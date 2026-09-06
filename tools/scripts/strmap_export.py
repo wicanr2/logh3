@@ -1,53 +1,60 @@
-# STRMAP.BIT：星域地圖，300 個 16×20 的 planar 圖塊（row-major）。
-# 版面來自原版 2376:0D3C 的 blit：每列 4 個 plane 各一個 word，SI 連續走完
-# 一塊再走下一塊；第一塊畫在畫面 (0,40)。
-import struct, sys, os
+"""把 `STRMAP.BIT` 解成主畫面的星圖底圖。
+
+版面是**用改記憶體問出來的**，不是猜的：把載入後某個位移起的 64 bytes
+改掉，看畫面哪裡變色。
+
+| 位移 | 變化的畫面區域 |
+|---|---|
+| 0 | x 0–15, y 40–47 |
+| 160 | x 16–31 |
+| 320 | x 32–47 |
+| 2400 | x 240–255 |
+
+每 160 bytes 前進 16 個像素，而 16×20 的格子正好是 160 bytes（4bpp），
+20×15 格 × 160 ＝ 48,000 ＝ 檔案大小，而星圖視窗也正好是 20×15 格。
+格內每一列 8 bytes ＝ 四個平面各 2 bytes 交錯（改位移 4–7 會把色 3 變成
+色 F，也就是加上 bit2 與 bit3）。
+
+用法：tools/py.sh tools/scripts/strmap_export.py [畫面收據名]
+"""
+import pathlib, sys
 sys.path.insert(0, '/work/tools/scripts')
-from amg_export import write_png
+from pngout import write_png, game_palette
 
-TW, TH, COLS = 16, 20, 20
-f = open('/orig/STRMAP.BIT', 'rb').read()
-n = len(f) // (TH * 8)
-rows_of_tiles = n // COLS
-W, H = COLS * TW, rows_of_tiles * TH
-px = bytearray(W * H)
-for k in range(n):
-    tx, ty = (k % COLS) * TW, (k // COLS) * TH
-    d = f[k*TH*8:(k+1)*TH*8]
-    for y in range(TH):
-        w4 = struct.unpack_from('<4H', d, y*8)
-        for x in range(TW):
-            v = 0
-            for p in range(4):
-                be = ((w4[p] & 0xFF) << 8) | (w4[p] >> 8)
-                if be & (0x8000 >> x):
-                    v |= 1 << p
-            px[(ty+y)*W + tx+x] = v
-print(f'{len(f)} bytes → {n} 塊 → {W}×{H}')
+CW, CH = 16, 20            # 一格
+COLS, ROWS = 20, 15        # 格數
+W, H = CW * COLS, CH * ROWS
+CELL = CW * CH // 2        # 160 bytes
+name = sys.argv[1] if len(sys.argv) > 1 else 'main1'
 
-# 判準：貼到畫面 (0,40) 要能對上原版。地圖上另外畫了星球與艦隊圖示，
-# 所以不會 0 差異；看的是**底圖對不對**。
-fb = open('/work/workplace/oracle/key1/screen.bin', 'rb').read()
-SW, X0, Y0 = 640, 0, 40
-# 會計報告視窗蓋住地圖右半，所以只比對沒被遮住的左邊那一條。
-for x1 in (140, 150, 160):
-    tot = bad = 0
-    for y in range(H):
-        for x in range(x1):
-            if Y0+y >= 480:
-                continue
-            tot += 1
-            if fb[(Y0+y)*SW + X0+x] != px[y*W+x]:
-                bad += 1
-    print(f'x < {x1}：{bad} / {tot} 不同')
+bit = pathlib.Path('/orig/STRMAP.BIT').read_bytes()
+scr = pathlib.Path('/work/workplace/oracle/%s/screen.bin' % name).read_bytes()
+pal = game_palette('/work/workplace/oracle/%s/screen.png' % name)
 
-png = open('/work/workplace/oracle/key1/screen.png', 'rb').read()
-i, pal = 8, None
-while i < len(png):
-    ln = struct.unpack_from('>I', png, i)[0]
-    if png[i+4:i+8] == b'PLTE':
-        pal = list(png[i+8:i+8+ln]); break
-    i += 12 + ln
+def decode():
+    px = bytearray(W * H)
+    for cy in range(ROWS):
+        for cx in range(COLS):
+            base = (cy * COLS + cx) * CELL
+            for y in range(CH):
+                row = base + y * 8
+                for p in range(4):
+                    hi, lo = bit[row + p * 2], bit[row + p * 2 + 1]
+                    word = hi << 8 | lo
+                    for k in range(16):
+                        if word >> (15 - k) & 1:
+                            px[(cy * CH + y) * W + cx * CW + k] |= 1 << p
+    return px
+
+px = decode()
+same = sum(1 for y in range(H) for x in range(W)
+           if px[y * W + x] == scr[(40 + y) * 640 + x])
+print('與 %s 畫面同色 %d / %d (%.1f%%)' % (name, same, W * H, same * 100 / (W * H)))
+import os
 os.makedirs('/work/workplace/assets', exist_ok=True)
-write_png('/work/workplace/assets/strmap.png', W, H, bytes(px), (pal+[0]*768)[:48])
-print('→ workplace/assets/strmap.png')
+write_png('/work/workplace/assets/strmap.png', W, H, px, pal)
+
+# 只比 bit2／bit3（檔案裡的那兩個平面；bit0／bit1 是執行期算出來的勢力色）
+hi_same = sum(1 for y in range(H) for x in range(W)
+              if (px[y * W + x] >> 2) == (scr[(40 + y) * 640 + x] >> 2))
+print('只比高兩個 bit：%d / %d (%.1f%%)' % (hi_same, W * H, hi_same * 100 / (W * H)))
