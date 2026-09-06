@@ -1,0 +1,405 @@
+{
+ "note": ".VO5 結局圖；PNG 由 tools/scripts/vo5_export.py 從自備原版重建，不進 Git",
+ "images": [
+  {
+   "file": "ENDA10.VO5",
+   "width": 640,
+   "height": 200,
+   "bytes": 29890,
+   "consumed": 29890,
+   "ok": true
+  },
+  {
+   "file": "ENDA11.VO5",
+   "width": 640,
+   "height": 200,
+   "bytes": 37773,
+   "consumed": 37773,
+   "ok": true
+  },
+  {
+   "file": "ENDA710.VO5",
+   "width": 640,
+   "height": 200,
+   "bytes": 34644,
+   "consumed": 34644,
+   "ok": true
+  },
+  {
+   "file": "ENDA711.VO5",
+   "width": 640,
+   "height": 200,
+   "bytes": 41261,
+   "consumed": 41261,
+   "ok": true
+  },
+  {
+   "file": "ENDD30.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 32302,
+   "consumed": 32302,
+   "ok": true
+  },
+  {
+   "file": "ENDD40.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 20941,
+   "consumed": 20941,
+   "ok": true
+  },
+  {
+   "file": "ENDD5A0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 26057,
+   "consumed": 26057,
+   "ok": true
+  },
+  {
+   "file": "ENDD5B0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 10776,
+   "consumed": 10776,
+   "ok": true
+  },
+  {
+   "file": "ENDD6A0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 21409,
+   "consumed": 21409,
+   "ok": true
+  },
+  {
+   "file": "ENDD810.VO5",
+   "width": 640,
+   "height": 200,
+   "bytes": 39496,
+   "consumed": 39496,
+   "ok": true
+  },
+  {
+   "file": "ENDDA0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 9726,
+   "consumed": 9726,
+   "ok": true
+  },
+  {
+   "file": "ENDDB0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 11654,
+   "consumed": 11654,
+   "ok": true
+  },
+  {
+   "file": "ENDDC0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 10392,
+   "consumed": 10392,
+   "ok": true
+  },
+  {
+   "file": "ENDDD0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 10597,
+   "consumed": 10597,
+   "ok": true
+  },
+  {
+   "file": "ENDDE0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 10680,
+   "consumed": 10680,
+   "ok": true
+  },
+  {
+   "file": "ENDDF0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 10172,
+   "consumed": 10172,
+   "ok": true
+  },
+  {
+   "file": "ENDDG0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 13639,
+   "consumed": 13639,
+   "ok": true
+  },
+  {
+   "file": "ENDDH0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 11788,
+   "consumed": 11788,
+   "ok": true
+  },
+  {
+   "file": "ENDDI0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 10417,
+   "consumed": 10417,
+   "ok": true
+  },
+  {
+   "file": "ENDDJ0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 11452,
+   "consumed": 11452,
+   "ok": true
+  },
+  {
+   "file": "ENDDK0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 9385,
+   "consumed": 9385,
+   "ok": true
+  },
+  {
+   "file": "ENDDL0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 10891,
+   "consumed": 10891,
+   "ok": true
+  },
+  {
+   "file": "ENDDM0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 12728,
+   "consumed": 12728,
+   "ok": true
+  },
+  {
+   "file": "ENDDN0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 8954,
+   "consumed": 8954,
+   "ok": true
+  },
+  {
+   "file": "ENDDO0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 10654,
+   "consumed": 10654,
+   "ok": true
+  },
+  {
+   "file": "ENDDP11.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 20989,
+   "consumed": 20989,
+   "ok": true
+  },
+  {
+   "file": "ENDDP21.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 22793,
+   "consumed": 22793,
+   "ok": true
+  },
+  {
+   "file": "ENDT30.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 18777,
+   "consumed": 18777,
+   "ok": true
+  },
+  {
+   "file": "ENDT40.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 19807,
+   "consumed": 19807,
+   "ok": true
+  },
+  {
+   "file": "ENDT5A0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 29594,
+   "consumed": 29594,
+   "ok": true
+  },
+  {
+   "file": "ENDT5B0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 14390,
+   "consumed": 14390,
+   "ok": true
+  },
+  {
+   "file": "ENDT6A0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 27796,
+   "consumed": 27796,
+   "ok": true
+  },
+  {
+   "file": "ENDT810.VO5",
+   "width": 640,
+   "height": 200,
+   "bytes": 39780,
+   "consumed": 39780,
+   "ok": true
+  },
+  {
+   "file": "ENDTA0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 14607,
+   "consumed": 14607,
+   "ok": true
+  },
+  {
+   "file": "ENDTB0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 12806,
+   "consumed": 12806,
+   "ok": true
+  },
+  {
+   "file": "ENDTC0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 10814,
+   "consumed": 10814,
+   "ok": true
+  },
+  {
+   "file": "ENDTD0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 12433,
+   "consumed": 12433,
+   "ok": true
+  },
+  {
+   "file": "ENDTE0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 13076,
+   "consumed": 13076,
+   "ok": true
+  },
+  {
+   "file": "ENDTF0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 12432,
+   "consumed": 12432,
+   "ok": true
+  },
+  {
+   "file": "ENDTG0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 12475,
+   "consumed": 12475,
+   "ok": true
+  },
+  {
+   "file": "ENDTH0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 14325,
+   "consumed": 14325,
+   "ok": true
+  },
+  {
+   "file": "ENDTI0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 11412,
+   "consumed": 11412,
+   "ok": true
+  },
+  {
+   "file": "ENDTJ0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 11287,
+   "consumed": 11287,
+   "ok": true
+  },
+  {
+   "file": "ENDTK0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 12137,
+   "consumed": 12137,
+   "ok": true
+  },
+  {
+   "file": "ENDTL0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 13856,
+   "consumed": 13856,
+   "ok": true
+  },
+  {
+   "file": "ENDTM0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 11287,
+   "consumed": 11287,
+   "ok": true
+  },
+  {
+   "file": "ENDTN0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 13524,
+   "consumed": 13524,
+   "ok": true
+  },
+  {
+   "file": "ENDTO0.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 14655,
+   "consumed": 14655,
+   "ok": true
+  },
+  {
+   "file": "ENDTP11.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 26273,
+   "consumed": 26273,
+   "ok": true
+  },
+  {
+   "file": "ENDTP21.VO5",
+   "width": 640,
+   "height": 400,
+   "bytes": 26506,
+   "consumed": 26506,
+   "ok": true
+  }
+ ]
+}

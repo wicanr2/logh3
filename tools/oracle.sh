@@ -10,6 +10,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GOLEM="${DOSGOLEM_DIR:-$HOME/cht/dosgolem-logh3}"
 name="${1:?用法: tools/oracle.sh <批次名> [額外旗標...]}"; shift
+# 預設跑 GIN3.COM；結局那類獨立執行檔用 LOGH3_EXE 換掉。
+EXE="${LOGH3_EXE:-/orig/GIN3.COM}"
 out="$ROOT/workplace/oracle/$name"
 mkdir -p "$out"
 
@@ -18,7 +20,7 @@ dirty=$(git -C "$GOLEM" status --porcelain | wc -l)
 
 cd "$GOLEM"
 DOSGOLEM_ORIG="$ROOT/org_game/extracted" tools/go.sh run ./cmd/probe \
-  -exe /orig/GIN3.COM -root /orig "$@" \
+  -exe "$EXE" -root /orig "$@" \
   -dump-ega "/src/workplace/oracle-tmp.png" \
   -dump-palette "/src/workplace/oracle-tmp-pal.bin" > "$out/report.txt" 2>&1 || true
 cp "$GOLEM/workplace/oracle-tmp.png" "$out/screen.png"
@@ -29,6 +31,7 @@ cp "$GOLEM/workplace/oracle-tmp-pal.bin" "$out/pal.bin"
   echo "批次: $name"
   echo "日期: $(date -Iseconds)"
   echo "dosgolem HEAD: $head（未提交檔案 $dirty 個）"
+  echo "執行檔: $EXE"
   echo "probe 旗標: $*"
   echo "GIN3.COM SHA-256: $(sha256sum "$ROOT/org_game/extracted/GIN3.COM" | cut -d' ' -f1)"
   echo "screen.bin SHA-256: $(sha256sum "$out/screen.bin" | cut -d' ' -f1)"
