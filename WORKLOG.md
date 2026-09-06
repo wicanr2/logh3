@@ -4,6 +4,16 @@
 
 ## 2026-09-06
 
+- re06：拿到第一張真色彩畫面（主選單，黑底青綠框白字），同命令連跑兩次逐位元組
+  一致。黑畫面不是遊戲的淡入沒走完，是 dosgolem 的兩個缺口疊在一起：
+  `int 10h AH=10h` 的 AL 分支接錯（AL=02h 是 17 bytes 的屬性調色盤卻被接成
+  768 bytes 的 DAC，AL=10h 是設單筆 DAC 卻被接成設屬性暫存器，讀回的
+  07/08/09/15/17 全缺），以及「`AH=35h` 取向量 → 自己疊框架 iret 跳進去」的
+  BIOS 呼叫從未執行——服務層掛在 CPU 的 INT 指令 hook 上，而向量指向裸 iret，
+  C 的 `int86x` 那條路安靜地什麼都不做。改成每個向量一段 `int n; iret` 的
+  stub。dosgolem-logh3 `769b030`（spec 011），已推 origin。
+  注意：該分支上另有其他 session 的提交（rich2 選單修正、`cmd/scenetime`），
+  本批以 rebase 接上。詳 `docs/re/06-palette-alive-first-real-screen.md`。
 - re05：停點解掉，本體跑進**主選單**（帝國／同盟／對戰／取進度），滑鼠輪詢
   205,509 次。根因不在圖形也不在中斷——dosgolem 的 EXEC 之後配置游標沒有退回，
   `OPEN.EXE` 用掉的 230 KB 沒還，本體被載到段 `0x3922`，向 DOS 要 `0x6A07` 段
