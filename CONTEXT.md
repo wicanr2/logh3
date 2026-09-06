@@ -164,11 +164,9 @@
     候選 `STELLAR.DT*`）。
 16. **`.AMG` 以外的圖庫**：`COMANI.BMG` 命名相近，先驗它是不是同一種編碼。
 17. **`ADMIRAL.DT*` 的另外 13 個能力欄位**（`docs/internals/08`）。
-18. **命令階段的畫面**（`docs/playtest/006`）：主畫面 remake 側已經畫得出來，
-    **差 185 / 307,200**（`TestCommandPhaseProgress` 盯著門檻，
-    規格由 `tools/scripts/cmdscreen_spec.py` 量）。剩下：標題框裡四個
-    3×11 的小圖示（128 px，可能是 `SPRITE.SPR` 的某張）、游標邊緣約 25 px、
-    命令列上下緣各兩條 1 px 的線。三個選單畫面還沒開始。
+18. **命令階段的畫面**（`docs/playtest/006`）：主畫面 **已經逐位元組對上**
+    （收據 `main1e`，規格由 `tools/scripts/cmdscreen_spec.py` 量）。
+    戰略命令／一覽表／系統指令三個選單畫面還沒開始。
 19. ~~星域歸屬的來源~~（完成，`docs/re/17`）：`STELLAR.DT*` 的 `+18` 是
     擁有者（0 帝國、1 同盟、2 無主），查 `ds:8BD2` 得色號，首都另外用
     色 6 重塗。**剩下一步**：檔案裡只有 0 與 1，載入後有 10 個星域被改成

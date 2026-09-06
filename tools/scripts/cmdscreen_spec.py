@@ -16,7 +16,7 @@ sys.path.insert(0, '/work/tools/scripts')
 from screenspec import (W, H, load_screen, font_lookup, measure_frame,
                         frame_patches, read_line)
 
-batch = sys.argv[1] if len(sys.argv) > 1 else 'main1'
+batch = sys.argv[1] if len(sys.argv) > 1 else 'main1e'
 outname = sys.argv[2] if len(sys.argv) > 2 else 'screen-command-phase'
 rows, flat = load_screen(f'/work/workplace/oracle/{batch}/screen.bin')
 full, half = font_lookup('/orig/GRAPH.IMG')
@@ -161,10 +161,16 @@ spec = {
                   {'x': 627, 'y': 152, 'w': 4, 'h': 1, 'colour': 3}],
     }},
     'order': [],
-    # 游標畫在 (300,200)（遊戲座標，畫面上是 y+40），但右鍵關掉報告視窗
-    # 之後整片重畫，只補回了左半邊——原版的游標是疊上去的，
-    # 被蓋掉的部分要等下次移動才回來（`docs/re/09`）。
-    'mouse': {'x': 300, 'y': 200, 'clip': {'x': 302, 'y': 0, 'w': 6, 'h': 480}},
+    # 游標在 (300,200)（遊戲座標，畫面上 y+40）。
+    #
+    # 用 `main1c` 而不是 `main1` 是**刻意挑的狀態**：兩者畫面內容相同，
+    # 但 `main1` 的滑鼠停在原地沒動過，右鍵重畫之後游標只補回中間幾列，
+    # 剩下的是隔列的殘留；`main1c` 在最後把滑鼠移過一次，游標整個重畫，
+    # 量到的才是它本來的樣子。
+    # 游標只剩 x 610–611 兩列看得見：左邊被清單條蓋掉（清單畫到 x=609），
+    # 右邊被捲軸框蓋掉（捲軸從 x=612 起）。原版的游標是疊上去的，
+    # 視窗一重畫就吃掉一塊，要等下次移動才補回來（`docs/re/09`）。
+    'mouse': {'x': 600, 'y': 300, 'clip': {'x': 610, 'y': 0, 'w': 2, 'h': 480}},
     'window_origin_grid': [21, 4],
     'hotspots': [
         {'x': 352, 'y': 80, 'w': 32, 'h': 20, 'grid': [1, 0],
@@ -175,6 +181,13 @@ spec = {
          'action': 'system-menu', 'note': '系統指令'},
     ],
 }
-out = f'/work/docs/internals/data/{outname}.json'
+# 捲軸滑軌那一格的左緣被讀成交錯：框的上下兩列落在清單條的邊上（那裡是 3），
+# 中間整段都是 7，量測因此以為它一列 7 一列 3。原版 x=610 從頭到尾都是 7。
+for _b in spec['windows']['board']['boxes']:
+    if _b['x'] == 610 and _b['h'] == 60:
+        _b['layers'][0][3] = 7
+        _b['alt'][0][3] = 0
+
+out = f'/work/docs/internals/data/{outname}.json' 
 json.dump(spec, open(out, 'w'), ensure_ascii=False, indent=1)
 print('寫出', out, '｜文字', sum(len(l['cells']) for l in lines), '格、小框', len(BOXES), '個')
