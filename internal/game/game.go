@@ -147,7 +147,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	switch g.state {
 	case StateCopyProtection:
 		face, _ := g.res.Faces.Decode(g.res.CopyProt.Face.Index)
-		fb, _ := screen.CopyProtection(g.res.CopyProt, g.res.Font, face)
+		fb, _ := screen.CopyProtection(g.res.CopyProt, g.res.Font, face, string(g.typed))
 		return fb
 	case StateMainGame:
 		fb, _ := screen.MainGame(g.res.MainGame, g.res.Font, g.res.StarMap,

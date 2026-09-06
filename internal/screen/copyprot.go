@@ -49,6 +49,13 @@ type CopyProtSpec struct {
 			} `json:"cells"`
 		} `json:"lines"`
 	} `json:"text"`
+	// InputText 是玩家打進去的數字要畫在哪（半形字型，沒有立體邊）。
+	InputText *struct {
+		X, Y  int
+		Pitch int   `json:"pitch"`
+		Ink   uint8 `json:"ink"`
+	} `json:"input_text"`
+
 	Palette6bit [][3]uint8 `json:"palette_6bit"`
 }
 
@@ -90,8 +97,9 @@ func (s *CopyProtSpec) Frame() ui.Frame {
 }
 
 // CopyProtection 畫防拷問答畫面。face 是 `FACE.AMG` 解出來的頭像
-// （nil 就不畫，用來單獨驗版面）。回傳畫不出來的字碼。
-func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image) (*gfx.Framebuffer, []uint16) {
+// （nil 就不畫，用來單獨驗版面），typed 是玩家已經打進去的數字。
+// 回傳畫不出來的字碼。
+func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed string) (*gfx.Framebuffer, []uint16) {
 	fb := gfx.NewFramebuffer(s.Background)
 	s.Frame().Draw(fb, s.Window.X, s.Window.Y, s.Window.W, s.Window.H)
 	if face != nil {
@@ -117,6 +125,11 @@ func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image) (*gfx.Fr
 			if !ui.DrawGlyph(fb, fnt, c.X, line.Y, *c.Code, s.Text.Ink, s.Text.Shadow, -1) {
 				missing = append(missing, *c.Code)
 			}
+		}
+	}
+	if t := s.InputText; t != nil {
+		for i, c := range []byte(typed) {
+			ui.DrawHalfGlyph(fb, fnt, t.X+i*t.Pitch, t.Y, c, t.Ink, 0, 0)
 		}
 	}
 	return fb, missing
