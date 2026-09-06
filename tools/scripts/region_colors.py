@@ -7,7 +7,10 @@
 實測的呼叫順序：第一趟 626 次顏色全 0（626 ＝ 全部星域的格數，等於
 先清一遍），第二趟才塗，而且**星域 0 排到最後**（順序是 1…31、0）。
 
-用法：tools/py.sh tools/scripts/region_colors.py <記憶體dump> [顏色序列檔]
+用法：tools/py.sh tools/scripts/region_colors.py <記憶體dump> [顏色序列檔] [輸出json]
+
+⚠ 輸出檔要指定。預設會寫 `star-region-colors.json`，那是**主畫面的勢力色**，
+remake 的對拍在用；拿別的畫面的 dump 跑一次就會把它蓋掉。
 """
 import json, pathlib, struct, sys
 
@@ -53,6 +56,8 @@ if len(sys.argv) > 2:
     print('表算出來（首都算兩次）：', dict(sorted(want.items())))
     print('一致' if got == want else '**不一致**')
 
+out_path = sys.argv[3] if len(sys.argv) > 3 else \
+    '/work/docs/internals/data/star-region-colors.json'
 json.dump({
     'note': '32 個星域在 796 年 1 月帝國開局的著色色號。表在 ds:F162，'
             '每個星域一個 byte；著色常式 2376:0BAF 的 [bp+12] 就是從這裡取的。'
@@ -61,6 +66,5 @@ json.dump({
             '首都會被塗兩次：先跟其他帝國星域一樣塗 01，再用 06 重塗。',
     'table': 'ds:F162',
     'colors': colors,
-}, open('/work/docs/internals/data/star-region-colors.json', 'w'),
-    ensure_ascii=False, indent=1)
-print('寫出 docs/internals/data/star-region-colors.json')
+}, open(out_path, 'w'), ensure_ascii=False, indent=1)
+print('寫出', out_path)

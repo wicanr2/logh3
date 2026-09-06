@@ -2,10 +2,16 @@
 """把「疊在既有畫面上的一層視窗」量成規格。
 
     tools/py.sh tools/scripts/overlay_spec.py <批次> <底層規格> <輸出名> \
-        <x0> <y0> <x1> <y1> <游標x> <游標y>
+        <x0> <y0> <x1> <y1> <游標x> <游標y> [小框 x0:y0:x1:y1,...]
 
 底層原封不動沿用（那一層已經對拍過），只量最上面那一層——重量一次
 會因為文字被切在視窗邊界而讀錯（`docs/re/12`）。
+
+游標座標給 `-1` ＝ 沿用底層那一份（含它的可見範圍）。疊一層上去通常
+不會動到游標：滑鼠沒移動，畫面上那隻還是原來被夾成幾列的樣子。
+
+小框（清單列、按鈕）要明列——它們的框線點陣剛好等於某些製表符，
+不列出來就會被讀成一行「文字」。位置用 `diff_parts.py` 的連通分量抄。
 """
 import json, sys
 sys.path.insert(0, '/work/tools/scripts')
@@ -15,6 +21,8 @@ from screenspec import (W, H, load_screen, font_lookup, measure_frame,
 batch, base_name, out_name = sys.argv[1], sys.argv[2], sys.argv[3]
 X0, Y0, X1, Y1 = (int(v) for v in sys.argv[4:8])
 MX, MY = int(sys.argv[8]), int(sys.argv[9])
+BOXES = [tuple(int(v) for v in b.split(':'))
+         for b in (sys.argv[10].split(',') if len(sys.argv) > 10 and sys.argv[10] else [])]
 
 rows, _ = load_screen(f'/work/workplace/oracle/{batch}/screen.bin')
 full, half = font_lookup('/orig/GRAPH.IMG')
@@ -27,19 +35,54 @@ patches = frame_patches(rows, X0, Y0, X1, Y1, layers, alts, corner=12)
 def scan(phase):
     out = []
     for y in range(Y0 + 10 + phase, Y1 - 14, 20):
-        ln = max((read_line(rows, sx, y, X1 - 12, 7, full, half, [])
-                  for sx in range(X0 + 8, X0 + 40)), key=len)
-        if len(ln) >= 2 and len({c['code'] for c in ln}) > 1:
+        skip = [(bx0, by0, bx1 - bx0 + 1, by1 - by0 + 1)
+                for bx0, by0, bx1, by1 in BOXES]
+        # 起點要掃寬一點：這一層裡不只一欄文字，左邊那欄的縮排
+        # 各畫面不同，範圍太窄就整欄讀不到。
+        ln = max((read_line(rows, sx, y, X1 - 12, 7, full, half, skip)
+                  for sx in range(X0 + 4, X0 + 80)), key=len)
+        if ln and (len(ln) < 4 or len({c['code'] for c in ln}) > 1):
             out.append({'y': y, 'ink': 7, 'cells': ln})
     return out
 
-lines = max((scan(p) for p in range(20)),
-            key=lambda ls: sum(len(l['cells']) for l in ls))
+def _span(line):
+    xs = [c['x'] for c in line['cells']]
+    return min(xs), max(c['x'] + c['w'] for c in line['cells'])
+
+def _merge(acc, cand):
+    """一層裡的行不只一種相位（標籤欄與清單欄各排各的），所以把所有相位
+    的結果併起來，再把佔到同一塊位置的行去掉，只留字數多的那一個。
+    只取單一最佳相位會整欄漏掉。"""
+    lo, hi = _span(cand)
+    for i, cur in enumerate(acc):
+        if abs(cur['y'] - cand['y']) >= 15:
+            continue
+        clo, chi = _span(cur)
+        if lo < chi and clo < hi:
+            if len(cand['cells']) > len(cur['cells']):
+                acc[i] = cand
+            return
+    acc.append(cand)
+
+lines = []
+for _p in range(20):
+    for _l in scan(_p):
+        _merge(lines, _l)
+lines.sort(key=lambda l: (l['y'], l['cells'][0]['x']))
 
 spec['windows']['overlay'] = {
     'x': X0, 'y': Y0, 'w': X1 - X0 + 1, 'h': Y1 - Y0 + 1,
     'frame': {'layers': layers, 'alt': alts, 'fill': 9, 'patches': patches},
-    'ink': 7, 'lines': lines, 'boxes': [], 'rules': [],
+    'ink': 7, 'lines': lines, 'rules': [],
+    'boxes': [{'x': bx0, 'y': by0, 'w': bx1 - bx0 + 1, 'h': by1 - by0 + 1,
+               'layers': (_l := measure_frame(rows, bx0, by0, bx1, by1,
+                                              fill=rows[(by0 + by1) // 2][(bx0 + bx1) // 2]))[0],
+               'alt': _l[1],
+               'fill': rows[(by0 + by1) // 2][(bx0 + bx1) // 2],
+               'patches': frame_patches(rows, bx0, by0, bx1, by1, *_l,
+                                        fill=rows[(by0 + by1) // 2][(bx0 + bx1) // 2],
+                                        corner=12)}
+              for bx0, by0, bx1, by1 in BOXES],
 }
 # 底層不一定有 report——命令階段主畫面只有 board 一個視窗。
 spec['order'] = [n for n in ('report', 'overlay') if n in spec['windows']]
