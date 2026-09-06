@@ -21,11 +21,11 @@ dirty=$(git -C "$GOLEM" status --porcelain | wc -l)
 cd "$GOLEM"
 DOSGOLEM_ORIG="$ROOT/org_game/extracted" tools/go.sh run ./cmd/probe \
   -exe "$EXE" -root /orig "$@" \
-  -dump-ega "/src/workplace/oracle-tmp.png" \
-  -dump-palette "/src/workplace/oracle-tmp-pal.bin" > "$out/report.txt" 2>&1 || true
-cp "$GOLEM/workplace/oracle-tmp.png" "$out/screen.png"
-cp "$GOLEM/workplace/oracle-tmp.bin" "$out/screen.bin"
-cp "$GOLEM/workplace/oracle-tmp-pal.bin" "$out/pal.bin"
+  -dump-ega "/src/workplace/oracle-tmp-$name.png" \
+  -dump-palette "/src/workplace/oracle-tmp-pal-$name.bin" > "$out/report.txt" 2>&1 || true
+cp "$GOLEM/workplace/oracle-tmp-$name.png" "$out/screen.png"
+cp "$GOLEM/workplace/oracle-tmp-$name.bin" "$out/screen.bin"
+cp "$GOLEM/workplace/oracle-tmp-pal-$name.bin" "$out/pal.bin"
 
 {
   echo "批次: $name"
