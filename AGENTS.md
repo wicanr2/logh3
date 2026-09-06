@@ -2,9 +2,14 @@
 
 本檔是此儲存庫的 agent 入口。所有工作先遵守共用主機規則，再遵守本檔；專案事實以
 `CONTEXT.md` 的目前狀態、目前程式、最近一次可重現測試及原始證據為準。本檔改寫自
-`~/cht/sangokushi/AGENTS.md` 的協作經驗，對拍方法論改用 `~/cht/dosgolem/`（無頭
+`~/cht/sangokushi/AGENTS.md` 的協作經驗，對拍方法論改用 dosgolem（無頭
 決定性 DOS 執行器）為首選 oracle；平台為 PC DOS。尚未建立的工具
 與目錄在第一次使用時補建，不得把本檔的流程描述當成「已存在」的證據。
+
+dosgolem 的工作副本固定用 `~/cht/dosgolem-logh3/`（branch `logh3-com-support`，
+origin 為 GitHub `wicanr2/dosgolem`），不得在主 checkout `~/cht/dosgolem/` 內
+為本專案改動——主 checkout 有其他 session 使用。分支上的提交由使用者主導
+MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分支。
 
 ## 專案背景
 
