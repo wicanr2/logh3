@@ -113,6 +113,19 @@
 `TestBuildPlanStatesMatchOriginal`，清單在
 `workplace/explore/manifest.json`（一次性證據，不進 Git）。
 
+那 34 個 poke 局面用 `tools/buildplan_states.sh` 重建，六路並行約 1 分 50 秒：
+
+```
+tools/buildplan_states.sh          # 全部
+tools/buildplan_states.sh e1 m2    # 只重建指定局面
+```
+
+百分比從 `manifest.json` 讀，執行器 HEAD 與完整旗標寫進
+`workplace/explore/buildplan/meta.txt`。收據放 `buildplan/` 子目錄，
+與探索用的短檔名分開——`workplace/explore/` 底下的 `k1`、`m2` 這種
+名字很容易被下一輪探索重用，撞到就是拿另一個畫面來比，
+測試會爆出一整片跟程式無關的假差異。
+
 規則實作在 `internal/rules/buildplan.go`。
 
 ## 方法論
