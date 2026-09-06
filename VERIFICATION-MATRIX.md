@@ -49,6 +49,13 @@
 | `IBM16.350` ＋ `IBMFLS16.350`（開頭動畫）| 影格切分已解出（374 格，長度總和逐位元組吻合）；每格的編碼未解 | [`docs/internals/19`](docs/internals/19-ibm16-350.md) |
 | `COMANI.BMG`（戰鬥動畫）| 目錄已解出（253 段，位移逐筆接得起來）；每段的編碼未解 | [`docs/internals/20`](docs/internals/20-comani-bmg.md) |
 
+## 介面覆蓋
+
+| 項目 | 狀態 | 證據 |
+|---|---|---|
+| 資料段裡的熱區清單 | **25 份全部掃出**（含每個按鈕的中文標籤）| [`docs/internals/23`](docs/internals/23-hotspot-lists.md) |
+| 清單 ↔ 畫面的對應 | 25 份裡只確定 2 份（主畫面、建造計劃）| 同上 |
+
 ## 遊戲規則
 
 | 規則 | 狀態 | 證據 |
