@@ -46,6 +46,17 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 挑簽章時避開含絕對位址的位元組（`9A xx xx ss ss` 的 far call 目標、
 `A1 xx xx` 之類指到別段的存取），那些會隨載入位址改變。
 
+## 工具
+
+| 包裝器 | 用途 |
+|---|---|
+| `tools/py.sh` | Python 分析（`python:3.12-slim`）。原版素材唯讀掛在 `/orig`，倚天字型之類的外部參照用 `LOGH3_EXTRA_RO` 掛在 `/ref`。|
+| `tools/ida.sh` | IDA Pro 9.4 headless。`analyze <exe>` 建 `.i64`，`script <exe> <py>` 跑 IDAPython。**exit code 不能當證據，只看輸出檔**；腳本一律寫檔，一支腳本一次處理多個目標（對同一個 `.i64` 連續開關會弄壞它）。|
+
+`GIN3PS.EXE` 是 GLUE 封裝的，IDA 只看得到解壓殼——本體要在執行期逆向
+（dosgolem 的 `-peek`／`-find`／trace／檔案存取記錄）。`OPEN.EXE` 與
+`ENDING.EXE` 沒有封裝，適合 IDA。
+
 ## 目錄
 
 | 檔 | 內容 |
