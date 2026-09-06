@@ -41,6 +41,13 @@
 | `FACE.AMG`（.AMG 圖庫）| **已解出**（83 張逐像素對得上原版畫面）| [`docs/internals/09`](docs/internals/09-face-amg.md) |
 | `COMANI.BMG` / `IBM16.350` | 未開始 | — |
 
+## 遊戲規則
+
+| 規則 | 狀態 | 證據 |
+|---|---|---|
+| 船艦建造預算分配（±2%、金額 ＝ 建造費 × 百分比、餘額不足不能加）| **已實作**（`internal/rules/buildplan.go`）| [`docs/re/10`](docs/re/10-build-plan-arrows.md)，實測四個狀態 |
+| 其他 | 未開始 | — |
+
 ## 執行器（dosgolem）覆蓋
 
 | 項目 | 狀態 |
