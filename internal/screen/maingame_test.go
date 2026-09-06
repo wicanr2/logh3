@@ -151,6 +151,45 @@ func checkGameScreen(t *testing.T, specName, batch string) {
 	}
 }
 
+// TestCommandPhaseProgress 盯著命令階段主畫面還差多少。
+//
+// 這張畫面**還沒對上**（右側五個面板的版面還在量），所以不放進
+// TestMainGameMatchesOracle——那張表只收 0 差異的畫面。這裡的門檻只有
+// 一個用途：**差異變大就是回歸**。每次量準一塊就把門檻往下調，
+// 調到 0 之後再搬進上面那張表。
+func TestCommandPhaseProgress(t *testing.T) {
+	const budget = 3251 // 2026-09-07 的進度；只能往下調
+	root := "../.."
+	specPath := filepath.Join(root, "docs/internals/data/screen-command-phase.json")
+	oracle := filepath.Join(root, "workplace/oracle/main1/screen.bin")
+	if _, err := os.Stat(oracle); err != nil {
+		t.Skip("缺 main1 收據，跳過")
+	}
+	s, err := LoadMainGameSpec(specPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fnt, mapImg, faces, cur := gameScreenAssets(t)
+	fb, missing := MainGame(s, fnt, mapImg, faces, cur)
+	want, err := os.ReadFile(oracle)
+	if err != nil {
+		t.Fatal(err)
+	}
+	bad := 0
+	for i := range want {
+		if want[i] != fb.Pix[i] {
+			bad++
+		}
+	}
+	_ = os.WriteFile(filepath.Join(root, "workplace/remake-main1.bin"), fb.Pix, 0o644)
+	if bad > budget {
+		t.Fatalf("命令階段主畫面差 %d / %d，比上次的 %d 還多（畫不出來的字碼 %d 個）",
+			bad, len(want), budget, len(missing))
+	}
+	t.Logf("命令階段主畫面差 %d / %d（門檻 %d，畫不出來的字碼 %d 個）",
+		bad, len(want), budget, len(missing))
+}
+
 // loadRegionColours 讀各星域在 796 年 1 月的所屬勢力色。
 func loadRegionColours(path string) ([]uint8, error) {
 	b, err := os.ReadFile(path)
