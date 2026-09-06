@@ -11,11 +11,24 @@ import (
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
-// TestMainGameMatchesOracle 是遊戲主畫面的同狀態對拍。
+// TestMainGameMatchesOracle 是遊戲本體各畫面的同狀態對拍。
+//
+// 這些畫面共用同一個結構（底板 ＋ 星域地圖 ＋ 疊上去的視窗），
+// 所以同一個繪製器換一份規格就能畫——差別只在文字、頭像與熱區。
 func TestMainGameMatchesOracle(t *testing.T) {
+	for _, c := range []struct{ spec, batch string }{
+		{"screen-main-game", "key1"},
+		{"screen-ship-order", "ship1"},
+	} {
+		t.Run(c.batch, func(t *testing.T) { checkGameScreen(t, c.spec, c.batch) })
+	}
+}
+
+func checkGameScreen(t *testing.T, specName, batch string) {
+	t.Helper()
 	root := "../.."
-	specPath := filepath.Join(root, "docs/internals/data/screen-main-game.json")
-	oracle := filepath.Join(root, "workplace/oracle/key1/screen.bin")
+	specPath := filepath.Join(root, "docs/internals/data/"+specName+".json")
+	oracle := filepath.Join(root, "workplace/oracle/"+batch+"/screen.bin")
 	fontPath := filepath.Join(root, "org_game/extracted/GRAPH.IMG")
 	bitPath := filepath.Join(root, "org_game/extracted/STRMAP.BIT")
 	rgnPath := filepath.Join(root, "org_game/extracted/STRMAP.RGN")
@@ -75,8 +88,9 @@ func TestMainGameMatchesOracle(t *testing.T) {
 		}
 	}
 	if bad != 0 {
-		_ = os.WriteFile(filepath.Join(root, "workplace/remake-maingame.bin"), fb.Pix, 0o644)
-		t.Fatalf("與原版不同的像素 %d / %d（畫不出來的字碼 %d 個）", bad, len(want), len(missing))
+		_ = os.WriteFile(filepath.Join(root, "workplace/remake-"+batch+".bin"), fb.Pix, 0o644)
+		t.Fatalf("%s：與原版不同的像素 %d / %d（畫不出來的字碼 %d 個）",
+			batch, bad, len(want), len(missing))
 	}
 }
 

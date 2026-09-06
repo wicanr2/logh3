@@ -8,7 +8,9 @@ sys.path.insert(0, '/work/tools/scripts')
 from screenspec import (W, H, load_screen, font_lookup, measure_frame,
                         frame_patches, read_line, ink_rows)
 
-rows, flat = load_screen('/work/workplace/oracle/key1/screen.bin')
+batch = sys.argv[1] if len(sys.argv) > 1 else 'key1'
+outname = sys.argv[2] if len(sys.argv) > 2 else 'screen-main-game'
+rows, flat = load_screen(f'/work/workplace/oracle/{batch}/screen.bin')
 full, half = font_lookup('/orig/GRAPH.IMG')
 # 背景取畫面角落，**不是**出現最多的色號——主畫面上視窗填色比背景多。
 bg = rows[0][0]
@@ -138,13 +140,36 @@ def solid(cx, cy):
     while y1 < H-1 and rows[y1+1][cx] == c: y1 += 1
     return {'x': x0, 'y': y0, 'w': x1-x0+1, 'h': y1-y0+1, 'colour': c}
 
-spec['mouse'] = {'x': 300, 'y': 170}
-spec['windows']['report']['face'] = {'source': 'FACE.AMG', 'index': 16, 'x': 400, 'y': 100}
+# 游標位置是那一份收據的輸入序列決定的，不能沿用別的畫面。
+spec['mouse'] = {'x': int(sys.argv[3]) if len(sys.argv) > 3 else 300,
+                 'y': int(sys.argv[4]) if len(sys.argv) > 4 else 170}
+# 頭像編號不寫死：在報告視窗裡把 83 張逐一比對，找逐像素相同的那張。
+import struct as _st
+_f = open('/orig/FACE.AMG', 'rb').read()
+_idx = [_st.unpack_from('<HI', _f, k*6) for k in range(83)]
+sys.path.insert(0, '/work/tools/scripts')
+from amg_decode import decode as _dec
+_best = None
+for _k, (_s, _o) in enumerate(_idx):
+    _W, _H, _px, _ = _dec(_f[_o:_o+_s])
+    for _y0 in range(92, 112):
+        for _x0 in range(392, 412):
+            _bad = 0
+            for _y in range(0, _H, 4):
+                _r = [rows[_y0+_y][_x0+_i] for _i in range(_W)]
+                _bad += sum(1 for _a, _b in zip(_r, _px[_y*_W:(_y+1)*_W]) if _a != _b)
+                if _best and _bad > _best[0]:
+                    break
+            if _best is None or _bad < _best[0]:
+                _best = (_bad, _k, _x0, _y0)
+print(f'頭像：第 {_best[1]} 張 於 ({_best[2]},{_best[3]})  抽樣差異 {_best[0]}')
+spec['windows']['report']['face'] = {'source': 'FACE.AMG', 'index': _best[1],
+                                     'x': _best[2], 'y': _best[3]}
 spec['windows']['report']['input_box'] = solid(460, 350)
 spec['windows']['board']['bar'] = solid(560, 125)
 print('輸入框', spec['windows']['report']['input_box'])
 print('面板橫條', spec['windows']['board']['bar'])
 
-json.dump(spec, open('/work/docs/internals/data/screen-main-game.json', 'w'),
+json.dump(spec, open(f'/work/docs/internals/data/{outname}.json', 'w'),
           ensure_ascii=False, indent=1)
-print('→ docs/internals/data/screen-main-game.json')
+print(f'→ docs/internals/data/{outname}.json')

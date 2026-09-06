@@ -76,8 +76,12 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	so, err := screen.LoadMainGameSpec(filepath.Join(root, "docs/internals/data/screen-ship-order.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
-		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral}
+		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so}
 }
 
 func regionColours(path string) ([]uint8, error) {
@@ -152,6 +156,13 @@ func TestPlayerPathReachesGame(t *testing.T) {
 		t.Fatal("答對了卻沒進遊戲本體")
 	}
 	matches(t, g, "key1")
+
+	// 主畫面的熱區：點下去開出船艦訂造報告。
+	g.Click(448, 330)
+	if g.State() != StateShipOrder {
+		t.Fatal("點了主畫面的熱區沒有開出船艦訂造報告")
+	}
+	matches(t, g, "ship1")
 }
 
 // TestWrongAnswerStaysOnQuestion：答錯不會放行。

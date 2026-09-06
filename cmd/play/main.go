@@ -29,7 +29,7 @@ func main() {
 	data := flag.String("data", "docs/internals/data", "畫面規格與資料目錄")
 	out := flag.String("out", "workplace/play", "輸出目錄")
 	script := flag.String("script", "move 300 170; click; type 138; enter",
-		"輸入腳本，分號分隔：move X Y／click／type 數字／enter／back")
+		"輸入腳本，分號分隔：move X Y／click [X Y]／type 數字／enter／back")
 	flag.Parse()
 
 	res, err := load(*orig, *data)
@@ -107,6 +107,8 @@ func stateName(s game.State) string {
 		return "防拷問答"
 	case game.StateMainGame:
 		return "遊戲本體"
+	case game.StateShipOrder:
+		return "船艦訂造報告"
 	default:
 		return "主選單"
 	}
@@ -141,6 +143,10 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	so, err := screen.LoadMainGameSpec(filepath.Join(data, "screen-ship-order.json"))
+	if err != nil {
+		return nil, err
+	}
 	cur, err := ui.LoadCursor(filepath.Join(data, "cursor.json"))
 	if err != nil {
 		return nil, err
@@ -162,7 +168,8 @@ func load(orig, data string) (*game.Resources, error) {
 		return nil, err
 	}
 	return &game.Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
-		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral}, nil
+		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
+		ShipOrder: so}, nil
 }
 
 func regionColours(path string) ([]uint8, error) {

@@ -1,8 +1,9 @@
 # 把 remake 與 oracle 的差異切成連通分量，報出每塊的 bbox 與原版的顏色。
 # 「還缺什麼」用這個問，比逐處目視快。
 import collections, sys
-a = open('/work/workplace/remake-maingame.bin', 'rb').read()
-b = open('/work/workplace/oracle/key1/screen.bin', 'rb').read()
+batch = sys.argv[1] if len(sys.argv) > 1 else 'key1'
+a = open(f'/work/workplace/remake-{batch}.bin', 'rb').read()
+b = open(f'/work/workplace/oracle/{batch}/screen.bin', 'rb').read()
 W, H = 640, 480
 diff = {(i % W, i//W) for i in range(len(a)) if a[i] != b[i]}
 seen = set()

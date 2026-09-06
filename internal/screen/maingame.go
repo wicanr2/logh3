@@ -20,8 +20,21 @@ type MainGameSpec struct {
 		X, Y    int
 	} `json:"map"`
 	Windows map[string]*GameWindow `json:"windows"`
-	Mouse   *struct {
+
+	// Hotspots 是可點的區域。原版存的是**相對視窗原點的格子**
+	// （`docs/re/09`）；這裡放換算好的像素矩形，另外附上原始格子座標。
+	Hotspots []struct {
+		X, Y, W, H int
+		Grid       []int  `json:"grid"`
+		Action     string `json:"action"`
+	} `json:"hotspots"`
+	Mouse *struct {
 		X, Y int
+
+		// Clip 是游標的可見矩形。原版的游標是**疊上去**的，視窗一重畫就
+		// 把它蓋掉一部分，直到游標下次移動才補回來——所以同一隻游標在
+		// 不同畫面上可見的範圍不一樣。
+		Clip *struct{ X, Y, W, H int } `json:"clip"`
 	} `json:"mouse"`
 }
 
@@ -181,7 +194,21 @@ func MainGame(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset
 		}
 	}
 	if cur != nil && s.Mouse != nil {
-		cur.Draw(fb, s.Mouse.X, s.Mouse.Y)
+		if c := s.Mouse.Clip; c != nil {
+			cur.DrawClipped(fb, s.Mouse.X, s.Mouse.Y, c.X, c.Y, c.W, c.H)
+		} else {
+			cur.Draw(fb, s.Mouse.X, s.Mouse.Y)
+		}
 	}
 	return fb, missing
+}
+
+// HitTest 回點在哪個熱區上的 action，沒點中回空字串。
+func (s *MainGameSpec) HitTest(x, y int) string {
+	for _, h := range s.Hotspots {
+		if x >= h.X && x < h.X+h.W && y >= h.Y && y < h.Y+h.H {
+			return h.Action
+		}
+	}
+	return ""
 }

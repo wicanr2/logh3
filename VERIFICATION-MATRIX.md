@@ -16,6 +16,7 @@
 | 4b | 防拷問答（輸入中的數字）| — | — | 收據 `typed138` | **未通過**：位置量到了，但那套數字字型不是 `GRAPH.IMG` 的半形字型，來源沒找到（`docs/re/09`）|
 | 4 | 防拷問答 | `same-state` | 0 | [`docs/playtest/003-copy-protection.md`](docs/playtest/003-copy-protection.md) | 全畫面 640×480 逐位元組一致（框、頭像、三行字、輸入框） |
 | 5 | 遊戲主畫面（796 年 1 月）| `same-state` | 0 | [`docs/playtest/004-main-game.md`](docs/playtest/004-main-game.md) | 全畫面逐位元組一致；地圖、頭像、文字全部從原版檔案重建 |
+| 5b | 船艦訂造報告（796 年 1 月）| `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
 | 6 | 結局 | — | — | — | 未開始 |
 
 ## 資料格式
