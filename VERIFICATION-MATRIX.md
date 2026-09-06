@@ -22,6 +22,7 @@
 | 5g | 月份會計報告 | `same-state` | 0 | 收據 `account1`；[`docs/re/13`](docs/re/13-account-report.md) | 由預算計劃 (472,325) 點進去；獨立驗證了三條錢的公式 |
 | 5f | 待命中提督資料 | `same-state` | 0 | 收據 `admirals1`；[`docs/re/12`](docs/re/12-budget-plan-and-buttons.md) | 三層視窗（底板＋建造計劃＋清單）；正常玩家路徑有回歸測試 |
 | 5d | 建造計劃（改過預算的 34 個局面）| `same-state` | 0 | [`docs/re/11`](docs/re/11-build-plan-rest-amount.md) | 用 `-poke` 把百分比寫進原版記憶體造的局面，含手點到不了的「七列全 0%」與「某列吃滿 100%」；每張 640×480 逐位元組一致 |
+| 5h | 命令階段主畫面 ＋ 三個選單 | — | — | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | **原版側收據，remake 未實作**。右鍵兩下關掉月初報告才到得了（[`docs/re/16`](docs/re/16-window-list-right-button.md)）；戰略命令／一覽表／系統指令的第二層都走過一次 |
 | 6 | 結局（單張 CG）| `same-state`（plane 2／3）| 0 | 收據 `ending-empire`、`ending-alliance` | remake 畫得出來，plane 2／3 與原版逐位元組相同；plane 0／1 是多張圖疊出來的，疊法未解。播放順序（哪張配哪句、換場）也未解 |
 
 ## 資料格式
@@ -36,7 +37,7 @@
 | `STRMAP.BIT`（星域地圖）| **已解出**（320×300；記憶體版本與原版畫面 0 差異）| [`docs/internals/12`](docs/internals/12-strmap-bit.md) |
 | `FRAME.BLK` / `BLOCK_*.BLK` | 未解（全彩非遮罩；32×32／320×128／640×64 等切法都對不齊）| — |
 | `STRMAP.RGN`（星域區域遮罩）| **已解出**（32 區域；底圖＋遮罩＋顏色重建 0 差異）| [`docs/internals/13`](docs/internals/13-strmap-rgn.md) |
-| `MAP*.CMP` | 未解 | — |
+| `MAP*.CMP` | 未解；**不是星圖的來源**（走到主畫面為止一份都沒被讀）| [`docs/re/17`](docs/re/17-star-region-owner.md) |
 | `PLADAT.DAT` | **已解出** | [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
 | `KEIREKI.DAT`（人物傳）| **已解出**（82 篇，位移表 ＋ Big5 內文）| [`docs/internals/15`](docs/internals/15-keireki-dat.md) |
 | `ATTR.DAT` | 版面已觀察（128 bytes，只有 `00`／`0F`；前 8 個全 0，接著三組「六個 `0F` ＋ 兩個 `00`」，其餘全 `0F`）；語意未解 | — |
