@@ -7,6 +7,7 @@ import (
 
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/ui"
 )
 
 // TestMainMenuMatchesOracle 是主選單的同狀態對拍：remake 畫出來的色號陣列
@@ -17,13 +18,36 @@ import (
 // **缺檔就 skip**：字型是原版素材，repo 裡沒有；oracle 收據在 workplace/
 // 也不進版控。用代用品頂替會讓「還沒做完」看起來像做完了。
 func TestMainMenuMatchesOracle(t *testing.T) {
+	// 四個反白狀態各一份收據：滑鼠停在第 r 列上，遊戲反白那一列。
+	// **一個狀態對得上不算數**——反白的模型（底色／字色／立體邊都換）
+	// 只有在多個狀態同時成立時才算被驗證過。
+	//
+	// ⚠ 收據要在**選單畫出來之前**就把滑鼠定位（`-mouse-at 30000000`）。
+	// 畫完之後才移動的話拿到的是「反白從別列搬過來」的轉換後狀態，
+	// 被還原的那一列會留下痕跡——那是轉換效果，不是這個靜態畫面該有的東西。
+	cases := []struct {
+		batch  string
+		mx, my int
+	}{
+		{"r0", 300, 170}, {"r1", 300, 190}, {"r2", 300, 210}, {"r3", 300, 230},
+		{"cur300", 450, 300}, // 滑鼠在選單外：不反白，只有游標
+		// curfill（游標壓在視窗下緣外框上）暫時不列入：那一帶的 oracle 會被
+		// 「反白從別列還原」的殘留污染，量不乾淨（`docs/internals/07`）。
+	}
+	for _, c := range cases {
+		t.Run(c.batch, func(t *testing.T) { checkOracle(t, c.batch, c.mx, c.my) })
+	}
+}
+
+func checkOracle(t *testing.T, batch string, mx, my int) {
+	t.Helper()
 	root := "../.."
 	fontPath := os.Getenv("LOGH3_FONT")
 	if fontPath == "" {
 		fontPath = filepath.Join(root, "org_game/extracted/GRAPH.IMG")
 	}
-	oraclePath := filepath.Join(root, "workplace/oracle/hilite/screen.bin")
-	palPath := filepath.Join(root, "workplace/oracle/hilite/pal.bin")
+	oraclePath := filepath.Join(root, "workplace/oracle", batch, "screen.bin")
+	palPath := filepath.Join(root, "workplace/oracle", batch, "pal.bin")
 	for _, p := range []string{fontPath, oraclePath, palPath} {
 		if _, err := os.Stat(p); err != nil {
 			t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", p)
@@ -38,7 +62,11 @@ func TestMainMenuMatchesOracle(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fb, missing := MainMenu(spec, fnt)
+	cur, err := ui.LoadCursor(filepath.Join(root, "docs/internals/data/cursor.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	fb, missing := MainMenuAt(spec, fnt, RowAt(spec, my), cur, mx, my)
 	if len(missing) != 0 {
 		t.Fatalf("有缺字：%04X", missing)
 	}

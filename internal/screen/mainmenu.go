@@ -18,19 +18,23 @@ import (
 type MenuSpec struct {
 	Background uint8 `json:"background"`
 	Window     struct {
-		X, Y, W, H int
+		X, Y, W, H      int
+		CursorClipInset int `json:"cursor_clip_inset"`
 	} `json:"window"`
 	Text struct {
-		Color    uint8 `json:"color"`
-		ColPitch int   `json:"col_pitch"`
-		RowPitch int   `json:"row_pitch"`
-		ColsX    []int `json:"cols_x"`
-		RowsY    []int `json:"rows_y"`
+		AttrNormal      uint8 `json:"attr_normal"`
+		AttrHighlight   uint8 `json:"attr_highlight"`
+		ShadowNormal    uint8 `json:"shadow_normal"`
+		ShadowHighlight uint8 `json:"shadow_highlight"`
+		CellPadY        int   `json:"cell_pad_y"`
+		ColPitch        int   `json:"col_pitch"`
+		RowPitch        int   `json:"row_pitch"`
+		ColsX           []int `json:"cols_x"`
+		RowsY           []int `json:"rows_y"`
 	} `json:"text"`
 	Items     [][]string `json:"items"`
 	Highlight *struct {
-		Row   int   `json:"row"`
-		Color uint8 `json:"color"`
+		Row int `json:"row"`
 	} `json:"highlight"`
 	Palette6bit [][3]uint8 `json:"palette_6bit"`
 }
@@ -70,23 +74,68 @@ func big5(s string) uint16 {
 	return uint16(b[0])<<8 | uint16(b[1])
 }
 
-// MainMenu 畫主選單，回畫布與缺字清單。
+// MainMenu 畫主選單，反白列取規格裡的預設值。
 func MainMenu(s *MenuSpec, fnt *font.Font) (*gfx.Framebuffer, []uint16) {
+	row := -1
+	if s.Highlight != nil {
+		row = s.Highlight.Row
+	}
+	return MainMenuWith(s, fnt, row)
+}
+
+// MainMenuWith 畫主選單並指定反白哪一列（-1 ＝ 不反白）。
+func MainMenuWith(s *MenuSpec, fnt *font.Font, highlight int) (*gfx.Framebuffer, []uint16) {
+	return MainMenuAt(s, fnt, highlight, nil, -1, -1)
+}
+
+// CursorHotY 是游標熱點相對滑鼠 y 的位移。
+//
+// 遊戲把滑鼠座標當成**游標的位置**在用：命中判定與游標繪製是同一個點，
+// 不是兩套座標。這個數字是量出來的（`docs/internals/07`）。
+const CursorHotY = 41
+
+// RowAt 回滑鼠 y（遊戲收到的座標）落在哪一列，-1 ＝ 不在任何一列上。
+//
+// 判準是**游標熱點**落在哪一格的矩形裡，不是滑鼠座標本身。
+func RowAt(s *MenuSpec, y int) int {
+	hot := y + CursorHotY
+	first := s.Text.RowsY[0] - s.Text.CellPadY
+	if hot < first {
+		return -1
+	}
+	r := (hot - first) / s.Text.RowPitch
+	if r >= len(s.Text.RowsY) {
+		return -1
+	}
+	return r
+}
+
+// MainMenuAt 畫主選單，並在指定的滑鼠座標畫游標（cur 為 nil 或座標為負就不畫）。
+func MainMenuAt(s *MenuSpec, fnt *font.Font, highlight int, cur *ui.Cursor, mx, my int) (*gfx.Framebuffer, []uint16) {
 	fb := gfx.NewFramebuffer(s.Background)
 	w := ui.NewTextWindow(s.Window.X, s.Window.Y, len(s.Text.ColsX), len(s.Text.RowsY),
-		ui.MenuFrame())
+		ui.MenuFrame(), s.Text.AttrNormal, s.Text.ShadowNormal)
 	w.ColPitch, w.RowPitch = s.Text.ColPitch, s.Text.RowPitch
+	w.CellPadY = s.Text.CellPadY
 	w.OriginX = s.Text.ColsX[0] - s.Window.X
 	w.OriginY = s.Text.RowsY[0] - s.Window.Y
-	if s.Highlight != nil {
-		w.Highlight, w.HighlightColor = s.Highlight.Row, s.Highlight.Color
-	}
 	for r, line := range s.Items {
 		codes := make([]uint16, 0, len(line))
 		for _, ch := range line {
 			codes = append(codes, big5(ch))
 		}
-		w.SetText(r, s.Text.Color, codes)
+		w.SetText(r, s.Text.AttrNormal, s.Text.ShadowNormal, codes)
 	}
-	return fb, w.Draw(fb, fnt, s.Window.W, s.Window.H)
+	// **順序是量出來的**：一般的列先畫完，接著畫游標，最後才畫反白的那一列。
+	// 所以游標會被反白列蓋掉一部分——換個順序畫面就會多出一截箭頭，
+	// 而那看起來只像「多了一個箭頭」，不像錯。
+	missing := w.Draw(fb, fnt, s.Window.W, s.Window.H)
+	if cur != nil && mx >= 0 && my >= 0 {
+		cur.Draw(fb, mx, my)
+	}
+	if highlight >= 0 && highlight < w.Rows {
+		w.SetRowAttr(highlight, s.Text.AttrHighlight, s.Text.ShadowHighlight)
+		missing = append(missing, w.DrawRow(fb, fnt, highlight)...)
+	}
+	return fb, missing
 }

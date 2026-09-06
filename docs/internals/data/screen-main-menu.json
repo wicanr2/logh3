@@ -12,7 +12,6 @@
     "h": 118
   },
   "text": {
-    "color": 7,
     "glyph_w": 16,
     "glyph_h": 15,
     "col_pitch": 16,
@@ -27,7 +26,13 @@
       222,
       242,
       262
-    ]
+    ],
+    "attr_normal": 151,
+    "attr_highlight": 34,
+    "cell_pad_y": 2,
+    "shadow_normal": 3,
+    "shadow_highlight": 2,
+    "shadow_note": "立體邊的顏色與屬性的關係未確認：正常屬性 0x97 配 3、反白屬性 0x22 配 2。兩個樣本不足以定公式（fg&3 剛好都對得上，但那可能是巧合）。"
   },
   "items": [
     [
@@ -136,7 +141,6 @@
   "source": "workplace/oracle/hilite/screen.bin + pal.bin（dosgolem oracle，見 meta.txt）",
   "highlight": {
     "row": 2,
-    "color": 2,
-    "note": "整列填滿，文字不畫；bbox 相對第一格 (0,-2)，寬 欄數×欄距、高 列距"
+    "note": "反白＝換一組屬性重畫那一列；底色與字色都是 2，所以字看不見"
   }
 }

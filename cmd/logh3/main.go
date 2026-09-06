@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 
 	"github.com/wicanr2/logh3/internal/font"
+	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/screen"
 )
 
@@ -18,6 +19,7 @@ func main() {
 	fontPath := flag.String("font", "", "原版字型檔路徑（remake 不內嵌原版素材，必填）")
 	specPath := flag.String("spec", "docs/internals/data/screen-main-menu.json", "畫面規格 JSON")
 	out := flag.String("out", "workplace/remake", "輸出目錄")
+	hl := flag.Int("highlight", -2, "反白哪一列（-1 ＝ 不反白；不給就用規格的預設）")
 	flag.Parse()
 
 	if *fontPath == "" {
@@ -35,7 +37,13 @@ func main() {
 	if err := os.MkdirAll(*out, 0o755); err != nil {
 		die(err)
 	}
-	fb, missing := screen.MainMenu(spec, fnt)
+	var fb *gfx.Framebuffer
+	var missing []uint16
+	if *hl == -2 {
+		fb, missing = screen.MainMenu(spec, fnt)
+	} else {
+		fb, missing = screen.MainMenuWith(spec, fnt, *hl)
+	}
 	for _, c := range missing {
 		fmt.Fprintf(os.Stderr, "缺字：Big5 %04X\n", c)
 	}
