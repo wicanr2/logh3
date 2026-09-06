@@ -32,7 +32,9 @@ BASE = json.load(open('/work/docs/internals/data/screen-main-game.json',
 # 右上、命令列、右側資訊、左下——星圖那一個被地圖整個蓋掉，不用畫。
 BOXES = [
     (320, 40, 639, 119),    # 右上：日期與軍事費
-    (320, 100, 639, 159),   # 命令列：戰略命令／一覽表／系統指令
+    # 命令列面板：角落修正要抓到 24 px——命令列那條框的上下緣（y 114、152）
+    # 離面板邊 14 px，corner 只有 12 的話那四段線修不到。
+    (320, 100, 639, 159, None, 40),
     (320, 140, 639, 419),   # 右側資訊：星系狀態與清單
     (0, 340, 319, 419),     # 左下：對方星系
 ]
@@ -42,6 +44,10 @@ SMALL_BOXES = [
     # 清單標題列的四個小框（同樣是高 20、含立體邊）
     (336, 280, 385, 299), (400, 280, 449, 299),
     (464, 280, 529, 299), (544, 280, 593, 299),
+] + [
+    # 每個標題框裡靠左有一個 7×12 的凹格（左緣 ＋8），四個都一樣。
+    (x + 8, 285, x + 14, 296) for x in (336, 400, 464, 544)
+] + [
     # 命令列：先畫整條（填色要在按鈕之間取樣），再畫三個按鈕框
     (328, 115, 631, 145, (430, 130)),
     (350, 120, 417, 139), (446, 120, 513, 139), (542, 120, 609, 139),
@@ -125,7 +131,7 @@ for area in TEXT_AREAS:
         lines += got
 lines.sort(key=lambda l: (l['y'], l['cells'][0]['x']))
 
-def box(bx0, by0, bx1, by1, sample=None):
+def box(bx0, by0, bx1, by1, sample=None, corner=12):
     """量一個小框。
 
     `sample` 是取填色的位置：預設是框的正中央，但命令列那一條的正中央
@@ -136,7 +142,7 @@ def box(bx0, by0, bx1, by1, sample=None):
     return {'x': bx0, 'y': by0, 'w': bx1 - bx0 + 1, 'h': by1 - by0 + 1,
             'layers': lay, 'alt': alt, 'fill': fill,
             'patches': frame_patches(rows, bx0, by0, bx1, by1, lay, alt,
-                                     fill=fill, corner=12)}
+                                     fill=fill, corner=corner)}
 
 spec = {
     'canvas': {'width': W, 'height': H, 'mode': 'VGA 12h 640x480x16'},
@@ -146,15 +152,19 @@ spec = {
         'x': x0, 'y': y0, 'w': x1 - x0 + 1, 'h': y1 - y0 + 1,
         'frame': BASE['frame'],
         'ink': 7, 'lines': lines,
-        'boxes': [box(*b[:4], b[4] if len(b) > 4 else None)
+        'boxes': [box(*b[:4], b[4] if len(b) > 4 else None,
+                      b[5] if len(b) > 5 else 12)
                   for b in BOXES + SMALL_BOXES],
-        'rules': [],
+        # 命令列框下緣兩端的斜切：框模型只認四條邊與角落修正，
+        # 這兩段落在框外一列，補成純色線。
+        'rules': [{'x': 328, 'y': 152, 'w': 4, 'h': 1, 'colour': 3},
+                  {'x': 627, 'y': 152, 'w': 4, 'h': 1, 'colour': 3}],
     }},
     'order': [],
     # 游標畫在 (300,200)（遊戲座標，畫面上是 y+40），但右鍵關掉報告視窗
     # 之後整片重畫，只補回了左半邊——原版的游標是疊上去的，
     # 被蓋掉的部分要等下次移動才回來（`docs/re/09`）。
-    'mouse': {'x': 300, 'y': 200, 'clip': {'x': 0, 'y': 0, 'w': 307, 'h': 480}},
+    'mouse': {'x': 300, 'y': 200, 'clip': {'x': 302, 'y': 0, 'w': 6, 'h': 480}},
     'window_origin_grid': [21, 4],
     'hotspots': [
         {'x': 352, 'y': 80, 'w': 32, 'h': 20, 'grid': [1, 0],
