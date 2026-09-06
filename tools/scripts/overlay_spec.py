@@ -3,7 +3,7 @@
 
     tools/py.sh tools/scripts/overlay_spec.py <批次> <底層規格> <輸出名> \
         <x0> <y0> <x1> <y1> <游標x> <游標y> [小框 x0:y0:x1:y1,...] \
-        [純色塊 x:y:w:h:色,...] [頭像 index:x:y]
+        [純色塊 x:y:w:h:色,...] [頭像 index:x:y] [額外文字區 x0:y0:x1:y1]
 
 底層原封不動沿用（那一層已經對拍過），只量最上面那一層——重量一次
 會因為文字被切在視窗邊界而讀錯（`docs/re/12`）。
@@ -30,6 +30,10 @@ RULES = [tuple(int(v) for v in r.split(':'))
 # 頭像：哪一張用 tools/scripts/face_find.py 問，別用肉眼比。
 FACE = ([int(v) for v in sys.argv[12].split(':')]
         if len(sys.argv) > 12 and sys.argv[12] else None)
+# 額外文字區：有些畫面除了疊上去那一層，還會改到底層別處的字
+# （提督資料會重寫左下角那塊）。座標是絕對的，掃出來的行併進同一層。
+EXTRA = ([int(v) for v in sys.argv[13].split(':')]
+         if len(sys.argv) > 13 and sys.argv[13] else None)
 
 rows, _ = load_screen(f'/work/workplace/oracle/{batch}/screen.bin')
 full, half = font_lookup('/orig/GRAPH.IMG')
@@ -66,6 +70,10 @@ def _merge(acc, cand):
     只取單一最佳相位會整欄漏掉。"""
     lo, hi = _span(cand)
     for i, cur in enumerate(acc):
+        # 顏色不同的兩行可以疊在同一列（標籤是色 7、數字是色 6），
+        # 只有同色才算佔到同一塊位置。
+        if cur.get('ink') != cand.get('ink'):
+            continue
         if abs(cur['y'] - cand['y']) >= 15:
             continue
         clo, chi = _span(cur)
@@ -75,10 +83,30 @@ def _merge(acc, cand):
             return
     acc.append(cand)
 
+def scan_area(x0, y0, x1, y1, phase, ink=7):
+    """額外文字區。**顏色不只一種**——左下那塊的數字是色 6 與 5，
+    只掃 7 會整片漏掉。"""
+    out = []
+    for y in range(y0 + phase, y1 - 14, 20):
+        skip = [(bx0, by0, bx1 - bx0 + 1, by1 - by0 + 1)
+                for bx0, by0, bx1, by1 in BOXES]
+        ln = max((read_line(rows, sx, y, x1, ink, full, half, skip)
+                  for sx in range(x0, x0 + 40)), key=len)
+        if ln and len(ln) <= 4 and all(0xA140 <= c['code'] <= 0xA1FE for c in ln):
+            continue
+        if ln and (len(ln) < 4 or len({c['code'] for c in ln}) > 1):
+            out.append({'y': y, 'ink': ink, 'cells': ln})
+    return out
+
 lines = []
 for _p in range(20):
     for _l in scan(_p):
         _merge(lines, _l)
+if EXTRA:
+    for _ink in (7, 6, 5):
+        for _p in range(20):
+            for _l in scan_area(*EXTRA, _p, _ink):
+                _merge(lines, _l)
 lines.sort(key=lambda l: (l['y'], l['cells'][0]['x']))
 
 spec['windows']['overlay'] = {
