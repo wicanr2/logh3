@@ -17,3 +17,6 @@
   `CONTEXT.md`、`.gitignore`、`docs/{playtest,spec,re}/`、`workplace/`。
 - dosgolem 改動收在 fork 分支 `logh3-com-support`（wicanr2/dosgolem），已推送；
   後續對 dosgolem 的對拍驗證支援都走該分支，MR 合併由使用者主導。
+- 建立 logh3 專用的 dosgolem 本地副本 `~/cht/dosgolem-logh3`（branch
+  `logh3-com-support`，origin 指 GitHub wicanr2/dosgolem），與主 checkout
+  `~/cht/dosgolem` 隔離；後續對拍驗證改動一律在副本內進行。
