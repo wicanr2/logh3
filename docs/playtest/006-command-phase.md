@@ -87,6 +87,9 @@ remake 側 **0 / 307,200**（`TestMainGameMatchesOracle` 的 `main1e`）。
 
 ## remake 側
 
+這一節的六張畫面，量測命令都在 **`tools/specs.sh`**（重跑產出逐位元組
+相同）。規格改不動的時候先看那支，不要重湊命令列。
+
 主畫面（`main1e`）已經逐位元組對上，規格由
 `tools/scripts/cmdscreen_spec.py` 量出來，放在
 `docs/internals/data/screen-command-phase.json`。
