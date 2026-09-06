@@ -31,8 +31,35 @@ GANDHARVA、ISERLOHN、TIAMAT、DORIA、BALLAT…）、航路連線、星球圖�
 `x < 140`）。直接用檔案原始內容則有 9,980 個像素不同，而且**全部**是
 「檔案是 0、畫面是 1 / 3 / 6」。
 
-著色的依據（哪個星域屬於誰、色號怎麼對應）還沒逆向出來；
-`MAP*.CMP`（32 份、大小各異）是候選，**未確認**。
+### 著色怎麼算的（confirmed）
+
+原版 `GIN3PS.EXE` `2376:0BDC`：
+
+```
+0BDC  mov ax,[bp+00]      ; bp ＝ 星域形狀遮罩
+0BDF  not ax
+0BE1  and [si],ax         ; 先把工作副本上遮罩涵蓋的位元清掉（四個 plane）
+0BEC  mov ax,es:[di]      ; ES ＝ EMS 頁框，放的是**原始的 STRMAP.BIT**
+0BEF  or  ax,es:[di+2]    ; 四個 plane 相 OR ＝「這裡原本有沒有東西」
+0BF3  or  ax,es:[di+4]
+0BF7  or  ax,es:[di+6]
+0BFB  not ax
+0BFD  and ax,[bp+00]      ; ＝ 遮罩內、原圖是空白的那些位元
+0C02  mov bx,ax
+0C0B  mov ax,es:[di]      ; 再取一次原圖的 plane
+0C10  test dl,1           ; 顏色的第 0 個位元
+0C15  or  ax,bx           ; 有就把要塗的位元併進這個 plane
+0C17  or  [si],ax         ; 寫回工作副本
+```
+
+也就是**在遮罩範圍內，只塗原圖留白的地方**；航路、星系名、星球圖示
+原封不動。原始地圖留在 EMS 頁框當底本，塗色的結果寫進主記憶體的工作
+副本——所以工作副本可以反覆重塗而不會越塗越髒。
+
+remake 端是 `asset.PaintRegion`（在色號陣列上就是同一個條件）。
+
+星域形狀遮罩（`[bp+00]`）與顏色（`[bp+12]`）由呼叫端傳進來，
+**來源還沒追出來**；`MAP*.CMP`（32 份、大小各異）是候選。
 
 回歸測試 `TestStrmapSheet` 釘的是「檔案非 0 的像素必須與畫面相同」——
 一旦出現「地圖非 0 卻和畫面不同」，就是圖塊排列或位元序解錯了。

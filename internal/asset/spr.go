@@ -67,3 +67,20 @@ func DecodeSheet(data []byte, tw, th, cols int) (*Image, error) {
 	}
 	return out, nil
 }
+
+// PaintRegion 在遮罩涵蓋的範圍內，把圖上**留白（色號 0）**的像素塗成
+// colour；已經有東西的地方（航路、星系名、星球）原封不動。
+//
+// 這是原版 `GIN3PS.EXE` 2376:0BDC 那支常式的語意。它在 planar 位元上算：
+// 先取原圖四個 plane 的 OR、取反，再與遮罩相 AND，得到「遮罩內、
+// 原圖是空的」那些位元，然後依顏色的每個位元 OR 進對應的 plane。
+// 在色號陣列上就是這一行條件。
+//
+// mask 與 img 同尺寸，非 0 表示涵蓋。
+func PaintRegion(img *Image, mask []uint8, colour uint8) {
+	for i := range img.Pix {
+		if i < len(mask) && mask[i] != 0 && img.Pix[i] == 0 {
+			img.Pix[i] = colour
+		}
+	}
+}
