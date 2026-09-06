@@ -39,9 +39,9 @@ MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分�
 
 ## Docker-only 與原版素材邊界
 
-- 分析、搜尋大量資料、轉檔、建置、測試、DOSBox、抓圖、影像差分、IDA 及 GUI 自動化
+- 分析、搜尋大量資料、轉檔、建置、測試、抓圖、影像差分、IDA 及 GUI 自動化
   一律在 Docker 容器內執行。主機只做 `docker`／`git` 控制與儲存庫檔案編輯。
-- 專案包裝器建立後（預定 `tools/dosbox.sh`、`tools/go.sh` 之類），一律走包裝器，
+- 專案包裝器（dosgolem 副本的 `tools/go.sh` 等）一律走包裝器，
   不要手打另一套 `docker run`，也不要因一次啟動失敗就另建重複 image。
 - 一次性容器必須 `--rm --network none`、設定 memory／CPU／PID／log 上限，並以
   `-u "$(id -u):$(id -g)"` 寫入。原版輸入只讀掛載，輸出只准寫明確目錄。
@@ -75,23 +75,24 @@ MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分�
 
 每次對拍建立獨立 run 目錄，至少保存：
 
-- 原版 bundle 檔名與 SHA-256、執行器（dosgolem Git HEAD 或 DOSBox 版本）與 image
-  tag、`dosbox.conf` 完整內容（DOSBox 時）；
+- 原版 bundle 檔名與 SHA-256、dosgolem 工作副本的 Git HEAD 與工作樹是否乾淨、
+  Go image tag、完整命令列（含步數與 tick 間隔）；
 - remake Git HEAD、工作樹是否乾淨、建置 image tag 與執行參數；
 - 劇本／陣營、遊戲內日期、存檔或 fixture 雜湊、RNG 狀態／限制；
 - 完整按鍵／滑鼠序列與相對時間戳、畫面名稱、游標與動畫 frame；
-- 原版顯示模式（解析度、色彩深度）、模擬器視窗與 remake 邏輯畫布尺寸，以及
-  裁切／縮放方法；
+- 原版顯示模式（解析度、色彩深度）與 remake 邏輯畫布尺寸，以及裁切／縮放方法；
 - 原版 PNG、remake PNG、差分 PNG、區域座標與逐區統計。
 
-原版擷取輸出（預定 `workplace/dos-out/`）是一次性、gitignore 證據；可重現方法與
-必要摘要寫入 `docs/playtest/`。文件不得只引用一個之後找不到的本機檔名。
+原版擷取輸出放 `workplace/<批次>/`（一次性、gitignore 證據）；可重現方法、命令列
+與必要摘要寫入 `docs/playtest/`，逆向過程寫 `docs/re/`。文件不得只引用一個之後
+找不到的本機檔名——引用時一併寫雜湊。
 
 ### 3. 擷取原版
 
-優先順序：**dosgolem 無頭執行器為首選 oracle**，DOSBox 為備援與交叉驗證。
+**dosgolem 是唯一 oracle。** 原版畫面、記憶體狀態與行為一律從 dosgolem 取得；
+不另外跑模擬器擷取，也不拿模擬器截圖當證據。
 
-#### 3a. dosgolem 無頭對拍（首選）
+#### 3a. dosgolem 無頭對拍
 
 沿用 `~/cht/dosgolem/` 的方法論：原版 `GIN3.COM` 直接在無頭、決定性、可當
 Go 套件 import 的 DOS 執行器內跑，以程式化方式觀測（`oracle/` 的
@@ -112,22 +113,25 @@ Go 套件 import 的 DOS 執行器內跑，以程式化方式觀測（`oracle/` 
 - **下層自證**：執行器 CPU 的驗收判準是 SingleStepTests 全過，不是大部分過；
   CPU 的錯不會報錯，只會讓上層在幾百萬個指令後畫錯一個像素。語料與手冊衝突時
   以硬體產生的語料為準，並在規格與程式註解標明來源。
-- **GIN3.COM 尚未在 dosgolem 跑過**：第一次接入是「讓原版在執行器內到達目標畫面」
-  的獨立工作項，完成前所有對拍一律走 DOSBox 並標明；不得假設執行器已支援本作
-  用到的所有指令、中斷與顯示模式。
+- **執行器不對就修執行器。** 畫面或行為可疑時，預設懷疑對象是 dosgolem 的
+  服務覆蓋，不是「原版本來就這樣」。到目前為止每一個看似遊戲端的怪異行為
+  （停在計時器向量、整份調色盤全黑）根因都在執行器
+  （`docs/re/05`、`docs/re/06`）。
+- **原始遊戲檔一律唯讀**；需要 patch 才能取證時，保存未修改輸入的雜湊與 patch
+  說明，patch 產物另存，不得改原檔。
 
-#### 3b. DOSBox 擷取（備援）
+#### 3b. DOSBox 的角色：原始碼參考
 
-- 先驗 bundle 與解包檔雜湊，再以固定腳本（DOSBox 的 `-c` 命令列或輸入重播機制）
-  執行固定序列；同一序列至少連跑兩次至獨立目錄，比較截圖雜湊。兩次未逐位元組
-  一致前，先處理送鍵時機、亂數、開機狀態或環境分歧，不進入 remake 差分裁決。
-- 週期數（cycles）與機器設定影響動畫相位與時序，一律固定並記錄；不可用
-  `cycles=auto` 的結果做逐幀對拍。
-- dosgolem 與 DOSBox 結果衝突時，以可重現的那一方為準並記錄分歧原因；兩者都能
-  重現但互不相同時，差異歸類為執行器 bug 候選，優先排查 dosgolem 的 CPU／DOS
-  服務覆蓋。
-- 原始遊戲檔一律唯讀；需要 oracle patch 時保存未修改輸入雜湊及 patch 說明，
-  patch 產物另存，不得改原檔。
+DOSBox **不是**擷取工具、不是備援 oracle、不產生任何證據。它的用途只有一個：
+dosgolem 缺功能或行為存疑時，去讀 DOSBox 對應的實作，弄清楚真機語意應該是什麼。
+
+- 適用時機：某個 I/O 埠、BIOS 服務、DOS 呼叫或顯示模式在 dosgolem 沒有覆蓋，
+  或覆蓋了但結果可疑，而手冊講得不夠具體。
+- 用法：讀它的原始碼推出語意，寫進 dosgolem 的 spec，再實作 ＋ 單元測試。
+  **不要照抄程式碼**（授權不同），也不要把「DOSBox 這樣做」當成證據等級——
+  規格裡要寫出硬體語意的推理，並標明參考來源。
+- bundle 的 `.jsdos/dosbox.conf` 仍然是原版機器規格的來源（`machine=svga_s3`、
+  `memsize=16`、SB16），dosgolem 的機器設定以它為準。
 
 ### 4. 擷取 remake
 

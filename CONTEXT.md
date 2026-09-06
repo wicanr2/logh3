@@ -17,10 +17,10 @@
 - 本作是 **Big5 中文版**（載入 16 點字型 `BU16IBM.RGB`，選單文字為 Big5）。
   這一點影響所有文字相關的逆向與 remake 決策。
 - **還沒有任何對拍**：沒有 same-state 收據、沒有已逆向的資料格式、沒有已驗證的
-  遊戲規則、沒有 remake 程式碼。DOSBox 擷取鏈（`tools/dosbox.sh`）尚未建立。
+  遊戲規則、沒有 remake 程式碼。
 - 已取得第一張真色彩畫面（主選單，`workplace/re06/`），同命令連跑兩次逐位元組
-  一致。但那**只是 dosgolem 內部自洽**，不是 `same-state` 對拍——沒有第二個
-  執行器的同狀態畫面可比。
+  一致。dosgolem 跑的是原版執行檔，所以那就是**原版側**的畫面；還缺的是
+  remake 側——對拍要等 remake 有東西可比才成立。
 
 ## 執行器走到哪（confirmed，證據見 `docs/re/`）
 
@@ -68,7 +68,11 @@
 7. ~~查調色盤為什麼是黑的~~（完成，spec 011／`docs/re/06`）：不是淡入沒走完，
    是 `int 10h AH=10h` 的 AL 分支接錯，加上「取向量後直接跳」的 BIOS 呼叫
    從未執行。
-8. **建立 DOSBox 擷取鏈（`tools/dosbox.sh`）並跑同一組固定輸入序列**
-   （目前唯一阻塞對拍的項目）：現有畫面只是 dosgolem 內部自洽，沒有第二個
-   執行器可比，`same-state` 收據還開不出來。
-9. 對拍門檻過了之後，才進資料格式逆向與 remake。
+8. **把主選單存成正式的 oracle 收據**：獨立 run 目錄 ＋ metadata（bundle 與
+   `GIN3.COM` 雜湊、dosgolem Git HEAD、完整輸入序列與步數、顯示模式、
+   framebuffer 與 DAC 雜湊），寫進 `docs/playtest/`。這是之後每一次
+   remake 差分的基準。
+9. **開始資料格式逆向**：`GRAPH.IMG`、`SPRITE.SPR`、`FRAME.BLK`、
+   `PLADAT.DAT`、`ADMIRAL.DTX`、`STELLAR.DTX` 等已知會被載入的檔。
+   dosgolem 可以在載入點下攔截，拿「解碼前的檔案 bytes」對「解碼後的
+   記憶體內容」，比純靜態猜格式可靠。
