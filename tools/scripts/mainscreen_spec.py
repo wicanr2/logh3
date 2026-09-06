@@ -22,6 +22,9 @@ WINDOWS = {
     'board': (0, 40, 639, 418),
     'report': (144, 80, 495, 399),
 }
+# 疊上去的那個視窗每個畫面大小不同，可以從命令列蓋掉。
+if len(sys.argv) > 8:
+    WINDOWS['report'] = tuple(int(v) for v in sys.argv[5:9])
 # 底板的四邊要在沒被遮住的地方取樣；左上角整個被地圖蓋住，不能拿來
 # 量角落修正。
 SAMPLE = {'board': (600, 380)}
@@ -33,20 +36,58 @@ EXCLUDE = {'board': ((0, 40, 320, 300),)}
 BOXES = {
     'board': [(496, 109, 631, 152), (1, 340, 143, 348), (320, 41, 327, 79),
               (311, 400, 327, 417)],
+    'report': [],
+}
+# 疊上去那個視窗裡的小框，各畫面不同。位置量自「remake 與 oracle 的差異
+# 連通分量」（tools/scripts/diff_parts.py）——那支工具直接回答「還缺什麼」。
+EXTRA_BOXES = {
     # 右下的輸入框是**上下兩格**，不是一個 36×40 的框。
-    'report': [(430, 340, 465, 359), (430, 360, 465, 379)],
+    'screen-main-game': [(430, 340, 465, 359), (430, 360, 465, 379)],
+    'screen-ship-order': [(430, 340, 465, 359), (430, 360, 465, 379)],
+    # 預算分配的上下箭頭：2 欄 × 7 列，每個 16×20；外加兩個按鈕。
+    'screen-build-plan': [(208 + c*16, 200 + r*20, 208 + c*16 + 15, 200 + r*20 + 19)
+                          for r in range(7) for c in range(2)]
+                         + [(446, 360, 481, 379), (494, 360, 529, 379)],
 }
 # 純色的線（報告視窗裡的表格分隔線）。
-RULES = {'report': [(160, 259, 192, 1), (160, 279, 192, 1), (160, 299, 192, 1)]}
+# 各畫面自己的補充：游標的可見範圍（原版的游標是疊上去的，視窗一重畫
+# 就把它蓋掉一部分）與熱區（座標見 docs/re/09）。
+EXTRA_SPEC = {
+    'screen-main-game': {
+        'window_origin_grid': [10, 3],
+        'hotspots': [
+            {'x': 432, 'y': 300, 'w': 32, 'h': 20, 'grid': [17, 12], 'action': '?',
+             'note': '點下去的畫面還沒擷取'},
+            {'x': 432, 'y': 320, 'w': 32, 'h': 20, 'grid': [17, 13],
+             'action': 'ship-order', 'note': '796 年 1 月份船艦訂造報告'},
+        ],
+    },
+    'screen-ship-order': {'mouse_clip': {'x': 0, 'y': 378, 'w': 640, 'h': 102}},
+    'screen-build-plan': {'mouse_clip': {'x': 0, 'y': 0, 'w': 640, 'h': 362}},
+}
+
+# 表格分隔線也是各畫面自己的：套到別的畫面會蓋掉那裡的框。
+RULES_BY_SCREEN = {
+    'screen-main-game': [(160, 259, 192, 1), (160, 279, 192, 1), (160, 299, 192, 1)],
+}
 # 同一個視窗裡不是每一行都用同一個顏色：面板的艦隊數字是 6 與 5。
 TEXT_INKS = {'board': [7, 6, 5], 'report': [7]}
 
 # 文字掃描區：底板被地圖與報告視窗遮住的部分讀不到，分成兩塊來讀。
+_rx0, _ry0, _rx1, _ry1 = WINDOWS['report']
 TEXT_AREAS = {
-    'board': [(496, 49, 638, 410), (13, 345, 318, 410)],
+    # 底板被地圖與那個視窗遮住的部分讀不到；掃描區跟著視窗走。
+    'board': [(max(496, _rx1 + 1), 49, 638, 410)] if _rx1 + 40 < 638 else [],
     # 右邊界停在 420：再往右是輸入框，它的框線點陣剛好等於某個製表符，
     # 會被讀成一行「文字」，而那行的**陰影**會把框的左緣蓋掉一個像素。
-    'report': [(158, 90, 420, 390)],
+    # 掃描區要避開小框：框線的點陣剛好等於某些製表符，會被讀成一行
+    # 「文字」，而那行的陰影會把框的邊緣蓋掉一個像素。
+    'report': {
+        'screen-main-game': [(158, 90, 483, 390)],
+        'screen-ship-order': [(158, 90, 483, 390)],
+        'screen-build-plan': [(94, 70, 545, 392)],
+    }.get(outname, [(WINDOWS['report'][0]+14, WINDOWS['report'][1]+10,
+                     WINDOWS['report'][2]-12, WINDOWS['report'][3]-10)]),
 }
 spec = {'canvas': {'width': W, 'height': H, 'mode': 'VGA 12h 640x480x16'},
         'background': bg,
@@ -81,7 +122,10 @@ for name, (x0, y0, x1, y1) in WINDOWS.items():
                               if any(rows[yy][x] == ink for yy in range(y, min(y+15, H)))), None)
                 if first is None:
                     continue
-                best_line = max((read_line(rows, sx, y, xe, ink, full, half)
+                skip = [(bx0, by0, bx1-bx0+1, by1-by0+1)
+                        for bx0, by0, bx1, by1 in EXTRA_BOXES.get(outname, [])] \
+                    if name == 'report' else []
+                best_line = max((read_line(rows, sx, y, xe, ink, full, half, skip)
                                  for sx in range(max(xs, first-6), first+1)), key=len)
                 # 整行同一個字碼 ＝ 框線（點陣剛好等於某個製表符），不是文字。
                 # 整行同一個字碼且夠長 ＝ 框線（點陣剛好等於某個製表符）。
@@ -116,9 +160,11 @@ for name, (x0, y0, x1, y1) in WINDOWS.items():
                        # 這些小框整塊比對：它們是純色填充，沒有「內容」
                        # 會被誤當成修正，而角落的斜切在小框上佔的比例很高。
                        fill=rows[(by0+by1)//2][(bx0+bx1)//2], corner=999)}
-                  for bx0, by0, bx1, by1 in BOXES.get(name, [])],
+                  for bx0, by0, bx1, by1 in (BOXES.get(name, []) if name != 'report'
+                                             else EXTRA_BOXES.get(outname, []))],
         'rules': [{'x': rx, 'y': ry, 'w': rw, 'h': rh, 'colour': rows[ry][rx]}
-                  for rx, ry, rw, rh in RULES.get(name, [])],
+                  for rx, ry, rw, rh in (RULES_BY_SCREEN.get(outname, [])
+                                         if name == 'report' else [])],
     }
     print(f'{name}: ({x0},{y0}) {x1-x0+1}×{y1-y0+1}  層 {len(layers)}  '
           f'角落修正 {len(patches)}  文字色 {ink}  {len(lines)} 行')
@@ -152,8 +198,8 @@ from amg_decode import decode as _dec
 _best = None
 for _k, (_s, _o) in enumerate(_idx):
     _W, _H, _px, _ = _dec(_f[_o:_o+_s])
-    for _y0 in range(92, 112):
-        for _x0 in range(392, 412):
+    for _y0 in range(_ry0 + 5, _ry0 + 60):
+        for _x0 in range(_rx1 - 130, _rx1 - 40):
             _bad = 0
             for _y in range(0, _H, 4):
                 _r = [rows[_y0+_y][_x0+_i] for _i in range(_W)]
@@ -169,6 +215,12 @@ spec['windows']['report']['input_box'] = solid(460, 350)
 spec['windows']['board']['bar'] = solid(560, 125)
 print('輸入框', spec['windows']['report']['input_box'])
 print('面板橫條', spec['windows']['board']['bar'])
+
+for _k, _v in EXTRA_SPEC.get(outname, {}).items():
+    if _k == 'mouse_clip':
+        spec['mouse']['clip'] = _v
+    else:
+        spec[_k] = _v
 
 json.dump(spec, open(f'/work/docs/internals/data/{outname}.json', 'w'),
           ensure_ascii=False, indent=1)

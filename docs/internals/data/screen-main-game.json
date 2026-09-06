@@ -3007,6 +3007,10 @@
   "x": 300,
   "y": 170
  },
+ "window_origin_grid": [
+  10,
+  3
+ ],
  "hotspots": [
   {
    "x": 432,
@@ -3032,9 +3036,5 @@
    "action": "ship-order",
    "note": "796 年 1 月份船艦訂造報告"
   }
- ],
- "window_origin_grid": [
-  10,
-  3
  ]
 }

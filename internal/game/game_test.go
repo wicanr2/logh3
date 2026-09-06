@@ -80,8 +80,12 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	bp, err := screen.LoadMainGameSpec(filepath.Join(root, "docs/internals/data/screen-build-plan.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
-		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so}
+		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so, BuildPlan: bp}
 }
 
 func regionColours(path string) ([]uint8, error) {
@@ -163,6 +167,13 @@ func TestPlayerPathReachesGame(t *testing.T) {
 		t.Fatal("點了主畫面的熱區沒有開出船艦訂造報告")
 	}
 	matches(t, g, "ship1")
+
+	// 訂造報告上的熱區：點下去開出次月份船艦建造計劃。
+	g.Click(448, 310)
+	if g.State() != StateBuildPlan {
+		t.Fatal("點了訂造報告的熱區沒有開出建造計劃")
+	}
+	matches(t, g, "plan1")
 }
 
 // TestWrongAnswerStaysOnQuestion：答錯不會放行。

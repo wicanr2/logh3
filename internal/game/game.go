@@ -29,6 +29,9 @@ const (
 
 	// StateShipOrder 是點了主畫面熱區後開出來的船艦訂造報告。
 	StateShipOrder
+
+	// StateBuildPlan 是次月份船艦建造計劃（有預算分配的可操作介面）。
+	StateBuildPlan
 )
 
 // Resources 是玩家自備的原版檔案解出來的東西。**這個套件不內嵌任何原版資料。**
@@ -40,6 +43,7 @@ type Resources struct {
 	CopyProt *screen.CopyProtSpec
 	MainGame  *screen.MainGameSpec
 	ShipOrder *screen.MainGameSpec
+	BuildPlan *screen.MainGameSpec
 	StarMap  *asset.Image
 	Admiral  []byte // ADMIRAL.DT*，防拷問答的答案在裡面
 }
@@ -118,9 +122,13 @@ func (g *Game) Click(x, y int) {
 			g.typed = nil
 		}
 	case StateMainGame:
-		// 主畫面的可點區域是熱區清單，不是「視窗內就好」（`docs/re/09`）。
+		// 可點區域是熱區清單，不是「視窗內就好」（`docs/re/09`）。
 		if g.res.MainGame.HitTest(x, y) == "ship-order" && g.res.ShipOrder != nil {
 			g.state = StateShipOrder
+		}
+	case StateShipOrder:
+		if g.res.ShipOrder.HitTest(x, y) == "build-plan" && g.res.BuildPlan != nil {
+			g.state = StateBuildPlan
 		}
 	}
 }
@@ -167,6 +175,10 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		return fb
 	case StateShipOrder:
 		fb, _ := screen.MainGame(g.res.ShipOrder, g.res.Font, g.res.StarMap,
+			g.res.Faces, g.res.Cursor)
+		return fb
+	case StateBuildPlan:
+		fb, _ := screen.MainGame(g.res.BuildPlan, g.res.Font, g.res.StarMap,
 			g.res.Faces, g.res.Cursor)
 		return fb
 	default:

@@ -123,7 +123,7 @@ def cell_bits(rows, cx, cy, ink, width):
     return bytes(out)
 
 
-def read_line(rows, x, y, x_end, ink, full, half):
+def read_line(rows, x, y, x_end, ink, full, half, exclude=()):
     """從 (x,y) 往右讀一行，全形與半形混排都認。
 
     先試全形（16 寬），不中再試半形（8 寬）——反過來的話全形字的左半邊
@@ -131,6 +131,14 @@ def read_line(rows, x, y, x_end, ink, full, half):
     """
     cells = []
     while x + HALF_W <= x_end:
+        # 小框的框線點陣剛好等於某些製表符，會被讀成「文字」，
+        # 而那一行的陰影會把框的邊緣蓋掉一個像素。跳過框佔的格子。
+        # 判斷用「這一格有沒有碰到框」，不是「格子左上角在不在框裡」——
+        # 起點在框左邊的那一格照樣會蓋到框。
+        if any(ex < x + GLYPH_W and x < ex + ew and ey < y + GLYPH_H and y < ey + eh
+               for ex, ey, ew, eh in exclude):
+            x += HALF_W
+            continue
         f = cell_bits(rows, x, y, ink, GLYPH_W)
         if any(f) and f in full:
             cells.append({'x': x, 'w': GLYPH_W, 'code': full[f], 'hex': f'{full[f]:04X}'})

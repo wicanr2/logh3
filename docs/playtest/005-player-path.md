@@ -9,7 +9,7 @@
 ## 序列
 
 ```
-tools/go.sh run ./cmd/play -script "move 300 170; click; type 138; enter; click 448 330"
+tools/go.sh run ./cmd/play -script "move 300 170; click; type 138; enter; click 448 330; click 448 310"
 ```
 
 | 步 | 輸入 | 狀態 | 對照收據 | 差異 |
@@ -19,6 +19,7 @@ tools/go.sh run ./cmd/play -script "move 300 170; click; type 138; enter; click 
 | 3 | `type 138` | 防拷問答（輸入中） | — | 畫面不變（見未確認） |
 | 4 | `enter` | 遊戲本體 | `key1` | 0 / 307,200 |
 | 5 | `click 448 330` | 船艦訂造報告 | `ship1` | 0 / 307,200 |
+| 6 | `click 448 310` | 次月份船艦建造計劃 | `plan1` | 0 / 307,200 |
 
 回歸測試：`internal/game/game_test.go` 的 `TestPlayerPathReachesGame`。
 
@@ -41,4 +42,6 @@ tools/go.sh run ./cmd/play -script "move 300 170; click; type 138; enter; click 
   不是原版規則。
 - 主選單的四個選項目前都走同一條路（進防拷問答）。「取進度」之後
   應該是讀檔畫面，還沒做。
-- 主畫面另一個熱區 (432,300) 點下去是什麼還沒擷取。
+- 主畫面另一個熱區 (432,300)、以及建造計劃畫面上的熱區，點下去是什麼
+  還沒擷取。
+- 建造計劃的預算箭頭還不能按（畫得出來，但按了不會改數字）。

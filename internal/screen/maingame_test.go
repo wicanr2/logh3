@@ -19,6 +19,7 @@ func TestMainGameMatchesOracle(t *testing.T) {
 	for _, c := range []struct{ spec, batch string }{
 		{"screen-main-game", "key1"},
 		{"screen-ship-order", "ship1"},
+		{"screen-build-plan", "plan1"},
 	} {
 		t.Run(c.batch, func(t *testing.T) { checkGameScreen(t, c.spec, c.batch) })
 	}
