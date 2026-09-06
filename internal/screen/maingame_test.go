@@ -158,7 +158,7 @@ func checkGameScreen(t *testing.T, specName, batch string) {
 // 一個用途：**差異變大就是回歸**。每次量準一塊就把門檻往下調，
 // 調到 0 之後再搬進上面那張表。
 func TestCommandPhaseProgress(t *testing.T) {
-	const budget = 3251 // 2026-09-07 的進度；只能往下調
+	const budget = 185 // 2026-09-07 的進度；只能往下調
 	root := "../.."
 	specPath := filepath.Join(root, "docs/internals/data/screen-command-phase.json")
 	oracle := filepath.Join(root, "workplace/oracle/main1/screen.bin")
