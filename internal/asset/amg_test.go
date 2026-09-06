@@ -1,0 +1,89 @@
+package asset
+
+import (
+	"os"
+	"path/filepath"
+	"testing"
+)
+
+// origDir 是玩家自備的原版目錄。**找不到就 skip**——安靜的替代品會讓
+// 「還沒做完」看起來像做完了。
+func origDir(t *testing.T) string {
+	t.Helper()
+	d := os.Getenv("LOGH3_ORIG")
+	if d == "" {
+		d = "../../org_game/extracted"
+	}
+	if _, err := os.Stat(filepath.Join(d, "FACE.AMG")); err != nil {
+		t.Skip("找不到原版 FACE.AMG，跳過")
+	}
+	return d
+}
+
+// TestFaceAMGDecodesExactly 釘住兩件會安靜出錯的事：每一張都要**剛好**
+// 用完自己那段位元組（少用或多用都表示解碼走偏），而且尺寸一致。
+func TestFaceAMGDecodesExactly(t *testing.T) {
+	data, err := os.ReadFile(filepath.Join(origDir(t), "FACE.AMG"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	a, err := OpenAMG(data)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(a.Entries) != 83 {
+		t.Fatalf("索引筆數 %d，預期 83", len(a.Entries))
+	}
+	for i := range a.Entries {
+		img, err := a.Decode(i)
+		if err != nil {
+			t.Fatalf("第 %d 張：%v", i, err)
+		}
+		if img.Used != a.Entries[i].Size {
+			t.Fatalf("第 %d 張用掉 %d bytes，該用 %d", i, img.Used, a.Entries[i].Size)
+		}
+		if img.W != 80 || img.H != 100 {
+			t.Fatalf("第 %d 張尺寸 %d×%d，預期 80×100", i, img.W, img.H)
+		}
+		for _, v := range img.Pix {
+			if v > 15 {
+				t.Fatalf("第 %d 張出現非 4 位元色號 %d", i, v)
+			}
+		}
+	}
+}
+
+// TestFaceAMGMatchesOracle 拿原版畫面當判準：防拷問答那張照片
+// （`FACE.AMG` 第 0 張）在收據裡的位置必須**逐像素相同**。
+// 沒有收據就 skip——收據是一次性證據，不進 Git。
+func TestFaceAMGMatchesOracle(t *testing.T) {
+	const receipt = "../../workplace/oracle/face-fresh/screen.bin"
+	fb, err := os.ReadFile(receipt)
+	if err != nil {
+		t.Skip("沒有 face-fresh 收據，跳過（tools/oracle.sh 可重建）")
+	}
+	data, err := os.ReadFile(filepath.Join(origDir(t), "FACE.AMG"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	a, err := OpenAMG(data)
+	if err != nil {
+		t.Fatal(err)
+	}
+	img, err := a.Decode(0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	const sw, x0, y0 = 640, 144, 192
+	bad := 0
+	for y := 0; y < img.H; y++ {
+		for x := 0; x < img.W; x++ {
+			if fb[(y0+y)*sw+x0+x] != img.Pix[y*img.W+x] {
+				bad++
+			}
+		}
+	}
+	if bad != 0 {
+		t.Fatalf("與原版畫面有 %d / %d 個像素不同", bad, img.W*img.H)
+	}
+}

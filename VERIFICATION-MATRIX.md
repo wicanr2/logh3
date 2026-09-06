@@ -11,9 +11,10 @@
 |---|---|---|---:|---|---|
 | 1 | 主選單（含反白與游標）| `same-state` | 0 | [`docs/playtest/001-main-menu.md`](docs/playtest/001-main-menu.md) | **五個狀態**逐位元組一致：反白第 0–3 列各一、游標在選單外一個 |
 | 2 | 開頭動畫 | — | — | — | 未開始 |
-| 3 | 主選單（互動）| — | — | — | 進行中：反白、滑鼠→選項對應、游標都已對拍；還缺**切換過程**（反白從 A 列搬到 B 列會留殘留）與點擊後的行為 |
-| 4 | 遊戲主畫面 | — | — | — | 未開始 |
-| 5 | 結局 | — | — | — | 未開始 |
+| 3 | 主選單（互動）| — | — | — | 進行中：反白、滑鼠→選項對應、游標都已對拍；點擊已能推進到下一畫面；還缺**切換過程**（反白從 A 列搬到 B 列會留殘留）|
+| 4 | 防拷問答 | — | — | [`docs/playtest/002`](docs/playtest/002-into-the-game.md) | 原版狀態可重現（兩次雜湊相同）；remake 尚未實作 |
+| 5 | 遊戲主畫面（796 年 1 月）| — | — | [`docs/playtest/002`](docs/playtest/002-into-the-game.md) | 原版狀態可重現；remake 尚未實作 |
+| 6 | 結局 | — | — | — | 未開始 |
 
 ## 資料格式
 
@@ -23,12 +24,15 @@
 | `.RGB`（16 色調色盤）| **已解出** | [`docs/internals/05`](docs/internals/05-palette-and-fade.md) |
 | `SPRITE.SPR` / `3DBLOCK.SPR` / `COM_FLAG.SPR` | 未開始 | — |
 | `FRAME.BLK` / `BLOCK_*.BLK` | 未開始 | — |
-| `PLADAT.DAT` / `ATTR.DAT` / `KEIREKI.DAT` | 未開始 | — |
-| `ADMIRAL.DT*` / `STELLAR.DT*` / `SHIP.DT*` / `FLEET.DT*` / `PLANET.DT*` | 未開始 | — |
+| `PLADAT.DAT` | **已解出** | [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
+| `ATTR.DAT` / `KEIREKI.DAT` | 未開始 | — |
+| `ADMIRAL.DT*` | **版面已解出**（欄位語意只確認 `+11` ＝ 占領能力）| [`docs/internals/08`](docs/internals/08-admiral-dt.md) |
+| `STELLAR.DT*` / `SHIP.DT*` / `FLEET.DT*` / `PLANET.DT*` | 未開始 | — |
 | `MAP*.CMP`（32 份）| 未開始 | — |
 | `*.MDS`（音樂，22 份）| 未開始 | — |
 | `*.VO5`（結局劇情，50 份）| 未開始 | — |
-| `COMANI.BMG` / `FACE.AMG` / `IBM16.350` | 未開始 | — |
+| `FACE.AMG`（.AMG 圖庫）| **已解出**（83 張逐像素對得上原版畫面）| [`docs/internals/09`](docs/internals/09-face-amg.md) |
+| `COMANI.BMG` / `IBM16.350` | 未開始 | — |
 
 ## 執行器（dosgolem）覆蓋
 
@@ -37,5 +41,7 @@
 | 跑到主選單並停在互動迴圈 | 通過（6000 萬道指令，可重現；120M 步狀態不變）|
 | 鍵盤（IRQ1 ＋ 埠 0x60）| 通過（送得進遊戲自己的 int 09h；遊戲不吃鍵是另一回事）|
 | 滑鼠點擊（虛擬座標倍率依模式）| 通過（點在選單上會改變畫面）|
+| 滑鼠事件回呼（`int 33h AX=000Ch`）| 通過（主選單只走這條路收按下；dosgolem `docs/spec/013`）|
+| 走完開場 → 主選單 → 防拷 → 遊戲本體 | 通過（[`docs/playtest/002`](docs/playtest/002-into-the-game.md)，兩次逐位元組一致）|
 | 未實作的 BIOS／DOS 服務 | 0 種 |
 | SingleStepTests | 未在本專案重跑（語料未下載）|
