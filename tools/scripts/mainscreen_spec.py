@@ -48,6 +48,10 @@ EXTRA_BOXES = {
     'screen-build-plan': [(208 + c*16, 200 + r*20, 208 + c*16 + 15, 200 + r*20 + 19)
                           for r in range(7) for c in range(2)]
                          + [(446, 360, 481, 379), (494, 360, 529, 379)],
+    # 預算計劃：兩組上下箭頭（徵稅檔位、建造費百分比）與兩個按鈕。
+    'screen-budget-plan': [(464, 280, 479, 299), (480, 280, 495, 299),
+                           (464, 320, 479, 339), (480, 320, 495, 339),
+                           (398, 360, 433, 379), (446, 360, 481, 379)],
 }
 # 純色的線（報告視窗裡的表格分隔線）。
 # 各畫面自己的補充：游標的可見範圍（原版的游標是疊上去的，視窗一重畫
@@ -56,19 +60,24 @@ EXTRA_SPEC = {
     'screen-main-game': {
         'window_origin_grid': [10, 3],
         'hotspots': [
-            {'x': 432, 'y': 300, 'w': 32, 'h': 20, 'grid': [17, 12], 'action': '?',
-             'note': '點下去的畫面還沒擷取'},
+            {'x': 432, 'y': 300, 'w': 32, 'h': 20, 'grid': [17, 12],
+             'action': 'budget-plan', 'note': '次月份預算計劃（docs/re/12）'},
             {'x': 432, 'y': 320, 'w': 32, 'h': 20, 'grid': [17, 13],
              'action': 'ship-order', 'note': '796 年 1 月份船艦訂造報告'},
         ],
     },
     'screen-ship-order': {'mouse_clip': {'x': 0, 'y': 378, 'w': 640, 'h': 102}},
     'screen-build-plan': {'mouse_clip': {'x': 0, 'y': 0, 'w': 640, 'h': 362}},
+    'screen-budget-plan': {
+        'hotspots': [],
+        'note': '次月份預算計劃；由主畫面熱區 (432,300) 點進去（docs/re/12）',
+    },
 }
 
 # 表格分隔線也是各畫面自己的：套到別的畫面會蓋掉那裡的框。
 RULES_BY_SCREEN = {
     'screen-main-game': [(160, 259, 192, 1), (160, 279, 192, 1), (160, 299, 192, 1)],
+    'screen-budget-plan': [(144, 239, 256, 1), (144, 279, 256, 1)],
 }
 # 同一個視窗裡不是每一行都用同一個顏色：面板的艦隊數字是 6 與 5。
 TEXT_INKS = {'board': [7, 6, 5], 'report': [7]}
@@ -86,6 +95,7 @@ TEXT_AREAS = {
         'screen-main-game': [(158, 90, 483, 390)],
         'screen-ship-order': [(158, 90, 483, 390)],
         'screen-build-plan': [(94, 70, 545, 392)],
+        'screen-budget-plan': [(142, 70, 497, 392)],
     }.get(outname, [(WINDOWS['report'][0]+14, WINDOWS['report'][1]+10,
                      WINDOWS['report'][2]-12, WINDOWS['report'][3]-10)]),
 }

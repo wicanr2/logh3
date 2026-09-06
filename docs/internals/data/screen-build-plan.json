@@ -23094,7 +23094,8 @@
     22,
     14
    ],
-   "action": "button-left"
+   "action": "admiral-list",
+   "note": "待命中提督資料（docs/re/12）"
   },
   {
    "X": 496,
@@ -23105,7 +23106,8 @@
     25,
     14
    ],
-   "action": "button-right"
+   "action": "commit",
+   "note": "決定：送出計劃回訂造報告（docs/re/12）"
   }
  ]
 }

@@ -84,8 +84,12 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	bg, err := screen.LoadMainGameSpec(filepath.Join(root, "docs/internals/data/screen-budget-plan.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
-		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so, BuildPlan: bp}
+		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so, BuildPlan: bp, BudgetPlan: bg}
 }
 
 func regionColours(path string) ([]uint8, error) {
@@ -253,4 +257,26 @@ func TestBuildPlanArrowsChangePlan(t *testing.T) {
 	if p.Pct[6] != 14 {
 		t.Fatalf("點第 6 列的減，變成 %d%%，應該是 14%%", p.Pct[6])
 	}
+}
+
+// TestBudgetPlanFromMainScreen：主畫面另一個熱區開出次月份預算計劃，
+// 畫面要與原版收據逐位元組相同（`docs/re/12`）。
+func TestBudgetPlanFromMainScreen(t *testing.T) {
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 170)
+	for _, c := range []byte{'1', '3', '8'} {
+		g.Key(c)
+	}
+	g.Key('\r')
+	if g.State() != StateMainGame {
+		t.Fatal("答對了卻沒進遊戲本體")
+	}
+	g.Click(432, 300)
+	if g.State() != StateBudgetPlan {
+		t.Fatal("點了 (432,300) 沒有開出預算計劃")
+	}
+	matches(t, g, "budget1")
 }

@@ -23,6 +23,7 @@ func TestMainGameMatchesOracle(t *testing.T) {
 		{"screen-main-game", "key1"},
 		{"screen-ship-order", "ship1"},
 		{"screen-build-plan", "plan1"},
+		{"screen-budget-plan", "budget1"},
 	} {
 		t.Run(c.batch, func(t *testing.T) { checkGameScreen(t, c.spec, c.batch) })
 	}

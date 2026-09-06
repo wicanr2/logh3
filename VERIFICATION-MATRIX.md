@@ -18,8 +18,10 @@
 | 5 | 遊戲主畫面（796 年 1 月）| `same-state` | 0 | [`docs/playtest/004-main-game.md`](docs/playtest/004-main-game.md) | 全畫面逐位元組一致；地圖、頭像、文字全部從原版檔案重建 |
 | 5b | 船艦訂造報告（796 年 1 月）| `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
 | 5c | 次月份船艦建造計劃 | `same-state` | 0 | 收據 `plan1` | 由訂造報告熱區 (432,300) 點進去 |
+| 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/re/12`](docs/re/12-budget-plan-and-buttons.md) | 由主畫面熱區 (432,300) 點進去；正常玩家路徑有回歸測試 |
+| 5f | 待命中提督資料 | — | — | 收據 `admirals1` | 已擷取；三層視窗（底板＋建造計劃＋清單），繪製器目前只支援兩層 |
 | 5d | 建造計劃（改過預算的 34 個局面）| `same-state` | 0 | [`docs/re/11`](docs/re/11-build-plan-rest-amount.md) | 用 `-poke` 把百分比寫進原版記憶體造的局面，含手點到不了的「七列全 0%」與「某列吃滿 100%」；每張 640×480 逐位元組一致 |
-| 6 | 結局 | — | — | — | 未開始 |
+| 6 | 結局 | — | — | — | 畫面未開始；文字與職員表已取出（[`docs/internals/16`](docs/internals/16-ending-exe.md)）|
 
 ## 資料格式
 
@@ -39,7 +41,8 @@
 | `ADMIRAL.DT*` | **版面已解出**（欄位語意確認 `+1` ＝ 陣營、`+11` ＝ 占領能力）| [`docs/internals/08`](docs/internals/08-admiral-dt.md) |
 | `STELLAR.DT*` / `SHIP.DT*` / `FLEET.DT*` / `PLANET.DT*` | 未開始 | — |
 | `*.MDS`（音樂，22 份）| 未開始 | — |
-| `*.VO5`（結局劇情，50 份）| 未開始 | — |
+| `*.VO5`（結局劇情，50 份）| 未解（不是 `.AMG` 檔頭；解碼常式未定位）| [`docs/internals/16`](docs/internals/16-ending-exe.md) |
+| `ENDING.EXE`（結局文字、職員表）| **已解出** | [`docs/internals/16`](docs/internals/16-ending-exe.md) |
 | `FACE.AMG`（.AMG 圖庫）| **已解出**（83 張逐像素對得上原版畫面）| [`docs/internals/09`](docs/internals/09-face-amg.md) |
 | `COMANI.BMG` / `IBM16.350` | 未開始 | — |
 
@@ -52,6 +55,9 @@
 | 船艦數 ＝ 金額 ÷ 單價 × 10（七個單價已量出）| **已實作並對拍** | 同上 |
 | 部隊 ＝ 船艦數 ÷ 定員（七個定員已量出）| **已實作並對拍** | 同上 |
 | 餘額 ＝ 建造費 − Σ 各列實際花掉（零頭退回）| **已實作並對拍** | 同上 |
+| 預估軍事費 ＝ 國庫 ＋ 預估徵稅額 | **已實作**（`internal/rules/budget.go`）| [`docs/re/12`](docs/re/12-budget-plan-and-buttons.md) |
+| 船艦建造費 ＝ 預估軍事費 × 百分比（捨去）| **已實作** | 同上 |
+| 剩餘軍事費 ＝ 預估軍事費 − 船艦建造費 | **已實作** | 同上 |
 | 其他 | 未開始 | — |
 
 ## 執行器（dosgolem）覆蓋
