@@ -122,10 +122,28 @@ CPU 寫進去的位元組會先被硬體改一次才落到 VRAM。
 先前拿字形去比對畫面（差 32 位元、加粗、放大…）全部問對了地方、
 用錯了方法。
 
-**下一步**：記下那一段執行時圖形控制器各個 index 的值
-（尤其 index 0 Set/Reset、index 3 Function Select、index 8 Bit Mask），
-還原硬體那一步做了什麼。dosgolem 已經在記寫過的 I/O 埠，
-要的是「這一刻的暫存器狀態」。
+### 那一刻的硬體狀態（confirmed）
+
+dosgolem 補了 `-vga-regs-at`（`internal/machine` 的 `VGAState`）。
+`#210,262,081`——正是那個位址變成 `C3` 的那一步——狀態是：
+
+```
+GC  = 07 0F 00 00 00 0B 00 00 FF
+      ^Set/Reset       ^Mode      ^Bit Mask
+Seq = 00 00 0F 00 00
+latch = FF C6 00 39
+```
+
+`Mode = 0x0B` ＝ **write mode 3**、`Set/Reset = 7`（顏色 7）、
+`Bit Mask = FF`。write mode 3 下 CPU 寫的位元組就是位元遮罩，
+遮到的像素填 Set/Reset 的顏色、其餘保留 latch。
+
+所以硬體這一步**不會把字形變成別的形狀**——它只決定「哪些像素上色」。
+`al` 來自呼叫端算好的區域變數（`mov ax,[bp+20]`），
+**變換仍然在軟體那一側**，而且在展開迴圈之前。
+
+**下一步**：那一排區域變數是誰填的。BP ＝ `1F0A`、SS ＝ `63EB`，
+所以它們在線性 `65DB4` 起那一段堆疊；監看那裡就會看到算出 `C3` 的那支。
 
 ## 影響
 
