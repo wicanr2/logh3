@@ -4,6 +4,15 @@
 
 ## 2026-09-06
 
+- re05：停點解掉，本體跑進**主選單**（帝國／同盟／對戰／取進度），滑鼠輪詢
+  205,509 次。根因不在圖形也不在中斷——dosgolem 的 EXEC 之後配置游標沒有退回，
+  `OPEN.EXE` 用掉的 230 KB 沒還，本體被載到段 `0x3922`，向 DOS 要 `0x6A07` 段
+  （超過 640 KB）被拒，heap 拿不到空間，malloc 從位在 `0000:0000` 的假區塊切出
+  指標，選單文字就落在 IVT 上。re03／re04 讀成「模組管理器寫 ISR 表」是誤讀：
+  那八個「段值」逐位元組解出來是中文字（同取度國進盟對戰）。另補 planar
+  write mode 3（鏈內 1160 次，先前當 mode 0 處理導致字形破碎）與 mode 0 的
+  enable set/reset。dosgolem-logh3 `803cb06`（spec 010），已推 origin。
+  詳 `docs/re/05-menu-reached-heap-starved-by-exec-leak.md`。
 - re04：VGA planar 管線打通（dosgolem-logh3 `518028d`，spec 009），拿到本體的
   第一張 framebuffer 傾倒。畫面全黑是遊戲自己的淡入調色盤還停在暗值
   （DAC[15]=(8,8,8)），色號陣列證明圖形已畫進 plane（103,452 個非零像素）；
