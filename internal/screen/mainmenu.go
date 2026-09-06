@@ -27,7 +27,11 @@ type MenuSpec struct {
 		ColsX    []int `json:"cols_x"`
 		RowsY    []int `json:"rows_y"`
 	} `json:"text"`
-	Items       [][]string `json:"items"`
+	Items     [][]string `json:"items"`
+	Highlight *struct {
+		Row   int   `json:"row"`
+		Color uint8 `json:"color"`
+	} `json:"highlight"`
 	Palette6bit [][3]uint8 `json:"palette_6bit"`
 }
 
@@ -74,6 +78,9 @@ func MainMenu(s *MenuSpec, fnt *font.Font) (*gfx.Framebuffer, []uint16) {
 	w.ColPitch, w.RowPitch = s.Text.ColPitch, s.Text.RowPitch
 	w.OriginX = s.Text.ColsX[0] - s.Window.X
 	w.OriginY = s.Text.RowsY[0] - s.Window.Y
+	if s.Highlight != nil {
+		w.Highlight, w.HighlightColor = s.Highlight.Row, s.Highlight.Color
+	}
 	for r, line := range s.Items {
 		codes := make([]uint16, 0, len(line))
 		for _, ch := range line {

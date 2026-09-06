@@ -22,8 +22,8 @@ func TestMainMenuMatchesOracle(t *testing.T) {
 	if fontPath == "" {
 		fontPath = filepath.Join(root, "org_game/extracted/GRAPH.IMG")
 	}
-	oraclePath := filepath.Join(root, "workplace/re06/screen.bin")
-	palPath := filepath.Join(root, "workplace/re06/pal.bin")
+	oraclePath := filepath.Join(root, "workplace/oracle/hilite/screen.bin")
+	palPath := filepath.Join(root, "workplace/oracle/hilite/pal.bin")
 	for _, p := range []string{fontPath, oraclePath, palPath} {
 		if _, err := os.Stat(p); err != nil {
 			t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", p)

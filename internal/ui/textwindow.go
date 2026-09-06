@@ -40,6 +40,11 @@ type TextWindow struct {
 	Frame              Frame
 	Shadow             Shadow
 	Cells              []Cell
+
+	// Highlight 是反白的列（-1 ＝ 沒有）。原版的反白是**整列填滿一個色號、
+	// 文字不畫**，不是換文字顏色——所以反白列上看不到字。
+	Highlight      int
+	HighlightColor uint8
 }
 
 // NewTextWindow 造一個清空的文字視窗。
@@ -47,9 +52,11 @@ func NewTextWindow(x, y, cols, rows int, f Frame) *TextWindow {
 	w := &TextWindow{
 		X: x, Y: y, Cols: cols, Rows: rows,
 		ColPitch: font.GlyphW, RowPitch: 20,
-		Frame:  f,
-		Shadow: Shadow{DY: -1, Color: 3, On: true},
-		Cells:  make([]Cell, cols*rows),
+		Frame:          f,
+		Shadow:         Shadow{DY: -1, Color: 3, On: true},
+		Highlight:      -1,
+		HighlightColor: 2,
+		Cells:          make([]Cell, cols*rows),
 	}
 	for i := range w.Cells {
 		w.Cells[i] = Cell{Code: Blank}
@@ -78,6 +85,12 @@ func (w *TextWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, frameW, frameH in
 	w.Frame.Draw(fb, w.X, w.Y, frameW, frameH)
 	var missing []uint16
 	for r := 0; r < w.Rows; r++ {
+		if r == w.Highlight {
+			// 反白列整條填滿，文字不畫。
+			fb.FillRect(w.X+w.OriginX, w.Y+w.OriginY+r*w.RowPitch-2,
+				w.Cols*w.ColPitch, w.RowPitch, w.HighlightColor)
+			continue
+		}
 		for c := 0; c < w.Cols; c++ {
 			cell := w.Cells[r*w.Cols+c]
 			if cell.Code == Blank {

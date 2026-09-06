@@ -133,5 +133,10 @@
       48
     ]
   ],
-  "source": "workplace/re06/screen.bin + pal.bin（dosgolem oracle）"
+  "source": "workplace/oracle/hilite/screen.bin + pal.bin（dosgolem oracle，見 meta.txt）",
+  "highlight": {
+    "row": 2,
+    "color": 2,
+    "note": "整列填滿，文字不畫；bbox 相對第一格 (0,-2)，寬 欄數×欄距、高 列距"
+  }
 }
