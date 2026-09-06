@@ -37,27 +37,30 @@ EXTRA = ([int(v) for v in sys.argv[13].split(':')]
 
 rows, _ = load_screen(f'/work/workplace/oracle/{batch}/screen.bin')
 full, half = font_lookup('/orig/GRAPH.IMG')
+# 原版有兩種粗細：細的直接查字型檔，粗的要拿加粗後的點陣查
+# （`docs/internals/26`）。兩種都掃，重疊的行由 _merge 取字多的那個。
+fullb, halfb = font_lookup('/orig/GRAPH.IMG', bold=True)
 spec = json.load(open(f'/work/docs/internals/data/{base_name}.json'))
 
 layers, alts = measure_frame(rows, X0, Y0, X1, Y1)
 patches = frame_patches(rows, X0, Y0, X1, Y1, layers, alts, corner=12)
 
 # 文字：行距 20，相位用全域最佳化找（一行誤判會讓後面全部錯位）。
-def scan(phase):
+def scan(phase, tabs):
     out = []
     for y in range(Y0 + 10 + phase, Y1 - 14, 20):
         skip = [(bx0, by0, bx1 - bx0 + 1, by1 - by0 + 1)
                 for bx0, by0, bx1, by1 in BOXES]
         # 起點要掃寬一點：這一層裡不只一欄文字，左邊那欄的縮排
         # 各畫面不同，範圍太窄就整欄讀不到。
-        ln = max((read_line(rows, sx, y, X1 - 12, 7, full, half, skip)
+        ln = max((read_line(rows, sx, y, X1 - 12, 7, tabs[0], tabs[1], skip)
                   for sx in range(X0 + 4, X0 + 80)), key=len)
         # 短短一兩格的製表符不是文字，是被讀成字的框線——而畫出來的
         # 陰影會把那條線蓋掉一個像素。
         if ln and len(ln) <= 4 and all(0xA140 <= c['code'] <= 0xA1FE for c in ln):
             continue
         if ln and (len(ln) < 4 or len({c['code'] for c in ln}) > 1):
-            out.append({'y': y, 'ink': 7, 'cells': ln})
+            out.append({'y': y, 'ink': 7, 'bold': tabs[2], 'cells': ln})
     return out
 
 def _span(line):
@@ -83,31 +86,88 @@ def _merge(acc, cand):
             return
     acc.append(cand)
 
-def scan_area(x0, y0, x1, y1, phase, ink=7):
+def scan_area(x0, y0, x1, y1, phase, ink=7, tabs=None):
     """額外文字區。**顏色不只一種**——左下那塊的數字是色 6 與 5，
     只掃 7 會整片漏掉。"""
     out = []
     for y in range(y0 + phase, y1 - 14, 20):
         skip = [(bx0, by0, bx1 - bx0 + 1, by1 - by0 + 1)
                 for bx0, by0, bx1, by1 in BOXES]
-        ln = max((read_line(rows, sx, y, x1, ink, full, half, skip)
+        ln = max((read_line(rows, sx, y, x1, ink, tabs[0], tabs[1], skip)
                   for sx in range(x0, x0 + 40)), key=len)
         if ln and len(ln) <= 4 and all(0xA140 <= c['code'] <= 0xA1FE for c in ln):
             continue
         if ln and (len(ln) < 4 or len({c['code'] for c in ln}) > 1):
-            out.append({'y': y, 'ink': ink, 'cells': ln})
+            out.append({'y': y, 'ink': ink, 'bold': tabs[2], 'cells': ln})
     return out
 
+TABS = [(full, half, False), (fullb, halfb, True)]
 lines = []
-for _p in range(20):
-    for _l in scan(_p):
-        _merge(lines, _l)
+for _t in TABS:
+    for _p in range(20):
+        for _l in scan(_p, _t):
+            _merge(lines, _l)
 if EXTRA:
-    for _ink in (7, 6, 5):
-        for _p in range(20):
-            for _l in scan_area(*EXTRA, _p, _ink):
-                _merge(lines, _l)
+    for _t in TABS:
+        for _ink in (7, 6, 5):
+            for _p in range(20):
+                for _l in scan_area(*EXTRA, _p, _ink, _t):
+                    _merge(lines, _l)
 lines.sort(key=lambda l: (l['y'], l['cells'][0]['x']))
+
+def _refit_under_base_cursor(spec):
+    """底層規格裡「其實是游標」的修正點，拿這一張畫面重量一次。
+
+    底層那一份是連著游標一起量的：游標壓在框上的那幾格會被當成框的
+    角落修正記進 `patches`。在底層那張畫面上看不出來——游標最後會蓋回
+    同一批像素；但這一層把游標移走之後，那幾格就露出來了。
+
+    不能整批丟掉：游標蓋住的像素裡有一部分本來就是框的修正。所以改成
+    **在這一張畫面上重量那一塊**——這裡游標已經移開，量到的才是框本身。
+    """
+    m = spec.get('mouse')
+    if not m:
+        return 0
+    cur = json.load(open('/work/docs/internals/data/cursor.json'))
+    ox, oy = cur['offset_from_mouse']
+    cx0, cy0 = m['x'] + ox, m['y'] + oy
+    cx1, cy1 = cx0 + cur['width'], cy0 + cur['height']
+    n = 0
+
+    def abs_xy(x, y, w, h, pt):
+        return (x + pt['dx'] if pt['dx'] >= 0 else x + w + pt['dx'],
+                y + pt['dy'] if pt['dy'] >= 0 else y + h + pt['dy'])
+
+    def refit(x, y, w, h, layers, alts, fill, patches):
+        nonlocal n
+        if not (x < cx1 and cx0 < x + w and y < cy1 and cy0 < y + h):
+            return patches
+        fresh = frame_patches(rows, x, y, x + w - 1, y + h - 1, layers, alts,
+                              fill=fill, corner=12,
+                              exclude=[(X0, Y0, X1 - X0 + 1, Y1 - Y0 + 1)])
+        inside = lambda pt: (lambda a: cx0 <= a[0] < cx1 and cy0 <= a[1] < cy1)(
+            abs_xy(x, y, w, h, pt))
+        out = [pt for pt in patches if not inside(pt)] + [pt for pt in fresh if inside(pt)]
+        n += len(patches) + len(out) - 2 * sum(1 for pt in patches if pt in out)
+        return out
+
+    for win in spec['windows'].values():
+        f = win.get('frame')
+        if f:
+            f['patches'] = refit(win['x'], win['y'], win['w'], win['h'],
+                                 f['layers'], f['alt'], f.get('fill', 9),
+                                 f.get('patches') or [])
+        for b in win.get('boxes') or []:
+            b['patches'] = refit(b['x'], b['y'], b['w'], b['h'],
+                                 b['layers'], b['alt'], b.get('fill', 9),
+                                 b.get('patches') or [])
+    return n
+
+
+if MX >= 0:
+    _n = _refit_under_base_cursor(spec)
+    if _n:
+        print('底層游標壓住那一塊重量：修正點動了 %d 個' % _n)
 
 spec['windows']['overlay'] = {
     'x': X0, 'y': Y0, 'w': X1 - X0 + 1, 'h': Y1 - Y0 + 1,

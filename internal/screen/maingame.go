@@ -111,6 +111,10 @@ type GameWindow struct {
 	Lines []struct {
 		Y     int `json:"y"`
 		Ink   uint8 `json:"ink"`
+
+		// Bold ＝ 這一行用粗體畫。原版兩種粗細共用同一份字形，
+		// 粗的那一種先把每一列往右加粗一格（`docs/internals/25`）。
+		Bold  bool `json:"bold"`
 		Cells []struct {
 			X    int    `json:"x"`
 			W    int    `json:"w"`
@@ -209,12 +213,12 @@ func (w *GameWindow) drawContent(fb *gfx.Framebuffer, fnt *font.Font, shadow uin
 		}
 		for _, c := range line.Cells {
 			if c.W == font.HalfW {
-				if !ui.DrawHalfGlyph(fb, fnt, c.X, line.Y, uint8(c.Code), ink, shadow, -1) {
+				if !ui.DrawHalfGlyph(fb, fnt, c.X, line.Y, uint8(c.Code), ink, shadow, -1, line.Bold) {
 					missing = append(missing, c.Code)
 				}
 				continue
 			}
-			if !ui.DrawGlyph(fb, fnt, c.X, line.Y, c.Code, ink, shadow, -1) {
+			if !ui.DrawGlyph(fb, fnt, c.X, line.Y, c.Code, ink, shadow, -1, line.Bold) {
 				missing = append(missing, c.Code)
 			}
 		}
@@ -304,7 +308,7 @@ func (s *MainGameSpec) DrawNumbers(fb *gfx.Framebuffer, fnt *font.Font,
 		}
 		fb.FillRect(clr, y-1, nf.Right()-clr, font.GlyphH+1, fill)
 		for i := 0; i < len(text); i++ {
-			ui.DrawHalfGlyph(fb, fnt, x+i*font.HalfW, y, text[i], w.Ink, 3, -1)
+			ui.DrawHalfGlyph(fb, fnt, x+i*font.HalfW, y, text[i], w.Ink, 3, -1, false)
 		}
 	}
 	for i, r := range f.Rows {

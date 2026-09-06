@@ -4,12 +4,20 @@
 #
 #   tools/rerun_receipts.sh              # 全部
 #   tools/rerun_receipts.sh -m mouse-x   # 只重跑命令列含這個字串的
+#   tools/rerun_receipts.sh -n 'main1e|cmd1e'  # 只重跑名字對得上的
 #   JOBS=6 tools/rerun_receipts.sh       # 並行數（預設 4）
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 JOBS="${JOBS:-4}"
 match=''
-[[ "${1:-}" == "-m" ]] && { match="$2"; shift 2; }
+namere=''
+while [[ "${1:-}" == -* ]]; do
+  case "$1" in
+    -m) match="$2"; shift 2 ;;
+    -n) namere="$2"; shift 2 ;;
+    *) echo "不認得的參數 $1" >&2; exit 2 ;;
+  esac
+done
 
 n=0
 for d in "$ROOT"/workplace/oracle/*/; do
@@ -18,6 +26,7 @@ for d in "$ROOT"/workplace/oracle/*/; do
   flags=$(sed -n 's/^probe 旗標: //p' "$d/meta.txt")
   [[ -n "$flags" ]] || continue
   [[ -z "$match" || "$flags" == *"$match"* ]] || continue
+  [[ -z "$namere" || "$name" =~ $namere ]] || continue
   exe=$(sed -n 's/^執行檔: //p' "$d/meta.txt")
   before=$(sha256sum "$d/screen.bin" 2>/dev/null | cut -d' ' -f1 || echo -)
   (

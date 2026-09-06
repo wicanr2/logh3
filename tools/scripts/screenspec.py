@@ -16,9 +16,32 @@ def load_screen(path):
     return [d[y*W:(y+1)*W] for y in range(H)], d
 
 
-def font_lookup(path):
-    """回 (全形點陣→Big5 碼, 半形點陣→ASCII 碼) 兩張反查表。"""
+def embolden(bits, width):
+    """把一列點陣往右加粗一格：`v | (v >> 1)`。
+
+    原版的文字有兩種粗細。粗的那一種是遊戲先在字形緩衝區裡就地做
+    `or [si], ax`（ax ＝ 該列右移一格），再送進 VGA
+    （`docs/internals/25`）。所以要反查字碼，得拿加粗後的點陣當鍵。
+    """
+    top = 0x8000 if width == 16 else 0x80
+    return [(v | (v >> 1)) & (top * 2 - 1) for v in bits]
+
+
+def font_lookup(path, bold=False):
+    """回 (全形點陣→Big5 碼, 半形點陣→ASCII 碼) 兩張反查表。
+
+    `bold=True` 時鍵是加粗後的點陣——原版有一半的文字是加粗畫的，
+    拿原始點陣去查那些字一個都查不到。
+    """
     f = open(path, 'rb').read()
+
+    def key(raw, width):
+        if not bold:
+            return raw
+        n = width // 8
+        rows = [int.from_bytes(raw[i*n:(i+1)*n], 'big') for i in range(GLYPH_H)]
+        rows = embolden(rows, width)
+        return b''.join(v.to_bytes(n, 'big') for v in rows)
 
     def off(code):
         lead, trail = code >> 8, code & 0xFF
@@ -32,12 +55,12 @@ def font_lookup(path):
             code = lead << 8 | trail
             o = off(code)
             if 0 <= o and o + FULL_STRIDE <= len(f):
-                full.setdefault(f[o:o+FULL_STRIDE], code)
+                full.setdefault(key(f[o:o+FULL_STRIDE], 16), code)
     half = {}
     for code in range(0x20, 0x80):
         o = HALF_BASE + code*HALF_STRIDE
         if o + HALF_STRIDE <= len(f):
-            half.setdefault(f[o:o+HALF_STRIDE], code)
+            half.setdefault(key(f[o:o+HALF_STRIDE], 8), code)
     return full, half
 
 

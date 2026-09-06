@@ -122,14 +122,14 @@ func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed st
 			if c.Code == nil {
 				continue
 			}
-			if !ui.DrawGlyph(fb, fnt, c.X, line.Y, *c.Code, s.Text.Ink, s.Text.Shadow, -1) {
+			if !ui.DrawGlyph(fb, fnt, c.X, line.Y, *c.Code, s.Text.Ink, s.Text.Shadow, -1, false) {
 				missing = append(missing, *c.Code)
 			}
 		}
 	}
 	if t := s.InputText; t != nil {
 		for i, c := range []byte(typed) {
-			ui.DrawHalfGlyph(fb, fnt, t.X+i*t.Pitch, t.Y, c, t.Ink, 0, 0)
+			ui.DrawHalfGlyph(fb, fnt, t.X+i*t.Pitch, t.Y, c, t.Ink, 0, 0, false)
 		}
 	}
 	return fb, missing

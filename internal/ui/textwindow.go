@@ -150,10 +150,19 @@ func (w *TextWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, frameW, frameH in
 // 給「不是格狀排版」的畫面用：防拷問答那三行字每行的字數不同、
 // 輸入框那一格又另起一個 x，硬塞進 TextWindow 的格點要多算一堆空白。
 // 陰影規則與 drawCell 相同：先把每一列往左位移一格畫陰影，再畫本體。
-func DrawGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16, fg, shadow uint8, shadowDY int) bool {
+//
+// bold ＝ 原版的粗體：**先**把字形每一列往右加粗一格，陰影與本體都用
+// 加粗後的點陣（`docs/internals/25`）。順序不能顛倒——先畫陰影再加粗
+// 會多出一排像素。
+func DrawGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16, fg, shadow uint8, shadowDY int, bold bool) bool {
 	g := fnt.Glyph(code)
 	if g == nil {
 		return false
+	}
+	if bold {
+		for i, v := range g {
+			g[i] = v | v>>1
+		}
 	}
 	blit := func(shift, oy int, col uint8) {
 		for gy, bits := range g {
@@ -173,10 +182,15 @@ func DrawGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16, fg, s
 }
 
 // DrawHalfGlyph 畫一個半形字（8×15）。數字與百分比走這條。
-func DrawHalfGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8, fg, shadow uint8, shadowDY int) bool {
+func DrawHalfGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8, fg, shadow uint8, shadowDY int, bold bool) bool {
 	g := fnt.Half(code)
 	if g == nil {
 		return false
+	}
+	if bold {
+		for i, v := range g {
+			g[i] = v | v>>1
+		}
 	}
 	blit := func(shift, oy int, col uint8) {
 		for gy, bits := range g {

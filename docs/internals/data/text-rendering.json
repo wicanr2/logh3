@@ -1,0 +1,98 @@
+{
+ "buffer": {
+  "segment_offset": "0x829C",
+  "rows": 20,
+  "row_bytes": 2,
+  "bit_order": "bit15 = 最左",
+  "note": "字形讀進來之後就地做樣式變換"
+ },
+ "passes": [
+  {
+   "n": 1,
+   "what": "底色填滿 20 列",
+   "colour": "屬性位元組高四位",
+   "vga_write_mode": 2
+  },
+  {
+   "n": 2,
+   "what": "樣式變換（就地改緩衝區）"
+  },
+  {
+   "n": 3,
+   "what": "陰影：第 r 列畫緩衝區第 r+1 列、往左移一格",
+   "rows": 19,
+   "colour": "ch bit6 ? 7 : 3",
+   "vga_write_mode": 3
+  },
+  {
+   "n": 4,
+   "what": "本體：第 r 列畫緩衝區第 r 列",
+   "rows": 20,
+   "colour": "屬性位元組低四位",
+   "vga_write_mode": 3
+  },
+  {
+   "n": 5,
+   "what": "底線（ch bit0）",
+   "colour": 15
+  }
+ ],
+ "attribute_byte": {
+  "register": "cl",
+  "low_nibble": "字身色",
+  "high_nibble": "底色"
+ },
+ "style_flags": {
+  "register": "ch",
+  "0": {
+   "name": "underline",
+   "status": "confirmed"
+  },
+  "1": {
+   "name": "halftone",
+   "op": "and 5555/AAAA 交錯",
+   "status": "confirmed"
+  },
+  "2": {
+   "name": "bold",
+   "op": "v |= v >> 1",
+   "status": "confirmed"
+  },
+  "3": {
+   "name": "unknown",
+   "status": "unsolved"
+  },
+  "4": {
+   "name": "unknown",
+   "status": "unsolved"
+  },
+  "5": {
+   "name": "unknown",
+   "status": "unsolved"
+  },
+  "6": {
+   "name": "shadow_colour_7",
+   "status": "confirmed"
+  },
+  "7": {
+   "name": "unknown",
+   "status": "unsolved"
+  }
+ },
+ "vga": {
+  "read_mode": 1,
+  "color_dont_care": 0,
+  "note": "read mode 1 加 CDC=0 讀回一律 FF，所以 and es:[di],al 的遮罩就是 al"
+ },
+ "signatures": {
+  "shadow_colour_select": "F6 C5 40 75 04 B1 03 EB 02 B1 07",
+  "shadow_pass": "BE 9E 82 51 B9 13 00 AD 86 E0 D1 E0 86 E0 26 20 05 26 20 65 01 83 C7 50 E2 ED",
+  "body_pass": "BE 9C 82 81 EF F0 05 51 B9 14 00 AD 26 20 05 26 20 65 01 83 C7 50 E2 F3",
+  "background_pass": "B8 08 FF EF 8A C1 C0 E8 04 B9 14 00 26 88 05 26 88 45 01 83 C7 50 E2 F4",
+  "style_dispatch": "F6 C5 04 74 03 E8 09 00 F6 C5 02 74 03 E8 18 00 C3",
+  "bold": "BE 9C 82 B9 14 00 8B 04 86 E0 D1 E8 86 E0 09 04 46 46 E2 F2",
+  "halftone": "BE 9C 82 B9 14 00 B8 55 55 21 04 46 46 F7 D0 E2 F8",
+  "set_write_mode_2": "BA CE 03 B8 05 0A EF B8 03 00 EF B8 07 00 EF CB",
+  "set_write_mode_3": "BA CE 03 B8 05 0B EF B8 01 0F EF 8A E1 32 C0 EF"
+ }
+}
