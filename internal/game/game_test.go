@@ -88,8 +88,12 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	al, err := screen.LoadMainGameSpec(filepath.Join(root, "docs/internals/data/screen-admiral-list.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
-		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so, BuildPlan: bp, BudgetPlan: bg}
+		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al}
 }
 
 func regionColours(path string) ([]uint8, error) {
@@ -279,4 +283,28 @@ func TestBudgetPlanFromMainScreen(t *testing.T) {
 		t.Fatal("點了 (432,300) 沒有開出預算計劃")
 	}
 	matches(t, g, "budget1")
+}
+
+// TestAdmiralListFromBuildPlan：建造計劃左按鈕開出待命中提督資料，
+// 畫面要與原版收據逐位元組相同（`docs/re/12`）。
+func TestAdmiralListFromBuildPlan(t *testing.T) {
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 170)
+	for _, c := range []byte{'1', '3', '8'} {
+		g.Key(c)
+	}
+	g.Key('\r')
+	g.Click(448, 330)
+	g.Click(448, 310)
+	if g.State() != StateBuildPlan {
+		t.Fatal("走不到建造計劃")
+	}
+	g.Click(464, 330)
+	if g.State() != StateAdmiralList {
+		t.Fatal("點了左按鈕沒有開出待命中提督資料")
+	}
+	matches(t, g, "admirals1")
 }

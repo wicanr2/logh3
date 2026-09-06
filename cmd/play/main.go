@@ -109,6 +109,8 @@ func stateName(s game.State) string {
 		return "遊戲本體"
 	case game.StateShipOrder:
 		return "船艦訂造報告"
+	case game.StateAdmiralList:
+		return "admiral-list"
 	case game.StateBudgetPlan:
 		return "budget-plan"
 	case game.StateBuildPlan:
@@ -159,6 +161,10 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	al, err := screen.LoadMainGameSpec(filepath.Join(data, "screen-admiral-list.json"))
+	if err != nil {
+		return nil, err
+	}
 	cur, err := ui.LoadCursor(filepath.Join(data, "cursor.json"))
 	if err != nil {
 		return nil, err
@@ -181,7 +187,7 @@ func load(orig, data string) (*game.Resources, error) {
 	}
 	return &game.Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
-		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg}, nil
+		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al}, nil
 }
 
 func regionColours(path string) ([]uint8, error) {

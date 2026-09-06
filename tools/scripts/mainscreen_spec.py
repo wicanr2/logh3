@@ -225,8 +225,13 @@ _f = open('/orig/FACE.AMG', 'rb').read()
 _idx = [_st.unpack_from('<HI', _f, k*6) for k in range(83)]
 sys.path.insert(0, '/work/tools/scripts')
 from amg_decode import decode as _dec
+# 頭像被最上層視窗蓋住時就沒得找——那個搜尋很貴（83 張 × 數千個位置），
+# 讓它在明知找不到的情況下空跑是白費工。
+_face_x1 = WINDOWS['overlay'][0] if 'overlay' in WINDOWS else W
+_search = (_rx1 - 130) < _face_x1
 _best = None
-for _k, (_s, _o) in enumerate(_idx):
+
+for _k, (_s, _o) in enumerate(_idx if _search else []):
     _W, _H, _px, _ = _dec(_f[_o:_o+_s])
     for _y0 in range(_ry0 + 5, _ry0 + 60):
         for _x0 in range(_rx1 - 130, _rx1 - 40):
@@ -238,9 +243,12 @@ for _k, (_s, _o) in enumerate(_idx):
                     break
             if _best is None or _bad < _best[0]:
                 _best = (_bad, _k, _x0, _y0)
-print(f'頭像：第 {_best[1]} 張 於 ({_best[2]},{_best[3]})  抽樣差異 {_best[0]}')
-spec['windows']['report']['face'] = {'source': 'FACE.AMG', 'index': _best[1],
-                                     'x': _best[2], 'y': _best[3]}
+if _best is None:
+    print('頭像：被上層視窗蓋住，這個畫面不畫')
+else:
+    print(f'頭像：第 {_best[1]} 張 於 ({_best[2]},{_best[3]})  抽樣差異 {_best[0]}')
+    spec['windows']['report']['face'] = {'source': 'FACE.AMG', 'index': _best[1],
+                                         'x': _best[2], 'y': _best[3]}
 spec['windows']['report']['input_box'] = solid(460, 350)
 spec['windows']['board']['bar'] = solid(560, 125)
 print('輸入框', spec['windows']['report']['input_box'])

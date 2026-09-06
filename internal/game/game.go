@@ -37,6 +37,9 @@ const (
 
 	// StateBudgetPlan 是次月份預算計劃（徵稅、軍事費、造船預算比例）。
 	StateBudgetPlan
+
+	// StateAdmiralList 是待命中提督資料（疊在建造計劃上的清單）。
+	StateAdmiralList
 )
 
 // Resources 是玩家自備的原版檔案解出來的東西。**這個套件不內嵌任何原版資料。**
@@ -49,7 +52,8 @@ type Resources struct {
 	MainGame  *screen.MainGameSpec
 	ShipOrder *screen.MainGameSpec
 	BuildPlan  *screen.MainGameSpec
-	BudgetPlan *screen.MainGameSpec
+	BudgetPlan  *screen.MainGameSpec
+	AdmiralList *screen.MainGameSpec
 	StarMap  *asset.Image
 	Admiral  []byte // ADMIRAL.DT*，防拷問答的答案在裡面
 }
@@ -160,6 +164,10 @@ func (g *Game) Click(x, y int) {
 		case strings.HasPrefix(act, "dec-"):
 			fmt.Sscanf(act, "dec-%d", &row)
 			g.plan.Dec(row)
+		case act == "admiral-list":
+			if g.res.AdmiralList != nil {
+				g.state = StateAdmiralList
+			}
 		}
 	}
 }
@@ -206,6 +214,10 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		return fb
 	case StateShipOrder:
 		fb, _ := screen.MainGame(g.res.ShipOrder, g.res.Font, g.res.StarMap,
+			g.res.Faces, g.res.Cursor)
+		return fb
+	case StateAdmiralList:
+		fb, _ := screen.MainGame(g.res.AdmiralList, g.res.Font, g.res.StarMap,
 			g.res.Faces, g.res.Cursor)
 		return fb
 	case StateBudgetPlan:

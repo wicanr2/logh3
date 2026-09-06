@@ -56,6 +56,9 @@ type MainGameSpec struct {
 	Mouse *struct {
 		X, Y int
 
+		// AfterBoxes 指定一個視窗：它的小框在游標之後再畫一次。
+		AfterBoxes string `json:"after_boxes"`
+
 		// Clip 是游標的可見矩形。原版的游標是**疊上去**的，視窗一重畫就
 		// 把它蓋掉一部分，直到游標下次移動才補回來——所以同一隻游標在
 		// 不同畫面上可見的範圍不一樣。
@@ -158,6 +161,16 @@ func (w *GameWindow) bevel() ui.Frame {
 // Draw 畫這個視窗的外框與文字。shadow 是文字的立體邊色號。
 func (w *GameWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8, faces *asset.AMG) []uint16 {
 	w.bevel().Draw(fb, w.X, w.Y, w.W, w.H)
+	w.DrawBoxes(fb)
+	for _, r := range w.Rules {
+		fb.FillRect(r.X, r.Y, r.W, r.H, r.Colour)
+	}
+	return w.drawContent(fb, fnt, shadow, faces)
+}
+
+// DrawBoxes 只畫視窗裡的小框。拆出來是因為原版有些畫面**先畫游標、
+// 再刷清單列**，所以那幾格會把游標蓋掉一部分（`docs/re/12`）。
+func (w *GameWindow) DrawBoxes(fb *gfx.Framebuffer) {
 	for _, b := range w.Boxes {
 		f := ui.Frame{Fill: b.Fill}
 		for _, l := range b.Layers {
@@ -171,9 +184,10 @@ func (w *GameWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8, fac
 		}
 		f.Draw(fb, b.X, b.Y, b.W, b.H)
 	}
-	for _, r := range w.Rules {
-		fb.FillRect(r.X, r.Y, r.W, r.H, r.Colour)
-	}
+}
+
+func (w *GameWindow) drawContent(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8,
+	faces *asset.AMG) []uint16 {
 	if w.Face != nil && faces != nil {
 		if img, err := faces.Decode(w.Face.Index); err == nil {
 			for y := 0; y < img.H; y++ {
@@ -238,6 +252,12 @@ func MainGame(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset
 			cur.DrawClipped(fb, s.Mouse.X, s.Mouse.Y, c.X, c.Y, c.W, c.H)
 		} else {
 			cur.Draw(fb, s.Mouse.X, s.Mouse.Y)
+		}
+		// 有些畫面在游標之後才刷清單列，那幾格會蓋掉游標的一部分。
+		if n := s.Mouse.AfterBoxes; n != "" {
+			if w := s.Windows[n]; w != nil {
+				w.DrawBoxes(fb)
+			}
 		}
 	}
 	return fb, missing
