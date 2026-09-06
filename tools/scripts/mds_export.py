@@ -94,7 +94,7 @@ def bar_length(tracks):
     return sums.most_common(1)[0][0] if sums else 192
 
 
-def timeline(t, barlen):
+def timeline(t, barlen, sane_bars=True):
     """把一軌展成（絕對 tick, 事件）。小節線是時間錨點：
     絕對時間 ＝ 小節序號 × 小節長度 ＋ 小節內的 tick。"""
     out, bar, tick = [], 0, 0
@@ -105,7 +105,10 @@ def timeline(t, barlen):
                 out.append((at, 'note', e[1], e[3], e[4]))
             tick += e[2]
         elif e[0] == 'bar':
-            bar += e[1]
+            # 引數幾乎都是 1。END_2F／END_2M 的引數是垃圾（249、115…），
+            # 但每一軌的步進總和都是 135 × 192，證明小節線本身沒問題，
+            # 一律前進一小節就對了。
+            bar += e[1] if sane_bars else 1
             tick = 0
         elif e[0] == 'raw' and e[1] in (0xFB, 0xFC):
             # FC／FB 不推進時間：把它們的第一個引數當步進的話，
@@ -126,12 +129,12 @@ def vlq(n):
     return bytes(reversed(b))
 
 
-def midi(title, tracks, barlen):
+def midi(title, tracks, barlen, sane_bars=True):
     chunks = []
     for t in tracks:
         ch = max(0, min(15, t['channel'] - 1))
         ev = []
-        for it in timeline(t, barlen):
+        for it in timeline(t, barlen, sane_bars):
             at, kind = it[0], it[1]
             if kind == 'note':
                 _, _, note, gate, vel = it
@@ -165,11 +168,11 @@ for f in sorted(glob.glob(SRC)):
     barlen = bar_length(tracks)
     notes = sum(1 for t in tracks for e in t['events'] if e[0] == 'note')
     # 小節線的引數在正常檔案裡幾乎都是 1；END_2F／END_2M 的是亂數般的值，
-    # 那兩份的事件流顯然不是同一套編碼。標成未解，不輸出 MIDI。
+    # 但那兩份每一軌的步進總和都是 135 × 192，小節線本身沒問題——
+    # 引數不可信的時候一律前進一小節。
     barargs = [e[1] for t in tracks for e in t['events'] if e[0] == 'bar']
     sane = bool(barargs) and sum(1 for v in barargs if v <= 2) / len(barargs) > 0.9
-    if sane:
-        open(f'{OUT_MID}/{name}.mid', 'wb').write(midi(title, tracks, barlen))
+    open(f'{OUT_MID}/{name}.mid', 'wb').write(midi(title, tracks, barlen, sane))
     json.dump({'file': os.path.basename(f), 'title': title, 'channels': chans,
                'ticks_per_quarter': TPQ, 'bar_ticks': barlen,
                'tracks': [{'channel': t['channel'],
@@ -178,11 +181,11 @@ for f in sorted(glob.glob(SRC)):
               ensure_ascii=False)
     index.append({'file': os.path.basename(f), 'title': title, 'tracks': len(tracks),
                   'channels': chans, 'bar_ticks': barlen, 'notes': notes,
-                  'decoded': sane,
+                  'bar_args_sane': sane,
                   'unknown_cmds': {hex(k): v for k, v in unknown.items()}})
     print('%-12s %-34s 軌 %2d  小節 %3d tick  音符 %5d  %s'
           % (name, title, len(tracks), barlen, notes,
-             'MIDI 已輸出' if sane else '**未解，不輸出 MIDI**'))
+             'MIDI 已輸出' if sane else 'MIDI 已輸出（小節線引數是垃圾，一律前進一小節）'))
 
 json.dump({'note': '.MDS 樂曲索引；MIDI 由 tools/scripts/mds_export.py 從自備原版重建，不進 Git',
            'ticks_per_quarter': TPQ, 'songs': index},

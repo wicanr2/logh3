@@ -16,7 +16,7 @@
    ],
    "bar_ticks": 144,
    "notes": 3294,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xfc": 61,
     "0xfb": 61
@@ -38,7 +38,7 @@
    ],
    "bar_ticks": 144,
    "notes": 3829,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xfc": 110,
     "0xfb": 110,
@@ -59,7 +59,7 @@
    ],
    "bar_ticks": 144,
    "notes": 2849,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xfc": 87,
     "0xfb": 87
@@ -80,7 +80,7 @@
    ],
    "bar_ticks": 144,
    "notes": 3235,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xfc": 153,
     "0xfb": 153
@@ -100,7 +100,7 @@
    ],
    "bar_ticks": 96,
    "notes": 1542,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xfc": 6,
     "0xfb": 6
@@ -117,7 +117,7 @@
    ],
    "bar_ticks": 192,
    "notes": 1754,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xfc": 3,
     "0xfb": 3
@@ -139,7 +139,7 @@
    ],
    "bar_ticks": 192,
    "notes": 2780,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xfc": 6,
     "0xfb": 6
@@ -161,7 +161,7 @@
    ],
    "bar_ticks": 192,
    "notes": 3411,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xfc": 8,
     "0xfb": 8
@@ -183,7 +183,7 @@
    ],
    "bar_ticks": 192,
    "notes": 4795,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xe4": 93,
     "0xfc": 6,
@@ -206,7 +206,7 @@
    ],
    "bar_ticks": 192,
    "notes": 3210,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xe4": 81,
     "0xfc": 5,
@@ -229,7 +229,7 @@
    ],
    "bar_ticks": 192,
    "notes": 979,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xe4": 6,
     "0xfc": 6,
@@ -252,7 +252,7 @@
    ],
    "bar_ticks": 192,
    "notes": 990,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xe4": 6,
     "0xfc": 6,
@@ -275,7 +275,7 @@
    ],
    "bar_ticks": 192,
    "notes": 688,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xe4": 6,
     "0xfc": 7,
@@ -298,7 +298,7 @@
    ],
    "bar_ticks": 192,
    "notes": 930,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xfc": 8,
     "0xfb": 8,
@@ -321,7 +321,7 @@
    ],
    "bar_ticks": 192,
    "notes": 481,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xe4": 5,
     "0xfc": 6,
@@ -344,7 +344,7 @@
    ],
    "bar_ticks": 192,
    "notes": 736,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xfc": 8,
     "0xfb": 8,
@@ -367,7 +367,7 @@
    ],
    "bar_ticks": 192,
    "notes": 3126,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xe4": 5,
     "0xfc": 5,
@@ -388,7 +388,7 @@
    ],
    "bar_ticks": 192,
    "notes": 4769,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xe4": 6,
     "0xfc": 6,
@@ -419,7 +419,7 @@
    ],
    "bar_ticks": 192,
    "notes": 2952,
-   "decoded": false,
+   "bar_args_sane": false,
    "unknown_cmds": {
     "0xe4": 7
    }
@@ -438,7 +438,7 @@
    ],
    "bar_ticks": 192,
    "notes": 2870,
-   "decoded": false,
+   "bar_args_sane": false,
    "unknown_cmds": {
     "0xe4": 6
    }
@@ -459,7 +459,7 @@
    ],
    "bar_ticks": 192,
    "notes": 977,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xe4": 8,
     "0xfc": 6,
@@ -482,7 +482,7 @@
    ],
    "bar_ticks": 192,
    "notes": 899,
-   "decoded": true,
+   "bar_args_sane": true,
    "unknown_cmds": {
     "0xe4": 6,
     "0xfc": 6,

@@ -40,7 +40,7 @@
 | `ATTR.DAT` | 未開始 | — |
 | `ADMIRAL.DT*` | **版面已解出**（欄位語意確認 `+1` ＝ 陣營、`+11` ＝ 占領能力）| [`docs/internals/08`](docs/internals/08-admiral-dt.md) |
 | `STELLAR.DT*` / `SHIP.DT*` / `FLEET.DT*` / `PLANET.DT*` | 未開始 | — |
-| `*.MDS`（音樂，22 份）| 未開始 | — |
+| `*.MDS`（音樂，22 份）| **已解出**（22 首轉成 MIDI；速度數值的單位未確認）| [`docs/internals/17`](docs/internals/17-mds.md) |
 | `*.VO5`（結局劇情，50 份）| 未解（不是 `.AMG` 檔頭；解碼常式未定位）| [`docs/internals/16`](docs/internals/16-ending-exe.md) |
 | `ENDING.EXE`（結局文字、職員表）| **已解出** | [`docs/internals/16`](docs/internals/16-ending-exe.md) |
 | `FACE.AMG`（.AMG 圖庫）| **已解出**（83 張逐像素對得上原版畫面）| [`docs/internals/09`](docs/internals/09-face-amg.md) |
