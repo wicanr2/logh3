@@ -41,8 +41,13 @@ spec['windows']['overlay'] = {
     'frame': {'layers': layers, 'alt': alts, 'fill': 9, 'patches': patches},
     'ink': 7, 'lines': lines, 'boxes': [], 'rules': [],
 }
-spec['order'] = ['report', 'overlay']
-spec['mouse'] = {'x': MX, 'y': MY}
+# 底層不一定有 report——命令階段主畫面只有 board 一個視窗。
+spec['order'] = [n for n in ('report', 'overlay') if n in spec['windows']]
+# 游標座標給 -1 ＝ **沿用底層那一份**（含它的可見範圍）。
+# 疊一層上去通常不會動到游標：滑鼠沒移動，畫面上那隻還是原來被夾成
+# 幾列的樣子，重新算一次反而會畫成完整的一隻。
+if MX >= 0:
+    spec['mouse'] = {'x': MX, 'y': MY}
 spec['hotspots'] = []
 json.dump(spec, open(f'/work/docs/internals/data/{out_name}.json', 'w'),
           ensure_ascii=False, indent=1)

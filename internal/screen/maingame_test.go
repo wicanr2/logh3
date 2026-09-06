@@ -27,6 +27,7 @@ func TestMainGameMatchesOracle(t *testing.T) {
 		{"screen-admiral-list", "admirals1"},
 		{"screen-account", "account1"},
 		{"screen-command-phase", "main1e"},
+		{"screen-cmd-menu", "cmd1e"},
 	} {
 		t.Run(c.batch, func(t *testing.T) { checkGameScreen(t, c.spec, c.batch) })
 	}
