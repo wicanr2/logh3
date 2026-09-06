@@ -87,3 +87,33 @@ func TestFaceAMGMatchesOracle(t *testing.T) {
 		t.Fatalf("與原版畫面有 %d / %d 個像素不同", bad, img.W*img.H)
 	}
 }
+
+// TestSpriteSPRTiles 釘住 `SPRITE.SPR` 的版面：75 張 16×16。
+// 尺寸猜錯不會報錯——只會讓每一張的內容從上一張的中間開始，
+// 圖案看起來「大致對但錯位」。
+func TestSpriteSPRTiles(t *testing.T) {
+	data, err := os.ReadFile(filepath.Join(origDir(t), "SPRITE.SPR"))
+	if err != nil {
+		t.Skip("找不到原版 SPRITE.SPR，跳過")
+	}
+	tiles, err := DecodeTiles(data, 16, 16)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(tiles) != 75 {
+		t.Fatalf("解出 %d 張，預期 75", len(tiles))
+	}
+	for i, tl := range tiles {
+		for _, v := range tl.Pix {
+			if v > 15 {
+				t.Fatalf("第 %d 張出現非 4 位元色號 %d", i, v)
+			}
+		}
+	}
+	// **整除證明不了尺寸**：9600 同樣是 16×20（160 bytes）的整數倍，
+	// 解出來是 60 張錯位的圖。16×16 的依據是原版 blit 常式與圖形本身
+	// （見 `docs/internals/10`），不是這個整除關係。
+	if _, err := DecodeTiles(data, 16, 20); err != nil {
+		t.Fatal("16×20 也整除，這個測試不該靠整除判斷尺寸")
+	}
+}
