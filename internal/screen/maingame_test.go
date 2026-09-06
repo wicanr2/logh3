@@ -115,3 +115,39 @@ func loadRegionColours(path string) ([]uint8, error) {
 	}
 	return out, nil
 }
+
+// TestBuildPlanNumbersRedrawIdentically 釘住「重畫數字」這條路：
+// 把開局的值原樣畫回去，畫面必須與原版逐位元組相同。
+// 這條過了，改預算之後的畫面才有意義——不然分不清是規則錯了還是重畫錯了。
+func TestBuildPlanNumbersRedrawIdentically(t *testing.T) {
+	root := "../.."
+	specPath := filepath.Join(root, "docs/internals/data/screen-build-plan.json")
+	oracle := filepath.Join(root, "workplace/oracle/plan1/screen.bin")
+	fontPath := filepath.Join(root, "org_game/extracted/GRAPH.IMG")
+	for _, p := range []string{specPath, oracle, fontPath} {
+		if _, err := os.Stat(p); err != nil {
+			t.Skipf("缺 %s，跳過", p)
+		}
+	}
+	s, err := LoadMainGameSpec(specPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fnt, err := font.Load(fontPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fb, _ := MainGame(s, fnt, nil, nil, nil)
+	before := append([]uint8(nil), fb.Pix...)
+	s.DrawNumbers(fb, fnt, []int{20, 10, 18, 10, 12, 15, 15},
+		[]int{3037, 1518, 2733, 1518, 1822, 2277, 2277}, 0, 36)
+	bad := 0
+	for i := range before {
+		if before[i] != fb.Pix[i] {
+			bad++
+		}
+	}
+	if bad != 0 {
+		t.Fatalf("把開局的值原樣重畫，卻與原本差了 %d 個像素", bad)
+	}
+}

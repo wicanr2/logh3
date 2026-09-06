@@ -63,3 +63,19 @@ func (b *BuildPlan) Dec(row int) bool {
 	b.Pct[row] -= BuildPlanStep
 	return true
 }
+
+// RestBase 是餘額那一列算金額用的基數。
+//
+// ⚠ **它不是建造費。** 建造費 15,185 算出來的各列金額對得上，但餘額那一列
+// 對不上——六個實測狀態（餘額 0/2/4/6/93% 對應 36/340/644/948/14,178）
+// 只有基數 15,207 全部吻合。15,207 與 15,185 差 22，來源未確認。
+const RestBase = 15207
+
+// RestCarry 是餘額金額裡那個與百分比無關的固定項（餘額 0% 時就是 36）。
+// 來源未確認。
+const RestCarry = 36
+
+// RestAmount 是餘額那一列的金額 ＝ 基數 × 餘額百分比（捨去）＋ 固定項。
+func (b *BuildPlan) RestAmount() int {
+	return RestBase*b.RestPct()/100 + RestCarry
+}

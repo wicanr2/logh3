@@ -1,12 +1,14 @@
 package screen
 
 import (
+	"strings"
 	"encoding/json"
 	"os"
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
@@ -20,6 +22,22 @@ type MainGameSpec struct {
 		X, Y    int
 	} `json:"map"`
 	Windows map[string]*GameWindow `json:"windows"`
+
+	// Fields 是「會變的數字」畫在哪（建造計劃的百分比、金額、餘額）。
+	// 靜態的 Lines 已經含了開局的值，所以要重畫時先把這幾格填回底色。
+	Fields *struct {
+		Cost *NumField `json:"cost"`
+		Rows []struct {
+			Y      int       `json:"y"`
+			Pct    *NumField `json:"pct"`
+			Amount *NumField `json:"amount"`
+		} `json:"rows"`
+		Rest *struct {
+			Y      int       `json:"y"`
+			Pct    *NumField `json:"pct"`
+			Amount *NumField `json:"amount"`
+		} `json:"rest"`
+	} `json:"fields"`
 
 	// Hotspots 是可點的區域。原版存的是**相對視窗原點的格子**
 	// （`docs/re/09`）；這裡放換算好的像素矩形，另外附上原始格子座標。
@@ -86,6 +104,15 @@ type GameWindow struct {
 		} `json:"cells"`
 	} `json:"lines"`
 }
+
+// NumField 是一格會變的數字：靠右對齊，右邊界固定。
+type NumField struct {
+	X, W int
+	Text string `json:"text"`
+}
+
+// Right 回這一格的右邊界。
+func (f *NumField) Right() int { return f.X + f.W }
 
 // Solid 是一塊純色矩形（輸入框、面板上的橫條）。
 type Solid struct {
@@ -211,4 +238,103 @@ func (s *MainGameSpec) HitTest(x, y int) string {
 		}
 	}
 	return ""
+}
+
+// DrawNumbers 把會變的數字重畫上去：先把原本那幾格填回底色，
+// 再靠右畫新的值。pct／amount 各七列，另加餘額那一列。
+func (s *MainGameSpec) DrawNumbers(fb *gfx.Framebuffer, fnt *font.Font,
+	pct, amount []int, restPct, restAmount int) {
+	f := s.Fields
+	if f == nil {
+		return
+	}
+	w := s.Windows["report"]
+	if w == nil {
+		return
+	}
+	fill := w.Frame.Fill
+	put := func(nf *NumField, y int, text string) {
+		if nf == nil {
+			return
+		}
+		x := nf.Right() - len(text)*font.HalfW
+		// 只清「舊值與新值聯集」那一塊。往左多清會吃掉左邊的欄位標題——
+		// 那一帶是 3/7/9 的網點，不是底色，清了補不回來。
+		// 立體邊往上一列、往左一位元，所以上緣要多留一列。
+		clr := nf.X
+		if x < clr {
+			clr = x
+		}
+		fb.FillRect(clr, y-1, nf.Right()-clr, font.GlyphH+1, fill)
+		for i := 0; i < len(text); i++ {
+			ui.DrawHalfGlyph(fb, fnt, x+i*font.HalfW, y, text[i], w.Ink, 3, -1)
+		}
+	}
+	for i, r := range f.Rows {
+		if i < len(pct) {
+			put(r.Pct, r.Y, itoa(pct[i])+"%")
+		}
+		if i < len(amount) {
+			put(r.Amount, r.Y, itoa(amount[i]))
+		}
+	}
+	if f.Rest != nil {
+		put(f.Rest.Pct, f.Rest.Y, itoa(restPct)+"%")
+		put(f.Rest.Amount, f.Rest.Y, itoa(restAmount))
+	}
+}
+
+func itoa(v int) string {
+	if v == 0 {
+		return "0"
+	}
+	var b [12]byte
+	i := len(b)
+	for v > 0 {
+		i--
+		b[i] = byte('0' + v%10)
+		v /= 10
+	}
+	return string(b[i:])
+}
+
+// InitialBuildPlan 從畫面規格讀出開局的預算分配：建造費與七列的百分比
+// 都是規格裡量到的原版初值。
+func InitialBuildPlan(s *MainGameSpec) *rules.BuildPlan {
+	b := &rules.BuildPlan{}
+	if s == nil || s.Fields == nil {
+		return b
+	}
+	if s.Fields.Cost != nil {
+		b.Cost = atoi(s.Fields.Cost.Text)
+	}
+	for i, r := range s.Fields.Rows {
+		if i >= rules.BuildPlanRows || r.Pct == nil {
+			break
+		}
+		b.Pct[i] = atoi(strings.TrimSuffix(r.Pct.Text, "%"))
+	}
+	return b
+}
+
+// DrawBuildPlan 把一份預算分配畫上去。
+func DrawBuildPlan(s *MainGameSpec, fb *gfx.Framebuffer, fnt *font.Font, b *rules.BuildPlan) {
+	pct := make([]int, rules.BuildPlanRows)
+	amt := make([]int, rules.BuildPlanRows)
+	for i := 0; i < rules.BuildPlanRows; i++ {
+		pct[i] = b.Pct[i]
+		amt[i] = b.Amount(i)
+	}
+	s.DrawNumbers(fb, fnt, pct, amt, b.RestPct(), b.RestAmount())
+}
+
+func atoi(s string) int {
+	n := 0
+	for i := 0; i < len(s); i++ {
+		if s[i] < '0' || s[i] > '9' {
+			continue
+		}
+		n = n*10 + int(s[i]-'0')
+	}
+	return n
 }

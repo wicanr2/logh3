@@ -60,3 +60,26 @@ func TestDecBlockedAtZero(t *testing.T) {
 		t.Fatal("0% 還減得下去")
 	}
 }
+
+// TestRestAmountMatchesOriginal 釘住餘額金額的六個實測狀態。
+// 最後兩個是直接改記憶體造出來的局面（改了七列的百分比），
+// 沒有它們就分不出好幾個都對得上前四點的公式（`docs/re/11`）。
+func TestRestAmountMatchesOriginal(t *testing.T) {
+	cases := []struct {
+		pct  [BuildPlanRows]int
+		want int
+	}{
+		{[BuildPlanRows]int{20, 10, 18, 10, 12, 15, 15}, 36},   // 餘 0%
+		{[BuildPlanRows]int{18, 10, 18, 10, 12, 15, 15}, 340},  // 餘 2%
+		{[BuildPlanRows]int{16, 10, 18, 10, 12, 15, 15}, 644},  // 餘 4%
+		{[BuildPlanRows]int{14, 10, 18, 10, 12, 15, 15}, 948},  // 餘 6%
+		{[BuildPlanRows]int{20, 10, 16, 10, 12, 15, 15}, 340},  // 餘 2%，改的是第 2 列
+		{[BuildPlanRows]int{1, 1, 1, 1, 1, 1, 1}, 14178},       // 餘 93%，改記憶體造的
+	}
+	for _, c := range cases {
+		b := &BuildPlan{Cost: 15185, Pct: c.pct}
+		if got := b.RestAmount(); got != c.want {
+			t.Fatalf("餘額 %d%%：%d，原版是 %d", b.RestPct(), got, c.want)
+		}
+	}
+}

@@ -6,10 +6,12 @@ package game
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
 	"github.com/wicanr2/logh3/internal/ui"
 )
@@ -67,6 +69,9 @@ type Game struct {
 	typed  []byte
 	answer uint8
 	tries  int
+
+	// 建造計劃的預算分配。進入該畫面時從規格的初始值開一份。
+	plan *rules.BuildPlan
 }
 
 // New 從主選單開始。
@@ -129,6 +134,21 @@ func (g *Game) Click(x, y int) {
 	case StateShipOrder:
 		if g.res.ShipOrder.HitTest(x, y) == "build-plan" && g.res.BuildPlan != nil {
 			g.state = StateBuildPlan
+			g.plan = screen.InitialBuildPlan(g.res.BuildPlan)
+		}
+	case StateBuildPlan:
+		if g.plan == nil {
+			return
+		}
+		act := g.res.BuildPlan.HitTest(x, y)
+		var row int
+		switch {
+		case strings.HasPrefix(act, "inc-"):
+			fmt.Sscanf(act, "inc-%d", &row)
+			g.plan.Inc(row)
+		case strings.HasPrefix(act, "dec-"):
+			fmt.Sscanf(act, "dec-%d", &row)
+			g.plan.Dec(row)
 		}
 	}
 }
@@ -180,6 +200,9 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	case StateBuildPlan:
 		fb, _ := screen.MainGame(g.res.BuildPlan, g.res.Font, g.res.StarMap,
 			g.res.Faces, g.res.Cursor)
+		if g.plan != nil {
+			screen.DrawBuildPlan(g.res.BuildPlan, fb, g.res.Font, g.plan)
+		}
 		return fb
 	default:
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.highlight,
