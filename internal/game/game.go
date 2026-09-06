@@ -211,6 +211,9 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	}
 }
 
+// Plan 回目前的建造計劃預算分配；不在那個畫面就回 nil。
+func (g *Game) Plan() *rules.BuildPlan { return g.plan }
+
 // Answer 回這一題的答案。給測試與除錯用——正式玩不會叫它。
 func (g *Game) Answer() uint8 { return g.answer }
 

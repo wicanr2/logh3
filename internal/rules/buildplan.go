@@ -2,15 +2,30 @@
 // 猜的東西不放進來。
 package rules
 
-// BuildPlanRows 是船艦建造計劃的列數：戰艦、高速戰艦、巡航艦、航空母艦、
-// 驅逐艦、運補艦、修護艦。
+// BuildPlanRows 是船艦建造計劃的列數。
 const BuildPlanRows = 7
 
 // BuildPlanStep 是按一次箭頭改變的百分比。
 //
-// 量自原版：在 796 年 1 月的建造計劃上連按右欄箭頭，第一列從 20% →
-// 18% → 16%（`docs/re/10`）。
-const BuildPlanStep = 2
+// **是 1，不是 2。** 箭頭按住會連發，量到的關係是按越久改越多：
+// 按 200,000 道指令改 1%、3,000,000 改 3%、6,000,000 改 4%
+// （`docs/re/12`）。先前以為一次 2%，那是同一組按壓時間剛好連發兩次。
+const BuildPlanStep = 1
+
+// UnitPrice 是各列的單價。**一列的預算只能買整數艘**，除不盡的零頭
+// 退回餘額——餘額那一列的金額就是這樣來的，不是「建造費 × 餘額百分比」。
+//
+// 量法：把百分比陣列直接寫進記憶體，一次只讓一列有預算，從餘額反推
+// 那一列實際花掉多少，再用兩個不同百分比取最大公因數夾出單價
+// （`docs/re/12`）。
+var UnitPrice = [BuildPlanRows]int{8, 12, 4, 24, 4, 7, 22}
+
+// ShipsPerUnit 是一個「部隊」要幾艘船。畫面上的「部隊」那一欄 ＝
+// 船艦數 ÷ 這個值，無條件捨去。
+//
+// ⚠ **只有第 0／2／4／5／6 列夾得夠緊，第 1／3 列還在區間裡。**
+// 量法見 `docs/re/11`。
+var ShipsPerUnit = [BuildPlanRows]int{3000, 3000, 4000, 2000, 3000, 3000, 1000}
 
 // BuildPlan 是次月份的船艦建造預算分配。
 type BuildPlan struct {
@@ -33,15 +48,53 @@ func (b *BuildPlan) UsedPct() int {
 // RestPct 是還沒分配的百分比（畫面上的「餘額」那一列）。
 func (b *BuildPlan) RestPct() int { return 100 - b.UsedPct() }
 
-// Amount 是某一列分到的金額 ＝ 建造費 × 百分比，取整數。
+// Amount 是某一列**畫在畫面上**的金額 ＝ 建造費 × 百分比，無條件捨去。
 //
-// 實測：建造費 15,185 時 20% ＝ 3,037、18% ＝ 2,733、16% ＝ 2,429，
-// 都是無條件捨去。
+// 實測：建造費 15,185 時 20% ＝ 3,037、18% ＝ 2,733、16% ＝ 2,429。
 func (b *BuildPlan) Amount(row int) int {
 	if row < 0 || row >= BuildPlanRows {
 		return 0
 	}
 	return b.Cost * b.Pct[row] / 100
+}
+
+// Spent 是某一列**實際花掉**的錢：金額裡買得起整數艘的部分。
+// 顯示的是 Amount，花掉的是 Spent，兩者的差額回到餘額。
+func (b *BuildPlan) Spent(row int) int {
+	a := b.Amount(row)
+	if row < 0 || row >= BuildPlanRows || UnitPrice[row] <= 0 {
+		return a
+	}
+	return a - a%UnitPrice[row]
+}
+
+// Ships 是某一列的「船艦數」欄。單價買到幾組，一組十艘。
+func (b *BuildPlan) Ships(row int) int {
+	if row < 0 || row >= BuildPlanRows || UnitPrice[row] <= 0 {
+		return 0
+	}
+	return b.Amount(row) / UnitPrice[row] * 10
+}
+
+// Units 是某一列的「部隊」欄 ＝ 船艦數 ÷ 一個部隊的艘數。
+func (b *BuildPlan) Units(row int) int {
+	if row < 0 || row >= BuildPlanRows || ShipsPerUnit[row] <= 0 {
+		return 0
+	}
+	return b.Ships(row) / ShipsPerUnit[row]
+}
+
+// RestAmount 是餘額那一列的金額 ＝ 建造費減掉各列實際花掉的錢。
+//
+// 各列都是 0% 時餘額就是整筆建造費（實測 15,185）；第 0 列吃掉 100%
+// 時餘額是 1（15,185 除以單價 8 的零頭），這兩點把「餘額 ＝ 建造費 ×
+// 餘額百分比 ＋ 常數」那類公式全部推翻。
+func (b *BuildPlan) RestAmount() int {
+	rest := b.Cost
+	for i := 0; i < BuildPlanRows; i++ {
+		rest -= b.Spent(i)
+	}
+	return rest
 }
 
 // Inc 把某一列加一格。**餘額不夠就不動**——原版開局各列加起來剛好
@@ -62,20 +115,4 @@ func (b *BuildPlan) Dec(row int) bool {
 	}
 	b.Pct[row] -= BuildPlanStep
 	return true
-}
-
-// RestBase 是餘額那一列算金額用的基數。
-//
-// ⚠ **它不是建造費。** 建造費 15,185 算出來的各列金額對得上，但餘額那一列
-// 對不上——六個實測狀態（餘額 0/2/4/6/93% 對應 36/340/644/948/14,178）
-// 只有基數 15,207 全部吻合。15,207 與 15,185 差 22，來源未確認。
-const RestBase = 15207
-
-// RestCarry 是餘額金額裡那個與百分比無關的固定項（餘額 0% 時就是 36）。
-// 來源未確認。
-const RestCarry = 36
-
-// RestAmount 是餘額那一列的金額 ＝ 基數 × 餘額百分比（捨去）＋ 固定項。
-func (b *BuildPlan) RestAmount() int {
-	return RestBase*b.RestPct()/100 + RestCarry
 }

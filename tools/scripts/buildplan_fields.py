@@ -38,13 +38,19 @@ for l in lines:
     if l['y'] == 162 and segs:
         spec.setdefault('fields', {})['cost'] = dict(box(segs[0]), y=l['y'])
     elif 200 <= l['y'] <= 330 and len(segs) >= 2:
-        rows.append({'y': l['y'], 'pct': box(segs[0]), 'amount': box(segs[1])})
+        r = {'y': l['y'], 'pct': box(segs[0]), 'amount': box(segs[1])}
+        # 金額右邊還有「船艦數」與「部隊」「建造中部隊」三欄，也會跟著預算變。
+        for name, k in (('ships', 2), ('units', 3), ('building', 4)):
+            if len(segs) > k:
+                r[name] = box(segs[k])
+        rows.append(r)
     elif l['y'] == 342 and len(segs) >= 2:
         spec.setdefault('fields', {})['rest'] = {
             'y': l['y'], 'pct': box(segs[0]), 'amount': box(segs[1])}
 spec['fields']['rows'] = rows
-spec['fields']['note'] = ('會變的數字：各列的百分比與金額、餘額。'
-                          '百分比與金額都是靠右對齊，右邊界固定。')
+spec['fields']['note'] = ('會變的數字：各列的百分比、金額、船艦數、部隊、'
+                          '建造中部隊，以及餘額。每一欄都是靠右對齊，'
+                          '右邊界固定。')
 json.dump(spec, open(p, 'w'), ensure_ascii=False, indent=1)
 print('cost:', spec['fields'].get('cost'))
 for r in rows:

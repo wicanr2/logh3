@@ -28,9 +28,12 @@ type MainGameSpec struct {
 	Fields *struct {
 		Cost *NumField `json:"cost"`
 		Rows []struct {
-			Y      int       `json:"y"`
-			Pct    *NumField `json:"pct"`
-			Amount *NumField `json:"amount"`
+			Y        int       `json:"y"`
+			Pct      *NumField `json:"pct"`
+			Amount   *NumField `json:"amount"`
+			Ships    *NumField `json:"ships"`
+			Units    *NumField `json:"units"`
+			Building *NumField `json:"building"`
 		} `json:"rows"`
 		Rest *struct {
 			Y      int       `json:"y"`
@@ -243,7 +246,7 @@ func (s *MainGameSpec) HitTest(x, y int) string {
 // DrawNumbers 把會變的數字重畫上去：先把原本那幾格填回底色，
 // 再靠右畫新的值。pct／amount 各七列，另加餘額那一列。
 func (s *MainGameSpec) DrawNumbers(fb *gfx.Framebuffer, fnt *font.Font,
-	pct, amount []int, restPct, restAmount int) {
+	pct, amount, ships, units []int, restPct, restAmount int) {
 	f := s.Fields
 	if f == nil {
 		return
@@ -276,6 +279,12 @@ func (s *MainGameSpec) DrawNumbers(fb *gfx.Framebuffer, fnt *font.Font,
 		}
 		if i < len(amount) {
 			put(r.Amount, r.Y, itoa(amount[i]))
+		}
+		if i < len(ships) {
+			put(r.Ships, r.Y, itoa(ships[i]))
+		}
+		if i < len(units) {
+			put(r.Units, r.Y, itoa(units[i]))
 		}
 	}
 	if f.Rest != nil {
@@ -319,13 +328,15 @@ func InitialBuildPlan(s *MainGameSpec) *rules.BuildPlan {
 
 // DrawBuildPlan 把一份預算分配畫上去。
 func DrawBuildPlan(s *MainGameSpec, fb *gfx.Framebuffer, fnt *font.Font, b *rules.BuildPlan) {
-	pct := make([]int, rules.BuildPlanRows)
-	amt := make([]int, rules.BuildPlanRows)
-	for i := 0; i < rules.BuildPlanRows; i++ {
+	n := rules.BuildPlanRows
+	pct, amt, ships, units := make([]int, n), make([]int, n), make([]int, n), make([]int, n)
+	for i := 0; i < n; i++ {
 		pct[i] = b.Pct[i]
 		amt[i] = b.Amount(i)
+		ships[i] = b.Ships(i)
+		units[i] = b.Units(i)
 	}
-	s.DrawNumbers(fb, fnt, pct, amt, b.RestPct(), b.RestAmount())
+	s.DrawNumbers(fb, fnt, pct, amt, ships, units, b.RestPct(), b.RestAmount())
 }
 
 func atoi(s string) int {

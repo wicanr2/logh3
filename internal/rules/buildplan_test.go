@@ -21,28 +21,29 @@ func TestAmountsMatchOriginal(t *testing.T) {
 	}
 }
 
-// TestArrowsMatchOriginal 走一遍實測過的操作序列：
-// 右欄按兩下 20% → 16%，左欄按一下回到 18%。
+// TestArrowsMatchOriginal 走一遍實測過的操作序列。箭頭一次 1%。
 func TestArrowsMatchOriginal(t *testing.T) {
 	b := newPlan()
-	if !b.Dec(0) || !b.Dec(0) {
-		t.Fatal("減不下去")
+	for i := 0; i < 4; i++ {
+		if !b.Dec(0) {
+			t.Fatalf("第 %d 次減不下去", i+1)
+		}
 	}
-	if b.Pct[0] != 16 || b.Amount(0) != 2429 || b.RestPct() != 4 {
-		t.Fatalf("減兩次後 %d%% / %d / 餘 %d%%，原版是 16%% / 2429 / 餘 4%%",
-			b.Pct[0], b.Amount(0), b.RestPct())
+	if b.Pct[0] != 16 || b.Amount(0) != 2429 || b.RestPct() != 4 || b.RestAmount() != 644 {
+		t.Fatalf("減四次後 %d%% / %d / 餘 %d%% %d，原版是 16%% / 2429 / 餘 4%% 644",
+			b.Pct[0], b.Amount(0), b.RestPct(), b.RestAmount())
 	}
-	if !b.Inc(0) {
+	if !b.Inc(0) || !b.Inc(0) {
 		t.Fatal("加不上去")
 	}
-	if b.Pct[0] != 18 || b.Amount(0) != 2733 || b.RestPct() != 2 {
-		t.Fatalf("再加一次後 %d%% / %d / 餘 %d%%，原版是 18%% / 2733 / 餘 2%%",
-			b.Pct[0], b.Amount(0), b.RestPct())
+	if b.Pct[0] != 18 || b.Amount(0) != 2733 || b.RestPct() != 2 || b.RestAmount() != 340 {
+		t.Fatalf("再加兩次後 %d%% / %d / 餘 %d%% %d，原版是 18%% / 2733 / 餘 2%% 340",
+			b.Pct[0], b.Amount(0), b.RestPct(), b.RestAmount())
 	}
 }
 
 // TestIncBlockedWhenFull 釘住那個看起來像壞掉的行為：開局餘額 0%，
-// 左欄箭頭按下去**不該有任何動靜**。原版就是這樣，害我以為熱區找錯了。
+// 左欄箭頭按下去**不該有任何動靜**。
 func TestIncBlockedWhenFull(t *testing.T) {
 	b := newPlan()
 	if b.Inc(0) {
@@ -61,25 +62,49 @@ func TestDecBlockedAtZero(t *testing.T) {
 	}
 }
 
-// TestRestAmountMatchesOriginal 釘住餘額金額的六個實測狀態。
-// 最後兩個是直接改記憶體造出來的局面（改了七列的百分比），
-// 沒有它們就分不出好幾個都對得上前四點的公式（`docs/re/11`）。
+// TestRestAmountMatchesOriginal 釘住餘額金額。
+//
+// 後面那一批是直接把百分比陣列寫進原版記憶體造出來的局面
+// （`docs/re/12`）。手點只能造出餘額 0–6%，那個範圍裡好幾組公式
+// 都對得上；單列獨佔預算的局面才分得出來。
 func TestRestAmountMatchesOriginal(t *testing.T) {
 	cases := []struct {
+		name string
 		pct  [BuildPlanRows]int
 		want int
 	}{
-		{[BuildPlanRows]int{20, 10, 18, 10, 12, 15, 15}, 36},   // 餘 0%
-		{[BuildPlanRows]int{18, 10, 18, 10, 12, 15, 15}, 340},  // 餘 2%
-		{[BuildPlanRows]int{16, 10, 18, 10, 12, 15, 15}, 644},  // 餘 4%
-		{[BuildPlanRows]int{14, 10, 18, 10, 12, 15, 15}, 948},  // 餘 6%
-		{[BuildPlanRows]int{20, 10, 16, 10, 12, 15, 15}, 340},  // 餘 2%，改的是第 2 列
-		{[BuildPlanRows]int{1, 1, 1, 1, 1, 1, 1}, 14178},       // 餘 93%，改記憶體造的
+		{"開局", [BuildPlanRows]int{20, 10, 18, 10, 12, 15, 15}, 36},
+		{"餘 1%", [BuildPlanRows]int{19, 10, 18, 10, 12, 15, 15}, 188},
+		{"餘 2%", [BuildPlanRows]int{18, 10, 18, 10, 12, 15, 15}, 340},
+		{"餘 4%", [BuildPlanRows]int{16, 10, 18, 10, 12, 15, 15}, 644},
+		{"餘 6%", [BuildPlanRows]int{14, 10, 18, 10, 12, 15, 15}, 948},
+		{"改第 2 列", [BuildPlanRows]int{20, 10, 16, 10, 12, 15, 15}, 340},
+		{"改第 6 列", [BuildPlanRows]int{20, 10, 18, 10, 12, 15, 12}, 498},
+		{"兩列都改", [BuildPlanRows]int{17, 10, 18, 10, 12, 15, 12}, 954},
+		{"全部 1%", [BuildPlanRows]int{1, 1, 1, 1, 1, 1, 1}, 14178},
+		{"全部 0%", [BuildPlanRows]int{}, 15185},
+		{"第 0 列吃滿", [BuildPlanRows]int{100}, 1},
 	}
 	for _, c := range cases {
 		b := &BuildPlan{Cost: 15185, Pct: c.pct}
 		if got := b.RestAmount(); got != c.want {
-			t.Fatalf("餘額 %d%%：%d，原版是 %d", b.RestPct(), got, c.want)
+			t.Errorf("%s（餘 %d%%）：%d，原版是 %d", c.name, b.RestPct(), got, c.want)
+		}
+	}
+}
+
+// TestUnitPrices 用「只給一列預算」的實測局面釘住七個單價。
+func TestUnitPrices(t *testing.T) {
+	// 一列獨佔 15% 與 20% 時的餘額，逐列量的。
+	at15 := [BuildPlanRows]int{12913, 12917, 12909, 12929, 12909, 12910, 12919}
+	at20 := [BuildPlanRows]int{12153, 12149, 12149, 12161, 12149, 12154, 12149}
+	for i := 0; i < BuildPlanRows; i++ {
+		for _, c := range []struct{ pct, want int }{{15, at15[i]}, {20, at20[i]}} {
+			b := &BuildPlan{Cost: 15185}
+			b.Pct[i] = c.pct
+			if got := b.RestAmount(); got != c.want {
+				t.Errorf("只有第 %d 列 %d%%：餘額 %d，原版是 %d", i, c.pct, got, c.want)
+			}
 		}
 	}
 }

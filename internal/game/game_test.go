@@ -205,3 +205,52 @@ func TestClickOutsideMenuDoesNothing(t *testing.T) {
 		t.Fatal("點在選單外卻換了畫面")
 	}
 }
+
+// TestBuildPlanArrowsChangePlan：建造計劃上的箭頭要真的改到預算。
+//
+// 右欄是減、左欄是加，一次 1%（`docs/re/11`）。開局七列加起來剛好
+// 100%，所以左欄一開始按不動——那是原版行為，不是壞掉。
+func TestBuildPlanArrowsChangePlan(t *testing.T) {
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 170)
+	for _, c := range []byte{'1', '3', '8'} {
+		g.Key(c)
+	}
+	g.Key('\r')
+	g.Click(448, 330)
+	g.Click(448, 310)
+	if g.State() != StateBuildPlan {
+		t.Skip("走不到建造計劃（缺資源），跳過")
+	}
+	p := g.Plan()
+	if p == nil {
+		t.Fatal("進了建造計劃卻沒有預算分配")
+	}
+	if p.Pct[0] != 20 {
+		t.Fatalf("開局第 0 列是 %d%%，原版是 20%%", p.Pct[0])
+	}
+	// 左欄：餘額 0% 時按不動。
+	g.Click(216, 170)
+	if p.Pct[0] != 20 {
+		t.Fatalf("餘額 0%% 還加得上去：%d%%", p.Pct[0])
+	}
+	// 右欄：一次減 1%。
+	g.Click(232, 170)
+	if p.Pct[0] != 19 || p.RestPct() != 1 || p.RestAmount() != 188 {
+		t.Fatalf("減一次後 %d%% / 餘 %d%% %d，原版是 19%% / 餘 1%% 188",
+			p.Pct[0], p.RestPct(), p.RestAmount())
+	}
+	// 有餘額之後左欄就按得動了。
+	g.Click(216, 170)
+	if p.Pct[0] != 20 || p.RestPct() != 0 {
+		t.Fatalf("加回來變成 %d%% / 餘 %d%%", p.Pct[0], p.RestPct())
+	}
+	// 第 6 列的箭頭在最後一格。
+	g.Click(232, 280)
+	if p.Pct[6] != 14 {
+		t.Fatalf("點第 6 列的減，變成 %d%%，應該是 14%%", p.Pct[6])
+	}
+}
