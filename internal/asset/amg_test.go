@@ -150,3 +150,33 @@ func TestStrmapSheet(t *testing.T) {
 		}
 	}
 }
+
+// TestStrmapLiveMatchesOracle 是最強的那一條：把**記憶體裡**那份
+// （已經塗上勢力色的）地圖解出來，貼到原版畫面要逐像素相同。
+// 檔案原始內容做不到這件事——那些 0 是留白，遊戲載入後才就地塗掉。
+func TestStrmapLiveMatchesOracle(t *testing.T) {
+	live, err := os.ReadFile("../../workplace/strmap-live.bin")
+	if err != nil {
+		t.Skip("沒有 strmap-live.bin，跳過（probe -dump-mem 可重建）")
+	}
+	fb, err := os.ReadFile("../../workplace/oracle/key1/screen.bin")
+	if err != nil {
+		t.Skip("沒有 key1 收據，跳過")
+	}
+	img, err := DecodeSheet(live, 16, 20, 20)
+	if err != nil {
+		t.Fatal(err)
+	}
+	const sw, y0, visible = 640, 40, 140
+	bad := 0
+	for y := 0; y < img.H; y++ {
+		for x := 0; x < visible; x++ {
+			if fb[(y0+y)*sw+x] != img.Pix[y*img.W+x] {
+				bad++
+			}
+		}
+	}
+	if bad != 0 {
+		t.Fatalf("與原版畫面有 %d / %d 個像素不同", bad, visible*img.H)
+	}
+}

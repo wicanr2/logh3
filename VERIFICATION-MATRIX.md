@@ -24,7 +24,7 @@
 | `.RGB`（16 色調色盤）| **已解出** | [`docs/internals/05`](docs/internals/05-palette-and-fade.md) |
 | `SPRITE.SPR` | **已解出**（75 張 16×16） | [`docs/internals/10`](docs/internals/10-sprite-spr.md) |
 | `3DBLOCK.SPR` / `COM_FLAG.SPR` | 未解（不是 `SPRITE.SPR` 的版面） | — |
-| `STRMAP.BIT`（星域地圖底圖）| **已解出**（320×300，非透明像素與原版畫面完全相同）| [`docs/internals/12`](docs/internals/12-strmap-bit.md) |
+| `STRMAP.BIT`（星域地圖）| **已解出**（320×300；記憶體版本與原版畫面 0 差異）| [`docs/internals/12`](docs/internals/12-strmap-bit.md) |
 | `FRAME.BLK` / `BLOCK_*.BLK` | 未開始 | — |
 | `MAP*.CMP`（勢力著色？）| 未解 | — |
 | `PLADAT.DAT` | **已解出** | [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
