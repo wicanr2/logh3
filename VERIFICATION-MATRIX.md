@@ -12,7 +12,7 @@
 | 1 | 主選單（含反白與游標）| `same-state` | 0 | [`docs/playtest/001-main-menu.md`](docs/playtest/001-main-menu.md) | **五個狀態**逐位元組一致：反白第 0–3 列各一、游標在選單外一個 |
 | 2 | 開頭動畫 | — | — | — | 未開始 |
 | 3 | 主選單（互動）| — | — | — | 進行中：反白、滑鼠→選項對應、游標都已對拍；點擊已能推進到下一畫面；還缺**切換過程**（反白從 A 列搬到 B 列會留殘留）|
-| 4 | 防拷問答 | — | — | [`docs/playtest/002`](docs/playtest/002-into-the-game.md) | 原版狀態可重現（兩次雜湊相同）；remake 尚未實作 |
+| 4 | 防拷問答 | `same-state` | 0 | [`docs/playtest/003-copy-protection.md`](docs/playtest/003-copy-protection.md) | 全畫面 640×480 逐位元組一致（框、頭像、三行字、輸入框） |
 | 5 | 遊戲主畫面（796 年 1 月）| — | — | [`docs/playtest/002`](docs/playtest/002-into-the-game.md) | 原版狀態可重現；remake 尚未實作 |
 | 6 | 結局 | — | — | — | 未開始 |
 
@@ -22,7 +22,8 @@
 |---|---|---|
 | `GRAPH.IMG`（中文字型）| **已解出**（假名區的字碼對應未確認）| [`docs/internals/06`](docs/internals/06-font-graph-img.md) |
 | `.RGB`（16 色調色盤）| **已解出** | [`docs/internals/05`](docs/internals/05-palette-and-fade.md) |
-| `SPRITE.SPR` / `3DBLOCK.SPR` / `COM_FLAG.SPR` | 未開始 | — |
+| `SPRITE.SPR` | **已解出**（75 張 16×16） | [`docs/internals/10`](docs/internals/10-sprite-spr.md) |
+| `3DBLOCK.SPR` / `COM_FLAG.SPR` | 未解（不是 `SPRITE.SPR` 的版面） | — |
 | `FRAME.BLK` / `BLOCK_*.BLK` | 未開始 | — |
 | `PLADAT.DAT` | **已解出** | [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
 | `ATTR.DAT` / `KEIREKI.DAT` | 未開始 | — |

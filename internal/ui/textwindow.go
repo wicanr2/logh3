@@ -144,3 +144,30 @@ func (w *TextWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, frameW, frameH in
 	}
 	return missing
 }
+
+// DrawGlyph 在指定像素座標畫一個字（不填背景）。
+//
+// 給「不是格狀排版」的畫面用：防拷問答那三行字每行的字數不同、
+// 輸入框那一格又另起一個 x，硬塞進 TextWindow 的格點要多算一堆空白。
+// 陰影規則與 drawCell 相同：先把每一列往左位移一格畫陰影，再畫本體。
+func DrawGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16, fg, shadow uint8, shadowDY int) bool {
+	g := fnt.Glyph(code)
+	if g == nil {
+		return false
+	}
+	blit := func(shift, oy int, col uint8) {
+		for gy, bits := range g {
+			row := bits << uint(shift)
+			for gx := 0; gx < font.GlyphW; gx++ {
+				if row>>(font.GlyphW-1-gx)&1 != 0 {
+					fb.Set(x+gx, y+oy+gy, col)
+				}
+			}
+		}
+	}
+	if shadow != 0 {
+		blit(1, shadowDY, shadow)
+	}
+	blit(0, 0, fg)
+	return true
+}

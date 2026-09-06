@@ -28,6 +28,18 @@ type Frame struct {
 	Layers  []Layer
 	Fill    uint8
 	Patches []Patch
+
+	// Order 是四個邊的畫序，**角落歸最後畫的那一邊**。空字串 ＝ "LBTR"
+	// （先暗後亮，角落歸上緣與右緣），主選單那種外凸的框用這個。
+	// 內凹的框（例如輸入框）要 "TRBL"：角落歸左緣與下緣。
+	Order string
+
+	// Alt 讓某一邊變成 1:1 交錯（網點）：非 0 的邊會依 (x+y) 的奇偶
+	// 在 Layers 的主色與這裡的色號之間換。長度可以短於 Layers。
+	//
+	// 防拷問答那個視窗的左緣就是這樣畫的（8 與 15 交錯）——
+	// 當成純色會得到「一半的像素對、一半不對」，而框看起來完全正常。
+	Alt []Layer
 }
 
 // MenuFrame 是主選單那種視窗的外框，量自 oracle 收據。
@@ -51,6 +63,34 @@ func MenuFrame() Frame {
 	}
 }
 
+// hline／vline 畫一條線；alt 非 0 時依 (x+y) 的奇偶交錯兩個色號。
+func hline(fb *gfx.Framebuffer, x, y, n int, c, alt uint8) {
+	if alt == 0 {
+		fb.HLine(x, y, n, c)
+		return
+	}
+	for i := 0; i < n; i++ {
+		fb.Set(x+i, y, pick(x+i, y, c, alt))
+	}
+}
+
+func vline(fb *gfx.Framebuffer, x, y, n int, c, alt uint8) {
+	if alt == 0 {
+		fb.VLine(x, y, n, c)
+		return
+	}
+	for i := 0; i < n; i++ {
+		fb.Set(x, y+i, pick(x, y+i, c, alt))
+	}
+}
+
+func pick(x, y int, c, alt uint8) uint8 {
+	if (x+y)%2 == 0 {
+		return c
+	}
+	return alt
+}
+
 // Draw 把外框與內部填色畫到畫布上。
 func (f Frame) Draw(fb *gfx.Framebuffer, x, y, w, h int) {
 	for r, l := range f.Layers {
@@ -58,12 +98,28 @@ func (f Frame) Draw(fb *gfx.Framebuffer, x, y, w, h int) {
 			return
 		}
 		lx, ly, lw, lh := x+r, y+r, w-2*r, h-2*r
-		// **先暗後亮**：角落歸亮邊。順序倒過來的話左上角會變暗，
-		// 而那是唯一看得出差別的地方——整片框其他部分完全一樣。
-		fb.VLine(lx, ly, lh, l.Left)
-		fb.HLine(lx, ly+lh-1, lw, l.Bottom)
-		fb.HLine(lx, ly, lw, l.Top)
-		fb.VLine(lx+lw-1, ly, lh, l.Right)
+		var alt Layer
+		if r < len(f.Alt) {
+			alt = f.Alt[r]
+		}
+		// 角落歸**最後畫的那一邊**。順序錯了只有四個角不一樣，
+		// 而那是唯一看得出差別的地方——整片框其他部分完全相同。
+		order := f.Order
+		if order == "" {
+			order = "LBTR"
+		}
+		for _, side := range order {
+			switch side {
+			case 'L':
+				vline(fb, lx, ly, lh, l.Left, alt.Left)
+			case 'B':
+				hline(fb, lx, ly+lh-1, lw, l.Bottom, alt.Bottom)
+			case 'T':
+				hline(fb, lx, ly, lw, l.Top, alt.Top)
+			case 'R':
+				vline(fb, lx+lw-1, ly, lh, l.Right, alt.Right)
+			}
+		}
 	}
 	r := len(f.Layers)
 	if w-2*r > 0 && h-2*r > 0 {
