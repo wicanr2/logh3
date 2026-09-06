@@ -40,6 +40,9 @@ const (
 
 	// StateAdmiralList 是待命中提督資料（疊在建造計劃上的清單）。
 	StateAdmiralList
+
+	// StateEnding 是結局畫面（一張 `.VO5` CG 鋪滿畫布）。
+	StateEnding
 )
 
 // Resources 是玩家自備的原版檔案解出來的東西。**這個套件不內嵌任何原版資料。**
@@ -80,6 +83,18 @@ type Game struct {
 
 	// 建造計劃的預算分配。進入該畫面時從規格的初始值開一份。
 	plan *rules.BuildPlan
+
+	// 結局：目前顯示哪一張 CG。
+	ending *asset.Image
+}
+
+// ShowEnding 切到結局畫面，顯示 `.VO5` 解出來的那張圖。
+//
+// **結局的播放順序還沒逆向出來**（哪一張配哪一句、怎麼疊、
+// 換場怎麼走都未解，見 `docs/internals/18`）；這裡只負責把一張畫出來。
+func (g *Game) ShowEnding(img *asset.Image) {
+	g.ending = img
+	g.state = StateEnding
 }
 
 // New 從主選單開始。
@@ -216,6 +231,8 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		fb, _ := screen.MainGame(g.res.ShipOrder, g.res.Font, g.res.StarMap,
 			g.res.Faces, g.res.Cursor)
 		return fb
+	case StateEnding:
+		return screen.Ending(g.ending)
 	case StateAdmiralList:
 		fb, _ := screen.MainGame(g.res.AdmiralList, g.res.Font, g.res.StarMap,
 			g.res.Faces, g.res.Cursor)

@@ -8,6 +8,7 @@ import (
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
+	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/screen"
 	"github.com/wicanr2/logh3/internal/ui"
 )
@@ -307,4 +308,54 @@ func TestAdmiralListFromBuildPlan(t *testing.T) {
 		t.Fatal("點了左按鈕沒有開出待命中提督資料")
 	}
 	matches(t, g, "admirals1")
+}
+
+// TestEndingScreenMatchesOriginalPlanes：結局畫面畫出來之後，
+// plane 2 與 plane 3 要與原版收據逐位元組相同。
+//
+// 只比這兩個 plane，因為原版那一幕是好幾張圖疊出來的，
+// plane 0／1 怎麼來的還沒解（`docs/internals/18`）。
+func TestEndingScreenMatchesOriginalPlanes(t *testing.T) {
+	src := filepath.Join(root, "org_game/extracted/ENDT30.VO5")
+	shot := filepath.Join(root, "workplace/oracle/ending-empire/screen.bin")
+	for _, p := range []string{src, shot} {
+		if _, err := os.Stat(p); err != nil {
+			t.Skipf("缺 %s，跳過", p)
+		}
+	}
+	raw, err := os.ReadFile(src)
+	if err != nil {
+		t.Fatal(err)
+	}
+	img, err := asset.DecodeVO5(raw)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.ShowEnding(img)
+	if g.State() != StateEnding {
+		t.Fatal("沒有切到結局畫面")
+	}
+	got := g.Frame().Pix
+	want, err := os.ReadFile(shot)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, plane := range []uint8{2, 3} {
+		bad := 0
+		for y := 0; y < img.H; y++ {
+			for x := 0; x < img.W; x++ {
+				i := (screen.EndingImageY+y)*gfx.Width + x
+				if (got[i]>>plane)&1 != (want[i]>>plane)&1 {
+					bad++
+				}
+			}
+		}
+		if bad != 0 {
+			t.Errorf("plane %d：與原版差 %d 個位元", plane, bad)
+		}
+	}
 }

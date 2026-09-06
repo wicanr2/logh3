@@ -21,7 +21,7 @@
 | 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/re/12`](docs/re/12-budget-plan-and-buttons.md) | 由主畫面熱區 (432,300) 點進去；正常玩家路徑有回歸測試 |
 | 5f | 待命中提督資料 | `same-state` | 0 | 收據 `admirals1`；[`docs/re/12`](docs/re/12-budget-plan-and-buttons.md) | 三層視窗（底板＋建造計劃＋清單）；正常玩家路徑有回歸測試 |
 | 5d | 建造計劃（改過預算的 34 個局面）| `same-state` | 0 | [`docs/re/11`](docs/re/11-build-plan-rest-amount.md) | 用 `-poke` 把百分比寫進原版記憶體造的局面，含手點到不了的「七列全 0%」與「某列吃滿 100%」；每張 640×480 逐位元組一致 |
-| 6 | 結局 | `reference-only` | — | 收據 `ending-empire`、`ending-alliance` | 兩個結局都能在執行器裡跑到並擷取（`ENDING.EXE 9 1` / `9 2`）；50 張 CG 已解出（[`docs/internals/18`](docs/internals/18-vo5.md)），文字與職員表已取出（[`docs/internals/16`](docs/internals/16-ending-exe.md)）。remake 這邊還沒畫 |
+| 6 | 結局（單張 CG）| `same-state`（plane 2／3）| 0 | 收據 `ending-empire`、`ending-alliance` | remake 畫得出來，plane 2／3 與原版逐位元組相同；plane 0／1 是多張圖疊出來的，疊法未解。播放順序（哪張配哪句、換場）也未解 |
 
 ## 資料格式
 
