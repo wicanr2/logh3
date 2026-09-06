@@ -1,0 +1,176 @@
+{
+ "note": "熱區清單 ↔ 登錄它的視窗；簽章 9A 0F 00 A9 37",
+ "calls": 25,
+ "map": {
+  "0578": [
+   {
+    "code_at": "04F0E",
+    "window_static": [],
+    "window_global": [],
+    "window_local": [
+     "bp+2",
+     "bp+0",
+     "bp+2",
+     "bp+0"
+    ]
+   }
+  ],
+  "0C52": [
+   {
+    "code_at": "053BD",
+    "window_static": [
+     "9518",
+     "955C"
+    ],
+    "window_global": [],
+    "window_local": []
+   },
+   {
+    "code_at": "0586C",
+    "window_static": [
+     "9518",
+     "955C"
+    ],
+    "window_global": [],
+    "window_local": []
+   }
+  ],
+  "09D6": [
+   {
+    "code_at": "06CAD",
+    "window_static": [],
+    "window_global": [],
+    "window_local": [
+     "bp+2",
+     "bp+0"
+    ]
+   }
+  ],
+  "10BC": [
+   {
+    "code_at": "087A6",
+    "window_static": [],
+    "window_global": [],
+    "window_local": [
+     "bp+6",
+     "bp+4"
+    ]
+   }
+  ],
+  "14A8": [
+   {
+    "code_at": "0972D",
+    "window_static": [],
+    "window_global": [],
+    "window_local": [
+     "bp+14",
+     "bp+12",
+     "bp+14",
+     "bp+12"
+    ]
+   }
+  ],
+  "1738": [
+   {
+    "code_at": "0A15B",
+    "window_static": [],
+    "window_global": [],
+    "window_local": [
+     "bp+8",
+     "bp+6",
+     "bp+8",
+     "bp+6"
+    ]
+   }
+  ],
+  "1AA8": [
+   {
+    "code_at": "0B768",
+    "window_static": [],
+    "window_global": [],
+    "window_local": [
+     "bp+28",
+     "bp+26"
+    ]
+   }
+  ],
+  "21C0": [
+   {
+    "code_at": "0E262",
+    "window_static": [],
+    "window_global": [
+     "21AE",
+     "21AC"
+    ],
+    "window_local": [
+     "bp+20"
+    ]
+   }
+  ],
+  "2248": [
+   {
+    "code_at": "0F3DB",
+    "window_static": [],
+    "window_global": [],
+    "window_local": [
+     "bp+16",
+     "bp+14",
+     "bp+16",
+     "bp+14"
+    ]
+   }
+  ],
+  "26E2": [
+   {
+    "code_at": "0F95D",
+    "window_static": [],
+    "window_global": [
+     "9776",
+     "9778",
+     "9776"
+    ],
+    "window_local": []
+   }
+  ],
+  "2A00": [
+   {
+    "code_at": "10241",
+    "window_static": [],
+    "window_global": [
+     "9870",
+     "986E"
+    ],
+    "window_local": []
+   }
+  ],
+  "2DB8": [
+   {
+    "code_at": "11D5F",
+    "window_static": [],
+    "window_global": [],
+    "window_local": []
+   }
+  ],
+  "5198": [
+   {
+    "code_at": "2B53C",
+    "window_static": [],
+    "window_global": [],
+    "window_local": [
+     "bp+2",
+     "bp+0",
+     "bp+2",
+     "bp+0"
+    ]
+   }
+  ],
+  "902C": [
+   {
+    "code_at": "3A9EF",
+    "window_static": [],
+    "window_global": [],
+    "window_local": []
+   }
+  ]
+ }
+}
