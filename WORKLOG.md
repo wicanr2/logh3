@@ -15,3 +15,5 @@
   存入 `org_game/`（gitignore），解出至 `org_game/extracted/`。
 - 建立專案骨架：`AGENTS.md`（參考 sangokushi 協作規範 + dosgolem 對拍方法論）、
   `CONTEXT.md`、`.gitignore`、`docs/{playtest,spec,re}/`、`workplace/`。
+- dosgolem 改動收在 fork 分支 `logh3-com-support`（wicanr2/dosgolem），已推送；
+  後續對 dosgolem 的對拍驗證支援都走該分支，MR 合併由使用者主導。
