@@ -53,6 +53,8 @@ EXTRA_BOXES = {
     # 右下的輸入框是**上下兩格**，不是一個 36×40 的框。
     'screen-main-game': [(430, 340, 465, 359), (430, 360, 465, 379)],
     'screen-ship-order': [(430, 340, 465, 359), (430, 360, 465, 379)],
+    # 會計報告：右下同樣是上下兩格的輸入框。
+    'screen-account': [(430, 340, 465, 359), (430, 360, 465, 379)],
     # 預算分配的上下箭頭：2 欄 × 7 列，每個 16×20；外加兩個按鈕。
     'screen-build-plan': [(208 + c*16, 200 + r*20, 208 + c*16 + 15, 200 + r*20 + 19)
                           for r in range(7) for c in range(2)]
@@ -87,6 +89,7 @@ EXTRA_SPEC = {
 RULES_BY_SCREEN = {
     'screen-main-game': [(160, 259, 192, 1), (160, 279, 192, 1), (160, 299, 192, 1)],
     'screen-budget-plan': [(144, 239, 256, 1), (144, 279, 256, 1)],
+    'screen-account': [(160, 259, 192, 1), (160, 279, 192, 1), (160, 299, 192, 1)],
 }
 # 同一個視窗裡不是每一行都用同一個顏色：面板的艦隊數字是 6 與 5。
 TEXT_INKS = {'board': [7, 6, 5], 'report': [7], 'overlay': [7]}
@@ -106,6 +109,7 @@ TEXT_AREAS = {
         'screen-ship-order': [(158, 90, 483, 390)],
         'screen-build-plan': [(94, 70, 545, 392)],
         'screen-budget-plan': [(142, 70, 497, 392)],
+        'screen-account': [(154, 90, 483, 389)],
     }.get(outname, [(WINDOWS['report'][0]+14, WINDOWS['report'][1]+10,
                      WINDOWS['report'][2]-12, WINDOWS['report'][3]-10)]),
 }
