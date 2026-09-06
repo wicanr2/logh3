@@ -95,4 +95,10 @@ remake 側 **0 / 307,200**（`TestMainGameMatchesOracle` 的 `main1e`）。
 清單條與捲軸框夾成兩列的樣子；重新算一次會畫成完整的一隻，
 多出 89 個像素。`overlay_spec.py` 的游標座標給 `-1` 就是「沿用底層那一份」。
 
-戰略情報報告（`info1e`）與遊戲設定（`settings1e`）還是原版側收據。
+戰略情報報告（`info1e`）也對上了 **0 / 307,200**。那張畫面的地圖跟著
+**治安**換色，不是勢力色：攔著色常式量了 626 次，順序是星域 0…31，
+結果存進 `strmap-regions.json` 的 `colour_796_01_security` 欄位，
+規格用 `map.colours` 指定要哪一組。
+
+遊戲設定（`settings1e`）還是原版側收據——那張畫面的標籤用的不是
+`GRAPH.IMG`（`docs/re/18`），文字掃不出來。

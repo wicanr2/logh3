@@ -16,9 +16,13 @@ import (
 // `docs/internals/data/screen-main-game.json`）。
 type MainGameSpec struct {
 	Background uint8 `json:"background"`
-	Map        struct {
+	Map struct {
 		Source  string `json:"source"`
 		Regions string `json:"regions"`
+
+		// Colours 是星域色號取哪一個欄位（`strmap-regions.json` 裡有好幾組：
+		// 勢力色、治安色…）。空的話用勢力色。
+		Colours string `json:"colours"`
 		X, Y    int
 	} `json:"map"`
 	Windows map[string]*GameWindow `json:"windows"`

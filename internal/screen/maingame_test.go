@@ -1,6 +1,7 @@
 package screen
 
 import (
+	"fmt"
 	"sort"
 	"encoding/json"
 	"os"
@@ -28,6 +29,7 @@ func TestMainGameMatchesOracle(t *testing.T) {
 		{"screen-account", "account1"},
 		{"screen-command-phase", "main1e"},
 		{"screen-cmd-menu", "cmd1e"},
+		{"screen-info", "info1e"},
 	} {
 		t.Run(c.batch, func(t *testing.T) { checkGameScreen(t, c.spec, c.batch) })
 	}
@@ -60,7 +62,7 @@ func gameScreenAssets(t *testing.T) (*font.Font, *asset.Image, *asset.AMG, *ui.C
 	if err != nil {
 		t.Fatal(err)
 	}
-	colours, err := loadRegionColours(regionsPath)
+	colours, err := loadRegionColours(regionsPath, "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -115,7 +117,8 @@ func checkGameScreen(t *testing.T, specName, batch string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	colours, err := loadRegionColours(regionsPath)
+	// 星域顏色取哪一組由規格決定：主畫面是勢力色，情報報告是治安色。
+	colours, err := loadRegionColours(regionsPath, s.Map.Colours)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -154,22 +157,29 @@ func checkGameScreen(t *testing.T, specName, batch string) {
 }
 
 // loadRegionColours 讀各星域在 796 年 1 月的所屬勢力色。
-func loadRegionColours(path string) ([]uint8, error) {
+func loadRegionColours(path, field string) ([]uint8, error) {
+	if field == "" {
+		field = "colour_796_01"
+	}
 	b, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
 	var doc struct {
-		Regions []struct {
-			Colour uint8 `json:"colour_796_01"`
-		} `json:"regions"`
+		Regions []map[string]json.RawMessage `json:"regions"`
 	}
 	if err := json.Unmarshal(b, &doc); err != nil {
 		return nil, err
 	}
 	out := make([]uint8, len(doc.Regions))
 	for i, r := range doc.Regions {
-		out[i] = r.Colour
+		raw, ok := r[field]
+		if !ok {
+			return nil, fmt.Errorf("第 %d 個星域沒有 %q 欄位", i, field)
+		}
+		if err := json.Unmarshal(raw, &out[i]); err != nil {
+			return nil, err
+		}
 	}
 	return out, nil
 }
