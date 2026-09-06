@@ -1,0 +1,142 @@
+{
+ "note": "每一處命中測試呼叫（call far 37A9:01F9）與它寫死的熱區清單位移；位址是那一次執行的線性位址，換一次執行會變，穩定的是「幾處」與「哪一份清單」。清單位移是資料段內的位移，穩定。",
+ "signature": "9A F9 01 A9 37",
+ "count": 27,
+ "sites": [
+  {
+   "linear": "046BA",
+   "list": "03D8",
+   "labels": null
+  },
+  {
+   "linear": "04CF0",
+   "list": "0578",
+   "labels": "確認"
+  },
+  {
+   "linear": "06D56",
+   "list": "09D6",
+   "labels": "確認、變更"
+  },
+  {
+   "linear": "0701B",
+   "list": "0C52",
+   "labels": "戰略命令、一覽表  、系統指令"
+  },
+  {
+   "linear": "07085",
+   "list": "0BEE",
+   "labels": null
+  },
+  {
+   "linear": "07F63",
+   "list": "0DA2",
+   "labels": null
+  },
+  {
+   "linear": "0882B",
+   "list": "10BC",
+   "labels": "副官、艦隊編號、None"
+  },
+  {
+   "linear": "09158",
+   "list": "14A8",
+   "labels": "動作碼 17、動作碼 18、參謀、結束、動作碼 17、動作碼 18"
+  },
+  {
+   "linear": "0A978",
+   "list": "1738",
+   "labels": "治安、敵艦、勢力、參謀、確認"
+  },
+  {
+   "linear": "0B5D6",
+   "list": "1AA8",
+   "labels": "結束"
+  },
+  {
+   "linear": "0C21B",
+   "list": "1BF2",
+   "labels": null
+  },
+  {
+   "linear": "0C413",
+   "list": "1BF2",
+   "labels": null
+  },
+  {
+   "linear": "0C956",
+   "list": "1CCE",
+   "labels": null
+  },
+  {
+   "linear": "0CBD4",
+   "list": "1CCE",
+   "labels": null
+  },
+  {
+   "linear": "0D1AF",
+   "list": "1E04",
+   "labels": null
+  },
+  {
+   "linear": "0D3F6",
+   "list": "1E04",
+   "labels": null
+  },
+  {
+   "linear": "0DDBD",
+   "list": "96EE",
+   "labels": null
+  },
+  {
+   "linear": "0EE41",
+   "list": "21C0",
+   "labels": "作戰、變更、結束"
+  },
+  {
+   "linear": "0F56B",
+   "list": "2248",
+   "labels": "None、None、None、None、None、決定、中止"
+  },
+  {
+   "linear": "0FC06",
+   "list": "26E2",
+   "labels": "動作碼 17、動作碼 18、動作碼 17、動作碼 18、動作碼 17、動作碼 18、動作碼 17、動作碼 18、動作碼 17、動作碼 18、動作碼 17、動作碼 18、動作碼 17、動作碼 18、參謀、結束"
+  },
+  {
+   "linear": "107DC",
+   "list": "2A00",
+   "labels": "戰艦    高速戰艦巡航艦  、決定、陣形、中止"
+  },
+  {
+   "linear": "11DAE",
+   "list": "2DB8",
+   "labels": "占領、待命"
+  },
+  {
+   "linear": "1389D",
+   "list": "34CE",
+   "labels": null
+  },
+  {
+   "linear": "139B9",
+   "list": "34CE",
+   "labels": null
+  },
+  {
+   "linear": "2B1CC",
+   "list": "5198",
+   "labels": "確認"
+  },
+  {
+   "linear": "384D1",
+   "list": null,
+   "labels": null
+  },
+  {
+   "linear": "3AA7D",
+   "list": "902C",
+   "labels": "自動１、手動１、自動２、手動２、顯示  、不顯示、結  束"
+  }
+ ]
+}
