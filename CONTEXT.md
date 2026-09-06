@@ -24,8 +24,11 @@
 - **中文字型已解出**：`GRAPH.IMG` ＝ 倚天中文系統字型（半形 8×15、全形
   16×15），索引公式與存取方式見 `docs/internals/06`。字型是按需 seek+read，
   不整份載入。
-- **還沒有任何對拍**：沒有 same-state 收據、沒有已逆向的資料格式、沒有已驗證的
-  遊戲規則、沒有 remake 程式碼。
+- **remake 已經開始**：Go 專案（`internal/gfx`、`internal/font`、`internal/ui`、
+  `internal/screen`、`cmd/logh3`、`cmd/oradiff`）。主選單達成 **`same-state`
+  逐位元組一致**（收據 `docs/playtest/001-main-menu.md`），有回歸測試護著。
+- 還沒有：互動（反白／鍵盤／滑鼠）、其他畫面、遊戲規則、除字型與調色盤外的
+  資料格式。完成度見 `VERIFICATION-MATRIX.md`。
 - 已取得第一張真色彩畫面（主選單，`workplace/re06/`），同命令連跑兩次逐位元組
   一致。dosgolem 跑的是原版執行檔，所以那就是**原版側**的畫面；還缺的是
   remake 側——對拍要等 remake 有東西可比才成立。
@@ -80,10 +83,8 @@
 7. ~~查調色盤為什麼是黑的~~（完成，spec 011／`docs/re/06`）：不是淡入沒走完，
    是 `int 10h AH=10h` 的 AL 分支接錯，加上「取向量後直接跳」的 BIOS 呼叫
    從未執行。
-8. **把主選單存成正式的 oracle 收據**：獨立 run 目錄 ＋ metadata（bundle 與
-   `GIN3.COM` 雜湊、dosgolem Git HEAD、完整輸入序列與步數、顯示模式、
-   framebuffer 與 DAC 雜湊），寫進 `docs/playtest/`。這是之後每一次
-   remake 差分的基準。
+8. ~~把主選單存成正式的 oracle 收據~~（完成，`docs/playtest/001-main-menu.md`）。
+   remake 側也已對上：色號陣列與調色盤的 SHA-256 與原版側相同。
 9. **開始資料格式逆向**：`GRAPH.IMG`、`SPRITE.SPR`、`FRAME.BLK`、
    `PLADAT.DAT`、`ADMIRAL.DTX`、`STELLAR.DTX` 等已知會被載入的檔。
    dosgolem 可以在載入點下攔截，拿「解碼前的檔案 bytes」對「解碼後的
@@ -93,3 +94,7 @@
     倚天字型，格式與索引已釘住。剩下 302 個假名／西里爾字形的字碼對應未確認
     ——測法是跑到結局畫面看它 seek 到哪。
 11. **`IBM16.350`（1.76 MB，整包最大）的用途**仍未確認。
+12. **視窗外框的角落規則**沒有逆向出來，目前靠七個明列的像素修正
+    （`docs/internals/07`）。出現第二個視窗尺寸時第一件事是重驗那張表。
+13. **主選單的互動**：反白屬性（記錄 `+0x1D`／`+0x1F`）、鍵盤與滑鼠、
+    選項切換。這是 remake 從「一張圖」變成「能玩」的第一步。

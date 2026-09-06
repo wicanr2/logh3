@@ -18,3 +18,7 @@ dist-all/
 # 系統雜項
 .DS_Store
 *.swp
+
+# Go 建置與快取
+/workplace/gocache/
+/workplace/gomodcache/

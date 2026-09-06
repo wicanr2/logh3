@@ -4,6 +4,16 @@
 
 ## 2026-09-06
 
+- remake 開工，主選單達成 **逐位元組一致**的同狀態對拍：色號陣列與調色盤的
+  SHA-256 與 oracle 收據相同。Go 專案骨架（`gfx` 色號畫布／`font` 原版字型／
+  `ui` 斜角視窗與文字格／`screen` 畫面組裝／`cmd/logh3` 出圖／`cmd/oradiff`
+  差分），版面數字全部從 `docs/internals/data/screen-main-menu.json` 讀，
+  不寫死在程式裡。收據 `docs/playtest/001-main-menu.md`，回歸測試
+  `TestMainMenuMatchesOracle`（缺字型或缺收據就 skip，不用代用品）。
+  差分過程：539 → 31 → 7 → 0。三個修正各自對應一個發現——文字有立體邊
+  （字形每列左移一位、往上一列、色號 3）、左移是對位元做的不是整字平移、
+  框角規則對不上（七個像素，先明列修正並標成技術債）。
+  建立 `VERIFICATION-MATRIX.md` 作為完成度的唯一數字來源。
 - re07：中文字型解出來了。`GRAPH.IMG` 是完整的中文點陣字型（半形 8×15、
   全形 16×15、每列 2 bytes 高位在前），**內容與倚天中文系統的 `stdfont.15`
   與 `ascfont.15` 逐位元組相同**。方法是拿主選單九個已知字當答案去反查，

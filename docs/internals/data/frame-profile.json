@@ -1,0 +1,82 @@
+{
+  "rect": [
+    273,
+    181,
+    78,
+    118
+  ],
+  "layers": [
+    {
+      "ring": 0,
+      "top": 15,
+      "right": 15,
+      "bottom": 8,
+      "left": 8,
+      "pure": false
+    },
+    {
+      "ring": 1,
+      "top": 7,
+      "right": 7,
+      "bottom": 3,
+      "left": 3,
+      "pure": true
+    },
+    {
+      "ring": 2,
+      "top": 15,
+      "right": 15,
+      "bottom": 15,
+      "left": 15,
+      "pure": true
+    },
+    {
+      "ring": 3,
+      "top": 15,
+      "right": 15,
+      "bottom": 15,
+      "left": 15,
+      "pure": true
+    },
+    {
+      "ring": 4,
+      "top": 3,
+      "right": 3,
+      "bottom": 7,
+      "left": 7,
+      "pure": false
+    },
+    {
+      "ring": 5,
+      "top": 8,
+      "right": 8,
+      "bottom": 8,
+      "left": 8,
+      "pure": true
+    },
+    {
+      "ring": 6,
+      "top": 3,
+      "right": 3,
+      "bottom": 3,
+      "left": 3,
+      "pure": true
+    },
+    {
+      "ring": 7,
+      "top": 9,
+      "right": 9,
+      "bottom": 9,
+      "left": 9,
+      "pure": true
+    },
+    {
+      "ring": 8,
+      "top": 9,
+      "right": 9,
+      "bottom": 9,
+      "left": 9,
+      "pure": true
+    }
+  ]
+}

@@ -26,5 +26,5 @@ exec timeout "${LOGH3_TIMEOUT:-15m}" docker run --rm --network none \
   -v "$ROOT/docs:/work/docs" \
   -v "$ROOT/tools:/work/tools:ro" \
   "${EXTRA[@]}" \
-  -e HOME=/tmp -w /work \
+  -e HOME=/tmp -e RECT="${RECT:-}" -w /work \
   "$IMAGE" python3 "$@"
