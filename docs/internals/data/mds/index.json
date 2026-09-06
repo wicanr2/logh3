@@ -1,0 +1,493 @@
+{
+ "note": ".MDS 樂曲索引；MIDI 由 tools/scripts/mds_export.py 從自備原版重建，不進 Git",
+ "ticks_per_quarter": 48,
+ "songs": [
+  {
+   "file": "BGM_0F.MDS",
+   "title": "E_BOLEOR",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "bar_ticks": 144,
+   "notes": 3294,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xfc": 61,
+    "0xfb": 61
+   }
+  },
+  {
+   "file": "BGM_0M.MDS",
+   "title": "BOLEOR_R2",
+   "tracks": 8,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "bar_ticks": 144,
+   "notes": 3829,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xfc": 110,
+    "0xfb": 110,
+    "0xe4": 1
+   }
+  },
+  {
+   "file": "BGM_1F.MDS",
+   "title": "E_SYMPOHNY No.3",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "bar_ticks": 144,
+   "notes": 2849,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xfc": 87,
+    "0xfb": 87
+   }
+  },
+  {
+   "file": "BGM_1M.MDS",
+   "title": "SYMPOHNY No.3",
+   "tracks": 7,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "bar_ticks": 144,
+   "notes": 3235,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xfc": 153,
+    "0xfb": 153
+   }
+  },
+  {
+   "file": "BGM_2F.MDS",
+   "title": "E_HISOU",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "bar_ticks": 96,
+   "notes": 1542,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xfc": 6,
+    "0xfb": 6
+   }
+  },
+  {
+   "file": "BGM_2M.MDS",
+   "title": "HISOU2",
+   "tracks": 3,
+   "channels": [
+    1,
+    1,
+    2
+   ],
+   "bar_ticks": 192,
+   "notes": 1754,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xfc": 3,
+    "0xfb": 3
+   }
+  },
+  {
+   "file": "BGM_3F.MDS",
+   "title": "FROM THE NEW WORLD 4th gro con",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 2780,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xfc": 6,
+    "0xfb": 6
+   }
+  },
+  {
+   "file": "BGM_3M.MDS",
+   "title": "FROM THE NEW WORLD 4th gro con",
+   "tracks": 8,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    4,
+    5,
+    6,
+    7
+   ],
+   "bar_ticks": 192,
+   "notes": 3411,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xfc": 8,
+    "0xfb": 8
+   }
+  },
+  {
+   "file": "BGM_4F.MDS",
+   "title": "��",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 4795,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xe4": 93,
+    "0xfc": 6,
+    "0xfb": 6
+   }
+  },
+  {
+   "file": "BGM_4M.MDS",
+   "title": "GEN3 BGM2 NATSU-1",
+   "tracks": 5,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 3210,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xe4": 81,
+    "0xfc": 5,
+    "0xfb": 5
+   }
+  },
+  {
+   "file": "BGM_5F.MDS",
+   "title": "M1",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 979,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xe4": 6,
+    "0xfc": 6,
+    "0xfb": 6
+   }
+  },
+  {
+   "file": "BGM_5M.MDS",
+   "title": "GEN3 BGM1",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 990,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xe4": 6,
+    "0xfc": 6,
+    "0xfb": 6
+   }
+  },
+  {
+   "file": "BGM_6F.MDS",
+   "title": "FIGHT1 FOR OPN",
+   "tracks": 7,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 688,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xe4": 6,
+    "0xfc": 7,
+    "0xfb": 7
+   }
+  },
+  {
+   "file": "BGM_6M.MDS",
+   "title": "GEN3 FIGHT1",
+   "tracks": 8,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    9,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 930,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xfc": 8,
+    "0xfb": 8,
+    "0xe4": 7
+   }
+  },
+  {
+   "file": "BGM_7F.MDS",
+   "title": "F2",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 481,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xe4": 5,
+    "0xfc": 6,
+    "0xfb": 6
+   }
+  },
+  {
+   "file": "BGM_7M.MDS",
+   "title": "GEN3  FIGHT2",
+   "tracks": 8,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    9,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 736,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xfc": 8,
+    "0xfb": 8,
+    "0xe4": 7
+   }
+  },
+  {
+   "file": "END_1F.MDS",
+   "title": "",
+   "tracks": 5,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    9,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 3126,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xe4": 5,
+    "0xfc": 5,
+    "0xfb": 5
+   }
+  },
+  {
+   "file": "END_1M.MDS",
+   "title": "ET",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    9
+   ],
+   "bar_ticks": 192,
+   "notes": 4769,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xe4": 6,
+    "0xfc": 6,
+    "0xfb": 6
+   }
+  },
+  {
+   "file": "END_2F.MDS",
+   "title": "",
+   "tracks": 7,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "bar_ticks": 192,
+   "notes": 2952,
+   "decoded": false,
+   "unknown_cmds": {
+    "0xe4": 7
+   }
+  },
+  {
+   "file": "END_2M.MDS",
+   "title": "",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "bar_ticks": 192,
+   "notes": 2870,
+   "decoded": false,
+   "unknown_cmds": {
+    "0xe4": 6
+   }
+  },
+  {
+   "file": "OPEN_F.MDS",
+   "title": "OPEN MIDI For 01:28",
+   "tracks": 8,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "bar_ticks": 192,
+   "notes": 977,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xe4": 8,
+    "0xfc": 6,
+    "0xfb": 6
+   }
+  },
+  {
+   "file": "OPEN_M.MDS",
+   "title": "OPEN_OPS 1:28  TAKE 10/23",
+   "tracks": 6,
+   "channels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    6,
+    7
+   ],
+   "bar_ticks": 192,
+   "notes": 899,
+   "decoded": true,
+   "unknown_cmds": {
+    "0xe4": 6,
+    "0xfc": 6,
+    "0xfb": 6
+   }
+  }
+ ]
+}
