@@ -45,7 +45,7 @@
 | `ENDING.EXE`（結局文字、職員表）| **已解出** | [`docs/internals/16`](docs/internals/16-ending-exe.md) |
 | `FACE.AMG`（.AMG 圖庫）| **已解出**（83 張逐像素對得上原版畫面）| [`docs/internals/09`](docs/internals/09-face-amg.md) |
 | `IBM16.350` ＋ `IBMFLS16.350`（開頭動畫）| 影格切分已解出（374 格，長度總和逐位元組吻合）；每格的編碼未解 | [`docs/internals/19`](docs/internals/19-ibm16-350.md) |
-| `COMANI.BMG` | 未開始 | — |
+| `COMANI.BMG`（戰鬥動畫）| 目錄已解出（253 段，位移逐筆接得起來）；每段的編碼未解 | [`docs/internals/20`](docs/internals/20-comani-bmg.md) |
 
 ## 遊戲規則
 
