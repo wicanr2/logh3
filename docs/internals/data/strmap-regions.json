@@ -1,0 +1,307 @@
+{
+ "source": "STRMAP.RGN",
+ "header_bytes": 192,
+ "entry": 6,
+ "entry_fields": [
+  "塊x",
+  "塊y",
+  "塊寬",
+  "塊高",
+  "u16 位移（相對資料區）"
+ ],
+ "tile": {
+  "w": 16,
+  "h": 20
+ },
+ "mask": "1bpp，每塊 40 bytes，塊之間 row-major",
+ "regions": [
+  {
+   "index": 0,
+   "bx": 0,
+   "by": 0,
+   "bw": 5,
+   "bh": 4,
+   "offset": 0,
+   "colour_796_01": 6
+  },
+  {
+   "index": 1,
+   "bx": 0,
+   "by": 3,
+   "bw": 3,
+   "bh": 4,
+   "offset": 800,
+   "colour_796_01": 1
+  },
+  {
+   "index": 2,
+   "bx": 1,
+   "by": 2,
+   "bw": 5,
+   "bh": 4,
+   "offset": 1280,
+   "colour_796_01": 1
+  },
+  {
+   "index": 3,
+   "bx": 6,
+   "by": 0,
+   "bw": 6,
+   "bh": 4,
+   "offset": 2080,
+   "colour_796_01": 3
+  },
+  {
+   "index": 4,
+   "bx": 3,
+   "by": 0,
+   "bw": 5,
+   "bh": 3,
+   "offset": 3040,
+   "colour_796_01": 1
+  },
+  {
+   "index": 5,
+   "bx": 0,
+   "by": 5,
+   "bw": 5,
+   "bh": 6,
+   "offset": 3640,
+   "colour_796_01": 1
+  },
+  {
+   "index": 6,
+   "bx": 5,
+   "by": 1,
+   "bw": 5,
+   "bh": 5,
+   "offset": 4840,
+   "colour_796_01": 1
+  },
+  {
+   "index": 7,
+   "bx": 4,
+   "by": 4,
+   "bw": 6,
+   "bh": 4,
+   "offset": 5840,
+   "colour_796_01": 1
+  },
+  {
+   "index": 8,
+   "bx": 4,
+   "by": 7,
+   "bw": 6,
+   "bh": 4,
+   "offset": 6800,
+   "colour_796_01": 1
+  },
+  {
+   "index": 9,
+   "bx": 1,
+   "by": 8,
+   "bw": 6,
+   "bh": 5,
+   "offset": 7760,
+   "colour_796_01": 1
+  },
+  {
+   "index": 10,
+   "bx": 0,
+   "by": 10,
+   "bw": 4,
+   "bh": 5,
+   "offset": 8960,
+   "colour_796_01": 3
+  },
+  {
+   "index": 11,
+   "bx": 3,
+   "by": 9,
+   "bw": 6,
+   "bh": 5,
+   "offset": 9760,
+   "colour_796_01": 3
+  },
+  {
+   "index": 12,
+   "bx": 1,
+   "by": 12,
+   "bw": 6,
+   "bh": 3,
+   "offset": 10960,
+   "colour_796_01": 3
+  },
+  {
+   "index": 13,
+   "bx": 7,
+   "by": 8,
+   "bw": 5,
+   "bh": 4,
+   "offset": 11680,
+   "colour_796_01": 1
+  },
+  {
+   "index": 14,
+   "bx": 7,
+   "by": 3,
+   "bw": 6,
+   "bh": 4,
+   "offset": 12480,
+   "colour_796_01": 3
+  },
+  {
+   "index": 15,
+   "bx": 9,
+   "by": 6,
+   "bw": 5,
+   "bh": 4,
+   "offset": 13440,
+   "colour_796_01": 12
+  },
+  {
+   "index": 16,
+   "bx": 9,
+   "by": 7,
+   "bw": 5,
+   "bh": 5,
+   "offset": 14240,
+   "colour_796_01": 12
+  },
+  {
+   "index": 17,
+   "bx": 8,
+   "by": 11,
+   "bw": 6,
+   "bh": 4,
+   "offset": 15240,
+   "colour_796_01": 12
+  },
+  {
+   "index": 18,
+   "bx": 12,
+   "by": 10,
+   "bw": 5,
+   "bh": 4,
+   "offset": 16200,
+   "colour_796_01": 12
+  },
+  {
+   "index": 19,
+   "bx": 15,
+   "by": 9,
+   "bw": 4,
+   "bh": 4,
+   "offset": 17000,
+   "colour_796_01": 12
+  },
+  {
+   "index": 20,
+   "bx": 11,
+   "by": 12,
+   "bw": 6,
+   "bh": 3,
+   "offset": 17640,
+   "colour_796_01": 12
+  },
+  {
+   "index": 21,
+   "bx": 13,
+   "by": 6,
+   "bw": 3,
+   "bh": 5,
+   "offset": 18360,
+   "colour_796_01": 12
+  },
+  {
+   "index": 22,
+   "bx": 12,
+   "by": 5,
+   "bw": 3,
+   "bh": 3,
+   "offset": 18960,
+   "colour_796_01": 12
+  },
+  {
+   "index": 23,
+   "bx": 11,
+   "by": 1,
+   "bw": 4,
+   "bh": 5,
+   "offset": 19320,
+   "colour_796_01": 3
+  },
+  {
+   "index": 24,
+   "bx": 16,
+   "by": 0,
+   "bw": 4,
+   "bh": 6,
+   "offset": 20120,
+   "colour_796_01": 3
+  },
+  {
+   "index": 25,
+   "bx": 12,
+   "by": 0,
+   "bw": 7,
+   "bh": 3,
+   "offset": 21080,
+   "colour_796_01": 3
+  },
+  {
+   "index": 26,
+   "bx": 14,
+   "by": 4,
+   "bw": 4,
+   "bh": 4,
+   "offset": 21920,
+   "colour_796_01": 12
+  },
+  {
+   "index": 27,
+   "bx": 15,
+   "by": 7,
+   "bw": 4,
+   "bh": 3,
+   "offset": 22560,
+   "colour_796_01": 12
+  },
+  {
+   "index": 28,
+   "bx": 14,
+   "by": 1,
+   "bw": 4,
+   "bh": 4,
+   "offset": 23040,
+   "colour_796_01": 3
+  },
+  {
+   "index": 29,
+   "bx": 18,
+   "by": 4,
+   "bw": 2,
+   "bh": 4,
+   "offset": 23680,
+   "colour_796_01": 12
+  },
+  {
+   "index": 30,
+   "bx": 18,
+   "by": 7,
+   "bw": 2,
+   "bh": 5,
+   "offset": 24000,
+   "colour_796_01": 12
+  },
+  {
+   "index": 31,
+   "bx": 16,
+   "by": 11,
+   "bw": 4,
+   "bh": 4,
+   "offset": 24400,
+   "colour_796_01": 12
+  }
+ ]
+}

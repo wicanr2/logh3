@@ -26,7 +26,8 @@
 | `3DBLOCK.SPR` / `COM_FLAG.SPR` | 未解（不是 `SPRITE.SPR` 的版面） | — |
 | `STRMAP.BIT`（星域地圖）| **已解出**（320×300；記憶體版本與原版畫面 0 差異）| [`docs/internals/12`](docs/internals/12-strmap-bit.md) |
 | `FRAME.BLK` / `BLOCK_*.BLK` | 未開始 | — |
-| `MAP*.CMP`（勢力著色？）| 未解 | — |
+| `STRMAP.RGN`（星域區域遮罩）| **已解出**（32 區域；底圖＋遮罩＋顏色重建 0 差異）| [`docs/internals/13`](docs/internals/13-strmap-rgn.md) |
+| `MAP*.CMP` | 未解 | — |
 | `PLADAT.DAT` | **已解出** | [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
 | `ATTR.DAT` / `KEIREKI.DAT` | 未開始 | — |
 | `ADMIRAL.DT*` | **版面已解出**（欄位語意只確認 `+11` ＝ 占領能力）| [`docs/internals/08`](docs/internals/08-admiral-dt.md) |
