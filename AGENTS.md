@@ -84,6 +84,14 @@ MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分�
 
 ### 2. 固定輸入與 metadata
 
+**[HARD] 要某個局面就直接改記憶體，不要靠亂數。** 需要特定狀態才能對拍時，
+用 dosgolem 的 `-poke`／`oracle.WriteBytes` 把狀態寫進去（規格
+`docs/spec/014-poke-state-not-luck.md`），不要用「換個種子再跑一次」或
+「一直跑到它出現」。靠運氣得到的狀態換一版執行器就可能不再出現，收據
+跟著作廢；對不上的時候也分不清是 remake 錯了還是這次抽到不同的數。
+注入的內容必須完整記進收據——沒記下來的注入等於沒有發生過。
+
+
 每次對拍建立獨立 run 目錄，至少保存：
 
 - 原版 bundle 檔名與 SHA-256、dosgolem 工作副本的 Git HEAD 與工作樹是否乾淨、
