@@ -10,7 +10,7 @@
 | # | 畫面 | 等級 | 未核准差異 | 收據 | 備註 |
 |---|---|---|---:|---|---|
 | 1 | 主選單（含反白與游標）| `same-state` | 0 | [`docs/playtest/001-main-menu.md`](docs/playtest/001-main-menu.md) | **五個狀態**逐位元組一致：反白第 0–3 列各一、游標在選單外一個 |
-| 2 | 開頭動畫 | — | — | — | 未開始 |
+| 2 | 開頭動畫 | — | — | — | 進行中：374 格已切分（[`docs/internals/19`](docs/internals/19-ibm16-350.md)），mode 10h 640×350；每一格的編碼未解 |
 | 3a | 正常玩家路徑（選單→防拷→本體）| `same-state` | 0 | [`docs/playtest/005-player-path.md`](docs/playtest/005-player-path.md) | 三個畫面都是前一步的輸入帶進去的，不是 direct-entry |
 | 3 | 主選單（互動）| — | — | — | 進行中：反白、滑鼠→選項對應、游標都已對拍；點擊已能推進到下一畫面；還缺**切換過程**（反白從 A 列搬到 B 列會留殘留）|
 | 4b | 防拷問答（輸入中的數字）| — | — | 收據 `typed138` | **未通過**：位置量到了，但那套數字字型不是 `GRAPH.IMG` 的半形字型，來源沒找到（`docs/re/09`）|
@@ -44,7 +44,8 @@
 | `*.VO5`（結局圖，50 張）| **已解出**（逐 byte 的相等即重複；50/50 位元組完全用完）| [`docs/internals/18`](docs/internals/18-vo5.md) |
 | `ENDING.EXE`（結局文字、職員表）| **已解出** | [`docs/internals/16`](docs/internals/16-ending-exe.md) |
 | `FACE.AMG`（.AMG 圖庫）| **已解出**（83 張逐像素對得上原版畫面）| [`docs/internals/09`](docs/internals/09-face-amg.md) |
-| `COMANI.BMG` / `IBM16.350` | 未開始 | — |
+| `IBM16.350` ＋ `IBMFLS16.350`（開頭動畫）| 影格切分已解出（374 格，長度總和逐位元組吻合）；每格的編碼未解 | [`docs/internals/19`](docs/internals/19-ibm16-350.md) |
+| `COMANI.BMG` | 未開始 | — |
 
 ## 遊戲規則
 
