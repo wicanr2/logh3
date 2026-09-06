@@ -17,7 +17,8 @@
 | 4 | 防拷問答 | `same-state` | 0 | [`docs/playtest/003-copy-protection.md`](docs/playtest/003-copy-protection.md) | 全畫面 640×480 逐位元組一致（框、頭像、三行字、輸入框） |
 | 5 | 遊戲主畫面（796 年 1 月）| `same-state` | 0 | [`docs/playtest/004-main-game.md`](docs/playtest/004-main-game.md) | 全畫面逐位元組一致；地圖、頭像、文字全部從原版檔案重建 |
 | 5b | 船艦訂造報告（796 年 1 月）| `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
-| 5c | 次月份船艦建造計劃 | `same-state` | 0 | 收據 `plan1` | 帶預算分配箭頭的可操作介面；由訂造報告熱區 (432,300) 點進去 |
+| 5c | 次月份船艦建造計劃 | `same-state` | 0 | 收據 `plan1` | 由訂造報告熱區 (432,300) 點進去 |
+| 5d | 建造計劃（改過預算的 34 個局面）| `same-state` | 0 | [`docs/re/11`](docs/re/11-build-plan-rest-amount.md) | 用 `-poke` 把百分比寫進原版記憶體造的局面，含手點到不了的「七列全 0%」與「某列吃滿 100%」；每張 640×480 逐位元組一致 |
 | 6 | 結局 | — | — | — | 未開始 |
 
 ## 資料格式
@@ -33,8 +34,9 @@
 | `STRMAP.RGN`（星域區域遮罩）| **已解出**（32 區域；底圖＋遮罩＋顏色重建 0 差異）| [`docs/internals/13`](docs/internals/13-strmap-rgn.md) |
 | `MAP*.CMP` | 未解 | — |
 | `PLADAT.DAT` | **已解出** | [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
-| `ATTR.DAT` / `KEIREKI.DAT` | 未開始 | — |
-| `ADMIRAL.DT*` | **版面已解出**（欄位語意只確認 `+11` ＝ 占領能力）| [`docs/internals/08`](docs/internals/08-admiral-dt.md) |
+| `KEIREKI.DAT`（人物傳）| **已解出**（82 篇，位移表 ＋ Big5 內文）| [`docs/internals/15`](docs/internals/15-keireki-dat.md) |
+| `ATTR.DAT` | 未開始 | — |
+| `ADMIRAL.DT*` | **版面已解出**（欄位語意確認 `+1` ＝ 陣營、`+11` ＝ 占領能力）| [`docs/internals/08`](docs/internals/08-admiral-dt.md) |
 | `STELLAR.DT*` / `SHIP.DT*` / `FLEET.DT*` / `PLANET.DT*` | 未開始 | — |
 | `*.MDS`（音樂，22 份）| 未開始 | — |
 | `*.VO5`（結局劇情，50 份）| 未開始 | — |
@@ -45,7 +47,11 @@
 
 | 規則 | 狀態 | 證據 |
 |---|---|---|
-| 船艦建造預算分配（±2%、金額 ＝ 建造費 × 百分比、餘額不足不能加）| **已實作**（`internal/rules/buildplan.go`）| [`docs/re/10`](docs/re/10-build-plan-arrows.md)，實測四個狀態 |
+| 船艦建造預算分配（箭頭 ±1%、餘額不足不能加）| **已實作並對拍**（`internal/rules/buildplan.go`）| [`docs/re/11`](docs/re/11-build-plan-rest-amount.md)，35 個局面 |
+| 金額 ＝ 建造費 × 百分比（捨去）| **已實作並對拍** | 同上 |
+| 船艦數 ＝ 金額 ÷ 單價 × 10（七個單價已量出）| **已實作並對拍** | 同上 |
+| 部隊 ＝ 船艦數 ÷ 定員（七個定員已量出）| **已實作並對拍** | 同上 |
+| 餘額 ＝ 建造費 − Σ 各列實際花掉（零頭退回）| **已實作並對拍** | 同上 |
 | 其他 | 未開始 | — |
 
 ## 執行器（dosgolem）覆蓋
