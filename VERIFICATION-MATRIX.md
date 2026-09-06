@@ -24,12 +24,13 @@
 | `.RGB`（16 色調色盤）| **已解出** | [`docs/internals/05`](docs/internals/05-palette-and-fade.md) |
 | `SPRITE.SPR` | **已解出**（75 張 16×16） | [`docs/internals/10`](docs/internals/10-sprite-spr.md) |
 | `3DBLOCK.SPR` / `COM_FLAG.SPR` | 未解（不是 `SPRITE.SPR` 的版面） | — |
+| `STRMAP.BIT`（星域地圖底圖）| **已解出**（320×300，非透明像素與原版畫面完全相同）| [`docs/internals/12`](docs/internals/12-strmap-bit.md) |
 | `FRAME.BLK` / `BLOCK_*.BLK` | 未開始 | — |
+| `MAP*.CMP`（勢力著色？）| 未解 | — |
 | `PLADAT.DAT` | **已解出** | [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
 | `ATTR.DAT` / `KEIREKI.DAT` | 未開始 | — |
 | `ADMIRAL.DT*` | **版面已解出**（欄位語意只確認 `+11` ＝ 占領能力）| [`docs/internals/08`](docs/internals/08-admiral-dt.md) |
 | `STELLAR.DT*` / `SHIP.DT*` / `FLEET.DT*` / `PLANET.DT*` | 未開始 | — |
-| `MAP*.CMP`（32 份）| 未開始 | — |
 | `*.MDS`（音樂，22 份）| 未開始 | — |
 | `*.VO5`（結局劇情，50 份）| 未開始 | — |
 | `FACE.AMG`（.AMG 圖庫）| **已解出**（83 張逐像素對得上原版畫面）| [`docs/internals/09`](docs/internals/09-face-amg.md) |

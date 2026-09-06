@@ -117,3 +117,36 @@ func TestSpriteSPRTiles(t *testing.T) {
 		t.Fatal("16×20 也整除，這個測試不該靠整除判斷尺寸")
 	}
 }
+
+// TestStrmapSheet 釘住星域地圖：300 塊 16×20 拼成 320×300。
+//
+// 另外釘一件事：把它貼到原版畫面的 (0,40)，**差異只能是「地圖是 0、
+// 畫面不是 0」**。地圖的 0 是留給底下那層勢力著色的，
+// 一旦出現「地圖非 0 卻和畫面不同」就表示圖塊排列或位元序解錯了。
+func TestStrmapSheet(t *testing.T) {
+	dir := origDir(t)
+	data, err := os.ReadFile(filepath.Join(dir, "STRMAP.BIT"))
+	if err != nil {
+		t.Skip("找不到原版 STRMAP.BIT，跳過")
+	}
+	img, err := DecodeSheet(data, 16, 20, 20)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if img.W != 320 || img.H != 300 {
+		t.Fatalf("拼出 %d×%d，預期 320×300", img.W, img.H)
+	}
+	fb, err := os.ReadFile("../../workplace/oracle/key1/screen.bin")
+	if err != nil {
+		t.Skip("沒有 key1 收據，跳過對位（tools/oracle.sh 可重建）")
+	}
+	const sw, x0, y0, visible = 640, 0, 40, 140 // 右半被會計報告視窗蓋住
+	for y := 0; y < img.H; y++ {
+		for x := 0; x < visible; x++ {
+			want, got := fb[(y0+y)*sw+x0+x], img.Pix[y*img.W+x]
+			if want != got && got != 0 {
+				t.Fatalf("(%d,%d) 地圖畫 %d、原版是 %d", x, y, got, want)
+			}
+		}
+	}
+}

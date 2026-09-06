@@ -45,3 +45,25 @@ func DecodeTiles(data []byte, w, h int) ([]*Image, error) {
 	}
 	return out, nil
 }
+
+// DecodeSheet 把圖塊庫拼成一張大圖（`STRMAP.BIT` 是 20×15 塊的星域地圖）。
+//
+// 圖塊在檔案裡是 row-major：先左到右排滿一列，再換下一列。
+func DecodeSheet(data []byte, tw, th, cols int) (*Image, error) {
+	tiles, err := DecodeTiles(data, tw, th)
+	if err != nil {
+		return nil, err
+	}
+	if cols <= 0 || len(tiles)%cols != 0 {
+		return nil, fmt.Errorf("%d 張圖塊排不成每列 %d 張", len(tiles), cols)
+	}
+	rows := len(tiles) / cols
+	out := &Image{W: cols * tw, H: rows * th, Pix: make([]uint8, cols*tw*rows*th), Used: len(data)}
+	for i, t := range tiles {
+		ox, oy := (i%cols)*tw, (i/cols)*th
+		for y := 0; y < th; y++ {
+			copy(out.Pix[(oy+y)*out.W+ox:], t.Pix[y*tw:(y+1)*tw])
+		}
+	}
+	return out, nil
+}
