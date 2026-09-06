@@ -20,3 +20,8 @@
 - 建立 logh3 專用的 dosgolem 本地副本 `~/cht/dosgolem-logh3`（branch
   `logh3-com-support`，origin 指 GitHub wicanr2/dosgolem），與主 checkout
   `~/cht/dosgolem` 隔離；後續對拍驗證改動一律在副本內進行。
+- re03：EMS 頁框/映射實作完成（dosgolem-logh3 `43e3460`，spec 008），本體
+  GIN3PS.EXE 通過 EMS 配置（AH=44 映射 ×152 全過）、載入 19 個檔、切 VGA mode
+  12h、A0000 有 ~38KB planar 內容。新停點：模組管理器把 int 08h 向量改到
+  未載入的 BED4:0097（根因假說：高段載入位址算錯，依賴某記憶體查詢回答）。
+  詳 docs/re/03-gin3ps-ems-ok-timer-vector-crash.md。
