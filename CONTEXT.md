@@ -14,8 +14,11 @@
 - 執行器是 dosgolem，工作副本 `~/cht/dosgolem-logh3`（branch `logh3-com-support`，
   已推 origin）。原版未修改的 `GIN3.COM` 在裡面可以跑進遊戲本體的**主選單**
   並停在互動等待迴圈。
-- 本作是 **Big5 中文版**（載入 16 點字型 `BU16IBM.RGB`，選單文字為 Big5）。
-  這一點影響所有文字相關的逆向與 remake 決策。
+- 本作是 **Big5 中文版**，1994 年由亨和企業．微波軟體發行，中文版程式
+  Andrew Liao、翻譯邵程衍；日文原版為 BOTHTEC／QUEST ＋ Micro Vision（1993）。
+  文字用 Big5，日文假名走 **ETen／HKSCS 擴充區**（標準 Big5 表會解錯）。
+- 逆向出來的結構化資料整理在 **`docs/internals/`**（素材清單、執行檔與製作
+  名單、啟動與記憶體、文字視窗與編碼、調色盤）。`docs/re/` 是逐次調查紀錄。
 - **還沒有任何對拍**：沒有 same-state 收據、沒有已逆向的資料格式、沒有已驗證的
   遊戲規則、沒有 remake 程式碼。
 - 已取得第一張真色彩畫面（主選單，`workplace/re06/`），同命令連跑兩次逐位元組
@@ -25,7 +28,7 @@
 ## 執行器走到哪（confirmed，證據見 `docs/re/`）
 
 - 啟動鏈：`GIN3.COM`（622-byte launcher）→ `OPEN.EXE`（開頭動畫，點一下可跳過）
-  → `GIN3PS.EXE`（189,536 bytes 未打包 MZ，遊戲本體）→ `ENDING.EXE`。
+  → `GIN3PS.EXE`（189,536 bytes，**GLUE V1.70 封裝**，遊戲本體）→ `ENDING.EXE`。
 - 本體在 dosgolem 內：EMS 全過（AH=41/43 各 1、AH=44 映射 ×152）、載入 19 個資產檔
   （`MUSIC.INI`、`GIN3SP.VOC`、`GRAPH.IMG`、`COMANI.BMG`、`FRAME.BLK`、`SPRITE.SPR`、
   `BLOCK_3.BLK`、`3DBLOCK.SPR`、`COM_FLAG.SPR`、`PLADAT.DAT`、`ADMIRAL.DTX`、
@@ -55,6 +58,9 @@
 | null 基底來自 `6A04:0071–007B` 推 0 當 record 欄位 | re/04 §3 最佳假說 | re/05 §3：`6A04:057F` 是雙向串列插入，那兩個 0 是「插到最前面」的哨兵 |
 | write mode 3 未見使用 | dosgolem spec 009 §4 | re/05 §4：鏈內用了 1160 次；當 mode 0 處理時中文字形只剩零星像素 |
 | 畫面全黑是遊戲自己的淡入沒走完 | re/04 §1、re/05 §5 | re/06 §2：是 dosgolem 的兩個缺口——`int 10h AH=10h` 的 AL 分支接錯，以及「取向量後直接跳」的 BIOS 呼叫從未執行 |
+| `GIN3PS.EXE` 是未打包的 MZ | re/01 §3 | 檔頭 `0x24` 起是明文 `GLUE V1.70 -- Program Coder (By:C.C.F.)`；整支檔案撈不到可讀字串 |
+| 模組是「TINYPROG 解出的」 | re/03 §2、re/04 §3 | 整包檔案裡沒有 `TINYPROG` 字串；`TINYPROG says` 只在單獨執行 `GIN3PS.EXE` 時出現，與 GLUE 的關係未知 |
+| `BU16IBM.RGB` 是 16 點字型 | 早前的現況一覽 | 48 bytes ＝ 16 色 × 3 bytes 的調色盤，分量是 0–15 的 4 位元值；字型的候選是 1.76 MB 的 `IBM16.350` |
 
 ## 唯一 worklist
 
@@ -75,4 +81,7 @@
 9. **開始資料格式逆向**：`GRAPH.IMG`、`SPRITE.SPR`、`FRAME.BLK`、
    `PLADAT.DAT`、`ADMIRAL.DTX`、`STELLAR.DTX` 等已知會被載入的檔。
    dosgolem 可以在載入點下攔截，拿「解碼前的檔案 bytes」對「解碼後的
-   記憶體內容」，比純靜態猜格式可靠。
+   記憶體內容」，比純靜態猜格式可靠。**每解出一個格式就寫進
+   `docs/internals/`**，不要只留在 `docs/re/` 的敘事裡。
+10. **字型**：跑不跳開頭動畫的路徑，確認 `IBM16.350`（1.76 MB）是不是
+    中文點陣字型並解出格式。

@@ -11,6 +11,17 @@ origin 為 GitHub `wicanr2/dosgolem`），不得在主 checkout `~/cht/dosgolem/
 為本專案改動——主 checkout 有其他 session 使用。分支上的提交由使用者主導
 MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分支。
 
+## 專案目的
+
+兩個並行的目的，優先序相同：
+
+1. **remake**：把這款遊戲重做成可維護、可發行的版本。
+2. **保存**：這是 1994 年的台灣中文化作品（亨和企業．微波軟體發行）。
+   原始碼與開發資料都不存在，只剩執行檔可以問。**逆向出來的每一項事實
+   都要整理成 markdown 進版控**——格式、結構、演算法、編碼取捨、製作
+   團隊、原版自帶的錯字，全部算數。留在對話紀錄、一次性輸出檔或某人
+   腦袋裡的東西，等於沒有保存。
+
 ## 專案背景
 
 - 遊戲：《銀河英雄傳說III SP》（Legend of the Galactic Heroes III SP，Micronet，1994），
@@ -192,6 +203,11 @@ direct-entry 能開畫面，都不能單獨標為同狀態對拍完成。
 - 程式改動至少跑專案標準測試命令；畫面改動再跑目標 screenshot／oracle 流程。
   綠色單元測試只證明 remake 內部自洽，不證明原版 parity。
 - `README.md` 只放用途、穩定入口、現況摘要與正式連結，不加入逐輪命令或 checkpoint。
+- **`docs/internals/` 是逆向出來的事實本身**（結構化、會持續更新的參考）；
+  `docs/re/` 是逐次調查的紀錄（不改寫，被推翻時只加指標）。解出新東西時
+  兩邊都要寫：`docs/re/` 記怎麼查到的，`docs/internals/` 記查到了什麼。
+  段值與線性位址不穩定，`docs/internals/` 一律用結構位移與位元組簽章
+  （見 `docs/internals/00-README.md`）。
 - `WORKLOG.md` 是唯一流水帳；`CONTEXT.md` 是目前真相與唯一剩餘工作；
   `VERIFICATION-MATRIX.md` 是完成度唯一數字來源；逆向證據放 `docs/re/`，對拍收據放
   `docs/playtest/`，規格放 `docs/spec/`。
