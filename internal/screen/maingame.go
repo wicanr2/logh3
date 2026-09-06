@@ -42,6 +42,10 @@ type MainGameSpec struct {
 		} `json:"rest"`
 	} `json:"fields"`
 
+	// Order 是疊在地圖之上的視窗畫的順序（先畫的在下面）。
+	// 空的話就只畫 report——大多數畫面只有一層。
+	Order []string `json:"order"`
+
 	// Hotspots 是可點的區域。原版存的是**相對視窗原點的格子**
 	// （`docs/re/09`）；這裡放換算好的像素矩形，另外附上原始格子座標。
 	Hotspots []struct {
@@ -218,7 +222,13 @@ func MainGame(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset
 			}
 		}
 	}
-	for _, name := range []string{"report"} {
+	// 疊在地圖上的視窗照 Order 畫；沒寫 Order 就只有 report 一層。
+	// 「待命中提督資料」那種畫面是三層：底板 → 建造計劃 → 清單。
+	order := s.Order
+	if len(order) == 0 {
+		order = []string{"report"}
+	}
+	for _, name := range order {
 		if w := s.Windows[name]; w != nil {
 			missing = append(missing, w.Draw(fb, fnt, 3, faces)...)
 		}

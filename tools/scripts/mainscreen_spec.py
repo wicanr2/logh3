@@ -25,10 +25,19 @@ WINDOWS = {
 # 疊上去的那個視窗每個畫面大小不同，可以從命令列蓋掉。
 if len(sys.argv) > 8:
     WINDOWS['report'] = tuple(int(v) for v in sys.argv[5:9])
+# 第三層：有些畫面在報告視窗之上再疊一個（待命中提督資料）。
+if len(sys.argv) > 12:
+    WINDOWS['overlay'] = tuple(int(v) for v in sys.argv[9:13])
 # 底板的四邊要在沒被遮住的地方取樣；左上角整個被地圖蓋住，不能拿來
 # 量角落修正。
 SAMPLE = {'board': (600, 380)}
 EXCLUDE = {'board': ((0, 40, 320, 300),)}
+if 'overlay' in WINDOWS:
+    # 底板與報告視窗都被最上層蓋掉右半邊，量框與掃字都要避開。
+    _ox0 = WINDOWS['overlay'][0]
+    EXCLUDE['board'] = EXCLUDE['board'] + ((_ox0, 40, 640, 480),)
+    EXCLUDE['report'] = ((_ox0, 40, 640, 480),)
+    SAMPLE['report'] = (WINDOWS['report'][0] + 20, WINDOWS['report'][3] - 20)
 
 # 視窗裡自成一格的小框（輸入框、面板上的橫條、地圖旁的裝飾條）。
 # 位置是從「remake 與 oracle 的差異連通分量」量出來的
@@ -80,13 +89,14 @@ RULES_BY_SCREEN = {
     'screen-budget-plan': [(144, 239, 256, 1), (144, 279, 256, 1)],
 }
 # 同一個視窗裡不是每一行都用同一個顏色：面板的艦隊數字是 6 與 5。
-TEXT_INKS = {'board': [7, 6, 5], 'report': [7]}
+TEXT_INKS = {'board': [7, 6, 5], 'report': [7], 'overlay': [7]}
 
 # 文字掃描區：底板被地圖與報告視窗遮住的部分讀不到，分成兩塊來讀。
 _rx0, _ry0, _rx1, _ry1 = WINDOWS['report']
 TEXT_AREAS = {
     # 底板被地圖與那個視窗遮住的部分讀不到；掃描區跟著視窗走。
-    'board': [(max(496, _rx1 + 1), 49, 638, 410)] if _rx1 + 40 < 638 else [],
+    'board': ([] if 'overlay' in WINDOWS
+              else [(max(496, _rx1 + 1), 49, 638, 410)] if _rx1 + 40 < 638 else []),
     # 右邊界停在 420：再往右是輸入框，它的框線點陣剛好等於某個製表符，
     # 會被讀成一行「文字」，而那行的**陰影**會把框的左緣蓋掉一個像素。
     # 掃描區要避開小框：框線的點陣剛好等於某些製表符，會被讀成一行
@@ -99,6 +109,12 @@ TEXT_AREAS = {
     }.get(outname, [(WINDOWS['report'][0]+14, WINDOWS['report'][1]+10,
                      WINDOWS['report'][2]-12, WINDOWS['report'][3]-10)]),
 }
+if 'overlay' in WINDOWS:
+    _v0, _w0, _v1, _w1 = WINDOWS['overlay']
+    TEXT_AREAS['overlay'] = [(_v0 + 14, _w0 + 10, _v1 - 12, _w1 - 10)]
+    # 報告視窗只剩左半邊看得到。
+    TEXT_AREAS['report'] = [(WINDOWS['report'][0] + 14, WINDOWS['report'][1] + 10,
+                             _v0 - 2, WINDOWS['report'][3] - 10)]
 spec = {'canvas': {'width': W, 'height': H, 'mode': 'VGA 12h 640x480x16'},
         'background': bg,
         'map': {'source': 'STRMAP.BIT', 'regions': 'STRMAP.RGN', 'x': 0, 'y': 40},
@@ -170,11 +186,13 @@ for name, (x0, y0, x1, y1) in WINDOWS.items():
                        # 這些小框整塊比對：它們是純色填充，沒有「內容」
                        # 會被誤當成修正，而角落的斜切在小框上佔的比例很高。
                        fill=rows[(by0+by1)//2][(bx0+bx1)//2], corner=999)}
-                  for bx0, by0, bx1, by1 in (BOXES.get(name, []) if name != 'report'
-                                             else EXTRA_BOXES.get(outname, []))],
+                  for bx0, by0, bx1, by1 in (BOXES.get(name, []) if name == 'board'
+                                             else EXTRA_BOXES.get(outname + ':' + name,
+                                                                  EXTRA_BOXES.get(outname, [])
+                                                                  if name == 'report' else []))],
         'rules': [{'x': rx, 'y': ry, 'w': rw, 'h': rh, 'colour': rows[ry][rx]}
-                  for rx, ry, rw, rh in (RULES_BY_SCREEN.get(outname, [])
-                                         if name == 'report' else [])],
+                  for rx, ry, rw, rh in (RULES_BY_SCREEN.get(
+                      outname if name == 'report' else outname + ':' + name, []))],
     }
     print(f'{name}: ({x0},{y0}) {x1-x0+1}×{y1-y0+1}  層 {len(layers)}  '
           f'角落修正 {len(patches)}  文字色 {ink}  {len(lines)} 行')
@@ -197,6 +215,8 @@ def solid(cx, cy):
     return {'x': x0, 'y': y0, 'w': x1-x0+1, 'h': y1-y0+1, 'colour': c}
 
 # 游標位置是那一份收據的輸入序列決定的，不能沿用別的畫面。
+if 'overlay' in WINDOWS:
+    spec['order'] = ['report', 'overlay']
 spec['mouse'] = {'x': int(sys.argv[3]) if len(sys.argv) > 3 else 300,
                  'y': int(sys.argv[4]) if len(sys.argv) > 4 else 170}
 # 頭像編號不寫死：在報告視窗裡把 83 張逐一比對，找逐像素相同的那張。
