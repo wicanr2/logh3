@@ -4,6 +4,14 @@
 
 ## 2026-09-06
 
+- re04：VGA planar 管線打通（dosgolem-logh3 `518028d`，spec 009），拿到本體的
+  第一張 framebuffer 傾倒。畫面全黑是遊戲自己的淡入調色盤還停在暗值
+  （DAC[15]=(8,8,8)），色號陣列證明圖形已畫進 plane（103,452 個非零像素）；
+  滑鼠輪詢已開始，到達互動畫面邊緣。停點根因由「載入位址算錯」的假說收斂成
+  confirmed 機制：計時器 ISR 內的模組管理器用 null 基底（ES=0000）把 ISR 表
+  寫進 IVT[0]–[0B]。EMS 頁數、AdLib、tick 頻率、IOCTL 四個假說各有實驗反證。
+  剩下的未知只有一個：那個表指標在真機上從哪裡得到值。
+  詳 `docs/re/04-gin3ps-planar-pipeline-and-module-manager-crash.md`。
 - dosgolem 第一次接觸（詳 `docs/re/01-first-contact-gin3com.md`）：
   `GIN3.COM` 是 622-byte launcher；dosgolem 新增 `LoadCOM` 後原版路徑跑 35 道
   指令停在 EMS 偵測（`EMMXXXX0` 字元裝置開啟失敗，exit 3）。patch 版證實
