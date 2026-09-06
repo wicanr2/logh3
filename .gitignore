@@ -1,0 +1,20 @@
+# 原版素材與本機 oracle（不得進版控）
+org_game/
+workplace/
+testdata/
+
+# 建置與交付產物
+dist/
+dist-all/
+
+# 逆向工具產物
+*.i64
+*.id0
+*.id1
+*.id2
+*.nam
+*.til
+
+# 系統雜項
+.DS_Store
+*.swp
