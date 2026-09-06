@@ -1,0 +1,4267 @@
+{
+ "source": "GIN3PS.EXE 的資料段（執行期 DS，64 KB）",
+ "note": "\\0 分隔；多數前面帶 \\x01 ＋ 排版格式字串",
+ "count": 852,
+ "strings": [
+  {
+   "offset": 445,
+   "format": null,
+   "text": "發現敵方艦隊。\n"
+  },
+  {
+   "offset": 467,
+   "format": null,
+   "text": "艦隊\n%s%s\n"
+  },
+  {
+   "offset": 478,
+   "format": null,
+   "text": "已經全滅。    \n"
+  },
+  {
+   "offset": 505,
+   "format": null,
+   "text": "的消息已經斷絕。    \n"
+  },
+  {
+   "offset": 529,
+   "format": null,
+   "text": "帝  國"
+  },
+  {
+   "offset": 536,
+   "format": null,
+   "text": "同  盟"
+  },
+  {
+   "offset": 543,
+   "format": null,
+   "text": "對  戰"
+  },
+  {
+   "offset": 550,
+   "format": null,
+   "text": "取進度"
+  },
+  {
+   "offset": 740,
+   "format": null,
+   "text": "關閉"
+  },
+  {
+   "offset": 745,
+   "format": null,
+   "text": "波琍璐              "
+  },
+  {
+   "offset": 766,
+   "format": null,
+   "text": "英雄交響曲          "
+  },
+  {
+   "offset": 787,
+   "format": null,
+   "text": "悲愴交響曲          "
+  },
+  {
+   "offset": 808,
+   "format": null,
+   "text": "來自新世界          "
+  },
+  {
+   "offset": 829,
+   "format": null,
+   "text": "四季．夏            "
+  },
+  {
+   "offset": 850,
+   "format": null,
+   "text": "沈默的戰場          "
+  },
+  {
+   "offset": 871,
+   "format": null,
+   "text": "全艦攻擊            "
+  },
+  {
+   "offset": 892,
+   "format": null,
+   "text": "決戰前夕            "
+  },
+  {
+   "offset": 913,
+   "format": null,
+   "text": "使用原有的ＢＧＭ    "
+  },
+  {
+   "offset": 940,
+   "format": null,
+   "text": "開啟"
+  },
+  {
+   "offset": 945,
+   "format": null,
+   "text": "關閉"
+  },
+  {
+   "offset": 950,
+   "format": null,
+   "text": "普通"
+  },
+  {
+   "offset": 955,
+   "format": null,
+   "text": "快速"
+  },
+  {
+   "offset": 960,
+   "format": null,
+   "text": "最快"
+  },
+  {
+   "offset": 965,
+   "format": null,
+   "text": "結束"
+  },
+  {
+   "offset": 1286,
+   "format": null,
+   "text": "音源\n"
+  },
+  {
+   "offset": 1308,
+   "format": "[%d,%d,",
+   "text": "戰鬥ＢＧＭ\n\n\n"
+  },
+  {
+   "offset": 1322,
+   "format": null,
+   "text": "訊息速度      \n"
+  },
+  {
+   "offset": 1338,
+   "format": null,
+   "text": "動畫效果      \n"
+  },
+  {
+   "offset": 1354,
+   "format": null,
+   "text": "動畫速度  "
+  },
+  {
+   "offset": 1435,
+   "format": null,
+   "text": "請放入『銀河英雄傳說ⅢＳＰ』的Ｄ–Ｄｉｓｋ至Ａ磁碟機。            "
+  },
+  {
+   "offset": 1529,
+   "format": null,
+   "text": "已經將敵方的主要星系攻陷。\n"
+  },
+  {
+   "offset": 1557,
+   "format": null,
+   "text": "%s戰勝。    \n\n"
+  },
+  {
+   "offset": 1572,
+   "format": null,
+   "text": "我方星系總數        %2d\n"
+  },
+  {
+   "offset": 1597,
+   "format": null,
+   "text": "首都所在的星系已經被占領。\n"
+  },
+  {
+   "offset": 1625,
+   "format": null,
+   "text": "%s戰敗。    \n\n\n"
+  },
+  {
+   "offset": 1641,
+   "format": null,
+   "text": "勝利點    %12ld\n"
+  },
+  {
+   "offset": 1691,
+   "format": null,
+   "text": "%s的戰略輸入"
+  },
+  {
+   "offset": 1711,
+   "format": null,
+   "text": "宇宙曆  %3d 年 %2d 月 %2d 日\n"
+  },
+  {
+   "offset": 1741,
+   "format": null,
+   "text": "軍事費  %10ld  總稅收  %8lu"
+  },
+  {
+   "offset": 1769,
+   "format": null,
+   "text": "戰略模式思考中  "
+  },
+  {
+   "offset": 1878,
+   "format": null,
+   "text": "星系方面\n已經被敵方艦隊侵入。　\n"
+  },
+  {
+   "offset": 1912,
+   "format": null,
+   "text": "星系方面　\n占領行動持續進行中。\n"
+  },
+  {
+   "offset": 1946,
+   "format": null,
+   "text": "星系上　\n敵方艦隊正在侵略中。\n"
+  },
+  {
+   "offset": 1977,
+   "format": null,
+   "text": "\f%s　　　"
+  },
+  {
+   "offset": 1987,
+   "format": null,
+   "text": "宇宙曆　%3d 年 %2d 月 %2d 日\n"
+  },
+  {
+   "offset": 2017,
+   "format": null,
+   "text": "戰略模式處理中"
+  },
+  {
+   "offset": 2077,
+   "format": null,
+   "text": "%s已經\n"
+  },
+  {
+   "offset": 2085,
+   "format": null,
+   "text": "確認死亡。　　　　　"
+  },
+  {
+   "offset": 2106,
+   "format": null,
+   "text": "脫離成央B確定生還。"
+  },
+  {
+   "offset": 2159,
+   "format": null,
+   "text": "發生叛亂。"
+  },
+  {
+   "offset": 2187,
+   "format": null,
+   "text": "    \n由於受到敵方艦隊入侵\n部分地區已經無法掌控。"
+  },
+  {
+   "offset": 2236,
+   "format": null,
+   "text": "    \n部分行星我軍已成功進駐。"
+  },
+  {
+   "offset": 2266,
+   "format": null,
+   "text": "　　\n已被我方占領。"
+  },
+  {
+   "offset": 2286,
+   "format": null,
+   "text": "　　\n已被敵軍占領。"
+  },
+  {
+   "offset": 2306,
+   "format": null,
+   "text": "解除自動模式　"
+  },
+  {
+   "offset": 2329,
+   "format": null,
+   "text": "官階晉昇為%s。\n"
+  },
+  {
+   "offset": 2345,
+   "format": null,
+   "text": "能力提升。\n"
+  },
+  {
+   "offset": 2357,
+   "format": null,
+   "text": "統率力　﹕%4u\n"
+  },
+  {
+   "offset": 2372,
+   "format": null,
+   "text": "占領　　﹕%4u\n"
+  },
+  {
+   "offset": 2387,
+   "format": null,
+   "text": "防禦　　﹕%4u\n"
+  },
+  {
+   "offset": 2402,
+   "format": null,
+   "text": "光線砲　﹕%4u\n"
+  },
+  {
+   "offset": 2417,
+   "format": null,
+   "text": "飛彈　　﹕%4u\n"
+  },
+  {
+   "offset": 2432,
+   "format": null,
+   "text": "戰鬥機　﹕%4u\n"
+  },
+  {
+   "offset": 2447,
+   "format": null,
+   "text": "移動　　﹕%4u\n"
+  },
+  {
+   "offset": 2462,
+   "format": null,
+   "text": "回轉　　﹕%4u\n"
+  },
+  {
+   "offset": 2477,
+   "format": null,
+   "text": "營運　　﹕%4u\n"
+  },
+  {
+   "offset": 2492,
+   "format": null,
+   "text": "運用　　﹕%4u\n"
+  },
+  {
+   "offset": 2508,
+   "format": null,
+   "text": "確認"
+  },
+  {
+   "offset": 2513,
+   "format": null,
+   "text": "變更"
+  },
+  {
+   "offset": 2563,
+   "format": "[%d,%d,",
+   "text": "船艦接收報告\n軍事專任參謀"
+  },
+  {
+   "offset": 2598,
+   "format": "[%d,%d,",
+   "text": "以下船艦已建造完成        "
+  },
+  {
+   "offset": 2634,
+   "format": "[%d,%d,",
+   "text": "造艦數    部隊數"
+  },
+  {
+   "offset": 2687,
+   "format": "[%d,%d,",
+   "text": "船艦訂造報告\n軍事專任參謀"
+  },
+  {
+   "offset": 2722,
+   "format": "[%d,%d,",
+   "text": "建造以下船艦            "
+  },
+  {
+   "offset": 2756,
+   "format": "[%d,%d,",
+   "text": "造艦數    部隊數"
+  },
+  {
+   "offset": 2809,
+   "format": "[%d,%d,",
+   "text": "會計報告\n內政專任參謀"
+  },
+  {
+   "offset": 2840,
+   "format": "[%d,%d,",
+   "text": "本月份的收入及支出狀況      "
+  },
+  {
+   "offset": 2878,
+   "format": "[%d,%d,",
+   "text": "軍事費餘額：%12ld\n"
+  },
+  {
+   "offset": 2897,
+   "format": null,
+   "text": "稅收　　　：　%10lu\n"
+  },
+  {
+   "offset": 2918,
+   "format": null,
+   "text": "合計收入　：%12ld\n"
+  },
+  {
+   "offset": 2937,
+   "format": null,
+   "text": "船艦建造費：　%10lu\n"
+  },
+  {
+   "offset": 2958,
+   "format": null,
+   "text": "總計　　　："
+  },
+  {
+   "offset": 3031,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 3036,
+   "format": null,
+   "text": "行星"
+  },
+  {
+   "offset": 3041,
+   "format": null,
+   "text": "敵艦隊"
+  },
+  {
+   "offset": 3048,
+   "format": null,
+   "text": "提督"
+  },
+  {
+   "offset": 3126,
+   "format": null,
+   "text": "戰略命令"
+  },
+  {
+   "offset": 3135,
+   "format": null,
+   "text": "一覽表  "
+  },
+  {
+   "offset": 3144,
+   "format": null,
+   "text": "系統指令"
+  },
+  {
+   "offset": 3174,
+   "format": null,
+   "text": "?\f袍\r"
+  },
+  {
+   "offset": 3202,
+   "format": null,
+   "text": "出擊命令"
+  },
+  {
+   "offset": 3211,
+   "format": null,
+   "text": "情報收集"
+  },
+  {
+   "offset": 3220,
+   "format": null,
+   "text": "徵稅計劃"
+  },
+  {
+   "offset": 3229,
+   "format": null,
+   "text": "生產計劃"
+  },
+  {
+   "offset": 3271,
+   "format": null,
+   "text": "艦隊資料"
+  },
+  {
+   "offset": 3280,
+   "format": null,
+   "text": "提督資料"
+  },
+  {
+   "offset": 3289,
+   "format": null,
+   "text": "敵將資料"
+  },
+  {
+   "offset": 3329,
+   "format": null,
+   "text": "取進度"
+  },
+  {
+   "offset": 3336,
+   "format": null,
+   "text": "存進度"
+  },
+  {
+   "offset": 3343,
+   "format": null,
+   "text": "設定  "
+  },
+  {
+   "offset": 3350,
+   "format": null,
+   "text": "結束  "
+  },
+  {
+   "offset": 3397,
+   "format": null,
+   "text": "艦隊解散"
+  },
+  {
+   "offset": 3523,
+   "format": "[%d,%d,",
+   "text": "%6s星系"
+  },
+  {
+   "offset": 3619,
+   "format": null,
+   "text": "治安    "
+  },
+  {
+   "offset": 3700,
+   "format": "[%d,%d,",
+   "text": "防衛力  "
+  },
+  {
+   "offset": 3720,
+   "format": null,
+   "text": "經濟力  %10lu\n"
+  },
+  {
+   "offset": 3744,
+   "format": "[%d,%d,",
+   "text": "成長率    %3u.%1u%%"
+  },
+  {
+   "offset": 3773,
+   "format": "[%d,%d,",
+   "text": "成長率    ------"
+  },
+  {
+   "offset": 3799,
+   "format": "[%d,%d,",
+   "text": "徵稅額  ----------  稅率       -----\n"
+  },
+  {
+   "offset": 3846,
+   "format": "[%d,%d,",
+   "text": "徵稅額  %10lu  稅率       %2d.%1d%%"
+  },
+  {
+   "offset": 3912,
+   "format": "[%d,%d,",
+   "text": "星系內行星"
+  },
+  {
+   "offset": 3932,
+   "format": "[%d,%d,",
+   "text": "待命船艦  艦數  部隊  補給物資\n"
+  },
+  {
+   "offset": 3988,
+   "format": "[%d,%d,",
+   "text": "飛彈    "
+  },
+  {
+   "offset": 4021,
+   "format": "[%d,%d,",
+   "text": "戰鬥機"
+  },
+  {
+   "offset": 4043,
+   "format": null,
+   "text": "  Ｂ  --------  ----  飛彈    \n"
+  },
+  {
+   "offset": 4111,
+   "format": null,
+   "text": "  Ｃ  --------  ----  戰鬥機\n"
+  },
+  {
+   "offset": 4252,
+   "format": "[%d,%d,",
+   "text": "確認"
+  },
+  {
+   "offset": 4257,
+   "format": null,
+   "text": "結束"
+  },
+  {
+   "offset": 4275,
+   "format": null,
+   "text": "艦隊編號"
+  },
+  {
+   "offset": 4332,
+   "format": null,
+   "text": "變更"
+  },
+  {
+   "offset": 4337,
+   "format": null,
+   "text": "決定"
+  },
+  {
+   "offset": 4378,
+   "format": null,
+   "text": "第01艦隊"
+  },
+  {
+   "offset": 4387,
+   "format": null,
+   "text": "第02艦隊"
+  },
+  {
+   "offset": 4396,
+   "format": null,
+   "text": "第03艦隊"
+  },
+  {
+   "offset": 4405,
+   "format": null,
+   "text": "第04艦隊"
+  },
+  {
+   "offset": 4414,
+   "format": null,
+   "text": "第05艦隊"
+  },
+  {
+   "offset": 4423,
+   "format": null,
+   "text": "第06艦隊"
+  },
+  {
+   "offset": 4432,
+   "format": null,
+   "text": "第07艦隊"
+  },
+  {
+   "offset": 4441,
+   "format": null,
+   "text": "第08艦隊"
+  },
+  {
+   "offset": 4450,
+   "format": null,
+   "text": "第09艦隊"
+  },
+  {
+   "offset": 4459,
+   "format": null,
+   "text": "第10艦隊"
+  },
+  {
+   "offset": 4468,
+   "format": null,
+   "text": "第11艦隊"
+  },
+  {
+   "offset": 4477,
+   "format": null,
+   "text": "第12艦隊"
+  },
+  {
+   "offset": 4486,
+   "format": null,
+   "text": "第13艦隊"
+  },
+  {
+   "offset": 4495,
+   "format": null,
+   "text": "第14艦隊"
+  },
+  {
+   "offset": 4504,
+   "format": null,
+   "text": "第15艦隊"
+  },
+  {
+   "offset": 4513,
+   "format": null,
+   "text": "第16艦隊"
+  },
+  {
+   "offset": 4623,
+   "format": null,
+   "text": "卸任"
+  },
+  {
+   "offset": 4669,
+   "format": null,
+   "text": "待命中提督資料"
+  },
+  {
+   "offset": 4684,
+   "format": null,
+   "text": "由於船艦數量不足，無法組成艦隊。"
+  },
+  {
+   "offset": 4722,
+   "format": null,
+   "text": "提督      %s%s\n"
+  },
+  {
+   "offset": 4738,
+   "format": null,
+   "text": "          等級    %2d  經驗值%6u\n"
+  },
+  {
+   "offset": 4772,
+   "format": null,
+   "text": "旗艦      "
+  },
+  {
+   "offset": 4787,
+   "format": null,
+   "text": "戰艦\n"
+  },
+  {
+   "offset": 4793,
+   "format": null,
+   "text": "高速戰艦\n"
+  },
+  {
+   "offset": 4812,
+   "format": "[%d,%d,",
+   "text": "艦隊能力  艦隊運用      光線砲\n"
+  },
+  {
+   "offset": 4844,
+   "format": null,
+   "text": "          艦隊營運      飛彈    \n"
+  },
+  {
+   "offset": 4878,
+   "format": null,
+   "text": "          移動          戰鬥機\n"
+  },
+  {
+   "offset": 4910,
+   "format": null,
+   "text": "          回轉          防禦\n"
+  },
+  {
+   "offset": 4940,
+   "format": null,
+   "text": "          占領"
+  },
+  {
+   "offset": 4967,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 4972,
+   "format": null,
+   "text": "待命中副官資料"
+  },
+  {
+   "offset": 4998,
+   "format": null,
+   "text": "副官      %22s"
+  },
+  {
+   "offset": 5052,
+   "format": "[%d,%d,",
+   "text": "等級    %2d  經驗值%6u"
+  },
+  {
+   "offset": 5272,
+   "format": null,
+   "text": "參謀"
+  },
+  {
+   "offset": 5277,
+   "format": null,
+   "text": "結束"
+  },
+  {
+   "offset": 5372,
+   "format": null,
+   "text": "微稅"
+  },
+  {
+   "offset": 5377,
+   "format": null,
+   "text": "輕稅"
+  },
+  {
+   "offset": 5382,
+   "format": null,
+   "text": "普通"
+  },
+  {
+   "offset": 5387,
+   "format": null,
+   "text": "重稅"
+  },
+  {
+   "offset": 5392,
+   "format": null,
+   "text": "緊急"
+  },
+  {
+   "offset": 5445,
+   "format": null,
+   "text": "\f次月份預算計劃\n"
+  },
+  {
+   "offset": 5462,
+   "format": null,
+   "text": "內政專任參謀\n\n"
+  },
+  {
+   "offset": 5477,
+   "format": null,
+   "text": "帝國馬克  "
+  },
+  {
+   "offset": 5488,
+   "format": null,
+   "text": "帝納      "
+  },
+  {
+   "offset": 5499,
+   "format": null,
+   "text": "單位＝億%s\n"
+  },
+  {
+   "offset": 5511,
+   "format": null,
+   "text": "本月份  原定軍事費﹕\n"
+  },
+  {
+   "offset": 5533,
+   "format": null,
+   "text": "已支付  船艦建造費﹕\n"
+  },
+  {
+   "offset": 5555,
+   "format": null,
+   "text": "        艦隊維持費﹕\n"
+  },
+  {
+   "offset": 5577,
+   "format": null,
+   "text": "        移動經費  ﹕\n"
+  },
+  {
+   "offset": 5599,
+   "format": null,
+   "text": "本次    艦隊維持費﹕\n"
+  },
+  {
+   "offset": 5621,
+   "format": null,
+   "text": "預定    移動經費  ﹕\n"
+  },
+  {
+   "offset": 5643,
+   "format": null,
+   "text": "次月份  預估徵稅額﹕\n"
+  },
+  {
+   "offset": 5665,
+   "format": null,
+   "text": "預定    預估軍事費﹕\n"
+  },
+  {
+   "offset": 5687,
+   "format": null,
+   "text": "        船艦建造費﹕\n"
+  },
+  {
+   "offset": 5709,
+   "format": null,
+   "text": "        剩餘軍事費﹕\n"
+  },
+  {
+   "offset": 5918,
+   "format": null,
+   "text": "治安"
+  },
+  {
+   "offset": 5923,
+   "format": null,
+   "text": "敵艦"
+  },
+  {
+   "offset": 5928,
+   "format": null,
+   "text": "勢力"
+  },
+  {
+   "offset": 5933,
+   "format": null,
+   "text": "參謀"
+  },
+  {
+   "offset": 5938,
+   "format": null,
+   "text": "確認"
+  },
+  {
+   "offset": 6036,
+   "format": null,
+   "text": "情報專任參謀"
+  },
+  {
+   "offset": 6078,
+   "format": "[%d,%d,",
+   "text": "目前各星系的治安狀態："
+  },
+  {
+   "offset": 6110,
+   "format": "[%d,%d,",
+   "text": "完全沒有問題          "
+  },
+  {
+   "offset": 6142,
+   "format": "[%d,%d,",
+   "text": "大致上還算平靜        "
+  },
+  {
+   "offset": 6174,
+   "format": "[%d,%d,",
+   "text": "治安正逐漸惡化        "
+  },
+  {
+   "offset": 6206,
+   "format": "[%d,%d,",
+   "text": "處於危險狀態          "
+  },
+  {
+   "offset": 6238,
+   "format": "[%d,%d,",
+   "text": "完全無法支配的區域    "
+  },
+  {
+   "offset": 6270,
+   "format": "[%d,%d,",
+   "text": "目前敵艦隊的配置情報  "
+  },
+  {
+   "offset": 6302,
+   "format": "[%d,%d,",
+   "text": "沒有出現敵方艦隊      "
+  },
+  {
+   "offset": 6334,
+   "format": "[%d,%d,",
+   "text": "可能有敵方的艦隊出沒  "
+  },
+  {
+   "offset": 6366,
+   "format": "[%d,%d,",
+   "text": "出現小規模的敵方艦隊  "
+  },
+  {
+   "offset": 6398,
+   "format": "[%d,%d,",
+   "text": "出現大規模的敵方艦隊  "
+  },
+  {
+   "offset": 6430,
+   "format": "[%d,%d,",
+   "text": "情報資料不足，無法確認"
+  },
+  {
+   "offset": 6462,
+   "format": "[%d,%d,",
+   "text": "目前我方艦隊的勢力圖："
+  },
+  {
+   "offset": 6494,
+   "format": "[%d,%d,",
+   "text": "正集結大規模的艦隊    "
+  },
+  {
+   "offset": 6526,
+   "format": "[%d,%d,",
+   "text": "有中等規模的艦隊群    "
+  },
+  {
+   "offset": 6558,
+   "format": "[%d,%d,",
+   "text": "有少數的艦隊群        "
+  },
+  {
+   "offset": 6590,
+   "format": "[%d,%d,",
+   "text": "只有少數的船艦        "
+  },
+  {
+   "offset": 6622,
+   "format": "[%d,%d,",
+   "text": "沒有我方艦隊的存在    "
+  },
+  {
+   "offset": 6658,
+   "format": null,
+   "text": "待命中提督資料"
+  },
+  {
+   "offset": 6674,
+   "format": null,
+   "text": "提督資料"
+  },
+  {
+   "offset": 6683,
+   "format": null,
+   "text": "敵提督資料"
+  },
+  {
+   "offset": 6791,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 6884,
+   "format": null,
+   "text": "情報資料來源不足"
+  },
+  {
+   "offset": 6901,
+   "format": null,
+   "text": "\f%s  第"
+  },
+  {
+   "offset": 6909,
+   "format": null,
+   "text": "艦隊\n"
+  },
+  {
+   "offset": 6915,
+   "format": null,
+   "text": "提督      %s%s\n\n\n"
+  },
+  {
+   "offset": 6933,
+   "format": null,
+   "text": "部隊種類  "
+  },
+  {
+   "offset": 6968,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 6984,
+   "format": null,
+   "text": "第？艦隊"
+  },
+  {
+   "offset": 7124,
+   "format": null,
+   "text": "%-8s　　　"
+  },
+  {
+   "offset": 7265,
+   "format": null,
+   "text": "%-8s　"
+  },
+  {
+   "offset": 7358,
+   "format": null,
+   "text": "士氣"
+  },
+  {
+   "offset": 7363,
+   "format": null,
+   "text": "部隊"
+  },
+  {
+   "offset": 7368,
+   "format": null,
+   "text": "作戰"
+  },
+  {
+   "offset": 7467,
+   "format": "[%d,%d,",
+   "text": "　艦隊一覽"
+  },
+  {
+   "offset": 7505,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 7516,
+   "format": null,
+   "text": "　 %3d"
+  },
+  {
+   "offset": 7532,
+   "format": null,
+   "text": "戰鬥"
+  },
+  {
+   "offset": 7537,
+   "format": null,
+   "text": "占領"
+  },
+  {
+   "offset": 7542,
+   "format": null,
+   "text": "　%4s"
+  },
+  {
+   "offset": 7668,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 7673,
+   "format": null,
+   "text": "配屬"
+  },
+  {
+   "offset": 7678,
+   "format": null,
+   "text": "稅金"
+  },
+  {
+   "offset": 7777,
+   "format": "[%d,%d,",
+   "text": "  星系資料"
+  },
+  {
+   "offset": 7972,
+   "format": null,
+   "text": "經歷"
+  },
+  {
+   "offset": 7977,
+   "format": null,
+   "text": "中止"
+  },
+  {
+   "offset": 7982,
+   "format": null,
+   "text": "出擊"
+  },
+  {
+   "offset": 8036,
+   "format": null,
+   "text": "經歷"
+  },
+  {
+   "offset": 8041,
+   "format": null,
+   "text": "中止"
+  },
+  {
+   "offset": 8046,
+   "format": null,
+   "text": "決定"
+  },
+  {
+   "offset": 8100,
+   "format": null,
+   "text": "經歷"
+  },
+  {
+   "offset": 8105,
+   "format": null,
+   "text": "結束"
+  },
+  {
+   "offset": 8166,
+   "format": null,
+   "text": "參謀          "
+  },
+  {
+   "offset": 8184,
+   "format": null,
+   "text": "艦隊      "
+  },
+  {
+   "offset": 8205,
+   "format": null,
+   "text": "現在位置      "
+  },
+  {
+   "offset": 8220,
+   "format": null,
+   "text": "死亡\n"
+  },
+  {
+   "offset": 8226,
+   "format": null,
+   "text": "下落不明\n"
+  },
+  {
+   "offset": 8244,
+   "format": null,
+   "text": "待命中\n"
+  },
+  {
+   "offset": 8252,
+   "format": null,
+   "text": "執勤中\n"
+  },
+  {
+   "offset": 8260,
+   "format": null,
+   "text": "出擊中\n"
+  },
+  {
+   "offset": 8286,
+   "format": null,
+   "text": "旗艦          "
+  },
+  {
+   "offset": 8304,
+   "format": null,
+   "text": "高速"
+  },
+  {
+   "offset": 8309,
+   "format": null,
+   "text": "戰艦"
+  },
+  {
+   "offset": 8317,
+   "format": null,
+   "text": "提督的等級    "
+  },
+  {
+   "offset": 8332,
+   "format": null,
+   "text": "等級       %3u    經驗值  %6lu\n"
+  },
+  {
+   "offset": 8364,
+   "format": null,
+   "text": "艦隊運用能力  統率力     %3u    移動       %3u\n"
+  },
+  {
+   "offset": 8412,
+   "format": null,
+   "text": "              運用       %3u    回轉       %3u\n"
+  },
+  {
+   "offset": 8460,
+   "format": null,
+   "text": "              營運       %3u\n"
+  },
+  {
+   "offset": 8490,
+   "format": null,
+   "text": "戰鬥能力      光線砲     %3u    占領       %3u\n"
+  },
+  {
+   "offset": 8538,
+   "format": null,
+   "text": "              飛彈       %3u    防禦       %3u\n"
+  },
+  {
+   "offset": 8586,
+   "format": null,
+   "text": "              戰鬥機     %3u"
+  },
+  {
+   "offset": 8624,
+   "format": null,
+   "text": "作戰"
+  },
+  {
+   "offset": 8629,
+   "format": null,
+   "text": "變更"
+  },
+  {
+   "offset": 8634,
+   "format": null,
+   "text": "結束"
+  },
+  {
+   "offset": 8688,
+   "format": null,
+   "text": "移動"
+  },
+  {
+   "offset": 8693,
+   "format": null,
+   "text": "占領"
+  },
+  {
+   "offset": 8698,
+   "format": null,
+   "text": "駐留"
+  },
+  {
+   "offset": 8703,
+   "format": null,
+   "text": "輸送"
+  },
+  {
+   "offset": 8708,
+   "format": null,
+   "text": "待命"
+  },
+  {
+   "offset": 8749,
+   "format": null,
+   "text": "編組"
+  },
+  {
+   "offset": 8762,
+   "format": null,
+   "text": "-\"袍決定"
+  },
+  {
+   "offset": 8771,
+   "format": null,
+   "text": "中止"
+  },
+  {
+   "offset": 8872,
+   "format": null,
+   "text": "移動至"
+  },
+  {
+   "offset": 8879,
+   "format": null,
+   "text": "占領"
+  },
+  {
+   "offset": 8884,
+   "format": null,
+   "text": "駐留在"
+  },
+  {
+   "offset": 8891,
+   "format": null,
+   "text": "輸送物資至"
+  },
+  {
+   "offset": 8902,
+   "format": null,
+   "text": "待命於"
+  },
+  {
+   "offset": 8932,
+   "format": null,
+   "text": "%s    第"
+  },
+  {
+   "offset": 8941,
+   "format": null,
+   "text": "艦隊\n"
+  },
+  {
+   "offset": 8947,
+   "format": null,
+   "text": "提督      %s%s\n"
+  },
+  {
+   "offset": 8963,
+   "format": null,
+   "text": "          等級    %2d  經驗值"
+  },
+  {
+   "offset": 9047,
+   "format": null,
+   "text": "作戰"
+  },
+  {
+   "offset": 9061,
+   "format": "[%d,%d,",
+   "text": "現在位置    "
+  },
+  {
+   "offset": 9082,
+   "format": null,
+   "text": "\n狀態      部隊組成\n"
+  },
+  {
+   "offset": 9110,
+   "format": null,
+   "text": "副官\n"
+  },
+  {
+   "offset": 9123,
+   "format": null,
+   "text": "營運經費  維持費          移動經費                "
+  },
+  {
+   "offset": 9174,
+   "format": null,
+   "text": "艦隊能力  艦隊士氣值      光線砲\n"
+  },
+  {
+   "offset": 9208,
+   "format": null,
+   "text": "          統率力          飛彈    \n"
+  },
+  {
+   "offset": 9244,
+   "format": null,
+   "text": "          回轉速度        戰鬥機\n"
+  },
+  {
+   "offset": 9278,
+   "format": null,
+   "text": "          巡航速度        占領\n"
+  },
+  {
+   "offset": 9310,
+   "format": null,
+   "text": "          戰鬥速度        防禦"
+  },
+  {
+   "offset": 9350,
+   "format": "[%d,%d,",
+   "text": "%s戰鬥"
+  },
+  {
+   "offset": 9357,
+   "format": null,
+   "text": "戰鬥中  "
+  },
+  {
+   "offset": 9366,
+   "format": null,
+   "text": "占領中  "
+  },
+  {
+   "offset": 9384,
+   "format": "[%d,%d,",
+   "text": "移動目標    "
+  },
+  {
+   "offset": 9397,
+   "format": null,
+   "text": "待命行星    "
+  },
+  {
+   "offset": 9410,
+   "format": null,
+   "text": "            待命中          "
+  },
+  {
+   "offset": 9471,
+   "format": "[%d,%d,",
+   "text": "飛彈        "
+  },
+  {
+   "offset": 9496,
+   "format": null,
+   "text": "    戰鬥機      "
+  },
+  {
+   "offset": 9554,
+   "format": "[%d,%d,",
+   "text": "等級    %2d  經驗值"
+  },
+  {
+   "offset": 9579,
+   "format": null,
+   "text": "沒有"
+  },
+  {
+   "offset": 9599,
+   "format": "[%d,%d,",
+   "text": "等級    --  經驗值 -----"
+  },
+  {
+   "offset": 9835,
+   "format": null,
+   "text": "駐留在"
+  },
+  {
+   "offset": 9865,
+   "format": null,
+   "text": "\f指定待命行星\n"
+  },
+  {
+   "offset": 9880,
+   "format": null,
+   "text": "\n      星系      %s\n"
+  },
+  {
+   "offset": 9944,
+   "format": null,
+   "text": "參謀"
+  },
+  {
+   "offset": 9949,
+   "format": null,
+   "text": "結束"
+  },
+  {
+   "offset": 10167,
+   "format": "[%d,%d,",
+   "text": "次月份船艦建造計劃\n"
+  },
+  {
+   "offset": 10187,
+   "format": null,
+   "text": "軍事專任參謀"
+  },
+  {
+   "offset": 10209,
+   "format": "[%d,%d,",
+   "text": "船艦建造費        %10ld\n"
+  },
+  {
+   "offset": 10243,
+   "format": "[%d,%d,",
+   "text": "建造船艦  預算分配      金額／船艦數  部隊／建造中  部隊\n"
+  },
+  {
+   "offset": 10305,
+   "format": null,
+   "text": "餘額"
+  },
+  {
+   "offset": 10388,
+   "format": null,
+   "text": "待命中提督資料"
+  },
+  {
+   "offset": 10736,
+   "format": null,
+   "text": "決定"
+  },
+  {
+   "offset": 10741,
+   "format": null,
+   "text": "陣形"
+  },
+  {
+   "offset": 10746,
+   "format": null,
+   "text": "中止"
+  },
+  {
+   "offset": 10812,
+   "format": null,
+   "text": "圓錐"
+  },
+  {
+   "offset": 10817,
+   "format": null,
+   "text": "紡錘"
+  },
+  {
+   "offset": 10822,
+   "format": null,
+   "text": "半月"
+  },
+  {
+   "offset": 10827,
+   "format": null,
+   "text": "Ｖ字"
+  },
+  {
+   "offset": 10832,
+   "format": null,
+   "text": "Ｍ字"
+  },
+  {
+   "offset": 10837,
+   "format": null,
+   "text": "Ｔ字"
+  },
+  {
+   "offset": 10842,
+   "format": null,
+   "text": "分散"
+  },
+  {
+   "offset": 10847,
+   "format": null,
+   "text": "密集"
+  },
+  {
+   "offset": 10896,
+   "format": null,
+   "text": "_*袍\f"
+  },
+  {
+   "offset": 10902,
+   "format": null,
+   "text": "艦隊組成"
+  },
+  {
+   "offset": 10920,
+   "format": "[%d,%d,",
+   "text": "待命部隊  數  量"
+  },
+  {
+   "offset": 10973,
+   "format": "[%d,%d,",
+   "text": "編隊﹕"
+  },
+  {
+   "offset": 10995,
+   "format": "[%d,%d,",
+   "text": "部隊數  ﹕ %2d/%2d"
+  },
+  {
+   "offset": 11023,
+   "format": "[%d,%d,",
+   "text": "機動力  ﹕  %3u%%"
+  },
+  {
+   "offset": 11086,
+   "format": null,
+   "text": "只有戰艦或者高速戰艦才能當做旗艦。"
+  },
+  {
+   "offset": 11121,
+   "format": null,
+   "text": "船艦數量不足。"
+  },
+  {
+   "offset": 11136,
+   "format": null,
+   "text": "無法超過目前統率能力以上的船艦數量。"
+  },
+  {
+   "offset": 11173,
+   "format": null,
+   "text": "無法撤離旗艦。                  "
+  },
+  {
+   "offset": 11698,
+   "format": "\f\u0007�e��",
+   "text": "待命"
+  },
+  {
+   "offset": 11740,
+   "format": null,
+   "text": "這是無法前往的星系。"
+  },
+  {
+   "offset": 11761,
+   "format": null,
+   "text": "待命"
+  },
+  {
+   "offset": 11798,
+   "format": null,
+   "text": "\f%s  第"
+  },
+  {
+   "offset": 11806,
+   "format": null,
+   "text": "艦隊\n%s%s\n"
+  },
+  {
+   "offset": 11817,
+   "format": null,
+   "text": "無法前往敵方的星系\n。          "
+  },
+  {
+   "offset": 11849,
+   "format": null,
+   "text": "%s第"
+  },
+  {
+   "offset": 11854,
+   "format": null,
+   "text": "艦隊\n%s%s\n"
+  },
+  {
+   "offset": 11865,
+   "format": null,
+   "text": "%s無法直接到達此星系。    \n"
+  },
+  {
+   "offset": 11893,
+   "format": null,
+   "text": "%s要占領此星系嗎？    "
+  },
+  {
+   "offset": 11916,
+   "format": null,
+   "text": "\f%s  第"
+  },
+  {
+   "offset": 11924,
+   "format": null,
+   "text": "艦隊\n%s%s\n"
+  },
+  {
+   "offset": 11935,
+   "format": null,
+   "text": "由於移動經費不足無法移動。"
+  },
+  {
+   "offset": 11962,
+   "format": null,
+   "text": "\f%s  第"
+  },
+  {
+   "offset": 11970,
+   "format": null,
+   "text": "艦隊\n%s%s\n"
+  },
+  {
+   "offset": 11981,
+   "format": null,
+   "text": "出發前往\n"
+  },
+  {
+   "offset": 11991,
+   "format": null,
+   "text": "\n已經到達目標星系。    "
+  },
+  {
+   "offset": 12015,
+   "format": null,
+   "text": "\n已經駐留在星系上。  "
+  },
+  {
+   "offset": 12038,
+   "format": null,
+   "text": "  占領費沙自治領地可能會導致費沙的經\n  濟力流向同盟軍。  \n            "
+  },
+  {
+   "offset": 12109,
+   "format": null,
+   "text": "  而且，強硬的占領政策可能會造成邊境\n  星系的情勢惡化。                "
+  },
+  {
+   "offset": 12181,
+   "format": null,
+   "text": "  破壞和平條約將會使費沙龐大的經濟力\n  流向帝國軍那一方。\n        "
+  },
+  {
+   "offset": 12248,
+   "format": null,
+   "text": "  而且有可能會使得同盟星系發生叛亂。\n  你確定要占領費沙嗎？  "
+  },
+  {
+   "offset": 12399,
+   "format": null,
+   "text": "  同時，支持費沙自治領地的邊境星系\n  目前情勢正持續惡化中。          "
+  },
+  {
+   "offset": 12469,
+   "format": null,
+   "text": "  雖然費沙自治領地的占領行動已經成功\n  。但是，破壞條約的背信行為卻造成\n  我方邊境星系接連不斷地發生叛亂。\n"
+  },
+  {
+   "offset": 12577,
+   "format": null,
+   "text": "  而且，費沙的經濟力大部份好像已經轉\n  移到帝國軍那邊的樣子。      "
+  },
+  {
+   "offset": 12645,
+   "format": null,
+   "text": "  由於費沙星系被同盟軍占領的緣故；  \n  目前邊境正流入大量的難民。  \n"
+  },
+  {
+   "offset": 12714,
+   "format": null,
+   "text": "  另外，同盟邊境地帶的情勢正陷入混亂\n  的狀態。    "
+  },
+  {
+   "offset": 12766,
+   "format": null,
+   "text": "  因為費沙自治領地已被帝國大軍占領。\n  有許多費沙的流亡者前來請求庇護。\n"
+  },
+  {
+   "offset": 12839,
+   "format": null,
+   "text": "  而且，帝國邊境的星系目前好像發生叛\n  亂的樣子。      "
+  },
+  {
+   "offset": 12955,
+   "format": null,
+   "text": "\f%s星系上  \n"
+  },
+  {
+   "offset": 12968,
+   "format": null,
+   "text": "發生叛亂。"
+  },
+  {
+   "offset": 12980,
+   "format": null,
+   "text": "%s第"
+  },
+  {
+   "offset": 12985,
+   "format": null,
+   "text": "艦隊  %s\n士氣值"
+  },
+  {
+   "offset": 13001,
+   "format": null,
+   "text": "低落的關係，\n已經無法戰鬥。        \n"
+  },
+  {
+   "offset": 13038,
+   "format": null,
+   "text": "已經恢復，\n可以進行戰鬥。　　　　\n"
+  },
+  {
+   "offset": 13073,
+   "format": null,
+   "text": "艦隊士氣值　%4u\n"
+  },
+  {
+   "offset": 13090,
+   "format": null,
+   "text": "%s第"
+  },
+  {
+   "offset": 13095,
+   "format": null,
+   "text": "艦隊\n%s\n已全軍覆沒。　\n"
+  },
+  {
+   "offset": 13120,
+   "format": null,
+   "text": "戰術模式結束！"
+  },
+  {
+   "offset": 13135,
+   "format": null,
+   "text": "戰術"
+  },
+  {
+   "offset": 13140,
+   "format": null,
+   "text": "實行  "
+  },
+  {
+   "offset": 13147,
+   "format": null,
+   "text": "資料  "
+  },
+  {
+   "offset": 13154,
+   "format": null,
+   "text": "撤退  "
+  },
+  {
+   "offset": 13161,
+   "format": null,
+   "text": "取進度"
+  },
+  {
+   "offset": 13168,
+   "format": null,
+   "text": "存進度"
+  },
+  {
+   "offset": 13175,
+   "format": null,
+   "text": "設定  "
+  },
+  {
+   "offset": 13182,
+   "format": null,
+   "text": "結束  "
+  },
+  {
+   "offset": 13228,
+   "format": null,
+   "text": "~3袍l"
+  },
+  {
+   "offset": 13240,
+   "format": null,
+   "text": "      您確定要結束這個遊戲嗎？"
+  },
+  {
+   "offset": 13330,
+   "format": null,
+   "text": "回合"
+  },
+  {
+   "offset": 13344,
+   "format": "[%d,%d,",
+   "text": "﹕    輸入"
+  },
+  {
+   "offset": 13364,
+   "format": "[%d,%d,",
+   "text": "勝利點﹕%8ld"
+  },
+  {
+   "offset": 13377,
+   "format": null,
+   "text": "帝國軍﹕%8ld"
+  },
+  {
+   "offset": 13390,
+   "format": null,
+   "text": "同盟軍﹕%8ld"
+  },
+  {
+   "offset": 13403,
+   "format": null,
+   "text": "勝利點﹕%8ld"
+  },
+  {
+   "offset": 13416,
+   "format": null,
+   "text": "同盟軍﹕%8ld"
+  },
+  {
+   "offset": 13429,
+   "format": null,
+   "text": "帝國軍﹕%8ld"
+  },
+  {
+   "offset": 13451,
+   "format": "[%d,%d,",
+   "text": "\n思考中"
+  },
+  {
+   "offset": 13471,
+   "format": null,
+   "text": "確定要放棄這個星系嗎？"
+  },
+  {
+   "offset": 13494,
+   "format": null,
+   "text": "艦隊  "
+  },
+  {
+   "offset": 13501,
+   "format": null,
+   "text": "行星  "
+  },
+  {
+   "offset": 13508,
+   "format": null,
+   "text": "敵艦隊"
+  },
+  {
+   "offset": 13623,
+   "format": null,
+   "text": "艦隊資料                        艦數  最大  士氣"
+  },
+  {
+   "offset": 13693,
+   "format": "[%d,%d,",
+   "text": "行星資料          經濟力  防衛力  補給  BHCADTE "
+  },
+  {
+   "offset": 13820,
+   "format": "[%d,%d,",
+   "text": "敵艦隊資料                      艦數  最大  士氣"
+  },
+  {
+   "offset": 13881,
+   "format": null,
+   "text": "第？艦隊  第？部隊          "
+  },
+  {
+   "offset": 13913,
+   "format": null,
+   "text": "艦隊  "
+  },
+  {
+   "offset": 13926,
+   "format": null,
+   "text": "          第"
+  },
+  {
+   "offset": 13939,
+   "format": null,
+   "text": "部隊          "
+  },
+  {
+   "offset": 14025,
+   "format": null,
+   "text": "艦隊\n"
+  },
+  {
+   "offset": 14031,
+   "format": null,
+   "text": "指揮官  %s%s"
+  },
+  {
+   "offset": 14053,
+   "format": "[%d,%d,",
+   "text": "等級    %2d    經驗值  %6lu\n"
+  },
+  {
+   "offset": 14082,
+   "format": null,
+   "text": "副官    "
+  },
+  {
+   "offset": 14105,
+   "format": "[%d,%d,",
+   "text": "等級    %2d    經驗值  %6lu\n"
+  },
+  {
+   "offset": 14134,
+   "format": null,
+   "text": "無                            "
+  },
+  {
+   "offset": 14200,
+   "format": null,
+   "text": "艦隊士氣值      統率力          光線砲        \n"
+  },
+  {
+   "offset": 14248,
+   "format": null,
+   "text": "回轉速度        運用            飛彈          \n"
+  },
+  {
+   "offset": 14296,
+   "format": null,
+   "text": "巡航速度        營運            戰鬥機        \n"
+  },
+  {
+   "offset": 14344,
+   "format": null,
+   "text": "戰鬥速度        占領            防禦            "
+  },
+  {
+   "offset": 14623,
+   "format": null,
+   "text": "部隊"
+  },
+  {
+   "offset": 14628,
+   "format": null,
+   "text": "  %-8s                %4d／  %4d隻"
+  },
+  {
+   "offset": 14663,
+   "format": null,
+   "text": "部隊士氣值 %3u"
+  },
+  {
+   "offset": 14678,
+   "format": null,
+   "text": "  %-14s  %6ld／%6ld門"
+  },
+  {
+   "offset": 14700,
+   "format": null,
+   "text": "  光線砲                    非搭載"
+  },
+  {
+   "offset": 14735,
+   "format": null,
+   "text": "最高速度   %3u"
+  },
+  {
+   "offset": 14750,
+   "format": null,
+   "text": "  %-14s  %6ld／%6ld發"
+  },
+  {
+   "offset": 14772,
+   "format": null,
+   "text": "  飛彈                      非搭載"
+  },
+  {
+   "offset": 14807,
+   "format": null,
+   "text": "戰鬥速度   %3u"
+  },
+  {
+   "offset": 14822,
+   "format": null,
+   "text": "        發射裝置  %6ld／%6ld座"
+  },
+  {
+   "offset": 14888,
+   "format": null,
+   "text": "耐久力     %3u"
+  },
+  {
+   "offset": 14903,
+   "format": null,
+   "text": "  %-14s  %6ld／%6ld架"
+  },
+  {
+   "offset": 14925,
+   "format": null,
+   "text": "  艦載機                    非搭載"
+  },
+  {
+   "offset": 14960,
+   "format": null,
+   "text": "%s星系  "
+  },
+  {
+   "offset": 14973,
+   "format": null,
+   "text": "要塞"
+  },
+  {
+   "offset": 14978,
+   "format": null,
+   "text": "行星"
+  },
+  {
+   "offset": 14996,
+   "format": null,
+   "text": "經濟力    %10lu﹕成長率  %2d.%1d%% \n"
+  },
+  {
+   "offset": 15033,
+   "format": null,
+   "text": "防衛力   %5u/%5u﹕回復率  %2d.0%% \n"
+  },
+  {
+   "offset": 15117,
+   "format": null,
+   "text": "\n  飛彈          戰鬥機\n"
+  },
+  {
+   "offset": 15161,
+   "format": null,
+   "text": "經濟力    %10lu﹕成長率  ----\n"
+  },
+  {
+   "offset": 15192,
+   "format": null,
+   "text": "防衛力   %5u/%5u﹕回復率  ----\n"
+  },
+  {
+   "offset": 15308,
+   "format": null,
+   "text": "  飛彈          戰鬥機\n"
+  },
+  {
+   "offset": 15361,
+   "format": null,
+   "text": "情報資料不足。        "
+  },
+  {
+   "offset": 15429,
+   "format": null,
+   "text": "結束"
+  },
+  {
+   "offset": 15437,
+   "format": null,
+   "text": "%s  第"
+  },
+  {
+   "offset": 15444,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 15455,
+   "format": null,
+   "text": "索敵部隊        "
+  },
+  {
+   "offset": 15475,
+   "format": null,
+   "text": "部隊        "
+  },
+  {
+   "offset": 15586,
+   "format": null,
+   "text": "\f修理階段    "
+  },
+  {
+   "offset": 15600,
+   "format": null,
+   "text": "\f移動階段    "
+  },
+  {
+   "offset": 15614,
+   "format": null,
+   "text": "解除自動模式  "
+  },
+  {
+   "offset": 15629,
+   "format": null,
+   "text": "\f索敵階段    "
+  },
+  {
+   "offset": 15643,
+   "format": null,
+   "text": "\f戰鬥階段    "
+  },
+  {
+   "offset": 15657,
+   "format": null,
+   "text": "\f占領階段    "
+  },
+  {
+   "offset": 15671,
+   "format": null,
+   "text": "\f最後階段    "
+  },
+  {
+   "offset": 15686,
+   "format": null,
+   "text": "  \n已經全滅。    "
+  },
+  {
+   "offset": 15704,
+   "format": null,
+   "text": "%s星系  \n已經占領下來。\n"
+  },
+  {
+   "offset": 15729,
+   "format": null,
+   "text": "%s星系部分地區\n已脫離我方統治。\n"
+  },
+  {
+   "offset": 15762,
+   "format": null,
+   "text": "我軍已進駐\n%s星系部分行星。\n"
+  },
+  {
+   "offset": 15791,
+   "format": null,
+   "text": "%s星系\n已經被敵軍奪取。\n"
+  },
+  {
+   "offset": 15816,
+   "format": null,
+   "text": "的\n索敵艦已經失去連絡。      \n"
+  },
+  {
+   "offset": 15855,
+   "format": null,
+   "text": "的官階晉昇為%s"
+  },
+  {
+   "offset": 15870,
+   "format": null,
+   "text": "的能力已經提昇。"
+  },
+  {
+   "offset": 15887,
+   "format": null,
+   "text": "\n統率力  ﹕%4u"
+  },
+  {
+   "offset": 15902,
+   "format": null,
+   "text": "\n占領    ﹕%4u"
+  },
+  {
+   "offset": 15917,
+   "format": null,
+   "text": "\n防禦    ﹕%4u"
+  },
+  {
+   "offset": 15932,
+   "format": null,
+   "text": "\n光線砲  ﹕%4u"
+  },
+  {
+   "offset": 15947,
+   "format": null,
+   "text": "\n飛彈    ﹕%4u"
+  },
+  {
+   "offset": 15962,
+   "format": null,
+   "text": "\n戰鬥機  ﹕%4u"
+  },
+  {
+   "offset": 15977,
+   "format": null,
+   "text": "\n移動    ﹕%4u"
+  },
+  {
+   "offset": 15992,
+   "format": null,
+   "text": "\n回轉    ﹕%4u"
+  },
+  {
+   "offset": 16007,
+   "format": null,
+   "text": "\n營運    ﹕%4u"
+  },
+  {
+   "offset": 16022,
+   "format": null,
+   "text": "\n運用    ﹕%4u"
+  },
+  {
+   "offset": 16037,
+   "format": null,
+   "text": "整個艦隊已經失去戰鬥意志。\n無法繼續進行戰鬥。\n"
+  },
+  {
+   "offset": 16084,
+   "format": null,
+   "text": "敵方此艦隊已經無法戰鬥。\n"
+  },
+  {
+   "offset": 16110,
+   "format": null,
+   "text": "%s第"
+  },
+  {
+   "offset": 16115,
+   "format": null,
+   "text": "艦隊  %s\n"
+  },
+  {
+   "offset": 16125,
+   "format": null,
+   "text": "%s艦隊已將\n"
+  },
+  {
+   "offset": 16137,
+   "format": null,
+   "text": "占領下來。"
+  },
+  {
+   "offset": 16148,
+   "format": null,
+   "text": "沒有需要補給的船艦。"
+  },
+  {
+   "offset": 16169,
+   "format": null,
+   "text": "\f%s  第"
+  },
+  {
+   "offset": 16177,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 16182,
+   "format": null,
+   "text": "運輸艦      %4u"
+  },
+  {
+   "offset": 16198,
+   "format": null,
+   "text": "飛彈      %6lu"
+  },
+  {
+   "offset": 16213,
+   "format": null,
+   "text": "戰鬥機    %6lu"
+  },
+  {
+   "offset": 16240,
+   "format": null,
+   "text": "飛彈    "
+  },
+  {
+   "offset": 16254,
+   "format": null,
+   "text": "    全滿"
+  },
+  {
+   "offset": 16263,
+   "format": null,
+   "text": "      無"
+  },
+  {
+   "offset": 16272,
+   "format": null,
+   "text": "戰鬥機  "
+  },
+  {
+   "offset": 16286,
+   "format": null,
+   "text": "    全滿"
+  },
+  {
+   "offset": 16295,
+   "format": null,
+   "text": "      無"
+  },
+  {
+   "offset": 16304,
+   "format": null,
+   "text": "沒有需要補給的船艦。    "
+  },
+  {
+   "offset": 16344,
+   "format": null,
+   "text": "飛彈    %8lu"
+  },
+  {
+   "offset": 16357,
+   "format": null,
+   "text": "戰鬥機  %8lu"
+  },
+  {
+   "offset": 16382,
+   "format": null,
+   "text": "飛彈    "
+  },
+  {
+   "offset": 16396,
+   "format": null,
+   "text": "    全滿"
+  },
+  {
+   "offset": 16405,
+   "format": null,
+   "text": "      無"
+  },
+  {
+   "offset": 16414,
+   "format": null,
+   "text": "戰鬥機  "
+  },
+  {
+   "offset": 16428,
+   "format": null,
+   "text": "    全滿"
+  },
+  {
+   "offset": 16437,
+   "format": null,
+   "text": "      無"
+  },
+  {
+   "offset": 16446,
+   "format": null,
+   "text": "沒有需要修理的船艦在附近。"
+  },
+  {
+   "offset": 16473,
+   "format": null,
+   "text": "\f%s  第"
+  },
+  {
+   "offset": 16481,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 16486,
+   "format": null,
+   "text": "修護艦      %4u"
+  },
+  {
+   "offset": 16502,
+   "format": null,
+   "text": "最高修理數  %4lu"
+  },
+  {
+   "offset": 16531,
+   "format": null,
+   "text": "損壞艦數    %4u"
+  },
+  {
+   "offset": 16547,
+   "format": null,
+   "text": "沒有可以補充的船艦。"
+  },
+  {
+   "offset": 16623,
+   "format": null,
+   "text": "不足艦數    %4u"
+  },
+  {
+   "offset": 16661,
+   "format": null,
+   "text": "戰鬥"
+  },
+  {
+   "offset": 16666,
+   "format": null,
+   "text": "索敵"
+  },
+  {
+   "offset": 16695,
+   "format": null,
+   "text": "編隊"
+  },
+  {
+   "offset": 16708,
+   "format": null,
+   "text": "7A袍移動"
+  },
+  {
+   "offset": 16717,
+   "format": null,
+   "text": "編隊"
+  },
+  {
+   "offset": 16722,
+   "format": null,
+   "text": "補給"
+  },
+  {
+   "offset": 16742,
+   "format": null,
+   "text": "RA袍移動"
+  },
+  {
+   "offset": 16751,
+   "format": null,
+   "text": "編隊"
+  },
+  {
+   "offset": 16756,
+   "format": null,
+   "text": "修理"
+  },
+  {
+   "offset": 16776,
+   "format": null,
+   "text": "tA袍移動"
+  },
+  {
+   "offset": 16785,
+   "format": null,
+   "text": "歸隊"
+  },
+  {
+   "offset": 16798,
+   "format": null,
+   "text": "飊袍\f"
+  },
+  {
+   "offset": 16816,
+   "format": null,
+   "text": "艦隊士氣值  "
+  },
+  {
+   "offset": 16829,
+   "format": null,
+   "text": "部隊士氣值  "
+  },
+  {
+   "offset": 16847,
+   "format": null,
+   "text": "無法戰鬥        "
+  },
+  {
+   "offset": 16885,
+   "format": null,
+   "text": "部隊行動    %4s"
+  },
+  {
+   "offset": 16901,
+   "format": null,
+   "text": "最高修理數  %4lu"
+  },
+  {
+   "offset": 16918,
+   "format": null,
+   "text": "剩餘燃料  %3d 回"
+  },
+  {
+   "offset": 16935,
+   "format": null,
+   "text": "補給物資\n"
+  },
+  {
+   "offset": 16945,
+   "format": null,
+   "text": "光線砲    %6lu"
+  },
+  {
+   "offset": 16960,
+   "format": null,
+   "text": "飛彈      "
+  },
+  {
+   "offset": 16976,
+   "format": null,
+   "text": "戰鬥機    "
+  },
+  {
+   "offset": 17006,
+   "format": null,
+   "text": "艦隊士氣值  "
+  },
+  {
+   "offset": 17019,
+   "format": null,
+   "text": "部隊士氣值  "
+  },
+  {
+   "offset": 17037,
+   "format": null,
+   "text": "%s  第？艦隊"
+  },
+  {
+   "offset": 17114,
+   "format": null,
+   "text": "情報"
+  },
+  {
+   "offset": 17119,
+   "format": null,
+   "text": "補給"
+  },
+  {
+   "offset": 17124,
+   "format": null,
+   "text": "補充"
+  },
+  {
+   "offset": 17144,
+   "format": null,
+   "text": "裫袍情報  "
+  },
+  {
+   "offset": 17155,
+   "format": null,
+   "text": "補給  "
+  },
+  {
+   "offset": 17162,
+   "format": null,
+   "text": "補充  "
+  },
+  {
+   "offset": 17169,
+   "format": null,
+   "text": "要塞砲"
+  },
+  {
+   "offset": 17215,
+   "format": null,
+   "text": "經濟力  %8lu"
+  },
+  {
+   "offset": 17228,
+   "format": null,
+   "text": "防衛力    "
+  },
+  {
+   "offset": 17244,
+   "format": null,
+   "text": "最大防衛力 %5u"
+  },
+  {
+   "offset": 17259,
+   "format": null,
+   "text": "要塞砲發射"
+  },
+  {
+   "offset": 17270,
+   "format": null,
+   "text": "要塞砲填充  %1u 回"
+  },
+  {
+   "offset": 17289,
+   "format": null,
+   "text": "要塞砲待命中"
+  },
+  {
+   "offset": 17456,
+   "format": null,
+   "text": "第？艦隊  第？部隊\n"
+  },
+  {
+   "offset": 17479,
+   "format": null,
+   "text": "艦隊  "
+  },
+  {
+   "offset": 17508,
+   "format": null,
+   "text": "艦隊  "
+  },
+  {
+   "offset": 17580,
+   "format": "[%d,%d,",
+   "text": "擊毀  %6u"
+  },
+  {
+   "offset": 17604,
+   "format": null,
+   "text": "ế袍自動"
+  },
+  {
+   "offset": 17613,
+   "format": null,
+   "text": "防禦"
+  },
+  {
+   "offset": 17641,
+   "format": null,
+   "text": "艦隊的戰鬥命令"
+  },
+  {
+   "offset": 17656,
+   "format": null,
+   "text": "光線砲  %8lu"
+  },
+  {
+   "offset": 17669,
+   "format": null,
+   "text": "飛彈    %8lu"
+  },
+  {
+   "offset": 17682,
+   "format": null,
+   "text": "戰鬥機  %8lu"
+  },
+  {
+   "offset": 17716,
+   "format": null,
+   "text": "%s  第？艦隊"
+  },
+  {
+   "offset": 17775,
+   "format": null,
+   "text": "距離  %6lu0000"
+  },
+  {
+   "offset": 18421,
+   "format": "[5,1,\u0003[%d,%s\u0003[%d,��",
+   "text": "占領"
+  },
+  {
+   "offset": 18426,
+   "format": null,
+   "text": "防衛"
+  },
+  {
+   "offset": 18433,
+   "format": null,
+   "text": "第？艦隊  ？？？？？？？？？\n"
+  },
+  {
+   "offset": 18466,
+   "format": null,
+   "text": "艦隊  "
+  },
+  {
+   "offset": 18483,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 18495,
+   "format": null,
+   "text": "攻擊力                  %6u"
+  },
+  {
+   "offset": 18523,
+   "format": null,
+   "text": "\f登陸艦攻擊"
+  },
+  {
+   "offset": 18535,
+   "format": null,
+   "text": "船艦總數           %5u/%5u"
+  },
+  {
+   "offset": 18572,
+   "format": null,
+   "text": "防衛力             %5u/%5u"
+  },
+  {
+   "offset": 18599,
+   "format": null,
+   "text": "\f防衛攻擊"
+  },
+  {
+   "offset": 18641,
+   "format": "[0,1,����  %6u",
+   "text": "\f占領成功"
+  },
+  {
+   "offset": 18651,
+   "format": null,
+   "text": "\f占領失敗"
+  },
+  {
+   "offset": 18661,
+   "format": null,
+   "text": "我軍第"
+  },
+  {
+   "offset": 18668,
+   "format": null,
+   "text": "艦隊\n%s\n"
+  },
+  {
+   "offset": 18677,
+   "format": null,
+   "text": "正在攻占"
+  },
+  {
+   "offset": 18686,
+   "format": null,
+   "text": "%s艦隊    \n"
+  },
+  {
+   "offset": 18698,
+   "format": null,
+   "text": "企圖占領"
+  },
+  {
+   "offset": 18707,
+   "format": null,
+   "text": "\n星系內行星"
+  },
+  {
+   "offset": 18721,
+   "format": null,
+   "text": "已經歸屬%s掌控之中\n"
+  },
+  {
+   "offset": 18777,
+   "format": null,
+   "text": "第？艦隊  第？部隊\n"
+  },
+  {
+   "offset": 18800,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 18830,
+   "format": null,
+   "text": "艦隊"
+  },
+  {
+   "offset": 18889,
+   "format": "[%d,%d,",
+   "text": "擊毀  %6u"
+  },
+  {
+   "offset": 18909,
+   "format": null,
+   "text": "防衛力             %5u/%5u"
+  },
+  {
+   "offset": 18936,
+   "format": null,
+   "text": "\f要塞砲"
+  },
+  {
+   "offset": 18955,
+   "format": "[5,1,%s��",
+   "text": "艦隊的索敵"
+  },
+  {
+   "offset": 18966,
+   "format": null,
+   "text": "%s%s%s的索敵"
+  },
+  {
+   "offset": 18980,
+   "format": null,
+   "text": "這是無法行動的地方。  "
+  },
+  {
+   "offset": 20514,
+   "format": null,
+   "text": "中子光線砲　"
+  },
+  {
+   "offset": 20527,
+   "format": null,
+   "text": "光子砲"
+  },
+  {
+   "offset": 20534,
+   "format": null,
+   "text": "中子砲　"
+  },
+  {
+   "offset": 20543,
+   "format": null,
+   "text": "軌道砲　　"
+  },
+  {
+   "offset": 20554,
+   "format": null,
+   "text": "防空砲"
+  },
+  {
+   "offset": 20561,
+   "format": null,
+   "text": "雷射水雷　　"
+  },
+  {
+   "offset": 20574,
+   "format": null,
+   "text": "中子飛彈　"
+  },
+  {
+   "offset": 20585,
+   "format": null,
+   "text": "光子飛彈　　"
+  },
+  {
+   "offset": 20598,
+   "format": null,
+   "text": "中子彈　"
+  },
+  {
+   "offset": 20607,
+   "format": null,
+   "text": "光子魚雷"
+  },
+  {
+   "offset": 20616,
+   "format": null,
+   "text": "王爾古雷"
+  },
+  {
+   "offset": 20625,
+   "format": null,
+   "text": "斯巴達尼恩"
+  },
+  {
+   "offset": 20636,
+   "format": null,
+   "text": "選擇錯誤！"
+  },
+  {
+   "offset": 20648,
+   "format": null,
+   "text": "\"P袍/P袍6P袍?P袍JP袍QP袍^P袍iP袍vP袍P袍㇊袍𩡗袍憕袍中子光線砲　"
+  },
+  {
+   "offset": 20713,
+   "format": null,
+   "text": "光子砲"
+  },
+  {
+   "offset": 20720,
+   "format": null,
+   "text": "中子砲　"
+  },
+  {
+   "offset": 20729,
+   "format": null,
+   "text": "軌道砲　　"
+  },
+  {
+   "offset": 20740,
+   "format": null,
+   "text": "防空砲"
+  },
+  {
+   "offset": 20747,
+   "format": null,
+   "text": "雷射水雷　　"
+  },
+  {
+   "offset": 20760,
+   "format": null,
+   "text": "中子飛彈　　　"
+  },
+  {
+   "offset": 20775,
+   "format": null,
+   "text": "光子飛彈　　"
+  },
+  {
+   "offset": 20788,
+   "format": null,
+   "text": "中子彈　"
+  },
+  {
+   "offset": 20797,
+   "format": null,
+   "text": "光子魚雷"
+  },
+  {
+   "offset": 20806,
+   "format": null,
+   "text": "王爾古雷　　"
+  },
+  {
+   "offset": 20819,
+   "format": null,
+   "text": "斯巴達尼恩　　"
+  },
+  {
+   "offset": 20929,
+   "format": null,
+   "text": "要塞"
+  },
+  {
+   "offset": 20934,
+   "format": null,
+   "text": "行星"
+  },
+  {
+   "offset": 20952,
+   "format": null,
+   "text": "經濟力    %10lu﹕成長率 "
+  },
+  {
+   "offset": 20988,
+   "format": null,
+   "text": "防衛力   %5u/%5u﹕回復率  %3d%%\n"
+  },
+  {
+   "offset": 21069,
+   "format": null,
+   "text": "\n  飛彈      %10lu\n"
+  },
+  {
+   "offset": 21089,
+   "format": null,
+   "text": "  戰鬥機    %10lu"
+  },
+  {
+   "offset": 21107,
+   "format": null,
+   "text": "經濟力    %10lu﹕成長率  ----\n"
+  },
+  {
+   "offset": 21138,
+   "format": null,
+   "text": "防衛力   %5u/%5u﹕回復率  ----\n"
+  },
+  {
+   "offset": 21254,
+   "format": null,
+   "text": "  飛彈      ----------\n"
+  },
+  {
+   "offset": 21278,
+   "format": null,
+   "text": "  戰鬥機    ----------"
+  },
+  {
+   "offset": 23134,
+   "format": null,
+   "text": "帝國軍"
+  },
+  {
+   "offset": 23141,
+   "format": null,
+   "text": "同盟軍"
+  },
+  {
+   "offset": 23148,
+   "format": null,
+   "text": "對  戰"
+  },
+  {
+   "offset": 23240,
+   "format": null,
+   "text": "殮袍    請將操作磁碟片\n    放入Ａ磁碟機中。                  "
+  },
+  {
+   "offset": 23302,
+   "format": null,
+   "text": "請將『銀河英雄傳說III  ＳＰ』的\nＣ–Ｄｉｓｋ放入Ａ磁碟機中。     "
+  },
+  {
+   "offset": 23368,
+   "format": null,
+   "text": "帝國"
+  },
+  {
+   "offset": 23373,
+   "format": null,
+   "text": "同盟"
+  },
+  {
+   "offset": 23378,
+   "format": null,
+   "text": "對戰"
+  },
+  {
+   "offset": 23398,
+   "format": null,
+   "text": "R[袍savedata.idx"
+  },
+  {
+   "offset": 23485,
+   "format": null,
+   "text": "磁碟片讀取時有發生錯誤。    \n請重新開機。          "
+  },
+  {
+   "offset": 23537,
+   "format": null,
+   "text": "磁碟片載入時有發生錯誤。    "
+  },
+  {
+   "offset": 23667,
+   "format": null,
+   "text": "%-16s  第%2d回合"
+  },
+  {
+   "offset": 23684,
+   "format": null,
+   "text": "戰略模式"
+  },
+  {
+   "offset": 23707,
+   "format": null,
+   "text": "--/--/-- --:--:-- 未使用%44s"
+  },
+  {
+   "offset": 24122,
+   "format": null,
+   "text": "H]袍"
+  },
+  {
+   "offset": 24130,
+   "format": null,
+   "text": "H]袍J]袍"
+  },
+  {
+   "offset": 24142,
+   "format": null,
+   "text": "H]袍L]袍P]袍V]袍Z]袍"
+  },
+  {
+   "offset": 24166,
+   "format": null,
+   "text": "H]袍J]袍"
+  },
+  {
+   "offset": 24178,
+   "format": null,
+   "text": "b]袍h]袍"
+  },
+  {
+   "offset": 24190,
+   "format": null,
+   "text": "J]袍b]袍h]袍"
+  },
+  {
+   "offset": 24206,
+   "format": null,
+   "text": "L]袍P]袍V]袍Z]袍b]袍h]袍"
+  },
+  {
+   "offset": 24234,
+   "format": null,
+   "text": "J]袍b]袍h]袍"
+  },
+  {
+   "offset": 24250,
+   "format": null,
+   "text": "H]袍"
+  },
+  {
+   "offset": 24258,
+   "format": null,
+   "text": "H]袍J]袍"
+  },
+  {
+   "offset": 24270,
+   "format": null,
+   "text": "H]袍L]袍P]袍V]袍Z]袍"
+  },
+  {
+   "offset": 24294,
+   "format": null,
+   "text": "H]袍J]袍"
+  },
+  {
+   "offset": 24736,
+   "format": null,
+   "text": "同盟軍"
+  },
+  {
+   "offset": 24743,
+   "format": null,
+   "text": "中立軍"
+  },
+  {
+   "offset": 24820,
+   "format": null,
+   "text": "槁袍狜袍趎袍戰艦"
+  },
+  {
+   "offset": 24837,
+   "format": null,
+   "text": "高速戰艦"
+  },
+  {
+   "offset": 24846,
+   "format": null,
+   "text": "巡航艦"
+  },
+  {
+   "offset": 24853,
+   "format": null,
+   "text": "航空母艦"
+  },
+  {
+   "offset": 24862,
+   "format": null,
+   "text": "驅逐艦"
+  },
+  {
+   "offset": 24869,
+   "format": null,
+   "text": "運補艦"
+  },
+  {
+   "offset": 24876,
+   "format": null,
+   "text": "修護艦"
+  },
+  {
+   "offset": 24883,
+   "format": null,
+   "text": "偵察艦"
+  },
+  {
+   "offset": 24946,
+   "format": null,
+   "text": "Za袍]a袍`a袍ca袍fa袍ia袍la袍oa袍行星"
+  },
+  {
+   "offset": 24983,
+   "format": null,
+   "text": "要塞"
+  },
+  {
+   "offset": 25009,
+   "format": null,
+   "text": "吉爾菲艾斯"
+  },
+  {
+   "offset": 25020,
+   "format": null,
+   "text": "米達麥亞"
+  },
+  {
+   "offset": 25029,
+   "format": null,
+   "text": "羅嚴塔爾"
+  },
+  {
+   "offset": 25038,
+   "format": null,
+   "text": "畢典菲爾特"
+  },
+  {
+   "offset": 25049,
+   "format": null,
+   "text": "謬拉"
+  },
+  {
+   "offset": 25054,
+   "format": null,
+   "text": "梅克林格"
+  },
+  {
+   "offset": 25063,
+   "format": null,
+   "text": "魯茲"
+  },
+  {
+   "offset": 25068,
+   "format": null,
+   "text": "瓦列"
+  },
+  {
+   "offset": 25073,
+   "format": null,
+   "text": "艾齊納哈"
+  },
+  {
+   "offset": 25082,
+   "format": null,
+   "text": "坎普"
+  },
+  {
+   "offset": 25087,
+   "format": null,
+   "text": "法倫海特"
+  },
+  {
+   "offset": 25096,
+   "format": null,
+   "text": "舒坦梅茲"
+  },
+  {
+   "offset": 25105,
+   "format": null,
+   "text": "克斯拉"
+  },
+  {
+   "offset": 25112,
+   "format": null,
+   "text": "連內肯普"
+  },
+  {
+   "offset": 25121,
+   "format": null,
+   "text": "托爾奈森"
+  },
+  {
+   "offset": 25130,
+   "format": null,
+   "text": "奧貝斯坦"
+  },
+  {
+   "offset": 25139,
+   "format": null,
+   "text": "錦茲"
+  },
+  {
+   "offset": 25144,
+   "format": null,
+   "text": "拜耶爾藍"
+  },
+  {
+   "offset": 25153,
+   "format": null,
+   "text": "列肯道夫"
+  },
+  {
+   "offset": 25162,
+   "format": null,
+   "text": "迪爾克先"
+  },
+  {
+   "offset": 25171,
+   "format": null,
+   "text": "瑞文茲"
+  },
+  {
+   "offset": 25178,
+   "format": null,
+   "text": "列佛爾特"
+  },
+  {
+   "offset": 25187,
+   "format": null,
+   "text": "庫典森"
+  },
+  {
+   "offset": 25194,
+   "format": null,
+   "text": "萊博爾"
+  },
+  {
+   "offset": 25201,
+   "format": null,
+   "text": "克里希"
+  },
+  {
+   "offset": 25208,
+   "format": null,
+   "text": "魯比茲"
+  },
+  {
+   "offset": 25215,
+   "format": null,
+   "text": "山德斯"
+  },
+  {
+   "offset": 25222,
+   "format": null,
+   "text": "奈西巴哈"
+  },
+  {
+   "offset": 25231,
+   "format": null,
+   "text": "布連塔諾"
+  },
+  {
+   "offset": 25240,
+   "format": null,
+   "text": "布魯丹巴"
+  },
+  {
+   "offset": 25249,
+   "format": null,
+   "text": "菲爾納"
+  },
+  {
+   "offset": 25256,
+   "format": null,
+   "text": "修特萊"
+  },
+  {
+   "offset": 25263,
+   "format": null,
+   "text": "皮羅"
+  },
+  {
+   "offset": 25268,
+   "format": null,
+   "text": "貝爾肯格林"
+  },
+  {
+   "offset": 25279,
+   "format": null,
+   "text": "費塞尼加"
+  },
+  {
+   "offset": 25288,
+   "format": null,
+   "text": "阿姆斯道爾夫"
+  },
+  {
+   "offset": 25301,
+   "format": null,
+   "text": "格雷布納"
+  },
+  {
+   "offset": 25310,
+   "format": null,
+   "text": "烏爾拉"
+  },
+  {
+   "offset": 25317,
+   "format": null,
+   "text": "狄克爾"
+  },
+  {
+   "offset": 25324,
+   "format": null,
+   "text": "亞典波羅"
+  },
+  {
+   "offset": 25333,
+   "format": null,
+   "text": "派特"
+  },
+  {
+   "offset": 25338,
+   "format": null,
+   "text": "路菲普"
+  },
+  {
+   "offset": 25345,
+   "format": null,
+   "text": "培特雷"
+  },
+  {
+   "offset": 25352,
+   "format": null,
+   "text": "比克古"
+  },
+  {
+   "offset": 25359,
+   "format": null,
+   "text": "慕亞"
+  },
+  {
+   "offset": 25364,
+   "format": null,
+   "text": "赫伍得"
+  },
+  {
+   "offset": 25371,
+   "format": null,
+   "text": "阿普頓"
+  },
+  {
+   "offset": 25378,
+   "format": null,
+   "text": "亞爾•沙列姆"
+  },
+  {
+   "offset": 25391,
+   "format": null,
+   "text": "伍蘭夫"
+  },
+  {
+   "offset": 25398,
+   "format": null,
+   "text": "魯格拉希"
+  },
+  {
+   "offset": 25407,
+   "format": null,
+   "text": "波羅汀"
+  },
+  {
+   "offset": 25414,
+   "format": null,
+   "text": "楊威利"
+  },
+  {
+   "offset": 25421,
+   "format": null,
+   "text": "莫頓"
+  },
+  {
+   "offset": 25426,
+   "format": null,
+   "text": "卡爾先"
+  },
+  {
+   "offset": 25433,
+   "format": null,
+   "text": "費雪"
+  },
+  {
+   "offset": 25438,
+   "format": null,
+   "text": "尤里安"
+  },
+  {
+   "offset": 25445,
+   "format": null,
+   "text": "拉歐"
+  },
+  {
+   "offset": 25450,
+   "format": null,
+   "text": "巴格達胥"
+  },
+  {
+   "offset": 25459,
+   "format": null,
+   "text": "古嚴"
+  },
+  {
+   "offset": 25464,
+   "format": null,
+   "text": "邱吾權"
+  },
+  {
+   "offset": 25471,
+   "format": null,
+   "text": "拉普"
+  },
+  {
+   "offset": 25476,
+   "format": null,
+   "text": "雅拉肯"
+  },
+  {
+   "offset": 25483,
+   "format": null,
+   "text": "法菲爾"
+  },
+  {
+   "offset": 25490,
+   "format": null,
+   "text": "馬里涅汀"
+  },
+  {
+   "offset": 25502,
+   "format": null,
+   "text": "史多克斯"
+  },
+  {
+   "offset": 25511,
+   "format": null,
+   "text": "可那利"
+  },
+  {
+   "offset": 25518,
+   "format": null,
+   "text": "菲列特利加"
+  },
+  {
+   "offset": 25529,
+   "format": null,
+   "text": "馬利諾"
+  },
+  {
+   "offset": 25536,
+   "format": null,
+   "text": "沙尼亞"
+  },
+  {
+   "offset": 25543,
+   "format": null,
+   "text": "姆萊"
+  },
+  {
+   "offset": 25548,
+   "format": null,
+   "text": "先寇布"
+  },
+  {
+   "offset": 25555,
+   "format": null,
+   "text": "史路茲卡利達"
+  },
+  {
+   "offset": 25568,
+   "format": null,
+   "text": "波布蘭"
+  },
+  {
+   "offset": 25575,
+   "format": null,
+   "text": "卡介倫"
+  },
+  {
+   "offset": 25582,
+   "format": null,
+   "text": "林滋"
+  },
+  {
+   "offset": 25587,
+   "format": null,
+   "text": "布魯姆哈爾特"
+  },
+  {
+   "offset": 25600,
+   "format": null,
+   "text": "伊旺•高尼夫"
+  },
+  {
+   "offset": 25613,
+   "format": null,
+   "text": "派特里契夫"
+  },
+  {
+   "offset": 25624,
+   "format": null,
+   "text": "梅爾卡茲"
+  },
+  {
+   "offset": 25633,
+   "format": null,
+   "text": "舒奈德"
+  },
+  {
+   "offset": 25977,
+   "format": null,
+   "text": "巴爾巴洛沙"
+  },
+  {
+   "offset": 25988,
+   "format": null,
+   "text": "人狼"
+  },
+  {
+   "offset": 25993,
+   "format": null,
+   "text": "托利斯坦"
+  },
+  {
+   "offset": 26002,
+   "format": null,
+   "text": "王虎"
+  },
+  {
+   "offset": 26007,
+   "format": null,
+   "text": "倫貝克"
+  },
+  {
+   "offset": 26014,
+   "format": null,
+   "text": "庫瓦希爾"
+  },
+  {
+   "offset": 26023,
+   "format": null,
+   "text": "史奇爾尼爾"
+  },
+  {
+   "offset": 26034,
+   "format": null,
+   "text": "火龍"
+  },
+  {
+   "offset": 26039,
+   "format": null,
+   "text": "維札爾"
+  },
+  {
+   "offset": 26046,
+   "format": null,
+   "text": "優茲黑姆"
+  },
+  {
+   "offset": 26055,
+   "format": null,
+   "text": "亞斯古里"
+  },
+  {
+   "offset": 26064,
+   "format": null,
+   "text": "馮凱爾"
+  },
+  {
+   "offset": 26071,
+   "format": null,
+   "text": "佛爾瑟帝"
+  },
+  {
+   "offset": 26080,
+   "format": null,
+   "text": "高爾加•法爾姆爾"
+  },
+  {
+   "offset": 26097,
+   "format": null,
+   "text": "特奧德利克斯"
+  },
+  {
+   "offset": 26110,
+   "format": null,
+   "text": "特里古拉夫"
+  },
+  {
+   "offset": 26121,
+   "format": null,
+   "text": "波羅庫斯"
+  },
+  {
+   "offset": 26130,
+   "format": null,
+   "text": "庫•赫林"
+  },
+  {
+   "offset": 26139,
+   "format": null,
+   "text": "雷歐達"
+  },
+  {
+   "offset": 26146,
+   "format": null,
+   "text": "利歐格朗特"
+  },
+  {
+   "offset": 26157,
+   "format": null,
+   "text": "佩卡蒙"
+  },
+  {
+   "offset": 26164,
+   "format": null,
+   "text": "凱茲阿爾克阿多爾"
+  },
+  {
+   "offset": 26181,
+   "format": null,
+   "text": "克利什那"
+  },
+  {
+   "offset": 26190,
+   "format": null,
+   "text": "帕拉米迪斯"
+  },
+  {
+   "offset": 26201,
+   "format": null,
+   "text": "盤古"
+  },
+  {
+   "offset": 26206,
+   "format": null,
+   "text": "雷歐達II"
+  },
+  {
+   "offset": 26215,
+   "format": null,
+   "text": "佩倫"
+  },
+  {
+   "offset": 26220,
+   "format": null,
+   "text": "休伯利安"
+  },
+  {
+   "offset": 26229,
+   "format": null,
+   "text": "阿奇列沃斯"
+  },
+  {
+   "offset": 26240,
+   "format": null,
+   "text": "狄奧梅迪斯"
+  },
+  {
+   "offset": 26251,
+   "format": null,
+   "text": "亞加特拉姆"
+  },
+  {
+   "offset": 26262,
+   "format": null,
+   "text": "馬奧里亞"
+  },
+  {
+   "offset": 26271,
+   "format": null,
+   "text": "姆夫維瑟"
+  },
+  {
+   "offset": 26516,
+   "format": null,
+   "text": "餻袍"
+  },
+  {
+   "offset": 26608,
+   "format": null,
+   "text": "少尉"
+  },
+  {
+   "offset": 26613,
+   "format": null,
+   "text": "中尉"
+  },
+  {
+   "offset": 26618,
+   "format": null,
+   "text": "上尉"
+  },
+  {
+   "offset": 26623,
+   "format": null,
+   "text": "少校"
+  },
+  {
+   "offset": 26628,
+   "format": null,
+   "text": "中校"
+  },
+  {
+   "offset": 26633,
+   "format": null,
+   "text": "上校"
+  },
+  {
+   "offset": 26638,
+   "format": null,
+   "text": "准將"
+  },
+  {
+   "offset": 26643,
+   "format": null,
+   "text": "少將"
+  },
+  {
+   "offset": 26648,
+   "format": null,
+   "text": "中將"
+  },
+  {
+   "offset": 26653,
+   "format": null,
+   "text": "上將"
+  },
+  {
+   "offset": 26658,
+   "format": null,
+   "text": "一級上將"
+  },
+  {
+   "offset": 26667,
+   "format": null,
+   "text": "元帥"
+  },
+  {
+   "offset": 26725,
+   "format": null,
+   "text": "中尉"
+  },
+  {
+   "offset": 26730,
+   "format": null,
+   "text": "上尉"
+  },
+  {
+   "offset": 26735,
+   "format": null,
+   "text": "少校"
+  },
+  {
+   "offset": 26740,
+   "format": null,
+   "text": "中校"
+  },
+  {
+   "offset": 26745,
+   "format": null,
+   "text": "上校"
+  },
+  {
+   "offset": 26750,
+   "format": null,
+   "text": "准將"
+  },
+  {
+   "offset": 26755,
+   "format": null,
+   "text": "少將"
+  },
+  {
+   "offset": 26760,
+   "format": null,
+   "text": "中將"
+  },
+  {
+   "offset": 26765,
+   "format": null,
+   "text": "上將"
+  },
+  {
+   "offset": 26770,
+   "format": null,
+   "text": "上將"
+  },
+  {
+   "offset": 26775,
+   "format": null,
+   "text": "元帥"
+  },
+  {
+   "offset": 26833,
+   "format": null,
+   "text": "占領"
+  },
+  {
+   "offset": 26838,
+   "format": null,
+   "text": "駐留"
+  },
+  {
+   "offset": 26843,
+   "format": null,
+   "text": "輸送"
+  },
+  {
+   "offset": 26848,
+   "format": null,
+   "text": "返航"
+  },
+  {
+   "offset": 26853,
+   "format": null,
+   "text": "待命"
+  },
+  {
+   "offset": 26858,
+   "format": null,
+   "text": "岝袍宬袍猏袍菆袍跠袍嶕袍移動"
+  },
+  {
+   "offset": 26887,
+   "format": null,
+   "text": "戰鬥"
+  },
+  {
+   "offset": 26892,
+   "format": null,
+   "text": "防禦"
+  },
+  {
+   "offset": 26897,
+   "format": null,
+   "text": "占領"
+  },
+  {
+   "offset": 26902,
+   "format": null,
+   "text": "待命"
+  },
+  {
+   "offset": 26938,
+   "format": null,
+   "text": "編隊"
+  },
+  {
+   "offset": 26943,
+   "format": null,
+   "text": "索敵"
+  },
+  {
+   "offset": 26948,
+   "format": null,
+   "text": "歸隊"
+  },
+  {
+   "offset": 26954,
+   "format": null,
+   "text": "5i袍:i袍?i袍Di袍放出"
+  },
+  {
+   "offset": 26975,
+   "format": null,
+   "text": "停止"
+  },
+  {
+   "offset": 26980,
+   "format": null,
+   "text": "標準"
+  },
+  {
+   "offset": 26985,
+   "format": null,
+   "text": "優先"
+  },
+  {
+   "offset": 33689,
+   "format": null,
+   "text": "?3?000p譇"
+  },
+  {
+   "offset": 35844,
+   "format": null,
+   "text": "確認"
+  },
+  {
+   "offset": 35874,
+   "format": null,
+   "text": "中止"
+  },
+  {
+   "offset": 35879,
+   "format": null,
+   "text": "決定"
+  },
+  {
+   "offset": 35920,
+   "format": null,
+   "text": "確認"
+  },
+  {
+   "offset": 35950,
+   "format": null,
+   "text": "中止"
+  },
+  {
+   "offset": 35955,
+   "format": null,
+   "text": "決定"
+  },
+  {
+   "offset": 35996,
+   "format": null,
+   "text": "統率"
+  },
+  {
+   "offset": 36001,
+   "format": null,
+   "text": "移動"
+  },
+  {
+   "offset": 36006,
+   "format": null,
+   "text": "回轉"
+  },
+  {
+   "offset": 36011,
+   "format": null,
+   "text": "營運"
+  },
+  {
+   "offset": 36016,
+   "format": null,
+   "text": "光線砲"
+  },
+  {
+   "offset": 36023,
+   "format": null,
+   "text": "飛彈"
+  },
+  {
+   "offset": 36028,
+   "format": null,
+   "text": "戰鬥機"
+  },
+  {
+   "offset": 36035,
+   "format": null,
+   "text": "防禦"
+  },
+  {
+   "offset": 36040,
+   "format": null,
+   "text": "占領"
+  },
+  {
+   "offset": 36045,
+   "format": null,
+   "text": "運用"
+  },
+  {
+   "offset": 36112,
+   "format": null,
+   "text": "            請查閱提督資料表\n            輸入照片上%s提督\n            %s能力數值："
+  },
+  {
+   "offset": 36504,
+   "format": null,
+   "text": "%s第"
+  },
+  {
+   "offset": 36509,
+   "format": null,
+   "text": "艦隊  %s"
+  },
+  {
+   "offset": 36518,
+   "format": null,
+   "text": "%s第"
+  },
+  {
+   "offset": 36523,
+   "format": null,
+   "text": "艦隊%s"
+  },
+  {
+   "offset": 36865,
+   "format": "\u0001\u001c\u0003\u0002\u0002������",
+   "text": "手動１"
+  },
+  {
+   "offset": 36872,
+   "format": null,
+   "text": "自動２"
+  },
+  {
+   "offset": 36879,
+   "format": null,
+   "text": "手動２"
+  },
+  {
+   "offset": 36886,
+   "format": null,
+   "text": "顯示  "
+  },
+  {
+   "offset": 36893,
+   "format": null,
+   "text": "不顯示"
+  },
+  {
+   "offset": 36900,
+   "format": null,
+   "text": "結  束"
+  },
+  {
+   "offset": 37328,
+   "format": null,
+   "text": "Y㭠TP"
+  },
+  {
+   "offset": 37334,
+   "format": null,
+   "text": "e㭠Td"
+  },
+  {
+   "offset": 37340,
+   "format": null,
+   "text": "m㭠Te"
+  },
+  {
+   "offset": 37346,
+   "format": null,
+   "text": "{㭠Tf"
+  },
+  {
+   "offset": 38252,
+   "format": null,
+   "text": "寛D騄T:䛏T"
+  },
+  {
+   "offset": 42908,
+   "format": null,
+   "text": "瓦爾哈拉"
+  },
+  {
+   "offset": 42940,
+   "format": null,
+   "text": "大大"
+  },
+  {
+   "offset": 43033,
+   "format": null,
+   "text": "$亞爾迪巴朗"
+  },
+  {
+   "offset": 43159,
+   "format": null,
+   "text": "&亞爾提那"
+  },
+  {
+   "offset": 43410,
+   "format": null,
+   "text": "dd菲列亞"
+  },
+  {
+   "offset": 43663,
+   "format": null,
+   "text": " 香陶"
+  },
+  {
+   "offset": 43789,
+   "format": null,
+   "text": "0亞爾維斯"
+  },
+  {
+   "offset": 43915,
+   "format": null,
+   "text": ",亞姆力札"
+  },
+  {
+   "offset": 44041,
+   "format": null,
+   "text": "*亞凡海爾"
+  },
+  {
+   "offset": 44167,
+   "format": null,
+   "text": "2杜威爾格"
+  },
+  {
+   "offset": 44292,
+   "format": null,
+   "text": "dd優茲黑姆"
+  },
+  {
+   "offset": 44418,
+   "format": null,
+   "text": "dd赫爾森"
+  },
+  {
+   "offset": 44544,
+   "format": null,
+   "text": "dd伊謝爾倫"
+  },
+  {
+   "offset": 44671,
+   "format": null,
+   "text": "0費沙"
+  },
+  {
+   "offset": 44796,
+   "format": null,
+   "text": "dd艾爾•法西爾"
+  },
+  {
+   "offset": 45930,
+   "format": null,
+   "text": "dd馬爾•亞迪特"
+  },
+  {
+   "offset": 46056,
+   "format": null,
+   "text": "dd干達巴爾"
+  },
+  {
+   "offset": 46182,
+   "format": null,
+   "text": "dd達希利"
+  },
+  {
+   "offset": 46560,
+   "format": null,
+   "text": "dd流卡斯"
+  },
+  {
+   "offset": 62020,
+   "format": null,
+   "text": "渤袍渤袍"
+  },
+  {
+   "offset": 62030,
+   "format": null,
+   "text": "\n糃T"
+  }
+ ]
+}
