@@ -33,14 +33,14 @@
 | `3DBLOCK.SPR` | **已解出**（48×64，4 plane 逐列交錯，四塊等距方塊）| [`docs/internals/21`](docs/internals/21-3dblock-spr.md) |
 | `COM_FLAG.SPR` | 未解（每 8 bytes 有 4 bytes 是 0，不是逐列交錯）| [`docs/internals/21`](docs/internals/21-3dblock-spr.md) |
 | `STRMAP.BIT`（星域地圖）| **已解出**（320×300；記憶體版本與原版畫面 0 差異）| [`docs/internals/12`](docs/internals/12-strmap-bit.md) |
-| `FRAME.BLK` / `BLOCK_*.BLK` | 未開始 | — |
+| `FRAME.BLK` / `BLOCK_*.BLK` | 未解（全彩非遮罩；32×32／320×128／640×64 等切法都對不齊）| — |
 | `STRMAP.RGN`（星域區域遮罩）| **已解出**（32 區域；底圖＋遮罩＋顏色重建 0 差異）| [`docs/internals/13`](docs/internals/13-strmap-rgn.md) |
 | `MAP*.CMP` | 未解 | — |
 | `PLADAT.DAT` | **已解出** | [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
 | `KEIREKI.DAT`（人物傳）| **已解出**（82 篇，位移表 ＋ Big5 內文）| [`docs/internals/15`](docs/internals/15-keireki-dat.md) |
 | `ATTR.DAT` | 未開始 | — |
 | `ADMIRAL.DT*` | **版面已解出**（欄位語意確認 `+1` ＝ 陣營、`+11` ＝ 占領能力）| [`docs/internals/08`](docs/internals/08-admiral-dt.md) |
-| `STELLAR.DT*` / `SHIP.DT*` / `FLEET.DT*` / `PLANET.DT*` | 未開始 | — |
+| `STELLAR.DT*` | **版面已解出**（32 筆 × 126 bytes，32 個星域名；數值欄位語意未知）| [`docs/internals/22`](docs/internals/22-stellar-dt.md) |
 | `*.MDS`（音樂，22 份）| **已解出**（22 首轉成 MIDI；速度數值的單位未確認）| [`docs/internals/17`](docs/internals/17-mds.md) |
 | `*.VO5`（結局圖，50 張）| **已解出**（逐 byte 的相等即重複；50/50 位元組完全用完）| [`docs/internals/18`](docs/internals/18-vo5.md) |
 | `ENDING.EXE`（結局文字、職員表）| **已解出** | [`docs/internals/16`](docs/internals/16-ending-exe.md) |
