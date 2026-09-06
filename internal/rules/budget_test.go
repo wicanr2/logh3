@@ -47,3 +47,27 @@ func TestBudgetAtOtherPercent(t *testing.T) {
 		}
 	}
 }
+
+// TestBudgetAlliance 第三組獨立資料：選「同盟」開局，內政專任參謀
+// 邱吾權上校的會計報告印出
+//
+//	軍事費餘額 50000／稅收 11087／合計收入 61087／船艦建造費 15271／總計 45816
+//
+// 稅收與帝國的 10741 不同，所以這一組驗的是同一條公式吃不同的輸入
+// （收據 `alliance1`，`docs/re/15`）。
+func TestBudgetAlliance(t *testing.T) {
+	b := &Budget{Treasury: 50000, Tax: 11087, ShipPct: 25}
+	for _, c := range []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"合計收入", b.Military(), 61087},
+		{"船艦建造費", b.ShipCost(), 15271},
+		{"總計", b.Rest(), 45816},
+	} {
+		if c.got != c.want {
+			t.Errorf("%s：%d，原版是 %d", c.name, c.got, c.want)
+		}
+	}
+}

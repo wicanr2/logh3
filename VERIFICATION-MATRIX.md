@@ -65,7 +65,7 @@
 | 船艦數 ＝ 金額 ÷ 單價 × 10（七個單價已量出）| **已實作並對拍** | 同上 |
 | 部隊 ＝ 船艦數 ÷ 定員（七個定員已量出）| **已實作並對拍** | 同上 |
 | 餘額 ＝ 建造費 − Σ 各列實際花掉（零頭退回）| **已實作並對拍** | 同上 |
-| 預估軍事費 ＝ 國庫 ＋ 預估徵稅額 | **已實作**（`internal/rules/budget.go`）| [`docs/re/12`](docs/re/12-budget-plan-and-buttons.md) |
+| 預估軍事費 ＝ 國庫 ＋ 預估徵稅額 | **已實作**（`internal/rules/budget.go`），三組獨立資料 | [`docs/re/12`](docs/re/12-budget-plan-and-buttons.md)、[`13`](docs/re/13-account-report.md)、[`15`](docs/re/15-alliance-start.md) |
 | 船艦建造費 ＝ 預估軍事費 × 百分比（捨去）| **已實作** | 同上 |
 | 剩餘軍事費 ＝ 預估軍事費 − 船艦建造費 | **已實作** | 同上 |
 | 其他 | 未開始 | — |
