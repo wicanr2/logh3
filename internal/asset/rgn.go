@@ -74,3 +74,25 @@ func (r Region) Paint(dst, base *Image, colour uint8, tw, th int) {
 		}
 	}
 }
+
+// BuildStarMap 從原版檔案重建星域地圖：底圖 ＋ 區域遮罩 ＋ 每區顏色。
+//
+// colours 是各星域的所屬勢力色（遊戲狀態），長度要與區域數相同。
+func BuildStarMap(bit, rgn []byte, colours []uint8, tw, th, cols int) (*Image, error) {
+	base, err := DecodeSheet(bit, tw, th, cols)
+	if err != nil {
+		return nil, err
+	}
+	regions, err := OpenRGN(rgn, tw, th)
+	if err != nil {
+		return nil, err
+	}
+	if len(colours) != len(regions) {
+		return nil, fmt.Errorf("給了 %d 個顏色，區域有 %d 個", len(colours), len(regions))
+	}
+	out := &Image{W: base.W, H: base.H, Pix: append([]uint8(nil), base.Pix...)}
+	for i, r := range regions {
+		r.Paint(out, base, colours[i], tw, th)
+	}
+	return out, nil
+}

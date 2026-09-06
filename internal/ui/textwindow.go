@@ -171,3 +171,26 @@ func DrawGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16, fg, s
 	blit(0, 0, fg)
 	return true
 }
+
+// DrawHalfGlyph 畫一個半形字（8×15）。數字與百分比走這條。
+func DrawHalfGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8, fg, shadow uint8, shadowDY int) bool {
+	g := fnt.Half(code)
+	if g == nil {
+		return false
+	}
+	blit := func(shift, oy int, col uint8) {
+		for gy, bits := range g {
+			row := bits << uint(shift)
+			for gx := 0; gx < font.HalfW; gx++ {
+				if row>>(font.HalfW-1-gx)&1 != 0 {
+					fb.Set(x+gx, y+oy+gy, col)
+				}
+			}
+		}
+	}
+	if shadow != 0 {
+		blit(1, shadowDY, shadow)
+	}
+	blit(0, 0, fg)
+	return true
+}
