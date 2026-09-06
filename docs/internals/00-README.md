@@ -36,6 +36,13 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
   -find "26 8A 47 0B 30 E4 26 8A 4F 0C 30 ED F7 E1, 83 3E E6 94 FF 75 1A"
 ```
 
+## 產出格式
+
+**每一項解出來的東西都要有機器可讀版本。** markdown 給人看，
+`data/*.json` 給後續的工具與 remake 用；兩邊由同一份證據產生，不得只更新
+一邊。素材（字型、圖庫、地圖）解出來之後匯出成 **PNG** 放
+`workplace/assets/`——那是原版素材，**不進版控**，但要讓下一輪能直接拿來用。
+
 挑簽章時避開含絕對位址的位元組（`9A xx xx ss ss` 的 far call 目標、
 `A1 xx xx` 之類指到別段的存取），那些會隨載入位址改變。
 
@@ -48,3 +55,5 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 | [`03-startup-and-memory.md`](03-startup-and-memory.md) | 啟動鏈、EMS 交握、記憶體佈局、C runtime 的堆積配置器 |
 | [`04-text-windows-and-big5.md`](04-text-windows-and-big5.md) | 文字視窗結構、儲存格格式、Big5 與假名擴充區 |
 | [`05-palette-and-fade.md`](05-palette-and-fade.md) | 調色盤模組、淡入淡出、用到的 BIOS 介面 |
+| [`06-font-graph-img.md`](06-font-graph-img.md) | 中文字型：格式、索引公式、存取方式 |
+| [`data/`](data/) | 機器可讀版本（JSON），給後續工具與 remake 用 |

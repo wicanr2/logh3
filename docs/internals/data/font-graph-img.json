@@ -1,0 +1,76 @@
+{
+  "file": "GRAPH.IMG",
+  "bytes": 419850,
+  "role": "中文點陣字型（半形 ＋ 全形）",
+  "evidence_level": "confirmed",
+  "format": {
+    "halfwidth": {
+      "range": [0, 3840],
+      "glyphs": 256,
+      "width": 8, "rows": 15, "stride": 15,
+      "bit_order": "MSB 在左",
+      "identical_to": "倚天中文系統 ascfont.15（3840 bytes，逐位元組 100% 相同）"
+    },
+    "fullwidth": {
+      "width": 16, "rows": 15, "stride": 30,
+      "row_encoding": "每列 2 bytes，高位在前；bit15 是最左邊的像素"
+    }
+  },
+  "blocks": [
+    {
+      "name": "half-width ASCII",
+      "start": 0, "end": 3840, "glyphs": 256,
+      "index": "offset = code * 15（CP437 排列）",
+      "evidence_level": "confirmed"
+    },
+    {
+      "name": "full-width symbols (Big5 0xA1–0xA3)",
+      "start": 3840, "end": 17970, "glyphs": 471,
+      "index": "offset = 3840 + big5_index(code) * 30",
+      "evidence_level": "confirmed",
+      "positive_control": "注音 ㄅ(0xA374) 依公式算出 0x39E4，該處確為 ㄅㄆㄇㄈ…ㄩ 與 ˙ˊˇˋ"
+    },
+    {
+      "name": "kana / Cyrillic / box-drawing / circled numbers",
+      "start": 17970, "end": 27030, "glyphs": 302,
+      "index": null,
+      "evidence_level": "未確認",
+      "note": "內容已由渲染辨識（平假名→片假名→西里爾大小寫→框線→圈號→㊣No.正），但字碼對應尚未解出。已排除『以 Big5 0xC6A1 為起點連續存放』：依該假說算出的 ジ(0xC7B4) 位置實際是西里爾大寫。",
+      "test_method": "在遊戲內找到會顯示假名的畫面（ENDING.EXE 的版權行有 ジャパン／キティフィルム），用 probe 的檔案存取記錄看它 seek 到哪個偏移"
+    },
+    {
+      "name": "hanzi (Big5 0xA440 起)",
+      "start": 27030, "end": 419850, "glyphs": 13094,
+      "index": "offset = 27030 + (big5_index(code) - 471) * 30",
+      "evidence_level": "confirmed",
+      "identical_to": "倚天中文系統 stdfont.15（392820 bytes，13094 個字形逐位元組 100% 相同）"
+    }
+  ],
+  "big5_index": "idx = (lead-0xA1)*157 + (trail<=0x7E ? trail-0x40 : trail-0xA1+63)",
+  "access_pattern": {
+    "description": "字型不整份載入。開機時只讀開頭 1920 bytes（前 128 個半形字形），之後每要畫一個中文字就 seek 到該字的偏移、讀 30 bytes。",
+    "evidence_level": "confirmed",
+    "consequence": "在記憶體或 EMS 裡搜字形點陣一定是空的——那不代表字型不在，代表它從來沒有以整塊形式存在過。"
+  },
+  "verified_seeks": [
+    {"char": "帝", "big5": "ABD2", "offset": 63360,  "step": 25777538},
+    {"char": "國", "big5": "B0EA", "offset": 87630,  "step": 25778643},
+    {"char": "同", "big5": "A650", "offset": 36930,  "step": 25781661},
+    {"char": "盟", "big5": "B7F9", "offset": 121050, "step": 25782766},
+    {"char": "對", "big5": "B9EF", "offset": 130170, "step": 25785686},
+    {"char": "戰", "big5": "BED4", "offset": 152910, "step": 25786791},
+    {"char": "取", "big5": "A8FA", "offset": 50430,  "step": 25789711},
+    {"char": "進", "big5": "B669", "offset": 113040, "step": 25790235},
+    {"char": "度", "big5": "ABD7", "offset": 63510,  "step": 25790766}
+  ],
+  "verification": {
+    "bitmap": "九個字的點陣與主選單畫面（workplace/re06/screen.bin）逐位元吻合",
+    "mechanism": "九個字的 seek 偏移與公式算出來的完全相同（probe 檔案存取記錄）",
+    "external": "與倚天 stdfont.15／ascfont.15 逐位元組比對"
+  },
+  "exports": {
+    "sheet": "workplace/assets/font/graph-img-sheet.png（全部 13995 個字形，1536×2190）",
+    "halfwidth": "workplace/assets/font/graph-img-head-8x15.png",
+    "regions": ["region-b-16x15.png", "region-c-16x15.png", "gap-17970-27030.png"]
+  }
+}
