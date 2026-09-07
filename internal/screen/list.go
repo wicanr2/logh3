@@ -26,13 +26,31 @@ type ListSpec struct {
 	StaffMark uint16 `json:"staff_mark"`
 	// Ranks 是十個軍階的字碼，由低到高，對上 rules.RankNames。
 	Ranks [][]uint16 `json:"ranks"`
+
+	// 星系清單那張的欄位：兩個艦隊數是半形數字，中間夾一個全形的「﹕」。
+	OwnX    int    `json:"own_x"`
+	SepX    int    `json:"sep_x"`
+	EnemyX  int    `json:"enemy_x"`
+	SepCode uint16 `json:"sep_code"`
+}
+
+// ListCell 是清單一列上的一段字：全形用 Codes、半形（數字）用 Text。
+type ListCell struct {
+	X    int
+	Ink  uint8
+	Codes []uint16
+	Text  string
 }
 
 // ListRow 是清單上的一列。
+//
+// 提督清單用 Staff／Name／Rank 三段固定欄位；星系清單那種欄位不一樣的，
+// 由呼叫端算好座標放進 Cells。
 type ListRow struct {
 	Staff bool
 	Name  []uint16
 	Rank  int
+	Cells []ListCell
 }
 
 // Draw 畫清單的列。超過 Rows 的部分不畫——原版一頁就十六列。
@@ -76,9 +94,23 @@ func (l *ListSpec) drawIn(fb *gfx.Framebuffer, fnt *font.Font, rows []ListRow,
 		for j, c := range r.Name {
 			draw(l.NameX+j*font.GlyphW, c)
 		}
-		if r.Rank >= 0 && r.Rank < len(l.Ranks) {
+		if len(r.Name) > 0 && r.Rank >= 0 && r.Rank < len(l.Ranks) {
 			for j, c := range l.Ranks[r.Rank] {
 				draw(l.RankX+j*font.GlyphW, c)
+			}
+		}
+		for _, cell := range r.Cells {
+			ink := cell.Ink
+			if ink == 0 {
+				ink = l.Ink
+			}
+			for j, c := range cell.Codes {
+				ui.DrawGlyphClipped(fb, fnt, cell.X+j*font.GlyphW, y, c,
+					ink, l.Shadow, -1, false, 0, y, gfx.Width, l.Pitch)
+			}
+			for j := 0; j < len(cell.Text); j++ {
+				ui.DrawHalfGlyphClipped(fb, fnt, cell.X+j*font.HalfW, y, cell.Text[j],
+					ink, l.Shadow, -1, false, 0, y, gfx.Width, l.Pitch)
 			}
 		}
 	}

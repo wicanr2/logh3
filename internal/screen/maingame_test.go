@@ -172,6 +172,9 @@ func checkGameScreen(t *testing.T, specName, batch string) {
 	if faction, standby, ok := listState(specName); ok {
 		s.ListRows = admiralRows(t, faction, standby)
 	}
+	if specName == "screen-star-list" {
+		s.ListRows = starRows(t, s)
+	}
 	fb, missing := MainGameWithBoard(s, fnt, mapImg, faces, cur, afterBoard)
 	// 生產計劃的數字是算出來的（`docs/spec/004`）。
 	if specName == "screen-production-plan" {
@@ -436,4 +439,41 @@ func admiralRows(t *testing.T, faction int, standby bool) []ListRow {
 		})
 	}
 	return out
+}
+
+// starRows 算「星系資料」那張清單的列：星域名（用擁有者的陣營色）
+// 與兩個陣營的艦隊數。
+func starRows(t *testing.T, s *MainGameSpec) []ListRow {
+	t.Helper()
+	root := "../.."
+	stellar, err := os.ReadFile(filepath.Join(root, "org_game/extracted/STELLAR.DTX"))
+	if err != nil {
+		t.Skipf("缺 STELLAR.DTX，跳過（不用代用品）")
+	}
+	var l *ListSpec
+	for _, w := range s.Windows {
+		if w.List != nil {
+			l = w.List
+		}
+	}
+	if l == nil {
+		t.Fatal("規格裡沒有清單版面")
+	}
+	var out []ListRow
+	for i := 0; i*rules.RegionRecord+rules.RegionRecord <= len(stellar); i++ {
+		rec := stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		out = append(out, starRow(l, rec))
+	}
+	return out
+}
+
+// starRow 把一筆星域記錄排成清單的一列。
+func starRow(l *ListSpec, rec []byte) ListRow {
+	owner := rules.RegionOwnerOf(rec)
+	return ListRow{Cells: []ListCell{
+		{X: l.NameX, Ink: rules.FactionColour(owner), Codes: rules.RegionName(rec)},
+		{X: l.OwnX, Ink: rules.FactionColour(0), Text: " 0"},
+		{X: l.SepX, Ink: l.Ink, Codes: []uint16{l.SepCode}},
+		{X: l.EnemyX, Ink: rules.FactionColour(1), Text: " 0"},
+	}}
 }

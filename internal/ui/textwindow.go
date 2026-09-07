@@ -203,6 +203,13 @@ func DrawGlyphClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16
 // 陰影會落到左半的地盤上**，不會被丟掉；左半那個字移出格外的那一行才會。
 // 判準是這個字在不在 16 的邊界上。
 func DrawHalfGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8, fg, shadow uint8, shadowDY int, bold bool) bool {
+	return DrawHalfGlyphClipped(fb, fnt, x, y, code, fg, shadow, shadowDY, bold,
+		0, 0, gfx.Width, gfx.Height)
+}
+
+// DrawHalfGlyphClipped 同 DrawHalfGlyph，但把整個字（含立體邊）裁在矩形內。
+func DrawHalfGlyphClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8,
+	fg, shadow uint8, shadowDY int, bold bool, cx, cy, cw, ch int) bool {
 	g := fnt.Half(code)
 	if g == nil {
 		return false
@@ -219,11 +226,14 @@ func DrawHalfGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8, fg
 				if bits>>(font.HalfW-1-gx)&1 == 0 {
 					continue
 				}
-				px := x + gx - shift
+				px, py := x+gx-shift, y+oy+gy
 				if px < x && !rightHalf {
 					continue
 				}
-				fb.Set(px, y+oy+gy, col)
+				if px < cx || py < cy || px >= cx+cw || py >= cy+ch {
+					continue
+				}
+				fb.Set(px, py, col)
 			}
 		}
 	}

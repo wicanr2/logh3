@@ -251,6 +251,14 @@ func (p *Planets) RegionPlanets(region int) (empire, alliance, other int) {
 	return
 }
 
+// RegionOwnerOf 從星域記錄的 `+0x12` 讀擁有者（0 帝國、1 同盟、2 無主）。
+func RegionOwnerOf(record []byte) int {
+	if len(record) <= regionOwner {
+		return 2
+	}
+	return int(record[regionOwner])
+}
+
 // RegionOwner 判定一個星域屬於誰：**全屬同一方才算那一方的，只要混雜就是無主**
 // （`docs/re/17`）。回 0 帝國、1 同盟、2 無主。
 func (p *Planets) RegionOwner(region int) int {
