@@ -29,6 +29,8 @@ func main() {
 	orig := flag.String("orig", "org_game/extracted", "原版檔案目錄（玩家自備）")
 	data := flag.String("data", "docs/internals/data", "畫面規格與資料目錄")
 	out := flag.String("out", "workplace/play", "輸出目錄")
+	palPath := flag.String("pal", "", "調色盤檔（dosgolem 的 -dump-palette 格式，256×3）；"+
+		"不給就用主選單規格裡那 16 色。遊戲本體的調色盤與主選單不同")
 	script := flag.String("script", "move 300 170; click; type 138; enter",
 		"輸入腳本，分號分隔：move X Y／click [X Y]／type 數字／enter／back")
 	flag.Parse()
@@ -45,6 +47,18 @@ func main() {
 		die(err)
 	}
 	pal := res.Menu.Palette()
+	if *palPath != "" {
+		b, err := os.ReadFile(*palPath)
+		if err != nil {
+			die(err)
+		}
+		if len(b) < len(pal)*3 {
+			die(fmt.Errorf("%s 只有 %d bytes，要 %d", *palPath, len(b), len(pal)*3))
+		}
+		for i := range pal {
+			pal[i][0], pal[i][1], pal[i][2] = b[i*3], b[i*3+1], b[i*3+2]
+		}
+	}
 	step := 0
 	dump := func(label string) {
 		fb := g.Frame()
@@ -246,7 +260,16 @@ func load(orig, data string) (*game.Resources, error) {
 			return nil, err
 		}
 	}
-	return &game.Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
+	graph, err := rules.LoadStarGraph(filepath.Join(data, "star-graph.json"))
+	if err != nil {
+		return nil, err
+	}
+	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph,
+		UnrestParams: rules.UnrestParams{
+			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
+			Table: []int{170, 150, 130, 90, 60},
+			Base:  []int{50, 75, 100, 150, 200},
+		}, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
 		Screens: screens, StarMaps: maps, Regions: regions,

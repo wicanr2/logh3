@@ -7,26 +7,76 @@
 專案有兩個並行的目的：把遊戲重做成可維護的版本，以及保存這款 1994 年台灣
 中文化作品的技術細節——原始碼與開發資料都不存在，只剩執行檔可以問。
 
-## 現況
+## 現在做到哪裡
 
-主選單已達成**逐位元組一致**的同狀態對拍：remake 畫出來的 640×480 色號陣列
-與調色盤，跟原版在無頭執行器裡跑出來的收據 SHA-256 相同。
+下面五張都是 **remake 自己畫的**，而且與原版在無頭執行器裡跑出來的收據
+**逐位元組相同**（0 個像素不同）。走的是正常玩家路徑，不是直接開畫面。
 
-完成度看 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)。
+| 主選單 | 防拷問答 |
+|---|---|
+| ![主選單](docs/images/01-main-menu.png) | ![防拷問答](docs/images/02-copy-protection.png) |
+| 收據 `click3` | 收據 `cb1` |
+
+| 月初報告 | 戰略地圖介面 |
+|---|---|
+| ![月初報告](docs/images/03-month-report.png) | ![戰略地圖介面](docs/images/04-command-phase.png) |
+| 收據 `key1` | 收據 `main1e` |
+
+![取進度](docs/images/05-load-game.png)
+
+「取進度」那 11 列不是量好畫死的——存檔時間、序號、遊戲內日期與名稱都從
+`SAVEDATA.IDX` 算出來（收據 `load1e`，整張逐位元組相同）。
+
+戰略地圖介面上的每一個數字也是算出來的：左下角的星域摘要、右側的日期與
+兩筆錢、預算與生產計劃的四十幾個數字，全部從原版資料檔推到像素，
+中間沒有抄來的值。
+
+### 走得完的路
+
+```
+主選單 ─┬─ 帝國／同盟／對戰 ─→ 防拷問答 ─→ 月初報告 ─→ 戰略地圖介面
+        └─ 取進度 ─→ 防拷問答 ─→ 存檔畫面 ─→ 選一格 ─→ 戰略地圖介面
+```
+
+命令階段三格下拉選單、十二張子畫面、預算／生產計劃、一覽表五張、
+結局畫面都畫得出來且對過。存檔可以讀也可以寫回去（六個檔逐位元組相同）。
+
+### 解出來的規則
+
+| 主題 | 做到哪裡 |
+|---|---|
+| 月底結算 | 逐行星成長、兩種稅、造船扣款——796 年 1 月畫面上每一個錢都算得出來 |
+| 未安定度 | 載入時整支算式解出來，三個局面 ×32 個星域**全中**；跨月不重算 |
+| 星域表重算 | 新遊戲開局的擁有者、行星數、經濟力、成長率、民心、稅率、未安定度七項全中 |
+| 存檔格式 | `*.DT[89A]` 就是執行期那幾張表；讀、寫、目錄都對過 |
+| 曆法、路徑表、星域圖 | 已解 |
+
+完成度的數字看 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)，
+規格與狀態看 [`docs/spec/000-README.md`](docs/spec/000-README.md)。
+
+## 還沒做的
+
+戰鬥（`COMANI.BMG`）、開頭動畫的像素對應、「存進度」畫面的互動、
+新遊戲的存檔寫出、艦艇數值的語意。
 
 ## 怎麼跑
 
 需要自備原版遊戲檔（本儲存庫不含原版檔與素材），放在 `org_game/extracted/`。
 
 ```
-tools/go.sh test ./...                                   # 含對拍回歸測試
-tools/go.sh run ./cmd/logh3 -font /orig/GRAPH.IMG -out workplace/remake
+tools/go.sh test ./...                       # 含對拍回歸測試
+tools/go.sh run ./cmd/play -orig /orig -out /src/workplace/play \
+  -pal /src/workplace/oracle/main1e/pal.bin \
+  -script "move 300 170; click; type 138; enter; rclick 300 240; rclick 300 240"
 tools/go.sh run ./cmd/oradiff \
-  -oracle workplace/re06/screen.bin -remake workplace/remake/screen.bin
+  -oracle workplace/oracle/main1e/screen.bin -remake workplace/play/06-rclick-300-240.bin
 ```
 
 原版側的畫面由 [dosgolem](https://github.com/wicanr2/dosgolem)（無頭、決定性的
 DOS 執行器）產生，它是本專案唯一的 oracle。
+
+上面那幾張 PNG 是 remake 的輸出，用原版字型與地圖畫的；原版檔案本身
+不隨本儲存庫散布。
 
 ## 文件
 
@@ -35,8 +85,10 @@ DOS 執行器）產生，它是本專案唯一的 oracle。
 | [`AGENTS.md`](AGENTS.md) | 協作規範與對拍契約 |
 | [`CONTEXT.md`](CONTEXT.md) | 目前真相與唯一剩餘工作 |
 | [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md) | 完成度的唯一數字來源 |
+| [`docs/spec/`](docs/spec/) | 規格：要照著做什麼與驗收條件 |
 | [`docs/internals/`](docs/internals/) | 逆向出來的事實（格式、結構、演算法），含機器可讀的 `data/*.json` |
 | [`docs/re/`](docs/re/) | 逐次調查紀錄 |
+| [`docs/lore/`](docs/lore/) | 從遊戲裡抓出來的人物傳等文本 |
 | [`docs/playtest/`](docs/playtest/) | 對拍收據 |
 | [`WORKLOG.md`](WORKLOG.md) | 流水帳 |
 
