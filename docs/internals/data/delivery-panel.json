@@ -1,0 +1,9 @@
+{
+ "note": "月底「船艦接收報告」視窗裡算出來的部分。量自 screen-ship-delivery 的規格 JSON（收據 turnmonth2）。七列的造艦數與部隊數由 rules.BuildPlan 算——是上一份計劃買到的船，月底照這個數交付（docs/re/21）；年月由回合計數器算（docs/re/25）；參謀的姓名與軍階由 WORK +0x37 與 ADMIRAL +0x06 算（docs/internals/30、08）。",
+ "window": {"x": 144, "y": 80, "w": 352, "h": 320},
+ "ink": 7,
+ "header": {"y": 102, "year_x": 160, "month_right": 256},
+ "staff": {"y": 142, "x": 160},
+ "rows_y": [242, 262, 282, 302, 322, 342, 362],
+ "columns": {"ships": 320, "units": 384}
+}

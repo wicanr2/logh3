@@ -42,6 +42,7 @@
 | 5o | 取進度 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `load1e`；8 個未使用欄位（色 8）＋ 三個劇本 |
 | 5p | 存進度 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 紅條那張（`TestSaveBarMatchesOracle`）與正常玩家路徑那張都 0 點。這張逼出了「命中判定用畫面座標、游標繪製用滑鼠座標」的抵銷（[`docs/re/52`](docs/re/52-two-mouse-coordinate-conventions.md)）。收據 `save1e`；滑鼠所在那一列是紅色反白條，刷的時候把游標蓋掉 |
 | 5q | 出擊命令 → 待命中提督資料 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `sortie1e`；清單十七列，左下角那塊被重寫成星系摘要 |
+| 5w | 月底船艦接收報告 | `same-state`（兩塊）| 0 | [`docs/re/55`](docs/re/55-ship-delivery-report.md) | 第十次「實行」跨月時跳出來。收據 `turnmonth2`；對話框 (144,80)–(495,399) 與「戰略模式處理中」那條 (320,40)–(639,79) 逐位元組。十四個數字、標題的年月、署名的姓名與軍階**全部算出來**；整張比不了的三處差異（兩個星域換色、首都色、捲軸箭頭）在 `docs/re/54`／`55` 列了成因 |
 | 5r | 結束（確認對話框）| `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `quit1e`；「您確定要結束這個遊戲嗎？」＋ 兩個按鈕 |
 | 5s | 一覽表 → 星系資料 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `star1e`；三十二列的星域名與艦隊數是算出來的，列的順序來自資料段 `ds:1DB2` 的排列表（[`docs/re/50`](docs/re/50-admiral-lists.md)）。地圖用第三組星域色（`colour_796_01_star_list`），選中的星域畫成色 7 |
 | 5t | 兩張下拉選單（系統指令、一覽表）| `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `sysmenu1e`、`lstmenu1e`；系統指令五項（實行／取進度／存進度／設定／結束）、一覽表四項 |

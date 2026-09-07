@@ -68,6 +68,10 @@ func TestDiffAgainstOracle(t *testing.T) {
 		return
 	}
 
+	bx0, by0, bx1, by1 := 0, 0, 639, 479
+	if bb := os.Getenv("LOGH3_BOX"); bb != "" {
+		fmt.Sscanf(bb, "%d,%d,%d,%d", &bx0, &by0, &bx1, &by1)
+	}
 	rows := map[int][]string{}
 	n, minY, maxY := 0, 1<<30, -1
 	for i := range want {
@@ -75,6 +79,9 @@ func TestDiffAgainstOracle(t *testing.T) {
 			continue
 		}
 		x, y := i%640, i/640
+		if x < bx0 || x > bx1 || y < by0 || y > by1 {
+			continue
+		}
 		rows[y] = append(rows[y], fmt.Sprintf("x%d(原版 %d／remake %d)", x, want[i], got[i]))
 		n++
 		if y < minY {

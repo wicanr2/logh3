@@ -27,6 +27,27 @@ func StaffAdmirals(work []byte) []int {
 	return out
 }
 
+// 幕僚職的職位碼（`docs/internals/30`）。四份存檔裡三個碼都一樣，
+// 只有坐那個位子的人會換。
+const (
+	PostMilitaryStaff = 0x4F // 軍事專任參謀：月底的船艦接收報告、次月份建造計劃署名
+	PostIntelStaff    = 0x3A // 情報專任參謀：戰略情報報告署名
+	PostDomesticStaff = 0x3C // 內政專任參謀：月初的會計報告署名
+)
+
+// StaffAdmiralByPost 回坐某個幕僚職的提督索引，沒有就回 −1。
+func StaffAdmiralByPost(work []byte, post byte) int {
+	if len(work) < workStaffOff+workStaffCount*2 {
+		return -1
+	}
+	for i := 0; i < workStaffCount; i++ {
+		if work[workStaffOff+i*2+1] == post {
+			return int(work[workStaffOff+i*2])
+		}
+	}
+	return -1
+}
+
 // RankNames 是軍階由低到高。`RankOf` 回的是這個陣列的索引。
 var RankNames = []string{
 	"少尉", "中尉", "上尉", "少校", "中校", "上校", "准將", "少將", "中將", "上將",

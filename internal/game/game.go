@@ -75,6 +75,10 @@ const (
 	StateSaveGame
 	StateSettings
 	StateQuitConfirm
+
+	// StateShipDelivery 是月底的「船艦接收報告」：第十次「實行」跨月時
+	// 自己跳出來，按「確認」才回到地圖介面（`docs/re/21`、`docs/re/55`）。
+	StateShipDelivery
 )
 
 // screenSpecName 是每個命令階段狀態對應的規格名（`docs/internals/data/`）。
@@ -96,6 +100,7 @@ var screenSpecName = map[State]string{
 	StateSaveGame:        "screen-save-game",
 	StateSettings:        "screen-settings",
 	StateQuitConfirm:     "screen-quit-confirm",
+	StateShipDelivery:    "screen-ship-delivery",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -164,6 +169,9 @@ type Resources struct {
 	CapitalPanel *screen.CapitalPanel
 
 	// BudgetPanel 是預算計劃／徵稅計劃那個視窗的數字版面（`docs/spec/003`），
+	// DeliveryPanel 是月底船艦接收報告那個視窗算出來的部分。
+	DeliveryPanel *screen.DeliveryPanel
+
 	// ProductionPanel 是生產計劃那個視窗的（`docs/spec/004`）。
 	BudgetPanel     *screen.BudgetPanel
 	ProductionPanel *screen.ProductionPanel
@@ -265,6 +273,10 @@ type Game struct {
 	// building 是**上一次結算撥款出去**的那份計劃：買到的船這個月還在造，
 	// 下個月底交付（`docs/re/21`）。生產計劃畫面的「建造中」就是它。
 	building rules.BuildPlan
+
+	// delivered 是月底報告上那一份：跨月的當下交付出去的船。
+	delivered              rules.BuildPlan
+	reportYear, reportMonth int
 
 	// 目前選中的星域。左下角那塊寫的就是它。**還沒選過是 −1**，
 	// 那塊是空的——收據 `main1e` 就是這個狀態（關月初報告的那兩下右鍵
@@ -390,6 +402,9 @@ func (g *Game) Click(x, y int) {
 		if n := g.saveRow(); n >= 0 && g.res.SaveDir != "" {
 			g.saveErr = g.SaveSlot(g.res.SaveDir, n)
 		}
+	case StateShipDelivery:
+		// 報告只有一個「確認」鈕，點哪裡都收掉——哪裡按不算數還沒量過。
+		g.state = StateCommandPhase
 	case StateMainGame:
 		// 可點區域是熱區清單，不是「視窗內就好」（`docs/re/09`）。
 		switch g.res.MainGame.HitTest(x, y) {
@@ -446,9 +461,21 @@ func (g *Game) Click(x, y int) {
 				if item == StateExecute {
 					// 一次「實行」推進一個回合 ＝ 三天（`docs/re/20`、`docs/re/25`）。
 					g.turn++
-					// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）。
+					// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
+					// 並跳出船艦接收報告。
 					if g.turn%rules.TurnsPerMonth == 0 {
+						g.delivered = g.building
+						g.reportYear, g.reportMonth, _ = g.Date()
+						// 報告掛的是**剛結束的那個月**，日期已經翻到次月 1 日。
+						g.reportMonth--
+						if g.reportMonth == 0 {
+							g.reportMonth, g.reportYear = 12, g.reportYear-1
+						}
 						g.monthEnd()
+						if g.commandSpec(StateShipDelivery) != nil {
+							g.state = StateShipDelivery
+							return
+						}
 					}
 					g.state = StateCommandPhase
 					return
@@ -698,6 +725,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawPanels(fb)
 			g.drawBudget(fb)
 			g.drawProduction(fb)
+			g.drawDelivery(fb)
 			g.drawSlotList(fb)
 			return fb
 		}
@@ -750,6 +778,14 @@ func (g *Game) estimateTax() int {
 // 同一塊底板，右側面板在每一張上都看得到（被疊上去的視窗蓋住的部分除外）。
 func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 	if _, ok := screenSpecName[g.state]; !ok {
+		return
+	}
+	// 月底結算的當下右側面板的字整塊是空的，只寫「戰略模式處理中」——
+	// 算出來的那幾塊不畫，但按鈕與分頁鈕還在。
+	if g.state == StateShipDelivery {
+		if g.res.CapitalPanel != nil {
+			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
+		}
 		return
 	}
 	g.drawCapitalPanel(fb)
@@ -811,6 +847,16 @@ func (g *Game) drawBudget(fb *gfx.Framebuffer) {
 func (g *Game) nextPlan() rules.BuildPlan {
 	b := rules.Budget{Treasury: g.military, Tax: g.taxTotal, ShipPct: g.res.ShipPct}
 	return rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct}
+}
+
+// drawDelivery 畫月底船艦接收報告裡算出來的那幾塊。
+func (g *Game) drawDelivery(fb *gfx.Framebuffer) {
+	if g.state != StateShipDelivery || g.res.DeliveryPanel == nil {
+		return
+	}
+	name, rank := g.staffAdmiral(rules.PostMilitaryStaff)
+	g.res.DeliveryPanel.Draw(fb, g.res.Font, g.reportYear, g.reportMonth,
+		g.delivered, name, rank)
 }
 
 // drawProduction 畫生產計劃的數字（`docs/spec/004`）。
@@ -933,11 +979,7 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 	if !ok || len(g.res.Admiral) == 0 || len(g.res.AdmiralNames) == 0 {
 		return
 	}
-	work := g.res.WorkTemplate
-	if g.slot != nil && len(g.slot.Work) > 0 {
-		work = g.slot.Work
-	}
-	staff := rules.StaffAdmirals(work)
+	staff := rules.StaffAdmirals(g.workRecord())
 	isStaff := map[int]bool{}
 	for _, i := range staff {
 		isStaff[i] = true
@@ -953,6 +995,47 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 			Rank:  rules.RankOf(a.Merit),
 		})
 	}
+}
+
+// workRecord 回目前這一局的 `WORK` 區塊：讀進來的存檔優先，
+// 沒有就用新遊戲的樣板。
+func (g *Game) workRecord() []byte {
+	if g.slot != nil && len(g.slot.Work) > 0 {
+		return g.slot.Work
+	}
+	return g.res.WorkTemplate
+}
+
+// staffAdmiral 回坐某個幕僚職的提督姓名與軍階的字碼（`docs/internals/30`）。
+func (g *Game) staffAdmiral(post byte) (name, rank []uint16) {
+	i := rules.StaffAdmiralByPost(g.workRecord(), post)
+	if i < 0 || i >= len(g.res.AdmiralNames) {
+		return nil, nil
+	}
+	name = g.res.AdmiralNames[i]
+	all := rules.ParseAdmirals(g.res.Admiral)
+	if i < len(all) {
+		rank = g.rankCodes(rules.RankOf(all[i].Merit))
+	}
+	return name, rank
+}
+
+// rankCodes 回某一階的字碼。
+//
+// 十個軍階的字碼**只量過一份**，在提督資料那張畫面的規格裡
+// （`screen-admiral-list-view.json` 的 `list.ranks`）。再抄一份到別的
+// 資料檔就會有兩個真相，所以這裡直接跟那一份要。
+func (g *Game) rankCodes(rank int) []uint16 {
+	s := g.res.Screens["screen-admiral-list-view"]
+	if s == nil || rank < 0 {
+		return nil
+	}
+	for _, w := range s.Windows {
+		if w.List != nil && rank < len(w.List.Ranks) {
+			return w.List.Ranks[rank]
+		}
+	}
+	return nil
 }
 
 // listState 回這個狀態的清單要哪一群提督。

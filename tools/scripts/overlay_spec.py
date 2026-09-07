@@ -259,18 +259,35 @@ spec['hotspots'] = []
 # （規格 `docs/spec/003`，畫的人是 `internal/screen.BudgetPanel`）。
 # 量好畫死的話換一個月份就不對——`budget1` 與 `tax1e` 每一格都不一樣。
 COMPUTED_MONEY = {'screen-budget-plan': 'report', 'screen-tax-plan': 'overlay',
-                  'screen-production-plan': 'overlay'}
-COMPUTED_MONEY_ROWS = (162, 182, 202, 222, 242, 262, 282, 302, 322, 342)
+                  'screen-production-plan': 'overlay',
+                  'screen-ship-delivery': 'overlay'}
+COMPUTED_MONEY_ROWS = {'screen-ship-delivery': (242, 262, 282, 302, 322, 342, 362)}
+DEFAULT_MONEY_ROWS = (162, 182, 202, 222, 242, 262, 282, 302, 322, 342)
 _wname = COMPUTED_MONEY.get(out_name)
 if _wname and _wname in spec['windows']:
+    _rows = COMPUTED_MONEY_ROWS.get(out_name, DEFAULT_MONEY_ROWS)
     _ls = []
     for _l in spec['windows'][_wname]['lines']:
-        if _l['y'] in COMPUTED_MONEY_ROWS:
+        if _l['y'] in _rows:
             _l = dict(_l, cells=[c for c in _l['cells'] if c['w'] != 8])
             if not _l['cells']:
                 continue
         _ls.append(_l)
     spec['windows'][_wname]['lines'] = _ls
+
+# 船艦接收報告的標題年月是**全形數字**（半形那條濾不掉），署名那一行
+# 整行都跟存檔走——兩者都由 internal/screen.DeliveryPanel 畫。
+if out_name == 'screen-ship-delivery':
+    _w = spec['windows']['overlay']
+    _ls = []
+    for _l in _w['lines']:
+        if _l['y'] == 142:      # 參謀的姓名與軍階
+            continue
+        if _l['y'] == 102:      # 標題：只留固定的字，年月拿掉
+            _l = dict(_l, cells=[c for c in _l['cells']
+                                 if not 0xA2AF <= c['code'] <= 0xA2B8])
+        _ls.append(_l)
+    _w['lines'] = _ls
 
 json.dump(spec, open(f'/work/docs/internals/data/{out_name}.json', 'w'),
           ensure_ascii=False, indent=1)

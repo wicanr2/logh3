@@ -169,6 +169,15 @@ func (p *CapitalPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, region *RegionP
 	region.DrawAt(fb, fnt, c.Region, faction, p.Summary.DX, p.Summary.DY)
 }
 
+// DrawChrome 只畫按鈕與分頁鈕，不畫算出來的文字。
+//
+// 月底結算的當下右側面板的字整塊是空的（畫面上只有「戰略模式處理中」），
+// 但按鈕與分頁鈕還在。
+func (p *CapitalPanel) DrawChrome(fb *gfx.Framebuffer, fnt *font.Font) {
+	p.drawButtons(fb, fnt)
+	p.drawTabs(fb, fnt)
+}
+
 // drawButtons 畫中間那三顆命令按鈕。
 //
 // 字裁在按鈕的內容區裡：立體邊往上移那一列會落到按鈕的白色上緣上，

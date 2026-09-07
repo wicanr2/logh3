@@ -81,6 +81,18 @@
 前三項在 `internal/asset/amg_test.go`；第四項是同一支測試的
 `TestFaceAMGMatchesOracle`，沒有收據就 skip。
 
+## 編號就是提督索引（strong inference）
+
+畫面上出現的頭像，編號與 `ADMIRAL.DT*` 的提督索引對得上：
+
+| 畫面 | 頭像 | 署名 | `WORK` +0x37 的提督索引 |
+|---|---:|---|---:|
+| 戰略情報報告（`info1e`）| 13 | 情報專任參謀克斯拉准將 | 13（職位碼 `3A`）|
+| 月底船艦接收報告（`turnmonth2`）| 6 | 軍事專任參謀梅克林格准將 | 6（職位碼 `4F`）|
+
+兩個獨立資料點，兩張畫面的頭像都用 `tools/scripts/face_find.py` 比到
+**0 個像素不同**。83 張比 82 名提督多一張，多的那一張是誰未確認。
+
 ## 怎麼找到的
 
 在 dosgolem 開 `-vram-sites`（統計「誰在寫視訊記憶體」），跑兩次不同步數

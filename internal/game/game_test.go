@@ -116,6 +116,10 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	delivery, err := screen.LoadDeliveryPanel(filepath.Join(root, "docs/internals/data/delivery-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	production, err := screen.LoadProductionPanel(filepath.Join(root, "docs/internals/data/production-panel.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -168,7 +172,8 @@ func load(t *testing.T) *Resources {
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
-		BudgetPanel: budget, ProductionPanel: production, Stellar: stellar, Planets: planets, Growth: growth,
+		BudgetPanel: budget, ProductionPanel: production, DeliveryPanel: delivery,
+		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		StartMilitary: 50000, ShipPct: 25}
 }
@@ -299,6 +304,31 @@ func TestExecuteTurnMatchesOracle(t *testing.T) {
 	}
 }
 
+// TestShipDeliveryMatchesOracle 月底的船艦接收報告。
+//
+// **只比對話框那一塊**（`layout-only` 不夠、`same-state` 不到）：整張畫面
+// 對不上，因為那一刻的地圖已經是結算後的樣子——有兩個星域換了顏色
+// （`docs/re/54`），而 remake 還沒有那條規則。對話框本身與原版
+// 逐位元組相同，含年月、參謀的姓名軍階與十四個數字。
+func TestShipDeliveryMatchesOracle(t *testing.T) {
+	g := reachCommandPhase(t)
+	for i := 0; i < rules.TurnsPerMonth; i++ {
+		g.Click(544, 125) // 系統指令
+		g.Click(560, 125) // 實行
+	}
+	if g.State() != StateShipDelivery {
+		t.Fatalf("跨月之後在 %v，不是船艦接收報告", g.State())
+	}
+	matchesBox(t, g, "turnmonth2", 144, 80, 495, 399)
+	// 右側面板的字被清掉、只留「戰略模式處理中」那一行，也對得上。
+	matchesBox(t, g, "turnmonth2", 320, 40, 639, 79)
+
+	g.Click(448, 402) // 確認
+	if g.State() != StateCommandPhase {
+		t.Fatalf("按了確認之後在 %v", g.State())
+	}
+}
+
 // TestMenuClickOutsideCloses 點在選單項目外面會把選單關掉（實測四個方向的
 // 界外點都回主畫面，`docs/internals/23`）。
 func TestMenuClickOutsideCloses(t *testing.T) {
@@ -347,6 +377,30 @@ func regionColours(path string) ([]uint8, error) {
 }
 
 // matches 把目前畫面與 oracle 收據逐位元組比。
+// matchesBox 只比畫面上的一塊矩形。整張比不了的時候用它，並在呼叫端
+// 寫清楚為什麼——**降級要留下理由**，不然下一個人會以為整張都對過。
+func matchesBox(t *testing.T, g *Game, batch string, x0, y0, x1, y1 int) {
+	t.Helper()
+	want, err := os.ReadFile(filepath.Join(root, "workplace/oracle", batch, "screen.bin"))
+	if err != nil {
+		t.Skipf("沒有收據 %s，跳過（tools/oracle.sh 可重建）", batch)
+	}
+	got := g.Frame().Pix
+	bad, total := 0, 0
+	for y := y0; y <= y1; y++ {
+		for x := x0; x <= x1; x++ {
+			total++
+			if want[y*640+x] != got[y*640+x] {
+				bad++
+			}
+		}
+	}
+	if bad != 0 {
+		t.Fatalf("%s (%d,%d)-(%d,%d)：與原版不同的像素 %d / %d",
+			batch, x0, y0, x1, y1, bad, total)
+	}
+}
+
 func matches(t *testing.T, g *Game, batch string) {
 	t.Helper()
 	p := filepath.Join(root, "workplace/oracle", batch, "screen.bin")

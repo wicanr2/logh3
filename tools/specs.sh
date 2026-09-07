@@ -140,4 +140,16 @@ want quit-confirm && py tools/scripts/overlay_spec.py \
 want settings && py tools/scripts/overlay_spec.py \
   settings1e screen-cmd-menu screen-settings 160 41 463 399 560 145 "$SETTINGS_BOXES"
 
+# 月底的船艦接收報告。底層是命令階段主畫面，但右側面板的字整塊被清掉、
+# 只留「戰略模式處理中」那一行——所以要多量一塊額外文字區。
+# 「確認」鈕的字要走 box_text.py：框裡有字的時候 measure_frame 會把字的
+# 像素量成一圈一圈的立體邊（十層），而 frame_patches 只補角落，
+# 中間那一塊就變成一片交錯的雜訊。
+if want ship-delivery; then
+  py tools/scripts/overlay_spec.py \
+    turnmonth2 screen-command-phase screen-ship-delivery 144 80 495 399 560 85 \
+    '430:360:465:379' '' '6:400:100' '320:40:639:79'
+  py tools/scripts/box_text.py turnmonth2 screen-ship-delivery overlay 0
+fi
+
 exit 0
