@@ -25,7 +25,7 @@
 | 5h | 命令階段主畫面（796 年 1 月）| `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 全畫面逐位元組一致。右鍵兩下關掉月初報告才到得了（[`docs/re/16`](docs/re/16-window-list-right-button.md)）；收據用 `main1e`（游標搬過一次，沒有殘留）|
 | 5i | 戰略命令選單（情報收集／徵稅計劃／生產計劃）| `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `cmd1e`；主畫面當底層，只量疊上去那一層 |
 | 5j | 戰略情報報告 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `info1e`；地圖跟著**治安**換色（色表在 `strmap-regions.json` 的 `colour_796_01_security`），頭像是 `FACE.AMG` 第 13 張 |
-| 5l | 一覽表：艦隊資料／提督資料／敵將資料 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `lst1e`／`lst2e`／`lst3e`；三張共用同一份清單版面 |
+| 5l | 一覽表：艦隊資料／提督資料／敵將資料 | `same-state` | 0 | 收據 `lst1e`／`lst2e`／`lst3e`；[`docs/re/37`](docs/re/37-empty-lists.md) | 三張共用同一份清單版面。**清單在 796/1 是空的——原版就是空的**，不是 remake 少畫 |
 | 5k | 遊戲設定 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `settings1e`；標籤是**粗體＋陰影**畫的（[`docs/internals/25`](docs/internals/25-text-rendering.md)），不是另一套字型 |
 | 5m | 徵稅計劃 → 次月份預算計劃 | `same-state` | 0 | 收據 `tax1e`；[`docs/spec/003`](docs/spec/003-budget-panel.md) | 與 `budget1` 同一個視窗版面，底下換成命令階段底板；數字與右側面板都是算出來的 |
 | 5n | 生產計劃 → 次月份船艦建造計劃 | `same-state` | 0 | 收據 `prod1e`；[`docs/spec/004`](docs/spec/004-production-panel.md) | 44 個數字**全部從 `rules.BuildPlan` 算**，含「建造中」那兩欄（上一份計劃買到的船）|
