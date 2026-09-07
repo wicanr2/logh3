@@ -107,7 +107,21 @@ type GameWindow struct {
 		Index  int    `json:"index"`
 		X      int    `json:"x"`
 		Y      int    `json:"y"`
+
+		// StaffPost 有值時，`Index` 由遊戲換成那個職位的幕僚本人
+		// （頭像的編號就是提督索引，`docs/internals/09`）。規格裡的
+		// `Index` 是量收據那一張時的值，只當備援。
+		StaffPost *int `json:"staff_post"`
 	} `json:"face"`
+
+	// Staff 是「跟著幕僚走的署名」：規格只記位置與職位，
+	// 姓名與軍階由遊戲填（`docs/spec/011`）。
+	Staff *struct {
+		Post int   `json:"post"`
+		X    int   `json:"x"`
+		Y    int   `json:"y"`
+		Ink  uint8 `json:"ink"`
+	} `json:"staff"`
 	InputBox *Solid `json:"input_box"`
 	Bar      *Solid `json:"bar"`
 
@@ -506,4 +520,11 @@ func atoi(s string) int {
 		n = n*10 + int(s[i]-'0')
 	}
 	return n
+}
+
+
+// DrawStaffLine 畫一行署名：姓名接軍階，全形字。
+func DrawStaffLine(fb *gfx.Framebuffer, fnt *font.Font, x, y int, name, rank []uint16, ink uint8) {
+	codes := append(append([]uint16(nil), name...), rank...)
+	drawFull(fb, fnt, x, y, codes, ink)
 }

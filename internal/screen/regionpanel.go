@@ -92,7 +92,10 @@ func (p *RegionPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, s rules.RegionSu
 // 行星、艦隊、陣營前綴、星系名全部對得上（`docs/spec/002`）。
 func (p *RegionPanel) DrawAt(fb *gfx.Framebuffer, fnt *font.Font, s rules.RegionSummary,
 	faction, dx, dy int) {
-	own, enemy := p.ValueLine.Fleets.OwnInk, p.ValueLine.Fleets.EnemyInk
+	// 行星那個分子用**玩家的陣營色**，艦隊那兩個數字用兩個常數——
+	// 同一行上兩種規則，`main1eAlly` 才分得出來（`docs/re/61`）。
+	own := rules.FactionColour(faction)
+	fleetOwn, fleetEnemy := p.ValueLine.Fleets.OwnInk, p.ValueLine.Fleets.EnemyInk
 	fx := func(x int) int { return x + dx }
 
 	// 第一行：陣營前綴 ＋ 星域名。
@@ -123,12 +126,12 @@ func (p *RegionPanel) DrawAt(fb *gfx.Framebuffer, fnt *font.Font, s rules.Region
 	p.half(fb, fnt, fx(pl.SlashX), y, '/', ink)
 	p.half(fb, fnt, fx(pl.TotalX), y, byte('0'+s.Total%10), ink)
 
-	// 艦隊 a：b，兩個數字各用自己那一邊的陣營色。
+	// 艦隊 a：b 的兩個墨色是常數，不跟著玩家的陣營換。
 	fl := p.ValueLine.Fleets
 	p.full(fb, fnt, fx(fl.LabelX), y, fl.Label, ink)
-	p.right(fb, fnt, fx(fl.OwnRight), y, strconv.Itoa(s.OwnFleets), own)
+	p.right(fb, fnt, fx(fl.OwnRight), y, strconv.Itoa(s.OwnFleets), fleetOwn)
 	p.full(fb, fnt, fx(fl.ColonX), y, []uint16{fl.Colon}, ink)
-	p.right(fb, fnt, fx(fl.EnemyRight), y, strconv.Itoa(s.EnemyFleets), enemy)
+	p.right(fb, fnt, fx(fl.EnemyRight), y, strconv.Itoa(s.EnemyFleets), fleetEnemy)
 }
 
 // drawFull 從 x 起畫一串全形字。

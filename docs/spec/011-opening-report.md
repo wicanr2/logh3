@@ -1,7 +1,8 @@
-# SPEC 011 — 月初會計報告與那一刻的右側面板
+# SPEC 011 — 疊在戰略底板上那三張裡跟局面走的內容
 
-狀態：**CONFORMED**（`key1`、`keyAlly` 兩張整張 640×480 逐位元組相同）
-證據：`docs/re/61`
+狀態：**CONFORMED**（`key1`／`ship1`／`plan1`／`keyAlly`／`shipAlly`／`planAlly`
+六張整張 640×480 逐位元組相同）
+證據：`docs/re/61`、`docs/re/62`
 資料：[`docs/internals/data/report-panel.json`](../internals/data/report-panel.json)、
 [`docs/internals/data/capital-panel.json`](../internals/data/capital-panel.json)
 執行器：dosgolem-logh3 `2833ec9`
@@ -62,7 +63,36 @@
 點第 1 列開同盟的局時原版的游標低一列，所以這張畫面與戰略地圖介面
 一樣改用即時滑鼠位置。
 
+## 另外兩張：船艦訂造報告與次月份船艦建造計劃
+
+同樣疊在戰略底板上，同樣有署名、頭像與跟局面走的數字。署名的是
+**軍事專任參謀**（帝國梅克林格准將，`FACE.AMG` 第 6 張；同盟派特里契夫
+少校，第 79 張）。
+
+規格裡改放兩個宣告，其餘由程式填：
+
+- `windows.<視窗>.staff`：`{post, x, y, ink}` —— 署名畫在哪、跟哪個職位走。
+- `windows.<視窗>.face.staff_post`：頭像跟哪個職位走（索引 ＝ 提督索引）。
+
+| 畫面 | 署名 | 數字 | 畫的人 |
+|---|---|---|---|
+| 船艦訂造報告 | (160,142) | 標題年月 ＋ 七列造艦數／部隊數 | `DeliveryPanel`（版面與月底接收報告**完全相同**，共用同一份） |
+| 次月份建造計劃 | (96,122) | 船艦建造費（靠右 320）| `ReportPanel`（`build-plan-panel.json`）；其餘數字仍由 `DrawBuildPlan` 畫 |
+
+兩張印的都是**這個月**的計劃（`Budget.ShipCost()` 照百分比切），
+不是次月份的預估。
+
+## 七列的單價兩個陣營不一樣
+
+帝國 `8 / 12 / 4 / 24 / 4 / 7 / 22`、同盟 `9 / 14 / 5 / 23 / 3 / 7 / 24`
+（`docs/re/62`）。只有運補艦兩邊同價。`rules.BuildPlan` 因此多一個
+`Faction` 欄位。
+
 ## 還沒做的
 
 `screen-account`（會計報告，收據 `account1`）是同一個視窗，署名、頭像與
 金額還是量好畫死的。那張目前只有帝國的收據，換陣營同樣會不對。
+
+命令階段那一批畫面的規格裡也還留著底板右側那幾行（`overlay_spec.py`
+量進去的），只是 `drawBoardPanels` 會蓋過去。同盟的字如果比帝國的短，
+底下會露出殘留——目前沒有那樣的收據，還沒驗。

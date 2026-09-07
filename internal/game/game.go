@@ -182,6 +182,9 @@ type Resources struct {
 	// ReportPanel 是主畫面會計報告那個視窗算出來的部分（署名、頭像、金額）。
 	ReportPanel *screen.ReportPanel
 
+	// BuildPlanPanel 是建造計劃那張的「船艦建造費」（同樣是 rules.Budget 算的）。
+	BuildPlanPanel *screen.ReportPanel
+
 	// ProductionPanel 是生產計劃那個視窗的（`docs/spec/004`）。
 	BudgetPanel     *screen.BudgetPanel
 	ProductionPanel *screen.ProductionPanel
@@ -481,7 +484,8 @@ func (g *Game) Click(x, y int) {
 	case StateShipOrder:
 		if g.res.ShipOrder.HitTest(x, y) == "build-plan" && g.res.BuildPlan != nil {
 			g.state = StateBuildPlan
-			g.plan = &rules.BuildPlan{Cost: g.monthReport.ShipCost(), Pct: g.pct}
+			p := g.thisPlan()
+			g.plan = &p
 		}
 	case StateBuildPlan:
 		if g.plan == nil {
@@ -775,8 +779,11 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		g.drawReport(fb)
 		return fb
 	case StateShipOrder:
-		fb, _ := screen.MainGame(g.res.ShipOrder, g.res.Font, g.playerStarMap(),
-			g.res.Faces, g.res.Cursor)
+		g.applyStaffFaces(g.res.ShipOrder)
+		fb, _ := screen.MainGameWithBoard(g.res.ShipOrder, g.res.Font, g.playerStarMap(),
+			g.res.Faces, g.res.Cursor, g.drawBoardPanels)
+		g.drawSpecStaff(fb, g.res.ShipOrder)
+		g.drawShipOrder(fb)
 		return fb
 	case StateEnding:
 		return screen.Ending(g.ending)
@@ -791,8 +798,13 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		g.drawBudget(fb)
 		return fb
 	case StateBuildPlan:
-		fb, _ := screen.MainGame(g.res.BuildPlan, g.res.Font, g.playerStarMap(),
-			g.res.Faces, g.res.Cursor)
+		g.applyStaffFaces(g.res.BuildPlan)
+		fb, _ := screen.MainGameWithBoard(g.res.BuildPlan, g.res.Font, g.playerStarMap(),
+			g.res.Faces, g.res.Cursor, g.drawBoardPanels)
+		g.drawSpecStaff(fb, g.res.BuildPlan)
+		if p := g.res.BuildPlanPanel; p != nil {
+			p.Draw(fb, g.res.Font, g.monthReport, nil, nil)
+		}
 		if g.plan != nil {
 			screen.DrawBuildPlan(g.res.BuildPlan, fb, g.res.Font, g.plan)
 		}
@@ -831,7 +843,7 @@ func (g *Game) monthEnd() {
 	collected := rules.MonthEnd(g.res.Stellar, g.res.Planets, g.res.Growth, g.faction)
 	budget := before + collected
 	// 2. 照百分比切給造船，各列只買得起整數艘，零頭退回；扣掉實際花掉的。
-	plan := rules.BuildPlan{Cost: budget * g.res.ShipPct / 100, Pct: g.pct}
+	plan := rules.BuildPlan{Cost: budget * g.res.ShipPct / 100, Pct: g.pct, Faction: g.faction}
 	paid := plan.Paid()
 	g.building = plan
 	g.military = budget - paid
@@ -860,7 +872,7 @@ func (g *Game) estimateTax() int {
 // drawBoardPanels 畫底板上那幾塊算出來的內容。命令階段那一批畫面共用
 // 同一塊底板，右側面板在每一張上都看得到（被疊上去的視窗蓋住的部分除外）。
 func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
-	if g.state == StateMainGame {
+	if g.state == StateMainGame || g.state == StateShipOrder || g.state == StateBuildPlan {
 		if c, _, ok := g.capitalSummary(); ok {
 			g.res.CapitalPanel.DrawOpening(fb, g.res.Font, g.res.RegionPanel, c, g.faction)
 		}
@@ -952,10 +964,16 @@ func (g *Game) drawBudget(fb *gfx.Framebuffer) {
 	}
 }
 
+// thisPlan 是**這個月**的船艦建造計劃：月底結算算出來的建造費照百分比
+// 切出來的那一份。訂造報告與建造計劃這兩張印的都是它。
+func (g *Game) thisPlan() rules.BuildPlan {
+	return rules.BuildPlan{Cost: g.monthReport.ShipCost(), Pct: g.pct, Faction: g.faction}
+}
+
 // nextPlan 是次月份的船艦建造計劃：預估軍事費照百分比切出來的那一份。
 func (g *Game) nextPlan() rules.BuildPlan {
 	b := rules.Budget{Treasury: g.military, Tax: g.taxTotal, ShipPct: g.res.ShipPct}
-	return rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct}
+	return rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct, Faction: g.faction}
 }
 
 // drawDelivery 畫月底船艦接收報告裡算出來的那幾塊。
@@ -990,6 +1008,56 @@ func (g *Game) drawReport(fb *gfx.Framebuffer) {
 			fb.Set(p.Face.X+x, p.Face.Y+y, img.Pix[y*img.W+x])
 		}
 	}
+}
+
+// applyStaffFaces 把規格宣告 `staff_post` 的頭像換成那位幕僚本人。
+//
+// 規格量自帝國的收據；同一張畫面換一個陣營署名的人就不同，頭像跟著換
+// （`docs/spec/011`）。要在畫視窗之前做——頭像是視窗自己畫的。
+func (g *Game) applyStaffFaces(spec *screen.MainGameSpec) {
+	if spec == nil {
+		return
+	}
+	for _, w := range spec.Windows {
+		if w == nil || w.Face == nil || w.Face.StaffPost == nil {
+			continue
+		}
+		if i := rules.StaffAdmiral(g.workRecord(), *w.Face.StaffPost, g.faction); i >= 0 {
+			w.Face.Index = i
+		}
+	}
+}
+
+// drawSpecStaff 把規格宣告的署名畫上去（姓名 ＋ 軍階）。
+func (g *Game) drawSpecStaff(fb *gfx.Framebuffer, spec *screen.MainGameSpec) {
+	if spec == nil {
+		return
+	}
+	for _, w := range spec.Windows {
+		if w == nil || w.Staff == nil {
+			continue
+		}
+		name, rank := g.staffAdmiral(w.Staff.Post)
+		if len(name) == 0 {
+			continue
+		}
+		screen.DrawStaffLine(fb, g.res.Font, w.Staff.X, w.Staff.Y, name, rank, w.Staff.Ink)
+	}
+}
+
+// drawShipOrder 畫「船艦訂造報告」裡算出來的部分：標題的年月與七列的
+// 造艦數、部隊數。版面與月底的接收報告**完全相同**，所以共用同一份
+// （`docs/internals/data/delivery-panel.json`）；署名與頭像走規格的
+// `staff`／`staff_post`。
+func (g *Game) drawShipOrder(fb *gfx.Framebuffer) {
+	if g.state != StateShipOrder || g.res.DeliveryPanel == nil {
+		return
+	}
+	c, _, ok := g.capitalSummary()
+	if !ok {
+		return
+	}
+	g.res.DeliveryPanel.Draw(fb, g.res.Font, c.Year, c.Month, g.thisPlan(), nil, nil)
 }
 
 // drawProduction 畫生產計劃的數字（`docs/spec/004`）。

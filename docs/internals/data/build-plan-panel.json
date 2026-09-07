@@ -1,0 +1,8 @@
+{
+ "note": "次月份船艦建造計劃視窗裡「船艦建造費」那個數字。其餘的數字由 internal/screen.DrawBuildPlan 畫，署名與頭像走畫面規格的 staff／staff_post。座標量自收據 plan1／planAlly，規格 docs/spec/011。",
+ "ink": 7,
+ "right": 320,
+ "rows": [
+  { "y": 162, "field": "ship_cost" }
+ ]
+}

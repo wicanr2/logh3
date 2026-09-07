@@ -12,25 +12,45 @@ const BuildPlanRows = 7
 // （`docs/re/12`）。先前以為一次 2%，那是同一組按壓時間剛好連發兩次。
 const BuildPlanStep = 1
 
-// UnitPrice 是各列的單價。**一列的預算只能買整數艘**，除不盡的零頭
-// 退回餘額——餘額那一列的金額就是這樣來的，不是「建造費 × 餘額百分比」。
+// UnitPrices 是各列的單價，**兩個陣營各一份**。一列的預算只能買整數艘，
+// 除不盡的零頭退回餘額——餘額那一列的金額就是這樣來的，不是
+// 「建造費 × 餘額百分比」。
 //
-// 量法：把百分比陣列直接寫進記憶體，一次只讓一列有預算，從餘額反推
-// 那一列實際花掉多少，再用兩個不同百分比取最大公因數夾出單價
-// （`docs/re/12`）。
-var UnitPrice = [BuildPlanRows]int{8, 12, 4, 24, 4, 7, 22}
+// 帝國那一份的量法：把百分比陣列直接寫進記憶體，一次只讓一列有預算，
+// 從餘額反推那一列實際花掉多少，再用兩個不同百分比取最大公因數夾出
+// 單價（`docs/re/12`）。
+//
+// 同盟那一份量自收據 `planAlly`（`docs/re/62`）：畫面上的金額 a 與船艦數
+// 給了 `⌊a/p⌋ ＝ 船艦數/10`，每一列都把 p 夾成唯一的整數。七列的
+// 「餘額 32」也與這一組相符——換成帝國那一組會算出 30。
+var UnitPrices = [2][BuildPlanRows]int{
+	{8, 12, 4, 24, 4, 7, 22},
+	{9, 14, 5, 23, 3, 7, 24},
+}
+
+// UnitPrice 回一個陣營某一列的單價；問不到就回 0。
+func UnitPrice(faction, row int) int {
+	if faction < 0 || faction >= len(UnitPrices) || row < 0 || row >= BuildPlanRows {
+		return 0
+	}
+	return UnitPrices[faction][row]
+}
 
 // ShipsPerUnit 是一個「部隊」要幾艘船。畫面上的「部隊」那一欄 ＝
-// 船艦數 ÷ 這個值，無條件捨去。
+// 船艦數 ÷ 這個值，無條件捨去。**兩個陣營共用一份**——`SHIP.DT?` 的
+// `+0x08` 依艦種 × 陣營查表，兩邊的值相同（`ship-types.json`）。
 //
-// ⚠ **只有第 0／2／4／5／6 列夾得夠緊，第 1／3 列還在區間裡。**
-// 量法見 `docs/re/11`。
+// ⚠ **每一列都還在區間裡，不是量到的定值。** 量法見 `docs/re/11`；
+// 同盟那張建造計劃把幾列收得更緊（`docs/re/62`），現在用的值仍在區間內。
 var ShipsPerUnit = [BuildPlanRows]int{3000, 3000, 4000, 2000, 3000, 3000, 1000}
 
 // BuildPlan 是次月份的船艦建造預算分配。
 type BuildPlan struct {
 	// Cost 是「船艦建造費」，各列的金額都由它按百分比算出來。
 	Cost int
+
+	// Faction 是玩家陣營：0 帝國、1 同盟。單價兩邊不一樣（見 UnitPrices）。
+	Faction int
 
 	// Pct 是各列分配到的百分比，總和不會超過 100。
 	Pct [BuildPlanRows]int
@@ -62,18 +82,20 @@ func (b *BuildPlan) Amount(row int) int {
 // 顯示的是 Amount，花掉的是 Spent，兩者的差額回到餘額。
 func (b *BuildPlan) Spent(row int) int {
 	a := b.Amount(row)
-	if row < 0 || row >= BuildPlanRows || UnitPrice[row] <= 0 {
+	price := UnitPrice(b.Faction, row)
+	if price <= 0 {
 		return a
 	}
-	return a - a%UnitPrice[row]
+	return a - a%price
 }
 
 // Ships 是某一列的「船艦數」欄。單價買到幾組，一組十艘。
 func (b *BuildPlan) Ships(row int) int {
-	if row < 0 || row >= BuildPlanRows || UnitPrice[row] <= 0 {
+	price := UnitPrice(b.Faction, row)
+	if price <= 0 {
 		return 0
 	}
-	return b.Amount(row) / UnitPrice[row] * 10
+	return b.Amount(row) / price * 10
 }
 
 // Units 是某一列的「部隊」欄 ＝ 船艦數 ÷ 一個部隊的艘數。

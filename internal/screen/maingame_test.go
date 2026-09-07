@@ -2,7 +2,6 @@ package screen
 
 import (
 	"fmt"
-	"sort"
 	"encoding/json"
 	"os"
 	"path/filepath"
@@ -24,14 +23,14 @@ import (
 // `TestSlotListMatchesOracle`；存進度（`save1e`）那條紅條跟著滑鼠走
 // （`docs/spec/010`），整張對拍在 `TestSaveBarMatchesOracle`；月初的會計報告
 // （`key1`）署名、頭像、金額與右側首都摘要都改成現算（`docs/spec/011`），
-// 整張對拍在 `internal/game` 的 `TestPlayerPathReachesGame`。
+// 整張對拍在 `internal/game` 的 `TestPlayerPathReachesGame`；船艦訂造報告
+// （`ship1`）與次月份建造計劃（`plan1`）同理——署名、頭像與數字都跟著
+// 陣營與局面走，整張對拍也在 `internal/game`。
 //
 // 這些畫面共用同一個結構（底板 ＋ 星域地圖 ＋ 疊上去的視窗），
 // 所以同一個繪製器換一份規格就能畫——差別只在文字、頭像與熱區。
 func TestMainGameMatchesOracle(t *testing.T) {
 	for _, c := range []struct{ spec, batch string }{
-		{"screen-ship-order", "ship1"},
-		{"screen-build-plan", "plan1"},
 		{"screen-budget-plan", "budget1"},
 		{"screen-admiral-list", "admirals1"},
 		{"screen-account", "account1"},
@@ -279,67 +278,6 @@ func TestBuildPlanNumbersRedrawIdentically(t *testing.T) {
 	if bad != 0 {
 		t.Fatalf("把開局的值原樣重畫，卻與原本差了 %d 個像素", bad)
 	}
-}
-
-// TestBuildPlanStatesMatchOriginal 拿改過記憶體的原版局面對拍：
-// 把同一組百分比餵給 remake，整張 640×480 必須逐位元組相同。
-//
-// 這些局面手點到不了（例如七列各 1%、某一列吃滿 100%），是用 `-poke`
-// 把百分比陣列直接寫進原版記憶體造出來的（`docs/re/11`）。點擊序列與
-// plan1 完全一樣，所以游標位置也一樣，可以整張比。
-//
-// 清單在 `workplace/explore/manifest.json`——那是一次性證據，
-// 不在 Git 裡；缺檔就跳過，不做代用品。
-func TestBuildPlanStatesMatchOriginal(t *testing.T) {
-	root := "../.."
-	dir := filepath.Join(root, "workplace/explore")
-	raw, err := os.ReadFile(filepath.Join(dir, "manifest.json"))
-	if err != nil {
-		t.Skip("缺 workplace/explore/manifest.json，跳過")
-	}
-	var mf struct {
-		Cost   int                            `json:"cost"`
-		States map[string][rules.BuildPlanRows]int `json:"states"`
-	}
-	if err := json.Unmarshal(raw, &mf); err != nil {
-		t.Fatal(err)
-	}
-	s, err := LoadMainGameSpec(filepath.Join(root, "docs/internals/data/screen-build-plan.json"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	fnt, mapImg, faces, cur := gameScreenAssets(t)
-	names := make([]string, 0, len(mf.States))
-	for n := range mf.States {
-		names = append(names, n)
-	}
-	sort.Strings(names)
-	checked := 0
-	for _, name := range names {
-		want, err := os.ReadFile(filepath.Join(dir, name))
-		if err != nil {
-			t.Skipf("缺 %s，跳過", name)
-		}
-		fb, _ := MainGame(s, fnt, mapImg, faces, cur)
-		DrawBuildPlan(s, fb, fnt, &rules.BuildPlan{Cost: mf.Cost, Pct: mf.States[name]})
-		if len(want) != len(fb.Pix) {
-			t.Fatalf("%s 是 %d bytes，畫布是 %d", name, len(want), len(fb.Pix))
-		}
-		bad, fx, fy := 0, -1, -1
-		for i := range want {
-			if want[i] != fb.Pix[i] {
-				if bad == 0 {
-					fx, fy = i%gfx.Width, i/gfx.Width
-				}
-				bad++
-			}
-		}
-		if bad != 0 {
-			t.Errorf("%s：差 %d / %d 像素，第一處在 (%d,%d)", name, bad, len(want), fx, fy)
-		}
-		checked++
-	}
-	t.Logf("同狀態對拍 %d 個局面，各 %d 像素", checked, gfx.Width*gfx.Height)
 }
 
 // budgetState 回這兩張畫面當下的財政狀態（量到的，`docs/spec/003`）。

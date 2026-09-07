@@ -26,7 +26,7 @@
 | 4b | 防拷問答（輸入中的數字）| `same-state` | 0 | 收據 `typed138`；[`docs/re/56`](docs/re/56-typed-digits-are-full-width.md) | 打進去的數字是 `GRAPH.IMG` 的**全形**數字（`A2AF` 起），不是半形——先前搜不到是因為只試了半形的打包方式 |
 | 4 | 防拷問答 | `same-state` | 0 | [`docs/playtest/003-copy-protection.md`](docs/playtest/003-copy-protection.md) | 全畫面 640×480 逐位元組一致（框、頭像、三行字、輸入框） |
 | 5 | 遊戲主畫面（796 年 1 月）| `same-state` | 0 | [`docs/playtest/004-main-game.md`](docs/playtest/004-main-game.md) | 全畫面逐位元組一致；地圖、頭像、文字全部從原版檔案重建 |
-| 5a | **同盟開局**（主選單第 1 列 → 防拷 → 月初會計報告）| `same-state` | 0 | 收據 `cbAlly`／`keyAlly`；[`docs/spec/011`](docs/spec/011-opening-report.md)、[`docs/re/61`](docs/re/61-work-staff-is-faction-pairs.md) | 兩張整張 640×480 逐位元組一致。署名、頭像、五個金額、右側首都摘要與星圖的首都特別色都跟著陣營走 |
+| 5a | **同盟開局**（主選單第 1 列 → 防拷 → 月初會計報告 → 訂造報告 → 建造計劃 → 戰略地圖）| `same-state` | 0 | 收據 `cbAlly`／`keyAlly`／`shipAlly`／`planAlly`／`main1eAlly`；[`docs/spec/011`](docs/spec/011-opening-report.md)、[`docs/re/61`](docs/re/61-work-staff-is-faction-pairs.md)、[`docs/re/62`](docs/re/62-unit-prices-differ-by-faction.md) | 五張整張 640×480 逐位元組一致。署名、頭像、金額、右側首都摘要、星圖的首都特別色與**七列的船艦單價**都跟著陣營走 |
 | 5b | 船艦訂造報告（796 年 1 月）| `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
 | 5c | 次月份船艦建造計劃 | `same-state` | 0 | 收據 `plan1` | 由訂造報告熱區 (432,300) 點進去 |
 | 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/spec/003`](docs/spec/003-budget-panel.md) | 由主畫面熱區 (432,300) 點進去；十個數字**從財政狀態算出來**，不是量好畫死的 |

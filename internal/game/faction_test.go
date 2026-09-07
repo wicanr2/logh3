@@ -28,4 +28,39 @@ func TestAllianceStartMatchesOracle(t *testing.T) {
 		t.Fatalf("陣營是 %d，預期 1（同盟）", g.faction)
 	}
 	matches(t, g, "keyAlly")
+
+	// 右鍵兩下關掉報告，滑鼠搬到與收據同一個地方（`main1eAlly` 的
+	// `-mouse-at 600,300`，畫面座標 (600,340)）。
+	g.RightClick(300, 240)
+	g.RightClick(300, 240)
+	if g.State() != StateCommandPhase {
+		t.Fatalf("右鍵兩下之後在 %v，不是戰略地圖介面", g.State())
+	}
+	g.MoveMouse(600, 340)
+	matches(t, g, "main1eAlly")
+}
+
+// TestAllianceBuildPlanMatchesOracle 同盟的船艦訂造報告與次月份建造計劃。
+//
+// 七列的單價**兩個陣營不一樣**（`docs/re/62`）：畫面上的金額與船艦數
+// 把每一列的單價各夾成唯一的整數，同盟是 9／14／5／23／3／7／24。
+func TestAllianceBuildPlanMatchesOracle(t *testing.T) {
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 230)
+	for _, c := range []byte{'1', '3', '8', '\r'} {
+		g.Key(c)
+	}
+	g.Click(448, 330)
+	if g.State() != StateShipOrder {
+		t.Fatalf("點了主畫面的熱區之後在 %v", g.State())
+	}
+	matches(t, g, "shipAlly")
+	g.Click(448, 310)
+	if g.State() != StateBuildPlan {
+		t.Fatalf("點了訂造報告的熱區之後在 %v", g.State())
+	}
+	matches(t, g, "planAlly")
 }
