@@ -24,8 +24,22 @@ func TestDiffAgainstOracle(t *testing.T) {
 		t.Skip("設 LOGH3_DIFF=<批次>:<x,y> <x,y>… 才跑")
 	}
 	batch, clicks, _ := strings.Cut(spec, ":")
+	if n, rest, ok := strings.Cut(clicks, "x"); ok {
+		// "10x544,125 560,125 | 440,368" ＝ 前面那組重複 N 次
+		times, _ := strconv.Atoi(n)
+		head, tail, _ := strings.Cut(rest, "|")
+		clicks = strings.TrimSpace(strings.Repeat(head+" ", times)) + " " + tail
+	}
 	g := reachCommandPhase(t)
 	for _, c := range strings.Fields(clicks) {
+		if strings.HasPrefix(c, "@") {
+			// @x,y ＝ 只移動滑鼠，不按下去
+			x, y, _ := strings.Cut(c[1:], ",")
+			mx, _ := strconv.Atoi(x)
+			my, _ := strconv.Atoi(y)
+			g.MoveMouse(mx, my)
+			continue
+		}
 		x, y, ok := strings.Cut(c, ",")
 		if !ok {
 			t.Fatalf("點擊要寫成 x,y：%q", c)

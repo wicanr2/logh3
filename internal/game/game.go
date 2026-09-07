@@ -690,6 +690,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	default:
 		if spec := g.commandSpec(g.state); spec != nil {
 			g.setListRows(spec)
+			g.liveCursor(spec)
 			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
 			// （`docs/spec/002`）。
 			fb, _ := screen.MainGameWithBoard(spec, g.res.Font, g.starMapFor(spec),
@@ -752,6 +753,23 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 		return
 	}
 	g.drawCapitalPanel(fb)
+}
+
+// liveCursor 讓戰略地圖介面的游標跟著滑鼠跑。
+//
+// 規格裡的 `mouse` 記的是**量那張收據時**滑鼠停在哪，對疊上去的那些畫面
+// 是對的（開畫面的那一下點在哪，游標就停在哪）；但地圖介面本身是玩家
+// 待最久的地方，滑鼠愛停哪就停哪。按一次「實行」回到地圖，原版的游標
+// 在剛剛點「實行」的位置，remake 卻畫在收據當初 `-mouse-at` 搬過去的
+// (600,300)——兩隻箭頭，223 個像素。
+//
+// 只對地圖介面這樣做：疊上去那些畫面的規格還帶著游標的裁切範圍與
+// 「游標之後再畫一次」的補丁，那幾件事綁著當初那個位置，還沒模型化。
+func (g *Game) liveCursor(spec *screen.MainGameSpec) {
+	if g.state != StateCommandPhase || spec.Mouse == nil || g.mouseY < 0 {
+		return
+	}
+	spec.Mouse.X, spec.Mouse.Y = g.mouseX, g.mouseY-mouseDY
 }
 
 // drawSlotList 畫存檔畫面那 11 列（`docs/spec/008`）。

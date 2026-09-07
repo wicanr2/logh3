@@ -193,6 +193,10 @@ func reachCommandPhase(t *testing.T) *Game {
 	if g.State() != StateCommandPhase {
 		t.Fatalf("右鍵兩下之後在 %v，不是戰略地圖介面", g.State())
 	}
+	// 收據 `main1e` 是用 `-mouse-at` 把滑鼠搬到 (600,300) 之後才擷取的
+	// （滑鼠座標；畫面座標 (600,340)）。地圖介面的游標跟著滑鼠跑，
+	// 所以要對得上就得搬到同一個地方。
+	g.MoveMouse(600, 340)
 	return g
 }
 
@@ -270,6 +274,28 @@ func TestExecuteAdvancesThreeDays(t *testing.T) {
 	}
 	if _, m, d := g.Date(); m != 2 || d != 1 {
 		t.Fatalf("第十次實行之後是 %d月%d日，預期 2月1日", m, d)
+	}
+}
+
+// TestExecuteTurnMatchesOracle 按一次「實行」之後**整張畫面**要與原版相同。
+//
+// 這一張逼出了「游標跟不跟著滑鼠」：地圖介面的規格記著量收據那一刻
+// `-mouse-at` 搬過去的位置，按完實行回到地圖，原版的箭頭在剛剛點下去的
+// 地方，remake 卻還畫在收據那一點——畫面上是兩隻箭頭，223 個像素。
+//
+// 三份收據是同一個狀態的三個步數（260M／320M／450M），拿來確認畫面在
+// 那個區間內是穩定的，不是擷取到畫到一半。
+func TestExecuteTurnMatchesOracle(t *testing.T) {
+	for _, batch := range []string{"turn260", "turn320", "turn450"} {
+		t.Run(batch, func(t *testing.T) {
+			g := reachCommandPhase(t)
+			g.Click(544, 125)
+			g.Click(560, 125)
+			if g.State() != StateCommandPhase {
+				t.Fatalf("實行之後在 %v", g.State())
+			}
+			matches(t, g, batch)
+		})
 	}
 }
 
