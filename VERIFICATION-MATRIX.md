@@ -95,3 +95,20 @@
 | 走完開場 → 主選單 → 防拷 → 遊戲本體 | 通過（[`docs/playtest/002`](docs/playtest/002-into-the-game.md)，兩次逐位元組一致）|
 | 未實作的 BIOS／DOS 服務 | 0 種 |
 | SingleStepTests | 未在本專案重跑（語料未下載）|
+
+## 規則
+
+只有拿得出「原版實測值當預期值」的回歸測試才算通過。
+
+| 規則 | 狀態 | 證據 |
+|---|---|---|
+| 船艦建造預算分配（左欄 +2%、右欄 −2%、金額 ＝ 建造費 × 百分比捨去）| 通過 | [`docs/re/11`](docs/re/11-build-plan-rest-amount.md)；34 個 `-poke` 局面 |
+| 預算計劃三條錢的公式 | 通過 | [`docs/re/12`](docs/re/12-budget-plan-and-buttons.md) |
+| 星域擁有者（全屬同一方才算，混雜就是無主）| 通過 | [`docs/re/17`](docs/re/17-star-region-owner.md)；六個星域 |
+| 星域防衛力 ＝ 該星域行星 `+0x14` 相加 | 通過 | [`docs/re/23`](docs/re/23-region-panel-fields.md)；六個星域對執行期 `+0x20` |
+| 行星 `n/m` ＝ 玩家陣營行星數 / 總數 | 通過 | [`docs/re/23`](docs/re/23-region-panel-fields.md)；五個星域對畫面 |
+| 徵稅額 ＝ 經濟力 × 稅率（捨去）| 通過 | [`docs/re/22`](docs/re/22-region-panel-and-month-rollover.md)；796/1 與 796/2 |
+| 一次「實行」推進三天；十回合換月 | 通過 | [`docs/re/20`](docs/re/20-execute-advances-three-days.md)、[`docs/re/22`](docs/re/22-region-panel-and-month-rollover.md) |
+| 月底交付「建造中」的船艦 | 已量到、未實作 | [`docs/re/21`](docs/re/21-month-end-ship-delivery.md) |
+| 治安 | **未解** | [`docs/re/23`](docs/re/23-region-panel-fields.md) 列了五條排除掉的路 |
+| 經濟力每月 +1002 的算式 | **未解** | [`docs/re/23`](docs/re/23-region-panel-fields.md) |
