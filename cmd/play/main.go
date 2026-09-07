@@ -224,11 +224,16 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	growth, err := rules.LoadGrowthTable(filepath.Join(data, "growth-table.json"))
+	if err != nil {
+		return nil, err
+	}
+	game.Bootstrap796_01(stellar, planets, growth)
 	return &game.Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
 		Screens: screens, StarMaps: maps, Regions: regions,
-		RegionPanel: panel, CapitalPanel: capital, Stellar: stellar, Planets: planets,
+		RegionPanel: panel, CapitalPanel: capital, Stellar: stellar, Planets: planets, Growth: growth,
 		Military: 45592, TaxTotal: 10341}, nil
 }
 

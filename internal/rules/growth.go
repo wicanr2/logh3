@@ -96,3 +96,33 @@ func (p *Planets) MonthEndRegion(t *GrowthTable, region, taxPerMille int) (tax, 
 	}
 	return tax, economy
 }
+
+// SetRegionEconomy 寫回星域記錄的經濟力。
+func SetRegionEconomy(record []byte, v int) {
+	if len(record) < regionEconomy+4 {
+		return
+	}
+	record[regionEconomy] = byte(v)
+	record[regionEconomy+1] = byte(v >> 8)
+	record[regionEconomy+2] = byte(v >> 16)
+	record[regionEconomy+3] = byte(v >> 24)
+}
+
+// MonthEnd 跑一次完整的月底結算：每個星域逐行星成長與收稅，
+// 經濟力寫回星域記錄，稅率抄一份到 `+0x27`，回玩家陣營收到的總稅收。
+//
+// 順序照 `docs/re/26` 量到的：總稅收歸零 → 逐星域累加 → 軍事費 += 總稅收
+// （加錢那一步由呼叫端做）。
+func MonthEnd(records []byte, p *Planets, t *GrowthTable, faction int) int {
+	total := 0
+	for i := 0; i*RegionRecord+RegionRecord <= len(records); i++ {
+		rec := records[i*RegionRecord : (i+1)*RegionRecord]
+		tax, economy := p.MonthEndRegion(t, i, RegionTaxRate(rec))
+		SetRegionEconomy(rec, economy)
+		rec[0x27] = rec[regionTaxRate]
+		if p.RegionOwner(i) == faction {
+			total += tax
+		}
+	}
+	return total
+}

@@ -171,6 +171,9 @@ type Resources struct {
 	Stellar []byte
 	Planets *rules.Planets
 
+	// Growth 是行星成長率的階梯表（`docs/re/33`），月底結算要用。
+	Growth *rules.GrowthTable
+
 	// Faction 是玩家陣營：0 帝國、1 同盟。
 	Faction int
 }
@@ -338,6 +341,10 @@ func (g *Game) Click(x, y int) {
 				if item == StateExecute {
 					// 一次「實行」推進一個回合 ＝ 三天（`docs/re/20`、`docs/re/25`）。
 					g.turn++
+					// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）。
+					if g.turn%rules.TurnsPerMonth == 0 {
+						g.monthEnd()
+					}
 					g.state = StateCommandPhase
 					return
 				}
@@ -462,6 +469,18 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	}
 }
 
+// monthEnd 跑月底結算：逐行星成長與收稅，軍事費 += 總稅收。
+//
+// **還沒做的**：船艦交付與扣款（`docs/re/21`）、未安定度與成長率的重算
+// （`docs/re/33` 只解出骨架）。
+func (g *Game) monthEnd() {
+	if g.res.Growth == nil || g.res.Planets == nil || len(g.res.Stellar) == 0 {
+		return
+	}
+	g.taxTotal = rules.MonthEnd(g.res.Stellar, g.res.Planets, g.res.Growth, g.res.Faction)
+	g.military += g.taxTotal
+}
+
 // drawPanels 把兩塊「從狀態算出來」的面板畫上去：右側（規格 002）
 // 與左下角（規格 001）。**只有戰略地圖介面畫**——疊在上面的那幾張
 // 會把這兩塊改寫成自己的內容，它們的規格裡已經有了。
@@ -528,6 +547,10 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 
 // Turn 回目前是第幾個回合（開局 0）。
 func (g *Game) Turn() int { return g.turn }
+
+// Military 回手上的軍事費，TaxTotal 回這個月的總稅收。
+func (g *Game) Military() int { return g.military }
+func (g *Game) TaxTotal() int { return g.taxTotal }
 
 // Date 回遊戲內的日期。紀元年 796 是原版帝國戰役的開局。
 func (g *Game) Date() (year, month, day int) { return rules.Date(g.turn, 796) }

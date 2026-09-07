@@ -105,3 +105,19 @@ func LoadRegionRecords(stellar []byte, measuredPath string) ([]byte, error) {
 	}
 	return out, nil
 }
+
+// Bootstrap796_01 把行星表推進到 796 年 1 月的狀態。
+//
+// 原版開機就跑一次月底結算——載入時算出來的經濟力（Σ 行星 `+0x1A`）是
+// 81300，畫面上的 82302 是那一次結算之後的值（`docs/re/33`）。
+// 所以 remake 也照跑一次，行星表才會停在正確的起點；星域記錄的經濟力
+// 隨後用量到的值蓋回去（別人的星域在那一個月改過稅率，算出來會偏低）。
+func Bootstrap796_01(records []byte, p *rules.Planets, t *rules.GrowthTable) {
+	if p == nil || t == nil {
+		return
+	}
+	for i := 0; i*rules.RegionRecord+rules.RegionRecord <= len(records); i++ {
+		rec := records[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		p.MonthEndRegion(t, i, rules.RegionTaxRate(rec))
+	}
+}
