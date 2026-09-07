@@ -1,8 +1,8 @@
-# SPEC 011 — 疊在戰略底板上那三張裡跟局面走的內容
+# SPEC 011 — 疊在戰略底板上那幾張裡跟局面走的內容
 
-狀態：**CONFORMED**（`key1`／`ship1`／`plan1`／`keyAlly`／`shipAlly`／`planAlly`
-六張整張 640×480 逐位元組相同）
-證據：`docs/re/61`、`docs/re/62`
+狀態：**CONFORMED**（帝國與同盟各一整條玩家路徑，每一張整張 640×480
+逐位元組相同：開局三張 ＋ 命令階段十二張）
+證據：`docs/re/61`、`docs/re/62`、`docs/re/63`、`docs/re/64`
 資料：[`docs/internals/data/report-panel.json`](../internals/data/report-panel.json)、
 [`docs/internals/data/capital-panel.json`](../internals/data/capital-panel.json)
 執行器：dosgolem-logh3 `2833ec9`
@@ -87,6 +87,19 @@
 帝國 `8 / 12 / 4 / 24 / 4 / 7 / 22`、同盟 `9 / 14 / 5 / 23 / 3 / 7 / 24`
 （`docs/re/62`）。只有運補艦兩邊同價。`rules.BuildPlan` 因此多一個
 `Faction` 欄位。
+
+## 命令階段那十二張
+
+同一套機制往下套（逐項證據在 `docs/re/64`）：
+
+| 宣告 | 用在哪 |
+|---|---|
+| `windows.<視窗>.staff` `{post, x, y, ink}` | 情報收集、徵稅計劃、生產計劃、次月份預算計劃、船艦訂造報告、建造計劃 |
+| `windows.<視窗>.face.staff_post` | 同上 |
+| `windows.<視窗>.faction_text` | 貨幣單位（帝國「億帝國馬克」／同盟「億帝納」）|
+
+不進規格、由程式現算的還有：提督清單的「自己人／敵將」、星系清單的列
+順序（兩份表）、情報報告與星系資料那兩張地圖的著色、左下角的星域摘要。
 
 ## 還沒做的
 
