@@ -157,7 +157,7 @@ func checkGameScreen(t *testing.T, specName, batch string) {
 	// 底層是命令階段那張的話，右側面板也是算出來的（`docs/spec/002`）——
 	// 要畫在底板之後、疊上去的視窗之前。
 	var afterBoard func(*gfx.Framebuffer)
-	if specName == "screen-tax-plan" {
+	if specName == "screen-tax-plan" || specName == "screen-production-plan" {
 		planets, cap, region := capitalAssets(t)
 		afterBoard = func(fb *gfx.Framebuffer) {
 			rec := panelRecord(t, 0, -1, 0, 0)
@@ -169,6 +169,18 @@ func checkGameScreen(t *testing.T, specName, batch string) {
 		}
 	}
 	fb, missing := MainGameWithBoard(s, fnt, mapImg, faces, cur, afterBoard)
+	// 生產計劃的數字是算出來的（`docs/spec/004`）。
+	if specName == "screen-production-plan" {
+		pp, err := LoadProductionPanel(filepath.Join(root, "docs/internals/data/production-panel.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		// 次月份的計劃：預估軍事費 55933 的 25%。建造中那一欄是上一份
+		// 計劃（60741 的 25%）買到的船，月底交付（`docs/re/21`）。
+		pp.Draw(fb, fnt,
+			rules.BuildPlan{Cost: 13983, Pct: rules.OpeningPct},
+			rules.BuildPlan{Cost: 15185, Pct: rules.OpeningPct})
+	}
 	// 預算計劃／徵稅計劃的數字是算出來的（`docs/spec/003`），規格裡沒有。
 	if t2, b2, ok := budgetState(specName); ok {
 		bp, err := LoadBudgetPanel(filepath.Join(root, "docs/internals/data/budget-panel.json"))

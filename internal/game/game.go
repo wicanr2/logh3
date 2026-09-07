@@ -161,8 +161,10 @@ type Resources struct {
 	RegionPanel  *screen.RegionPanel
 	CapitalPanel *screen.CapitalPanel
 
-	// BudgetPanel 是預算計劃／徵稅計劃那個視窗的數字版面（`docs/spec/003`）。
-	BudgetPanel *screen.BudgetPanel
+	// BudgetPanel 是預算計劃／徵稅計劃那個視窗的數字版面（`docs/spec/003`），
+	// ProductionPanel 是生產計劃那個視窗的（`docs/spec/004`）。
+	BudgetPanel     *screen.BudgetPanel
+	ProductionPanel *screen.ProductionPanel
 
 	// ShipPct 是切給船艦建造費的百分比（開局 25%）。
 	ShipPct int
@@ -225,6 +227,10 @@ type Game struct {
 	// monthReport 是月初報告那張上的預算。
 	treasury    rules.Treasury
 	monthReport rules.Budget
+
+	// building 是**上一次結算撥款出去**的那份計劃：買到的船這個月還在造，
+	// 下個月底交付（`docs/re/21`）。生產計劃畫面的「建造中」就是它。
+	building rules.BuildPlan
 
 	// 目前選中的星域。左下角那塊寫的就是它。**還沒選過是 −1**，
 	// 那塊是空的——收據 `main1e` 就是這個狀態（關月初報告的那兩下右鍵
@@ -480,6 +486,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 				g.res.Faces, g.res.Cursor, g.drawBoardPanels)
 			g.drawPanels(fb)
 			g.drawBudget(fb)
+			g.drawProduction(fb)
 			return fb
 		}
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.highlight,
@@ -503,6 +510,7 @@ func (g *Game) monthEnd() {
 	// 2. 照百分比切給造船，各列只買得起整數艘，零頭退回；扣掉實際花掉的。
 	plan := rules.BuildPlan{Cost: budget * g.res.ShipPct / 100, Pct: rules.OpeningPct}
 	paid := plan.Paid()
+	g.building = plan
 	g.military = budget - paid
 	g.treasury = rules.Treasury{Budget: budget, ShipPaid: paid}
 	g.monthReport = rules.Budget{Treasury: before, Tax: collected, ShipPct: g.res.ShipPct}
@@ -548,6 +556,20 @@ func (g *Game) drawBudget(fb *gfx.Framebuffer) {
 		// 月初報告那一張：本月份那一欄還沒有數字（全 0）。
 		g.res.BudgetPanel.Draw(fb, g.res.Font, rules.Treasury{}, g.monthReport)
 	}
+}
+
+// nextPlan 是次月份的船艦建造計劃：預估軍事費照百分比切出來的那一份。
+func (g *Game) nextPlan() rules.BuildPlan {
+	b := rules.Budget{Treasury: g.military, Tax: g.taxTotal, ShipPct: g.res.ShipPct}
+	return rules.BuildPlan{Cost: b.ShipCost(), Pct: rules.OpeningPct}
+}
+
+// drawProduction 畫生產計劃的數字（`docs/spec/004`）。
+func (g *Game) drawProduction(fb *gfx.Framebuffer) {
+	if g.state != StateProductionPlan || g.res.ProductionPanel == nil {
+		return
+	}
+	g.res.ProductionPanel.Draw(fb, g.res.Font, g.nextPlan(), g.building)
 }
 
 // drawPanels 把兩塊「從狀態算出來」的面板畫上去：右側（規格 002）

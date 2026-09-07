@@ -28,7 +28,7 @@
 | 5l | 一覽表：艦隊資料／提督資料／敵將資料 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `lst1e`／`lst2e`／`lst3e`；三張共用同一份清單版面 |
 | 5k | 遊戲設定 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `settings1e`；標籤是**粗體＋陰影**畫的（[`docs/internals/25`](docs/internals/25-text-rendering.md)），不是另一套字型 |
 | 5m | 徵稅計劃 → 次月份預算計劃 | `same-state` | 0 | 收據 `tax1e`；[`docs/spec/003`](docs/spec/003-budget-panel.md) | 與 `budget1` 同一個視窗版面，底下換成命令階段底板；數字與右側面板都是算出來的 |
-| 5n | 生產計劃 → 次月份船艦建造計劃 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `prod1e`（＋`prod1i` 補游標蓋住的那一格）|
+| 5n | 生產計劃 → 次月份船艦建造計劃 | `same-state` | 0 | 收據 `prod1e`；[`docs/spec/004`](docs/spec/004-production-panel.md) | 44 個數字**全部從 `rules.BuildPlan` 算**，含「建造中」那兩欄（上一份計劃買到的船）|
 | 5o | 取進度 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `load1e`；8 個未使用欄位（色 8）＋ 三個劇本 |
 | 5p | 存進度 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `save1e`；滑鼠所在那一列是紅色反白條，刷的時候把游標蓋掉 |
 | 5q | 出擊命令 → 待命中提督資料 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `sortie1e`；清單十七列，左下角那塊被重寫成星系摘要 |
@@ -114,7 +114,7 @@
 | 月底軍事費的完整算式 | **未解** | [`docs/re/26`](docs/re/26-tax-and-treasury.md)；`軍事費 += 總稅收` 已確認，扣款那一步未追 |
 | 星域相鄰圖與原版路徑表（32×32 中點矩陣 ×2）| 通過 | [`docs/internals/26`](docs/internals/26-star-region-graph.md)；1024 對逐步驗證 |
 | 曆法：一回合三天、一個月十回合、一年十二個月 | 通過 | [`docs/re/25`](docs/re/25-calendar.md)；`ds:8F18` 回合計數器對三份記憶體傾印＋三張畫面，另加 `-poke` 成第 118 回合 → 796/12/25（`docs/re/32`）|
-| 月底交付「建造中」的船艦 | 已量到、未實作 | [`docs/re/21`](docs/re/21-month-end-ship-delivery.md) |
+| 月底交付「建造中」的船艦 | 數量算得出來（`docs/spec/004`）；交付之後放到哪裡未定 | [`docs/re/21`](docs/re/21-month-end-ship-delivery.md) |
 | 治安 ＝ (200 − 未安定度) / 2 | 通過 | [`docs/re/24`](docs/re/24-security-formula.md)；六個帝國星域 ＋ 四個 `-poke` 局面（`docs/re/31`）|
 | 治安數字的四段顏色（`<=40` 色 6、`<=80` 色 7、`<=120` 色 5、其餘色 2）| 通過 | [`docs/re/31`](docs/re/31-region-panel-layout.md)；40/41 那一對把門檻釘死 |
 | 艦隊 `a：b` ＝ 記錄的 `+0x28`／`+0x2B`（帝國玩家）| 通過 | [`docs/re/31`](docs/re/31-region-panel-layout.md)；`-poke` 成 12：99 |

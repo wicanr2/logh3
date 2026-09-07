@@ -258,7 +258,8 @@ spec['hotspots'] = []
 # 預算計劃／徵稅計劃那個視窗裡的**數字**不進規格：它們是從財政狀態算出來的
 # （規格 `docs/spec/003`，畫的人是 `internal/screen.BudgetPanel`）。
 # 量好畫死的話換一個月份就不對——`budget1` 與 `tax1e` 每一格都不一樣。
-COMPUTED_MONEY = {'screen-budget-plan': 'report', 'screen-tax-plan': 'overlay'}
+COMPUTED_MONEY = {'screen-budget-plan': 'report', 'screen-tax-plan': 'overlay',
+                  'screen-production-plan': 'overlay'}
 COMPUTED_MONEY_ROWS = (162, 182, 202, 222, 242, 262, 282, 302, 322, 342)
 _wname = COMPUTED_MONEY.get(out_name)
 if _wname and _wname in spec['windows']:

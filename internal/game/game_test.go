@@ -116,6 +116,10 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	production, err := screen.LoadProductionPanel(filepath.Join(root, "docs/internals/data/production-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	stellarFile, err := os.ReadFile(filepath.Join(orig, "STELLAR.DTA"))
 	if err != nil {
 		t.Fatal(err)
@@ -141,7 +145,7 @@ func load(t *testing.T) *Resources {
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
-		BudgetPanel: budget, Stellar: stellar, Planets: planets, Growth: growth,
+		BudgetPanel: budget, ProductionPanel: production, Stellar: stellar, Planets: planets, Growth: growth,
 		StartMilitary: 50000, ShipPct: 25}
 }
 

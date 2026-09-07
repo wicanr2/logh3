@@ -1,0 +1,16 @@
+{
+ "note": "生產計劃（＝次月份船艦建造計劃）那個視窗裡的數字位置。量自 screen-production-plan 的規格 JSON，規格 docs/spec/004。七列的百分比、金額、船艦數、部隊都由 rules.BuildPlan 算；建造中那兩欄是上一份計劃買到的船。",
+ "window": {"x": 80, "y": 60, "w": 480, "h": 340},
+ "ink": 7,
+ "cost": {"y": 162, "right": 320},
+ "rows_y": [202, 222, 242, 262, 282, 302, 322],
+ "columns": {
+  "pct": 192,
+  "amount": 320,
+  "ships": 384,
+  "units": 432,
+  "building": 496,
+  "building_units": 544
+ },
+ "rest": {"y": 342, "pct": 192, "amount": 320}
+}
