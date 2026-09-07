@@ -43,7 +43,91 @@ const (
 
 	// StateEnding 是結局畫面（一張 `.VO5` CG 鋪滿畫布）。
 	StateEnding
+
+	// 以下是命令階段：月初報告被右鍵關掉之後露出來的戰略地圖介面
+	// （`docs/re/16`）。命令列三格各拉出一張下拉選單，選單項目再開一張畫面。
+
+	// StateCommandPhase 是戰略地圖介面本身。
+	StateCommandPhase
+
+	// StateCmdMenu／StateListMenu／StateSysMenu 是三張下拉選單開著的樣子。
+	StateCmdMenu
+	StateListMenu
+	StateSysMenu
+
+	// 戰略命令的四項。
+	StateStandbyAdmirals
+	StateInfo
+	StateTaxPlan
+	StateProductionPlan
+
+	// 一覽表的四項。
+	StateStarList
+	StateFleetList
+	StateAdmiralListView
+	StateEnemyList
+
+	// 系統指令的五項。第一項「實行」不是畫面，是推進日期的動作。
+	StateExecute
+	StateLoadGame
+	StateSaveGame
+	StateSettings
+	StateQuitConfirm
 )
+
+// screenSpecName 是每個命令階段狀態對應的規格名（`docs/internals/data/`）。
+// 「實行」不在裡面——它不開畫面。
+var screenSpecName = map[State]string{
+	StateCommandPhase:    "screen-command-phase",
+	StateCmdMenu:         "screen-cmd-menu",
+	StateListMenu:        "screen-list-menu",
+	StateSysMenu:         "screen-sys-menu",
+	StateStandbyAdmirals: "screen-standby-admirals",
+	StateInfo:            "screen-info",
+	StateTaxPlan:         "screen-tax-plan",
+	StateProductionPlan:  "screen-production-plan",
+	StateStarList:        "screen-star-list",
+	StateFleetList:       "screen-fleet-list",
+	StateAdmiralListView: "screen-admiral-list-view",
+	StateEnemyList:       "screen-enemy-list",
+	StateLoadGame:        "screen-load-game",
+	StateSaveGame:        "screen-save-game",
+	StateSettings:        "screen-settings",
+	StateQuitConfirm:     "screen-quit-confirm",
+}
+
+// barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
+const barRow, rowHeight = 120, 20
+
+// commandBar 是命令列三格與它們拉出來的選單（`docs/internals/23`、
+// `data/menu-hotspots.json`）。
+//
+// 選單項目與母項目**同一個 x**，寬度是該選單裡最長那個標籤的字數 × 16，
+// 四（五）個項目共用；第 n 項的 y 是 `barRow + 20n`——所以**第 0 項與命令列
+// 那一格重疊**。實測選單開著的時候是選單項目收下那一點。
+var commandBar = []struct {
+	X, W  int
+	Menu  State
+	ItemW int
+	Items []State
+}{
+	{X: 352, W: 64, Menu: StateCmdMenu, ItemW: 64, Items: []State{
+		StateStandbyAdmirals, StateInfo, StateTaxPlan, StateProductionPlan}},
+	{X: 448, W: 64, Menu: StateListMenu, ItemW: 64, Items: []State{
+		StateStarList, StateFleetList, StateAdmiralListView, StateEnemyList}},
+	{X: 544, W: 64, Menu: StateSysMenu, ItemW: 48, Items: []State{
+		StateExecute, StateLoadGame, StateSaveGame, StateSettings, StateQuitConfirm}},
+}
+
+// menuOf 回這個狀態是哪一格拉出來的選單；不是選單就回 -1。
+func menuOf(s State) int {
+	for i, b := range commandBar {
+		if b.Menu == s {
+			return i
+		}
+	}
+	return -1
+}
 
 // Resources 是玩家自備的原版檔案解出來的東西。**這個套件不內嵌任何原版資料。**
 type Resources struct {
@@ -57,7 +141,16 @@ type Resources struct {
 	BuildPlan  *screen.MainGameSpec
 	BudgetPlan  *screen.MainGameSpec
 	AdmiralList *screen.MainGameSpec
+
+	// Screens 是命令階段那一批畫面的規格，key 是規格名（見 screenSpecName）。
+	Screens map[string]*screen.MainGameSpec
+
 	StarMap  *asset.Image
+
+	// StarMaps 是「照某一組星域色重建的地圖」，key 是規格的 `map.colours`
+	// 欄位名。空字串那一份就是 StarMap（勢力色）。情報報告用治安色、
+	// 星系資料又是另一組，所以不能共用同一張。
+	StarMaps map[string]*asset.Image
 	Admiral  []byte // ADMIRAL.DT*，防拷問答的答案在裡面
 }
 
@@ -86,6 +179,12 @@ type Game struct {
 
 	// 結局：目前顯示哪一張 CG。
 	ending *asset.Image
+
+	// 命令階段：月內第幾天。一次「實行」推進三天（`docs/re/20`）。
+	day int
+
+	// 月初報告被關掉幾層。兩層都關掉才露出戰略地圖介面。
+	reportLayer int
 }
 
 // ShowEnding 切到結局畫面，顯示 `.VO5` 解出來的那張圖。
@@ -102,7 +201,7 @@ func New(res *Resources) (*Game, error) {
 	if res.Font == nil || res.Menu == nil || res.CopyProt == nil || res.MainGame == nil {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
-	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1}
+	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, day: 1}
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
 	}
@@ -184,6 +283,59 @@ func (g *Game) Click(x, y int) {
 				g.state = StateAdmiralList
 			}
 		}
+	case StateCommandPhase:
+		for _, b := range commandBar {
+			if x >= b.X && x < b.X+b.W && y >= barRow && y < barRow+rowHeight {
+				if g.commandSpec(b.Menu) != nil {
+					g.state = b.Menu
+				}
+				return
+			}
+		}
+	case StateCmdMenu, StateListMenu, StateSysMenu:
+		b := commandBar[menuOf(g.state)]
+		for n, item := range b.Items {
+			top := barRow + n*rowHeight
+			if x >= b.X && x < b.X+b.ItemW && y >= top && y < top+rowHeight {
+				if item == StateExecute {
+					// 一次「實行」推進三天（`docs/re/20`）。
+					g.day += 3
+					g.state = StateCommandPhase
+					return
+				}
+				if g.commandSpec(item) != nil {
+					g.state = item
+				}
+				return
+			}
+		}
+		// 點在選單項目外面就把選單關掉——實測四個方向的界外點都回主畫面。
+		g.state = StateCommandPhase
+	}
+}
+
+// RightClick 按一下右鍵。
+//
+// 右鍵在這個遊戲裡是「關掉最上面那一層」（`docs/re/16`）：月初報告要按兩下
+// 才會露出完整的戰略地圖介面，命令階段開出來的畫面按一下就回到地圖介面。
+//
+// **座標目前不影響結果**——實測 (300,240) 那一點在報告視窗上與在地圖上
+// 都關得掉；哪裡按不算數還沒量過。
+func (g *Game) RightClick(x, y int) {
+	g.MoveMouse(x, y)
+	switch g.state {
+	case StateMainGame:
+		// 月初報告是兩層。第一下關掉上面那層，第二下才到地圖介面。
+		g.reportLayer++
+		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
+			g.state = StateCommandPhase
+		}
+	case StateCmdMenu, StateListMenu, StateSysMenu:
+		g.state = StateCommandPhase
+	default:
+		if _, ok := screenSpecName[g.state]; ok && g.state != StateCommandPhase {
+			g.state = StateCommandPhase
+		}
 	}
 }
 
@@ -249,11 +401,39 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		}
 		return fb
 	default:
+		if spec := g.commandSpec(g.state); spec != nil {
+			fb, _ := screen.MainGame(spec, g.res.Font, g.starMapFor(spec),
+				g.res.Faces, g.res.Cursor)
+			return fb
+		}
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.highlight,
 			g.res.Cursor, g.mouseX, g.mouseY)
 		return fb
 	}
 }
+
+// commandSpec 回這個命令階段狀態的規格；沒有就回 nil。
+func (g *Game) commandSpec(s State) *screen.MainGameSpec {
+	name, ok := screenSpecName[s]
+	if !ok || g.res.Screens == nil {
+		return nil
+	}
+	return g.res.Screens[name]
+}
+
+// starMapFor 回這張規格要用的地圖。**不能共用同一張**：情報報告的地圖
+// 跟著治安換色、星系資料又是另一組（`strmap-regions.json` 的 colour_fields）。
+func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
+	if spec.Map.Colours != "" && g.res.StarMaps != nil {
+		if m := g.res.StarMaps[spec.Map.Colours]; m != nil {
+			return m
+		}
+	}
+	return g.res.StarMap
+}
+
+// Day 回遊戲內的日期（月內第幾天）。開局是 1。
+func (g *Game) Day() int { return g.day }
 
 // Plan 回目前的建造計劃預算分配；不在那個畫面就回 nil。
 func (g *Game) Plan() *rules.BuildPlan { return g.plan }

@@ -73,6 +73,9 @@ func main() {
 			g.MoveMouse(x, y)
 		case "click":
 			g.Click(mouseOf(f, g))
+		case "rclick":
+			// 右鍵 ＝ 關掉最上面那一層（月初報告要兩下）。
+			g.RightClick(mouseOf(f, g))
 		case "type":
 			if len(f) != 2 {
 				die(fmt.Errorf("type 要一串數字：%q", cmd))
@@ -185,9 +188,15 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	screens, maps, err := game.LoadCommandScreens(
+		data, filepath.Join(data, "strmap-regions.json"), bit, rgn)
+	if err != nil {
+		return nil, err
+	}
 	return &game.Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
-		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al}, nil
+		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
+		Screens: screens, StarMaps: maps}, nil
 }
 
 func regionColours(path string) ([]uint8, error) {

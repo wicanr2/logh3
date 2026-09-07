@@ -93,8 +93,131 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	screens, maps, err := LoadCommandScreens(
+		filepath.Join(root, "docs/internals/data"),
+		filepath.Join(root, "docs/internals/data/strmap-regions.json"), bit, rgn)
+	if err != nil {
+		t.Fatal(err)
+	}
 	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
-		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al}
+		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
+		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps}
+}
+
+// reachCommandPhase 走正常玩家路徑到戰略地圖介面：
+// 主選單 → 防拷問答 → 遊戲本體（月初報告）→ 右鍵兩下。
+func reachCommandPhase(t *testing.T) *Game {
+	t.Helper()
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 170)
+	for _, c := range []byte{'1', '3', '8', '\r'} {
+		g.Key(c)
+	}
+	if g.State() != StateMainGame {
+		t.Fatal("答對了卻沒進遊戲本體")
+	}
+	g.RightClick(300, 240)
+	g.RightClick(300, 240)
+	if g.State() != StateCommandPhase {
+		t.Fatalf("右鍵兩下之後在 %v，不是戰略地圖介面", g.State())
+	}
+	return g
+}
+
+// TestCommandPhaseNavigation 走命令階段的每一條路：命令列三格各拉出選單，
+// 選單每一項各開一張畫面，每一張都要與原版收據逐位元組相同。
+//
+// **回程不比像素**：右鍵回到地圖介面之後，原版左下角那塊會顯示游標底下的
+// 星系（`rcback` 收據），remake 還沒有那一層模型，所以只驗狀態。
+func TestCommandPhaseNavigation(t *testing.T) {
+	for _, c := range []struct {
+		name       string
+		menuX, itemX int
+		itemY      int
+		menuBatch  string
+		batch      string
+		state      State
+	}{
+		{"出擊命令", 352, 400, 125, "cmd1e", "sortie1e", StateStandbyAdmirals},
+		{"情報收集", 352, 400, 145, "cmd1e", "info1e", StateInfo},
+		{"徵稅計劃", 352, 400, 165, "cmd1e", "tax1e", StateTaxPlan},
+		{"生產計劃", 352, 400, 185, "cmd1e", "prod1e", StateProductionPlan},
+		{"星系資料", 448, 460, 125, "lstmenu1e", "star1e", StateStarList},
+		{"艦隊資料", 448, 460, 145, "lstmenu1e", "lst1e", StateFleetList},
+		{"提督資料", 448, 460, 165, "lstmenu1e", "lst2e", StateAdmiralListView},
+		{"敵將資料", 448, 460, 185, "lstmenu1e", "lst3e", StateEnemyList},
+		{"取進度", 544, 560, 145, "sysmenu1e", "load1e", StateLoadGame},
+		{"存進度", 544, 560, 165, "sysmenu1e", "save1e", StateSaveGame},
+		{"設定", 544, 560, 185, "sysmenu1e", "settings1e", StateSettings},
+		{"結束", 544, 560, 205, "sysmenu1e", "quit1e", StateQuitConfirm},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			g := reachCommandPhase(t)
+			matches(t, g, "main1e")
+
+			g.Click(c.menuX, 125)
+			matches(t, g, c.menuBatch)
+
+			g.Click(c.itemX, c.itemY)
+			if g.State() != c.state {
+				t.Fatalf("點了「%s」之後在 %v", c.name, g.State())
+			}
+			matches(t, g, c.batch)
+
+			g.RightClick(300, 240)
+			if g.State() != StateCommandPhase {
+				t.Fatalf("右鍵沒有回到地圖介面，在 %v", g.State())
+			}
+		})
+	}
+}
+
+// TestExecuteAdvancesThreeDays 釘住「實行」那條規則（`docs/re/20`）。
+func TestExecuteAdvancesThreeDays(t *testing.T) {
+	g := reachCommandPhase(t)
+	if g.Day() != 1 {
+		t.Fatalf("開局是第 %d 天，預期 1", g.Day())
+	}
+	for i, want := range []int{4, 7, 10} {
+		g.Click(544, 125)
+		g.Click(560, 125)
+		if g.State() != StateCommandPhase {
+			t.Fatalf("第 %d 次實行之後在 %v", i+1, g.State())
+		}
+		if g.Day() != want {
+			t.Fatalf("第 %d 次實行之後是第 %d 天，預期 %d", i+1, g.Day(), want)
+		}
+	}
+}
+
+// TestMenuClickOutsideCloses 點在選單項目外面會把選單關掉（實測四個方向的
+// 界外點都回主畫面，`docs/internals/23`）。
+func TestMenuClickOutsideCloses(t *testing.T) {
+	for _, c := range []struct {
+		name       string
+		menuX      int
+		x, y       int
+	}{
+		{"戰略命令右界外", 352, 456, 125},
+		{"戰略命令下界外", 352, 400, 200},
+		{"系統指令左界外", 544, 543, 145},
+		{"系統指令右界外", 544, 592, 145},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			g := reachCommandPhase(t)
+			g.Click(c.menuX, 125)
+			if g.State() == StateCommandPhase {
+				t.Fatal("選單沒開起來")
+			}
+			g.Click(c.x, c.y)
+			if g.State() != StateCommandPhase {
+				t.Fatalf("點界外之後在 %v，預期回地圖介面", g.State())
+			}
+		})
+	}
 }
 
 func regionColours(path string) ([]uint8, error) {
