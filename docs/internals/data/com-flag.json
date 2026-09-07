@@ -1,0 +1,18 @@
+{
+ "source": "COM_FLAG.SPR",
+ "bytes": 1440,
+ "width": 64,
+ "height": 45,
+ "layout": "一個影像列 32 bytes ＝ plane 0..3 各 8 bytes（64 像素）；色號 = p0|p1<<1|p2<<2|p3<<3",
+ "label_height": 9,
+ "labels": [
+  "BEEM",
+  "MISSILE",
+  "FIGHTER",
+  "ATTACK",
+  "DEFENCE"
+ ],
+ "ink": 4,
+ "outline": 11,
+ "note": "BEEM 是原版自帶的錯字（應為 BEAM），保留原樣。用途推測是戰鬥畫面的指令字樣（COM ＝ command），還沒在畫面上對過。"
+}

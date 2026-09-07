@@ -175,3 +175,12 @@
 `ENDING.EXE` 依結局載入的 `.VO5`：
 
 `endd5a0.VO5`, `endd6a0.VO5`, `endd5b0.VO5`, `endd810.VO5`, `endt30.VO5`, `endt5a0.VO5`, `endt6a0.VO5`, `endt5b0.VO5`, `endt810.VO5`, `enda710.VO5`, `enda711.VO5`, `enda10.VO5`, `endda0.VO5`, `endta0.VO5`, `enddp11.VO5`, `endtp11.VO5`, `enda10.VO5`, `enda11.VO5`
+
+## 原版自帶的錯字
+
+保存的一部分是**不修**：這些字樣在 1994 年的原版裡就是這樣，
+remake 照樣呈現。
+
+| 檔案 | 字樣 | 應為 |
+|---|---|---|
+| `COM_FLAG.SPR` | `BEEM` | `BEAM`（[`docs/internals/21`](../internals/21-3dblock-spr.md)）|
