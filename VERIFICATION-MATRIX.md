@@ -72,6 +72,15 @@
 | 資料段裡的熱區清單 | **25 份全部掃出**（含每個按鈕的中文標籤）| [`docs/internals/23`](docs/internals/23-hotspot-lists.md) |
 | 清單 ↔ 畫面的對應 | 25 份裡只確定 2 份（主畫面、建造計劃）| 同上 |
 
+## 執行期的資料表
+
+| 表 | 位址 | 一筆 | 證據 |
+|---|---|---|---|
+| 星域 `STELLAR.DT*` | `ds:A79C` | 126 bytes | [`docs/internals/22`](docs/internals/22-stellar-dt.md) |
+| 行星 `PLADAT.DAT` | `5313:0002` | 82 bytes | [`docs/re/30`](docs/re/30-region-economy-from-planets.md) |
+| 提督 `ADMIRAL.DT*` | `ds:B77C` | 28 bytes | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md) |
+| **艦隊** | `ds:C074` | **122 bytes** | [`docs/re/40`](docs/re/40-fleet-table.md)；欄位語意未解 |
+
 ## 遊戲規則
 
 | 規則 | 狀態 | 證據 |
