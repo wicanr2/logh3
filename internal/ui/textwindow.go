@@ -182,6 +182,11 @@ func DrawGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16, fg, s
 }
 
 // DrawHalfGlyph 畫一個半形字（8×15）。數字與百分比走這條。
+//
+// 半形字是**兩個一組塞進同一個 16 像素的格子**（`docs/internals/25`）。
+// 陰影那一趟是整格 16 位元一起往左移一格，所以**右半那個字最左邊那一行的
+// 陰影會落到左半的地盤上**，不會被丟掉；左半那個字移出格外的那一行才會。
+// 判準是這個字在不在 16 的邊界上。
 func DrawHalfGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8, fg, shadow uint8, shadowDY int, bold bool) bool {
 	g := fnt.Half(code)
 	if g == nil {
@@ -192,13 +197,18 @@ func DrawHalfGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8, fg
 			g[i] = v | v>>1
 		}
 	}
+	rightHalf := x%(2*font.HalfW) == font.HalfW
 	blit := func(shift, oy int, col uint8) {
 		for gy, bits := range g {
-			row := bits << uint(shift)
 			for gx := 0; gx < font.HalfW; gx++ {
-				if row>>(font.HalfW-1-gx)&1 != 0 {
-					fb.Set(x+gx, y+oy+gy, col)
+				if bits>>(font.HalfW-1-gx)&1 == 0 {
+					continue
 				}
+				px := x + gx - shift
+				if px < x && !rightHalf {
+					continue
+				}
+				fb.Set(px, y+oy+gy, col)
 			}
 		}
 	}

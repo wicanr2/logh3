@@ -39,6 +39,10 @@ EXTRA = ([int(v) for v in sys.argv[13].split(':')]
 # 事件（設定、生產計劃…），游標只會停在最後一次點擊的地方。同一張畫面點在
 # 不同位置各抓一份收據，兩份的文字聯集就補得回來。幾何仍然只看主收據。
 ALSO = sys.argv[14] if len(sys.argv) > 14 and sys.argv[14] else None
+# 文字顏色：預設只掃 7。有些畫面用別的色號表示「這一列是空的／不能選」
+# （取進度的未使用欄位是色 8），那幾行不列出來就整片讀不到。
+INKS = [7] + [int(v) for v in (sys.argv[15].split(',')
+                               if len(sys.argv) > 15 and sys.argv[15] else [])]
 
 rows, _ = load_screen(f'/work/workplace/oracle/{batch}/screen.bin')
 full, half = font_lookup('/orig/GRAPH.IMG')
@@ -51,7 +55,7 @@ layers, alts = measure_frame(rows, X0, Y0, X1, Y1)
 patches = frame_patches(rows, X0, Y0, X1, Y1, layers, alts, corner=12)
 
 # 文字：行距 20，相位用全域最佳化找（一行誤判會讓後面全部錯位）。
-def scan(phase, tabs):
+def scan(phase, tabs, ink=7):
     out = []
     for y in range(Y0 + 10 + phase, Y1 - 14, 20):
         skip = [(bx0, by0, bx1 - bx0 + 1, by1 - by0 + 1)
@@ -62,14 +66,15 @@ def scan(phase, tabs):
             skip.append((FACE[1], FACE[2], 80, 100))
         # 起點要掃寬一點：這一層裡不只一欄文字，左邊那欄的縮排
         # 各畫面不同，範圍太窄就整欄讀不到。
-        ln = max((read_line(rows, sx, y, X1 - 12, 7, tabs[0], tabs[1], skip)
+        ln = max((read_line(rows, sx, y, X1 - 12, ink, tabs[0], tabs[1], skip)
                   for sx in range(X0 + 4, X0 + 80)), key=len)
         # 短短一兩格的製表符不是文字，是被讀成字的框線——而畫出來的
-        # 陰影會把那條線蓋掉一個像素。
-        if ln and len(ln) <= 4 and all(0xA140 <= c['code'] <= 0xA1FE for c in ln):
+        # 陰影會把那條線蓋掉一個像素。上限收在 0xA27E：再往上就是全形英數
+        # （0xA2D0 是「Ｂ」），設定畫面的「ＢＧＭ」正好三格，不能一起濾掉。
+        if ln and len(ln) <= 4 and all(0xA140 <= c["code"] <= 0xA27E for c in ln):
             continue
         if ln and (len(ln) < 4 or len({c['code'] for c in ln}) > 1):
-            out.append({'y': y, 'ink': 7, 'bold': tabs[2], 'cells': ln})
+            out.append({'y': y, 'ink': ink, 'bold': tabs[2], 'cells': ln})
     return out
 
 def _span(line):
@@ -104,7 +109,7 @@ def scan_area(x0, y0, x1, y1, phase, ink=7, tabs=None):
                 for bx0, by0, bx1, by1 in BOXES]
         ln = max((read_line(rows, sx, y, x1, ink, tabs[0], tabs[1], skip)
                   for sx in range(x0, x0 + 40)), key=len)
-        if ln and len(ln) <= 4 and all(0xA140 <= c['code'] <= 0xA1FE for c in ln):
+        if ln and len(ln) <= 4 and all(0xA140 <= c["code"] <= 0xA27E for c in ln):
             continue
         if ln and (len(ln) < 4 or len({c['code'] for c in ln}) > 1):
             out.append({'y': y, 'ink': ink, 'bold': tabs[2], 'cells': ln})
@@ -112,18 +117,20 @@ def scan_area(x0, y0, x1, y1, phase, ink=7, tabs=None):
 
 TABS = [(full, half, False), (fullb, halfb, True)]
 lines = []
-for _t in TABS:
-    for _p in range(20):
-        for _l in scan(_p, _t):
-            _merge(lines, _l)
+for _ink in INKS:
+    for _t in TABS:
+        for _p in range(20):
+            for _l in scan(_p, _t, _ink):
+                _merge(lines, _l)
 if ALSO:
     _main_rows = rows
     rows, _ = load_screen(f'/work/workplace/oracle/{ALSO}/screen.bin')
     _extra = []
-    for _t in TABS:
-        for _p in range(20):
-            for _l in scan(_p, _t):
-                _merge(_extra, _l)
+    for _ink in INKS:
+        for _t in TABS:
+            for _p in range(20):
+                for _l in scan(_p, _t, _ink):
+                    _merge(_extra, _l)
     rows = _main_rows
 
     def _union(acc, cand):
@@ -203,7 +210,9 @@ def _refit_under_base_cursor(spec):
     return n
 
 
-if MX >= 0:
+# MX ＝ -1（沿用底層的游標）以外都要重量：游標一旦搬走或整個不畫，
+# 底層那一份把游標當成框的修正記下來的那幾格就會露出來。
+if MX != -1:
     _n = _refit_under_base_cursor(spec)
     if _n:
         print('底層游標壓住那一塊重量：修正點動了 %d 個' % _n)
@@ -234,6 +243,9 @@ spec['order'] = [n for n in ('report', 'overlay') if n in spec['windows']]
 # 幾列的樣子，重新算一次反而會畫成完整的一隻。
 if MX >= 0:
     spec['mouse'] = {'x': MX, 'y': MY}
+    if RULES:
+        # 反白條是滑鼠移過去才刷的，那一下會把游標蓋掉。
+        spec['mouse']['after_rules'] = 'overlay'
 elif MX == -2:
     # 這一層把游標整個蓋掉了（覆蓋範圍含游標位置），不要畫。
     spec.pop('mouse', None)

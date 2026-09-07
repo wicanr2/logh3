@@ -63,6 +63,9 @@ type MainGameSpec struct {
 		// AfterBoxes 指定一個視窗：它的小框在游標之後再畫一次。
 		AfterBoxes string `json:"after_boxes"`
 
+		// AfterRules 同理，指定一個視窗的純色塊在游標之後再畫一次。
+		AfterRules string `json:"after_rules"`
+
 		// Clip 是游標的可見矩形。原版的游標是**疊上去**的，視窗一重畫就
 		// 把它蓋掉一部分，直到游標下次移動才補回來——所以同一隻游標在
 		// 不同畫面上可見的範圍不一樣。
@@ -265,6 +268,15 @@ func MainGame(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset
 		if n := s.Mouse.AfterBoxes; n != "" {
 			if w := s.Windows[n]; w != nil {
 				w.DrawBoxes(fb)
+			}
+		}
+		// 反白條同理：滑鼠移到哪一列，原版就把那一列整條重畫成反白色，
+		// 而那一下會把游標蓋掉——只留下沒被條子壓到的那幾列。
+		if n := s.Mouse.AfterRules; n != "" {
+			if w := s.Windows[n]; w != nil {
+				for _, r := range w.Rules {
+					fb.FillRect(r.X, r.Y, r.W, r.H, r.Colour)
+				}
 			}
 		}
 	}
