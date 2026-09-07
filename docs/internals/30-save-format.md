@@ -20,7 +20,7 @@
 | `PLANET.DT?` | 6,642 | 行星 81 × 82 | 段 `5313` 的 offset 2 起 |
 | `ADMIRAL.DT?` | 2,296 | 提督 82 × 28 | `ds:B77C`（`docs/internals/08`）|
 | `FLEET.DT?` | 3,904 | 艦隊 32 × 122 | `ds:C074`（`docs/re/40`）|
-| `SHIP.DT?` | 27,456 | 艦艇池 352 × 78 | 未對過（`docs/re/42`）|
+| `SHIP.DT?` | 27,456 | 艦艇池 352 × 78 | 未對過（`docs/re/42`）；欄位見 [`data/ship-types.json`](data/ship-types.json)|
 | `WORK.DT?` | 230 | 全域狀態 | `docs/internals/27` |
 
 `PLANET.DT?` 與 `FLEET.DT?` 跟記憶體裡的表**逐位元組相同**；
