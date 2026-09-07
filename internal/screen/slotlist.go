@@ -42,6 +42,9 @@ type SlotList struct {
 		TextTop int `json:"text_top"`
 		BarTop  int `json:"bar_top"`
 		Height  int `json:"height"`
+		// TextInk 是紅條上那一列的字色：條子把那一列蓋掉之後，
+		// 原版用這個顏色把「--/--/--」重畫上去（平常是 EmptyInk）。
+		TextInk uint8 `json:"text_ink"`
 		Bar     struct {
 			X      int   `json:"x"`
 			W      int   `json:"w"`
@@ -76,6 +79,24 @@ func (s *SlotList) DrawSaveBar(fb *gfx.Framebuffer, row int) {
 	}
 }
 
+// DrawSaveRow 把「存進度」那一列的字重畫在紅條上。
+//
+// 存進度只列沒用到的格子，所以內容固定是 `--/--/--`；顏色與平常那幾列
+// 不同（條子上是亮的）。
+func (s *SlotList) DrawSaveRow(fb *gfx.Framebuffer, fnt *font.Font, row int) {
+	if row < 0 || row >= s.Save.Rows {
+		return
+	}
+	ink := s.Save.TextInk
+	if ink == 0 {
+		ink = s.EmptyInk
+	}
+	y := s.Save.TextTop + row*s.Save.Height
+	drawASCII(fb, fnt, s.StampX, y, s.EmptyStamp, ink)
+	drawASCII(fb, fnt, s.TimeX, y, s.EmptyTime, ink)
+	drawFull(fb, fnt, s.EmptyX, y, s.EmptyCodes, ink)
+}
+
 // LoadSlotList 讀存檔畫面的版面。
 func LoadSlotList(path string) (*SlotList, error) {
 	b, err := os.ReadFile(path)
@@ -93,13 +114,25 @@ func LoadSlotList(path string) (*SlotList, error) {
 func (s *SlotList) Draw(fb *gfx.Framebuffer, fnt *font.Font,
 	entries []rules.SaveIndexEntry, epoch int) {
 	for n := 0; n < s.Rows && n < len(entries); n++ {
+		s.DrawRow(fb, fnt, entries, epoch, n)
+	}
+}
+
+// DrawRow 只畫一列。**存進度那條紅條會把那一列蓋掉，原版接著把字重畫上去**
+// ——不重畫的話那一列就只剩一條純色。
+func (s *SlotList) DrawRow(fb *gfx.Framebuffer, fnt *font.Font,
+	entries []rules.SaveIndexEntry, epoch, n int) {
+	if n < 0 || n >= s.Rows || n >= len(entries) {
+		return
+	}
+	{
 		e := entries[n]
 		y := s.Top + n*s.Height
 		if !e.Used {
 			drawASCII(fb, fnt, s.StampX, y, s.EmptyStamp, s.EmptyInk)
 			drawASCII(fb, fnt, s.TimeX, y, s.EmptyTime, s.EmptyInk)
 			drawFull(fb, fnt, s.EmptyX, y, s.EmptyCodes, s.EmptyInk)
-			continue
+			return
 		}
 		yy, mm, dd, hh, mi, ss := e.StampFields()
 		drawASCII(fb, fnt, s.StampX, y,

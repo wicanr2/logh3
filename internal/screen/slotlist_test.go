@@ -87,7 +87,10 @@ func TestSaveBarMatchesOracle(t *testing.T) {
 	}
 	fnt, mapImg, faces, cur := gameScreenAssets(t)
 	fb, _ := MainGameWithBoard(spec, fnt, mapImg, faces, cur, nil)
+	// 條子畫上去會把那一列蓋掉，原版接著把字重畫在條子上。
 	list.DrawSaveBar(fb, row)
+	list.DrawSaveRow(fb, fnt, row)
+	cur.Draw(fb, spec.Mouse.X, spec.Mouse.Y) // 條子蓋掉游標，原版再畫一次
 
 	want, err := os.ReadFile(oracle)
 	if err != nil {

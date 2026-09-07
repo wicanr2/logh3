@@ -754,13 +754,18 @@ func (g *Game) drawSlotList(fb *gfx.Framebuffer) {
 	if g.res.SlotList == nil || len(g.res.SaveIndex) == 0 {
 		return
 	}
-	// **只有「取進度」那張**。「存進度」那張的版面不一樣（量到的只有 7 行、
-	// 位置也不同），還沒解，先照規格裡量到的畫。
 	switch g.state {
 	case StateLoadGame:
 		g.res.SlotList.Draw(fb, g.res.Font, g.res.SaveIndex, rules.Epoch)
 	case StateSaveGame:
-		g.res.SlotList.DrawSaveBar(fb, g.saveRow())
+		// 條子把那一列蓋掉，字要重畫在條子上，游標再蓋一次
+		// ——原版的游標永遠在最上面。
+		row := g.saveRow()
+		g.res.SlotList.DrawSaveBar(fb, row)
+		g.res.SlotList.DrawSaveRow(fb, g.res.Font, row)
+		if g.res.Cursor != nil {
+			g.res.Cursor.Draw(fb, g.mouseX, g.mouseY)
+		}
 	}
 }
 
