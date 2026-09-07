@@ -66,6 +66,9 @@ type MainGameSpec struct {
 		// AfterRules 同理，指定一個視窗的純色塊在游標之後再畫一次。
 		AfterRules string `json:"after_rules"`
 
+		// AfterBoxFills 指定一個視窗：它的小框**只有內部**在游標之後填回底色。
+		AfterBoxFills string `json:"after_box_fills"`
+
 		// Clip 是游標的可見矩形。原版的游標是**疊上去**的，視窗一重畫就
 		// 把它蓋掉一部分，直到游標下次移動才補回來——所以同一隻游標在
 		// 不同畫面上可見的範圍不一樣。
@@ -179,6 +182,20 @@ func (w *GameWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8, fac
 	return w.drawContent(fb, fnt, shadow, faces)
 }
 
+// DrawBoxFills 只把每個小框的**內部**填回底色，不重畫立體邊。
+//
+// 原版有些畫面先畫游標、再刷清單列，而刷的只有列的內容區——
+// 游標壓在列與列交界那條邊上的部分留了下來。整個小框重畫會把那幾格也擦掉。
+func (w *GameWindow) DrawBoxFills(fb *gfx.Framebuffer) {
+	for _, b := range w.Boxes {
+		n := len(b.Layers)
+		if b.W <= 2*n || b.H <= 2*n {
+			continue
+		}
+		fb.FillRect(b.X+n, b.Y+n, b.W-2*n, b.H-2*n, b.Fill)
+	}
+}
+
 // DrawBoxes 只畫視窗裡的小框。拆出來是因為原版有些畫面**先畫游標、
 // 再刷清單列**，所以那幾格會把游標蓋掉一部分（`docs/re/12`）。
 func (w *GameWindow) DrawBoxes(fb *gfx.Framebuffer) {
@@ -268,6 +285,11 @@ func MainGame(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset
 		if n := s.Mouse.AfterBoxes; n != "" {
 			if w := s.Windows[n]; w != nil {
 				w.DrawBoxes(fb)
+			}
+		}
+		if n := s.Mouse.AfterBoxFills; n != "" {
+			if w := s.Windows[n]; w != nil {
+				w.DrawBoxFills(fb)
 			}
 		}
 		// 反白條同理：滑鼠移到哪一列，原版就把那一列整條重畫成反白色，

@@ -246,6 +246,11 @@ if MX >= 0:
     if RULES:
         # 反白條是滑鼠移過去才刷的，那一下會把游標蓋掉。
         spec['mouse']['after_rules'] = 'overlay'
+    if BOXES:
+        # 清單列同理：原版先畫游標再刷清單。刷的只有列的**內容區**，
+        # 所以游標壓在列與列交界那條邊上的部分會留下來。
+        # 沒有壓到就什麼也不會變，所以有小框就一律加上。
+        spec['mouse']['after_box_fills'] = 'overlay'
 elif MX == -2:
     # 這一層把游標整個蓋掉了（覆蓋範圍含游標位置），不要畫。
     spec.pop('mouse', None)

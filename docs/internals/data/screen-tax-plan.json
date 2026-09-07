@@ -14825,7 +14825,8 @@
  "mouse": {
   "x": 400,
   "y": 125,
-  "after_rules": "overlay"
+  "after_rules": "overlay",
+  "after_box_fills": "overlay"
  },
  "window_origin_grid": [
   21,
