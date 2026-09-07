@@ -93,36 +93,50 @@ func panelRecord(t *testing.T, region, unrest, own, enemy int) []byte {
 	rec := make([]byte, rules.RegionRecord)
 	copy(rec, stellar[region*rules.RegionRecord:(region+1)*rules.RegionRecord])
 	if unrest < 0 {
-		unrest = measuredUnrest(t, region)
+		unrest = newGameUnrest(t, region)
 	}
 	rec[0x7D] = byte(unrest)
 	rec[0x28], rec[0x2B] = byte(own), byte(enemy)
 	return rec
 }
 
-// measuredUnrest 讀 796 年 1 月量到的未安定度。
-func measuredUnrest(t *testing.T, region int) int {
+// newGameUnrest 算 796 年 1 月的未安定度。
+//
+// 整張星域表都是從原版檔案重建的（`rules.NewGameRegions`，`docs/re/44`）：
+// 擁有者與行星數讀 `PLADAT.DAT`、經濟力與成長率照成長表算、民心由擁有者
+// 決定、稅率照 `090A:0CC0` 那一支算，最後才是未安定度（`docs/spec/006`）。
+// 難度參數是量到的（收據 `newload`）。
+func newGameUnrest(t *testing.T, region int) int {
 	t.Helper()
-	b, err := os.ReadFile(filepath.Join("../..", "docs/internals/data/month-rollover-796-01.json"))
+	root := "../.."
+	read := func(name string) []byte {
+		b, err := os.ReadFile(filepath.Join(root, "org_game/extracted", name))
+		if err != nil {
+			t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", name)
+		}
+		return b
+	}
+	planets, err := rules.LoadPlanets(read("PLADAT.DAT"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	var d struct {
-		Regions []struct {
-			Index  int `json:"index"`
-			Unrest int `json:"unrest_796_01"`
-		} `json:"regions"`
-	}
-	if err := json.Unmarshal(b, &d); err != nil {
+	table, err := rules.LoadGrowthTable(filepath.Join(root,
+		"docs/internals/data/growth-table.json"))
+	if err != nil {
 		t.Fatal(err)
 	}
-	for _, r := range d.Regions {
-		if r.Index == region {
-			return r.Unrest
-		}
+	graph, err := rules.LoadStarGraph(filepath.Join(root,
+		"docs/internals/data/star-graph.json"))
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Fatalf("量到的資料裡沒有星域 %d", region)
-	return 0
+	out := rules.NewGameRegions(read("STELLAR.DTX"), planets, read("ADMIRAL.DTX"),
+		table, graph, rules.UnrestParams{
+			Turn: 0, Ruler: [2]int{16, 60}, Blend: [2]int{2, 2}, Rate: [2]int{2, 2},
+			Table: []int{170, 150, 130, 90, 60},
+			Base:  []int{50, 75, 100, 150, 200},
+		})
+	return int(out[region*rules.RegionRecord+rules.RegionUnrest])
 }
 
 // savedSlot 讀一格存檔的行星表與星域記錄。
