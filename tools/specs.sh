@@ -106,6 +106,11 @@ want save-game && py tools/scripts/overlay_spec.py \
   save1e screen-command-phase screen-save-game 32 120 607 319 560 125 \
   '' '48:160:544:20:2' '' '' '' 8
 
+# 結束：確認對話框，兩個按鈕。
+want quit-confirm && py tools/scripts/overlay_spec.py \
+  quit1e screen-command-phase screen-quit-confirm 128 180 479 299 560 165 \
+  '366:260:401:279,414:260:449:279'
+
 # 遊戲設定：底層是戰略命令選單那一份（設定視窗把選單整個蓋住）。
 # 游標停在最後一次點擊的位置，要明寫。
 want settings && py tools/scripts/overlay_spec.py \
