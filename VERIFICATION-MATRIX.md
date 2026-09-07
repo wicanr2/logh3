@@ -107,7 +107,9 @@
 | 星域擁有者（全屬同一方才算，混雜就是無主）| 通過 | [`docs/re/17`](docs/re/17-star-region-owner.md)；六個星域 |
 | 星域防衛力 ＝ 該星域行星 `+0x14` 相加 | 通過 | [`docs/re/23`](docs/re/23-region-panel-fields.md)；六個星域對執行期 `+0x20` |
 | 行星 `n/m` ＝ 玩家陣營行星數 / 總數 | 通過 | [`docs/re/23`](docs/re/23-region-panel-fields.md)；五個星域對畫面 |
-| 徵稅額 ＝ 經濟力 × 稅率（捨去）| 通過 | [`docs/re/22`](docs/re/22-region-panel-and-month-rollover.md)；796/1 與 796/2 |
+| 徵稅額 ＝ 經濟力 × 該星域稅率 / 1000（捨去）| 通過 | [`docs/re/26`](docs/re/26-tax-and-treasury.md)；稅率是**每個星域各自的** |
+| 總稅收 ＝ 自己擁有的星域徵稅額相加 | 通過 | [`docs/re/26`](docs/re/26-tax-and-treasury.md)；帝國 10341、同盟 11087 兩邊都對 |
+| 月底軍事費的完整算式 | **未解** | [`docs/re/26`](docs/re/26-tax-and-treasury.md)；`軍事費 += 總稅收` 已確認，扣款那一步未追 |
 | 曆法：一回合三天、一個月十回合、一年十二個月 | 通過 | [`docs/re/25`](docs/re/25-calendar.md)；`ds:8F18` 回合計數器對三份記憶體傾印＋三張畫面 |
 | 月底交付「建造中」的船艦 | 已量到、未實作 | [`docs/re/21`](docs/re/21-month-end-ship-delivery.md) |
 | 治安 ＝ (200 − 未安定度) / 2 | 通過 | [`docs/re/24`](docs/re/24-security-formula.md)；六個帝國星域 |

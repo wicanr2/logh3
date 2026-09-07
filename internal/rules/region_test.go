@@ -152,3 +152,47 @@ func TestFleetsReadsBothSides(t *testing.T) {
 		t.Errorf("同盟視角 %d：%d，預期 5：4", own, enemy)
 	}
 }
+
+// loadRuntimeRegions 讀一份執行期的星域表傾印（32 筆 × 126 bytes）。
+// 那是一次性證據，缺檔就 skip。
+func loadRuntimeRegions(t *testing.T) [][]byte {
+	t.Helper()
+	p := filepath.Join("../..", "workplace/explore/stellar-796-01.bin")
+	b, err := os.ReadFile(p)
+	if err != nil {
+		t.Skipf("缺 %s，跳過（tools/oracle.sh 的記憶體傾印可重建）", p)
+	}
+	if len(b) != 32*RegionRecord {
+		t.Fatalf("%s 是 %d bytes，預期 %d", p, len(b), 32*RegionRecord)
+	}
+	out := make([][]byte, 32)
+	for i := range out {
+		out[i] = b[i*RegionRecord : (i+1)*RegionRecord]
+	}
+	return out
+}
+
+// TestTotalTaxMatchesPanel：總稅收 ＝ 自己擁有的星域徵稅額相加。
+// 兩個陣營的預期值都取自原版畫面（收據 `main1e` 的 796 年 1 月 1 日）。
+func TestTotalTaxMatchesPanel(t *testing.T) {
+	regs := loadRuntimeRegions(t)
+	for _, c := range []struct{ faction, want int }{{0, 10341}, {1, 11087}} {
+		if got := TotalTax(regs, c.faction); got != c.want {
+			t.Errorf("陣營 %d 總稅收 %d，預期 %d", c.faction, got, c.want)
+		}
+	}
+}
+
+// TestRegionTaxMatchesPanel：瓦爾哈拉的徵稅額。
+func TestRegionTaxMatchesPanel(t *testing.T) {
+	regs := loadRuntimeRegions(t)
+	if got := RegionEconomy(regs[0]); got != 82302 {
+		t.Fatalf("瓦爾哈拉經濟力 %d，預期 82302", got)
+	}
+	if got := RegionTaxRate(regs[0]); got != 32 {
+		t.Fatalf("瓦爾哈拉稅率 %d‰，預期 32", got)
+	}
+	if got := RegionTax(regs[0]); got != 2633 {
+		t.Fatalf("瓦爾哈拉徵稅額 %d，預期 2633", got)
+	}
+}

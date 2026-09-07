@@ -23,7 +23,45 @@ const (
 	regionEconomy = 0x1A // 32 位元
 	regionDefence = 0x20 // 16 位元，與 +0x22 是同一個值的兩份
 	regionUnrest  = 0x7D // 未安定度，記錄的最後一個 byte；治安由它算出來
+	regionTaxRate = 0x26 // 稅率，千分之一為單位（畫面上的 3.2% ＝ 32）
 )
+
+// RegionEconomy 回星域記錄裡的經濟力（32 位元）。
+func RegionEconomy(record []byte) int {
+	if len(record) < regionEconomy+4 {
+		return 0
+	}
+	return int(record[regionEconomy]) | int(record[regionEconomy+1])<<8 |
+		int(record[regionEconomy+2])<<16 | int(record[regionEconomy+3])<<24
+}
+
+// RegionTaxRate 回星域的稅率（千分之一）。**每個星域不一樣**——
+// 畫面右側那個 3.2% 是首都的，不是全國統一的。
+func RegionTaxRate(record []byte) int {
+	if len(record) <= regionTaxRate {
+		return 0
+	}
+	return int(record[regionTaxRate])
+}
+
+// RegionTax 回一個星域這個月的徵稅額 ＝ 經濟力 × 稅率 / 1000（捨去）。
+func RegionTax(record []byte) int {
+	return RegionEconomy(record) * RegionTaxRate(record) / 1000
+}
+
+// TotalTax 回一個陣營的總稅收 ＝ **自己擁有的**星域徵稅額相加。
+//
+// 月底的結算是：總稅收歸零 → 逐星域累加 → 軍事費 += 總稅收
+// （線性 `273E0` 起那一支，`docs/re/26`）。
+func TotalTax(records [][]byte, faction int) int {
+	sum := 0
+	for _, r := range records {
+		if len(r) > regionOwner && int(r[regionOwner]) == faction {
+			sum += RegionTax(r)
+		}
+	}
+	return sum
+}
 
 // Security 回畫面上那個「治安 %」。
 //
