@@ -183,8 +183,9 @@ type Game struct {
 	// 結局：目前顯示哪一張 CG。
 	ending *asset.Image
 
-	// 命令階段：月內第幾天。一次「實行」推進三天（`docs/re/20`）。
-	day int
+	// 命令階段：第幾個回合。遊戲只存這一個數，年月日是印的時候算出來的
+	// （`docs/re/25`）。開局 0。
+	turn int
 
 	// 月初報告被關掉幾層。兩層都關掉才露出戰略地圖介面。
 	reportLayer int
@@ -214,7 +215,7 @@ func New(res *Resources) (*Game, error) {
 	if res.Font == nil || res.Menu == nil || res.CopyProt == nil || res.MainGame == nil {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
-	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, day: 1}
+	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1}
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
 	}
@@ -311,8 +312,8 @@ func (g *Game) Click(x, y int) {
 			top := barRow + n*rowHeight
 			if x >= b.X && x < b.X+b.ItemW && y >= top && y < top+rowHeight {
 				if item == StateExecute {
-					// 一次「實行」推進三天（`docs/re/20`）。
-					g.day += 3
+					// 一次「實行」推進一個回合 ＝ 三天（`docs/re/20`、`docs/re/25`）。
+					g.turn++
 					g.state = StateCommandPhase
 					return
 				}
@@ -451,8 +452,11 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 	return g.res.StarMap
 }
 
-// Day 回遊戲內的日期（月內第幾天）。開局是 1。
-func (g *Game) Day() int { return g.day }
+// Turn 回目前是第幾個回合（開局 0）。
+func (g *Game) Turn() int { return g.turn }
+
+// Date 回遊戲內的日期。紀元年 796 是原版帝國戰役的開局。
+func (g *Game) Date() (year, month, day int) { return rules.Date(g.turn, 796) }
 
 // SelectedRegion 回目前選中的星域編號（`STELLAR.DT*` 的筆序）。
 //

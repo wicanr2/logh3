@@ -183,18 +183,29 @@ func TestCommandPhaseNavigation(t *testing.T) {
 // TestExecuteAdvancesThreeDays 釘住「實行」那條規則（`docs/re/20`）。
 func TestExecuteAdvancesThreeDays(t *testing.T) {
 	g := reachCommandPhase(t)
-	if g.Day() != 1 {
-		t.Fatalf("開局是第 %d 天，預期 1", g.Day())
+	if y, m, d := g.Date(); y != 796 || m != 1 || d != 1 {
+		t.Fatalf("開局是 %d年%d月%d日，預期 796年1月1日", y, m, d)
 	}
-	for i, want := range []int{4, 7, 10} {
+	for i, want := range []struct{ month, day int }{
+		{1, 4}, {1, 7}, {1, 10},
+	} {
 		g.Click(544, 125)
 		g.Click(560, 125)
 		if g.State() != StateCommandPhase {
 			t.Fatalf("第 %d 次實行之後在 %v", i+1, g.State())
 		}
-		if g.Day() != want {
-			t.Fatalf("第 %d 次實行之後是第 %d 天，預期 %d", i+1, g.Day(), want)
+		if _, m, d := g.Date(); m != want.month || d != want.day {
+			t.Fatalf("第 %d 次實行之後是 %d月%d日，預期 %d月%d日",
+				i+1, m, d, want.month, want.day)
 		}
+	}
+	// 再按七次就跨月（一個月十回合）。
+	for i := 0; i < 7; i++ {
+		g.Click(544, 125)
+		g.Click(560, 125)
+	}
+	if _, m, d := g.Date(); m != 2 || d != 1 {
+		t.Fatalf("第十次實行之後是 %d月%d日，預期 2月1日", m, d)
 	}
 }
 

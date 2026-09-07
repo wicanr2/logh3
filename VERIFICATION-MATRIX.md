@@ -108,7 +108,7 @@
 | 星域防衛力 ＝ 該星域行星 `+0x14` 相加 | 通過 | [`docs/re/23`](docs/re/23-region-panel-fields.md)；六個星域對執行期 `+0x20` |
 | 行星 `n/m` ＝ 玩家陣營行星數 / 總數 | 通過 | [`docs/re/23`](docs/re/23-region-panel-fields.md)；五個星域對畫面 |
 | 徵稅額 ＝ 經濟力 × 稅率（捨去）| 通過 | [`docs/re/22`](docs/re/22-region-panel-and-month-rollover.md)；796/1 與 796/2 |
-| 一次「實行」推進三天；十回合換月 | 通過 | [`docs/re/20`](docs/re/20-execute-advances-three-days.md)、[`docs/re/22`](docs/re/22-region-panel-and-month-rollover.md) |
+| 曆法：一回合三天、一個月十回合、一年十二個月 | 通過 | [`docs/re/25`](docs/re/25-calendar.md)；`ds:8F18` 回合計數器對三份記憶體傾印＋三張畫面 |
 | 月底交付「建造中」的船艦 | 已量到、未實作 | [`docs/re/21`](docs/re/21-month-end-ship-delivery.md) |
 | 治安 ＝ (200 − 未安定度) / 2 | 通過 | [`docs/re/24`](docs/re/24-security-formula.md)；六個帝國星域 |
 | 未安定度的開局值怎麼算出來 | **未解** | [`docs/re/24`](docs/re/24-security-formula.md) |
