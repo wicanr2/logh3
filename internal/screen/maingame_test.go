@@ -425,7 +425,7 @@ func admiralRows(t *testing.T, faction int, standby bool) []ListRow {
 	for _, r := range names.Records {
 		code[r.Index] = r.NameCodes
 	}
-	staff := rules.StaffAdmirals(work)
+	staff := rules.StaffAdmirals(work, 0)
 	isStaff := map[int]bool{}
 	for _, i := range staff {
 		isStaff[i] = true

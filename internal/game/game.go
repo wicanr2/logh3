@@ -854,7 +854,7 @@ func (g *Game) drawDelivery(fb *gfx.Framebuffer) {
 	if g.state != StateShipDelivery || g.res.DeliveryPanel == nil {
 		return
 	}
-	name, rank := g.staffAdmiral(rules.PostMilitaryStaff)
+	name, rank := g.staffAdmiral(rules.PostMilitary)
 	g.res.DeliveryPanel.Draw(fb, g.res.Font, g.reportYear, g.reportMonth,
 		g.delivered, name, rank)
 }
@@ -979,7 +979,7 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 	if !ok || len(g.res.Admiral) == 0 || len(g.res.AdmiralNames) == 0 {
 		return
 	}
-	staff := rules.StaffAdmirals(g.workRecord())
+	staff := rules.StaffAdmirals(g.workRecord(), g.res.Faction)
 	isStaff := map[int]bool{}
 	for _, i := range staff {
 		isStaff[i] = true
@@ -1007,8 +1007,8 @@ func (g *Game) workRecord() []byte {
 }
 
 // staffAdmiral 回坐某個幕僚職的提督姓名與軍階的字碼（`docs/internals/30`）。
-func (g *Game) staffAdmiral(post byte) (name, rank []uint16) {
-	i := rules.StaffAdmiralByPost(g.workRecord(), post)
+func (g *Game) staffAdmiral(post int) (name, rank []uint16) {
+	i := rules.StaffAdmiral(g.workRecord(), post, g.res.Faction)
 	if i < 0 || i >= len(g.res.AdmiralNames) {
 		return nil, nil
 	}

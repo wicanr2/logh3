@@ -9,43 +9,40 @@ package rules
 const (
 	admiralMerit = 0x06 // 軍階由這個值分段換算
 
-	// 幕僚職不在提督表裡，在 WORK 的 +0x37：三筆 2 bytes 的
-	// 「提督索引 ＋ 職務碼」（`docs/internals/30`）。
+	// 幕僚職不在提督表裡，在 WORK 的 `+0x37`：三個職位各兩個位元組，
+	// **帝國那位的提督索引在前、同盟那位在後**（`docs/internals/30`）。
 	workStaffOff   = 0x37
 	workStaffCount = 3
 )
 
-// StaffAdmirals 回 WORK 裡三個幕僚職的提督索引。
-func StaffAdmirals(work []byte) []int {
-	if len(work) < workStaffOff+workStaffCount*2 {
-		return nil
-	}
+// StaffAdmirals 回某個陣營三個幕僚職的提督索引。
+func StaffAdmirals(work []byte, faction int) []int {
 	out := make([]int, 0, workStaffCount)
-	for i := 0; i < workStaffCount; i++ {
-		out = append(out, int(work[workStaffOff+i*2]))
+	for post := 0; post < workStaffCount; post++ {
+		if i := StaffAdmiral(work, post, faction); i >= 0 {
+			out = append(out, i)
+		}
 	}
 	return out
 }
 
-// 幕僚職的職位碼（`docs/internals/30`）。四份存檔裡三個碼都一樣，
-// 只有坐那個位子的人會換。
+// 三個幕僚職的順序（`docs/internals/30`）。`WORK` 的 `+0x37` 起
+// **一職兩個位元組：帝國那位的提督索引、同盟那位的**。
 const (
-	PostMilitaryStaff = 0x4F // 軍事專任參謀：月底的船艦接收報告、次月份建造計劃署名
-	PostIntelStaff    = 0x3A // 情報專任參謀：戰略情報報告署名
-	PostDomesticStaff = 0x3C // 內政專任參謀：月初的會計報告署名
+	PostMilitary = 0 // 軍事專任參謀：月底的船艦接收報告、次月份建造計劃署名
+	PostIntel    = 1 // 情報專任參謀：戰略情報報告署名
+	PostDomestic = 2 // 內政專任參謀：月初的會計報告署名
 )
 
-// StaffAdmiralByPost 回坐某個幕僚職的提督索引，沒有就回 −1。
-func StaffAdmiralByPost(work []byte, post byte) int {
+// StaffAdmiral 回某個陣營坐某個幕僚職的提督索引，取不到就回 −1。
+func StaffAdmiral(work []byte, post, faction int) int {
+	if post < 0 || post >= workStaffCount || faction < 0 || faction > 1 {
+		return -1
+	}
 	if len(work) < workStaffOff+workStaffCount*2 {
 		return -1
 	}
-	for i := 0; i < workStaffCount; i++ {
-		if work[workStaffOff+i*2+1] == post {
-			return int(work[workStaffOff+i*2])
-		}
-	}
-	return -1
+	return int(work[workStaffOff+post*2+faction])
 }
 
 // RankNames 是軍階由低到高。`RankOf` 回的是這個陣列的索引。

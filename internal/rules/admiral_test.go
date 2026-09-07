@@ -48,7 +48,7 @@ func TestAdmiralListNewGame(t *testing.T) {
 			t.Skipf("缺 WORK 樣板，跳過")
 		}
 	}
-	staff := StaffAdmirals(work)
+	staff := StaffAdmirals(work, 0)
 	list := AdmiralList(all, 0, false, staff)
 	for i, w := range want {
 		if got := list[i].Rank(); got != w {
@@ -79,5 +79,39 @@ func TestAdmiralListNewGame(t *testing.T) {
 		if standby[i].Index != w {
 			t.Fatalf("待命中第 %d 列是提督 %d，預期 %d", i, standby[i].Index, w)
 		}
+	}
+}
+
+// TestStaffAdmiralsByFaction 釘住「一職兩個位元組、帝國在前同盟在後」。
+//
+// 判準是**兩邊各自的提督清單缺了誰**（`docs/re/61`）：新遊戲載入之後
+// `ds:95DA` 那份清單，帝國缺 6／13／16、同盟缺 0x3A／0x3C／0x4F，
+// 而那六個就是 `WORK +0x37` 的六個位元組。同盟的月初報告署名
+// 「內政專任參謀 邱吾權上校」＝ 提督 60 ＝ 0x3C，對得上。
+func TestStaffAdmiralsByFaction(t *testing.T) {
+	work, err := os.ReadFile(filepath.Join("../..", "org_game/extracted/WORK.DT9"))
+	if err != nil {
+		t.Skipf("缺 WORK，跳過")
+	}
+	for _, c := range []struct {
+		faction int
+		want    []int
+	}{
+		{0, []int{6, 13, 16}},   // 梅克林格／克斯拉／奧貝斯坦
+		{1, []int{79, 58, 60}},  // 派特里契夫／巴格達胥／邱吾權
+	} {
+		got := StaffAdmirals(work, c.faction)
+		if len(got) != len(c.want) {
+			t.Fatalf("陣營 %d 拿到 %v，預期 %v", c.faction, got, c.want)
+		}
+		for i := range c.want {
+			if got[i] != c.want[i] {
+				t.Fatalf("陣營 %d 的第 %d 個是 %d，預期 %d（全部 %v）",
+					c.faction, i, got[i], c.want[i], got)
+			}
+		}
+	}
+	if got := StaffAdmiral(work, PostDomestic, 1); got != 60 {
+		t.Fatalf("同盟的內政專任參謀是 %d，預期 60（邱吾權）", got)
 	}
 }
