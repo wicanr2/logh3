@@ -169,6 +169,9 @@ func checkGameScreen(t *testing.T, specName, batch string) {
 				rules.SummariseCapital(rec, planets, 0, 0, 0, 796, 45592, 10341), 0)
 		}
 	}
+	if faction, standby, ok := listState(specName); ok {
+		s.ListRows = admiralRows(t, faction, standby)
+	}
 	fb, missing := MainGameWithBoard(s, fnt, mapImg, faces, cur, afterBoard)
 	// 生產計劃的數字是算出來的（`docs/spec/004`）。
 	if specName == "screen-production-plan" {
@@ -374,4 +377,63 @@ func capitalAssets(t *testing.T) (*rules.Planets, *CapitalPanel, *RegionPanel) {
 		t.Fatal(err)
 	}
 	return planets, cap, region
+}
+
+// listState 回這張畫面的清單要哪一群提督：陣營，以及要不要濾掉幕僚職。
+func listState(specName string) (faction int, standby, ok bool) {
+	switch specName {
+	case "screen-admiral-list-view": // 提督資料：全列，幕僚職前面標 ○
+		return 0, false, true
+	case "screen-standby-admirals", "screen-admiral-list": // 待命中提督資料
+		return 0, true, true
+	case "screen-enemy-list": // 敵提督資料
+		return 1, false, true
+	}
+	return 0, false, false
+}
+
+// admiralRows 從原版資料檔算出清單的列。姓名的字碼在
+// `docs/internals/data/keireki.json`，軍階與幕僚職由 `internal/rules` 算。
+func admiralRows(t *testing.T, faction int, standby bool) []ListRow {
+	t.Helper()
+	root := "../.."
+	adm, err := os.ReadFile(filepath.Join(root, "org_game/extracted/ADMIRAL.DTX"))
+	if err != nil {
+		t.Skipf("缺 ADMIRAL.DTX，跳過（不用代用品）")
+	}
+	work, err := os.ReadFile(filepath.Join(root, "org_game/extracted/WORK.DT9"))
+	if err != nil {
+		t.Skipf("缺 WORK 樣板，跳過")
+	}
+	var names struct {
+		Records []struct {
+			Index     int      `json:"index"`
+			NameCodes []uint16 `json:"name_codes"`
+		} `json:"records"`
+	}
+	b, err := os.ReadFile(filepath.Join(root, "docs/internals/data/keireki.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(b, &names); err != nil {
+		t.Fatal(err)
+	}
+	code := map[int][]uint16{}
+	for _, r := range names.Records {
+		code[r.Index] = r.NameCodes
+	}
+	staff := rules.StaffAdmirals(work)
+	isStaff := map[int]bool{}
+	for _, i := range staff {
+		isStaff[i] = true
+	}
+	var out []ListRow
+	for _, a := range rules.AdmiralList(rules.ParseAdmirals(adm), faction, standby, staff) {
+		out = append(out, ListRow{
+			Staff: isStaff[a.Index],
+			Name:  code[a.Index],
+			Rank:  rules.RankOf(a.Merit),
+		})
+	}
+	return out
 }

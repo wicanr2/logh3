@@ -27,6 +27,10 @@ type MainGameSpec struct {
 	} `json:"map"`
 	Windows map[string]*GameWindow `json:"windows"`
 
+	// ListRows 是清單畫面要畫的列。**不進 JSON**——名字、軍階與幕僚記號
+	// 都是從原版資料檔算出來的（`internal/rules`），不是規格裡抄好的。
+	ListRows []ListRow `json:"-"`
+
 	// Fields 是「會變的數字」畫在哪（建造計劃的百分比、金額、餘額）。
 	// 靜態的 Lines 已經含了開局的值，所以要重畫時先把這幾格填回底色。
 	Fields *struct {
@@ -131,6 +135,9 @@ type GameWindow struct {
 
 	// Tabs 是視窗裡的分頁鈕（一覽表、情報收集那幾張的上方切換鈕）。
 	Tabs *ui.TabBar `json:"tabs"`
+
+	// List 是清單的列版面；內容由呼叫端算好放進 MainGameSpec.ListRows。
+	List *ListSpec `json:"list"`
 
 	// Rules 是純色的線（報告視窗裡的表格分隔線）。
 	Rules []Solid `json:"rules"`
@@ -329,6 +336,11 @@ func MainGameWithBoard(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, fac
 			missing = append(missing, w.Draw(fb, fnt, 3, faces)...)
 		}
 	}
+	for _, w := range s.Windows {
+		if w.List != nil {
+			w.List.Draw(fb, fnt, s.ListRows)
+		}
+	}
 	if cur != nil && s.Mouse != nil {
 		if c := s.Mouse.Clip; c != nil {
 			cur.DrawClipped(fb, s.Mouse.X, s.Mouse.Y, c.X, c.Y, c.W, c.H)
@@ -342,12 +354,23 @@ func MainGameWithBoard(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, fac
 		if n := s.Mouse.AfterBoxes; n != "" {
 			if w := s.Windows[n]; w != nil {
 				w.DrawBoxes(fb, nil)
+				if w.List != nil {
+					// 列的底板重畫過，字要跟著補回去，游標再蓋一次上去
+					// ——原版的游標永遠在最上面。
+					w.List.Draw(fb, fnt, s.ListRows)
+					cur.Draw(fb, s.Mouse.X, s.Mouse.Y)
+				}
 			}
 		}
 		if n := s.Mouse.AfterBoxFills; n != "" {
 			if w := s.Windows[n]; w != nil {
-				w.DrawBoxFills(fb, s.Mouse.X+cur.Offset[0], s.Mouse.Y+cur.Offset[1],
-					cur.Width, cur.Height)
+				cx, cy := s.Mouse.X+cur.Offset[0], s.Mouse.Y+cur.Offset[1]
+				w.DrawBoxFills(fb, cx, cy, cur.Width, cur.Height)
+				// 刷回底色的那一列要把字補回去，游標再蓋一次上去。
+				if w.List != nil {
+					w.List.DrawRowsIn(fb, fnt, s.ListRows, cx, cy, cur.Width, cur.Height)
+					cur.Draw(fb, s.Mouse.X, s.Mouse.Y)
+				}
 			}
 		}
 		// 反白條同理：滑鼠移到哪一列，原版就把那一列整條重畫成反白色，
