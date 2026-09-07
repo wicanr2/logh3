@@ -9,6 +9,7 @@ import (
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
 	"github.com/wicanr2/logh3/internal/ui"
 )
@@ -103,10 +104,31 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	panel, err := screen.LoadRegionPanel(filepath.Join(root, "docs/internals/data/region-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	stellarFile, err := os.ReadFile(filepath.Join(orig, "STELLAR.DTA"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	stellar, err := LoadRegionRecords(stellarFile,
+		filepath.Join(root, "docs/internals/data/month-rollover-796-01.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	pladat, err := os.ReadFile(filepath.Join(orig, "PLADAT.DAT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	planets, err := rules.LoadPlanets(pladat)
+	if err != nil {
+		t.Fatal(err)
+	}
 	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
-		Regions: regions}
+		Regions: regions, RegionPanel: panel, Stellar: stellar, Planets: planets}
 }
 
 // reachCommandPhase 走正常玩家路徑到戰略地圖介面：
@@ -520,6 +542,49 @@ func TestRightClickSelectsRegion(t *testing.T) {
 			if g.SelectedRegion() != c.want {
 				t.Fatalf("(%d,%d) 選到星域 %d，預期 %d（%s）",
 					c.x, c.y, g.SelectedRegion(), c.want, c.name)
+			}
+		})
+	}
+}
+
+// TestRegionPanelOnPlayerPath 走正常玩家路徑到戰略地圖介面，右鍵選一個星域，
+// 左下角那塊要與原版逐位元組相同（規格 `docs/spec/001`）。
+//
+// 只比面板那塊 320×80：這張畫面的游標還是規格裡量到的位置（遊戲目前不會
+// 把游標跟著滑鼠搬，那是另一件事），所以整張比會差在游標上。
+func TestRegionPanelOnPlayerPath(t *testing.T) {
+	for _, c := range []struct {
+		batch  string
+		x, y   int
+		region int
+	}{
+		{"hovA", 60, 100, 2},
+		{"hovB", 150, 160, 14},
+		{"hovC", 250, 240, 19},
+		{"rcback", 300, 240, 30},
+	} {
+		t.Run(c.batch, func(t *testing.T) {
+			oracle := filepath.Join("../..", "workplace/oracle/"+c.batch+"/screen.bin")
+			want, err := os.ReadFile(oracle)
+			if err != nil {
+				t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", oracle)
+			}
+			g := reachCommandPhase(t)
+			g.RightClick(c.x, c.y)
+			if g.SelectedRegion() != c.region {
+				t.Fatalf("選到星域 %d，預期 %d", g.SelectedRegion(), c.region)
+			}
+			fb := g.Frame()
+			bad := 0
+			for y := 340; y < 420; y++ {
+				for x := 0; x < 320; x++ {
+					if want[y*640+x] != fb.Pix[y*640+x] {
+						bad++
+					}
+				}
+			}
+			if bad != 0 {
+				t.Fatalf("%s：左下角那塊與原版不同的像素 %d / %d", c.batch, bad, 320*80)
 			}
 		})
 	}

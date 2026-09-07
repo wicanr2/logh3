@@ -36,6 +36,7 @@
 | 5s | 一覽表 → 星系資料 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `star1e`；地圖用第三組星域色（`colour_796_01_star_list`），選中的星域畫成色 7 |
 | 5t | 兩張下拉選單（系統指令、一覽表）| `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `sysmenu1e`、`lstmenu1e`；系統指令五項（實行／取進度／存進度／設定／結束）、一覽表四項 |
 | 3b | 命令階段的正常玩家路徑（12 張）| `same-state` | 0 | [`docs/playtest/005`](docs/playtest/005-player-path.md) | 右鍵兩下關掉月初報告 → 命令列三格 → 選單每一項；每一張都是前一步的輸入帶進去的，不是 direct-entry |
+| 5u | 星域摘要面板（右鍵選星域，15 個局面）| `same-state` | 0 | [`docs/spec/001`](docs/spec/001-region-summary-panel.md)、[`docs/re/31`](docs/re/31-region-panel-layout.md) | 文字**從規則算出來**，不是量好畫死的。整張比，跳過游標的外接矩形（原版右鍵之後游標只補回隔列）。含七個 `-poke` 造的局面 |
 | 6 | 結局（單張 CG）| `same-state`（plane 2／3）| 0 | 收據 `ending-empire`、`ending-alliance` | remake 畫得出來，plane 2／3 與原版逐位元組相同；plane 0／1 是多張圖疊出來的，疊法未解。播放順序（哪張配哪句、換場）也未解 |
 
 ## 資料格式
@@ -51,11 +52,11 @@
 | `FRAME.BLK` / `BLOCK_*.BLK` | 未解（全彩非遮罩；32×32／320×128／640×64 等切法都對不齊）| — |
 | `STRMAP.RGN`（星域區域遮罩）| **已解出**（32 區域；底圖＋遮罩＋顏色重建 0 差異）| [`docs/internals/13`](docs/internals/13-strmap-rgn.md) |
 | `MAP*.CMP` | 未解；**不是星圖的來源**（走到主畫面為止一份都沒被讀）| [`docs/re/17`](docs/re/17-star-region-owner.md) |
-| `PLADAT.DAT` | **已解出** | [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
+| `PLADAT.DAT` | **已解出**（檔頭 ＝ 每星域行星數；`+0x11` 擁有者、`+0x14` 防衛力、`+0x1A` 經濟力）| [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
 | `KEIREKI.DAT`（人物傳）| **已解出**（82 篇，位移表 ＋ Big5 內文）| [`docs/internals/15`](docs/internals/15-keireki-dat.md) |
 | `ATTR.DAT` | 版面已觀察（128 bytes，只有 `00`／`0F`；前 8 個全 0，接著三組「六個 `0F` ＋ 兩個 `00`」，其餘全 `0F`）；語意未解 | — |
 | `ADMIRAL.DT*` | **版面已解出**（欄位語意確認 `+1` ＝ 陣營、`+11` ＝ 占領能力）| [`docs/internals/08`](docs/internals/08-admiral-dt.md) |
-| `STELLAR.DT*` | **版面已解出**（32 筆 × 126 bytes，32 個星域名；`+18` ＝ 擁有者，其餘數值欄位語意未知）| [`docs/internals/22`](docs/internals/22-stellar-dt.md) |
+| `STELLAR.DT*` | **版面已解出**（32 筆 × 126 bytes；擁有者、行星數、經濟力、成長率、防衛力、稅率、艦隊、未安定度已對出，檔案裡 `+0x13` 之後仍有未對過的欄位）| [`docs/internals/22`](docs/internals/22-stellar-dt.md) |
 | `*.MDS`（音樂，22 份）| **已解出**（22 首轉成 MIDI；速度數值的單位未確認）| [`docs/internals/17`](docs/internals/17-mds.md) |
 | `*.VO5`（結局圖，50 張）| **已解出**（逐 byte 的相等即重複；50/50 位元組完全用完）| [`docs/internals/18`](docs/internals/18-vo5.md) |
 | `ENDING.EXE`（結局文字、職員表）| **已解出** | [`docs/internals/16`](docs/internals/16-ending-exe.md) |
@@ -113,7 +114,11 @@
 | 星域相鄰圖與原版路徑表（32×32 中點矩陣 ×2）| 通過 | [`docs/internals/26`](docs/internals/26-star-region-graph.md)；1024 對逐步驗證 |
 | 曆法：一回合三天、一個月十回合、一年十二個月 | 通過 | [`docs/re/25`](docs/re/25-calendar.md)；`ds:8F18` 回合計數器對三份記憶體傾印＋三張畫面 |
 | 月底交付「建造中」的船艦 | 已量到、未實作 | [`docs/re/21`](docs/re/21-month-end-ship-delivery.md) |
-| 治安 ＝ (200 − 未安定度) / 2 | 通過 | [`docs/re/24`](docs/re/24-security-formula.md)；六個帝國星域 |
+| 治安 ＝ (200 − 未安定度) / 2 | 通過 | [`docs/re/24`](docs/re/24-security-formula.md)；六個帝國星域 ＋ 四個 `-poke` 局面（`docs/re/31`）|
+| 治安數字的四段顏色（`<=40` 色 6、`<=80` 色 7、`<=120` 色 5、其餘色 2）| 通過 | [`docs/re/31`](docs/re/31-region-panel-layout.md)；40/41 那一對把門檻釘死 |
+| 艦隊 `a：b` ＝ 記錄的 `+0x28`／`+0x2B`（帝國玩家）| 通過 | [`docs/re/31`](docs/re/31-region-panel-layout.md)；`-poke` 成 12：99 |
 | 情報報告地圖的治安色（表 `ds:1780` ＋ 分段算式）| 通過 | [`docs/re/27`](docs/re/27-security-map-colours.md)；32 個星域逐一相符，除數 85 用 poke 實測定下來 |
 | 未安定度的開局值怎麼算出來 | **未解** | [`docs/re/24`](docs/re/24-security-formula.md) |
-| 經濟力每月 +1002 的算式 | **未解** | [`docs/re/23`](docs/re/23-region-panel-fields.md) |
+| 星域經濟力 ＝ 該星域行星 `+0x1A` 相加（載入與每個月底各重算一次）| 通過 | [`docs/re/30`](docs/re/30-region-economy-from-planets.md)；星域 0 的四次累加逐值相符 |
+| 月底把當月的稅從重算的經濟力裡扣掉 | 星域 0 已量到，其餘**未解** | [`docs/re/30`](docs/re/30-region-economy-from-planets.md)；反推另外九個星域合計 10892 vs 實際 10813 |
+| 行星每月的成長算式 | **未解** | [`docs/re/30`](docs/re/30-region-economy-from-planets.md)；每顆行星各走各的，還會變負 |

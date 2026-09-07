@@ -19,6 +19,21 @@ from screenspec import (W, H, load_screen, font_lookup, measure_frame,
 batch = sys.argv[1] if len(sys.argv) > 1 else 'main1e'
 outname = sys.argv[2] if len(sys.argv) > 2 else 'screen-command-phase'
 rows, flat = load_screen(f'/work/workplace/oracle/{batch}/screen.bin')
+
+# 游標在 (600,340) 壓在清單條那一格上，量框的時候分不出「底板本來長怎樣」
+# 與「游標留下來的點」。底板那一塊用另一份**游標不在那裡**的收據補
+# （`pnlU000` 的游標在星圖上），量完再把差異當成游標的一部分記回 mouse。
+CURSOR_REMNANT = (600, 340, 10, 15)
+CLEAN = 'pnlU000'
+_clean, _ = load_screen(f'/work/workplace/oracle/{CLEAN}/screen.bin')
+_rx, _ry, _rw, _rh = CURSOR_REMNANT
+rows = [bytearray(r) for r in rows]
+CURSOR_PATCHES = []
+for _y in range(_ry, _ry + _rh):
+    for _x in range(_rx, _rx + _rw):
+        if rows[_y][_x] != _clean[_y][_x]:
+            CURSOR_PATCHES.append({'x': _x, 'y': _y, 'colour': rows[_y][_x]})
+        rows[_y][_x] = _clean[_y][_x]
 full, half = font_lookup('/orig/GRAPH.IMG')
 bg = rows[0][0]
 
@@ -181,6 +196,11 @@ spec = {
          'action': 'system-menu', 'note': '系統指令'},
     ],
 }
+# 底板已經在載入時補乾淨了，剩下的差異就是游標本身：掛在 mouse 底下，
+# 在游標之後畫。這樣把游標搬到別的位置（星域摘要面板要換位置，
+# 見 `docs/spec/001`）不會多畫出這幾點。
+spec['mouse']['patches'] = CURSOR_PATCHES
+
 # 捲軸滑軌那一格的左緣被讀成交錯：框的上下兩列落在清單條的邊上（那裡是 3），
 # 中間整段都是 7，量測因此以為它一列 7 一列 3。原版 x=610 從頭到尾都是 7。
 for _b in spec['windows']['board']['boxes']:
@@ -190,4 +210,5 @@ for _b in spec['windows']['board']['boxes']:
 
 out = f'/work/docs/internals/data/{outname}.json' 
 json.dump(spec, open(out, 'w'), ensure_ascii=False, indent=1)
+print('游標殘留', len(CURSOR_PATCHES), '點')
 print('寫出', out, '｜文字', sum(len(l['cells']) for l in lines), '格、小框', len(BOXES), '個')

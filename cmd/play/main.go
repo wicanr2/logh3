@@ -20,6 +20,7 @@ import (
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/game"
+	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
 	"github.com/wicanr2/logh3/internal/ui"
 )
@@ -197,10 +198,33 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	// 左下角的星域摘要：版面 ＋ 執行期星域記錄 ＋ 行星表（規格 `docs/spec/001`）。
+	panel, err := screen.LoadRegionPanel(filepath.Join(data, "region-panel.json"))
+	if err != nil {
+		return nil, err
+	}
+	stellarFile, err := os.ReadFile(filepath.Join(orig, "STELLAR.DTA"))
+	if err != nil {
+		return nil, err
+	}
+	stellar, err := game.LoadRegionRecords(stellarFile,
+		filepath.Join(data, "month-rollover-796-01.json"))
+	if err != nil {
+		return nil, err
+	}
+	pladat, err := os.ReadFile(filepath.Join(orig, "PLADAT.DAT"))
+	if err != nil {
+		return nil, err
+	}
+	planets, err := rules.LoadPlanets(pladat)
+	if err != nil {
+		return nil, err
+	}
 	return &game.Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
-		Screens: screens, StarMaps: maps, Regions: regions}, nil
+		Screens: screens, StarMaps: maps, Regions: regions,
+		RegionPanel: panel, Stellar: stellar, Planets: planets}, nil
 }
 
 func regionColours(path string) ([]uint8, error) {

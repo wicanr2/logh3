@@ -155,6 +155,17 @@ type Resources struct {
 	// 星系資料又是另一組，所以不能共用同一張。
 	StarMaps map[string]*asset.Image
 	Admiral  []byte // ADMIRAL.DT*，防拷問答的答案在裡面
+
+	// RegionPanel 是左下角星域摘要那塊的版面（規格 `docs/spec/001`）。
+	RegionPanel *screen.RegionPanel
+
+	// Stellar 是執行期的星域記錄（一筆 126 bytes），Planets 是 `PLADAT.DAT`。
+	// 面板上的數字從這兩份算出來，不是量好畫死的。
+	Stellar []byte
+	Planets *rules.Planets
+
+	// Faction 是玩家陣營：0 帝國、1 同盟。
+	Faction int
 }
 
 // AdmiralRecord 是 `ADMIRAL.DT*` 一筆記錄的長度。
@@ -190,7 +201,9 @@ type Game struct {
 	// 月初報告被關掉幾層。兩層都關掉才露出戰略地圖介面。
 	reportLayer int
 
-	// 目前選中的星域。左下角那塊寫的就是它。開局是 0（瓦爾哈拉）。
+	// 目前選中的星域。左下角那塊寫的就是它。**還沒選過是 −1**，
+	// 那塊是空的——收據 `main1e` 就是這個狀態（關月初報告的那兩下右鍵
+	// 也點在星圖上，但沒有選中任何星域）。
 	selectedRegion int
 }
 
@@ -215,7 +228,7 @@ func New(res *Resources) (*Game, error) {
 	if res.Font == nil || res.Menu == nil || res.CopyProt == nil || res.MainGame == nil {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
-	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1}
+	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1}
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
 	}
@@ -338,7 +351,12 @@ func (g *Game) Click(x, y int) {
 func (g *Game) RightClick(x, y int) {
 	g.MoveMouse(x, y)
 	// 按在星圖上會順便換掉選中的星域，左下角那塊跟著改寫（收據 `rcback`）。
-	if g.res.Regions != nil && x >= mapX && x < mapX+mapW && y >= mapY && y < mapY+mapH {
+	//
+	// **只有已經在戰略地圖介面時才算**：關月初報告的那兩下右鍵也點在
+	// 星圖上（`main1e` 的 `-rclicks 300,200` 兩次），而那張畫面的左下角
+	// 是空的——所以關報告的右鍵不選星域。
+	if g.state == StateCommandPhase && g.res.Regions != nil &&
+		x >= mapX && x < mapX+mapW && y >= mapY && y < mapY+mapH {
 		if i := asset.RegionAt(g.res.Regions, x-mapX, y-mapY, tileW, tileH); i >= 0 {
 			g.selectedRegion = i
 		}
@@ -424,12 +442,31 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		if spec := g.commandSpec(g.state); spec != nil {
 			fb, _ := screen.MainGame(spec, g.res.Font, g.starMapFor(spec),
 				g.res.Faces, g.res.Cursor)
+			g.drawRegionPanel(fb)
 			return fb
 		}
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.highlight,
 			g.res.Cursor, g.mouseX, g.mouseY)
 		return fb
 	}
+}
+
+// drawRegionPanel 把選中星域的摘要畫進左下角那塊。
+//
+// **只有戰略地圖介面畫**：疊在上面的那幾張（一覽表、出擊命令…）會把
+// 左下角改寫成自己的內容，它們的規格裡已經有了。
+func (g *Game) drawRegionPanel(fb *gfx.Framebuffer) {
+	if g.state != StateCommandPhase || g.selectedRegion < 0 ||
+		g.res.RegionPanel == nil || g.res.Planets == nil {
+		return
+	}
+	o := g.selectedRegion * rules.RegionRecord
+	if o+rules.RegionRecord > len(g.res.Stellar) {
+		return
+	}
+	sum := rules.Summarise(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
+		g.selectedRegion, g.res.Faction)
+	g.res.RegionPanel.Draw(fb, g.res.Font, sum, g.res.Faction)
 }
 
 // commandSpec 回這個命令階段狀態的規格；沒有就回 nil。

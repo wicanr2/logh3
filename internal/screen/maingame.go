@@ -69,6 +69,14 @@ type MainGameSpec struct {
 		// AfterBoxFills 指定一個視窗：它的小框**只有內部**在游標之後填回底色。
 		AfterBoxFills string `json:"after_box_fills"`
 
+		// Patches 是游標畫在這個位置時**留在底板上的零星像素**：
+		// 游標被重畫的視窗蓋掉一部分之後剩下的那幾點。座標是絕對的，
+		// 在游標之後畫（`docs/spec/001`）。
+		Patches []struct {
+			X, Y   int
+			Colour uint8 `json:"colour"`
+		} `json:"patches"`
+
 		// Clip 是游標的可見矩形。原版的游標是**疊上去**的，視窗一重畫就
 		// 把它蓋掉一部分，直到游標下次移動才補回來——所以同一隻游標在
 		// 不同畫面上可見的範圍不一樣。
@@ -286,6 +294,9 @@ func MainGame(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset
 			cur.DrawClipped(fb, s.Mouse.X, s.Mouse.Y, c.X, c.Y, c.W, c.H)
 		} else {
 			cur.Draw(fb, s.Mouse.X, s.Mouse.Y)
+		}
+		for _, p := range s.Mouse.Patches {
+			fb.Set(p.X, p.Y, p.Colour)
 		}
 		// 有些畫面在游標之後才刷清單列，那幾格會蓋掉游標的一部分。
 		if n := s.Mouse.AfterBoxes; n != "" {
