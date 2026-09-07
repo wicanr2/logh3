@@ -1,0 +1,367 @@
+{
+ "note": "796 年 1 月 1 日與 2 月 1 日兩個時間點的星域數值，直接讀執行期記錄（docs/re/29）。月底結算的算式還沒解出來，這是給下一輪對算式用的資料。",
+ "treasury": {
+  "796_01": {
+   "military": 45592,
+   "tax_total": 10341
+  },
+  "796_02": {
+   "military": 42339,
+   "tax_total": 10413
+  }
+ },
+ "regions": [
+  {
+   "index": 0,
+   "owner": 0,
+   "economy_796_01": 82302,
+   "economy_796_02": 83304,
+   "growth_per_mille": 45,
+   "tax_per_mille": 32,
+   "unrest_796_01": 36,
+   "unrest_796_02": 36,
+   "defence": 27300
+  },
+  {
+   "index": 1,
+   "owner": 0,
+   "economy_796_01": 28196,
+   "economy_796_02": 28612,
+   "growth_per_mille": 54,
+   "tax_per_mille": 38,
+   "unrest_796_01": 38,
+   "unrest_796_02": 38,
+   "defence": 15900
+  },
+  {
+   "index": 2,
+   "owner": 0,
+   "economy_796_01": 21277,
+   "economy_796_02": 21559,
+   "growth_per_mille": 52,
+   "tax_per_mille": 37,
+   "unrest_796_01": 27,
+   "unrest_796_02": 27,
+   "defence": 18000
+  },
+  {
+   "index": 3,
+   "owner": 2,
+   "economy_796_01": 30498,
+   "economy_796_02": 32245,
+   "growth_per_mille": 58,
+   "tax_per_mille": 58,
+   "unrest_796_01": 100,
+   "unrest_796_02": 100,
+   "defence": 11300
+  },
+  {
+   "index": 4,
+   "owner": 0,
+   "economy_796_01": 5081,
+   "economy_796_02": 5164,
+   "growth_per_mille": 64,
+   "tax_per_mille": 45,
+   "unrest_796_01": 30,
+   "unrest_796_02": 30,
+   "defence": 10600
+  },
+  {
+   "index": 5,
+   "owner": 0,
+   "economy_796_01": 9758,
+   "economy_796_02": 9918,
+   "growth_per_mille": 64,
+   "tax_per_mille": 45,
+   "unrest_796_01": 32,
+   "unrest_796_02": 32,
+   "defence": 12600
+  },
+  {
+   "index": 6,
+   "owner": 0,
+   "economy_796_01": 37908,
+   "economy_796_02": 38423,
+   "growth_per_mille": 51,
+   "tax_per_mille": 36,
+   "unrest_796_01": 48,
+   "unrest_796_02": 48,
+   "defence": 18000
+  },
+  {
+   "index": 7,
+   "owner": 0,
+   "economy_796_01": 36699,
+   "economy_796_02": 37189,
+   "growth_per_mille": 51,
+   "tax_per_mille": 36,
+   "unrest_796_01": 44,
+   "unrest_796_02": 44,
+   "defence": 21300
+  },
+  {
+   "index": 8,
+   "owner": 0,
+   "economy_796_01": 33537,
+   "economy_796_02": 34078,
+   "growth_per_mille": 60,
+   "tax_per_mille": 42,
+   "unrest_796_01": 42,
+   "unrest_796_02": 42,
+   "defence": 13800
+  },
+  {
+   "index": 9,
+   "owner": 0,
+   "economy_796_01": 18879,
+   "economy_796_02": 19163,
+   "growth_per_mille": 59,
+   "tax_per_mille": 42,
+   "unrest_796_01": 50,
+   "unrest_796_02": 50,
+   "defence": 15100
+  },
+  {
+   "index": 10,
+   "owner": 2,
+   "economy_796_01": 13553,
+   "economy_796_02": 14350,
+   "growth_per_mille": 58,
+   "tax_per_mille": 58,
+   "unrest_796_01": 100,
+   "unrest_796_02": 100,
+   "defence": 8700
+  },
+  {
+   "index": 11,
+   "owner": 2,
+   "economy_796_01": 12498,
+   "economy_796_02": 13220,
+   "growth_per_mille": 59,
+   "tax_per_mille": 59,
+   "unrest_796_01": 100,
+   "unrest_796_02": 100,
+   "defence": 8000
+  },
+  {
+   "index": 12,
+   "owner": 2,
+   "economy_796_01": 17203,
+   "economy_796_02": 18045,
+   "growth_per_mille": 48,
+   "tax_per_mille": 48,
+   "unrest_796_01": 100,
+   "unrest_796_02": 100,
+   "defence": 5800
+  },
+  {
+   "index": 13,
+   "owner": 0,
+   "economy_796_01": 7109,
+   "economy_796_02": 7221,
+   "growth_per_mille": 60,
+   "tax_per_mille": 42,
+   "unrest_796_01": 48,
+   "unrest_796_02": 48,
+   "defence": 12800
+  },
+  {
+   "index": 14,
+   "owner": 2,
+   "economy_796_01": 103100,
+   "economy_796_02": 106193,
+   "growth_per_mille": 31,
+   "tax_per_mille": 31,
+   "unrest_796_01": 100,
+   "unrest_796_02": 100,
+   "defence": 8800
+  },
+  {
+   "index": 15,
+   "owner": 1,
+   "economy_796_01": 12524,
+   "economy_796_02": 13222,
+   "growth_per_mille": 61,
+   "tax_per_mille": 46,
+   "unrest_796_01": 56,
+   "unrest_796_02": 60,
+   "defence": 8300
+  },
+  {
+   "index": 16,
+   "owner": 1,
+   "economy_796_01": 7087,
+   "economy_796_02": 7521,
+   "growth_per_mille": 73,
+   "tax_per_mille": 55,
+   "unrest_796_01": 50,
+   "unrest_796_02": 41,
+   "defence": 13200
+  },
+  {
+   "index": 17,
+   "owner": 1,
+   "economy_796_01": 13979,
+   "economy_796_02": 14143,
+   "growth_per_mille": 59,
+   "tax_per_mille": 44,
+   "unrest_796_01": 42,
+   "unrest_796_02": 49,
+   "defence": 13800
+  },
+  {
+   "index": 18,
+   "owner": 1,
+   "economy_796_01": 28580,
+   "economy_796_02": 29862,
+   "growth_per_mille": 54,
+   "tax_per_mille": 40,
+   "unrest_796_01": 40,
+   "unrest_796_02": 47,
+   "defence": 19100
+  },
+  {
+   "index": 19,
+   "owner": 1,
+   "economy_796_01": 22710,
+   "economy_796_02": 23577,
+   "growth_per_mille": 56,
+   "tax_per_mille": 42,
+   "unrest_796_01": 38,
+   "unrest_796_02": 45,
+   "defence": 15200
+  },
+  {
+   "index": 20,
+   "owner": 1,
+   "economy_796_01": 30136,
+   "economy_796_02": 31391,
+   "growth_per_mille": 53,
+   "tax_per_mille": 40,
+   "unrest_796_01": 26,
+   "unrest_796_02": 34,
+   "defence": 21800
+  },
+  {
+   "index": 21,
+   "owner": 1,
+   "economy_796_01": 27415,
+   "economy_796_02": 28674,
+   "growth_per_mille": 58,
+   "tax_per_mille": 43,
+   "unrest_796_01": 18,
+   "unrest_796_02": 26,
+   "defence": 25400
+  },
+  {
+   "index": 22,
+   "owner": 1,
+   "economy_796_01": 4686,
+   "economy_796_02": 5188,
+   "growth_per_mille": 115,
+   "tax_per_mille": 87,
+   "unrest_796_01": 48,
+   "unrest_796_02": 55,
+   "defence": 5400
+  },
+  {
+   "index": 23,
+   "owner": 2,
+   "economy_796_01": 5584,
+   "economy_796_02": 5978,
+   "growth_per_mille": 73,
+   "tax_per_mille": 73,
+   "unrest_796_01": 100,
+   "unrest_796_02": 100,
+   "defence": 6200
+  },
+  {
+   "index": 24,
+   "owner": 2,
+   "economy_796_01": 3007,
+   "economy_796_02": 3515,
+   "growth_per_mille": 73,
+   "tax_per_mille": 73,
+   "unrest_796_01": 100,
+   "unrest_796_02": 72,
+   "defence": 6600
+  },
+  {
+   "index": 25,
+   "owner": 2,
+   "economy_796_01": 7576,
+   "economy_796_02": 8277,
+   "growth_per_mille": 97,
+   "tax_per_mille": 97,
+   "unrest_796_01": 100,
+   "unrest_796_02": 100,
+   "defence": 8700
+  },
+  {
+   "index": 26,
+   "owner": 1,
+   "economy_796_01": 12065,
+   "economy_796_02": 12645,
+   "growth_per_mille": 67,
+   "tax_per_mille": 50,
+   "unrest_796_01": 46,
+   "unrest_796_02": 49,
+   "defence": 11800
+  },
+  {
+   "index": 27,
+   "owner": 1,
+   "economy_796_01": 8329,
+   "economy_796_02": 8836,
+   "growth_per_mille": 67,
+   "tax_per_mille": 50,
+   "unrest_796_01": 40,
+   "unrest_796_02": 49,
+   "defence": 9200
+  },
+  {
+   "index": 28,
+   "owner": 2,
+   "economy_796_01": 9213,
+   "economy_796_02": 10104,
+   "growth_per_mille": 71,
+   "tax_per_mille": 71,
+   "unrest_796_01": 100,
+   "unrest_796_02": 76,
+   "defence": 14000
+  },
+  {
+   "index": 29,
+   "owner": 1,
+   "economy_796_01": 17305,
+   "economy_796_02": 17992,
+   "growth_per_mille": 55,
+   "tax_per_mille": 41,
+   "unrest_796_01": 44,
+   "unrest_796_02": 47,
+   "defence": 8300
+  },
+  {
+   "index": 30,
+   "owner": 1,
+   "economy_796_01": 7639,
+   "economy_796_02": 8234,
+   "growth_per_mille": 75,
+   "tax_per_mille": 57,
+   "unrest_796_01": 38,
+   "unrest_796_02": 47,
+   "defence": 14100
+  },
+  {
+   "index": 31,
+   "owner": 1,
+   "economy_796_01": 68282,
+   "economy_796_02": 70895,
+   "growth_per_mille": 48,
+   "tax_per_mille": 36,
+   "unrest_796_01": 24,
+   "unrest_796_02": 32,
+   "defence": 27500
+  }
+ ]
+}
