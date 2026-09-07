@@ -354,7 +354,12 @@ func (g *Game) State() State { return g.state }
 // Typed 回防拷問答已經打進去的字串（畫面上還沒畫，見下方的未確認事項）。
 func (g *Game) Typed() string { return string(g.typed) }
 
-// MoveMouse 移動游標。主選單會跟著換反白的那一列。
+// mouseDY 見 `ui.MouseDY`：**Game 對外一律用畫面座標**，只有要餵給吃滑鼠
+// 座標的東西時才減掉它。兩套座標曾經同時存在，症狀是「命中判定對、
+// 游標畫在別的地方」——兩邊各錯一次剛好互相抵銷（`docs/re/52`）。
+const mouseDY = ui.MouseDY
+
+// MoveMouse 移動游標，座標是**畫面座標**。主選單會跟著換反白的那一列。
 func (g *Game) MoveMouse(x, y int) {
 	g.mouseX, g.mouseY = x, y
 	if g.state == StateMainMenu {
@@ -696,7 +701,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			return fb
 		}
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.highlight,
-			g.res.Cursor, g.mouseX, g.mouseY)
+			g.res.Cursor, g.mouseX, g.mouseY-mouseDY)
 		return fb
 	}
 }
@@ -764,7 +769,7 @@ func (g *Game) drawSlotList(fb *gfx.Framebuffer) {
 		g.res.SlotList.DrawSaveBar(fb, row)
 		g.res.SlotList.DrawSaveRow(fb, g.res.Font, row)
 		if g.res.Cursor != nil {
-			g.res.Cursor.Draw(fb, g.mouseX, g.mouseY)
+			g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)
 		}
 	}
 }

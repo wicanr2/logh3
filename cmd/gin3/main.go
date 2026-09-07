@@ -25,10 +25,6 @@ import (
 	"github.com/wicanr2/logh3/internal/gfx"
 )
 
-// mouseDY 是視窗座標與遊戲座標的差：原版把 640×400 的畫面置中放進 640×480，
-// 遊戲收到的滑鼠 y 比畫面少 40（`docs/spec/007`）。
-const mouseDY = 40
-
 type app struct {
 	g      *game.Game
 	pal    [gfx.Colors]color.RGBA
@@ -61,13 +57,14 @@ func (a *app) Update() error {
 		}
 		return nil
 	}
+	// 視窗就是 640×480 的邏輯畫布，Game 也吃畫面座標，所以直接傳。
 	x, y := ebiten.CursorPosition()
-	a.g.MoveMouse(x, y-mouseDY)
+	a.g.MoveMouse(x, y)
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		a.g.Click(x, y-mouseDY)
+		a.g.Click(x, y)
 	}
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
-		a.g.RightClick(x, y-mouseDY)
+		a.g.RightClick(x, y)
 	}
 	for k := ebiten.Key0; k <= ebiten.Key9; k++ {
 		if inpututil.IsKeyJustPressed(k) {

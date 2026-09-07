@@ -66,7 +66,8 @@ func checkOracle(t *testing.T, batch string, mx, my int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fb, missing := MainMenuAt(spec, fnt, RowAt(spec, my), cur, mx, my)
+	// 表裡是收據的滑鼠座標；RowAt 吃畫面座標，兩者差 ui.MouseDY。
+	fb, missing := MainMenuAt(spec, fnt, RowAt(spec, my+ui.MouseDY), cur, mx, my)
 	if len(missing) != 0 {
 		t.Fatalf("有缺字：%04X", missing)
 	}

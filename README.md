@@ -95,7 +95,7 @@ tools/gui_check.sh                           # 顯示層的同狀態驗收
 tools/go.sh test ./...                       # 含對拍回歸測試
 tools/go.sh run ./cmd/play -orig /orig -out /src/workplace/play \
   -pal /src/workplace/oracle/main1e/pal.bin \
-  -script "move 300 170; click; type 138; enter; rclick 300 240; rclick 300 240"
+  -script "move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240"
 tools/go.sh run ./cmd/oradiff \
   -oracle workplace/oracle/main1e/screen.bin -remake workplace/play/06-rclick-300-240.bin
 ```

@@ -181,7 +181,7 @@ func reachCommandPhase(t *testing.T) *Game {
 	if err != nil {
 		t.Fatal(err)
 	}
-	g.Click(300, 170)
+	g.Click(300, 210)
 	for _, c := range []byte{'1', '3', '8', '\r'} {
 		g.Key(c)
 	}
@@ -353,10 +353,10 @@ func TestPlayerPathReachesGame(t *testing.T) {
 	if g.State() != StateMainMenu {
 		t.Fatal("開場不是主選單")
 	}
-	g.MoveMouse(300, 170)
+	g.MoveMouse(300, 210)
 	matches(t, g, "r0")
 
-	g.Click(300, 170)
+	g.Click(300, 210)
 	if g.State() != StateCopyProtection {
 		t.Fatal("點了主選單沒有進防拷問答")
 	}
@@ -394,7 +394,7 @@ func TestWrongAnswerStaysOnQuestion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	g.Click(300, 170)
+	g.Click(300, 210)
 	for _, c := range []byte{'1', '2', '3', '\r'} {
 		g.Key(c)
 	}
@@ -427,7 +427,7 @@ func TestBuildPlanArrowsChangePlan(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	g.Click(300, 170)
+	g.Click(300, 210)
 	for _, c := range []byte{'1', '3', '8'} {
 		g.Key(c)
 	}
@@ -474,7 +474,7 @@ func TestBudgetPlanFromMainScreen(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	g.Click(300, 170)
+	g.Click(300, 210)
 	for _, c := range []byte{'1', '3', '8'} {
 		g.Key(c)
 	}
@@ -496,7 +496,7 @@ func TestAdmiralListFromBuildPlan(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	g.Click(300, 170)
+	g.Click(300, 210)
 	for _, c := range []byte{'1', '3', '8'} {
 		g.Key(c)
 	}
@@ -674,7 +674,7 @@ func TestBuildPlanPctReachesProduction(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	g.Click(300, 170)
+	g.Click(300, 210)
 	for _, c := range []byte{'1', '3', '8', '\r'} {
 		g.Key(c)
 	}
@@ -915,7 +915,7 @@ func TestSaveGameClickWrites(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	g.Click(300, 170)
+	g.Click(300, 210)
 	for _, c := range []byte{'1', '3', '8', '\r'} {
 		g.Key(c)
 	}

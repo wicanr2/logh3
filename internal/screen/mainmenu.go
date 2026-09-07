@@ -88,15 +88,16 @@ func MainMenuWith(s *MenuSpec, fnt *font.Font, highlight int) (*gfx.Framebuffer,
 	return MainMenuAt(s, fnt, highlight, nil, -1, -1)
 }
 
-// CursorHotY 是游標熱點相對滑鼠 y 的位移。
+// CursorHotY 是游標熱點相對**畫面** y 的位移。
 //
 // 遊戲把滑鼠座標當成**游標的位置**在用：命中判定與游標繪製是同一個點，
-// 不是兩套座標。這個數字是量出來的（`docs/internals/07`）。
-const CursorHotY = 41
+// 不是兩套座標。量出來的原始數字是相對滑鼠座標的 41（`docs/internals/07`）；
+// 滑鼠座標與畫面座標差 40（`docs/internals/31`），所以相對畫面是 1。
+const CursorHotY = 1
 
-// RowAt 回滑鼠 y（遊戲收到的座標）落在哪一列，-1 ＝ 不在任何一列上。
+// RowAt 回**畫面** y 落在哪一列，-1 ＝ 不在任何一列上。
 //
-// 判準是**游標熱點**落在哪一格的矩形裡，不是滑鼠座標本身。
+// 判準是**游標熱點**落在哪一格的矩形裡，不是游標左上角。
 func RowAt(s *MenuSpec, y int) int {
 	hot := y + CursorHotY
 	first := s.Text.RowsY[0] - s.Text.CellPadY

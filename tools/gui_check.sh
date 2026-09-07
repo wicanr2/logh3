@@ -10,11 +10,11 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 cases=(
-  "r0|move 300 170"
-  "cb1|move 300 170; click"
-  "key1|move 300 170; click; type 138; enter"
-  "main1e|move 300 170; click; type 138; enter; rclick 300 240; rclick 300 240"
-  "load1e|move 300 170; click; type 138; enter; rclick 300 240; rclick 300 240; click 544 125; click 560 145"
+  "r0|move 300 210"
+  "cb1|move 300 210; click"
+  "key1|move 300 210; click; type 138; enter"
+  "main1e|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240"
+  "load1e|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; click 544 125; click 560 145"
 )
 fail=0
 for c in "${cases[@]}"; do

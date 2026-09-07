@@ -3,7 +3,7 @@
 // 這是 remake 的「可操作」入口：沒有顯示層也能一步步把輸入送進去、
 // 看每一步畫成什麼。腳本用分號分隔，例如
 //
-//	move 300 170; click; type 138; enter
+//	move 300 210; click; type 138; enter
 //
 // 原版素材由玩家自備（`-orig`），本專案不內嵌任何原版檔。
 package main
@@ -26,7 +26,7 @@ func main() {
 	out := flag.String("out", "workplace/play", "輸出目錄")
 	palPath := flag.String("pal", "", "調色盤檔（dosgolem 的 -dump-palette 格式，256×3）；"+
 		"不給就用主選單規格裡那 16 色。遊戲本體的調色盤與主選單不同")
-	script := flag.String("script", "move 300 170; click; type 138; enter",
+	script := flag.String("script", "move 300 210; click; type 138; enter",
 		"輸入腳本，分號分隔：move X Y／click [X Y]／type 數字／enter／back")
 	flag.Parse()
 

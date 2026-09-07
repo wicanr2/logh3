@@ -7,6 +7,17 @@ import (
 	"github.com/wicanr2/logh3/internal/gfx"
 )
 
+// MouseDY 是畫面座標與原版滑鼠座標的 y 差。
+//
+// 原版的字元平面從畫面 y ＝ 40 開始（`docs/internals/31`），滑鼠驅動程式
+// 回的是平面座標，所以畫面 y ＝ 滑鼠 y ＋ 40。remake 對外一律用畫面座標，
+// 只有要餵給吃滑鼠座標的東西（游標點陣、畫面規格的 `mouse` 欄位、
+// dosgolem 的 `-clicks`）時才減掉它。
+//
+// 這個值與 `cursor.json` 的 `offset_from_mouse[1]` 是同一件事：游標點陣的
+// 左上角就畫在熱點上，那個 40 全部來自座標系的差。
+const MouseDY = 40
+
 // Cursor 是遊戲自己畫的滑鼠游標。
 //
 // **游標是畫面內容的一部分**，不是模擬器疊上去的東西——原版自己畫它，

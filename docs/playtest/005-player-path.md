@@ -9,12 +9,12 @@
 ## 序列
 
 ```
-tools/go.sh run ./cmd/play -script "move 300 170; click; type 138; enter; click 448 330; click 448 310"
+tools/go.sh run ./cmd/play -script "move 300 210; click; type 138; enter; click 448 330; click 448 310"
 ```
 
 | 步 | 輸入 | 狀態 | 對照收據 | 差異 |
 |---|---|---|---|---|
-| 1 | `move 300 170` | 主選單（第 0 列反白） | `r0` | 0 / 307,200 |
+| 1 | `move 300 210` | 主選單（第 0 列反白） | `r0` | 0 / 307,200 |
 | 2 | `click` | 防拷問答 | `cb1` | 0 / 307,200 |
 | 3 | `type 138` | 防拷問答（輸入中） | — | 畫面不變（見未確認） |
 | 4 | `enter` | 遊戲本體 | `key1` | 0 / 307,200 |
@@ -54,7 +54,7 @@ tools/go.sh run ./cmd/play -script "move 300 170; click; type 138; enter; click 
 
 ```
 tools/go.sh run ./cmd/play -script \
-  "move 300 170; click; type 138; enter; rclick 300 240; rclick 300 240; \
+  "move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; \
    click 352 125; click 400 145"
 ```
 
@@ -78,5 +78,7 @@ tools/go.sh run ./cmd/play -script \
 星系（收據 `rcback`：右鍵回去之後那塊寫成「同盟軍星系艾流塞拉」），
 remake 還沒有那一層模型，所以只驗狀態不比畫面。
 
-⚠ 這裡的座標是**畫面座標**；收據裡的 `-clicks` 是滑鼠座標，兩者差 40
-（畫面 y ＝ 滑鼠 y ＋ 40，與游標的 `offset_from_mouse` 一致）。
+⚠ 這裡的座標是**畫面座標**；收據裡的 `-clicks` 是滑鼠座標，兩者差
+`ui.MouseDY` ＝ 40（畫面 y ＝ 滑鼠 y ＋ 40，與游標的 `offset_from_mouse`
+是同一件事）。remake 的 `MoveMouse`／`Click`／`RightClick` 一律吃畫面座標，
+換算只在餵給游標點陣與畫面規格的 `mouse` 欄位時發生（`docs/re/52`）。
