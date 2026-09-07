@@ -232,6 +232,11 @@ func TestCapitalPanelMatchesOracle(t *testing.T) {
 		// 而且首都有兩支艦隊。
 		{"s2empire", 346, 150000, 7280, 86275, 17, 0, false, false, 35,
 			[2]int{2, 0}, [2]int{318, 168}},
+		// S3「巴米利恩會戰」：799 年 3 月 1 日 ＝ 第 380 回合。
+		// 首都的治安 93%（未安定度 14）、艦隊 0：0、稅率 2.2%
+		// ——`89759 × 22 / 1000 = 1974` 與畫面相同（`docs/re/38`）。
+		{"s3rgn", 380, 160000, 13131, 89759, 22, 14, false, false, 45,
+			[2]int{0, 0}, [2]int{230, 12}},
 	} {
 		c := c
 		t.Run(c.batch, func(t *testing.T) {

@@ -36,7 +36,7 @@
 | 5s | 一覽表 → 星系資料 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `star1e`；地圖用第三組星域色（`colour_796_01_star_list`），選中的星域畫成色 7 |
 | 5t | 兩張下拉選單（系統指令、一覽表）| `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `sysmenu1e`、`lstmenu1e`；系統指令五項（實行／取進度／存進度／設定／結束）、一覽表四項 |
 | 3b | 命令階段的正常玩家路徑（12 張）| `same-state` | 0 | [`docs/playtest/005`](docs/playtest/005-player-path.md) | 右鍵兩下關掉月初報告 → 命令列三格 → 選單每一項；每一張都是前一步的輸入帶進去的，不是 direct-entry |
-| 5v | 右側面板（日期、軍事費、總稅收、首都摘要、防衛力、經濟力、成長率、徵稅額、稅率）| `same-state` | 0 | [`docs/spec/002`](docs/spec/002-capital-panel.md)、[`docs/re/32`](docs/re/32-capital-panel.md) | 文字**從遊戲狀態算出來**。`main1e`（796/1/1）整張 640×480 逐位元組；`turn260`／`turn320`／`turn450`（796/1/4，三份收據逐位元組相同）、`turnnext`（796/2/1）與 `s2empire`（**798/11/19**，從取進度載進 S2「諸神的黃昏」）右側面板逐位元組——同一份規格換四組狀態畫出四張不同的畫面 |
+| 5v | 右側面板（日期、軍事費、總稅收、首都摘要、防衛力、經濟力、成長率、徵稅額、稅率）| `same-state` | 0 | [`docs/spec/002`](docs/spec/002-capital-panel.md)、[`docs/re/32`](docs/re/32-capital-panel.md) | 文字**從遊戲狀態算出來**。`main1e`（796/1/1）整張 640×480 逐位元組；`turn260`／`turn320`／`turn450`（796/1/4，三份收據逐位元組相同）、`turnnext`（796/2/1）、`s2empire`（798/11/19）與 `s3rgn`（**799/3/1**，S3「巴米利恩會戰」）右側面板逐位元組——同一份規格換五組狀態畫出五張不同的畫面，橫跨三年 |
 | 5u | 星域摘要面板（右鍵選星域，15 個局面）| `same-state` | 0 | [`docs/spec/001`](docs/spec/001-region-summary-panel.md)、[`docs/re/31`](docs/re/31-region-panel-layout.md) | 文字**從規則算出來**，不是量好畫死的。整張比，跳過游標的外接矩形（原版右鍵之後游標只補回隔列）。含七個 `-poke` 造的局面 |
 | 6 | 結局（單張 CG）| `same-state`（plane 2／3）| 0 | 收據 `ending-empire`、`ending-alliance` | remake 畫得出來，plane 2／3 與原版逐位元組相同；plane 0／1 是多張圖疊出來的，疊法未解。播放順序（哪張配哪句、換場）也未解 |
 
