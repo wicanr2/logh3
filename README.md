@@ -39,6 +39,9 @@
         └─ 取進度 ─→ 防拷問答 ─→ 存檔畫面 ─→ 選一格 ─→ 戰略地圖介面
 ```
 
+視窗版（Ebiten）走得完同一條路：`tools/gui_check.sh` 把 Ebiten 畫出來的
+色號陣列與原版收據逐位元組比，五張全中。
+
 命令階段三格下拉選單、十二張子畫面、預算／生產計劃、結局畫面都畫得出來且
 對過。一覽表的四張清單（提督、待命中提督、敵提督、星系）也是——十六列的
 姓名、軍階、幕僚職記號與星域名全部從原版資料檔算出來，規格裡只有版面。
@@ -59,8 +62,6 @@
 
 ## 還沒做的
 
-- **顯示層**。目前只有無頭的繪製器（`cmd/play` 把每一步倒成 PNG），
-  還沒有 Ebiten 的視窗與輸入迴圈。
 - 三張畫面還差幾百個像素：戰略情報報告（252）、遊戲設定（436）、
   存進度（714）。
 - 戰鬥（`COMANI.BMG`）、開頭動畫的像素對應、「存進度」畫面的互動、
@@ -88,6 +89,9 @@
 需要自備原版遊戲檔（本儲存庫不含原版檔與素材），放在 `org_game/extracted/`。
 
 ```
+tools/gui.sh build ./cmd/gin3                # 建 Ebiten 視窗版
+tools/gui.sh run ./cmd/gin3 -orig /orig      # 玩（Ebiten）
+tools/gui_check.sh                           # 顯示層的同狀態驗收
 tools/go.sh test ./...                       # 含對拍回歸測試
 tools/go.sh run ./cmd/play -orig /orig -out /src/workplace/play \
   -pal /src/workplace/oracle/main1e/pal.bin \

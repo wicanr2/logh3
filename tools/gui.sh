@@ -17,7 +17,7 @@ MOUNTS=()
 [[ -d "$ROOT/org_game/extracted" ]] && MOUNTS+=(-v "$ROOT/org_game/extracted:/orig:ro")
 PRE=()
 case "${1:-}" in
-  run|test) PRE=(xvfb-run -a -s "-screen 0 640x480x24") ;;
+  run|test) PRE=(with-xvfb) ;;
 esac
 exec timeout "${LOGH3_TIMEOUT:-15m}" docker run --rm "${NET[@]}" \
   --memory "${LOGH3_MEM:-4g}" --cpus "${LOGH3_CPUS:-4}" --pids-limit 512 \

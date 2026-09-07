@@ -1,14 +1,22 @@
 # Ebiten 的建置與無頭執行環境。
 #
-# Ebiten 在 Linux 走 OpenGL／X11，要 cgo 與一堆 -dev 標頭；無頭跑要 Xvfb 與
-# 軟體 OpenGL（Mesa 的 llvmpipe）。這支 image 只給本專案的 GUI 用，
-# 不動主機，也不影響 tools/go.sh 那條純建置的路。
+# Ebiten 在 Linux 走 OpenGL／X11，package init 就會開 GLFW，所以要 cgo 的
+# 標頭與一個 DISPLAY；無頭跑靠 Xvfb ＋ Mesa 的軟體 OpenGL（llvmpipe）。
+#
+# **不要用 xvfb-run**：以 `-u <uid>:<gid>` 執行、而該 uid 不在 /etc/passwd 時
+# 它會無限等待。改用 with-xvfb（自己起 Xvfb :99 再執行命令）——
+# 這個坑與修法來自同一台機器上的 curse_of_the_azure_bonds。
 FROM golang:1.24-bookworm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
       libgl1-mesa-dev libxrandr-dev libxcursor-dev libxinerama-dev \
       libxi-dev libxxf86vm-dev libasound2-dev pkg-config \
-      xvfb libgl1-mesa-dri mesa-utils x11-utils \
+      xvfb xauth x11-xserver-utils libgl1-mesa-dri \
  && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
+ENV HOME=/tmp
 ENV LIBGL_ALWAYS_SOFTWARE=1
+
+COPY with-xvfb.sh /usr/local/bin/with-xvfb
+RUN chmod 0755 /usr/local/bin/with-xvfb
