@@ -238,7 +238,8 @@ _best = None
 for _k, (_s, _o) in enumerate(_idx if _search else []):
     _W, _H, _px, _ = _dec(_f[_o:_o+_s])
     for _y0 in range(_ry0 + 5, _ry0 + 60):
-        for _x0 in range(_rx1 - 130, _rx1 - 40):
+        # 視窗寬到貼著畫面右緣時，搜尋範圍要夾住，否則會讀出界。
+        for _x0 in range(max(0, _rx1 - 130), min(_rx1 - 40, W - _W)):
             _bad = 0
             for _y in range(0, _H, 4):
                 _r = [rows[_y0+_y][_x0+_i] for _i in range(_W)]
