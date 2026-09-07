@@ -40,7 +40,7 @@ SETTINGS_BOXES=\
 # internal/screen 的 ReportPanel／DeliveryPanel／CapitalPanel 現算
 # （`docs/spec/011`）。這一步是冪等的，重跑不會壞。
 if want computed; then
-  for n in screen-main-game screen-ship-order screen-build-plan; do
+  for n in screen-main-game screen-ship-order screen-build-plan screen-info; do
     py tools/scripts/maingame_computed.py "$n"
   done
   # 命令階段那一批只要拿掉底板右側那幾行（其餘本來就沒量進去）。

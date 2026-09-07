@@ -127,24 +127,53 @@ var (
 	// 第 5 個（3）是不屬於自己的星域用的。
 	securityMapColours = [5]uint8{6, 1, 5, 2, 3}
 
-	// securityDivisor 是算治安段時的除數。**85 是實測定下來的**：
-	// 796 年 1 月的資料只能把它框到 85–88，於是把瓦爾哈拉的未安定度
-	// `-poke` 成 85 再看情報報告那張地圖——畫出來是色 5（第 2 段），
-	// 只有除數 85 算得出來（86–88 會落在第 1 段、色 1）。收據 `secpoke55`。
-	securityDivisor = 85
+	// DefaultSecurityDivisor 是算治安段時的除數，問不到情報參謀時用它。
+	//
+	// **85 是實測定下來的**：796 年 1 月的帝國局面只能把它框到 85–88，
+	// 於是把瓦爾哈拉的未安定度 `-poke` 成 85 再看情報報告那張地圖——
+	// 畫出來是色 5（第 2 段），只有 85 算得出來（86–88 會落在第 1 段、
+	// 色 1）。收據 `secpoke55`。
+	//
+	// 那個 85 其實不是常數，是**帝國情報專任參謀（提督 13）的 `+0x14`**
+	// ——同盟那位（提督 58）是 82，畫出來的段真的不一樣
+	// （`docs/re/63`）。留這個常數只當備援。
+	DefaultSecurityDivisor = 85
 )
+
+// admiralSecurity 是提督記錄裡當除數用的那一格。與稅率算式用的
+// `admiralTaxA` 是同一個位元組（`+0x14`）。
+const admiralSecurity = admiralTaxA
+
+// SecurityDivisor 回情報專任參謀的 `+0x14`，那就是治安分段的除數。
+//
+// `admirals` 是 `ADMIRAL.DT*` 整份，`i` 是提督索引；問不到就回
+// DefaultSecurityDivisor。
+func SecurityDivisor(admirals []byte, i int) int {
+	r := admiralRecord(admirals, i)
+	if len(r) <= admiralSecurity || r[admiralSecurity] == 0 {
+		return DefaultSecurityDivisor
+	}
+	return int(r[admiralSecurity])
+}
 
 // SecurityMapColour 回戰略情報報告那張地圖上，一個星域該塗什麼顏色。
 //
 //	段 = 未安定度 × 100 / 除數 / 50，超過 3 夾成 3
 //
+// 除數是**情報專任參謀的 `+0x14`**（`SecurityDivisor`）：帝國那位 85、
+// 同盟那位 82，所以同一個未安定度在兩邊可能落到不同的段
+// （未安定度 42：帝國第 0 段、同盟第 1 段，`docs/re/63`）。
+//
 // 不屬於自己的星域一律色 3（等於底色，看起來就是黑的）。
-// 32 個星域與實測的著色逐一相符。
-func SecurityMapColour(unrest int, own bool) uint8 {
+// 兩個陣營各 32 個星域與實測的著色逐一相符。
+func SecurityMapColour(unrest int, own bool, divisor int) uint8 {
 	if !own {
 		return securityMapColours[4]
 	}
-	band := unrest * 100 / securityDivisor / 50
+	if divisor <= 0 {
+		divisor = DefaultSecurityDivisor
+	}
+	band := unrest * 100 / divisor / 50
 	if band > 3 {
 		band = 3
 	}

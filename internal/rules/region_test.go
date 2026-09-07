@@ -198,19 +198,32 @@ func TestRegionTaxMatchesPanel(t *testing.T) {
 }
 
 // TestSecurityMapColourMatchesOracle：戰略情報報告那張地圖的著色。
-// 預期值是攔原版著色常式量到的 32 個色號（`strmap-regions.json` 的
-// `colour_796_01_security`，`docs/re/17` 量的），未安定度取自同一份
-// 執行期傾印。
+//
+// 預期值是兩張收據上量到的色號：帝國那組來自攔原版著色常式
+// （`strmap-regions.json` 的 `colour_796_01_security`，`docs/re/17`），
+// 同盟那組量自 `info1eAlly` 的像素（`docs/re/63`）。未安定度兩邊相同，
+// 取自執行期傾印；**差別只在除數**——情報專任參謀的 `+0x14`，
+// 帝國那位（提督 13）85、同盟那位（提督 58）82。
 func TestSecurityMapColourMatchesOracle(t *testing.T) {
 	regs := loadRuntimeRegions(t)
-	want := []uint8{6, 6, 6, 3, 6, 6, 1, 1, 6, 1, 3, 3, 3, 1, 3, 3,
-		3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}
-	for k, w := range want {
-		r := regs[k]
-		got := SecurityMapColour(int(r[0x7D]), r[0x12] == 0)
-		if got != w {
-			t.Errorf("星域 %d（未安定度 %d、擁有者 %d）色 %d，預期 %d",
-				k, r[0x7D], r[0x12], got, w)
+	for _, c := range []struct {
+		name    string
+		faction int
+		divisor int
+		want    []uint8
+	}{
+		{"帝國", 0, 85, []uint8{6, 6, 6, 3, 6, 6, 1, 1, 6, 1, 3, 3, 3, 1, 3, 3,
+			3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}},
+		{"同盟", 1, 82, []uint8{3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1,
+			1, 1, 6, 6, 6, 6, 1, 3, 3, 3, 1, 6, 3, 1, 6, 6}},
+	} {
+		for k, w := range c.want {
+			r := regs[k]
+			got := SecurityMapColour(int(r[0x7D]), int(r[0x12]) == c.faction, c.divisor)
+			if got != w {
+				t.Errorf("%s 星域 %d（未安定度 %d、擁有者 %d）色 %d，預期 %d",
+					c.name, k, r[0x7D], r[0x12], got, w)
+			}
 		}
 	}
 }

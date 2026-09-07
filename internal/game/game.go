@@ -813,6 +813,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		if spec := g.commandSpec(g.state); spec != nil {
 			g.setListRows(spec)
 			g.liveCursor(spec)
+			g.applyStaffFaces(spec)
 			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
 			// （`docs/spec/002`）。
 			fb, _ := screen.MainGameWithBoard(spec, g.res.Font, g.starMapFor(spec),
@@ -822,6 +823,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawProduction(fb)
 			g.drawDelivery(fb)
 			g.drawSlotList(fb)
+			g.drawSpecStaff(fb, spec)
 			return fb
 		}
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.highlight,
@@ -1120,6 +1122,11 @@ func (g *Game) commandSpec(s State) *screen.MainGameSpec {
 // starMapFor 回這張規格要用的地圖。**不能共用同一張**：情報報告的地圖
 // 跟著治安換色、星系資料又是另一組（`strmap-regions.json` 的 colour_fields）。
 func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
+	if spec.Map.Colours == securityColours {
+		if m := g.securityStarMap(); m != nil {
+			return m
+		}
+	}
 	if spec.Map.Colours != "" && g.res.StarMaps != nil {
 		if m := g.res.StarMaps[spec.Map.Colours]; m != nil {
 			return m
@@ -1134,6 +1141,41 @@ func (g *Game) playerStarMap() *asset.Image {
 		return g.starMap
 	}
 	return g.res.StarMap
+}
+
+// securityColours 是戰略情報報告那張地圖用的色表名。
+const securityColours = "colour_796_01_security"
+
+// securityStarMap 依現在的局面重建戰略情報報告那張地圖。
+//
+// 著色規則是 `rules.SecurityMapColour`：**自己這一方**的星域照治安分四段
+// 上色，其餘一律色 3（等於底色，看起來是黑的）。所以換一個陣營整張圖的
+// 明暗會反過來——`strmap-regions.json` 裡那份 `colour_796_01_security`
+// 是帝國視角量的，只當對照。
+//
+// 分段的除數是**情報專任參謀的 `+0x14`**（帝國 85、同盟 82，`docs/re/63`），
+// 所以同一個未安定度在兩邊可能塗不同的顏色。
+func (g *Game) securityStarMap() *asset.Image {
+	if g.res.StarBit == nil || g.res.StarRGN == nil || g.res.Planets == nil {
+		return nil
+	}
+	n := len(g.res.Stellar) / rules.RegionRecord
+	if n == 0 {
+		return nil
+	}
+	div := rules.SecurityDivisor(g.res.Admiral,
+		rules.StaffAdmiral(g.workRecord(), rules.PostIntel, g.faction))
+	cols := make([]uint8, n)
+	for i := range cols {
+		rec := g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		own := g.res.Planets.RegionOwner(i) == g.faction
+		cols[i] = rules.SecurityMapColour(int(rec[rules.RegionUnrest]), own, div)
+	}
+	img, err := asset.BuildStarMap(g.res.StarBit, g.res.StarRGN, cols, 16, 20, 20)
+	if err != nil {
+		return nil
+	}
+	return img
 }
 
 // factionStarMap 依玩家陣營重建勢力色地圖。

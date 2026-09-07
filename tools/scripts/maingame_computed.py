@@ -20,6 +20,13 @@ import sys
 # 每一張的：署名那一行的 y、職位（0 軍事 1 情報 2 內政）、
 # 要清掉半形數字的列、標題那一行的 y（清全形數字）。
 RECIPES = {
+    'screen-info': {
+        'window': 'overlay',
+        'staff_y': 102, 'post': 1, 'staff_x': 336,
+        'money_rows': (), 'header_y': None,
+        'drop_face': False, 'staff_block': True,
+        'keep_board': True,
+    },
     'screen-main-game': {
         'staff_y': 142, 'post': 2, 'staff_x': 160,
         'money_rows': (222, 242, 262, 282, 302), 'header_y': None,
@@ -46,11 +53,11 @@ path = f'/work/docs/internals/data/{name}.json'
 spec = json.load(open(path))
 
 board = spec['windows'].get('board')
-if board is not None and board.get('lines'):
+if not r.get('keep_board') and board is not None and board.get('lines'):
     print(f'底板：拿掉 {len(board["lines"])} 行（首都摘要改由 CapitalPanel 畫）')
     board['lines'] = []
 
-report = spec['windows'].get('report')
+report = spec['windows'].get(r.get('window', 'report'))
 if report is not None:
     lines, dropped, stripped = [], 0, 0
     for l in report.get('lines', []):
