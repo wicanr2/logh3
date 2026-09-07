@@ -100,6 +100,35 @@ func SecurityColour(unrest int) uint8 {
 	return [...]uint8{6, 7, 5, 2}[UnrestBand(unrest)]
 }
 
+// 戰略情報報告那張的地圖色（`docs/re/27`）。
+var (
+	// securityMapColours 是 `ds:1780`：治安段 → 色號。
+	// 第 5 個（3）是不屬於自己的星域用的。
+	securityMapColours = [5]uint8{6, 1, 5, 2, 3}
+
+	// securityDivisor 是算治安段時的除數。**實測只框到 85–88**
+	// （32 個星域四個值都能全對），確切是多少要等 `[bp+06]` 那個
+	// 記錄的身分查出來（`docs/re/27`）。
+	securityDivisor = 85
+)
+
+// SecurityMapColour 回戰略情報報告那張地圖上，一個星域該塗什麼顏色。
+//
+//	段 = 未安定度 × 100 / 除數 / 50，超過 3 夾成 3
+//
+// 不屬於自己的星域一律色 3（等於底色，看起來就是黑的）。
+// 32 個星域與實測的著色逐一相符。
+func SecurityMapColour(unrest int, own bool) uint8 {
+	if !own {
+		return securityMapColours[4]
+	}
+	band := unrest * 100 / securityDivisor / 50
+	if band > 3 {
+		band = 3
+	}
+	return securityMapColours[band]
+}
+
 // FleetsUnknown 是「看不到」的艦隊數；畫面上印 `--`。
 const FleetsUnknown = 0xFF
 
