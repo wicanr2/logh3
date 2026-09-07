@@ -50,8 +50,10 @@ func TestGrowthRateMatchesOracle(t *testing.T) {
 func TestMonthEndRegionMatchesOracle(t *testing.T) {
 	tab, pl := loadGrowth(t)
 	tax, economy := pl.MonthEndRegion(tab, 0, 32)
-	if tax != 2718 {
-		t.Errorf("星域 0 的稅 %d，實測 2718", tax)
+	// 進國庫的是用星域總和算的 2720（監看總稅收量到的第一個增量）；
+	// 從行星身上扣掉的是逐顆捨去的 2718。
+	if tax != 2720 {
+		t.Errorf("星域 0 進國庫的稅 %d，實測 2720", tax)
 	}
 	if economy != 82302 {
 		t.Errorf("星域 0 結算後的經濟力 %d，實測 82302", economy)
@@ -64,14 +66,16 @@ func TestMonthEndRegionMatchesOracle(t *testing.T) {
 	}
 }
 
-// TestMonthEndFloorsPerPlanet 逐行星捨去與在總和上捨去**不一樣**——
-// 這就是 `docs/re/30` 反推別的星域對不上的原因。
+// TestMonthEndFloorsPerPlanet 釘住「兩個稅不是同一個數」：
+// 從行星身上扣掉的是逐顆捨去的和（2718），進國庫的是拿星域總和算一次
+// 捨去（2720）。`docs/re/30` 反推別的星域對不上就是把兩者混為一談。
 func TestMonthEndFloorsPerPlanet(t *testing.T) {
 	tab, pl := loadGrowth(t)
 	tax, economy := pl.MonthEndRegion(tab, 0, 32)
-	if whole := (tax + economy) * 32 / 1000; whole == tax {
-		t.Fatalf("逐行星與總和算出來一樣（%d），這個測試就證明不了什麼", tax)
-	} else if whole != 2720 {
-		t.Errorf("在總和上算應該是 2720，得到 %d", whole)
+	if deducted := 85020 - economy; deducted != 2718 {
+		t.Errorf("從行星身上扣掉 %d，實測 2718", deducted)
+	}
+	if tax != 2720 {
+		t.Errorf("進國庫 %d，實測 2720", tax)
 	}
 }

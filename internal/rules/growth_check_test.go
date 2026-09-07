@@ -30,6 +30,9 @@ func TestMonthEndEmpireTotal(t *testing.T) {
 	if err := json.Unmarshal(b, &d); err != nil {
 		t.Fatal(err)
 	}
+	// 監看總稅收（線性 `5DA9A`）在第一次跨月量到的十個增量（`docs/re/35`）。
+	want := map[int]int{0: 2720, 1: 1113, 2: 817, 4: 239, 5: 459,
+		6: 1415, 7: 1370, 8: 1470, 9: 827, 13: 311}
 	total, other := 0, 0
 	for _, r := range d.Regions {
 		tax, economy := pl.MonthEndRegion(tab, r.Index, r.TaxRate)
@@ -43,16 +46,17 @@ func TestMonthEndEmpireTotal(t *testing.T) {
 			continue
 		}
 		total += tax
+		if w, ok := want[r.Index]; ok && tax != w {
+			t.Errorf("星域 %d 進國庫 %d，實測 %d", r.Index, tax, w)
+		}
 		if economy != r.Economy {
 			t.Errorf("星域 %d 結算後 %d，量到 %d（差 %+d）",
 				r.Index, economy, r.Economy, economy-r.Economy)
 		}
 	}
-	// 十個帝國星域的經濟力**逐一相符**。加進軍事費的錢還差 9——
-	// 星域的稅是被經濟力釘死的（稅 ＝ E′ − 結算後的經濟力），所以那 9
-	// 不在星域這一邊，是別的收入或別處的呼叫（`docs/re/29`）。
-	if total != 10732 {
-		t.Errorf("帝國總稅收 %d，這個模型算出來應該是 10732（原版加進軍事費的是 10741，差 9 未解）", total)
+	// 十個帝國星域的經濟力與進國庫的錢**都逐一相符**（`docs/re/35`）。
+	if total != 10741 {
+		t.Errorf("帝國總稅收 %d，實測 10741（監看軍事費看到 50000 → 60741）", total)
 	}
 	t.Logf("別人的星域對不上 %d 個（稅率那一欄是畫面值，不是結算當下的值）", other)
 }

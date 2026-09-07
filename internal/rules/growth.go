@@ -72,29 +72,31 @@ func (p *Planets) SetPlanetEconomy(i, v int) {
 	r[planetEconomy+3] = byte(v >> 24)
 }
 
-// MonthEndRegion 跑一個星域的月底結算：逐行星成長、逐行星扣稅，
-// 回這個星域收到的稅與結算後的星域經濟力（`docs/re/33`）。
+// MonthEndRegion 跑一個星域的月底結算，回**進國庫的稅**與結算後的
+// 星域經濟力（`docs/re/33`、`docs/re/35`）。
 //
 //	對每一顆行星：
 //	    經濟力 += 經濟力 × 成長率(經濟力, 防衛力) / 1000
-//	    稅      = 經濟力 × 星域稅率 / 1000      （捨去）
-//	    經濟力 -= 稅
+//	    行星稅  = 經濟力 × 星域稅率 / 1000      （捨去）
+//	    經濟力 -= 行星稅
 //	星域經濟力 = Σ 該星域行星的經濟力
+//	進國庫的稅 = (Σ 成長後、扣稅前的經濟力) × 星域稅率 / 1000   （捨去）
 //
-// **捨去發生在每一顆行星上**，不是在星域的總和上——差別看得出來：
-// 星域 0 逐行星是 2718，用總和算是 2720。
+// **兩個稅不是同一個數。** 從行星身上扣的是逐顆捨去的和，進國庫的是拿
+// 星域總和算一次捨去——星域 0 是 2718 與 2720，十個帝國星域加起來差 9。
+// 原版就是這樣：監看總稅收看到的十個增量與「用總和算」逐一相符。
 func (p *Planets) MonthEndRegion(t *GrowthTable, region, taxPerMille int) (tax, economy int) {
 	start, n := p.Range(region)
+	grown := 0
 	for i := start; i < start+n; i++ {
 		e := p.PlanetEconomy(i)
 		e += e * t.Rate(e, p.Defence(i)) / 1000
-		levy := e * taxPerMille / 1000
-		e -= levy
+		grown += e
+		e -= e * taxPerMille / 1000
 		p.SetPlanetEconomy(i, e)
-		tax += levy
 		economy += e
 	}
-	return tax, economy
+	return grown * taxPerMille / 1000, economy
 }
 
 // SetRegionEconomy 寫回星域記錄的經濟力。
