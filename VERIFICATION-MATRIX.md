@@ -79,7 +79,7 @@
 | 星域 `STELLAR.DT*` | `ds:A79C` | 126 bytes | [`docs/internals/22`](docs/internals/22-stellar-dt.md) |
 | 行星 `PLADAT.DAT` | `5313:0002` | 82 bytes | [`docs/re/30`](docs/re/30-region-economy-from-planets.md) |
 | 提督 `ADMIRAL.DT*` | `ds:B77C` | 28 bytes | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md) |
-| **艦隊** | `ds:C074` | **122 bytes** | [`docs/re/40`](docs/re/40-fleet-table.md)；欄位語意未解 |
+| **艦隊** | `ds:C074` | **122 bytes × 32 筆** | [`docs/re/40`](docs/re/40-fleet-table.md)；`+0x01` 陣營、`+0x04` FF ＝ 未使用、`+0x06` 所在星域 confirmed，其餘未解 |
 
 ## 遊戲規則
 
