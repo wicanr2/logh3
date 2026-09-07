@@ -112,6 +112,10 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	budget, err := screen.LoadBudgetPanel(filepath.Join(root, "docs/internals/data/budget-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	stellarFile, err := os.ReadFile(filepath.Join(orig, "STELLAR.DTA"))
 	if err != nil {
 		t.Fatal(err)
@@ -138,8 +142,10 @@ func load(t *testing.T) *Resources {
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
-		Stellar: stellar, Planets: planets, Growth: growth,
-		Military: 45592, TaxTotal: 10341}
+		BudgetPanel: budget, Stellar: stellar, Planets: planets, Growth: growth,
+		Military: 45592, TaxTotal: 10341, ShipPct: 25,
+		Treasury: rules.Treasury{Budget: 60741, ShipPaid: 15149},
+		MonthReport: rules.Budget{Treasury: 50000, Tax: 10741, ShipPct: 25}}
 }
 
 // reachCommandPhase 走正常玩家路徑到戰略地圖介面：

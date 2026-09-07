@@ -154,7 +154,29 @@ func checkGameScreen(t *testing.T, specName, batch string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fb, missing := MainGame(s, fnt, mapImg, faces, cur)
+	// 底層是命令階段那張的話，右側面板也是算出來的（`docs/spec/002`）——
+	// 要畫在底板之後、疊上去的視窗之前。
+	var afterBoard func(*gfx.Framebuffer)
+	if specName == "screen-tax-plan" {
+		planets, cap, region := capitalAssets(t)
+		afterBoard = func(fb *gfx.Framebuffer) {
+			rec := panelRecord(t, 0, -1, 0, 0)
+			rec[0x1A], rec[0x1B] = byte(82302&0xFF), byte(82302>>8&0xFF)
+			rec[0x1C] = byte(82302 >> 16)
+			rec[0x26] = 32
+			cap.Draw(fb, fnt, region,
+				rules.SummariseCapital(rec, planets, 0, 0, 0, 796, 45592, 10341), 0)
+		}
+	}
+	fb, missing := MainGameWithBoard(s, fnt, mapImg, faces, cur, afterBoard)
+	// 預算計劃／徵稅計劃的數字是算出來的（`docs/spec/003`），規格裡沒有。
+	if t2, b2, ok := budgetState(specName); ok {
+		bp, err := LoadBudgetPanel(filepath.Join(root, "docs/internals/data/budget-panel.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		bp.Draw(fb, fnt, t2, b2)
+	}
 	want, err := os.ReadFile(oracle)
 	if err != nil {
 		t.Fatal(err)
@@ -298,4 +320,45 @@ func TestBuildPlanStatesMatchOriginal(t *testing.T) {
 		checked++
 	}
 	t.Logf("同狀態對拍 %d 個局面，各 %d 像素", checked, gfx.Width*gfx.Height)
+}
+
+// budgetState 回這兩張畫面當下的財政狀態（量到的，`docs/spec/003`）。
+//
+//	budget1：796 年 1 月的月初報告，本月份那一欄還沒有數字（全 0），
+//	         國庫 50000、預估徵稅額 10741。
+//	tax1e：  同一個月的徵稅計劃，本月份原定 60741、已付船艦建造費 15149，
+//	         國庫 45592、預估徵稅額 10341。
+func budgetState(spec string) (rules.Treasury, rules.Budget, bool) {
+	switch spec {
+	case "screen-budget-plan":
+		return rules.Treasury{},
+			rules.Budget{Treasury: 50000, Tax: 10741, ShipPct: 25}, true
+	case "screen-tax-plan":
+		return rules.Treasury{Budget: 60741, ShipPaid: 15149},
+			rules.Budget{Treasury: 45592, Tax: 10341, ShipPct: 25}, true
+	}
+	return rules.Treasury{}, rules.Budget{}, false
+}
+
+// capitalAssets 讀右側面板要的東西。
+func capitalAssets(t *testing.T) (*rules.Planets, *CapitalPanel, *RegionPanel) {
+	t.Helper()
+	root := "../.."
+	pl, err := os.ReadFile(filepath.Join(root, "org_game/extracted/PLADAT.DAT"))
+	if err != nil {
+		t.Skip("缺 PLADAT.DAT，跳過")
+	}
+	planets, err := rules.LoadPlanets(pl)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cap, err := LoadCapitalPanel(filepath.Join(root, "docs/internals/data/capital-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	region, err := LoadRegionPanel(filepath.Join(root, "docs/internals/data/region-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return planets, cap, region
 }

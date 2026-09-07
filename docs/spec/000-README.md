@@ -16,3 +16,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 |---|---|---|
 | [`001`](001-region-summary-panel.md) | 星域摘要面板（左下角）| `CONFORMED` |
 | [`002`](002-capital-panel.md) | 右側面板（日期、錢、自己的首都）| `CONFORMED` |
+| [`003`](003-budget-panel.md) | 預算計劃／徵稅計劃的數字 | `CONFORMED` |

@@ -1,0 +1,18 @@
+{
+ "note": "次月份預算計劃／徵稅計劃那個視窗的數字位置。兩張畫面共用同一份版面（視窗都在 128,60,384×340），底層不同：budget1 疊在遊戲主畫面上、tax1e 疊在命令階段底板上。量自兩張的規格 JSON，規格 docs/spec/003。",
+ "window": {"x": 128, "y": 60, "w": 384, "h": 340},
+ "ink": 7,
+ "right": 400,
+ "rows": [
+  {"y": 162, "field": "budget",       "text": "本月份 原定軍事費"},
+  {"y": 182, "field": "ship_paid",    "text": "已支付 船艦建造費"},
+  {"y": 202, "field": "fleet_upkeep", "text": "艦隊維持費"},
+  {"y": 222, "field": "movement",     "text": "移動經費"},
+  {"y": 242, "field": "next_fleet_upkeep", "text": "次月份 艦隊維持費"},
+  {"y": 262, "field": "next_movement",     "text": "次月份 移動經費"},
+  {"y": 282, "field": "tax",       "text": "次月份 預估徵稅額"},
+  {"y": 302, "field": "military",  "text": "預估軍事費"},
+  {"y": 322, "field": "ship_cost", "text": "船艦建造費", "pct_right": 448},
+  {"y": 342, "field": "rest",      "text": "剩餘軍事費"}
+ ]
+}

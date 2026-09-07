@@ -18,7 +18,7 @@
 | 5 | 遊戲主畫面（796 年 1 月）| `same-state` | 0 | [`docs/playtest/004-main-game.md`](docs/playtest/004-main-game.md) | 全畫面逐位元組一致；地圖、頭像、文字全部從原版檔案重建 |
 | 5b | 船艦訂造報告（796 年 1 月）| `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
 | 5c | 次月份船艦建造計劃 | `same-state` | 0 | 收據 `plan1` | 由訂造報告熱區 (432,300) 點進去 |
-| 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/re/12`](docs/re/12-budget-plan-and-buttons.md) | 由主畫面熱區 (432,300) 點進去；正常玩家路徑有回歸測試 |
+| 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/spec/003`](docs/spec/003-budget-panel.md) | 由主畫面熱區 (432,300) 點進去；十個數字**從財政狀態算出來**，不是量好畫死的 |
 | 5g | 月份會計報告 | `same-state` | 0 | 收據 `account1`；[`docs/re/13`](docs/re/13-account-report.md) | 由預算計劃 (472,325) 點進去；獨立驗證了三條錢的公式 |
 | 5f | 待命中提督資料 | `same-state` | 0 | 收據 `admirals1`；[`docs/re/12`](docs/re/12-budget-plan-and-buttons.md) | 三層視窗（底板＋建造計劃＋清單）；正常玩家路徑有回歸測試 |
 | 5d | 建造計劃（改過預算的 34 個局面）| `same-state` | 0 | [`docs/re/11`](docs/re/11-build-plan-rest-amount.md) | 用 `-poke` 把百分比寫進原版記憶體造的局面，含手點到不了的「七列全 0%」與「某列吃滿 100%」；每張 640×480 逐位元組一致 |
@@ -27,7 +27,7 @@
 | 5j | 戰略情報報告 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `info1e`；地圖跟著**治安**換色（色表在 `strmap-regions.json` 的 `colour_796_01_security`），頭像是 `FACE.AMG` 第 13 張 |
 | 5l | 一覽表：艦隊資料／提督資料／敵將資料 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `lst1e`／`lst2e`／`lst3e`；三張共用同一份清單版面 |
 | 5k | 遊戲設定 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `settings1e`；標籤是**粗體＋陰影**畫的（[`docs/internals/25`](docs/internals/25-text-rendering.md)），不是另一套字型 |
-| 5m | 徵稅計劃 → 次月份預算計劃 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `tax1e`；與 `budget1` 同一個視窗版面，底下換成命令階段底板 |
+| 5m | 徵稅計劃 → 次月份預算計劃 | `same-state` | 0 | 收據 `tax1e`；[`docs/spec/003`](docs/spec/003-budget-panel.md) | 與 `budget1` 同一個視窗版面，底下換成命令階段底板；數字與右側面板都是算出來的 |
 | 5n | 生產計劃 → 次月份船艦建造計劃 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `prod1e`（＋`prod1i` 補游標蓋住的那一格）|
 | 5o | 取進度 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `load1e`；8 個未使用欄位（色 8）＋ 三個劇本 |
 | 5p | 存進度 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `save1e`；滑鼠所在那一列是紅色反白條，刷的時候把游標蓋掉 |

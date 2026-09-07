@@ -255,6 +255,22 @@ elif MX == -2:
     # 這一層把游標整個蓋掉了（覆蓋範圍含游標位置），不要畫。
     spec.pop('mouse', None)
 spec['hotspots'] = []
+# 預算計劃／徵稅計劃那個視窗裡的**數字**不進規格：它們是從財政狀態算出來的
+# （規格 `docs/spec/003`，畫的人是 `internal/screen.BudgetPanel`）。
+# 量好畫死的話換一個月份就不對——`budget1` 與 `tax1e` 每一格都不一樣。
+COMPUTED_MONEY = {'screen-budget-plan': 'report', 'screen-tax-plan': 'overlay'}
+COMPUTED_MONEY_ROWS = (162, 182, 202, 222, 242, 262, 282, 302, 322, 342)
+_wname = COMPUTED_MONEY.get(out_name)
+if _wname and _wname in spec['windows']:
+    _ls = []
+    for _l in spec['windows'][_wname]['lines']:
+        if _l['y'] in COMPUTED_MONEY_ROWS:
+            _l = dict(_l, cells=[c for c in _l['cells'] if c['w'] != 8])
+            if not _l['cells']:
+                continue
+        _ls.append(_l)
+    spec['windows'][_wname]['lines'] = _ls
+
 json.dump(spec, open(f'/work/docs/internals/data/{out_name}.json', 'w'),
           ensure_ascii=False, indent=1)
 print('overlay (%d,%d) %d×%d 層 %d 角落 %d 文字 %d 行'

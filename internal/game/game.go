@@ -161,6 +161,20 @@ type Resources struct {
 	RegionPanel  *screen.RegionPanel
 	CapitalPanel *screen.CapitalPanel
 
+	// BudgetPanel 是預算計劃／徵稅計劃那個視窗的數字版面（`docs/spec/003`）。
+	BudgetPanel *screen.BudgetPanel
+
+	// Treasury 是這個月的財政（原定軍事費、已支付的各項），ShipPct 是
+	// 切給船艦建造費的百分比。796 年 1 月量到的：60741／15149／25%。
+	Treasury rules.Treasury
+	ShipPct  int
+
+	// MonthReport 是月初報告那一張（`budget1`）上的預算：國庫 50000、
+	// 預估徵稅額 10741。**與徵稅計劃那一張不是同一組數**——報告顯示的是
+	// 這次月底**實收**的稅（`docs/re/35` 量到 10741），徵稅計劃顯示的是
+	// 結算完之後重算的**下個月預估**（10341）。
+	MonthReport rules.Budget
+
 	// Military／TaxTotal 是開局的軍事費與總稅收（`ds:8F52`／`ds:8F6A`）。
 	// **這兩個從檔案推不出來**——載入時就已經是這個值了，月底結算才會改
 	// （`docs/internals/27`）。796 年 1 月帝國是 45592／10341（量到的）。
@@ -448,6 +462,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	case StateBudgetPlan:
 		fb, _ := screen.MainGame(g.res.BudgetPlan, g.res.Font, g.res.StarMap,
 			g.res.Faces, g.res.Cursor)
+		g.drawBudget(fb)
 		return fb
 	case StateBuildPlan:
 		fb, _ := screen.MainGame(g.res.BuildPlan, g.res.Font, g.res.StarMap,
@@ -458,9 +473,12 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		return fb
 	default:
 		if spec := g.commandSpec(g.state); spec != nil {
-			fb, _ := screen.MainGame(spec, g.res.Font, g.starMapFor(spec),
-				g.res.Faces, g.res.Cursor)
+			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
+			// （`docs/spec/002`）。
+			fb, _ := screen.MainGameWithBoard(spec, g.res.Font, g.starMapFor(spec),
+				g.res.Faces, g.res.Cursor, g.drawBoardPanels)
 			g.drawPanels(fb)
+			g.drawBudget(fb)
 			return fb
 		}
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.highlight,
@@ -481,6 +499,30 @@ func (g *Game) monthEnd() {
 	g.military += g.taxTotal
 }
 
+// drawBoardPanels 畫底板上那幾塊算出來的內容。命令階段那一批畫面共用
+// 同一塊底板，右側面板在每一張上都看得到（被疊上去的視窗蓋住的部分除外）。
+func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
+	if _, ok := screenSpecName[g.state]; !ok {
+		return
+	}
+	g.drawCapitalPanel(fb)
+}
+
+// drawBudget 畫預算計劃／徵稅計劃的數字（`docs/spec/003`）。
+func (g *Game) drawBudget(fb *gfx.Framebuffer) {
+	if g.res.BudgetPanel == nil {
+		return
+	}
+	switch g.state {
+	case StateTaxPlan:
+		b := rules.Budget{Treasury: g.military, Tax: g.taxTotal, ShipPct: g.res.ShipPct}
+		g.res.BudgetPanel.Draw(fb, g.res.Font, g.res.Treasury, b)
+	case StateBudgetPlan:
+		// 月初報告那一張：本月份那一欄還沒有數字（全 0）。
+		g.res.BudgetPanel.Draw(fb, g.res.Font, rules.Treasury{}, g.res.MonthReport)
+	}
+}
+
 // drawPanels 把兩塊「從狀態算出來」的面板畫上去：右側（規格 002）
 // 與左下角（規格 001）。**只有戰略地圖介面畫**——疊在上面的那幾張
 // 會把這兩塊改寫成自己的內容，它們的規格裡已經有了。
@@ -488,7 +530,6 @@ func (g *Game) drawPanels(fb *gfx.Framebuffer) {
 	if g.state != StateCommandPhase {
 		return
 	}
-	g.drawCapitalPanel(fb)
 	g.drawRegionPanel(fb)
 }
 

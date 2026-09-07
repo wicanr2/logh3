@@ -265,6 +265,14 @@ func (w *GameWindow) drawContent(fb *gfx.Framebuffer, fnt *font.Font, shadow uin
 // 畫的順序就是原版的層次：會計報告是後來彈出來的，蓋在面板與地圖上。
 func MainGame(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset.AMG,
 	cur *ui.Cursor) (*gfx.Framebuffer, []uint16) {
+	return MainGameWithBoard(s, fnt, mapImg, faces, cur, nil)
+}
+
+// MainGameWithBoard 同 MainGame，但在**底板與地圖之後、疊上去的視窗之前**
+// 讓呼叫端插一手。從遊戲狀態算出來的那幾塊面板要畫在這個時機——畫太晚
+// 會蓋掉疊在上面的視窗（`docs/spec/002`、`003`）。
+func MainGameWithBoard(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset.AMG,
+	cur *ui.Cursor, afterBoard func(*gfx.Framebuffer)) (*gfx.Framebuffer, []uint16) {
 	fb := gfx.NewFramebuffer(s.Background)
 	var missing []uint16
 	// 順序就是原版的層次：底板 → 星域地圖（蓋住底板左上角）→ 會計報告。
@@ -277,6 +285,9 @@ func MainGame(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset
 				fb.Set(s.Map.X+x, s.Map.Y+y, mapImg.Pix[y*mapImg.W+x])
 			}
 		}
+	}
+	if afterBoard != nil {
+		afterBoard(fb)
 	}
 	// 疊在地圖上的視窗照 Order 畫；沒寫 Order 就只有 report 一層。
 	// 「待命中提督資料」那種畫面是三層：底板 → 建造計劃 → 清單。
