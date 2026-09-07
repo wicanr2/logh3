@@ -272,7 +272,11 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph, AdmiralNames: names,
+	starOrder, err := loadStarListOrder(filepath.Join(data, "star-list-order.json"))
+	if err != nil {
+		return nil, err
+	}
+	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph, AdmiralNames: names, StarListOrder: starOrder,
 		UnrestParams: rules.UnrestParams{
 			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
 			Table: []int{170, 150, 130, 90, 60},
@@ -334,4 +338,19 @@ func loadAdmiralNames(path string) ([][]uint16, error) {
 		}
 	}
 	return out, nil
+}
+
+// loadStarListOrder 讀「星系資料」那張清單的列順序。
+func loadStarListOrder(path string) ([]int, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var doc struct {
+		Order []int `json:"order"`
+	}
+	if err := json.Unmarshal(b, &doc); err != nil {
+		return nil, err
+	}
+	return doc.Order, nil
 }

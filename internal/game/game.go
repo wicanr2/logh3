@@ -179,6 +179,10 @@ type Resources struct {
 	// AdmiralNames 是 82 名提督姓名的 Big5 字碼（`docs/internals/data/keireki.json`）。
 	AdmiralNames [][]uint16
 
+	// StarListOrder 是「星系資料」那張清單的列順序
+	// （`docs/internals/data/star-list-order.json`）。
+	StarListOrder []int
+
 	// WorkTemplate 是新遊戲開局的 `WORK` 區塊（`docs/re/45`）。
 	// 新遊戲要存檔就得靠它——`WORK.DTX` 不存在。
 	WorkTemplate []byte
@@ -893,6 +897,10 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 		return
 	}
 	spec.ListRows = nil
+	if g.state == StateStarList {
+		g.setStarRows(spec)
+		return
+	}
 	faction, standby, ok := listState(g.state)
 	if !ok || len(g.res.Admiral) == 0 || len(g.res.AdmiralNames) == 0 {
 		return
@@ -930,4 +938,32 @@ func listState(s State) (faction int, standby, ok bool) {
 		return 1, false, true
 	}
 	return 0, false, false
+}
+
+// setStarRows 算「星系資料」那張清單的列：星域名（用行星算出來的擁有者
+// 的陣營色）與兩個陣營的艦隊數。
+func (g *Game) setStarRows(spec *screen.MainGameSpec) {
+	var l *screen.ListSpec
+	for _, w := range spec.Windows {
+		if w.List != nil {
+			l = w.List
+		}
+	}
+	if l == nil || g.res.Planets == nil || len(g.res.Stellar) == 0 ||
+		len(g.res.StarListOrder) == 0 {
+		return
+	}
+	for _, i := range g.res.StarListOrder {
+		if (i+1)*rules.RegionRecord > len(g.res.Stellar) {
+			continue
+		}
+		rec := g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		owner := g.res.Planets.RegionOwner(i)
+		spec.ListRows = append(spec.ListRows, screen.ListRow{Cells: []screen.ListCell{
+			{X: l.NameX, Ink: rules.FactionColour(owner), Codes: rules.RegionName(rec)},
+			{X: l.OwnX, Ink: rules.FactionColour(0), Text: " 0"},
+			{X: l.SepX, Ink: l.Ink, Codes: []uint16{l.SepCode}},
+			{X: l.EnemyX, Ink: rules.FactionColour(1), Text: " 0"},
+		}})
+	}
 }

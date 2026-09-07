@@ -459,17 +459,33 @@ func starRows(t *testing.T, s *MainGameSpec) []ListRow {
 	if l == nil {
 		t.Fatal("規格裡沒有清單版面")
 	}
+	var doc struct {
+		Order []int `json:"order"`
+	}
+	b, err := os.ReadFile(filepath.Join(root, "docs/internals/data/star-list-order.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(b, &doc); err != nil {
+		t.Fatal(err)
+	}
+	planets, _, _ := capitalAssets(t)
 	var out []ListRow
-	for i := 0; i*rules.RegionRecord+rules.RegionRecord <= len(stellar); i++ {
+	for _, i := range doc.Order {
+		if (i+1)*rules.RegionRecord > len(stellar) {
+			continue
+		}
 		rec := stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
-		out = append(out, starRow(l, rec))
+		out = append(out, starRow(l, rec, planets.RegionOwner(i)))
 	}
 	return out
 }
 
 // starRow 把一筆星域記錄排成清單的一列。
-func starRow(l *ListSpec, rec []byte) ListRow {
-	owner := rules.RegionOwnerOf(rec)
+//
+// 名字的顏色是**行星算出來的擁有者**（全屬同一方才算那一方，混雜就是中立），
+// 不是星域記錄的 `+0x12`——收據上五個星域的名字是中立色。
+func starRow(l *ListSpec, rec []byte, owner int) ListRow {
 	return ListRow{Cells: []ListCell{
 		{X: l.NameX, Ink: rules.FactionColour(owner), Codes: rules.RegionName(rec)},
 		{X: l.OwnX, Ink: rules.FactionColour(0), Text: " 0"},
