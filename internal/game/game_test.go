@@ -323,7 +323,7 @@ func TestShipDeliveryMatchesOracle(t *testing.T) {
 	// 右側面板的字被清掉、只留「戰略模式處理中」那一行，也對得上。
 	matchesBox(t, g, "turnmonth2", 320, 40, 639, 79)
 
-	g.Click(448, 402) // 確認
+	g.Click(448, 370) // 確認鈕在 (430,360)-(465,379)
 	if g.State() != StateCommandPhase {
 		t.Fatalf("按了確認之後在 %v", g.State())
 	}
