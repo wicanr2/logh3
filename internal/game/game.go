@@ -6,6 +6,8 @@ package game
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/wicanr2/logh3/internal/asset"
@@ -166,6 +168,14 @@ type Resources struct {
 	BudgetPanel     *screen.BudgetPanel
 	ProductionPanel *screen.ProductionPanel
 
+	// OrigDir 是原版檔案的目錄。「取進度」要從那裡讀存檔（`docs/spec/007`）。
+	OrigDir string
+
+	// Graph 是星域相鄰圖，UnrestParams 是載入時重算未安定度要的難度參數
+	// （`docs/spec/006`）。兩者都給了才走得到「取進度」。
+	Graph        *rules.StarGraph
+	UnrestParams rules.UnrestParams
+
 	// ShipPct 是切給船艦建造費的百分比（開局 25%）。
 	ShipPct int
 
@@ -241,6 +251,10 @@ type Game struct {
 	// 那塊是空的——收據 `main1e` 就是這個狀態（關月初報告的那兩下右鍵
 	// 也點在星圖上，但沒有選中任何星域）。
 	selectedRegion int
+
+	// menuRow 是主選單點了哪一列（-1 ＝ 還沒點）。防拷答對之後要靠它
+	// 決定是開新遊戲還是進存檔畫面。
+	menuRow int
 }
 
 // 星圖畫在畫面的 (0,40)，320×300，圖塊 16×20（`docs/internals/12`）。
@@ -265,7 +279,7 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		military: res.StartMilitary, pct: rules.OpeningPct}
+		menuRow: -1, military: res.StartMilitary, pct: rules.OpeningPct}
 	// 原版開機就跑一次月底結算，796 年 1 月的局面是那一次的結果
 	// （`docs/re/33`、`docs/re/35`）。
 	g.monthEnd()
@@ -329,8 +343,13 @@ func (g *Game) Click(x, y int) {
 	switch g.state {
 	case StateMainMenu:
 		if g.highlight >= 0 {
+			g.menuRow = g.highlight
 			g.state = StateCopyProtection
 			g.typed = nil
+		}
+	case StateLoadGame:
+		if n := SlotAt(y); n >= 0 {
+			g.loadSlotFromDisk(n)
 		}
 	case StateMainGame:
 		// 可點區域是熱區清單，不是「視窗內就好」（`docs/re/09`）。
@@ -463,12 +482,75 @@ func (g *Game) Key(c byte) {
 			v = v*10 + int(d-'0')
 		}
 		if len(g.typed) > 0 && v == int(g.answer) {
-			g.state = StateMainGame
+			// 主選單前三列開新遊戲，第四列「取進度」先進存檔畫面
+			// （`docs/re/38`、`docs/spec/007`）。
+			if g.menuRow == menuRowLoad && g.commandSpec(StateLoadGame) != nil {
+				g.state = StateLoadGame
+			} else {
+				g.state = StateMainGame
+			}
 			return
 		}
 		g.tries++
 		g.typed = nil
 	}
+}
+
+// menuRowLoad 是主選單第四列「取進度」（`docs/internals/data/screen-main-menu.json`）。
+const menuRowLoad = 3
+
+// 存檔畫面那 11 列的版面（`docs/spec/007`）。三個有內容的槽位量到的
+// 落點是 y ＝ 242／262／282（收據 `slot242`／`s2empire`／`s3rgn`），
+// 一列 20 px，往上推到第 0 格就是 82。
+const (
+	slotRowTop    = 82
+	slotRowHeight = 20
+)
+
+// SlotAt 回存檔畫面上這個 y 落在第幾格；不在任何一列上回 -1。
+func SlotAt(y int) int {
+	if y < slotRowTop {
+		return -1
+	}
+	n := (y - slotRowTop) / slotRowHeight
+	if n >= rules.SaveSlots {
+		return -1
+	}
+	return n
+}
+
+// loadSlotFromDisk 讀一格存檔接上遊戲（`docs/spec/005`、`docs/spec/007`）。
+//
+// 未安定度載入時要重算（`docs/spec/006`），所以讀完就跑一次。
+// 缺檔或缺參數就什麼都不做——存檔畫面上那些空的格子點下去也是這樣。
+func (g *Game) loadSlotFromDisk(n int) {
+	if g.res.OrigDir == "" || g.res.Graph == nil {
+		return
+	}
+	ext := rules.SlotExt(n)
+	read := func(name string) []byte {
+		b, err := os.ReadFile(filepath.Join(g.res.OrigDir, name))
+		if err != nil {
+			return nil
+		}
+		return b
+	}
+	f := rules.SlotFiles{
+		Stellar: read("STELLAR.DT" + ext), Planet: read("PLANET.DT" + ext),
+		Admiral: read("ADMIRAL.DT" + ext), Fleet: read("FLEET.DT" + ext),
+		Ship: read("SHIP.DT" + ext), Work: read("WORK.DT" + ext),
+		PlanetHeader: read("PLADAT.DAT"),
+	}
+	sl, err := rules.LoadSlot(f)
+	if err != nil {
+		return
+	}
+	// 算式要的回合數就是這一格存檔的（`ds:8F18`，`docs/re/43`）。
+	params := g.res.UnrestParams
+	params.Turn = sl.Turn
+	sl.RecomputeUnrest(g.res.Graph, params)
+	g.res.Admiral = sl.Admiral
+	g.LoadSlot(sl)
 }
 
 // Frame 畫出目前的畫面。

@@ -716,3 +716,66 @@ func TestLoadSlotSetsState(t *testing.T) {
 		t.Errorf("狀態 %v，要命令階段", g.State())
 	}
 }
+
+// TestLoadGamePlayerPath 走「取進度」那條正常玩家路徑（`docs/spec/007`）：
+// 主選單第四列 → 防拷問答 → 存檔畫面 → 點第 9 格（諸神的黃昏）。
+func TestLoadGamePlayerPath(t *testing.T) {
+	res := load(t)
+	orig := filepath.Join(root, "org_game/extracted")
+	if _, err := os.Stat(filepath.Join(orig, "WORK.DT9")); err != nil {
+		t.Skipf("缺存檔，跳過（不用代用品）")
+	}
+	res.OrigDir = orig
+	graph, err := rules.LoadStarGraph(filepath.Join(root,
+		"docs/internals/data/star-graph.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	res.Graph = graph
+	res.UnrestParams = rules.UnrestParams{
+		Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
+		Table: []int{170, 150, 130, 90, 60},
+		Base:  []int{50, 75, 100, 150, 200},
+	}
+	g, err := New(res)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, menuRowY(t, res, menuRowLoad))
+	if g.State() != StateCopyProtection {
+		t.Fatalf("點第四列之後在 %v，要防拷問答", g.State())
+	}
+	for _, c := range []byte{'1', '3', '8'} {
+		g.Key(c)
+	}
+	g.Key('\r')
+	if g.State() != StateLoadGame {
+		t.Fatalf("答對之後在 %v，要存檔畫面", g.State())
+	}
+	// 第 9 格「諸神的黃昏」量到的落點是 y ＝ 262（收據 `s2empire`）。
+	if n := SlotAt(262); n != 9 {
+		t.Fatalf("y=262 落在第 %d 格，要第 9 格", n)
+	}
+	g.Click(300, 262)
+	if g.State() != StateCommandPhase {
+		t.Fatalf("點下去之後在 %v，要命令階段", g.State())
+	}
+	if y, m, d := g.Date(); y != 798 || m != 11 || d != 19 {
+		t.Errorf("日期 %d/%d/%d，要 798/11/19", y, m, d)
+	}
+	if g.Military() != 150000 || g.TaxTotal() != 7280 {
+		t.Errorf("軍事費 %d 總稅收 %d，要 150000／7280", g.Military(), g.TaxTotal())
+	}
+}
+
+// menuRowY 回主選單第 n 列的 y。
+func menuRowY(t *testing.T, res *Resources, n int) int {
+	t.Helper()
+	for y := 0; y < 480; y++ {
+		if screen.RowAt(res.Menu, y) == n {
+			return y
+		}
+	}
+	t.Fatalf("主選單找不到第 %d 列", n)
+	return 0
+}
