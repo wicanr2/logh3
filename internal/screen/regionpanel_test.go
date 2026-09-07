@@ -341,39 +341,40 @@ func TestCapitalPanelMatchesOracle(t *testing.T) {
 		growth                   int  // 成長率（0 ＝ 用 STELLAR.DTA 的值）
 		fleets                   [2]int
 		mouse                    [2]int // 非零就把游標搬到這裡
+		pressedSys               bool   // 系統指令那顆按鈕是按下去的狀態
 	}{
-		{"main1e", 0, 45592, 10341, 82302, 32, 36, true, false, 0, [2]int{}, [2]int{}},
+		{"main1e", 0, 45592, 10341, 82302, 32, 36, true, false, 0, [2]int{}, [2]int{}, false},
 		// 按過一次「實行」：只有日期變成 1 月 4 日，錢與經濟力都沒動。
 		// 三份收據（`turn260`／`turn320`／`turn450`，步數不同）逐位元組相同。
-		{"turn260", 1, 45592, 10341, 82302, 32, 36, false, true, 0, [2]int{}, [2]int{}},
-		{"turn320", 1, 45592, 10341, 82302, 32, 36, false, true, 0, [2]int{}, [2]int{}},
-		{"turn450", 1, 45592, 10341, 82302, 32, 36, false, true, 0, [2]int{}, [2]int{}},
-		{"turnnext", 10, 42339, 10413, 83304, 32, 36, false, false, 0, [2]int{}, [2]int{}},
+		{"turn260", 1, 45592, 10341, 82302, 32, 36, false, false, 0, [2]int{}, [2]int{560, 85}, true},
+		{"turn320", 1, 45592, 10341, 82302, 32, 36, false, false, 0, [2]int{}, [2]int{560, 85}, true},
+		{"turn450", 1, 45592, 10341, 82302, 32, 36, false, false, 0, [2]int{}, [2]int{560, 85}, true},
+		{"turnnext", 10, 42339, 10413, 83304, 32, 36, false, false, 0, [2]int{}, [2]int{}, false},
 		// 從主選單「取進度」載進 S2「諸神的黃昏」（`docs/re/38`）：
 		// 798 年 11 月 19 日 ＝ 第 346 回合，數字與開局差很遠，
 		// 而且首都有兩支艦隊。
 		{"s2empire", 346, 150000, 7280, 86275, 17, 0, false, false, 35,
-			[2]int{2, 0}, [2]int{318, 168}},
+			[2]int{2, 0}, [2]int{318, 168}, false},
 		// S3「巴米利恩會戰」：799 年 3 月 1 日 ＝ 第 380 回合。首都的
 		// 未安定度 13（治安 93%）、艦隊 0：0、稅率 2.2%——
 		// `89759 × 22 / 1000 = 1974` 與畫面相同（`docs/re/38`）。
 		// 經濟力、稅率、成長率、未安定度都與量到的執行期星域表相同
 		// （[`state-s3-799-03.json`](../../docs/internals/data/state-s3-799-03.json)）。
 		{"s3rgn", 380, 160000, 13131, 89759, 22, 13, false, false, 45,
-			[2]int{0, 0}, [2]int{230, 12}},
+			[2]int{0, 0}, [2]int{230, 12}, false},
 	} {
 		c := c
 		t.Run(c.batch, func(t *testing.T) {
 			checkCapitalPanel(t, c.batch, c.turn, c.military, c.taxTotal,
 				c.economy, c.taxRate, c.unrest, c.whole, c.noCursor,
-				c.growth, c.fleets, c.mouse)
+				c.growth, c.fleets, c.mouse, c.pressedSys)
 		})
 	}
 }
 
 func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
 	economy, taxRate, unrest int, whole, noCursor bool,
-	growth int, fleets, mouse [2]int) {
+	growth int, fleets, mouse [2]int, pressedSys bool) {
 	t.Helper()
 	root := "../.."
 	oracle := filepath.Join(root, "workplace/oracle/"+batch+"/screen.bin")
@@ -446,7 +447,7 @@ func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
 			// 命令列第三個按鈕（系統指令）在這幾份收據裡是**按下去**的狀態
 			// ——最後一次點擊就落在它上面，底緣的立體邊跟著反過來（7 px）。
 			// 那是命令列的事，不在這份規格裡。
-			if noCursor && x >= 542 && x < 611 && y >= 136 && y < 142 {
+			if pressedSys && x >= 542 && x < 611 && y >= 136 && y < 142 {
 				continue
 			}
 			if want[y*640+x] != fb.Pix[y*640+x] {
