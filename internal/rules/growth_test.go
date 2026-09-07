@@ -1,6 +1,7 @@
 package rules
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"testing"
@@ -77,5 +78,48 @@ func TestMonthEndFloorsPerPlanet(t *testing.T) {
 	}
 	if tax != 2720 {
 		t.Errorf("進國庫 %d，實測 2720", tax)
+	}
+}
+
+// TestRegionEconomyAndGrowth 是載入時重算的驗收（`docs/re/44`）：
+// 新遊戲那一輪量到的 32 個星域，經濟力與成長率都要算得剛好。
+//
+// 讀存檔不重算這兩欄，所以只驗新遊戲那條路徑。
+func TestRegionEconomyAndGrowth(t *testing.T) {
+	root := "../.."
+	pl, err := os.ReadFile(filepath.Join(root, "org_game/extracted/PLADAT.DAT"))
+	if err != nil {
+		t.Skipf("缺 PLADAT.DAT，跳過（不用代用品）")
+	}
+	planets, err := LoadPlanets(pl)
+	if err != nil {
+		t.Fatal(err)
+	}
+	table, err := LoadGrowthTable(filepath.Join(root,
+		"docs/internals/data/growth-table.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	b, err := os.ReadFile(filepath.Join(root,
+		"docs/internals/data/region-table-796-01.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var d struct {
+		Regions []struct {
+			Index   int `json:"index"`
+			Economy int `json:"economy"`
+			Growth  int `json:"growth_per_mille"`
+		} `json:"regions"`
+	}
+	if err := json.Unmarshal(b, &d); err != nil {
+		t.Fatal(err)
+	}
+	for _, r := range d.Regions {
+		e, g := RegionEconomyAndGrowth(planets, table, r.Index)
+		if e != r.Economy || g != r.Growth {
+			t.Errorf("星域 %d：經濟力 %d 成長率 %d，量到的是 %d／%d",
+				r.Index, e, g, r.Economy, r.Growth)
+		}
 	}
 }

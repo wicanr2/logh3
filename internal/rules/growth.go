@@ -36,8 +36,9 @@ func LoadGrowthTable(path string) (*GrowthTable, error) {
 
 // Rate 回一顆行星這個月的成長率（千分之一）。
 //
-// 防衛力低於門檻（3000）時再 ×3/2——這一條是從程式讀出來的，
-// 還沒實測到（`docs/re/33`）。
+// 防衛力低於門檻（3000）時再 ×3/2。**用的是行星的 `+0x16`，不是畫面上
+// 那個 `+0x14`**（`docs/re/44`）——兩格在量到的資料裡數值一樣，
+// 所以先前分不出來。
 func (t *GrowthTable) Rate(economy, defence int) int {
 	if len(t.Rows) == 0 {
 		return 0
@@ -127,4 +128,24 @@ func MonthEnd(records []byte, p *Planets, t *GrowthTable, faction int) int {
 		}
 	}
 	return total
+}
+
+// RegionEconomyAndGrowth 回一個星域載入時重算出來的經濟力與成長率
+// （`docs/re/44`）。
+//
+// 經濟力 ＝ 該星域行星的經濟力相加；成長率 ＝ 「全部長一次之後的合計」
+// 比經濟力多出來的比例（千分之一）。**新遊戲才會重算**——讀存檔時
+// 這兩欄照存檔的用，只有未安定度重算（`docs/spec/006`）。
+func RegionEconomyAndGrowth(p *Planets, t *GrowthTable, region int) (economy, growth int) {
+	start, n := p.Range(region)
+	grown := 0
+	for i := start; i < start+n; i++ {
+		e := p.PlanetEconomy(i)
+		economy += e
+		grown += e + e*t.Rate(e, p.GrowthDefence(i))/1000
+	}
+	if economy > 0 {
+		growth = (grown - economy) * 1000 / economy
+	}
+	return economy, growth
 }

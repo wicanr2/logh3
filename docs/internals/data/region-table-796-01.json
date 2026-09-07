@@ -1,0 +1,524 @@
+{
+ "note": "新遊戲（STELLAR.DTX）載入之後量到的星域表——經濟力、成長率、防衛力等欄位都是載入時重算的（docs/re/44）。這裡只留驗算得到的那幾欄；未安定度另見 unrest-at-load.json。",
+ "source": {
+  "batch": "newload",
+  "dosgolem_head": "8c8af90",
+  "steps": 71200000,
+  "dump": "-dump-mem lin:54B30:47104（取 ds:A79C 起 4032 bytes）"
+ },
+ "scenario": "新遊戲 796/1/1",
+ "regions": [
+  {
+   "index": 0,
+   "name": "瓦爾哈拉",
+   "owner": 0,
+   "planets": [
+    4,
+    0,
+    0
+   ],
+   "economy": 81300,
+   "growth_per_mille": 45,
+   "defence": 27300,
+   "tax_rate_per_mille": 32,
+   "morale": 0,
+   "unrest": 36
+  },
+  {
+   "index": 1,
+   "name": "亞爾迪巴朗",
+   "owner": 0,
+   "planets": [
+    3,
+    0,
+    0
+   ],
+   "economy": 27800,
+   "growth_per_mille": 54,
+   "defence": 15900,
+   "tax_rate_per_mille": 38,
+   "morale": 0,
+   "unrest": 38
+  },
+  {
+   "index": 2,
+   "name": "亞爾提那",
+   "owner": 0,
+   "planets": [
+    2,
+    0,
+    0
+   ],
+   "economy": 21000,
+   "growth_per_mille": 52,
+   "defence": 18000,
+   "tax_rate_per_mille": 37,
+   "morale": 0,
+   "unrest": 27
+  },
+  {
+   "index": 3,
+   "name": "卡斯特羅普",
+   "owner": 2,
+   "planets": [
+    0,
+    0,
+    3
+   ],
+   "economy": 28800,
+   "growth_per_mille": 58,
+   "defence": 11300,
+   "tax_rate_per_mille": 58,
+   "morale": 100,
+   "unrest": 100
+  },
+  {
+   "index": 4,
+   "name": "菲列亞",
+   "owner": 0,
+   "planets": [
+    1,
+    0,
+    0
+   ],
+   "economy": 5000,
+   "growth_per_mille": 64,
+   "defence": 10600,
+   "tax_rate_per_mille": 45,
+   "morale": 0,
+   "unrest": 30
+  },
+  {
+   "index": 5,
+   "name": "奇霍伊薩",
+   "owner": 0,
+   "planets": [
+    2,
+    0,
+    0
+   ],
+   "economy": 9600,
+   "growth_per_mille": 64,
+   "defence": 12600,
+   "tax_rate_per_mille": 45,
+   "morale": 0,
+   "unrest": 32
+  },
+  {
+   "index": 6,
+   "name": "香陶",
+   "owner": 0,
+   "planets": [
+    3,
+    0,
+    0
+   ],
+   "economy": 37400,
+   "growth_per_mille": 51,
+   "defence": 18000,
+   "tax_rate_per_mille": 36,
+   "morale": 0,
+   "unrest": 48
+  },
+  {
+   "index": 7,
+   "name": "亞爾維斯",
+   "owner": 0,
+   "planets": [
+    3,
+    0,
+    0
+   ],
+   "economy": 36200,
+   "growth_per_mille": 51,
+   "defence": 21300,
+   "tax_rate_per_mille": 36,
+   "morale": 0,
+   "unrest": 44
+  },
+  {
+   "index": 8,
+   "name": "亞姆力札",
+   "owner": 0,
+   "planets": [
+    4,
+    0,
+    0
+   ],
+   "economy": 33000,
+   "growth_per_mille": 60,
+   "defence": 13800,
+   "tax_rate_per_mille": 42,
+   "morale": 0,
+   "unrest": 42
+  },
+  {
+   "index": 9,
+   "name": "亞凡海爾",
+   "owner": 0,
+   "planets": [
+    3,
+    0,
+    0
+   ],
+   "economy": 18600,
+   "growth_per_mille": 59,
+   "defence": 15100,
+   "tax_rate_per_mille": 42,
+   "morale": 0,
+   "unrest": 50
+  },
+  {
+   "index": 10,
+   "name": "杜威爾格",
+   "owner": 2,
+   "planets": [
+    0,
+    0,
+    2
+   ],
+   "economy": 12800,
+   "growth_per_mille": 58,
+   "defence": 8700,
+   "tax_rate_per_mille": 58,
+   "morale": 100,
+   "unrest": 100
+  },
+  {
+   "index": 11,
+   "name": "優茲黑姆",
+   "owner": 2,
+   "planets": [
+    0,
+    0,
+    2
+   ],
+   "economy": 11800,
+   "growth_per_mille": 59,
+   "defence": 8000,
+   "tax_rate_per_mille": 59,
+   "morale": 100,
+   "unrest": 100
+  },
+  {
+   "index": 12,
+   "name": "赫爾森",
+   "owner": 2,
+   "planets": [
+    0,
+    0,
+    1
+   ],
+   "economy": 16400,
+   "growth_per_mille": 48,
+   "defence": 5800,
+   "tax_rate_per_mille": 48,
+   "morale": 100,
+   "unrest": 100
+  },
+  {
+   "index": 13,
+   "name": "伊謝爾倫",
+   "owner": 0,
+   "planets": [
+    1,
+    0,
+    0
+   ],
+   "economy": 7000,
+   "growth_per_mille": 60,
+   "defence": 12800,
+   "tax_rate_per_mille": 42,
+   "morale": 0,
+   "unrest": 48
+  },
+  {
+   "index": 14,
+   "name": "費沙",
+   "owner": 2,
+   "planets": [
+    0,
+    0,
+    1
+   ],
+   "economy": 100000,
+   "growth_per_mille": 31,
+   "defence": 8800,
+   "tax_rate_per_mille": 31,
+   "morale": 100,
+   "unrest": 100
+  },
+  {
+   "index": 15,
+   "name": "艾爾•法西爾",
+   "owner": 1,
+   "planets": [
+    0,
+    2,
+    0
+   ],
+   "economy": 11800,
+   "growth_per_mille": 61,
+   "defence": 8300,
+   "tax_rate_per_mille": 46,
+   "morale": 200,
+   "unrest": 56
+  },
+  {
+   "index": 16,
+   "name": "亞斯提",
+   "owner": 1,
+   "planets": [
+    0,
+    3,
+    0
+   ],
+   "economy": 6600,
+   "growth_per_mille": 73,
+   "defence": 13200,
+   "tax_rate_per_mille": 55,
+   "morale": 200,
+   "unrest": 50
+  },
+  {
+   "index": 17,
+   "name": "迪亞馬特",
+   "owner": 1,
+   "planets": [
+    0,
+    2,
+    0
+   ],
+   "economy": 13200,
+   "growth_per_mille": 59,
+   "defence": 13800,
+   "tax_rate_per_mille": 44,
+   "morale": 200,
+   "unrest": 42
+  },
+  {
+   "index": 18,
+   "name": "凱利姆",
+   "owner": 1,
+   "planets": [
+    0,
+    3,
+    0
+   ],
+   "economy": 27100,
+   "growth_per_mille": 54,
+   "defence": 19100,
+   "tax_rate_per_mille": 40,
+   "morale": 200,
+   "unrest": 40
+  },
+  {
+   "index": 19,
+   "name": "特利布拉",
+   "owner": 1,
+   "planets": [
+    0,
+    3,
+    0
+   ],
+   "economy": 21500,
+   "growth_per_mille": 56,
+   "defence": 15200,
+   "tax_rate_per_mille": 42,
+   "morale": 200,
+   "unrest": 38
+  },
+  {
+   "index": 20,
+   "name": "德奧里亞",
+   "owner": 1,
+   "planets": [
+    0,
+    3,
+    0
+   ],
+   "economy": 28600,
+   "growth_per_mille": 53,
+   "defence": 21800,
+   "tax_rate_per_mille": 40,
+   "morale": 200,
+   "unrest": 26
+  },
+  {
+   "index": 21,
+   "name": "傑姆席德",
+   "owner": 1,
+   "planets": [
+    0,
+    4,
+    0
+   ],
+   "economy": 25900,
+   "growth_per_mille": 58,
+   "defence": 25400,
+   "tax_rate_per_mille": 43,
+   "morale": 200,
+   "unrest": 18
+  },
+  {
+   "index": 22,
+   "name": "蘭提馬利歐",
+   "owner": 1,
+   "planets": [
+    0,
+    2,
+    0
+   ],
+   "economy": 4200,
+   "growth_per_mille": 115,
+   "defence": 5400,
+   "tax_rate_per_mille": 87,
+   "morale": 200,
+   "unrest": 48
+  },
+  {
+   "index": 23,
+   "name": "波列多",
+   "owner": 2,
+   "planets": [
+    0,
+    0,
+    2
+   ],
+   "economy": 5200,
+   "growth_per_mille": 73,
+   "defence": 6200,
+   "tax_rate_per_mille": 73,
+   "morale": 100,
+   "unrest": 100
+  },
+  {
+   "index": 24,
+   "name": "馬爾•亞迪特",
+   "owner": 2,
+   "planets": [
+    0,
+    0,
+    1
+   ],
+   "economy": 2800,
+   "growth_per_mille": 73,
+   "defence": 6600,
+   "tax_rate_per_mille": 73,
+   "morale": 100,
+   "unrest": 100
+  },
+  {
+   "index": 25,
+   "name": "干達巴爾",
+   "owner": 2,
+   "planets": [
+    0,
+    0,
+    3
+   ],
+   "economy": 6900,
+   "growth_per_mille": 97,
+   "defence": 8700,
+   "tax_rate_per_mille": 97,
+   "morale": 100,
+   "unrest": 100
+  },
+  {
+   "index": 26,
+   "name": "達希利",
+   "owner": 1,
+   "planets": [
+    0,
+    3,
+    0
+   ],
+   "economy": 11300,
+   "growth_per_mille": 67,
+   "defence": 11800,
+   "tax_rate_per_mille": 50,
+   "morale": 200,
+   "unrest": 46
+  },
+  {
+   "index": 27,
+   "name": "萊加爾",
+   "owner": 1,
+   "planets": [
+    0,
+    2,
+    0
+   ],
+   "economy": 7800,
+   "growth_per_mille": 67,
+   "defence": 9200,
+   "tax_rate_per_mille": 50,
+   "morale": 200,
+   "unrest": 40
+  },
+  {
+   "index": 28,
+   "name": "巴米利恩",
+   "owner": 2,
+   "planets": [
+    0,
+    0,
+    3
+   ],
+   "economy": 8600,
+   "growth_per_mille": 71,
+   "defence": 14000,
+   "tax_rate_per_mille": 71,
+   "morale": 100,
+   "unrest": 100
+  },
+  {
+   "index": 29,
+   "name": "流卡斯",
+   "owner": 1,
+   "planets": [
+    0,
+    2,
+    0
+   ],
+   "economy": 16400,
+   "growth_per_mille": 55,
+   "defence": 8300,
+   "tax_rate_per_mille": 41,
+   "morale": 200,
+   "unrest": 44
+  },
+  {
+   "index": 30,
+   "name": "艾流塞拉",
+   "owner": 1,
+   "planets": [
+    0,
+    3,
+    0
+   ],
+   "economy": 7100,
+   "growth_per_mille": 75,
+   "defence": 14100,
+   "tax_rate_per_mille": 57,
+   "morale": 200,
+   "unrest": 38
+  },
+  {
+   "index": 31,
+   "name": "巴拉特",
+   "owner": 1,
+   "planets": [
+    0,
+    5,
+    0
+   ],
+   "economy": 65100,
+   "growth_per_mille": 48,
+   "defence": 27500,
+   "tax_rate_per_mille": 36,
+   "morale": 200,
+   "unrest": 24
+  }
+ ]
+}

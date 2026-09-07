@@ -13,7 +13,8 @@ const (
 	PlanetHeader = 64
 
 	planetOwner   = 0x11 // 這顆行星屬於誰：0 帝國、1 同盟、2 其他
-	planetDefence = 0x14 // 防衛力
+	planetDefence = 0x14 // 防衛力（畫面上的那個，星域防衛力 ＝ 這一欄相加）
+	planetGrowthDef = 0x16 // 成長率的 ×3/2 加成看的是這一欄（`docs/re/44`）
 
 	// RegionRecord 是 `STELLAR.DT*` 一筆的長度，RegionCount 是星域數。
 	RegionRecord = 126
@@ -214,6 +215,12 @@ func (p *Planets) Owner(i int) int { return int(p.rec(i)[planetOwner]) }
 // Defence 回第 i 顆行星的防衛力。
 func (p *Planets) Defence(i int) int {
 	return int(binary.LittleEndian.Uint16(p.rec(i)[planetDefence:]))
+}
+
+// GrowthDefence 回成長率加成看的那一欄（`+0x16`）。與 Defence 多半同值，
+// 但原版讀的是這一格（`docs/re/44`）。
+func (p *Planets) GrowthDefence(i int) int {
+	return int(binary.LittleEndian.Uint16(p.rec(i)[planetGrowthDef:]))
 }
 
 // RegionDefence 回一個星域的防衛力：該星域所有行星的防衛力相加。
