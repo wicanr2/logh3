@@ -110,3 +110,45 @@ func TestUnrestBand(t *testing.T) {
 		}
 	}
 }
+
+// TestFactionColour：陣營前綴的墨色。四份收據上量到的：
+// 「帝國軍星系」色 6、「同盟軍星系」色 5、「中立軍星系」色 7。
+func TestFactionColour(t *testing.T) {
+	for _, c := range []struct {
+		faction int
+		want    uint8
+	}{{0, 6}, {1, 5}, {2, 7}} {
+		if got := FactionColour(c.faction); got != c.want {
+			t.Errorf("陣營 %d 色號 %d，預期 %d", c.faction, got, c.want)
+		}
+	}
+}
+
+// TestSecurityColour：治安那個數字的墨色。
+// 收據 `main1e`／`sec1`／`hovA`／`sec5` 是色 6（未安定度 36／38／27／32），
+// `sec7`／`sec9` 是色 7（44／50）。
+func TestSecurityColour(t *testing.T) {
+	for _, c := range []struct {
+		unrest int
+		want   uint8
+		// 前六筆是收據上量到的；後四筆是反組譯出來的門檻
+		// （40／80／120，`docs/re/24`），無主星域畫面上印 `----`，量不到。
+	}{{36, 6}, {38, 6}, {27, 6}, {32, 6}, {44, 7}, {50, 7},
+		{40, 6}, {41, 7}, {81, 5}, {121, 2}} {
+		if got := SecurityColour(c.unrest); got != c.want {
+			t.Errorf("未安定度 %d 色號 %d，預期 %d", c.unrest, got, c.want)
+		}
+	}
+}
+
+// TestFleetsReadsBothSides：兩邊看到的不是同一組欄位。
+func TestFleetsReadsBothSides(t *testing.T) {
+	rec := make([]byte, RegionRecord)
+	rec[0x28], rec[0x29], rec[0x2A], rec[0x2B] = 3, 4, 5, 6
+	if own, enemy := Fleets(rec, 0); own != 3 || enemy != 6 {
+		t.Errorf("帝國視角 %d：%d，預期 3：6", own, enemy)
+	}
+	if own, enemy := Fleets(rec, 1); own != 5 || enemy != 4 {
+		t.Errorf("同盟視角 %d：%d，預期 5：4", own, enemy)
+	}
+}

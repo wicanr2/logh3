@@ -39,6 +39,47 @@ const (
 // 其餘畫面上寫 `----`。
 func Security(unrest int) int { return (200 - unrest) / 2 }
 
+// FactionColour 回陣營的文字色號：帝國 6、同盟 5、中立 7。
+//
+// 原版的表在 `ds:6096`，存的是 `0x96 0x95 0x97`——文字系統的顏色跳脫碼
+// 是 `0x90 + 色號`（`docs/re/24`）。與四份收據上量到的墨色一致。
+func FactionColour(faction int) uint8 {
+	switch faction {
+	case 0:
+		return 6
+	case 1:
+		return 5
+	default:
+		return 7
+	}
+}
+
+// SecurityColour 回治安那個數字用什麼顏色印：照未安定度分四段。
+//
+// 程式裡寫的是跳脫碼 `0x96`／`0x97`／`0x95`／`0x92`，減掉 `0x90` 就是色號。
+// 實測：未安定度 36／38／27／32 印色 6，44／50 印色 7。
+func SecurityColour(unrest int) uint8 {
+	return [...]uint8{6, 7, 5, 2}[UnrestBand(unrest)]
+}
+
+// FleetsUnknown 是「看不到」的艦隊數；畫面上印 `--`。
+const FleetsUnknown = 0xFF
+
+// Fleets 回畫面上「艦隊 a：b」那兩個數字：自己的、敵方的。
+//
+// 記錄的 `+0x28`–`+0x2B` 是四個 byte，**兩邊看到的不是同一組**
+// （`docs/re/24`）：帝國玩家看 `+0x28`／`+0x2B`，同盟玩家看
+// `+0x2A`／`+0x29`。`0xFF` 代表看不到。
+func Fleets(record []byte, faction int) (own, enemy int) {
+	if len(record) < 0x2C {
+		return FleetsUnknown, FleetsUnknown
+	}
+	if faction == 0 {
+		return int(record[0x28]), int(record[0x2B])
+	}
+	return int(record[0x2A]), int(record[0x29])
+}
+
 // UnrestBand 回未安定度落在哪一段（0 最好、3 最差）。
 // 門檻取自同一段程式的三個比較：40、80、120（`docs/re/24`）。
 func UnrestBand(unrest int) int {
