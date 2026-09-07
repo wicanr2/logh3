@@ -173,6 +173,9 @@ type Resources struct {
 	SlotList  *screen.SlotList
 	SaveIndex []rules.SaveIndexEntry
 
+	// SaveDir 是存檔要寫去哪。**不會是原版目錄**——原版檔案一律唯讀。
+	SaveDir string
+
 	// WorkTemplate 是新遊戲開局的 `WORK` 區塊（`docs/re/45`）。
 	// 新遊戲要存檔就得靠它——`WORK.DTX` 不存在。
 	WorkTemplate []byte
@@ -260,6 +263,9 @@ type Game struct {
 	// 那塊是空的——收據 `main1e` 就是這個狀態（關月初報告的那兩下右鍵
 	// 也點在星圖上，但沒有選中任何星域）。
 	selectedRegion int
+
+	// saveErr 是上一次存檔的結果（nil ＝ 成功或還沒存過）。
+	saveErr error
 
 	// slot 是目前這個局面從哪一格存檔來的（新遊戲是 nil）。
 	// 存檔寫出要靠它——`WORK` 那 230 bytes 只解出三個欄位，
@@ -365,6 +371,12 @@ func (g *Game) Click(x, y int) {
 	case StateLoadGame:
 		if n := SlotAt(y); n >= 0 {
 			g.loadSlotFromDisk(n)
+		}
+	case StateSaveGame:
+		// 點下去就直接存到那一格，不問名字——原版在唯讀的原版目錄上
+		// 會跳「磁碟片載入時有發生錯誤。」（`docs/spec/010`）。
+		if n := g.saveRow(); n >= 0 && g.res.SaveDir != "" {
+			g.saveErr = g.SaveSlot(g.res.SaveDir, n)
 		}
 	case StateMainGame:
 		// 可點區域是熱區清單，不是「視窗內就好」（`docs/re/09`）。
@@ -511,14 +523,29 @@ func (g *Game) Key(c byte) {
 	}
 }
 
+// saveRow 回「存進度」畫面上滑鼠停在第幾列。**不存成狀態**——原版一開畫面
+// 紅條就在滑鼠底下那一列，所以它是「現在滑鼠在哪」的函式，不是點出來的。
+func (g *Game) saveRow() int {
+	if g.res.SlotList == nil {
+		return -1
+	}
+	return g.res.SlotList.SaveRowAt(g.mouseY)
+}
+
+// SaveErr 回上一次存檔的結果。
+func (g *Game) SaveErr() error { return g.saveErr }
+
 // menuRowLoad 是主選單第四列「取進度」（`docs/internals/data/screen-main-menu.json`）。
 const menuRowLoad = 3
 
-// 存檔畫面那 11 列的版面（`docs/spec/007`）。三個有內容的槽位量到的
-// 落點是 y ＝ 242／262／282（收據 `slot242`／`s2empire`／`s3rgn`），
-// 一列 20 px，往上推到第 0 格就是 82。
+// 存檔畫面那 11 列的版面（`docs/spec/007`）。畫面上第 0 列在 y ＝ 122，
+// 一列 20 px。
+//
+// **收據裡的點擊座標比這裡少 40**：dosgolem 的虛擬滑鼠座標是畫面座標
+// 減 40（`docs/re/09`），所以量到的 242／262／282 對應畫面的 282／302／322。
+// `Game` 這一層一律用畫面座標。
 const (
-	slotRowTop    = 82
+	slotRowTop    = 122
 	slotRowHeight = 20
 )
 
@@ -720,8 +747,11 @@ func (g *Game) drawSlotList(fb *gfx.Framebuffer) {
 	}
 	// **只有「取進度」那張**。「存進度」那張的版面不一樣（量到的只有 7 行、
 	// 位置也不同），還沒解，先照規格裡量到的畫。
-	if g.state == StateLoadGame {
+	switch g.state {
+	case StateLoadGame:
 		g.res.SlotList.Draw(fb, g.res.Font, g.res.SaveIndex, rules.Epoch)
+	case StateSaveGame:
+		g.res.SlotList.DrawSaveBar(fb, g.saveRow())
 	}
 }
 

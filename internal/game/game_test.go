@@ -767,11 +767,12 @@ func TestLoadGamePlayerPath(t *testing.T) {
 	if g.State() != StateLoadGame {
 		t.Fatalf("答對之後在 %v，要存檔畫面", g.State())
 	}
-	// 第 9 格「諸神的黃昏」量到的落點是 y ＝ 262（收據 `s2empire`）。
-	if n := SlotAt(262); n != 9 {
-		t.Fatalf("y=262 落在第 %d 格，要第 9 格", n)
+	// 第 9 格「諸神的黃昏」：收據量到的落點是 262，畫面座標是 302
+	// （dosgolem 的滑鼠座標比畫面少 40，`docs/spec/007`）。
+	if n := SlotAt(302); n != 9 {
+		t.Fatalf("y=302 落在第 %d 格，要第 9 格", n)
 	}
-	g.Click(300, 262)
+	g.Click(300, 302)
 	if g.State() != StateCommandPhase {
 		t.Fatalf("點下去之後在 %v，要命令階段", g.State())
 	}
@@ -824,7 +825,7 @@ func TestSaveSlotRoundTrip(t *testing.T) {
 		g.Key(c)
 	}
 	g.Key('\r')
-	g.Click(300, 262)
+	g.Click(300, 302)
 	dir := t.TempDir()
 	if err := g.SaveSlot(dir, 9); err != nil {
 		t.Fatal(err)
@@ -889,5 +890,41 @@ func TestSaveNewGame(t *testing.T) {
 	if turn != g.Turn() || mil != g.Military() {
 		t.Errorf("WORK 裡是回合 %d、軍事費 %d，遊戲裡是 %d／%d",
 			turn, mil, g.Turn(), g.Military())
+	}
+}
+
+// TestSaveGameClickWrites 走「存進度」那條路（`docs/spec/010`）：
+// 命令階段 → 系統 → 存進度 → 點一列，就寫出那一格的六個檔。
+//
+// 原版在唯讀的原版目錄上會跳「磁碟片載入時有發生錯誤。」（收據 `save3e`）；
+// remake 寫去自己的目錄，所以會成功。
+func TestSaveGameClickWrites(t *testing.T) {
+	res := load(t)
+	dir := t.TempDir()
+	res.SaveDir = dir
+	g, err := New(res)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 170)
+	for _, c := range []byte{'1', '3', '8', '\r'} {
+		g.Key(c)
+	}
+	g.RightClick(300, 240)
+	g.RightClick(300, 240)
+	g.Click(544, 125) // 系統
+	g.Click(560, 165) // 存進度
+	if g.State() != StateSaveGame {
+		t.Fatalf("點了存進度之後在 %v", g.State())
+	}
+	// 第 0 列：畫面 y ＝ 142（一列 20 px）。
+	g.Click(300, 145)
+	if err := g.SaveErr(); err != nil {
+		t.Fatalf("存檔失敗：%v", err)
+	}
+	for _, name := range rules.SlotFileNames(0) {
+		if _, err := os.Stat(filepath.Join(dir, name)); err != nil {
+			t.Errorf("沒寫出 %s", name)
+		}
 	}
 }

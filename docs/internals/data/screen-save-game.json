@@ -13353,15 +13353,6 @@
      ]
     }
    ],
-   "rules": [
-    {
-     "x": 48,
-     "y": 160,
-     "w": 544,
-     "h": 20,
-     "colour": 2
-    }
-   ],
    "boxes": []
   }
  },
@@ -13377,5 +13368,6 @@
   21,
   4
  ],
- "hotspots": []
+ "hotspots": [],
+ "note": " 那條紅條不在這裡——它跟著滑鼠走（docs/spec/010、save-slot-list.json 的 save 段）。"
 }

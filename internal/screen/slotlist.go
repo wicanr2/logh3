@@ -34,6 +34,46 @@ type SlotList struct {
 	EmptyCodes []uint16 `json:"empty_codes"`
 	EmptyStamp string   `json:"empty_stamp"`
 	EmptyTime  string   `json:"empty_time"`
+
+	// Save 是「存進度」那張的版面：列數與「取進度」不同，而且滑鼠移過去
+	// 的那一列畫成一條紅條（規格 `docs/spec/010`）。
+	Save struct {
+		Rows    int `json:"rows"`
+		TextTop int `json:"text_top"`
+		BarTop  int `json:"bar_top"`
+		Height  int `json:"height"`
+		Bar     struct {
+			X      int   `json:"x"`
+			W      int   `json:"w"`
+			H      int   `json:"h"`
+			Colour uint8 `json:"colour"`
+		} `json:"bar"`
+	} `json:"save"`
+}
+
+// SaveRowAt 回「存進度」畫面上這個**畫面** y 落在第幾列；不在就回 -1。
+func (s *SlotList) SaveRowAt(y int) int {
+	if y < s.Save.TextTop {
+		return -1
+	}
+	n := (y - s.Save.TextTop) / s.Save.Height
+	if n >= s.Save.Rows {
+		return -1
+	}
+	return n
+}
+
+// DrawSaveBar 把滑鼠移過去那一列畫成紅條。`row` < 0 就不畫。
+func (s *SlotList) DrawSaveBar(fb *gfx.Framebuffer, row int) {
+	if row < 0 || row >= s.Save.Rows {
+		return
+	}
+	y0 := s.Save.BarTop + row*s.Save.Height
+	for y := y0; y < y0+s.Save.Bar.H; y++ {
+		for x := s.Save.Bar.X; x < s.Save.Bar.X+s.Save.Bar.W; x++ {
+			fb.Pix[y*gfx.Width+x] = s.Save.Bar.Colour
+		}
+	}
 }
 
 // LoadSlotList 讀存檔畫面的版面。

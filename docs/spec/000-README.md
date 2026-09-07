@@ -23,3 +23,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`007`](007-load-game-path.md) | 「取進度」那條玩家路徑 | `CONFORMED` |
 | [`008`](008-save-slot-list.md) | 存檔畫面那 11 列（從 `SAVEDATA.IDX` 算）| `CONFORMED` |
 | [`009`](009-save-slot-writing.md) | 存檔寫出 | `CONFORMED` |
+| [`010`](010-save-game-screen.md) | 「存進度」畫面 | `CONFORMED` |

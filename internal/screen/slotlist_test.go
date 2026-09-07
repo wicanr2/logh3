@@ -58,3 +58,49 @@ func TestSlotListMatchesOracle(t *testing.T) {
 		t.Fatalf("與原版不同的像素 %d / %d", bad, len(want))
 	}
 }
+
+// TestSaveBarMatchesOracle 是「存進度」那條紅條的對拍（`docs/spec/010`）：
+// 條子跟著滑鼠走，畫在滑鼠停的那一列。收據 `save1e` 的滑鼠在 (560,125)
+// ——畫面 y ＝ 165，落在第 1 列。
+func TestSaveBarMatchesOracle(t *testing.T) {
+	root := "../.."
+	specPath := filepath.Join(root, "docs/internals/data/screen-save-game.json")
+	oracle := filepath.Join(root, "workplace/oracle/save1e/screen.bin")
+	for _, p := range []string{specPath, oracle} {
+		if _, err := os.Stat(p); err != nil {
+			t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", p)
+		}
+	}
+	spec, err := LoadMainGameSpec(specPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	list, err := LoadSlotList(filepath.Join(root,
+		"docs/internals/data/save-slot-list.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	// 規格裡的 `mouse.y` 是 dosgolem 的滑鼠座標，比畫面座標少 40。
+	row := list.SaveRowAt(spec.Mouse.Y + 40)
+	if row != 1 {
+		t.Fatalf("滑鼠 y=%d 落在第 %d 列，要第 1 列", spec.Mouse.Y, row)
+	}
+	fnt, mapImg, faces, cur := gameScreenAssets(t)
+	fb, _ := MainGameWithBoard(spec, fnt, mapImg, faces, cur, nil)
+	list.DrawSaveBar(fb, row)
+
+	want, err := os.ReadFile(oracle)
+	if err != nil {
+		t.Fatal(err)
+	}
+	bad := 0
+	for i := range want {
+		if want[i] != fb.Pix[i] {
+			bad++
+		}
+	}
+	if bad != 0 {
+		_ = os.WriteFile(filepath.Join(root, "workplace/remake-savebar.bin"), fb.Pix, 0o644)
+		t.Fatalf("與原版不同的像素 %d / %d", bad, len(want))
+	}
+}
