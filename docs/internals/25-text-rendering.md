@@ -5,6 +5,9 @@
 差別全部是畫的時候疊出來的。
 
 機器可讀版本在 [`data/text-rendering.json`](data/text-rendering.json)。
+證據等級：繪製流程與加粗／陰影／網點／底線 **confirmed**（反組譯 ＋ 十三張
+畫面逐位元組對拍）；樣式旗標 bit 3／4／5／7 的效果 **未解**。
+調查過程見 [`docs/re/18`](../re/18-settings-screen-font.md)。
 
 ## 一個字怎麼畫出來（confirmed）
 

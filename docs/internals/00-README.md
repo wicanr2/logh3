@@ -61,10 +61,31 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 
 | 檔 | 內容 |
 |---|---|
-| [`01-assets-inventory.md`](01-assets-inventory.md) | 162 個原版檔案的清單、大小、雜湊與用途推測 |
-| [`02-executables-and-credits.md`](02-executables-and-credits.md) | 四支執行檔、封裝器、工具鏈、製作團隊名單 |
-| [`03-startup-and-memory.md`](03-startup-and-memory.md) | 啟動鏈、EMS 交握、記憶體佈局、C runtime 的堆積配置器 |
-| [`04-text-windows-and-big5.md`](04-text-windows-and-big5.md) | 文字視窗結構、儲存格格式、Big5 與假名擴充區 |
-| [`05-palette-and-fade.md`](05-palette-and-fade.md) | 調色盤模組、淡入淡出、用到的 BIOS 介面 |
-| [`06-font-graph-img.md`](06-font-graph-img.md) | 中文字型：格式、索引公式、存取方式 |
+| [`01-assets-inventory.md`](01-assets-inventory.md) | 原版素材清單 |
+| [`02-executables-and-credits.md`](02-executables-and-credits.md) | 執行檔、封裝器與製作團隊 |
+| [`03-startup-and-memory.md`](03-startup-and-memory.md) | 啟動鏈、記憶體佈局與堆積配置器 |
+| [`04-text-windows-and-big5.md`](04-text-windows-and-big5.md) | 文字視窗、儲存格格式與中文編碼 |
+| [`05-palette-and-fade.md`](05-palette-and-fade.md) | 調色盤與淡入淡出 |
+| [`06-font-graph-img.md`](06-font-graph-img.md) | 中文字型：`GRAPH.IMG` |
+| [`07-window-frame.md`](07-window-frame.md) | 視窗外框 |
+| [`08-admiral-dt.md`](08-admiral-dt.md) | ADMIRAL.DT[89AX] — 提督能力表 |
+| [`09-face-amg.md`](09-face-amg.md) | FACE.AMG — 人物頭像（.AMG 圖庫格式） |
+| [`10-sprite-spr.md`](10-sprite-spr.md) | SPRITE.SPR — 艦隊編號圖塊 |
+| [`11-copy-protection-screen.md`](11-copy-protection-screen.md) | 防拷問答畫面 |
+| [`12-strmap-bit.md`](12-strmap-bit.md) | STRMAP.BIT — 星域地圖底圖 |
+| [`13-strmap-rgn.md`](13-strmap-rgn.md) | STRMAP.RGN — 星域區域遮罩 |
+| [`14-screen-strings.md`](14-screen-strings.md) | 畫面文字表與熱區 |
+| [`15-keireki-dat.md`](15-keireki-dat.md) | KEIREKI.DAT — 人物傳 |
+| [`16-ending-exe.md`](16-ending-exe.md) | ENDING.EXE — 結局文字與職員表 |
+| [`17-mds.md`](17-mds.md) | `.MDS` — 樂曲 |
+| [`18-vo5.md`](18-vo5.md) | `.VO5` — 結局圖 |
+| [`19-ibm16-350.md`](19-ibm16-350.md) | `IBM16.350` ＋ `IBMFLS16.350` — 開頭動畫 |
+| [`20-comani-bmg.md`](20-comani-bmg.md) | `COMANI.BMG` — 戰鬥動畫封存檔 |
+| [`21-3dblock-spr.md`](21-3dblock-spr.md) | `3DBLOCK.SPR` — 等距方塊 |
+| [`22-stellar-dt.md`](22-stellar-dt.md) | `STELLAR.DT[89AX]` — 星域資料 |
+| [`23-hotspot-lists.md`](23-hotspot-lists.md) | 熱區清單與按鈕標籤 |
+| [`24-window-list-and-right-button.md`](24-window-list-and-right-button.md) | 視窗串列、命中測試與右鍵 |
+| [`25-text-rendering.md`](25-text-rendering.md) | 文字繪製：粗體、陰影、底線與網點 |
+| [`26-star-region-graph.md`](26-star-region-graph.md) | 星域之間的相鄰關係與路徑表 |
+| [`27-treasury-globals.md`](27-treasury-globals.md) | 財政的全域變數 |
 | [`data/`](data/) | 機器可讀版本（JSON），給後續工具與 remake 用 |

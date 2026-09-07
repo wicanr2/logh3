@@ -3,7 +3,9 @@
 資料：`docs/internals/data/stellar.json`（四個版本全欄位）
 可讀版本：`docs/lore/star-regions.md`
 產生：`tools/py.sh tools/scripts/stellar_export.py`
-證據等級：版面與名稱 **confirmed**；其餘欄位語意 **未知**。
+證據等級：版面與名稱 **confirmed**；執行期記錄的欄位語意見下表，
+標 confirmed 的都對過畫面或反組譯（`docs/re/17`、`23`、`24`、`26`、`30`）；
+檔案裡 `+0x13` 之後那一段沒對過的欄位仍是 **未知**。
 
 ## 版面
 
