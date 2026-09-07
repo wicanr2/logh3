@@ -268,7 +268,11 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph,
+	names, err := loadAdmiralNames(filepath.Join(data, "keireki.json"))
+	if err != nil {
+		return nil, err
+	}
+	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph, AdmiralNames: names,
 		UnrestParams: rules.UnrestParams{
 			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
 			Table: []int{170, 150, 130, 90, 60},
@@ -306,4 +310,28 @@ func regionColours(path string) ([]uint8, error) {
 func die(err error) {
 	fmt.Fprintln(os.Stderr, "錯誤：", err)
 	os.Exit(1)
+}
+
+// loadAdmiralNames 讀 82 名提督姓名的 Big5 字碼。
+func loadAdmiralNames(path string) ([][]uint16, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var doc struct {
+		Records []struct {
+			Index     int      `json:"index"`
+			NameCodes []uint16 `json:"name_codes"`
+		} `json:"records"`
+	}
+	if err := json.Unmarshal(b, &doc); err != nil {
+		return nil, err
+	}
+	out := make([][]uint16, len(doc.Records))
+	for _, r := range doc.Records {
+		if r.Index >= 0 && r.Index < len(out) {
+			out[r.Index] = r.NameCodes
+		}
+	}
+	return out, nil
 }

@@ -155,7 +155,12 @@ func load(t *testing.T) *Resources {
 			t.Fatal(err)
 		}
 	}
+	names, err := loadAdmiralNames(filepath.Join("../..", "docs/internals/data/keireki.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	return &Resources{Font: fnt, OrigDir: orig, Faces: faces, Cursor: cur, Menu: menu,
+		AdmiralNames: names,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
@@ -927,4 +932,28 @@ func TestSaveGameClickWrites(t *testing.T) {
 			t.Errorf("沒寫出 %s", name)
 		}
 	}
+}
+
+// loadAdmiralNames 讀 82 名提督姓名的 Big5 字碼。
+func loadAdmiralNames(path string) ([][]uint16, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var doc struct {
+		Records []struct {
+			Index     int      `json:"index"`
+			NameCodes []uint16 `json:"name_codes"`
+		} `json:"records"`
+	}
+	if err := json.Unmarshal(b, &doc); err != nil {
+		return nil, err
+	}
+	out := make([][]uint16, len(doc.Records))
+	for _, r := range doc.Records {
+		if r.Index >= 0 && r.Index < len(out) {
+			out[r.Index] = r.NameCodes
+		}
+	}
+	return out, nil
 }

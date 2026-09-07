@@ -176,6 +176,9 @@ type Resources struct {
 	// SaveDir 是存檔要寫去哪。**不會是原版目錄**——原版檔案一律唯讀。
 	SaveDir string
 
+	// AdmiralNames 是 82 名提督姓名的 Big5 字碼（`docs/internals/data/keireki.json`）。
+	AdmiralNames [][]uint16
+
 	// WorkTemplate 是新遊戲開局的 `WORK` 區塊（`docs/re/45`）。
 	// 新遊戲要存檔就得靠它——`WORK.DTX` 不存在。
 	WorkTemplate []byte
@@ -659,6 +662,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	case StateEnding:
 		return screen.Ending(g.ending)
 	case StateAdmiralList:
+		g.setListRows(g.res.AdmiralList)
 		fb, _ := screen.MainGame(g.res.AdmiralList, g.res.Font, g.res.StarMap,
 			g.res.Faces, g.res.Cursor)
 		return fb
@@ -676,6 +680,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		return fb
 	default:
 		if spec := g.commandSpec(g.state); spec != nil {
+			g.setListRows(spec)
 			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
 			// （`docs/spec/002`）。
 			fb, _ := screen.MainGameWithBoard(spec, g.res.Font, g.starMapFor(spec),
@@ -878,3 +883,51 @@ func (g *Game) Answer() uint8 { return g.answer }
 
 // Mouse 回目前的游標位置。
 func (g *Game) Mouse() (int, int) { return g.mouseX, g.mouseY }
+
+// setListRows 把一覽表那幾張清單要畫的列算好放進規格。
+//
+// 名字、軍階與幕僚記號全部從原版資料檔算（`internal/rules`），
+// 規格裡只有版面。缺資料就留空——空清單看得出來是缺資料，不是假裝畫完了。
+func (g *Game) setListRows(spec *screen.MainGameSpec) {
+	if spec == nil {
+		return
+	}
+	spec.ListRows = nil
+	faction, standby, ok := listState(g.state)
+	if !ok || len(g.res.Admiral) == 0 || len(g.res.AdmiralNames) == 0 {
+		return
+	}
+	work := g.res.WorkTemplate
+	if g.slot != nil && len(g.slot.Work) > 0 {
+		work = g.slot.Work
+	}
+	staff := rules.StaffAdmirals(work)
+	isStaff := map[int]bool{}
+	for _, i := range staff {
+		isStaff[i] = true
+	}
+	for _, a := range rules.AdmiralList(rules.ParseAdmirals(g.res.Admiral), faction, standby, staff) {
+		var name []uint16
+		if a.Index < len(g.res.AdmiralNames) {
+			name = g.res.AdmiralNames[a.Index]
+		}
+		spec.ListRows = append(spec.ListRows, screen.ListRow{
+			Staff: isStaff[a.Index],
+			Name:  name,
+			Rank:  rules.RankOf(a.Merit),
+		})
+	}
+}
+
+// listState 回這個狀態的清單要哪一群提督。
+func listState(s State) (faction int, standby, ok bool) {
+	switch s {
+	case StateAdmiralListView: // 提督資料：全列，幕僚職前面標 ○
+		return 0, false, true
+	case StateStandbyAdmirals, StateAdmiralList: // 待命中提督資料
+		return 0, true, true
+	case StateEnemyList: // 敵提督資料
+		return 1, false, true
+	}
+	return 0, false, false
+}
