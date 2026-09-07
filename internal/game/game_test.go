@@ -1052,17 +1052,17 @@ func loadAdmiralNames(path string) ([][]uint16, error) {
 	return out, nil
 }
 
-// loadStarListOrder 讀「星系資料」那張清單的列順序。
-func loadStarListOrder(path string) ([]int, error) {
+// loadStarListOrder 讀「星系資料」那張清單的列順序，兩個陣營各一份。
+func loadStarListOrder(path string) ([][]int, error) {
 	b, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
 	var doc struct {
-		Order []int `json:"order"`
+		Orders [][]int `json:"orders"`
 	}
 	if err := json.Unmarshal(b, &doc); err != nil {
 		return nil, err
 	}
-	return doc.Order, nil
+	return doc.Orders, nil
 }

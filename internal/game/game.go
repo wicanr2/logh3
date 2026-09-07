@@ -202,7 +202,7 @@ type Resources struct {
 
 	// StarListOrder 是「星系資料」那張清單的列順序
 	// （`docs/internals/data/star-list-order.json`）。
-	StarListOrder []int
+	StarListOrder [][]int
 
 	// WorkTemplate 是新遊戲開局的 `WORK` 區塊（`docs/re/45`）。
 	// 新遊戲要存檔就得靠它——`WORK.DTX` 不存在。
@@ -789,12 +789,16 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		return screen.Ending(g.ending)
 	case StateAdmiralList:
 		g.setListRows(g.res.AdmiralList)
-		fb, _ := screen.MainGame(g.res.AdmiralList, g.res.Font, g.playerStarMap(),
-			g.res.Faces, g.res.Cursor)
+		g.applyStaffFaces(g.res.AdmiralList)
+		fb, _ := screen.MainGameWithBoard(g.res.AdmiralList, g.res.Font, g.playerStarMap(),
+			g.res.Faces, g.res.Cursor, g.drawBoardPanels)
+		g.drawSpecStaff(fb, g.res.AdmiralList)
 		return fb
 	case StateBudgetPlan:
-		fb, _ := screen.MainGame(g.res.BudgetPlan, g.res.Font, g.playerStarMap(),
-			g.res.Faces, g.res.Cursor)
+		g.applyStaffFaces(g.res.BudgetPlan)
+		fb, _ := screen.MainGameWithBoard(g.res.BudgetPlan, g.res.Font, g.playerStarMap(),
+			g.res.Faces, g.res.Cursor, g.drawBoardPanels)
+		g.drawSpecStaff(fb, g.res.BudgetPlan)
 		g.drawBudget(fb)
 		return fb
 	case StateBuildPlan:
@@ -874,7 +878,9 @@ func (g *Game) estimateTax() int {
 // drawBoardPanels 畫底板上那幾塊算出來的內容。命令階段那一批畫面共用
 // 同一塊底板，右側面板在每一張上都看得到（被疊上去的視窗蓋住的部分除外）。
 func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
-	if g.state == StateMainGame || g.state == StateShipOrder || g.state == StateBuildPlan {
+	g.drawLeftSummary(fb)
+	switch g.state {
+	case StateMainGame, StateShipOrder, StateBuildPlan, StateAdmiralList, StateBudgetPlan:
 		if c, _, ok := g.capitalSummary(); ok {
 			g.res.CapitalPanel.DrawOpening(fb, g.res.Font, g.res.RegionPanel, c, g.faction)
 		}
@@ -1030,13 +1036,18 @@ func (g *Game) applyStaffFaces(spec *screen.MainGameSpec) {
 	}
 }
 
-// drawSpecStaff 把規格宣告的署名畫上去（姓名 ＋ 軍階）。
+// drawSpecStaff 把規格宣告的署名（姓名 ＋ 軍階）與「兩個陣營印不同字」
+// 的那幾行畫上去。
 func (g *Game) drawSpecStaff(fb *gfx.Framebuffer, spec *screen.MainGameSpec) {
 	if spec == nil {
 		return
 	}
 	for _, w := range spec.Windows {
-		if w == nil || w.Staff == nil {
+		if w == nil {
+			continue
+		}
+		w.DrawFactionText(fb, g.res.Font, g.faction)
+		if w.Staff == nil {
 			continue
 		}
 		name, rank := g.staffAdmiral(w.Staff.Post)
@@ -1110,6 +1121,37 @@ func (g *Game) drawRegionPanel(fb *gfx.Framebuffer) {
 	g.res.RegionPanel.Draw(fb, g.res.Font, sum, g.faction)
 }
 
+// drawLeftSummary 把一個星域的摘要畫進左下角那塊。
+//
+// 提督資料那幾張畫的是**自己的首都**（收據 `lst2e`／`sortie1e`／
+// `admirals1` 與同盟的對應張），星系資料畫的是**滑鼠停的那一列**那個
+// 星域（`star1e`／`star1eAlly`）。其餘畫面左下角是空的，或由
+// `drawRegionPanel` 畫游標選中的那一格。
+//
+// **畫在底板那一層**（`drawBoardPanels` 裡）——待命中提督資料那張的
+// 視窗會蓋掉左下角一部分，畫在視窗之後會蓋錯。
+func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
+	if g.res.RegionPanel == nil || g.res.Planets == nil {
+		return
+	}
+	region := -1
+	switch g.state {
+	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList:
+		region = rules.CapitalRegion(g.faction)
+	case StateStarList:
+		if spec := g.commandSpec(g.state); spec != nil {
+			region = g.starListSelected(spec)
+		}
+	}
+	o := region * rules.RegionRecord
+	if region < 0 || o+rules.RegionRecord > len(g.res.Stellar) {
+		return
+	}
+	sum := rules.Summarise(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
+		region, g.faction)
+	g.res.RegionPanel.Draw(fb, g.res.Font, sum, g.faction)
+}
+
 // commandSpec 回這個命令階段狀態的規格；沒有就回 nil。
 func (g *Game) commandSpec(s State) *screen.MainGameSpec {
 	name, ok := screenSpecName[s]
@@ -1122,8 +1164,13 @@ func (g *Game) commandSpec(s State) *screen.MainGameSpec {
 // starMapFor 回這張規格要用的地圖。**不能共用同一張**：情報報告的地圖
 // 跟著治安換色、星系資料又是另一組（`strmap-regions.json` 的 colour_fields）。
 func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
-	if spec.Map.Colours == securityColours {
+	switch spec.Map.Colours {
+	case securityColours:
 		if m := g.securityStarMap(); m != nil {
+			return m
+		}
+	case starListColours:
+		if m := g.starListStarMap(spec); m != nil {
 			return m
 		}
 	}
@@ -1143,8 +1190,64 @@ func (g *Game) playerStarMap() *asset.Image {
 	return g.res.StarMap
 }
 
-// securityColours 是戰略情報報告那張地圖用的色表名。
-const securityColours = "colour_796_01_security"
+// securityColours 是戰略情報報告那張地圖用的色表名，
+// starListColours 是星系資料那張的。
+const (
+	securityColours = "colour_796_01_security"
+	starListColours = "colour_796_01_star_list"
+)
+
+// starListStarMap 依現在的局面重建「星系資料」那張地圖。
+//
+// 底色是星域的勢力色（`rules.RegionColour`：帝國 1、同盟 12、無主 3），
+// **選中那一格另外用陣營的文字色**（`rules.FactionColour`：帝國 6、
+// 同盟 5、無主 7）。選中的是滑鼠停的那一列——帝國那張停在第 2 列 ＝
+// 卡斯特羅普（無主，色 7），同盟那張同樣第 2 列 ＝ 凱利姆（同盟，色 5），
+// 兩張的色號不同正是因為擁有者不同（`docs/re/64`）。
+func (g *Game) starListStarMap(spec *screen.MainGameSpec) *asset.Image {
+	if g.res.StarBit == nil || g.res.StarRGN == nil || g.res.Planets == nil {
+		return nil
+	}
+	n := len(g.res.Stellar) / rules.RegionRecord
+	if n == 0 {
+		return nil
+	}
+	cols := make([]uint8, n)
+	for i := range cols {
+		cols[i] = rules.RegionColour(g.res.Planets.RegionOwner(i))
+	}
+	if r := g.starListSelected(spec); r >= 0 && r < n {
+		cols[r] = rules.FactionColour(g.res.Planets.RegionOwner(r))
+	}
+	img, err := asset.BuildStarMap(g.res.StarBit, g.res.StarRGN, cols, 16, 20, 20)
+	if err != nil {
+		return nil
+	}
+	return img
+}
+
+// starListSelected 回星系清單上滑鼠停的那一列對應的星域；問不到回 -1。
+func (g *Game) starListSelected(spec *screen.MainGameSpec) int {
+	order := g.starListOrder()
+	var l *screen.ListSpec
+	for _, w := range spec.Windows {
+		if w != nil && w.List != nil {
+			l = w.List
+		}
+	}
+	if l == nil || l.Pitch <= 0 || len(order) == 0 {
+		return -1
+	}
+	y := g.mouseY
+	if y < 0 && spec.Mouse != nil {
+		y = spec.Mouse.Y + mouseDY
+	}
+	row := (y - l.Y) / l.Pitch
+	if y < l.Y || row < 0 || row >= l.Rows || row >= len(order) {
+		return -1
+	}
+	return order[row]
+}
 
 // securityStarMap 依現在的局面重建戰略情報報告那張地圖。
 //
@@ -1252,7 +1355,7 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 		g.setStarRows(spec)
 		return
 	}
-	faction, standby, ok := listState(g.state)
+	faction, standby, ok := g.listState(g.state)
 	if !ok || len(g.res.Admiral) == 0 || len(g.res.AdmiralNames) == 0 {
 		return
 	}
@@ -1316,16 +1419,28 @@ func (g *Game) rankCodes(rank int) []uint16 {
 }
 
 // listState 回這個狀態的清單要哪一群提督。
-func listState(s State) (faction int, standby, ok bool) {
+//
+// 「自己人」是玩家的陣營、「敵將」是另一邊——不是寫死的帝國／同盟
+// （`docs/re/64`）。
+func (g *Game) listState(s State) (faction int, standby, ok bool) {
 	switch s {
 	case StateAdmiralListView: // 提督資料：全列，幕僚職前面標 ○
-		return 0, false, true
+		return g.faction, false, true
 	case StateStandbyAdmirals, StateAdmiralList: // 待命中提督資料
-		return 0, true, true
+		return g.faction, true, true
 	case StateEnemyList: // 敵提督資料
-		return 1, false, true
+		return 1 - g.faction, false, true
 	}
 	return 0, false, false
+}
+
+// starListOrder 回這一方的星系清單列順序。**兩個陣營各一份**，
+// 都從自己的首都起頭（`docs/re/64`）。
+func (g *Game) starListOrder() []int {
+	if g.faction < 0 || g.faction >= len(g.res.StarListOrder) {
+		return nil
+	}
+	return g.res.StarListOrder[g.faction]
 }
 
 // setStarRows 算「星系資料」那張清單的列：星域名（用行星算出來的擁有者
@@ -1338,10 +1453,11 @@ func (g *Game) setStarRows(spec *screen.MainGameSpec) {
 		}
 	}
 	if l == nil || g.res.Planets == nil || len(g.res.Stellar) == 0 ||
-		len(g.res.StarListOrder) == 0 {
+		len(g.starListOrder()) == 0 {
 		return
 	}
-	for _, i := range g.res.StarListOrder {
+	order := g.starListOrder()
+	for _, i := range order {
 		if (i+1)*rules.RegionRecord > len(g.res.Stellar) {
 			continue
 		}

@@ -99,8 +99,18 @@ func TestAllianceCommandPhaseScreens(t *testing.T) {
 		batch        string
 		state        State
 	}{
+		{"出擊命令", 352, 400, 125, "cmd1eAlly", "sortie1eAlly", StateStandbyAdmirals},
 		{"情報收集", 352, 400, 145, "cmd1eAlly", "info1eAlly", StateInfo},
+		{"徵稅計劃", 352, 400, 165, "cmd1eAlly", "tax1eAlly", StateTaxPlan},
+		{"生產計劃", 352, 400, 185, "cmd1eAlly", "prod1eAlly", StateProductionPlan},
+		{"星系資料", 448, 460, 125, "lstmenu1eAlly", "star1eAlly", StateStarList},
+		{"艦隊資料", 448, 460, 145, "lstmenu1eAlly", "lst1eAlly", StateFleetList},
 		{"提督資料", 448, 460, 165, "lstmenu1eAlly", "lst2eAlly", StateAdmiralListView},
+		{"敵將資料", 448, 460, 185, "lstmenu1eAlly", "lst3eAlly", StateEnemyList},
+		{"取進度", 544, 560, 145, "sysmenu1eAlly", "load1eAlly", StateLoadGame},
+		{"存進度", 544, 560, 165, "sysmenu1eAlly", "save1eAlly", StateSaveGame},
+		{"設定", 544, 560, 185, "sysmenu1eAlly", "settings1eAlly", StateSettings},
+		{"結束", 544, 560, 205, "sysmenu1eAlly", "quit1eAlly", StateQuitConfirm},
 	} {
 		t.Run(c.name, func(t *testing.T) {
 			g := reachCommandPhaseAlly(t)

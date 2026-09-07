@@ -40,15 +40,20 @@ SETTINGS_BOXES=\
 # internal/screen 的 ReportPanel／DeliveryPanel／CapitalPanel 現算
 # （`docs/spec/011`）。這一步是冪等的，重跑不會壞。
 if want computed; then
-  for n in screen-main-game screen-ship-order screen-build-plan screen-info; do
+  for n in screen-main-game screen-ship-order screen-build-plan screen-info \
+           screen-tax-plan screen-production-plan screen-budget-plan \
+           screen-admiral-list-view screen-standby-admirals screen-star-list; do
     py tools/scripts/maingame_computed.py "$n"
   done
+  # 貨幣單位兩個陣營不同（帝國「億帝國馬克」、同盟「億帝納」），
+  # 要從兩張收據各讀一次。
+  py tools/scripts/faction_text.py screen-tax-plan overlay 142 tax1e tax1eAlly
   # 命令階段那一批只要拿掉底板右側那幾行（其餘本來就沒量進去）。
   py tools/scripts/board_computed.py \
     screen-cmd-menu screen-list-menu screen-sys-menu screen-standby-admirals \
     screen-info screen-star-list screen-fleet-list screen-admiral-list-view \
     screen-enemy-list screen-load-game screen-save-game screen-settings \
-    screen-quit-confirm
+    screen-quit-confirm screen-admiral-list screen-budget-plan
 fi
 
 # ⚠ **這三張的「量版面」那一步還沒完全腳本化。** 量的命令是

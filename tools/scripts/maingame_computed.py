@@ -19,7 +19,43 @@ import sys
 
 # 每一張的：署名那一行的 y、職位（0 軍事 1 情報 2 內政）、
 # 要清掉半形數字的列、標題那一行的 y（清全形數字）。
+_LEFT_SUMMARY = {
+    'window': 'overlay',
+    'staff_y': None, 'post': 0, 'staff_x': 0,
+    'money_rows': (), 'header_y': None,
+    'drop_face': False, 'staff_block': False,
+    'keep_board': True,
+    # 這兩張會把左下角那塊改寫成**自己首都**的摘要（其餘畫面那裡是空的）。
+    # 那是算出來的，由 RegionPanel 畫。
+    'left_summary_rows': (362, 382),
+}
+
 RECIPES = {
+    'screen-standby-admirals': _LEFT_SUMMARY,
+    # 星系資料的左下角是**滑鼠停的那一列**那個星域的摘要，不是首都。
+    'screen-star-list': _LEFT_SUMMARY,
+    'screen-admiral-list-view': _LEFT_SUMMARY,
+    'screen-tax-plan': {
+        'window': 'overlay',
+        'staff_y': 122, 'post': 2, 'staff_x': 144,
+        'money_rows': (), 'header_y': None,
+        'drop_face': False, 'staff_block': True,
+        'keep_board': True,
+    },
+    'screen-production-plan': {
+        'window': 'overlay',
+        'staff_y': 122, 'post': 0, 'staff_x': 96,
+        'money_rows': (), 'header_y': None,
+        'drop_face': False, 'staff_block': True,
+        'keep_board': True,
+    },
+    'screen-budget-plan': {
+        'window': 'report',
+        'staff_y': 122, 'post': 2, 'staff_x': 144,
+        'money_rows': (), 'header_y': None,
+        'drop_face': False, 'staff_block': True,
+        'keep_board': True,
+    },
     'screen-info': {
         'window': 'overlay',
         'staff_y': 102, 'post': 1, 'staff_x': 336,
@@ -60,7 +96,11 @@ if not r.get('keep_board') and board is not None and board.get('lines'):
 report = spec['windows'].get(r.get('window', 'report'))
 if report is not None:
     lines, dropped, stripped = [], 0, 0
+    left = r.get('left_summary_rows', ())
     for l in report.get('lines', []):
+        if l['y'] in left and l['cells'][0]['x'] < 320:
+            dropped += 1
+            continue
         if l['y'] == r['staff_y']:
             dropped += 1
             continue
@@ -77,7 +117,7 @@ if report is not None:
             l = dict(l, cells=cells)
         lines.append(l)
     report['lines'] = lines
-    print(f'報告：拿掉 {dropped} 行署名、{stripped} 個數字')
+    print(f'報告：拿掉 {dropped} 行（署名／左下摘要）、{stripped} 個數字')
 
     if r['drop_face']:
         if report.pop('face', None) is not None:

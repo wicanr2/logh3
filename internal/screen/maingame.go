@@ -114,6 +114,17 @@ type GameWindow struct {
 		StaffPost *int `json:"staff_post"`
 	} `json:"face"`
 
+	// FactionText 是「同一個位置、兩個陣營印不同字」的行。目前只有
+	// 貨幣單位：帝國「單位＝億帝國馬克」、同盟「單位＝億帝納」
+	// （`docs/re/64`）。`variants` 依陣營索引。
+	FactionText []struct {
+		X        int        `json:"x"`
+		Y        int        `json:"y"`
+		Ink      uint8      `json:"ink"`
+		Text     []string   `json:"text"`
+		Variants [][]uint16 `json:"variants"`
+	} `json:"faction_text"`
+
 	// Staff 是「跟著幕僚走的署名」：規格只記位置與職位，
 	// 姓名與軍階由遊戲填（`docs/spec/011`）。
 	Staff *struct {
@@ -527,4 +538,15 @@ func atoi(s string) int {
 func DrawStaffLine(fb *gfx.Framebuffer, fnt *font.Font, x, y int, name, rank []uint16, ink uint8) {
 	codes := append(append([]uint16(nil), name...), rank...)
 	drawFull(fb, fnt, x, y, codes, ink)
+}
+
+
+// DrawFactionText 畫規格宣告的「兩個陣營印不同字」那幾行。
+func (w *GameWindow) DrawFactionText(fb *gfx.Framebuffer, fnt *font.Font, faction int) {
+	for _, t := range w.FactionText {
+		if faction < 0 || faction >= len(t.Variants) {
+			continue
+		}
+		drawFull(fb, fnt, t.X, t.Y, t.Variants[faction], t.Ink)
+	}
 }
