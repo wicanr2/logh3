@@ -15,8 +15,9 @@ const (
 	planetOwner   = 0x11 // 這顆行星屬於誰：0 帝國、1 同盟、2 其他
 	planetDefence = 0x14 // 防衛力
 
-	// RegionRecord 是 `STELLAR.DT*` 一筆的長度。
+	// RegionRecord 是 `STELLAR.DT*` 一筆的長度，RegionCount 是星域數。
 	RegionRecord = 126
+	RegionCount  = 32
 
 	regionOwner   = 0x12 // 0 帝國、1 同盟、2 無主
 	regionCount   = 0x16 // 三個 byte：帝國／同盟／其他 各有幾顆行星

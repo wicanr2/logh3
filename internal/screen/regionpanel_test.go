@@ -127,34 +127,34 @@ func measuredUnrest(t *testing.T, region int) int {
 
 // savedSlot 讀一格存檔的行星表與星域記錄。
 //
-// 存檔就是執行期那幾張表原樣寫出去的（`docs/re/41`）：`PLANET.DT?`
-// 與記憶體裡的行星表逐位元組相同，`STELLAR.DT?` 只差未安定度那一個
-// byte——**未安定度是載入時重算的**，算式還沒解（`docs/re/24`），
-// 所以那一欄取量到的值（[`unrest-at-load.json`](../../docs/internals/data/unrest-at-load.json)）。
-//
-// 存檔的行星表沒有檔頭：「第 k 個星域有幾顆行星」不隨局面變，
-// 那 64 bytes 仍然從 `PLADAT.DAT` 借。
+// 存檔就是執行期那幾張表原樣寫出去的（`docs/re/41`），載入走
+// `rules.LoadSlot`。未安定度是唯一一欄載入時會重算的，算式還沒解
+// （`docs/re/24`），所以拿量到的值蓋回去
+// （[`unrest-at-load.json`](../../docs/internals/data/unrest-at-load.json)）。
 func savedSlot(t *testing.T, slot string, pladat []byte, region int) ([]byte, []byte) {
 	t.Helper()
-	root := "../.."
-	planetPath := filepath.Join(root, "org_game/extracted/PLANET.DT"+slot)
-	regionPath := filepath.Join(root, "org_game/extracted/STELLAR.DT"+slot)
-	body, err := os.ReadFile(planetPath)
-	if err != nil {
-		t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", planetPath)
+	root := filepath.Join("../..", "org_game/extracted")
+	read := func(name string) []byte {
+		b, err := os.ReadFile(filepath.Join(root, name))
+		if err != nil {
+			t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", name)
+		}
+		return b
 	}
-	table, err := os.ReadFile(regionPath)
+	sl, err := rules.LoadSlot(rules.SlotFiles{
+		Stellar:      read("STELLAR.DT" + slot),
+		Planet:       read("PLANET.DT" + slot),
+		Admiral:      read("ADMIRAL.DT" + slot),
+		Fleet:        read("FLEET.DT" + slot),
+		Ship:         read("SHIP.DT" + slot),
+		Work:         read("WORK.DT" + slot),
+		PlanetHeader: pladat,
+	})
 	if err != nil {
-		t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", regionPath)
+		t.Fatal(err)
 	}
-	planets := make([]byte, rules.PlanetHeader, rules.PlanetHeader+len(body))
-	copy(planets, pladat[:rules.PlanetHeader])
-	planets = append(planets, body...)
-
-	rec := make([]byte, rules.RegionRecord)
-	copy(rec, table[region*rules.RegionRecord:(region+1)*rules.RegionRecord])
-	rec[rules.RegionUnrest] = byte(unrestAtLoad(t, slot, region))
-	return planets, rec
+	sl.SetUnrest(region, unrestAtLoad(t, slot, region))
+	return sl.Planets.Data, sl.Region(region)
 }
 
 // unrestAtLoad 讀「這一格存檔載入之後」量到的未安定度。
