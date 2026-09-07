@@ -119,7 +119,8 @@
 | 治安數字的四段顏色（`<=40` 色 6、`<=80` 色 7、`<=120` 色 5、其餘色 2）| 通過 | [`docs/re/31`](docs/re/31-region-panel-layout.md)；40/41 那一對把門檻釘死 |
 | 艦隊 `a：b` ＝ 記錄的 `+0x28`／`+0x2B`（帝國玩家）| 通過 | [`docs/re/31`](docs/re/31-region-panel-layout.md)；`-poke` 成 12：99 |
 | 情報報告地圖的治安色（表 `ds:1780` ＋ 分段算式）| 通過 | [`docs/re/27`](docs/re/27-security-map-colours.md)；32 個星域逐一相符，除數 85 用 poke 實測定下來 |
-| 未安定度的開局值怎麼算出來 | **未解** | [`docs/re/24`](docs/re/24-security-formula.md) |
 | 星域經濟力 ＝ 該星域行星 `+0x1A` 相加（載入與每個月底各重算一次）| 通過 | [`docs/re/30`](docs/re/30-region-economy-from-planets.md)；星域 0 的四次累加逐值相符 |
-| 月底把當月的稅從重算的經濟力裡扣掉 | 星域 0 已量到，其餘**未解** | [`docs/re/30`](docs/re/30-region-economy-from-planets.md)；反推另外九個星域合計 10892 vs 實際 10813 |
-| 行星每月的成長算式 | **未解** | [`docs/re/30`](docs/re/30-region-economy-from-planets.md)；每顆行星各走各的，還會變負 |
+| 行星每月的成長：階梯表查成長率（`ds:4A68`，32 列）| 通過 | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md)；五個實測點逐一相符 |
+| 月底逐行星成長 ＋ 逐行星扣稅（捨去在每顆行星上）| 通過 | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md)；十個帝國星域結算後的經濟力與量到的 796/1 逐一相符 |
+| 帝國第一趟總稅收 | 差 81 **未解** | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md)；逐行星算出 10732，量到 10813 |
+| 未安定度的開局值怎麼算出來 | 骨架已解、四支子函式**未解** | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md) |

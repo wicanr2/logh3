@@ -1,0 +1,139 @@
+{
+ "note": "行星經濟力每月的成長率階梯表（ds:4A68，一列 6 bytes：門檻 32 位元 ＋ 成長率 16 位元）。查法：找到第一列 i 使得第 i+1 列的門檻 >= 經濟力，取第 i 列的成長率。行星防衛力（記錄 +0x16）小於 3000 時成長率再 ×3/2。證據見 docs/re/33。",
+ "lookup": "first i with table[i+1].threshold >= economy",
+ "defence_bonus": {
+  "below": 3000,
+  "multiply": 3,
+  "divide": 2
+ },
+ "rows": [
+  {
+   "threshold": 0,
+   "rate_per_mille": 90
+  },
+  {
+   "threshold": 1000,
+   "rate_per_mille": 82
+  },
+  {
+   "threshold": 2000,
+   "rate_per_mille": 74
+  },
+  {
+   "threshold": 3000,
+   "rate_per_mille": 68
+  },
+  {
+   "threshold": 4000,
+   "rate_per_mille": 64
+  },
+  {
+   "threshold": 5000,
+   "rate_per_mille": 62
+  },
+  {
+   "threshold": 6000,
+   "rate_per_mille": 60
+  },
+  {
+   "threshold": 7000,
+   "rate_per_mille": 58
+  },
+  {
+   "threshold": 8000,
+   "rate_per_mille": 56
+  },
+  {
+   "threshold": 9000,
+   "rate_per_mille": 54
+  },
+  {
+   "threshold": 10000,
+   "rate_per_mille": 52
+  },
+  {
+   "threshold": 12000,
+   "rate_per_mille": 51
+  },
+  {
+   "threshold": 14000,
+   "rate_per_mille": 50
+  },
+  {
+   "threshold": 16000,
+   "rate_per_mille": 49
+  },
+  {
+   "threshold": 18000,
+   "rate_per_mille": 48
+  },
+  {
+   "threshold": 20000,
+   "rate_per_mille": 47
+  },
+  {
+   "threshold": 25000,
+   "rate_per_mille": 46
+  },
+  {
+   "threshold": 30000,
+   "rate_per_mille": 45
+  },
+  {
+   "threshold": 35000,
+   "rate_per_mille": 44
+  },
+  {
+   "threshold": 40000,
+   "rate_per_mille": 43
+  },
+  {
+   "threshold": 50000,
+   "rate_per_mille": 41
+  },
+  {
+   "threshold": 60000,
+   "rate_per_mille": 39
+  },
+  {
+   "threshold": 70000,
+   "rate_per_mille": 37
+  },
+  {
+   "threshold": 80000,
+   "rate_per_mille": 35
+  },
+  {
+   "threshold": 85000,
+   "rate_per_mille": 33
+  },
+  {
+   "threshold": 90000,
+   "rate_per_mille": 32
+  },
+  {
+   "threshold": 95000,
+   "rate_per_mille": 31
+  },
+  {
+   "threshold": 100000,
+   "rate_per_mille": 30
+  },
+  {
+   "threshold": 120000,
+   "rate_per_mille": 26
+  },
+  {
+   "threshold": 180000,
+   "rate_per_mille": 18
+  },
+  {
+   "threshold": 200000,
+   "rate_per_mille": 0
+  },
+  {
+   "threshold": 4294967295,
+   "rate_per_mille": 0
+  }
+ ]
+}
