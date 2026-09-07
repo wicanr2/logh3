@@ -13,7 +13,7 @@
 
 | # | 項目 | 等級 | 未核准差異 | 收據 | 備註 |
 |---|---|---|---:|---|---|
-| G1 | Ebiten 視窗版走玩家路徑 | `same-state` | 0 | `tools/gui_check.sh` | `cmd/gin3` 畫出來的色號陣列與 `r0`／`cb1`／`key1`／`main1e`／`load1e` 逐位元組相同。**「視窗開得起來」不算數**——比的是同一條玩家路徑跑完的畫面 |
+| G1 | Ebiten 視窗版走玩家路徑 | `same-state` | 0 | `tools/gui_check.sh` | `cmd/gin3` 畫出來的色號陣列與 `r0`／`cb1`／`key1`／`cbAlly`／`keyAlly`／`main1e`／`load1e` 逐位元組相同。**「視窗開得起來」不算數**——比的是同一條玩家路徑跑完的畫面 |
 
 ## 畫面
 

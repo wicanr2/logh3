@@ -13,6 +13,8 @@ cases=(
   "r0|move 300 210"
   "cb1|move 300 210; click"
   "key1|move 300 210; click; type 138; enter"
+  "cbAlly|move 300 230; click"
+  "keyAlly|move 300 230; click; type 138; enter"
   "main1e|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340"
   "load1e|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145"
 )
