@@ -147,6 +147,9 @@ type Resources struct {
 
 	StarMap  *asset.Image
 
+	// Regions 是星域遮罩（`STRMAP.RGN`），用來問「地圖上這一點是哪個星域」。
+	Regions []asset.Region
+
 	// StarMaps 是「照某一組星域色重建的地圖」，key 是規格的 `map.colours`
 	// 欄位名。空字串那一份就是 StarMap（勢力色）。情報報告用治安色、
 	// 星系資料又是另一組，所以不能共用同一張。
@@ -185,7 +188,17 @@ type Game struct {
 
 	// 月初報告被關掉幾層。兩層都關掉才露出戰略地圖介面。
 	reportLayer int
+
+	// 目前選中的星域。左下角那塊寫的就是它。開局是 0（瓦爾哈拉）。
+	selectedRegion int
 }
+
+// 星圖畫在畫面的 (0,40)，320×300，圖塊 16×20（`docs/internals/12`）。
+const (
+	mapX, mapY = 0, 40
+	mapW, mapH = 320, 300
+	tileW, tileH = 16, 20
+)
 
 // ShowEnding 切到結局畫面，顯示 `.VO5` 解出來的那張圖。
 //
@@ -323,6 +336,12 @@ func (g *Game) Click(x, y int) {
 // 都關得掉；哪裡按不算數還沒量過。
 func (g *Game) RightClick(x, y int) {
 	g.MoveMouse(x, y)
+	// 按在星圖上會順便換掉選中的星域，左下角那塊跟著改寫（收據 `rcback`）。
+	if g.res.Regions != nil && x >= mapX && x < mapX+mapW && y >= mapY && y < mapY+mapH {
+		if i := asset.RegionAt(g.res.Regions, x-mapX, y-mapY, tileW, tileH); i >= 0 {
+			g.selectedRegion = i
+		}
+	}
 	switch g.state {
 	case StateMainGame:
 		// 月初報告是兩層。第一下關掉上面那層，第二下才到地圖介面。
@@ -434,6 +453,13 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 
 // Day 回遊戲內的日期（月內第幾天）。開局是 1。
 func (g *Game) Day() int { return g.day }
+
+// SelectedRegion 回目前選中的星域編號（`STELLAR.DT*` 的筆序）。
+//
+// **左下角那塊的內容還沒接上**：星系名與陣營從 `STELLAR.DT*` 讀得到，
+// 但治安、行星數、艦隊數那幾格的來源還沒解出來（`docs/re/22`），
+// 所以畫面仍然照規格畫死的那一份。
+func (g *Game) SelectedRegion() int { return g.selectedRegion }
 
 // Plan 回目前的建造計劃預算分配；不在那個畫面就回 nil。
 func (g *Game) Plan() *rules.BuildPlan { return g.plan }

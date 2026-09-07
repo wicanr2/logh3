@@ -96,3 +96,19 @@ func BuildStarMap(bit, rgn []byte, colours []uint8, tw, th, cols int) (*Image, e
 	}
 	return out, nil
 }
+
+// RegionAt 回地圖上這一點屬於哪個星域，沒有就回 -1。
+//
+// 座標是**地圖內的座標**（星圖畫在畫面的 (0,40)，所以畫面座標要先減掉
+// 那個原點）。用遮罩判定，不是用外接矩形——星域的外接矩形會互相重疊。
+//
+// 重疊的話取**第一個**涵蓋這一點的：原版的星域遮罩本來就不重疊，
+// 真的重疊代表遮罩解錯了，回第一個至少是決定性的。
+func RegionAt(regions []Region, x, y, tw, th int) int {
+	for i, r := range regions {
+		if r.Covers(x-r.BX*tw, y-r.BY*th, tw, th) {
+			return i
+		}
+	}
+	return -1
+}

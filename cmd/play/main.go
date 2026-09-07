@@ -188,6 +188,10 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	regions, err := asset.OpenRGN(rgn, 16, 20)
+	if err != nil {
+		return nil, err
+	}
 	screens, maps, err := game.LoadCommandScreens(
 		data, filepath.Join(data, "strmap-regions.json"), bit, rgn)
 	if err != nil {
@@ -196,7 +200,7 @@ func load(orig, data string) (*game.Resources, error) {
 	return &game.Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
-		Screens: screens, StarMaps: maps}, nil
+		Screens: screens, StarMaps: maps, Regions: regions}, nil
 }
 
 func regionColours(path string) ([]uint8, error) {

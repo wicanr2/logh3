@@ -93,6 +93,10 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	regions, err := asset.OpenRGN(rgn, 16, 20)
+	if err != nil {
+		t.Fatal(err)
+	}
 	screens, maps, err := LoadCommandScreens(
 		filepath.Join(root, "docs/internals/data"),
 		filepath.Join(root, "docs/internals/data/strmap-regions.json"), bit, rgn)
@@ -101,7 +105,8 @@ func load(t *testing.T) *Resources {
 	}
 	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
-		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps}
+		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
+		Regions: regions}
 }
 
 // reachCommandPhase 走正常玩家路徑到戰略地圖介面：
@@ -480,5 +485,31 @@ func TestEndingScreenMatchesOriginalPlanes(t *testing.T) {
 		if bad != 0 {
 			t.Errorf("plane %d：與原版差 %d 個位元", plane, bad)
 		}
+	}
+}
+
+
+// TestRightClickSelectsRegion 按在星圖上會換掉選中的星域。
+// 每一筆的預期值都是實測：原版按下去之後左下角那塊寫出來的星系名
+// （收據 `hovA`／`hovB`／`hovC`／`rcback`）。
+func TestRightClickSelectsRegion(t *testing.T) {
+	for _, c := range []struct {
+		x, y  int
+		want  int
+		name  string
+	}{
+		{60, 100, 2, "亞爾提那"},
+		{150, 160, 14, "費沙"},
+		{250, 240, 19, "特利布拉"},
+		{300, 240, 30, "艾流塞拉"},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			g := reachCommandPhase(t)
+			g.RightClick(c.x, c.y)
+			if g.SelectedRegion() != c.want {
+				t.Fatalf("(%d,%d) 選到星域 %d，預期 %d（%s）",
+					c.x, c.y, g.SelectedRegion(), c.want, c.name)
+			}
+		})
 	}
 }
