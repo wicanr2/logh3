@@ -32,6 +32,9 @@ for arg in sys.argv[2:]:
             "growth_per_mille": b[0x1E], "tax_rate_per_mille": b[0x26],
             "own_fleets": b[0x28], "enemy_fleets": b[0x2B],
             "stored": a[0x7D], "at_load": b[0x7D],
+            # 載入後的整筆記錄。算式吃的就是這一份——新遊戲那條路徑的
+            # 經濟力、成長率與稅率都是載入時重算的，檔案裡沒有。
+            "raw_at_load": b.hex(),
         })
     slots.append({"slot": slot, "scenario": scenario, "turn": int(turn),
                   "receipt": receipt, "regions": regions})

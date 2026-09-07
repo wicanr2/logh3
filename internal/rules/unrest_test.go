@@ -1,6 +1,7 @@
 package rules
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"os"
 	"path/filepath"
@@ -27,8 +28,9 @@ func TestUnrestAtLoad(t *testing.T) {
 				Base  []int  `json:"base_147E"`
 			} `json:"params"`
 			Regions []struct {
-				Index  int `json:"index"`
-				AtLoad int `json:"at_load"`
+				Index  int    `json:"index"`
+				AtLoad int    `json:"at_load"`
+				Raw    string `json:"raw_at_load"`
 			} `json:"regions"`
 		} `json:"slots"`
 	}
@@ -45,12 +47,33 @@ func TestUnrestAtLoad(t *testing.T) {
 			continue // 那一格的執行期參數還沒量
 		}
 		t.Run(sl.Slot, func(t *testing.T) {
-			slot := loadSlot(t, sl.Slot)
+			var regions, fleets, admirals []byte
+			var planets *Planets
+			if sl.Slot == "X" {
+				// 新遊戲不是存檔：星域表載入時重算過，拿量到的那一份當輸入；
+				// 行星讀 `PLADAT.DAT`、提督讀樣板，這個局面還沒有艦隊。
+				for _, r := range sl.Regions {
+					raw, err := hex.DecodeString(r.Raw)
+					if err != nil {
+						t.Fatal(err)
+					}
+					regions = append(regions, raw...)
+				}
+				planets, err = LoadPlanets(readOrig(t, "PLADAT.DAT"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				admirals = readOrig(t, "ADMIRAL.DTX")
+			} else {
+				slot := loadSlot(t, sl.Slot)
+				regions, planets = slot.Stellar, slot.Planets
+				fleets, admirals = slot.Fleet, slot.Admiral
+			}
 			st := &UnrestState{
-				Regions:  slot.Stellar,
-				Planets:  slot.Planets,
-				Fleets:   slot.Fleet,
-				Admirals: slot.Admiral,
+				Regions:  regions,
+				Planets:  planets,
+				Fleets:   fleets,
+				Admirals: admirals,
 				Graph:    graph,
 				Params: UnrestParams{
 					Turn: sl.Params.Turn, Ruler: sl.Params.Ruler,
