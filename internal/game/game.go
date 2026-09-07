@@ -206,7 +206,12 @@ type Game struct {
 	answer uint8
 	tries  int
 
-	// 建造計劃的預算分配。進入該畫面時從規格的初始值開一份。
+	// pct 是船艦建造費的百分比分配。**建造計劃與生產計劃共用同一份**
+	// ——在建造計劃上按箭頭改的，生產計劃那張跟著變（`docs/spec/004`）。
+	// 開局是量到的那一組（`rules.OpeningPct`）。
+	pct [rules.BuildPlanRows]int
+
+	// plan 是建造計劃畫面當下那一份（建造費用月初報告那一組算）。
 	plan *rules.BuildPlan
 
 	// 結局：目前顯示哪一張 CG。
@@ -260,7 +265,7 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		military: res.StartMilitary}
+		military: res.StartMilitary, pct: rules.OpeningPct}
 	// 原版開機就跑一次月底結算，796 年 1 月的局面是那一次的結果
 	// （`docs/re/33`、`docs/re/35`）。
 	g.monthEnd()
@@ -325,7 +330,7 @@ func (g *Game) Click(x, y int) {
 	case StateShipOrder:
 		if g.res.ShipOrder.HitTest(x, y) == "build-plan" && g.res.BuildPlan != nil {
 			g.state = StateBuildPlan
-			g.plan = screen.InitialBuildPlan(g.res.BuildPlan)
+			g.plan = &rules.BuildPlan{Cost: g.monthReport.ShipCost(), Pct: g.pct}
 		}
 	case StateBuildPlan:
 		if g.plan == nil {
@@ -336,10 +341,14 @@ func (g *Game) Click(x, y int) {
 		switch {
 		case strings.HasPrefix(act, "inc-"):
 			fmt.Sscanf(act, "inc-%d", &row)
-			g.plan.Inc(row)
+			if g.plan.Inc(row) {
+				g.pct = g.plan.Pct
+			}
 		case strings.HasPrefix(act, "dec-"):
 			fmt.Sscanf(act, "dec-%d", &row)
-			g.plan.Dec(row)
+			if g.plan.Dec(row) {
+				g.pct = g.plan.Pct
+			}
 		case act == "admiral-list":
 			if g.res.AdmiralList != nil {
 				g.state = StateAdmiralList
@@ -508,7 +517,7 @@ func (g *Game) monthEnd() {
 	collected := rules.MonthEnd(g.res.Stellar, g.res.Planets, g.res.Growth, g.res.Faction)
 	budget := before + collected
 	// 2. 照百分比切給造船，各列只買得起整數艘，零頭退回；扣掉實際花掉的。
-	plan := rules.BuildPlan{Cost: budget * g.res.ShipPct / 100, Pct: rules.OpeningPct}
+	plan := rules.BuildPlan{Cost: budget * g.res.ShipPct / 100, Pct: g.pct}
 	paid := plan.Paid()
 	g.building = plan
 	g.military = budget - paid
@@ -561,7 +570,7 @@ func (g *Game) drawBudget(fb *gfx.Framebuffer) {
 // nextPlan 是次月份的船艦建造計劃：預估軍事費照百分比切出來的那一份。
 func (g *Game) nextPlan() rules.BuildPlan {
 	b := rules.Budget{Treasury: g.military, Tax: g.taxTotal, ShipPct: g.res.ShipPct}
-	return rules.BuildPlan{Cost: b.ShipCost(), Pct: rules.OpeningPct}
+	return rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct}
 }
 
 // drawProduction 畫生產計劃的數字（`docs/spec/004`）。
@@ -657,6 +666,9 @@ func (g *Game) SelectedRegion() int { return g.selectedRegion }
 
 // Plan 回目前的建造計劃預算分配；不在那個畫面就回 nil。
 func (g *Game) Plan() *rules.BuildPlan { return g.plan }
+
+// NextPlan 是次月份的船艦建造計劃（生產計劃那張印的就是它）。
+func (g *Game) NextPlan() rules.BuildPlan { return g.nextPlan() }
 
 // Answer 回這一題的答案。給測試與除錯用——正式玩不會叫它。
 func (g *Game) Answer() uint8 { return g.answer }

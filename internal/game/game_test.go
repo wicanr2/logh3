@@ -640,3 +640,39 @@ func TestMonthEndAdvancesMoneyAndDate(t *testing.T) {
 		t.Fatalf("預估徵稅額 %d，應該是正的", g.TaxTotal())
 	}
 }
+
+// TestBuildPlanPctReachesProduction：建造計劃上改的百分比要傳到生產計劃。
+//
+// 兩張畫面是不同月份的同一份分配（`docs/spec/004`）：建造計劃用月初報告
+// 那一組建造費、生產計劃用次月份預估的，百分比共用一份。
+func TestBuildPlanPctReachesProduction(t *testing.T) {
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 170)
+	for _, c := range []byte{'1', '3', '8', '\r'} {
+		g.Key(c)
+	}
+	g.Click(448, 330) // 船艦訂造報告
+	g.Click(448, 310) // 建造計劃
+	if g.State() != StateBuildPlan {
+		t.Fatalf("沒進建造計劃，在 %v", g.State())
+	}
+	before := g.NextPlan()
+	// 第 0 列的右箭頭按兩下：開局各列加起來剛好 100%，只減得動。
+	g.Click(232, 170)
+	g.Click(232, 170)
+	after := g.NextPlan()
+	if after.Pct[0] == before.Pct[0] {
+		t.Fatalf("按了箭頭之後第 0 列還是 %d%%", after.Pct[0])
+	}
+	if after.Ships(0) == before.Ships(0) {
+		t.Fatalf("百分比變了（%d%% → %d%%）但船艦數沒變（%d）",
+			before.Pct[0], after.Pct[0], after.Ships(0))
+	}
+	if after.RestPct() <= before.RestPct() {
+		t.Fatalf("減了預算，餘額百分比卻沒變多（%d%% → %d%%）",
+			before.RestPct(), after.RestPct())
+	}
+}
