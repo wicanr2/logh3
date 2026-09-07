@@ -2,7 +2,9 @@
 
 資料：`docs/internals/data/comani-bmg.json`
 產生：`tools/py.sh tools/scripts/bmg_export.py`
-證據等級：目錄結構 **confirmed**（位移可用累加逐筆驗證）；每一段的編碼 **未解**。
+證據等級：目錄結構 **confirmed**（位移可用累加逐筆驗證）；每一段的編碼 **未解**
+——**不是開頭動畫那套 XOR-RLE**，253 段一段都吃不光
+（[`docs/re/46`](../re/46-comani-not-intro-codec.md)）。
 
 ## 目錄
 
