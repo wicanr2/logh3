@@ -13,6 +13,9 @@
 import struct, sys
 
 SRC = sys.argv[1] if len(sys.argv) > 1 else '/work/workplace/explore/ds54b3.bin'
+# **輸出路徑要指定。** 預設寫進 docs 會讓「拿另一份傾印掃掃看」順手蓋掉
+# 正式資料——那份還帶著人工標上的標籤，掃出來的新檔沒有。
+OUT = sys.argv[2] if len(sys.argv) > 2 else '/work/workplace/explore/hotspot-lists.json'
 d = open(SRC, 'rb').read()
 
 
@@ -53,9 +56,9 @@ json.dump({'note': '資料段裡所有「熱區清單」形狀的資料；像素
                    '要加上該畫面視窗原點的格子座標才是畫面座標（docs/re/09）',
            'segment': 'DS=54B3（796 年 1 月，走到會計報告時）',
            'count': len(found), 'lists': out},
-          open('/work/docs/internals/data/hotspot-lists.json', 'w', encoding='utf-8'),
+          open(OUT, 'w', encoding='utf-8'),
           ensure_ascii=False, indent=1)
-print('找到 %d 份清單 → docs/internals/data/hotspot-lists.json' % len(found))
+print('找到 %d 份清單 → %s' % (len(found), OUT))
 for off, recs in found:
     px = ['(%d,%d) %dx%d' % (r['grid'][0], r['grid'][1], r['size'][0], r['size'][1])
           for r in recs]
