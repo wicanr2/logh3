@@ -110,5 +110,6 @@
 | 徵稅額 ＝ 經濟力 × 稅率（捨去）| 通過 | [`docs/re/22`](docs/re/22-region-panel-and-month-rollover.md)；796/1 與 796/2 |
 | 一次「實行」推進三天；十回合換月 | 通過 | [`docs/re/20`](docs/re/20-execute-advances-three-days.md)、[`docs/re/22`](docs/re/22-region-panel-and-month-rollover.md) |
 | 月底交付「建造中」的船艦 | 已量到、未實作 | [`docs/re/21`](docs/re/21-month-end-ship-delivery.md) |
-| 治安 | **未解** | [`docs/re/23`](docs/re/23-region-panel-fields.md) 列了五條排除掉的路 |
+| 治安 ＝ (200 − 未安定度) / 2 | 通過 | [`docs/re/24`](docs/re/24-security-formula.md)；六個帝國星域 |
+| 未安定度的開局值怎麼算出來 | **未解** | [`docs/re/24`](docs/re/24-security-formula.md) |
 | 經濟力每月 +1002 的算式 | **未解** | [`docs/re/23`](docs/re/23-region-panel-fields.md) |

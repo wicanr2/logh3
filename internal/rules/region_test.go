@@ -84,3 +84,29 @@ func TestTaxMatchesPanel(t *testing.T) {
 		}
 	}
 }
+
+// TestSecurityMatchesPanel：治安 ＝ (200 − 未安定度) / 2。
+// 未安定度取自執行期星域記錄的 `+0x7D`，治安取自原版畫面
+// （收據 `main1e`／`sec1`／`hovA`／`sec5`／`sec7`／`sec9`）。
+func TestSecurityMatchesPanel(t *testing.T) {
+	for _, c := range []struct{ region, unrest, want int }{
+		{0, 36, 82}, {1, 38, 81}, {2, 27, 86},
+		{5, 32, 84}, {7, 44, 78}, {9, 50, 75},
+	} {
+		if got := Security(c.unrest); got != c.want {
+			t.Errorf("星域 %d 未安定度 %d → 治安 %d%%，預期 %d%%",
+				c.region, c.unrest, got, c.want)
+		}
+	}
+}
+
+// TestUnrestBand 釘住三個門檻（40／80／120）。
+func TestUnrestBand(t *testing.T) {
+	for _, c := range []struct{ unrest, want int }{
+		{0, 0}, {40, 0}, {41, 1}, {80, 1}, {81, 2}, {120, 2}, {121, 3}, {200, 3},
+	} {
+		if got := UnrestBand(c.unrest); got != c.want {
+			t.Errorf("未安定度 %d → 第 %d 段，預期 %d", c.unrest, got, c.want)
+		}
+	}
+}

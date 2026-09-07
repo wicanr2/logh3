@@ -22,7 +22,37 @@ const (
 	regionCount   = 0x16 // 三個 byte：帝國／同盟／其他 各有幾顆行星
 	regionEconomy = 0x1A // 32 位元
 	regionDefence = 0x20 // 16 位元，與 +0x22 是同一個值的兩份
+	regionUnrest  = 0x7D // 未安定度，記錄的最後一個 byte；治安由它算出來
 )
+
+// Security 回畫面上那個「治安 %」。
+//
+// 原版的算式是 `(200 − 未安定度) / 2`（`docs/re/24`）：
+//
+//	B8 C8 00       mov ax,00C8        ; 200
+//	26 8A 4C 7D    mov cl,es:[si+7D]  ; 未安定度
+//	30 ED          xor ch,ch
+//	2B C1          sub ax,cx
+//	99 2B C2 D1 F8 cwd; sub ax,dx; sar ax,1   ; 帶號除以 2
+//
+// 六個帝國星域實測全對。**只有自己這一方的星域才顯示數字**，
+// 其餘畫面上寫 `----`。
+func Security(unrest int) int { return (200 - unrest) / 2 }
+
+// UnrestBand 回未安定度落在哪一段（0 最好、3 最差）。
+// 門檻取自同一段程式的三個比較：40、80、120（`docs/re/24`）。
+func UnrestBand(unrest int) int {
+	switch {
+	case unrest <= 40:
+		return 0
+	case unrest <= 80:
+		return 1
+	case unrest <= 120:
+		return 2
+	default:
+		return 3
+	}
+}
 
 // Planets 是 `PLADAT.DAT`：檔頭的每星域行星數 ＋ 81 筆行星記錄。
 type Planets struct {
