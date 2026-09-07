@@ -214,3 +214,21 @@ func TestSecurityMapColourMatchesOracle(t *testing.T) {
 		}
 	}
 }
+
+// TestTreasuryRemainingMatchesPanel：原定軍事費 − 已支付 ＝ 軍事費。
+// 兩個月的值都是從執行期記憶體讀出來的（`docs/internals/27`），
+// 而 60741／15149／45592 三個數字在徵稅計劃畫面上都看得到（收據 `tax1e`）。
+func TestTreasuryRemainingMatchesPanel(t *testing.T) {
+	for _, c := range []struct {
+		month string
+		tr    Treasury
+		want  int
+	}{
+		{"796/1", Treasury{Budget: 60741, ShipPaid: 15149}, 45592},
+		{"796/2", Treasury{Budget: 56405, ShipPaid: 14066}, 42339},
+	} {
+		if got := c.tr.Remaining(); got != c.want {
+			t.Errorf("%s 軍事費 %d，預期 %d", c.month, got, c.want)
+		}
+	}
+}

@@ -258,3 +258,21 @@ func (p *Planets) RegionOwner(region int) int {
 func Tax(economy, ratePerMille int) int {
 	return economy * ratePerMille / 1000
 }
+
+// Treasury 是一個陣營這個月的財政（`docs/internals/27`）。
+type Treasury struct {
+	Budget   int // 原定軍事費：這個月一開始有多少（ds:8F62）
+	ShipPaid int // 已支付的船艦建造費（ds:8F94）
+	FleetUpkeep int // 艦隊維持費（ds:8F72）
+	Movement    int // 移動經費（ds:8F7A）
+	Other       int // 還沒認出來的第三項（ds:8F82）
+}
+
+// Remaining 回手上還有多少軍事費 ＝ 原定軍事費 − 已支付的各項。
+//
+// 玩家那兩個月都成立：`60741 − 15149 ＝ 45592`、`56405 − 14066 ＝ 42339`
+// （另外三項都是 0）。**同盟那邊對不上**，還有沒找到的支出項目
+// （`docs/re/29`）。
+func (t Treasury) Remaining() int {
+	return t.Budget - t.ShipPaid - t.FleetUpkeep - t.Movement - t.Other
+}
