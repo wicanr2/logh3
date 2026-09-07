@@ -23,9 +23,10 @@ rows, flat = load_screen(f'/work/workplace/oracle/{batch}/screen.bin')
 # 游標在 (600,340) 壓在清單條那一格上，量框的時候分不出「底板本來長怎樣」
 # 與「游標留下來的點」。底板那一塊用另一份**游標不在那裡**的收據補
 # （`pnlU000` 的游標在星圖上），量完再把差異當成游標的一部分記回 mouse。
-CURSOR_REMNANT = (600, 340, 10, 15)
+# 只有 main1e 的游標壓在那一格上，別的收據不用補。
+CURSOR_REMNANT = (600, 340, 10, 15) if batch == 'main1e' else (0, 0, 0, 0)
 CLEAN = 'pnlU000'
-_clean, _ = load_screen(f'/work/workplace/oracle/{CLEAN}/screen.bin')
+_clean, _ = load_screen(f'/work/workplace/oracle/{CLEAN}/screen.bin') if CURSOR_REMNANT[2] else (None, None)
 _rx, _ry, _rw, _rh = CURSOR_REMNANT
 rows = [bytearray(r) for r in rows]
 CURSOR_PATCHES = []
@@ -151,7 +152,7 @@ lines.sort(key=lambda l: (l['y'], l['cells'][0]['x']))
 # （規格 `docs/spec/002`，畫的人是 `internal/screen.CapitalPanel`）。
 # 量好畫死的話換一個月份就不對——`turnnext`（796/2）與這裡量的 796/1
 # 每一個數字都不一樣。
-COMPUTED_ROWS = (62, 82, 162, 182, 202, 222, 242)
+COMPUTED_ROWS = (62, 82, 162, 182, 202, 222, 242) if batch == 'main1e' else ()
 lines = [l for l in lines if l['y'] not in COMPUTED_ROWS]
 
 def box(bx0, by0, bx1, by1, sample=None, corner=12):
@@ -193,7 +194,10 @@ spec = {
     # 游標只剩 x 610–611 兩列看得見：左邊被清單條蓋掉（清單畫到 x=609），
     # 右邊被捲軸框蓋掉（捲軸從 x=612 起）。原版的游標是疊上去的，
     # 視窗一重畫就吃掉一塊，要等下次移動才補回來（`docs/re/09`）。
-    'mouse': {'x': 600, 'y': 300, 'clip': {'x': 610, 'y': 0, 'w': 2, 'h': 480}},
+    'mouse': ({'x': 600, 'y': 300, 'clip': {'x': 610, 'y': 0, 'w': 2, 'h': 480}}
+              if batch == 'main1e' else
+              {'x': int(sys.argv[3]) if len(sys.argv) > 3 else 560,
+               'y': int(sys.argv[4]) if len(sys.argv) > 4 else 85}),
     'window_origin_grid': [21, 4],
     'hotspots': [
         {'x': 352, 'y': 80, 'w': 32, 'h': 20, 'grid': [1, 0],

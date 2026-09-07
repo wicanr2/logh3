@@ -215,20 +215,26 @@ func TestCapitalPanelMatchesOracle(t *testing.T) {
 		military, taxTotal       int
 		economy, taxRate, unrest int
 		whole                    bool // 整張都比
+		noCursor                 bool // 這一份的游標被面板蓋掉了，不畫
 	}{
-		{"main1e", 0, 45592, 10341, 82302, 32, 36, true},
-		{"turnnext", 10, 42339, 10413, 83304, 32, 36, false},
+		{"main1e", 0, 45592, 10341, 82302, 32, 36, true, false},
+		// 按過一次「實行」：只有日期變成 1 月 4 日，錢與經濟力都沒動。
+		// 三份收據（`turn260`／`turn320`／`turn450`，步數不同）逐位元組相同。
+		{"turn260", 1, 45592, 10341, 82302, 32, 36, false, true},
+		{"turn320", 1, 45592, 10341, 82302, 32, 36, false, true},
+		{"turn450", 1, 45592, 10341, 82302, 32, 36, false, true},
+		{"turnnext", 10, 42339, 10413, 83304, 32, 36, false, false},
 	} {
 		c := c
 		t.Run(c.batch, func(t *testing.T) {
 			checkCapitalPanel(t, c.batch, c.turn, c.military, c.taxTotal,
-				c.economy, c.taxRate, c.unrest, c.whole)
+				c.economy, c.taxRate, c.unrest, c.whole, c.noCursor)
 		})
 	}
 }
 
 func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
-	economy, taxRate, unrest int, whole bool) {
+	economy, taxRate, unrest int, whole, noCursor bool) {
 	t.Helper()
 	root := "../.."
 	oracle := filepath.Join(root, "workplace/oracle/"+batch+"/screen.bin")
@@ -266,6 +272,11 @@ func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
 	rec[0x26] = byte(taxRate)
 	sum := rules.SummariseCapital(rec, planets, 0, 0, turn, 796, military, taxTotal)
 
+	if noCursor {
+		// 按過「實行」之後面板整個重畫，把游標蓋掉了——原版那一格是面板
+		// 的填色，不是游標。
+		s.Mouse = nil
+	}
 	fb, _ := MainGame(s, fnt, mapImg, faces, cur)
 	cap.Draw(fb, fnt, region, sum, 0)
 
@@ -279,6 +290,12 @@ func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
 	bad := 0
 	for y := y0; y < y1; y++ {
 		for x := x0; x < x1; x++ {
+			// 命令列第三個按鈕（系統指令）在這幾份收據裡是**按下去**的狀態
+			// ——最後一次點擊就落在它上面，底緣的立體邊跟著反過來（7 px）。
+			// 那是命令列的事，不在這份規格裡。
+			if noCursor && x >= 542 && x < 611 && y >= 136 && y < 142 {
+				continue
+			}
 			if want[y*640+x] != fb.Pix[y*640+x] {
 				bad++
 			}
