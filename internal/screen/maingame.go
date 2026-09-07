@@ -250,9 +250,11 @@ func (w *GameWindow) DrawBoxes(fb *gfx.Framebuffer, fnt *font.Font) {
 		if fnt == nil || len(b.Codes) == 0 {
 			continue
 		}
+		// 只裁上下：立體邊往上移那一列會落到框的白色上緣，原版的上緣是
+		// 乾淨的；左右不裁——字的最左一行剛好落在內容區的邊界上。
 		n := len(b.Layers)
-		cx, cy := b.X+n, b.Y+n
-		cw, ch := b.W-2*n, b.H-2*n
+		cx, cy := 0, b.Y+n
+		cw, ch := gfx.Width, b.H-2*n
 		ty := b.TextY
 		if ty == 0 {
 			ty = b.Y + n
