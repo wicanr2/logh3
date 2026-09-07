@@ -260,7 +260,7 @@ func (w *GameWindow) DrawBoxes(fb *gfx.Framebuffer, fnt *font.Font) {
 			ty = b.Y + n
 		}
 		for i, code := range b.Codes {
-			ui.DrawGlyphClipped(fb, fnt, b.TextX+i*font.GlyphW, ty, code,
+			ui.DrawCellClipped(fb, fnt, b.TextX+i*font.GlyphW, ty, code,
 				b.Ink, b.Shadow, -1, false, cx, cy, cw, ch)
 		}
 	}

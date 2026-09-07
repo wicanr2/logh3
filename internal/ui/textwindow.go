@@ -243,3 +243,20 @@ func DrawHalfGlyphClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code ui
 	blit(0, 0, fg)
 	return true
 }
+
+// DrawCellClipped 畫字元平面上的一格。
+//
+// 原版依字碼的高位元組分路（`docs/internals/31`）：≥ 0x80 是一個全形字，
+// < 0x80 是**兩個半形字塞在同一格**（高位元組在左、低位元組在右）。
+// 「MIDI I/F」那種按鈕就是後者。
+func DrawCellClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16,
+	fg, shadow uint8, shadowDY int, bold bool, cx, cy, cw, ch int) bool {
+	if code>>8 >= 0x80 {
+		return DrawGlyphClipped(fb, fnt, x, y, code, fg, shadow, shadowDY, bold, cx, cy, cw, ch)
+	}
+	a := DrawHalfGlyphClipped(fb, fnt, x, y, uint8(code>>8), fg, shadow, shadowDY, bold,
+		cx, cy, cw, ch)
+	b := DrawHalfGlyphClipped(fb, fnt, x+font.HalfW, y, uint8(code), fg, shadow, shadowDY, bold,
+		cx, cy, cw, ch)
+	return a && b
+}

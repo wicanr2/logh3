@@ -28,6 +28,12 @@ const (
 	hanziBase  = 27030
 	// hanziIndex 是 Big5 0xA440（第一個漢字）的序號。
 	hanziIndex = 471
+	// level2Index 是 Big5 0xC940（第一個次常用字）的序號；
+	// level2Gap 是 0xC6A1–0xC8FE 那一段**沒有存進字型檔**的碼數
+	// （lead C6 的 94 個 ＋ C7、C8 各 157 個）。次常用字的位移要扣掉它，
+	// 不扣就整段偏 408×30 ＝ 12240 bytes，畫出來是別的字。
+	level2Index = 6280
+	level2Gap   = 408
 )
 
 // Font 是一份載入好的字型。
@@ -64,6 +70,9 @@ func offsetOf(code uint16) int {
 	i := Big5Index(code)
 	if i < hanziIndex {
 		return symbolBase + i*fullStride
+	}
+	if i >= level2Index {
+		i -= level2Gap
 	}
 	return hanziBase + (i-hanziIndex)*fullStride
 }

@@ -11569,33 +11569,6 @@
         "no_box": true
        }
       ]
-     },
-     {
-      "y": 360,
-      "items": [
-       {
-        "x": 464,
-        "w": 18,
-        "textx": 464,
-        "text": "謀",
-        "codes": [
-         49105
-        ],
-        "on": false,
-        "no_box": true
-       },
-       {
-        "x": 512,
-        "w": 18,
-        "textx": 512,
-        "text": "束",
-        "codes": [
-         42996
-        ],
-        "on": false,
-        "no_box": true
-       }
-      ]
      }
     ]
    }

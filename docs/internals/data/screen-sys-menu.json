@@ -12304,36 +12304,6 @@
     "note": "分頁鈕。座標、文字與選中狀態讀自字元平面（docs/internals/31，工具 tools/scripts/plane_json.py）。",
     "rows": [
      {
-      "y": 120,
-      "items": [
-       {
-        "x": 368,
-        "w": 50,
-        "textx": 368,
-        "text": "略命令",
-        "codes": [
-         45732,
-         43346,
-         42319
-        ],
-        "on": false,
-        "no_box": true
-       },
-       {
-        "x": 464,
-        "w": 50,
-        "textx": 464,
-        "text": "覽表",
-        "codes": [
-         50429,
-         43757
-        ],
-        "on": false,
-        "no_box": true
-       }
-      ]
-     },
-     {
       "y": 280,
       "items": [
        {

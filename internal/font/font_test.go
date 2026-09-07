@@ -36,3 +36,21 @@ func TestGlyphRejectsInvalidCode(t *testing.T) {
 		t.Error("合法字碼 A650 回了 nil")
 	}
 }
+
+// TestGlyphLevel2 釘住次常用字（Big5 0xC940 起）的位移。
+//
+// 0xC6A1–0xC8FE 那一段沒有存進字型檔，所以次常用字要扣掉 408 個碼；
+// 不扣的話畫出來是別的字，而且**畫得出來**——最難發現的那種錯。
+func TestGlyphLevel2(t *testing.T) {
+	// 璐（0xED69，遊戲設定的第一首 BGM「波琍璐」）的點陣在 359850
+	// ——量法是把收據 settings1e 上那個字的 16×15 點陣打包成 30 bytes，
+	// 拿去 GRAPH.IMG 裡搜。
+	want := 359850
+	if got := offsetOf(0xED69); got != want {
+		t.Errorf("0xED69 的位移 %d，預期 %d", got, want)
+	}
+	// 常用字不受影響：待（0xA5DD）。
+	if got := offsetOf(0xA5DD); got != 35430 {
+		t.Errorf("0xA5DD 的位移 %d，預期 35430", got)
+	}
+}
