@@ -460,3 +460,37 @@ func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
 		t.Fatalf("%s：右側面板與原版不同的像素 %d", batch, bad)
 	}
 }
+
+// openingBoardPanel 回一個能把 796 年 1 月 1 日的右側面板畫上去的函式。
+//
+// 命令階段那一批畫面的規格裡已經沒有底板右側那幾行了（`docs/re/62`）
+// ——它們由 `CapitalPanel` 現算。拿規格單獨畫的測試要自己補這一塊，
+// 數字用 `main1e` 那一組（與 `TestCapitalPanelMatchesOracle` 同一份）。
+func openingBoardPanel(t *testing.T) func(*gfx.Framebuffer) {
+	t.Helper()
+	root := "../.."
+	cap, err := LoadCapitalPanel(filepath.Join(root, "docs/internals/data/capital-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	region, err := LoadRegionPanel(filepath.Join(root, "docs/internals/data/region-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	pl, err := os.ReadFile(filepath.Join(root, "org_game/extracted/PLADAT.DAT"))
+	if err != nil {
+		t.Skip("缺 PLADAT.DAT，跳過")
+	}
+	planets, err := rules.LoadPlanets(pl)
+	if err != nil {
+		t.Fatal(err)
+	}
+	rec := panelRecord(t, 0, 36, 0, 0)
+	economy := 82302
+	rec[0x1A], rec[0x1B] = byte(economy), byte(economy>>8)
+	rec[0x1C], rec[0x1D] = byte(economy>>16), byte(economy>>24)
+	rec[0x26] = 32
+	sum := rules.SummariseCapital(rec, planets, 0, 0, 0, 796, 45592, 10341)
+	fnt, _, _, _ := gameScreenAssets(t)
+	return func(fb *gfx.Framebuffer) { cap.Draw(fb, fnt, region, sum, 0) }
+}

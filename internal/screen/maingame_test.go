@@ -27,6 +27,11 @@ import (
 // （`ship1`）與次月份建造計劃（`plan1`）同理——署名、頭像與數字都跟著
 // 陣營與局面走，整張對拍也在 `internal/game`。
 //
+// **命令階段那一批（`cmd1e` 以下十三張）也不在這裡。** 它們的底板右側
+// 同樣改成現算（`docs/re/62`：規格裡再留一份量死的，兩份點陣會疊在一起
+// 變成雜訊），拿規格單獨畫是畫不全的；整張對拍在 `internal/game` 的
+// `TestCommandPhaseNavigation`，那支是走正常玩家路徑到每一張。
+//
 // 這些畫面共用同一個結構（底板 ＋ 星域地圖 ＋ 疊上去的視窗），
 // 所以同一個繪製器換一份規格就能畫——差別只在文字、頭像與熱區。
 func TestMainGameMatchesOracle(t *testing.T) {
@@ -34,19 +39,6 @@ func TestMainGameMatchesOracle(t *testing.T) {
 		{"screen-budget-plan", "budget1"},
 		{"screen-admiral-list", "admirals1"},
 		{"screen-account", "account1"},
-		{"screen-cmd-menu", "cmd1e"},
-		{"screen-info", "info1e"},
-		{"screen-fleet-list", "lst1e"},
-		{"screen-admiral-list-view", "lst2e"},
-		{"screen-enemy-list", "lst3e"},
-		{"screen-settings", "settings1e"},
-		{"screen-tax-plan", "tax1e"},
-		{"screen-production-plan", "prod1e"},
-		{"screen-standby-admirals", "sortie1e"},
-		{"screen-quit-confirm", "quit1e"},
-		{"screen-star-list", "star1e"},
-		{"screen-sys-menu", "sysmenu1e"},
-		{"screen-list-menu", "lstmenu1e"},
 	} {
 		t.Run(c.batch, func(t *testing.T) { checkGameScreen(t, c.spec, c.batch) })
 	}

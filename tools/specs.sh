@@ -43,6 +43,12 @@ if want computed; then
   for n in screen-main-game screen-ship-order screen-build-plan; do
     py tools/scripts/maingame_computed.py "$n"
   done
+  # 命令階段那一批只要拿掉底板右側那幾行（其餘本來就沒量進去）。
+  py tools/scripts/board_computed.py \
+    screen-cmd-menu screen-list-menu screen-sys-menu screen-standby-admirals \
+    screen-info screen-star-list screen-fleet-list screen-admiral-list-view \
+    screen-enemy-list screen-load-game screen-save-game screen-settings \
+    screen-quit-confirm
 fi
 
 # ⚠ **這三張的「量版面」那一步還沒完全腳本化。** 量的命令是

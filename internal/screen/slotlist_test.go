@@ -40,7 +40,7 @@ func TestSlotListMatchesOracle(t *testing.T) {
 		t.Fatal(err)
 	}
 	fnt, mapImg, faces, cur := gameScreenAssets(t)
-	fb, _ := MainGame(spec, fnt, mapImg, faces, cur)
+	fb, _ := MainGameWithBoard(spec, fnt, mapImg, faces, cur, openingBoardPanel(t))
 	list.Draw(fb, fnt, entries, rules.Epoch)
 
 	want, err := os.ReadFile(oracle)
@@ -86,7 +86,7 @@ func TestSaveBarMatchesOracle(t *testing.T) {
 		t.Fatalf("滑鼠 y=%d 落在第 %d 列，要第 1 列", spec.Mouse.Y, row)
 	}
 	fnt, mapImg, faces, cur := gameScreenAssets(t)
-	fb, _ := MainGameWithBoard(spec, fnt, mapImg, faces, cur, nil)
+	fb, _ := MainGameWithBoard(spec, fnt, mapImg, faces, cur, openingBoardPanel(t))
 	// 條子畫上去會把那一列蓋掉，原版接著把字重畫在條子上。
 	list.DrawSaveBar(fb, row)
 	list.DrawSaveRow(fb, fnt, row)

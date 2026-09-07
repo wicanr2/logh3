@@ -91,4 +91,6 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 | [`28-screen-specs.md`](28-screen-specs.md) | 畫面規格 JSON：`data/screen-*.json` |
 | [`29-planets-and-economy.md`](29-planets-and-economy.md) | `PLADAT.DAT` 與經濟力 |
 | [`30-save-format.md`](30-save-format.md) | 存檔：`*.DT[89A]` 就是執行期的表 |
+| [`31-text-plane.md`](31-text-plane.md) | 全螢幕字元平面（`ds:D81E`）|
+| [`32-ship-build-costs.md`](32-ship-build-costs.md) | 船艦建造：單價（兩個陣營不同）、一單位幾艘與捨去規則 |
 | [`data/`](data/) | 機器可讀版本（JSON），給後續工具與 remake 用 |
