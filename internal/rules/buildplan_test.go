@@ -108,3 +108,18 @@ func TestUnitPrices(t *testing.T) {
 		}
 	}
 }
+
+// TestPaidMatchesOracle 釘住「已支付 船艦建造費」那一格。
+//
+// 796 年 1 月：預估軍事費 60741 的 25% ＝ 建造費 15185，照開局的百分比
+// 分下去，各列只買得起整數艘，實際花掉 **15149**——與畫面相同
+// （`docs/internals/27`、`docs/spec/003`）。零頭 36 退回。
+func TestPaidMatchesOracle(t *testing.T) {
+	b := BuildPlan{Cost: 15185, Pct: OpeningPct}
+	if got := b.Paid(); got != 15149 {
+		t.Errorf("實際花掉 %d，實測 15149", got)
+	}
+	if got := b.RestAmount(); got != 36 {
+		t.Errorf("退回 %d，預期 36（15185 − 15149）", got)
+	}
+}

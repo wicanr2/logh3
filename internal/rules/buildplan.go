@@ -116,3 +116,19 @@ func (b *BuildPlan) Dec(row int) bool {
 	b.Pct[row] -= BuildPlanStep
 	return true
 }
+
+// Paid 是這一份計劃**實際花掉**的錢 ＝ 各列 Spent 相加。
+// 建造費減掉它就是退回的零頭（`RestAmount`）。
+//
+// 796 年 1 月量到的：建造費 15,185（60,741 的 25%）花掉 **15,149**，
+// 與畫面上「已支付 船艦建造費」那一格相同（`docs/internals/27`）。
+func (b *BuildPlan) Paid() int {
+	sum := 0
+	for i := 0; i < BuildPlanRows; i++ {
+		sum += b.Spent(i)
+	}
+	return sum
+}
+
+// OpeningPct 是開局的百分比分配（收據 `plan1`／`prod1e`，加起來剛好 100）。
+var OpeningPct = [BuildPlanRows]int{20, 10, 18, 10, 12, 15, 15}

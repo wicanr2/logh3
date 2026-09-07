@@ -232,16 +232,13 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
-	game.Bootstrap796_01(stellar, planets, growth)
 	return &game.Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
 		Screens: screens, StarMaps: maps, Regions: regions,
 		RegionPanel: panel, CapitalPanel: capital, BudgetPanel: budget,
 		Stellar: stellar, Planets: planets, Growth: growth,
-		Military: 45592, TaxTotal: 10341, ShipPct: 25,
-		Treasury: rules.Treasury{Budget: 60741, ShipPaid: 15149},
-		MonthReport: rules.Budget{Treasury: 50000, Tax: 10741, ShipPct: 25}}, nil
+		StartMilitary: 50000, ShipPct: 25}, nil
 }
 
 func regionColours(path string) ([]uint8, error) {

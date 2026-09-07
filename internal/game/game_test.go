@@ -137,15 +137,12 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
-	Bootstrap796_01(stellar, planets, growth)
 	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
 		BudgetPanel: budget, Stellar: stellar, Planets: planets, Growth: growth,
-		Military: 45592, TaxTotal: 10341, ShipPct: 25,
-		Treasury: rules.Treasury{Budget: 60741, ShipPaid: 15149},
-		MonthReport: rules.Budget{Treasury: 50000, Tax: 10741, ShipPct: 25}}
+		StartMilitary: 50000, ShipPct: 25}
 }
 
 // reachCommandPhase 走正常玩家路徑到戰略地圖介面：
@@ -608,14 +605,17 @@ func TestRegionPanelOnPlayerPath(t *testing.T) {
 }
 
 // TestMonthEndAdvancesMoneyAndDate 按十次「實行」跨過月底：日期要走到
-// 796 年 2 月 1 日，軍事費要加上這一個月收到的稅（`docs/re/26`、`docs/re/33`）。
+// 796 年 2 月 1 日，錢要照月底的順序動（`docs/re/26`、`docs/re/33`、`docs/re/35`）：
+//
+//	原定軍事費 ＝ 上個月的軍事費 ＋ 這次收到的稅
+//	軍事費     ＝ 原定軍事費 − 實際花掉的造船費
 //
 // 796/2 的經濟力目前算出來是 83305、原版是 83304，**差 1 還沒解**
-// （`docs/re/33`），所以這裡只驗日期與「軍事費 ＝ 舊的 ＋ 總稅收」這條關係，
-// 不驗絕對值。
+// （`docs/re/33`），所以這裡驗關係，不驗絕對值。
 func TestMonthEndAdvancesMoneyAndDate(t *testing.T) {
 	g := reachCommandPhase(t)
 	before := g.Military()
+
 	for i := 0; i < 10; i++ {
 		g.Click(544, 125) // 系統指令
 		g.Click(560, 125) // 實行
@@ -624,11 +624,15 @@ func TestMonthEndAdvancesMoneyAndDate(t *testing.T) {
 	if y != 796 || m != 2 || d != 1 {
 		t.Fatalf("十次實行之後是 %d 年 %d 月 %d 日，預期 796/2/1", y, m, d)
 	}
-	if got, want := g.Military(), before+g.TaxTotal(); got != want {
-		t.Fatalf("軍事費 %d，預期 %d（結算前 %d ＋ 總稅收 %d）",
-			got, want, before, g.TaxTotal())
+	tr := g.Treasury()
+	if tr.Budget <= before {
+		t.Fatalf("原定軍事費 %d 沒有比結算前的 %d 多", tr.Budget, before)
+	}
+	if got, want := g.Military(), tr.Budget-tr.ShipPaid; got != want {
+		t.Fatalf("軍事費 %d，預期 %d（原定 %d − 已支付 %d）",
+			got, want, tr.Budget, tr.ShipPaid)
 	}
 	if g.TaxTotal() <= 0 {
-		t.Fatalf("總稅收 %d，應該是正的", g.TaxTotal())
+		t.Fatalf("預估徵稅額 %d，應該是正的", g.TaxTotal())
 	}
 }

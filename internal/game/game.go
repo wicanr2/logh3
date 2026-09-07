@@ -164,21 +164,13 @@ type Resources struct {
 	// BudgetPanel 是預算計劃／徵稅計劃那個視窗的數字版面（`docs/spec/003`）。
 	BudgetPanel *screen.BudgetPanel
 
-	// Treasury 是這個月的財政（原定軍事費、已支付的各項），ShipPct 是
-	// 切給船艦建造費的百分比。796 年 1 月量到的：60741／15149／25%。
-	Treasury rules.Treasury
-	ShipPct  int
+	// ShipPct 是切給船艦建造費的百分比（開局 25%）。
+	ShipPct int
 
-	// MonthReport 是月初報告那一張（`budget1`）上的預算：國庫 50000、
-	// 預估徵稅額 10741。**與徵稅計劃那一張不是同一組數**——報告顯示的是
-	// 這次月底**實收**的稅（`docs/re/35` 量到 10741），徵稅計劃顯示的是
-	// 結算完之後重算的**下個月預估**（10341）。
-	MonthReport rules.Budget
-
-	// Military／TaxTotal 是開局的軍事費與總稅收（`ds:8F52`／`ds:8F6A`）。
-	// **這兩個從檔案推不出來**——載入時就已經是這個值了，月底結算才會改
-	// （`docs/internals/27`）。796 年 1 月帝國是 45592／10341（量到的）。
-	Military, TaxTotal int
+	// StartMilitary 是**開場那次月底結算之前**的軍事費。劇本給的起始值，
+	// 從檔案推不出來；796 年 1 月帝國是 50000（監看軍事費看到
+	// 50000 → 60741 → 45592，`docs/re/35`）。
+	StartMilitary int
 
 	// Stellar 是執行期的星域記錄（一筆 126 bytes），Planets 是 `PLADAT.DAT`。
 	// 面板上的數字從這兩份算出來，不是量好畫死的。
@@ -225,8 +217,14 @@ type Game struct {
 	// 月初報告被關掉幾層。兩層都關掉才露出戰略地圖介面。
 	reportLayer int
 
-	// 手上的軍事費與總稅收。開局取自 Resources，月底結算會改。
+	// 手上的軍事費與下個月的預估徵稅額。開場那次結算算出來，之後每個
+	// 月底再算一次。
 	military, taxTotal int
+
+	// treasury 是這個月的財政（原定軍事費、已支付各項），
+	// monthReport 是月初報告那張上的預算。
+	treasury    rules.Treasury
+	monthReport rules.Budget
 
 	// 目前選中的星域。左下角那塊寫的就是它。**還沒選過是 −1**，
 	// 那塊是空的——收據 `main1e` 就是這個狀態（關月初報告的那兩下右鍵
@@ -256,7 +254,10 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		military: res.Military, taxTotal: res.TaxTotal}
+		military: res.StartMilitary}
+	// 原版開機就跑一次月底結算，796 年 1 月的局面是那一次的結果
+	// （`docs/re/33`、`docs/re/35`）。
+	g.monthEnd()
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
 	}
@@ -495,8 +496,34 @@ func (g *Game) monthEnd() {
 	if g.res.Growth == nil || g.res.Planets == nil || len(g.res.Stellar) == 0 {
 		return
 	}
-	g.taxTotal = rules.MonthEnd(g.res.Stellar, g.res.Planets, g.res.Growth, g.res.Faction)
-	g.military += g.taxTotal
+	before := g.military
+	// 1. 逐星域結算，把自己那一份的稅加進軍事費——加完就是「原定軍事費」。
+	collected := rules.MonthEnd(g.res.Stellar, g.res.Planets, g.res.Growth, g.res.Faction)
+	budget := before + collected
+	// 2. 照百分比切給造船，各列只買得起整數艘，零頭退回；扣掉實際花掉的。
+	plan := rules.BuildPlan{Cost: budget * g.res.ShipPct / 100, Pct: rules.OpeningPct}
+	paid := plan.Paid()
+	g.military = budget - paid
+	g.treasury = rules.Treasury{Budget: budget, ShipPaid: paid}
+	g.monthReport = rules.Budget{Treasury: before, Tax: collected, ShipPct: g.res.ShipPct}
+	// 3. 結算完之後重算下個月的預估徵稅額——徵稅計劃那張印的是這個，
+	//    與剛剛實收的那筆不是同一個數（`docs/spec/003`）。
+	g.taxTotal = g.estimateTax()
+}
+
+// estimateTax 回下個月的預估徵稅額 ＝ 自己擁有的星域的徵稅額相加。
+//
+// 擁有者要**照行星現算**（`docs/re/17`）——星域記錄裡那一格是檔案裡的
+// 原值，載入時會被重算，直接拿來用會多算十個星域。
+func (g *Game) estimateTax() int {
+	sum := 0
+	for i := 0; (i+1)*rules.RegionRecord <= len(g.res.Stellar); i++ {
+		if g.res.Planets.RegionOwner(i) != g.res.Faction {
+			continue
+		}
+		sum += rules.RegionTax(g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord])
+	}
+	return sum
 }
 
 // drawBoardPanels 畫底板上那幾塊算出來的內容。命令階段那一批畫面共用
@@ -516,10 +543,10 @@ func (g *Game) drawBudget(fb *gfx.Framebuffer) {
 	switch g.state {
 	case StateTaxPlan:
 		b := rules.Budget{Treasury: g.military, Tax: g.taxTotal, ShipPct: g.res.ShipPct}
-		g.res.BudgetPanel.Draw(fb, g.res.Font, g.res.Treasury, b)
+		g.res.BudgetPanel.Draw(fb, g.res.Font, g.treasury, b)
 	case StateBudgetPlan:
 		// 月初報告那一張：本月份那一欄還沒有數字（全 0）。
-		g.res.BudgetPanel.Draw(fb, g.res.Font, rules.Treasury{}, g.res.MonthReport)
+		g.res.BudgetPanel.Draw(fb, g.res.Font, rules.Treasury{}, g.monthReport)
 	}
 }
 
@@ -591,6 +618,9 @@ func (g *Game) Turn() int { return g.turn }
 
 // Military 回手上的軍事費，TaxTotal 回這個月的總稅收。
 func (g *Game) Military() int { return g.military }
+
+// Treasury 回這個月的財政（原定軍事費、已支付各項）。
+func (g *Game) Treasury() rules.Treasury { return g.treasury }
 func (g *Game) TaxTotal() int { return g.taxTotal }
 
 // Date 回遊戲內的日期。紀元年 796 是原版帝國戰役的開局。
