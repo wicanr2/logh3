@@ -23,14 +23,27 @@ n=0
 for d in "$ROOT"/workplace/oracle/*/; do
   name=$(basename "$d")
   [[ -f "$d/meta.txt" ]] || continue
-  flags=$(sed -n 's/^probe 旗標: //p' "$d/meta.txt")
+  # 旗標優先讀 flags.txt（一個一行，原樣保留空格）；沒有就退回 meta.txt
+  # 那一行——但那一行是給人看的，旗標裡有空格就會拆錯，所以要標出來。
+  if [[ -f "$d/flags.txt" ]]; then
+    mapfile -t flagv < "$d/flags.txt"
+    flags="${flagv[*]}"
+  else
+    flags=$(sed -n 's/^probe 旗標: //p' "$d/meta.txt")
+    read -r -a flagv <<<"$flags"
+  fi
   [[ -n "$flags" ]] || continue
   [[ -z "$match" || "$flags" == *"$match"* ]] || continue
   [[ -z "$namere" || "$name" =~ $namere ]] || continue
   exe=$(sed -n 's/^執行檔: //p' "$d/meta.txt")
   before=$(sha256sum "$d/screen.bin" 2>/dev/null | cut -d' ' -f1 || echo -)
   (
-    LOGH3_EXE="${exe:-/orig/GIN3.COM}" "$ROOT/tools/oracle.sh" "$name" $flags >/dev/null 2>&1
+    # **失敗要印出來。** 原本 oracle.sh 一失敗，子 shell 就被 set -e 帶走，
+    # 一行都不印——那份收據等於沒有重跑過，而且看不出來。
+    if ! LOGH3_EXE="${exe:-/orig/GIN3.COM}" "$ROOT/tools/oracle.sh" "$name" "${flagv[@]}" >/dev/null 2>&1; then
+      echo "  $name **重跑失敗**（旗標可能含空格；看 $d/flags.txt）"
+      exit 0
+    fi
     after=$(sha256sum "$d/screen.bin" | cut -d' ' -f1)
     [[ "$before" == "$after" ]] && echo "  $name 不變" || echo "  $name **變了**（$before → $after）"
   ) &

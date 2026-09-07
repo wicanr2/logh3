@@ -37,4 +37,10 @@ cp "$GOLEM/workplace/oracle-tmp-pal-$name.bin" "$out/pal.bin"
   echo "screen.bin SHA-256: $(sha256sum "$out/screen.bin" | cut -d' ' -f1)"
   echo "pal.bin SHA-256: $(sha256sum "$out/pal.bin" | cut -d' ' -f1)"
 } > "$out/meta.txt"
+
+# **旗標要能原樣拿回來。** meta.txt 那一行是給人看的：旗標裡有空格
+# （`-cmdline " 9 2"`、`-poke ...=01 01 01`）時，用不帶引號的展開重跑會拆錯。
+# 這裡一個旗標一行另存一份；旗標裡不會有換行，所以逐行讀是安全的。
+printf '%s\n' "$@" > "$out/flags.txt"
+
 cat "$out/meta.txt"
