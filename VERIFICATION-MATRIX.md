@@ -123,4 +123,4 @@
 | 行星每月的成長：階梯表查成長率（`ds:4A68`，32 列）| 通過 | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md)；五個實測點逐一相符 |
 | 月底逐行星成長 ＋ 逐行星扣稅（捨去在每顆行星上）| 通過 | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md)；十個帝國星域結算後的經濟力與量到的 796/1 逐一相符 |
 | 帝國第一趟總稅收 | 差 81 **未解** | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md)；逐行星算出 10732，量到 10813 |
-| 未安定度的開局值怎麼算出來 | 骨架已解、四支子函式**未解** | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md) |
+| 未安定度的開局值怎麼算出來 | 骨架 ＋ 四支子函式都從程式讀出來了，**一個實測點都還沒有** | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md)、[`docs/re/34`](docs/re/34-unrest-formula-skeleton.md) |
