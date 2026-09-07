@@ -22,13 +22,14 @@ import (
 // `TestCapitalPanelMatchesOracle`。取進度（`load1e`）同理——那 11 列
 // 改成從 `SAVEDATA.IDX` 算（`docs/spec/008`），整張對拍在
 // `TestSlotListMatchesOracle`；存進度（`save1e`）那條紅條跟著滑鼠走
-// （`docs/spec/010`），整張對拍在 `TestSaveBarMatchesOracle`。
+// （`docs/spec/010`），整張對拍在 `TestSaveBarMatchesOracle`；月初的會計報告
+// （`key1`）署名、頭像、金額與右側首都摘要都改成現算（`docs/spec/011`），
+// 整張對拍在 `internal/game` 的 `TestPlayerPathReachesGame`。
 //
 // 這些畫面共用同一個結構（底板 ＋ 星域地圖 ＋ 疊上去的視窗），
 // 所以同一個繪製器換一份規格就能畫——差別只在文字、頭像與熱區。
 func TestMainGameMatchesOracle(t *testing.T) {
 	for _, c := range []struct{ spec, batch string }{
-		{"screen-main-game", "key1"},
 		{"screen-ship-order", "ship1"},
 		{"screen-build-plan", "plan1"},
 		{"screen-budget-plan", "budget1"},

@@ -1,13 +1,48 @@
 {
  "note": "戰略地圖介面左下角那塊星域摘要的版面。量自收據 hovA/hovB/hovC/rcback/sec1/sec5/sec7/sec9 與 pnl* 系列（-poke 造的局面），工具 tools/scripts/paneltext.py，規格 docs/spec/001。",
- "rect": {"x": 0, "y": 340, "w": 320, "h": 80},
+ "rect": {
+  "x": 0,
+  "y": 340,
+  "w": 320,
+  "h": 80
+ },
  "faction_line": {
   "y": 362,
   "prefix_x": 16,
   "prefix": [
-   {"owner": 0, "text": "帝國軍星系", "codes": [43986, 45290, 44408, 44112, 43124]},
-   {"owner": 1, "text": "同盟軍星系", "codes": [42576, 47097, 44408, 44112, 43124]},
-   {"owner": 2, "text": "中立軍星系", "codes": [42148, 42463, 44408, 44112, 43124]}
+   {
+    "owner": 0,
+    "text": "帝國軍星系",
+    "codes": [
+     43986,
+     45290,
+     44408,
+     44112,
+     43124
+    ]
+   },
+   {
+    "owner": 1,
+    "text": "同盟軍星系",
+    "codes": [
+     42576,
+     47097,
+     44408,
+     44112,
+     43124
+    ]
+   },
+   {
+    "owner": 2,
+    "text": "中立軍星系",
+    "codes": [
+     42148,
+     42463,
+     44408,
+     44112,
+     43124
+    ]
+   }
   ],
   "name_x": 96,
   "name_ink": 7
@@ -15,8 +50,40 @@
  "value_line": {
   "y": 382,
   "label_ink": 7,
-  "security": {"label_x": 16, "label": [43638, 42615], "label_text": "治安", "right": 112, "unknown": "----"},
-  "planets": {"label_x": 128, "label": [42726, 44112], "label_text": "行星", "own_right": 176, "slash_x": 176, "total_x": 184},
-  "fleets": {"label_x": 208, "label": [50341, 46756], "label_text": "艦隊", "own_right": 272, "colon_x": 272, "colon": 41287, "enemy_right": 304}
+  "security": {
+   "label_x": 16,
+   "label": [
+    43638,
+    42615
+   ],
+   "label_text": "治安",
+   "right": 112,
+   "unknown": "----"
+  },
+  "planets": {
+   "label_x": 128,
+   "label": [
+    42726,
+    44112
+   ],
+   "label_text": "行星",
+   "own_right": 176,
+   "slash_x": 176,
+   "total_x": 184
+  },
+  "fleets": {
+   "label_x": 208,
+   "label": [
+    50341,
+    46756
+   ],
+   "label_text": "艦隊",
+   "own_right": 272,
+   "colon_x": 272,
+   "colon": 41287,
+   "enemy_right": 304,
+   "own_ink": 6,
+   "enemy_ink": 5
+  }
  }
 }

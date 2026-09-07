@@ -1,0 +1,14 @@
+{
+ "note": "主畫面會計報告視窗裡算出來的那幾塊。座標量自收據 key1（帝國）與 keyAlly（同盟），規格 docs/spec/010。",
+ "ink": 7,
+ "right": 352,
+ "staff": { "y": 142, "x": 160 },
+ "face": { "x": 400, "y": 100 },
+ "rows": [
+  { "y": 222, "field": "treasury" },
+  { "y": 242, "field": "tax" },
+  { "y": 262, "field": "military" },
+  { "y": 282, "field": "ship_cost" },
+  { "y": 302, "field": "rest" }
+ ]
+}

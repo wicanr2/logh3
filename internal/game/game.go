@@ -179,6 +179,9 @@ type Resources struct {
 	// DeliveryPanel 是月底船艦接收報告那個視窗算出來的部分。
 	DeliveryPanel *screen.DeliveryPanel
 
+	// ReportPanel 是主畫面會計報告那個視窗算出來的部分（署名、頭像、金額）。
+	ReportPanel *screen.ReportPanel
+
 	// ProductionPanel 是生產計劃那個視窗的（`docs/spec/004`）。
 	BudgetPanel     *screen.BudgetPanel
 	ProductionPanel *screen.ProductionPanel
@@ -302,6 +305,10 @@ type Game struct {
 	// （`docs/re/61`）。
 	faction int
 
+	// worldStellar／worldPlanets 是星域記錄與行星表的開局值。月底結算
+	// 會就地改寫那兩份，重開新遊戲時要先還原（見 `snapshotWorld`）。
+	worldStellar, worldPlanets []byte
+
 	// starMap 是照玩家陣營重建的勢力色地圖（首都那格的顏色跟著玩家走）。
 	// nil 表示還沒建，畫的時候退回 `Resources.StarMap`。
 	starMap *asset.Image
@@ -325,6 +332,7 @@ const (
 // （`docs/re/33`、`docs/re/35`）；換陣營要重跑一次，因為收的稅是
 // **自己那一方的星域**加出來的。
 func (g *Game) startNewGame(faction int) {
+	g.restoreWorld()
 	g.faction = faction
 	g.starMap = g.factionStarMap(faction)
 	g.turn = 0
@@ -332,6 +340,30 @@ func (g *Game) startNewGame(faction int) {
 	g.pct = rules.OpeningPct
 	g.slot = nil
 	g.monthEnd()
+}
+
+// snapshotWorld 記下星域記錄與行星表的開局值。
+//
+// 月底結算會**就地改寫**這兩份（行星的經濟力成長、星域的經濟力寫回），
+// 所以「重開一次新遊戲」必須先把它們還原——不然第二次結算是在已經
+// 長過一次的資料上跑，稅收會多出來（換陣營時多 134）。
+func (g *Game) snapshotWorld() {
+	g.worldStellar = append([]byte(nil), g.res.Stellar...)
+	if g.res.Planets != nil {
+		g.worldPlanets = append([]byte(nil), g.res.Planets.Data...)
+	}
+}
+
+// restoreWorld 把兩份世界資料還原成開局值。
+func (g *Game) restoreWorld() {
+	if g.worldStellar == nil {
+		g.snapshotWorld()
+		return
+	}
+	copy(g.res.Stellar, g.worldStellar)
+	if g.res.Planets != nil {
+		copy(g.res.Planets.Data, g.worldPlanets)
+	}
 }
 
 // ShowEnding 切到結局畫面，顯示 `.VO5` 解出來的那張圖。
@@ -735,8 +767,12 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		fb, _ := screen.CopyProtection(g.res.CopyProt, g.res.Font, face, string(g.typed))
 		return fb
 	case StateMainGame:
-		fb, _ := screen.MainGame(g.res.MainGame, g.res.Font, g.playerStarMap(),
-			g.res.Faces, g.res.Cursor)
+		// 底板上的首都摘要與報告裡的署名／金額都是算出來的
+		// （`docs/spec/011`）——規格裡只有版面。
+		g.liveCursor(g.res.MainGame)
+		fb, _ := screen.MainGameWithBoard(g.res.MainGame, g.res.Font, g.playerStarMap(),
+			g.res.Faces, g.res.Cursor, g.drawBoardPanels)
+		g.drawReport(fb)
 		return fb
 	case StateShipOrder:
 		fb, _ := screen.MainGame(g.res.ShipOrder, g.res.Font, g.playerStarMap(),
@@ -824,6 +860,12 @@ func (g *Game) estimateTax() int {
 // drawBoardPanels 畫底板上那幾塊算出來的內容。命令階段那一批畫面共用
 // 同一塊底板，右側面板在每一張上都看得到（被疊上去的視窗蓋住的部分除外）。
 func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
+	if g.state == StateMainGame {
+		if c, _, ok := g.capitalSummary(); ok {
+			g.res.CapitalPanel.DrawOpening(fb, g.res.Font, g.res.RegionPanel, c, g.faction)
+		}
+		return
+	}
 	if _, ok := screenSpecName[g.state]; !ok {
 		return
 	}
@@ -838,6 +880,20 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 	g.drawCapitalPanel(fb)
 }
 
+// capitalSummary 回自己首都那一格的摘要，第二個回傳值說算不算得出來。
+func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
+	if g.res.CapitalPanel == nil || g.res.RegionPanel == nil || g.res.Planets == nil {
+		return rules.CapitalSummary{}, 0, false
+	}
+	r := rules.CapitalRegion(g.faction)
+	o := r * rules.RegionRecord
+	if o+rules.RegionRecord > len(g.res.Stellar) {
+		return rules.CapitalSummary{}, 0, false
+	}
+	return rules.SummariseCapital(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
+		r, g.faction, g.turn, rules.Epoch, g.military, g.taxTotal), r, true
+}
+
 // liveCursor 讓戰略地圖介面的游標跟著滑鼠跑。
 //
 // 規格裡的 `mouse` 記的是**量那張收據時**滑鼠停在哪，對疊上去的那些畫面
@@ -846,10 +902,16 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 // 在剛剛點「實行」的位置，remake 卻畫在收據當初 `-mouse-at` 搬過去的
 // (600,300)——兩隻箭頭，223 個像素。
 //
-// 只對地圖介面這樣做：疊上去那些畫面的規格還帶著游標的裁切範圍與
+// 月初會計報告也一樣：規格量自 `key1`，游標停在主選單第 0 列（帝國）；
+// 點第 1 列開同盟的局，原版的游標低一列。
+//
+// 只對這兩張這樣做：疊上去那些畫面的規格還帶著游標的裁切範圍與
 // 「游標之後再畫一次」的補丁，那幾件事綁著當初那個位置，還沒模型化。
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
-	if g.state != StateCommandPhase || spec.Mouse == nil || g.mouseY < 0 {
+	if g.state != StateCommandPhase && g.state != StateMainGame {
+		return
+	}
+	if spec.Mouse == nil || g.mouseY < 0 {
 		return
 	}
 	spec.Mouse.X, spec.Mouse.Y = g.mouseX, g.mouseY-mouseDY
@@ -906,6 +968,30 @@ func (g *Game) drawDelivery(fb *gfx.Framebuffer) {
 		g.delivered, name, rank)
 }
 
+// drawReport 畫主畫面會計報告裡算出來的那幾塊（`docs/spec/011`）：
+// 署名的參謀、他的頭像與五個金額。署名的是**內政專任參謀**。
+func (g *Game) drawReport(fb *gfx.Framebuffer) {
+	if g.state != StateMainGame || g.res.ReportPanel == nil {
+		return
+	}
+	p := g.res.ReportPanel
+	name, rank := g.staffAdmiral(rules.PostDomestic)
+	p.Draw(fb, g.res.Font, g.monthReport, name, rank)
+	if g.res.Faces == nil {
+		return
+	}
+	i := rules.StaffAdmiral(g.workRecord(), rules.PostDomestic, g.faction)
+	img, err := g.res.Faces.Decode(i)
+	if err != nil {
+		return
+	}
+	for y := 0; y < img.H; y++ {
+		for x := 0; x < img.W; x++ {
+			fb.Set(p.Face.X+x, p.Face.Y+y, img.Pix[y*img.W+x])
+		}
+	}
+}
+
 // drawProduction 畫生產計劃的數字（`docs/spec/004`）。
 func (g *Game) drawProduction(fb *gfx.Framebuffer) {
 	if g.state != StateProductionPlan || g.res.ProductionPanel == nil {
@@ -929,13 +1015,10 @@ func (g *Game) drawCapitalPanel(fb *gfx.Framebuffer) {
 	if g.res.CapitalPanel == nil || g.res.RegionPanel == nil || g.res.Planets == nil {
 		return
 	}
-	r := rules.CapitalRegion(g.faction)
-	o := r * rules.RegionRecord
-	if o+rules.RegionRecord > len(g.res.Stellar) {
+	c, _, ok := g.capitalSummary()
+	if !ok {
 		return
 	}
-	c := rules.SummariseCapital(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
-		r, g.faction, g.turn, rules.Epoch, g.military, g.taxTotal)
 	g.res.CapitalPanel.Draw(fb, g.res.Font, g.res.RegionPanel, c, g.faction)
 }
 

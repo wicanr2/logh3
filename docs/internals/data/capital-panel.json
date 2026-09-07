@@ -137,6 +137,10 @@
    }
   }
  ],
+ "opening_hidden": [
+  "military",
+  "tax_total"
+ ],
  "ink": 7,
  "buttons": {
   "note": "右側面板中間那三顆按鈕。矩形與立體邊量自收據 sec1；文字、座標與屬性讀自字元平面（docs/internals/31，工具 tools/scripts/plane_json.py）。",

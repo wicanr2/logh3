@@ -51,6 +51,9 @@ type CapitalPanel struct {
 
 	Ink uint8 `json:"ink"`
 
+	// OpeningHidden 是月初會計報告那一刻還沒寫上去的欄位（見 DrawOpening）。
+	OpeningHidden []string `json:"opening_hidden"`
+
 	// Buttons 是中間那三顆命令按鈕（戰略命令／一覽表／系統指令）。
 	// 立體邊與輸入框同一種：兩層 top/left 色號 7、bottom/right 色號 3。
 	Buttons *struct {
@@ -167,6 +170,36 @@ func (p *CapitalPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, region *RegionP
 	p.drawButtons(fb, fnt)
 	p.drawTabs(fb, fnt)
 	region.DrawAt(fb, fnt, c.Region, faction, p.Summary.DX, p.Summary.DY)
+}
+
+// DrawOpening 畫月初會計報告那一刻的右側面板：**只有首都那一塊**。
+//
+// 收據 `key1` 的右側面板在那一刻（`docs/spec/011`），日期那一行與軍事費／總稅收那一列是空的
+// （整片底色），中間三顆按鈕的位置放的是一條橫條（在畫面規格裡），
+// 分頁鈕也還沒畫；首都的防衛力、經濟力、成長率、徵稅額、稅率與最上面那塊
+// 摘要則已經寫好了。`opening_hidden` 記的就是那幾格。
+func (p *CapitalPanel) DrawOpening(fb *gfx.Framebuffer, fnt *font.Font, region *RegionPanel,
+	c rules.CapitalSummary, faction int) {
+	for _, r := range p.Rows {
+		for _, fld := range []*PanelField{r.Left, r.Right} {
+			if fld == nil || p.hiddenAtOpening(fld.Field) {
+				continue
+			}
+			drawFull(fb, fnt, fld.LabelX, r.Y, fld.Label, p.Ink)
+			drawRight(fb, fnt, fld.Right, r.Y, fld.value(c), p.Ink)
+		}
+	}
+	region.DrawAt(fb, fnt, c.Region, faction, p.Summary.DX, p.Summary.DY)
+}
+
+// hiddenAtOpening 回這一格在月初報告那一刻畫了沒有。
+func (p *CapitalPanel) hiddenAtOpening(field string) bool {
+	for _, f := range p.OpeningHidden {
+		if f == field {
+			return true
+		}
+	}
+	return false
 }
 
 // DrawChrome 只畫按鈕與分頁鈕，不畫算出來的文字。

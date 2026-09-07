@@ -35,6 +35,20 @@ SETTINGS_BOXES=\
 '302:340:337:359,350:340:385:359,398:340:433:359,'\
 '318:360:385:379,398:360:433:379'
 
+# 月初的會計報告（防拷答對之後那一張）。三步：量版面 → 把兩顆按鈕的字
+# 從 patches 搬成 text → 拿掉跟局面走的內容（署名、頭像、金額、首都摘要），
+# 那幾樣由 internal/screen.ReportPanel 與 CapitalPanel 現算（`docs/spec/011`）。
+#
+# ⚠ 分頁鈕（`tabs`）與輸入框（`input_box`）是從字元平面補進去的
+# （`tools/scripts/plane_json.py`，`docs/internals/31`），這裡還沒腳本化——
+# 重跑這一段會把那兩塊弄丟，要先確認手上有那份平面資料。
+if want main-game; then
+  py tools/scripts/mainscreen_spec.py key1 screen-main-game
+  py tools/scripts/box_text.py key1 screen-main-game report 0
+  py tools/scripts/box_text.py key1 screen-main-game report 1
+  py tools/scripts/maingame_computed.py screen-main-game
+fi
+
 # 底層：命令階段主畫面。其餘幾張都疊在它上面。
 want command-phase && py tools/scripts/cmdscreen_spec.py main1e screen-command-phase
 

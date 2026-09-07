@@ -53,6 +53,11 @@ type RegionPanel struct {
 			ColonX     int      `json:"colon_x"`
 			Colon      uint16   `json:"colon"`
 			EnemyRight int      `json:"enemy_right"`
+
+			// OwnInk／EnemyInk 是那兩個數字的墨色，**兩個常數**，
+			// 不跟著玩家的陣營換（`docs/re/61`）。
+			OwnInk   uint8 `json:"own_ink"`
+			EnemyInk uint8 `json:"enemy_ink"`
 		} `json:"fleets"`
 	} `json:"value_line"`
 }
@@ -87,7 +92,7 @@ func (p *RegionPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, s rules.RegionSu
 // 行星、艦隊、陣營前綴、星系名全部對得上（`docs/spec/002`）。
 func (p *RegionPanel) DrawAt(fb *gfx.Framebuffer, fnt *font.Font, s rules.RegionSummary,
 	faction, dx, dy int) {
-	own, enemy := rules.FactionColour(faction), rules.FactionColour(1-faction)
+	own, enemy := p.ValueLine.Fleets.OwnInk, p.ValueLine.Fleets.EnemyInk
 	fx := func(x int) int { return x + dx }
 
 	// 第一行：陣營前綴 ＋ 星域名。

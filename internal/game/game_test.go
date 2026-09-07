@@ -116,6 +116,10 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	report, err := screen.LoadReportPanel(filepath.Join(root, "docs/internals/data/report-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	delivery, err := screen.LoadDeliveryPanel(filepath.Join(root, "docs/internals/data/delivery-panel.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -174,6 +178,7 @@ func load(t *testing.T) *Resources {
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
 		BudgetPanel: budget, ProductionPanel: production, DeliveryPanel: delivery,
+		ReportPanel: report,
 		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		StartMilitary: 50000, ShipPct: 25}
