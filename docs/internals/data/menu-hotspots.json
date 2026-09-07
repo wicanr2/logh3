@@ -1,0 +1,97 @@
+{
+ "note": "下拉選單的可點範圍。量出來的行為（confirmed），機制未解——命中測試那一處把清單當參數收，不是寫死的資料段位移。座標是畫面座標。",
+ "rule": "x 從母項目左緣起算，寬 = 該選單最長標籤的字數 × 16（四個項目共用）；列高 20，第一列 y = 120。",
+ "menus": [
+  {
+   "parent": "戰略命令",
+   "parent_hotspot": [
+    352,
+    80,
+    64,
+    20
+   ],
+   "item_x": 352,
+   "item_w": 64,
+   "items": [
+    {
+     "label": "出擊命令",
+     "y": 120,
+     "h": 20,
+     "screen": "screen-standby-admirals"
+    },
+    {
+     "label": "情報收集",
+     "y": 140,
+     "h": 20,
+     "screen": "screen-info"
+    },
+    {
+     "label": "徵稅計劃",
+     "y": 160,
+     "h": 20,
+     "screen": "screen-tax-plan"
+    },
+    {
+     "label": "生產計劃",
+     "y": 180,
+     "h": 20,
+     "screen": "screen-production-plan"
+    }
+   ]
+  },
+  {
+   "parent": "系統指令",
+   "parent_hotspot": [
+    544,
+    80,
+    64,
+    20
+   ],
+   "item_x": 544,
+   "item_w": 48,
+   "items": [
+    {
+     "label": "取進度",
+     "y": 120,
+     "h": 20,
+     "screen": "screen-load-game"
+    },
+    {
+     "label": "存進度",
+     "y": 140,
+     "h": 20,
+     "screen": "screen-save-game"
+    },
+    {
+     "label": "設定",
+     "y": 160,
+     "h": 20,
+     "screen": "screen-settings"
+    },
+    {
+     "label": "結束",
+     "y": 180,
+     "h": 20,
+     "screen": "screen-quit-confirm"
+    }
+   ]
+  }
+ ],
+ "hittest_site_without_static_list": {
+  "note": "27 處命中測試呼叫裡唯一一處把清單當參數收",
+  "signature": "FF 76 1A FF 76 18 9A F9 01 A9 37",
+  "args": "push [bp+08], [bp+06], [F250], [F24E], [bp+1A], [bp+18]"
+ },
+ "evidence": [
+  "mx415",
+  "mx416",
+  "my159",
+  "my160",
+  "sx543",
+  "sx575",
+  "sx576",
+  "sx591",
+  "sx592",
+  "sx592b"
+ ]
+}
