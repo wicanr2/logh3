@@ -141,6 +141,10 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	work, err := rules.LoadWorkTemplate(filepath.Join(root, "docs/internals/data/work-796-01.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	slotList, err := screen.LoadSlotList(filepath.Join(root, "docs/internals/data/save-slot-list.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -151,12 +155,12 @@ func load(t *testing.T) *Resources {
 			t.Fatal(err)
 		}
 	}
-	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
+	return &Resources{Font: fnt, OrigDir: orig, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
 		BudgetPanel: budget, ProductionPanel: production, Stellar: stellar, Planets: planets, Growth: growth,
-		SlotList: slotList, SaveIndex: saveIndex,
+		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		StartMilitary: 50000, ShipPct: 25}
 }
 
@@ -848,5 +852,42 @@ func TestSaveSlotRoundTrip(t *testing.T) {
 		if bad > limit {
 			t.Errorf("%s：與原版不同的位元組 %d（允許 %d）", name, bad, limit)
 		}
+	}
+}
+
+// TestSaveNewGame 新遊戲也存得了（`docs/spec/009`）：開局走到戰略地圖介面
+// 就存出去，六個檔的長度與版面要對，`WORK` 的三個欄位要是目前的狀態。
+func TestSaveNewGame(t *testing.T) {
+	g := reachCommandPhase(t)
+	dir := t.TempDir()
+	if err := g.SaveSlot(dir, 0); err != nil {
+		t.Fatal(err)
+	}
+	want := map[string]int{
+		"STELLAR.DT0": rules.RegionCount * rules.RegionRecord,
+		"PLANET.DT0":  81 * rules.PlanetRecord,
+		"ADMIRAL.DT0": 82 * rules.AdmiralRecord,
+		"FLEET.DT0":   rules.FleetCount * rules.FleetRecord,
+		"SHIP.DT0":    rules.ShipCount * rules.ShipRecord,
+		"WORK.DT0":    rules.WorkRecord,
+	}
+	for name, n := range want {
+		b, err := os.ReadFile(filepath.Join(dir, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(b) != n {
+			t.Errorf("%s：%d bytes，要 %d", name, len(b), n)
+		}
+	}
+	w, err := os.ReadFile(filepath.Join(dir, "WORK.DT0"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	turn := int(w[0x04]) | int(w[0x05])<<8
+	mil := int(w[0x3E]) | int(w[0x3F])<<8 | int(w[0x40])<<16 | int(w[0x41])<<24
+	if turn != g.Turn() || mil != g.Military() {
+		t.Errorf("WORK 裡是回合 %d、軍事費 %d，遊戲裡是 %d／%d",
+			turn, mil, g.Turn(), g.Military())
 	}
 }

@@ -250,6 +250,10 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	work, err := rules.LoadWorkTemplate(filepath.Join(data, "work-796-01.json"))
+	if err != nil {
+		return nil, err
+	}
 	slotList, err := screen.LoadSlotList(filepath.Join(data, "save-slot-list.json"))
 	if err != nil {
 		return nil, err
@@ -275,7 +279,7 @@ func load(orig, data string) (*game.Resources, error) {
 		Screens: screens, StarMaps: maps, Regions: regions,
 		RegionPanel: panel, CapitalPanel: capital, BudgetPanel: budget, ProductionPanel: production,
 		Stellar: stellar, Planets: planets, Growth: growth,
-		SlotList: slotList, SaveIndex: saveIndex,
+		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
 

@@ -1,6 +1,8 @@
 package rules
 
 import (
+	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -330,4 +332,30 @@ func WriteSaveIndex(idx []byte, index int, turn int, name []uint16) error {
 		r[saveEntryName+i*2+1] = byte(c)
 	}
 	return nil
+}
+
+// LoadWorkTemplate 讀新遊戲開局的 `WORK` 區塊。
+//
+// 存檔的 `WORK.DT?` 就是 `ds:8F14` 起那 230 bytes（`docs/re/45`），
+// 而 `WORK.DTX` 不存在——新遊戲那一份只能從記憶體量。這支讀的就是量到的
+// 那一份（`docs/internals/data/work-796-01.json`）。
+func LoadWorkTemplate(path string) ([]byte, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var d struct {
+		Hex string `json:"hex"`
+	}
+	if err := json.Unmarshal(b, &d); err != nil {
+		return nil, fmt.Errorf("%s: %w", path, err)
+	}
+	out, err := hex.DecodeString(d.Hex)
+	if err != nil {
+		return nil, fmt.Errorf("%s: %w", path, err)
+	}
+	if len(out) != WorkRecord {
+		return nil, fmt.Errorf("%s: WORK 有 %d bytes，要 %d", path, len(out), WorkRecord)
+	}
+	return out, nil
 }

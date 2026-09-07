@@ -173,6 +173,10 @@ type Resources struct {
 	SlotList  *screen.SlotList
 	SaveIndex []rules.SaveIndexEntry
 
+	// WorkTemplate 是新遊戲開局的 `WORK` 區塊（`docs/re/45`）。
+	// 新遊戲要存檔就得靠它——`WORK.DTX` 不存在。
+	WorkTemplate []byte
+
 	// OrigDir 是原版檔案的目錄。「取進度」要從那裡讀存檔（`docs/spec/007`）。
 	OrigDir string
 
@@ -570,7 +574,25 @@ func (g *Game) loadSlotFromDisk(n int) {
 // 新遊戲沒有可以照抄的底稿。`dir` 由呼叫端指定，原版目錄一律唯讀。
 func (g *Game) SaveSlot(dir string, index int) error {
 	if g.slot == nil {
-		return fmt.Errorf("這個局面不是從存檔來的，還存不了（`docs/spec/009`）")
+		// 新遊戲：拿量到的開局 `WORK` 當底稿，其餘的表就是目前手上的。
+		// remake 沒有模型的那些欄位會停在 796 年 1 月的初值
+		// （`docs/spec/009`）。
+		if len(g.res.WorkTemplate) < rules.WorkRecord || g.res.Planets == nil {
+			return fmt.Errorf("新遊戲要存檔得先給 WorkTemplate（`docs/spec/009`）")
+		}
+		g.slot = &rules.Slot{
+			Stellar: g.res.Stellar, Planets: g.res.Planets,
+			Admiral: g.res.Admiral,
+			Fleet:   make([]byte, rules.FleetCount*rules.FleetRecord),
+			Ship:    make([]byte, rules.ShipCount*rules.ShipRecord),
+			Work:    append([]byte(nil), g.res.WorkTemplate...),
+		}
+		for i := range g.slot.Fleet {
+			g.slot.Fleet[i] = 0xFF
+		}
+		for i := range g.slot.Ship {
+			g.slot.Ship[i] = 0xFF
+		}
 	}
 	g.slot.Turn = g.turn
 	g.slot.Military = g.military
