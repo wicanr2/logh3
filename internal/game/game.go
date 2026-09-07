@@ -275,6 +275,23 @@ func New(res *Resources) (*Game, error) {
 	return g, nil
 }
 
+// LoadSlot 把一格存檔接上來（規格 `docs/spec/005`）。
+//
+// 存檔存的是**結算之後**的狀態：回合數、軍事費與總稅收都在 `WORK.DT?`
+// 裡，所以載進來不再跑一次月底結算——跑了就會把那個月的稅收重複算一遍。
+//
+// 未安定度是唯一一欄載進來還不對的（原版載入時重算，算式未解，
+// `docs/re/24`）。要對畫面的地方得自己 `Slot.SetUnrest` 蓋成量到的值。
+func (g *Game) LoadSlot(sl *rules.Slot) {
+	g.res.Stellar = sl.Stellar
+	g.res.Planets = sl.Planets
+	g.turn = sl.Turn
+	g.military = sl.Military
+	g.taxTotal = sl.TaxTotal
+	g.selectedRegion = -1
+	g.state = StateCommandPhase
+}
+
 // pickQuestion 決定防拷問答的題目與答案。
 //
 // 題目就是規格裡那張照片的編號——原版問的是「照片上那位提督的占領能力」，

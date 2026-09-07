@@ -676,3 +676,43 @@ func TestBuildPlanPctReachesProduction(t *testing.T) {
 			before.RestPct(), after.RestPct())
 	}
 }
+
+// TestLoadSlotSetsState 走存檔那條路：載進第 10 格（S3「巴米利恩會戰」）
+// 之後，日期與兩筆錢就是那個局面的，不是開局的（規格 `docs/spec/005`）。
+func TestLoadSlotSetsState(t *testing.T) {
+	res := load(t)
+	g, err := New(res)
+	if err != nil {
+		t.Fatal(err)
+	}
+	orig := filepath.Join("../..", "org_game/extracted")
+	read := func(name string) []byte {
+		b, err := os.ReadFile(filepath.Join(orig, name))
+		if err != nil {
+			t.Skipf("缺 %s，跳過（不用代用品）", name)
+		}
+		return b
+	}
+	sl, err := rules.LoadSlot(rules.SlotFiles{
+		Stellar:      read("STELLAR.DTA"),
+		Planet:       read("PLANET.DTA"),
+		Admiral:      read("ADMIRAL.DTA"),
+		Fleet:        read("FLEET.DTA"),
+		Ship:         read("SHIP.DTA"),
+		Work:         read("WORK.DTA"),
+		PlanetHeader: read("PLADAT.DAT"),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.LoadSlot(sl)
+	if y, m, d := g.Date(); y != 799 || m != 3 || d != 1 {
+		t.Errorf("日期 %d/%d/%d，要 799/3/1", y, m, d)
+	}
+	if g.Military() != 160000 || g.TaxTotal() != 13131 {
+		t.Errorf("軍事費 %d 總稅收 %d，要 160000／13131", g.Military(), g.TaxTotal())
+	}
+	if g.State() != StateCommandPhase {
+		t.Errorf("狀態 %v，要命令階段", g.State())
+	}
+}
