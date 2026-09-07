@@ -8,6 +8,7 @@ import (
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
+	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/ui"
 )
@@ -50,6 +51,22 @@ func TestRegionPanelMatchesOracle(t *testing.T) {
 			checkRegionPanel(t, c.batch, c.mx, c.my, c.unrest, c.own, c.enemy, c.whole)
 		})
 	}
+}
+
+// drawCapital796_01 把右側面板畫成 796 年 1 月的狀態（量到的值）。
+func drawCapital796_01(t *testing.T, fb *gfx.Framebuffer, fnt *font.Font,
+	region *RegionPanel, planets *rules.Planets) {
+	t.Helper()
+	root := "../.."
+	cap, err := LoadCapitalPanel(filepath.Join(root, "docs/internals/data/capital-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	rec := panelRecord(t, 0, -1, 0, 0)
+	rec[0x1A], rec[0x1B] = byte(82302&0xFF), byte(82302>>8&0xFF)
+	rec[0x1C], rec[0x1D] = byte(82302>>16), 0
+	rec[0x26] = 32
+	cap.Draw(fb, fnt, region, rules.SummariseCapital(rec, planets, 0, 0, 0, 796, 45592, 10341), 0)
 }
 
 // panelRecord 湊出面板要的執行期星域記錄。
@@ -151,6 +168,9 @@ func checkRegionPanel(t *testing.T, batch string, mx, my, unrest, own, enemy int
 	sum := rules.Summarise(panelRecord(t, region, unrest, own, enemy), planets, region, 0)
 
 	fb, _ := MainGame(s, fnt, mapImg, faces, cur)
+	// 右側面板同樣是算出來的（`docs/spec/002`）：這幾份收據都是 796 年 1 月，
+	// 值與 `main1e` 相同。
+	drawCapital796_01(t, fb, fnt, panel, planets)
 	panel.Draw(fb, fnt, sum, 0)
 
 	want, err := os.ReadFile(oracle)
@@ -182,3 +202,90 @@ func checkRegionPanel(t *testing.T, batch string, mx, my, unrest, own, enemy int
 
 var _ = font.GlyphW
 var _ = ui.Frame{}
+
+// TestCapitalPanelMatchesOracle 是右側面板的同狀態對拍（規格 `docs/spec/002`）。
+//
+// 兩個月份：`main1e` 是 796 年 1 月 1 日，`turnnext` 是按了十一次「實行」
+// 之後的 796 年 2 月 1 日。同一份規格換一組狀態就得畫出兩張不同的畫面
+// ——這是「文字真的是算出來的」最直接的證據。
+func TestCapitalPanelMatchesOracle(t *testing.T) {
+	for _, c := range []struct {
+		batch                    string
+		turn                     int
+		military, taxTotal       int
+		economy, taxRate, unrest int
+		whole                    bool // 整張都比
+	}{
+		{"main1e", 0, 45592, 10341, 82302, 32, 36, true},
+		{"turnnext", 10, 42339, 10413, 83304, 32, 36, false},
+	} {
+		c := c
+		t.Run(c.batch, func(t *testing.T) {
+			checkCapitalPanel(t, c.batch, c.turn, c.military, c.taxTotal,
+				c.economy, c.taxRate, c.unrest, c.whole)
+		})
+	}
+}
+
+func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
+	economy, taxRate, unrest int, whole bool) {
+	t.Helper()
+	root := "../.."
+	oracle := filepath.Join(root, "workplace/oracle/"+batch+"/screen.bin")
+	want, err := os.ReadFile(oracle)
+	if err != nil {
+		t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", oracle)
+	}
+	panelPath := filepath.Join(root, "docs/internals/data/capital-panel.json")
+	cap, err := LoadCapitalPanel(panelPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	region, err := LoadRegionPanel(filepath.Join(root, "docs/internals/data/region-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	fnt, mapImg, faces, cur := gameScreenAssets(t)
+	s, err := LoadMainGameSpec(filepath.Join(root, "docs/internals/data/screen-command-phase.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	pl, err := os.ReadFile(filepath.Join(root, "org_game/extracted/PLADAT.DAT"))
+	if err != nil {
+		t.Skip("缺 PLADAT.DAT，跳過")
+	}
+	planets, err := rules.LoadPlanets(pl)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// 首都那一筆記錄：名字從檔案讀，會變的那幾格填量到的值。
+	rec := panelRecord(t, 0, unrest, 0, 0)
+	rec[0x1A] = byte(economy)
+	rec[0x1B] = byte(economy >> 8)
+	rec[0x1C], rec[0x1D] = byte(economy>>16), byte(economy>>24)
+	rec[0x26] = byte(taxRate)
+	sum := rules.SummariseCapital(rec, planets, 0, 0, turn, 796, military, taxTotal)
+
+	fb, _ := MainGame(s, fnt, mapImg, faces, cur)
+	cap.Draw(fb, fnt, region, sum, 0)
+
+	// `main1e` 整張比：那份收據沒有選中任何星域（左下角是空的），
+	// 游標也就在規格量到的位置。`turnnext` 只比右側面板——它是十一次
+	// 「實行」跑出來的，游標與左下角都在別的狀態。
+	x0, y0, x1, y1 := 0, 0, 640, 480
+	if !whole {
+		x0, y0, y1 = 320, 40, 300
+	}
+	bad := 0
+	for y := y0; y < y1; y++ {
+		for x := x0; x < x1; x++ {
+			if want[y*640+x] != fb.Pix[y*640+x] {
+				bad++
+			}
+		}
+	}
+	if bad != 0 {
+		_ = os.WriteFile(filepath.Join(root, "workplace/remake-"+batch+"-cap.bin"), fb.Pix, 0o644)
+		t.Fatalf("%s：右側面板與原版不同的像素 %d", batch, bad)
+	}
+}

@@ -24,6 +24,7 @@ const (
 	regionDefence = 0x20 // 16 位元，與 +0x22 是同一個值的兩份
 	regionUnrest  = 0x7D // 未安定度，記錄的最後一個 byte；治安由它算出來
 	regionTaxRate = 0x26 // 稅率，千分之一為單位（畫面上的 3.2% ＝ 32）
+	regionGrowth  = 0x1E // 成長率，千分之一為單位（畫面上的 4.5% ＝ 45）
 )
 
 // RegionEconomy 回星域記錄裡的經濟力（32 位元）。

@@ -203,6 +203,10 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	capital, err := screen.LoadCapitalPanel(filepath.Join(data, "capital-panel.json"))
+	if err != nil {
+		return nil, err
+	}
 	stellarFile, err := os.ReadFile(filepath.Join(orig, "STELLAR.DTA"))
 	if err != nil {
 		return nil, err
@@ -224,7 +228,8 @@ func load(orig, data string) (*game.Resources, error) {
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
 		Screens: screens, StarMaps: maps, Regions: regions,
-		RegionPanel: panel, Stellar: stellar, Planets: planets}, nil
+		RegionPanel: panel, CapitalPanel: capital, Stellar: stellar, Planets: planets,
+		Military: 45592, TaxTotal: 10341}, nil
 }
 
 func regionColours(path string) ([]uint8, error) {

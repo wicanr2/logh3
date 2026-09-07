@@ -67,3 +67,44 @@ func Summarise(record []byte, planets *Planets, region, faction int) RegionSumma
 	s.OwnFleets, s.EnemyFleets = Fleets(record, faction)
 	return s
 }
+
+// CapitalSummary 是右側面板要印的東西（規格 `docs/spec/002`）。
+//
+// 分兩種來源：**算得出來的**（日期、防衛力、經濟力、成長率、徵稅額、稅率）
+// 與**存在遊戲狀態裡的**（軍事費、總稅收）。後兩個是月底結算留下來的全域
+// （`docs/internals/27`），畫面只是把它們印出來，不是每一格重算。
+type CapitalSummary struct {
+	// Region 是首都那一塊摘要，與左下角同一個版面。
+	Region RegionSummary
+
+	Year, Month, Day int
+
+	// Military ＝ 軍事費（`ds:8F52`）、TaxTotal ＝ 總稅收（`ds:8F6A`）。
+	Military, TaxTotal int
+
+	Defence, Economy, Tax int
+
+	// GrowthPerMille／TaxRatePerMille 以千分之一為單位，畫面印成 `4.5%`。
+	GrowthPerMille, TaxRatePerMille int
+}
+
+// SummariseCapital 把首都那一筆記錄與遊戲狀態整理成右側面板要印的東西。
+func SummariseCapital(record []byte, planets *Planets, region, faction, turn, epoch,
+	military, taxTotal int) CapitalSummary {
+	y, m, d := Date(turn, epoch)
+	c := CapitalSummary{
+		Region:   Summarise(record, planets, region, faction),
+		Year:     y, Month: m, Day: d,
+		Military: military, TaxTotal: taxTotal,
+		Economy:  RegionEconomy(record),
+		Tax:      RegionTax(record),
+		TaxRatePerMille: RegionTaxRate(record),
+	}
+	if len(record) > regionGrowth {
+		c.GrowthPerMille = int(record[regionGrowth])
+	}
+	if planets != nil {
+		c.Defence = planets.RegionDefence(region)
+	}
+	return c
+}

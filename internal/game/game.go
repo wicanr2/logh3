@@ -156,8 +156,15 @@ type Resources struct {
 	StarMaps map[string]*asset.Image
 	Admiral  []byte // ADMIRAL.DT*，防拷問答的答案在裡面
 
-	// RegionPanel 是左下角星域摘要那塊的版面（規格 `docs/spec/001`）。
-	RegionPanel *screen.RegionPanel
+	// RegionPanel 是左下角星域摘要那塊的版面（規格 `docs/spec/001`），
+	// CapitalPanel 是右側那塊（`docs/spec/002`）。
+	RegionPanel  *screen.RegionPanel
+	CapitalPanel *screen.CapitalPanel
+
+	// Military／TaxTotal 是開局的軍事費與總稅收（`ds:8F52`／`ds:8F6A`）。
+	// **這兩個從檔案推不出來**——載入時就已經是這個值了，月底結算才會改
+	// （`docs/internals/27`）。796 年 1 月帝國是 45592／10341（量到的）。
+	Military, TaxTotal int
 
 	// Stellar 是執行期的星域記錄（一筆 126 bytes），Planets 是 `PLADAT.DAT`。
 	// 面板上的數字從這兩份算出來，不是量好畫死的。
@@ -201,6 +208,9 @@ type Game struct {
 	// 月初報告被關掉幾層。兩層都關掉才露出戰略地圖介面。
 	reportLayer int
 
+	// 手上的軍事費與總稅收。開局取自 Resources，月底結算會改。
+	military, taxTotal int
+
 	// 目前選中的星域。左下角那塊寫的就是它。**還沒選過是 −1**，
 	// 那塊是空的——收據 `main1e` 就是這個狀態（關月初報告的那兩下右鍵
 	// 也點在星圖上，但沒有選中任何星域）。
@@ -228,7 +238,8 @@ func New(res *Resources) (*Game, error) {
 	if res.Font == nil || res.Menu == nil || res.CopyProt == nil || res.MainGame == nil {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
-	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1}
+	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
+		military: res.Military, taxTotal: res.TaxTotal}
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
 	}
@@ -442,13 +453,39 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		if spec := g.commandSpec(g.state); spec != nil {
 			fb, _ := screen.MainGame(spec, g.res.Font, g.starMapFor(spec),
 				g.res.Faces, g.res.Cursor)
-			g.drawRegionPanel(fb)
+			g.drawPanels(fb)
 			return fb
 		}
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.highlight,
 			g.res.Cursor, g.mouseX, g.mouseY)
 		return fb
 	}
+}
+
+// drawPanels 把兩塊「從狀態算出來」的面板畫上去：右側（規格 002）
+// 與左下角（規格 001）。**只有戰略地圖介面畫**——疊在上面的那幾張
+// 會把這兩塊改寫成自己的內容，它們的規格裡已經有了。
+func (g *Game) drawPanels(fb *gfx.Framebuffer) {
+	if g.state != StateCommandPhase {
+		return
+	}
+	g.drawCapitalPanel(fb)
+	g.drawRegionPanel(fb)
+}
+
+// drawCapitalPanel 畫右側那塊：日期、軍事費、總稅收與自己首都的摘要。
+func (g *Game) drawCapitalPanel(fb *gfx.Framebuffer) {
+	if g.res.CapitalPanel == nil || g.res.RegionPanel == nil || g.res.Planets == nil {
+		return
+	}
+	r := rules.CapitalRegion(g.res.Faction)
+	o := r * rules.RegionRecord
+	if o+rules.RegionRecord > len(g.res.Stellar) {
+		return
+	}
+	c := rules.SummariseCapital(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
+		r, g.res.Faction, g.turn, rules.Epoch, g.military, g.taxTotal)
+	g.res.CapitalPanel.Draw(fb, g.res.Font, g.res.RegionPanel, c, g.res.Faction)
 }
 
 // drawRegionPanel 把選中星域的摘要畫進左下角那塊。

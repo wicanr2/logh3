@@ -108,6 +108,10 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	capital, err := screen.LoadCapitalPanel(filepath.Join(root, "docs/internals/data/capital-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	stellarFile, err := os.ReadFile(filepath.Join(orig, "STELLAR.DTA"))
 	if err != nil {
 		t.Fatal(err)
@@ -128,7 +132,8 @@ func load(t *testing.T) *Resources {
 	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
-		Regions: regions, RegionPanel: panel, Stellar: stellar, Planets: planets}
+		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
+		Stellar: stellar, Planets: planets, Military: 45592, TaxTotal: 10341}
 }
 
 // reachCommandPhase 走正常玩家路徑到戰略地圖介面：

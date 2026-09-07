@@ -55,9 +55,12 @@ func LoadCommandScreens(dataDir, regionsPath string, bit, rgn []byte) (
 // 原版是載入時依行星重算的（`docs/re/17`、`docs/re/30`），面板要用的那幾格
 // 由 `internal/rules` 現算，不動記錄。
 //
-// **未安定度是例外**：載入時怎麼算出來的還沒解（`docs/re/24`），所以這裡
-// 用量到的那一組（`month-rollover-796-01.json`）填回去。解出算式之前，
-// 換一個劇本或開局之後的局面這一欄就不對——這是已知的缺口，不是設計。
+// **四個欄位是例外**：未安定度、經濟力、成長率、稅率在原版載入時都會被
+// 重算，而檔案裡的值與畫面上的不一樣（星域 0 的稅率檔案寫 22、畫面是 32）。
+// 經濟力的重算已經解出來了（Σ 行星的 `+0x1A`，`docs/re/30`），但那只算到
+// 81300，畫面上的 82302 還經過開場那一次月底結算——**成長那一步未解**。
+// 所以這四欄先用量到的那一組（`month-rollover-796-01.json`）填回去。
+// 解出算式之前，換一個劇本或開局之後的局面這幾欄就不對——已知的缺口。
 func LoadRegionRecords(stellar []byte, measuredPath string) ([]byte, error) {
 	if len(stellar) < 32*rules.RegionRecord {
 		return nil, fmt.Errorf("STELLAR 太短：%d bytes", len(stellar))
@@ -68,8 +71,11 @@ func LoadRegionRecords(stellar []byte, measuredPath string) ([]byte, error) {
 	}
 	var d struct {
 		Regions []struct {
-			Index  int `json:"index"`
-			Unrest int `json:"unrest_796_01"`
+			Index   int `json:"index"`
+			Unrest  int `json:"unrest_796_01"`
+			Economy int `json:"economy_796_01"`
+			Growth  int `json:"growth_per_mille"`
+			TaxRate int `json:"tax_per_mille"`
 		} `json:"regions"`
 	}
 	if err := json.Unmarshal(b, &d); err != nil {
@@ -81,7 +87,14 @@ func LoadRegionRecords(stellar []byte, measuredPath string) ([]byte, error) {
 		if r.Index < 0 || r.Index >= 32 {
 			continue
 		}
-		out[r.Index*rules.RegionRecord+0x7D] = byte(r.Unrest)
+		o := r.Index * rules.RegionRecord
+		out[o+0x7D] = byte(r.Unrest)
+		out[o+0x1A] = byte(r.Economy)
+		out[o+0x1B] = byte(r.Economy >> 8)
+		out[o+0x1C] = byte(r.Economy >> 16)
+		out[o+0x1D] = byte(r.Economy >> 24)
+		out[o+0x1E] = byte(r.Growth)
+		out[o+0x26] = byte(r.TaxRate)
 	}
 	// 艦隊數同樣清掉。796 年 1 月每一份收據上都是 `0：0`，而檔案裡不是
 	// 全零（`STELLAR.DTA` 星域 14 的 `+0x28` 是 1）——那一格在載入時

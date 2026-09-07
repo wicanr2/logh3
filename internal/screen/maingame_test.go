@@ -17,6 +17,10 @@ import (
 
 // TestMainGameMatchesOracle 是遊戲本體各畫面的同狀態對拍。
 //
+// 戰略地圖介面（`main1e`）不在這裡：它的右側面板已經改成從遊戲狀態算
+// （`docs/spec/002`），規格裡沒有那幾行文字，整張對拍在
+// `TestCapitalPanelMatchesOracle`。
+//
 // 這些畫面共用同一個結構（底板 ＋ 星域地圖 ＋ 疊上去的視窗），
 // 所以同一個繪製器換一份規格就能畫——差別只在文字、頭像與熱區。
 func TestMainGameMatchesOracle(t *testing.T) {
@@ -27,7 +31,6 @@ func TestMainGameMatchesOracle(t *testing.T) {
 		{"screen-budget-plan", "budget1"},
 		{"screen-admiral-list", "admirals1"},
 		{"screen-account", "account1"},
-		{"screen-command-phase", "main1e"},
 		{"screen-cmd-menu", "cmd1e"},
 		{"screen-info", "info1e"},
 		{"screen-fleet-list", "lst1e"},

@@ -146,6 +146,14 @@ for area in TEXT_AREAS:
         lines += got
 lines.sort(key=lambda l: (l['y'], l['cells'][0]['x']))
 
+# 右側面板那幾行**不進規格**：日期、軍事費、總稅收、首都摘要、防衛力、
+# 經濟力、成長率、徵稅額、稅率全部是**從遊戲狀態算出來的**
+# （規格 `docs/spec/002`，畫的人是 `internal/screen.CapitalPanel`）。
+# 量好畫死的話換一個月份就不對——`turnnext`（796/2）與這裡量的 796/1
+# 每一個數字都不一樣。
+COMPUTED_ROWS = (62, 82, 162, 182, 202, 222, 242)
+lines = [l for l in lines if l['y'] not in COMPUTED_ROWS]
+
 def box(bx0, by0, bx1, by1, sample=None, corner=12):
     """量一個小框。
 

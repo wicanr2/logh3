@@ -36,6 +36,7 @@
 | 5s | 一覽表 → 星系資料 | `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `star1e`；地圖用第三組星域色（`colour_796_01_star_list`），選中的星域畫成色 7 |
 | 5t | 兩張下拉選單（系統指令、一覽表）| `same-state` | 0 | [`docs/playtest/006`](docs/playtest/006-command-phase.md) | 收據 `sysmenu1e`、`lstmenu1e`；系統指令五項（實行／取進度／存進度／設定／結束）、一覽表四項 |
 | 3b | 命令階段的正常玩家路徑（12 張）| `same-state` | 0 | [`docs/playtest/005`](docs/playtest/005-player-path.md) | 右鍵兩下關掉月初報告 → 命令列三格 → 選單每一項；每一張都是前一步的輸入帶進去的，不是 direct-entry |
+| 5v | 右側面板（日期、軍事費、總稅收、首都摘要、防衛力、經濟力、成長率、徵稅額、稅率）| `same-state` | 0 | [`docs/spec/002`](docs/spec/002-capital-panel.md)、[`docs/re/32`](docs/re/32-capital-panel.md) | 文字**從遊戲狀態算出來**。`main1e`（796/1）整張 640×480 逐位元組；`turnnext`（796/2）右側面板逐位元組——同一份規格換一組狀態畫出兩張不同的畫面 |
 | 5u | 星域摘要面板（右鍵選星域，15 個局面）| `same-state` | 0 | [`docs/spec/001`](docs/spec/001-region-summary-panel.md)、[`docs/re/31`](docs/re/31-region-panel-layout.md) | 文字**從規則算出來**，不是量好畫死的。整張比，跳過游標的外接矩形（原版右鍵之後游標只補回隔列）。含七個 `-poke` 造的局面 |
 | 6 | 結局（單張 CG）| `same-state`（plane 2／3）| 0 | 收據 `ending-empire`、`ending-alliance` | remake 畫得出來，plane 2／3 與原版逐位元組相同；plane 0／1 是多張圖疊出來的，疊法未解。播放順序（哪張配哪句、換場）也未解 |
 
@@ -112,7 +113,7 @@
 | 總稅收 ＝ 自己擁有的星域徵稅額相加 | 通過 | [`docs/re/26`](docs/re/26-tax-and-treasury.md)；帝國 10341、同盟 11087 兩邊都對 |
 | 月底軍事費的完整算式 | **未解** | [`docs/re/26`](docs/re/26-tax-and-treasury.md)；`軍事費 += 總稅收` 已確認，扣款那一步未追 |
 | 星域相鄰圖與原版路徑表（32×32 中點矩陣 ×2）| 通過 | [`docs/internals/26`](docs/internals/26-star-region-graph.md)；1024 對逐步驗證 |
-| 曆法：一回合三天、一個月十回合、一年十二個月 | 通過 | [`docs/re/25`](docs/re/25-calendar.md)；`ds:8F18` 回合計數器對三份記憶體傾印＋三張畫面 |
+| 曆法：一回合三天、一個月十回合、一年十二個月 | 通過 | [`docs/re/25`](docs/re/25-calendar.md)；`ds:8F18` 回合計數器對三份記憶體傾印＋三張畫面，另加 `-poke` 成第 118 回合 → 796/12/25（`docs/re/32`）|
 | 月底交付「建造中」的船艦 | 已量到、未實作 | [`docs/re/21`](docs/re/21-month-end-ship-delivery.md) |
 | 治安 ＝ (200 − 未安定度) / 2 | 通過 | [`docs/re/24`](docs/re/24-security-formula.md)；六個帝國星域 ＋ 四個 `-poke` 局面（`docs/re/31`）|
 | 治安數字的四段顏色（`<=40` 色 6、`<=80` 色 7、`<=120` 色 5、其餘色 2）| 通過 | [`docs/re/31`](docs/re/31-region-panel-layout.md)；40/41 那一對把門檻釘死 |

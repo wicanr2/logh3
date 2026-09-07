@@ -9,6 +9,9 @@ package rules
 //	33 d2 f7 f3  xor dx,dx; div bx     ; bx = 120
 //	03 06 f6 8f  add ax,[8FF6]         ; ← 年
 //	…（餘數再除 10 得月、除 1 得回合序號 ×3 + 1 得日）
+// Epoch 是回合計數器的起算年（`ds:8FF6`，796）。
+const Epoch = 796
+
 const (
 	TurnsPerMonth = 10
 	MonthsPerYear = 12
