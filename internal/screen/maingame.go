@@ -182,14 +182,20 @@ func (w *GameWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8, fac
 	return w.drawContent(fb, fnt, shadow, faces)
 }
 
-// DrawBoxFills 只把每個小框的**內部**填回底色，不重畫立體邊。
+// DrawBoxFills 把**游標壓到的**那幾個小框的內部填回底色，不重畫立體邊。
 //
-// 原版有些畫面先畫游標、再刷清單列，而刷的只有列的內容區——
+// 原版先畫游標、再刷游標底下那一列，而刷的只有列的內容區——
 // 游標壓在列與列交界那條邊上的部分留了下來。整個小框重畫會把那幾格也擦掉。
-func (w *GameWindow) DrawBoxFills(fb *gfx.Framebuffer) {
+//
+// 只刷游標壓到的框，不是全部：同一個視窗裡還有別的小框（清單上方那排
+// 標題格、格子裡的小標記），把它們一起填回底色會把標記整個抹掉。
+func (w *GameWindow) DrawBoxFills(fb *gfx.Framebuffer, cx, cy, cw, ch int) {
 	for _, b := range w.Boxes {
 		n := len(b.Layers)
 		if b.W <= 2*n || b.H <= 2*n {
+			continue
+		}
+		if b.X >= cx+cw || cx >= b.X+b.W || b.Y >= cy+ch || cy >= b.Y+b.H {
 			continue
 		}
 		fb.FillRect(b.X+n, b.Y+n, b.W-2*n, b.H-2*n, b.Fill)
@@ -289,7 +295,8 @@ func MainGame(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset
 		}
 		if n := s.Mouse.AfterBoxFills; n != "" {
 			if w := s.Windows[n]; w != nil {
-				w.DrawBoxFills(fb)
+				w.DrawBoxFills(fb, s.Mouse.X+cur.Offset[0], s.Mouse.Y+cur.Offset[1],
+					cur.Width, cur.Height)
 			}
 		}
 		// 反白條同理：滑鼠移到哪一列，原版就把那一列整條重畫成反白色，

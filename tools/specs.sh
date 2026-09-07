@@ -83,6 +83,30 @@ want production-plan && py tools/scripts/overlay_spec.py \
   '208:200:223:219,224:200:239:219,208:220:223:239,224:220:239:239,208:240:223:259,224:240:239:259,208:260:223:279,224:260:239:279,208:280:223:299,224:280:239:299,208:300:223:319,224:300:239:319,208:320:223:339,224:320:239:339,446:360:481:379,494:360:529:379' \
   '' '6:464:80' '' prod1i
 
+# 兩張下拉選單本身（戰略命令那一張是 screen-cmd-menu）。
+want sys-menu && py tools/scripts/overlay_spec.py \
+  sysmenu1e screen-command-phase screen-sys-menu 528 100 607 239 -1 -1
+want list-menu && py tools/scripts/overlay_spec.py \
+  lstmenu1e screen-command-phase screen-list-menu 432 100 527 219 -1 -1
+
+# 一覽表 → 星系資料。版面與另外三張清單相同，差別有兩處：
+# 標題格裡各有一個 11×11 的小標記（選中的那個填紅色 2），
+# 以及**地圖用另一組星域色**——首都不重塗成色 6，選中的星域畫成色 7。
+STAR_BOXES='432:60:481:79,496:60:545:79,560:60:609:79,436:65:446:75,500:65:510:75,564:65:574:75'
+for y in 80 100 120 140 160 180 200 220 240 260 280 300 320 340 360 380; do
+  STAR_BOXES="$STAR_BOXES,336:$y:609:$((y+19)),610:$y:623:$((y+19))"
+done
+if want star-list; then
+  py tools/scripts/overlay_spec.py \
+    star1e screen-command-phase screen-star-list 320 40 639 419 460 85 \
+    "$STAR_BOXES" '' '' '8:350:320:400' '' 8,6,5
+  py -c 'import json,collections
+p="/work/docs/internals/data/screen-star-list.json"
+s=json.load(open(p),object_pairs_hook=collections.OrderedDict)
+s["map"]["colours"]="colour_796_01_star_list"
+json.dump(s,open(p,"w"),ensure_ascii=False,indent=1)'
+fi
+
 # 出擊命令 → 待命中提督資料。清單十七列 ＋ 右側捲軸（上下箭頭各一格）。
 # 左下角那塊會被重寫（星系名、治安、行星、艦隊），走額外文字區；
 # 那塊的數字是色 6 與 5，標籤是色 7。

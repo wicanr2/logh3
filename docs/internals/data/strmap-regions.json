@@ -23,7 +23,8 @@
    "bh": 4,
    "offset": 0,
    "colour_796_01": 6,
-   "colour_796_01_security": 6
+   "colour_796_01_security": 6,
+   "colour_796_01_star_list": 1
   },
   {
    "index": 1,
@@ -33,7 +34,8 @@
    "bh": 4,
    "offset": 800,
    "colour_796_01": 1,
-   "colour_796_01_security": 6
+   "colour_796_01_security": 6,
+   "colour_796_01_star_list": 1
   },
   {
    "index": 2,
@@ -43,7 +45,8 @@
    "bh": 4,
    "offset": 1280,
    "colour_796_01": 1,
-   "colour_796_01_security": 6
+   "colour_796_01_security": 6,
+   "colour_796_01_star_list": 1
   },
   {
    "index": 3,
@@ -53,7 +56,8 @@
    "bh": 4,
    "offset": 2080,
    "colour_796_01": 3,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 7
   },
   {
    "index": 4,
@@ -63,7 +67,8 @@
    "bh": 3,
    "offset": 3040,
    "colour_796_01": 1,
-   "colour_796_01_security": 6
+   "colour_796_01_security": 6,
+   "colour_796_01_star_list": 1
   },
   {
    "index": 5,
@@ -73,7 +78,8 @@
    "bh": 6,
    "offset": 3640,
    "colour_796_01": 1,
-   "colour_796_01_security": 6
+   "colour_796_01_security": 6,
+   "colour_796_01_star_list": 1
   },
   {
    "index": 6,
@@ -83,7 +89,8 @@
    "bh": 5,
    "offset": 4840,
    "colour_796_01": 1,
-   "colour_796_01_security": 1
+   "colour_796_01_security": 1,
+   "colour_796_01_star_list": 1
   },
   {
    "index": 7,
@@ -93,7 +100,8 @@
    "bh": 4,
    "offset": 5840,
    "colour_796_01": 1,
-   "colour_796_01_security": 1
+   "colour_796_01_security": 1,
+   "colour_796_01_star_list": 1
   },
   {
    "index": 8,
@@ -103,7 +111,8 @@
    "bh": 4,
    "offset": 6800,
    "colour_796_01": 1,
-   "colour_796_01_security": 6
+   "colour_796_01_security": 6,
+   "colour_796_01_star_list": 1
   },
   {
    "index": 9,
@@ -113,7 +122,8 @@
    "bh": 5,
    "offset": 7760,
    "colour_796_01": 1,
-   "colour_796_01_security": 1
+   "colour_796_01_security": 1,
+   "colour_796_01_star_list": 1
   },
   {
    "index": 10,
@@ -123,7 +133,8 @@
    "bh": 5,
    "offset": 8960,
    "colour_796_01": 3,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 3
   },
   {
    "index": 11,
@@ -133,7 +144,8 @@
    "bh": 5,
    "offset": 9760,
    "colour_796_01": 3,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 3
   },
   {
    "index": 12,
@@ -143,7 +155,8 @@
    "bh": 3,
    "offset": 10960,
    "colour_796_01": 3,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 3
   },
   {
    "index": 13,
@@ -153,7 +166,8 @@
    "bh": 4,
    "offset": 11680,
    "colour_796_01": 1,
-   "colour_796_01_security": 1
+   "colour_796_01_security": 1,
+   "colour_796_01_star_list": 1
   },
   {
    "index": 14,
@@ -163,7 +177,8 @@
    "bh": 4,
    "offset": 12480,
    "colour_796_01": 3,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 3
   },
   {
    "index": 15,
@@ -173,7 +188,8 @@
    "bh": 4,
    "offset": 13440,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 16,
@@ -183,7 +199,8 @@
    "bh": 5,
    "offset": 14240,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 17,
@@ -193,7 +210,8 @@
    "bh": 4,
    "offset": 15240,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 18,
@@ -203,7 +221,8 @@
    "bh": 4,
    "offset": 16200,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 19,
@@ -213,7 +232,8 @@
    "bh": 4,
    "offset": 17000,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 20,
@@ -223,7 +243,8 @@
    "bh": 3,
    "offset": 17640,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 21,
@@ -233,7 +254,8 @@
    "bh": 5,
    "offset": 18360,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 22,
@@ -243,7 +265,8 @@
    "bh": 3,
    "offset": 18960,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 23,
@@ -253,7 +276,8 @@
    "bh": 5,
    "offset": 19320,
    "colour_796_01": 3,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 3
   },
   {
    "index": 24,
@@ -263,7 +287,8 @@
    "bh": 6,
    "offset": 20120,
    "colour_796_01": 3,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 3
   },
   {
    "index": 25,
@@ -273,7 +298,8 @@
    "bh": 3,
    "offset": 21080,
    "colour_796_01": 3,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 3
   },
   {
    "index": 26,
@@ -283,7 +309,8 @@
    "bh": 4,
    "offset": 21920,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 27,
@@ -293,7 +320,8 @@
    "bh": 3,
    "offset": 22560,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 28,
@@ -303,7 +331,8 @@
    "bh": 4,
    "offset": 23040,
    "colour_796_01": 3,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 3
   },
   {
    "index": 29,
@@ -313,7 +342,8 @@
    "bh": 4,
    "offset": 23680,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 30,
@@ -323,7 +353,8 @@
    "bh": 5,
    "offset": 24000,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   },
   {
    "index": 31,
@@ -333,11 +364,13 @@
    "bh": 4,
    "offset": 24400,
    "colour_796_01": 12,
-   "colour_796_01_security": 3
+   "colour_796_01_security": 3,
+   "colour_796_01_star_list": 12
   }
  ],
  "colour_fields": {
   "colour_796_01": "796 年 1 月的勢力色（0 帝國→色 1、1 同盟→色 12、2 無主→色 3，首都另外用色 6）",
-  "colour_796_01_security": "同一時間的治安色，戰略命令→情報收集那張畫面用的（攔著色常式 2376:0BAF 的 [bp+12] 實測 626 次，順序是星域 0…31）"
+  "colour_796_01_security": "同一時間的治安色，戰略命令→情報收集那張畫面用的（攔著色常式 2376:0BAF 的 [bp+12] 實測 626 次，順序是星域 0…31）",
+  "colour_796_01_star_list": "一覽表→星系資料那張畫面用的。與勢力色差兩格：首都（星域 0）不另外重塗成色 6，而選中的那一個星域（開畫面時是 3，卡斯特羅普）畫成色 7。直接讀 ds:F162 那 32 bytes 量到的。"
  }
 }
