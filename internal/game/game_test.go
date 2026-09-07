@@ -790,3 +790,63 @@ func menuRowY(t *testing.T, res *Resources, n int) int {
 	t.Fatalf("主選單找不到第 %d 列", n)
 	return 0
 }
+
+// TestSaveSlotRoundTrip 走「載入 → 存回去」（`docs/spec/009`）：
+// 從第 9 格進來、什麼都沒做就存到另一個目錄，六個檔要與原版相同。
+func TestSaveSlotRoundTrip(t *testing.T) {
+	res := load(t)
+	orig := filepath.Join(root, "org_game/extracted")
+	if _, err := os.Stat(filepath.Join(orig, "WORK.DT9")); err != nil {
+		t.Skipf("缺存檔，跳過（不用代用品）")
+	}
+	res.OrigDir = orig
+	graph, err := rules.LoadStarGraph(filepath.Join(root,
+		"docs/internals/data/star-graph.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	res.Graph = graph
+	res.UnrestParams = rules.UnrestParams{
+		Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
+		Table: []int{170, 150, 130, 90, 60},
+		Base:  []int{50, 75, 100, 150, 200},
+	}
+	g, err := New(res)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, menuRowY(t, res, menuRowLoad))
+	for _, c := range []byte{'1', '3', '8'} {
+		g.Key(c)
+	}
+	g.Key('\r')
+	g.Click(300, 262)
+	dir := t.TempDir()
+	if err := g.SaveSlot(dir, 9); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range rules.SlotFileNames(9) {
+		got, err := os.ReadFile(filepath.Join(dir, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		want, err := os.ReadFile(filepath.Join(orig, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		bad := 0
+		for i := range want {
+			if i < len(got) && got[i] != want[i] {
+				bad++
+			}
+		}
+		// 未安定度載入時重算過，寫回去自然是重算後的值。
+		limit := 0
+		if name == "STELLAR.DT9" {
+			limit = rules.RegionCount
+		}
+		if bad > limit {
+			t.Errorf("%s：與原版不同的位元組 %d（允許 %d）", name, bad, limit)
+		}
+	}
+}

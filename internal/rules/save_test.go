@@ -177,3 +177,84 @@ func shipFilled(r []byte) bool {
 	}
 	return n >= 10
 }
+
+// TestSlotSaveRoundTrip 是存檔寫出的驗收（`docs/spec/009`）：
+// 讀一格再寫出去，六個檔要與原版逐位元組相同。
+//
+// 唯一的例外是 `STELLAR` 的 `+0x7D`：載入時原版會重算未安定度
+// （`docs/spec/006`），寫回去的自然是重算後的值。這裡讀完不重算，
+// 所以連那一欄也應該相同——真的存檔時會不一樣，那是原版的行為。
+func TestSlotSaveRoundTrip(t *testing.T) {
+	for _, ext := range []string{"9", "A"} {
+		t.Run(ext, func(t *testing.T) {
+			s := loadSlot(t, ext)
+			dir := t.TempDir()
+			index := 9
+			if ext == "A" {
+				index = 10
+			}
+			if err := s.Save(dir, index); err != nil {
+				t.Fatal(err)
+			}
+			for _, name := range SlotFileNames(index) {
+				got, err := os.ReadFile(filepath.Join(dir, name))
+				if err != nil {
+					t.Fatal(err)
+				}
+				want := readOrig(t, name)
+				if len(got) != len(want) {
+					t.Errorf("%s：寫出 %d bytes，原版 %d", name, len(got), len(want))
+					continue
+				}
+				bad := 0
+				for i := range want {
+					if got[i] != want[i] {
+						bad++
+					}
+				}
+				if bad != 0 {
+					t.Errorf("%s：與原版不同的位元組 %d / %d", name, bad, len(want))
+				}
+			}
+		})
+	}
+}
+
+// TestWriteSaveIndex 對存檔目錄的寫回：只動回合數與名稱，其餘照舊。
+func TestWriteSaveIndex(t *testing.T) {
+	orig := readOrig(t, "SAVEDATA.IDX")
+	idx := append([]byte(nil), orig...)
+	before, err := ParseSaveIndex(idx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// 把第 10 格改成第 9 格的回合數與名稱，再讀回來對。
+	if err := WriteSaveIndex(idx, 10, before[9].Turn, before[9].Name); err != nil {
+		t.Fatal(err)
+	}
+	after, err := ParseSaveIndex(idx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if after[10].Turn != before[9].Turn || len(after[10].Name) != len(before[9].Name) {
+		t.Errorf("寫回去之後第 10 格是 %d／%d 個字，要 %d／%d 個字",
+			after[10].Turn, len(after[10].Name), before[9].Turn, len(before[9].Name))
+	}
+	if after[10].Num != before[10].Num || after[10].Stamp != before[10].Stamp {
+		t.Errorf("序號或時間戳被動到了")
+	}
+	// 寫成原本的值應該一個 byte 都不差。
+	idx2 := append([]byte(nil), orig...)
+	if err := WriteSaveIndex(idx2, 10, before[10].Turn, before[10].Name); err != nil {
+		t.Fatal(err)
+	}
+	bad := 0
+	for i := range orig {
+		if orig[i] != idx2[i] {
+			bad++
+		}
+	}
+	if bad != 0 {
+		t.Errorf("寫回原值之後與原版不同的位元組 %d", bad)
+	}
+}

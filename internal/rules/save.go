@@ -1,6 +1,10 @@
 package rules
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+)
 
 // 存檔的版面（`docs/internals/30`、`docs/re/41`、`docs/re/42`）。
 //
@@ -128,6 +132,11 @@ type Slot struct {
 	// Admiral／Fleet／Ship 是提督表、艦隊表與艦艇池，先原樣留著。
 	Admiral, Fleet, Ship []byte
 
+	// Work 是 `WORK.DT?` 的 230 bytes。只有三個欄位解出來了
+	// （回合數、軍事費、總稅收），其餘原樣留著——存回去的時候要照抄，
+	// 不然會把還沒解的東西寫壞。
+	Work []byte
+
 	// Turn 是回合數，Military 是軍事費，TaxTotal 是總稅收。
 	Turn, Military, TaxTotal int
 }
@@ -169,6 +178,7 @@ func LoadSlot(f SlotFiles) (*Slot, error) {
 		Admiral:  f.Admiral,
 		Fleet:    f.Fleet,
 		Ship:     f.Ship,
+		Work:     append([]byte(nil), f.Work[:WorkRecord]...),
 		Turn:     int(f.Work[workTurn]) | int(f.Work[workTurn+1])<<8,
 		Military: u32(f.Work, workMilitary),
 		TaxTotal: u32(f.Work, workTaxTotal),
@@ -256,4 +266,68 @@ func (s *Slot) fleet(i int) []byte {
 		return nil
 	}
 	return s.Fleet[i*FleetRecord : (i+1)*FleetRecord]
+}
+
+// SlotFileNames 回一格存檔的六個檔名。
+func SlotFileNames(index int) []string {
+	e := SlotExt(index)
+	return []string{"STELLAR.DT" + e, "PLANET.DT" + e, "ADMIRAL.DT" + e,
+		"FLEET.DT" + e, "SHIP.DT" + e, "WORK.DT" + e}
+}
+
+// Save 把這一格存檔寫進 `dir`（規格 `docs/spec/009`）。
+//
+// 存檔就是執行期那幾張表原樣寫出去（`docs/re/41`），所以這裡沒有格式轉換
+// ——把手上的表直接寫成檔。`WORK` 只改解出來的三個欄位，其餘照抄，
+// 因為那 227 bytes 還沒解，動它等於把不懂的東西寫壞。
+//
+// **不會寫進原版目錄**：`dir` 由呼叫端指定，原版檔案一律唯讀。
+func (s *Slot) Save(dir string, index int) error {
+	if len(s.Work) < WorkRecord {
+		return fmt.Errorf("WORK 只有 %d bytes，寫不出去", len(s.Work))
+	}
+	work := append([]byte(nil), s.Work...)
+	work[workTurn], work[workTurn+1] = byte(s.Turn), byte(s.Turn>>8)
+	put32(work, workMilitary, s.Military)
+	put32(work, workTaxTotal, s.TaxTotal)
+	planet := s.Planets.Data
+	if len(planet) < PlanetHeader {
+		return fmt.Errorf("行星表只有 %d bytes", len(planet))
+	}
+	for i, b := range [][]byte{s.Stellar, planet[PlanetHeader:], s.Admiral,
+		s.Fleet, s.Ship, work} {
+		name := SlotFileNames(index)[i]
+		if err := os.WriteFile(filepath.Join(dir, name), b, 0o644); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func put32(b []byte, o, v int) {
+	b[o], b[o+1] = byte(v), byte(v>>8)
+	b[o+2], b[o+3] = byte(v>>16), byte(v>>24)
+}
+
+// WriteSaveIndex 把一格的目錄資料寫回 `SAVEDATA.IDX` 的位元組。
+//
+// 只動回合數與名稱兩欄——其餘（開頭那 12 bytes、序號、`FF FF`）原樣留著，
+// 語意還沒解完（`docs/internals/30`）。
+func WriteSaveIndex(idx []byte, index int, turn int, name []uint16) error {
+	if index < 0 || index >= SaveSlots || len(idx) < SaveSlots*SaveEntry {
+		return fmt.Errorf("存檔目錄寫不到第 %d 格", index)
+	}
+	r := idx[index*SaveEntry : (index+1)*SaveEntry]
+	r[saveEntryTurn], r[saveEntryTurn+1] = byte(turn), byte(turn>>8)
+	for i := 0; i < saveEntryNameLen; i += 2 {
+		r[saveEntryName+i], r[saveEntryName+i+1] = ' ', ' '
+	}
+	for i, c := range name {
+		if saveEntryName+i*2+1 >= saveEntryName+saveEntryNameLen {
+			break
+		}
+		r[saveEntryName+i*2] = byte(c >> 8)
+		r[saveEntryName+i*2+1] = byte(c)
+	}
+	return nil
 }

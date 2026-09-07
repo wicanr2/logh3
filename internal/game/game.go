@@ -257,6 +257,11 @@ type Game struct {
 	// 也點在星圖上，但沒有選中任何星域）。
 	selectedRegion int
 
+	// slot 是目前這個局面從哪一格存檔來的（新遊戲是 nil）。
+	// 存檔寫出要靠它——`WORK` 那 230 bytes 只解出三個欄位，
+	// 其餘得原樣抄回去（`docs/spec/009`）。
+	slot *rules.Slot
+
 	// menuRow 是主選單點了哪一列（-1 ＝ 還沒點）。防拷答對之後要靠它
 	// 決定是開新遊戲還是進存檔畫面。
 	menuRow int
@@ -302,6 +307,7 @@ func New(res *Resources) (*Game, error) {
 // 未安定度是唯一一欄載進來還不對的（原版載入時重算，算式未解，
 // `docs/re/24`）。要對畫面的地方得自己 `Slot.SetUnrest` 蓋成量到的值。
 func (g *Game) LoadSlot(sl *rules.Slot) {
+	g.slot = sl
 	g.res.Stellar = sl.Stellar
 	g.res.Planets = sl.Planets
 	g.turn = sl.Turn
@@ -556,6 +562,34 @@ func (g *Game) loadSlotFromDisk(n int) {
 	sl.RecomputeUnrest(g.res.Graph, params)
 	g.res.Admiral = sl.Admiral
 	g.LoadSlot(sl)
+}
+
+// SaveSlot 把目前的局面寫回一格存檔（規格 `docs/spec/009`）。
+//
+// **只有從存檔進來的局面存得了**：`WORK.DT?` 那 230 bytes 只解出三個欄位，
+// 新遊戲沒有可以照抄的底稿。`dir` 由呼叫端指定，原版目錄一律唯讀。
+func (g *Game) SaveSlot(dir string, index int) error {
+	if g.slot == nil {
+		return fmt.Errorf("這個局面不是從存檔來的，還存不了（`docs/spec/009`）")
+	}
+	g.slot.Turn = g.turn
+	g.slot.Military = g.military
+	g.slot.TaxTotal = g.taxTotal
+	if err := g.slot.Save(dir, index); err != nil {
+		return err
+	}
+	if len(g.res.SaveIndex) == 0 {
+		return nil
+	}
+	b, err := os.ReadFile(filepath.Join(g.res.OrigDir, "SAVEDATA.IDX"))
+	if err != nil {
+		return err
+	}
+	name := g.res.SaveIndex[index].Name
+	if err := rules.WriteSaveIndex(b, index, g.turn, name); err != nil {
+		return err
+	}
+	return os.WriteFile(filepath.Join(dir, "SAVEDATA.IDX"), b, 0o644)
 }
 
 // Frame 畫出目前的畫面。
