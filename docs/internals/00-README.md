@@ -90,4 +90,5 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 | [`27-treasury-globals.md`](27-treasury-globals.md) | 財政的全域變數 |
 | [`28-screen-specs.md`](28-screen-specs.md) | 畫面規格 JSON：`data/screen-*.json` |
 | [`29-planets-and-economy.md`](29-planets-and-economy.md) | `PLADAT.DAT` 與經濟力 |
+| [`30-save-format.md`](30-save-format.md) | 存檔：`*.DT[89A]` 就是執行期的表 |
 | [`data/`](data/) | 機器可讀版本（JSON），給後續工具與 remake 用 |

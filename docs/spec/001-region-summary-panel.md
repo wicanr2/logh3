@@ -1,7 +1,8 @@
 # SPEC 001 — 星域摘要面板（左下角）
 
-狀態：**CONFORMED**（已實作，十五份收據除了游標那一塊逐位元組相同）
-證據：`docs/re/22`、`docs/re/23`、`docs/re/24`、`docs/re/30`
+狀態：**CONFORMED**（已實作；十五份 796 年 1 月的收據除了游標那一塊
+逐位元組相同，另一份 799 年 3 月的中局收據面板那一塊逐位元組相同）
+證據：`docs/re/22`、`docs/re/23`、`docs/re/24`、`docs/re/30`、`docs/re/41`
 資料：[`docs/internals/data/region-panel.json`](../internals/data/region-panel.json)
 執行器：dosgolem-logh3 `8c8af90`
 
@@ -102,12 +103,25 @@
 | `sec1`／`sec5`／`sec7`／`sec9` | 另外四個帝國星域，治安 81／84／78／75 |
 | `pnlU000`／`pnlU040`／`pnlU041`／`pnlU100`／`pnlU150`／`pnlU200` | 注入的未安定度 0／40／41／100／150／200 |
 | `pnlFLT` | 注入的艦隊數 12：99 |
+| `s3rgn` | **中局**：S3「巴米利恩會戰」（799 年 3 月 1 日）右鍵選星域 25 |
 
-面板要的執行期狀態這樣湊出來：擁有者、行星數從 `PLADAT.DAT` 現算
-（`docs/re/17`、`docs/re/23`）、名字從 `STELLAR.DTA` 讀、未安定度取
+796 年 1 月那十五份的執行期狀態這樣湊出來：擁有者、行星數從
+`PLADAT.DAT` 現算（`docs/re/17`、`docs/re/23`）、名字從星域資料檔讀、
+未安定度取
 [`month-rollover-796-01.json`](../internals/data/month-rollover-796-01.json)
-量到的那一組。**載入時未安定度怎麼算出來的還沒解**（`docs/re/24`），
-所以那一欄目前只能用量到的值，不能從檔案推。
+量到的那一組。
+
+`s3rgn` 是中局，行星擁有者早就不是開局那一份了，所以改讀那一格存檔：
+`PLANET.DTA` 是行星表、`STELLAR.DTA` 是星域表，兩者與執行期的表逐位元組
+相同（`docs/re/41`）。
+
+兩條路徑都有一欄要用量到的值：**載入時未安定度怎麼算出來的還沒解**
+（`docs/re/24`）。存檔裡雖然有這一欄，載入之後會變成另一個數
+——32 個星域裡有 22 個不一樣，量到的那一份在
+[`unrest-at-load.json`](../internals/data/unrest-at-load.json)。
+
+`s3rgn` 的底板是 796 年 1 月的，與那個局面的地圖與右側面板都不同，
+所以只比面板那塊 `(0, 340, 320, 80)`，不比整張。
 
 ## 游標那一塊不比
 

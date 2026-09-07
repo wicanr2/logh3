@@ -29,26 +29,35 @@ func TestRegionPanelMatchesOracle(t *testing.T) {
 		unrest     int  // <0 ＝ 用量到的那一組
 		own, enemy int
 		whole      bool // 整張都比（保留給游標乾淨的收據；目前一份都沒有）
+		panelOnly  bool // 只比左下角那塊（底層是別的局面，地圖與右側面板都不一樣）
+		// slot 是存檔槽位（`PLANET.DT?`／`STELLAR.DT?`，`docs/re/41`）。
+		// 空的就用 `PLADAT.DAT` ＋ 上面那幾欄湊出來的開局狀態。
+		slot string
 	}{
-		{"hovA", 60, 60, -1, 0, 0, false},
-		{"hovB", 150, 120, -1, 0, 0, false},
-		{"hovC", 250, 200, -1, 0, 0, false},
-		{"rcback", 300, 200, -1, 0, 0, false},
-		{"sec1", 23, 72, -1, 0, 0, false},
-		{"sec5", 33, 117, -1, 0, 0, false},
-		{"sec7", 91, 102, -1, 0, 0, false},
-		{"sec9", 66, 180, -1, 0, 0, false},
-		{"pnlU000", 12, 12, 0, 0, 0, false},
-		{"pnlU040", 12, 12, 40, 0, 0, false},
-		{"pnlU041", 12, 12, 41, 0, 0, false},
-		{"pnlU100", 12, 12, 100, 0, 0, false},
-		{"pnlU150", 12, 12, 150, 0, 0, false},
-		{"pnlU200", 12, 12, 200, 0, 0, false},
-		{"pnlFLT", 12, 12, -1, 12, 99, false},
+		{"hovA", 60, 60, -1, 0, 0, false, false, ""},
+		{"hovB", 150, 120, -1, 0, 0, false, false, ""},
+		{"hovC", 250, 200, -1, 0, 0, false, false, ""},
+		{"rcback", 300, 200, -1, 0, 0, false, false, ""},
+		{"sec1", 23, 72, -1, 0, 0, false, false, ""},
+		{"sec5", 33, 117, -1, 0, 0, false, false, ""},
+		{"sec7", 91, 102, -1, 0, 0, false, false, ""},
+		{"sec9", 66, 180, -1, 0, 0, false, false, ""},
+		{"pnlU000", 12, 12, 0, 0, 0, false, false, ""},
+		{"pnlU040", 12, 12, 40, 0, 0, false, false, ""},
+		{"pnlU041", 12, 12, 41, 0, 0, false, false, ""},
+		{"pnlU100", 12, 12, 100, 0, 0, false, false, ""},
+		{"pnlU150", 12, 12, 150, 0, 0, false, false, ""},
+		{"pnlU200", 12, 12, 200, 0, 0, false, false, ""},
+		{"pnlFLT", 12, 12, -1, 12, 99, false, false, ""},
+		// S3「巴米利恩會戰」右鍵選星域 25（干達巴爾）。這一份的擁有者、
+		// 行星數與艦隊數都不是開局的值，直接讀那一格存檔（`docs/re/41`）。
+		// 底層是 796 年 1 月的底板，所以只比左下角那塊。
+		{"s3rgn", 230, 12, -1, 0, 0, false, true, "A"},
 	} {
 		c := c
 		t.Run(c.batch, func(t *testing.T) {
-			checkRegionPanel(t, c.batch, c.mx, c.my, c.unrest, c.own, c.enemy, c.whole)
+			checkRegionPanel(t, c.batch, c.mx, c.my, c.unrest, c.own, c.enemy,
+				c.whole, c.panelOnly, c.slot)
 		})
 	}
 }
@@ -116,7 +125,74 @@ func measuredUnrest(t *testing.T, region int) int {
 	return 0
 }
 
-func checkRegionPanel(t *testing.T, batch string, mx, my, unrest, own, enemy int, whole bool) {
+// savedSlot 讀一格存檔的行星表與星域記錄。
+//
+// 存檔就是執行期那幾張表原樣寫出去的（`docs/re/41`）：`PLANET.DT?`
+// 與記憶體裡的行星表逐位元組相同，`STELLAR.DT?` 只差未安定度那一個
+// byte——**未安定度是載入時重算的**，算式還沒解（`docs/re/24`），
+// 所以那一欄取量到的值（[`unrest-at-load.json`](../../docs/internals/data/unrest-at-load.json)）。
+//
+// 存檔的行星表沒有檔頭：「第 k 個星域有幾顆行星」不隨局面變，
+// 那 64 bytes 仍然從 `PLADAT.DAT` 借。
+func savedSlot(t *testing.T, slot string, pladat []byte, region int) ([]byte, []byte) {
+	t.Helper()
+	root := "../.."
+	planetPath := filepath.Join(root, "org_game/extracted/PLANET.DT"+slot)
+	regionPath := filepath.Join(root, "org_game/extracted/STELLAR.DT"+slot)
+	body, err := os.ReadFile(planetPath)
+	if err != nil {
+		t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", planetPath)
+	}
+	table, err := os.ReadFile(regionPath)
+	if err != nil {
+		t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", regionPath)
+	}
+	planets := make([]byte, rules.PlanetHeader, rules.PlanetHeader+len(body))
+	copy(planets, pladat[:rules.PlanetHeader])
+	planets = append(planets, body...)
+
+	rec := make([]byte, rules.RegionRecord)
+	copy(rec, table[region*rules.RegionRecord:(region+1)*rules.RegionRecord])
+	rec[rules.RegionUnrest] = byte(unrestAtLoad(t, slot, region))
+	return planets, rec
+}
+
+// unrestAtLoad 讀「這一格存檔載入之後」量到的未安定度。
+func unrestAtLoad(t *testing.T, slot string, region int) int {
+	t.Helper()
+	b, err := os.ReadFile(filepath.Join("../..",
+		"docs/internals/data/unrest-at-load.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var d struct {
+		Slots []struct {
+			Slot    string `json:"slot"`
+			Regions []struct {
+				Index  int `json:"index"`
+				AtLoad int `json:"at_load"`
+			} `json:"regions"`
+		} `json:"slots"`
+	}
+	if err := json.Unmarshal(b, &d); err != nil {
+		t.Fatal(err)
+	}
+	for _, sl := range d.Slots {
+		if sl.Slot != slot {
+			continue
+		}
+		for _, r := range sl.Regions {
+			if r.Index == region {
+				return r.AtLoad
+			}
+		}
+	}
+	t.Fatalf("unrest-at-load.json 裡沒有第 %s 格的星域 %d", slot, region)
+	return 0
+}
+
+func checkRegionPanel(t *testing.T, batch string, mx, my, unrest, own, enemy int,
+	whole, panelOnly bool, slot string) {
 	t.Helper()
 	root := "../.."
 	specPath := filepath.Join(root, "docs/internals/data/screen-command-phase.json")
@@ -161,21 +237,42 @@ func checkRegionPanel(t *testing.T, batch string, mx, my, unrest, own, enemy int
 	if err != nil {
 		t.Fatal(err)
 	}
+	rec := panelRecord(t, region, unrest, own, enemy)
+	if slot != "" {
+		pl, rec = savedSlot(t, slot, pl, region)
+	}
 	planets, err := rules.LoadPlanets(pl)
 	if err != nil {
 		t.Fatal(err)
 	}
-	sum := rules.Summarise(panelRecord(t, region, unrest, own, enemy), planets, region, 0)
+	sum := rules.Summarise(rec, planets, region, 0)
 
 	fb, _ := MainGame(s, fnt, mapImg, faces, cur)
-	// 右側面板同樣是算出來的（`docs/spec/002`）：這幾份收據都是 796 年 1 月，
-	// 值與 `main1e` 相同。
-	drawCapital796_01(t, fb, fnt, panel, planets)
+	if slot == "" {
+		// 右側面板同樣是算出來的（`docs/spec/002`）：這幾份收據都是
+		// 796 年 1 月，值與 `main1e` 相同。
+		drawCapital796_01(t, fb, fnt, panel, planets)
+	}
 	panel.Draw(fb, fnt, sum, 0)
 
 	want, err := os.ReadFile(oracle)
 	if err != nil {
 		t.Fatal(err)
+	}
+	if panelOnly {
+		bad := 0
+		for y := 340; y < 420; y++ {
+			for x := 0; x < 320; x++ {
+				if want[y*640+x] != fb.Pix[y*640+x] {
+					bad++
+				}
+			}
+		}
+		if bad != 0 {
+			_ = os.WriteFile(filepath.Join(root, "workplace/remake-"+batch+".bin"), fb.Pix, 0o644)
+			t.Fatalf("%s（星域 %d）：左下角那塊與原版不同的像素 %d", batch, region, bad)
+		}
+		return
 	}
 	// 游標那一塊不比。原版在右鍵之後**只把游標補回隔列**，要看到完整的
 	// 游標得在最後多移動一次滑鼠（`docs/re/09`，底板規格就是為了這個
@@ -232,10 +329,12 @@ func TestCapitalPanelMatchesOracle(t *testing.T) {
 		// 而且首都有兩支艦隊。
 		{"s2empire", 346, 150000, 7280, 86275, 17, 0, false, false, 35,
 			[2]int{2, 0}, [2]int{318, 168}},
-		// S3「巴米利恩會戰」：799 年 3 月 1 日 ＝ 第 380 回合。
-		// 首都的治安 93%（未安定度 14）、艦隊 0：0、稅率 2.2%
-		// ——`89759 × 22 / 1000 = 1974` 與畫面相同（`docs/re/38`）。
-		{"s3rgn", 380, 160000, 13131, 89759, 22, 14, false, false, 45,
+		// S3「巴米利恩會戰」：799 年 3 月 1 日 ＝ 第 380 回合。首都的
+		// 未安定度 13（治安 93%）、艦隊 0：0、稅率 2.2%——
+		// `89759 × 22 / 1000 = 1974` 與畫面相同（`docs/re/38`）。
+		// 經濟力、稅率、成長率、未安定度都與量到的執行期星域表相同
+		// （[`state-s3-799-03.json`](../../docs/internals/data/state-s3-799-03.json)）。
+		{"s3rgn", 380, 160000, 13131, 89759, 22, 13, false, false, 45,
 			[2]int{0, 0}, [2]int{230, 12}},
 	} {
 		c := c

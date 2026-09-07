@@ -61,8 +61,8 @@ func Summarise(record []byte, planets *Planets, region, faction int) RegionSumma
 		}
 	}
 	s.Own = s.Owner == faction
-	if len(record) > regionUnrest {
-		s.Unrest = int(record[regionUnrest])
+	if len(record) > RegionUnrest {
+		s.Unrest = int(record[RegionUnrest])
 	}
 	s.OwnFleets, s.EnemyFleets = Fleets(record, faction)
 	return s

@@ -1,0 +1,594 @@
+{
+ "note": "存檔裡的未安定度與載入之後記憶體裡的值。存檔的其餘欄位載入時原封不動（`STELLAR.DT?` 與執行期星域表只差 +0x7D），只有這一欄會變——載入時怎麼算出來的還沒解（docs/re/24、docs/re/34、docs/re/41）。",
+ "record": {
+  "offset": "0x7D",
+  "width": 1,
+  "table": "星域表 32 × 126"
+ },
+ "slots": [
+  {
+   "slot": "A",
+   "scenario": "S3 巴米利恩會戰",
+   "turn": 380,
+   "receipt": "s3load",
+   "regions": [
+    {
+     "index": 0,
+     "name": "瓦爾哈拉",
+     "owner": 0,
+     "planets": [
+      4,
+      0,
+      0
+     ],
+     "economy": 89759,
+     "defence": 27300,
+     "growth_per_mille": 45,
+     "tax_rate_per_mille": 22,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 2,
+     "at_load": 13
+    },
+    {
+     "index": 1,
+     "name": "亞爾迪巴朗",
+     "owner": 0,
+     "planets": [
+      3,
+      0,
+      0
+     ],
+     "economy": 29459,
+     "defence": 15900,
+     "growth_per_mille": 53,
+     "tax_rate_per_mille": 27,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 5,
+     "at_load": 17
+    },
+    {
+     "index": 2,
+     "name": "亞爾提那",
+     "owner": 0,
+     "planets": [
+      2,
+      0,
+      0
+     ],
+     "economy": 26337,
+     "defence": 18000,
+     "growth_per_mille": 50,
+     "tax_rate_per_mille": 25,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 2,
+     "at_load": 5
+    },
+    {
+     "index": 3,
+     "name": "卡斯特羅普",
+     "owner": 0,
+     "planets": [
+      3,
+      0,
+      0
+     ],
+     "economy": 30687,
+     "defence": 11300,
+     "growth_per_mille": 57,
+     "tax_rate_per_mille": 28,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 7,
+     "at_load": 19
+    },
+    {
+     "index": 4,
+     "name": "菲列亞",
+     "owner": 0,
+     "planets": [
+      1,
+      0,
+      0
+     ],
+     "economy": 5342,
+     "defence": 10600,
+     "growth_per_mille": 61,
+     "tax_rate_per_mille": 31,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 2,
+     "at_load": 5
+    },
+    {
+     "index": 5,
+     "name": "奇霍伊薩",
+     "owner": 0,
+     "planets": [
+      2,
+      0,
+      0
+     ],
+     "economy": 10283,
+     "defence": 12600,
+     "growth_per_mille": 62,
+     "tax_rate_per_mille": 32,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 4,
+     "at_load": 7
+    },
+    {
+     "index": 6,
+     "name": "香陶",
+     "owner": 0,
+     "planets": [
+      3,
+      0,
+      0
+     ],
+     "economy": 43363,
+     "defence": 18000,
+     "growth_per_mille": 50,
+     "tax_rate_per_mille": 25,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 7,
+     "at_load": 19
+    },
+    {
+     "index": 7,
+     "name": "亞爾維斯",
+     "owner": 0,
+     "planets": [
+      3,
+      0,
+      0
+     ],
+     "economy": 38424,
+     "defence": 21300,
+     "growth_per_mille": 51,
+     "tax_rate_per_mille": 26,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 7,
+     "at_load": 19
+    },
+    {
+     "index": 8,
+     "name": "亞姆力札",
+     "owner": 0,
+     "planets": [
+      4,
+      0,
+      0
+     ],
+     "economy": 35373,
+     "defence": 13800,
+     "growth_per_mille": 60,
+     "tax_rate_per_mille": 31,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 9,
+     "at_load": 21
+    },
+    {
+     "index": 9,
+     "name": "亞凡海爾",
+     "owner": 0,
+     "planets": [
+      3,
+      0,
+      0
+     ],
+     "economy": 19835,
+     "defence": 15100,
+     "growth_per_mille": 57,
+     "tax_rate_per_mille": 28,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 9,
+     "at_load": 21
+    },
+    {
+     "index": 10,
+     "name": "杜威爾格",
+     "owner": 0,
+     "planets": [
+      2,
+      0,
+      0
+     ],
+     "economy": 13629,
+     "defence": 8700,
+     "growth_per_mille": 58,
+     "tax_rate_per_mille": 29,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 9,
+     "at_load": 21
+    },
+    {
+     "index": 11,
+     "name": "優茲黑姆",
+     "owner": 0,
+     "planets": [
+      2,
+      0,
+      0
+     ],
+     "economy": 12564,
+     "defence": 8000,
+     "growth_per_mille": 59,
+     "tax_rate_per_mille": 30,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 11,
+     "at_load": 23
+    },
+    {
+     "index": 12,
+     "name": "赫爾森",
+     "owner": 0,
+     "planets": [
+      1,
+      0,
+      0
+     ],
+     "economy": 17319,
+     "defence": 5800,
+     "growth_per_mille": 48,
+     "tax_rate_per_mille": 24,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 11,
+     "at_load": 23
+    },
+    {
+     "index": 13,
+     "name": "伊謝爾倫",
+     "owner": 0,
+     "planets": [
+      1,
+      0,
+      0
+     ],
+     "economy": 7572,
+     "defence": 12800,
+     "growth_per_mille": 57,
+     "tax_rate_per_mille": 28,
+     "own_fleets": 1,
+     "enemy_fleets": 0,
+     "stored": 8,
+     "at_load": 13
+    },
+    {
+     "index": 14,
+     "name": "費沙",
+     "owner": 0,
+     "planets": [
+      1,
+      0,
+      0
+     ],
+     "economy": 106726,
+     "defence": 8800,
+     "growth_per_mille": 29,
+     "tax_rate_per_mille": 14,
+     "own_fleets": 1,
+     "enemy_fleets": 0,
+     "stored": 6,
+     "at_load": 12
+    },
+    {
+     "index": 15,
+     "name": "艾爾•法西爾",
+     "owner": 0,
+     "planets": [
+      2,
+      0,
+      0
+     ],
+     "economy": 12559,
+     "defence": 8300,
+     "growth_per_mille": 60,
+     "tax_rate_per_mille": 31,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 17,
+     "at_load": 29
+    },
+    {
+     "index": 16,
+     "name": "亞斯提",
+     "owner": 1,
+     "planets": [
+      0,
+      3,
+      0
+     ],
+     "economy": 7425,
+     "defence": 13200,
+     "growth_per_mille": 73,
+     "tax_rate_per_mille": 53,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 40,
+     "at_load": 40
+    },
+    {
+     "index": 17,
+     "name": "迪亞馬特",
+     "owner": 1,
+     "planets": [
+      0,
+      2,
+      0
+     ],
+     "economy": 14412,
+     "defence": 13800,
+     "growth_per_mille": 58,
+     "tax_rate_per_mille": 42,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 20,
+     "at_load": 20
+    },
+    {
+     "index": 18,
+     "name": "凱利姆",
+     "owner": 1,
+     "planets": [
+      0,
+      3,
+      0
+     ],
+     "economy": 29446,
+     "defence": 19100,
+     "growth_per_mille": 54,
+     "tax_rate_per_mille": 39,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 18,
+     "at_load": 18
+    },
+    {
+     "index": 19,
+     "name": "特利布拉",
+     "owner": 1,
+     "planets": [
+      0,
+      3,
+      0
+     ],
+     "economy": 25234,
+     "defence": 15200,
+     "growth_per_mille": 55,
+     "tax_rate_per_mille": 40,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 17,
+     "at_load": 17
+    },
+    {
+     "index": 20,
+     "name": "德奧里亞",
+     "owner": 1,
+     "planets": [
+      0,
+      3,
+      0
+     ],
+     "economy": 31070,
+     "defence": 21800,
+     "growth_per_mille": 53,
+     "tax_rate_per_mille": 39,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 11,
+     "at_load": 4
+    },
+    {
+     "index": 21,
+     "name": "傑姆席德",
+     "owner": 1,
+     "planets": [
+      0,
+      4,
+      0
+     ],
+     "economy": 28299,
+     "defence": 25400,
+     "growth_per_mille": 57,
+     "tax_rate_per_mille": 41,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 15,
+     "at_load": 6
+    },
+    {
+     "index": 22,
+     "name": "蘭提馬利歐",
+     "owner": 0,
+     "planets": [
+      2,
+      0,
+      0
+     ],
+     "economy": 4746,
+     "defence": 5400,
+     "growth_per_mille": 115,
+     "tax_rate_per_mille": 60,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 22,
+     "at_load": 31
+    },
+    {
+     "index": 23,
+     "name": "波列多",
+     "owner": 0,
+     "planets": [
+      2,
+      0,
+      0
+     ],
+     "economy": 8945,
+     "defence": 6200,
+     "growth_per_mille": 65,
+     "tax_rate_per_mille": 33,
+     "own_fleets": 2,
+     "enemy_fleets": 0,
+     "stored": 11,
+     "at_load": 23
+    },
+    {
+     "index": 24,
+     "name": "馬爾•亞迪特",
+     "owner": 1,
+     "planets": [
+      0,
+      1,
+      0
+     ],
+     "economy": 3151,
+     "defence": 6600,
+     "growth_per_mille": 73,
+     "tax_rate_per_mille": 53,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 33,
+     "at_load": 33
+    },
+    {
+     "index": 25,
+     "name": "干達巴爾",
+     "owner": 0,
+     "planets": [
+      3,
+      0,
+      0
+     ],
+     "economy": 8810,
+     "defence": 8700,
+     "growth_per_mille": 92,
+     "tax_rate_per_mille": 48,
+     "own_fleets": 7,
+     "enemy_fleets": 0,
+     "stored": 10,
+     "at_load": 10
+    },
+    {
+     "index": 26,
+     "name": "達希利",
+     "owner": 2,
+     "planets": [
+      1,
+      2,
+      0
+     ],
+     "economy": 13488,
+     "defence": 11800,
+     "growth_per_mille": 65,
+     "tax_rate_per_mille": 36,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 100,
+     "at_load": 100
+    },
+    {
+     "index": 27,
+     "name": "萊加爾",
+     "owner": 1,
+     "planets": [
+      0,
+      2,
+      0
+     ],
+     "economy": 10724,
+     "defence": 9200,
+     "growth_per_mille": 63,
+     "tax_rate_per_mille": 46,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 22,
+     "at_load": 22
+    },
+    {
+     "index": 28,
+     "name": "巴米利恩",
+     "owner": 0,
+     "planets": [
+      3,
+      0,
+      0
+     ],
+     "economy": 9330,
+     "defence": 14000,
+     "growth_per_mille": 71,
+     "tax_rate_per_mille": 36,
+     "own_fleets": 1,
+     "enemy_fleets": 0,
+     "stored": 25,
+     "at_load": 37
+    },
+    {
+     "index": 29,
+     "name": "流卡斯",
+     "owner": 1,
+     "planets": [
+      0,
+      2,
+      0
+     ],
+     "economy": 17862,
+     "defence": 8300,
+     "growth_per_mille": 54,
+     "tax_rate_per_mille": 39,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 19,
+     "at_load": 19
+    },
+    {
+     "index": 30,
+     "name": "艾流塞拉",
+     "owner": 1,
+     "planets": [
+      0,
+      3,
+      0
+     ],
+     "economy": 7977,
+     "defence": 14100,
+     "growth_per_mille": 73,
+     "tax_rate_per_mille": 53,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 22,
+     "at_load": 22
+    },
+    {
+     "index": 31,
+     "name": "巴拉特",
+     "owner": 1,
+     "planets": [
+      0,
+      5,
+      0
+     ],
+     "economy": 71909,
+     "defence": 27500,
+     "growth_per_mille": 47,
+     "tax_rate_per_mille": 34,
+     "own_fleets": 0,
+     "enemy_fleets": 0,
+     "stored": 9,
+     "at_load": 2
+    }
+   ]
+  }
+ ]
+}
