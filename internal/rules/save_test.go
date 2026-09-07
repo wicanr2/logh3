@@ -1,6 +1,7 @@
 package rules
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"testing"
@@ -256,5 +257,39 @@ func TestWriteSaveIndex(t *testing.T) {
 	}
 	if bad != 0 {
 		t.Errorf("寫回原值之後與原版不同的位元組 %d", bad)
+	}
+}
+
+// TestShipTypeUnitSize 把艦艇記錄的 `+0x08` 對上建造計劃的「一單位幾艘」
+// （`docs/re/42`）：艦艇的艦種就是建造計劃的列。
+func TestShipTypeUnitSize(t *testing.T) {
+	b, err := os.ReadFile(filepath.Join("../..",
+		"docs/internals/data/ship-types.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var d struct {
+		Types []struct {
+			Type int `json:"type"`
+			At08 int `json:"at_08"`
+		} `json:"types"`
+	}
+	if err := json.Unmarshal(b, &d); err != nil {
+		t.Fatal(err)
+	}
+	seen := 0
+	for _, ty := range d.Types {
+		if ty.Type < 0 || ty.Type >= BuildPlanRows {
+			t.Errorf("艦種 %d 超出建造計劃的 %d 列", ty.Type, BuildPlanRows)
+			continue
+		}
+		if ty.At08 != ShipsPerUnit[ty.Type] {
+			t.Errorf("艦種 %d 的 +0x08 是 %d，建造計劃的一單位是 %d 艘",
+				ty.Type, ty.At08, ShipsPerUnit[ty.Type])
+		}
+		seen++
+	}
+	if seen < 7 {
+		t.Errorf("只對到 %d 組，太少", seen)
 	}
 }
