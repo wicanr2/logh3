@@ -14,7 +14,7 @@ only="${1:-}"
 
 MENU='move 300 210'
 GAME="$MENU; click; type 138; enter"
-CMD="$GAME; rclick 300 240; rclick 300 240"
+CMD="$GAME; rclick 300 240; rclick 300 240; move 600 340"
 
 # 檔名前綴|收據|腳本
 shots=(
