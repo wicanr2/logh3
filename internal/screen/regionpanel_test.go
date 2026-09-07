@@ -216,25 +216,35 @@ func TestCapitalPanelMatchesOracle(t *testing.T) {
 		economy, taxRate, unrest int
 		whole                    bool // 整張都比
 		noCursor                 bool // 這一份的游標被面板蓋掉了，不畫
+		growth                   int  // 成長率（0 ＝ 用 STELLAR.DTA 的值）
+		fleets                   [2]int
+		mouse                    [2]int // 非零就把游標搬到這裡
 	}{
-		{"main1e", 0, 45592, 10341, 82302, 32, 36, true, false},
+		{"main1e", 0, 45592, 10341, 82302, 32, 36, true, false, 0, [2]int{}, [2]int{}},
 		// 按過一次「實行」：只有日期變成 1 月 4 日，錢與經濟力都沒動。
 		// 三份收據（`turn260`／`turn320`／`turn450`，步數不同）逐位元組相同。
-		{"turn260", 1, 45592, 10341, 82302, 32, 36, false, true},
-		{"turn320", 1, 45592, 10341, 82302, 32, 36, false, true},
-		{"turn450", 1, 45592, 10341, 82302, 32, 36, false, true},
-		{"turnnext", 10, 42339, 10413, 83304, 32, 36, false, false},
+		{"turn260", 1, 45592, 10341, 82302, 32, 36, false, true, 0, [2]int{}, [2]int{}},
+		{"turn320", 1, 45592, 10341, 82302, 32, 36, false, true, 0, [2]int{}, [2]int{}},
+		{"turn450", 1, 45592, 10341, 82302, 32, 36, false, true, 0, [2]int{}, [2]int{}},
+		{"turnnext", 10, 42339, 10413, 83304, 32, 36, false, false, 0, [2]int{}, [2]int{}},
+		// 從主選單「取進度」載進 S2「諸神的黃昏」（`docs/re/38`）：
+		// 798 年 11 月 19 日 ＝ 第 346 回合，數字與開局差很遠，
+		// 而且首都有兩支艦隊。
+		{"s2empire", 346, 150000, 7280, 86275, 17, 0, false, false, 35,
+			[2]int{2, 0}, [2]int{318, 168}},
 	} {
 		c := c
 		t.Run(c.batch, func(t *testing.T) {
 			checkCapitalPanel(t, c.batch, c.turn, c.military, c.taxTotal,
-				c.economy, c.taxRate, c.unrest, c.whole, c.noCursor)
+				c.economy, c.taxRate, c.unrest, c.whole, c.noCursor,
+				c.growth, c.fleets, c.mouse)
 		})
 	}
 }
 
 func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
-	economy, taxRate, unrest int, whole, noCursor bool) {
+	economy, taxRate, unrest int, whole, noCursor bool,
+	growth int, fleets, mouse [2]int) {
 	t.Helper()
 	root := "../.."
 	oracle := filepath.Join(root, "workplace/oracle/"+batch+"/screen.bin")
@@ -265,13 +275,21 @@ func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
 		t.Fatal(err)
 	}
 	// 首都那一筆記錄：名字從檔案讀，會變的那幾格填量到的值。
-	rec := panelRecord(t, 0, unrest, 0, 0)
+	rec := panelRecord(t, 0, unrest, fleets[0], fleets[1])
+	if growth != 0 {
+		rec[0x1E] = byte(growth)
+	}
 	rec[0x1A] = byte(economy)
 	rec[0x1B] = byte(economy >> 8)
 	rec[0x1C], rec[0x1D] = byte(economy>>16), byte(economy>>24)
 	rec[0x26] = byte(taxRate)
 	sum := rules.SummariseCapital(rec, planets, 0, 0, turn, 796, military, taxTotal)
 
+	if mouse[0] != 0 || mouse[1] != 0 {
+		s.Mouse.X, s.Mouse.Y = mouse[0], mouse[1]
+		s.Mouse.Clip = nil
+		s.Mouse.Patches = nil
+	}
 	if noCursor {
 		// 按過「實行」之後面板整個重畫，把游標蓋掉了——原版那一格是面板
 		// 的填色，不是游標。
@@ -290,6 +308,12 @@ func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
 	bad := 0
 	for y := y0; y < y1; y++ {
 		for x := x0; x < x1; x++ {
+			// 這一份的最後一個動作是點擊，游標只補回一半（`docs/re/09`）
+			// ——它壓在星圖右緣，有幾個像素落進右側面板裡。不比那一塊。
+			if mouse[0] != 0 && x >= mouse[0] && x < mouse[0]+16 &&
+				y >= mouse[1]+40 && y < mouse[1]+40+24 {
+				continue
+			}
 			// 命令列第三個按鈕（系統指令）在這幾份收據裡是**按下去**的狀態
 			// ——最後一次點擊就落在它上面，底緣的立體邊跟著反過來（7 px）。
 			// 那是命令列的事，不在這份規格裡。
