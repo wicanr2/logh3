@@ -203,10 +203,13 @@ func (w *GameWindow) bevel() ui.Frame {
 func (w *GameWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8, faces *asset.AMG) []uint16 {
 	w.bevel().Draw(fb, w.X, w.Y, w.W, w.H)
 	w.DrawBoxes(fb, fnt)
+	// Rules 畫在分頁鈕**之後**：規格裡的純色塊除了圖例色票，還兼收
+	// 「壓在分頁鈕立體邊上的游標尾巴」那種最上層的補丁（`docs/re/53`）。
+	// 順序顛倒的話分頁鈕的上緣會把那幾個像素蓋掉。
+	w.Tabs.Draw(fb, fnt)
 	for _, r := range w.Rules {
 		fb.FillRect(r.X, r.Y, r.W, r.H, r.Colour)
 	}
-	w.Tabs.Draw(fb, fnt)
 	return w.drawContent(fb, fnt, shadow, faces)
 }
 
