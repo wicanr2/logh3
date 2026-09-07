@@ -19,3 +19,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`003`](003-budget-panel.md) | 預算計劃／徵稅計劃的數字 | `CONFORMED` |
 | [`004`](004-production-panel.md) | 生產計劃的數字 | `CONFORMED` |
 | [`005`](005-save-slot-loading.md) | 讀一格存檔（`*.DT[0-9A]` 六個檔）| `CONFORMED` |
+| [`006`](006-unrest-at-load.md) | 載入時重算未安定度 | `CONFORMED` |

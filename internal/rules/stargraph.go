@@ -85,14 +85,45 @@ func (g *StarGraph) Route(from, to, faction int) []int {
 	return walk(from, to, 0)
 }
 
-// Steps 回原版算出來的距離（走幾步）。未安定度的算式用的就是這個
-// （`docs/re/28`）。走不出來回 -1。
+// Steps 回把中點矩陣遞迴展開之後的路徑長度（走幾步）。走不出來回 -1。
+//
+// **未安定度用的不是這個**：量到的 31 個步數（`docs/re/43`）與 Hops
+// 相同，而 Steps 在星域 15、22 兩處多一步——遞迴展開挑的中繼點不見得
+// 落在最短路上。要「幾步」用 Hops，要「經過哪些星域」才用 Route。
 func (g *StarGraph) Steps(from, to, faction int) int {
 	p := g.Route(from, to, faction)
 	if p == nil {
 		return -1
 	}
 	return len(p) - 1
+}
+
+// Hops 回相鄰圖上的最短步數（BFS）。未安定度算式尾巴扣的就是這個
+// ——對 `2703:0ED6` 設 -regs-at 量到的 31 個回值與它逐一相同
+// （`docs/re/43`）。走不出來回 -1。
+func (g *StarGraph) Hops(from, to int) int {
+	if from == to {
+		return 0
+	}
+	seen := map[int]bool{from: true}
+	frontier := []int{from}
+	for d := 1; len(frontier) > 0; d++ {
+		var next []int
+		for _, u := range frontier {
+			for _, v := range g.Neighbours(u) {
+				if seen[v] {
+					continue
+				}
+				if v == to {
+					return d
+				}
+				seen[v] = true
+				next = append(next, v)
+			}
+		}
+		frontier = next
+	}
+	return -1
 }
 
 // CapitalRegion 回一個陣營的首都星域：帝國 0（瓦爾哈拉）、同盟 31（巴拉特）。

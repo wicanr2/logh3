@@ -128,9 +128,10 @@ func measuredUnrest(t *testing.T, region int) int {
 // savedSlot 讀一格存檔的行星表與星域記錄。
 //
 // 存檔就是執行期那幾張表原樣寫出去的（`docs/re/41`），載入走
-// `rules.LoadSlot`。未安定度是唯一一欄載入時會重算的，算式還沒解
-// （`docs/re/24`），所以拿量到的值蓋回去
-// （[`unrest-at-load.json`](../../docs/internals/data/unrest-at-load.json)）。
+// `rules.LoadSlot`。未安定度那一欄原版載入時整份重算，算式解出來了
+// （`docs/re/43`、規格 `docs/spec/006`），所以這裡照算——面板上的
+// 治安是**算出來的**，不是抄量到的值。算式要的執行期參數在
+// [`unrest-at-load.json`](../../docs/internals/data/unrest-at-load.json)。
 func savedSlot(t *testing.T, slot string, pladat []byte, region int) ([]byte, []byte) {
 	t.Helper()
 	root := filepath.Join("../..", "org_game/extracted")
@@ -153,12 +154,19 @@ func savedSlot(t *testing.T, slot string, pladat []byte, region int) ([]byte, []
 	if err != nil {
 		t.Fatal(err)
 	}
-	sl.SetUnrest(region, unrestAtLoad(t, slot, region))
+	graph, err := rules.LoadStarGraph(filepath.Join("../..",
+		"docs/internals/data/star-graph.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	sl.RecomputeUnrest(graph, unrestParams(t, slot))
 	return sl.Planets.Data, sl.Region(region)
 }
 
-// unrestAtLoad 讀「這一格存檔載入之後」量到的未安定度。
-func unrestAtLoad(t *testing.T, slot string, region int) int {
+// unrestParams 讀未安定度算式要的執行期參數。
+//
+// 難度那兩張表與統治者編號不在存檔裡，只能量（`docs/re/43`）。
+func unrestParams(t *testing.T, slot string) rules.UnrestParams {
 	t.Helper()
 	b, err := os.ReadFile(filepath.Join("../..",
 		"docs/internals/data/unrest-at-load.json"))
@@ -167,28 +175,31 @@ func unrestAtLoad(t *testing.T, slot string, region int) int {
 	}
 	var d struct {
 		Slots []struct {
-			Slot    string `json:"slot"`
-			Regions []struct {
-				Index  int `json:"index"`
-				AtLoad int `json:"at_load"`
-			} `json:"regions"`
+			Slot   string `json:"slot"`
+			Params struct {
+				Turn  int    `json:"turn_word_8F18"`
+				Ruler [2]int `json:"ruler_8F4F"`
+				Blend [2]int `json:"blend_8FD4"`
+				Rate  [2]int `json:"rate_8FF8"`
+				Table []int  `json:"table_4B28"`
+				Base  []int  `json:"base_147E"`
+			} `json:"params"`
 		} `json:"slots"`
 	}
 	if err := json.Unmarshal(b, &d); err != nil {
 		t.Fatal(err)
 	}
 	for _, sl := range d.Slots {
-		if sl.Slot != slot {
-			continue
-		}
-		for _, r := range sl.Regions {
-			if r.Index == region {
-				return r.AtLoad
+		if sl.Slot == slot {
+			return rules.UnrestParams{
+				Turn: sl.Params.Turn, Ruler: sl.Params.Ruler,
+				Blend: sl.Params.Blend, Rate: sl.Params.Rate,
+				Table: sl.Params.Table, Base: sl.Params.Base,
 			}
 		}
 	}
-	t.Fatalf("unrest-at-load.json 裡沒有第 %s 格的星域 %d", slot, region)
-	return 0
+	t.Fatalf("unrest-at-load.json 裡沒有第 %s 格的參數", slot)
+	return rules.UnrestParams{}
 }
 
 func checkRegionPanel(t *testing.T, batch string, mx, my, unrest, own, enemy int,

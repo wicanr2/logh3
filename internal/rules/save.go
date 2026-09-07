@@ -175,11 +175,29 @@ func (s *Slot) Region(i int) []byte {
 	return s.Stellar[i*RegionRecord : (i+1)*RegionRecord]
 }
 
-// SetUnrest 覆蓋一個星域的未安定度。載入時的算式解出來之前，
-// 要對畫面的地方只能用量到的值（`docs/internals/data/unrest-at-load.json`）。
+// SetUnrest 覆蓋一個星域的未安定度。
 func (s *Slot) SetUnrest(region, unrest int) {
 	if r := s.Region(region); r != nil {
 		r[RegionUnrest] = byte(unrest)
+	}
+}
+
+// RecomputeUnrest 照原版載入時的算式把整份未安定度重算一遍
+// （規格 `docs/spec/006`）。存檔裡那一欄是存檔當下的值，原版載入時
+// 不用它——所以讀完存檔要跑這一支，畫面上的治安才會對。
+//
+// `params` 不在存檔裡（是難度與統治者那幾個全域），要另外給。
+func (s *Slot) RecomputeUnrest(g *StarGraph, params UnrestParams) {
+	st := &UnrestState{
+		Regions: s.Stellar, Planets: s.Planets, Fleets: s.Fleet,
+		Admirals: s.Admiral, Graph: g, Params: params,
+	}
+	out := make([]int, RegionCount)
+	for i := range out {
+		out[i] = st.Unrest(i)
+	}
+	for i, v := range out {
+		s.SetUnrest(i, v)
 	}
 }
 

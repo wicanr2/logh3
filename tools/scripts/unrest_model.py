@@ -35,6 +35,16 @@ counts = [int.from_bytes(pladat[i * 2:i * 2 + 2], "little") for i in range(32)]
 start = [sum(counts[:i]) for i in range(32)]
 
 
+def idiv(a, b):
+    """x86 的 `idiv` 往零截斷，Python 的 `//` 往下取整——負數會差 1。
+
+    `d = 100 + (v0 × 100 / di − 100) / 4` 這一步括號內是負的，
+    差這 1 會讓 f1 差 2，整支算下來就對不上（`docs/re/43`）。
+    """
+    q = abs(a) // abs(b)
+    return q if (a < 0) == (b < 0) else -q
+
+
 def rec(i):
     return stellar[i * REC:(i + 1) * REC]
 
@@ -47,10 +57,10 @@ def f1(i, owner):
     v0 = r[0x27] * 100 // growth if growth > 0 else di
     if v0 <= 25:
         v0 = di
-    d = 100 + (v0 * 100 // di - 100) // 4
+    d = 100 + idiv(v0 * 100 // di - 100, 4)
     m = TURN % 10
     blend = ((m + 5) * T[a] + (14 - m) * T[b]) // 19
-    return blend * 100 // d
+    return idiv(blend * 100, d)
 
 
 def f2(i, owner):
@@ -139,14 +149,16 @@ for e in slot["regions"]:
     if rec(i)[0x13] & 4:
         base -= 30
     base = max(base, 0)
-    v = base * admiral[RULER[owner] * ADM + 0x0E] // 100
+    v = idiv(base * admiral[RULER[owner] * ADM + 0x0E], 100)
     v = min(v, 200)
     want = 200 - e["at_load"]
     a6 = f6(i, owner)
     v2 = min(v + a6, 200)
     # 尾巴：`v -= 2 × 步數`。載入的當下中點矩陣還是整片 FF（「都直接相連」），
     # 所以非首都一律 1 步（`docs/re/43`）。
-    hops = 0 if i == CAPITAL[owner] else 1
+    # 尾巴的步數就是「離自己首都幾步」——對 `2703:0ED6` 設 -regs-at
+    # 量到的 31 個回值與相鄰圖跑 BFS 完全相同（`docs/re/43`）。
+    hops = BFS[owner][i]
     v3 = max(v2 - 2 * hops, 0)
     want = 200 - e["at_load"]
     print("%2d  %d   %3d %3d %3d %3d  %4d  %4d %4d  %5d  %5d  %5d  %+4d"
