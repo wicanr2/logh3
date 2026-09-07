@@ -118,7 +118,19 @@ type GameWindow struct {
 			DY    int   `json:"dy"`
 			Color uint8 `json:"color"`
 		} `json:"patches"`
+
+		// TextX／Codes 是框上的字（按鈕的標籤）。字裁在框的內容區裡：
+		// 立體邊往上移那一列會落到框的白色上緣，原版的上緣是乾淨的。
+		TextX  int      `json:"text_x"`
+		TextY  int      `json:"text_y"`
+		Text   string   `json:"text"`
+		Codes  []uint16 `json:"codes"`
+		Ink    uint8    `json:"ink"`
+		Shadow uint8    `json:"shadow"`
 	} `json:"boxes"`
+
+	// Tabs 是視窗裡的分頁鈕（一覽表、情報收集那幾張的上方切換鈕）。
+	Tabs *ui.TabBar `json:"tabs"`
 
 	// Rules 是純色的線（報告視窗裡的表格分隔線）。
 	Rules []Solid `json:"rules"`
@@ -183,10 +195,11 @@ func (w *GameWindow) bevel() ui.Frame {
 // Draw 畫這個視窗的外框與文字。shadow 是文字的立體邊色號。
 func (w *GameWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8, faces *asset.AMG) []uint16 {
 	w.bevel().Draw(fb, w.X, w.Y, w.W, w.H)
-	w.DrawBoxes(fb)
+	w.DrawBoxes(fb, fnt)
 	for _, r := range w.Rules {
 		fb.FillRect(r.X, r.Y, r.W, r.H, r.Colour)
 	}
+	w.Tabs.Draw(fb, fnt)
 	return w.drawContent(fb, fnt, shadow, faces)
 }
 
@@ -212,7 +225,7 @@ func (w *GameWindow) DrawBoxFills(fb *gfx.Framebuffer, cx, cy, cw, ch int) {
 
 // DrawBoxes 只畫視窗裡的小框。拆出來是因為原版有些畫面**先畫游標、
 // 再刷清單列**，所以那幾格會把游標蓋掉一部分（`docs/re/12`）。
-func (w *GameWindow) DrawBoxes(fb *gfx.Framebuffer) {
+func (w *GameWindow) DrawBoxes(fb *gfx.Framebuffer, fnt *font.Font) {
 	for _, b := range w.Boxes {
 		f := ui.Frame{Fill: b.Fill}
 		for _, l := range b.Layers {
@@ -225,6 +238,22 @@ func (w *GameWindow) DrawBoxes(fb *gfx.Framebuffer) {
 			f.Patches = append(f.Patches, ui.Patch{DX: p.DX, DY: p.DY, Color: p.Color})
 		}
 		f.Draw(fb, b.X, b.Y, b.W, b.H)
+		// fnt ＝ nil 是「游標之後再刷一次」那一趟：只補外框，不重畫字。
+		// 原版的游標畫在最上面，字重畫上去會把箭頭咬掉一塊。
+		if fnt == nil || len(b.Codes) == 0 {
+			continue
+		}
+		n := len(b.Layers)
+		cx, cy := b.X+n, b.Y+n
+		cw, ch := b.W-2*n, b.H-2*n
+		ty := b.TextY
+		if ty == 0 {
+			ty = b.Y + n
+		}
+		for i, code := range b.Codes {
+			ui.DrawGlyphClipped(fb, fnt, b.TextX+i*font.GlyphW, ty, code,
+				b.Ink, b.Shadow, -1, false, cx, cy, cw, ch)
+		}
 	}
 }
 
@@ -312,7 +341,7 @@ func MainGameWithBoard(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, fac
 		// 有些畫面在游標之後才刷清單列，那幾格會蓋掉游標的一部分。
 		if n := s.Mouse.AfterBoxes; n != "" {
 			if w := s.Windows[n]; w != nil {
-				w.DrawBoxes(fb)
+				w.DrawBoxes(fb, nil)
 			}
 		}
 		if n := s.Mouse.AfterBoxFills; n != "" {

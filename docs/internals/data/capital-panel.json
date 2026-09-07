@@ -1,31 +1,313 @@
 {
  "note": "戰略地圖介面右側那塊（右上的日期與錢、下面自己首都的摘要）。量自收據 main1e（796/1）與 turnnext（796/2），對齊用 -poke 造的 capDATE／capNUM 定下來。規格 docs/spec/002。",
- "summary": {"dx": 320, "dy": -200},
+ "summary": {
+  "dx": 320,
+  "dy": -200
+ },
  "faction_line": {
   "y": 62,
   "prefix_x": 336,
   "prefix": [
-   {"faction": 0, "text": "帝國軍", "codes": [43986, 45290, 44408]},
-   {"faction": 1, "text": "同盟軍", "codes": [42576, 47097, 44408]}
+   {
+    "faction": 0,
+    "text": "帝國軍",
+    "codes": [
+     43986,
+     45290,
+     44408
+    ]
+   },
+   {
+    "faction": 1,
+    "text": "同盟軍",
+    "codes": [
+     42576,
+     47097,
+     44408
+    ]
+   }
   ],
-  "era_x": 400, "era": [42612, 43386, 48868], "era_text": "宇宙曆",
-  "year_right": 488, "year_mark_x": 496, "year_mark": 42622,
-  "month_right": 536, "month_mark_x": 544, "month_mark": 42219,
-  "day_right": 584, "day_mark_x": 592, "day_mark": 42217,
+  "era_x": 400,
+  "era": [
+   42612,
+   43386,
+   48868
+  ],
+  "era_text": "宇宙曆",
+  "year_right": 488,
+  "year_mark_x": 496,
+  "year_mark": 42622,
+  "month_right": 536,
+  "month_mark_x": 544,
+  "month_mark": 42219,
+  "day_right": 584,
+  "day_mark_x": 592,
+  "day_mark": 42217,
   "ink": 7
  },
  "rows": [
-  {"y": 82,
-   "left": {"label_x": 336, "label": [44408, 43206, 46671], "text": "軍事費", "right": 480, "field": "military"},
-   "right": {"label_x": 496, "label": [49504, 46460, 42668], "text": "總稅收", "right": 624, "field": "tax_total"}},
-  {"y": 202,
-   "left": {"label_x": 336, "label": [43198, 48579, 42063], "text": "防衛力", "right": 480, "field": "defence"}},
-  {"y": 222,
-   "left": {"label_x": 336, "label": [47207, 49369, 42063], "text": "經濟力", "right": 480, "field": "economy"},
-   "right": {"label_x": 496, "label": [42664, 43768, 45686], "text": "成長率", "right": 624, "field": "growth_per_mille", "format": "per_mille"}},
-  {"y": 242,
-   "left": {"label_x": 336, "label": [48248, 46460, 49986], "text": "徵稅額", "right": 480, "field": "tax"},
-   "right": {"label_x": 496, "label": [46460, 45686], "text": "稅率", "right": 624, "field": "tax_rate_per_mille", "format": "per_mille"}}
+  {
+   "y": 82,
+   "left": {
+    "label_x": 336,
+    "label": [
+     44408,
+     43206,
+     46671
+    ],
+    "text": "軍事費",
+    "right": 480,
+    "field": "military"
+   },
+   "right": {
+    "label_x": 496,
+    "label": [
+     49504,
+     46460,
+     42668
+    ],
+    "text": "總稅收",
+    "right": 624,
+    "field": "tax_total"
+   }
+  },
+  {
+   "y": 202,
+   "left": {
+    "label_x": 336,
+    "label": [
+     43198,
+     48579,
+     42063
+    ],
+    "text": "防衛力",
+    "right": 480,
+    "field": "defence"
+   }
+  },
+  {
+   "y": 222,
+   "left": {
+    "label_x": 336,
+    "label": [
+     47207,
+     49369,
+     42063
+    ],
+    "text": "經濟力",
+    "right": 480,
+    "field": "economy"
+   },
+   "right": {
+    "label_x": 496,
+    "label": [
+     42664,
+     43768,
+     45686
+    ],
+    "text": "成長率",
+    "right": 624,
+    "field": "growth_per_mille",
+    "format": "per_mille"
+   }
+  },
+  {
+   "y": 242,
+   "left": {
+    "label_x": 336,
+    "label": [
+     48248,
+     46460,
+     49986
+    ],
+    "text": "徵稅額",
+    "right": 480,
+    "field": "tax"
+   },
+   "right": {
+    "label_x": 496,
+    "label": [
+     46460,
+     45686
+    ],
+    "text": "稅率",
+    "right": 624,
+    "field": "tax_rate_per_mille",
+    "format": "per_mille"
+   }
+  }
  ],
- "ink": 7
+ "ink": 7,
+ "buttons": {
+  "note": "右側面板中間那三顆按鈕。矩形與立體邊量自收據 sec1；文字、座標與屬性讀自字元平面（docs/internals/31，工具 tools/scripts/plane_json.py）。",
+  "y": 120,
+  "w": 68,
+  "h": 20,
+  "fill": 8,
+  "order": "TRBL",
+  "layers": [
+   [
+    7,
+    3,
+    3,
+    7
+   ],
+   [
+    7,
+    3,
+    3,
+    7
+   ]
+  ],
+  "ink": 7,
+  "shadow": 3,
+  "text_dx": 2,
+  "text_dy": 2,
+  "items": [
+   {
+    "x": 350,
+    "text": "戰略命令",
+    "codes": [
+     48852,
+     45732,
+     43346,
+     42319
+    ]
+   },
+   {
+    "x": 446,
+    "text": "一覽表",
+    "codes": [
+     42048,
+     50429,
+     43757
+    ]
+   },
+   {
+    "x": 542,
+    "text": "系統指令",
+    "codes": [
+     43124,
+     45774,
+     44028,
+     42319
+    ]
+   }
+  ]
+ },
+ "tabs": {
+  "note": "一覽表那四個分頁鈕。矩形、核取方塊與顏色量自收據 sec1；文字與座標讀自字元平面（docs/internals/31）。核取方塊內部填的是那一格的底色：選中 2、沒選中 9。",
+  "y": 280,
+  "h": 20,
+  "fill": 8,
+  "order": "TRBL",
+  "layers": [
+   [
+    7,
+    3,
+    3,
+    7
+   ],
+   [
+    7,
+    3,
+    3,
+    7
+   ]
+  ],
+  "ink": 7,
+  "shadow": 3,
+  "text_dx": 16,
+  "text_dy": 2,
+  "box": {
+   "dx": 4,
+   "dy": 5,
+   "w": 11,
+   "h": 11,
+   "order": "TRBL",
+   "layers": [
+    [
+     7,
+     3,
+     3,
+     7
+    ],
+    [
+     15,
+     15,
+     15,
+     15
+    ],
+    [
+     3,
+     7,
+     7,
+     3
+    ]
+   ],
+   "fill_on": 2,
+   "fill_off": 9,
+   "patches": [
+    {
+     "dx": 10,
+     "dy": 0,
+     "color": 8,
+     "note": "右上角空著"
+    },
+    {
+     "dx": 2,
+     "dy": 8,
+     "color": 7,
+     "note": "內層下緣往左多一格"
+    },
+    {
+     "dx": 0,
+     "dy": 10,
+     "color": 8,
+     "note": "左下角空著"
+    }
+   ],
+   "patch_note": "核取方塊是原版畫死的點陣，不是純粹的層狀立體邊；三個角落與演算法對不上，逐點補。"
+  },
+  "selected": 0,
+  "items": [
+   {
+    "x": 336,
+    "w": 50,
+    "text": "艦隊",
+    "codes": [
+     50341,
+     46756
+    ]
+   },
+   {
+    "x": 400,
+    "w": 50,
+    "text": "行星",
+    "codes": [
+     42726,
+     44112
+    ]
+   },
+   {
+    "x": 464,
+    "w": 66,
+    "text": "敵艦隊",
+    "codes": [
+     48324,
+     50341,
+     46756
+    ]
+   },
+   {
+    "x": 544,
+    "w": 50,
+    "text": "提督",
+    "codes": [
+     46243,
+     47102
+    ]
+   }
+  ]
+ }
 }

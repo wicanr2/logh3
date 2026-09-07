@@ -49,6 +49,17 @@ type CopyProtSpec struct {
 			} `json:"cells"`
 		} `json:"lines"`
 	} `json:"text"`
+	// ButtonText 是輸入框右邊那顆按鈕上的字（「確認」）。
+	ButtonText *struct {
+		Y      int   `json:"y"`
+		Ink    uint8 `json:"ink"`
+		Shadow uint8 `json:"shadow"`
+		Cells  []struct {
+			X    int    `json:"x"`
+			Code uint16 `json:"code"`
+		} `json:"cells"`
+	} `json:"button_text"`
+
 	// InputText 是玩家打進去的數字要畫在哪（半形字型，沒有立體邊）。
 	InputText *struct {
 		X, Y  int
@@ -115,6 +126,17 @@ func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed st
 			f.Layers = append(f.Layers, ui.Layer{Top: l[0], Right: l[1], Bottom: l[2], Left: l[3]})
 		}
 		f.Draw(fb, b.X, b.Y, b.W, b.H)
+	}
+	if b := s.ButtonText; b != nil {
+		// 裁在按鈕內容區：立體邊往上移那一列會落到外框上，原版沒有。
+		cx, cy, cw, ch := 0, 0, 640, 480
+		if box := s.InputBox; box != nil {
+			cx, cy, cw, ch = box.X+2, box.Y+2, box.W-4, box.H-4
+		}
+		for _, c := range b.Cells {
+			ui.DrawGlyphClipped(fb, fnt, c.X, b.Y, c.Code, b.Ink, b.Shadow, -1, false,
+				cx, cy, cw, ch)
+		}
 	}
 	var missing []uint16
 	for _, line := range s.Text.Lines {

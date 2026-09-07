@@ -126,16 +126,16 @@ func MainMenuAt(s *MenuSpec, fnt *font.Font, highlight int, cur *ui.Cursor, mx, 
 		}
 		w.SetText(r, s.Text.AttrNormal, s.Text.ShadowNormal, codes)
 	}
-	// **順序是量出來的**：一般的列先畫完，接著畫游標，最後才畫反白的那一列。
-	// 所以游標會被反白列蓋掉一部分——換個順序畫面就會多出一截箭頭，
-	// 而那看起來只像「多了一個箭頭」，不像錯。
+	// **順序是量出來的**：一般的列先畫完，再用另一組屬性重畫反白的那一列，
+	// 游標最後畫。游標壓在反白帶上的那幾列會蓋在反白列上面——順序顛倒的話
+	// 那一截箭頭會消失，而畫面上只像「箭頭短了一點」，不像錯。
 	missing := w.Draw(fb, fnt, s.Window.W, s.Window.H)
-	if cur != nil && mx >= 0 && my >= 0 {
-		cur.Draw(fb, mx, my)
-	}
 	if highlight >= 0 && highlight < w.Rows {
 		w.SetRowAttr(highlight, s.Text.AttrHighlight, s.Text.ShadowHighlight)
 		missing = append(missing, w.DrawRow(fb, fnt, highlight)...)
+	}
+	if cur != nil && mx >= 0 && my >= 0 {
+		cur.Draw(fb, mx, my)
 	}
 	return fb, missing
 }

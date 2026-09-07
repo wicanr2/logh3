@@ -9,6 +9,7 @@ import (
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/ui"
 )
 
 // CapitalPanel 是戰略地圖介面右側那塊：右上的日期與錢，下面自己首都的摘要
@@ -49,6 +50,64 @@ type CapitalPanel struct {
 	} `json:"rows"`
 
 	Ink uint8 `json:"ink"`
+
+	// Buttons 是中間那三顆命令按鈕（戰略命令／一覽表／系統指令）。
+	// 立體邊與輸入框同一種：兩層 top/left 色號 7、bottom/right 色號 3。
+	Buttons *struct {
+		Y, W, H int
+		Fill    uint8      `json:"fill"`
+		Order   string     `json:"order"`
+		Layers  [][4]uint8 `json:"layers"`
+		Ink     uint8      `json:"ink"`
+		Shadow  uint8      `json:"shadow"`
+		TextDX  int        `json:"text_dx"`
+		TextDY  int        `json:"text_dy"`
+		Items   []struct {
+			X     int      `json:"x"`
+			Text  string   `json:"text"`
+			Codes []uint16 `json:"codes"`
+		} `json:"items"`
+	} `json:"buttons"`
+
+	// Tabs 是一覽表那四個分頁鈕。核取方塊是三層立體邊，內部填的是那一格的
+	// 底色——選中的填 2、沒選中的填 9，這是原版分辨選了哪一頁的方式。
+	Tabs *struct {
+		Y, H   int
+		Fill   uint8      `json:"fill"`
+		Order  string     `json:"order"`
+		Layers [][4]uint8 `json:"layers"`
+		Ink    uint8      `json:"ink"`
+		Shadow uint8      `json:"shadow"`
+		TextDX int        `json:"text_dx"`
+		TextDY int        `json:"text_dy"`
+		Box    struct {
+			DX, DY, W, H int
+			Order        string     `json:"order"`
+			Layers       [][4]uint8 `json:"layers"`
+			FillOn       uint8      `json:"fill_on"`
+			FillOff      uint8      `json:"fill_off"`
+			Patches      []struct {
+				DX, DY int
+				Color  uint8 `json:"color"`
+			} `json:"patches"`
+		} `json:"box"`
+		Selected int `json:"selected"`
+		Items    []struct {
+			X     int      `json:"x"`
+			W     int      `json:"w"`
+			Text  string   `json:"text"`
+			Codes []uint16 `json:"codes"`
+		} `json:"items"`
+	} `json:"tabs"`
+}
+
+// frameOf 把規格裡的層色轉成 ui.Frame。
+func frameOf(fill uint8, order string, layers [][4]uint8) ui.Frame {
+	f := ui.Frame{Fill: fill, Order: order}
+	for _, l := range layers {
+		f.Layers = append(f.Layers, ui.Layer{Top: l[0], Right: l[1], Bottom: l[2], Left: l[3]})
+	}
+	return f
 }
 
 // PanelField 是「標籤 ＋ 一個靠右對齊的數字」。
@@ -105,7 +164,30 @@ func (p *CapitalPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, region *RegionP
 		}
 	}
 
+	p.drawButtons(fb, fnt)
+	p.drawTabs(fb, fnt)
 	region.DrawAt(fb, fnt, c.Region, faction, p.Summary.DX, p.Summary.DY)
+}
+
+// drawButtons 畫中間那三顆命令按鈕。
+//
+// 字裁在按鈕的內容區裡：立體邊往上移那一列會落到按鈕的白色上緣上，
+// 原版的上緣是乾淨的。
+func (p *CapitalPanel) drawButtons(fb *gfx.Framebuffer, fnt *font.Font) {
+	b := p.Buttons
+	if b == nil {
+		return
+	}
+	f := frameOf(b.Fill, b.Order, b.Layers)
+	for _, it := range b.Items {
+		f.Draw(fb, it.X, b.Y, b.W, b.H)
+		cx, cy := it.X+b.TextDX, b.Y+b.TextDY
+		cw, ch := b.W-2*b.TextDX, b.H-2*b.TextDY
+		for i, code := range it.Codes {
+			ui.DrawGlyphClipped(fb, fnt, cx+i*font.GlyphW, cy, code,
+				b.Ink, b.Shadow, -1, false, cx, cy, cw, ch)
+		}
+	}
 }
 
 // value 回這一格要印的字串。
@@ -132,4 +214,31 @@ func (f *PanelField) value(c rules.CapitalSummary) string {
 		return fmt.Sprintf("%d.%d%%", v/10, v%10)
 	}
 	return strconv.Itoa(v)
+}
+
+// drawTabs 畫一覽表那四個分頁鈕。
+func (p *CapitalPanel) drawTabs(fb *gfx.Framebuffer, fnt *font.Font) {
+	t := p.Tabs
+	if t == nil {
+		return
+	}
+	outer := frameOf(t.Fill, t.Order, t.Layers)
+	for i, it := range t.Items {
+		outer.Draw(fb, it.X, t.Y, it.W, t.H)
+		fill := t.Box.FillOff
+		if i == t.Selected {
+			fill = t.Box.FillOn
+		}
+		bx, by := it.X+t.Box.DX, t.Y+t.Box.DY
+		frameOf(fill, t.Box.Order, t.Box.Layers).Draw(fb, bx, by, t.Box.W, t.Box.H)
+		for _, pt := range t.Box.Patches {
+			fb.Set(bx+pt.DX, by+pt.DY, pt.Color)
+		}
+		cx, cy := it.X+t.TextDX, t.Y+t.TextDY
+		cw, ch := it.W-t.TextDX-2, t.H-2*t.TextDY
+		for j, code := range it.Codes {
+			ui.DrawGlyphClipped(fb, fnt, cx+j*font.GlyphW, cy, code,
+				t.Ink, t.Shadow, -1, false, cx, cy, cw, ch)
+		}
+	}
 }

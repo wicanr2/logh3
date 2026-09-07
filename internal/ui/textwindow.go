@@ -155,6 +155,16 @@ func (w *TextWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, frameW, frameH in
 // 加粗後的點陣（`docs/internals/25`）。順序不能顛倒——先畫陰影再加粗
 // 會多出一排像素。
 func DrawGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16, fg, shadow uint8, shadowDY int, bold bool) bool {
+	return DrawGlyphClipped(fb, fnt, x, y, code, fg, shadow, shadowDY, bold,
+		0, 0, gfx.Width, gfx.Height)
+}
+
+// DrawGlyphClipped 同 DrawGlyph，但把整個字（含立體邊）裁在指定矩形內。
+//
+// 按鈕上的字要用這條：立體邊那一趟會往上移一列，落到按鈕外框上。
+// 原版把字裁在按鈕的內容區裡，外框不會被立體邊咬掉一格。
+func DrawGlyphClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16,
+	fg, shadow uint8, shadowDY int, bold bool, cx, cy, cw, ch int) bool {
 	g := fnt.Glyph(code)
 	if g == nil {
 		return false
@@ -168,9 +178,14 @@ func DrawGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16, fg, s
 		for gy, bits := range g {
 			row := bits << uint(shift)
 			for gx := 0; gx < font.GlyphW; gx++ {
-				if row>>(font.GlyphW-1-gx)&1 != 0 {
-					fb.Set(x+gx, y+oy+gy, col)
+				if row>>(font.GlyphW-1-gx)&1 == 0 {
+					continue
 				}
+				px, py := x+gx, y+oy+gy
+				if px < cx || py < cy || px >= cx+cw || py >= cy+ch {
+					continue
+				}
+				fb.Set(px, py, col)
 			}
 		}
 	}
