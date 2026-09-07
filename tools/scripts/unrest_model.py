@@ -128,7 +128,7 @@ def f6(i, owner):
         qs.append(a[0x13])
     return tot * max(ps) * max(qs) // 10000
 
-print("星域 own  f1  f2  f3  f4  base  ×能力  f6  加f6後 量到治安 要幾步 BFS 中點")
+print("星域 own  f1  f2  f3  f4  base  ×能力  f6  加f6後 減步數 量到治安  差")
 for e in slot["regions"]:
     i, owner = e["index"], e["owner"]
     if owner == 2:
@@ -144,8 +144,10 @@ for e in slot["regions"]:
     want = 200 - e["at_load"]
     a6 = f6(i, owner)
     v2 = min(v + a6, 200)
+    # 尾巴：`v -= 2 × 步數`。載入的當下中點矩陣還是整片 FF（「都直接相連」），
+    # 所以非首都一律 1 步（`docs/re/43`）。
+    hops = 0 if i == CAPITAL[owner] else 1
+    v3 = max(v2 - 2 * hops, 0)
     want = 200 - e["at_load"]
-    need = (v2 - want) / 2
-    print("%2d  %d   %3d %3d %3d %3d  %4d  %4d %4d  %5d  %5d  %5.1f %3d %3d"
-          % (i, owner, a1, a2, a3, a4, base, v, a6, v2, want, need,
-             BFS[owner].get(i, -1), MIDD[owner].get(i, -1)))
+    print("%2d  %d   %3d %3d %3d %3d  %4d  %4d %4d  %5d  %5d  %5d  %+4d"
+          % (i, owner, a1, a2, a3, a4, base, v, a6, v2, v3, want, want - v3))
