@@ -174,7 +174,10 @@
     （收據 `main1e`，規格由 `tools/scripts/cmdscreen_spec.py` 量）。
     戰略命令選單（`cmd1e`）、戰略情報報告（`info1e`）、一覽表三張
     （`lst1e`／`lst2e`／`lst3e`）與遊戲設定（`settings1e`）也都逐位元組對上。
-    六張的量測命令都在 `tools/specs.sh`，重跑產出逐位元組相同。
+    徵稅計劃（`tax1e`）與生產計劃（`prod1e`）也對上了——那兩張的視窗
+    版面分別與 `screen-budget-plan`、`screen-build-plan` 相同。
+    八張的量測命令都在 `tools/specs.sh`，重跑產出逐位元組相同。
+    **剩下的命令列項目**：出擊命令、取進度／存進度／結束。
 19. ~~星域歸屬的來源~~（完成，`docs/re/17`）：`STELLAR.DT*` 的 `+18` 是
     擁有者（0 帝國、1 同盟、2 無主），查 `ds:8BD2` 得色號，首都另外用
     色 6 重塗。**剩下一步**：檔案裡只有 0 與 1，載入後有 10 個星域被改成

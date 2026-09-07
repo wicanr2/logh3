@@ -35,6 +35,11 @@ FACE = ([int(v) for v in sys.argv[12].split(':')]
 EXTRA = ([int(v) for v in sys.argv[13].split(':')]
          if len(sys.argv) > 13 and sys.argv[13] else None)
 
+# 額外文字來源：**游標蓋住的那一格讀不出來**，而有些畫面的迴圈不理會純移動
+# 事件（設定、生產計劃…），游標只會停在最後一次點擊的地方。同一張畫面點在
+# 不同位置各抓一份收據，兩份的文字聯集就補得回來。幾何仍然只看主收據。
+ALSO = sys.argv[14] if len(sys.argv) > 14 and sys.argv[14] else None
+
 rows, _ = load_screen(f'/work/workplace/oracle/{batch}/screen.bin')
 full, half = font_lookup('/orig/GRAPH.IMG')
 # 原版有兩種粗細：細的直接查字型檔，粗的要拿加粗後的點陣查
@@ -51,6 +56,10 @@ def scan(phase, tabs):
     for y in range(Y0 + 10 + phase, Y1 - 14, 20):
         skip = [(bx0, by0, bx1 - bx0 + 1, by1 - by0 + 1)
                 for bx0, by0, bx1, by1 in BOXES]
+        # 頭像也要跳過：人像的線條會被讀成製表符或底線，而且畫的時候
+        # 頭像在文字之前，那幾格會被字的陰影咬掉一列。
+        if FACE:
+            skip.append((FACE[1], FACE[2], 80, 100))
         # 起點要掃寬一點：這一層裡不只一欄文字，左邊那欄的縮排
         # 各畫面不同，範圍太窄就整欄讀不到。
         ln = max((read_line(rows, sx, y, X1 - 12, 7, tabs[0], tabs[1], skip)
@@ -107,6 +116,36 @@ for _t in TABS:
     for _p in range(20):
         for _l in scan(_p, _t):
             _merge(lines, _l)
+if ALSO:
+    _main_rows = rows
+    rows, _ = load_screen(f'/work/workplace/oracle/{ALSO}/screen.bin')
+    _extra = []
+    for _t in TABS:
+        for _p in range(20):
+            for _l in scan(_p, _t):
+                _merge(_extra, _l)
+    rows = _main_rows
+
+    def _union(acc, cand):
+        """逐格聯集。兩份各自被游標咬掉不同的一格，誰也不是誰的超集，
+        所以不能用「留字多的那一份」——要把格子併起來。"""
+        for cur in acc:
+            if cur.get('ink') != cand.get('ink') or cur['y'] != cand['y']:
+                continue
+            have = {c['x'] for c in cur['cells']}
+            add = [c for c in cand['cells']
+                   if c['x'] not in have
+                   and not any(o['x'] < c['x'] + c['w'] and c['x'] < o['x'] + o['w']
+                               for o in cur['cells'])]
+            if add:
+                cur['cells'] = sorted(cur['cells'] + add, key=lambda c: c['x'])
+            return True
+        return False
+
+    # 只往既有的行補格子，**不新增行**——第二份收據萬一點歪了、開的是別的
+    # 畫面，多出來的行就會整片變成假資料。少一格看得出來，多一行看不出來。
+    for _l in _extra:
+        _union(lines, _l)
 if EXTRA:
     for _t in TABS:
         for _ink in (7, 6, 5):
