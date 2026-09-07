@@ -55,8 +55,11 @@ func main() {
 		if len(b) < len(pal)*3 {
 			die(fmt.Errorf("%s 只有 %d bytes，要 %d", *palPath, len(b), len(pal)*3))
 		}
+		// dosgolem 的 -dump-palette 是**8 位元**的值，gfx.Palette 存的是
+		// DAC 的 6 位元（畫的時候才用 (v<<2)|(v>>4) 展開）。不換回 6 位元
+		// 就會展開兩次，顏色整個偏掉——而色號陣列的對拍看不出來。
 		for i := range pal {
-			pal[i][0], pal[i][1], pal[i][2] = b[i*3], b[i*3+1], b[i*3+2]
+			pal[i][0], pal[i][1], pal[i][2] = b[i*3]>>2, b[i*3+1]>>2, b[i*3+2]>>2
 		}
 	}
 	step := 0

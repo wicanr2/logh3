@@ -1,0 +1,14 @@
+# Ebiten 的建置與無頭執行環境。
+#
+# Ebiten 在 Linux 走 OpenGL／X11，要 cgo 與一堆 -dev 標頭；無頭跑要 Xvfb 與
+# 軟體 OpenGL（Mesa 的 llvmpipe）。這支 image 只給本專案的 GUI 用，
+# 不動主機，也不影響 tools/go.sh 那條純建置的路。
+FROM golang:1.24-bookworm
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      libgl1-mesa-dev libxrandr-dev libxcursor-dev libxinerama-dev \
+      libxi-dev libxxf86vm-dev libasound2-dev pkg-config \
+      xvfb libgl1-mesa-dri mesa-utils x11-utils \
+ && rm -rf /var/lib/apt/lists/*
+
+ENV LIBGL_ALWAYS_SOFTWARE=1
