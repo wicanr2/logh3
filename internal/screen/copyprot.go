@@ -60,7 +60,7 @@ type CopyProtSpec struct {
 		} `json:"cells"`
 	} `json:"button_text"`
 
-	// InputText 是玩家打進去的數字要畫在哪（半形字型，沒有立體邊）。
+	// InputText 是玩家打進去的數字要畫在哪。**全形數字**，沒有立體邊。
 	InputText *struct {
 		X, Y  int
 		Pitch int   `json:"pitch"`
@@ -150,8 +150,17 @@ func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed st
 		}
 	}
 	if t := s.InputText; t != nil {
+		// 打進去的數字用**全形**字型（Big5 `A2AF` 起的 ０–９），
+		// 不是半形——量出來的字比半形高也寬，而點陣在 GRAPH.IMG 的
+		// 全形符號區裡（`docs/re/56`）。
 		for i, c := range []byte(typed) {
-			ui.DrawHalfGlyph(fb, fnt, t.X+i*t.Pitch, t.Y, c, t.Ink, 0, 0, false)
+			if c < '0' || c > '9' {
+				continue
+			}
+			code := fullDigit0 + uint16(c-'0')
+			if !ui.DrawGlyph(fb, fnt, t.X+i*t.Pitch, t.Y, code, t.Ink, 0, 0, false) {
+				missing = append(missing, code)
+			}
 		}
 	}
 	return fb, missing

@@ -67,9 +67,59 @@ func TestCopyProtectionMatchesOracle(t *testing.T) {
 	}
 }
 
-// TestCopyProtectionDrawsTyped 只釘「打進去的數字有畫出來、而且落在量到的
-// 位置上」。**這一格還沒對拍通過**：畫面上那套數字字型不是 GRAPH.IMG 的
-// 半形字型（比它高也寬），來源還沒找到，所以不能宣稱逐位元組一致。
+// TestCopyProtectionTypedMatchesOracle 打進去的數字要與原版逐位元組相同。
+//
+// 那套字型是 GRAPH.IMG 的**全形**數字（`docs/re/56`）。
+func TestCopyProtectionTypedMatchesOracle(t *testing.T) {
+	root := "../.."
+	specPath := filepath.Join(root, "docs/internals/data/screen-copy-protection.json")
+	fontPath := filepath.Join(root, "org_game/extracted/GRAPH.IMG")
+	facePath := filepath.Join(root, "org_game/extracted/FACE.AMG")
+	oracle := filepath.Join(root, "workplace/oracle/typed138/screen.bin")
+	for _, p := range []string{specPath, fontPath, facePath, oracle} {
+		if _, err := os.Stat(p); err != nil {
+			t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", p)
+		}
+	}
+	s, err := LoadCopyProtSpec(specPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fnt, err := font.Load(fontPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	faceData, err := os.ReadFile(facePath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	face, err := FaceFrom(faceData, s)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fb, missing := CopyProtection(s, fnt, face, "138")
+	if len(missing) > 0 {
+		t.Fatalf("有 %d 個字碼畫不出來：%04X", len(missing), missing)
+	}
+	want, err := os.ReadFile(oracle)
+	if err != nil {
+		t.Fatal(err)
+	}
+	bad, firstX, firstY := 0, -1, -1
+	for i := range want {
+		if want[i] != fb.Pix[i] {
+			if bad == 0 {
+				firstX, firstY = i%640, i/640
+			}
+			bad++
+		}
+	}
+	if bad != 0 {
+		t.Fatalf("與原版不同的像素 %d / %d，第一個在 (%d,%d)", bad, len(want), firstX, firstY)
+	}
+}
+
+// TestCopyProtectionDrawsTyped 釘「打進去的數字落在量到的位置上」。
 func TestCopyProtectionDrawsTyped(t *testing.T) {
 	root := "../.."
 	specPath := filepath.Join(root, "docs/internals/data/screen-copy-protection.json")

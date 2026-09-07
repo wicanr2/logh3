@@ -23,7 +23,7 @@
 | 2 | 開頭動畫 | — | — | — | 進行中：374 格已切分（[`docs/internals/19`](docs/internals/19-ibm16-350.md)），mode 10h 640×350；每一格的編碼未解 |
 | 3a | 正常玩家路徑（選單→防拷→本體）| `same-state` | 0 | [`docs/playtest/005-player-path.md`](docs/playtest/005-player-path.md) | 三個畫面都是前一步的輸入帶進去的，不是 direct-entry |
 | 3 | 主選單（互動）| — | — | — | 進行中：反白、滑鼠→選項對應、游標都已對拍；點擊已能推進到下一畫面；還缺**切換過程**（反白從 A 列搬到 B 列會留殘留）|
-| 4b | 防拷問答（輸入中的數字）| — | — | 收據 `typed138` | **未通過**：位置量到了，但那套數字字型不是 `GRAPH.IMG` 的半形字型，來源沒找到（`docs/re/09`）|
+| 4b | 防拷問答（輸入中的數字）| `same-state` | 0 | 收據 `typed138`；[`docs/re/56`](docs/re/56-typed-digits-are-full-width.md) | 打進去的數字是 `GRAPH.IMG` 的**全形**數字（`A2AF` 起），不是半形——先前搜不到是因為只試了半形的打包方式 |
 | 4 | 防拷問答 | `same-state` | 0 | [`docs/playtest/003-copy-protection.md`](docs/playtest/003-copy-protection.md) | 全畫面 640×480 逐位元組一致（框、頭像、三行字、輸入框） |
 | 5 | 遊戲主畫面（796 年 1 月）| `same-state` | 0 | [`docs/playtest/004-main-game.md`](docs/playtest/004-main-game.md) | 全畫面逐位元組一致；地圖、頭像、文字全部從原版檔案重建 |
 | 5b | 船艦訂造報告（796 年 1 月）| `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
