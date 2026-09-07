@@ -57,10 +57,12 @@
 
 ## 與 `PLADAT.DAT` 的關係
 
-`PLADAT.DAT` 是 81 筆行星（`docs/internals/data/pladat.json`），
-`STELLAR.DT*` 是 32 個星域。星域是地圖上的區塊，行星在星域裡——
-兩者怎麼對應（哪顆行星屬於哪個星域）**還沒查**。
+`PLADAT.DAT` 的 64 bytes 檔頭是 32 個 word，**第 k 個就是第 k 個星域有幾顆行星**
+（合計 81 ＝ 筆數）。行星在檔案裡按星域順序排，所以第 k 個星域的行星就是
+前面數量累加起來那一段。詳見 [`29-planets-and-economy.md`](29-planets-and-economy.md)。
 
+星域記錄裡好幾格其實是「把自己的行星加起來」：擁有者、行星數、防衛力、
+**經濟力**都是載入時算出來的，檔案裡的原值當場被蓋掉。
 
 ## 執行期記錄的欄位（confirmed，`docs/re/23`）
 

@@ -88,4 +88,6 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 | [`25-text-rendering.md`](25-text-rendering.md) | 文字繪製：粗體、陰影、底線與網點 |
 | [`26-star-region-graph.md`](26-star-region-graph.md) | 星域之間的相鄰關係與路徑表 |
 | [`27-treasury-globals.md`](27-treasury-globals.md) | 財政的全域變數 |
+| [`28-screen-specs.md`](28-screen-specs.md) | 畫面規格 JSON：`data/screen-*.json` |
+| [`29-planets-and-economy.md`](29-planets-and-economy.md) | `PLADAT.DAT` 與經濟力 |
 | [`data/`](data/) | 機器可讀版本（JSON），給後續工具與 remake 用 |
