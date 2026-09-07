@@ -21,3 +21,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`005`](005-save-slot-loading.md) | 讀一格存檔（`*.DT[0-9A]` 六個檔）| `CONFORMED` |
 | [`006`](006-unrest-at-load.md) | 載入時重算未安定度 | `CONFORMED` |
 | [`007`](007-load-game-path.md) | 「取進度」那條玩家路徑 | `CONFORMED` |
+| [`008`](008-save-slot-list.md) | 存檔畫面那 11 列（從 `SAVEDATA.IDX` 算）| `CONFORMED` |

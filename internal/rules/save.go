@@ -49,6 +49,18 @@ type SaveIndexEntry struct {
 
 	// Name 是存檔名稱，Big5 字碼（右邊補的半形空白已經去掉）。
 	Name []uint16
+
+	// Stamp 是記錄開頭那六個 byte，畫面上印成「93/12/03 00:00:00」。
+	// 三格存檔完全一樣，所以**怎麼解還沒定**（只有一組樣本）：
+	// 目前照「年 BCD、月在高四位、日 BCD、時分秒 BCD」讀得出畫面上的字。
+	Stamp [6]byte
+}
+
+// StampFields 把 Stamp 拆成畫面上那六個數字。解法未驗（見 Stamp）。
+func (e SaveIndexEntry) StampFields() (year, month, day, hour, min, sec int) {
+	bcd := func(b byte) int { return int(b>>4)*10 + int(b&0x0F) }
+	return bcd(e.Stamp[0]), int(e.Stamp[1] >> 4), bcd(e.Stamp[2]),
+		bcd(e.Stamp[3]), bcd(e.Stamp[4]), bcd(e.Stamp[5])
 }
 
 // SlotExt 回這一格對應的副檔名末字：0–9 用數字，10 用 `A`。
@@ -79,6 +91,7 @@ func ParseSaveIndex(b []byte) ([]SaveIndexEntry, error) {
 			e.Num = int(r[saveEntryNum])
 			e.Turn = int(r[saveEntryTurn]) | int(r[saveEntryTurn+1])<<8
 			e.Name = saveName(r[saveEntryName : saveEntryName+saveEntryNameLen])
+			copy(e.Stamp[:], r[:6])
 		}
 		out[i] = e
 	}

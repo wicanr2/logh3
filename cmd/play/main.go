@@ -236,12 +236,23 @@ func load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	slotList, err := screen.LoadSlotList(filepath.Join(data, "save-slot-list.json"))
+	if err != nil {
+		return nil, err
+	}
+	var saveIndex []rules.SaveIndexEntry
+	if b, err := os.ReadFile(filepath.Join(orig, "SAVEDATA.IDX")); err == nil {
+		if saveIndex, err = rules.ParseSaveIndex(b); err != nil {
+			return nil, err
+		}
+	}
 	return &game.Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
 		Screens: screens, StarMaps: maps, Regions: regions,
 		RegionPanel: panel, CapitalPanel: capital, BudgetPanel: budget, ProductionPanel: production,
 		Stellar: stellar, Planets: planets, Growth: growth,
+		SlotList: slotList, SaveIndex: saveIndex,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
 

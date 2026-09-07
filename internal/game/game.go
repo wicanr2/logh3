@@ -168,6 +168,11 @@ type Resources struct {
 	BudgetPanel     *screen.BudgetPanel
 	ProductionPanel *screen.ProductionPanel
 
+	// SlotList 是存檔畫面那 11 列的版面，SaveIndex 是 `SAVEDATA.IDX` 的內容
+	// （`docs/spec/008`）。那 11 列是算出來的，不在畫面規格裡。
+	SlotList  *screen.SlotList
+	SaveIndex []rules.SaveIndexEntry
+
 	// OrigDir 是原版檔案的目錄。「取進度」要從那裡讀存檔（`docs/spec/007`）。
 	OrigDir string
 
@@ -595,6 +600,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawPanels(fb)
 			g.drawBudget(fb)
 			g.drawProduction(fb)
+			g.drawSlotList(fb)
 			return fb
 		}
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.highlight,
@@ -649,6 +655,18 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 		return
 	}
 	g.drawCapitalPanel(fb)
+}
+
+// drawSlotList 畫存檔畫面那 11 列（`docs/spec/008`）。
+func (g *Game) drawSlotList(fb *gfx.Framebuffer) {
+	if g.res.SlotList == nil || len(g.res.SaveIndex) == 0 {
+		return
+	}
+	// **只有「取進度」那張**。「存進度」那張的版面不一樣（量到的只有 7 行、
+	// 位置也不同），還沒解，先照規格裡量到的畫。
+	if g.state == StateLoadGame {
+		g.res.SlotList.Draw(fb, g.res.Font, g.res.SaveIndex, rules.Epoch)
+	}
 }
 
 // drawBudget 畫預算計劃／徵稅計劃的數字（`docs/spec/003`）。

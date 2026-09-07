@@ -19,7 +19,9 @@ import (
 //
 // 戰略地圖介面（`main1e`）不在這裡：它的右側面板已經改成從遊戲狀態算
 // （`docs/spec/002`），規格裡沒有那幾行文字，整張對拍在
-// `TestCapitalPanelMatchesOracle`。
+// `TestCapitalPanelMatchesOracle`。取進度（`load1e`）同理——那 11 列
+// 改成從 `SAVEDATA.IDX` 算（`docs/spec/008`），整張對拍在
+// `TestSlotListMatchesOracle`。
 //
 // 這些畫面共用同一個結構（底板 ＋ 星域地圖 ＋ 疊上去的視窗），
 // 所以同一個繪製器換一份規格就能畫——差別只在文字、頭像與熱區。
@@ -39,7 +41,6 @@ func TestMainGameMatchesOracle(t *testing.T) {
 		{"screen-settings", "settings1e"},
 		{"screen-tax-plan", "tax1e"},
 		{"screen-production-plan", "prod1e"},
-		{"screen-load-game", "load1e"},
 		{"screen-save-game", "save1e"},
 		{"screen-standby-admirals", "sortie1e"},
 		{"screen-quit-confirm", "quit1e"},

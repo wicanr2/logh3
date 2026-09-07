@@ -141,11 +141,22 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	slotList, err := screen.LoadSlotList(filepath.Join(root, "docs/internals/data/save-slot-list.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var saveIndex []rules.SaveIndexEntry
+	if b, err := os.ReadFile(filepath.Join(orig, "SAVEDATA.IDX")); err == nil {
+		if saveIndex, err = rules.ParseSaveIndex(b); err != nil {
+			t.Fatal(err)
+		}
+	}
 	return &Resources{Font: fnt, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
 		BudgetPanel: budget, ProductionPanel: production, Stellar: stellar, Planets: planets, Growth: growth,
+		SlotList: slotList, SaveIndex: saveIndex,
 		StartMilitary: 50000, ShipPct: 25}
 }
 

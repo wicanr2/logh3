@@ -1,0 +1,20 @@
+{
+ "note": "存檔畫面那 11 列的版面（規格 docs/spec/008）。量自收據 load1e 的 screen-load-game 規格；列高 20、第 0 列在 y=122。點擊落點是畫面 y 減 40（docs/spec/007）。",
+ "rows": 11,
+ "top": 122,
+ "height": 20,
+ "used_ink": 7,
+ "empty_ink": 8,
+ "stamp_x": 48,
+ "time_x": 120,
+ "hash_x": 256,
+ "index_x": 272,
+ "date_x": 296,
+ "name_x": 384,
+ "empty_x": 192,
+ "hash_code": 41697,
+ "index_codes": [41648, 41649, 41650, 41651, 41652, 41653, 41654, 41655, 41656, 41657, 41658],
+ "empty_codes": [42428, 43215, 42446],
+ "empty_stamp": "--/--/--",
+ "empty_time": "--:--:--"
+}
