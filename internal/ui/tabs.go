@@ -33,11 +33,16 @@ type TabStyle struct {
 }
 
 // Tab 是一個分頁鈕。
+//
+// NoBox ＝ 左端被上層視窗蓋掉的分頁：核取方塊與左緣的立體邊都看不見，
+// 只剩文字條與右端的立體邊。原版沒有「部分遮蔽」這個概念——它是逐格畫的，
+// 被蓋掉的那幾格就換成別的內容，剩下的照畫。
 type Tab struct {
 	X, W, TextX int
 	Text        string   `json:"text"`
 	Codes       []uint16 `json:"codes"`
 	On          bool     `json:"on"`
+	NoBox       bool     `json:"no_box"`
 }
 
 // TabRow 是同一列上的一組分頁鈕。
@@ -60,6 +65,10 @@ func (t *TabBar) Draw(fb *gfx.Framebuffer, fnt *font.Font) {
 	outer := FrameOf(t.Fill, t.Order, t.Layers)
 	for _, row := range t.Rows {
 		for _, it := range row.Items {
+			if it.NoBox {
+				t.drawStrip(fb, fnt, it, row.Y)
+				continue
+			}
 			outer.Draw(fb, it.X, row.Y, it.W, t.H)
 			fill := t.Box.FillOff
 			if it.On {
@@ -77,5 +86,31 @@ func (t *TabBar) Draw(fb *gfx.Framebuffer, fnt *font.Font) {
 					t.Ink, t.Shadow, -1, false, cx, cy, cw, ch)
 			}
 		}
+	}
+}
+
+// drawStrip 畫左端被蓋掉的分頁：整條填底色，再畫上、右、下三邊的立體邊。
+func (t *TabBar) drawStrip(fb *gfx.Framebuffer, fnt *font.Font, it Tab, y int) {
+	fb.FillRect(it.X, y, it.W, t.H, t.Fill)
+	for r, l := range t.Layers {
+		lw, ly, lh := it.W-r, y+r, t.H-2*r
+		if lw <= 0 || lh <= 0 {
+			break
+		}
+		for x := it.X; x < it.X+lw; x++ { // 上
+			fb.Set(x, ly, l[0])
+		}
+		for yy := ly; yy < ly+lh; yy++ { // 右
+			fb.Set(it.X+lw-1, yy, l[1])
+		}
+		for x := it.X; x < it.X+lw; x++ { // 下
+			fb.Set(x, ly+lh-1, l[2])
+		}
+	}
+	cx, cy := it.TextX, y+t.TextDY
+	cw, ch := it.X+it.W-2-cx, t.H-2*t.TextDY
+	for i, code := range it.Codes {
+		DrawGlyphClipped(fb, fnt, cx+i*font.GlyphW, cy, code,
+			t.Ink, t.Shadow, -1, false, cx, cy, cw, ch)
 	}
 }

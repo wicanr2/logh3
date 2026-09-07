@@ -12199,8 +12199,224 @@
     "note": "分頁鈕。座標、文字與選中狀態讀自字元平面（docs/internals/31，工具 tools/scripts/plane_json.py）。",
     "rows": [
      {
+      "y": 100,
+      "items": [
+       {
+        "x": 368,
+        "w": 18,
+        "textx": 368,
+        "text": "Ｍ",
+        "codes": [
+         41691
+        ],
+        "on": false,
+        "no_box": true
+       },
+       {
+        "x": 416,
+        "w": 18,
+        "textx": 416,
+        "text": "閉",
+        "codes": [
+         45996
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
+      "y": 120,
+      "items": [
+       {
+        "x": 288,
+        "w": 146,
+        "textx": 288,
+        "text": "琍璐",
+        "codes": [
+         45692,
+         60777
+        ],
+        "on": false,
+        "no_box": true
+       },
+       {
+        "x": 464,
+        "w": 50,
+        "textx": 464,
+        "text": "覽表",
+        "codes": [
+         50429,
+         43757
+        ],
+        "on": false,
+        "no_box": true
+       },
+       {
+        "x": 560,
+        "w": 50,
+        "textx": 560,
+        "text": "統指令",
+        "codes": [
+         45774,
+         44028,
+         42319
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
+      "y": 140,
+      "items": [
+       {
+        "x": 288,
+        "w": 146,
+        "textx": 288,
+        "text": "雄交響曲",
+        "codes": [
+         46767,
+         42470,
+         50516,
+         42673
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
+      "y": 160,
+      "items": [
+       {
+        "x": 288,
+        "w": 146,
+        "textx": 288,
+        "text": "愴交響曲",
+        "codes": [
+         46939,
+         42470,
+         50516,
+         42673
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
+      "y": 180,
+      "items": [
+       {
+        "x": 288,
+        "w": 146,
+        "textx": 288,
+        "text": "自新世界",
+        "codes": [
+         42715,
+         46963,
+         42304,
+         44233
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
+      "y": 200,
+      "items": [
+       {
+        "x": 288,
+        "w": 146,
+        "textx": 288,
+        "text": "季．夏",
+        "codes": [
+         43381,
+         41284,
+         44620
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
+      "y": 220,
+      "items": [
+       {
+        "x": 288,
+        "w": 146,
+        "textx": 288,
+        "text": "默的戰場",
+        "codes": [
+         49265,
+         43706,
+         48852,
+         46069
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
+      "y": 240,
+      "items": [
+       {
+        "x": 288,
+        "w": 146,
+        "textx": 288,
+        "text": "艦攻擊",
+        "codes": [
+         50341,
+         42992,
+         49339
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
+      "y": 260,
+      "items": [
+       {
+        "x": 288,
+        "w": 146,
+        "textx": 288,
+        "text": "戰前夕",
+        "codes": [
+         48852,
+         43877,
+         42089
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
       "y": 280,
       "items": [
+       {
+        "x": 288,
+        "w": 146,
+        "textx": 288,
+        "text": "用原有的ＢＧＭ",
+        "codes": [
+         42446,
+         44524,
+         42675,
+         43706,
+         41680,
+         41685,
+         41691
+        ],
+        "on": false,
+        "no_box": true
+       },
        {
         "x": 464,
         "w": 66,
@@ -12211,7 +12427,8 @@
          50341,
          46756
         ],
-        "on": false
+        "on": false,
+        "no_box": false
        },
        {
         "x": 544,
@@ -12222,7 +12439,102 @@
          46243,
          47102
         ],
-        "on": false
+        "on": false,
+        "no_box": false
+       }
+      ]
+     },
+     {
+      "y": 320,
+      "items": [
+       {
+        "x": 368,
+        "w": 18,
+        "textx": 368,
+        "text": "啟",
+        "codes": [
+         45522
+        ],
+        "on": false,
+        "no_box": true
+       },
+       {
+        "x": 416,
+        "w": 18,
+        "textx": 416,
+        "text": "閉",
+        "codes": [
+         45996
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
+      "y": 340,
+      "items": [
+       {
+        "x": 320,
+        "w": 18,
+        "textx": 320,
+        "text": "通",
+        "codes": [
+         45937
+        ],
+        "on": false,
+        "no_box": true
+       },
+       {
+        "x": 368,
+        "w": 18,
+        "textx": 368,
+        "text": "速",
+        "codes": [
+         45940
+        ],
+        "on": false,
+        "no_box": true
+       },
+       {
+        "x": 416,
+        "w": 18,
+        "textx": 416,
+        "text": "快",
+        "codes": [
+         42966
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
+      "y": 360,
+      "items": [
+       {
+        "x": 336,
+        "w": 50,
+        "textx": 336,
+        "text": "DI I/F",
+        "codes": [
+         17481,
+         8265,
+         12102
+        ],
+        "on": false,
+        "no_box": true
+       },
+       {
+        "x": 416,
+        "w": 18,
+        "textx": 416,
+        "text": "束",
+        "codes": [
+         42996
+        ],
+        "on": false,
+        "no_box": true
        }
       ]
      }

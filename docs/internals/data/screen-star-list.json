@@ -16726,7 +16726,8 @@
          50341,
          46756
         ],
-        "on": true
+        "on": true,
+        "no_box": false
        },
        {
         "x": 496,
@@ -16737,7 +16738,8 @@
          45172,
          50397
         ],
-        "on": false
+        "on": false,
+        "no_box": false
        },
        {
         "x": 560,
@@ -16748,7 +16750,8 @@
          46460,
          43767
         ],
-        "on": false
+        "on": false,
+        "no_box": false
        }
       ]
      }

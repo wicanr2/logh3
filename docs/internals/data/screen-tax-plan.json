@@ -11547,8 +11547,37 @@
     "note": "分頁鈕。座標、文字與選中狀態讀自字元平面（docs/internals/31，工具 tools/scripts/plane_json.py）。",
     "rows": [
      {
+      "y": 120,
+      "items": [
+       {
+        "x": 560,
+        "w": 50,
+        "textx": 560,
+        "text": "統指令",
+        "codes": [
+         45774,
+         44028,
+         42319
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     },
+     {
       "y": 280,
       "items": [
+       {
+        "x": 512,
+        "w": 18,
+        "textx": 512,
+        "text": "隊",
+        "codes": [
+         46756
+        ],
+        "on": false,
+        "no_box": true
+       },
        {
         "x": 544,
         "w": 50,
@@ -11558,7 +11587,35 @@
          46243,
          47102
         ],
-        "on": false
+        "on": false,
+        "no_box": false
+       }
+      ]
+     },
+     {
+      "y": 360,
+      "items": [
+       {
+        "x": 416,
+        "w": 18,
+        "textx": 416,
+        "text": "謀",
+        "codes": [
+         49105
+        ],
+        "on": false,
+        "no_box": true
+       },
+       {
+        "x": 464,
+        "w": 18,
+        "textx": 464,
+        "text": "束",
+        "codes": [
+         42996
+        ],
+        "on": false,
+        "no_box": true
        }
       ]
      }

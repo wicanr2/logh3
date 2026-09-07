@@ -22715,6 +22715,104 @@
     "w": 100,
     "h": 159,
     "colour": 9
+   },
+   "tabs": {
+    "h": 20,
+    "fill": 8,
+    "order": "TRBL",
+    "layers": [
+     [
+      7,
+      3,
+      3,
+      7
+     ],
+     [
+      7,
+      3,
+      3,
+      7
+     ]
+    ],
+    "ink": 7,
+    "shadow": 3,
+    "text_dy": 2,
+    "box": {
+     "dx": 4,
+     "dy": 5,
+     "w": 11,
+     "h": 11,
+     "order": "TRBL",
+     "layers": [
+      [
+       7,
+       3,
+       3,
+       7
+      ],
+      [
+       15,
+       15,
+       15,
+       15
+      ],
+      [
+       3,
+       7,
+       7,
+       3
+      ]
+     ],
+     "fill_on": 2,
+     "fill_off": 9,
+     "patches": [
+      {
+       "dx": 10,
+       "dy": 0,
+       "color": 8
+      },
+      {
+       "dx": 2,
+       "dy": 8,
+       "color": 7
+      },
+      {
+       "dx": 0,
+       "dy": 10,
+       "color": 8
+      }
+     ]
+    },
+    "note": "分頁鈕。座標、文字與選中狀態讀自字元平面（docs/internals/31，工具 tools/scripts/plane_json.py）。",
+    "rows": [
+     {
+      "y": 360,
+      "items": [
+       {
+        "x": 464,
+        "w": 18,
+        "textx": 464,
+        "text": "謀",
+        "codes": [
+         49105
+        ],
+        "on": false,
+        "no_box": true
+       },
+       {
+        "x": 512,
+        "w": 18,
+        "textx": 512,
+        "text": "束",
+        "codes": [
+         42996
+        ],
+        "on": false,
+        "no_box": true
+       }
+      ]
+     }
+    ]
    }
   }
  },
