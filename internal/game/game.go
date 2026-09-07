@@ -154,6 +154,13 @@ type Resources struct {
 
 	StarMap  *asset.Image
 
+	// StarBit／StarRGN 是星圖的原始位元組（`STRMAP.BIT`／`STRMAP.RGN`），
+	// RegionColours 是 `strmap-regions.json` 的 `colour_796_01`。
+	// 留著是因為**首都那格的顏色跟著玩家的陣營走**，開局時要照陣營重建
+	// 一次勢力色地圖（見 `factionStarMap`）。
+	StarBit, StarRGN []byte
+	RegionColours    []uint8
+
 	// Regions 是星域遮罩（`STRMAP.RGN`），用來問「地圖上這一點是哪個星域」。
 	Regions []asset.Region
 
@@ -291,6 +298,14 @@ type Game struct {
 	// 其餘得原樣抄回去（`docs/spec/009`）。
 	slot *rules.Slot
 
+	// faction 是玩家陣營：0 帝國、1 同盟。主選單前兩列各選一邊
+	// （`docs/re/61`）。
+	faction int
+
+	// starMap 是照玩家陣營重建的勢力色地圖（首都那格的顏色跟著玩家走）。
+	// nil 表示還沒建，畫的時候退回 `Resources.StarMap`。
+	starMap *asset.Image
+
 	// menuRow 是主選單點了哪一列（-1 ＝ 還沒點）。防拷答對之後要靠它
 	// 決定是開新遊戲還是進存檔畫面。
 	menuRow int
@@ -302,6 +317,22 @@ const (
 	mapW, mapH = 320, 300
 	tileW, tileH = 16, 20
 )
+
+// startNewGame 從開局狀態開始一局，陣營由主選單那一列決定
+// （`docs/re/61`）。
+//
+// 原版開機就跑一次月底結算，796 年 1 月的局面是那一次的結果
+// （`docs/re/33`、`docs/re/35`）；換陣營要重跑一次，因為收的稅是
+// **自己那一方的星域**加出來的。
+func (g *Game) startNewGame(faction int) {
+	g.faction = faction
+	g.starMap = g.factionStarMap(faction)
+	g.turn = 0
+	g.military = g.res.StartMilitary
+	g.pct = rules.OpeningPct
+	g.slot = nil
+	g.monthEnd()
+}
 
 // ShowEnding 切到結局畫面，顯示 `.VO5` 解出來的那張圖。
 //
@@ -318,10 +349,8 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		menuRow: -1, military: res.StartMilitary, pct: rules.OpeningPct}
-	// 原版開機就跑一次月底結算，796 年 1 月的局面是那一次的結果
-	// （`docs/re/33`、`docs/re/35`）。
-	g.monthEnd()
+		menuRow: -1}
+	g.startNewGame(res.Faction)
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
 	}
@@ -553,6 +582,18 @@ func (g *Game) Key(c byte) {
 			if g.menuRow == menuRowLoad && g.commandSpec(StateLoadGame) != nil {
 				g.state = StateLoadGame
 			} else {
+				// 第 0 列帝國、第 1 列同盟（`docs/re/61`）。
+				// 第 2 列「對戰」是兩人對打，**還沒解**，先當帝國。
+				//
+				// **只有換邊才重開局**：開局的月底結算在 New() 就跑過
+				// 一次了，再跑一次會把成長與收稅疊上去。
+				want := 0
+				if g.menuRow == menuRowAlliance {
+					want = 1
+				}
+				if want != g.faction {
+					g.startNewGame(want)
+				}
 				g.state = StateMainGame
 			}
 			return
@@ -574,8 +615,14 @@ func (g *Game) saveRow() int {
 // SaveErr 回上一次存檔的結果。
 func (g *Game) SaveErr() error { return g.saveErr }
 
-// menuRowLoad 是主選單第四列「取進度」（`docs/internals/data/screen-main-menu.json`）。
-const menuRowLoad = 3
+// 主選單四列（`docs/internals/data/screen-main-menu.json`）：
+// 帝國／同盟／對戰／取進度。
+const (
+	menuRowEmpire   = 0
+	menuRowAlliance = 1
+	menuRowVersus   = 2
+	menuRowLoad     = 3
+)
 
 // 存檔畫面那 11 列的版面（`docs/spec/007`）。畫面上第 0 列在 y ＝ 122，
 // 一列 20 px。
@@ -688,27 +735,27 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		fb, _ := screen.CopyProtection(g.res.CopyProt, g.res.Font, face, string(g.typed))
 		return fb
 	case StateMainGame:
-		fb, _ := screen.MainGame(g.res.MainGame, g.res.Font, g.res.StarMap,
+		fb, _ := screen.MainGame(g.res.MainGame, g.res.Font, g.playerStarMap(),
 			g.res.Faces, g.res.Cursor)
 		return fb
 	case StateShipOrder:
-		fb, _ := screen.MainGame(g.res.ShipOrder, g.res.Font, g.res.StarMap,
+		fb, _ := screen.MainGame(g.res.ShipOrder, g.res.Font, g.playerStarMap(),
 			g.res.Faces, g.res.Cursor)
 		return fb
 	case StateEnding:
 		return screen.Ending(g.ending)
 	case StateAdmiralList:
 		g.setListRows(g.res.AdmiralList)
-		fb, _ := screen.MainGame(g.res.AdmiralList, g.res.Font, g.res.StarMap,
+		fb, _ := screen.MainGame(g.res.AdmiralList, g.res.Font, g.playerStarMap(),
 			g.res.Faces, g.res.Cursor)
 		return fb
 	case StateBudgetPlan:
-		fb, _ := screen.MainGame(g.res.BudgetPlan, g.res.Font, g.res.StarMap,
+		fb, _ := screen.MainGame(g.res.BudgetPlan, g.res.Font, g.playerStarMap(),
 			g.res.Faces, g.res.Cursor)
 		g.drawBudget(fb)
 		return fb
 	case StateBuildPlan:
-		fb, _ := screen.MainGame(g.res.BuildPlan, g.res.Font, g.res.StarMap,
+		fb, _ := screen.MainGame(g.res.BuildPlan, g.res.Font, g.playerStarMap(),
 			g.res.Faces, g.res.Cursor)
 		if g.plan != nil {
 			screen.DrawBuildPlan(g.res.BuildPlan, fb, g.res.Font, g.plan)
@@ -745,7 +792,7 @@ func (g *Game) monthEnd() {
 	}
 	before := g.military
 	// 1. 逐星域結算，把自己那一份的稅加進軍事費——加完就是「原定軍事費」。
-	collected := rules.MonthEnd(g.res.Stellar, g.res.Planets, g.res.Growth, g.res.Faction)
+	collected := rules.MonthEnd(g.res.Stellar, g.res.Planets, g.res.Growth, g.faction)
 	budget := before + collected
 	// 2. 照百分比切給造船，各列只買得起整數艘，零頭退回；扣掉實際花掉的。
 	plan := rules.BuildPlan{Cost: budget * g.res.ShipPct / 100, Pct: g.pct}
@@ -766,7 +813,7 @@ func (g *Game) monthEnd() {
 func (g *Game) estimateTax() int {
 	sum := 0
 	for i := 0; (i+1)*rules.RegionRecord <= len(g.res.Stellar); i++ {
-		if g.res.Planets.RegionOwner(i) != g.res.Faction {
+		if g.res.Planets.RegionOwner(i) != g.faction {
 			continue
 		}
 		sum += rules.RegionTax(g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord])
@@ -882,14 +929,14 @@ func (g *Game) drawCapitalPanel(fb *gfx.Framebuffer) {
 	if g.res.CapitalPanel == nil || g.res.RegionPanel == nil || g.res.Planets == nil {
 		return
 	}
-	r := rules.CapitalRegion(g.res.Faction)
+	r := rules.CapitalRegion(g.faction)
 	o := r * rules.RegionRecord
 	if o+rules.RegionRecord > len(g.res.Stellar) {
 		return
 	}
 	c := rules.SummariseCapital(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
-		r, g.res.Faction, g.turn, rules.Epoch, g.military, g.taxTotal)
-	g.res.CapitalPanel.Draw(fb, g.res.Font, g.res.RegionPanel, c, g.res.Faction)
+		r, g.faction, g.turn, rules.Epoch, g.military, g.taxTotal)
+	g.res.CapitalPanel.Draw(fb, g.res.Font, g.res.RegionPanel, c, g.faction)
 }
 
 // drawRegionPanel 把選中星域的摘要畫進左下角那塊。
@@ -906,8 +953,8 @@ func (g *Game) drawRegionPanel(fb *gfx.Framebuffer) {
 		return
 	}
 	sum := rules.Summarise(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
-		g.selectedRegion, g.res.Faction)
-	g.res.RegionPanel.Draw(fb, g.res.Font, sum, g.res.Faction)
+		g.selectedRegion, g.faction)
+	g.res.RegionPanel.Draw(fb, g.res.Font, sum, g.faction)
 }
 
 // commandSpec 回這個命令階段狀態的規格；沒有就回 nil。
@@ -927,7 +974,44 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 			return m
 		}
 	}
+	return g.playerStarMap()
+}
+
+// playerStarMap 回勢力色那一張：開局時照陣營重建過的優先。
+func (g *Game) playerStarMap() *asset.Image {
+	if g.starMap != nil {
+		return g.starMap
+	}
 	return g.res.StarMap
+}
+
+// factionStarMap 依玩家陣營重建勢力色地圖。
+//
+// `strmap-regions.json` 的 `colour_796_01` 是**帝國視角**量到的一份：
+// 瓦爾哈拉（星域 0）是 6，其餘帝國星域 1、同盟 12、無主 3。同盟開局那張
+// 收據（`main1eAlly`）裡瓦爾哈拉退回 1、巴拉特（星域 31）變成 5 ——
+// 也就是**只有玩家自己的首都有特別色，帝國 6、同盟 5**，正好是
+// `rules.FactionColour` 那兩個值（`docs/re/61`）。
+//
+// 建不起來（缺原始位元組）時回 nil，由 starMapFor 退回載入時那一張。
+func (g *Game) factionStarMap(faction int) *asset.Image {
+	if g.res.StarBit == nil || g.res.StarRGN == nil || len(g.res.RegionColours) == 0 {
+		return nil
+	}
+	cols := append([]uint8(nil), g.res.RegionColours...)
+	for f := 0; f < 2; f++ {
+		if r := rules.CapitalRegion(f); r >= 0 && r < len(cols) {
+			cols[r] = rules.RegionColour(f)
+		}
+	}
+	if r := rules.CapitalRegion(faction); r >= 0 && r < len(cols) {
+		cols[r] = rules.FactionColour(faction)
+	}
+	img, err := asset.BuildStarMap(g.res.StarBit, g.res.StarRGN, cols, 16, 20, 20)
+	if err != nil {
+		return nil
+	}
+	return img
 }
 
 // Turn 回目前是第幾個回合（開局 0）。
@@ -979,7 +1063,7 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 	if !ok || len(g.res.Admiral) == 0 || len(g.res.AdmiralNames) == 0 {
 		return
 	}
-	staff := rules.StaffAdmirals(g.workRecord(), g.res.Faction)
+	staff := rules.StaffAdmirals(g.workRecord(), g.faction)
 	isStaff := map[int]bool{}
 	for _, i := range staff {
 		isStaff[i] = true
@@ -1008,7 +1092,7 @@ func (g *Game) workRecord() []byte {
 
 // staffAdmiral 回坐某個幕僚職的提督姓名與軍階的字碼（`docs/internals/30`）。
 func (g *Game) staffAdmiral(post int) (name, rank []uint16) {
-	i := rules.StaffAdmiral(g.workRecord(), post, g.res.Faction)
+	i := rules.StaffAdmiral(g.workRecord(), post, g.faction)
 	if i < 0 || i >= len(g.res.AdmiralNames) {
 		return nil, nil
 	}

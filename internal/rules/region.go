@@ -97,6 +97,22 @@ func FactionColour(faction int) uint8 {
 	}
 }
 
+// RegionColour 回星圖上一個星域的勢力色：帝國 1、同盟 12、無主 3。
+//
+// 這是**地圖上的星點顏色**，跟 FactionColour（文字色 6／5／7）不是同一套。
+// 量自 `strmap-regions.json` 的 `colour_796_01`：六個帝國星域全是 1、
+// 同盟那批全是 12、其餘 3。首都那一格是例外，見 `docs/re/61`。
+func RegionColour(faction int) uint8 {
+	switch faction {
+	case 0:
+		return 1
+	case 1:
+		return 12
+	default:
+		return 3
+	}
+}
+
 // SecurityColour 回治安那個數字用什麼顏色印：照未安定度分四段。
 //
 // 程式裡寫的是跳脫碼 `0x96`／`0x97`／`0x95`／`0x92`，減掉 `0x90` 就是色號。

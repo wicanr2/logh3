@@ -170,6 +170,7 @@ func load(t *testing.T) *Resources {
 	return &Resources{Font: fnt, OrigDir: orig, Faces: faces, Cursor: cur, Menu: menu,
 		AdmiralNames: names, StarListOrder: starOrder,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
+		StarBit: bit, StarRGN: rgn, RegionColours: colours,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
 		BudgetPanel: budget, ProductionPanel: production, DeliveryPanel: delivery,

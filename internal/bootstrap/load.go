@@ -167,6 +167,7 @@ func Load(orig, data string) (*game.Resources, error) {
 			Base:  []int{50, 75, 100, 150, 200},
 		}, Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
+		StarBit: bit, StarRGN: rgn, RegionColours: colours,
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
 		Screens: screens, StarMaps: maps, Regions: regions,
 		RegionPanel: panel, CapitalPanel: capital, BudgetPanel: budget, ProductionPanel: production,
