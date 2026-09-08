@@ -20,6 +20,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
+	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/bootstrap"
 	"github.com/wicanr2/logh3/internal/game"
 	"github.com/wicanr2/logh3/internal/gfx"
@@ -138,6 +139,10 @@ func main() {
 		"move X Y／click [X Y]／rclick [X Y]／type 數字／enter／back")
 	shotBin := flag.String("shot-bin", "", "同 -shot，但倒的是色號陣列（可與收據逐位元組比）")
 	shotAfter := flag.Int("shot-after", 4, "倒圖前先跑幾格")
+	// **預設是原版**：原版按「實行」時電腦不下任何命令（`docs/re/79`），
+	// 對拍收據都靠這個前提。強化版要玩家自己開（`docs/spec/017`）。
+	aiLevel := flag.Int("ai", -1, "電腦 AI：-1 ＝ 原版（不動）；0–3 ＝ 強化版，"+
+		"數字越大越兇（會挑目標、集結、包圍）")
 	flag.Parse()
 
 	res, err := bootstrap.Load(*orig, *data)
@@ -147,6 +152,9 @@ func main() {
 	g, err := game.New(res)
 	if err != nil {
 		die(err)
+	}
+	if *aiLevel >= 0 {
+		g.SetBrain(&ai.Focused{Difficulty: *aiLevel})
 	}
 	a := &app{
 		g:         g,
