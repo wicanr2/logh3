@@ -23,6 +23,7 @@ run() {
     -u "$(id -u):$(id -g)" \
     -v "$WORK:/work" \
     -v "$ROOT/tools/scripts:/idascripts:ro" \
+    -e IDA_TRACE_OFFSETS="${IDA_TRACE_OFFSETS:-}" \
     -w /work "$IMAGE" "$@"
 }
 

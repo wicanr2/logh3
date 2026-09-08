@@ -11,6 +11,7 @@ package rules
 //	+0x05  Adjutant  副官
 //	+0x06  Region    所在星域
 //	+0x07  Target    要去的星域；`NoTarget` ＝ 沒有命令
+//	+0x08  Parked    移動狀態；5 ＝ 這一支不動
 //
 // 其餘 100 多個 byte 還沒解，remake 不假裝知道。
 type Fleet struct {
@@ -20,13 +21,22 @@ type Fleet struct {
 	Adjutant int `json:"adjutant"` // 副官的提督索引；-1 ＝ 沒有
 	Region   int `json:"region"`   // 現在在哪一個星域
 	Target   int `json:"target"`   // 要去哪一個星域
+
+	// Parked ＝ 原版 `+0x08` 是 5：**這一支不會動**，就算有目的地也一樣
+	// （`113A:0350` 讀的就是它，`docs/re/77`）。劇本可以把艦隊設成這樣
+	// ——S2 同盟那七支全是，所以它們十二回合原地不動。
+	Parked bool `json:"parked"`
 }
 
 // NoTarget ＝ 沒有移動命令。原版在那一格填 `0xFF`（`docs/re/77`）。
 const NoTarget = -1
 
-// Moving 回這一支有沒有在移動。
-func (f Fleet) Moving() bool { return f.Target != NoTarget && f.Target != f.Region }
+// Moving 回這一支這回合會不會走。
+//
+// 原版的判斷在 `113A:0350`：`+0x08` 是 5 就不動，否則有目的地就往那邊走。
+func (f Fleet) Moving() bool {
+	return !f.Parked && f.Target != NoTarget && f.Target != f.Region
+}
 
 // Advance 把一支艦隊往目的地推進一格，回有沒有動。
 //
@@ -56,7 +66,9 @@ func (g *StarGraph) Advance(f *Fleet) bool {
 	}
 	f.Region = route[1]
 	if f.Region == f.Target {
+		// 到了：原版同時寫 `+0x08 = 5` 與 `+0x07 = 0xFF`（`113A:0350`）。
 		f.Target = NoTarget
+		f.Parked = true
 	}
 	return true
 }

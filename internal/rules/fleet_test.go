@@ -32,9 +32,26 @@ func TestAdvanceMatchesS3(t *testing.T) {
 		if f.Target != NoTarget {
 			t.Fatalf("到了 %d 命令沒清掉（還是 %d）", c.to, f.Target)
 		}
+		if !f.Parked {
+			t.Fatalf("到了 %d 沒有被標成停止（原版同時寫 +08=5）", c.to)
+		}
 		if g.Advance(&f) {
 			t.Fatal("沒有命令卻還在動")
 		}
+	}
+}
+
+// TestParkedFleetsDoNotMove ＝ 原版的 `+0x08` 是 5 就不動，就算有目的地
+// （`docs/re/77`：S2 同盟七支十二回合原地不動）。
+func TestParkedFleetsDoNotMove(t *testing.T) {
+	g := testGraph(t)
+	f := Fleet{Faction: 1, Region: 31, Target: 4, Parked: true}
+	if g.Advance(&f) || f.Region != 31 {
+		t.Fatalf("標成停止的艦隊卻走到 %d", f.Region)
+	}
+	f.Parked = false
+	if !g.Advance(&f) {
+		t.Fatal("解除停止之後還是不走")
 	}
 }
 
