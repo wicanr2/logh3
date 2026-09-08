@@ -107,6 +107,11 @@ const (
 	// StateShipDelivery 是月底的「船艦接收報告」：第十次「實行」跨月時
 	// 自己跳出來，按「確認」才回到地圖介面（`docs/re/21`、`docs/re/55`）。
 	StateShipDelivery
+
+	// StateVersusInput 是對戰模式的交棒視窗：「帝國軍／同盟軍的戰略輸入」
+	// 疊在戰略地圖上，按「確認」開始這一方的回合
+	// （`docs/re/76`、`docs/spec/016`）。
+	StateVersusInput
 )
 
 // screenSpecName 是每個命令階段狀態對應的規格名（`docs/internals/data/`）。
@@ -136,6 +141,7 @@ var screenSpecName = map[State]string{
 	StateFleetAdjutant:   "screen-fleet-adjutant",
 	StateFleetComposition: "screen-fleet-composition",
 	StateFormation:        "screen-formation",
+	StateVersusInput:      "screen-versus-input",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -391,6 +397,29 @@ type Game struct {
 	// menuRow 是主選單點了哪一列（-1 ＝ 還沒點）。防拷答對之後要靠它
 	// 決定是開新遊戲還是進存檔畫面。
 	menuRow int
+
+	// versus ＝ 主選單選了第 2 列「對戰」：兩個人輪流下命令
+	// （`docs/re/76`、`docs/spec/016`）。
+	versus bool
+
+	// sides 是對戰模式下兩邊各自的錢與造船計劃，索引就是陣營。
+	// 世界資料（星域記錄、行星表）兩邊共用一份——月底的成長是就地
+	// 寫回的，一個月只能跑一次。
+	//
+	// ⚠ **兩邊各自的開局數字是推論，不是量到的**（`docs/spec/016`）：
+	// 收據只走到帝國的第一張月初報告。
+	sides [2]side
+}
+
+// side 是對戰模式下屬於某一個陣營的那幾筆狀態。單人模式用不到——
+// 那時 Game 上那幾個欄位就是玩家自己的。
+type side struct {
+	military, taxTotal int
+	pct                [rules.BuildPlanRows]int
+	treasury           rules.Treasury
+	monthReport        rules.Budget
+	building           rules.BuildPlan
+	fleets             []int
 }
 
 // 星圖畫在畫面的 (0,40)，320×300，圖塊 16×20（`docs/internals/12`）。
@@ -406,6 +435,95 @@ const (
 // 原版開機就跑一次月底結算，796 年 1 月的局面是那一次的結果
 // （`docs/re/33`、`docs/re/35`）；換陣營要重跑一次，因為收的稅是
 // **自己那一方的星域**加出來的。
+// execute 是系統指令的「實行」。
+//
+// 單人模式一次推進三天（`docs/re/20`、`docs/re/25`）。對戰模式的意思是
+// 「我這一方下完了」：帝國按完換同盟、日期不動，同盟按完才推進三天並
+// 換回帝國（`docs/re/76`，收據 `vs5`／`vs6`）。
+func (g *Game) execute() {
+	if g.versus {
+		g.sides[g.faction] = g.side()
+		next := 1 - g.faction
+		g.enterSide(next)
+		g.state = StateVersusInput
+		if next != 0 {
+			return
+		}
+		// 換回帝國 ＝ 這一輪兩邊都下完了，日期才推進。
+	}
+	g.advanceTurn()
+}
+
+// advanceTurn 推進一個回合 ＝ 三天。
+func (g *Game) advanceTurn() {
+	g.turn++
+	// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
+	// 並跳出船艦接收報告。
+	//
+	// ⚠ **對戰模式的跨月沒有量過**（`docs/spec/016`）：這裡照單人模式
+	// 只結算目前這一方，另一方的錢停在上個月。要往下走得先有收據。
+	if g.turn%rules.TurnsPerMonth == 0 {
+		g.delivered = g.building
+		g.reportYear, g.reportMonth, _ = g.Date()
+		// 報告掛的是**剛結束的那個月**，日期已經翻到次月 1 日。
+		g.reportMonth--
+		if g.reportMonth == 0 {
+			g.reportMonth, g.reportYear = 12, g.reportYear-1
+		}
+		g.monthEnd()
+		if g.commandSpec(StateShipDelivery) != nil {
+			g.state = StateShipDelivery
+			return
+		}
+	}
+	if g.versus {
+		g.state = StateVersusInput
+		return
+	}
+	g.state = StateCommandPhase
+}
+
+// startVersus 開一局對戰。
+//
+// 兩邊的開局狀態各算一次：`startNewGame` 會先把世界還原成開局值再結算，
+// 所以跑兩次不會把成長疊上去——留在世界上的是第二次那一份，而兩次的
+// 成長完全相同，差別只在收誰的稅。
+//
+// ⚠ **兩邊各自的開局數字是推論**：收據只走到帝國的第一張月初報告
+// （`docs/spec/016`）。
+func (g *Game) startVersus() {
+	g.versus = true
+	for f := 0; f < 2; f++ {
+		g.startNewGame(f)
+		g.fleets = nil
+		g.sides[f] = g.side()
+	}
+	g.enterSide(0)
+	g.state = StateVersusInput
+}
+
+// side 把目前這一方的狀態收起來。
+func (g *Game) side() side {
+	return side{military: g.military, taxTotal: g.taxTotal, pct: g.pct,
+		treasury: g.treasury, monthReport: g.monthReport,
+		building: g.building, fleets: g.fleets}
+}
+
+// enterSide 換到某一方：陣營、地圖顏色與那一方的錢一起換過去。
+func (g *Game) enterSide(faction int) {
+	g.faction = faction
+	g.starMap = g.factionStarMap(faction)
+	s := g.sides[faction]
+	g.military, g.taxTotal, g.pct = s.military, s.taxTotal, s.pct
+	g.treasury, g.monthReport = s.treasury, s.monthReport
+	g.building, g.fleets = s.building, s.fleets
+	// 交棒的當下底板是乾淨的：右側面板只剩陣營那一行與按鈕，
+	// 左下角是空的（收據 `vs3`／`vs5`）。
+	g.selectedRegion = -1
+	g.detailAdmiral = -1
+	g.reportLayer = 0
+}
+
 func (g *Game) startNewGame(faction int) {
 	g.restoreWorld()
 	g.faction = faction
@@ -484,8 +602,11 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 
 // pickQuestion 決定防拷問答的題目與答案。
 //
-// 題目就是規格裡那張照片的編號——原版問的是「照片上那位提督的占領能力」，
-// 答案是 `ADMIRAL.DT*` 同一筆記錄的 +11（`docs/internals/08`）。
+// 題目就是規格裡那張照片的編號——原版問的是「照片上那位提督的占領能力」。
+//
+// ⚠ 這裡讀的是 `+11`（統率力），而畫面問的占領在 `+0x19`。之所以沒差，
+// 是因為**原版根本不驗答案**（`docs/re/75`）：`Answer()` 只給文件與
+// 測試看，不參與判斷。題目是怎麼挑的仍然未解（`docs/re/74`）。
 func (g *Game) pickQuestion() error {
 	i := g.res.CopyProt.Face.Index
 	off := i*AdmiralRecord + occupyOffset
@@ -541,6 +662,14 @@ func (g *Game) Click(x, y int) {
 	case StateShipDelivery:
 		// 報告只有一個「確認」鈕，點哪裡都收掉——哪裡按不算數還沒量過。
 		g.state = StateCommandPhase
+	case StateVersusInput:
+		// 交棒視窗只有「確認」一顆（`docs/re/76`）。點在框裡但熱區外
+		// 什麼都不會發生（收據 `vs3`），所以走 `BoxAt`。
+		if spec := g.commandSpec(StateVersusInput); spec != nil {
+			if w := spec.Windows["overlay"]; w != nil && w.BoxAt(x, y) == 0 {
+				g.state = StateMainGame
+			}
+		}
 	case StateMainGame:
 		// 可點區域是熱區清單，不是「視窗內就好」（`docs/re/09`）。
 		switch g.res.MainGame.HitTest(x, y) {
@@ -674,25 +803,7 @@ func (g *Game) Click(x, y int) {
 			top := barRow + n*rowHeight
 			if x >= b.X && x < b.X+b.ItemW && y >= top && y < top+rowHeight {
 				if item == StateExecute {
-					// 一次「實行」推進一個回合 ＝ 三天（`docs/re/20`、`docs/re/25`）。
-					g.turn++
-					// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
-					// 並跳出船艦接收報告。
-					if g.turn%rules.TurnsPerMonth == 0 {
-						g.delivered = g.building
-						g.reportYear, g.reportMonth, _ = g.Date()
-						// 報告掛的是**剛結束的那個月**，日期已經翻到次月 1 日。
-						g.reportMonth--
-						if g.reportMonth == 0 {
-							g.reportMonth, g.reportYear = 12, g.reportYear-1
-						}
-						g.monthEnd()
-						if g.commandSpec(StateShipDelivery) != nil {
-							g.state = StateShipDelivery
-							return
-						}
-					}
-					g.state = StateCommandPhase
+					g.execute()
 					return
 				}
 				if g.commandSpec(item) != nil {
@@ -743,6 +854,9 @@ func (g *Game) RightClick(x, y int) {
 		g.state = StateStandbyAdmirals
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
+	case StateVersusInput:
+		// 交棒視窗按右鍵會怎樣**沒有量過**，先什麼都不做——
+		// 這一步不能靠猜，猜錯會讓對戰模式跳掉一方的回合。
 	default:
 		if _, ok := screenSpecName[g.state]; ok && g.state != StateCommandPhase {
 			g.state = StateCommandPhase
@@ -772,9 +886,12 @@ func (g *Game) Key(c byte) {
 			// （`docs/re/38`、`docs/spec/007`）。
 			if g.menuRow == menuRowLoad && g.commandSpec(StateLoadGame) != nil {
 				g.state = StateLoadGame
+			} else if g.menuRow == menuRowVersus && g.commandSpec(StateVersusInput) != nil {
+				// 第 2 列「對戰」：兩個人輪流下命令。先跳帝國的交棒視窗
+				// （`docs/re/76`、`docs/spec/016`）。
+				g.startVersus()
 			} else {
 				// 第 0 列帝國、第 1 列同盟（`docs/re/61`）。
-				// 第 2 列「對戰」是兩人對打，**還沒解**，先當帝國。
 				//
 				// **只有換邊才重開局**：開局的月底結算在 New() 就跑過
 				// 一次了，再跑一次會把成長與收稅疊上去。
@@ -1045,6 +1162,13 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 	if _, ok := screenSpecName[g.state]; !ok {
 		return
 	}
+	// 對戰交棒的當下只有陣營那一行與按鈕（`docs/spec/016`）。
+	if g.state == StateVersusInput {
+		if c, _, ok := g.capitalSummary(); ok {
+			g.res.CapitalPanel.DrawHandover(fb, g.res.Font, c, g.faction)
+		}
+		return
+	}
 	// 月底結算的當下右側面板的字整塊是空的，只寫「戰略模式處理中」——
 	// 算出來的那幾塊不畫，但按鈕與分頁鈕還在。
 	if g.state == StateShipDelivery {
@@ -1088,7 +1212,10 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
 		StateFleetNumber, StateFleetAdjutant, StateFleetComposition,
-		StateFormation:
+		StateFormation,
+		// 交棒視窗的游標停在剛剛按下確認／實行的地方：`vs3` 在主選單
+		// 那一列 (300,250)，`vs5`／`vs6` 在「實行」那一格 (560,125)。
+		StateVersusInput:
 	default:
 		return
 	}
@@ -1717,7 +1844,10 @@ func (g *Game) factionStarMap(faction int) *asset.Image {
 			cols[r] = rules.RegionColour(f)
 		}
 	}
-	if r := rules.CapitalRegion(faction); r >= 0 && r < len(cols) {
+	// **對戰模式不上玩家色**：交棒視窗底下的地圖兩邊完全一樣
+	// （`vs5` 對 `vs3` 扣掉游標只差六個字），帝國首都那一格是星域
+	// 本來的色 1，不是單人模式那個色 6。
+	if r := rules.CapitalRegion(faction); r >= 0 && r < len(cols) && !g.versus {
 		cols[r] = rules.FactionColour(faction)
 	}
 	img, err := asset.BuildStarMap(g.res.StarBit, g.res.StarRGN, cols, 16, 20, 20)

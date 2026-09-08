@@ -114,13 +114,17 @@ type GameWindow struct {
 		StaffPost *int `json:"staff_post"`
 	} `json:"face"`
 
-	// FactionText 是「同一個位置、兩個陣營印不同字」的行。目前只有
-	// 貨幣單位：帝國「單位＝億帝國馬克」、同盟「單位＝億帝納」
-	// （`docs/re/64`）。`variants` 依陣營索引。
+	// FactionText 是「同一個位置、兩個陣營印不同字」的行：貨幣單位
+	// （帝國「單位＝億帝國馬克」、同盟「單位＝億帝納」，`docs/re/64`）
+	// 與對戰交棒視窗的標題（`docs/re/76`）。`variants` 依陣營索引。
+	//
+	// **兩邊不一定同色**：貨幣單位兩邊都是色 7，陣營名用的是陣營色
+	// （帝國 6、同盟 5）。`inks` 沒給就兩邊都用 `ink`。
 	FactionText []struct {
 		X        int        `json:"x"`
 		Y        int        `json:"y"`
 		Ink      uint8      `json:"ink"`
+		Inks     []uint8    `json:"inks"`
 		Text     []string   `json:"text"`
 		Variants [][]uint16 `json:"variants"`
 	} `json:"faction_text"`
@@ -304,6 +308,23 @@ func (w *GameWindow) SelectRowAt(x, y int) int {
 			continue
 		}
 		b := w.Boxes[k]
+		if x >= b.X+2 && x < b.X+b.W-2 && y >= b.Y && y < b.Y+b.H {
+			return i
+		}
+	}
+	return -1
+}
+
+// BoxAt 回畫面座標 (x,y) 落在第幾個框上；不在任何一個上面回 -1。
+//
+// 命中的範圍與 `SelectRowAt` 同一條規則：熱區左右各比畫出來的框窄
+// 2 像素（`docs/re/68`）。收據 `vs3` 點在 (400,262)——框裡、熱區外
+// ——原版什麼都沒做。
+func (w *GameWindow) BoxAt(x, y int) int {
+	if w == nil {
+		return -1
+	}
+	for i, b := range w.Boxes {
 		if x >= b.X+2 && x < b.X+b.W-2 && y >= b.Y && y < b.Y+b.H {
 			return i
 		}
@@ -674,6 +695,10 @@ func (w *GameWindow) DrawFactionText(fb *gfx.Framebuffer, fnt *font.Font, factio
 		if faction < 0 || faction >= len(t.Variants) {
 			continue
 		}
-		drawFull(fb, fnt, t.X, t.Y, t.Variants[faction], t.Ink)
+		ink := t.Ink
+		if faction < len(t.Inks) {
+			ink = t.Inks[faction]
+		}
+		drawFull(fb, fnt, t.X, t.Y, t.Variants[faction], ink)
 	}
 }

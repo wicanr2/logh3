@@ -1134,3 +1134,71 @@ func loadBiographies(path string) ([][]uint16, error) {
 	}
 	return out, nil
 }
+
+// TestVersusHandover 走對戰模式的一輪：交棒視窗 → 確認 → 實行 → 換邊
+// （`docs/re/76`、`docs/spec/016`）。
+func TestVersusHandover(t *testing.T) {
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	// 主選單第 2 列「對戰」。收據點的是滑鼠 (300,210) ＝ 畫面 (300,250)。
+	g.Click(300, 250)
+	if g.State() != StateCopyProtection {
+		t.Fatal("點了對戰沒有進防拷問答")
+	}
+	for _, c := range []byte{'1', '2', '6', '\r'} {
+		g.Key(c)
+	}
+	if g.State() != StateVersusInput {
+		t.Fatalf("答完防拷之後在 %v，預期交棒視窗", g.State())
+	}
+	matches(t, g, "vs3")
+
+	// 框裡、熱區外：原版什麼都不做（收據 `vs3` 點的就是這裡）。
+	g.Click(400, 262)
+	if g.State() != StateVersusInput {
+		t.Fatalf("點在確認鈕的熱區外卻換了畫面：%v", g.State())
+	}
+
+	// 確認 ＝ 開始帝國的回合，接的是月初會計報告（收據 `vs4`）。
+	g.Click(432, 263)
+	if g.State() != StateMainGame {
+		t.Fatalf("按了確認之後在 %v，預期月初報告", g.State())
+	}
+
+	// 關掉兩層報告 → 戰略地圖；系統指令 → 實行。
+	g.RightClick(300, 240)
+	g.RightClick(300, 240)
+	if g.State() != StateCommandPhase {
+		t.Fatalf("關完報告之後在 %v，預期戰略地圖", g.State())
+	}
+	_, _, day := g.Date()
+	if day != 1 {
+		t.Fatalf("帝國下命令時是 %d 日，預期 1 日", day)
+	}
+	g.Click(544, 125)
+	g.Click(560, 125)
+	if g.State() != StateVersusInput || g.faction != 1 {
+		t.Fatalf("帝國按完實行在 %v／陣營 %d，預期同盟的交棒視窗",
+			g.State(), g.faction)
+	}
+	if _, _, day = g.Date(); day != 1 {
+		t.Fatalf("換同盟時是 %d 日——換邊不推進日期（`docs/re/76`）", day)
+	}
+	matches(t, g, "vs5")
+
+	// 同盟走同一條：確認 → 關報告 → 實行。這一次日期才推進三天。
+	g.Click(432, 263)
+	g.RightClick(300, 240)
+	g.RightClick(300, 240)
+	g.Click(544, 125)
+	g.Click(560, 125)
+	if g.State() != StateVersusInput || g.faction != 0 {
+		t.Fatalf("同盟按完實行在 %v／陣營 %d，預期換回帝國", g.State(), g.faction)
+	}
+	if _, _, day = g.Date(); day != 4 {
+		t.Fatalf("兩邊都實行之後是 %d 日，預期 4 日", day)
+	}
+	matches(t, g, "vs6")
+}

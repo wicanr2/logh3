@@ -141,6 +141,25 @@ func LoadCapitalPanel(path string) (*CapitalPanel, error) {
 // Draw 把右側面板畫出來。region 是左下角那塊的版面（首都摘要借它畫）。
 func (p *CapitalPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, region *RegionPanel,
 	c rules.CapitalSummary, faction int) {
+	p.drawFactionLine(fb, fnt, c, faction)
+	for _, r := range p.Rows {
+		for _, fld := range []*PanelField{r.Left, r.Right} {
+			if fld == nil {
+				continue
+			}
+			drawFull(fb, fnt, fld.LabelX, r.Y, fld.Label, p.Ink)
+			drawRight(fb, fnt, fld.Right, r.Y, fld.value(c), p.Ink)
+		}
+	}
+
+	p.drawButtons(fb, fnt)
+	p.drawTabs(fb, fnt)
+	region.DrawAt(fb, fnt, c.Region, faction, p.Summary.DX, p.Summary.DY)
+}
+
+// drawFactionLine 畫最上面那一行：陣營名（陣營色）＋ 宇宙曆年月日。
+func (p *CapitalPanel) drawFactionLine(fb *gfx.Framebuffer, fnt *font.Font,
+	c rules.CapitalSummary, faction int) {
 	ink := p.FactionLine.Ink
 	for _, pre := range p.FactionLine.Prefix {
 		if pre.Faction == faction {
@@ -156,20 +175,18 @@ func (p *CapitalPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, region *RegionP
 	drawFull(fb, fnt, f.MonthMarkX, f.Y, []uint16{f.MonthMark}, ink)
 	drawRight(fb, fnt, f.DayRight, f.Y, strconv.Itoa(c.Day), ink)
 	drawFull(fb, fnt, f.DayMarkX, f.Y, []uint16{f.DayMark}, ink)
+}
 
-	for _, r := range p.Rows {
-		for _, fld := range []*PanelField{r.Left, r.Right} {
-			if fld == nil {
-				continue
-			}
-			drawFull(fb, fnt, fld.LabelX, r.Y, fld.Label, p.Ink)
-			drawRight(fb, fnt, fld.Right, r.Y, fld.value(c), p.Ink)
-		}
-	}
-
+// DrawHandover 畫對戰模式交棒那一刻的右側面板：**陣營那一行、
+// 三顆命令按鈕與分頁鈕，其餘全空**。
+//
+// 軍事費／總稅收那一列與星域摘要那一塊都還沒畫（收據 `vs3`／`vs5`），
+// 要等玩家按下確認、關掉月初報告才填上去（`docs/spec/016`）。
+func (p *CapitalPanel) DrawHandover(fb *gfx.Framebuffer, fnt *font.Font,
+	c rules.CapitalSummary, faction int) {
+	p.drawFactionLine(fb, fnt, c, faction)
 	p.drawButtons(fb, fnt)
 	p.drawTabs(fb, fnt)
-	region.DrawAt(fb, fnt, c.Region, faction, p.Summary.DX, p.Summary.DY)
 }
 
 // DrawOpening 畫月初會計報告那一刻的右側面板：**只有首都那一塊**。

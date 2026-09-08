@@ -86,6 +86,7 @@ tools/specs.sh cmd-menu     # 只做一張
 | `screen-admiral-detail` | 提督詳細資料 | `adm1e` |
 | `screen-admiral-bio` | 提督經歷（人物傳）| `keireki1e` |
 | `screen-fleet-org` | 艦隊編成 | `fleet1e` |
+| `screen-versus-input` | 對戰的交棒視窗 | `vs3`（帝國）／`vs5`（同盟）|
 
 ## 現在的限制
 

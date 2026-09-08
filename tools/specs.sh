@@ -268,4 +268,17 @@ if want ship-delivery; then
   py tools/scripts/box_text.py turnmonth2 screen-ship-delivery overlay 0
 fi
 
+
+# 對戰的交棒視窗（`docs/spec/016`）。標題前三個字是陣營名，用陣營色印
+# （帝國 6、同盟 5），所以要兩張收據：`vs3` 帝國、`vs5` 同盟。
+# 那一列上有**兩行**：陣營名與接在後面的「的戰略輸入」，只有前者跟陣營走。
+if want versus-input; then
+  py tools/scripts/overlay_spec.py vs3 screen-command-phase screen-versus-input \
+    128 180 479 299 300 210 "414:260:449:279" "" "" "" "" "6,5"
+  py tools/scripts/box_text.py vs3 screen-versus-input overlay 0
+  py tools/scripts/faction_text.py screen-versus-input overlay 202 vs3 vs5
+  # 底板只差右下角那兩顆鈕：交棒的當下裡面各有一隻箭頭，命令階段是空的。
+  py tools/scripts/versus_board.py vs3 screen-versus-input
+fi
+
 exit 0

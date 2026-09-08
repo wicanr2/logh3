@@ -30,21 +30,40 @@ if not old:
 line = old[0]
 x, ink = line['cells'][0]['x'], line.get('ink', 7)
 
+# **兩個陣營的字不一定同色。** 貨幣單位那一行兩邊都是色 7，但陣營名
+# （「帝國軍」／「同盟軍」）是用陣營色印的——帝國 6、同盟 5
+# （`rules.FactionColour`）。所以每一份收據各自試一遍顏色，
+# 只用帝國那一個去讀同盟那張會整行讀不到。
+INKS = [ink] + [i for i in (6, 5, 7) if i != ink]
+
 full, half = font_lookup('/orig/GRAPH.IMG')
-variants, texts = [], []
+variants, texts, inks = [], [], []
 for b in batches:
     rows, _ = load_screen(f'/work/workplace/oracle/{b}/screen.bin')
-    cells = read_line(rows, x, y, x + 400, ink, full, half)
+    cells, hit = [], ink
+    for cand in INKS:
+        cells = read_line(rows, x, y, x + 400, cand, full, half)
+        if cells:
+            hit = cand
+            break
+    inks.append(hit)
     if not cells:
         sys.exit(f'收據 {b} 的 ({x},{y}) 讀不到字')
     variants.append([c['code'] for c in cells])
     texts.append(''.join(bytes.fromhex(c['hex']).decode('big5', 'replace')
                          if c['w'] == 16 else chr(c['code']) for c in cells))
 
-w['lines'] = [l for l in w['lines'] if l['y'] != y]
+# **只搬走那一行，不是那一列。** 同一個 y 上可以有兩行：陣營名（陣營色）
+# 與後面接的固定字（色 7）——對戰的交棒視窗就是這樣。整列刪掉的話，
+# 固定字那半邊會從規格裡消失，畫出來只剩「帝國軍」。
+w['lines'] = [l for l in w['lines']
+              if not (l['y'] == y and l['cells'][0]['x'] == x
+                      and l.get('ink', 7) == ink)]
 w.setdefault('faction_text', [])
 w['faction_text'] = [t for t in w['faction_text'] if t['y'] != y]
-w['faction_text'].append({'x': x, 'y': y, 'ink': ink,
-                          'text': texts, 'variants': variants})
+entry = {'x': x, 'y': y, 'ink': ink, 'text': texts, 'variants': variants}
+if len(set(inks)) > 1:
+    entry['inks'] = inks
+w['faction_text'].append(entry)
 json.dump(spec, open(path, 'w'), ensure_ascii=False, indent=1)
 print(f'{name}／{win} y={y}：{texts}')
