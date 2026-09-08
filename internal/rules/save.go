@@ -32,10 +32,19 @@ const (
 	FleetCount  = 32
 
 	fleetFaction = 0x01
-	fleetUnused  = 0x04 // FF ＝ 這一格沒在用
-	fleetRegion  = 0x06
-	fleetSlots   = 0x10 // 十個 4-byte 的槽，前兩 byte 是艦艇索引
-	fleetSlotN   = 10
+	fleetNumber  = 0x02 // 艦隊編號
+	// fleetUnused 同時是**提督索引**：`113A:05CF` 拿它 ×28 去查
+	// 執行期提督表 `ds:B77C`（`docs/re/77`）。沒有提督就是沒在用。
+	fleetUnused   = 0x04 // FF ＝ 這一格沒在用
+	fleetAdjutant = 0x05
+	fleetRegion   = 0x06
+	fleetTarget   = 0x07 // 要去的星域；FF ＝ 沒有命令
+	fleetState    = 0x08 // 移動狀態；5 ＝ 不動（`docs/re/77`）
+	fleetSlots    = 0x10 // 十個 4-byte 的槽，前兩 byte 是艦艇索引
+	fleetSlotN    = 10
+
+	// fleetParked 是 `+0x08` 代表「這一支不會動」的值（`113A:0350`）。
+	fleetParked = 5
 
 	// ShipRecord 是艦艇池一筆的長度，ShipCount 是筆數（`docs/re/42`）。
 	ShipRecord = 78
@@ -237,6 +246,36 @@ func (s *Slot) FleetFaction(i int) int { return int(s.fleet(i)[fleetFaction]) }
 
 // FleetRegion 回艦隊所在的星域編號。
 func (s *Slot) FleetRegion(i int) int { return int(s.fleet(i)[fleetRegion]) }
+
+// Fleets 把存檔裡的艦隊表讀成 `[]Fleet`（`docs/internals/33`）。
+//
+// **沒在用的那幾格不收**：原版整筆填 `FF`，只留編號。
+func (s *Slot) Fleets() []Fleet {
+	var out []Fleet
+	for i := 0; i < FleetCount; i++ {
+		if !s.FleetUsed(i) {
+			continue
+		}
+		r := s.fleet(i)
+		f := Fleet{
+			Number:   int(r[fleetNumber]),
+			Faction:  int(r[fleetFaction]),
+			Admiral:  int(r[fleetUnused]),
+			Adjutant: int(r[fleetAdjutant]),
+			Region:   int(r[fleetRegion]),
+			Target:   NoTarget,
+			Parked:   r[fleetState] == fleetParked,
+		}
+		if r[fleetAdjutant] == 0xFF {
+			f.Adjutant = -1
+		}
+		if t := r[fleetTarget]; t != 0xFF {
+			f.Target = int(t)
+		}
+		out = append(out, f)
+	}
+	return out
+}
 
 // FleetShips 回這支艦隊十個槽指到的艦艇索引（`docs/re/42`）。
 func (s *Slot) FleetShips(i int) []int {

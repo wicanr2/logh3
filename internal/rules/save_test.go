@@ -293,3 +293,73 @@ func TestShipTypeUnitSize(t *testing.T) {
 		t.Errorf("只對到 %d 組，太少", seen)
 	}
 }
+
+// TestSlotFleetsMatchDump 存檔讀出來的艦隊表要與**執行期倒出來的那一份**
+// 相同（`docs/re/77` 的收據 `s2ai0`／`s3ai0`）。
+//
+// 兩份的來源不同：這裡讀的是 `FLEET.DT?`，收據量的是遊戲載入之後
+// `ds:C074` 的內容。對得起來才表示欄位讀對了。
+func TestSlotFleetsMatchDump(t *testing.T) {
+	cases := []struct {
+		ext  string
+		want []Fleet
+	}{
+		// S2「諸神的黃昏」：第 9 格。
+		{"9", []Fleet{
+			{Number: 1, Faction: 0, Region: 2, Target: 14},
+			{Number: 3, Faction: 0, Region: 7, Target: 14},
+			{Number: 4, Faction: 0, Region: 8, Target: 13},
+			{Number: 5, Faction: 0, Region: 0, Target: NoTarget, Parked: true},
+			{Number: 6, Faction: 0, Region: 7, Target: 14},
+			{Number: 8, Faction: 0, Region: 8, Target: 13},
+			{Number: 9, Faction: 0, Region: 2, Target: 0, Parked: true},
+			{Number: 12, Faction: 0, Region: 0, Target: NoTarget, Parked: true},
+			{Number: 13, Faction: 0, Region: 2, Target: 14},
+			{Number: 15, Faction: 0, Region: 8, Target: 13},
+			{Number: 16, Faction: 0, Region: 2, Target: 14},
+			{Number: 1, Faction: 1, Region: 13, Target: 0, Parked: true},
+			{Number: 2, Faction: 1, Region: 31, Target: 4, Parked: true},
+			{Number: 5, Faction: 1, Region: 31, Target: 4, Parked: true},
+			{Number: 13, Faction: 1, Region: 13, Target: 0, Parked: true},
+			{Number: 14, Faction: 1, Region: 31, Target: 4, Parked: true},
+			{Number: 15, Faction: 1, Region: 31, Target: 4, Parked: true},
+			{Number: 16, Faction: 1, Region: 13, Target: 0, Parked: true},
+		}},
+		// S3「巴米利恩會戰」：第 10 格。同盟六支全部在萊加爾、
+		// 目的地是達希利，而且**不是 Parked**——所以它們會動。
+		{"A", []Fleet{
+			{Number: 1, Faction: 0, Region: 25, Target: 0, Parked: true},
+			{Number: 3, Faction: 0, Region: 25, Target: 0, Parked: true},
+			{Number: 4, Faction: 0, Region: 25, Target: 0, Parked: true},
+			{Number: 5, Faction: 0, Region: 25, Target: 0, Parked: true},
+			{Number: 6, Faction: 0, Region: 25, Target: 0, Parked: true},
+			{Number: 8, Faction: 0, Region: 13, Target: 0, Parked: true},
+			{Number: 9, Faction: 0, Region: 23, Target: 25},
+			{Number: 10, Faction: 0, Region: 14, Target: 0, Parked: true},
+			{Number: 12, Faction: 0, Region: 25, Target: 0, Parked: true},
+			{Number: 13, Faction: 0, Region: 28, Target: 26},
+			{Number: 15, Faction: 0, Region: 23, Target: 25},
+			{Number: 16, Faction: 0, Region: 25, Target: 0, Parked: true},
+			{Number: 1, Faction: 1, Region: 27, Target: 26},
+			{Number: 2, Faction: 1, Region: 27, Target: 26},
+			{Number: 13, Faction: 1, Region: 27, Target: 26},
+			{Number: 14, Faction: 1, Region: 27, Target: 26},
+			{Number: 15, Faction: 1, Region: 27, Target: 26},
+			{Number: 16, Faction: 1, Region: 27, Target: 26},
+		}},
+	}
+	for _, c := range cases {
+		got := loadSlot(t, c.ext).Fleets()
+		if len(got) != len(c.want) {
+			t.Fatalf("DT%s 讀出 %d 支，預期 %d 支", c.ext, len(got), len(c.want))
+		}
+		for i, w := range c.want {
+			g := got[i]
+			if g.Number != w.Number || g.Faction != w.Faction ||
+				g.Region != w.Region || g.Target != w.Target || g.Parked != w.Parked {
+				t.Errorf("DT%s 第 %d 支 = %+v，預期編號%d 陣營%d 星域%d 目的%d 停%v",
+					c.ext, i, g, w.Number, w.Faction, w.Region, w.Target, w.Parked)
+			}
+		}
+	}
+}

@@ -613,6 +613,9 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.turn = sl.Turn
 	g.military = sl.Military
 	g.taxTotal = sl.TaxTotal
+	// 存檔裡就有兩邊的艦隊（`FLEET.DT?` ＝ 執行期那張表，`docs/re/41`）。
+	// 讀進來之後 remake 才有敵方的艦隊可以畫、可以推進。
+	g.fleets = sl.Fleets()
 	g.selectedRegion = -1
 	g.state = StateCommandPhase
 }
