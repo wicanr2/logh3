@@ -24,3 +24,10 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`008`](008-save-slot-list.md) | 存檔畫面那 11 列（從 `SAVEDATA.IDX` 算）| `CONFORMED` |
 | [`009`](009-save-slot-writing.md) | 存檔寫出 | `CONFORMED` |
 | [`010`](010-save-game-screen.md) | 「存進度」畫面 | `CONFORMED` |
+| [`011`](011-opening-report.md) | 疊在戰略底板上那幾張裡跟局面走的內容 | `CONFORMED` |
+| [`012`](012-admiral-detail.md) | 提督詳細資料 | `CONFORMED` |
+| [`013`](013-fleet-organisation.md) | 艦隊編成 | `CONFORMED` |
+| [`015`](015-fleet-composition.md) | 艦隊組成 | `CONFORMED` |
+| [`016`](016-versus-mode.md) | 對戰模式 | `CONFORMED` |
+| [`017`](017-computer-ai.md) | 電腦 AI：原版行為與強化版 | 兩層都有了 |
+| [`018`](018-battle-resolution.md) | 戰鬥結算（射程、攻擊名單、損失分攤）| 部分 `READY` |
