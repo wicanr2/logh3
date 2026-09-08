@@ -9,7 +9,7 @@
 | 一輪的總損失 | `READY` | `21A0:0004`–`0136`，已實作並對過欄位 |
 | 損失分攤到分隊 | `CONFORMED` | `203A:0593`，九個分隊實測相同 |
 | 單擊的分母 K | `READY` | `docs/re/94`：橢圓極座標式，整條鏈照原版的 16.16 定點重算 |
-| 單擊的攻擊係數 | `READY` | `rules.ShipKindTable.SkirmishAttack`：`+0x16 ÷ K` |
+| 單擊的攻擊係數 | `READY` | `rules.ShipKindTable.SkirmishAttack`：攻擊方 `+0x16` ÷ K，K 是**目標**的方向性防禦 |
 | 單擊的量 | `DRAFT` | 算式與係數都齊了，還沒換掉每回合的艦隊層結算 |
 | 開火順序 | `DRAFT` | 比較器 `2264:036E` 還沒讀 |
 | 戰鬥結束條件 | `READY` | `docs/re/92`：主迴圈 `cmp ds:8F1A, 9`，最多九個回合 |

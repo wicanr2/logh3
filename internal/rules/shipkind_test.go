@@ -38,7 +38,8 @@ func TestShipKindTableValues(t *testing.T) {
 	}
 }
 
-// 攻擊係數會隨方向變，而且 K 在分母——方向越有利，係數越大。
+// 攻擊係數會隨方向變，而且 K 在分母——從目標防禦弱的方向打，係數越大。
+// （傳進去的陣營／艦種／能力都是**目標**的，`docs/re/94`。）
 func TestSkirmishAttackDirection(t *testing.T) {
 	tab := loadKinds(t)
 	const attack, ability = 20000, 100

@@ -64,8 +64,9 @@ func (t *ShipKindTable) Kind(faction, kind int) (ShipKind, bool) {
 // SkirmishAttack 回單擊算式裡的攻擊係數 `攻擊方 +0x16 ÷ K`
 // （`2350:0023`，`docs/re/86`、`docs/re/94`）。
 //
-// `attack` 是艦艇記錄的 `+0x16`，`ability` 是艦隊記錄的 `+0x3D`，
-// `dir` 是方向索引。表裡查不到那個艦種就回 0。
+// ⚠ **`faction`／`kind`／`ability` 是「目標」的**，不是攻擊方的：K 是
+// 目標的方向性防禦（橢圓），只有 `attack`（艦艇記錄的 `+0x16`）取自
+// 攻擊方。`dir` 是方向索引。表裡查不到那個艦種就回 0。
 func (t *ShipKindTable) SkirmishAttack(faction, kind, dir, ability, attack int) int {
 	k, ok := t.Kind(faction, kind)
 	if !ok {
