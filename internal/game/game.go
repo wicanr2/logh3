@@ -76,6 +76,11 @@ const (
 	StateSettings
 	StateQuitConfirm
 
+	// StateAdmiralDetail 是提督的詳細資料：從「出擊命令」的待命中提督
+	// 清單點一位提督開出來，下面有經歷／中止／出擊三顆按鈕
+	// （`docs/re/65`）。
+	StateAdmiralDetail
+
 	// StateShipDelivery 是月底的「船艦接收報告」：第十次「實行」跨月時
 	// 自己跳出來，按「確認」才回到地圖介面（`docs/re/21`、`docs/re/55`）。
 	StateShipDelivery
@@ -101,6 +106,7 @@ var screenSpecName = map[State]string{
 	StateSettings:        "screen-settings",
 	StateQuitConfirm:     "screen-quit-confirm",
 	StateShipDelivery:    "screen-ship-delivery",
+	StateAdmiralDetail:   "screen-admiral-detail",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -312,6 +318,12 @@ type Game struct {
 	// 會就地改寫那兩份，重開新遊戲時要先還原（見 `snapshotWorld`）。
 	worldStellar, worldPlanets []byte
 
+	// listIndex 是目前清單每一列對應的提督索引（`setListRows` 填）。
+	listIndex []int
+
+	// detailAdmiral 是提督詳細資料那張畫面在看哪一位；-1 ＝ 沒有。
+	detailAdmiral int
+
 	// starMap 是照玩家陣營重建的勢力色地圖（首都那格的顏色跟著玩家走）。
 	// nil 表示還沒建，畫的時候退回 `Resources.StarMap`。
 	starMap *asset.Image
@@ -384,7 +396,7 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		menuRow: -1}
+		menuRow: -1, detailAdmiral: -1}
 	g.startNewGame(res.Faction)
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
@@ -508,6 +520,12 @@ func (g *Game) Click(x, y int) {
 			if g.res.AdmiralList != nil {
 				g.state = StateAdmiralList
 			}
+		}
+	case StateStandbyAdmirals:
+		// 點清單的一列開那位提督的詳細資料（`docs/re/65`）。
+		if i := g.listAdmiralAt(y); i >= 0 && g.commandSpec(StateAdmiralDetail) != nil {
+			g.detailAdmiral = i
+			g.state = StateAdmiralDetail
 		}
 	case StateCommandPhase:
 		for _, b := range commandBar {
@@ -1351,6 +1369,7 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 		return
 	}
 	spec.ListRows = nil
+	g.listIndex = nil
 	if g.state == StateStarList {
 		g.setStarRows(spec)
 		return
@@ -1374,6 +1393,7 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 			Name:  name,
 			Rank:  rules.RankOf(a.Merit),
 		})
+		g.listIndex = append(g.listIndex, a.Index)
 	}
 }
 
@@ -1432,6 +1452,31 @@ func (g *Game) listState(s State) (faction int, standby, ok bool) {
 		return 1 - g.faction, false, true
 	}
 	return 0, false, false
+}
+
+// listAdmiralAt 回清單上畫面 y 那一列的提督索引；不在清單上回 -1。
+func (g *Game) listAdmiralAt(y int) int {
+	spec := g.commandSpec(g.state)
+	if spec == nil {
+		return -1
+	}
+	// 清單是畫的時候才算的；點擊可能發生在第一次畫之前（測試就是這樣），
+	// 所以這裡自己先算一次。
+	g.setListRows(spec)
+	var l *screen.ListSpec
+	for _, w := range spec.Windows {
+		if w != nil && w.List != nil {
+			l = w.List
+		}
+	}
+	if l == nil || l.Pitch <= 0 || y < l.Y {
+		return -1
+	}
+	row := (y - l.Y) / l.Pitch
+	if row < 0 || row >= l.Rows || row >= len(g.listIndex) {
+		return -1
+	}
+	return g.listIndex[row]
 }
 
 // starListOrder 回這一方的星系清單列順序。**兩個陣營各一份**，
