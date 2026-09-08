@@ -1,5 +1,7 @@
 package rules
 
+import "encoding/binary"
+
 // 戰鬥結算（`docs/spec/018`）。
 //
 // 這一版走的是**艦隊層**那條算式（`21A0:0004`，`docs/re/86`）：一支艦隊
@@ -180,4 +182,29 @@ func (s *Slot) admiral(i int) []byte {
 		return nil
 	}
 	return s.Admiral[i*AdmiralRecord : (i+1)*AdmiralRecord]
+}
+
+// ApplyBattleResult 把戰場上剩下的艘數寫回艦艇池。
+//
+// 只寫 `+0x08`（現有艘數）。原版戰後還會動什麼（撤退、星域易主、
+// 分數怎麼結算）還沒解，所以這裡就只做這一件確定的事。
+func (s *Slot) ApplyBattleResult(units []BattleUnit) int {
+	changed := 0
+	for _, u := range units {
+		ships := s.FleetShips(u.Fleet)
+		if u.Squadron < 0 || u.Squadron >= len(ships) {
+			continue
+		}
+		n := ships[u.Squadron]
+		if n < 0 || (n+1)*ShipRecord > len(s.Ship) {
+			continue
+		}
+		rec := s.Ship[n*ShipRecord : (n+1)*ShipRecord]
+		if int(binary.LittleEndian.Uint16(rec[8:])) == u.Ships {
+			continue
+		}
+		binary.LittleEndian.PutUint16(rec[8:], uint16(u.Ships))
+		changed++
+	}
+	return changed
 }

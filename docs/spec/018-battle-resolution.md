@@ -136,6 +136,14 @@ func InRange(units []BattleUnit, x, y, limit, faction int) []int
 同一個亂數產生器），差別在量級與觸發頻率。**這是 remake 明講的取代，
 不是對拍過的行為**；K 解出來之後換掉。
 
+## 戰後
+
+`EndBattle`：把戰場上剩下的艘數寫回艦艇池的 `+0x08`，重算艦隊戰力，
+回戰略地圖。**只做這一件確定的事**——原版戰後還會不會撤退、星域會不會
+易主、分數怎麼結算，都還沒解。
+
+雙方仍在同一個星域的話，下一回合會再打一場。原版是不是這樣還沒驗。
+
 ## 驗收
 
 - `rules.EngagementRange` 對 `docs/re/90` 記的算式，單元測試；
@@ -143,6 +151,7 @@ func InRange(units []BattleUnit, x, y, limit, faction int) []int
 - 一場戰鬥推到一方歸零不會卡住、不會出現負的艘數；
 - 九個回合打完 `battleOver` 會設起來，第八回合還不會
   （`TestBattleEndsAfterNineTurns`）；
+- 打完會回戰略地圖，而且損失寫回了艦艇池（`TestBattleResultPersists`）；
 - 從載入存檔一路按實行到開戰、再推十個回合，艘數會往下掉
   （`TestBattleStartsOnContact`、`TestBattleTurnsDeduct`）；
 - 既有的畫面對拍（`TestBattleMatchesOracle`、`TestMinimapMatchesOracle`）

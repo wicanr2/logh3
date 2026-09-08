@@ -130,6 +130,21 @@ func (g *Game) AdvanceBattleTurn() {
 	g.battleTurn++
 	// 九個回合打完就結束（`docs/re/92`）；中途一方歸零也結束。
 	g.battleOver = g.battleTurn > rules.MaxBattleTurns || battleDecided(g.battleUnits)
+	if g.battleOver {
+		g.EndBattle()
+	}
+}
+
+// EndBattle 收掉戰場：把剩下的艘數寫回艦艇池，重算戰力，回戰略地圖。
+//
+// 原版戰後還會做什麼（撤退、星域易主、分數怎麼結算）還沒解，所以這裡
+// 只做「把損失寫回去」這一件確定的事（`docs/spec/018`）。
+func (g *Game) EndBattle() {
+	if g.slot != nil {
+		g.slot.ApplyBattleResult(g.battleUnits)
+		g.fleets = g.slot.Fleets(g.res.Weights)
+	}
+	g.state = StateCommandPhase
 }
 
 // flagshipOf 回一支艦隊的旗艦分隊（第 0 個）。
