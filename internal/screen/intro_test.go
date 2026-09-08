@@ -4,8 +4,10 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/wicanr2/logh3/internal/asset"
+	"github.com/wicanr2/logh3/internal/gfx"
 )
 
 // TestIntroPagePlacesImageAtRow61 釘住「畫面畫在頁面第 61 列」。
@@ -64,4 +66,66 @@ func TestIntroPagePlacesImageAtRow61(t *testing.T) {
 	}
 	t.Logf("第 200 格：%d 個非零像素，畫在第 %d–%d 列",
 		nonzero, IntroTopRow, IntroTopRow+img.H-1)
+}
+
+// TestIntroPaletteMatchesOracle 釘住「檔案值 × 4 才是 6 位元 DAC 值」。
+//
+// `BU16IBM.RGB` 是 48 bytes ＝ 16 組 RGB，裡面的值只有 0–15，直接當
+// 顏色用會暗到看不見。收據 `introvram/pal.bin` 是 dosgolem 從執行期的
+// DAC 倒出來的 8 位元值，這裡把「檔案值 ×4 → 6 位元 →`(v<<2)|(v>>4)`」
+// 走一遍，48 個位元組要逐一相同。
+func TestIntroPaletteMatchesOracle(t *testing.T) {
+	orig := os.Getenv("LOGH3_ORIG")
+	if orig == "" {
+		orig = filepath.Join("..", "..", "org_game", "extracted")
+	}
+	rgb, err := os.ReadFile(filepath.Join(orig, "BU16IBM.RGB"))
+	if err != nil {
+		t.Skipf("沒有原版素材，跳過：%v", err)
+	}
+	want, err := os.ReadFile(filepath.Join("..", "..", "workplace", "oracle", "introvram", "pal.bin"))
+	if err != nil {
+		t.Skipf("沒有收據，跳過：%v", err)
+	}
+	pal, err := IntroPalette(rgb)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i := range pal {
+		r, g, b := pal.RGB8(i)
+		got := [3]uint8{r, g, b}
+		for c := 0; c < 3; c++ {
+			if got[c] != want[i*3+c] {
+				t.Fatalf("第 %d 色第 %d 通道：remake %d，收據 %d", i, c, got[c], want[i*3+c])
+			}
+		}
+	}
+	// 十六階的亮度梯：G ＝ B ＝ 色號，偶數色號的 R 少一階（略偏青）。
+	for i := range pal {
+		wantG := uint8(i * IntroPaletteScale)
+		wantR := wantG
+		if i%2 == 0 && i > 0 {
+			wantR = uint8((i - 1) * IntroPaletteScale)
+		}
+		if pal[i] != [3]uint8{wantR, wantG, wantG} {
+			t.Fatalf("第 %d 色 %v，預期 %v", i, pal[i], [3]uint8{wantR, wantG, wantG})
+		}
+	}
+}
+
+// TestIntroFrameIntervalMatchesMeasurement 釘住量到的播放速度。
+//
+// `OPEN.EXE` 把 PIT 除數改成 0x0800，解碼器入口四個一組、組與組相差
+// 73 個計時器中斷（收據 `introtime2`，`docs/re/110`）。
+func TestIntroFrameIntervalMatchesMeasurement(t *testing.T) {
+	want := time.Duration(IntroTicksPerFrame) * IntroPITDivisor * time.Second / IntroPITHz
+	if IntroFrameInterval != want {
+		t.Fatalf("一格 %v，算出來是 %v", IntroFrameInterval, want)
+	}
+	if IntroFrameInterval < 124*time.Millisecond || IntroFrameInterval > 126*time.Millisecond {
+		t.Fatalf("一格 %v 不在 125 ms 附近", IntroFrameInterval)
+	}
+	if IntroScreenTop+IntroTopRow != (gfx.Height-asset.IntroPlaneRows)/2 {
+		t.Fatalf("畫面沒有垂直置中：%d + %d", IntroScreenTop, IntroTopRow)
+	}
 }

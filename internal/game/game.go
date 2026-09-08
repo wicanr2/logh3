@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/asset"
@@ -123,6 +124,10 @@ const (
 	// （`StateMainGame`）相同，但底板已經畫了陣營那一行、三顆命令按鈕
 	// 與分頁鈕（收據 `vs4`，`docs/spec/016`）。
 	StateVersusAccount
+
+	// StateIntro 是開頭動畫（`OPEN.EXE` 的 374 格，`docs/spec/020`）。
+	// 排在最後是為了不動既有狀態的編號；玩家路徑上它在主選單**之前**。
+	StateIntro
 )
 
 // screenSpecName 是每個命令階段狀態對應的規格名（`docs/internals/data/`）。
@@ -305,6 +310,12 @@ type Resources struct {
 	// 要用它判「這條直線走不走得通」；nil ＝ 不判，一律當通得過。
 	Terrain *rules.BattleTerrain
 
+	// Intro 是開頭動畫的解碼器（`IBM16.350` ＋ `IBMFLS16.350`），
+	// IntroPal 是它的調色盤（`BU16IBM.RGB`）。**nil ＝ 直接從主選單開始**
+	// ——測試與對拍腳本都不帶開頭動畫，帶了整條輸入序列就會位移。
+	Intro    *asset.IntroDecoder
+	IntroPal gfx.Palette
+
 	// Weights 是戰力權重表（原版的 `ds:6032`，`docs/re/79`）。
 	// nil ＝ 算不出戰力，AI 退回「每支艦隊算 1」。
 	Weights rules.StrengthWeights
@@ -367,6 +378,11 @@ type Game struct {
 
 	// 結局：目前顯示哪一張 CG。
 	ending *asset.Image
+
+	// 開頭動畫：目前這一格的頁面、播到第幾格、離下一格還差多久。
+	introPage  *asset.Image
+	introFrame int
+	introLeft  time.Duration
 
 	// 命令階段：第幾個回合。遊戲只存這一個數，年月日是印的時候算出來的
 	// （`docs/re/25`）。開局 0。
@@ -715,7 +731,7 @@ func (g *Game) ShowEnding(img *asset.Image) {
 	g.state = StateEnding
 }
 
-// New 從主選單開始。
+// New 開一局。有開頭動畫的素材就從動畫開始，沒有就直接進主選單。
 func New(res *Resources) (*Game, error) {
 	if res.Font == nil || res.Menu == nil || res.CopyProt == nil || res.MainGame == nil {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
@@ -725,6 +741,11 @@ func New(res *Resources) (*Game, error) {
 	g.startNewGame(res.Faction)
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
+	}
+	if res.Intro != nil {
+		if err := g.startIntro(); err != nil {
+			return nil, err
+		}
 	}
 	return g, nil
 }
@@ -791,6 +812,10 @@ func (g *Game) MoveMouse(x, y int) {
 // **主選單只從事件回呼收按下**（`docs/re/08`）——那是原版的實作細節，
 // 在這裡的意義是：點擊要落在某一列上才算數，不是點到視窗內就好。
 func (g *Game) Click(x, y int) {
+	if g.state == StateIntro {
+		g.SkipIntro()
+		return
+	}
 	g.MoveMouse(x, y)
 	switch g.state {
 	case StateMainMenu:
@@ -991,6 +1016,10 @@ func (g *Game) Click(x, y int) {
 // **座標目前不影響結果**——實測 (300,240) 那一點在報告視窗上與在地圖上
 // 都關得掉；哪裡按不算數還沒量過。
 func (g *Game) RightClick(x, y int) {
+	if g.state == StateIntro {
+		g.SkipIntro()
+		return
+	}
 	g.MoveMouse(x, y)
 	// 按在星圖上會順便換掉選中的星域，左下角那塊跟著改寫（收據 `rcback`）。
 	//
@@ -1040,6 +1069,10 @@ func (g *Game) RightClick(x, y int) {
 // 所以 Enter 只要求「有打東西」。`Answer()` 留著給文件與測試看，
 // 不參與判斷。
 func (g *Game) Key(c byte) {
+	if g.state == StateIntro {
+		g.SkipIntro()
+		return
+	}
 	if g.state != StateCopyProtection {
 		return
 	}
@@ -1226,6 +1259,8 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		g.drawSpecStaff(fb, g.res.ShipOrder)
 		g.drawShipOrder(fb)
 		return fb
+	case StateIntro:
+		return screen.IntroScreen(g.introPage)
 	case StateEnding:
 		return screen.Ending(g.ending)
 	case StateAdmiralList:

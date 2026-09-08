@@ -22,3 +22,9 @@ dist-all/
 # Go 建置與快取
 /workplace/gocache/
 /workplace/gomodcache/
+
+# 建置出來的執行檔（`go build` 預設寫在根目錄）
+/gin3
+/play
+/logh3
+/oradiff

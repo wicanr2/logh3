@@ -16,6 +16,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -44,6 +45,9 @@ type app struct {
 }
 
 func (a *app) Update() error {
+	// 時間往前走一格。目前只有開頭動畫在用（一格 125.3 ms，
+	// `docs/spec/020`）；其他畫面都是事件驅動的。
+	a.g.Tick(time.Second / time.Duration(ebiten.TPS()))
 	if !a.fed {
 		a.fed = true
 		if err := feed(a.g, a.script); err != nil {
@@ -94,6 +98,7 @@ func (a *app) Update() error {
 // dump 把畫面倒出來就結束。`.bin` 是色號陣列，格式與 dosgolem 的
 // `-dump-ega` 相同，可以直接與收據逐位元組比。
 func (a *app) dump() error {
+	a.setPalette(a.g.Palette())
 	fb := a.g.Frame()
 	if a.shot != "" {
 		if err := fb.WritePNG(a.shot, a.paletteSpec()); err != nil {
@@ -108,6 +113,14 @@ func (a *app) dump() error {
 	return ebiten.Termination
 }
 
+// setPalette 把 6 位元調色盤展開成畫面用的 RGBA。
+func (a *app) setPalette(p gfx.Palette) {
+	for i := range a.pal {
+		r, g, b := p.RGB8(i)
+		a.pal[i] = color.RGBA{r, g, b, 255}
+	}
+}
+
 // paletteSpec 回畫 PNG 用的調色盤（6 位元，與 gfx 的慣例相同）。
 func (a *app) paletteSpec() gfx.Palette {
 	var p gfx.Palette
@@ -119,6 +132,8 @@ func (a *app) paletteSpec() gfx.Palette {
 }
 
 func (a *app) Draw(screen *ebiten.Image) {
+	// 調色盤每格問一次：開頭動畫那一段是自己的一組灰階。
+	a.setPalette(a.g.Palette())
 	fb := a.g.Frame()
 	for i, v := range fb.Pix {
 		c := a.pal[v]
@@ -141,6 +156,8 @@ func main() {
 	shotAfter := flag.Int("shot-after", 4, "倒圖前先跑幾格")
 	// **預設是原版**：原版按「實行」時電腦不下任何命令（`docs/re/79`），
 	// 對拍收據都靠這個前提。強化版要玩家自己開（`docs/spec/017`）。
+	intro := flag.Bool("intro", true, "從開頭動畫開始（`OPEN.EXE` 的 374 格）；"+
+		"素材不齊就自動跳過")
 	aiLevel := flag.Int("ai", -1, "電腦 AI：-1 ＝ 原版（不動）；0–3 ＝ 強化版，"+
 		"數字越大越兇（會挑目標、集結、包圍）")
 	flag.Parse()
@@ -148,6 +165,13 @@ func main() {
 	res, err := bootstrap.Load(*orig, *data)
 	if err != nil {
 		die(err)
+	}
+	// 走腳本的時候不放動畫：腳本是照「開機就是主選單」寫的，
+	// 前面多一張畫面整條序列就對不上收據。
+	if *intro && *script == "" {
+		if err := bootstrap.LoadIntro(res, *orig); err != nil {
+			die(err)
+		}
 	}
 	g, err := game.New(res)
 	if err != nil {
@@ -169,11 +193,7 @@ func main() {
 		shotAfter: *shotAfter,
 		script:    *script,
 	}
-	pal := res.Menu.Palette()
-	for i := range a.pal {
-		r, gg, b := pal.RGB8(i)
-		a.pal[i] = color.RGBA{r, gg, b, 255}
-	}
+	a.setPalette(g.Palette())
 	ebiten.SetWindowSize(int(float64(gfx.Width)*(*scale)), int(float64(gfx.Height)*(*scale)))
 	ebiten.SetWindowTitle("銀河英雄傳說III SP")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)

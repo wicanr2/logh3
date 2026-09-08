@@ -20,7 +20,8 @@
 | # | 畫面 | 等級 | 未核准差異 | 收據 | 備註 |
 |---|---|---|---:|---|---|
 | 1 | 主選單（含反白與游標）| `same-state` | 0 | [`docs/playtest/001-main-menu.md`](docs/playtest/001-main-menu.md) | **五個狀態**逐位元組一致：反白第 0–3 列各一、游標在選單外一個 |
-| 2 | 開頭動畫 | — | — | — | 進行中：374 格已切分、**編碼也解出來了**（[`docs/internals/19`](docs/internals/19-ibm16-350.md)、[`docs/re/72`](docs/re/72-intro-decoder-solved.md)），mode 10h 640×350。卡在畫面對拍——見 4z |
+| 2 | 開頭動畫 | — | — | — | 進行中：374 格已切分、編碼、調色盤與播放速度都解出來了（[`docs/internals/19`](docs/internals/19-ibm16-350.md)、[`docs/re/110`](docs/re/110-intro-playback-timing-and-palette.md)），已接進 `cmd/gin3` 的玩家路徑。整段的畫面對拍——見 4z |
+| 4x | **開頭動畫的調色盤與播放速度** | `same-state`（調色盤）| 0 | 收據 `introvram`／`introtime2`／`introtime10`；[`docs/re/110`](docs/re/110-intro-playback-timing-and-palette.md) | `BU16IBM.RGB` 的值 ×4 ＝ 6 位元 DAC 值，48 個位元組與收據逐一相符（`TestIntroPaletteMatchesOracle`）。播放速度：PIT 除數 `0x0800`（582.6 Hz），一格 **73 個計時器中斷** ＝ 125.3 ms（約 8 fps），`-tick 20000` 下三次量到 1,459,999／1,460,000／1,459,999 道指令，換 tick 步數跟著縮放 |
 | 3a | 正常玩家路徑（選單→防拷→本體）| `same-state` | 0 | [`docs/playtest/005-player-path.md`](docs/playtest/005-player-path.md) | 三個畫面都是前一步的輸入帶進去的，不是 direct-entry |
 | 3 | 主選單（互動）| — | — | — | 進行中：反白、滑鼠→選項對應、游標都已對拍；點擊已能推進到下一畫面；還缺**切換過程**（反白從 A 列搬到 B 列會留殘留）|
 | 4b | 防拷問答（輸入中的數字）| `same-state` | 0 | 收據 `typed138`；[`docs/re/56`](docs/re/56-typed-digits-are-full-width.md) | 打進去的數字是 `GRAPH.IMG` 的**全形**數字（`A2AF` 起），不是半形——先前搜不到是因為只試了半形的打包方式 |

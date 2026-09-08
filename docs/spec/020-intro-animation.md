@@ -1,7 +1,9 @@
 # 020 — 開頭動畫
 
-狀態：**READY**（畫面組成）／**未解**（原版的播放順序，見最後一節）。
-證據：`docs/re/71`、`docs/re/72`、`docs/re/108`、`docs/internals/19`。
+狀態：**READY**（畫面組成、調色盤、播放速度）／**未解**（原版的播放順序，
+見最後一節）。
+證據：`docs/re/71`、`docs/re/72`、`docs/re/108`、`docs/re/110`、
+`docs/internals/19`。
 
 ## 素材
 
@@ -9,7 +11,7 @@
 |---|---|
 | `IBM16.350` | 1,764,911 bytes，374 段壓縮資料首尾相接 |
 | `IBMFLS16.350` | 748 bytes ＝ 374 個 uint16，每一個是一格的長度（加起來剛好等於上面）|
-| `BU16IBM.RGB` | 調色盤 |
+| `BU16IBM.RGB` | 48 bytes ＝ 16 組 RGB，值 0–15 |
 
 ## 一格怎麼解（confirmed）
 
@@ -54,6 +56,45 @@ di ＝ 0；limit ＝ 0x100
 61 是明確的峰值。remake 照這條：`screen.IntroPage`
 （`TestIntroPagePlacesImageAtRow61`）。
 
+## 調色盤（confirmed）
+
+`BU16IBM.RGB` 裡的值只有 0–15，**乘 4 才是 VGA DAC 的 6 位元值**。
+與收據 `introvram/pal.bin` 的 48 個位元組逐一相符（`docs/re/110`）。
+形狀是十六階亮度梯：G ＝ B ＝ 色號，偶數色號的 R 少一階，略偏青。
+
+remake：`screen.IntroPalette`（`TestIntroPaletteMatchesOracle`）。
+
+## 一格多久（confirmed）
+
+`OPEN.EXE` 進場時把 PIT 除數改成 `0x0800`（離場寫回 0），所以動畫
+期間計時器是 1,193,182 / 2,048 ≈ 582.6 Hz。解碼器入口四個一組
+（四個 plane ＝ 一格），組與組相差 **73 個計時器中斷**——`-tick 20000`
+下三次量到 1,459,999／1,460,000／1,459,999 道指令，換 `-tick 10000`
+步數跟著減半，所以是計時器驅動的（`docs/re/110`）。
+
+```
+73 × 2048 / 1193182 ≈ 125.3 ms ≈ 每秒 7.98 格
+```
+
+remake：`screen.IntroFrameInterval`，由 `Game.Tick(d)` 推進
+（`TestIntroAdvancesOneFramePerInterval`）。**不讀牆上時鐘**，
+顯示層把每格的長度傳進來，所以同一串 `Tick` 重現同一串畫面。
+
+## 接進玩家路徑（remake 決定）
+
+- `bootstrap.Load` **不接**動畫；要動畫的入口自己呼叫
+  `bootstrap.LoadIntro`。動畫排在主選單前面，接上去整條輸入序列就
+  往後位移一格畫面，而對拍收據與 README 的截圖腳本都是照沒有動畫的
+  路徑寫的。
+- `cmd/gin3` 預設開（`-intro=false` 關），走 `-script` 時自動不開。
+- 三個素材缺任何一個就整段跳過，不是錯——玩家自備的原版目錄不保證完整。
+- 左鍵、右鍵、任何按鍵都跳過；374 格播完自己進主選單。
+- **畫面尺寸**：原版這一段是 mode 10h（640×350），remake 的畫布固定
+  640×480（mode 12h），兩者對不起來。remake 把整頁垂直置中
+  （`IntroScreenTop ＝ 65`），加上頁面內的第 61 列剛好是第 126 列，
+  與「227 列的畫面在 480 列裡置中」相同。這是 remake 自己的決定，
+  沒有可以對拍的原版狀態。
+
 ## 原版的播放順序（未解，remake 不照抄）
 
 原版**不是**照檔案順序播第 0、1、2… 格。`docs/re/108` 量到：
@@ -72,7 +113,6 @@ remake 這一側先照**檔案順序**播 374 格——那是動畫的內容，
 
 ## 還沒接上的
 
-- 調色盤（`BU16IBM.RGB`）還沒接進 remake 的開頭畫面；
-- 播放的時序（一格幾個 tick）還沒量；
-- 主選單之前的整條路徑（`GIN3.COM` → `OPEN.EXE` → 主選單）remake 目前
-  直接從主選單開始。
+- 原版在動畫**之前**還有 `GIN3.COM` 的 launcher 畫面，remake 沒有；
+- 動畫**之後**原版怎麼轉場到主選單（有沒有淡出、要不要等按鍵）還沒量；
+- 音樂還沒接。
