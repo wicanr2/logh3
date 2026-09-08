@@ -141,6 +141,19 @@ func (g *Game) AdvanceBattleTurn() {
 	}
 }
 
+// Withdraw 讓一方退出戰鬥。
+//
+// 原版提早結束的出口就是這個：每個回合結束時問一次（`12AA:02D4`），
+// 那一邊回非 0 就跳出主迴圈（`docs/re/92`）。問的字串與選項還沒解，
+// 所以 remake 只提供這個入口，由上層決定什麼時候呼叫。
+func (g *Game) Withdraw() {
+	if g.state != StateBattle {
+		return
+	}
+	g.battleOver = true
+	g.EndBattle()
+}
+
 // EndBattle 收掉戰場：把剩下的艘數寫回艦艇池，重算戰力，回戰略地圖。
 //
 // 原版戰後還會做什麼（撤退、星域易主、分數怎麼結算）還沒解，所以這裡
