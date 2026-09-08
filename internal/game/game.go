@@ -81,6 +81,10 @@ const (
 	// （`docs/re/65`）。
 	StateAdmiralDetail
 
+	// StateAdmiralBio 是提督經歷：詳細資料按「經歷」開出來的人物傳
+	// （`docs/internals/15`、`docs/re/65`）。
+	StateAdmiralBio
+
 	// StateShipDelivery 是月底的「船艦接收報告」：第十次「實行」跨月時
 	// 自己跳出來，按「確認」才回到地圖介面（`docs/re/21`、`docs/re/55`）。
 	StateShipDelivery
@@ -107,6 +111,7 @@ var screenSpecName = map[State]string{
 	StateQuitConfirm:     "screen-quit-confirm",
 	StateShipDelivery:    "screen-ship-delivery",
 	StateAdmiralDetail:   "screen-admiral-detail",
+	StateAdmiralBio:      "screen-admiral-bio",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -193,6 +198,11 @@ type Resources struct {
 
 	// AdmiralPanel 是提督詳細資料那個視窗算出來的部分（`docs/spec/012`）。
 	AdmiralPanel *screen.AdmiralPanel
+
+	// BioPanel 是提督經歷那個視窗的內文版面，Biographies 是 82 篇人物傳
+	// 的字碼（`docs/internals/15`）。
+	BioPanel     *screen.BioPanel
+	Biographies  [][]uint16
 
 	// Flagships 是兩個陣營各 16 艘旗艦的名字（`docs/re/65`）。
 	Flagships *screen.Flagships
@@ -527,6 +537,19 @@ func (g *Game) Click(x, y int) {
 				g.state = StateAdmiralList
 			}
 		}
+	case StateAdmiralDetail:
+		// 下緣三顆按鈕：經歷／中止／出擊（`docs/re/65`）。
+		if g.res.AdmiralPanel == nil {
+			return
+		}
+		switch g.res.AdmiralPanel.ButtonAt(x, y) {
+		case "bio":
+			if g.commandSpec(StateAdmiralBio) != nil {
+				g.state = StateAdmiralBio
+			}
+		case "cancel":
+			g.state = StateStandbyAdmirals
+		}
 	case StateStandbyAdmirals:
 		// 點清單的一列開那位提督的詳細資料（`docs/re/65`）。
 		if i := g.listAdmiralAt(y); i >= 0 && g.commandSpec(StateAdmiralDetail) != nil {
@@ -607,6 +630,10 @@ func (g *Game) RightClick(x, y int) {
 		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
 		}
+	case StateAdmiralBio:
+		g.state = StateAdmiralDetail
+	case StateAdmiralDetail:
+		g.state = StateStandbyAdmirals
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
 	default:
@@ -852,6 +879,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawDelivery(fb)
 			g.drawSlotList(fb)
 			g.drawAdmiralDetail(fb)
+			g.drawAdmiralBio(fb)
 			g.drawSpecStaff(fb, spec)
 			return fb
 		}
@@ -955,7 +983,7 @@ func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
 // 「游標之後再畫一次」的補丁，那幾件事綁著當初那個位置，還沒模型化。
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
-	case StateCommandPhase, StateMainGame, StateAdmiralDetail:
+	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio:
 	default:
 		return
 	}
@@ -1102,8 +1130,15 @@ func (g *Game) drawShipOrder(fb *gfx.Framebuffer) {
 }
 
 // drawAdmiralDetail 畫提督詳細資料裡跟著提督走的那幾塊（`docs/spec/012`）。
+//
+// 上半（姓名、軍階、頭像、現在位置、旗艦）在經歷那張畫面也看得到——
+// 經歷的視窗只蓋住 y ≥ 200，上面那塊是同一份。下半（等級、經驗值與
+// 十個能力值）只有詳細資料那張有。
 func (g *Game) drawAdmiralDetail(fb *gfx.Framebuffer) {
-	if g.state != StateAdmiralDetail || g.res.AdmiralPanel == nil {
+	if g.res.AdmiralPanel == nil {
+		return
+	}
+	if g.state != StateAdmiralDetail && g.state != StateAdmiralBio {
 		return
 	}
 	i := g.detailAdmiral
@@ -1127,7 +1162,7 @@ func (g *Game) drawAdmiralDetail(fb *gfx.Framebuffer) {
 	if slot := rules.FlagshipSlot(rec, i); slot >= 0 {
 		v.Flagship = g.res.Flagships.Name(rules.AdmiralFaction(rec), slot)
 	}
-	p.Draw(fb, g.res.Font, v)
+	p.Draw(fb, g.res.Font, v, g.state == StateAdmiralDetail)
 	if g.res.Faces == nil {
 		return
 	}
@@ -1137,6 +1172,23 @@ func (g *Game) drawAdmiralDetail(fb *gfx.Framebuffer) {
 				fb.Set(p.Face.X+x, p.Face.Y+y, img.Pix[y*img.W+x])
 			}
 		}
+	}
+}
+
+// drawAdmiralBio 把那位提督的人物傳排進經歷視窗（`docs/spec/012`）。
+func (g *Game) drawAdmiralBio(fb *gfx.Framebuffer) {
+	if g.state != StateAdmiralBio || g.res.BioPanel == nil {
+		return
+	}
+	i := g.detailAdmiral
+	if i < 0 || i >= len(g.res.Biographies) {
+		return
+	}
+	g.res.BioPanel.Draw(fb, g.res.Font, g.res.Biographies[i])
+	// 內文是在視窗畫完之後才補上去的，會把游標蓋掉一角——原版的游標
+	// 壓在字上面，所以再畫一次（收據 `keireki1e`：滑鼠停在第五列的字上）。
+	if spec := g.commandSpec(g.state); spec != nil && spec.Mouse != nil && g.res.Cursor != nil {
+		g.res.Cursor.Draw(fb, spec.Mouse.X, spec.Mouse.Y)
 	}
 }
 
@@ -1203,7 +1255,8 @@ func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 	}
 	region := -1
 	switch g.state {
-	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList, StateAdmiralDetail:
+	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList,
+		StateAdmiralDetail, StateAdmiralBio:
 		region = rules.CapitalRegion(g.faction)
 	case StateStarList:
 		if spec := g.commandSpec(g.state); spec != nil {

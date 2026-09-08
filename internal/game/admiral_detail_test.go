@@ -35,3 +35,23 @@ func TestAdmiralDetailMatchesOracle(t *testing.T) {
 		})
 	}
 }
+
+// TestAdmiralBioMatchesOracle 提督詳細資料按「經歷」開出人物傳
+// （收據 `keireki1e`，`docs/spec/012`）。
+//
+// 內文是 `KEIREKI.DAT` 那一段字，斷行由遊戲算：一列 28 個全形字、
+// 六列——萊因哈特那一段 168 個字剛好排滿。
+func TestAdmiralBioMatchesOracle(t *testing.T) {
+	g := reachCommandPhase(t)
+	g.Click(352, 125) // 戰略命令
+	g.Click(400, 125) // 出擊命令
+	g.Click(400, 85)  // 第 0 列 萊因哈特
+	if g.State() != StateAdmiralDetail {
+		t.Fatalf("點了第一列之後在 %v", g.State())
+	}
+	g.Click(392, 330) // 「經歷」
+	if g.State() != StateAdmiralBio {
+		t.Fatalf("點了經歷之後在 %v", g.State())
+	}
+	matches(t, g, "keireki1e")
+}

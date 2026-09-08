@@ -41,6 +41,7 @@ SETTINGS_BOXES=\
 # （`docs/spec/011`）。這一步是冪等的，重跑不會壞。
 if want computed; then
   for n in screen-main-game screen-ship-order screen-build-plan screen-info \
+           screen-admiral-detail screen-admiral-bio \
            screen-tax-plan screen-production-plan screen-budget-plan \
            screen-admiral-list-view screen-standby-admirals screen-star-list; do
     py tools/scripts/maingame_computed.py "$n"
@@ -67,6 +68,28 @@ fi
 # 但分頁鈕（`tabs`）、輸入框、熱區與 `fields` 是另外從字元平面
 # （`tools/scripts/plane_json.py`，`docs/internals/31`）補進去的，那一步
 # 沒有腳本。**照上面重跑會把那幾塊弄丟**，補回來的辦法還沒寫下來。
+
+# 提督詳細資料與提督經歷（`docs/spec/012`）。經歷那一層要另外併進詳細
+# 資料的規格——`overlay_spec.py` 產出的視窗一律叫 `overlay`，直接用會把
+# 底層那個視窗蓋掉。
+if want admiral-detail; then
+  py tools/scripts/overlay_spec.py adm1e screen-command-phase screen-admiral-detail \
+    96 80 543 359 400 45 "382:320:417:339,430:320:465:339,478:320:513:339" "" "0:448:100" \
+    "16:352:320:400" "" "6,5"
+  py tools/scripts/box_text.py adm1e screen-admiral-detail overlay 0
+  py tools/scripts/box_text.py adm1e screen-admiral-detail overlay 1
+  py tools/scripts/box_text.py adm1e screen-admiral-detail overlay 2
+  py tools/scripts/maingame_computed.py screen-admiral-detail
+fi
+if want admiral-bio; then
+  py tools/scripts/overlay_spec.py keireki1e screen-admiral-detail screen-admiral-bio \
+    80 200 559 359 392 290
+  py tools/scripts/bio_spec.py
+  py tools/scripts/maingame_computed.py screen-admiral-bio
+fi
+
+# 提督詳細資料的「旗艦」對照表（資料段的兩張 far 指標表）。
+want flagships && py tools/scripts/flagship_export.py
 
 # 底層：命令階段主畫面。其餘幾張都疊在它上面。
 want command-phase && py tools/scripts/cmdscreen_spec.py main1e screen-command-phase

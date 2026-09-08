@@ -1,10 +1,11 @@
 # SPEC 012 — 提督詳細資料
 
-狀態：**CONFORMED**（`adm1e`／`adm2e`／`adm3e`／`adm15e` 四張整張
-640×480 逐位元組相同）
+狀態：**CONFORMED**（`adm1e`／`adm2e`／`adm3e`／`adm15e`／`keireki1e`
+五張整張 640×480 逐位元組相同）
 證據：[`docs/re/65`](../re/65-admiral-detail-screen.md)
 資料：[`docs/internals/data/admiral-detail-panel.json`](../internals/data/admiral-detail-panel.json)、
-[`docs/internals/data/flagships.json`](../internals/data/flagships.json)
+[`docs/internals/data/flagships.json`](../internals/data/flagships.json)、
+[`docs/internals/data/admiral-bio-panel.json`](../internals/data/admiral-bio-panel.json)
 執行器：dosgolem-logh3 `2833ec9`
 
 ## 怎麼到得了
@@ -39,12 +40,24 @@
 規格的 `mouse` 量自「點第 0 列」那一次；點別列游標就在別處，所以這張
 畫面與戰略地圖介面、月初報告一樣改用即時滑鼠位置。
 
+## 經歷（人物傳）
+
+按「經歷」疊上一層 (80,200)–(559,359) 的視窗，**只蓋住下半**——姓名、
+軍階、頭像、現在位置、旗艦那一塊還是詳細資料那張的，所以規格是
+「詳細資料 ＋ 經歷那一層」（`tools/scripts/bio_spec.py` 把兩層併起來，
+`order` ＝ overlay → bio）。
+
+內文從 (96,222) 起、一列 20 像素、**一列 28 個全形字、最多六列**：
+萊因哈特那一段 168 個字剛好排滿。字碼在 `keireki.json` 的 `text_codes`
+（`docs/internals/15`）。
+
+內文是視窗畫完之後才補上去的，會蓋掉游標一角——原版的游標壓在字上面，
+所以畫完內文要再畫一次游標（`keireki1e` 的滑鼠正好停在第五列的字上）。
+
 ## 還沒做的
 
-- **「經歷」那顆按鈕**開出的人物傳畫面還沒實作（收據 `keireki1e`）：
-  文字從 (96,222) 起、一列 20 像素、一列 28 個全形字、六列，內容是
-  `KEIREKI.DAT`（`docs/internals/15` 已經解開）。
-- 「中止」與「出擊」還沒接。出擊接的是艦隊編成（熱區清單 `2A00`）。
+- 「中止」回待命中提督清單已經接了；**「出擊」還沒**——它接的是艦隊編成
+  （熱區清單 `2A00`）。
 - 現在位置那一行的「：待命中」是量死的；出擊之後會變成什麼還沒量。
 - 提督 80（梅爾卡茲）的陣營內序號是 40，超出 16 個槽，旗艦查不到。
   資料段裡還有兩個旗艦名（馬奧里亞、姆夫維瑟）被別處引用，可能是他的。

@@ -32,6 +32,16 @@ _LEFT_SUMMARY = {
 
 RECIPES = {
     'screen-standby-admirals': _LEFT_SUMMARY,
+    'screen-admiral-bio': {
+        'window': 'overlay',
+        'staff_y': None, 'post': -1, 'staff_x': 0,
+        'money_rows': (), 'header_y': None,
+        'drop_face': False, 'staff_block': False,
+        'keep_board': True,
+        'left_summary_rows': (362, 382),
+        # 六列內文全是 KEIREKI.DAT 排出來的，由 BioPanel 畫。
+        'drop_rows': (222, 242, 262, 282, 302, 322),
+    },
     'screen-admiral-detail': {
         'window': 'overlay',
         # 署名那一行整行都是那位提督的（姓名 ＋ 軍階）。
@@ -120,6 +130,9 @@ if report is not None:
                 continue
             l = dict(l, cells=cells)
         if l['y'] in left and l['cells'][0]['x'] < 320:
+            dropped += 1
+            continue
+        if l['y'] in r.get('drop_rows', ()):
             dropped += 1
             continue
         if l['y'] == r['staff_y']:

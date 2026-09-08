@@ -21,6 +21,10 @@ spec = json.load(open(path))
 w = spec['windows'][win]
 
 old = [l for l in w.get('lines', []) if l['y'] == y]
+done = [t for t in w.get('faction_text', []) if t['y'] == y]
+if not old and done:
+    print(f'{name}／{win} y={y}：已經搬過了（{done[0]["text"]}）')
+    sys.exit(0)
 if not old:
     sys.exit(f'{name} 的 {win} 沒有 y={y} 這一行')
 line = old[0]

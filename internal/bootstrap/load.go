@@ -109,6 +109,14 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	bioPanel, err := screen.LoadBioPanel(filepath.Join(data, "admiral-bio-panel.json"))
+	if err != nil {
+		return nil, err
+	}
+	bios, err := loadBiographies(filepath.Join(data, "keireki.json"))
+	if err != nil {
+		return nil, err
+	}
 	flagships, err := screen.LoadFlagships(filepath.Join(data, "flagships.json"))
 	if err != nil {
 		return nil, err
@@ -187,7 +195,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
 		Screens: screens, StarMaps: maps, Regions: regions,
 		RegionPanel: panel, CapitalPanel: capital, BudgetPanel: budget, ProductionPanel: production,
-		DeliveryPanel: delivery, ReportPanel: report, BuildPlanPanel: buildPanel, AdmiralPanel: admPanel, Flagships: flagships,
+		DeliveryPanel: delivery, ReportPanel: report, BuildPlanPanel: buildPanel, AdmiralPanel: admPanel, Flagships: flagships, BioPanel: bioPanel, Biographies: bios,
 		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		StartMilitary: 50000, ShipPct: 25}, nil
@@ -251,4 +259,30 @@ func loadStarListOrder(path string) ([][]int, error) {
 		return nil, err
 	}
 	return doc.Orders, nil
+}
+
+
+// loadBiographies 讀 82 篇人物傳的字碼（`docs/internals/15`）。
+func loadBiographies(path string) ([][]uint16, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var doc struct {
+		Records []struct {
+			Index int      `json:"index"`
+			Codes []uint16 `json:"text_codes"`
+		} `json:"records"`
+	}
+	if err := json.Unmarshal(b, &doc); err != nil {
+		return nil, err
+	}
+	out := make([][]uint16, 0, len(doc.Records))
+	for _, r := range doc.Records {
+		for len(out) <= r.Index {
+			out = append(out, nil)
+		}
+		out[r.Index] = r.Codes
+	}
+	return out, nil
 }

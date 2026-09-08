@@ -41,6 +41,11 @@ type AdmiralPanel struct {
 		Y     int `json:"y"`
 		Right int `json:"right"`
 	} `json:"exp"`
+	Buttons []struct {
+		Action     string `json:"action"`
+		Text       string `json:"text"`
+		X, Y, W, H int
+	} `json:"buttons"`
 	Stats []struct {
 		Y      int    `json:"y"`
 		Right  int    `json:"right"`
@@ -72,7 +77,10 @@ type AdmiralView struct {
 }
 
 // Draw 把算出來的部分畫上去。頭像另外畫（要 `FACE.AMG`）。
-func (p *AdmiralPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, v AdmiralView) {
+//
+// `stats` ＝ false 時只畫上半（姓名、軍階、現在位置、旗艦）——經歷那張
+// 畫面的視窗蓋住了下半，等級與能力值不該再畫上去。
+func (p *AdmiralPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, v AdmiralView, stats bool) {
 	// 姓名與軍階**各有自己的欄**，不是接在一起（`adm1e`：姓名 x=224、
 	// 軍階 x=368）。
 	drawFull(fb, fnt, p.Name.X, p.Name.Y, v.Name, p.Ink)
@@ -85,6 +93,9 @@ func (p *AdmiralPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, v AdmiralView) 
 		drawFull(fb, fnt, p.Flagship.LabelX, p.Flagship.Y, p.Flagship.Label, p.Ink)
 		drawFull(fb, fnt, p.Flagship.X, p.Flagship.Y, v.Flagship, p.Ink)
 	}
+	if !stats {
+		return
+	}
 	drawRight(fb, fnt, p.Level.Right, p.Level.Y, strconv.Itoa(v.Level), p.Ink)
 	drawRight(fb, fnt, p.Exp.Right, p.Exp.Y, strconv.Itoa(v.Exp), p.Ink)
 	for _, s := range p.Stats {
@@ -93,4 +104,15 @@ func (p *AdmiralPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, v AdmiralView) 
 		}
 		drawRight(fb, fnt, s.Right, s.Y, strconv.Itoa(int(v.Record[s.Offset])), p.Ink)
 	}
+}
+
+
+// ButtonAt 回畫面座標 (x,y) 落在哪一顆按鈕上；沒有就回空字串。
+func (p *AdmiralPanel) ButtonAt(x, y int) string {
+	for _, b := range p.Buttons {
+		if x >= b.X && x < b.X+b.W && y >= b.Y && y < b.Y+b.H {
+			return b.Action
+		}
+	}
+	return ""
 }

@@ -17,7 +17,7 @@ import json, os, struct
 
 SRC = "/orig/KEIREKI.DAT"
 ADMIRAL = "/orig/ADMIRAL.DTX"  # +1 ＝ 陣營旗標（0 帝國／1 同盟），confirmed
-STRTAB = "/work/workplace/strtab.bin"
+STRTAB = os.environ.get("LOGH3_STRTAB", "/work/workplace/strtab.bin")
 NAME_OFF, NAME_N = 0x61A8, 82
 SHIP_OFF, SHIP_N = 0x6570, 34
 OUT_JSON = "/work/docs/internals/data/keireki.json"
@@ -25,13 +25,19 @@ OUT_MD = "/work/docs/lore/character-biographies.md"
 
 
 def read_cstrings(d, off, n, skip_lead=True):
-    """從 off 起讀 n 個 \\0 結尾的 Big5 字串。"""
+    """從 off 起讀 n 個 \\0 結尾的 Big5 字串，回 (字串, 原始位元組)。"""
     out, p = [], off
     while len(out) < n:
         e = d.index(b"\x00", p)
-        out.append(d[p:e].decode("big5hkscs", errors="replace"))
+        raw = d[p:e]
+        out.append((raw.decode("big5hkscs", errors="replace"), raw))
         p = e + 1
     return out
+
+
+def big5_codes(raw):
+    """把一段 Big5 位元組兩兩併成 uint16——畫面用的是字碼，不是字串。"""
+    return [raw[k] << 8 | raw[k + 1] for k in range(0, len(raw) - 1, 2)]
 
 
 data = open(SRC, "rb").read()
@@ -42,7 +48,7 @@ names, ships = [], []
 if os.path.exists(STRTAB):
     st = open(STRTAB, "rb").read()
     names = read_cstrings(st, NAME_OFF, NAME_N)
-    ships = read_cstrings(st, SHIP_OFF, SHIP_N)
+    ships = [t for t, _ in read_cstrings(st, SHIP_OFF, SHIP_N)]
 
 side = []
 if os.path.exists(ADMIRAL):
@@ -55,14 +61,23 @@ for i in range(n - 1):
     if not raw:
         continue
     # 原版把每段補到固定長度，尾巴的全形空白是排版用的，不是內文。
-    txt = raw.rstrip(b"\x00").decode("big5hkscs", errors="replace").rstrip("\u3000 ")
+    body = raw.rstrip(b"\x00")
+    txt = body.decode("big5hkscs", errors="replace").rstrip("\u3000 ")
+    # 畫面用的是**字碼**，不是 UTF-8 字串——把去掉排版填充之後那一段
+    # 原始 Big5 位元組兩兩併成 uint16 存起來（`docs/spec/012`）。
+    trimmed = body[:len(body)]
+    while trimmed.endswith(b"\xa1@") or trimmed.endswith(b" "):
+        trimmed = trimmed[:-2] if trimmed.endswith(b"\xa1@") else trimmed[:-1]
+    codes = [trimmed[k] << 8 | trimmed[k + 1] for k in range(0, len(trimmed) - 1, 2)]
     recs.append({
         "index": i,
-        "name": names[i] if i < len(names) else "",
+        "name": names[i][0] if i < len(names) else "",
+        "name_codes": big5_codes(names[i][1]) if i < len(names) else [],
         "side": int(side[i]) if i < len(side) else None,
         "offset": offs[i],
         "bytes": len(raw),
         "text": txt,
+        "text_codes": codes,
     })
 
 os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
