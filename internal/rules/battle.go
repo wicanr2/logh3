@@ -40,6 +40,12 @@ type BattleUnit struct {
 	FightSpeed  int `json:"fight_speed"`
 	Out       bool `json:"out"`       // 出局，不進攻擊名單（艦艇記錄 `+0x1E` bit7）
 
+	// Missiles／Fighters 是艦艇記錄 `+0x0E`／`+0x12` 的 32 位元值：
+	// 現有的飛彈與戰鬥機數。分隊面板印的就是它們，顏色由「滿不滿」決定
+	// （`docs/re/118`）。
+	Missiles int `json:"missiles"`
+	Fighters int `json:"fighters"`
+
 	// Action 是艦艇記錄 `+0x1E` 整個位元組：分隊自己的行動
 	// （0 移動／1 編隊／2 索敵／3 歸隊，0x7F ＝ 沒有）。
 	// 戰場命令選單用它決定「移動」可不可選（`docs/spec/023`）。
@@ -309,6 +315,8 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 			// 會是 0xFF64。用 -poke 把 0x682EC 寫成 77 驗過，畫面上只有
 			// 那一列的士氣跟著變（收據 `s3morale`，`docs/re/111`）。
 			u.Morale = int(rec[6])
+			u.Missiles = int(binary.LittleEndian.Uint32(rec[0x0E:]))
+			u.Fighters = int(binary.LittleEndian.Uint32(rec[0x12:]))
 			u.Action = int(rec[0x1E])
 			u.TurnSpeed = int(rec[0x1F])
 			u.CruiseSpeed = int(rec[0x21])

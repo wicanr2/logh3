@@ -157,3 +157,92 @@ func (g *Game) commandMenuClick(x, y int) bool {
 	// 其餘各項的行為還沒逆向（`docs/spec/023`「還沒做的」）。
 	return true
 }
+
+// 分隊面板（`docs/re/118`）：點自己陣營的分隊時，右側的狀態欄換成它。
+//
+// **只在命令選單開著的時候換**——收據上兩者一起出現，選單關掉之後會不會
+// 留著沒有量過（`docs/spec/023`）。
+
+// 艦種列上這一層讀的四個「每艘幾件」（`docs/internals/40`）。
+const (
+	kindBeamPer     = 0x0B
+	kindLauncherPer = 0x0F
+	kindMissilePer  = 0x10
+	kindFighterPer  = 0x13
+	kindFighterFull = 0x14
+)
+
+// unitPanelView 組出分隊面板要顯示的內容。
+func (g *Game) unitPanelView() (screen.UnitPanelView, bool) {
+	var v screen.UnitPanelView
+	s := g.res.UnitPanel
+	if s == nil || !g.battleCmd ||
+		g.battleCmdUnit < 0 || g.battleCmdUnit >= len(g.battleUnits) {
+		return v, false
+	}
+	u := g.battleUnits[g.battleCmdUnit]
+	f := g.fleetByIndex(u.Fleet)
+	if f == nil {
+		return v, false
+	}
+	v.Faction = u.Faction
+	v.FleetNo = f.Number
+	v.Flagship = u.Squadron == 0
+	v.Scout = u.Kind == shipKindScout
+	v.UnitNo = u.Squadron + 1
+	if v.Flagship {
+		v.Admiral = g.res.AdmiralNames[f.Admiral]
+	}
+	if fd := g.res.FleetDetail; fd != nil && u.Kind >= 0 && u.Kind < len(fd.ShipKinds) {
+		v.KindName = fd.ShipKinds[u.Kind].Codes
+	}
+	v.Ships = u.Ships
+
+	// 士氣：旗艦印艦隊的（建立艦隊時寫死 100），其餘印自己那筆。
+	if v.Flagship {
+		v.FleetMorale, v.Morale = true, f.Morale
+	} else {
+		v.Morale = u.Morale
+	}
+
+	// 行動：分隊沒有自己的命令（`+0x1E ＝ 0x7F`）就印艦隊的。
+	bf := g.battleFleet(u.Fleet)
+	switch {
+	case u.Action != squadronNone && u.Action < len(s.SquadronActions):
+		v.UnitAction = true
+		v.ActionName = s.SquadronActions[u.Action].Codes
+		v.ActionInk = s.Ink
+	case bf != nil && bf.Flag0:
+		v.CannotFight = true
+	default:
+		a := f.Action
+		if a >= 0 && a < len(s.FleetActions) {
+			v.ActionName = s.FleetActions[a].Codes
+			v.ActionInk = s.FleetActionInkOf(a)
+		}
+	}
+
+	// 三組武器。光線砲印的是算出來的量，另外兩組印艦艇記錄裡的現有量，
+	// 顏色由「滿不滿」決定。
+	if k, ok := g.res.ShipKinds.Kind(u.Faction, u.Kind); ok {
+		v.Beam = u.Ships * k.Byte(kindBeamPer)
+		v.Missile, v.Fighter = u.Missiles, u.Fighters
+		v.MissileInk = weaponInk(s, u.Missiles,
+			u.Ships*k.Byte(kindMissilePer), u.Ships*k.Byte(kindLauncherPer))
+		v.FighterInk = weaponInk(s, u.Fighters,
+			u.Ships*k.Byte(kindFighterFull), u.Ships*k.Byte(kindFighterPer))
+	}
+	return v, true
+}
+
+// weaponInk 回武器數的顏色：等於滿量是本色，達到門檻是色 5，否則色 2
+// （`0x1CFFE` 起那兩段比較，`docs/re/118`）。
+func weaponInk(s *screen.UnitPanelSpec, have, full, part int) uint8 {
+	switch {
+	case have == full:
+		return s.WeaponInk.Full
+	case have >= part:
+		return s.WeaponInk.Part
+	}
+	return s.WeaponInk.Low
+}

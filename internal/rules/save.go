@@ -40,6 +40,8 @@ const (
 	fleetRegion   = 0x06
 	fleetTarget   = 0x07 // 要去的星域；FF ＝ 沒有命令
 	fleetState    = 0x08 // 移動狀態；5 ＝ 不動（`docs/re/77`）
+	fleetMorale   = 0x3C // 艦隊士氣值（建立艦隊時寫 100，戰鬥中會變）
+	fleetAction   = 0x48 // 低四位 ＝ 艦隊行動（0 移動／1 戰鬥／2 防禦／3 占領／4 待命）
 	fleetSlots    = 0x10 // 十個 4-byte 的槽，前兩 byte 是艦艇索引
 	fleetSlotN    = 10
 
@@ -267,6 +269,8 @@ func (s *Slot) Fleets(w StrengthWeights) []Fleet {
 			Region:   int(r[fleetRegion]),
 			Target:   NoTarget,
 			Parked:   r[fleetState] == fleetParked,
+			Action:   int(r[fleetAction] & 0x0F),
+			Morale:   int(r[fleetMorale]),
 		}
 		if r[fleetAdjutant] == 0xFF {
 			f.Adjutant = -1

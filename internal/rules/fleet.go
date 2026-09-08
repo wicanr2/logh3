@@ -27,6 +27,14 @@ type Fleet struct {
 	// 0 ＝ 算不出來（沒有艦艇池或權重表），AI 那邊會退回「每支算 1」。
 	Strength int `json:"strength"`
 
+	// Morale 是艦隊記錄 `+0x3C`：畫面上的「艦隊士氣值」。建立艦隊時寫
+	// 100，戰鬥中會變（`docs/internals/33`）。
+	Morale int `json:"morale"`
+
+	// Action 是艦隊記錄 `+0x48` 的低四位：畫面上的「艦隊行動」
+	// （0 移動／1 戰鬥／2 防禦／3 占領／4 待命，`docs/internals/33`）。
+	Action int `json:"action"`
+
 	// Parked ＝ 原版 `+0x08` 是 5：**這一支不會動**，就算有目的地也一樣
 	// （`113A:0350` 讀的就是它，`docs/re/77`）。劇本可以把艦隊設成這樣
 	// ——S2 同盟那七支全是，所以它們十二回合原地不動。

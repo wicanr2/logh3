@@ -113,7 +113,7 @@ func (g *Game) fleetDetailView() (screen.FleetDetailView, bool) {
 	ab := rules.FleetAbilities(adm, adj)
 	turn, cruise, fight := fleetSpeeds(g.battleUnits, u.Fleet)
 	v.Values = [12]int{
-		fleetMoraleValue, turn, cruise, fight,
+		f.Morale, turn, cruise, fight,
 		byteAt(adm, admiralCommandOff), int(ab[9]), int(ab[10]), int(ab[3]),
 		int(ab[0]), int(ab[1]), int(ab[2]), int(ab[4]),
 	}
@@ -150,13 +150,12 @@ func (g *Game) fleetDetailView() (screen.FleetDetailView, bool) {
 	return v, true
 }
 
-const (
-	// fleetMoraleValue 是艦隊記錄 `+0x3C`：建立艦隊時寫死 100
-	// （`0x2A7F8`：`mov byte es:[bx+3Ch],64h`）。
-	fleetMoraleValue = 100
-	// adjutantInk 是「這一項副官比提督高」的顏色（`docs/re/112`）。
-	adjutantInk = 5
-)
+// adjutantInk 是「這一項副官比提督高」的顏色（`docs/re/112`）。
+//
+// 「艦隊士氣值」讀的是艦隊記錄 `+0x3C`（`rules.Fleet.Morale`）：建立艦隊
+// 時寫 100（`0x2A7F8`：`mov byte es:[bx+3Ch],64h`），戰鬥中會變——收據
+// `s3cmdfl3` 的第 13 艦隊是 99（`docs/re/118`）。
+const adjutantInk = 5
 
 // weapon 把「名字索引、每艘幾件」變成一組裝備；索引 −1 ＝ 沒搭載。
 func (g *Game) weapon(name, per int) screen.FleetDetailWeapon {

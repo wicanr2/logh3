@@ -1,0 +1,267 @@
+{
+ "_note": "戰場右側的分隊面板（docs/re/118）。點自己陣營的分隊時換上來，與狀態欄同一個框、同一組字元格。八列，列距 20。",
+ "cell": {
+  "x": 480,
+  "y": 242,
+  "col": 16,
+  "row": 20,
+  "half": 8,
+  "rows": 8
+ },
+ "ink": 7,
+ "morale_low_ink": 2,
+ "morale_low_below": 50,
+ "faction_ink": [
+  150,
+  149,
+  151,
+  171
+ ],
+ "labels": {
+  "di": {
+   "text": "第",
+   "codes": [
+    45764
+   ]
+  },
+  "fleet": {
+   "text": "艦隊",
+   "codes": [
+    50341,
+    46756
+   ]
+  },
+  "unit": {
+   "text": "部隊        ",
+   "codes": [
+    45985,
+    46756
+   ]
+  },
+  "scout_unit": {
+   "text": "索敵部隊        ",
+   "codes": [
+    44993,
+    48324,
+    45985,
+    46756
+   ]
+  },
+  "fleet_morale": {
+   "text": "艦隊士氣值  ",
+   "codes": [
+    50341,
+    46756,
+    42088,
+    44784,
+    44488
+   ]
+  },
+  "unit_morale": {
+   "text": "部隊士氣值  ",
+   "codes": [
+    45985,
+    46756,
+    42088,
+    44784,
+    44488
+   ]
+  },
+  "cannot_fight": {
+   "text": "無法戰鬥        ",
+   "codes": [
+    46412,
+    43627,
+    48852,
+    45227
+   ]
+  },
+  "fleet_action": {
+   "text": "艦隊行動    \u0003[%d,%4s",
+   "codes": [
+    50341,
+    46756,
+    42726,
+    45258
+   ]
+  },
+  "unit_action": {
+   "text": "部隊行動    %4s",
+   "codes": [
+    45985,
+    46756,
+    42726,
+    45258
+   ]
+  },
+  "beam": {
+   "text": "光線砲    %6lu",
+   "codes": [
+    42490,
+    48501,
+    44965
+   ]
+  },
+  "missile": {
+   "text": "飛彈      ",
+   "codes": [
+    44472,
+    48245
+   ]
+  },
+  "fighter": {
+   "text": "戰鬥機    ",
+   "codes": [
+    48852,
+    45227,
+    48887
+   ]
+  },
+  "supply": {
+   "text": "補給物資\n",
+   "codes": [
+    47305,
+    46521,
+    43691,
+    47338
+   ]
+  },
+  "repair_max": {
+   "text": "最高修理數  %4lu",
+   "codes": [
+    46028,
+    45226,
+    44503,
+    45690,
+    48326
+   ]
+  },
+  "fuel_left": {
+   "text": "剩餘燃料  %3d 回",
+   "codes": [
+    46033,
+    48748,
+    48981,
+    44742
+   ]
+  }
+ },
+ "factions": [
+  {
+   "text": "帝國軍",
+   "codes": [
+    43986,
+    45290,
+    44408
+   ]
+  },
+  {
+   "text": "同盟軍",
+   "codes": [
+    42576,
+    47097,
+    44408
+   ]
+  }
+ ],
+ "fleet_actions": [
+  {
+   "text": "移動",
+   "codes": [
+    45758,
+    45258
+   ]
+  },
+  {
+   "text": "戰鬥",
+   "codes": [
+    48852,
+    45227
+   ]
+  },
+  {
+   "text": "防禦",
+   "codes": [
+    43198,
+    49005
+   ]
+  },
+  {
+   "text": "占領",
+   "codes": [
+    42341,
+    48098
+   ]
+  },
+  {
+   "text": "待命",
+   "codes": [
+    43997,
+    43346
+   ]
+  }
+ ],
+ "fleet_action_ink": [
+  7,
+  2,
+  7,
+  7,
+  7
+ ],
+ "squadron_actions": [
+  {
+   "text": "移動",
+   "codes": [
+    45758,
+    45258
+   ]
+  },
+  {
+   "text": "編隊",
+   "codes": [
+    48499,
+    46756
+   ]
+  },
+  {
+   "text": "索敵",
+   "codes": [
+    44993,
+    48324
+   ]
+  },
+  {
+   "text": "歸隊",
+   "codes": [
+    49771,
+    46756
+   ]
+  }
+ ],
+ "weapon_ink": {
+  "full": 7,
+  "part": 5,
+  "low": 2
+ },
+ "halves": {
+  "faction": 0,
+  "di": 8,
+  "fleet_no": 10,
+  "fleet_word": 12,
+  "unit_di": 0,
+  "unit_no": 2,
+  "unit_word": 4,
+  "admiral": 0,
+  "kind_name": 0,
+  "ships": 12,
+  "ships_width": 4,
+  "morale_label": 0,
+  "morale_value": 12,
+  "morale_width": 4,
+  "action_label": 0,
+  "action_value": 12,
+  "weapon_label": 0,
+  "weapon_value": 10,
+  "weapon_width": 6
+ }
+}

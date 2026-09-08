@@ -309,6 +309,9 @@ type Resources struct {
 	// CommandMenus 是戰場上五張命令選單的版面與內容（`docs/spec/023`）。
 	CommandMenus *screen.CommandMenuSpec
 
+	// UnitPanel 是點到分隊時右側換上的那塊面板（`docs/re/118`）。
+	UnitPanel *screen.UnitPanelSpec
+
 	// Terrain 是戰場地形的通行規則（`docs/re/100`）。戰術層挑集結點時
 	// 要用它判「這條直線走不走得通」；nil ＝ 不判，一律當通得過。
 	Terrain *rules.BattleTerrain
@@ -2348,7 +2351,10 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH))
 	screen.DrawMinimapUnits(g.res.Battle, fb, g.battleUnits)
 	screen.DrawBattleStatusFrame(g.res.Battle, fb)
-	if g.res.Font != nil {
+	// 點到自己的分隊時右側換成分隊面板（`docs/re/118`）。
+	if v, ok := g.unitPanelView(); ok && g.res.Font != nil {
+		screen.DrawUnitPanel(g.res.UnitPanel, fb, g.res.Font, v)
+	} else if g.res.Font != nil {
 		y, mo, d := g.Date()
 		screen.DrawBattleStatus(g.res.Battle, fb, g.res.Font, screen.BattleStatus{
 			Faction: g.faction, Year: y, Month: mo, Day: d,

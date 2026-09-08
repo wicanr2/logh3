@@ -231,6 +231,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	unitPanel, err := screen.LoadUnitPanelSpec(filepath.Join(data, "unit-panel.json"))
+	if err != nil {
+		return nil, err
+	}
 	battleData, err := screen.LoadBattleDataSpec(filepath.Join(data, "battle-data.json"))
 	if err != nil {
 		return nil, err
@@ -258,7 +262,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		Battle: battle, BattlePanel: battlePanel, BattleTiles: battleTiles, BattleMaps: battleMaps,
-		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, BattleData: battleData,
+		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
