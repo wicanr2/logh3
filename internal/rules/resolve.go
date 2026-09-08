@@ -6,6 +6,12 @@ package rules
 // 一回合算一次總損失，再按比例分攤給對方的分隊。原版每一擊走的是
 // `2350:0023`，那條的分母 K 還沒解完（`docs/re/86`），解出來之後換掉。
 
+// MaxBattleTurns 是一場戰鬥最多幾個回合（`docs/re/92`）。
+//
+// 原版的主迴圈是 `cmp word ptr ds:8F1A, 9` ／ `jnb 離開`，回合從 0 起算，
+// 所以畫面上印的是第 1 到第 9 回合。
+const MaxBattleTurns = 9
+
 // BattleFleet 是戰鬥期間一支艦隊要用到的欄位（艦隊記錄，`docs/internals/33`）。
 type BattleFleet struct {
 	Index   int  `json:"index"`   // 艦隊表的索引

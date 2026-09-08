@@ -128,7 +128,8 @@ func (g *Game) AdvanceBattleTurn() {
 	}
 	g.battleLosses = rules.ResolveBattleTurn(g.battleFleets, g.battleUnits, g.battleRand)
 	g.battleTurn++
-	g.battleOver = battleDecided(g.battleUnits)
+	// 九個回合打完就結束（`docs/re/92`）；中途一方歸零也結束。
+	g.battleOver = g.battleTurn > rules.MaxBattleTurns || battleDecided(g.battleUnits)
 }
 
 // flagshipOf 回一支艦隊的旗艦分隊（第 0 個）。

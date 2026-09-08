@@ -1,6 +1,10 @@
 package game
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/wicanr2/logh3/internal/rules"
+)
 
 // TestBattleStartsOnContact 走 S3「巴米利恩會戰」那條路：一直按實行，
 // 兩邊的艦隊會合在達希利（星域 26）就切進戰術畫面（`docs/internals/34`）。
@@ -83,4 +87,33 @@ func TestBattleTurnsDeduct(t *testing.T) {
 		}
 	}
 	t.Logf("十個回合：%d → %d 艘（少了 %d）", before, after, before-after)
+}
+
+// TestBattleEndsAfterNineTurns 九個回合打完就結束（`docs/re/92`）。
+func TestBattleEndsAfterNineTurns(t *testing.T) {
+	g := newTestGame(t)
+	if g.res.Entries == nil {
+		t.Skip("沒有入口表")
+	}
+	g.state = StateCommandPhase
+	for turn := 0; turn < 40 && g.state != StateBattle; turn++ {
+		g.advanceTurn()
+		if g.state == StateShipDelivery {
+			g.state = StateCommandPhase
+		}
+	}
+	if g.state != StateBattle {
+		t.Skip("沒走到戰場")
+	}
+	for i := 0; i < rules.MaxBattleTurns-1; i++ {
+		g.AdvanceBattleTurn()
+		if g.battleOver {
+			t.Fatalf("第 %d 回合就說結束了，應該撐到第 %d 回合",
+				g.battleTurn, rules.MaxBattleTurns)
+		}
+	}
+	g.AdvanceBattleTurn()
+	if !g.battleOver {
+		t.Fatalf("第 %d 回合該結束了", rules.MaxBattleTurns)
+	}
 }
