@@ -27,7 +27,11 @@ type BattleUnit struct {
 	Kind      int `json:"kind"`       // 艦種（艦艇記錄 `+0x04`）
 	Detail    int `json:"detail"`     // 顯示層級（艦艇記錄 `+0x17`）
 	Ships     int `json:"ships"`      // 現有艘數（艦艇記錄 `+0x08`）
-	FullShips int `json:"full_ships"` // 滿編艘數（艦艇記錄 `+0x0A`）
+	FullShips int `json:"full_ships"` // 建制滿編艘數（艦艇記錄 `+0x0A`）
+
+	// RepairCap 是「修理」補得回來的上限（艦艇記錄 `+0x0C`）。它與
+	// `+0x0A` 不同——戰損會把它扣掉一點（永久損失），`+0x0A` 不動。
+	RepairCap int `json:"repair_cap"`
 	Attack    int `json:"attack"`     // 攻擊力（艦艇記錄 `+0x16`）
 	Morale    int `json:"morale"`     // 士氣（艦艇記錄 `+0x06`）
 
@@ -316,6 +320,7 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 			u.Slot = int(rec[5])
 			u.Ships = int(binary.LittleEndian.Uint16(rec[8:]))
 			u.FullShips = int(binary.LittleEndian.Uint16(rec[10:]))
+			u.RepairCap = int(binary.LittleEndian.Uint16(rec[12:]))
 			u.Attack = int(binary.LittleEndian.Uint16(rec[0x16:]))
 			// 士氣是**一個位元組**：`+0x07` 固定 0xFF，整個 word 讀出來
 			// 會是 0xFF64。用 -poke 把 0x682EC 寫成 77 驗過，畫面上只有
