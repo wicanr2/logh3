@@ -31,6 +31,7 @@
 | 5d | **提督詳細資料與經歷**（出擊命令 → 待命中提督清單 → 點一列 → 經歷）| `same-state` | 0 | 收據 `adm1e`／`adm2e`／`adm3e`／`adm15e`／`keireki1e`；[`docs/spec/012`](docs/spec/012-admiral-detail.md)、[`docs/re/65`](docs/re/65-admiral-detail-screen.md) | 五張整張逐位元組一致。姓名、軍階、頭像、現在位置、旗艦、等級與十個能力值都跟著提督走；`ADMIRAL.DT*` 十四個能力欄位的名字就是這張畫面給的。「經歷」印的是 `KEIREKI.DAT` 的人物傳 |
 | 5h | **艦隊編成**（提督詳細資料 → 出擊）| `same-state` | 0 | 收據 `fleet1e`／`fleet2e`；[`docs/spec/013`](docs/spec/013-fleet-organisation.md)、[`docs/re/66`](docs/re/66-fleet-organisation-screen.md) | 兩張整張 640×480 逐位元組一致。艦隊能力九格是提督與副官**逐項取大**，副官贏的印成色 5；副官 ＝ `ADMIRAL.DT*` 的 `+0x07` |
 | 5i | **艦隊編號清單**與**副官選單**（艦隊編成的兩顆按鈕）| `same-state` | 0 | 收據 `fnum`／`fnum3`／`fadj`／`fadj3` ＋ 兩個反例 `fnum2`／`fadj2`；[`docs/re/67`](docs/re/67-fleet-org-buttons.md)、[`docs/re/68`](docs/re/68-hotspot-origin-rule.md) | 四張整張逐位元組一致；反白條跟著滑鼠走，由 `hover` 版面算。另外兩張是**反例**：點在畫出來的框內、熱區外一個像素，畫面與 `fleet1e` 完全相同 |
+| 5j | **艦隊組成**（艦隊編成 → 確認）| `same-state` | 0 | 收據 `fok`；[`docs/spec/015`](docs/spec/015-fleet-composition.md)、[`docs/re/69`](docs/re/69-region-ship-strength.md) | 整張 640×480 逐位元組一致。9×9 格盤鋪的是 `SPRITE.SPR` 圖塊；「待命部隊」＝ 星域記錄 `+0x30` 的艦艇艘數 ÷ 一單位幾艘 |
 | 5b | 船艦訂造報告（796 年 1 月）| `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
 | 5c | 次月份船艦建造計劃 | `same-state` | 0 | 收據 `plan1` | 由訂造報告熱區 (432,300) 點進去 |
 | 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/spec/003`](docs/spec/003-budget-panel.md) | 由主畫面熱區 (432,300) 點進去；十個數字**從財政狀態算出來**，不是量好畫死的 |

@@ -136,6 +136,28 @@ type GameWindow struct {
 	InputBox *Solid `json:"input_box"`
 	Bar      *Solid `json:"bar"`
 
+	// Select 是「這一組小框裡有一個是選中的，它的內部填成另一個顏色」
+	// （艦隊組成的七個艦種列，`docs/re/67`）。選取條要畫在**框的字之前**
+	// ——字印在條子上面，所以做法是換掉那個框的底色，不是另外畫一條。
+	Select *struct {
+		First, Count int
+		Colour       uint8
+	} `json:"select"`
+
+	// selected ＝ 選中的是第幾個 ＋ 1；0 ＝ 都沒選（同 hoverRow 的理由）。
+	selected int
+
+	// Grid 是格盤：一格一張 `SPRITE.SPR` 的圖塊。圖塊由呼叫端畫
+	// （這一層拿不到素材），這裡只記版面。
+	Grid *struct {
+		X, Y       int
+		Cols, Rows int
+		Tile       int
+		Source     string
+		Empty      int
+		Unit       int
+	} `json:"grid"`
+
 	// Hover 是「滑鼠停在哪一列，那一列就整條刷成反白」的清單
 	// （艦隊編號那 16 列、副官那 2 列，`docs/re/67`）。反白條畫在文字
 	// **之前**——字是印在條子上面的。
@@ -255,6 +277,17 @@ func (w *GameWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8, fac
 	return w.drawContent(fb, fnt, shadow, faces)
 }
 
+// SetSelected 指定 `Select` 那一組小框裡選中的是第幾個；-1 ＝ 都沒選。
+func (w *GameWindow) SetSelected(i int) {
+	if w == nil || i < 0 {
+		if w != nil {
+			w.selected = 0
+		}
+		return
+	}
+	w.selected = i + 1
+}
+
 // SetHoverRow 指定這一次要把哪一列刷成反白；-1 ＝ 都不刷。
 func (w *GameWindow) SetHoverRow(row int) {
 	if w == nil || row < 0 {
@@ -312,8 +345,13 @@ func (w *GameWindow) DrawBoxFills(fb *gfx.Framebuffer, cx, cy, cw, ch int) {
 // DrawBoxes 只畫視窗裡的小框。拆出來是因為原版有些畫面**先畫游標、
 // 再刷清單列**，所以那幾格會把游標蓋掉一部分（`docs/re/12`）。
 func (w *GameWindow) DrawBoxes(fb *gfx.Framebuffer, fnt *font.Font) {
-	for _, b := range w.Boxes {
-		f := ui.Frame{Fill: b.Fill}
+	for i, b := range w.Boxes {
+		fill := b.Fill
+		if sel := w.Select; sel != nil && w.selected > 0 &&
+			i == sel.First+w.selected-1 && i < sel.First+sel.Count {
+			fill = sel.Colour
+		}
+		f := ui.Frame{Fill: fill}
 		for _, l := range b.Layers {
 			f.Layers = append(f.Layers, ui.Layer{Top: l[0], Right: l[1], Bottom: l[2], Left: l[3]})
 		}

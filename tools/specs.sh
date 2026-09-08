@@ -120,6 +120,26 @@ if want fleet-adjutant; then
   py tools/scripts/hover_block.py screen-fleet-adjutant menu 416 340 32 20 20 2 2
 fi
 
+# 艦隊組成（`docs/spec/015`）。格盤那一塊要當成小框傳進去才能排除在文字
+# 掃描之外，量完再換回純色矩形；七個艦種列的第 0 列內部是**選取**不是底色。
+if want fleet-composition; then
+  BOXES='112:140:303:339'
+  for y in 160 180 200 220 240 260 280; do BOXES="$BOXES,334:$y:401:$((y+19))"; done
+  for y in 300 320 340; do BOXES="$BOXES,494:$y:529:$((y+19))"; done
+  py tools/scripts/overlay_spec.py fok screen-fleet-org screen-fleet-composition \
+    80 100 559 379 480 310 "$BOXES"
+  for i in 1 2 3 4 5 6 7 8 9 10; do
+    py tools/scripts/box_text.py fok screen-fleet-composition overlay $i
+  done
+  py tools/scripts/composition_blocks.py
+  py tools/scripts/maingame_computed.py screen-fleet-composition
+fi
+
+# 資料段的艦種表與開局各星域的艦艇艘數（要一份記憶體 dump，見腳本說明）。
+# tools/oracle.sh fokall … -dump-mem lin:0:1048576:/src/workplace/fokall.bin
+# py tools/scripts/shiptype_export.py /work/workplace/explore/fleetorg/fokall.bin 0
+# py tools/scripts/region_ships_export.py /work/workplace/explore/fleetorg/fokall.bin 0
+
 # 提督詳細資料的「旗艦」對照表（資料段的兩張 far 指標表）。
 want flagships && py tools/scripts/flagship_export.py
 

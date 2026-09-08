@@ -1,6 +1,7 @@
 package game
 
 import (
+	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -61,7 +62,7 @@ func LoadCommandScreens(dataDir, regionsPath string, bit, rgn []byte) (
 // 81300，畫面上的 82302 還經過開場那一次月底結算——**成長那一步未解**。
 // 所以這四欄先用量到的那一組（`month-rollover-796-01.json`）填回去。
 // 解出算式之前，換一個劇本或開局之後的局面這幾欄就不對——已知的缺口。
-func LoadRegionRecords(stellar []byte, measuredPath string) ([]byte, error) {
+func LoadRegionRecords(stellar []byte, measuredPath, shipsPath string) ([]byte, error) {
 	if len(stellar) < 32*rules.RegionRecord {
 		return nil, fmt.Errorf("STELLAR 太短：%d bytes", len(stellar))
 	}
@@ -103,7 +104,48 @@ func LoadRegionRecords(stellar []byte, measuredPath string) ([]byte, error) {
 		o := i*rules.RegionRecord + 0x28
 		out[o], out[o+1], out[o+2], out[o+3] = 0, 0, 0, 0
 	}
+	if err := applyRegionShips(out, shipsPath); err != nil {
+		return nil, err
+	}
 	return out, nil
+}
+
+// applyRegionShips 把開局各星域的艦艇艘數填進 `+0x30`／`+0x4C`。
+//
+// 那兩段在 `STELLAR.DT*` 檔案裡是**全 0**，原版載入時才填，填的那一步
+// 未解（`docs/re/69`）——所以先用量到的那一份
+// （`region-ships-796-01.json`）。與上面那四個欄位是同一種缺口。
+func applyRegionShips(out []byte, path string) error {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+	var d struct {
+		Regions []struct {
+			Region   int   `json:"region"`
+			Empire   []int `json:"empire"`
+			Alliance []int `json:"alliance"`
+		} `json:"regions"`
+	}
+	if err := json.Unmarshal(b, &d); err != nil {
+		return err
+	}
+	for _, r := range d.Regions {
+		if r.Region < 0 || r.Region >= 32 {
+			continue
+		}
+		o := r.Region * rules.RegionRecord
+		for faction, ships := range [][]int{r.Empire, r.Alliance} {
+			for i, n := range ships {
+				k := o + 0x30 + (faction*7+i)*4
+				if k+4 > len(out) {
+					continue
+				}
+				binary.LittleEndian.PutUint32(out[k:], uint32(n))
+			}
+		}
+	}
+	return nil
 }
 
 // Bootstrap796_01 把行星表推進到 796 年 1 月的狀態。

@@ -341,3 +341,24 @@ type Treasury struct {
 func (t Treasury) Remaining() int {
 	return t.Budget - t.ShipPaid - t.FleetUpkeep - t.Movement - t.Other
 }
+
+
+// 星域記錄裡兩個陣營的艦艇艘數各佔七個 32 位元（`docs/re/69`）。
+const (
+	regionShips     = 0x30
+	regionShipKinds = 7
+)
+
+// RegionShips 回這個星域裡某一個陣營的七種艦艇艘數。
+func RegionShips(record []byte, faction int) []int {
+	off := regionShips + faction*regionShipKinds*4
+	out := make([]int, regionShipKinds)
+	for i := range out {
+		o := off + i*4
+		if o+4 > len(record) {
+			return out
+		}
+		out[i] = int(binary.LittleEndian.Uint32(record[o:]))
+	}
+	return out
+}

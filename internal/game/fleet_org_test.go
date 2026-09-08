@@ -113,3 +113,17 @@ func TestFleetAdjutantMenuMatchesOracle(t *testing.T) {
 		})
 	}
 }
+
+// TestFleetCompositionMatchesOracle 艦隊編成按「確認」開出的**艦隊組成**
+// （收據 `fok`，`docs/re/67`、`docs/re/69`）。
+//
+// 七列的「待命部隊」是首都星域的艦艇艘數 ÷ 一單位幾艘，「數量」印的就是
+// 一單位幾艘；格盤是 9 × 9 的 `SPRITE.SPR` 圖塊。
+func TestFleetCompositionMatchesOracle(t *testing.T) {
+	g := reachFleetOrg(t)
+	g.Click(480, 350) // 「確認」
+	if g.State() != StateFleetComposition {
+		t.Fatalf("點了確認之後在 %v", g.State())
+	}
+	matches(t, g, "fok")
+}

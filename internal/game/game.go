@@ -95,6 +95,11 @@ const (
 	StateFleetNumber
 	StateFleetAdjutant
 
+	// StateFleetComposition 是艦隊編成按「確認」開出的**艦隊組成**：
+	// 9 × 9 的格盤 ＋ 七列待命部隊與數量 ＋ 陣形／中止／決定
+	// （`docs/re/67`、`docs/spec/015`）。
+	StateFleetComposition
+
 	// StateShipDelivery 是月底的「船艦接收報告」：第十次「實行」跨月時
 	// 自己跳出來，按「確認」才回到地圖介面（`docs/re/21`、`docs/re/55`）。
 	StateShipDelivery
@@ -125,6 +130,7 @@ var screenSpecName = map[State]string{
 	StateFleetOrg:        "screen-fleet-org",
 	StateFleetNumber:     "screen-fleet-number",
 	StateFleetAdjutant:   "screen-fleet-adjutant",
+	StateFleetComposition: "screen-fleet-composition",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -214,6 +220,11 @@ type Resources struct {
 
 	// FleetPanel 是艦隊編成那個視窗算出來的部分（`docs/spec/013`）。
 	FleetPanel *screen.FleetPanel
+
+	// CompositionPanel 是艦隊組成那個視窗算出來的部分（`docs/spec/015`），
+	// Sprites 是 `SPRITE.SPR` 那 75 張 16 × 16 圖塊（格盤用它）。
+	CompositionPanel *screen.CompositionPanel
+	Sprites          []*asset.Image
 
 	// BioPanel 是提督經歷那個視窗的內文版面，Biographies 是 82 篇人物傳
 	// 的字碼（`docs/internals/15`）。
@@ -355,6 +366,9 @@ type Game struct {
 
 	// detailAdmiral 是提督詳細資料那張畫面在看哪一位；-1 ＝ 沒有。
 	detailAdmiral int
+
+	// selectedRow 是有選取條那種清單目前選在第幾列（艦隊組成的七個艦種）。
+	selectedRow int
 
 	// starMap 是照玩家陣營重建的勢力色地圖（首都那格的顏色跟著玩家走）。
 	// nil 表示還沒建，畫的時候退回 `Resources.StarMap`。
@@ -585,6 +599,10 @@ func (g *Game) Click(x, y int) {
 			if g.commandSpec(StateFleetAdjutant) != nil {
 				g.state = StateFleetAdjutant
 			}
+		case "confirm":
+			if g.commandSpec(StateFleetComposition) != nil {
+				g.state = StateFleetComposition
+			}
 		}
 	case StateStandbyAdmirals:
 		// 點清單的一列開那位提督的詳細資料（`docs/re/65`）。
@@ -666,7 +684,7 @@ func (g *Game) RightClick(x, y int) {
 		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
 		}
-	case StateFleetNumber, StateFleetAdjutant:
+	case StateFleetNumber, StateFleetAdjutant, StateFleetComposition:
 		g.state = StateFleetOrg
 	case StateAdmiralBio, StateFleetOrg:
 		g.state = StateAdmiralDetail
@@ -1040,6 +1058,68 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 	if name == "overlay" {
 		g.drawFleetOrg(fb)
+		g.drawFleetComposition(fb)
+	}
+}
+
+// drawFleetComposition 畫艦隊組成裡算出來的那幾塊（`docs/spec/015`）。
+//
+// 「待命部隊」是**該星域**的艦艇艘數除以一單位幾艘（`docs/re/69`）；
+// 開局那一支艦隊站在自己的首都。
+func (g *Game) drawFleetComposition(fb *gfx.Framebuffer) {
+	if g.state != StateFleetComposition || g.res.CompositionPanel == nil {
+		return
+	}
+	region := rules.CapitalRegion(g.faction)
+	o := region * rules.RegionRecord
+	if region < 0 || o+rules.RegionRecord > len(g.res.Stellar) {
+		return
+	}
+	v := screen.CompositionView{
+		Ships:    rules.RegionShips(g.res.Stellar[o:o+rules.RegionRecord], g.faction),
+		PerUnit:  rules.ShipsPerUnit[:],
+		Units:    1,
+		Mobility: 100,
+		Slots:    []int{0},
+	}
+	p := g.res.CompositionPanel
+	p.Draw(fb, g.res.Font, v)
+	g.drawCompositionGrid(fb, v)
+}
+
+// drawCompositionGrid 鋪格盤那 9 × 9 的圖塊（`docs/re/67`）：
+// `(欄 + 列)` 為偶數的 41 格才畫，中央那一格畫部隊的圖塊。
+func (g *Game) drawCompositionGrid(fb *gfx.Framebuffer, v screen.CompositionView) {
+	spec := g.commandSpec(g.state)
+	if spec == nil || g.res.Sprites == nil {
+		return
+	}
+	w := spec.Windows["overlay"]
+	if w == nil || w.Grid == nil {
+		return
+	}
+	gr := w.Grid
+	for row := 0; row < gr.Rows; row++ {
+		for col := 0; col < gr.Cols; col++ {
+			if (col+row)%2 != 0 {
+				continue
+			}
+			tile := gr.Empty
+			if col == gr.Cols/2 && row == gr.Rows/2 && len(v.Slots) > 0 {
+				if t := g.res.CompositionPanel.TileAt(0); t >= 0 {
+					tile = t
+				}
+			}
+			if tile < 0 || tile >= len(g.res.Sprites) {
+				continue
+			}
+			img := g.res.Sprites[tile]
+			for y := 0; y < img.H; y++ {
+				for x := 0; x < img.W; x++ {
+					fb.Set(gr.X+col*gr.Tile+x, gr.Y+row*gr.Tile+y, img.Pix[y*img.W+x])
+				}
+			}
+		}
 	}
 }
 
@@ -1050,10 +1130,14 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 // 量進規格就綁死在收據那一列上了。
 func (g *Game) setHoverRow(spec *screen.MainGameSpec) {
 	for _, w := range spec.Windows {
-		if w.Hover == nil {
-			continue
+		if w.Hover != nil {
+			w.SetHoverRow(w.HoverRowAt(g.mouseX, g.mouseY))
 		}
-		w.SetHoverRow(w.HoverRowAt(g.mouseX, g.mouseY))
+		if w.Select != nil {
+			// 艦隊組成開畫面時選在第 0 列（收據 `fok`，假設待驗：
+			// 只有一張收據，還沒看過怎麼換列）。
+			w.SetSelected(g.selectedRow)
+		}
 	}
 }
 
@@ -1397,7 +1481,7 @@ func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 	switch g.state {
 	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList,
 		StateAdmiralDetail, StateAdmiralBio, StateFleetOrg,
-		StateFleetNumber, StateFleetAdjutant:
+		StateFleetNumber, StateFleetAdjutant, StateFleetComposition:
 		region = rules.CapitalRegion(g.faction)
 	case StateStarList:
 		if spec := g.commandSpec(g.state); spec != nil {

@@ -132,6 +132,18 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	sprData, err := os.ReadFile(filepath.Join(root, "org_game/extracted/SPRITE.SPR"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	sprites, err := asset.DecodeTiles(sprData, 16, 16)
+	if err != nil {
+		t.Fatal(err)
+	}
+	composition, err := screen.LoadCompositionPanel(filepath.Join(root, "docs/internals/data/fleet-composition-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	fleetPanel, err := screen.LoadFleetPanel(filepath.Join(root, "docs/internals/data/fleet-org-panel.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -157,7 +169,8 @@ func load(t *testing.T) *Resources {
 		t.Fatal(err)
 	}
 	stellar, err := LoadRegionRecords(stellarFile,
-		filepath.Join(root, "docs/internals/data/month-rollover-796-01.json"))
+		filepath.Join(root, "docs/internals/data/month-rollover-796-01.json"),
+		filepath.Join(root, "docs/internals/data/region-ships-796-01.json"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -202,7 +215,7 @@ func load(t *testing.T) *Resources {
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
 		BudgetPanel: budget, ProductionPanel: production, DeliveryPanel: delivery,
-		ReportPanel: report, BuildPlanPanel: buildPanel, AdmiralPanel: admPanel, FleetPanel: fleetPanel, Flagships: flagships, BioPanel: bioPanel, Biographies: bios,
+		ReportPanel: report, BuildPlanPanel: buildPanel, AdmiralPanel: admPanel, FleetPanel: fleetPanel, CompositionPanel: composition, Sprites: sprites, Flagships: flagships, BioPanel: bioPanel, Biographies: bios,
 		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		StartMilitary: 50000, ShipPct: 25}
