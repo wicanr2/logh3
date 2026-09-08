@@ -12,8 +12,12 @@
 占領能力數值：            ［輸入框］
 ```
 
-左側是 `FACE.AMG` 的第 0 張頭像（萊因哈特）。答案是 `ADMIRAL.DTX`
-第 0 筆的 `+11` ＝ 138（`docs/internals/08`）。
+左側是 `FACE.AMG` 的第 0 張頭像（萊因哈特），問的是 `ADMIRAL.DTX`
+第 0 筆的 `+19`（占領）＝ 126（`docs/internals/08`）。
+
+**輸入的值不會被檢查**：任何非空輸入按 Enter 都直接進遊戲本體，
+空白按 Enter 才留在這張畫面
+（[`docs/re/75`](../re/75-copy-protection-does-not-check-the-answer.md)）。
 
 三行字碼（Big5，從畫面點陣回 `GRAPH.IMG` 反查得到，不是照螢幕認字）：
 

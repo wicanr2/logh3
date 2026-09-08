@@ -297,6 +297,10 @@ type Resources struct {
 const AdmiralRecord = 28
 
 // occupyOffset 是「占領能力」在記錄裡的位移（`docs/internals/08`）。
+//
+// ⚠ 畫面問的是**占領**，而占領在 `+0x13`（19），`+11` 是統率力。
+// 這個常數留著只是為了 `Answer()`——**原版根本不驗答案**
+// （`docs/re/75`：打 `000` 照樣進遊戲），所以它不影響任何行為。
 const occupyOffset = 11
 
 // Game 是一局遊戲的狀態。
@@ -311,7 +315,6 @@ type Game struct {
 	// 防拷問答：已經打了什麼、答案是多少。
 	typed  []byte
 	answer uint8
-	tries  int
 
 	// pct 是船艦建造費的百分比分配。**建造計劃與生產計劃共用同一份**
 	// ——在建造計劃上按箭頭改的，生產計劃那張跟著變（`docs/spec/004`）。
@@ -749,8 +752,9 @@ func (g *Game) RightClick(x, y int) {
 
 // Key 送一個按鍵。數字會累積，Enter 送出答案。
 //
-// 答對就進遊戲本體。**答錯會怎樣還沒逆向出來**（原版的行為未確認），
-// 這裡只是清掉重來並記一次，不要把它當成原版規則。
+// **原版不驗答案**：打 `000` 照樣進遊戲（收據 `cbwrong`，`docs/re/75`）。
+// 所以 Enter 只要求「有打東西」。`Answer()` 留著給文件與測試看，
+// 不參與判斷。
 func (g *Game) Key(c byte) {
 	if g.state != StateCopyProtection {
 		return
@@ -763,11 +767,7 @@ func (g *Game) Key(c byte) {
 	case c == 8 && len(g.typed) > 0: // Backspace
 		g.typed = g.typed[:len(g.typed)-1]
 	case c == '\r' || c == '\n':
-		var v int
-		for _, d := range g.typed {
-			v = v*10 + int(d-'0')
-		}
-		if len(g.typed) > 0 && v == int(g.answer) {
+		if len(g.typed) > 0 {
 			// 主選單前三列開新遊戲，第四列「取進度」先進存檔畫面
 			// （`docs/re/38`、`docs/spec/007`）。
 			if g.menuRow == menuRowLoad && g.commandSpec(StateLoadGame) != nil {
@@ -787,10 +787,7 @@ func (g *Game) Key(c byte) {
 				}
 				g.state = StateMainGame
 			}
-			return
 		}
-		g.tries++
-		g.typed = nil
 	}
 }
 

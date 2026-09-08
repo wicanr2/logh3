@@ -515,21 +515,27 @@ func TestPlayerPathReachesGame(t *testing.T) {
 	matches(t, g, "plan1")
 }
 
-// TestWrongAnswerStaysOnQuestion：答錯不會放行。
-func TestWrongAnswerStaysOnQuestion(t *testing.T) {
+// TestAnyAnswerEntersGame：原版不驗答案，打什麼都進得去。
+//
+// 證據是收據 `cbwrong`（`-press 0,0,0,enter`）：打 `000` 之後的 VGA
+// framebuffer 與答對的 `main1`／`rcback` 逐位元組相同，都是戰略地圖
+// （`docs/re/75`）。空白直接按 Enter 才留在問答畫面。
+func TestAnyAnswerEntersGame(t *testing.T) {
 	g, err := New(load(t))
 	if err != nil {
 		t.Fatal(err)
 	}
 	g.Click(300, 210)
-	for _, c := range []byte{'1', '2', '3', '\r'} {
+	g.Key('\r')
+	if g.State() != StateCopyProtection {
+		t.Fatal("什麼都沒打就放行了")
+	}
+
+	for _, c := range []byte{'0', '0', '0', '\r'} {
 		g.Key(c)
 	}
-	if g.State() != StateCopyProtection {
-		t.Fatal("答錯卻進了遊戲")
-	}
-	if g.Typed() != "" {
-		t.Fatalf("答錯之後輸入沒清掉：%q", g.Typed())
+	if g.State() != StateMainGame {
+		t.Fatal("打 000 沒進遊戲——原版是進得去的")
 	}
 }
 
