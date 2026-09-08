@@ -18,6 +18,7 @@ cases=(
   "main1e|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340"
   "load1e|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145"
   "vs3|move 300 250; click; type 126; enter"
+  "vs4|move 300 250; click; type 126; enter; click 432 263"
   "vs5|move 300 250; click; type 126; enter; click 432 263; rclick 300 240; rclick 300 240; click 544 125; click 560 125"
 )
 fail=0

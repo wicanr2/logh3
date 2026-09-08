@@ -13,7 +13,7 @@
 
 | # | 項目 | 等級 | 未核准差異 | 收據 | 備註 |
 |---|---|---|---:|---|---|
-| G1 | Ebiten 視窗版走玩家路徑 | `same-state` | 0 | `tools/gui_check.sh` | `cmd/gin3` 畫出來的色號陣列與 `r0`／`cb1`／`key1`／`cbAlly`／`keyAlly`／`main1e`／`load1e`／`vs3`／`vs5` 逐位元組相同。**「視窗開得起來」不算數**——比的是同一條玩家路徑跑完的畫面 |
+| G1 | Ebiten 視窗版走玩家路徑 | `same-state` | 0 | `tools/gui_check.sh` | `cmd/gin3` 畫出來的色號陣列與 `r0`／`cb1`／`key1`／`cbAlly`／`keyAlly`／`main1e`／`load1e`／`vs3`／`vs4`／`vs5` 逐位元組相同。**「視窗開得起來」不算數**——比的是同一條玩家路徑跑完的畫面 |
 
 ## 畫面
 
@@ -35,7 +35,7 @@
 | 5j | **艦隊組成**（艦隊編成 → 確認）| `same-state` | 0 | 收據 `fok`；[`docs/spec/015`](docs/spec/015-fleet-composition.md)、[`docs/re/69`](docs/re/69-region-ship-strength.md) | 整張 640×480 逐位元組一致。9×9 格盤鋪的是 `SPRITE.SPR` 圖塊；「待命部隊」＝ 星域記錄 `+0x30` 的艦艇艘數 ÷ 一單位幾艘 |
 | 5k | **陣形清單**（艦隊組成 → 陣形）| `same-state` | 0 | 收據 `form1`／`form2`／`form3`；[`docs/re/70`](docs/re/70-formation-list-and-decide.md) | 三張整張逐位元組一致。八列圓錐／紡錘／半月／Ｕ字／Ｍ字／Ｔ字／分散／密集，反白條跟著滑鼠走 |
 | 5l | **艦隊建成**（艦隊組成 → 決定）| `same-state` | 0 | 收據 `dec1`、`decwatch`；[`docs/re/70`](docs/re/70-formation-list-and-decide.md)、[`docs/internals/33`](docs/internals/33-fleet-table.md) | 整張逐位元組一致。右下角清單多出「第１艦隊　萊因哈特　100」；左下角的首都摘要留在畫面上不被擦掉 |
-| 5m | **對戰的交棒視窗**（主選單第 2 列 → 防拷 → 帝國／同盟輪流）| `same-state` | 0 | 收據 `vs3`／`vs5`／`vs6` ＋ 反例 `vs3` 的框內熱區外那一點；[`docs/spec/016`](docs/spec/016-versus-mode.md)、[`docs/re/76`](docs/re/76-versus-turn-order.md) | 三張整張 640×480 逐位元組一致，走的是完整玩家路徑（確認 → 關報告 → 系統指令／實行 → 換邊）。**兩邊各按一次「實行」才推進三天**；交棒那一刻的底板不上玩家色、右側面板只有陣營那一行與按鈕。按確認之後那張月初報告（`vs4`）與單人那張不同，**還沒對拍** |
+| 5m | **對戰的交棒視窗**（主選單第 2 列 → 防拷 → 帝國／同盟輪流）| `same-state` | 0 | 收據 `vs3`／`vs4`／`vs5`／`vs6` ＋ 反例 `vs3` 的框內熱區外那一點；[`docs/spec/016`](docs/spec/016-versus-mode.md)、[`docs/re/76`](docs/re/76-versus-turn-order.md) | 四張整張 640×480 逐位元組一致，走的是完整玩家路徑（確認 → 月初報告 → 關報告 → 系統指令／實行 → 換邊）。**兩邊各按一次「實行」才推進三天**；交棒那一刻的底板不上玩家色，按下確認之後又塗回來 |
 | 5b | 船艦訂造報告（796 年 1 月）| `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
 | 5c | 次月份船艦建造計劃 | `same-state` | 0 | 收據 `plan1` | 由訂造報告熱區 (432,300) 點進去 |
 | 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/spec/003`](docs/spec/003-budget-panel.md) | 由主畫面熱區 (432,300) 點進去；十個數字**從財政狀態算出來**，不是量好畫死的 |

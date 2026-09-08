@@ -281,4 +281,16 @@ if want versus-input; then
   py tools/scripts/versus_board.py vs3 screen-versus-input
 fi
 
+# 對戰的月初會計報告（收據 `vs4`）。內容與單人那張（`screen-main-game`）
+# 相同，但底板是交棒那一張——右側面板已經畫了陣營那一行、三顆命令按鈕
+# 與分頁鈕，所以要疊在命令階段的底板上重量一次。
+if want versus-account; then
+  py tools/scripts/overlay_spec.py vs4 screen-command-phase screen-versus-account     144 80 495 399 432 223 "430:340:465:359,430:360:465:379" \
+    "160:259:192:1:15,160:279:192:1:15,160:299:192:1:15" "16:400:100"
+  py tools/scripts/box_text.py vs4 screen-versus-account overlay 0
+  py tools/scripts/box_text.py vs4 screen-versus-account overlay 1
+  py tools/scripts/versus_board.py vs4 screen-versus-account
+  py tools/scripts/maingame_computed.py screen-versus-account
+fi
+
 exit 0

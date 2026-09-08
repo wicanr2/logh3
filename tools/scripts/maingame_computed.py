@@ -118,6 +118,15 @@ RECIPES = {
         # 署名與頭像也在那裡，所以規格不留 staff 區塊。
         'drop_face': True, 'staff_block': False,
     },
+    # 對戰的月初報告：內容與單人那張相同，只是量成 overlay 疊在命令階段
+    # 的底板上（底板要留著——那一層是交棒那張的底板，`docs/spec/016`）。
+    'screen-versus-account': {
+        'window': 'overlay',
+        'staff_y': 142, 'post': 2, 'staff_x': 160,
+        'money_rows': (222, 242, 262, 282, 302), 'header_y': None,
+        'drop_face': True, 'staff_block': False,
+        'keep_board': True,
+    },
     'screen-ship-order': {
         'staff_y': 142, 'post': 0, 'staff_x': 160,
         'money_rows': (242, 262, 282, 302, 322, 342, 362), 'header_y': 102,

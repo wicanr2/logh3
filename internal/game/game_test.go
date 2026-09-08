@@ -1163,9 +1163,10 @@ func TestVersusHandover(t *testing.T) {
 
 	// 確認 ＝ 開始帝國的回合，接的是月初會計報告（收據 `vs4`）。
 	g.Click(432, 263)
-	if g.State() != StateMainGame {
+	if g.State() != StateVersusAccount {
 		t.Fatalf("按了確認之後在 %v，預期月初報告", g.State())
 	}
+	matches(t, g, "vs4")
 
 	// 關掉兩層報告 → 戰略地圖；系統指令 → 實行。
 	g.RightClick(300, 240)

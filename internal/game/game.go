@@ -112,6 +112,11 @@ const (
 	// 疊在戰略地圖上，按「確認」開始這一方的回合
 	// （`docs/re/76`、`docs/spec/016`）。
 	StateVersusInput
+
+	// StateVersusAccount 是對戰模式的月初會計報告：內容與單人那張
+	// （`StateMainGame`）相同，但底板已經畫了陣營那一行、三顆命令按鈕
+	// 與分頁鈕（收據 `vs4`，`docs/spec/016`）。
+	StateVersusAccount
 )
 
 // screenSpecName 是每個命令階段狀態對應的規格名（`docs/internals/data/`）。
@@ -142,6 +147,7 @@ var screenSpecName = map[State]string{
 	StateFleetComposition: "screen-fleet-composition",
 	StateFormation:        "screen-formation",
 	StateVersusInput:      "screen-versus-input",
+	StateVersusAccount:    "screen-versus-account",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -392,7 +398,10 @@ type Game struct {
 
 	// starMap 是照玩家陣營重建的勢力色地圖（首都那格的顏色跟著玩家走）。
 	// nil 表示還沒建，畫的時候退回 `Resources.StarMap`。
-	starMap *asset.Image
+	//
+	// plainMap 是同一張但**不塗玩家色**：對戰的交棒視窗用它
+	// （`docs/spec/016`）。
+	starMap, plainMap *asset.Image
 
 	// menuRow 是主選單點了哪一列（-1 ＝ 還沒點）。防拷答對之後要靠它
 	// 決定是開新遊戲還是進存檔畫面。
@@ -512,7 +521,8 @@ func (g *Game) side() side {
 // enterSide 換到某一方：陣營、地圖顏色與那一方的錢一起換過去。
 func (g *Game) enterSide(faction int) {
 	g.faction = faction
-	g.starMap = g.factionStarMap(faction)
+	g.starMap = g.factionStarMap(faction, true)
+	g.plainMap = g.factionStarMap(faction, false)
 	s := g.sides[faction]
 	g.military, g.taxTotal, g.pct = s.military, s.taxTotal, s.pct
 	g.treasury, g.monthReport = s.treasury, s.monthReport
@@ -527,7 +537,8 @@ func (g *Game) enterSide(faction int) {
 func (g *Game) startNewGame(faction int) {
 	g.restoreWorld()
 	g.faction = faction
-	g.starMap = g.factionStarMap(faction)
+	g.starMap = g.factionStarMap(faction, true)
+	g.plainMap = g.factionStarMap(faction, false)
 	g.turn = 0
 	g.military = g.res.StartMilitary
 	g.pct = rules.OpeningPct
@@ -667,7 +678,12 @@ func (g *Game) Click(x, y int) {
 		// 什麼都不會發生（收據 `vs3`），所以走 `BoxAt`。
 		if spec := g.commandSpec(StateVersusInput); spec != nil {
 			if w := spec.Windows["overlay"]; w != nil && w.BoxAt(x, y) == 0 {
-				g.state = StateMainGame
+				g.reportLayer = 0
+				if g.commandSpec(StateVersusAccount) != nil {
+					g.state = StateVersusAccount
+				} else {
+					g.state = StateMainGame
+				}
 			}
 		}
 	case StateMainGame:
@@ -838,8 +854,9 @@ func (g *Game) RightClick(x, y int) {
 		}
 	}
 	switch g.state {
-	case StateMainGame:
+	case StateMainGame, StateVersusAccount:
 		// 月初報告是兩層。第一下關掉上面那層，第二下才到地圖介面。
+		// 對戰模式那張（`vs4`）也是兩下——收據 `vs5` 用的就是兩次右鍵。
 		g.reportLayer++
 		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
@@ -1097,6 +1114,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawProduction(fb)
 			g.drawDelivery(fb)
 			g.drawSlotList(fb)
+			g.drawReport(fb)
 			g.drawAdmiralDetail(fb)
 			g.drawAdmiralBio(fb)
 			g.drawSpecStaff(fb, spec)
@@ -1163,9 +1181,16 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 		return
 	}
 	// 對戰交棒的當下只有陣營那一行與按鈕（`docs/spec/016`）。
-	if g.state == StateVersusInput {
-		if c, _, ok := g.capitalSummary(); ok {
-			g.res.CapitalPanel.DrawHandover(fb, g.res.Font, c, g.faction)
+	// 接著那張月初報告是「交棒的底板 ＋ 單人那張的首都摘要」——
+	// 兩件事都要，所以兩個都畫（收據 `vs4`）。
+	if g.state == StateVersusInput || g.state == StateVersusAccount {
+		c, _, ok := g.capitalSummary()
+		if !ok {
+			return
+		}
+		g.res.CapitalPanel.DrawHandover(fb, g.res.Font, c, g.faction)
+		if g.state == StateVersusAccount {
+			g.res.CapitalPanel.DrawOpening(fb, g.res.Font, g.res.RegionPanel, c, g.faction)
 		}
 		return
 	}
@@ -1215,7 +1240,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 		StateFormation,
 		// 交棒視窗的游標停在剛剛按下確認／實行的地方：`vs3` 在主選單
 		// 那一列 (300,250)，`vs5`／`vs6` 在「實行」那一格 (560,125)。
-		StateVersusInput:
+		StateVersusInput, StateVersusAccount:
 	default:
 		return
 	}
@@ -1379,7 +1404,10 @@ func (g *Game) drawDelivery(fb *gfx.Framebuffer) {
 // drawReport 畫主畫面會計報告裡算出來的那幾塊（`docs/spec/011`）：
 // 署名的參謀、他的頭像與五個金額。署名的是**內政專任參謀**。
 func (g *Game) drawReport(fb *gfx.Framebuffer) {
-	if g.state != StateMainGame || g.res.ReportPanel == nil {
+	if g.state != StateMainGame && g.state != StateVersusAccount {
+		return
+	}
+	if g.res.ReportPanel == nil {
 		return
 	}
 	p := g.res.ReportPanel
@@ -1728,6 +1756,10 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 
 // playerStarMap 回勢力色那一張：開局時照陣營重建過的優先。
 func (g *Game) playerStarMap() *asset.Image {
+	// 交棒視窗那一刻地圖不上玩家色（收據 `vs3`／`vs5`）。
+	if g.state == StateVersusInput && g.plainMap != nil {
+		return g.plainMap
+	}
 	if g.starMap != nil {
 		return g.starMap
 	}
@@ -1834,7 +1866,11 @@ func (g *Game) securityStarMap() *asset.Image {
 // `rules.FactionColour` 那兩個值（`docs/re/61`）。
 //
 // 建不起來（缺原始位元組）時回 nil，由 starMapFor 退回載入時那一張。
-func (g *Game) factionStarMap(faction int) *asset.Image {
+//
+// `tint` ＝ 要不要塗那一格。**對戰的交棒視窗那一刻不塗**（`vs5` 對 `vs3`
+// 扣掉游標只差六個字，兩邊的地圖完全一樣）；按下確認之後那張月初報告
+// 又塗回來了（`vs4`）。所以它跟著**畫面**走，不是跟著模式走。
+func (g *Game) factionStarMap(faction int, tint bool) *asset.Image {
 	if g.res.StarBit == nil || g.res.StarRGN == nil || len(g.res.RegionColours) == 0 {
 		return nil
 	}
@@ -1844,10 +1880,7 @@ func (g *Game) factionStarMap(faction int) *asset.Image {
 			cols[r] = rules.RegionColour(f)
 		}
 	}
-	// **對戰模式不上玩家色**：交棒視窗底下的地圖兩邊完全一樣
-	// （`vs5` 對 `vs3` 扣掉游標只差六個字），帝國首都那一格是星域
-	// 本來的色 1，不是單人模式那個色 6。
-	if r := rules.CapitalRegion(faction); r >= 0 && r < len(cols) && !g.versus {
+	if r := rules.CapitalRegion(faction); r >= 0 && r < len(cols) && tint {
 		cols[r] = rules.FactionColour(faction)
 	}
 	img, err := asset.BuildStarMap(g.res.StarBit, g.res.StarRGN, cols, 16, 20, 20)
