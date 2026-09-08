@@ -7,6 +7,7 @@ import (
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
@@ -298,5 +299,38 @@ func drawFullNumber(fb *gfx.Framebuffer, fnt *font.Font, x, y, n int, digits []u
 	s := itoa(n)
 	for i := 0; i < len(s); i++ {
 		drawFull(fb, fnt, x+i*font.GlyphW, y, []uint16{digits[s[i]-'0']}, ink)
+	}
+}
+
+// DrawBattleUnits 把分隊畫到戰場上。
+//
+// 單位是 `SPRITE.SPR` 的 16×16 圖塊，**左上角對齊分隊的世界座標**
+// （`docs/re/85`）。哪個艦種用哪一塊還沒解完，所以圖塊索引由呼叫端給。
+//
+// 超出戰場那一塊的部分會被裁掉——原版的戰場是有邊界的視窗。
+func DrawBattleUnits(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
+	units []rules.BattleUnit, sprite func(rules.BattleUnit) int, v BattleView) {
+	if len(sprites) == 0 || sprite == nil {
+		return
+	}
+	fx, fy := s.Field.X, s.Field.Y
+	fw, fh := s.Field.Cols*s.Field.TileW, s.Field.Rows*s.Field.TileH
+	ox, oy := v.Col*s.Field.TileW, v.Row*s.Field.TileH
+	for _, u := range units {
+		n := sprite(u)
+		if n < 0 || n >= len(sprites) {
+			continue
+		}
+		t := sprites[n]
+		sx, sy := fx+u.X-ox, fy+u.Y-oy
+		for y := 0; y < t.H; y++ {
+			for x := 0; x < t.W; x++ {
+				px, py := sx+x, sy+y
+				if px < fx || py < fy || px >= fx+fw || py >= fy+fh {
+					continue
+				}
+				fb.Set(px, py, t.Pix[y*t.W+x])
+			}
+		}
 	}
 }
