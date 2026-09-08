@@ -109,7 +109,7 @@ func clampRow(r, rows int) int {
 // 損失怎麼算還沒解（`docs/re/86`），所以這裡只有移動。
 func (g *Game) AdvanceBattleTurn() {
 	if g.tactic != nil {
-		b := ai.Battlefield{Units: g.battleUnits}
+		b := ai.Battlefield{Units: g.battleUnits, Planets: g.battlePlanets}
 		for _, faction := range []int{0, 1} {
 			if faction == g.faction && !g.autoBattle {
 				continue // 玩家自己下令

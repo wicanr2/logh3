@@ -13,7 +13,28 @@ type Move struct {
 
 // Battlefield 是戰術層看得到的局面。**只讀**。
 type Battlefield struct {
-	Units []rules.BattleUnit
+	Units   []rules.BattleUnit
+	Planets []rules.BattlePlanet
+}
+
+// enemyPlanet 回離 (x,y) 最近的敵方行星，沒有就回 false。
+//
+// 原版量到的目標點裡有一個是 **(1320,812)**——那正是雷奧米爾的座標
+// （`docs/re/80` 的艦隊 28、`docs/re/99` 的行星表）。所以戰術層會把
+// 艦隊帶向敵方的行星，不是只追著敵艦跑。
+func enemyPlanet(b Battlefield, faction, x, y int) (rules.BattlePlanet, bool) {
+	best, found, bestD := rules.BattlePlanet{}, false, 0
+	for _, p := range b.Planets {
+		if p.Owner == faction || (p.Owner != 0 && p.Owner != 1) {
+			continue
+		}
+		dx, dy := p.X-x, p.Y-y
+		d := dx*dx + dy*dy
+		if !found || d < bestD {
+			best, found, bestD = p, true, d
+		}
+	}
+	return best, found
 }
 
 // Tactic 是戰術層的一套決策。
@@ -24,20 +45,34 @@ type Tactic interface {
 // OriginalTactic 照原版：**整批朝同一個點壓過去**。
 //
 // 這不是猜的——`docs/re/80` 量到一場六對一的戰鬥裡，敵方六支有四支的
-// 目標點是同一個座標，而且整批朝我方移動。這裡把那個行為寫出來：
-// 挑最近的敵方單位，所有人指向它。
+// 目標點是同一個座標，而且整批朝我方移動；**另一支指向 (1320,812)，
+// 那是行星雷奧米爾的座標**（`docs/re/99`）。所以目標優先取敵方的行星，
+// 沒有行星才退回最近的敵方單位。
 type OriginalTactic struct{}
 
 // Moves 回這一回合的命令。
 func (OriginalTactic) Moves(b Battlefield, faction, turn int) []Move {
 	mine, foes := split(b, faction)
-	if len(mine) == 0 || len(foes) == 0 {
+	if len(mine) == 0 {
 		return nil
 	}
-	t := b.Units[nearestFoe(b, mine, foes)]
+	tx, ty, ok := 0, 0, false
+	if len(mine) > 0 {
+		u := b.Units[mine[0]]
+		if p, found := enemyPlanet(b, faction, u.X, u.Y); found {
+			tx, ty, ok = p.X, p.Y, true
+		}
+	}
+	if !ok {
+		if len(foes) == 0 {
+			return nil
+		}
+		t := b.Units[nearestFoe(b, mine, foes)]
+		tx, ty = t.X, t.Y
+	}
 	var out []Move
 	for _, i := range mine {
-		out = append(out, Move{Unit: i, X: t.X, Y: t.Y})
+		out = append(out, Move{Unit: i, X: tx, Y: ty})
 	}
 	return out
 }

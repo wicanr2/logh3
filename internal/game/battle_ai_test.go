@@ -67,6 +67,9 @@ func TestBattleLossMagnitude(t *testing.T) {
 	if g.res.Entries == nil {
 		t.Skip("沒有入口表")
 	}
+	// 沒有戰術層就沒有人會動，距離項會把基本量吃光——量級要在兩邊
+	// 真的靠過去之後才有意義。
+	g.SetTactic(ai.OriginalTactic{}, true)
 	g.state = StateCommandPhase
 	for turn := 0; turn < 40 && g.state != StateBattle; turn++ {
 		g.advanceTurn()
@@ -91,10 +94,13 @@ func TestBattleLossMagnitude(t *testing.T) {
 	if n == 0 {
 		t.Fatal("九個回合一次交火都沒有")
 	}
-	// ⚠ 量級只有在**幾何可比**的時候才有意義：原版那 290 是雙方壓在
-	// 行星上打出來的（艦隊 31 的旗艦就站在雷奧米爾的座標上）。remake
-	// 的戰術層目前把單位往敵人身上帶，不往行星帶，所以距離項會把基本量
-	// 吃掉大半。這條測試只記數字，不斷言。
+	avg := sum / n
 	t.Logf("remake：%d 次交火，總損失平均 %d、最大 %d（原版在行星上量到 290）",
-		n, sum/n, max)
+		n, avg, max)
+	// 量級只有在**幾何可比**的時候才有意義：原版那 290 是雙方壓在行星上
+	// 打出來的（艦隊 31 的旗艦就站在雷奧米爾的座標上）。這裡的界很寬，
+	// 只擋「差一個量級」那種回歸——不是逐位元組的對拍。
+	if avg < 100 || avg > 600 {
+		t.Errorf("平均 %d 離原版量到的 290 差一個量級", avg)
+	}
 }
