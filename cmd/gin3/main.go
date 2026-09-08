@@ -155,6 +155,10 @@ func main() {
 	}
 	if *aiLevel >= 0 {
 		g.SetBrain(&ai.Focused{Difficulty: *aiLevel})
+		g.SetTactic(&ai.Encircle{Difficulty: *aiLevel}, false)
+	} else {
+		// 預設走原版：戰術層整批朝同一點壓上去（`docs/re/80`）。
+		g.SetTactic(ai.OriginalTactic{}, false)
 	}
 	a := &app{
 		g:         g,

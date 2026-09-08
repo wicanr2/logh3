@@ -295,6 +295,9 @@ type Resources struct {
 	BattleTiles []*asset.Image
 	BattleMaps  [][]uint8
 
+	// Entries 是戰場入口表（`docs/internals/39`）。
+	Entries *rules.BattleEntries
+
 	// Weights 是戰力權重表（原版的 `ds:6032`，`docs/re/79`）。
 	// nil ＝ 算不出戰力，AI 退回「每支艦隊算 1」。
 	Weights rules.StrengthWeights
@@ -436,6 +439,9 @@ type Game struct {
 	battleRegion int
 	battleView   screen.BattleView
 	battleTurn   int
+	battleUnits  []rules.BattleUnit
+	tactic       ai.Tactic
+	autoBattle   bool
 
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
 	// **預設是 `ai.Original`——按實行時什麼都不做**，那是量出來的原版
@@ -2200,6 +2206,10 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		cells = g.res.BattleMaps[r]
 	}
 	fb := screen.Battle(g.res.Battle, g.res.BattlePanel, g.res.BattleTiles, cells, g.battleView)
+	if len(g.battleUnits) > 0 && len(g.res.Sprites) > 0 {
+		screen.DrawBattleUnits(g.res.Battle, fb, g.res.Sprites, g.battleUnits,
+			func(u rules.BattleUnit) int { return battleSprite(g.shipKind(u)) }, g.battleView)
+	}
 	screen.DrawBattleStatusFrame(g.res.Battle, fb)
 	if g.res.Font != nil {
 		y, mo, d := g.Date()

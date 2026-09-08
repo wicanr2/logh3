@@ -214,6 +214,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	entries, err := rules.LoadBattleEntries(filepath.Join(data, "battle-entry-points.json"))
+	if err != nil {
+		return nil, err
+	}
 	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph, Weights: weights, AdmiralNames: names, StarListOrder: starOrder,
 		UnrestParams: rules.UnrestParams{
 			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
@@ -229,6 +233,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		Battle: battle, BattlePanel: battlePanel, BattleTiles: battleTiles, BattleMaps: battleMaps,
+		Entries: entries,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
 
