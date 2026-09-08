@@ -88,7 +88,7 @@ func ResolveBattleTurn(fleets []BattleFleet, units []BattleUnit, rnd *Rand) []Ba
 		}
 		tx, ty := units[theirs[0]].X, units[theirs[0]].Y
 		total := BattleDamage(DamageInput{
-			Kind1Ships: kindOneShips(units, mine),
+			Ships01: shipsKind01(units, mine),
 			Bonus:      f.Bonus,
 			Halved:     f.Halved,
 			Distance:   isqrt((tx-cx)*(tx-cx) + (ty-cy)*(ty-cy)),
@@ -141,10 +141,11 @@ func maxAttack(units []BattleUnit, idx []int) int {
 	return best
 }
 
-func kindOneShips(units []BattleUnit, idx []int) int {
+// shipsKind01 加總艦種 0 與 1 的現有艘數（`203A:04D1`，`docs/re/99`）。
+func shipsKind01(units []BattleUnit, idx []int) int {
 	sum := 0
 	for _, i := range idx {
-		if units[i].Kind == 1 {
+		if units[i].Kind == 0 || units[i].Kind == 1 {
 			sum += units[i].Ships
 		}
 	}

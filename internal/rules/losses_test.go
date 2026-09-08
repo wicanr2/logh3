@@ -143,7 +143,7 @@ func TestDamageFactorPeaksAtHalfTurn(t *testing.T) {
 // 整條戰損算式的結構性質（`docs/re/86`）。目前**還沒有能逐位元組
 // 對拍的樣本**——要有的話得同時知道 +0x12／+0x14 與那一輪的亂數。
 func TestBattleDamageShape(t *testing.T) {
-	in := DamageInput{Kind1Ships: 30000, Bonus: 100, Facing: 0, Bearing: 128}
+	in := DamageInput{Ships01: 30000, Bonus: 100, Facing: 0, Bearing: 128}
 	// 近距離不衰減：距離 149 與 0 算出來一樣。
 	a := BattleDamage(in)
 	in.Distance = 149
@@ -156,7 +156,7 @@ func TestBattleDamageShape(t *testing.T) {
 		t.Errorf("距離 300 算出 %d，不該多於近距離的 %d", c, a)
 	}
 	// 防禦係數越大，傷害越少。
-	in = DamageInput{Kind1Ships: 30000, Bonus: 100, Facing: 0, Bearing: 128, Defence: 100}
+	in = DamageInput{Ships01: 30000, Bonus: 100, Facing: 0, Bearing: 128, Defence: 100}
 	base := BattleDamage(in)
 	in.Defence = 200
 	if hard := BattleDamage(in); hard >= base {
@@ -168,14 +168,14 @@ func TestBattleDamageShape(t *testing.T) {
 	}
 
 	// 除數 20 的那一半。
-	in = DamageInput{Kind1Ships: 30000, Bonus: 100, Facing: 0, Bearing: 128}
+	in = DamageInput{Ships01: 30000, Bonus: 100, Facing: 0, Bearing: 128}
 	full := BattleDamage(in)
 	in.Halved = true
 	if half := BattleDamage(in); half*2 > full+2 || half*2 < full-2 {
 		t.Errorf("+0x12 非 0 時算出 %d，該是 %d 的一半上下", half, full)
 	}
 	// 方向的影響上限是兩成。
-	in = DamageInput{Kind1Ships: 30000, Bonus: 100, Facing: 0}
+	in = DamageInput{Ships01: 30000, Bonus: 100, Facing: 0}
 	best, worst := 0, 1<<30
 	for d := 0; d < BattleTurn; d++ {
 		in.Bearing = d
