@@ -32,6 +32,19 @@ _LEFT_SUMMARY = {
 
 RECIPES = {
     'screen-standby-admirals': _LEFT_SUMMARY,
+    'screen-admiral-detail': {
+        'window': 'overlay',
+        # 署名那一行整行都是那位提督的（姓名 ＋ 軍階）。
+        'staff_y': 122, 'post': -1, 'staff_x': 224,
+        'money_rows': (202, 222, 242, 262, 282, 302, 322), 'header_y': None,
+        'drop_face': True, 'staff_block': False,
+        'keep_board': True,
+        'left_summary_rows': (362, 382),
+        # 現在位置的星域名與旗艦名跟著提督走，標籤留著。
+        'strip_x': ((142, 224, 352), (162, 224, 544)),
+        # 陣營那一行（色 6）兩邊不同字。
+        'faction_rows': (102,),
+    },
     # 星系資料的左下角是**滑鼠停的那一列**那個星域的摘要，不是首都。
     'screen-star-list': _LEFT_SUMMARY,
     'screen-admiral-list-view': _LEFT_SUMMARY,
@@ -97,7 +110,15 @@ report = spec['windows'].get(r.get('window', 'report'))
 if report is not None:
     lines, dropped, stripped = [], 0, 0
     left = r.get('left_summary_rows', ())
+    strip_x = {y: (a, b) for y, a, b in r.get('strip_x', ())}
     for l in report.get('lines', []):
+        if l['y'] in strip_x:
+            a, b = strip_x[l['y']]
+            cells = [c for c in l['cells'] if not (a <= c['x'] < b)]
+            stripped += len(l['cells']) - len(cells)
+            if not cells:
+                continue
+            l = dict(l, cells=cells)
         if l['y'] in left and l['cells'][0]['x'] < 320:
             dropped += 1
             continue

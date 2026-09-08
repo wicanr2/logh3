@@ -109,6 +109,14 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	flagships, err := screen.LoadFlagships(filepath.Join(data, "flagships.json"))
+	if err != nil {
+		return nil, err
+	}
+	admPanel, err := screen.LoadAdmiralPanel(filepath.Join(data, "admiral-detail-panel.json"))
+	if err != nil {
+		return nil, err
+	}
 	buildPanel, err := screen.LoadReportPanel(filepath.Join(data, "build-plan-panel.json"))
 	if err != nil {
 		return nil, err
@@ -179,7 +187,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
 		Screens: screens, StarMaps: maps, Regions: regions,
 		RegionPanel: panel, CapitalPanel: capital, BudgetPanel: budget, ProductionPanel: production,
-		DeliveryPanel: delivery, ReportPanel: report, BuildPlanPanel: buildPanel,
+		DeliveryPanel: delivery, ReportPanel: report, BuildPlanPanel: buildPanel, AdmiralPanel: admPanel, Flagships: flagships,
 		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		StartMilitary: 50000, ShipPct: 25}, nil

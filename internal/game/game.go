@@ -191,6 +191,12 @@ type Resources struct {
 	// BuildPlanPanel 是建造計劃那張的「船艦建造費」（同樣是 rules.Budget 算的）。
 	BuildPlanPanel *screen.ReportPanel
 
+	// AdmiralPanel 是提督詳細資料那個視窗算出來的部分（`docs/spec/012`）。
+	AdmiralPanel *screen.AdmiralPanel
+
+	// Flagships 是兩個陣營各 16 艘旗艦的名字（`docs/re/65`）。
+	Flagships *screen.Flagships
+
 	// ProductionPanel 是生產計劃那個視窗的（`docs/spec/004`）。
 	BudgetPanel     *screen.BudgetPanel
 	ProductionPanel *screen.ProductionPanel
@@ -845,6 +851,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawProduction(fb)
 			g.drawDelivery(fb)
 			g.drawSlotList(fb)
+			g.drawAdmiralDetail(fb)
 			g.drawSpecStaff(fb, spec)
 			return fb
 		}
@@ -941,12 +948,15 @@ func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
 // (600,300)——兩隻箭頭，223 個像素。
 //
 // 月初會計報告也一樣：規格量自 `key1`，游標停在主選單第 0 列（帝國）；
-// 點第 1 列開同盟的局，原版的游標低一列。
+// 點第 1 列開同盟的局，原版的游標低一列。提督詳細資料同理——
+// 規格量自點第 0 列那一次，點別列游標就在別處。
 //
 // 只對這兩張這樣做：疊上去那些畫面的規格還帶著游標的裁切範圍與
 // 「游標之後再畫一次」的補丁，那幾件事綁著當初那個位置，還沒模型化。
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
-	if g.state != StateCommandPhase && g.state != StateMainGame {
+	switch g.state {
+	case StateCommandPhase, StateMainGame, StateAdmiralDetail:
+	default:
 		return
 	}
 	if spec.Mouse == nil || g.mouseY < 0 {
@@ -1091,6 +1101,45 @@ func (g *Game) drawShipOrder(fb *gfx.Framebuffer) {
 	g.res.DeliveryPanel.Draw(fb, g.res.Font, c.Year, c.Month, g.thisPlan(), nil, nil)
 }
 
+// drawAdmiralDetail 畫提督詳細資料裡跟著提督走的那幾塊（`docs/spec/012`）。
+func (g *Game) drawAdmiralDetail(fb *gfx.Framebuffer) {
+	if g.state != StateAdmiralDetail || g.res.AdmiralPanel == nil {
+		return
+	}
+	i := g.detailAdmiral
+	if i < 0 || (i+1)*rules.AdmiralRecord > len(g.res.Admiral) {
+		return
+	}
+	p := g.res.AdmiralPanel
+	rec := g.res.Admiral[i*rules.AdmiralRecord : (i+1)*rules.AdmiralRecord]
+	v := screen.AdmiralView{Record: rec, Level: rules.AdmiralLevel(rec)}
+	if i < len(g.res.AdmiralNames) {
+		v.Name = g.res.AdmiralNames[i]
+	}
+	v.Rank = g.rankCodes(rules.RankOf(rules.AdmiralLevel(rec)))
+	// 待命中的提督站在自己陣營的首都（三張收據都是瓦爾哈拉，假設待驗）。
+	if r := rules.CapitalRegion(rules.AdmiralFaction(rec)); r >= 0 {
+		o := r * rules.RegionRecord
+		if o+rules.RegionRecord <= len(g.res.Stellar) {
+			v.Location = rules.RegionName(g.res.Stellar[o : o+rules.RegionRecord])
+		}
+	}
+	if slot := rules.FlagshipSlot(rec, i); slot >= 0 {
+		v.Flagship = g.res.Flagships.Name(rules.AdmiralFaction(rec), slot)
+	}
+	p.Draw(fb, g.res.Font, v)
+	if g.res.Faces == nil {
+		return
+	}
+	if img, err := g.res.Faces.Decode(i); err == nil {
+		for y := 0; y < img.H; y++ {
+			for x := 0; x < img.W; x++ {
+				fb.Set(p.Face.X+x, p.Face.Y+y, img.Pix[y*img.W+x])
+			}
+		}
+	}
+}
+
 // drawProduction 畫生產計劃的數字（`docs/spec/004`）。
 func (g *Game) drawProduction(fb *gfx.Framebuffer) {
 	if g.state != StateProductionPlan || g.res.ProductionPanel == nil {
@@ -1154,7 +1203,7 @@ func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 	}
 	region := -1
 	switch g.state {
-	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList:
+	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList, StateAdmiralDetail:
 		region = rules.CapitalRegion(g.faction)
 	case StateStarList:
 		if spec := g.commandSpec(g.state); spec != nil {
