@@ -99,3 +99,10 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [`35-block3-blk.md`](35-block3-blk.md)：戰場的圖塊集（128 塊 16×20）。
 - [`36-map-cmp.md`](36-map-cmp.md)：每個星域的戰場地圖（128×102 格，兩條規則的編碼）。
 - [`37-ani-pnl-a98.md`](37-ani-pnl-a98.md)：戰鬥畫面的底圖（`.AMG` 編碼、畫在 y=40）。
+- [`38-battle-units.md`](38-battle-units.md)：戰場上的單位是「分隊」，不是艦隊。
+- [`39-battle-entry-points.md`](39-battle-entry-points.md)：戰場入口表。
+- [`40-ship-kind-table.md`](40-ship-kind-table.md)：艦種屬性表。
+- [`41-sin-table.md`](41-sin-table.md)：原版的正弦表。
+- [`42-screen-tile-table.md`](42-screen-tile-table.md)：畫面的圖塊表 `ds:D81E`。
+- [`43-battle-terrain-and-rally.md`](43-battle-terrain-and-rally.md)：戰場地形的通行規則與集結點。
+- [`44-battle-command-menus.md`](44-battle-command-menus.md)：戰場的命令選單（五張表、可選旗標、版面公式）。
