@@ -22,6 +22,10 @@ type Fleet struct {
 	Region   int `json:"region"`   // 現在在哪一個星域
 	Target   int `json:"target"`   // 要去哪一個星域
 
+	// Strength 是這一支的戰力（`ShipStrength` 的算式加總）。
+	// 0 ＝ 算不出來（沒有艦艇池或權重表），AI 那邊會退回「每支算 1」。
+	Strength int `json:"strength"`
+
 	// Parked ＝ 原版 `+0x08` 是 5：**這一支不會動**，就算有目的地也一樣
 	// （`113A:0350` 讀的就是它，`docs/re/77`）。劇本可以把艦隊設成這樣
 	// ——S2 同盟那七支全是，所以它們十二回合原地不動。

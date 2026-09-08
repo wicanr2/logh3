@@ -349,7 +349,7 @@ func TestSlotFleetsMatchDump(t *testing.T) {
 		}},
 	}
 	for _, c := range cases {
-		got := loadSlot(t, c.ext).Fleets()
+		got := loadSlot(t, c.ext).Fleets(nil)
 		if len(got) != len(c.want) {
 			t.Fatalf("DT%s 讀出 %d 支，預期 %d 支", c.ext, len(got), len(c.want))
 		}
@@ -360,6 +360,49 @@ func TestSlotFleetsMatchDump(t *testing.T) {
 				t.Errorf("DT%s 第 %d 支 = %+v，預期編號%d 陣營%d 星域%d 目的%d 停%v",
 					c.ext, i, g, w.Number, w.Faction, w.Region, w.Target, w.Parked)
 			}
+		}
+	}
+}
+
+// TestFleetStrengthUsesOriginalFormula 釘住原版的戰力算式
+// （`2E54:1876`，`docs/re/79`）：權重[艦種] × 現有艘數 × 1000 ÷ 滿編艘數。
+//
+// S3 載入時每一筆都是滿編，所以每一艘的貢獻剛好是 `權重 × 1000`；
+// 一支艦隊的戰力就是它十個槽的權重和 × 1000。
+func TestFleetStrengthUsesOriginalFormula(t *testing.T) {
+	w, err := LoadStrengthWeights("../../docs/internals/data/ship-strength-weights.json")
+	if err != nil {
+		t.Skipf("讀不到權重表：%v", err)
+	}
+	if len(w) != 8 {
+		t.Fatalf("權重表有 %d 個，預期 8 個（艦種 0–7）", len(w))
+	}
+	s := loadSlot(t, "A")
+
+	for i := 0; i < FleetCount; i++ {
+		if !s.FleetUsed(i) {
+			continue
+		}
+		want := 0
+		for _, n := range s.FleetShips(i) {
+			r := s.Ship[n*ShipRecord : (n+1)*ShipRecord]
+			kind := int(r[shipKind])
+			alive := int(r[shipAlive]) | int(r[shipAlive+1])<<8
+			full := int(r[shipFull]) | int(r[shipFull+1])<<8
+			if kind == shipKindEmpty || full == 0 {
+				continue
+			}
+			if alive != full {
+				t.Fatalf("第 %d 支的第 %d 筆不是滿編（%d/%d），這個測試的前提不成立",
+					i, n, alive, full)
+			}
+			want += w[kind] * 1000
+		}
+		if got := s.FleetStrength(w, i); got != want {
+			t.Fatalf("第 %d 支戰力 %d，照算式應該是 %d", i, got, want)
+		}
+		if want == 0 {
+			t.Fatalf("第 %d 支算出 0 戰力——欄位大概讀錯了", i)
 		}
 	}
 }

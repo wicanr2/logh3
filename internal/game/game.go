@@ -281,6 +281,10 @@ type Resources struct {
 	// OrigDir 是原版檔案的目錄。「取進度」要從那裡讀存檔（`docs/spec/007`）。
 	OrigDir string
 
+	// Weights 是戰力權重表（原版的 `ds:6032`，`docs/re/79`）。
+	// nil ＝ 算不出戰力，AI 退回「每支艦隊算 1」。
+	Weights rules.StrengthWeights
+
 	// Graph 是星域相鄰圖，UnrestParams 是載入時重算未安定度要的難度參數
 	// （`docs/spec/006`）。兩者都給了才走得到「取進度」。
 	Graph        *rules.StarGraph
@@ -523,6 +527,12 @@ func (g *Game) runBrain() {
 		Fleets: g.fleets,
 		Graph:  g.res.Graph,
 		Owner:  func(r int) int { return g.res.Planets.RegionOwner(r) },
+		Strength: func(f rules.Fleet) int {
+			if f.Strength > 0 {
+				return f.Strength
+			}
+			return 1
+		},
 		Value: func(r int) int {
 			o := r * rules.RegionRecord
 			if o+rules.RegionRecord > len(g.res.Stellar) {
@@ -657,7 +667,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.taxTotal = sl.TaxTotal
 	// 存檔裡就有兩邊的艦隊（`FLEET.DT?` ＝ 執行期那張表，`docs/re/41`）。
 	// 讀進來之後 remake 才有敵方的艦隊可以畫、可以推進。
-	g.fleets = sl.Fleets()
+	g.fleets = sl.Fleets(g.res.Weights)
 	g.selectedRegion = -1
 	g.state = StateCommandPhase
 }

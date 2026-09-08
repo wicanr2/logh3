@@ -250,7 +250,8 @@ func (s *Slot) FleetRegion(i int) int { return int(s.fleet(i)[fleetRegion]) }
 // Fleets 把存檔裡的艦隊表讀成 `[]Fleet`（`docs/internals/33`）。
 //
 // **沒在用的那幾格不收**：原版整筆填 `FF`，只留編號。
-func (s *Slot) Fleets() []Fleet {
+// `w` 給了就順便算每一支的戰力（原版的算式，`docs/re/79`）；nil 就留 0。
+func (s *Slot) Fleets(w StrengthWeights) []Fleet {
 	var out []Fleet
 	for i := 0; i < FleetCount; i++ {
 		if !s.FleetUsed(i) {
@@ -271,6 +272,9 @@ func (s *Slot) Fleets() []Fleet {
 		}
 		if t := r[fleetTarget]; t != 0xFF {
 			f.Target = int(t)
+		}
+		if w != nil {
+			f.Strength = s.FleetStrength(w, i)
 		}
 		out = append(out, f)
 	}

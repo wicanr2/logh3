@@ -193,6 +193,10 @@ func Load(orig, data string) (*game.Resources, error) {
 			return nil, err
 		}
 	}
+	weights, err := rules.LoadStrengthWeights(filepath.Join(data, "ship-strength-weights.json"))
+	if err != nil {
+		return nil, err
+	}
 	graph, err := rules.LoadStarGraph(filepath.Join(data, "star-graph.json"))
 	if err != nil {
 		return nil, err
@@ -205,7 +209,7 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph, AdmiralNames: names, StarListOrder: starOrder,
+	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph, Weights: weights, AdmiralNames: names, StarListOrder: starOrder,
 		UnrestParams: rules.UnrestParams{
 			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
 			Table: []int{170, 150, 130, 90, 60},
