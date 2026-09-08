@@ -100,7 +100,10 @@
 - **開頭動畫解出來了**（`docs/re/71`、`docs/re/72`）：`IBM16.350` 374 格、
   一格四個 plane、位元圖 80 × 227 一欄一欄往下 XOR。驗算是「每一格吃掉的
   位元組數與長度表逐一相符」＋「累加在兩處場景黑幕整個歸零」＋「解出來
-  就是船艦」。解碼器在 `tools/scripts/intro_decode.py`；**remake 還沒接**。
+  就是船艦」。解碼器在 `tools/scripts/intro_decode.py` 與
+  `internal/asset.IntroDecoder`（有單元測試）。**畫面對拍還做不了**：
+  執行器把四個 plane 畫散了，要先修 dosgolem（`docs/re/73`）；
+  remake 也還沒把動畫接上去。
 - 還沒有：主選單第 2 列（對戰）、**戰鬥**（`COMANI.BMG` 的段編碼未解）、
   艦隊記錄大部分欄位的語意、編隊那八格的字母規則，以及
   `BLK`／`ATTR.DAT`／`IBM16.350` 的像素對應。完成度見
