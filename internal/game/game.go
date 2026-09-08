@@ -393,8 +393,9 @@ type Game struct {
 	// selectedRow 是有選取條那種清單目前選在第幾列（艦隊組成的七個艦種）。
 	selectedRow int
 
-	// fleets 是已經編成的艦隊，值是帶隊提督的索引；順序就是艦隊編號 − 1。
-	fleets []int
+	// fleets 是已經編成的艦隊，順序就是艦隊編號 − 1
+	// （`internal/rules.Fleet`，對應原版的執行期艦隊表）。
+	fleets []rules.Fleet
 
 	// starMap 是照玩家陣營重建的勢力色地圖（首都那格的顏色跟著玩家走）。
 	// nil 表示還沒建，畫的時候退回 `Resources.StarMap`。
@@ -428,7 +429,7 @@ type side struct {
 	treasury           rules.Treasury
 	monthReport        rules.Budget
 	building           rules.BuildPlan
-	fleets             []int
+	fleets             []rules.Fleet
 }
 
 // 星圖畫在畫面的 (0,40)，320×300，圖塊 16×20（`docs/internals/12`）。
@@ -466,6 +467,11 @@ func (g *Game) execute() {
 // advanceTurn 推進一個回合 ＝ 三天。
 func (g *Game) advanceTurn() {
 	g.turn++
+	// 有命令的艦隊往目的地走一格（`docs/re/77`、`internal/rules.Advance`）。
+	// **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
+	if g.res.Graph != nil {
+		g.res.Graph.MoveFleets(g.fleets)
+	}
 	// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
 	// 並跳出船艦接收報告。
 	//
@@ -760,7 +766,16 @@ func (g *Game) Click(x, y int) {
 				// 見 `docs/internals/33`；remake 目前只記「這一位提督
 				// 帶了第幾艦隊」。
 				if g.commandSpec(StateCommandPhase) != nil {
-					g.fleets = append(g.fleets, g.detailAdmiral)
+					g.fleets = append(g.fleets, rules.Fleet{
+						Number:   len(g.fleets) + 1,
+						Faction:  g.faction,
+						Admiral:  g.detailAdmiral,
+						Adjutant: rules.Adjutant(g.admiralRecord(g.detailAdmiral)),
+						// 編成完停在自己的首都，還沒有移動命令
+						// （`docs/re/70` 的收據 `dec1` 就是這個狀態）。
+						Region: rules.CapitalRegion(g.faction),
+						Target: rules.NoTarget,
+					})
 					// 左下角那塊**不會被擦掉**：艦隊那幾張畫的是自己的
 					// 首都，回到地圖之後原版就讓它留在那裡（收據 `dec1`）。
 					g.selectedRegion = rules.CapitalRegion(g.faction)
@@ -1660,10 +1675,10 @@ func (g *Game) drawFleetRows(fb *gfx.Framebuffer) {
 		return
 	}
 	var rows []screen.FleetRow
-	for i, adm := range g.fleets {
+	for i, f := range g.fleets {
 		var name []uint16
-		if adm >= 0 && adm < len(g.res.AdmiralNames) {
-			name = g.res.AdmiralNames[adm]
+		if f.Admiral >= 0 && f.Admiral < len(g.res.AdmiralNames) {
+			name = g.res.AdmiralNames[f.Admiral]
 		}
 		// 右邊那個數字目前一律 100——與艦隊組成上的「機動力」相同，
 		// 是不是機動力還沒驗（只有一個資料點，`docs/re/70`）。
