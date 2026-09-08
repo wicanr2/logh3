@@ -1,6 +1,7 @@
 # SPEC 017 — 電腦 AI：原版行為與強化版
 
-狀態：**DRAFT**
+狀態：**部分實作**（`internal/ai`：`Original` 與 `Focused` 都有了，
+行為指標測試在 `internal/ai/focused_test.go`；戰術層還沒做）
 證據：`docs/re/77`（原版的每回合決策，調查中）
 相關：[`docs/internals/26`](../internals/26-star-region-graph.md)（星域圖與路徑表）、
 [`docs/internals/33`](../internals/33-fleet-table.md)（執行期艦隊表）
@@ -23,9 +24,17 @@ remake 目前**沒有任何電腦 AI**：按「實行」只推進日期與月底
 **預設走原版行為**：對拍收據與「與原版逐位元組相同」那個宣稱才站得住。
 強化版做成可切換的設定（開局選單／設定檔／啟動旗標），玩家自己開。
 
+```go
+// internal/ai
+type Brain interface{ Orders(w World, faction, turn int) []Order }
+type Original struct{}          // 什麼都不做
+type Focused struct{ Difficulty int }  // 選目標、集結、包圍
+
+game.SetBrain(&ai.Focused{Difficulty: 1})   // 開強化版
 ```
-ai.Profile = Original | Focused
-```
+
+命令只有一種形狀：**寫目的地並解開移動狀態**，與原版的 `+0x07`／`+0x08`
+一樣（`docs/internals/33`）。AI 只回命令，不自己改狀態。
 
 `Original` 在原版 AI 逆向完成之前是「什麼都不做」——**不要拿強化版
 去填那個洞**，那會讓「原版行為」這四個字失去意義。

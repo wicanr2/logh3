@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
@@ -412,6 +413,11 @@ type Game struct {
 	// （`docs/re/76`、`docs/spec/016`）。
 	versus bool
 
+	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
+	// **預設是 `ai.Original`——按實行時什麼都不做**，那是量出來的原版
+	// 行為（`docs/re/79`）。要強化版就換成 `ai.Focused`。
+	brain ai.Brain
+
 	// sides 是對戰模式下兩邊各自的錢與造船計劃，索引就是陣營。
 	// 世界資料（星域記錄、行星表）兩邊共用一份——月底的成長是就地
 	// 寫回的，一個月只能跑一次。
@@ -467,6 +473,9 @@ func (g *Game) execute() {
 // advanceTurn 推進一個回合 ＝ 三天。
 func (g *Game) advanceTurn() {
 	g.turn++
+	// 電腦那一方先下命令，再讓所有艦隊走。預設的 `ai.Original`
+	// 一道都不下，所以這一段對原版對拍沒有影響。
+	g.runBrain()
 	// 有命令的艦隊往目的地走一格（`docs/re/77`、`internal/rules.Advance`）。
 	// **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
 	if g.res.Graph != nil {
@@ -496,6 +505,39 @@ func (g *Game) advanceTurn() {
 		return
 	}
 	g.state = StateCommandPhase
+}
+
+// SetBrain 換掉電腦那一方的決策。nil ＝ 回到原版（什麼都不做）。
+func (g *Game) SetBrain(b ai.Brain) { g.brain = b }
+
+// runBrain 讓電腦那一方下這一回合的命令。
+//
+// 命令只有一種形狀：**寫目的地並解開移動狀態**，與原版的 `+0x07`／
+// `+0x08` 一樣（`docs/internals/33`）。對戰模式兩邊都是人，不跑。
+func (g *Game) runBrain() {
+	if g.brain == nil || g.versus || g.res.Graph == nil || g.res.Planets == nil {
+		return
+	}
+	foe := 1 - g.faction
+	w := ai.World{
+		Fleets: g.fleets,
+		Graph:  g.res.Graph,
+		Owner:  func(r int) int { return g.res.Planets.RegionOwner(r) },
+		Value: func(r int) int {
+			o := r * rules.RegionRecord
+			if o+rules.RegionRecord > len(g.res.Stellar) {
+				return 1
+			}
+			return rules.RegionTax(g.res.Stellar[o : o+rules.RegionRecord])
+		},
+	}
+	for _, o := range g.brain.Orders(w, foe, g.turn) {
+		if o.Fleet < 0 || o.Fleet >= len(g.fleets) {
+			continue
+		}
+		g.fleets[o.Fleet].Target = o.Target
+		g.fleets[o.Fleet].Parked = false
+	}
 }
 
 // startVersus 開一局對戰。

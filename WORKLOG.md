@@ -529,3 +529,23 @@ remake 端：`Key()` 改成只檢查有沒有打東西，`tries` 移除，測試
 `open(out,'w')` 之後寫中文會丟 `UnicodeEncodeError`，而檔案已經建立並
 清空——症狀是「有檔案、0 bytes、沒有任何錯誤訊息」，非常像 IDA 沒跑。
 `tools/scripts/ida_trace.py` 已改成 `encoding='utf-8'` 並把這件事寫進註解。
+
+### 強化版 AI 上線（`internal/ai`）
+
+`Original` 與 `Focused` 兩套並存，預設 `Original`——而且那不是「還沒實作」，
+是量出來的原版行為（`docs/re/79`）。
+
+`Focused` 的三條規則：選一個目標並黏著幾回合、把散在各處的艦隊先集結到
+**與目標相鄰的我方星域**、湊到兩個以上方向且兵力比達標才一起壓上去。
+節制調的是節奏（間隔、留守、同時只打一個），不是把攻擊部隊砍小。
+
+驗收不做畫面對拍——強化版本來就與原版不同，比畫面沒有意義。改成三條
+**行為指標**：
+
+- `TestOriginalDoesNothing`：十回合一道命令都不下
+- `TestFocusedConvergesOnOneTarget`：從兩個以上方向同回合到、首都留得住人
+- `TestFocusedDoesNotTrickle`：**任何一回合都不該只有一支走進目標**
+
+最後那條是這一款最重要的一條，也是實作時唯一踩到的坑：`canAttack` 通過
+之後我先把 `b.target` 清成 -1 再讀它，整批艦隊收到一道 `-1` 的無效命令，
+表面症狀是「AI 每三回合下一次命令、艦隊卻從來不動」。
