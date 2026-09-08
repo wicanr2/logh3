@@ -20,7 +20,7 @@
 | # | 畫面 | 等級 | 未核准差異 | 收據 | 備註 |
 |---|---|---|---:|---|---|
 | 1 | 主選單（含反白與游標）| `same-state` | 0 | [`docs/playtest/001-main-menu.md`](docs/playtest/001-main-menu.md) | **五個狀態**逐位元組一致：反白第 0–3 列各一、游標在選單外一個 |
-| 2 | 開頭動畫 | — | — | — | 進行中：374 格已切分（[`docs/internals/19`](docs/internals/19-ibm16-350.md)），mode 10h 640×350；每一格的編碼未解 |
+| 2 | 開頭動畫 | — | — | — | 進行中：374 格已切分、**編碼也解出來了**（[`docs/internals/19`](docs/internals/19-ibm16-350.md)、[`docs/re/72`](docs/re/72-intro-decoder-solved.md)），mode 10h 640×350。卡在畫面對拍——見 4z |
 | 3a | 正常玩家路徑（選單→防拷→本體）| `same-state` | 0 | [`docs/playtest/005-player-path.md`](docs/playtest/005-player-path.md) | 三個畫面都是前一步的輸入帶進去的，不是 direct-entry |
 | 3 | 主選單（互動）| — | — | — | 進行中：反白、滑鼠→選項對應、游標都已對拍；點擊已能推進到下一畫面；還缺**切換過程**（反白從 A 列搬到 B 列會留殘留）|
 | 4b | 防拷問答（輸入中的數字）| `same-state` | 0 | 收據 `typed138`；[`docs/re/56`](docs/re/56-typed-digits-are-full-width.md) | 打進去的數字是 `GRAPH.IMG` 的**全形**數字（`A2AF` 起），不是半形——先前搜不到是因為只試了半形的打包方式 |
@@ -40,6 +40,7 @@
 | 5o | **戰場上的單位** | `same-state` | 0 | 收據 `s3fight`；[`docs/re/85`](docs/re/85-units-are-sprite-tiles.md) | 分隊畫成 `SPRITE.SPR` 的 16×16 圖塊，左上角對齊世界座標。視野內比得出圖塊的八個分隊，每一塊 16×16 逐位元組相同——落點錯一個像素整塊就對不上，所以座標換算也被驗到。**畫哪一塊已經解完**：塊號存在艦艇記錄 `+0x2F`，由 `25DB:03E8` 依陣營基底（帝國 20、同盟 50）與顯示層級 `+0x17` 算出來；兩份收據十六個樣本與畫面全部相同（`rules.BattleSprite`）。`+0x17` 是索敵殘留、每輪衰減，判定「看到」的條件還沒解，所以 remake 的 `Deploy` 一律給 2 |
 | 5p | **戰術選單** | `same-state` | 0 | 收據 `s3menu`（`menu-open.bin`）；[`docs/re/101`](docs/re/101-battle-tactic-menu-layout.md)、[`docs/re/98`](docs/re/98-battle-tactic-menu.md) | 戰鬥每一回合結束時開在游標處的七項選單。外框 (225,221) 126×178（相對游標 (−15,−19)），反白帶 (240,240) 96×20 色 2，字身比帶頂低 2 列。框與主選單同一組（`ui.MenuFrame`）——連四個角的修正像素都成立，這是那組修正的第二個樣本。文字是遊戲既有的立體邊規則：本體色 7、立體邊色 3（字模每列左移一位再上移一列）。**選單矩形 22,428 個像素全部相同**，含原版自己畫在第一項上的滑鼠游標（`TestBattleMenuMatchesOracle`）|
 | 5q | **戰場移動** | `same-state` | 0 | 收據 `s3move`／`s3budget`／`s3tgt`；[`docs/re/102`](docs/re/102-battle-movement.md) | 一回合的行程 ＝ 艦隊 `+0x4E × 8` 像素，沿方位每次走 8，行程餘額（`+0x56`／`+0x58`，16.16）扣掉實際距離，剩不到 8 就停；每一步先問地形（`2583:040C` → `1588:04EA`）。十八支艦隊的 `+0x4E` 與行程全部對得上。remake 用收據的起點與目標跑兩個回合，落點 (1420,1637)、(1306,1434) **與原版逐像素相同**（`TestBattleMoveMatchesOracle`）。`+0x4E` 自己的輸入（艦種列 `+6`）還沒對出來 |
+| 5r | **戰後不改星域歸屬** | `same-state` | 0 | 收據 `s3own`／`s3win`；[`docs/re/105`](docs/re/105-battle-does-not-capture-region.md) | 星域記錄 `+0x12`（`ds:A79C` ＋ 26 × 126 ＋ 0x12 ＝ 線性 `5FFAA`）在整場戰鬥中一次都沒有被寫，**連用 `-poke` 把同盟四十個分隊的存活艘數寫成 0、讓戰鬥提早結束也一樣**（`+0x13` 從 12 退回 8 證明戰鬥真的結束了）。remake 的 `EndBattle` 不動星域歸屬因此是照原版。星域什麼時候易主還沒解 |
 | 5b | 船艦訂造報告（796 年 1 月）| `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
 | 5c | 次月份船艦建造計劃 | `same-state` | 0 | 收據 `plan1` | 由訂造報告熱區 (432,300) 點進去 |
 | 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/spec/003`](docs/spec/003-budget-panel.md) | 由主畫面熱區 (432,300) 點進去；十個數字**從財政狀態算出來**，不是量好畫死的 |
