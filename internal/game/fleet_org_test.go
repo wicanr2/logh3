@@ -165,3 +165,18 @@ func TestFormationListMatchesOracle(t *testing.T) {
 		})
 	}
 }
+
+// TestFleetDecideMatchesOracle 艦隊組成按「決定」：艦隊建成，回戰略地圖，
+// 右下角清單的「艦隊」分頁多出一列（收據 `dec1`，`docs/re/70`）。
+//
+// 左下角那塊**不會被擦掉**——艦隊那幾張畫的是自己的首都，回到地圖之後
+// 原版就讓它留在那裡。
+func TestFleetDecideMatchesOracle(t *testing.T) {
+	g := reachFleetOrg(t)
+	g.Click(480, 350) // 「確認」→ 艦隊組成
+	g.Click(510, 350) // 「決定」
+	if g.State() != StateCommandPhase {
+		t.Fatalf("點了決定之後在 %v", g.State())
+	}
+	matches(t, g, "dec1")
+}

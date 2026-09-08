@@ -33,6 +33,7 @@
 | 5i | **艦隊編號清單**與**副官選單**（艦隊編成的兩顆按鈕）| `same-state` | 0 | 收據 `fnum`／`fnum3`／`fadj`／`fadj3` ＋ 兩個反例 `fnum2`／`fadj2`；[`docs/re/67`](docs/re/67-fleet-org-buttons.md)、[`docs/re/68`](docs/re/68-hotspot-origin-rule.md) | 四張整張逐位元組一致；反白條跟著滑鼠走，由 `hover` 版面算。另外兩張是**反例**：點在畫出來的框內、熱區外一個像素，畫面與 `fleet1e` 完全相同 |
 | 5j | **艦隊組成**（艦隊編成 → 確認）| `same-state` | 0 | 收據 `fok`；[`docs/spec/015`](docs/spec/015-fleet-composition.md)、[`docs/re/69`](docs/re/69-region-ship-strength.md) | 整張 640×480 逐位元組一致。9×9 格盤鋪的是 `SPRITE.SPR` 圖塊；「待命部隊」＝ 星域記錄 `+0x30` 的艦艇艘數 ÷ 一單位幾艘 |
 | 5k | **陣形清單**（艦隊組成 → 陣形）| `same-state` | 0 | 收據 `form1`／`form2`／`form3`；[`docs/re/70`](docs/re/70-formation-list-and-decide.md) | 三張整張逐位元組一致。八列圓錐／紡錘／半月／Ｕ字／Ｍ字／Ｔ字／分散／密集，反白條跟著滑鼠走 |
+| 5l | **艦隊建成**（艦隊組成 → 決定）| `same-state` | 0 | 收據 `dec1`、`decwatch`；[`docs/re/70`](docs/re/70-formation-list-and-decide.md)、[`docs/internals/33`](docs/internals/33-fleet-table.md) | 整張逐位元組一致。右下角清單多出「第１艦隊　萊因哈特　100」；左下角的首都摘要留在畫面上不被擦掉 |
 | 5b | 船艦訂造報告（796 年 1 月）| `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
 | 5c | 次月份船艦建造計劃 | `same-state` | 0 | 收據 `plan1` | 由訂造報告熱區 (432,300) 點進去 |
 | 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/spec/003`](docs/spec/003-budget-panel.md) | 由主畫面熱區 (432,300) 點進去；十個數字**從財政狀態算出來**，不是量好畫死的 |

@@ -226,6 +226,9 @@ type Resources struct {
 	// FleetPanel 是艦隊編成那個視窗算出來的部分（`docs/spec/013`）。
 	FleetPanel *screen.FleetPanel
 
+	// FleetList 是戰略地圖介面右下角那張清單的「艦隊」分頁（`docs/re/70`）。
+	FleetList *screen.FleetList
+
 	// CompositionPanel 是艦隊組成那個視窗算出來的部分（`docs/spec/015`），
 	// Sprites 是 `SPRITE.SPR` 那 75 張 16 × 16 圖塊（格盤用它）。
 	CompositionPanel *screen.CompositionPanel
@@ -374,6 +377,9 @@ type Game struct {
 
 	// selectedRow 是有選取條那種清單目前選在第幾列（艦隊組成的七個艦種）。
 	selectedRow int
+
+	// fleets 是已經編成的艦隊，值是帶隊提督的索引；順序就是艦隊編號 − 1。
+	fleets []int
 
 	// starMap 是照玩家陣營重建的勢力色地圖（首都那格的顏色跟著玩家走）。
 	// nil 表示還沒建，畫的時候退回 `Resources.StarMap`。
@@ -601,6 +607,18 @@ func (g *Game) Click(x, y int) {
 			case "cancel":
 				g.state = StateFleetOrg
 				return
+			case "decide":
+				// 艦隊建成，回戰略地圖（收據 `dec1`）。艦隊記錄怎麼填
+				// 見 `docs/internals/33`；remake 目前只記「這一位提督
+				// 帶了第幾艦隊」。
+				if g.commandSpec(StateCommandPhase) != nil {
+					g.fleets = append(g.fleets, g.detailAdmiral)
+					// 左下角那塊**不會被擦掉**：艦隊那幾張畫的是自己的
+					// 首都，回到地圖之後原版就讓它留在那裡（收據 `dec1`）。
+					g.selectedRegion = rules.CapitalRegion(g.faction)
+					g.state = StateCommandPhase
+					return
+				}
 			}
 		}
 		// 點七個艦種列的哪一列，選取條就跳到哪一列（收據 `row3`）。
@@ -1019,6 +1037,7 @@ func (g *Game) estimateTax() int {
 // 同一塊底板，右側面板在每一張上都看得到（被疊上去的視窗蓋住的部分除外）。
 func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 	g.drawLeftSummary(fb)
+	g.drawFleetRows(fb)
 	switch g.state {
 	case StateMainGame, StateShipOrder, StateBuildPlan, StateAdmiralList, StateBudgetPlan:
 		if c, _, ok := g.capitalSummary(); ok {
@@ -1479,6 +1498,26 @@ func (g *Game) drawCapitalPanel(fb *gfx.Framebuffer) {
 		return
 	}
 	g.res.CapitalPanel.Draw(fb, g.res.Font, g.res.RegionPanel, c, g.faction)
+}
+
+// drawFleetRows 畫右下角清單的「艦隊」分頁（`docs/re/70`）。
+//
+// **畫在底板那一層**：疊上去的視窗要蓋得住它。
+func (g *Game) drawFleetRows(fb *gfx.Framebuffer) {
+	if g.res.FleetList == nil || len(g.fleets) == 0 {
+		return
+	}
+	var rows []screen.FleetRow
+	for i, adm := range g.fleets {
+		var name []uint16
+		if adm >= 0 && adm < len(g.res.AdmiralNames) {
+			name = g.res.AdmiralNames[adm]
+		}
+		// 右邊那個數字目前一律 100——與艦隊組成上的「機動力」相同，
+		// 是不是機動力還沒驗（只有一個資料點，`docs/re/70`）。
+		rows = append(rows, screen.FleetRow{Number: i + 1, Name: name, Value: 100})
+	}
+	g.res.FleetList.Draw(fb, g.res.Font, rows)
 }
 
 // drawRegionPanel 把選中星域的摘要畫進左下角那塊。
