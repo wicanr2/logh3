@@ -110,10 +110,16 @@ func (d *IntroDecoder) Pixels() *Image {
 
 // decodeIntroPlane 解一個 plane，回吃掉的位元組數（不含分隔位元組）。
 //
-// 停的條件是 `di == limit`（原版是 `cmp di,cs:[0248] / jz`），**不是 >=**：
-// `di` 每格 `+80`，一超過 18,160 就 `-18,159`，所以換欄之後 `di` 就是欄號
-// 1、2、3…，而 limit 在第一次換欄時從 0x100 改成 0x50 ＝ 80 欄。
-// 讀成「大於等於」的話一格只吃 21 個位元組（`docs/re/72`）。
+// 照原版 `041F:024B` 逐條寫的（`docs/re/108` 讀的那一段）：
+//
+//   - 停的條件是 `di == limit`（`cmp di,cs:[0248] / jz`），**不是 >=**。
+//     讀成「大於等於」的話一格只吃 21 個位元組（`docs/re/72`）。
+//   - `di` 每格 `+80`，一超過 18,160 就 `-18,159`，所以換欄之後 `di`
+//     就是欄號 1、2、3…。
+//   - **limit 從 0x100 改成 0x50 的時機是「一個 run token 跑完」**
+//     （原版在兩條 run 迴圈的出口各有一次 `mov cs:[0248],50h`），
+//     單一 byte 的那條路徑**不動它**。換欄本身不改 limit。
+//     兩種寫法在 374 格上的輸出相同，這裡照原版的形狀寫。
 func decodeIntroPlane(data []byte, pos int, buf []uint8) (int, error) {
 	const wrap = IntroPlaneSize
 	di, limit, start := 0, 0x100, pos
@@ -121,7 +127,6 @@ func decodeIntroPlane(data []byte, pos int, buf []uint8) (int, error) {
 		di += IntroPlaneStride
 		if di >= wrap {
 			di -= wrap - 1
-			limit = 0x50
 		}
 	}
 	for {
@@ -158,5 +163,6 @@ func decodeIntroPlane(data []byte, pos int, buf []uint8) (int, error) {
 			}
 			advance()
 		}
+		limit = 0x50 // run 跑完才改（原版兩條 run 迴圈的出口）
 	}
 }
