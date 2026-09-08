@@ -62,6 +62,7 @@ func (g *Game) StartBattle(region int) {
 	g.battlePlanets = g.battleRegionPlanets(region)
 	g.battleRally = g.battleRegionRally(region)
 	g.battleMenu = false
+	g.closeCommandMenu()
 	for i := range g.battleFleets {
 		if u := flagshipOf(g.battleUnits, g.battleFleets[i].Index); u != nil {
 			g.battleFleets[i].Facing = rules.BattleFacing(u.X, u.Y)
@@ -167,7 +168,18 @@ func (g *Game) battleClick(x, y int) {
 	if g.battleDataClick(x, y) {
 		return
 	}
+	if g.commandMenuClick(x, y) {
+		return
+	}
 	if !g.battleMenu {
+		// 先看有沒有點到自己陣營的分隊：有的話開命令選單，沒有才開
+		// 戰術選單（`docs/spec/023`）。
+		if u := g.battleUnitAt(x, y); u >= 0 && g.battleUnits[u].Faction == g.faction {
+			g.openCommandMenu(u, x, y)
+			if g.CommandMenuOpen() {
+				return
+			}
+		}
 		if g.res.BattleMenu == nil {
 			return
 		}

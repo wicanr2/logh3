@@ -39,6 +39,11 @@ type BattleUnit struct {
 	CruiseSpeed int `json:"cruise_speed"`
 	FightSpeed  int `json:"fight_speed"`
 	Out       bool `json:"out"`       // 出局，不進攻擊名單（艦艇記錄 `+0x1E` bit7）
+
+	// Action 是艦艇記錄 `+0x1E` 整個位元組：分隊自己的行動
+	// （0 移動／1 編隊／2 索敵／3 歸隊，0x7F ＝ 沒有）。
+	// 戰場命令選單用它決定「移動」可不可選（`docs/spec/023`）。
+	Action int `json:"action"`
 }
 
 // EngagementRange 回一個分隊的射程（`docs/spec/018`）。
@@ -304,6 +309,7 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 			// 會是 0xFF64。用 -poke 把 0x682EC 寫成 77 驗過，畫面上只有
 			// 那一列的士氣跟著變（收據 `s3morale`，`docs/re/111`）。
 			u.Morale = int(rec[6])
+			u.Action = int(rec[0x1E])
 			u.TurnSpeed = int(rec[0x1F])
 			u.CruiseSpeed = int(rec[0x21])
 			u.FightSpeed = int(rec[0x22])

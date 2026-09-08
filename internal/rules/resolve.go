@@ -22,6 +22,14 @@ type BattleFleet struct {
 	Halved  bool `json:"halved"`  // `+0x12` 非 0：除數從 10 變 20
 	Defence int  `json:"defence"` // `+0x40 × +0x41 ÷ 100`
 	Facing  int  `json:"facing"`  // `+0x4A`：朝向
+
+	// Flag0 是 `+0x00` bit0。語意未解（`docs/internals/33`），但兩件事
+	// 靠它：戰力加總不算這種艦隊，戰場的艦隊選單把「戰鬥」與「索敵」
+	// 關掉（`docs/spec/023`）。
+	Flag0 bool `json:"flag0"`
+	// ScoutOut ＝ `+0x3A` 不是 0xFF 或 `+0x3B` 不是 0：已經放了索敵隊
+	// 出去，「索敵」不能再選。
+	ScoutOut bool `json:"scout_out"`
 }
 
 // NewBattleFleet 從艦隊記錄與算好的能力做出一支戰鬥用的艦隊。
@@ -31,6 +39,10 @@ func NewBattleFleet(index int, rec []byte, ab [FleetAbilityCount]byte) BattleFle
 		f.Faction = int(rec[1])
 		f.Bonus = int(rec[0x14])
 		f.Halved = rec[0x12] != 0
+		f.Flag0 = rec[0]&1 != 0
+	}
+	if len(rec) > 0x3B {
+		f.ScoutOut = rec[0x3A] != 0xFF || rec[0x3B] != 0
 	}
 	f.Defence = int(ab[defenceAbilityA]) * int(ab[defenceAbilityB]) / 100
 	return f

@@ -306,6 +306,9 @@ type Resources struct {
 	// BattleMenu 是戰術選單的版面（`docs/re/101`）。
 	BattleMenu *screen.BattleMenuSpec
 
+	// CommandMenus 是戰場上五張命令選單的版面與內容（`docs/spec/023`）。
+	CommandMenus *screen.CommandMenuSpec
+
 	// Terrain 是戰場地形的通行規則（`docs/re/100`）。戰術層挑集結點時
 	// 要用它判「這條直線走不走得通」；nil ＝ 不判，一律當通得過。
 	Terrain *rules.BattleTerrain
@@ -491,6 +494,14 @@ type Game struct {
 	battleDetail    bool
 	battleDetailRow int
 	battleMenuX, battleMenuY int
+
+	// battleCmd ＝ 戰場的命令選單開著沒有（`docs/spec/023`）；
+	// battleCmdUnit 是點到的分隊在 battleUnits 裡的索引，battleCmdKind
+	// 是五張表的哪一張，battleCmdX／Y 是框的左上角。
+	battleCmd                bool
+	battleCmdUnit            int
+	battleCmdKind            screen.CommandMenuKind
+	battleCmdX, battleCmdY   int
 
 	battleRally   []rules.RallySite
 	battlePlanets []rules.BattlePlanet
@@ -1067,13 +1078,17 @@ func (g *Game) RightClick(x, y int) {
 	case StateAdmiralDetail:
 		g.state = StateStandbyAdmirals
 	case StateBattle:
-		// 右鍵關掉最上面那一層：詳細資料 → 「資料」 → 選單。
+		// 右鍵關掉最上面那一層：詳細資料 → 「資料」 → 命令選單 → 選單。
 		if g.battleDetail {
 			g.battleDetail = false
 			return
 		}
 		if g.battleData {
 			g.battleData = false
+			return
+		}
+		if g.CommandMenuOpen() {
+			g.closeCommandMenu()
 			return
 		}
 		g.battleMenu = false
@@ -2347,6 +2362,16 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	if g.battleMenu && g.res.BattleMenu != nil && g.res.Font != nil {
 		screen.DrawBattleMenu(g.res.BattleMenu, fb, g.res.Font,
 			g.battleMenuX, g.battleMenuY, 0)
+	}
+	// 命令選單開在游標處，反白帶跟著游標走（`docs/spec/023`）。
+	if g.battleCmd && g.res.CommandMenus != nil && g.res.Font != nil &&
+		g.battleCmdUnit >= 0 && g.battleCmdUnit < len(g.battleUnits) {
+		cm := g.res.CommandMenus
+		n := cm.ItemCount(g.battleCmdKind)
+		sel := cm.CommandMenuRowAt(g.battleCmdX, g.battleCmdY, g.mouseX, g.mouseY, n)
+		screen.DrawCommandMenu(cm, fb, g.res.Font, g.battleCmdKind,
+			g.commandMenuEnabled(g.battleCmdKind, g.battleUnits[g.battleCmdUnit]),
+			g.battleCmdX, g.battleCmdY, sel)
 	}
 	// 「資料」是不透明的一層，蓋掉戰場那一塊（`docs/spec/021`）。
 	if g.battleData && g.res.BattleData != nil && g.res.Font != nil {

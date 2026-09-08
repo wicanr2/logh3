@@ -1,0 +1,148 @@
+{
+ "_note": "戰場的命令選單（docs/re/117）。開啟常式 3667:0004 與戰術選單同一支，配色與框線也同一套，所以這裡只放每一張的項目與內寬；版面走下面的 layout 公式。",
+ "width": 2,
+ "menus": {
+  "fleet": {
+   "address": "ds:4120",
+   "when": "旗艦（艦艇 +0x03 ＝ 0）",
+   "items": [
+    {
+     "text": "移動",
+     "codes": [
+      45758,
+      45258
+     ]
+    },
+    {
+     "text": "戰鬥",
+     "codes": [
+      48852,
+      45227
+     ]
+    },
+    {
+     "text": "索敵",
+     "codes": [
+      44993,
+      48324
+     ]
+    }
+   ]
+  },
+  "squadron": {
+   "address": "ds:413C",
+   "when": "分隊，艦種 0–4",
+   "items": [
+    {
+     "text": "移動",
+     "codes": [
+      45758,
+      45258
+     ]
+    },
+    {
+     "text": "編隊",
+     "codes": [
+      48499,
+      46756
+     ]
+    }
+   ]
+  },
+  "supply": {
+   "address": "ds:4158",
+   "when": "艦種 5（運補艦）",
+   "items": [
+    {
+     "text": "移動",
+     "codes": [
+      45758,
+      45258
+     ]
+    },
+    {
+     "text": "編隊",
+     "codes": [
+      48499,
+      46756
+     ]
+    },
+    {
+     "text": "補給",
+     "codes": [
+      47305,
+      46521
+     ]
+    }
+   ]
+  },
+  "repair": {
+   "address": "ds:417A",
+   "when": "艦種 6（修護艦）",
+   "items": [
+    {
+     "text": "移動",
+     "codes": [
+      45758,
+      45258
+     ]
+    },
+    {
+     "text": "編隊",
+     "codes": [
+      48499,
+      46756
+     ]
+    },
+    {
+     "text": "修理",
+     "codes": [
+      44503,
+      45690
+     ]
+    }
+   ]
+  },
+  "scout": {
+   "address": "ds:4196",
+   "when": "艦種 7（索敵分遣隊）",
+   "items": [
+    {
+     "text": "移動",
+     "codes": [
+      45758,
+      45258
+     ]
+    },
+    {
+     "text": "歸隊",
+     "codes": [
+      49771,
+      46756
+     ]
+    }
+   ]
+  }
+ },
+ "layout": {
+  "_measured_from": "s3cmdsq3（分隊 62×78）、s3cmdfl3（艦隊 62×98）、s3menu（戰術 126×178）三張逐一驗過",
+  "cell_w": 16,
+  "cell_h": 20,
+  "origin_bias": 1,
+  "cursor_cell_bias": -1,
+  "clamp_rows": 19,
+  "frame_pad_w": 30,
+  "frame_pad_h": 38,
+  "highlight_dx": 15,
+  "highlight_dy": 19,
+  "text_dy": 2,
+  "col_pitch": 16,
+  "row_pitch": 20,
+  "ink": 7,
+  "shadow": 3,
+  "highlight_ink": 2,
+  "disabled_ink": 8,
+  "fill": 9,
+  "frame": "ui.MenuFrame"
+ }
+}
