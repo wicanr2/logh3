@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/wicanr2/logh3/internal/asset"
+	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
 )
 
@@ -28,6 +29,8 @@ type BattleSpec struct {
 		TileWRaw      int    `json:"tile_w"`
 		TileHRaw      int    `json:"tile_h"`
 	} `json:"field"`
+	Status StatusSpec `json:"status"`
+
 	Grid struct {
 		Pitch  int   `json:"pitch"`
 		DotX   int   `json:"dot_x"`
@@ -138,5 +141,124 @@ func drawBattleGrid(fb *gfx.Framebuffer, s *BattleSpec, v BattleView) {
 				dot(x, y)
 			}
 		}
+	}
+}
+
+// BattleStatus 是右側狀態欄要顯示的東西。
+type BattleStatus struct {
+	Faction  int      // 0 帝國、1 同盟：決定第一行的軍名
+	Year     int      // 宇宙曆
+	Month    int      // 月
+	Day      int      // 日
+	Turn     int      // 第幾回合
+	Victory  int      // 勝利點
+	Empire   int      // 帝國軍的數字
+	Alliance int      // 同盟軍的數字
+	Region   []uint16 // 星域名（Big5 全形碼）
+}
+
+// label 是規格裡的一段文字：原文加上 Big5 碼。
+type label struct {
+	Text  string   `json:"text"`
+	Codes []uint16 `json:"codes"`
+}
+
+// StatusSpec 是狀態欄的版面。
+type StatusSpec struct {
+	X, Y, W, H  int
+	LabelX      int `json:"label_x"`
+	ColonX      int `json:"colon_x"`
+	Ink         uint8
+	FactionInk  uint8 `json:"faction_ink"`
+	ValueRight  int   `json:"value_right"`
+	PhaseX      int   `json:"phase_x"`
+	TurnNumberX int   `json:"turn_number_x"`
+	Rows        struct {
+		Phase, Date, Turn, Victory, Empire, Alliance, Region int
+	} `json:"rows"`
+	DateX struct {
+		Year, Month, Day int
+	} `json:"date_x"`
+	DateInk struct {
+		Year, Month, Day uint8
+	} `json:"date_ink"`
+	Labels struct {
+		Factions    []label `json:"factions"`
+		Colon       uint16  `json:"colon"`
+		PhaseInput  label   `json:"phase_input"`
+		Date        label   `json:"date"`
+		TurnPrefix  label   `json:"turn_prefix"`
+		TurnSuffix  label   `json:"turn_suffix"`
+		Victory     label   `json:"victory"`
+		FullDigits  label   `json:"full_digits"`
+	} `json:"labels"`
+}
+
+// DrawBattleStatus 畫右側狀態欄的文字。
+//
+// 版面全部來自規格（`docs/internals/data/screen-battle.json`）；
+// 數字靠右對齊到 ValueRight，日期的年月日各一種顏色
+// （`docs/internals/34`）。
+func DrawBattleStatus(s *BattleSpec, fb *gfx.Framebuffer, fnt *font.Font, st BattleStatus) {
+	p := &s.Status
+	if len(p.Labels.Factions) < 2 {
+		return
+	}
+	ink, r := p.Ink, p.Rows
+
+	// 第一行：軍名（陣營色）＋ 全形冒號 ＋ 階段。
+	drawFull(fb, fnt, p.LabelX, r.Phase, p.Labels.Factions[st.Faction%2].Codes, p.FactionInk)
+	drawFull(fb, fnt, p.ColonX, r.Phase, []uint16{p.Labels.Colon}, ink)
+	drawFull(fb, fnt, p.PhaseX, r.Phase, p.Labels.PhaseInput.Codes, ink)
+
+	// 日期：「宇宙曆﹕」之後年月日各一種顏色，年是三位、月日各兩位。
+	drawFull(fb, fnt, p.LabelX, r.Date, p.Labels.Date.Codes, ink)
+	drawFull(fb, fnt, p.ColonX, r.Date, []uint16{p.Labels.Colon}, ink)
+	drawPadded(fb, fnt, p.DateX.Year, r.Date, st.Year, 3, p.DateInk.Year)
+	drawPadded(fb, fnt, p.DateX.Month, r.Date, st.Month, 2, p.DateInk.Month)
+	drawPadded(fb, fnt, p.DateX.Day, r.Date, st.Day, 2, p.DateInk.Day)
+
+	// 「第Ｎ回合」：中間那個數字是全形的。
+	drawFull(fb, fnt, p.LabelX, r.Turn, p.Labels.TurnPrefix.Codes, ink)
+	drawFullNumber(fb, fnt, p.TurnNumberX, r.Turn, st.Turn, p.Labels.FullDigits.Codes, ink)
+	drawFull(fb, fnt, p.TurnNumberX+font.GlyphW, r.Turn, p.Labels.TurnSuffix.Codes, ink)
+
+	// 三個計數：標籤 ＋ 冒號 ＋ 靠右的半形數字。
+	for _, row := range []struct {
+		y     int
+		codes []uint16
+		n     int
+	}{
+		{r.Victory, p.Labels.Victory.Codes, st.Victory},
+		{r.Empire, p.Labels.Factions[0].Codes, st.Empire},
+		{r.Alliance, p.Labels.Factions[1].Codes, st.Alliance},
+	} {
+		drawFull(fb, fnt, p.LabelX, row.y, row.codes, ink)
+		drawFull(fb, fnt, p.ColonX, row.y, []uint16{p.Labels.Colon}, ink)
+		drawRight(fb, fnt, p.ValueRight, row.y, itoa(row.n), ink)
+	}
+
+	drawFull(fb, fnt, p.LabelX, r.Region, st.Region, ink)
+}
+
+// drawPadded 畫固定位數的半形數字，不足的補 0。
+func drawPadded(fb *gfx.Framebuffer, fnt *font.Font, x, y, n, width int, ink uint8) {
+	s := itoa(n)
+	for len(s) < width {
+		s = "0" + s
+	}
+	for i := 0; i < len(s); i++ {
+		drawHalf(fb, fnt, x+i*font.HalfW, y, s[i], ink)
+	}
+}
+
+// drawFullNumber 用全形數字畫一個數（「第１回合」中間那一個）。
+func drawFullNumber(fb *gfx.Framebuffer, fnt *font.Font, x, y, n int, digits []uint16, ink uint8) {
+	if len(digits) < 10 {
+		return
+	}
+	s := itoa(n)
+	for i := 0; i < len(s); i++ {
+		drawFull(fb, fnt, x+i*font.GlyphW, y, []uint16{digits[s[i]-'0']}, ink)
 	}
 }

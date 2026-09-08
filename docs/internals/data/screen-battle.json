@@ -1,28 +1,133 @@
 {
-  "_note": "戰場畫面的版面（docs/internals/34、36、37）。數字量自收據 s3ai6。",
-  "panel": {
-    "file": "ANI_PNL0.A98",
-    "y": 40,
-    "_note": "整個檔就是一張 .AMG 影像，640×400，畫在 y=40，逐像素相同"
+ "_note": "戰場畫面的版面（docs/internals/34、36、37）。數字量自收據 s3ai6。",
+ "panel": {
+  "file": "ANI_PNL0.A98",
+  "y": 40,
+  "_note": "整個檔就是一張 .AMG 影像，640×400，畫在 y=40，逐像素相同"
+ },
+ "field": {
+  "x": 16,
+  "y": 60,
+  "cols": 28,
+  "rows": 18,
+  "tile_w": 16,
+  "tile_h": 20,
+  "tiles": "BLOCK_2.BLK",
+  "map_cols": 128,
+  "map_rows": 102,
+  "_note": "整張戰場 128×102 格 ＝ 2048×2040，看得到的是其中 28×18"
+ },
+ "grid": {
+  "pitch": 240,
+  "dot_x": 4,
+  "dot_y": 4,
+  "ink": 6,
+  "shadow": 0,
+  "_note": "世界座標每 240 像素一條線，橫豎都是。點陣是 x%4==0 且 y%4<2，y%4==0 用 ink、y%4==1 用 shadow；橫線佔兩列"
+ },
+ "status": {
+  "_note": "右側狀態欄。位置與色號量自收據 s3ai6（docs/internals/34）。數字靠右對齊到 value_right；日期的年月日各用一種顏色。",
+  "x": 464,
+  "y": 220,
+  "w": 160,
+  "h": 200,
+  "label_x": 480,
+  "colon_x": 528,
+  "ink": 7,
+  "faction_ink": 6,
+  "value_right": 608,
+  "rows": {
+   "phase": 242,
+   "date": 262,
+   "turn": 282,
+   "victory": 302,
+   "empire": 322,
+   "alliance": 342,
+   "region": 382
   },
-  "field": {
-    "x": 16,
-    "y": 60,
-    "cols": 28,
-    "rows": 18,
-    "tile_w": 16,
-    "tile_h": 20,
-    "tiles": "BLOCK_2.BLK",
-    "map_cols": 128,
-    "map_rows": 102,
-    "_note": "整張戰場 128×102 格 ＝ 2048×2040，看得到的是其中 28×18"
+  "phase_x": 576,
+  "turn_number_x": 496,
+  "date_x": {
+   "year": 552,
+   "month": 576,
+   "day": 592
   },
-  "grid": {
-    "pitch": 240,
-    "dot_x": 4,
-    "dot_y": 4,
-    "ink": 6,
-    "shadow": 0,
-    "_note": "世界座標每 240 像素一條線，橫豎都是。點陣是 x%4==0 且 y%4<2，y%4==0 用 ink、y%4==1 用 shadow；橫線佔兩列"
+  "date_ink": {
+   "year": 7,
+   "month": 6,
+   "day": 5
+  },
+  "labels": {
+   "factions": [
+    {
+     "text": "帝國軍",
+     "codes": [
+      43986,
+      45290,
+      44408
+     ]
+    },
+    {
+     "text": "同盟軍",
+     "codes": [
+      42576,
+      47097,
+      44408
+     ]
+    }
+   ],
+   "colon": 41298,
+   "phase_input": {
+    "text": "輸入",
+    "codes": [
+     49129,
+     42058
+    ]
+   },
+   "date": {
+    "text": "宇宙曆",
+    "codes": [
+     42612,
+     43386,
+     48868
+    ]
+   },
+   "turn_prefix": {
+    "text": "第",
+    "codes": [
+     45764
+    ]
+   },
+   "turn_suffix": {
+    "text": "回合",
+    "codes": [
+     42590,
+     42584
+    ]
+   },
+   "victory": {
+    "text": "勝利點",
+    "codes": [
+     46035,
+     42833,
+     49737
+    ]
+   },
+   "full_digits": {
+    "text": "０１２３４５６７８９",
+    "codes": [
+     41647,
+     41648,
+     41649,
+     41650,
+     41651,
+     41652,
+     41653,
+     41654,
+     41655,
+     41656
+    ]
+   }
   }
+ }
 }
