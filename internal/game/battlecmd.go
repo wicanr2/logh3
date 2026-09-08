@@ -154,6 +154,11 @@ func (g *Game) commandMenuClick(x, y int) bool {
 	if g.battleCmdKind == screen.CommandMenuScout && row == 1 {
 		g.battleUnits[unit].Action = squadronRejoin
 	}
+	// 分隊的「移動」是第一項：接著等玩家點目的地。旗艦（艦隊選單）
+	// 那一項要再選抵達朝向，還沒逆向完，所以不接。
+	if row == 0 && g.battleCmdKind != screen.CommandMenuFleet {
+		g.beginMoveTarget(unit)
+	}
 	// 其餘各項的行為還沒逆向（`docs/spec/023`「還沒做的」）。
 	return true
 }
@@ -176,11 +181,11 @@ const (
 func (g *Game) unitPanelView() (screen.UnitPanelView, bool) {
 	var v screen.UnitPanelView
 	s := g.res.UnitPanel
-	if s == nil || !g.battleCmd ||
-		g.battleCmdUnit < 0 || g.battleCmdUnit >= len(g.battleUnits) {
+	sel, ok := g.selectedUnit()
+	if s == nil || !ok {
 		return v, false
 	}
-	u := g.battleUnits[g.battleCmdUnit]
+	u := g.battleUnits[sel]
 	f := g.fleetByIndex(u.Fleet)
 	if f == nil {
 		return v, false
@@ -235,6 +240,22 @@ func (g *Game) unitPanelView() (screen.UnitPanelView, bool) {
 	return v, true
 }
 
+// selectedUnit 回現在選著的分隊——命令選單開著，或是選了「移動」正在等
+// 玩家點目的地。收據 `s3cmdrange` 上選目的地的時候面板還在。
+func (g *Game) selectedUnit() (int, bool) {
+	i := -1
+	switch {
+	case g.battleCmd:
+		i = g.battleCmdUnit
+	case g.battleMove:
+		i = g.battleMoveUnit
+	}
+	if i < 0 || i >= len(g.battleUnits) {
+		return -1, false
+	}
+	return i, true
+}
+
 // weaponInk 回武器數的顏色：等於滿量是本色，達到門檻是色 5，否則色 2
 // （`0x1CFFE` 起那兩段比較，`docs/re/118`）。
 func weaponInk(s *screen.UnitPanelSpec, have, full, part int) uint8 {
@@ -245,4 +266,74 @@ func weaponInk(s *screen.UnitPanelSpec, have, full, part int) uint8 {
 		return s.WeaponInk.Part
 	}
 	return s.WeaponInk.Low
+}
+
+// 「移動」：選一個目的地（`docs/re/119`、`docs/re/121`、規格 `docs/spec/024`）。
+//
+// 分隊層那支（原版 `2583:00DE`）沒有速度上限也不畫範圍——寫進艦艇
+// `+0x28`／`+0x2A` 的就是點到的世界座標，逐位元組驗過（收據 `s3cmdmove`）。
+// 艦隊層那支要再選一次抵達朝向，還沒逆向完，所以旗艦的「移動」這裡不做。
+
+// 世界座標的上下限（原版 `2583:022B` 的 `cmp ax,7EFh`／`cmp ax,7E7h`）。
+const (
+	battleWorldMaxX = 0x7EF // 2031
+	battleWorldMaxY = 0x7E7 // 2023
+)
+
+// MoveTargetPending 回「正在等玩家點目的地」。
+func (g *Game) MoveTargetPending() bool { return g.battleMove }
+
+// beginMoveTarget 進入選目的地的狀態。
+func (g *Game) beginMoveTarget(unit int) {
+	g.battleMove, g.battleMoveUnit = true, unit
+}
+
+// cancelMoveTarget 取消選目的地。
+func (g *Game) cancelMoveTarget() { g.battleMove = false }
+
+// moveTargetClick 處理選目的地時的左鍵；回有沒有吃掉這一下。
+//
+// 點在戰場外、超出世界範圍或那一格過不去，原版會跳「這是無法行動的
+// 地方。」再回到戰場（`ds:4A24`）。那個訊息框的版面還沒量，所以這裡
+// 只是取消——**差異記在規格裡，沒有猜版面**。
+func (g *Game) moveTargetClick(x, y int) bool {
+	if !g.battleMove {
+		return false
+	}
+	unit := g.battleMoveUnit
+	g.cancelMoveTarget()
+	if unit < 0 || unit >= len(g.battleUnits) {
+		return true
+	}
+	wx, wy, ok := g.battleWorldAt(x, y)
+	if !ok {
+		return true
+	}
+	g.battleUnits[unit].TargetX, g.battleUnits[unit].TargetY = wx, wy
+	g.battleUnits[unit].Action = squadronMove
+	return true
+}
+
+// battleWorldAt 把畫面座標換成戰場的世界座標，並照原版做邊界與地形
+// 判斷（`2583:022B` ＋ `1588:04EA`）。第三個回傳值 false ＝ 不能去。
+func (g *Game) battleWorldAt(x, y int) (int, int, bool) {
+	s := g.res.Battle
+	if s == nil {
+		return 0, 0, false
+	}
+	fw := s.Field.Cols * s.Field.TileW
+	fh := s.Field.Rows * s.Field.TileH
+	if x < s.Field.X || y < s.Field.Y || x >= s.Field.X+fw || y >= s.Field.Y+fh {
+		return 0, 0, false // 點在戰場那一塊外面
+	}
+	wx := x - s.Field.X + g.battleView.Col*s.Field.TileW
+	wy := y - s.Field.Y + g.battleView.Row*s.Field.TileH
+	if wx < 0 || wx > battleWorldMaxX || wy < 0 || wy > battleWorldMaxY {
+		return 0, 0, false
+	}
+	if g.res.Terrain != nil &&
+		!g.res.Terrain.Passable(g.battleCells(g.battleRegion), wx, wy) {
+		return 0, 0, false
+	}
+	return wx, wy, true
 }

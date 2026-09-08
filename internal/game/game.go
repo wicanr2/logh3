@@ -506,6 +506,11 @@ type Game struct {
 	battleCmdKind            screen.CommandMenuKind
 	battleCmdX, battleCmdY   int
 
+	// battleMove ＝ 選了「移動」之後在等玩家點目的地（`docs/spec/024`）；
+	// battleMoveUnit 是要移動的分隊。
+	battleMove     bool
+	battleMoveUnit int
+
 	battleRally   []rules.RallySite
 	battlePlanets []rules.BattlePlanet
 	battleRand   *rules.Rand
@@ -1088,6 +1093,10 @@ func (g *Game) RightClick(x, y int) {
 		}
 		if g.battleData {
 			g.battleData = false
+			return
+		}
+		if g.MoveTargetPending() {
+			g.cancelMoveTarget()
 			return
 		}
 		if g.CommandMenuOpen() {

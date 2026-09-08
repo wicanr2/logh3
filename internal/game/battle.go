@@ -63,6 +63,7 @@ func (g *Game) StartBattle(region int) {
 	g.battleRally = g.battleRegionRally(region)
 	g.battleMenu = false
 	g.closeCommandMenu()
+	g.cancelMoveTarget()
 	for i := range g.battleFleets {
 		if u := flagshipOf(g.battleUnits, g.battleFleets[i].Index); u != nil {
 			g.battleFleets[i].Facing = rules.BattleFacing(u.X, u.Y)
@@ -166,6 +167,9 @@ func (g *Game) AdvanceBattleTurn() {
 // 第二項「資料」開的是什麼還沒逆向，所以只把選單關掉。
 func (g *Game) battleClick(x, y int) {
 	if g.battleDataClick(x, y) {
+		return
+	}
+	if g.moveTargetClick(x, y) {
 		return
 	}
 	if g.commandMenuClick(x, y) {

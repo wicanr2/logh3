@@ -49,6 +49,15 @@ func commandTestGame(t *testing.T) *Game {
 		}
 		g.res.CommandMenus = s
 	}
+	if g.res.UnitPanel == nil {
+		s, err := screen.LoadUnitPanelSpec(filepath.Join(root,
+			"docs/internals/data/unit-panel.json"))
+		if err != nil {
+			t.Skipf("缺分隊面板的版面，跳過：%v", err)
+			return nil
+		}
+		g.res.UnitPanel = s
+	}
 	return g
 }
 
@@ -170,5 +179,107 @@ func TestCommandMenuRejoinWritesAction(t *testing.T) {
 	}
 	if got := g.battleUnits[0].Action; got != squadronRejoin {
 		t.Errorf("歸隊之後分隊行動 = %d，應該是 %d", got, squadronRejoin)
+	}
+}
+
+// TestMoveOrderSetsTarget 分隊的「移動」：選單第一項之後點戰場，
+// 目的地就是點到的世界座標，分隊行動變成 0（`docs/spec/024`）。
+func TestMoveOrderSetsTarget(t *testing.T) {
+	g := commandTestGame(t)
+	if g == nil {
+		return
+	}
+	own := findUnit(g, g.faction, false)
+	if own < 0 {
+		t.Skip("這個局面畫面上沒有自己的分隊，跳過")
+	}
+	g.battleUnits[own].Action = squadronNone
+	ux, uy := unitScreenPos(g, own)
+	g.MoveMouse(ux+8, uy+8)
+	g.Click(ux+8, uy+8)
+	if !g.CommandMenuOpen() {
+		t.Fatal("點自己的分隊沒開命令選單")
+	}
+	// 選單第一項「移動」。
+	s := g.res.CommandMenus
+	mx := g.battleCmdX + s.Layout.HighlightDX + 8
+	my := g.battleCmdY + s.Layout.HighlightDY + 8
+	g.Click(mx, my)
+	if g.CommandMenuOpen() {
+		t.Error("選了一項之後選單應該關掉")
+	}
+	if !g.MoveTargetPending() {
+		t.Fatal("選了「移動」之後應該在等玩家點目的地")
+	}
+	// 選目的地的時候右側面板還在（收據 s3cmdrange）。
+	if _, ok := g.unitPanelView(); !ok {
+		t.Error("選目的地時分隊面板應該還在")
+	}
+
+	// 點一個走得通的點。
+	fld := g.res.Battle.Field
+	var tx, ty, wx, wy int
+	for dy := 0; dy < fld.Rows*fld.TileH && wx == 0 && wy == 0; dy += 20 {
+		for dx := 0; dx < fld.Cols*fld.TileW; dx += 16 {
+			px, py := fld.X+dx, fld.Y+dy
+			if x, y, ok := g.battleWorldAt(px, py); ok {
+				tx, ty, wx, wy = px, py, x, y
+				break
+			}
+		}
+	}
+	if wx == 0 && wy == 0 {
+		t.Skip("找不到走得通的目的地，跳過")
+	}
+	g.MoveMouse(tx, ty)
+	g.Click(tx, ty)
+	if g.MoveTargetPending() {
+		t.Error("點完目的地之後不該還在等")
+	}
+	u := g.battleUnits[own]
+	if u.TargetX != wx || u.TargetY != wy {
+		t.Errorf("目的地 (%d,%d)，應該是 (%d,%d)", u.TargetX, u.TargetY, wx, wy)
+	}
+	if u.Action != squadronMove {
+		t.Errorf("分隊行動 %d，應該是 %d", u.Action, squadronMove)
+	}
+}
+
+// TestMoveOrderRightClickCancels 選目的地時右鍵退掉這一層。
+func TestMoveOrderRightClickCancels(t *testing.T) {
+	g := commandTestGame(t)
+	if g == nil {
+		return
+	}
+	if len(g.battleUnits) == 0 {
+		t.Skip("戰場上沒有分隊，跳過")
+	}
+	before := g.battleUnits[0]
+	g.battleUnits[0].Squadron = 1
+	g.beginMoveTarget(0)
+	g.RightClick(200, 200)
+	if g.MoveTargetPending() {
+		t.Error("右鍵沒取消選目的地")
+	}
+	if g.battleUnits[0].TargetX != before.TargetX || g.battleUnits[0].TargetY != before.TargetY {
+		t.Error("取消不該改到目的地")
+	}
+}
+
+// TestMoveTargetRejectsOutOfField 點在戰場那一塊外面 → 取消，不設目的地。
+func TestMoveTargetRejectsOutOfField(t *testing.T) {
+	g := commandTestGame(t)
+	if g == nil {
+		return
+	}
+	if g.res.Battle == nil {
+		t.Skip("缺戰場版面，跳過")
+	}
+	f := g.res.Battle.Field
+	for _, p := range [][2]int{{f.X - 1, f.Y}, {f.X, f.Y - 1},
+		{f.X + f.Cols*f.TileW, f.Y}, {f.X, f.Y + f.Rows*f.TileH}} {
+		if _, _, ok := g.battleWorldAt(p[0], p[1]); ok {
+			t.Errorf("(%d,%d) 在戰場外，不該算合法", p[0], p[1])
+		}
 	}
 }
