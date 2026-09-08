@@ -390,6 +390,18 @@ func MainGame(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset
 // 會蓋掉疊在上面的視窗（`docs/spec/002`、`003`）。
 func MainGameWithBoard(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset.AMG,
 	cur *ui.Cursor, afterBoard func(*gfx.Framebuffer)) (*gfx.Framebuffer, []uint16) {
+	return MainGameLayered(s, fnt, mapImg, faces, cur, afterBoard, nil)
+}
+
+// MainGameLayered 再多一個掛勾：`afterWindow` 在**每一個疊層畫完之後**
+// 被呼叫一次，帶著那一層的名字。
+//
+// 從狀態算出來的內容屬於某一層，得畫在那一層之後、**上面那一層之前**。
+// 全部等到最後再畫的話，疊在上面的小視窗會被下面那層的數字戳穿——
+// 艦隊編號那張清單右緣就被艦隊編成的能力值畫了一排洞。
+func MainGameLayered(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces *asset.AMG,
+	cur *ui.Cursor, afterBoard func(*gfx.Framebuffer),
+	afterWindow func(string, *gfx.Framebuffer)) (*gfx.Framebuffer, []uint16) {
 	fb := gfx.NewFramebuffer(s.Background)
 	var missing []uint16
 	// 順序就是原版的層次：底板 → 星域地圖（蓋住底板左上角）→ 會計報告。
@@ -415,6 +427,9 @@ func MainGameWithBoard(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, fac
 	for _, name := range order {
 		if w := s.Windows[name]; w != nil {
 			missing = append(missing, w.Draw(fb, fnt, 3, faces)...)
+		}
+		if afterWindow != nil {
+			afterWindow(name, fb)
 		}
 	}
 	for _, w := range s.Windows {

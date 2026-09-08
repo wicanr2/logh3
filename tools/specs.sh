@@ -96,13 +96,28 @@ if want fleet-org; then
     "0:432:96,32:432:196" "" "" "6,5"
   py tools/scripts/box_text.py fleet1e screen-fleet-org overlay 0
   py tools/scripts/box_text.py fleet1e screen-fleet-org overlay 1
-  # 游標停在「確認」上，第二個字讀不出來（這張畫面的迴圈不理會純移動
-  # 事件——另抓一張只移動滑鼠的收據 `fleet1eB`，畫面逐位元組相同，
-  # 補不回來）。字碼直接給，讀到的那一格必須是它的前綴。
-  LOGH3_BOX_CODES=BD54,BB7B; export LOGH3_BOX_CODES
-  py tools/scripts/box_text.py fleet1e screen-fleet-org overlay 2
-  unset LOGH3_BOX_CODES
+  # 「確認」那顆的游標正壓在上面：字讀不全，而且游標的像素會被當成
+  # 框的角落修正記進去（在 fleet1e 上看不出來——游標最後會蓋回同一批
+  # 像素；疊上艦隊編號那張、游標移走之後就露餡）。改用 `fnum`：
+  # 同一顆按鈕、游標在別處。
+  py tools/scripts/box_text.py fnum screen-fleet-org overlay 2
   py tools/scripts/maingame_computed.py screen-fleet-org
+fi
+
+# 艦隊編成的兩個小視窗（`docs/re/67`）。兩張都被游標咬掉了字，所以各配
+# 一份「游標停在同一顆熱區另一端」的收據，兩份取文字聯集。
+# 反白條不進規格（換一個滑鼠位置就換一列），改由 `hover` 描述版面。
+if want fleet-number; then
+  py tools/scripts/overlay_spec.py fnum screen-fleet-org screen-fleet-number \
+    320 60 415 418 368 310 "" "" "" "" fnum3
+  py tools/scripts/stack_spec.py screen-fleet-org screen-fleet-number number
+  py tools/scripts/hover_block.py screen-fleet-number number 336 80 64 20 20 16 2
+fi
+if want fleet-adjutant; then
+  py tools/scripts/overlay_spec.py fadj screen-fleet-org screen-fleet-adjutant \
+    400 320 463 398 432 310 "" "" "" "" fadj3
+  py tools/scripts/stack_spec.py screen-fleet-org screen-fleet-adjutant menu
+  py tools/scripts/hover_block.py screen-fleet-adjutant menu 416 340 32 20 20 2 2
 fi
 
 # 提督詳細資料的「旗艦」對照表（資料段的兩張 far 指標表）。

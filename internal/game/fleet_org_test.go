@@ -32,3 +32,84 @@ func TestFleetOrgMatchesOracle(t *testing.T) {
 		})
 	}
 }
+
+// reachFleetOrg 走玩家路徑走到萊因哈特那張艦隊編成。
+func reachFleetOrg(t *testing.T) *Game {
+	t.Helper()
+	g := reachCommandPhase(t)
+	g.Click(352, 125) // 戰略命令
+	g.Click(400, 125) // 出擊命令
+	g.Click(400, 85)  // 第 0 列 萊因哈特
+	g.Click(488, 330) // 「出擊」
+	if g.State() != StateFleetOrg {
+		t.Fatalf("走到艦隊編成之前就跑到 %v", g.State())
+	}
+	return g
+}
+
+// TestFleetOrgHotspotsAreNarrowerThanTheBoxes 點在畫出來的框內、熱區外
+// 一個像素，原版一個位元組都不動（收據 `fnum2`／`fadj2` 與 `fleet1e`
+// 雜湊相同，`docs/re/68`）。
+//
+// 這兩個是**反例**：正例只說得出「這裡點得到」，反例才定得住邊界。
+func TestFleetOrgHotspotsAreNarrowerThanTheBoxes(t *testing.T) {
+	for _, c := range []struct {
+		x, y  int
+		batch string
+		what  string
+	}{
+		{400, 350, "fnum2", "艦隊編號框的右邊緣"},
+		{448, 350, "fadj2", "副官框的右邊緣"},
+	} {
+		t.Run(c.batch, func(t *testing.T) {
+			g := reachFleetOrg(t)
+			g.Click(c.x, c.y)
+			if g.State() != StateFleetOrg {
+				t.Fatalf("點 %s (%d,%d) 之後跑到 %v", c.what, c.x, c.y, g.State())
+			}
+			matches(t, g, c.batch)
+		})
+	}
+}
+
+// TestFleetNumberListMatchesOracle 「艦隊編號」開出的十六列清單
+// （收據 `fnum`／`fnum3`，`docs/re/67`）。滑鼠停哪一列，那一列整條反白。
+func TestFleetNumberListMatchesOracle(t *testing.T) {
+	for _, c := range []struct {
+		x     int
+		batch string
+	}{
+		{368, "fnum"},  // 游標壓在「艦」上
+		{338, "fnum3"}, // 游標壓在「第」上
+	} {
+		t.Run(c.batch, func(t *testing.T) {
+			g := reachFleetOrg(t)
+			g.Click(c.x, 350)
+			if g.State() != StateFleetNumber {
+				t.Fatalf("點了艦隊編號之後在 %v", g.State())
+			}
+			matches(t, g, c.batch)
+		})
+	}
+}
+
+// TestFleetAdjutantMenuMatchesOracle 「副官」開出的「變更／卸任」兩列
+// 小選單（收據 `fadj`／`fadj3`）。
+func TestFleetAdjutantMenuMatchesOracle(t *testing.T) {
+	for _, c := range []struct {
+		x     int
+		batch string
+	}{
+		{432, "fadj"},
+		{417, "fadj3"},
+	} {
+		t.Run(c.batch, func(t *testing.T) {
+			g := reachFleetOrg(t)
+			g.Click(c.x, 350)
+			if g.State() != StateFleetAdjutant {
+				t.Fatalf("點了副官之後在 %v", g.State())
+			}
+			matches(t, g, c.batch)
+		})
+	}
+}

@@ -89,6 +89,12 @@ const (
 	// 艦隊能力是提督與副官逐項取大（`docs/re/66`、`docs/spec/013`）。
 	StateFleetOrg
 
+	// StateFleetNumber 是艦隊編成按「艦隊編號」開出的十六列清單，
+	// StateFleetAdjutant 是按「副官」開出的「變更／卸任」兩列小選單
+	// （`docs/re/67`）。兩張都是滑鼠停哪一列、哪一列就反白。
+	StateFleetNumber
+	StateFleetAdjutant
+
 	// StateShipDelivery 是月底的「船艦接收報告」：第十次「實行」跨月時
 	// 自己跳出來，按「確認」才回到地圖介面（`docs/re/21`、`docs/re/55`）。
 	StateShipDelivery
@@ -117,6 +123,8 @@ var screenSpecName = map[State]string{
 	StateAdmiralDetail:   "screen-admiral-detail",
 	StateAdmiralBio:      "screen-admiral-bio",
 	StateFleetOrg:        "screen-fleet-org",
+	StateFleetNumber:     "screen-fleet-number",
+	StateFleetAdjutant:   "screen-fleet-adjutant",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -562,6 +570,22 @@ func (g *Game) Click(x, y int) {
 				g.state = StateFleetOrg
 			}
 		}
+	case StateFleetOrg:
+		// 下緣三顆按鈕：艦隊編號／副官／確認（熱區清單 `10BC`，
+		// `docs/re/68`）。座標是熱區，比畫出來的框左右各窄 2 像素。
+		if g.res.FleetPanel == nil {
+			return
+		}
+		switch g.res.FleetPanel.ButtonAt(x, y) {
+		case "fleet-number":
+			if g.commandSpec(StateFleetNumber) != nil {
+				g.state = StateFleetNumber
+			}
+		case "adjutant":
+			if g.commandSpec(StateFleetAdjutant) != nil {
+				g.state = StateFleetAdjutant
+			}
+		}
 	case StateStandbyAdmirals:
 		// 點清單的一列開那位提督的詳細資料（`docs/re/65`）。
 		if i := g.listAdmiralAt(y); i >= 0 && g.commandSpec(StateAdmiralDetail) != nil {
@@ -642,6 +666,8 @@ func (g *Game) RightClick(x, y int) {
 		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
 		}
+	case StateFleetNumber, StateFleetAdjutant:
+		g.state = StateFleetOrg
 	case StateAdmiralBio, StateFleetOrg:
 		g.state = StateAdmiralDetail
 	case StateAdmiralDetail:
@@ -880,11 +906,12 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		if spec := g.commandSpec(g.state); spec != nil {
 			g.setListRows(spec)
 			g.liveCursor(spec)
+			g.setHoverRow(spec)
 			g.applyStaffFaces(spec)
 			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
 			// （`docs/spec/002`）。
-			fb, _ := screen.MainGameWithBoard(spec, g.res.Font, g.starMapFor(spec),
-				g.res.Faces, g.res.Cursor, g.drawBoardPanels)
+			fb, _ := screen.MainGameLayered(spec, g.res.Font, g.starMapFor(spec),
+				g.res.Faces, g.res.Cursor, g.drawBoardPanels, g.afterWindow)
 			g.drawPanels(fb)
 			g.drawBudget(fb)
 			g.drawProduction(fb)
@@ -892,7 +919,6 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawSlotList(fb)
 			g.drawAdmiralDetail(fb)
 			g.drawAdmiralBio(fb)
-			g.drawFleetOrg(fb)
 			g.drawSpecStaff(fb, spec)
 			return fb
 		}
@@ -996,7 +1022,8 @@ func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
 // 「游標之後再畫一次」的補丁，那幾件事綁著當初那個位置，還沒模型化。
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
-	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio:
+	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
+		StateFleetNumber, StateFleetAdjutant:
 	default:
 		return
 	}
@@ -1004,6 +1031,30 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 		return
 	}
 	spec.Mouse.X, spec.Mouse.Y = g.mouseX, g.mouseY-mouseDY
+}
+
+// afterWindow 在每一層畫完之後補上那一層算出來的內容。
+//
+// 艦隊編成那張的姓名與能力值屬於 `overlay` 那一層：等整張畫完再補，
+// 疊在上面的艦隊編號清單就會被戳出一排洞（`docs/spec/013`）。
+func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
+	if name == "overlay" {
+		g.drawFleetOrg(fb)
+	}
+}
+
+// setHoverRow 把「滑鼠停在哪一列」告訴有反白條的那個視窗
+// （艦隊編號那 16 列、副官那 2 列，`docs/re/67`）。
+//
+// 反白條是遊戲畫的，不在規格的 `lines` 裡：換一個滑鼠位置就換一列，
+// 量進規格就綁死在收據那一列上了。
+func (g *Game) setHoverRow(spec *screen.MainGameSpec) {
+	for _, w := range spec.Windows {
+		if w.Hover == nil {
+			continue
+		}
+		w.SetHoverRow(w.HoverRowAt(g.mouseX, g.mouseY))
+	}
 }
 
 // drawSlotList 畫存檔畫面那 11 列（`docs/spec/008`）。
@@ -1193,7 +1244,13 @@ func (g *Game) drawAdmiralDetail(fb *gfx.Framebuffer) {
 // 副官是提督記錄的 `+0x07`（`docs/re/66`）；`0xFF` ＝ 沒有副官，那位也
 // 沒有旗艦、帶不了艦隊，走不到這張畫面。
 func (g *Game) drawFleetOrg(fb *gfx.Framebuffer) {
-	if g.state != StateFleetOrg || g.res.FleetPanel == nil {
+	if g.res.FleetPanel == nil {
+		return
+	}
+	// 艦隊編號與副官那兩個小視窗疊在這一張上面，底下這一層照畫。
+	switch g.state {
+	case StateFleetOrg, StateFleetNumber, StateFleetAdjutant:
+	default:
 		return
 	}
 	i := g.detailAdmiral
@@ -1339,7 +1396,8 @@ func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 	region := -1
 	switch g.state {
 	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList,
-		StateAdmiralDetail, StateAdmiralBio, StateFleetOrg:
+		StateAdmiralDetail, StateAdmiralBio, StateFleetOrg,
+		StateFleetNumber, StateFleetAdjutant:
 		region = rules.CapitalRegion(g.faction)
 	case StateStarList:
 		if spec := g.commandSpec(g.state); spec != nil {
