@@ -165,6 +165,16 @@ func (g *Game) commandMenuClick(x, y int) bool {
 		g.battleCmdKind != screen.CommandMenuScout {
 		g.beginFormationPick(unit)
 	}
+	// 運補艦與修護艦那兩張表的第三項是「補給」／「修理」：接著等玩家
+	// 點對象（`docs/re/131`）。
+	if row == 2 {
+		switch g.battleCmdKind {
+		case screen.CommandMenuSupply:
+			g.beginSupplyPick(unit, false)
+		case screen.CommandMenuRepair:
+			g.beginSupplyPick(unit, true)
+		}
+	}
 	// 其餘各項的行為還沒逆向（`docs/spec/023`「還沒做的」）。
 	return true
 }

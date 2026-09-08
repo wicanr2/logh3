@@ -520,6 +520,12 @@ type Game struct {
 	battleForm     bool
 	battleFormUnit int
 
+	// battleSupply ＝ 選了「補給」或「修理」之後在等玩家點對象
+	// （`docs/re/131`）；battleSupplyRepair 分辨是哪一個。
+	battleSupply       bool
+	battleSupplyUnit   int
+	battleSupplyRepair bool
+
 	battleRally   []rules.RallySite
 	battlePlanets []rules.BattlePlanet
 	battleRand   *rules.Rand
@@ -1110,6 +1116,10 @@ func (g *Game) RightClick(x, y int) {
 		}
 		if g.FormationPickPending() {
 			g.cancelFormationPick()
+			return
+		}
+		if g.SupplyPickPending() {
+			g.cancelSupplyPick()
 			return
 		}
 		if g.CommandMenuOpen() {
