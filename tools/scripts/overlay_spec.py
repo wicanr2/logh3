@@ -42,7 +42,9 @@ EXTRA = ([int(v) for v in sys.argv[13].split(':')]
 # 額外文字來源：**游標蓋住的那一格讀不出來**，而有些畫面的迴圈不理會純移動
 # 事件（設定、生產計劃…），游標只會停在最後一次點擊的地方。同一張畫面點在
 # 不同位置各抓一份收據，兩份的文字聯集就補得回來。幾何仍然只看主收據。
-ALSO = sys.argv[14] if len(sys.argv) > 14 and sys.argv[14] else None
+# 可以給**不只一份**（逗號分隔）：游標一次只擋得住一兩列，列數多的清單
+# 要兩份才補得齊。
+ALSO = [b for b in (sys.argv[14].split(',') if len(sys.argv) > 14 and sys.argv[14] else []) if b]
 # 文字顏色：預設只掃 7。有些畫面用別的色號表示「這一列是空的／不能選」
 # （取進度的未使用欄位是色 8），那幾行不列出來就整片讀不到。
 INKS = [7] + [int(v) for v in (sys.argv[15].split(',')
@@ -128,13 +130,14 @@ for _ink in INKS:
                 _merge(lines, _l)
 if ALSO:
     _main_rows = rows
-    rows, _ = load_screen(f'/work/workplace/oracle/{ALSO}/screen.bin')
     _extra = []
-    for _ink in INKS:
-        for _t in TABS:
-            for _p in range(20):
-                for _l in scan(_p, _t, _ink):
-                    _merge(_extra, _l)
+    for _batch in ALSO:
+        rows, _ = load_screen(f'/work/workplace/oracle/{_batch}/screen.bin')
+        for _ink in INKS:
+            for _t in TABS:
+                for _p in range(20):
+                    for _l in scan(_p, _t, _ink):
+                        _merge(_extra, _l)
     rows = _main_rows
 
     def _union(acc, cand):

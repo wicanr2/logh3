@@ -584,6 +584,15 @@ func (g *Game) Click(x, y int) {
 				g.state = StateFleetOrg
 			}
 		}
+	case StateFleetComposition:
+		// 點七個艦種列的哪一列，選取條就跳到哪一列（收據 `row3`）。
+		if spec := g.commandSpec(g.state); spec != nil {
+			if w := spec.Windows["overlay"]; w != nil {
+				if i := w.SelectRowAt(x, y); i >= 0 {
+					g.selectedRow = i
+				}
+			}
+		}
 	case StateFleetOrg:
 		// 下緣三顆按鈕：艦隊編號／副官／確認（熱區清單 `10BC`，
 		// `docs/re/68`）。座標是熱區，比畫出來的框左右各窄 2 像素。
@@ -601,6 +610,7 @@ func (g *Game) Click(x, y int) {
 			}
 		case "confirm":
 			if g.commandSpec(StateFleetComposition) != nil {
+				g.selectedRow = 0
 				g.state = StateFleetComposition
 			}
 		}
@@ -1041,7 +1051,7 @@ func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
-		StateFleetNumber, StateFleetAdjutant:
+		StateFleetNumber, StateFleetAdjutant, StateFleetComposition:
 	default:
 		return
 	}

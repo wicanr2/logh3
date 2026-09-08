@@ -127,3 +127,15 @@ func TestFleetCompositionMatchesOracle(t *testing.T) {
 	}
 	matches(t, g, "fok")
 }
+
+// TestFleetCompositionRowSelect 點七個艦種列的哪一列，選取條就跳到哪一列
+// （收據 `row3`：點第 2 列巡航艦）。
+func TestFleetCompositionRowSelect(t *testing.T) {
+	g := reachFleetOrg(t)
+	g.Click(480, 350) // 「確認」
+	g.Click(360, 210) // 第 2 列 巡航艦
+	if g.State() != StateFleetComposition {
+		t.Fatalf("點了艦種列之後在 %v", g.State())
+	}
+	matches(t, g, "row3")
+}

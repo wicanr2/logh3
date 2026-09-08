@@ -288,6 +288,29 @@ func (w *GameWindow) SetSelected(i int) {
 	w.selected = i + 1
 }
 
+// SelectRowAt 回畫面座標 (x,y) 落在 `Select` 那一組小框的第幾個；
+// 不在上面回 -1。
+//
+// 命中的範圍是**熱區**不是畫出來的框：熱區左右各比框窄 2 像素
+// （`docs/re/68`）。
+func (w *GameWindow) SelectRowAt(x, y int) int {
+	sel := w.Select
+	if sel == nil {
+		return -1
+	}
+	for i := 0; i < sel.Count; i++ {
+		k := sel.First + i
+		if k < 0 || k >= len(w.Boxes) {
+			continue
+		}
+		b := w.Boxes[k]
+		if x >= b.X+2 && x < b.X+b.W-2 && y >= b.Y && y < b.Y+b.H {
+			return i
+		}
+	}
+	return -1
+}
+
 // SetHoverRow 指定這一次要把哪一列刷成反白；-1 ＝ 都不刷。
 func (w *GameWindow) SetHoverRow(row int) {
 	if w == nil || row < 0 {
