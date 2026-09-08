@@ -1,5 +1,7 @@
 package rules
 
+import "encoding/binary"
+
 // BattleUnit 是戰術畫面上的一支**分隊**。
 //
 // 一支艦隊進了戰場會散成最多十個分隊，各自有座標、各自移動；分隊就是
@@ -22,8 +24,48 @@ type BattleUnit struct {
 	TargetY  int `json:"target_y"`
 	Speed    int `json:"speed"`     // 一回合走多遠
 	Strength int `json:"strength"`  // 戰力（`StrengthWeights` 算的）
-	Kind     int `json:"kind"`      // 艦種（艦艇記錄 `+0x04`）
-	Detail   int `json:"detail"`    // 顯示層級（艦艇記錄 `+0x17`）
+	Kind      int `json:"kind"`       // 艦種（艦艇記錄 `+0x04`）
+	Detail    int `json:"detail"`     // 顯示層級（艦艇記錄 `+0x17`）
+	Ships     int `json:"ships"`      // 現有艘數（艦艇記錄 `+0x08`）
+	FullShips int `json:"full_ships"` // 滿編艘數（艦艇記錄 `+0x0A`）
+	Attack    int `json:"attack"`     // 攻擊力（艦艇記錄 `+0x16`）
+	Out       bool `json:"out"`       // 出局，不進攻擊名單（艦艇記錄 `+0x1E` bit7）
+}
+
+// EngagementRange 回一個分隊的射程（`docs/spec/018`）。
+//
+// 原版 `2350:0003`：`+0x16 ÷ 200 ＋ 80`。挑攻擊名單時用的門檻是它的兩倍。
+func EngagementRange(attack int) int {
+	if attack < 0 {
+		attack = 0
+	}
+	return attack/rangeDivisor + rangeBase
+}
+
+const (
+	rangeDivisor = 200
+	rangeBase    = 80
+	// RangeFactor 是「攻擊名單的門檻 ＝ 射程 × 2」（`17A0:00AC` 的呼叫端）。
+	RangeFactor = 2
+)
+
+// InRange 回名單裡「陣營相符、沒出局、而且目的地離 (x,y) 不超過 limit」
+// 的分隊索引（原版 `17A0:00AC`，`docs/spec/018`）。
+//
+// 比的是分隊的**目的地** `TargetX`／`TargetY`，不是現在的位置——原版讀的
+// 是艦艇記錄的 `+0x34`／`+0x36`。
+func InRange(units []BattleUnit, x, y, limit, faction int) []int {
+	var out []int
+	for i, u := range units {
+		if u.Faction != faction || u.Out {
+			continue
+		}
+		dx, dy := u.TargetX-x, u.TargetY-y
+		if dx*dx+dy*dy <= limit*limit {
+			out = append(out, i)
+		}
+	}
+	return out
 }
 
 // BattleSprite 回一個分隊要畫 `SPRITE.SPR` 的第幾塊。
@@ -195,6 +237,9 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 		if ship >= 0 && (ship+1)*ShipRecord <= len(s.Ship) {
 			rec := s.Ship[ship*ShipRecord : (ship+1)*ShipRecord]
 			u.Kind = int(rec[4])
+			u.Ships = int(binary.LittleEndian.Uint16(rec[8:]))
+			u.FullShips = int(binary.LittleEndian.Uint16(rec[10:]))
+			u.Attack = int(binary.LittleEndian.Uint16(rec[0x16:]))
 			if w != nil {
 				u.Strength = w.ShipStrength(rec)
 			}
