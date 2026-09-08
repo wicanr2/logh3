@@ -443,6 +443,13 @@ type Game struct {
 	tactic       ai.Tactic
 	autoBattle   bool
 
+	// 結算用的（`docs/spec/018`）：參戰艦隊、亂數、上一回合的交火紀錄，
+	// 以及「有一方全沒了」。
+	battleFleets []rules.BattleFleet
+	battleRand   *rules.Rand
+	battleLosses []rules.BattleLoss
+	battleOver   bool
+
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
 	// **預設是 `ai.Original`——按實行時什麼都不做**，那是量出來的原版
 	// 行為（`docs/re/79`）。要強化版就換成 `ai.Focused`。

@@ -28,6 +28,9 @@ func (g *Game) StartBattle(region int) {
 	g.battleRegion = region
 	g.battleTurn = 1
 	g.battleUnits = nil
+	g.battleFleets = nil
+	g.battleOver = false
+	var joined []int
 	if g.res.Entries == nil {
 		return
 	}
@@ -51,6 +54,13 @@ func (g *Game) StartBattle(region int) {
 		ux, uy := rules.FormationBase(rules.BattleFacing(x, y))
 		for _, u := range g.slot.Deploy(g.res.Weights, f, x, y, ux, uy) {
 			g.battleUnits = append(g.battleUnits, u)
+		}
+		joined = append(joined, f.Index)
+	}
+	g.battleFleets = g.slot.BattleFleetsFor(joined)
+	for i := range g.battleFleets {
+		if u := flagshipOf(g.battleUnits, g.battleFleets[i].Index); u != nil {
+			g.battleFleets[i].Facing = rules.BattleFacing(u.X, u.Y)
 		}
 	}
 	if len(g.battleUnits) > 0 {
@@ -113,7 +123,33 @@ func (g *Game) AdvanceBattleTurn() {
 	for i := range g.battleUnits {
 		rules.AdvanceBattle(&g.battleUnits[i])
 	}
+	if g.battleRand == nil {
+		g.battleRand = rules.NewRand(uint32(g.battleTurn))
+	}
+	g.battleLosses = rules.ResolveBattleTurn(g.battleFleets, g.battleUnits, g.battleRand)
 	g.battleTurn++
+	g.battleOver = battleDecided(g.battleUnits)
+}
+
+// flagshipOf 回一支艦隊的旗艦分隊（第 0 個）。
+func flagshipOf(units []rules.BattleUnit, fleet int) *rules.BattleUnit {
+	for i := range units {
+		if units[i].Fleet == fleet && units[i].Squadron == 0 {
+			return &units[i]
+		}
+	}
+	return nil
+}
+
+// battleDecided 回「有一方的艦艇全沒了」。
+func battleDecided(units []rules.BattleUnit) bool {
+	var left [2]int
+	for _, u := range units {
+		if u.Faction >= 0 && u.Faction < 2 {
+			left[u.Faction] += u.Ships
+		}
+	}
+	return left[0] == 0 || left[1] == 0
 }
 
 // SetTactic 換戰術層的 AI（`-ai` 旗標會設它）。
