@@ -31,6 +31,11 @@ type BattleUnit struct {
 	Attack    int `json:"attack"`     // 攻擊力（艦艇記錄 `+0x16`）
 	Morale    int `json:"morale"`     // 士氣（艦艇記錄 `+0x06`）
 
+	// Slot 是隊形槽索引 0–40（艦艇記錄 `+0x05`）：目的地 ＝ 艦隊位置 ＋
+	// `ds:59BA` 第 N 筆偏移依艦隊朝向旋轉。「編隊」改的就是它
+	// （`docs/internals/46`）。
+	Slot int `json:"slot"`
+
 	// TurnSpeed／CruiseSpeed／FightSpeed 是艦艇記錄的 `+0x1F`／`+0x21`／
 	// `+0x22`。艦隊的回轉／巡航／戰鬥速度就是**各分隊取最小值**
 	// （`0x2A7AE` 那個迴圈，寫進艦隊記錄 `+0x4D`／`+0x4E`／`+0x4F`；
@@ -308,6 +313,7 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 		if ship >= 0 && (ship+1)*ShipRecord <= len(s.Ship) {
 			rec := s.Ship[ship*ShipRecord : (ship+1)*ShipRecord]
 			u.Kind = int(rec[4])
+			u.Slot = int(rec[5])
 			u.Ships = int(binary.LittleEndian.Uint16(rec[8:]))
 			u.FullShips = int(binary.LittleEndian.Uint16(rec[10:]))
 			u.Attack = int(binary.LittleEndian.Uint16(rec[0x16:]))

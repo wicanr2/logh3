@@ -312,6 +312,10 @@ type Resources struct {
 	// UnitPanel 是點到分隊時右側換上的那塊面板（`docs/re/118`）。
 	UnitPanel *screen.UnitPanelSpec
 
+	// Formation 是 41 格的隊形槽位表（原版 `ds:59BA`，`docs/re/126`）。
+	// 「編隊」讓玩家在上面挑一格（`docs/internals/46`）。
+	Formation *rules.FormationSlots
+
 	// Terrain 是戰場地形的通行規則（`docs/re/100`）。戰術層挑集結點時
 	// 要用它判「這條直線走不走得通」；nil ＝ 不判，一律當通得過。
 	Terrain *rules.BattleTerrain
@@ -510,6 +514,11 @@ type Game struct {
 	// battleMoveUnit 是要移動的分隊。
 	battleMove     bool
 	battleMoveUnit int
+
+	// battleForm ＝ 選了「編隊」之後在等玩家點隊形格（`docs/internals/46`）；
+	// battleFormUnit 是要換位置的分隊。
+	battleForm     bool
+	battleFormUnit int
 
 	battleRally   []rules.RallySite
 	battlePlanets []rules.BattlePlanet
@@ -1097,6 +1106,10 @@ func (g *Game) RightClick(x, y int) {
 		}
 		if g.MoveTargetPending() {
 			g.cancelMoveTarget()
+			return
+		}
+		if g.FormationPickPending() {
+			g.cancelFormationPick()
 			return
 		}
 		if g.CommandMenuOpen() {
@@ -2354,6 +2367,12 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	if len(g.battleUnits) > 0 && len(g.res.Sprites) > 0 {
 		screen.DrawBattleUnits(g.res.Battle, fb, g.res.Sprites, g.battleUnits,
 			func(u rules.BattleUnit) int { return battleSprite(u) }, g.battleView)
+	}
+	// 「編隊」選格子時，空格子各畫一個標記（`docs/internals/46`）。
+	// 原版是把標記掛進顯示串列再整張重畫，分隊在標記之後畫上去
+	// ——收據 `s3form` 上壓在分隊底下的那三格看得到。
+	if marks := g.formationMarkSlots(); len(marks) > 0 && len(g.res.Sprites) > 0 {
+		screen.DrawFormationMarks(g.res.Battle, fb, g.res.Sprites, marks, g.battleView)
 	}
 	screen.DrawMinimap(g.res.Battle, fb, cells, g.battleView)
 	screen.DrawMinimapPlanets(g.res.Battle, fb,

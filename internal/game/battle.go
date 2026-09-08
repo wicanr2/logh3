@@ -64,6 +64,7 @@ func (g *Game) StartBattle(region int) {
 	g.battleMenu = false
 	g.closeCommandMenu()
 	g.cancelMoveTarget()
+	g.cancelFormationPick()
 	for i := range g.battleFleets {
 		if u := flagshipOf(g.battleUnits, g.battleFleets[i].Index); u != nil {
 			g.battleFleets[i].Facing = rules.BattleFacing(u.X, u.Y)
@@ -170,6 +171,9 @@ func (g *Game) battleClick(x, y int) {
 		return
 	}
 	if g.moveTargetClick(x, y) {
+		return
+	}
+	if g.formationPickClick(x, y) {
 		return
 	}
 	if g.commandMenuClick(x, y) {

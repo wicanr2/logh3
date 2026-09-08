@@ -159,6 +159,12 @@ func (g *Game) commandMenuClick(x, y int) bool {
 	if row == 0 && g.battleCmdKind != screen.CommandMenuFleet {
 		g.beginMoveTarget(unit)
 	}
+	// 「編隊」是分隊三張表的第二項：接著等玩家點隊形格
+	// （`docs/internals/46`）。索敵那張的第二項是「歸隊」，不算。
+	if row == 1 && g.battleCmdKind != screen.CommandMenuFleet &&
+		g.battleCmdKind != screen.CommandMenuScout {
+		g.beginFormationPick(unit)
+	}
 	// 其餘各項的行為還沒逆向（`docs/spec/023`「還沒做的」）。
 	return true
 }

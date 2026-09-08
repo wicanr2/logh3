@@ -459,3 +459,38 @@ func DrawMinimapUnits(s *BattleSpec, fb *gfx.Framebuffer, units []rules.BattleUn
 		fb.Set(px, py, fb.At(px, py)^ink)
 	}
 }
+
+// FormationMarkTile 是「編隊」畫面上每個空格子畫的那一塊
+// （原版 `2BE1:0564` 寫死 11，`docs/internals/46`）。
+const FormationMarkTile = 11
+
+// DrawFormationMarks 把「編隊」的格子標記畫上去。
+//
+// slots 是格子的**世界座標左上角**。色號 0 是透空的——收據 `s3form` 上
+// 那 118 個 0 的位置留著戰場底色，沒有被塗掉。
+func DrawFormationMarks(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
+	slots [][2]int, v BattleView) {
+	if s == nil || FormationMarkTile >= len(sprites) {
+		return
+	}
+	t := sprites[FormationMarkTile]
+	fx, fy := s.Field.X, s.Field.Y
+	fw, fh := s.Field.Cols*s.Field.TileW, s.Field.Rows*s.Field.TileH
+	ox, oy := v.Col*s.Field.TileW, v.Row*s.Field.TileH
+	for _, p := range slots {
+		sx, sy := fx+p[0]-ox, fy+p[1]-oy
+		for y := 0; y < t.H; y++ {
+			for x := 0; x < t.W; x++ {
+				c := t.Pix[y*t.W+x]
+				if c == 0 {
+					continue
+				}
+				px, py := sx+x, sy+y
+				if px < fx || py < fy || px >= fx+fw || py >= fy+fh {
+					continue
+				}
+				fb.Set(px, py, c)
+			}
+		}
+	}
+}

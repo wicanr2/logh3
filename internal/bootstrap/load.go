@@ -235,6 +235,11 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	formation, err := rules.LoadFormationSlots(
+		filepath.Join(data, "battle-formation-slots.json"))
+	if err != nil {
+		return nil, err
+	}
 	battleData, err := screen.LoadBattleDataSpec(filepath.Join(data, "battle-data.json"))
 	if err != nil {
 		return nil, err
@@ -263,6 +268,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		Battle: battle, BattlePanel: battlePanel, BattleTiles: battleTiles, BattleMaps: battleMaps,
 		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
+		Formation: formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
