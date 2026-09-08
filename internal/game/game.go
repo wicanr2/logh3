@@ -451,6 +451,10 @@ type Game struct {
 	battleScore  [2]int
 	battleOver   bool
 
+	// 戰場上「同一點連點兩下」的狀態（`docs/internals/34`）。
+	battleClickX, battleClickY int
+	battleClickArmed           bool
+
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
 	// **預設是 `ai.Original`——按實行時什麼都不做**，那是量出來的原版
 	// 行為（`docs/re/79`）。要強化版就換成 `ai.Focused`。
@@ -947,6 +951,20 @@ func (g *Game) Click(x, y int) {
 				return
 			}
 		}
+	case StateBattle:
+		// **同一點連點兩下 ＝ 結束我方輸入，推一個回合**
+		// （`docs/internals/34`「一個戰鬥回合怎麼推進」：`s3turn2` 連點
+		// 兩次兩回，畫面從第 1 回合走到第 3 回合）。
+		//
+		// 原版第一下會在游標處開一個小選單、第二下選中第一項「實行」。
+		// **那個選單的版面還沒逆向**，所以這裡只重現輸入契約，不畫選單
+		// ——畫出來的會是憑空捏的。
+		if g.battleClickArmed && g.battleClickX == x && g.battleClickY == y {
+			g.battleClickArmed = false
+			g.AdvanceBattleTurn()
+		} else {
+			g.battleClickX, g.battleClickY, g.battleClickArmed = x, y, true
+		}
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		b := commandBar[menuOf(g.state)]
 		for n, item := range b.Items {
@@ -1003,6 +1021,9 @@ func (g *Game) RightClick(x, y int) {
 		g.state = StateAdmiralDetail
 	case StateAdmiralDetail:
 		g.state = StateStandbyAdmirals
+	case StateBattle:
+		// 右鍵取消上一次的第一下（原版右鍵是關掉開在游標處的那個選單）。
+		g.battleClickArmed = false
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
 	case StateVersusInput:
