@@ -130,9 +130,14 @@ func DamageFactor(facing, bearing int) int {
 func Bearing(x0, y0, x1, y1 int) int { return atan256(x1-x0, y1-y0) }
 
 // DamageInput 是算一輪戰損要的東西（`docs/re/86`）。
+// ⚠ **這幾個欄位現在餵錯了表**（`docs/re/99`）：原版那條算式的第一個
+// 參數是**行星記錄**——`+0x11` 是擁有者、`+0x46`／`+0x48` 是行星在星域
+// 地圖上的位置、`+0x14` 是**行星防衛力**，`203A:04D1` 數的是行星附近
+// 該陣營的艦艇。remake 目前餵的是艦隊的對應欄位，所以量級小五倍
+// （remake 平均 56、原版量到 290）。要對上得先把行星接進戰場模型。
 type DamageInput struct {
-	Kind1Ships int  // 攻擊方艦種 1 的艘數總和（`203A:04D1` 加總的那個）
-	Bonus      int  // 攻擊方艦隊記錄的 +0x14
+	Kind1Ships int  // 原版：行星附近該陣營的艦艇量（`203A:04D1`）
+	Bonus      int  // 原版：行星記錄的 +0x14（防衛力）
 	Halved     bool // 攻擊方艦隊記錄的 +0x12 非 0：除數從 10 變 20
 	Distance   int  // 攻擊方 (+0x46,+0x48) 到目標 (+0x5C,+0x5E) 的距離
 	Facing     int  // 攻擊方艦隊的朝向（+0x4A）
