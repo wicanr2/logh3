@@ -435,6 +435,7 @@ type Game struct {
 	// 在整張戰場上的位置（單位是格）。-1 ＝ 還沒進過戰場。
 	battleRegion int
 	battleView   screen.BattleView
+	battleTurn   int
 
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
 	// **預設是 `ai.Original`——按實行時什麼都不做**，那是量出來的原版
@@ -2198,7 +2199,24 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	if r := g.battleRegion; r >= 0 && r < len(g.res.BattleMaps) {
 		cells = g.res.BattleMaps[r]
 	}
-	return screen.Battle(g.res.Battle, g.res.BattlePanel, g.res.BattleTiles, cells, g.battleView)
+	fb := screen.Battle(g.res.Battle, g.res.BattlePanel, g.res.BattleTiles, cells, g.battleView)
+	if g.res.Font != nil {
+		y, mo, d := g.Date()
+		screen.DrawBattleStatus(g.res.Battle, fb, g.res.Font, screen.BattleStatus{
+			Faction: g.faction, Year: y, Month: mo, Day: d,
+			Turn:   g.battleTurn,
+			Region: g.regionName(g.battleRegion),
+		})
+	}
+	return fb
+}
+
+// regionName 回第 i 個星域的名字；沒有資料就回 nil。
+func (g *Game) regionName(i int) []uint16 {
+	if i < 0 || (i+1)*rules.RegionRecord > len(g.res.Stellar) {
+		return nil
+	}
+	return rules.RegionName(g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord])
 }
 
 // EnterBattle 開戰術畫面，看第 region 個星域、視野從格 (col,row) 起。
@@ -2208,5 +2226,6 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 func (g *Game) EnterBattle(region, col, row int) {
 	g.battleRegion = region
 	g.battleView = screen.BattleView{Col: col, Row: row}
+	g.battleTurn = 1
 	g.state = StateBattle
 }
