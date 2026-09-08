@@ -61,64 +61,87 @@ const ScoreDivisor = 20
 // 原版沒有把它存起來，畫的時候現算（`13581` 那一段的 32 位元減法）。
 func BattleVictory(score [2]int) int { return score[0] - score[1] }
 
-// ResolveBattleTurn 跑一回合的結算：每一支艦隊各打一次，扣數直接寫回
-// `units` 的 `Ships`。回這一回合發生的每一次交火。
+// ResolveBattleTurn 跑一回合的結算，扣數直接寫回 `units` 的 `Ships`。
+// 回這一回合發生的每一次交火。
 //
-// 交火條件照 `docs/spec/018`：以艦隊旗艦分隊的位置為中心，射程取旗下
-// 分隊 `Attack` 的最大值，門檻是射程 × `RangeFactor`；範圍內有敵方分隊
-// 才開火，目標是最近的那一支所屬的艦隊。
-func ResolveBattleTurn(fleets []BattleFleet, units []BattleUnit, rnd *Rand) []BattleLoss {
+// **以行星為中心**（`docs/re/99`）：一顆行星對每一支敵方艦隊算一次。
+//
+//	量     ＝ Σ{艦種 0 或 1、陣營 ＝ 行星擁有者、距行星 ≤ 半徑} 現有艘數
+//	基本量 ＝ (量 ÷ 100 ＋ 行星防衛力) ÷ (10 或 20)
+//	總損失 ＝ (基本量 − 距離項) × 方向係數 ÷ 100 × 100 ÷ 防禦係數 ＋ 亂數 %100
+//
+// 半徑是 `PlanetQueryRadius(防衛力)`，距離量的是行星到目標艦隊旗艦。
+// **哪些（行星, 艦隊）配對會交火、順序如何，原版還沒逆向**——這裡對
+// 每一顆有主的行星、每一支敵方艦隊各算一次。
+func ResolveBattleTurn(planets []BattlePlanet, fleets []BattleFleet,
+	units []BattleUnit, rnd *Rand) []BattleLoss {
 	var out []BattleLoss
-	for _, f := range fleets {
-		mine := unitsOf(units, f.Index)
-		if len(mine) == 0 {
-			continue
+	for _, p := range planets {
+		if p.Owner != 0 && p.Owner != 1 {
+			continue // 無主的行星不開火
 		}
-		cx, cy := units[mine[0]].X, units[mine[0]].Y
-		limit := EngagementRange(maxAttack(units, mine)) * RangeFactor
-		near := InRange(units, cx, cy, limit, 1-f.Faction)
-		if len(near) == 0 {
-			continue
-		}
-		target := nearestFleet(units, near, cx, cy)
-		def := fleetByIndex(fleets, target)
-		theirs := unitsOf(units, target)
-		if len(theirs) == 0 {
-			continue
-		}
-		tx, ty := units[theirs[0]].X, units[theirs[0]].Y
-		total := BattleDamage(DamageInput{
-			Ships01: shipsKind01(units, mine),
-			Bonus:      f.Bonus,
-			Halved:     f.Halved,
-			Distance:   isqrt((tx-cx)*(tx-cx) + (ty-cy)*(ty-cy)),
-			Facing:     f.Facing,
-			Bearing:    Bearing(cx, cy, tx, ty),
-			Defence:    def.Defence,
-			Rand:       rnd.Next(),
-		})
-		alive := make([]int, len(theirs))
-		kinds := make([]int, len(theirs))
-		for i, u := range theirs {
-			alive[i], kinds[i] = units[u].Ships, units[u].Kind
-		}
-		per := DistributeLosses(alive, kinds, total, true)
-		score := 0
-		for i, u := range theirs {
-			units[u].Ships -= per[i]
-			if units[u].Ships < 0 {
-				units[u].Ships = 0
+		ships := shipsNearPlanet(units, p)
+		for _, f := range fleets {
+			if f.Faction == p.Owner {
+				continue
 			}
-			// 分數是**逐個分隊**除 20 再加，不是總量除一次——原版的
-			// 善後常式每扣一筆就加一次（`docs/re/93`）。
-			score += per[i] / ScoreDivisor
+			theirs := unitsOf(units, f.Index)
+			if len(theirs) == 0 {
+				continue
+			}
+			tx, ty := units[theirs[0]].X, units[theirs[0]].Y
+			total := BattleDamage(DamageInput{
+				Ships01:  ships,
+				Bonus:    p.Defence,
+				Halved:   p.Halved,
+				Distance: isqrt((tx-p.X)*(tx-p.X) + (ty-p.Y)*(ty-p.Y)),
+				Facing:   f.Facing,
+				Bearing:  Bearing(p.X, p.Y, tx, ty),
+				Defence:  f.Defence,
+				Rand:     rnd.Next(),
+			})
+			out = append(out, resolveOne(units, theirs, f, total, p.Owner))
 		}
-		out = append(out, BattleLoss{
-			Attacker: f.Index, Defender: target, Total: total, PerUnit: per,
-			Scorer: 1 - def.Faction, Score: score,
-		})
 	}
 	return out
+}
+
+// shipsNearPlanet ＝ `203A:04D1`：行星附近、擁有者那一方、艦種 0 或 1 的
+// 現有艘數總和，再除 100。比的是分隊的**目的地**（`17A0:00AC`）。
+func shipsNearPlanet(units []BattleUnit, p BattlePlanet) int {
+	r := PlanetQueryRadius(p.Defence)
+	sum := 0
+	for _, i := range InRange(units, p.X, p.Y, r, p.Owner) {
+		if units[i].Kind == 0 || units[i].Kind == 1 {
+			sum += units[i].Ships
+		}
+	}
+	return sum
+}
+
+// resolveOne 把總損失分攤到一支艦隊的各分隊，扣回去，回這一次交火。
+func resolveOne(units []BattleUnit, theirs []int, f BattleFleet,
+	total, scorer int) BattleLoss {
+	alive := make([]int, len(theirs))
+	kinds := make([]int, len(theirs))
+	for i, u := range theirs {
+		alive[i], kinds[i] = units[u].Ships, units[u].Kind
+	}
+	per := DistributeLosses(alive, kinds, total, true)
+	score := 0
+	for i, u := range theirs {
+		units[u].Ships -= per[i]
+		if units[u].Ships < 0 {
+			units[u].Ships = 0
+		}
+		// 分數是**逐個分隊**除 20 再加，不是總量除一次——原版的
+		// 善後常式每扣一筆就加一次（`docs/re/93`）。
+		score += per[i] / ScoreDivisor
+	}
+	return BattleLoss{
+		Attacker: -1, Defender: f.Index, Total: total, PerUnit: per,
+		Scorer: scorer, Score: score,
+	}
 }
 
 func unitsOf(units []BattleUnit, fleet int) []int {
@@ -131,15 +154,6 @@ func unitsOf(units []BattleUnit, fleet int) []int {
 	return out
 }
 
-func maxAttack(units []BattleUnit, idx []int) int {
-	best := 0
-	for _, i := range idx {
-		if units[i].Attack > best {
-			best = units[i].Attack
-		}
-	}
-	return best
-}
 
 // shipsKind01 加總艦種 0 與 1 的現有艘數（`203A:04D1`，`docs/re/99`）。
 func shipsKind01(units []BattleUnit, idx []int) int {
@@ -152,26 +166,7 @@ func shipsKind01(units []BattleUnit, idx []int) int {
 	return sum
 }
 
-func nearestFleet(units []BattleUnit, idx []int, x, y int) int {
-	best, bestD := -1, 0
-	for _, i := range idx {
-		dx, dy := units[i].X-x, units[i].Y-y
-		d := dx*dx + dy*dy
-		if best < 0 || d < bestD {
-			best, bestD = units[i].Fleet, d
-		}
-	}
-	return best
-}
 
-func fleetByIndex(fleets []BattleFleet, index int) BattleFleet {
-	for _, f := range fleets {
-		if f.Index == index {
-			return f
-		}
-	}
-	return BattleFleet{Index: index, Defence: 100}
-}
 
 // BattleFleetsFor 從存檔的艦隊表與提督表做出戰鬥用的艦隊資料。
 //

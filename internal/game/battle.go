@@ -59,6 +59,7 @@ func (g *Game) StartBattle(region int) {
 		joined = append(joined, f.Index)
 	}
 	g.battleFleets = g.slot.BattleFleetsFor(joined)
+	g.battlePlanets = g.battleRegionPlanets(region)
 	for i := range g.battleFleets {
 		if u := flagshipOf(g.battleUnits, g.battleFleets[i].Index); u != nil {
 			g.battleFleets[i].Facing = rules.BattleFacing(u.X, u.Y)
@@ -127,7 +128,8 @@ func (g *Game) AdvanceBattleTurn() {
 	if g.battleRand == nil {
 		g.battleRand = rules.NewRand(uint32(g.battleTurn))
 	}
-	g.battleLosses = rules.ResolveBattleTurn(g.battleFleets, g.battleUnits, g.battleRand)
+	g.battleLosses = rules.ResolveBattleTurn(g.battlePlanets, g.battleFleets,
+		g.battleUnits, g.battleRand)
 	for _, l := range g.battleLosses {
 		if l.Scorer >= 0 && l.Scorer < 2 {
 			g.battleScore[l.Scorer] += l.Score
@@ -165,6 +167,25 @@ func (g *Game) EndBattle() {
 		g.fleets = g.slot.Fleets(g.res.Weights)
 	}
 	g.state = StateCommandPhase
+}
+
+// battleRegionPlanets 回這個星域的行星在戰場上的樣子（`docs/re/99`）。
+//
+// 位置要掃該星域的地圖（圖塊 `PlanetTile` 的格子依列序對到行星，
+// `docs/re/89`），所以缺地圖或缺行星表就回空的——沒有行星就不開火。
+func (g *Game) battleRegionPlanets(region int) []rules.BattlePlanet {
+	if g.res.Planets == nil || g.res.BattleMaps == nil || g.res.Battle == nil {
+		return nil
+	}
+	if region < 0 || region >= len(g.res.BattleMaps) {
+		return nil
+	}
+	cells := g.res.BattleMaps[region]
+	if len(cells) == 0 {
+		return nil
+	}
+	sites := rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
+	return g.res.Planets.BattlePlanetsFor(region, sites)
 }
 
 // flagshipOf 回一支艦隊的旗艦分隊（第 0 個）。

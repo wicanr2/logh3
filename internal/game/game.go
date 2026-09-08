@@ -445,7 +445,8 @@ type Game struct {
 
 	// 結算用的（`docs/spec/018`）：參戰艦隊、亂數、上一回合的交火紀錄，
 	// 以及「有一方全沒了」。
-	battleFleets []rules.BattleFleet
+	battleFleets  []rules.BattleFleet
+	battlePlanets []rules.BattlePlanet
 	battleRand   *rules.Rand
 	battleLosses []rules.BattleLoss
 	battleScore  [2]int

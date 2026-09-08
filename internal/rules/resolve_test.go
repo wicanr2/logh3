@@ -17,6 +17,11 @@ func testUnits() []BattleUnit {
 	}
 }
 
+// 一顆帝國的行星，就放在帝國旗艦旁邊。
+func testPlanets() []BattlePlanet {
+	return []BattlePlanet{{Index: 0, Owner: 0, X: 1000, Y: 1000, Defence: 2687}}
+}
+
 func testFleets() []BattleFleet {
 	return []BattleFleet{
 		{Index: 0, Faction: 0, Bonus: 100, Defence: 100, Facing: 0},
@@ -27,9 +32,9 @@ func testFleets() []BattleFleet {
 func TestResolveBattleTurnDeducts(t *testing.T) {
 	units, fleets := testUnits(), testFleets()
 	before := units[2].Ships + units[3].Ships
-	got := ResolveBattleTurn(fleets, units, NewRand(1))
-	if len(got) != 2 {
-		t.Fatalf("兩支艦隊都在射程內，該有兩次交火，實得 %d", len(got))
+	got := ResolveBattleTurn(testPlanets(), fleets, units, NewRand(1))
+	if len(got) != 1 {
+		t.Fatalf("一顆帝國行星對一支同盟艦隊，該有一次交火，實得 %d", len(got))
 	}
 	after := units[2].Ships + units[3].Ships
 	if after >= before {
@@ -42,17 +47,25 @@ func TestResolveBattleTurnDeducts(t *testing.T) {
 	}
 }
 
-// 超出射程就不開火。
-func TestResolveBattleTurnOutOfRange(t *testing.T) {
+// 無主的行星不開火。
+func TestResolveBattleTurnNeutralPlanet(t *testing.T) {
 	units, fleets := testUnits(), testFleets()
-	for i := range units {
-		if units[i].Faction == 1 {
-			units[i].X += 2000
-			units[i].TargetX += 2000
-		}
+	p := testPlanets()
+	p[0].Owner = 2
+	if got := ResolveBattleTurn(p, fleets, units, NewRand(1)); len(got) != 0 {
+		t.Fatalf("無主的行星不該開火，卻有 %d 次", len(got))
 	}
-	if got := ResolveBattleTurn(fleets, units, NewRand(1)); len(got) != 0 {
-		t.Fatalf("離那麼遠不該開火，卻有 %d 次", len(got))
+}
+
+// 查詢半徑：防衛力夾在 1500–6000 再除 25（`2AF5:01F7`）。
+func TestPlanetQueryRadius(t *testing.T) {
+	cases := []struct{ defence, want int }{
+		{0, 60}, {1500, 60}, {2687, 107}, {4700, 188}, {6000, 240}, {9999, 240},
+	}
+	for _, c := range cases {
+		if got := PlanetQueryRadius(c.defence); got != c.want {
+			t.Errorf("PlanetQueryRadius(%d) ＝ %d，要 %d", c.defence, got, c.want)
+		}
 	}
 }
 
@@ -61,7 +74,7 @@ func TestResolveBattleTurnRunsDown(t *testing.T) {
 	units, fleets := testUnits(), testFleets()
 	rnd := NewRand(12345)
 	for turn := 0; turn < 500; turn++ {
-		ResolveBattleTurn(fleets, units, rnd)
+		ResolveBattleTurn(testPlanets(), fleets, units, rnd)
 	}
 	for i, u := range units {
 		if u.Ships < 0 {

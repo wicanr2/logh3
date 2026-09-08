@@ -179,8 +179,8 @@ func BattleDamage(in DamageInput) int {
 
 // SkirmishInput 是 `2350:0023` 那條傷害路徑要的東西（`docs/re/86`）。
 //
-// 那是戰鬥實際扣艦艇走的路徑——`-watch` 量到的單輪扣除量落在它的
-// 範圍裡，而艦隊層那條分攤算出來小一個量級。
+// ⚠ **原版沒有在跑這條**（`docs/re/97`：`-regs-at 2264:0FC3` 整場 0 次）。
+// 算式與分母 K 都解出來了，留著當保存成果，不接進結算。
 type SkirmishInput struct {
 	TargetShips int // 目標的現有艘數（艦艇記錄 +0x08）
 	Attack      int // 攻擊方的 +0x16 除以 2264:0FC3 回的分母

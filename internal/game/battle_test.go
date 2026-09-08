@@ -1,12 +1,15 @@
 package game
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
 
 	"github.com/wicanr2/logh3/internal/ai"
+	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
 )
 
 // newTestGame 用測試那份資源開一局，另外把戰場入口表接上。
@@ -25,6 +28,31 @@ func newTestGame(t *testing.T) *Game {
 			t.Fatal(err)
 		}
 		res.Graph = graph
+	}
+	if res.Battle == nil {
+		spec, err := screen.LoadBattleSpec(filepath.Join(root,
+			"docs/internals/data/screen-battle.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.Battle = spec
+	}
+	// 戰鬥要行星，行星的位置要掃星域地圖（`docs/re/99`）。
+	if res.Battle != nil && res.BattleMaps == nil {
+		maps := make([][]uint8, 32)
+		for i := range maps {
+			b, err := os.ReadFile(filepath.Join(root, "org_game/extracted",
+				fmt.Sprintf("MAP%02d.CMP", i)))
+			if err != nil {
+				continue
+			}
+			cells, err := asset.DecodeCMP(b, res.Battle.Field.MapCols, res.Battle.Field.MapRows)
+			if err != nil {
+				continue
+			}
+			maps[i] = cells
+		}
+		res.BattleMaps = maps
 	}
 	g, err := New(res)
 	if err != nil {
