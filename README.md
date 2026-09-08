@@ -53,6 +53,15 @@
 中譯是當年微波軟體的中文化工程；82 篇的可讀版本在
 [`docs/lore/character-biographies.md`](docs/lore/character-biographies.md)。
 
+![艦隊編成](docs/images/11-fleet-org.png)
+
+詳細資料按「出擊」開出**艦隊編成**（收據 `fleet1e`）。九格艦隊能力不是
+提督自己的值，而是**提督與副官逐項取大**——而且副官贏的那幾格印成
+另一個顏色，畫面自己把「這一格是副官撐起來的」標了出來
+（[`docs/re/66`](docs/re/66-fleet-organisation-screen.md)）。
+副官是 `ADMIRAL.DT*` 記錄裡的 `+0x07`，`0xFF` 同時代表這位提督
+沒有旗艦、帶不了艦隊。
+
 ![遊戲設定](docs/images/08-settings.png)
 
 遊戲設定那張把字型層的兩個問題一次逼出來：曲名「波利路」用到 Big5 的

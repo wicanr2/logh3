@@ -82,6 +82,10 @@ tools/specs.sh cmd-menu     # 只做一張
 | `screen-load-game`／`screen-save-game` | 取進度／存進度 | `load1e`／`save1e` |
 | `screen-settings` | 遊戲設定 | `settings1e` |
 | `screen-quit-confirm` | 結束確認 | `quit1e` |
+| `screen-ship-delivery` | 月底的船艦接收報告 | `turnmonth2` |
+| `screen-admiral-detail` | 提督詳細資料 | `adm1e` |
+| `screen-admiral-bio` | 提督經歷（人物傳）| `keireki1e` |
+| `screen-fleet-org` | 艦隊編成 | `fleet1e` |
 
 ## 現在的限制
 

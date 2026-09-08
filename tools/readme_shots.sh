@@ -28,6 +28,7 @@ shots=(
   "08-settings|settings1e|$CMD; click 544 125; click 560 185"
   "09-admiral-detail|adm1e|$CMD; click 352 125; click 400 125; click 400 85"
   "10-biography|keireki1e|$CMD; click 352 125; click 400 125; click 400 85; click 392 330"
+  "11-fleet-org|fleet1e|$CMD; click 352 125; click 400 125; click 400 85; click 488 330"
 )
 
 out=workplace/readme-shots

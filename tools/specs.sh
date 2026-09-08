@@ -88,6 +88,23 @@ if want admiral-bio; then
   py tools/scripts/maingame_computed.py screen-admiral-bio
 fi
 
+# 艦隊編成（`docs/spec/013`）。視窗比提督詳細資料矮一截、往右挪了兩格：
+# (112,80)–(527,379)。
+if want fleet-org; then
+  py tools/scripts/overlay_spec.py fleet1e screen-command-phase screen-fleet-org \
+    112 80 527 379 488 290 "334:340:401:359,414:340:449:359,462:340:497:359" "" \
+    "0:432:96,32:432:196" "" "" "6,5"
+  py tools/scripts/box_text.py fleet1e screen-fleet-org overlay 0
+  py tools/scripts/box_text.py fleet1e screen-fleet-org overlay 1
+  # 游標停在「確認」上，第二個字讀不出來（這張畫面的迴圈不理會純移動
+  # 事件——另抓一張只移動滑鼠的收據 `fleet1eB`，畫面逐位元組相同，
+  # 補不回來）。字碼直接給，讀到的那一格必須是它的前綴。
+  LOGH3_BOX_CODES=BD54,BB7B; export LOGH3_BOX_CODES
+  py tools/scripts/box_text.py fleet1e screen-fleet-org overlay 2
+  unset LOGH3_BOX_CODES
+  py tools/scripts/maingame_computed.py screen-fleet-org
+fi
+
 # 提督詳細資料的「旗艦」對照表（資料段的兩張 far 指標表）。
 want flagships && py tools/scripts/flagship_export.py
 

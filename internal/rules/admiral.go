@@ -155,3 +155,13 @@ const AllianceFirstAdmiral = 40
 
 // admiralFleet 是提督記錄的 `+0x07`：`0xFF` ＝ 沒有艦隊。
 const admiralFleet = 0x07
+
+// Adjutant 回這位提督的副官是第幾位提督（記錄 `+0x07`）；`0xFF` 回 -1。
+//
+// 同一個欄位也決定他有沒有旗艦、能不能單獨帶艦隊（`docs/re/66`）。
+func Adjutant(record []byte) int {
+	if len(record) <= admiralFleet || record[admiralFleet] == 0xFF {
+		return -1
+	}
+	return int(record[admiralFleet])
+}

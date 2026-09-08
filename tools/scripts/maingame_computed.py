@@ -55,6 +55,19 @@ RECIPES = {
         # 陣營那一行（色 6）兩邊不同字。
         'faction_rows': (102,),
     },
+    'screen-fleet-org': {
+        'window': 'overlay',
+        # 提督與副官那兩行整行（姓名 ＋ 軍階）都跟著人走，標籤留著。
+        'staff_y': None, 'post': -1, 'staff_x': 0,
+        'money_rows': (142, 222, 262, 282, 302, 322, 342),
+        # 標題「第Ｎ艦隊」的全形編號是算出來的。
+        'header_y': 102,
+        'drop_face': True, 'staff_block': False,
+        'keep_board': True,
+        'strip_x': ((122, 208, 544), (162, 208, 544), (202, 208, 544)),
+        # 陣營那一行（色 6）兩邊不同字，與提督詳細資料同一組。
+        'faction_like': ('screen-admiral-detail', 102),
+    },
     # 星系資料的左下角是**滑鼠停的那一列**那個星域的摘要，不是首都。
     'screen-star-list': _LEFT_SUMMARY,
     'screen-admiral-list-view': _LEFT_SUMMARY,
@@ -150,6 +163,29 @@ if report is not None:
             stripped += len(l['cells']) - len(cells)
             l = dict(l, cells=cells)
         lines.append(l)
+    fl = r.get('faction_like')
+    if fl:
+        src_name, fy = fl
+        src = json.load(open(f'/work/docs/internals/data/{src_name}.json'))
+        want = [t for t in src['windows'][r.get('window', 'report')]
+                .get('faction_text', []) if t['y'] == fy]
+        if not want:
+            sys.exit(f'{src_name} 沒有 y={fy} 的 faction_text 可以沿用')
+        ref = want[0]
+        # 已經搬過就不再動（這支要能重跑）。
+        keep = [l for l in lines if l['y'] == fy and l.get('ink') != report.get('ink', 7)]
+        if keep:
+            got = [c['code'] for c in keep[0]['cells']]
+            # 沿用之前要先確認**帝國那一份逐字相同**，不是換個名字照抄。
+            if got != ref['variants'][0]:
+                sys.exit(f'y={fy} 的色 {keep[0]["ink"]} 那行與 {src_name} 不一致')
+            lines = [l for l in lines if l is not keep[0]]
+            dropped += 1
+            report.setdefault('faction_text', [])
+            report['faction_text'] = [t for t in report['faction_text'] if t['y'] != fy]
+            report['faction_text'].append(dict(ref, x=keep[0]['cells'][0]['x']))
+            print(f'報告：y={fy} 那行改成 faction_text {ref["text"]}')
+
     report['lines'] = lines
     print(f'報告：拿掉 {dropped} 行（署名／左下摘要）、{stripped} 個數字')
 

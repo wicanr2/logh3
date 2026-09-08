@@ -1,0 +1,35 @@
+{
+ "note": "艦隊編成那個視窗裡算出來的部分。座標量自收據 fleet1e／fleet2e（`docs/re/66`）：數值靠右對齊，等級／經驗值那兩行的右緣是 288／400，能力值那五行是 304／416。stats 的 offset 是 ADMIRAL.DT* 記錄裡的位移；每一格是 max(提督, 副官)，副官贏的印成 alt_ink。",
+ "ink": 7,
+ "alt_ink": 5,
+ "title": { "y": 102, "prefix_x": 192, "digits_x": 208 },
+ "admiral": {
+  "name": { "x": 208, "y": 122 },
+  "face": { "x": 432, "y": 96 },
+  "flagship": { "x": 208, "y": 162 },
+  "level": { "y": 142, "right": 288 },
+  "exp": { "y": 142, "right": 400 }
+ },
+ "adjutant": {
+  "name": { "x": 208, "y": 202 },
+  "face": { "x": 432, "y": 196 },
+  "level": { "y": 222, "right": 288 },
+  "exp": { "y": 222, "right": 400 }
+ },
+ "stats": [
+  { "y": 262, "right": 304, "offset": 23, "name": "艦隊運用" },
+  { "y": 262, "right": 416, "offset": 15, "name": "光線砲" },
+  { "y": 282, "right": 304, "offset": 14, "name": "艦隊營運" },
+  { "y": 282, "right": 416, "offset": 16, "name": "飛彈" },
+  { "y": 302, "right": 304, "offset": 12, "name": "移動" },
+  { "y": 302, "right": 416, "offset": 17, "name": "戰鬥機" },
+  { "y": 322, "right": 304, "offset": 13, "name": "回轉" },
+  { "y": 322, "right": 416, "offset": 18, "name": "防禦" },
+  { "y": 342, "right": 304, "offset": 19, "name": "占領" }
+ ],
+ "buttons": [
+  { "action": "fleet-number", "text": "艦隊編號", "x": 334, "y": 340, "w": 68, "h": 20 },
+  { "action": "adjutant", "text": "副官", "x": 414, "y": 340, "w": 36, "h": 20 },
+  { "action": "confirm", "text": "確認", "x": 462, "y": 340, "w": 36, "h": 20 }
+ ]
+}

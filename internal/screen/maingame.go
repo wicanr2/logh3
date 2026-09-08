@@ -245,8 +245,15 @@ func (w *GameWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8, fac
 //
 // 只刷游標壓到的框，不是全部：同一個視窗裡還有別的小框（清單上方那排
 // 標題格、格子裡的小標記），把它們一起填回底色會把標記整個抹掉。
+//
+// **帶字的框是按鈕，不刷。** 刷回底色模型的是「原版先畫游標、再刷清單
+// 那一列」；按鈕在游標之前就畫好了，游標壓上去只是蓋住一角，字還在
+// （收據 `fleet1e`：游標停在「確認」上，那兩個字完整）。
 func (w *GameWindow) DrawBoxFills(fb *gfx.Framebuffer, cx, cy, cw, ch int) {
 	for _, b := range w.Boxes {
+		if len(b.Codes) > 0 {
+			continue
+		}
 		n := len(b.Layers)
 		if b.W <= 2*n || b.H <= 2*n {
 			continue

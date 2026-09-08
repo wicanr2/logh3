@@ -85,6 +85,10 @@ const (
 	// （`docs/internals/15`、`docs/re/65`）。
 	StateAdmiralBio
 
+	// StateFleetOrg 是艦隊編成：詳細資料按「出擊」開出來的那一張，
+	// 艦隊能力是提督與副官逐項取大（`docs/re/66`、`docs/spec/013`）。
+	StateFleetOrg
+
 	// StateShipDelivery 是月底的「船艦接收報告」：第十次「實行」跨月時
 	// 自己跳出來，按「確認」才回到地圖介面（`docs/re/21`、`docs/re/55`）。
 	StateShipDelivery
@@ -112,6 +116,7 @@ var screenSpecName = map[State]string{
 	StateShipDelivery:    "screen-ship-delivery",
 	StateAdmiralDetail:   "screen-admiral-detail",
 	StateAdmiralBio:      "screen-admiral-bio",
+	StateFleetOrg:        "screen-fleet-org",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -198,6 +203,9 @@ type Resources struct {
 
 	// AdmiralPanel 是提督詳細資料那個視窗算出來的部分（`docs/spec/012`）。
 	AdmiralPanel *screen.AdmiralPanel
+
+	// FleetPanel 是艦隊編成那個視窗算出來的部分（`docs/spec/013`）。
+	FleetPanel *screen.FleetPanel
 
 	// BioPanel 是提督經歷那個視窗的內文版面，Biographies 是 82 篇人物傳
 	// 的字碼（`docs/internals/15`）。
@@ -549,6 +557,10 @@ func (g *Game) Click(x, y int) {
 			}
 		case "cancel":
 			g.state = StateStandbyAdmirals
+		case "sortie":
+			if g.commandSpec(StateFleetOrg) != nil {
+				g.state = StateFleetOrg
+			}
 		}
 	case StateStandbyAdmirals:
 		// 點清單的一列開那位提督的詳細資料（`docs/re/65`）。
@@ -630,7 +642,7 @@ func (g *Game) RightClick(x, y int) {
 		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
 		}
-	case StateAdmiralBio:
+	case StateAdmiralBio, StateFleetOrg:
 		g.state = StateAdmiralDetail
 	case StateAdmiralDetail:
 		g.state = StateStandbyAdmirals
@@ -880,6 +892,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawSlotList(fb)
 			g.drawAdmiralDetail(fb)
 			g.drawAdmiralBio(fb)
+			g.drawFleetOrg(fb)
 			g.drawSpecStaff(fb, spec)
 			return fb
 		}
@@ -1175,6 +1188,76 @@ func (g *Game) drawAdmiralDetail(fb *gfx.Framebuffer) {
 	}
 }
 
+// drawFleetOrg 畫艦隊編成裡跟著提督與副官走的那幾塊（`docs/spec/013`）。
+//
+// 副官是提督記錄的 `+0x07`（`docs/re/66`）；`0xFF` ＝ 沒有副官，那位也
+// 沒有旗艦、帶不了艦隊，走不到這張畫面。
+func (g *Game) drawFleetOrg(fb *gfx.Framebuffer) {
+	if g.state != StateFleetOrg || g.res.FleetPanel == nil {
+		return
+	}
+	i := g.detailAdmiral
+	rec := g.admiralRecord(i)
+	if rec == nil {
+		return
+	}
+	adj := rules.Adjutant(rec)
+	arec := g.admiralRecord(adj)
+	if arec == nil {
+		return
+	}
+	p := g.res.FleetPanel
+	v := screen.FleetView{
+		AdmiralRecord:  rec,
+		AdjutantRecord: arec,
+		AdmiralLevel:   rules.AdmiralLevel(rec),
+		AdjutantLevel:  rules.AdmiralLevel(arec),
+	}
+	if i < len(g.res.AdmiralNames) {
+		v.AdmiralName = g.res.AdmiralNames[i]
+	}
+	if adj < len(g.res.AdmiralNames) {
+		v.AdjutantName = g.res.AdmiralNames[adj]
+	}
+	v.AdmiralRank = g.rankCodes(rules.RankOf(v.AdmiralLevel))
+	v.AdjutantRank = g.rankCodes(rules.RankOf(v.AdjutantLevel))
+	slot := rules.FlagshipSlot(rec, i)
+	if slot >= 0 {
+		v.Flagship = g.res.Flagships.Name(rules.AdmiralFaction(rec), slot)
+		// 艦隊編號 ＝ 旗艦的欄位 ＋ 1（假設待驗，兩個資料點：`docs/re/66`）。
+		v.Number = slot + 1
+	}
+	p.Draw(fb, g.res.Font, v)
+	if g.res.Faces == nil {
+		return
+	}
+	for _, f := range []struct {
+		index, x, y int
+	}{
+		{i, p.Admiral.Face.X, p.Admiral.Face.Y},
+		{adj, p.Adjutant.Face.X, p.Adjutant.Face.Y},
+	} {
+		img, err := g.res.Faces.Decode(f.index)
+		if err != nil {
+			continue
+		}
+		for y := 0; y < img.H; y++ {
+			for x := 0; x < img.W; x++ {
+				fb.Set(f.x+x, f.y+y, img.Pix[y*img.W+x])
+			}
+		}
+	}
+}
+
+// admiralRecord 回第 i 位提督在 `ADMIRAL.DT*` 裡的那 28 個位元組；
+// 索引不合法（含 `0xFF` ＝ 沒有這個人）回 nil。
+func (g *Game) admiralRecord(i int) []byte {
+	if i < 0 || (i+1)*rules.AdmiralRecord > len(g.res.Admiral) {
+		return nil
+	}
+	return g.res.Admiral[i*rules.AdmiralRecord : (i+1)*rules.AdmiralRecord]
+}
+
 // drawAdmiralBio 把那位提督的人物傳排進經歷視窗（`docs/spec/012`）。
 func (g *Game) drawAdmiralBio(fb *gfx.Framebuffer) {
 	if g.state != StateAdmiralBio || g.res.BioPanel == nil {
@@ -1256,7 +1339,7 @@ func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 	region := -1
 	switch g.state {
 	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList,
-		StateAdmiralDetail, StateAdmiralBio:
+		StateAdmiralDetail, StateAdmiralBio, StateFleetOrg:
 		region = rules.CapitalRegion(g.faction)
 	case StateStarList:
 		if spec := g.commandSpec(g.state); spec != nil {
