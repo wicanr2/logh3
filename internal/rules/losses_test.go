@@ -70,3 +70,18 @@ func TestDistributeLossesRemainderGoesToBiggest(t *testing.T) {
 		t.Errorf("餘數沒落在最大的那一支上：%v", got)
 	}
 }
+
+// 方向係數表就是原版 ds:47D0 那八個值（`docs/re/86`）。
+func TestDirectionFactors(t *testing.T) {
+	want := [8]int{80, 85, 90, 95, 100, 95, 90, 85}
+	if DirectionFactors != want {
+		t.Fatalf("係數表是 %v，原版是 %v", DirectionFactors, want)
+	}
+	if DirectionFactor(-1) != 100 || DirectionFactor(8) != 100 {
+		t.Error("超出範圍該回 100")
+	}
+	// 最大與最小差兩成——「包圍側擊」的加成上限就是這個數。
+	if DirectionFactors[4]-DirectionFactors[0] != 20 {
+		t.Error("最大與最小該差 20")
+	}
+}

@@ -79,3 +79,19 @@ func kindSkipsLoss(kinds []int, i int) bool {
 
 // shipKindNoLoss 是不會被扣的艦種（`203A:059E` 直接回傳現有艘數）。
 const shipKindNoLoss = 7
+
+// DirectionFactors 是攻擊方向對戰損的加成，單位是百分比
+// （原版的 `ds:47D0`，`docs/re/86`）。
+//
+// 八個方向，最多差 20%。索引 4 那格是 100，兩側遞減——**索引怎麼對到
+// 實際方向還沒確定**（原版用 `3982:22` 把角度換成索引，那支還沒讀），
+// 所以這裡只保存數值本身。
+var DirectionFactors = [8]int{80, 85, 90, 95, 100, 95, 90, 85}
+
+// DirectionFactor 回第 i 個方向的係數；超出範圍回 100（不加成）。
+func DirectionFactor(i int) int {
+	if i < 0 || i >= len(DirectionFactors) {
+		return 100
+	}
+	return DirectionFactors[i]
+}
