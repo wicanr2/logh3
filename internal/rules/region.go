@@ -254,6 +254,17 @@ func (p *Planets) rec(i int) []byte {
 	return p.Data[o : o+PlanetRecord]
 }
 
+// Name 回第 i 顆行星的名字：記錄 `+0x00` 起的 Big5 字碼，`00` 結尾
+// （最多四個全形字，`docs/re/111`）。
+func (p *Planets) Name(i int) []uint16 {
+	r := p.rec(i)
+	var out []uint16
+	for k := 0; k+1 < PlanetRecord && r[k] != 0; k += 2 {
+		out = append(out, uint16(r[k])<<8|uint16(r[k+1]))
+	}
+	return out
+}
+
 // Owner 回第 i 顆行星屬於誰。
 func (p *Planets) Owner(i int) int { return int(p.rec(i)[planetOwner]) }
 

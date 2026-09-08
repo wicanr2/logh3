@@ -17,10 +17,6 @@ import (
 // 內容——艦隊編號、提督名、第Ｎ部隊、艦種字母、艦數／最大、士氣，
 // 全部從玩家路徑走到的戰場狀態算出來。
 func TestBattleDataContentMatchesOracle(t *testing.T) {
-	want, err := os.ReadFile(filepath.Join(root, "workplace/oracle/s3data/screen.bin"))
-	if err != nil || len(want) < gfx.Width*gfx.Height {
-		t.Skipf("缺收據 s3data，跳過（不用代用品）")
-	}
 	g := newTestGame(t)
 	if g.res.BattleData == nil {
 		s, err := screen.LoadBattleDataSpec(filepath.Join(root,
@@ -52,35 +48,66 @@ func TestBattleDataContentMatchesOracle(t *testing.T) {
 	if g.State() != StateBattle {
 		t.Skipf("走不到戰術畫面（現在 %v），跳過", g.State())
 	}
-	rows := g.battleDataRows(0)
-	if len(rows) != 8 {
-		t.Fatalf("表上 %d 列，收據是 8 列", len(rows))
-	}
 	fnt, cur := g.res.Font, g.res.Cursor
 	if fnt == nil || cur == nil {
 		t.Skip("缺字型或游標")
 	}
-	fb := gfx.NewFramebuffer(0)
-	if m := screen.DrawBattleData(g.res.BattleData, fb, fnt, 0, rows); len(m) > 0 {
-		t.Fatalf("缺字 %04X", m)
-	}
-	// 收據上那隻游標是原版畫的，吃**滑鼠**座標（畫面 y 減 40）。
-	cur.Draw(fb, 240, 220)
-	w := g.res.BattleData.Window
-	diff, first := 0, [2]int{-1, -1}
-	for y := w.Y; y < w.Y+w.H; y++ {
-		for x := w.X; x < w.X+w.W; x++ {
-			if fb.Pix[y*gfx.Width+x] != want[y*gfx.Width+x] {
-				if diff == 0 {
-					first = [2]int{x, y}
-				}
-				diff++
+	for _, tc := range []struct {
+		name   string
+		tab    int
+		batch  string
+		rows   int
+		mx, my int
+	}{
+		{"艦隊", 0, "s3data", 8, 240, 220},
+		{"行星", 1, "s3data_planet", 3, 144, 50},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			want, err := os.ReadFile(filepath.Join(root, "workplace/oracle", tc.batch, "screen.bin"))
+			if err != nil || len(want) < gfx.Width*gfx.Height {
+				t.Skipf("缺收據 %s，跳過（不用代用品）", tc.batch)
 			}
+			rows := g.battleDataRows(tc.tab)
+			if len(rows) != tc.rows {
+				t.Fatalf("表上 %d 列，收據是 %d 列", len(rows), tc.rows)
+			}
+			fb := gfx.NewFramebuffer(0)
+			if m := screen.DrawBattleData(g.res.BattleData, fb, fnt, tc.tab, rows); len(m) > 0 {
+				t.Fatalf("缺字 %04X", m)
+			}
+			// 收據上那隻游標是原版畫的，吃**滑鼠**座標（畫面 y 減 40）。
+			cur.Draw(fb, tc.mx, tc.my)
+			w := g.res.BattleData.Window
+			skip := g.battleDataUndecided(tc.tab)
+			diff, first := 0, [2]int{-1, -1}
+			for y := w.Y; y < w.Y+w.H; y++ {
+				for x := w.X; x < w.X+w.W; x++ {
+					if inAny(skip, x, y) {
+						continue
+					}
+					if fb.Pix[y*gfx.Width+x] != want[y*gfx.Width+x] {
+						if diff == 0 {
+							first = [2]int{x, y}
+						}
+						diff++
+					}
+				}
+			}
+			t.Logf("內容對拍：%d／%d 個像素不同", diff, w.W*w.H)
+			if diff != 0 {
+				t.Errorf("第一個不同的點 (%d,%d)：remake %d，原版 %d", first[0], first[1],
+					fb.Pix[first[1]*gfx.Width+first[0]], want[first[1]*gfx.Width+first[0]])
+			}
+		})
+	}
+}
+
+// inAny 回這個點在不在任何一個矩形裡。
+func inAny(rs [][4]int, x, y int) bool {
+	for _, r := range rs {
+		if x >= r[0] && y >= r[1] && x < r[0]+r[2] && y < r[1]+r[3] {
+			return true
 		}
 	}
-	t.Logf("內容對拍：%d／%d 個像素不同", diff, w.W*w.H)
-	if diff != 0 {
-		t.Errorf("第一個不同的點 (%d,%d)：remake %d，原版 %d", first[0], first[1],
-			fb.Pix[first[1]*gfx.Width+first[0]], want[first[1]*gfx.Width+first[0]])
-	}
+	return false
 }

@@ -81,11 +81,9 @@ func (g *Game) battleDataClick(x, y int) bool {
 
 // battleDataRows 組出表上的每一列。
 //
-// 行星那個分頁還沒接：戰場上的行星只量到座標，對不回星系記錄
-// （`docs/re/99`）。
 func (g *Game) battleDataRows(tab int) [][]screen.BattleDataRun {
 	if tab == 1 {
-		return nil
+		return g.battleDataPlanets()
 	}
 	want := g.faction
 	if tab == 2 {
@@ -172,6 +170,75 @@ func rightDigits(v, w int) []uint16 {
 		if v == 0 {
 			break
 		}
+	}
+	return out
+}
+
+// battleDataPlanets 組出行星那個分頁：這場戰鬥所在星域的行星，
+// 照星系記錄的順序（`Planets.Range`）。
+//
+// 欄位量自收據 `s3data_planet`（`docs/re/111`）：名字是行星記錄
+// `+0x00` 起的 Big5、經濟力是 `+0x1A`、防衛力是 `+0x14`，名字的顏色
+// 是擁有者的陣營色。**不是玩家的行星整段印死字串 `M*:F* *******`**
+// ——那條字串就在原版的字串表裡，兩顆同盟行星都印它。
+//
+// 自己的行星那一格（`Mo:Fo` ＋ 七個 `o`／`x`）**還沒解**：七個旗標對到
+// 七種艦艇（欄名就是 `BHCADTE`），但判準未知，收據裡那一顆七格全是
+// `x`，一個樣本分不出來。空著不猜。
+func (g *Game) battleDataPlanets() [][]screen.BattleDataRun {
+	p := g.res.Planets
+	if p == nil || g.battleRegion < 0 {
+		return nil
+	}
+	start, n := p.Range(g.battleRegion)
+	var out [][]screen.BattleDataRun
+	for i := start; i < start+n; i++ {
+		owner := p.Owner(i)
+		row := []screen.BattleDataRun{
+			{X: 48, Ink: battleDataInk(owner), Codes: p.Name(i)},
+			{X: 192, Codes: rightDigits(p.PlanetEconomy(i), 6)},
+			{X: 256, Codes: rightDigits(p.Defence(i), 6)},
+		}
+		if owner != g.faction {
+			row = append(row, screen.BattleDataRun{X: 320, Codes: half("M*:F* *******")})
+		}
+		out = append(out, row)
+	}
+	return out
+}
+
+// half 把一串半形字轉成字碼。
+func half(s string) []uint16 {
+	out := make([]uint16, len(s))
+	for i := 0; i < len(s); i++ {
+		out[i] = uint16(s[i])
+	}
+	return out
+}
+
+// battleDataUndecided 回這個分頁上「規則還沒解、remake 刻意不畫」的矩形
+// （對拍契約要求允許差異必須事先列出確切座標與理由，`docs/spec/021`）。
+//
+// 目前只有一處：行星分頁上**自己那幾顆行星的補給欄**（x 320–431）。
+// 原版在那裡印 `Mo:Fo` ＋ 七個 `o`／`x`，七個旗標對到七種艦艇
+// （欄名就是 `BHCADTE`），但判準未解——收據裡唯一一顆自己的行星
+// 七格全是 `x`，一個樣本分不出來。不是自己的行星印死字串
+// `M*:F* *******`，那條已經接上了。
+func (g *Game) battleDataUndecided(tab int) [][4]int {
+	if tab != 1 || g.res.Planets == nil || g.battleRegion < 0 {
+		return nil
+	}
+	s := g.res.BattleData
+	if s == nil {
+		return nil
+	}
+	start, n := g.res.Planets.Range(g.battleRegion)
+	var out [][4]int
+	for i := start; i < start+n && i-start < s.Row.Count; i++ {
+		if g.res.Planets.Owner(i) != g.faction {
+			continue
+		}
+		out = append(out, [4]int{320, s.Row.Y + (i-start)*s.Row.H, 112, s.Row.H})
 	}
 	return out
 }
