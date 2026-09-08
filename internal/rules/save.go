@@ -259,6 +259,7 @@ func (s *Slot) Fleets(w StrengthWeights) []Fleet {
 		}
 		r := s.fleet(i)
 		f := Fleet{
+			Index:    i,
 			Number:   int(r[fleetNumber]),
 			Faction:  int(r[fleetFaction]),
 			Admiral:  int(r[fleetUnused]),

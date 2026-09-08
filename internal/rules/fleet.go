@@ -15,6 +15,7 @@ package rules
 //
 // 其餘 100 多個 byte 還沒解，remake 不假裝知道。
 type Fleet struct {
+	Index    int `json:"index"`    // 在艦隊表裡的第幾筆（查艦艇池要用）
 	Number   int `json:"number"`   // 艦隊編號（1 起）
 	Faction  int `json:"faction"`  // 0 帝國、1 同盟
 	Admiral  int `json:"admiral"`  // 帶隊提督的索引
