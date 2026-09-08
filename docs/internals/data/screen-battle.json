@@ -396,6 +396,12 @@
   "top_ink": 3,
   "view_or": 4,
   "sample_num": 4,
-  "sample_den": 5
+  "sample_den": 5,
+  "unit_scale": 16,
+  "unit_row_bias": 1,
+  "unit_ink": [
+   4,
+   8
+  ]
  }
 }

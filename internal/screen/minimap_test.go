@@ -7,6 +7,7 @@ import (
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
 )
 
 // TestMinimapMatchesOracle 是小地圖的同狀態對拍。
@@ -38,6 +39,7 @@ func TestMinimapMatchesOracle(t *testing.T) {
 	}
 	fb := gfx.NewFramebuffer(0)
 	DrawMinimap(s, fb, cells, BattleView{Col: 66, Row: 30})
+	DrawMinimapUnits(s, fb, minimapUnits)
 	m := &s.Minimap
 	bad, firstX, firstY := 0, -1, -1
 	for y := m.Y; y < m.Y+m.H; y++ {
@@ -53,9 +55,30 @@ func TestMinimapMatchesOracle(t *testing.T) {
 	total := m.W * m.H
 	t.Logf("小地圖 %d×%d：不同 %d／%d（%.1f%%）", m.W, m.H, bad, total,
 		100*float64(bad)/float64(total))
-	// 目前的規則湊到 99.9%；剩下的殘差是行星的標記（`docs/internals/34`）。
-	if bad*1000 > total*2 {
+	// 剩下的殘差是兩個白點與艦隊 31 旗艦那一個像素（`docs/re/89`）。
+	if bad > 3 {
 		t.Fatalf("差 %d／%d 個像素（超過 0.2%%），第一個在 (%d,%d)：收據 %d、remake %d",
 			bad, total, firstX, firstY, want[firstY*640+firstX], fb.Pix[firstY*640+firstX])
 	}
+}
+
+// minimapUnits 是收據 `s3fight` 裡會在小地圖上點出來的十六個分隊
+// （艦艇記錄的 `+0x1A`／`+0x1C` 不是 `0xFFFF` 的那些，`docs/re/89`）。
+var minimapUnits = []rules.BattleUnit{
+	{Fleet: 12, Squadron: 0, Faction: 0, X: 416, Y: 280},
+	{Fleet: 12, Squadron: 1, Faction: 0, X: 419, Y: 258},
+	{Fleet: 12, Squadron: 2, Faction: 0, X: 394, Y: 277},
+	{Fleet: 12, Squadron: 3, Faction: 0, X: 422, Y: 235},
+	{Fleet: 12, Squadron: 4, Faction: 0, X: 371, Y: 274},
+	{Fleet: 12, Squadron: 5, Faction: 0, X: 396, Y: 255},
+	{Fleet: 12, Squadron: 6, Faction: 0, X: 424, Y: 213},
+	{Fleet: 12, Squadron: 7, Faction: 0, X: 349, Y: 272},
+	{Fleet: 28, Squadron: 0, Faction: 1, X: 1330, Y: 941},
+	{Fleet: 31, Squadron: 0, Faction: 1, X: 1320, Y: 812},
+	{Fleet: 31, Squadron: 1, Faction: 1, X: 1293, Y: 830},
+	{Fleet: 31, Squadron: 2, Faction: 1, X: 1347, Y: 794},
+	{Fleet: 31, Squadron: 3, Faction: 1, X: 1311, Y: 856},
+	{Fleet: 31, Squadron: 4, Faction: 1, X: 1338, Y: 839},
+	{Fleet: 31, Squadron: 5, Faction: 1, X: 1364, Y: 821},
+	{Fleet: 31, Squadron: 6, Faction: 1, X: 1356, Y: 865},
 }

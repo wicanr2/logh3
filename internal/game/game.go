@@ -2211,6 +2211,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 			func(u rules.BattleUnit) int { return battleSprite(u) }, g.battleView)
 	}
 	screen.DrawMinimap(g.res.Battle, fb, cells, g.battleView)
+	screen.DrawMinimapUnits(g.res.Battle, fb, g.battleUnits)
 	screen.DrawBattleStatusFrame(g.res.Battle, fb)
 	if g.res.Font != nil {
 		y, mo, d := g.Date()

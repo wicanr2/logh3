@@ -347,6 +347,9 @@ type MinimapSpec struct {
 	TopInk        uint8          `json:"top_ink"`
 	SampleNum     int            `json:"sample_num"`
 	SampleDen     int            `json:"sample_den"`
+	UnitScale     int            `json:"unit_scale"`
+	UnitRowBias   int            `json:"unit_row_bias"`
+	UnitInk       []uint8        `json:"unit_ink"`
 }
 
 // DrawMinimap 畫右上角的小地圖。
@@ -401,5 +404,31 @@ func DrawMinimap(s *BattleSpec, fb *gfx.Framebuffer, cells []uint8, v BattleView
 	for j := 0; j < vh; j++ {
 		mark(vx, vy+j)
 		mark(vx+vw-1, vy+j)
+	}
+}
+
+// DrawMinimapUnits 在小地圖上點出分隊（`docs/re/89`）。
+//
+// 每個分隊一個像素，位置是世界座標除以 `UnitScale`（縱向再加一列），
+// 顏色是底色清掉最低位再或上陣營的墨色。原版的來源欄位是艦艇記錄的
+// `+0x1A`／`+0x1C`（不是畫在戰場上用的 `+0x28`／`+0x2A`），值為
+// `0xFFFF` 的分隊不點。
+func DrawMinimapUnits(s *BattleSpec, fb *gfx.Framebuffer, units []rules.BattleUnit) {
+	m := &s.Minimap
+	if m.W <= 0 || m.H <= 0 || m.UnitScale <= 0 || len(m.UnitInk) == 0 {
+		return
+	}
+	for _, u := range units {
+		x := u.X / m.UnitScale
+		y := u.Y/m.UnitScale + m.UnitRowBias
+		if x < 0 || y < 0 || x >= m.W || y >= m.H {
+			continue
+		}
+		ink := m.UnitInk[0]
+		if u.Faction >= 0 && u.Faction < len(m.UnitInk) {
+			ink = m.UnitInk[u.Faction]
+		}
+		px, py := m.X+x, m.Y+y
+		fb.Set(px, py, fb.At(px, py)&^1|ink)
 	}
 }
