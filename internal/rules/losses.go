@@ -137,6 +137,7 @@ type DamageInput struct {
 	Distance   int  // 攻擊方 (+0x46,+0x48) 到目標 (+0x5C,+0x5E) 的距離
 	Facing     int  // 攻擊方艦隊的朝向（+0x4A）
 	Bearing    int  // 從攻擊方指向目標的方位
+	Defence    int  // 目標艦隊的 +0x40 × +0x41 ÷ 100
 	Rand       int  // 原版 rand() 的傳回值（`rules.Rand`）
 }
 
@@ -146,10 +147,14 @@ type DamageInput struct {
 //
 //	基本量 ＝ (艦種 1 艘數總和 ÷ 100 ＋ +0x14) ÷ (10 或 20)
 //	距離項 ＝ 基本量 × (距離 ÷ 150) ÷ 5
-//	總損失 ＝ (基本量 − 距離項) × 方向係數 ÷ 100 ＋ rand() mod 100
+//	攻擊力 ＝ (基本量 − 距離項) × 方向係數 ÷ 100
+//	總損失 ＝ 攻擊力 × 100 ÷ 防禦係數 ＋ rand() mod 100
 //
 // 每一步的整數除法都照原版的順序與位置——換一個順序算出來的數字會差。
 // 距離小於 150 時距離項是 0（整數除），所以近距離不衰減。
+//
+// ⚠ **這是 `203A:0593` 六個呼叫點裡的一條路徑。** 觀測到的單輪扣除量
+// 比這條路徑算出來的大一個量級，所以還有別的傷害來源沒追（`docs/re/86`）。
 func BattleDamage(in DamageInput) int {
 	div := 10
 	if in.Halved {
@@ -161,5 +166,8 @@ func BattleDamage(in DamageInput) int {
 		base = 0
 	}
 	n := base * DamageFactor(in.Facing, in.Bearing) / 100
+	if d := in.Defence; d > 0 {
+		n = n * 100 / d
+	}
 	return n + in.Rand%100
 }

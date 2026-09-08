@@ -155,6 +155,18 @@ func TestBattleDamageShape(t *testing.T) {
 	if c := BattleDamage(in); c >= a {
 		t.Errorf("距離 300 算出 %d，不該多於近距離的 %d", c, a)
 	}
+	// 防禦係數越大，傷害越少。
+	in = DamageInput{Kind1Ships: 30000, Bonus: 100, Facing: 0, Bearing: 128, Defence: 100}
+	base := BattleDamage(in)
+	in.Defence = 200
+	if hard := BattleDamage(in); hard >= base {
+		t.Errorf("防禦係數 200 算出 %d，不該多於 100 時的 %d", hard, base)
+	}
+	in.Defence = 50
+	if soft := BattleDamage(in); soft <= base {
+		t.Errorf("防禦係數 50 算出 %d，不該少於 100 時的 %d", soft, base)
+	}
+
 	// 除數 20 的那一半。
 	in = DamageInput{Kind1Ships: 30000, Bonus: 100, Facing: 0, Bearing: 128}
 	full := BattleDamage(in)
