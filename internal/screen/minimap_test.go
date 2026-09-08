@@ -53,9 +53,9 @@ func TestMinimapMatchesOracle(t *testing.T) {
 	total := m.W * m.H
 	t.Logf("小地圖 %d×%d：不同 %d／%d（%.1f%%）", m.W, m.H, bad, total,
 		100*float64(bad)/float64(total))
-	// 目前的規則湊到 99.7%；還沒解的殘差寫在 `docs/internals/34`。
-	if bad*1000 > total*5 {
-		t.Fatalf("差 %d／%d 個像素（超過 0.5%%），第一個在 (%d,%d)：收據 %d、remake %d",
+	// 目前的規則湊到 99.9%；剩下的殘差是行星的標記（`docs/internals/34`）。
+	if bad*1000 > total*2 {
+		t.Fatalf("差 %d／%d 個像素（超過 0.2%%），第一個在 (%d,%d)：收據 %d、remake %d",
 			bad, total, firstX, firstY, want[firstY*640+firstX], fb.Pix[firstY*640+firstX])
 	}
 }

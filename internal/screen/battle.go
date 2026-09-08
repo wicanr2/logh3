@@ -345,13 +345,16 @@ type MinimapSpec struct {
 	TileColour    map[string]int `json:"tile_colour"`
 	DefaultColour uint8          `json:"default_colour"`
 	TopInk        uint8          `json:"top_ink"`
+	SampleNum     int            `json:"sample_num"`
+	SampleDen     int            `json:"sample_den"`
 }
 
 // DrawMinimap 畫右上角的小地圖。
 //
 // 三層（`docs/internals/34`）：
 //
-//   - 地形：像素 (i,j) 顯示格 (i, j × 列數 ÷ 高)，色由圖塊編號查表；
+//   - 地形：像素 (i,j) 顯示格 `(i, j × 4 ÷ 5)`——4/5 就是圖塊 16:20 的比例，
+//     色由圖塊編號查表；
 //   - 格線：`i % 15 == 0` 或 `j % 15 < 2` 畫成底色，與戰場那層同一組；
 //   - 視野框：左上 (視野欄, 視野列 × 高 ÷ 列數 **向上取整**)，大小就是視野的格數。
 //     框不是固定色——它把底下那一格的色**或上 ViewOr**（地形 1 變 5、3 變 7）。
@@ -362,8 +365,15 @@ func DrawMinimap(s *BattleSpec, fb *gfx.Framebuffer, cells []uint8, v BattleView
 	if m.W <= 0 || m.H <= 0 || len(cells) == 0 {
 		return
 	}
+	num, den := m.SampleNum, m.SampleDen
+	if num <= 0 || den <= 0 {
+		num, den = s.Field.TileW, s.Field.TileH
+	}
 	for j := 0; j < m.H; j++ {
-		r := j * s.Field.MapRows / m.H
+		r := j * num / den
+		if r >= s.Field.MapRows {
+			r = s.Field.MapRows - 1
+		}
 		for i := 0; i < m.W; i++ {
 			c := m.DefaultColour
 			if j == 0 {
