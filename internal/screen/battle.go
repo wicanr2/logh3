@@ -31,7 +31,8 @@ type BattleSpec struct {
 		TileWRaw      int    `json:"tile_w"`
 		TileHRaw      int    `json:"tile_h"`
 	} `json:"field"`
-	Status StatusSpec `json:"status"`
+	Status  StatusSpec  `json:"status"`
+	Minimap MinimapSpec `json:"minimap"`
 
 	Grid struct {
 		Pitch  int   `json:"pitch"`
@@ -332,5 +333,55 @@ func DrawBattleUnits(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
 				fb.Set(px, py, t.Pix[y*t.W+x])
 			}
 		}
+	}
+}
+
+// MinimapSpec 是小地圖的版面（`docs/internals/34`）。
+type MinimapSpec struct {
+	X, Y, W, H    int
+	GridPitch     int            `json:"grid_pitch"`
+	GridInk       uint8          `json:"grid_ink"`
+	ViewInk       uint8          `json:"view_ink"`
+	TileColour    map[string]int `json:"tile_colour"`
+	DefaultColour uint8          `json:"default_colour"`
+}
+
+// DrawMinimap 畫右上角的小地圖。
+//
+// 三層（`docs/internals/34`）：
+//
+//   - 地形：像素 (i,j) 顯示格 (i, j × 列數 ÷ 高)，色由圖塊編號查表；
+//   - 格線：`i % 15 == 0` 或 `j % 15 < 2` 畫成底色，與戰場那層同一組；
+//   - 視野框：左上 (視野欄, 視野列 × 高 ÷ 列數)，大小就是視野的格數。
+func DrawMinimap(s *BattleSpec, fb *gfx.Framebuffer, cells []uint8, v BattleView) {
+	m := &s.Minimap
+	if m.W <= 0 || m.H <= 0 || len(cells) == 0 {
+		return
+	}
+	for j := 0; j < m.H; j++ {
+		r := j * s.Field.MapRows / m.H
+		for i := 0; i < m.W; i++ {
+			c := m.DefaultColour
+			if m.GridPitch > 0 && (i%m.GridPitch == 0 || j%m.GridPitch < 2) {
+				c = m.GridInk
+			} else if k := r*s.Field.MapCols + i; k < len(cells) {
+				if n, ok := m.TileColour[itoa(int(cells[k]))]; ok {
+					c = uint8(n)
+				}
+			}
+			fb.Set(m.X+i, m.Y+j, c)
+		}
+	}
+	// 視野框：只畫邊。
+	vx := m.X + v.Col
+	vy := m.Y + v.Row*m.H/s.Field.MapRows
+	vw, vh := s.Field.Cols, s.Field.Rows*m.H/s.Field.MapRows
+	for i := 0; i < vw; i++ {
+		fb.Set(vx+i, vy, m.ViewInk)
+		fb.Set(vx+i, vy+vh-1, m.ViewInk)
+	}
+	for j := 0; j < vh; j++ {
+		fb.Set(vx, vy+j, m.ViewInk)
+		fb.Set(vx+vw-1, vy+j, m.ViewInk)
 	}
 }
