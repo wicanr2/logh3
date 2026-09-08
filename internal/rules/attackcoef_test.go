@@ -47,3 +47,48 @@ func TestAttackCoefficientGuards(t *testing.T) {
 		t.Error("負的半軸應該回 0")
 	}
 }
+
+// 定點開平方要與原版同一條路（`3310:014B` 的牛頓法）。
+func TestFixSqrt(t *testing.T) {
+	cases := []struct{ n, want int64 }{
+		{0, 0},
+		{FixOne, FixOne},           // sqrt(1) ＝ 1
+		{4 * FixOne, 2 * FixOne},   // sqrt(4) ＝ 2
+		{9 * FixOne, 3 * FixOne},   // sqrt(9) ＝ 3
+		{FixOne / 4, FixOne / 2},   // sqrt(0.25) ＝ 0.5
+	}
+	for _, c := range cases {
+		if got := fixSqrt(c.n); got != c.want {
+			t.Errorf("fixSqrt(%d) ＝ %d，要 %d", c.n, got, c.want)
+		}
+	}
+}
+
+// 定點乘除的刻度：1.0 × 1.0 ＝ 1.0、1.0 ÷ 1.0 ＝ 1.0。
+func TestFixMulDiv(t *testing.T) {
+	if got := fixMul(FixOne, FixOne); got != FixOne {
+		t.Errorf("fixMul(1,1) ＝ %d", got)
+	}
+	if got := fixDiv(FixOne, FixOne); got != FixOne {
+		t.Errorf("fixDiv(1,1) ＝ %d", got)
+	}
+	if got := fixMul(FixOne/2, FixOne/2); got != FixOne/4 {
+		t.Errorf("fixMul(0.5,0.5) ＝ %d", got)
+	}
+}
+
+// 八種艦種的 K 都算得出來，而且方向 0 一定不小於半圈那一邊。
+func TestAttackCoefficientAllKinds(t *testing.T) {
+	kinds := [][2]int{{100, 95}, {95, 85}, {85, 80}, {240, 180},
+		{80, 75}, {60, 57}, {60, 58}, {50, 50}}
+	for i, k := range kinds {
+		far := AttackCoefficient(k[0], k[1], 0, 100)
+		near := AttackCoefficient(k[0], k[1], BattleTurn/2, 100)
+		if far < near {
+			t.Errorf("艦種 %d：θ＝0 應該不小於半圈那一邊（%d < %d）", i, far, near)
+		}
+		if far <= 0 {
+			t.Errorf("艦種 %d 的 K 算出 %d", i, far)
+		}
+	}
+}
