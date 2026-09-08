@@ -22,7 +22,50 @@ type BattleUnit struct {
 	TargetY  int `json:"target_y"`
 	Speed    int `json:"speed"`     // 一回合走多遠
 	Strength int `json:"strength"`  // 戰力（`StrengthWeights` 算的）
+	Kind     int `json:"kind"`      // 艦種（艦艇記錄 `+0x04`）
+	Detail   int `json:"detail"`    // 顯示層級（艦艇記錄 `+0x17`）
 }
+
+// BattleSprite 回一個分隊要畫 `SPRITE.SPR` 的第幾塊。
+//
+// 照原版 `25DB:03E8` 的算式（`docs/internals/38`）：陣營決定基底
+// （帝國 20、同盟 50），顯示層級決定加多少。
+func BattleSprite(faction, detail, kind int) int {
+	base := AllianceSpriteBase
+	if faction == 0 {
+		base = EmpireSpriteBase
+	}
+	if kind == 7 {
+		return BlankSprite
+	}
+	switch detail {
+	case 1:
+		return base + spriteRoughOffset
+	case 2:
+		if kind < 0 {
+			return base + spriteRoughOffset
+		}
+		return base + spriteDetailOffset + kind
+	}
+	return BlankSprite
+}
+
+// `SPRITE.SPR` 裡單位圖示的位置（`docs/re/85`）。
+const (
+	EmpireSpriteBase   = 20 // 陣營 0 的基底
+	AllianceSpriteBase = 50 // 陣營 1 的基底
+	BlankSprite        = 9  // 不顯示
+	spriteDetailOffset = 16 // 詳細：基底 ＋ 16 ＋ 艦種
+	spriteRoughOffset  = 24 // 概略：基底 ＋ 24
+)
+
+// DefaultDetail 是佈陣時給的顯示層級。
+//
+// 原版靠艦艇記錄的 `+0x17` 決定，而寫那個欄位的地方還沒找到
+// （`docs/re/85`）。量到的八個單位裡有 2 也有 1，沒有能把兩群分開的
+// 欄位，所以這裡一律給「詳細」——單位會依艦種畫成不同的圖示。
+// 解出 `+0x17` 之前這是 remake 自己的選擇，不能拿去對拍。
+const DefaultDetail = 2
 
 // FormationSpacing 是分隊之間的間距（`docs/internals/38`）。
 //
@@ -146,9 +189,15 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 			TargetX:  x + ox,
 			TargetY:  y + oy,
 			Speed:    DefaultBattleSpeed,
+			Kind:     -1,
+			Detail:   DefaultDetail,
 		}
-		if w != nil && ship >= 0 && (ship+1)*ShipRecord <= len(s.Ship) {
-			u.Strength = w.ShipStrength(s.Ship[ship*ShipRecord : (ship+1)*ShipRecord])
+		if ship >= 0 && (ship+1)*ShipRecord <= len(s.Ship) {
+			rec := s.Ship[ship*ShipRecord : (ship+1)*ShipRecord]
+			u.Kind = int(rec[4])
+			if w != nil {
+				u.Strength = w.ShipStrength(rec)
+			}
 		}
 		out = append(out, u)
 	}

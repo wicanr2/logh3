@@ -7,39 +7,13 @@ import (
 	"github.com/wicanr2/logh3/internal/screen"
 )
 
-// battleSprite 回一個分隊要畫哪一塊 `SPRITE.SPR`。
-//
-// 用 `-poke` 把同一支艦隊七個分隊的艦種改成 0–6，再看畫面上各是哪一塊
-// （收據 `s3kinds2`，`docs/re/85`）：艦種 0、1、2 依序是第 66、67、68 塊，
-// 3 到 6 全部畫成第 74 塊。
-//
-// ⚠ **規則不只看艦種**：另一支艦隊的艦種 0 分隊畫的是第 74 塊而不是 66，
-// 同一個艦種在不同收據也會畫不同的塊。這裡是**畫得出來的近似**，
-// 決定的到底是什麼還沒解，不要拿它去對拍。
-func battleSprite(kind int) int {
-	if kind >= 0 && kind <= 2 {
-		return battleSpriteBase + kind
+// battleSprite 回一個分隊要畫哪一塊 `SPRITE.SPR`（`rules.BattleSprite`）。
+func battleSprite(u rules.BattleUnit) int {
+	kind := u.Kind
+	if kind < 0 {
+		kind = -1
 	}
-	return battleSpriteOther
-}
-
-// SPRITE.SPR 裡單位圖示的位置（`docs/re/85`）。
-const (
-	battleSpriteBase  = 66
-	battleSpriteOther = 74
-)
-
-// shipKind 回一個分隊的艦種（艦艇記錄的 `+0x04`）。
-func (g *Game) shipKind(u rules.BattleUnit) int {
-	ships := g.slot.FleetShips(u.Fleet)
-	if u.Squadron < 0 || u.Squadron >= len(ships) {
-		return -1
-	}
-	n := ships[u.Squadron]
-	if n < 0 || (n+1)*rules.ShipRecord > len(g.slot.Ship) {
-		return -1
-	}
-	return int(g.slot.Ship[n*rules.ShipRecord+4])
+	return rules.BattleSprite(u.Faction, u.Detail, kind)
 }
 
 // StartBattle 在某個星域開一場戰鬥。

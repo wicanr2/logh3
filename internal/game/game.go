@@ -2208,7 +2208,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	fb := screen.Battle(g.res.Battle, g.res.BattlePanel, g.res.BattleTiles, cells, g.battleView)
 	if len(g.battleUnits) > 0 && len(g.res.Sprites) > 0 {
 		screen.DrawBattleUnits(g.res.Battle, fb, g.res.Sprites, g.battleUnits,
-			func(u rules.BattleUnit) int { return battleSprite(g.shipKind(u)) }, g.battleView)
+			func(u rules.BattleUnit) int { return battleSprite(u) }, g.battleView)
 	}
 	screen.DrawMinimap(g.res.Battle, fb, cells, g.battleView)
 	screen.DrawBattleStatusFrame(g.res.Battle, fb)
