@@ -191,3 +191,34 @@ func TestBattleDamageShape(t *testing.T) {
 		t.Errorf("方向造成的差是 %d–%d，該剛好是兩成", worst, best)
 	}
 }
+
+// `2350:0023` 那條路徑的量級要涵蓋 -watch 實際量到的扣除數
+// （艦隊 31 組 0，3000 艘，單輪掉 37 與 50；`docs/re/86`）。
+func TestSkirmishDamageCoversObserved(t *testing.T) {
+	in := SkirmishInput{TargetShips: 3000, Attack: 1}
+	lo, hi := 1<<30, 0
+	for a := 0; a < 200; a++ {
+		for b := 0; b < 200; b++ {
+			n := SkirmishDamage(SkirmishInput{
+				TargetShips: in.TargetShips, Attack: in.Attack,
+				RandBase: a, Rand100: b,
+			})
+			if n < lo {
+				lo = n
+			}
+			if n > hi {
+				hi = n
+			}
+		}
+	}
+	if lo > 37 || hi < 50 {
+		t.Fatalf("算出來的範圍是 %d–%d，涵蓋不了實際量到的 37 與 50", lo, hi)
+	}
+	// 夾在 0 與現有艘數之間。
+	if n := SkirmishDamage(SkirmishInput{TargetShips: 10, Attack: 1000, RandBase: 5, Rand100: 99}); n > 10 {
+		t.Errorf("算出 %d 艘，超過目標的 10 艘", n)
+	}
+	if n := SkirmishDamage(SkirmishInput{TargetShips: 0, Attack: 1}); n < 0 {
+		t.Errorf("算出 %d，不該是負的", n)
+	}
+}

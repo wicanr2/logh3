@@ -171,3 +171,43 @@ func BattleDamage(in DamageInput) int {
 	}
 	return n + in.Rand%100
 }
+
+// SkirmishInput 是 `2350:0023` 那條傷害路徑要的東西（`docs/re/86`）。
+//
+// 那是戰鬥實際扣艦艇走的路徑——`-watch` 量到的單輪扣除量落在它的
+// 範圍裡，而艦隊層那條分攤算出來小一個量級。
+type SkirmishInput struct {
+	TargetShips int // 目標的現有艘數（艦艇記錄 +0x08）
+	Attack      int // 攻擊方的 +0x16 除以 2264:0FC3 回的分母
+	RandBase    int // 一個亂數，會對基準量取模
+	Rand100     int // 另一個亂數，會對 100 取模
+}
+
+// 原版寫死的兩個常數（`2350:005B`／`0073`）。
+const (
+	skirmishMul = 40
+	skirmishDiv = 12800
+)
+
+// SkirmishDamage 算一次攻擊扣幾艘。
+//
+//	基準 ＝ 目標現有艘數 × 40 × 攻擊係數 ÷ 12800
+//	量   ＝ 基準 ＋ (亂數 % 基準) − 基準 ÷ 2 ＋ (亂數 % 100)
+//
+// 結果夾在 0 與目標的現有艘數之間（`2350:00CA`／`00DB`）。
+func SkirmishDamage(in SkirmishInput) int {
+	base := in.TargetShips * skirmishMul * in.Attack / skirmishDiv
+	n := base
+	if base > 0 {
+		n += in.RandBase % base
+	}
+	n -= base / 2
+	n += in.Rand100 % 100
+	if n < 0 {
+		n = 0
+	}
+	if n > in.TargetShips {
+		n = in.TargetShips
+	}
+	return n
+}
