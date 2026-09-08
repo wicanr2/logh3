@@ -7,7 +7,9 @@
 | 射程 | `READY` | `2350:0003`，逐行讀完 |
 | 攻擊名單（空間查詢） | `READY` | `17A0:00AC`，逐行讀完 |
 | 一輪的總損失 | `READY` | 算式、呼叫路徑與輸入都對上了（`docs/re/97`、`docs/re/99`）：以行星為中心，`rules.ResolveBattleTurn` 已照做 |
-| 戰術層往哪裡帶 | `READY`（一半）| `docs/re/80` 量到的目標點有一個是行星雷奧米爾的座標，`ai.OriginalTactic` 已改成優先指向敵方行星；另一個目標點 (1168,1160) 還沒解 |
+| 戰術層挑目標點 | `READY` | `31DB:01B6` 逐行讀完（`docs/re/100`）：框內的**集結點**（地圖圖塊 1）隨機抽一個，要兩條直線都走得通；`rules.PickRally` 照做 |
+| 戰術層的參考點 | 未解 | `31DB:01B6` 的參考點是呼叫端傳的，那一層還沒逆向。remake 先取敵方行星、沒有才取最近的敵艦 |
+| 戰場地形通行 | `READY` | `1588:891`／`4EA`／`621` 逐行讀完，兩張表倒進 `battle-terrain.json`（`docs/internals/43`）|
 | 損失分攤到分隊 | `CONFORMED` | `203A:0593`，九個分隊實測相同 |
 | 單擊的分母 K | `READY` | `docs/re/94`：橢圓極座標式，整條鏈照原版的 16.16 定點重算 |
 | 單擊的攻擊係數 | `READY` | `rules.ShipKindTable.SkirmishAttack`：攻擊方 `+0x16` ÷ K，K 是**目標**的方向性防禦 |

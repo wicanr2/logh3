@@ -15,6 +15,17 @@ type Move struct {
 type Battlefield struct {
 	Units   []rules.BattleUnit
 	Planets []rules.BattlePlanet
+
+	// Rally 是這張地圖上埋的集結點，Terrain／Cells 是通行判定要的地形
+	// （`docs/re/100`）。三者缺一時 OriginalTactic 會退回「直接壓向
+	// 參考點」。
+	Rally   []rules.RallySite
+	Terrain *rules.BattleTerrain
+	Cells   []uint8
+
+	// Rand 是挑集結點用的亂數。原版每一支艦隊都抽一次
+	// （`3CD5:000C`），nil ＝ 每次都抽第 0 個。
+	Rand *rules.Rand
 }
 
 // enemyPlanet 回離 (x,y) 最近的敵方行星，沒有就回 false。
@@ -42,12 +53,17 @@ type Tactic interface {
 	Moves(b Battlefield, faction, turn int) []Move
 }
 
-// OriginalTactic 照原版：**整批朝同一個點壓過去**。
+// OriginalTactic 照原版：**每一支艦隊走向地圖上埋好的集結點**。
 //
-// 這不是猜的——`docs/re/80` 量到一場六對一的戰鬥裡，敵方六支有四支的
-// 目標點是同一個座標，而且整批朝我方移動；**另一支指向 (1320,812)，
-// 那是行星雷奧米爾的座標**（`docs/re/99`）。所以目標優先取敵方的行星，
-// 沒有行星才退回最近的敵方單位。
+// 原版的挑法在 `31DB:01B6`（`docs/re/100`）：以艦隊與參考點為對角線框
+// 一個正方形，收框內的集結點當候選，隨機抽一個，抽中的要「從艦隊走得
+// 到它、從它也走得到參考點」才算數；抽到「第 n 個」（機率 1/(n+1)）
+// 就直接壓向參考點。`docs/re/80` 量到的六支裡四支指同一個點，就是這樣
+// 來的——框內候選本來就只有一兩個。
+//
+// **參考點是呼叫端傳進來的，那一層還沒逆向。** 這裡取敵方行星優先、
+// 沒有行星才取最近的敵艦：`docs/re/80` 的同盟 28 目標是雷奧米爾的
+// 座標（`docs/re/99` 的行星表），所以「往敵方行星」至少是其中一種。
 type OriginalTactic struct{}
 
 // Moves 回這一回合的命令。
@@ -56,23 +72,49 @@ func (OriginalTactic) Moves(b Battlefield, faction, turn int) []Move {
 	if len(mine) == 0 {
 		return nil
 	}
-	tx, ty, ok := 0, 0, false
-	if len(mine) > 0 {
-		u := b.Units[mine[0]]
-		if p, found := enemyPlanet(b, faction, u.X, u.Y); found {
-			tx, ty, ok = p.X, p.Y, true
-		}
-	}
-	if !ok {
-		if len(foes) == 0 {
-			return nil
-		}
-		t := b.Units[nearestFoe(b, mine, foes)]
-		tx, ty = t.X, t.Y
-	}
 	var out []Move
+	for _, g := range fleetGroups(b, mine) {
+		// 艦隊的位置取旗艦（第 0 個分隊）那一份，與原版讀
+		// `+0x5C`／`+0x5E` 同一個來源（`docs/internals/34`）。
+		u := b.Units[g[0]]
+		rx, ry, ok := 0, 0, false
+		if p, found := enemyPlanet(b, faction, u.X, u.Y); found {
+			rx, ry, ok = p.X, p.Y, true
+		}
+		if !ok {
+			if len(foes) == 0 {
+				continue
+			}
+			t := b.Units[nearestFoe(b, g, foes)]
+			rx, ry = t.X, t.Y
+		}
+		tx, ty := rx, ry
+		if len(b.Rally) > 0 {
+			tx, ty = rules.PickRally(b.Terrain, b.Cells, b.Rally,
+				u.X, u.Y, rx, ry, b.Rand)
+		}
+		for _, i := range g {
+			out = append(out, Move{Unit: i, X: tx, Y: ty})
+		}
+	}
+	return out
+}
+
+// fleetGroups 把自己這一側的分隊按艦隊分組，**依第一次出現的順序**。
+//
+// 不用 map 迭代：同一個局面每次要算出一樣的結果，決定性是對拍的前提。
+func fleetGroups(b Battlefield, mine []int) [][]int {
+	at := map[int]int{}
+	var out [][]int
 	for _, i := range mine {
-		out = append(out, Move{Unit: i, X: tx, Y: ty})
+		f := b.Units[i].Fleet
+		n, ok := at[f]
+		if !ok {
+			n = len(out)
+			at[f] = n
+			out = append(out, nil)
+		}
+		out[n] = append(out[n], i)
 	}
 	return out
 }

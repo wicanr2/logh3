@@ -60,6 +60,7 @@ func (g *Game) StartBattle(region int) {
 	}
 	g.battleFleets = g.slot.BattleFleetsFor(joined)
 	g.battlePlanets = g.battleRegionPlanets(region)
+	g.battleRally = g.battleRegionRally(region)
 	for i := range g.battleFleets {
 		if u := flagshipOf(g.battleUnits, g.battleFleets[i].Index); u != nil {
 			g.battleFleets[i].Facing = rules.BattleFacing(u.X, u.Y)
@@ -108,8 +109,15 @@ func clampRow(r, rows int) int {
 //
 // 損失怎麼算還沒解（`docs/re/86`），所以這裡只有移動。
 func (g *Game) AdvanceBattleTurn() {
+	if g.battleRand == nil {
+		g.battleRand = rules.NewRand(uint32(g.battleTurn))
+	}
 	if g.tactic != nil {
-		b := ai.Battlefield{Units: g.battleUnits, Planets: g.battlePlanets}
+		b := ai.Battlefield{
+			Units: g.battleUnits, Planets: g.battlePlanets,
+			Rally: g.battleRally, Terrain: g.res.Terrain,
+			Cells: g.battleCells(g.battleRegion), Rand: g.battleRand,
+		}
 		for _, faction := range []int{0, 1} {
 			if faction == g.faction && !g.autoBattle {
 				continue // 玩家自己下令
@@ -124,9 +132,6 @@ func (g *Game) AdvanceBattleTurn() {
 	}
 	for i := range g.battleUnits {
 		rules.AdvanceBattle(&g.battleUnits[i])
-	}
-	if g.battleRand == nil {
-		g.battleRand = rules.NewRand(uint32(g.battleTurn))
 	}
 	g.battleLosses = rules.ResolveBattleTurn(g.battlePlanets, g.battleFleets,
 		g.battleUnits, g.battleRand)
@@ -186,6 +191,26 @@ func (g *Game) battleRegionPlanets(region int) []rules.BattlePlanet {
 	}
 	sites := rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
 	return g.res.Planets.BattlePlanetsFor(region, sites)
+}
+
+// battleCells 回一個星域的戰場地形，沒有就回 nil。
+func (g *Game) battleCells(region int) []uint8 {
+	if region < 0 || region >= len(g.res.BattleMaps) {
+		return nil
+	}
+	return g.res.BattleMaps[region]
+}
+
+// battleRegionRally 回這個星域埋了哪些集結點（`docs/re/100`）。
+func (g *Game) battleRegionRally(region int) []rules.RallySite {
+	if g.res.Battle == nil {
+		return nil
+	}
+	cells := g.battleCells(region)
+	if len(cells) == 0 {
+		return nil
+	}
+	return rules.RallySites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
 }
 
 // flagshipOf 回一支艦隊的旗艦分隊（第 0 個）。

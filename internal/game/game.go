@@ -298,6 +298,10 @@ type Resources struct {
 	// Entries 是戰場入口表（`docs/internals/39`）。
 	Entries *rules.BattleEntries
 
+	// Terrain 是戰場地形的通行規則（`docs/re/100`）。戰術層挑集結點時
+	// 要用它判「這條直線走不走得通」；nil ＝ 不判，一律當通得過。
+	Terrain *rules.BattleTerrain
+
 	// Weights 是戰力權重表（原版的 `ds:6032`，`docs/re/79`）。
 	// nil ＝ 算不出戰力，AI 退回「每支艦隊算 1」。
 	Weights rules.StrengthWeights
@@ -446,6 +450,7 @@ type Game struct {
 	// 結算用的（`docs/spec/018`）：參戰艦隊、亂數、上一回合的交火紀錄，
 	// 以及「有一方全沒了」。
 	battleFleets  []rules.BattleFleet
+	battleRally   []rules.RallySite
 	battlePlanets []rules.BattlePlanet
 	battleRand   *rules.Rand
 	battleLosses []rules.BattleLoss

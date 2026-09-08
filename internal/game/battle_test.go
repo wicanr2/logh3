@@ -54,6 +54,14 @@ func newTestGame(t *testing.T) *Game {
 		}
 		res.BattleMaps = maps
 	}
+	if res.Terrain == nil {
+		terrain, err := rules.LoadBattleTerrain(filepath.Join(root,
+			"docs/internals/data/battle-terrain.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.Terrain = terrain
+	}
 	g, err := New(res)
 	if err != nil {
 		t.Fatal(err)
