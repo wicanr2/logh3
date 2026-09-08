@@ -86,3 +86,26 @@ for r0 in range(ROWS - VIEW_R + 1):
         if bad < bestBad:
             best, bestBad = (c0, r0), bad
 print('  最合的視野起點 %s，不合的列 %d／%d' % (best, bestBad, VIEW_R*VIEW_C*TH))
+
+# 哪幾格對不上——**列出來才知道差異有沒有規律**（是不是都在某一欄／某一列）。
+c0, r0 = best
+bad = []
+for r in range(VIEW_R):
+    for c in range(VIEW_C):
+        idx = cells[(r0+r)*COLS + c0+c]
+        t = tl[idx % len(tl)]
+        n = 0
+        for y in range(TH):
+            sy = FIELD_Y + r*TH + y
+            sx = FIELD_X + c*TW
+            if scr[sy*W + sx: sy*W + sx + TW] != bytes(t[y]):
+                n += 1
+        if n:
+            bad.append((r, c, idx, n))
+print('  對不上的格子 %d／%d' % (len(bad), VIEW_R*VIEW_C))
+rows = sorted({r for r, _, _, _ in bad})
+colsb = sorted({c for _, c, _, _ in bad})
+print('  落在列 %s' % rows)
+print('  落在欄 %s' % colsb)
+import collections
+print('  對不上的圖塊編號 %s' % collections.Counter(i for _, _, i, _ in bad).most_common(8))
