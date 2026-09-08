@@ -128,3 +128,38 @@ func DamageFactor(facing, bearing int) int {
 
 // Bearing 回從 (x0,y0) 指向 (x1,y1) 的方位，一圈 256（原版 `2BE1:011D`）。
 func Bearing(x0, y0, x1, y1 int) int { return atan256(x1-x0, y1-y0) }
+
+// DamageInput 是算一輪戰損要的東西（`docs/re/86`）。
+type DamageInput struct {
+	Kind1Ships int  // 攻擊方艦種 1 的艘數總和（`203A:04D1` 加總的那個）
+	Bonus      int  // 攻擊方艦隊記錄的 +0x14
+	Halved     bool // 攻擊方艦隊記錄的 +0x12 非 0：除數從 10 變 20
+	Distance   int  // 攻擊方 (+0x46,+0x48) 到目標 (+0x5C,+0x5E) 的距離
+	Facing     int  // 攻擊方艦隊的朝向（+0x4A）
+	Bearing    int  // 從攻擊方指向目標的方位
+	Rand       int  // 原版 rand() 的傳回值（`rules.Rand`）
+}
+
+// BattleDamage 算一輪的總損失。
+//
+// 原版的順序（`20A0:0FBE` → `21A0:0004` → `21A0:006E` → `21A0:011C`）：
+//
+//	基本量 ＝ (艦種 1 艘數總和 ÷ 100 ＋ +0x14) ÷ (10 或 20)
+//	距離項 ＝ 基本量 × (距離 ÷ 150) ÷ 5
+//	總損失 ＝ (基本量 − 距離項) × 方向係數 ÷ 100 ＋ rand() mod 100
+//
+// 每一步的整數除法都照原版的順序與位置——換一個順序算出來的數字會差。
+// 距離小於 150 時距離項是 0（整數除），所以近距離不衰減。
+func BattleDamage(in DamageInput) int {
+	div := 10
+	if in.Halved {
+		div = 20
+	}
+	base := (in.Kind1Ships/100 + in.Bonus) / div
+	base -= base * (in.Distance / 150) / 5
+	if base < 0 {
+		base = 0
+	}
+	n := base * DamageFactor(in.Facing, in.Bearing) / 100
+	return n + in.Rand%100
+}
