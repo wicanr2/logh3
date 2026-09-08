@@ -35,3 +35,31 @@ func sin256(a int) int {
 // cos256 回 cos(a) × 1024。原版就是拿同一張表用「角度 ＋ 64」查的
 // （`2264:10BA`）。
 func cos256(a int) int { return sin256(a + 64) }
+
+// 戰場世界座標的上下限（原版 `2BE1:026F` 走完一步之後夾的值，
+// 也是選目的地時的判準，`docs/re/121`）。
+const (
+	BattleWorldMaxX = 0x7EF // 2031
+	BattleWorldMaxY = 0x7E7 // 2023
+)
+
+// StepAlong 從 (x,y) 沿方位 a 走 dist 像素，回落點（原版 `2BE1:026F`）。
+//
+// 原版是 32 位元乘完之後**加 512 再算術右移 10 位**——也就是四捨五入，
+// 不是截斷；最後把兩軸各夾進 0–2031／0–2023。差一個像素會讓直線判定
+// 走到別的半格上去，所以這裡照抄（`docs/re/123`）。
+func StepAlong(x, y, a, dist int) (int, int) {
+	x += (cos256(a)*dist + 512) >> 10
+	y += (sin256(a)*dist + 512) >> 10
+	return clampInt(x, 0, BattleWorldMaxX), clampInt(y, 0, BattleWorldMaxY)
+}
+
+func clampInt(v, lo, hi int) int {
+	if v < lo {
+		return lo
+	}
+	if v > hi {
+		return hi
+	}
+	return v
+}

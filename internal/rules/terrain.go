@@ -107,9 +107,8 @@ func (t *BattleTerrain) Passable(cells []uint8, x, y int) bool {
 // LineOpen 回兩點之間沿直線走得通不通（原版 `1588:891`）。
 //
 // 每次沿方位前進 Step 像素試一格，剩下不足 Step 就直接到終點。方位取
-// 一整圈 256 的 atan2，與原版同一個定義；原版真正走一步的
-// `2BE1:026F` 還沒逆向，所以這裡用 `cos256`／`sin256` 自己算，
-// 落點可能差一兩個像素。
+// 一整圈 256 的 atan2，與原版同一個定義；走一步用 `StepAlong`，
+// 那是原版 `2BE1:026F` 的算式（四捨五入 ＋ 夾範圍，`docs/re/123`）。
 func (t *BattleTerrain) LineOpen(cells []uint8, x1, y1, x2, y2 int) bool {
 	step := t.Step
 	if step <= 0 {
@@ -124,9 +123,7 @@ func (t *BattleTerrain) LineOpen(cells []uint8, x1, y1, x2, y2 int) bool {
 			x1, y1 = x2, y2
 			continue
 		}
-		a := atan256(dx, dy)
-		x1 += cos256(a) * step / 1024
-		y1 += sin256(a) * step / 1024
+		x1, y1 = StepAlong(x1, y1, atan256(dx, dy), step)
 		if !t.Passable(cells, x1, y1) {
 			return false
 		}
