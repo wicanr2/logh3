@@ -97,3 +97,4 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 
 - [`34-battle-screen.md`](34-battle-screen.md)：戰術（戰鬥）畫面的版面、命令選單與怎麼走到。
 - [`35-block3-blk.md`](35-block3-blk.md)：戰場的圖塊集（128 塊 16×20）。
+- [`36-map-cmp.md`](36-map-cmp.md)：每個星域的戰場地圖（128×102 格，兩條規則的編碼）。
