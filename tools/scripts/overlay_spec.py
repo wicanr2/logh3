@@ -28,8 +28,12 @@ BOXES = [tuple(int(v) for v in b.split(':'))
 RULES = [tuple(int(v) for v in r.split(':'))
          for r in (sys.argv[11].split(',') if len(sys.argv) > 11 and sys.argv[11] else [])]
 # 頭像：哪一張用 tools/scripts/face_find.py 問，別用肉眼比。
-FACE = ([int(v) for v in sys.argv[12].split(':')]
-        if len(sys.argv) > 12 and sys.argv[12] else None)
+# 頭像可以有**不只一張**（艦隊編成上下各一張）：用逗號分隔
+# `index:x:y`。第一張寫進規格的 `face`，其餘只用來把那塊排除在文字與
+# 修正點之外——它們都是算出來的，由程式畫。
+FACES = [[int(v) for v in f.split(':')]
+         for f in (sys.argv[12].split(',') if len(sys.argv) > 12 and sys.argv[12] else [])]
+FACE = FACES[0] if FACES else None
 # 額外文字區：有些畫面除了疊上去那一層，還會改到底層別處的字
 # （提督資料會重寫左下角那塊）。座標是絕對的，掃出來的行併進同一層。
 EXTRA = ([int(v) for v in sys.argv[13].split(':')]
@@ -62,8 +66,8 @@ def scan(phase, tabs, ink=7):
                 for bx0, by0, bx1, by1 in BOXES]
         # 頭像也要跳過：人像的線條會被讀成製表符或底線，而且畫的時候
         # 頭像在文字之前，那幾格會被字的陰影咬掉一列。
-        if FACE:
-            skip.append((FACE[1], FACE[2], 80, 100))
+        for _f in FACES:
+            skip.append((_f[1], _f[2], 80, 100))
         # 起點要掃寬一點：這一層裡不只一欄文字，左邊那欄的縮排
         # 各畫面不同，範圍太窄就整欄讀不到。
         ln = max((read_line(rows, sx, y, X1 - 12, ink, tabs[0], tabs[1], skip)
