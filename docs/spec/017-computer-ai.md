@@ -1,7 +1,8 @@
 # SPEC 017 — 電腦 AI：原版行為與強化版
 
-狀態：**部分實作**（`internal/ai`：`Original` 與 `Focused` 都有了，
-行為指標測試在 `internal/ai/focused_test.go`；戰術層還沒做）
+狀態：**兩層都有了**（`internal/ai`：戰略層 `Original`／`Focused`、
+戰術層 `OriginalTactic`／`Encircle`，行為指標測試七條。
+戰術層還沒接上畫面——remake 的戰鬥畫面本身還沒做）
 證據：`docs/re/77`（原版的每回合決策，調查中）
 相關：[`docs/internals/26`](../internals/26-star-region-graph.md)（星域圖與路徑表）、
 [`docs/internals/33`](../internals/33-fleet-table.md)（執行期艦隊表）
@@ -171,6 +172,17 @@ AI**：同盟那幾支艦隊的 `+0x08` 一開始就是 5（＝不動），是�
 
 座標欄位是艦隊記錄的 `+0x5C`／`+0x5E`（現在位置）與 `+0x64`／`+0x66`
 （要去的點）。一回合能走多遠還沒釘（量到 233 與 325）。
+
+實作在 `internal/ai/tactical.go`：
+
+- `OriginalTactic`：整批指向最近的敵方單位——**照量到的原版行為寫的**
+  （`docs/re/80`），不是佔位符。
+- `Encircle`：集火**最弱**的那一支、每一支分到目標周圍不同方位的點
+  （這就是包圍——一路壓上去只會排成一條線）、己方戰力掉到開場的
+  四成以下就撤（難度越高撐越久）。
+
+單位模型在 `internal/rules/battle.go`，位移用整數平方根算，
+**不用浮點數**——這一層之後要能逐位元組重現。
 
 
 ## remake 這一側還缺的地基
