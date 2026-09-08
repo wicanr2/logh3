@@ -136,6 +136,20 @@ type GameWindow struct {
 	InputBox *Solid `json:"input_box"`
 	Bar      *Solid `json:"bar"`
 
+	// Hover 是「滑鼠停在哪一列，那一列就整條刷成反白」的清單
+	// （艦隊編號那 16 列、副官那 2 列，`docs/re/67`）。反白條畫在文字
+	// **之前**——字是印在條子上面的。
+	Hover *struct {
+		X, Y, W, H int
+		Pitch      int
+		Rows       int
+		Colour     uint8
+	} `json:"hover"`
+
+	// hoverRow ＝ 要刷的那一列 ＋ 1；0 ＝ 都不刷。用「＋1」是為了讓
+	// JSON 解出來的零值就是「不刷」，不必另外記「有沒有設過」。
+	hoverRow int
+
 	// Boxes 是視窗裡自成一格的小框（輸入框、面板上的橫條）。
 	Boxes []struct {
 		X, Y, W, H int
@@ -235,7 +249,37 @@ func (w *GameWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8, fac
 	for _, r := range w.Rules {
 		fb.FillRect(r.X, r.Y, r.W, r.H, r.Colour)
 	}
+	if h := w.Hover; h != nil && w.hoverRow > 0 {
+		fb.FillRect(h.X, h.Y+(w.hoverRow-1)*h.Pitch, h.W, h.H, h.Colour)
+	}
 	return w.drawContent(fb, fnt, shadow, faces)
+}
+
+// SetHoverRow 指定這一次要把哪一列刷成反白；-1 ＝ 都不刷。
+func (w *GameWindow) SetHoverRow(row int) {
+	if w == nil || row < 0 {
+		if w != nil {
+			w.hoverRow = 0
+		}
+		return
+	}
+	w.hoverRow = row + 1
+}
+
+// HoverRowAt 回畫面座標 (x,y) 落在清單的第幾列；不在清單上回 -1。
+func (w *GameWindow) HoverRowAt(x, y int) int {
+	h := w.Hover
+	if h == nil || h.Pitch <= 0 {
+		return -1
+	}
+	if x < h.X || x >= h.X+h.W || y < h.Y {
+		return -1
+	}
+	row := (y - h.Y) / h.Pitch
+	if row < 0 || row >= h.Rows {
+		return -1
+	}
+	return row
 }
 
 // DrawBoxFills 把**游標壓到的**那幾個小框的內部填回底色，不重畫立體邊。
