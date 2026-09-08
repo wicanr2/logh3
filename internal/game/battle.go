@@ -29,6 +29,7 @@ func (g *Game) StartBattle(region int) {
 	g.battleTurn = 1
 	g.battleUnits = nil
 	g.battleFleets = nil
+	g.battleScore = [2]int{}
 	g.battleOver = false
 	var joined []int
 	if g.res.Entries == nil {
@@ -127,6 +128,11 @@ func (g *Game) AdvanceBattleTurn() {
 		g.battleRand = rules.NewRand(uint32(g.battleTurn))
 	}
 	g.battleLosses = rules.ResolveBattleTurn(g.battleFleets, g.battleUnits, g.battleRand)
+	for _, l := range g.battleLosses {
+		if l.Scorer >= 0 && l.Scorer < 2 {
+			g.battleScore[l.Scorer] += l.Score
+		}
+	}
 	g.battleTurn++
 	// 九個回合打完就結束（`docs/re/92`）；中途一方歸零也結束。
 	g.battleOver = g.battleTurn > rules.MaxBattleTurns || battleDecided(g.battleUnits)

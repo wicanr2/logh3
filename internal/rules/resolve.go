@@ -48,7 +48,18 @@ type BattleLoss struct {
 	Defender int   `json:"defender"` // 被打的人
 	Total    int   `json:"total"`    // 總損失
 	PerUnit  []int `json:"per_unit"` // 分攤到目標各分隊的量，順序同 units
+	Scorer   int   `json:"scorer"`   // 分數記給哪一邊（＝ 被扣一方的對手）
+	Score    int   `json:"score"`    // 這一次交火加了多少分
 }
+
+// ScoreDivisor 是分數的除數：每扣一個分隊，對手加「扣掉的艘數 ÷ 20」
+// （`203A:06C0`，`docs/re/93`）。
+const ScoreDivisor = 20
+
+// BattleVictory 回勝利點 ＝ 帝國的分數 − 同盟的分數（`docs/re/93`）。
+//
+// 原版沒有把它存起來，畫的時候現算（`13581` 那一段的 32 位元減法）。
+func BattleVictory(score [2]int) int { return score[0] - score[1] }
 
 // ResolveBattleTurn 跑一回合的結算：每一支艦隊各打一次，扣數直接寫回
 // `units` 的 `Ships`。回這一回合發生的每一次交火。
@@ -92,14 +103,19 @@ func ResolveBattleTurn(fleets []BattleFleet, units []BattleUnit, rnd *Rand) []Ba
 			alive[i], kinds[i] = units[u].Ships, units[u].Kind
 		}
 		per := DistributeLosses(alive, kinds, total, true)
+		score := 0
 		for i, u := range theirs {
 			units[u].Ships -= per[i]
 			if units[u].Ships < 0 {
 				units[u].Ships = 0
 			}
+			// 分數是**逐個分隊**除 20 再加，不是總量除一次——原版的
+			// 善後常式每扣一筆就加一次（`docs/re/93`）。
+			score += per[i] / ScoreDivisor
 		}
 		out = append(out, BattleLoss{
 			Attacker: f.Index, Defender: target, Total: total, PerUnit: per,
+			Scorer: 1 - def.Faction, Score: score,
 		})
 	}
 	return out

@@ -448,6 +448,7 @@ type Game struct {
 	battleFleets []rules.BattleFleet
 	battleRand   *rules.Rand
 	battleLosses []rules.BattleLoss
+	battleScore  [2]int
 	battleOver   bool
 
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
@@ -2256,8 +2257,11 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		y, mo, d := g.Date()
 		screen.DrawBattleStatus(g.res.Battle, fb, g.res.Font, screen.BattleStatus{
 			Faction: g.faction, Year: y, Month: mo, Day: d,
-			Turn:   g.battleTurn,
-			Region: g.regionName(g.battleRegion),
+			Turn:     g.battleTurn,
+			Victory:  rules.BattleVictory(g.battleScore),
+			Empire:   g.battleScore[0],
+			Alliance: g.battleScore[1],
+			Region:   g.regionName(g.battleRegion),
 		})
 	}
 	return fb
