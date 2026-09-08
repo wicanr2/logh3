@@ -164,6 +164,9 @@ func (g *Game) AdvanceBattleTurn() {
 //
 // 第二項「資料」開的是什麼還沒逆向，所以只把選單關掉。
 func (g *Game) battleClick(x, y int) {
+	if g.battleDataClick(x, y) {
+		return
+	}
 	if !g.battleMenu {
 		if g.res.BattleMenu == nil {
 			return
@@ -177,6 +180,8 @@ func (g *Game) battleClick(x, y int) {
 	switch row {
 	case 0: // 實行
 		g.AdvanceBattleTurn()
+	case 1: // 資料
+		g.OpenBattleData()
 	case 2: // 撤退
 		g.Withdraw()
 	case 3, 4, 5, 6: // 取進度／存進度／設定／結束

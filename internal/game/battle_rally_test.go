@@ -1,6 +1,11 @@
 package game
 
-import "testing"
+import (
+	"path/filepath"
+	"testing"
+
+	"github.com/wicanr2/logh3/internal/screen"
+)
 
 // TestRallyPointsMatchOriginal 對原版量到的七個集結點。
 //
@@ -67,5 +72,49 @@ func TestBattleMenuItemsReachScreens(t *testing.T) {
 		if g.state != want {
 			t.Errorf("第 %d 項換到 %v，應該是 %v", row, g.state, want)
 		}
+	}
+}
+
+// TestBattleDataOpensFromMenu 釘住戰術選單第二項「資料」開得起來、
+// 標籤換得動、右鍵關得掉（`docs/spec/021`）。
+func TestBattleDataOpensFromMenu(t *testing.T) {
+	g := newTestGame(t)
+	if g.res.BattleMenu == nil {
+		t.Skip("沒有選單版面")
+	}
+	if g.res.BattleData == nil {
+		s, err := screen.LoadBattleDataSpec(filepath.Join(root,
+			"docs/internals/data/battle-data.json"))
+		if err != nil {
+			t.Skipf("缺「資料」的版面，跳過：%v", err)
+		}
+		g.res.BattleData = s
+	}
+	g.state = StateBattle
+	g.battleMenu = false
+	g.Click(240, 240)
+	g.Click(240, 240+g.res.BattleMenu.Layout.Text.RowPitch)
+	if g.BattleDataTab() != 0 {
+		t.Fatalf("選了「資料」之後在分頁 %d，預期 0", g.BattleDataTab())
+	}
+	// 三個標籤都點得到。
+	for i, x := range g.res.BattleData.Tab.Xs {
+		g.Click(x+4, g.res.BattleData.Tab.Y+4)
+		if g.BattleDataTab() != i {
+			t.Fatalf("點第 %d 個標籤之後在分頁 %d", i, g.BattleDataTab())
+		}
+	}
+	// 畫得出來（不缺字）。
+	if fb := g.Frame(); fb == nil {
+		t.Fatal("畫不出畫面")
+	}
+	g.RightClick(300, 300)
+	if g.BattleDataTab() != -1 {
+		t.Fatal("右鍵沒有關掉「資料」")
+	}
+	// 關掉之後戰術選單還是關著的，點一下要能重新開起來。
+	g.Click(240, 240)
+	if !g.battleMenu {
+		t.Fatal("關掉「資料」之後選單開不起來")
 	}
 }

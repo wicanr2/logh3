@@ -310,6 +310,9 @@ type Resources struct {
 	// 要用它判「這條直線走不走得通」；nil ＝ 不判，一律當通得過。
 	Terrain *rules.BattleTerrain
 
+	// BattleData 是戰術選單「資料」那張畫面的版面（`docs/spec/021`）。
+	BattleData *screen.BattleDataSpec
+
 	// Intro 是開頭動畫的解碼器（`IBM16.350` ＋ `IBMFLS16.350`），
 	// IntroPal 是它的調色盤（`BU16IBM.RGB`）。**nil ＝ 直接從主選單開始**
 	// ——測試與對拍腳本都不帶開頭動畫，帶了整條輸入序列就會位移。
@@ -472,6 +475,11 @@ type Game struct {
 	// 戰術選單開在游標處：battleMenu 是「開著沒有」，battleMenuX／Y 是框的
 	// 左上角（`docs/internals/34`）。
 	battleMenu           bool
+
+	// battleData ＝ 戰術選單「資料」開著沒有，battleDataTab 是看哪一個
+	// 分頁（0 艦隊／1 行星／2 敵艦隊）。
+	battleData    bool
+	battleDataTab int
 	battleMenuX, battleMenuY int
 
 	battleRally   []rules.RallySite
@@ -1049,7 +1057,11 @@ func (g *Game) RightClick(x, y int) {
 	case StateAdmiralDetail:
 		g.state = StateStandbyAdmirals
 	case StateBattle:
-		// 右鍵關掉開在游標處的那張選單。
+		// 右鍵關掉最上面那一層：先關「資料」，再關開在游標處的選單。
+		if g.battleData {
+			g.battleData = false
+			return
+		}
 		g.battleMenu = false
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
@@ -2321,6 +2333,11 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	if g.battleMenu && g.res.BattleMenu != nil && g.res.Font != nil {
 		screen.DrawBattleMenu(g.res.BattleMenu, fb, g.res.Font,
 			g.battleMenuX, g.battleMenuY, 0)
+	}
+	// 「資料」是不透明的一層，蓋掉戰場那一塊（`docs/spec/021`）。
+	if g.battleData && g.res.BattleData != nil && g.res.Font != nil {
+		screen.DrawBattleData(g.res.BattleData, fb, g.res.Font,
+			g.battleDataTab, g.battleDataRows(g.battleDataTab))
 	}
 	return fb
 }
