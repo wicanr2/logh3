@@ -343,11 +343,11 @@
   }
  },
  "minimap": {
-  "_note": "小地圖：這個星域的地形等比縮小 1/16（docs/internals/34）。像素 (i,j) 顯示格 (i, j × sample_num ÷ sample_den)——4/5 就是圖塊 16:20 的比例。疊一層與戰場同一組的格線（每 grid_pitch 像素，色 grid_ink），第 0 列是色 top_ink 的邊框；再畫視野框（左上 ＝ (視野欄, 視野列 × h ÷ map_rows 向上取整)，大小同視野），框不是固定色，是把底下的色 OR view_or。",
+  "_note": "小地圖：這個星域的地形等比縮小 1/16（docs/internals/34）。像素 (i,j) 顯示格 (i, j × sample_num ÷ sample_den)——4/5 就是圖塊 16:20 的比例。疊一層與戰場同一組的格線（每 grid_pitch 像素，色 grid_ink），第 0 列是色 top_ink 的邊框；行星直接填色 planet_ink，分隊把底下的值 XOR 上 unit_ink[陣營]；再畫視野框（左上 ＝ (視野欄, 視野列 × h ÷ map_rows 向上取整)，大小同視野），框不是固定色，是把底下的色 OR view_or。",
   "x": 480,
   "y": 75,
   "w": 128,
-  "h": 127,
+  "h": 128,
   "grid_pitch": 15,
   "grid_ink": 1,
   "tile_colour": {
