@@ -131,8 +131,18 @@ func stateName(s game.State) string {
 		return "budget-plan"
 	case game.StateBuildPlan:
 		return "船艦建造計劃"
-	default:
+	case game.StateMainMenu:
 		return "主選單"
+	case game.StateCommandPhase:
+		return "戰略地圖介面"
+	case game.StateBattle:
+		return "戰術畫面"
+	case game.StateShipDelivery:
+		return "船艦接收報告"
+	case game.StateEnding:
+		return "結局"
+	default:
+		return fmt.Sprintf("狀態 %d", int(s))
 	}
 }
 

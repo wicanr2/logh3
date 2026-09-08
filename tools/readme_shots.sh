@@ -31,6 +31,12 @@ shots=(
   "11-fleet-org|fleet1e|$CMD; click 352 125; click 400 125; click 400 85; click 488 330"
 )
 
+# 戰術畫面沒有同狀態收據可比——remake 的行軍速度還沒對到原版（原版要按
+# 六次實行才會合，remake 一次就到），所以它不走上面那條「比過才寫出去」
+# 的迴圈，另外拍。畫面組成本身由 TestBattleMatchesOracle 與
+# TestMinimapMatchesOracle 逐位元組驗過。
+BATTLE="$CMD; click 544 125; click 560 145; click 300 322; click 318 208; click 544 125; click 560 125"
+
 out=workplace/readme-shots
 rm -rf "$out"; mkdir -p "$out"
 fail=0
@@ -54,4 +60,19 @@ for s in "${shots[@]}"; do
     fail=1
   fi
 done
+
+# 12 戰術畫面：沒有同狀態收據可比（remake 的行軍速度還沒對到原版——原版
+# 要按六次「實行」才會合，remake 一次就到），所以不走上面「比過才寫出去」
+# 的迴圈。畫面組成本身由 `TestBattleMatchesOracle` 與
+# `TestMinimapMatchesOracle` 逐位元組驗過。
+if [[ -z "$only" || "12" == "$only"* ]] && [[ -f workplace/oracle/s3fight/pal.bin ]]; then
+  rm -rf "$out/12-battle"; mkdir -p "$out/12-battle"
+  tools/go.sh run ./cmd/play -orig /orig -pal workplace/oracle/s3fight/pal.bin \
+    -out "$out/12-battle" -script "$CMD; click 544 125; click 560 145; \
+      click 300 322; click 318 208; click 544 125; click 560 125" >/dev/null
+  last=$(ls "$out/12-battle"/*.png | sort | tail -1)
+  cp "$last" docs/images/12-battle.png
+  echo "  12-battle 拍好了（無收據可比，見上面的註）"
+fi
+
 exit $fail
