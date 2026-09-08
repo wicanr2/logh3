@@ -136,14 +136,14 @@ func Bearing(x0, y0, x1, y1 int) int { return atan256(x1-x0, y1-y0) }
 // 該陣營的艦艇。remake 目前餵的是艦隊的對應欄位，所以量級小五倍
 // （remake 平均 56、原版量到 290）。要對上得先把行星接進戰場模型。
 type DamageInput struct {
-	Ships01 int  // 原版：行星附近該陣營**艦種 0 與 1** 的現有艘數總和（`203A:04D1`）
-	Bonus      int  // 原版：行星記錄的 +0x14（防衛力）
-	Halved     bool // 攻擊方艦隊記錄的 +0x12 非 0：除數從 10 變 20
-	Distance   int  // 攻擊方 (+0x46,+0x48) 到目標 (+0x5C,+0x5E) 的距離
-	Facing     int  // 攻擊方艦隊的朝向（+0x4A）
-	Bearing    int  // 從攻擊方指向目標的方位
-	Defence    int  // 目標艦隊的 +0x40 × +0x41 ÷ 100
-	Rand       int  // 原版 rand() 的傳回值（`rules.Rand`）
+	Ships01  int  // 原版：行星附近該陣營**艦種 0 與 1** 的現有艘數總和（`203A:04D1`）
+	Bonus    int  // 原版：行星記錄的 +0x14（防衛力）
+	Halved   bool // 攻擊方艦隊記錄的 +0x12 非 0：除數從 10 變 20
+	Distance int  // 攻擊方 (+0x46,+0x48) 到目標 (+0x5C,+0x5E) 的距離
+	Facing   int  // 攻擊方艦隊的朝向（+0x4A）
+	Bearing  int  // 從攻擊方指向目標的方位
+	Defence  int  // 目標艦隊的 +0x40 × +0x41 ÷ 100
+	Rand     int  // 原版 rand() 的傳回值（`rules.Rand`）
 }
 
 // BattleDamage 算一輪的總損失。

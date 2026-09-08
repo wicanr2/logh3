@@ -117,7 +117,6 @@ func AdmiralList(all []Admiral, faction int, standby bool, staff []int) []Admira
 	return out
 }
 
-
 // AdmiralLevel 回一筆提督記錄的等級（`+0x06`）。軍階由它分段推出來
 // （`RankOf`）；提督詳細資料那張畫面把它標成「等級」（`docs/re/65`）。
 func AdmiralLevel(record []byte) int {

@@ -50,7 +50,7 @@ const (
 )
 
 // TopSpeed／BattleSpeed 是明細畫面上那兩格。
-func (k ShipKind) TopSpeed() int    { return k.Byte(kindTopSpeed) }
+func (k ShipKind) TopSpeed() int { return k.Byte(kindTopSpeed) }
 
 // BattleSpeed 見 TopSpeed。
 func (k ShipKind) BattleSpeed() int { return k.Byte(kindBattleSpeed) }

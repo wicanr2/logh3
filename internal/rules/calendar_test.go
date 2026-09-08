@@ -9,9 +9,9 @@ import "testing"
 // `turn12b` 九次是 1 月 28 日、`turnnext` 十次之後是 2 月 1 日。
 func TestDateMatchesOracle(t *testing.T) {
 	for _, c := range []struct {
-		turn                int
-		year, month, day    int
-		note                string
+		turn             int
+		year, month, day int
+		note             string
 	}{
 		{0, 796, 1, 1, "開局（m1）"},
 		{1, 796, 1, 4, "一次實行（m4）"},

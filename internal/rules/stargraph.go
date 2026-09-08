@@ -16,9 +16,9 @@ import (
 // 最遠 9 步，照原版的表展開帝國那張最遠 10 步、同盟那張 12 步。
 // 要跟原版一致就得照表走。
 type StarGraph struct {
-	Adjacency [][]int  `json:"adjacency"`
-	Empire    [][]int  `json:"midpoint_empire"`
-	Alliance  [][]int  `json:"midpoint_alliance"`
+	Adjacency [][]int `json:"adjacency"`
+	Empire    [][]int `json:"midpoint_empire"`
+	Alliance  [][]int `json:"midpoint_alliance"`
 }
 
 const starDirect = 255 // 中點矩陣裡「直接相連」的記法

@@ -18,8 +18,8 @@ func TestUnrestAtLoad(t *testing.T) {
 	}
 	var d struct {
 		Slots []struct {
-			Slot    string `json:"slot"`
-			Params  struct {
+			Slot   string `json:"slot"`
+			Params struct {
 				Turn  int    `json:"turn_word_8F18"`
 				Ruler [2]int `json:"ruler_8F4F"`
 				Blend [2]int `json:"blend_8FD4"`

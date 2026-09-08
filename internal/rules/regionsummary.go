@@ -93,11 +93,11 @@ func SummariseCapital(record []byte, planets *Planets, region, faction, turn, ep
 	military, taxTotal int) CapitalSummary {
 	y, m, d := Date(turn, epoch)
 	c := CapitalSummary{
-		Region:   Summarise(record, planets, region, faction),
-		Year:     y, Month: m, Day: d,
+		Region: Summarise(record, planets, region, faction),
+		Year:   y, Month: m, Day: d,
 		Military: military, TaxTotal: taxTotal,
-		Economy:  RegionEconomy(record),
-		Tax:      RegionTax(record),
+		Economy:         RegionEconomy(record),
+		Tax:             RegionTax(record),
 		TaxRatePerMille: RegionTaxRate(record),
 	}
 	if len(record) > regionGrowth {

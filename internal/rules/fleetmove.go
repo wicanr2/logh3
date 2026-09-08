@@ -1,0 +1,119 @@
+package rules
+
+// 艦隊在戰場上怎麼轉、怎麼走（原版 `1C03:01B5`、`1C03:0524`、`3310:0006`）。
+//
+// 這一層與分隊的移動（`AdvanceBattle`）不是同一支常式：艦隊記錄自己帶
+// 一個 16.16 的行程額度，轉向與前進都從裡面扣，而且**扣在落點檢查前面**
+// ——被擋掉的一步照樣扣。逐位元的對照見 `docs/re/129`。
+
+// FleetMover 是艦隊移動要用到的那幾格（`docs/internals/33`）。
+type FleetMover struct {
+	X, Y      int // +0x5C／+0x5E 現在位置
+	DestX     int // +0x64
+	DestY     int // +0x66
+	Facing    int // +0x4A 現在朝向（一整圈 256）
+	TurnSpeed int // +0x4D 回轉速度
+	Budget    int // +0x56／+0x58 這一回合剩下的行程，16.16
+	PerTurn   int // +0x52／+0x54 每回合行程，16.16
+	Arrived   bool
+}
+
+// RefillFleetBudget 是每回合開頭那一下（`1C03:0040`）：**無條件覆蓋**，
+// 不是把剩下的加上去。分隊那份（`1C61:0005`）才有「不足一步就累加」。
+func RefillFleetBudget(f *FleetMover) { f.Budget = f.PerTurn }
+
+// Distance16 是原版的兩點距離（`3310:0006`），回 16.16。
+//
+// 算的是 `M × √(1 + (m/M)²)`，`M` 取兩軸差的大者。中間兩步都截斷
+// （`39B5:005C` 除、`39B5:000C` 乘），開根號走 `fixSqrt`。**不是**
+// `√(dx²＋dy²)` 的直接寫法——差一個最低位就對不上收據。
+func Distance16(x0, y0, x1, y1 int) int64 {
+	dx, dy := abs32(x1-x0), abs32(y1-y0)
+	m, M := dx, dy
+	if m > M {
+		m, M = M, m
+	}
+	if M == 0 {
+		return 0
+	}
+	q := (int64(m) << 16) / int64(M)
+	return int64(M) * fixSqrt(FixOne+(q*q)>>16)
+}
+
+// TurnFacing256 是帶正負號的最短角差（原版 `2BE1:021B`）：`a − b` 之後
+// 正規化到 −128..127。
+func TurnFacing256(target, cur int) int {
+	d := (target - cur) & 0xFF
+	if d >= 128 {
+		d -= 256
+	}
+	return d
+}
+
+// fleetStepCost 是額度的門檻與轉向的固定花費，都是 16.16 的 8.0。
+const fleetStepCost = BattleStep * FixOne
+
+// turnFleet 轉一步（原版 `1C03:0524`）。回 true 表示「動了」，對應原版
+// 的回傳 1；`|角差| ≤ 回轉速度` 那條**一次轉到位而且不扣額度**。
+func turnFleet(f *FleetMover, bearing int) bool {
+	d := TurnFacing256(bearing, f.Facing)
+	if d == 0 {
+		return false
+	}
+	if abs32(d) <= f.TurnSpeed {
+		f.Facing = (f.Facing + d) & 0xFF
+		return true
+	}
+	if int64(f.Budget) < fleetStepCost {
+		return false
+	}
+	step := f.TurnSpeed
+	if d < 0 {
+		step = -step
+	}
+	f.Facing = (f.Facing + step) & 0xFF
+	f.Budget -= fleetStepCost
+	return true
+}
+
+// AdvanceFleet 走一次「實行」（原版 `1C03:01B5`）：先轉一步，**同一次
+// 呼叫接著就前進一步**，所以第一步用的是轉到一半的朝向。
+//
+// `passable` 回 true 表示那個點站得住（原版 `2583:040C` 回 0）。傳 nil
+// 當成處處可站。回 true 表示這一次還有得做，false 表示額度用完了。
+func AdvanceFleet(f *FleetMover, passable func(x, y int) bool) bool {
+	if f == nil {
+		return false
+	}
+	if f.X != f.DestX || f.Y != f.DestY {
+		if bearing := atan256(f.DestX-f.X, f.DestY-f.Y); bearing != f.Facing {
+			turnFleet(f, bearing)
+		}
+	}
+	if int64(f.Budget) < fleetStepCost {
+		return false
+	}
+	nx, ny := f.DestX, f.DestY
+	if Distance16(f.X, f.Y, f.DestX, f.DestY) > fleetStepCost {
+		nx, ny = StepAlong(f.X, f.Y, f.Facing, BattleStep)
+	}
+	d := Distance16(f.X, f.Y, nx, ny)
+	if d == 0 {
+		d = 1 // 原版：算出來是 0 就當 1，免得原地不動又不扣額度
+	}
+	f.Budget -= int(d)
+	if passable == nil || passable(nx, ny) {
+		f.X, f.Y = nx, ny
+		if f.X == f.DestX && f.Y == f.DestY {
+			f.Arrived = true
+		}
+	}
+	return true
+}
+
+// RunFleetTurn 把一回合跑完：補滿額度，然後一直「實行」到額度不足一步。
+func RunFleetTurn(f *FleetMover, passable func(x, y int) bool) {
+	RefillFleetBudget(f)
+	for AdvanceFleet(f, passable) {
+	}
+}

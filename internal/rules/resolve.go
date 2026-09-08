@@ -166,7 +166,6 @@ func unitsOf(units []BattleUnit, fleet int) []int {
 	return out
 }
 
-
 // shipsKind01 加總艦種 0 與 1 的現有艘數（`203A:04D1`，`docs/re/99`）。
 func shipsKind01(units []BattleUnit, idx []int) int {
 	sum := 0
@@ -177,8 +176,6 @@ func shipsKind01(units []BattleUnit, idx []int) int {
 	}
 	return sum
 }
-
-
 
 // BattleFleetsFor 從存檔的艦隊表與提督表做出戰鬥用的艦隊資料。
 //

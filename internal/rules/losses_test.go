@@ -89,14 +89,14 @@ func TestDirectionFactors(t *testing.T) {
 // 方向索引的算式（`3982:0022`）與它在係數表上的落點。
 func TestDirectionIndex(t *testing.T) {
 	cases := []struct{ diff, idx, factor int }{
-		{0, 0, 80},    // 同向：最低
+		{0, 0, 80}, // 同向：最低
 		{16, 1, 85},
 		{32, 1, 85},
 		{48, 2, 90},
 		{64, 2, 90},   // 差四分之一圈
 		{128, 4, 100}, // 差半圈：最高
 		{192, 6, 90},
-		{255, 0, 80},  // 繞回去
+		{255, 0, 80}, // 繞回去
 	}
 	for _, c := range cases {
 		if got := DirectionIndex(c.diff); got != c.idx {

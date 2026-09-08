@@ -14,11 +14,11 @@ import (
 // 位移與 `region.go` 的是同一套，載進來之後不必再轉換。
 const (
 	// SaveSlots 是存檔格數，SaveEntry 是 `SAVEDATA.IDX` 一筆的長度。
-	SaveSlots    = 11
-	SaveEntry    = 48
-	saveEntryNum = 0x0D // 存檔序號
-	saveEntryTurn = 0x0E
-	saveEntryName = 0x14
+	SaveSlots        = 11
+	SaveEntry        = 48
+	saveEntryNum     = 0x0D // 存檔序號
+	saveEntryTurn    = 0x0E
+	saveEntryName    = 0x14
 	saveEntryNameLen = 18
 
 	// WorkRecord 是 `WORK.DT?` 的長度，後面三個是對上的欄位。

@@ -21,11 +21,11 @@ func TestEngagementRange(t *testing.T) {
 // 攻擊名單的三個條件（`17A0:00AC`）。
 func TestInRange(t *testing.T) {
 	units := []BattleUnit{
-		{Faction: 0, TargetX: 1000, TargetY: 1000},             // 陣營不符
-		{Faction: 1, TargetX: 1000, TargetY: 1000},             // 在範圍內
-		{Faction: 1, TargetX: 1000, TargetY: 1000, Out: true},  // 出局
-		{Faction: 1, TargetX: 1200, TargetY: 1000},             // 剛好在邊界外
-		{Faction: 1, TargetX: 1160, TargetY: 1000},             // 邊界上
+		{Faction: 0, TargetX: 1000, TargetY: 1000},            // 陣營不符
+		{Faction: 1, TargetX: 1000, TargetY: 1000},            // 在範圍內
+		{Faction: 1, TargetX: 1000, TargetY: 1000, Out: true}, // 出局
+		{Faction: 1, TargetX: 1200, TargetY: 1000},            // 剛好在邊界外
+		{Faction: 1, TargetX: 1160, TargetY: 1000},            // 邊界上
 	}
 	got := InRange(units, 1000, 1000, 160, 1)
 	want := []int{1, 4}

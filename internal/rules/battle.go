@@ -15,15 +15,15 @@ import "encoding/binary"
 // 座標空間比看得到的戰場（448×360）大很多：整張戰場 128×102 格、
 // 一格 16×20，所以是 2048×2040，右上角小地圖上的白框就是視野。
 type BattleUnit struct {
-	Fleet    int `json:"fleet"`     // 屬於戰略地圖上的哪一支艦隊
-	Squadron int `json:"squadron"`  // 在艦隊裡的第幾個分隊，0 ＝ 旗艦
-	Faction  int `json:"faction"`   // 0 帝國、1 同盟
-	X        int `json:"x"`         // 現在的位置
-	Y        int `json:"y"`
-	TargetX  int `json:"target_x"` // 要去的點
-	TargetY  int `json:"target_y"`
-	Speed    int `json:"speed"`     // 一回合走多遠
-	Strength int `json:"strength"`  // 戰力（`StrengthWeights` 算的）
+	Fleet     int `json:"fleet"`    // 屬於戰略地圖上的哪一支艦隊
+	Squadron  int `json:"squadron"` // 在艦隊裡的第幾個分隊，0 ＝ 旗艦
+	Faction   int `json:"faction"`  // 0 帝國、1 同盟
+	X         int `json:"x"`        // 現在的位置
+	Y         int `json:"y"`
+	TargetX   int `json:"target_x"` // 要去的點
+	TargetY   int `json:"target_y"`
+	Speed     int `json:"speed"`      // 一回合走多遠
+	Strength  int `json:"strength"`   // 戰力（`StrengthWeights` 算的）
 	Kind      int `json:"kind"`       // 艦種（艦艇記錄 `+0x04`）
 	Detail    int `json:"detail"`     // 顯示層級（艦艇記錄 `+0x17`）
 	Ships     int `json:"ships"`      // 現有艘數（艦艇記錄 `+0x08`）
@@ -35,10 +35,10 @@ type BattleUnit struct {
 	// `+0x22`。艦隊的回轉／巡航／戰鬥速度就是**各分隊取最小值**
 	// （`0x2A7AE` 那個迴圈，寫進艦隊記錄 `+0x4D`／`+0x4E`／`+0x4F`；
 	// `docs/re/112`）。
-	TurnSpeed   int `json:"turn_speed"`
-	CruiseSpeed int `json:"cruise_speed"`
-	FightSpeed  int `json:"fight_speed"`
-	Out       bool `json:"out"`       // 出局，不進攻擊名單（艦艇記錄 `+0x1E` bit7）
+	TurnSpeed   int  `json:"turn_speed"`
+	CruiseSpeed int  `json:"cruise_speed"`
+	FightSpeed  int  `json:"fight_speed"`
+	Out         bool `json:"out"` // 出局，不進攻擊名單（艦艇記錄 `+0x1E` bit7）
 
 	// Missiles／Fighters 是艦艇記錄 `+0x0E`／`+0x12` 的 32 位元值：
 	// 現有的飛彈與戰鬥機數。分隊面板印的就是它們，顏色由「滿不滿」決定

@@ -52,10 +52,10 @@ func TestAttackCoefficientGuards(t *testing.T) {
 func TestFixSqrt(t *testing.T) {
 	cases := []struct{ n, want int64 }{
 		{0, 0},
-		{FixOne, FixOne},           // sqrt(1) ＝ 1
-		{4 * FixOne, 2 * FixOne},   // sqrt(4) ＝ 2
-		{9 * FixOne, 3 * FixOne},   // sqrt(9) ＝ 3
-		{FixOne / 4, FixOne / 2},   // sqrt(0.25) ＝ 0.5
+		{FixOne, FixOne},         // sqrt(1) ＝ 1
+		{4 * FixOne, 2 * FixOne}, // sqrt(4) ＝ 2
+		{9 * FixOne, 3 * FixOne}, // sqrt(9) ＝ 3
+		{FixOne / 4, FixOne / 2}, // sqrt(0.25) ＝ 0.5
 	}
 	for _, c := range cases {
 		if got := fixSqrt(c.n); got != c.want {

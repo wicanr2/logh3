@@ -8,9 +8,9 @@ package rules
 
 // BattlePlanet 是戰鬥期間一顆行星要用到的欄位。
 type BattlePlanet struct {
-	Index   int  `json:"index"`   // 行星表的索引
-	Owner   int  `json:"owner"`   // 0 帝國、1 同盟、2 無主
-	X       int  `json:"x"`       // 星域地圖上的位置
+	Index   int  `json:"index"` // 行星表的索引
+	Owner   int  `json:"owner"` // 0 帝國、1 同盟、2 無主
+	X       int  `json:"x"`     // 星域地圖上的位置
 	Y       int  `json:"y"`
 	Defence int  `json:"defence"` // `+0x14`：防衛力
 	Halved  bool `json:"halved"`  // `+0x12` 非 0：除數從 10 變 20

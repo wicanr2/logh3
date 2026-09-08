@@ -97,8 +97,8 @@ func TestStaffAdmiralsByFaction(t *testing.T) {
 		faction int
 		want    []int
 	}{
-		{0, []int{6, 13, 16}},   // 梅克林格／克斯拉／奧貝斯坦
-		{1, []int{79, 58, 60}},  // 派特里契夫／巴格達胥／邱吾權
+		{0, []int{6, 13, 16}},  // 梅克林格／克斯拉／奧貝斯坦
+		{1, []int{79, 58, 60}}, // 派特里契夫／巴格達胥／邱吾權
 	} {
 		got := StaffAdmirals(work, c.faction)
 		if len(got) != len(c.want) {

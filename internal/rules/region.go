@@ -12,8 +12,8 @@ const (
 	PlanetRecord = 82
 	PlanetHeader = 64
 
-	planetOwner   = 0x11 // 這顆行星屬於誰：0 帝國、1 同盟、2 其他
-	planetDefence = 0x14 // 防衛力（畫面上的那個，星域防衛力 ＝ 這一欄相加）
+	planetOwner     = 0x11 // 這顆行星屬於誰：0 帝國、1 同盟、2 其他
+	planetDefence   = 0x14 // 防衛力（畫面上的那個，星域防衛力 ＝ 這一欄相加）
 	planetGrowthDef = 0x16 // 成長率的 ×3/2 加成看的是這一欄（`docs/re/44`）
 
 	// RegionRecord 是 `STELLAR.DT*` 一筆的長度，RegionCount 是星域數。
@@ -26,7 +26,7 @@ const (
 	regionDefence = 0x20 // 16 位元，與 +0x22 是同一個值的兩份
 	// RegionUnrest 是未安定度，記錄的最後一個 byte；治安由它算出來。
 	// 存檔裡也有這一欄，但載入時會重算（`docs/re/41`）。
-	RegionUnrest = 0x7D
+	RegionUnrest  = 0x7D
 	regionTaxRate = 0x26 // 稅率，千分之一為單位（畫面上的 3.2% ＝ 32）
 	regionGrowth  = 0x1E // 成長率，千分之一為單位（畫面上的 4.5% ＝ 45）
 )
@@ -370,8 +370,8 @@ func Tax(economy, ratePerMille int) int {
 
 // Treasury 是一個陣營這個月的財政（`docs/internals/27`）。
 type Treasury struct {
-	Budget   int // 原定軍事費：這個月一開始有多少（ds:8F62）
-	ShipPaid int // 已支付的船艦建造費（ds:8F94）
+	Budget      int // 原定軍事費：這個月一開始有多少（ds:8F62）
+	ShipPaid    int // 已支付的船艦建造費（ds:8F94）
 	FleetUpkeep int // 艦隊維持費（ds:8F72）
 	Movement    int // 移動經費（ds:8F7A）
 	Other       int // 還沒認出來的第三項（ds:8F82）
@@ -385,7 +385,6 @@ type Treasury struct {
 func (t Treasury) Remaining() int {
 	return t.Budget - t.ShipPaid - t.FleetUpkeep - t.Movement - t.Other
 }
-
 
 // 星域記錄裡兩個陣營的艦艇艘數各佔七個 32 位元（`docs/re/69`）。
 const (
