@@ -18,6 +18,14 @@ func newTestGame(t *testing.T) *Game {
 		t.Fatal(err)
 	}
 	res.Entries = e
+	if res.Graph == nil {
+		graph, err := rules.LoadStarGraph(filepath.Join(root,
+			"docs/internals/data/star-graph.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.Graph = graph
+	}
 	g, err := New(res)
 	if err != nil {
 		t.Fatal(err)

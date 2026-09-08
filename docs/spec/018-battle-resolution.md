@@ -74,6 +74,17 @@ func InRange(units []BattleUnit, x, y, limit, faction int) []int
 `rules.DistributeLosses`：按各分隊佔全隊現有艘數的比例分攤，餘數補給最大
 的一支，每支至少留一艘，艦種 7 不扣。
 
+## 什麼時候開戰
+
+原版在雙方的艦隊走到同一個星域的那一刻直接切進戰術畫面
+（`docs/internals/34`「怎麼走到」：載 S3 按六次「實行」，兩邊會合在
+達希利就開戰）。remake 在推進回合、艦隊移動之後檢查一次：有星域同時
+站著兩個陣營的艦隊就開戰。
+
+**還沒解**：同時有多個星域符合時原版打哪一個（remake 取編號最小）、
+幾支才算、能不能迴避。remake 走幾回合會合也不會與原版相同——移動是
+「一回合走一格」，那本身是假設待驗（`docs/re/77`）。
+
 ## 每回合的流程
 
 ```
@@ -111,6 +122,8 @@ func InRange(units []BattleUnit, x, y, limit, faction int) []int
 - `rules.EngagementRange` 對 `docs/re/90` 記的算式，單元測試；
 - `rules.InRange` 對三個條件各一組樣本；
 - 一場戰鬥推到一方歸零不會卡住、不會出現負的艘數；
+- 從載入存檔一路按實行到開戰、再推十個回合，艘數會往下掉
+  （`TestBattleStartsOnContact`、`TestBattleTurnsDeduct`）；
 - 既有的畫面對拍（`TestBattleMatchesOracle`、`TestMinimapMatchesOracle`）
   不受影響。
 

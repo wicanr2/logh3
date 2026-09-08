@@ -518,6 +518,14 @@ func (g *Game) advanceTurn() {
 	if g.res.Graph != nil {
 		g.res.Graph.MoveFleets(g.fleets)
 	}
+	// 兩邊的艦隊走到同一個星域就直接切進戰術畫面（`docs/internals/34`
+	// 「怎麼走到」：S3 按六次實行，雙方會合在達希利就開戰）。
+	// **哪一個星域先打、能不能不打，都還沒解**——同時有多個星域符合時
+	// 這裡取編號最小的那一個。
+	if r := g.contestedRegion(); r >= 0 {
+		g.StartBattle(r)
+		return
+	}
 	// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
 	// 並跳出船艦接收報告。
 	//
@@ -542,6 +550,28 @@ func (g *Game) advanceTurn() {
 		return
 	}
 	g.state = StateCommandPhase
+}
+
+// contestedRegion 回「同時有兩個陣營的艦隊」的星域，沒有就回 -1。
+//
+// 原版在雙方會合的那一刻直接切進戰術畫面（`docs/internals/34`）。
+// 判斷的細節（幾支才算、能不能迴避）還沒解，這裡只看有沒有兩邊都在。
+func (g *Game) contestedRegion() int {
+	best := -1
+	for r := 0; r < rules.RegionCount; r++ {
+		var side [2]bool
+		for _, f := range g.fleets {
+			if f.Region == r && f.Faction >= 0 && f.Faction < 2 {
+				side[f.Faction] = true
+			}
+		}
+		if side[0] && side[1] {
+			if best < 0 || r < best {
+				best = r
+			}
+		}
+	}
+	return best
 }
 
 // SetBrain 換掉電腦那一方的決策。nil ＝ 回到原版（什麼都不做）。
