@@ -254,6 +254,39 @@ func (p *Planets) rec(i int) []byte {
 	return p.Data[o : o+PlanetRecord]
 }
 
+// 補給欄那三組欄位（`docs/re/111`，反組譯自 `0x140A5` 起那一段）。
+const (
+	planetYard     = 0x20 // ＋ 艦種 × 4：對該艦種的補給量（32 位元）
+	planetSupplyM  = 0x3C // 補給欄的 M（32 位元）
+	planetSupplyF  = 0x40 // 補給欄的 F（32 位元）
+	planetYardKind = 7    // 七種艦艇
+)
+
+// u32 讀記錄裡的 32 位元值。
+func (p *Planets) u32(i, off int) uint32 {
+	return binary.LittleEndian.Uint32(p.rec(i)[off:])
+}
+
+// SupplyM／SupplyF 回補給欄那兩格是不是 `o`。
+//
+// 原版只看「非零」：`mov ax,es:[bx+3Ch] / or ax,es:[bx+3Eh] / jz`
+// ——**兩個 word 或起來**，等於整個 32 位元非零。
+func (p *Planets) SupplyM(i int) bool { return p.u32(i, planetSupplyM) != 0 }
+
+// SupplyF 同 SupplyM，讀的是 `+0x40`。
+func (p *Planets) SupplyF(i int) bool { return p.u32(i, planetSupplyF) != 0 }
+
+// Yard 回這顆行星對第 kind 種艦艇能不能補給（畫面上那七格 `o`／`x`）。
+//
+// 欄位是 `+0x20 + 艦種 × 4` 的 32 位元值，判準同樣是「非零」。
+// 七格的順序就是表頭 `BHCADTE` 的順序，也就是艦種 0–6。
+func (p *Planets) Yard(i, kind int) bool {
+	if kind < 0 || kind >= planetYardKind {
+		return false
+	}
+	return p.u32(i, planetYard+kind*4) != 0
+}
+
 // Name 回第 i 顆行星的名字：記錄 `+0x00` 起的 Big5 字碼，`00` 結尾
 // （最多四個全形字，`docs/re/111`）。
 func (p *Planets) Name(i int) []uint16 {

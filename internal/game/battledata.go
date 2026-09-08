@@ -182,9 +182,10 @@ func rightDigits(v, w int) []uint16 {
 // 是擁有者的陣營色。**不是玩家的行星整段印死字串 `M*:F* *******`**
 // ——那條字串就在原版的字串表裡，兩顆同盟行星都印它。
 //
-// 自己的行星那一格（`Mo:Fo` ＋ 七個 `o`／`x`）**還沒解**：七個旗標對到
-// 七種艦艇（欄名就是 `BHCADTE`），但判準未知，收據裡那一顆七格全是
-// `x`，一個樣本分不出來。空著不猜。
+// 自己的行星印 `Mo:`／`Mx:` ＋ `Fo `／`Fx ` ＋ 七個 `o`／`x`。判準全是
+// **「那個 32 位元欄位非不非零」**（反組譯 `0x140A5` 起那一段）：
+// M 看 `+0x3C`、F 看 `+0x40`、第 i 格看 `+0x20 + i × 4`，
+// 七格的順序就是表頭 `BHCADTE`，也就是艦種 0–6。
 func (g *Game) battleDataPlanets() [][]screen.BattleDataRun {
 	p := g.res.Planets
 	if p == nil || g.battleRegion < 0 {
@@ -199,10 +200,30 @@ func (g *Game) battleDataPlanets() [][]screen.BattleDataRun {
 			{X: 192, Codes: rightDigits(p.PlanetEconomy(i), 6)},
 			{X: 256, Codes: rightDigits(p.Defence(i), 6)},
 		}
-		if owner != g.faction {
-			row = append(row, screen.BattleDataRun{X: 320, Codes: half("M*:F* *******")})
-		}
+		row = append(row, screen.BattleDataRun{X: 320, Codes: half(g.planetSupply(i, owner))})
 		out = append(out, row)
+	}
+	return out
+}
+
+// planetSupply 回補給那一欄要印的字串。
+//
+// 不是玩家的行星整段遮起來——原版比的是行星記錄 `+0x11` 與玩家陣營
+// （`ds:8F1D`），不同就跳去印死字串 `M*:F* *******`。
+func (g *Game) planetSupply(i, owner int) string {
+	if owner != g.faction {
+		return "M*:F* *******"
+	}
+	p := g.res.Planets
+	flag := func(ok bool) string {
+		if ok {
+			return "o"
+		}
+		return "x"
+	}
+	out := "M" + flag(p.SupplyM(i)) + ":F" + flag(p.SupplyF(i)) + " "
+	for k := 0; k < 7; k++ {
+		out += flag(p.Yard(i, k))
 	}
 	return out
 }
@@ -219,26 +240,5 @@ func half(s string) []uint16 {
 // battleDataUndecided 回這個分頁上「規則還沒解、remake 刻意不畫」的矩形
 // （對拍契約要求允許差異必須事先列出確切座標與理由，`docs/spec/021`）。
 //
-// 目前只有一處：行星分頁上**自己那幾顆行星的補給欄**（x 320–431）。
-// 原版在那裡印 `Mo:Fo` ＋ 七個 `o`／`x`，七個旗標對到七種艦艇
-// （欄名就是 `BHCADTE`），但判準未解——收據裡唯一一顆自己的行星
-// 七格全是 `x`，一個樣本分不出來。不是自己的行星印死字串
-// `M*:F* *******`，那條已經接上了。
-func (g *Game) battleDataUndecided(tab int) [][4]int {
-	if tab != 1 || g.res.Planets == nil || g.battleRegion < 0 {
-		return nil
-	}
-	s := g.res.BattleData
-	if s == nil {
-		return nil
-	}
-	start, n := g.res.Planets.Range(g.battleRegion)
-	var out [][4]int
-	for i := start; i < start+n && i-start < s.Row.Count; i++ {
-		if g.res.Planets.Owner(i) != g.faction {
-			continue
-		}
-		out = append(out, [4]int{320, s.Row.Y + (i-start)*s.Row.H, 112, s.Row.H})
-	}
-	return out
-}
+// 目前是空的：補給欄那三組旗標已經解出來了（`docs/re/111`）。
+func (g *Game) battleDataUndecided(tab int) [][4]int { return nil }
