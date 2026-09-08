@@ -343,14 +343,13 @@
   }
  },
  "minimap": {
-  "_note": "小地圖：這個星域的地形等比縮小 1/16（docs/internals/34）。像素 (i,j) 顯示格 (i, j × map_rows ÷ h)，比例來自圖塊的 16×20。疊一層與戰場同一組的格線（每 15 像素，色 grid_ink），再畫視野框（左上 ＝ (視野欄, 視野列 × h ÷ map_rows)，大小同視野）。",
+  "_note": "小地圖：這個星域的地形等比縮小 1/16（docs/internals/34）。像素 (i,j) 顯示格 (i, j × map_rows ÷ h)，比例來自圖塊的 16×20。疊一層與戰場同一組的格線（每 15 像素，色 grid_ink），再畫視野框（左上 ＝ (視野欄, 視野列 × h ÷ map_rows 向上取整)，大小同視野）；框不是固定色，是把底下的色 OR view_or。 第 0 列是色 top_ink 的邊框，不是格線；視野框的上邊用向上取整。",
   "x": 480,
   "y": 75,
   "w": 128,
   "h": 127,
   "grid_pitch": 15,
   "grid_ink": 1,
-  "view_ink": 7,
   "tile_colour": {
    "0": 3,
    "1": 3,
@@ -393,6 +392,8 @@
    "54": 1,
    "55": 1
   },
-  "default_colour": 1
+  "default_colour": 1,
+  "top_ink": 3,
+  "view_or": 4
  }
 }

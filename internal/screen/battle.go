@@ -341,9 +341,10 @@ type MinimapSpec struct {
 	X, Y, W, H    int
 	GridPitch     int            `json:"grid_pitch"`
 	GridInk       uint8          `json:"grid_ink"`
-	ViewInk       uint8          `json:"view_ink"`
+	ViewOr        uint8          `json:"view_or"`
 	TileColour    map[string]int `json:"tile_colour"`
 	DefaultColour uint8          `json:"default_colour"`
+	TopInk        uint8          `json:"top_ink"`
 }
 
 // DrawMinimap 畫右上角的小地圖。
@@ -352,7 +353,10 @@ type MinimapSpec struct {
 //
 //   - 地形：像素 (i,j) 顯示格 (i, j × 列數 ÷ 高)，色由圖塊編號查表；
 //   - 格線：`i % 15 == 0` 或 `j % 15 < 2` 畫成底色，與戰場那層同一組；
-//   - 視野框：左上 (視野欄, 視野列 × 高 ÷ 列數)，大小就是視野的格數。
+//   - 視野框：左上 (視野欄, 視野列 × 高 ÷ 列數 **向上取整**)，大小就是視野的格數。
+//     框不是固定色——它把底下那一格的色**或上 ViewOr**（地形 1 變 5、3 變 7）。
+//
+// 第 0 列是邊框（色 TopInk），不是格線。
 func DrawMinimap(s *BattleSpec, fb *gfx.Framebuffer, cells []uint8, v BattleView) {
 	m := &s.Minimap
 	if m.W <= 0 || m.H <= 0 || len(cells) == 0 {
@@ -362,7 +366,9 @@ func DrawMinimap(s *BattleSpec, fb *gfx.Framebuffer, cells []uint8, v BattleView
 		r := j * s.Field.MapRows / m.H
 		for i := 0; i < m.W; i++ {
 			c := m.DefaultColour
-			if m.GridPitch > 0 && (i%m.GridPitch == 0 || j%m.GridPitch < 2) {
+			if j == 0 {
+				c = m.TopInk
+			} else if m.GridPitch > 0 && (i%m.GridPitch == 0 || j%m.GridPitch < 2) {
 				c = m.GridInk
 			} else if k := r*s.Field.MapCols + i; k < len(cells) {
 				if n, ok := m.TileColour[itoa(int(cells[k]))]; ok {
@@ -374,14 +380,16 @@ func DrawMinimap(s *BattleSpec, fb *gfx.Framebuffer, cells []uint8, v BattleView
 	}
 	// 視野框：只畫邊。
 	vx := m.X + v.Col
-	vy := m.Y + v.Row*m.H/s.Field.MapRows
+	// 上邊向上取整——`s3ai6` 的視野列 30 算出來是 37.35，原版畫在 38。
+	vy := m.Y + (v.Row*m.H+s.Field.MapRows-1)/s.Field.MapRows
 	vw, vh := s.Field.Cols, s.Field.Rows*m.H/s.Field.MapRows
+	mark := func(x, y int) { fb.Set(x, y, fb.At(x, y)|m.ViewOr) }
 	for i := 0; i < vw; i++ {
-		fb.Set(vx+i, vy, m.ViewInk)
-		fb.Set(vx+i, vy+vh-1, m.ViewInk)
+		mark(vx+i, vy)
+		mark(vx+i, vy+vh-1)
 	}
 	for j := 0; j < vh; j++ {
-		fb.Set(vx, vy+j, m.ViewInk)
-		fb.Set(vx+vw-1, vy+j, m.ViewInk)
+		mark(vx, vy+j)
+		mark(vx+vw-1, vy+j)
 	}
 }
