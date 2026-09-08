@@ -310,8 +310,13 @@ type Resources struct {
 	// 要用它判「這條直線走不走得通」；nil ＝ 不判，一律當通得過。
 	Terrain *rules.BattleTerrain
 
-	// BattleData 是戰術選單「資料」那張畫面的版面（`docs/spec/021`）。
-	BattleData *screen.BattleDataSpec
+	// BattleData 是戰術選單「資料」那張畫面的版面（`docs/spec/021`），
+	// FleetDetail 是點一列開出來的艦隊詳細資料（`docs/spec/022`）。
+	BattleData  *screen.BattleDataSpec
+	FleetDetail *screen.FleetDetailSpec
+
+	// ShipKinds 是艦種屬性表（`docs/internals/40`）。
+	ShipKinds *rules.ShipKindTable
 
 	// Intro 是開頭動畫的解碼器（`IBM16.350` ＋ `IBMFLS16.350`），
 	// IntroPal 是它的調色盤（`BU16IBM.RGB`）。**nil ＝ 直接從主選單開始**
@@ -480,6 +485,11 @@ type Game struct {
 	// 分頁（0 艦隊／1 行星／2 敵艦隊）。
 	battleData    bool
 	battleDataTab int
+
+	// battleDetail ＝ 艦隊詳細資料那一層開著沒有，battleDetailRow 是
+	// 點的是表上第幾列。
+	battleDetail    bool
+	battleDetailRow int
 	battleMenuX, battleMenuY int
 
 	battleRally   []rules.RallySite
@@ -1057,7 +1067,11 @@ func (g *Game) RightClick(x, y int) {
 	case StateAdmiralDetail:
 		g.state = StateStandbyAdmirals
 	case StateBattle:
-		// 右鍵關掉最上面那一層：先關「資料」，再關開在游標處的選單。
+		// 右鍵關掉最上面那一層：詳細資料 → 「資料」 → 選單。
+		if g.battleDetail {
+			g.battleDetail = false
+			return
+		}
 		if g.battleData {
 			g.battleData = false
 			return
@@ -2336,8 +2350,17 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	}
 	// 「資料」是不透明的一層，蓋掉戰場那一塊（`docs/spec/021`）。
 	if g.battleData && g.res.BattleData != nil && g.res.Font != nil {
-		screen.DrawBattleData(g.res.BattleData, fb, g.res.Font,
-			g.battleDataTab, g.battleDataRows(g.battleDataTab))
+		if g.battleDetail && g.res.FleetDetail != nil {
+			// 詳細資料與「資料」共用外框，換掉的是裡面那一層。
+			w := g.res.BattleData.Window
+			g.res.BattleData.Window.Frame.Frame().Draw(fb, w.X, w.Y, w.W, w.H)
+			if v, ok := g.fleetDetailView(); ok {
+				screen.DrawFleetDetail(g.res.FleetDetail, fb, g.res.Font, v)
+			}
+		} else {
+			screen.DrawBattleData(g.res.BattleData, fb, g.res.Font,
+				g.battleDataTab, g.battleDataRows(g.battleDataTab))
+		}
 	}
 	return fb
 }

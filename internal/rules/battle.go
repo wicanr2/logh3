@@ -30,6 +30,14 @@ type BattleUnit struct {
 	FullShips int `json:"full_ships"` // 滿編艘數（艦艇記錄 `+0x0A`）
 	Attack    int `json:"attack"`     // 攻擊力（艦艇記錄 `+0x16`）
 	Morale    int `json:"morale"`     // 士氣（艦艇記錄 `+0x06`）
+
+	// TurnSpeed／CruiseSpeed／FightSpeed 是艦艇記錄的 `+0x1F`／`+0x21`／
+	// `+0x22`。艦隊的回轉／巡航／戰鬥速度就是**各分隊取最小值**
+	// （`0x2A7AE` 那個迴圈，寫進艦隊記錄 `+0x4D`／`+0x4E`／`+0x4F`；
+	// `docs/re/112`）。
+	TurnSpeed   int `json:"turn_speed"`
+	CruiseSpeed int `json:"cruise_speed"`
+	FightSpeed  int `json:"fight_speed"`
 	Out       bool `json:"out"`       // 出局，不進攻擊名單（艦艇記錄 `+0x1E` bit7）
 }
 
@@ -296,6 +304,9 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 			// 會是 0xFF64。用 -poke 把 0x682EC 寫成 77 驗過，畫面上只有
 			// 那一列的士氣跟著變（收據 `s3morale`，`docs/re/111`）。
 			u.Morale = int(rec[6])
+			u.TurnSpeed = int(rec[0x1F])
+			u.CruiseSpeed = int(rec[0x21])
+			u.FightSpeed = int(rec[0x22])
 			if w != nil {
 				u.Strength = w.ShipStrength(rec)
 			}

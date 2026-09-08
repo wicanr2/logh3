@@ -17,7 +17,68 @@ type ShipKind struct {
 	// `docs/re/94`）。
 	SemiMajor int `json:"semi_major"`
 	SemiMinor int `json:"semi_minor"`
+
+	// Words 是這一列原始的 13 個 word。畫面上讀的是**位元組**
+	// （`docs/re/112`），所以下面幾個取值函式都從這裡拆。
+	Words []int `json:"words"`
 }
+
+// Byte 回這一列第 off 個位元組（13 個 word ＝ 26 個位元組）。
+func (k ShipKind) Byte(off int) int {
+	i := off / 2
+	if i < 0 || i >= len(k.Words) {
+		return 0
+	}
+	if off%2 == 0 {
+		return k.Words[i] & 0xFF
+	}
+	return k.Words[i] >> 8
+}
+
+// 艦隊詳細資料那一層讀的欄位（`docs/re/112`）。
+const (
+	kindTopSpeed    = 0x06 // 最高速度
+	kindBattleSpeed = 0x07 // 戰鬥速度
+	kindBeamName    = 0x0A // 第一組武器的名字索引（0xFF ＝ 沒搭載）
+	kindBeamPer     = 0x0B // 第一組武器每艘幾門
+	kindMissileName = 0x0E // 第二組武器的名字索引
+	kindLauncherPer = 0x0F // 發射裝置每艘幾座
+	kindMissilePer  = 0x10 // 第二組武器每艘幾發
+	kindFighterName = 0x12 // 艦載機的名字索引
+	kindFighterPer  = 0x13 // 艦載機每艘幾架
+	kindNoWeapon    = 0xFF
+)
+
+// TopSpeed／BattleSpeed 是明細畫面上那兩格。
+func (k ShipKind) TopSpeed() int    { return k.Byte(kindTopSpeed) }
+
+// BattleSpeed 見 TopSpeed。
+func (k ShipKind) BattleSpeed() int { return k.Byte(kindBattleSpeed) }
+
+// Durability 是明細畫面上的「耐久力」＝ 兩個半軸的平均
+// （`0x1524F`：`mov ax,[bx+16h] / add ax,[bx+18h] / shr ax,1`）。
+func (k ShipKind) Durability() int { return (k.SemiMajor + k.SemiMinor) / 2 }
+
+// Weapon 回一組裝備的「名字索引、每艘幾件」；索引 −1 ＝ 沒搭載。
+func (k ShipKind) Weapon(nameOff, perOff int) (name, per int) {
+	n := k.Byte(nameOff)
+	if n == kindNoWeapon {
+		return -1, 0
+	}
+	return n, k.Byte(perOff)
+}
+
+// BeamWeapon／MissileWeapon／LauncherPer／FighterWeapon 是那四組。
+func (k ShipKind) BeamWeapon() (int, int) { return k.Weapon(kindBeamName, kindBeamPer) }
+
+// MissileWeapon 見 BeamWeapon。
+func (k ShipKind) MissileWeapon() (int, int) { return k.Weapon(kindMissileName, kindMissilePer) }
+
+// LauncherPer 回發射裝置每艘幾座；搭載與否看的是飛彈那一格。
+func (k ShipKind) LauncherPer() (int, int) { return k.Weapon(kindMissileName, kindLauncherPer) }
+
+// FighterWeapon 見 BeamWeapon。
+func (k ShipKind) FighterWeapon() (int, int) { return k.Weapon(kindFighterName, kindFighterPer) }
 
 // ShipKindTable 是整張表。
 type ShipKindTable struct {

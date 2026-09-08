@@ -33,6 +33,9 @@ type BattleDataFrame struct {
 	} `json:"patches"`
 }
 
+// Frame 回這個框的 `ui.Frame`。
+func (f BattleDataFrame) Frame() ui.Frame { return f.frame() }
+
 func (f BattleDataFrame) frame() ui.Frame {
 	out := ui.Frame{Fill: f.Fill}
 	for _, l := range f.Layers {

@@ -69,9 +69,18 @@ func (g *Game) battleDataClick(x, y int) bool {
 	if !g.battleData {
 		return false
 	}
+	if g.battleDetail {
+		// 詳細資料那一層點哪裡都回上一層（原版的行為還沒量過，
+		// 先與右鍵一致；量到之前不猜別的）。
+		g.battleDetail = false
+		return true
+	}
 	if s := g.res.BattleData; s != nil {
 		if t := s.BattleDataTabAt(x, y); t >= 0 {
 			g.battleDataTab = t
+			return true
+		}
+		if r := s.BattleDataRowAt(x, y); r >= 0 && g.OpenFleetDetail(r) {
 			return true
 		}
 	}
