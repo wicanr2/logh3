@@ -143,3 +143,69 @@ func dist(x1, y1, x2, y2 int) int {
 	}
 	return r
 }
+
+// squadrons 把 battle() 那一場的每支艦隊展成分隊——戰場上真正在動的
+// 是分隊，不是艦隊（`docs/internals/38`）。朝向照原版量到的長度取 23。
+func squadrons(n int) Battlefield {
+	var out []rules.BattleUnit
+	for _, f := range battle().Units {
+		ux, uy := 22, 6
+		if f.Faction == 1 {
+			ux, uy = -22, -6 // 兩邊面對面
+		}
+		for k := 0; k < n; k++ {
+			dx, dy := rules.Formation(k, ux, uy)
+			out = append(out, rules.BattleUnit{
+				Fleet: f.Fleet, Squadron: k, Faction: f.Faction,
+				X: f.X + dx, Y: f.Y + dy,
+				TargetX: f.X + dx, TargetY: f.Y + dy,
+				Strength: f.Strength / n,
+			})
+		}
+	}
+	return Battlefield{Units: out}
+}
+
+// TestEncircleAtSquadronScale 分隊規模下強化版仍然要圍上去：
+// 每個分隊都收到命令、目標點不只一個、而且真的縮短了距離。
+func TestEncircleAtSquadronScale(t *testing.T) {
+	b := squadrons(6)
+	mine := 0
+	for _, u := range b.Units {
+		if u.Faction == 1 {
+			mine++
+		}
+	}
+	e := &Encircle{}
+	var ms []Move
+	for n := 1; n <= 12; n++ {
+		ms = turn(&b, e, 1, n)
+	}
+	if len(ms) != mine {
+		t.Fatalf("下了 %d 道命令，%d 個分隊都該有", len(ms), mine)
+	}
+	pts := map[[2]int]bool{}
+	for _, m := range ms {
+		pts[[2]int{m.X, m.Y}] = true
+	}
+	if len(pts) < 4 {
+		t.Fatalf("只用了 %d 個目標點，沒有從幾個方位圍", len(pts))
+	}
+	// 帝國那一支的分隊還在原地，同盟該壓到它附近。
+	var near int
+	for _, u := range b.Units {
+		if u.Faction == 1 && abs(u.X-416) < 900 && abs(u.Y-280) < 900 {
+			near++
+		}
+	}
+	if near == 0 {
+		t.Fatal("十二回合過去沒有任何分隊接近敵方")
+	}
+}
+
+func abs(n int) int {
+	if n < 0 {
+		return -n
+	}
+	return n
+}
