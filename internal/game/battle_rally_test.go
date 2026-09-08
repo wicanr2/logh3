@@ -43,3 +43,29 @@ func TestPlanetIsPassable(t *testing.T) {
 		t.Error("雷奧米爾 (1320,812) 被判成障礙")
 	}
 }
+
+// TestBattleMenuItemsReachScreens 釘住戰術選單後四項會換到對應的畫面。
+//
+// `docs/re/98`：選「實行」以外的任何一項都會跳出戰鬥主迴圈；後四項的
+// 字串與系統指令的後四項一字不差，所以接同一組畫面。
+func TestBattleMenuItemsReachScreens(t *testing.T) {
+	g := newTestGame(t)
+	if g.res.BattleMenu == nil {
+		t.Skip("沒有選單版面")
+	}
+	for row, want := range map[int]State{
+		3: StateLoadGame, 4: StateSaveGame, 5: StateSettings, 6: StateQuitConfirm,
+	} {
+		if g.commandSpec(want) == nil {
+			continue // 缺那張畫面的版面就跳過，不用代用品
+		}
+		g.state = StateBattle
+		g.battleMenu = false
+		// 第一下開選單，第二下落在第 row 項上。
+		g.Click(240, 240)
+		g.Click(240, 240+row*g.res.BattleMenu.Layout.Text.RowPitch)
+		if g.state != want {
+			t.Errorf("第 %d 項換到 %v，應該是 %v", row, g.state, want)
+		}
+	}
+}

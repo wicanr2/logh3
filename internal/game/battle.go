@@ -156,9 +156,13 @@ func (g *Game) AdvanceBattleTurn() {
 // 連點兩下就等於推進一個回合：第一下開選單，第二下落在第一項上。
 //
 // `12AA:02D4` 的回傳值就是選了哪一項（`docs/re/98`）：選「實行」回 0，
-// 主迴圈繼續下一個回合；其餘六項回非 0，跳出主迴圈去處理那個命令。
-// 這裡實作了「實行」與「撤退」；取進度／存進度／設定／結束會離開戰場
-// 去別的畫面，**那條路還沒逆向**，所以先只把選單關掉。
+// 主迴圈繼續下一個回合；其餘六項回非 0，**跳出主迴圈**去處理那個命令。
+//
+// 後四項的字串與戰略地圖上「系統指令」的後四項一字不差，所以接到同一
+// 組畫面。**離開之後會不會回到這一場戰鬥還沒逆向**——這裡不動戰場狀態
+// （不寫回損失、不清單位），純粹換畫面，回得來就接得上。
+//
+// 第二項「資料」開的是什麼還沒逆向，所以只把選單關掉。
 func (g *Game) battleClick(x, y int) {
 	if !g.battleMenu {
 		if g.res.BattleMenu == nil {
@@ -175,7 +179,22 @@ func (g *Game) battleClick(x, y int) {
 		g.AdvanceBattleTurn()
 	case 2: // 撤退
 		g.Withdraw()
+	case 3, 4, 5, 6: // 取進度／存進度／設定／結束
+		if to := battleMenuScreen[row]; g.commandSpec(to) != nil {
+			g.state = to
+		}
 	}
+}
+
+// battleMenuScreen 是戰術選單後四項對到的畫面。
+//
+// 字串與系統指令的後四項相同（`ds:334F` 與戰略地圖那張是各自一份，
+// 但內容一字不差），所以走同一組畫面。
+var battleMenuScreen = map[int]State{
+	3: StateLoadGame,
+	4: StateSaveGame,
+	5: StateSettings,
+	6: StateQuitConfirm,
 }
 
 // Withdraw 讓一方退出戰鬥——戰術選單的第三項。

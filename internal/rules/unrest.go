@@ -69,6 +69,9 @@ func (s *UnrestState) Unrest(region int) int {
 	if owner == 2 { // 無主一律 100，其餘一概不算
 		return 100
 	}
+	if owner < 0 || owner >= len(s.Params.Ruler) {
+		return 0
+	}
 	v := s.f1(r, owner) - s.f2(r, owner) - s.f3(r, region, owner) + s.f4(region)
 	if r[regionFlag13]&4 != 0 {
 		v -= 30
@@ -76,7 +79,14 @@ func (s *UnrestState) Unrest(region int) int {
 	if v < 0 {
 		v = 0
 	}
-	v = idiv(v*int(s.admiral(s.Params.Ruler[owner])[admiralRule]), 100)
+	// 缺提督表就算不出來——回 0。原本這裡直接對 admiral() 的結果取索引，
+	// 而它在查不到的時候回 nil，於是「資料不全」變成 panic；那是玩家走得到
+	// 的路（戰鬥中選「取進度」就會經過這裡）。
+	ruler := s.admiral(s.Params.Ruler[owner])
+	if len(ruler) <= admiralRule {
+		return 0
+	}
+	v = idiv(v*int(ruler[admiralRule]), 100)
 	if v > 200 {
 		v = 200
 	}
@@ -127,6 +137,9 @@ func (s *UnrestState) f2(r []byte, owner int) int {
 
 // f3 是鄰居：敵對的扣得多，而且鄰居的 `+0x13 & 0x14` 再加一份。
 func (s *UnrestState) f3(r []byte, region, owner int) int {
+	if s.Graph == nil {
+		return 0
+	}
 	out := 0
 	for _, j := range s.Graph.Neighbours(region) {
 		n := s.region(j)

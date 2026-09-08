@@ -90,3 +90,21 @@ func TestUnrestAtLoad(t *testing.T) {
 		})
 	}
 }
+
+// TestUnrestSurvivesMissingAdmirals 釘住「資料不全不要 panic」。
+//
+// `admiral()` 查不到的時候回 nil，而 `Unrest` 原本直接對它取索引。
+// 戰鬥中選「取進度」會走到這條路，玩家碰得到。
+func TestUnrestSurvivesMissingAdmirals(t *testing.T) {
+	s := &UnrestState{
+		Regions: make([]byte, RegionRecord),
+		Params: UnrestParams{
+			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
+			Table: []int{170, 150, 130, 90, 60},
+			Base:  []int{50, 75, 100, 150, 200},
+		},
+	}
+	if got := s.Unrest(0); got != 0 {
+		t.Errorf("缺提督表時回 %d，應該是 0", got)
+	}
+}

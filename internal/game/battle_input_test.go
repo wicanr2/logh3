@@ -2,8 +2,10 @@ package game
 
 import "testing"
 
-// TestBattleDoubleClickAdvances 同一點連點兩下推一個回合
-// （`docs/internals/34`）；點在不同的地方不算。
+// TestBattleDoubleClickAdvances 同一點連點兩下推一個回合。
+//
+// 那不是另一套輸入契約，是戰術選單的結果（`docs/re/101`）：第一下在
+// 游標處開選單、第二下落在第一項「實行」上。點到選單外面就什麼都不選。
 func TestBattleDoubleClickAdvances(t *testing.T) {
 	g := newTestGame(t)
 	if g.res.Entries == nil {
@@ -30,11 +32,14 @@ func TestBattleDoubleClickAdvances(t *testing.T) {
 		t.Fatalf("連點兩下該推一個回合：%d → %d", start, g.battleTurn)
 	}
 
-	// 兩下點在不同的地方不算。
+	// 第二下落在選單外面：什麼都不選，回合不動。
 	g.Click(200, 200)
-	g.Click(260, 260)
+	g.Click(600, 400)
 	if g.battleTurn != start+1 {
-		t.Fatalf("點在不同的地方不該推回合，現在是 %d", g.battleTurn)
+		t.Fatalf("點在選單外面不該推回合，現在是 %d", g.battleTurn)
+	}
+	if g.state != StateBattle {
+		t.Fatalf("點在選單外面不該換畫面，現在是 %v", g.state)
 	}
 
 	// 右鍵取消第一下。
