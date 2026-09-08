@@ -1,0 +1,194 @@
+{
+  "檔案": "IBM16.350",
+  "說明": "OPEN.EXE 開頭動畫的分塊載入表；長度表在載入器資料段的 +0x03C0，每塊格數表在 +0x0000，兩者都是 30 個 uint16。",
+  "分塊數": 30,
+  "總長度": 1764911,
+  "總格數": 374,
+  "緩衝區": {
+    "A": "175C:001E",
+    "B": "175F:0016",
+    "相差位元組": 40
+  },
+  "分塊": [
+    {
+      "index": 0,
+      "offset": 0,
+      "length": 65365,
+      "frames": 117
+    },
+    {
+      "index": 1,
+      "offset": 65365,
+      "length": 63656,
+      "frames": 15
+    },
+    {
+      "index": 2,
+      "offset": 129021,
+      "length": 61544,
+      "frames": 9
+    },
+    {
+      "index": 3,
+      "offset": 190565,
+      "length": 58535,
+      "frames": 7
+    },
+    {
+      "index": 4,
+      "offset": 249100,
+      "length": 64083,
+      "frames": 7
+    },
+    {
+      "index": 5,
+      "offset": 313183,
+      "length": 63707,
+      "frames": 7
+    },
+    {
+      "index": 6,
+      "offset": 376890,
+      "length": 58378,
+      "frames": 7
+    },
+    {
+      "index": 7,
+      "offset": 435268,
+      "length": 58954,
+      "frames": 8
+    },
+    {
+      "index": 8,
+      "offset": 494222,
+      "length": 63308,
+      "frames": 9
+    },
+    {
+      "index": 9,
+      "offset": 557530,
+      "length": 57477,
+      "frames": 7
+    },
+    {
+      "index": 10,
+      "offset": 615007,
+      "length": 56881,
+      "frames": 6
+    },
+    {
+      "index": 11,
+      "offset": 671888,
+      "length": 62020,
+      "frames": 6
+    },
+    {
+      "index": 12,
+      "offset": 733908,
+      "length": 54842,
+      "frames": 5
+    },
+    {
+      "index": 13,
+      "offset": 788750,
+      "length": 56343,
+      "frames": 5
+    },
+    {
+      "index": 14,
+      "offset": 845093,
+      "length": 57013,
+      "frames": 5
+    },
+    {
+      "index": 15,
+      "offset": 902106,
+      "length": 55842,
+      "frames": 5
+    },
+    {
+      "index": 16,
+      "offset": 957948,
+      "length": 62865,
+      "frames": 7
+    },
+    {
+      "index": 17,
+      "offset": 1020813,
+      "length": 62379,
+      "frames": 34
+    },
+    {
+      "index": 18,
+      "offset": 1083192,
+      "length": 65218,
+      "frames": 12
+    },
+    {
+      "index": 19,
+      "offset": 1148410,
+      "length": 61100,
+      "frames": 11
+    },
+    {
+      "index": 20,
+      "offset": 1209510,
+      "length": 62936,
+      "frames": 13
+    },
+    {
+      "index": 21,
+      "offset": 1272446,
+      "length": 63492,
+      "frames": 17
+    },
+    {
+      "index": 22,
+      "offset": 1335938,
+      "length": 64317,
+      "frames": 20
+    },
+    {
+      "index": 23,
+      "offset": 1400255,
+      "length": 29845,
+      "frames": 10
+    },
+    {
+      "index": 24,
+      "offset": 1430100,
+      "length": 61225,
+      "frames": 5
+    },
+    {
+      "index": 25,
+      "offset": 1491325,
+      "length": 60104,
+      "frames": 4
+    },
+    {
+      "index": 26,
+      "offset": 1551429,
+      "length": 52720,
+      "frames": 3
+    },
+    {
+      "index": 27,
+      "offset": 1604149,
+      "length": 53292,
+      "frames": 3
+    },
+    {
+      "index": 28,
+      "offset": 1657441,
+      "length": 62343,
+      "frames": 4
+    },
+    {
+      "index": 29,
+      "offset": 1719784,
+      "length": 45127,
+      "frames": 5
+    }
+  ]
+}
