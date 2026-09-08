@@ -62,6 +62,14 @@ func newTestGame(t *testing.T) *Game {
 		}
 		res.Terrain = terrain
 	}
+	if res.BattleMenu == nil {
+		m, err := screen.LoadBattleMenuSpec(filepath.Join(root,
+			"docs/internals/data/battle-menu.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.BattleMenu = m
+	}
 	g, err := New(res)
 	if err != nil {
 		t.Fatal(err)

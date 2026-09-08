@@ -61,6 +61,7 @@ func (g *Game) StartBattle(region int) {
 	g.battleFleets = g.slot.BattleFleetsFor(joined)
 	g.battlePlanets = g.battleRegionPlanets(region)
 	g.battleRally = g.battleRegionRally(region)
+	g.battleMenu = false
 	for i := range g.battleFleets {
 		if u := flagshipOf(g.battleUnits, g.battleFleets[i].Index); u != nil {
 			g.battleFleets[i].Facing = rules.BattleFacing(u.X, u.Y)
@@ -148,12 +149,36 @@ func (g *Game) AdvanceBattleTurn() {
 	}
 }
 
-// Withdraw 讓一方退出戰鬥。
+// battleClick 處理戰術畫面的左鍵。
 //
-// 原版每個回合結束時會在游標處開一張**戰術選單**（`12AA:02D4`）：
-// 實行／資料／撤退／取進度／存進度／設定／結束（`docs/re/98`）。
-// 選「實行」就繼續下一個回合，選其餘六項會跳出主迴圈——「撤退」是
-// 其中一項。選單的版面還沒量，所以 remake 只提供這個入口。
+// 原版每一回合結束時在**游標所在位置**開一張戰術選單（`12AA:02D4`），
+// 第一項「實行」正好落在游標底下（`docs/internals/34`）——所以同一點
+// 連點兩下就等於推進一個回合：第一下開選單，第二下落在第一項上。
+//
+// `12AA:02D4` 的回傳值就是選了哪一項（`docs/re/98`）：選「實行」回 0，
+// 主迴圈繼續下一個回合；其餘六項回非 0，跳出主迴圈去處理那個命令。
+// 這裡實作了「實行」與「撤退」；取進度／存進度／設定／結束會離開戰場
+// 去別的畫面，**那條路還沒逆向**，所以先只把選單關掉。
+func (g *Game) battleClick(x, y int) {
+	if !g.battleMenu {
+		if g.res.BattleMenu == nil {
+			return
+		}
+		g.battleMenuX, g.battleMenuY = g.res.BattleMenu.BattleMenuAt(x, y)
+		g.battleMenu = true
+		return
+	}
+	row := g.res.BattleMenu.BattleMenuRowAt(g.battleMenuX, g.battleMenuY, x, y)
+	g.battleMenu = false
+	switch row {
+	case 0: // 實行
+		g.AdvanceBattleTurn()
+	case 2: // 撤退
+		g.Withdraw()
+	}
+}
+
+// Withdraw 讓一方退出戰鬥——戰術選單的第三項。
 func (g *Game) Withdraw() {
 	if g.state != StateBattle {
 		return

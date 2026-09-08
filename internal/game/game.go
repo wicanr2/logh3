@@ -298,6 +298,9 @@ type Resources struct {
 	// Entries 是戰場入口表（`docs/internals/39`）。
 	Entries *rules.BattleEntries
 
+	// BattleMenu 是戰術選單的版面（`docs/re/101`）。
+	BattleMenu *screen.BattleMenuSpec
+
 	// Terrain 是戰場地形的通行規則（`docs/re/100`）。戰術層挑集結點時
 	// 要用它判「這條直線走不走得通」；nil ＝ 不判，一律當通得過。
 	Terrain *rules.BattleTerrain
@@ -450,16 +453,17 @@ type Game struct {
 	// 結算用的（`docs/spec/018`）：參戰艦隊、亂數、上一回合的交火紀錄，
 	// 以及「有一方全沒了」。
 	battleFleets  []rules.BattleFleet
+	// 戰術選單開在游標處：battleMenu 是「開著沒有」，battleMenuX／Y 是框的
+	// 左上角（`docs/internals/34`）。
+	battleMenu           bool
+	battleMenuX, battleMenuY int
+
 	battleRally   []rules.RallySite
 	battlePlanets []rules.BattlePlanet
 	battleRand   *rules.Rand
 	battleLosses []rules.BattleLoss
 	battleScore  [2]int
 	battleOver   bool
-
-	// 戰場上「同一點連點兩下」的狀態（`docs/internals/34`）。
-	battleClickX, battleClickY int
-	battleClickArmed           bool
 
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
 	// **預設是 `ai.Original`——按實行時什麼都不做**，那是量出來的原版
@@ -958,19 +962,7 @@ func (g *Game) Click(x, y int) {
 			}
 		}
 	case StateBattle:
-		// **同一點連點兩下 ＝ 結束我方輸入，推一個回合**
-		// （`docs/internals/34`「一個戰鬥回合怎麼推進」：`s3turn2` 連點
-		// 兩次兩回，畫面從第 1 回合走到第 3 回合）。
-		//
-		// 原版第一下會在游標處開一個小選單、第二下選中第一項「實行」。
-		// **那個選單的版面還沒逆向**，所以這裡只重現輸入契約，不畫選單
-		// ——畫出來的會是憑空捏的。
-		if g.battleClickArmed && g.battleClickX == x && g.battleClickY == y {
-			g.battleClickArmed = false
-			g.AdvanceBattleTurn()
-		} else {
-			g.battleClickX, g.battleClickY, g.battleClickArmed = x, y, true
-		}
+		g.battleClick(x, y)
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		b := commandBar[menuOf(g.state)]
 		for n, item := range b.Items {
@@ -1028,8 +1020,8 @@ func (g *Game) RightClick(x, y int) {
 	case StateAdmiralDetail:
 		g.state = StateStandbyAdmirals
 	case StateBattle:
-		// 右鍵取消上一次的第一下（原版右鍵是關掉開在游標處的那個選單）。
-		g.battleClickArmed = false
+		// 右鍵關掉開在游標處的那張選單。
+		g.battleMenu = false
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
 	case StateVersusInput:
@@ -2290,6 +2282,10 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 			Alliance: g.battleScore[1],
 			Region:   g.regionName(g.battleRegion),
 		})
+	}
+	if g.battleMenu && g.res.BattleMenu != nil && g.res.Font != nil {
+		screen.DrawBattleMenu(g.res.BattleMenu, fb, g.res.Font,
+			g.battleMenuX, g.battleMenuY, 0)
 	}
 	return fb
 }
