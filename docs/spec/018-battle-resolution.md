@@ -94,9 +94,9 @@ func InRange(units []BattleUnit, x, y, limit, faction int) []int
 「實行」，等於結束我方輸入（`docs/internals/34`：`s3turn2` 連點兩次兩回，
 畫面從第 1 回合走到第 3 回合）。
 
-remake 重現的是**輸入契約**，不畫那個選單——選項已經解出來了
-（`docs/re/98`），但版面（開在游標處的哪個相對位置、框怎麼畫）還沒量，
-畫出來的會是憑空捏的。右鍵取消第一下。
+remake 目前只重現**輸入契約**，還沒把選單畫出來。選項與版面都量到了
+（`docs/re/98`、`docs/internals/data/battle-menu.json`），框的逐層結構
+還沒拆，所以畫出來的框會是近似的。右鍵取消第一下。
 
 ## 每回合的流程
 

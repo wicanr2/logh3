@@ -56,3 +56,41 @@ func TestEncircleChangesOutcome(t *testing.T) {
 		t.Error("換了戰術之後結果完全一樣，強化版沒有起作用")
 	}
 }
+
+// TestBattleLossMagnitude 把 remake 每一輪每一支艦隊的總損失印出來，
+// 好跟原版收據對量級。
+//
+// 原版量到的是**一支艦隊一回合 290**（`docs/re/97`：`-regs-at 20B4:1110`
+// 的 `[bp+06h]` 從 290 開始往下扣）。
+func TestBattleLossMagnitude(t *testing.T) {
+	g := newTestGame(t)
+	if g.res.Entries == nil {
+		t.Skip("沒有入口表")
+	}
+	g.state = StateCommandPhase
+	for turn := 0; turn < 40 && g.state != StateBattle; turn++ {
+		g.advanceTurn()
+		if g.state == StateShipDelivery {
+			g.state = StateCommandPhase
+		}
+	}
+	if g.state != StateBattle {
+		t.Skip("沒走到戰場")
+	}
+	sum, n, max := 0, 0, 0
+	for i := 0; i < rules.MaxBattleTurns; i++ {
+		g.AdvanceBattleTurn()
+		for _, l := range g.battleLosses {
+			sum += l.Total
+			n++
+			if l.Total > max {
+				max = l.Total
+			}
+		}
+	}
+	if n == 0 {
+		t.Fatal("九個回合一次交火都沒有")
+	}
+	t.Logf("remake：%d 次交火，總損失平均 %d、最大 %d（原版量到 290）",
+		n, sum/n, max)
+}
