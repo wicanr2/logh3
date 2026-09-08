@@ -7,6 +7,7 @@ import (
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/ui"
 )
 
 // BattleSpec 是戰場畫面的版面（`docs/internals/data/screen-battle.json`）。
@@ -182,6 +183,17 @@ type StatusSpec struct {
 	DateInk struct {
 		Year, Month, Day uint8
 	} `json:"date_ink"`
+	Frame struct {
+		X, Y, W, H int
+		Fill       uint8
+		Order      string
+		Layers     [][4]uint8
+		Alt        [][4]uint8
+		Patches    []struct {
+			DX, DY int
+			Color  uint8
+		} `json:"patches"`
+	} `json:"frame"`
 	Labels struct {
 		Factions    []label `json:"factions"`
 		Colon       uint16  `json:"colon"`
@@ -192,6 +204,32 @@ type StatusSpec struct {
 		Victory     label   `json:"victory"`
 		FullDigits  label   `json:"full_digits"`
 	} `json:"labels"`
+}
+
+// DrawBattleStatusFrame 畫狀態欄的視窗框與底色。
+//
+// 框逐層量自收據（`docs/internals/34`）：外三層亮邊、左緣是 8／15 的
+// 1:1 交錯、中間一層 7、兩層反向的立體邊、一層 3，最後一層只有上緣
+// 與右緣是 3——那一層的下緣與左緣填底色，靠 Order 的角落歸屬做出來。
+func DrawBattleStatusFrame(s *BattleSpec, fb *gfx.Framebuffer) {
+	f := &s.Status.Frame
+	if f.W <= 0 || f.H <= 0 {
+		return
+	}
+	fb.FillRect(f.X, f.Y, f.W, f.H, f.Fill)
+	var fr ui.Frame
+	fr.Fill = f.Fill
+	fr.Order = f.Order
+	for _, l := range f.Layers {
+		fr.Layers = append(fr.Layers, ui.Layer{Top: l[0], Right: l[1], Bottom: l[2], Left: l[3]})
+	}
+	for _, l := range f.Alt {
+		fr.Alt = append(fr.Alt, ui.Layer{Top: l[0], Right: l[1], Bottom: l[2], Left: l[3]})
+	}
+	for _, p := range f.Patches {
+		fr.Patches = append(fr.Patches, ui.Patch{DX: p.DX, DY: p.DY, Color: p.Color})
+	}
+	fr.Draw(fb, f.X, f.Y, f.W, f.H)
 }
 
 // DrawBattleStatus 畫右側狀態欄的文字。

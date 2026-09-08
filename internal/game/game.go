@@ -2200,6 +2200,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		cells = g.res.BattleMaps[r]
 	}
 	fb := screen.Battle(g.res.Battle, g.res.BattlePanel, g.res.BattleTiles, cells, g.battleView)
+	screen.DrawBattleStatusFrame(g.res.Battle, fb)
 	if g.res.Font != nil {
 		y, mo, d := g.Date()
 		screen.DrawBattleStatus(g.res.Battle, fb, g.res.Font, screen.BattleStatus{
