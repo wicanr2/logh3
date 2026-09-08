@@ -70,9 +70,10 @@ func (g *Game) battleDataClick(x, y int) bool {
 		return false
 	}
 	if g.battleDetail {
-		// 詳細資料那一層點哪裡都回上一層（原版的行為還沒量過，
-		// 先與右鍵一致；量到之前不猜別的）。
-		g.battleDetail = false
+		// **在明細裡點一下會把整個「資料」關掉**，不是回到表
+		// （收據 `s3detail_back`：點完之後畫面直接回戰場，
+		// `docs/re/112`）。右鍵才是一層一層退。
+		g.battleDetail, g.battleData = false, false
 		return true
 	}
 	if s := g.res.BattleData; s != nil {
