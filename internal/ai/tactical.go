@@ -109,18 +109,45 @@ func (e *Encircle) Moves(b Battlefield, faction, turn int) []Move {
 		radius = 40
 	}
 
+	// 方位不是隨便挑的：站在不同方位打過去，原版會乘一個 80–100 的
+	// 方向係數（`docs/re/88`）。先把八個方位按係數由高到低排，
+	// 分隊依序去佔——**先佔到划算的位置**。
+	order := bearingOrder(t.X, t.Y, radius)
+
 	var out []Move
 	for n, i := range mine {
 		// 每一支分到不同方位——**這就是包圍**：一路壓上去只會排成
 		// 一條線，繞到不同方位才會同時從幾個方向接觸。
-		bx, by := bearings[n%len(bearings)][0], bearings[n%len(bearings)][1]
+		b := bearings[order[n%len(order)]]
 		out = append(out, Move{
 			Unit: i,
-			X:    t.X + bx*radius/10,
-			Y:    t.Y + by*radius/10,
+			X:    t.X + b[0]*radius/10,
+			Y:    t.Y + b[1]*radius/10,
 		})
 	}
 	return out
+}
+
+// bearingOrder 把八個方位按「從那裡打目標拿到的方向係數」由高到低排。
+//
+// 係數相同的維持原本的順序，這樣同一個局面每次算出來都一樣——
+// 決定性是對拍的前提。
+func bearingOrder(tx, ty, radius int) []int {
+	order := make([]int, len(bearings))
+	factor := make([]int, len(bearings))
+	for i, b := range bearings {
+		px, py := tx+b[0]*radius/10, ty+b[1]*radius/10
+		factor[i] = rules.DamageFactor(rules.BattleFacing(px, py),
+			rules.Bearing(px, py, tx, ty))
+		order[i] = i
+	}
+	// 插入排序，穩定且不需要額外套件。
+	for i := 1; i < len(order); i++ {
+		for j := i; j > 0 && factor[order[j]] > factor[order[j-1]]; j-- {
+			order[j], order[j-1] = order[j-1], order[j]
+		}
+	}
+	return order
 }
 
 // retreat 讓整批往遠離敵方重心的方向退。

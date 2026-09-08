@@ -209,3 +209,29 @@ func abs(n int) int {
 	}
 	return n
 }
+
+// 圍上去的方位要按方向係數排——第一支分到的位置，打過去的係數
+// 不能低於最後一支的（`docs/re/88`）。
+func TestEncirclePrefersGoodBearings(t *testing.T) {
+	b := squadrons(6)
+	e := &Encircle{}
+	ms := turn(&b, e, 1, 1)
+	if len(ms) < 2 {
+		t.Fatal("命令太少，看不出方位順序")
+	}
+	// 驗排序函式本身：回來的順序，係數必須不遞增。
+	order := bearingOrder(1000, 1000, 200)
+	prev := 1 << 30
+	for _, i := range order {
+		bb := bearings[i]
+		px, py := 1000+bb[0]*20, 1000+bb[1]*20
+		f := rules.DamageFactor(rules.BattleFacing(px, py), rules.Bearing(px, py, 1000, 1000))
+		if f > prev {
+			t.Fatalf("方位沒有按係數排：%v", order)
+		}
+		prev = f
+	}
+	if len(order) != len(bearings) {
+		t.Fatalf("排出來 %d 個方位，該是 %d 個", len(order), len(bearings))
+	}
+}

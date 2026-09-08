@@ -95,3 +95,36 @@ func DirectionFactor(i int) int {
 	}
 	return DirectionFactors[i]
 }
+
+// AngleDiff 回兩個角度的絕對差，一圈是 256（原版 `2BE1:024A`）。
+func AngleDiff(a, b int) int {
+	a = ((a % BattleTurn) + BattleTurn) % BattleTurn
+	b = ((b % BattleTurn) + BattleTurn) % BattleTurn
+	if a >= b {
+		return a - b
+	}
+	return b - a
+}
+
+// DirectionIndex 把角度差換成 0–7 的方向索引（原版 `3982:0022`）：
+//
+//	索引 ＝ ((差 ÷ 16) ＋ 1) ÷ 2 & 7
+//
+// 兩次整數除法照原版的順序。差 128（半圈）算出來是 4，也就是係數
+// 最高的那一格；差 0 算出來是 0，係數最低。
+func DirectionIndex(diff int) int {
+	return ((diff/16 + 1) / 2) & 7
+}
+
+// DamageFactor 回一次攻擊的方向係數（百分比）。
+//
+// facing 是攻擊方艦隊的朝向（記錄 `+0x4A`，＝ 指向戰場中心的角度），
+// bearing 是從攻擊方指向目標的方位。兩者差半圈時係數最高（100），
+// 同向時最低（80）——也就是**目標在攻擊方背對中心的那一側最吃虧**
+// （`docs/re/86`、`docs/re/88`）。
+func DamageFactor(facing, bearing int) int {
+	return DirectionFactor(DirectionIndex(AngleDiff(bearing, facing)))
+}
+
+// Bearing 回從 (x0,y0) 指向 (x1,y1) 的方位，一圈 256（原版 `2BE1:011D`）。
+func Bearing(x0, y0, x1, y1 int) int { return atan256(x1-x0, y1-y0) }

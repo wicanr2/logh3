@@ -85,3 +85,57 @@ func TestDirectionFactors(t *testing.T) {
 		t.Error("最大與最小該差 20")
 	}
 }
+
+// 方向索引的算式（`3982:0022`）與它在係數表上的落點。
+func TestDirectionIndex(t *testing.T) {
+	cases := []struct{ diff, idx, factor int }{
+		{0, 0, 80},    // 同向：最低
+		{16, 1, 85},
+		{32, 1, 85},
+		{48, 2, 90},
+		{64, 2, 90},   // 差四分之一圈
+		{128, 4, 100}, // 差半圈：最高
+		{192, 6, 90},
+		{255, 0, 80},  // 繞回去
+	}
+	for _, c := range cases {
+		if got := DirectionIndex(c.diff); got != c.idx {
+			t.Errorf("差 %d 算出索引 %d，該是 %d", c.diff, got, c.idx)
+		}
+		if got := DirectionFactor(DirectionIndex(c.diff)); got != c.factor {
+			t.Errorf("差 %d 算出係數 %d，該是 %d", c.diff, got, c.factor)
+		}
+	}
+}
+
+// 角度差要繞圈，而且對稱。
+func TestAngleDiff(t *testing.T) {
+	if AngleDiff(10, 250) != 240 {
+		t.Errorf("AngleDiff(10,250) ＝ %d，原版是絕對差 240", AngleDiff(10, 250))
+	}
+	if AngleDiff(250, 10) != 240 {
+		t.Error("角度差該對稱")
+	}
+	if AngleDiff(300, 44) != 0 {
+		t.Errorf("300 繞一圈是 44，差該是 0，卻是 %d", AngleDiff(300, 44))
+	}
+}
+
+// 打在背對中心那一側傷害最高。
+func TestDamageFactorPeaksAtHalfTurn(t *testing.T) {
+	best := 0
+	for d := 0; d < BattleTurn; d++ {
+		if f := DamageFactor(0, d); f > best {
+			best = f
+		}
+	}
+	if best != 100 {
+		t.Fatalf("最高的係數是 %d，該是 100", best)
+	}
+	if DamageFactor(0, 128) != 100 {
+		t.Error("差半圈時該拿到最高係數")
+	}
+	if DamageFactor(0, 0) != 80 {
+		t.Error("同向時該拿到最低係數")
+	}
+}
