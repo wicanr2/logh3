@@ -210,37 +210,52 @@ func DrawHalfGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8, fg
 // DrawHalfGlyphClipped 同 DrawHalfGlyph，但把整個字（含立體邊）裁在矩形內。
 func DrawHalfGlyphClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8,
 	fg, shadow uint8, shadowDY int, bold bool, cx, cy, cw, ch int) bool {
+	if shadow != 0 {
+		halfPass(fb, fnt, x, y, code, shadow, 1, shadowDY, bold, cx, cy, cw, ch)
+	}
+	return halfPass(fb, fnt, x, y, code, fg, 0, 0, bold, cx, cy, cw, ch)
+}
+
+// halfPass 畫半形字的一趟：shift ＝ 1 是立體邊那一趟（整個字往左移一行）。
+func halfPass(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8,
+	col uint8, shift, oy int, bold bool, cx, cy, cw, ch int) bool {
 	g := fnt.Half(code)
 	if g == nil {
 		return false
 	}
-	if bold {
-		for i, v := range g {
-			g[i] = v | v>>1
-		}
-	}
 	rightHalf := x%(2*font.HalfW) == font.HalfW
-	blit := func(shift, oy int, col uint8) {
-		for gy, bits := range g {
-			for gx := 0; gx < font.HalfW; gx++ {
-				if bits>>(font.HalfW-1-gx)&1 == 0 {
-					continue
-				}
-				px, py := x+gx-shift, y+oy+gy
-				if px < x && !rightHalf {
-					continue
-				}
-				if px < cx || py < cy || px >= cx+cw || py >= cy+ch {
-					continue
-				}
-				fb.Set(px, py, col)
+	// 加粗是**整格 16 位元一起**做的（`docs/internals/25`），所以左半那個
+	// 字最右一行加粗出來的那一行會落到右半的地盤上，右半那個字的則移出
+	// 格外被丟掉。拆成兩次 8 位元去做的話兩邊都丟——症狀是粗體的半形字
+	// 右邊少一豎（`BHCADTE` 的 E，`docs/re/111`）。
+	// 這裡把一行擺成 9 位（第 gx 行 ＝ 第 8−gx 位），左半才留得住第 8 行。
+	width := font.HalfW
+	if bold && !rightHalf {
+		width = font.HalfW + 1
+	}
+	rows := make([]uint16, len(g))
+	for i, v := range g {
+		w := uint16(v) << 1
+		if bold {
+			w |= w >> 1
+		}
+		rows[i] = w
+	}
+	for gy, bits := range rows {
+		for gx := 0; gx < width; gx++ {
+			if bits>>(font.HalfW-gx)&1 == 0 {
+				continue
 			}
+			px, py := x+gx-shift, y+oy+gy
+			if px < x && !rightHalf {
+				continue
+			}
+			if px < cx || py < cy || px >= cx+cw || py >= cy+ch {
+				continue
+			}
+			fb.Set(px, py, col)
 		}
 	}
-	if shadow != 0 {
-		blit(1, shadowDY, shadow)
-	}
-	blit(0, 0, fg)
 	return true
 }
 
@@ -254,9 +269,13 @@ func DrawCellClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16,
 	if code>>8 >= 0x80 {
 		return DrawGlyphClipped(fb, fnt, x, y, code, fg, shadow, shadowDY, bold, cx, cy, cw, ch)
 	}
-	a := DrawHalfGlyphClipped(fb, fnt, x, y, uint8(code>>8), fg, shadow, shadowDY, bold,
-		cx, cy, cw, ch)
-	b := DrawHalfGlyphClipped(fb, fnt, x+font.HalfW, y, uint8(code), fg, shadow, shadowDY, bold,
-		cx, cy, cw, ch)
+	// **整格先畫立體邊、再畫兩個字身。** 一個字一個字畫的話，右半那個字的
+	// 立體邊會蓋掉左半那個字加粗溢出來的最後一行（`docs/re/111`）。
+	if shadow != 0 {
+		halfPass(fb, fnt, x, y, uint8(code>>8), shadow, 1, shadowDY, bold, cx, cy, cw, ch)
+		halfPass(fb, fnt, x+font.HalfW, y, uint8(code), shadow, 1, shadowDY, bold, cx, cy, cw, ch)
+	}
+	a := halfPass(fb, fnt, x, y, uint8(code>>8), fg, 0, 0, bold, cx, cy, cw, ch)
+	b := halfPass(fb, fnt, x+font.HalfW, y, uint8(code), fg, 0, 0, bold, cx, cy, cw, ch)
 	return a && b
 }
