@@ -81,10 +81,6 @@ func (g *Game) battleDataClick(x, y int) bool {
 
 // battleDataRows 組出表上的每一列。
 //
-// **士氣那一欄空著**：原版印的是 `%3u`，收據裡三個分頁每一列都是 100，
-// 從哪裡算還沒解（`docs/spec/021` 的「還沒解」）。填一個猜的值會讓畫面
-// 看起來是對的而其實是錯的，空著比較誠實。
-//
 // 行星那個分頁還沒接：戰場上的行星只量到座標，對不回星系記錄
 // （`docs/re/99`）。
 func (g *Game) battleDataRows(tab int) [][]screen.BattleDataRun {
@@ -114,7 +110,8 @@ func (g *Game) battleDataRows(tab int) [][]screen.BattleDataRun {
 			screen.BattleDataRun{X: 272, Codes: []uint16{shipKindLetter(u.Kind)}},
 			screen.BattleDataRun{X: 304, Codes: rightDigits(u.Ships, 4)},
 			screen.BattleDataRun{X: 336, Codes: []uint16{b5Slash}},
-			screen.BattleDataRun{X: 352, Codes: rightDigits(u.FullShips, 4)})
+			screen.BattleDataRun{X: 352, Codes: rightDigits(u.FullShips, 4)},
+			screen.BattleDataRun{X: 408, Codes: rightDigits(u.Morale, 3)})
 		out = append(out, row)
 	}
 	return out

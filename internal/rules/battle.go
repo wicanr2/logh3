@@ -29,6 +29,7 @@ type BattleUnit struct {
 	Ships     int `json:"ships"`      // 現有艘數（艦艇記錄 `+0x08`）
 	FullShips int `json:"full_ships"` // 滿編艘數（艦艇記錄 `+0x0A`）
 	Attack    int `json:"attack"`     // 攻擊力（艦艇記錄 `+0x16`）
+	Morale    int `json:"morale"`     // 士氣（艦艇記錄 `+0x06`）
 	Out       bool `json:"out"`       // 出局，不進攻擊名單（艦艇記錄 `+0x1E` bit7）
 }
 
@@ -291,6 +292,10 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 			u.Ships = int(binary.LittleEndian.Uint16(rec[8:]))
 			u.FullShips = int(binary.LittleEndian.Uint16(rec[10:]))
 			u.Attack = int(binary.LittleEndian.Uint16(rec[0x16:]))
+			// 士氣是**一個位元組**：`+0x07` 固定 0xFF，整個 word 讀出來
+			// 會是 0xFF64。用 -poke 把 0x682EC 寫成 77 驗過，畫面上只有
+			// 那一列的士氣跟著變（收據 `s3morale`，`docs/re/111`）。
+			u.Morale = int(rec[6])
 			if w != nil {
 				u.Strength = w.ShipStrength(rec)
 			}
