@@ -27,7 +27,7 @@ func turn(b *Battlefield, t Tactic, faction, n int) []Move {
 		b.Units[m.Unit].TargetX, b.Units[m.Unit].TargetY = m.X, m.Y
 	}
 	for i := range b.Units {
-		rules.AdvanceBattle(&b.Units[i])
+		rules.AdvanceBattle(&b.Units[i], nil, nil)
 	}
 	return ms
 }

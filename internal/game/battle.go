@@ -132,7 +132,7 @@ func (g *Game) AdvanceBattleTurn() {
 		}
 	}
 	for i := range g.battleUnits {
-		rules.AdvanceBattle(&g.battleUnits[i])
+		rules.AdvanceBattle(&g.battleUnits[i], g.res.Terrain, g.battleCells(g.battleRegion))
 	}
 	g.battleLosses = rules.ResolveBattleTurn(g.battlePlanets, g.battleFleets,
 		g.battleUnits, g.battleRand)

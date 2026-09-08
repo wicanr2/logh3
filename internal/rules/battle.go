@@ -143,36 +143,87 @@ func Formation(n, ux, uy int) (int, int) {
 	return a*ux + b*uy, a*uy - b*ux
 }
 
-// DefaultBattleSpeed 是一回合走多遠的暫定值。
+// BattleStep 是戰場上走一步的長度（`docs/re/102`）。
 //
-// **還沒釘死**：`docs/re/80` 量到兩支分別是每回合約 233 與 325，
-// 看起來跟機動力（艦隊記錄 `+0x3C`）有關，但只有兩個資料點。
-const DefaultBattleSpeed = 256
+// 原版不是「一步跳到目的地」：`1C03:01B6` 沿方位每次前進 8 像素，
+// 每一步都先問地形與碰撞才走。直線通行判定（`1588:0891`）用的也是這個 8。
+const BattleStep = 8
+
+// DefaultBattleSpeed 是一回合的行程，單位是像素。
+//
+// 原版存在艦隊記錄 `+0x52`／`+0x54`（16.16 定點），每回合開頭複製到
+// `+0x56`／`+0x58` 當餘額，每走一步扣掉實際距離，**剩不到 8 就停**。
+// 那個值 ＝ `+0x4E × 8`——`+0x4E` 是這一支的每回合步數，收據 `s3tgt`
+// 十八支全部對得上（`docs/re/102`）。
+//
+// 30 是收據裡同盟第 16 艦隊量到的步數（240 像素）。**`+0x4E` 自己怎麼
+// 算還沒解完**：唯一的寫入點取「各分隊 `艦種列[+6] × 艦隊能力[+0x42]
+// ÷ 80` 的最小值」，其中的艦種列還沒對出來。
+const DefaultBattleSpeed = 30 * BattleStep
 
 // Moving 回這一支還沒走到目標。
 func (u BattleUnit) Moving() bool { return u.X != u.TargetX || u.Y != u.TargetY }
 
-// AdvanceBattle 把一支部隊往目標推進一步，回有沒有動。
+// AdvanceBattle 讓一支分隊走完這一回合的行程，回有沒有動。
 //
-// 走的是直線：不夠一步就直接到位。原版的路徑細節還沒逆向，
-// 但量到的位移確實指著目標的方向（`docs/re/80`）。
-func AdvanceBattle(u *BattleUnit) bool {
+// 照原版 `1C03:01B6`：沿著指向目標的方位每次走 `BattleStep`，從行程
+// 餘額扣掉實際距離，剩不到一步就停；每一步先問地形（`2583:040C` →
+// `1588:04EA`），不能站就停在原地不再往前。
+//
+// terrain／cells 給 nil 就不判地形——測試與還沒載到原版地圖時用。
+//
+// ⚠ 原版走的是艦隊**現在的朝向** `+0x4A`，另有一支慢慢轉向目標朝向
+// `+0x4C` 的邏輯（`1C03:0361`）**還沒逆向**。這裡直接朝目標走，
+// 轉彎的落差還沒量。
+func AdvanceBattle(u *BattleUnit, t *BattleTerrain, cells []uint8) bool {
 	if u == nil || !u.Moving() {
 		return false
 	}
-	speed := u.Speed
-	if speed <= 0 {
-		speed = DefaultBattleSpeed
+	budget := u.Speed
+	if budget <= 0 {
+		budget = DefaultBattleSpeed
 	}
-	dx, dy := u.TargetX-u.X, u.TargetY-u.Y
-	d := isqrt(dx*dx + dy*dy)
-	if d <= speed {
-		u.X, u.Y = u.TargetX, u.TargetY
-		return true
+	// 餘額用 8.8 定點算：一步 (−4,−7) 的長度是 8.06，截成 8 會多走一步
+	// ——原版是 29 步，截斷會變 30 步。
+	budget *= fixStep
+	moved := false
+	for budget >= BattleStep*fixStep {
+		dx, dy := u.TargetX-u.X, u.TargetY-u.Y
+		d := isqrt(dx*dx + dy*dy)
+		if d < BattleStep {
+			// 原版在這裡把「到了」的旗標設起來就結束這一輪。
+			u.X, u.Y = u.TargetX, u.TargetY
+			return true
+		}
+		a := atan256(dx, dy)
+		nx := u.X + roundDiv(cos256(a)*BattleStep, 1024)
+		ny := u.Y + roundDiv(sin256(a)*BattleStep, 1024)
+		if nx == u.X && ny == u.Y {
+			break
+		}
+		if t != nil && cells != nil && !t.Passable(cells, nx, ny) {
+			break
+		}
+		sx, sy := nx-u.X, ny-u.Y
+		budget -= isqrt((sx*sx + sy*sy) * fixStep * fixStep)
+		u.X, u.Y = nx, ny
+		moved = true
 	}
-	u.X += dx * speed / d
-	u.Y += dy * speed / d
-	return true
+	return moved
+}
+
+// fixStep 是走一步扣行程時用的定點倍率。
+const fixStep = 256
+
+// roundDiv 是四捨五入的整數除法（往絕對值大的方向進位）。
+//
+// 直接截斷會把每一步縮短：收據裡量到的一步是 (−4,−7)，長度 8.06；
+// 截斷會得到 (−3,−7)。
+func roundDiv(a, b int) int {
+	if a < 0 {
+		return -((-a + b/2) / b)
+	}
+	return (a + b/2) / b
 }
 
 // isqrt 是整數平方根。**故意不用浮點數**：這一層的每一個數字都要能
