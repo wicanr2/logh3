@@ -1729,17 +1729,34 @@ func (g *Game) drawFleetRows(fb *gfx.Framebuffer) {
 	if g.res.FleetList == nil || len(g.fleets) == 0 {
 		return
 	}
+	rows := g.fleetRows()
+	g.res.FleetList.Draw(fb, g.res.Font, rows)
+}
+
+// fleetRows 回右下角「艦隊」分頁要列的那幾列。
+//
+// **只列右側面板那一格裡的艦隊**：載入 S2 之後畫面上寫的是
+// 「帝國軍星系瓦爾哈拉」，清單就只有停在瓦爾哈拉的第 5 與第 12 艦隊
+// （收據 `s2ai0`）。面板看哪一格，清單就看哪一格。
+func (g *Game) fleetRows() []screen.FleetRow {
+	region := g.selectedRegion
+	if region < 0 {
+		region = rules.CapitalRegion(g.faction)
+	}
 	var rows []screen.FleetRow
-	for i, f := range g.fleets {
+	for _, f := range g.fleets {
+		if f.Faction != g.faction || f.Region != region {
+			continue
+		}
 		var name []uint16
 		if f.Admiral >= 0 && f.Admiral < len(g.res.AdmiralNames) {
 			name = g.res.AdmiralNames[f.Admiral]
 		}
 		// 右邊那個數字目前一律 100——與艦隊組成上的「機動力」相同，
 		// 是不是機動力還沒驗（只有一個資料點，`docs/re/70`）。
-		rows = append(rows, screen.FleetRow{Number: i + 1, Name: name, Value: 100})
+		rows = append(rows, screen.FleetRow{Number: f.Number, Name: name, Value: 100})
 	}
-	g.res.FleetList.Draw(fb, g.res.Font, rows)
+	return rows
 }
 
 // drawRegionPanel 把選中星域的摘要畫進左下角那塊。

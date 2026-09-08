@@ -1203,3 +1203,50 @@ func TestVersusHandover(t *testing.T) {
 	}
 	matches(t, g, "vs6")
 }
+
+// TestFleetRowsFollowThePanel 右下角「艦隊」分頁只列**右側面板那一格裡**
+// 的艦隊。
+//
+// 收據 `s2ai0`：載入 S2 之後畫面寫「帝國軍星系瓦爾哈拉」，清單就只有
+// 停在瓦爾哈拉的第 5 與第 12 艦隊（曼典菲爾特、法倫海特），
+// 而面板上的「艦隊」是 2：0。
+func TestFleetRowsFollowThePanel(t *testing.T) {
+	res := load(t)
+	graph, err := rules.LoadStarGraph(
+		filepath.Join("../..", "docs/internals/data/star-graph.json"))
+	if err != nil {
+		t.Skipf("讀不到星域圖：%v", err)
+	}
+	res.Graph = graph
+	res.Weights, _ = rules.LoadStrengthWeights(
+		filepath.Join("../..", "docs/internals/data/ship-strength-weights.json"))
+	// 載入時要重算未安定度（`docs/spec/006`），少了參數會炸。
+	res.UnrestParams = rules.UnrestParams{
+		Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
+		Table: []int{170, 150, 130, 90, 60},
+		Base:  []int{50, 75, 100, 150, 200},
+	}
+	g, err := New(res)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.loadSlotFromDisk(9) // 第 9 格 ＝ S2「諸神的黃昏」
+	if len(g.fleets) != 18 {
+		t.Skipf("讀不到 S2 的艦隊表（%d 支），跳過", len(g.fleets))
+	}
+	rows := g.fleetRows()
+	if len(rows) != 2 {
+		t.Fatalf("瓦爾哈拉列了 %d 支，收據上是 2 支", len(rows))
+	}
+	if rows[0].Number != 5 || rows[1].Number != 12 {
+		t.Fatalf("列的是第 %d、%d 艦隊，收據上是第 5、12",
+			rows[0].Number, rows[1].Number)
+	}
+	// 面板上的「艦隊 2：0」是重數出來的，兩邊要一致。
+	if n := rules.CountFleets(g.fleets, rules.CapitalRegion(0), 0); n != 2 {
+		t.Fatalf("瓦爾哈拉數出 %d 支帝國艦隊，預期 2", n)
+	}
+	if n := rules.CountFleets(g.fleets, rules.CapitalRegion(0), 1); n != 0 {
+		t.Fatalf("瓦爾哈拉數出 %d 支同盟艦隊，預期 0", n)
+	}
+}
