@@ -6,6 +6,7 @@ package bootstrap
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -209,6 +210,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	battle, battlePanel, battleTiles, battleMaps, err := loadBattle(data, orig)
+	if err != nil {
+		return nil, err
+	}
 	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph, Weights: weights, AdmiralNames: names, StarListOrder: starOrder,
 		UnrestParams: rules.UnrestParams{
 			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
@@ -223,7 +228,48 @@ func Load(orig, data string) (*game.Resources, error) {
 		DeliveryPanel: delivery, ReportPanel: report, BuildPlanPanel: buildPanel, AdmiralPanel: admPanel, FleetPanel: fleetPanel, CompositionPanel: composition, FleetList: fleetList, Sprites: sprites, Flagships: flagships, BioPanel: bioPanel, Biographies: bios,
 		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
+		Battle: battle, BattlePanel: battlePanel, BattleTiles: battleTiles, BattleMaps: battleMaps,
 		StartMilitary: 50000, ShipPct: 25}, nil
+}
+
+// loadBattle 讀戰場畫面要的東西：版面、面板背景、圖塊庫與 32 張地圖
+// （`docs/internals/34`、`36`、`37`）。
+//
+// 原版檔案是玩家自備的，缺了就回 nil——戰場畫面開不起來，其他畫面照常。
+func loadBattle(data, orig string) (*screen.BattleSpec, *asset.Image, []*asset.Image, [][]uint8, error) {
+	spec, err := screen.LoadBattleSpec(filepath.Join(data, "screen-battle.json"))
+	if err != nil {
+		return nil, nil, nil, nil, err
+	}
+	panelData, err := os.ReadFile(filepath.Join(orig, spec.Panel.File))
+	if err != nil {
+		return nil, nil, nil, nil, nil
+	}
+	panel, err := asset.DecodeAMGImage(panelData)
+	if err != nil {
+		return nil, nil, nil, nil, err
+	}
+	blk, err := os.ReadFile(filepath.Join(orig, spec.Field.Tiles))
+	if err != nil {
+		return nil, nil, nil, nil, nil
+	}
+	tiles, err := asset.DecodeTiles(blk, spec.Field.TileW, spec.Field.TileH)
+	if err != nil {
+		return nil, nil, nil, nil, err
+	}
+	maps := make([][]uint8, 32)
+	for i := range maps {
+		b, err := os.ReadFile(filepath.Join(orig, fmt.Sprintf("MAP%02d.CMP", i)))
+		if err != nil {
+			continue
+		}
+		cells, err := asset.DecodeCMP(b, spec.Field.MapCols, spec.Field.MapRows)
+		if err != nil {
+			return nil, nil, nil, nil, err
+		}
+		maps[i] = cells
+	}
+	return spec, panel, tiles, maps, nil
 }
 
 func regionColours(path string) ([]uint8, error) {

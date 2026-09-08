@@ -105,6 +105,11 @@ const (
 	// 半月／Ｕ字／Ｍ字／Ｔ字／分散／密集（`docs/re/70`）。
 	StateFormation
 
+	// StateBattle 是戰術畫面：面板 ＋ 星域的戰場地形 ＋ 格線
+	// （`docs/internals/34`）。原版在輸入階段不畫單位（`docs/re/82`），
+	// 所以這張目前也只有地形。
+	StateBattle
+
 	// StateShipDelivery 是月底的「船艦接收報告」：第十次「實行」跨月時
 	// 自己跳出來，按「確認」才回到地圖介面（`docs/re/21`、`docs/re/55`）。
 	StateShipDelivery
@@ -281,6 +286,15 @@ type Resources struct {
 	// OrigDir 是原版檔案的目錄。「取進度」要從那裡讀存檔（`docs/spec/007`）。
 	OrigDir string
 
+	// Battle 是戰場畫面的版面，BattlePanel 是面板背景（`ANI_PNL0.A98`），
+	// BattleTiles 是 `BLOCK_2.BLK` 的 128 張圖塊，BattleMaps 是 32 個星域
+	// 各一張的戰場地形（`docs/internals/34`、`36`、`37`）。
+	// 缺原版檔案時全是 nil，戰場畫面就開不起來。
+	Battle      *screen.BattleSpec
+	BattlePanel *asset.Image
+	BattleTiles []*asset.Image
+	BattleMaps  [][]uint8
+
 	// Weights 是戰力權重表（原版的 `ds:6032`，`docs/re/79`）。
 	// nil ＝ 算不出戰力，AI 退回「每支艦隊算 1」。
 	Weights rules.StrengthWeights
@@ -416,6 +430,11 @@ type Game struct {
 	// versus ＝ 主選單選了第 2 列「對戰」：兩個人輪流下命令
 	// （`docs/re/76`、`docs/spec/016`）。
 	versus bool
+
+	// battleRegion 是戰術畫面看的是哪個星域的地形，battleView 是視野
+	// 在整張戰場上的位置（單位是格）。-1 ＝ 還沒進過戰場。
+	battleRegion int
+	battleView   screen.BattleView
 
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
 	// **預設是 `ai.Original`——按實行時什麼都不做**，那是量出來的原版
@@ -643,7 +662,7 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		menuRow: -1, detailAdmiral: -1}
+		menuRow: -1, detailAdmiral: -1, battleRegion: -1}
 	g.startNewGame(res.Faction)
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
@@ -1122,6 +1141,8 @@ func (g *Game) SaveSlot(dir string, index int) error {
 // Frame 畫出目前的畫面。
 func (g *Game) Frame() *gfx.Framebuffer {
 	switch g.state {
+	case StateBattle:
+		return g.drawBattle()
 	case StateCopyProtection:
 		face, _ := g.res.Faces.Decode(g.res.CopyProt.Face.Index)
 		fb, _ := screen.CopyProtection(g.res.CopyProt, g.res.Font, face, string(g.typed))
@@ -2164,4 +2185,28 @@ func (g *Game) setStarRows(spec *screen.MainGameSpec) {
 			{X: l.EnemyX, Ink: rules.FactionColour(1), Text: " 0"},
 		}})
 	}
+}
+
+// drawBattle 畫戰術畫面。
+//
+// 視野是 g.battleView（單位是格）；缺原版檔案時回一張空畫布。
+func (g *Game) drawBattle() *gfx.Framebuffer {
+	if g.res.Battle == nil || g.res.BattlePanel == nil {
+		return gfx.NewFramebuffer(0)
+	}
+	var cells []uint8
+	if r := g.battleRegion; r >= 0 && r < len(g.res.BattleMaps) {
+		cells = g.res.BattleMaps[r]
+	}
+	return screen.Battle(g.res.Battle, g.res.BattlePanel, g.res.BattleTiles, cells, g.battleView)
+}
+
+// EnterBattle 開戰術畫面，看第 region 個星域、視野從格 (col,row) 起。
+//
+// **這是診斷入口**：原版是戰略地圖上遭遇才進戰場，那條路徑還沒逆向
+// （`docs/re/82`）。走這裡進來的畫面不能當玩家路徑收據。
+func (g *Game) EnterBattle(region, col, row int) {
+	g.battleRegion = region
+	g.battleView = screen.BattleView{Col: col, Row: row}
+	g.state = StateBattle
 }
