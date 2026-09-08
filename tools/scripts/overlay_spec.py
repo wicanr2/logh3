@@ -156,10 +156,28 @@ if ALSO:
             return True
         return False
 
-    # 只往既有的行補格子，**不新增行**——第二份收據萬一點歪了、開的是別的
-    # 畫面，多出來的行就會整片變成假資料。少一格看得出來，多一行看不出來。
+    # 只往既有的行補格子；要新增一整行，那一行**必須被主收據的游標壓著**
+    # ——不然第二份收據萬一點歪了、開的是別的畫面，多出來的行就會整片變成
+    # 假資料。少一格看得出來，多一行看不出來。
+    #
+    # 游標一次蓋得住兩列，所以八列的清單得配兩份補充收據：一份讓上面那列
+    # 露出來、一份讓下面那列露出來。
+    _cur = json.load(open('/work/docs/internals/data/cursor.json'))
+    _ox, _oy = _cur['offset_from_mouse']
+    _cx0, _cy0 = MX + _ox, MY + _oy
+    _cx1, _cy1 = _cx0 + _cur['width'], _cy0 + _cur['height']
+
+    def _under_cursor(l):
+        lo, hi = _span(l)
+        return (lo < _cx1 and _cx0 < hi
+                and l['y'] - 2 < _cy1 and _cy0 < l['y'] + 16)
+
     for _l in _extra:
-        _union(lines, _l)
+        if _union(lines, _l):
+            continue
+        if MX >= 0 and _under_cursor(_l):
+            lines.append(_l)
+            print('   （游標壓著、由補充收據補回來）y=%d' % _l['y'])
 if EXTRA:
     for _t in TABS:
         for _ink in (7, 6, 5):

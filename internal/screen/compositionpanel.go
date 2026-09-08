@@ -41,6 +41,11 @@ type CompositionPanel struct {
 		Slots int
 		Empty uint16
 	} `json:"formation"`
+	Buttons []struct {
+		Action     string
+		Text       string
+		X, Y, W, H int
+	} `json:"buttons"`
 	UnitLabels []struct {
 		Slot int
 		Code uint16
@@ -123,4 +128,15 @@ func (p *CompositionPanel) TileAt(slot int) int {
 		}
 	}
 	return -1
+}
+
+// ButtonAt 回畫面座標 (x,y) 落在哪一顆按鈕上；沒有回空字串。
+// 矩形是熱區，比畫出來的框左右各窄 2 像素（`docs/re/68`）。
+func (p *CompositionPanel) ButtonAt(x, y int) string {
+	for _, b := range p.Buttons {
+		if x >= b.X && x < b.X+b.W && y >= b.Y && y < b.Y+b.H {
+			return b.Action
+		}
+	}
+	return ""
 }

@@ -1,9 +1,24 @@
 {
  "note": "艦隊組成那個視窗裡算出來的部分。座標量自收據 `fok`（`docs/re/67`）。七列的「待命部隊」靠右對齊 464、「數量」靠右對齊 544；一單位幾艘見 `docs/internals/32`。",
  "ink": 7,
- "rows": { "y": 162, "pitch": 20, "count": 7, "count_right": 464, "quantity_right": 544 },
- "units": { "y": 322, "numerator_right": 440, "slash_x": 440, "denominator_right": 464, "slots": 8 },
- "mobility": { "y": 342, "right": 464 },
+ "rows": {
+  "y": 162,
+  "pitch": 20,
+  "count": 7,
+  "count_right": 464,
+  "quantity_right": 544
+ },
+ "units": {
+  "y": 322,
+  "numerator_right": 440,
+  "slash_x": 440,
+  "denominator_right": 464,
+  "slots": 8
+ },
+ "mobility": {
+  "y": 342,
+  "right": 464
+ },
  "formation": {
   "y": 342,
   "x": 160,
@@ -14,6 +29,39 @@
   "note": "第 n 格印那一個部隊的字母。開局那一支艦隊只有一個部隊，印的是「Ｂ」，格盤中央同時畫 `SPRITE.SPR` 第 36 張（形狀就是 Ｂ）。**字母怎麼決定還沒解**——收據只有一個資料點，所以下面那張表只有第一格是量到的。"
  },
  "unit_labels": [
-  { "slot": 0, "code": 41680, "text": "Ｂ", "tile": 36, "source": "收據 fok" }
+  {
+   "slot": 0,
+   "code": 41680,
+   "text": "Ｂ",
+   "tile": 36,
+   "source": "收據 fok"
+  }
+ ],
+ "buttons_note": "座標是**熱區**（清單 `2A00`），不是畫出來的框：框左右各多 2 像素（`docs/re/68`）。",
+ "buttons": [
+  {
+   "action": "formation",
+   "text": "陣形",
+   "x": 496,
+   "y": 300,
+   "w": 32,
+   "h": 20
+  },
+  {
+   "action": "cancel",
+   "text": "中止",
+   "x": 496,
+   "y": 320,
+   "w": 32,
+   "h": 20
+  },
+  {
+   "action": "decide",
+   "text": "決定",
+   "x": 496,
+   "y": 340,
+   "w": 32,
+   "h": 20
+  }
  ]
 }

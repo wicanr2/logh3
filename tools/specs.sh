@@ -135,6 +135,14 @@ if want fleet-composition; then
   py tools/scripts/maingame_computed.py screen-fleet-composition
 fi
 
+# 陣形清單（`docs/re/70`）。游標一次蓋得住兩列，八列要三份收據取文字聯集。
+if want formation; then
+  py tools/scripts/overlay_spec.py form1 screen-fleet-composition screen-formation \
+    480 220 543 418 510 270 "" "" "" "" "form2,form3"
+  py tools/scripts/stack_spec.py screen-fleet-composition screen-formation formation
+  py tools/scripts/hover_block.py screen-formation formation 496 240 32 20 20 8 2
+fi
+
 # 資料段的艦種表與開局各星域的艦艇艘數（要一份記憶體 dump，見腳本說明）。
 # tools/oracle.sh fokall … -dump-mem lin:0:1048576:/src/workplace/fokall.bin
 # py tools/scripts/shiptype_export.py /work/workplace/explore/fleetorg/fokall.bin 0

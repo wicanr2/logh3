@@ -139,3 +139,29 @@ func TestFleetCompositionRowSelect(t *testing.T) {
 	}
 	matches(t, g, "row3")
 }
+
+// TestFormationListMatchesOracle 艦隊組成按「陣形」開出的八列清單：
+// 圓錐／紡錘／半月／Ｕ字／Ｍ字／Ｔ字／分散／密集（`docs/re/70`）。
+//
+// 三張收據點的是同一顆按鈕的不同位置——游標一次蓋得住兩列，八列要三份
+// 收據才讀得齊，而三張的反白條都在同一列（滑鼠都落在那一格裡）。
+func TestFormationListMatchesOracle(t *testing.T) {
+	for _, c := range []struct {
+		x, y  int
+		batch string
+	}{
+		{510, 310, "form1"},
+		{497, 300, "form2"},
+		{497, 318, "form3"},
+	} {
+		t.Run(c.batch, func(t *testing.T) {
+			g := reachFleetOrg(t)
+			g.Click(480, 350) // 「確認」→ 艦隊組成
+			g.Click(c.x, c.y) // 「陣形」
+			if g.State() != StateFormation {
+				t.Fatalf("點了陣形之後在 %v", g.State())
+			}
+			matches(t, g, c.batch)
+		})
+	}
+}

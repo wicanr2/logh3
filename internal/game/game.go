@@ -100,6 +100,10 @@ const (
 	// （`docs/re/67`、`docs/spec/015`）。
 	StateFleetComposition
 
+	// StateFormation 是艦隊組成按「陣形」開出的八列清單：圓錐／紡錘／
+	// 半月／Ｕ字／Ｍ字／Ｔ字／分散／密集（`docs/re/70`）。
+	StateFormation
+
 	// StateShipDelivery 是月底的「船艦接收報告」：第十次「實行」跨月時
 	// 自己跳出來，按「確認」才回到地圖介面（`docs/re/21`、`docs/re/55`）。
 	StateShipDelivery
@@ -131,6 +135,7 @@ var screenSpecName = map[State]string{
 	StateFleetNumber:     "screen-fleet-number",
 	StateFleetAdjutant:   "screen-fleet-adjutant",
 	StateFleetComposition: "screen-fleet-composition",
+	StateFormation:        "screen-formation",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -585,6 +590,19 @@ func (g *Game) Click(x, y int) {
 			}
 		}
 	case StateFleetComposition:
+		// 下緣三顆按鈕：陣形／中止／決定（熱區清單 `2A00`）。
+		if p := g.res.CompositionPanel; p != nil {
+			switch p.ButtonAt(x, y) {
+			case "formation":
+				if g.commandSpec(StateFormation) != nil {
+					g.state = StateFormation
+					return
+				}
+			case "cancel":
+				g.state = StateFleetOrg
+				return
+			}
+		}
 		// 點七個艦種列的哪一列，選取條就跳到哪一列（收據 `row3`）。
 		if spec := g.commandSpec(g.state); spec != nil {
 			if w := spec.Windows["overlay"]; w != nil {
@@ -694,6 +712,8 @@ func (g *Game) RightClick(x, y int) {
 		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
 		}
+	case StateFormation:
+		g.state = StateFleetComposition
 	case StateFleetNumber, StateFleetAdjutant, StateFleetComposition:
 		g.state = StateFleetOrg
 	case StateAdmiralBio, StateFleetOrg:
@@ -1051,7 +1071,8 @@ func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
-		StateFleetNumber, StateFleetAdjutant, StateFleetComposition:
+		StateFleetNumber, StateFleetAdjutant, StateFleetComposition,
+		StateFormation:
 	default:
 		return
 	}
@@ -1077,7 +1098,11 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 // 「待命部隊」是**該星域**的艦艇艘數除以一單位幾艘（`docs/re/69`）；
 // 開局那一支艦隊站在自己的首都。
 func (g *Game) drawFleetComposition(fb *gfx.Framebuffer) {
-	if g.state != StateFleetComposition || g.res.CompositionPanel == nil {
+	if g.res.CompositionPanel == nil {
+		return
+	}
+	// 陣形那一層疊在這一張上面，底下這一層照畫。
+	if g.state != StateFleetComposition && g.state != StateFormation {
 		return
 	}
 	region := rules.CapitalRegion(g.faction)
@@ -1491,7 +1516,8 @@ func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 	switch g.state {
 	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList,
 		StateAdmiralDetail, StateAdmiralBio, StateFleetOrg,
-		StateFleetNumber, StateFleetAdjutant, StateFleetComposition:
+		StateFleetNumber, StateFleetAdjutant, StateFleetComposition,
+		StateFormation:
 		region = rules.CapitalRegion(g.faction)
 	case StateStarList:
 		if spec := g.commandSpec(g.state); spec != nil {
