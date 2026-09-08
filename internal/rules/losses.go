@@ -10,8 +10,11 @@ package rules
 // 兩次整數除法的順序照原版——先算百分比再乘，取整的結果與一次除不同。
 //
 // spare 為真時每一支至少留一艘（原版 `[bp+30h]` 為 0 的路徑）；
-// 實際扣掉的是 `min(現有艘數, 份額)`，扣不滿的部分留給後面的分隊
-// （原版把待扣量記在 `[bp+6]`）。
+// 實際扣掉的是 `min(現有艘數, 份額)`。
+//
+// 分完之後如果還有沒扣掉的，**全部丟給現有艘數最多的那一支**——原版
+// 在第一趟迴圈就把最大的那一支記在 `[bp+18h]`，分攤完的 `21A0:02D0`
+// 再回頭補扣。
 //
 // 艦種 7 不扣（`203A:0593` 開頭就回傳），所以 kinds 給了就會跳過它。
 func DistributeLosses(alive []int, kinds []int, total int, spare bool) []int {
@@ -26,12 +29,15 @@ func DistributeLosses(alive []int, kinds []int, total int, spare bool) []int {
 	if sum <= 0 || total <= 0 {
 		return out
 	}
-	left := total
+	left, big := total, -1
 	for i, n := range alive {
-		if left <= 0 {
-			break
-		}
 		if kindSkipsLoss(kinds, i) || n <= 0 {
+			continue
+		}
+		if big < 0 || n > alive[big] {
+			big = i
+		}
+		if left <= 0 {
 			continue
 		}
 		share := total * (n * 100 / sum) / 100
@@ -49,6 +55,19 @@ func DistributeLosses(alive []int, kinds []int, total int, spare bool) []int {
 		}
 		out[i] = share
 		left -= share
+	}
+	// 餘數補在最大的那一支上，一樣受「留一艘」與現有艘數限制。
+	if left > 0 && big >= 0 {
+		room := alive[big] - out[big]
+		if spare {
+			room--
+		}
+		if room > left {
+			room = left
+		}
+		if room > 0 {
+			out[big] += room
+		}
 	}
 	return out
 }
