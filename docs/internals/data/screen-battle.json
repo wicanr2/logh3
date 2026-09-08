@@ -400,8 +400,9 @@
   "unit_scale": 16,
   "unit_row_bias": 1,
   "unit_ink": [
-   4,
-   8
-  ]
+   5,
+   9
+  ],
+  "planet_ink": 15
  }
 }

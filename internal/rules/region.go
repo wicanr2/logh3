@@ -362,3 +362,42 @@ func RegionShips(record []byte, faction int) []int {
 	}
 	return out
 }
+
+// 行星在星域地圖上的位置（`docs/re/89`）。
+//
+// `PLADAT.DAT` 裡沒有座標，是載入星域地圖時算出來的：地圖上圖塊編號
+// 為 `PlanetTile` 的格子依列序對到該星域的行星，位置取格子的中心偏移。
+const (
+	PlanetTile   = 6  // 星域地圖上代表行星的圖塊
+	planetOffX   = 8  // 一格 16 寬，取中央
+	planetOffY   = 12 // 一格 20 高
+	planetMapCol = 128
+)
+
+// PlanetSite 是一顆行星在星域地圖上的位置。
+type PlanetSite struct {
+	Col int `json:"col"`
+	Row int `json:"row"`
+	X   int `json:"x"`
+	Y   int `json:"y"`
+}
+
+// PlanetSites 掃一張星域地圖，回上面的行星位置（依列序）。
+func PlanetSites(cells []uint8, tileW, tileH int) []PlanetSite {
+	if tileW <= 0 || tileH <= 0 {
+		return nil
+	}
+	var out []PlanetSite
+	for i, c := range cells {
+		if c != PlanetTile {
+			continue
+		}
+		col, row := i%planetMapCol, i/planetMapCol
+		out = append(out, PlanetSite{
+			Col: col, Row: row,
+			X: col*tileW + planetOffX,
+			Y: row*tileH + planetOffY,
+		})
+	}
+	return out
+}

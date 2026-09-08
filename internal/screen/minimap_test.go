@@ -39,6 +39,7 @@ func TestMinimapMatchesOracle(t *testing.T) {
 	}
 	fb := gfx.NewFramebuffer(0)
 	DrawMinimap(s, fb, cells, BattleView{Col: 66, Row: 30})
+	DrawMinimapPlanets(s, fb, rules.PlanetSites(cells, s.Field.TileW, s.Field.TileH))
 	DrawMinimapUnits(s, fb, minimapUnits)
 	m := &s.Minimap
 	bad, firstX, firstY := 0, -1, -1
@@ -55,8 +56,8 @@ func TestMinimapMatchesOracle(t *testing.T) {
 	total := m.W * m.H
 	t.Logf("小地圖 %d×%d：不同 %d／%d（%.1f%%）", m.W, m.H, bad, total,
 		100*float64(bad)/float64(total))
-	// 剩下的殘差是兩個白點與艦隊 31 旗艦那一個像素（`docs/re/89`）。
-	if bad > 3 {
+	// 地形 ＋ 格線 ＋ 行星 ＋ 分隊 ＋ 視野框五層都齊了，應該一個都不差。
+	if bad > 0 {
 		t.Fatalf("差 %d／%d 個像素（超過 0.2%%），第一個在 (%d,%d)：收據 %d、remake %d",
 			bad, total, firstX, firstY, want[firstY*640+firstX], fb.Pix[firstY*640+firstX])
 	}

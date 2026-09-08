@@ -2211,6 +2211,8 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 			func(u rules.BattleUnit) int { return battleSprite(u) }, g.battleView)
 	}
 	screen.DrawMinimap(g.res.Battle, fb, cells, g.battleView)
+	screen.DrawMinimapPlanets(g.res.Battle, fb,
+		rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH))
 	screen.DrawMinimapUnits(g.res.Battle, fb, g.battleUnits)
 	screen.DrawBattleStatusFrame(g.res.Battle, fb)
 	if g.res.Font != nil {
