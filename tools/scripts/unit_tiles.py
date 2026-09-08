@@ -74,7 +74,7 @@ for f in range(FLEET_N):
     for g in range(ngroup):
         idx = u16(rec + 0x10 + g * 4)
         p = pool + idx * POOL_SZ
-        wx, wy = s16(p + 0x28), s16(p + 0x2A)
+        wx, wy = s16(p + 0x34), s16(p + 0x36)   # 現在的位置（`docs/re/119`）
         sx = 16 + wx - vcol * 16
         sy = 60 + wy - vrow * 20
         tile = screen_block(sx, sy)
