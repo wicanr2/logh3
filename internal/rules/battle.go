@@ -43,6 +43,10 @@ var formationSlots = [10][2]int{
 // (ux,uy) 是艦隊的朝向，長度就是一個間距——原版量到的值都是 22 或 23
 // （`docs/internals/38`）。法線取 (uy,−ux)，與原版第 2 個分隊的位移同一側。
 //
+// 方向本身由 BattleFacing 算：原版量到的十二支帝國艦隊，基底的方向
+// 都是「指向戰場中心的角度減 96」（`docs/internals/39`）。同盟那幾支
+// 的間距與排法不同，規則還沒解，所以呼叫端要自己給基底。
+//
 // 位移是基底的整數倍。原版在 a 或 b 到 3 的時候會比整數倍少 1，
 // 看得出它是沿同一個角度取距離、每一步各自取整；十個格點裡有八個
 // 用整數倍就完全對得上，剩下兩個差 1。
@@ -149,4 +153,74 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 		out = append(out, u)
 	}
 	return out
+}
+
+// 戰場中心的參考點與角度的一整圈（`docs/internals/39`）。
+//
+// 整張戰場是 2048×2040，中心是 (1024,1020)；原版用的是 (1016,1012)，
+// 兩邊各少 8。這裡照原版的數字，不改成幾何中心。
+const (
+	BattleCentreX = 1016
+	BattleCentreY = 1012
+	BattleTurn    = 256 // 角度的一整圈
+	facingOffset  = 96  // 基底方向 ＝ 朝向 − 96（＝ 135°）
+)
+
+// BattleFacing 回一支艦隊在 (x,y) 的朝向，一整圈是 256。
+//
+// 原版是 `2BE1:011D` 的 atan2（`docs/internals/39`）：拿
+// (BattleCentreX − x, BattleCentreY − y) 算角度。這裡用整數運算重算，
+// 與原版量到的十八支全部相同或差 1。
+func BattleFacing(x, y int) int {
+	return atan256(BattleCentreX-x, BattleCentreY-y)
+}
+
+// FormationBase 回佈陣用的基底向量：長度一個間距、方向是朝向減 96。
+func FormationBase(facing int) (int, int) {
+	a := ((facing-facingOffset)%BattleTurn + BattleTurn) % BattleTurn
+	return cos256(a) * FormationSpacing / 1024, sin256(a) * FormationSpacing / 1024
+}
+
+// atan256 是一整圈 256 的 atan2，**只用整數**。
+//
+// 原版查的是反正切表；這裡用二分逼近同一個定義域，兩者在量到的
+// 十八個樣本上一致或差 1。
+func atan256(dx, dy int) int {
+	ax, ay := abs32(dx), abs32(dy)
+	var a int
+	switch {
+	case ax == 0 && ay == 0:
+		return 0
+	case ax == 0:
+		a = 64
+	default:
+		// 在 0–64 裡找角度，判準是 tan 的比較（全部化成乘法，不做除法）。
+		lo, hi := 0, 64
+		for lo < hi {
+			mid := (lo + hi) / 2
+			// tan(mid) ≥ ay/ax  ⇔  sin(mid)*ax ≥ cos(mid)*ay
+			if sin256(mid)*ax >= cos256(mid)*ay {
+				hi = mid
+			} else {
+				lo = mid + 1
+			}
+		}
+		a = lo
+	}
+	switch {
+	case dx < 0 && dy >= 0:
+		return (128 - a) % BattleTurn
+	case dx < 0 && dy < 0:
+		return (a + 128) % BattleTurn
+	case dy < 0:
+		return (BattleTurn - a) % BattleTurn
+	}
+	return a
+}
+
+func abs32(n int) int {
+	if n < 0 {
+		return -n
+	}
+	return n
 }

@@ -65,4 +65,12 @@ func TestBattleEntryMatchesReceipt(t *testing.T) {
 		t.Fatalf("算出格 (%d,%d) ＝ (%d,%d)，原版是 (26,14) ＝ (416,280)",
 			x.Col, x.Row, x.X, x.Y)
 	}
+	// 同一場的另一邊：同盟第 1 艦隊從星域 27 進來，量到 (1536,1840)。
+	y, ok := e.EntryFor(26, 27)
+	if !ok {
+		t.Fatal("星域 26 找不到來自 27 的入口")
+	}
+	if y.X != 1536 || y.Y != 1840 {
+		t.Fatalf("算出 (%d,%d)，原版是 (1536,1840)", y.X, y.Y)
+	}
 }
