@@ -1,5 +1,5 @@
 {
- "_note": "艦種屬性表，來源 ds:4E3A（docs/re/86、docs/internals/40）。每個陣營一筆 208 位元組，內含 8 個艦種各 26 位元組 ＝ 13 個 word。已解出的欄位：words[0] 滿編艘數、words[11]／words[12] 是攻擊係數分母用的兩個值；其餘還沒解。",
+ "_note": "艦種屬性表，來源 ds:4E3A（docs/re/86、docs/internals/40）。每個陣營一筆 208 位元組，內含 8 個艦種各 26 位元組 ＝ 13 個 word。已解出的欄位：words[0] 滿編艘數；words[11]（+0x16）是攻擊橢圓的長半軸 a、words[12]（+0x18）是短半軸 b——單擊算式的分母 K ＝ (b²/a) ÷ (1 − e·cos θ) × 艦隊能力 ÷ 100，e ＝ sqrt(1 − b²/a²)（docs/re/94）。其餘還沒解。",
  "factions": [
   {
    "faction": 0,
@@ -23,7 +23,11 @@
       12,
       100,
       95
-     ]
+     ],
+     "semi_major": 100,
+     "semi_minor": 95,
+     "eccentricity": 0.3122,
+     "semi_latus_rectum": 90
     },
     {
      "kind": 1,
@@ -44,7 +48,11 @@
       12,
       95,
       85
-     ]
+     ],
+     "semi_major": 95,
+     "semi_minor": 85,
+     "eccentricity": 0.4466,
+     "semi_latus_rectum": 76
     },
     {
      "kind": 2,
@@ -65,7 +73,11 @@
       5,
       85,
       80
-     ]
+     ],
+     "semi_major": 85,
+     "semi_minor": 80,
+     "eccentricity": 0.3379,
+     "semi_latus_rectum": 75
     },
     {
      "kind": 3,
@@ -86,7 +98,11 @@
       120,
       240,
       180
-     ]
+     ],
+     "semi_major": 240,
+     "semi_minor": 180,
+     "eccentricity": 0.6614,
+     "semi_latus_rectum": 135
     },
     {
      "kind": 4,
@@ -107,7 +123,11 @@
       2,
       80,
       75
-     ]
+     ],
+     "semi_major": 80,
+     "semi_minor": 75,
+     "eccentricity": 0.348,
+     "semi_latus_rectum": 70
     },
     {
      "kind": 5,
@@ -128,7 +148,11 @@
       24,
       60,
       57
-     ]
+     ],
+     "semi_major": 60,
+     "semi_minor": 57,
+     "eccentricity": 0.3122,
+     "semi_latus_rectum": 54
     },
     {
      "kind": 6,
@@ -149,7 +173,11 @@
       0,
       60,
       58
-     ]
+     ],
+     "semi_major": 60,
+     "semi_minor": 58,
+     "eccentricity": 0.256,
+     "semi_latus_rectum": 56
     },
     {
      "kind": 7,
@@ -170,7 +198,11 @@
       0,
       50,
       50
-     ]
+     ],
+     "semi_major": 50,
+     "semi_minor": 50,
+     "eccentricity": 0.0,
+     "semi_latus_rectum": 50
     }
    ]
   },
@@ -196,7 +228,11 @@
       9,
       100,
       95
-     ]
+     ],
+     "semi_major": 100,
+     "semi_minor": 95,
+     "eccentricity": 0.3122,
+     "semi_latus_rectum": 90
     },
     {
      "kind": 1,
@@ -217,7 +253,11 @@
       9,
       95,
       85
-     ]
+     ],
+     "semi_major": 95,
+     "semi_minor": 85,
+     "eccentricity": 0.4466,
+     "semi_latus_rectum": 76
     },
     {
      "kind": 2,
@@ -238,7 +278,11 @@
       3,
       85,
       80
-     ]
+     ],
+     "semi_major": 85,
+     "semi_minor": 80,
+     "eccentricity": 0.3379,
+     "semi_latus_rectum": 75
     },
     {
      "kind": 3,
@@ -259,7 +303,11 @@
       100,
       240,
       180
-     ]
+     ],
+     "semi_major": 240,
+     "semi_minor": 180,
+     "eccentricity": 0.6614,
+     "semi_latus_rectum": 135
     },
     {
      "kind": 4,
@@ -280,7 +328,11 @@
       0,
       78,
       73
-     ]
+     ],
+     "semi_major": 78,
+     "semi_minor": 73,
+     "eccentricity": 0.3523,
+     "semi_latus_rectum": 68
     },
     {
      "kind": 5,
@@ -301,7 +353,11 @@
       24,
       60,
       57
-     ]
+     ],
+     "semi_major": 60,
+     "semi_minor": 57,
+     "eccentricity": 0.3122,
+     "semi_latus_rectum": 54
     },
     {
      "kind": 6,
@@ -322,7 +378,11 @@
       0,
       60,
       58
-     ]
+     ],
+     "semi_major": 60,
+     "semi_minor": 58,
+     "eccentricity": 0.256,
+     "semi_latus_rectum": 56
     },
     {
      "kind": 7,
@@ -343,7 +403,11 @@
       0,
       60,
       60
-     ]
+     ],
+     "semi_major": 60,
+     "semi_minor": 60,
+     "eccentricity": 0.0,
+     "semi_latus_rectum": 60
     }
    ]
   }
