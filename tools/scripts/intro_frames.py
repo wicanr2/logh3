@@ -18,8 +18,9 @@ out_dir = sys.argv[1]
 want = {int(v) for v in sys.argv[2].split(',')} if len(sys.argv) > 2 else {0}
 os.makedirs(out_dir, exist_ok=True)
 
+# 收據的 `pal.bin` 已經是 0–255（灰階漸層 0 → 243），不要再乘 255/63。
 pal = open('/work/workplace/oracle/intro40/pal.bin', 'rb').read()
-rgb = bytes(min(255, pal[i] * 255 // 63) for i in range(48))
+rgb = bytes(pal[:48])
 
 
 def png(path, pix):

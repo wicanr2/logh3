@@ -55,12 +55,31 @@ jz  ret            ← 相等才停
 
 ## 解碼器
 
-`tools/scripts/intro_decode.py`（解成 plane）與
-`tools/scripts/intro_frames.py`（輸出 PNG）。
+- `tools/scripts/intro_decode.py`（解成 plane）與
+  `tools/scripts/intro_frames.py`（輸出 PNG）。
+- remake 端：`internal/asset.IntroDecoder`，單元測試
+  `TestIntroDecoder` 把上面那三個判準都寫進去（374 格全解、
+  兩處場景黑幕整個歸零、歸零的格正好是那 14 個）。
+
+收據的 `pal.bin` 是**已經換算成 0–255 的**灰階漸層（0 → 243），
+不要再乘 `255/63`——乘了會整片過曝成白／青色。
 
 一格 ＝ 四個 plane，每個 plane 後面接一個分隔位元組；plane 的資料是
 `docs/re/36` 那四種 token。位元圖是 80 × 227 ＝ 18,160 bytes，
 **一欄一欄往下**：`di += 80`，`di >= 18160` 就 `di -= 18159`。
+
+## 還沒對上執行期的緩衝區
+
+拿「從第 0 格（或場景開頭）累加到第 N 格」去比 `lin:27616`／`lin:34B16`
+那兩個解碼緩衝區，**374 格沒有一格逐位元組相同**，比畫面也一樣。
+理由很可能只是 dump 的時機落在一格的中間（`-dump-mem` 是跑完才倒，
+而一格要解好幾萬個指令），但沒有證據，先當**未對上**記著。
+
+要對上得停在影格邊界：對緩衝區設寫入監看找出兩格之間的指令數，
+再用那個數字當 `-steps` 重跑一次。
+
+順帶量到的：第 30,000,000 步時兩個緩衝區四個 plane **全部是 0**，
+所以緩衝區本身不帶底圖。
 
 ## 還沒做
 
