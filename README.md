@@ -38,6 +38,21 @@
 右邊那張十六列的姓名、軍階與幕僚職記號全部從 `ADMIRAL.DT*` 與 `WORK` 算出來，
 規格裡只有版面。
 
+| 提督詳細資料 | 提督經歷（人物傳）|
+|---|---|
+| ![提督詳細資料](docs/images/09-admiral-detail.png) | ![提督經歷](docs/images/10-biography.png) |
+| 收據 `adm1e` | 收據 `keireki1e` |
+
+出擊命令的待命中提督清單點一位提督就到這裡。這張畫面把 `ADMIRAL.DT*`
+十四個能力欄位裡的十個標了名字——統率力、移動、回轉、營運、光線砲、
+飛彈、戰鬥機、防禦、占領、運用——逆向到這一步之前那幾格只知道
+「值域 80–140」（[`docs/re/65`](docs/re/65-admiral-detail-screen.md)）。
+旗艦查的是執行檔資料段裡兩張各 16 筆的對照表。
+
+右邊那張是「經歷」開出來的**人物傳**，內容逐字取自原版 `KEIREKI.DAT`，
+中譯是當年微波軟體的中文化工程；82 篇的可讀版本在
+[`docs/lore/character-biographies.md`](docs/lore/character-biographies.md)。
+
 ![遊戲設定](docs/images/08-settings.png)
 
 遊戲設定那張把字型層的兩個問題一次逼出來：曲名「波利路」用到 Big5 的
