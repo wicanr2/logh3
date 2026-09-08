@@ -68,14 +68,25 @@ func (a *AMG) Decode(i int) (*Image, error) {
 		return nil, fmt.Errorf("沒有第 %d 張（共 %d 張）", i, len(a.Entries))
 	}
 	e := a.Entries[i]
-	img := a.data[e.Offset : e.Offset+e.Size]
+	img, err := DecodeAMGImage(a.data[e.Offset : e.Offset+e.Size])
+	if err != nil {
+		return nil, fmt.Errorf("第 %d 張：%w", i, err)
+	}
+	return img, nil
+}
+
+// DecodeAMGImage 解一張 `.AMG` 影像。
+//
+// `ANI_PNL?.A98`（戰鬥畫面的面板）**整個檔就是一張這種影像**，
+// 沒有前面那張索引表——所以解碼的部分要能單獨用（`docs/internals/37`）。
+func DecodeAMGImage(img []byte) (*Image, error) {
 	if len(img) < 13 {
-		return nil, fmt.Errorf("第 %d 張太短：%d bytes", i, len(img))
+		return nil, fmt.Errorf("太短：%d bytes", len(img))
 	}
 	w := int(binary.LittleEndian.Uint16(img[8:]))  // 直行數，每行 8 像素
 	h := int(binary.LittleEndian.Uint16(img[10:])) // 每直行的 word 數
 	if w <= 0 || h <= 0 || w > 256 || h > 256 {
-		return nil, fmt.Errorf("第 %d 張的尺寸不合理：%d×%d", i, w, h)
+		return nil, fmt.Errorf("尺寸不合理：%d×%d", w, h)
 	}
 	rows := h * 2
 	planes := make([][]uint8, 4)
