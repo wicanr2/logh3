@@ -25,6 +25,10 @@ var PickerModes = [3]PickerMode{
 // Candidate 是評分要看的艦隊欄位，對應原版艦隊記錄（`docs/internals/33`）。
 type Candidate struct {
 	FleetView
+
+	// Index ＝ 這是呼叫端那份艦隊清單的第幾筆。評分不看它，
+	// 挑完之後要拿它回頭指到艦隊。
+	Index int
 	Disabled  bool // `+0x00` bit0：無法戰鬥
 	Decided   bool // `+0x79` 不是 0xFF：這回合已經決定過
 	Morale    int  // `+0x3C`
