@@ -162,7 +162,7 @@
 | 指派、建艦隊、費沙事件 | **已逆向，未實作** | [`docs/re/180`](docs/re/180-admiral-fleet-slot.md)–[`182`](docs/re/182-admiral-flags-and-fleet-cost.md)、[`190`](docs/re/190-fleet-class-meaning.md)–[`192`](docs/re/192-phezzan-event.md) |
 | 一個回合串起來（`ai.Turn`，階段二／三／五）| **已實作，未對拍** | 逐艦隊決定的過濾已解（[`docs/re/196`](docs/re/196-decision-pass-filter.md)）：`+0x00` bit0 沒設又不在交戰格的留給後面的階段挑。`ds:D60E` 那一格的殘留也解了（[`docs/re/197`](docs/re/197-d60e-counts-the-whole-turn.md)：它數的是整個回合，十一處遞增點見 [`198`](docs/re/198-ai-runs-in-turn260.md)）|
 | `Brain` 包裝（`ai.OriginalStrategy`）| **已實作，未啟用** | 接得上 `Brain`；`Original` 仍回 `nil`，換掉只要改建構的那一行 |
-| **開局艦隊沒有載入** | **未做** | 新遊戲後 `len(g.fleets) == 0`；原版 `STELLAR.DT8` 的 `+0x28`／`+0x29` 記著帝國 13、同盟 13，`FLEET.DT8` 也有那 26 筆（[`docs/re/199`](docs/re/199-region-fleet-counts.md)）。**這一項擋在戰略 AI 前面**——沒有艦隊，接上 AI 也沒有對象 |
+| **建艦隊（階段一，`2D76:0002`／`2E54:0513`）** | **已逆向，未實作** | **這一項擋在戰略 AI 前面**：新遊戲兩邊都是零艦隊（新遊戲樣板只有 `ADMIRAL.DTX`／`STELLAR.DTX`，沒有 `FLEET.DTX`，[`docs/re/200`](docs/re/200-new-game-has-no-fleets.md)），電腦那一方的艦隊是 AI 自己建的。`ai.Turn` 只涵蓋階段二／三／五——建艦隊產生的是新艦隊不是命令，`[]Order` 裝不下 |
 | **接到 `advanceTurn`** | **未做** | 規格已 **READY**（證據審查見 `docs/spec/029`），但 `internal/ai` 的 `Original` 仍回 `nil`——換掉會改變 remake 的行為，需要使用者裁決（理由與影響寫在該規格末尾）|
 
 > 既有的 25 份記憶體傾印裡，**只有被 `-poke` 過座位表的 `s3aicomp` 跑過 AI**
@@ -173,8 +173,9 @@
 >
 > 畫面收據 `turn260`／`turn320`／`turn450` 是例外：**原版在那個狀態裡
 > 跑過 AI，指派了三支艦隊**（[`docs/re/198`](docs/re/198-ai-runs-in-turn260.md)）。
-> 那三張目前逐位元組通得過與 AI 無關——**remake 在那個局面下一支艦隊
-> 都沒有**（新遊戲不載入劇本的開局艦隊），`ai.Turn` 回的一定是空清單。
+> 那三張目前逐位元組通得過與 AI 無關——remake 在那個局面下一支艦隊都沒有，
+> 而**原版的新遊戲也是零艦隊**（[`docs/re/200`](docs/re/200-new-game-has-no-fleets.md)）：
+> 原版那三支是電腦自己建的，而 `ai.Turn` 不含建艦隊那一段。
 
 ## 執行器（dosgolem）覆蓋
 
