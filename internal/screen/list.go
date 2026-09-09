@@ -36,8 +36,8 @@ type ListSpec struct {
 
 // ListCell 是清單一列上的一段字：全形用 Codes、半形（數字）用 Text。
 type ListCell struct {
-	X    int
-	Ink  uint8
+	X     int
+	Ink   uint8
 	Codes []uint16
 	Text  string
 }

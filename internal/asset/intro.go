@@ -11,9 +11,9 @@ import (
 // 80 × 227 ＝ 18,160 bytes 的位元圖，token 解出來的位元組**一欄一欄往下**
 // XOR 進去。
 const (
-	IntroPlaneStride = 80                                   // 一列幾個位元組
-	IntroPlaneRows   = 227                                  // 幾列
-	IntroPlaneSize   = IntroPlaneStride * IntroPlaneRows     // 18,160
+	IntroPlaneStride = 80                                // 一列幾個位元組
+	IntroPlaneRows   = 227                               // 幾列
+	IntroPlaneSize   = IntroPlaneStride * IntroPlaneRows // 18,160
 	IntroPlanes      = 4
 	IntroWidth       = IntroPlaneStride * 8
 )

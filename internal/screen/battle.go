@@ -18,18 +18,18 @@ type BattleSpec struct {
 		Y    int    `json:"y"`
 	} `json:"panel"`
 	Field struct {
-		X, Y          int    `json:"-"`
-		Cols, Rows    int    `json:"-"`
-		TileW, TileH  int    `json:"-"`
-		Tiles         string `json:"tiles"`
-		MapCols       int    `json:"map_cols"`
-		MapRows       int    `json:"map_rows"`
-		XRaw          int    `json:"x"`
-		YRaw          int    `json:"y"`
-		ColsRaw       int    `json:"cols"`
-		RowsRaw       int    `json:"rows"`
-		TileWRaw      int    `json:"tile_w"`
-		TileHRaw      int    `json:"tile_h"`
+		X, Y         int    `json:"-"`
+		Cols, Rows   int    `json:"-"`
+		TileW, TileH int    `json:"-"`
+		Tiles        string `json:"tiles"`
+		MapCols      int    `json:"map_cols"`
+		MapRows      int    `json:"map_rows"`
+		XRaw         int    `json:"x"`
+		YRaw         int    `json:"y"`
+		ColsRaw      int    `json:"cols"`
+		RowsRaw      int    `json:"rows"`
+		TileWRaw     int    `json:"tile_w"`
+		TileHRaw     int    `json:"tile_h"`
 	} `json:"field"`
 	Status  StatusSpec  `json:"status"`
 	Minimap MinimapSpec `json:"minimap"`
@@ -197,14 +197,14 @@ type StatusSpec struct {
 		} `json:"patches"`
 	} `json:"frame"`
 	Labels struct {
-		Factions    []label `json:"factions"`
-		Colon       uint16  `json:"colon"`
-		PhaseInput  label   `json:"phase_input"`
-		Date        label   `json:"date"`
-		TurnPrefix  label   `json:"turn_prefix"`
-		TurnSuffix  label   `json:"turn_suffix"`
-		Victory     label   `json:"victory"`
-		FullDigits  label   `json:"full_digits"`
+		Factions   []label `json:"factions"`
+		Colon      uint16  `json:"colon"`
+		PhaseInput label   `json:"phase_input"`
+		Date       label   `json:"date"`
+		TurnPrefix label   `json:"turn_prefix"`
+		TurnSuffix label   `json:"turn_suffix"`
+		Victory    label   `json:"victory"`
+		FullDigits label   `json:"full_digits"`
 	} `json:"labels"`
 }
 

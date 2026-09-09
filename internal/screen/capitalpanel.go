@@ -29,18 +29,18 @@ type CapitalPanel struct {
 			Text    string   `json:"text"`
 			Codes   []uint16 `json:"codes"`
 		} `json:"prefix"`
-		EraX      int      `json:"era_x"`
-		Era       []uint16 `json:"era"`
-		YearRight int      `json:"year_right"`
-		YearMarkX int      `json:"year_mark_x"`
-		YearMark  uint16   `json:"year_mark"`
-		MonthRight int     `json:"month_right"`
-		MonthMarkX int     `json:"month_mark_x"`
-		MonthMark  uint16  `json:"month_mark"`
-		DayRight   int     `json:"day_right"`
-		DayMarkX   int     `json:"day_mark_x"`
-		DayMark    uint16  `json:"day_mark"`
-		Ink        uint8   `json:"ink"`
+		EraX       int      `json:"era_x"`
+		Era        []uint16 `json:"era"`
+		YearRight  int      `json:"year_right"`
+		YearMarkX  int      `json:"year_mark_x"`
+		YearMark   uint16   `json:"year_mark"`
+		MonthRight int      `json:"month_right"`
+		MonthMarkX int      `json:"month_mark_x"`
+		MonthMark  uint16   `json:"month_mark"`
+		DayRight   int      `json:"day_right"`
+		DayMarkX   int      `json:"day_mark_x"`
+		DayMark    uint16   `json:"day_mark"`
+		Ink        uint8    `json:"ink"`
 	} `json:"faction_line"`
 
 	Rows []struct {

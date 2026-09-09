@@ -106,7 +106,6 @@ func (p *AdmiralPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, v AdmiralView, 
 	}
 }
 
-
 // ButtonAt 回畫面座標 (x,y) 落在哪一顆按鈕上；沒有就回空字串。
 func (p *AdmiralPanel) ButtonAt(x, y int) string {
 	for _, b := range p.Buttons {

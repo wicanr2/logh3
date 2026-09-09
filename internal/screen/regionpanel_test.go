@@ -26,7 +26,7 @@ func TestRegionPanelMatchesOracle(t *testing.T) {
 	for _, c := range []struct {
 		batch      string
 		mx, my     int
-		unrest     int  // <0 ＝ 用量到的那一組
+		unrest     int // <0 ＝ 用量到的那一組
 		own, enemy int
 		whole      bool // 整張都比（保留給游標乾淨的收據；目前一份都沒有）
 		panelOnly  bool // 只比左下角那塊（底層是別的局面，地圖與右側面板都不一樣）

@@ -259,12 +259,12 @@ func reachCommandPhase(t *testing.T) *Game {
 // 星系（`rcback` 收據），remake 還沒有那一層模型，所以只驗狀態。
 func TestCommandPhaseNavigation(t *testing.T) {
 	for _, c := range []struct {
-		name       string
+		name         string
 		menuX, itemX int
-		itemY      int
-		menuBatch  string
-		batch      string
-		state      State
+		itemY        int
+		menuBatch    string
+		batch        string
+		state        State
 	}{
 		{"出擊命令", 352, 400, 125, "cmd1e", "sortie1e", StateStandbyAdmirals},
 		{"情報收集", 352, 400, 145, "cmd1e", "info1e", StateInfo},
@@ -380,9 +380,9 @@ func TestShipDeliveryMatchesOracle(t *testing.T) {
 // 界外點都回主畫面，`docs/internals/23`）。
 func TestMenuClickOutsideCloses(t *testing.T) {
 	for _, c := range []struct {
-		name       string
-		menuX      int
-		x, y       int
+		name  string
+		menuX int
+		x, y  int
 	}{
 		{"戰略命令右界外", 352, 456, 125},
 		{"戰略命令下界外", 352, 400, 200},
@@ -696,15 +696,14 @@ func TestEndingScreenMatchesOriginalPlanes(t *testing.T) {
 	}
 }
 
-
 // TestRightClickSelectsRegion 按在星圖上會換掉選中的星域。
 // 每一筆的預期值都是實測：原版按下去之後左下角那塊寫出來的星系名
 // （收據 `hovA`／`hovB`／`hovC`／`rcback`）。
 func TestRightClickSelectsRegion(t *testing.T) {
 	for _, c := range []struct {
-		x, y  int
-		want  int
-		name  string
+		x, y int
+		want int
+		name string
 	}{
 		{60, 100, 2, "亞爾提那"},
 		{150, 160, 14, "費沙"},

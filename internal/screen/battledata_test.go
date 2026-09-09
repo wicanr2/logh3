@@ -14,10 +14,10 @@ import (
 // 這裡是**繪製**的對拍：內容當固定輸入，證明版面與字的落點對得上原版；
 // 內容怎麼從戰場狀態算出來由 internal/game 那一側負責。
 const (
-	b5Di   = 0xB2C4 // 第
-	b5Jian = 0xC4A5 // 艦
-	b5Dui  = 0xB6A4 // 隊
-	b5Bu   = 0xB3A1 // 部
+	b5Di    = 0xB2C4 // 第
+	b5Jian  = 0xC4A5 // 艦
+	b5Dui   = 0xB6A4 // 隊
+	b5Bu    = 0xB3A1 // 部
 	b5Slash = 0xA1FE // ／（原版用 A1FE，不是 python big5 編出來的 A241）
 )
 

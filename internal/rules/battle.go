@@ -32,8 +32,8 @@ type BattleUnit struct {
 	// RepairCap 是「修理」補得回來的上限（艦艇記錄 `+0x0C`）。它與
 	// `+0x0A` 不同——戰損會把它扣掉一點（永久損失），`+0x0A` 不動。
 	RepairCap int `json:"repair_cap"`
-	Attack    int `json:"attack"`     // 攻擊力（艦艇記錄 `+0x16`）
-	Morale    int `json:"morale"`     // 士氣（艦艇記錄 `+0x06`）
+	Attack    int `json:"attack"` // 攻擊力（艦艇記錄 `+0x16`）
+	Morale    int `json:"morale"` // 士氣（艦艇記錄 `+0x06`）
 
 	// Slot 是隊形槽索引 0–40（艦艇記錄 `+0x05`）：目的地 ＝ 艦隊位置 ＋
 	// `ds:59BA` 第 N 筆偏移依艦隊朝向旋轉。「編隊」改的就是它

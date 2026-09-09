@@ -19,9 +19,9 @@ type FleetPanel struct {
 	Ink    uint8 `json:"ink"`
 	AltInk uint8 `json:"alt_ink"`
 	Title  struct {
-		Y        int `json:"y"`
-		PrefixX  int `json:"prefix_x"`
-		DigitsX  int `json:"digits_x"`
+		Y       int `json:"y"`
+		PrefixX int `json:"prefix_x"`
+		DigitsX int `json:"digits_x"`
 	} `json:"title"`
 	Admiral  fleetSide `json:"admiral"`
 	Adjutant fleetSide `json:"adjutant"`
@@ -73,16 +73,16 @@ func LoadFleetPanel(path string) (*FleetPanel, error) {
 
 // FleetView 是畫這張畫面要的一整組值。
 type FleetView struct {
-	Number             int      // 第幾艦隊
-	AdmiralName        []uint16 // 姓名 ＋ 軍階，接在一起
-	AdmiralRank        []uint16
-	AdmiralLevel, AdmiralExp int
-	Flagship           []uint16
-	AdjutantName       []uint16
-	AdjutantRank       []uint16
+	Number                     int      // 第幾艦隊
+	AdmiralName                []uint16 // 姓名 ＋ 軍階，接在一起
+	AdmiralRank                []uint16
+	AdmiralLevel, AdmiralExp   int
+	Flagship                   []uint16
+	AdjutantName               []uint16
+	AdjutantRank               []uint16
 	AdjutantLevel, AdjutantExp int
-	AdmiralRecord      []byte
-	AdjutantRecord     []byte
+	AdmiralRecord              []byte
+	AdjutantRecord             []byte
 }
 
 // Draw 把算出來的部分畫上去。兩張頭像另外畫（要 `FACE.AMG`）。

@@ -67,3 +67,10 @@ func clampInt(v, lo, hi int) int {
 // Atan256 回 (dx,dy) 的方位，一整圈 256（原版 `2BE1:011D`）。
 // 選抵達朝向與算「往目的地的方位」都用它。
 func Atan256(dx, dy int) int { return atan256(dx, dy) }
+
+// Sin256／Cos256 是原版正弦表（`ds:573A`）的公開版本：一整圈 256、
+// 值 ＝ sin × 1024（`docs/internals/41`）。
+func Sin256(a int) int { return sin256(a) }
+
+// Cos256 見 Sin256。
+func Cos256(a int) int { return cos256(a) }

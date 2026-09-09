@@ -1,9 +1,9 @@
 package screen
 
 import (
-	"strings"
 	"encoding/json"
 	"os"
+	"strings"
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
@@ -16,7 +16,7 @@ import (
 // `docs/internals/data/screen-main-game.json`）。
 type MainGameSpec struct {
 	Background uint8 `json:"background"`
-	Map struct {
+	Map        struct {
 		Source  string `json:"source"`
 		Regions string `json:"regions"`
 
@@ -207,8 +207,8 @@ type GameWindow struct {
 	// Rules 是純色的線（報告視窗裡的表格分隔線）。
 	Rules []Solid `json:"rules"`
 	Lines []struct {
-		Y     int `json:"y"`
-		Ink   uint8 `json:"ink"`
+		Y   int   `json:"y"`
+		Ink uint8 `json:"ink"`
 
 		// Bold ＝ 這一行用粗體畫。原版兩種粗細共用同一份字形，
 		// 粗的那一種先把每一列往右加粗一格（`docs/internals/25`）。
@@ -681,13 +681,11 @@ func atoi(s string) int {
 	return n
 }
 
-
 // DrawStaffLine 畫一行署名：姓名接軍階，全形字。
 func DrawStaffLine(fb *gfx.Framebuffer, fnt *font.Font, x, y int, name, rank []uint16, ink uint8) {
 	codes := append(append([]uint16(nil), name...), rank...)
 	drawFull(fb, fnt, x, y, codes, ink)
 }
-
 
 // DrawFactionText 畫規格宣告的「兩個陣營印不同字」那幾行。
 func (w *GameWindow) DrawFactionText(fb *gfx.Framebuffer, fnt *font.Font, faction int) {

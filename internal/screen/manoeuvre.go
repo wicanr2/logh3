@@ -148,3 +148,37 @@ func FacingCrossSegments(facing int) [2][4]int {
 	dx, dy := rules.Rotate256(0, FacingCrossSide, facing)
 	return [2][4]int{{ax, ay, bx, by}, {cx, cy, dx, dy}}
 }
+
+// 要塞砲的射程是一個橢圓（描述 `[+6] ＝ 2`，`docs/re/134`）。
+const FortressRangeInk uint8 = 4
+
+// DrawFortressRange 把要塞砲的射程橢圓畫在行星上。cx／cy 是世界座標，
+// tilt 是傾角（一整圈 256）。
+func DrawFortressRange(s *BattleSpec, fb *gfx.Framebuffer,
+	cx, cy, semiMajor, semiMinor, tilt int, v BattleView) {
+	if s == nil || fb == nil || semiMajor <= semiMinor || semiMinor <= 0 {
+		return
+	}
+	sx := s.Field.X + cx - v.Col*s.Field.TileW
+	sy := s.Field.Y + cy - v.Row*s.Field.TileH
+	clip := func(x, y int) bool {
+		return x >= s.Field.X && y >= s.Field.Y &&
+			x < s.Field.X+s.Field.Cols*s.Field.TileW &&
+			y < s.Field.Y+s.Field.Rows*s.Field.TileH
+	}
+	// 原版是「畫一個正圓、把 y 依 短/長 壓扁、再依傾角轉過去」
+	// （`39D7:035E`）。這裡照同一個順序，落點才會一致。
+	last := [2]int{1 << 30, 1 << 30}
+	for a := 0; a < 256; a++ {
+		x := semiMajor * rules.Cos256(a) / 1024
+		y := semiMajor * rules.Sin256(a) / 1024 * semiMinor / semiMajor
+		rx, ry := rules.Rotate256(x, y, tilt)
+		if rx == last[0] && ry == last[1] {
+			continue
+		}
+		last = [2]int{rx, ry}
+		if clip(sx+rx, sy+ry) {
+			fb.Set(sx+rx, sy+ry, fb.At(sx+rx, sy+ry)^FortressRangeInk)
+		}
+	}
+}

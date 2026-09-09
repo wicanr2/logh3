@@ -3,6 +3,8 @@ package game
 import (
 	"testing"
 
+	"github.com/wicanr2/logh3/internal/rules"
+
 	"github.com/wicanr2/logh3/internal/screen"
 )
 
@@ -96,8 +98,8 @@ func TestPlanetMenuItems(t *testing.T) {
 	}
 	s := g.res.CommandMenus
 	for _, c := range []struct {
-		kind  screen.CommandMenuKind
-		n, w  int
+		kind screen.CommandMenuKind
+		n, w int
 	}{
 		{screen.CommandMenuPlanet, 3, 2},
 		{screen.CommandMenuFortress, 4, 3},
@@ -114,7 +116,6 @@ func TestPlanetMenuItems(t *testing.T) {
 		t.Errorf("艦隊選單的內寬 %d，該是 2", got)
 	}
 }
-
 
 func clampTestInt(v, lo, hi int) int {
 	if v < lo {
@@ -178,5 +179,21 @@ func TestFortressTargetLocks(t *testing.T) {
 	g.beginFortressTarget(idx)
 	if g.FortressTargetPending() {
 		t.Error("狀態 1 不該進得去")
+	}
+}
+
+// 射程是一個橢圓（`3870:03A3` → `39D7:035E`），不是內外兩圈：
+// 長半軸 ＝ 防衛力 ÷ 200 ＋ 80、短半軸 ＝ 長半軸 ÷ 4。
+func TestFortressRangeIsEllipse(t *testing.T) {
+	for _, c := range []struct{ def, a, b int }{
+		{12800, 144, 36}, {9800, 129, 32}, {6500, 112, 28},
+	} {
+		a, b := rules.FortressRange(c.def)
+		if a != c.a || b != c.b {
+			t.Errorf("防衛力 %d → (%d,%d)，該是 (%d,%d)", c.def, a, b, c.a, c.b)
+		}
+		if b*4 > a || b*4 < a-3 {
+			t.Errorf("短半軸 %d 不是長半軸 %d 的四分之一", b, a)
+		}
 	}
 }

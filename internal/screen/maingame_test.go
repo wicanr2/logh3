@@ -1,16 +1,16 @@
 package screen
 
 import (
-	"fmt"
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
-	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
@@ -42,7 +42,6 @@ func TestMainGameMatchesOracle(t *testing.T) {
 		t.Run(c.batch, func(t *testing.T) { checkGameScreen(t, c.spec, c.batch) })
 	}
 }
-
 
 // gameScreenAssets 從原版檔案重建畫面需要的資源。缺檔就 skip，不做代用品。
 func gameScreenAssets(t *testing.T) (*font.Font, *asset.Image, *asset.AMG, *ui.Cursor) {

@@ -112,7 +112,7 @@ type FleetDetailView struct {
 	Adjutant    []uint16 // 空 ＝ 沒有副官
 	AdjLevel    int
 	AdjExp      int
-	Values      [12]int  // 順序同規格的 values
+	Values      [12]int   // 順序同規格的 values
 	ValueInks   [12]uint8 // 0 ＝ 用預設色
 	UnitNo      int
 	KindName    []uint16

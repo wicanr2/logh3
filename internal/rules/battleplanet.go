@@ -8,11 +8,11 @@ package rules
 
 // BattlePlanet 是戰鬥期間一顆行星要用到的欄位。
 type BattlePlanet struct {
-	Index   int  `json:"index"` // 行星表的索引
-	Owner   int  `json:"owner"` // 0 帝國、1 同盟、2 無主
-	X       int  `json:"x"`     // 星域地圖上的位置
-	Y       int  `json:"y"`
-	Defence int  `json:"defence"` // `+0x14`：防衛力
+	Index   int `json:"index"` // 行星表的索引
+	Owner   int `json:"owner"` // 0 帝國、1 同盟、2 無主
+	X       int `json:"x"`     // 星域地圖上的位置
+	Y       int `json:"y"`
+	Defence int `json:"defence"` // `+0x14`：防衛力
 	// Fortress ＝ 行星記錄 `+0x12` 非 0：**這顆有要塞**。81 顆裡有 8 顆
 	// （伊謝爾倫、連典貝爾克、禿鷹之城、格魯米遜、葛羅斯達、帕謬爾、
 	// 梅爾格利德、魯德米拉）。兩個地方讀它：戰損的除數從 10 變 20，
@@ -66,9 +66,9 @@ func (p *Planets) BattlePlanetsFor(region int, sites []PlanetSite) []BattlePlane
 			Index: i, Owner: p.Owner(i),
 			X: sites[k].X, Y: sites[k].Y,
 			Defence: p.Defence(i), Fortress: p.Fortress(i),
-			GunState: int(p.rec(i)[planetGunState]),
+			GunState:  int(p.rec(i)[planetGunState]),
 			GunTarget: int(le32(p.rec(i)[planetGunTarget:]) & 0xFFFF),
-			Stock: planetStockOf(p.rec(i)),
+			Stock:     planetStockOf(p.rec(i)),
 		})
 	}
 	return out

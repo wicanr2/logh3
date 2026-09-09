@@ -17,7 +17,7 @@ func TestManoeuvreBoundaryMatchesOracle(t *testing.T) {
 	const (
 		w, cx, cy      = 640, 298, 409
 		turn, dist, fc = 15, 240, 190
-		fx0, fy0       = 16, 40  // 戰場左上
+		fx0, fy0       = 16, 40   // 戰場左上
 		fx1, fy1       = 464, 400 // 戰場右下
 		shapeInk       = 2
 	)

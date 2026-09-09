@@ -268,7 +268,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		Battle: battle, BattlePanel: battlePanel, BattleTiles: battleTiles, BattleMaps: battleMaps,
 		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
-		Formation: formation,
+		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
@@ -333,7 +333,6 @@ func regionColours(path string) ([]uint8, error) {
 	return out, nil
 }
 
-
 // loadAdmiralNames 讀 82 名提督姓名的 Big5 字碼。
 func loadAdmiralNames(path string) ([][]uint16, error) {
 	b, err := os.ReadFile(path)
@@ -372,7 +371,6 @@ func loadStarListOrder(path string) ([][]int, error) {
 	}
 	return doc.Orders, nil
 }
-
 
 // loadBiographies 讀 82 篇人物傳的字碼（`docs/internals/15`）。
 func loadBiographies(path string) ([][]uint16, error) {

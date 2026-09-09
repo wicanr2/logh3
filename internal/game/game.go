@@ -133,28 +133,28 @@ const (
 // screenSpecName 是每個命令階段狀態對應的規格名（`docs/internals/data/`）。
 // 「實行」不在裡面——它不開畫面。
 var screenSpecName = map[State]string{
-	StateCommandPhase:    "screen-command-phase",
-	StateCmdMenu:         "screen-cmd-menu",
-	StateListMenu:        "screen-list-menu",
-	StateSysMenu:         "screen-sys-menu",
-	StateStandbyAdmirals: "screen-standby-admirals",
-	StateInfo:            "screen-info",
-	StateTaxPlan:         "screen-tax-plan",
-	StateProductionPlan:  "screen-production-plan",
-	StateStarList:        "screen-star-list",
-	StateFleetList:       "screen-fleet-list",
-	StateAdmiralListView: "screen-admiral-list-view",
-	StateEnemyList:       "screen-enemy-list",
-	StateLoadGame:        "screen-load-game",
-	StateSaveGame:        "screen-save-game",
-	StateSettings:        "screen-settings",
-	StateQuitConfirm:     "screen-quit-confirm",
-	StateShipDelivery:    "screen-ship-delivery",
-	StateAdmiralDetail:   "screen-admiral-detail",
-	StateAdmiralBio:      "screen-admiral-bio",
-	StateFleetOrg:        "screen-fleet-org",
-	StateFleetNumber:     "screen-fleet-number",
-	StateFleetAdjutant:   "screen-fleet-adjutant",
+	StateCommandPhase:     "screen-command-phase",
+	StateCmdMenu:          "screen-cmd-menu",
+	StateListMenu:         "screen-list-menu",
+	StateSysMenu:          "screen-sys-menu",
+	StateStandbyAdmirals:  "screen-standby-admirals",
+	StateInfo:             "screen-info",
+	StateTaxPlan:          "screen-tax-plan",
+	StateProductionPlan:   "screen-production-plan",
+	StateStarList:         "screen-star-list",
+	StateFleetList:        "screen-fleet-list",
+	StateAdmiralListView:  "screen-admiral-list-view",
+	StateEnemyList:        "screen-enemy-list",
+	StateLoadGame:         "screen-load-game",
+	StateSaveGame:         "screen-save-game",
+	StateSettings:         "screen-settings",
+	StateQuitConfirm:      "screen-quit-confirm",
+	StateShipDelivery:     "screen-ship-delivery",
+	StateAdmiralDetail:    "screen-admiral-detail",
+	StateAdmiralBio:       "screen-admiral-bio",
+	StateFleetOrg:         "screen-fleet-org",
+	StateFleetNumber:      "screen-fleet-number",
+	StateFleetAdjutant:    "screen-fleet-adjutant",
 	StateFleetComposition: "screen-fleet-composition",
 	StateFormation:        "screen-formation",
 	StateVersusInput:      "screen-versus-input",
@@ -196,21 +196,21 @@ func menuOf(s State) int {
 
 // Resources 是玩家自備的原版檔案解出來的東西。**這個套件不內嵌任何原版資料。**
 type Resources struct {
-	Font     *font.Font
-	Faces    *asset.AMG
-	Cursor   *ui.Cursor
-	Menu     *screen.MenuSpec
-	CopyProt *screen.CopyProtSpec
-	MainGame  *screen.MainGameSpec
-	ShipOrder *screen.MainGameSpec
-	BuildPlan  *screen.MainGameSpec
+	Font        *font.Font
+	Faces       *asset.AMG
+	Cursor      *ui.Cursor
+	Menu        *screen.MenuSpec
+	CopyProt    *screen.CopyProtSpec
+	MainGame    *screen.MainGameSpec
+	ShipOrder   *screen.MainGameSpec
+	BuildPlan   *screen.MainGameSpec
 	BudgetPlan  *screen.MainGameSpec
 	AdmiralList *screen.MainGameSpec
 
 	// Screens 是命令階段那一批畫面的規格，key 是規格名（見 screenSpecName）。
 	Screens map[string]*screen.MainGameSpec
 
-	StarMap  *asset.Image
+	StarMap *asset.Image
 
 	// StarBit／StarRGN 是星圖的原始位元組（`STRMAP.BIT`／`STRMAP.RGN`），
 	// RegionColours 是 `strmap-regions.json` 的 `colour_796_01`。
@@ -259,8 +259,8 @@ type Resources struct {
 
 	// BioPanel 是提督經歷那個視窗的內文版面，Biographies 是 82 篇人物傳
 	// 的字碼（`docs/internals/15`）。
-	BioPanel     *screen.BioPanel
-	Biographies  [][]uint16
+	BioPanel    *screen.BioPanel
+	Biographies [][]uint16
 
 	// Flagships 是兩個陣營各 16 艘旗艦的名字（`docs/re/65`）。
 	Flagships *screen.Flagships
@@ -423,7 +423,7 @@ type Game struct {
 	building rules.BuildPlan
 
 	// delivered 是月底報告上那一份：跨月的當下交付出去的船。
-	delivered              rules.BuildPlan
+	delivered               rules.BuildPlan
 	reportYear, reportMonth int
 
 	// 目前選中的星域。左下角那塊寫的就是它。**還沒選過是 −1**，
@@ -486,10 +486,10 @@ type Game struct {
 
 	// 結算用的（`docs/spec/018`）：參戰艦隊、亂數、上一回合的交火紀錄，
 	// 以及「有一方全沒了」。
-	battleFleets  []rules.BattleFleet
+	battleFleets []rules.BattleFleet
 	// 戰術選單開在游標處：battleMenu 是「開著沒有」，battleMenuX／Y 是框的
 	// 左上角（`docs/internals/34`）。
-	battleMenu           bool
+	battleMenu bool
 
 	// battleData ＝ 戰術選單「資料」開著沒有，battleDataTab 是看哪一個
 	// 分頁（0 艦隊／1 行星／2 敵艦隊）。
@@ -498,18 +498,18 @@ type Game struct {
 
 	// battleDetail ＝ 艦隊詳細資料那一層開著沒有，battleDetailRow 是
 	// 點的是表上第幾列。
-	battleDetail    bool
-	battleDetailRow int
+	battleDetail             bool
+	battleDetailRow          int
 	battleMenuX, battleMenuY int
 
 	// battleCmd ＝ 戰場的命令選單開著沒有（`docs/spec/023`）；
 	// battleCmdUnit 是點到的分隊在 battleUnits 裡的索引，battleCmdKind
 	// 是五張表的哪一張，battleCmdX／Y 是框的左上角。
-	battleCmd                bool
-	battleCmdUnit            int
-	battleCmdPlanet          int // -1 ＝ 這一張不是行星的選單
-	battleCmdKind            screen.CommandMenuKind
-	battleCmdX, battleCmdY   int
+	battleCmd              bool
+	battleCmdUnit          int
+	battleCmdPlanet        int // -1 ＝ 這一張不是行星的選單
+	battleCmdKind          screen.CommandMenuKind
+	battleCmdX, battleCmdY int
 
 	// battleMove ＝ 選了「移動」之後在等玩家點目的地（`docs/spec/024`）；
 	// battleMoveUnit 是要移動的分隊。
@@ -545,10 +545,10 @@ type Game struct {
 
 	battleRally   []rules.RallySite
 	battlePlanets []rules.BattlePlanet
-	battleRand   *rules.Rand
-	battleLosses []rules.BattleLoss
-	battleScore  [2]int
-	battleOver   bool
+	battleRand    *rules.Rand
+	battleLosses  []rules.BattleLoss
+	battleScore   [2]int
+	battleOver    bool
 
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
 	// **預設是 `ai.Original`——按實行時什麼都不做**，那是量出來的原版
@@ -577,8 +577,8 @@ type side struct {
 
 // 星圖畫在畫面的 (0,40)，320×300，圖塊 16×20（`docs/internals/12`）。
 const (
-	mapX, mapY = 0, 40
-	mapW, mapH = 320, 300
+	mapX, mapY   = 0, 40
+	mapW, mapH   = 320, 300
 	tileW, tileH = 16, 20
 )
 
@@ -2208,7 +2208,7 @@ func (g *Game) Military() int { return g.military }
 
 // Treasury 回這個月的財政（原定軍事費、已支付各項）。
 func (g *Game) Treasury() rules.Treasury { return g.treasury }
-func (g *Game) TaxTotal() int { return g.taxTotal }
+func (g *Game) TaxTotal() int            { return g.taxTotal }
 
 // Date 回遊戲內的日期。紀元年 796 是原版帝國戰役的開局。
 func (g *Game) Date() (year, month, day int) { return rules.Date(g.turn, 796) }
@@ -2412,6 +2412,11 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 			screen.DrawManoeuvreRange(g.res.Battle, fb, f.cx, f.cy,
 				f.turn, f.dist, f.facing, g.battleView)
 		}
+	}
+	// 要塞砲指定目標時畫射程橢圓（`docs/re/134`）。
+	if o, i, ok := g.FortressTargetRange(); ok {
+		p := g.battlePlanets[g.battleGun]
+		screen.DrawFortressRange(g.res.Battle, fb, p.X, p.Y, o, i, 0, g.battleView)
 	}
 	// 選抵達朝向時，目的地上多一個指向性的十字（`docs/re/122`）。
 	if g.fleetOrder == FleetOrderFacing {

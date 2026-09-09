@@ -92,12 +92,12 @@ type BattleDataSpec struct {
 		Frame BattleDataFrame      `json:"frame"`
 	} `json:"scroll"`
 	Text struct {
-		X        int   `json:"x"`
-		HeaderY  int   `json:"header_y"`
-		RowDY    int   `json:"row_dy"`
-		Ink      uint8 `json:"ink"`
-		LeadInk  uint8 `json:"lead_ink"`
-		Shadow   uint8 `json:"shadow"`
+		X       int   `json:"x"`
+		HeaderY int   `json:"header_y"`
+		RowDY   int   `json:"row_dy"`
+		Ink     uint8 `json:"ink"`
+		LeadInk uint8 `json:"lead_ink"`
+		Shadow  uint8 `json:"shadow"`
 	} `json:"text"`
 	Headers []BattleDataLine `json:"headers"`
 }

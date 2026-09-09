@@ -17,14 +17,16 @@ const (
 	planetGunTarget = 0x50 // 要塞砲鎖定的目標，0xFFFF ＝ 沒有
 )
 
-// FortressRange 回要塞砲的兩個半徑（外圈、內圈），單位是像素。
+// FortressRange 回要塞砲射程那個**橢圓**的長短半軸，單位是像素。
 //
-//	外圈 ＝ 防衛力 ÷ 200 ＋ 80、內圈 ＝ 外圈 ÷ 4（`2264:0EC3`）
+//	長半軸 ＝ 防衛力 ÷ 200 ＋ 80、短半軸 ＝ 長半軸 ÷ 4（`2264:0EC3`）
 //
-// 伊謝爾倫的防衛力 12800 → 144 與 36。
-func FortressRange(defence int) (outer, inner int) {
-	outer = defence/200 + 80
-	return outer, outer / 4
+// 伊謝爾倫的防衛力 12800 → 144 與 36。圖形種類是 2（`3870:03A3` →
+// `39D7:035E`），畫的是一個可以傾斜的橢圓，傾角在描述的 `[+4]`
+// （`docs/re/134`、`docs/re/135`）。
+func FortressRange(defence int) (semiMajor, semiMinor int) {
+	semiMajor = defence/200 + 80
+	return semiMajor, semiMajor / 4
 }
 
 // FortressGunReady 回要塞砲現在能不能重新指定目標：狀態只有 0（沒鎖定）
@@ -40,8 +42,8 @@ const (
 // PlanetStock 是一顆行星身上的三種存量。欄位對到行星記錄的
 // `+0x3C`、`+0x40` 與 `+0x20` 起那七格。
 type PlanetStock struct {
-	Missiles int   `json:"missiles"`
-	Fighters int   `json:"fighters"`
+	Missiles int    `json:"missiles"`
+	Fighters int    `json:"fighters"`
 	Ships    [7]int `json:"ships"` // 艦種 0–6 各一份
 }
 

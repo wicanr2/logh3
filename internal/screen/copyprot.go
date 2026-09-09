@@ -14,16 +14,16 @@ import (
 // CopyProtSpec 是防拷問答畫面的版面規格（量自 oracle，見
 // `docs/internals/data/screen-copy-protection.json`）。
 type CopyProtSpec struct {
-	Background uint8 `json:"background"`
+	Background uint8                    `json:"background"`
 	Window     struct{ X, Y, W, H int } `json:"window"`
-	Bevel struct {
-		Layers [][4]uint8 `json:"layers"`
-		Alt    [][4]uint8 `json:"alt"`
-		Fill   uint8      `json:"fill"`
+	Bevel      struct {
+		Layers  [][4]uint8 `json:"layers"`
+		Alt     [][4]uint8 `json:"alt"`
+		Fill    uint8      `json:"fill"`
 		Patches []struct {
-			DX int `json:"dx"`
-			DY int `json:"dy"`
-			Color  uint8 `json:"color"`
+			DX    int   `json:"dx"`
+			DY    int   `json:"dy"`
+			Color uint8 `json:"color"`
 		} `json:"patches"`
 	} `json:"frame"`
 	Face struct {

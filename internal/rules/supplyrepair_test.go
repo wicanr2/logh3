@@ -169,7 +169,6 @@ func TestSupplyRange(t *testing.T) {
 	}
 }
 
-
 func max0(v int) int {
 	if v < 0 {
 		return 0

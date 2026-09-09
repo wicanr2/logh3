@@ -124,7 +124,6 @@ func TestBattleMatchesOracle(t *testing.T) {
 	}
 }
 
-
 // battleMinimapUnits 是收據 `s3ai6` 裡會在小地圖上點出來的分隊
 // （艦艇記錄的 `+0x1A`／`+0x1C` 不是 `0xFFFF` 的那些，`docs/re/89`）。
 var battleMinimapUnits = []rules.BattleUnit{

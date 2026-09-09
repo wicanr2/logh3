@@ -90,7 +90,6 @@ func (g *Game) battleDataClick(x, y int) bool {
 }
 
 // battleDataRows 組出表上的每一列。
-//
 func (g *Game) battleDataRows(tab int) [][]screen.BattleDataRun {
 	if tab == 1 {
 		return g.battleDataPlanets()

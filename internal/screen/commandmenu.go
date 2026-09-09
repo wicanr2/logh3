@@ -39,23 +39,23 @@ type CommandMenuSpec struct {
 		Items   []label `json:"items"`
 	} `json:"menus"`
 	Layout struct {
-		CellW           int   `json:"cell_w"`
-		CellH           int   `json:"cell_h"`
-		OriginBias      int   `json:"origin_bias"`
-		CursorCellBias  int   `json:"cursor_cell_bias"`
-		ClampRows       int   `json:"clamp_rows"`
-		FramePadW       int   `json:"frame_pad_w"`
-		FramePadH       int   `json:"frame_pad_h"`
-		HighlightDX     int   `json:"highlight_dx"`
-		HighlightDY     int   `json:"highlight_dy"`
-		TextDY          int   `json:"text_dy"`
-		ColPitch        int   `json:"col_pitch"`
-		RowPitch        int   `json:"row_pitch"`
-		Ink             uint8 `json:"ink"`
-		Shadow          uint8 `json:"shadow"`
-		HighlightInk    uint8 `json:"highlight_ink"`
-		DisabledInk     uint8 `json:"disabled_ink"`
-		Fill            uint8 `json:"fill"`
+		CellW          int   `json:"cell_w"`
+		CellH          int   `json:"cell_h"`
+		OriginBias     int   `json:"origin_bias"`
+		CursorCellBias int   `json:"cursor_cell_bias"`
+		ClampRows      int   `json:"clamp_rows"`
+		FramePadW      int   `json:"frame_pad_w"`
+		FramePadH      int   `json:"frame_pad_h"`
+		HighlightDX    int   `json:"highlight_dx"`
+		HighlightDY    int   `json:"highlight_dy"`
+		TextDY         int   `json:"text_dy"`
+		ColPitch       int   `json:"col_pitch"`
+		RowPitch       int   `json:"row_pitch"`
+		Ink            uint8 `json:"ink"`
+		Shadow         uint8 `json:"shadow"`
+		HighlightInk   uint8 `json:"highlight_ink"`
+		DisabledInk    uint8 `json:"disabled_ink"`
+		Fill           uint8 `json:"fill"`
 	} `json:"layout"`
 }
 
