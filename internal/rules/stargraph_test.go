@@ -121,3 +121,30 @@ func TestNextStepMatchesRoute(t *testing.T) {
 		t.Fatalf("只比到 %d 對，太少——中點矩陣可能沒載進來", pairs)
 	}
 }
+
+// TestStarGraphFullyConnected 釘住一個 `internal/ai` 依賴的事實：
+// 星圖是全連通的，所以原版 `2B99:0392`（從首都能不能走到）在正常局面下
+// 填的是全 1（`docs/re/185`）。
+func TestStarGraphFullyConnected(t *testing.T) {
+	g := loadGraph(t)
+	for _, capital := range []int{0, 31} {
+		n := 0
+		for i := 0; i < 32; i++ {
+			if g.Hops(capital, i) >= 0 {
+				n++
+			}
+		}
+		if n != 32 {
+			t.Errorf("從星域 %d 只走得到 %d／32 格", capital, n)
+		}
+	}
+	for faction := 0; faction < 2; faction++ {
+		for i := 0; i < 32; i++ {
+			for j := 0; j < 32; j++ {
+				if i != j && g.Route(i, j, faction) == nil {
+					t.Fatalf("陣營 %d 的中點矩陣解不開 %d→%d", faction, i, j)
+				}
+			}
+		}
+	}
+}
