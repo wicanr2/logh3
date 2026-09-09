@@ -91,3 +91,68 @@ func (g *StarGraph) Postures(owner []int, fleets []Fleet) [32]RegionPosture {
 	}
 	return out
 }
+
+// 另外半邊：`056A:0468`（`docs/re/245`）。它與 `2703:0933` 平行，掃同樣
+// 32 格，但先 `and 0E9h` 清 bit1｜bit2｜bit4 再重填——兩支只有 bit2 兩邊
+// 都寫，而且條件相同，所以不會打架。
+//
+// 執行時機量過了（收據 `flagpass`）：一次「實行」裡 `056A:0468`
+// 在 `#218118662`、`2703:08DE` 在 `#218904226`、回合計數器在 `#221187705`
+// 進位——**這一支在前，兩支都在回合遞增之前**。
+
+// RegionOccupation 是 `056A:0468` 算出來的兩個位元。
+//
+// **bit1 不在裡面**：它來自 `2703:1789`（非首都、非無主、該陣營在這一格
+// 沒有駐軍，再擲 `亂數 % 400`），那一支的後半段還沒讀，所以 remake 只清
+// 不設（`docs/re/245`）。remake 目前也沒有任何地方讀 bit1。
+type RegionOccupation struct {
+	Contested bool // bit2：這一格雙方都有艦隊
+	// Occupied 是 bit4：**單方面占據**——有一方的艦隊停在不屬於它的星域裡，
+	// 而另一方沒有艦隊。`2E54:005D` 拿 bit2｜bit4 一起測當「不能留在這裡」
+	// （`docs/re/196`、`197`）。
+	Occupied bool
+}
+
+// Bits 回要寫進 `+0x13` 的兩個位元（bit2｜bit4）。
+func (o RegionOccupation) Bits() byte {
+	var b byte
+	if o.Contested {
+		b |= 0x04
+	}
+	if o.Occupied {
+		b |= 0x10
+	}
+	return b
+}
+
+// ApplyOccupation 照原版的 `and 0E9h` ＋ `or` 填回去：清 bit1｜bit2｜bit4，
+// 其餘位元原樣保留。
+func ApplyOccupation(flags byte, o RegionOccupation) byte {
+	return flags&0xE9 | o.Bits()
+}
+
+// Occupations 跑一輪 32 格的 `056A:0468`。
+func (g *StarGraph) Occupations(owner []int, fleets []Fleet) [32]RegionOccupation {
+	var count [32][2]int
+	for _, f := range fleets {
+		if f.Flags&1 != 0 || f.Region < 0 || f.Region >= 32 {
+			continue
+		}
+		if f.Faction == 0 || f.Faction == 1 {
+			count[f.Region][f.Faction]++
+		}
+	}
+	var out [32]RegionOccupation
+	for i := 0; i < 32; i++ {
+		e, a := count[i][0], count[i][1]
+		switch {
+		case e > 0 && a > 0:
+			out[i].Contested = true
+		case e > 0 && owner[i] != 0:
+			out[i].Occupied = true
+		case a > 0 && owner[i] != 1:
+			out[i].Occupied = true
+		}
+	}
+	return out
+}
