@@ -31,6 +31,8 @@ const (
 	workBuildPct = 0xC2 // 7 bytes × 陣營（＝ ds:8FD6，七個艦種的分配）
 	// 徵稅計劃「已支付」那一欄的三格 ＋ 原定軍事費（`docs/re/258`）。
 	workBudgetStart = 0x4E // 32 位元 × 陣營（＝ ds:8F62）
+	workUpkeep      = 0x5E // 32 位元 × 陣營（＝ ds:8F72，本回合維持費）
+	workMoveCost    = 0x6E // 32 位元 × 陣營（＝ ds:8F82，本回合移動經費）
 	workPaidUpkeep  = 0x66 // 32 位元 × 陣營（＝ ds:8F7A，累計已付維持費）
 	workPaidMove    = 0x76 // 32 位元 × 陣營（＝ ds:8F8A，已付移動經費）
 	workShipPaid    = 0x80 // 32 位元 × 陣營（＝ ds:8F94，已付船艦建造費）
@@ -57,8 +59,12 @@ const (
 	fleetExpected = 0x0E // 編制槽的**應有**數；+0x0F 是現有數（docs/re/194）
 	fleetGroups   = 0x0F // 這一支有幾組編制
 	fleetSlots    = 0x10 // 十個 4-byte 的槽，前兩 byte 是艦艇索引
-	fleetScout    = 0x38 // 索敵分遣隊的艦艇池索引（不在編制表裡）
-	fleetSlotN    = 10
+	// fleetOps ＝ 艦隊能力第 10 項（`+0x47`）＝ max(提督, 副官) 的
+	// `ADMIRAL` `+14`（`docs/re/218`）；維持費與移動經費的
+	// `(200 − 營運)` 那一項讀它。
+	fleetOps   = 0x47
+	fleetScout = 0x38 // 索敵分遣隊的艦艇池索引（不在編制表裡）
+	fleetSlotN = 10
 
 	// fleetParked 是 `+0x08` 代表「這一支不會動」的值（`113A:0350`）。
 	fleetParked = 5
@@ -181,6 +187,11 @@ type Slot struct {
 	// `軍事費 ＝ BudgetStart − ShipPaid − PaidUpkeep − PaidMove`
 	// 三格存檔 × 兩個陣營六組全中（`docs/re/258`）。
 	BudgetStart, ShipPaid, PaidUpkeep, PaidMove [2]int
+
+	// Upkeep／MoveCost 是存檔當下的本回合維持費與移動經費
+	// （`ds:8F72`／`ds:8F82`）。remake 是現算的，這兩格拿來對拍
+	// （`docs/re/263`）。
+	Upkeep, MoveCost [2]int
 }
 
 // LoadSlot 把一格存檔組成遊戲狀態。
@@ -230,6 +241,8 @@ func LoadSlot(f SlotFiles) (*Slot, error) {
 		ShipPaid:    [2]int{u32(f.Work, workShipPaid), u32(f.Work, workShipPaid+4)},
 		PaidUpkeep:  [2]int{u32(f.Work, workPaidUpkeep), u32(f.Work, workPaidUpkeep+4)},
 		PaidMove:    [2]int{u32(f.Work, workPaidMove), u32(f.Work, workPaidMove+4)},
+		Upkeep:      [2]int{u32(f.Work, workUpkeep), u32(f.Work, workUpkeep+4)},
+		MoveCost:    [2]int{u32(f.Work, workMoveCost), u32(f.Work, workMoveCost+4)},
 	}
 	for faction := 0; faction < 2; faction++ {
 		for row := 0; row < BuildPlanRows; row++ {
@@ -317,6 +330,9 @@ func (s *Slot) Fleets(w StrengthWeights) []Fleet {
 			Groups:   int(r[fleetGroups]),
 			Expected: int(r[fleetExpected]),
 			ClassKey: int(r[fleetClassKey]),
+			// 維持費與移動經費的 `(200 − 營運)` 那一項要它，
+			// 沒填的話兩筆都會多算一倍（`docs/re/263`）。
+			Operations: int(r[fleetOps]),
 		}
 		if r[fleetAdjutant] == 0xFF {
 			f.Adjutant = -1
@@ -324,10 +340,56 @@ func (s *Slot) Fleets(w StrengthWeights) []Fleet {
 		if t := r[fleetTarget]; t != 0xFF {
 			f.Target = int(t)
 		}
+		f.Composition = s.FleetComposition(i)
 		if w != nil {
 			f.Strength = s.FleetStrength(w, i)
 		}
 		out = append(out, f)
+	}
+	return out
+}
+
+// FleetComposition 把存檔裡第 i 支艦隊的編制重建出來。
+//
+// 槽是四個位元組：`[0..1]` 艦艇索引、`[2]`／`[3]` 就是 `FleetGroup` 的
+// `Slot2`／`Slot3`（`docs/re/224`：`+0x12` 是第 0 組的 `[2]`）；艦種、
+// 現有艘數與滿編艘數在艦艇池那一筆（`+0x04`／`+0x08`／`+0x0A`）。
+//
+// **只取現在編制裡的那幾組**（`+0x0F`）——縮編過的艦隊後面幾個槽還留著
+// 舊索引，全取會多算（`docs/re/194`）。
+//
+// 沒有這一支的時候，載進來的艦隊 `Composition` 是空的，於是維持費、
+// 移動經費與整補全部算 0（`docs/re/263`）。
+func (s *Slot) FleetComposition(i int) []FleetGroup {
+	r := s.fleet(i)
+	if r == nil {
+		return nil
+	}
+	n := int(r[fleetGroups])
+	if n > fleetSlotN {
+		n = fleetSlotN
+	}
+	var out []FleetGroup
+	for k := 0; k < n; k++ {
+		o := fleetSlots + k*4
+		if r[o] == 0xFF {
+			continue
+		}
+		idx := int(r[o]) | int(r[o+1])<<8
+		if idx < 0 || (idx+1)*ShipRecord > len(s.Ship) {
+			continue
+		}
+		sh := s.Ship[idx*ShipRecord : (idx+1)*ShipRecord]
+		if sh[shipKind] == shipKindEmpty {
+			continue
+		}
+		out = append(out, FleetGroup{
+			Kind:  int(sh[shipKind]),
+			Ships: int(sh[shipAlive]) | int(sh[shipAlive+1])<<8,
+			Full:  int(sh[shipFull]) | int(sh[shipFull+1])<<8,
+			Slot2: int(r[o+2]),
+			Slot3: int(r[o+3]),
+		})
 	}
 	return out
 }

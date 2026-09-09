@@ -69,8 +69,8 @@ type Fleet struct {
 	Operations int `json:"operations"`
 
 	// Composition 是這一支的編制，每組一筆艦艇（`docs/re/215`–`217`）。
-	// 新編艦隊時由 `BuildComposition` 產生；從存檔載進來的艦隊還是走
-	// `Slot.FleetGroupShips` 那條原始表的路，這一格是空的。
+	// 新編艦隊時由 `BuildComposition` 產生；從存檔載進來的由
+	// `Slot.FleetComposition` 從艦艇池重建（`docs/re/263`）。
 	Composition []FleetGroup `json:"composition,omitempty"`
 
 	// Parked ＝ 原版 `+0x08` 是 5：**這一支不會動**，就算有目的地也一樣

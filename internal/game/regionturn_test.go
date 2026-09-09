@@ -308,3 +308,33 @@ func TestTaxEstimateRefreshesEveryTurn(t *testing.T) {
 		t.Errorf("同盟的預估徵稅額 ＝ %d，預期 %d", got, want)
 	}
 }
+
+// TestUpkeepAndMoveCostMatchSave 拿 `WORK.DTA` 記的 `ds:8F72`／`ds:8F82`
+// 對 remake 算出來的（`docs/re/263`）。
+//
+// 這一支同時驗三件本來各自壞掉的事：
+//   - `Slot.FleetComposition` 從艦艇池把編制重建回來（本來載進來是空的，
+//     於是維持費與移動經費一律算 0）；
+//   - `Slot.Fleets` 填 `Operations`（艦隊 `+0x47`），少了它
+//     `(200 − 營運)` 那一項會讓兩筆都多算一倍；
+//   - 兩者的**集合不同**：維持費算那一方每一支，移動經費只算會動的。
+func TestUpkeepAndMoveCostMatchSave(t *testing.T) {
+	g := newTestGame(t)
+	if g.slot == nil {
+		t.Skip("沒有存檔，跳過")
+	}
+	kinds, err := rules.LoadShipKindTable(filepath.Join(root,
+		"docs", "internals", "data", "ship-kind-table.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.res.ShipKinds = kinds
+	for f := 0; f < 2; f++ {
+		if got, want := g.fleetUpkeep(f), g.slot.Upkeep[f]; got != want {
+			t.Errorf("陣營 %d 的維持費 ＝ %d，WORK.DTA 是 %d", f, got, want)
+		}
+		if got, want := g.fleetMoveCost(f), g.slot.MoveCost[f]; got != want {
+			t.Errorf("陣營 %d 的移動經費 ＝ %d，WORK.DTA 是 %d", f, got, want)
+		}
+	}
+}

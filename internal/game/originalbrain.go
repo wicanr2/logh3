@@ -223,8 +223,8 @@ func (g *Game) newComposition(faction, region, admiral, classKey int) []rules.Fl
 // ＝ 那一方**在用**的每一支艦隊的 `+0x0A` 加總（`docs/re/211`、
 // `docs/re/218`）。
 //
-// 只有帶編制的艦隊算得出來；從存檔載進來的艦隊 `Composition` 是空的，
-// 那幾支目前算 0。
+// 只有帶編制的艦隊算得出來。從存檔載進來的也算得出來——
+// `Slot.FleetComposition` 會從艦艇池把編制重建回來（`docs/re/263`）。
 func (g *Game) fleetUpkeep(faction int) int {
 	if g.res.ShipKinds == nil {
 		return 0
@@ -240,15 +240,20 @@ func (g *Game) fleetUpkeep(faction int) int {
 }
 
 // fleetMoveCost 回一個陣營的本回合移動經費 ＝ 原版 `ds:8F82[陣營]`
-// ＝ 那一方每一支艦隊的 `+0x0C` 加總（`docs/internals/27`、`docs/re/237`）。
-// 與 `fleetUpkeep` 同一個形狀，只換成 `FleetOtherCost`。
+// ＝ **會動的**那幾支艦隊的 `+0x0C` 加總（`docs/internals/27`、
+// `docs/re/237`、`docs/re/263`）。
+//
+// 與 `fleetUpkeep` 差在集合：維持費算那一方**每一支**，移動經費只算
+// `+0x08 != 5` 的（`Parked` ＝ 這一支不會動，`docs/re/77`）。
+// 兩個集合都用 `WORK.DTA` 對過——維持費 2342／951、移動經費 665／1133，
+// 四個數字與存檔逐一相同。
 func (g *Game) fleetMoveCost(faction int) int {
 	if g.res.ShipKinds == nil {
 		return 0
 	}
 	sum := 0
 	for _, f := range g.fleets {
-		if f.Faction != faction {
+		if f.Faction != faction || f.Parked {
 			continue
 		}
 		sum += rules.FleetOtherCost(g.res.ShipKinds, faction, f.Composition, f.Operations)
