@@ -721,16 +721,20 @@ func (g *Game) advanceTurn() {
 	// **哪一個星域先打、能不能不打，都還沒解**——同時有多個星域符合時
 	// 這裡取編號最小的那一個。
 	//
-	// ⚠ 這條路徑**跳過底下的月底結算**。星域重算改由 `EndBattle` 接手
-	// ——原版打完會走完回合結束那條鏈，收據見 `docs/re/105` 與
-	// `docs/spec/033`。**月底那一段還沒有證據**說戰鬥回合會不會跑，
-	// 所以先維持原狀，不要一起搬過去。
+	// 原版 `0374:03E8` 逐格掃，`+0x13` bit2 有設的就開打，**打完接著掃
+	// 下一格**；全部打完才走回合結束（`docs/re/251`）。所以這裡進戰鬥
+	// 之後由 `EndBattle` 接著掃，不是就此結束這個回合。
 	if r := g.contestedRegion(); r >= 0 {
 		g.StartBattle(r)
 		return
 	}
-	// 回合結束依行星重算星域歸屬，再重建路徑表與每一格的態勢
-	// （原版 `2703:08DE`，`docs/re/17`、`docs/re/244`、`docs/spec/032`）。
+	g.endOfTurn()
+}
+
+// endOfTurn 是所有戰鬥都打完之後的那一段（原版主迴圈的 `056A:078E`
+// 加上 `ds:8F18++`，`docs/re/251`）：依行星重算星域歸屬、跳易主報告、
+// 重建路徑表與每一格的態勢，然後才是跨月結算與下一個畫面。
+func (g *Game) endOfTurn() {
 	// **有易主就先停在報告上**，後半段等按掉才跑（`docs/spec/034`）。
 	if g.runRegionPass(g.finishTurn) {
 		return
@@ -771,9 +775,14 @@ func (g *Game) finishTurn() {
 //
 // 原版在雙方會合的那一刻直接切進戰術畫面（`docs/internals/34`）。
 // 判斷的細節（幾支才算、能不能迴避）還沒解，這裡只看有沒有兩邊都在。
-func (g *Game) contestedRegion() int {
-	best := -1
-	for r := 0; r < rules.RegionCount; r++ {
+func (g *Game) contestedRegion() int { return g.contestedRegionFrom(0) }
+
+// contestedRegionFrom 從 `from` 起找下一個雙方都有艦隊的星域；沒有回 -1。
+//
+// 原版 `0374:03E8` 是**逐格往上掃**，打完一格接著掃下一格
+// （`docs/re/251`），所以續掃要從上一格的下一個開始，不會回頭。
+func (g *Game) contestedRegionFrom(from int) int {
+	for r := from; r < rules.RegionCount; r++ {
 		var side [2]bool
 		for _, f := range g.fleets {
 			if f.Region == r && f.Faction >= 0 && f.Faction < 2 {
@@ -781,12 +790,10 @@ func (g *Game) contestedRegion() int {
 			}
 		}
 		if side[0] && side[1] {
-			if best < 0 || r < best {
-				best = r
-			}
+			return r
 		}
 	}
-	return best
+	return -1
 }
 
 // SetBrain 換掉電腦那一方的決策。nil ＝ 回到原版（什麼都不做）。

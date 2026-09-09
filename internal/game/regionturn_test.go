@@ -236,3 +236,39 @@ func TestFlipMessageSelection(t *testing.T) {
 		}
 	}
 }
+
+// 一個回合會把**每一個**交戰星域都打完，不是只打編號最小的那一格
+// （原版 `0374:03E8` 逐格掃，`docs/re/251`）。
+func TestBattleScanContinuesToNextRegion(t *testing.T) {
+	g := newRegionTurnGame(t)
+	regionPass(g)
+	// 星域 5 與 20 各有雙方艦隊。
+	g.fleets = []rules.Fleet{
+		{Faction: 0, Region: 5}, {Faction: 1, Region: 5},
+		{Faction: 0, Region: 20}, {Faction: 1, Region: 20},
+	}
+	if got := g.contestedRegion(); got != 5 {
+		t.Fatalf("第一格 ＝ %d，預期 5", got)
+	}
+	if got := g.contestedRegionFrom(6); got != 20 {
+		t.Fatalf("從 6 起 ＝ %d，預期 20", got)
+	}
+	if got := g.contestedRegionFrom(21); got != -1 {
+		t.Errorf("從 21 起 ＝ %d，預期 -1", got)
+	}
+
+	// 打完星域 5 之後要接著開星域 20，不是收尾。
+	g.battleRegion = 5
+	g.EndBattle()
+	if g.battleRegion != 20 {
+		t.Errorf("打完 5 之後 battleRegion ＝ %d，預期 20", g.battleRegion)
+	}
+	if g.state == StateCommandPhase {
+		t.Error("還有一格沒打就回指令畫面了")
+	}
+	// 再打完 20 就沒有了，這時才走回合結束。
+	g.EndBattle()
+	if g.state == StateBattle {
+		t.Error("都打完了還停在戰場")
+	}
+}
