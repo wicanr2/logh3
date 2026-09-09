@@ -25,6 +25,9 @@ const (
 	regionCount   = 0x16 // 三個 byte：帝國／同盟／其他 各有幾顆行星
 	regionEconomy = 0x1A // 32 位元
 	regionDefence = 0x20 // 16 位元，與 +0x22 是同一個值的兩份
+	// RegionMorale 是民心（`+0x7C`）：稅率與未安定度都讀它，帝國星域取
+	// 原值、同盟取 `200 −`。
+	RegionMorale = 0x7C
 	// RegionUnrest 是未安定度，記錄的最後一個 byte；治安由它算出來。
 	// 存檔裡也有這一欄，但載入時會重算（`docs/re/41`）。
 	RegionUnrest  = 0x7D

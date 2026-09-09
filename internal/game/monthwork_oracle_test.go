@@ -97,3 +97,56 @@ func TestMonthEndMatchesWorkBlock(t *testing.T) {
 		t.Errorf("下期船艦建造費：remake %d，原版 %d", got, w.ShipBudget[0])
 	}
 }
+
+// TestAllianceTaxRateNeedsRuntimeStaff 釘住一個**還沒解的分歧**：稅率算式
+// 要乘的那位提督（原版 `ds:8F4F + 陣營`，內政專任參謀）不是常數。
+//
+//	work-796-01.json（第 71,200,000 步，防拷畫面之前）  同盟那一格 ＝ 60
+//	收據 monthwork（第 300,000,000 步起，回合 1 之後） 同盟那一格 ＝ 63
+//
+// 拿 63 重算收據 `monthwork3` 裡十三個同盟星域的稅率**全中**，拿 60 **全錯**；
+// 但 796/1 的同盟開局畫面 `main1eAlly` 逐位元組要的是 60。兩個值各有收據，
+// 所以那一格在載入之後被改過——改的時機與規則還沒查
+// （`docs/spec/038`、`docs/re/267`）。
+//
+// 這一支不改行為，只是把兩半都釘住：哪天有人把 `UnrestParams.Ruler` 改成
+// 63，`main1eAlly` 會紅；改回 60，這裡記的 13/13 仍然成立。
+func TestAllianceTaxRateNeedsRuntimeStaff(t *testing.T) {
+	p := filepath.Join("..", "..", "workplace", "oracle", "monthwork3", "mr1820.bin")
+	b, err := os.ReadFile(p)
+	if err != nil {
+		t.Skipf("缺收據 %s，跳過（不用代用品）", p)
+	}
+	g := reachCommandPhase(t)
+	base := g.res.UnrestParams.Base[g.blend[1]]
+	count := func(admiral int) (ok, bad int) {
+		ruler := g.admiralRecord(admiral)
+		if ruler == nil {
+			t.Fatalf("拿不到提督 %d", admiral)
+		}
+		for i := 0; i < 32; i++ {
+			if g.res.Planets.RegionOwner(i) != 1 {
+				continue
+			}
+			r := b[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+			got := rules.TaxRatePerMille(rules.RegionGrowth(r),
+				int(r[rules.RegionMorale]), 1, base, ruler)
+			if got == rules.RegionTaxRate(r) {
+				ok++
+			} else {
+				bad++
+			}
+		}
+		return ok, bad
+	}
+	if ok, bad := count(63); bad != 0 || ok != 13 {
+		t.Errorf("提督 63：對 %d 格、錯 %d 格，收據是 13／0", ok, bad)
+	}
+	if ok, _ := count(60); ok != 0 {
+		t.Errorf("提督 60：對 %d 格，收據是一格都不對", ok)
+	}
+	// remake 目前用的是載入時那一份（60）——`main1eAlly` 要它。
+	if got := g.taxRateAdmiral(1); got != 60 {
+		t.Errorf("remake 用的是提督 %d，目前應該是 60（見本函式的說明）", got)
+	}
+}
