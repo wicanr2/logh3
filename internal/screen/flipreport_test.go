@@ -181,6 +181,40 @@ func TestFlipReportTakenMessageMatchesOracle(t *testing.T) {
 	}
 }
 
+// 敵方星域變成無主：收據 `chain8` 把星域 15 兩顆行星裡的一顆 poke 成帝國，
+// 那一格變混雜就成了無主，畫的是「艾爾•法西爾星系／部分行星我軍已成功
+// 進駐。」。這一份把最後一句 `we_partly_landed` 也釘住（`docs/re/249`）。
+func TestFlipReportPartlyLandedMatchesOracle(t *testing.T) {
+	root := filepath.Join("..", "..")
+	scr, err := os.ReadFile(filepath.Join(root, "workplace", "oracle", "chain8", "screen.bin"))
+	if err != nil || len(scr) != 640*480 {
+		t.Skip("缺收據 chain8，跳過（不用代用品）")
+	}
+	fnt, err := font.Load(filepath.Join(root, "org_game/extracted/GRAPH.IMG"))
+	if err != nil {
+		t.Skip("缺 GRAPH.IMG，跳過")
+	}
+	p := loadFlipPanel(t)
+	// 星域 15「艾爾•法西爾」。
+	name := []uint16{42723, 47800, 41285, 43627, 42728, 47800}
+
+	fb := gfx.NewFramebuffer(9)
+	p.Draw(fb, fnt, name, 2, "we_partly_landed") // 敵方的變成無主
+
+	bad, total := 0, 0
+	for y := 178; y < 220; y++ {
+		for x := 334; x < 525; x++ {
+			total++
+			if fb.At(x, y) != scr[y*640+x] {
+				bad++
+			}
+		}
+	}
+	if bad != 0 {
+		t.Errorf("文字與收據差 %d／%d 個像素，預期 0", bad, total)
+	}
+}
+
 // 文字逐像素對收據：收據 `chain3` 畫的是「菲列亞星系／已被敵軍占領。」。
 //
 // 只比報告那兩行佔的矩形——底板與視窗框由命令階段那張畫面負責
