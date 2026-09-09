@@ -9,6 +9,7 @@ import (
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/ui"
 )
 
 // TestBattleMatchesOracle 是戰場畫面的同狀態對拍。
@@ -59,7 +60,7 @@ func TestBattleMatchesOracle(t *testing.T) {
 	}
 	// s3ai6 那一場的視野（`docs/internals/36`）。
 	fb := Battle(s, panel, tiles, cells, BattleView{Col: 66, Row: 30})
-	DrawBattleStatusFrame(s, fb)
+	DrawBattleStatusFrame(s, fb, statusTiles(t))
 	fnt, err := font.Load(filepath.Join(orig, "GRAPH.IMG"))
 	if err != nil {
 		t.Fatal(err)
@@ -135,4 +136,19 @@ var battleMinimapUnits = []rules.BattleUnit{
 	{Fleet: 12, Squadron: 5, Faction: 0, X: 396, Y: 255},
 	{Fleet: 12, Squadron: 6, Faction: 0, X: 424, Y: 213},
 	{Fleet: 12, Squadron: 7, Faction: 0, X: 349, Y: 272},
+}
+
+// statusTiles 讀 `FRAME.BLK`（狀態欄的框是它的圖塊，`docs/re/142`）。
+func statusTiles(t *testing.T) *ui.FrameTiles {
+	t.Helper()
+	root := "../.."
+	b, err := os.ReadFile(filepath.Join(root, "org_game/extracted/FRAME.BLK"))
+	if err != nil {
+		t.Skipf("缺原版 FRAME.BLK：%v", err)
+	}
+	tiles, err := ui.LoadFrameTiles(b)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return tiles
 }

@@ -186,15 +186,17 @@ type StatusSpec struct {
 		Year, Month, Day uint8
 	} `json:"date_ink"`
 	Frame struct {
+		// X／Y／W／H 是**看得見**的那個矩形（框最外圈那一像素與底色
+		// 同色），幾何測試用；畫的時候看的是格。
 		X, Y, W, H int
 		Fill       uint8
-		Order      string
-		Layers     [][4]uint8
-		Alt        [][4]uint8
-		Patches    []struct {
-			DX, DY int
-			Color  uint8
-		} `json:"patches"`
+
+		CellX  int `json:"cell_x"`
+		CellY  int `json:"cell_y"`
+		Cols   int `json:"cols"`
+		Rows   int `json:"rows"`
+		Style  int `json:"style"`
+		Colour int `json:"colour"`
 	} `json:"frame"`
 	Labels struct {
 		Factions   []label `json:"factions"`
@@ -210,28 +212,17 @@ type StatusSpec struct {
 
 // DrawBattleStatusFrame 畫狀態欄的視窗框與底色。
 //
-// 框逐層量自收據（`docs/internals/34`）：外三層亮邊、左緣是 8／15 的
-// 1:1 交錯、中間一層 7、兩層反向的立體邊、一層 3，最後一層只有上緣
-// 與右緣是 3——那一層的下緣與左緣填底色，靠 Order 的角落歸屬做出來。
-func DrawBattleStatusFrame(s *BattleSpec, fb *gfx.Framebuffer) {
+// 框不是畫線畫出來的，是 `FRAME.BLK` 的圖塊：原版在 `0C0A:6B6D` 用
+// `3603:0006(色 0x97, 格 (29,9), 內容 8×8 格, 旗標 1)` 建這個視窗，
+// 旗標讓它實際佔 10 × 10 格（`docs/re/142`）。tiles 是 nil 就不畫——
+// `FRAME.BLK` 是原版素材，缺檔不用代用品。
+func DrawBattleStatusFrame(s *BattleSpec, fb *gfx.Framebuffer, tiles *ui.FrameTiles) {
 	f := &s.Status.Frame
-	if f.W <= 0 || f.H <= 0 {
+	if tiles == nil || f.Cols <= 0 || f.Rows <= 0 {
 		return
 	}
-	fb.FillRect(f.X, f.Y, f.W, f.H, f.Fill)
-	var fr ui.Frame
-	fr.Fill = f.Fill
-	fr.Order = f.Order
-	for _, l := range f.Layers {
-		fr.Layers = append(fr.Layers, ui.Layer{Top: l[0], Right: l[1], Bottom: l[2], Left: l[3]})
-	}
-	for _, l := range f.Alt {
-		fr.Alt = append(fr.Alt, ui.Layer{Top: l[0], Right: l[1], Bottom: l[2], Left: l[3]})
-	}
-	for _, p := range f.Patches {
-		fr.Patches = append(fr.Patches, ui.Patch{DX: p.DX, DY: p.DY, Color: p.Color})
-	}
-	fr.Draw(fb, f.X, f.Y, f.W, f.H)
+	(ui.TileFrame{Tiles: tiles, Style: f.Style, Fill: uint8(f.Colour >> 4)}).
+		Draw(fb, f.CellX, f.CellY, f.Cols, f.Rows)
 }
 
 // DrawBattleStatus 畫右側狀態欄的文字。

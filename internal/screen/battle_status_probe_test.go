@@ -50,7 +50,7 @@ func TestBattleStatusReadBack(t *testing.T) {
 			st := base
 			set(&st, v)
 			fb := gfx.NewFramebuffer(0)
-			DrawBattleStatusFrame(s, fb)
+			DrawBattleStatusFrame(s, fb, statusTiles(t))
 			DrawBattleStatus(s, fb, fnt, st)
 			if rowSame(fb, y0) {
 				return v
