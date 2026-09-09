@@ -27,6 +27,7 @@ const (
 	workMilitary = 0x3E // 32 位元 × 陣營
 	workTaxTotal = 0x56 // 32 位元 × 陣營
 	workBlend    = 0xC0 // 8 位元 × 陣營（＝ ds:8FD4，`docs/internals/55`）
+	workShipBudget = 0x46 // 32 位元 × 陣營（＝ ds:8F5A，下期船艦建造費）
 	workShipPct  = 0x7E // 8 位元 × 陣營（＝ ds:8F92，造船百分比）
 	workBuildPct = 0xC2 // 7 bytes × 陣營（＝ ds:8FD6，七個艦種的分配）
 	// 徵稅計劃「已支付」那一欄的三格 ＋ 原定軍事費（`docs/re/258`）。
@@ -209,6 +210,16 @@ type WorkFields struct {
 	// （`docs/re/263`）。
 	Upkeep, MoveCost [2]int
 
+	// ShipBudget 是 `ds:8F5A`。**它有兩個寫入者、語意不同**
+	// （收據 `monthwork2` 的監看，`docs/re/266`）：
+	//
+	//	090A:0F7E（在 090A:0E88 內）  下一期的**預估**建造費，每個座位回合都寫
+	//	0654:009F（月底本體）          `2B5F:0103(1)` 回傳的**實付總額**
+	//
+	// 所以按步數取樣的傾印看到的是「最後跑的那一個」——同一份存檔裡這一格
+	// 是預估還是實付，要看它是在回合之間還是月底本體中途存的。
+	ShipBudget [2]int
+
 	// Building 是各陣營建造中的船艦艘數（`ds:8F9C`），七個艦種各一格。
 	// 月底把它整組交進首都行星與首都星域（`docs/spec/036`、`docs/re/264`）。
 	Building [2]Building
@@ -234,6 +245,7 @@ func ReadWork(w []byte) (WorkFields, error) {
 		f.TaxTotal[i] = u32(w, workTaxTotal+i*4)
 		f.Blend[i] = int(w[workBlend+i])
 		f.ShipPct[i] = int(w[workShipPct+i])
+		f.ShipBudget[i] = u32(w, workShipBudget+i*4)
 		f.BudgetStart[i] = u32(w, workBudgetStart+i*4)
 		f.ShipPaid[i] = u32(w, workShipPaid+i*4)
 		f.PaidUpkeep[i] = u32(w, workPaidUpkeep+i*4)
