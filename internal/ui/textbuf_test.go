@@ -179,3 +179,40 @@ func TestWidenASCII(t *testing.T) {
 		t.Errorf("(2,0) 是 %04X，該是 4344", got)
 	}
 }
+
+// 格式化只做原版格式字串用得到的那幾種；沒見過的轉換原樣輸出。
+//
+// **格式字串是原版資料段的 Big5 位元組**，不是 Go 原始碼裡的 UTF-8，
+// 所以這裡一律用位元組字面值。
+func TestTextBufferPrintf(t *testing.T) {
+	bytesOf := func(b *TextBuffer, n int) []byte {
+		var out []byte
+		for i := 0; i < n; i++ {
+			out = append(out, byte(b.Cells[i].Code>>8), byte(b.Cells[i].Code))
+		}
+		return out
+	}
+	// `ds:3F36`「運輸艦      %4u」：3 個全形 ＋ 6 個空白 ＋ 4 欄的數字
+	// ＝ 剛好 8 格，也就是視窗一整列。
+	b := NewTextBuffer(8, 2, 0x97)
+	b.Printf([]byte{0xB9, 0x42, 0xBF, 0xE9, 0xC4, 0xA5, ' ', ' ', ' ', ' ', ' ', ' ',
+		'%', '4', 'u'}, 12)
+	want := []byte{0xB9, 0x42, 0xBF, 0xE9, 0xC4, 0xA5, ' ', ' ', ' ', ' ', ' ', ' ',
+		' ', ' ', '1', '2'}
+	if got := bytesOf(b, 8); string(got) != string(want) {
+		t.Errorf("得到 % X\n該是   % X", got, want)
+	}
+
+	// 靠左、補零、`%%`；`l` 只是取值寬度，輸出一樣。
+	b = NewTextBuffer(8, 2, 0x97)
+	b.Printf([]byte("%-8s|%6lu"), []byte("abc"), 1234)
+	// 15 個位元組 ＝ 7 格半，最後一格只寫了高位元組（原版也是這樣）。
+	if got := bytesOf(b, 8); string(got) != "abc     |  1234\x00" {
+		t.Errorf("%q", got)
+	}
+	b = NewTextBuffer(4, 1, 0x97)
+	b.Printf([]byte("%03d%%"), 7)
+	if got := bytesOf(b, 2); string(got) != "007%" {
+		t.Errorf("%q", got)
+	}
+}

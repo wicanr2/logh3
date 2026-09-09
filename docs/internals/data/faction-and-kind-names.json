@@ -1,0 +1,62 @@
+{
+ "_note": "陣營名（ds:60F4，一筆 4 bytes 遠指標）與艦種名（ds:613A）。陣營名裡夾著顏色跳脫碼 \\x03[150,（帝國）／\\x03[149,（同盟）／\\x03[151,（中立），印完再切回 151——所以右側狀態欄那個「陣營色」不是版面常數，是字串自己帶的（docs/re/141、143）。",
+ "factions": [
+  {
+   "offset": "ds:60BA",
+   "bytes": "035b3135302cabd2b0eaad78035b3135312c",
+   "text": "\\x03[150,帝國軍\\x03[151,"
+  },
+  {
+   "offset": "ds:60CD",
+   "bytes": "035b3134392ca650b7f9ad78035b3135312c",
+   "text": "\\x03[149,同盟軍\\x03[151,"
+  },
+  {
+   "offset": "ds:60E0",
+   "bytes": "035b3135312ca4a4a5dfad78035b3135312c",
+   "text": "\\x03[151,中立軍\\x03[151,"
+  }
+ ],
+ "ship_kinds": [
+  {
+   "offset": "ds:6100",
+   "bytes": "bed4c4a5",
+   "text": "戰艦"
+  },
+  {
+   "offset": "ds:6105",
+   "bytes": "b0aab374bed4c4a5",
+   "text": "高速戰艦"
+  },
+  {
+   "offset": "ds:610E",
+   "bytes": "a8b5afe8c4a5",
+   "text": "巡航艦"
+  },
+  {
+   "offset": "ds:6115",
+   "bytes": "afe8aac5a5c0c4a5",
+   "text": "航空母艦"
+  },
+  {
+   "offset": "ds:611E",
+   "bytes": "c558b376c4a5",
+   "text": "驅逐艦"
+  },
+  {
+   "offset": "ds:6125",
+   "bytes": "b942b8c9c4a5",
+   "text": "運補艦"
+  },
+  {
+   "offset": "ds:612C",
+   "bytes": "add7c540c4a5",
+   "text": "修護艦"
+  },
+  {
+   "offset": "ds:6133",
+   "bytes": "b0bbb9eec4a5",
+   "text": "偵察艦"
+  }
+ ]
+}
