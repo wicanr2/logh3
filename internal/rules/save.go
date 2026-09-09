@@ -31,6 +31,9 @@ const (
 	FleetRecord = 122
 	FleetCount  = 32
 
+	// fleetFlags 的 bit0 把艦隊分成兩類：有設的在原版 `2E54:005D` 當場
+	// 處理完，沒設的留給後面五個階段挑（`docs/internals/33`、`docs/re/196`）。
+	fleetFlags   = 0x00
 	fleetFaction = 0x01
 	fleetNumber  = 0x02 // 艦隊編號
 	// fleetUnused 同時是**提督索引**：`113A:05CF` 拿它 ×28 去查
@@ -276,6 +279,8 @@ func (s *Slot) Fleets(w StrengthWeights) []Fleet {
 			Action:   int(r[fleetAction] & 0x0F),
 			Scout:    int(r[fleetScout]) | int(r[fleetScout+1])<<8,
 			Morale:   int(r[fleetMorale]),
+			Flags:    int(r[fleetFlags]),
+			Move:     int(r[fleetState]),
 			Groups:   int(r[fleetGroups]),
 			Expected: int(r[fleetExpected]),
 			ClassKey: int(r[fleetClassKey]),

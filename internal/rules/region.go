@@ -21,6 +21,7 @@ const (
 	RegionCount  = 32
 
 	regionOwner   = 0x12 // 0 帝國、1 同盟、2 無主
+	regionFleets  = 0x28 // +0x28 帝國、+0x29 同盟：這一格各有幾支艦隊
 	regionCount   = 0x16 // 三個 byte：帝國／同盟／其他 各有幾顆行星
 	regionEconomy = 0x1A // 32 位元
 	regionDefence = 0x20 // 16 位元，與 +0x22 是同一個值的兩份
@@ -30,6 +31,19 @@ const (
 	regionTaxRate = 0x26 // 稅率，千分之一為單位（畫面上的 3.2% ＝ 32）
 	regionGrowth  = 0x1E // 成長率，千分之一為單位（畫面上的 4.5% ＝ 45）
 )
+
+// RegionFleets 回星域記錄裡「這一格某個陣營有幾支艦隊」：`+0x28` 是帝國、
+// `+0x29` 是同盟（`docs/re/199`）。
+//
+// 這一格是遊戲每次重數出來的：`2703:08CE` 先把 32 格的 `+0x28`／`+0x29`
+// 清 0，再掃艦隊表對 `+0x28 ＋ 陣營` 遞增（`docs/re/40`）。
+// 戰略 AI 的 `2E54:005D` 拿**敵方**那一格判斷要不要退。
+func RegionFleets(record []byte, faction int) int {
+	if faction < 0 || faction > 1 || len(record) <= regionFleets+faction {
+		return 0
+	}
+	return int(record[regionFleets+faction])
+}
 
 // RegionEconomy 回星域記錄裡的經濟力（32 位元）。
 func RegionEconomy(record []byte) int {

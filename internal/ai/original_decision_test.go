@@ -116,3 +116,95 @@ func TestDecisionPassCountsHeld(t *testing.T) {
 		t.Errorf("bit0 有設的那一支也該被決定，共 %d 支，預期 3", withSplit)
 	}
 }
+
+// TestDecisionPassSplitBranch 測 `+0x00` bit0 有設的那一路
+// （`docs/re/197`、`docs/re/199`）：這一格有戰鬥、有敵方艦隊、或不是
+// 自己的，就往首都退一格；三個條件都不成立才原地出擊。
+func TestDecisionPassSplitBranch(t *testing.T) {
+	g := testGraph(t)
+	const me = 0
+	// 星域 5 是自己的、沒有戰鬥、沒有敵方艦隊 → 原地出擊。
+	base := DecisionInput{
+		Faction: me,
+		Fleets:  []rules.Fleet{{Index: 0, Faction: me, Region: 5, Morale: 100}},
+		Graph:   g,
+		Owner:   func(int) int { return me },
+		Split:   func(rules.Fleet) bool { return true },
+	}
+	out, _, _ := DecisionPass(base)
+	if len(out) != 1 {
+		t.Fatalf("回了 %d 支，預期 1", len(out))
+	}
+	if out[0].Target != 5 || out[0].Move != moveSortie || out[0].Parked {
+		t.Errorf("原地出擊應該是 +0x07 = 5、+0x08 = 3，得到 %+v", out[0])
+	}
+	if out[0].Decision != DecisionIdle {
+		t.Errorf("兩條路都寫 +0x79 = 0，得到 %d", out[0].Decision)
+	}
+
+	// 三個條件各自都足以把它趕走。
+	for _, c := range []struct {
+		name string
+		in   DecisionInput
+	}{
+		{"有戰鬥", withBlocked(base, func(r int) bool { return r == 5 })},
+		{"有敵方艦隊", withEnemy(base, func(r int) int {
+			if r == 5 {
+				return 1
+			}
+			return 0
+		})},
+		{"不是自己的", withOwner(base, func(int) int { return 1 })},
+	} {
+		got, _, _ := DecisionPass(c.in)
+		if len(got) != 1 {
+			t.Fatalf("%s：回了 %d 支", c.name, len(got))
+		}
+		if got[0].Move == moveSortie {
+			t.Errorf("%s：不該原地出擊，得到 %+v", c.name, got[0])
+		}
+		if got[0].Target == 5 {
+			t.Errorf("%s：目的地不該是原地，得到 %+v", c.name, got[0])
+		}
+	}
+}
+
+// TestDecisionPassSkipsMoveState4 測第一條分支：`+0x08 == 4` 只寫
+// `+0x79 = 0`，移動狀態與目的地都不動（`docs/internals/54`）。
+func TestDecisionPassSkipsMoveState4(t *testing.T) {
+	g := testGraph(t)
+	const me = 0
+	out, _, decided := DecisionPass(DecisionInput{
+		Faction: me,
+		Fleets:  []rules.Fleet{{Index: 0, Faction: me, Region: 5, Move: 4, Target: 9}},
+		Graph:   g,
+		Owner:   func(int) int { return me },
+		// bit0 有設也一樣——`+0x08 == 4` 排在前面。
+		Split:   func(rules.Fleet) bool { return true },
+		Blocked: func(int) bool { return true },
+	})
+	if decided != 1 || len(out) != 1 {
+		t.Fatalf("決定了 %d 支、回了 %d 筆，預期各 1", decided, len(out))
+	}
+	if out[0].Decision != DecisionIdle {
+		t.Errorf("+0x79 應該是 0，得到 %d", out[0].Decision)
+	}
+	if out[0].Move != -1 || out[0].Target != rules.NoTarget || out[0].Parked {
+		t.Errorf("這一條不該動 +0x07／+0x08，得到 %+v", out[0])
+	}
+}
+
+func withBlocked(in DecisionInput, f func(int) bool) DecisionInput {
+	in.Blocked = f
+	return in
+}
+
+func withEnemy(in DecisionInput, f func(int) int) DecisionInput {
+	in.EnemyFleets = f
+	return in
+}
+
+func withOwner(in DecisionInput, f func(int) int) DecisionInput {
+	in.Owner = f
+	return in
+}

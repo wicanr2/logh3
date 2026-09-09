@@ -154,7 +154,7 @@
 | 敵方兵力圖 `ds:D54E` | **已實作並對拍**（`ai.ThreatMap`）| 收據 `s3aicomp`：四格全中，星域 25 ＝ 69 |
 | 攻擊目標分 `ds:D50E` | **已實作並對拍**（`ai.AttackScore`）| 收據 `s3aicomp`：13→682、15／22／28→2048 |
 | 要派幾支 `ds:D58E`（階段四）| **已實作並對拍**（`ai.AttackNeed`）| 收據 `s3aicomp` ＋ 原版種子 `0xD3DC167E`（[`docs/re/184`](docs/re/184-ai-rng-call-trace.md)）|
-| 逐艦隊決定（`2E54:005D`／`2E54:16F5`／`2E54:1955`）| **已實作，未對拍**（`ai.DecisionPass`）| 四條分支與退一格的挑法來自反組譯（[`docs/re/79`](docs/re/79-per-fleet-decision-pass.md)、`docs/internals/54`）|
+| 逐艦隊決定（`2E54:005D`／`2E54:16F5`／`2E54:1955`）| **已實作，未對拍**（`ai.DecisionPass`）| 三條分支全部實作：`+0x08 == 4` 跳過、`+0x00` bit0 有設的原地出擊／退一格、bit0 沒設的留給後面五個階段挑。判「有沒有敵人」的 `+0x28`／`+0x29` 已解（[`docs/re/199`](docs/re/199-region-fleet-counts.md)，`rules.RegionFleets`，三個劇本 96 格全對）。算式來自反組譯（[`docs/re/79`](docs/re/79-per-fleet-decision-pass.md)、[`196`](docs/re/196-decision-pass-filter.md)、[`197`](docs/re/197-d60e-counts-the-whole-turn.md)、`docs/internals/54`）|
 | 守勢優先度／守勢要派幾支 | **已實作，未對拍** | 算式來自反組譯；收據那一趟走的是攻勢版 |
 | 進軍路線表（12 種戰略態勢）| **已實作**（`ai.AdvanceRoutes`、`data/ai-advance-routes.json`）| [`docs/re/178`](docs/re/178-ai-advance-routes.md)、[`179`](docs/re/179-ai-strategic-state-code.md) |
 | 「下一步走哪一格」`2B99:0302` | **已實作並證明等價**（`rules.StarGraph.NextStep`）| [`docs/re/183`](docs/re/183-next-step-equivalence.md)；兩張矩陣所有走得通的星域對與 `Route[1]` 逐一相同 |
@@ -162,6 +162,7 @@
 | 指派、建艦隊、費沙事件 | **已逆向，未實作** | [`docs/re/180`](docs/re/180-admiral-fleet-slot.md)–[`182`](docs/re/182-admiral-flags-and-fleet-cost.md)、[`190`](docs/re/190-fleet-class-meaning.md)–[`192`](docs/re/192-phezzan-event.md) |
 | 一個回合串起來（`ai.Turn`，階段二／三／五）| **已實作，未對拍** | 逐艦隊決定的過濾已解（[`docs/re/196`](docs/re/196-decision-pass-filter.md)）：`+0x00` bit0 沒設又不在交戰格的留給後面的階段挑。`ds:D60E` 那一格的殘留也解了（[`docs/re/197`](docs/re/197-d60e-counts-the-whole-turn.md)：它數的是整個回合，十一處遞增點見 [`198`](docs/re/198-ai-runs-in-turn260.md)）|
 | `Brain` 包裝（`ai.OriginalStrategy`）| **已實作，未啟用** | 接得上 `Brain`；`Original` 仍回 `nil`，換掉只要改建構的那一行 |
+| **開局艦隊沒有載入** | **未做** | 新遊戲後 `len(g.fleets) == 0`；原版 `STELLAR.DT8` 的 `+0x28`／`+0x29` 記著帝國 13、同盟 13，`FLEET.DT8` 也有那 26 筆（[`docs/re/199`](docs/re/199-region-fleet-counts.md)）。**這一項擋在戰略 AI 前面**——沒有艦隊，接上 AI 也沒有對象 |
 | **接到 `advanceTurn`** | **未做** | 規格已 **READY**（證據審查見 `docs/spec/029`），但 `internal/ai` 的 `Original` 仍回 `nil`——換掉會改變 remake 的行為，需要使用者裁決（理由與影響寫在該規格末尾）|
 
 > 既有的 25 份記憶體傾印裡，**只有被 `-poke` 過座位表的 `s3aicomp` 跑過 AI**
@@ -172,9 +173,8 @@
 >
 > 畫面收據 `turn260`／`turn320`／`turn450` 是例外：**原版在那個狀態裡
 > 跑過 AI，指派了三支艦隊**（[`docs/re/198`](docs/re/198-ai-runs-in-turn260.md)）。
-> 那三張目前逐位元組通得過，是因為那三支指派沒有改到畫面；
-> 換掉 `Original` 之後 `TestExecuteTurnMatchesOracle` 是不是還綠，
-> 跑一次就知道，不必再排長跑。
+> 那三張目前逐位元組通得過與 AI 無關——**remake 在那個局面下一支艦隊
+> 都沒有**（新遊戲不載入劇本的開局艦隊），`ai.Turn` 回的一定是空清單。
 
 ## 執行器（dosgolem）覆蓋
 

@@ -22,6 +22,14 @@ type StrategyInput struct {
 	// nil ＝ 都沒有。
 	Contested func(region int) bool
 
+	// Blocked 是星域 `+0x13` 的 `& 0x14`（bit2｜bit4）：bit0 有設的那一路
+	// 拿它當「不能留在這裡」的第一個條件（`docs/re/197`）。nil ＝ 都沒設。
+	Blocked func(region int) bool
+
+	// EnemyFleets 回敵方在那一格有幾支艦隊（星域 `+0x28`／`+0x29`，
+	// `docs/re/199`）。nil ＝ 一律 0。
+	EnemyFleets func(region int) int
+
 	// Split 是艦隊 `+0x00` 的 bit0（`docs/re/196`）。**bit0 沒設又不在
 	// 交戰格的艦隊，逐艦隊決定不碰它們**，才會留給階段二／三／五挑。
 	// nil ＝ 都沒設。
@@ -112,19 +120,17 @@ func Turn(in StrategyInput) []Order {
 		Faction: in.Faction, Fleets: in.Fleets, Graph: in.Graph,
 		Owner: in.owner, Strength: in.Strength,
 		Contested: in.Contested, Split: in.Split,
+		Blocked: in.Blocked, EnemyFleets: in.EnemyFleets,
 	})
 	byIndex := map[int]int{}
 	for i, f := range in.Fleets {
 		byIndex[f.Index] = i
 	}
-	// **兩條分支都算「已經決定」**：原版 `2E54:005D` 回 1 寫 `+0x79 = 3`、
-	// 回 0 寫 `+0x79 = 0`，兩者都不再是 `0xFF`，所以 `2E54:143F` 之後都挑不到
-	// （`docs/internals/54`）。
-	//
-	// 但收據 `s3aicomp` 上有兩支的 `+0x79` 是 1——那是後面的階段寫的，
-	// 代表 `2E54:005D` **並沒有決定每一支**，還有一道沒讀到的過濾
-	// （`docs/re/195`）。在那道過濾讀出來之前，`DecisionPass` 會把所有
-	// 自己的艦隊都決定掉，後面幾個階段實務上挑不到候選。
+	// `DecisionPass` 回傳的每一支都算「已經決定」：原版寫進 `+0x79` 的
+	// 是 0 或 3，都不再是 `0xFF`，所以 `2E54:143F` 之後挑不到它們
+	// （`docs/internals/54`）。**它不會回傳每一支**——`+0x00` bit0 沒設
+	// 又不在交戰格的那些留著 `0xFF`，正是後面五個階段的候選來源
+	// （`docs/re/196`）。
 	for _, d := range dp {
 		i, ok := byIndex[d.Index]
 		if !ok {
@@ -291,6 +297,11 @@ func ForwardBase(region, faction int, g *rules.StarGraph, owner func(int) int) i
 type OriginalStrategy struct {
 	// Contested 是星域 `+0x13` bit2（這一格有戰鬥，`docs/re/173`）。
 	Contested func(region int) bool
+	// Blocked 是星域 `+0x13` 的 `& 0x14`（`docs/re/197`）。
+	Blocked func(region int) bool
+	// EnemyFleets 是敵方在那一格的艦隊數（星域 `+0x28`／`+0x29`，
+	// `docs/re/199`）。
+	EnemyFleets func(region int) int
 	// Split 是艦隊 `+0x00` bit0（`docs/re/196`）。
 	Split func(f rules.Fleet) bool
 	// Ships 回一支艦隊的艘數與主力槽數（`rules.Slot.FleetShipTotals`）。
@@ -308,6 +319,7 @@ func (o OriginalStrategy) Orders(w World, faction, _ int) []Order {
 	return Turn(StrategyInput{
 		Faction: faction, Fleets: w.Fleets, Graph: w.Graph,
 		Owner: w.Owner, Contested: o.Contested, Split: o.Split,
+		Blocked: o.Blocked, EnemyFleets: o.EnemyFleets,
 		Strength: w.Strength, Ships: o.Ships,
 		Routes: o.Routes, Rand: o.Rand, PhezzanOpen: o.PhezzanOpen,
 	})
