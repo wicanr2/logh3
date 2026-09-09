@@ -7,7 +7,7 @@
 舊筆記寫「開頭把參數 ×8 與 ×8÷3 當成兩個半徑，再往下搜（`165F:0003`），
 **看起來是**以艦隊為中心用自己的射程搜一圈」。讀完之後：那兩個半徑不是
 搜尋範圍，是**畫在畫面上的兩個圖形**——就是
-[`docs/re/120`](120-manoeuvre-shapes.md) 已經解過、remake 也已經在畫的
+[`docs/re/120`](120-battle-move-range.md) 已經解過、remake 也已經在畫的
 `screen.DrawManoeuvreRange`。
 
 ```

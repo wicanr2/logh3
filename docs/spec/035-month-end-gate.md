@@ -7,7 +7,7 @@
 [`docs/internals/27`](../internals/27-treasury-globals.md)（財政全域）
 收據：`monthgate7`（旗標 0、回合 380）、`monthgateA`（旗標 1、回合 380）、
 `monthgateB`（旗標 1、回合 381）、`monthgateD`（座位 0 改電腦，本體無頭跑完）
-相關：[`docs/spec/003`](003-budget-plan.md)（徵稅計劃那張畫的就是這裡的預估值）
+相關：[`docs/spec/003`](003-budget-panel.md)（徵稅計劃那張畫的就是這裡的預估值）
 
 ## 什麼時候結算
 

@@ -53,7 +53,8 @@ func TestShipDeliveryGoesToCapitalPlanet(t *testing.T) {
 			}
 			continue
 		}
-		// 海尼森那一顆是同盟自己的交付，不在這條收據的觀測範圍內。
+		// 海尼森那一顆是同盟自己的交付。原版那一趟卡在帝國的接收報告上，
+		// 同盟座位沒跑到，所以收據沒有涵蓋它（`docs/re/264`）。
 		if i == allianceCapitalPlanet {
 			continue
 		}
