@@ -261,6 +261,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	planetInfo, err := screen.LoadPlanetInfoSpec(filepath.Join(data, "planet-info.json"))
+	if err != nil {
+		return nil, err
+	}
 	factionNames, kindNames, err := loadNameTables(
 		filepath.Join(data, "faction-and-kind-names.json"))
 	if err != nil {
@@ -293,6 +297,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		FleetDetail: fleetDetail, ShipKinds: shipKinds,
 		MessageBox: msgBox, FrameTiles: frameTiles,
 		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,
+		PlanetInfo: planetInfo,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
 

@@ -1,5 +1,7 @@
 package rules
 
+import "encoding/binary"
+
 // 戰場上的行星（`docs/re/99`）。
 //
 // 一輪的總損失是**以行星為中心**算的，不是兩支艦隊互打：行星記錄的
@@ -26,6 +28,13 @@ type BattlePlanet struct {
 	// `+0x50`）。只有狀態 0（沒鎖定）或 3（已鎖定）能重新指定。
 	GunState  int `json:"gun_state"`
 	GunTarget int `json:"gun_target"`
+
+	// 情報視窗要的幾格（`docs/re/144`）：名字（記錄開頭那串 Big5）、
+	// `+0x16` 防衛力上限、`+0x18` 回復率、`+0x1A` 經濟力（32 位元）。
+	NameBytes  []byte `json:"name_bytes"`
+	DefenceMax int    `json:"defence_max"`
+	Recover    int    `json:"recover"`
+	Economy    int    `json:"economy"`
 }
 
 // 查詢半徑的夾限（`2AF5:01F7`）。
@@ -69,9 +78,26 @@ func (p *Planets) BattlePlanetsFor(region int, sites []PlanetSite) []BattlePlane
 			GunState:  int(p.rec(i)[planetGunState]),
 			GunTarget: int(le32(p.rec(i)[planetGunTarget:]) & 0xFFFF),
 			Stock:     planetStockOf(p.rec(i)),
+
+			NameBytes:  planetNameOf(p.rec(i)),
+			DefenceMax: int(binary.LittleEndian.Uint16(p.rec(i)[0x16:])),
+			Recover:    int(binary.LittleEndian.Uint16(p.rec(i)[0x18:])),
+			Economy:    int(le32(p.rec(i)[0x1A:])),
 		})
 	}
 	return out
+}
+
+// planetNameOf 回一筆行星記錄開頭那串名字（Big5，`0x00` 結尾）。
+func planetNameOf(rec []byte) []byte {
+	for i, b := range rec {
+		if b == 0 {
+			out := make([]byte, i)
+			copy(out, rec[:i])
+			return out
+		}
+	}
+	return nil
 }
 
 // planetStockOf 讀一筆行星記錄的存量；讀不出來就回空的。

@@ -179,6 +179,11 @@ func (g *Game) battleClick(x, y int) {
 	if g.messageClick(x, y) {
 		return
 	}
+	// 行星情報視窗按任一鍵關掉（`docs/re/144`）。
+	if g.planetInfoOn {
+		g.closePlanetInfo()
+		return
+	}
 	if g.battleDataClick(x, y) {
 		return
 	}

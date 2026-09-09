@@ -97,8 +97,7 @@ func (g *Game) PlanetMenuOpen() bool {
 
 // planetMenuClick 處理行星選單開著時的左鍵。四項各自對應一支常式
 // （`ds:4396` 的跳躍表）：情報 `1373:1C71`、補給 `1930:0DA2`、
-// 補充 `1AAB:0A33`、要塞砲 `2264:0049`——**四支都還沒逆向**，所以
-// 現在只把選單關掉。
+// 補充 `1AAB:0A33`、要塞砲 `2264:0049`。
 func (g *Game) planetMenuClick(x, y, n int) bool {
 	s := g.res.CommandMenus
 	planet := g.battleCmdPlanet
@@ -110,8 +109,9 @@ func (g *Game) planetMenuClick(x, y, n int) bool {
 	}
 	switch row {
 	case 0:
-		// 「情報」開一個 22×10 格的資訊視窗，按任一鍵關掉
-		// （`1373:1C71`）。視窗裡印什麼還沒逆向，所以不做。
+		// 「情報」開一個 22 × 10 格的資訊視窗（`1373:1CBC`，
+		// `docs/re/144`）。原版按任一鍵關掉。
+		g.planetInfoOn, g.planetInfo = true, planet
 	case 1:
 		g.beginPlanetSupplyPick(planet, false)
 	case 2:
@@ -180,3 +180,66 @@ func (g *Game) FortressTargetRange() (outer, inner int, ok bool) {
 
 // fortressNoTarget 是「沒有鎖定」的標記（原版寫 0xFFFF）。
 const fortressNoTarget = 0xFFFF
+
+// PlanetInfoOpen 回行星情報視窗開著沒有。
+func (g *Game) PlanetInfoOpen() bool { return g.planetInfoOn }
+
+// closePlanetInfo 關掉情報視窗。原版按任一鍵就關（`1373:1C71`）。
+func (g *Game) closePlanetInfo() { g.planetInfoOn = false }
+
+// planetInfoView 回情報視窗要顯示的東西；沒開就回 false。
+func (g *Game) planetInfoView() (screen.PlanetInfo, bool) {
+	if !g.planetInfoOn || g.res.PlanetInfo == nil ||
+		g.planetInfo < 0 || g.planetInfo >= len(g.battlePlanets) {
+		return screen.PlanetInfo{}, false
+	}
+	p := g.battlePlanets[g.planetInfo]
+	v := screen.PlanetInfo{
+		RegionOwner: g.regionOwnerOf(g.battleRegion),
+		RegionName:  g.regionNameBytesOf(g.battleRegion),
+		PlanetOwner: p.Owner,
+		PlanetName:  p.NameBytes,
+		Fortress:    p.Fortress,
+		Own:         p.Owner == g.faction,
+		Economy:     int64(p.Economy),
+		Defence:     p.Defence,
+		DefenceMax:  p.DefenceMax,
+		Recover:     p.Recover,
+		Missiles:    int64(p.Stock.Missiles),
+		Fighters:    int64(p.Stock.Fighters),
+	}
+	for i := range v.Kinds {
+		v.Kinds[i] = p.Stock.Ships[i]
+	}
+	return v, true
+}
+
+// regionRecordOf 回第 i 個星域的記錄；越界回 nil。
+func (g *Game) regionRecordOf(i int) []byte {
+	if i < 0 || (i+1)*rules.RegionRecord > len(g.res.Stellar) {
+		return nil
+	}
+	return g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+}
+
+// regionOwnerOf 回星域記錄的 `+0x12`（0 帝國、1 同盟、2 無主）。
+func (g *Game) regionOwnerOf(i int) int {
+	r := g.regionRecordOf(i)
+	if len(r) <= 0x12 {
+		return 2
+	}
+	return int(r[0x12])
+}
+
+// regionNameBytesOf 回星域名那串 Big5（記錄開頭，`0x00` 結尾）。
+func (g *Game) regionNameBytesOf(i int) []byte {
+	r := g.regionRecordOf(i)
+	for j, b := range r {
+		if b == 0 {
+			out := make([]byte, j)
+			copy(out, r[:j])
+			return out
+		}
+	}
+	return nil
+}

@@ -331,6 +331,9 @@ type Resources struct {
 	MessageBox *screen.MessageBoxSpec
 	FrameTiles *ui.FrameTiles
 
+	// PlanetInfo 是行星情報視窗的版面（`docs/re/144`）。
+	PlanetInfo *screen.PlanetInfoSpec
+
 	// SupplyPanel 是「補給」選對象時右側那個面板（`docs/re/143`）。
 	SupplyPanel *screen.SupplyPanelSpec
 
@@ -550,6 +553,11 @@ type Game struct {
 	fleetOrderX      int
 	fleetOrderY      int
 	fleetOrderFacing int
+
+	// planetInfoOn ＝ 行星情報視窗開著（`docs/re/144`），planetInfo 是
+	// 哪一顆。原版按任一鍵關掉。
+	planetInfoOn bool
+	planetInfo   int
 
 	// msgOn ＝ 訊息框開著（模態）。msgKind 是樣板種類，msgRaw 是原版資料段
 	// 那一串 Big5（控制碼夾在裡面，交給 `ui.TextBuffer` 解；`docs/re/141`）。
@@ -2511,6 +2519,10 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 			screen.DrawBattleData(g.res.BattleData, fb, g.res.Font,
 				g.battleDataTab, g.battleDataRows(g.battleDataTab))
 		}
+	}
+	// 行星情報視窗（`docs/re/144`）。
+	if v, ok := g.planetInfoView(); ok {
+		screen.DrawPlanetInfo(fb, g.res.PlanetInfo, g.res.Font, g.res.FrameTiles, v)
 	}
 	// 訊息框畫在最上面（模態）。
 	g.drawMessage(fb)
