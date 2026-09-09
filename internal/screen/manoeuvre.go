@@ -29,45 +29,152 @@ func DrawManoeuvreRange(s *BattleSpec, fb *gfx.Framebuffer,
 	}
 	sx := s.Field.X + cx - v.Col*s.Field.TileW
 	sy := s.Field.Y + cy - v.Row*s.Field.TileH
-	clip := func(x, y int) bool {
-		return x >= s.Field.X && y >= s.Field.Y &&
-			x < s.Field.X+s.Field.Cols*s.Field.TileW &&
-			y < s.Field.Y+s.Field.Rows*s.Field.TileH
-	}
-	xorCircle(fb, sx, sy, rules.ManoeuvreInnerRadius(dist), ManoeuvreInnerInk, clip)
+	r := FieldClip(s)
+	xorCircle(fb, sx, sy, rules.ManoeuvreInnerRadius(dist), ManoeuvreInnerInk, r.Inside)
 	pts := rules.ManoeuvreBoundary(turn, dist, facing)
 	for i := 1; i < len(pts); i++ {
-		xorLine(fb, sx+pts[i-1][0], sy+pts[i-1][1],
-			sx+pts[i][0], sy+pts[i][1], ManoeuvreOuterInk, clip)
+		r.XorLine(fb, sx+pts[i-1][0], sy+pts[i-1][1],
+			sx+pts[i][0], sy+pts[i][1], ManoeuvreOuterInk)
 	}
 }
 
-// xorLine 走 Bresenham，把顏色 XOR 上去。
-func xorLine(fb *gfx.Framebuffer, x0, y0, x1, y1 int, ink uint8, ok func(int, int) bool) {
-	dx, sx := abs(x1-x0), 1
-	if x0 > x1 {
-		sx = -1
+// ClipRect 是原版畫線之前的裁切矩形（`ds:8D6A`／`8D6C`／`8D6E`／`8D70`，
+// 兩端都含）。戰場那一組就是 `FieldClip`。
+type ClipRect struct{ X0, Y0, X1, Y1 int }
+
+// FieldClip 回戰場的裁切矩形。
+func FieldClip(s *BattleSpec) ClipRect {
+	return ClipRect{
+		X0: s.Field.X, Y0: s.Field.Y,
+		X1: s.Field.X + s.Field.Cols*s.Field.TileW - 1,
+		Y1: s.Field.Y + s.Field.Rows*s.Field.TileH - 1,
 	}
-	dy, sy := -abs(y1-y0), 1
-	if y0 > y1 {
+}
+
+// Inside 回這個點在不在矩形裡。
+func (r ClipRect) Inside(x, y int) bool {
+	return x >= r.X0 && x <= r.X1 && y >= r.Y0 && y <= r.Y1
+}
+
+// outcode 是 `3870:09F1` 的四個位元：1 左、2 右、8 上、4 下。
+func (r ClipRect) outcode(x, y int) int {
+	c := 0
+	switch {
+	case x < r.X0:
+		c |= 1
+	case x > r.X1:
+		c |= 2
+	}
+	switch {
+	case y < r.Y0:
+		c |= 8
+	case y > r.Y1:
+		c |= 4
+	}
+	return c
+}
+
+// move 是 `3870:0A30`：把落在外面的那一端拉到邊界上。除法**往零截斷**
+// （`3CC9:70`），少了這一條端點會差一格。
+func (r ClipRect) move(code, x, y, ox, oy int) (int, int) {
+	switch {
+	case code&8 != 0:
+		x += (r.Y0 - y) * (x - ox) / (y - oy)
+		y = r.Y0
+	case code&4 != 0:
+		x += (r.Y1 - y) * (x - ox) / (y - oy)
+		y = r.Y1
+	case code&1 != 0:
+		y += (r.X0 - x) * (y - oy) / (x - ox)
+		x = r.X0
+	case code&2 != 0:
+		y += (r.X1 - x) * (y - oy) / (x - ox)
+		x = r.X1
+	}
+	return x, y
+}
+
+// Clip 是 `3870:08FF` 的 Cohen–Sutherland。整段在外面就回 false。
+//
+// **裁切換掉的是端點，不是「畫的時候跳過畫面外的點」**：接下來的
+// Bresenham 從新端點起算，斜率累加的相位跟著變，差一格就整段錯開
+// （`docs/re/155`）。
+func (r ClipRect) Clip(x0, y0, x1, y1 int) (int, int, int, int, bool) {
+	c0, c1 := r.outcode(x0, y0), r.outcode(x1, y1)
+	for n := 0; n < 8; n++ {
+		if c0&c1 != 0 {
+			return 0, 0, 0, 0, false
+		}
+		if c0 == 0 && c1 == 0 {
+			return x0, y0, x1, y1, true
+		}
+		if c0 != 0 {
+			x0, y0 = r.move(c0, x0, y0, x1, y1)
+			c0 = r.outcode(x0, y0)
+			if c0 == 0 && c1 == 0 {
+				return x0, y0, x1, y1, true
+			}
+		}
+		if c0&c1 != 0 {
+			return 0, 0, 0, 0, false
+		}
+		if c1 != 0 {
+			x1, y1 = r.move(c1, x1, y1, x0, y0)
+			c1 = r.outcode(x1, y1)
+		}
+	}
+	return 0, 0, 0, 0, false
+}
+
+// XorLine 裁切之後照原版 `39D7:0936` 走一條線，把顏色 XOR 上去。
+//
+// 原版分四支：|Δx| > |Δy|（橫向為主）、|Δx| ＝ |Δy|（正對角）、
+// Δx ＝ 0（垂直）、其餘（縱向為主）。呼叫端 `3870:0833` 先把兩端
+// **按 x 排好**，所以次要軸的累加器是 0.16 定點、起始值 `0x8000`
+// （等於四捨五入），每畫完一點才累加。
+//
+// 共用端點會被畫兩次 ——XOR 之後就消失，原版的折線在每個轉折上
+// 都少一個像素，那不是漏畫。
+func (r ClipRect) XorLine(fb *gfx.Framebuffer, x0, y0, x1, y1 int, ink uint8) {
+	cx0, cy0, cx1, cy1, ok := r.Clip(x0, y0, x1, y1)
+	if !ok {
+		return
+	}
+	put := func(x, y int) { fb.Set(x, y, fb.At(x, y)^ink) }
+	if cx1 < cx0 {
+		cx0, cy0, cx1, cy1 = cx1, cy1, cx0, cy0
+	}
+	dx, dy := cx1-cx0, cy1-cy0
+	ady, sy := abs(dy), 1
+	if dy < 0 {
 		sy = -1
 	}
-	err := dx + dy
-	for {
-		if ok(x0, y0) {
-			fb.Set(x0, y0, fb.At(x0, y0)^ink)
+	switch {
+	case dx > ady: // 橫向為主
+		step, acc, y := (ady<<16)/dx, 0x8000, cy0
+		for k := 0; k <= dx; k++ {
+			put(cx0+k, y)
+			if acc += step; acc >= 0x10000 {
+				acc -= 0x10000
+				y += sy
+			}
 		}
-		if x0 == x1 && y0 == y1 {
-			return
+	case dx == ady: // 正對角
+		for k := 0; k <= dx; k++ {
+			put(cx0+k, cy0+k*sy)
 		}
-		e2 := 2 * err
-		if e2 >= dy {
-			err += dy
-			x0 += sx
+	case dx == 0: // 垂直
+		for k := 0; k <= ady; k++ {
+			put(cx0, cy0+k*sy)
 		}
-		if e2 <= dx {
-			err += dx
-			y0 += sy
+	default: // 縱向為主
+		step, acc, x := (dx<<16)/ady, 0x8000, cx0
+		for k := 0; k <= ady; k++ {
+			put(x, cy0+k*sy)
+			if acc += step; acc >= 0x10000 {
+				acc -= 0x10000
+				x++
+			}
 		}
 	}
 }
@@ -129,14 +236,9 @@ func DrawFacingCross(s *BattleSpec, fb *gfx.Framebuffer,
 	}
 	cx := s.Field.X + tx + FacingCrossBias - v.Col*s.Field.TileW
 	cy := s.Field.Y + ty + FacingCrossBias - v.Row*s.Field.TileH
-	clip := func(x, y int) bool {
-		return x >= s.Field.X && y >= s.Field.Y &&
-			x < s.Field.X+s.Field.Cols*s.Field.TileW &&
-			y < s.Field.Y+s.Field.Rows*s.Field.TileH
-	}
+	r := FieldClip(s)
 	for _, seg := range FacingCrossSegments(facing) {
-		xorLine(fb, cx+seg[0], cy+seg[1], cx+seg[2], cy+seg[3],
-			FacingCrossInk, clip)
+		r.XorLine(fb, cx+seg[0], cy+seg[1], cx+seg[2], cy+seg[3], FacingCrossInk)
 	}
 }
 

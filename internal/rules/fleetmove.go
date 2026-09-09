@@ -162,20 +162,38 @@ func AdvanceFleetTurn(f *FleetMover, s *FormationSlots, units []BattleUnit, idx 
 //	    剩下的預算 距離 − (i × 16) ÷ 回轉速度 沿最後的朝向直直走
 //
 // 轉彎在預算裡算 16／步、實際只走 8／步——轉向是雙倍代價。
-// 算完之後**沿 x 軸鏡射**成兩倍的點，再整批依艦隊朝向旋轉。
+// 算完之後**沿 x 軸鏡射**成兩倍的點，再整批依艦隊朝向旋轉
+// （`3A92:0001`）。
+//
+// 積分那一圈是 **do-while，而且 `rem` 是 16 位元無號**
+// （`+0AE1 inc cx` 之前那個 `jnb`）：`i = 0` 時它照樣走一步，
+// 然後 `rem` 減成 `0xFFF1` 繼續繞，一直到扣回小於回轉速度為止。
+// 繞完的那些整圈正弦幾乎互相抵消，所以看起來只差一兩個像素——
+// 但差的地方**每個線段都差**：收據 `s3cmdrange` 上照這樣算的
+// 480／501 個像素落在外形上，改成一般的 while 只剩 355
+// （`docs/re/155`）。
 func ManoeuvreBoundary(turnSpeed, dist, facing int) [][2]int {
 	if turnSpeed <= 0 || dist <= 0 {
 		return nil
 	}
 	var half [][2]int
-	for i := 0; (i*16)/turnSpeed <= dist; i += manoeuvreStep {
+	for i := 0; ; i += manoeuvreStep {
+		if (i*16)/turnSpeed > dist {
+			// 預算走完：原版把累加值清成 0 再存一點，
+			// 也就是**多一個落在圓心的點**，然後收工。
+			half = append(half, [2]int{0, 0})
+			break
+		}
 		var sx, sy int
-		a, rem := 0, i
-		for rem >= turnSpeed {
+		a, rem := 0, i&0xFFFF
+		for {
 			sx += cos256(a) << 3
 			sy += sin256(a) << 3
 			a += turnSpeed
-			rem -= turnSpeed
+			rem = (rem - turnSpeed) & 0xFFFF
+			if rem < turnSpeed {
+				break
+			}
 		}
 		frac := (rem << 3) / turnSpeed
 		sx += frac * cos256(i)
@@ -184,7 +202,7 @@ func ManoeuvreBoundary(turnSpeed, dist, facing int) [][2]int {
 		sx += straight * cos256(i)
 		sy += straight * sin256(i)
 		if sy < 0 {
-			break // 原版：y 的累加值變負就停
+			break // 原版：y 的累加值變負就停，這一點不存
 		}
 		half = append(half, [2]int{sx >> 10, sy >> 10})
 	}
