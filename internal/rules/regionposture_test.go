@@ -20,6 +20,44 @@ type posturePair struct {
 	} `json:"regions"`
 }
 
+// 第二、三份收據：`region-posture-chain4.json` 是整條歸屬鏈的同狀態驗證
+// （新遊戲跑一回合、poke 一顆行星讓星域 4 易主），`region-posture-s3ai6.json`
+// 是 S3 的局面。兩份的局面、擁有者與艦隊都不同（`docs/spec/033`）。
+func TestPosturesMatchOracleReceipts(t *testing.T) {
+	dir := filepath.Join("..", "..", "docs", "internals", "data")
+	g, err := LoadStarGraph(filepath.Join(dir, "star-graph.json"))
+	if err != nil {
+		t.Fatalf("讀星域圖：%v", err)
+	}
+	for _, name := range []string{"region-posture-s3ai6.json", "region-posture-chain4.json"} {
+		b, err := os.ReadFile(filepath.Join(dir, name))
+		if err != nil {
+			t.Fatalf("讀 %s：%v", name, err)
+		}
+		var rec posturePair
+		if err := json.Unmarshal(b, &rec); err != nil {
+			t.Fatalf("解 %s：%v", name, err)
+		}
+		fleets := make([]Fleet, 0, len(rec.Fleets))
+		for _, f := range rec.Fleets {
+			fleets = append(fleets, Fleet{Region: f.Region, Faction: f.Faction, Flags: f.Flags})
+		}
+		got := g.Postures(rec.Owners, fleets)
+		occ := g.Occupations(rec.Owners, fleets)
+		for i, w := range rec.Regions {
+			if w.Owner != RegionOwnerNone && got[i].CapitalCost != w.CapitalCost {
+				t.Errorf("%s 星域 %d 的 +0x24 ＝ %d，收據是 %d",
+					name, i, got[i].CapitalCost, w.CapitalCost)
+			}
+			// 兩支常式合起來管 bit0–bit4。
+			if bits := got[i].Bits() | occ[i].Bits(); bits != byte(w.Flags)&0x1D {
+				t.Errorf("%s 星域 %d 的 +0x13 bit0–bit4 ＝ %02X，收據是 %02X",
+					name, i, bits, byte(w.Flags)&0x1D)
+			}
+		}
+	}
+}
+
 func TestPosturesMatchOracle(t *testing.T) {
 	dir := filepath.Join("..", "..", "docs", "internals", "data")
 	g, err := LoadStarGraph(filepath.Join(dir, "star-graph.json"))

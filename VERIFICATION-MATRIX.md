@@ -220,7 +220,7 @@
 | 距離矩陣與中點矩陣的**產生算法**（`2B99:007D` ＋ `2B99:01B1`）| 通過 | [`docs/re/243`](docs/re/243-who-fills-the-distance-table.md)；`tools/scripts/distance_build.py` 從 `ds:533A` 重算，四張表 1024×4 格與 EMS 傾印相同 |
 | 星域旗標的執行順序（`056A:0468` → `2703:08DE` → 回合計數器）| 通過 | 收據 `flagpass`：`-regs-at` 抓到 `#218118662` / `#218904226` / `#221187705`，[`docs/re/245`](docs/re/245-region-flag-bits-one-and-four.md)。`+0x13` bit4（單方面占據）已實作（`rules.Occupations`）；bit1 只清不設（`2703:1789` 後半未讀）|
 | 星域態勢重算（`2703:0933` → `+0x24`、`+0x13` bit0／bit2／bit3）| 通過 | [`docs/spec/032`](docs/spec/032-region-posture.md)；收據 `data/region-posture-s3ai6.json`，32 格四個可觀測量逐格相同；已接進 `advanceTurn` |
-| 回合結束的星域歸屬鏈（佔領寫回 → 依行星重算 `+0x12` → 重建路徑表 → 態勢）| 部分 | [`docs/spec/033`](docs/spec/033-region-ownership-chain.md)；每一環各有收據（`docs/re/150`／`17`／`spec/032`），**整條鏈的同狀態收據還沒做**；戰鬥路徑的星域重算已接上（`docs/re/105` 的 `s3win` 收據反推），月底結算那一段仍未接 |
+| 回合結束的星域歸屬鏈（佔領寫回 → 依行星重算 `+0x12` → 重建路徑表 → 態勢）| 通過 | [`docs/spec/033`](docs/spec/033-region-ownership-chain.md)；每一環各有收據（`docs/re/150`／`17`／`spec/032`），整條鏈的同狀態收據做出來了（[`docs/re/246`](docs/re/246-ownership-chain-receipt.md)，批次 `chain4`：poke 一顆行星 → 星域 4 易主、`+0x24` 14 → 4218、鄰居變前線），三個局面的 `+0x24` 與 `+0x13` bit0–bit4 逐格相同。戰鬥路徑的星域重算已接上；**易主報告與月底結算那一段仍未接** |
 | 曆法：一回合三天、一個月十回合、一年十二個月 | 通過 | [`docs/re/25`](docs/re/25-calendar.md)；`ds:8F18` 回合計數器對三份記憶體傾印＋三張畫面，另加 `-poke` 成第 118 回合 → 796/12/25（`docs/re/32`）|
 | 月底交付「建造中」的船艦 | 數量算得出來（`docs/spec/004`）；交付之後放到哪裡未定 | [`docs/re/21`](docs/re/21-month-end-ship-delivery.md) |
 | 治安 ＝ (200 − 未安定度) / 2 | 通過 | [`docs/re/24`](docs/re/24-security-formula.md)；六個帝國星域 ＋ 四個 `-poke` 局面（`docs/re/31`）|

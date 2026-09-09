@@ -1,0 +1,220 @@
+{
+ "note": "整條歸屬鏈的同狀態收據（`docs/spec/033`）：新遊戲跑一回合，把星域 4 唯一那顆行星的 `+0x11` 從 0 poke 成 1（`lin:5351B`）。回合結束依行星重算之後星域 4 易主、路徑表重建、`+0x24` 從 14 變 4218（＝ 1024×4 + 122）、`+0x13` bit0 起，鄰居 0 與 2 變成前線。基準是同一組旗標不 poke 的 `chain_post`。",
+ "source": "chain4_post.bin（批次 chain4）",
+ "owners": [
+  0,
+  0,
+  0,
+  2,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  2,
+  2,
+  2,
+  0,
+  2,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  2,
+  2,
+  2,
+  1,
+  1,
+  2,
+  1,
+  1,
+  1
+ ],
+ "fleets": [
+  {
+   "slot": 23,
+   "region": 20,
+   "faction": 1,
+   "flags": 0
+  },
+  {
+   "slot": 28,
+   "region": 30,
+   "faction": 1,
+   "flags": 0
+  },
+  {
+   "slot": 31,
+   "region": 30,
+   "faction": 1,
+   "flags": 0
+  }
+ ],
+ "regions": [
+  {
+   "owner": 0,
+   "capital_cost": 0,
+   "flags": 8
+  },
+  {
+   "owner": 0,
+   "capital_cost": 16,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 15,
+   "flags": 8
+  },
+  {
+   "owner": 2,
+   "capital_cost": 0,
+   "flags": 8
+  },
+  {
+   "owner": 1,
+   "capital_cost": 4218,
+   "flags": 9
+  },
+  {
+   "owner": 0,
+   "capital_cost": 33,
+   "flags": 8
+  },
+  {
+   "owner": 0,
+   "capital_cost": 28,
+   "flags": 8
+  },
+  {
+   "owner": 0,
+   "capital_cost": 31,
+   "flags": 8
+  },
+  {
+   "owner": 0,
+   "capital_cost": 46,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 51,
+   "flags": 8
+  },
+  {
+   "owner": 2,
+   "capital_cost": 0,
+   "flags": 8
+  },
+  {
+   "owner": 2,
+   "capital_cost": 0,
+   "flags": 8
+  },
+  {
+   "owner": 2,
+   "capital_cost": 0,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 60,
+   "flags": 8
+  },
+  {
+   "owner": 2,
+   "capital_cost": 0,
+   "flags": 8
+  },
+  {
+   "owner": 1,
+   "capital_cost": 63,
+   "flags": 8
+  },
+  {
+   "owner": 1,
+   "capital_cost": 50,
+   "flags": 8
+  },
+  {
+   "owner": 1,
+   "capital_cost": 39,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 24,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 14,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 10,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 36,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 51,
+   "flags": 8
+  },
+  {
+   "owner": 2,
+   "capital_cost": 0,
+   "flags": 8
+  },
+  {
+   "owner": 2,
+   "capital_cost": 0,
+   "flags": 8
+  },
+  {
+   "owner": 2,
+   "capital_cost": 0,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 39,
+   "flags": 8
+  },
+  {
+   "owner": 1,
+   "capital_cost": 29,
+   "flags": 0
+  },
+  {
+   "owner": 2,
+   "capital_cost": 0,
+   "flags": 8
+  },
+  {
+   "owner": 1,
+   "capital_cost": 34,
+   "flags": 8
+  },
+  {
+   "owner": 1,
+   "capital_cost": 16,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 0,
+   "flags": 0
+  }
+ ]
+}
