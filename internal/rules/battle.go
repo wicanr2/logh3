@@ -49,11 +49,13 @@ type BattleUnit struct {
 	FightSpeed  int  `json:"fight_speed"`
 	Out         bool `json:"out"` // 出局，不進攻擊名單（艦艇記錄 `+0x1E` bit7）
 
-	// Trail ＝ 艦艇記錄 `+0x19` bit7：要在戰場上留航跡。「索敵」放偵察隊
-	// 出去時設起來（`1CC5:0966`）；原版接著由 `1727:0207` 依陣營挑顏色
-	// （帝國 5、同盟 9）畫下去並把 bit6 也設起來（`docs/re/132`）。
-	// remake 還沒畫航跡。
-	Trail bool `json:"trail"`
+	// Marked ＝ 艦艇記錄 `+0x19` bit7：這個分隊要在小地圖上點出來。
+	// 「索敵」放偵察隊出去時設起來（`1CC5:0966`）；原版接著由
+	// `1727:0207` 依陣營挑顏色（帝國 5、同盟 9）XOR 上去，並把 bit6
+	// （目前點著）與顏色記回 `+0x19`，位置記進 `+0x1A`／`+0x1C`——
+	// 擦的時候 `1727:0298` 要用同一個顏色 XOR 回原處
+	// （`docs/re/154`、`docs/internals/38`）。
+	Marked bool `json:"marked"`
 
 	// Missiles／Fighters 是艦艇記錄 `+0x0E`／`+0x12` 的 32 位元值：
 	// 現有的飛彈與戰鬥機數。分隊面板印的就是它們，顏色由「滿不滿」決定

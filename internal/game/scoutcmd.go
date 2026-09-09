@@ -33,7 +33,7 @@ func (g *Game) beginScout(unit int) {
 		return
 	}
 	u.Action = squadronRejoin // 原版寫 3，等玩家指定目的地才會改
-	u.Trail = true            // 艦艇 `+0x19` bit7：畫航跡
+	u.Marked = true           // 艦艇 `+0x19` bit7：上小地圖
 	g.battleUnits = append(g.battleUnits, u)
 	bf.ScoutOut = true
 	g.beginMoveTarget(len(g.battleUnits) - 1)

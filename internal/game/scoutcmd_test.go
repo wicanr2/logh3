@@ -48,8 +48,8 @@ func TestScoutOrderDeploysDetachment(t *testing.T) {
 	if u.Action != squadronRejoin {
 		t.Errorf("偵察隊的行動 %d，原版寫 3（歸隊）", u.Action)
 	}
-	if !u.Trail {
-		t.Error("偵察隊該立起航跡旗標（艦艇 +0x19 bit7）")
+	if !u.Marked {
+		t.Error("偵察隊該立起小地圖標記旗標（艦艇 +0x19 bit7）")
 	}
 	if !g.battleFleet(fleet).ScoutOut {
 		t.Error("放出去之後艦隊的 ScoutOut 該是 true")

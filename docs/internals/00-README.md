@@ -107,3 +107,10 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [`43-battle-terrain-and-rally.md`](43-battle-terrain-and-rally.md)：戰場地形的通行規則與集結點。
 - [`44-battle-command-menus.md`](44-battle-command-menus.md)：戰場的命令選單（五張表、可選旗標、版面公式）。
 - [`45-battle-unit-panel.md`](45-battle-unit-panel.md)：戰場右側的分隊面板（八列、值的來源、三個顏色規則）。
+- [`46-battle-formation-chooser.md`](46-battle-formation-chooser.md)：戰場「編隊」的選格子畫面。
+- [`47-window-frame-tiles.md`](47-window-frame-tiles.md)：視窗外框的圖塊（`FRAME.BLK`）。
+- [`48-message-inventory.md`](48-message-inventory.md)：訊息框說了什麼。
+- [`49-text-engine.md`](49-text-engine.md)：印字進視窗。
+- [`50-fortress-gun.md`](50-fortress-gun.md)：要塞砲的射程、瞄準與開火。
+- [`51-borland-long-helpers.md`](51-borland-long-helpers.md)：Borland 的 32 位元輔助函式（`3CC9` 那一段）。
+- [`52-plot-primitives-and-canvas.md`](52-plot-primitives-and-canvas.md)：畫點的三支常式與那 40 列的畫布偏移。
