@@ -83,8 +83,15 @@ func TestDecisionPassCountsHeld(t *testing.T) {
 		Owner:     func(int) int { return me },
 		Contested: func(r int) bool { return r == 5 },
 	})
-	if decided != 3 {
-		t.Errorf("決定了 %d 支，預期 3（敵方那一支不算）", decided)
+	// 槽 2 在沒有戰鬥的格子、`+0x00` bit0 也沒設 → 這一趟不碰它
+	// （`docs/re/196`）；敵方那一支本來就不算。
+	if decided != 2 {
+		t.Errorf("決定了 %d 支，預期 2", decided)
+	}
+	for _, d := range out {
+		if d.Index == 2 {
+			t.Error("槽 2 不該被決定——它要留給後面的階段挑")
+		}
 	}
 	if held[5] != 2 {
 		t.Errorf("ds:D5CE[5] ＝ %d，預期 2", held[5])
@@ -93,11 +100,19 @@ func TestDecisionPassCountsHeld(t *testing.T) {
 		t.Errorf("ds:D5CE[9] ＝ %d，預期 0（那一格沒有戰鬥）", held[9])
 	}
 	for _, d := range out {
-		if d.Index == 2 && d.Decision != DecisionIdle {
-			t.Errorf("不在交戰格的那一支決定 ＝ %d，預期 0", d.Decision)
-		}
 		if d.Index == 0 && d.Decision != DecisionEngaged {
 			t.Errorf("交戰格的那一支決定 ＝ %d，預期 3", d.Decision)
 		}
+	}
+
+	// `+0x00` bit0 有設的那一類就算不在交戰格也會被決定。
+	_, _, withSplit := DecisionPass(DecisionInput{
+		Faction: me, Fleets: fleets, Graph: g,
+		Owner:     func(int) int { return me },
+		Contested: func(r int) bool { return r == 5 },
+		Split:     func(f rules.Fleet) bool { return f.Index == 2 },
+	})
+	if withSplit != 3 {
+		t.Errorf("bit0 有設的那一支也該被決定，共 %d 支，預期 3", withSplit)
 	}
 }

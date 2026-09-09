@@ -84,13 +84,20 @@ type DecisionInput struct {
 	// Contested 是星域記錄 `+0x13` 的 bit2：這一格有戰鬥
 	// （`docs/re/173`、`docs/internals/22`）。
 	Contested func(region int) bool
+
+	// Split 是艦隊記錄 `+0x00` 的 bit0：把艦隊分成兩類
+	// （`docs/internals/33`）。**bit0 沒設而且不在交戰格的那些艦隊，
+	// 這一趟完全不碰**——`+0x79` 留著 `0xFF`，於是後面五個階段挑得到
+	// 它們（`docs/re/196`）。nil ＝ 都沒設。
+	Split func(f rules.Fleet) bool
 }
 
 // DecisionPass 跑一趟 `2E54:005D`：回每一支的決定、`ds:D5CE`（這一格有
 // 幾支決定留守）與 `ds:D60E`（決定了幾支）。
 //
-// 只處理 `Faction` 那個陣營的艦隊；`+0x79` 在原版是先填 `0xFF` 再改寫，
-// 這裡直接回改寫後的值。
+// 只處理 `Faction` 那個陣營的艦隊。**回傳的清單只含這一趟真的決定了的
+// 那幾支**；`+0x00` bit0 沒設又不在交戰格的不在裡面，因為原版把它們的
+// `+0x79` 留在 `0xFF`，交給後面五個階段（`docs/re/196`）。
 func DecisionPass(in DecisionInput) (out []FleetDecision, held [RegionCount]int, decided int) {
 	strength := func(f rules.Fleet) int {
 		if in.Strength == nil {
@@ -113,8 +120,15 @@ func DecisionPass(in DecisionInput) (out []FleetDecision, held [RegionCount]int,
 		}
 	}
 
+	split := func(f rules.Fleet) bool { return in.Split != nil && in.Split(f) }
+
 	for _, f := range in.Fleets {
 		if f.Faction != in.Faction || f.Region < 0 || f.Region >= RegionCount {
+			continue
+		}
+		// 那道過濾：不是「分成兩類」的那一類、又不在交戰格 → 這一趟不碰，
+		// `+0x79` 留 `0xFF`（`docs/re/196`）。
+		if !split(f) && !contested(f.Region) {
 			continue
 		}
 		d := FleetDecision{Index: f.Index, Target: rules.NoTarget, Parked: true}
