@@ -154,6 +154,7 @@
 | 敵方兵力圖 `ds:D54E` | **已實作並對拍**（`ai.ThreatMap`）| 收據 `s3aicomp`：四格全中，星域 25 ＝ 69 |
 | 攻擊目標分 `ds:D50E` | **已實作並對拍**（`ai.AttackScore`）| 收據 `s3aicomp`：13→682、15／22／28→2048 |
 | 要派幾支 `ds:D58E`（階段四）| **已實作並對拍**（`ai.AttackNeed`）| 收據 `s3aicomp` ＋ 原版種子 `0xD3DC167E`（[`docs/re/184`](docs/re/184-ai-rng-call-trace.md)）|
+| 逐艦隊決定（`2E54:005D`／`2E54:16F5`／`2E54:1955`）| **已實作，未對拍**（`ai.DecisionPass`）| 四條分支與退一格的挑法來自反組譯（[`docs/re/79`](docs/re/79-per-fleet-decision-pass.md)、`docs/internals/54`）|
 | 守勢優先度／守勢要派幾支 | **已實作，未對拍** | 算式來自反組譯；收據那一趟走的是攻勢版 |
 | 進軍路線表（12 種戰略態勢）| **已實作**（`ai.AdvanceRoutes`、`data/ai-advance-routes.json`）| [`docs/re/178`](docs/re/178-ai-advance-routes.md)、[`179`](docs/re/179-ai-strategic-state-code.md) |
 | 「下一步走哪一格」`2B99:0302` | **已實作並證明等價**（`rules.StarGraph.NextStep`）| [`docs/re/183`](docs/re/183-next-step-equivalence.md)；兩張矩陣所有走得通的星域對與 `Route[1]` 逐一相同 |

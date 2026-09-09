@@ -249,6 +249,7 @@ n -= 2E54:03C3(n)                       ; 先從現有的湊
 | `StateCode` | `2D54:0163` | 12 種全表 |
 | `AdvanceRoutes` | `ds:5EF2`／`ds:5F22` | 路線終點檢查 |
 | `PickerModes`／`Score`／`Pick` | `2E54:143F`／`2E54:1574` | **無收據**（那一趟沒經過候選評分）；測的是算式形狀 |
+| `Engaged`／`RetreatTarget`／`DecisionPass` | `2E54:16F5`／`2E54:1955`／`2E54:005D` | **無收據**；產出 `ds:D5CE` 與 `ds:D60E`，是 `DefenceBoard` 的輸入 |
 | `DefenceBoard`／`AttackBoard` | 一回合的六張表 | 由上面幾支組成；`Reachable` 是外部注入 |
 
 **還沒接上**的原因有兩個，兩個都要先解決才談得上把 `Original` 換掉：
