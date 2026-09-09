@@ -21,3 +21,8 @@ func FleetSlots(level int) int {
 	}
 	return 10
 }
+
+// NewFleetMorale 是新編艦隊的 `+0x3C`：原版 `297B:0066` 寫死 100
+// （`docs/re/214`）。那一格在艦隊組成畫面叫「機動力」、在戰術選單的
+// 明細叫「艦隊士氣值」（`docs/internals/33`）。
+const NewFleetMorale = 100

@@ -263,3 +263,46 @@ func TestOriginalBrainStillNotDefault(t *testing.T) {
 		t.Errorf("ai.Original 回了 %v，預期 nil", got)
 	}
 }
+
+// TestFirstAITurnMatchesReceipt 拿接好線的原版 AI 跑第一個回合，逐支比
+// 收據 `turn260mem`（`docs/re/209`、`docs/re/221`）。
+//
+// 前三支**完全對上**：提督、類別鍵、目的地都與原版相同。第四支是
+// remake 多建的——原版那一趟裡同盟的 `Blend` 從 2 掉到 1、全國稅率
+// 重算、稅收從 10599 掉到 7852，閘門因此提早收手；remake 沒有 `Blend`
+// 的升降事件（`docs/re/220`），那是**還沒解**不是還沒做。
+func TestFirstAITurnMatchesReceipt(t *testing.T) {
+	g := reachBrainPhase(t)
+	g.SetBrain(g.OriginalBrain())
+	g.Click(544, 125)
+	g.Click(560, 125)
+
+	if len(g.fleets) < 3 {
+		t.Fatalf("只建了 %d 支", len(g.fleets))
+	}
+	// 收據上三支：提督 47／52／55，類別鍵 0C／04／0B。
+	// 建出來的順序是類別 0 → 1 → 2（開局四類平手照 0 1 2 3），
+	// 亂數從 D3DC167E 起算得到鍵 04／0B／0C。
+	want := []struct {
+		admiral, key, target int
+	}{
+		{52, 0x04, 24}, // 階段二打無主
+		{55, 0x0B, 24}, // 同上，湊滿兩支
+		{47, 0x0C, 15}, // 階段三的指派
+	}
+	for i, w := range want {
+		f := g.fleets[i]
+		if f.Admiral != w.admiral || f.ClassKey != w.key || f.Target != w.target {
+			t.Errorf("第 %d 支 ＝ 提督 %d／鍵 %02X／目的地 %d，收據是 %d／%02X／%d",
+				i, f.Admiral, f.ClassKey, f.Target, w.admiral, w.key, w.target)
+		}
+		if f.Morale != rules.NewFleetMorale {
+			t.Errorf("第 %d 支的士氣 ＝ %d，新編艦隊應該是 100", i, f.Morale)
+		}
+	}
+	// 收據上是三支；remake 目前四支，差在稅率重算（`docs/re/220`）。
+	if len(g.fleets) != 4 {
+		t.Logf("建了 %d 支（收據 3、目前預期 4）——`Blend` 那一段是不是接上了？",
+			len(g.fleets))
+	}
+}

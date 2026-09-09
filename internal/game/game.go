@@ -758,17 +758,23 @@ func (g *Game) runBrain() {
 			return rules.RegionTax(g.res.Stellar[o : o+rules.RegionRecord])
 		},
 	}
+	// **建艦隊排在下命令前面**：原版 `2D10:0005` 先 `2D76:0002`（建艦隊）
+	// 再 `2E54:000C`（那五個階段，`docs/re/175`）。順序反了有兩個後果
+	// ——這一回合新編的艦隊拿不到命令，而且亂數的呼叫次序整個錯開
+	// （建艦隊每建一支吃兩個，`docs/re/218`）。
+	//
+	// 階段一產生的是**新艦隊**不是命令，所以走另一條路
+	// （`ai.Builder`，`docs/internals/54`）。**選配**：沒實作就不建。
+	if b, ok := g.brain.(ai.Builder); ok {
+		g.buildFleets(b.Build(w, foe, g.turn), foe)
+		w.Fleets = g.fleets // 新編的要看得到，後面的階段才挑得到它們
+	}
 	for _, o := range g.brain.Orders(w, foe, g.turn) {
 		if o.Fleet < 0 || o.Fleet >= len(g.fleets) {
 			continue
 		}
 		g.fleets[o.Fleet].Target = o.Target
 		g.fleets[o.Fleet].Parked = false
-	}
-	// 階段一產生的是**新艦隊**不是命令，所以走另一條路
-	// （`ai.Builder`，`docs/internals/54`）。**選配**：沒實作就不建。
-	if b, ok := g.brain.(ai.Builder); ok {
-		g.buildFleets(b.Build(w, foe, g.turn), foe)
 	}
 }
 
@@ -811,6 +817,8 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 			Composition: nf.Composition,
 			Groups:      len(nf.Composition),
 			Operations:  nf.Operations,
+			// `297B:0066` 建立艦隊時寫 `+0x3C = 100`（`docs/re/214`）。
+			Morale: rules.NewFleetMorale,
 		})
 		led[nf.Admiral] = true
 		n++
@@ -1112,6 +1120,8 @@ func (g *Game) Click(x, y int) {
 						// `0x0814F` 與 `0x2DE35`），所以規則相同。
 						Expected: rules.FleetSlots(
 							rules.AdmiralLevel(g.admiralRecord(g.detailAdmiral))),
+						// 同一支 `297B:0066` 也寫 `+0x3C = 100`。
+						Morale: rules.NewFleetMorale,
 						// 編成完停在自己的首都，還沒有移動命令
 						// （`docs/re/70` 的收據 `dec1` 就是這個狀態）。
 						Region: rules.CapitalRegion(g.faction),
