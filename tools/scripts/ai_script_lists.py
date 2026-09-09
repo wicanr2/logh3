@@ -44,7 +44,7 @@ def group(lin):
 out = {}
 for name, base in (('帝國 ds:5EF2', 0x5EF2), ('同盟 ds:5F22', 0x5F22)):
     entries = []
-    for n in range(8):
+    for n in range(12):
         target, seg, off = far(DS + base + n * 4)
         entries.append({'n': n, 'ptr': '%04X:%04X' % (seg, off), 'lists': group(target)})
     out[name] = entries
