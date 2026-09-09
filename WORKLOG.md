@@ -3337,3 +3337,36 @@ r >= 4000h 且 筆數 >= 2 且 清單[1] 等級 >= 16 → 第二名   ; 1／4
 
 - **看到一張表，先找它的反表在不在手上。** `ds:5F52` 早就記在
   `docs/re/190` 裡，四張鍵表逐項對得起來，於是「抄對了沒」不必另外驗。
+
+## 2026-09-09（一〇〇）　新艦隊的回傳路徑，順帶發現測試的綠燈有洞
+
+階段一產生的是新艦隊不是命令，`Brain.Orders` 回的 `[]Order` 裝不下。
+開了一條選配的路：
+
+```go
+type NewFleet struct{ Admiral, Region, ClassKey, Adjutant int }
+type Builder interface{ Build(w World, faction, turn int) []NewFleet }
+```
+
+`Game.runBrain` 下完命令之後用型別斷言問一次，有實作才建；建的時候守
+兩道限制——每個陣營最多 16 支（`ds:8F49[陣營] < 16`）、一位提督只帶一支。
+沒實作 `Builder` 的 `Brain`（`Original`、`Focused`）完全不受影響，
+有測試釘住這一點。
+
+**寫測試時撞到一件事**：`runBrain` 在 `Resources.Graph` 是 nil 時整段
+跳過，而 `internal/game` 測試共用的 `load()` **沒有載星域圖**
+（正式入口 `internal/bootstrap` 有）。所以
+
+> 「把 `Original` 換掉之後 `go test` 還是綠」在目前的測試裡
+> **不代表決策層被跑過**。
+
+這是 `turn260` 那三張收據對 AI 不敏感的**第三個**獨立原因
+（前兩個：remake 那個局面零艦隊、原版新遊戲也是零艦隊）。
+`builder_test.go` 另外寫了 `reachBrainPhase`——與 `reachCommandPhase`
+相同但接上星域圖，要驗決策層得走那一條。記進 `docs/spec/029` 與驗證矩陣。
+
+### 這一輪的方法
+
+- **測試通過之前先確認那段程式真的被執行到。** 這裡的守衛（`Graph == nil`
+  就 return）讓三個測試「通過」，而它們一次都沒有進到要測的那一段。
+  探針只花一分鐘：叫一個會計數的 `Brain`，印出被叫幾次。

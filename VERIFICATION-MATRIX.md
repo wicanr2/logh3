@@ -160,6 +160,7 @@
 | 「下一步走哪一格」`2B99:0302` | **已實作並證明等價**（`rules.StarGraph.NextStep`）| [`docs/re/183`](docs/re/183-next-step-equivalence.md)；兩張矩陣所有走得通的星域對與 `Route[1]` 逐一相同 |
 | 候選挑選與評分（`2E54:143F`／`2E54:1574`）| **已實作，未對拍**（`ai.PickerModes`／`Score`／`Pick`；艘數與主力槽數由 `rules.Slot.FleetShipTotals` 供）| 算式來自反組譯；`s3aicomp` 那一趟走到的是階段四，沒經過候選評分，所以**沒有收據** |
 | 建艦隊的閘門與配額（`2D76:0060`／`011C`／`01A5`／`0251`）| **已實作**（`ai.BuildGate`／`ai.ClassQuotaOrder`）| 上限 16 → 少於三支放行 → 維持費 × 20 追上總稅收就不建（[`docs/re/202`](docs/re/202-fleet-build-money-gate.md)）；配額 40/45/5/10 整數捨去、升冪排最缺的。`ds:8FD4[陣營]` 的語意仍未解 |
+| 新艦隊的回傳路徑（`ai.NewFleet`／`ai.Builder`）| **已實作** | 選配介面，`Game.runBrain` 型別斷言問一次；守「每陣營 16 支」與「一位提督一支」兩道限制。沒實作的 `Brain` 不受影響 |
 | 建艦隊抽類別鍵（`2D76:0576`）| **已實作**（`ai.PickClassKey`／`ai.ClassKeys`）| 四張鍵表是 `ds:5F52` 的反表，逐項對過（[`docs/re/204`](docs/re/204-fleet-class-key-pick.md)）|
 | 建艦隊挑人選（`2D76:02FA`）| **已實作**（`ai.PickBuildAdmiral`）| 四層門檻 `7000h`／`6000h`／`4000h`，機率 1/8、1/8、1/4、**1/2**（[`docs/re/203`](docs/re/203-fleet-build-admiral-pick.md)）；分布用原版亂數跑 8 萬次驗過。`2D76:0576` 仍未讀 |
 | 提督排序（`2E54:063C`）| **已實作**（`rules.CompareAdmiralsForFleet`／`SortAdmiralsForFleet`）| 等級 → 統率力 → 運用，三段降冪（[`docs/re/201`](docs/re/201-admiral-sort-key.md)）；原版提督表排完的單調性有測試 |
@@ -177,7 +178,9 @@
 >
 > 畫面收據 `turn260`／`turn320`／`turn450` 是例外：**原版在那個狀態裡
 > 跑過 AI，指派了三支艦隊**（[`docs/re/198`](docs/re/198-ai-runs-in-turn260.md)）。
-> 那三張目前逐位元組通得過與 AI 無關——remake 在那個局面下一支艦隊都沒有，
+> 那三張目前逐位元組通得過與 AI 無關——`internal/game` 測試共用的 `load()`
+> **沒有載星域圖**，而 `runBrain` 缺圖就整段跳過；就算載了，remake 在那個
+> 局面下一支艦隊都沒有，
 > 而**原版的新遊戲也是零艦隊**（[`docs/re/200`](docs/re/200-new-game-has-no-fleets.md)）：
 > 原版那三支是電腦自己建的，而 `ai.Turn` 不含建艦隊那一段。
 

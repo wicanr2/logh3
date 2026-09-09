@@ -217,6 +217,11 @@ ds:D5AE[0..31] = 0
     而**原版的新遊戲也是零艦隊**——新遊戲樣板只有 `ADMIRAL.DTX`
     與 `STELLAR.DTX`，沒有 `FLEET.DTX`（`docs/re/200`）。
     原版那三支是電腦在第一個 AI 回合**自己建的**。
+- ⚠ **測試的綠燈證明力有限**：`Game.runBrain` 在 `Resources.Graph` 是 nil
+  時整段跳過，而 `internal/game` 測試共用的 `load()` **沒有載星域圖**
+  （正式入口 `internal/bootstrap` 有）。所以「換了 `Original` 之後
+  `go test` 還是綠」在目前的測試裡**不代表決策層被跑過**。
+  要真的驗，得用有接圖的入口（`builder_test.go` 的 `reachBrainPhase`）。
 - **建議**：換預設是安全的（`ai.Turn` 回空清單），但**單獨換它沒有作用**。
   真正擋在前面的是**階段一：建艦隊**（`2D76:0002`／`2E54:0513`）——
   `ai.Turn` 不含它，因為它產生的是新艦隊不是命令，`[]Order` 裝不下。
@@ -310,9 +315,13 @@ ds:D5AE[0..31] = 0
 
 已實作成 `ai.BuildGate`／`ai.ClassQuotaOrder`／`ai.PickBuildAdmiral`／
 `ai.PickClassKey`。**建艦隊那條路的反組譯到此讀完**，只剩
-`ds:8FD4[陣營]` 的語意（它只影響閘門鬆緊）。`ai.Turn` 還不呼叫它們
-——把新艦隊接進 `advanceTurn` 是下一步，`[]Order` 裝不下新艦隊，
-要另一條回傳路徑。
+`ds:8FD4[陣營]` 的語意（它只影響閘門鬆緊）。`ai.Turn` 還不呼叫它們。
+
+**回傳路徑已經開好了**：`ai.NewFleet` ＋ `ai.Builder`（選配介面）。
+`Game.runBrain` 下完命令之後用型別斷言問一次，有實作才建；建的時候
+守兩道限制——每個陣營最多 16 支、一位提督只帶一支。沒實作 `Builder`
+的 `Brain`（`Original`、`Focused`）完全不受影響。
+差的是把 `docs/re/202`–`204` 那幾支純函式串成一個 `Build` 實作。
 
 ## 階段一的完整形狀（`docs/re/180`–`docs/re/182`）
 

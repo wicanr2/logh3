@@ -746,6 +746,50 @@ func (g *Game) runBrain() {
 		g.fleets[o.Fleet].Target = o.Target
 		g.fleets[o.Fleet].Parked = false
 	}
+	// 階段一產生的是**新艦隊**不是命令，所以走另一條路
+	// （`ai.Builder`，`docs/internals/54`）。**選配**：沒實作就不建。
+	if b, ok := g.brain.(ai.Builder); ok {
+		g.buildFleets(b.Build(w, foe, g.turn), foe)
+	}
+}
+
+// buildFleets 把 `ai.Builder` 要的新艦隊編出來。
+//
+// 原版的上限是每個陣營 16 支（艦隊表每邊 16 個槽，`ds:8F49[陣營] < 16`，
+// `docs/internals/33`），而且一位提督只帶一支。編出來的停在原地、
+// 沒有移動命令——與玩家走「艦隊編成」建出來的那一支相同（`docs/re/70`）。
+func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
+	if len(list) == 0 {
+		return
+	}
+	n := 0
+	led := make(map[int]bool, len(g.fleets))
+	for _, f := range g.fleets {
+		if f.Faction == faction {
+			n++
+			led[f.Admiral] = true
+		}
+	}
+	for _, nf := range list {
+		if n >= ai.FleetCap {
+			return // 滿了
+		}
+		if nf.Region < 0 || nf.Region >= rules.RegionCount || led[nf.Admiral] {
+			continue
+		}
+		g.fleets = append(g.fleets, rules.Fleet{
+			Index:    len(g.fleets),
+			Number:   len(g.fleets) + 1,
+			Faction:  faction,
+			Admiral:  nf.Admiral,
+			Adjutant: nf.Adjutant,
+			Region:   nf.Region,
+			Target:   rules.NoTarget,
+			ClassKey: nf.ClassKey,
+		})
+		led[nf.Admiral] = true
+		n++
+	}
 }
 
 // startVersus 開一局對戰。

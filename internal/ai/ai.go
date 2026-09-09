@@ -76,6 +76,30 @@ type Brain interface {
 	Orders(w World, faction, turn int) []Order
 }
 
+// NewFleet 是這一回合要**新編**的一支艦隊。
+//
+// 原版的階段一（`2D76:0002` 主動建、`2E54:0513` 守首都補）產生的不是
+// 命令而是新艦隊，`[]Order` 裝不下，所以另開一條路
+// （`docs/internals/54`、`docs/re/201`–`docs/re/204`）。
+type NewFleet struct {
+	// Admiral 是帶隊提督在提督表裡的索引。
+	Admiral int
+	// Region 是編在哪一格。原版永遠是自己的首都。
+	Region int
+	// ClassKey 是艦隊記錄的 `+0x09`（0–15，`ai.PickClassKey` 抽出來的）。
+	ClassKey int
+	// Adjutant 是副官的提督索引；-1 ＝ 沒有。
+	Adjutant int
+}
+
+// Builder 是「除了下命令，還會建艦隊」的 `Brain`。
+//
+// **選配**：`Game` 用型別斷言問一次，沒實作就不建。這樣既有的
+// `Original`／`Focused` 不必跟著改。
+type Builder interface {
+	Build(w World, faction, turn int) []NewFleet
+}
+
 // Original 照原版。目前回 nil ＝ **還沒接上**原版那套戰略 AI
 // （`docs/internals/54`）；在電腦座位真的跑起來的收據做出來之前，
 // 這裡不猜。
