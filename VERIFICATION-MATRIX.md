@@ -160,6 +160,7 @@
 | 「下一步走哪一格」`2B99:0302` | **已實作並證明等價**（`rules.StarGraph.NextStep`）| [`docs/re/183`](docs/re/183-next-step-equivalence.md)；兩張矩陣所有走得通的星域對與 `Route[1]` 逐一相同 |
 | 候選挑選與評分（`2E54:143F`／`2E54:1574`）| **已實作，未對拍**（`ai.PickerModes`／`Score`／`Pick`；艘數與主力槽數由 `rules.Slot.FleetShipTotals` 供）| 算式來自反組譯；`s3aicomp` 那一趟走到的是階段四，沒經過候選評分，所以**沒有收據** |
 | 建艦隊的閘門與配額（`2D76:0060`／`011C`／`01A5`／`0251`）| **已實作**（`ai.BuildGate`／`ai.ClassQuotaOrder`）| 上限 16 → 少於三支放行 → 維持費 × 20 追上總稅收就不建（[`docs/re/202`](docs/re/202-fleet-build-money-gate.md)）；配額 40/45/5/10 整數捨去、升冪排最缺的。`ds:8FD4[陣營]` 的語意仍未解 |
+| 建艦隊挑人選（`2D76:02FA`）| **已實作**（`ai.PickBuildAdmiral`）| 四層門檻 `7000h`／`6000h`／`4000h`，機率 1/8、1/8、1/4、**1/2**（[`docs/re/203`](docs/re/203-fleet-build-admiral-pick.md)）；分布用原版亂數跑 8 萬次驗過。`2D76:0576` 仍未讀 |
 | 提督排序（`2E54:063C`）| **已實作**（`rules.CompareAdmiralsForFleet`／`SortAdmiralsForFleet`）| 等級 → 統率力 → 運用，三段降冪（[`docs/re/201`](docs/re/201-admiral-sort-key.md)）；原版提督表排完的單調性有測試 |
 | 指派、建艦隊、費沙事件 | **已逆向，未實作** | [`docs/re/180`](docs/re/180-admiral-fleet-slot.md)–[`182`](docs/re/182-admiral-flags-and-fleet-cost.md)、[`190`](docs/re/190-fleet-class-meaning.md)–[`192`](docs/re/192-phezzan-event.md) |
 | 一個回合串起來（`ai.Turn`，階段二／三／五）| **已實作，未對拍** | 逐艦隊決定的過濾已解（[`docs/re/196`](docs/re/196-decision-pass-filter.md)）：`+0x00` bit0 沒設又不在交戰格的留給後面的階段挑。`ds:D60E` 那一格的殘留也解了（[`docs/re/197`](docs/re/197-d60e-counts-the-whole-turn.md)：它數的是整個回合，十一處遞增點見 [`198`](docs/re/198-ai-runs-in-turn260.md)）|

@@ -62,3 +62,41 @@ func ClassQuotaOrder(counts [4]int, total int) [4]int {
 	sort.SliceStable(s, func(a, b int) bool { return short[s[a]] < short[s[b]] })
 	return order
 }
+
+// admiralPickTiers 是 `2D76:02FA` 的四層門檻（`docs/re/203`）。
+// 亂數值域 0–0x7FFF，所以區間寬度是 0x1000／0x1000／0x2000／0x4000
+// ——**一半的機率仍然挑第一名**。
+var admiralPickTiers = []struct {
+	threshold int // r 要 >= 這個值
+	rank      int // 挑排序後的第幾名（0 起）
+}{
+	{0x7000, 3},
+	{0x6000, 2},
+	{0x4000, 1},
+}
+
+// AdmiralPickMinLevel 是被降格選中的提督自己要有的等級（`+0x06`）。
+const AdmiralPickMinLevel = 16
+
+// PickBuildAdmiral ＝ 原版 `2D76:02FA` 排序之後那一段：從**已經依分數
+// 排好**的提督清單裡挑一位（`docs/re/203`）。
+//
+//	r      3CD5:000C() 的傳回值（0–0x7FFF）
+//	count  清單長度
+//	level  回排序後第 k 名的等級（`+0x06`）
+//
+// 回排序後的名次（0 ＝ 分數最高）。清單是空的回 -1。
+//
+// 每一層要「人數夠」而且「那個人等級 ≥ 16」，任一不成立就**往下一層試**
+// ——不是直接落到第一名。
+func PickBuildAdmiral(r, count int, level func(rank int) int) int {
+	if count <= 0 {
+		return -1
+	}
+	for _, t := range admiralPickTiers {
+		if r >= t.threshold && count > t.rank && level(t.rank) >= AdmiralPickMinLevel {
+			return t.rank
+		}
+	}
+	return 0
+}

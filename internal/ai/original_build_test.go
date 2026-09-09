@@ -1,15 +1,19 @@
 package ai
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/wicanr2/logh3/internal/rules"
+)
 
 // TestBuildGate 測 `2D76:0060` 的三道關卡（`docs/re/202`）。
 func TestBuildGate(t *testing.T) {
 	for _, c := range []struct {
-		name                   string
-		existing, tax, upkeep  int
-		tight                  bool
-		wantN                  int
-		wantOK                 bool
+		name                  string
+		existing, tax, upkeep int
+		tight                 bool
+		wantN                 int
+		wantOK                bool
 	}{
 		{"滿 16 支不建", 16, 100000, 0, false, 0, false},
 		{"少於三支不看錢", 2, 0, 999999, false, 2, true},
@@ -48,4 +52,67 @@ func TestClassQuotaOrder(t *testing.T) {
 	if sum != 100 {
 		t.Errorf("配額相加 ＝ %d，預期 100", sum)
 	}
+}
+
+// TestPickBuildAdmiral 測 `2D76:02FA` 的四層（`docs/re/203`）。
+func TestPickBuildAdmiral(t *testing.T) {
+	// 四個人，等級都夠。
+	high := func(int) int { return 20 }
+	for _, c := range []struct{ r, want int }{
+		{0x7FFF, 3}, {0x7000, 3},
+		{0x6FFF, 2}, {0x6000, 2},
+		{0x5FFF, 1}, {0x4000, 1},
+		{0x3FFF, 0}, {0, 0},
+	} {
+		if got := PickBuildAdmiral(c.r, 4, high); got != c.want {
+			t.Errorf("r ＝ %04X 挑第 %d 名，預期第 %d 名", c.r, got, c.want)
+		}
+	}
+
+	// 人數不夠就往下一層試，不是直接落到第一名。
+	if got := PickBuildAdmiral(0x7FFF, 2, high); got != 1 {
+		t.Errorf("只有兩個人時 r ＝ 7FFF 挑第 %d 名，預期第 1 名", got)
+	}
+	// 等級不夠也一樣往下試。
+	lowAt3 := func(k int) int {
+		if k == 3 {
+			return 15
+		}
+		return 20
+	}
+	if got := PickBuildAdmiral(0x7FFF, 4, lowAt3); got != 2 {
+		t.Errorf("第四名等級 15 時挑第 %d 名，預期第 2 名", got)
+	}
+	// 全部都不夠格 → 第一名。
+	low := func(int) int { return 15 }
+	if got := PickBuildAdmiral(0x7FFF, 4, low); got != 0 {
+		t.Errorf("都不夠格時挑第 %d 名，預期第 0 名", got)
+	}
+	if got := PickBuildAdmiral(0x1000, 0, high); got != -1 {
+		t.Errorf("空清單應該回 -1，得到 %d", got)
+	}
+}
+
+// TestPickBuildAdmiralDistribution 用原版的亂數跑一輪，確認四個名次的
+// 比例是 1/2、1/4、1/8、1/8（`docs/re/203`）。
+func TestPickBuildAdmiralDistribution(t *testing.T) {
+	r := rulesRand(t)
+	var hit [4]int
+	const n = 80000
+	for i := 0; i < n; i++ {
+		hit[PickBuildAdmiral(r.Next(), 4, func(int) int { return 20 })]++
+	}
+	want := [4]float64{0.5, 0.25, 0.125, 0.125}
+	for k, w := range want {
+		got := float64(hit[k]) / n
+		if got < w-0.01 || got > w+0.01 {
+			t.Errorf("第 %d 名佔 %.4f，預期約 %.3f", k, got, w)
+		}
+	}
+}
+
+// rulesRand 給分布測試一個原版的亂數產生器。
+func rulesRand(t *testing.T) *rules.Rand {
+	t.Helper()
+	return rules.NewRand(0xD3DC167E)
 }
