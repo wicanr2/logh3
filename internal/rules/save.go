@@ -43,6 +43,7 @@ const (
 	fleetMorale   = 0x3C // 艦隊士氣值（建立艦隊時寫 100，戰鬥中會變）
 	fleetAction   = 0x48 // 低四位 ＝ 艦隊行動（0 移動／1 戰鬥／2 防禦／3 占領／4 待命）
 	fleetSlots    = 0x10 // 十個 4-byte 的槽，前兩 byte 是艦艇索引
+	fleetScout    = 0x38 // 索敵分遣隊的艦艇池索引（不在編制表裡）
 	fleetSlotN    = 10
 
 	// fleetParked 是 `+0x08` 代表「這一支不會動」的值（`113A:0350`）。
@@ -270,6 +271,7 @@ func (s *Slot) Fleets(w StrengthWeights) []Fleet {
 			Target:   NoTarget,
 			Parked:   r[fleetState] == fleetParked,
 			Action:   int(r[fleetAction] & 0x0F),
+			Scout:    int(r[fleetScout]) | int(r[fleetScout+1])<<8,
 			Morale:   int(r[fleetMorale]),
 		}
 		if r[fleetAdjutant] == 0xFF {

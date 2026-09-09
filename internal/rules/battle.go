@@ -49,6 +49,12 @@ type BattleUnit struct {
 	FightSpeed  int  `json:"fight_speed"`
 	Out         bool `json:"out"` // 出局，不進攻擊名單（艦艇記錄 `+0x1E` bit7）
 
+	// Trail ＝ 艦艇記錄 `+0x19` bit7：要在戰場上留航跡。「索敵」放偵察隊
+	// 出去時設起來（`1CC5:0966`）；原版接著由 `1727:0207` 依陣營挑顏色
+	// （帝國 5、同盟 9）畫下去並把 bit6 也設起來（`docs/re/132`）。
+	// remake 還沒畫航跡。
+	Trail bool `json:"trail"`
+
 	// Missiles／Fighters 是艦艇記錄 `+0x0E`／`+0x12` 的 32 位元值：
 	// 現有的飛彈與戰鬥機數。分隊面板印的就是它們，顏色由「滿不滿」決定
 	// （`docs/re/118`）。
@@ -314,28 +320,7 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 			Kind:     -1,
 			Detail:   DefaultDetail,
 		}
-		if ship >= 0 && (ship+1)*ShipRecord <= len(s.Ship) {
-			rec := s.Ship[ship*ShipRecord : (ship+1)*ShipRecord]
-			u.Kind = int(rec[4])
-			u.Slot = int(rec[5])
-			u.Ships = int(binary.LittleEndian.Uint16(rec[8:]))
-			u.FullShips = int(binary.LittleEndian.Uint16(rec[10:]))
-			u.RepairCap = int(binary.LittleEndian.Uint16(rec[12:]))
-			u.Attack = int(binary.LittleEndian.Uint16(rec[0x16:]))
-			// 士氣是**一個位元組**：`+0x07` 固定 0xFF，整個 word 讀出來
-			// 會是 0xFF64。用 -poke 把 0x682EC 寫成 77 驗過，畫面上只有
-			// 那一列的士氣跟著變（收據 `s3morale`，`docs/re/111`）。
-			u.Morale = int(rec[6])
-			u.Missiles = int(binary.LittleEndian.Uint32(rec[0x0E:]))
-			u.Fighters = int(binary.LittleEndian.Uint32(rec[0x12:]))
-			u.Action = int(rec[0x1E])
-			u.TurnSpeed = int(rec[0x1F])
-			u.CruiseSpeed = int(rec[0x21])
-			u.FightSpeed = int(rec[0x22])
-			if w != nil {
-				u.Strength = w.ShipStrength(rec)
-			}
-		}
+		s.fillFromShip(&u, ship, w)
 		out = append(out, u)
 	}
 	return out
@@ -410,3 +395,54 @@ func abs32(n int) int {
 	}
 	return n
 }
+
+// fillFromShip 把艦艇池第 ship 筆的欄位填進一個分隊。ship < 0 或超出
+// 範圍就什麼都不做（`docs/internals/38`）。
+func (s *Slot) fillFromShip(u *BattleUnit, ship int, w StrengthWeights) {
+	if ship < 0 || (ship+1)*ShipRecord > len(s.Ship) {
+		return
+	}
+	rec := s.Ship[ship*ShipRecord : (ship+1)*ShipRecord]
+	u.Kind = int(rec[4])
+	u.Slot = int(rec[5])
+	u.Ships = int(binary.LittleEndian.Uint16(rec[8:]))
+	u.FullShips = int(binary.LittleEndian.Uint16(rec[10:]))
+	u.RepairCap = int(binary.LittleEndian.Uint16(rec[12:]))
+	u.Attack = int(binary.LittleEndian.Uint16(rec[0x16:]))
+	// 士氣是**一個位元組**：`+0x07` 固定 0xFF，整個 word 讀出來
+	// 會是 0xFF64。用 -poke 把 0x682EC 寫成 77 驗過，畫面上只有
+	// 那一列的士氣跟著變（收據 `s3morale`，`docs/re/111`）。
+	u.Morale = int(rec[6])
+	u.Missiles = int(binary.LittleEndian.Uint32(rec[0x0E:]))
+	u.Fighters = int(binary.LittleEndian.Uint32(rec[0x12:]))
+	u.Action = int(rec[0x1E])
+	u.TurnSpeed = int(rec[0x1F])
+	u.CruiseSpeed = int(rec[0x21])
+	u.FightSpeed = int(rec[0x22])
+	if w != nil {
+		u.Strength = w.ShipStrength(rec)
+	}
+}
+
+// ScoutUnit 做出艦隊的索敵分遣隊（艦隊記錄 `+0x38` 那一筆），擺在
+// (x,y)。它平常不在戰場上——戰場的「索敵」才會把它放出來
+// （`1CC5:0966`，`docs/re/132`）。第二個回傳值 false ＝ 這一支沒有。
+func (s *Slot) ScoutUnit(w StrengthWeights, f Fleet, x, y int) (BattleUnit, bool) {
+	if f.Scout == 0xFFFF || f.Scout < 0 {
+		return BattleUnit{}, false
+	}
+	u := BattleUnit{
+		Fleet: f.Index, Squadron: scoutSquadron, Faction: f.Faction,
+		X: x, Y: y, TargetX: x, TargetY: y,
+		Speed: DefaultBattleSpeed, Kind: -1, Detail: DefaultDetail,
+	}
+	s.fillFromShip(&u, f.Scout, w)
+	if u.Kind < 0 {
+		return BattleUnit{}, false
+	}
+	return u, true
+}
+
+// scoutSquadron 是索敵分遣隊在 remake 裡的分隊序號。原版沒有這個編號
+// ——它不在編制表裡，用一個不會撞到的值標出來。
+const scoutSquadron = -1
