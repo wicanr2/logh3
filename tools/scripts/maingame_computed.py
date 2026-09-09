@@ -132,6 +132,16 @@ RECIPES = {
         'money_rows': (242, 262, 282, 302, 322, 342, 362), 'header_y': 102,
         'drop_face': False, 'staff_block': True,
     },
+    # 對戰模式的船艦訂造報告（收據 `vs7`，`docs/re/260`）：疊上去那一層
+    # 與單人那張相同，底板是交棒之後那一張（陣營那一行、系統指令、分頁鈕
+    # 都已經畫好），所以視窗名是 `overlay`、底板留著。
+    'screen-versus-ship-order': {
+        'window': 'overlay',
+        'staff_y': 142, 'post': 0, 'staff_x': 160,
+        'money_rows': (242, 262, 282, 302, 322, 342, 362), 'header_y': 102,
+        'drop_face': False, 'staff_block': True,
+        'keep_board': True,
+    },
     'screen-build-plan': {
         'staff_y': 122, 'post': 0, 'staff_x': 96,
         # y=162 的「船艦建造費」是 rules.Budget 算出來的（ReportPanel）。

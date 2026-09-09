@@ -69,6 +69,7 @@ tools/specs.sh cmd-menu     # 只做一張
 | `screen-copy-protection` | 防拷問答 | `cb1` |
 | `screen-main-game` | 遊戲主畫面（月初報告）| `key1` |
 | `screen-ship-order` | 船艦訂造報告 | `ship1` |
+| `screen-versus-ship-order` | 對戰的船艦訂造報告（月初報告第二張）| `vs7` |
 | `screen-build-plan` | 次月份船艦建造計劃 | `plan1` |
 | `screen-budget-plan` | 次月份預算計劃 | `budget1` |
 | `screen-admiral-list` | 待命中提督資料（疊在建造計劃上）| `admirals1` |

@@ -470,6 +470,16 @@ func matches(t *testing.T, g *Game, batch string) {
 		}
 	}
 	if bad != 0 {
+		// 對不上的時候把 remake 那一側倒出來，`tools/scripts/diff_parts.py`
+		// 才有東西可以切連通分量——不然只知道差幾個像素，不知道差在哪。
+		if os.Getenv("LOGH3_DUMP_REMAKE") != "" {
+			out := filepath.Join(root, "workplace", "remake-"+batch+".bin")
+			if err := os.WriteFile(out, got, 0o644); err != nil {
+				t.Logf("倒 remake 畫面失敗：%v", err)
+			} else {
+				t.Logf("remake 畫面寫到 %s", out)
+			}
+		}
 		t.Fatalf("%s：與原版不同的像素 %d / %d", batch, bad, len(want))
 	}
 }
@@ -1175,7 +1185,12 @@ func TestVersusHandover(t *testing.T) {
 	matches(t, g, "vs4")
 
 	// 關掉兩層報告 → 戰略地圖；系統指令 → 實行。
+	// **中間那張是船艦訂造報告**（收據 `vs7`，`docs/re/260`）。
 	g.RightClick(300, 240)
+	if g.State() != StateVersusShipOrder {
+		t.Fatalf("關掉會計報告之後在 %v，預期船艦訂造報告", g.State())
+	}
+	matches(t, g, "vs7")
 	g.RightClick(300, 240)
 	if g.State() != StateCommandPhase {
 		t.Fatalf("關完報告之後在 %v，預期戰略地圖", g.State())

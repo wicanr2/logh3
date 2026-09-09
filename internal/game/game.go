@@ -134,6 +134,11 @@ const (
 	// StateIntro 是開頭動畫（`OPEN.EXE` 的 374 格，`docs/spec/020`）。
 	// 排在最後是為了不動既有狀態的編號；玩家路徑上它在主選單**之前**。
 	StateIntro
+
+	// StateVersusShipOrder 是對戰模式月初報告的第二張：船艦訂造報告。
+	// 內容與單人那張（`StateShipOrder`）相同，底板是交棒之後那一張
+	// （收據 `vs7`，`docs/re/260`）。同樣排在最後不動既有編號。
+	StateVersusShipOrder
 )
 
 // screenSpecName 是每個命令階段狀態對應的規格名（`docs/internals/data/`）。
@@ -166,6 +171,7 @@ var screenSpecName = map[State]string{
 	StateFormation:        "screen-formation",
 	StateVersusInput:      "screen-versus-input",
 	StateVersusAccount:    "screen-versus-account",
+	StateVersusShipOrder:  "screen-versus-ship-order",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -1430,8 +1436,14 @@ func (g *Game) RightClick(x, y int) {
 			g.state = StateCommandPhase
 		}
 	case StateVersusAccount:
-		// 對戰模式那張（`vs4`）也是兩下右鍵（收據 `vs5`）。**中間那張是
-		// 不是訂造報告還沒量過**，所以這一路先照舊只數層數。
+		// 對戰模式那張（`vs4`）也是兩下右鍵（收據 `vs5`），而**中間那張
+		// 就是船艦訂造報告**——收據 `vs7` 的畫面與 `vsreports` 在兩下
+		// 右鍵之間倒的那一張逐位元組相同（`docs/re/260`）。
+		if g.commandSpec(StateVersusShipOrder) != nil {
+			g.reportLayer = 1
+			g.state = StateVersusShipOrder
+			return
+		}
 		g.reportLayer++
 		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
@@ -1849,13 +1861,14 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 	// 對戰交棒的當下只有陣營那一行與按鈕（`docs/spec/016`）。
 	// 接著那張月初報告是「交棒的底板 ＋ 單人那張的首都摘要」——
 	// 兩件事都要，所以兩個都畫（收據 `vs4`）。
-	if g.state == StateVersusInput || g.state == StateVersusAccount {
+	if g.state == StateVersusInput || g.state == StateVersusAccount ||
+		g.state == StateVersusShipOrder {
 		c, _, ok := g.capitalSummary()
 		if !ok {
 			return
 		}
 		g.res.CapitalPanel.DrawHandover(fb, g.res.Font, c, g.faction)
-		if g.state == StateVersusAccount {
+		if g.state != StateVersusInput {
 			g.res.CapitalPanel.DrawOpening(fb, g.res.Font, g.res.RegionPanel, c, g.faction)
 		}
 		return
@@ -1933,6 +1946,9 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 	if name == "overlay" {
 		g.drawFleetOrg(fb)
 		g.drawFleetComposition(fb)
+		// 訂造報告那七列要畫在**游標之前**——收據 `vs7` 的游標正好壓在
+		// 「戰艦」那一列的數字上，順序反了就差 32 個像素。
+		g.drawShipOrder(fb)
 	}
 }
 
@@ -2194,7 +2210,10 @@ func (g *Game) drawSpecStaff(fb *gfx.Framebuffer, spec *screen.MainGameSpec) {
 // （`docs/internals/data/delivery-panel.json`）；署名與頭像走規格的
 // `staff`／`staff_post`。
 func (g *Game) drawShipOrder(fb *gfx.Framebuffer) {
-	if g.state != StateShipOrder || g.res.DeliveryPanel == nil {
+	if g.res.DeliveryPanel == nil {
+		return
+	}
+	if g.state != StateShipOrder && g.state != StateVersusShipOrder {
 		return
 	}
 	c, _, ok := g.capitalSummary()

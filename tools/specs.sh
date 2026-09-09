@@ -293,4 +293,16 @@ if want versus-account; then
   py tools/scripts/maingame_computed.py screen-versus-account
 fi
 
+# 對戰月初報告的第二張：船艦訂造報告（收據 `vs7`，`docs/re/260`）。
+# 疊上去那一層與單人那張相同，底板同樣是交棒之後那一張。頭像是第 6 張
+# （`face_find.py vs7 400 100` 回 0 差異）。
+if want versus-ship-order; then
+  py tools/scripts/overlay_spec.py vs7 screen-command-phase screen-versus-ship-order \
+    144 80 495 399 300 200 "430:340:465:359,430:360:465:379" "" "6:400:100"
+  py tools/scripts/box_text.py vs7 screen-versus-ship-order overlay 0
+  py tools/scripts/box_text.py vs7 screen-versus-ship-order overlay 1
+  py tools/scripts/versus_board.py vs7 screen-versus-ship-order
+  py tools/scripts/maingame_computed.py screen-versus-ship-order
+fi
+
 exit 0
