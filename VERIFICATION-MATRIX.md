@@ -231,6 +231,6 @@
 | 行星每月的成長：階梯表查成長率（`ds:4A68`，32 列）| 通過 | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md)；五個實測點逐一相符 |
 | 月底逐行星成長 ＋ 逐行星扣稅（捨去在每顆行星上）| 通過 | [`docs/re/33`](docs/re/33-planet-growth-and-tax.md)；十個帝國星域結算後的經濟力與量到的 796/1 逐一相符 |
 | 進國庫的稅 ＝ (成長後、扣稅前的星域經濟力) × 稅率 / 1000 | 通過 | [`docs/re/35`](docs/re/35-two-taxes.md)；十個帝國星域的增量逐一相符，合計 10741 |
-| 星域易主的戰略報告（畫面）| **未做** | [`docs/spec/034`](docs/spec/034-region-flip-report.md) DRAFT：版面量自收據 `chain3`（文字左上 (336,182)、列距 20、星系名色 5／其餘色 7、頭像框 (544,180)–(620,276)），模態且擋住回合結束處理。**RE 齊了，實作與對拍還沒做** |
+| 星域易主的戰略報告（畫面）| **未做** | [`docs/spec/034`](docs/spec/034-region-flip-report.md) **READY**：版面量自收據 `chain3`（文字左上 (336,182)、列距 20、星系名色 5／其餘色 7、頭像框 (544,180)–(620,276)），模態且擋住回合結束處理，**滑鼠任一鍵可關、鍵盤不行**（`chain4` 右鍵／`chain5` 左鍵都走完鏈，`chain3` 全程送鍵仍卡住）。**RE 齊了，實作與對拍還沒做** |
 | 戰略模式報告的訊息表（`ds:0490`–`ds:09F0`，86 條）| 通過 | [`docs/re/247`](docs/re/247-strategy-report-strings.md)、[`data/strategy-report-strings.json`](docs/internals/data/strategy-report-strings.json)。含易主／侵略／叛亂／提督生死與勝負頁的字串；`+0x13` bit1 因此定性 ＝ 發生叛亂。原版錯字 `脫離成央B確定生還。`（Big5 `0x5C` 被當跳脫字元）照原樣保存。**報告畫面 remake 還沒做** |
 | 未安定度的開局值怎麼算出來 | **通過**（整支算式對上，三個局面 ×32 格全中）| [`docs/re/43`](docs/re/43-unrest-full-disassembly.md)、[`docs/spec/006`](docs/spec/006-unrest-at-load.md) CONFORMED、`rules.UnrestAtLoad`。S3、S2（存檔第 9 格）與新遊戲 796/1 合計 96 個星域逐一相同；骨架階段的讀法與那次對不上的紀錄留在 [`docs/re/34`](docs/re/34-unrest-formula-skeleton.md)。**`LoadRegionRecords` 的 796/1 那條路仍填量到的值**——那是 fixture，不是算不出來 |
