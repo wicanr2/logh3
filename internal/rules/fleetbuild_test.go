@@ -133,3 +133,45 @@ func putStock(rec []byte, faction, kind, n int) {
 	rec[o+2] = byte(n >> 16)
 	rec[o+3] = byte(n >> 24)
 }
+
+// TestBuildCompositionBalancesFiveAndSix 釘替代清單裡的 `0xFE`：
+// 它不是艦種，是「艦種 5 與 6 挑目前組數少的那個」（`docs/re/226`）。
+//
+// 艦種 0 的替代順序是 `2 → 4 → FE → 3 → 1`，所以只給 5 與 6 存量時，
+// 樣板要艦種 0 的那幾組會走到 `0xFE`：第一次兩邊都是 0 組 → 先試 6，
+// 下一次 6 已經有一組 → 換 5。
+func TestBuildCompositionBalancesFiveAndSix(t *testing.T) {
+	kinds, tt := kindTable(t), compTables(t)
+	rec := make([]byte, RegionRecord)
+	putStock(rec, 0, 5, 100000)
+	putStock(rec, 0, 6, 100000)
+	got := BuildComposition(BuildInput{
+		Region: rec, Faction: 0, Kinds: kinds, Tables: tt,
+		AdmiralLevel: 39, AdmiralKind: 0, ClassKey: 4,
+	})
+	if len(got) < 3 {
+		t.Fatalf("只編出 %d 組——`0xFE` 那一格沒有換到艦種？", len(got))
+	}
+	// 第 0 組是旗艦（艦種 0，沒有存量所以 0 艘），後面照樣板順序排過。
+	if got[0].Kind != 0 {
+		t.Errorf("旗艦那一組 ＝ 艦種 %d，預期 0", got[0].Kind)
+	}
+	n5, n6 := 0, 0
+	for _, g := range got[1:] {
+		switch g.Kind {
+		case 5:
+			n5++
+		case 6:
+			n6++
+		default:
+			t.Errorf("編出艦種 %d，這一格只有 5 與 6 有存量", g.Kind)
+		}
+	}
+	// 平衡的效果：兩種的組數最多差一。
+	if d := n5 - n6; d > 1 || d < -1 {
+		t.Errorf("艦種 5 有 %d 組、6 有 %d 組——沒有平衡", n5, n6)
+	}
+	if n5 == 0 || n6 == 0 {
+		t.Errorf("艦種 5 有 %d 組、6 有 %d 組——`0xFE` 只挑了一邊", n5, n6)
+	}
+}

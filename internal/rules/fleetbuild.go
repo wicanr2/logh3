@@ -139,21 +139,46 @@ func (in BuildInput) groups(kind int) int {
 // substitute 回替代艦種 ＝ 原版 `0FF4:1350`：照 `ds:295C` 的順序找第一個
 // 編得出至少一組的；找不到回 -1（原版回 `0xFF`）。
 //
-// 清單裡的 `0xFE` 在原版有一段獨立分支，**還沒讀**（`docs/re/216`）；
-// 這裡直接跳過它。
-func (in BuildInput) substitute(kind int) int {
+// 清單裡的 `0xFE` 是「**艦種 5 與 6 挑目前比較少的那個**」
+// （`0FF4:1404` 數這支艦隊已經有幾組是 5、幾組是 6，`docs/re/226`）。
+// `built` 是已經編好的那幾組（含旗艦）。
+func (in BuildInput) substitute(kind int, built []FleetGroup) int {
 	if in.Tables == nil || kind < 0 || kind >= len(in.Tables.Fallback) {
 		return -1
 	}
 	for _, c := range in.Tables.Fallback[kind] {
-		if c == 0xFE {
-			continue // 未讀的特例
+		if c != 0xFE {
+			if in.groups(c) != 0 {
+				return c
+			}
+			continue
 		}
-		if in.groups(c) != 0 {
-			return c
+		for _, k := range balanceFiveSix(built) {
+			if in.groups(k) != 0 {
+				return k
+			}
 		}
 	}
 	return -1
+}
+
+// balanceFiveSix 回 `0xFE` 那一格要試的順序：艦種 5 與 6 裡**目前組數
+// 少的先試**（原版 `0FF4:1350` 拿 `0FF4:1404` 數出來的兩個數比一次；
+// 一樣多的時候先試 6）。
+func balanceFiveSix(built []FleetGroup) [2]int {
+	n5, n6 := 0, 0
+	for _, g := range built {
+		switch g.Slot2 {
+		case 5:
+			n5++
+		case 6:
+			n6++
+		}
+	}
+	if n5 < n6 {
+		return [2]int{5, 6}
+	}
+	return [2]int{6, 5}
 }
 
 // take 產生一組編制：算滿編、從星域存量搬走艘數（`2AD2:0029` ＋
@@ -200,7 +225,7 @@ func BuildComposition(in BuildInput) []FleetGroup {
 		}
 		v := in.groups(a)
 		if (a == in.AdmiralKind && v < 4) || v == 0 {
-			s := in.substitute(a)
+			s := in.substitute(a, out)
 			if s < 0 {
 				break // 換不到 → 這一支就編到這裡
 			}
