@@ -263,6 +263,15 @@ func (p *Planets) Range(region int) (start, n int) {
 	return start, p.PerRegion[region]
 }
 
+// Record 回第 i 顆行星那 82 位元組的記錄，**可以就地改**——月底交付
+// 就是往它的 `+0x20` 加（`docs/spec/036`）。序號超出範圍回 nil。
+func (p *Planets) Record(i int) []byte {
+	if i < 0 || PlanetHeader+(i+1)*PlanetRecord > len(p.Data) {
+		return nil
+	}
+	return p.rec(i)
+}
+
 func (p *Planets) rec(i int) []byte {
 	o := PlanetHeader + i*PlanetRecord
 	return p.Data[o : o+PlanetRecord]

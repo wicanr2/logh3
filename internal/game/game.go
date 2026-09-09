@@ -499,10 +499,14 @@ type Game struct {
 
 	// building 是**上一次結算撥款出去**的那份計劃：買到的船這個月還在造，
 	// 下個月底交付（`docs/re/21`）。生產計劃畫面的「建造中」就是它。
-	building rules.BuildPlan
+	//
+	// **每個陣營各一份**，索引就是陣營——原版的 `ds:8F9C` 也是
+	// （`docs/internals/27`）。電腦那一方也會交付，少留一份它就永遠
+	// 造不出船（`docs/spec/036`）。
+	building [2]rules.Building
 
 	// delivered 是月底報告上那一份：跨月的當下交付出去的船。
-	delivered               rules.BuildPlan
+	delivered               rules.Building
 	reportYear, reportMonth int
 
 	// 目前選中的星域。左下角那塊寫的就是它。**還沒選過是 −1**，
@@ -673,7 +677,6 @@ type side struct {
 	pct         [rules.BuildPlanRows]int
 	treasury    rules.Treasury
 	monthReport rules.Budget
-	building    rules.BuildPlan
 	fleets      []rules.Fleet
 }
 
@@ -778,7 +781,8 @@ func (g *Game) finishTurn() {
 	// 只結算目前這一方，另一方的錢停在上個月。要往下走得先有收據。
 	month := g.turn%rules.TurnsPerMonth == 0
 	if month {
-		g.delivered = g.building
+		g.deliverShips()
+		g.delivered = g.building[g.faction]
 		g.reportYear, g.reportMonth, _ = g.Date()
 		// 報告掛的是**剛結束的那個月**，日期已經翻到次月 1 日。
 		g.reportMonth--
@@ -990,8 +994,7 @@ func (g *Game) startVersus() {
 // side 把目前這一方的狀態收起來。
 func (g *Game) side() side {
 	return side{pct: g.pct,
-		treasury: g.treasury, monthReport: g.monthReport,
-		building: g.building, fleets: g.fleets}
+		treasury: g.treasury, monthReport: g.monthReport, fleets: g.fleets}
 }
 
 // enterSide 換到某一方：陣營、地圖顏色與那一方的錢一起換過去。
@@ -1002,7 +1005,7 @@ func (g *Game) enterSide(faction int) {
 	s := g.sides[faction]
 	g.pct = s.pct
 	g.treasury, g.monthReport = s.treasury, s.monthReport
-	g.building, g.fleets = s.building, s.fleets
+	g.fleets = s.fleets
 	// 交棒的當下底板是乾淨的：右側面板只剩陣營那一行與按鈕，
 	// 左下角是空的（收據 `vs3`／`vs5`）。
 	g.selectedRegion = -1
@@ -1102,6 +1105,8 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.pct = sl.BuildPct[g.faction]
 	g.foePct = sl.BuildPct[1-g.faction]
 	// 徵稅計劃「已支付」那一欄也在 `WORK.DT?` 裡（`docs/re/258`）。
+	// 建造中的船艦（`ds:8F9C`）：下個月底交付的就是它（`docs/spec/036`）。
+	g.building = sl.Building
 	g.paidUpkeep = sl.PaidUpkeep
 	g.paidMove = sl.PaidMove
 	g.treasury = rules.Treasury{Budget: sl.BudgetStart[g.faction],
@@ -1662,6 +1667,7 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	g.slot.ShipPct = g.shipPct
 	g.slot.BuildPct[g.faction] = g.pct
 	g.slot.BuildPct[1-g.faction] = g.foePct
+	g.slot.Building = g.building
 	g.slot.PaidUpkeep = g.paidUpkeep
 	g.slot.PaidMove = g.paidMove
 	// 原定軍事費與已付建造費目前只留玩家那一方（`monthEnd` 只填那一格）；
@@ -1793,10 +1799,12 @@ func (g *Game) monthEnd() {
 		plan := rules.BuildPlan{Cost: b.ShipCost(), Pct: g.buildPctFor(f), Faction: f}
 		paid := plan.Paid()
 		g.military[f] = budget - paid
+		// **兩個陣營都留一份**：下個月底各自交付到自己首都
+		// （`docs/spec/036`）。
+		g.building[f] = plan.Building()
 		if f != g.faction {
 			continue
 		}
-		g.building = plan
 		g.treasury = rules.Treasury{Budget: budget, ShipPaid: paid}
 		g.monthReport = b
 	}
@@ -2220,7 +2228,8 @@ func (g *Game) drawShipOrder(fb *gfx.Framebuffer) {
 	if !ok {
 		return
 	}
-	g.res.DeliveryPanel.Draw(fb, g.res.Font, c.Year, c.Month, g.thisPlan(), nil, nil)
+	p := g.thisPlan()
+	g.res.DeliveryPanel.Draw(fb, g.res.Font, c.Year, c.Month, p.Building(), nil, nil)
 }
 
 // drawAdmiralDetail 畫提督詳細資料裡跟著提督走的那幾塊（`docs/spec/012`）。
@@ -2367,7 +2376,7 @@ func (g *Game) drawProduction(fb *gfx.Framebuffer) {
 	if g.state != StateProductionPlan || g.res.ProductionPanel == nil {
 		return
 	}
-	g.res.ProductionPanel.Draw(fb, g.res.Font, g.nextPlan(), g.building)
+	g.res.ProductionPanel.Draw(fb, g.res.Font, g.nextPlan(), g.building[g.faction])
 }
 
 // drawPanels 把兩塊「從狀態算出來」的面板畫上去：右側（規格 002）
@@ -2968,4 +2977,48 @@ func (g *Game) EnterBattle(region, col, row int) {
 	g.battleView = screen.BattleView{Col: col, Row: row}
 	g.battleTurn = 1
 	g.state = StateBattle
+}
+
+// capitalPlanet 是某個陣營首都星域裡收船的那一顆：帝國是切片的第 0 顆
+// （奧丁），同盟是第 4 顆（海尼森）。原版 `2B5F:001F` 把這兩組
+// `(星域, 切片內序號)` 寫死成 `(0, 0)` 與 `(31, 4)`（`docs/re/264`）。
+var capitalPlanetSlot = [2]int{0, 4}
+
+// deliverShips 是原版月底本體的第一件事（`2B5F:001F`，`docs/spec/036`）：
+// 把上個月「建造中」的船艦加進自己陣營首都行星的補充存量，同時記進
+// 首都星域記錄的艦艇彙總。
+//
+// 兩邊都寫是照原版做的——星域那一份每回合會被重算（`docs/internals/22`），
+// 但同一個回合內新編艦隊讀的是它。
+func (g *Game) deliverShips() {
+	if g.res.Planets == nil || len(g.res.Stellar) == 0 {
+		return
+	}
+	for f := 0; f < 2; f++ {
+		region := ai.Capitals[f]
+		start, n := g.res.Planets.Range(region)
+		slot := capitalPlanetSlot[f]
+		if slot >= n {
+			continue
+		}
+		rec := g.res.Planets.Record(start + slot)
+		st, ok := rules.ReadPlanetStock(rec)
+		if !ok {
+			continue
+		}
+		o := region * rules.RegionRecord
+		if o+rules.RegionRecord > len(g.res.Stellar) {
+			continue
+		}
+		plan := g.building[f]
+		for row := 0; row < rules.BuildPlanRows; row++ {
+			ships := plan[row]
+			if ships == 0 {
+				continue
+			}
+			st.Ships[row] += ships
+			rules.ReturnRegionShips(g.res.Stellar[o:o+rules.RegionRecord], f, row, ships)
+		}
+		rules.WritePlanetStock(rec, st)
+	}
 }

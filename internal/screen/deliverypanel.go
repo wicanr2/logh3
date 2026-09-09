@@ -52,9 +52,9 @@ func LoadDeliveryPanel(path string) (*DeliveryPanel, error) {
 // Draw 把算出來的部分畫上去。
 //
 // year／month 是報告的年月（＝剛結束的那個月），delivered 是這個月交付的
-// 那一份計劃，name／rank 是簽這份報告的參謀。
+// 七個艦種艘數（原版 `ds:8F9C`），name／rank 是簽這份報告的參謀。
 func (p *DeliveryPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font,
-	year, month int, delivered rules.BuildPlan, name, rank []uint16) {
+	year, month int, delivered rules.Building, name, rank []uint16) {
 	// 標題的年月是**全形數字**（Big5 A2AF 起），不是半形。
 	drawFullDigits(fb, fnt, p.Header.YearX, p.Header.Y, year, p.Ink)
 	m := fullDigits(month)

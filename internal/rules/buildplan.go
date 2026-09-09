@@ -100,6 +100,38 @@ func (b *BuildPlan) Ships(row int) int {
 	return b.Amount(row) / price * 10
 }
 
+// Building 是**建造中的船艦艘數**，七個艦種各一格 ＝ 原版 `ds:8F9C`
+// 那 28 bytes（`docs/internals/27`、`docs/re/264`）。
+//
+// 它與 `BuildPlan` 的差別是「已經買定的艘數」對「還在按百分比切的計劃」：
+// 撥款當下算出艘數之後就不再回頭乘除，存檔存的也是艘數本身。
+type Building [BuildPlanRows]int
+
+// Ships 是某一列建造中的艘數。
+func (b Building) Ships(row int) int {
+	if row < 0 || row >= BuildPlanRows {
+		return 0
+	}
+	return b[row]
+}
+
+// Units 是某一列的「部隊」欄 ＝ 艘數 ÷ 一個部隊的艘數。
+func (b Building) Units(row int) int {
+	if row < 0 || row >= BuildPlanRows || ShipsPerUnit[row] <= 0 {
+		return 0
+	}
+	return b[row] / ShipsPerUnit[row]
+}
+
+// Building 把一份計劃買到的船換算成艘數，撥款的當下做一次。
+func (b *BuildPlan) Building() Building {
+	var out Building
+	for row := range out {
+		out[row] = b.Ships(row)
+	}
+	return out
+}
+
 // Units 是某一列的「部隊」欄 ＝ 船艦數 ÷ 一個部隊的艘數。
 func (b *BuildPlan) Units(row int) int {
 	if row < 0 || row >= BuildPlanRows || ShipsPerUnit[row] <= 0 {

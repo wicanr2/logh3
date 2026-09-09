@@ -477,3 +477,34 @@ func TestWorkShipPctAndBuildPct(t *testing.T) {
 		t.Errorf("總稅收 ＝ %v，收據是 %v", got, want)
 	}
 }
+
+// TestWorkBuilding 釘住 `WORK.DT?` 的 `+0x88`（＝ `ds:8F9C`，建造中的
+// 船艦，`docs/re/264`）。三格存檔各有各的數，`WORK.DTA` 那一格兩邊都是 0。
+func TestWorkBuilding(t *testing.T) {
+	for _, c := range []struct {
+		file string
+		want [2][BuildPlanRows]int
+	}{
+		{"WORK.DT8", [2][BuildPlanRows]int{
+			{2200, 730, 3970, 380, 2650, 2200, 630},
+			{2010, 690, 3260, 390, 3630, 1940, 540}}},
+		{"WORK.DT9", [2][BuildPlanRows]int{
+			{2240, 740, 4040, 390, 2690, 2240, 640},
+			{2010, 690, 3260, 410, 3630, 1940, 540}}},
+		{"WORK.DTA", [2][BuildPlanRows]int{}},
+	} {
+		work := readOrig(t, c.file)
+		if len(work) != WorkRecord {
+			t.Fatalf("%s 有 %d bytes，要 %d", c.file, len(work), WorkRecord)
+		}
+		var got [2][BuildPlanRows]int
+		for f := 0; f < 2; f++ {
+			for row := 0; row < BuildPlanRows; row++ {
+				got[f][row] = u32(work, workBuilding+(f*BuildPlanRows+row)*4)
+			}
+		}
+		if got != c.want {
+			t.Errorf("%s 的建造中 ＝ %v，收據是 %v", c.file, got, c.want)
+		}
+	}
+}

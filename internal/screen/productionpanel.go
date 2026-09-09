@@ -50,9 +50,9 @@ func LoadProductionPanel(path string) (*ProductionPanel, error) {
 	return &p, nil
 }
 
-// Draw 把數字畫上去。plan 是次月份的計劃，building 是上一份計劃
-// （買到的船這個月還在造，月底交付）。
-func (p *ProductionPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, plan, building rules.BuildPlan) {
+// Draw 把數字畫上去。plan 是次月份的計劃，building 是建造中的艘數
+// （上一份計劃買到的船，月底交付；原版 `ds:8F9C`）。
+func (p *ProductionPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, plan rules.BuildPlan, building rules.Building) {
 	c := p.Columns
 	drawRight(fb, fnt, p.Cost.Right, p.Cost.Y, strconv.Itoa(plan.Cost), p.Ink)
 	for i, y := range p.RowsY {

@@ -36,6 +36,9 @@ const (
 	workPaidUpkeep  = 0x66 // 32 位元 × 陣營（＝ ds:8F7A，累計已付維持費）
 	workPaidMove    = 0x76 // 32 位元 × 陣營（＝ ds:8F8A，已付移動經費）
 	workShipPaid    = 0x80 // 32 位元 × 陣營（＝ ds:8F94，已付船艦建造費）
+	// 建造中的船艦（＝ ds:8F9C）：32 位元 × 七個艦種 × 陣營，
+	// 月底 `2B5F:001F` 交付的就是這一組（`docs/re/264`）。
+	workBuilding = 0x88
 
 	// FleetRecord 是艦隊表一筆的長度（`docs/re/40`）。
 	FleetRecord = 122
@@ -192,6 +195,10 @@ type Slot struct {
 	// （`ds:8F72`／`ds:8F82`）。remake 是現算的，這兩格拿來對拍
 	// （`docs/re/263`）。
 	Upkeep, MoveCost [2]int
+
+	// Building 是各陣營建造中的船艦艘數（`ds:8F9C`），七個艦種各一格。
+	// 月底把它整組交進首都行星與首都星域（`docs/spec/036`、`docs/re/264`）。
+	Building [2]Building
 }
 
 // LoadSlot 把一格存檔組成遊戲狀態。
@@ -247,6 +254,7 @@ func LoadSlot(f SlotFiles) (*Slot, error) {
 	for faction := 0; faction < 2; faction++ {
 		for row := 0; row < BuildPlanRows; row++ {
 			s.BuildPct[faction][row] = int(f.Work[workBuildPct+faction*BuildPlanRows+row])
+			s.Building[faction][row] = u32(f.Work, workBuilding+(faction*BuildPlanRows+row)*4)
 		}
 	}
 	return s, nil
@@ -486,6 +494,7 @@ func (s *Slot) Save(dir string, index int) error {
 		put32(work, workPaidMove+4*f, s.PaidMove[f])
 		for row := 0; row < BuildPlanRows; row++ {
 			work[workBuildPct+f*BuildPlanRows+row] = byte(s.BuildPct[f][row])
+			put32(work, workBuilding+(f*BuildPlanRows+row)*4, s.Building[f][row])
 		}
 	}
 	planet := s.Planets.Data
