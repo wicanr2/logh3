@@ -30,9 +30,8 @@ func TestMainMenuMatchesOracle(t *testing.T) {
 		mx, my int
 	}{
 		{"r0", 300, 170}, {"r1", 300, 190}, {"r2", 300, 210}, {"r3", 300, 230},
-		{"cur300", 450, 300}, // 滑鼠在選單外：不反白，只有游標
-		// curfill（游標壓在視窗下緣外框上）暫時不列入：那一帶的 oracle 會被
-		// 「反白從別列還原」的殘留污染，量不乾淨（`docs/internals/07`）。
+		{"cur300", 450, 300},  // 滑鼠在選單外：不反白，只有游標
+		{"curfill", 310, 241}, // 游標壓在視窗下緣的外框上
 	}
 	for _, c := range cases {
 		t.Run(c.batch, func(t *testing.T) { checkOracle(t, c.batch, c.mx, c.my) })
