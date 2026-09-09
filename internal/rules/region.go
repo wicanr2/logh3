@@ -458,3 +458,31 @@ func PlanetSites(cells []uint8, tileW, tileH int) []PlanetSite {
 	}
 	return out
 }
+
+// TakeRegionShips ＝ 原版 `2703:1433(星域, 陣營, 艦種)`：新編一組編制時
+// **從星域的艦艇存量搬走一單位**（`docs/re/215`）。
+//
+//	n = min(存量, full)
+//	存量 -= n
+//	回 n
+//
+// `full` 是艦種表那一列的滿編艘數（`ds:4E3A` 的 word 0，
+// `rules.ShipKind.FullShips`）。存量是 32 位元，就地改寫 `record`。
+//
+// 陣營或艦種超出範圍、或記錄太短時回 0 且不動任何東西。
+func TakeRegionShips(record []byte, faction, kind, full int) int {
+	if faction < 0 || faction > 1 || kind < 0 || kind >= regionShipKinds || full <= 0 {
+		return 0
+	}
+	o := regionShips + faction*regionShipKinds*4 + kind*4
+	if o+4 > len(record) {
+		return 0
+	}
+	have := int(binary.LittleEndian.Uint32(record[o : o+4]))
+	n := full
+	if have < n {
+		n = have
+	}
+	binary.LittleEndian.PutUint32(record[o:o+4], uint32(have-n))
+	return n
+}
