@@ -254,6 +254,11 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	adjutants, err := rules.LoadDefaultAdjutants(
+		filepath.Join(data, "default-adjutants.json"))
+	if err != nil {
+		return nil, err
+	}
 	compTables, err := rules.LoadCompositionTables(
 		filepath.Join(data, "fleet-composition-templates.json"),
 		filepath.Join(data, "ship-kind-fallback.json"))
@@ -306,7 +311,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
 		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds, AdvanceRoutes: routes,
-		Composition: compTables,
+		Composition: compTables, DefaultAdjutants: adjutants,
 		MessageBox: msgBox, FrameTiles: frameTiles,
 		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,
 		PlanetInfo: planetInfo,

@@ -28,6 +28,10 @@ func reachBrainPhase(t *testing.T) *Game {
 		filepath.Join(data, "ship-kind-table.json")); err != nil {
 		t.Fatal(err)
 	}
+	if res.DefaultAdjutants, err = rules.LoadDefaultAdjutants(
+		filepath.Join(data, "default-adjutants.json")); err != nil {
+		t.Fatal(err)
+	}
 	if res.Composition, err = rules.LoadCompositionTables(
 		filepath.Join(data, "fleet-composition-templates.json"),
 		filepath.Join(data, "ship-kind-fallback.json")); err != nil {

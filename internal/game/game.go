@@ -346,6 +346,10 @@ type Resources struct {
 	// ai-advance-routes.json`，`docs/re/178`）。戰略 AI 的階段四、五要用。
 	AdvanceRoutes *ai.AdvanceRoutes
 
+	// DefaultAdjutants 是 `ds:5F78`：新編艦隊時提督沒有副官就從這裡填
+	// （`docs/re/219`）。
+	DefaultAdjutants rules.DefaultAdjutants
+
 	// Composition 是新編艦隊要用的兩張表（`ds:2BC6` 樣板與 `ds:295C`
 	// 艦種替代表，`docs/re/212`／`docs/re/216`）。nil ＝ 建出來的艦隊
 	// 只有旗艦那一組。
@@ -1555,10 +1559,18 @@ func (g *Game) monthEnd() {
 //
 // 擁有者要**照行星現算**（`docs/re/17`）——星域記錄裡那一格是檔案裡的
 // 原值，載入時會被重算，直接拿來用會多算十個星域。
-func (g *Game) estimateTax() int {
+func (g *Game) estimateTax() int { return g.estimateTaxFor(g.faction) }
+
+// estimateTaxFor 是同一件事，但算指定陣營的——原版的 `ds:8F6A` 是
+// **每個陣營一格**（`docs/internals/27`），戰略 AI 的建艦隊閘門看的是
+// 電腦那一方的（`docs/re/202`）。
+func (g *Game) estimateTaxFor(faction int) int {
+	if g.res.Planets == nil {
+		return 0
+	}
 	sum := 0
 	for i := 0; (i+1)*rules.RegionRecord <= len(g.res.Stellar); i++ {
-		if g.res.Planets.RegionOwner(i) != g.faction {
+		if g.res.Planets.RegionOwner(i) != faction {
 			continue
 		}
 		sum += rules.RegionTax(g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord])

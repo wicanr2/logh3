@@ -1,0 +1,12 @@
+{
+ "source": "ds:5F78（執行期資料段），82 bytes，一個提督一格；0xFF ＝ 沒有預設副官",
+ "reader": "2D76:0611：新編艦隊時提督的 +0x07 是 0xFF 就從這裡填（docs/re/214、docs/re/219）",
+ "pairs": [
+  {"admiral": 41, "adjutant": 75},
+  {"admiral": 42, "adjutant": 63},
+  {"admiral": 43, "adjutant": 73},
+  {"admiral": 46, "adjutant": 69},
+  {"admiral": 47, "adjutant": 64},
+  {"admiral": 53, "adjutant": 56}
+ ]
+}

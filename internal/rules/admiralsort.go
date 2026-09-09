@@ -46,3 +46,34 @@ func SortAdmiralsForFleet(indices []int, record func(i int) []byte) {
 		return CompareAdmiralsForFleet(record(indices[x]), record(indices[y])) < 0
 	})
 }
+
+// DefaultAdjutants 是原版 `ds:5F78` 的預設副官表：新編艦隊時提督的
+// `+0x07` 是 `0xFF` 就從這裡填（`2D76:0611`，`docs/re/219`）。
+// 82 格裡只有六格不是 `0xFF`。
+type DefaultAdjutants map[int]int
+
+// LoadDefaultAdjutants 讀 `docs/internals/data/default-adjutants.json`。
+func LoadDefaultAdjutants(path string) (DefaultAdjutants, error) {
+	var raw struct {
+		Pairs []struct {
+			Admiral  int `json:"admiral"`
+			Adjutant int `json:"adjutant"`
+		} `json:"pairs"`
+	}
+	if err := readJSON(path, &raw); err != nil {
+		return nil, err
+	}
+	out := make(DefaultAdjutants, len(raw.Pairs))
+	for _, p := range raw.Pairs {
+		out[p.Admiral] = p.Adjutant
+	}
+	return out, nil
+}
+
+// For 回某位提督的預設副官；沒有回 -1。
+func (d DefaultAdjutants) For(admiral int) int {
+	if v, ok := d[admiral]; ok {
+		return v
+	}
+	return -1
+}

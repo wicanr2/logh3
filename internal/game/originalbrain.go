@@ -97,22 +97,27 @@ func (g *Game) buildSupport() *ai.BuildSupport {
 		// 軍事費與稅收（`g.taxTotal`），電腦那一方的財政沒有模型。
 		// 單人模式下這是把玩家的稅收拿去當電腦的預算——**已知不忠實**，
 		// 而且因為維持費也是 0，那道閘門實際上永遠通過。
-		// ⚠ **稅收回的是玩家那一方的數字**：remake 只追一方的軍事費與
-		// 稅收（`g.taxTotal`），電腦那一方的財政沒有模型。單人模式下
-		// 這是把玩家的稅收拿去當電腦的預算——**已知不忠實**。
+		// 稅收算**那個陣營自己的**（原版 `ds:8F6A` 是每陣營一格），
+		// 維持費 ＝ Σ 各艦隊的 `+0x0A`（`docs/re/218`）。
 		//
-		// 維持費算得出來（`ds:8F72` ＝ Σ 各艦隊的 `+0x0A`，`docs/re/218`）。
-		// `ds:8FD4[陣營]` ＝ 未安定度公式的 `Blend`（0–4，`docs/re/207`），
+		// ⚠ `ds:8FD4[陣營]` ＝ 未安定度公式的 `Blend`（0–4，`docs/re/207`），
 		// remake 還沒有跨回合維護，一律 false ＝ 當成 0。
 		Money: func(faction int) (tax, upkeep int, tight bool) {
-			return g.taxTotal, g.fleetUpkeep(faction), false
+			return g.estimateTaxFor(faction), g.fleetUpkeep(faction), false
 		},
 		Admirals: func(faction int) []ai.AdmiralView {
 			return admiralCandidates(all, g.fleets, faction)
 		},
 		CanForm:  g.canFormFleet,
 		Form:     g.formFleet,
-		Adjutant: func(i int) int { return rules.Adjutant(g.admiralRecord(i)) },
+		// 提督沒有副官時從 `ds:5F78` 填（原版 `2D76:0611`，`docs/re/219`）
+		// ——副官會把艦隊能力的 `max` 拉高，維持費跟著變。
+		Adjutant: func(i int) int {
+			if a := rules.Adjutant(g.admiralRecord(i)); a >= 0 {
+				return a
+			}
+			return g.res.DefaultAdjutants.For(i)
+		},
 	}
 }
 
