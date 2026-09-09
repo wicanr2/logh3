@@ -770,8 +770,8 @@ func TestRegionPanelOnPlayerPath(t *testing.T) {
 //	原定軍事費 ＝ 上個月的軍事費 ＋ 這次收到的稅
 //	軍事費     ＝ 原定軍事費 − 實際花掉的造船費
 //
-// 796/2 的經濟力目前算出來是 83305、原版是 83304，**差 1 還沒解**
-// （`docs/re/33`），所以這裡驗關係，不驗絕對值。
+// 這裡驗的是錢的**關係**；796/2 的經濟力絕對值由
+// `TestMonthEndSecondMonthEconomy` 釘住。
 func TestMonthEndAdvancesMoneyAndDate(t *testing.T) {
 	g := reachCommandPhase(t)
 	before := g.Military()
