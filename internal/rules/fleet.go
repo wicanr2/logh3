@@ -40,11 +40,18 @@ type Fleet struct {
 	// （`1CC5:0966`，`docs/re/132`）。0xFFFF ＝ 沒有。
 	Scout int `json:"scout"`
 
-	// Groups ＝ 這一支有幾組編制，對應執行期艦隊記錄的 `+0x0F`
-	// （`docs/internals/33`）。戰略 AI 的敵方兵力圖就是把它加總
-	// （`docs/re/173`）。存檔這邊沒有獨立欄位，用編制槽掃到 `0xFF`
-	// 為止的筆數（`FleetShips`）。
+	// Groups ＝ 這一支**現有**幾組編制（`+0x0F`）。戰略 AI 的敵方兵力圖
+	// 就是把它加總（`docs/re/173`）。
 	Groups int `json:"groups"`
+
+	// Expected ＝ 編制槽的**應有**數（`+0x0E`）。`Groups == Expected`
+	// 就是原版說的「編制不缺」，`2E54:143F` 的模式 1／2 拿它當候選門檻、
+	// `2E54:1574` 的分數乘上 `Groups ÷ Expected`（`docs/re/168`、`194`）。
+	Expected int `json:"expected"`
+
+	// ClassKey ＝ 艦隊類別鍵（`+0x09`，0–15）。經 `FleetClass` 換成 0–3
+	// 的類別，各對應提督的一項能力（`docs/re/190`）。
+	ClassKey int `json:"class_key"`
 
 	// Parked ＝ 原版 `+0x08` 是 5：**這一支不會動**，就算有目的地也一樣
 	// （`113A:0350` 讀的就是它，`docs/re/77`）。劇本可以把艦隊設成這樣
@@ -118,4 +125,19 @@ func CountFleets(fleets []Fleet, region, faction int) int {
 		}
 	}
 	return n
+}
+
+// fleetClassTable 是原版 `ds:5F52` 那張 16 格的表（`docs/re/169`）。
+var fleetClassTable = [16]int{0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3}
+
+// FleetClass 把艦隊的類別鍵（`+0x09`）換成 0–3 的類別。
+//
+// 四個類別各對應提督的一項能力（`docs/re/190`）：
+// 0 → `+20`（名字未知）、1 → 占領、2 → 防禦、3 → 運用。
+// 超出 0–15 回 0。
+func FleetClass(key int) int {
+	if key < 0 || key >= len(fleetClassTable) {
+		return 0
+	}
+	return fleetClassTable[key]
 }

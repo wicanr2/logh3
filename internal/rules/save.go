@@ -42,6 +42,9 @@ const (
 	fleetState    = 0x08 // 移動狀態；5 ＝ 不動（`docs/re/77`）
 	fleetMorale   = 0x3C // 艦隊士氣值（建立艦隊時寫 100，戰鬥中會變）
 	fleetAction   = 0x48 // 低四位 ＝ 艦隊行動（0 移動／1 戰鬥／2 防禦／3 占領／4 待命）
+	fleetClassKey = 0x09 // 艦隊類別鍵 0–15，經 ds:5F52 換成 0–3（docs/re/190）
+	fleetExpected = 0x0E // 編制槽的**應有**數；+0x0F 是現有數（docs/re/194）
+	fleetGroups   = 0x0F // 這一支有幾組編制
 	fleetSlots    = 0x10 // 十個 4-byte 的槽，前兩 byte 是艦艇索引
 	fleetScout    = 0x38 // 索敵分遣隊的艦艇池索引（不在編制表裡）
 	fleetSlotN    = 10
@@ -273,7 +276,9 @@ func (s *Slot) Fleets(w StrengthWeights) []Fleet {
 			Action:   int(r[fleetAction] & 0x0F),
 			Scout:    int(r[fleetScout]) | int(r[fleetScout+1])<<8,
 			Morale:   int(r[fleetMorale]),
-			Groups:   len(s.FleetShips(i)),
+			Groups:   int(r[fleetGroups]),
+			Expected: int(r[fleetExpected]),
+			ClassKey: int(r[fleetClassKey]),
 		}
 		if r[fleetAdjutant] == 0xFF {
 			f.Adjutant = -1
@@ -297,6 +302,35 @@ func (s *Slot) FleetShips(i int) []int {
 	}
 	var out []int
 	for k := 0; k < fleetSlotN; k++ {
+		o := fleetSlots + k*4
+		if r[o] == 0xFF {
+			continue
+		}
+		out = append(out, int(r[o])|int(r[o+1])<<8)
+	}
+	return out
+}
+
+// FleetGroupShips 回這支艦隊**現在編制裡**那幾組指到的艦艇索引。
+//
+// 與 `FleetShips` 的差別是**上界**：這一支只走前 `+0x0F` 組，
+// `FleetShips` 走完十個槽、只跳過 `0xFF`。編制縮編過的艦隊，後面幾個槽
+// 還留著舊的艦艇索引（`FLEET.DT8` 的第 26 支：`+0x0F` ＝ 1，
+// 卻有 7 個槽不是 `0xFF`）。
+//
+// **原版的戰力與候選評分都以 `+0x0F` 為界**（`2E54:1876`、`2E54:1574`，
+// `docs/internals/54`、`docs/re/168`），所以那兩條算式要用這一支。
+func (s *Slot) FleetGroupShips(i int) []int {
+	r := s.fleet(i)
+	if r == nil {
+		return nil
+	}
+	n := int(r[fleetGroups])
+	if n > fleetSlotN {
+		n = fleetSlotN
+	}
+	var out []int
+	for k := 0; k < n; k++ {
 		o := fleetSlots + k*4
 		if r[o] == 0xFF {
 			continue

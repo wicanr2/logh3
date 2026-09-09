@@ -417,12 +417,19 @@ func TestFleetGroupsMatchesSlots(t *testing.T) {
 		t.Fatal("這一格沒有在用的艦隊")
 	}
 	for _, f := range fleets {
-		want := len(s.FleetShips(f.Index))
-		if f.Groups != want {
-			t.Errorf("艦隊 %d 的 Groups ＝ %d，編制槽有 %d 組", f.Index, f.Groups, want)
+		// 現在編制裡的那幾組不會多於 `+0x0F`。
+		if got := len(s.FleetGroupShips(f.Index)); got > f.Groups {
+			t.Errorf("艦隊 %d 的編制取出 %d 組，超過 +0x0F ＝ %d", f.Index, got, f.Groups)
 		}
 		if f.Groups == 0 {
 			t.Errorf("艦隊 %d 一組編制都沒有", f.Index)
+		}
+		// `+0x0E` 是應有數，不會小於現有數（`docs/re/194`）。
+		if f.Expected < f.Groups {
+			t.Errorf("艦隊 %d 的 +0x0E ＝ %d 小於 +0x0F ＝ %d", f.Index, f.Expected, f.Groups)
+		}
+		if f.ClassKey < 0 || f.ClassKey > 15 {
+			t.Errorf("艦隊 %d 的類別鍵 ＝ %d，超出 0–15", f.Index, f.ClassKey)
 		}
 	}
 }

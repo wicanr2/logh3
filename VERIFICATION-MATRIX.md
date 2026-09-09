@@ -139,6 +139,7 @@
 | 預估軍事費 ＝ 國庫 ＋ 預估徵稅額 | **已實作**（`internal/rules/budget.go`），三組獨立資料 | [`docs/re/12`](docs/re/12-budget-plan-and-buttons.md)、[`13`](docs/re/13-account-report.md)、[`15`](docs/re/15-alliance-start.md) |
 | 船艦建造費 ＝ 預估軍事費 × 百分比（捨去）| **已實作** | 同上 |
 | 剩餘軍事費 ＝ 預估軍事費 − 船艦建造費 | **已實作** | 同上 |
+| 艦隊戰力 ＝ Σ 前 `+0x0F` 組的 `權重[艦種] × 現有 × 1000 ÷ 滿編` | **已實作**（`rules.FleetStrength`）| [`docs/re/79`](docs/re/79-per-fleet-decision-pass.md)；上界修正見 [`docs/re/194`](docs/re/194-fleet-record-in-save.md) |
 | 其他 | 未開始 | — |
 
 ## 戰略 AI

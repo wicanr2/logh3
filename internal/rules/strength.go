@@ -59,10 +59,12 @@ func (w StrengthWeights) ShipStrength(record []byte) int {
 
 // FleetStrength 回存檔裡第 i 支艦隊的戰力總和。
 //
-// 十個槽指到的艦艇各算一次（`docs/re/42`）。
+// **只算現在編制裡的那幾組**（`+0x0F`）——原版 `2E54:1876` 的迴圈上界
+// 就是它（`docs/internals/54`）。縮編過的艦隊後面幾個槽還留著舊索引，
+// 用 `FleetShips` 會多算（`docs/re/194`）。
 func (s *Slot) FleetStrength(w StrengthWeights, i int) int {
 	total := 0
-	for _, n := range s.FleetShips(i) {
+	for _, n := range s.FleetGroupShips(i) {
 		if n < 0 || (n+1)*ShipRecord > len(s.Ship) {
 			continue
 		}
@@ -77,7 +79,7 @@ func (s *Slot) FleetStrength(w StrengthWeights, i int) int {
 // 艘數是各編制槽艦艇 `+0x08` 的和，主力槽是艦種（`+0x04`）為 0 或 1 的
 // 那幾槽。
 func (s *Slot) FleetShipTotals(i int) (ships, mainSlots int) {
-	for _, n := range s.FleetShips(i) {
+	for _, n := range s.FleetGroupShips(i) {
 		if n < 0 || (n+1)*ShipRecord > len(s.Ship) {
 			continue
 		}
