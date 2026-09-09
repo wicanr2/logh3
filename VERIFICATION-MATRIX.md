@@ -159,6 +159,7 @@
 | 進軍路線表（12 種戰略態勢）| **已實作**（`ai.AdvanceRoutes`、`data/ai-advance-routes.json`）| [`docs/re/178`](docs/re/178-ai-advance-routes.md)、[`179`](docs/re/179-ai-strategic-state-code.md) |
 | 「下一步走哪一格」`2B99:0302` | **已實作並證明等價**（`rules.StarGraph.NextStep`）| [`docs/re/183`](docs/re/183-next-step-equivalence.md)；兩張矩陣所有走得通的星域對與 `Route[1]` 逐一相同 |
 | 候選挑選與評分（`2E54:143F`／`2E54:1574`）| **已實作，未對拍**（`ai.PickerModes`／`Score`／`Pick`；艘數與主力槽數由 `rules.Slot.FleetShipTotals` 供）| 算式來自反組譯；`s3aicomp` 那一趟走到的是階段四，沒經過候選評分，所以**沒有收據** |
+| 提督排序（`2E54:063C`）| **已實作**（`rules.CompareAdmiralsForFleet`／`SortAdmiralsForFleet`）| 等級 → 統率力 → 運用，三段降冪（[`docs/re/201`](docs/re/201-admiral-sort-key.md)）；原版提督表排完的單調性有測試 |
 | 指派、建艦隊、費沙事件 | **已逆向，未實作** | [`docs/re/180`](docs/re/180-admiral-fleet-slot.md)–[`182`](docs/re/182-admiral-flags-and-fleet-cost.md)、[`190`](docs/re/190-fleet-class-meaning.md)–[`192`](docs/re/192-phezzan-event.md) |
 | 一個回合串起來（`ai.Turn`，階段二／三／五）| **已實作，未對拍** | 逐艦隊決定的過濾已解（[`docs/re/196`](docs/re/196-decision-pass-filter.md)）：`+0x00` bit0 沒設又不在交戰格的留給後面的階段挑。`ds:D60E` 那一格的殘留也解了（[`docs/re/197`](docs/re/197-d60e-counts-the-whole-turn.md)：它數的是整個回合，十一處遞增點見 [`198`](docs/re/198-ai-runs-in-turn260.md)）|
 | `Brain` 包裝（`ai.OriginalStrategy`）| **已實作，未啟用** | 接得上 `Brain`；`Original` 仍回 `nil`，換掉只要改建構的那一行 |
