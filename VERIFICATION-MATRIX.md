@@ -160,7 +160,7 @@
 | 「下一步走哪一格」`2B99:0302` | **已實作並證明等價**（`rules.StarGraph.NextStep`）| [`docs/re/183`](docs/re/183-next-step-equivalence.md)；兩張矩陣所有走得通的星域對與 `Route[1]` 逐一相同 |
 | 候選挑選與評分（`2E54:143F`／`2E54:1574`）| **已實作，未對拍**（`ai.PickerModes`／`Score`／`Pick`；艘數與主力槽數由 `rules.Slot.FleetShipTotals` 供）| 算式來自反組譯；`s3aicomp` 那一趟走到的是階段四，沒經過候選評分，所以**沒有收據** |
 | 指派、建艦隊、費沙事件 | **已逆向，未實作** | [`docs/re/180`](docs/re/180-admiral-fleet-slot.md)–[`182`](docs/re/182-admiral-flags-and-fleet-cost.md)、[`190`](docs/re/190-fleet-class-meaning.md)–[`192`](docs/re/192-phezzan-event.md) |
-| 一個回合串起來（`ai.Turn`，階段二／三／五）| **已實作，未對拍** | 逐艦隊決定的過濾已解（[`docs/re/196`](docs/re/196-decision-pass-filter.md)）：`+0x00` bit0 沒設又不在交戰格的留給後面的階段挑。殘留 `ds:D60E` 差一格，待動態量|
+| 一個回合串起來（`ai.Turn`，階段二／三／五）| **已實作，未對拍** | 逐艦隊決定的過濾已解（[`docs/re/196`](docs/re/196-decision-pass-filter.md)）：`+0x00` bit0 沒設又不在交戰格的留給後面的階段挑。`ds:D60E` 那一格的殘留也解了（[`docs/re/197`](docs/re/197-d60e-counts-the-whole-turn.md)：它數的是整個回合）|
 | **接到 `advanceTurn`** | **未做** | 規格仍 DRAFT；`internal/ai` 的 `Original` 仍回 `nil`。要換掉之前需要使用者裁決（理由與影響寫在 `docs/spec/029` 末尾）|
 
 > 既有的 25 份記憶體傾印裡，**只有被 `-poke` 過座位表的 `s3aicomp` 跑過 AI**

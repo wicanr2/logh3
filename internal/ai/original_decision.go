@@ -4,7 +4,11 @@ import "github.com/wicanr2/logh3/internal/rules"
 
 // 逐艦隊決定那一趟（原版 `2E54:005D` → `2E54:16F5`／`2E54:1955`，
 // `docs/re/79`、`docs/internals/54`）。它是每個 AI 回合的第一件事，
-// 產出 `ds:D5CE`（這一格有幾支決定留守）與 `ds:D60E`（決定了幾支）。
+// 產出 `ds:D5CE`（這一格有幾支決定留守）。
+//
+// **回傳的 `decided` 不是原版的 `ds:D60E`。** 那個計數器數的是整個回合
+// ——逐艦隊決定、守首都湊人、新編艦隊、階段三的指派都會加它
+// （十處遞增點，`docs/re/197`）。
 
 // Decision 是一支艦隊這回合的決定，對應原版艦隊記錄的 `+0x79`。
 type Decision int
@@ -98,6 +102,7 @@ type DecisionInput struct {
 // 只處理 `Faction` 那個陣營的艦隊。**回傳的清單只含這一趟真的決定了的
 // 那幾支**；`+0x00` bit0 沒設又不在交戰格的不在裡面，因為原版把它們的
 // `+0x79` 留在 `0xFF`，交給後面五個階段（`docs/re/196`）。
+// `decided` 只是**這一趟**處理了幾支，不等於 `ds:D60E`（見上）。
 func DecisionPass(in DecisionInput) (out []FleetDecision, held [RegionCount]int, decided int) {
 	strength := func(f rules.Fleet) int {
 		if in.Strength == nil {
