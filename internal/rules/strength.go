@@ -70,3 +70,25 @@ func (s *Slot) FleetStrength(w StrengthWeights, i int) int {
 	}
 	return total
 }
+
+// FleetShipTotals 回第 i 支艦隊的「現有艘數總和」與「主力槽數」。
+//
+// 戰略 AI 的候選評分要這兩個數（`2E54:1574`，`docs/re/168`）：
+// 艘數是各編制槽艦艇 `+0x08` 的和，主力槽是艦種（`+0x04`）為 0 或 1 的
+// 那幾槽。
+func (s *Slot) FleetShipTotals(i int) (ships, mainSlots int) {
+	for _, n := range s.FleetShips(i) {
+		if n < 0 || (n+1)*ShipRecord > len(s.Ship) {
+			continue
+		}
+		r := s.Ship[n*ShipRecord : (n+1)*ShipRecord]
+		if r[shipKind] == shipKindEmpty {
+			continue
+		}
+		ships += int(r[shipAlive]) | int(r[shipAlive+1])<<8
+		if r[shipKind] == 0 || r[shipKind] == 1 {
+			mainSlots++
+		}
+	}
+	return ships, mainSlots
+}
