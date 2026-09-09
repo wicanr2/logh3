@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"sort"
 )
 
 // 新編一支艦隊的編制（原版 `297B:0066` 的旗艦那一組 ＋ `0FF4:11F4` 的
@@ -180,8 +181,8 @@ func (in BuildInput) take(kind, slot2, slot3 int) FleetGroup {
 //
 // **會就地扣掉 `Region` 的艦艇存量。**
 //
-// **沒有做排序**：原版填完會用 `0FF4:0FF2` 對第 1 組起排一次，
-// 那個比較器還沒讀（`docs/re/213`）。組數與艘數不受影響。
+// 填完之後第 1 組起會排序（原版 `3C6A:000D` 的 qsort 配比較器
+// `0FF4:0FF2`：`[2]` 升冪、相同再比 `[3]` 升冪，`docs/re/225`）。
 func BuildComposition(in BuildInput) []FleetGroup {
 	n := FleetSlots(in.AdmiralLevel)
 	out := make([]FleetGroup, 0, n)
@@ -207,7 +208,27 @@ func BuildComposition(in BuildInput) []FleetGroup {
 		}
 		out = append(out, in.take(a, a, tpl[i][1]))
 	}
+	sortGroups(out)
 	return out
+}
+
+// sortGroups 排第 1 組起（旗艦不參與）＝ 原版 `0FF4:0FF2` 那個比較器：
+// 先比 `[2]`（艦種）升冪，相同再比 `[3]`（隊形槽）升冪。
+//
+// **remake-owned**：原版走 `qsort`，兩組的 `[2]`／`[3]` 都相同時它不保證
+// 誰在前面。樣板裡沒有重複的 `(slot2, slot3)`，但換過艦種之後可能撞上，
+// 所以這裡用穩定排序把次序定下來。
+func sortGroups(g []FleetGroup) {
+	if len(g) < 3 {
+		return
+	}
+	sort.SliceStable(g[1:], func(i, j int) bool {
+		a, b := g[1+i], g[1+j]
+		if a.Slot2 != b.Slot2 {
+			return a.Slot2 < b.Slot2
+		}
+		return a.Slot3 < b.Slot3
+	})
 }
 
 // 艦種列裡的兩個每艘費用（`ds:4E3A` 那一列，`docs/re/218`）。

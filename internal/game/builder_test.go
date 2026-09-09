@@ -290,14 +290,23 @@ func TestFirstAITurnMatchesReceipt(t *testing.T) {
 	// 收據上三支：提督 47／52／55，類別鍵 0C／04／0B。
 	// 建出來的順序是類別 0 → 1 → 2（開局四類平手照 0 1 2 3），
 	// 亂數從 D3DC167E 起算得到鍵 04／0B／0C。
-	// 運用（`+0x47`）與維持費（`+0x0A`）也是收據上的
-	// （`docs/re/218`、`docs/re/224`）。
+	// 運用（`+0x47`）、維持費（`+0x0A`）與編制都是收據上的
+	// （`docs/re/218`、`docs/re/224`、`docs/re/225`）。編制逐組寫成
+	// `{艦種, 艘數, 隊形槽}`，順序就是原版排序之後的。
 	want := []struct {
 		admiral, key, target, ops, upkeep int
+		comp                              [][3]int
 	}{
-		{52, 0x04, 24, 128, 85},  // 階段二打無主
-		{55, 0x0B, 24, 120, 124}, // 同上，湊滿兩支
-		{47, 0x0C, 15, 102, 217}, // 階段三的指派
+		// 階段二打無主
+		{52, 0x04, 24, 128, 85, [][3]int{
+			{0, 3000, 20}, {0, 3000, 10}, {0, 3000, 12}, {6, 1000, 29}}},
+		// 同上，湊滿兩支
+		{55, 0x0B, 24, 120, 124, [][3]int{
+			{1, 3000, 20}, {1, 3000, 10}, {1, 3000, 11}, {1, 3000, 12}}},
+		// 階段三的指派
+		{47, 0x0C, 15, 102, 217, [][3]int{
+			{0, 3000, 20}, {0, 3000, 10}, {3, 2000, 5}, {3, 2000, 8},
+			{5, 3000, 29}, {6, 1000, 34}}},
 	}
 	for i, w := range want {
 		f := g.fleets[i]
@@ -313,6 +322,17 @@ func TestFirstAITurnMatchesReceipt(t *testing.T) {
 		}
 		if u := rules.FleetUpkeep(g.res.ShipKinds, 1, f.Composition, f.Operations); u != w.upkeep {
 			t.Errorf("第 %d 支的維持費 ＝ %d，收據是 %d", i, u, w.upkeep)
+		}
+		if len(f.Composition) != len(w.comp) {
+			t.Errorf("第 %d 支有 %d 組編制，收據是 %d", i, len(f.Composition), len(w.comp))
+			continue
+		}
+		for j, c := range w.comp {
+			got := f.Composition[j]
+			if got.Kind != c[0] || got.Ships != c[1] || got.Slot3 != c[2] {
+				t.Errorf("第 %d 支第 %d 組 ＝ 艦種 %d／%d 艘／槽 %d，收據是 %d／%d／%d",
+					i, j, got.Kind, got.Ships, got.Slot3, c[0], c[1], c[2])
+			}
 		}
 	}
 	// 合計就是收據的 `ds:8F72[同盟]`。
