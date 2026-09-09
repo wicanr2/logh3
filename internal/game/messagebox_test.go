@@ -83,8 +83,8 @@ func TestSupplyWithNoCandidateShowsMessage(t *testing.T) {
 			continue
 		}
 		_, want, _ := g.res.MessageBox.Message(c.name)
-		if len(g.msgCodes) != len(want) {
-			t.Errorf("%s：跳的字數是 %d，該是 %d", c.name, len(g.msgCodes), len(want))
+		if string(g.msgRaw) != string(want) {
+			t.Errorf("%s：跳的不是那一句", c.name)
 		}
 	}
 }

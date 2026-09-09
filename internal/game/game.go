@@ -543,11 +543,11 @@ type Game struct {
 	fleetOrderY      int
 	fleetOrderFacing int
 
-	// msgOn ＝ 訊息框開著（模態）。msgKind 是樣板種類，msgCodes 是那一行
-	// 字的字碼（`docs/re/138`）。
-	msgOn    bool
-	msgKind  int
-	msgCodes []uint16
+	// msgOn ＝ 訊息框開著（模態）。msgKind 是樣板種類，msgRaw 是原版資料段
+	// 那一串 Big5（控制碼夾在裡面，交給 `ui.TextBuffer` 解；`docs/re/141`）。
+	msgOn   bool
+	msgKind int
+	msgRaw  []byte
 
 	// battleGunOn ＝ 正在替要塞砲指定目標，battleGun 是哪一座
 	// （`docs/re/134`）。**用旗標而不是 -1**：`Game` 的零值要是

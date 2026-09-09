@@ -17,11 +17,11 @@ func (g *Game) showMessage(name string) bool {
 	if g.res.MessageBox == nil {
 		return false
 	}
-	kind, codes, ok := g.res.MessageBox.Message(name)
+	kind, raw, ok := g.res.MessageBox.Message(name)
 	if !ok {
 		return false
 	}
-	g.msgOn, g.msgKind, g.msgCodes = true, kind, codes
+	g.msgOn, g.msgKind, g.msgRaw = true, kind, raw
 	return true
 }
 
@@ -32,7 +32,7 @@ func (g *Game) messageClick(x, y int) bool {
 		return false
 	}
 	if _, hit := g.res.MessageBox.MessageBoxButtonAt(g.msgKind, x, y); hit {
-		g.msgOn, g.msgCodes = false, nil
+		g.msgOn, g.msgRaw = false, nil
 	}
 	return true
 }
@@ -42,8 +42,6 @@ func (g *Game) drawMessage(fb *gfx.Framebuffer) {
 	if !g.msgOn || g.res.MessageBox == nil || g.res.FrameTiles == nil || g.res.Font == nil {
 		return
 	}
-	s := g.res.MessageBox
-	screen.DrawMessageBox(fb, s, g.msgKind, g.res.FrameTiles)
-	screen.DrawMessageBoxText(fb, s, g.msgKind, g.res.Font, 0, g.msgCodes)
-	screen.DrawMessageBoxButtons(fb, s, g.msgKind, g.res.Font)
+	screen.DrawMessageBox(fb, g.res.MessageBox, g.msgKind,
+		g.res.FrameTiles, g.res.Font, g.msgRaw)
 }
