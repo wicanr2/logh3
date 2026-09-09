@@ -287,3 +287,30 @@ func TestTreasuryPaidMatchesReceipt(t *testing.T) {
 		t.Errorf("只扣移動經費的剩餘軍事費 ＝ %d，收據是 %d", got, want)
 	}
 }
+
+// TestTreasuryRemainingMatchesSaves 用**三格存檔**釘住那條減法
+// （`docs/re/258`）。開局那兩個月另外兩項都是 0，分不開「本次預定」與
+// 「累計已付」；存檔裡六組都是非零的。
+func TestTreasuryRemainingMatchesSaves(t *testing.T) {
+	for _, c := range []struct {
+		slot    string
+		faction int
+		tr      Treasury
+		want    int
+	}{
+		{"DT8", 0, Treasury{Budget: 120533, ShipPaid: 8801, FleetUpkeep: 15155, Movement: 6577,
+			NextUpkeep: 2165, NextMovement: 2238}, 90000},
+		{"DT8", 1, Treasury{Budget: 47942, ShipPaid: 9030, FleetUpkeep: 12412, Movement: 11500,
+			NextUpkeep: 1816}, 15000},
+		{"DT9", 0, Treasury{Budget: 178563, ShipPaid: 8957, FleetUpkeep: 14238, Movement: 5368,
+			NextUpkeep: 2373, NextMovement: 1975}, 150000},
+		{"DT9", 1, Treasury{Budget: 49957, ShipPaid: 9035, FleetUpkeep: 7992, Movement: 2930,
+			NextUpkeep: 1303}, 30000},
+		{"DTA", 0, Treasury{Budget: 160000, NextUpkeep: 2342, NextMovement: 665}, 160000},
+		{"DTA", 1, Treasury{Budget: 30000, NextUpkeep: 951, NextMovement: 1133}, 30000},
+	} {
+		if got := c.tr.Remaining(); got != c.want {
+			t.Errorf("WORK.%s 陣營 %d 的軍事費 ＝ %d，存檔是 %d", c.slot, c.faction, got, c.want)
+		}
+	}
+}

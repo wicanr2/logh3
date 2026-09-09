@@ -29,6 +29,11 @@ const (
 	workBlend    = 0xC0 // 8 位元 × 陣營（＝ ds:8FD4，`docs/internals/55`）
 	workShipPct  = 0x7E // 8 位元 × 陣營（＝ ds:8F92，造船百分比）
 	workBuildPct = 0xC2 // 7 bytes × 陣營（＝ ds:8FD6，七個艦種的分配）
+	// 徵稅計劃「已支付」那一欄的三格 ＋ 原定軍事費（`docs/re/258`）。
+	workBudgetStart = 0x4E // 32 位元 × 陣營（＝ ds:8F62）
+	workPaidUpkeep  = 0x66 // 32 位元 × 陣營（＝ ds:8F7A，累計已付維持費）
+	workPaidMove    = 0x76 // 32 位元 × 陣營（＝ ds:8F8A，已付移動經費）
+	workShipPaid    = 0x80 // 32 位元 × 陣營（＝ ds:8F94，已付船艦建造費）
 
 	// FleetRecord 是艦隊表一筆的長度（`docs/re/40`）。
 	FleetRecord = 122
@@ -171,6 +176,11 @@ type Slot struct {
 	// （`docs/internals/27`、`docs/re/256`、`docs/re/257`）。
 	ShipPct  [2]int
 	BuildPct [2][BuildPlanRows]int
+
+	// 徵稅計劃「已支付」那一欄：原定軍事費與三個累計。
+	// `軍事費 ＝ BudgetStart − ShipPaid − PaidUpkeep − PaidMove`
+	// 三格存檔 × 兩個陣營六組全中（`docs/re/258`）。
+	BudgetStart, ShipPaid, PaidUpkeep, PaidMove [2]int
 }
 
 // LoadSlot 把一格存檔組成遊戲狀態。
@@ -205,17 +215,21 @@ func LoadSlot(f SlotFiles) (*Slot, error) {
 		return nil, err
 	}
 	s := &Slot{
-		Stellar:  append([]byte(nil), f.Stellar...),
-		Planets:  planets,
-		Admiral:  f.Admiral,
-		Fleet:    f.Fleet,
-		Ship:     f.Ship,
-		Work:     append([]byte(nil), f.Work[:WorkRecord]...),
-		Turn:     int(f.Work[workTurn]) | int(f.Work[workTurn+1])<<8,
-		Military: [2]int{u32(f.Work, workMilitary), u32(f.Work, workMilitary+4)},
-		TaxTotal: [2]int{u32(f.Work, workTaxTotal), u32(f.Work, workTaxTotal+4)},
-		Blend:    [2]int{int(f.Work[workBlend]), int(f.Work[workBlend+1])},
-		ShipPct:  [2]int{int(f.Work[workShipPct]), int(f.Work[workShipPct+1])},
+		Stellar:     append([]byte(nil), f.Stellar...),
+		Planets:     planets,
+		Admiral:     f.Admiral,
+		Fleet:       f.Fleet,
+		Ship:        f.Ship,
+		Work:        append([]byte(nil), f.Work[:WorkRecord]...),
+		Turn:        int(f.Work[workTurn]) | int(f.Work[workTurn+1])<<8,
+		Military:    [2]int{u32(f.Work, workMilitary), u32(f.Work, workMilitary+4)},
+		TaxTotal:    [2]int{u32(f.Work, workTaxTotal), u32(f.Work, workTaxTotal+4)},
+		Blend:       [2]int{int(f.Work[workBlend]), int(f.Work[workBlend+1])},
+		ShipPct:     [2]int{int(f.Work[workShipPct]), int(f.Work[workShipPct+1])},
+		BudgetStart: [2]int{u32(f.Work, workBudgetStart), u32(f.Work, workBudgetStart+4)},
+		ShipPaid:    [2]int{u32(f.Work, workShipPaid), u32(f.Work, workShipPaid+4)},
+		PaidUpkeep:  [2]int{u32(f.Work, workPaidUpkeep), u32(f.Work, workPaidUpkeep+4)},
+		PaidMove:    [2]int{u32(f.Work, workPaidMove), u32(f.Work, workPaidMove+4)},
 	}
 	for faction := 0; faction < 2; faction++ {
 		for row := 0; row < BuildPlanRows; row++ {
@@ -404,6 +418,10 @@ func (s *Slot) Save(dir string, index int) error {
 		put32(work, workTaxTotal+4*f, s.TaxTotal[f])
 		work[workBlend+f] = byte(s.Blend[f])
 		work[workShipPct+f] = byte(s.ShipPct[f])
+		put32(work, workBudgetStart+4*f, s.BudgetStart[f])
+		put32(work, workShipPaid+4*f, s.ShipPaid[f])
+		put32(work, workPaidUpkeep+4*f, s.PaidUpkeep[f])
+		put32(work, workPaidMove+4*f, s.PaidMove[f])
 		for row := 0; row < BuildPlanRows; row++ {
 			work[workBuildPct+f*BuildPlanRows+row] = byte(s.BuildPct[f][row])
 		}

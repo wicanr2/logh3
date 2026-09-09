@@ -476,6 +476,10 @@ type Game struct {
 	// shipPctSet 分得開「還沒設過」與「設成 0」——**0% 是合法值**
 	// （S3 的帝國就是 0%），不能拿零值當「沒設過」。
 	shipPctSet bool
+	// paidUpkeep／paidMove 是這個月**累計已付**的艦隊維持費與移動經費
+	// （原版 `ds:8F7A`／`ds:8F8A`），月底歸零（`docs/re/255`）。
+	// 徵稅計劃「已支付」那一欄印的就是它們（`docs/re/258`）。
+	paidUpkeep, paidMove [2]int
 
 	// blend 是未安定度算式的 `Blend`（原版 `ds:8FD4[陣營]`，0–4）。
 	// 電腦座位的戰略 AI 每回合按軍事費重設它，一設就重算該陣營所有
@@ -709,7 +713,9 @@ func (g *Game) advanceTurn() {
 	// `sub [bx+8F52], si`，`docs/re/236`）：**兩邊一起扣**，扣的是那一支
 	// 自己陣營的那一格。順序照原版——在 AI 回合之後、艦隊移動之前。
 	for f := 0; f < 2; f++ {
-		g.military[f] -= g.fleetUpkeep(f)
+		up := g.fleetUpkeep(f)
+		g.military[f] -= up
+		g.paidUpkeep[f] += up // ds:8F7A，月底歸零
 	}
 	// 有命令的艦隊往目的地走一格（`docs/re/77`、`internal/rules.Advance`）。
 	// **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
@@ -724,8 +730,10 @@ func (g *Game) advanceTurn() {
 			if f.Faction < 0 || f.Faction > 1 {
 				continue
 			}
-			g.military[f.Faction] -= rules.FleetOtherCost(
+			cost := rules.FleetOtherCost(
 				g.res.ShipKinds, f.Faction, f.Composition, f.Operations)
+			g.military[f.Faction] -= cost
+			g.paidMove[f.Faction] += cost // ds:8F8A，月底歸零
 		}
 	}
 	// 兩邊的艦隊走到同一個星域就直接切進戰術畫面（`docs/internals/34`
@@ -1087,6 +1095,11 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.shipPctSet = true
 	g.pct = sl.BuildPct[g.faction]
 	g.foePct = sl.BuildPct[1-g.faction]
+	// 徵稅計劃「已支付」那一欄也在 `WORK.DT?` 裡（`docs/re/258`）。
+	g.paidUpkeep = sl.PaidUpkeep
+	g.paidMove = sl.PaidMove
+	g.treasury = rules.Treasury{Budget: sl.BudgetStart[g.faction],
+		ShipPaid: sl.ShipPaid[g.faction]}
 	// 存檔裡就有兩邊的艦隊（`FLEET.DT?` ＝ 執行期那張表，`docs/re/41`）。
 	// 讀進來之後 remake 才有敵方的艦隊可以畫、可以推進。
 	g.fleets = sl.Fleets(g.res.Weights)
@@ -1590,6 +1603,15 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	g.slot.Military = g.military
 	g.slot.TaxTotal = g.taxTotal
 	g.slot.Blend = g.blend
+	g.slot.ShipPct = g.shipPct
+	g.slot.BuildPct[g.faction] = g.pct
+	g.slot.BuildPct[1-g.faction] = g.foePct
+	g.slot.PaidUpkeep = g.paidUpkeep
+	g.slot.PaidMove = g.paidMove
+	// 原定軍事費與已付建造費目前只留玩家那一方（`monthEnd` 只填那一格）；
+	// 電腦那一方沿用底稿裡的值。
+	g.slot.BudgetStart[g.faction] = g.treasury.Budget
+	g.slot.ShipPaid[g.faction] = g.treasury.ShipPaid
 	if err := g.slot.Save(dir, index); err != nil {
 		return err
 	}
@@ -1722,6 +1744,9 @@ func (g *Game) monthEnd() {
 		g.treasury = rules.Treasury{Budget: budget, ShipPaid: paid}
 		g.monthReport = b
 	}
+	// `ds:8F7A` 與 `ds:8F8A` 在 `0654:0034` 的尾段歸零（`docs/re/255`）。
+	g.paidUpkeep = [2]int{}
+	g.paidMove = [2]int{}
 	// 3. 結算完之後重算下個月的預估徵稅額——徵稅計劃那張印的是這個，
 	//    與剛剛實收的那筆不是同一個數（`docs/spec/003`）。
 	g.refreshTaxEstimate()
@@ -1977,7 +2002,7 @@ func (g *Game) drawBudget(fb *gfx.Framebuffer) {
 	}
 	switch g.state {
 	case StateTaxPlan:
-		g.res.BudgetPanel.Draw(fb, g.res.Font, g.treasury, g.nextBudget())
+		g.res.BudgetPanel.Draw(fb, g.res.Font, g.currentTreasury(), g.nextBudget())
 	case StateBudgetPlan:
 		// 月初報告那一張：本月份那一欄還沒有數字（全 0）。
 		g.res.BudgetPanel.Draw(fb, g.res.Font, rules.Treasury{}, g.monthReport)
@@ -1991,6 +2016,22 @@ func (g *Game) nextBudget() rules.Budget {
 	return rules.Budget{Treasury: g.military[f], Tax: g.taxTotal[f],
 		ShipPct: g.factionShipPct(f), Upkeep: g.fleetUpkeep(f),
 		MoveCost: g.fleetMoveCost(f)}
+}
+
+// currentTreasury 是**現在**的財政：原定軍事費與已付的建造費在月底定下來，
+// 已付維持費與移動經費是這個月累計到現在的，「本次預定」兩格現算
+// （原版 `ds:8F72`／`ds:8F82` 每個回合由 `297B:10DE` 重算，`docs/re/258`）。
+func (g *Game) currentTreasury() rules.Treasury {
+	t := g.treasury
+	f := g.faction
+	if f < 0 || f > 1 {
+		return t
+	}
+	t.FleetUpkeep = g.paidUpkeep[f]
+	t.Movement = g.paidMove[f]
+	t.NextUpkeep = g.fleetUpkeep(f)
+	t.NextMovement = g.fleetMoveCost(f)
+	return t
 }
 
 // buildPctFor 回一個陣營切給七個艦種的百分比。玩家那一份是可以改的
@@ -2550,7 +2591,7 @@ func (g *Game) Turn() int { return g.turn }
 func (g *Game) Military() int { return g.military[g.faction] }
 
 // Treasury 回這個月的財政（原定軍事費、已支付各項）。
-func (g *Game) Treasury() rules.Treasury { return g.treasury }
+func (g *Game) Treasury() rules.Treasury { return g.currentTreasury() }
 func (g *Game) TaxTotal() int            { return g.taxTotal[g.faction] }
 
 // Date 回遊戲內的日期。紀元年 796 是原版帝國戰役的開局。
