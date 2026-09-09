@@ -59,6 +59,9 @@ func ClassQuotaOrder(counts [4]int, total int) [4]int {
 	}
 	order := [4]int{0, 1, 2, 3}
 	s := order[:]
+	// ⚠ 原版走 `3C6A:000D`（qsort），**平手時的次序沒有保證**；這裡用
+	// 穩定排序保持 0 1 2 3，是 remake 自己的收斂。開局四類全是 0，
+	// 就是靠這個決定先試類別 0。
 	sort.SliceStable(s, func(a, b int) bool { return short[s[a]] < short[s[b]] })
 	return order
 }

@@ -317,11 +317,22 @@ ds:D5AE[0..31] = 0
 `ai.PickClassKey`。**建艦隊那條路的反組譯到此讀完**，只剩
 `ds:8FD4[陣營]` 的語意（它只影響閘門鬆緊）。`ai.Turn` 還不呼叫它們。
 
-**回傳路徑已經開好了**：`ai.NewFleet` ＋ `ai.Builder`（選配介面）。
-`Game.runBrain` 下完命令之後用型別斷言問一次，有實作才建；建的時候
-守兩道限制——每個陣營最多 16 支、一位提督只帶一支。沒實作 `Builder`
-的 `Brain`（`Original`、`Focused`）完全不受影響。
-差的是把 `docs/re/202`–`204` 那幾支純函式串成一個 `Build` 實作。
+**整條已經串起來了**：`ai.BuildPass` 把六段接成一趟，
+`OriginalStrategy.Build` 讓它成為一個 `ai.Builder`，
+`Game.runBrain` 用型別斷言問一次、有實作才建（守「每陣營 16 支」與
+「一位提督一支」兩道限制）。沒實作 `Builder` 的 `Brain`
+（`Original`、`Focused`）完全不受影響。
+
+**三件是 remake 自己決定的，不是量出來的**，都標在程式註解裡：
+
+| 項目 | 原因 |
+|---|---|
+| 候選提督怎麼濾（`BuildInput.Candidates`）| `28E0:0103` 的 `0x25` 還沒讀 |
+| 配額平手時的次序 | 原版走 qsort（`3C6A:000D`），平手沒有保證 |
+| 等級 > 43 的折算值 | 沒有觀察到那麼高的等級（`docs/re/205`）|
+
+還缺的是 `OriginalStrategy.Support` 的接線（提督表、`ds:8F6A`／`ds:8F72`
+的錢、`ds:4E3A` 的艦種存量門檻）——那三樣 `Resources` 都有。
 
 ## 階段一的完整形狀（`docs/re/180`–`docs/re/182`）
 

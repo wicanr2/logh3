@@ -312,6 +312,9 @@ type OriginalStrategy struct {
 	Rand *rules.Rand
 	// PhezzanOpen 是 `ds:8F48`（費沙進入戰局，`docs/re/179`）。
 	PhezzanOpen bool
+	// Support 是階段一（建艦隊）要的、`World` 帶不到的東西。
+	// nil ＝ 不建艦隊（`original_buildpass.go`）。
+	Support *BuildSupport
 }
 
 // Orders 跑一個戰略回合（`docs/spec/029` 的階段二、三、五）。
