@@ -196,6 +196,10 @@ func TestFortressGunMatchesOracle(t *testing.T) {
 	}
 	t.Logf("總共擊沉 %d 艘（%d 支）", total, len(hitGot))
 
+	// 同一份收據再走一次 production path：FortressGunFire 應該算出
+	// 一模一樣的結果。
+	checkFortressGunFire(t, pre, post, order, hitGot)
+
 	// 計分器：每一支各加 ⌊實扣 ÷ 20⌋（**逐支捨去**，不是總和再除）。
 	if want := scoreWant; want > 0 {
 		for _, base := range []int{0x8FE4, 0x8FEC} {
@@ -218,4 +222,98 @@ func TestFortressGunMatchesOracle(t *testing.T) {
 			t.Logf("計分器 ds:%04X[%d] %d → %d（差 %d）", base, f, g0, g1, g1-g0)
 		}
 	}
+}
+
+// checkFortressGunFire 把收據的狀態搬進 remake 的資料結構，跑一次
+// `FortressGunFire`，再與傾印逐支比。前面那一段驗的是算式，這一段驗的是
+// **接進去的那條路**：候選、排序、亂數順序、副作用一次全走。
+func checkFortressGunFire(t *testing.T, pre, post gunDump, order []int, hit map[int]bool) {
+	t.Helper()
+	kinds, err := LoadShipKindTable(filepath.Join("../..",
+		"docs/internals/data/ship-kind-table.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	p := pre[oraclePlanet63 : oraclePlanet63+82]
+	planets := []BattlePlanet{{
+		Index:      63,
+		Owner:      int(p[0x11]),
+		X:          int(binary.LittleEndian.Uint16(p[0x46:])),
+		Y:          int(binary.LittleEndian.Uint16(p[0x48:])),
+		Fortress:   p[0x12] != 0,
+		DefenceMax: int(binary.LittleEndian.Uint16(p[0x16:])),
+		GunState:   int(p[0x45]),
+		GunAim:     int(binary.LittleEndian.Uint16(p[0x50:])),
+	}}
+	// 只搬**候選集合裡**的分隊：範圍查詢還沒實作，池裡沒上場的那些
+	// 記錄座標是垃圾，全搬進去會多打到不存在的東西。
+	var units []BattleUnit
+	idxOf := map[int]int{}
+	for i := 0; i < 352; i++ {
+		mark := post.ship(i)[0x3C]
+		if mark != 0 && mark != 1 {
+			continue
+		}
+		s := pre.ship(i)
+		idxOf[i] = len(units)
+		units = append(units, BattleUnit{
+			Fleet:     int(s[1]),
+			Squadron:  int(s[3]),
+			Faction:   int(s[0]),
+			Kind:      int(s[4]),
+			X:         int(binary.LittleEndian.Uint16(s[0x34:])),
+			Y:         int(binary.LittleEndian.Uint16(s[0x36:])),
+			Ships:     int(binary.LittleEndian.Uint16(s[8:])),
+			FullShips: int(binary.LittleEndian.Uint16(s[0x0A:])),
+			RepairCap: int(binary.LittleEndian.Uint16(s[0x0C:])),
+			Missiles:  int(binary.LittleEndian.Uint32(s[0x0E:])),
+			Fighters:  int(binary.LittleEndian.Uint32(s[0x12:])),
+		})
+	}
+	var fleets []BattleFleet
+	for n := 0; n < 32; n++ {
+		f := pre.fleet(n)
+		fleets = append(fleets, BattleFleet{
+			Index: n, Faction: int(f[1]), Facing: int(f[0x4A]),
+			Ability0: int(f[0x3D]),
+		})
+	}
+	rng := NewRand(uint32(pre.u32(oracleDS + 0x94DC)))
+	hits := FortressGunFire(planets, fleets, units, kinds, rng)
+	if len(hits) != len(hit) {
+		t.Fatalf("FortressGunFire 打中 %d 支，收據是 %d 支", len(hits), len(hit))
+	}
+	var score int
+	for _, h := range hits {
+		score += h.Score
+	}
+	for i := range idxOf {
+		u := units[idxOf[i]]
+		s1 := post.ship(i)
+		if u.Ships != int(binary.LittleEndian.Uint16(s1[8:])) {
+			t.Errorf("艦艇 %d 算出剩 %d 艘，收據是 %d",
+				i, u.Ships, int(binary.LittleEndian.Uint16(s1[8:])))
+		}
+		if u.RepairCap != int(binary.LittleEndian.Uint16(s1[0x0C:])) {
+			t.Errorf("艦艇 %d 的 +0x0C 算出 %d，收據是 %d",
+				i, u.RepairCap, int(binary.LittleEndian.Uint16(s1[0x0C:])))
+		}
+		if int64(u.Missiles) != int64(binary.LittleEndian.Uint32(s1[0x0E:])) {
+			t.Errorf("艦艇 %d 的飛彈算出 %d，收據是 %d",
+				i, u.Missiles, binary.LittleEndian.Uint32(s1[0x0E:]))
+		}
+		if int64(u.Fighters) != int64(binary.LittleEndian.Uint32(s1[0x12:])) {
+			t.Errorf("艦艇 %d 的艦載機算出 %d，收據是 %d",
+				i, u.Fighters, binary.LittleEndian.Uint32(s1[0x12:]))
+		}
+	}
+	want := int(post.u32(oracleDS+0x8FE4) - pre.u32(oracleDS+0x8FE4))
+	if score != want {
+		t.Errorf("FortressGunFire 加了 %d 分，收據是 %d", score, want)
+	}
+	FortressGunTickAll(planets)
+	if planets[0].GunState != 2 {
+		t.Errorf("開火之後狀態 %d，該是 2", planets[0].GunState)
+	}
+	t.Logf("FortressGunFire 打中 %d 支、加 %d 分，與收據逐一相同", len(hits), score)
 }

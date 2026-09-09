@@ -570,6 +570,8 @@ type Game struct {
 	// 「沒有在指定」，否則沒走過 enterBattle 的測試會被吃掉點擊。
 	battleGunOn bool
 	battleGun   int
+	// battleGunHits 是上一回合要塞砲打掉的分隊（`docs/spec/028`）。
+	battleGunHits []rules.FortressGunHit
 	// battleGunAim 是射程橢圓現在的傾角（一整圈 256）；瞄準當下由
 	// 游標的方位算，按下左鍵才寫進行星記錄的 `+0x50`。
 	battleGunAim int

@@ -1,6 +1,7 @@
 package game
 
 import (
+	"path/filepath"
 	"testing"
 
 	"github.com/wicanr2/logh3/internal/rules"
@@ -220,6 +221,63 @@ func TestFortressRangeIsEllipse(t *testing.T) {
 		}
 		if b*4 > a || b*4 < a-3 {
 			t.Errorf("短半軸 %d 不是長半軸 %d 的四分之一", b, a)
+		}
+	}
+}
+
+// TestFortressGunFiresOnTurn 驗要塞砲接上了戰場的回合結算：狀態 3 的
+// 要塞在「實行」之後開一次火，然後倒數到 2（`docs/spec/028`）。
+func TestFortressGunFiresOnTurn(t *testing.T) {
+	g := commandTestGame(t)
+	if g == nil {
+		return
+	}
+	if len(g.battlePlanets) == 0 || len(g.battleUnits) == 0 {
+		t.Skip("這個星域沒有行星或分隊，跳過")
+	}
+	if g.res.ShipKinds == nil {
+		k, err := rules.LoadShipKindTable(filepath.Join(root,
+			"docs/internals/data/ship-kind-table.json"))
+		if err != nil {
+			t.Skipf("缺艦種表，跳過：%v", err)
+		}
+		g.res.ShipKinds = k
+	}
+	// 造一座要塞：瞄準第一支分隊的方向，並把行星挪到它旁邊，
+	// 確保它落在射程橢圓裡（fixture，不是收據）。
+	idx := 0
+	u := &g.battleUnits[0]
+	p := &g.battlePlanets[idx]
+	p.Fortress = true
+	p.DefenceMax = 12800
+	p.X, p.Y = u.X, u.Y-40
+	p.GunAim = rules.Atan256(u.X-p.X, u.Y-p.Y)
+	p.GunState = rules.FortressGunAimed
+	before := u.Ships
+	if before <= 0 {
+		t.Skip("第一支分隊沒有艘數，跳過")
+	}
+	g.AdvanceBattleTurn()
+	if g.battlePlanets[idx].GunState != 2 {
+		t.Errorf("開火之後狀態 %d，該是 2（填充中）", g.battlePlanets[idx].GunState)
+	}
+	var lost int
+	for _, h := range g.battleGunHits {
+		lost += h.Lost
+	}
+	if lost == 0 {
+		t.Errorf("要塞砲該打到東西，battleGunHits 是空的（分隊在 (%d,%d)、要塞在 (%d,%d)、瞄 %d）",
+			u.X, u.Y, p.X, p.Y, p.GunAim)
+	}
+	// 再走一回合：狀態 2 不開火，只倒數。
+	g.battleGunHits = nil
+	if !g.battleOver {
+		g.AdvanceBattleTurn()
+		if len(g.battleGunHits) != 0 {
+			t.Error("填充中不該開火")
+		}
+		if s := g.battlePlanets[idx].GunState; s != 1 {
+			t.Errorf("再一回合之後狀態 %d，該是 1", s)
 		}
 	}
 }

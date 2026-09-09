@@ -152,6 +152,17 @@ func (g *Game) AdvanceBattleTurn() {
 			g.battleScore[l.Scorer] += l.Score
 		}
 	}
+	// 已瞄準的要塞砲在移動與戰鬥**之後**才開火（原版一回合八步的第五步，
+	// `181B:0385`；規格 `docs/spec/028`）。開完再把每一顆有要塞的行星
+	// 減 1——狀態 3 打一次、2 與 1 是填充、0 才能重新瞄。
+	g.battleGunHits = rules.FortressGunFire(g.battlePlanets, g.battleFleets,
+		g.battleUnits, g.res.ShipKinds, g.battleRand)
+	for _, h := range g.battleGunHits {
+		if h.Scorer >= 0 && h.Scorer < 2 {
+			g.battleScore[h.Scorer] += h.Score
+		}
+	}
+	rules.FortressGunTickAll(g.battlePlanets)
 	g.battleTurn++
 	// 九個回合打完就結束（`docs/re/92`）；中途一方歸零也結束。
 	g.battleOver = g.battleTurn > rules.MaxBattleTurns || battleDecided(g.battleUnits)

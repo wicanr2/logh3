@@ -21,20 +21,18 @@ package rules
 const FixOne = 1 << 16
 
 // AttackCoefficient 回單擊算式的分母 K。
+// 算式與要塞砲的射程判定共用同一支橢圓半徑（`EllipseRadius`）——
+// 原版 `2264:047C` 與 `2264:0FC3` 就是同一段程式碼
+// （[`docs/re/147`](../../docs/re/147-fortress-gun-damage.md)）。
 func AttackCoefficient(a, b, dir, ability int) int {
 	if a <= 0 || b <= 0 {
 		return 0
 	}
-	l := int64(b) * int64(b) / int64(a)
-	// t ＝ 65536 × b² ÷ a²，再取 1 − t 開平方（`3870:0643` 的小值那條）。
-	t := int64(b) * int64(b) * FixOne / (int64(a) * int64(a))
-	e := fixSqrt(FixOne - t)
-	c := int64(sin256((dir+BattleTurn/4)&(BattleTurn-1))) * 64
-	den := FixOne - fixMul(e, c)
-	if den <= 0 {
+	r := EllipseRadius(a, b, dir)
+	if r <= 0 {
 		return 0
 	}
-	return int(l * FixOne / den * int64(ability) / 100)
+	return r.Int() * ability / 100
 }
 
 // fixMul 是 16.16 定點乘（`39B5:000C`：丟掉低位相乘的低 16 位）。

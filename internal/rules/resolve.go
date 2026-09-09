@@ -24,6 +24,10 @@ type BattleFleet struct {
 	Defence int  `json:"defence"` // `+0x40 × +0x41 ÷ 100`
 	Facing  int  `json:"facing"`  // `+0x4A`：朝向
 
+	// Ability0 是能力的第 0 項（記錄 `+0x3D`）。單擊算式與要塞砲的
+	// 防禦係數都乘它再除 100（`2264:0FC3`，`docs/re/147`）。
+	Ability0 int `json:"ability0"`
+
 	// Flag0 是 `+0x00` bit0。語意未解（`docs/internals/33`），但兩件事
 	// 靠它：戰力加總不算這種艦隊，戰場的艦隊選單把「戰鬥」與「索敵」
 	// 關掉（`docs/spec/023`）。
@@ -68,6 +72,7 @@ func NewBattleFleet(index int, rec []byte, ab [FleetAbilityCount]byte) BattleFle
 		f.ScoutOut = rec[0x3A] != 0xFF || rec[0x3B] != 0
 	}
 	f.Defence = int(ab[defenceAbilityA]) * int(ab[defenceAbilityB]) / 100
+	f.Ability0 = int(ab[0])
 	return f
 }
 

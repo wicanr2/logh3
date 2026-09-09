@@ -1,5 +1,7 @@
 package rules
 
+import "sort"
+
 // 要塞砲的射程判定與損失（`docs/spec/028`、`docs/re/145`、`docs/re/147`）。
 
 // EllipseRadius 回「以焦點為極點」的圓錐曲線在夾角 delta 上的半徑，
@@ -19,13 +21,18 @@ func EllipseRadius(semiMajor, semiMinor, delta int) Fixed {
 	return FixedDiv(l, FixedOne-FixedMul(e, cos))
 }
 
-// EllipseEccentricity 是 `3870:0643`：`√(1 − (b/a)²)`，16.16。
+// EllipseEccentricity 是 `3870:0643`：`√(1 − b² × 65536 ÷ a²)`，16.16。
+//
+// **要先算 b² 再一次除掉 a²**，不要先算 b/a 再平方——原版是
+// `3CC9:0020(b² × 65536, a²)`，兩種寫法的截斷點不同（a ＝ 95、b ＝ 85
+// 差 4 個 ulp）。
 func EllipseEccentricity(semiMajor, semiMinor int) Fixed {
 	if semiMajor <= 0 {
 		return 0
 	}
-	ratio := FixedDiv(FixedFromInt(semiMinor), FixedFromInt(semiMajor))
-	return FixedSqrt(FixedOne - FixedMul(ratio, ratio))
+	bb := int64(semiMinor) * int64(semiMinor)
+	aa := int64(semiMajor) * int64(semiMajor)
+	return FixedSqrt(FixedOne - Fixed(bb<<16/aa))
 }
 
 // FortressFocalDistance 回焦點到橢圓中心的距離，也就是原版
@@ -66,16 +73,18 @@ func AngleDiff256(a, b int) int {
 	return b - a
 }
 
-// FortressGunDefence 回一支分隊挨這一發時的防禦係數（`2264:0FC3`）：
-// 取**艦種自己的裝甲橢圓**在「砲來的方向」上的半徑，再乘艦隊能力的
-// 第 0 項（記錄 `+0x3D`）除以 100。
+// FortressGunDefence 回一支分隊挨這一發時的防禦係數（`2264:0FC3`）。
 //
-// armourMajor／armourMinor 是艦種表的 word 11／12
-// （`docs/internals/40`）；facing 是艦隊的朝向（`+0x4A`）。
+// 與單擊算式的分母是**同一支**（`AttackCoefficient`，`docs/re/94`）：
+// 取艦種自己的裝甲橢圓在「砲來的方向」上的半徑，再乘艦隊能力的第 0 項
+// （記錄 `+0x3D`）除以 100。差別只在角度怎麼來——這裡是
+// 「從分隊看向行星的方位」與艦隊朝向的夾角。
+//
+// armourMajor／armourMinor 是艦種表的 word 11／12（`docs/internals/40`）；
+// facing 是艦隊的朝向（`+0x4A`）。
 func FortressGunDefence(px, py, x, y, facing, armourMajor, armourMinor, ability int) int {
 	delta := AngleDiff256(Atan256(px-x, py-y), facing)
-	r := EllipseRadius(armourMajor, armourMinor, delta).Int()
-	return r * ability / 100
+	return AttackCoefficient(armourMajor, armourMinor, delta, ability)
 }
 
 // FortressGunBase 回損失的基準量（`2264:0EE3`）：
@@ -100,4 +109,139 @@ func FortressGunLoss(base, r1, r2 int) int {
 		r1 %= base
 	}
 	return base + r1 - base/2 + r2%100
+}
+
+// FortressGunHit 是一發打在一支分隊上的結果。
+type FortressGunHit struct {
+	Planet int `json:"planet"` // 開火的行星（battlePlanets 的索引）
+	Unit   int `json:"unit"`   // 被打的分隊（units 的索引）
+	Lost   int `json:"lost"`   // 扣掉的艘數
+	Scorer int `json:"scorer"` // 分數記給誰（＝ 被打一方的對手）
+	Score  int `json:"score"`  // 加了多少分（＝ 扣掉的艘數 ÷ 20，逐支捨去）
+}
+
+// 艦種表裡「這個艦種有沒有飛彈／艦載機」的旗標位移（值 0xFF ＝ 沒有）。
+// 損失時那兩格要按剩餘比例縮減，而艦種 5（運補艦）不縮
+// （`203A:0593`，`docs/re/147`）。
+const (
+	kindMissileFlag = 0x0E
+	kindFighterFlag = 0x12
+	kindSupply      = 5
+	kindScout       = 7
+)
+
+// FortressGunFire 把「已瞄準」的要塞砲全部打出去，回逐支的結果。
+//
+// 順序照原版（`2264:0248`）：先收射程內的分隊，再依比較函式排序
+// （艦隊編號遞減、分隊序遞增、索引遞增），才逐支取兩個亂數算損失。
+// **順序會影響結果**，因為亂數是共用的。
+//
+// 打完之後呼叫端要走一次 FortressGunTickAll。
+func FortressGunFire(planets []BattlePlanet, fleets []BattleFleet,
+	units []BattleUnit, kinds *ShipKindTable, r *Rand) []FortressGunHit {
+	if r == nil {
+		return nil
+	}
+	var out []FortressGunHit
+	for pi := range planets {
+		p := &planets[pi]
+		if !p.Fortress || p.GunState != FortressGunAimed {
+			continue
+		}
+		a, b := FortressRange(p.DefenceMax)
+		var hits []int
+		for i := range units {
+			u := &units[i]
+			if u.Ships <= 0 || u.Kind == kindScout {
+				continue
+			}
+			if FortressGunInRange(p.X, p.Y, p.GunAim, a, b, u.X, u.Y) {
+				hits = append(hits, i)
+			}
+		}
+		sortFortressTargets(hits, units)
+		for _, i := range hits {
+			h := fireOne(pi, p, i, fleets, units, kinds, r)
+			if h.Lost > 0 {
+				out = append(out, h)
+			}
+		}
+	}
+	return out
+}
+
+// sortFortressTargets 照帝國那支比較函式（`2264:052F`）排：艦隊編號
+// 遞減、分隊序遞增、索引遞增。同盟那支（`2264:0612`）骨架相同。
+func sortFortressTargets(idx []int, units []BattleUnit) {
+	sort.SliceStable(idx, func(x, y int) bool {
+		u, v := &units[idx[x]], &units[idx[y]]
+		if u.Fleet != v.Fleet {
+			return u.Fleet > v.Fleet
+		}
+		if u.Squadron != v.Squadron {
+			return u.Squadron < v.Squadron
+		}
+		return idx[x] < idx[y]
+	})
+}
+
+func fireOne(pi int, p *BattlePlanet, i int, fleets []BattleFleet,
+	units []BattleUnit, kinds *ShipKindTable, r *Rand) FortressGunHit {
+	u := &units[i]
+	h := FortressGunHit{Planet: pi, Unit: i, Scorer: 1 - u.Faction}
+	var facing, ability int
+	for fi := range fleets {
+		if fleets[fi].Index == u.Fleet {
+			facing, ability = fleets[fi].Facing, fleets[fi].Ability0
+			break
+		}
+	}
+	k, ok := kinds.Kind(u.Faction, u.Kind)
+	if !ok {
+		return h
+	}
+	d := FortressGunDefence(p.X, p.Y, u.X, u.Y, facing, k.SemiMajor, k.SemiMinor, ability)
+	base := FortressGunBase(u.Ships, p.DefenceMax, d)
+	var r1 int
+	if base != 0 {
+		r1 = r.Next()
+	}
+	lost := FortressGunLoss(base, r1, r.Next())
+	if lost < 0 {
+		lost = 0
+	}
+	if lost > u.Ships {
+		lost = u.Ships
+	}
+	if lost == 0 {
+		return h
+	}
+	before := u.Ships
+	u.Ships -= lost
+	if u.FullShips > 0 {
+		u.RepairCap -= lost * lost / u.FullShips
+		if u.RepairCap < 0 {
+			u.RepairCap = 0
+		}
+	}
+	if u.Kind != kindSupply {
+		if k.Byte(kindMissileFlag) != 0xFF {
+			u.Missiles = u.Missiles / before * (before - lost)
+		}
+		if k.Byte(kindFighterFlag) != 0xFF {
+			u.Fighters = u.Fighters / before * (before - lost)
+		}
+	}
+	h.Lost, h.Score = lost, lost/ScoreDivisor
+	return h
+}
+
+// FortressGunTickAll 把每一顆有要塞、狀態非 0 的行星減 1
+// （`2264:000A`，每回合一次）。
+func FortressGunTickAll(planets []BattlePlanet) {
+	for i := range planets {
+		if planets[i].Fortress {
+			planets[i].GunState = FortressGunTick(planets[i].GunState)
+		}
+	}
 }

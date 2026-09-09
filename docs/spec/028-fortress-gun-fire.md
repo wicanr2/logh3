@@ -78,7 +78,19 @@ ds:8FE4[敵方 × 4] += 實扣 ÷ 20 ; ds:8FEC[敵方 × 4] += 實扣 ÷ 20
 
 ## remake 現況
 
-瞄準、射程橢圓、狀態機都接上了（`docs/re/145`）。算式進了
-`internal/rules`（`fixed.go` 的 16.16 定點數、`fortressgun.go` 的射程與
-損失），對拍測試是 `TestFortressGunMatchesOracle`。**還沒接進戰場的
-回合結算**——remake 目前沒有 `181B:000A` 那條八步的管線。
+全部接上了。
+
+- `internal/rules/fixed.go`：16.16 定點數（乘、除、開方、兩點距離），
+  都照原版往零截斷。
+- `internal/rules/fortressgun.go`：焦點極坐標的橢圓半徑、射程判定、
+  防禦係數、基準量與損失，以及 `FortressGunFire`／`FortressGunTickAll`。
+- 防禦係數與單擊算式的分母**共用同一支** `AttackCoefficient`
+  （`docs/re/94`）——原版 `2264:047C` 與 `2264:0FC3` 就是同一段程式碼。
+  順帶修掉舊版的 `ℓ` 先截成整數再放大（原版保留小數）。
+- `internal/game.AdvanceBattleTurn` 在移動與戰鬥**之後**開火，再走一次
+  倒數；打中的分隊記在 `battleGunHits`，分數併進 `battleScore`。
+
+對拍：`rules.TestFortressGunMatchesOracle` 走兩遍——先驗算式本身，
+再把收據的狀態搬進 remake 的資料結構跑 `FortressGunFire`，
+**17 支的艘數、`+0x0C`、飛彈、艦載機與 989 分全部逐一相同**。
+玩家路徑另有 `game.TestFortressGunFiresOnTurn`。
