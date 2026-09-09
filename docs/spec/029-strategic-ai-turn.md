@@ -1,6 +1,8 @@
 # SPEC 029 — 原版的戰略 AI 回合
 
 狀態：**DRAFT**（不得動 production path）
+已實作：`internal/ai/original_tables.go` 的**純函式**——威脅圖、兩種優先度、兩種「要派幾支」、滿足率與挑格、態勢碼、進軍路線表。
+還沒接到 `advanceTurn`；測試 `original_tables_test.go` 釘收據 `s3aicomp` 的數字
 證據：`docs/re/162`–`docs/re/176`、`docs/internals/54`、
 `docs/internals/data/strategic-ai.json`、收據 `s3aicomp`
 相關：[`docs/spec/017`](017-computer-ai.md)（AI 兩層與「預設原版」的取捨）、
@@ -208,3 +210,25 @@ n -= 2E54:03C3(n)                       ; 先從現有的湊
         副官合格（五個條件）→ 副官[+0x09] = 同一個槽
         艦隊[槽][+0x08] = 5、[+0x07] = 0FFh、ds:D60E++、n--
 ```
+
+## 已經實作的部分
+
+`internal/ai/original_tables.go`（純函式，沒有接到 `advanceTurn`）：
+
+| 函式 | 對應 | 收據驗證 |
+|---|---|---|
+| `ThreatMap` | `ds:D54E`（`2E54:1A76`）| `s3aicomp` 四格全中，星域 25 ＝ 69 |
+| `DefencePriority` | `ds:D50E` 守勢（`2E54:0222`）| 尚無（收據那一趟走的是攻勢版）|
+| `AttackScore` | `ds:D50E` 攻勢（`2D54:0000`）| 13→682、15／22／28→2048 |
+| `DefenceNeed` | `ds:D58E` 階段三（`2E54:0730`）| 尚無 |
+| `AttackNeed` | `ds:D58E` 階段四（`2E54:08E3`）| 13→1、15→1、22→2、28→3（亂數項由收據反推）|
+| `Unsatisfied`／`PickCell` | `2E54:088F`／`2E54:0842` | 單元測試 |
+| `StateCode` | `2D54:0163` | 12 種全表 |
+| `AdvanceRoutes` | `ds:5EF2`／`ds:5F22` | 路線終點檢查 |
+
+**還沒接上**的原因有兩個，兩個都要先解決才談得上把 `Original` 換掉：
+
+1. `ThreatMap` 的「下一格」用 `StarGraph.Route` 的第二個元素代替原版的
+   `2B99:0302`，等價還沒驗。
+2. 階段四的 `RNG % 4` 要與原版 `3CD5:000C` 的呼叫次序完全對上，
+   否則整回合的結果會漂。
