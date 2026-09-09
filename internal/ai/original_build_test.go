@@ -220,3 +220,53 @@ func TestAdmiralBuildScore(t *testing.T) {
 		t.Errorf("艦種 1 的分數 ＝ %d，預期 %d", got, 3600*3/2)
 	}
 }
+
+// TestBuildGateStopsAtThreeFleets 釘住收據 `turn260mem`（`docs/re/209`）：
+// 同盟在第一個 AI 回合建到第三支就停，因為建完之後
+// **艦隊維持費 426 × 20 ＝ 8520 已經追上總稅收 7852**。
+func TestBuildGateStopsAtThreeFleets(t *testing.T) {
+	// 建第三支之前：n < 3，不看錢，一律放行。
+	for n := 0; n < 3; n++ {
+		if got, ok := BuildGate(n, 10599, 0, false); !ok || got != n {
+			t.Errorf("第 %d 支之前應該放行，得到 (%d, %v)", n, got, ok)
+		}
+	}
+	// 建完三支之後：426 × 20 ＝ 8520 >= 7852 → 不建。
+	if _, ok := BuildGate(3, 7852, 426, false); ok {
+		t.Error("維持費追上稅收之後不該再建")
+	}
+	// 若維持費再低一點就還能建（確認擋住的是這一項，不是別的）。
+	if _, ok := BuildGate(3, 7852, 392, false); !ok {
+		t.Error("392 × 20 ＝ 7840 < 7852，應該還能建")
+	}
+}
+
+// TestFirstAITurnRandCount 釘住收據 `turn260mem` 的亂數次數：
+// `ds:94DC` 從 D3DC167E 走七次到 AF5AAD71 ＝ 三支 ×2 ＋ 階段四一格。
+func TestFirstAITurnRandCount(t *testing.T) {
+	r := rules.NewRand(0xD3DC167E)
+	for i := 0; i < 7; i++ {
+		r.Next()
+	}
+	if got := r.Seed(); got != 0xAF5AAD71 {
+		t.Errorf("走七次的種子 ＝ %08X，收據是 AF5AAD71", got)
+	}
+	// 少一次或多一次都對不上——次數本身是被釘住的。
+	r2 := rules.NewRand(0xD3DC167E)
+	for i := 0; i < 6; i++ {
+		r2.Next()
+	}
+	if r2.Seed() == 0xAF5AAD71 {
+		t.Error("六次就到了？那次數的推導有問題")
+	}
+}
+
+// TestClassKeysOfFirstAITurn 收據上三支的類別鍵是 0C／04／0B，
+// 分屬類別 2／0／1（`docs/re/209`）。
+func TestClassKeysOfFirstAITurn(t *testing.T) {
+	for key, want := range map[int]int{0x0C: 2, 0x04: 0, 0x0B: 1} {
+		if got := rules.FleetClass(key); got != want {
+			t.Errorf("類別鍵 %02X 的類別 ＝ %d，收據是 %d", key, got, want)
+		}
+	}
+}

@@ -11,11 +11,11 @@ import (
 // （什麼都不做）；要換是 `SetBrain(g.OriginalBrain())`，那一步是
 // `docs/spec/029` 末節那個裁決。
 
-// strategyRandSeed 是戰略 AI 亂數的起始種子。
+// strategyRandSeed 是戰略 AI 亂數的起始種子（原版 `ds:94DC`）。
 //
-// ⚠ **原版開局的 `ds:94DC` 還沒量到**（`docs/re/184` 那份收據是從一個
-// 既有局面開始的）。這裡先用那份收據上的值，讓行為至少是決定性的；
-// 要對拍得先量開局的種子。
+// **量到了**：收據 `turn260mem` 在第一次 AI 回合之前倒的那一份，
+// `ds:94DC` 就是這個值（`docs/re/209`）——而 `docs/re/184` 在另一個劇本
+// 量到的呼叫前種子也相同，代表載入之後到第一次 AI 之間沒有東西動過它。
 const strategyRandSeed = 0xD3DC167E
 
 // OriginalBrain 回接好線的原版戰略 AI。
