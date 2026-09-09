@@ -3,6 +3,8 @@ package ai
 import (
 	"path/filepath"
 	"testing"
+
+	"github.com/wicanr2/logh3/internal/rules"
 )
 
 // 這一組測試釘的是收據 `s3aicomp`（`docs/re/176`）的實際數字：
@@ -143,5 +145,31 @@ func TestAdvanceRoutesEndAtEnemyCapital(t *testing.T) {
 				}
 			}
 		}
+	}
+}
+
+// TestAttackNeedWithOriginalSeed 用**原版真正的種子**跑階段四的
+// `ds:D58E`：收據 `s3airng` 對 `ds:94DC` 設監看，抓到那一趟 AI 回合裡
+// 剛好四次亂數呼叫，呼叫前的種子是 `0xD3DC167E`（`docs/re/184`）。
+//
+// 與 `TestAttackNeedMatchesOracle` 的差別是那一支的亂數項由收據反推、
+// 這一支是從種子算出來的——兩邊得到同一組 0／1／2／3。
+func TestAttackNeedWithOriginalSeed(t *testing.T) {
+	threat := ThreatMap(s3aicompEmpire, 0, nil)
+	var priority, held [RegionCount]int
+	for i, v := range map[int]int{13: 682, 15: 2048, 22: 2048, 28: 2048} {
+		priority[i] = v
+	}
+	r := rules.NewRand(0xD3DC167E)
+	got := AttackNeed(priority, threat, held, func() int { return r.Next() })
+	want := map[int]int{13: 1, 15: 1, 22: 2, 28: 3}
+	for i := 0; i < RegionCount; i++ {
+		if got[i] != want[i] {
+			t.Errorf("ds:D58E[%d] ＝ %d，收據是 %d", i, got[i], want[i])
+		}
+	}
+	// 四次之後的種子要與監看抓到的最後一筆相同。
+	if r.Seed() != 0xC21F1C8A {
+		t.Errorf("跑完四次的種子 ＝ %08X，收據是 C21F1C8A", r.Seed())
 	}
 }
