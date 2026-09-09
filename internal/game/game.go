@@ -115,6 +115,12 @@ const (
 	// 自己跳出來，按「確認」才回到地圖介面（`docs/re/21`、`docs/re/55`）。
 	StateShipDelivery
 
+	// StateRegionFlipReport 是星域易主的戰略報告：回合結束逐格重算擁有者
+	// 時每有一格易主就跳一則，**擋住後面的路徑表重建與態勢重算**，
+	// 滑鼠任一鍵可關、鍵盤不行（`docs/spec/034`、`docs/re/246`）。
+	// 畫在命令階段那張底上，所以共用 `screen-command-phase`。
+	StateRegionFlipReport
+
 	// StateVersusInput 是對戰模式的交棒視窗：「帝國軍／同盟軍的戰略輸入」
 	// 疊在戰略地圖上，按「確認」開始這一方的回合
 	// （`docs/re/76`、`docs/spec/016`）。
@@ -150,6 +156,7 @@ var screenSpecName = map[State]string{
 	StateSettings:         "screen-settings",
 	StateQuitConfirm:      "screen-quit-confirm",
 	StateShipDelivery:     "screen-ship-delivery",
+	StateRegionFlipReport: "screen-command-phase",
 	StateAdmiralDetail:    "screen-admiral-detail",
 	StateAdmiralBio:       "screen-admiral-bio",
 	StateFleetOrg:         "screen-fleet-org",
@@ -405,8 +412,13 @@ const occupyOffset = 11
 
 // Game 是一局遊戲的狀態。
 type Game struct {
-	res   *Resources
-	state State
+	res *Resources
+
+	// pendingFlips 是還沒給玩家看的易主報告，afterFlips 是全部看完之後
+	// 要接回去的那條路（`docs/spec/034`）。
+	pendingFlips []RegionFlip
+	afterFlips   func()
+	state        State
 
 	// 主選單：滑鼠位置與反白到哪一列。
 	mouseX, mouseY int
@@ -711,7 +723,16 @@ func (g *Game) advanceTurn() {
 	}
 	// 回合結束依行星重算星域歸屬，再重建路徑表與每一格的態勢
 	// （原版 `2703:08DE`，`docs/re/17`、`docs/re/244`、`docs/spec/032`）。
-	g.recomputeRegions()
+	// **有易主就先停在報告上**，後半段等按掉才跑（`docs/spec/034`）。
+	if g.runRegionPass(g.finishTurn) {
+		return
+	}
+	g.finishTurn()
+}
+
+// finishTurn 是回合結束的尾段：跨月結算與下一個畫面。易主報告會把它
+// 延後到報告全部按掉之後（`docs/spec/034`）。
+func (g *Game) finishTurn() {
 	// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
 	// 並跳出船艦接收報告。
 	//
@@ -1092,6 +1113,10 @@ func (g *Game) Click(x, y int) {
 	case StateShipDelivery:
 		// 報告只有一個「確認」鈕，點哪裡都收掉——哪裡按不算數還沒量過。
 		g.state = StateCommandPhase
+	case StateRegionFlipReport:
+		// 滑鼠任一鍵關掉一則（收據 `chain4` 右鍵、`chain5` 左鍵）；
+		// 兩份都點在地圖上，其他位置沒量過。
+		g.dismissFlip()
 	case StateVersusInput:
 		// 交棒視窗只有「確認」一顆（`docs/re/76`）。點在框裡但熱區外
 		// 什麼都不會發生（收據 `vs3`），所以走 `BoxAt`。

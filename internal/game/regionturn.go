@@ -28,26 +28,53 @@ const (
 	regionCapCostOff = 0x24
 )
 
-// recomputeRegions 跑一輪回合結束的星域重算，回這一輪有幾格易主。
+// 這一圈分兩步跑，因為中間會被易主報告打斷（`docs/spec/034`）：
+//
+//	recomputeRegionOwners   依行星重算 +0x12，易主的排進報告佇列
+//	（報告全部按掉）
+//	refreshRegionPosture    重建路徑表，填 +0x13 與 +0x24
 //
 // 擁有者照 `docs/re/17`：**全屬同一方才算那一方的，只要混雜就是無主**。
-// 之後重建路徑表，把 `+0x13` 的 bit0／bit2／bit3 與 `+0x24` 填回去
-// （其餘位元原版不動，所以這裡也不動）。
-func (g *Game) recomputeRegions() int {
-	if g.res == nil || g.res.Planets == nil || g.res.Graph == nil ||
-		len(g.res.Stellar) < rules.RegionCount*rules.RegionRecord {
+// `+0x13` 的其餘位元（bit5–bit7）原版不動，所以這裡也不動。
+
+// regionsReady 是這一圈要不要跑的前提。
+func (g *Game) regionsReady() bool {
+	return g.res != nil && g.res.Planets != nil && g.res.Graph != nil &&
+		len(g.res.Stellar) >= rules.RegionCount*rules.RegionRecord
+}
+
+// recomputeRegionOwners 跑第一步：逐格依行星重算 `+0x12`（`2703:159B`），
+// 把易主的排進 `pendingFlips`（原版每一格易主跳一則報告，`docs/spec/034`）。
+// 回這一輪有幾格易主。
+func (g *Game) recomputeRegionOwners() int {
+	if !g.regionsReady() {
 		return 0
 	}
-	owner := make([]int, rules.RegionCount)
 	changed := 0
 	for i := 0; i < rules.RegionCount; i++ {
 		rec := g.regionRecord(i)
+		old := int(rec[regionOwnerOff])
 		o := g.res.Planets.RegionOwner(i)
-		if int(rec[regionOwnerOff]) != o {
+		if old != o {
 			changed++
+			g.pendingFlips = append(g.pendingFlips,
+				RegionFlip{Region: i, OldOwner: old, NewOwner: o})
 		}
 		rec[regionOwnerOff] = byte(o)
-		owner[i] = o
+	}
+	return changed
+}
+
+// refreshRegionPosture 跑第二步：重建路徑表，再填 `+0x13` 與 `+0x24`。
+//
+// **原版是在易主報告全部按掉之後才跑這一段**（`docs/re/246`）。
+func (g *Game) refreshRegionPosture() {
+	if !g.regionsReady() {
+		return
+	}
+	owner := make([]int, rules.RegionCount)
+	for i := range owner {
+		owner[i] = int(g.regionRecord(i)[regionOwnerOff])
 	}
 	// `056A:0468` 先跑（收據 `flagpass` 量到它在 `2703:08DE` 之前，
 	// 兩支都在回合計數器遞增之前，`docs/re/245`）。
@@ -63,5 +90,20 @@ func (g *Game) recomputeRegions() int {
 			binary.LittleEndian.PutUint16(rec[regionCapCostOff:], uint16(p.CapitalCost))
 		}
 	}
-	return changed
+}
+
+// runRegionPass 跑整條回合結束的星域重算，並在有易主時**停在報告上**
+// ——後半段（路徑表與態勢）等玩家把報告全部按掉才跑，照原版
+// （`docs/re/246`、`docs/spec/034`）。`tail` 是報告收完之後要接回去的那條路。
+//
+// 回 true ＝ 停在報告上了，呼叫端要立刻 return。
+func (g *Game) runRegionPass(tail func()) bool {
+	g.recomputeRegionOwners()
+	if len(g.pendingFlips) > 0 {
+		g.afterFlips = tail
+		g.state = StateRegionFlipReport
+		return true
+	}
+	g.refreshRegionPosture()
+	return false
 }

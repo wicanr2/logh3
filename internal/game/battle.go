@@ -315,7 +315,9 @@ func (g *Game) EndBattle() {
 	//
 	// 那一份收據看到 `+0x12` 沒有變，是因為達希利的行星仍然混雜、重算出
 	// 同一個值，不是因為沒有重算（`docs/re/244`、`docs/spec/033`）。
-	g.recomputeRegions()
+	if g.runRegionPass(nil) {
+		return
+	}
 	g.state = StateCommandPhase
 }
 

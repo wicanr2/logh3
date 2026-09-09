@@ -1,6 +1,6 @@
 # SPEC 034 — 星域易主的戰略報告
 
-狀態：**READY**（RE 證據、版面與關閉方式都量到了，**還沒實作也沒對拍**）
+狀態：**READY**（行為層已實作並有測試；**畫面還沒畫、也沒對拍**）
 證據：[`docs/re/246`](../re/246-ownership-chain-receipt.md)（發現與模態行為）、
 [`docs/re/247`](../re/247-strategy-report-strings.md)（訊息表）、
 [`docs/re/244`](../re/244-region-posture-recompute.md)（回合結束的順序）
@@ -47,8 +47,16 @@
 
 ```
 ds:087A   \x1B[%d,%s\x1B[%d,星系          ← 第 1 行
-ds:08DA   　　\n已被我方占領。            ← 自己打下來的
-ds:08EE   　　\n已被敵軍占領。            ← 被打下來的
+ds:08DA   　　\n已被我方占領。            ← 自己打下來的（量到）
+ds:08EE   　　\n已被敵軍占領。            ← 被打下來的（量到，chain3 畫的就是這句）
+```
+
+星域變成**無主**時印哪一句**沒有收據**。訊息表裡緊挨著的兩句語意對得上
+兩個方向，`RegionFlip.Message` 暫時照這樣挑，**標成假設待驗**：
+
+```
+ds:088B   由於受到敵方艦隊入侵\n部分地區已經無法掌控。   ← 自己的變成無主
+ds:08BC   部分行星我軍已成功進駐。                       ← 敵方的變成無主
 ```
 
 同一組報告還有這些句子（易主以外的事件，**不在這份規格裡**）：
@@ -65,12 +73,25 @@ ds:080A   下落不明的提督　 / ds:0825 確認死亡。 / ds:083A 脫離成
 
 `ds:083A` 那個錯字**照原樣輸出**，不要修（`docs/re/247`）。
 
-## remake 要改什麼
+## remake
 
-- 新增一個報告狀態，`Game.recomputeRegions()` 每偵測到一格易主就排一則。
-  現在它只回「有幾格易主」，那個回傳值沒有人用。
-- **順序**：報告要卡在擁有者重算那一圈裡，後面的路徑表重建與態勢重算
-  要等它按掉——照原版。目前 remake 是一口氣跑完。
+**行為層做好了**（`internal/game/regionreport.go`）：
+
+- `StateRegionFlipReport` ＋ `pendingFlips` 佇列，**一格易主一則**。
+- 回合結束那一圈拆成兩步：`recomputeRegionOwners`（依行星重算 `+0x12`、
+  把易主的排進佇列）與 `refreshRegionPosture`（重建路徑表、填 `+0x13`
+  與 `+0x24`）。中間隔著報告——**全部按掉才跑後半段**，照原版。
+- `runRegionPass(tail)` 是入口：有易主就停在報告上並記住 `tail`，
+  等佇列清空再接回去。`advanceTurn` 傳的 `tail` 是 `finishTurn`
+  （跨月結算與下一個畫面），`EndBattle` 傳 `nil`（回指令畫面）。
+- 點擊：`StateRegionFlipReport` 收到任一鍵就 `dismissFlip()`。
+- `RegionFlip.Message(seat)` 挑四句裡的哪一句。
+
+回歸測試：`TestEndBattleRecomputesRegions`（打下行星 → 報告 → 按掉才重算
+`+0x24`）、`TestRegionFlipReportsQueueOneByOne`（兩格易主要按兩次，
+中間不跑後半段）、`TestFlipMessageSelection`。
+
+**還沒畫**：報告本身的文字與頭像。版面在上一節，對拍方法在下一節。
 - **關掉的方式量過了**：`chain4` 用右鍵、`chain5` 用左鍵，兩份都讓
   `2703:159B` 跑滿 64 次、`2703:08DE` 跑 1 次，也就是**滑鼠任一鍵都能關**
   （兩份都點在地圖上的 `(300,200)`，沒有測其他位置）。**鍵盤不行**——

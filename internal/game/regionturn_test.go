@@ -44,13 +44,21 @@ func newRegionTurnGame(t *testing.T) *Game {
 	return g
 }
 
+// regionPass 跑完整條但不跳報告——測純算的那幾支時用。
+func regionPass(g *Game) int {
+	n := g.recomputeRegionOwners()
+	g.pendingFlips = nil
+	g.refreshRegionPosture()
+	return n
+}
+
 func TestRecomputeRegionsFollowsPlanets(t *testing.T) {
 	g := newRegionTurnGame(t)
 	// 記錄的 `+0x12` 初值是 0，所以只有 16–31 那 16 格算易主。
-	if n := g.recomputeRegions(); n != 16 {
+	if n := regionPass(g); n != 16 {
 		t.Fatalf("第一次應該 16 格易主，得到 %d", n)
 	}
-	if n := g.recomputeRegions(); n != 0 {
+	if n := regionPass(g); n != 0 {
 		t.Errorf("第二次不該再有易主，得到 %d 格", n)
 	}
 	for i := 0; i < rules.RegionCount; i++ {
@@ -78,7 +86,7 @@ func TestRecomputeRegionsFollowsPlanets(t *testing.T) {
 	// 路徑表是擁有者的函數，換一格會影響到別格。
 	before := binary.LittleEndian.Uint16(g.regionRecord(18)[0x24:])
 	g.res.Planets.Data[rules.PlanetHeader+20*rules.PlanetRecord+0x11] = 0
-	if n := g.recomputeRegions(); n != 1 {
+	if n := regionPass(g); n != 1 {
 		t.Fatalf("只有星域 20 該易主，得到 %d 格", n)
 	}
 	if got := int(g.regionRecord(20)[0x12]); got != 0 {
@@ -100,7 +108,7 @@ func TestRecomputeRegionsFollowsPlanets(t *testing.T) {
 func TestRecomputeRegionsKeepsOtherFlagBits(t *testing.T) {
 	g := newRegionTurnGame(t)
 	g.regionRecord(5)[0x13] = 0xFF
-	g.recomputeRegions()
+	regionPass(g)
 	if got := g.regionRecord(5)[0x13] & 0xE0; got != 0xE0 {
 		t.Errorf("bit5–bit7 被動到了：%02X", g.regionRecord(5)[0x13])
 	}
@@ -112,7 +120,7 @@ func TestRecomputeRegionsMarksOccupation(t *testing.T) {
 	g := newRegionTurnGame(t) // 0–15 帝國、16–31 同盟
 	// 帝國一支停在同盟的星域 20 → bit4；停在自己的星域 5 → 不設。
 	g.fleets = []rules.Fleet{{Faction: 0, Region: 20}, {Faction: 0, Region: 5}}
-	g.recomputeRegions()
+	regionPass(g)
 	if got := g.regionRecord(20)[0x13]; got&0x10 == 0 {
 		t.Errorf("星域 20 應該設 bit4，+0x13 ＝ %02X", got)
 	}
@@ -121,13 +129,13 @@ func TestRecomputeRegionsMarksOccupation(t *testing.T) {
 	}
 	// 雙方都在 → bit2，而且 bit4 不設。
 	g.fleets = append(g.fleets, rules.Fleet{Faction: 1, Region: 20})
-	g.recomputeRegions()
+	regionPass(g)
 	if got := g.regionRecord(20)[0x13]; got&0x04 == 0 || got&0x10 != 0 {
 		t.Errorf("星域 20 應該只設 bit2，+0x13 ＝ %02X", got)
 	}
 	// `Flags` bit0 有設的不計（`297B:14F8` 的 `test 1`）。
 	g.fleets = []rules.Fleet{{Faction: 0, Region: 20, Flags: 1}}
-	g.recomputeRegions()
+	regionPass(g)
 	if got := g.regionRecord(20)[0x13]; got&0x14 != 0 {
 		t.Errorf("bit0 有設的不該算進去，+0x13 ＝ %02X", got)
 	}
@@ -138,7 +146,7 @@ func TestRecomputeRegionsMarksOccupation(t *testing.T) {
 // 呼叫者），所以 `EndBattle` 也要跑一次。
 func TestEndBattleRecomputesRegions(t *testing.T) {
 	g := newRegionTurnGame(t)
-	g.recomputeRegions()
+	regionPass(g)
 	if got := int(g.regionRecord(20)[0x12]); got != 1 {
 		t.Fatalf("星域 20 一開始應該是同盟，得到 %d", got)
 	}
@@ -154,6 +162,7 @@ func TestEndBattleRecomputesRegions(t *testing.T) {
 		t.Fatalf("還沒 EndBattle 就變了：%d", got)
 	}
 
+	before := binary.LittleEndian.Uint16(g.regionRecord(20)[0x24:])
 	g.EndBattle()
 	if got := g.res.Planets.Owner(20); got != 0 {
 		t.Errorf("行星沒寫回：擁有者 ＝ %d，預期 0", got)
@@ -161,7 +170,69 @@ func TestEndBattleRecomputesRegions(t *testing.T) {
 	if got := int(g.regionRecord(20)[0x12]); got != 0 {
 		t.Errorf("星域 20 的擁有者 ＝ %d，預期 0", got)
 	}
+	// 易主要先跳報告，而且**後半段還沒跑**——原版就是卡在這裡
+	// （`docs/re/246`：`2703:08DE` 零次執行）。
+	if g.state != StateRegionFlipReport {
+		t.Fatalf("狀態 ＝ %v，預期停在易主報告", g.state)
+	}
+	if f, ok := g.CurrentFlip(); !ok || f.Region != 20 || f.NewOwner != 0 {
+		t.Errorf("報告的內容 ＝ %+v %v，預期星域 20 易主給帝國", f, ok)
+	}
+	if after := binary.LittleEndian.Uint16(g.regionRecord(20)[0x24:]); after != before {
+		t.Errorf("報告還沒按掉就重算了 +0x24：%d → %d", before, after)
+	}
+	g.Click(300, 200) // 滑鼠任一鍵可關（收據 chain4／chain5）
 	if g.state != StateCommandPhase {
-		t.Errorf("狀態 ＝ %v，預期回指令畫面", g.state)
+		t.Errorf("按掉之後狀態 ＝ %v，預期回指令畫面", g.state)
+	}
+	if after := binary.LittleEndian.Uint16(g.regionRecord(20)[0x24:]); after == before {
+		t.Errorf("按掉之後 +0x24 沒重算（前後都是 %d）", before)
+	}
+}
+
+// 報告一則一則來：兩格易主就要按兩次，而且兩次都按完才跑後半段
+// （`docs/spec/034`）。
+func TestRegionFlipReportsQueueOneByOne(t *testing.T) {
+	g := newRegionTurnGame(t)
+	regionPass(g)
+	// 星域 20 與 21 各翻一顆行星。
+	for _, r := range []int{20, 21} {
+		g.res.Planets.Data[rules.PlanetHeader+r*rules.PlanetRecord+0x11] = 0
+	}
+	before := binary.LittleEndian.Uint16(g.regionRecord(18)[0x24:])
+	if !g.runRegionPass(nil) {
+		t.Fatal("有兩格易主，應該停在報告上")
+	}
+	if n := len(g.PendingFlips()); n != 2 {
+		t.Fatalf("排了 %d 則報告，預期 2", n)
+	}
+	g.dismissFlip()
+	if n := len(g.PendingFlips()); n != 1 {
+		t.Errorf("按掉一則之後剩 %d，預期 1", n)
+	}
+	if after := binary.LittleEndian.Uint16(g.regionRecord(18)[0x24:]); after != before {
+		t.Errorf("還有一則沒按掉就重算了後半段")
+	}
+	g.dismissFlip()
+	if after := binary.LittleEndian.Uint16(g.regionRecord(18)[0x24:]); after == before {
+		t.Errorf("全部按掉之後後半段沒跑（+0x24 前後都是 %d）", before)
+	}
+}
+
+// 四句話怎麼挑（`docs/re/247` 的訊息表；後兩句是假設待驗）。
+func TestFlipMessageSelection(t *testing.T) {
+	for _, c := range []struct {
+		old, now, seat int
+		want           FlipMessage
+	}{
+		{1, 0, 0, FlipTakenByUs},      // 敵方的變成我的
+		{0, 1, 0, FlipLostToEnemy},    // 我的被打下來
+		{0, 2, 0, FlipOurGripLost},    // 我的變成無主
+		{1, 2, 0, FlipWePartlyLanded}, // 敵方的變成無主
+	} {
+		f := RegionFlip{OldOwner: c.old, NewOwner: c.now}
+		if got := f.Message(c.seat); got != c.want {
+			t.Errorf("%d → %d（座位 %d）＝ %v，預期 %v", c.old, c.now, c.seat, got, c.want)
+		}
 	}
 }

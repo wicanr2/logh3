@@ -498,7 +498,11 @@
     頭像框 `(544,180)`–`(620,276)`、內部 72×93。關閉方式也量了：
     **滑鼠任一鍵可關、鍵盤不行**（`chain4` 右鍵、`chain5` 左鍵都讓鏈走完，
     而 `chain3` 全程 `-press-every` 送鍵照樣卡住）。規格轉 **READY**，
-    **實作與對拍還沒做。**
+    **行為層做好了**（`StateRegionFlipReport` ＋ `pendingFlips` 佇列：
+    回合結束那一圈拆成 `recomputeRegionOwners` 與 `refreshRegionPosture`，
+    中間隔著報告，全部按掉才跑後半段——照原版）。
+    **畫面還沒畫、也沒對拍**；星域變成無主時印哪一句沒有收據，
+    `RegionFlip.Message` 那兩條標成假設待驗。
     (b) `advanceTurn` 遇到戰鬥仍提早 `return`，**月底結算那一段不跑**
     ——原版在戰鬥回合會不會結算沒有證據，不憑結構相似搬過去。
 19. ~~星域歸屬的來源~~（完成，`docs/re/17`）：`STELLAR.DT*` 的 `+18` 是
