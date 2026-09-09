@@ -276,4 +276,14 @@ func TestTreasuryPaidMatchesReceipt(t *testing.T) {
 	if got, want := b.Military()-tr.Paid()-b.ShipCost(), -21110; got != want {
 		t.Errorf("剩餘軍事費 ＝ %d，收據是 %d", got, want)
 	}
+	// 收據 `fiscalpaid`：只把「已支付 移動經費」（ds:8F8A）poke 成 44444，
+	// 預估軍事費 60741 − 44444 ＝ 16297、剩餘 16297 − 15185 ＝ 1112
+	// （`docs/re/240`）。
+	only := Treasury{Movement: 44444}
+	if got, want := b.Military()-only.Paid(), 16297; got != want {
+		t.Errorf("只扣移動經費的預估軍事費 ＝ %d，收據是 %d", got, want)
+	}
+	if got, want := b.Military()-only.Paid()-b.ShipCost(), 1112; got != want {
+		t.Errorf("只扣移動經費的剩餘軍事費 ＝ %d，收據是 %d", got, want)
+	}
 }

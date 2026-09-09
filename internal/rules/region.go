@@ -389,7 +389,7 @@ type Treasury struct {
 	// 底下四格照畫面上的兩組（「已支付」與「本次預定」），
 	// 對應的全域由收據 `fiscalrows5` 逐格釘出來（`docs/re/239`）。
 	FleetUpkeep  int // 已支付 艦隊維持費（ds:8F7A ＝ 累計已付）
-	Movement     int // 已支付 移動經費（全域還沒找到，量到的都是 0）
+	Movement     int // 已支付 移動經費（ds:8F8A，`docs/re/240`）
 	NextUpkeep   int // 本次預定 艦隊維持費（ds:8F72 ＝ Σ 艦隊 +0x0A）
 	NextMovement int // 本次預定 移動經費（ds:8F82 ＝ Σ 會動的艦隊 +0x0C）
 }
