@@ -72,5 +72,8 @@ remake 從同一份開局狀態按十次「實行」跨月，這幾格要逐一�
   （`TestAllianceTaxRateNeedsRuntimeStaff` 把兩半都釘住）。
 - 同盟的經濟力對不上是量測的側邊效應：收稅逐座位做，那一趟同盟座位沒跑，
   原版那些格子是「長完但還沒課稅」。要對拍得把收據再往前推。
-- 無主星域 R24／R28 的擁有者兩邊算得不一樣（原版算同盟、remake 算無主），
-  還沒查。
+- 無主星域 R24／R28 的擁有者兩邊算得不一樣（原版算同盟、remake 算無主）。
+  **成因已知**：原版在回合 1–9 之間有六顆無主行星被同盟的艦隊打下來
+  （[`docs/re/161`](../re/161-neutral-planets-are-taken-not-annexed.md)、
+  [`docs/internals/53`](../internals/53-strategic-planet-assault.md)），
+  remake 還沒接戰略回合那條打行星。屬於戰略層，不在這一份裡。
