@@ -1,0 +1,63 @@
+{
+ "_note": "「補給」選對象時右側面板的格式字串（1930:0AA2，docs/re/143）。視窗是 ds:9890：內容 8×8 格，左上角在畫面格 (30,10)（docs/re/142）。格式字串裡沒有換行——每一段剛好佔滿 8 格，寫到第 9 格自動折行。",
+ "cell_x": 30,
+ "cell_y": 10,
+ "cols": 8,
+ "rows": 8,
+ "colour": 151,
+ "lines": {
+  "head": {
+   "offset": "ds:3F29",
+   "bytes": "0c25732020b2c4",
+   "text": "\\x0c%s  第"
+  },
+  "fleet_suffix": {
+   "offset": "ds:3F31",
+   "bytes": "c4a5b6a4",
+   "text": "艦隊"
+  },
+  "transport": {
+   "offset": "ds:3F36",
+   "bytes": "b942bfe9c4a5202020202020253475",
+   "text": "運輸艦      %4u"
+  },
+  "missile": {
+   "offset": "ds:3F46",
+   "bytes": "adb8bc7520202020202025366c75",
+   "text": "飛彈      %6lu"
+  },
+  "fighter": {
+   "offset": "ds:3F55",
+   "bytes": "bed4b0abbef72020202025366c75",
+   "text": "戰鬥機    %6lu"
+  },
+  "target": {
+   "offset": "ds:3F64",
+   "bytes": "252d387320202020253475",
+   "text": "%-8s    %4u"
+  },
+  "target_missile": {
+   "offset": "ds:3F70",
+   "bytes": "adb8bc7520202020",
+   "text": "飛彈    "
+  },
+  "target_fighter": {
+   "offset": "ds:3F90",
+   "bytes": "bed4b0abbef72020",
+   "text": "戰鬥機  "
+  }
+ },
+ "number": {
+  "_note": "艦隊編號（3982:0038）：小於 10 用 \\x06%d\\x07（半形轉全形，一格一個全形數字），否則用 %2d（兩個半形塞一格）——**兩種都剛好一格**。",
+  "lt10": {
+   "offset": "ds:8E86",
+   "bytes": "06256407",
+   "text": "\\x06%d\\x07"
+  },
+  "ge10": {
+   "offset": "ds:8E8B",
+   "bytes": "253264",
+   "text": "%2d"
+  }
+ }
+}
