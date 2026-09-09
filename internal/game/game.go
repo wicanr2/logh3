@@ -673,6 +673,12 @@ func (g *Game) advanceTurn() {
 	// 電腦那一方先下命令，再讓所有艦隊走。預設沒有 `Brain`，
 	// 一道都不下，所以這一段對原版對拍沒有影響。
 	g.runBrain()
+	// 每個戰略回合逐支扣艦隊維持費（原版 `056A:09EB` 的
+	// `sub [bx+8F52], si`，`docs/re/236`）：**兩邊一起扣**，扣的是那一支
+	// 自己陣營的那一格。順序照原版——在 AI 回合之後、艦隊移動之前。
+	for f := 0; f < 2; f++ {
+		g.military[f] -= g.fleetUpkeep(f)
+	}
 	// 有命令的艦隊往目的地走一格（`docs/re/77`、`internal/rules.Advance`）。
 	// **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
 	if g.res.Graph != nil {
