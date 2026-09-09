@@ -28,3 +28,6 @@ dist-all/
 /play
 /logh3
 /oradiff
+
+# Python 產物
+__pycache__/

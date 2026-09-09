@@ -3,6 +3,9 @@ package screen
 import (
 	"encoding/json"
 	"os"
+
+	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/ui"
 )
 
 // 訊息框（原版 `3826:0005`，`docs/re/137`）。三個地方用它：選點不合法的
@@ -55,8 +58,31 @@ func (s *MessageBoxSpec) Box(kind int, l *CommandMenuSpec) (x, y, w, h int, ok b
 	return 0, 0, 0, 0, false
 }
 
-// DrawMessageBox **還沒做**：框的位置與大小已經對過收據（`Box`），
-// 但框線的畫法與命令選單那一支不同（原版走 `3603:0006`）——收據左緣是
-// `8 F 8 7 F F 3`、拿 `ui.MenuFrame` 畫出來是 `8 3 F F 7 8 3`，元素一樣
-// 但排法不同，開頭幾列還有階梯狀的斜切。把 `3603:0006` 讀出來之前
-// 不畫（`docs/re/137`）。
+// MessageBoxStyle／MessageBoxColour 是訊息框傳給視窗系統的兩個值：
+// `3826:0005` 拿樣板的 `[+4]` 當旗標（三種訊息都是 1），顏色固定 0x97。
+// 圖塊裡色號 0 的像素填的是顏色的**高四位**（`docs/re/138`）。
+const (
+	MessageBoxStyle  = 1
+	MessageBoxColour = 0x97
+)
+
+// DrawMessageBox 把第 kind 種訊息框的框與底畫出來（不含文字）。
+//
+// 框是圖塊不是線：外圈八張取自 `FRAME.BLK`，內部填視窗底色。旗標讓框
+// 往外多長兩格，所以實際佔 (寬＋2) × (高＋2) 格（`docs/re/137`、`138`）。
+func DrawMessageBox(fb *gfx.Framebuffer, s *MessageBoxSpec, kind int, tiles *ui.FrameTiles) bool {
+	if fb == nil || s == nil || tiles == nil {
+		return false
+	}
+	for _, t := range s.Templates {
+		if t.Kind != kind {
+			continue
+		}
+		f := ui.TileFrame{Tiles: tiles, Style: MessageBoxStyle, Fill: MessageBoxColour >> 4}
+		// 格 y **不加 RowBias**：那兩格就是格座標系原點與畫面頂端
+		// 的 40 像素（`ui.FrameCellOriginY`），Draw 自己會加。
+		f.Draw(fb, t.CellX, t.CellY, t.Cols+2, t.Rows+2)
+		return true
+	}
+	return false
+}

@@ -1,0 +1,52 @@
+{
+ "file": "FRAME.BLK",
+ "bytes": 5280,
+ "tileBytes": 160,
+ "tileW": 16,
+ "tileH": 20,
+ "count": 33,
+ "runtimeAddress": "ds:6BF4",
+ "layout": "plane-major per row (plane 0-3, one word each)",
+ "ring": [
+  "topLeft",
+  "top",
+  "topRight",
+  "left",
+  "right",
+  "bottomLeft",
+  "bottom",
+  "bottomRight"
+ ],
+ "styles": [
+  {
+   "startCode": 1,
+   "firstTile": 0,
+   "use": "戰場大面板、訊息框、清單面板"
+  },
+  {
+   "startCode": 9,
+   "firstTile": 8,
+   "use": "主選單與各種小選單"
+  },
+  {
+   "startCode": 17,
+   "firstTile": 16,
+   "use": "未在收據上看到"
+  },
+  {
+   "startCode": 25,
+   "firstTile": 24,
+   "use": "未在收據上看到"
+  }
+ ],
+ "transparentIndex": 0,
+ "fillRule": "視窗顏色 >> 4",
+ "cellW": 16,
+ "cellH": 20,
+ "cellOriginY": 40,
+ "cellCols": 40,
+ "cellRows": 20,
+ "cellTable": "ds:D81E",
+ "cellStride": 6,
+ "frameCodeBase": "0xFF00"
+}

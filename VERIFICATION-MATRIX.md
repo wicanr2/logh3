@@ -89,7 +89,8 @@
 | `3DBLOCK.SPR` | **已解出**（48×64，4 plane 逐列交錯，四塊等距方塊）| [`docs/internals/21`](docs/internals/21-3dblock-spr.md) |
 | `COM_FLAG.SPR` | **已解出**（64×45，四個 plane 以「一列一個 plane」交錯；內容是五個戰鬥指令字樣 `BEEM`／`MISSILE`／`FIGHTER`／`ATTACK`／`DEFENCE`，第一個是原版錯字）| [`docs/internals/21`](docs/internals/21-3dblock-spr.md) |
 | `STRMAP.BIT`（星域地圖）| **已解出**（320×300；記憶體版本與原版畫面 0 差異）| [`docs/internals/12`](docs/internals/12-strmap-bit.md) |
-| `FRAME.BLK` / `BLOCK_*.BLK` | 未解（全彩非遮罩；32×32／320×128／640×64 等切法都對不齊）| — |
+| `FRAME.BLK` | **已解出**（33 張 16×20 四平面圖塊，版面同 `SPRITE.SPR`；四組視窗外框各八張，色號 0 ＝ 視窗底色）| [`docs/internals/47`](docs/internals/47-window-frame-tiles.md) |
+| `BLOCK_*.BLK` | **已解出**（各 128 張 16×20，與 `FRAME.BLK` 同一種版面；`BLOCK_2` 已用在戰場地形，`BLOCK_0` 的圖塊 2／3／4 在收據 `s3menu` 上逐位元組命中面板分隔線）| [`docs/internals/36`](docs/internals/36-map-cmp.md)、[`docs/internals/47`](docs/internals/47-window-frame-tiles.md) |
 | `STRMAP.RGN`（星域區域遮罩）| **已解出**（32 區域；底圖＋遮罩＋顏色重建 0 差異）| [`docs/internals/13`](docs/internals/13-strmap-rgn.md) |
 | `MAP*.CMP` | 未解；**不是星圖的來源**（走到主畫面為止一份都沒被讀）| [`docs/re/17`](docs/re/17-star-region-owner.md) |
 | `PLADAT.DAT` | **已解出**（檔頭 ＝ 每星域行星數；`+0x11` 擁有者、`+0x14` 防衛力、`+0x1A` 經濟力）| [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
