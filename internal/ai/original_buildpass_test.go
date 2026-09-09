@@ -39,17 +39,27 @@ func TestBuildPassMoneyGate(t *testing.T) {
 	if got := BuildPass(in); got != nil {
 		t.Errorf("錢不夠還建了 %v", got)
 	}
+	// 錢夠的話 `2D76:0002` 會一直繞——候選只有三位，繞到沒人可用為止。
 	in.Upkeep = 499
-	if got := BuildPass(in); len(got) != 1 {
-		t.Errorf("錢夠卻建出 %d 支，預期 1", len(got))
+	if got := BuildPass(in); len(got) != 3 {
+		t.Errorf("錢夠卻建出 %d 支，預期 3（候選用完）", len(got))
 	}
 }
 
-// TestBuildPassOneFleetPerTurn 一趟最多建一支。
-func TestBuildPassOneFleetPerTurn(t *testing.T) {
+// TestBuildPassLoopsUntilBlocked `2D76:0002` 是迴圈——建到擋住為止
+// （`docs/re/210`）。這裡的候選只有三位，所以停在三支，而且**不會有人
+// 帶兩支**（原版靠清掉 `+0x09` bit7 達成）。
+func TestBuildPassLoopsUntilBlocked(t *testing.T) {
 	got := BuildPass(buildBase())
-	if len(got) != 1 {
-		t.Fatalf("建出 %d 支，預期 1", len(got))
+	if len(got) != 3 {
+		t.Fatalf("建出 %d 支，預期 3（候選三位用完）", len(got))
+	}
+	seen := map[int]bool{}
+	for _, nf := range got {
+		if seen[nf.Admiral] {
+			t.Fatalf("提督 %d 帶了兩支", nf.Admiral)
+		}
+		seen[nf.Admiral] = true
 	}
 	// **一支都沒有時四類的「現有 − 應有」全是 0**（總數 0 → 應有全 0），
 	// 平手就照 0 1 2 3 的順序，所以試的是類別 0，鍵取自它那張表。
@@ -57,9 +67,9 @@ func TestBuildPassOneFleetPerTurn(t *testing.T) {
 		t.Errorf("類別鍵 ＝ %X（類別 %d），預期類別 0",
 			got[0].ClassKey, rules.FleetClass(got[0].ClassKey))
 	}
-	// 亂數是 nil → 挑第一名，也就是分數最高的（等級 20 那位）。
+	// 亂數是 nil → 每一輪都挑當時分數最高的（等級 20 那位先）。
 	if got[0].Admiral != 1 {
-		t.Errorf("挑到提督 %d，預期 1（分數最高）", got[0].Admiral)
+		t.Errorf("第一支挑到提督 %d，預期 1（分數最高）", got[0].Admiral)
 	}
 	if got[0].Region != Capitals[0] {
 		t.Errorf("編在星域 %d，預期首都 %d", got[0].Region, Capitals[0])
@@ -74,7 +84,7 @@ func TestBuildPassFallsThroughToNextClass(t *testing.T) {
 	if got := BuildPass(in); got != nil {
 		t.Errorf("四類都編不成卻建了 %v", got)
 	}
-	// 四類各用掉兩個亂數 ＝ 八次。
+	// 四類各用掉兩個亂數 ＝ 八次；四類都失敗，外圈就結束，不會再繞。
 	r := rules.NewRand(1)
 	in.Rand = r
 	BuildPass(in)
@@ -97,8 +107,8 @@ func TestBuildPassAdjutant(t *testing.T) {
 		return -1
 	}
 	got := BuildPass(in)
-	if len(got) != 1 || got[0].Adjutant != 75 {
-		t.Errorf("副官 ＝ %v，預期 75", got)
+	if len(got) == 0 || got[0].Adjutant != 75 {
+		t.Errorf("第一支的副官 ＝ %v，預期 75", got)
 	}
 }
 
@@ -126,10 +136,10 @@ func TestBuildPassPicksMostLackingClass(t *testing.T) {
 		in.Fleets = append(in.Fleets, rules.Fleet{Faction: 0, ClassKey: 0})
 	}
 	got := BuildPass(in)
-	if len(got) != 1 {
-		t.Fatalf("建出 %d 支，預期 1", len(got))
+	if len(got) == 0 {
+		t.Fatal("一支都沒建")
 	}
 	if c := rules.FleetClass(got[0].ClassKey); c != 1 {
-		t.Errorf("補的是類別 %d，預期 1（配額 45％ 缺最多）", c)
+		t.Errorf("第一支補的是類別 %d，預期 1（配額 45％ 缺最多）", c)
 	}
 }

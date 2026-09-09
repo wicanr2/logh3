@@ -15,7 +15,11 @@ import (
 //	2D76:0576(提督, 類別) 抽類別鍵
 //	2D76:0611(提督)      真的編出來（編不成就換下一類）
 //
-// **一趟最多建一支**：原版照類別順序試，成功一個就 return。
+// **一個 AI 回合可以建很多支**：`2D76:0002` 是一個迴圈——閘門過了就
+// 呼叫 `2D76:01A5`（配額排序 ＋ 依序試建，成功一類就 break），
+// 回非 0（有建成）就再繞一輪，直到閘門擋下來或四類都編不成
+// （`docs/re/210`）。收據 `turn260mem` 上同盟第一個回合建了**三支**，
+// 第四輪被錢的閘門擋掉（`docs/re/209`）。
 
 // BuildInput 是跑一趟建艦隊要的東西。
 type BuildInput struct {
@@ -61,44 +65,78 @@ func (in BuildInput) next() int {
 	return in.Rand.Next()
 }
 
-// BuildPass 跑一趟階段一，回這一回合要新編的艦隊（最多一支）。
+// BuildPass 跑一趟階段一，回這一回合要新編的艦隊。
+//
+// ⚠ **閘門的「錢」那一項要靠呼叫端給對的維持費。** 原版是靠
+// `維持費 × 20 >= 總稅收` 收手的（收據 `turn260mem` 建到第三支就停，
+// `docs/re/209`）；`Upkeep` 給 0 的話那一項永遠通過，迴圈只會被
+// `FleetCap` 與 `CanForm` 擋住——那是與原版不同的行為。
 func BuildPass(in BuildInput) []NewFleet {
 	if in.CapitalOwner != in.Faction {
 		return nil // 首都不是自己的就不建
 	}
-	n := 0
-	var counts [4]int
-	for _, f := range in.Fleets {
-		if f.Faction != in.Faction {
-			continue
+	// 這一趟建出來的也要算進「現有幾支」與類別計數，下一輪才對；
+	// 用掉的提督（與他的副官）也不再是候選。
+	var out []NewFleet
+	used := map[int]bool{}
+	for {
+		n := len(out)
+		var counts [4]int
+		for _, f := range out {
+			if c := rules.FleetClass(f.ClassKey); c >= 0 && c < len(counts) {
+				counts[c]++
+			}
 		}
-		n++
-		if c := rules.FleetClass(f.ClassKey); c >= 0 && c < len(counts) {
-			counts[c]++
+		for _, f := range in.Fleets {
+			if f.Faction != in.Faction {
+				continue
+			}
+			n++
+			if c := rules.FleetClass(f.ClassKey); c >= 0 && c < len(counts) {
+				counts[c]++
+			}
+		}
+		if _, ok := BuildGate(n, in.Tax, in.Upkeep, in.Tight); !ok {
+			return out
+		}
+		built := false
+		for _, class := range ClassQuotaOrder(counts, n) {
+			nf, ok := in.tryClass(class, used)
+			if !ok {
+				continue // 這一類編不成 → 換下一類（2D76:01A5 的迴圈）
+			}
+			out = append(out, nf)
+			// 原版靠 `2D76:0611` 清掉提督 `+0x09` 的 bit7，下一輪重建清單
+			// 時他就不合格了（`docs/re/208` 的 bit5）；副官也被綁進同一支
+			// 艦隊，一樣不再是候選。
+			used[nf.Admiral] = true
+			if nf.Adjutant >= 0 {
+				used[nf.Adjutant] = true
+			}
+			built = true
+			break // 成功一類就跳出，回到 2D76:0002 的外圈
+		}
+		if !built {
+			return out // 四類都編不成 → 2D76:01A5 回 0 → 外圈結束
 		}
 	}
-	if _, ok := BuildGate(n, in.Tax, in.Upkeep, in.Tight); !ok {
-		return nil
-	}
-	for _, class := range ClassQuotaOrder(counts, n) {
-		if nf, ok := in.tryClass(class); ok {
-			return []NewFleet{nf}
-		}
-	}
-	return nil
 }
 
 // tryClass ＝ `2D76:02FA(類別)` ＋ `2D76:0576` ＋ `2D76:0611` 的前半。
 //
 // **亂數照原版的次序用掉**：先挑人選、再抽類別鍵。編不成也已經用掉了，
 // 與原版一致（`2D76:0576` 排在 `2D76:0611` 之前）。
-func (in BuildInput) tryClass(class int) (NewFleet, bool) {
-	if len(in.Candidates) == 0 {
+func (in BuildInput) tryClass(class int, used map[int]bool) (NewFleet, bool) {
+	// 評分 → 降冪（`2D76:0434` ＋ `2D76:04FD`）。用掉的先濾掉。
+	ranked := make([]AdmiralView, 0, len(in.Candidates))
+	for _, a := range in.Candidates {
+		if !used[a.Index] {
+			ranked = append(ranked, a)
+		}
+	}
+	if len(ranked) == 0 {
 		return NewFleet{}, false
 	}
-	// 評分 → 降冪（`2D76:0434` ＋ `2D76:04FD`）。
-	ranked := make([]AdmiralView, len(in.Candidates))
-	copy(ranked, in.Candidates)
 	score := make(map[int]int, len(ranked))
 	for _, a := range ranked {
 		score[a.Index] = AdmiralBuildScore(a, class, in.Faction, in.Tax)
