@@ -64,6 +64,11 @@ type Fleet struct {
 	// （跳過，`docs/internals/54`）。
 	Move int `json:"move"`
 
+	// Composition 是這一支的編制，每組一筆艦艇（`docs/re/215`–`217`）。
+	// 新編艦隊時由 `BuildComposition` 產生；從存檔載進來的艦隊還是走
+	// `Slot.FleetGroupShips` 那條原始表的路，這一格是空的。
+	Composition []FleetGroup `json:"composition,omitempty"`
+
 	// Parked ＝ 原版 `+0x08` 是 5：**這一支不會動**，就算有目的地也一樣
 	// （`113A:0350` 讀的就是它，`docs/re/77`）。劇本可以把艦隊設成這樣
 	// ——S2 同盟那七支全是，所以它們十二回合原地不動。
