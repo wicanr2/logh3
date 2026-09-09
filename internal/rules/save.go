@@ -39,6 +39,8 @@ const (
 	// 建造中的船艦（＝ ds:8F9C）：32 位元 × 七個艦種 × 陣營，
 	// 月底 `2B5F:001F` 交付的就是這一組（`docs/re/264`）。
 	workBuilding = 0x88
+	// 月底結算的一次性旗標（＝ ds:8FF4／8FF5，`docs/re/255`）。
+	workMonthFlag = 0xE0
 
 	// FleetRecord 是艦隊表一筆的長度（`docs/re/40`）。
 	FleetRecord = 122
@@ -174,6 +176,17 @@ type Slot struct {
 	// 要照抄，不然會把還沒解的東西寫壞。
 	Work []byte
 
+	// WorkFields 是那 230 bytes 解出來的欄位。
+	WorkFields
+}
+
+// WorkFields 是 `WORK.DT?`（＝ 執行期的 `ds:8F14` 起 230 bytes）目前解出來的
+// 欄位，版面見 `docs/internals/30`。`ReadWork` 從位元組解出它，`Slot.Save`
+// 寫回去；**沒解出來的位元組一律照抄**，不然會把還沒解的東西寫壞。
+//
+// 存檔與執行期記憶體是同一份版面，所以同一支解析器可以吃 dosgolem 倒出來的
+// 記憶體，用來做月底結算的同狀態對拍（`docs/spec/035`）。
+type WorkFields struct {
 	// Turn 是回合數。Military（軍事費）、TaxTotal（總稅收）與 Blend
 	// **都是每個陣營一格**，索引就是陣營——原版的 `ds:8F52`、`ds:8F6A`
 	// 與 `ds:8FD4` 也是（`docs/internals/27`、`docs/internals/55`）。
@@ -199,6 +212,41 @@ type Slot struct {
 	// Building 是各陣營建造中的船艦艘數（`ds:8F9C`），七個艦種各一格。
 	// 月底把它整組交進首都行星與首都星域（`docs/spec/036`、`docs/re/264`）。
 	Building [2]Building
+
+	// MonthFlag 是月底結算的一次性旗標（`ds:8FF4`／`ds:8FF5`）：主迴圈在
+	// `ds:8F18++` 之後把兩格都設成 1，`0654:0034` 做完就清掉自己那一格
+	// （`docs/re/255`）。
+	//
+	// **目前只讀不寫**：remake 的月底不用旗標當閘門（它自己知道跨月了），
+	// `Save` 照抄 `Work` 裡原本那兩個位元組。
+	MonthFlag [2]int
+}
+
+// ReadWork 解 `WORK` 那 230 bytes。長度不足回錯。
+func ReadWork(w []byte) (WorkFields, error) {
+	var f WorkFields
+	if len(w) < WorkRecord {
+		return f, fmt.Errorf("WORK 只有 %d bytes，要 %d", len(w), WorkRecord)
+	}
+	f.Turn = int(w[workTurn]) | int(w[workTurn+1])<<8
+	for i := 0; i < 2; i++ {
+		f.Military[i] = u32(w, workMilitary+i*4)
+		f.TaxTotal[i] = u32(w, workTaxTotal+i*4)
+		f.Blend[i] = int(w[workBlend+i])
+		f.ShipPct[i] = int(w[workShipPct+i])
+		f.BudgetStart[i] = u32(w, workBudgetStart+i*4)
+		f.ShipPaid[i] = u32(w, workShipPaid+i*4)
+		f.PaidUpkeep[i] = u32(w, workPaidUpkeep+i*4)
+		f.PaidMove[i] = u32(w, workPaidMove+i*4)
+		f.Upkeep[i] = u32(w, workUpkeep+i*4)
+		f.MoveCost[i] = u32(w, workMoveCost+i*4)
+		f.MonthFlag[i] = int(w[workMonthFlag+i])
+		for row := 0; row < BuildPlanRows; row++ {
+			f.BuildPct[i][row] = int(w[workBuildPct+i*BuildPlanRows+row])
+			f.Building[i][row] = u32(w, workBuilding+(i*BuildPlanRows+row)*4)
+		}
+	}
+	return f, nil
 }
 
 // LoadSlot 把一格存檔組成遊戲狀態。
@@ -232,32 +280,19 @@ func LoadSlot(f SlotFiles) (*Slot, error) {
 	if err != nil {
 		return nil, err
 	}
-	s := &Slot{
-		Stellar:     append([]byte(nil), f.Stellar...),
-		Planets:     planets,
-		Admiral:     f.Admiral,
-		Fleet:       f.Fleet,
-		Ship:        f.Ship,
-		Work:        append([]byte(nil), f.Work[:WorkRecord]...),
-		Turn:        int(f.Work[workTurn]) | int(f.Work[workTurn+1])<<8,
-		Military:    [2]int{u32(f.Work, workMilitary), u32(f.Work, workMilitary+4)},
-		TaxTotal:    [2]int{u32(f.Work, workTaxTotal), u32(f.Work, workTaxTotal+4)},
-		Blend:       [2]int{int(f.Work[workBlend]), int(f.Work[workBlend+1])},
-		ShipPct:     [2]int{int(f.Work[workShipPct]), int(f.Work[workShipPct+1])},
-		BudgetStart: [2]int{u32(f.Work, workBudgetStart), u32(f.Work, workBudgetStart+4)},
-		ShipPaid:    [2]int{u32(f.Work, workShipPaid), u32(f.Work, workShipPaid+4)},
-		PaidUpkeep:  [2]int{u32(f.Work, workPaidUpkeep), u32(f.Work, workPaidUpkeep+4)},
-		PaidMove:    [2]int{u32(f.Work, workPaidMove), u32(f.Work, workPaidMove+4)},
-		Upkeep:      [2]int{u32(f.Work, workUpkeep), u32(f.Work, workUpkeep+4)},
-		MoveCost:    [2]int{u32(f.Work, workMoveCost), u32(f.Work, workMoveCost+4)},
+	work, err := ReadWork(f.Work)
+	if err != nil {
+		return nil, err
 	}
-	for faction := 0; faction < 2; faction++ {
-		for row := 0; row < BuildPlanRows; row++ {
-			s.BuildPct[faction][row] = int(f.Work[workBuildPct+faction*BuildPlanRows+row])
-			s.Building[faction][row] = u32(f.Work, workBuilding+(faction*BuildPlanRows+row)*4)
-		}
-	}
-	return s, nil
+	return &Slot{
+		Stellar:    append([]byte(nil), f.Stellar...),
+		Planets:    planets,
+		Admiral:    f.Admiral,
+		Fleet:      f.Fleet,
+		Ship:       f.Ship,
+		Work:       append([]byte(nil), f.Work[:WorkRecord]...),
+		WorkFields: work,
+	}, nil
 }
 
 func u32(b []byte, o int) int {

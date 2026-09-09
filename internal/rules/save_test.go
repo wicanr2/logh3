@@ -508,3 +508,22 @@ func TestWorkBuilding(t *testing.T) {
 		}
 	}
 }
+
+// TestReadWorkMonthFlag 釘住 `WORK` 的 `+0xE0`（＝ `ds:8FF4`／`8FF5`）：
+// 三格存檔都是 0／0。`0654:0034` 不論閘門過不過，共同尾巴都會清掉自己
+// 那一格（`docs/re/255`），所以存檔裡不會看到 1——這一列存在的意義是
+// 「讀到非 0 就表示這份不是在回合之間存的」。
+func TestReadWorkMonthFlag(t *testing.T) {
+	for _, f := range []string{"WORK.DT8", "WORK.DT9", "WORK.DTA"} {
+		w, err := ReadWork(readOrig(t, f))
+		if err != nil {
+			t.Fatalf("%s：%v", f, err)
+		}
+		if w.MonthFlag != [2]int{0, 0} {
+			t.Errorf("%s 的月底旗標 ＝ %v，三格存檔都該是 [0 0]", f, w.MonthFlag)
+		}
+	}
+	if _, err := ReadWork(make([]byte, WorkRecord-1)); err == nil {
+		t.Error("長度不足應該回錯")
+	}
+}
