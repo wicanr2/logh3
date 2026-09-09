@@ -3,7 +3,6 @@ package game
 import (
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
-	"github.com/wicanr2/logh3/internal/ui"
 )
 
 // 「補給」與「修理」的選目標（原版 `1930:05EC`、`1AAB:0583`，
@@ -213,10 +212,12 @@ func (g *Game) supplyRangeCircle() (cx, cy, r int, ok bool) {
 	return unit.X, unit.Y, r, true
 }
 
-// supplyPanel 回「補給」選對象時右側面板要顯示的東西；沒有在選對象就回
-// false。行星版沒有這個面板（`1930:0DA2` 那條路不走 `1930:0AA2`）。
+// supplyPanel 回「補給」選對象時右側面板要顯示的東西；沒有在選對象、
+// 或這一次是「修理」就回 false。行星版沒有這個面板（`1930:0DA2` 那條路
+// 不走 `1930:0AA2`）。
 func (g *Game) supplyPanel() (screen.SupplyPanel, bool) {
-	if !g.battleSupply || g.battleSupplyPlanet >= 0 || g.res.SupplyPanel == nil {
+	if !g.battleSupply || g.battleSupplyRepair ||
+		g.battleSupplyPlanet >= 0 || g.res.SupplyPanel == nil {
 		return screen.SupplyPanel{}, false
 	}
 	u := g.battleSupplyUnit
@@ -247,7 +248,7 @@ func (g *Game) supplyPanel() (screen.SupplyPanel, bool) {
 // 換人了才重印（`ds:A436` 記著上一次是誰）。所以「選中」沒有標記，
 // 回饋就是面板下半那三行（`docs/re/143`）。
 func (g *Game) supplyPanelTarget() *screen.SupplyTarget {
-	hit := g.battleUnitAt(g.mouseX, g.mouseY+ui.MouseDY)
+	hit := g.battleUnitAt(g.mouseX, g.mouseY)
 	if hit < 0 {
 		return nil
 	}
@@ -278,5 +279,63 @@ func (g *Game) supplyPanelTarget() *screen.SupplyTarget {
 		MissileFull: int64(k.Byte(0x10)) * int64(t.Ships),
 		Fighters:    int64(t.Fighters),
 		FighterFull: int64(k.Byte(0x14)) * int64(t.Ships),
+	}
+}
+
+// repairPanel 回「修理」選對象時右側面板要顯示的東西（`1AAB:08FB`）。
+func (g *Game) repairPanel() (screen.RepairPanel, bool) {
+	if !g.battleSupply || !g.battleSupplyRepair ||
+		g.battleSupplyPlanet >= 0 || g.res.SupplyPanel == nil {
+		return screen.RepairPanel{}, false
+	}
+	u := g.battleSupplyUnit
+	if u < 0 || u >= len(g.battleUnits) {
+		return screen.RepairPanel{}, false
+	}
+	unit := g.battleUnits[u]
+	if unit.Faction < 0 || unit.Faction >= len(g.res.FactionNames) {
+		return screen.RepairPanel{}, false
+	}
+	fleetNumber := 0
+	if f := g.battleFleet(unit.Fleet); f != nil {
+		fleetNumber = f.Number
+	}
+	p := screen.RepairPanel{
+		FactionName: g.res.FactionNames[unit.Faction],
+		Fleet:       fleetNumber,
+		Repairers:   unit.Ships,
+		Capacity:    int64(unit.Missiles), // 修理艦的 `+0x0E` 是最高修理數
+	}
+	if t := g.repairPanelTarget(); t != nil {
+		p.Target = t
+	}
+	return p, true
+}
+
+// repairPanelTarget 回滑鼠指著的候選（同 `supplyPanelTarget` 的判準）。
+func (g *Game) repairPanelTarget() *screen.RepairTarget {
+	hit := g.battleUnitAt(g.mouseX, g.mouseY)
+	if hit < 0 {
+		return nil
+	}
+	ok := false
+	for _, c := range g.SupplyCandidates() {
+		if c == hit {
+			ok = true
+			break
+		}
+	}
+	if !ok {
+		return nil
+	}
+	t := g.battleUnits[hit]
+	name := []byte(nil)
+	if t.Kind >= 0 && t.Kind < len(g.res.ShipKindNames) {
+		name = g.res.ShipKindNames[t.Kind]
+	}
+	return &screen.RepairTarget{
+		KindName: name,
+		Ships:    t.Ships,
+		Damaged:  t.RepairCap - t.Ships,
 	}
 }

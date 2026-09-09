@@ -113,5 +113,40 @@
   ]
  },
  "target_note": "有目標時多印三列（1930:0AA2 後半）：`%-8s    %4u`（艦種名 ＋ 目標艘數）、「飛彈    」＋ 四格、「戰鬥機  」＋ 四格。四格那一段三選一：補給艦艦種列 +0x0E ＝ 0xFF → 「      無」；目標的量 >= 滿載量 → 「    全滿」；否則把顏色換成 0x92（字色 2）印 `%8ld`（目標的量 − 滿載量，負數），印完切回 0x97。",
- "shortfall_colour": 146
+ "shortfall_colour": 146,
+ "repair": {
+  "_note": "「修理」的面板（1AAB:08FB）：同一個視窗、同一套機制，只是字串與欄位不同。有目標時多兩列。損壞艦數 ＝ 目標 +0x0C − 目標 +0x08。",
+  "lines": {
+   "head": {
+    "offset": "ds:4059",
+    "bytes": "0c25732020b2c4",
+    "text": "\\x0c%s  第"
+   },
+   "fleet_suffix": {
+    "offset": "ds:4061",
+    "bytes": "c4a5b6a4",
+    "text": "艦隊"
+   },
+   "repairer": {
+    "offset": "ds:4066",
+    "bytes": "add7c540c4a5202020202020253475",
+    "text": "修護艦      %4u"
+   },
+   "capacity": {
+    "offset": "ds:4076",
+    "bytes": "b3ccb0aaadd7b27abcc6202025346c75",
+    "text": "最高修理數  %4lu"
+   },
+   "target": {
+    "offset": "ds:4087",
+    "bytes": "252d387320202020253475",
+    "text": "%-8s    %4u"
+   },
+   "damaged": {
+    "offset": "ds:4093",
+    "bytes": "b76cc361c4a5bcc620202020253475",
+    "text": "損壞艦數    %4u"
+   }
+  }
+ }
 }

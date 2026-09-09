@@ -2439,6 +2439,10 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		// 「結束」鈕是另一個視窗，畫在面板上面（`docs/re/143`）。
 		screen.DrawSupplyEndButton(fb, g.res.SupplyPanel, g.res.Font, g.res.FrameTiles)
 	}
+	if p, ok := g.repairPanel(); ok {
+		screen.DrawRepairPanel(fb, g.res.SupplyPanel, g.res.Font, g.res.FrameTiles, p)
+		screen.DrawSupplyEndButton(fb, g.res.SupplyPanel, g.res.Font, g.res.FrameTiles)
+	}
 	// 「補給」／「修理」選對象時畫查詢範圍的圈（`docs/re/140`）。
 	// **候選本身沒有高亮**——原版那個模態迴圈裡只有這個圈與右側面板，
 	// 沒有逐個候選的繪製。

@@ -303,7 +303,8 @@ func weaponInk(s *screen.UnitPanelSpec, have, full, part int) uint8 {
 //
 // 分隊層那支（原版 `2583:00DE`）沒有速度上限也不畫範圍——寫進艦艇
 // `+0x28`／`+0x2A` 的就是點到的世界座標，逐位元組驗過（收據 `s3cmdmove`）。
-// 艦隊層那支要再選一次抵達朝向，還沒逆向完，所以旗艦的「移動」這裡不做。
+// 艦隊層那支（旗艦）要再選一次抵達朝向，走 `beginFleetOrder` 的兩段
+// （`docs/spec/027`）。
 
 // 世界座標的上下限（原版 `2583:022B` 的 `cmp ax,7EFh`／`cmp ax,7E7h`）。
 const (

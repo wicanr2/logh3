@@ -42,6 +42,19 @@ type SupplyPanelSpec struct {
 	// ShortfallColour 是缺口那個數字的顏色（`視窗[+1] = 0x92`，字色 2）。
 	ShortfallColour int `json:"shortfall_colour"`
 
+	// Repair 是「修理」那一版（`1AAB:08FB`）：同一個視窗、同一套機制，
+	// 只是字串與欄位不同。
+	Repair struct {
+		Lines struct {
+			Head      hexStr `json:"head"`
+			FleetTail hexStr `json:"fleet_suffix"`
+			Repairer  hexStr `json:"repairer"`
+			Capacity  hexStr `json:"capacity"`
+			Target    hexStr `json:"target"`
+			Damaged   hexStr `json:"damaged"`
+		} `json:"lines"`
+	} `json:"repair"`
+
 	Number struct {
 		LT10 hexStr `json:"lt10"`
 		GE10 hexStr `json:"ge10"`
@@ -180,4 +193,46 @@ func DrawSupplyEndButton(fb *gfx.Framebuffer, s *SupplyPanelSpec, fnt *font.Font
 		b.Write(seg.String.Raw())
 	}
 	ui.DrawTextBuffer(fb, fnt, tiles, b, e.CellX, e.CellY)
+}
+
+// RepairPanel 是「修理」面板上要顯示的東西（`1AAB:08FB`）。
+type RepairPanel struct {
+	FactionName []byte
+	Fleet       int
+	Repairers   int   // 修理艦 `+0x08`
+	Capacity    int64 // 修理艦 `+0x0E` 32 位元：最高修理數
+
+	// Target 是滑鼠指著的候選；nil 就只印前三列。
+	Target *RepairTarget
+}
+
+// RepairTarget 是目標那兩列。
+type RepairTarget struct {
+	KindName []byte
+	Ships    int // 目標 `+0x08`
+	Damaged  int // 目標 `+0x0C` − `+0x08`
+}
+
+// DrawRepairPanel 把「修理」的面板畫進右側狀態欄。
+func DrawRepairPanel(fb *gfx.Framebuffer, s *SupplyPanelSpec, fnt *font.Font,
+	tiles *ui.FrameTiles, p RepairPanel) {
+	if fb == nil || s == nil {
+		return
+	}
+	l := &s.Repair.Lines
+	b := ui.NewTextBuffer(s.Cols, s.Rows, uint8(s.Colour))
+	b.Printf(l.Head.Raw(), p.FactionName)
+	if p.Fleet < 10 {
+		b.Printf(s.Number.LT10.Raw(), p.Fleet)
+	} else {
+		b.Printf(s.Number.GE10.Raw(), p.Fleet)
+	}
+	b.Write(l.FleetTail.Raw())
+	b.Printf(l.Repairer.Raw(), p.Repairers)
+	b.Printf(l.Capacity.Raw(), p.Capacity)
+	if t := p.Target; t != nil {
+		b.Printf(l.Target.Raw(), t.KindName, t.Ships)
+		b.Printf(l.Damaged.Raw(), t.Damaged)
+	}
+	ui.DrawTextBuffer(fb, fnt, tiles, b, s.CellX, s.CellY)
 }
