@@ -272,3 +272,39 @@ func TestBattleScanContinuesToNextRegion(t *testing.T) {
 		t.Error("都打完了還停在戰場")
 	}
 }
+
+// TestTaxEstimateRefreshesEveryTurn 釘住「預估徵稅額每個回合重算」
+// （`docs/spec/035`、`docs/re/255`）。
+//
+// 原版 `0654:0034` 的共同尾巴 `090A:0E6D` 每個座位回合都跑，而且是冪等的
+// ——收據 `monthgate7`／`monthgateB` 各跑三趟，20 筆逐筆累加值完全相同。
+// 所以中途打下一個星域之後，當回合的預估值就要跟著變，不必等到月底。
+func TestTaxEstimateRefreshesEveryTurn(t *testing.T) {
+	g := newRegionTurnGame(t)
+	// 每格經濟力 1000、稅率 32‰ → 每格 32。
+	for i := 0; i < rules.RegionCount; i++ {
+		rec := g.regionRecord(i)
+		binary.LittleEndian.PutUint32(rec[0x1A:], 1000)
+		rec[0x26] = 32
+	}
+	regionPass(g)
+	g.refreshTaxEstimate()
+	before := g.taxTotal
+	if before[0] != 16*32 || before[1] != 16*32 {
+		t.Fatalf("初值 ＝ %v，預期兩邊各 %d", before, 16*32)
+	}
+
+	// 打下一顆行星讓星域 16 從同盟換到帝國，然後跑一個**非月底**的回合。
+	g.res.Planets.Data[rules.PlanetHeader+16*rules.PlanetRecord+0x11] = 0
+	g.turn = 3 // 3 mod 10 != 0
+	g.recomputeRegionOwners()
+	g.pendingFlips = nil
+	g.finishTurn()
+
+	if got, want := g.taxTotal[0], 17*32; got != want {
+		t.Errorf("帝國的預估徵稅額 ＝ %d，預期 %d", got, want)
+	}
+	if got, want := g.taxTotal[1], 15*32; got != want {
+		t.Errorf("同盟的預估徵稅額 ＝ %d，預期 %d", got, want)
+	}
+}

@@ -750,7 +750,8 @@ func (g *Game) finishTurn() {
 	//
 	// ⚠ **對戰模式的跨月沒有量過**（`docs/spec/016`）：這裡照單人模式
 	// 只結算目前這一方，另一方的錢停在上個月。要往下走得先有收據。
-	if g.turn%rules.TurnsPerMonth == 0 {
+	month := g.turn%rules.TurnsPerMonth == 0
+	if month {
 		g.delivered = g.building
 		g.reportYear, g.reportMonth, _ = g.Date()
 		// 報告掛的是**剛結束的那個月**，日期已經翻到次月 1 日。
@@ -759,6 +760,12 @@ func (g *Game) finishTurn() {
 			g.reportMonth, g.reportYear = 12, g.reportYear-1
 		}
 		g.monthEnd()
+	}
+	// 原版 `0654:0034` 的共同尾巴每個回合都跑：照現在的狀態把預估徵稅額
+	// 刷一次（`docs/spec/035`）。中途打下一個星域之後，右側面板與徵稅
+	// 計劃當回合就要跟著變，不必等到月底。
+	g.refreshTaxEstimate()
+	if month {
 		if g.commandSpec(StateShipDelivery) != nil {
 			g.state = StateShipDelivery
 			return
@@ -1682,6 +1689,16 @@ func (g *Game) monthEnd() {
 	}
 	// 3. 結算完之後重算下個月的預估徵稅額——徵稅計劃那張印的是這個，
 	//    與剛剛實收的那筆不是同一個數（`docs/spec/003`）。
+	g.refreshTaxEstimate()
+}
+
+// refreshTaxEstimate 重算兩個陣營下個月的預估徵稅額。
+//
+// 原版的 `090A:0E6D`（`2703:02E5` ＋ `090A:0E88`）**每個座位回合都跑**，
+// 而且是冪等的——收據 `monthgate7`／`monthgateB` 各跑三趟，20 筆逐筆
+// 累加值完全相同（`docs/spec/035`、`docs/re/255`）。真正改狀態的是月底
+// 那一趟旗標 1 的 `2703:03AF`。
+func (g *Game) refreshTaxEstimate() {
 	for f := 0; f < 2; f++ {
 		g.taxTotal[f] = g.estimateTaxFor(f)
 	}
