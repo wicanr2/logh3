@@ -141,6 +141,31 @@
 | 剩餘軍事費 ＝ 預估軍事費 − 船艦建造費 | **已實作** | 同上 |
 | 其他 | 未開始 | — |
 
+## 戰略 AI
+
+原版有一整套戰略 AI（`docs/internals/54`、規格 [`docs/spec/029`](docs/spec/029-strategic-ai-turn.md)）。
+逆向與實作的完成度分開記——**「反組譯讀完」不等於「接上去了」**。
+
+| 項目 | 狀態 | 證據 |
+|---|---|---|
+| 何時跑（座位、閘門、玩家／電腦兩條迴圈）| **已逆向** | [`docs/re/175`](docs/re/175-ai-runs-only-for-computer-seats.md)、[`186`](docs/re/186-seat-turn-loop.md)、[`187`](docs/re/187-player-phase-vs-ai-phase.md) |
+| 一回合的五個階段（骨架與各階段算式）| **已逆向** | [`docs/re/168`](docs/re/168-strategic-ai-candidate-picker.md)–[`182`](docs/re/182-admiral-flags-and-fleet-cost.md) |
+| 敵方兵力圖 `ds:D54E` | **已實作並對拍**（`ai.ThreatMap`）| 收據 `s3aicomp`：四格全中，星域 25 ＝ 69 |
+| 攻擊目標分 `ds:D50E` | **已實作並對拍**（`ai.AttackScore`）| 收據 `s3aicomp`：13→682、15／22／28→2048 |
+| 要派幾支 `ds:D58E`（階段四）| **已實作並對拍**（`ai.AttackNeed`）| 收據 `s3aicomp` ＋ 原版種子 `0xD3DC167E`（[`docs/re/184`](docs/re/184-ai-rng-call-trace.md)）|
+| 守勢優先度／守勢要派幾支 | **已實作，未對拍** | 算式來自反組譯；收據那一趟走的是攻勢版 |
+| 進軍路線表（12 種戰略態勢）| **已實作**（`ai.AdvanceRoutes`、`data/ai-advance-routes.json`）| [`docs/re/178`](docs/re/178-ai-advance-routes.md)、[`179`](docs/re/179-ai-strategic-state-code.md) |
+| 「下一步走哪一格」`2B99:0302` | **已實作並證明等價**（`rules.StarGraph.NextStep`）| [`docs/re/183`](docs/re/183-next-step-equivalence.md)；兩張矩陣所有走得通的星域對與 `Route[1]` 逐一相同 |
+| 候選挑選與評分（`2E54:143F`／`2E54:1574`）| **已逆向，未實作** | 要先把艦艇池接進 `ai.World` |
+| 指派、建艦隊、費沙事件 | **已逆向，未實作** | [`docs/re/180`](docs/re/180-admiral-fleet-slot.md)–[`182`](docs/re/182-admiral-flags-and-fleet-cost.md)、[`190`](docs/re/190-fleet-class-meaning.md)–[`192`](docs/re/192-phezzan-event.md) |
+| **接到 `advanceTurn`** | **未做** | 規格仍 DRAFT；`internal/ai` 的 `Original` 仍回 `nil`。要換掉之前需要使用者裁決（理由與影響寫在 `docs/spec/029` 末尾）|
+
+> 既有的 25 份記憶體傾印裡，**只有被 `-poke` 過座位表的 `s3aicomp` 跑過 AI**
+> （`ds:D60E = 5`），其餘 24 份的 `ds:D60E` 與整張 `ds:D50E` 都是 0
+> （[`docs/re/189`](docs/re/189-ai-never-ran-in-any-receipt.md)）——
+> 所以目前**沒有任何既有收據涵蓋 AI 的行為**，上面標「已對拍」的三項
+> 靠的都是 `s3aicomp` 這一份。
+
 ## 執行器（dosgolem）覆蓋
 
 | 項目 | 狀態 |
