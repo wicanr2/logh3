@@ -13,7 +13,11 @@ type BattlePlanet struct {
 	X       int  `json:"x"`     // 星域地圖上的位置
 	Y       int  `json:"y"`
 	Defence int  `json:"defence"` // `+0x14`：防衛力
-	Halved  bool `json:"halved"`  // `+0x12` 非 0：除數從 10 變 20
+	// Fortress ＝ 行星記錄 `+0x12` 非 0：**這顆有要塞**。81 顆裡有 8 顆
+	// （伊謝爾倫、連典貝爾克、禿鷹之城、格魯米遜、葛羅斯達、帕謬爾、
+	// 梅爾格利德、魯德米拉）。兩個地方讀它：戰損的除數從 10 變 20，
+	// 以及戰場點行星時開的是四項的選單（多「要塞砲」，`docs/re/133`）。
+	Fortress bool `json:"fortress"`
 }
 
 // 查詢半徑的夾限（`2AF5:01F7`）。
@@ -35,10 +39,10 @@ func PlanetQueryRadius(defence int) int {
 	return d / planetRangeDiv
 }
 
-// Halved 回行星記錄的 `+0x12` 是不是非 0（除數 10 → 20）。
-func (p *Planets) Halved(i int) bool { return p.rec(i)[planetHalved] != 0 }
+// Fortress 回這顆行星有沒有要塞（記錄 `+0x12` 非 0）。
+func (p *Planets) Fortress(i int) bool { return p.rec(i)[planetFortress] != 0 }
 
-const planetHalved = 0x12
+const planetFortress = 0x12
 
 // BattlePlanetsFor 把一個星域的行星配上它們在戰場上的位置。
 //
@@ -53,7 +57,7 @@ func (p *Planets) BattlePlanetsFor(region int, sites []PlanetSite) []BattlePlane
 		out = append(out, BattlePlanet{
 			Index: i, Owner: p.Owner(i),
 			X: sites[k].X, Y: sites[k].Y,
-			Defence: p.Defence(i), Halved: p.Halved(i),
+			Defence: p.Defence(i), Fortress: p.Fortress(i),
 		})
 	}
 	return out

@@ -507,6 +507,7 @@ type Game struct {
 	// 是五張表的哪一張，battleCmdX／Y 是框的左上角。
 	battleCmd                bool
 	battleCmdUnit            int
+	battleCmdPlanet          int // -1 ＝ 這一張不是行星的選單
 	battleCmdKind            screen.CommandMenuKind
 	battleCmdX, battleCmdY   int
 
@@ -2427,7 +2428,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		g.battleCmdUnit >= 0 && g.battleCmdUnit < len(g.battleUnits) {
 		cm := g.res.CommandMenus
 		n := cm.ItemCount(g.battleCmdKind)
-		sel := cm.CommandMenuRowAt(g.battleCmdX, g.battleCmdY, g.mouseX, g.mouseY, n)
+		sel := cm.CommandMenuRowAt(g.battleCmdKind, g.battleCmdX, g.battleCmdY, g.mouseX, g.mouseY, n)
 		screen.DrawCommandMenu(cm, fb, g.res.Font, g.battleCmdKind,
 			g.commandMenuEnabled(g.battleCmdKind, g.battleUnits[g.battleCmdUnit]),
 			g.battleCmdX, g.battleCmdY, sel)

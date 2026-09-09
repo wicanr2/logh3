@@ -119,7 +119,7 @@ func ResolveBattleTurn(planets []BattlePlanet, fleets []BattleFleet,
 			total := BattleDamage(DamageInput{
 				Ships01:  ships,
 				Bonus:    p.Defence,
-				Halved:   p.Halved,
+				Halved:   p.Fortress, // 有要塞：除數從 10 變 20
 				Distance: isqrt((tx-p.X)*(tx-p.X) + (ty-p.Y)*(ty-p.Y)),
 				Facing:   f.Facing,
 				Bearing:  Bearing(p.X, p.Y, tx, ty),

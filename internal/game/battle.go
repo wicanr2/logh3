@@ -196,6 +196,15 @@ func (g *Game) battleClick(x, y int) {
 				return
 			}
 		}
+		// 分隊底下才輪到行星。**誰的行星都開得起來**（原版索引最高位元
+		// 設起來就代表點到行星，一律可以），不是自己的只剩「情報」
+		// （`docs/re/133`）。
+		if p := g.battlePlanetAt(x, y); p >= 0 {
+			g.openPlanetMenu(p, x, y)
+			if g.CommandMenuOpen() {
+				return
+			}
+		}
 		if g.res.BattleMenu == nil {
 			return
 		}

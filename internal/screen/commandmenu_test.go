@@ -57,9 +57,9 @@ func TestCommandMenuMatchesOracle(t *testing.T) {
 			n := s.ItemCount(c.kind)
 			sx, sy := c.mx, c.my+ui.MouseDY
 			x, y := s.CommandMenuAt(sx, sy, n)
-			w, h := s.Size(n)
+			w, h := s.Size(c.kind, n)
 			fb := gfx.NewFramebuffer(0)
-			sel := s.CommandMenuRowAt(x, y, sx, sy, n)
+			sel := s.CommandMenuRowAt(c.kind, x, y, sx, sy, n)
 			if m := DrawCommandMenu(s, fb, fnt, c.kind, c.enabled, x, y, sel); len(m) > 0 {
 				t.Fatalf("缺字 %04X", m)
 			}

@@ -18,6 +18,11 @@ const (
 	CommandMenuSupply   CommandMenuKind = "supply"   // ds:4158 移動／編隊／補給
 	CommandMenuRepair   CommandMenuKind = "repair"   // ds:417A 移動／編隊／修理
 	CommandMenuScout    CommandMenuKind = "scout"    // ds:4196 移動／歸隊
+
+	// 行星那兩張（`docs/re/133`）。有要塞（行星記錄 `+0x12` 非 0）的
+	// 多一項「要塞砲」，內寬也從 2 變 3。
+	CommandMenuPlanet   CommandMenuKind = "planet"   // ds:42EA 情報／補給／補充
+	CommandMenuFortress CommandMenuKind = "fortress" // ds:4318 ＋要塞砲
 )
 
 // CommandMenuSpec 是戰場命令選單的版面與五張表
@@ -26,10 +31,11 @@ const (
 // 開啟常式與戰術選單同一支，配色與框線也同一套，所以這裡只放每一張的
 // 項目與內寬；框的位置與大小走 layout 的公式（`docs/re/117`）。
 type CommandMenuSpec struct {
-	Width int `json:"width"` // 內寬，單位是 16 像素
+	Width int `json:"width"` // 預設內寬，單位是 16 像素
 	Menus map[CommandMenuKind]struct {
 		Address string  `json:"address"`
 		When    string  `json:"when"`
+		Width   int     `json:"width,omitempty"` // 0 ＝ 用上面那個預設值
 		Items   []label `json:"items"`
 	} `json:"menus"`
 	Layout struct {
@@ -71,13 +77,22 @@ func (s *CommandMenuSpec) ItemCount(kind CommandMenuKind) int {
 	return len(s.Menus[kind].Items)
 }
 
+// WidthOf 回某一張選單的內寬。戰場那五張都是 2，行星那兩張是 2 與 3
+// （`1CC5:0FB9`／`1CC5:0FCB`，`docs/re/133`）。
+func (s *CommandMenuSpec) WidthOf(kind CommandMenuKind) int {
+	if w := s.Menus[kind].Width; w > 0 {
+		return w
+	}
+	return s.Width
+}
+
 // Size 回一張有 rows 項的選單的框大小。
 //
 // 框大小 ＝ (內寬 × 16 ＋ 30) × (項目數 × 20 ＋ 38)，三張收據驗過
 // （`docs/re/117`）。
-func (s *CommandMenuSpec) Size(rows int) (int, int) {
+func (s *CommandMenuSpec) Size(kind CommandMenuKind, rows int) (int, int) {
 	l := &s.Layout
-	return s.Width*l.CellW + l.FramePadW, rows*l.CellH + l.FramePadH
+	return s.WidthOf(kind)*l.CellW + l.FramePadW, rows*l.CellH + l.FramePadH
 }
 
 // CommandMenuAt 回把有 rows 項的選單開在游標 (mx,my) 時，框的左上角。
@@ -101,10 +116,10 @@ func (s *CommandMenuSpec) CommandMenuAt(mx, my, rows int) (int, int) {
 }
 
 // CommandMenuRowAt 回畫面座標 (x,y) 落在第幾項，-1 ＝ 不在任何一項上。
-func (s *CommandMenuSpec) CommandMenuRowAt(left, top, x, y, rows int) int {
+func (s *CommandMenuSpec) CommandMenuRowAt(kind CommandMenuKind, left, top, x, y, rows int) int {
 	l := &s.Layout
 	hx := left + l.HighlightDX
-	if x < hx || x >= hx+s.Width*l.CellW {
+	if x < hx || x >= hx+s.WidthOf(kind)*l.CellW {
 		return -1
 	}
 	first := top + l.HighlightDY
@@ -130,7 +145,7 @@ func DrawCommandMenu(s *CommandMenuSpec, fb *gfx.Framebuffer, fnt *font.Font,
 		return nil
 	}
 	l := &s.Layout
-	w, h := s.Size(len(items))
+	w, h := s.Size(kind, len(items))
 	f := ui.MenuFrame()
 	f.Fill = l.Fill
 	f.Draw(fb, x, y, w, h)
@@ -138,7 +153,7 @@ func DrawCommandMenu(s *CommandMenuSpec, fb *gfx.Framebuffer, fnt *font.Font,
 	hx, hy := x+l.HighlightDX, y+l.HighlightDY
 	on := func(r int) bool { return r >= len(enabled) || enabled[r] }
 	if sel >= 0 && sel < len(items) && on(sel) {
-		fb.FillRect(hx, hy+sel*l.RowPitch, s.Width*l.CellW, l.RowPitch, l.HighlightInk)
+		fb.FillRect(hx, hy+sel*l.RowPitch, s.WidthOf(kind)*l.CellW, l.RowPitch, l.HighlightInk)
 	}
 	var missing []uint16
 	for r, item := range items {

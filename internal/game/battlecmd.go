@@ -122,12 +122,13 @@ func (g *Game) openCommandMenu(unit, x, y int) {
 	}
 	g.battleCmd = true
 	g.battleCmdUnit = unit
+	g.battleCmdPlanet = -1
 	g.battleCmdKind = kind
 	g.battleCmdX, g.battleCmdY = s.CommandMenuAt(x, y, n)
 }
 
 // closeCommandMenu 關掉命令選單。
-func (g *Game) closeCommandMenu() { g.battleCmd = false }
+func (g *Game) closeCommandMenu() { g.battleCmd, g.battleCmdPlanet = false, -1 }
 
 // CommandMenuOpen 回命令選單開著沒有。
 func (g *Game) CommandMenuOpen() bool { return g.battleCmd }
@@ -139,12 +140,15 @@ func (g *Game) commandMenuClick(x, y int) bool {
 	}
 	s := g.res.CommandMenus
 	n := s.ItemCount(g.battleCmdKind)
+	if g.battleCmdPlanet >= 0 {
+		return g.planetMenuClick(x, y, n)
+	}
 	unit := g.battleCmdUnit
 	if unit < 0 || unit >= len(g.battleUnits) {
 		g.closeCommandMenu()
 		return true
 	}
-	row := s.CommandMenuRowAt(g.battleCmdX, g.battleCmdY, x, y, n)
+	row := s.CommandMenuRowAt(g.battleCmdKind, g.battleCmdX, g.battleCmdY, x, y, n)
 	on := g.commandMenuEnabled(g.battleCmdKind, g.battleUnits[unit])
 	g.closeCommandMenu()
 	if row < 0 || (row < len(on) && !on[row]) {
