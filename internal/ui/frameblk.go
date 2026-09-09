@@ -152,3 +152,54 @@ func (f TileFrame) DrawRect(fb *gfx.Framebuffer, x, y, w, h int) bool {
 	f.Draw(fb, (x-1)/FrameTileW, cellY, (w+2)/FrameTileW, (h+2)/FrameTileH)
 	return true
 }
+
+// 內容格的旗標（視窗內容緩衝區一格的 `[+3]`，搬到畫面格表就是顏色的
+// 高位元組）。`2376:1144`／`2376:1180`／`2376:1193` 依這些位元加裝飾，
+// 位置與色號都寫死在程式裡（`docs/re/138`）。
+const (
+	CellUnderline   = 0x01 // 字上方一條線（色 15）
+	CellDither      = 0x02 // 網點
+	CellBold        = 0x04 // 加粗
+	CellButtonBody  = 0x08 // 按鈕的上下兩條邊
+	CellButtonLeft  = 0x10 // 按鈕左端（畫在格內最右邊兩個像素）
+	CellButtonRight = 0x20 // 按鈕右端（畫在格內最左邊兩個像素）
+)
+
+// 按鈕邊用的兩個色號：`2376:1270` 是 7、`2376:1278` 是 3。
+const (
+	ButtonLightInk = 7
+	ButtonDarkInk  = 3
+)
+
+// DrawCellDecor 把一格的按鈕裝飾畫上去，(x, y) 是那一格的左上角像素。
+//
+// 三段的像素位置直接照 `2376:11B9`／`2376:11F1`／`2376:121B`：上下邊
+// 各兩列、左端在格內第 14–15 行、右端在第 0–1 行，而且**最後一列與其他
+// 列不同色**——左端最後一列的最右邊那個像素是暗色，右端第一列的最左邊
+// 那個像素是亮色。四個角就是靠這兩個像素接起來的。
+func DrawCellDecor(fb *gfx.Framebuffer, x, y int, flags uint8) {
+	if flags&CellButtonBody != 0 {
+		for i := 0; i < FrameTileW; i++ {
+			fb.Set(x+i, y, ButtonLightInk)
+			fb.Set(x+i, y+1, ButtonLightInk)
+			fb.Set(x+i, y+FrameTileH-2, ButtonDarkInk)
+			fb.Set(x+i, y+FrameTileH-1, ButtonDarkInk)
+		}
+	}
+	if flags&CellButtonLeft != 0 {
+		for r := 0; r < FrameTileH-1; r++ {
+			fb.Set(x+FrameTileW-2, y+r, ButtonLightInk)
+			fb.Set(x+FrameTileW-1, y+r, ButtonLightInk)
+		}
+		fb.Set(x+FrameTileW-2, y+FrameTileH-1, ButtonLightInk)
+		fb.Set(x+FrameTileW-1, y+FrameTileH-1, ButtonDarkInk)
+	}
+	if flags&CellButtonRight != 0 {
+		for r := 1; r < FrameTileH; r++ {
+			fb.Set(x, y+r, ButtonDarkInk)
+			fb.Set(x+1, y+r, ButtonDarkInk)
+		}
+		fb.Set(x, y, ButtonLightInk)
+		fb.Set(x+1, y, ButtonDarkInk)
+	}
+}

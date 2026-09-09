@@ -102,9 +102,9 @@ func TestMessageBoxFrameMatchesOracle(t *testing.T) {
 	}
 }
 
-// 框 ＋ 那行字一起畫，與收據 `s3msg` 比整個 22 × 6 格。
-// 差的只該是右下角那個按鈕（`37A9:004C` 的子元件，還沒做）。
-func TestMessageBoxTextMatchesOracle(t *testing.T) {
+// 框 ＋ 那行字 ＋ 按鈕一起畫，與收據 `s3msg` 比整個 22 × 6 格
+// （42,240 個像素）逐位元組。
+func TestMessageBoxMatchesOracle(t *testing.T) {
 	root := "../.."
 	s, err := LoadMessageBoxSpec(
 		filepath.Join(root, "docs/internals/data/message-box.json"))
@@ -150,26 +150,19 @@ func TestMessageBoxTextMatchesOracle(t *testing.T) {
 	y0 := tp.cellY*ui.FrameTileH + ui.FrameCellOriginY
 	w, h := (tp.cols+2)*ui.FrameTileW, (tp.rows+2)*ui.FrameTileH
 
-	// 按鈕在內容區右下角，`37A9:004C` 畫的，還沒做——先量出它的範圍，
-	// 其餘每一個像素都要與收據相同。
-	const btnX0, btnX1, btnY0, btnY1 = 336, 400, 260, 280
-	var diff, inBtn int
+	if miss := DrawMessageBoxButtons(fb, s, 2, fnt); len(miss) != 0 {
+		t.Fatalf("按鈕有缺字：%04X", miss)
+	}
+
+	var diff int
 	for y := y0; y < y0+h; y++ {
 		for x := x0; x < x0+w; x++ {
-			if fb.At(x, y) == want[y*640+x] {
-				continue
+			if fb.At(x, y) != want[y*640+x] {
+				diff++
 			}
-			if x >= btnX0 && x < btnX1 && y >= btnY0 && y < btnY1 {
-				inBtn++
-				continue
-			}
-			diff++
 		}
 	}
 	if diff != 0 {
-		t.Errorf("框 ＋ 文字之外還有 %d 個像素不同（按鈕那一塊 %d 個）", diff, inBtn)
-	}
-	if inBtn == 0 {
-		t.Error("按鈕那一塊沒有差異——它應該還沒做")
+		t.Errorf("整個訊息框有 %d 個像素與收據不同", diff)
 	}
 }

@@ -2,6 +2,7 @@ package screen
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/wicanr2/logh3/internal/font"
@@ -39,6 +40,24 @@ type MessageBoxSpec struct {
 		Shadow   uint8 `json:"shadow"`
 		ShadowDY int   `json:"shadow_dy"`
 	} `json:"text"`
+
+	// Button 是子元件的配色（`ds:8BE4`）。
+	Button struct {
+		Colour int `json:"colour"`
+	} `json:"button"`
+
+	// Children 是每一種訊息框的按鈕（`37A9:000F` 的 12 bytes 一筆表）。
+	Children []struct {
+		Kind  int `json:"kind"`
+		Items []struct {
+			CellX int      `json:"cell_x"`
+			CellY int      `json:"cell_y"`
+			Cols  int      `json:"cols"`
+			Rows  int      `json:"rows"`
+			Codes []string `json:"codes"`
+			Text  string   `json:"text"`
+		} `json:"items"`
+	} `json:"children"`
 }
 
 // LoadMessageBoxSpec 讀訊息框的版面。
@@ -129,6 +148,64 @@ func DrawMessageBoxText(fb *gfx.Framebuffer, s *MessageBoxSpec, kind int,
 		if !ui.DrawGlyph(fb, fnt, x+i*s.Text.ColPitch, y, c,
 			s.Text.Ink, s.Text.Shadow, s.Text.ShadowDY, false) {
 			missing = append(missing, c)
+		}
+	}
+	return missing
+}
+
+// DrawMessageBoxButtons 把訊息框的按鈕畫出來。
+//
+// `37A9:004C` 是寫進視窗的內容緩衝區，不是直接畫：按鈕那幾格拿到顏色
+// `ds:8BE4[…]`（0x87 ＝ 底色 8、字色 7）與旗標 `0x08`，左邊多一格拿
+// `0x10`、右邊多一格拿 `0x20`。左右那兩格**沒有換顏色**，所以底仍是視窗
+// 的 9，只有格內邊緣那兩行像素被畫上（`docs/re/138`）。
+func DrawMessageBoxButtons(fb *gfx.Framebuffer, s *MessageBoxSpec, kind int,
+	fnt *font.Font) []uint16 {
+	t, ok := s.template(kind)
+	if !ok {
+		return nil
+	}
+	bg := uint8(s.Button.Colour >> 4)
+	ink := uint8(s.Button.Colour & 0x0F)
+	// 內容格 (0,0) 的左上角像素。
+	ox := (t.cellX + 1) * ui.FrameTileW
+	oy := (t.cellY+1)*ui.FrameTileH + ui.FrameCellOriginY
+
+	var missing []uint16
+	for _, c := range s.Children {
+		if c.Kind != kind {
+			continue
+		}
+		for _, it := range c.Items {
+			// 順序照 `2376:10B7`：底色 → 立體邊 → 字 → 裝飾。裝飾**最後**畫，
+			// 所以按鈕上緣那兩列會蓋掉字的立體邊——差就差在那兩個像素。
+			for r := 0; r < it.Rows; r++ {
+				y := oy + (it.CellY+r)*ui.FrameTileH
+				for i := 0; i < it.Cols; i++ {
+					fb.FillRect(ox+(it.CellX+i)*ui.FrameTileW, y,
+						ui.FrameTileW, ui.FrameTileH, bg)
+				}
+			}
+			for i, h := range it.Codes {
+				var code uint16
+				if _, err := fmt.Sscanf(h, "%04X", &code); err != nil {
+					continue
+				}
+				if !ui.DrawGlyph(fb, fnt,
+					ox+(it.CellX+i)*ui.FrameTileW+s.Text.DX,
+					oy+it.CellY*ui.FrameTileH+s.Text.DY,
+					code, ink, s.Text.Shadow, s.Text.ShadowDY, false) {
+					missing = append(missing, code)
+				}
+			}
+			for r := 0; r < it.Rows; r++ {
+				y := oy + (it.CellY+r)*ui.FrameTileH
+				for i := 0; i < it.Cols; i++ {
+					ui.DrawCellDecor(fb, ox+(it.CellX+i)*ui.FrameTileW, y, ui.CellButtonBody)
+				}
+				ui.DrawCellDecor(fb, ox+(it.CellX-1)*ui.FrameTileW, y, ui.CellButtonLeft)
+				ui.DrawCellDecor(fb, ox+(it.CellX+it.Cols)*ui.FrameTileW, y, ui.CellButtonRight)
+			}
 		}
 	}
 	return missing
