@@ -182,3 +182,27 @@ func DrawFortressRange(s *BattleSpec, fb *gfx.Framebuffer,
 		}
 	}
 }
+
+// SupplyRangeInk 是「補給」／「修理」選對象時那個圈的色號。
+//
+// 圈是 `165F:09D9` 掛上去的圖形描述：中心 ＝ 單位 `+0x34`／`+0x36` 各 ＋8
+// （佔位框中心）、`[+5] = 5`（色）、`[+6] = 1`（圓）、半徑 ＝ 艦種列
+// `+0x06`（最高速度）× 32 ÷ 5，也就是 `rules.SupplyRange` 的那個 6.4
+// （`docs/re/140`）。
+const SupplyRangeInk = 5
+
+// DrawSupplyRange 把補給／修理的查詢範圍畫在戰場上。cx／cy 是單位的
+// 世界座標（不含 ＋8），r 是半徑。
+func DrawSupplyRange(s *BattleSpec, fb *gfx.Framebuffer, cx, cy, r int, v BattleView) {
+	if s == nil || fb == nil || r <= 0 {
+		return
+	}
+	sx := s.Field.X + cx + 8 - v.Col*s.Field.TileW
+	sy := s.Field.Y + cy + 8 - v.Row*s.Field.TileH
+	clip := func(x, y int) bool {
+		return x >= s.Field.X && y >= s.Field.Y &&
+			x < s.Field.X+s.Field.Cols*s.Field.TileW &&
+			y < s.Field.Y+s.Field.Rows*s.Field.TileH
+	}
+	xorCircle(fb, sx, sy, r, SupplyRangeInk, clip)
+}

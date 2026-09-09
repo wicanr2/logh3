@@ -2425,6 +2425,12 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 				f.turn, f.dist, f.facing, g.battleView)
 		}
 	}
+	// 「補給」／「修理」選對象時畫查詢範圍的圈（`docs/re/140`）。
+	// **候選本身沒有高亮**——原版那個模態迴圈裡只有這個圈與右側面板，
+	// 沒有逐個候選的繪製。
+	if cx, cy, r, ok := g.supplyRangeCircle(); ok {
+		screen.DrawSupplyRange(g.res.Battle, fb, cx, cy, r, g.battleView)
+	}
 	// 要塞砲指定目標時畫射程橢圓（`docs/re/134`）。
 	if o, i, ok := g.FortressTargetRange(); ok {
 		p := g.battlePlanets[g.battleGun]

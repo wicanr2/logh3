@@ -108,3 +108,13 @@ func give(need, have int) int {
 // kindFighterFull 是艦種列的「艦載機滿量」（`+0x14`）。分隊面板拿它
 // 判斷艦載機滿不滿（`docs/re/118`），補給也拿它當上限。
 const kindFighterFull = 0x14
+
+// SupplyRangePixels 回「補給」／「修理」選對象時畫在戰場上那個圈的半徑
+// （像素）。
+//
+// `165F:09D9` 直接算 `最高速度 × 32 ÷ 5`（五次 `shl`／`rcl` 之後除 5），
+// 不是把 16.16 的 SupplyListRange 截下來——兩者目前每一個速度都給同一個
+// 數，但**算式不同就分開寫**，哪天發現差一個數才知道是誰錯（`docs/re/140`）。
+func SupplyRangePixels(t *ShipKindTable, faction, kind int) int {
+	return kindSpeed(t, faction, kind) * 32 / 5
+}

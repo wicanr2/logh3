@@ -186,3 +186,25 @@ func (g *Game) supplyPickClick(x, y int) bool {
 	}
 	return true
 }
+
+// supplyRangeCircle 回「補給」／「修理」選對象時那個圈的中心與半徑
+// （世界座標，不含佔位框的 ＋8）。
+//
+// 原版是 `165F:044D` 掛上去的圖形描述之一（`165F:09D9`），半徑
+// `最高速度 × 32 ÷ 5`。行星版沒有這一支——`1AAB:0A33` 那條路沒有走
+// `165F:044D`，所以行星補給不畫圈（`docs/re/140`）。
+func (g *Game) supplyRangeCircle() (cx, cy, r int, ok bool) {
+	if !g.battleSupply || g.battleSupplyPlanet >= 0 {
+		return 0, 0, 0, false
+	}
+	u := g.battleSupplyUnit
+	if u < 0 || u >= len(g.battleUnits) {
+		return 0, 0, 0, false
+	}
+	unit := g.battleUnits[u]
+	r = rules.SupplyRangePixels(g.res.ShipKinds, unit.Faction, unit.Kind)
+	if r <= 0 {
+		return 0, 0, 0, false
+	}
+	return unit.X, unit.Y, r, true
+}
