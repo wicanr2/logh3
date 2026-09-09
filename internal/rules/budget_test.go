@@ -104,3 +104,32 @@ func TestShipCostMatchesS3Receipt(t *testing.T) {
 		t.Errorf("預估軍事費 ＝ %d，預期 %d", got, want)
 	}
 }
+
+// TestAIShipPctMatchesReceipts 釘住 `2D10:0038` 尾段的兩份收據
+// （`docs/re/257`）：傾印裡的 `ds:8F92[同盟]` 與 `ds:8F6A[同盟] ÷ 900`
+// 相同。
+func TestAIShipPctMatchesReceipts(t *testing.T) {
+	for _, c := range []struct {
+		dump      string
+		tax, want int
+	}{
+		{"s3aicomp", 6378, 7},
+		{"monthblend", 10213, 11},
+	} {
+		if got := AIShipPct(c.tax); got != c.want {
+			t.Errorf("%s 的總稅收 %d → %d%%，傾印是 %d%%", c.dump, c.tax, got, c.want)
+		}
+	}
+	// 門檻與上限是同一個數的兩種寫法：31500 ÷ 900 ＝ 35。
+	if got := AIShipPct(31499); got != 34 {
+		t.Errorf("31499 → %d%%，預期 34", got)
+	}
+	for _, tax := range []int{31500, 1 << 20} {
+		if got := AIShipPct(tax); got != AIShipPctCap {
+			t.Errorf("%d → %d%%，預期夾在 %d", tax, got, AIShipPctCap)
+		}
+	}
+	if got := AIShipPct(0); got != 0 {
+		t.Errorf("0 → %d%%，預期 0", got)
+	}
+}

@@ -54,3 +54,27 @@ func (b *Budget) ShipCost() int {
 
 // Rest 是剩餘軍事費。
 func (b *Budget) Rest() int { return b.Military() - b.ShipCost() }
+
+// AIShipPctCap 是電腦那一方造船百分比的上限，`AIShipPctStep` 是每一級的
+// 稅收（`31500 ÷ 900 = 35`，所以門檻與上限是同一個數的兩種寫法）。
+const (
+	AIShipPctStep = 900
+	AIShipPctCap  = 35
+)
+
+// AIShipPct 回電腦那一方在回合收尾把自己的造船百分比設成多少
+// ＝ 原版 `2D10:0038` 尾段（`docs/re/257`）：
+//
+//	ds:8F92[陣營] = min(總稅收 ÷ 900, 35)
+//
+// 收據兩份：`s3aicomp` 的 6378 ÷ 900 ＝ 7、`monthblend` 的 10213 ÷ 900 ＝ 11，
+// 都與傾印裡的 `ds:8F92` 相同。
+func AIShipPct(tax int) int {
+	if tax < 0 {
+		return 0
+	}
+	if tax >= AIShipPctStep*AIShipPctCap {
+		return AIShipPctCap
+	}
+	return tax / AIShipPctStep
+}

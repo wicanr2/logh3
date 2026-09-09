@@ -464,6 +464,11 @@ type Game struct {
 	// 算出來，之後每個月底再算一次。電腦那一方要有自己的錢，戰略 AI
 	// 的預算閘門才擋得住（`docs/spec/030`）。
 	military, taxTotal [2]int
+	// shipPct 是每個陣營切給造船的百分比 ＝ 原版 `ds:8F92[陣營]`
+	// （`docs/re/256`）。新遊戲兩邊都是 `Resources.ShipPct`（25，
+	// `63A1:0074` 設的）；電腦那一方每個回合收尾自己改
+	// （`docs/re/257`）。**存檔裡的那一格還沒定位**，載入時先沿用開局值。
+	shipPct [2]int
 
 	// blend 是未安定度算式的 `Blend`（原版 `ds:8FD4[陣營]`，0–4）。
 	// 電腦座位的戰略 AI 每回合按軍事費重設它，一設就重算該陣營所有
@@ -868,6 +873,10 @@ func (g *Game) runBrain() {
 		level = rules.BlendForFunds(g.military[foe])
 	}
 	g.refreshBlend(foe, level)
+	// `2D10:0038` 的尾段：重算完稅率之後，照**新的**總稅收設自己的造船
+	// 百分比（`docs/re/257`）。順序照原版——`Blend(0)` 會重算稅率，
+	// 所以這一步讀到的是重算後的數。
+	g.shipPct[foe] = rules.AIShipPct(g.taxTotal[foe])
 }
 
 // refreshBlend 走原版 `2D10:0319` 的後半：寫下等級，接著用它當下標
@@ -986,6 +995,7 @@ func (g *Game) startNewGame(faction int) {
 	// 兩個陣營的起始軍事費相同（796/1 量到帝國 50000，`docs/re/35`）。
 	g.military = [2]int{g.res.StartMilitary, g.res.StartMilitary}
 	g.blend = [2]int{rules.NewGameBlend, rules.NewGameBlend}
+	g.shipPct = [2]int{g.res.ShipPct, g.res.ShipPct}
 	g.pct = rules.OpeningPct
 	g.slot = nil
 	g.monthEnd()
@@ -1058,6 +1068,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.military = sl.Military
 	g.taxTotal = sl.TaxTotal
 	g.blend = sl.Blend
+	g.shipPct = [2]int{g.res.ShipPct, g.res.ShipPct}
 	// 存檔裡就有兩邊的艦隊（`FLEET.DT?` ＝ 執行期那張表，`docs/re/41`）。
 	// 讀進來之後 remake 才有敵方的艦隊可以畫、可以推進。
 	g.fleets = sl.Fleets(g.res.Weights)
@@ -1679,7 +1690,7 @@ func (g *Game) monthEnd() {
 		// 取的是**結算前**的軍事費——原版算 `ds:8F5A` 的那一趟
 		// （`090A:0E88`）跑在 `軍事費 += 總稅收` 之前（`docs/re/256`）。
 		b := rules.Budget{Treasury: before[f], Tax: collected[f],
-			ShipPct: g.res.ShipPct, Upkeep: g.fleetUpkeep(f),
+			ShipPct: g.factionShipPct(f), Upkeep: g.fleetUpkeep(f),
 			MoveCost: g.fleetMoveCost(f)}
 		budget := b.Military()
 		plan := rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct, Faction: f}
@@ -1959,8 +1970,17 @@ func (g *Game) drawBudget(fb *gfx.Framebuffer) {
 func (g *Game) nextBudget() rules.Budget {
 	f := g.faction
 	return rules.Budget{Treasury: g.military[f], Tax: g.taxTotal[f],
-		ShipPct: g.res.ShipPct, Upkeep: g.fleetUpkeep(f),
+		ShipPct: g.factionShipPct(f), Upkeep: g.fleetUpkeep(f),
 		MoveCost: g.fleetMoveCost(f)}
+}
+
+// factionShipPct 回一個陣營的造船百分比。`shipPct` 是零值時（direct-entry
+// 的測試沒走過 `startNewGame`）沿用開局值，不要靜靜地變成 0%。
+func (g *Game) factionShipPct(faction int) int {
+	if faction < 0 || faction > 1 || g.shipPct[faction] == 0 {
+		return g.res.ShipPct
+	}
+	return g.shipPct[faction]
 }
 
 // thisPlan 是**這個月**的船艦建造計劃：月底結算算出來的建造費照百分比
