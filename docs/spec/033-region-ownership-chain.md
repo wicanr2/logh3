@@ -102,7 +102,7 @@ word**，原本用 `le32` 讀，長度不足就回 0，所以那一格永遠讀�
 收據：[`data/region-posture-chain4.json`](../internals/data/region-posture-chain4.json)、
 [`data/region-posture-s3ai6.json`](../internals/data/region-posture-s3ai6.json)。
 
-## 還沒做：易主報告
+## 還沒做：易主報告（規格 [`034`](034-region-flip-report.md) DRAFT）
 
 原版每有一格易主就跳一則「**XX星系　已被敵軍占領。**」的報告
 （`056A:0855`），而且它**擋住回合結束處理**——第一次跑收據時
