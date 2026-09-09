@@ -113,17 +113,43 @@ func (g *Game) commitFleetOrder() {
 	}
 	flag := g.battleUnits[unit]
 	f.OriginX, f.OriginY = flag.X, flag.Y
+	f.X, f.Y = flag.X, flag.Y
 	f.DestX, f.DestY = x, y
 	f.TargetFacing = facing
 	f.Ordered = true
+	// 一回合的行程 ＝ 這一次用的速度 × 8（`307D:1468`，`docs/re/102`），
+	// 回轉速度是艦隊記錄的 `+0x4D`。兩者都取各分隊的最小值
+	// （`docs/re/112`）。
+	f.TurnSpeed, f.PerTurn = g.fleetSpeeds(f.Index, battle)
 	if battle {
 		f.Action = fleetActionBattle
 	}
-	// 艦隊層的移動引擎（`rules.AdvanceFleet`）還沒接進回合流程，
-	// remake 目前逐分隊各自走——所以先讓旗艦朝新目的地移動，
-	// 畫面上才看得到命令生效（差異記在 `docs/spec/027`）。
-	g.battleUnits[unit].TargetX, g.battleUnits[unit].TargetY = x, y
 	g.battleUnits[unit].Action = squadronMove
+}
+
+// fleetSpeeds 回一支艦隊的回轉速度與這一次的每回合行程（16.16）。
+//
+// 回轉速度 ＝ 各分隊艦艇記錄 `+0x1F` 的最小值；速度看命令：
+// 「移動」用巡航 `+0x21`、「戰鬥」用戰鬥 `+0x22`，都取最小值再 × 8
+// （`docs/re/112`、`docs/re/102`）。
+func (g *Game) fleetSpeeds(fleet int, battle bool) (turn, perTurn int) {
+	turn, speed := 0, 0
+	for _, u := range g.battleUnits {
+		if u.Fleet != fleet {
+			continue
+		}
+		s := u.CruiseSpeed
+		if battle {
+			s = u.FightSpeed
+		}
+		if turn == 0 || (u.TurnSpeed > 0 && u.TurnSpeed < turn) {
+			turn = u.TurnSpeed
+		}
+		if speed == 0 || (s > 0 && s < speed) {
+			speed = s
+		}
+	}
+	return turn, speed * rules.BattleStep * rules.FixOne
 }
 
 // fleetActionBattle 是艦隊記錄 `+0x48` 低四位的「戰鬥」（`docs/internals/33`）。

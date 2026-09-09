@@ -154,3 +154,50 @@ func TestFleetBattleOrderSetsAction(t *testing.T) {
 		t.Error("右鍵該把艦隊命令整個取消")
 	}
 }
+
+// 下完命令之後推一個回合：艦隊真的往目的地移動，分隊的目的地跟著換成
+// 隊形位置（`docs/re/129`、`docs/re/126`）。
+func TestOrderedFleetAdvances(t *testing.T) {
+	g := commandTestGame(t)
+	if g == nil {
+		return
+	}
+	if g.res.Formation == nil {
+		t.Skip("沒載隊形槽位表，跳過")
+	}
+	flag := findUnit(g, g.faction, true)
+	if flag < 0 {
+		t.Skip("這個局面畫面上沒有自己的旗艦，跳過")
+	}
+	fleet := g.battleUnits[flag].Fleet
+	bf := g.battleFleet(fleet)
+	if bf == nil {
+		t.Skip("找不到艦隊記錄，跳過")
+	}
+	// 直接把命令擺好（互動那一段另外有測試）。
+	bf.X, bf.Y = g.battleUnits[flag].X, g.battleUnits[flag].Y
+	bf.DestX, bf.DestY = bf.X, bf.Y-400
+	bf.TargetFacing, bf.Ordered = bf.Facing, true
+	bf.TurnSpeed, bf.PerTurn = g.fleetSpeeds(fleet, false)
+	if bf.PerTurn == 0 {
+		t.Skip("這一支算不出速度，跳過")
+	}
+	x0, y0 := bf.X, bf.Y
+
+	g.advanceOrderedFleets()
+
+	if bf.X == x0 && bf.Y == y0 {
+		t.Fatalf("推了一回合艦隊沒動：(%d,%d)", bf.X, bf.Y)
+	}
+	// 分隊的目的地要落在新的隊形位置上。
+	for i, u := range g.battleUnits {
+		if u.Fleet != fleet {
+			continue
+		}
+		wx, wy := g.res.Formation.Station(bf.X, bf.Y, bf.Facing, u.Slot)
+		if u.TargetX != wx || u.TargetY != wy {
+			t.Fatalf("第 %d 個分隊（槽 %d）的目的地 (%d,%d)，該是 (%d,%d)",
+				i, u.Slot, u.TargetX, u.TargetY, wx, wy)
+		}
+	}
+}

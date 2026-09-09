@@ -137,6 +137,11 @@ func (g *Game) AdvanceBattleTurn() {
 			}
 		}
 	}
+	// 收到過命令的艦隊走艦隊層那一套：艦隊自己動，分隊的目的地跟著
+	// 換成隊形位置（`docs/re/129`、`docs/re/126`）。沒下過命令的
+	// 仍然逐分隊各自走——原版兩層本來就各走各的，這裡只是還沒把
+	// 全部艦隊搬過去（`docs/spec/027`）。
+	g.advanceOrderedFleets()
 	for i := range g.battleUnits {
 		rules.AdvanceBattle(&g.battleUnits[i], g.res.Terrain, g.battleCells(g.battleRegion))
 	}
@@ -328,4 +333,41 @@ func battleDecided(units []rules.BattleUnit) bool {
 // SetTactic 換戰術層的 AI（`-ai` 旗標會設它）。
 func (g *Game) SetTactic(t ai.Tactic, auto bool) {
 	g.tactic, g.autoBattle = t, auto
+}
+
+// advanceOrderedFleets 把收到過移動／戰鬥命令的艦隊各推進一個回合。
+func (g *Game) advanceOrderedFleets() {
+	if g.res.Formation == nil {
+		return
+	}
+	cells := g.battleCells(g.battleRegion)
+	passable := func(x, y int) bool {
+		return g.res.Terrain == nil || cells == nil || g.res.Terrain.Passable(cells, x, y)
+	}
+	for i := range g.battleFleets {
+		f := &g.battleFleets[i]
+		if !f.Ordered {
+			continue
+		}
+		var idx []int
+		for k := range g.battleUnits {
+			if g.battleUnits[k].Fleet == f.Index {
+				idx = append(idx, k)
+			}
+		}
+		if len(idx) == 0 {
+			continue
+		}
+		m := rules.FleetMover{
+			X: f.X, Y: f.Y, DestX: f.DestX, DestY: f.DestY,
+			Facing: f.Facing, TurnSpeed: f.TurnSpeed, PerTurn: f.PerTurn,
+		}
+		rules.AdvanceFleetTurn(&m, g.res.Formation, g.battleUnits, idx, passable)
+		f.X, f.Y, f.Facing = m.X, m.Y, m.Facing
+		f.Budget = m.Budget
+		if m.Arrived {
+			f.Ordered = false
+			f.Facing = f.TargetFacing
+		}
+	}
 }

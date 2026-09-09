@@ -117,3 +117,36 @@ func RunFleetTurn(f *FleetMover, passable func(x, y int) bool) {
 	for AdvanceFleet(f, passable) {
 	}
 }
+
+// StationSquadrons 把一支艦隊的分隊目的地設成各自的隊形位置
+// （原版每次移動之後由 `2BE1:0059` 重算，`docs/re/126`）。
+//
+// units 是整批分隊，idx 是屬於這一支的那幾個。旗艦（槽 20）會被擺回
+// 艦隊自己的位置，所以呼叫端不必另外處理。
+func StationSquadrons(f *FleetMover, s *FormationSlots, units []BattleUnit, idx []int) {
+	if f == nil || s == nil {
+		return
+	}
+	for _, i := range idx {
+		if i < 0 || i >= len(units) {
+			continue
+		}
+		u := &units[i]
+		x, y := s.Station(f.X, f.Y, f.Facing, u.Slot)
+		u.TargetX, u.TargetY = x, y
+	}
+}
+
+// AdvanceFleetTurn 推進一支艦隊的一個回合：補滿額度、一路「實行」到
+// 額度不足一步，然後把分隊的目的地重新擺到隊形位置。
+//
+// 分隊自己怎麼走仍然由 AdvanceBattle 負責——原版也是兩層各走各的
+// （`docs/re/129`、`docs/re/126`）。
+func AdvanceFleetTurn(f *FleetMover, s *FormationSlots, units []BattleUnit, idx []int,
+	passable func(x, y int) bool) {
+	if f == nil {
+		return
+	}
+	RunFleetTurn(f, passable)
+	StationSquadrons(f, s, units, idx)
+}

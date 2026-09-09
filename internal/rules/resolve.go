@@ -41,6 +41,13 @@ type BattleFleet struct {
 	// Ordered ＝ 這一支收到過移動／戰鬥命令（上面五格才有意義）。
 	Ordered bool `json:"ordered,omitempty"`
 
+	// X／Y 是艦隊自己的位置（`+0x5C`／`+0x5E`，＝ 旗艦的位置），
+	// Budget／PerTurn 是行程額度（`+0x56`/`+0x58` 與 `+0x52`/`+0x54`，
+	// 16.16）。艦隊層的移動引擎用它們（`docs/re/129`）。
+	X, Y            int `json:"x,omitempty"`
+	Budget, PerTurn int `json:"budget,omitempty"`
+	TurnSpeed       int `json:"turn_speed,omitempty"`
+
 	// Action 是艦隊記錄 `+0x48` 的低四位。「戰鬥」成功之後寫 1
 	// （`1CC5:08BD`）。
 	Action int `json:"action,omitempty"`

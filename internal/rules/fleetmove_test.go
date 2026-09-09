@@ -1,6 +1,9 @@
 package rules
 
-import "testing"
+import (
+	"path/filepath"
+	"testing"
+)
 
 // 收據 `s3fltseq`（第 28 艦隊）那一回合的每一筆，逐位元對原版。
 //
@@ -122,5 +125,64 @@ func TestTurnFacing256(t *testing.T) {
 		if got := TurnFacing256(c.target, c.cur); got != c.want {
 			t.Errorf("TurnFacing256(%d,%d) ＝ %d，要 %d", c.target, c.cur, got, c.want)
 		}
+	}
+}
+
+// 一回合跑完之後，艦隊往目的地移動、分隊的目的地換成隊形位置。
+func TestAdvanceFleetTurnStationsSquadrons(t *testing.T) {
+	s, err := LoadFormationSlots(
+		filepath.Join("..", "..", "docs/internals/data/battle-formation-slots.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	f := &FleetMover{
+		X: 1000, Y: 1000, DestX: 1000, DestY: 500,
+		Facing: 192, TurnSpeed: 15, PerTurn: 160 * FixOne,
+	}
+	units := []BattleUnit{
+		{Fleet: 1, Squadron: 0, Slot: s.Centre},
+		{Fleet: 1, Squadron: 1, Slot: 0},
+		{Fleet: 2, Squadron: 0, Slot: 5}, // 別支的，不該被動到
+	}
+	before := units[2]
+	AdvanceFleetTurn(f, s, units, []int{0, 1}, nil)
+
+	if f.Y >= 1000 {
+		t.Fatalf("艦隊沒有往北走：(%d,%d)", f.X, f.Y)
+	}
+	if f.X != 1000 {
+		t.Errorf("朝向 192 是正北，x 不該變：%d", f.X)
+	}
+	// 一回合 160.0 的額度、每步 8 像素，走到剩不足一步為止。
+	if got := 1000 - f.Y; got != 160 {
+		t.Errorf("走了 %d 像素，160.0 的額度每步 8 該走 160", got)
+	}
+	// 旗艦站中心，所以目的地就是艦隊自己的位置。
+	if units[0].TargetX != f.X || units[0].TargetY != f.Y {
+		t.Errorf("旗艦的目的地 (%d,%d)，該是艦隊的 (%d,%d)",
+			units[0].TargetX, units[0].TargetY, f.X, f.Y)
+	}
+	wx, wy := s.Station(f.X, f.Y, f.Facing, 0)
+	if units[1].TargetX != wx || units[1].TargetY != wy {
+		t.Errorf("分隊 1 的目的地 (%d,%d)，槽 0 算出 (%d,%d)",
+			units[1].TargetX, units[1].TargetY, wx, wy)
+	}
+	if units[2] != before {
+		t.Error("別支艦隊的分隊被動到了")
+	}
+}
+
+// 走到目的地就停：距離 ≤ 8 時直接歸位（`1C03:027F` 那一支）。
+func TestAdvanceFleetArrives(t *testing.T) {
+	f := &FleetMover{
+		X: 1000, Y: 1000, DestX: 1000, DestY: 980,
+		Facing: 192, TurnSpeed: 15, PerTurn: 160 * FixOne,
+	}
+	RunFleetTurn(f, nil)
+	if f.X != f.DestX || f.Y != f.DestY {
+		t.Fatalf("停在 (%d,%d)，該走到 (%d,%d)", f.X, f.Y, f.DestX, f.DestY)
+	}
+	if !f.Arrived {
+		t.Error("到了該把 Arrived 立起來")
 	}
 }
