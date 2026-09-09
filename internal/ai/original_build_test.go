@@ -116,3 +116,45 @@ func rulesRand(t *testing.T) *rules.Rand {
 	t.Helper()
 	return rules.NewRand(0xD3DC167E)
 }
+
+// TestClassKeysAreInverse 對 `ds:5F62`／`5F70`／`5F6C`／`5F74` 與
+// `ds:5F52`（`rules.FleetClass`）互為反表（`docs/re/204`）。
+func TestClassKeysAreInverse(t *testing.T) {
+	seen := map[int]bool{}
+	for class := 0; class < 4; class++ {
+		for _, k := range ClassKeys(class) {
+			if got := rules.FleetClass(k); got != class {
+				t.Errorf("鍵 %X 在類別 %d 的表裡，但 FleetClass 回 %d", k, class, got)
+			}
+			if seen[k] {
+				t.Errorf("鍵 %X 出現在兩張表裡", k)
+			}
+			seen[k] = true
+		}
+	}
+	// 16 個鍵一個不漏。
+	if len(seen) != 16 {
+		t.Errorf("四張表合起來 %d 個鍵，預期 16", len(seen))
+	}
+}
+
+// TestPickClassKey 測 `2D76:0576` 的取模抽法。
+func TestPickClassKey(t *testing.T) {
+	// 類別 1 只有 0A／0B 兩個鍵，取模輪流。
+	if got := PickClassKey(1, 0); got != 0x0A {
+		t.Errorf("r ＝ 0 抽到 %X，預期 0A", got)
+	}
+	if got := PickClassKey(1, 1); got != 0x0B {
+		t.Errorf("r ＝ 1 抽到 %X，預期 0B", got)
+	}
+	if got := PickClassKey(1, 2); got != 0x0A {
+		t.Errorf("r ＝ 2 抽到 %X，預期 0A（取模繞回）", got)
+	}
+	// 類別 0 有九個鍵。
+	if got := PickClassKey(0, 5); got != 0x06 {
+		t.Errorf("類別 0、r ＝ 5 抽到 %X，預期 06", got)
+	}
+	if got := PickClassKey(4, 0); got != -1 {
+		t.Errorf("不合法的類別應該回 -1，得到 %d", got)
+	}
+}

@@ -100,3 +100,37 @@ func PickBuildAdmiral(r, count int, level func(rank int) int) int {
 	}
 	return 0
 }
+
+// classKeys 是四個艦隊類別各自可以抽到的**類別鍵**（原版 `ds:5F62`／
+// `ds:5F70`／`ds:5F6C`／`ds:5F74`，`docs/re/204`）。
+//
+// 這四張表是 `rules.FleetClass` 那張 `ds:5F52` 的反表——每個鍵
+// `FleetClass(鍵)` 回的就是它所在的這一格，`TestClassKeysAreInverse`
+// 逐項對過。
+var classKeys = [4][]int{
+	0: {0x00, 0x01, 0x02, 0x03, 0x04, 0x06, 0x07, 0x08, 0x09},
+	1: {0x0A, 0x0B},
+	2: {0x05, 0x0C, 0x0D},
+	3: {0x0E, 0x0F},
+}
+
+// ClassKeys 回某一個類別可以抽到的類別鍵（唯讀）。
+func ClassKeys(class int) []int {
+	if class < 0 || class >= len(classKeys) {
+		return nil
+	}
+	return classKeys[class]
+}
+
+// PickClassKey ＝ 原版 `2D76:0576`：從那一類的鍵裡等機率抽一個
+// （`r` 是 `3CD5:000C()` 的傳回值）。原版把它寫進提督 `+0x08` 的高四位，
+// 之後搬進艦隊記錄的 `+0x09`（`docs/internals/33`）。
+//
+// 類別不合法回 -1（原版沒有防守，呼叫端只給 0–3）。
+func PickClassKey(class, r int) int {
+	keys := ClassKeys(class)
+	if len(keys) == 0 {
+		return -1
+	}
+	return keys[r%len(keys)]
+}

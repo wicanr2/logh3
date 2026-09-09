@@ -303,9 +303,16 @@ ds:D5AE[0..31] = 0
 
 條件不成立就往下一層試，不是直接落到第一名。
 
-已實作成 `ai.BuildGate`／`ai.ClassQuotaOrder`／`ai.PickBuildAdmiral`。
-**還沒讀的**：`2D76:0576`（挑完、建艦隊之前呼叫的一支）與
-`ds:8FD4[陣營]` 的語意，所以 `ai.Turn` 還不呼叫它們。
+挑完之後 `2D76:0576(提督, 類別)` 從那一類的鍵裡等機率抽一個，
+寫進提督 `+0x08` 的高四位（之後搬進艦隊 `+0x09`，`docs/re/204`）：
+類別 0 是 `00 01 02 03 04 06 07 08 09`、1 是 `0A 0B`、2 是 `05 0C 0D`、
+3 是 `0E 0F`——正好是 `ds:5F52` 的反表。
+
+已實作成 `ai.BuildGate`／`ai.ClassQuotaOrder`／`ai.PickBuildAdmiral`／
+`ai.PickClassKey`。**建艦隊那條路的反組譯到此讀完**，只剩
+`ds:8FD4[陣營]` 的語意（它只影響閘門鬆緊）。`ai.Turn` 還不呼叫它們
+——把新艦隊接進 `advanceTurn` 是下一步，`[]Order` 裝不下新艦隊，
+要另一條回傳路徑。
 
 ## 階段一的完整形狀（`docs/re/180`–`docs/re/182`）
 
