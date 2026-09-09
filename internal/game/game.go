@@ -335,8 +335,9 @@ type Resources struct {
 	SupplyPanel *screen.SupplyPanelSpec
 
 	// FactionNames 是陣營名的原始位元組（`ds:60F4`）。字串自己帶著換色的
-	// 跳脫碼，所以顏色不是版面常數。
-	FactionNames [][]byte
+	// 跳脫碼，所以顏色不是版面常數。ShipKindNames 是艦種名（`ds:613A`）。
+	FactionNames  [][]byte
+	ShipKindNames [][]byte
 
 	// ShipKinds 是艦種屬性表（`docs/internals/40`）。
 	ShipKinds *rules.ShipKindTable

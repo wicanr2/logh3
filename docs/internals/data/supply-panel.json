@@ -36,15 +36,30 @@
    "bytes": "252d387320202020253475",
    "text": "%-8s    %4u"
   },
-  "target_missile": {
+  "target_missile_label": {
    "offset": "ds:3F70",
    "bytes": "adb8bc7520202020",
    "text": "飛彈    "
   },
-  "target_fighter": {
+  "target_fighter_label": {
    "offset": "ds:3F90",
    "bytes": "bed4b0abbef72020",
    "text": "戰鬥機  "
+  },
+  "value": {
+   "offset": "ds:3F79",
+   "bytes": "25386c64",
+   "text": "%8ld"
+  },
+  "value_full": {
+   "offset": "ds:3F7E",
+   "bytes": "20202020a5febaa1",
+   "text": "    全滿"
+  },
+  "value_none": {
+   "offset": "ds:3F87",
+   "bytes": "202020202020b54c",
+   "text": "      無"
   }
  },
  "number": {
@@ -96,5 +111,7 @@
     }
    }
   ]
- }
+ },
+ "target_note": "有目標時多印三列（1930:0AA2 後半）：`%-8s    %4u`（艦種名 ＋ 目標艘數）、「飛彈    」＋ 四格、「戰鬥機  」＋ 四格。四格那一段三選一：補給艦艦種列 +0x0E ＝ 0xFF → 「      無」；目標的量 >= 滿載量 → 「    全滿」；否則把顏色換成 0x92（字色 2）印 `%8ld`（目標的量 − 滿載量，負數），印完切回 0x97。",
+ "shortfall_colour": 146
 }

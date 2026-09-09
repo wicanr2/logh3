@@ -3,6 +3,7 @@ package game
 import (
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
+	"github.com/wicanr2/logh3/internal/ui"
 )
 
 // 「補給」與「修理」的選目標（原版 `1930:05EC`、`1AAB:0583`，
@@ -236,5 +237,46 @@ func (g *Game) supplyPanel() (screen.SupplyPanel, bool) {
 		Transport:   unit.Ships,
 		Missiles:    int64(unit.Missiles),
 		Fighters:    int64(unit.Fighters),
+		Target:      g.supplyPanelTarget(),
 	}, true
+}
+
+// supplyPanelTarget 回滑鼠指著的候選；沒指到就回 nil。
+//
+// 原版的面板**跟著滑鼠走**：`1930:0769` 每一輪用滑鼠位置找命中的候選，
+// 換人了才重印（`ds:A436` 記著上一次是誰）。所以「選中」沒有標記，
+// 回饋就是面板下半那三行（`docs/re/143`）。
+func (g *Game) supplyPanelTarget() *screen.SupplyTarget {
+	hit := g.battleUnitAt(g.mouseX, g.mouseY+ui.MouseDY)
+	if hit < 0 {
+		return nil
+	}
+	ok := false
+	for _, c := range g.SupplyCandidates() {
+		if c == hit {
+			ok = true
+			break
+		}
+	}
+	if !ok {
+		return nil
+	}
+	t := g.battleUnits[hit]
+	k, has := g.res.ShipKinds.Kind(t.Faction, t.Kind)
+	if !has {
+		return nil
+	}
+	name := []byte(nil)
+	if t.Kind >= 0 && t.Kind < len(g.res.ShipKindNames) {
+		name = g.res.ShipKindNames[t.Kind]
+	}
+	return &screen.SupplyTarget{
+		KindName:    name,
+		Ships:       t.Ships,
+		NoStock:     k.Byte(0x0E) == 0xFF,
+		Missiles:    int64(t.Missiles),
+		MissileFull: int64(k.Byte(0x10)) * int64(t.Ships),
+		Fighters:    int64(t.Fighters),
+		FighterFull: int64(k.Byte(0x14)) * int64(t.Ships),
+	}
 }

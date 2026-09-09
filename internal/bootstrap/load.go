@@ -261,7 +261,8 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
-	factionNames, err := loadFactionNames(filepath.Join(data, "faction-and-kind-names.json"))
+	factionNames, kindNames, err := loadNameTables(
+		filepath.Join(data, "faction-and-kind-names.json"))
 	if err != nil {
 		return nil, err
 	}
@@ -291,7 +292,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds,
 		MessageBox: msgBox, FrameTiles: frameTiles,
-		SupplyPanel: supplyPanel, FactionNames: factionNames,
+		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
 
@@ -419,27 +420,36 @@ func loadBiographies(path string) ([][]uint16, error) {
 	return out, nil
 }
 
-// loadFactionNames 讀陣營名的原始位元組（`ds:60F4`，`docs/re/143`）。
-func loadFactionNames(path string) ([][]byte, error) {
+// loadNameTables 讀陣營名（`ds:60F4`）與艦種名（`ds:613A`）的原始位元組
+// （`docs/re/143`）。陣營名自己帶著換色的跳脫碼，所以要照原樣傳。
+func loadNameTables(path string) (factions, kinds [][]byte, err error) {
 	b, err := os.ReadFile(path)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	var d struct {
-		Factions []struct {
-			Bytes string `json:"bytes"`
-		} `json:"factions"`
+		Factions  []struct{ Bytes string } `json:"factions"`
+		ShipKinds []struct{ Bytes string } `json:"ship_kinds"`
 	}
 	if err := json.Unmarshal(b, &d); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	out := make([][]byte, 0, len(d.Factions))
-	for _, f := range d.Factions {
-		raw, err := hex.DecodeString(f.Bytes)
-		if err != nil {
-			return nil, err
+	decode := func(in []struct{ Bytes string }) ([][]byte, error) {
+		out := make([][]byte, 0, len(in))
+		for _, e := range in {
+			raw, err := hex.DecodeString(e.Bytes)
+			if err != nil {
+				return nil, err
+			}
+			out = append(out, raw)
 		}
-		out = append(out, raw)
+		return out, nil
 	}
-	return out, nil
+	if factions, err = decode(d.Factions); err != nil {
+		return nil, nil, err
+	}
+	if kinds, err = decode(d.ShipKinds); err != nil {
+		return nil, nil, err
+	}
+	return factions, kinds, nil
 }
