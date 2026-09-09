@@ -5,6 +5,7 @@
 package bootstrap
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -256,6 +257,14 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	supplyPanel, err := screen.LoadSupplyPanelSpec(filepath.Join(data, "supply-panel.json"))
+	if err != nil {
+		return nil, err
+	}
+	factionNames, err := loadFactionNames(filepath.Join(data, "faction-and-kind-names.json"))
+	if err != nil {
+		return nil, err
+	}
 	// `FRAME.BLK` 是原版素材，玩家自備；缺了就不畫訊息框（不用代用品）。
 	var frameTiles *ui.FrameTiles
 	if b, err := os.ReadFile(filepath.Join(orig, "FRAME.BLK")); err == nil {
@@ -282,6 +291,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds,
 		MessageBox: msgBox, FrameTiles: frameTiles,
+		SupplyPanel: supplyPanel, FactionNames: factionNames,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
 
@@ -405,6 +415,31 @@ func loadBiographies(path string) ([][]uint16, error) {
 			out = append(out, nil)
 		}
 		out[r.Index] = r.Codes
+	}
+	return out, nil
+}
+
+// loadFactionNames 讀陣營名的原始位元組（`ds:60F4`，`docs/re/143`）。
+func loadFactionNames(path string) ([][]byte, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var d struct {
+		Factions []struct {
+			Bytes string `json:"bytes"`
+		} `json:"factions"`
+	}
+	if err := json.Unmarshal(b, &d); err != nil {
+		return nil, err
+	}
+	out := make([][]byte, 0, len(d.Factions))
+	for _, f := range d.Factions {
+		raw, err := hex.DecodeString(f.Bytes)
+		if err != nil {
+			return nil, err
+		}
+		out = append(out, raw)
 	}
 	return out, nil
 }

@@ -17,6 +17,7 @@ const MaxBattleTurns = 9
 // BattleFleet 是戰鬥期間一支艦隊要用到的欄位（艦隊記錄，`docs/internals/33`）。
 type BattleFleet struct {
 	Index   int  `json:"index"`   // 艦隊表的索引
+	Number  int  `json:"number"`  // `+0x02`：畫面上「第 N 艦隊」的那個 N
 	Faction int  `json:"faction"` // 0 帝國、1 同盟
 	Bonus   int  `json:"bonus"`   // `+0x14`：基本量的加成
 	Halved  bool `json:"halved"`  // `+0x12` 非 0：除數從 10 變 20
@@ -58,6 +59,7 @@ func NewBattleFleet(index int, rec []byte, ab [FleetAbilityCount]byte) BattleFle
 	f := BattleFleet{Index: index}
 	if len(rec) > 0x14 {
 		f.Faction = int(rec[1])
+		f.Number = int(rec[2])
 		f.Bonus = int(rec[0x14])
 		f.Halved = rec[0x12] != 0
 		f.Flag0 = rec[0]&1 != 0

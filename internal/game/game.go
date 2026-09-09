@@ -331,6 +331,13 @@ type Resources struct {
 	MessageBox *screen.MessageBoxSpec
 	FrameTiles *ui.FrameTiles
 
+	// SupplyPanel 是「補給」選對象時右側那個面板（`docs/re/143`）。
+	SupplyPanel *screen.SupplyPanelSpec
+
+	// FactionNames 是陣營名的原始位元組（`ds:60F4`）。字串自己帶著換色的
+	// 跳脫碼，所以顏色不是版面常數。
+	FactionNames [][]byte
+
 	// ShipKinds 是艦種屬性表（`docs/internals/40`）。
 	ShipKinds *rules.ShipKindTable
 
@@ -2424,6 +2431,12 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 			screen.DrawManoeuvreRange(g.res.Battle, fb, f.cx, f.cy,
 				f.turn, f.dist, f.facing, g.battleView)
 		}
+	}
+	// 「補給」選對象時右側狀態欄換成補給面板（`docs/re/143`）。
+	if p, ok := g.supplyPanel(); ok {
+		screen.DrawSupplyPanel(fb, g.res.SupplyPanel, g.res.Font, g.res.FrameTiles, p)
+		// 「結束」鈕是另一個視窗，畫在面板上面（`docs/re/143`）。
+		screen.DrawSupplyEndButton(fb, g.res.SupplyPanel, g.res.Font, g.res.FrameTiles)
 	}
 	// 「補給」／「修理」選對象時畫查詢範圍的圈（`docs/re/140`）。
 	// **候選本身沒有高亮**——原版那個模態迴圈裡只有這個圈與右側面板，

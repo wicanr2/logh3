@@ -1,6 +1,9 @@
 package game
 
-import "github.com/wicanr2/logh3/internal/rules"
+import (
+	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
+)
 
 // 「補給」與「修理」的選目標（原版 `1930:05EC`、`1AAB:0583`，
 // `docs/re/131`）。兩者只差候選的條件與動手時搬什麼。
@@ -207,4 +210,31 @@ func (g *Game) supplyRangeCircle() (cx, cy, r int, ok bool) {
 		return 0, 0, 0, false
 	}
 	return unit.X, unit.Y, r, true
+}
+
+// supplyPanel 回「補給」選對象時右側面板要顯示的東西；沒有在選對象就回
+// false。行星版沒有這個面板（`1930:0DA2` 那條路不走 `1930:0AA2`）。
+func (g *Game) supplyPanel() (screen.SupplyPanel, bool) {
+	if !g.battleSupply || g.battleSupplyPlanet >= 0 || g.res.SupplyPanel == nil {
+		return screen.SupplyPanel{}, false
+	}
+	u := g.battleSupplyUnit
+	if u < 0 || u >= len(g.battleUnits) {
+		return screen.SupplyPanel{}, false
+	}
+	unit := g.battleUnits[u]
+	if unit.Faction < 0 || unit.Faction >= len(g.res.FactionNames) {
+		return screen.SupplyPanel{}, false
+	}
+	fleetNumber := 0
+	if f := g.battleFleet(unit.Fleet); f != nil {
+		fleetNumber = f.Number
+	}
+	return screen.SupplyPanel{
+		FactionName: g.res.FactionNames[unit.Faction],
+		Fleet:       fleetNumber,
+		Transport:   unit.Ships,
+		Missiles:    int64(unit.Missiles),
+		Fighters:    int64(unit.Fighters),
+	}, true
 }

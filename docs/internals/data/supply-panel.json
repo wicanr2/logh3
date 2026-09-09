@@ -59,5 +59,42 @@
    "bytes": "253264",
    "text": "%2d"
   }
+ },
+ "end_button": {
+  "_note": "「結束」鈕（1629:0154）：另一個視窗，格 (34,17)、4×1 格、旗標 0（不畫框）。三段各自換旗標與顏色——左端 0x10、本體 0x08 配色 0x87、右端 0x20 配色 0x97。",
+  "cell_x": 34,
+  "cell_y": 17,
+  "cols": 4,
+  "rows": 1,
+  "colour": 151,
+  "segments": [
+   {
+    "flags": 16,
+    "colour": 151,
+    "string": {
+     "offset": "ds:3C42",
+     "bytes": "2020",
+     "text": "  "
+    }
+   },
+   {
+    "flags": 8,
+    "colour": 135,
+    "string": {
+     "offset": "ds:3C45",
+     "bytes": "b5b2a7f4",
+     "text": "結束"
+    }
+   },
+   {
+    "flags": 32,
+    "colour": 151,
+    "string": {
+     "offset": "ds:3C4A",
+     "bytes": "2020",
+     "text": "  "
+    }
+   }
+  ]
  }
 }

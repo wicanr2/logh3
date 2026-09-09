@@ -36,6 +36,23 @@ type SupplyPanelSpec struct {
 		LT10 hexStr `json:"lt10"`
 		GE10 hexStr `json:"ge10"`
 	} `json:"number"`
+
+	// EndButton 是「結束」鈕。它是**另一個視窗**（`1629:0154`），格
+	// (34,17)、4 × 1 格、旗標 0（不畫框）：三段各自換旗標與顏色，
+	// 左端 `0x10`、本體 `0x08` 配色 `0x87`、右端 `0x20`。
+	EndButton struct {
+		CellX  int `json:"cell_x"`
+		CellY  int `json:"cell_y"`
+		Cols   int `json:"cols"`
+		Rows   int `json:"rows"`
+		Colour int `json:"colour"`
+
+		Segments []struct {
+			Flags  uint8  `json:"flags"`
+			Colour int    `json:"colour"`
+			String hexStr `json:"string"`
+		} `json:"segments"`
+	} `json:"end_button"`
 }
 
 // hexStr 是「原版資料段那一串位元組」，JSON 裡用十六進位存。
@@ -96,4 +113,20 @@ func DrawSupplyPanel(fb *gfx.Framebuffer, s *SupplyPanelSpec, fnt *font.Font,
 	b.Printf(s.Lines.Missile.Raw(), p.Missiles)
 	b.Printf(s.Lines.Fighter.Raw(), p.Fighters)
 	ui.DrawTextBuffer(fb, fnt, tiles, b, s.CellX, s.CellY)
+}
+
+// DrawSupplyEndButton 畫「結束」鈕。原版是另一個視窗，所以位置與面板
+// 無關（`docs/re/143`）。
+func DrawSupplyEndButton(fb *gfx.Framebuffer, s *SupplyPanelSpec, fnt *font.Font,
+	tiles *ui.FrameTiles) {
+	if fb == nil || s == nil || s.EndButton.Cols <= 0 {
+		return
+	}
+	e := &s.EndButton
+	b := ui.NewTextBuffer(e.Cols, e.Rows, uint8(e.Colour))
+	for _, seg := range e.Segments {
+		b.Colour, b.Flags = uint8(seg.Colour), seg.Flags
+		b.Write(seg.String.Raw())
+	}
+	ui.DrawTextBuffer(fb, fnt, tiles, b, e.CellX, e.CellY)
 }
