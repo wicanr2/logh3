@@ -239,6 +239,23 @@ func (g *Game) fleetUpkeep(faction int) int {
 	return sum
 }
 
+// fleetMoveCost 回一個陣營的本回合移動經費 ＝ 原版 `ds:8F82[陣營]`
+// ＝ 那一方每一支艦隊的 `+0x0C` 加總（`docs/internals/27`、`docs/re/237`）。
+// 與 `fleetUpkeep` 同一個形狀，只換成 `FleetOtherCost`。
+func (g *Game) fleetMoveCost(faction int) int {
+	if g.res.ShipKinds == nil {
+		return 0
+	}
+	sum := 0
+	for _, f := range g.fleets {
+		if f.Faction != faction {
+			continue
+		}
+		sum += rules.FleetOtherCost(g.res.ShipKinds, faction, f.Composition, f.Operations)
+	}
+	return sum
+}
+
 // fleetOperations 回一支新艦隊的 `+0x47`（營運）＝ `max(提督, 副官)` 的
 // `ADMIRAL` `+14`（`docs/re/218`）。
 func (g *Game) fleetOperations(admiral, adjutant int) int {

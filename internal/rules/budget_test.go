@@ -71,3 +71,36 @@ func TestBudgetAlliance(t *testing.T) {
 		}
 	}
 }
+
+// TestShipCostMatchesS3Receipt 釘住收據 `monthmoney` 的兩組數字
+// （`docs/re/256`）：S3「巴米利恩會戰」開局，把座位 0 poke 成電腦讓月底
+// 本體無頭跑完，前後各倒一份 1 MB。
+//
+//	ds:8F92 ＝ 00 14 → 帝國 0%、同盟 20%
+//	帝國 160000 ＋ 13131 − 2342 − 665 ＝ 170124，×0%  ＝ 0
+//	同盟  30000 ＋  9748 −  951 − 1133 ＝  37664，×20% ＝ 7532 ＝ ds:8F5A
+//
+// 舊的算式（不扣維持費與移動經費）在同盟那組會給 39748 × 20% ＝ 7949。
+func TestShipCostMatchesS3Receipt(t *testing.T) {
+	for _, c := range []struct {
+		name string
+		b    Budget
+		want int
+	}{
+		{"帝國", Budget{Treasury: 160000, Tax: 13131, Upkeep: 2342, MoveCost: 665, ShipPct: 0}, 0},
+		{"同盟", Budget{Treasury: 30000, Tax: 9748, Upkeep: 951, MoveCost: 1133, ShipPct: 20}, 7532},
+	} {
+		if got := c.b.ShipCost(); got != c.want {
+			t.Errorf("%s 的船艦建造費 ＝ %d，收據是 %d", c.name, got, c.want)
+		}
+	}
+	// 基數是負的要夾成 0（原版 `090A:0E88` 的 `jns` 那一路）。
+	neg := Budget{Treasury: 100, Tax: 0, Upkeep: 500, MoveCost: 0, ShipPct: 25}
+	if got := neg.ShipCost(); got != 0 {
+		t.Errorf("基數為負時的建造費 ＝ %d，預期 0", got)
+	}
+	// 預估軍事費不扣那兩項——畫面上印的是這個數。
+	if got, want := neg.Military(), 100; got != want {
+		t.Errorf("預估軍事費 ＝ %d，預期 %d", got, want)
+	}
+}

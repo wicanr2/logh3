@@ -1675,8 +1675,14 @@ func (g *Game) monthEnd() {
 	//    ⚠ 電腦那一方的造船支出沒有模型（`docs/spec/030` 末節），
 	//    這裡讓它跑與玩家同一套規則。
 	for f := 0; f < 2; f++ {
-		budget := before[f] + collected[f]
-		plan := rules.BuildPlan{Cost: budget * g.res.ShipPct / 100, Pct: g.pct, Faction: f}
+		// 建造費的基數是「軍事費 ＋ 總稅收 − 維持費 − 移動經費」，
+		// 取的是**結算前**的軍事費——原版算 `ds:8F5A` 的那一趟
+		// （`090A:0E88`）跑在 `軍事費 += 總稅收` 之前（`docs/re/256`）。
+		b := rules.Budget{Treasury: before[f], Tax: collected[f],
+			ShipPct: g.res.ShipPct, Upkeep: g.fleetUpkeep(f),
+			MoveCost: g.fleetMoveCost(f)}
+		budget := b.Military()
+		plan := rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct, Faction: f}
 		paid := plan.Paid()
 		g.military[f] = budget - paid
 		if f != g.faction {
@@ -1684,8 +1690,7 @@ func (g *Game) monthEnd() {
 		}
 		g.building = plan
 		g.treasury = rules.Treasury{Budget: budget, ShipPaid: paid}
-		g.monthReport = rules.Budget{Treasury: before[f], Tax: collected[f],
-			ShipPct: g.res.ShipPct}
+		g.monthReport = b
 	}
 	// 3. 結算完之後重算下個月的預估徵稅額——徵稅計劃那張印的是這個，
 	//    與剛剛實收的那筆不是同一個數（`docs/spec/003`）。
@@ -1942,13 +1947,20 @@ func (g *Game) drawBudget(fb *gfx.Framebuffer) {
 	}
 	switch g.state {
 	case StateTaxPlan:
-		b := rules.Budget{Treasury: g.military[g.faction], Tax: g.taxTotal[g.faction],
-			ShipPct: g.res.ShipPct}
-		g.res.BudgetPanel.Draw(fb, g.res.Font, g.treasury, b)
+		g.res.BudgetPanel.Draw(fb, g.res.Font, g.treasury, g.nextBudget())
 	case StateBudgetPlan:
 		// 月初報告那一張：本月份那一欄還沒有數字（全 0）。
 		g.res.BudgetPanel.Draw(fb, g.res.Font, rules.Treasury{}, g.monthReport)
 	}
+}
+
+// nextBudget 是次月份的預算：國庫與預估徵稅額都取現值，維持費與移動經費
+// 現算（原版 `090A:0E88` 每回合重算一次，`docs/spec/035`）。
+func (g *Game) nextBudget() rules.Budget {
+	f := g.faction
+	return rules.Budget{Treasury: g.military[f], Tax: g.taxTotal[f],
+		ShipPct: g.res.ShipPct, Upkeep: g.fleetUpkeep(f),
+		MoveCost: g.fleetMoveCost(f)}
 }
 
 // thisPlan 是**這個月**的船艦建造計劃：月底結算算出來的建造費照百分比
@@ -1959,8 +1971,7 @@ func (g *Game) thisPlan() rules.BuildPlan {
 
 // nextPlan 是次月份的船艦建造計劃：預估軍事費照百分比切出來的那一份。
 func (g *Game) nextPlan() rules.BuildPlan {
-	b := rules.Budget{Treasury: g.military[g.faction], Tax: g.taxTotal[g.faction],
-		ShipPct: g.res.ShipPct}
+	b := g.nextBudget()
 	return rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct, Faction: g.faction}
 }
 

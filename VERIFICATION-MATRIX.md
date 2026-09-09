@@ -215,7 +215,7 @@
 | 行星 `n/m` ＝ 玩家陣營行星數 / 總數 | 通過 | [`docs/re/23`](docs/re/23-region-panel-fields.md)；五個星域對畫面 |
 | 徵稅額 ＝ 經濟力 × 該星域稅率 / 1000（捨去）| 通過 | [`docs/re/26`](docs/re/26-tax-and-treasury.md)；稅率是**每個星域各自的** |
 | 總稅收 ＝ 自己擁有的星域徵稅額相加 | 通過 | [`docs/re/26`](docs/re/26-tax-and-treasury.md)；帝國 10341、同盟 11087 兩邊都對 |
-| 月底軍事費的完整算式 | **已逆向，未對數字** | [`docs/re/255`](docs/re/255-month-end-gate-found.md)、[`docs/internals/27`](docs/internals/27-treasury-globals.md)：`0654:0034` 的完整順序讀出來了（`2703:03AF` 的 `軍事費 += 總稅收` → `ds:8F62` 留原定軍事費 → `軍事費 −= 船艦建造費` → `ds:8F94` → 累計維持費與移動經費歸零）。**每一項的數字還沒逐一對過** |
+| 月底軍事費的完整算式 | **通過**（兩組數字） | [`docs/re/255`](docs/re/255-month-end-gate-found.md)、[`docs/internals/27`](docs/internals/27-treasury-globals.md)：`0654:0034` 的完整順序讀出來了（`2703:03AF` 的 `軍事費 += 總稅收` → `ds:8F62` 留原定軍事費 → `軍事費 −= 船艦建造費` → `ds:8F94` → 累計維持費與移動經費歸零）。收據 `monthmoney`（S3 開局，座位 0 poke 成電腦讓本體無頭跑完，前後各倒一份 1 MB）：`軍事費 160000 → 173131 ＝ ＋總稅收 13131`、`ds:8F62` 抄結算後的值、`ds:8FF4[0]` 被清掉、同盟那一欄一個位元組都沒動。船艦建造費的算式也對上兩組（[`docs/re/256`](docs/re/256-ship-budget-formula.md)）：基數扣維持費與移動經費、百分比在 `ds:8F92`（每陣營一個 byte），帝國 170124×0%＝0、同盟 37664×20%＝7532。**還沒對的是 `ds:8F94`／`ds:8F7A`／`ds:8F8A` 三格**（收據裡本來就是 0） |
 | 星域相鄰圖與原版路徑表（32×32 中點矩陣 ×2）| 通過 | [`docs/internals/26`](docs/internals/26-star-region-graph.md)；1024 對逐步驗證 |
 | 距離矩陣與中點矩陣的**產生算法**（`2B99:007D` ＋ `2B99:01B1`）| 通過 | [`docs/re/243`](docs/re/243-who-fills-the-distance-table.md)；`tools/scripts/distance_build.py` 從 `ds:533A` 重算，四張表 1024×4 格與 EMS 傾印相同 |
 | 星域旗標的執行順序（`056A:0468` → `2703:08DE` → 回合計數器）| 通過 | 收據 `flagpass`：`-regs-at` 抓到 `#218118662` / `#218904226` / `#221187705`，[`docs/re/245`](docs/re/245-region-flag-bits-one-and-four.md)。`+0x13` bit4（單方面占據）已實作（`rules.Occupations`）；bit1 只清不設（`2703:1789` 後半未讀）|
