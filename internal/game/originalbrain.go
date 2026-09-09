@@ -97,7 +97,8 @@ func (g *Game) buildSupport() *ai.BuildSupport {
 			// 總稅收 ＝ ds:8F6A。**艦隊維持費（ds:8F72）remake 還沒算**
 			// ——收據上帝國那一欄是 0（`docs/internals/27`），所以這裡
 			// 也是 0，閘門的那一項等於永遠通過。
-			// `ds:8FD4[陣營]` 語意未解，一律 false。
+			// `ds:8FD4[陣營]` 是一個 0–4 的等級（`docs/re/206`），
+			// remake 還沒有它——一律 false 等於當成 0。
 			return g.taxTotal, 0, false
 		},
 		Admirals: func(faction int) []ai.AdmiralView {
