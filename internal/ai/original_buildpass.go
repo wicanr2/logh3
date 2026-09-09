@@ -71,6 +71,10 @@ func (in BuildInput) next() int {
 // `維持費 × 20 >= 總稅收` 收手的（收據 `turn260mem` 建到第三支就停，
 // `docs/re/209`）；`Upkeep` 給 0 的話那一項永遠通過，迴圈只會被
 // `FleetCap` 與 `CanForm` 擋住——那是與原版不同的行為。
+//
+// **而 remake 現在一定給 0**：維持費是逐艦隊走編制算出來的
+// （`ds:8F72` ＝ Σ `297B:116C(艦隊)`，`docs/re/211`），而 `NewFleet`
+// 還沒有編制。補算式沒有用，要先讓 AI 建的艦隊分到艦艇。
 func BuildPass(in BuildInput) []NewFleet {
 	if in.CapitalOwner != in.Faction {
 		return nil // 首都不是自己的就不建
