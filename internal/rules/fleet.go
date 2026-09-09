@@ -40,6 +40,12 @@ type Fleet struct {
 	// （`1CC5:0966`，`docs/re/132`）。0xFFFF ＝ 沒有。
 	Scout int `json:"scout"`
 
+	// Groups ＝ 這一支有幾組編制，對應執行期艦隊記錄的 `+0x0F`
+	// （`docs/internals/33`）。戰略 AI 的敵方兵力圖就是把它加總
+	// （`docs/re/173`）。存檔這邊沒有獨立欄位，用編制槽掃到 `0xFF`
+	// 為止的筆數（`FleetShips`）。
+	Groups int `json:"groups"`
+
 	// Parked ＝ 原版 `+0x08` 是 5：**這一支不會動**，就算有目的地也一樣
 	// （`113A:0350` 讀的就是它，`docs/re/77`）。劇本可以把艦隊設成這樣
 	// ——S2 同盟那七支全是，所以它們十二回合原地不動。

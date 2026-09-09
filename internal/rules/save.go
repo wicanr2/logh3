@@ -273,6 +273,7 @@ func (s *Slot) Fleets(w StrengthWeights) []Fleet {
 			Action:   int(r[fleetAction] & 0x0F),
 			Scout:    int(r[fleetScout]) | int(r[fleetScout+1])<<8,
 			Morale:   int(r[fleetMorale]),
+			Groups:   len(s.FleetShips(i)),
 		}
 		if r[fleetAdjutant] == 0xFF {
 			f.Adjutant = -1

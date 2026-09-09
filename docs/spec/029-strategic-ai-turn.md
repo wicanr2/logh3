@@ -122,7 +122,9 @@ ds:D5AE[0..31] = 0
 
 | 需要 | 現況 |
 |---|---|
-| 艦隊的編制槽與艦艇池（`+0x0F`／`+0x10`+／艦艇 `+0x04`／`+0x08`） | `internal/rules` 有艦艇但 AI 的 `World` 還沒接（`ai.World.Strength` 是預留的口）|
+| 艦隊的 `+0x0F`（編制槽數） | **有了**：`rules.Fleet.Groups`，存檔那邊用編制槽掃到 `0xFF` 為止的筆數 |
+| 艦艇池（艦艇 `+0x04`／`+0x08`，候選評分要用） | `internal/rules` 有艦艇但 AI 的 `World` 還沒接（`ai.World.Strength` 是預留的口）|
+| `2B99:0392`（從首都能不能走到） | **還沒讀**；`ai.TurnInput.Reachable` 要求呼叫端自己給，`nil` 代表「全部算得到」，那不是原版行為 |
 | 艦隊 `+0x09`（類別鍵） | remake 沒有這個欄位；來源那筆記錄未解（`docs/re/169`）|
 | 艦隊 `+0x0E`（編制槽應有數） | remake 沒有；語意是假說（`docs/re/168`）|
 | 星域 `+0x13` bit0／bit2 | bit2 ＝ 有戰鬥（強推論）；bit0 未解 |
@@ -240,6 +242,7 @@ n -= 2E54:03C3(n)                       ; 先從現有的湊
 | `Unsatisfied`／`PickCell` | `2E54:088F`／`2E54:0842` | 單元測試 |
 | `StateCode` | `2D54:0163` | 12 種全表 |
 | `AdvanceRoutes` | `ds:5EF2`／`ds:5F22` | 路線終點檢查 |
+| `DefenceBoard`／`AttackBoard` | 一回合的六張表 | 由上面幾支組成；`Reachable` 是外部注入 |
 
 **還沒接上**的原因有兩個，兩個都要先解決才談得上把 `Original` 換掉：
 

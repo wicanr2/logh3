@@ -406,3 +406,23 @@ func TestFleetStrengthUsesOriginalFormula(t *testing.T) {
 		}
 	}
 }
+
+// TestFleetGroupsMatchesSlots 驗艦隊的 `Groups`（執行期記錄的 `+0x0F`，
+// 戰略 AI 的敵方兵力圖靠它加總，`docs/re/173`）與編制槽掃到 `0xFF`
+// 為止的筆數一致，而且每一支都至少有一組。
+func TestFleetGroupsMatchesSlots(t *testing.T) {
+	s := loadSlot(t, "8")
+	fleets := s.Fleets(nil)
+	if len(fleets) == 0 {
+		t.Fatal("這一格沒有在用的艦隊")
+	}
+	for _, f := range fleets {
+		want := len(s.FleetShips(f.Index))
+		if f.Groups != want {
+			t.Errorf("艦隊 %d 的 Groups ＝ %d，編制槽有 %d 組", f.Index, f.Groups, want)
+		}
+		if f.Groups == 0 {
+			t.Errorf("艦隊 %d 一組編制都沒有", f.Index)
+		}
+	}
+}
