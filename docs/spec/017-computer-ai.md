@@ -4,6 +4,7 @@
 戰術層 `OriginalTactic`／`Encircle`，行為指標測試七條。
 戰術層還沒接上畫面——remake 的戰鬥畫面本身還沒做）
 證據：`docs/re/77`（原版的每回合決策，調查中）
+後續：原版戰略 AI 的完整流程改寫在 [`docs/spec/029`](029-strategic-ai-turn.md)（DRAFT）；本檔「原版按實行時電腦不下任何命令」的前提已被 `docs/re/175` 收窄
 相關：[`docs/internals/26`](../internals/26-star-region-graph.md)（星域圖與路徑表）、
 [`docs/internals/33`](../internals/33-fleet-table.md)（執行期艦隊表）
 
