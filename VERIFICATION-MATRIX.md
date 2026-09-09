@@ -162,6 +162,7 @@
 | 建艦隊的閘門與配額（`2D76:0060`／`011C`／`01A5`／`0251`）| **已實作**（`ai.BuildGate`／`ai.ClassQuotaOrder`）| 上限 16 → 少於三支放行 → 維持費 × 20 追上總稅收就不建（[`docs/re/202`](docs/re/202-fleet-build-money-gate.md)）；配額 40/45/5/10 整數捨去、升冪排最缺的。`ds:8FD4[陣營]` 的語意仍未解 |
 | 新艦隊的回傳路徑（`ai.NewFleet`／`ai.Builder`）| **已實作** | 選配介面，`Game.runBrain` 型別斷言問一次；守「每陣營 16 支」與「一位提督一支」兩道限制。沒實作的 `Brain` 不受影響 |
 | 建艦隊抽類別鍵（`2D76:0576`）| **已實作**（`ai.PickClassKey`／`ai.ClassKeys`）| 四張鍵表是 `ds:5F52` 的反表，逐項對過（[`docs/re/204`](docs/re/204-fleet-class-key-pick.md)）|
+| 建艦隊評分（`2D76:0434`／`04FD`）| **已實作**（`ai.AdmiralBuildScore`）| 基底 → ×統率力÷100 → ×類別能力 → 艦種 1 再 ×3÷2，依分數降冪。**同盟缺錢那條路查的 `ds:5FCA` 只有 16 格而等級到 41**，讀出表尾放大五到七倍（[`docs/re/205`](docs/re/205-fleet-build-score-table-overrun.md)），照量到的重現 |
 | 建艦隊挑人選（`2D76:02FA`）| **已實作**（`ai.PickBuildAdmiral`）| 四層門檻 `7000h`／`6000h`／`4000h`，機率 1/8、1/8、1/4、**1/2**（[`docs/re/203`](docs/re/203-fleet-build-admiral-pick.md)）；分布用原版亂數跑 8 萬次驗過。`2D76:0576` 仍未讀 |
 | 提督排序（`2E54:063C`）| **已實作**（`rules.CompareAdmiralsForFleet`／`SortAdmiralsForFleet`）| 等級 → 統率力 → 運用，三段降冪（[`docs/re/201`](docs/re/201-admiral-sort-key.md)）；原版提督表排完的單調性有測試 |
 | 指派、費沙事件 | **已逆向，未實作** | [`docs/re/180`](docs/re/180-admiral-fleet-slot.md)–[`182`](docs/re/182-admiral-flags-and-fleet-cost.md)、[`190`](docs/re/190-fleet-class-meaning.md)–[`192`](docs/re/192-phezzan-event.md) |

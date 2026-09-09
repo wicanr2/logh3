@@ -134,3 +134,61 @@ func PickClassKey(class, r int) int {
 	}
 	return keys[r%len(keys)]
 }
+
+// levelScale ＝ 原版 `ds:5FCA`：同盟缺錢時拿等級換算出來的「基底」
+// （`2D76:0434`，`docs/re/205`）。
+//
+// **前 16 格才是那張表本身**（`1 1 2 2 3 3 4 4 5 5 5 5 6 6 6 6`）。
+// 原版用等級直接當 word 索引、沒有夾限，而提督的等級到 41——
+// 索引 16 以後讀的是隔壁的 `ds:5FEA`，值從傾印量出來就是下面這些。
+// 這裡照量到的重現，不修掉。
+var levelScale = [44]int{
+	1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, // ds:5FCA 本體
+	30, 31, 32, 33, 40, 41, 42, 43, // 以下讀出表尾，落在 ds:5FEA
+	29, 28, 27, 26, 25, 24, 23, 22,
+	21, 20, 19, 18, 17, 16, 15, 14,
+	13, 12, 11, 10,
+}
+
+// AdmiralView 是建艦隊評分要看的提督欄位（`docs/internals/08`）。
+type AdmiralView struct {
+	Index   int    // 提督表裡的索引
+	Level   int    // `+0x06` 等級
+	Command int    // `+0x0B` 統率力
+	Ability [4]int // 四個類別各自對應的能力：+0x14／+0x13／+0x12／+0x17
+	Kind    int    // `+0x08 & 0x0F` 艦種
+}
+
+// AllianceBrokeBelow 是 `2D76:0434` 那條「同盟缺錢」分支的門檻：
+// 總稅收低於它才改查 `levelScale`。
+const AllianceBrokeBelow = 20000
+
+// AdmiralBuildScore ＝ 原版 `2D76:0434(提督, 類別)`：算一位提督在某個
+// 艦隊類別的分數（原版寫進提督 `+0x1A`，排序器 `2D76:04FD` 比的就是它）。
+//
+//	faction 目前在跑 AI 的陣營（0 帝國、1 同盟）
+//	tax     那個陣營的總稅收（ds:8F6A[陣營 × 4]）
+//
+// 等級超過 43 的沒有觀察到，夾在 43——**那是 remake 自己的收斂**，
+// 原版會繼續往下讀（`docs/re/205`）。
+func AdmiralBuildScore(a AdmiralView, class, faction, tax int) int {
+	base := a.Level * 2
+	if faction == 1 && tax < AllianceBrokeBelow {
+		i := a.Level
+		if i < 0 {
+			i = 0
+		}
+		if i >= len(levelScale) {
+			i = len(levelScale) - 1
+		}
+		base = levelScale[i]
+	}
+	score := base * a.Command / 100
+	if class >= 0 && class < len(a.Ability) {
+		score *= a.Ability[class]
+	}
+	if a.Kind == 1 {
+		score = score * 3 / 2
+	}
+	return score
+}

@@ -158,3 +158,65 @@ func TestPickClassKey(t *testing.T) {
 		t.Errorf("不合法的類別應該回 -1，得到 %d", got)
 	}
 }
+
+// TestLevelScaleTable 釘住 `ds:5FCA` 本體與讀出表尾的那一段
+// （`docs/re/205`）。
+func TestLevelScaleTable(t *testing.T) {
+	want := []int{1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6}
+	for i, w := range want {
+		if levelScale[i] != w {
+			t.Errorf("ds:5FCA[%d] ＝ %d，預期 %d", i, levelScale[i], w)
+		}
+	}
+	// 索引 16 起是隔壁的表，值明顯大一個級距。
+	for _, c := range []struct{ i, want int }{
+		{16, 30}, {19, 33}, {20, 40}, {23, 43}, {24, 29}, {41, 12}, {43, 10},
+	} {
+		if levelScale[c.i] != c.want {
+			t.Errorf("讀出表尾的 [%d] ＝ %d，預期 %d", c.i, levelScale[c.i], c.want)
+		}
+	}
+	// 24 之後是每級 −1 的降冪。
+	for i := 25; i < len(levelScale); i++ {
+		if levelScale[i] != levelScale[i-1]-1 {
+			t.Errorf("[%d] ＝ %d，前一格是 %d，預期每級 −1",
+				i, levelScale[i], levelScale[i-1])
+		}
+	}
+}
+
+// TestAdmiralBuildScore 測 `2D76:0434` 的四段（`docs/re/205`）。
+func TestAdmiralBuildScore(t *testing.T) {
+	a := AdmiralView{Level: 20, Command: 100, Ability: [4]int{80, 90, 100, 110}, Kind: 0}
+
+	// 帝國：基底 ＝ 等級 × 2 ＝ 40 → 40 × 100 ÷ 100 × 90 ＝ 3600。
+	if got := AdmiralBuildScore(a, 1, 0, 10000); got != 3600 {
+		t.Errorf("帝國分數 ＝ %d，預期 3600", got)
+	}
+	// 同盟但錢夠：走同一條。
+	if got := AdmiralBuildScore(a, 1, 1, 20000); got != 3600 {
+		t.Errorf("同盟錢夠時分數 ＝ %d，預期 3600", got)
+	}
+	// 同盟缺錢：基底改查表，等級 20 讀出表尾 ＝ 40 → 與 ×2 相同。
+	if got := AdmiralBuildScore(a, 1, 1, 19999); got != 3600 {
+		t.Errorf("同盟缺錢、等級 20 時分數 ＝ %d，預期 3600", got)
+	}
+	// 等級 10 才看得出差別：×2 ＝ 20，查表 ＝ 5。
+	low := a
+	low.Level = 10
+	rich := AdmiralBuildScore(low, 1, 1, 20000)
+	broke := AdmiralBuildScore(low, 1, 1, 19999)
+	if rich != 1800 || broke != 450 {
+		t.Errorf("等級 10：錢夠 %d（預期 1800）、缺錢 %d（預期 450）", rich, broke)
+	}
+	// 類別換一個 → 換一項能力。
+	if got := AdmiralBuildScore(a, 3, 0, 10000); got != 40*110 {
+		t.Errorf("類別 3 的分數 ＝ %d，預期 %d", got, 40*110)
+	}
+	// 艦種 1 → × 3 ÷ 2。
+	k1 := a
+	k1.Kind = 1
+	if got := AdmiralBuildScore(k1, 1, 0, 10000); got != 3600*3/2 {
+		t.Errorf("艦種 1 的分數 ＝ %d，預期 %d", got, 3600*3/2)
+	}
+}
