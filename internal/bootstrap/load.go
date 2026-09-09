@@ -112,6 +112,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	flipReport, err := screen.LoadFlipReportPanel(filepath.Join(data, "flip-report-panel.json"))
+	if err != nil {
+		return nil, err
+	}
 	bioPanel, err := screen.LoadBioPanel(filepath.Join(data, "admiral-bio-panel.json"))
 	if err != nil {
 		return nil, err
@@ -298,7 +302,11 @@ func Load(orig, data string) (*game.Resources, error) {
 			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
 			Table: []int{170, 150, 130, 90, 60},
 			Base:  []int{50, 75, 100, 150, 200},
-		}, Faces: faces, Cursor: cur, Menu: menu,
+		},
+		// `ds:8F4D`：報告頭像用的提督編號，量自新遊戲那一份傾印
+		// （`docs/re/248`）。**不是統治者**。
+		Reporter: [2]int{13, 75}, FlipReport: flipReport,
+		Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
 		StarBit: bit, StarRGN: rgn, RegionColours: colours,
 		ShipOrder: so, BuildPlan: bp, BudgetPlan: bg, AdmiralList: al,
@@ -314,7 +322,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Composition: compTables, DefaultAdjutants: adjutants,
 		MessageBox: msgBox, FrameTiles: frameTiles,
 		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,
-		PlanetInfo: planetInfo,
+		PlanetInfo:    planetInfo,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
 

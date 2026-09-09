@@ -247,6 +247,14 @@ type Resources struct {
 	// ReportPanel 是主畫面會計報告那個視窗算出來的部分（署名、頭像、金額）。
 	ReportPanel *screen.ReportPanel
 
+	// FlipReport 是星域易主報告那一頁的版面（`docs/spec/034`）。
+	FlipReport *screen.FlipReportPanel
+
+	// Reporter 是報告頭像用的提督編號，＝ 原版的 `ds:8F4D[陣營]`
+	// （`docs/re/248`）。**不是統治者**（那個是 `ds:8F4F`）。
+	// 量自新遊戲那一份傾印；換一個劇本會不會不同還沒驗。
+	Reporter [2]int
+
 	// BuildPlanPanel 是建造計劃那張的「船艦建造費」（同樣是 rules.Budget 算的）。
 	BuildPlanPanel *screen.ReportPanel
 
@@ -1730,6 +1738,14 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 		if g.res.CapitalPanel != nil {
 			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
 		}
+		return
+	}
+	// 易主報告是同一塊底板加上兩行字與一張頭像（`docs/spec/034`）。
+	if g.state == StateRegionFlipReport {
+		if g.res.CapitalPanel != nil {
+			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
+		}
+		g.drawFlipReport(fb)
 		return
 	}
 	g.drawCapitalPanel(fb)

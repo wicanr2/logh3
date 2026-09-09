@@ -501,8 +501,12 @@
     **行為層做好了**（`StateRegionFlipReport` ＋ `pendingFlips` 佇列：
     回合結束那一圈拆成 `recomputeRegionOwners` 與 `refreshRegionPosture`，
     中間隔著報告，全部按掉才跑後半段——照原版）。
-    **畫面還沒畫、也沒對拍**；星域變成無主時印哪一句沒有收據，
-    `RegionFlip.Message` 那兩條標成假設待驗。
+    **畫面也畫了並對過拍**：`FlipReportPanel`（版面 JSON 由
+    `tools/scripts/flip_report_panel.py` 從訊息表產生，字碼與原版逐位元組
+    相同）＋ `Game.drawFlipReport`；對收據 `chain3` **頭像 72×93 與兩行
+    文字各 0 差異**。規格轉 CONFORMED。
+    **剩下**：星域變成無主時印哪一句沒有收據（`RegionFlip.Message` 那兩條
+    標假設待驗），以及正常玩家路徑的整張對拍。
     **頭像解出來了**（`docs/re/248`）：`FACE.AMG` 第 `ds:8F4D[座位陣營]`
     張，畫在 `(544,180)`、取左上 **72×93**，與收據逐像素差 0。
     `ds:8F4D` ＝ 13（帝國）／75（同盟），**不是統治者**

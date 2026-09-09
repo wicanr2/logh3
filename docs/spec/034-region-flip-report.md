@@ -1,6 +1,6 @@
 # SPEC 034 — 星域易主的戰略報告
 
-狀態：**READY**（行為層已實作並有測試；**畫面還沒畫、也沒對拍**）
+狀態：**CONFORMED**（行為層與畫面都實作了；文字與頭像逐像素對過收據。**星域變成無主時印哪一句仍是假設待驗**）
 證據：[`docs/re/246`](../re/246-ownership-chain-receipt.md)（發現與模態行為）、
 [`docs/re/247`](../re/247-strategy-report-strings.md)（訊息表）、
 [`docs/re/244`](../re/244-region-posture-recompute.md)（回合結束的順序）
@@ -92,15 +92,37 @@ ds:080A   下落不明的提督　 / ds:0825 確認死亡。 / ds:083A 脫離成
 `+0x24`）、`TestRegionFlipReportsQueueOneByOne`（兩格易主要按兩次，
 中間不跑後半段）、`TestFlipMessageSelection`。
 
-**還沒畫**：報告本身的文字與頭像。版面在上一節，對拍方法在下一節。
+**畫面也畫了**（`internal/screen/flipreport.go` ＋
+[`data/flip-report-panel.json`](../internals/data/flip-report-panel.json)，
+由 `tools/scripts/flip_report_panel.py` 從訊息表產生，所以字碼與原版
+逐位元組相同）：
+
+- `FlipReportPanel.Draw` 畫兩行——第 1 行星系名（色 5）接 `星系`（色 7），
+  第 2 行那一句（色 7），陰影一律 3。
+- `Game.drawFlipReport` 另外畫頭像：`FACE.AMG` 第 `Resources.Reporter[座位]`
+  張（＝ `ds:8F4D`），**只畫左上 72×93**。
+
+## 對拍
+
+收據 `chain3`（原版停在報告上那一張）：
+
+| 比什麼 | 結果 |
+|---|---|
+| 頭像 72×93 逐像素 | **0 差異**（`TestFlipReportFaceMatchesOracle`）|
+| 兩行文字 (334,178)–(470,220) 逐像素 | **0 差異**（`TestFlipReportTextMatchesOracle`）|
+
+底板與視窗框不在這兩支裡——命令階段那張畫面已經逐位元組對過
+（`docs/spec/005`）。
 - **關掉的方式量過了**：`chain4` 用右鍵、`chain5` 用左鍵，兩份都讓
   `2703:159B` 跑滿 64 次、`2703:08DE` 跑 1 次，也就是**滑鼠任一鍵都能關**
   （兩份都點在地圖上的 `(300,200)`，沒有測其他位置）。**鍵盤不行**——
   `chain3` 全程 `-press-every 2000000` 一直在送鍵，照樣卡住。
 
-## 對拍怎麼做
+## 還沒做
 
-收據 `chain3` 的 `screen.png`／`screen.bin` 就是原版那一張。remake 要
-走正常玩家路徑到同一個局面（新遊戲、一次「實行」、星域 4 易主），
-比較右側面板那一塊的色號陣列。**局面要用注入的**（`docs/spec/014`）：
-行星記錄陣列基底在線性 `0x53132`，星域 4 那顆的 `+0x11` 在 `lin:5351B`。
+- **星域變成無主時印哪一句沒有收據**（`our_grip_lost`／`we_partly_landed`
+  兩條）。要驗的話用 `-poke` 把某一格的行星弄成混雜：行星記錄陣列基底在
+  線性 `0x53132`，一筆 82 位元組，`+0x11` 是擁有者。
+- **正常玩家路徑的整張對拍**還沒做。上面兩支比的是報告自己畫的那兩塊；
+  走完整條路徑（新遊戲、一次「實行」、星域 4 易主）再比整個右側面板，
+  要等 remake 能重現同一個局面。

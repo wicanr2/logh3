@@ -1,6 +1,9 @@
 package game
 
-import "github.com/wicanr2/logh3/internal/rules"
+import (
+	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
+)
 
 // 星域易主的戰略報告（原版 `056A:0855`，`docs/spec/034`、`docs/re/246`、
 // `docs/re/247`）。
@@ -88,4 +91,48 @@ func (g *Game) resumeAfterFlips() {
 		return
 	}
 	g.state = StateCommandPhase
+}
+
+// drawFlipReport 把現在這一則報告畫上去：兩行字 ＋ 頭像
+// （版面 `docs/internals/data/flip-report-panel.json`，`docs/spec/034`）。
+func (g *Game) drawFlipReport(fb *gfx.Framebuffer) {
+	p := g.res.FlipReport
+	f, ok := g.CurrentFlip()
+	if p == nil || !ok {
+		return
+	}
+	p.Draw(fb, g.res.Font, g.FlipRegionName(f), flipMessageKey(f.Message(g.faction)))
+	if g.res.Faces == nil {
+		return
+	}
+	// 頭像是 `FACE.AMG` 第 `ds:8F4D[座位陣營]` 張，**只畫左上 72×93**
+	// ——整張是 80×100，畫上去的是裁切過的（`docs/re/248`）。
+	n := 0
+	if g.faction >= 0 && g.faction < len(g.res.Reporter) {
+		n = g.res.Reporter[g.faction]
+	}
+	img, err := g.res.Faces.Decode(n)
+	if err != nil {
+		return
+	}
+	for y := 0; y < p.Face.H && y < img.H; y++ {
+		for x := 0; x < p.Face.W && x < img.W; x++ {
+			fb.Set(p.Face.X+x, p.Face.Y+y, img.Pix[y*img.W+x])
+		}
+	}
+}
+
+// flipMessageKey 把四句對應到版面 JSON 裡的鍵。
+func flipMessageKey(m FlipMessage) string {
+	switch m {
+	case FlipTakenByUs:
+		return "taken_by_us"
+	case FlipLostToEnemy:
+		return "lost_to_enemy"
+	case FlipOurGripLost:
+		return "our_grip_lost"
+	case FlipWePartlyLanded:
+		return "we_partly_landed"
+	}
+	return ""
 }
