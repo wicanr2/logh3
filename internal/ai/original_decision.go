@@ -28,7 +28,7 @@ const (
 )
 
 // RegionOwnerNeutral ＝ 星域記錄 `+0x12` 的「無主」（帝國 0、同盟 1）。
-const RegionOwnerNeutral = 2
+const RegionOwnerNeutral = rules.RegionOwnerNone
 
 // Engaged 回原版 `2E54:16F5(艦隊)` 的判斷：這一支在它現在這一格
 // **有沒有事做**。

@@ -1,0 +1,310 @@
+{
+ "note": "`2703:0933` 的同狀態收據：星域 `+0x24`（到自己首都的路徑成本）與 `+0x13`（bit0 遠、bit2 雙方都有艦隊、bit3 前線）。算法見 docs/re/244，邊權表在 star-graph.json 的 edge_cost。",
+ "source": "s3ai6.bin",
+ "owners": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  0,
+  0,
+  1,
+  0,
+  2,
+  1,
+  0,
+  1,
+  1,
+  1
+ ],
+ "fleets": [
+  {
+   "slot": 0,
+   "region": 25,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 2,
+   "region": 25,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 3,
+   "region": 25,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 4,
+   "region": 25,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 5,
+   "region": 25,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 7,
+   "region": 13,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 8,
+   "region": 25,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 9,
+   "region": 14,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 11,
+   "region": 25,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 12,
+   "region": 26,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 14,
+   "region": 25,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 15,
+   "region": 25,
+   "faction": 0,
+   "flags": 0
+  },
+  {
+   "slot": 16,
+   "region": 26,
+   "faction": 1,
+   "flags": 0
+  },
+  {
+   "slot": 17,
+   "region": 26,
+   "faction": 1,
+   "flags": 0
+  },
+  {
+   "slot": 28,
+   "region": 26,
+   "faction": 1,
+   "flags": 0
+  },
+  {
+   "slot": 29,
+   "region": 26,
+   "faction": 1,
+   "flags": 0
+  },
+  {
+   "slot": 30,
+   "region": 26,
+   "faction": 1,
+   "flags": 0
+  },
+  {
+   "slot": 31,
+   "region": 26,
+   "faction": 1,
+   "flags": 0
+  }
+ ],
+ "regions": [
+  {
+   "owner": 0,
+   "capital_cost": 0,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 16,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 15,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 27,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 14,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 33,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 28,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 31,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 46,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 51,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 43,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 67,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 59,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 60,
+   "flags": 8
+  },
+  {
+   "owner": 0,
+   "capital_cost": 44,
+   "flags": 0
+  },
+  {
+   "owner": 0,
+   "capital_cost": 61,
+   "flags": 8
+  },
+  {
+   "owner": 1,
+   "capital_cost": 50,
+   "flags": 8
+  },
+  {
+   "owner": 1,
+   "capital_cost": 39,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 24,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 14,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 10,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 36,
+   "flags": 8
+  },
+  {
+   "owner": 0,
+   "capital_cost": 73,
+   "flags": 8
+  },
+  {
+   "owner": 0,
+   "capital_cost": 58,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 46,
+   "flags": 8
+  },
+  {
+   "owner": 0,
+   "capital_cost": 75,
+   "flags": 0
+  },
+  {
+   "owner": 2,
+   "capital_cost": 0,
+   "flags": 12
+  },
+  {
+   "owner": 1,
+   "capital_cost": 29,
+   "flags": 8
+  },
+  {
+   "owner": 0,
+   "capital_cost": 90,
+   "flags": 8
+  },
+  {
+   "owner": 1,
+   "capital_cost": 34,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 16,
+   "flags": 0
+  },
+  {
+   "owner": 1,
+   "capital_cost": 0,
+   "flags": 0
+  }
+ ]
+}
