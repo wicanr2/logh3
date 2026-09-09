@@ -108,3 +108,8 @@ word**，原本用 `le32` 讀，長度不足就回 0，所以那一格永遠讀�
 （`056A:0855`），而且它**擋住回合結束處理**——第一次跑收據時
 `2703:08DE` 零次執行，就是停在那則報告上（`docs/re/246`）。
 remake 的 `recomputeRegions` 只回「有幾格易主」，沒有把它變成畫面。
+
+訊息表倒出來了（`docs/re/247`、
+[`data/strategy-report-strings.json`](../internals/data/strategy-report-strings.json)）：
+標題兩種（玩家 `戰略模式處理中`／電腦 `戰略模式思考中`），易主兩句分我方
+（`ds:08DA`）與敵方（`ds:08EE`），名字與顏色走 `\x1B[%d,` 那組控制碼。
