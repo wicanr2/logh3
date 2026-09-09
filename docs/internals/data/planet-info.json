@@ -1,0 +1,112 @@
+{
+ "_note": "戰場的行星情報視窗（1373:1CBC，docs/re/144）。視窗 3603:0006(色 0x97, 格 (3,4), 內容 22×10 格, 旗標 1) → 實際 24×12 格。格式字串裡沒有換行以外的排版——每一段自己帶 \\n。",
+ "cell_x": 3,
+ "cell_y": 4,
+ "cols": 22,
+ "rows": 10,
+ "colour": 151,
+ "owner_ink": [
+  6,
+  5,
+  7
+ ],
+ "owner_colour": [
+  150,
+  149,
+  151
+ ],
+ "owner_names": [
+  {
+   "offset": "ds:6099",
+   "bytes": "abd2b0eaad78",
+   "text": "帝國軍"
+  },
+  {
+   "offset": "ds:60A0",
+   "bytes": "a650b7f9ad78",
+   "text": "同盟軍"
+  },
+  {
+   "offset": "ds:60A7",
+   "bytes": "a4a4a5dfad78",
+   "text": "中立軍"
+  }
+ ],
+ "lines": {
+  "region": {
+   "offset": "ds:3A70",
+   "bytes": "2573ac50a8742020",
+   "text": "%s星系  "
+  },
+  "region_name": {
+   "offset": "ds:3A79",
+   "bytes": "25730a",
+   "text": "%s\n"
+  },
+  "fortress": {
+   "offset": "ds:3A7D",
+   "bytes": "ad6eb6eb",
+   "text": "要塞"
+  },
+  "planet": {
+   "offset": "ds:3A82",
+   "bytes": "a6e6ac50",
+   "text": "行星"
+  },
+  "kind_and_owner": {
+   "offset": "ds:3A87",
+   "bytes": "257325732020",
+   "text": "%s%s  "
+  },
+  "planet_name": {
+   "offset": "ds:3A8E",
+   "bytes": "25730a",
+   "text": "%s\n"
+  },
+  "blank": {
+   "offset": "ds:3A92",
+   "bytes": "0a",
+   "text": "\n"
+  },
+  "economy": {
+   "offset": "ds:3A94",
+   "bytes": "b867c0d9a44f202020202531306c75a152a6a8aaf8b27620202532642e2531642525200a",
+   "text": "經濟力    %10lu﹕成長率  %2d.%1d%% \n"
+  },
+  "defence": {
+   "offset": "ds:3AB9",
+   "bytes": "a8bebdc3a44f2020202535752f253575a152a65eb45fb27620202532642e302525200a",
+   "text": "防衛力   %5u/%5u﹕回復率  %2d.0%% \n"
+  },
+  "kind_header": {
+   "offset": "ds:3ADD",
+   "bytes": "2020a2d020202020a2d620202020a2d120202020a2cf20202020a2d220202020a2e220202020a2d30a",
+   "text": "  Ｂ    Ｈ    Ｃ    Ａ    Ｄ    Ｔ    Ｅ\n"
+  },
+  "kind_value": {
+   "offset": "ds:3B07",
+   "bytes": "2534642020",
+   "text": "%4d  "
+  },
+  "stock_header": {
+   "offset": "ds:3B0D",
+   "bytes": "0a2020adb8bc7520202020202020202020bed4b0abbef70a",
+   "text": "\n  飛彈          戰鬥機\n"
+  },
+  "stock_value": {
+   "offset": "ds:3B26",
+   "bytes": "202020202531306c75202020202531306c75",
+   "text": "    %10lu    %10lu"
+  },
+  "economy_other": {
+   "offset": "ds:3B39",
+   "bytes": "b867c0d9a44f202020202531306c75a152a6a8aaf8b27620202d2d2d2d0a",
+   "text": "經濟力    %10lu﹕成長率  ----\n"
+  },
+  "defence_other": {
+   "offset": "ds:3B58",
+   "bytes": "a8bebdc3a44f2020202535752f253575a152a65eb45fb27620202d2d2d2d0a",
+   "text": "防衛力   %5u/%5u﹕回復率  ----\n"
+  }
+ }
+}
