@@ -27,6 +27,8 @@ const (
 	workMilitary = 0x3E // 32 位元 × 陣營
 	workTaxTotal = 0x56 // 32 位元 × 陣營
 	workBlend    = 0xC0 // 8 位元 × 陣營（＝ ds:8FD4，`docs/internals/55`）
+	workShipPct  = 0x7E // 8 位元 × 陣營（＝ ds:8F92，造船百分比）
+	workBuildPct = 0xC2 // 7 bytes × 陣營（＝ ds:8FD6，七個艦種的分配）
 
 	// FleetRecord 是艦隊表一筆的長度（`docs/re/40`）。
 	FleetRecord = 122
@@ -163,6 +165,12 @@ type Slot struct {
 	// 與 `ds:8FD4` 也是（`docs/internals/27`、`docs/internals/55`）。
 	Turn                      int
 	Military, TaxTotal, Blend [2]int
+
+	// ShipPct 是切給造船的百分比（`ds:8F92`），BuildPct 是那筆錢在七個
+	// 艦種之間的分配（`ds:8FD6`）。兩個都是每陣營一份
+	// （`docs/internals/27`、`docs/re/256`、`docs/re/257`）。
+	ShipPct  [2]int
+	BuildPct [2][BuildPlanRows]int
 }
 
 // LoadSlot 把一格存檔組成遊戲狀態。
@@ -207,6 +215,12 @@ func LoadSlot(f SlotFiles) (*Slot, error) {
 		Military: [2]int{u32(f.Work, workMilitary), u32(f.Work, workMilitary+4)},
 		TaxTotal: [2]int{u32(f.Work, workTaxTotal), u32(f.Work, workTaxTotal+4)},
 		Blend:    [2]int{int(f.Work[workBlend]), int(f.Work[workBlend+1])},
+		ShipPct:  [2]int{int(f.Work[workShipPct]), int(f.Work[workShipPct+1])},
+	}
+	for faction := 0; faction < 2; faction++ {
+		for row := 0; row < BuildPlanRows; row++ {
+			s.BuildPct[faction][row] = int(f.Work[workBuildPct+faction*BuildPlanRows+row])
+		}
 	}
 	return s, nil
 }
@@ -375,8 +389,8 @@ func SlotFileNames(index int) []string {
 // Save 把這一格存檔寫進 `dir`（規格 `docs/spec/009`）。
 //
 // 存檔就是執行期那幾張表原樣寫出去（`docs/re/41`），所以這裡沒有格式轉換
-// ——把手上的表直接寫成檔。`WORK` 只改解出來的三個欄位，其餘照抄，
-// 因為那 227 bytes 還沒解，動它等於把不懂的東西寫壞。
+// ——把手上的表直接寫成檔。`WORK` 只改解出來的那幾個欄位，其餘照抄，
+// 因為剩下的還沒解，動它等於把不懂的東西寫壞。
 //
 // **不會寫進原版目錄**：`dir` 由呼叫端指定，原版檔案一律唯讀。
 func (s *Slot) Save(dir string, index int) error {
@@ -389,6 +403,10 @@ func (s *Slot) Save(dir string, index int) error {
 		put32(work, workMilitary+4*f, s.Military[f])
 		put32(work, workTaxTotal+4*f, s.TaxTotal[f])
 		work[workBlend+f] = byte(s.Blend[f])
+		work[workShipPct+f] = byte(s.ShipPct[f])
+		for row := 0; row < BuildPlanRows; row++ {
+			work[workBuildPct+f*BuildPlanRows+row] = byte(s.BuildPct[f][row])
+		}
 	}
 	planet := s.Planets.Data
 	if len(planet) < PlanetHeader {

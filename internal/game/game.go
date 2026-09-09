@@ -473,6 +473,9 @@ type Game struct {
 	// `ds:8FD6[陣營 × 7]`；玩家那一份就是 `pct`）。電腦在回合收尾寫回
 	// 一張固定表（`docs/re/257`）。
 	foePct [rules.BuildPlanRows]int
+	// shipPctSet 分得開「還沒設過」與「設成 0」——**0% 是合法值**
+	// （S3 的帝國就是 0%），不能拿零值當「沒設過」。
+	shipPctSet bool
 
 	// blend 是未安定度算式的 `Blend`（原版 `ds:8FD4[陣營]`，0–4）。
 	// 電腦座位的戰略 AI 每回合按軍事費重設它，一設就重算該陣營所有
@@ -1003,6 +1006,7 @@ func (g *Game) startNewGame(faction int) {
 	g.military = [2]int{g.res.StartMilitary, g.res.StartMilitary}
 	g.blend = [2]int{rules.NewGameBlend, rules.NewGameBlend}
 	g.shipPct = [2]int{g.res.ShipPct, g.res.ShipPct}
+	g.shipPctSet = true
 	g.pct = rules.OpeningPct
 	g.foePct = rules.OpeningPct
 	g.slot = nil
@@ -1076,7 +1080,13 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.military = sl.Military
 	g.taxTotal = sl.TaxTotal
 	g.blend = sl.Blend
-	g.shipPct = [2]int{g.res.ShipPct, g.res.ShipPct}
+	// 造船百分比與七個艦種的分配都在 `WORK.DT?` 裡（`ds:8F92`／`ds:8FD6`，
+	// `docs/re/256`、`docs/re/257`）。0 是合法值（S3 的帝國就是 0%），
+	// 所以整組照抄，不做「零值就換掉」的補救。
+	g.shipPct = sl.ShipPct
+	g.shipPctSet = true
+	g.pct = sl.BuildPct[g.faction]
+	g.foePct = sl.BuildPct[1-g.faction]
 	// 存檔裡就有兩邊的艦隊（`FLEET.DT?` ＝ 執行期那張表，`docs/re/41`）。
 	// 讀進來之後 remake 才有敵方的艦隊可以畫、可以推進。
 	g.fleets = sl.Fleets(g.res.Weights)
@@ -1990,7 +2000,7 @@ func (g *Game) buildPctFor(faction int) [rules.BuildPlanRows]int {
 	if g.versus || faction == g.faction {
 		return g.pct
 	}
-	if g.foePct == ([rules.BuildPlanRows]int{}) {
+	if !g.shipPctSet {
 		return rules.OpeningPct
 	}
 	return g.foePct
@@ -1999,7 +2009,7 @@ func (g *Game) buildPctFor(faction int) [rules.BuildPlanRows]int {
 // factionShipPct 回一個陣營的造船百分比。`shipPct` 是零值時（direct-entry
 // 的測試沒走過 `startNewGame`）沿用開局值，不要靜靜地變成 0%。
 func (g *Game) factionShipPct(faction int) int {
-	if faction < 0 || faction > 1 || g.shipPct[faction] == 0 {
+	if faction < 0 || faction > 1 || !g.shipPctSet {
 		return g.res.ShipPct
 	}
 	return g.shipPct[faction]

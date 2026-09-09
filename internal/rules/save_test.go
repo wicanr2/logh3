@@ -439,3 +439,41 @@ func TestFleetGroupsMatchesSlots(t *testing.T) {
 		}
 	}
 }
+
+// TestWorkShipPctAndBuildPct 釘住 `WORK.DT?` 新對上的兩個欄位
+// （`docs/re/256`、`docs/re/257`）。`WORK.DTA` 是 S3「巴米利恩會戰」，
+// 記憶體那一側的收據 `monthmoney` 量到 `ds:8F92` ＝ `00 14`、
+// 軍事費 `160000 / 30000`、總稅收 `13131 / 9748`、回合 380——
+// 存檔裡的同一組數字必須相同（`WORK.DT?` 就是 `ds:8F14` 起那 230 bytes，
+// `docs/re/45`）。
+func TestWorkShipPctAndBuildPct(t *testing.T) {
+	work := readOrig(t, "WORK.DTA")
+	if len(work) != WorkRecord {
+		t.Fatalf("WORK.DTA 有 %d bytes，要 %d", len(work), WorkRecord)
+	}
+	if got, want := [2]int{int(work[workShipPct]), int(work[workShipPct+1])},
+		[2]int{0, 20}; got != want {
+		t.Errorf("ds:8F92 ＝ %v，收據是 %v", got, want)
+	}
+	for faction := 0; faction < 2; faction++ {
+		sum := 0
+		for row := 0; row < BuildPlanRows; row++ {
+			sum += int(work[workBuildPct+faction*BuildPlanRows+row])
+		}
+		if sum != 100 {
+			t.Errorf("陣營 %d 的 ds:8FD6 加起來 ＝ %d，預期 100", faction, sum)
+		}
+	}
+	// 同一份檔案裡的三個舊欄位——基底位址錯了這三個會一起錯。
+	if got := int(work[workTurn]) | int(work[workTurn+1])<<8; got != 380 {
+		t.Errorf("回合 ＝ %d，預期 380", got)
+	}
+	if got, want := [2]int{u32(work, workMilitary), u32(work, workMilitary+4)},
+		[2]int{160000, 30000}; got != want {
+		t.Errorf("軍事費 ＝ %v，收據是 %v", got, want)
+	}
+	if got, want := [2]int{u32(work, workTaxTotal), u32(work, workTaxTotal+4)},
+		[2]int{13131, 9748}; got != want {
+		t.Errorf("總稅收 ＝ %v，收據是 %v", got, want)
+	}
+}
