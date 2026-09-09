@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
+	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/ui"
 )
@@ -25,6 +26,19 @@ type MessageBoxSpec struct {
 		Rows   int `json:"rows"`
 	} `json:"templates"`
 	RowBias int `json:"row_bias"` // 樣板的格 y 要再加幾格
+	Style   int `json:"style"`    // 外框樣式的起始碼（`視窗[+3]`）
+	Colour  int `json:"colour"`   // 視窗顏色，高四位是底色
+
+	// Text 是內容區裡文字的排版。原點是內容格的左上角。
+	Text struct {
+		DX       int   `json:"dx"`
+		DY       int   `json:"dy"`
+		ColPitch int   `json:"col_pitch"`
+		RowPitch int   `json:"row_pitch"`
+		Ink      uint8 `json:"ink"`
+		Shadow   uint8 `json:"shadow"`
+		ShadowDY int   `json:"shadow_dy"`
+	} `json:"text"`
 }
 
 // LoadMessageBoxSpec 讀訊息框的版面。
@@ -58,14 +72,6 @@ func (s *MessageBoxSpec) Box(kind int, l *CommandMenuSpec) (x, y, w, h int, ok b
 	return 0, 0, 0, 0, false
 }
 
-// MessageBoxStyle／MessageBoxColour 是訊息框傳給視窗系統的兩個值：
-// `3826:0005` 拿樣板的 `[+4]` 當旗標（三種訊息都是 1），顏色固定 0x97。
-// 圖塊裡色號 0 的像素填的是顏色的**高四位**（`docs/re/138`）。
-const (
-	MessageBoxStyle  = 1
-	MessageBoxColour = 0x97
-)
-
 // DrawMessageBox 把第 kind 種訊息框的框與底畫出來（不含文字）。
 //
 // 框是圖塊不是線：外圈八張取自 `FRAME.BLK`，內部填視窗底色。旗標讓框
@@ -74,15 +80,56 @@ func DrawMessageBox(fb *gfx.Framebuffer, s *MessageBoxSpec, kind int, tiles *ui.
 	if fb == nil || s == nil || tiles == nil {
 		return false
 	}
-	for _, t := range s.Templates {
-		if t.Kind != kind {
-			continue
-		}
-		f := ui.TileFrame{Tiles: tiles, Style: MessageBoxStyle, Fill: MessageBoxColour >> 4}
-		// 格 y **不加 RowBias**：那兩格就是格座標系原點與畫面頂端
-		// 的 40 像素（`ui.FrameCellOriginY`），Draw 自己會加。
-		f.Draw(fb, t.CellX, t.CellY, t.Cols+2, t.Rows+2)
-		return true
+	t, ok := s.template(kind)
+	if !ok {
+		return false
 	}
-	return false
+	f := ui.TileFrame{Tiles: tiles, Style: s.Style, Fill: uint8(s.Colour >> 4)}
+	// 格 y **不加 RowBias**：那兩格就是格座標系原點與畫面頂端的 40 像素
+	// （`ui.FrameCellOriginY`），Draw 自己會加。
+	f.Draw(fb, t.cellX, t.cellY, t.cols+2, t.rows+2)
+	return true
+}
+
+// tmpl 是樣板的一列，欄位換成小寫免得外面誤用匿名結構。
+type tmpl struct{ cellX, cellY, cols, rows int }
+
+func (s *MessageBoxSpec) template(kind int) (tmpl, bool) {
+	for _, t := range s.Templates {
+		if t.Kind == kind {
+			return tmpl{t.CellX, t.CellY, t.Cols, t.Rows}, true
+		}
+	}
+	return tmpl{}, false
+}
+
+// MessageBoxTextOrigin 回第 kind 種訊息框裡文字第 0 列第 0 欄的左上角。
+//
+// 內容區從框往內縮一格（旗標多出來的那一圈），文字再往下 `Text.DY`
+// 像素——收據 `s3msg` 量到 (80, 202)，內容格是 (5, 8)（`docs/re/138`）。
+func (s *MessageBoxSpec) MessageBoxTextOrigin(kind int) (x, y int, ok bool) {
+	t, ok := s.template(kind)
+	if !ok {
+		return 0, 0, false
+	}
+	return (t.cellX+1)*ui.FrameTileW + s.Text.DX,
+		(t.cellY+1)*ui.FrameTileH + ui.FrameCellOriginY + s.Text.DY, true
+}
+
+// DrawMessageBoxText 把一行全形字畫進訊息框。row 是內容區的第幾列。
+func DrawMessageBoxText(fb *gfx.Framebuffer, s *MessageBoxSpec, kind int,
+	fnt *font.Font, row int, codes []uint16) []uint16 {
+	x, y, ok := s.MessageBoxTextOrigin(kind)
+	if !ok {
+		return codes
+	}
+	y += row * s.Text.RowPitch
+	var missing []uint16
+	for i, c := range codes {
+		if !ui.DrawGlyph(fb, fnt, x+i*s.Text.ColPitch, y, c,
+			s.Text.Ink, s.Text.Shadow, s.Text.ShadowDY, false) {
+			missing = append(missing, c)
+		}
+	}
+	return missing
 }

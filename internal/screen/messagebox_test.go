@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/ui"
 )
@@ -98,5 +99,77 @@ func TestMessageBoxFrameMatchesOracle(t *testing.T) {
 	}
 	if diff != 0 {
 		t.Errorf("框那一圈有 %d 個像素與收據不同", diff)
+	}
+}
+
+// 框 ＋ 那行字一起畫，與收據 `s3msg` 比整個 22 × 6 格。
+// 差的只該是右下角那個按鈕（`37A9:004C` 的子元件，還沒做）。
+func TestMessageBoxTextMatchesOracle(t *testing.T) {
+	root := "../.."
+	s, err := LoadMessageBoxSpec(
+		filepath.Join(root, "docs/internals/data/message-box.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	blk, err := os.ReadFile(filepath.Join(root, "org_game/extracted/FRAME.BLK"))
+	if err != nil {
+		t.Skipf("缺原版 FRAME.BLK：%v", err)
+	}
+	tiles, err := ui.LoadFrameTiles(blk)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fnt, err := font.Load(filepath.Join(root, "org_game/extracted/GRAPH.IMG"))
+	if err != nil {
+		t.Skipf("缺原版字型：%v", err)
+	}
+	want, err := os.ReadFile(filepath.Join(root, "workplace/oracle/s3msg/screen.bin"))
+	if err != nil {
+		t.Skipf("缺收據 s3msg：%v", err)
+	}
+
+	fb := gfx.NewFramebuffer(0)
+	if !DrawMessageBox(fb, s, 2, tiles) {
+		t.Fatal("畫不出種類 2 的訊息框")
+	}
+	// `ds:4A24`「這是無法行動的地方。」（`docs/re/121`）。
+	raw := []byte{
+		0xb3, 0x6f, 0xac, 0x4f, 0xb5, 0x4c, 0xaa, 0x6b, 0xa6, 0xe6,
+		0xb0, 0xca, 0xaa, 0xba, 0xa6, 0x61, 0xa4, 0xe8, 0xa1, 0x43,
+	}
+	codes := make([]uint16, 0, len(raw)/2)
+	for i := 0; i+1 < len(raw); i += 2 {
+		codes = append(codes, uint16(raw[i])<<8|uint16(raw[i+1]))
+	}
+	if miss := DrawMessageBoxText(fb, s, 2, fnt, 0, codes); len(miss) != 0 {
+		t.Fatalf("有缺字：%04X", miss)
+	}
+
+	tp, _ := s.template(2)
+	x0 := tp.cellX * ui.FrameTileW
+	y0 := tp.cellY*ui.FrameTileH + ui.FrameCellOriginY
+	w, h := (tp.cols+2)*ui.FrameTileW, (tp.rows+2)*ui.FrameTileH
+
+	// 按鈕在內容區右下角，`37A9:004C` 畫的，還沒做——先量出它的範圍，
+	// 其餘每一個像素都要與收據相同。
+	const btnX0, btnX1, btnY0, btnY1 = 336, 400, 260, 280
+	var diff, inBtn int
+	for y := y0; y < y0+h; y++ {
+		for x := x0; x < x0+w; x++ {
+			if fb.At(x, y) == want[y*640+x] {
+				continue
+			}
+			if x >= btnX0 && x < btnX1 && y >= btnY0 && y < btnY1 {
+				inBtn++
+				continue
+			}
+			diff++
+		}
+	}
+	if diff != 0 {
+		t.Errorf("框 ＋ 文字之外還有 %d 個像素不同（按鈕那一塊 %d 個）", diff, inBtn)
+	}
+	if inBtn == 0 {
+		t.Error("按鈕那一塊沒有差異——它應該還沒做")
 	}
 }

@@ -1,11 +1,52 @@
 {
- "_note": "訊息框的版面（原版 3826:0005，樣板表在 ds:8BEC，一種 6 bytes；docs/re/137）。框與字的幾何與命令選單同一套（docs/internals/44），只有格 y 要再加 row_bias 格——樣板寫 7，收據 s3msg 量到框頂 181 ＝ (7+2)×20+1。",
+ "_note": "訊息框的版面（原版 3826:0005，樣板表在 ds:8BEC，一種 6 bytes；docs/re/137）。外框是 FRAME.BLK 的圖塊，起始碼 1（docs/re/138）。樣板寫的是**內容**的格數，旗標讓外面再包兩格框；格 y 的 row_bias 就是格座標系原點的 40 像素。文字從內容格的左上角起算，往下 2 像素、陰影往上一列（收據 s3msg 逐位元組 0 差異）。",
  "row_bias": 2,
  "templates": [
-  {"kind": 0, "cell_x": 8, "cell_y": 7, "cols": 20, "rows": 4},
-  {"kind": 1, "cell_x": 8, "cell_y": 7, "cols": 20, "rows": 4},
-  {"kind": 2, "cell_x": 4, "cell_y": 7, "cols": 20, "rows": 4},
-  {"kind": 3, "cell_x": 4, "cell_y": 7, "cols": 20, "rows": 4},
-  {"kind": 5, "cell_x": 17, "cell_y": 3, "cols": 2, "rows": 1}
- ]
+  {
+   "kind": 0,
+   "cell_x": 8,
+   "cell_y": 7,
+   "cols": 20,
+   "rows": 4
+  },
+  {
+   "kind": 1,
+   "cell_x": 8,
+   "cell_y": 7,
+   "cols": 20,
+   "rows": 4
+  },
+  {
+   "kind": 2,
+   "cell_x": 4,
+   "cell_y": 7,
+   "cols": 20,
+   "rows": 4
+  },
+  {
+   "kind": 3,
+   "cell_x": 4,
+   "cell_y": 7,
+   "cols": 20,
+   "rows": 4
+  },
+  {
+   "kind": 5,
+   "cell_x": 17,
+   "cell_y": 3,
+   "cols": 2,
+   "rows": 1
+  }
+ ],
+ "style": 1,
+ "colour": 151,
+ "text": {
+  "dx": 0,
+  "dy": 2,
+  "col_pitch": 16,
+  "row_pitch": 20,
+  "ink": 7,
+  "shadow": 3,
+  "shadow_dy": -1
+ }
 }
