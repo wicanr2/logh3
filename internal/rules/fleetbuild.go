@@ -288,8 +288,12 @@ func FleetUpkeep(kinds *ShipKindTable, faction int, comp []FleetGroup, operation
 	return fleetCost(kinds, faction, comp, operations, kindUpkeepPer)
 }
 
-// FleetOtherCost 是同一支算出來的另一項（進 `ds:8F82`），
-// 差別只在讀艦種列的 `+0x05`。項目名稱還沒解（`docs/internals/27`）。
+// FleetOtherCost 是**移動一格的花費**（艦隊記錄的 `+0x0C`）：同一支算式，
+// 差別只在讀艦種列的 `+0x05`。原版走一格就從那一支陣營的軍事費扣掉它
+// （`113A:0729`，`docs/re/237`）；同一個數也累加進 `ds:8F82`。
+//
+// 收據 `turn260mem` 的三支算出來是 263／95／134，與各自的 `+0x0C`
+// 逐一相同，也與收據 `monthend` 監看到的三筆扣款相同。
 func FleetOtherCost(kinds *ShipKindTable, faction int, comp []FleetGroup, operations int) int {
 	return fleetCost(kinds, faction, comp, operations, kindOtherPer)
 }

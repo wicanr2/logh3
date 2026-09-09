@@ -339,10 +339,12 @@ func TestFirstAITurnMatchesReceipt(t *testing.T) {
 	if got, want := g.fleetUpkeep(1), 426; got != want {
 		t.Errorf("同盟的艦隊維持費 ＝ %d，收據是 %d", got, want)
 	}
-	// 這一回合結束時維持費會從軍事費扣掉（原版 `056A:09EB`，
-	// `docs/re/236`）：收據 `monthend` 監看到同盟 45848 → 45422。
-	if got, want := g.military[1], 45848-426; got != want {
-		t.Errorf("扣完維持費的同盟軍事費 ＝ %d，收據是 %d", got, want)
+	// 這一回合結束會扣兩筆：維持費（原版 `056A:09EB`，逐支 217／85／124）
+	// 與移動花費（`113A:0729`，逐支 263／95／134），`docs/re/236`、`237`。
+	// 收據 `monthend` 監看到 45848 → 45422 → 44930，而 44930 正是第二個
+	// AI 回合那份傾印（`refit2_pre.bin`）裡 `ds:8F52[同盟]` 的值。
+	if got, want := g.military[1], 45848-426-492; got != want {
+		t.Errorf("扣完維持費與移動花費的同盟軍事費 ＝ %d，收據是 %d", got, want)
 	}
 	if len(g.fleets) != 3 {
 		t.Errorf("建了 %d 支，收據是 3", len(g.fleets))

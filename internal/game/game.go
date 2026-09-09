@@ -682,7 +682,19 @@ func (g *Game) advanceTurn() {
 	// 有命令的艦隊往目的地走一格（`docs/re/77`、`internal/rules.Advance`）。
 	// **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
 	if g.res.Graph != nil {
-		g.res.Graph.MoveFleets(g.fleets)
+		for i := range g.fleets {
+			if !g.res.Graph.Advance(&g.fleets[i]) {
+				continue
+			}
+			// 走一格要錢：艦隊記錄的 `+0x0C`，原版 `113A:0729` 逐支從
+			// 那一支陣營的軍事費扣（`docs/re/237`）。
+			f := g.fleets[i]
+			if f.Faction < 0 || f.Faction > 1 {
+				continue
+			}
+			g.military[f.Faction] -= rules.FleetOtherCost(
+				g.res.ShipKinds, f.Faction, f.Composition, f.Operations)
+		}
 	}
 	// 兩邊的艦隊走到同一個星域就直接切進戰術畫面（`docs/internals/34`
 	// 「怎麼走到」：S3 按六次實行，雙方會合在達希利就開戰）。
