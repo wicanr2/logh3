@@ -222,6 +222,13 @@ func load(t *testing.T) *Resources {
 		ReportPanel: report, BuildPlanPanel: buildPanel, AdmiralPanel: admPanel, FleetPanel: fleetPanel, CompositionPanel: composition, FleetList: fleetList, Sprites: sprites, Flagships: flagships, BioPanel: bioPanel, Biographies: bios,
 		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
+		// 與正式路徑（`internal/bootstrap`）同一組——月底的稅率重算
+		// （`docs/spec/038`）要它，少了就整段變成 no-op。
+		UnrestParams: rules.UnrestParams{
+			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
+			Table: []int{170, 150, 130, 90, 60},
+			Base:  []int{50, 75, 100, 150, 200},
+		},
 		StartMilitary: 50000, ShipPct: 25}
 }
 

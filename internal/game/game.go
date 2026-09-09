@@ -907,6 +907,33 @@ func (g *Game) runBrain() {
 	}
 }
 
+// recomputeAllTaxRates 是原版 `090A:0B5E`：月底在收稅之前把兩個陣營所有
+// 星域的稅率重算一遍（各自用自己的 `Blend` 當難度下標）。
+//
+// 稅率吃星域的成長率，而成長率剛剛被這個月實際的成長改過，所以這一步
+// 不做的話稅率會一直停在開局那一份（`docs/spec/038`、`docs/re/267`）。
+//
+// **無主星域那一支（`090A:0DC0`）還沒讀**——那些格子不進任何一方的國庫，
+// 只影響星域面板上顯示的稅率。
+func (g *Game) recomputeAllTaxRates() {
+	pr := g.res.UnrestParams
+	if g.res.Planets == nil || len(g.res.Stellar) == 0 {
+		return
+	}
+	owner := func(i int) int { return g.res.Planets.RegionOwner(i) }
+	for f := 0; f < 2; f++ {
+		level := g.blend[f]
+		if level < 0 || level >= len(pr.Base) {
+			continue
+		}
+		ruler := g.admiralRecord(pr.Ruler[f])
+		if ruler == nil {
+			continue
+		}
+		rules.RecomputeTaxRates(g.res.Stellar, f, pr.Base[level], ruler, owner)
+	}
+}
+
 // refreshBlend 走原版 `2D10:0319` 的後半：寫下等級，接著用它當下標
 // 重算那個陣營所有星域的稅率（`090A:0B93`），最後把預估徵稅額跟著更新。
 func (g *Game) refreshBlend(faction, level int) {
@@ -1783,7 +1810,8 @@ func (g *Game) monthEnd() {
 	before := g.military
 	// 1. 逐星域結算。成長是就地寫回的，一個月只能跑一次，所以兩個陣營
 	//    的徵稅額要在同一趟裡拿。
-	collected := rules.MonthEndTotals(g.res.Stellar, g.res.Planets, g.res.Growth)
+	collected := rules.MonthEndTotals(g.res.Stellar, g.res.Planets, g.res.Growth,
+		g.recomputeAllTaxRates)
 	// 2. 照百分比切給造船，各列只買得起整數艘，零頭退回；扣掉實際花掉的。
 	//    百分比與各列的分配都是每個陣營自己的（`shipPct`／`buildPctFor`，
 	//    原版 `ds:8F92`／`ds:8FD6`）——電腦那一方在回合收尾按自己的總稅收

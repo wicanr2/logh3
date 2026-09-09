@@ -1,7 +1,9 @@
 # SPEC 035 — 月底的閘門與每回合的重算
 
-狀態：**READY**（三條都已實作；**還沒做同狀態對拍**——原版側的收據證明的是
-原版怎麼跑，remake 側只有接線測試 `TestTaxEstimateRefreshesEveryTurn`）
+狀態：**CONFORMED**（三條都已實作；同狀態對拍做出來了——收據 `monthwork2`
+的帝國那一側六個欄位加建造中那七格與 remake 逐一相同，
+`TestMonthEndMatchesWorkBlock`。同盟那一側沒有對拍，那一趟它的座位在
+回合 10 的月底一次都沒跑）
 證據：[`docs/re/255`](../re/255-month-end-gate-found.md)（閘門與呼叫鏈）、
 [`docs/re/254`](../re/254-month-end-body.md)（`2703:02E5`／`090A:0E88` 的內容）、
 [`docs/internals/27`](../internals/27-treasury-globals.md)（財政全域）
@@ -92,6 +94,6 @@ ds:8F8A/8C[陣營] ← 0                 已支付移動經費歸零
 
 ## 還沒解
 
-- `2B5F:001F`、`2B5F:0103(旗標)`、`0654:0007` 呼叫的 `2703:0BF2`／`090A:0B5E`。
+- `2B5F:02B2`（`0654:0007` 在 mod 10 之前每回合都跑的那一支）。
 - 旗標 0 與旗標 1 兩趟加總的是同一組行星（`monthgateD` 逐筆相同），
   所以 `docs/re/35` 量到的「兩種稅差 9」不是集合差異造成的，仍未解釋。

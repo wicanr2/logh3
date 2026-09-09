@@ -22,14 +22,14 @@ const (
 	saveEntryNameLen = 18
 
 	// WorkRecord 是 `WORK.DT?` 的長度，後面三個是對上的欄位。
-	WorkRecord   = 230
-	workTurn     = 0x04 // 16 位元
-	workMilitary = 0x3E // 32 位元 × 陣營
-	workTaxTotal = 0x56 // 32 位元 × 陣營
-	workBlend    = 0xC0 // 8 位元 × 陣營（＝ ds:8FD4，`docs/internals/55`）
+	WorkRecord     = 230
+	workTurn       = 0x04 // 16 位元
+	workMilitary   = 0x3E // 32 位元 × 陣營
+	workTaxTotal   = 0x56 // 32 位元 × 陣營
+	workBlend      = 0xC0 // 8 位元 × 陣營（＝ ds:8FD4，`docs/internals/55`）
 	workShipBudget = 0x46 // 32 位元 × 陣營（＝ ds:8F5A，下期船艦建造費）
-	workShipPct  = 0x7E // 8 位元 × 陣營（＝ ds:8F92，造船百分比）
-	workBuildPct = 0xC2 // 7 bytes × 陣營（＝ ds:8FD6，七個艦種的分配）
+	workShipPct    = 0x7E // 8 位元 × 陣營（＝ ds:8F92，造船百分比）
+	workBuildPct   = 0xC2 // 7 bytes × 陣營（＝ ds:8FD6，七個艦種的分配）
 	// 徵稅計劃「已支付」那一欄的三格 ＋ 原定軍事費（`docs/re/258`）。
 	workBudgetStart = 0x4E // 32 位元 × 陣營（＝ ds:8F62）
 	workUpkeep      = 0x5E // 32 位元 × 陣營（＝ ds:8F72，本回合維持費）

@@ -52,7 +52,6 @@ func UnitPrice(faction, row, staffOps int) int {
 	return BasePrices[faction][row] * 100 / staffOps
 }
 
-
 // ShipsPerUnit 是一個「部隊」要幾艘船。畫面上的「部隊」那一欄 ＝
 // 船艦數 ÷ 這個值，無條件捨去。**兩個陣營共用一份**——`SHIP.DT?` 的
 // `+0x08` 依艦種 × 陣營查表，兩邊的值相同（`ship-types.json`）。

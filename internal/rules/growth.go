@@ -87,17 +87,63 @@ func (p *Planets) SetPlanetEconomy(i, v int) {
 // 星域總和算一次捨去——星域 0 是 2718 與 2720，十個帝國星域加起來差 9。
 // 原版就是這樣：監看總稅收看到的十個增量與「用總和算」逐一相符。
 func (p *Planets) MonthEndRegion(t *GrowthTable, region, taxPerMille int) (tax, economy int) {
+	p.GrowRegion(t, region)
+	return p.TaxRegion(region, taxPerMille)
+}
+
+// GrowRegion 是月底的**成長**那一步（原版 `2703:0C26`）：這個星域每顆行星
+// 各長一次，回成長前與成長後的經濟力總和。
+//
+// 原版拿這兩個數重算星域的成長率 `+0x1E`：
+//
+//	成長率 ＝ (成長後 − 成長前) × 1000 ÷ 成長前
+//
+// 也就是**用這個月實際長了多少反推**，不是沿用開局那一份
+// （`docs/spec/038`、`docs/re/267`）。
+func (p *Planets) GrowRegion(t *GrowthTable, region int) (before, after int) {
+	start, n := p.Range(region)
+	for i := start; i < start+n; i++ {
+		e := p.PlanetEconomy(i)
+		before += e
+		e += e * t.Rate(e, p.Defence(i)) / 1000
+		p.SetPlanetEconomy(i, e)
+		after += e
+	}
+	return before, after
+}
+
+// TaxRegion 是月底的**收稅**那一步（原版 `2703:0AB8` 旗標 1）：逐行星扣稅，
+// 回進國庫的稅與扣完稅的經濟力總和。
+//
+// **兩個稅不是同一個數**（`docs/re/35`）：從行星身上扣的是逐顆捨去的和，
+// 進國庫的是拿成長後、扣稅前的總和算一次捨去。
+func (p *Planets) TaxRegion(region, taxPerMille int) (tax, economy int) {
 	start, n := p.Range(region)
 	grown := 0
 	for i := start; i < start+n; i++ {
 		e := p.PlanetEconomy(i)
-		e += e * t.Rate(e, p.Defence(i)) / 1000
 		grown += e
 		e -= e * taxPerMille / 1000
 		p.SetPlanetEconomy(i, e)
 		economy += e
 	}
 	return grown * taxPerMille / 1000, economy
+}
+
+// GrowthFromChange 是原版 `2703:0C26` 尾段那一行：拿實際的成長反推成長率。
+func GrowthFromChange(before, after int) int {
+	if before <= 0 {
+		return 0
+	}
+	return (after - before) * 1000 / before
+}
+
+// SetRegionGrowth 寫回星域記錄的成長率（`+0x1E`，有號 16 位元）。
+func SetRegionGrowth(record []byte, v int) {
+	if len(record) < regionGrowth+2 {
+		return
+	}
+	record[regionGrowth], record[regionGrowth+1] = byte(v), byte(v>>8)
 }
 
 // SetRegionEconomy 寫回星域記錄的經濟力。
@@ -117,18 +163,32 @@ func SetRegionEconomy(record []byte, v int) {
 // 順序照 `docs/re/26` 量到的：總稅收歸零 → 逐星域累加 → 軍事費 += 總稅收
 // （加錢那一步由呼叫端做）。
 func MonthEnd(records []byte, p *Planets, t *GrowthTable, faction int) int {
-	return MonthEndTotals(records, p, t)[faction]
+	return MonthEndTotals(records, p, t, nil)[faction]
 }
 
 // MonthEndTotals 是同一趟結算，但**兩個陣營的徵稅額一起回**。
 //
 // 成長是就地寫回的，一個月只能跑一次，所以要兩邊的數字就得在同一趟裡拿
 // （原版的 `ds:8F6A` 本來就是每個陣營一格，`docs/internals/27`）。
-func MonthEndTotals(records []byte, p *Planets, t *GrowthTable) [2]int {
+func MonthEndTotals(records []byte, p *Planets, t *GrowthTable,
+	recomputeRates func()) [2]int {
+	// 第一趟（原版 `0654:0007` → `2703:0BF2`，一個月只跑一次，而且跑在
+	// 逐座位之前）：32 格全部成長，並用實際成長重算成長率。
+	for i := 0; i*RegionRecord+RegionRecord <= len(records); i++ {
+		rec := records[i*RegionRecord : (i+1)*RegionRecord]
+		before, after := p.GrowRegion(t, i)
+		SetRegionEconomy(rec, after)
+		SetRegionGrowth(rec, GrowthFromChange(before, after))
+	}
+	// 稅率吃成長率，所以在收稅**之前**重算（原版 `090A:0B5E`）。
+	if recomputeRates != nil {
+		recomputeRates()
+	}
+	// 第二趟（原版 `2703:0AB8` 旗標 1）：用新稅率收稅。
 	var total [2]int
 	for i := 0; i*RegionRecord+RegionRecord <= len(records); i++ {
 		rec := records[i*RegionRecord : (i+1)*RegionRecord]
-		tax, economy := p.MonthEndRegion(t, i, RegionTaxRate(rec))
+		tax, economy := p.TaxRegion(i, RegionTaxRate(rec))
 		SetRegionEconomy(rec, economy)
 		rec[0x27] = rec[regionTaxRate]
 		if o := p.RegionOwner(i); o == 0 || o == 1 {
