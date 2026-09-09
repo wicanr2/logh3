@@ -1,0 +1,11 @@
+{
+ "_note": "訊息框的版面（原版 3826:0005，樣板表在 ds:8BEC，一種 6 bytes；docs/re/137）。框與字的幾何與命令選單同一套（docs/internals/44），只有格 y 要再加 row_bias 格——樣板寫 7，收據 s3msg 量到框頂 181 ＝ (7+2)×20+1。",
+ "row_bias": 2,
+ "templates": [
+  {"kind": 0, "cell_x": 8, "cell_y": 7, "cols": 20, "rows": 4},
+  {"kind": 1, "cell_x": 8, "cell_y": 7, "cols": 20, "rows": 4},
+  {"kind": 2, "cell_x": 4, "cell_y": 7, "cols": 20, "rows": 4},
+  {"kind": 3, "cell_x": 4, "cell_y": 7, "cols": 20, "rows": 4},
+  {"kind": 5, "cell_x": 17, "cell_y": 3, "cols": 2, "rows": 1}
+ ]
+}
