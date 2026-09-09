@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/game"
@@ -249,6 +250,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	routes, err := ai.LoadAdvanceRoutes(filepath.Join(data, "ai-advance-routes.json"))
+	if err != nil {
+		return nil, err
+	}
 	shipKinds, err := rules.LoadShipKindTable(filepath.Join(data, "ship-kind-table.json"))
 	if err != nil {
 		return nil, err
@@ -294,7 +299,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Battle: battle, BattlePanel: battlePanel, BattleTiles: battleTiles, BattleMaps: battleMaps,
 		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
 		Formation:   formation,
-		FleetDetail: fleetDetail, ShipKinds: shipKinds,
+		FleetDetail: fleetDetail, ShipKinds: shipKinds, AdvanceRoutes: routes,
 		MessageBox: msgBox, FrameTiles: frameTiles,
 		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,
 		PlanetInfo: planetInfo,

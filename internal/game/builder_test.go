@@ -129,3 +129,57 @@ func TestPlainBrainBuildsNothing(t *testing.T) {
 		t.Error("ai.Original 不該實作 ai.Builder")
 	}
 }
+
+// TestOriginalBrainWiring 把接好線的原版 AI 掛上去跑一個回合：
+// 新遊戲兩邊都沒有艦艇（原版樣板沒有 `SHIP.DTX`，`docs/re/200`），
+// 所以 `canFormFleet` 一律不成立、**一支都不該建**。
+//
+// 這一支釘的是「接線本身走得通、而且不會憑空生出艦隊」。
+func TestOriginalBrainWiring(t *testing.T) {
+	g := reachBrainPhase(t)
+	b := g.OriginalBrain()
+	if b == nil {
+		t.Fatal("OriginalBrain 回 nil——星域圖或星域記錄沒接上")
+	}
+	g.SetBrain(b)
+	g.Click(544, 125)
+	g.Click(560, 125)
+	if len(g.fleets) != 0 {
+		t.Errorf("新遊戲沒有艦艇卻建出 %d 支", len(g.fleets))
+	}
+	if g.State() != StateCommandPhase {
+		t.Fatalf("實行之後在 %v", g.State())
+	}
+}
+
+// TestOriginalBrainCandidatesExcludeLedAdmirals 候選提督不含已經帶隊的。
+func TestOriginalBrainCandidatesExcludeLedAdmirals(t *testing.T) {
+	g := reachBrainPhase(t)
+	s := g.buildSupport()
+	if s == nil {
+		t.Fatal("buildSupport 回 nil——提督表沒接上")
+	}
+	before := len(s.Admirals(1))
+	if before == 0 {
+		t.Fatal("同盟一個候選提督都沒有")
+	}
+	// 讓其中一位帶隊，候選就要少一個。
+	first := s.Admirals(1)[0]
+	g.fleets = append(g.fleets, rules.Fleet{Faction: 1, Admiral: first.Index, Adjutant: -1})
+	if after := len(s.Admirals(1)); after != before-1 {
+		t.Errorf("帶隊之後候選 %d 人，預期 %d", after, before-1)
+	}
+}
+
+// TestOriginalBrainStillNotDefault 預設仍然沒有 `Brain`——換上原版那套
+// 是 `docs/spec/029` 末節的裁決，不是這一輪接線的副作用。
+func TestOriginalBrainStillNotDefault(t *testing.T) {
+	g := reachBrainPhase(t)
+	if g.brain != nil {
+		t.Errorf("預設的 Brain 是 %T，預期 nil", g.brain)
+	}
+	// `ai.Original` 與 nil 同義：兩者都一道命令都不下。
+	if got := (ai.Original{}).Orders(ai.World{}, 0, 0); got != nil {
+		t.Errorf("ai.Original 回了 %v，預期 nil", got)
+	}
+}

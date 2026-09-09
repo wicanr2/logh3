@@ -342,6 +342,10 @@ type Resources struct {
 	FactionNames  [][]byte
 	ShipKindNames [][]byte
 
+	// AdvanceRoutes 是原版寫死的進軍路線表（`docs/internals/data/
+	// ai-advance-routes.json`，`docs/re/178`）。戰略 AI 的階段四、五要用。
+	AdvanceRoutes *ai.AdvanceRoutes
+
 	// ShipKinds 是艦種屬性表（`docs/internals/40`）。
 	ShipKinds *rules.ShipKindTable
 
@@ -450,6 +454,10 @@ type Game struct {
 
 	// saveErr 是上一次存檔的結果（nil ＝ 成功或還沒存過）。
 	saveErr error
+
+	// strategyRand 是戰略 AI 的亂數（原版 `ds:94DC`，`docs/re/184`）。
+	// **跨回合沿用同一份**——原版的種子是全域的。
+	strategyRand *rules.Rand
 
 	// slot 是目前這個局面從哪一格存檔來的（新遊戲是 nil）。
 	// 存檔寫出要靠它——`WORK` 那 230 bytes 只解出三個欄位，
@@ -586,8 +594,10 @@ type Game struct {
 	battleOver    bool
 
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
-	// **預設是 `ai.Original`——按實行時什麼都不做**，那是量出來的原版
-	// 行為（`docs/re/79`）。要強化版就換成 `ai.Focused`。
+	//
+	// **預設是 nil ＝ 按實行時什麼都不做**，與 `ai.Original` 同義
+	// （那一支也回 nil）。要原版那套戰略 AI 是 `SetBrain(OriginalBrain())`
+	// ——那一步是 `docs/spec/029` 末節的裁決；要強化版就換成 `ai.Focused`。
 	brain ai.Brain
 
 	// sides 是對戰模式下兩邊各自的錢與造船計劃，索引就是陣營。
@@ -645,7 +655,7 @@ func (g *Game) execute() {
 // advanceTurn 推進一個回合 ＝ 三天。
 func (g *Game) advanceTurn() {
 	g.turn++
-	// 電腦那一方先下命令，再讓所有艦隊走。預設的 `ai.Original`
+	// 電腦那一方先下命令，再讓所有艦隊走。預設沒有 `Brain`，
 	// 一道都不下，所以這一段對原版對拍沒有影響。
 	g.runBrain()
 	// 有命令的艦隊往目的地走一格（`docs/re/77`、`internal/rules.Advance`）。

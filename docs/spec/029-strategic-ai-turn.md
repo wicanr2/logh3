@@ -331,8 +331,18 @@ ds:D5AE[0..31] = 0
 | 配額平手時的次序 | 原版走 qsort（`3C6A:000D`），平手沒有保證 |
 | 等級 > 43 的折算值 | 沒有觀察到那麼高的等級（`docs/re/205`）|
 
-還缺的是 `OriginalStrategy.Support` 的接線（提督表、`ds:8F6A`／`ds:8F72`
-的錢、`ds:4E3A` 的艦種存量門檻）——那三樣 `Resources` 都有。
+接線也做完了：`Game.OriginalBrain()` 回接好線的一支
+（`internal/game/originalbrain.go`）。**它不是預設**——`New` 建出來的
+`Game` 仍然沒有 `Brain`（等同 `ai.Original`，一道命令都不下），
+要換是 `SetBrain(g.OriginalBrain())`。
+
+接線用到的、還不精確的三處，都標在程式註解：
+
+| 項目 | 現況 |
+|---|---|
+| 艦隊維持費（`ds:8F72`）| remake 還沒算，一律 0——閘門那一項等於永遠通過 |
+| `ds:8FD4[陣營]` | 語意未解，一律 false |
+| 戰略亂數的開局種子（`ds:94DC`）| 沒量到；先用 `docs/re/184` 那份收據上的值，行為至少是決定性的 |
 
 ## 階段一的完整形狀（`docs/re/180`–`docs/re/182`）
 

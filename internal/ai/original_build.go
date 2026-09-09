@@ -160,6 +160,7 @@ type AdmiralView struct {
 	Command int    // `+0x0B` 統率力
 	Ability [4]int // 四個類別各自對應的能力：+0x14／+0x13／+0x12／+0x17
 	Kind    int    // `+0x08 & 0x0F` 艦種
+	Region  int    // `+0x0A` 所在星域；`07F9:023B` 拿它查艦艇存量
 }
 
 // AllianceBrokeBelow 是 `2D76:0434` 那條「同盟缺錢」分支的門檻：

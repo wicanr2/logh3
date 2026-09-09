@@ -3427,3 +3427,35 @@ type Builder interface{ Build(w World, faction, turn int) []NewFleet }
 - **測試的預期也要有來源。** 「配額 45％ 最大所以最缺類別 1」是憑印象推的，
   而 `總數 × 45 ÷ 100` 在總數 0 的時候是 0。預期寫錯比程式寫錯更難發現，
   因為紅燈會讓人先去改程式。
+
+## 2026-09-09（一〇三）　接線：`Game.OriginalBrain()`
+
+`ai.OriginalStrategy` 接上這一局的資料了（`internal/game/originalbrain.go`）：
+
+| 決策層要的 | 接到哪 |
+|---|---|
+| `Contested`／`Blocked` | 星域記錄 `+0x13` 的 bit2 與 `& 0x14` |
+| `EnemyFleets` | `rules.RegionFleets`（`+0x28`／`+0x29`）|
+| `Split` | 艦隊 `+0x00` bit0 |
+| `Ships` | `Slot.FleetShipTotals`；新遊戲沒存檔就回 0（原版樣板也沒有 `SHIP.DTX`）|
+| `Routes` | `Resources.AdvanceRoutes`（bootstrap 新載）|
+| `Support.Money` | `g.taxTotal` |
+| `Support.Admirals` | `ADMIRAL.DT*` 解出來、濾掉已帶隊的 |
+| `Support.CanForm` | 星域艦艇存量 vs 艦種表的滿編艘數 |
+
+**仍然不是預設**：`New` 建出來的 `Game` 沒有 `Brain`，要換是
+`SetBrain(g.OriginalBrain())`。有測試釘住這一點。
+
+三處不精確，都標在註解與 `docs/spec/029`：艦隊維持費（`ds:8F72`）
+remake 還沒算所以一律 0、`ds:8FD4[陣營]` 語意未解所以 false、
+戰略亂數的**開局**種子沒量到（先用 `docs/re/184` 那份收據上的值）。
+
+順帶修一個註解與程式對不上的地方：`brain` 欄位寫著「預設是
+`ai.Original`」，實際上預設是 nil。兩者行為相同（都一道不下），
+但寫錯的註解會讓人以為 `New` 有設。正文改成現況。
+
+### 這一輪的方法
+
+- **接線的每一個「先用一個值頂著」都要當場標出來。** 這一輪有三個
+  （維持費 0、`ds:8FD4` false、種子），三個都不是量出來的；
+  不標的話，下一輪對拍對不上時會先去懷疑演算法。
