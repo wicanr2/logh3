@@ -133,10 +133,22 @@ func (g *Game) beginFortressTarget(planet int) {
 	if !rules.FortressGunReady(g.battlePlanets[planet].GunState) {
 		return
 	}
-	g.battleGunOn, g.battleGun = true, planet
+	g.battleGunOn, g.battleGun, g.battleGunAim = true, planet, 0
+	g.fortressAimMouse(g.mouseX, g.mouseY)
 }
 
-// cancelFortressTarget 右鍵：解除鎖定（原版寫 `+0x50` ← 0xFFFF、
+// fortressAimMouse 讓射程橢圓跟著游標轉（原版每一圈都重算一次，
+// 方位沒變就不重畫，`2264:0133`）。
+func (g *Game) fortressAimMouse(x, y int) {
+	if !g.battleGunOn {
+		return
+	}
+	if a, ok := g.fortressAimAt(x, y); ok {
+		g.battleGunAim = a
+	}
+}
+
+// cancelFortressTarget 右鍵：取消瞄準（原版寫 `+0x50` ← 0xFFFF、
 // `+0x45` ← 0）。
 func (g *Game) cancelFortressTarget() {
 	if !g.battleGunOn {
@@ -147,10 +159,12 @@ func (g *Game) cancelFortressTarget() {
 		return
 	}
 	p := &g.battlePlanets[g.battleGun]
-	p.GunTarget, p.GunState = fortressNoTarget, rules.FortressGunIdle
+	p.GunAim, p.GunState = rules.FortressGunNoAim, rules.FortressGunIdle
 }
 
-// fortressTargetClick 左鍵：鎖定點到的分隊（`+0x50` ← 目標、`+0x45` ← 3）。
+// fortressTargetClick 左鍵：把游標的**方位**記下來（`+0x50` ← 方位、
+// `+0x45` ← 3）。點的不是某一支分隊——要塞砲掃的是一個橢圓，
+// 誰在裡面是開火那一刻才算的（`docs/re/145`）。
 func (g *Game) fortressTargetClick(x, y int) bool {
 	if !g.battleGunOn {
 		return false
@@ -160,26 +174,55 @@ func (g *Game) fortressTargetClick(x, y int) bool {
 	if planet < 0 || planet >= len(g.battlePlanets) {
 		return true
 	}
-	hit := g.battleUnitAt(x, y)
-	if hit < 0 {
+	aim, ok := g.fortressAimAt(x, y)
+	if !ok {
 		return true
 	}
 	p := &g.battlePlanets[planet]
-	p.GunTarget, p.GunState = hit, rules.FortressGunLocked
+	p.GunAim, p.GunState = aim, rules.FortressGunAimed
 	return true
 }
 
-// FortressTargetRange 回正在指定目標的那座要塞的兩個射程半徑。
+// fortressAimAt 回「游標在 (x,y) 時要塞砲的方位」。x／y 是畫面座標。
+// 游標正好落在要塞中心那一格時方位不變（原版直接回舊值，
+// `2264:0133`）。
+func (g *Game) fortressAimAt(x, y int) (int, bool) {
+	if !g.battleGunOn || g.battleGun < 0 || g.battleGun >= len(g.battlePlanets) {
+		return 0, false
+	}
+	p := g.battlePlanets[g.battleGun]
+	wx, wy, ok := g.battleWorldPixel(x, y)
+	if !ok {
+		return 0, false
+	}
+	cx, cy := p.X+fortressCentreBias, p.Y+fortressCentreBias
+	if wx == cx && wy == cy {
+		return 0, false
+	}
+	return rules.Atan256(wx-cx, wy-cy), true
+}
+
+// FortressAim 回要塞砲正在瞄的方位；沒在瞄就回 false。
+func (g *Game) FortressAim() (int, bool) {
+	if !g.battleGunOn {
+		return 0, false
+	}
+	return g.battleGunAim, true
+}
+
+// FortressTargetRange 回正在瞄準的那座要塞的長短半軸。**吃的是防衛力
+// 上限**（記錄 `+0x16`），不是目前防衛力（收據 `s3fort`：3300 → 96／24）。
 func (g *Game) FortressTargetRange() (outer, inner int, ok bool) {
 	if !g.battleGunOn || g.battleGun >= len(g.battlePlanets) {
 		return 0, 0, false
 	}
-	o, i := rules.FortressRange(g.battlePlanets[g.battleGun].Defence)
+	o, i := rules.FortressRange(g.battlePlanets[g.battleGun].DefenceMax)
 	return o, i, true
 }
 
-// fortressNoTarget 是「沒有鎖定」的標記（原版寫 0xFFFF）。
-const fortressNoTarget = 0xFFFF
+// fortressCentreBias 是「行星記錄的座標 → 佔位框中心」的偏移
+// （原版 `行星[+0x46] ＋ 7`、`行星[+0x48] ＋ 7`）。
+const fortressCentreBias = 7
 
 // PlanetInfoOpen 回行星情報視窗開著沒有。
 func (g *Game) PlanetInfoOpen() bool { return g.planetInfoOn }

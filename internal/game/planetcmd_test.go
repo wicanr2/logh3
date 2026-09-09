@@ -127,66 +127,92 @@ func clampTestInt(v, lo, hi int) int {
 	return v
 }
 
-// 「要塞砲」是指定目標，不是開火：左鍵鎖定（`+0x50` ← 目標、`+0x45` ← 3），
-// 右鍵解除（`0xFFFF`／0）。狀態不是 0 也不是 3 就進不去（`docs/re/134`）。
-func TestFortressTargetLocks(t *testing.T) {
+// 「要塞砲」是**瞄一個方位**，不是點一支分隊：左鍵把游標的方位寫進
+// `+0x50`、`+0x45` ← 3，右鍵寫回 `0xFFFF`／0。狀態不是 0 也不是 3 就
+// 進不去（`docs/re/145`）。
+func TestFortressAimStoresBearing(t *testing.T) {
 	g := commandTestGame(t)
 	if g == nil {
 		return
 	}
-	if len(g.battlePlanets) == 0 || len(g.battleUnits) == 0 {
-		t.Skip("這個星域沒有行星或分隊，跳過")
+	if len(g.battlePlanets) == 0 {
+		t.Skip("這個星域沒有行星，跳過")
 	}
 	// 這個星域沒有要塞，所以**造一個**（fixture，不是收據）：驗的是
-	// 鎖定／解除與狀態閘門，與哪一顆行星無關。
+	// 瞄準／取消與狀態閘門，與哪一顆行星無關。
 	idx := 0
 	g.battlePlanets[idx].Fortress = true
-	g.battlePlanets[idx].Defence = 12800 // 伊謝爾倫那一顆的防衛力
+	g.battlePlanets[idx].DefenceMax = 12800 // 伊謝爾倫那一顆的防衛力上限
 	g.battlePlanets[idx].GunState = 0
 	g.beginFortressTarget(idx)
 	if !g.FortressTargetPending() {
-		t.Fatal("該進入指定目標的狀態")
+		t.Fatal("該進入瞄準的狀態")
 	}
-	if o, i, ok := g.FortressTargetRange(); !ok || o != g.battlePlanets[idx].Defence/200+80 || i != o/4 {
-		t.Errorf("射程 (%d,%d)，防衛力 %d 該算出 (%d,%d)",
-			o, i, g.battlePlanets[idx].Defence,
-			g.battlePlanets[idx].Defence/200+80, (g.battlePlanets[idx].Defence/200+80)/4)
+	want := g.battlePlanets[idx].DefenceMax/200 + 80
+	if o, i, ok := g.FortressTargetRange(); !ok || o != want || i != want/4 {
+		t.Errorf("射程 (%d,%d)，防衛力上限 %d 該算出 (%d,%d)",
+			o, i, g.battlePlanets[idx].DefenceMax, want, want/4)
 	}
 
-	// 點一個分隊 → 鎖定。
-	u := 0
-	ux, uy := unitScreenPos(g, u)
-	g.Click(ux+8, uy+8)
+	// 挑一個在戰場那一塊裡、而且不是行星中心的畫面座標。
+	p := g.battlePlanets[idx]
+	s := g.res.Battle
+	cx := s.Field.X + p.X + fortressCentreBias - g.battleView.Col*s.Field.TileW
+	cy := s.Field.Y + p.Y + fortressCentreBias - g.battleView.Row*s.Field.TileH
+	px, py := cx+40, cy+20
+	if px >= s.Field.X+s.Field.Cols*s.Field.TileW {
+		px = cx - 40
+	}
+	if py >= s.Field.Y+s.Field.Rows*s.Field.TileH {
+		py = cy - 20
+	}
+	wx, wy, ok := g.battleWorldPixel(px, py)
+	if !ok {
+		t.Skip("挑不到戰場裡的一點，跳過")
+	}
+	aim := rules.Atan256(wx-(p.X+fortressCentreBias), wy-(p.Y+fortressCentreBias))
+
+	// 游標一動，橢圓的傾角就跟著換。
+	g.MoveMouse(px, py)
+	if g.battleGunAim != aim {
+		t.Errorf("傾角 %d，該是 %d", g.battleGunAim, aim)
+	}
+	g.Click(px, py)
 	if g.FortressTargetPending() {
-		t.Error("點完之後不該還在等")
+		t.Error("按完之後不該還在瞄")
 	}
-	if g.battlePlanets[idx].GunTarget != u || g.battlePlanets[idx].GunState != 3 {
-		t.Errorf("鎖定之後目標 %d 狀態 %d，該是 %d／3",
-			g.battlePlanets[idx].GunTarget, g.battlePlanets[idx].GunState, u)
+	if g.battlePlanets[idx].GunAim != aim || g.battlePlanets[idx].GunState != 3 {
+		t.Errorf("瞄完之後方位 %d 狀態 %d，該是 %d／3",
+			g.battlePlanets[idx].GunAim, g.battlePlanets[idx].GunState, aim)
 	}
 
-	// 右鍵解除。
+	// 右鍵取消。
 	g.beginFortressTarget(idx)
-	g.RightClick(ux+8, uy+8)
-	if g.battlePlanets[idx].GunTarget != fortressNoTarget ||
+	g.RightClick(px, py)
+	if g.battlePlanets[idx].GunAim != rules.FortressGunNoAim ||
 		g.battlePlanets[idx].GunState != 0 {
-		t.Errorf("解除之後目標 %04X 狀態 %d，該是 FFFF／0",
-			g.battlePlanets[idx].GunTarget, g.battlePlanets[idx].GunState)
+		t.Errorf("取消之後方位 %04X 狀態 %d，該是 FFFF／0",
+			g.battlePlanets[idx].GunAim, g.battlePlanets[idx].GunState)
 	}
 
-	// 狀態 1 就進不去。
+	// 狀態 1 就進不去；每回合減 1，減到 0 才能再瞄。
 	g.battlePlanets[idx].GunState = 1
 	g.beginFortressTarget(idx)
 	if g.FortressTargetPending() {
 		t.Error("狀態 1 不該進得去")
 	}
+	for _, c := range [][2]int{{3, 2}, {2, 1}, {1, 0}, {0, 0}} {
+		if got := rules.FortressGunTick(c[0]); got != c[1] {
+			t.Errorf("狀態 %d 過一回合變 %d，該是 %d", c[0], got, c[1])
+		}
+	}
 }
 
 // 射程是一個橢圓（`3870:03A3` → `39D7:035E`），不是內外兩圈：
-// 長半軸 ＝ 防衛力 ÷ 200 ＋ 80、短半軸 ＝ 長半軸 ÷ 4。
+// 長半軸 ＝ 防衛力**上限** ÷ 200 ＋ 80、短半軸 ＝ 長半軸 ÷ 4。
 func TestFortressRangeIsEllipse(t *testing.T) {
 	for _, c := range []struct{ def, a, b int }{
-		{12800, 144, 36}, {9800, 129, 32}, {6500, 112, 28},
+		{12800, 144, 36}, {9800, 129, 32}, {6500, 112, 28}, {3300, 96, 24},
 	} {
 		a, b := rules.FortressRange(c.def)
 		if a != c.a || b != c.b {

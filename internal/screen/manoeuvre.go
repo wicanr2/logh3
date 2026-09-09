@@ -152,35 +152,69 @@ func FacingCrossSegments(facing int) [2][4]int {
 // 要塞砲的射程是一個橢圓（描述 `[+6] ＝ 2`，`docs/re/134`）。
 const FortressRangeInk uint8 = 4
 
-// DrawFortressRange 把要塞砲的射程橢圓畫在行星上。cx／cy 是世界座標，
-// tilt 是傾角（一整圈 256）。
+// DrawFortressRange 把要塞砲的射程橢圓畫在行星上。
+//
+// fx／fy 是**焦點**的世界座標——要塞站在焦點上，不在中心，所以射程
+// 在瞄準的那一側長、背面短。中心 ＝ 焦點 ＋ 沿 tilt 走
+// `rules.FortressFocalDistance` 個像素（`165F:0A71`）。
+//
+// 曲線本身是**中點圓演算法**（`39D7:035E`）：拿長半軸畫一個整數圓，
+// 每個點的另一軸乘 短/長 壓扁，旋轉 tilt 之後畫四組對稱點的正負兩端。
+// 一圈只採 256 個角度會在長軸兩端留下空隙，與原版對不上
+// （收據 `s3fort`／`s3fort2`，`docs/re/145`）。
 func DrawFortressRange(s *BattleSpec, fb *gfx.Framebuffer,
-	cx, cy, semiMajor, semiMinor, tilt int, v BattleView) {
-	if s == nil || fb == nil || semiMajor <= semiMinor || semiMinor <= 0 {
+	fx, fy, semiMajor, semiMinor, tilt int, v BattleView) {
+	if s == nil || fb == nil {
 		return
 	}
-	sx := s.Field.X + cx - v.Col*s.Field.TileW
-	sy := s.Field.Y + cy - v.Row*s.Field.TileH
-	clip := func(x, y int) bool {
-		return x >= s.Field.X && y >= s.Field.Y &&
-			x < s.Field.X+s.Field.Cols*s.Field.TileW &&
-			y < s.Field.Y+s.Field.Rows*s.Field.TileH
-	}
-	// 原版是「畫一個正圓、把 y 依 短/長 壓扁、再依傾角轉過去」
-	// （`39D7:035E`）。這裡照同一個順序，落點才會一致。
-	last := [2]int{1 << 30, 1 << 30}
-	for a := 0; a < 256; a++ {
-		x := semiMajor * rules.Cos256(a) / 1024
-		y := semiMajor * rules.Sin256(a) / 1024 * semiMinor / semiMajor
-		rx, ry := rules.Rotate256(x, y, tilt)
-		if rx == last[0] && ry == last[1] {
+	ox := s.Field.X - v.Col*s.Field.TileW
+	oy := s.Field.Y - v.Row*s.Field.TileH
+	for _, p := range FortressRangePoints(fx, fy, semiMajor, semiMinor, tilt) {
+		x, y := p[0]+ox, p[1]+oy
+		if x < s.Field.X || y < s.Field.Y ||
+			x >= s.Field.X+s.Field.Cols*s.Field.TileW ||
+			y >= s.Field.Y+s.Field.Rows*s.Field.TileH {
 			continue
 		}
-		last = [2]int{rx, ry}
-		if clip(sx+rx, sy+ry) {
-			fb.Set(sx+rx, sy+ry, fb.At(sx+rx, sy+ry)^FortressRangeInk)
+		// XOR：同一個像素被畫兩次就等於沒畫，原版就是靠這個
+		// 讓橢圓疊在地形上還能擦乾淨。
+		fb.Set(x, y, fb.At(x, y)^FortressRangeInk)
+	}
+}
+
+// FortressRangePoints 回橢圓要畫的**世界座標**點，順序與原版一致；
+// 同一個點出現兩次就是被 XOR 兩次（等於沒畫），所以呼叫端要照次數
+// 的奇偶決定畫不畫。
+func FortressRangePoints(fx, fy, semiMajor, semiMinor, tilt int) [][2]int {
+	if semiMajor <= semiMinor || semiMinor <= 0 {
+		return nil
+	}
+	c := rules.FortressFocalDistance(semiMajor, semiMinor)
+	ox, oy := rules.Rotate256(c, 0, tilt)
+	cx, cy := fx+ox, fy+oy
+	var pts [][2]int
+	var last [4][2]int
+	var seen [4]bool
+	x, err, y := semiMajor, semiMajor, 0
+	for x >= y {
+		px := x * semiMinor / semiMajor
+		py := y * semiMinor / semiMajor
+		for i, u := range [4][2]int{{x, py}, {x, -py}, {y, px}, {y, -px}} {
+			rx, ry := rules.Rotate256(u[0], u[1], tilt)
+			if seen[i] && last[i] == [2]int{rx, ry} {
+				continue
+			}
+			seen[i], last[i] = true, [2]int{rx, ry}
+			pts = append(pts, [2]int{cx + rx, cy + ry}, [2]int{cx - rx, cy - ry})
+		}
+		err -= 2*y - 1
+		y++
+		if err < 0 {
+			err += 2 * (x - 1)
+			x--
 		}
 	}
+	return pts
 }
 
 // SupplyRangeInk 是「補給」／「修理」選對象時那個圈的色號。

@@ -570,6 +570,9 @@ type Game struct {
 	// 「沒有在指定」，否則沒走過 enterBattle 的測試會被吃掉點擊。
 	battleGunOn bool
 	battleGun   int
+	// battleGunAim 是射程橢圓現在的傾角（一整圈 256）；瞄準當下由
+	// 游標的方位算，按下左鍵才寫進行星記錄的 `+0x50`。
+	battleGunAim int
 
 	battleRally   []rules.RallySite
 	battlePlanets []rules.BattlePlanet
@@ -904,6 +907,8 @@ func (g *Game) MoveMouse(x, y int) {
 	}
 	// 艦隊命令選抵達朝向那一段，指標跟著游標繞目的地轉（`docs/re/122`）。
 	g.fleetOrderMouse(x, y)
+	// 要塞砲的射程橢圓也跟著游標轉（`docs/re/145`）。
+	g.fortressAimMouse(x, y)
 }
 
 // Click 按一下左鍵。
@@ -2457,10 +2462,13 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	if cx, cy, r, ok := g.supplyRangeCircle(); ok {
 		screen.DrawSupplyRange(g.res.Battle, fb, cx, cy, r, g.battleView)
 	}
-	// 要塞砲指定目標時畫射程橢圓（`docs/re/134`）。
+	// 要塞砲瞄準時畫射程橢圓（`docs/re/145`）。焦點是行星佔位框的
+	// 中心（記錄座標各 ＋7），傾角跟著游標。
 	if o, i, ok := g.FortressTargetRange(); ok {
 		p := g.battlePlanets[g.battleGun]
-		screen.DrawFortressRange(g.res.Battle, fb, p.X, p.Y, o, i, 0, g.battleView)
+		screen.DrawFortressRange(g.res.Battle, fb,
+			p.X+fortressCentreBias, p.Y+fortressCentreBias,
+			o, i, g.battleGunAim, g.battleView)
 	}
 	// 選抵達朝向時，目的地上多一個指向性的十字（`docs/re/122`）。
 	if g.fleetOrder == FleetOrderFacing {

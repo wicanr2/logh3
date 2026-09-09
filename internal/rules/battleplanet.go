@@ -24,10 +24,13 @@ type BattlePlanet struct {
 	// Stock 是這顆行星身上的補給／補充存量（`docs/re/134`）。
 	Stock PlanetStock `json:"stock"`
 
-	// GunState／GunTarget 是要塞砲的狀態與鎖定的目標（記錄 `+0x45`／
-	// `+0x50`）。只有狀態 0（沒鎖定）或 3（已鎖定）能重新指定。
-	GunState  int `json:"gun_state"`
-	GunTarget int `json:"gun_target"`
+	// GunState 是要塞砲的狀態（記錄 `+0x45`）：只有 0（待命）或
+	// 3（已瞄準）能重新瞄準。GunAim 是**瞄準的方位**（記錄 `+0x50`，
+	// 一整圈 256，`0xFFFF` ＝ 沒瞄準），不是某一支分隊——玩家路徑
+	// 由游標的方位算（`2264:0133`），電腦路徑用八格一步掃一圈挑
+	// （`303F:00B0`），兩邊寫進去的都是角度（`docs/re/145`）。
+	GunState int `json:"gun_state"`
+	GunAim   int `json:"gun_aim"`
 
 	// 情報視窗要的幾格（`docs/re/144`）：名字（記錄開頭那串 Big5）、
 	// `+0x16` 防衛力上限、`+0x18` 回復率、`+0x1A` 經濟力（32 位元）。
@@ -76,7 +79,7 @@ func (p *Planets) BattlePlanetsFor(region int, sites []PlanetSite) []BattlePlane
 			X: sites[k].X, Y: sites[k].Y,
 			Defence: p.Defence(i), Fortress: p.Fortress(i),
 			GunState:  int(p.rec(i)[planetGunState]),
-			GunTarget: int(le32(p.rec(i)[planetGunTarget:]) & 0xFFFF),
+			GunAim:    int(le32(p.rec(i)[planetGunAim:]) & 0xFFFF),
 			Stock:     planetStockOf(p.rec(i)),
 
 			NameBytes:  planetNameOf(p.rec(i)),

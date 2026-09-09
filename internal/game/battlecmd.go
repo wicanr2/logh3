@@ -347,6 +347,27 @@ func (g *Game) moveTargetClick(x, y int) bool {
 	return true
 }
 
+// battleWorldPixel 把畫面座標換成戰場的世界座標，只做邊界判斷。
+// 瞄準要塞砲那類「只要方向」的用途走這一支（原版 `1588:0362`）；
+// 要下移動命令才用 battleWorldAt，因為那還得過地形。
+func (g *Game) battleWorldPixel(x, y int) (int, int, bool) {
+	s := g.res.Battle
+	if s == nil {
+		return 0, 0, false
+	}
+	fw := s.Field.Cols * s.Field.TileW
+	fh := s.Field.Rows * s.Field.TileH
+	if x < s.Field.X || y < s.Field.Y || x >= s.Field.X+fw || y >= s.Field.Y+fh {
+		return 0, 0, false
+	}
+	wx := x - s.Field.X + g.battleView.Col*s.Field.TileW
+	wy := y - s.Field.Y + g.battleView.Row*s.Field.TileH
+	if wx < 0 || wx > battleWorldMaxX || wy < 0 || wy > battleWorldMaxY {
+		return 0, 0, false
+	}
+	return wx, wy, true
+}
+
 // battleWorldAt 把畫面座標換成戰場的世界座標，並照原版做邊界與地形
 // 判斷（`2583:022B` ＋ `1588:04EA`）。第三個回傳值 false ＝ 不能去。
 func (g *Game) battleWorldAt(x, y int) (int, int, bool) {

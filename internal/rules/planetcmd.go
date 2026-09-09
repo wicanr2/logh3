@@ -12,32 +12,65 @@ const (
 	planetKindStock = 0x20
 	planetMissiles  = 0x3C // 飛彈存量（32 位元），「補給」扣它
 	planetFighters  = 0x40 // 艦載機存量（32 位元）
-	planetDefence2  = 0x16 // 防衛力的第二份，要塞砲的射程查它
-	planetGunState  = 0x45 // 要塞砲狀態：0 沒鎖定、3 已鎖定
-	planetGunTarget = 0x50 // 要塞砲鎖定的目標，0xFFFF ＝ 沒有
+	planetDefence2  = 0x16 // 防衛力**上限**，要塞砲的射程查的是它
+	planetGunState  = 0x45 // 要塞砲狀態：0 待命、3 已瞄準
+	planetGunAim    = 0x50 // 要塞砲瞄準的方位（一整圈 256），0xFFFF ＝ 沒瞄準
 )
 
 // FortressRange 回要塞砲射程那個**橢圓**的長短半軸，單位是像素。
+// 吃的是防衛力**上限**（記錄 `+0x16`），不是目前防衛力。
 //
-//	長半軸 ＝ 防衛力 ÷ 200 ＋ 80、短半軸 ＝ 長半軸 ÷ 4（`2264:0EC3`）
+//	長半軸 ＝ 防衛力上限 ÷ 200 ＋ 80、短半軸 ＝ 長半軸 ÷ 4（`2264:0EC3`）
 //
-// 伊謝爾倫的防衛力 12800 → 144 與 36。圖形種類是 2（`3870:03A3` →
+// 伊謝爾倫的 12800 → 144 與 36。圖形種類是 2（`3870:03A3` →
 // `39D7:035E`），畫的是一個可以傾斜的橢圓，傾角在描述的 `[+4]`
 // （`docs/re/134`、`docs/re/135`）。
-func FortressRange(defence int) (semiMajor, semiMinor int) {
-	semiMajor = defence/200 + 80
+func FortressRange(defenceMax int) (semiMajor, semiMinor int) {
+	semiMajor = defenceMax/200 + 80
 	return semiMajor, semiMajor / 4
 }
 
-// FortressGunReady 回要塞砲現在能不能重新指定目標：狀態只有 0（沒鎖定）
-// 與 3（已鎖定）兩種可以（`1D9E:0247`）。
+// FortressFocalDistance 回焦點到橢圓中心的距離。
+//
+// **要塞在焦點上，不在中心。** 原版把中心算成「焦點 ＋ 沿瞄準方位走
+// c 像素」（`165F:0A71` ＝ `3870:0614` 算 c 之後交給 `3A92:0001` 旋轉），
+// 所以射程在瞄準的那一側長、背面短。c ＝ √(長半軸² − 短半軸²)
+// **無條件捨去**：收據 `s3fort` 的 96／24 量到 92，四捨五入會得到 93
+// （`docs/re/145`）。
+func FortressFocalDistance(semiMajor, semiMinor int) int {
+	d := semiMajor*semiMajor - semiMinor*semiMinor
+	if d <= 0 {
+		return 0
+	}
+	c := 0
+	for (c+1)*(c+1) <= d {
+		c++
+	}
+	return c
+}
+
+// FortressGunReady 回要塞砲現在能不能重新瞄準：狀態只有 0（待命）
+// 與 3（已瞄準）兩種可以（`1D9E:0247`）。
 func FortressGunReady(state int) bool { return state == 0 || state == 3 }
 
-// 要塞砲的兩種狀態。
+// 要塞砲的兩種狀態。開火之後每回合減 1，減到 0 才能再瞄
+// （`2264:000A`，`docs/re/145`）。
 const (
-	FortressGunIdle   = 0
-	FortressGunLocked = 3
+	FortressGunIdle  = 0
+	FortressGunAimed = 3
 )
+
+// FortressGunNoAim 是「沒瞄準」的標記（記錄 `+0x50` ＝ 0xFFFF）。
+const FortressGunNoAim = 0xFFFF
+
+// FortressGunTick 回下一回合的要塞砲狀態：非 0 就減 1（`2264:000A`
+// 每回合對每一顆有要塞的行星做一次）。
+func FortressGunTick(state int) int {
+	if state == 0 {
+		return 0
+	}
+	return state - 1
+}
 
 // PlanetStock 是一顆行星身上的三種存量。欄位對到行星記錄的
 // `+0x3C`、`+0x40` 與 `+0x20` 起那七格。
