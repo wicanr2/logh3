@@ -122,3 +122,18 @@ func TestForwardBasePicksNearestOwnNeighbour(t *testing.T) {
 		t.Errorf("沒有自己的鄰居應該回 -1，得到 %d", got)
 	}
 }
+
+// TestOriginalStrategyIsABrain 只確認它接得上 `Brain`，而且**不是預設**
+// ——`Original` 仍然什麼都不做（`docs/spec/029` 末節那個裁決還沒下）。
+func TestOriginalStrategyIsABrain(t *testing.T) {
+	var b Brain = OriginalStrategy{}
+	g := testGraph(t)
+	w := World{Fleets: []rules.Fleet{{Index: 0, Faction: 0, Region: 5, Morale: 100, Groups: 7, Expected: 7}},
+		Graph: g, Owner: func(int) int { return 0 }}
+	if got := b.Orders(w, 0, 1); got == nil && len(got) != 0 {
+		t.Error("Orders 不該回沒有初始化的東西")
+	}
+	if got := (Original{}).Orders(w, 0, 1); got != nil {
+		t.Errorf("Original 仍然要回 nil（預設不變），得到 %v", got)
+	}
+}

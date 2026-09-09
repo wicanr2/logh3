@@ -19,8 +19,13 @@ type StrategyInput struct {
 	Owner func(region int) int
 
 	// Contested 是星域 `+0x13` 的 bit2：這一格有戰鬥（`docs/re/173`）。
-	// nil ＝ 都沒有，逐艦隊決定會全部走「往首都退一格」。
+	// nil ＝ 都沒有。
 	Contested func(region int) bool
+
+	// Split 是艦隊 `+0x00` 的 bit0（`docs/re/196`）。**bit0 沒設又不在
+	// 交戰格的艦隊，逐艦隊決定不碰它們**，才會留給階段二／三／五挑。
+	// nil ＝ 都沒設。
+	Split func(f rules.Fleet) bool
 
 	// Strength 回一支艦隊的戰力（`rules.Slot.FleetStrength`）。
 	// nil ＝ 每支算 1。
@@ -105,7 +110,8 @@ func Turn(in StrategyInput) []Order {
 	// 逐艦隊決定：填 ds:D5CE，並把「有事做」的那幾支標成已決定。
 	dp, held, _ := DecisionPass(DecisionInput{
 		Faction: in.Faction, Fleets: in.Fleets, Graph: in.Graph,
-		Owner: in.owner, Strength: in.Strength, Contested: in.Contested,
+		Owner: in.owner, Strength: in.Strength,
+		Contested: in.Contested, Split: in.Split,
 	})
 	byIndex := map[int]int{}
 	for i, f := range in.Fleets {
@@ -273,4 +279,36 @@ func ForwardBase(region, faction int, g *rules.StarGraph, owner func(int) int) i
 		}
 	}
 	return best
+}
+
+// OriginalStrategy 是把 `Turn` 包成 `Brain` 的那一層。
+//
+// **它不是預設。** `Original` 仍然回 `nil`；要換掉是 `docs/spec/029`
+// 末節那個裁決，換的時候只要把建構 `Brain` 的地方改成這一支。
+//
+// `World` 帶不到的幾樣（交戰旗標、艦隊分類、艦艇數、路線表、亂數）
+// 由這個結構自己帶——它們都是原版有、而 `World` 這個介面當初沒開的口。
+type OriginalStrategy struct {
+	// Contested 是星域 `+0x13` bit2（這一格有戰鬥，`docs/re/173`）。
+	Contested func(region int) bool
+	// Split 是艦隊 `+0x00` bit0（`docs/re/196`）。
+	Split func(f rules.Fleet) bool
+	// Ships 回一支艦隊的艘數與主力槽數（`rules.Slot.FleetShipTotals`）。
+	Ships func(f rules.Fleet) (ships, mainSlots int)
+	// Routes 是進軍路線表（`LoadAdvanceRoutes`）。
+	Routes *AdvanceRoutes
+	// Rand 是原版的亂數（`rules.NewRand`），跨回合要沿用同一份。
+	Rand *rules.Rand
+	// PhezzanOpen 是 `ds:8F48`（費沙進入戰局，`docs/re/179`）。
+	PhezzanOpen bool
+}
+
+// Orders 跑一個戰略回合（`docs/spec/029` 的階段二、三、五）。
+func (o OriginalStrategy) Orders(w World, faction, _ int) []Order {
+	return Turn(StrategyInput{
+		Faction: faction, Fleets: w.Fleets, Graph: w.Graph,
+		Owner: w.Owner, Contested: o.Contested, Split: o.Split,
+		Strength: w.Strength, Ships: o.Ships,
+		Routes: o.Routes, Rand: o.Rand, PhezzanOpen: o.PhezzanOpen,
+	})
 }
