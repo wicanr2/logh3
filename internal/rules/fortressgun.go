@@ -216,6 +216,30 @@ func fireOne(pi int, p *BattlePlanet, i int, fleets []BattleFleet,
 	if lost == 0 {
 		return h
 	}
+	h.Lost = ApplyShipLoss(u, k, lost)
+	h.Score = h.Lost / ScoreDivisor
+	return h
+}
+
+// ApplyShipLoss 扣一支分隊的艘數並帶上所有副作用（原版 `203A:0593`，
+// `docs/re/147`），回**實際**扣掉的艘數。
+//
+//	艦種 7（索敵分遣隊）不受損，直接回它現有的艘數
+//	實扣 ＝ min(艘數, 量)
+//	`+0x0E`／`+0x12`（飛彈／艦載機）按剩餘比例縮減（艦種 ≠ 5，
+//	而且艦種表對應欄位不是 0xFF）
+//	`+0x08` −= 實扣、`+0x0C` −= 實扣² ÷ 滿編
+func ApplyShipLoss(u *BattleUnit, k ShipKind, amount int) int {
+	if u.Kind == kindScout {
+		return u.Ships // 不受損，但回值仍是艘數——分攤時會吃掉那麼多餘額
+	}
+	lost := amount
+	if lost > u.Ships {
+		lost = u.Ships
+	}
+	if lost <= 0 {
+		return 0
+	}
 	before := u.Ships
 	u.Ships -= lost
 	if u.FullShips > 0 {
@@ -232,8 +256,7 @@ func fireOne(pi int, p *BattlePlanet, i int, fleets []BattleFleet,
 			u.Fighters = u.Fighters / before * (before - lost)
 		}
 	}
-	h.Lost, h.Score = lost, lost/ScoreDivisor
-	return h
+	return lost
 }
 
 // FortressGunTickAll 把每一顆有要塞、狀態非 0 的行星減 1

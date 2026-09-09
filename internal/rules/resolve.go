@@ -28,6 +28,15 @@ type BattleFleet struct {
 	// 防禦係數都乘它再除 100（`2264:0FC3`，`docs/re/147`）。
 	Ability0 int `json:"ability0"`
 
+	// Ability3 是能力的第 3 項（記錄 `+0x40`）。攻擊力
+	// `203A:0424` ＝ 主力艘數 × 它 ÷ 100 ÷ 15 ＋ 250（`docs/re/146`）。
+	Ability3 int `json:"ability3"`
+
+	// Spirit 是記錄 `+0x3C`，0–100。打行星時拿它與「防衛力還剩幾成」
+	// 比：不低於門檻就先開火，低於就先挨反擊（`20B4:0503`，
+	// `docs/re/151`）。語意未解。
+	Spirit int `json:"spirit"`
+
 	// Flag0 是 `+0x00` bit0。語意未解（`docs/internals/33`），但兩件事
 	// 靠它：戰力加總不算這種艦隊，戰場的艦隊選單把「戰鬥」與「索敵」
 	// 關掉（`docs/spec/023`）。
@@ -73,6 +82,10 @@ func NewBattleFleet(index int, rec []byte, ab [FleetAbilityCount]byte) BattleFle
 	}
 	f.Defence = int(ab[defenceAbilityA]) * int(ab[defenceAbilityB]) / 100
 	f.Ability0 = int(ab[0])
+	f.Ability3 = int(ab[defenceAbilityA])
+	if len(rec) > 0x3C {
+		f.Spirit = int(rec[0x3C])
+	}
 	return f
 }
 

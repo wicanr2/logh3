@@ -152,12 +152,20 @@ func (g *Game) AdvanceBattleTurn() {
 			g.battleScore[l.Scorer] += l.Score
 		}
 	}
-	// 已瞄準的要塞砲在移動與戰鬥**之後**才開火（原版一回合八步的第五步，
-	// `181B:0385`；規格 `docs/spec/028`）。開完再把每一顆有要塞的行星
-	// 減 1——狀態 3 打一次、2 與 1 是填充、0 才能重新瞄。
+	// 原版一回合八步，第五步是要塞砲開火（`181B:0385`，規格
+	// `docs/spec/028`）、第六步是打行星（`181B:03D0`，規格
+	// `docs/spec/019`）。**順序有意義**：瞄好的要塞砲會讓敵方那一回合
+	// 打不到這顆行星，所以倒數要排在打行星之後（`docs/re/149`）。
 	g.battleGunHits = rules.FortressGunFire(g.battlePlanets, g.battleFleets,
 		g.battleUnits, g.res.ShipKinds, g.battleRand)
 	for _, h := range g.battleGunHits {
+		if h.Scorer >= 0 && h.Scorer < 2 {
+			g.battleScore[h.Scorer] += h.Score
+		}
+	}
+	g.battleAssaults = rules.PlanetAssault(g.battlePlanets, g.battleFleets,
+		g.battleUnits, g.res.ShipKinds, g.battleRand)
+	for _, h := range g.battleAssaults {
 		if h.Scorer >= 0 && h.Scorer < 2 {
 			g.battleScore[h.Scorer] += h.Score
 		}
