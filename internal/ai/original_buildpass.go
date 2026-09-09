@@ -53,6 +53,11 @@ type BuildInput struct {
 	// 滿編艘數）。nil ＝ 一律可以。
 	CanForm func(a AdmiralView) bool
 
+	// Form 真的把這一支編出來：填 `Composition`／`Operations`／`Upkeep`，
+	// **並從星域存量扣掉艦艇**（原版 `2D76:0611` 的後半，`docs/re/215`）。
+	// 回 false ＝ 編不成。nil ＝ 不編編制，維持費一律 0。
+	Form func(nf *NewFleet) bool
+
 	// Adjutant 回預設副官的提督索引（原版 `ds:5F78[編號]`），-1 ＝ 沒有。
 	// nil ＝ 都沒有。
 	Adjutant func(admiral int) int
@@ -100,7 +105,13 @@ func BuildPass(in BuildInput) []NewFleet {
 				counts[c]++
 			}
 		}
-		if _, ok := BuildGate(n, in.Tax, in.Upkeep, in.Tight); !ok {
+		// 這一趟已經建出來的也要算進維持費——原版每建一支就重算
+		// `ds:8F72`，下一輪的閘門看的是新值（`docs/re/218`）。
+		upkeep := in.Upkeep
+		for _, f := range out {
+			upkeep += f.Upkeep
+		}
+		if _, ok := BuildGate(n, in.Tax, upkeep, in.Tight); !ok {
 			return out
 		}
 		built := false
@@ -170,9 +181,13 @@ func (in BuildInput) tryClass(class int, used map[int]bool) (NewFleet, bool) {
 	// **編在提督所在的那一格**，不是首都——原版 `297B:0066` 寫的是
 	// `艦隊[+0x06] = 提督[+0x0A]`（`docs/re/214`）。開局兩邊的提督都在
 	// 自己的首都，所以收據上看起來一樣，但規則不是「首都」。
-	return NewFleet{Admiral: a.Index, Region: a.Region,
+	nf := NewFleet{Admiral: a.Index, Region: a.Region,
 		ClassKey: key, Adjutant: adj,
-		Expected: rules.FleetSlots(a.Level)}, true
+		Expected: rules.FleetSlots(a.Level)}
+	if in.Form != nil && !in.Form(&nf) {
+		return NewFleet{}, false
+	}
+	return nf, true
 }
 
 // BuildSupport 是建艦隊那條路要的、`World` 帶不到的東西。
@@ -184,6 +199,8 @@ type BuildSupport struct {
 	Admirals func(faction int) []AdmiralView
 	// CanForm ＝ `07F9:023B`。
 	CanForm func(faction int, a AdmiralView) bool
+	// Form 把一支新艦隊真的編出來（填編制與維持費、扣星域存量）。
+	Form func(faction int, nf *NewFleet) bool
 	// Adjutant ＝ `ds:5F78[編號]`。
 	Adjutant func(admiral int) int
 }
@@ -211,6 +228,9 @@ func (o OriginalStrategy) Build(w World, faction, _ int) []NewFleet {
 	}
 	if s.CanForm != nil {
 		in.CanForm = func(a AdmiralView) bool { return s.CanForm(faction, a) }
+	}
+	if s.Form != nil {
+		in.Form = func(nf *NewFleet) bool { return s.Form(faction, nf) }
 	}
 	in.Adjutant = s.Adjutant
 	return BuildPass(in)

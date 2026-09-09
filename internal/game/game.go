@@ -792,7 +792,6 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 		if nf.Region < 0 || nf.Region >= rules.RegionCount || led[nf.Admiral] {
 			continue
 		}
-		comp := g.newComposition(faction, nf.Region, nf.Admiral, nf.ClassKey)
 		g.fleets = append(g.fleets, rules.Fleet{
 			Index:    len(g.fleets),
 			Number:   len(g.fleets) + 1,
@@ -803,8 +802,11 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 			Target:   rules.NoTarget,
 			ClassKey:    nf.ClassKey,
 			Expected:    nf.Expected,
-			Composition: comp,
-			Groups:      len(comp),
+			// 編制與維持費在 `ai.BuildSupport.Form` 那一步就算好了
+			// （存量也是在那裡扣的），這裡只是收下來。
+			Composition: nf.Composition,
+			Groups:      len(nf.Composition),
+			Operations:  nf.Operations,
 		})
 		led[nf.Admiral] = true
 		n++

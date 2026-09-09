@@ -64,6 +64,10 @@ type Fleet struct {
 	// （跳過，`docs/internals/54`）。
 	Move int `json:"move"`
 
+	// Operations 是艦隊能力的第 10 項（`+0x47`）＝ `max(提督, 副官)` 的
+	// `ADMIRAL` `+14`（營運）。維持費靠它打折（`docs/re/218`）。
+	Operations int `json:"operations"`
+
 	// Composition 是這一支的編制，每組一筆艦艇（`docs/re/215`–`217`）。
 	// 新編艦隊時由 `BuildComposition` 產生；從存檔載進來的艦隊還是走
 	// `Slot.FleetGroupShips` 那條原始表的路，這一格是空的。

@@ -206,3 +206,45 @@ func BuildComposition(in BuildInput) []FleetGroup {
 	}
 	return out
 }
+
+// 艦種列裡的兩個每艘費用（`ds:4E3A` 那一列，`docs/re/218`）。
+const (
+	kindUpkeepPer = 0x04 // 每艘的維持費（進 ds:8F72）
+	kindOtherPer  = 0x05 // 每艘的另一項費用（進 ds:8F82）
+)
+
+// FleetUpkeep 回一支艦隊的維持費 ＝ 原版 `297B:116C` 寫進艦隊 `+0x0A`
+// 的那個值（`docs/re/218`）：
+//
+//	Σ(艦種列[+0x04] × 那一組的艘數) ÷ 1000 × (200 − operations) ÷ 100
+//
+// `operations` 是艦隊能力的第 10 項（`+0x47`）＝ `max(提督, 副官)` 的
+// `ADMIRAL` `+14`（營運）。**營運越高、維持費越低。**
+//
+// 收據 `turn260mem` 的三支算出來是 217／85／124，與各自的 `+0x0A`
+// 逐一相同，合計 426 ＝ `ds:8F72`。
+func FleetUpkeep(kinds *ShipKindTable, faction int, comp []FleetGroup, operations int) int {
+	return fleetCost(kinds, faction, comp, operations, kindUpkeepPer)
+}
+
+// FleetOtherCost 是同一支算出來的另一項（進 `ds:8F82`），
+// 差別只在讀艦種列的 `+0x05`。項目名稱還沒解（`docs/internals/27`）。
+func FleetOtherCost(kinds *ShipKindTable, faction int, comp []FleetGroup, operations int) int {
+	return fleetCost(kinds, faction, comp, operations, kindOtherPer)
+}
+
+func fleetCost(kinds *ShipKindTable, faction int, comp []FleetGroup,
+	operations, off int) int {
+	if kinds == nil {
+		return 0
+	}
+	sum := 0
+	for _, g := range comp {
+		k, ok := kinds.Kind(faction, g.Kind)
+		if !ok {
+			continue
+		}
+		sum += k.Byte(off) * g.Ships
+	}
+	return sum / 1000 * (200 - operations) / 100
+}

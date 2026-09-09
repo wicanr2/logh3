@@ -147,10 +147,10 @@ func TestPlainBrainBuildsNothing(t *testing.T) {
 // 回合：它會從首都的**待命部隊**（星域記錄 `+0x30` 起）編出艦隊，
 // 每一支都有編制，而且存量真的被搬走（`docs/re/215`、`docs/re/217`）。
 //
-// ⚠ **它會一路建到上限 16 支，而原版在同一個局面停在三支**
-// （收據 `turn260mem`，`docs/re/209`）。原因是收手的那道閘門看艦隊
-// 維持費，而 remake 還沒算維持費（`docs/re/211`）——這一支就是把那個
-// 已知偏差釘住，換掉之後有人修好維持費，它會紅，那時候再改預期。
+// 維持費那道閘門接上之後建了 **4 支**（原版在同一個局面是 3 支）。
+// 差的那一支來自另一個已知不忠實：`Support.Money` 回的是**玩家**那一方
+// 的稅收（10341），而原版看的是同盟自己的（10599 → 7852）——remake
+// 只追一方的財政（`docs/re/218`）。
 func TestOriginalBrainBuildsWithComposition(t *testing.T) {
 	g := reachBrainPhase(t)
 	foe := 1 - g.faction
@@ -195,10 +195,15 @@ func TestOriginalBrainBuildsWithComposition(t *testing.T) {
 	if after >= before {
 		t.Errorf("存量從 %d 變成 %d——一艘都沒搬", before, after)
 	}
-	// 已知偏差：沒有維持費就收不了手。
-	if len(g.fleets) != ai.FleetCap {
-		t.Logf("建了 %d 支（不是上限 %d）——維持費那道閘門是不是接上了？",
+	// 維持費那道閘門要真的收得了手——不能再一路建到上限。
+	if len(g.fleets) >= ai.FleetCap {
+		t.Errorf("建到 %d 支（上限 %d）——維持費那道閘門沒收手",
 			len(g.fleets), ai.FleetCap)
+	}
+	// 原版在同一個局面是 3 支；remake 拿玩家的稅收當預算，所以多一支。
+	if len(g.fleets) != 4 {
+		t.Logf("建了 %d 支（原版 3、目前預期 4）——財政那一側是不是改了？",
+			len(g.fleets))
 	}
 	t.Logf("建了 %d 支，首都待命部隊從 %d 剩 %d", len(g.fleets), before, after)
 }

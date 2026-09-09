@@ -97,19 +97,21 @@ func (g *Game) buildSupport() *ai.BuildSupport {
 		// 軍事費與稅收（`g.taxTotal`），電腦那一方的財政沒有模型。
 		// 單人模式下這是把玩家的稅收拿去當電腦的預算——**已知不忠實**，
 		// 而且因為維持費也是 0，那道閘門實際上永遠通過。
+		// ⚠ **稅收回的是玩家那一方的數字**：remake 只追一方的軍事費與
+		// 稅收（`g.taxTotal`），電腦那一方的財政沒有模型。單人模式下
+		// 這是把玩家的稅收拿去當電腦的預算——**已知不忠實**。
+		//
+		// 維持費算得出來（`ds:8F72` ＝ Σ 各艦隊的 `+0x0A`，`docs/re/218`）。
+		// `ds:8FD4[陣營]` ＝ 未安定度公式的 `Blend`（0–4，`docs/re/207`），
+		// remake 還沒有跨回合維護，一律 false ＝ 當成 0。
 		Money: func(faction int) (tax, upkeep int, tight bool) {
-			// 總稅收 ＝ ds:8F6A。**艦隊維持費（ds:8F72）remake 還沒算**
-			// ——收據上帝國那一欄是 0（`docs/internals/27`），所以這裡
-			// 也是 0，閘門的那一項等於永遠通過。
-			// `ds:8FD4[陣營]` ＝ 未安定度公式的 `Blend`（0–4，`docs/re/207`）。
-			// remake 只在載入時算未安定度用它，還沒有跨回合維護，
-			// 所以這裡一律 false ＝ 當成 0（門檻是 3，開局值 2 本來也不觸發）。
-			return g.taxTotal, 0, false
+			return g.taxTotal, g.fleetUpkeep(faction), false
 		},
 		Admirals: func(faction int) []ai.AdmiralView {
 			return admiralCandidates(all, g.fleets, faction)
 		},
 		CanForm:  g.canFormFleet,
+		Form:     g.formFleet,
 		Adjutant: func(i int) int { return rules.Adjutant(g.admiralRecord(i)) },
 	}
 }
@@ -208,4 +210,50 @@ func (g *Game) newComposition(faction, region, admiral, classKey int) []rules.Fl
 		AdmiralKind:  rules.AdmiralAbility(adm, 0x08) & 0x0F,
 		ClassKey:     classKey,
 	})
+}
+
+// fleetUpkeep 回一個陣營的艦隊維持費 ＝ 原版 `ds:8F72[陣營]`
+// ＝ 那一方**在用**的每一支艦隊的 `+0x0A` 加總（`docs/re/211`、
+// `docs/re/218`）。
+//
+// 只有帶編制的艦隊算得出來；從存檔載進來的艦隊 `Composition` 是空的，
+// 那幾支目前算 0。
+func (g *Game) fleetUpkeep(faction int) int {
+	if g.res.ShipKinds == nil {
+		return 0
+	}
+	sum := 0
+	for _, f := range g.fleets {
+		if f.Faction != faction {
+			continue
+		}
+		sum += rules.FleetUpkeep(g.res.ShipKinds, faction, f.Composition, f.Operations)
+	}
+	return sum
+}
+
+// fleetOperations 回一支新艦隊的 `+0x47`（營運）＝ `max(提督, 副官)` 的
+// `ADMIRAL` `+14`（`docs/re/218`）。
+func (g *Game) fleetOperations(admiral, adjutant int) int {
+	v := rules.AdmiralAbility(g.admiralRecord(admiral), 0x0E)
+	if adjutant >= 0 {
+		if a := rules.AdmiralAbility(g.admiralRecord(adjutant), 0x0E); a > v {
+			v = a
+		}
+	}
+	return v
+}
+
+// formFleet 把一支新艦隊真的編出來 ＝ 原版 `2D76:0611` 的後半：
+// 產生編制（**從星域存量扣掉艦艇**）、算 `+0x47`（營運）與 `+0x0A`
+// （維持費）。編不出任何一組就回 false。
+func (g *Game) formFleet(faction int, nf *ai.NewFleet) bool {
+	comp := g.newComposition(faction, nf.Region, nf.Admiral, nf.ClassKey)
+	if len(comp) == 0 {
+		return false
+	}
+	nf.Composition = comp
+	nf.Operations = g.fleetOperations(nf.Admiral, nf.Adjutant)
+	nf.Upkeep = rules.FleetUpkeep(g.res.ShipKinds, faction, comp, nf.Operations)
+	return true
 }

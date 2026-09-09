@@ -92,11 +92,16 @@ type NewFleet struct {
 	Adjutant int
 	// Expected 是艦隊記錄的 `+0x0E`（應有幾組編制）＝ `rules.FleetSlots`
 	// 查提督等級（原版 `297B:0066` → `297B:0209`，`docs/re/214`）。
-	//
-	// ⚠ **現有組數（`+0x0F`）還是 0**：原版是 `297B:0066` 填旗艦那一組、
-	// `0FF4:11F4` 從第 1 組接手，兩處都靠 `2AD2:0029` 產生艦艇，
-	// 而那一支還沒讀（`docs/re/213`）。
 	Expected int
+
+	// Composition／Operations／Upkeep 由 `BuildSupport.Form` 填：編制、
+	// 艦隊能力第 10 項（`+0x47` 營運）、以及這一支的維持費（`+0x0A`）。
+	//
+	// **維持費要在這一趟裡就算出來**：原版每建一支就重算 `ds:8F72`，
+	// 下一輪的閘門看的是新值（`docs/re/218`）。
+	Composition []rules.FleetGroup
+	Operations  int
+	Upkeep      int
 }
 
 // Builder 是「除了下命令，還會建艦隊」的 `Brain`。
