@@ -137,3 +137,45 @@ func TestRefitSacrificesStaleSlot(t *testing.T) {
 		t.Errorf("待命部隊 ＝ %v，收據是前後相同的 %v", s, before)
 	}
 }
+
+// TestRefitBalancesFiveSixFromReceipt 釘替代清單裡的 `0xFE`
+// （收據 `refit4`／`docs/re/233`）。
+//
+// 把星域 30 的艦種 0–4 存量 `-poke` 成 0、5 與 6 各 30000，再把艦隊槽 28
+// 的現有組數改成 2。補編制要艦種 0 的那一格拿不到存量，走替代清單
+// `2 → 4 → FE → 3 → 1`：2 與 4 都沒有存量，`0xFE` 那一格兩邊都是 0 組
+// **先試 6**，拿到了。
+//
+//	後  組0 艦種0 槽20  組1 艦種0 槽10  組2 艦種6 槽12  組3 艦種6 槽29
+//	待命部隊 艦種6 30000 → 28000（兩組各 1000），艦種5 不動
+func TestRefitBalancesFiveSixFromReceipt(t *testing.T) {
+	kinds, tt := kindTable(t), compTables(t)
+	rec := make([]byte, RegionRecord)
+	rec[0x12] = 1
+	for k, v := range []int{0, 0, 0, 0, 0, 30000, 30000} {
+		putStock(rec, 1, k, v)
+	}
+	groups := []FleetGroup{
+		{Kind: 0, Ships: 3000, Full: 3000, Slot2: 0, Slot3: 20},
+		{Kind: 0, Ships: 3000, Full: 3000, Slot2: 0, Slot3: 10},
+	}
+	in := BuildInput{Region: rec, Faction: 1, Kinds: kinds, Tables: tt,
+		AdmiralKind: 0, ClassKey: 4}
+	got := Refit(in, groups, 4)
+
+	want := []struct{ kind, ships, slot3 int }{
+		{0, 3000, 20}, {0, 3000, 10}, {6, 1000, 12}, {6, 1000, 29},
+	}
+	if len(got) != len(want) {
+		t.Fatalf("整補之後有 %d 組，收據是 %d", len(got), len(want))
+	}
+	for i, w := range want {
+		if got[i].Kind != w.kind || got[i].Ships != w.ships || got[i].Slot3 != w.slot3 {
+			t.Errorf("組%d ＝ 艦種 %d／%d 艘／槽 %d，收據是 %d／%d／%d",
+				i, got[i].Kind, got[i].Ships, got[i].Slot3, w.kind, w.ships, w.slot3)
+		}
+	}
+	if s, w := RegionShips(rec, 1), []int{0, 0, 0, 0, 0, 30000, 28000}; !equalInts(s, w) {
+		t.Errorf("待命部隊 ＝ %v，收據是 %v", s, w)
+	}
+}
