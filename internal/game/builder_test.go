@@ -376,3 +376,38 @@ func TestTaxRateRecomputeMatchesReceipt(t *testing.T) {
 		t.Errorf("帝國的總稅收 ＝ %d，收據是 %d", got, want)
 	}
 }
+
+// TestMonthEndKeepsBlend 釘 `2D10:0319` 在 AI 回合結尾的月底分支
+// （收據 `monthblend`／`docs/re/238`）。
+//
+// 平時（`回合數 % 10 != 9`）結尾把 `Blend` 歸零，稅率跟著掉到等級 0；
+// 月底那一條照軍事費重算，等級留在 1。同一條序列、同一個時點，
+// 原版只差一個回合計數器：對照組 `Blend[同盟] = 0`／總稅收 6696，
+// 月底 `Blend[同盟] = 1`／總稅收 10213。
+func TestMonthEndKeepsBlend(t *testing.T) {
+	run := func(before int) (turn, blend, tax int) {
+		g := reachBrainPhase(t)
+		g.SetBrain(g.OriginalBrain())
+		g.turn = before
+		g.Click(544, 125)
+		g.Click(560, 125)
+		return g.turn, g.blend[1], g.taxTotal[1]
+	}
+	plainTurn, plainBlend, plainTax := run(0)
+	monthTurn, monthBlend, monthTax := run(8)
+
+	if plainTurn%10 == 9 || monthTurn%10 != 9 {
+		t.Fatalf("回合數不對：平時 %d、月底 %d", plainTurn, monthTurn)
+	}
+	if plainBlend != 0 {
+		t.Errorf("平時結尾的 Blend ＝ %d，原版歸零", plainBlend)
+	}
+	if monthBlend != 1 {
+		t.Errorf("月底結尾的 Blend ＝ %d，收據是 1（軍事費落在 40000–50000）", monthBlend)
+	}
+	// 等級 0 的稅率比等級 1 低，所以平時那一條的預估徵稅額一定比較小
+	// （收據：6696 對 10213）。
+	if !(plainTax < monthTax) {
+		t.Errorf("平時的總稅收 %d 沒有比月底的 %d 小", plainTax, monthTax)
+	}
+}
