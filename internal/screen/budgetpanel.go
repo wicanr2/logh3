@@ -49,18 +49,21 @@ func (p *BudgetPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, t rules.Treasury
 			v = t.FleetUpkeep
 		case "movement":
 			v = t.Movement
-		case "next_fleet_upkeep", "next_movement":
-			// 次月份那兩格在兩張收據上都是 0；它們從哪來還沒查
-			// （`docs/spec/003` 的缺口）。
-			v = 0
+		case "next_fleet_upkeep":
+			v = t.NextUpkeep
+		case "next_movement":
+			v = t.NextMovement
 		case "tax":
 			v = b.Tax
 		case "military":
-			v = b.Military()
+			// 預估軍事費要扣掉上面那四格（`docs/re/239`）。
+			v = b.Military() - t.Paid()
 		case "ship_cost":
+			// **船艦建造費用的是扣之前的數**：收據 `fiscalrows5` 把
+			// 預估軍事費壓成 −5925，這一格仍然是 15185（`docs/re/239`）。
 			v = b.ShipCost()
 		case "rest":
-			v = b.Rest()
+			v = b.Military() - t.Paid() - b.ShipCost()
 		}
 		drawRight(fb, fnt, p.Right, r.Y, strconv.Itoa(v), p.Ink)
 		if r.PctRight != 0 {

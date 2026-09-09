@@ -386,9 +386,12 @@ func Tax(economy, ratePerMille int) int {
 type Treasury struct {
 	Budget      int // 原定軍事費：這個月一開始有多少（ds:8F62）
 	ShipPaid    int // 已支付的船艦建造費（ds:8F94）
-	FleetUpkeep int // 本回合的艦隊維持費 ＝ Σ 艦隊 +0x0A（ds:8F72）
-	Movement    int // 累計已支付的艦隊維持費（ds:8F7A，`docs/re/238`）
-	Other       int // 本回合的移動經費 ＝ Σ 艦隊 +0x0C（ds:8F82）
+	// 底下四格照畫面上的兩組（「已支付」與「本次預定」），
+	// 對應的全域由收據 `fiscalrows5` 逐格釘出來（`docs/re/239`）。
+	FleetUpkeep  int // 已支付 艦隊維持費（ds:8F7A ＝ 累計已付）
+	Movement     int // 已支付 移動經費（全域還沒找到，量到的都是 0）
+	NextUpkeep   int // 本次預定 艦隊維持費（ds:8F72 ＝ Σ 艦隊 +0x0A）
+	NextMovement int // 本次預定 移動經費（ds:8F82 ＝ Σ 會動的艦隊 +0x0C）
 }
 
 // Remaining 回手上還有多少軍事費 ＝ 原定軍事費 − 已支付的各項。
@@ -399,7 +402,14 @@ type Treasury struct {
 // `ds:8F7A` 是**累計已付**，三者混在同一條減法裡會重複算。
 // 畫面上那幾列各對應哪一格還沒有非零的收據，所以這一支先不動。
 func (t Treasury) Remaining() int {
-	return t.Budget - t.ShipPaid - t.FleetUpkeep - t.Movement - t.Other
+	return t.Budget - t.ShipPaid - t.Paid()
+}
+
+// Paid 是畫面上那四格加起來 ＝ 預估軍事費要扣掉的部分
+// （`docs/re/239`：收據 `fiscalrows5` 把 60741 扣成 −5925，
+// 22222 ＋ 11111 ＋ 33333 ＝ 66666）。
+func (t Treasury) Paid() int {
+	return t.FleetUpkeep + t.Movement + t.NextUpkeep + t.NextMovement
 }
 
 // 星域記錄裡兩個陣營的艦艇艘數各佔七個 32 位元（`docs/re/69`）。

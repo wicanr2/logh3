@@ -245,3 +245,35 @@ func TestTreasuryRemainingMatchesPanel(t *testing.T) {
 		}
 	}
 }
+
+// TestTreasuryPaidMatchesReceipt 釘預算畫面那四格與預估軍事費的關係
+// （收據 `fiscalrows5`／`docs/re/239`）。
+//
+// 把三個全域 poke 成 11111（`ds:8F72`）／22222（`ds:8F7A`）／
+// 33333（`ds:8F82`）之後，畫面上：
+//
+//	已支付 艦隊維持費  22222      ← ds:8F7A
+//	本次預定 艦隊維持費 11111     ← ds:8F72
+//	本次預定 移動經費  33333      ← ds:8F82
+//	預估軍事費         −5925      ＝ 60741 − 66666
+//	船艦建造費         15185      ← **扣之前**的 60741 × 25%
+//	剩餘軍事費         −21110     ＝ −5925 − 15185
+func TestTreasuryPaidMatchesReceipt(t *testing.T) {
+	tr := Treasury{FleetUpkeep: 22222, NextUpkeep: 11111, NextMovement: 33333}
+	if got, want := tr.Paid(), 66666; got != want {
+		t.Errorf("四格加起來 ＝ %d，收據是 %d", got, want)
+	}
+	b := Budget{Treasury: 50000, Tax: 10741, ShipPct: 25}
+	if got, want := b.Military(), 60741; got != want {
+		t.Fatalf("預估軍事費（扣之前）＝ %d，收據是 %d", got, want)
+	}
+	if got, want := b.Military()-tr.Paid(), -5925; got != want {
+		t.Errorf("預估軍事費 ＝ %d，收據是 %d", got, want)
+	}
+	if got, want := b.ShipCost(), 15185; got != want {
+		t.Errorf("船艦建造費 ＝ %d，收據是 %d（用扣之前的數）", got, want)
+	}
+	if got, want := b.Military()-tr.Paid()-b.ShipCost(), -21110; got != want {
+		t.Errorf("剩餘軍事費 ＝ %d，收據是 %d", got, want)
+	}
+}
