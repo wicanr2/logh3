@@ -1,13 +1,47 @@
 # SPEC 029 — 原版的戰略 AI 回合
 
-狀態：**DRAFT**（不得動 production path）
-已實作：`internal/ai/original_tables.go` 的**純函式**——威脅圖、兩種優先度、兩種「要派幾支」、滿足率與挑格、態勢碼、進軍路線表。
-還沒接到 `advanceTurn`；測試 `original_tables_test.go` 釘收據 `s3aicomp` 的數字
-證據：`docs/re/162`–`docs/re/176`、`docs/internals/54`、
-`docs/internals/data/strategic-ai.json`、收據 `s3aicomp`
+狀態：**READY**（證據審查通過，見「證據審查」一節）
+證據：`docs/re/162`–`docs/re/197`、`docs/internals/54`、
+`docs/internals/data/strategic-ai.json`、`docs/internals/data/ai-advance-routes.json`、
+收據 `s3aicomp`／`s3airng`
 相關：[`docs/spec/017`](017-computer-ai.md)（AI 兩層與「預設原版」的取捨）、
 [`docs/internals/33`](../internals/33-fleet-table.md)、
 [`docs/internals/22`](../internals/22-stellar-dt.md)
+
+> **READY 的意思是「證據夠了，可以照著寫」**，不是「已經驗收」。
+> 已實作的部分見「已經實作的部分」，完成度以
+> [`VERIFICATION-MATRIX.md`](../../VERIFICATION-MATRIX.md) 為準。
+> **把 `internal/ai` 的 `Original` 換掉是另一件事**，要使用者裁決
+> （見末節）。
+
+## 證據審查
+
+逐項標證據等級。**沒有一項是猜的**；標「無收據」的是「反組譯讀出來、
+但還沒有原版輸出可對」。
+
+| 項目 | 等級 | 依據 |
+|---|---|---|
+| 什麼時候跑（座位表、兩條迴圈、`ds:8F46`）| proven | `docs/re/175`、`186`、`187`；25 份傾印的座位與計數器 |
+| 逐艦隊決定 `2E54:005D` 的四條路與那道過濾 | proven | `docs/re/196`、`197`（整支讀完）|
+| 戰力 `2E54:1876` | proven | `docs/re/79`；`rules.FleetStrength` |
+| 敵方兵力圖 `ds:D54E` | **對拍** | `s3aicomp` 四格全中，星域 25 ＝ 69 |
+| 攻擊目標分 `ds:D50E` | **對拍** | `s3aicomp` 13→682、15／22／28→2048 |
+| 「要派幾支」`ds:D58E`（階段四）| **對拍** | `s3aicomp` ＋ `s3airng` 的種子 `0xD3DC167E` |
+| 守勢優先度／守勢「要派幾支」 | proven（無收據）| `docs/re/171`、`172`；收據那一趟走攻勢版 |
+| 候選過濾與評分 `2E54:143F`／`2E54:1574` | proven（無收據）| `docs/re/168`；那一趟沒經過評分 |
+| 進軍路線表與戰略態勢碼 | proven | `docs/re/178`、`179`；表由記憶體走出來，12 組邊界互相夾住 |
+| 「下一步走哪一格」`2B99:0302` | **證明等價** | `docs/re/183`；兩張矩陣所有走得通的星域對 |
+| 「從首都走得到嗎」`2B99:0392` | proven | `docs/re/185`；星圖全連通已量 |
+| 階段一（守首都、新編艦隊、副官）| proven（無收據）| `docs/re/180`–`182`、`188`、`190`、`191` |
+| 階段二（打最近的無主星域）| proven（無收據）| `docs/re/177` |
+| 階段五（收尾指派、前進基地）| proven（無收據）| `docs/re/177`、`179` |
+| 費沙事件的**結算** | proven（無收據）| `docs/re/192` |
+| 費沙事件的**觸發條件** | **未解** | `docs/re/193`：四種掃法 0 命中，不在傾印裡 |
+| `2B99:028F` 的距離**數值** | **未解** | `docs/re/185`：表在 EMS |
+| 提督 `+20` 的名字、艦種 1 的意義 | **未解** | `docs/internals/08`、`docs/re/190` |
+
+**三項未解都不擋主流程**：費沙事件的觸發不影響一般回合、距離數值只在
+「走不走得到」這個布林上用得到（星圖全連通）、兩個命名問題不影響算式。
 
 ## 這份規格要解決的問題
 
@@ -163,7 +197,8 @@ ds:D5AE[0..31] = 0
 - **建議**：先把規格實作成另一個 `Brain`（不動預設），重跑受影響的收據、
   保存前後差分，再決定要不要換預設。
 
-在使用者裁決之前，這份規格維持 **DRAFT**，production path 不動。
+**規格已經是 READY**（證據夠了），但 production path 仍然不動——
+換掉 `Original` 是上面那個裁決，不是 READY 的自動後果。
 
 ## 驗收
 
