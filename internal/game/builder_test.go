@@ -21,6 +21,13 @@ func reachBrainPhase(t *testing.T) *Game {
 		t.Fatal(err)
 	}
 	res.Graph = graph
+	// `Blend` 一動就要重算稅率，那條路要統治者編號與難度表
+	// （`docs/spec/030`）——與 `internal/bootstrap` 給的同一組。
+	res.UnrestParams = rules.UnrestParams{
+		Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
+		Table: []int{170, 150, 130, 90, 60},
+		Base:  []int{50, 75, 100, 150, 200},
+	}
 	// 決策層還要艦種表與兩張編制表；`load()` 只給畫面要的東西，
 	// 正式入口 `internal/bootstrap` 才會載這幾份。
 	data := filepath.Join(root, "docs/internals/data")
@@ -267,10 +274,10 @@ func TestOriginalBrainStillNotDefault(t *testing.T) {
 // TestFirstAITurnMatchesReceipt 拿接好線的原版 AI 跑第一個回合，逐支比
 // 收據 `turn260mem`（`docs/re/209`、`docs/re/221`）。
 //
-// 前三支**完全對上**：提督、類別鍵、目的地都與原版相同。第四支是
-// remake 多建的——原版那一趟裡同盟的 `Blend` 從 2 掉到 1、全國稅率
-// 重算、稅收從 10599 掉到 7852，閘門因此提早收手；remake 沒有 `Blend`
-// 的升降事件（`docs/re/220`），那是**還沒解**不是還沒做。
+// 三支**完全對上**：支數、提督、類別鍵、目的地都與原版相同。
+// 支數要接上 `Blend` 與稅率重算才會是三支（`docs/spec/030`）——AI
+// 回合開頭把 `Blend` 設成 1、全國稅率重算、稅收從 10599 掉到 7852，
+// 閘門就在第三支之後收手。
 func TestFirstAITurnMatchesReceipt(t *testing.T) {
 	g := reachBrainPhase(t)
 	g.SetBrain(g.OriginalBrain())
@@ -300,9 +307,33 @@ func TestFirstAITurnMatchesReceipt(t *testing.T) {
 			t.Errorf("第 %d 支的士氣 ＝ %d，新編艦隊應該是 100", i, f.Morale)
 		}
 	}
-	// 收據上是三支；remake 目前四支，差在稅率重算（`docs/re/220`）。
-	if len(g.fleets) != 4 {
-		t.Logf("建了 %d 支（收據 3、目前預期 4）——`Blend` 那一段是不是接上了？",
-			len(g.fleets))
+	if len(g.fleets) != 3 {
+		t.Errorf("建了 %d 支，收據是 3", len(g.fleets))
+	}
+}
+
+// TestTaxRateRecomputeMatchesReceipt 釘 `090A:0B93`：AI 回合開頭
+// 按 `Blend` 重算全國稅率之後，同盟的預估徵稅額要與收據相同
+// （`docs/re/223`、`docs/spec/030`）。
+//
+//	等級 2（開局值）→ 10599      `t260_pre` 的 ds:8F6A[同盟]
+//	等級 1（軍事費 45848）→ 7852 `t260_post` 的同一格
+func TestTaxRateRecomputeMatchesReceipt(t *testing.T) {
+	g := reachBrainPhase(t)
+	if got, want := g.military[1], 45848; got != want {
+		t.Errorf("同盟的軍事費 ＝ %d，收據是 %d", got, want)
+	}
+	if got, want := rules.BlendForFunds(g.military[1]), 1; got != want {
+		t.Errorf("同盟的 Blend ＝ %d，預期 %d", got, want)
+	}
+	for _, c := range []struct{ level, tax int }{{2, 10599}, {1, 7852}} {
+		g.refreshBlend(1, c.level)
+		if got := g.taxTotal[1]; got != c.tax {
+			t.Errorf("等級 %d 的總稅收 ＝ %d，收據是 %d", c.level, got, c.tax)
+		}
+	}
+	// 帝國那一邊不跑 AI，重算同盟不該碰到它。
+	if got, want := g.taxTotal[0], 10341; got != want {
+		t.Errorf("帝國的總稅收 ＝ %d，收據是 %d", got, want)
 	}
 }

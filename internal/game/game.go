@@ -439,9 +439,16 @@ type Game struct {
 	// 月初報告被關掉幾層。兩層都關掉才露出戰略地圖介面。
 	reportLayer int
 
-	// 手上的軍事費與下個月的預估徵稅額。開場那次結算算出來，之後每個
-	// 月底再算一次。
-	military, taxTotal int
+	// 手上的軍事費與下個月的預估徵稅額，**每個陣營一格**（原版的
+	// `ds:8F52`／`ds:8F6A` 也是，`docs/internals/27`）。開場那次結算
+	// 算出來，之後每個月底再算一次。電腦那一方要有自己的錢，戰略 AI
+	// 的預算閘門才擋得住（`docs/spec/030`）。
+	military, taxTotal [2]int
+
+	// blend 是未安定度算式的 `Blend`（原版 `ds:8FD4[陣營]`，0–4）。
+	// 電腦座位的戰略 AI 每回合按軍事費重設它，一設就重算該陣營所有
+	// 星域的稅率（`docs/spec/030`、`docs/internals/55`）。
+	blend [2]int
 
 	// treasury 是這個月的財政（原定軍事費、已支付各項），
 	// monthReport 是月初報告那張上的預算。
@@ -621,12 +628,11 @@ type Game struct {
 // side 是對戰模式下屬於某一個陣營的那幾筆狀態。單人模式用不到——
 // 那時 Game 上那幾個欄位就是玩家自己的。
 type side struct {
-	military, taxTotal int
-	pct                [rules.BuildPlanRows]int
-	treasury           rules.Treasury
-	monthReport        rules.Budget
-	building           rules.BuildPlan
-	fleets             []rules.Fleet
+	pct         [rules.BuildPlanRows]int
+	treasury    rules.Treasury
+	monthReport rules.Budget
+	building    rules.BuildPlan
+	fleets      []rules.Fleet
 }
 
 // 星圖畫在畫面的 (0,40)，320×300，圖塊 16×20（`docs/internals/12`）。
@@ -763,6 +769,10 @@ func (g *Game) runBrain() {
 	// ——這一回合新編的艦隊拿不到命令，而且亂數的呼叫次序整個錯開
 	// （建艦隊每建一支吃兩個，`docs/re/218`）。
 	//
+	// 原版 AI 回合的第一件事是 `2D10:0319(1)`：按軍事費重設 `Blend`，
+	// 一設就重算全國稅率（`docs/spec/030`）。建艦隊的預算閘門看的就是
+	// 重算之後的稅收，所以這一步要排在建艦隊前面。
+	g.refreshBlend(foe, rules.BlendForFunds(g.military[foe]))
 	// 階段一產生的是**新艦隊**不是命令，所以走另一條路
 	// （`ai.Builder`，`docs/internals/54`）。**選配**：沒實作就不建。
 	if b, ok := g.brain.(ai.Builder); ok {
@@ -776,6 +786,31 @@ func (g *Game) runBrain() {
 		g.fleets[o.Fleet].Target = o.Target
 		g.fleets[o.Fleet].Parked = false
 	}
+	// 回合的最後一件事是 `2D10:0319(0)`：月底照軍事費再算一次，
+	// 平時把 `Blend` 歸零。兩條都會再重算一次稅率。
+	level := 0
+	if g.turn%10 == 9 {
+		level = rules.BlendForFunds(g.military[foe])
+	}
+	g.refreshBlend(foe, level)
+}
+
+// refreshBlend 走原版 `2D10:0319` 的後半：寫下等級，接著用它當下標
+// 重算那個陣營所有星域的稅率（`090A:0B93`），最後把預估徵稅額跟著更新。
+func (g *Game) refreshBlend(faction, level int) {
+	g.blend[faction] = level
+	pr := g.res.UnrestParams
+	if g.res.Planets == nil || len(g.res.Stellar) == 0 ||
+		level < 0 || level >= len(pr.Base) {
+		return
+	}
+	ruler := g.admiralRecord(pr.Ruler[faction])
+	if ruler == nil {
+		return
+	}
+	rules.RecomputeTaxRates(g.res.Stellar, faction, pr.Base[level], ruler,
+		func(i int) int { return g.res.Planets.RegionOwner(i) })
+	g.taxTotal[faction] = g.estimateTaxFor(faction)
 }
 
 // buildFleets 把 `ai.Builder` 要的新艦隊編出來。
@@ -810,8 +845,8 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 			Adjutant: nf.Adjutant,
 			Region:   nf.Region,
 			Target:   rules.NoTarget,
-			ClassKey:    nf.ClassKey,
-			Expected:    nf.Expected,
+			ClassKey: nf.ClassKey,
+			Expected: nf.Expected,
 			// 編制與維持費在 `ai.BuildSupport.Form` 那一步就算好了
 			// （存量也是在那裡扣的），這裡只是收下來。
 			Composition: nf.Composition,
@@ -846,7 +881,7 @@ func (g *Game) startVersus() {
 
 // side 把目前這一方的狀態收起來。
 func (g *Game) side() side {
-	return side{military: g.military, taxTotal: g.taxTotal, pct: g.pct,
+	return side{pct: g.pct,
 		treasury: g.treasury, monthReport: g.monthReport,
 		building: g.building, fleets: g.fleets}
 }
@@ -857,7 +892,7 @@ func (g *Game) enterSide(faction int) {
 	g.starMap = g.factionStarMap(faction, true)
 	g.plainMap = g.factionStarMap(faction, false)
 	s := g.sides[faction]
-	g.military, g.taxTotal, g.pct = s.military, s.taxTotal, s.pct
+	g.pct = s.pct
 	g.treasury, g.monthReport = s.treasury, s.monthReport
 	g.building, g.fleets = s.building, s.fleets
 	// 交棒的當下底板是乾淨的：右側面板只剩陣營那一行與按鈕，
@@ -873,7 +908,9 @@ func (g *Game) startNewGame(faction int) {
 	g.starMap = g.factionStarMap(faction, true)
 	g.plainMap = g.factionStarMap(faction, false)
 	g.turn = 0
-	g.military = g.res.StartMilitary
+	// 兩個陣營的起始軍事費相同（796/1 量到帝國 50000，`docs/re/35`）。
+	g.military = [2]int{g.res.StartMilitary, g.res.StartMilitary}
+	g.blend = [2]int{rules.NewGameBlend, rules.NewGameBlend}
 	g.pct = rules.OpeningPct
 	g.slot = nil
 	g.monthEnd()
@@ -945,6 +982,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.turn = sl.Turn
 	g.military = sl.Military
 	g.taxTotal = sl.TaxTotal
+	g.blend = sl.Blend
 	// 存檔裡就有兩邊的艦隊（`FLEET.DT?` ＝ 執行期那張表，`docs/re/41`）。
 	// 讀進來之後 remake 才有敵方的艦隊可以畫、可以推進。
 	g.fleets = sl.Fleets(g.res.Weights)
@@ -1443,6 +1481,7 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	g.slot.Turn = g.turn
 	g.slot.Military = g.military
 	g.slot.TaxTotal = g.taxTotal
+	g.slot.Blend = g.blend
 	if err := g.slot.Save(dir, index); err != nil {
 		return err
 	}
@@ -1550,19 +1589,30 @@ func (g *Game) monthEnd() {
 		return
 	}
 	before := g.military
-	// 1. 逐星域結算，把自己那一份的稅加進軍事費——加完就是「原定軍事費」。
-	collected := rules.MonthEnd(g.res.Stellar, g.res.Planets, g.res.Growth, g.faction)
-	budget := before + collected
+	// 1. 逐星域結算。成長是就地寫回的，一個月只能跑一次，所以兩個陣營
+	//    的徵稅額要在同一趟裡拿。
+	collected := rules.MonthEndTotals(g.res.Stellar, g.res.Planets, g.res.Growth)
 	// 2. 照百分比切給造船，各列只買得起整數艘，零頭退回；扣掉實際花掉的。
-	plan := rules.BuildPlan{Cost: budget * g.res.ShipPct / 100, Pct: g.pct, Faction: g.faction}
-	paid := plan.Paid()
-	g.building = plan
-	g.military = budget - paid
-	g.treasury = rules.Treasury{Budget: budget, ShipPaid: paid}
-	g.monthReport = rules.Budget{Treasury: before, Tax: collected, ShipPct: g.res.ShipPct}
+	//    ⚠ 電腦那一方的造船支出沒有模型（`docs/spec/030` 末節），
+	//    這裡讓它跑與玩家同一套規則。
+	for f := 0; f < 2; f++ {
+		budget := before[f] + collected[f]
+		plan := rules.BuildPlan{Cost: budget * g.res.ShipPct / 100, Pct: g.pct, Faction: f}
+		paid := plan.Paid()
+		g.military[f] = budget - paid
+		if f != g.faction {
+			continue
+		}
+		g.building = plan
+		g.treasury = rules.Treasury{Budget: budget, ShipPaid: paid}
+		g.monthReport = rules.Budget{Treasury: before[f], Tax: collected[f],
+			ShipPct: g.res.ShipPct}
+	}
 	// 3. 結算完之後重算下個月的預估徵稅額——徵稅計劃那張印的是這個，
 	//    與剛剛實收的那筆不是同一個數（`docs/spec/003`）。
-	g.taxTotal = g.estimateTax()
+	for f := 0; f < 2; f++ {
+		g.taxTotal[f] = g.estimateTaxFor(f)
+	}
 }
 
 // estimateTax 回下個月的預估徵稅額 ＝ 自己擁有的星域的徵稅額相加。
@@ -1639,7 +1689,8 @@ func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
 		return rules.CapitalSummary{}, 0, false
 	}
 	return rules.SummariseCapital(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
-		r, g.faction, g.turn, rules.Epoch, g.military, g.taxTotal), r, true
+		r, g.faction, g.turn, rules.Epoch,
+		g.military[g.faction], g.taxTotal[g.faction]), r, true
 }
 
 // liveCursor 讓戰略地圖介面的游標跟著滑鼠跑。
@@ -1794,7 +1845,8 @@ func (g *Game) drawBudget(fb *gfx.Framebuffer) {
 	}
 	switch g.state {
 	case StateTaxPlan:
-		b := rules.Budget{Treasury: g.military, Tax: g.taxTotal, ShipPct: g.res.ShipPct}
+		b := rules.Budget{Treasury: g.military[g.faction], Tax: g.taxTotal[g.faction],
+			ShipPct: g.res.ShipPct}
 		g.res.BudgetPanel.Draw(fb, g.res.Font, g.treasury, b)
 	case StateBudgetPlan:
 		// 月初報告那一張：本月份那一欄還沒有數字（全 0）。
@@ -1810,7 +1862,8 @@ func (g *Game) thisPlan() rules.BuildPlan {
 
 // nextPlan 是次月份的船艦建造計劃：預估軍事費照百分比切出來的那一份。
 func (g *Game) nextPlan() rules.BuildPlan {
-	b := rules.Budget{Treasury: g.military, Tax: g.taxTotal, ShipPct: g.res.ShipPct}
+	b := rules.Budget{Treasury: g.military[g.faction], Tax: g.taxTotal[g.faction],
+		ShipPct: g.res.ShipPct}
 	return rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct, Faction: g.faction}
 }
 
@@ -2334,11 +2387,11 @@ func (g *Game) factionStarMap(faction int, tint bool) *asset.Image {
 func (g *Game) Turn() int { return g.turn }
 
 // Military 回手上的軍事費，TaxTotal 回這個月的總稅收。
-func (g *Game) Military() int { return g.military }
+func (g *Game) Military() int { return g.military[g.faction] }
 
 // Treasury 回這個月的財政（原定軍事費、已支付各項）。
 func (g *Game) Treasury() rules.Treasury { return g.treasury }
-func (g *Game) TaxTotal() int            { return g.taxTotal }
+func (g *Game) TaxTotal() int            { return g.taxTotal[g.faction] }
 
 // Date 回遊戲內的日期。紀元年 796 是原版帝國戰役的開局。
 func (g *Game) Date() (year, month, day int) { return rules.Date(g.turn, 796) }

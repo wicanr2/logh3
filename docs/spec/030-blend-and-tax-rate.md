@@ -1,0 +1,100 @@
+# SPEC 030 — `Blend` 與稅率重算
+
+狀態：**READY**（證據審查通過，見下）
+證據：[`docs/re/222`](../re/222-ai-sets-its-own-blend.md)、
+[`docs/re/223`](../re/223-tax-rate-recompute-formula.md)、
+[`docs/internals/55`](../internals/55-blend-and-tax-rate.md)、
+[`docs/internals/data/tax-rate.json`](../internals/data/tax-rate.json)、
+收據 `turn260mem`（`workplace/t260_pre.bin`／`t260_post.bin`）
+相關：[`docs/spec/006`](006-unrest-at-load.md)（`Blend` 是未安定度的參數）、
+[`docs/spec/029`](029-strategic-ai-turn.md)（建艦隊的預算閘門）
+
+## 要做什麼
+
+原版的戰略 AI 在自己的回合開頭，按那個陣營的**軍事費**把
+`Blend`（`ds:8FD4[陣營]`）重設成 0–4 的一個等級，接著**整批重算該陣營
+每個星域的稅率**。稅率一動，總稅收跟著動，建艦隊的閘門
+（維持費 × 20 >= 總稅收）就會提早或延後收手。
+
+remake 目前完全沒有這一段：稅率停在開局值，AI 的預算永遠是開局的稅收。
+`docs/re/219` 那個「多建一支艦隊」的差異就是它。
+
+## 證據審查
+
+| 項目 | 等級 | 依據 |
+|---|---|---|
+| `2D10:0319` 的全文與兩個呼叫點 | proven | `docs/re/222`；`farcall_to.py` 掃全傾印，兩處 |
+| 軍事費 → 等級的分段函式 | **對拍** | `turn260mem`：同盟 45848 → 等級 1，監看抓到 `02 → 01` |
+| 回合結尾歸零（非月底）| **對拍** | 同一份監看的 `01 → 00`，回合數 0，`0 % 10 != 9` |
+| 玩家座位不會被改動 | **對拍** | 兩份傾印帝國那一格從頭到尾都是 2 |
+| `090A:0B93` 的算式 | **對拍** | `docs/re/223`：23 格逐一相同（帝國 10、同盟 13）|
+| 稅率算式的民心三段（`m > 50`）| proven（無收據）| 兩份傾印的 `+0x7C` 只有 0 與 200，`m` 都是 0 |
+| 成長率 `<= 0` 的那一條 | proven（無收據）| 量到的 23 格成長率都是正的 |
+| 每個陣營一份軍事費（`ds:8F52[陣營×4]`）| proven | `docs/internals/27`、`docs/internals/30`；存檔 `WORK.DT?` 的 `+0x3E`／`+0x42` |
+
+## 規則
+
+### 等級
+
+```
+BlendForFunds(軍事費):
+    >= 50000 → 2
+    >= 40000 → 1
+    >= 10000 → 2
+    >=  5000 → 3
+    >=     0 → 4
+    <      0 → 2
+```
+
+### AI 回合的兩次寫入
+
+```
+AI 回合開始（建艦隊之前）：
+    Blend[電腦陣營] = BlendForFunds(軍事費[電腦陣營])
+    重算該陣營所有星域的稅率
+AI 回合結束：
+    回合數 % 10 == 9（月底）→ 同上重算一次
+    否則                    → Blend[電腦陣營] = 0，一樣重算
+```
+
+玩家陣營那一格不走這條路徑。
+
+### 稅率
+
+算式與 `rules.TaxRatePerMille` 相同（新遊戲載入時已經在用），差別只有
+**下標用 `Blend` 不是 `Rate`**、而且民心取星域記錄的 `+0x7C` 現值：
+
+```
+對每個「擁有者 ＝ 該陣營」的星域：
+    星域[+0x26] = TaxRatePerMille(成長率, 民心, 擁有者, Base[Blend[陣營]], 統治者記錄)
+```
+
+新遊戲載入那一次兩個下標都是 2，所以既有的收據不受影響。
+
+## remake 要動的地方
+
+| 檔案 | 改什麼 |
+|---|---|
+| `internal/rules/growth.go` | `MonthEndTotals`：一趟結算回**兩個陣營**的徵稅額 |
+| `internal/rules/taxrate.go`（新）| `BlendForFunds`、`RecomputeTaxRates` |
+| `internal/rules/save.go` | `Military`／`TaxTotal` 改成每陣營一格，另讀 `Blend`（工作區塊 `+0xC0`）|
+| `internal/game/game.go` | 軍事費與總稅收改成每陣營一格；月底兩邊都結算；`runBrain` 前後各設一次 `Blend` |
+| `internal/game/originalbrain.go` | `Support.Money` 的 `tight` 改成 `Blend[陣營] >= 3` |
+
+## 驗收
+
+- `TestFirstAITurnMatchesReceipt` 建出來的艦隊數從 4 變成 **3**，
+  前三支的提督／類別鍵／目的地不變。
+- `TestTaxRateRecomputeMatchesDump`（新）：拿 `t260_pre` 的星域表與
+  統治者記錄重算，13 格與傾印相同。
+- 既有的月底結算、面板與存檔測試全綠——玩家那一邊的數字不變。
+
+## 不在這份規格裡
+
+- **電腦那一方的造船支出**。原版的 AI 也會買船，那份模型還沒解；
+  remake 目前讓兩邊跑同一套結算與同一份開局比例，所以電腦的軍事費
+  是「同一套規則算出來的」而不是「量到的」。等級只看它落在哪一段，
+  40000–50000 這一段夠寬，收據那一趟不受這個近似影響。
+- `0x09413` 那支 `±1`（`docs/re/206`）：在已量到的局面裡沒有被走到。
+- 未安定度是否跟著重算：跨月不重算已經量過（`docs/spec/006` 末節），
+  這條路徑也不碰 `+0x7D`。

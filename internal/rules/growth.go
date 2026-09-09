@@ -117,14 +117,22 @@ func SetRegionEconomy(record []byte, v int) {
 // 順序照 `docs/re/26` 量到的：總稅收歸零 → 逐星域累加 → 軍事費 += 總稅收
 // （加錢那一步由呼叫端做）。
 func MonthEnd(records []byte, p *Planets, t *GrowthTable, faction int) int {
-	total := 0
+	return MonthEndTotals(records, p, t)[faction]
+}
+
+// MonthEndTotals 是同一趟結算，但**兩個陣營的徵稅額一起回**。
+//
+// 成長是就地寫回的，一個月只能跑一次，所以要兩邊的數字就得在同一趟裡拿
+// （原版的 `ds:8F6A` 本來就是每個陣營一格，`docs/internals/27`）。
+func MonthEndTotals(records []byte, p *Planets, t *GrowthTable) [2]int {
+	var total [2]int
 	for i := 0; i*RegionRecord+RegionRecord <= len(records); i++ {
 		rec := records[i*RegionRecord : (i+1)*RegionRecord]
 		tax, economy := p.MonthEndRegion(t, i, RegionTaxRate(rec))
 		SetRegionEconomy(rec, economy)
 		rec[0x27] = rec[regionTaxRate]
-		if p.RegionOwner(i) == faction {
-			total += tax
+		if o := p.RegionOwner(i); o == 0 || o == 1 {
+			total[o] += tax
 		}
 	}
 	return total

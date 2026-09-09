@@ -24,8 +24,9 @@ const (
 	// WorkRecord 是 `WORK.DT?` 的長度，後面三個是對上的欄位。
 	WorkRecord   = 230
 	workTurn     = 0x04 // 16 位元
-	workMilitary = 0x3E // 32 位元
-	workTaxTotal = 0x56 // 32 位元
+	workMilitary = 0x3E // 32 位元 × 陣營
+	workTaxTotal = 0x56 // 32 位元 × 陣營
+	workBlend    = 0xC0 // 8 位元 × 陣營（＝ ds:8FD4，`docs/internals/55`）
 
 	// FleetRecord 是艦隊表一筆的長度（`docs/re/40`）。
 	FleetRecord = 122
@@ -152,13 +153,16 @@ type Slot struct {
 	// Admiral／Fleet／Ship 是提督表、艦隊表與艦艇池，先原樣留著。
 	Admiral, Fleet, Ship []byte
 
-	// Work 是 `WORK.DT?` 的 230 bytes。只有三個欄位解出來了
-	// （回合數、軍事費、總稅收），其餘原樣留著——存回去的時候要照抄，
-	// 不然會把還沒解的東西寫壞。
+	// Work 是 `WORK.DT?` 的 230 bytes。只有四個欄位解出來了
+	// （回合數、軍事費、總稅收、`Blend`），其餘原樣留著——存回去的時候
+	// 要照抄，不然會把還沒解的東西寫壞。
 	Work []byte
 
-	// Turn 是回合數，Military 是軍事費，TaxTotal 是總稅收。
-	Turn, Military, TaxTotal int
+	// Turn 是回合數。Military（軍事費）、TaxTotal（總稅收）與 Blend
+	// **都是每個陣營一格**，索引就是陣營——原版的 `ds:8F52`、`ds:8F6A`
+	// 與 `ds:8FD4` 也是（`docs/internals/27`、`docs/internals/55`）。
+	Turn                      int
+	Military, TaxTotal, Blend [2]int
 }
 
 // LoadSlot 把一格存檔組成遊戲狀態。
@@ -200,8 +204,9 @@ func LoadSlot(f SlotFiles) (*Slot, error) {
 		Ship:     f.Ship,
 		Work:     append([]byte(nil), f.Work[:WorkRecord]...),
 		Turn:     int(f.Work[workTurn]) | int(f.Work[workTurn+1])<<8,
-		Military: u32(f.Work, workMilitary),
-		TaxTotal: u32(f.Work, workTaxTotal),
+		Military: [2]int{u32(f.Work, workMilitary), u32(f.Work, workMilitary+4)},
+		TaxTotal: [2]int{u32(f.Work, workTaxTotal), u32(f.Work, workTaxTotal+4)},
+		Blend:    [2]int{int(f.Work[workBlend]), int(f.Work[workBlend+1])},
 	}
 	return s, nil
 }
@@ -380,8 +385,11 @@ func (s *Slot) Save(dir string, index int) error {
 	}
 	work := append([]byte(nil), s.Work...)
 	work[workTurn], work[workTurn+1] = byte(s.Turn), byte(s.Turn>>8)
-	put32(work, workMilitary, s.Military)
-	put32(work, workTaxTotal, s.TaxTotal)
+	for f := 0; f < 2; f++ {
+		put32(work, workMilitary+4*f, s.Military[f])
+		put32(work, workTaxTotal+4*f, s.TaxTotal[f])
+		work[workBlend+f] = byte(s.Blend[f])
+	}
 	planet := s.Planets.Data
 	if len(planet) < PlanetHeader {
 		return fmt.Errorf("行星表只有 %d bytes", len(planet))

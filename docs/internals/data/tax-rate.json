@@ -1,0 +1,58 @@
+{
+  "source": "docs/re/222, docs/re/223",
+  "confidence": "confirmed",
+  "blend": {
+    "what": "每個陣營一個 0-4 的等級；未安定度算式的 Blend，也是稅率的級距",
+    "runtime_address": "ds:8FD4[陣營]",
+    "save_offset": 192,
+    "new_game": [2, 2],
+    "writer": {
+      "routine": "2D10:0319",
+      "callers": [
+        {"site": "2D10:0010", "flag": 1, "when": "AI 回合開始，建艦隊之前"},
+        {"site": "2D10:014D", "flag": 0, "when": "AI 回合結束"}
+      ],
+      "recompute_when": "回合數 % 10 == 9（月底）或 旗標 != 0；否則等級 = 0",
+      "military_fund_steps": [
+        {"min": 50000, "level": 2},
+        {"min": 40000, "level": 1},
+        {"min": 10000, "level": 2},
+        {"min": 5000, "level": 3},
+        {"min": 0, "level": 4},
+        {"min": null, "level": 2}
+      ]
+    },
+    "player_seat": "玩家座位不跑戰略 AI，這條路徑不會動玩家陣營那一格"
+  },
+  "tax_rate": {
+    "what": "星域記錄 +0x26，千分之一為單位；徵稅額 = 經濟力 × 稅率 / 1000",
+    "routine": "090A:0B93",
+    "callers_linear": ["092E1", "0946B", "09C09", "09C1B", "2D301", "2D406", "2D52D"],
+    "base_table": [50, 75, 100, 150, 200],
+    "base_address": "ds:147E（32 位元 × 5）",
+    "scope": "擁有者 == ds:8F1D 的星域",
+    "no_growth": "成長率 <= 0 → Base[等級] × 5 / 100",
+    "steps": [
+      "v = 成長率 × Base[等級] / 100",
+      "v = v × 100 / 統治者[+0x0E]",
+      "v = v × 統治者[+0x15] / 100",
+      "m = （帝國 ? +0x7C : 200 - +0x7C）× 統治者[+0x14] / 100"
+    ],
+    "loyalty_steps": [
+      {"above": 150, "mul": 30, "div": "統治者[+0x14]"},
+      {"above": 100, "mul": 50, "div": "統治者[+0x14]"},
+      {"above": 50, "mul": 75, "div": "統治者[+0x14]"},
+      {"above": null, "mul": 1, "div": 1}
+    ],
+    "clamp": [1, 200],
+    "rounding": "所有除法往零截斷",
+    "verified": {
+      "receipt": "turn260mem",
+      "dumps": ["workplace/t260_pre.bin", "workplace/t260_post.bin"],
+      "checker": "tools/scripts/taxrate_check.py",
+      "matched": 23,
+      "mismatched": 0,
+      "untested_branches": ["m > 50 的三段", "成長率 <= 0"]
+    }
+  }
+}

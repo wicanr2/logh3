@@ -77,20 +77,26 @@ func loadSlot(t *testing.T, ext string) *Slot {
 func TestLoadSlot(t *testing.T) {
 	for _, c := range []struct {
 		ext                    string
-		turn, military, tax    int
+		turn                   int
+		military, tax, blend   [2]int
 		region, owner, planets int
 		fleets                 int
 	}{
 		// S2「諸神的黃昏」798/11/19；S3「巴米利恩會戰」799/3/1。
-		{"9", 346, 150000, 7280, 0, 0, 4, 18},
+		// 帝國那一格是畫面上印的（`docs/spec/002`）；同盟那一格與 `Blend`
+		// 是工作區塊裡的（`docs/internals/30`、`docs/internals/55`），
+		// `Blend` 與 `docs/spec/006` 量到的執行期值相同。
+		{"9", 346, [2]int{150000, 30000}, [2]int{7280, 10321}, [2]int{1, 2}, 0, 0, 4, 18},
 		// 干達巴爾開局是三顆中立行星，S3 已經全是帝國的。
-		{"A", 380, 160000, 13131, 25, 0, 3, 18},
+		{"A", 380, [2]int{160000, 30000}, [2]int{13131, 9748}, [2]int{1, 2}, 25, 0, 3, 18},
 	} {
 		t.Run(c.ext, func(t *testing.T) {
 			s := loadSlot(t, c.ext)
-			if s.Turn != c.turn || s.Military != c.military || s.TaxTotal != c.tax {
-				t.Errorf("回合 %d 軍事費 %d 總稅收 %d，要 %d／%d／%d",
-					s.Turn, s.Military, s.TaxTotal, c.turn, c.military, c.tax)
+			if s.Turn != c.turn || s.Military != c.military ||
+				s.TaxTotal != c.tax || s.Blend != c.blend {
+				t.Errorf("回合 %d 軍事費 %v 總稅收 %v Blend %v，要 %d／%v／%v／%v",
+					s.Turn, s.Military, s.TaxTotal, s.Blend,
+					c.turn, c.military, c.tax, c.blend)
 			}
 			if o := s.Planets.RegionOwner(c.region); o != c.owner {
 				t.Errorf("星域 %d 擁有者 %d，要 %d", c.region, o, c.owner)

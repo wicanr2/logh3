@@ -20,7 +20,8 @@
    "tax_per_mille": 32,
    "unrest_796_01": 36,
    "unrest_796_02": 36,
-   "defence": 27300
+   "defence": 27300,
+   "morale_796_01": 0
   },
   {
    "index": 1,
@@ -31,7 +32,8 @@
    "tax_per_mille": 38,
    "unrest_796_01": 38,
    "unrest_796_02": 38,
-   "defence": 15900
+   "defence": 15900,
+   "morale_796_01": 0
   },
   {
    "index": 2,
@@ -42,7 +44,8 @@
    "tax_per_mille": 37,
    "unrest_796_01": 27,
    "unrest_796_02": 27,
-   "defence": 18000
+   "defence": 18000,
+   "morale_796_01": 0
   },
   {
    "index": 3,
@@ -53,7 +56,8 @@
    "tax_per_mille": 58,
    "unrest_796_01": 100,
    "unrest_796_02": 100,
-   "defence": 11300
+   "defence": 11300,
+   "morale_796_01": 100
   },
   {
    "index": 4,
@@ -64,7 +68,8 @@
    "tax_per_mille": 45,
    "unrest_796_01": 30,
    "unrest_796_02": 30,
-   "defence": 10600
+   "defence": 10600,
+   "morale_796_01": 0
   },
   {
    "index": 5,
@@ -75,7 +80,8 @@
    "tax_per_mille": 45,
    "unrest_796_01": 32,
    "unrest_796_02": 32,
-   "defence": 12600
+   "defence": 12600,
+   "morale_796_01": 0
   },
   {
    "index": 6,
@@ -86,7 +92,8 @@
    "tax_per_mille": 36,
    "unrest_796_01": 48,
    "unrest_796_02": 48,
-   "defence": 18000
+   "defence": 18000,
+   "morale_796_01": 0
   },
   {
    "index": 7,
@@ -97,7 +104,8 @@
    "tax_per_mille": 36,
    "unrest_796_01": 44,
    "unrest_796_02": 44,
-   "defence": 21300
+   "defence": 21300,
+   "morale_796_01": 0
   },
   {
    "index": 8,
@@ -108,7 +116,8 @@
    "tax_per_mille": 42,
    "unrest_796_01": 42,
    "unrest_796_02": 42,
-   "defence": 13800
+   "defence": 13800,
+   "morale_796_01": 0
   },
   {
    "index": 9,
@@ -119,7 +128,8 @@
    "tax_per_mille": 42,
    "unrest_796_01": 50,
    "unrest_796_02": 50,
-   "defence": 15100
+   "defence": 15100,
+   "morale_796_01": 0
   },
   {
    "index": 10,
@@ -130,7 +140,8 @@
    "tax_per_mille": 58,
    "unrest_796_01": 100,
    "unrest_796_02": 100,
-   "defence": 8700
+   "defence": 8700,
+   "morale_796_01": 100
   },
   {
    "index": 11,
@@ -141,7 +152,8 @@
    "tax_per_mille": 59,
    "unrest_796_01": 100,
    "unrest_796_02": 100,
-   "defence": 8000
+   "defence": 8000,
+   "morale_796_01": 100
   },
   {
    "index": 12,
@@ -152,7 +164,8 @@
    "tax_per_mille": 48,
    "unrest_796_01": 100,
    "unrest_796_02": 100,
-   "defence": 5800
+   "defence": 5800,
+   "morale_796_01": 100
   },
   {
    "index": 13,
@@ -163,7 +176,8 @@
    "tax_per_mille": 42,
    "unrest_796_01": 48,
    "unrest_796_02": 48,
-   "defence": 12800
+   "defence": 12800,
+   "morale_796_01": 0
   },
   {
    "index": 14,
@@ -174,7 +188,8 @@
    "tax_per_mille": 31,
    "unrest_796_01": 100,
    "unrest_796_02": 100,
-   "defence": 8800
+   "defence": 8800,
+   "morale_796_01": 100
   },
   {
    "index": 15,
@@ -185,7 +200,8 @@
    "tax_per_mille": 46,
    "unrest_796_01": 56,
    "unrest_796_02": 60,
-   "defence": 8300
+   "defence": 8300,
+   "morale_796_01": 200
   },
   {
    "index": 16,
@@ -196,7 +212,8 @@
    "tax_per_mille": 55,
    "unrest_796_01": 50,
    "unrest_796_02": 41,
-   "defence": 13200
+   "defence": 13200,
+   "morale_796_01": 200
   },
   {
    "index": 17,
@@ -207,7 +224,8 @@
    "tax_per_mille": 44,
    "unrest_796_01": 42,
    "unrest_796_02": 49,
-   "defence": 13800
+   "defence": 13800,
+   "morale_796_01": 200
   },
   {
    "index": 18,
@@ -218,7 +236,8 @@
    "tax_per_mille": 40,
    "unrest_796_01": 40,
    "unrest_796_02": 47,
-   "defence": 19100
+   "defence": 19100,
+   "morale_796_01": 200
   },
   {
    "index": 19,
@@ -229,7 +248,8 @@
    "tax_per_mille": 42,
    "unrest_796_01": 38,
    "unrest_796_02": 45,
-   "defence": 15200
+   "defence": 15200,
+   "morale_796_01": 200
   },
   {
    "index": 20,
@@ -240,7 +260,8 @@
    "tax_per_mille": 40,
    "unrest_796_01": 26,
    "unrest_796_02": 34,
-   "defence": 21800
+   "defence": 21800,
+   "morale_796_01": 200
   },
   {
    "index": 21,
@@ -251,7 +272,8 @@
    "tax_per_mille": 43,
    "unrest_796_01": 18,
    "unrest_796_02": 26,
-   "defence": 25400
+   "defence": 25400,
+   "morale_796_01": 200
   },
   {
    "index": 22,
@@ -262,7 +284,8 @@
    "tax_per_mille": 87,
    "unrest_796_01": 48,
    "unrest_796_02": 55,
-   "defence": 5400
+   "defence": 5400,
+   "morale_796_01": 200
   },
   {
    "index": 23,
@@ -273,7 +296,8 @@
    "tax_per_mille": 73,
    "unrest_796_01": 100,
    "unrest_796_02": 100,
-   "defence": 6200
+   "defence": 6200,
+   "morale_796_01": 100
   },
   {
    "index": 24,
@@ -284,7 +308,8 @@
    "tax_per_mille": 73,
    "unrest_796_01": 100,
    "unrest_796_02": 72,
-   "defence": 6600
+   "defence": 6600,
+   "morale_796_01": 100
   },
   {
    "index": 25,
@@ -295,7 +320,8 @@
    "tax_per_mille": 97,
    "unrest_796_01": 100,
    "unrest_796_02": 100,
-   "defence": 8700
+   "defence": 8700,
+   "morale_796_01": 100
   },
   {
    "index": 26,
@@ -306,7 +332,8 @@
    "tax_per_mille": 50,
    "unrest_796_01": 46,
    "unrest_796_02": 49,
-   "defence": 11800
+   "defence": 11800,
+   "morale_796_01": 200
   },
   {
    "index": 27,
@@ -317,7 +344,8 @@
    "tax_per_mille": 50,
    "unrest_796_01": 40,
    "unrest_796_02": 49,
-   "defence": 9200
+   "defence": 9200,
+   "morale_796_01": 200
   },
   {
    "index": 28,
@@ -328,7 +356,8 @@
    "tax_per_mille": 71,
    "unrest_796_01": 100,
    "unrest_796_02": 76,
-   "defence": 14000
+   "defence": 14000,
+   "morale_796_01": 100
   },
   {
    "index": 29,
@@ -339,7 +368,8 @@
    "tax_per_mille": 41,
    "unrest_796_01": 44,
    "unrest_796_02": 47,
-   "defence": 8300
+   "defence": 8300,
+   "morale_796_01": 200
   },
   {
    "index": 30,
@@ -350,7 +380,8 @@
    "tax_per_mille": 57,
    "unrest_796_01": 38,
    "unrest_796_02": 47,
-   "defence": 14100
+   "defence": 14100,
+   "morale_796_01": 200
   },
   {
    "index": 31,
@@ -361,7 +392,8 @@
    "tax_per_mille": 36,
    "unrest_796_01": 24,
    "unrest_796_02": 32,
-   "defence": 27500
+   "defence": 27500,
+   "morale_796_01": 200
   }
  ]
 }

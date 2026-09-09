@@ -73,6 +73,8 @@ func LoadRegionRecords(stellar []byte, measuredPath, shipsPath string) ([]byte, 
 	var d struct {
 		Regions []struct {
 			Index   int `json:"index"`
+			Owner   int `json:"owner"`
+			Morale  int `json:"morale_796_01"`
 			Unrest  int `json:"unrest_796_01"`
 			Economy int `json:"economy_796_01"`
 			Growth  int `json:"growth_per_mille"`
@@ -89,6 +91,11 @@ func LoadRegionRecords(stellar []byte, measuredPath, shipsPath string) ([]byte, 
 			continue
 		}
 		o := r.Index * rules.RegionRecord
+		// 擁有者與民心載入時也會重算（`docs/spec/006` 末節那張表），
+		// 檔案裡留的是劇本原值——星域 15 檔案寫帝國、開局量到的是同盟。
+		// 稅率重算讀的就是這兩欄（`docs/spec/030`）。
+		out[o+0x12] = byte(r.Owner)
+		out[o+0x7C] = byte(r.Morale)
 		out[o+0x7D] = byte(r.Unrest)
 		out[o+0x1A] = byte(r.Economy)
 		out[o+0x1B] = byte(r.Economy >> 8)
