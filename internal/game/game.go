@@ -796,6 +796,9 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 			Region:   nf.Region,
 			Target:   rules.NoTarget,
 			ClassKey: nf.ClassKey,
+			Expected: nf.Expected,
+			// Groups 留 0：原版靠 `2AD2:0029` 產生艦艇，那一支還沒讀
+			// （`docs/re/213`）。
 		})
 		led[nf.Admiral] = true
 		n++

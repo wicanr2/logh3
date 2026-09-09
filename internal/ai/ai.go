@@ -90,6 +90,13 @@ type NewFleet struct {
 	ClassKey int
 	// Adjutant 是副官的提督索引；-1 ＝ 沒有。
 	Adjutant int
+	// Expected 是艦隊記錄的 `+0x0E`（應有幾組編制）＝ `rules.FleetSlots`
+	// 查提督等級（原版 `297B:0066` → `297B:0209`，`docs/re/214`）。
+	//
+	// ⚠ **現有組數（`+0x0F`）還是 0**：原版是 `297B:0066` 填旗艦那一組、
+	// `0FF4:11F4` 從第 1 組接手，兩處都靠 `2AD2:0029` 產生艦艇，
+	// 而那一支還沒讀（`docs/re/213`）。
+	Expected int
 }
 
 // Builder 是「除了下命令，還會建艦隊」的 `Brain`。

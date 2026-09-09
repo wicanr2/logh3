@@ -168,7 +168,8 @@ func (in BuildInput) tryClass(class int, used map[int]bool) (NewFleet, bool) {
 		adj = in.Adjutant(a.Index)
 	}
 	return NewFleet{Admiral: a.Index, Region: Capitals[in.Faction],
-		ClassKey: key, Adjutant: adj}, true
+		ClassKey: key, Adjutant: adj,
+		Expected: rules.FleetSlots(a.Level)}, true
 }
 
 // BuildSupport 是建艦隊那條路要的、`World` 帶不到的東西。
