@@ -160,7 +160,7 @@
 | 「下一步走哪一格」`2B99:0302` | **已實作並證明等價**（`rules.StarGraph.NextStep`）| [`docs/re/183`](docs/re/183-next-step-equivalence.md)；兩張矩陣所有走得通的星域對與 `Route[1]` 逐一相同 |
 | 候選挑選與評分（`2E54:143F`／`2E54:1574`）| **已實作，未對拍**（`ai.PickerModes`／`Score`／`Pick`；艘數與主力槽數由 `rules.Slot.FleetShipTotals` 供）| 算式來自反組譯；`s3aicomp` 那一趟走到的是階段四，沒經過候選評分，所以**沒有收據** |
 | 建艦隊的閘門與配額（`2D76:0060`／`011C`／`01A5`／`0251`）| **已實作**（`ai.BuildGate`／`ai.ClassQuotaOrder`）| 上限 16 → 少於三支放行 → 維持費 × 20 追上總稅收就不建（[`docs/re/202`](docs/re/202-fleet-build-money-gate.md)）；配額 40/45/5/10 整數捨去、升冪排最缺的。`ds:8FD4[陣營]` 的語意仍未解 |
-| 階段一整條（`ai.BuildPass`／`OriginalStrategy.Build`）| **已實作並接線** | 六段串成一趟，一回合最多建一支；亂數照原版次序用掉兩個（挑人選、抽鍵）。**三件 remake-owned**：候選提督的過濾（`28E0:0103` 的 `0x25` 未讀）、配額平手次序（原版 qsort 無保證）、等級 > 43 的折算值。接線在 `Game.OriginalBrain()`；**仍不是預設**。三處不精確：艦隊維持費未算（一律 0）、`ds:8FD4` 未解（false）、戰略亂數的開局種子沒量到 |
+| 階段一整條（`ai.BuildPass`／`OriginalStrategy.Build`）| **已實作並接線** | 六段串成一趟，一回合最多建一支；亂數照原版次序用掉兩個（挑人選、抽鍵）。**兩件 remake-owned**：配額平手次序（原版 qsort 無保證）、等級 > 43 的折算值。候選提督的過濾已照 [`docs/re/208`](docs/re/208-admiral-list-builder.md) 量到的做（同陣營＋沒職務＋沒帶艦隊）。接線在 `Game.OriginalBrain()`；**仍不是預設**。三處不精確：艦隊維持費未算（一律 0）、`ds:8FD4`（＝ `Blend`）沒有跨回合維護（false ＝ 當成 0）、戰略亂數的開局種子沒量到 |
 | 新艦隊的回傳路徑（`ai.NewFleet`／`ai.Builder`）| **已實作** | 選配介面，`Game.runBrain` 型別斷言問一次；守「每陣營 16 支」與「一位提督一支」兩道限制。沒實作的 `Brain` 不受影響 |
 | 建艦隊抽類別鍵（`2D76:0576`）| **已實作**（`ai.PickClassKey`／`ai.ClassKeys`）| 四張鍵表是 `ds:5F52` 的反表，逐項對過（[`docs/re/204`](docs/re/204-fleet-class-key-pick.md)）|
 | 建艦隊評分（`2D76:0434`／`04FD`）| **已實作**（`ai.AdmiralBuildScore`）| 基底 → ×統率力÷100 → ×類別能力 → 艦種 1 再 ×3÷2，依分數降冪。**同盟缺錢那條路查的 `ds:5FCA` 只有 16 格而等級到 41**，讀出表尾放大五到七倍（[`docs/re/205`](docs/re/205-fleet-build-score-table-overrun.md)），照量到的重現 |

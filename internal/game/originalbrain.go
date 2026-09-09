@@ -110,11 +110,18 @@ func (g *Game) buildSupport() *ai.BuildSupport {
 	}
 }
 
-// admiralCandidates 收候選提督。
+// admiralCandidates 收候選提督 ＝ 原版 `28E0:0103(&清單, 0xFF, 0x25, 0)`
+// （`docs/re/208`）。`0x25` 是三個過濾位元：
 //
-// ⚠ **這個過濾是 remake 自己決定的**：原版走 `28E0:0103(…, 0xFF, 0x25, 0)`，
-// 那支清單產生器的 `0x25` 還沒讀（`docs/internals/54` 的未解清單）。
-// 這裡取「同陣營、而且還沒帶艦隊」。
+//	bit0  +0x01 == 陣營      同陣營
+//	bit2  +0x00 == 0xFF      沒有職務
+//	bit5  +0x09 bit7 有設    沒有帶艦隊
+//
+// 加上底層那道 `+0x00 != 0xFE`。
+//
+// ⚠ **「沒有帶艦隊」這一項用 remake 自己的艦隊表推，不是讀 `+0x09` bit7**：
+// `docs/internals/08` 記著一個待驗——載入時 `+0x09` 被夾成 `0x7F`，
+// 最高位一定是 0，那樣就不會有人合格。矛盾沒解之前用艦隊表比較可靠。
 func admiralCandidates(all []rules.Admiral, fleets []rules.Fleet, faction int) []ai.AdmiralView {
 	led := make(map[int]bool, len(fleets))
 	for _, f := range fleets {
@@ -126,6 +133,10 @@ func admiralCandidates(all []rules.Admiral, fleets []rules.Fleet, faction int) [
 	out := make([]ai.AdmiralView, 0, len(all))
 	for _, a := range all {
 		if a.Faction != faction || led[a.Index] {
+			continue
+		}
+		// `+0x00`：0xFE 連底層都不收，0xFF 以外的是有職務的。
+		if rules.AdmiralAbility(a.Record, 0x00) != 0xFF {
 			continue
 		}
 		out = append(out, ai.AdmiralView{
