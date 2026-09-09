@@ -3,7 +3,7 @@
 狀態：**READY**。證據：`docs/re/106`、`docs/re/107`（星域擁有者是行星的
 函數）、`docs/re/146`（傷害算式）、`docs/re/149`（兩道閘門）、
 `docs/re/150`（換手的收據）、`docs/re/151`（換手條件）、
-`docs/re/152`（行星的反擊）。對拍收據 `s3assault`：整條 production path
+`docs/re/152`（行星的反擊）、`docs/re/153`（`+0x3C` ＝ 編制完整度）。對拍收據 `s3assault`：整條 production path
 逐一相同（見文末）。
 
 ## 為什麼需要這一條

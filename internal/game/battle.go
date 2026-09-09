@@ -163,6 +163,8 @@ func (g *Game) AdvanceBattleTurn() {
 			g.battleScore[h.Scorer] += h.Score
 		}
 	}
+	// 打行星讀艦隊的編制完整度（`+0x3C`），先重算一次（`docs/re/153`）。
+	rules.RefreshFleetIntegrity(g.battleFleets, g.battleUnits)
 	g.battleAssaults = rules.PlanetAssault(g.battlePlanets, g.battleFleets,
 		g.battleUnits, g.res.ShipKinds, g.battleRand)
 	for _, h := range g.battleAssaults {

@@ -57,7 +57,8 @@ func TestPlanetAssaultMatchesOracle(t *testing.T) {
 			Index: fn, Faction: int(f[1]), Facing: int(f[0x4A]),
 			Ability0: int(f[0x3D]), Ability3: int(f[0x40]),
 			Defence: int(f[0x40]) * int(f[0x41]) / 100,
-			Spirit:  int(f[0x3C]), Flag0: f[0]&1 != 0,
+			Integrity: int(f[0x3C]), Flag0: f[0]&1 != 0,
+			AdmiralLossFactor: int(pre[oracleDS+0xB77C+int(f[4])*AdmiralRecord+0x0B]),
 			Action: int(f[0x48]) & 0x0F,
 			X:      int(binary.LittleEndian.Uint16(f[0x5C:])),
 			Y:      int(binary.LittleEndian.Uint16(f[0x5E:])),
@@ -77,6 +78,15 @@ func TestPlanetAssaultMatchesOracle(t *testing.T) {
 				Missiles:  int(binary.LittleEndian.Uint32(s[0x0E:])),
 				Fighters:  int(binary.LittleEndian.Uint32(s[0x12:])),
 			})
+		}
+	}
+
+	// 順帶驗編制完整度（`+0x3C`）算得出來：傾印是在打行星那一步的進場
+	// 拍的，那時原版的值是最新的（`docs/re/153`）。
+	for i := range fleets {
+		if got := FleetIntegrity(&fleets[i], units); got != fleets[i].Integrity {
+			t.Errorf("艦隊 %d 的編制完整度算出 %d，收據是 %d",
+				fleets[i].Index, got, fleets[i].Integrity)
 		}
 	}
 

@@ -32,10 +32,17 @@ type BattleFleet struct {
 	// `203A:0424` ＝ 主力艘數 × 它 ÷ 100 ÷ 15 ＋ 250（`docs/re/146`）。
 	Ability3 int `json:"ability3"`
 
-	// Spirit 是記錄 `+0x3C`，0–100。打行星時拿它與「防衛力還剩幾成」
-	// 比：不低於門檻就先開火，低於就先挨反擊（`20B4:0503`，
-	// `docs/re/151`）。語意未解。
-	Spirit int `json:"spirit"`
+	// Integrity 是記錄 `+0x3C`：**編制完整度百分比**，＝ 各分隊
+	// 「(滿編 − 折算損失) × 100 ÷ 滿編」的**算術平均**（只算還有艘數的
+	// 分隊）。折算損失 ＝ `損失 × (200 − 提督[+0x0B]) ÷ 100`，夾在滿編
+	// 以下。全部分隊都沒艘數時改設 `+0x00` bit 3。
+	// 打行星時拿它與「防衛力還剩幾成」比：不低於門檻就先開火，
+	// 低於就先挨反擊（`20B4:0503`，`docs/re/153`）。
+	Integrity int `json:"integrity"`
+
+	// AdmiralLossFactor 是提督記錄的 `+0x0B`，只在 Integrity 的折算裡
+	// 用到：`(200 − 它) ÷ 100`。值越大越耐打；語意未解。
+	AdmiralLossFactor int `json:"admiral_loss_factor"`
 
 	// Flag0 是 `+0x00` bit0。語意未解（`docs/internals/33`），但兩件事
 	// 靠它：戰力加總不算這種艦隊，戰場的艦隊選單把「戰鬥」與「索敵」
@@ -84,7 +91,7 @@ func NewBattleFleet(index int, rec []byte, ab [FleetAbilityCount]byte) BattleFle
 	f.Ability0 = int(ab[0])
 	f.Ability3 = int(ab[defenceAbilityA])
 	if len(rec) > 0x3C {
-		f.Spirit = int(rec[0x3C])
+		f.Integrity = int(rec[0x3C])
 	}
 	return f
 }

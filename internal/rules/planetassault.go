@@ -100,7 +100,7 @@ func PlanetAssault(planets []BattlePlanet, fleets []BattleFleet,
 		if target[order[x]] != target[order[y]] {
 			return target[order[x]] < target[order[y]]
 		}
-		return fleets[order[x]].Spirit < fleets[order[y]].Spirit
+		return fleets[order[x]].Integrity < fleets[order[y]].Integrity
 	})
 	var out []PlanetAssaultHit
 	for pi := range planets {
@@ -139,7 +139,7 @@ func assaultOne(p *BattlePlanet, pi int, f *BattleFleet, bits int,
 	if p.DefenceMax > 0 {
 		thr = p.Defence * 100 / p.DefenceMax
 	}
-	if f.Spirit >= thr {
+	if f.Integrity >= thr {
 		h.Damage, h.Captured = assaultFire(p, f, bits, units, r)
 		if !h.Captured {
 			h.Counter = assaultCounter(p, f, bits, units, kinds, r)
@@ -312,6 +312,43 @@ func capturePlanet(p *BattlePlanet, faction int) {
 	p.Stock.Ships = [7]int{}        // `+0x20`–`+0x3B` ← 0
 	p.Stock.Missiles /= 2           // `+0x3C` 右移一位
 	p.Stock.Fighters = 0            // `+0x40` ← 0
+}
+
+// FleetIntegrity 重算一支艦隊的編制完整度（記錄 `+0x3C`，`docs/re/153`）：
+//
+//	折算損失 ＝ min(損失 × (200 − 提督[+0x0B]) ÷ 100, 滿編)
+//	這一支   ＝ (滿編 − 折算損失) × 100 ÷ 滿編
+//	完整度   ＝ 上面那些值的**算術平均**（只算還有艘數的分隊）
+//
+// 全隊都沒艘數就回 0——原版那時改設 `+0x00` bit 3。
+func FleetIntegrity(f *BattleFleet, units []BattleUnit) int {
+	fac := 200 - f.AdmiralLossFactor
+	sum, n := 0, 0
+	for i := range units {
+		u := &units[i]
+		if u.Fleet != f.Index || u.Ships == 0 || u.FullShips == 0 {
+			continue
+		}
+		v := (u.FullShips - u.Ships) * fac / 100
+		if v > u.FullShips {
+			v = u.FullShips
+		}
+		sum += (u.FullShips - v) * 100 / u.FullShips
+		n++
+	}
+	if n == 0 {
+		return 0
+	}
+	return sum / n
+}
+
+// RefreshFleetIntegrity 把每一支的 Integrity 重算一次。原版在每次扣完
+// 艘數之後就重算（`1261:*`），這裡在打行星之前走一次就夠——那正是唯一
+// 讀它的地方。
+func RefreshFleetIntegrity(fleets []BattleFleet, units []BattleUnit) {
+	for i := range fleets {
+		fleets[i].Integrity = FleetIntegrity(&fleets[i], units)
+	}
 }
 
 // randMod 回 `rand() % n`；n 為 0 時原版不取那一個亂數。
