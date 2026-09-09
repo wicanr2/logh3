@@ -264,3 +264,43 @@ func (g *Game) formFleet(faction int, nf *ai.NewFleet) bool {
 	nf.Upkeep = rules.FleetUpkeep(g.res.ShipKinds, faction, comp, nf.Operations)
 	return true
 }
+
+// refitFleets ＝ 原版 `2D76:0732`：對這個陣營**停在自己星域、而且那一格
+// 沒有戰鬥**的每一支艦隊跑一次整補（`docs/spec/031`、`docs/re/227`–`231`）。
+//
+// 併殘部（`2D76:07BA`）會把艘數還回星域待命部隊，補編制（`2D76:0A44`）
+// 再從那裡拿回來——兩邊動的是同一份存量，所以順序不能換。
+func (g *Game) refitFleets(faction int) {
+	if g.res.ShipKinds == nil || g.res.Composition == nil {
+		return
+	}
+	for i := range g.fleets {
+		f := &g.fleets[i]
+		if f.Faction != faction || len(f.Composition) == 0 {
+			continue
+		}
+		rec := g.regionRecord(f.Region)
+		if rec == nil || int(rec[0x12]) != faction || g.regionContested(f.Region) {
+			continue
+		}
+		// `2D76:0A44` 對這兩種直接回：沒有類別鍵、或這一趟跳過它。
+		if f.ClassKey < 0 || f.ClassKey >= 16 || f.Move == 4 {
+			f.Composition = rules.MergeUnderStrength(g.refitInput(rec, f), f.Composition)
+			continue
+		}
+		f.Composition = rules.Refit(g.refitInput(rec, f), f.Composition, f.Expected)
+	}
+}
+
+// refitInput 湊整補要的輸入。旗艦的艦種取第 0 組的——原版讀的是
+// 艦隊 `+0x12`（第 0 組的 `[2]`），不是提督記錄（`docs/re/224`）。
+func (g *Game) refitInput(rec []byte, f *rules.Fleet) rules.BuildInput {
+	return rules.BuildInput{
+		Region:      rec,
+		Faction:     f.Faction,
+		Kinds:       g.res.ShipKinds,
+		Tables:      g.res.Composition,
+		AdmiralKind: f.Composition[0].Kind,
+		ClassKey:    f.ClassKey,
+	}
+}

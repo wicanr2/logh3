@@ -122,6 +122,18 @@ func (in BuildInput) full(kind int) int {
 	return k.FullShips
 }
 
+// stock 回那一格這個艦種的待命部隊存量。
+func (in BuildInput) stock(kind int) int {
+	if kind < 0 || kind >= regionShipKinds {
+		return 0
+	}
+	s := RegionShips(in.Region, in.Faction)
+	if kind >= len(s) {
+		return 0
+	}
+	return s[kind]
+}
+
 // groups 回「那一格這個艦種編得出幾組」＝ 原版 `0FF4:0E84`：
 // 存量 ÷ 滿編艘數（`docs/re/216`）。
 func (in BuildInput) groups(kind int) int {

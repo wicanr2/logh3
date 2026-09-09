@@ -112,6 +112,17 @@ type Builder interface {
 	Build(w World, faction, turn int) []NewFleet
 }
 
+// Refitter ＝ 這個腦會跑原版的**整補**（`2D76:0732`，`docs/spec/031`）：
+// 回合開頭建完艦隊之後，把自己陣營、停在自己星域而且那一格沒有戰鬥的
+// 每一支艦隊的編制併殘部、再補回應有組數。
+//
+// 整補不需要決策——要補哪一組、犧牲哪一組全部由樣板與存量決定——
+// 所以這個介面只是一個標記，`Game` 拿它決定要不要跑那一步。
+// 整補是 **AI 專屬**的（三個入口各只有一個呼叫者，`docs/re/229`）。
+type Refitter interface {
+	OriginalRefit()
+}
+
 // Original 照原版。目前回 nil ＝ **還沒接上**原版那套戰略 AI
 // （`docs/internals/54`）；在電腦座位真的跑起來的收據做出來之前，
 // 這裡不猜。

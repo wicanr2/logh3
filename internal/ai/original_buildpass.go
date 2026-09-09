@@ -235,3 +235,7 @@ func (o OriginalStrategy) Build(w World, faction, _ int) []NewFleet {
 	in.Adjutant = s.Adjutant
 	return BuildPass(in)
 }
+
+// OriginalRefit 讓 `OriginalStrategy` 成為 `Refitter`：原版 AI 的回合
+// 在建艦隊之後會跑一次整補（`docs/spec/031`）。
+func (OriginalStrategy) OriginalRefit() {}

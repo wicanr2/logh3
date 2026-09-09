@@ -779,6 +779,12 @@ func (g *Game) runBrain() {
 		g.buildFleets(b.Build(w, foe, g.turn), foe)
 		w.Fleets = g.fleets // 新編的要看得到，後面的階段才挑得到它們
 	}
+	// 建艦隊之後、五個階段之前跑整補（原版 `2D76:0732`，
+	// `docs/spec/031`）。**選配**：沒實作就不整補。
+	if _, ok := g.brain.(ai.Refitter); ok {
+		g.refitFleets(foe)
+		w.Fleets = g.fleets
+	}
 	for _, o := range g.brain.Orders(w, foe, g.turn) {
 		if o.Fleet < 0 || o.Fleet >= len(g.fleets) {
 			continue

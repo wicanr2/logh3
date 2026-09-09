@@ -1,8 +1,10 @@
 # SPEC 031 — AI 回合的艦隊整補
 
-狀態：**DRAFT**（反組譯齊了，**沒有收據**；見「為什麼還不是 READY」）
+狀態：**CONFORMED**（已實作；收據 `refit2` 的七個可觀測量逐一相同）
 證據：[`docs/re/227`](../re/227-ai-turn-refit-step.md)、
 [`228`](../re/228-refit-callees.md)、[`229`](../re/229-refit-chain-complete.md)、
+[`230`](../re/230-composition-change-refresh.md)、
+[`231`](../re/231-refit-receipt.md)、
 [`docs/internals/33`](../internals/33-fleet-table.md)、
 [`docs/internals/54`](../internals/54-strategic-ai-decision.md)
 相關：[`docs/spec/029`](029-strategic-ai-turn.md)（AI 回合的順序）、
@@ -43,28 +45,38 @@ remake 完全沒有這一段——AI 的艦隊打完仗就一直缺著，而原�
 | 滿了要犧牲誰 | 隊形槽已經不在樣板前 `+0x0F` 組裡的那一組 |
 | 排序 | 每次改動後 `[2]` 升冪、相同再比 `[3]` 升冪 |
 
-## remake 要動的地方
+## remake
 
-| 檔案 | 改什麼 |
+| 檔案 | 什麼 |
 |---|---|
-| `internal/rules/fleetbuild.go` | 併殘部與補編制兩支純函式（吃艦隊編制 ＋ 星域記錄，就地改寫）|
-| `internal/rules/region.go` | 還艘數（`TakeRegionShips` 的反向）|
-| `internal/ai` | 新的 `Refitter` 介面，比照既有的 `Builder` |
-| `internal/game/originalbrain.go` | 接線；`runBrain` 在 `Build` 之後、`Orders` 之前呼叫 |
+| `internal/rules/fleetrefit.go` | `MergeUnderStrength`（`07BA`）、`TopUpComposition`（`0A44`）、`Refit` |
+| `internal/rules/region.go` | `ReturnRegionShips`（`2703:155B`，`TakeRegionShips` 的反向）|
+| `internal/ai/ai.go` | `Refitter` 標記介面，比照既有的 `Builder`；只有 `OriginalStrategy` 有 |
+| `internal/game/originalbrain.go` | `refitFleets`；`runBrain` 在 `Build` 之後、`Orders` 之前呼叫 |
 
-## 為什麼還不是 READY
+## 驗收
 
-**沒有收據可以裁決。** 手上唯一的 AI 收據 `turn260mem` 是開局那一趟，
-三支艦隊都是當場新編的、全部滿編，一組殘部都沒有——整補在那一趟裡
-什麼都不會做。要驗得先做一份「打過仗、艦隊缺編之後」的收據：
-用 `-poke` 把某支艦隊的幾組艦艇 `+0x08` 改小（規格
-[`docs/spec/014`](014-poke-state-not-luck.md)：**直接改記憶體，不要靠
-亂數打一場**），跑到 AI 回合，前後各倒一份 1 MB。
+收據 `refit2`（`docs/re/231`）：用 `-poke` 把提督 52 那一支的兩組艦艇
+`+0x08` 改成 1000（滿編 3000）造出缺編局面，整補前後各倒一份 1 MB。
+**七個可觀測量全中**——三次 `+0x0F`（4→2→3→4）與寫入它的常式、
+兩組的最終艦種與艘數（艦種 0 補滿 3000、艦種 2 換上 4000）、
+兩種待命部隊的餘額（艦種 0 剩 2000、艦種 2 剩 0）。
+釘在 `TestRefitMatchesReceipt`；`TestRefitLeavesFullFleetAlone` 釘
+「全滿編就什麼都不做」，那正是 `turn260mem` 第一個 AI 回合的局面。
 
-在那之前實作，等於把「補到哪一槽、犧牲哪一組」這幾個沒有輸出可比的
-決定寫死進 remake。**先做收據再實作。**
+## 還沒有收據的分支
+
+三條都實作了，但 `refit2` 裁決不了：
+
+- `2D76:0C4F` 回**非 0**：樣板要的隊形槽已經有一組但艦種不同 → 覆蓋它。
+- 編制已滿要犧牲一組（`2D76:0D40` ＋ `2D76:0DB2`：挑隊形槽已經不在
+  樣板裡的那一組）。
+- 替代清單裡的 `0xFE`（艦種 5／6 平衡，`docs/re/226`）。
 
 ## 不在這份規格裡
 
-- `297B:03EB` 迴圈之後那一段（用 `艦隊[+0x38]` 那一筆艦艇）。
+- **改完編制之後的那三支重算**（`297B:03EB` 的尾段、`297B:08D8`、
+  `297B:0546`，`docs/re/230`）。remake 的 `rules.Fleet` 沒有獨立的艦艇池，
+  組序同步不用做；能力重算對應的是 `Operations` 與 `Upkeep`，
+  兩者在整補前後都沒變（提督與副官沒換），所以這一輪不動。
 - 玩家「艦隊編成」補編制的那一條路。

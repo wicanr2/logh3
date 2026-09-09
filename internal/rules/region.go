@@ -486,3 +486,20 @@ func TakeRegionShips(record []byte, faction, kind, full int) int {
 	binary.LittleEndian.PutUint32(record[o:o+4], uint32(have-n))
 	return n
 }
+
+// ReturnRegionShips ＝ 原版 `2703:155B(星域, 艦艇)`：拆掉一組編制時
+// **把現有艘數整批還回星域的待命部隊**（`docs/re/229`）。
+//
+// 是 `TakeRegionShips` 的反向。艦種 7 不走這一支（產生它的時候也不扣
+// 存量，`docs/re/215`）——那一條在呼叫端擋掉。
+func ReturnRegionShips(record []byte, faction, kind, n int) {
+	if faction < 0 || faction > 1 || kind < 0 || kind >= regionShipKinds || n <= 0 {
+		return
+	}
+	o := regionShips + faction*regionShipKinds*4 + kind*4
+	if o+4 > len(record) {
+		return
+	}
+	have := int(binary.LittleEndian.Uint32(record[o : o+4]))
+	binary.LittleEndian.PutUint32(record[o:o+4], uint32(have+n))
+}

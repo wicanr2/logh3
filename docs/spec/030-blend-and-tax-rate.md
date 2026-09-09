@@ -1,6 +1,6 @@
 # SPEC 030 — `Blend` 與稅率重算
 
-狀態：**READY**（證據審查通過，見下）
+狀態：**CONFORMED**（已實作；收據 `turn260mem` 的軍事費、總稅收與建艦隊支數逐一相同）
 證據：[`docs/re/222`](../re/222-ai-sets-its-own-blend.md)、
 [`docs/re/223`](../re/223-tax-rate-recompute-formula.md)、
 [`docs/internals/55`](../internals/55-blend-and-tax-rate.md)、
