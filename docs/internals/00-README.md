@@ -115,3 +115,4 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [`51-borland-long-helpers.md`](51-borland-long-helpers.md)：Borland 的 32 位元輔助函式（`3CC9` 那一段）。
 - [`52-plot-primitives-and-canvas.md`](52-plot-primitives-and-canvas.md)：畫點的三支常式與那 40 列的畫布偏移。
 - [`53-strategic-planet-assault.md`](53-strategic-planet-assault.md)：戰略回合裡的打行星（`20B4:1512` → `20B4:1662`）。
+- [`54-strategic-ai-decision.md`](54-strategic-ai-decision.md)：戰略 AI 決定一支艦隊要不要動。

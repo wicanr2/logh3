@@ -1,0 +1,47 @@
+{
+ "note": "戰略 AI 決定艦隊要不要動（docs/internals/54、docs/re/163）。",
+ "strength": {
+  "routine": "2E54:1876(星域, 艦隊索引清單, 幾支, 陣營)",
+  "formula": "Σ 每支能戰艦隊的每個分隊：weight[艦種] × 現有艘數 × 1000 ÷ 滿編艘數",
+  "skip_fleet_if": "艦隊 +0x00 bit0（無法戰鬥）",
+  "weight_table_addr": "ds:6032",
+  "weight": [
+   4,
+   3,
+   3,
+   3,
+   2,
+   1,
+   3,
+   0
+  ]
+ },
+ "decide": {
+  "routine": "2E54:16F5(艦隊)",
+  "capital_region": {
+   "0": 0,
+   "1": 31
+  },
+  "rules": [
+   {
+    "owner": "self",
+    "act_if": "own*4 >= enemy",
+    "or_if": "fleet[+0x3C] == 100"
+   },
+   {
+    "owner": "neutral",
+    "act_if": "own*2 > enemy"
+   },
+   {
+    "owner": "enemy",
+    "act_if": "own > enemy"
+   }
+  ],
+  "returns": "1 → 上一層寫 +0x79 = 3；0 → 走 2E54:1955、+0x79 = 0"
+ },
+ "unsolved": [
+  "目的地 +0x07 怎麼選",
+  "2E54:1955 做什麼",
+  "[星域×2 − 0x2A32] 那張 word 表"
+ ]
+}
