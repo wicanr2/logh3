@@ -215,13 +215,13 @@
 
 ## `.DAT`（3 個）
 
-假說：資料表。`PLADAT.DAT`、`ATTR.DAT` 在開機路徑上會被開啟
+資料表。`PLADAT.DAT`、`ATTR.DAT` 在開機路徑上會被開啟。
 
-| 檔名 | bytes | SHA-256（前 16） | 開機到主選單會開 |
-|---|---:|---|:--:|
-| `ATTR.DAT` | 128 | `241ed01da07a31a2` | v |
-| `KEIREKI.DAT` | 18046 | `df28571add3b59ac` |  |
-| `PLADAT.DAT` | 6706 | `20cf8a62d01d27c1` | v |
+| 檔名 | bytes | SHA-256（前 16） | 開機到主選單會開 | 內容 |
+|---|---:|---|:--:|---|
+| `ATTR.DAT` | 128 | `241ed01da07a31a2` | v | 戰場的**圖塊遮罩**，執行期在 `ds:9BB4`（[`docs/re/262`](../re/262-attr-dat-is-the-tile-mask.md)、[`43`](43-battle-terrain-and-rally.md)）|
+| `KEIREKI.DAT` | 18046 | `df28571add3b59ac` |  | 人物傳，82 篇（[`15`](15-keireki-dat.md)）|
+| `PLADAT.DAT` | 6706 | `20cf8a62d01d27c1` | v | 行星表（[`data/pladat.json`](data/pladat.json)）|
 
 ## `.EXE`（3 個）
 

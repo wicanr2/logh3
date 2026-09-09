@@ -104,7 +104,7 @@
 | `MAP*.CMP` | 未解；**不是星圖的來源**（走到主畫面為止一份都沒被讀）| [`docs/re/17`](docs/re/17-star-region-owner.md) |
 | `PLADAT.DAT` | **已解出**（檔頭 ＝ 每星域行星數；`+0x11` 擁有者、`+0x14` 防衛力、`+0x1A` 經濟力）| [`docs/internals/data/pladat.json`](docs/internals/data/pladat.json) |
 | `KEIREKI.DAT`（人物傳）| **已解出**（82 篇，位移表 ＋ Big5 內文）| [`docs/internals/15`](docs/internals/15-keireki-dat.md) |
-| `ATTR.DAT` | 版面已觀察（128 bytes，只有 `00`／`0F`；前 8 個全 0，接著三組「六個 `0F` ＋ 兩個 `00`」，其餘全 `0F`）；語意未解 | — |
+| `ATTR.DAT` | **已解出**：就是戰場的**圖塊遮罩**（執行期 `ds:9BB4`，四份不同局面的傾印都逐位元組命中同一處）。128 個位元組 ＝ 128 個圖塊，值 `0F` 通／`00` 擋，通行判定 `1588:0621` 拿 `ds:3C3E` 的象限位元去 and 它 | [`docs/re/262`](docs/re/262-attr-dat-is-the-tile-mask.md)、[`docs/internals/43`](docs/internals/43-battle-terrain-and-rally.md) |
 | `WORK.DT*`（存檔的全域區塊）| **已解出**（230 bytes ＝ `ds:8F14` 起的逐位元組複本；十五個欄位換算完成，`WORK.DTA` 的七個欄位與記憶體收據 `monthmoney` 逐一相同）| [`docs/internals/30`](docs/internals/30-save-format.md)、[`docs/re/256`](docs/re/256-ship-budget-formula.md) |
 | `ADMIRAL.DT*` | **版面已解出**（欄位語意確認 `+1` ＝ 陣營、`+11` ＝ 占領能力）| [`docs/internals/08`](docs/internals/08-admiral-dt.md) |
 | `STELLAR.DT*` | **版面已解出**（32 筆 × 126 bytes；擁有者、行星數、經濟力、成長率、防衛力、稅率、艦隊、未安定度已對出，檔案裡 `+0x13` 之後仍有未對過的欄位）| [`docs/internals/22`](docs/internals/22-stellar-dt.md) |
