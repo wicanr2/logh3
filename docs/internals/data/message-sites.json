@@ -1,0 +1,197 @@
+{
+ "_note": "訊息框（3826:0005）的呼叫端與字串；由 tools/scripts/msgbox_sites.py 掃出，2BE1 那五處是反組譯補的（`docs/re/139`）。種類寫成 ds:xxxx 表示它是變數不是常數。",
+ "sites": [
+  {
+   "call": "090A:24CC",
+   "linear": "0B56C",
+   "kind": 0,
+   "colour": 151,
+   "string": "ds:1AE4",
+   "text": "情報資料來源不足",
+   "bytes": "b1a1b3f8b8eaaec6a8d3b7bda4a3a8ac"
+  },
+  {
+   "call": "0C0A:4B46",
+   "linear": "10BE6",
+   "kind": 0,
+   "colour": 151,
+   "string": "ds:2B4E",
+   "text": "只有戰艦或者高速戰艦才能當做旗艦。",
+   "bytes": "a575a6b3bed4c4a5a9ceaaccb0aab374bed4c4a5a47eafe0b7edb0b5ba58c4a5a143"
+  },
+  {
+   "call": "0C0A:4B70",
+   "linear": "10C10",
+   "kind": 0,
+   "colour": 151,
+   "string": "ds:2B71",
+   "text": "船艦數量不足。",
+   "bytes": "b2eec4a5bcc6b671a4a3a8aca143"
+  },
+  {
+   "call": "0C0A:4BCD",
+   "linear": "10C6D",
+   "kind": 0,
+   "colour": 151,
+   "string": "ds:2B80",
+   "text": "無法超過目前統率能力以上的船艦數量。",
+   "bytes": "b54caa6bb657b94ca5d8ab65b2ceb276afe0a44fa548a457aabab2eec4a5bcc6b671a143"
+  },
+  {
+   "call": "0C0A:4C8E",
+   "linear": "10D2E",
+   "kind": 0,
+   "colour": 151,
+   "string": "ds:2BA5",
+   "text": "無法撤離旗艦。                  ",
+   "bytes": "b54caa6bba4dc2f7ba58c4a5a143202020202020202020202020202020202020"
+  },
+  {
+   "call": "0C0A:5506",
+   "linear": "115A6",
+   "kind": 0,
+   "colour": 151,
+   "string": "ds:2DDC",
+   "text": "這是無法前往的星系。",
+   "bytes": "b36fac4fb54caa6bab65a9b9aabaac50a874a143"
+  },
+  {
+   "call": "0C0A:55CD",
+   "linear": "1166D",
+   "kind": 1,
+   "colour": 151,
+   "string": "ds:2DF6",
+   "text": "要%s\u0003[%d,%s\u0003[%d,%s星系嗎？  \n",
+   "bytes": "ad6e2573035b25642c2573035b25642c2573ac50a874b6dca14820200a"
+  },
+  {
+   "call": "0C0A:715C",
+   "linear": "131FC",
+   "kind": 3,
+   "colour": 151,
+   "string": "ds:33B8",
+   "text": "      您確定要結束這個遊戲嗎？",
+   "bytes": "202020202020b17abd54a977ad6eb5b2a7f4b36fadd3b943c0b8b6dca148"
+  },
+  {
+   "call": "0C0A:7668",
+   "linear": "13708",
+   "kind": 3,
+   "colour": 151,
+   "string": "ds:349F",
+   "text": "確定要放棄這個星系嗎？",
+   "bytes": "bd54a977ad6ea9f1b1f3b36fadd3ac50a874b6dca148"
+  },
+  {
+   "call": "1373:201B",
+   "linear": "1574B",
+   "kind": 2,
+   "colour": 151,
+   "string": "ds:3C01",
+   "text": "情報資料不足。        ",
+   "bytes": "b1a1b3f8b8eaaec6a4a3a8aca1432020202020202020"
+  },
+  {
+   "call": "1930:0699",
+   "linear": "19999",
+   "kind": 2,
+   "colour": 151,
+   "string": "ds:3F14",
+   "text": "沒有需要補給的船艦。",
+   "bytes": "a853a6b3bbddad6eb8c9b5b9aabab2eec4a5a143"
+  },
+  {
+   "call": "1930:0E2B",
+   "linear": "1A12B",
+   "kind": 2,
+   "colour": 151,
+   "string": "ds:3FB0",
+   "text": "沒有需要補給的船艦。    ",
+   "bytes": "a853a6b3bbddad6eb8c9b5b9aabab2eec4a5a14320202020"
+  },
+  {
+   "call": "1AAB:0632",
+   "linear": "1B0E2",
+   "kind": 2,
+   "colour": 151,
+   "string": "ds:403E",
+   "text": "沒有需要修理的船艦在附近。",
+   "bytes": "a853a6b3bbddad6eadd7b27aaabab2eec4a5a662aafeaaf1a143"
+  },
+  {
+   "call": "1AAB:0AA4",
+   "linear": "1B554",
+   "kind": 2,
+   "colour": 151,
+   "string": "ds:40A3",
+   "text": "沒有可以補充的船艦。",
+   "bytes": "a853a6b3a569a548b8c9a552aabab2eec4a5a143"
+  },
+  {
+   "call": "2583:02A9",
+   "linear": "25AD9",
+   "kind": 2,
+   "colour": 151,
+   "string": "ds:4A24",
+   "text": "這是無法行動的地方。  ",
+   "bytes": "b36fac4fb54caa6ba6e6b0caaabaa661a4e8a1432020"
+  },
+  {
+   "call": "2583:16C0",
+   "linear": "26EF0",
+   "kind": 2,
+   "colour": 151,
+   "string": "ds:4A5C",
+   "text": "%s的%s輸入",
+   "bytes": "2573aaba2573bfe9a44a"
+  },
+  {
+   "call": "2BE1:0A17",
+   "linear": "2C827",
+   "kind": "ds:D20C",
+   "colour": 151,
+   "string": "ds:5BBD",
+   "text": "磁碟片讀取時有發生錯誤。    \n請重新開機。          ",
+   "bytes": "bacfbad0a4f9c5aaa8faaec9a6b3b56fa5cdbff9bb7ea143202020200abdd0adabb773b67dbef7a14320202020202020202020"
+  },
+  {
+   "call": "2BE1:0B32",
+   "linear": "2C942",
+   "kind": "ds:D20C",
+   "colour": 151,
+   "string": "ds:5BF1",
+   "text": "磁碟片載入時有發生錯誤。    ",
+   "bytes": "bacfbad0a4f9b8fca44aaec9a6b3b56fa5cdbff9bb7ea14320202020"
+  },
+  {
+   "call": "2BE1:10C5",
+   "linear": "2CED5",
+   "kind": null,
+   "colour": null,
+   "string": null,
+   "text": null,
+   "bytes": null,
+   "note": "四個參數都是呼叫端自己的參數——這是一層通用包裝，不是固定訊息"
+  },
+  {
+   "call": "2BE1:112A",
+   "linear": "2CF3A",
+   "kind": null,
+   "colour": null,
+   "string": null,
+   "text": null,
+   "bytes": null,
+   "note": "同上"
+  },
+  {
+   "call": "2BE1:119A",
+   "linear": "2CFAA",
+   "kind": null,
+   "colour": null,
+   "string": null,
+   "text": null,
+   "bytes": null,
+   "note": "同上"
+  }
+ ]
+}

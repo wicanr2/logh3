@@ -165,6 +165,22 @@
    "colour": 151,
    "text": "沒有需要修理的船艦在附近。",
    "bytes": "a853a6b3bbddad6eadd7b27aaabab2eec4a5a662aafeaaf1a143"
+  },
+  {
+   "name": "supply_none_planet",
+   "offset": "ds:3FB0",
+   "kind": 2,
+   "colour": 151,
+   "text": "沒有需要補給的船艦。",
+   "bytes": "a853a6b3bbddad6eb8c9b5b9aabab2eec4a5a14320202020"
+  },
+  {
+   "name": "replenish_none",
+   "offset": "ds:40A3",
+   "kind": 2,
+   "colour": 151,
+   "text": "沒有可以補充的船艦。",
+   "bytes": "a853a6b3a569a548b8c9a552aabab2eec4a5a143"
   }
  ]
 }

@@ -21,6 +21,13 @@ func (g *Game) beginPlanetSupplyPick(planet int, replenish bool) {
 		return
 	}
 	if len(g.planetSupplyCandidates(planet)) == 0 {
+		// 行星版另有自己的兩句（`1930:0DA2` 與 `1AAB:0A33` 各存一份字串，
+		// `docs/internals/48`）。
+		if replenish {
+			g.showMessage("replenish_none")
+		} else {
+			g.showMessage("supply_none_planet")
+		}
 		return
 	}
 	g.battleSupply, g.battleSupplyPlanet = true, planet
