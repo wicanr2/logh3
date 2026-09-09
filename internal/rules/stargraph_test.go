@@ -93,3 +93,31 @@ func TestCapitalRegions(t *testing.T) {
 			CapitalRegion(0), CapitalRegion(1))
 	}
 }
+
+// TestNextStepMatchesRoute 驗 `NextStep`（原版 `2B99:0302` 的定點迭代）
+// 與 `Route` 展開之後的第一步是同一個值——兩張中點矩陣、所有走得通的
+// 星域對（`docs/re/183`）。
+func TestNextStepMatchesRoute(t *testing.T) {
+	g := loadGraph(t)
+	pairs := 0
+	for faction := 0; faction < 2; faction++ {
+		for from := 0; from < 32; from++ {
+			for to := 0; to < 32; to++ {
+				if from == to {
+					continue
+				}
+				p := g.Route(from, to, faction)
+				if len(p) < 2 {
+					continue
+				}
+				if got := g.NextStep(from, to, faction); got != p[1] {
+					t.Fatalf("陣營 %d %d→%d：NextStep ＝ %d，Route[1] ＝ %d", faction, from, to, got, p[1])
+				}
+				pairs++
+			}
+		}
+	}
+	if pairs < 1800 {
+		t.Fatalf("只比到 %d 對，太少——中點矩陣可能沒載進來", pairs)
+	}
+}

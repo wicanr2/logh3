@@ -85,6 +85,35 @@ func (g *StarGraph) Route(from, to, faction int) []int {
 	return walk(from, to, 0)
 }
 
+// NextStep 回從 from 往 to 走的**下一格**；走不出來回 -1。
+//
+// 這是原版 `2B99:0302(to, from, 陣營)` 的等價物（`docs/re/183`）。原版
+// 走的是定點迭代——`a ← T[from][a]`，起點 a ＝ to，直到 `T[from][a]`
+// 是 255（直接相連）就回 a：
+//
+//	2B99:0349(a, b, m): v = m[b][a]; v == 0FFh ? a : 2B99:0349(v, b, m)
+//
+// 與 `Route(from, to)[1]` 是同一個值：`Route` 的 `walk(i, v) ++ walk(v, j)`
+// 展開之後，第一步同樣是 `T[i][·]` 這條鏈的定點。
+func (g *StarGraph) NextStep(from, to, faction int) int {
+	t := g.midpoint(faction)
+	if from < 0 || from >= 32 || to < 0 || to >= 32 {
+		return -1
+	}
+	a := to
+	for i := 0; i <= 64; i++ {
+		v := t[from][a]
+		if v == starDirect {
+			return a
+		}
+		if v < 0 || v >= 32 {
+			return -1
+		}
+		a = v
+	}
+	return -1
+}
+
 // Steps 回把中點矩陣遞迴展開之後的路徑長度（走幾步）。走不出來回 -1。
 //
 // **未安定度用的不是這個**：量到的 31 個步數（`docs/re/43`）與 Hops

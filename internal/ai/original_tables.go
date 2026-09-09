@@ -33,9 +33,8 @@ const RegionCount = 32
 //
 // 移動中的艦隊算在**下一格**，所以這是一張預測的威脅圖，不是現況。
 //
-// 原版算下一格用的是 `2B99:0302`；這裡用 `StarGraph.Route` 的第二個
-// 元素代替，**兩者等價還沒驗**（`docs/spec/029`）。收據 `s3aicomp` 裡
-// 敵方八支全是「不動」，只走到 `case 5` 那一條。
+// 下一格走 `StarGraph.NextStep`，那是原版 `2B99:0302` 的等價物
+// （`docs/re/183` 讀完 `2B99:0349` 之後證出來的，不是假設）。
 func ThreatMap(fleets []FleetView, enemy int, g *rules.StarGraph) [RegionCount]int {
 	var t [RegionCount]int
 	for _, f := range fleets {
@@ -48,9 +47,7 @@ func ThreatMap(fleets []FleetView, enemy int, g *rules.StarGraph) [RegionCount]i
 			if f.Target == rules.NoTarget || g == nil {
 				continue
 			}
-			if p := g.Route(f.Region, f.Target, f.Faction); len(p) >= 2 {
-				cell = p[1]
-			}
+			cell = g.NextStep(f.Region, f.Target, f.Faction)
 		case 5:
 			cell = f.Region
 		default:
