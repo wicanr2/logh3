@@ -1,0 +1,223 @@
+{
+ "_note": "半形轉全形（3B6B:0025）。數字／小寫／大寫用加法，其餘查這張表（鍵 ds:92C6、值 ds:930A，各 34 筆）。**由前往後找，第一個中的算數**——0x60 出現兩次，所以反引號變的是「，」不是「‘」。",
+ "add": [
+  {
+   "range": "30-39",
+   "delta": "A27F"
+  },
+  {
+   "range": "61-7A",
+   "delta": "A288"
+  },
+  {
+   "range": "41-5A",
+   "delta": "A28E"
+  }
+ ],
+ "table": [
+  {
+   "half": "20",
+   "char": " ",
+   "full": "A140",
+   "text": "　"
+  },
+  {
+   "half": "21",
+   "char": "!",
+   "full": "A149",
+   "text": "！"
+  },
+  {
+   "half": "60",
+   "char": "`",
+   "full": "A141",
+   "text": "，"
+  },
+  {
+   "half": "23",
+   "char": "#",
+   "full": "A1AD",
+   "text": "＃"
+  },
+  {
+   "half": "24",
+   "char": "$",
+   "full": "A243",
+   "text": "＄"
+  },
+  {
+   "half": "25",
+   "char": "%",
+   "full": "A248",
+   "text": "％"
+  },
+  {
+   "half": "26",
+   "char": "&",
+   "full": "A1AE",
+   "text": "＆"
+  },
+  {
+   "half": "22",
+   "char": "\"",
+   "full": "A149",
+   "text": "！"
+  },
+  {
+   "half": "27",
+   "char": "'",
+   "full": "A1A6",
+   "text": "’"
+  },
+  {
+   "half": "28",
+   "char": "(",
+   "full": "A15D",
+   "text": "（"
+  },
+  {
+   "half": "29",
+   "char": ")",
+   "full": "A15E",
+   "text": "）"
+  },
+  {
+   "half": "2A",
+   "char": "*",
+   "full": "A1AF",
+   "text": "＊"
+  },
+  {
+   "half": "2B",
+   "char": "+",
+   "full": "A1CF",
+   "text": "＋"
+  },
+  {
+   "half": "2C",
+   "char": ",",
+   "full": "A141",
+   "text": "，"
+  },
+  {
+   "half": "2D",
+   "char": "-",
+   "full": "A1D0",
+   "text": "－"
+  },
+  {
+   "half": "2E",
+   "char": ".",
+   "full": "A14F",
+   "text": "﹒"
+  },
+  {
+   "half": "2F",
+   "char": "/",
+   "full": "A1FE",
+   "text": "／"
+  },
+  {
+   "half": "3A",
+   "char": ":",
+   "full": "A147",
+   "text": "："
+  },
+  {
+   "half": "3B",
+   "char": ";",
+   "full": "A146",
+   "text": "；"
+  },
+  {
+   "half": "3C",
+   "char": "<",
+   "full": "A1D5",
+   "text": "＜"
+  },
+  {
+   "half": "3D",
+   "char": "=",
+   "full": "A1D7",
+   "text": "＝"
+  },
+  {
+   "half": "3E",
+   "char": ">",
+   "full": "A1D6",
+   "text": "＞"
+  },
+  {
+   "half": "3F",
+   "char": "?",
+   "full": "A148",
+   "text": "？"
+  },
+  {
+   "half": "40",
+   "char": "@",
+   "full": "A249",
+   "text": "＠"
+  },
+  {
+   "half": "5B",
+   "char": "[",
+   "full": "A165",
+   "text": "〔"
+  },
+  {
+   "half": "5C",
+   "char": "\\",
+   "full": "A240",
+   "text": "＼"
+  },
+  {
+   "half": "5D",
+   "char": "]",
+   "full": "A1A4",
+   "text": "﹞"
+  },
+  {
+   "half": "5E",
+   "char": "^",
+   "full": "A173",
+   "text": "︿"
+  },
+  {
+   "half": "5F",
+   "char": "_",
+   "full": "A15A",
+   "text": "╴"
+  },
+  {
+   "half": "60",
+   "char": "`",
+   "full": "A1A5",
+   "text": "‘"
+  },
+  {
+   "half": "7B",
+   "char": "{",
+   "full": "A1A1",
+   "text": "﹛"
+  },
+  {
+   "half": "7C",
+   "char": "|",
+   "full": "A155",
+   "text": "｜"
+  },
+  {
+   "half": "7D",
+   "char": "}",
+   "full": "A1A2",
+   "text": "﹜"
+  },
+  {
+   "half": "7E",
+   "char": "~",
+   "full": "A1E3",
+   "text": "∼"
+  }
+ ]
+}

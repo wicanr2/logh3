@@ -194,10 +194,7 @@ func (b *TextBuffer) put(c byte) {
 	}
 	cell.Colour, cell.Flags = b.Colour, b.Flags
 	if b.Attr&AttrWiden != 0 && c >= 0x20 && c <= 0x7E {
-		// 半形轉全形（原版查 `3B6B:0002` 的表）。**表還沒抄出來**，
-		// 所以這裡先原樣放進高位元組再補一個空白——與原版不同，
-		// 用到的地方要先量收據（`docs/re/141`）。
-		cell.Code = uint16(c)<<8 | 0x20
+		cell.Code = WidenASCII(c)
 		b.Col++
 		return
 	}

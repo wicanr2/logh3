@@ -1,0 +1,47 @@
+package ui
+
+// 半形轉全形（原版 `3B6B:0002` → `3B6B:0025`，`docs/re/141`）。
+//
+// 數字、小寫、大寫各用一個加法常數，其餘查一張 34 筆的對照表。
+// **表是由前往後線性找、第一個中的算數**——`0x60`（反引號）在表上出現
+// 兩次，所以它變成的是「，」而不是「‘」。這是原版的行為，照抄。
+//
+// `"` 對到的是「！」，看起來像原版建表時的手誤；同樣照抄，
+// 不「修正」（`docs/internals/data/halfwidth-map.json`）。
+
+const (
+	widenDigitDelta = 0xA27F // '0'–'9'
+	widenLowerDelta = 0xA288 // 'a'–'z'
+	widenUpperDelta = 0xA28E // 'A'–'Z'
+)
+
+// widenTable 是 `ds:92C6`（鍵）與 `ds:930A`（值）那兩張表，逐筆抄出來。
+var widenTable = [...][2]uint16{
+	{0x20, 0xA140}, {0x21, 0xA149}, {0x60, 0xA141}, {0x23, 0xA1AD},
+	{0x24, 0xA243}, {0x25, 0xA248}, {0x26, 0xA1AE}, {0x22, 0xA149},
+	{0x27, 0xA1A6}, {0x28, 0xA15D}, {0x29, 0xA15E}, {0x2A, 0xA1AF},
+	{0x2B, 0xA1CF}, {0x2C, 0xA141}, {0x2D, 0xA1D0}, {0x2E, 0xA14F},
+	{0x2F, 0xA1FE}, {0x3A, 0xA147}, {0x3B, 0xA146}, {0x3C, 0xA1D5},
+	{0x3D, 0xA1D7}, {0x3E, 0xA1D6}, {0x3F, 0xA148}, {0x40, 0xA249},
+	{0x5B, 0xA165}, {0x5C, 0xA240}, {0x5D, 0xA1A4}, {0x5E, 0xA173},
+	{0x5F, 0xA15A}, {0x60, 0xA1A5}, {0x7B, 0xA1A1}, {0x7C, 0xA155},
+	{0x7D, 0xA1A2}, {0x7E, 0xA1E3},
+}
+
+// WidenASCII 回半形字 c 的全形字碼；表上沒有的原樣回傳。
+func WidenASCII(c byte) uint16 {
+	switch {
+	case c >= '0' && c <= '9':
+		return uint16(c) + widenDigitDelta
+	case c >= 'a' && c <= 'z':
+		return uint16(c) + widenLowerDelta
+	case c >= 'A' && c <= 'Z':
+		return uint16(c) + widenUpperDelta
+	}
+	for _, e := range widenTable {
+		if e[0] == uint16(c) {
+			return e[1]
+		}
+	}
+	return uint16(c)
+}

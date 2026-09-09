@@ -141,3 +141,41 @@ func TestTextBufferRedrawsMessageBox(t *testing.T) {
 		t.Errorf("走文字緩衝區重畫的訊息框有 %d 個像素與收據不同", diff)
 	}
 }
+
+// 半形轉全形（`3B6B:0025`）：數字／英文用加法，標點查表。
+// **表是線性找、第一個中的算數**——`0x60` 在表上出現兩次，
+// 所以反引號變的是「，」（A141）不是「‘」（A1A5）。
+func TestWidenASCII(t *testing.T) {
+	cases := []struct {
+		in   byte
+		want uint16
+	}{
+		{'0', 0xA2AF}, {'9', 0xA2B8},
+		{'a', 0xA2E9}, {'z', 0xA302},
+		{'A', 0xA2CF}, {'Z', 0xA2E8},
+		{' ', 0xA140}, {'!', 0xA149}, {'?', 0xA148},
+		{'`', 0xA141}, // 表上兩筆，取前面那一筆
+		{'"', 0xA149}, // 原版對到「！」，照抄不修正
+		{0x01, 0x0001},
+	}
+	for _, c := range cases {
+		if got := WidenASCII(c.in); got != c.want {
+			t.Errorf("WidenASCII(%02X) ＝ %04X，該是 %04X", c.in, got, c.want)
+		}
+	}
+
+	// 開了 AttrWiden 之後 ASCII 一個字佔一格。
+	b := NewTextBuffer(4, 1, 0x97)
+	b.Write([]byte("\x06AB"))
+	if got := b.At(0, 0).Code; got != 0xA2CF {
+		t.Errorf("(0,0) 是 %04X，該是 A2CF", got)
+	}
+	if got := b.At(1, 0).Code; got != 0xA2D0 {
+		t.Errorf("(1,0) 是 %04X，該是 A2D0", got)
+	}
+	// 關掉之後回到「兩個半形塞一格」。
+	b.Write([]byte("\x07CD"))
+	if got := b.At(2, 0).Code; got != 0x4344 {
+		t.Errorf("(2,0) 是 %04X，該是 4344", got)
+	}
+}
