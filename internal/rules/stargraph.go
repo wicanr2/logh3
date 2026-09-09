@@ -12,13 +12,17 @@ import (
 // `T[i][j] == 255` 代表兩者直接相連，否則 `T[i][j]` 是中繼點，
 // `path(i,j) = path(i,T) + path(T,j)`。
 //
-// **兩張表的相鄰關係相同，但走出來的路不一定是最短路**：同一張圖上廣度優先
-// 最遠 9 步，照原版的表展開帝國那張最遠 10 步、同盟那張 12 步。
+// **兩張表的相鄰關係相同，但走出來的路不是步數最短、是成本最短**：同一張圖上
+// 廣度優先最遠 9 步，照原版的表展開帝國那張最遠 10 步、同盟那張 12 步——
+// 成本裡有「踏出自己地盤」的罰則，所以路徑會繞遠（`BuildTables`）。
 // 要跟原版一致就得照表走。
 type StarGraph struct {
 	Adjacency [][]int `json:"adjacency"`
 	Empire    [][]int `json:"midpoint_empire"`
 	Alliance  [][]int `json:"midpoint_alliance"`
+	// EdgeCost 是 `ds:533A` 的 32×32 位元組邊權表（`StarNoEdge` ＝ 不相鄰、
+	// 對角線 0，其餘 10–18）。原版拿它重建路徑表（`docs/re/243`）。
+	EdgeCost [][]int `json:"edge_cost"`
 }
 
 const starDirect = 255 // 中點矩陣裡「直接相連」的記法
@@ -34,7 +38,8 @@ func LoadStarGraph(path string) (*StarGraph, error) {
 		return nil, err
 	}
 	for name, m := range map[string][][]int{
-		"adjacency": g.Adjacency, "midpoint_empire": g.Empire, "midpoint_alliance": g.Alliance,
+		"adjacency": g.Adjacency, "midpoint_empire": g.Empire,
+		"midpoint_alliance": g.Alliance, "edge_cost": g.EdgeCost,
 	} {
 		if len(m) != 32 {
 			return nil, fmt.Errorf("%s 有 %d 筆，預期 32", name, len(m))
