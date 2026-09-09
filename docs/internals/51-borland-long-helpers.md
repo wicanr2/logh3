@@ -16,7 +16,7 @@
 | `3CC9:0020` | `AX:BX ÷ CX:DX → AX:BX`，**無號**；餘數留在 `CX:DX`；除以 0 回 `0xFFFFFFFF` |
 | `3CC9:0070` | 同上但**有號**：先取絕對值、呼叫 `0020`、再依號數補回去 |
 | `3CC9:00B9` | 比較。高位字不同就直接帶著旗標回（呼叫端接 `jg`／`jle`）；相同時 `AX ← −1／0／1` |
-| `3CC9:00CC` | 亂數：`ds:94DC` 的 32 位元種子 × `0x41C64E6D`（[`docs/re/87`](../re/87-original-rng.md)，remake 的 `rules.Rand`）|
+| `3CC9:00CC` | 亂數：`ds:94DC` 的 32 位元種子 × `0x41C64E6D` ＋ `0x3039`，回高位 word `& 0x7FFF`（[`docs/re/87`](../re/87-original-rng.md)，remake 的 `rules.Rand`）。**呼叫端多半寫成 `3CD5:000C`**——同一個線性位址 `0x3CD5C` 的另一種段寫法 |
 
 ## 認出來的樣子
 
