@@ -469,6 +469,10 @@ type Game struct {
 	// `63A1:0074` 設的）；電腦那一方每個回合收尾自己改
 	// （`docs/re/257`）。**存檔裡的那一格還沒定位**，載入時先沿用開局值。
 	shipPct [2]int
+	// foePct 是**電腦那一方**切給七個艦種的百分比（原版
+	// `ds:8FD6[陣營 × 7]`；玩家那一份就是 `pct`）。電腦在回合收尾寫回
+	// 一張固定表（`docs/re/257`）。
+	foePct [rules.BuildPlanRows]int
 
 	// blend 是未安定度算式的 `Blend`（原版 `ds:8FD4[陣營]`，0–4）。
 	// 電腦座位的戰略 AI 每回合按軍事費重設它，一設就重算該陣營所有
@@ -877,6 +881,9 @@ func (g *Game) runBrain() {
 	// 百分比（`docs/re/257`）。順序照原版——`Blend(0)` 會重算稅率，
 	// 所以這一步讀到的是重算後的數。
 	g.shipPct[foe] = rules.AIShipPct(g.taxTotal[foe])
+	if foe == 0 || foe == 1 {
+		g.foePct = rules.AIBuildPct[foe]
+	}
 }
 
 // refreshBlend 走原版 `2D10:0319` 的後半：寫下等級，接著用它當下標
@@ -997,6 +1004,7 @@ func (g *Game) startNewGame(faction int) {
 	g.blend = [2]int{rules.NewGameBlend, rules.NewGameBlend}
 	g.shipPct = [2]int{g.res.ShipPct, g.res.ShipPct}
 	g.pct = rules.OpeningPct
+	g.foePct = rules.OpeningPct
 	g.slot = nil
 	g.monthEnd()
 }
@@ -1694,7 +1702,7 @@ func (g *Game) monthEnd() {
 			ShipPct: g.factionShipPct(f), Upkeep: g.fleetUpkeep(f),
 			MoveCost: g.fleetMoveCost(f)}
 		budget := b.Military()
-		plan := rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct, Faction: f}
+		plan := rules.BuildPlan{Cost: b.ShipCost(), Pct: g.buildPctFor(f), Faction: f}
 		paid := plan.Paid()
 		g.military[f] = budget - paid
 		if f != g.faction {
@@ -1973,6 +1981,19 @@ func (g *Game) nextBudget() rules.Budget {
 	return rules.Budget{Treasury: g.military[f], Tax: g.taxTotal[f],
 		ShipPct: g.factionShipPct(f), Upkeep: g.fleetUpkeep(f),
 		MoveCost: g.fleetMoveCost(f)}
+}
+
+// buildPctFor 回一個陣營切給七個艦種的百分比。玩家那一份是可以改的
+// `pct`（生產計劃那張畫面），電腦那一份由它自己在回合收尾設
+// （`docs/re/257`）。對戰模式兩邊都是玩家，一律用 `pct`。
+func (g *Game) buildPctFor(faction int) [rules.BuildPlanRows]int {
+	if g.versus || faction == g.faction {
+		return g.pct
+	}
+	if g.foePct == ([rules.BuildPlanRows]int{}) {
+		return rules.OpeningPct
+	}
+	return g.foePct
 }
 
 // factionShipPct 回一個陣營的造船百分比。`shipPct` 是零值時（direct-entry

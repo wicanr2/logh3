@@ -83,11 +83,37 @@ ds:8F92[陣營] = min(總稅收 ÷ 900, 35)
 `t260_post`（新遊戲 796/1/4）兩邊都還是 25：那一份的傾印點在 AI 指派艦隊
 之後、`2D10:0038` 之前。
 
+## 接著它也把七個艦種的分配寫回去
+
+`ds:8F92` 之後那一段（同一支 `2D10:0038`）：
+
+```
+2D193  si = 8FD6h + ds:8F1D × 7          ; 每個陣營七個 byte
+2D1AA  ds:8F1D == 0 ?
+         帝國 → 30 30 8 5 9 9 9
+         同盟 → 30 25 10 5 10 10 10
+```
+
+寫法是「`les bx,[bp+0]` → `inc word [bp+0]` → `mov es:[bx], 值`」重複七次，
+所以是**由列 0 往下逐格寫的固定表**，不是算出來的。兩排都剛好加到 100。
+
+`ds:8FD6` 這個位置是拿 remake 的 `rules.OpeningPct`
+（`20 10 18 10 12 15 15`，收據 `plan1`／`prod1e`）去搜傾印找到的——
+`ds:8FD6` 與 `ds:8FDD` 各一份，正好是兩個陣營。
+
+同盟那一排有收據：**AI 回合真的跑過的那兩份傾印**（`monthblend`、
+`s3aicomp`）`ds:8FD6[7..13]` 都是 `30 25 10 05 10 10 10`；其餘四份
+（`t260_pre`／`t260_post`／`s3ai6`／`monthmoney_post`，AI 的回合收尾都還沒跑）
+兩排都還是開局值。帝國那一排是從立即值讀出來的，**還沒有傾印驗過**——
+手上的傾印裡帝國一直是玩家。
+
 ## remake
 
-`rules.AIShipPct(tax)`，接在 `Game.runBrain` 的尾巴——`refreshBlend(foe, 0)`
-（＝ `2D10:0319(0)`）重算完稅率之後才讀 `taxTotal[foe]`，順序與原版相同。
-造船百分比也跟著從單一值改成 `Game.shipPct[2]`。
+`rules.AIShipPct(tax)` 與 `rules.AIBuildPct[陣營]`，都接在 `Game.runBrain`
+的尾巴——`refreshBlend(foe, 0)`（＝ `2D10:0319(0)`）重算完稅率之後才讀
+`taxTotal[foe]`，順序與原版相同。造船百分比從單一值改成 `Game.shipPct[2]`，
+七個艦種的分配多一份 `Game.foePct`（玩家那一份還是可以在生產計劃改的
+`pct`）。
 
 **存檔裡的那一格還沒定位**（`docs/internals/30`），`LoadSlot` 先沿用開局值。
 

@@ -123,3 +123,29 @@ func TestPaidMatchesOracle(t *testing.T) {
 		t.Errorf("退回 %d，預期 36（15185 − 15149）", got)
 	}
 }
+
+// TestAIBuildPctMatchesDumps 釘住 `2D10:0038` 尾段寫回的那張表
+// （`docs/re/257`）。同盟那一排有兩份傾印：`monthblend` 與 `s3aicomp` 的
+// `ds:8FD6[7..13]` 都是 `30 25 10 05 10 10 10`。
+func TestAIBuildPctMatchesDumps(t *testing.T) {
+	if got, want := AIBuildPct[1], ([BuildPlanRows]int{30, 25, 10, 5, 10, 10, 10}); got != want {
+		t.Errorf("同盟那一排 ＝ %v，傾印是 %v", got, want)
+	}
+	// 兩排都要剛好 100——原版寫的是七個立即值，加不到 100 就是讀錯了。
+	for f, row := range AIBuildPct {
+		sum := 0
+		for _, v := range row {
+			sum += v
+		}
+		if sum != 100 {
+			t.Errorf("陣營 %d 那一排加起來 ＝ %d，預期 100（%v）", f, sum, row)
+		}
+	}
+	sum := 0
+	for _, v := range OpeningPct {
+		sum += v
+	}
+	if sum != 100 {
+		t.Errorf("開局那一排加起來 ＝ %d，預期 100", sum)
+	}
+}
