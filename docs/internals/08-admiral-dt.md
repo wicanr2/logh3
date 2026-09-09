@@ -104,3 +104,15 @@
 
 實作在 `internal/rules/admiral.go` 的 `RankOf`，測試
 `TestRankOfMatchesOracle`／`TestAdmiralListNewGame`。
+
+## `+0x09` 的低七位 ＝ 這個提督帶的艦隊槽
+
+`2E54:0513`（`docs/re/180`）用它算艦隊記錄的位址：
+
+```
+艦隊 = ds:C074 + ((ds:8F1D == 0 ? 0 : 16) + 提督[+0x09]) × 122
+```
+
+陣營基底（帝國 0、同盟 16）由呼叫端補上，所以 `+0x09` 存的是**陣營內**
+的槽號。最高位是另一件事（`docs/re/43` 的不穩條件、載入時被夾成 `0x7F`）；
+`2D76:0611` 進門就 `AND 7Fh` 把它清掉。
