@@ -1176,6 +1176,16 @@ func (g *Game) Click(x, y int) {
 		}
 	case StateShipDelivery:
 		// 報告只有一個「確認」鈕，點哪裡都收掉——哪裡按不算數還沒量過。
+		//
+		// **關掉之後接著跳會計報告與訂造報告**（`docs/re/259`）：原版
+		// `0654:0034` 在 `0654:0130`（接收）之後依序呼叫 `0654:0486`
+		// （會計）與 `0654:02E0`（訂造），收據 `monthacct`／`monthorder`
+		// 各一張。對戰模式的跨月沒量過，那一路照舊。
+		if !g.versus && g.res.MainGame != nil {
+			g.reportLayer = 0
+			g.state = StateMainGame
+			return
+		}
 		g.state = StateCommandPhase
 	case StateRegionFlipReport:
 		// 滑鼠任一鍵關掉一則（收據 `chain4` 右鍵、`chain5` 左鍵）；
@@ -1385,9 +1395,34 @@ func (g *Game) RightClick(x, y int) {
 		}
 	}
 	switch g.state {
-	case StateMainGame, StateVersusAccount:
-		// 月初報告是兩層。第一下關掉上面那層，第二下才到地圖介面。
-		// 對戰模式那張（`vs4`）也是兩下——收據 `vs5` 用的就是兩次右鍵。
+	case StateMainGame:
+		// 月初報告是**一串兩張**（`docs/re/259`）：會計報告 →（右鍵）
+		// 船艦訂造報告 →（右鍵）地圖介面。原版在 `0654:0034` 裡依序
+		// 呼叫 `0654:0486`（會計）與 `0654:02E0`（訂造），`main1e` 那兩下
+		// 右鍵關的就是這兩張。
+		if g.res.ShipOrder != nil {
+			g.reportLayer = 1
+			g.state = StateShipOrder
+			return
+		}
+		g.reportLayer++
+		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
+			g.state = StateCommandPhase
+		}
+	case StateShipOrder:
+		// 從報告串進來的（`reportLayer > 0`）右鍵到地圖介面；從會計報告
+		// 那顆「變更」熱區點進來的（`reportLayer == 0`）右鍵退回會計報告。
+		if g.reportLayer > 0 {
+			g.reportLayer = 0
+			if g.commandSpec(StateCommandPhase) != nil {
+				g.state = StateCommandPhase
+			}
+			return
+		}
+		g.state = StateMainGame
+	case StateVersusAccount:
+		// 對戰模式那張（`vs4`）也是兩下右鍵（收據 `vs5`）。**中間那張是
+		// 不是訂造報告還沒量過**，所以這一路先照舊只數層數。
 		g.reportLayer++
 		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase

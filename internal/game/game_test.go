@@ -370,9 +370,16 @@ func TestShipDeliveryMatchesOracle(t *testing.T) {
 	// 右側面板的字被清掉、只留「戰略模式處理中」那一行，也對得上。
 	matchesBox(t, g, "turnmonth2", 320, 40, 639, 79)
 
+	// 按掉接收報告之後接著是會計報告與訂造報告（`docs/re/259`，收據
+	// `monthacct`／`monthorder`），兩下右鍵才回地圖介面。
 	g.Click(448, 370) // 確認鈕在 (430,360)-(465,379)
+	if g.State() != StateMainGame {
+		t.Fatalf("按了確認之後在 %v，不是會計報告", g.State())
+	}
+	g.RightClick(300, 240)
+	g.RightClick(300, 240)
 	if g.State() != StateCommandPhase {
-		t.Fatalf("按了確認之後在 %v", g.State())
+		t.Fatalf("關掉兩張月報之後在 %v", g.State())
 	}
 }
 
@@ -1247,5 +1254,54 @@ func TestFleetRowsFollowThePanel(t *testing.T) {
 	}
 	if n := rules.CountFleets(g.fleets, rules.CapitalRegion(0), 1); n != 0 {
 		t.Fatalf("瓦爾哈拉數出 %d 支同盟艦隊，預期 0", n)
+	}
+}
+
+// TestMonthEndReportChain 釘住月底那一串報告的順序（`docs/re/259`）：
+// 接收報告 →（左鍵）會計報告 →（右鍵）船艦訂造報告 →（右鍵）地圖介面。
+//
+// 原版 `0654:0034` 依序呼叫 `0654:0130`（接收，參數 `ds:8F18 − 1`）、
+// `0654:0486`（會計）與 `0654:02E0`（訂造），收據 `monthgateA`／
+// `monthacct`／`monthorder` 各一張。開局那一趟 `ds:8F18 == 0`，接收那一支
+// 被跳過，所以只有兩張——與 `main1e` 的兩下右鍵一致。
+func TestMonthEndReportChain(t *testing.T) {
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 210)
+	for _, c := range []byte{'1', '3', '8', '\r'} {
+		g.Key(c)
+	}
+	if g.State() != StateMainGame {
+		t.Fatalf("答對防拷之後在 %v，不是會計報告", g.State())
+	}
+	// 開局：會計 → 訂造 → 地圖（兩下右鍵，`main1e`）。
+	g.RightClick(300, 240)
+	if g.State() != StateShipOrder {
+		t.Fatalf("關掉會計報告之後在 %v，不是船艦訂造報告", g.State())
+	}
+	g.RightClick(300, 240)
+	if g.State() != StateCommandPhase {
+		t.Fatalf("關掉訂造報告之後在 %v，不是地圖介面", g.State())
+	}
+	// 跨月：接收 → 會計 → 訂造 → 地圖。
+	for i := 0; i < rules.TurnsPerMonth; i++ {
+		g.advanceTurn()
+	}
+	if g.State() != StateShipDelivery {
+		t.Fatalf("跨月之後在 %v，不是船艦接收報告", g.State())
+	}
+	g.Click(300, 240)
+	if g.State() != StateMainGame {
+		t.Fatalf("關掉接收報告之後在 %v，不是會計報告", g.State())
+	}
+	g.RightClick(300, 240)
+	if g.State() != StateShipOrder {
+		t.Fatalf("關掉會計報告之後在 %v，不是船艦訂造報告", g.State())
+	}
+	g.RightClick(300, 240)
+	if g.State() != StateCommandPhase {
+		t.Fatalf("關掉訂造報告之後在 %v，不是地圖介面", g.State())
 	}
 }
