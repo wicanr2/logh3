@@ -93,6 +93,10 @@ func (g *Game) buildSupport() *ai.BuildSupport {
 	}
 	all := rules.ParseAdmirals(g.res.Admiral)
 	return &ai.BuildSupport{
+		// ⚠ **`Money` 回的是玩家那一方的數字**：remake 只追一方的
+		// 軍事費與稅收（`g.taxTotal`），電腦那一方的財政沒有模型。
+		// 單人模式下這是把玩家的稅收拿去當電腦的預算——**已知不忠實**，
+		// 而且因為維持費也是 0，那道閘門實際上永遠通過。
 		Money: func(faction int) (tax, upkeep int, tight bool) {
 			// 總稅收 ＝ ds:8F6A。**艦隊維持費（ds:8F72）remake 還沒算**
 			// ——收據上帝國那一欄是 0（`docs/internals/27`），所以這裡
@@ -176,4 +180,32 @@ func (g *Game) canFormFleet(faction int, a ai.AdmiralView) bool {
 		return false
 	}
 	return stock[a.Kind] >= k.FullShips
+}
+
+// newComposition 產生一支新艦隊的編制（`rules.BuildComposition`，
+// 原版 `297B:0066` ＋ `0FF4:11F4`，`docs/re/212`–`docs/re/217`）。
+//
+// **會就地扣掉那一格的艦艇存量**——原版就是這樣：新艦隊不是憑空變出來的，
+// 是把星域的庫存編成部隊（`docs/re/215`）。
+//
+// 缺艦種表或樣板表就回 nil；那時候艦隊仍然建得出來，只是沒有編制。
+func (g *Game) newComposition(faction, region, admiral, classKey int) []rules.FleetGroup {
+	rec := g.regionRecord(region)
+	if rec == nil || g.res.ShipKinds == nil || g.res.Composition == nil {
+		return nil
+	}
+	adm := g.admiralRecord(admiral)
+	if len(adm) < rules.AdmiralRecord {
+		return nil
+	}
+	return rules.BuildComposition(rules.BuildInput{
+		Region:       rec,
+		RegionOwner:  int(rec[0x12]),
+		Faction:      faction,
+		Kinds:        g.res.ShipKinds,
+		Tables:       g.res.Composition,
+		AdmiralLevel: rules.AdmiralLevel(adm),
+		AdmiralKind:  rules.AdmiralAbility(adm, 0x08) & 0x0F,
+		ClassKey:     classKey,
+	})
 }

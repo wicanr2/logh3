@@ -346,6 +346,11 @@ type Resources struct {
 	// ai-advance-routes.json`，`docs/re/178`）。戰略 AI 的階段四、五要用。
 	AdvanceRoutes *ai.AdvanceRoutes
 
+	// Composition 是新編艦隊要用的兩張表（`ds:2BC6` 樣板與 `ds:295C`
+	// 艦種替代表，`docs/re/212`／`docs/re/216`）。nil ＝ 建出來的艦隊
+	// 只有旗艦那一組。
+	Composition *rules.CompositionTables
+
 	// ShipKinds 是艦種屬性表（`docs/internals/40`）。
 	ShipKinds *rules.ShipKindTable
 
@@ -787,6 +792,7 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 		if nf.Region < 0 || nf.Region >= rules.RegionCount || led[nf.Admiral] {
 			continue
 		}
+		comp := g.newComposition(faction, nf.Region, nf.Admiral, nf.ClassKey)
 		g.fleets = append(g.fleets, rules.Fleet{
 			Index:    len(g.fleets),
 			Number:   len(g.fleets) + 1,
@@ -795,10 +801,10 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 			Adjutant: nf.Adjutant,
 			Region:   nf.Region,
 			Target:   rules.NoTarget,
-			ClassKey: nf.ClassKey,
-			Expected: nf.Expected,
-			// Groups 留 0：原版靠 `2AD2:0029` 產生艦艇，那一支還沒讀
-			// （`docs/re/213`）。
+			ClassKey:    nf.ClassKey,
+			Expected:    nf.Expected,
+			Composition: comp,
+			Groups:      len(comp),
 		})
 		led[nf.Admiral] = true
 		n++

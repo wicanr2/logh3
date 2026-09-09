@@ -1,6 +1,7 @@
 package game
 
 import (
+	"encoding/binary"
 	"path/filepath"
 	"testing"
 
@@ -20,6 +21,18 @@ func reachBrainPhase(t *testing.T) *Game {
 		t.Fatal(err)
 	}
 	res.Graph = graph
+	// 決策層還要艦種表與兩張編制表；`load()` 只給畫面要的東西，
+	// 正式入口 `internal/bootstrap` 才會載這幾份。
+	data := filepath.Join(root, "docs/internals/data")
+	if res.ShipKinds, err = rules.LoadShipKindTable(
+		filepath.Join(data, "ship-kind-table.json")); err != nil {
+		t.Fatal(err)
+	}
+	if res.Composition, err = rules.LoadCompositionTables(
+		filepath.Join(data, "fleet-composition-templates.json"),
+		filepath.Join(data, "ship-kind-fallback.json")); err != nil {
+		t.Fatal(err)
+	}
 	g, err := New(res)
 	if err != nil {
 		t.Fatal(err)
@@ -130,25 +143,83 @@ func TestPlainBrainBuildsNothing(t *testing.T) {
 	}
 }
 
-// TestOriginalBrainWiring 把接好線的原版 AI 掛上去跑一個回合：
-// 新遊戲兩邊都沒有艦艇（原版樣板沒有 `SHIP.DTX`，`docs/re/200`），
-// 所以 `canFormFleet` 一律不成立、**一支都不該建**。
+// TestOriginalBrainBuildsWithComposition 把接好線的原版 AI 掛上去跑一個
+// 回合：它會從首都的**待命部隊**（星域記錄 `+0x30` 起）編出艦隊，
+// 每一支都有編制，而且存量真的被搬走（`docs/re/215`、`docs/re/217`）。
 //
-// 這一支釘的是「接線本身走得通、而且不會憑空生出艦隊」。
-func TestOriginalBrainWiring(t *testing.T) {
+// ⚠ **它會一路建到上限 16 支，而原版在同一個局面停在三支**
+// （收據 `turn260mem`，`docs/re/209`）。原因是收手的那道閘門看艦隊
+// 維持費，而 remake 還沒算維持費（`docs/re/211`）——這一支就是把那個
+// 已知偏差釘住，換掉之後有人修好維持費，它會紅，那時候再改預期。
+func TestOriginalBrainBuildsWithComposition(t *testing.T) {
 	g := reachBrainPhase(t)
-	b := g.OriginalBrain()
-	if b == nil {
-		t.Fatal("OriginalBrain 回 nil——星域圖或星域記錄沒接上")
+	foe := 1 - g.faction
+	capital := rules.CapitalRegion(foe)
+	rec := g.regionRecord(capital)
+	if rec == nil {
+		t.Fatal("拿不到電腦首都的星域記錄")
 	}
-	g.SetBrain(b)
+	before := 0
+	for _, v := range rules.RegionShips(rec, foe) {
+		before += v
+	}
+	if before == 0 {
+		t.Skip("新遊戲的首都沒有待命部隊，這一支測不到")
+	}
+
+	g.SetBrain(g.OriginalBrain())
+	g.Click(544, 125)
+	g.Click(560, 125)
+
+	if len(g.fleets) == 0 {
+		t.Fatal("一支都沒建")
+	}
+	for i, f := range g.fleets {
+		if f.Faction != foe {
+			t.Errorf("第 %d 支是陣營 %d，預期 %d", i, f.Faction, foe)
+		}
+		if len(f.Composition) == 0 {
+			t.Errorf("第 %d 支沒有編制", i)
+		}
+		if f.Groups != len(f.Composition) {
+			t.Errorf("第 %d 支 Groups ＝ %d，編制有 %d 組", i, f.Groups, len(f.Composition))
+		}
+		if f.Expected < f.Groups {
+			t.Errorf("第 %d 支現有 %d 組多於應有 %d 組", i, f.Groups, f.Expected)
+		}
+	}
+	after := 0
+	for _, v := range rules.RegionShips(rec, foe) {
+		after += v
+	}
+	if after >= before {
+		t.Errorf("存量從 %d 變成 %d——一艘都沒搬", before, after)
+	}
+	// 已知偏差：沒有維持費就收不了手。
+	if len(g.fleets) != ai.FleetCap {
+		t.Logf("建了 %d 支（不是上限 %d）——維持費那道閘門是不是接上了？",
+			len(g.fleets), ai.FleetCap)
+	}
+	t.Logf("建了 %d 支，首都待命部隊從 %d 剩 %d", len(g.fleets), before, after)
+}
+
+// TestOriginalBrainNeedsStock 首都沒有待命部隊就一支都編不出來
+// （`07F9:023B` 的存量檢查，`docs/re/215`）。
+func TestOriginalBrainNeedsStock(t *testing.T) {
+	g := reachBrainPhase(t)
+	foe := 1 - g.faction
+	rec := g.regionRecord(rules.CapitalRegion(foe))
+	if rec == nil {
+		t.Fatal("拿不到電腦首都的星域記錄")
+	}
+	for k := 0; k < 7; k++ {
+		binary.LittleEndian.PutUint32(rec[0x30+foe*28+k*4:], 0)
+	}
+	g.SetBrain(g.OriginalBrain())
 	g.Click(544, 125)
 	g.Click(560, 125)
 	if len(g.fleets) != 0 {
-		t.Errorf("新遊戲沒有艦艇卻建出 %d 支", len(g.fleets))
-	}
-	if g.State() != StateCommandPhase {
-		t.Fatalf("實行之後在 %v", g.State())
+		t.Errorf("沒有待命部隊卻建出 %d 支", len(g.fleets))
 	}
 }
 

@@ -167,7 +167,10 @@ func (in BuildInput) tryClass(class int, used map[int]bool) (NewFleet, bool) {
 	if in.Adjutant != nil {
 		adj = in.Adjutant(a.Index)
 	}
-	return NewFleet{Admiral: a.Index, Region: Capitals[in.Faction],
+	// **編在提督所在的那一格**，不是首都——原版 `297B:0066` 寫的是
+	// `艦隊[+0x06] = 提督[+0x0A]`（`docs/re/214`）。開局兩邊的提督都在
+	// 自己的首都，所以收據上看起來一樣，但規則不是「首都」。
+	return NewFleet{Admiral: a.Index, Region: a.Region,
 		ClassKey: key, Adjutant: adj,
 		Expected: rules.FleetSlots(a.Level)}, true
 }

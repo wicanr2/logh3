@@ -254,6 +254,12 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	compTables, err := rules.LoadCompositionTables(
+		filepath.Join(data, "fleet-composition-templates.json"),
+		filepath.Join(data, "ship-kind-fallback.json"))
+	if err != nil {
+		return nil, err
+	}
 	shipKinds, err := rules.LoadShipKindTable(filepath.Join(data, "ship-kind-table.json"))
 	if err != nil {
 		return nil, err
@@ -300,6 +306,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
 		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds, AdvanceRoutes: routes,
+		Composition: compTables,
 		MessageBox: msgBox, FrameTiles: frameTiles,
 		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,
 		PlanetInfo: planetInfo,
