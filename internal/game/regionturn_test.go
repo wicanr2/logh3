@@ -104,3 +104,36 @@ func TestRecomputeRegionsKeepsOtherFlagBits(t *testing.T) {
 		t.Errorf("bit1／bit4–bit7 被動到了：%02X", g.regionRecord(5)[0x13])
 	}
 }
+
+// 打完戰鬥就重算：原版走完回合結束那條鏈（`docs/re/105` 的 `s3win`
+// 收據裡 `2703:0944`／`2703:0990` 都在 `2703:0933` 內，而它只有兩個
+// 呼叫者），所以 `EndBattle` 也要跑一次。
+func TestEndBattleRecomputesRegions(t *testing.T) {
+	g := newRegionTurnGame(t)
+	g.recomputeRegions()
+	if got := int(g.regionRecord(20)[0x12]); got != 1 {
+		t.Fatalf("星域 20 一開始應該是同盟，得到 %d", got)
+	}
+
+	// 打下星域 20 那顆行星：戰場副本改了，還沒寫回。
+	bp := g.res.Planets.BattlePlanetsFor(20, []rules.PlanetSite{{}})
+	if len(bp) != 1 {
+		t.Fatalf("星域 20 配出 %d 顆行星，預期 1", len(bp))
+	}
+	bp[0].Owner = 0
+	g.battlePlanets = bp
+	if got := int(g.regionRecord(20)[0x12]); got != 1 {
+		t.Fatalf("還沒 EndBattle 就變了：%d", got)
+	}
+
+	g.EndBattle()
+	if got := g.res.Planets.Owner(20); got != 0 {
+		t.Errorf("行星沒寫回：擁有者 ＝ %d，預期 0", got)
+	}
+	if got := int(g.regionRecord(20)[0x12]); got != 0 {
+		t.Errorf("星域 20 的擁有者 ＝ %d，預期 0", got)
+	}
+	if g.state != StateCommandPhase {
+		t.Errorf("狀態 ＝ %v，預期回指令畫面", g.state)
+	}
+}

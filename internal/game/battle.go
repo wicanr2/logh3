@@ -308,6 +308,14 @@ func (g *Game) EndBattle() {
 	if g.res.Planets != nil {
 		g.res.Planets.ApplyBattlePlanets(g.battlePlanets)
 	}
+	// 戰鬥結束之後原版會走完回合結束那條鏈（`2703:08DE`）。證據在收據
+	// `s3win`（`docs/re/105`）：`2703:0944` 與 `2703:0990` 這兩個寫入點
+	// 都在 `2703:0933` 裡面，而 `2703:0933` 只有兩個呼叫者——新遊戲初始化
+	// 與 `2703:08DE`。戰鬥中不會是前者。
+	//
+	// 那一份收據看到 `+0x12` 沒有變，是因為達希利的行星仍然混雜、重算出
+	// 同一個值，不是因為沒有重算（`docs/re/244`、`docs/spec/033`）。
+	g.recomputeRegions()
 	g.state = StateCommandPhase
 }
 
