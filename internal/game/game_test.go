@@ -1305,3 +1305,26 @@ func TestMonthEndReportChain(t *testing.T) {
 		t.Fatalf("關掉訂造報告之後在 %v，不是地圖介面", g.State())
 	}
 }
+
+// TestShipOrderRightClickGoesToMap 釘住「訂造報告右鍵到地圖介面」
+// （收據 `orderback`）：會計報告點熱區開訂造報告、右鍵之後**不是**退回
+// 會計報告，而是直接露出地圖介面——與報告串那一路（`openreports` 的第二下
+// 右鍵）落到同一張畫面。
+func TestShipOrderRightClickGoesToMap(t *testing.T) {
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 210)
+	for _, c := range []byte{'1', '3', '8', '\r'} {
+		g.Key(c)
+	}
+	g.Click(448, 330) // 會計報告上的熱區
+	if g.State() != StateShipOrder {
+		t.Fatalf("點了熱區之後在 %v，不是船艦訂造報告", g.State())
+	}
+	g.RightClick(300, 240)
+	if g.State() != StateCommandPhase {
+		t.Fatalf("右鍵之後在 %v，不是地圖介面", g.State())
+	}
+}

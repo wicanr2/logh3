@@ -1410,16 +1410,13 @@ func (g *Game) RightClick(x, y int) {
 			g.state = StateCommandPhase
 		}
 	case StateShipOrder:
-		// 從報告串進來的（`reportLayer > 0`）右鍵到地圖介面；從會計報告
-		// 那顆「變更」熱區點進來的（`reportLayer == 0`）右鍵退回會計報告。
-		if g.reportLayer > 0 {
-			g.reportLayer = 0
-			if g.commandSpec(StateCommandPhase) != nil {
-				g.state = StateCommandPhase
-			}
-			return
+		// **右鍵一律到地圖介面**，兩條路進來的都一樣（收據 `orderback`：
+		// 會計報告點熱區 → 訂造報告 → 右鍵 → 地圖介面，與報告串那一路
+		// `openreports` 的第二下右鍵落到同一張畫面）。
+		g.reportLayer = 0
+		if g.commandSpec(StateCommandPhase) != nil {
+			g.state = StateCommandPhase
 		}
-		g.state = StateMainGame
 	case StateVersusAccount:
 		// 對戰模式那張（`vs4`）也是兩下右鍵（收據 `vs5`）。**中間那張是
 		// 不是訂造報告還沒量過**，所以這一路先照舊只數層數。
