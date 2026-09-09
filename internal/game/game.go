@@ -1395,6 +1395,18 @@ func (g *Game) RightClick(x, y int) {
 		}
 	}
 	switch g.state {
+	case StateShipDelivery:
+		// 接收報告也是右鍵關掉的（收據 `mreponlyr`：三張報告全部只用右鍵
+		// 就依序退場，第三下之後露出地圖介面）。左鍵那一路在 `Click`
+		// 裡，落點還沒量過。
+		if !g.versus && g.res.MainGame != nil {
+			g.reportLayer = 0
+			g.state = StateMainGame
+			return
+		}
+		if g.commandSpec(StateCommandPhase) != nil {
+			g.state = StateCommandPhase
+		}
 	case StateMainGame:
 		// 月初報告是**一串兩張**（`docs/re/259`）：會計報告 →（右鍵）
 		// 船艦訂造報告 →（右鍵）地圖介面。原版在 `0654:0034` 裡依序

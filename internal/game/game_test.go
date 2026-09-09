@@ -1328,3 +1328,18 @@ func TestShipOrderRightClickGoesToMap(t *testing.T) {
 		t.Fatalf("右鍵之後在 %v，不是地圖介面", g.State())
 	}
 }
+
+// TestMonthEndReportChainRightClick 整串報告只用右鍵走完（收據 `mreponlyr`：
+// 三張報告全部只用右鍵就依序退場，第三下之後露出地圖介面）。
+func TestMonthEndReportChainRightClick(t *testing.T) {
+	g := reachCommandPhase(t)
+	for i := 0; i < rules.TurnsPerMonth; i++ {
+		g.advanceTurn()
+	}
+	for i, want := range []State{StateMainGame, StateShipOrder, StateCommandPhase} {
+		g.RightClick(320, 280)
+		if g.State() != want {
+			t.Fatalf("第 %d 下右鍵之後在 %v，預期 %v", i+1, g.State(), want)
+		}
+	}
+}
