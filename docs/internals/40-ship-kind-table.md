@@ -20,6 +20,14 @@ word。
 
 其餘九個還沒解。
 
+## 存量不夠就換艦種
+
+新編艦隊時，某個艦種在那一格編不出一組（`0FF4:0E84` 回 0 ＝
+`存量 ÷ 滿編艘數` 是 0）就照 `ds:295C` 的替代順序往下試
+（`0FF4:1350`，`docs/re/216`）。表倒在
+`docs/internals/data/ship-kind-fallback.json`，一個艦種 6 bytes、
+`0xFF` 結尾；`0xFE` 是清單裡的特例標記，不是艦種。
+
 ## 內容
 
 倒出來放在 `docs/internals/data/ship-kind-table.json`
