@@ -63,3 +63,7 @@ func clampInt(v, lo, hi int) int {
 	}
 	return v
 }
+
+// Atan256 回 (dx,dy) 的方位，一整圈 256（原版 `2BE1:011D`）。
+// 選抵達朝向與算「往目的地的方位」都用它。
+func Atan256(dx, dy int) int { return atan256(dx, dy) }

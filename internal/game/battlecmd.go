@@ -154,10 +154,19 @@ func (g *Game) commandMenuClick(x, y int) bool {
 	if g.battleCmdKind == screen.CommandMenuScout && row == 1 {
 		g.battleUnits[unit].Action = squadronRejoin
 	}
-	// 分隊的「移動」是第一項：接著等玩家點目的地。旗艦（艦隊選單）
-	// 那一項要再選抵達朝向，還沒逆向完，所以不接。
-	if row == 0 && g.battleCmdKind != screen.CommandMenuFleet {
-		g.beginMoveTarget(unit)
+	// 第一項是「移動」：分隊直接等點目的地，旗艦（艦隊選單）走兩段
+	// （點目的地 → 選抵達朝向，`docs/spec/027`）。
+	if row == 0 {
+		if g.battleCmdKind == screen.CommandMenuFleet {
+			g.beginFleetOrder(unit, false)
+		} else {
+			g.beginMoveTarget(unit)
+		}
+	}
+	// 艦隊選單第二項是「戰鬥」：與「移動」同一條路，成功之後艦隊行動
+	// 寫成 1（`docs/re/120`）。
+	if row == 1 && g.battleCmdKind == screen.CommandMenuFleet {
+		g.beginFleetOrder(unit, true)
 	}
 	// 「編隊」是分隊三張表的第二項：接著等玩家點隊形格
 	// （`docs/internals/46`）。索敵那張的第二項是「歸隊」，不算。

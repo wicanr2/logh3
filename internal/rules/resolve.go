@@ -30,6 +30,20 @@ type BattleFleet struct {
 	// ScoutOut ＝ `+0x3A` 不是 0xFF 或 `+0x3B` 不是 0：已經放了索敵隊
 	// 出去，「索敵」不能再選。
 	ScoutOut bool `json:"scout_out"`
+
+	// 下面五格是艦隊層的「移動／戰鬥」命令寫進去的（`2583:0003`，
+	// `docs/re/120`–`122`）。原版對應 `+0x60`／`+0x62`（下令前的位置
+	// 備份）、`+0x64`／`+0x66`（要去的點）、`+0x4C`（抵達朝向）。
+	OriginX, OriginY int `json:"origin_x,omitempty"`
+	DestX, DestY     int `json:"dest_x,omitempty"`
+	TargetFacing     int `json:"target_facing,omitempty"`
+
+	// Ordered ＝ 這一支收到過移動／戰鬥命令（上面五格才有意義）。
+	Ordered bool `json:"ordered,omitempty"`
+
+	// Action 是艦隊記錄 `+0x48` 的低四位。「戰鬥」成功之後寫 1
+	// （`1CC5:08BD`）。
+	Action int `json:"action,omitempty"`
 }
 
 // NewBattleFleet 從艦隊記錄與算好的能力做出一支戰鬥用的艦隊。

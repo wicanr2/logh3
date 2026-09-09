@@ -526,6 +526,15 @@ type Game struct {
 	battleSupplyUnit   int
 	battleSupplyRepair bool
 
+	// 艦隊選單的「移動」／「戰鬥」是兩段互動（`docs/re/120`–`122`）：
+	// 先點目的地，再繞著它轉游標選抵達朝向。
+	fleetOrder       FleetOrderStage
+	fleetOrderUnit   int
+	fleetOrderBattle bool
+	fleetOrderX      int
+	fleetOrderY      int
+	fleetOrderFacing int
+
 	battleRally   []rules.RallySite
 	battlePlanets []rules.BattlePlanet
 	battleRand   *rules.Rand
@@ -857,6 +866,8 @@ func (g *Game) MoveMouse(x, y int) {
 	if g.state == StateMainMenu {
 		g.highlight = screen.RowAt(g.res.Menu, y)
 	}
+	// 艦隊命令選抵達朝向那一段，指標跟著游標繞目的地轉（`docs/re/122`）。
+	g.fleetOrderMouse(x, y)
 }
 
 // Click 按一下左鍵。
@@ -1120,6 +1131,10 @@ func (g *Game) RightClick(x, y int) {
 		}
 		if g.SupplyPickPending() {
 			g.cancelSupplyPick()
+			return
+		}
+		if g.FleetOrderStage() != FleetOrderNone {
+			g.cancelFleetOrder()
 			return
 		}
 		if g.CommandMenuOpen() {
