@@ -23,19 +23,20 @@ type RegionFlip struct {
 // FlipMessage 是報告第二行要印的那句話（`docs/re/247` 的訊息表）。
 type FlipMessage int
 
-// 四句候選。前兩句是**量到的**（收據 `chain3` 畫的就是 `FlipLostToEnemy`）；
-// 後兩句是**假設待驗**——它們在訊息表裡緊挨著前兩句（`ds:088B`／`ds:08BC`
-// 就排在 `ds:08DA`／`ds:08EE` 前面），語意也對得上「變成無主」的兩種方向，
-// 但沒有收據。
+// 四句話。四份收據各釘一句（`chain7`／`chain3`／`chain6`／`chain8`），
+// 選法也從 `056A:089D` 讀出來了（`docs/re/249`、`250`）。
 const (
 	FlipNone           FlipMessage = iota
-	FlipTakenByUs                  // ds:08DA　已被我方占領。          （量到）
-	FlipLostToEnemy                // ds:08EE　已被敵軍占領。          （量到）
-	FlipOurGripLost                // ds:088B　…部分地區已經無法掌控。（假設待驗）
-	FlipWePartlyLanded             // ds:08BC　部分行星我軍已成功進駐。（假設待驗）
+	FlipTakenByUs                  // ds:08DA　已被我方占領。
+	FlipLostToEnemy                // ds:08EE　已被敵軍占領。
+	FlipOurGripLost                // ds:088B　…部分地區已經無法掌控。
+	FlipWePartlyLanded             // ds:08BC　部分行星我軍已成功進駐。
 )
 
 // Message 回這一則對 `seat` 這個座位要印哪一句。
+//
+// 四條分支照原版 `056A:089D`（`docs/re/250`）：新擁有者是無主時看
+// 「**舊**擁有者是不是自己」，否則看「**新**擁有者是不是自己」。
 func (f RegionFlip) Message(seat int) FlipMessage {
 	switch {
 	case f.NewOwner == seat:
@@ -72,6 +73,14 @@ func (g *Game) FlipRegionName(f RegionFlip) []uint16 {
 // dismissFlip 收掉最前面那一則。全部看完之後才把後半段跑完
 // ——重建路徑表、32 格態勢，然後接回原本的流程。
 func (g *Game) dismissFlip() {
+	if f, ok := g.CurrentFlip(); ok && f.NewOwner != rules.RegionOwnerNone {
+		// 原版在組報告時就把 `+0x13` bit4 清掉（`056A:089D` 的
+		// `and 0EFh`），而且只在「新擁有者不是無主」那一路
+		// （`docs/re/250`）。之後 `refreshRegionPosture` 還會重推一次。
+		if rec := g.regionRecord(f.Region); rec != nil {
+			rec[regionFlagsOff] &^= 0x10
+		}
+	}
 	if len(g.pendingFlips) > 0 {
 		g.pendingFlips = g.pendingFlips[1:]
 	}
