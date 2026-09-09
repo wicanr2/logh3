@@ -92,3 +92,48 @@ func TestRefitLeavesFullFleetAlone(t *testing.T) {
 		t.Errorf("待命部隊被動過：%v → %v", before, RegionShips(rec, 1))
 	}
 }
+
+// TestRefitSacrificesStaleSlot 釘「編制已滿要犧牲一組」那一條
+// （原版 `2D76:0D40` ＋ `2D76:0DB2`，收據 `refit3`／`docs/re/232`）。
+//
+// 把提督 52 那一支的組1 的隊形槽 `-poke` 成 99（樣板裡沒有這個槽），
+// 編制仍然是 4／4。整補時樣板第 1 格要的槽 10 找不到、編制又滿了，
+// 所以挑「隊形槽已經不在樣板裡」的那一組犧牲掉，重建成槽 10。
+//
+//	前  組0 艦種0 槽20  組1 艦種0 槽**99**  組2 艦種0 槽12  組3 艦種6 槽29
+//	後  組0 艦種0 槽20  組1 艦種0 槽**10**  組2 艦種0 槽12  組3 艦種6 槽29
+//	待命部隊前後相同——拆掉還回去 3000、重建又拿走 3000。
+func TestRefitSacrificesStaleSlot(t *testing.T) {
+	kinds, tt := kindTable(t), compTables(t)
+	rec := make([]byte, RegionRecord)
+	rec[0x12] = 1
+	for k, v := range []int{3000, 0, 4000, 0, 3000, 0, 0} {
+		putStock(rec, 1, k, v)
+	}
+	before := RegionShips(rec, 1)
+	groups := []FleetGroup{
+		{Kind: 0, Ships: 3000, Full: 3000, Slot2: 0, Slot3: 20},
+		{Kind: 0, Ships: 3000, Full: 3000, Slot2: 0, Slot3: 99},
+		{Kind: 0, Ships: 3000, Full: 3000, Slot2: 0, Slot3: 12},
+		{Kind: 6, Ships: 1000, Full: 1000, Slot2: 6, Slot3: 29},
+	}
+	in := BuildInput{Region: rec, Faction: 1, Kinds: kinds, Tables: tt,
+		AdmiralKind: 0, ClassKey: 4}
+	got := Refit(in, groups, 4)
+
+	want := []struct{ kind, ships, slot3 int }{
+		{0, 3000, 20}, {0, 3000, 10}, {0, 3000, 12}, {6, 1000, 29},
+	}
+	if len(got) != len(want) {
+		t.Fatalf("整補之後有 %d 組，收據是 %d", len(got), len(want))
+	}
+	for i, w := range want {
+		if got[i].Kind != w.kind || got[i].Ships != w.ships || got[i].Slot3 != w.slot3 {
+			t.Errorf("組%d ＝ 艦種 %d／%d 艘／槽 %d，收據是 %d／%d／%d",
+				i, got[i].Kind, got[i].Ships, got[i].Slot3, w.kind, w.ships, w.slot3)
+		}
+	}
+	if s := RegionShips(rec, 1); !equalInts(s, before) {
+		t.Errorf("待命部隊 ＝ %v，收據是前後相同的 %v", s, before)
+	}
+}
