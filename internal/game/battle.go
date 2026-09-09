@@ -287,15 +287,26 @@ func (g *Game) Withdraw() {
 	g.EndBattle()
 }
 
-// EndBattle 收掉戰場：把剩下的艘數寫回艦艇池，重算戰力，回戰略地圖。
+// EndBattle 收掉戰場：把剩下的艘數寫回艦艇池、把行星狀態寫回行星表，
+// 重算戰力，回戰略地圖。
 //
 // **星域不會易主**：兩份收據量過了（`docs/re/105`），連把一方整個抹掉
 // 讓戰鬥提早結束，星域記錄的 `+0x12` 都沒有被寫。所以這裡不動星域歸屬
-// 不是偷懶，是照原版。戰後會不會撤退、分數怎麼結算還沒解。
+// 不是偷懶，是照原版——原版是**回合結束**依行星重算的（`2703:159B`、
+// `docs/re/244`）。
+//
+// **行星那一半要寫回來**：原版整場都直接改行星記錄，佔領、防衛力損失、
+// 要塞砲狀態與被打掉的存量打完就留在那裡（`docs/re/150`）。remake 為了
+// 讓戰場層是純函式而先複製一份，所以這裡補寫回去。
+//
+// 戰後會不會撤退、分數怎麼結算還沒解。
 func (g *Game) EndBattle() {
 	if g.slot != nil {
 		g.slot.ApplyBattleResult(g.battleUnits)
 		g.fleets = g.slot.Fleets(g.res.Weights)
+	}
+	if g.res.Planets != nil {
+		g.res.Planets.ApplyBattlePlanets(g.battlePlanets)
 	}
 	g.state = StateCommandPhase
 }

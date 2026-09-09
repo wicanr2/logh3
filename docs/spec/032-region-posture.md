@@ -1,6 +1,6 @@
 # SPEC 032 — 星域態勢重算（`+0x13` 與 `+0x24`）
 
-狀態：**READY**（純函式已實作並通過同狀態驗證；**接進回合流程還沒做**，見末節）
+狀態：**CONFORMED**（純函式通過 32 格同狀態驗證，已接進 `advanceTurn`）
 證據：[`docs/re/243`](../re/243-who-fills-the-distance-table.md)、
 [`244`](../re/244-region-posture-recompute.md)、
 [`docs/internals/22`](../internals/22-stellar-dt.md)、
@@ -60,9 +60,10 @@ bit0 的門檻是 `0x400`（`k >= 1`）。**別跟 `2B99:0392` 的 `0x800` 搞�
 同狀態驗證（`TestPosturesMatchOracle`）：拿 `s3ai6.bin` 那一刻的擁有者與
 18 支在用艦隊重算，32 格的 `+0x24`、bit0、bit2、bit3 **逐格與原版相同**。
 
-## 還沒做：接進回合流程
+## 接進回合流程
 
-`Postures` 目前沒有呼叫者。要接上得在 `advanceTurn` 的回合結束處，
-**在易主處理之後**，把 32 格的 `+0x13`／`+0x24` 寫回 `g.res.Stellar`。
-那會改變 AI 的行為（`regionContested` 一變，`DecisionPass` 走的分支就變），
-所以要有一份「跑一個回合、比對 32 格」的收據才動 production path。
+`Game.recomputeRegions()` 在 `advanceTurn` 的回合結束處呼叫它，**在依行星
+重算星域擁有者之後**，把 32 格的 `+0x13`／`+0x24` 寫回 `g.res.Stellar`
+（整條鏈見 [`docs/spec/033`](033-region-ownership-chain.md)）。
+
+`advanceTurn` 遇到戰鬥會提早 `return`，那條路徑跳過這一段——見 `033` 末節。

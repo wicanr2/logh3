@@ -75,6 +75,26 @@ func ReadPlanetStock(rec []byte) (PlanetStock, bool) {
 	return s, true
 }
 
+// WritePlanetStock 把存量寫回一筆行星記錄（`ReadPlanetStock` 的反向）。
+func WritePlanetStock(rec []byte, s PlanetStock) bool {
+	if len(rec) < PlanetRecord {
+		return false
+	}
+	putLE32(rec[planetMissiles:], s.Missiles)
+	putLE32(rec[planetFighters:], s.Fighters)
+	for k := range s.Ships {
+		putLE32(rec[planetKindStock+k*4:], s.Ships[k])
+	}
+	return true
+}
+
+func putLE32(b []byte, v int) {
+	if len(b) < 4 {
+		return
+	}
+	b[0], b[1], b[2], b[3] = byte(v), byte(v>>8), byte(v>>16), byte(v>>24)
+}
+
 // PlanetSupply 用行星的存量補給一個分隊，回實際給出的飛彈與艦載機。
 // 滿載量的算法與補給艦那支完全相同（`docs/re/131`）。
 func PlanetSupply(t *ShipKindTable, s *PlanetStock, to *BattleUnit) (missiles, fighters int) {

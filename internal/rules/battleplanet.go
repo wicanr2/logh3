@@ -78,9 +78,9 @@ func (p *Planets) BattlePlanetsFor(region int, sites []PlanetSite) []BattlePlane
 			Index: i, Owner: p.Owner(i),
 			X: sites[k].X, Y: sites[k].Y,
 			Defence: p.Defence(i), Fortress: p.Fortress(i),
-			GunState:  int(p.rec(i)[planetGunState]),
-			GunAim:    int(le32(p.rec(i)[planetGunAim:]) & 0xFFFF),
-			Stock:     planetStockOf(p.rec(i)),
+			GunState: int(p.rec(i)[planetGunState]),
+			GunAim:   int(binary.LittleEndian.Uint16(p.rec(i)[planetGunAim:])),
+			Stock:    planetStockOf(p.rec(i)),
 
 			NameBytes:  planetNameOf(p.rec(i)),
 			DefenceMax: int(binary.LittleEndian.Uint16(p.rec(i)[0x16:])),
@@ -107,4 +107,29 @@ func planetNameOf(rec []byte) []byte {
 func planetStockOf(rec []byte) PlanetStock {
 	s, _ := ReadPlanetStock(rec)
 	return s
+}
+
+// ApplyBattlePlanets 把一場戰鬥結束時的行星狀態寫回行星表。
+//
+// **原版沒有「戰場副本」這回事**——它整場都直接改行星記錄，所以佔領、
+// 防衛力損失、要塞砲狀態與被打掉的存量打完就留在那裡（收據 `docs/re/150`
+// 量到 `+0x11` 從 0 變 1）。remake 為了讓戰場層是純函式而先複製一份，
+// 那份不寫回來就等於每場戰鬥都從原始狀態重開。
+//
+// 星域的 `+0x12` **不在這裡寫**：原版是回合結束依行星重算的
+// （`2703:159B`、`docs/re/17`、`docs/re/244`），戰鬥結束當下不動
+// （`docs/re/105` 兩份收據）。
+func (p *Planets) ApplyBattlePlanets(bp []BattlePlanet) {
+	for _, b := range bp {
+		o := PlanetHeader + b.Index*PlanetRecord
+		if b.Index < 0 || o+PlanetRecord > len(p.Data) {
+			continue
+		}
+		r := p.rec(b.Index)
+		r[planetOwner] = byte(b.Owner)
+		binary.LittleEndian.PutUint16(r[planetDefence:], uint16(b.Defence))
+		r[planetGunState] = byte(b.GunState)
+		binary.LittleEndian.PutUint16(r[planetGunAim:], uint16(b.GunAim))
+		WritePlanetStock(r, b.Stock)
+	}
 }
