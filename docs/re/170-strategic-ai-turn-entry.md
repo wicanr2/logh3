@@ -100,3 +100,4 @@ ds:D60E = 0
 （另一條填 `ds:D50E` 的路）、`ds:D58E`／`ds:D5AE` 的寫入點、`ds:D5CE`。
 
 > `2E54:08D2` 的正確位址是 `2E54:08D3`（`docs/re/171`）。
+> `ds:D58E`／`ds:D5AE`／`ds:D54E`／`ds:D5CE` 的關係與算式：`docs/re/172`。
