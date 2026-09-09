@@ -140,5 +140,31 @@
     }
    ]
   }
+ ],
+ "messages": [
+  {
+   "name": "move_blocked",
+   "offset": "ds:4A24",
+   "kind": 2,
+   "colour": 151,
+   "text": "這是無法行動的地方。",
+   "bytes": "b36fac4fb54caa6ba6e6b0caaabaa661a4e8a1432020"
+  },
+  {
+   "name": "supply_none",
+   "offset": "ds:3F14",
+   "kind": 2,
+   "colour": 151,
+   "text": "沒有需要補給的船艦。",
+   "bytes": "a853a6b3bbddad6eb8c9b5b9aabab2eec4a5a143"
+  },
+  {
+   "name": "repair_none",
+   "offset": "ds:403E",
+   "kind": 2,
+   "colour": 151,
+   "text": "沒有需要修理的船艦在附近。",
+   "bytes": "a853a6b3bbddad6eadd7b27aaabab2eec4a5a662aafeaaf1a143"
+  }
  ]
 }

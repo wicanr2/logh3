@@ -325,6 +325,12 @@ type Resources struct {
 	BattleData  *screen.BattleDataSpec
 	FleetDetail *screen.FleetDetailSpec
 
+	// MessageBox 是訊息框的版面，FrameTiles 是 `FRAME.BLK` 的外框圖塊
+	// （`docs/internals/47`）。缺原版檔案時 FrameTiles 是 nil，訊息框
+	// 就不畫——**不用代用品**。
+	MessageBox *screen.MessageBoxSpec
+	FrameTiles *ui.FrameTiles
+
 	// ShipKinds 是艦種屬性表（`docs/internals/40`）。
 	ShipKinds *rules.ShipKindTable
 
@@ -536,6 +542,12 @@ type Game struct {
 	fleetOrderX      int
 	fleetOrderY      int
 	fleetOrderFacing int
+
+	// msgOn ＝ 訊息框開著（模態）。msgKind 是樣板種類，msgCodes 是那一行
+	// 字的字碼（`docs/re/138`）。
+	msgOn    bool
+	msgKind  int
+	msgCodes []uint16
 
 	// battleGunOn ＝ 正在替要塞砲指定目標，battleGun 是哪一座
 	// （`docs/re/134`）。**用旗標而不是 -1**：`Game` 的零值要是
@@ -2476,6 +2488,8 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 				g.battleDataTab, g.battleDataRows(g.battleDataTab))
 		}
 	}
+	// 訊息框畫在最上面（模態）。
+	g.drawMessage(fb)
 	return fb
 }
 

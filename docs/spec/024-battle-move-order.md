@@ -32,10 +32,14 @@
 | 差異 | 理由 |
 |---|---|
 | remake 不畫那兩個範圍圖形 | 內圈的公式量到了（`docs/re/120`，偏差 0.4 像素），外形的逐點重現還沒做 |
-| 目的地不合法時 remake 只取消，不跳訊息 | 原版跳 `ds:4A24`「這是無法行動的地方。」。整個訊息框（框 ＋ 字 ＋「確認」按鈕）已經畫得出來，與收據 `s3msg` 逐位元組相同（42,240 個像素 0 差異，`docs/re/138`）。**還缺關閉時機**（`3826:023B` 還沒讀），所以還沒接上玩家路徑 |
 | 旗艦的「移動」還不能用 | 要先逆向抵達朝向的選擇器 |
 
 ## 驗證
 
 `TestMoveOrderSetsTarget`（走完整條玩家路徑：點分隊 → 點「移動」 →
 點目的地）、`TestMoveOrderRightClickCancels`、`TestMoveTargetRejectsOutOfField`。
+
+目的地不合法時跳的「這是無法行動的地方。」（`ds:4A24`）已經照原版畫、
+照原版關（模態，只認按鈕上的左鍵；關掉之後命令作廢）：
+`TestMessageBoxMatchesOracle`（與收據 `s3msg` 逐位元組，42,240 個像素
+0 差異）＋ `TestMoveBlockedShowsMessage`（玩家路徑）。

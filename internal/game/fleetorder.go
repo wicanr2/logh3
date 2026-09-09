@@ -49,8 +49,9 @@ func (g *Game) fleetOrderClick(x, y int) bool {
 	case FleetOrderPoint:
 		wx, wy, ok := g.battleWorldAt(x, y)
 		if !ok {
-			// 與分隊的「移動」同一條檢查鏈；原版會跳「這是無法行動的
-			// 地方。」，remake 只取消（`docs/spec/024`）。
+			// 與分隊的「移動」同一條檢查鏈：原版跳「這是無法行動的
+			// 地方。」再整個作廢（`docs/re/121`、`138`）。
+			g.showMessage("move_blocked")
 			g.cancelFleetOrder()
 			return true
 		}

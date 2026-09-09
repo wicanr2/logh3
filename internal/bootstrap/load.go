@@ -252,6 +252,17 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	msgBox, err := screen.LoadMessageBoxSpec(filepath.Join(data, "message-box.json"))
+	if err != nil {
+		return nil, err
+	}
+	// `FRAME.BLK` 是原版素材，玩家自備；缺了就不畫訊息框（不用代用品）。
+	var frameTiles *ui.FrameTiles
+	if b, err := os.ReadFile(filepath.Join(orig, "FRAME.BLK")); err == nil {
+		if ft, err := ui.LoadFrameTiles(b); err == nil {
+			frameTiles = ft
+		}
+	}
 	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph, Weights: weights, AdmiralNames: names, StarListOrder: starOrder,
 		UnrestParams: rules.UnrestParams{
 			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
@@ -270,6 +281,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
 		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds,
+		MessageBox: msgBox, FrameTiles: frameTiles,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
 

@@ -324,9 +324,9 @@ func (g *Game) cancelMoveTarget() { g.battleMove = false }
 
 // moveTargetClick 處理選目的地時的左鍵；回有沒有吃掉這一下。
 //
-// 點在戰場外、超出世界範圍或那一格過不去，原版會跳「這是無法行動的
-// 地方。」再回到戰場（`ds:4A24`）。那個訊息框的版面還沒量，所以這裡
-// 只是取消——**差異記在規格裡，沒有猜版面**。
+// 點在戰場外、超出世界範圍或那一格過不去，原版跳「這是無法行動的
+// 地方。」（`ds:4A24`）**然後回 `0xFFFF`**，也就是整個命令作廢
+// （`docs/re/121`）。訊息框照畫（`docs/re/138`）。
 func (g *Game) moveTargetClick(x, y int) bool {
 	if !g.battleMove {
 		return false
@@ -338,6 +338,7 @@ func (g *Game) moveTargetClick(x, y int) bool {
 	}
 	wx, wy, ok := g.battleWorldAt(x, y)
 	if !ok {
+		g.showMessage("move_blocked")
 		return true
 	}
 	g.battleUnits[unit].TargetX, g.battleUnits[unit].TargetY = wx, wy

@@ -175,6 +175,10 @@ func (g *Game) AdvanceBattleTurn() {
 //
 // 第二項「資料」開的是什麼還沒逆向，所以只把選單關掉。
 func (g *Game) battleClick(x, y int) {
+	// 訊息框是模態的，開著的時候什麼都不用往下傳（`docs/re/138`）。
+	if g.messageClick(x, y) {
+		return
+	}
 	if g.battleDataClick(x, y) {
 		return
 	}

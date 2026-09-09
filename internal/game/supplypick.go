@@ -55,11 +55,15 @@ func (g *Game) planetSupplyCandidates(planet int) []int {
 
 // beginSupplyPick 進入選對象的狀態；一個候選都沒有就不進去。
 //
-// 原版這時會跳「沒有需要補給的船艦。」（`ds:3F14`）／「沒有需要修理的
-// 船艦在附近。」（`ds:403E`）的訊息框——版面還沒量，所以這裡只是不進去
-// （比照 `docs/spec/024` 的作法，差異記在規格裡）。
+// 一個都沒有時原版跳「沒有需要補給的船艦。」（`ds:3F14`）／「沒有需要
+// 修理的船艦在附近。」（`ds:403E`）（`docs/re/131`、`138`）。
 func (g *Game) beginSupplyPick(unit int, repair bool) {
 	if len(g.supplyCandidates(unit, repair)) == 0 {
+		if repair {
+			g.showMessage("repair_none")
+		} else {
+			g.showMessage("supply_none")
+		}
 		return
 	}
 	g.battleSupply, g.battleSupplyUnit, g.battleSupplyRepair = true, unit, repair

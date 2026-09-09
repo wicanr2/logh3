@@ -1,6 +1,7 @@
 package screen
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -58,6 +59,70 @@ type MessageBoxSpec struct {
 			Text  string   `json:"text"`
 		} `json:"items"`
 	} `json:"children"`
+
+	// Messages 是三句訊息（`docs/re/121`、`131`）。`bytes` 是原版資料段裡
+	// 那一串 Big5，照抄。
+	Messages []struct {
+		Name   string `json:"name"`
+		Offset string `json:"offset"`
+		Kind   int    `json:"kind"`
+		Colour int    `json:"colour"`
+		Text   string `json:"text"`
+		Bytes  string `json:"bytes"`
+	} `json:"messages"`
+}
+
+// Message 回名為 name 的那一句：訊息框種類與字碼。
+//
+// 半形（高位元組 < 0x80，例如原版字串尾巴那兩個空白）跳過——底色已經
+// 由框那一趟填好，畫空白是沒有作用的。
+func (s *MessageBoxSpec) Message(name string) (kind int, codes []uint16, ok bool) {
+	for _, m := range s.Messages {
+		if m.Name != name {
+			continue
+		}
+		raw, err := hex.DecodeString(m.Bytes)
+		if err != nil {
+			return 0, nil, false
+		}
+		for i := 0; i+1 < len(raw); i += 2 {
+			c := uint16(raw[i])<<8 | uint16(raw[i+1])
+			if c < 0x8000 {
+				continue
+			}
+			codes = append(codes, c)
+		}
+		return m.Kind, codes, true
+	}
+	return 0, nil, false
+}
+
+// MessageBoxButtonAt 回 (x, y) 有沒有落在第 kind 種訊息框的某顆按鈕上，
+// 以及那顆按鈕的編號（`紀錄[+5]`，0 ＝ 確認／決定、1 ＝ 中止）。
+//
+// 命中範圍就是按鈕那幾格本身；左右那兩格只是端點的裝飾，原版的命中測試
+// 走的是子元件自己的格範圍（`37A9:01F9` → `341B:44A`）。
+func (s *MessageBoxSpec) MessageBoxButtonAt(kind, x, y int) (int, bool) {
+	t, ok := s.template(kind)
+	if !ok {
+		return 0, false
+	}
+	ox := (t.cellX + 1) * ui.FrameTileW
+	oy := (t.cellY+1)*ui.FrameTileH + ui.FrameCellOriginY
+	for _, c := range s.Children {
+		if c.Kind != kind {
+			continue
+		}
+		for i, it := range c.Items {
+			bx := ox + it.CellX*ui.FrameTileW
+			by := oy + it.CellY*ui.FrameTileH
+			if x >= bx && x < bx+it.Cols*ui.FrameTileW &&
+				y >= by && y < by+it.Rows*ui.FrameTileH {
+				return i, true
+			}
+		}
+	}
+	return 0, false
 }
 
 // LoadMessageBoxSpec 讀訊息框的版面。
