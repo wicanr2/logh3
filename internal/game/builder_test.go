@@ -290,12 +290,14 @@ func TestFirstAITurnMatchesReceipt(t *testing.T) {
 	// 收據上三支：提督 47／52／55，類別鍵 0C／04／0B。
 	// 建出來的順序是類別 0 → 1 → 2（開局四類平手照 0 1 2 3），
 	// 亂數從 D3DC167E 起算得到鍵 04／0B／0C。
+	// 運用（`+0x47`）與維持費（`+0x0A`）也是收據上的
+	// （`docs/re/218`、`docs/re/224`）。
 	want := []struct {
-		admiral, key, target int
+		admiral, key, target, ops, upkeep int
 	}{
-		{52, 0x04, 24}, // 階段二打無主
-		{55, 0x0B, 24}, // 同上，湊滿兩支
-		{47, 0x0C, 15}, // 階段三的指派
+		{52, 0x04, 24, 128, 85},  // 階段二打無主
+		{55, 0x0B, 24, 120, 124}, // 同上，湊滿兩支
+		{47, 0x0C, 15, 102, 217}, // 階段三的指派
 	}
 	for i, w := range want {
 		f := g.fleets[i]
@@ -306,6 +308,16 @@ func TestFirstAITurnMatchesReceipt(t *testing.T) {
 		if f.Morale != rules.NewFleetMorale {
 			t.Errorf("第 %d 支的士氣 ＝ %d，新編艦隊應該是 100", i, f.Morale)
 		}
+		if f.Operations != w.ops {
+			t.Errorf("第 %d 支的運用 ＝ %d，收據是 %d", i, f.Operations, w.ops)
+		}
+		if u := rules.FleetUpkeep(g.res.ShipKinds, 1, f.Composition, f.Operations); u != w.upkeep {
+			t.Errorf("第 %d 支的維持費 ＝ %d，收據是 %d", i, u, w.upkeep)
+		}
+	}
+	// 合計就是收據的 `ds:8F72[同盟]`。
+	if got, want := g.fleetUpkeep(1), 426; got != want {
+		t.Errorf("同盟的艦隊維持費 ＝ %d，收據是 %d", got, want)
 	}
 	if len(g.fleets) != 3 {
 		t.Errorf("建了 %d 支，收據是 3", len(g.fleets))

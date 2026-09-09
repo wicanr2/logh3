@@ -208,8 +208,8 @@ func (g *Game) newComposition(faction, region, admiral, classKey int) []rules.Fl
 		return nil
 	}
 	return rules.BuildComposition(rules.BuildInput{
-		Region:       rec,
-		RegionOwner:  int(rec[0x12]),
+		Region: rec,
+
 		Faction:      faction,
 		Kinds:        g.res.ShipKinds,
 		Tables:       g.res.Composition,

@@ -57,7 +57,7 @@ func TestBuildCompositionDeductsStock(t *testing.T) {
 	}
 
 	got := BuildComposition(BuildInput{
-		Region: rec, RegionOwner: 0, Faction: 0, Kinds: kinds, Tables: tt,
+		Region: rec, Faction: 0, Kinds: kinds, Tables: tt,
 		AdmiralLevel: 20, AdmiralKind: 0, ClassKey: 0,
 	})
 	if len(got) != FleetSlots(20) {
@@ -94,7 +94,7 @@ func TestBuildCompositionStopsWhenStockRunsOut(t *testing.T) {
 	kinds, tt := kindTable(t), compTables(t)
 	rec := make([]byte, RegionRecord)
 	got := BuildComposition(BuildInput{
-		Region: rec, RegionOwner: 0, Faction: 0, Kinds: kinds, Tables: tt,
+		Region: rec, Faction: 0, Kinds: kinds, Tables: tt,
 		AdmiralLevel: 39, AdmiralKind: 0, ClassKey: 0,
 	})
 	if len(got) != 1 {
@@ -113,7 +113,7 @@ func TestBuildCompositionSubstitutesKind(t *testing.T) {
 	// 第一個就是 2，`docs/re/216`）。
 	putStock(rec, 0, 2, 10000)
 	got := BuildComposition(BuildInput{
-		Region: rec, RegionOwner: 0, Faction: 0, Kinds: kinds, Tables: tt,
+		Region: rec, Faction: 0, Kinds: kinds, Tables: tt,
 		AdmiralLevel: 20, AdmiralKind: 2, ClassKey: 0,
 	})
 	if len(got) < 2 {

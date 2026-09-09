@@ -97,9 +97,6 @@ type BuildInput struct {
 	// Region 是**執行期星域記錄**，一筆 `RegionRecord`。
 	// **會被就地改寫**——每一組都從這裡扣存量（`docs/re/215`）。
 	Region []byte
-	// RegionOwner 是那一格的擁有者（`+0x12`）。樣板給 0 而擁有者是 1 時
-	// 改用 1（`docs/re/216`）。
-	RegionOwner int
 	// Faction 是艦隊的陣營，Kinds 是艦種屬性表（滿編艘數的來源）。
 	Faction int
 	Kinds   *ShipKindTable
@@ -175,27 +172,33 @@ func (in BuildInput) take(kind, slot2, slot3 int) FleetGroup {
 //
 // 第 0 組是旗艦（`297B:0066` 填，艦種取提督的 `+0x08` 低四位），
 // 第 1 組起照 `ds:2BC6` 的樣板、艦種不夠就照 `ds:295C` 換
-// （`0FF4:11F4`）。**會就地扣掉 `Region` 的艦艇存量。**
+// （`0FF4:11F4`，`docs/re/224`）：
+//
+//	旗艦的艦種 == 1 且 樣板給 0 → a = 1
+//	v = 那一格這個艦種編得出幾組
+//	(a == 旗艦的艦種 且 v < 4) 或 v == 0 → 照 ds:295C 換一個
+//
+// **會就地扣掉 `Region` 的艦艇存量。**
 //
 // **沒有做排序**：原版填完會用 `0FF4:0FF2` 對第 1 組起排一次，
 // 那個比較器還沒讀（`docs/re/213`）。組數與艘數不受影響。
-//
-// **沒有做 `a == 星域擁有者 且 v < 4` 那一段**：`0FF4:11F4` 裡還有一個
-// 未讀的分支（`docs/re/216`）。
 func BuildComposition(in BuildInput) []FleetGroup {
 	n := FleetSlots(in.AdmiralLevel)
 	out := make([]FleetGroup, 0, n)
-	out = append(out, in.take(in.AdmiralKind, 0, 0)) // 旗艦
 	if in.Tables == nil || in.ClassKey < 0 || in.ClassKey >= len(in.Tables.Template) {
-		return out
+		return append(out, in.take(in.AdmiralKind, in.AdmiralKind, 0))
 	}
 	tpl := in.Tables.Template[in.ClassKey]
+	// 旗艦那一組的 `[3]` 取樣板第 0 組的（十六個鍵都是 20，所以收據
+	// 分不出它是查表還是寫死）。
+	out = append(out, in.take(in.AdmiralKind, in.AdmiralKind, tpl[0][1]))
 	for i := 1; i < n && i < len(tpl); i++ {
 		a := tpl[i][0]
-		if in.RegionOwner == 1 && a == 0 {
+		if in.AdmiralKind == 1 && a == 0 {
 			a = 1
 		}
-		if in.groups(a) == 0 {
+		v := in.groups(a)
+		if (a == in.AdmiralKind && v < 4) || v == 0 {
 			s := in.substitute(a)
 			if s < 0 {
 				break // 換不到 → 這一支就編到這裡
