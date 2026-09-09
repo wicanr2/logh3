@@ -1094,6 +1094,12 @@ func (g *Game) Click(x, y int) {
 						Faction:  g.faction,
 						Admiral:  g.detailAdmiral,
 						Adjutant: rules.Adjutant(g.admiralRecord(g.detailAdmiral)),
+						// 應有組數由提督等級決定（原版 `297B:0066` →
+						// `297B:0209`，`docs/re/214`）。**玩家這條路與 AI
+						// 建艦隊走同一支** `297B:0066`（兩個呼叫者：
+						// `0x0814F` 與 `0x2DE35`），所以規則相同。
+						Expected: rules.FleetSlots(
+							rules.AdmiralLevel(g.admiralRecord(g.detailAdmiral))),
 						// 編成完停在自己的首都，還沒有移動命令
 						// （`docs/re/70` 的收據 `dec1` 就是這個狀態）。
 						Region: rules.CapitalRegion(g.faction),
