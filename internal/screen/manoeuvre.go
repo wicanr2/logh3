@@ -106,3 +106,45 @@ func abs(v int) int {
 	}
 	return v
 }
+
+// 選抵達朝向時，目的地上那個指向性的十字（原版描述 `[+6] ＝ 4`、
+// `3870:042F`，`docs/re/122`）。
+//
+// 兩條線，都依朝向旋轉：沿朝向從後方 FacingCrossBack 拉到前方
+// FacingCrossFront，加上垂直方向 ±FacingCrossSide。遮罩是 0xFFFF
+// ——**實線**；畫面上看起來斷斷續續是 XOR 疊在不同底色上的結果。
+const (
+	FacingCrossInk   uint8 = 4
+	FacingCrossFront       = 0x40 // 描述 [+8]
+	FacingCrossBack        = 0x20 // 描述 [+0A]
+	FacingCrossSide        = 0x20 // 描述 [+0C]
+	FacingCrossBias        = 7    // 中心 ＝ 選到的點各 ＋7
+)
+
+// DrawFacingCross 把那個十字畫在目的地上。tx／ty 是**世界座標**。
+func DrawFacingCross(s *BattleSpec, fb *gfx.Framebuffer,
+	tx, ty, facing int, v BattleView) {
+	if s == nil || fb == nil {
+		return
+	}
+	cx := s.Field.X + tx + FacingCrossBias - v.Col*s.Field.TileW
+	cy := s.Field.Y + ty + FacingCrossBias - v.Row*s.Field.TileH
+	clip := func(x, y int) bool {
+		return x >= s.Field.X && y >= s.Field.Y &&
+			x < s.Field.X+s.Field.Cols*s.Field.TileW &&
+			y < s.Field.Y+s.Field.Rows*s.Field.TileH
+	}
+	for _, seg := range FacingCrossSegments(facing) {
+		xorLine(fb, cx+seg[0], cy+seg[1], cx+seg[2], cy+seg[3],
+			FacingCrossInk, clip)
+	}
+}
+
+// FacingCrossSegments 回兩條線的端點（相對中心的位移）。
+func FacingCrossSegments(facing int) [2][4]int {
+	ax, ay := rules.Rotate256(-FacingCrossBack, 0, facing)
+	bx, by := rules.Rotate256(FacingCrossFront, 0, facing)
+	cx, cy := rules.Rotate256(0, -FacingCrossSide, facing)
+	dx, dy := rules.Rotate256(0, FacingCrossSide, facing)
+	return [2][4]int{{ax, ay, bx, by}, {cx, cy, dx, dy}}
+}

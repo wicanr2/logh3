@@ -2407,11 +2407,16 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	}
 	// 艦隊選點時畫兩個範圍圖形（`docs/re/120`、`docs/re/135`）。
 	// 兩個都是 XOR 上去的，所以要畫在單位與格線之後。
-	if g.fleetOrder == FleetOrderPoint {
+	if g.fleetOrder != FleetOrderNone {
 		if f := g.orderedFleetForRange(); f != nil {
 			screen.DrawManoeuvreRange(g.res.Battle, fb, f.cx, f.cy,
 				f.turn, f.dist, f.facing, g.battleView)
 		}
+	}
+	// 選抵達朝向時，目的地上多一個指向性的十字（`docs/re/122`）。
+	if g.fleetOrder == FleetOrderFacing {
+		screen.DrawFacingCross(g.res.Battle, fb,
+			g.fleetOrderX, g.fleetOrderY, g.fleetOrderFacing, g.battleView)
 	}
 	// 「編隊」選格子時，空格子各畫一個標記（`docs/internals/46`）。
 	// 原版是把標記掛進顯示串列再整張重畫，分隊在標記之後畫上去
