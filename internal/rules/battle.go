@@ -360,9 +360,12 @@ func atan256(dx, dy int) int {
 	ax, ay := abs32(dx), abs32(dy)
 	var a int
 	switch {
-	case ax == 0 && ay == 0:
-		return 0
 	case ax == 0:
+		// **(0,0) 也回 64。** 原版 `2BE1:011D` 只看 dx 是不是 0：是就把
+		// 比值當成 0xFFFF 去查反正切表，得到 64，dy 是多少都一樣。
+		// 收據 `s3gunfire2` 裡有一支分隊剛好站在要塞正上方（距離 0），
+		// 回 0 會讓防禦係數算成 55 而不是 50，量從 3364 掉到 1602
+		// （`docs/re/148`）。
 		a = 64
 	default:
 		// 在 0–64 裡找角度，判準是 tan 的比較（全部化成乘法，不做除法）。

@@ -30,25 +30,6 @@ func FortressRange(defenceMax int) (semiMajor, semiMinor int) {
 	return semiMajor, semiMajor / 4
 }
 
-// FortressFocalDistance 回焦點到橢圓中心的距離。
-//
-// **要塞在焦點上，不在中心。** 原版把中心算成「焦點 ＋ 沿瞄準方位走
-// c 像素」（`165F:0A71` ＝ `3870:0614` 算 c 之後交給 `3A92:0001` 旋轉），
-// 所以射程在瞄準的那一側長、背面短。c ＝ √(長半軸² − 短半軸²)
-// **無條件捨去**：收據 `s3fort` 的 96／24 量到 92，四捨五入會得到 93
-// （`docs/re/145`）。
-func FortressFocalDistance(semiMajor, semiMinor int) int {
-	d := semiMajor*semiMajor - semiMinor*semiMinor
-	if d <= 0 {
-		return 0
-	}
-	c := 0
-	for (c+1)*(c+1) <= d {
-		c++
-	}
-	return c
-}
-
 // FortressGunReady 回要塞砲現在能不能重新瞄準：狀態只有 0（待命）
 // 與 3（已瞄準）兩種可以（`1D9E:0247`）。
 func FortressGunReady(state int) bool { return state == 0 || state == 3 }
