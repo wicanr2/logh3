@@ -12,29 +12,46 @@ const BuildPlanRows = 7
 // （`docs/re/12`）。先前以為一次 2%，那是同一組按壓時間剛好連發兩次。
 const BuildPlanStep = 1
 
-// UnitPrices 是各列的單價，**兩個陣營各一份**。一列的預算只能買整數艘，
-// 除不盡的零頭退回餘額——餘額那一列的金額就是這樣來的，不是
-// 「建造費 × 餘額百分比」。
-//
-// 帝國那一份的量法：把百分比陣列直接寫進記憶體，一次只讓一列有預算，
-// 從餘額反推那一列實際花掉多少，再用兩個不同百分比取最大公因數夾出
-// 單價（`docs/re/12`）。
-//
-// 同盟那一份量自收據 `planAlly`（`docs/re/62`）：畫面上的金額 a 與船艦數
-// 給了 `⌊a/p⌋ ＝ 船艦數/10`，每一列都把 p 夾成唯一的整數。七列的
-// 「餘額 32」也與這一組相符——換成帝國那一組會算出 30。
-var UnitPrices = [2][BuildPlanRows]int{
-	{8, 12, 4, 24, 4, 7, 22},
-	{9, 14, 5, 23, 3, 7, 24},
+// BasePrices 是各列的**基價**，**兩個陣營各一份** ＝ 艦種表
+// `ds:4E3A + 陣營×208 + 艦種×26` 的 `+0x02`（`docs/internals/40`）。
+// 真正用來除的單價要再過一次參謀（見 `UnitPrice`）。
+var BasePrices = [2][BuildPlanRows]int{
+	{10, 14, 5, 27, 5, 8, 25},
+	{10, 15, 6, 25, 4, 8, 26},
 }
 
-// UnitPrice 回一個陣營某一列的單價；問不到就回 0。
-func UnitPrice(faction, row int) int {
-	if faction < 0 || faction >= len(UnitPrices) || row < 0 || row >= BuildPlanRows {
+// DefaultStaffOps 是「問不到軍事專任參謀」時用的營運值。原版沒有這個
+// 狀態（幕僚欄一定有人坐），這裡只是不讓它除以零。
+const DefaultStaffOps = 100
+
+// 796/1 開局兩位軍事專任參謀的營運（帝國提督 6、同盟提督 79）。
+// 所有 796/1 的建造計劃收據都是在這兩個值下量的（`docs/re/265`）。
+const (
+	EmpireStaffOps796   = 112
+	AllianceStaffOps796 = 106
+)
+
+// UnitPrice 回一個陣營某一列的單價：
+//
+//	單價 ＝ ⌊基價 × 100 ÷ 軍事專任參謀的營運⌋
+//
+// `staffOps` 是 `ds:8F4B[陣營]` 那位提督記錄的 `+14`（營運）。算式出自
+// `2B5F:014D`，兩個陣營各七列 14/14 對上畫面量到的單價
+// （`docs/spec/037`、`docs/re/265`）：796/1 開局的參謀是提督 6（帝國，
+// 營運 112）與提督 79（同盟，106），代進去就是原本寫死的那十四個數。
+//
+// **換一位軍事專任參謀，十四個數全部改變**——營運越高船越便宜。
+// 問不到就回 0。
+func UnitPrice(faction, row, staffOps int) int {
+	if faction < 0 || faction >= len(BasePrices) || row < 0 || row >= BuildPlanRows {
 		return 0
 	}
-	return UnitPrices[faction][row]
+	if staffOps <= 0 {
+		staffOps = DefaultStaffOps
+	}
+	return BasePrices[faction][row] * 100 / staffOps
 }
+
 
 // ShipsPerUnit 是一個「部隊」要幾艘船。畫面上的「部隊」那一欄 ＝
 // 船艦數 ÷ 這個值，無條件捨去。**兩個陣營共用一份**——`SHIP.DT?` 的
@@ -56,6 +73,10 @@ type BuildPlan struct {
 
 	// Pct 是各列分配到的百分比，總和不會超過 100。
 	Pct [BuildPlanRows]int
+
+	// StaffOps 是軍事專任參謀的營運（提督記錄 `+14`）——單價由它決定
+	// （`docs/spec/037`）。0 ＝ 問不到，退回 `DefaultStaffOps`。
+	StaffOps int
 }
 
 // UsedPct 是已經分配掉的百分比。
@@ -84,7 +105,7 @@ func (b *BuildPlan) Amount(row int) int {
 // 顯示的是 Amount，花掉的是 Spent，兩者的差額回到餘額。
 func (b *BuildPlan) Spent(row int) int {
 	a := b.Amount(row)
-	price := UnitPrice(b.Faction, row)
+	price := UnitPrice(b.Faction, row, b.StaffOps)
 	if price <= 0 {
 		return a
 	}
@@ -93,7 +114,7 @@ func (b *BuildPlan) Spent(row int) int {
 
 // Ships 是某一列的「船艦數」欄。單價買到幾組，一組十艘。
 func (b *BuildPlan) Ships(row int) int {
-	price := UnitPrice(b.Faction, row)
+	price := UnitPrice(b.Faction, row, b.StaffOps)
 	if price <= 0 {
 		return 0
 	}

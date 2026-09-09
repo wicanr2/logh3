@@ -34,6 +34,10 @@ const (
 	PostDomestic = 2 // 內政專任參謀：月初的會計報告署名
 )
 
+// WorkStaffOffset 是 `WORK` 區塊裡三個幕僚職的起點（`ds:8F4B`）：
+// 一職兩個位元組，帝國那位的提督索引在前。
+const WorkStaffOffset = workStaffOff
+
 // StaffAdmiral 回某個陣營坐某個幕僚職的提督索引，取不到就回 −1。
 func StaffAdmiral(work []byte, post, faction int) int {
 	if post < 0 || post >= workStaffCount || faction < 0 || faction > 1 {
@@ -163,4 +167,24 @@ func Adjutant(record []byte) int {
 		return -1
 	}
 	return int(record[admiralFleet])
+}
+
+// admiralOps 是提督記錄的 `+14`（營運）。
+const admiralOps = 14
+
+// AdmiralOps 回第 i 位提督的營運（`ADMIRAL` `+14`）。取不到回 0。
+//
+// 兩個消費者看的是不同的提督：艦隊維持費與移動經費看**那支艦隊的**
+// （`Fleet.Operations`，`docs/re/218`）；船艦建造的單價看**軍事專任參謀的**
+// （`docs/spec/037`）。
+func AdmiralOps(data []byte, i int) int {
+	if i < 0 || (i+1)*AdmiralRecord > len(data) {
+		return 0
+	}
+	return int(data[i*AdmiralRecord+admiralOps])
+}
+
+// StaffOps 回某個陣營坐某個幕僚職那位提督的營運。取不到回 0。
+func StaffOps(work, admiral []byte, post, faction int) int {
+	return AdmiralOps(admiral, StaffAdmiral(work, post, faction))
 }

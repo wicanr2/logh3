@@ -4,7 +4,8 @@ import "testing"
 
 // newPlan 是原版 796 年 1 月的開局：建造費 15,185，七列加起來剛好 100%。
 func newPlan() *BuildPlan {
-	return &BuildPlan{Cost: 15185, Pct: [BuildPlanRows]int{20, 10, 18, 10, 12, 15, 15}}
+	return &BuildPlan{Cost: 15185, Pct: [BuildPlanRows]int{20, 10, 18, 10, 12, 15, 15},
+		StaffOps: EmpireStaffOps796}
 }
 
 // TestAmountsMatchOriginal 釘住原版畫面上的金額。
@@ -86,21 +87,49 @@ func TestRestAmountMatchesOriginal(t *testing.T) {
 		{"第 0 列吃滿", [BuildPlanRows]int{100}, 1},
 	}
 	for _, c := range cases {
-		b := &BuildPlan{Cost: 15185, Pct: c.pct}
+		b := &BuildPlan{Cost: 15185, Pct: c.pct, StaffOps: EmpireStaffOps796}
 		if got := b.RestAmount(); got != c.want {
 			t.Errorf("%s（餘 %d%%）：%d，原版是 %d", c.name, b.RestPct(), got, c.want)
 		}
 	}
 }
 
-// TestUnitPrices 用「只給一列預算」的實測局面釘住七個單價。
-func TestUnitPrices(t *testing.T) {
+// TestUnitPricesFromBaseAndStaff 釘住「基價 ×100÷ 參謀營運」這條算式：
+// 796/1 的兩位軍事專任參謀（帝國提督 6 營運 112、同盟提督 79 營運 106）
+// 代進去要得到畫面上量到的那十四個單價（`docs/re/265`，14/14）。
+func TestUnitPricesFromBaseAndStaff(t *testing.T) {
+	for _, c := range []struct {
+		faction, ops int
+		want         [BuildPlanRows]int
+	}{
+		{0, EmpireStaffOps796, [BuildPlanRows]int{8, 12, 4, 24, 4, 7, 22}},
+		{1, AllianceStaffOps796, [BuildPlanRows]int{9, 14, 5, 23, 3, 7, 24}},
+	} {
+		for row := 0; row < BuildPlanRows; row++ {
+			if got := UnitPrice(c.faction, row, c.ops); got != c.want[row] {
+				t.Errorf("陣營 %d 第 %d 列（營運 %d）單價 ＝ %d，畫面量到 %d",
+					c.faction, row, c.ops, got, c.want[row])
+			}
+		}
+	}
+	// 營運越高越便宜：帝國戰艦基價 10，營運 200 → 5。
+	if got := UnitPrice(0, 0, 200); got != 5 {
+		t.Errorf("營運 200 的帝國戰艦單價 ＝ %d，預期 5", got)
+	}
+	// 問不到參謀時退回 100，不是除以零。
+	if got, want := UnitPrice(0, 0, 0), BasePrices[0][0]; got != want {
+		t.Errorf("營運 0 的單價 ＝ %d，預期退回 %d", got, want)
+	}
+}
+
+// TestUnitPricesRestAmount 用「只給一列預算」的實測局面釘住七個單價。
+func TestUnitPricesRestAmount(t *testing.T) {
 	// 一列獨佔 15% 與 20% 時的餘額，逐列量的。
 	at15 := [BuildPlanRows]int{12913, 12917, 12909, 12929, 12909, 12910, 12919}
 	at20 := [BuildPlanRows]int{12153, 12149, 12149, 12161, 12149, 12154, 12149}
 	for i := 0; i < BuildPlanRows; i++ {
 		for _, c := range []struct{ pct, want int }{{15, at15[i]}, {20, at20[i]}} {
-			b := &BuildPlan{Cost: 15185}
+			b := &BuildPlan{Cost: 15185, StaffOps: EmpireStaffOps796}
 			b.Pct[i] = c.pct
 			if got := b.RestAmount(); got != c.want {
 				t.Errorf("只有第 %d 列 %d%%：餘額 %d，原版是 %d", i, c.pct, got, c.want)
@@ -115,7 +144,7 @@ func TestUnitPrices(t *testing.T) {
 // 分下去，各列只買得起整數艘，實際花掉 **15149**——與畫面相同
 // （`docs/internals/27`、`docs/spec/003`）。零頭 36 退回。
 func TestPaidMatchesOracle(t *testing.T) {
-	b := BuildPlan{Cost: 15185, Pct: OpeningPct}
+	b := BuildPlan{Cost: 15185, Pct: OpeningPct, StaffOps: EmpireStaffOps796}
 	if got := b.Paid(); got != 15149 {
 		t.Errorf("實際花掉 %d，實測 15149", got)
 	}

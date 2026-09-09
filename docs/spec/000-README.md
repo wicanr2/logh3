@@ -49,3 +49,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`034`](034-region-flip-report.md) | 星域易主的戰略報告 | CONFORMED |
 | [`035`](035-month-end-gate.md) | 月底的閘門與每回合的重算 | READY |
 | [`036`](036-ship-delivery.md) | 月底交付的船艦放到哪裡 | READY |
+| [`037`](037-unit-price-from-staff.md) | 船艦單價由軍事專任參謀決定 | CONFORMED |

@@ -1796,7 +1796,8 @@ func (g *Game) monthEnd() {
 			ShipPct: g.factionShipPct(f), Upkeep: g.fleetUpkeep(f),
 			MoveCost: g.fleetMoveCost(f)}
 		budget := b.Military()
-		plan := rules.BuildPlan{Cost: b.ShipCost(), Pct: g.buildPctFor(f), Faction: f}
+		plan := rules.BuildPlan{Cost: b.ShipCost(), Pct: g.buildPctFor(f),
+			Faction: f, StaffOps: g.staffOps(f)}
 		paid := plan.Paid()
 		g.military[f] = budget - paid
 		// **兩個陣營都留一份**：下個月底各自交付到自己首都
@@ -2127,13 +2128,15 @@ func (g *Game) factionShipPct(faction int) int {
 // thisPlan 是**這個月**的船艦建造計劃：月底結算算出來的建造費照百分比
 // 切出來的那一份。訂造報告與建造計劃這兩張印的都是它。
 func (g *Game) thisPlan() rules.BuildPlan {
-	return rules.BuildPlan{Cost: g.monthReport.ShipCost(), Pct: g.pct, Faction: g.faction}
+	return rules.BuildPlan{Cost: g.monthReport.ShipCost(), Pct: g.pct,
+		Faction: g.faction, StaffOps: g.staffOps(g.faction)}
 }
 
 // nextPlan 是次月份的船艦建造計劃：預估軍事費照百分比切出來的那一份。
 func (g *Game) nextPlan() rules.BuildPlan {
 	b := g.nextBudget()
-	return rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct, Faction: g.faction}
+	return rules.BuildPlan{Cost: b.ShipCost(), Pct: g.pct,
+		Faction: g.faction, StaffOps: g.staffOps(g.faction)}
 }
 
 // drawDelivery 畫月底船艦接收報告裡算出來的那幾塊。
@@ -2732,6 +2735,14 @@ func (g *Game) workRecord() []byte {
 		return g.slot.Work
 	}
 	return g.res.WorkTemplate
+}
+
+// staffOps 回某個陣營的軍事專任參謀的營運（提督記錄 `+14`）——船艦建造的
+// 單價由它決定（`docs/spec/037`、`docs/re/265`）。
+//
+// **電腦那一方也要**：它的建造計劃走同一條算式，用的是它自己那位參謀。
+func (g *Game) staffOps(faction int) int {
+	return rules.StaffOps(g.workRecord(), g.res.Admiral, rules.PostMilitary, faction)
 }
 
 // staffAdmiral 回坐某個幕僚職的提督姓名與軍階的字碼（`docs/internals/30`）。

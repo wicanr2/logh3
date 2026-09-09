@@ -94,3 +94,49 @@ func TestCapitalPlanetSlots(t *testing.T) {
 		}
 	}
 }
+
+// TestStaffOpsDrivesUnitPrice 驗兩件事：接線活著（兩個陣營都從幕僚欄拿到
+// 自己那位軍事專任參謀的營運），以及**換人就換價**
+// （`docs/spec/037`、`docs/re/265`）。
+func TestStaffOpsDrivesUnitPrice(t *testing.T) {
+	g := reachCommandPhase(t)
+	for f, want := range map[int]int{0: rules.EmpireStaffOps796, 1: rules.AllianceStaffOps796} {
+		if got := g.staffOps(f); got != want {
+			t.Errorf("陣營 %d 的軍事專任參謀營運 ＝ %d，`ADMIRAL.DTX` 是 %d", f, got, want)
+		}
+	}
+	if g.building[0][0] == 0 {
+		t.Fatal("帝國的建造中是 0，接線斷了")
+	}
+	np := g.nextPlan()
+	beforeShips := np.Ships(0)
+
+	// 找一位營運最高的提督，把帝國的軍事專任參謀換成他。
+	best, bestOps := -1, 0
+	for i := 0; (i+1)*rules.AdmiralRecord <= len(g.res.Admiral); i++ {
+		if o := rules.AdmiralOps(g.res.Admiral, i); o > bestOps {
+			best, bestOps = i, o
+		}
+	}
+	if bestOps <= rules.EmpireStaffOps796 {
+		t.Skipf("沒有營運高於 %d 的提督，跳過", rules.EmpireStaffOps796)
+	}
+	work := g.workRecord()
+	if len(work) < rules.WorkRecord {
+		t.Fatal("拿不到 WORK 區塊")
+	}
+	off := rules.WorkStaffOffset + rules.PostMilitary*2 // 帝國那一格
+	old := work[off]
+	work[off] = byte(best)
+	defer func() { work[off] = old }()
+
+	if got := g.staffOps(0); got != bestOps {
+		t.Fatalf("換成提督 %d 之後營運 ＝ %d，預期 %d", best, got, bestOps)
+	}
+	// 營運越高單價越低，同一筆建造費買到更多船。
+	np2 := g.nextPlan()
+	if after := np2.Ships(0); !(after > beforeShips) {
+		t.Errorf("換成營運 %d 的參謀之後戰艦數 %d 沒有比 %d 多",
+			bestOps, after, beforeShips)
+	}
+}

@@ -174,9 +174,13 @@ func checkGameScreen(t *testing.T, specName, batch string) {
 		}
 		// 次月份的計劃：預估軍事費 55933 的 25%。建造中那一欄是上一份
 		// 計劃（60741 的 25%）買到的船，月底交付（`docs/re/21`）。
-		prev := rules.BuildPlan{Cost: 15185, Pct: rules.OpeningPct}
+		// 單價由軍事專任參謀的營運決定（`docs/spec/037`）；796/1 帝國那位
+		// 是提督 6，營運 112——少了它十四個數會全部算錯。
+		prev := rules.BuildPlan{Cost: 15185, Pct: rules.OpeningPct,
+			StaffOps: rules.EmpireStaffOps796}
 		pp.Draw(fb, fnt,
-			rules.BuildPlan{Cost: 13983, Pct: rules.OpeningPct},
+			rules.BuildPlan{Cost: 13983, Pct: rules.OpeningPct,
+				StaffOps: rules.EmpireStaffOps796},
 			prev.Building())
 	}
 	// 預算計劃／徵稅計劃的數字是算出來的（`docs/spec/003`），規格裡沒有。
