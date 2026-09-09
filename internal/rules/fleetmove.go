@@ -150,3 +150,58 @@ func AdvanceFleetTurn(f *FleetMover, s *FormationSlots, units []BattleUnit, idx 
 	RunFleetTurn(f, passable)
 	StationSquadrons(f, s, units, idx)
 }
+
+// ManoeuvreBoundary 回艦隊選點時畫的那個外形（原版 `165F:004D`，
+// `docs/re/135`）。回的是**相對圓心的位移**，圓心是旗艦圖塊的中心。
+//
+// 形狀的意思是「照回轉速率轉過去、再把剩下的預算直直走完」能到的地方：
+//
+//	對每個 i（0, 8, 16 …，條件 (i × 16) ÷ 回轉速度 ≤ 距離）：
+//	    以每步轉「回轉速度」、走 8 像素積分到轉了 i
+//	    補上不足一步的那一段
+//	    剩下的預算 距離 − (i × 16) ÷ 回轉速度 沿最後的朝向直直走
+//
+// 轉彎在預算裡算 16／步、實際只走 8／步——轉向是雙倍代價。
+// 算完之後**沿 x 軸鏡射**成兩倍的點，再整批依艦隊朝向旋轉。
+func ManoeuvreBoundary(turnSpeed, dist, facing int) [][2]int {
+	if turnSpeed <= 0 || dist <= 0 {
+		return nil
+	}
+	var half [][2]int
+	for i := 0; (i*16)/turnSpeed <= dist; i += manoeuvreStep {
+		var sx, sy int
+		a, rem := 0, i
+		for rem >= turnSpeed {
+			sx += cos256(a) << 3
+			sy += sin256(a) << 3
+			a += turnSpeed
+			rem -= turnSpeed
+		}
+		frac := (rem << 3) / turnSpeed
+		sx += frac * cos256(i)
+		sy += frac * sin256(i)
+		straight := dist - (i*16)/turnSpeed
+		sx += straight * cos256(i)
+		sy += straight * sin256(i)
+		if sy < 0 {
+			break // 原版：y 的累加值變負就停
+		}
+		half = append(half, [2]int{sx >> 10, sy >> 10})
+	}
+	out := make([][2]int, 0, len(half)*2)
+	out = append(out, half...)
+	for k := len(half) - 1; k >= 0; k-- {
+		out = append(out, [2]int{half[k][0], -half[k][1]})
+	}
+	for k := range out {
+		out[k][0], out[k][1] = Rotate256(out[k][0], out[k][1], facing)
+	}
+	return out
+}
+
+// manoeuvreStep 是外形取樣的角度間隔（原版 `add word ptr [bp+10h], 8`）。
+const manoeuvreStep = 8
+
+// ManoeuvreInnerRadius 回選點時內圈的半徑（原版 `165F:0003`）：
+// `距離 ÷ 3 ＋ 8`，圓心同樣是旗艦圖塊的中心（`docs/re/120`）。
+func ManoeuvreInnerRadius(dist int) int { return dist/3 + 8 }

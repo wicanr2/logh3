@@ -2405,6 +2405,14 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		screen.DrawBattleUnits(g.res.Battle, fb, g.res.Sprites, g.battleUnits,
 			func(u rules.BattleUnit) int { return battleSprite(u) }, g.battleView)
 	}
+	// 艦隊選點時畫兩個範圍圖形（`docs/re/120`、`docs/re/135`）。
+	// 兩個都是 XOR 上去的，所以要畫在單位與格線之後。
+	if g.fleetOrder == FleetOrderPoint {
+		if f := g.orderedFleetForRange(); f != nil {
+			screen.DrawManoeuvreRange(g.res.Battle, fb, f.cx, f.cy,
+				f.turn, f.dist, f.facing, g.battleView)
+		}
+	}
 	// 「編隊」選格子時，空格子各畫一個標記（`docs/internals/46`）。
 	// 原版是把標記掛進顯示串列再整張重畫，分隊在標記之後畫上去
 	// ——收據 `s3form` 上壓在分隊底下的那三格看得到。

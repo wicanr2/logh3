@@ -154,3 +154,33 @@ func (g *Game) fleetSpeeds(fleet int, battle bool) (turn, perTurn int) {
 
 // fleetActionBattle 是艦隊記錄 `+0x48` 低四位的「戰鬥」（`docs/internals/33`）。
 const fleetActionBattle = 1
+
+// rangeShape 是畫範圍圖形要用的幾個數字。
+type rangeShape struct {
+	cx, cy, turn, dist, facing int
+}
+
+// orderedFleetForRange 回正在選點的那一支要畫的範圍；沒有就回 nil。
+//
+// 圓心是旗艦圖塊的中心（艦隊位置各 ＋8，`165F:0003`／`165F:004D`），
+// 距離是這一次用的速度 × 8：「移動」用巡航、「戰鬥」用戰鬥速度。
+func (g *Game) orderedFleetForRange() *rangeShape {
+	unit := g.fleetOrderUnit
+	if unit < 0 || unit >= len(g.battleUnits) {
+		return nil
+	}
+	f := g.battleFleet(g.battleUnits[unit].Fleet)
+	if f == nil {
+		return nil
+	}
+	turn, perTurn := g.fleetSpeeds(g.battleUnits[unit].Fleet, g.fleetOrderBattle)
+	dist := perTurn / rules.FixOne
+	if turn <= 0 || dist <= 0 {
+		return nil
+	}
+	u := g.battleUnits[unit]
+	return &rangeShape{
+		cx: u.X + battleUnitTile/2, cy: u.Y + battleUnitTile/2,
+		turn: turn, dist: dist, facing: f.Facing,
+	}
+}
