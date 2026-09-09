@@ -97,8 +97,9 @@ func (g *Game) buildSupport() *ai.BuildSupport {
 			// 總稅收 ＝ ds:8F6A。**艦隊維持費（ds:8F72）remake 還沒算**
 			// ——收據上帝國那一欄是 0（`docs/internals/27`），所以這裡
 			// 也是 0，閘門的那一項等於永遠通過。
-			// `ds:8FD4[陣營]` 是一個 0–4 的等級（`docs/re/206`），
-			// remake 還沒有它——一律 false 等於當成 0。
+			// `ds:8FD4[陣營]` ＝ 未安定度公式的 `Blend`（0–4，`docs/re/207`）。
+			// remake 只在載入時算未安定度用它，還沒有跨回合維護，
+			// 所以這裡一律 false ＝ 當成 0（門檻是 3，開局值 2 本來也不觸發）。
 			return g.taxTotal, 0, false
 		},
 		Admirals: func(faction int) []ai.AdmiralView {
