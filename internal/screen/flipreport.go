@@ -18,7 +18,10 @@ type FlipReportPanel struct {
 	LineStep int `json:"line_step"`
 	Name     struct {
 		X, Y int
-		Ink  uint8
+		// InkByOwner 以**新的擁有者**索引（0 帝國 6、1 同盟 5、2 無主 7）。
+		// 三份收據的玩家座位都是帝國，所以「依擁有者」與「依敵我」
+		// 這一份證據分不開（`docs/spec/034`）。
+		InkByOwner []uint8 `json:"ink_by_owner"`
 	} `json:"name"`
 	Suffix struct {
 		Ink   uint8
@@ -54,10 +57,14 @@ func LoadFlipReportPanel(path string) (*FlipReportPanel, error) {
 //
 // 頭像另外畫（要 `FACE.AMG`，見 `Face`）。
 func (p *FlipReportPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font,
-	name []uint16, key string) {
+	name []uint16, owner int, key string) {
+	ink := uint8(7)
+	if owner >= 0 && owner < len(p.Name.InkByOwner) {
+		ink = p.Name.InkByOwner[owner]
+	}
 	x := p.Name.X
 	for _, c := range name {
-		drawFull(fb, fnt, x, p.Name.Y, []uint16{c}, p.Name.Ink)
+		drawFull(fb, fnt, x, p.Name.Y, []uint16{c}, ink)
 		x += font.GlyphW
 	}
 	drawFull(fb, fnt, x, p.Name.Y, p.Suffix.Codes, p.Suffix.Ink)

@@ -45,7 +45,13 @@ panel = {
     "note": ("星域易主報告的版面（`docs/spec/034`）。座標量自收據 `chain3`，"
              "文字取自 `strategy-report-strings.json`，字碼與原版逐位元組相同。"),
     "line_step": 20,
-    "name": {"x": 336, "y": 182, "ink": 5},
+    # 星系名的字色跟著**新的擁有者**走，三格都是量到的：
+    #   chain7 打下敵方星域 → 0（帝國）色 6
+    #   chain3 被敵方打下來 → 1（同盟）色 5
+    #   chain6 變成無主     → 2 色 7
+    # 三份收據的玩家座位都是帝國，所以「依擁有者」與「依敵我」分不開。
+    "name": {"x": 336, "y": 182, "ink_by_owner": [6, 5, 7],
+             "ink_note": "chain7／chain3／chain6 各一格；座位都是帝國"},
     # `ds:085D` ＝ `\x1B[%d,%s\x1B[%d,星系`，尾巴那兩個字就是接在星系名後面的。
     "suffix": {"ink": 7, "ds": "085D",
                "codes": fullwidth(bytes.fromhex(by_ds["085D"]["raw"]))[-2:],
@@ -62,10 +68,10 @@ panel = {
         "we_partly_landed": entry("08BC"),
     },
     "evidence": {
-        "taken_by_us": "量到（訊息表）",
-        "lost_to_enemy": "量到（收據 chain3 畫的就是這句）",
-        "our_grip_lost": "假設待驗",
-        "we_partly_landed": "假設待驗",
+        "taken_by_us": "量到（訊息表；收據 chain7 打下敵方星域畫的就是這句）",
+        "lost_to_enemy": "量到（收據 chain3）",
+        "our_grip_lost": "量到（收據 chain6：自己的星域變混雜就成無主）",
+        "we_partly_landed": "假設待驗——敵方的變成無主還沒造出來",
     },
 }
 json.dump(panel, open(sys.argv[2], "w", encoding="utf-8"),

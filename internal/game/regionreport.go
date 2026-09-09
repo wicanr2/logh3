@@ -101,7 +101,8 @@ func (g *Game) drawFlipReport(fb *gfx.Framebuffer) {
 	if p == nil || !ok {
 		return
 	}
-	p.Draw(fb, g.res.Font, g.FlipRegionName(f), flipMessageKey(f.Message(g.faction)))
+	p.Draw(fb, g.res.Font, g.FlipRegionName(f), f.NewOwner,
+		flipMessageKey(f.Message(g.faction)))
 	if g.res.Faces == nil {
 		return
 	}
