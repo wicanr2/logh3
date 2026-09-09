@@ -1,6 +1,9 @@
 package game
 
-import "github.com/wicanr2/logh3/internal/screen"
+import (
+	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
+)
 
 // 戰場上點行星開的命令選單（原版 `1D9E:01F1`，`docs/re/133`）。
 //
@@ -105,5 +108,75 @@ func (g *Game) planetMenuClick(x, y, n int) bool {
 	if row < 0 || (row < len(on) && !on[row]) {
 		return true
 	}
+	switch row {
+	case 0:
+		// 「情報」開一個 22×10 格的資訊視窗，按任一鍵關掉
+		// （`1373:1C71`）。視窗裡印什麼還沒逆向，所以不做。
+	case 1:
+		g.beginPlanetSupplyPick(planet, false)
+	case 2:
+		g.beginPlanetSupplyPick(planet, true)
+	case 3:
+		g.beginFortressTarget(planet)
+	}
 	return true
 }
+
+// FortressTargetPending 回「正在等玩家替要塞砲指定目標」。
+func (g *Game) FortressTargetPending() bool { return g.battleGunOn }
+
+// beginFortressTarget 進入要塞砲指定目標的狀態（`2264:0049`）。
+func (g *Game) beginFortressTarget(planet int) {
+	if planet < 0 || planet >= len(g.battlePlanets) {
+		return
+	}
+	if !rules.FortressGunReady(g.battlePlanets[planet].GunState) {
+		return
+	}
+	g.battleGunOn, g.battleGun = true, planet
+}
+
+// cancelFortressTarget 右鍵：解除鎖定（原版寫 `+0x50` ← 0xFFFF、
+// `+0x45` ← 0）。
+func (g *Game) cancelFortressTarget() {
+	if !g.battleGunOn {
+		return
+	}
+	g.battleGunOn = false
+	if g.battleGun < 0 || g.battleGun >= len(g.battlePlanets) {
+		return
+	}
+	p := &g.battlePlanets[g.battleGun]
+	p.GunTarget, p.GunState = fortressNoTarget, rules.FortressGunIdle
+}
+
+// fortressTargetClick 左鍵：鎖定點到的分隊（`+0x50` ← 目標、`+0x45` ← 3）。
+func (g *Game) fortressTargetClick(x, y int) bool {
+	if !g.battleGunOn {
+		return false
+	}
+	planet := g.battleGun
+	g.battleGunOn = false
+	if planet < 0 || planet >= len(g.battlePlanets) {
+		return true
+	}
+	hit := g.battleUnitAt(x, y)
+	if hit < 0 {
+		return true
+	}
+	p := &g.battlePlanets[planet]
+	p.GunTarget, p.GunState = hit, rules.FortressGunLocked
+	return true
+}
+
+// FortressTargetRange 回正在指定目標的那座要塞的兩個射程半徑。
+func (g *Game) FortressTargetRange() (outer, inner int, ok bool) {
+	if !g.battleGunOn || g.battleGun >= len(g.battlePlanets) {
+		return 0, 0, false
+	}
+	o, i := rules.FortressRange(g.battlePlanets[g.battleGun].Defence)
+	return o, i, true
+}
+
+// fortressNoTarget 是「沒有鎖定」的標記（原版寫 0xFFFF）。
+const fortressNoTarget = 0xFFFF

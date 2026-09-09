@@ -526,6 +526,7 @@ type Game struct {
 	battleSupply       bool
 	battleSupplyUnit   int
 	battleSupplyRepair bool
+	battleSupplyPlanet int // >= 0 ＝ 這一次是行星的「補給」／「補充」
 
 	// 艦隊選單的「移動」／「戰鬥」是兩段互動（`docs/re/120`–`122`）：
 	// 先點目的地，再繞著它轉游標選抵達朝向。
@@ -535,6 +536,12 @@ type Game struct {
 	fleetOrderX      int
 	fleetOrderY      int
 	fleetOrderFacing int
+
+	// battleGunOn ＝ 正在替要塞砲指定目標，battleGun 是哪一座
+	// （`docs/re/134`）。**用旗標而不是 -1**：`Game` 的零值要是
+	// 「沒有在指定」，否則沒走過 enterBattle 的測試會被吃掉點擊。
+	battleGunOn bool
+	battleGun   int
 
 	battleRally   []rules.RallySite
 	battlePlanets []rules.BattlePlanet
@@ -1136,6 +1143,10 @@ func (g *Game) RightClick(x, y int) {
 		}
 		if g.FleetOrderStage() != FleetOrderNone {
 			g.cancelFleetOrder()
+			return
+		}
+		if g.FortressTargetPending() {
+			g.cancelFortressTarget()
 			return
 		}
 		if g.CommandMenuOpen() {

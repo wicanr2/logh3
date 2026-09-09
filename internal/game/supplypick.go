@@ -11,6 +11,48 @@ func (g *Game) SupplyPickPending() bool { return g.battleSupply }
 // SupplyPickRepair 回這一次是不是「修理」。
 func (g *Game) SupplyPickRepair() bool { return g.battleSupplyRepair }
 
+// beginPlanetSupplyPick 進入「行星補給／補充」的選對象狀態。
+//
+// 與艦艇版同一個骨架，只換中心、陣營與半徑（`docs/re/134`）：中心是
+// 行星在戰場上的位置，陣營是行星的擁有者，半徑是
+// `rules.PlanetQueryRadius(防衛力)`。
+func (g *Game) beginPlanetSupplyPick(planet int, replenish bool) {
+	if planet < 0 || planet >= len(g.battlePlanets) {
+		return
+	}
+	if len(g.planetSupplyCandidates(planet)) == 0 {
+		return
+	}
+	g.battleSupply, g.battleSupplyPlanet = true, planet
+	g.battleSupplyRepair = replenish
+}
+
+// planetSupplyCandidates 回行星半徑內可以補的分隊。篩選條件與艦艇版的
+// 「補給」逐條相同（`1930:10B2` 對 `1930:0485`）。
+func (g *Game) planetSupplyCandidates(planet int) []int {
+	if planet < 0 || planet >= len(g.battlePlanets) {
+		return nil
+	}
+	p := g.battlePlanets[planet]
+	r := rules.PlanetQueryRadius(p.Defence)
+	var out []int
+	for i := range g.battleUnits {
+		u := g.battleUnits[i]
+		if u.Faction != p.Owner || u.Out {
+			continue
+		}
+		if u.Kind == shipKindSupply || u.Kind == shipKindRepair || u.Kind == shipKindScout {
+			continue
+		}
+		dx, dy := u.X-p.X, u.Y-p.Y
+		if dx*dx+dy*dy > r*r {
+			continue
+		}
+		out = append(out, i)
+	}
+	return out
+}
+
 // beginSupplyPick 進入選對象的狀態；一個候選都沒有就不進去。
 //
 // 原版這時會跳「沒有需要補給的船艦。」（`ds:3F14`）／「沒有需要修理的
@@ -21,15 +63,19 @@ func (g *Game) beginSupplyPick(unit int, repair bool) {
 		return
 	}
 	g.battleSupply, g.battleSupplyUnit, g.battleSupplyRepair = true, unit, repair
+	g.battleSupplyPlanet = -1
 }
 
 // cancelSupplyPick 取消選對象。
-func (g *Game) cancelSupplyPick() { g.battleSupply = false }
+func (g *Game) cancelSupplyPick() { g.battleSupply, g.battleSupplyPlanet = false, -1 }
 
 // SupplyCandidates 回現在可以點的分隊索引。
 func (g *Game) SupplyCandidates() []int {
 	if !g.battleSupply {
 		return nil
+	}
+	if g.battleSupplyPlanet >= 0 {
+		return g.planetSupplyCandidates(g.battleSupplyPlanet)
 	}
 	return g.supplyCandidates(g.battleSupplyUnit, g.battleSupplyRepair)
 }
@@ -84,6 +130,7 @@ func (g *Game) supplyPickClick(x, y int) bool {
 		return false
 	}
 	unit, repair := g.battleSupplyUnit, g.battleSupplyRepair
+	planet := g.battleSupplyPlanet
 	cands := g.SupplyCandidates()
 	g.cancelSupplyPick()
 	hit := g.battleUnitAt(x, y)
@@ -98,6 +145,15 @@ func (g *Game) supplyPickClick(x, y int) bool {
 		}
 	}
 	if !found {
+		return true
+	}
+	if planet >= 0 {
+		p := &g.battlePlanets[planet]
+		if repair {
+			rules.PlanetReplenish(&p.Stock, &g.battleUnits[hit])
+		} else {
+			rules.PlanetSupply(g.res.ShipKinds, &p.Stock, &g.battleUnits[hit])
+		}
 		return true
 	}
 	from, to := &g.battleUnits[unit], &g.battleUnits[hit]

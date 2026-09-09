@@ -18,6 +18,14 @@ type BattlePlanet struct {
 	// 梅爾格利德、魯德米拉）。兩個地方讀它：戰損的除數從 10 變 20，
 	// 以及戰場點行星時開的是四項的選單（多「要塞砲」，`docs/re/133`）。
 	Fortress bool `json:"fortress"`
+
+	// Stock 是這顆行星身上的補給／補充存量（`docs/re/134`）。
+	Stock PlanetStock `json:"stock"`
+
+	// GunState／GunTarget 是要塞砲的狀態與鎖定的目標（記錄 `+0x45`／
+	// `+0x50`）。只有狀態 0（沒鎖定）或 3（已鎖定）能重新指定。
+	GunState  int `json:"gun_state"`
+	GunTarget int `json:"gun_target"`
 }
 
 // 查詢半徑的夾限（`2AF5:01F7`）。
@@ -58,7 +66,16 @@ func (p *Planets) BattlePlanetsFor(region int, sites []PlanetSite) []BattlePlane
 			Index: i, Owner: p.Owner(i),
 			X: sites[k].X, Y: sites[k].Y,
 			Defence: p.Defence(i), Fortress: p.Fortress(i),
+			GunState: int(p.rec(i)[planetGunState]),
+			GunTarget: int(le32(p.rec(i)[planetGunTarget:]) & 0xFFFF),
+			Stock: planetStockOf(p.rec(i)),
 		})
 	}
 	return out
+}
+
+// planetStockOf 讀一筆行星記錄的存量；讀不出來就回空的。
+func planetStockOf(rec []byte) PlanetStock {
+	s, _ := ReadPlanetStock(rec)
+	return s
 }

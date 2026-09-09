@@ -125,3 +125,58 @@ func clampTestInt(v, lo, hi int) int {
 	}
 	return v
 }
+
+// 「要塞砲」是指定目標，不是開火：左鍵鎖定（`+0x50` ← 目標、`+0x45` ← 3），
+// 右鍵解除（`0xFFFF`／0）。狀態不是 0 也不是 3 就進不去（`docs/re/134`）。
+func TestFortressTargetLocks(t *testing.T) {
+	g := commandTestGame(t)
+	if g == nil {
+		return
+	}
+	if len(g.battlePlanets) == 0 || len(g.battleUnits) == 0 {
+		t.Skip("這個星域沒有行星或分隊，跳過")
+	}
+	// 這個星域沒有要塞，所以**造一個**（fixture，不是收據）：驗的是
+	// 鎖定／解除與狀態閘門，與哪一顆行星無關。
+	idx := 0
+	g.battlePlanets[idx].Fortress = true
+	g.battlePlanets[idx].Defence = 12800 // 伊謝爾倫那一顆的防衛力
+	g.battlePlanets[idx].GunState = 0
+	g.beginFortressTarget(idx)
+	if !g.FortressTargetPending() {
+		t.Fatal("該進入指定目標的狀態")
+	}
+	if o, i, ok := g.FortressTargetRange(); !ok || o != g.battlePlanets[idx].Defence/200+80 || i != o/4 {
+		t.Errorf("射程 (%d,%d)，防衛力 %d 該算出 (%d,%d)",
+			o, i, g.battlePlanets[idx].Defence,
+			g.battlePlanets[idx].Defence/200+80, (g.battlePlanets[idx].Defence/200+80)/4)
+	}
+
+	// 點一個分隊 → 鎖定。
+	u := 0
+	ux, uy := unitScreenPos(g, u)
+	g.Click(ux+8, uy+8)
+	if g.FortressTargetPending() {
+		t.Error("點完之後不該還在等")
+	}
+	if g.battlePlanets[idx].GunTarget != u || g.battlePlanets[idx].GunState != 3 {
+		t.Errorf("鎖定之後目標 %d 狀態 %d，該是 %d／3",
+			g.battlePlanets[idx].GunTarget, g.battlePlanets[idx].GunState, u)
+	}
+
+	// 右鍵解除。
+	g.beginFortressTarget(idx)
+	g.RightClick(ux+8, uy+8)
+	if g.battlePlanets[idx].GunTarget != fortressNoTarget ||
+		g.battlePlanets[idx].GunState != 0 {
+		t.Errorf("解除之後目標 %04X 狀態 %d，該是 FFFF／0",
+			g.battlePlanets[idx].GunTarget, g.battlePlanets[idx].GunState)
+	}
+
+	// 狀態 1 就進不去。
+	g.battlePlanets[idx].GunState = 1
+	g.beginFortressTarget(idx)
+	if g.FortressTargetPending() {
+		t.Error("狀態 1 不該進得去")
+	}
+}
