@@ -255,7 +255,9 @@ direct-entry 能開畫面，都不能單獨標為同狀態對拍完成。
   `tools/go.sh run ./cmd/worklist render -w` 產生（標記之間的內容不要手改）。
   `WORKLOG.md` 是唯一流水帳；`CONTEXT.md` 其餘部分是目前真相；
   `VERIFICATION-MATRIX.md` 是完成度唯一數字來源；逆向證據放 `docs/re/`，對拍收據放
-  `docs/playtest/`，規格放 `docs/spec/`。
+  `docs/playtest/`，規格放 `docs/spec/`。更早的逆向歷程（舊 worklist 那 65 條的原文）
+  在 `docs/solved-history.md`——**那是快照、不再維護，裡面有過期斷言**，
+  不要拿它當「還剩多少」的依據。
 - **每一條未完成項掛一個 `verify`，跑起來要能自己開口。** 訊號由穩到不穩是
   項數（`json_len`）> 型別／函式名（`absent`）> 程式碼裡的自承註解（`present`）>
   `manual`。**沒有訊號就標 `manual` 並在 `note` 寫明將來接上時該綁什麼**——

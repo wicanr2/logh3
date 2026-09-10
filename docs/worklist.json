@@ -370,6 +370,132 @@
         "pkg": "internal/game",
         "run": "TestMonthEndMatchesWorkBlock"
       }
+    },
+    {
+      "id": "rebellion-flag-bit1",
+      "legacy_id": "18e",
+      "status": "open",
+      "layer": "re",
+      "title": "叛亂判定 `2703:1789` 的後半段沒讀（星域 `+0x13` bit1）",
+      "body": [
+        "前置條件讀出來了：不是首都、不是無主、該陣營在這一格沒有駐軍，",
+        "再查 `ds:8F4D[擁有者]` 那位提督的記錄擲 `亂數 % 400`。",
+        "**後半段（亂數怎麼判、叛亂的效果）還沒讀**，所以 remake 的 bit1 只清不設，",
+        "也沒有任何地方讀它。定性的依據是報告訊息表的「〈星系名〉星系　發生叛亂。」"
+      ],
+      "acceptance": "叛亂會發生，且與收據的 bit1 逐格相同。",
+      "evidence": [
+        "docs/re/245-region-flag-bits-one-and-four.md",
+        "docs/internals/22-stellar-dt.md"
+      ],
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/rules/regionposture.go"
+        ],
+        "pattern": "後半段還沒讀"
+      }
+    },
+    {
+      "id": "phezzan-event-trigger",
+      "status": "open",
+      "layer": "re",
+      "title": "費沙事件的觸發條件未解",
+      "body": [
+        "結算那一段讀完了（`0x1238D` 的呼叫者把 `ds:8F48` 設起來，緊接著處理費沙），",
+        "**觸發條件四種掃法 0 命中**——不在傾印裡。",
+        "不擋主流程：AI 的一般回合不看它。"
+      ],
+      "acceptance": "觸發條件查出來，`docs/spec/029` 那一列不再標「未解」。",
+      "evidence": [
+        "docs/spec/029-strategic-ai-turn.md",
+        "docs/re/193-phezzan-trigger-not-in-dump.md"
+      ],
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "docs/spec/029-strategic-ai-turn.md"
+        ],
+        "pattern": "費沙事件的\\*\\*觸發條件\\*\\* \\| \\*\\*未解\\*\\*"
+      }
+    },
+    {
+      "id": "region-morale-7c",
+      "status": "open",
+      "layer": "re",
+      "title": "民心 `+0x7C` 的變化沒解",
+      "body": [
+        "未安定度（`+0x7D`）整條算式解完並對拍過了，**民心怎麼變還沒解**；",
+        "796 年 1 月那 15 份收據的民心是 `LoadRegionRecords` 用量到的那一組填的。"
+      ],
+      "acceptance": "民心由規則算出來，跨月之後與收據逐格相同。",
+      "evidence": [
+        "docs/re/43-unrest-full-disassembly.md",
+        "docs/internals/22-stellar-dt.md"
+      ],
+      "verify": {
+        "kind": "manual",
+        "note": "解出來會多一支 rules 的算式（大概叫 RegionMorale 之類），到時綁那個函式名；現在程式裡填的是量到的常數，沒有自承可綁。"
+      }
+    },
+    {
+      "id": "fleet-record-fields",
+      "legacy_id": "20",
+      "status": "open",
+      "layer": "re",
+      "title": "艦隊記錄 122 bytes 裡還有欄位沒解",
+      "body": [
+        "`ds:C074` 一筆 122 bytes，`+0x01` 陣營、`+0x04` 沒在用、`+0x06` 所在星域、",
+        "`+0x07`／`+0x08` 目的地與移動狀態、`+0x09` 類別、`+0x3C`–`+0x4F` 那一批能力值",
+        "都解出來了；**其餘欄位仍未解**。三份存檔可以互相對照，不必再跑模擬器。"
+      ],
+      "acceptance": "122 bytes 逐欄有語意，或明列哪幾格確定沒被讀過。",
+      "evidence": [
+        "docs/internals/33-fleet-table.md"
+      ],
+      "verify": {
+        "kind": "manual",
+        "note": "解一格就會多一個具名常數在 internal/rules/fleet.go，到時改成 json_len 綁 docs/internals/data 那份欄位表的項數。"
+      }
+    },
+    {
+      "id": "month-end-2b5f02b2",
+      "legacy_id": "18p",
+      "status": "open",
+      "layer": "re",
+      "title": "月底那一支每回合都跑的 `2B5F:02B2` 沒讀",
+      "body": [
+        "`0654:0007` 的第一件事就是它，而且在 `ds:8F18 mod 10` 那道閘門**之前**",
+        "——所以它每個回合都跑，不是月底限定。內容還沒讀。"
+      ],
+      "acceptance": "讀出來並確認 remake 有沒有缺這一步。",
+      "evidence": [
+        "docs/re/267-monthly-growth-and-tax-rate-recompute.md",
+        "docs/spec/035-month-end-gate.md"
+      ],
+      "verify": {
+        "kind": "manual",
+        "note": "讀完之後若要補實作，會在 internal/game 多一支月底步驟；到時綁那個函式名。現在沒有自承可綁——remake 不知道自己缺這一步。"
+      }
+    },
+    {
+      "id": "delivery-report-details",
+      "legacy_id": "22",
+      "status": "open",
+      "layer": "parity",
+      "title": "月底報告的兩個細節還沒模型化",
+      "body": [
+        "船艦接收報告本身已經逐位元組對上。兩件沒做：",
+        "**結算中地圖不重塗首都**、以及**捲軸會多出上下箭頭**。"
+      ],
+      "acceptance": "兩個細節照原版畫，收據逐位元組相同。",
+      "evidence": [
+        "docs/re/55-ship-delivery-report.md"
+      ],
+      "verify": {
+        "kind": "manual",
+        "note": "接上時會在 internal/screen 多出箭頭的繪製與首都重塗的分支，到時綁那兩個函式名。"
+      }
     }
   ]
 }

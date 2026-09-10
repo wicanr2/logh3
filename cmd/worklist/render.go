@@ -47,7 +47,8 @@ func Render(doc *Doc) (string, error) {
 	}
 
 	b.WriteString("### 做完的\n\n")
-	b.WriteString("留著是為了不要重做一遍，也為了 `docs/re/` 裡「CONTEXT 第 N 條」那種交叉引用。\n\n")
+	b.WriteString("留著是為了不要重做一遍，順帶當回歸偵測。更早的逆向歷程（舊 worklist\n" +
+		"那 65 條的原文）在 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。\n\n")
 	for i := range done {
 		renderItem(&b, doc, &done[i])
 	}
