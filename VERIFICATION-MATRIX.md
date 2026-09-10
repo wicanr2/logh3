@@ -114,7 +114,7 @@
 | `*.MDS`（音樂，22 份） | **已解出**（22 首轉成 MIDI；速度數值的單位未確認） | [`docs/internals/17`](docs/internals/17-mds.md) |
 | `*.VO5`（結局圖，50 張） | **已解出**（逐 byte 的相等即重複；50/50 位元組完全用完） | [`docs/internals/18`](docs/internals/18-vo5.md) |
 | `ENDING.EXE`（結局文字、職員表） | **已解出** | [`docs/internals/16`](docs/internals/16-ending-exe.md) |
-| `FACE.AMG`（.AMG 圖庫） | **已解出**（83 張逐像素對得上原版畫面） | [`docs/internals/09`](docs/internals/09-face-amg.md) |
+| `FACE.AMG`（.AMG 圖庫） | **已解出**（83 張逐像素對得上原版畫面；第 n 張 ＝ 提督索引 n，[`docs/re/271`](docs/re/271-face-amg-index-is-the-admiral-index.md)。第 82 格沒有人物，先前記的「九張空白」是把資料的第一個位元組當成旗標） | [`docs/internals/09`](docs/internals/09-face-amg.md) |
 | `IBM16.350` ＋ `IBMFLS16.350`（開頭動畫） | **已解出**：影格切分、壓縮語法與位元圖的走法都 confirmed（374 格逐格對上長度表、整檔吃光；`docs/re/36`、`docs/re/72`）。**播放順序另計**——原版在第一次搬圖前換過讀檔緩衝，第 1–116 格從來沒被解過（`docs/re/108`），時序也不等距（`docs/re/261`），要照原版播完整段得連緩衝副作用一起模擬 | [`docs/internals/19`](docs/internals/19-ibm16-350.md) |
 | `COMANI.BMG`（戰鬥動畫） | 目錄已解出（253 段，位移逐筆接得起來）；每段的編碼未解 | [`docs/internals/20`](docs/internals/20-comani-bmg.md) |
 

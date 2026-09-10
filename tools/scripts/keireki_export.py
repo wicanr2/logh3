@@ -22,6 +22,9 @@ NAME_OFF, NAME_N = 0x61A8, 82
 SHIP_OFF, SHIP_N = 0x6570, 34
 OUT_JSON = "/work/docs/internals/data/keireki.json"
 OUT_MD = "/work/docs/lore/character-biographies.md"
+# 頭像：FACE.AMG 第 n 張 ＝ 提督索引 n（docs/internals/09、docs/re/271）。
+# 這份 JSON 由 amg_export.py 產生，跑本腳本之前要先跑它。
+FACE_JSON = "/work/docs/internals/data/face-amg.json"
 
 
 def read_cstrings(d, off, n, skip_lead=True):
@@ -95,6 +98,27 @@ def wrap(t, width=38):
     return "\n".join(t[i:i + width] for i in range(0, len(t), width))
 
 
+# 頭像引用：原版素材不進 Git，所以只寫「哪一張 ＋ 解碼後像素的 SHA-256」。
+# 拿的是 sha256_pixels 不是 sha256_png——像素雜湊只看解碼結果，換一個
+# zlib 版本不會變；PNG 雜湊會，掛在 82 篇底下會安靜地全部過期。
+faces = {}
+if os.path.exists(FACE_JSON):
+    for m in json.load(open(FACE_JSON))["images"]:
+        if m.get("admiral") is not None:
+            faces[m["admiral"]] = m["sha256_pixels"]
+if len(faces) != NAME_N:
+    # 少了就大聲講。安靜地少掉 82 行頭像引用，看起來會像「本來就沒有」。
+    print("⚠ 只讀到 %d 筆頭像雜湊（要 %d）：先跑 amg_export.py，"
+          "否則人物傳這一版不會有頭像引用" % (len(faces), NAME_N))
+
+
+def face_line(i):
+    h = faces.get(i)
+    if not h:
+        return ""
+    return "頭像 `face-%02d`（像素 SHA-256 `%s`）\n\n" % (i, h)
+
+
 os.makedirs(os.path.dirname(OUT_MD), exist_ok=True)
 with open(OUT_MD, "w", encoding="utf-8") as f:
     f.write("""# 人物傳
@@ -114,13 +138,31 @@ with open(OUT_MD, "w", encoding="utf-8") as f:
 | 筆數 | 83 筆位移，其中 82 筆有內文 |
 | 資料 | `docs/internals/data/keireki.json` |
 
+## 頭像
+
+每一篇底下的 `face-NN` 是這個人在 `FACE.AMG` 裡的那一張——**第 n 張就是
+提督索引 n**，證據與逐項等級見 [`docs/internals/09`](../internals/09-face-amg.md)
+與 [`docs/re/271`](../re/271-face-amg-index-is-the-admiral-index.md)。
+
+原版素材不進版控，所以這裡只寫編號與雜湊。要拿到圖：自備原版之後跑
+
+```
+tools/py.sh tools/scripts/amg_export.py
+```
+
+它會把 83 張寫到 `workplace/assets/face/face-NN.png`（80 × 100、4 位元色號），
+並更新 `docs/internals/data/face-amg.json`。**像素 SHA-256** 算的是解碼後
+`80 × 100` 個色號位元組（`sha256sum` 不能直接對 PNG 用，PNG 的雜湊隨 zlib
+版本變動；`face-amg.json` 兩種都有）。
+
 """)
     cur = None
     for r in recs:
         if r["side"] != cur:
             cur = r["side"]
             f.write("## %s\n\n" % ("自由行星同盟軍" if cur else "銀河帝國軍"))
-        f.write("### %02d %s\n\n%s\n\n" % (r["index"], r["name"] or "（未知）", r["text"]))
+        f.write("### %02d %s\n\n%s%s\n\n" % (r["index"], r["name"] or "（未知）",
+                                             face_line(r["index"]), r["text"]))
     if ships:
         f.write("## 旗艦名\n\n")
         f.write("資料段 0x6570 起，34 筆。\n\n")

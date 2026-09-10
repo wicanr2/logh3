@@ -359,7 +359,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 27 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 28 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -646,6 +646,23 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：要人判——讀完之後若要補實作，會在 internal/game 多一支月底步驟；到時綁那個函式名。現在沒有自承可綁——remake 不知道自己缺這一步。
 
+#### face-draw-index-source — 原版怎麼把提督索引交給畫頭像的常式，還沒從反組譯讀出來
+
+*re（逆向：機制還沒讀出來）*
+
+「`FACE.AMG` 第 n 張 ＝ 提督索引 n」已經 confirmed，但撐著它的是收據、
+制服色的分界與人物傳的內容對應（`docs/re/271`），不是程式碼。解碼常式在
+`348A:02F9`；呼叫端——易主報告那條路上是 `3958:0215`——把 SI 與編號
+準備好的那一段沒有反組譯過。
+讀出來才知道編號是直接傳索引、還是中間過一張表；現在只知道**不是**
+提督記錄裡的欄位（28 個位移沒有一欄等於記錄索引）。
+
+**做完的判準**：`3958:0215`（或另一條路上的同一支常式）讀出來，寫明編號從哪個位址取、有沒有經過轉換，並在 `docs/internals/09` 用位址與位元組佐證。
+
+**證據**：[`docs/re/271-face-amg-index-is-the-admiral-index.md`](docs/re/271-face-amg-index-is-the-admiral-index.md)、[`docs/internals/09-face-amg.md`](docs/internals/09-face-amg.md)
+
+**核實**：要人判——這是原版程式碼的閱讀進度，remake 端沒有對應的缺席可綁——remake 本來就直接用提督索引取圖，接不接這一條它都是綠的。讀完之後會在 docs/internals/09 多一段反組譯，到時改成 present 綁那段裡的位址字串 `3958:0215`。
+
 #### delivery-report-details — 月底報告的兩個細節還沒模型化
 
 *原編號 22 · parity（對拍：要與原版逐位元組相同）*
@@ -731,6 +748,9 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 **核實**：`TestMonthEndMatchesWorkBlock` 釘在 `internal/game`
 
 <!-- worklist:end -->
+
+
+
 
 
 

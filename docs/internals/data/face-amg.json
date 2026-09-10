@@ -1,5 +1,6 @@
 {
  "source": "FACE.AMG",
+ "sha256": "514c1ea9b2c63b85f4ecf1b9d473f46691dc70140272027d8e62fd16d768e0d4",
  "count": 83,
  "index_entry": {
   "size": "u16 @+0",
@@ -10,9 +11,20 @@
   "+4": "u32 size-6",
   "+8": "u16 直行數（每行 8 像素）",
   "+10": "u16 每直行的 word 數（每 word 2 列）",
-  "+12": "u8 0 ＝ 一般、0xFF ＝ 空白",
-  "+13": "影像資料"
+  "+12": "壓縮資料的第一個位元組（**不是旗標**，見 docs/re/271）"
  },
+ "mapping": {
+  "rule": "第 n 張 ＝ 提督索引 n（0–81）；第 82 張是沒有人物的單色格",
+  "level": "confirmed",
+  "evidence": [
+   "逐位元組收據：0（防拷照片 face-fresh）、1／17（提督詳細資料 adm2e／adm15e）、6（月底船艦接收報告 turnmonth2）、12（戰術艦隊詳細資料 s3detail）、13（戰略情報報告 info1e、易主報告 chain3）、16（月初會計報告 key1）、60（同盟月初會計報告 keyAlly）",
+   "制服分界：0–39 帝國制服、40–79 同盟制服（色 4）、80–81 帝國制服；與 ADMIRAL.DTX +1 的陣營欄一致，兩個例外 80／81 正是投奔同盟的梅爾卡茲與舒奈德（KEIREKI.DAT 第 80／81 段自己寫著）",
+   "內容對應：0 金髮、1 火紅髮、2 蜂蜜色髮、3 右眼黑左眼藍、34 鬍鬚、49 淺黑膚色、74 淡綠眼——都與同編號的人物傳字面相符",
+   "ADMIRAL.DT* 的 28 個位移沒有任何一欄等於記錄索引，所以頭像編號不是提督記錄裡的欄位，就是索引本身"
+  ],
+  "not_yet": "原版繪圖端「索引怎麼算出來」的那段程式碼還沒從反組譯讀出來"
+ },
+ "hash_note": "sha256_pixels 是解碼後 w×h 個色號位元組的雜湊，與 PNG 編碼器無關，引用時以它為準；sha256_png 只在同一個 zlib 版本下才重現。",
  "images": [
   {
    "index": 0,
@@ -24,7 +36,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3342,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -38,7 +50,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "853e01d1aeadc88515f68bdf1cb39ad25ef2eb352e3f0600c236dd81b6f74beb",
+   "sha256_png": "d9aa3f11db0c8ca8bc104fb6b308abe6b3836bee2218f50a59c2fd2581130083",
+   "admiral": 0,
+   "name": "萊因哈特",
+   "side": 0
   },
   {
    "index": 1,
@@ -50,7 +70,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3506,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -64,7 +84,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "1cbe40860ddae88f64f2260d55e044fffe37c59b6e274e1e88b9b50621c8ddd1",
+   "sha256_png": "d934d04281f1f9c31cbb2065423457b0b08d62ce83af3655a68ce0fc8eafe58c",
+   "admiral": 1,
+   "name": "吉爾菲艾斯",
+   "side": 0
   },
   {
    "index": 2,
@@ -76,7 +104,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3596,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -90,7 +118,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "375ab796eb343d95a521aaa3250373fb9afaa7b25435b2dbf353c1026dc45603",
+   "sha256_png": "55c9ea494fdabbfcd01838d9e3f3a9f0583f2932e9c2d59e8c0e8f2d51741d14",
+   "admiral": 2,
+   "name": "米達麥亞",
+   "side": 0
   },
   {
    "index": 3,
@@ -102,7 +138,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3134,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -115,7 +151,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "c0078936175e5eef5e580200909560d4bd0e9954985e21a9f04dbdc4c07573b4",
+   "sha256_png": "b4f6f5b485faae228257d26017adf4a5c1a7bb5c9589ec247ef13245f07e56a8",
+   "admiral": 3,
+   "name": "羅嚴塔爾",
+   "side": 0
   },
   {
    "index": 4,
@@ -127,7 +171,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3208,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     2,
     3,
@@ -142,7 +186,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "5231db21edbdd778398eca616ec48b89af4edd59a9628054a598a358584779c9",
+   "sha256_png": "48240a35779a8fbc5b2cbce782fbc1f97077bba906e0ce3aa88eceb94f6d9128",
+   "admiral": 4,
+   "name": "畢典菲爾特",
+   "side": 0
   },
   {
    "index": 5,
@@ -154,7 +206,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3396,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -167,7 +219,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "34971bf944aae754b12a8e4a841d10039e50b9a9a52064a50880dbc80edf2df7",
+   "sha256_png": "224a81f1bc9ffe2197b4dba0b1b3103a36b7880a533d0a06c89eb4e4b88556e3",
+   "admiral": 5,
+   "name": "謬拉",
+   "side": 0
   },
   {
    "index": 6,
@@ -179,7 +239,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3182,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -191,7 +251,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "ae5419f035cb5fcfc8865eda9778714b3e4959f30d32b2b40776ee2c8bdcba9f",
+   "sha256_png": "b97486f478219ac1a3c3d3f17c63a4f6299707b1a1b1a4501999ce20025465a6",
+   "admiral": 6,
+   "name": "梅克林格",
+   "side": 0
   },
   {
    "index": 7,
@@ -203,7 +271,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3346,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -215,7 +283,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "cbad94ba06d2113ec7dd9e31903dc6440f6c37bc655aeda8a2d7dcacc3253a33",
+   "sha256_png": "9237fc99622397b2fb65aa9c5b0edd29b91c8818103d345753351ae749db5a35",
+   "admiral": 7,
+   "name": "魯茲",
+   "side": 0
   },
   {
    "index": 8,
@@ -227,7 +303,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3340,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -239,7 +315,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "4598c2569c26d95683cc42dc26852dce385796f8365ed5689e0473806f4b4398",
+   "sha256_png": "62076cf0bee49d8e3c0948c6f2535be73da71e2240587f477e30076f496f6c4f",
+   "admiral": 8,
+   "name": "瓦列",
+   "side": 0
   },
   {
    "index": 9,
@@ -251,7 +335,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3198,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -264,7 +348,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "48ee6f3a5b637e49b6586aed726a70fff4acd717f0a5deb383d0ce45ae6f3d1a",
+   "sha256_png": "1f71dd6a9aded49fc0809df179cfeb6ca37111bdc5c2fd383207c64a8280b80b",
+   "admiral": 9,
+   "name": "艾齊納哈",
+   "side": 0
   },
   {
    "index": 10,
@@ -276,7 +368,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3378,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -289,7 +381,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 6,
+   "uniform": "empire",
+   "sha256_pixels": "8cc2eaa9138d6f2c6cb0669b34b1d34f74891412025a1345eead4b9ee94f8123",
+   "sha256_png": "9129e2727c634119460efdbe63566a43aac75dcd3996d8f9d5a99e6674d92080",
+   "admiral": 10,
+   "name": "坎普",
+   "side": 0
   },
   {
    "index": 11,
@@ -301,7 +401,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3136,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     0,
     1,
@@ -315,7 +415,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "67c19e79b845168cfac8864663646ffff734594372fc16d2d4c412f698b526ef",
+   "sha256_png": "8293bebb3400b5e1bc20cdadb06f08931ba839746ae7710d965d6bbb30b02c50",
+   "admiral": 11,
+   "name": "法倫海特",
+   "side": 0
   },
   {
    "index": 12,
@@ -327,7 +435,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3336,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -339,7 +447,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "f79b6b12a4a7e4d1f1df9840ee2118892e444312d64993f4f24ed4f25e67f88e",
+   "sha256_png": "771d9112a29fec773cc4c9cd5dfa404a3cfe5adadbfef0d3d914d62a20c1071d",
+   "admiral": 12,
+   "name": "舒坦梅茲",
+   "side": 0
   },
   {
    "index": 13,
@@ -351,7 +467,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3140,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -363,7 +479,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "2fcc2a71c1ffddc5a50f94d1039eb462f9037cdb78d47c7e06e6f67bff42f42c",
+   "sha256_png": "e51f13cfac7f7493d2595b164d4e0a2f50793b6cb9af6f592787e9c0859220a6",
+   "admiral": 13,
+   "name": "克斯拉",
+   "side": 0
   },
   {
    "index": 14,
@@ -375,7 +499,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3214,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -388,7 +512,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "11f8a18abc47730b9dfedee5814115fd307c766b6cd6a7a7bd954941c7df03e0",
+   "sha256_png": "ab97dd268b109fb2996e29b5c33b08a971ec1d9647c75c1972e0a95155dd2be6",
+   "admiral": 14,
+   "name": "連內肯普",
+   "side": 0
   },
   {
    "index": 15,
@@ -400,7 +532,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3412,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -412,7 +544,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "83836d0dd059eaa39a06bf139e66b52132dca285a060f5a101ce5b8a9d943125",
+   "sha256_png": "6b21d1fb6e7218046b82a39872ee2168971ccd9d3d78e2ad1a743937014bfb60",
+   "admiral": 15,
+   "name": "托爾奈森",
+   "side": 0
   },
   {
    "index": 16,
@@ -424,7 +564,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3258,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -436,7 +576,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "f84cc6a39bba0ae83ba8d8a71635219e4eeb9710c5190683ea96b2ee8c34fde7",
+   "sha256_png": "ebfb5866ad9279eda55eb64c563f5d4e7ad63d6d13c3de2c67a8a5f15867a719",
+   "admiral": 16,
+   "name": "奧貝斯坦",
+   "side": 0
   },
   {
    "index": 17,
@@ -448,7 +596,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3224,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -460,7 +608,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "39d5f3a3e509a7a747541facd56aa270b811afbcd2948cc9d0200b0ae6431a6d",
+   "sha256_png": "79f7a54342eb97e1e3e6be09638358b127a1580b7e3b0cefaacda297f2528b30",
+   "admiral": 17,
+   "name": "錦茲",
+   "side": 0
   },
   {
    "index": 18,
@@ -472,7 +628,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2852,
-   "flag12": 255,
+   "data0": 255,
    "colors": [
     3,
     4,
@@ -485,7 +641,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 10,
+   "uniform": "empire",
+   "sha256_pixels": "f09dc0f7f00c5230946be32db87e3fe3ae408d08a5b9e3432f91e2d73898c411",
+   "sha256_png": "8f56224ed090acb05af8a6e9091db0a48635e45b8b46590036a940105500c56a",
+   "admiral": 18,
+   "name": "拜耶爾藍",
+   "side": 0
   },
   {
    "index": 19,
@@ -497,7 +661,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3124,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     5,
@@ -510,7 +674,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "1c3f242b8e4a30b54a52cd8b19a27d51f7c14d60614a36bb85d808552248abf9",
+   "sha256_png": "0992d0a84cc7acad6e5f9d56a87cd5011728b87fae3cf197f00f5a7b00f4f50f",
+   "admiral": 19,
+   "name": "列肯道夫",
+   "side": 0
   },
   {
    "index": 20,
@@ -522,7 +694,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3238,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -534,7 +706,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "da088ac6e58be928a2a540e38c6399748a18addba8dc1b87e439b185766d96ac",
+   "sha256_png": "bc94a3c721769ca0634115a7a28c645cc5088f70f05523aba3cffb5cc0ba3d99",
+   "admiral": 20,
+   "name": "迪爾克先",
+   "side": 0
   },
   {
    "index": 21,
@@ -546,7 +726,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3036,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -559,7 +739,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "0afb1957662d5c1090f41a4043bbdf4a98ef932c61d01a736d71835c84261429",
+   "sha256_png": "4182116c65ebf39d18aa913355d1d90e9317ec5ec7dc145b1fd72b5dbcddaa78",
+   "admiral": 21,
+   "name": "瑞文茲",
+   "side": 0
   },
   {
    "index": 22,
@@ -571,7 +759,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3654,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -583,7 +771,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "f12e098821ee430b82f19df4b499b87d018e1c38b412a293d1eb549e35def3cd",
+   "sha256_png": "7d437b4fef8fd7fd2dbbb61278027f4773957d57d26170bd0451fd7ee55e3925",
+   "admiral": 22,
+   "name": "列佛爾特",
+   "side": 0
   },
   {
    "index": 23,
@@ -595,7 +791,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3518,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -607,7 +803,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "71dd33753dc2fdd9a0446ccbba656d6e2602b14dfb3a7945d5299cda6b96f637",
+   "sha256_png": "07e0631321034e6957c96f3410fc8877a3788ef62a884e5a6eedd58b25d056d4",
+   "admiral": 23,
+   "name": "庫典森",
+   "side": 0
   },
   {
    "index": 24,
@@ -619,7 +823,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2874,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     5,
@@ -632,7 +836,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "dbf5cf9f7085e1093f09844a047c678bd8d3789edc9cd6852f44556504f518d3",
+   "sha256_png": "2897ab60be85dfff7360d2ce64936a50d09dec740b47ee03ca67aff74afcb5ed",
+   "admiral": 24,
+   "name": "萊博爾",
+   "side": 0
   },
   {
    "index": 25,
@@ -644,7 +856,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3342,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -656,7 +868,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "bd3269ce7bf63d731c5a2999fd2f4a7dfce6552bad281e0e9b3fda67386281dc",
+   "sha256_png": "1af6fab535e107dd46a8fb2066b517375cf9e19640015eb12807c105dd0a6b76",
+   "admiral": 25,
+   "name": "克里希",
+   "side": 0
   },
   {
    "index": 26,
@@ -668,7 +888,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3464,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -680,7 +900,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "899b5dbb72d1686b78f465864a5588adc1816be719196726fa926092f3ef1c86",
+   "sha256_png": "c2cce8e3a44eed1363dfbf5f4af753a9f13fec140731d1215d7a1f3a9adf6b08",
+   "admiral": 26,
+   "name": "魯比茲",
+   "side": 0
   },
   {
    "index": 27,
@@ -692,7 +920,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3160,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -704,7 +932,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "a4a1657047907101a44a6c6c93c1872c4e48297ab72d8a2802d30915c080044b",
+   "sha256_png": "93d909b2fb17c93fdbff0657279be6be33db36e6eba56a03bd560cebb39e6239",
+   "admiral": 27,
+   "name": "山德斯",
+   "side": 0
   },
   {
    "index": 28,
@@ -716,7 +952,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2704,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     0,
     1,
@@ -730,7 +966,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "371c516296a6776fcab7c013c73f180a006989dd0354c185ed427bfc59d66d89",
+   "sha256_png": "38ad452e48b43484428e04ac6f565708aaad32fae79b94a2a56ab64730f7a48d",
+   "admiral": 28,
+   "name": "奈西巴哈",
+   "side": 0
   },
   {
    "index": 29,
@@ -742,7 +986,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3442,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -754,7 +998,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "39eb4b748fc30a9426ac815258811e05216cdb20d932e582f27c363dac33cc6e",
+   "sha256_png": "6ab23b1671115fafe674379b0683e43c238962e991a1780c437c8c04d96feaf7",
+   "admiral": 29,
+   "name": "布連塔諾",
+   "side": 0
   },
   {
    "index": 30,
@@ -766,7 +1018,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3250,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     5,
@@ -779,7 +1031,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "8e4d153c3f76b3a7e6170e2c8381a2933a1fb58d748ccfa69d07c42eec8fabca",
+   "sha256_png": "84441e5cc197756622f73d683d3a919ea7e12a48acb1bf009d775de4aebce6ec",
+   "admiral": 30,
+   "name": "布魯丹巴",
+   "side": 0
   },
   {
    "index": 31,
@@ -791,7 +1051,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3012,
-   "flag12": 255,
+   "data0": 255,
    "colors": [
     1,
     3,
@@ -804,7 +1064,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "18fdf0bbb4f29f7a6798ae29eec27b559dd515d67ac7e2a265e0c9527c849f25",
+   "sha256_png": "02791ebea24c20fe1e2f0339aa6623d924115200f6311b4d9a5220c600c3e870",
+   "admiral": 31,
+   "name": "菲爾納",
+   "side": 0
   },
   {
    "index": 32,
@@ -816,7 +1084,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3102,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -828,7 +1096,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "d3ae60e299ee620bee5cbb72c2e015d362206c6a27f74e70908a787089ed1f8a",
+   "sha256_png": "de3fe20337fe825c7fbe4aa008e787a5a3275ad37afaa5aa2b6c498574dbe133",
+   "admiral": 32,
+   "name": "修特萊",
+   "side": 0
   },
   {
    "index": 33,
@@ -840,7 +1116,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3128,
-   "flag12": 255,
+   "data0": 255,
    "colors": [
     3,
     6,
@@ -852,7 +1128,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "f1777874f365d4b066c4db8e3423c5e40034680a488fabedef754f940ad71f57",
+   "sha256_png": "765cee5789c98200229012e29bdfeb66a4b893af1d33bfce09edcf93eedf1fa6",
+   "admiral": 33,
+   "name": "皮羅",
+   "side": 0
   },
   {
    "index": 34,
@@ -864,7 +1148,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3328,
-   "flag12": 255,
+   "data0": 255,
    "colors": [
     1,
     3,
@@ -878,7 +1162,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 6,
+   "uniform": "empire",
+   "sha256_pixels": "1a7353bdd643b78470d9c1d82e6f2df839882b66f2bc8dbb1d16575e6c4985e9",
+   "sha256_png": "1e5c25687989f42de807ca75c91f90487303495b2856009ec95ec3900d284087",
+   "admiral": 34,
+   "name": "貝爾肯格林",
+   "side": 0
   },
   {
    "index": 35,
@@ -890,7 +1182,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3410,
-   "flag12": 255,
+   "data0": 255,
    "colors": [
     1,
     3,
@@ -903,7 +1195,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "638db24f236b7bde99485370a957d031aed6f59f63fe44a77285fb1f18d416e4",
+   "sha256_png": "d6541e716ce38e284bee0b80e06b2e72e384f17d5a00b5b85f8b8808b5db9d81",
+   "admiral": 35,
+   "name": "費塞尼加",
+   "side": 0
   },
   {
    "index": 36,
@@ -915,7 +1215,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3572,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -928,7 +1228,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 8,
+   "uniform": "empire",
+   "sha256_pixels": "6ab3f5994a027558077bb1da13a707f40245049fe514f84c32f54b63024f2316",
+   "sha256_png": "334c09a6043294d1607952e6edd496617dfe5ec59470d3da28fb5f547fd828ab",
+   "admiral": 36,
+   "name": "阿姆斯道爾夫",
+   "side": 0
   },
   {
    "index": 37,
@@ -940,7 +1248,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3032,
-   "flag12": 255,
+   "data0": 255,
    "colors": [
     3,
     6,
@@ -952,7 +1260,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "727c1ec52fda50e048b285a396a96f99b6f5a78a21b19e4a2973b53a075910b8",
+   "sha256_png": "9f9d2cbfddfc48e76ba07924d5278929dfd9e819f3c84d2a7354803c10ff7c97",
+   "admiral": 37,
+   "name": "格雷布納",
+   "side": 0
   },
   {
    "index": 38,
@@ -964,7 +1280,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3266,
-   "flag12": 255,
+   "data0": 255,
    "colors": [
     3,
     6,
@@ -976,7 +1292,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "fb1d897c2ade2c360f92911886f71c2f8387165c92db6b92b9c86931f70e6ceb",
+   "sha256_png": "53d840921156399d50a620a741bc4d905a0e88e94e38390469e6b97a8b2d54b3",
+   "admiral": 38,
+   "name": "烏爾拉",
+   "side": 0
   },
   {
    "index": 39,
@@ -988,7 +1312,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3022,
-   "flag12": 255,
+   "data0": 255,
    "colors": [
     3,
     6,
@@ -1000,7 +1324,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "f84027187cb836933db071ae3704029243b69eea3a9d017b9989927bd1171956",
+   "sha256_png": "47870429c4dea4de5fbae27c0f9ce329362e5422d01491049d004b598e327a0e",
+   "admiral": 39,
+   "name": "狄克爾",
+   "side": 0
   },
   {
    "index": 40,
@@ -1012,7 +1344,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3328,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -1026,7 +1358,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 849,
+   "uniform": "alliance",
+   "sha256_pixels": "548bc5bfa285efdb145b055d213f0427d3ec8eeb9a9cc190243c1193ed8b7bab",
+   "sha256_png": "870fcde21d5b0d6b0e5e61acc62ff6a3898b8e54c570e6e5562c665fb2565b33",
+   "admiral": 40,
+   "name": "亞典波羅",
+   "side": 1
   },
   {
    "index": 41,
@@ -1038,7 +1378,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2808,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     2,
@@ -1055,7 +1395,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 625,
+   "uniform": "alliance",
+   "sha256_pixels": "3c4ee756d45a8e678218a978ec85af455759fd53c1f4b3ec303c12706666ecfc",
+   "sha256_png": "9d30a45e38e49830797205447ffb8841b5c488ed1ad7d58d23e5676f5ead7be9",
+   "admiral": 41,
+   "name": "派特",
+   "side": 1
   },
   {
    "index": 42,
@@ -1067,7 +1415,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2880,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -1082,7 +1430,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 651,
+   "uniform": "alliance",
+   "sha256_pixels": "a5b8946491ebf11a0282ba14953465b4b3749f064913441b9fad205b8e18a269",
+   "sha256_png": "7f477a81e0f240aa97e907d74440ceeb212dcc4b77b867e02e80a8a121efdb9c",
+   "admiral": 42,
+   "name": "路菲普",
+   "side": 1
   },
   {
    "index": 43,
@@ -1094,7 +1450,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3124,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -1109,7 +1465,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 1304,
+   "uniform": "alliance",
+   "sha256_pixels": "328a2229385d41451e10d6b306c7b138f910c9e5a608f8a70974e257a3f69b6f",
+   "sha256_png": "8a74c7360df6b744c6aa838cc9b29730b29ed73874df40f3e5446cdf3403e604",
+   "admiral": 43,
+   "name": "培特雷",
+   "side": 1
   },
   {
    "index": 44,
@@ -1121,7 +1485,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3184,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1135,7 +1499,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 804,
+   "uniform": "alliance",
+   "sha256_pixels": "1b7dd5485885b1cf231d6381386d189856c07779a810cb8e51b7d11306a6fcdb",
+   "sha256_png": "ac277325a7b0d094acddad561be1b6d258dc05a45b85c79afa753dffad3d0e9a",
+   "admiral": 44,
+   "name": "比克古",
+   "side": 1
   },
   {
    "index": 45,
@@ -1147,7 +1519,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3288,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1161,7 +1533,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 949,
+   "uniform": "alliance",
+   "sha256_pixels": "a0fc4ea2f39b9f5a5b79804f6448f3ad99f0407e57150a780984113285308e26",
+   "sha256_png": "06d21274543e0194275bd197d83ece8d3f230d86d13876754b279f3bf8b33301",
+   "admiral": 45,
+   "name": "慕亞",
+   "side": 1
   },
   {
    "index": 46,
@@ -1173,7 +1553,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3282,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1187,7 +1567,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 750,
+   "uniform": "alliance",
+   "sha256_pixels": "778caa2c64701f881ec3cad109064041522c7a8fd08c1201d48be501fc0f5662",
+   "sha256_png": "2d855e7edbf74e06f610a302b73cef2ea50438635bd6742ba536a0dc78287a88",
+   "admiral": 46,
+   "name": "赫伍得",
+   "side": 1
   },
   {
    "index": 47,
@@ -1199,7 +1587,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3434,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1213,7 +1601,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 478,
+   "uniform": "alliance",
+   "sha256_pixels": "f56ab6ee251956db082accd460f293965a450fc2f8a517f6388dbb014f8decdc",
+   "sha256_png": "691ff90c49cf38259d66b694c608d87b28aee37bcacff4f8bc8a3f43473d4f1e",
+   "admiral": 47,
+   "name": "阿普頓",
+   "side": 1
   },
   {
    "index": 48,
@@ -1225,7 +1621,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3156,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1238,7 +1634,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 625,
+   "uniform": "alliance",
+   "sha256_pixels": "dea15e482b91c563139bac240e26541b718cae7389a3c3d4b8093791d28f700f",
+   "sha256_png": "16bf405f26ba29285a18f789a29bef7036b814ee44c3a8fbbc9da7c1b0b4c34d",
+   "admiral": 48,
+   "name": "亞爾•沙列姆",
+   "side": 1
   },
   {
    "index": 49,
@@ -1250,7 +1654,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3004,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1263,7 +1667,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 546,
+   "uniform": "alliance",
+   "sha256_pixels": "30654ea65d63a22e2f6b586dc5e419e0c80beef2940cba1af24ef0f14f4218ad",
+   "sha256_png": "f270f4d5c0a07eaed22b1d0f08b75d8d32b99f159a98ab3522da1fd2c5fc2d3e",
+   "admiral": 49,
+   "name": "伍蘭夫",
+   "side": 1
   },
   {
    "index": 50,
@@ -1275,7 +1687,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2990,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     0,
     1,
@@ -1291,7 +1703,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 313,
+   "uniform": "alliance",
+   "sha256_pixels": "30129d39a07f6b303ecf6728d447510352d892afb3ae5d53af0650822f2f92cb",
+   "sha256_png": "d58727ba371a93f6846547b62964cfdd14aec0bbec33153906fe224979dbca1c",
+   "admiral": 50,
+   "name": "魯格拉希",
+   "side": 1
   },
   {
    "index": 51,
@@ -1303,7 +1723,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3310,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1317,7 +1737,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 711,
+   "uniform": "alliance",
+   "sha256_pixels": "7e4bec4bbe50a5ea7a5b150d087905dc2d9ea33b37cc29f52762b1f28732c4c1",
+   "sha256_png": "09fce9002c52c128fe8bb76c02a6c130dc89efe0756cfb487ac15963a74d6fed",
+   "admiral": 51,
+   "name": "波羅汀",
+   "side": 1
   },
   {
    "index": 52,
@@ -1329,7 +1757,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2840,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -1344,7 +1772,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 623,
+   "uniform": "alliance",
+   "sha256_pixels": "387083179cb3eafe734a337424d66cceaf23620f9ac89b08baf867e1330329e5",
+   "sha256_png": "760671e80f947ff89aaa5575e5a27661eede1b57a76587e7616268ff60a8a5e3",
+   "admiral": 52,
+   "name": "楊威利",
+   "side": 1
   },
   {
    "index": 53,
@@ -1356,7 +1792,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2812,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1370,7 +1806,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 802,
+   "uniform": "alliance",
+   "sha256_pixels": "0c7580caad92918160b97691286fbfc817ceeeadf7f6fee069892701db7de289",
+   "sha256_png": "767876106b05d6f7001cfcdb29aad9378170b42213a29871704413b6ef255e06",
+   "admiral": 53,
+   "name": "莫頓",
+   "side": 1
   },
   {
    "index": 54,
@@ -1382,7 +1826,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3094,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1396,7 +1840,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 919,
+   "uniform": "alliance",
+   "sha256_pixels": "9217297daa705fe69ff99f5e4ed28e98b4d775b38ba260b085db28a11312b61a",
+   "sha256_png": "72b377d97571c0c6fea152d4a3ff36f18863a0960eafdcd48b185008bfde6994",
+   "admiral": 54,
+   "name": "卡爾先",
+   "side": 1
   },
   {
    "index": 55,
@@ -1408,7 +1860,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3024,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1422,7 +1874,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 736,
+   "uniform": "alliance",
+   "sha256_pixels": "39ad9e1b79adc28d95825fdc3a9da1b6ca08e2f558b53ddc0af106ae2ca5c802",
+   "sha256_png": "e73a161d4572d2d2ef8da8f8e525edb79de1599959db81a99b6327d6a7e4136f",
+   "admiral": 55,
+   "name": "費雪",
+   "side": 1
   },
   {
    "index": 56,
@@ -1434,7 +1894,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3252,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1448,7 +1908,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 268,
+   "uniform": "alliance",
+   "sha256_pixels": "20c23c0eeee49f5cc706a15dd39f720e28cdaabf8fbba419ca1f411482b1b7ff",
+   "sha256_png": "74b3405ad534f493711b3834dcf3ea899cc6b78e31071597e48278e2a4b61650",
+   "admiral": 56,
+   "name": "尤里安",
+   "side": 1
   },
   {
    "index": 57,
@@ -1460,7 +1928,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2972,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1474,7 +1942,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 838,
+   "uniform": "alliance",
+   "sha256_pixels": "2505809dd10eae3622dcd068636c2d0c3312264f05b1ceadb1b4c0bd529c233c",
+   "sha256_png": "d6b2fa40f100e8403b3de93b9e86ef8e6cff06d846dc9c44133f72ad9f92e91b",
+   "admiral": 57,
+   "name": "拉歐",
+   "side": 1
   },
   {
    "index": 58,
@@ -1486,7 +1962,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2956,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -1501,7 +1977,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 711,
+   "uniform": "alliance",
+   "sha256_pixels": "556c5aa4d81751129a9b8031d338a4baec144e550c967561c927239af2ae8457",
+   "sha256_png": "def5f9eb87795f4649785ac64ce16445d77ee1f11373993c217b57e39807a422",
+   "admiral": 58,
+   "name": "巴格達胥",
+   "side": 1
   },
   {
    "index": 59,
@@ -1513,7 +1997,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2958,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1526,7 +2010,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 753,
+   "uniform": "alliance",
+   "sha256_pixels": "2fe96f56d12629b9a6bc5b3fbbb8447e7684f1ae3b07a1e69d19c0c885c6c919",
+   "sha256_png": "08ffba848e7637879a06fb17d65c174428f21e4e9b1bc7758f6f3f0e9fb38565",
+   "admiral": 59,
+   "name": "古嚴",
+   "side": 1
   },
   {
    "index": 60,
@@ -1538,7 +2030,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3194,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1552,7 +2044,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 883,
+   "uniform": "alliance",
+   "sha256_pixels": "90abac1812555bdd95e23b4cb2407875b9e8051cb43ae07f88df15f1f6a51708",
+   "sha256_png": "0bb40e5abc83f617c543eb53a7f9d5e8e634a65c516bbfccf728e931525a56f1",
+   "admiral": 60,
+   "name": "邱吾權",
+   "side": 1
   },
   {
    "index": 61,
@@ -1564,7 +2064,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2974,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1578,7 +2078,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 549,
+   "uniform": "alliance",
+   "sha256_pixels": "c42f4a944d3417592c349b48d00b170330b0d1bf0924e00f0df2edfe75c34d30",
+   "sha256_png": "2222562ac10fd2f6caf9de2da6d2728a508acdcb120c17ccdf386a965af62298",
+   "admiral": 61,
+   "name": "拉普",
+   "side": 1
   },
   {
    "index": 62,
@@ -1590,7 +2098,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2930,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1604,7 +2112,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 743,
+   "uniform": "alliance",
+   "sha256_pixels": "5ea6fe58c063cbe53236916c4f3489691181a115859a7b8a457c3f7a9fb20d99",
+   "sha256_png": "7abad82d5e75d1da3153f6e6867bbfeeff3c29cc1015697925c7254cd4a3c35a",
+   "admiral": 62,
+   "name": "雅拉肯",
+   "side": 1
   },
   {
    "index": 63,
@@ -1616,7 +2132,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3508,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -1631,7 +2147,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 396,
+   "uniform": "alliance",
+   "sha256_pixels": "14392caa58146613c05d9f90d86aba20c90b9b683a589a28d734b3db9b83d90e",
+   "sha256_png": "c9178e5de0f7b83ac87946efe41e7ec3e947d1a9be0c0d375eb04611097a9eb8",
+   "admiral": 63,
+   "name": "法菲爾",
+   "side": 1
   },
   {
    "index": 64,
@@ -1643,7 +2167,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3504,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1657,7 +2181,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 672,
+   "uniform": "alliance",
+   "sha256_pixels": "645a21a1b129036f5c8f7d3ec25c2d0a2d867b80eec1bb885c96a8d8c76415aa",
+   "sha256_png": "09e94405b5409a231cfa7b9c9a636281bc5a002f1e9ef254d02573b44f826e21",
+   "admiral": 64,
+   "name": "馬里涅汀",
+   "side": 1
   },
   {
    "index": 65,
@@ -1669,7 +2201,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2894,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1683,7 +2215,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 500,
+   "uniform": "alliance",
+   "sha256_pixels": "b53497efa0679ec67e799725be878cd2d7eb107597dfd5d39f56b8f679ee5921",
+   "sha256_png": "53812c576ad74aa144a04f615162ed37d73b691c92f39cc709f02ecabf459789",
+   "admiral": 65,
+   "name": "陳",
+   "side": 1
   },
   {
    "index": 66,
@@ -1695,7 +2235,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3236,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1709,7 +2249,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 730,
+   "uniform": "alliance",
+   "sha256_pixels": "3386f40e49b4509c4741546bc5096fd49afff659c4e1017be9ca5813c8d09a0b",
+   "sha256_png": "0aa3f295ec7ee2d83c3a98526be54f78ef504f87d4ad8a32dd0f6e438ac146b7",
+   "admiral": 66,
+   "name": "史多克斯",
+   "side": 1
   },
   {
    "index": 67,
@@ -1721,7 +2269,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3006,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1735,7 +2283,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 820,
+   "uniform": "alliance",
+   "sha256_pixels": "9ac8af6a15533069cb5f7748b0b54c60f2d09219b354564a2d3f78ecc80549c6",
+   "sha256_png": "5f7eaa42cd6919c92b48d0e09a54b88e8bd76482cb0933a5d60770fca707e6f7",
+   "admiral": 67,
+   "name": "可那利",
+   "side": 1
   },
   {
    "index": 68,
@@ -1747,7 +2303,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3462,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1761,7 +2317,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 573,
+   "uniform": "alliance",
+   "sha256_pixels": "b757722fdd7ff84b1fd6b5984a6ac162ee4000880dfbbc9ac9067efec656e45e",
+   "sha256_png": "dd0cf58610d81a5698d49ab4908028960030202c781f03c9519a8fe6f636ffcf",
+   "admiral": 68,
+   "name": "菲列特利加",
+   "side": 1
   },
   {
    "index": 69,
@@ -1773,7 +2337,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3138,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1786,7 +2350,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 618,
+   "uniform": "alliance",
+   "sha256_pixels": "59e427ca9989d9fbcc5f3f6dc4284056bd33fbd3f6063467834f581dd726b239",
+   "sha256_png": "87f20d2912eb29b492f4416cf161f8840911ff3f065c78fedaacc329a69a8806",
+   "admiral": 69,
+   "name": "馬利諾",
+   "side": 1
   },
   {
    "index": 70,
@@ -1798,7 +2370,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3238,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -1812,7 +2384,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 356,
+   "uniform": "alliance",
+   "sha256_pixels": "a7294eb6e6a090da9ea62f9fbaa4923d89fa3966ce96887ab3a4288ccf914db7",
+   "sha256_png": "f101708e675684b91e24c42becce751eef309d25a291857ee57c5aeb2bcd326f",
+   "admiral": 70,
+   "name": "沙尼亞",
+   "side": 1
   },
   {
    "index": 71,
@@ -1824,7 +2404,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3060,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1838,7 +2418,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 837,
+   "uniform": "alliance",
+   "sha256_pixels": "8ba0b15ace2e5730a9bd8ceae70c5f3a2b44d40de8d58d1ccac5552c20f30e1a",
+   "sha256_png": "69535b6ff92f3a28f6fa59de6f73bbe04254193923008b38cdd32c922fa5fe82",
+   "admiral": 71,
+   "name": "姆萊",
+   "side": 1
   },
   {
    "index": 72,
@@ -1850,7 +2438,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3426,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1864,7 +2452,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 294,
+   "uniform": "alliance",
+   "sha256_pixels": "8ad4ea42ef8ff346482e867bfb2bd323c47b748158b7679ebfc357fa8ceaf643",
+   "sha256_png": "5b732b8cbb2517fc47604bc6df05c109f7ffc67cadac2839a99685ad306386bc",
+   "admiral": 72,
+   "name": "先寇布",
+   "side": 1
   },
   {
    "index": 73,
@@ -1876,7 +2472,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3278,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1890,7 +2486,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 675,
+   "uniform": "alliance",
+   "sha256_pixels": "ce6e83c9d87094178299450a0bfa4510cc5cf6efae99f3de7a361f74d914a854",
+   "sha256_png": "6a5722aa271882f737594d7acc791a86bb2c852f402f5d2ae9520bcaef03e3b3",
+   "admiral": 73,
+   "name": "史路茲卡利達",
+   "side": 1
   },
   {
    "index": 74,
@@ -1902,7 +2506,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3384,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1916,7 +2520,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 1267,
+   "uniform": "alliance",
+   "sha256_pixels": "8b79f060a78f221362d892a435e9eda6500f22a6e87b7b485ca75bacebacfa9f",
+   "sha256_png": "ff017e6cc297739ec2865dcccdb592919dfa2ac4836ebce4a983d3422865e4a4",
+   "admiral": 74,
+   "name": "波布蘭",
+   "side": 1
   },
   {
    "index": 75,
@@ -1928,7 +2540,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3252,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -1942,7 +2554,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 278,
+   "uniform": "alliance",
+   "sha256_pixels": "201a97c3c88628a8e92801fa6deabaedae33b4a7fe323aa7e31593bf9399618d",
+   "sha256_png": "f92f90fbdc9d2a1d8292624d96adcac0579205d81063e925af38ed7408d37a49",
+   "admiral": 75,
+   "name": "卡介倫",
+   "side": 1
   },
   {
    "index": 76,
@@ -1954,7 +2574,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3306,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     1,
     3,
@@ -1969,7 +2589,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 307,
+   "uniform": "alliance",
+   "sha256_pixels": "dad9d149e2e254245e1be830cde08b0cab3d77d68824cffbdc450d143d2b6216",
+   "sha256_png": "f065d370f64b902404a8e473ae5f7688bc03680cfba29336e3838a33bc799e6c",
+   "admiral": 76,
+   "name": "林滋",
+   "side": 1
   },
   {
    "index": 77,
@@ -1981,7 +2609,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 2976,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -1995,7 +2623,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 260,
+   "uniform": "alliance",
+   "sha256_pixels": "6821ef0c9dc5866b888f231a049fa99a48c0fc61ab72e408191695e978ac1550",
+   "sha256_png": "c4af8958d32c790e0303b0ff02bca31744dfcbf463829010a250d533728ea339",
+   "admiral": 77,
+   "name": "布魯姆哈爾特",
+   "side": 1
   },
   {
    "index": 78,
@@ -2007,7 +2643,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3112,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -2021,7 +2657,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 208,
+   "uniform": "alliance",
+   "sha256_pixels": "ea89b68de90d4bf6619bc4b5052b7bdf60d5699bfb730bdc8c23caf42751a1e5",
+   "sha256_png": "bc950e95778856e2de7b55f9e4841b06cf3aaf6ad7d8899ac8088dc075dbd28f",
+   "admiral": 78,
+   "name": "伊旺•高尼夫",
+   "side": 1
   },
   {
    "index": 79,
@@ -2033,7 +2677,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3216,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     4,
@@ -2047,7 +2691,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 802,
+   "uniform": "alliance",
+   "sha256_pixels": "b0fc29d1125b6c2794cde162e5f22f460d880c7e061c19fb8bb3cd550870b306",
+   "sha256_png": "220d2f31e6cebdbc2cb973660a4eee100f1ca7d599ab494851bb5679140fdb14",
+   "admiral": 79,
+   "name": "派特里契夫",
+   "side": 1
   },
   {
    "index": 80,
@@ -2059,7 +2711,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3500,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -2071,7 +2723,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "4552310603622dff6f1175eb5063aa739ac89d1935a113adeebb8215c818cbb3",
+   "sha256_png": "7ba9d961ede2584cced5150ead6f999acc99718a2994129fa63a6be09a1df65c",
+   "admiral": 80,
+   "name": "梅爾卡茲",
+   "side": 1
   },
   {
    "index": 81,
@@ -2083,7 +2743,7 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 3368,
-   "flag12": 0,
+   "data0": 0,
    "colors": [
     3,
     6,
@@ -2095,7 +2755,15 @@
     13,
     14,
     15
-   ]
+   ],
+   "solid": false,
+   "green_px": 0,
+   "uniform": "empire",
+   "sha256_pixels": "07f3729001cbacde587196b2905652c1d8eccdbd591d0e11b5d24d531838c243",
+   "sha256_png": "420b27e63c768bf47de782526f58f1ed6f5d4d4f9caaf03649b74b795b3d7e19",
+   "admiral": 81,
+   "name": "舒奈德",
+   "side": 1
   },
   {
    "index": 82,
@@ -2107,10 +2775,19 @@
    "exact": true,
    "hdr0": 1,
    "hdr4": 38,
-   "flag12": 255,
+   "data0": 255,
    "colors": [
     9
-   ]
+   ],
+   "solid": true,
+   "green_px": 0,
+   "uniform": null,
+   "sha256_pixels": "4c322eb720bad570a139eafdb0b57b21165b96a409368bf7caeea060ed53762a",
+   "sha256_png": "0f4196a48a9595d98b600fa8e502dcc2a1b050fbb74cd02ec752af741d15c8ca",
+   "admiral": null,
+   "name": "",
+   "side": null,
+   "note": "第 83 格：整張單色 9（外框色），沒有人物；KEIREKI.DAT 的第 83 段同樣是空的"
   }
  ]
 }
