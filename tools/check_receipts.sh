@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 # 只比對、不覆蓋：用翻譯後的旗標把收據重跑一次，記下畫面與調色盤差幾個位元組。
 #
-#   tools/check_receipts.sh                 # 全部
-#   tools/check_receipts.sh main1e cb1      # 指定幾份
+#   tools/check_receipts.sh                 # 全部（已經比過的會跳過）
+#   tools/check_receipts.sh main1e cb1      # 指定幾份（指名的一定重比）
 #   JOBS=3 tools/check_receipts.sh          # 並行數（預設 2）
+#   FORCE=1 tools/check_receipts.sh         # 全部重比，不跳過
+#
+# ⚠ **這是幾個鐘頭的工作，會被外力打斷。** 455 份裡有跑十幾億道指令的，
+# 而這台機器同時有別人在用——記憶體一緊就被 OOM 砍掉。所以每比完一份
+# 就把結果附到 `workplace/receipt-check.tsv`，下次跑自動從那裡接下去；
+# 全部重來一次的代價是好幾個鐘頭，而**被砍掉的那一次什麼都沒留下**
+# 才是真正貴的地方。
 #
 # 與 `tools/rerun_receipts.sh` 的差別是**它不寫回 workplace/oracle/**。
 # 換執行器的時候要先知道「哪幾份對不上」，而重跑會把舊畫面蓋掉——
@@ -20,14 +27,25 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GOLEM="${DOSGOLEM_DIR:-$HOME/cht/dosgolem-logh3}"
 FLAGS="$ROOT/workplace/flags-new"
 OUT="$GOLEM/workplace/check"
+TSV="$ROOT/workplace/receipt-check.tsv"
 JOBS="${JOBS:-2}"
 mkdir -p "$OUT"
+touch "$TSV"
 
 names=("$@")
+picked=$#
 if [[ ${#names[@]} -eq 0 ]]; then
   mapfile -t names < <(cd "$FLAGS" && ls *.txt 2>/dev/null | sed 's/\.txt$//')
 fi
+# ⚠ 這個檢查要在「跳過已比過的」之前——續跑到全部比完時剩下的清單是空的，
+# 那是**做完了**，不是「沒有旗標」。
 [[ ${#names[@]} -gt 0 ]] || { echo "沒有翻好的旗標——先跑 tools/py.sh tools/scripts/translate_receipt_flags.py --all" >&2; exit 2; }
+
+# 指名的一定重比（要看某一份改了沒）；跑全部時跳過已經有結果的。
+if [[ $picked -eq 0 && "${FORCE:-}" != "1" ]]; then
+  mapfile -t names < <(printf '%s\n' "${names[@]}" | grep -vxF -f <(cut -f1 "$TSV") || true)
+  echo "已經比過 $(wc -l < "$TSV") 份，這次要比 ${#names[@]} 份（FORCE=1 可全部重比）"
+fi
 
 one() {
   local name="$1" f="$FLAGS/$1.txt" exe
@@ -49,22 +67,28 @@ one() {
   else
     s=-1; p=-1   # 跑不出畫面：旗標壞了或程式死在半路，與「差很多」不是同一回事
   fi
+  # **邊比邊寫**：被砍掉的時候已經比完的那些要留得住。
+  flock "$TSV" -c "printf '%s\t%s\t%s\n' '$name' '$s' '$p' >> '$TSV'"
   printf '%s\t%s\t%s\n' "$name" "$s" "$p"
 }
 export -f one
-export ROOT GOLEM FLAGS OUT
+export ROOT GOLEM FLAGS OUT TSV
 
-tmp=$(mktemp)
-printf '%s\n' "${names[@]}" | xargs -P "$JOBS" -I{} bash -c 'one "$@"' _ {} | tee "$tmp"
+if [[ ${#names[@]} -gt 0 ]]; then
+  printf '%s\n' "${names[@]}" | xargs -P "$JOBS" -I{} bash -c 'one "$@"' _ {}
+fi
 
-python3 - "$tmp" "$ROOT/workplace/receipt-check.json" "$(git -C "$GOLEM" rev-parse --short HEAD)" <<'PY'
+# JSON 一律從 TSV 全量重出，所以續跑與一次跑完的結果相同。
+python3 - "$TSV" "$ROOT/workplace/receipt-check.json" "$(git -C "$GOLEM" rev-parse --short HEAD)" <<'PY'
 import json, sys, datetime
-rows = []
+# 指名重比的那幾份會在 TSV 裡多一列——**後面那一列才算數**，
+# 不然重比完的結果會被舊的蓋掉，而報表看起來完全正常。
+seen = {}
 for line in open(sys.argv[1], encoding="utf-8"):
     f = line.rstrip("\n").split("\t")
     if len(f) == 3:
-        rows.append({"name": f[0], "screen_diff": int(f[1]), "pal_diff": int(f[2])})
-rows.sort(key=lambda r: r["name"])
+        seen[f[0]] = {"name": f[0], "screen_diff": int(f[1]), "pal_diff": int(f[2])}
+rows = sorted(seen.values(), key=lambda r: r["name"])
 bad = [r["name"] for r in rows if r["screen_diff"] != 0 or r["pal_diff"] != 0]
 json.dump({"generated": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
            "golem_head": sys.argv[3], "checked": len(rows),
@@ -73,4 +97,4 @@ json.dump({"generated": datetime.datetime.now().astimezone().isoformat(timespec=
 open(sys.argv[2], "a", encoding="utf-8").write("\n")
 print(f"\n比對 {len(rows)} 份：{len(rows)-len(bad)} 份逐位元組一致、{len(bad)} 份對不上")
 PY
-rm -f "$tmp"
+
