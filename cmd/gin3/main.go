@@ -19,9 +19,11 @@ import (
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	eaudio "github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
 	"github.com/wicanr2/logh3/internal/ai"
+	"github.com/wicanr2/logh3/internal/audio"
 	"github.com/wicanr2/logh3/internal/bootstrap"
 	"github.com/wicanr2/logh3/internal/game"
 	"github.com/wicanr2/logh3/internal/gfx"
@@ -31,6 +33,7 @@ type app struct {
 	g      *game.Game
 	pal    [gfx.Colors]color.RGBA
 	screen *ebiten.Image
+	music  *musicPlayer
 	buf    []byte
 
 	shot      string
@@ -44,10 +47,33 @@ type app struct {
 	fed    bool
 }
 
+// tuneFor 回這個狀態該播哪一首。**只回有證據的**——目前只有開頭動畫：
+// `docs/internals/19` §播放環境（confirmed）記著 `OPEN.EXE` 播 `OPEN_M.MDS`。
+//
+// ⚠ **其餘畫面回空字串，不要猜。** 猜一首放上去，聽起來「有音樂」而且
+// 不會報錯，於是「原版哪個畫面播哪一首還沒解」就再也沒有人去查了。
+// 那條記在 worklist 的 `music-screen-mapping`。
+func tuneFor(st game.State) string {
+	if st == game.StateIntro {
+		return "OPEN_M"
+	}
+	return ""
+}
+
 func (a *app) Update() error {
 	// 時間往前走一格。目前只有開頭動畫在用（一格 125.3 ms，
 	// `docs/spec/020`）；其他畫面都是事件驅動的。
 	a.g.Tick(time.Second / time.Duration(ebiten.TPS()))
+	if a.music != nil {
+		if tune := tuneFor(a.g.State()); tune == "" {
+			a.music.Stop()
+		} else if err := a.music.Play(tune); err != nil {
+			// 配樂出錯不該把遊戲帶走，但**要留下痕跡**——安靜地沒有音樂
+			// 與「還沒接播放層」長得一樣。
+			fmt.Fprintln(os.Stderr, "配樂：", err)
+			a.music = nil
+		}
+	}
 	if !a.fed {
 		a.fed = true
 		if err := feed(a.g, a.script); err != nil {
@@ -160,6 +186,11 @@ func main() {
 		"素材不齊就自動跳過")
 	aiLevel := flag.Int("ai", -1, "電腦 AI：-1 ＝ 原版（不動）；0–3 ＝ 強化版，"+
 		"數字越大越兇（會挑目標、集結、包圍）")
+	musicDir := flag.String("music", "",
+		"配樂目錄（OGG）；空的 ＝ 不放音樂。**不進版控**——曲子是從原版\n"+
+			"    素材轉出來的，玩家自備原版之後用 tools/music_to_ogg.sh 自己轉。\n"+
+			"    預設關著是刻意的：沒有音效裝置的機器（容器、CI、無頭對拍）\n"+
+			"    一開音訊就整個跑不起來，而對拍流程不該因為配樂多一種死法")
 	flag.Parse()
 
 	res, err := bootstrap.Load(*orig, *data)
@@ -193,11 +224,39 @@ func main() {
 		shotAfter: *shotAfter,
 		script:    *script,
 	}
+	// 配樂：**要求了才開音訊**。缺檔就不播，但要說出來——安靜與
+	// 「沒接播放層」長得一樣，不講的話沒有人分得出是哪一種
+	// （AGENTS.md：缺檔就 skip，不用代用品）。
+	if *musicDir != "" {
+		lib := audio.NewLibrary(*musicDir)
+		switch {
+		case !hasAudioDevice():
+			fmt.Fprintln(os.Stderr, "配樂：這台機器沒有音效裝置（/dev/snd 不在），"+
+				"這一趟沒有音樂")
+		case lib.Have() == 0:
+			fmt.Fprintf(os.Stderr, "配樂：%s 裡一首都沒有，這一趟沒有音樂。"+
+				"轉檔看 tools/music_to_ogg.sh\n", lib.Dir())
+		default:
+			if miss := lib.Missing(); len(miss) > 0 {
+				fmt.Fprintf(os.Stderr, "配樂：%d/%d 首，缺 %v\n",
+					lib.Have(), len(audio.Tracks), miss)
+			}
+			a.music = newMusicPlayer(eaudio.NewContext(audio.SampleRate), lib)
+		}
+	}
+
 	a.setPalette(g.Palette())
 	ebiten.SetWindowSize(int(float64(gfx.Width)*(*scale)), int(float64(gfx.Height)*(*scale)))
 	ebiten.SetWindowTitle("銀河英雄傳說III SP")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
-	if err := ebiten.RunGame(a); err != nil && err != ebiten.Termination {
+	err = ebiten.RunGame(a)
+	if err != nil && err != ebiten.Termination && a.music != nil &&
+		strings.Contains(err.Error(), "oto:") {
+		// 裝置在但開不起來（被佔用、權限、PulseAudio 沒跑）。
+		// 原始訊息只有 ALSA 的字串，看不出與配樂有關。
+		die(fmt.Errorf("配樂開不起來：%w\n（用 -music \"\" 關掉配樂就能跑）", err))
+	}
+	if err != nil && err != ebiten.Termination {
 		die(err)
 	}
 }

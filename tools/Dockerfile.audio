@@ -1,0 +1,23 @@
+# 配樂轉檔：`.MDS` → MIDI → OGG Vorbis。
+#
+# `.MDS` 是原版自己的樂曲格式（`docs/internals/17`），先用
+# `tools/scripts/mds_export.py` 轉成標準 MIDI，再在這裡合成成音訊。
+#
+# ⚠ **這個 image 不含任何原版素材**，只有合成器與編碼器。曲子要玩家
+# 自備原版之後自己轉，產物落在 gitignore 的目錄（AGENTS.md 的硬規則：
+# 原版素材與其衍生物都不進版控、不進發行包）。
+#
+# 音色庫用 Debian 的 `fluid-soundfont-gm`（FluidR3_GM，可自由散布的授權），
+# 所以不必玩家再去找一份；要換成自己的就用 `-sf`。
+#
+# ⚠ **這是 General MIDI 的音色，不是原版的 FM 音源。** `_M` 那一組
+# （MPU-401／GM）用它合出來接近當年在 MIDI 音源上聽到的；`_F` 那一組
+# 是寫給 OPL 的，用 GM 音色只是「同一首曲子」而不是「同一個聲音」。
+# 要 FM 的原音得從執行器錄 OPL 暫存器寫入（見 `tools/music_to_ogg.sh` 的說明）。
+FROM debian:bookworm-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      fluidsynth fluid-soundfont-gm ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
+
+ENV HOME=/tmp

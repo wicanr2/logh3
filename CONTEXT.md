@@ -359,7 +359,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 29 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 30 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -382,18 +382,6 @@
 **證據**：[`docs/re/108-intro-plane-buffers-located.md`](docs/re/108-intro-plane-buffers-located.md)、[`docs/re/116-intro-buffer-overlap-root-cause.md`](docs/re/116-intro-buffer-overlap-root-cause.md)、[`docs/spec/020-intro-animation.md`](docs/spec/020-intro-animation.md)
 
 **核實**：`docs/spec/020-intro-animation.md` 標到 `CONFORMED`
-
-#### music-playback — 配樂沒有播放層
-
-*feature（功能：玩家會撞到、但 remake 還沒有）*
-
-22 首 `.MDS` 已經解成 MIDI，remake 這一側一個音都沒放。
-
-**做完的判準**：玩家路徑上聽得到原版配樂，且切換場景會換曲。
-
-**證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
-
-**核實**：要人判——接上時會出現播放層的型別（大概是 internal/audio），到時把這一條改成 absent 綁那個型別名——現在猜名字會寫出永遠為真的 pattern。
 
 #### s3datamem-rerecord — 收據 s3datamem 要重錄（原本那份的旗標在錄製時就壞了）
 
@@ -468,6 +456,41 @@ BIOS 計時器計數只在遊戲 chain 回 BIOS 時才加（每 32 刻一次，�
 **證據**：[`docs/re/247-strategy-report-strings.md`](docs/re/247-strategy-report-strings.md)、[`docs/internals/data/strategy-report-strings.json`](docs/internals/data/strategy-report-strings.json)
 
 **核實**：`internal/screen`、`internal/game` 裡出現 `strategy-report-strings|StrategyReport` 就是做好了
+
+#### music-screen-mapping — 原版哪個畫面播哪一首還沒解
+
+*re（逆向：機制還沒讀出來）*
+
+目前只有開頭動畫有證據：`docs/internals/19` §播放環境（confirmed）記著
+`OPEN.EXE` 播 `OPEN_M.MDS`，remake 就只接了這一條（`cmd/gin3` 的 `tuneFor`）。
+其餘 21 首對應哪個畫面、`MUSIC.INI` 怎麼在 `_F`／`_M` 之間選，都還沒讀。
+**不要猜一首填上去**：猜的聽起來「有音樂」而且不會報錯，
+於是這條缺口就再也沒有人去查了。
+
+**做完的判準**：每一首都對到它在原版裡實際播放的時機，來源是反組譯或收據，不是推測。
+
+**證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/internals/19-ibm16-350.md`](docs/internals/19-ibm16-350.md)
+
+**核實**：`cmd/gin3` 裡還找得到 `其餘畫面回空字串，不要猜`（自承還在 ＝ 還沒做）
+
+#### music-fm-capture — `_F` 那一組是 FM 音源，用 GM 音色庫合出來不是原音
+
+*re（逆向：機制還沒讀出來）*
+
+`tools/music_to_ogg.sh` 走的是 MIDI ＋ General MIDI 音色庫。
+`_M` 那一組本來就是寫給 MPU-401／GM 的，合出來接近當年的聲音；
+`_F` 是寫給 OPL 的，用 GM 音色只會得到「同一首曲子、不同的音源」。
+要 FM 原音得換一條路：讓 dosgolem 跑原版、錄下 OPL 暫存器的寫入序列
+（`machine.OPLWrite` 已經連步數一起記了）再合成。dosgolem 那側還缺一支
+把它倒成 VGM 的旗標——那對任何有 AdLib 的 DOS 遊戲都用得上，不是本作特例。
+
+**卡在**：要先在 dosgolem 加一支把 OPL 寫入序列倒成 VGM 的旗標。
+
+**做完的判準**：`_F` 那 11 首的 OGG 出自原版 OPL 的輸出，而不是 GM 音色庫。
+
+**證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
+
+**核實**：`tools/music_to_ogg.sh` 裡還找得到 `那條還沒做`（自承還在 ＝ 還沒做）
 
 #### battle-formation-letters — 編隊那八格的字母規則沒解
 
@@ -730,8 +753,28 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-3 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+4 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
+
+#### music-playback — 配樂的播放層（OGG）
+
+*feature（功能：玩家會撞到、但 remake 還沒有）*
+
+`internal/audio` 是曲庫（哪一首在哪裡、缺哪幾首，純的、測得到），
+`cmd/gin3/music.go` 是播放端（Ebitengine 的 `audio/vorbis`，循環播放）。
+轉檔走 `tools/music_to_ogg.sh`：`.MDS` → MIDI → OGG，產物落在
+gitignore 的 `workplace/assets/music/ogg/`（它是原版素材的衍生物）。
+**預設關著**（`-music` 給目錄才開）：沒有音效裝置的機器一開音訊就
+整個跑不起來，而對拍與截圖流程不該因為配樂多一種死法；沒有 `/dev/snd`
+時會講一句人話然後照常跑完。
+播放端放在 `cmd/gin3` 不放 `internal/`，因為 `oto` 建置時要 ALSA 的
+pkg-config，標準建置 image 沒有——放進 internal 會讓 `go test ./...` 建不起來。
+
+**做完的判準**：有播放層、能解 OGG 並循環、缺檔不播且說得出缺哪幾首、沒有音效裝置時不會把遊戲帶走。
+
+**證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
+
+**核實**：`TestMissingListsExactlyTheAbsentOnes` 釘在 `internal/audio`
 
 #### strategic-ai-advance-turn — 戰略 AI 接進 `advanceTurn`
 
@@ -770,6 +813,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 **核實**：`TestMonthEndMatchesWorkBlock` 釘在 `internal/game`
 
 <!-- worklist:end -->
+
 
 
 
