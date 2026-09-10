@@ -169,3 +169,12 @@ remake 只有戰場那條 `rules.PlanetAssault`，戰略回合那條還沒接—
     f9621115cb096490efbddb29444b01889e8fac8815d05b1d3f7bd5c87a3a3bf7  monthwork2/mw1820.bin
     8e55068ce71f4eb9379b214817a3b9f136668338562ee7075f28e4d31ba1a178  monthwork3/mr1820.bin
     0152898aa834be9863cd3aa750c8d4d6226cdbe454f320e087a06a7cc6480531  monthwork3/mp1820.bin
+
+---
+
+> **後續（`docs/re/268`）**：末節「改的時機與規則還沒查」已經查完。
+> `ds:8F4F` 是 AI 在自己回合的尾巴（`2D10:0038` → `2D10:0213`）重新指派的，
+> 候選與評分規則都量到了，用指派當下的提督表重算選出的就是**提督 63**。
+> 兩份收據不矛盾：`main1eAlly` 是 AI 還沒跑過的 796/1、`monthwork3` 是
+> 第一次「實行」之後。remake 同盟那格永遠是 60，是因為戰略 AI 還沒接進
+> `advanceTurn`。

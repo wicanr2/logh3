@@ -942,9 +942,15 @@ func (g *Game) recomputeAllTaxRates() {
 // `work-796-01.json` 量自第 71,200,000 步（防拷畫面之前），同盟那一格是 60；
 // 進到遊戲之後（第 300,000,000 步，回合 1）已經變成 63，而拿 63 重算回合 10
 // 的十三個同盟星域稅率**全中**。但 796/1 的同盟開局畫面 `main1eAlly`
-// 要的是 60——兩個值各有收據，所以那一格在載入之後被改過，改的時機與
-// 規則還沒查。在那之前這裡先用 `UnrestParams.Ruler`（載入時那一份），
-// 同盟的月底稅率因此會偏低約四分之一（`docs/spec/038`「不在這一份裡」）。
+// 要的是 60——兩個值各有收據，所以那一格在載入之後被改過。
+//
+// **改它的是誰已經查完了**（`docs/re/268`）：電腦在自己回合的尾巴重新指派
+// 內政專任參謀（`2D10:0038` → `2D10:0213`），規則本身在
+// `rules.PickDomesticStaff`，用收據的提督表重算選出的就是 63。remake 這裡
+// 仍然回載入時那一份，因為**戰略 AI 還沒接進 `advanceTurn`**
+// （`internal/ai` 的 `Original` 回 `nil`）——整個 AI 回合都沒跑，這一步
+// 自然也沒有。接上去之前同盟的月底稅率會偏低約四分之一
+// （`docs/spec/038`「不在這一份裡」）。
 func (g *Game) taxRateAdmiral(faction int) int {
 	return g.res.UnrestParams.Ruler[faction]
 }

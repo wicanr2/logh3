@@ -106,8 +106,10 @@ func TestMonthEndMatchesWorkBlock(t *testing.T) {
 //
 // 拿 63 重算收據 `monthwork3` 裡十三個同盟星域的稅率**全中**，拿 60 **全錯**；
 // 但 796/1 的同盟開局畫面 `main1eAlly` 逐位元組要的是 60。兩個值各有收據，
-// 所以那一格在載入之後被改過——改的時機與規則還沒查
-// （`docs/spec/038`、`docs/re/267`）。
+// 所以那一格在載入之後被改過：**電腦在自己回合的尾巴重新指派內政專任參謀**
+// （`2D10:0038` → `2D10:0213`，`docs/re/268`）。規則在 `rules.PickDomesticStaff`，
+// 收據測試在 `internal/rules/staffpick_test.go`；remake 這一側還沒有那一步，
+// 因為戰略 AI 尚未接進 `advanceTurn`（`docs/spec/038`、`docs/re/267`）。
 //
 // 這一支不改行為，只是把兩半都釘住：哪天有人把 `UnrestParams.Ruler` 改成
 // 63，`main1eAlly` 會紅；改回 60，這裡記的 13/13 仍然成立。
