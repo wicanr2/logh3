@@ -121,21 +121,17 @@
 
 ## 還沒做的
 
-- 開頭動畫的整段對拍：第 0 格、調色盤與頁面幾何都對上了，整段播不出原版
-  順序——原版在第一次搬圖之前換過讀檔緩衝，第 1–116 格從來沒被解過
-  （[`docs/re/108`](docs/re/108-intro-plane-buffers-located.md)、
-  [`docs/re/116`](docs/re/116-intro-buffer-overlap-root-cause.md)）。要不要連那個瑕疵一起
-  重現是忠實度取捨。
-- 單擊的扣除量：算式、係數與分母 K 都解出來了（`docs/re/86`、`docs/re/94`），
-  還沒把每回合的結算從艦隊層那條換成「照攻擊名單逐一開火」——卡在
-  「誰寫艦艇記錄的攻擊時座標」。
-- 戰略 AI 的座位順序：AI 本身已經接進回合流程（規格
-  [`docs/spec/029`](docs/spec/029-strategic-ai-turn.md)），但原版是**逐座位**跑的
-  ——帝國座位的月底結算在同盟座位的 AI 之前，而 remake 把 AI 放在回合最前面。
-  回合 10 的同盟 `Blend` 因此兩邊不同（原版 2、remake 0）。
-- 戰場的行星命令選單還沒對拍：四項行為都逆向過了，缺原版的行星命中判定。
-- 音樂：22 首 `.MDS` 已經轉成 MIDI（[`docs/internals/17`](docs/internals/17-mds.md)），
-  remake 還沒有播放層。
+**不在這裡列清單。** 還剩什麼的權威是
+[`docs/worklist.json`](docs/worklist.json)，畫成人看的樣子在
+[`CONTEXT.md`](CONTEXT.md) 的 worklist 一節；完成度看
+[`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)。兩份 markdown 都是產生的。
+
+```
+tools/go.sh run ./cmd/worklist verify     # 每一條的斷言還成立嗎
+```
+
+在 README 再抄一份清單，就是再多一個會過期的地方——這個專案已經因此把
+「還沒接」寫在三個檔案裡，而東西早就接上了。
 
 ## 電腦 AI
 
