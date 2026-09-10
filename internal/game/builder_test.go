@@ -258,14 +258,18 @@ func TestOriginalBrainCandidatesExcludeLedAdmirals(t *testing.T) {
 	}
 }
 
-// TestOriginalBrainStillNotDefault 預設仍然沒有 `Brain`——換上原版那套
-// 是 `docs/spec/029` 末節的裁決，不是這一輪接線的副作用。
-func TestOriginalBrainStillNotDefault(t *testing.T) {
+// TestOriginalBrainIsDefault 釘住預設就是原版那套戰略 AI
+// （`docs/spec/029` READY，使用者裁決 2026-09-10）。
+//
+// 這一支原本叫 `TestOriginalBrainStillNotDefault`，斷言 `g.brain == nil`
+// ——那是「還沒裁決」時的狀態。
+func TestOriginalBrainIsDefault(t *testing.T) {
 	g := reachBrainPhase(t)
-	if g.brain != nil {
-		t.Errorf("預設的 Brain 是 %T，預期 nil", g.brain)
+	if _, ok := g.brain.(ai.OriginalStrategy); !ok {
+		t.Errorf("預設的 Brain 是 %T，預期 ai.OriginalStrategy", g.brain)
 	}
-	// `ai.Original` 與 nil 同義：兩者都一道命令都不下。
+	// `ai.Original`（那個空殼）與 nil 仍然同義：兩者都一道命令都不下。
+	// 預設換掉的是 `Game` 接哪一個腦，不是這個型別的行為。
 	if got := (ai.Original{}).Orders(ai.World{}, 0, 0); got != nil {
 		t.Errorf("ai.Original 回了 %v，預期 nil", got)
 	}
@@ -409,5 +413,29 @@ func TestMonthEndKeepsBlend(t *testing.T) {
 	// （收據：6696 對 10213）。
 	if !(plainTax < monthTax) {
 		t.Errorf("平時的總稅收 %d 沒有比月底的 %d 小", plainTax, monthTax)
+	}
+}
+
+// TestExecuteTurnWithBrainMatchesOracle 是 `TestExecuteTurnMatchesOracle`
+// 的**有腦版本**：同一條玩家路徑、同一批收據，但走 `reachBrainPhase`
+// ——那個入口有載星域圖，所以戰略 AI 真的會跑。
+//
+// `docs/spec/029` 記著這個陷阱：`runBrain` 在 `Resources.Graph` 是 nil 時
+// 整段跳過，而 `internal/game` 共用的 `load()` 沒有載圖。所以「換掉預設
+// 之後 `go test` 還是綠」在那些測試裡**不代表決策層被跑過**。
+func TestExecuteTurnWithBrainMatchesOracle(t *testing.T) {
+	for _, batch := range []string{"turn260", "turn320", "turn450"} {
+		t.Run(batch, func(t *testing.T) {
+			g := reachBrainPhase(t)
+			if g.brain == nil {
+				t.Fatal("這個入口應該有接上 Brain")
+			}
+			g.Click(544, 125) // 系統指令
+			g.Click(560, 125) // 實行
+			if g.State() != StateCommandPhase {
+				t.Fatalf("實行之後在 %v", g.State())
+			}
+			matches(t, g, batch)
+		})
 	}
 }

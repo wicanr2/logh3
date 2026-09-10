@@ -655,6 +655,15 @@ type Game struct {
 	battleScore   [2]int
 	battleOver    bool
 
+	// work／admirals 是這一局**可寫**的 `WORK` 區塊與提督表。
+	//
+	// 兩者原本都直接讀資源（範本或存檔），但電腦每個回合會重新指派專任
+	// 參謀（`docs/re/268`）——那要寫 `WORK` 的 `+0x37` 起那六格與提督記錄
+	// 的 `+0x09`。`Resources` 可能被多局共用，所以第一次要寫的時候才複製
+	// （`mutableWork`／`mutableAdmirals`）。nil ＝ 這一局還沒有人寫過。
+	work     []byte
+	admirals []byte
+
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
 	//
 	// **預設是 nil ＝ 按實行時什麼都不做**，與 `ai.Original` 同義
@@ -891,6 +900,9 @@ func (g *Game) runBrain() {
 		g.fleets[o.Fleet].Target = o.Target
 		g.fleets[o.Fleet].Parked = false
 	}
+	// `2D10:0038` 的前兩步：重新指派情報與內政專任參謀（`docs/re/268`）。
+	// 排在 `Blend` 之前——換了人之後那一步重算稅率才會用到新的那位。
+	g.assignStaff(foe)
 	// 回合的最後一件事是 `2D10:0319(0)`：月底照軍事費再算一次，
 	// 平時把 `Blend` 歸零。兩條都會再重算一次稅率。
 	level := 0
@@ -952,7 +964,48 @@ func (g *Game) recomputeAllTaxRates() {
 // 自然也沒有。接上去之前同盟的月底稅率會偏低約四分之一
 // （`docs/spec/038`「不在這一份裡」）。
 func (g *Game) taxRateAdmiral(faction int) int {
+	if i := rules.StaffAdmiral(g.workRecord(), rules.PostDomestic, faction); i >= 0 {
+		return i
+	}
 	return g.res.UnrestParams.Ruler[faction]
+}
+
+// assignStaff 是原版 `2D10:0038` 的前兩步：電腦在自己回合的尾巴重新指派
+// **情報專任參謀**（`2D10:0143`）與**內政專任參謀**（`2D10:0213`），
+// 順序照原版（`docs/re/268`）。軍事專任參謀那格 AI 不換。
+//
+// 挑完接著的 `refreshBlend` 就是原版的 `090A:0B93`——換了人稅率要跟著
+// 重算，那正是同盟月底稅收對不上的成因。
+func (g *Game) assignStaff(faction int) {
+	admirals := g.mutableAdmirals()
+	if len(admirals) < rules.AdmiralRecord {
+		return
+	}
+	work := g.mutableWork()
+	capital := rules.CapitalRegion(faction)
+	posts := []struct {
+		post int
+		pick func(admirals []byte, faction, capital, current int) int
+	}{
+		{rules.PostIntel, rules.PickIntelStaff},
+		{rules.PostDomestic, rules.PickDomesticStaff},
+	}
+	for _, p := range posts {
+		cur := rules.StaffAdmiral(work, p.post, faction)
+		if cur < 0 {
+			continue
+		}
+		// 原版先把現任寫回「閒置」（`2D10:023A`），所以現任自己也在候選
+		// 清單裡、留任是合法結果。
+		if r := g.admiralRecord(cur); r != nil {
+			rules.LeaveStaffPost(r)
+		}
+		next := p.pick(admirals, faction, capital, cur)
+		rules.SetStaffAdmiral(work, p.post, faction, next)
+		if r := g.admiralRecord(next); r != nil {
+			rules.TakeStaffPost(r)
+		}
+	}
 }
 
 // refreshBlend 走原版 `2D10:0319` 的後半：寫下等級，接著用它當下標
@@ -964,7 +1017,7 @@ func (g *Game) refreshBlend(faction, level int) {
 		level < 0 || level >= len(pr.Base) {
 		return
 	}
-	ruler := g.admiralRecord(pr.Ruler[faction])
+	ruler := g.admiralRecord(g.taxRateAdmiral(faction))
 	if ruler == nil {
 		return
 	}
@@ -1015,6 +1068,18 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 			// `297B:0066` 建立艦隊時寫 `+0x3C = 100`（`docs/re/214`）。
 			Morale: rules.NewFleetMorale,
 		})
+		// 原版 `2D76:0611` 配到艦隊槽時把提督記錄的 `+0x09` 寫成
+		// 「bit7 清掉、低七位是槽號」，副官那一筆寫同一個槽
+		// （`docs/internals/08`）。**挑專任參謀的候選清單看的就是那個
+		// 位元**（`docs/re/268`），少了這一步，帶隊的提督下一輪還會被
+		// 挑去坐參謀，候選集就與原版不同。
+		g.mutableAdmirals()
+		if r := g.admiralRecord(nf.Admiral); r != nil {
+			rules.SetFleetSlot(r, n)
+		}
+		if r := g.admiralRecord(nf.Adjutant); r != nil {
+			rules.SetFleetSlot(r, n)
+		}
 		led[nf.Admiral] = true
 		n++
 	}
@@ -1119,6 +1184,9 @@ func New(res *Resources) (*Game, error) {
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
 		menuRow: -1, detailAdmiral: -1, battleRegion: -1}
 	g.startNewGame(res.Faction)
+	// 電腦那一方走原版的戰略 AI（`docs/spec/029` READY，使用者裁決
+	// 2026-09-10）。資源不齊時 `OriginalBrain` 自己回 nil ＝ 不下命令。
+	g.SetBrain(g.OriginalBrain())
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
 	}
@@ -1164,6 +1232,9 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.fleets = sl.Fleets(g.res.Weights)
 	g.selectedRegion = -1
 	g.state = StateCommandPhase
+	// 星域記錄與行星表剛剛才換成存檔那一份，戰略 AI 的地基跟著換，
+	// 所以重接一次。
+	g.SetBrain(g.OriginalBrain())
 }
 
 // pickQuestion 決定防拷問答的題目與答案。
@@ -2780,10 +2851,31 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 // workRecord 回目前這一局的 `WORK` 區塊：讀進來的存檔優先，
 // 沒有就用新遊戲的樣板。
 func (g *Game) workRecord() []byte {
+	if len(g.work) > 0 {
+		return g.work
+	}
 	if g.slot != nil && len(g.slot.Work) > 0 {
 		return g.slot.Work
 	}
 	return g.res.WorkTemplate
+}
+
+// mutableWork 回這一局可寫的 `WORK` 複本，第一次呼叫時才從資源複製。
+func (g *Game) mutableWork() []byte {
+	if len(g.work) == 0 {
+		g.work = append([]byte(nil), g.workRecord()...)
+	}
+	return g.work
+}
+
+// mutableAdmirals 回這一局可寫的提督表。複製之後把 `res.Admiral` 指過去，
+// 既有的讀取點（`admiralRecord` 那些）就自動看到同一份，原始陣列不被動到。
+func (g *Game) mutableAdmirals() []byte {
+	if len(g.admirals) == 0 {
+		g.admirals = append([]byte(nil), g.res.Admiral...)
+		g.res.Admiral = g.admirals
+	}
+	return g.admirals
 }
 
 // staffOps 回某個陣營的軍事專任參謀的營運（提督記錄 `+14`）——船艦建造的

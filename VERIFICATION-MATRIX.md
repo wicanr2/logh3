@@ -175,7 +175,7 @@
 | 一個回合串起來（`ai.Turn`，階段二／三／五）| **已實作，未對拍** | 逐艦隊決定的過濾已解（[`docs/re/196`](docs/re/196-decision-pass-filter.md)）：`+0x00` bit0 沒設又不在交戰格的留給後面的階段挑。`ds:D60E` 那一格的殘留也解了（[`docs/re/197`](docs/re/197-d60e-counts-the-whole-turn.md)：它數的是整個回合，十一處遞增點見 [`198`](docs/re/198-ai-runs-in-turn260.md)）|
 | `Brain` 包裝（`ai.OriginalStrategy`）| **已實作，未啟用** | 接得上 `Brain`；`Original` 仍回 `nil`，換掉只要改建構的那一行 |
 | **建艦隊（階段一，`2D76:0002`／`2E54:0513`）** | **已實作並接線**（`ai.BuildPass`／`OriginalStrategy.Build`，見下一列的長條目）| 當初擋在戰略 AI 前面的理由：新遊戲兩邊都是零艦隊（新遊戲樣板只有 `ADMIRAL.DTX`／`STELLAR.DTX`，沒有 `FLEET.DTX`，[`docs/re/200`](docs/re/200-new-game-has-no-fleets.md)），電腦那一方的艦隊是 AI 自己建的。`ai.Turn` 只涵蓋階段二／三／五——建艦隊產生的是新艦隊不是命令，`[]Order` 裝不下 |
-| **接到 `advanceTurn`** | **未做** | 規格已 **READY**（證據審查見 `docs/spec/029`），但 `internal/ai` 的 `Original` 仍回 `nil`——換掉會改變 remake 的行為，需要使用者裁決（理由與影響寫在該規格末尾）|
+| **接到 `advanceTurn`** | **已接**（2026-09-10 使用者裁決）| `New` 與 `LoadSlot` 都把 `Brain` 設成 `OriginalBrain()`，資源不齊時它自己回 nil。**既有的畫面收據一份都沒破**（`go test ./...` 全綠）。同時補上兩件原版行為：建艦隊時把帶隊提督的 `+0x09` 寫成艦隊槽（`2D76:0611`），以及 AI 回合尾巴重新指派情報與內政專任參謀（`2D10:0038`，[`docs/re/268`](docs/re/268-ai-reassigns-staff-officers.md)）——`TestAllianceStaffSwitchesToReceipt` 釘住同盟那格從 60 換到 63、帝國那格不動。**剩一個順序差異**：原版是逐座位跑的（帝國座位的月底結算 → 同盟座位的 AI → 同盟的結算），remake 的 `advanceTurn` 把 AI 放在最前面，所以回合 10 的同盟 `Blend` 兩邊不同（原版 2、remake 0）；`monthwork3` 倒在同盟座位跑完之前，逐格比稅率要另做一份收據 |
 
 > 既有的 25 份記憶體傾印裡，**只有被 `-poke` 過座位表的 `s3aicomp` 跑過 AI**
 > （`ds:D60E = 5`），其餘 24 份的 `ds:D60E` 與整張 `ds:D50E` 都是 0

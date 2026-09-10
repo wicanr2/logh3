@@ -188,3 +188,15 @@ func AdmiralOps(data []byte, i int) int {
 func StaffOps(work, admiral []byte, post, faction int) int {
 	return AdmiralOps(admiral, StaffAdmiral(work, post, faction))
 }
+
+// SetStaffAdmiral 把某個陣營的某個幕僚職換人（原版 `2D10:02ED` 那類寫入）。
+// 位址超出範圍就什麼都不做。
+func SetStaffAdmiral(work []byte, post, faction, admiral int) {
+	if post < 0 || post >= workStaffCount || faction < 0 || faction > 1 {
+		return
+	}
+	if len(work) < workStaffOff+workStaffCount*2 || admiral < 0 || admiral > 0xFF {
+		return
+	}
+	work[workStaffOff+post*2+faction] = byte(admiral)
+}

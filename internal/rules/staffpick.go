@@ -80,3 +80,37 @@ func PickIntelStaff(admirals []byte, faction, capital, current int) int {
 	}
 	return best
 }
+
+// StaffIdle 回一位提督的 `+0x09` bit7：**這位提督閒置**（沒帶艦隊，也沒有
+// 專任參謀職）。挑參謀的候選清單看的就是它（`docs/re/268`）。
+func StaffIdle(record []byte) bool {
+	return len(record) > admiralStaffFlag && record[admiralStaffFlag]&0x80 != 0
+}
+
+// TakeStaffPost／LeaveStaffPost 是就任與卸任那兩下寫入（`28E0:05CC` 與
+// `2D10:023A`）：就任寫 `0x7F`（清掉 bit7，低七位填 127 這個無效艦隊槽），
+// 卸任寫回 `0x80`。收據 `staffpick` 裡指派前後整張提督表就只有這兩個
+// 位元組不同。
+func TakeStaffPost(record []byte) {
+	if len(record) > admiralStaffFlag {
+		record[admiralStaffFlag] = 0x7F
+	}
+}
+
+func LeaveStaffPost(record []byte) {
+	if len(record) > admiralStaffFlag {
+		record[admiralStaffFlag] = 0x80
+	}
+}
+
+// SetFleetSlot 是原版 `2D76:0611` 那一下：提督配到艦隊槽時把 `+0x09` 寫成
+// 「bit7 清掉、低七位是陣營內的槽號」。副官那一筆寫同一個槽
+// （`docs/internals/08`）。
+//
+// 挑專任參謀的候選清單看的就是 bit7（`docs/re/268`），所以帶隊之後
+// 那位提督不會再被挑去坐參謀。
+func SetFleetSlot(record []byte, slot int) {
+	if len(record) > admiralStaffFlag && slot >= 0 {
+		record[admiralStaffFlag] = byte(slot & 0x7F)
+	}
+}

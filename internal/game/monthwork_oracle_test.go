@@ -98,57 +98,63 @@ func TestMonthEndMatchesWorkBlock(t *testing.T) {
 	}
 }
 
-// TestAllianceTaxRateNeedsRuntimeStaff 釘住一個**還沒解的分歧**：稅率算式
-// 要乘的那位提督（原版 `ds:8F4F + 陣營`，內政專任參謀）不是常數。
+// TestAllianceStaffSwitchesToReceipt 是同盟那一側的驗收。
 //
-//	work-796-01.json（第 71,200,000 步，防拷畫面之前）  同盟那一格 ＝ 60
-//	收據 monthwork（第 300,000,000 步起，回合 1 之後） 同盟那一格 ＝ 63
+// 稅率算式要乘的那位提督（原版 `ds:8F4F + 陣營`，內政專任參謀）**不是
+// 常數**：796/1 是 60（`main1eAlly` 逐位元組要它），回合 10 是 63
+// ——電腦在自己回合的尾巴重新指派（`2D10:0038` → `2D10:0213`，
+// `docs/re/268`）。接上戰略 AI 之後 remake 也會換，換到的是同一位。
 //
-// 拿 63 重算收據 `monthwork3` 裡十三個同盟星域的稅率**全中**，拿 60 **全錯**；
-// 但 796/1 的同盟開局畫面 `main1eAlly` 逐位元組要的是 60。兩個值各有收據，
-// 所以那一格在載入之後被改過：**電腦在自己回合的尾巴重新指派內政專任參謀**
-// （`2D10:0038` → `2D10:0213`，`docs/re/268`）。規則在 `rules.PickDomesticStaff`，
-// 收據測試在 `internal/rules/staffpick_test.go`；remake 這一側還沒有那一步，
-// 因為戰略 AI 尚未接進 `advanceTurn`（`docs/spec/038`、`docs/re/267`）。
-//
-// 這一支不改行為，只是把兩半都釘住：哪天有人把 `UnrestParams.Ruler` 改成
-// 63，`main1eAlly` 會紅；改回 60，這裡記的 13/13 仍然成立。
-func TestAllianceTaxRateNeedsRuntimeStaff(t *testing.T) {
+// ⚠ **逐格比稅率要另一份收據。** `monthwork3` 倒在同盟座位跑完之前
+// （`docs/re/267`：那一趟同盟座位沒跑，所以那些格子是「長完但還沒課稅」），
+// 它的 `Blend` 還是 2；remake 這一側同盟的 AI 已經跑完、`Blend` 歸 0，
+// 於是 `Base[0]` 對 `Base[2]` ——稅率整排差一半。那是**狀態不同**不是
+// 算錯，所以這裡拿收據自己的星域資料算，只換提督那一個變因。
+func TestAllianceStaffSwitchesToReceipt(t *testing.T) {
 	p := filepath.Join("..", "..", "workplace", "oracle", "monthwork3", "mr1820.bin")
 	b, err := os.ReadFile(p)
 	if err != nil {
 		t.Skipf("缺收據 %s，跳過（不用代用品）", p)
 	}
-	g := reachCommandPhase(t)
-	base := g.res.UnrestParams.Base[g.blend[1]]
-	count := func(admiral int) (ok, bad int) {
-		ruler := g.admiralRecord(admiral)
-		if ruler == nil {
-			t.Fatalf("拿不到提督 %d", admiral)
-		}
-		for i := 0; i < 32; i++ {
-			if g.res.Planets.RegionOwner(i) != 1 {
-				continue
-			}
-			r := b[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
-			got := rules.TaxRatePerMille(rules.RegionGrowth(r),
-				int(r[rules.RegionMorale]), 1, base, ruler)
-			if got == rules.RegionTaxRate(r) {
-				ok++
-			} else {
-				bad++
-			}
-		}
-		return ok, bad
-	}
-	if ok, bad := count(63); bad != 0 || ok != 13 {
-		t.Errorf("提督 63：對 %d 格、錯 %d 格，收據是 13／0", ok, bad)
-	}
-	if ok, _ := count(60); ok != 0 {
-		t.Errorf("提督 60：對 %d 格，收據是一格都不對", ok)
-	}
-	// remake 目前用的是載入時那一份（60）——`main1eAlly` 要它。
+	// 走 `reachBrainPhase`：`load()` 只給畫面要的東西，戰略 AI 還要星域圖、
+	// 艦種表與兩張編制表（正式入口 `internal/bootstrap` 才會載）。
+	g := reachBrainPhase(t)
 	if got := g.taxRateAdmiral(1); got != 60 {
-		t.Errorf("remake 用的是提督 %d，目前應該是 60（見本函式的說明）", got)
+		t.Fatalf("開局同盟的內政參謀是提督 %d，796/1 應該是 60", got)
+	}
+	for i := 0; i < 10; i++ {
+		g.Click(544, 125)
+		g.Click(560, 125)
+	}
+	if got := g.taxRateAdmiral(1); got != 63 {
+		t.Fatalf("回合 %d 同盟的內政參謀是提督 %d，收據是 63", g.turn, got)
+	}
+	// 帝國那一格不該被動——玩家座位不跑 AI（收據裡 `5DA7F` 全程沒變）。
+	if got := g.taxRateAdmiral(0); got != 16 {
+		t.Errorf("帝國的內政參謀變成提督 %d，原版全程是 16", got)
+	}
+
+	// 拿收據自己的星域資料重算：換上 remake 現在用的那位提督，
+	// 十三格要逐格相同。`Base` 用收據那一刻的 `Blend`（2）。
+	ruler := g.admiralRecord(g.taxRateAdmiral(1))
+	if ruler == nil {
+		t.Fatalf("拿不到提督 %d", g.taxRateAdmiral(1))
+	}
+	base := g.res.UnrestParams.Base[2]
+	ok, bad := 0, 0
+	for i := 0; i < 32; i++ {
+		if g.res.Planets.RegionOwner(i) != 1 {
+			continue
+		}
+		r := b[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		if rules.TaxRatePerMille(rules.RegionGrowth(r), int(r[rules.RegionMorale]),
+			1, base, ruler) == rules.RegionTaxRate(r) {
+			ok++
+		} else {
+			bad++
+		}
+	}
+	if bad != 0 || ok != 13 {
+		t.Errorf("同盟星域稅率：對 %d 格、錯 %d 格，收據是 13／0", ok, bad)
 	}
 }
