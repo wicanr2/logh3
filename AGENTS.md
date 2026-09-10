@@ -6,7 +6,7 @@
 決定性 DOS 執行器）為首選 oracle；平台為 PC DOS。尚未建立的工具
 與目錄在第一次使用時補建，不得把本檔的流程描述當成「已存在」的證據。
 
-dosgolem 的工作副本固定用 `~/cht/dosgolem-logh3/`（branch `logh3-com-support`，
+dosgolem 的工作副本固定用 `~/cht/dosgolem-logh3/`（branch `logh3-oracle`，
 origin 為 GitHub `wicanr2/dosgolem`），不得在主 checkout `~/cht/dosgolem/` 內
 為本專案改動——主 checkout 有其他 session 使用。分支上的提交由使用者主導
 MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分支。

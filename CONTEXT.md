@@ -11,7 +11,7 @@
 - `GIN3.COM` SHA-256 `770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918`。
 - bundle 基準機器設定（`.jsdos/dosbox.conf`）：`machine=svga_s3`、`memsize=16`、
   SB16、autoexec 為 `mount c .` + `GIN3.COM`。
-- 執行器是 dosgolem，工作副本 `~/cht/dosgolem-logh3`（branch `logh3-com-support`，
+- 執行器是 dosgolem，工作副本 `~/cht/dosgolem-logh3`（branch `logh3-oracle`，
   已推 origin）。原版未修改的 `GIN3.COM` 在裡面可以跑進遊戲本體的**主選單**
   並停在互動等待迴圈。
 - 本作是 **Big5 中文版**，1994 年由亨和企業．微波軟體發行，中文版程式

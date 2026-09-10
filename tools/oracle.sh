@@ -19,8 +19,11 @@ head=$(git -C "$GOLEM" rev-parse --short HEAD)
 dirty=$(git -C "$GOLEM" status --porcelain | wc -l)
 
 cd "$GOLEM"
+# ⚠ **`-empty-env` 不是可有可無的旗標。** 環境字串區非空時，`GIN3.COM`
+# 的載入器會去掃描它，走上一條與執行器的記憶體配置打架的路，最後
+# `retf` 進垃圾（`docs/re/269`）。少了它，這個遊戲一個畫面都跑不出來。
 DOSGOLEM_ORIG="$ROOT/org_game/extracted" tools/go.sh run ./cmd/probe \
-  -exe "$EXE" -root /orig "$@" \
+  -exe "$EXE" -root /orig -empty-env "$@" \
   -dump-ega "/src/workplace/oracle-tmp-$name.png" \
   -dump-palette "/src/workplace/oracle-tmp-pal-$name.bin" > "$out/report.txt" 2>&1 || true
 cp "$GOLEM/workplace/oracle-tmp-$name.png" "$out/screen.png"
