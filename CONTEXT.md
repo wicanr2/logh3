@@ -359,7 +359,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 26 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 27 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -394,6 +394,26 @@
 **證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
 
 **核實**：要人判——接上時會出現播放層的型別（大概是 internal/audio），到時把這一條改成 absent 綁那個型別名——現在猜名字會寫出永遠為真的 pattern。
+
+#### oracle-runaway-after-copy-protection — logh3-oracle 過了防拷問答就跑進沒配置的記憶體
+
+*parity（對拍：要與原版逐位元組相同）*
+
+`logh3-oracle`（基底 dosgolem main）跑收據 `main1e` 的輸入序列，
+防拷問答答對、畫面淡出，接著在第 117,673,624 道指令 `retf` 進
+`7555:7500`，最後在全零區空轉——星域圖一張都畫不出來。
+舊分支 `logh3-com-support`（`ef5be47`）同一組旗標**逐位元組重現收據**。
+已縮到「main 併入 COM 支援的那個 merge（`52f7563`）」，肇因在 main 那半邊；
+十一項新舊對照（DOS 呼叫序列、EMS 頁框、著色迴圈暫存器、工作副本、
+畫面色號、環境區塊、配置器兩種行為）全部相同或已排除。
+
+**卡在**：再往前二分要換一個在 `-dump-ega` 出現之前也量得到的判準（`-dump-vram` 或記憶體雜湊）。
+
+**做完的判準**：`logh3-oracle` 跑 `main1e` 的旗標到 2.2 億道指令，畫面與 `workplace/oracle/main1e/screen.bin` 逐位元組相同。
+
+**證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
+
+**核實**：`AGENTS.md`、`CONTEXT.md`、`tools/oracle.sh` 裡還找得到 `logh3-oracle`（自承還在 ＝ 還沒做）
 
 #### ai-seat-order — 戰略 AI 的座位順序與原版不同
 
@@ -708,6 +728,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 **核實**：`TestMonthEndMatchesWorkBlock` 釘在 `internal/game`
 
 <!-- worklist:end -->
+
 
 
 

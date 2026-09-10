@@ -244,6 +244,37 @@
       }
     },
     {
+      "id": "oracle-runaway-after-copy-protection",
+      "legacy_id": null,
+      "status": "open",
+      "layer": "parity",
+      "title": "logh3-oracle 過了防拷問答就跑進沒配置的記憶體",
+      "body": [
+        "`logh3-oracle`（基底 dosgolem main）跑收據 `main1e` 的輸入序列，",
+        "防拷問答答對、畫面淡出，接著在第 117,673,624 道指令 `retf` 進",
+        "`7555:7500`，最後在全零區空轉——星域圖一張都畫不出來。",
+        "舊分支 `logh3-com-support`（`ef5be47`）同一組旗標**逐位元組重現收據**。",
+        "已縮到「main 併入 COM 支援的那個 merge（`52f7563`）」，肇因在 main 那半邊；",
+        "十一項新舊對照（DOS 呼叫序列、EMS 頁框、著色迴圈暫存器、工作副本、",
+        "畫面色號、環境區塊、配置器兩種行為）全部相同或已排除。"
+      ],
+      "evidence": [
+        "docs/re/270-enter-works-the-divergence-is-after-it.md"
+      ],
+      "acceptance": "`logh3-oracle` 跑 `main1e` 的旗標到 2.2 億道指令，畫面與 `workplace/oracle/main1e/screen.bin` 逐位元組相同。",
+      "blocked_by": "再往前二分要換一個在 `-dump-ega` 出現之前也量得到的判準（`-dump-vram` 或記憶體雜湊）。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "AGENTS.md",
+          "CONTEXT.md",
+          "tools/oracle.sh"
+        ],
+        "pattern": "logh3-oracle",
+        "note": "對拍工具指向 logh3-oracle 的期間這一條就成立。等它跑得出 main1e 之後，改綁一個釘住重現的測試。"
+      }
+    },
+    {
       "id": "ai-seat-order",
       "status": "open",
       "layer": "parity",

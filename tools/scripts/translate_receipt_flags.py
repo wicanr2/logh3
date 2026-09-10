@@ -3,10 +3,16 @@
     tools/py.sh tools/scripts/translate_receipt_flags.py <批次名> [更多批次...]
     tools/py.sh tools/scripts/translate_receipt_flags.py --all
 
-舊收據綁的是 `logh3-com-support`（`ef5be47`）。main 那邊改了兩處語法：
+舊收據綁的是 `logh3-com-support`（`ef5be47`）。main 那邊改了三處語法：
 
     -clicks   x,y,at[,hold] 用 `;` 分隔   →   步數:X:Y[:鍵] 用 `,` 分隔
     -cmdline  <字串>                      →   -args <字串>
+    -dump-mem lin:<位址hex>:<長度dec>:<路徑>  →  <lo>-<hi>:<路徑>（都是 hex）
+
+**滑鼠座標不要動。** 兩版的水平倍率都是「依視訊模式自動判定」，mode 12h
+一律 1，收據上的 X 就是遊戲看到的 X（`docs/re/270`）。main 有一支
+`-xscale` 可以強制倍率，設成 2 會讓遊戲收到兩倍的 X 而走上另一條路——
+畫面照樣畫得出來，所以它看起來很像「修好了」。
 
 `-rclicks` 還在、格式與 `-clicks` 相同；`-steps` 仍然是「跑到第幾道指令」，
 不用動。**每個 click 各自的 hold 在新版沒有對應**——新版只有全域的
@@ -39,6 +45,25 @@ def read_flags(batch):
     return None, None
 
 
+def translate_dump_mem(v):
+    """lin:<位址hex>:<長度dec>:<路徑> → <lo>-<hi>:<路徑>（逗號分隔多段）"""
+    out = []
+    for part in v.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        if not part.startswith("lin:"):
+            out.append(part)
+            continue
+        _, addr, ln, path = part.split(":", 3)
+        lo = int(addr, 16)
+        # ⚠ 舊語法的位址是十六進位、長度是**十進位**（AGENTS.md）。
+        # 兩個都當成十六進位讀會安靜地換掉範圍大小。
+        hi = lo + int(ln, 10) - 1
+        out.append("%X-%X:%s" % (lo, hi, path))
+    return ",".join(out)
+
+
 def translate_clicks(v):
     """x,y,at[,hold];… → (步數:X:Y,…, holds)"""
     out, holds = [], set()
@@ -66,6 +91,11 @@ def translate(flags):
             v, h = translate_clicks(nxt)
             holds |= h
             out += [a, v]
+            i += 2
+            continue
+        if a == "-dump-mem" and nxt is not None and "lin:" in nxt:
+            out += [a, translate_dump_mem(nxt)]
+            notes.append("-dump-mem 改成 <lo>-<hi>:<路徑>")
             i += 2
             continue
         if a == "-cmdline" and nxt is not None:
