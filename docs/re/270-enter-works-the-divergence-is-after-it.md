@@ -60,13 +60,20 @@ GIN3PS.EXE 在同一個 PSP 載入，AH=4Ah 把自己的區塊撐到 0x7950
 | `cb1`／`typed138`（停在防拷問答） | 差 0（另一條路的巧合） | 差 32 bytes（見下） |
 
 `cb1`／`typed138` 剩的 32 個像素是 (240,283) 的一塊 16×2：色號新版 `F`、
-收據 `9`（四個 plane 全設 vs 只有 0 與 3）。另有 9 份收據的旗標因為每次
-點擊的 hold 不一致而還沒翻譯。
+收據 `9`（四個 plane 全設 vs 只有 0 與 3）。
 
-## 修好之後還剩什麼（2026-09-10 抽驗 18 份）
+旗標翻譯原本有 9 份卡住，已經解掉：8 份是**每次點擊的按住時間不同**
+（dosgolem `92d9f6a` 把第五欄加回來，`account1`／`budget1` 重現後差 0），
+1 份（`s3datamem`）是錄製時 `-clicks` 的值本身就壞了，要重錄。
 
-9 份逐位元組一致（`code28xx`／`dsFull`／`hov185`／`monthwork3`／`plain`／
-`r0c`／`regsS3`／`s3aim`／`s3fort`）。其餘的差異分成兩類：
+## 修好之後還剩什麼（2026-09-10 抽驗 26 份）
+
+**17 份逐位元組一致**（`code28xx`／`dsFull`／`hov185`／`monthwork3`／`plain`／
+`r0c`／`regsS3`／`s3aim`／`s3fort`／`s3move`／`s3turn2`／`shipdeliver2`／
+`sx543`／`turn12`／`vs6`／`account1`／`budget1`，加上 `main1e`）。
+全量 455 份的比對走 `tools/check_receipts.sh`，結果在
+`workplace/receipt-check.json`——**那份才是權威**，這裡的抽樣只是形狀。
+其餘的差異分成兩類：
 
 **一、游標位置**（`acctchg`／`lst3eAlly` 各 251 ＝ 兩個 13×16 的方塊）。
 舊版把游標留在**第一次點擊**的位置，新版畫在**最後一次點擊**的位置。
