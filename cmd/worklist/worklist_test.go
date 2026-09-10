@@ -2,6 +2,8 @@ package main
 
 import (
 	"crypto/sha256"
+	"fmt"
+	"reflect"
 	"encoding/hex"
 	"os"
 	"path/filepath"
@@ -235,7 +237,7 @@ func TestRenderAndWriteBack(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, want := range []string{"1 條還沒做、1 條做完了", "### 還沒做的",
+	for _, want := range []string{"還剩 1 條", "### 還沒做的",
 		"#### open-one", "原編號 18q", "不要手改"} {
 		if !strings.Contains(out, want) {
 			t.Errorf("render 少了 %q", want)
@@ -280,5 +282,72 @@ func TestWriteBackRefusesWithoutMarkers(t *testing.T) {
 	b, _ := os.ReadFile(p)
 	if string(b) != "整份都是手寫的\n" {
 		t.Errorf("拒絕之後檔案還是被動到了：%q", b)
+	}
+}
+
+// TestMatrixRoundTrip 是搬家的安全網：**把真的那份矩陣 parse 完再 render
+// 回去，內容必須一模一樣**。掉一列或吃掉一個註腳，在 174 列裡不會有人發現。
+//
+// 比的是**語意**不是字元：原檔的欄位間距是手打的、不一致（全形括號後面
+// 常常沒有空格），render 會統一成 `| a | b |`。那是一次性的正規化，
+// 之後矩陣都由工具產生。真正不能變的是欄位內容、列數與註腳。
+func TestMatrixRoundTrip(t *testing.T) {
+	t.Chdir("../..")
+	m1, rows1, err := ParseMatrix(matrixTarget)
+	if err != nil {
+		t.Skipf("讀不到 %s：%v", matrixTarget, err)
+	}
+	doc := &Doc{Matrix: m1}
+	for si, sec := range m1.Sections {
+		for ri, cells := range rows1[si] {
+			if len(cells) != len(sec.Columns) {
+				t.Fatalf("%s 第 %d 列有 %d 欄，表頭 %d 欄",
+					sec.Title, ri+1, len(cells), len(sec.Columns))
+			}
+			cm := map[string]string{}
+			for i, col := range sec.Columns {
+				cm[col] = cells[i]
+			}
+			doc.Items = append(doc.Items, Item{
+				ID: fmt.Sprintf("%s-%d", sec.ID, ri), Section: sec.ID, Cells: cm})
+		}
+	}
+	out, err := RenderMatrix(doc)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// render 出來的再 parse 一次，兩次的結果要相同。
+	tmp := filepath.Join(t.TempDir(), "m.md")
+	if err := os.WriteFile(tmp, []byte(out), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	m2, rows2, err := ParseMatrix(tmp)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(m1.Head, m2.Head) {
+		t.Errorf("前言變了：\n%v\n%v", m1.Head, m2.Head)
+	}
+	if len(m1.Sections) != len(m2.Sections) {
+		t.Fatalf("章節數 %d → %d", len(m1.Sections), len(m2.Sections))
+	}
+	for i := range m1.Sections {
+		a, b := m1.Sections[i], m2.Sections[i]
+		if a.Title != b.Title || !reflect.DeepEqual(a.Columns, b.Columns) ||
+			!reflect.DeepEqual(a.Intro, b.Intro) || !reflect.DeepEqual(a.Outro, b.Outro) {
+			t.Errorf("章節 %q 變了：\n%+v\n%+v", a.Title, a, b)
+		}
+		if !reflect.DeepEqual(rows1[i], rows2[i]) {
+			if len(rows1[i]) != len(rows2[i]) {
+				t.Fatalf("章節 %q 的列數 %d → %d", a.Title, len(rows1[i]), len(rows2[i]))
+			}
+			for r := range rows1[i] {
+				if !reflect.DeepEqual(rows1[i][r], rows2[i][r]) {
+					t.Fatalf("章節 %q 第 %d 列變了：\n%q\n%q",
+						a.Title, r+1, rows1[i][r], rows2[i][r])
+				}
+			}
+		}
 	}
 }

@@ -33,6 +33,9 @@ const dataPath = "docs/worklist.json"
 // renderTarget 是那一節的家。`render -w` 只動標記之間，其餘一個字不改。
 const renderTarget = "CONTEXT.md"
 
+// matrixTarget 整份都是產生的——它本來就只有表格。
+const matrixTarget = "VERIFICATION-MATRIX.md"
+
 // schemaID 跟著結構走：欄位語意改了就升版，舊檔會被 check 擋下來。
 const schemaID = "logh3-worklist/1"
 
@@ -47,7 +50,12 @@ type Doc struct {
 	Schema string            `json:"schema"`
 	Note   string            `json:"note"`
 	Layers map[string]string `json:"layers"`
-	Items  []Item            `json:"items"`
+
+	// Matrix 是 `VERIFICATION-MATRIX.md` 的骨架（前言與章節定義）；
+	// 列本身就是下面那些 Items——同一批資料的兩個切面。
+	Matrix *Matrix `json:"matrix,omitempty"`
+
+	Items []Item `json:"items"`
 }
 
 // Item 是一條斷言。
@@ -65,6 +73,16 @@ type Item struct {
 	Evidence []string `json:"evidence,omitempty"`
 	Accept   string   `json:"acceptance,omitempty"` // 怎樣算做完
 	Blocked  string   `json:"blocked_by,omitempty"` // 卡在什麼
+
+	// Section／Cells 是這一條在驗證矩陣裡的位置與那一列的欄位內容。
+	// 空的表示它只出現在 worklist（還沒進矩陣，或本來就不屬於完成度表）。
+	Section string            `json:"section,omitempty"`
+	Cells   map[string]string `json:"cells,omitempty"`
+
+	// Ref 指向代表這件事的 worklist 條目。**矩陣的一列不等於 worklist 的
+	// 一條**——開頭動畫在矩陣裡佔三列（解碼器、格子與時序、調色盤），
+	// 而要做的事只有一件。有 Ref 的列照樣核實，但不重複出現在 worklist。
+	Ref string `json:"ref,omitempty"`
 
 	Verify Verify `json:"verify"`
 }
@@ -120,7 +138,7 @@ func (r Result) String() string {
 func main() {
 	args := os.Args[1:]
 	if len(args) == 0 {
-		fmt.Fprintln(os.Stderr, "用法: worklist {verify [id...]|render [-w]|check}")
+		fmt.Fprintln(os.Stderr, "用法: worklist {verify [id...]|render [-w]|render-matrix [-w]|import-matrix|check}")
 		os.Exit(2)
 	}
 	doc, err := Load(dataPath)
@@ -146,6 +164,26 @@ func main() {
 			return
 		}
 		fmt.Print(out)
+	case "render-matrix":
+		out, err := RenderMatrix(doc)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		if len(args) > 1 && args[1] == "-w" {
+			if err := os.WriteFile(matrixTarget, []byte(out), 0o644); err != nil {
+				fmt.Fprintln(os.Stderr, err)
+				os.Exit(1)
+			}
+			fmt.Printf("寫回 %s\n", matrixTarget)
+			return
+		}
+		fmt.Print(out)
+	case "import-matrix":
+		if err := ImportMatrix(doc, dataPath); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
 	case "check":
 		if errs := Check(doc); len(errs) > 0 {
 			for _, e := range errs {
@@ -177,33 +215,58 @@ func Load(path string) (*Doc, error) {
 }
 
 // runVerify 核實指定的（或全部的）條目，回 exit code。
-func runVerify(doc *Doc, only []string) int {
+//
+// **報表只列要人看的**：斷言不成立的，以及**未完成項**裡沒有機器訊號的。
+// 已完成的條目若只有文件證據（`manual`），在摘要報數字而不逐條刷屏——
+// 189 條裡有一百多條是那種，逐條印會把真正要看的三行淹掉。`-v` 印全部。
+func runVerify(doc *Doc, args []string) int {
+	verbose := false
 	want := map[string]bool{}
-	for _, id := range only {
-		want[id] = true
+	for _, a := range args {
+		if a == "-v" {
+			verbose = true
+			continue
+		}
+		want[a] = true
 	}
-	var broken, unknown int
+	var broken, openUnknown, doneUnknown, holds int
 	var lines []string
 	for _, it := range doc.Items {
 		if len(want) > 0 && !want[it.ID] && !want[it.Legacy] {
 			continue
 		}
 		res, why := VerifyItem(&it, ".")
-		switch res {
-		case Broken:
+		show := verbose
+		switch {
+		case res == Broken:
 			broken++
-		case Unknown:
-			unknown++
+			show = true
+		case res == Unknown && it.Status == StatusOpen:
+			// [HARD] 未完成項沒有訊號一定要標出來——沉默不等於通過。
+			openUnknown++
+			show = true
+		case res == Unknown:
+			doneUnknown++
+		default:
+			holds++
 		}
-		lines = append(lines, fmt.Sprintf("%-32s %-6s %-14s %s",
-			it.ID, it.Status, res, why))
+		if show {
+			lines = append(lines, fmt.Sprintf("%-32s %-6s %-14s %s",
+				it.ID, it.Status, res, why))
+		}
 	}
 	sort.Strings(lines)
 	for _, l := range lines {
 		fmt.Println(l)
 	}
-	fmt.Printf("\n%d 條核實：%d 條斷言不成立、%d 條無法核實\n",
-		len(lines), broken, unknown)
+	total := broken + openUnknown + doneUnknown + holds
+	fmt.Printf("\n%d 條核實：%d 條斷言不成立、%d 條未完成項沒有機器訊號、%d 條一致\n",
+		total, broken, openUnknown, holds)
+	if doneUnknown > 0 {
+		fmt.Printf("另有 %d 條已完成的只有文件證據、沒有自動回歸偵測"+
+			"（`-v` 列出來；要更緊就把它們的 verify 換成 go_test 或 receipt）\n",
+			doneUnknown)
+	}
 	if broken > 0 {
 		fmt.Println("\n⚠ 「斷言不成立」的意思是**清單與現況對不上**：")
 		fmt.Println("   status=open 卻驗到做好了 → 過期斷言，把它改成 done；")
@@ -234,6 +297,18 @@ func Check(doc *Doc) []string {
 		if it.Status != StatusOpen && it.Status != StatusDone {
 			errs = append(errs, fmt.Sprintf("%s：status ＝ %q，只能是 open 或 done",
 				it.ID, it.Status))
+		}
+		if it.Ref != "" {
+			var found bool
+			for _, o := range doc.Items {
+				if o.ID == it.Ref {
+					found = true
+					break
+				}
+			}
+			if !found {
+				errs = append(errs, fmt.Sprintf("%s：ref 指到不存在的 %q", it.ID, it.Ref))
+			}
 		}
 		if it.Layer != "" && doc.Layers != nil {
 			if _, ok := doc.Layers[it.Layer]; !ok {

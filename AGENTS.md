@@ -251,8 +251,11 @@ direct-entry 能開畫面，都不能單獨標為同狀態對拍完成。
   兩邊都要寫：`docs/re/` 記怎麼查到的，`docs/internals/` 記查到了什麼。
   段值與線性位址不穩定，`docs/internals/` 一律用結構位移與位元組簽章
   （見 `docs/internals/00-README.md`）。
-- **`docs/worklist.json` 是「還剩什麼」的權威**；`CONTEXT.md` 的 worklist 一節由
-  `tools/go.sh run ./cmd/worklist render -w` 產生（標記之間的內容不要手改）。
+- **`docs/worklist.json` 是「還剩什麼」與完成度的權威**，兩份 markdown 都由它產生：
+  `CONTEXT.md` 的 worklist 一節走 `render -w`（標記之間不要手改）、
+  **整份 `VERIFICATION-MATRIX.md` 走 `render-matrix -w`**（整份都不要手改）。
+  改一件事只改 JSON 一處，兩份跟著出——以前改一條規則要同時改 worklist、
+  矩陣那一列與 README，三處各自會過期。
   `WORKLOG.md` 是唯一流水帳；`CONTEXT.md` 其餘部分是目前真相；
   `VERIFICATION-MATRIX.md` 是完成度唯一數字來源；逆向證據放 `docs/re/`，對拍收據放
   `docs/playtest/`，規格放 `docs/spec/`。更早的逆向歷程（舊 worklist 那 65 條的原文）

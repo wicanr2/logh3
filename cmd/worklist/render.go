@@ -21,17 +21,23 @@ const (
 func Render(doc *Doc) (string, error) {
 	var open, done []Item
 	for _, it := range doc.Items {
-		if it.Status == StatusOpen {
+		switch {
+		case it.Ref != "":
+			// 由別的條目代表，不重複列。
+		case it.Status == StatusOpen:
 			open = append(open, it)
-		} else {
+		case it.Section != "":
+			// 已完成的矩陣列只出現在矩陣——它的等級、未核准差異與收據
+			// 都在那張表上，在 worklist 再抄一份就是第二份會過期的東西。
+		default:
 			done = append(done, it)
 		}
 	}
 
 	var b strings.Builder
 	b.WriteString(markBegin + "\n\n")
-	fmt.Fprintf(&b, "權威是 [`docs/worklist.json`](docs/worklist.json)：**%d 條還沒做、%d 條做完了**。\n",
-		len(open), len(done))
+	fmt.Fprintf(&b, "權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 %d 條**。\n",
+		len(open))
 	b.WriteString("每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答\n")
 	b.WriteString("「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。\n\n")
 	if doc.Note != "" {
@@ -46,9 +52,12 @@ func Render(doc *Doc) (string, error) {
 		renderItem(&b, doc, &open[i])
 	}
 
-	b.WriteString("### 做完的\n\n")
-	b.WriteString("留著是為了不要重做一遍，順帶當回歸偵測。更早的逆向歷程（舊 worklist\n" +
-		"那 65 條的原文）在 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。\n\n")
+	if len(done) > 0 {
+		b.WriteString("### 做完的（不在矩陣裡的那幾條）\n\n")
+		fmt.Fprintf(&b, "%d 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)"+
+			"——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在\n"+
+			"[`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。\n\n", len(done))
+	}
 	for i := range done {
 		renderItem(&b, doc, &done[i])
 	}

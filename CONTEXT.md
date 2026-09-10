@@ -359,7 +359,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**21 條還沒做、3 條做完了**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 26 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -636,10 +636,40 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：要人判——接上時會在 internal/screen 多出箭頭的繪製與首都重塗的分支，到時綁那兩個函式名。
 
-### 做完的
+#### m4u — 「資料」帶進去的戰場
 
-留著是為了不要重做一遍，順帶當回歸偵測。更早的逆向歷程（舊 worklist
-那 65 條的原文）在 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
+*matrix（驗證矩陣的一列（完成度））*
+
+**核實**：要人判——完成度由收據 `s3detail_back` 撐著，還沒把雜湊釘進來；要自動回歸偵測就改成 receipt 並補 files 的 SHA-256
+
+#### m4g — 行星命令的四項行為
+
+*matrix（驗證矩陣的一列（完成度））*
+
+**核實**：要人判——這一列的完成度由它自己的證據欄撐著，沒有可綁的自動訊號
+
+#### m4e — 戰場的「索敵」「移動（艦隊）」「戰鬥」
+
+*matrix（驗證矩陣的一列（完成度））*
+
+**核實**：要人判——備註裡「艦隊層移動引擎還沒接」已經過期並修掉了；這一列仍標 `—` 是因為三項命令的**行為**沒有逐位元組收據。要人判還缺什麼——不要綁 TestManoeuvreOuterMatchesOracle，那只釘住範圍圖形那一小塊。
+
+#### m4d — 戰場的「補給」「修理」命令
+
+*matrix（驗證矩陣的一列（完成度））*
+
+**核實**：要人判——完成度由收據 `s3form` 撐著，還沒把雜湊釘進來；要自動回歸偵測就改成 receipt 並補 files 的 SHA-256
+
+#### s6-11 — 其他
+
+*matrix（驗證矩陣的一列（完成度））*
+
+**核實**：要人判——這一列的完成度由它自己的證據欄撐著，沒有可綁的自動訊號
+
+### 做完的（不在矩陣裡的那幾條）
+
+3 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+[`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### strategic-ai-advance-turn — 戰略 AI 接進 `advanceTurn`
 
@@ -678,6 +708,9 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 **核實**：`TestMonthEndMatchesWorkBlock` 釘在 `internal/game`
 
 <!-- worklist:end -->
+
+
+
 
 
 
