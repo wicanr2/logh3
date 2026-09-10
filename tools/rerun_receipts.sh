@@ -9,6 +9,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 JOBS="${JOBS:-4}"
+PREV="$ROOT/workplace/oracle-prev"   # 覆蓋前的備份（一份批次只留最原始的那次）
 match=''
 namere=''
 while [[ "${1:-}" == -* ]]; do
@@ -23,9 +24,14 @@ n=0
 for d in "$ROOT"/workplace/oracle/*/; do
   name=$(basename "$d")
   [[ -f "$d/meta.txt" ]] || continue
-  # 旗標優先讀 flags.txt（一個一行，原樣保留空格）；沒有就退回 meta.txt
-  # 那一行——但那一行是給人看的，旗標裡有空格就會拆錯，所以要標出來。
-  if [[ -f "$d/flags.txt" ]]; then
+  # 旗標**優先讀翻譯過的新語法**（`workplace/flags-new/`，由
+  # `tools/scripts/translate_receipt_flags.py` 產生）。收據裡那兩份記的是
+  # 錄製當時的舊語法，直接餵給新版 probe 會被拒或誤讀——而誤讀不會報錯，
+  # 只會跑出另一個畫面然後把它寫回收據。
+  if [[ -f "$ROOT/workplace/flags-new/$name.txt" ]]; then
+    mapfile -t flagv < "$ROOT/workplace/flags-new/$name.txt"
+    flags="${flagv[*]}"
+  elif [[ -f "$d/flags.txt" ]]; then
     mapfile -t flagv < "$d/flags.txt"
     flags="${flagv[*]}"
   else
@@ -37,6 +43,13 @@ for d in "$ROOT"/workplace/oracle/*/; do
   [[ -z "$namere" || "$name" =~ $namere ]] || continue
   exe=$(sed -n 's/^執行檔: //p' "$d/meta.txt")
   before=$(sha256sum "$d/screen.bin" 2>/dev/null | cut -d' ' -f1 || echo -)
+  # ⚠ **覆蓋之前先留一份。** 收據不進版控，寫回去就是唯一那份沒了——
+  # 而「原本停在哪個畫面」正是判斷「新的是不是同一個狀態」的唯一依據。
+  # 已經有備份就不再蓋（重跑第二次時，備份要維持是**最原始**的那一份）。
+  if [[ ! -d "$PREV/$name" ]]; then
+    mkdir -p "$PREV"
+    cp -a "$d" "$PREV/$name"
+  fi
   (
     # **失敗要印出來。** 原本 oracle.sh 一失敗，子 shell 就被 set -e 帶走，
     # 一行都不印——那份收據等於沒有重跑過，而且看不出來。
