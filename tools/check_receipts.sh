@@ -23,6 +23,14 @@
 # `tools/scripts/translate_receipt_flags.py` 產生的新語法版本；
 # 收據 `meta.txt` 裡那一行是舊語法，直接餵給新版 probe 會被拒或誤讀。
 set -uo pipefail
+
+# ⚠ **整個本體包在 main() 裡，最後一行才呼叫**——這不是排版偏好。
+# bash 是**邊讀邊執行**的：這支要跑好幾個鐘頭，中途有人（包括我自己）
+# 改了這個檔，bash 會從新內容的舊位元組位移接下去讀，噴出「未預期的
+# 字組附近有語法錯誤」，而**已經比完的那幾百份就此結束**。包成函式之後
+# bash 會先把整份解析完，跑起來就與檔案內容脫鉤了。
+# （2026-09-11 踩過：跑到第 416 份時被自己的編輯打斷。）
+main() {
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GOLEM="${DOSGOLEM_DIR:-$HOME/cht/dosgolem-logh3}"
 FLAGS="$ROOT/workplace/flags-new"
@@ -107,3 +115,7 @@ open(sys.argv[2], "a", encoding="utf-8").write("\n")
 print(f"\n比對 {len(rows)} 份：{len(rows)-len(bad)} 份逐位元組一致、{len(bad)} 份對不上")
 PY
 
+
+} # main
+
+main "$@"
