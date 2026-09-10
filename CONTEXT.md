@@ -357,6 +357,254 @@
 
 ## 唯一 worklist
 
+<!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
+
+權威是 [`docs/worklist.json`](docs/worklist.json)：**15 條還沒做、3 條做完了**。
+每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
+「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
+
+> 未完成項與完成度的權威。CONTEXT.md 的 worklist 一節由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改。每一條掛一個 verify，`verify` 子命令回答「這一條的斷言還成立嗎」——status=open 卻驗到做好了就是過期斷言，status=done 卻驗不到就是回歸。
+
+### 還沒做的
+
+#### intro-full-diff — 開頭動畫整段的畫面對拍
+
+*原編號 4z · decision（取捨：等使用者裁決）*
+
+第 0 格、調色盤與頁面幾何都逐位元組對上了，整段播不出原版順序：
+原版在第一次搬圖之前換過讀檔緩衝，**第 1–116 格從來沒被解過**
+（緩衝區開頭還留著前一塊的 40 個位元組）。remake 照檔案順序播 374 格。
+
+**卡在**：要不要連那個緩衝瑕疵一起重現，是忠實度取捨，等使用者裁決。
+
+**做完的判準**：`docs/spec/020` 標到 CONFORMED，整段逐格與原版相同。
+
+**證據**：[`docs/re/108-intro-plane-buffers-located.md`](docs/re/108-intro-plane-buffers-located.md)、[`docs/re/116-intro-buffer-overlap-root-cause.md`](docs/re/116-intro-buffer-overlap-root-cause.md)、[`docs/spec/020-intro-animation.md`](docs/spec/020-intro-animation.md)
+
+**核實**：`docs/spec/020-intro-animation.md` 標到 `CONFORMED`
+
+#### music-playback — 配樂沒有播放層
+
+*feature（功能：玩家會撞到、但 remake 還沒有）*
+
+22 首 `.MDS` 已經解成 MIDI，remake 這一側一個音都沒放。
+
+**做完的判準**：玩家路徑上聽得到原版配樂，且切換場景會換曲。
+
+**證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
+
+**核實**：要人判——接上時會出現播放層的型別（大概是 internal/audio），到時把這一條改成 absent 綁那個型別名——現在猜名字會寫出永遠為真的 pattern。
+
+#### ai-seat-order — 戰略 AI 的座位順序與原版不同
+
+*parity（對拍：要與原版逐位元組相同）*
+
+原版一次「實行」是**逐座位**跑的：帝國座位的月底結算（含 `0654:0007`
+那一次性的成長與稅率重算）在**同盟座位的 AI 之前**；remake 的
+`advanceTurn` 把 AI 放在整個回合的最前面。
+後果是回合 10 的同盟 `Blend` 兩邊不同（原版 2、remake 0），
+月底重算稅率的 `Base` 差一格，同盟那十三格的稅率整排差一倍。
+
+**做完的判準**：`advanceTurn` 拆成逐座位；同盟座位跑完之後的收據逐格對上稅率。
+
+**證據**：[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)
+
+**核實**：`internal/game/game.go` 裡還找得到 `remake 還沒有原版的逐座位順序`（自承還在 ＝ 還沒做）
+
+#### strategy-report-screen — 戰略模式報告畫面還沒做
+
+*原編號 242 · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+訊息表 86 條已經解出來並進版控（`ds:0490`–`ds:09F0`，含易主／侵略／
+叛亂／提督生死與勝負頁），畫面本身 remake 一張都還沒畫。
+
+**做完的判準**：報告畫面走得到、逐位元組對上原版收據。
+
+**證據**：[`docs/re/247-strategy-report-strings.md`](docs/re/247-strategy-report-strings.md)、[`docs/internals/data/strategy-report-strings.json`](docs/internals/data/strategy-report-strings.json)
+
+**核實**：`internal/screen`、`internal/game` 裡出現 `strategy-report-strings|StrategyReport` 就是做好了
+
+#### battle-formation-letters — 編隊那八格的字母規則沒解
+
+*re（逆向：機制還沒讀出來）*
+
+收據只有一個資料點，字母怎麼決定還沒解出來。
+
+**做完的判準**：八格的字母由規則算出來，兩份以上收據逐格相同。
+
+**核實**：`internal/screen/compositionpanel.go` 裡還找得到 `字母怎麼決定還沒解`（自承還在 ＝ 還沒做）
+
+#### alliance-squad-spacing — 同盟分隊的間距與排法沒解
+
+*re（逆向：機制還沒讀出來）*
+
+帝國那十二支的排法解出來了（旗艦周圍間距 22–23 的正交格點，
+方向是艦隊朝向減 96），同盟那幾支的間距與排法不同。
+
+**做完的判準**：同盟的分隊佈陣與收據逐支相同。
+
+**核實**：`internal/rules/battle.go` 裡還找得到 `間距與排法不同，規則還沒解`（自承還在 ＝ 還沒做）
+
+#### battle-seen-flag — 「看到」的條件沒解（`+0x17` 設成 3 的時機）
+
+*re（逆向：機制還沒讀出來）*
+
+`+0x17` 是索敵殘留，被看到時設成 3、之後每輪沒再被看到就掉一級；
+設成 3 的**時機**還沒讀出來，所以 remake 先一律給 2。
+
+**做完的判準**：索敵的可見度由規則算出來，收據上的 `+0x17` 逐筆相同。
+
+**核實**：`internal/rules/battle.go` 裡還找得到 `「看到」還沒解`（自承還在 ＝ 還沒做）
+
+#### battle-arrival-facing — 抵達朝向 `+0x4C` 的邏輯沒逆向（`1C03:0361`）
+
+*re（逆向：機制還沒讀出來）*
+
+remake 直接朝目標走，轉彎的落差還沒量。
+
+**做完的判準**：分隊的朝向變化與收據逐回合相同。
+
+**核實**：`internal/rules/battle.go` 裡還找得到 ``\+0x4C` 的邏輯（`1C03:0361`）\*\*還沒逆向\*\*`（自承還在 ＝ 還沒做）
+
+#### skirmish-per-attack — 每回合的結算還沒換成「照攻擊名單逐一開火」
+
+*parity（對拍：要與原版逐位元組相同）*
+
+算式、係數與分母 K 都解出來了（`SkirmishDamage` ＋ `AttackCoefficient`），
+remake 仍走艦隊層那條一次算總損失再分攤。
+
+**卡在**：卡在「誰寫艦艇記錄的攻擊時座標」還沒查出來。
+
+**做完的判準**：逐一開火的結果與收據逐分隊相同。
+
+**核實**：`internal/rules/resolve.go` 裡還找得到 `還沒換過來`（自承還在 ＝ 還沒做）
+
+#### planet-command-hit-test — 戰場行星命令選單還不能標對拍（`341B:039D` 沒讀）
+
+*原編號 4f · re（逆向：機制還沒讀出來）*
+
+開哪一張與可選旗標全解出來、四項行為也都逆向過了；
+缺的是原版的行星命中判定，remake 先用整格。
+
+**做完的判準**：命中判定照原版分層，選單對拍標得上 `same-state`。
+
+**核實**：`internal/game/planetcmd.go` 裡還找得到 ``341B:039D` 的分層邏輯`（自承還在 ＝ 還沒做）
+
+#### admiral-unknown-fields — 提督記錄還有四格沒有名字
+
+*原編號 17 · re（逆向：機制還沒讀出來）*
+
+十四個能力欄位裡十個從提督詳細資料那張畫面標到名字；
+`+20`／`+22`／`+24` 仍未命名（`+21` 已經有一個消費者：AI 挑內政參謀的
+分數是營運 × `+21`），另外 `+8`／`+10` 兩個小整數的語意也未知。
+
+**做完的判準**：四格都有畫面或算式給的名字。
+
+**證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)
+
+**核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
+
+#### window-frame-corners — 視窗外框的角落規則沒逆向
+
+*原編號 12 · re（逆向：機制還沒讀出來）*
+
+斜角在四個角的切法目前靠一張明列的像素修正表撐著。
+
+**做完的判準**：角落由規則算出來，修正表清空而收據不變。
+
+**證據**：[`docs/internals/07-window-frame.md`](docs/internals/07-window-frame.md)
+
+**核實**：`internal/ui/bevel.go` 裡還找得到 `角落規則還沒逆向出來`（自承還在 ＝ 還沒做）
+
+#### battle-data-scroll — 戰術選單「資料」的捲動沒量
+
+*原編號 4w · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+三個分頁都逐位元組對上了。行星分頁結構上不可能超過 5 列
+（`PLADAT.DAT` 檔頭 32 個星域的行星數最大 5），要量捲動得先有
+玩家兩支以上艦隊同場的戰鬥。
+
+**做完的判準**：捲動的行為與收據相同。
+
+**核實**：要人判——接上時會出現捲動狀態（大概在 internal/game 的戰術資料畫面），到時綁那個欄位名；現在程式裡沒有任何自承可綁。
+
+#### minimap-row-203 — 小地圖下緣 y=203 那一列在畫哪個元件沒對出來
+
+*re（逆向：機制還沒讀出來）*
+
+整張 640×480 的戰場畫面只剩兩處排除：原版自己畫的滑鼠游標，
+以及這一列——`2376:10EA`／`110B`／`1132` 三趟的列數是 19／20／20，
+多出來那一列只被部分 plane 寫到。
+
+**做完的判準**：那一列的來源查出來，戰場畫面的排除清單只剩游標。
+
+**證據**：[`docs/re/103-minimap-y203-strip.md`](docs/re/103-minimap-y203-strip.md)
+
+**核實**：要人判——沒有可綁的訊號——它是一份收據上的像素差異，不是程式裡的缺席。查出來之後會有一支新的繪製函式，到時綁它。
+
+#### kana-charcodes — 302 個假名／西里爾字形的字碼對應未確認
+
+*原編號 10 · re（逆向：機制還沒讀出來）*
+
+`GRAPH.IMG` 的 `0x4632`–`0x6996` 這 302 個字形，字碼怎麼對應還沒驗。
+
+**做完的判準**：跑到會用到假名的畫面，看它 seek 到哪，逐字對上。
+
+**證據**：[`docs/internals/06-font-graph-img.md`](docs/internals/06-font-graph-img.md)
+
+**核實**：要人判——測法是跑到結局畫面看它 seek 到哪；驗完會多一張對應表 JSON，到時改成 json_len 綁那張表的項數。
+
+### 做完的
+
+留著是為了不要重做一遍，也為了 `docs/re/` 裡「CONTEXT 第 N 條」那種交叉引用。
+
+#### strategic-ai-advance-turn — 戰略 AI 接進 `advanceTurn`
+
+*原編號 24 · parity（對拍：要與原版逐位元組相同）*
+
+`New` 與 `LoadSlot` 都把 `Brain` 設成 `OriginalBrain()`。
+驗收走有星域圖的入口（`load()` 沒載圖時 `runBrain` 整段跳過，
+所以一般測試的綠燈不代表決策層跑過）。
+
+**證據**：[`docs/spec/029-strategic-ai-turn.md`](docs/spec/029-strategic-ai-turn.md)
+
+**核實**：`TestExecuteTurnWithBrainMatchesOracle` 釘在 `internal/game`
+
+#### staff-reassignment — AI 每回合重新指派情報與內政專任參謀
+
+*原編號 18q · re（逆向：機制還沒讀出來）*
+
+`ds:8F4F` 不是常數：AI 回合的收尾 `2D10:0038` 依序換情報參謀
+（`2D10:0143`）與內政參謀（`2D10:0213`），再重算該陣營全部星域的稅率。
+用指派當下的提督表重算選出提督 63 ＝ 原版寫進去的值。
+
+**證據**：[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)
+
+**核實**：`TestDomesticStaffPickMatchesOracle` 釘在 `internal/rules`
+
+#### month-end-settlement — 月底結算的同狀態對拍
+
+*原編號 18p · parity（對拍：要與原版逐位元組相同）*
+
+`0654:0007` 一個月跑一次（逐座位之前）：32 格成長 → 用實際成長重算
+成長率 → 重算稅率 → 才收稅。帝國那一側七個欄位加建造中那七格
+與原版逐一相同。
+
+**證據**：[`docs/re/267-monthly-growth-and-tax-rate-recompute.md`](docs/re/267-monthly-growth-and-tax-rate-recompute.md)、[`docs/spec/038-monthly-growth-and-tax-rate.md`](docs/spec/038-monthly-growth-and-tax-rate.md)
+
+**核實**：`TestMonthEndMatchesWorkBlock` 釘在 `internal/game`
+
+<!-- worklist:end -->
+
+
+## 已解的紀錄（遷移中）
+
+> 下面這 65 條是舊格式的手寫紀錄。**它們正在搬進 `docs/worklist.json`**
+> ——搬完的會從這裡消失、出現在上面那一節。還沒搬的留在這裡，
+> 因為敘述本身是跨多份 `docs/re/` 的綜合，不能在搬家途中丟掉。
+> 新的未完成項一律寫進 JSON，不要再往下面加。
+
+
 1. ~~計算並記錄原版 bundle 與 `GIN3.COM` 的 SHA-256~~（完成，見上）。
 2. ~~dosgolem 第一次接觸~~（完成，`docs/re/01`）。
 3. ~~dosgolem 實作 EXEC（int 21h AX=4B00h + AH=4Dh）~~（完成，spec 007／`docs/re/02`）。

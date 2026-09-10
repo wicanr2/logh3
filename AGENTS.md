@@ -37,13 +37,15 @@ MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分�
 
 ## 開工順序與目前真相
 
-1. 先讀 `CONTEXT.md` 的「現況一覽」「已被推翻的斷言」與唯一 worklist（尚未建立時，
-   第一件工作是建立它，內容只寫已查證的事實）。
+1. 先跑 `tools/go.sh run ./cmd/worklist verify`，再讀 `CONTEXT.md` 的「現況一覽」
+   與「已被推翻的斷言」。**還剩什麼的權威是 `docs/worklist.json`**，不是任何一段
+   散文——`verify` 會逐條回答「這一條的斷言還成立嗎」，報「⚠ 斷言不成立」就是
+   清單與現況對不上（做好了沒改，或做好的東西壞了），**先處理那個再開工**。
 2. 再依任務讀 `docs/` 下一份直接相關的規格或 `docs/playtest/` 證據；不要掃完整個
    `workplace/` 或大型知識庫。
 3. 開工前執行 `git status --short`，保留使用者既有修改，不覆蓋不相關檔案。
-4. 目前沒有任何已對拍的畫面、已逆向的格式或已驗證的規則。任何「看起來像」的推測
-   都標 `hypothesis`，不寫進 README 當現況。
+4. 任何「看起來像」的推測都標 `hypothesis`，不寫進 README 當現況。完成度以
+   `VERIFICATION-MATRIX.md` 為準，別憑印象宣稱。
 
 若目前截圖、程式或新實驗推翻既有狀態，先修 `CONTEXT.md` 的現行正文並追加勘誤，
 再更新驗證矩陣；不可讓舊摘要繼續充當現況。
@@ -249,9 +251,18 @@ direct-entry 能開畫面，都不能單獨標為同狀態對拍完成。
   兩邊都要寫：`docs/re/` 記怎麼查到的，`docs/internals/` 記查到了什麼。
   段值與線性位址不穩定，`docs/internals/` 一律用結構位移與位元組簽章
   （見 `docs/internals/00-README.md`）。
-- `WORKLOG.md` 是唯一流水帳；`CONTEXT.md` 是目前真相與唯一剩餘工作；
+- **`docs/worklist.json` 是「還剩什麼」的權威**；`CONTEXT.md` 的 worklist 一節由
+  `tools/go.sh run ./cmd/worklist render -w` 產生（標記之間的內容不要手改）。
+  `WORKLOG.md` 是唯一流水帳；`CONTEXT.md` 其餘部分是目前真相；
   `VERIFICATION-MATRIX.md` 是完成度唯一數字來源；逆向證據放 `docs/re/`，對拍收據放
   `docs/playtest/`，規格放 `docs/spec/`。
+- **每一條未完成項掛一個 `verify`，跑起來要能自己開口。** 訊號由穩到不穩是
+  項數（`json_len`）> 型別／函式名（`absent`）> 程式碼裡的自承註解（`present`）>
+  `manual`。**沒有訊號就標 `manual` 並在 `note` 寫明將來接上時該綁什麼**——
+  會誤判的 verify 比沒有 verify 更糟，它給人「有在看」的假象。
+  `verify` **只看產品程式碼，不掃測試檔**：測試本來就會提到還沒接上的東西。
+- **做完一件事的收尾是改 `docs/worklist.json`，不是在 markdown 打勾**——
+  打勾的那一份下次會被 `render` 蓋掉。改完跑一次 `verify` 確認斷言與現況對上。
 - 對已宣稱通過的畫面新增證據時，更新原有條目；不要另建第二份互相競爭的狀態表。
 - 正式交付只認 `dist-all/<版本>/{full,release,promo}/` 結構（建立後適用）；含原版
   素材的完整版只能留在本機或授權的私有位置。

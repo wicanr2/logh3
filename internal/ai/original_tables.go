@@ -11,7 +11,8 @@ import (
 // 這一份是原版戰略 AI 每回合要算的那六張「以星域為索引」的表
 // （規格 `docs/spec/029`、`docs/internals/54`）。
 //
-// 都是純函式：吃局面、回表，不改任何狀態，也還沒接到 `advanceTurn`。
+// 都是純函式：吃局面、回表，不改任何狀態。**`OriginalStrategy` 已經接到
+// `advanceTurn`**（2026-09-10 使用者裁決）。
 // 收據 `s3aicomp`（`docs/re/176`）的數字由 `original_tables_test.go` 釘住。
 
 // FleetView 是算這些表要看的艦隊欄位，對應原版艦隊記錄
