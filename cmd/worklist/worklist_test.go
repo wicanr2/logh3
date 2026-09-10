@@ -351,3 +351,42 @@ func TestMatrixRoundTrip(t *testing.T) {
 		}
 	}
 }
+
+// 自評的數字要**算自資料**，而且矩陣以外的層要分開數。
+//
+// ⚠ 反面不會報錯：一個手寫死的百分比照樣印得出來，只是條目一改就過期，
+// 而過期的完成度看起來完全正常——只有在別人照它排工作時才會發現。
+func TestScoreCountsFromData(t *testing.T) {
+	doc := &Doc{
+		Layers: map[string]string{"matrix": "矩陣", "re": "逆向", "feature": "功能"},
+		Matrix: &Matrix{Sections: []Section{{ID: "s1", Title: "顯示層"}, {ID: "s2", Title: "畫面"}}},
+		Items: []Item{
+			{ID: "a", Layer: "matrix", Section: "s1", Status: StatusDone, Title: "甲"},
+			{ID: "b", Layer: "matrix", Section: "s2", Status: StatusDone, Title: "乙"},
+			{ID: "c", Layer: "matrix", Section: "s2", Status: StatusOpen, Title: "丙"},
+			{ID: "d", Layer: "re", Status: StatusOpen, Title: "丁"},
+			{ID: "e", Layer: "feature", Status: StatusOpen, Title: "戊"},
+			{ID: "f", Layer: "feature", Status: StatusDone, Title: "己"},
+		},
+	}
+	// **比對前把連續空白收成一個**：欄寬是靠 `%-14s` 排的，而中文字的
+	// 寬度與 rune 數不一致，把 padding 寫進預期值等於把測試綁在排版上。
+	out := Score(doc)
+	flat := strings.Join(strings.Fields(out), " ")
+	for _, want := range []string{
+		"s1 顯示層 100% 1/1",   // 全過
+		"s2 畫面 50% 1/2",     // 一過一沒過
+		"矩陣合計 2/3 條通過（66%）", // 只數矩陣層
+		"re 1 條",             // 矩陣以外的層分開數
+		"feature 1 條",        // 只數 open，不含那條 done
+		"丙",                  // 沒過的那一列要點名
+	} {
+		if !strings.Contains(flat, want) {
+			t.Errorf("報表少了 %q，實際：\n%s", want, out)
+		}
+	}
+	// 已經做完的不該出現在「還差多少」裡。
+	if strings.Contains(out, "己") {
+		t.Errorf("做完的條目不該出現在還差多少：\n%s", out)
+	}
+}

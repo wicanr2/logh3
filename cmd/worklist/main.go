@@ -138,7 +138,7 @@ func (r Result) String() string {
 func main() {
 	args := os.Args[1:]
 	if len(args) == 0 {
-		fmt.Fprintln(os.Stderr, "用法: worklist {verify [id...]|render [-w]|render-matrix [-w]|import-matrix|check}")
+		fmt.Fprintln(os.Stderr, "用法: worklist {verify [id...]|render [-w]|render-matrix [-w]|import-matrix|check|score}")
 		os.Exit(2)
 	}
 	doc, err := Load(dataPath)
@@ -184,6 +184,8 @@ func main() {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
+	case "score":
+		fmt.Print(Score(doc))
 	case "check":
 		if errs := Check(doc); len(errs) > 0 {
 			for _, e := range errs {
