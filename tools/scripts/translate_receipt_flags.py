@@ -40,9 +40,38 @@ def read_flags(batch):
         return None, None
     for line in m.read_text(encoding="utf-8").split("\n"):
         if line.startswith("probe 旗標: "):
-            # 只能按空白拆，所以值含空白的（-cmdline " 9 2"）會壞——標出來。
-            return line[len("probe 旗標: "):].split(), "meta.txt（按空白拆，值含空白者不可靠）"
+            return regroup(line[len("probe 旗標: "):].split()), "meta.txt（重組含空白的值）"
     return None, None
+
+
+def is_flag(tok):
+    """`-x` 開頭且第二個字元是字母才算旗標名。
+
+    `-1`（`-mouse-x -1` 的預設值）第二個字元是數字，是**值**不是旗標。
+    """
+    return len(tok) > 1 and tok[0] == "-" and tok[1].isalpha()
+
+
+def regroup(toks):
+    """把按空白拆開的旗標重新組回去。
+
+    `meta.txt` 那一行是給人看的，值含空白的（`-poke lin:...=03 02 01 04`、
+    `-cmdline " 9 2"`）拆完就散成好幾個 token。**散掉不會報錯**：probe 收到
+    多餘的位置參數會沉默地忽略，於是那個 `-poke` 等於沒下，收據跑出另一個
+    局面而旗標看起來完全正常。
+    """
+    out, cur = [], None
+    for t in toks:
+        if is_flag(t):
+            if cur is not None:
+                out.append(cur)
+                cur = None
+            out.append(t)
+        else:
+            cur = t if cur is None else cur + " " + t
+    if cur is not None:
+        out.append(cur)
+    return out
 
 
 def translate_dump_mem(v):
@@ -65,8 +94,13 @@ def translate_dump_mem(v):
 
 
 def translate_clicks(v):
-    """x,y,at[,hold];… → (步數:X:Y,…, holds)"""
-    out, holds = [], set()
+    """x,y,at[,hold];… → (步數:X:Y[::按住],…, holds)
+
+    hold 全部一樣時提成全域的 `-click-hold`（旗標比較短，也與已翻好的
+    那幾百份一致）；**不一樣時逐次寫進第五欄**——同一段序列裡不同的鈕
+    要不同的按住時間是常態，硬挑一個值會讓收據跑出另一個畫面。
+    """
+    rows, holds = [], set()
     for part in v.split(";"):
         part = part.strip()
         if not part:
@@ -75,10 +109,14 @@ def translate_clicks(v):
         if len(f) < 3:
             raise ValueError("clicks 少了欄位：%r" % part)
         x, y, at = f[0], f[1], f[2]
-        if len(f) > 3:
-            holds.add(f[3])
-        out.append("%s:%s:%s" % (at, x, y))
-    return ",".join(out), holds
+        hold = f[3] if len(f) > 3 else ""
+        if hold:
+            holds.add(hold)
+        rows.append((at, x, y, hold))
+    if len(holds) > 1:
+        # 第四欄（鍵）留空 ＝ 用預設的左鍵；-rclicks 那邊照樣把它改成右鍵。
+        return ",".join("%s:%s:%s::%s" % r for r in rows), set()
+    return ",".join("%s:%s:%s" % r[:3] for r in rows), holds
 
 
 def translate(flags):
