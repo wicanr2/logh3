@@ -51,6 +51,15 @@ one() {
   local name="$1" f="$FLAGS/$1.txt" exe
   local -a fl
   mapfile -t fl < "$f"
+  # ⚠ **空的旗標檔要當成「沒比」，不要記成結果。**
+  # 踩過：一邊跑這支、一邊重跑 translate_receipt_flags.py --all，
+  # 批次讀到正在被重寫的檔案 → 旗標是空的 → probe 跑出別的畫面或
+  # 根本沒畫面，而 TSV 記下一筆看起來很正常的「對不上」。
+  # 連續 39 份同時「失敗」才看得出來是競態；單獨一份會被當成真差異。
+  if [[ ${#fl[@]} -eq 0 ]]; then
+    echo "$name	略過：旗標檔是空的（有人正在重寫 flags-new/ 嗎？）" >&2
+    return
+  fi
   exe=$(sed -n 's/^執行檔: //p' "$ROOT/workplace/oracle/$name/meta.txt")
   rm -f "$OUT/$name.bin" "$OUT/$name.pal"
   # ⚠ `-dump-ega`／`-dump-palette` 放在最後：有些收據自己也帶了，
