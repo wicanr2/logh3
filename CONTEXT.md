@@ -395,20 +395,24 @@
 
 **核實**：要人判——接上時會出現播放層的型別（大概是 internal/audio），到時把這一條改成 absent 綁那個型別名——現在猜名字會寫出永遠為真的 pattern。
 
-#### oracle-runaway-after-copy-protection — logh3-oracle 上還有收據重現不了
+#### oracle-runaway-after-copy-protection — 收據要在 logh3-oracle 上重錄（新舊執行器的時序不同）
 
 *parity（對拍：要與原版逐位元組相同）*
 
-根因已解並修好（dosgolem `4732181`）：子行程結束時執行器沒有釋放它名下的 MCB，
-標頭因此留在接手程式的記憶體裡改寫程式碼；另外 `-tick` 會被 PIT 的重算蓋掉。
-`main1e`（2.2 億道指令、走到帝國軍主畫面）現在**畫面與調色盤都逐位元組重現**。
-剩下的是殘差：抽驗 12 份有 5 份完全一致，`monthdismiss` 差 105,328、
-`introtick10000` 差 37,015、`chain6` 差 2,265、`acctchg`／`lst3eAlly` 各 251、
-`intro347` 差 26；`cb1`／`typed138` 在 (240,283) 有 16×2 的色號 F vs 9
-（四個 plane 全設 vs 只有 0 與 3，形狀指向 planar 寫入遮罩）。
-另有 9 份收據因為每次點擊的 hold 不一致，旗標還沒翻譯。
+跑飛的根因已解並修好（dosgolem `4732181`／`2951243`）：子行程結束時執行器沒有
+釋放它名下的 MCB，標頭因此留在接手程式的記憶體裡改寫程式碼；另外 `-tick` 會被
+PIT 的重算蓋掉。`main1e`（2.2 億道指令、走到帝國軍主畫面）現在**畫面與調色盤
+都逐位元組重現**。
+剩下的是**時序**：抽驗 18 份有 9 份完全一致，其餘差在游標位置（各 251 ＝ 兩個
+13×16 方塊）或動畫相位（`monthdismiss` 105,328、`introtick10000` 37,015、
+`s3detailmem` 10,195、`s3cmd4` 4,984、`chain6` 2,265、`intro347` 26）。
+新版在同樣的指令數內跑得比舊版遠（到 mode 03h 領先 10.3M 道），而且新版的
+BIOS 計時器計數只在遊戲 chain 回 BIOS 時才加（每 32 刻一次，正確），舊版每刻都加。
+**新版對、舊版錯**，所以這些差異不是要修回去的，是收據要重錄的理由。
 
-**做完的判準**：455 份收據在 `logh3-oracle` 上重跑，畫面與調色盤逐位元組相同（或差異各有記錄在案的理由）。
+**卡在**：重錄要逐份確認畫面停在同一個遊戲狀態，不能只看「有沒有畫出東西」——`docs/re/270` 記著一次用錯判準的例子。
+
+**做完的判準**：455 份收據在 `logh3-oracle` 上重錄，每一份的畫面對應的遊戲狀態與原收據相同（步數可重新標定），且重錄後兩次獨立重跑逐位元組一致。
 
 **證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
 
@@ -727,6 +731,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 **核實**：`TestMonthEndMatchesWorkBlock` 釘在 `internal/game`
 
 <!-- worklist:end -->
+
 
 
 
