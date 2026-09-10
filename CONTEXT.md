@@ -359,7 +359,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 28 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 29 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -395,6 +395,28 @@
 
 **核實**：要人判——接上時會出現播放層的型別（大概是 internal/audio），到時把這一條改成 absent 綁那個型別名——現在猜名字會寫出永遠為真的 pattern。
 
+#### s3datamem-rerecord — 收據 s3datamem 要重錄（原本那份的旗標在錄製時就壞了）
+
+*parity（對拍：要與原版逐位元組相同）*
+
+原收據的 `-clicks` 值裡混進了整行旗標的複本（空白被換成 `x`），
+所以那份畫面**沒有任何一組旗標能重現**，已經刪掉（2026-09-11）。
+它引用的 1 MB 執行期傾印 `workplace/s3datamem.bin` **沒有跟著刪**——
+`docs/re/111`（行星記錄版面）、`docs/re/256`、`internal/rules/planetcmd_test.go`
+與 `tools/scripts/battlecmd_spec.py` 都靠它，那份是另外倒出來的檔案。
+點擊清單從爛值裡還原得出來（22 次、每項都合格），重錄用：
+
+```
+-clicks 40000000:300:230,95000000:300:230,190000000:300:282,240000000:318:168,300000000:544:85,330000000:560:85,405000000:544:85,435000000:560:85,510000000:544:85,540000000:560:85,615000000:544:85,645000000:560:85,720000000:544:85,750000000:560:85,825000000:544:85,855000000:560:85,920000000:240:200,935000000:240:200,1000000000:240:200,1015000000:240:200,1080000000:240:200,1095000000:240:220 -click-hold 3000000
+-tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 -steps 1200000000 -dump-mem 0-FFFFF:/src/workplace/s3datamem.bin
+```
+
+**做完的判準**：`workplace/oracle/s3datamem/` 用還原的旗標在 `logh3-oracle` 上重錄，且重錄後的 1 MB 傾印仍然支持 `docs/re/111` 量到的行星記錄版面。
+
+**證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
+
+**核實**：要人判——要人判：收據不進版控，沒有可掃的產品程式碼訊號。（試過用 absent 綁一個哨兵字串，但 pattern 本身就寫在 docs/worklist.json 裡，掃同一個檔會自己中自己。）重錄之後把這一條刪掉。
+
 #### oracle-runaway-after-copy-protection — 收據要在 logh3-oracle 上重錄（新舊執行器的時序不同）
 
 *parity（對拍：要與原版逐位元組相同）*
@@ -416,7 +438,7 @@ BIOS 計時器計數只在遊戲 chain 回 BIOS 時才加（每 32 刻一次，�
 
 **證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
 
-**核實**：要人判——要人判：目前沒有把 455 份收據的重現狀態釘成資料。做法是加一支 `tools/check_receipts.sh` 產出「批次 → 差異位元組數」的 JSON，再把這一條改成 json_len 綁「差異不為 0 的批次數」。
+**核實**：要人判——要人判：`tools/check_receipts.sh` 已經會產出 `workplace/receipt-check.json`（批次 → 差幾個位元組），但 `workplace/` 不進版控，綁它等於綁一個別人 clone 之後不存在的檔。等重錄完、把「哪幾份通過」釘進 docs/ 之後再改成機器訊號。
 
 #### ai-seat-order — 戰略 AI 的座位順序與原版不同
 
@@ -748,6 +770,8 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 **核實**：`TestMonthEndMatchesWorkBlock` 釘在 `internal/game`
 
 <!-- worklist:end -->
+
+
 
 
 

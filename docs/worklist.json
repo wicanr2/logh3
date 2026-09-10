@@ -244,6 +244,35 @@
       }
     },
     {
+      "id": "s3datamem-rerecord",
+      "legacy_id": null,
+      "status": "open",
+      "layer": "parity",
+      "title": "收據 s3datamem 要重錄（原本那份的旗標在錄製時就壞了）",
+      "body": [
+        "原收據的 `-clicks` 值裡混進了整行旗標的複本（空白被換成 `x`），",
+        "所以那份畫面**沒有任何一組旗標能重現**，已經刪掉（2026-09-11）。",
+        "它引用的 1 MB 執行期傾印 `workplace/s3datamem.bin` **沒有跟著刪**——",
+        "`docs/re/111`（行星記錄版面）、`docs/re/256`、`internal/rules/planetcmd_test.go`",
+        "與 `tools/scripts/battlecmd_spec.py` 都靠它，那份是另外倒出來的檔案。",
+        "點擊清單從爛值裡還原得出來（22 次、每項都合格），重錄用：",
+        "",
+        "```",
+        "-clicks 40000000:300:230,95000000:300:230,190000000:300:282,240000000:318:168,300000000:544:85,330000000:560:85,405000000:544:85,435000000:560:85,510000000:544:85,540000000:560:85,615000000:544:85,645000000:560:85,720000000:544:85,750000000:560:85,825000000:544:85,855000000:560:85,920000000:240:200,935000000:240:200,1000000000:240:200,1015000000:240:200,1080000000:240:200,1095000000:240:220 -click-hold 3000000",
+        "-tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 -steps 1200000000 -dump-mem 0-FFFFF:/src/workplace/s3datamem.bin",
+        "```"
+      ],
+      "evidence": [
+        "docs/re/270-enter-works-the-divergence-is-after-it.md"
+      ],
+      "acceptance": "`workplace/oracle/s3datamem/` 用還原的旗標在 `logh3-oracle` 上重錄，且重錄後的 1 MB 傾印仍然支持 `docs/re/111` 量到的行星記錄版面。",
+      "blocked_by": null,
+      "verify": {
+        "kind": "manual",
+        "note": "要人判：收據不進版控，沒有可掃的產品程式碼訊號。（試過用 absent 綁一個哨兵字串，但 pattern 本身就寫在 docs/worklist.json 裡，掃同一個檔會自己中自己。）重錄之後把這一條刪掉。"
+      }
+    },
+    {
       "id": "oracle-runaway-after-copy-protection",
       "legacy_id": null,
       "status": "open",
@@ -268,7 +297,7 @@
       "blocked_by": "重錄要逐份確認畫面停在同一個遊戲狀態，不能只看「有沒有畫出東西」——`docs/re/270` 記著一次用錯判準的例子。",
       "verify": {
         "kind": "manual",
-        "note": "要人判：目前沒有把 455 份收據的重現狀態釘成資料。做法是加一支 `tools/check_receipts.sh` 產出「批次 → 差異位元組數」的 JSON，再把這一條改成 json_len 綁「差異不為 0 的批次數」。"
+        "note": "要人判：`tools/check_receipts.sh` 已經會產出 `workplace/receipt-check.json`（批次 → 差幾個位元組），但 `workplace/` 不進版控，綁它等於綁一個別人 clone 之後不存在的檔。等重錄完、把「哪幾份通過」釘進 docs/ 之後再改成機器訊號。"
       }
     },
     {
