@@ -77,9 +77,16 @@ one() {
      tools/go.sh run ./cmd/probe -exe "${exe:-/orig/GIN3.COM}" -root /orig -empty-env \
      "${fl[@]}" -dump-ega "/src/workplace/check/$name.png" \
      -dump-palette "/src/workplace/check/$name.pal" >/dev/null 2>&1)
-  local s p
+  local s p ref="$ROOT/workplace/oracle/$name/screen.bin"
+  # ⚠ **收據不在就不能比。** `cmp` 對不存在的檔會失敗，而失敗的輸出是空的
+  # ——`wc -l` 回 0，於是「沒有東西可比」被記成「差 0 ＝ 一致」。
+  # 假通過比假失敗更貴：它不會有人去查。
+  if [[ ! -s "$ref" ]]; then
+    echo "$name	略過：找不到收據 $ref" >&2
+    return
+  fi
   if [[ -s "$OUT/$name.bin" ]]; then
-    s=$(cmp -l "$OUT/$name.bin" "$ROOT/workplace/oracle/$name/screen.bin" 2>/dev/null | wc -l)
+    s=$(cmp -l "$OUT/$name.bin" "$ref" | wc -l)
     p=$(cmp -l "$OUT/$name.pal" "$ROOT/workplace/oracle/$name/pal.bin" 2>/dev/null | wc -l)
   else
     s=-1; p=-1   # 跑不出畫面：旗標壞了或程式死在半路，與「差很多」不是同一回事

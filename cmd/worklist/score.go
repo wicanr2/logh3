@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 	"sort"
 	"strings"
 )
@@ -94,6 +96,7 @@ func Score(doc *Doc) string {
 		matrixDone, matrixTotal, matrixDone*100/max1(matrixTotal))
 	fmt.Fprintf(&b, "每一列的份量差很多（%s）。\n", weightNote(ids, secs))
 
+	fmt.Fprint(&b, receiptHealth())
 	fmt.Fprintf(&b, "\n還差多少（矩陣以外的層，只數還沒做完的）\n")
 	var layers []layerCount
 	for l, n := range openByLayer {
@@ -139,4 +142,43 @@ func max1(n int) int {
 		return 1
 	}
 	return n
+}
+
+// receiptHealth 是「撐著上面那些通過的收據，現在還有幾份重現得出來」。
+//
+// ⚠ **這一行不能省。** 矩陣的每一個「通過」背後都是一份收據，而收據綁
+// 執行器版本（AGENTS.md）——換了執行器之後重現不出來的那些，它們撐著的
+// 結論就只剩文件上的斷言。少了這一行，上面的百分比會顯得比實際可靠。
+//
+// 資料是 `tools/check_receipts.sh` 產的，落在 gitignore 的 workplace，
+// 所以**沒有它是正常的**（別人 clone 之後本來就沒有收據）——那時說不知道，
+// 不要假裝健康。
+func receiptHealth() string {
+	const path = "workplace/receipt-check.json"
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		return fmt.Sprintf("\n對拍證據：不知道（沒有 %s，跑 tools/check_receipts.sh 產生）\n", path)
+	}
+	var rc struct {
+		GolemHead string `json:"golem_head"`
+		Generated string `json:"generated"`
+		Results   []struct {
+			ScreenDiff int `json:"screen_diff"`
+			PalDiff    int `json:"pal_diff"`
+		} `json:"results"`
+	}
+	if err := json.Unmarshal(raw, &rc); err != nil || len(rc.Results) == 0 {
+		return fmt.Sprintf("\n對拍證據：%s 讀不動\n", path)
+	}
+	ok := 0
+	for _, r := range rc.Results {
+		if r.ScreenDiff == 0 && r.PalDiff == 0 {
+			ok++
+		}
+	}
+	return fmt.Sprintf("\n對拍證據：%d/%d 份收據在執行器 %s 上逐位元組重現（%d%%，量於 %s）\n"+
+		"  其餘的差異已知是時序（新執行器修好了舊版的 BIOS 時鐘與配置器，見 docs/re/270），\n"+
+		"  要重錄才會回到 100%%——在那之前，上面的「通過」有 %d 份的收據還沒重新驗過。\n",
+		ok, len(rc.Results), rc.GolemHead, ok*100/len(rc.Results), rc.Generated[:10],
+		len(rc.Results)-ok)
 }
