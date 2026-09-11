@@ -522,6 +522,11 @@ type Game struct {
 	// 重算的地方只有 `refreshHoverRegion` 一處。
 	hoverRegion int
 
+	// music 是設定畫面上那三行：音源、平時配樂、戰鬥配樂。
+	// 原版的 `ds:8F33`／`8F34`／`8F35`，跟著存檔走（`WORK.DT?` 的
+	// `+0x1F`／`+0x20`／`+0x21`，`docs/internals/30`）。
+	music MusicSettings
+
 	// saveErr 是上一次存檔的結果（nil ＝ 成功或還沒存過）。
 	saveErr error
 
@@ -1153,6 +1158,9 @@ func (g *Game) startNewGame(faction int) {
 	g.shipPctSet = true
 	g.pct = rules.OpeningPct
 	g.foePct = rules.OpeningPct
+	// 開新遊戲時原版把兩首曲號清零（簽章 `31 C0 A2 34 8F A2 35 8F CB`，
+	// `docs/re/274` §4）——**音源那一格不清**，它是開機偵測的結果。
+	g.music.BGM, g.music.Battle = 0, 0
 	g.slot = nil
 	g.monthEnd()
 }
@@ -1196,7 +1204,12 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		hoverRegion: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1}
+		hoverRegion: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1,
+		// 音源是開機偵測的結果，不是每局重來的東西：沒有 MPU-401 就退到
+		// OPL（`docs/re/274` §3）。remake 不模擬 MIDI 介面，所以與出貨的
+		// 原版一樣一律 ＦＭ——既有的執行期傾印 `ds:8F33` 全是 1，收據
+		// `settings1e` 上反白的也是「ＦＭ」那一格。
+		music: MusicSettings{Device: MusicFM}}
 	g.startNewGame(res.Faction)
 	// 電腦那一方走原版的戰略 AI（`docs/spec/029` READY，使用者裁決
 	// 2026-09-10）。資源不齊時 `OriginalBrain` 自己回 nil ＝ 不下命令。
@@ -1239,6 +1252,10 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.building = sl.Building
 	g.paidUpkeep = sl.PaidUpkeep
 	g.paidMove = sl.PaidMove
+	// 設定畫面那三格跟著存檔走（`docs/re/274` §6）：三格出貨存檔載進來
+	// 之後換到的曲子就是 `+0x20` 那個號碼。
+	g.music = MusicSettings{Device: sl.MusicDevice, BGM: sl.MusicBGM,
+		Battle: sl.MusicBattle}
 	g.treasury = rules.Treasury{Budget: sl.BudgetStart[g.faction],
 		ShipPaid: sl.ShipPaid[g.faction]}
 	// 存檔裡就有兩邊的艦隊（`FLEET.DT?` ＝ 執行期那張表，`docs/re/41`）。
@@ -1596,6 +1613,10 @@ func (g *Game) click(x, y int) {
 				return
 			}
 		}
+	case StateSettings:
+		// 音源／平時配樂／戰鬥配樂三組單選（`docs/re/285`）。
+		// 同一份清單上的訊息速度、動畫效果、動畫速度還沒接。
+		g.settingsClick(x, y)
 	case StateBattle:
 		g.battleClick(x, y)
 	case StateCmdMenu, StateListMenu, StateSysMenu:
@@ -1920,6 +1941,12 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	g.slot.Building = g.building
 	g.slot.PaidUpkeep = g.paidUpkeep
 	g.slot.PaidMove = g.paidMove
+	// 那三格音樂設定。**新遊戲的底稿在這一格上是 0**（`work-796-01.json`
+	// 量自第 71,200,000 步，那時候音源偵測還沒跑），而原版存檔的時候
+	// `ds:8F33` 已經是 1——三格出貨存檔的 `+0x1F` 都是 1，所以照現在的值寫。
+	g.slot.MusicDevice = g.music.Device
+	g.slot.MusicBGM = g.music.BGM
+	g.slot.MusicBattle = g.music.Battle
 	// 原定軍事費與已付建造費目前只留玩家那一方（`monthEnd` 只填那一格）；
 	// 電腦那一方沿用底稿裡的值。
 	g.slot.BudgetStart[g.faction] = g.treasury.Budget
@@ -2001,6 +2028,9 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.liveCursor(spec)
 			g.setHoverRow(spec)
 			g.applyStaffFaces(spec)
+			if g.state == StateSettings {
+				g.applyMusicSettings(spec)
+			}
 			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
 			// （`docs/spec/002`）。
 			fb, _ := screen.MainGameLayered(spec, g.res.Font, g.starMapFor(spec),

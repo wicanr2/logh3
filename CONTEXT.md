@@ -244,6 +244,7 @@
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
+| 清單 `902C`（自動１／手動１／自動２／手動２／顯示／不顯示／結束）**像是音源選擇**（假說）| `docs/internals/23` | `docs/re/285`：音源選擇在清單 `ds:03D8`，標籤是 `MIDI`／`ＦＭ`／`關閉`，動作碼直接寫 `ds:8F33`（`docs/re/274` §5），而且 22 筆的畫面矩形與收據 `settings1e` 量到的 20 個小框逐一吻合。`902C` 那七項與音源無關，**它屬於哪一張畫面仍然未知** |
 | 開頭動畫**第 1–116 格從來沒被解過**（兩個 64 KB 讀取緩衝只差 40 個位元組）；以及「500M 步裡只有 25 組解碼呼叫、間隔 71–4861 刻」 | `docs/re/108`、`docs/re/116`、`docs/re/261`、`docs/internals/19`、`docs/spec/020` | `docs/re/283`：那個 +40 的重疊是**執行器造成的**——收據 `intrord`／`openmem`／`introsched` 錄在 `4732181` 之前的 dosgolem 上，而那一版子行程結束時不釋放 MCB、把 DOS 的空間表寫壞（`docs/re/270`）。在 `2e9dd3b` 上同一個斷點量到的第二個緩衝區是 `275D:0016`（相差 65,544 bytes，互不重疊），原版**照檔案順序**播第 0、1、2… 格，而 remake 解出來的畫面與原版逐位元組相同（48 個時點，格 0–348 的 41 個全中）。`docs/re/116` 對遊戲那段 `farmalloc` 算術的分析仍然成立（堆積區段結尾照樣寫成 0），被推翻的是「另開的那一段落在哪裡」。實際的差異只有兩處：原版少播第 349 格（每塊格數表第 23 筆寫 10、實際裝 11 格），以及進尾段前會把 plane 緩衝區清成 0 |
 | `ds:8F4F[陣營]` 是**統治者**的提督編號 | `docs/re/34`、`docs/re/220`、`docs/re/222` 末節、`docs/internals/22` bit1、`docs/internals/55` | `docs/re/268`：對那一格設監看抓到兩個寫入者（`090A:021B` 玩家手動任命、`2D10:02ED` AI 指派），而 AI 在自己回合的收尾 `2D10:0038` 會**重新挑人**——常數不會每回合換。`docs/internals/30` 的 `WORK` 版面把六格定死：`ds:8F4B` 軍事／`ds:8F4D` 情報／`ds:8F4F` **內政**專任參謀，各陣營一格。受影響的是稅率公式（`docs/internals/55`，乘的是內政參謀的能力）與叛亂判定（`docs/internals/22` bit1，查的是情報參謀）。**統治者存在哪一格仍未定位** |
 | 船艦建造的單價是十四個常數（帝國 8/12/4/24/4/7/22、同盟 9/14/5/23/3/7/24）| `docs/internals/32`、`docs/re/12`、`docs/re/62` | `docs/re/265`：單價 ＝ ⌊艦種表基價 × 100 ÷ 軍事專任參謀的營運⌋（`2B5F:014D`）。那十四個數是 796/1 兩位參謀（帝國提督 6 營運 112、同盟提督 79 營運 106）下算出來的值——用基價代回去 14/14。「只有運補艦兩邊同價」也不是巧合以外的東西：基價兩邊都是 8，`8×100÷112` 與 `8×100÷106` 都是 7 |
@@ -551,25 +552,27 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 **核實**：`internal/screen`、`internal/game` 裡出現 `strategy-report-strings|StrategyReport` 就是做好了
 
-#### music-settings-wiring — 設定畫面的三格音樂設定還沒接進 remake
+#### settings-other-rows — 設定畫面另外那幾行（訊息速度／動畫效果／動畫速度）還沒接
 
 *feature（功能：玩家會撞到、但 remake 還沒有）*
 
-對照表已經解出來也接上了（`music-screen-mapping`、`internal/audio.TuneFor`），
-但 remake 一律用出廠預設：設定畫面上點「英雄交響曲」不會換曲、
-載入存檔也不會把存檔裡那一首帶進來。原版那三格是
-`ds:8F33`（音源）／`8F34`（平時配樂 0–5）／`8F35`（戰鬥配樂 0–2），
-存檔位移 `WORK.DT?` 的 `+0x1F`／`+0x20`／`+0x21`（`docs/internals/17`、`30`）。
-要接三處：設定畫面的十二個動作碼（碼 0–2 → 音源、3–8 減 3 → 平時、
-9–11 減 9 → 戰鬥，前兩組改完會立刻試聽，第三組不會）、
-`LoadSlot` 把三格讀進來、`SaveSlot` 寫回去。
-**交戰演出那個狀態 remake 還沒有**，所以 `Settings.BattleTune` 現在沒有出口。
+設定畫面的熱區清單 22 筆已經全部讀出來進了規格（`docs/re/285`），
+音樂那三組也接了，但另外幾行點下去沒有反應：
+訊息速度的上下箭頭（動作碼 12／13，畫面上寫 `90`）、
+動畫效果的開啟／關閉（14／15）、動畫速度的普通／快速／最快（16–18）、
+「結束」（19）與「ＭＩＤＩ Ｉ／Ｆ」（22）。
+**卡在同一件事**：那幾個值存在哪還沒定位——`WORK` 那 230 bytes 裡
+還有大片未解的位元組，也可能根本不進存檔。找法與 `docs/re/285` 相同：
+在動作碼那段分派上找寫位元組的指令（`A2 xx xx`）。
+「結束」另外還缺一件事：關掉之後回哪一張沒有收據，remake 目前用右鍵關。
 
-**做完的判準**：設定畫面改完馬上換曲、存檔存得下也讀得回來，三格的值與原版 WORK.DT? 的三個位元組一致。
+**卡在**：訊息速度／動畫效果／動畫速度三個值存在哪還沒定位。
 
-**證據**：[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/internals/data/music-mapping.json`](docs/internals/data/music-mapping.json)
+**做完的判準**：那幾行點下去有反應，值的去向有反組譯證據（不是猜的），存得下讀得回。
 
-**核實**：`cmd/gin3` 裡還找得到 `設定畫面上的點擊與存檔載入還沒把`（自承還在 ＝ 還沒做）
+**證據**：[`docs/re/285-settings-screen-hotspots.md`](docs/re/285-settings-screen-hotspots.md)
+
+**核實**：`internal/game` 裡出現 `msg-speed-inc` 就是做好了
 
 #### music-fm-capture — `_F` 那一組的 FM 原音：11 首錄到 9 首，結局那兩首還卡住
 
@@ -846,7 +849,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-10 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+11 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -964,14 +967,41 @@ pkg-config，標準建置 image 沒有——放進 internal 會讓 `go test ./..
 開頭動畫一律 `OPEN_M`（`OPEN.EXE` 兩個外皮都寫死 `'m'`，`OPEN_F` 是死素材）；
 結局照命令列第二個數字 `9 1`／`9 2` → `END_1`／`END_2`。
 主選單與防拷問答沒有配樂；戰術畫面沿用平時配樂，換戰鬥曲的是交戰演出。
-remake 接在 `internal/audio.TuneFor`，目前用出廠預設；
-**設定畫面的點擊與存檔載入還沒把那三格接進來**（見 `music-settings-wiring`）。
+remake 接在 `internal/audio.TuneFor`，曲號從 `Game` 那三格讀；
+**設定畫面的點擊與存檔載入已經接上**（`music-settings-wiring`、`docs/re/285`）。
 
 **做完的判準**：每一首都對到它在原版裡實際播放的時機，來源是反組譯或收據，不是推測。
 
 **證據**：[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/internals/data/music-mapping.json`](docs/internals/data/music-mapping.json)
 
 **核實**：`TestEveryTuneIsReachable` 釘在 `internal/audio`
+
+#### music-settings-wiring — 設定畫面的三格音樂設定
+
+*feature（功能：玩家會撞到、但 remake 還沒有）*
+
+設定畫面上那三行點得動了：音源（ＭＩＤＩ／ＦＭ／關閉）、平時配樂六選一、
+戰鬥配樂三選一，點完立刻換反白，值跟著存檔走。
+熱區不是量畫面量出來的，是從原版資料段讀的——清單在 `ds:03D8`，22 筆，
+換算出來的矩形與收據 `settings1e` 上量到的 20 個小框逐一吻合
+（框左右各比熱區多 2 像素；`docs/re/285`）。
+「ＭＩＤＩ」那一格點不下去：原版的可選旗標由開機偵測寫，出貨的 `MUSIC.INI`
+沒有 MIDI 介面，所以原版連框都不畫，`HitTest` 也跳過它。
+**試聽沒有另外做**：`cmd/gin3` 每幀問一次「現在該播哪一首」，而
+`audio.TuneFor` 只看音源與平時配樂——原版「選音源／選平時曲會試聽、
+選戰鬥曲不會」那個差別在這裡自然成立。
+存檔：`WORK.DT?` 的 `+0x1F`／`+0x20`／`+0x21`（`rules.WorkFields`），
+載入→存回第 9 格六個檔逐位元組相同。
+**交戰演出那個狀態 remake 還沒有**，所以 `Settings.BattleTune` 仍然沒有出口：
+戰鬥配樂存得下、讀得回，但還沒有畫面會去播它。
+同一份清單上的訊息速度／動畫效果／動畫速度／結束／ＭＩＤＩ Ｉ／Ｆ 還沒接
+（見 `settings-other-rows`）。
+
+**做完的判準**：設定畫面改完馬上換曲、存檔存得下也讀得回來，三格的值與原版 WORK.DT? 的三個位元組一致。
+
+**證據**：[`docs/re/285-settings-screen-hotspots.md`](docs/re/285-settings-screen-hotspots.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/internals/23-hotspot-lists.md`](docs/internals/23-hotspot-lists.md)、[`docs/internals/30-save-format.md`](docs/internals/30-save-format.md)
+
+**核實**：`TestSettingsMusicClicks` 釘在 `internal/game`
 
 #### strategic-ai-advance-turn — 戰略 AI 接進 `advanceTurn`
 
@@ -1044,6 +1074,7 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
 
 <!-- worklist:end -->
+
 
 
 

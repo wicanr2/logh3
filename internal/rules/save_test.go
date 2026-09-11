@@ -527,3 +527,31 @@ func TestReadWorkMonthFlag(t *testing.T) {
 		t.Error("長度不足應該回錯")
 	}
 }
+
+// TestWorkMusicSettings 釘住 `WORK.DT?` 的 `+0x1F`／`+0x20`／`+0x21`
+// （＝ `ds:8F33`／`8F34`／`8F35`，設定畫面上那三行，`docs/re/274`）。
+//
+// 三格出貨存檔的音源都是 1（ＦＭ）——出貨的 `MUSIC.INI` 把「ＭＩＤＩ
+// Ｉ／Ｆ」設成「無」，偵測不到 MPU-401 就退到 OPL。平時配樂 0／1／3
+// 各不相同，而**那三個號碼各自預測了一份既有收據裡實際被打開的檔案**
+// （`bgm_0f`／`bgm_1f`／`bgm_3f.mds`，`docs/re/274` §6）。
+func TestWorkMusicSettings(t *testing.T) {
+	for _, c := range []struct {
+		file                string
+		device, bgm, battle int
+	}{
+		{"WORK.DT8", 1, 0, 0},
+		{"WORK.DT9", 1, 1, 0},
+		{"WORK.DTA", 1, 3, 0},
+	} {
+		w, err := ReadWork(readOrig(t, c.file))
+		if err != nil {
+			t.Fatalf("%s：%v", c.file, err)
+		}
+		got := [3]int{w.MusicDevice, w.MusicBGM, w.MusicBattle}
+		want := [3]int{c.device, c.bgm, c.battle}
+		if got != want {
+			t.Errorf("%s 的三格音樂設定 ＝ %v，檔案裡是 %v", c.file, got, want)
+		}
+	}
+}

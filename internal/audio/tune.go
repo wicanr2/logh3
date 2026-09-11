@@ -24,7 +24,8 @@ type Settings struct {
 	Battle int
 }
 
-// DefaultSettings 是原版拿出貨的 `MUSIC.INI` 開新遊戲時的三格。
+// DefaultSettings 是原版拿出貨的 `MUSIC.INI` 開新遊戲時的三格，
+// 也就是 [game.New] 給的那一組。
 //
 // `Device` 是 1（ＦＭ）而不是 0：出貨的 `MUSIC.INI` 把「ＭＩＤＩ Ｉ／Ｆ」
 // 設成「無」（`+4` ＝ `FFFF`），偵測不到 MPU-401 就退到 OPL，於是原版
@@ -32,7 +33,7 @@ type Settings struct {
 //
 // `BGM`／`Battle` 都是 0：開新遊戲時原版把兩格清零
 // （簽章 `31 C0 A2 34 8F A2 35 8F CB`）。
-var DefaultSettings = Settings{Device: 1}
+var DefaultSettings = Settings{Device: game.MusicFM}
 
 // suffix 是檔名最後那個字元；關閉的時候回空字串。
 func (s Settings) suffix() string {

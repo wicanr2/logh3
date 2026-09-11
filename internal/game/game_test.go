@@ -1023,6 +1023,13 @@ func TestSaveSlotRoundTrip(t *testing.T) {
 	}
 	g.Key('\r')
 	g.Click(300, 302)
+	// 設定畫面那三格跟著存檔走：`WORK.DT9` 的 `+0x1F`／`+0x20`／`+0x21`
+	// ＝ 1／1／0 ＝ ＦＭ、英雄交響曲、全艦攻擊（`docs/re/274` §6）。
+	// 載進來要是這一組，存回去才寫得出同一份位元組。
+	if got, want := g.MusicSettings(),
+		(MusicSettings{Device: MusicFM, BGM: 1}); got != want {
+		t.Errorf("載入第 9 格之後音樂設定是 %+v，`WORK.DT9` 裡是 %+v", got, want)
+	}
 	dir := t.TempDir()
 	if err := g.SaveSlot(dir, 9); err != nil {
 		t.Fatal(err)

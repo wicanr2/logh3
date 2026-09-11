@@ -630,8 +630,8 @@
         "開頭動畫一律 `OPEN_M`（`OPEN.EXE` 兩個外皮都寫死 `'m'`，`OPEN_F` 是死素材）；",
         "結局照命令列第二個數字 `9 1`／`9 2` → `END_1`／`END_2`。",
         "主選單與防拷問答沒有配樂；戰術畫面沿用平時配樂，換戰鬥曲的是交戰演出。",
-        "remake 接在 `internal/audio.TuneFor`，目前用出廠預設；",
-        "**設定畫面的點擊與存檔載入還沒把那三格接進來**（見 `music-settings-wiring`）。"
+        "remake 接在 `internal/audio.TuneFor`，曲號從 `Game` 那三格讀；",
+        "**設定畫面的點擊與存檔載入已經接上**（`music-settings-wiring`、`docs/re/285`）。"
       ],
       "evidence": [
         "docs/re/274-which-screen-plays-which-tune.md",
@@ -650,33 +650,71 @@
     {
       "id": "music-settings-wiring",
       "legacy_id": null,
-      "status": "open",
+      "status": "done",
       "layer": "feature",
-      "title": "設定畫面的三格音樂設定還沒接進 remake",
+      "title": "設定畫面的三格音樂設定",
       "body": [
-        "對照表已經解出來也接上了（`music-screen-mapping`、`internal/audio.TuneFor`），",
-        "但 remake 一律用出廠預設：設定畫面上點「英雄交響曲」不會換曲、",
-        "載入存檔也不會把存檔裡那一首帶進來。原版那三格是",
-        "`ds:8F33`（音源）／`8F34`（平時配樂 0–5）／`8F35`（戰鬥配樂 0–2），",
-        "存檔位移 `WORK.DT?` 的 `+0x1F`／`+0x20`／`+0x21`（`docs/internals/17`、`30`）。",
-        "要接三處：設定畫面的十二個動作碼（碼 0–2 → 音源、3–8 減 3 → 平時、",
-        "9–11 減 9 → 戰鬥，前兩組改完會立刻試聽，第三組不會）、",
-        "`LoadSlot` 把三格讀進來、`SaveSlot` 寫回去。",
-        "**交戰演出那個狀態 remake 還沒有**，所以 `Settings.BattleTune` 現在沒有出口。"
+        "設定畫面上那三行點得動了：音源（ＭＩＤＩ／ＦＭ／關閉）、平時配樂六選一、",
+        "戰鬥配樂三選一，點完立刻換反白，值跟著存檔走。",
+        "熱區不是量畫面量出來的，是從原版資料段讀的——清單在 `ds:03D8`，22 筆，",
+        "換算出來的矩形與收據 `settings1e` 上量到的 20 個小框逐一吻合",
+        "（框左右各比熱區多 2 像素；`docs/re/285`）。",
+        "「ＭＩＤＩ」那一格點不下去：原版的可選旗標由開機偵測寫，出貨的 `MUSIC.INI`",
+        "沒有 MIDI 介面，所以原版連框都不畫，`HitTest` 也跳過它。",
+        "**試聽沒有另外做**：`cmd/gin3` 每幀問一次「現在該播哪一首」，而",
+        "`audio.TuneFor` 只看音源與平時配樂——原版「選音源／選平時曲會試聽、",
+        "選戰鬥曲不會」那個差別在這裡自然成立。",
+        "存檔：`WORK.DT?` 的 `+0x1F`／`+0x20`／`+0x21`（`rules.WorkFields`），",
+        "載入→存回第 9 格六個檔逐位元組相同。",
+        "**交戰演出那個狀態 remake 還沒有**，所以 `Settings.BattleTune` 仍然沒有出口：",
+        "戰鬥配樂存得下、讀得回，但還沒有畫面會去播它。",
+        "同一份清單上的訊息速度／動畫效果／動畫速度／結束／ＭＩＤＩ Ｉ／Ｆ 還沒接",
+        "（見 `settings-other-rows`）。"
       ],
       "evidence": [
+        "docs/re/285-settings-screen-hotspots.md",
         "docs/re/274-which-screen-plays-which-tune.md",
-        "docs/internals/data/music-mapping.json"
+        "docs/internals/23-hotspot-lists.md",
+        "docs/internals/30-save-format.md"
       ],
       "acceptance": "設定畫面改完馬上換曲、存檔存得下也讀得回來，三格的值與原版 WORK.DT? 的三個位元組一致。",
       "blocked_by": null,
       "verify": {
-        "kind": "present",
+        "kind": "go_test",
+        "pkg": "internal/game",
+        "run": "TestSettingsMusicClicks",
+        "note": "那支測試點三組選項各一次：值要換、畫面要立刻換、而且只在該換的那一組框裡變；再點一次不可選的「ＭＩＤＩ」，畫面一個位元組都不能動。存檔那一側由 `TestSaveSlotRoundTrip`（載入第 9 格再存回去，六個檔逐位元組相同）與 `internal/rules.TestWorkMusicSettings` 釘住。"
+      }
+    },
+    {
+      "id": "settings-other-rows",
+      "legacy_id": null,
+      "status": "open",
+      "layer": "feature",
+      "title": "設定畫面另外那幾行（訊息速度／動畫效果／動畫速度）還沒接",
+      "body": [
+        "設定畫面的熱區清單 22 筆已經全部讀出來進了規格（`docs/re/285`），",
+        "音樂那三組也接了，但另外幾行點下去沒有反應：",
+        "訊息速度的上下箭頭（動作碼 12／13，畫面上寫 `90`）、",
+        "動畫效果的開啟／關閉（14／15）、動畫速度的普通／快速／最快（16–18）、",
+        "「結束」（19）與「ＭＩＤＩ Ｉ／Ｆ」（22）。",
+        "**卡在同一件事**：那幾個值存在哪還沒定位——`WORK` 那 230 bytes 裡",
+        "還有大片未解的位元組，也可能根本不進存檔。找法與 `docs/re/285` 相同：",
+        "在動作碼那段分派上找寫位元組的指令（`A2 xx xx`）。",
+        "「結束」另外還缺一件事：關掉之後回哪一張沒有收據，remake 目前用右鍵關。"
+      ],
+      "evidence": [
+        "docs/re/285-settings-screen-hotspots.md"
+      ],
+      "acceptance": "那幾行點下去有反應，值的去向有反組譯證據（不是猜的），存得下讀得回。",
+      "blocked_by": "訊息速度／動畫效果／動畫速度三個值存在哪還沒定位。",
+      "verify": {
+        "kind": "absent",
         "paths": [
-          "cmd/gin3"
+          "internal/game"
         ],
-        "pattern": "設定畫面上的點擊與存檔載入還沒把",
-        "note": "`cmd/gin3/main.go` 的 `musicSettings` 旁邊那句自承還在就代表還沒接。接上之後那句會消失，同時 `musicSettings` 會改成從 Game 讀。"
+        "pattern": "msg-speed-inc",
+        "note": "接上去的時候產品程式碼一定會提到那個動作碼名（規格裡的 `action` 就叫 `msg-speed-inc`）。出現了 ＝ 做了。"
       }
     },
     {

@@ -3,7 +3,8 @@
 資料：[`data/unrest-at-load.json`](data/unrest-at-load.json)
 證據等級：檔案對應、槽位編號、`SAVEDATA.IDX` 版面、`PLANET`／`FLEET`
 與記憶體逐位元組相同 **confirmed**（[`docs/re/41`](../re/41-save-files-are-the-runtime-tables.md)）；
-`WORK.DT?` 只有三個欄位確認，`SHIP.DT?` **未解**。
+`WORK.DT?` 對上的欄位逐條列在下面那張表（每一條都附 `ds` 位址與出處），
+其餘位元組**未解**——寫回去一律照抄；`SHIP.DT?` **未解**。
 
 ## 一句話
 
@@ -56,6 +57,9 @@
 |---|---:|---|
 | +0x04 | 16 | 回合數（`ds:8F18`）|
 | +0x09 | 8 | 處理中的陣營（`ds:8F1D`）|
+| +0x1F | 8 | **音源**（`ds:8F33`）：0 ＝ MIDI（`_M`）、1 ＝ ＦＭ（`_F`）、2 ＝ 關閉。三格存檔都是 1——出貨的 `MUSIC.INI` 沒有 MIDI 介面（[`docs/re/274`](../re/274-which-screen-plays-which-tune.md)）|
+| +0x20 | 8 | **平時配樂**（`ds:8F34`）0–5 → `BGM_0`–`BGM_5`。三格存檔是 0／1／3，各自預測中那份存檔載入後實際打開的 `bgm_0f`／`bgm_1f`／`bgm_3f.mds` |
+| +0x21 | 8 | **戰鬥配樂**（`ds:8F35`）：0 → `BGM_6`、1 → `BGM_7`、2 ＝ 沿用平時那一首。三格存檔都是 0 |
 | +0x3E | 32 × 2 | 軍事費（`ds:8F52`）|
 | +0x46 | 32 × 2 | 下期船艦建造費（`ds:8F5A`）|
 | +0x4E | 32 × 2 | 原定軍事費（`ds:8F62`）|

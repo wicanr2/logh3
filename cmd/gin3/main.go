@@ -51,14 +51,19 @@ type app struct {
 // （純的、測得到；這個套件連結時要 ALSA，放不了測試），
 // 來源是 `docs/internals/17` §哪個畫面播哪一首 與 `docs/re/274`。
 //
-// 三格設定目前用原版的出廠預設：設定畫面上的點擊與存檔載入還沒把
-// `ds:8F33`／`8F34`／`8F35` 接進來，所以平時配樂固定是 `BGM_0F`。
+// 三格設定從遊戲狀態讀（設定畫面點了就換、存檔帶得走）。**試聽是這裡
+// 長出來的**：每一幀都問一次「現在該播哪一首」，換了就換曲——原版
+// 選完音源或平時曲會試聽、選戰鬥曲不會，正好對上 `TuneFor` 用得到
+// 哪幾格。
 func (a *app) tuneFor() string {
 	return audio.TuneFor(a.g.State(), a.g.Faction(), a.musicSettings())
 }
 
-// musicSettings 目前回出廠預設。接上設定畫面之後改成從遊戲狀態讀。
-func (a *app) musicSettings() audio.Settings { return audio.DefaultSettings }
+// musicSettings 把 `Game` 上那三格換成曲庫看得懂的樣子。
+func (a *app) musicSettings() audio.Settings {
+	m := a.g.MusicSettings()
+	return audio.Settings{Device: m.Device, BGM: m.BGM, Battle: m.Battle}
+}
 
 func (a *app) Update() error {
 	// 時間往前走一格。目前只有開頭動畫在用（一格 125.3 ms，

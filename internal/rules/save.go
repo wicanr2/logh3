@@ -40,6 +40,13 @@ const (
 	// 建造中的船艦（＝ ds:8F9C）：32 位元 × 七個艦種 × 陣營，
 	// 月底 `2B5F:001F` 交付的就是這一組（`docs/re/264`）。
 	workBuilding = 0x88
+	// 設定畫面上那三行音樂設定（＝ ds:8F33／8F34／8F35，`docs/re/274`）。
+	// 三格出貨存檔的 `+0x20` 分別是 0／1／3，與它們載入之後實際打開的
+	// `bgm_0f`／`bgm_1f`／`bgm_3f.mds` 逐一對上。
+	workMusicDevice = 0x1F // 音源：0 MIDI／1 ＦＭ／2 關閉
+	workMusicBGM    = 0x20 // 平時配樂 0–5
+	workMusicBattle = 0x21 // 戰鬥配樂：0／1，2 ＝ 沿用平時那一首
+
 	// 月底結算的一次性旗標（＝ ds:8FF4／8FF5，`docs/re/255`）。
 	workMonthFlag = 0xE0
 
@@ -224,6 +231,11 @@ type WorkFields struct {
 	// 月底把它整組交進首都行星與首都星域（`docs/spec/036`、`docs/re/264`）。
 	Building [2]Building
 
+	// MusicDevice／MusicBGM／MusicBattle 是設定畫面上那三行
+	// （`ds:8F33`／`8F34`／`8F35`，`docs/re/274`）。**不分陣營**，
+	// 一份存檔一組——它是玩家的偏好，不是局面的一部分。
+	MusicDevice, MusicBGM, MusicBattle int
+
 	// MonthFlag 是月底結算的一次性旗標（`ds:8FF4`／`ds:8FF5`）：主迴圈在
 	// `ds:8F18++` 之後把兩格都設成 1，`0654:0034` 做完就清掉自己那一格
 	// （`docs/re/255`）。
@@ -240,6 +252,9 @@ func ReadWork(w []byte) (WorkFields, error) {
 		return f, fmt.Errorf("WORK 只有 %d bytes，要 %d", len(w), WorkRecord)
 	}
 	f.Turn = int(w[workTurn]) | int(w[workTurn+1])<<8
+	f.MusicDevice = int(w[workMusicDevice])
+	f.MusicBGM = int(w[workMusicBGM])
+	f.MusicBattle = int(w[workMusicBattle])
 	for i := 0; i < 2; i++ {
 		f.Military[i] = u32(w, workMilitary+i*4)
 		f.TaxTotal[i] = u32(w, workTaxTotal+i*4)
@@ -530,6 +545,9 @@ func (s *Slot) Save(dir string, index int) error {
 	}
 	work := append([]byte(nil), s.Work...)
 	work[workTurn], work[workTurn+1] = byte(s.Turn), byte(s.Turn>>8)
+	work[workMusicDevice] = byte(s.MusicDevice)
+	work[workMusicBGM] = byte(s.MusicBGM)
+	work[workMusicBattle] = byte(s.MusicBattle)
 	for f := 0; f < 2; f++ {
 		put32(work, workMilitary+4*f, s.Military[f])
 		put32(work, workTaxTotal+4*f, s.TaxTotal[f])

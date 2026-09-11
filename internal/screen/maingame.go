@@ -60,6 +60,13 @@ type MainGameSpec struct {
 		X, Y, W, H int
 		Grid       []int  `json:"grid"`
 		Action     string `json:"action"`
+
+		// Disabled ＝ 原版那一筆的可選旗標（`+4`）是 0，命中測試直接跳過
+		// （`docs/internals/23`）。設定畫面的「ＭＩＤＩ」就是這種：出貨的
+		// `MUSIC.INI` 沒有 MIDI 介面，那一格點不下去、框也不畫
+		// （`docs/re/285`）。**零值是「可選」**——其餘畫面的規格裡沒有
+		// 這個欄位，不能反過來寫成 `Enabled`。
+		Disabled bool `json:"disabled"`
 	} `json:"hotspots"`
 	Mouse *struct {
 		X, Y int
@@ -332,6 +339,33 @@ func (w *GameWindow) BoxAt(x, y int) int {
 	return -1
 }
 
+// SetHotspotFill 把 (x,y,wd,ht) 這個熱區對應的小框換成另一個填色，
+// 回是否找到。
+//
+// 熱區與框的對應是量出來的：**框左右各比熱區多 2 像素、上下對齊**
+// （`docs/re/68`）；上下箭頭那種元件則與熱區一樣大（`docs/re/285`）。
+// 兩種都認，因為判準是「同一個 y 與高度、左右差 0 或 2」——設定畫面上
+// 20 個框逐一對得上，沒有第二種解。
+//
+// 找不到就什麼都不做：可選旗標是 0 的那一筆原版連框都不畫
+// （設定畫面的「ＭＩＤＩ」）。
+func (w *GameWindow) SetHotspotFill(x, y, wd, ht int, fill uint8) bool {
+	if w == nil {
+		return false
+	}
+	for i := range w.Boxes {
+		b := &w.Boxes[i]
+		if b.Y != y || b.H != ht {
+			continue
+		}
+		if (b.X == x-2 && b.W == wd+4) || (b.X == x && b.W == wd) {
+			b.Fill = fill
+			return true
+		}
+	}
+	return false
+}
+
 // SetHoverRow 指定這一次要把哪一列刷成反白；-1 ＝ 都不刷。
 func (w *GameWindow) SetHoverRow(row int) {
 	if w == nil || row < 0 {
@@ -565,8 +599,14 @@ func MainGameLayered(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces
 }
 
 // HitTest 回點在哪個熱區上的 action，沒點中回空字串。
+//
+// 可選旗標是 0 的那幾筆**當作不存在**（原版的命中測試就是跳過它們，
+// `docs/internals/23`）：點下去與點在空白處一樣，不是「點到但沒反應」。
 func (s *MainGameSpec) HitTest(x, y int) string {
 	for _, h := range s.Hotspots {
+		if h.Disabled {
+			continue
+		}
 		if x >= h.X && x < h.X+h.W && y >= h.Y && y < h.Y+h.H {
 			return h.Action
 		}

@@ -253,8 +253,15 @@ want quit-confirm && py tools/scripts/overlay_spec.py \
 
 # 遊戲設定：底層是戰略命令選單那一份（設定視窗把選單整個蓋住）。
 # 游標停在最後一次點擊的位置，要明寫。
-want settings && py tools/scripts/overlay_spec.py \
-  settings1e screen-cmd-menu screen-settings 160 41 463 399 560 145 "$SETTINGS_BOXES"
+#
+# 熱區要**接著**補回去：`overlay_spec.py` 一律把 `hotspots` 清成空陣列，
+# 而設定畫面那 22 筆是從執行期傾印的 `ds:03D8` 讀的（`docs/re/285`）。
+# 少跑第二步的話設定畫面又會變回點不下去的靜態畫面。
+if want settings; then
+  py tools/scripts/overlay_spec.py \
+    settings1e screen-cmd-menu screen-settings 160 41 463 399 560 145 "$SETTINGS_BOXES"
+  py tools/scripts/settings_hotspots.py
+fi
 
 # 月底的船艦接收報告。底層是命令階段主畫面，但右側面板的字整塊被清掉、
 # 只留「戰略模式處理中」那一行——所以要多量一塊額外文字區。
