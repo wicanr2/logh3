@@ -92,15 +92,17 @@ func (g *StarGraph) Postures(owner []int, fleets []Fleet) [32]RegionPosture {
 	return out
 }
 
-// 另外半邊：`056A:0468`（`docs/re/245`）。它與 `2703:0933` 平行，掃同樣
+// 另外半邊：`056A:0469`（`docs/re/245`）。它與 `2703:0933` 平行，掃同樣
 // 32 格，但先 `and 0E9h` 清 bit1｜bit2｜bit4 再重填——兩支只有 bit2 兩邊
 // 都寫，而且條件相同，所以不會打架。
 //
-// 執行時機量過了（收據 `flagpass`）：一次「實行」裡 `056A:0468`
-// 在 `#218118662`、`2703:08DE` 在 `#218904226`、回合計數器在 `#221187705`
-// 進位——**這一支在前，兩支都在回合遞增之前**。
+// 執行時機：`056A:0469` 是命令階段那一串 `056A:000C` 的最後一支
+// （`docs/re/295`），收據 `flagpass` 量到的是它前面 `056A:03E0` 的返回
+// `#218118662`（斷點當初下在 `0468`，那是 `03E0` 的 `retf`）、`2703:08DE`
+// 在 `#218904226`、回合計數器在 `#221187705` 進位——**這一支在前，兩支都在
+// 回合遞增之前**。
 
-// RegionOccupation 是 `056A:0468` 算出來的兩個位元。
+// RegionOccupation 是 `056A:0469` 算出來的兩個位元。
 //
 // **bit1 不在裡面**：它是叛亂，來自 `2703:1789`——非首都、非無主、該陣營
 // 在這一格沒有駐軍，再拿兩個 `亂數 % 400` 的和比一個由未安定度、情報專任
@@ -133,7 +135,7 @@ func ApplyOccupation(flags byte, o RegionOccupation) byte {
 	return flags&0xE9 | o.Bits()
 }
 
-// Occupations 跑一輪 32 格的 `056A:0468`。
+// Occupations 跑一輪 32 格的 `056A:0469`。
 func (g *StarGraph) Occupations(owner []int, fleets []Fleet) [32]RegionOccupation {
 	var count [32][2]int
 	for _, f := range fleets {

@@ -144,3 +144,8 @@ for 星域 i in 0..31:
 > 見 [`292`](292-rebellion-decision-and-effect.md)（含三份收據）。
 > 本篇「後半段還沒讀」那幾句到此為止；bit1 的現況以
 > [`docs/internals/22`](../internals/22-stellar-dt.md) 為準。
+
+> 2026-09-11 補：本篇的 `056A:0468` 是前一支 `056A:03E0` 的 `retf`，
+> 進入點是 **`056A:0469`**，呼叫點是 `056A:000C` 那一串的 `056A:005C`
+> （`9a 69 04 6a 05`），見 [`295`](295-region-morale-writers.md) 末節。
+> `flagpass` 那個斷點命中的是 `03E0` 的返回；先後順序的結論不變。

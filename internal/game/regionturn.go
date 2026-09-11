@@ -14,7 +14,7 @@ import (
 //	             2703:12EB(艦艇彙總)、2703:0DA1(未安定度)
 //	判勝負
 //
-// 另外還有一支 `056A:0468` 掃同樣 32 格，管 `+0x13` 的 bit1／bit2／bit4
+// 另外還有一支 `056A:0469` 掃同樣 32 格，管 `+0x13` 的 bit1／bit2／bit4
 // （`docs/re/245`）。收據 `flagpass` 量到它跑在 `2703:08DE` **之前**，
 // 兩支都在回合計數器遞增之前。
 //
@@ -76,7 +76,7 @@ func (g *Game) refreshRegionPosture() {
 	for i := range owner {
 		owner[i] = int(g.regionRecord(i)[regionOwnerOff])
 	}
-	// `056A:0468` 先跑（收據 `flagpass` 量到它在 `2703:08DE` 之前，
+	// `056A:0469` 先跑（收據 `flagpass` 量到它在 `2703:08DE` 之前，
 	// 兩支都在回合計數器遞增之前，`docs/re/245`）。
 	occ := g.res.Graph.Occupations(owner, g.fleets)
 	for i := 0; i < rules.RegionCount; i++ {

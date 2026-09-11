@@ -314,3 +314,7 @@ poke 成 **4**（`-poke lin:60426@211000000=04`），帝國那邊的門檻掉到
     e32fe387292972410c3dfcde125a38a3772b7215ed835b48ad820fc9def3676a  rbx292d_reg_pre.bin（星域表 32×126）
     15e4aaf72887e07c34e50529242d38c733368cfcf0f89a6f5bba3c17ad47b9d2  rbx292d_reg_post.bin
     2aafb59c4204ff42352abe13011a175acbd588e1eb0b5449cab7c4f030d3510d  rbx292e_pre.bin（#218,300,000 1 MB）
+
+> 2026-09-11 補：本篇的 `056A:0468` 應為 `056A:0469`（`0468` 是前一支的 `retf`），
+> 見 [`295`](295-region-morale-writers.md) 末節；`#218,119,706` 量到的是
+> `056A:03E0` 的返回，先後順序的結論不變。

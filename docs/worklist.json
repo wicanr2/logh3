@@ -1198,7 +1198,11 @@
       "body": [
         "結算那一段讀完了（`0x1238D` 的呼叫者把 `ds:8F48` 設起來，緊接著處理費沙），",
         "**觸發條件四種掃法 0 命中**——不在傾印裡。",
-        "不擋主流程：AI 的一般回合不看它。"
+        "不擋主流程：AI 的一般回合不看它。",
+        "",
+        "包裝裡的第二支 `1213:03F5` 讀出來了（`docs/re/295`）：費沙的擁有者是人類座位時，",
+        "那一方其餘每一格的行星經濟力扣 `ds:328E[回合 ÷ 100]`%（50／40／30／20／10，",
+        "回合 500–599 越界讀到 12），民心一律設成 100；電腦方拿到費沙不受罰。"
       ],
       "evidence": [
         "docs/spec/029-strategic-ai-turn.md",
@@ -1215,21 +1219,37 @@
     },
     {
       "id": "region-morale-7c",
-      "status": "open",
+      "status": "done",
       "layer": "re",
-      "title": "民心 `+0x7C` 的變化沒解",
+      "title": "民心 `+0x7C` 怎麼變化：每回合往擁有者的目標值走一格",
       "body": [
-        "未安定度（`+0x7D`）整條算式解完並對拍過了，**民心怎麼變還沒解**；",
-        "796 年 1 月那 15 份收據的民心是 `LoadRegionRecords` 用量到的那一組填的。"
+        "四個寫入者都有反組譯證據（[`docs/re/295`](docs/re/295-region-morale-writers.md)）：",
+        "新遊戲 `2703:0000` 照擁有者設 0／200／100；**每按一次「實行」`056A:0AA5`**",
+        "**往擁有者的目標值（0／200／100）走一格**，擁有者讀星域記錄的 `+0x12`，",
+        "排在扣維持費之後、艦隊移動之前、同一回合 AI 重算稅率之後；",
+        "費沙事件 `1213:03F5` 在費沙擁有者是人類座位時把那一方其餘星域設成 100；",
+        "讀存檔 `332E:04BB` 整張照檔案。易主的星域因此要一格一回合慢慢歸心",
+        "（0 → 200 要 200 回合），那段期間稅率被 `m` 壓低、未安定度的 `f2` 偏高。",
+        "",
+        "收據 `mrx295`（12 格民心改掉跑三回合）、`mrx295d`（4 格擁有者改掉、行星不動）、",
+        "`mrx295f`（回合 9 起跨過月底）共 192 格逐格相同。remake 是",
+        "`rules.DriftRegionMorale`，接進 `advanceTurn`（[`docs/spec/040`](docs/spec/040-region-morale-drift.md)）。",
+        "",
+        "費沙事件那一個寫入者 remake 還沒有，跟著 `phezzan-event-trigger` 走（觸發點沒找到）。"
       ],
       "evidence": [
-        "docs/re/43-unrest-full-disassembly.md",
+        "docs/re/295-region-morale-writers.md",
+        "docs/spec/040-region-morale-drift.md",
         "docs/internals/22-stellar-dt.md"
       ],
       "acceptance": "民心由規則算出來，跨月之後與收據逐格相同。",
       "verify": {
-        "kind": "manual",
-        "note": "解出來會多一支 rules 的算式（大概叫 RegionMorale 之類），到時綁那個函式名；現在程式裡填的是量到的常數，沒有自承可綁。"
+        "kind": "absent",
+        "paths": [
+          "internal/game/game.go"
+        ],
+        "pattern": "DriftRegionMorale",
+        "note": "綁的是 `advanceTurn` 裡的呼叫點，不是 rules 的定義：規則本身由 `TestDriftRegionMoraleMatchesReceipts` 對收據驗，那支測試不會因為呼叫點被拆掉而轉紅。"
       }
     },
     {
@@ -3951,12 +3971,12 @@
       "id": "s9-12",
       "status": "done",
       "layer": "matrix",
-      "title": "星域旗標的執行順序（056A:0468 → 2703:08DE → 回合計數器）",
+      "title": "星域旗標的執行順序（056A:0469 → 2703:08DE → 回合計數器）",
       "section": "s9",
       "cells": {
         "狀態": "通過",
-        "規則": "星域旗標的執行順序（`056A:0468` → `2703:08DE` → 回合計數器）",
-        "證據": "收據 `flagpass`：`-regs-at` 抓到 `#218118662` / `#218904226` / `#221187705`，[`docs/re/245`](docs/re/245-region-flag-bits-one-and-four.md)。`+0x13` bit4（單方面占據）已實作（`rules.Occupations`）；bit1 只清不設（`2703:1789` 後半未讀）"
+        "規則": "星域旗標的執行順序（`056A:0469` → `2703:08DE` → 回合計數器）",
+        "證據": "收據 `flagpass`：`-regs-at` 抓到 `#218118662` / `#218904226` / `#221187705`，[`docs/re/245`](docs/re/245-region-flag-bits-one-and-four.md)。`+0x13` bit4（單方面占據）已實作（`rules.Occupations`）；bit1 只清不設（`2703:1789` 後半未讀）。進入點是 `056A:0469`：`flagpass` 斷的 `056A:0468` 是前一支 `056A:03E0` 的 `retf`，那一支每回合也只跑一次，先後結論不變（[`docs/re/295`](docs/re/295-region-morale-writers.md) 末節）"
       },
       "verify": {
         "kind": "manual",
@@ -4219,6 +4239,27 @@
       "verify": {
         "kind": "manual",
         "note": "這一列的完成度由它自己的證據欄撐著，沒有可綁的自動訊號"
+      }
+    },
+    {
+      "id": "s9-29",
+      "status": "done",
+      "layer": "matrix",
+      "title": "民心每回合往擁有者的目標值走一格（056A:0AA5）",
+      "section": "s9",
+      "cells": {
+        "狀態": "**通過**（三份收據 192 格逐格相同，其中一份跨過月底）",
+        "規則": "民心每回合往擁有者的目標值走一格（`056A:0AA5`）",
+        "證據": "[`docs/re/295`](docs/re/295-region-morale-writers.md)、[`docs/spec/040`](docs/spec/040-region-morale-drift.md) CONFORMED、`rules.DriftRegionMorale`。收據 `mrx295`（12 格民心改成偏離目標，三回合 96 格）、`mrx295d`（4 格擁有者改掉、行星不動，32 格——擁有者讀記錄的 `+0x12`）、`mrx295f`（回合 9 → 10 → 11，月底兩個座位都結算完，64 格）；`TestDriftRegionMoraleMatchesReceipts` 拿前一份跑一次、下一份逐格相同（會動的 40 格）。同一收據順帶證了 AI 的稅率重算在它之前（17 號星域）"
+      },
+      "verify": {
+        "kind": "receipt",
+        "batch": "mrx295f",
+        "files": {
+          "mrx295f_r0p.bin": "7139f13fd5203894c0afe1c5374534487771664f1cfde3999b3ace91998f983d",
+          "mrx295f_r1.bin": "09a9138fa274e8d2d8cc9e4952827d1a337dffddc8e80c4f584dc82387000ace",
+          "mrx295f_r2.bin": "7dec69d294e98d0c8a6e9d19303b37b744f43d8865f64a3af949c85645570c67"
+        }
       }
     }
   ]

@@ -758,6 +758,12 @@ func (g *Game) advanceTurn() {
 		g.military[f] -= up
 		g.paidUpkeep[f] += up // ds:8F7A，月底歸零
 	}
+	// 民心往擁有者的目標值走一格（原版 `056A:0AA5`，`docs/spec/040`）：
+	// 同一串裡緊接在扣維持費之後、艦隊移動之前。擁有者讀星域記錄的
+	// `+0x12`，這時還是上一個回合尾巴重算完的值。
+	if g.res != nil {
+		rules.DriftRegionMorale(g.res.Stellar)
+	}
 	// 有命令的艦隊往目的地走一格（`docs/re/77`、`internal/rules.Advance`）。
 	// **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
 	if g.res.Graph != nil {

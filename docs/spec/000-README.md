@@ -51,3 +51,5 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`036`](036-ship-delivery.md) | 月底交付的船艦放到哪裡 | READY |
 | [`037`](037-unit-price-from-staff.md) | 船艦單價由軍事專任參謀決定 | CONFORMED |
 | [`038`](038-monthly-growth-and-tax-rate.md) | 月底重算成長率與稅率 | CONFORMED |
+| [`039`](039-region-supply-pool.md) | 星域的飛彈／艦載機存量每回合回充 | DRAFT |
+| [`040`](040-region-morale-drift.md) | 民心每回合往擁有者的目標值走一格 | CONFORMED |

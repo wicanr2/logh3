@@ -115,7 +115,7 @@ func TestRecomputeRegionsKeepsOtherFlagBits(t *testing.T) {
 }
 
 // bit4 ＝ 單方面占據：艦隊停在不屬於它的星域、而對方沒有艦隊。
-// 待在自家地盤不算（`056A:0468`，`docs/re/245`）。
+// 待在自家地盤不算（`056A:0469`，`docs/re/245`）。
 func TestRecomputeRegionsMarksOccupation(t *testing.T) {
 	g := newRegionTurnGame(t) // 0–15 帝國、16–31 同盟
 	// 帝國一支停在同盟的星域 20 → bit4；停在自己的星域 5 → 不設。

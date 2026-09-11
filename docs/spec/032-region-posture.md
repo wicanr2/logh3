@@ -66,7 +66,8 @@ bit0 的門檻是 `0x400`（`k >= 1`）。**別跟 `2B99:0392` 的 `0x800` 搞�
 重算星域擁有者之後**，把 32 格的 `+0x13`／`+0x24` 寫回 `g.res.Stellar`
 （整條鏈見 [`docs/spec/033`](033-region-ownership-chain.md)）。
 
-順序照量到的（收據 `flagpass`，`docs/re/245`）：`056A:0468`（bit1／bit2／
-bit4，`rules.Occupations`）先跑，再跑這一支，最後才是回合計數器進位。
+順序照量到的（收據 `flagpass`，`docs/re/245`）：`056A:0469`（bit1／bit2／
+bit4，`rules.Occupations`；進入點見 `docs/re/295` 末節）先跑，再跑這一支，
+最後才是回合計數器進位。
 
 `advanceTurn` 遇到戰鬥會提早 `return`，那條路徑跳過這一段——見 `033` 末節。

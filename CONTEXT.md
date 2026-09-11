@@ -244,6 +244,7 @@
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
+| `+0x13` bit1／bit2／bit4 那一圈的進入點是 `056A:0468`，呼叫點靜態掃不到（走模組管理器的間接向量） | `docs/re/245`、`docs/re/292`、`docs/internals/22`、`internal/rules/regionposture.go`、`internal/game/regionturn.go` 的註解、矩陣 `s9-12` | `docs/re/295` 末節：`056A:000C` 那一串的第九支是 `9a 69 04 6a 05`，進入點 **`056A:0469`**；線性 `0x05B08`（`0468`）是前一支 `056A:03E0`（艦隊移動）的 `retf`。掃不到呼叫點是因為拿 `0468` 去掃。`flagpass`／`rbx292c` 的 `-regs-at 056A:0468` 命中的是 `03E0` 的返回，那一支每回合也只跑一次，所以「一次」「在 `2703:08DE` 之前」「在 `0374:0556` 之前」都還成立，只是步數早了 `2703:051D`＋`2703:0853` 那一段。`docs/internals/22`、矩陣 `s9-12` 與 Go 註解已改；`docs/re/` 是調查紀錄，照規矩不改寫 |
 | `1C03:0361` 是「慢慢轉向 `+0x4C`」的邏輯 | `docs/re/102` 末段、`internal/rules/battle.go` 的註解 | `docs/re/294`：`1C03:0361` 是與 `1C03:0185` 並列的實行常式，由 `1C03:015C` 依 `+0x48` bit4 選——**短程平移**，還沒到時不轉身、每一步重新瞄準目的地直線前進。bit4 由 `2583:052C` 在下命令時設（距離 < 行程 ÷ 3 ＋ 4.0）。「到了才轉向 `+0x4C`」是兩支共同的抵達分支，`docs/re/122` 早就讀到 |
 | 艦隊 `+0x49` bit0 是「這一輪到位了」 | `docs/re/95`、`docs/internals/33` | `docs/re/294`：唯一的設定者 `1C03:021E` 在 `1C03:0185` 還沒到的那一段、`1C03:0524` 回 1 之後；抵達分支與 `1C03:0361` 都不設。bit0 ＝ 「這一次實行轉過身」，讀者 `1C03:093D` 拿它把跟隊形走的分隊步長從 8 改成 16 |
 | 假名／西里爾那 302 格的字碼對應未確認；**已排除**「以 Big5 `C6A1` 為起點連續存放」（依該假說算出的 `ジ` 落在西里爾大寫）。另：全形符號區有 471 格（`A140`–`A3FE`）；擴充區的內容是「…→框線→圈號→`㊣No.正`」 | `docs/internals/06`、`data/font-graph-img.json` | `docs/re/291`：`C6A1` 起連續存放是對的，錯的是把 `C6A1` 對到 `0x4632`——正確的是 `C6A1` → 16080，`0x4632` 是 `C6E0`，差 63 格，所以 `ジ` 才會算到序號 176（`Ж`）而不是 113。基準常數直接讀自 `ENDING.EXE` 未打包的字型常式（`sub ax,25A2h` ＋ `add ax,3ED0h`），再拿版權行 13 個假名碼位做往返驗證。連帶：符號區只有 **408** 格（上界 `A3BF`，出自同一支常式的 `cmp ax,025Dh`），多出來的 63 格是擴充區的 `C6A1`–`C6DF`（圈號、羅馬數字、部首）；擴充區裡**沒有框線字元**，末尾三格是 `㈱№℡`。仍未解：`C8A5`–`C8CC` 那 40 格合字代表什麼字 |
@@ -341,7 +342,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 28 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 27 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -766,24 +767,15 @@ remake 的回合處理也要照這個時序。
 **觸發條件四種掃法 0 命中**——不在傾印裡。
 不擋主流程：AI 的一般回合不看它。
 
+包裝裡的第二支 `1213:03F5` 讀出來了（`docs/re/295`）：費沙的擁有者是人類座位時，
+那一方其餘每一格的行星經濟力扣 `ds:328E[回合 ÷ 100]`%（50／40／30／20／10，
+回合 500–599 越界讀到 12），民心一律設成 100；電腦方拿到費沙不受罰。
+
 **做完的判準**：觸發條件查出來，`docs/spec/029` 那一列不再標「未解」。
 
 **證據**：[`docs/spec/029-strategic-ai-turn.md`](docs/spec/029-strategic-ai-turn.md)、[`docs/re/193-phezzan-trigger-not-in-dump.md`](docs/re/193-phezzan-trigger-not-in-dump.md)
 
 **核實**：`docs/spec/029-strategic-ai-turn.md` 裡還找得到 `費沙事件的\*\*觸發條件\*\* \| \*\*未解\*\*`（自承還在 ＝ 還沒做）
-
-#### region-morale-7c — 民心 `+0x7C` 的變化沒解
-
-*re（逆向：機制還沒讀出來）*
-
-未安定度（`+0x7D`）整條算式解完並對拍過了，**民心怎麼變還沒解**；
-796 年 1 月那 15 份收據的民心是 `LoadRegionRecords` 用量到的那一組填的。
-
-**做完的判準**：民心由規則算出來，跨月之後與收據逐格相同。
-
-**證據**：[`docs/re/43-unrest-full-disassembly.md`](docs/re/43-unrest-full-disassembly.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)
-
-**核實**：要人判——解出來會多一支 rules 的算式（大概叫 RegionMorale 之類），到時綁那個函式名；現在程式裡填的是量到的常數，沒有自承可綁。
 
 #### region-supply-pool-missing — 飛彈／艦載機存量的每回合回充 remake 沒有
 
@@ -845,7 +837,7 @@ remake 的回合處理也要照這個時序。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-16 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+17 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1147,6 +1139,30 @@ remake 端還沒接，另立一條 `rebellion-rule-in-remake`。
 **證據**：[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/re/245-region-flag-bits-one-and-four.md`](docs/re/245-region-flag-bits-one-and-four.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)
 
 **核實**：`docs/internals/22-stellar-dt.md` 裡出現 `2703:1908` 就是做好了
+
+#### region-morale-7c — 民心 `+0x7C` 怎麼變化：每回合往擁有者的目標值走一格
+
+*re（逆向：機制還沒讀出來）*
+
+四個寫入者都有反組譯證據（[`docs/re/295`](docs/re/295-region-morale-writers.md)）：
+新遊戲 `2703:0000` 照擁有者設 0／200／100；**每按一次「實行」`056A:0AA5`**
+**往擁有者的目標值（0／200／100）走一格**，擁有者讀星域記錄的 `+0x12`，
+排在扣維持費之後、艦隊移動之前、同一回合 AI 重算稅率之後；
+費沙事件 `1213:03F5` 在費沙擁有者是人類座位時把那一方其餘星域設成 100；
+讀存檔 `332E:04BB` 整張照檔案。易主的星域因此要一格一回合慢慢歸心
+（0 → 200 要 200 回合），那段期間稅率被 `m` 壓低、未安定度的 `f2` 偏高。
+
+收據 `mrx295`（12 格民心改掉跑三回合）、`mrx295d`（4 格擁有者改掉、行星不動）、
+`mrx295f`（回合 9 起跨過月底）共 192 格逐格相同。remake 是
+`rules.DriftRegionMorale`，接進 `advanceTurn`（[`docs/spec/040`](docs/spec/040-region-morale-drift.md)）。
+
+費沙事件那一個寫入者 remake 還沒有，跟著 `phezzan-event-trigger` 走（觸發點沒找到）。
+
+**做完的判準**：民心由規則算出來，跨月之後與收據逐格相同。
+
+**證據**：[`docs/re/295-region-morale-writers.md`](docs/re/295-region-morale-writers.md)、[`docs/spec/040-region-morale-drift.md`](docs/spec/040-region-morale-drift.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)
+
+**核實**：`internal/game/game.go` 裡出現 `DriftRegionMorale` 就是做好了
 
 #### fleet-record-fields — 艦隊記錄 122 bytes 逐格都有交代了
 
