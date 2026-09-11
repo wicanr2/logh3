@@ -78,3 +78,23 @@ func TestMergeIssuesPrefersTheIssue(t *testing.T) {
 		t.Errorf("合併結果不對：%+v", doc.Items)
 	}
 }
+
+// 佔位合併之後要**原地**換成 issue 的內容：矩陣列的順序照 JSON 排，
+// 搬家不能讓那幾列掉到章節尾巴。
+func TestStubIsReplacedInPlace(t *testing.T) {
+	a := Item{ID: "a", Status: StatusDone, Layer: "matrix", Section: "s1", Title: "甲", Verify: Verify{Kind: "manual"}}
+	mid := Item{ID: "b", Status: StatusOpen, Layer: "matrix", Section: "s1", Title: "乙", Verify: Verify{Kind: "manual"}}
+	c := Item{ID: "c", Status: StatusDone, Layer: "matrix", Section: "s1", Title: "丙", Verify: Verify{Kind: "manual"}}
+	doc := &Doc{Items: []Item{a, Stub(&mid, 12), c}}
+	body, _ := IssueBody(&mid)
+	rec := IssueRecord{Number: 12, Title: "乙", Body: body, State: "OPEN"}
+	rec.Labels = append(rec.Labels, struct {
+		Name string `json:"name"`
+	}{labelAll})
+	if err := MergeIssues(doc, []IssueRecord{rec}); err != nil {
+		t.Fatal(err)
+	}
+	if len(doc.Items) != 3 || doc.Items[1].ID != "b" || doc.Items[1].Title != "乙" || doc.Items[1].Issue != 12 {
+		t.Errorf("佔位沒有被原地換掉：%+v", doc.Items)
+	}
+}

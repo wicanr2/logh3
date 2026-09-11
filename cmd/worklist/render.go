@@ -13,6 +13,9 @@ const (
 	markEnd   = "<!-- worklist:end -->"
 )
 
+// issueURLBase 是 issue 連結的前綴。repo 改名時改這一行。
+const issueURLBase = "https://github.com/wicanr2/logh3/issues"
+
 // Render 把權威檔畫成 markdown。
 //
 // **未完成的排在前面**：worklist 要回答的是「還剩什麼」，不是「做過什麼」。
@@ -36,8 +39,10 @@ func Render(doc *Doc) (string, error) {
 
 	var b strings.Builder
 	b.WriteString(markBegin + "\n\n")
-	fmt.Fprintf(&b, "權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 %d 條**。\n",
-		len(open))
+	fmt.Fprintf(&b, "權威是 [GitHub issue（label `worklist`）](%s?q=is%%3Aopen+label%%3Aworklist)：**還剩 %d 條**。\n",
+		issueURLBase, len(open))
+	b.WriteString("搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；\n")
+	b.WriteString("這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。\n")
 	b.WriteString("每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答\n")
 	b.WriteString("「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。\n\n")
 	if doc.Note != "" {
@@ -69,6 +74,9 @@ func renderItem(b *strings.Builder, doc *Doc, it *Item) {
 	fmt.Fprintf(b, "#### %s — %s\n\n", it.ID, it.Title)
 
 	var tags []string
+	if it.Issue > 0 {
+		tags = append(tags, fmt.Sprintf("[#%d](%s/%d)", it.Issue, issueURLBase, it.Issue))
+	}
 	if it.Legacy != "" {
 		tags = append(tags, "原編號 "+it.Legacy)
 	}

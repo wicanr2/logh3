@@ -33,6 +33,21 @@ import (
 // issuesPath 是主機抓下來的快照（gitignore）。
 const issuesPath = "workplace/issues.json"
 
+// stubTitlePrefix 是佔位條目的標題開頭。**佔位不抄真正的標題**——抄了就是
+// 第二份會過期的內容；沒有快照時看到「見 GitHub #N」反而是對的提示。
+const stubTitlePrefix = "（見 GitHub #"
+
+// Stub 回一條的佔位：只留 id、層、章節、issue 編號。
+func Stub(it *Item, number int) Item {
+	return Item{
+		ID: it.ID, Legacy: it.Legacy, Status: it.Status, Layer: it.Layer, Section: it.Section,
+		Title: fmt.Sprintf("%s%d）", stubTitlePrefix, number),
+		Issue: number,
+		Verify: Verify{Kind: "manual",
+			Note: fmt.Sprintf("權威在 GitHub issue #%d；先跑 tools/issues_snapshot.sh 抓快照才核實得到", number)},
+	}
+}
+
 const (
 	issueMarkerPrefix = "<!-- worklist:id="
 	issueMarkerSuffix = " -->"
@@ -208,8 +223,9 @@ func MergeIssues(doc *Doc, recs []IssueRecord) error {
 			errs = append(errs, err.Error())
 			continue
 		}
+		it.Issue = rec.Number
 		if i, ok := idx[it.ID]; ok {
-			doc.Items[i] = it
+			doc.Items[i] = it // 原地替換：佔位的位置就是這一條在矩陣裡的順序
 		} else {
 			idx[it.ID] = len(doc.Items)
 			doc.Items = append(doc.Items, it)
@@ -261,8 +277,8 @@ func ExportOpen(doc *Doc) ([]exportIssue, error) {
 	var out []exportIssue
 	for i := range doc.Items {
 		it := &doc.Items[i]
-		if it.Status != StatusOpen {
-			continue
+		if it.Status != StatusOpen || it.Issue > 0 {
+			continue // 做完的不搬；已經是佔位的代表 issue 早就開了
 		}
 		body, err := IssueBody(it)
 		if err != nil {
@@ -271,4 +287,49 @@ func ExportOpen(doc *Doc) ([]exportIssue, error) {
 		out = append(out, exportIssue{ID: it.ID, Title: it.Title, Body: body, Labels: IssueLabels(it)})
 	}
 	return out, nil
+}
+
+// StubMigrated 把 JSON 裡**已經開成 issue 的條目**換成佔位，寫回 path。
+//
+// 只看 JSON 本身與快照裡的 id → 編號，**不做合併**——合併後的清單是
+// issue 的內容，寫回去就等於把 GitHub 上的東西抄一份進 repo，又回到
+// 兩份各自過期的老問題。
+func StubMigrated(path string, recs []IssueRecord) (int, error) {
+	doc, err := Load(path)
+	if err != nil {
+		return 0, err
+	}
+	num := map[string]int{}
+	for _, rec := range recs {
+		if !hasLabel(rec, labelAll) {
+			continue
+		}
+		it, err := ParseIssue(rec)
+		if err != nil {
+			return 0, err
+		}
+		num[it.ID] = rec.Number
+	}
+	n := 0
+	for i := range doc.Items {
+		it := &doc.Items[i]
+		if it.Issue > 0 {
+			continue
+		}
+		if no, ok := num[it.ID]; ok {
+			*it = Stub(it, no)
+			n++
+		}
+	}
+	if n == 0 {
+		return 0, nil
+	}
+	var b strings.Builder
+	enc := json.NewEncoder(&b)
+	enc.SetEscapeHTML(false) // 內文有 `<`、`>`、`&`，預設會被寫成 \u003c
+	enc.SetIndent("", "  ")
+	if err := enc.Encode(doc); err != nil {
+		return 0, err
+	}
+	return n, os.WriteFile(path, []byte(b.String()), 0o644)
 }

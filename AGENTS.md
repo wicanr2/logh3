@@ -37,10 +37,14 @@ MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分�
 
 ## 開工順序與目前真相
 
-1. 先跑 `tools/go.sh run ./cmd/worklist verify`，再讀 `CONTEXT.md` 的「現況一覽」
-   與「已被推翻的斷言」。**還剩什麼的權威是 `docs/worklist.json`**，不是任何一段
-   散文——`verify` 會逐條回答「這一條的斷言還成立嗎」，報「⚠ 斷言不成立」就是
-   清單與現況對不上（做好了沒改，或做好的東西壞了），**先處理那個再開工**。
+1. 先在主機跑 `tools/issues_snapshot.sh`（抓 GitHub issue 的快照），再跑
+   `tools/go.sh run ./cmd/worklist verify`，然後讀 `CONTEXT.md` 的「現況一覽」
+   與「已被推翻的斷言」。**還剩什麼的權威是 GitHub 上掛 `worklist` label 的
+   issue**（open ＝ 還沒做、closed ＝ 做完了），不是任何一段散文——`verify` 會
+   逐條回答「這一條的斷言還成立嗎」，報「⚠ 斷言不成立」就是清單與現況對不上
+   （做好了沒關，或做好的東西壞了），**先處理那個再開工**。
+   ⚠ 沒抓快照就跑 `verify`，工具只看得到搬移前做完的歷史，會印一行警告
+   ——**那時候的「0 條斷言不成立」不代表任何事**。
 2. 再依任務讀 `docs/` 下一份直接相關的規格或 `docs/playtest/` 證據；不要掃完整個
    `workplace/` 或大型知識庫。
 3. 開工前執行 `git status --short`，保留使用者既有修改，不覆蓋不相關檔案。
@@ -271,11 +275,15 @@ direct-entry 能開畫面，都不能單獨標為同狀態對拍完成。
   兩邊都要寫：`docs/re/` 記怎麼查到的，`docs/internals/` 記查到了什麼。
   段值與線性位址不穩定，`docs/internals/` 一律用結構位移與位元組簽章
   （見 `docs/internals/00-README.md`）。
-- **`docs/worklist.json` 是「還剩什麼」與完成度的權威**，兩份 markdown 都由它產生：
-  `CONTEXT.md` 的 worklist 一節走 `render -w`（標記之間不要手改）、
-  **整份 `VERIFICATION-MATRIX.md` 走 `render-matrix -w`**（整份都不要手改）。
-  改一件事只改 JSON 一處，兩份跟著出——以前改一條規則要同時改 worklist、
-  矩陣那一列與 README，三處各自會過期。
+- **未完成項的權威是 GitHub issue（label `worklist`）**；`docs/worklist.json`
+  只留搬移（2026-09-11）之前就做完的那一批，當歷史與回歸偵測。兩份 markdown
+  都由「JSON ＋ issue 快照」合併產生：`CONTEXT.md` 的 worklist 一節走
+  `render -w`（標記之間不要手改）、**整份 `VERIFICATION-MATRIX.md` 走
+  `render-matrix -w`**（整份都不要手改）。產生之前先跑 `tools/issues_snapshot.sh`。
+  **issue 本文的格式是資料**：開頭的 `<!-- worklist:id=… -->`、「### 判準」
+  「### 卡在」「### 證據」三個標題、尾巴那個「機器核對」JSON 區塊都是解析的
+  錨點（`cmd/worklist/issues.go`）。在 GitHub 上只改內容、不改標題；新條目照
+  既有 issue 的格式開（或先加進 JSON 再跑 `tools/issues_migrate.sh --apply`）。
   `WORKLOG.md` 是唯一流水帳；`CONTEXT.md` 其餘部分是目前真相；
   `VERIFICATION-MATRIX.md` 是完成度唯一數字來源；逆向證據放 `docs/re/`，對拍收據放
   `docs/playtest/`，規格放 `docs/spec/`。更早的逆向歷程（舊 worklist 那 65 條的原文）
@@ -286,8 +294,12 @@ direct-entry 能開畫面，都不能單獨標為同狀態對拍完成。
   `manual`。**沒有訊號就標 `manual` 並在 `note` 寫明將來接上時該綁什麼**——
   會誤判的 verify 比沒有 verify 更糟，它給人「有在看」的假象。
   `verify` **只看產品程式碼，不掃測試檔**：測試本來就會提到還沒接上的東西。
-- **做完一件事的收尾是改 `docs/worklist.json`，不是在 markdown 打勾**——
-  打勾的那一份下次會被 `render` 蓋掉。改完跑一次 `verify` 確認斷言與現況對上。
+- **做完一件事的收尾是關掉那張 issue**，不是在 markdown 打勾——打勾的那一份
+  下次會被 `render` 蓋掉。關之前先把本文的機器核對區塊改成「做完了」的訊號
+  （例如 `present` 自承 → `absent` 函式名，或 `go_test`），關完重抓快照、
+  跑一次 `verify` 確認斷言與現況對上。
+- **subagent 不直接改 GitHub issue。** 開、改、關 issue 是對外動作，由主 session
+  做；subagent 在回報裡寫明「哪一條做完了、verify 該換成什麼」。
 - 對已宣稱通過的畫面新增證據時，更新原有條目；不要另建第二份互相競爭的狀態表。
 - 正式交付只認 `dist-all/<版本>/{full,release,promo}/` 結構（建立後適用）；含原版
   素材的完整版只能留在本機或授權的私有位置。

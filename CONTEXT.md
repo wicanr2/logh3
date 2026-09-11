@@ -351,7 +351,9 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 30 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 30 條**。
+搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
+這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -361,7 +363,7 @@
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
 
-*原編號 4z · decision（取捨：等使用者裁決）*
+*[#1](https://github.com/wicanr2/logh3/issues/1) · 原編號 4z · decision（取捨：等使用者裁決）*
 
 格 0–348 **已經逐位元組對上原版**（`docs/re/283`：48 個時點的 640×350 色號陣列，
 格 0–348 抽的 41 個每一個都是 224,000 bytes 全部相同）。先前記的「第 1–116 格
@@ -393,7 +395,7 @@
 
 #### s3datamem-rerecord — 收據 s3datamem 要重錄（原本那份的旗標在錄製時就壞了）
 
-*parity（對拍：要與原版逐位元組相同）*
+*[#2](https://github.com/wicanr2/logh3/issues/2) · parity（對拍：要與原版逐位元組相同）*
 
 原收據的 `-clicks` 值裡混進了整行旗標的複本（空白被換成 `x`），
 所以那份畫面**沒有任何一組旗標能重現**，已經刪掉（2026-09-11）。
@@ -415,7 +417,7 @@
 
 #### oracle-runaway-after-copy-protection — 收據要在 logh3-oracle 上重錄（新舊執行器的時序不同）
 
-*parity（對拍：要與原版逐位元組相同）*
+*[#3](https://github.com/wicanr2/logh3/issues/3) · parity（對拍：要與原版逐位元組相同）*
 
 跑飛的根因已解並修好（dosgolem `4732181`／`2951243`）：子行程結束時執行器沒有
 釋放它名下的 MCB，標頭因此留在接手程式的記憶體裡改寫程式碼；另外 `-tick` 會被
@@ -467,7 +469,7 @@ PIT 的重算蓋掉。`main1e`（2.2 億道指令、走到帝國軍主畫面）�
 
 #### region-panel-freeze-differs-by-faction — 左下角摘要凍住的內容，同盟與帝國相反
 
-*re（逆向：機制還沒讀出來）*
+*[#4](https://github.com/wicanr2/logh3/issues/4) · re（逆向：機制還沒讀出來）*
 
 同一條輸入序列（右鍵兩下關月初報告 → 點命令列開選單 → 搬滑鼠），
 帝國那邊左下角凍著游標底下那一格（`cmd1e`，墨 2,353），同盟那邊整塊是空的
@@ -494,7 +496,7 @@ PIT 的重算蓋掉。`main1e`（2.2 億道指令、走到帝國軍主畫面）�
 
 #### copyprot-caret-blink — 防拷問答的輸入游標會閃，remake 畫成恆亮
 
-*feature（功能：玩家會撞到、但 remake 還沒有）*
+*[#5](https://github.com/wicanr2/logh3/issues/5) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
 原版那條 16×2 底線是**閃的**：畫（`2376:0DB1`）與擦（`2376:107F`）各隔
 320 次計時器中斷，整個週期 640 次。本作把 PIT 分頻設成 2048（582.8 Hz），
@@ -514,7 +516,7 @@ remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以
 
 #### gui-check-load1e-vs3 — `tools/gui_check.sh` 十例裡 `load1e`／`vs3` 對不上
 
-*parity（對拍：要與原版逐位元組相同）*
+*[#6](https://github.com/wicanr2/logh3/issues/6) · parity（對拍：要與原版逐位元組相同）*
 
 Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量到兩例紅：
 
@@ -540,7 +542,7 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 #### ai-seat-order — 戰略 AI 的座位順序與原版不同
 
-*parity（對拍：要與原版逐位元組相同）*
+*[#7](https://github.com/wicanr2/logh3/issues/7) · parity（對拍：要與原版逐位元組相同）*
 
 原版一次「實行」是**逐座位**跑的：帝國座位的月底結算（含 `0654:0007`
 那一次性的成長與稅率重算）在**同盟座位的 AI 之前**；remake 的
@@ -556,7 +558,7 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 #### strategy-report-screen — 戰略模式報告畫面還沒做
 
-*原編號 242 · feature（功能：玩家會撞到、但 remake 還沒有）*
+*[#8](https://github.com/wicanr2/logh3/issues/8) · 原編號 242 · feature（功能：玩家會撞到、但 remake 還沒有）*
 
 訊息表 86 條已經解出來並進版控（`ds:0490`–`ds:09F0`，含易主／侵略／
 叛亂／提督生死與勝負頁），畫面本身 remake 一張都還沒畫。
@@ -572,7 +574,7 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 #### music-fm-capture — `_F` 那一組的 FM 原音：11 首錄到 9 首，結局那兩首還卡住
 
-*re（逆向：機制還沒讀出來）*
+*[#9](https://github.com/wicanr2/logh3/issues/9) · re（逆向：機制還沒讀出來）*
 
 `_F` 是寫給 OPL 的（`docs/re/274`：`'f'` 那個外皮接的是 OPL 播放常式），
 用 GM 音色庫合只會得到「同一首曲子、不同的音源」。
@@ -601,7 +603,7 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 #### battle-formation-letters — 編隊那一行的字母規則解了，還差第二個局面的收據
 
-*re（逆向：機制還沒讀出來）*
+*[#10](https://github.com/wicanr2/logh3/issues/10) · re（逆向：機制還沒讀出來）*
 
 規則已經反組譯出來（`docs/re/293`、`docs/internals/56`）：格數 ＝ 艦隊
 `+0x0E`、前 `+0x0F` 格印 `ds:6172[該組艦種]` 的全形字母（Ｂ Ｈ Ｃ Ａ Ｄ
@@ -618,7 +620,7 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 #### alliance-squad-spacing — 同盟分隊的間距與排法沒解
 
-*re（逆向：機制還沒讀出來）*
+*[#11](https://github.com/wicanr2/logh3/issues/11) · re（逆向：機制還沒讀出來）*
 
 帝國那十二支的排法解出來了（旗艦周圍間距 22–23 的正交格點，
 方向是艦隊朝向減 96），同盟那幾支的間距與排法不同。
@@ -629,7 +631,7 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 #### battle-seen-flag — 戰場的索敵還沒接（艦艇 `+0x17` 一律給 2）
 
-*feature（功能：玩家會撞到、但 remake 還沒有）*
+*[#12](https://github.com/wicanr2/logh3/issues/12) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
 條件解出來了（[`docs/re/290`](docs/re/290-battle-spotting-solved.md)、
 [`docs/internals/38`](docs/internals/38-battle-units.md)）：`+0x17` **不是**「被看到就設 3」，
@@ -648,7 +650,7 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 #### battle-arrival-facing — 艦隊的短程平移與抵達轉向 remake 還沒照原版（`1C03:0361`／`1C03:0524`）
 
-*parity（對拍：要與原版逐位元組相同）*
+*[#13](https://github.com/wicanr2/logh3/issues/13) · parity（對拍：要與原版逐位元組相同）*
 
 原版的規則讀完了（[`docs/re/294`](docs/re/294-short-move-strafe-and-arrival-facing.md)）：
 `+0x48` bit4 在下命令時由 `2583:052C` 設（距離 < 行程 ÷ 3 ＋ 4.0），`1C03:015C` 依它選實行常式——
@@ -675,7 +677,7 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 #### skirmish-per-attack — 每回合的結算還沒換成「照攻擊名單逐一開火」
 
-*parity（對拍：要與原版逐位元組相同）*
+*[#14](https://github.com/wicanr2/logh3/issues/14) · parity（對拍：要與原版逐位元組相同）*
 
 算式、係數與分母 K 都解出來了（`SkirmishDamage` ＋ `AttackCoefficient`），
 remake 仍走艦隊層那條一次算總損失再分攤。
@@ -688,7 +690,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 #### planet-command-hit-test — 戰場行星命令選單還不能標對拍（`341B:039D` 沒讀）
 
-*原編號 4f · re（逆向：機制還沒讀出來）*
+*[#15](https://github.com/wicanr2/logh3/issues/15) · 原編號 4f · re（逆向：機制還沒讀出來）*
 
 開哪一張與可選旗標全解出來、四項行為也都逆向過了；
 缺的是原版的行星命中判定，remake 先用整格。
@@ -699,7 +701,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 #### admiral-unknown-fields — 提督記錄的 `+20`／`+22` 還沒有名字
 
-*原編號 17 · re（逆向：機制還沒讀出來）*
+*[#16](https://github.com/wicanr2/logh3/issues/16) · 原編號 17 · re（逆向：機制還沒讀出來）*
 
 十四個能力欄位裡十個從提督詳細資料那張畫面標到名字。剩下的在
 [`docs/re/287`](docs/re/287-admiral-remaining-fields.md) 收斂成兩件事：
@@ -725,7 +727,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 #### battle-data-scroll — 戰術選單「資料」的捲動沒量
 
-*原編號 4w · feature（功能：玩家會撞到、但 remake 還沒有）*
+*[#17](https://github.com/wicanr2/logh3/issues/17) · 原編號 4w · feature（功能：玩家會撞到、但 remake 還沒有）*
 
 三個分頁都逐位元組對上了。行星分頁結構上不可能超過 5 列
 （`PLADAT.DAT` 檔頭 32 個星域的行星數最大 5），要量捲動得先有
@@ -737,7 +739,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 #### minimap-row-203 — 小地圖下緣 y=203 那一列在畫哪個元件沒對出來
 
-*re（逆向：機制還沒讀出來）*
+*[#18](https://github.com/wicanr2/logh3/issues/18) · re（逆向：機制還沒讀出來）*
 
 整張 640×480 的戰場畫面只剩兩處排除：原版自己畫的滑鼠游標，
 以及這一列——`2376:10EA`／`110B`／`1132` 三趟的列數是 19／20／20，
@@ -751,7 +753,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 #### unrest-recompute-other-callers — 未安定度：其餘 `090A:0E6D` 呼叫端與戰鬥中的重算 remake 沒有接
 
-*parity（對拍：要與原版逐位元組相同）*
+*[#19](https://github.com/wicanr2/logh3/issues/19) · parity（對拍：要與原版逐位元組相同）*
 
 `090A:0E6D` 有 18 個呼叫點（[`docs/re/299`](docs/re/299-region-unrest-writers-and-recompute.md)），remake 接了影響叛亂與回合尾巴的那幾個
 （[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md)）。沒接的：玩家那一方的指令（編制、整補等 `297B` 那幾處）、
@@ -769,7 +771,7 @@ remake 用命令階段那一次的值；讀存檔之後到第一次回合尾巴�
 
 #### ai-month-branch-turn-offset — `runBrain` 的月底分支早一個回合（`g.turn % 10 == 9`）
 
-*parity（對拍：要與原版逐位元組相同）*
+*[#20](https://github.com/wicanr2/logh3/issues/20) · parity（對拍：要與原版逐位元組相同）*
 
 原版 `2D10:0319` 在 AI 回合尾巴判 `ds:8F18 % 10 == 9`（月底照軍事費重算 `Blend`，否則歸零）。
 remake 的 `g.turn` 在 `advanceTurn` 開頭就先加一：第一次「實行」AI 跑的時候原版計數器是 0（`rbx292_b`）、
@@ -787,7 +789,7 @@ remake 的 `g.turn` 在 `advanceTurn` 開頭就先加一：第一次「實行」
 
 #### load-unrest-params-from-work — 讀存檔時算未安定度，`Blend`／`ds:8FF8`／統治者用的是固定值，不是那一格存檔的
 
-*parity（對拍：要與原版逐位元組相同）*
+*[#21](https://github.com/wicanr2/logh3/issues/21) · parity（對拍：要與原版逐位元組相同）*
 
 `loadSlotFromDisk` 拿 `Resources.UnrestParams`（統治者 16／60、`Blend` 1／2、`Rate` 2／2）只換掉回合數。
 這三個全域在執行期就是 `WORK.DT?` 那一塊（`ds:8F14` 起：統治者 ＝ 內政專任參謀 `+0x3B`、`Blend` `+0xC0`、
@@ -805,7 +807,7 @@ remake 自己存的檔也一樣（`Game.rate`／`blend`／參謀都會寫回 `WO
 
 #### region-turn-upkeep-0556 — `0374:0556` 每回合逐格那三支 remake 沒有（`2703:1B48`／`1CD7`／`1D85`）
 
-*feature（功能：玩家會撞到、但 remake 還沒有）*
+*[#22](https://github.com/wicanr2/logh3/issues/22) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
 沒有戰鬥的格子每回合都跑（[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md) 末節）：
 `2703:1B48` 無主而且還有他陣營行星的格子**隨機**再跑掉一顆（抽亂數）、
@@ -823,7 +825,7 @@ remake 自己存的檔也一樣（`Game.rate`／`blend`／參謀都會寫回 `WO
 
 #### phezzan-event-impl — remake 還沒有費沙事件
 
-*feature（功能：玩家會撞到、但 remake 還沒有）*
+*[#23](https://github.com/wicanr2/logh3/issues/23) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
 觸發與效果都讀完了（`docs/internals/57`、`docs/re/296`）：費沙那一格第一次易主的回合尾巴，
 `ds:8F48 ← 1`、費沙行星八成經濟力搬到對手首都的行星、拿下的一方在鄰接清單裡沒駐軍的星域整格叛離
@@ -842,7 +844,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 #### region-supply-pool-missing — 飛彈／艦載機存量的每回合回充 remake 沒有
 
-*feature（功能：玩家會撞到、但 remake 還沒有）*
+*[#24](https://github.com/wicanr2/logh3/issues/24) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
 原版每個回合把星域記錄的 `+0x68`／`+0x70` 補一成、夾在經濟力＋防衛力，
 再按行星經濟力比例分回行星的 `+0x3C`／`+0x40`。remake 兩層都沒有：
@@ -857,7 +859,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 #### delivery-report-details — 月底報告的兩個細節還沒模型化
 
-*原編號 22 · parity（對拍：要與原版逐位元組相同）*
+*[#25](https://github.com/wicanr2/logh3/issues/25) · 原編號 22 · parity（對拍：要與原版逐位元組相同）*
 
 船艦接收報告本身已經逐位元組對上。兩件沒做：
 **結算中地圖不重塗首都**、以及**捲軸會多出上下箭頭**。
@@ -870,31 +872,31 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 #### m4u — 「資料」帶進去的戰場
 
-*matrix（驗證矩陣的一列（完成度））*
+*[#29](https://github.com/wicanr2/logh3/issues/29) · matrix（驗證矩陣的一列（完成度））*
 
 **核實**：要人判——完成度由收據 `s3detail_back` 撐著，還沒把雜湊釘進來；要自動回歸偵測就改成 receipt 並補 files 的 SHA-256
 
 #### m4g — 行星命令的四項行為
 
-*matrix（驗證矩陣的一列（完成度））*
+*[#30](https://github.com/wicanr2/logh3/issues/30) · matrix（驗證矩陣的一列（完成度））*
 
 **核實**：要人判——這一列的完成度由它自己的證據欄撐著，沒有可綁的自動訊號
 
 #### m4e — 戰場的「索敵」「移動（艦隊）」「戰鬥」
 
-*matrix（驗證矩陣的一列（完成度））*
+*[#32](https://github.com/wicanr2/logh3/issues/32) · matrix（驗證矩陣的一列（完成度））*
 
 **核實**：要人判——備註裡「艦隊層移動引擎還沒接」已經過期並修掉了；這一列仍標 `—` 是因為三項命令的**行為**沒有逐位元組收據。要人判還缺什麼——不要綁 TestManoeuvreOuterMatchesOracle，那只釘住範圍圖形那一小塊。
 
 #### m4d — 戰場的「補給」「修理」命令
 
-*matrix（驗證矩陣的一列（完成度））*
+*[#33](https://github.com/wicanr2/logh3/issues/33) · matrix（驗證矩陣的一列（完成度））*
 
 **核實**：要人判——完成度由收據 `s3form` 撐著，還沒把雜湊釘進來；要自動回歸偵測就改成 receipt 並補 files 的 SHA-256
 
 #### s6-11 — 其他
 
-*matrix（驗證矩陣的一列（完成度））*
+*[#34](https://github.com/wicanr2/logh3/issues/34) · matrix（驗證矩陣的一列（完成度））*
 
 **核實**：要人判——這一列的完成度由它自己的證據欄撐著，沒有可綁的自動訊號
 

@@ -6328,3 +6328,23 @@ worklist `ai-attack-reachability` → done。沒有新跑 dosgolem：`turn260mem
 - 候選評分 `2E54:1574`、階段五 `2E54:1243` 的「兩格之間」距離與階段二的排序鍵
   仍用 `StarGraph.Hops`，原版查距離表。
 - 讀檔路徑的重建點與擁有者重算的先後沒有逐位元組核對；中局易主之後沒有執行期收據。
+
+## 2026-09-12 — 未完成項的權威搬到 GitHub issue
+
+使用者定案：GitHub issue 是未完成項的權威。34 條未完成（逆向 8、功能 8、對拍 8、
+裁決 1、矩陣 9）開成 issue #1–#34，label `worklist` ＋ `layer:*`（矩陣列另加
+`section:*`）。已完成的 180 條留在 `docs/worklist.json` 當歷史與回歸偵測。
+
+- **`verify` 沒有跟著消失**：每張 issue 本文尾巴有機器核對的 JSON 區塊。主機跑
+  `tools/issues_snapshot.sh` 抓成 `workplace/issues.json`，`worklist` 在容器裡合併
+  後核實。
+- **JSON 裡原位留佔位**（`id`、章節、`issue` 編號，標題寫「見 GitHub #N」），
+  合併時原地替換——驗證矩陣的列順序照 JSON 排，搬家之後 `VERIFICATION-MATRIX.md`
+  逐位元組不變。佔位不抄真正的內容，免得成為第二份會過期的東西。
+- 驗收：`TestIssueRoundTrip` 對當時 210 條逐條往返相同；GitHub 實際存下來的 34 張
+  本文與送出的逐字相同；搬移前後 `verify` 同為「214 條、0 條斷言不成立、54 條一致」。
+- 沒有快照時每個子命令開頭都印警告——那時候的「0 條斷言不成立」不代表任何事。
+
+⚠ 取捨：在 GitHub 上改 issue 不會留在 git 歷史裡（`rulebook/61` 反對把清單放在
+git diff 看不到的地方，理由正是這個）。核對邏輯（verify）保住了，編輯歷史改由
+GitHub 的 issue 時間軸承擔。

@@ -88,6 +88,11 @@ type Item struct {
 	// 而要做的事只有一件。有 Ref 的列照樣核實，但不重複出現在 worklist。
 	Ref string `json:"ref,omitempty"`
 
+	// Issue 是這一條在 GitHub 上的 issue 編號。JSON 裡有它的條目是**佔位**：
+	// 內容在 issue，這裡只記位置（矩陣列的順序照 JSON 排）與指向。
+	// 合併快照時同一個 id 原地替換，所以順序不會因為搬家而亂掉。
+	Issue int `json:"issue,omitempty"`
+
 	Verify Verify `json:"verify"`
 }
 
@@ -142,7 +147,7 @@ func (r Result) String() string {
 func main() {
 	args := os.Args[1:]
 	if len(args) == 0 {
-		fmt.Fprintln(os.Stderr, "用法: worklist {verify [id...]|render [-w]|render-matrix [-w]|import-matrix|check|score|export-issues}")
+		fmt.Fprintln(os.Stderr, "用法: worklist {verify [id...]|render [-w]|render-matrix [-w]|import-matrix|check|score|export-issues|stub-issues}")
 		os.Exit(2)
 	}
 	doc, err := Load(dataPath)
@@ -150,7 +155,21 @@ func main() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	// 搬移用的匯出只看 JSON 本身——那時候 GitHub 上還沒有 issue。
+	// 搬移用的兩個子命令只看 JSON 本身，不合併快照。
+	if args[0] == "stub-issues" {
+		recs, ok, err := loadIssues(issuesPath)
+		if err != nil || !ok {
+			fmt.Fprintln(os.Stderr, "stub-issues 要先有快照：tools/issues_snapshot.sh", err)
+			os.Exit(1)
+		}
+		n, err := StubMigrated(dataPath, recs)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		fmt.Printf("%s：%d 條換成佔位（內容留在 GitHub issue）\n", dataPath, n)
+		return
+	}
 	if args[0] != "export-issues" {
 		if err := attachIssues(doc, issuesPath); err != nil {
 			fmt.Fprintln(os.Stderr, err)
@@ -240,6 +259,18 @@ func attachIssues(doc *Doc, path string) error {
 	}
 	if err := MergeIssues(doc, recs); err != nil {
 		return err
+	}
+	// 快照在、而佔位沒有被任何 issue 換掉 ＝ 那張 issue 不見了（被刪、被拿掉
+	// worklist label）。那一條就從清單上消失了，要當場講。
+	var orphan []string
+	for _, it := range doc.Items {
+		if it.Issue > 0 && strings.HasPrefix(it.Title, stubTitlePrefix) {
+			orphan = append(orphan, fmt.Sprintf("%s（#%d）", it.ID, it.Issue))
+		}
+	}
+	if len(orphan) > 0 {
+		return fmt.Errorf("%d 條佔位在快照裡找不到對應的 issue：%s——issue 被刪了或拿掉了 worklist label？",
+			len(orphan), strings.Join(orphan, "、"))
 	}
 	open := 0
 	for _, r := range recs {
