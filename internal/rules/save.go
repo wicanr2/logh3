@@ -46,6 +46,12 @@ const (
 	workMusicDevice = 0x1F // 音源：0 MIDI／1 ＦＭ／2 關閉
 	workMusicBGM    = 0x20 // 平時配樂 0–5
 	workMusicBattle = 0x21 // 戰鬥配樂：0／1，2 ＝ 沿用平時那一首
+	// 設定畫面上另外三行（＝ ds:8F36／8F37／8F38，`docs/re/286`）。
+	// 三格出貨存檔與新遊戲底稿在這三格上都是 `01 00 5A 00`，與開機
+	// 預設（`0x039E1`／`0x03A28`／`0x03A2C`）逐一相同。
+	workAnimEffect = 0x22 // 動畫效果：1 開啟、0 關閉
+	workAnimSpeed  = 0x23 // 動畫速度：0 普通、1 快速、2 最快
+	workMsgSpeed   = 0x24 // 訊息速度（16 位元）：訊息停留的計時器 tick 數
 
 	// 月底結算的一次性旗標（＝ ds:8FF4／8FF5，`docs/re/255`）。
 	workMonthFlag = 0xE0
@@ -236,6 +242,14 @@ type WorkFields struct {
 	// 一份存檔一組——它是玩家的偏好，不是局面的一部分。
 	MusicDevice, MusicBGM, MusicBattle int
 
+	// AnimEffect／AnimSpeed／MsgSpeed 是設定畫面上另外三行
+	// （`ds:8F36`／`8F37`／`8F38`，`docs/re/286`）。同樣不分陣營。
+	//
+	// 三個都是原版真的會讀回去用的值：`8F36` 是 0 就整支交戰演出常式
+	// 直接返回、`8F37` 當索引去查 `ds:8F10` 的 `{8,4,0}` 拿動畫每格等
+	// 幾個 tick、`8F38` 是訊息停留的 tick 數（按鍵可以提早結束）。
+	AnimEffect, AnimSpeed, MsgSpeed int
+
 	// MonthFlag 是月底結算的一次性旗標（`ds:8FF4`／`ds:8FF5`）：主迴圈在
 	// `ds:8F18++` 之後把兩格都設成 1，`0654:0034` 做完就清掉自己那一格
 	// （`docs/re/255`）。
@@ -253,6 +267,9 @@ func ReadWork(w []byte) (WorkFields, error) {
 	}
 	f.Turn = int(w[workTurn]) | int(w[workTurn+1])<<8
 	f.MusicDevice = int(w[workMusicDevice])
+	f.AnimEffect = int(w[workAnimEffect])
+	f.AnimSpeed = int(w[workAnimSpeed])
+	f.MsgSpeed = int(w[workMsgSpeed]) | int(w[workMsgSpeed+1])<<8
 	f.MusicBGM = int(w[workMusicBGM])
 	f.MusicBattle = int(w[workMusicBattle])
 	for i := 0; i < 2; i++ {
@@ -548,6 +565,9 @@ func (s *Slot) Save(dir string, index int) error {
 	work[workMusicDevice] = byte(s.MusicDevice)
 	work[workMusicBGM] = byte(s.MusicBGM)
 	work[workMusicBattle] = byte(s.MusicBattle)
+	work[workAnimEffect] = byte(s.AnimEffect)
+	work[workAnimSpeed] = byte(s.AnimSpeed)
+	work[workMsgSpeed], work[workMsgSpeed+1] = byte(s.MsgSpeed), byte(s.MsgSpeed>>8)
 	for f := 0; f < 2; f++ {
 		put32(work, workMilitary+4*f, s.Military[f])
 		put32(work, workTaxTotal+4*f, s.TaxTotal[f])

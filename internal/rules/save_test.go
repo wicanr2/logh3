@@ -1,6 +1,7 @@
 package rules
 
 import (
+	"bytes"
 	"encoding/json"
 	"os"
 	"path/filepath"
@@ -552,6 +553,32 @@ func TestWorkMusicSettings(t *testing.T) {
 		want := [3]int{c.device, c.bgm, c.battle}
 		if got != want {
 			t.Errorf("%s 的三格音樂設定 ＝ %v，檔案裡是 %v", c.file, got, want)
+		}
+	}
+}
+
+// TestWorkDisplaySettings 釘住 `WORK.DT?` 的 `+0x22`／`+0x23`／`+0x24`
+// （＝ `ds:8F36`／`8F37`／`8F38`，設定畫面上另外三行，`docs/re/286`）。
+//
+// 三格出貨存檔在這四個位元組上都是 `01 00 5A 00`，與開機預設
+// （`0x03A28` 寫 1、`0x03A2C` 寫 0、`0x039E1` 寫 90）以及 46 份執行期
+// 傾印的 `ds:8F36`–`8F39` 逐一相同——沒有人在遊戲中改過它們。
+func TestWorkDisplaySettings(t *testing.T) {
+	for _, file := range []string{"WORK.DT8", "WORK.DT9", "WORK.DTA"} {
+		raw := readOrig(t, file)
+		w, err := ReadWork(raw)
+		if err != nil {
+			t.Fatalf("%s：%v", file, err)
+		}
+		got := [3]int{w.AnimEffect, w.AnimSpeed, w.MsgSpeed}
+		if want := [3]int{1, 0, 90}; got != want {
+			t.Errorf("%s 的動畫效果／動畫速度／訊息速度 ＝ %v，預期 %v",
+				file, got, want)
+		}
+		// 位元組本身也對一次：訊息速度是 16 位元的，位移錯一格照樣
+		// 讀得出 90，所以連高位元組一起比。
+		if h := raw[0x22:0x26]; !bytes.Equal(h, []byte{1, 0, 0x5A, 0}) {
+			t.Errorf("%s 的 +0x22..+0x25 ＝ % X，預期 01 00 5A 00", file, h)
 		}
 	}
 }

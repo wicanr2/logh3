@@ -1030,6 +1030,12 @@ func TestSaveSlotRoundTrip(t *testing.T) {
 		(MusicSettings{Device: MusicFM, BGM: 1}); got != want {
 		t.Errorf("載入第 9 格之後音樂設定是 %+v，`WORK.DT9` 裡是 %+v", got, want)
 	}
+	// 另外三行同一塊：`+0x22`／`+0x23`／`+0x24` ＝ 1／0／90
+	// （動畫開啟、普通、90，`docs/re/286` §四）。
+	if got, want := g.DisplaySettings(),
+		(DisplaySettings{Anim: 1, MsgSpeed: 90}); got != want {
+		t.Errorf("載入第 9 格之後另外三行是 %+v，`WORK.DT9` 裡是 %+v", got, want)
+	}
 	dir := t.TempDir()
 	if err := g.SaveSlot(dir, 9); err != nil {
 		t.Fatal(err)

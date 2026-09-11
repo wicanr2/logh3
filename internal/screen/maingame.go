@@ -50,6 +50,10 @@ type MainGameSpec struct {
 		} `json:"rest"`
 	} `json:"fields"`
 
+	// MsgSpeed 是設定畫面上訊息速度那個數字畫在哪。原版用 `" %3d"`
+	// **靠右**印（`docs/re/286`），所以右邊界固定、位數變了往左長。
+	MsgSpeed *TextField `json:"msg_speed"`
+
 	// Order 是疊在地圖之上的視窗畫的順序（先畫的在下面）。
 	// 空的話就只畫 report——大多數畫面只有一層。
 	Order []string `json:"order"`
@@ -228,6 +232,15 @@ type GameWindow struct {
 	} `json:"lines"`
 }
 
+// TextField 是視窗內容裡一塊會變的字，靠右對齊。與 NumField 的差別是
+// 它帶自己的 `Y`——那幾塊在規格裡是 `lines` 的一行，不是 `fields` 的一列。
+type TextField struct {
+	X, Y, W int
+}
+
+// Right 回這一塊的右邊界。
+func (f *TextField) Right() int { return f.X + f.W }
+
 // NumField 是一格會變的數字：靠右對齊，右邊界固定。
 type NumField struct {
 	X, W int
@@ -362,6 +375,40 @@ func (w *GameWindow) SetHotspotFill(x, y, wd, ht int, fill uint8) bool {
 			b.Fill = fill
 			return true
 		}
+	}
+	return false
+}
+
+// SetFieldText 把 `f` 那一塊的字換成 `text`（半形、靠右對齊），回是否換成了。
+//
+// 靜態的 `Lines` 已經含了原版開局的值（設定畫面上那個 `90`），所以要跟著
+// 狀態變就得改那一行本身，不是另外畫一層蓋上去——疊上去會連立體邊一起疊。
+// 位數變了就增減格數：多的截掉，少的複製既有那一格再補（`Cells` 是匿名
+// 結構，複製既有元素是唯一不必替它取名的長法）。
+func (w *GameWindow) SetFieldText(f *TextField, text string) bool {
+	if w == nil || f == nil || text == "" {
+		return false
+	}
+	for i := range w.Lines {
+		ln := &w.Lines[i]
+		if ln.Y != f.Y || len(ln.Cells) == 0 {
+			continue
+		}
+		// 同一個 y 上還有那一行的中文標題，用「半形 ＋ 落在欄位裡」分開。
+		if ln.Cells[0].W != font.HalfW ||
+			ln.Cells[0].X < f.X || ln.Cells[0].X >= f.Right() {
+			continue
+		}
+		for len(ln.Cells) < len(text) {
+			ln.Cells = append(ln.Cells, ln.Cells[0])
+		}
+		ln.Cells = ln.Cells[:len(text)]
+		for n := range ln.Cells {
+			ln.Cells[n].X = f.Right() - (len(text)-n)*font.HalfW
+			ln.Cells[n].W = font.HalfW
+			ln.Cells[n].Code = uint16(text[n])
+		}
+		return true
 	}
 	return false
 }

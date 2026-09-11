@@ -336,7 +336,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 32 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 31 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -552,28 +552,6 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 **核實**：`internal/screen`、`internal/game` 裡出現 `strategy-report-strings|StrategyReport` 就是做好了
 
-#### settings-other-rows — 設定畫面另外那幾行（訊息速度／動畫效果／動畫速度）還沒接
-
-*feature（功能：玩家會撞到、但 remake 還沒有）*
-
-設定畫面的熱區清單 22 筆已經全部讀出來進了規格（`docs/re/285`），
-音樂那三組也接了，但另外幾行點下去沒有反應：
-訊息速度的上下箭頭（動作碼 12／13，畫面上寫 `90`）、
-動畫效果的開啟／關閉（14／15）、動畫速度的普通／快速／最快（16–18）、
-「結束」（19）與「ＭＩＤＩ Ｉ／Ｆ」（22）。
-**卡在同一件事**：那幾個值存在哪還沒定位——`WORK` 那 230 bytes 裡
-還有大片未解的位元組，也可能根本不進存檔。找法與 `docs/re/285` 相同：
-在動作碼那段分派上找寫位元組的指令（`A2 xx xx`）。
-「結束」另外還缺一件事：關掉之後回哪一張沒有收據，remake 目前用右鍵關。
-
-**卡在**：訊息速度／動畫效果／動畫速度三個值存在哪還沒定位。
-
-**做完的判準**：那幾行點下去有反應，值的去向有反組譯證據（不是猜的），存得下讀得回。
-
-**證據**：[`docs/re/285-settings-screen-hotspots.md`](docs/re/285-settings-screen-hotspots.md)
-
-**核實**：`internal/game` 裡出現 `msg-speed-inc` 就是做好了
-
 #### music-fm-capture — `_F` 那一組的 FM 原音：11 首錄到 9 首，結局那兩首還卡住
 
 *re（逆向：機制還沒讀出來）*
@@ -669,17 +647,29 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：`internal/game/planetcmd.go` 裡還找得到 ``341B:039D` 的分層邏輯`（自承還在 ＝ 還沒做）
 
-#### admiral-unknown-fields — 提督記錄還有四格沒有名字
+#### admiral-unknown-fields — 提督記錄的 `+20`／`+22` 還沒有名字
 
 *原編號 17 · re（逆向：機制還沒讀出來）*
 
-十四個能力欄位裡十個從提督詳細資料那張畫面標到名字；
-`+20`／`+22`／`+24` 仍未命名（`+21` 已經有一個消費者：AI 挑內政參謀的
-分數是營運 × `+21`），另外 `+8`／`+10` 兩個小整數的語意也未知。
+十四個能力欄位裡十個從提督詳細資料那張畫面標到名字。剩下的在
+[`docs/re/287`](docs/re/287-admiral-remaining-fields.md) 收斂成兩件事：
+**`+8`／`+10` 不是未知**——`+10` 是所在星域（`113A:047D` 的寫入點 ＋ 開局
+全在自己首都 ＋ 詳細資料那張的「現在位置」），`+8` 低四位是能帶哪一種艦、
+高四位是艦隊類別鍵（`2D76:0576`）。**`+24` 也不是「沒有名字」，是沒有消費者**：
+四份不同階段的 1 MB 傾印裡，`+0x18` 一個讀取指令都沒有（同一支掃描在
+`+0x17` 找到 11 處、`+0x15` 4 處），它也不被抄進艦隊記錄，而且值域是
+5–100 不是能力值那段 80–140。
+**還差的是 `+20` 與 `+22` 的名字。** 用途已經齊了——`+20` 有四個消費者
+（稅率、治安分段、AI 類別 0 評分、戰鬥層的 `ds:D61A` 完整度門檻），
+`+22` 合成進艦隊 `+0x45` 之後決定分隊挑不挑得中分數最高的攻擊目標
+（`1F6F:024C`）。但原版沒有任何畫面印這兩格的欄名，所以掃消費者這條路
+已經走到底。下一步是**原版說明書附的提督資料表**（防拷問答要玩家查的
+就是它，`ds:8D10` 的字串寫著「請查閱提督資料表」），拿到就同時解掉
+`+20`／`+22`／`+24` 三個名字。
 
-**做完的判準**：四格都有畫面或算式給的名字。
+**做完的判準**：`+20` 與 `+22` 有畫面或紙本資料表給的名字。
 
-**證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)
+**證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
@@ -849,7 +839,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-11 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+12 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -994,7 +984,8 @@ remake 接在 `internal/audio.TuneFor`，曲號從 `Game` 那三格讀；
 載入→存回第 9 格六個檔逐位元組相同。
 **交戰演出那個狀態 remake 還沒有**，所以 `Settings.BattleTune` 仍然沒有出口：
 戰鬥配樂存得下、讀得回，但還沒有畫面會去播它。
-同一份清單上的訊息速度／動畫效果／動畫速度／結束／ＭＩＤＩ Ｉ／Ｆ 還沒接
+同一份清單上另外那幾行（訊息速度／動畫效果／動畫速度／結束）也接上了
+（`settings-other-rows`、`docs/re/286`）；只剩「ＭＩＤＩ Ｉ／Ｆ」與 `BUG!`。
 （見 `settings-other-rows`）。
 
 **做完的判準**：設定畫面改完馬上換曲、存檔存得下也讀得回來，三格的值與原版 WORK.DT? 的三個位元組一致。
@@ -1002,6 +993,30 @@ remake 接在 `internal/audio.TuneFor`，曲號從 `Game` 那三格讀；
 **證據**：[`docs/re/285-settings-screen-hotspots.md`](docs/re/285-settings-screen-hotspots.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/internals/23-hotspot-lists.md`](docs/internals/23-hotspot-lists.md)、[`docs/internals/30-save-format.md`](docs/internals/30-save-format.md)
 
 **核實**：`TestSettingsMusicClicks` 釘在 `internal/game`
+
+#### settings-other-rows — 設定畫面另外那幾行（訊息速度／動畫效果／動畫速度／結束）
+
+*feature（功能：玩家會撞到、但 remake 還沒有）*
+
+六行都接了。三個值的去向是反組譯釘的（`docs/re/286`）：分派整段在
+線性 `0x04681`，動作碼 14／15 寫 `ds:8F36`（動畫效果 1／0）、
+16–18 寫 `ds:8F37`（動畫速度 0／1／2）、12／13 把 16 位元的
+`ds:8F38`（訊息速度）±10（上限 300，減到 0 為止）。
+**三個都進存檔**：`WORK.DT?` 的 `+0x22`／`+0x23`／`+0x24`，
+開機預設、46 份執行期傾印、三格出貨存檔與新遊戲底稿四條路都是
+`01 00 5A 00`。
+「結束」（19）在原版只是讓分派回傳 1，設定畫面的訊息迴圈跟著結束
+——**與右鍵收在同一個 `retf` 上**，所以 remake 讓它走右鍵那條路。
+**還沒接的兩筆**：「ＭＩＤＩ Ｉ／Ｆ」（22）要先有 `MUSIC.INI` 的
+讀寫（`docs/re/274` §10）；`BUG!`（20）開的是 `ds:902C` 那張隱藏的
+除錯選單（切換兩個座位的電腦／人，`docs/re/286` §六），要先有那張畫面。
+三個值目前也沒有人讀：交戰演出、動畫節奏與訊息停留 remake 都還沒做。
+
+**做完的判準**：那幾行點下去有反應，值的去向有反組譯證據（不是猜的），存得下讀得回。
+
+**證據**：[`docs/re/285-settings-screen-hotspots.md`](docs/re/285-settings-screen-hotspots.md)、[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)
+
+**核實**：`internal/game` 裡出現 `msg-speed-inc` 就是做好了
 
 #### strategic-ai-advance-turn — 戰略 AI 接進 `advanceTurn`
 
@@ -1074,6 +1089,9 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
 
 <!-- worklist:end -->
+
+
+
 
 
 

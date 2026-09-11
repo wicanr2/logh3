@@ -38,15 +38,15 @@ ACTIONS = {
     0: ('device-0', '音源 → ds:8F33 ＝ 0'),
     1: ('device-1', '音源 → ds:8F33 ＝ 1'),
     2: ('device-2', '音源 → ds:8F33 ＝ 2，不播'),
-    12: ('msg-speed-inc', '訊息速度 ＋（動作碼 FF 17 00，元件種類 6 ＝ 上下箭頭）'),
-    13: ('msg-speed-dec', '訊息速度 −（動作碼 FF 18 00）'),
-    14: ('anim-on', '動畫效果'),
-    15: ('anim-off', '動畫效果'),
-    16: ('anim-speed-0', '動畫速度'),
-    17: ('anim-speed-1', '動畫速度'),
-    18: ('anim-speed-2', '動畫速度'),
-    19: ('close', '關掉設定畫面；回到哪一張還沒量'),
-    20: ('bug', '畫面上沒有框、也沒有字的隱藏熱區'),
+    12: ('msg-speed-inc', '訊息速度 ＋10 → ds:8F38，到 300 就不動（元件種類 6 ＝ 上下箭頭）'),
+    13: ('msg-speed-dec', '訊息速度 −10 → ds:8F38，低於 10 就不動'),
+    14: ('anim-on', '動畫效果 → ds:8F36 ＝ 1'),
+    15: ('anim-off', '動畫效果 → ds:8F36 ＝ 0'),
+    16: ('anim-speed-0', '動畫速度 → ds:8F37 ＝ 0'),
+    17: ('anim-speed-1', '動畫速度 → ds:8F37 ＝ 1'),
+    18: ('anim-speed-2', '動畫速度 → ds:8F37 ＝ 2'),
+    19: ('close', '關掉設定畫面；與右鍵走同一條出口（`docs/re/286`）'),
+    20: ('bug', '畫面上沒有框、也沒有字的隱藏熱區，開的是 ds:902C 那張除錯選單'),
     22: ('midi-if', '七選一，選完寫回 MUSIC.INI +4（`docs/re/274` §10）'),
 }
 for n in range(3, 9):
@@ -120,9 +120,34 @@ while True:
 missing = [i for i in range(len(boxes)) if i not in used]
 if missing:
     bad.append('規格裡有 %d 個框沒有熱區認領：%s' % (len(missing), missing))
+
+# 訊息速度那個數字畫在哪。原版用 `" %3d"` **靠右**印在視窗的第 11 欄、
+# 第 12 列（`docs/re/286`），所以右邊界固定、位數變了往左長。
+#
+# 位置從收據量到的那一行反推：上下箭頭那一列上，半形的那幾格就是數字。
+# **位址自己會驗**：右邊界要剛好落在上箭頭往左一格（格 13 的左緣）。
+arrows = [h for h in out if h.get('kind') == 6]
+msg = None
+if arrows:
+    ax = min(h['x'] for h in arrows)
+    row = arrows[0]['y'] + 2          # 框裡的字比框低 2 像素
+    cells = [c for ln in win['lines'] if ln['y'] == row
+             for c in ln['cells'] if c['w'] == 8]
+    if not cells:
+        bad.append('上下箭頭那一列（y=%d）在規格裡找不到半形數字' % row)
+    else:
+        right = max(c['x'] + c['w'] for c in cells)
+        if right != ax - CELL_W:
+            bad.append('數字的右邊界 %d 不等於上箭頭往左一格 %d'
+                       % (right, ax - CELL_W))
+        else:
+            # `" %3d"` ＝ 四個半形，整個欄位就是那 32 像素。
+            msg = {'x': right - 4 * 8, 'y': row, 'w': 4 * 8}
+
 if bad:
     sys.exit('對不上，沒有寫檔：\n  ' + '\n  '.join(bad))
 
+spec['msg_speed'] = msg
 spec['hotspots'] = out
 json.dump(spec, open(SPEC, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print('ds:%04X 起 %d 筆熱區 → screen-settings.json（視窗原點格 (%d,%d)，'

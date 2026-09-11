@@ -527,6 +527,11 @@ type Game struct {
 	// `+0x1F`／`+0x20`／`+0x21`，`docs/internals/30`）。
 	music MusicSettings
 
+	// 原版的 `ds:8F36`／`8F37`／`8F38`（動畫效果／動畫速度／訊息速度），
+	// 同樣跟著存檔走（`WORK.DT?` 的 `+0x22`／`+0x23`／`+0x24`，
+	// `docs/re/286`）。
+	display DisplaySettings
+
 	// saveErr 是上一次存檔的結果（nil ＝ 成功或還沒存過）。
 	saveErr error
 
@@ -1209,7 +1214,10 @@ func New(res *Resources) (*Game, error) {
 		// OPL（`docs/re/274` §3）。remake 不模擬 MIDI 介面，所以與出貨的
 		// 原版一樣一律 ＦＭ——既有的執行期傾印 `ds:8F33` 全是 1，收據
 		// `settings1e` 上反白的也是「ＦＭ」那一格。
-		music: MusicSettings{Device: MusicFM}}
+		music: MusicSettings{Device: MusicFM},
+		// 另外三行是純軟體設定，開機就有預設值（動畫開啟／普通／90），
+		// 不像音源要等偵測（`docs/re/286` §二）。
+		display: newDisplaySettings()}
 	g.startNewGame(res.Faction)
 	// 電腦那一方走原版的戰略 AI（`docs/spec/029` READY，使用者裁決
 	// 2026-09-10）。資源不齊時 `OriginalBrain` 自己回 nil ＝ 不下命令。
@@ -1256,6 +1264,10 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	// 之後換到的曲子就是 `+0x20` 那個號碼。
 	g.music = MusicSettings{Device: sl.MusicDevice, BGM: sl.MusicBGM,
 		Battle: sl.MusicBattle}
+	// 另外三行同一塊、同一條路（`WORK.DT?` 的 `+0x22`–`+0x25`，
+	// `docs/re/286` §四）。三格出貨存檔都是 `01 00 5A 00`。
+	g.display = DisplaySettings{Anim: sl.AnimEffect, AnimSpeed: sl.AnimSpeed,
+		MsgSpeed: sl.MsgSpeed}
 	g.treasury = rules.Treasury{Budget: sl.BudgetStart[g.faction],
 		ShipPaid: sl.ShipPaid[g.faction]}
 	// 存檔裡就有兩邊的艦隊（`FLEET.DT?` ＝ 執行期那張表，`docs/re/41`）。
@@ -1614,8 +1626,9 @@ func (g *Game) click(x, y int) {
 			}
 		}
 	case StateSettings:
-		// 音源／平時配樂／戰鬥配樂三組單選（`docs/re/285`）。
-		// 同一份清單上的訊息速度、動畫效果、動畫速度還沒接。
+		// 六組都在這裡：音源／平時配樂／戰鬥配樂三組單選（`docs/re/285`）、
+		// 訊息速度的上下箭頭、動畫效果與動畫速度，以及「結束」
+		// （`docs/re/286`）。「ＭＩＤＩ Ｉ／Ｆ」與 `BUG!` 還沒接。
 		g.settingsClick(x, y)
 	case StateBattle:
 		g.battleClick(x, y)
@@ -1947,6 +1960,9 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	g.slot.MusicDevice = g.music.Device
 	g.slot.MusicBGM = g.music.BGM
 	g.slot.MusicBattle = g.music.Battle
+	g.slot.AnimEffect = g.display.Anim
+	g.slot.AnimSpeed = g.display.AnimSpeed
+	g.slot.MsgSpeed = g.display.MsgSpeed
 	// 原定軍事費與已付建造費目前只留玩家那一方（`monthEnd` 只填那一格）；
 	// 電腦那一方沿用底稿裡的值。
 	g.slot.BudgetStart[g.faction] = g.treasury.Budget
@@ -2029,7 +2045,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.setHoverRow(spec)
 			g.applyStaffFaces(spec)
 			if g.state == StateSettings {
-				g.applyMusicSettings(spec)
+				g.applySettings(spec)
 			}
 			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
 			// （`docs/spec/002`）。

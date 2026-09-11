@@ -119,3 +119,104 @@ func TestSettingsMusicClicks(t *testing.T) {
 		t.Fatalf("重新進設定畫面之後是 %+v，離開時是 %+v", got, want)
 	}
 }
+
+// TestSettingsDisplayClicks 設定畫面另外三行（訊息速度、動畫效果、動畫速度）
+// 點得動，而且畫面只在該變的那一塊變。
+//
+// 值的去向與邊界都是反組譯釘的（`docs/re/286` §二）：
+// `12`／`13` 把 `ds:8F38` ±10（到 300 不再加、不到 10 不再減）、
+// `14`／`15` 把 `ds:8F36` 設成 1／0、`16`–`18` 把 `ds:8F37` 設成 0／1／2。
+func TestSettingsDisplayClicks(t *testing.T) {
+	g := reachCommandPhase(t)
+	g.Click(544, 125)
+	g.Click(560, 185)
+	if g.State() != StateSettings {
+		t.Fatalf("點完「設定」之後在 %v", g.State())
+	}
+	// 開機預設：動畫開啟、普通、90（原版三份寫入點與出貨存檔一致）。
+	if got, want := g.DisplaySettings(),
+		(DisplaySettings{Anim: 1, MsgSpeed: 90}); got != want {
+		t.Fatalf("設定畫面開起來是 %+v，原版出貨是 %+v", got, want)
+	}
+
+	for _, c := range []struct {
+		name     string
+		x, y     int
+		want     DisplaySettings
+		rx0, ry0 int // 允許變動的範圍
+		rx1, ry1 int
+	}{
+		{name: "訊息速度 ＋", x: 405, y: 310,
+			want: DisplaySettings{Anim: 1, MsgSpeed: 100},
+			rx0:  351, ry0: 300, rx1: 384, ry1: 319},
+		{name: "動畫效果 關閉", x: 410, y: 330,
+			want: DisplaySettings{Anim: 0, MsgSpeed: 100},
+			rx0:  350, ry0: 320, rx1: 433, ry1: 339},
+		{name: "動畫速度 最快", x: 410, y: 350,
+			want: DisplaySettings{Anim: 0, AnimSpeed: 2, MsgSpeed: 100},
+			rx0:  302, ry0: 340, rx1: 433, ry1: 359},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			g.MoveMouse(c.x, c.y)
+			before := snapshot(g)
+			g.Click(c.x, c.y)
+			if got := g.DisplaySettings(); got != c.want {
+				t.Fatalf("點了「%s」之後是 %+v，預期 %+v", c.name, got, c.want)
+			}
+			x0, y0, x1, y1, n := diffBounds(before, snapshot(g))
+			if n == 0 {
+				t.Fatalf("點了「%s」畫面一個像素都沒變", c.name)
+			}
+			if x0 < c.rx0 || x1 > c.rx1 || y0 < c.ry0 || y1 > c.ry1 {
+				t.Fatalf("點了「%s」變動範圍是 (%d,%d)-(%d,%d)，"+
+					"超出 (%d,%d)-(%d,%d)",
+					c.name, x0, y0, x1, y1, c.rx0, c.ry0, c.rx1, c.ry1)
+			}
+		})
+	}
+
+	// 上限 300：從 100 按 20 下只到 300，再按不動。
+	for i := 0; i < 21; i++ {
+		g.Click(405, 310)
+	}
+	if got := g.DisplaySettings().MsgSpeed; got != 300 {
+		t.Fatalf("一直按「＋」之後訊息速度是 %d，原版停在 300", got)
+	}
+	// 下限：原版的判斷是「不到 10 就不減」，所以按到底是 0。
+	for i := 0; i < 40; i++ {
+		g.Click(421, 310)
+	}
+	if got := g.DisplaySettings().MsgSpeed; got != 0 {
+		t.Fatalf("一直按「−」之後訊息速度是 %d，原版停在 0", got)
+	}
+}
+
+// TestSettingsCloseIsRightClick 「結束」與右鍵走同一條出口。
+//
+// 原版的「結束」只是讓熱區分派回傳 1，設定畫面那個訊息迴圈跟著結束、
+// `retf` 回呼叫端；右鍵（輸入結果 2）收在**同一個** `retf` 上
+// （`docs/re/286` §三）。所以兩條路離開之後應該落在同一張畫面。
+func TestSettingsCloseIsRightClick(t *testing.T) {
+	open := func(t *testing.T) *Game {
+		t.Helper()
+		g := reachCommandPhase(t)
+		g.Click(544, 125)
+		g.Click(560, 185)
+		if g.State() != StateSettings {
+			t.Fatalf("點完「設定」之後在 %v", g.State())
+		}
+		return g
+	}
+	byRight := open(t)
+	byRight.RightClick(410, 370)
+
+	byClose := open(t)
+	byClose.Click(410, 370) // 「結束」那一格
+	if byClose.State() != byRight.State() {
+		t.Fatalf("「結束」離開之後在 %v，右鍵離開之後在 %v",
+			byClose.State(), byRight.State())
+	}
+	if !bytes.Equal(snapshot(byClose), snapshot(byRight)) {
+		t.Fatal("「結束」與右鍵離開之後的畫面不一樣")
+	}
+}
