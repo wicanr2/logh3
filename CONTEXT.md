@@ -458,21 +458,25 @@ BIOS 計時器計數只在遊戲 chain 回 BIOS 時才加（每 32 刻一次，�
 
 **核實**：`internal/screen`、`internal/game` 裡出現 `strategy-report-strings|StrategyReport` 就是做好了
 
-#### music-screen-mapping — 原版哪個畫面播哪一首還沒解
+#### music-settings-wiring — 設定畫面的三格音樂設定還沒接進 remake
 
-*re（逆向：機制還沒讀出來）*
+*feature（功能：玩家會撞到、但 remake 還沒有）*
 
-目前只有開頭動畫有證據：`docs/internals/19` §播放環境（confirmed）記著
-`OPEN.EXE` 播 `OPEN_M.MDS`，remake 就只接了這一條（`cmd/gin3` 的 `tuneFor`）。
-其餘 21 首對應哪個畫面、`MUSIC.INI` 怎麼在 `_F`／`_M` 之間選，都還沒讀。
-**不要猜一首填上去**：猜的聽起來「有音樂」而且不會報錯，
-於是這條缺口就再也沒有人去查了。
+對照表已經解出來也接上了（`music-screen-mapping`、`internal/audio.TuneFor`），
+但 remake 一律用出廠預設：設定畫面上點「英雄交響曲」不會換曲、
+載入存檔也不會把存檔裡那一首帶進來。原版那三格是
+`ds:8F33`（音源）／`8F34`（平時配樂 0–5）／`8F35`（戰鬥配樂 0–2），
+存檔位移 `WORK.DT?` 的 `+0x1F`／`+0x20`／`+0x21`（`docs/internals/17`、`30`）。
+要接三處：設定畫面的十二個動作碼（碼 0–2 → 音源、3–8 減 3 → 平時、
+9–11 減 9 → 戰鬥，前兩組改完會立刻試聽，第三組不會）、
+`LoadSlot` 把三格讀進來、`SaveSlot` 寫回去。
+**交戰演出那個狀態 remake 還沒有**，所以 `Settings.BattleTune` 現在沒有出口。
 
-**做完的判準**：每一首都對到它在原版裡實際播放的時機，來源是反組譯或收據，不是推測。
+**做完的判準**：設定畫面改完馬上換曲、存檔存得下也讀得回來，三格的值與原版 WORK.DT? 的三個位元組一致。
 
-**證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/internals/19-ibm16-350.md`](docs/internals/19-ibm16-350.md)
+**證據**：[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/internals/data/music-mapping.json`](docs/internals/data/music-mapping.json)
 
-**核實**：`cmd/gin3` 裡還找得到 `其餘畫面回空字串，不要猜`（自承還在 ＝ 還沒做）
+**核實**：`cmd/gin3` 裡還找得到 `設定畫面上的點擊與存檔載入還沒把`（自承還在 ＝ 還沒做）
 
 #### music-fm-capture — `_F` 那一組是 FM 音源，用 GM 音色庫合出來不是原音
 
@@ -739,7 +743,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-6 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+7 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -761,6 +765,27 @@ pkg-config，標準建置 image 沒有——放進 internal 會讓 `go test ./..
 **證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
 
 **核實**：`TestMissingListsExactlyTheAbsentOnes` 釘在 `internal/audio`
+
+#### music-screen-mapping — 原版哪個畫面播哪一首
+
+*re（逆向：機制還沒讀出來）*
+
+22 首全部對上（`docs/re/274`）。**原版沒有「畫面 → 曲子」的對照表**：
+八首 `BGM_*` 裡六首是玩家在設定畫面挑的平時配樂、兩首是挑的戰鬥配樂，
+曲號存在 `ds:8F34`／`8F35`，跟著存檔走（`WORK.DT?` `+0x20`／`+0x21`）。
+`_F` ＝ FM（OPL）、`_M` ＝ MPU-401；`MUSIC.INI` 不直接選，它只說
+有沒有 MIDI 介面（`+4` 的埠，出貨值 `FFFF` ＝ 無），所以原版開箱一律 `_F`。
+開頭動畫一律 `OPEN_M`（`OPEN.EXE` 兩個外皮都寫死 `'m'`，`OPEN_F` 是死素材）；
+結局照命令列第二個數字 `9 1`／`9 2` → `END_1`／`END_2`。
+主選單與防拷問答沒有配樂；戰術畫面沿用平時配樂，換戰鬥曲的是交戰演出。
+remake 接在 `internal/audio.TuneFor`，目前用出廠預設；
+**設定畫面的點擊與存檔載入還沒把那三格接進來**（見 `music-settings-wiring`）。
+
+**做完的判準**：每一首都對到它在原版裡實際播放的時機，來源是反組譯或收據，不是推測。
+
+**證據**：[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/internals/data/music-mapping.json`](docs/internals/data/music-mapping.json)
+
+**核實**：`TestEveryTuneIsReachable` 釘在 `internal/audio`
 
 #### strategic-ai-advance-turn — 戰略 AI 接進 `advanceTurn`
 
@@ -833,6 +858,7 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
 
 <!-- worklist:end -->
+
 
 
 

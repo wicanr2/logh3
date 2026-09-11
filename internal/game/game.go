@@ -1262,6 +1262,9 @@ func (g *Game) pickQuestion() error {
 // State 回目前在哪個畫面。
 func (g *Game) State() State { return g.state }
 
+// Faction 回玩家陣營：0 帝國、1 同盟。對戰模式下是**目前輪到的那一方**。
+func (g *Game) Faction() int { return g.faction }
+
 // Typed 回防拷問答已經打進去的字串（畫面上還沒畫，見下方的未確認事項）。
 func (g *Game) Typed() string { return string(g.typed) }
 

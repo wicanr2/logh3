@@ -1,0 +1,85 @@
+{
+  "source": "docs/re/274-which-screen-plays-which-tune.md",
+  "note": "曲號 ↔ 曲名 ↔ 播放時機。原版沒有「畫面 → 曲子」的對照表：BGM 是玩家在設定畫面挑的，曲號存在 WORK.DT? +0x20／+0x21。人看的版本在 docs/internals/17-mds.md。",
+  "grade": "confirmed",
+  "settings": {
+    "device": {
+      "var": "ds:8F33",
+      "save_offset": 31,
+      "note": "音源。開機時照偵測結果給預設值：有 MPU-401 → 0，只有 OPL → 1，都沒有 → 2。",
+      "values": [
+        {"value": 0, "label": "MIDI", "suffix": "M"},
+        {"value": 1, "label": "ＦＭ", "suffix": "F"},
+        {"value": 2, "label": "關閉", "suffix": null}
+      ]
+    },
+    "bgm": {
+      "var": "ds:8F34",
+      "save_offset": 32,
+      "default": 0,
+      "note": "平時配樂，六選一。設定畫面的動作碼 3–8 減 3 就是這個值。"
+    },
+    "battle": {
+      "var": "ds:8F35",
+      "save_offset": 33,
+      "default": 0,
+      "note": "戰鬥配樂，三選一。動作碼 9–11 減 9。值 0／1 是 BGM_6／BGM_7；值 2 代表沿用 ds:8F34 那一首。"
+    }
+  },
+  "filename_formats": [
+    {"exe": "OPEN.EXE", "format": "open_%c.mds", "at": "ds:031E"},
+    {"exe": "GIN3PS.EXE", "format": "bgm_%1d%c.mds", "at": "ds:69F4"},
+    {"exe": "ENDING.EXE", "format": "end_%1d%c.mds", "at": "ds:A2AC"}
+  ],
+  "tunes": [
+    {"files": ["BGM_0F", "BGM_0M"], "number": 0, "group": "bgm", "label": "波琍璐",
+     "label_note": "原版把「波麗露」印成「波琍璐」，照原樣保存",
+     "when": "平時配樂六選一，出廠預設"},
+    {"files": ["BGM_1F", "BGM_1M"], "number": 1, "group": "bgm", "label": "英雄交響曲",
+     "when": "平時配樂六選一"},
+    {"files": ["BGM_2F", "BGM_2M"], "number": 2, "group": "bgm", "label": "悲愴交響曲",
+     "when": "平時配樂六選一"},
+    {"files": ["BGM_3F", "BGM_3M"], "number": 3, "group": "bgm", "label": "來自新世界",
+     "when": "平時配樂六選一"},
+    {"files": ["BGM_4F", "BGM_4M"], "number": 4, "group": "bgm", "label": "四季．夏",
+     "when": "平時配樂六選一"},
+    {"files": ["BGM_5F", "BGM_5M"], "number": 5, "group": "bgm", "label": "沈默的戰場",
+     "when": "平時配樂六選一"},
+    {"files": ["BGM_6F", "BGM_6M"], "number": 6, "group": "battle", "label": "全艦攻擊",
+     "when": "交戰演出（ANI_PNL1.A98 ＋ COMANI.BMG），戰鬥配樂出廠預設"},
+    {"files": ["BGM_7F", "BGM_7M"], "number": 7, "group": "battle", "label": "決戰前夕",
+     "when": "交戰演出，戰鬥配樂第二個選項"},
+    {"files": ["OPEN_M"], "number": null, "group": "open", "label": null,
+     "when": "開頭動畫。OPEN.EXE 的 FM 與 MIDI 兩條路徑都寫死 'm'"},
+    {"files": ["OPEN_F"], "number": null, "group": "open", "label": null,
+     "when": "永遠不會播：OPEN.EXE 裡沒有任何一處送 'f'"},
+    {"files": ["END_1F", "END_1M"], "number": 1, "group": "ending", "label": null,
+     "when": "帝國勝利結局（ENDING.EXE 的命令列 `9 1`）"},
+    {"files": ["END_2F", "END_2M"], "number": 2, "group": "ending", "label": null,
+     "when": "同盟勝利結局（命令列 `9 2`）"}
+  ],
+  "silent_screens": [
+    {"screen": "主選單", "why": "GIN3PS.EXE 啟動到答完防拷題之間沒有開過任何 .MDS（收據 key1／main1e／chain1）"},
+    {"screen": "防拷問答", "why": "同上"}
+  ],
+  "music_ini": {
+    "size": 6,
+    "shipped": "00 00 01 FF FF FF",
+    "same_as": "MUSIC.ORG",
+    "fields": [
+      {"offset": 0, "width": 1, "meaning": null, "grade": "未解"},
+      {"offset": 1, "width": 1, "meaning": null, "grade": "未解"},
+      {"offset": 2, "width": 1, "meaning": "音效裝置（連同 GIN3SP.VOC 交給音效初始化）", "grade": "強證據"},
+      {"offset": 4, "width": 2, "meaning": "MPU-401 基底埠；FFFF 或 0 ＝ 沒有 MIDI 介面", "grade": "confirmed"}
+    ],
+    "midi_interface_menu": [
+      {"index": 0, "label": "無", "port": 65535},
+      {"index": 1, "label": "Roland : 300H", "port": 768},
+      {"index": 2, "label": "Roland : 320H", "port": 800},
+      {"index": 3, "label": "Roland : 330H", "port": 816},
+      {"index": 4, "label": "Roland : 332H", "port": 818},
+      {"index": 5, "label": "Roland : 334H", "port": 820},
+      {"index": 6, "label": "Roland : 336H", "port": 822}
+    ]
+  }
+}

@@ -47,25 +47,25 @@ type app struct {
 	fed    bool
 }
 
-// tuneFor 回這個狀態該播哪一首。**只回有證據的**——目前只有開頭動畫：
-// `docs/internals/19` §播放環境（confirmed）記著 `OPEN.EXE` 播 `OPEN_M.MDS`。
+// tuneFor 回這個狀態該播哪一首。對照表本身在 `internal/audio`
+// （純的、測得到；這個套件連結時要 ALSA，放不了測試），
+// 來源是 `docs/internals/17` §哪個畫面播哪一首 與 `docs/re/274`。
 //
-// ⚠ **其餘畫面回空字串，不要猜。** 猜一首放上去，聽起來「有音樂」而且
-// 不會報錯，於是「原版哪個畫面播哪一首還沒解」就再也沒有人去查了。
-// 那條記在 worklist 的 `music-screen-mapping`。
-func tuneFor(st game.State) string {
-	if st == game.StateIntro {
-		return "OPEN_M"
-	}
-	return ""
+// 三格設定目前用原版的出廠預設：設定畫面上的點擊與存檔載入還沒把
+// `ds:8F33`／`8F34`／`8F35` 接進來，所以平時配樂固定是 `BGM_0F`。
+func (a *app) tuneFor() string {
+	return audio.TuneFor(a.g.State(), a.g.Faction(), a.musicSettings())
 }
+
+// musicSettings 目前回出廠預設。接上設定畫面之後改成從遊戲狀態讀。
+func (a *app) musicSettings() audio.Settings { return audio.DefaultSettings }
 
 func (a *app) Update() error {
 	// 時間往前走一格。目前只有開頭動畫在用（一格 125.3 ms，
 	// `docs/spec/020`）；其他畫面都是事件驅動的。
 	a.g.Tick(time.Second / time.Duration(ebiten.TPS()))
 	if a.music != nil {
-		if tune := tuneFor(a.g.State()); tune == "" {
+		if tune := a.tuneFor(); tune == "" {
 			a.music.Stop()
 		} else if err := a.music.Play(tune); err != nil {
 			// 配樂出錯不該把遊戲帶走，但**要留下痕跡**——安靜地沒有音樂
