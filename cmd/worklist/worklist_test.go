@@ -390,3 +390,32 @@ func TestScoreCountsFromData(t *testing.T) {
 		t.Errorf("做完的條目不該出現在還差多少：\n%s", out)
 	}
 }
+
+// WriteBack 跑兩次要與跑一次相同。
+//
+// ⚠ 不冪等的症狀是**每跑一次多一個空行**，在 diff 裡幾乎看不見，而
+// `render -w` 是每一輪收尾都會跑的——十幾次之後 CONTEXT.md 的某一節
+// 前面就堆了一整片空白，沒有任何東西會開口。
+func TestWriteBackIsIdempotent(t *testing.T) {
+	dir := t.TempDir()
+	path := dir + "/ctx.md"
+	orig := "# 標題\n\n" + markBegin + "\n舊內容\n" + markEnd + "\n\n## 下一節\n"
+	if err := os.WriteFile(path, []byte(orig), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	body := markBegin + "\n\n新內容\n\n" + markEnd + "\n"
+	if err := WriteBack(path, body); err != nil {
+		t.Fatal(err)
+	}
+	once, _ := os.ReadFile(path)
+	if err := WriteBack(path, body); err != nil {
+		t.Fatal(err)
+	}
+	twice, _ := os.ReadFile(path)
+	if string(once) != string(twice) {
+		t.Errorf("跑兩次不同：\n一次 %q\n兩次 %q", once, twice)
+	}
+	if !strings.Contains(string(once), markEnd+"\n\n## 下一節") {
+		t.Errorf("標記後面原本的空行應該保留：%q", once)
+	}
+}

@@ -1203,48 +1203,6 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 
 <!-- worklist:end -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## 已解的逆向歷程
 
 舊 worklist 那 65 條的原文搬到 [`docs/solved-history.md`](docs/solved-history.md)

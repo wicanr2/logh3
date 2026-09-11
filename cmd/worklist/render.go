@@ -141,6 +141,14 @@ func WriteBack(path, body string) error {
 		return fmt.Errorf("%s 裡找不到 worklist:begin／end 標記——"+
 			"第一次接管請自己在該節放好標記，避免蓋掉手寫內容", path)
 	}
-	out := s[:i] + body + s[j+len(markEnd):]
+	// ⚠ **要冪等**：`Render` 的結尾已經帶一個換行（`markEnd + "\n"`），
+	// 舊檔 `markEnd` 後面也還留著上一次寫進去的那一個。兩個都留的話
+	// 每跑一次就多一個空行——而那一行在 diff 裡幾乎看不見，於是十幾次
+	// 之後 `## 已解的逆向歷程` 前面就堆了一整片空白（2026-09-11 量到）。
+	rest := s[j+len(markEnd):]
+	if strings.HasSuffix(body, "\n") && strings.HasPrefix(rest, "\n") {
+		rest = rest[1:]
+	}
+	out := s[:i] + body + rest
 	return os.WriteFile(path, []byte(out), 0o644)
 }
