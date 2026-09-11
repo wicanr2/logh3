@@ -177,8 +177,9 @@ func receiptHealth() string {
 		}
 	}
 	return fmt.Sprintf("\n對拍證據：%d/%d 份收據在執行器 %s 上逐位元組重現（%d%%，量於 %s）\n"+
-		"  其餘的差異已知是時序（新執行器修好了舊版的 BIOS 時鐘與配置器，見 docs/re/270），\n"+
-		"  要重錄才會回到 100%%——在那之前，上面的「通過」有 %d 份的收據還沒重新驗過。\n",
+		"  對不上的 %d 份已逐份分形狀（docs/re/276）：一部分只要重錄，另一部分是\n"+
+		"  輸入沒變但時序變了、同樣的步數落在遊戲的另一個時刻，那些要重挑步數。\n"+
+		"  在處理完之前，上面的「通過」有這 %d 份的收據還沒重新驗過。\n",
 		ok, len(rc.Results), rc.GolemHead, ok*100/len(rc.Results), rc.Generated[:10],
-		len(rc.Results)-ok)
+		len(rc.Results)-ok, len(rc.Results)-ok)
 }
