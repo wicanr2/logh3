@@ -102,9 +102,11 @@ func (g *StarGraph) Postures(owner []int, fleets []Fleet) [32]RegionPosture {
 
 // RegionOccupation 是 `056A:0468` 算出來的兩個位元。
 //
-// **bit1 不在裡面**：它來自 `2703:1789`（非首都、非無主、該陣營在這一格
-// 沒有駐軍，再擲 `亂數 % 400`），那一支的後半段還沒讀，所以 remake 只清
-// 不設（`docs/re/245`）。remake 目前也沒有任何地方讀 bit1。
+// **bit1 不在裡面**：它是叛亂，來自 `2703:1789`——非首都、非無主、該陣營
+// 在這一格沒有駐軍，再拿兩個 `亂數 % 400` 的和比一個由未安定度、情報專任
+// 參謀的營運與「已失格數」算出來的門檻；效果是 `2703:1908` 把行星翻成無主
+// （`docs/re/292`、`docs/internals/22`）。**remake 還沒接這條規則**——
+// 這裡只清不設，也沒有任何地方讀 bit1。
 type RegionOccupation struct {
 	Contested bool // bit2：這一格雙方都有艦隊
 	// Occupied 是 bit4：**單方面占據**——有一方的艦隊停在不屬於它的星域裡，

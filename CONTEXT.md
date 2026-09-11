@@ -717,20 +717,27 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：要人判——沒有可綁的訊號——它是一份收據上的像素差異，不是程式裡的缺席。查出來之後會有一支新的繪製函式，到時綁它。
 
-#### rebellion-flag-bit1 — 叛亂判定 `2703:1789` 的後半段沒讀（星域 `+0x13` bit1）
+#### rebellion-rule-in-remake — 叛亂規則還沒接進 remake
 
-*原編號 18e · re（逆向：機制還沒讀出來）*
+*feature（功能：玩家會撞到、但 remake 還沒有）*
 
-前置條件讀出來了：不是首都、不是無主、該陣營在這一格沒有駐軍，
-再查 `ds:8F4D[擁有者]` 那位提督的記錄擲 `亂數 % 400`。
-**後半段（亂數怎麼判、叛亂的效果）還沒讀**，所以 remake 的 bit1 只清不設，
-也沒有任何地方讀它。定性的依據是報告訊息表的「〈星系名〉星系　發生叛亂。」
+規則與效果都讀完了（[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md)），
+`internal/rules` 還沒有對應的實作：`RegionOccupation` 只清 bit1 不設，
+也沒有任何地方讀它，所以 remake 打到天荒地老都不會有星系叛變。
 
-**做完的判準**：叛亂會發生，且與收據的 bit1 逐格相同。
+接的時候要一起接的三件事：判定用的亂數**一格抽十次**（只用第 1 與第 6 次），
+抽少了後面每一格都會歪；`ds:B75C` 那份**載入當下的擁有者快照**要留著
+（機率的分母是「從載入到現在已失幾格」）；還有 `2703:1908` 那趟
+**排了沒用的 qsort**——照原版翻切片的第 0 顆或最後一顆，不是最有錢那顆。
 
-**證據**：[`docs/re/245-region-flag-bits-one-and-four.md`](docs/re/245-region-flag-bits-one-and-four.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)
+報告 `056A:06F3` 是模態的，會把逐格迴圈擋在中間，接上去之後
+remake 的回合處理也要照這個時序。
 
-**核實**：`internal/rules/regionposture.go` 裡還找得到 `後半段還沒讀`（自承還在 ＝ 還沒做）
+**做完的判準**：remake 跑同一個局面時叛亂的星域與原版逐格相同，被翻的行星與經濟力／防衛力也相同。
+
+**證據**：[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)
+
+**核實**：`internal/rules` 裡出現 `Rebellion` 就是做好了
 
 #### phezzan-event-trigger — 費沙事件的觸發條件未解
 
@@ -819,7 +826,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-15 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+16 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1097,6 +1104,31 @@ ETen 與 HKSCS 表都查無，**代表什麼字未知**，重畫字型只能照�
 
 **核實**：`TestMonthEndMatchesWorkBlock` 釘在 `internal/game`
 
+#### rebellion-flag-bit1 — 叛亂判定 `2703:1789` 與它的效果（星域 `+0x13` bit1）
+
+*原編號 18e · re（逆向：機制還沒讀出來）*
+
+整條讀完了（[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md)）：
+非首都、非無主、該陣營在這一格沒有駐軍才進判定；
+門檻 ＝ 未安定度的四段階梯 × 100 ÷ 情報專任參謀（`ds:8F4D[擁有者]`）的營運
+÷（該陣營從載入到現在已失的格數 ＋ 1），拿 `r1 ＋ r2` 去比，
+兩個亂數分別是一格十次抽樣裡的第 1 次與第 6 次（`% 400`）。
+
+效果是 `0374:0556` 在同一次「實行」的後半讀到 bit1 就跑 `2703:1908`：
+依未安定度決定翻幾顆行星（>160 全部、>120 兩顆、其餘一顆），每顆
+`2703:1ADB` 把擁有者改成無主、經濟力剩三分之二、防衛力扣掉上限的三分之一。
+**它排了一趟 qsort 卻沒用排序的結果**，實際翻的是切片的第 0 顆
+（未安定度 > 80）或最後一顆（≤ 80）——原版的 bug，remake 要照著重現。
+
+報告是 `056A:06F3`（`ds:085D` ＋ `ds:086F`），模態、會把逐格迴圈擋住。
+remake 端還沒接，另立一條 `rebellion-rule-in-remake`。
+
+**做完的判準**：叛亂會發生，且與收據的 bit1 逐格相同。
+
+**證據**：[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/re/245-region-flag-bits-one-and-four.md`](docs/re/245-region-flag-bits-one-and-four.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)
+
+**核實**：`docs/internals/22-stellar-dt.md` 裡出現 `2703:1908` 就是做好了
+
 #### fleet-record-fields — 艦隊記錄 122 bytes 逐格都有交代了
 
 *原編號 20 · re（逆向：機制還沒讀出來）*
@@ -1151,6 +1183,8 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
 
 <!-- worklist:end -->
+
+
 
 
 

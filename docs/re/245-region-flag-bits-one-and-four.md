@@ -137,3 +137,10 @@ for 星域 i in 0..31:
 `rules.StarGraph.Occupations` ＋ `ApplyOccupation`，在 `recomputeRegions`
 裡跑在 `Postures` 之前（照量到的順序）。**bit1 只清不設**——`2703:1789`
 的後半段還沒讀，而 remake 目前沒有任何地方讀 bit1。
+
+---
+
+> 2026-09-11 補：`2703:1789` 的後半段、叛亂的效果與報告都讀完了，
+> 見 [`292`](292-rebellion-decision-and-effect.md)（含三份收據）。
+> 本篇「後半段還沒讀」那幾句到此為止；bit1 的現況以
+> [`docs/internals/22`](../internals/22-stellar-dt.md) 為準。
