@@ -210,9 +210,11 @@ func (u BattleUnit) Moving() bool { return u.X != u.TargetX || u.Y != u.TargetY 
 //
 // terrain／cells 給 nil 就不判地形——測試與還沒載到原版地圖時用。
 //
-// ⚠ 原版走的是艦隊**現在的朝向** `+0x4A`，另有一支慢慢轉向目標朝向
-// `+0x4C` 的邏輯（`1C03:0361`）**還沒逆向**。這裡直接朝目標走，
-// 轉彎的落差還沒量。
+// ⚠ 這是分隊層的近似。原版艦隊層有兩支實行常式（`docs/re/294`）：
+// `+0x48` bit4 沒設的 `1C03:0185` 先轉向目的地方位、沿現在的朝向 `+0x4A`
+// 走；bit4 有設的 `1C03:0361` 不轉身、每一步直指目的地平移。兩支都在
+// 到了之後才轉向抵達朝向 `+0x4C`。艦隊層照原版的那一支是 `AdvanceFleet`；
+// 這裡直接朝目標走。
 func AdvanceBattle(u *BattleUnit, t *BattleTerrain, cells []uint8) bool {
 	if u == nil || !u.Moving() {
 		return false

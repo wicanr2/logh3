@@ -830,18 +830,37 @@
     {
       "id": "battle-arrival-facing",
       "status": "open",
-      "layer": "re",
-      "title": "抵達朝向 `+0x4C` 的邏輯沒逆向（`1C03:0361`）",
+      "layer": "parity",
+      "title": "艦隊的短程平移與抵達轉向 remake 還沒照原版（`1C03:0361`／`1C03:0524`）",
       "body": [
-        "remake 直接朝目標走，轉彎的落差還沒量。"
+        "原版的規則讀完了（[`docs/re/294`](docs/re/294-short-move-strafe-and-arrival-facing.md)）：",
+        "`+0x48` bit4 在下命令時由 `2583:052C` 設（距離 < 行程 ÷ 3 ＋ 4.0），`1C03:015C` 依它選實行常式——",
+        "有設走 `1C03:0361`，不轉身、每一步直指目的地平移，朝向整段不變；沒設走 `1C03:0185`",
+        "（先轉身再沿 `+0x4A` 走，`docs/re/129`）。兩支都在到了之後才用 `1C03:0524` 逐步轉向 `+0x4C`，",
+        "轉完就回、不再扣額度。`+0x4C` 的四個寫入者（開戰、玩家命令、AI 兩條）也列齊了。",
+        "",
+        "**還差的是 remake 這一端**，三件：",
+        "",
+        "1. `AdvanceFleet` 沒有 bit4 那一支，短程移動也先轉身，隊形跟著轉。",
+        "2. 到了之後不轉向 `+0x4C`，改由 `internal/game` 直接切換（`docs/spec/027` 的已知差異）。",
+        "3. 到了之後每叫一次扣 1：拿 `s3fltseq` 槽 30 的起點量過，會多繞 12,899,962 次、花 0.87 秒，",
+        "   額度剩 `0x7FFFF`（原版 `0xCCD678`）。",
+        "",
+        "平移那一段**現有收據沒有樣本**：78 份傾印裡 bit4 有設的 32 筆，唯一在路上的離目的地只有 3.16，",
+        "兩支常式在這裡結果相同。要一份目的地選在內圈裡、距離 > 8、抵達朝向與方位差很多的收據，",
+        "`實行` 前後各倒一份（`docs/re/294` 末節）。"
       ],
-      "acceptance": "分隊的朝向變化與收據逐回合相同。",
+      "evidence": [
+        "docs/re/294-short-move-strafe-and-arrival-facing.md",
+        "docs/spec/027-fleet-move-and-battle-order.md"
+      ],
+      "acceptance": "`s3fltseq` 槽 30 的 `ft02` → `ft03` 由 remake 跑出朝向 170、額度 `0xCCD678`；另一份短程平移（距離 > 8）的 same-state 收據，實行前後艦隊的 `+0x4A`／`+0x5C`／`+0x5E`／`+0x56` 與 remake 逐位元相同。",
       "verify": {
         "kind": "present",
         "paths": [
-          "internal/rules/battle.go"
+          "internal/rules/fleetmove.go"
         ],
-        "pattern": "`\\+0x4C` 的邏輯（`1C03:0361`）\\*\\*還沒逆向\\*\\*"
+        "pattern": "短程平移（`1C03:0361`）與抵達轉向 `\\+0x4C` remake 還沒接"
       }
     },
     {

@@ -81,6 +81,11 @@ func turnFleet(f *FleetMover, bearing int) bool {
 //
 // `passable` 回 true 表示那個點站得住（原版 `2583:040C` 回 0）。傳 nil
 // 當成處處可站。回 true 表示這一次還有得做，false 表示額度用完了。
+//
+// ⚠ 這裡只有 `+0x48` bit4 沒設的那一支（`1C03:01B5` ＝ `1C03:0185`）。
+// 短程平移（`1C03:0361`）與抵達轉向 `+0x4C` remake 還沒接：原版到了之後
+// 用 `1C03:0524` 逐步轉向 `+0x4C`、轉完就回，不再扣額度；這裡到了之後
+// 不轉，而且每叫一次扣 1，扣到不足一步才停（`docs/re/294`）。
 func AdvanceFleet(f *FleetMover, passable func(x, y int) bool) bool {
 	if f == nil {
 		return false
