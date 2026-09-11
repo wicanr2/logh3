@@ -2,11 +2,11 @@ package main
 
 import (
 	"crypto/sha256"
-	"fmt"
-	"reflect"
 	"encoding/hex"
+	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -377,9 +377,9 @@ func TestScoreCountsFromData(t *testing.T) {
 		"s1 顯示層 100% 1/1",   // 全過
 		"s2 畫面 50% 1/2",     // 一過一沒過
 		"矩陣合計 2/3 條通過（66%）", // 只數矩陣層
-		"re 1 條",             // 矩陣以外的層分開數
-		"feature 1 條",        // 只數 open，不含那條 done
-		"丙",                  // 沒過的那一列要點名
+		"re 1 條",            // 矩陣以外的層分開數
+		"feature 1 條",       // 只數 open，不含那條 done
+		"丙",                 // 沒過的那一列要點名
 	} {
 		if !strings.Contains(flat, want) {
 			t.Errorf("報表少了 %q，實際：\n%s", want, out)
