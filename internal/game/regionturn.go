@@ -18,8 +18,9 @@ import (
 // （`docs/re/245`）。收據 `flagpass` 量到它跑在 `2703:08DE` **之前**，
 // 兩支都在回合計數器遞增之前。
 //
-// **順序不能換**：路徑表是擁有者的函數。這裡做的是第一步與 `2703:0933`
-// 那一步；彙總與未安定度 remake 各自現算，不需要這一圈。
+// **順序不能換**：路徑表是擁有者的函數。這裡做的是第一步、`2703:0933`
+// 與 `2703:0DA1`（未安定度，`recomputeUnrest`，`docs/spec/042`）；彙總
+// remake 各自現算，不需要這一圈。
 
 // 星域記錄裡這一圈會寫到的三個位移（`docs/internals/22`）。
 const (
@@ -90,6 +91,14 @@ func (g *Game) refreshRegionPosture() {
 			binary.LittleEndian.PutUint16(rec[regionCapCostOff:], uint16(p.CapitalCost))
 		}
 	}
+	// `2703:08DE` 逐格的第三支 `2703:0DA1`。回合計數器還沒進位
+	// （remake 的 `g.turn` 在 advanceTurn 開頭就先加了）。
+	//
+	// 原版是逐格「態勢 → 彙總 → 未安定度」交錯跑，所以第 i 格讀到的是
+	// 編號比它大的鄰居**還沒更新**的 `+0x13`；這裡全部更新完才算。兩者只在
+	// 這一圈改了鄰居的 bit2 時才會不同，而下一個座位回合開頭的那一次
+	// （`finishTurn`）會照更新完的旗標再算一次，玩家看得到的是那一次。
+	g.recomputeUnrest(g.turn - 1)
 }
 
 // runRegionPass 跑整條回合結束的星域重算，並在有易主時**停在報告上**

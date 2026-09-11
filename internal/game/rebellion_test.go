@@ -66,9 +66,9 @@ func runRebellionTurn(t *testing.T, ops byte) *Game {
 //   - 32 格裡哪幾格擲亂數與原版逐格相同；帝國那 9 格的門檻與 r1 ＋ r2 逐格
 //     相同（`docs/re/292` 那張表）；叛亂的星域與收據 `rbx292e` 的
 //     `2703:1908` 七次相同。
-//   - 同盟那 10 格的未安定度 remake 沒有在 AI 回合裡重算
-//     （worklist `region-unrest-recompute`），門檻改驗「代進原版的未安定度
-//     就得到原版的門檻」。
+//   - 19 格的門檻逐格相同，**同盟那 10 格也是**：它們的未安定度原版在 AI
+//     回合裡重算過（`docs/spec/042`），remake 接上之後才直接對得上。先前這裡
+//     改驗「代進原版的未安定度就得到原版的門檻」，那是上游還沒修時的繞道。
 func TestRebellionSameStateRandom(t *testing.T) {
 	g := runRebellionTurn(t, 4)
 
@@ -127,22 +127,10 @@ func TestRebellionSameStateRandom(t *testing.T) {
 		}
 		// 擁有者看判定當下的（回合結束時叛亂的格子已經變成無主）。
 		owner := orig(i, 0x12)
-		// 帝國那 9 格：門檻逐格相同。
-		if owner == 0 {
-			if roll.Threshold != thr {
-				t.Errorf("星域 %d：門檻 %d，原版 %d", i, roll.Threshold, thr)
-			}
-			continue
-		}
-		// 同盟那 10 格：**未安定度是上游的落差**——原版在 AI 回合裡重算過
-		// （`rbx292_a` → `rbx292_b`，同盟 13 格各降 4–5），remake 載入之後
-		// 不再重算（worklist `region-unrest-recompute`）。拿原版的未安定度
-		// 代進 remake 的營運與已失格數，要得到原版的門檻——也就是除了
-		// 未安定度以外都一樣。
-		ops := rules.StaffOps(g.workRecord(), g.res.Admiral, rules.PostIntel, owner)
-		if got := rules.RebellionThreshold(orig(i, 0x7D), ops, 0); got != thr {
-			t.Errorf("星域 %d：原版的未安定度 %d 代進 remake 的營運 %d 得門檻 %d，原版 %d",
-				i, orig(i, 0x7D), ops, got, thr)
+		// 兩個陣營都逐格比門檻。同盟那 10 格的未安定度要靠 AI 回合裡的
+		// 重算（`docs/spec/042`）才對得上——拿掉重算，這裡會有 9 格不同。
+		if roll.Threshold != thr {
+			t.Errorf("星域 %d（陣營 %d）：門檻 %d，原版 %d", i, owner, roll.Threshold, thr)
 		}
 	}
 	// 同盟的情報參謀在 AI 回合裡換成提督 75（營運 128）。

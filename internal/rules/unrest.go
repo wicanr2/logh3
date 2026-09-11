@@ -1,6 +1,9 @@
 package rules
 
-// 未安定度：載入一個局面時整份重算，算式是 `2703:0DA1`（`docs/re/43`）。
+// 未安定度：算式是 `2703:0DA1`（`docs/re/43`、`docs/spec/006`）。載入一個局面
+// 時整份重算，遊戲進行中每一次 `090A:0E6D`（稅率或參謀一變、每次「實行」的
+// 扣維持費、每個座位回合開頭）與回合尾巴的 `2703:08DE` 也都整份重算
+// （`docs/spec/042`）。
 //
 // 算出來的其實是**治安度**（0–200），記錄裡的 `+0x7D` 是它的補數：
 // `未安定度 = 200 − 治安度`。畫面上的治安百分比 ＝ 治安度 / 2。
@@ -50,6 +53,68 @@ type UnrestState struct {
 	Admirals []byte // 提督表，一筆 AdmiralRecord
 	Graph    *StarGraph
 	Params   UnrestParams
+
+	// FleetList 是 remake 自己的艦隊表。有給就取代 Fleets（f6 只讀陣營、
+	// 所在星域、`+0x08 == 5`、`+0x0F` 與指揮官，`Fleet` 都有）。
+	FleetList []Fleet
+
+	// Paths 是尾巴那一段讀的路徑表。nil ＝ **載入當下**那一種：距離一律
+	// 小於 `0x800`、步數用相鄰圖的最短步數（`docs/spec/006` 量到的）。
+	// 遊戲進行中原版讀的是 `2B99:0003` 照擁有者建好的那兩張表
+	// （`docs/spec/042`），用 `StarGraph.UnrestPaths` 建。
+	Paths *UnrestPaths
+}
+
+// UnrestPaths 是未安定度尾巴那一段讀的兩組路徑表，以陣營索引：
+// `Dist` 給 `2B99:028F`（距離矩陣 `ds:D062`／`ds:D066`），`Mid` 給
+// `2B99:0450` 數步數（中點矩陣 `ds:D06A`／`ds:D06E`）。
+type UnrestPaths struct {
+	Dist [2][][]int
+	Mid  [2][][]int
+}
+
+// UnrestPaths 照 `2B99:0003` 的做法（`2B99:007D` ＋ `2B99:01B1`，兩個陣營
+// 各一次）用現在的擁有者建路徑表。`owner` 是 32 格的 `+0x12`。
+func (g *StarGraph) UnrestPaths(owner []int) *UnrestPaths {
+	p := &UnrestPaths{}
+	for f := 0; f < 2; f++ {
+		p.Dist[f], p.Mid[f] = g.BuildTables(owner, f)
+	}
+	return p
+}
+
+// unrestHalveCost 是 `2703:0E9B` 的 `cmp ax, 800h / jb`：到首都的路徑成本
+// （無號）不到它就一步扣 2，到了就把治安度砍半。
+const unrestHalveCost = 0x800
+
+// RouteSteps 是 `2B99:0450(星域, 首都, 陣營)`：從 `from` 一格一格往 `to`
+// 走（每一格都是 `2B99:0302` 的下一格），數走了幾步。`mid` 是那個陣營的
+// 中點矩陣（`255` ＝ 直接相連）。走不到回 -1。
+func RouteSteps(mid [][]int, from, to int) int {
+	if from < 0 || from >= len(mid) || to < 0 || to >= len(mid) {
+		return -1
+	}
+	n, cur := 0, from
+	for cur != to {
+		// 2B99:0302 → 2B99:0349：a ← to；a ← mid[cur][a]，直到 255 回 a。
+		a := to
+		for k := 0; ; k++ {
+			if k > 64 || a < 0 || a >= len(mid[cur]) {
+				return -1
+			}
+			v := mid[cur][a]
+			if v == starDirect {
+				break
+			}
+			a = v
+		}
+		cur = a
+		n++
+		if n > 64 {
+			return -1
+		}
+	}
+	return n
 }
 
 // AdmiralRecord 是提督表一筆的長度。
@@ -59,7 +124,7 @@ const AdmiralRecord = 28
 // 這支只是把「這裡不能用往下取整」講清楚——差 1 會讓 f1 差 2。
 func idiv(a, b int) int { return a / b }
 
-// Unrest 回一個星域載入時算出來的未安定度。
+// Unrest 回一個星域的未安定度（`2703:0DA1` 寫進 `+0x7D` 的那個值）。
 func (s *UnrestState) Unrest(region int) int {
 	r := s.region(region)
 	if r == nil {
@@ -86,25 +151,56 @@ func (s *UnrestState) Unrest(region int) int {
 	if len(ruler) <= admiralRule {
 		return 0
 	}
-	v = idiv(v*int(ruler[admiralRule]), 100)
+	v = rulerScale(v, int(ruler[admiralRule]))
 	if v > 200 {
 		v = 200
 	}
-	// f5（提督那一項）恆等於 0：它要 `+0x09` 最高位有設，而那一格
-	// 載入時會被夾到 127（`docs/re/43`、`docs/internals/08`）。
+	// f5（提督那一項，`2703:10FC`）恆等於 0：它把 `n × p × q ÷ 1000` 的商
+	// 放在 bx，卻把清成 0 的那一格推給 `3310:0130`（整數開根號），
+	// 開根號 0 回 0（`docs/spec/042`）。與提督的旗標無關。
 	v += s.f6(region, owner)
 	if v > 200 {
 		v = 200
 	}
-	// 尾巴：離自己首都幾步，一步扣 2。原版另有一條「路徑成本 >= 0x800
-	// 就砍半」的分支，但那張成本表載入時的值都遠小於 0x800。
-	if d := s.Graph.Hops(CapitalRegion(owner), region); d > 0 {
-		v -= 2 * d
-	}
+	v = s.tail(v, region, owner)
 	if v < 0 {
 		v = 0
 	}
 	return 200 - v
+}
+
+// tail 是 `2703:0E7F` 起那一段：到自己首都的路徑成本 >= 0x800 就把治安度
+// 砍半，否則一步扣 2。
+func (s *UnrestState) tail(v, region, owner int) int {
+	capital := CapitalRegion(owner)
+	if s.Paths == nil {
+		// 載入當下（`docs/spec/006`）：量到的成本都小於 0x800、步數與
+		// 相鄰圖的最短步數相同。
+		if d := s.Graph.Hops(capital, region); d > 0 {
+			v -= 2 * d
+		}
+		return v
+	}
+	dist, mid := s.Paths.Dist[owner], s.Paths.Mid[owner]
+	if capital >= len(dist) || region >= len(dist[capital]) {
+		return v
+	}
+	if uint16(dist[capital][region]) >= unrestHalveCost {
+		return idiv(v, 2)
+	}
+	if d := RouteSteps(mid, capital, region); d > 0 {
+		v -= 2 * d
+	}
+	return v
+}
+
+// rulerScale 是 `2703:0E33`–`0E47`：`v × 統治者 +0x0E ÷ 100`。乘法是
+// `mul cx`（16 × 16 → dx:ax），接著 `cwd / idiv 100`——**高位的 dx 被 cwd
+// 蓋掉**，只留低 16 位元、再當有號數除（`docs/spec/042`）。乘積到 0x8000 以上
+// 就變成負的；呼叫端的 `> 200` 夾限是有號比較，擋不住它——加上 f6 之後
+// 仍是負的，就由尾巴的 `< 0 → 0` 收成治安度 0（未安定度 200）。
+func rulerScale(v, ops int) int {
+	return idiv(int(int16(uint16(v*ops))), 100)
 }
 
 // f1 是稅率、成長率與兩組難度參數揉出來的基底。
@@ -183,16 +279,11 @@ func (s *UnrestState) f4(region int) int {
 // 其中 maxP／maxQ 取各艦隊指揮官（艦隊 `+0x04`）的 `+0x0B`／`+0x13` 最大值。
 func (s *UnrestState) f6(region, owner int) int {
 	sum, p, q := 0, 0, 0
-	for i := 0; (i+1)*FleetRecord <= len(s.Fleets); i++ {
-		f := s.Fleets[i*FleetRecord : (i+1)*FleetRecord]
-		if f[fleetUnusedOff] == 0xFF || int(f[fleetRegionOff]) != region ||
-			int(f[fleetFactionOff]) != owner || f[fleetStateOff] != fleetStateHome {
-			continue
-		}
-		sum += int(f[fleetWeightOff])
-		a := s.admiral(int(f[fleetAdmiralOff]))
+	take := func(weight, admiral int) {
+		sum += weight
+		a := s.admiral(admiral)
 		if a == nil {
-			continue
+			return
 		}
 		if int(a[admiralAbilP]) > p {
 			p = int(a[admiralAbilP])
@@ -200,6 +291,23 @@ func (s *UnrestState) f6(region, owner int) int {
 		if int(a[admiralAbilQ]) > q {
 			q = int(a[admiralAbilQ])
 		}
+	}
+	if s.FleetList != nil {
+		for _, f := range s.FleetList {
+			if f.Region != region || f.Faction != owner || !f.Parked {
+				continue
+			}
+			take(f.Groups, f.Admiral)
+		}
+		return sum * p * q / 10000
+	}
+	for i := 0; (i+1)*FleetRecord <= len(s.Fleets); i++ {
+		f := s.Fleets[i*FleetRecord : (i+1)*FleetRecord]
+		if f[fleetUnusedOff] == 0xFF || int(f[fleetRegionOff]) != region ||
+			int(f[fleetFactionOff]) != owner || f[fleetStateOff] != fleetStateHome {
+			continue
+		}
+		take(int(f[fleetWeightOff]), int(f[fleetAdmiralOff]))
 	}
 	return sum * p * q / 10000
 }

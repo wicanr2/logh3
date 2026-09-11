@@ -27,6 +27,7 @@ const (
 	workMilitary   = 0x3E // 32 位元 × 陣營
 	workTaxTotal   = 0x56 // 32 位元 × 陣營
 	workBlend      = 0xC0 // 8 位元 × 陣營（＝ ds:8FD4，`docs/internals/55`）
+	workRate       = 0xE4 // 8 位元 × 陣營（＝ ds:8FF8，月底收稅時 Blend 的快照，`docs/re/252`）
 	workShipBudget = 0x46 // 32 位元 × 陣營（＝ ds:8F5A，下期船艦建造費）
 	workShipPct    = 0x7E // 8 位元 × 陣營（＝ ds:8F92，造船百分比）
 	workBuildPct   = 0xC2 // 7 bytes × 陣營（＝ ds:8FD6，七個艦種的分配）
@@ -207,6 +208,11 @@ type WorkFields struct {
 	Turn                      int
 	Military, TaxTotal, Blend [2]int
 
+	// Rate 是 `ds:8FF8`：月底真正收稅那一趟（`2703:03AF`）把當下的 Blend
+	// 抄一份過來（`docs/re/252`）。只有未安定度的 f1 讀它
+	// （`docs/spec/006`、`docs/spec/042`）。
+	Rate [2]int
+
 	// ShipPct 是切給造船的百分比（`ds:8F92`），BuildPct 是那筆錢在七個
 	// 艦種之間的分配（`ds:8FD6`）。兩個都是每陣營一份
 	// （`docs/internals/27`、`docs/re/256`、`docs/re/257`）。
@@ -276,6 +282,7 @@ func ReadWork(w []byte) (WorkFields, error) {
 		f.Military[i] = u32(w, workMilitary+i*4)
 		f.TaxTotal[i] = u32(w, workTaxTotal+i*4)
 		f.Blend[i] = int(w[workBlend+i])
+		f.Rate[i] = int(w[workRate+i])
 		f.ShipPct[i] = int(w[workShipPct+i])
 		f.ShipBudget[i] = u32(w, workShipBudget+i*4)
 		f.BudgetStart[i] = u32(w, workBudgetStart+i*4)
@@ -572,6 +579,7 @@ func (s *Slot) Save(dir string, index int) error {
 		put32(work, workMilitary+4*f, s.Military[f])
 		put32(work, workTaxTotal+4*f, s.TaxTotal[f])
 		work[workBlend+f] = byte(s.Blend[f])
+		work[workRate+f] = byte(s.Rate[f])
 		work[workShipPct+f] = byte(s.ShipPct[f])
 		put32(work, workBudgetStart+4*f, s.BudgetStart[f])
 		put32(work, workShipPaid+4*f, s.ShipPaid[f])

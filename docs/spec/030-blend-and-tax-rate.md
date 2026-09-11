@@ -104,9 +104,15 @@ AI 回合結束：
   263／95／134 與收據逐一相同；維持費那一筆同樣接上了
   （`056A:09EB`，`docs/re/236`）。第一個 AI 回合跑完同盟是
   45848 − 426 − 492 ＝ **44930**，與第二個 AI 回合的傾印相同。
-- `0x09413` 那支 `±1`（`docs/re/206`）：在已量到的局面裡沒有被走到。
-- 未安定度：跨月不重算已經量過（`docs/spec/006` 末節）；但**第一個 AI 回合
-  裡原版重算了同盟的 `+0x7D`**（`docs/re/297`：`rbx292_a` → `rbx292_b` 同盟
-  13 格各降 4–5），與 `Blend` 變動、參謀換人落在同一段，寫入者最可能是
-  `090A:0B93` 之後的 `090A:0E6D`（hypothesis）。`refreshBlend` 不重算
-  `+0x7D`，列在 `region-unrest-recompute`。
+- `090A:0372` 那支 `±1`（`docs/re/206`；早期記成 `0x09413`，那是 prologue 的
+  第二個 byte，`docs/re/299`）：在已量到的局面裡沒有被走到。
+- ~~未安定度~~：**接上了**（[`docs/spec/042`](042-region-unrest-recompute.md)）。
+  `2D10:0319` 與 `2D10:0213` 寫完之後都跑 `090A:0B93` → `090A:0E6D`，後者經
+  `2703:02E5` 把 32 格的 `+0x7D` 整份重算；`refreshBlend` 的尾巴跟著跑
+  `recomputeUnrest`。收據 `urx299w` 量到第一個 AI 回合裡重算了七次
+  （`Blend` 2→1、建艦隊與下命令四次、參謀換人、`Blend` 1→0）。
+- **月底分支的回合數差一格**：`runBrain` 用 `g.turn % 10 == 9`，但 remake 的
+  `g.turn` 在 `advanceTurn` 開頭就先加了（第一次「實行」AI 跑的時候原版
+  `ds:8F18` 是 0、`g.turn` 是 1），原版的條件對應 `(g.turn − 1) % 10 == 9`
+  （`docs/re/299` 順帶）。`TestMonthEndKeepsBlend` 設 `g.turn = 8` 對的是原版
+  計數器 8，收據 `monthblend` poke 的是 9。還沒改。

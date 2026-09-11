@@ -1179,8 +1179,8 @@
         "32 格回合結束的擁有者逐一相同。",
         "",
         "remake 自己走到亂數有關的局面（`rbx292e`）也對上了：第一個 AI 回合抽 7 次、進場種子",
-        "AF5AAD71，叛亂的 7 格與收據相同（`ai-attack-reachability`）。同盟的未安定度 remake 沒有在",
-        "AI 回合重算（`region-unrest-recompute`），那一局結果相同、門檻不同。報告畫面跟著 `strategy-report-screen`，",
+        "AF5AAD71，叛亂的 7 格與收據相同（`ai-attack-reachability`）。同盟 10 格的門檻",
+        "也相同（未安定度在遊戲中重算，`region-unrest-recompute`）。報告畫面跟著 `strategy-report-screen`，",
         "`0374:0556` 的其餘三支跟著 `region-turn-upkeep-0556`。"
       ],
       "evidence": [
@@ -1235,32 +1235,116 @@
     },
     {
       "id": "region-unrest-recompute",
-      "status": "open",
+      "status": "done",
       "layer": "feature",
-      "title": "未安定度 `+0x7D` remake 載入之後就不再重算",
+      "title": "未安定度 `+0x7D` 在遊戲進行中的重算",
       "body": [
-        "remake 只在新遊戲與讀存檔時算未安定度。原版在第一個 AI 回合裡就重算了同盟那 13 格",
-        "（`rbx292_a` → `rbx292_b` 各降 4–5，與 `Blend` 2 → 0、參謀換人落在同一段；",
-        "寫入者最可能是 `090A:0B93` 之後的 `090A:0E6D`，`hypothesis`），回合尾巴的",
-        "`2703:08DE` 也逐格跑 `2703:0DA1`（[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)）。",
+        "寫入者只有 `2703:0DA1`，呼叫端三個：新遊戲初始化、`090A:0E6D` → `2703:02E5`（稅率或參謀一變、",
+        "每次「實行」扣維持費之前、每個座位回合開頭）、回合尾巴 `2703:08DE`；一次「實行」整份重算十一次",
+        "（收據 `urx299w` 的時間線，[`docs/re/299`](docs/re/299-region-unrest-writers-and-recompute.md)）。",
+        "遊戲進行中的算式與載入時那一支相同，只差尾巴讀照擁有者建的路徑表（成本 >= `0x800` 砍半、否則沿原版的路數步數）",
+        "與當下的回合計數器／`Blend`／`ds:8FF8`／內政參謀（[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md) CONFORMED）。",
         "",
-        "叛亂的門檻讀的就是它：同一個局面同盟那 10 格的門檻 remake 高一兩級",
-        "（[`docs/spec/041`](docs/spec/041-rebellion.md)）。星圖的治安色也讀它。"
+        "remake：`Game.recomputeUnrest` 接在 `refreshBlend` 的尾巴、`advanceTurn` 扣維持費之前、",
+        "`refreshRegionPosture` 的尾巴與 `finishTurn`；`ds:8FF8` 跟著 `WORK.DT?` 的 `+0xE4` 讀寫，月底收稅時抄 `Blend`。",
+        "`rbx292_b`（AI 回合剛跑完）與 `rbx292d_reg_post`（整個回合跑完）各 32 格、叛亂讀到的 19 格門檻都與原版相同。",
+        "",
+        "還沒接的呼叫端與戰鬥中的重算見 `unrest-recompute-other-callers`；月底那一格 `Blend` 的回合數差一格見",
+        "`ai-month-branch-turn-offset`。"
       ],
       "evidence": [
+        "docs/spec/042-region-unrest-recompute.md",
+        "docs/re/299-region-unrest-writers-and-recompute.md",
         "docs/re/297-rebellion-garrison-recount-and-rng.md",
-        "docs/re/220-tax-rates-recomputed-on-blend-change.md",
-        "docs/spec/030-blend-and-tax-rate.md",
-        "docs/spec/041-rebellion.md"
+        "docs/spec/006-unrest-at-load.md"
       ],
       "acceptance": "新遊戲按一次實行之後，32 格的 `+0x7D` 與收據 `rbx292_b` 逐格相同。",
+      "verify": {
+        "kind": "go_test",
+        "pkg": "internal/game",
+        "run": "TestUnrestSameStateAfterAITurn",
+        "note": "remake 自己走到 AI 回合剛跑完那一刻，32 格與 `rbx292_b` 逐格相同。拆掉 `recomputeUnrest` 的呼叫會紅（14 格不符）；整個回合那一支是 `TestUnrestSameStateAfterTurn`（23 格）。"
+      }
+    },
+    {
+      "id": "unrest-recompute-other-callers",
+      "status": "open",
+      "layer": "parity",
+      "title": "未安定度：其餘 `090A:0E6D` 呼叫端與戰鬥中的重算 remake 沒有接",
+      "body": [
+        "`090A:0E6D` 有 18 個呼叫點（[`docs/re/299`](docs/re/299-region-unrest-writers-and-recompute.md)），remake 接了影響叛亂與回合尾巴的那幾個",
+        "（[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md)）。沒接的：玩家那一方的指令（編制、整補等 `297B` 那幾處）、",
+        "費沙事件 `1213:0256`、`2E54:04FB` 與 9 處沒讀的。原版在那些時點當場重算，remake 要到下一次「實行」才跟上，",
+        "命令階段的面板與治安色會慢一步。",
+        "",
+        "另外兩件同一類的：逐格開戰那一圈裡戰鬥可能先動到叛亂那一格的輸入（`2703:1908` 讀 `+0x7D`），",
+        "remake 用命令階段那一次的值；讀存檔之後到第一次回合尾巴之間原版讀哪一份路徑表沒有量。"
+      ],
+      "evidence": [
+        "docs/spec/042-region-unrest-recompute.md",
+        "docs/re/299-region-unrest-writers-and-recompute.md"
+      ],
+      "acceptance": "玩家在命令階段做一次會跑 `090A:0E6D` 的指令（例如編一支艦隊停在某一格）之後，面板上的治安與原版同一時點的傾印相同。",
+      "verify": {
+        "kind": "manual",
+        "note": "沒有可掃的自承或缺席訊號（`recomputeUnrest` 已經存在，缺的是呼叫點）。接上時綁那一支同狀態測試（`go_test`）。"
+      }
+    },
+    {
+      "id": "ai-month-branch-turn-offset",
+      "status": "open",
+      "layer": "parity",
+      "title": "`runBrain` 的月底分支早一個回合（`g.turn % 10 == 9`）",
+      "body": [
+        "原版 `2D10:0319` 在 AI 回合尾巴判 `ds:8F18 % 10 == 9`（月底照軍事費重算 `Blend`，否則歸零）。",
+        "remake 的 `g.turn` 在 `advanceTurn` 開頭就先加一：第一次「實行」AI 跑的時候原版計數器是 0（`rbx292_b`）、",
+        "`g.turn` 是 1，所以原版的條件對應 `(g.turn − 1) % 10 == 9`，現在的寫法對的是原版計數器 8。",
+        "`TestMonthEndKeepsBlend` 設 `g.turn = 8` 再按實行；收據 `monthblend` poke 的是 9、跑完是 10。",
+        "",
+        "`ai-seat-order` 記的「回合 10 的同盟 `Blend` 兩邊不同（原版 2、remake 0）」與差這一格的結果相同，",
+        "月底抄進 `ds:8FF8` 的值也跟著差（未安定度的 f1，[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md)）。"
+      ],
+      "evidence": [
+        "docs/re/299-region-unrest-writers-and-recompute.md",
+        "docs/re/238-month-end-blend-and-fiscal-fields.md",
+        "docs/spec/030-blend-and-tax-rate.md"
+      ],
+      "acceptance": "月底分支改成照原版的計數器判，`TestMonthEndKeepsBlend` 改成對應 `monthblend` 的計數器 9；回合 10 的同盟 `Blend` 與收據相同。",
       "verify": {
         "kind": "present",
         "paths": [
           "internal/game/game.go"
         ],
-        "pattern": "region-unrest-recompute",
-        "note": "綁的是 `refreshBlend` 上的自承註解；接上重算時一併拿掉。"
+        "pattern": "g\\.turn%10 == 9",
+        "note": "綁的是 `runBrain` 裡那一行判斷本身；改成照原版計數器判之後它就不在了。"
+      }
+    },
+    {
+      "id": "load-unrest-params-from-work",
+      "status": "open",
+      "layer": "parity",
+      "title": "讀存檔時算未安定度，`Blend`／`ds:8FF8`／統治者用的是固定值，不是那一格存檔的",
+      "body": [
+        "`loadSlotFromDisk` 拿 `Resources.UnrestParams`（統治者 16／60、`Blend` 1／2、`Rate` 2／2）只換掉回合數。",
+        "這三個全域在執行期就是 `WORK.DT?` 那一塊（`ds:8F14` 起：統治者 ＝ 內政專任參謀 `+0x3B`、`Blend` `+0xC0`、",
+        "`ds:8FF8` `+0xE4`），讀檔之後照檔案。S2／S3（第 9、10 格）的檔案值剛好與固定值相同，所以",
+        "`TestUnrestAtLoad` 對得上；**第 8 格是統治者 32／60、`Blend` 2／2**，照現在的寫法會用錯。",
+        "remake 自己存的檔也一樣（`Game.rate`／`blend`／參謀都會寫回 `WORK`，讀回來卻不用）。",
+        "",
+        "改法是從 `sl.WorkFields` 與 `rules.StaffAdmiral(sl.Work, PostDomestic, 陣營)` 取；第 8 格要一份載入當下的收據。"
+      ],
+      "evidence": [
+        "docs/spec/006-unrest-at-load.md",
+        "docs/spec/042-region-unrest-recompute.md"
+      ],
+      "acceptance": "讀第 8 格存檔之後 32 格的 `+0x7D` 與原版載入當下的傾印逐格相同。",
+      "verify": {
+        "kind": "absent",
+        "paths": [
+          "internal/game/game.go"
+        ],
+        "pattern": "params\\.Rate = sl\\.Rate",
+        "note": "綁的是 `loadSlotFromDisk` 改成照存檔取參數時一定會出現的那一行。"
       }
     },
     {
@@ -4407,13 +4491,33 @@
       "cells": {
         "狀態": "**通過**（收據種子上 32 格逐格相同；remake 自己走的兩個局面——與亂數無關的 `rbx292d`、與亂數有關的 `rbx292e`——叛亂的星域都與收據相同）",
         "規則": "叛亂的判定與效果（`2703:1789` → `2703:1908`）",
-        "證據": "[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/spec/041`](docs/spec/041-rebellion.md) CONFORMED、`rules.DecideRebellions`／`rules.Rebel`。`rbx292e`（營運 4，結果由亂數決定）從收據種子重播 7 格叛亂、32 格逐格相同，含 748 ≥ 250、407 ≥ 350 兩個邊界；`rbx297w` 監看種子量到一格十次、整圈 190 次（936A823B）；`rbx292d`（營運 1）remake 自己走同一條玩家路徑，九格叛亂、九顆行星的擁有者／經濟力／防衛力、81 顆擁有者、32 格回合結束的擁有者逐一相同。`rbx292e` 那一局 remake 自己走也對上：叛亂之前抽 7 次、進場種子 AF5AAD71、整圈之後 936A823B，叛亂的 7 格相同（[`docs/re/298`](docs/re/298-ai-capital-reach-is-not-all-ones.md)）；同盟 10 格的門檻仍因未安定度不同（`region-unrest-recompute`）"
+        "證據": "[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/spec/041`](docs/spec/041-rebellion.md) CONFORMED、`rules.DecideRebellions`／`rules.Rebel`。`rbx292e`（營運 4，結果由亂數決定）從收據種子重播 7 格叛亂、32 格逐格相同，含 748 ≥ 250、407 ≥ 350 兩個邊界；`rbx297w` 監看種子量到一格十次、整圈 190 次（936A823B）；`rbx292d`（營運 1）remake 自己走同一條玩家路徑，九格叛亂、九顆行星的擁有者／經濟力／防衛力、81 顆擁有者、32 格回合結束的擁有者逐一相同。`rbx292e` 那一局 remake 自己走也對上：叛亂之前抽 7 次、進場種子 AF5AAD71、整圈之後 936A823B，叛亂的 7 格相同（[`docs/re/298`](docs/re/298-ai-capital-reach-is-not-all-ones.md)）；叛亂讀到的 19 格門檻（含同盟 10 格）也相同（`TestUnrestSameStateRebellionReads`，[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md)）"
       },
       "verify": {
         "kind": "receipt",
         "batch": "rbx297w",
         "files": {
           "report.txt": "c2139e87670661bbb9b3cff87b348c71ae46a2bcd66bfc065b9b6de12e73ca2d"
+        }
+      }
+    },
+    {
+      "id": "s9-31",
+      "status": "done",
+      "layer": "matrix",
+      "title": "未安定度在遊戲進行中的重算（090A:0E6D／2703:08DE → 2703:0DA1）",
+      "section": "s9",
+      "cells": {
+        "狀態": "**通過**（收據自己的傾印 96 格逐格相同，其中一格走砍半那一條；remake 自己走同一條玩家路徑，AI 回合剛跑完與整個回合跑完各 32 格逐格相同）",
+        "規則": "未安定度在遊戲進行中的重算（`090A:0E6D`／`2703:08DE` → `2703:0DA1`）",
+        "證據": "[`docs/re/299`](docs/re/299-region-unrest-writers-and-recompute.md)、[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md) CONFORMED、`Game.recomputeUnrest`。收據 `urx299w` 監看整張星域表並在七個呼叫端下斷點：`+0x7D` 的寫入者只有 `2703:0DA1`，一次「實行」整份重算十一次，叛亂讀的是扣維持費那一次。`rbx292_b`（AI 回合剛跑完，計數器 0）、`rbx292d_reg_post`（座位回合開頭，計數器 1）、`urx299c_post`（星域 4 成本 4218，砍半；監看到 128 → 127）各 32 格逐格相同；`rbx292_b` 映著的路徑表與照擁有者建的逐格相同"
+      },
+      "verify": {
+        "kind": "receipt",
+        "batch": "urx299w",
+        "files": {
+          "report.txt": "000c696bfb2705f7474fd709dbea42d7d7de675581cb8b4d5a9580d6fc30a58a",
+          "screen.bin": "27c1d17a274eab1cf824b5a70ad967e7468462654e177de9c40243173ac475ba"
         }
       }
     }

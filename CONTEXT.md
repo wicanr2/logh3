@@ -248,7 +248,10 @@
 | 費沙事件的觸發點不在傾印裡（沒載入的 overlay 或執行期填的間接呼叫）；包裝在 `1213:0235` | `docs/re/193`、`docs/spec/029`、worklist `phezzan-event-trigger` | `docs/re/296`：`1213:0235` 落在前一支 `1213:01B8` 的 far call 中間，包裝的進入點是 **`1213:023B`**，呼叫點 `1213:019E`。整條鏈常駐、全是直接 far call：回合尾巴 `056A:078E` → 易主通知 `056A:0855` → `1213:007B` 登記 `ds:988E` → 同一個回合尾巴 `1213:0096` 發動。觸發條件 ＝ 費沙那一格第一次易主（收據 `pzx296`／`pzx296n`／`pzx296g`）。`docs/spec/029`、`docs/internals/54` 已改；`docs/re/193` 是調查紀錄，照規矩不改寫，末尾加指標 |
 | `ds:8F48` 唯一的寫入點是費沙事件本體 | `docs/re/179`、`docs/internals/54` | `docs/re/296`：新遊戲初始化（`0374` 段，線性 `0x03A2F`，`a2 48 8f`）也寫它（清 0）；它跟著存檔 `WORK.DT?` 的 `+0x34` 走，出貨的 `WORK.DTA` 是 `0xFF`。`docs/internals/54` 已改 |
 | 回合尾巴那一支（逐格重算擁有者）的進入點是 `056A:078B` | `docs/re/245`、`docs/spec/034` | `docs/re/296` 末節：`078B` 是前一支結尾的 `pop si`，進入點 **`056A:078E`**。`docs/spec/034` 已改，`docs/re/245` 末尾加指標 |
-| `Blend` 變動那條路徑（`090A:0B93`）不碰未安定度 `+0x7D` | `docs/spec/030` 末節 | `docs/re/297`：`rbx292_a`（`#212,000,000`）→ `rbx292_b`（`#216,000,000`）之間同盟 13 格的 `+0x7D` 各降 4–5、帝國不變，同一段時間同盟的 `Blend` 2 → 0、情報與內政參謀換人。寫入者最可能是 `090A:0B93` 之後的 `090A:0E6D`（hypothesis）。`docs/spec/030` 那一句已改；remake 不重算，列在 `region-unrest-recompute` |
+| `Blend` 變動那條路徑（`090A:0B93`）不碰未安定度 `+0x7D` | `docs/spec/030` 末節 | `docs/re/297`：`rbx292_a`（`#212,000,000`）→ `rbx292_b`（`#216,000,000`）之間同盟 13 格的 `+0x7D` 各降 4–5、帝國不變，同一段時間同盟的 `Blend` 2 → 0、情報與內政參謀換人。寫入者最可能是 `090A:0B93` 之後的 `090A:0E6D`（hypothesis）。`docs/spec/030` 那一句已改。後續 `docs/re/299`：寫入者是 `2703:0DA1`，`090A:0E6D` 經 `2703:02E5` 呼叫它（proven），remake 接上（`docs/spec/042`） |
+| 未安定度載入之後就不再變：「跨月不重算」，星域 0 整個 796 年 1 月只寫過載入那幾次 | `docs/spec/006` 末節（收據 `watchmonth3`）、`docs/spec/030` 末節 | `docs/re/299`：監看只報**變動**，星域 0 是帝國首都，值一直是 36。`urx299w` 在呼叫端下斷點，一次「實行」裡 `2703:0DA1` 整份跑了十一次（`090A:0E6D` 十次、回合尾巴 `2703:08DE` 一次），同盟 13 格在 AI 回合裡就變了三輪。`docs/spec/006`、`030` 已改；remake 接上（`docs/spec/042`） |
+| 未安定度的 f5 恆等於 0，因為提督的 `+0x09` 載入時被夾到 127、過不了 `+0x09 & 0x80` 那道篩選 | `docs/re/43`、`docs/spec/006`、`internal/rules/unrest.go` 的註解 | `docs/re/299` 第六節：`s3datamem` 有 25 位、`rbx292_b` 有 68 位提督過得了兩道篩選（都在首都）。f5 ＝ 0 是因為 `2703:10FC` 推給開根號 `3310:0130` 的是清成 0 的那一格（`2703:11C9`–`11D3`），開根號 0 回 0。結論不變；`docs/spec/006` 與註解已改，`docs/re/43` 末尾加指標 |
+| `Blend ±1` 那一支在線性 `0x09413`，整份傾印裡一個呼叫者都沒有 | `docs/re/206`、`207`、`220`、`docs/spec/006`、`docs/spec/030` | `docs/re/299` 順帶：`0x09412` 才是 `push bp`（前面是 `5e 5d cb`），進入點 **`090A:0372`**；拿它掃有呼叫點 `090A:030A`（在 `090A:02AF` 裡），`090A:02AF` 又被 `090A:0107`／`0120` 呼叫。`docs/spec/006`、`030` 已改；`docs/re/207`、`220` 末尾加指標 |
 | `rebellion_check.py` 拿前傾印的 `+0x28`／`+0x29` 當 `056A:0469` 當下的駐軍數 | `tools/scripts/rebellion_check.py`、`docs/re/292` 的重播 | `docs/re/297`：`056A:0469` 的前一步是 `2703:0853`（重數艦隊），而 `rbx292e_pre` 等前傾印都倒在它之前，那兩格是艦隊移動之前的舊值。同盟 20／30 兩格因此被多擲了亂數；判定結果不變，亂數次數以收據 `rbx297w` 為準（190 次）。腳本已改成自己重數 |
 | `+0x13` bit1／bit2／bit4 那一圈的進入點是 `056A:0468`，呼叫點靜態掃不到（走模組管理器的間接向量） | `docs/re/245`、`docs/re/292`、`docs/internals/22`、`internal/rules/regionposture.go`、`internal/game/regionturn.go` 的註解、矩陣 `s9-12` | `docs/re/295` 末節：`056A:000C` 那一串的第九支是 `9a 69 04 6a 05`，進入點 **`056A:0469`**；線性 `0x05B08`（`0468`）是前一支 `056A:03E0`（艦隊移動）的 `retf`。掃不到呼叫點是因為拿 `0468` 去掃。`flagpass`／`rbx292c` 的 `-regs-at 056A:0468` 命中的是 `03E0` 的返回，那一支每回合也只跑一次，所以「一次」「在 `2703:08DE` 之前」「在 `0374:0556` 之前」都還成立，只是步數早了 `2703:051D`＋`2703:0853` 那一段。`docs/internals/22`、矩陣 `s9-12` 與 Go 註解已改；`docs/re/` 是調查紀錄，照規矩不改寫 |
 | `1C03:0361` 是「慢慢轉向 `+0x4C`」的邏輯 | `docs/re/102` 末段、`internal/rules/battle.go` 的註解 | `docs/re/294`：`1C03:0361` 是與 `1C03:0185` 並列的實行常式，由 `1C03:015C` 依 `+0x48` bit4 選——**短程平移**，還沒到時不轉身、每一步重新瞄準目的地直線前進。bit4 由 `2583:052C` 在下命令時設（距離 < 行程 ÷ 3 ＋ 4.0）。「到了才轉向 `+0x4C`」是兩支共同的抵達分支，`docs/re/122` 早就讀到 |
@@ -348,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 28 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 30 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -746,23 +749,59 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：要人判——沒有可綁的訊號——它是一份收據上的像素差異，不是程式裡的缺席。查出來之後會有一支新的繪製函式，到時綁它。
 
-#### region-unrest-recompute — 未安定度 `+0x7D` remake 載入之後就不再重算
+#### unrest-recompute-other-callers — 未安定度：其餘 `090A:0E6D` 呼叫端與戰鬥中的重算 remake 沒有接
 
-*feature（功能：玩家會撞到、但 remake 還沒有）*
+*parity（對拍：要與原版逐位元組相同）*
 
-remake 只在新遊戲與讀存檔時算未安定度。原版在第一個 AI 回合裡就重算了同盟那 13 格
-（`rbx292_a` → `rbx292_b` 各降 4–5，與 `Blend` 2 → 0、參謀換人落在同一段；
-寫入者最可能是 `090A:0B93` 之後的 `090A:0E6D`，`hypothesis`），回合尾巴的
-`2703:08DE` 也逐格跑 `2703:0DA1`（[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)）。
+`090A:0E6D` 有 18 個呼叫點（[`docs/re/299`](docs/re/299-region-unrest-writers-and-recompute.md)），remake 接了影響叛亂與回合尾巴的那幾個
+（[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md)）。沒接的：玩家那一方的指令（編制、整補等 `297B` 那幾處）、
+費沙事件 `1213:0256`、`2E54:04FB` 與 9 處沒讀的。原版在那些時點當場重算，remake 要到下一次「實行」才跟上，
+命令階段的面板與治安色會慢一步。
 
-叛亂的門檻讀的就是它：同一個局面同盟那 10 格的門檻 remake 高一兩級
-（[`docs/spec/041`](docs/spec/041-rebellion.md)）。星圖的治安色也讀它。
+另外兩件同一類的：逐格開戰那一圈裡戰鬥可能先動到叛亂那一格的輸入（`2703:1908` 讀 `+0x7D`），
+remake 用命令階段那一次的值；讀存檔之後到第一次回合尾巴之間原版讀哪一份路徑表沒有量。
 
-**做完的判準**：新遊戲按一次實行之後，32 格的 `+0x7D` 與收據 `rbx292_b` 逐格相同。
+**做完的判準**：玩家在命令階段做一次會跑 `090A:0E6D` 的指令（例如編一支艦隊停在某一格）之後，面板上的治安與原版同一時點的傾印相同。
 
-**證據**：[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/re/220-tax-rates-recomputed-on-blend-change.md`](docs/re/220-tax-rates-recomputed-on-blend-change.md)、[`docs/spec/030-blend-and-tax-rate.md`](docs/spec/030-blend-and-tax-rate.md)、[`docs/spec/041-rebellion.md`](docs/spec/041-rebellion.md)
+**證據**：[`docs/spec/042-region-unrest-recompute.md`](docs/spec/042-region-unrest-recompute.md)、[`docs/re/299-region-unrest-writers-and-recompute.md`](docs/re/299-region-unrest-writers-and-recompute.md)
 
-**核實**：`internal/game/game.go` 裡還找得到 `region-unrest-recompute`（自承還在 ＝ 還沒做）
+**核實**：要人判——沒有可掃的自承或缺席訊號（`recomputeUnrest` 已經存在，缺的是呼叫點）。接上時綁那一支同狀態測試（`go_test`）。
+
+#### ai-month-branch-turn-offset — `runBrain` 的月底分支早一個回合（`g.turn % 10 == 9`）
+
+*parity（對拍：要與原版逐位元組相同）*
+
+原版 `2D10:0319` 在 AI 回合尾巴判 `ds:8F18 % 10 == 9`（月底照軍事費重算 `Blend`，否則歸零）。
+remake 的 `g.turn` 在 `advanceTurn` 開頭就先加一：第一次「實行」AI 跑的時候原版計數器是 0（`rbx292_b`）、
+`g.turn` 是 1，所以原版的條件對應 `(g.turn − 1) % 10 == 9`，現在的寫法對的是原版計數器 8。
+`TestMonthEndKeepsBlend` 設 `g.turn = 8` 再按實行；收據 `monthblend` poke 的是 9、跑完是 10。
+
+`ai-seat-order` 記的「回合 10 的同盟 `Blend` 兩邊不同（原版 2、remake 0）」與差這一格的結果相同，
+月底抄進 `ds:8FF8` 的值也跟著差（未安定度的 f1，[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md)）。
+
+**做完的判準**：月底分支改成照原版的計數器判，`TestMonthEndKeepsBlend` 改成對應 `monthblend` 的計數器 9；回合 10 的同盟 `Blend` 與收據相同。
+
+**證據**：[`docs/re/299-region-unrest-writers-and-recompute.md`](docs/re/299-region-unrest-writers-and-recompute.md)、[`docs/re/238-month-end-blend-and-fiscal-fields.md`](docs/re/238-month-end-blend-and-fiscal-fields.md)、[`docs/spec/030-blend-and-tax-rate.md`](docs/spec/030-blend-and-tax-rate.md)
+
+**核實**：`internal/game/game.go` 裡還找得到 `g\.turn%10 == 9`（自承還在 ＝ 還沒做）
+
+#### load-unrest-params-from-work — 讀存檔時算未安定度，`Blend`／`ds:8FF8`／統治者用的是固定值，不是那一格存檔的
+
+*parity（對拍：要與原版逐位元組相同）*
+
+`loadSlotFromDisk` 拿 `Resources.UnrestParams`（統治者 16／60、`Blend` 1／2、`Rate` 2／2）只換掉回合數。
+這三個全域在執行期就是 `WORK.DT?` 那一塊（`ds:8F14` 起：統治者 ＝ 內政專任參謀 `+0x3B`、`Blend` `+0xC0`、
+`ds:8FF8` `+0xE4`），讀檔之後照檔案。S2／S3（第 9、10 格）的檔案值剛好與固定值相同，所以
+`TestUnrestAtLoad` 對得上；**第 8 格是統治者 32／60、`Blend` 2／2**，照現在的寫法會用錯。
+remake 自己存的檔也一樣（`Game.rate`／`blend`／參謀都會寫回 `WORK`，讀回來卻不用）。
+
+改法是從 `sl.WorkFields` 與 `rules.StaffAdmiral(sl.Work, PostDomestic, 陣營)` 取；第 8 格要一份載入當下的收據。
+
+**做完的判準**：讀第 8 格存檔之後 32 格的 `+0x7D` 與原版載入當下的傾印逐格相同。
+
+**證據**：[`docs/spec/006-unrest-at-load.md`](docs/spec/006-unrest-at-load.md)、[`docs/spec/042-region-unrest-recompute.md`](docs/spec/042-region-unrest-recompute.md)
+
+**核實**：`internal/game/game.go` 裡出現 `params\.Rate = sl\.Rate` 就是做好了
 
 #### region-turn-upkeep-0556 — `0374:0556` 每回合逐格那三支 remake 沒有（`2703:1B48`／`1CD7`／`1D85`）
 
@@ -861,7 +900,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-20 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+21 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1180,8 +1219,8 @@ remake 端接上了（`rebellion-rule-in-remake`，[`docs/spec/041`](docs/spec/0
 32 格回合結束的擁有者逐一相同。
 
 remake 自己走到亂數有關的局面（`rbx292e`）也對上了：第一個 AI 回合抽 7 次、進場種子
-AF5AAD71，叛亂的 7 格與收據相同（`ai-attack-reachability`）。同盟的未安定度 remake 沒有在
-AI 回合重算（`region-unrest-recompute`），那一局結果相同、門檻不同。報告畫面跟著 `strategy-report-screen`，
+AF5AAD71，叛亂的 7 格與收據相同（`ai-attack-reachability`）。同盟 10 格的門檻
+也相同（未安定度在遊戲中重算，`region-unrest-recompute`）。報告畫面跟著 `strategy-report-screen`，
 `0374:0556` 的其餘三支跟著 `region-turn-upkeep-0556`。
 
 **做完的判準**：remake 跑同一個局面時叛亂的星域與原版逐格相同，被翻的行星與經濟力／防衛力也相同。
@@ -1212,6 +1251,29 @@ remake 改成 `ai.CapitalReach` 照呼叫當下的擁有者算（`Reachable` 沒
 **證據**：[`docs/re/298-ai-capital-reach-is-not-all-ones.md`](docs/re/298-ai-capital-reach-is-not-all-ones.md)、[`docs/spec/043-ai-capital-reach.md`](docs/spec/043-ai-capital-reach.md)、[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/re/209-first-natural-ai-turn.md`](docs/re/209-first-natural-ai-turn.md)、[`docs/re/185-reachability-and-distance-table.md`](docs/re/185-reachability-and-distance-table.md)
 
 **核實**：`TestAttackBoardNewGameDrawsOnce` 釘在 `internal/ai`
+
+#### region-unrest-recompute — 未安定度 `+0x7D` 在遊戲進行中的重算
+
+*feature（功能：玩家會撞到、但 remake 還沒有）*
+
+寫入者只有 `2703:0DA1`，呼叫端三個：新遊戲初始化、`090A:0E6D` → `2703:02E5`（稅率或參謀一變、
+每次「實行」扣維持費之前、每個座位回合開頭）、回合尾巴 `2703:08DE`；一次「實行」整份重算十一次
+（收據 `urx299w` 的時間線，[`docs/re/299`](docs/re/299-region-unrest-writers-and-recompute.md)）。
+遊戲進行中的算式與載入時那一支相同，只差尾巴讀照擁有者建的路徑表（成本 >= `0x800` 砍半、否則沿原版的路數步數）
+與當下的回合計數器／`Blend`／`ds:8FF8`／內政參謀（[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md) CONFORMED）。
+
+remake：`Game.recomputeUnrest` 接在 `refreshBlend` 的尾巴、`advanceTurn` 扣維持費之前、
+`refreshRegionPosture` 的尾巴與 `finishTurn`；`ds:8FF8` 跟著 `WORK.DT?` 的 `+0xE4` 讀寫，月底收稅時抄 `Blend`。
+`rbx292_b`（AI 回合剛跑完）與 `rbx292d_reg_post`（整個回合跑完）各 32 格、叛亂讀到的 19 格門檻都與原版相同。
+
+還沒接的呼叫端與戰鬥中的重算見 `unrest-recompute-other-callers`；月底那一格 `Blend` 的回合數差一格見
+`ai-month-branch-turn-offset`。
+
+**做完的判準**：新遊戲按一次實行之後，32 格的 `+0x7D` 與收據 `rbx292_b` 逐格相同。
+
+**證據**：[`docs/spec/042-region-unrest-recompute.md`](docs/spec/042-region-unrest-recompute.md)、[`docs/re/299-region-unrest-writers-and-recompute.md`](docs/re/299-region-unrest-writers-and-recompute.md)、[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/spec/006-unrest-at-load.md`](docs/spec/006-unrest-at-load.md)
+
+**核實**：`TestUnrestSameStateAfterAITurn` 釘在 `internal/game`
 
 #### phezzan-event-trigger — 費沙事件的觸發：費沙那一格第一次易主
 

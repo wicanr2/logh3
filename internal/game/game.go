@@ -492,6 +492,11 @@ type Game struct {
 	// 星域的稅率（`docs/spec/030`、`docs/internals/55`）。
 	blend [2]int
 
+	// rate 是原版 `ds:8FF8[陣營]`：月底真正收稅那一趟（`2703:03AF`）把當下的
+	// `blend` 抄一份過來（`docs/re/252`）。只有未安定度的 f1 讀它
+	// （`docs/spec/042`）。
+	rate [2]int
+
 	// treasury 是這個月的財政（原定軍事費、已支付各項），
 	// monthReport 是月初報告那張上的預算。
 	treasury    rules.Treasury
@@ -757,6 +762,11 @@ func (g *Game) advanceTurn() {
 	// 回合 10 的同盟 `Blend` 因此兩邊不同（原版 2、remake 0），月底那一次
 	// 重算稅率的 `Base` 差一格。要對上得把 `advanceTurn` 拆成逐座位。
 	g.runBrain()
+	// 命令階段那一串的第一支 `056A:09EB` 一進去就先跑 `090A:0E6D`，把 32 格的
+	// 未安定度整份重算（`docs/spec/042`）——叛亂的門檻讀的就是這一次的值。
+	// 回合計數器要到回合尾巴才進位，remake 的 `g.turn` 在開頭就先加了，
+	// 所以這裡的 `ds:8F18` 是 `g.turn − 1`。
+	g.recomputeUnrest(g.turn - 1)
 	// 每個戰略回合逐支扣艦隊維持費（原版 `056A:09EB` 的
 	// `sub [bx+8F52], si`，`docs/re/236`）：**兩邊一起扣**，扣的是那一支
 	// 自己陣營的那一格。順序照原版——在 AI 回合之後、艦隊移動之前。
@@ -848,6 +858,10 @@ func (g *Game) finishTurn() {
 	// 刷一次（`docs/spec/035`）。中途打下一個星域之後，右側面板與徵稅
 	// 計劃當回合就要跟著變，不必等到月底。
 	g.refreshTaxEstimate()
+	// 同一支 `090A:0E6D` 的第三件事是 32 格的未安定度（`2703:02E5` →
+	// `2703:0DA1`）。這時回合計數器已經進位，路徑表也在座位回合開頭
+	// （`04F8:003E` → `2B99:0003`）照新的擁有者重建過（`docs/spec/042`）。
+	g.recomputeUnrest(g.turn)
 	if month {
 		if g.commandSpec(StateShipDelivery) != nil {
 			g.state = StateShipDelivery
@@ -1053,11 +1067,10 @@ func (g *Game) assignStaff(faction int) {
 }
 
 // refreshBlend 走原版 `2D10:0319` 的後半：寫下等級，接著用它當下標
-// 重算那個陣營所有星域的稅率（`090A:0B93`），最後把預估徵稅額跟著更新。
-//
-// ⚠ 未安定度 `+0x7D` 這裡不重算，remake 載入之後就不再動它；原版在第一個
-// AI 回合裡重算了同盟那 13 格（`docs/re/297`，worklist
-// `region-unrest-recompute`）。叛亂的門檻讀的就是它（`docs/spec/041`）。
+// 重算那個陣營所有星域的稅率（`090A:0B93`），最後跑 `090A:0E6D`——預估
+// 徵稅額與 32 格的未安定度跟著重算（`docs/spec/042`）。`2D10:0213` 換完
+// 內政專任參謀也是 `090A:0B93` → `090A:0E6D`，remake 在 `runBrain` 裡緊接著
+// 就是這一支，所以不另外跑。
 func (g *Game) refreshBlend(faction, level int) {
 	g.blend[faction] = level
 	pr := g.res.UnrestParams
@@ -1072,6 +1085,59 @@ func (g *Game) refreshBlend(faction, level int) {
 	rules.RecomputeTaxRates(g.res.Stellar, faction, pr.Base[level], ruler,
 		func(i int) int { return g.res.Planets.RegionOwner(i) })
 	g.taxTotal[faction] = g.estimateTaxFor(faction)
+	// AI 回合在回合計數器進位之前，`ds:8F18` ＝ `g.turn − 1`（見 advanceTurn）。
+	g.recomputeUnrest(g.turn - 1)
+}
+
+// recomputeUnrest 把 32 格的未安定度 `+0x7D` 照現在的局面整份重算——原版
+// `2703:0DA1` 逐格跑一次（`docs/spec/042`）。原版有兩個呼叫端：
+//
+//	090A:0E6D → 2703:02E5   稅率或參謀一變、每次「實行」扣維持費之前、
+//	                        每個座位回合開頭（月底那一趟跑兩次）
+//	2703:08DE              回合尾巴，重建路徑表與態勢旗標之後
+//
+// `counter` 是那一刻的回合計數器 `ds:8F18`（算式只用它除以 10 的餘數）。
+// 其餘輸入都讀現況：`Blend`／`ds:8FF8`、內政專任參謀（`ds:8F4F`，就是稅率
+// 那一位）、星域旗標與民心、行星、`+0x08 == 5` 的艦隊，以及照現在的擁有者
+// 建的路徑表（`2B99:0003` 在回合尾巴與玩家座位回合開頭重建，擁有者只在回合
+// 尾巴那一段會變，所以兩者相同）。
+func (g *Game) recomputeUnrest(counter int) {
+	if !g.regionsReady() || len(g.res.UnrestParams.Base) == 0 ||
+		len(g.res.UnrestParams.Table) == 0 {
+		return
+	}
+	if counter < 0 {
+		counter = 0
+	}
+	params := g.res.UnrestParams
+	params.Turn = counter
+	params.Blend = g.blend
+	params.Rate = g.rate
+	for f := 0; f < 2; f++ {
+		params.Ruler[f] = g.taxRateAdmiral(f)
+		if params.Blend[f] < 0 || params.Blend[f] >= len(params.Table) ||
+			params.Rate[f] < 0 || params.Rate[f] >= len(params.Base) {
+			return
+		}
+	}
+	owner := make([]int, rules.RegionCount)
+	for i := range owner {
+		owner[i] = int(g.regionRecord(i)[regionOwnerOff])
+	}
+	fleets := g.fleets
+	if fleets == nil {
+		fleets = []rules.Fleet{} // 非 nil ＝ 用 remake 的艦隊表
+	}
+	st := &rules.UnrestState{
+		Regions: g.res.Stellar, Planets: g.res.Planets, FleetList: fleets,
+		Admirals: g.res.Admiral, Graph: g.res.Graph, Params: params,
+		Paths: g.res.Graph.UnrestPaths(owner),
+	}
+	for i := 0; i < rules.RegionCount; i++ {
+		// `2703:0DA1` 只讀別格的擁有者與 `+0x13`，不讀別格的 `+0x7D`，
+		// 所以逐格寫回與全部算完再寫結果相同。
+		g.regionRecord(i)[rules.RegionUnrest] = byte(st.Unrest(i))
+	}
 }
 
 // buildFleets 把 `ai.Builder` 要的新艦隊編出來。
@@ -1184,6 +1250,9 @@ func (g *Game) startNewGame(faction int) {
 	// 兩個陣營的起始軍事費相同（796/1 量到帝國 50000，`docs/re/35`）。
 	g.military = [2]int{g.res.StartMilitary, g.res.StartMilitary}
 	g.blend = [2]int{rules.NewGameBlend, rules.NewGameBlend}
+	// `ds:8FF8` 開局照新遊戲的量測（兩邊都是 2，`docs/spec/006`）；緊接著的
+	// 開機月底結算會再抄一次 `blend`，值相同。
+	g.rate = g.res.UnrestParams.Rate
 	g.shipPct = [2]int{g.res.ShipPct, g.res.ShipPct}
 	g.shipPctSet = true
 	g.pct = rules.OpeningPct
@@ -1273,6 +1342,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.military = sl.Military
 	g.taxTotal = sl.TaxTotal
 	g.blend = sl.Blend
+	g.rate = sl.Rate
 	// 造船百分比與七個艦種的分配都在 `WORK.DT?` 裡（`ds:8F92`／`ds:8FD6`，
 	// `docs/re/256`、`docs/re/257`）。0 是合法值（S3 的帝國就是 0%），
 	// 所以整組照抄，不做「零值就換掉」的補救。
@@ -1973,6 +2043,7 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	g.slot.Military = g.military
 	g.slot.TaxTotal = g.taxTotal
 	g.slot.Blend = g.blend
+	g.slot.Rate = g.rate
 	g.slot.ShipPct = g.shipPct
 	g.slot.BuildPct[g.faction] = g.pct
 	g.slot.BuildPct[1-g.faction] = g.foePct
@@ -2101,6 +2172,9 @@ func (g *Game) monthEnd() {
 		return
 	}
 	before := g.military
+	// 0. `2703:03AF` 的第一件事：`ds:8FF8[陣營] ← ds:8FD4[陣營]`（`docs/re/252`）。
+	//    原版是逐座位各做自己那一格；remake 兩邊一起結算，就兩格一起抄。
+	g.rate = g.blend
 	// 1. 逐星域結算。成長是就地寫回的，一個月只能跑一次，所以兩個陣營
 	//    的徵稅額要在同一趟裡拿。
 	collected := rules.MonthEndTotals(g.res.Stellar, g.res.Planets, g.res.Growth,
