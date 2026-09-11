@@ -311,8 +311,20 @@
         "重錄之後轉紅的那批已經處理完：左下角摘要面板接上了",
         "（`region-summary-panel-trigger`），規格裡烘著的舊游標刮掉了",
         "（`docs/re/279`），防拷問答少畫的輸入游標補上了",
-        "（`copyprot-16x2-block-at-240-283`）。**還紅著的是**",
-        "`battle-unit-panel-after-rerecord`。",
+        "（`copyprot-16x2-block-at-240-283`），戰場分隊面板是**旗標翻譯掉了前移**",
+        "（`battle-unit-panel-after-rerecord`）。",
+        "",
+        "**翻譯還缺一處，而且會讓收據停在別的狀態。** 舊 probe 每一次腳本點擊都在",
+        "`at − 200000` 送一次移動事件（`ef5be47` 的 `const moveLead = 200_000`），",
+        "新版是移動與按下同一道指令。`tools/scripts/translate_receipt_flags.py` 沒翻這一項，",
+        "而**遊戲分得出來**：`s3cmdfl3` 少了那次前移，艦隊選單照樣開、右側卻不換成分隊面板",
+        "（`docs/re/282`）。補回前移之後與舊收據**全畫面 640×480 差 0**。",
+        "目前只手補了 `s3cmdfl3`／`s3cmdsq3` 兩份；差異七成以上落在右側面板的還有十份",
+        "（`s3cmdsq3v`／`s3cmdoff`／`s3cmdface`／`s3cmdrange`／`s3cmd4`／`s3rec137`／",
+        "`s3form`／`s3msg`／`s3plinfo`／`decwatch2`），22 份「只差游標位置」的很可能同源，",
+        "**都還沒逐份驗過**。讓翻譯自動補前移等於改掉全部 455 份旗標、要連帶重錄一遍，",
+        "是父層決策——先問使用者。翻譯腳本已加保護：手改過的 `flags-new/*.txt` 不再被",
+        "`--all` 無聲覆蓋（要蓋掉加 `--force`）。",
         "",
         "**不要改回舊收據讓測試變綠**——舊收據是在會改寫遊戲程式碼的執行器上錄的。"
       ],
@@ -320,7 +332,7 @@
         "docs/re/270-enter-works-the-divergence-is-after-it.md",
         "docs/re/276-what-the-executor-fix-changed-on-screen.md"
       ],
-      "acceptance": "455 份收據在 `logh3-oracle` 上重錄，每一份的畫面對應的遊戲狀態與原收據相同（步數可重新標定），且重錄後兩次獨立重跑逐位元組一致。",
+      "acceptance": "454 份收據在 `logh3-oracle` 上重錄，每一份的畫面對應的遊戲狀態與原收據相同（步數可重新標定），且重錄後兩次獨立重跑逐位元組一致。",
       "blocked_by": "重錄要逐份確認畫面停在同一個遊戲狀態，不能只看「有沒有畫出東西」——`docs/re/270` 記著一次用錯判準的例子。",
       "verify": {
         "kind": "manual",
@@ -507,29 +519,36 @@
     {
       "id": "battle-unit-panel-after-rerecord",
       "legacy_id": null,
-      "status": "open",
+      "status": "done",
       "layer": "parity",
-      "title": "戰場分隊面板重錄後對不上（s3cmdfl3 5,552／s3cmdsq3 5,740）",
+      "title": "戰場分隊面板重錄後對不上：翻譯掉了點擊的前移",
       "body": [
-        "`s3cmdfl3`／`s3cmdsq3` 在新執行器上重錄過（`workplace/oracle-prev/` 有備份）。",
-        "重錄後 `internal/screen.TestUnitPanelMatchesOracle` 轉紅：文字區 (480,242)",
-        "128×160 兩張各 5,552／5,740 個像素不同，第一個不同的點 (545,242)",
-        "remake `3`、原版 `9`。",
+        "**不是 remake 畫錯，也不是停在別的遊戲時點，是輸入序列少了一段。**",
+        "舊 probe 每一次腳本點擊都在 `at − 200000` 送一次移動事件",
+        "（`ef5be47` 的 `const moveLead = 200_000`），新版是移動與按下同一道指令；",
+        "`tools/scripts/translate_receipt_flags.py` 沒有翻這一項。少了那次前移，",
+        "艦隊選單照樣開（框與內容逐位元組相同），右側卻留在預設戰況欄",
+        "（`docs/re/282`）。",
         "",
-        "矩陣的 `m4s` 現在寫著「兩張各 0／20,480」——**那是重錄之前的數字**。",
-        "要先分清楚是 remake 畫錯，還是新收據停在別的遊戲時點",
-        "（`docs/re/276` 的形狀三／四），再決定改哪一邊。",
+        "排除「停在別的時點」的證據：點擊後 10 萬～5,000 萬步之間 13 個時點的",
+        "畫面與最終收據逐位元組相同，`-watch-screen` 在那 6,500 萬步裡只報一次",
+        "變化；`workplace/check/` 的獨立第二跑雜湊相同。",
         "",
-        "**與左下角摘要面板無關**——同一次重錄暴露出來的另一件事。"
+        "處置：`workplace/flags-new/s3cmdfl3.txt`／`s3cmdsq3.txt` 各加",
+        "`-mouse-x/-mouse-y/-mouse-at`（步數 1,394,800,000 ＝ 點擊前 20 萬步，",
+        "座標就是那一次點擊的座標）把前移補回去，重錄後與舊收據**全畫面",
+        "640×480 差 0**，測試回綠。翻譯腳本本身沒改（會動到全部 455 份旗標，",
+        "是父層決策），只加了「手改過的旗標不被 `--all` 無聲覆蓋」的保護。"
       ],
       "evidence": [
+        "docs/re/282-the-translation-dropped-the-click-pre-move.md",
         "docs/re/276-what-the-executor-fix-changed-on-screen.md",
         "docs/re/118-battle-unit-panel-layout.md"
       ],
-      "acceptance": "`s3cmdfl3` 與 `s3cmdsq3` 的文字區 (480,242) 128×160 各 0／20,480，或者差異已分類並在矩陣 `m4s` 寫成核准差異。",
+      "acceptance": "`s3cmdfl3` 與 `s3cmdsq3` 的文字區 (480,242) 128×160 各 0／20,480，且重錄後的畫面與 `workplace/oracle-prev/` 的原件全畫面逐位元組相同。",
       "verify": {
         "kind": "manual",
-        "note": "訊號是 `internal/screen.TestUnitPanelMatchesOracle` 紅不紅，而 `verify` 不跑測試。修好時連 `m4s` 那一列的數字一起改。"
+        "note": "訊號是 `internal/screen.TestUnitPanelMatchesOracle` 紅不紅，而 `verify` 不跑測試。"
       }
     },
     {
@@ -1666,8 +1685,8 @@
       "section": "s2",
       "cells": {
         "#": "4s",
-        "備註": "點自己陣營的分隊時右側換上來的八列。版面走原版格式字串算出來的半形格位置（格原點 (480,242)、欄距 16、列距 20）；值的來源全部反組譯過（士氣值旗艦讀艦隊 `+0x3C`、其餘讀艦艇 `+0x06`，低於 50 換色 2；行動名與顏色查 `ds:691C`／`ds:6930`；光線砲 ＝ 艘數 × 艦種列 `+0x0B`，飛彈與戰鬥機印艦艇 `+0x0E`／`+0x12` 的 32 位元量，顏色是拿現有量比「滿量」與「門檻」兩個欄位）。文字區 (480,242) 128×160 兩張各 **0／20,480**，沒有允許差異。按艦種換的那一行（運補／修護／索敵）規則已讀出，缺收據未做",
-        "收據": "收據 `s3cmdfl3`／`s3cmdsq3`；[`docs/re/118`](docs/re/118-battle-unit-panel-layout.md)、[`docs/internals/45`](docs/internals/45-battle-unit-panel.md)",
+        "備註": "點自己陣營的分隊時右側換上來的八列。版面走原版格式字串算出來的半形格位置（格原點 (480,242)、欄距 16、列距 20）；值的來源全部反組譯過（士氣值旗艦讀艦隊 `+0x3C`、其餘讀艦艇 `+0x06`，低於 50 換色 2；行動名與顏色查 `ds:691C`／`ds:6930`；光線砲 ＝ 艘數 × 艦種列 `+0x0B`，飛彈與戰鬥機印艦艇 `+0x0E`／`+0x12` 的 32 位元量，顏色是拿現有量比「滿量」與「門檻」兩個欄位）。文字區 (480,242) 128×160 兩張各 **0／20,480**，沒有允許差異。兩張收據的旗標各要帶一組 `-mouse-x/-mouse-y/-mouse-at 1394800000`——少了那次「按下前 20 萬步的移動事件」，原版選單照開但右側不換成這塊面板（[`docs/re/282`](docs/re/282-the-translation-dropped-the-click-pre-move.md)）。按艦種換的那一行（運補／修護／索敵）規則已讀出，缺收據未做",
+        "收據": "收據 `s3cmdfl3`／`s3cmdsq3`；[`docs/re/118`](docs/re/118-battle-unit-panel-layout.md)、[`docs/internals/45`](docs/internals/45-battle-unit-panel.md)、[`docs/re/282`](docs/re/282-the-translation-dropped-the-click-pre-move.md)",
         "未核准差異": "0",
         "畫面": "**戰場的分隊面板**",
         "等級": "`same-state`"
