@@ -244,6 +244,7 @@
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
+| 星圖全連通，所以 `2B99:0392`（從首都走得到嗎）在正常局面下填全 1，`ai` 的 `Reachable` 預設全部走得到就是原版行為 | `docs/re/185`、`docs/spec/029`（證據表與「remake 需要補的資料」）、`internal/ai` 的註解 | `docs/re/298`：`2B99:0392` 比的是帶領土罰則的距離（`1024 × k ＋ 邊權`）`< 0x800`，也就是 `k ≤ 1`。`t260_post.bin`（新遊戲第一個 AI 回合剛跑完）分頁框裡的四張表與照擁有者重算的逐格相同：同盟從巴拉特出發走不到 0–12、25，帝國那一側只有伊謝爾倫可達。remake 當成全 1 於是階段四多算 9 格、多抽 9 次亂數（`docs/re/297`）。改照擁有者算（`ai.CapitalReach`，`docs/spec/043`）之後抽 7 次、叛亂進場種子 AF5AAD71。`docs/spec/029`、`docs/internals/26`／`54` 已改；`docs/re/185` 末尾加指標 |
 | 費沙事件的觸發點不在傾印裡（沒載入的 overlay 或執行期填的間接呼叫）；包裝在 `1213:0235` | `docs/re/193`、`docs/spec/029`、worklist `phezzan-event-trigger` | `docs/re/296`：`1213:0235` 落在前一支 `1213:01B8` 的 far call 中間，包裝的進入點是 **`1213:023B`**，呼叫點 `1213:019E`。整條鏈常駐、全是直接 far call：回合尾巴 `056A:078E` → 易主通知 `056A:0855` → `1213:007B` 登記 `ds:988E` → 同一個回合尾巴 `1213:0096` 發動。觸發條件 ＝ 費沙那一格第一次易主（收據 `pzx296`／`pzx296n`／`pzx296g`）。`docs/spec/029`、`docs/internals/54` 已改；`docs/re/193` 是調查紀錄，照規矩不改寫，末尾加指標 |
 | `ds:8F48` 唯一的寫入點是費沙事件本體 | `docs/re/179`、`docs/internals/54` | `docs/re/296`：新遊戲初始化（`0374` 段，線性 `0x03A2F`，`a2 48 8f`）也寫它（清 0）；它跟著存檔 `WORK.DT?` 的 `+0x34` 走，出貨的 `WORK.DTA` 是 `0xFF`。`docs/internals/54` 已改 |
 | 回合尾巴那一支（逐格重算擁有者）的進入點是 `056A:078B` | `docs/re/245`、`docs/spec/034` | `docs/re/296` 末節：`078B` 是前一支結尾的 `pop si`，進入點 **`056A:078E`**。`docs/spec/034` 已改，`docs/re/245` 末尾加指標 |
@@ -347,7 +348,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 29 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 28 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -745,26 +746,6 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：要人判——沒有可綁的訊號——它是一份收據上的像素差異，不是程式裡的缺席。查出來之後會有一支新的繪製函式，到時綁它。
 
-#### ai-attack-reachability — 戰略 AI 階段四多抽 9 次亂數：`ds:D50E` remake 10 格非零、原版只有伊謝爾倫
-
-*re（逆向：機制還沒讀出來）*
-
-新遊戲第一個 AI 回合，原版抽 7 次亂數（建三支 × 2 ＋ 階段四伊謝爾倫 1，`docs/re/209`），
-remake 正式入口抽 16 次：`AttackScore` 算出星域 0–2、4–9 各 2048 與 13 的 4096，
-`AttackNeed` 每個非零格抽一次。原版那一刻 `ds:D50E` 只有 `[13] = 4096`
-（[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)）。
-
-最可能的原因是 `2B99:0392` 的可達表（`2B99:028F < 0x800`）在那個局面不是全 1，
-而 remake 預設全 1（`hypothesis`；距離值還沒從執行期取到）。叛亂判定與它共用
-同一個亂數序列，這一條不修，remake 自己走到的叛亂結果就與原版不同
-（`TestRebellionSameStateRandom` 把 16 釘住，數字變了會停下來）。
-
-**做完的判準**：第一個 AI 回合 remake 抽的亂數次數與原版相同（7 次），叛亂那一圈進場時的種子是 AF5AAD71。
-
-**證據**：[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/re/209-first-natural-ai-turn.md`](docs/re/209-first-natural-ai-turn.md)、[`docs/re/174-ai-five-phases.md`](docs/re/174-ai-five-phases.md)、[`docs/spec/041-rebellion.md`](docs/spec/041-rebellion.md)
-
-**核實**：`internal/ai/original_board.go` 裡還找得到 `ai-attack-reachability`（自承還在 ＝ 還沒做）
-
 #### region-unrest-recompute — 未安定度 `+0x7D` remake 載入之後就不再重算
 
 *feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -880,7 +861,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-19 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+20 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1198,9 +1179,9 @@ remake 端接上了（`rebellion-rule-in-remake`，[`docs/spec/041`](docs/spec/0
 `rbx292d` 由 remake 自己走同一條玩家路徑，九格叛亂、九顆行星、81 顆擁有者、
 32 格回合結束的擁有者逐一相同。
 
-remake 自己走到亂數有關的局面還對不上，差在上游、不在這一支：第一個 AI 回合 remake
-抽 16 次亂數、原版 7 次（`ai-attack-reachability`），同盟的未安定度 remake 沒有在
-AI 回合重算（`region-unrest-recompute`）。報告畫面跟著 `strategy-report-screen`，
+remake 自己走到亂數有關的局面（`rbx292e`）也對上了：第一個 AI 回合抽 7 次、進場種子
+AF5AAD71，叛亂的 7 格與收據相同（`ai-attack-reachability`）。同盟的未安定度 remake 沒有在
+AI 回合重算（`region-unrest-recompute`），那一局結果相同、門檻不同。報告畫面跟著 `strategy-report-screen`，
 `0374:0556` 的其餘三支跟著 `region-turn-upkeep-0556`。
 
 **做完的判準**：remake 跑同一個局面時叛亂的星域與原版逐格相同，被翻的行星與經濟力／防衛力也相同。
@@ -1208,6 +1189,29 @@ AI 回合重算（`region-unrest-recompute`）。報告畫面跟著 `strategy-re
 **證據**：[`docs/spec/041-rebellion.md`](docs/spec/041-rebellion.md)、[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)
 
 **核實**：`internal/game/game.go` 裡出現 `g\.runRebellions\(\)` 就是做好了
+
+#### ai-attack-reachability — 戰略 AI 的可達表 `2B99:0392` 不是全 1：階段四的候選與亂數次數對上原版
+
+*re（逆向：機制還沒讀出來）*
+
+`2B99:0392` 比的是帶領土罰則的距離 `< 0x800`（`k ≤ 1`：最多踏過一條不全是自己的邊），
+不是「圖上有沒有路」。`t260_post.bin`（新遊戲第一個 AI 回合剛跑完）分頁框裡的四張路徑表
+與照擁有者重算的逐格相同：同盟從巴拉特走不到 0–12、25，帝國那一側只有伊謝爾倫可達
+（[`docs/re/298`](docs/re/298-ai-capital-reach-is-not-all-ones.md)）。`s3aicomp` 算出的候選正好是收據那四格。
+
+remake 改成 `ai.CapitalReach` 照呼叫當下的擁有者算（`Reachable` 沒注入時，一回合一次，
+[`docs/spec/043`](docs/spec/043-ai-capital-reach.md) CONFORMED）。正式入口走 `rbx292e` 那條路徑：
+第一個 AI 回合抽 7 次（原來 16）、叛亂進場種子 AF5AAD71、整圈之後 936A823B、
+叛亂的 7 格與收據相同（`game.TestRebellionSameStateRandom`）。
+
+還沒做的不在這一條：候選評分與階段二、五的「兩格之間」距離、階段二的排序鍵
+仍用 `StarGraph.Hops`（規格 043「沒有驗到的」）。
+
+**做完的判準**：第一個 AI 回合 remake 抽的亂數次數與原版相同（7 次），叛亂那一圈進場時的種子是 AF5AAD71。
+
+**證據**：[`docs/re/298-ai-capital-reach-is-not-all-ones.md`](docs/re/298-ai-capital-reach-is-not-all-ones.md)、[`docs/spec/043-ai-capital-reach.md`](docs/spec/043-ai-capital-reach.md)、[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/re/209-first-natural-ai-turn.md`](docs/re/209-first-natural-ai-turn.md)、[`docs/re/185-reachability-and-distance-table.md`](docs/re/185-reachability-and-distance-table.md)
+
+**核實**：`TestAttackBoardNewGameDrawsOnce` 釘在 `internal/ai`
 
 #### phezzan-event-trigger — 費沙事件的觸發：費沙那一格第一次易主
 

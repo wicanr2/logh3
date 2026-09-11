@@ -1178,9 +1178,9 @@
         "`rbx292d` 由 remake 自己走同一條玩家路徑，九格叛亂、九顆行星、81 顆擁有者、",
         "32 格回合結束的擁有者逐一相同。",
         "",
-        "remake 自己走到亂數有關的局面還對不上，差在上游、不在這一支：第一個 AI 回合 remake",
-        "抽 16 次亂數、原版 7 次（`ai-attack-reachability`），同盟的未安定度 remake 沒有在",
-        "AI 回合重算（`region-unrest-recompute`）。報告畫面跟著 `strategy-report-screen`，",
+        "remake 自己走到亂數有關的局面（`rbx292e`）也對上了：第一個 AI 回合抽 7 次、進場種子",
+        "AF5AAD71，叛亂的 7 格與收據相同（`ai-attack-reachability`）。同盟的未安定度 remake 沒有在",
+        "AI 回合重算（`region-unrest-recompute`），那一局結果相同、門檻不同。報告畫面跟著 `strategy-report-screen`，",
         "`0374:0556` 的其餘三支跟著 `region-turn-upkeep-0556`。"
       ],
       "evidence": [
@@ -1201,34 +1201,36 @@
     },
     {
       "id": "ai-attack-reachability",
-      "status": "open",
+      "status": "done",
       "layer": "re",
-      "title": "戰略 AI 階段四多抽 9 次亂數：`ds:D50E` remake 10 格非零、原版只有伊謝爾倫",
+      "title": "戰略 AI 的可達表 `2B99:0392` 不是全 1：階段四的候選與亂數次數對上原版",
       "body": [
-        "新遊戲第一個 AI 回合，原版抽 7 次亂數（建三支 × 2 ＋ 階段四伊謝爾倫 1，`docs/re/209`），",
-        "remake 正式入口抽 16 次：`AttackScore` 算出星域 0–2、4–9 各 2048 與 13 的 4096，",
-        "`AttackNeed` 每個非零格抽一次。原版那一刻 `ds:D50E` 只有 `[13] = 4096`",
-        "（[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)）。",
+        "`2B99:0392` 比的是帶領土罰則的距離 `< 0x800`（`k ≤ 1`：最多踏過一條不全是自己的邊），",
+        "不是「圖上有沒有路」。`t260_post.bin`（新遊戲第一個 AI 回合剛跑完）分頁框裡的四張路徑表",
+        "與照擁有者重算的逐格相同：同盟從巴拉特走不到 0–12、25，帝國那一側只有伊謝爾倫可達",
+        "（[`docs/re/298`](docs/re/298-ai-capital-reach-is-not-all-ones.md)）。`s3aicomp` 算出的候選正好是收據那四格。",
         "",
-        "最可能的原因是 `2B99:0392` 的可達表（`2B99:028F < 0x800`）在那個局面不是全 1，",
-        "而 remake 預設全 1（`hypothesis`；距離值還沒從執行期取到）。叛亂判定與它共用",
-        "同一個亂數序列，這一條不修，remake 自己走到的叛亂結果就與原版不同",
-        "（`TestRebellionSameStateRandom` 把 16 釘住，數字變了會停下來）。"
+        "remake 改成 `ai.CapitalReach` 照呼叫當下的擁有者算（`Reachable` 沒注入時，一回合一次，",
+        "[`docs/spec/043`](docs/spec/043-ai-capital-reach.md) CONFORMED）。正式入口走 `rbx292e` 那條路徑：",
+        "第一個 AI 回合抽 7 次（原來 16）、叛亂進場種子 AF5AAD71、整圈之後 936A823B、",
+        "叛亂的 7 格與收據相同（`game.TestRebellionSameStateRandom`）。",
+        "",
+        "還沒做的不在這一條：候選評分與階段二、五的「兩格之間」距離、階段二的排序鍵",
+        "仍用 `StarGraph.Hops`（規格 043「沒有驗到的」）。"
       ],
       "evidence": [
+        "docs/re/298-ai-capital-reach-is-not-all-ones.md",
+        "docs/spec/043-ai-capital-reach.md",
         "docs/re/297-rebellion-garrison-recount-and-rng.md",
         "docs/re/209-first-natural-ai-turn.md",
-        "docs/re/174-ai-five-phases.md",
-        "docs/spec/041-rebellion.md"
+        "docs/re/185-reachability-and-distance-table.md"
       ],
       "acceptance": "第一個 AI 回合 remake 抽的亂數次數與原版相同（7 次），叛亂那一圈進場時的種子是 AF5AAD71。",
       "verify": {
-        "kind": "present",
-        "paths": [
-          "internal/ai/original_board.go"
-        ],
-        "pattern": "ai-attack-reachability",
-        "note": "綁的是 `AttackBoard` 上的自承註解；修好時把那段註解拿掉，並把 `TestRebellionSameStateRandom` 改成逐格比 r1 ＋ r2。"
+        "kind": "go_test",
+        "pkg": "internal/ai",
+        "run": "TestAttackBoardNewGameDrawsOnce",
+        "note": "單元那一支釘「新遊戲局面階段四只抽一次」；走完整條玩家路徑的是 `game.TestRebellionSameStateRandom`（7 次、AF5AAD71、936A823B），可達表一回退成全 1 兩支都會紅。"
       }
     },
     {
@@ -3521,7 +3523,7 @@
       "section": "s7",
       "cells": {
         "狀態": "**已實作並對拍**（`ai.AttackScore`）",
-        "證據": "收據 `s3aicomp`：13→682、15／22／28→2048",
+        "證據": "收據 `s3aicomp`：13→682、15／22／28→2048；候選由 `ai.CapitalReach` 照擁有者算（[`docs/spec/043`](docs/spec/043-ai-capital-reach.md)），算出的就是收據那四格。新遊戲第一個 AI 回合只有 `[13] = 4096`，與 `t260_post.bin` 相同（[`docs/re/298`](docs/re/298-ai-capital-reach-is-not-all-ones.md)）",
         "項目": "攻擊目標分 `ds:D50E`"
       },
       "verify": {
@@ -4403,9 +4405,9 @@
       "title": "叛亂的判定與效果（2703:1789 → 2703:1908）",
       "section": "s9",
       "cells": {
-        "狀態": "**通過**（收據種子上 32 格逐格相同；remake 自己走的與亂數無關局面 32 格逐格相同）",
+        "狀態": "**通過**（收據種子上 32 格逐格相同；remake 自己走的兩個局面——與亂數無關的 `rbx292d`、與亂數有關的 `rbx292e`——叛亂的星域都與收據相同）",
         "規則": "叛亂的判定與效果（`2703:1789` → `2703:1908`）",
-        "證據": "[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/spec/041`](docs/spec/041-rebellion.md) CONFORMED、`rules.DecideRebellions`／`rules.Rebel`。`rbx292e`（營運 4，結果由亂數決定）從收據種子重播 7 格叛亂、32 格逐格相同，含 748 ≥ 250、407 ≥ 350 兩個邊界；`rbx297w` 監看種子量到一格十次、整圈 190 次（936A823B）；`rbx292d`（營運 1）remake 自己走同一條玩家路徑，九格叛亂、九顆行星的擁有者／經濟力／防衛力、81 顆擁有者、32 格回合結束的擁有者逐一相同。亂數有關的局面 remake 自己走還對不上（上游 AI 多抽 9 次，`ai-attack-reachability`）"
+        "證據": "[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/spec/041`](docs/spec/041-rebellion.md) CONFORMED、`rules.DecideRebellions`／`rules.Rebel`。`rbx292e`（營運 4，結果由亂數決定）從收據種子重播 7 格叛亂、32 格逐格相同，含 748 ≥ 250、407 ≥ 350 兩個邊界；`rbx297w` 監看種子量到一格十次、整圈 190 次（936A823B）；`rbx292d`（營運 1）remake 自己走同一條玩家路徑，九格叛亂、九顆行星的擁有者／經濟力／防衛力、81 顆擁有者、32 格回合結束的擁有者逐一相同。`rbx292e` 那一局 remake 自己走也對上：叛亂之前抽 7 次、進場種子 AF5AAD71、整圈之後 936A823B，叛亂的 7 格相同（[`docs/re/298`](docs/re/298-ai-capital-reach-is-not-all-ones.md)）；同盟 10 格的門檻仍因未安定度不同（`region-unrest-recompute`）"
       },
       "verify": {
         "kind": "receipt",

@@ -31,7 +31,7 @@
 | 候選過濾與評分 `2E54:143F`／`2E54:1574` | proven（無收據）| `docs/re/168`；那一趟沒經過評分 |
 | 進軍路線表與戰略態勢碼 | proven | `docs/re/178`、`179`；表由記憶體走出來，12 組邊界互相夾住 |
 | 「下一步走哪一格」`2B99:0302` | **證明等價** | `docs/re/183`；兩張矩陣所有走得通的星域對 |
-| 「從首都走得到嗎」`2B99:0392` | proven | `docs/re/185`；星圖全連通已量 |
+| 「從首都走得到嗎」`2B99:0392` | **對拍** | `docs/re/185` 算式、[`docs/re/298`](../re/298-ai-capital-reach-is-not-all-ones.md) 值：帶領土罰則的距離 `< 0x800`，**不是全 1**；新遊戲 `t260_post.bin` 分頁框逐格，規格 [`043`](043-ai-capital-reach.md) |
 | 階段一（守首都、新編艦隊、副官）| proven（無收據）| `docs/re/180`–`182`、`188`、`190`、`191` |
 | 階段二（打最近的無主星域）| proven（無收據）| `docs/re/177` |
 | 階段五（收尾指派、前進基地）| proven（無收據）| `docs/re/177`、`179` |
@@ -175,8 +175,8 @@ ds:D5AE[0..31] = 0
 | 艦艇池（艦艇 `+0x04`／`+0x08`，候選評分要用） | **有了**：`rules.Slot.FleetShipTotals(i)` 回艘數與主力槽數 |
 | 艦隊 `+0x0E`（編制槽應有數） | **有了**：存檔就在 `+0x0E`，`rules.Fleet.Expected`（`docs/re/194`）|
 | 艦隊 `+0x09`（類別鍵） | **有了**：存檔就在 `+0x09`，`rules.Fleet.ClassKey`；`rules.FleetClass` 換成 0–3 |
-| `2B99:0392`（從首都能不能走到） | **已讀**（`docs/re/185`）：對每格填 `2B99:028F(首都, i, 陣營) < 0x800`。星圖全連通 → 正常局面全 1，`ai.TurnInput.Reachable` 的 `nil` 預設就是原版行為 |
-| `2B99:028F` 的**距離數值** | 表在 EMS（`E000:0000`／`E000:0800`），還沒取到；目前只用得到「走不走得到」這個布林 |
+| `2B99:0392`（從首都能不能走到） | **有了**：`ai.CapitalReach` 照目前擁有者建距離表、取首都那一列 `< 0x800`（規格 [`043`](043-ai-capital-reach.md)）。**不是全 1**——新遊戲同盟走不到帝國那一側除伊謝爾倫以外的每一格；`Reachable` 的 `nil` 預設就是這一張 |
+| `2B99:028F` 的**距離數值** | **有了**：`rules.StarGraph.BuildTables`（`docs/re/243`）。候選評分與階段二、五的「兩格之間」距離 remake 仍用 `StarGraph.Hops`（規格 `043`「沒有驗到的」）|
 | 艦隊 `+0x0E`（編制槽應有數） | remake 沒有；語意是假說（`docs/re/168`）|
 | 星域 `+0x13` bit0／bit2 | bit2 ＝ 有戰鬥（強推論）；bit0 未解 |
 | 星域圖的「下一格」與「走幾步」 | `rules.StarGraph` 有路徑表，要確認與 `2B99:0302`／`2B99:0450` 一致 |
@@ -411,7 +411,8 @@ n -= 2E54:03C3(n)                       ; 先從現有的湊
 | `AdvanceRoutes` | `ds:5EF2`／`ds:5F22` | 路線終點檢查 |
 | `PickerModes`／`Score`／`Pick` | `2E54:143F`／`2E54:1574` | **無收據**（那一趟沒經過候選評分）；測的是算式形狀 |
 | `Engaged`／`RetreatTarget`／`DecisionPass` | `2E54:16F5`／`2E54:1955`／`2E54:005D` | **無收據**；三條分支都實作了（`+0x08 == 4` 跳過、bit0 有設的原地出擊／退一格、bit0 沒設的留給後面挑），敵方艦隊數走 `rules.RegionFleets`（`docs/re/199`）|
-| `DefenceBoard`／`AttackBoard` | 一回合的六張表 | 由上面幾支組成；`Reachable` 是外部注入 |
+| `DefenceBoard`／`AttackBoard` | 一回合的六張表 | 由上面幾支組成；`Reachable` 沒注入時照 `CapitalReach` 算 |
+| `CapitalReach` | `2B99:0392`（`docs/spec/043`）| 新遊戲 `t260_post.bin` 分頁框逐格；`s3aicomp` 算出的候選就是收據那四格；第一個 AI 回合抽 7 次（`game.TestRebellionSameStateRandom`）|
 
 **還沒接上**的原因有兩個，兩個都要先解決才談得上把 `Original` 換掉：
 

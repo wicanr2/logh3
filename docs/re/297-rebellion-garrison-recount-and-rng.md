@@ -165,3 +165,9 @@ LCG 往前走去數步數（`tools/scripts/rng_watch_draws.py`）。比「猜幾
 旗標一個一行存在 `workplace/oracle/rbx297w/flags.txt`（`rbx292e` 的旗標，
 `-steps` 改成 231,000,000、`-regs-at` 換成上面三個位址、去掉 `-dump-mem-at`、
 加 `-watch 5E00C-5E00F`）。
+
+---
+
+> 「第一個 AI 回合 remake 抽 16 次」那一節的 hypothesis 成立（`docs/re/298`）：
+> 可達表在那個局面帝國那一側只有伊謝爾倫是 1，remake 改照擁有者算之後抽 7 次、
+> 叛亂那一圈進場種子 AF5AAD71、整圈之後 936A823B，叛亂的 7 格與 `rbx292e` 相同。

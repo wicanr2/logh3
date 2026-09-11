@@ -49,8 +49,9 @@ type StrategyInput struct {
 	// Rand 是原版的亂數（`rules.NewRand`）。nil ＝ 亂數項一律取 0。
 	Rand *rules.Rand
 
-	// Reachable 對應 `2B99:0392`；nil ＝ 全部走得到，那**是**原版行為
-	// （星圖全連通，`docs/re/185`）。
+	// Reachable 對應 `2B99:0392`（從首都走得到嗎）。nil ＝ 照 `Graph` 與
+	// `Owner` 當場算（`CapitalReach`，`docs/spec/043`），那就是原版行為；
+	// 要注入別的表才填它。**不是全 1**：帶領土罰則的距離 `< 0x800`。
 	Reachable func(region int) bool
 
 	// PhezzanOpen 是原版的 `ds:8F48`（費沙進入戰局，`docs/re/179`）。
@@ -64,8 +65,13 @@ func (in StrategyInput) owner(r int) int {
 	return in.Owner(r)
 }
 
+// reachable 查可達表。`Turn` 進門就把表算好；直接呼叫單一階段時
+// （測試）才會走到 nil 那一路，當場算一次。
 func (in StrategyInput) reachable(r int) bool {
-	return in.Reachable == nil || in.Reachable(r)
+	if in.Reachable == nil {
+		return reachFunc(in.Graph, in.owner, in.Faction)(r)
+	}
+	return in.Reachable(r)
 }
 
 func (in StrategyInput) candidates(decided map[int]bool) []Candidate {
@@ -111,6 +117,10 @@ func fleetAction(f rules.Fleet) int {
 func Turn(in StrategyInput) []Order {
 	if in.Graph == nil {
 		return nil
+	}
+	// 可達表一回合算一次，三個階段共用（原版每次都查同一張距離表）。
+	if in.Reachable == nil {
+		in.Reachable = reachFunc(in.Graph, in.owner, in.Faction)
 	}
 	var orders []Order
 	decided := map[int]bool{}

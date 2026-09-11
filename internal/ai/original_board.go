@@ -22,12 +22,10 @@ var Capitals = [2]int{0, 31}
 // TurnInput 是算一回合那六張表要的東西。
 //
 // `Reachable` 對應原版的 `2B99:0392(首都, 陣營, &旗標)`：它對每一格填
-// `2B99:028F(首都, i, 陣營) < 0x800`，也就是「走不走得到」（`docs/re/185`）。
-//
-// 星圖是全連通的（`rules.TestStarGraphFullyConnected`），所以正常局面下
-// 那張表是全 1——`nil` 的預設「全部走得到」就是原版行為。原版的距離表
-// 放在 EMS 裡、數值還沒取到，所以真有哪一格被標成走不到的話，
-// 這裡要換成注入的版本。
+// `2B99:028F(首都, i, 陣營) < 0x800`（`docs/re/185`）。那張距離表帶著
+// 領土罰則，**不是全 1**——從自己的地盤只走得到自己的地盤與外面那一圈
+// （`CapitalReach`，規格 `docs/spec/043`）。`nil` ＝ 照 `Graph` 與 `Owner`
+// 當場算，那就是原版行為；要注入別的表才填它。
 type TurnInput struct {
 	Faction   int
 	Fleets    []FleetView
@@ -39,10 +37,16 @@ type TurnInput struct {
 }
 
 func (in TurnInput) reachable(r int) bool {
-	if in.Reachable == nil {
-		return true
-	}
 	return in.Reachable(r)
+}
+
+// withReach 在 `Reachable` 沒給時照原版算一張（`CapitalReach`）。
+// 兩張表的入口都先過它，一回合只算一次。
+func (in TurnInput) withReach() TurnInput {
+	if in.Reachable == nil {
+		in.Reachable = reachFunc(in.Graph, in.Owner, in.Faction)
+	}
+	return in
 }
 
 func (in TurnInput) edgeFlag(r int) bool {
@@ -61,6 +65,7 @@ func Enemy(faction int) int { return 1 - faction }
 // `held` 是 `ds:D5CE`（這一格有幾支決定留守），由逐艦隊決定那一趟填
 // （`2E54:005D`，`docs/re/173`）；這裡當輸入收，因為那一趟還沒實作。
 func DefenceBoard(in TurnInput, held [RegionCount]int) Board {
+	in = in.withReach()
 	var b Board
 	b.Held = held
 	b.Threat = ThreatMap(in.Fleets, Enemy(in.Faction), in.Graph)
@@ -75,13 +80,12 @@ func DefenceBoard(in TurnInput, held [RegionCount]int) Board {
 //
 // `state` 是戰略態勢碼（`StateCode`），`routes` 是進軍路線表。
 // **會消耗亂數**：每個 `Priority != 0` 的格子取一次，依星域編號由小到大
-// ——次序是量出來的（`docs/re/184`）。
-//
-// ⚠ 新遊戲第一個 AI 回合這裡算出 10 格非零（星域 0–2、4–9 與 13），原版
-// 那一刻只有 13 非零，所以這一支多抽 9 次亂數（remake 16 次、原版 7 次，
-// `docs/re/297`；worklist `ai-attack-reachability`）。最可能是 `Reachable`
-// 在那個局面不該是全 1。叛亂判定與它共用同一個序列（`docs/spec/041`）。
+// ——次序是量出來的（`docs/re/184`）。候選要先過「從首都走得到」
+// （`CapitalReach`）：新遊戲第一個 AI 回合同盟只有伊謝爾倫一格非零、
+// 抽一次，與原版相同（`docs/re/298`）。叛亂判定與它共用同一個序列
+// （`docs/spec/041`），這裡多抽或少抽一次，之後每一條擲骰的規則都錯位。
 func AttackBoard(in TurnInput, routes *AdvanceRoutes, state int, held [RegionCount]int) Board {
+	in = in.withReach()
 	var b Board
 	b.Held = held
 	b.Threat = ThreatMap(in.Fleets, Enemy(in.Faction), in.Graph)

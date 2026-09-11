@@ -20,9 +20,9 @@ import (
 //
 // `rules` 那一層的測試拿收據自己的傾印重播；這一層驗的是 **remake 自己
 // 走到那一刻的狀態**——擁有者、未安定度、開局快照、兩位情報參謀、
-// 艦隊位置——與原版相同。亂數種子還差上游 AI 那一段（見
-// `TestRebellionSameStateRandom`），所以與亂數無關的那一份（`rbx292d`）
-// 逐格比結果，與亂數有關的那一份（`rbx292e`）逐格比門檻。
+// 艦隊位置——與原版相同。與亂數無關的那一份（`rbx292d`）逐格比結果；
+// 與亂數有關的那一份（`rbx292e`）比進場種子、逐格比 r1 ＋ r2 與叛亂集合
+// （見 `TestRebellionSameStateRandom`）。
 const intelStaffEmpire = 13 // 帝國的情報專任參謀（`docs/internals/30`）
 
 func runRebellionTurn(t *testing.T, ops byte) *Game {
@@ -30,7 +30,7 @@ func runRebellionTurn(t *testing.T, ops byte) *Game {
 	g := reachBrainPhase(t)
 	// 進軍路線表：正式入口（`internal/bootstrap`）會載，`reachBrainPhase`
 	// 沒有。少了它 AI 的階段四／五整段不跑，亂數的次數與正式遊戲不同
-	// （6 次；載了是 16 次；原版 7 次，見 `TestRebellionSameStateRandom`）。
+	// （6 次；載了是 7 次、與原版相同，見 `TestRebellionSameStateRandom`）。
 	// 這裡照正式入口載。
 	routes, err := ai.LoadAdvanceRoutes(filepath.Join(root, "docs/internals/data/ai-advance-routes.json"))
 	if err != nil {
@@ -56,19 +56,19 @@ func runRebellionTurn(t *testing.T, ops byte) *Game {
 // TestRebellionSameStateRandom 對收據 `rbx292e`（營運 4，門檻 225–625，
 // 結果由亂數決定）。
 //
-// 驗得到的：32 格裡哪幾格擲亂數與原版逐格相同；帝國那 9 格的門檻逐格
-// 相同（擁有者、未安定度、開局快照、情報參謀的營運、艦隊位置全對，門檻
-// 才會一樣）。同盟那 10 格的未安定度 remake 沒有在 AI 回合裡重算
-// （worklist `region-unrest-recompute`），門檻改驗「代進原版的未安定度
-// 就得到原版的門檻」。
+// 驗得到的：
 //
-// **亂數本身還對不上，差在上游**：原版第一個 AI 回合抽 7 次（建三支艦隊
-// 各 2 次 ＋ 階段四伊謝爾倫那一格 1 次，`docs/re/209`），remake 抽 16 次
-// ——階段四的 `ds:D50E` remake 有 10 格非零、原版只有伊謝爾倫一格
-// （worklist `ai-attack-reachability`）。叛亂這一支不補抽、不遷就
-// （`docs/spec/041`「亂數」一節）。上游修好之後這個測試會在下面那一行
-// 停下來，那時把它改成逐格比 r1 ＋ r2 與叛亂集合（`rules` 那一層已經
-// 拿收據自己的種子驗過：7 格、32 格逐格相同）。
+//   - 亂數：第一個 AI 回合抽 7 次（建三支艦隊各 2 次 ＋ 階段四伊謝爾倫那一格
+//     1 次，`docs/re/209`），叛亂那一圈進場的種子是 AF5AAD71、整圈之後是
+//     936A823B（收據 `rbx297w`，`docs/re/297`）。階段四要先過「從首都走得
+//     到」（`ai.CapitalReach`，`docs/spec/043`）才只剩伊謝爾倫一格——當成
+//     全 1 的時候這裡是 16 次。叛亂這一支不補抽、不遷就（`docs/spec/041`）。
+//   - 32 格裡哪幾格擲亂數與原版逐格相同；帝國那 9 格的門檻與 r1 ＋ r2 逐格
+//     相同（`docs/re/292` 那張表）；叛亂的星域與收據 `rbx292e` 的
+//     `2703:1908` 七次相同。
+//   - 同盟那 10 格的未安定度 remake 沒有在 AI 回合裡重算
+//     （worklist `region-unrest-recompute`），門檻改驗「代進原版的未安定度
+//     就得到原版的門檻」。
 func TestRebellionSameStateRandom(t *testing.T) {
 	g := runRebellionTurn(t, 4)
 
@@ -81,9 +81,31 @@ func TestRebellionSameStateRandom(t *testing.T) {
 	for ; n < 10000 && r.Seed() != end; n++ {
 		r.Next()
 	}
-	if before := n - rebelDraws; before != 16 {
-		t.Fatalf("叛亂之前 remake 抽了 %d 次亂數；已知的上游落差是 16（原版 7，"+
-			"`docs/re/209`）。數字變了就回來改這個測試", before)
+	if before := n - rebelDraws; before != 7 {
+		t.Fatalf("叛亂之前 remake 抽了 %d 次亂數，原版 7 次（`docs/re/209`）", before)
+	}
+	entry := rules.NewRand(strategyRandSeed)
+	entry.Advance(7)
+	if entry.Seed() != 0xAF5AAD71 {
+		t.Errorf("叛亂那一圈進場的種子 %08X，原版 AF5AAD71（`docs/re/297`）", entry.Seed())
+	}
+	if end != 0x936A823B {
+		t.Errorf("整圈之後的種子 %08X，收據 rbx297w 是 936A823B", end)
+	}
+	// 帝國那 9 格的 r1 ＋ r2（`docs/re/292`，`rbx292e_pre.bin` 重播）與叛亂的
+	// 星域（收據 `rbx292e` 的 `2703:1908` 呼叫 7 次）。
+	wantRoll := map[int]int{1: 297, 2: 157, 4: 112, 5: 748, 6: 262, 7: 347, 8: 407, 9: 427, 13: 201}
+	for i, v := range wantRoll {
+		if got := g.rebellionRolls[i].Roll; got != v {
+			t.Errorf("星域 %d：r1 ＋ r2 ＝ %d，原版 %d", i, got, v)
+		}
+	}
+	wantRebels := map[int]bool{1: true, 2: true, 4: true, 6: true, 7: true, 9: true, 13: true}
+	for i, roll := range g.rebellionRolls {
+		if roll.Rebels != wantRebels[i] {
+			t.Errorf("星域 %d：叛亂 %v，收據 %v（門檻 %d、r1 ＋ r2 %d）",
+				i, roll.Rebels, wantRebels[i], roll.Threshold, roll.Roll)
+		}
 	}
 
 	// 32 格擲不擲與原版逐格相同（`rbx292e_pre.bin` 重播；20／30 兩格有剛
