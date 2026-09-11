@@ -13,11 +13,24 @@
 # ⚠ **這是 General MIDI 的音色，不是原版的 FM 音源。** `_M` 那一組
 # （MPU-401／GM）用它合出來接近當年在 MIDI 音源上聽到的；`_F` 那一組
 # 是寫給 OPL 的，用 GM 音色只是「同一首曲子」而不是「同一個聲音」。
-# 要 FM 的原音得從執行器錄 OPL 暫存器寫入（見 `tools/music_to_ogg.sh` 的說明）。
+# 要 FM 的原音走另一條路：從執行器錄 OPL 暫存器寫入成 VGM，再用
+# **AdPlug**（`adplay`）合成。AdPlug 認得 DRO 不認得 VGM，中間那一步
+# 由 `tools/scripts/vgm_to_dro.py` 轉（兩邊都是「暫存器寫入 ＋ 延遲」
+# 的序列，轉換不損失音符，只把 1/44100 秒的刻度捨入成毫秒）。
+# `opl2wav` 自己編：Debian 有 `libadplug-dev`，但**沒有 `adplay`**
+# （`adplug-utils` 只裝 `adplugdb`），也沒有任何 VGM 播放器。
+FROM debian:bookworm-slim AS build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      g++ pkg-config libadplug-dev \
+ && rm -rf /var/lib/apt/lists/*
+COPY opl2wav.cpp /tmp/opl2wav.cpp
+RUN g++ -O2 -o /usr/local/bin/opl2wav /tmp/opl2wav.cpp $(pkg-config --cflags --libs adplug)
+
 FROM debian:bookworm-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      fluidsynth fluid-soundfont-gm ffmpeg \
+      fluidsynth fluid-soundfont-gm ffmpeg libadplug-2.3.3-0 \
  && rm -rf /var/lib/apt/lists/*
+COPY --from=build /usr/local/bin/opl2wav /usr/local/bin/opl2wav
 
 ENV HOME=/tmp

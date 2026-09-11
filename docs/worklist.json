@@ -470,27 +470,39 @@
       "legacy_id": null,
       "status": "open",
       "layer": "re",
-      "title": "`_F` 那一組是 FM 音源，用 GM 音色庫合出來不是原音",
+      "title": "`_F` 那一組的 FM 原音：11 首錄到 9 首，結局那兩首還卡住",
       "body": [
-        "`tools/music_to_ogg.sh` 走的是 MIDI ＋ General MIDI 音色庫。",
-        "`_M` 那一組本來就是寫給 MPU-401／GM 的，合出來接近當年的聲音；",
-        "`_F` 是寫給 OPL 的，用 GM 音色只會得到「同一首曲子、不同的音源」。",
-        "要 FM 原音得換一條路：讓 dosgolem 跑原版、錄下 OPL 暫存器的寫入序列",
-        "（`machine.OPLWrite` 已經連步數一起記了）再合成。dosgolem 那側還缺一支",
-        "把它倒成 VGM 的旗標——那對任何有 AdLib 的 DOS 遊戲都用得上，不是本作特例。"
+        "`_F` 是寫給 OPL 的（`docs/re/274`：`'f'` 那個外皮接的是 OPL 播放常式），",
+        "用 GM 音色庫合只會得到「同一首曲子、不同的音源」。",
+        "**11 首裡 9 首已經是原版 OPL 的輸出**（`docs/re/275`）：dosgolem 加了",
+        "`-dump-vgm` 與 `-vgm-clear-on-open`（`docs/spec/190-opl-vgm-dump`），",
+        "`tools/music_fm_capture.sh` 逐首讓原版自己去播再錄，AdPlug 離線合成。",
+        "`BGM_0F`–`BGM_7F` 用 `-poke` 寫 `ds:8F34` 選曲（連兩首戰鬥曲都不必打到戰鬥）；",
+        "`OPEN_F` 原版永遠不會開它（`docs/re/274` §8），用換檔內容讓 OPL 驅動",
+        "演奏那份資料，收據標 `FM(substituted)`。",
+        "**還缺 `END_1F`／`END_2F`**：`ENDING.EXE` 跑 2,000,000,000 道指令",
+        "（約 172 秒遊戲時間）沒有開過任何 `.MDS`，也沒有寫過 388／389。",
+        "它有 `'f'`／`'m'` 兩個外皮（檔案位移 `0x31C6`／`0x31F0`），但整支執行檔裡",
+        "**一個 `0x0388` 字面值都沒有**（`OPEN.EXE` 有兩處），所以它的 OPL 埠",
+        "不是寫死的、或者 ＦＭ 輸出根本不在這支裡——先解那件事才錄得到。",
+        "另有一個待裁決項：ＦＭ 那組的音量比 `_M` 那組低 10–20 dB，而那個落差是",
+        "原版自己寫進 OPL 音量暫存器的。`FM_NORM=batch`（預設）保留曲子之間的",
+        "音量關係，`FM_NORM=track` 聽感一致但抹掉那個關係。**要使用者裁決**。"
       ],
       "evidence": [
+        "docs/re/275-fm-capture-from-opl.md",
+        "docs/re/274-which-screen-plays-which-tune.md",
         "docs/internals/17-mds.md"
       ],
       "acceptance": "`_F` 那 11 首的 OGG 出自原版 OPL 的輸出，而不是 GM 音色庫。",
-      "blocked_by": "要先在 dosgolem 加一支把 OPL 寫入序列倒成 VGM 的旗標。",
+      "blocked_by": "`ENDING.EXE` 的音樂路徑還沒走通（見 body），所以 `END_1F`／`END_2F` 錄不到。",
       "verify": {
         "kind": "present",
         "paths": [
-          "tools/music_to_ogg.sh"
+          "tools/music_fm_capture.sh"
         ],
-        "pattern": "那條還沒做",
-        "note": "腳本裡的自承還在就代表還沒做。錄得出 FM 原音之後那句會被改掉。"
+        "pattern": "這條路還沒走通",
+        "note": "腳本裡的自承還在就代表 END_1F／END_2F 還沒錄到。兩首都錄得出來之後那一段會被改掉，這一條才關。"
       }
     },
     {
