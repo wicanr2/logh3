@@ -509,10 +509,18 @@ type Game struct {
 	delivered               rules.Building
 	reportYear, reportMonth int
 
-	// 目前選中的星域。左下角那塊寫的就是它。**還沒選過是 −1**，
-	// 那塊是空的——收據 `main1e` 就是這個狀態（關月初報告的那兩下右鍵
-	// 也點在星圖上，但沒有選中任何星域）。
+	// 目前選中的星域：對星圖按右鍵選的那一格。**右下角清單的「艦隊」
+	// 分頁看的是它**（`fleetRows`）；左下角那塊看的是 `hoverRegion`，
+	// 不是這個。**還沒選過是 −1** ＝ 退回自己的首都。
 	selectedRegion int
+
+	// hoverRegion 是左下角那塊現在寫著哪一格星域，−1 ＝ 整塊空的
+	// （`docs/re/277`、`docs/spec/001`）。
+	//
+	// 它是**游標底下**那一格，不是右鍵選中的那一格；而且只在戰略地圖
+	// 介面是最上層的時候跟著游標走——選單或視窗一開就凍在那裡。
+	// 重算的地方只有 `refreshHoverRegion` 一處。
+	hoverRegion int
 
 	// saveErr 是上一次存檔的結果（nil ＝ 成功或還沒存過）。
 	saveErr error
@@ -1127,6 +1135,7 @@ func (g *Game) enterSide(faction int) {
 	// 交棒的當下底板是乾淨的：右側面板只剩陣營那一行與按鈕，
 	// 左下角是空的（收據 `vs3`／`vs5`）。
 	g.selectedRegion = -1
+	g.hoverRegion = -1
 	g.detailAdmiral = -1
 	g.reportLayer = 0
 }
@@ -1187,7 +1196,7 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		menuRow: -1, detailAdmiral: -1, battleRegion: -1}
+		hoverRegion: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1}
 	g.startNewGame(res.Faction)
 	// 電腦那一方走原版的戰略 AI（`docs/spec/029` READY，使用者裁決
 	// 2026-09-10）。資源不齊時 `OriginalBrain` 自己回 nil ＝ 不下命令。
@@ -1236,6 +1245,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	// 讀進來之後 remake 才有敵方的艦隊可以畫、可以推進。
 	g.fleets = sl.Fleets(g.res.Weights)
 	g.selectedRegion = -1
+	g.hoverRegion = -1
 	g.state = StateCommandPhase
 	// 星域記錄與行星表剛剛才換成存檔那一份，戰略 AI 的地基跟著換，
 	// 所以重接一次。
@@ -1274,7 +1284,16 @@ func (g *Game) Typed() string { return string(g.typed) }
 const mouseDY = ui.MouseDY
 
 // MoveMouse 移動游標，座標是**畫面座標**。主選單會跟著換反白的那一列。
+//
+// 單純的移動會順便重算左下角那塊寫哪一格（`refreshHoverRegion`）；
+// 點擊帶著的那次移動**不算**，所以 `Click`／`RightClick` 走 `moveMouse`。
 func (g *Game) MoveMouse(x, y int) {
+	g.moveMouse(x, y)
+	g.refreshHoverRegion()
+}
+
+// moveMouse 只搬游標，不碰左下角那塊。
+func (g *Game) moveMouse(x, y int) {
 	g.mouseX, g.mouseY = x, y
 	if g.state == StateMainMenu {
 		g.highlight = screen.RowAt(g.res.Menu, y)
@@ -1285,16 +1304,52 @@ func (g *Game) MoveMouse(x, y int) {
 	g.fortressAimMouse(x, y)
 }
 
+// refreshHoverRegion 重算左下角那塊要寫哪一格星域（`docs/re/277`）。
+//
+// **只在戰略地圖介面是最上層的時候重算**：選單或疊上去的視窗開著的時候
+// 一個字都不動，所以那幾張畫面留著的是開起來之前的內容（收據 `cmd1e`：
+// 選單開著，滑鼠已經搬到右側面板上，左下角照樣寫著艾流塞拉）。
+//
+// 游標不在星圖上就是 −1 ＝ 整塊只剩外框（收據 `main1e`：滑鼠在 (600,340)，
+// 那塊 0 個非底色像素）。
+//
+// 呼叫點是三個輸入入口的**結尾**——「這次輸入做完之後還在地圖介面嗎」
+// 才是判準。左鍵點命令列把選單開起來時，結尾的狀態已經不是地圖介面，
+// 所以不重算，凍住的就是點下去之前游標底下那一格。
+//
+// ⚠ **同盟那條路凍住的內容與這裡相反，機制還沒解**（`docs/re/278`）：
+// 同一條輸入序列，帝國凍著游標底下那一格、同盟整塊是空的；再多按一次
+// 星圖上的右鍵或多移動一次滑鼠，兩邊又剛好對調。這裡照帝國那邊的證據做。
+func (g *Game) refreshHoverRegion() {
+	if g.state != StateCommandPhase {
+		return
+	}
+	g.hoverRegion = -1
+	if g.res.Regions == nil ||
+		g.mouseX < mapX || g.mouseX >= mapX+mapW ||
+		g.mouseY < mapY || g.mouseY >= mapY+mapH {
+		return
+	}
+	if i := asset.RegionAt(g.res.Regions, g.mouseX-mapX, g.mouseY-mapY, tileW, tileH); i >= 0 {
+		g.hoverRegion = i
+	}
+}
+
 // Click 按一下左鍵。
 //
 // **主選單只從事件回呼收按下**（`docs/re/08`）——那是原版的實作細節，
 // 在這裡的意義是：點擊要落在某一列上才算數，不是點到視窗內就好。
 func (g *Game) Click(x, y int) {
+	g.click(x, y)
+	g.refreshHoverRegion()
+}
+
+func (g *Game) click(x, y int) {
 	if g.state == StateIntro {
 		g.SkipIntro()
 		return
 	}
-	g.MoveMouse(x, y)
+	g.moveMouse(x, y)
 	switch g.state {
 	case StateMainMenu:
 		if g.highlight >= 0 {
@@ -1434,8 +1489,12 @@ func (g *Game) Click(x, y int) {
 						Region: rules.CapitalRegion(g.faction),
 						Target: rules.NoTarget,
 					})
-					// 左下角那塊**不會被擦掉**：艦隊那幾張畫的是自己的
-					// 首都，回到地圖之後原版就讓它留在那裡（收據 `dec1`）。
+					// 右下角清單跟著看首都那一格——剛編成的艦隊停在
+					// 那裡，回到地圖之後「艦隊」分頁要多出一列
+					// （收據 `dec1`，`docs/re/70`）。
+					//
+					// 左下角那塊不看這個：`dec1` 的游標按完「決定」停在
+					// (510,350)，不在星圖上，所以整塊是空的。
 					g.selectedRegion = rules.CapitalRegion(g.faction)
 					g.state = StateCommandPhase
 					return
@@ -1516,16 +1575,22 @@ func (g *Game) Click(x, y int) {
 // **座標目前不影響結果**——實測 (300,240) 那一點在報告視窗上與在地圖上
 // 都關得掉；哪裡按不算數還沒量過。
 func (g *Game) RightClick(x, y int) {
+	g.rightClick(x, y)
+	g.refreshHoverRegion()
+}
+
+func (g *Game) rightClick(x, y int) {
 	if g.state == StateIntro {
 		g.SkipIntro()
 		return
 	}
-	g.MoveMouse(x, y)
-	// 按在星圖上會順便換掉選中的星域，左下角那塊跟著改寫（收據 `rcback`）。
+	g.moveMouse(x, y)
+	// 按在星圖上會順便換掉選中的星域（右下角的艦隊分頁看的是它）。
 	//
 	// **只有已經在戰略地圖介面時才算**：關月初報告的那兩下右鍵也點在
-	// 星圖上（`main1e` 的 `-rclicks 300,200` 兩次），而那張畫面的左下角
-	// 是空的——所以關報告的右鍵不選星域。
+	// 星圖上（`main1e` 的 `-rclicks 300,200` 兩次），而那張畫面右下角
+	// 列的是首都的艦隊。左下角那塊不看這個，看的是游標底下那一格
+	// （`refreshHoverRegion`，`docs/re/277`）。
 	if g.state == StateCommandPhase && g.res.Regions != nil &&
 		x >= mapX && x < mapX+mapW && y >= mapY && y < mapY+mapH {
 		if i := asset.RegionAt(g.res.Regions, x-mapX, y-mapY, tileW, tileH); i >= 0 {
@@ -1882,7 +1947,6 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			// （`docs/spec/002`）。
 			fb, _ := screen.MainGameLayered(spec, g.res.Font, g.starMapFor(spec),
 				g.res.Faces, g.res.Cursor, g.drawBoardPanels, g.afterWindow)
-			g.drawPanels(fb)
 			g.drawBudget(fb)
 			g.drawProduction(fb)
 			g.drawDelivery(fb)
@@ -2061,8 +2125,13 @@ func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
-		StateFleetNumber, StateFleetAdjutant, StateFleetComposition,
-		StateFormation,
+		StateFleetOrg, StateFleetNumber, StateFleetAdjutant,
+		StateFleetComposition, StateFormation,
+		// 這五張的收據末尾都有一次 `-mouse-at`（搬到 (600,340)），
+		// 而畫面上的箭頭跟著搬過去了：`info1e`／`lst1e`／`lst2e`／
+		// `lst3e`／`settings1e` 與同盟的五張，十份都是同一個結論。
+		StateInfo, StateFleetList, StateAdmiralListView, StateEnemyList,
+		StateSettings,
 		// 交棒視窗的游標停在剛剛按下確認／實行的地方：`vs3` 在主選單
 		// 那一列 (300,250)，`vs5`／`vs6` 在「實行」那一格 (560,125)。
 		StateVersusInput, StateVersusAccount:
@@ -2510,16 +2579,6 @@ func (g *Game) drawProduction(fb *gfx.Framebuffer) {
 	g.res.ProductionPanel.Draw(fb, g.res.Font, g.nextPlan(), g.building[g.faction])
 }
 
-// drawPanels 把兩塊「從狀態算出來」的面板畫上去：右側（規格 002）
-// 與左下角（規格 001）。**只有戰略地圖介面畫**——疊在上面的那幾張
-// 會把這兩塊改寫成自己的內容，它們的規格裡已經有了。
-func (g *Game) drawPanels(fb *gfx.Framebuffer) {
-	if g.state != StateCommandPhase {
-		return
-	}
-	g.drawRegionPanel(fb)
-}
-
 // drawCapitalPanel 畫右側那塊：日期、軍事費、總稅收與自己首都的摘要。
 func (g *Game) drawCapitalPanel(fb *gfx.Framebuffer) {
 	if g.res.CapitalPanel == nil || g.res.RegionPanel == nil || g.res.Planets == nil {
@@ -2569,45 +2628,22 @@ func (g *Game) fleetRows() []screen.FleetRow {
 	return rows
 }
 
-// drawRegionPanel 把選中星域的摘要畫進左下角那塊。
-//
-// ⚠ **觸發條件還沒讀，所以這塊在 remake 等同永遠空著**（`docs/re/276`）。
-// 原版的行為量到兩個點：`main1e`（2.2 億步）那塊是空的，`cmd1e`（2.3 億步、
-// 中間多一次點擊）那塊有字，內容是右鍵點過的星域 30。**出擊命令的選單開著
-// 的時候左下角照樣顯示摘要**——先前這裡寫「疊在上面的那幾張會把左下角改寫
-// 成自己的內容」，`cmd1e` 的畫面否定了它。
-//
-// 現在的條件（`state == StateCommandPhase && selectedRegion >= 0`）只對得上
-// 空著的那一半，40 份收據因此各差 2,265 個像素。**不要猜一個條件補上去**：
-// 填錯星域與空著在對拍上都是紅的，但填錯會讓人以為做完了。
-func (g *Game) drawRegionPanel(fb *gfx.Framebuffer) {
-	if g.state != StateCommandPhase || g.selectedRegion < 0 ||
-		g.res.RegionPanel == nil || g.res.Planets == nil {
-		return
-	}
-	o := g.selectedRegion * rules.RegionRecord
-	if o+rules.RegionRecord > len(g.res.Stellar) {
-		return
-	}
-	sum := rules.Summarise(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
-		g.selectedRegion, g.faction)
-	g.res.RegionPanel.Draw(fb, g.res.Font, sum, g.faction)
-}
-
 // drawLeftSummary 把一個星域的摘要畫進左下角那塊。
 //
 // 提督資料那幾張畫的是**自己的首都**（收據 `lst2e`／`sortie1e`／
 // `admirals1` 與同盟的對應張），星系資料畫的是**滑鼠停的那一列**那個
-// 星域（`star1e`／`star1eAlly`）。其餘畫面左下角是空的，或由
-// `drawRegionPanel` 畫游標選中的那一格。
+// 星域（`star1e`／`star1eAlly`）。其餘畫面畫的是 `hoverRegion`
+// ——地圖介面上游標底下那一格，選單或視窗開起來之前是哪一格就留哪一格
+// （`docs/re/277`、`docs/spec/001`）。`−1` ＝ 整塊只剩外框。
 //
-// **畫在底板那一層**（`drawBoardPanels` 裡）——待命中提督資料那張的
-// 視窗會蓋掉左下角一部分，畫在視窗之後會蓋錯。
+// **畫在底板那一層**（`drawBoardPanels` 裡）：待命中提督資料那張的視窗會
+// 蓋掉左下角一部分，畫在視窗之後會蓋錯；徵稅計劃（`tax1e`）與取進度
+// （`load1e`）那幾張也是視窗壓在摘要上面，摘要只從沒被蓋到的地方露出來。
 func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 	if g.res.RegionPanel == nil || g.res.Planets == nil {
 		return
 	}
-	region := -1
+	region := g.hoverRegion
 	switch g.state {
 	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList,
 		StateAdmiralDetail, StateAdmiralBio, StateFleetOrg,

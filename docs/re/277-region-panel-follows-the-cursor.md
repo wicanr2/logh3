@@ -46,6 +46,12 @@ remake 早就會畫（[`../spec/001`](../spec/001-region-summary-panel.md)），
 
 ## remake 現在怎麼做的
 
+> 2026-09-11 起這三條已經接上（`internal/game.refreshHoverRegion`，
+> 規格 [`../spec/001`](../spec/001-region-summary-panel.md)）。同盟那條路
+> 凍住的內容與這裡量到的相反，機制未解，見
+> [`278`](278-region-panel-frozen-content-differs-by-faction.md)。
+> 以下是當時的現況。
+
 `internal/game.drawRegionPanel` 畫的是 `g.selectedRegion`（右鍵設的），
 而且 `selectedRegion < 0` 就不畫。對得上規則 2 那一半（空著），
 規則 1 與 3 兩半都沒有——所以那 40 份收據各差 2,265 個像素。

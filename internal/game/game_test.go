@@ -232,9 +232,14 @@ func load(t *testing.T) *Resources {
 		StartMilitary: 50000, ShipPct: 25}
 }
 
-// reachCommandPhase 走正常玩家路徑到戰略地圖介面：
+// reachCommandPhaseOnMap 走正常玩家路徑到戰略地圖介面：
 // 主選單 → 防拷問答 → 遊戲本體（月初報告）→ 右鍵兩下。
-func reachCommandPhase(t *testing.T) *Game {
+//
+// **停在這裡，游標還壓在星圖上 (300,240)**——所有收據的共同前綴就到這裡
+// （`-rclicks 130000000:300:200,155000000:300:200`）。往後每一份收據的輸入
+// 各自不同，要照那一份的順序接下去，不要串別份的動作進來：左下角那塊跟著
+// 游標走，而選單一開就凍住（`docs/re/277`），多一次滑鼠移動就換一張畫面。
+func reachCommandPhaseOnMap(t *testing.T) *Game {
 	t.Helper()
 	g, err := New(load(t))
 	if err != nil {
@@ -252,9 +257,15 @@ func reachCommandPhase(t *testing.T) *Game {
 	if g.State() != StateCommandPhase {
 		t.Fatalf("右鍵兩下之後在 %v，不是戰略地圖介面", g.State())
 	}
-	// 收據 `main1e` 是用 `-mouse-at` 把滑鼠搬到 (600,300) 之後才擷取的
-	// （滑鼠座標；畫面座標 (600,340)）。地圖介面的游標跟著滑鼠跑，
-	// 所以要對得上就得搬到同一個地方。
+	return g
+}
+
+// reachCommandPhase 再多走一步：收據 `main1e` 是用 `-mouse-at` 把滑鼠搬到
+// (600,300) 之後才擷取的（滑鼠座標；畫面座標 (600,340)）。地圖介面的游標
+// 跟著滑鼠跑，所以要對得上就得搬到同一個地方。
+func reachCommandPhase(t *testing.T) *Game {
+	t.Helper()
+	g := reachCommandPhaseOnMap(t)
 	g.MoveMouse(600, 340)
 	return g
 }
@@ -262,8 +273,13 @@ func reachCommandPhase(t *testing.T) *Game {
 // TestCommandPhaseNavigation 走命令階段的每一條路：命令列三格各拉出選單，
 // 選單每一項各開一張畫面，每一張都要與原版收據逐位元組相同。
 //
-// **回程不比像素**：右鍵回到地圖介面之後，原版左下角那塊會顯示游標底下的
-// 星系（`rcback` 收據），remake 還沒有那一層模型，所以只驗狀態。
+// **一張收據走一遍，不要把三張串成一條路。** 三份收據是三次獨立的執行，
+// 滑鼠移動落在不同的時點（旗標在 `workplace/flags-new/`）：`main1e` 在
+// 開選單**之前**搬到 (600,340)，`cmd1e` 是開完選單**之後**才搬，`tax1e`
+// 那幾份根本沒搬。串起來就會多一次或少一次移動，而左下角那塊跟著游標走、
+// 選單一開就凍住（`docs/re/277`），差一次移動整塊內容就不一樣。
+//
+// **回程不比像素**：右鍵回到地圖介面之後只驗狀態，那一張沒有收據。
 func TestCommandPhaseNavigation(t *testing.T) {
 	for _, c := range []struct {
 		name         string
@@ -272,30 +288,46 @@ func TestCommandPhaseNavigation(t *testing.T) {
 		menuBatch    string
 		batch        string
 		state        State
+		// moveAfter ＝ 這份子畫面的收據在點完選單項目之後還有一次
+		// `-mouse-at`（搬到 (600,340)）。沒有的那幾份游標就停在剛剛
+		// 點下去的地方。
+		moveAfter bool
 	}{
-		{"出擊命令", 352, 400, 125, "cmd1e", "sortie1e", StateStandbyAdmirals},
-		{"情報收集", 352, 400, 145, "cmd1e", "info1e", StateInfo},
-		{"徵稅計劃", 352, 400, 165, "cmd1e", "tax1e", StateTaxPlan},
-		{"生產計劃", 352, 400, 185, "cmd1e", "prod1e", StateProductionPlan},
-		{"星系資料", 448, 460, 125, "lstmenu1e", "star1e", StateStarList},
-		{"艦隊資料", 448, 460, 145, "lstmenu1e", "lst1e", StateFleetList},
-		{"提督資料", 448, 460, 165, "lstmenu1e", "lst2e", StateAdmiralListView},
-		{"敵將資料", 448, 460, 185, "lstmenu1e", "lst3e", StateEnemyList},
-		{"取進度", 544, 560, 145, "sysmenu1e", "load1e", StateLoadGame},
-		{"存進度", 544, 560, 165, "sysmenu1e", "save1e", StateSaveGame},
-		{"設定", 544, 560, 185, "sysmenu1e", "settings1e", StateSettings},
-		{"結束", 544, 560, 205, "sysmenu1e", "quit1e", StateQuitConfirm},
+		{"出擊命令", 352, 400, 125, "cmd1e", "sortie1e", StateStandbyAdmirals, false},
+		{"情報收集", 352, 400, 145, "cmd1e", "info1e", StateInfo, true},
+		{"徵稅計劃", 352, 400, 165, "cmd1e", "tax1e", StateTaxPlan, false},
+		{"生產計劃", 352, 400, 185, "cmd1e", "prod1e", StateProductionPlan, false},
+		{"星系資料", 448, 460, 125, "lstmenu1e", "star1e", StateStarList, false},
+		{"艦隊資料", 448, 460, 145, "lstmenu1e", "lst1e", StateFleetList, true},
+		{"提督資料", 448, 460, 165, "lstmenu1e", "lst2e", StateAdmiralListView, true},
+		{"敵將資料", 448, 460, 185, "lstmenu1e", "lst3e", StateEnemyList, true},
+		{"取進度", 544, 560, 145, "sysmenu1e", "load1e", StateLoadGame, false},
+		{"存進度", 544, 560, 165, "sysmenu1e", "save1e", StateSaveGame, false},
+		{"設定", 544, 560, 185, "sysmenu1e", "settings1e", StateSettings, true},
+		{"結束", 544, 560, 205, "sysmenu1e", "quit1e", StateQuitConfirm, false},
 	} {
 		t.Run(c.name, func(t *testing.T) {
-			g := reachCommandPhase(t)
-			matches(t, g, "main1e")
+			// 地圖介面：`main1e` ＝ 右鍵兩下之後把滑鼠搬到 (600,340)。
+			matches(t, reachCommandPhase(t), "main1e")
 
+			// 選單拉開：`cmd1e`／`lstmenu1e`／`sysmenu1e` ＝ 游標還在
+			// 星圖上就點命令列，**點完才**把滑鼠搬走。左下角那塊因此
+			// 凍著點下去之前游標底下那一格（星域 30 艾流塞拉）。
+			g := reachCommandPhaseOnMap(t)
 			g.Click(c.menuX, 125)
+			g.MoveMouse(600, 340)
 			matches(t, g, c.menuBatch)
 
+			// 子畫面：同一條序列，但收據在選單開著的時候就點下去了，
+			// 中間沒有那次滑鼠移動，所以重走一遍。
+			g = reachCommandPhaseOnMap(t)
+			g.Click(c.menuX, 125)
 			g.Click(c.itemX, c.itemY)
 			if g.State() != c.state {
 				t.Fatalf("點了「%s」之後在 %v", c.name, g.State())
+			}
+			if c.moveAfter {
+				g.MoveMouse(600, 340)
 			}
 			matches(t, g, c.batch)
 
@@ -1176,13 +1208,14 @@ func TestVersusHandover(t *testing.T) {
 	if g.State() != StateVersusInput {
 		t.Fatalf("答完防拷之後在 %v，預期交棒視窗", g.State())
 	}
-	matches(t, g, "vs3")
-
-	// 框裡、熱區外：原版什麼都不做（收據 `vs3` 點的就是這裡）。
+	// 框裡、熱區外：原版什麼都不做——**但游標會跟著搬過去**。
+	// `vs3` 的第三次點擊（`-clicks 170000000:400:222` ＝ 畫面 (400,262)）
+	// 就在這裡，所以要先點再比，不然比到的是點下去之前那一張。
 	g.Click(400, 262)
 	if g.State() != StateVersusInput {
 		t.Fatalf("點在確認鈕的熱區外卻換了畫面：%v", g.State())
 	}
+	matches(t, g, "vs3")
 
 	// 確認 ＝ 開始帝國的回合，接的是月初會計報告（收據 `vs4`）。
 	g.Click(432, 263)

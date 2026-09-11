@@ -461,11 +461,18 @@ func checkCapitalPanel(t *testing.T, batch string, turn, military, taxTotal,
 	}
 }
 
-// openingBoardPanel 回一個能把 796 年 1 月 1 日的右側面板畫上去的函式。
+// openingBoardPanel 回一個能把 796 年 1 月 1 日的底板兩塊面板畫上去的函式：
+// 右側的首都摘要，與左下角的星域摘要。
 //
 // 命令階段那一批畫面的規格裡已經沒有底板右側那幾行了（`docs/re/62`）
 // ——它們由 `CapitalPanel` 現算。拿規格單獨畫的測試要自己補這一塊，
 // 數字用 `main1e` 那一組（與 `TestCapitalPanelMatchesOracle` 同一份）。
+//
+// 左下角那塊寫的是**星域 30 艾流塞拉**：`load1e`／`save1e` 的輸入序列
+// 是「右鍵兩下關掉月初報告（點在 (300,200)）→ 點系統指令 → 點選單項目」，
+// 選單拉開的那一刻游標還壓在星圖上，那塊就凍在艾流塞拉
+// （`docs/re/277`、`docs/spec/001`）。兩塊都畫在底板那一層，疊上去的
+// 視窗蓋得住它們。
 func openingBoardPanel(t *testing.T) func(*gfx.Framebuffer) {
 	t.Helper()
 	root := "../.."
@@ -491,6 +498,13 @@ func openingBoardPanel(t *testing.T) func(*gfx.Framebuffer) {
 	rec[0x1C], rec[0x1D] = byte(economy>>16), byte(economy>>24)
 	rec[0x26] = 32
 	sum := rules.SummariseCapital(rec, planets, 0, 0, 0, 796, 45592, 10341)
+	// 左下角那塊：游標凍在星圖上的星域 30（艾流塞拉），未安定度照
+	// `rules.NewGameRegions` 現算，不抄量到的值。
+	const hover = 30
+	hoverSum := rules.Summarise(panelRecord(t, hover, -1, 0, 0), planets, hover, 0)
 	fnt, _, _, _ := gameScreenAssets(t)
-	return func(fb *gfx.Framebuffer) { cap.Draw(fb, fnt, region, sum, 0) }
+	return func(fb *gfx.Framebuffer) {
+		cap.Draw(fb, fnt, region, sum, 0)
+		region.Draw(fb, fnt, hoverSum, 0)
+	}
 }

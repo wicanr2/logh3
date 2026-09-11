@@ -360,7 +360,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 30 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 32 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -426,8 +426,15 @@ PIT 的重算蓋掉。`main1e`（2.2 億道指令、走到帝國軍主畫面）�
 這個步數」一起寫進收據。
 
 已重錄 53 份（22 份游標位置 ＋ 31 份被 go test 綁著的）；覆蓋前的原件在
-`workplace/oracle-prev/`。重錄之後 `go test ./...` 轉紅，紅的內容是
-`region-summary-panel-trigger`——**那是要的**，不要改回舊收據讓它變綠。
+`workplace/oracle-prev/`，同一批的獨立第二跑在 `workplace/check/`——
+已重錄的 47 份與第二跑逐位元組相同，所以那 47 份是重現得出來的。
+
+重錄之後轉紅的那批已經處理完：左下角摘要面板接上了
+（`region-summary-panel-trigger`），規格裡烘著的舊游標刮掉了
+（`docs/re/279`）。**還紅著的兩件與這次重錄有關但各自獨立**：
+`copyprot-16x2-block-at-240-283` 與 `battle-unit-panel-after-rerecord`。
+
+**不要改回舊收據讓測試變綠**——舊收據是在會改寫遊戲程式碼的執行器上錄的。
 
 **卡在**：重錄要逐份確認畫面停在同一個遊戲狀態，不能只看「有沒有畫出東西」——`docs/re/270` 記著一次用錯判準的例子。
 
@@ -437,29 +444,73 @@ PIT 的重算蓋掉。`main1e`（2.2 億道指令、走到帝國軍主畫面）�
 
 **核實**：要人判——要人判：`tools/check_receipts.sh` 已經會產出 `workplace/receipt-check.json`（批次 → 差幾個位元組），但 `workplace/` 不進版控，綁它等於綁一個別人 clone 之後不存在的檔。等重錄完、把「哪幾份通過」釘進 docs/ 之後再改成機器訊號。
 
-#### region-summary-panel-trigger — 左下角星域摘要面板什麼時候填、什麼時候清，沒讀
+#### region-panel-freeze-differs-by-faction — 左下角摘要凍住的內容，同盟與帝國相反
 
 *re（逆向：機制還沒讀出來）*
 
-面板本身 remake 會畫（`docs/spec/001` CONFORMED，版面在
-`docs/internals/data/region-panel.json`），缺的是**觸發條件**。
+同一條輸入序列（右鍵兩下關月初報告 → 點命令列開選單 → 搬滑鼠），
+帝國那邊左下角凍著游標底下那一格（`cmd1e`，墨 2,353），同盟那邊整塊是空的
+（`cmd1eAlly`，墨 88）。兩份都重現得出來。
 
-執行器修好之後量到：`main1e`（2.2 億步）那塊是空的、逐位元組重現；
-`cmd1e`（2.3 億步，中間多一次 `180000000:352:85` 的點擊）那塊有字，
-內容是右鍵點過的星域 30（艾流塞拉）。兩份只差一次點擊與一千萬步。
+六組受控對照（`docs/re/278`）排除了三個解釋：不是同盟畫不出來
+（沒開選單時那塊是滿的）、不是時點（選單開在更早的步數也一樣空）、
+不是自家／敵方星域。剩下的變因是「開選單之前最後一次動作是右鍵還是
+單純移動滑鼠」，而兩個陣營的答案**剛好對調**——看起來像奇偶性
+（畫過幾次／畫在哪一頁），不像一條規則。
 
-remake 現在等同「永遠空著」，所以 **40 份收據**（`cmd1e`／`lstmenu1e`／
-`sysmenu1e`／`load1e`／`save1e`／`quit1e`／`tax1e`／`prod1e`…）的差異
-全部落在那塊 320×80 裡，每份 2,265 個像素。
+在這條解開之前，`TestAllianceCommandPhaseScreens` 走的是串起來的那條路
+（開選單之前滑鼠已經在星圖外），十二張對得上但**對上的理由還沒解**。
+改成照收據順序會讓十二張一起變紅。
 
-**不要猜一個條件填上去**——填錯星域與空著在對拍上都是紅的，
-但填錯會讓人以為做完了。
+下一步：找出「選單開起來的那一刻用什麼重畫左下角那塊」的那一支，
+往回追它讀哪個變數、誰寫那個變數。輸入面的變因已經刨到只剩一個。
 
-**做完的判準**：那 40 份收據重錄後，remake 在同一條輸入路徑上與它們逐位元組相同。
+**做完的判準**：同盟與帝國的凍結內容由同一條規則推得出來，且 `TestAllianceCommandPhaseScreens` 改成照每一份收據自己的輸入順序走之後仍然逐位元組相同。
 
-**證據**：[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)、[`docs/spec/001-region-summary-panel.md`](docs/spec/001-region-summary-panel.md)
+**證據**：[`docs/re/278-region-panel-frozen-content-differs-by-faction.md`](docs/re/278-region-panel-frozen-content-differs-by-faction.md)、[`docs/spec/001-region-summary-panel.md`](docs/spec/001-region-summary-panel.md)
 
-**核實**：`internal/game/game.go` 裡還找得到 `觸發條件還沒讀，所以這塊在 remake 等同永遠空著`（自承還在 ＝ 還沒做）
+**核實**：`internal/game/game.go` 裡還找得到 `同盟那條路凍住的內容與這裡相反`（自承還在 ＝ 還沒做）
+
+#### copyprot-16x2-block-at-240-283 — 防拷問答還差 (240,283) 的一塊 16×2（32 個像素）
+
+*parity（對拍：要與原版逐位元組相同）*
+
+執行器修好之後（`docs/re/270`），`cb1`／`typed138` 從「差 0」變成差 32 個
+像素：(240,283) 的一塊 16×2，remake 色號 `F`（四個 plane 全設）、
+原版 `9`（只有 plane 0 與 3）。
+
+`docs/re/270` 的驗收表已經記著這件事，但沒有人追下去。紅的是
+`internal/game.TestPlayerPathReachesGame` 與
+`internal/screen.TestCopyProtectionMatchesOracle`。
+
+**與左下角摘要面板無關**——同一次重錄暴露出來的另一件事。
+
+**做完的判準**：`cb1` 與 `typed138` 整張 640×480 逐位元組相同。
+
+**證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
+
+**核實**：要人判——沒有可綁的產品程式碼訊號（沒有自承註解，也沒有「接上就會出現」的型別）。訊號是 `internal/screen.TestCopyProtectionMatchesOracle` 紅不紅，而 `verify` 不跑測試；修好時把這一條關掉並在 `docs/re/` 留紀錄。
+
+#### battle-unit-panel-after-rerecord — 戰場分隊面板重錄後對不上（s3cmdfl3 5,552／s3cmdsq3 5,740）
+
+*parity（對拍：要與原版逐位元組相同）*
+
+`s3cmdfl3`／`s3cmdsq3` 在新執行器上重錄過（`workplace/oracle-prev/` 有備份）。
+重錄後 `internal/screen.TestUnitPanelMatchesOracle` 轉紅：文字區 (480,242)
+128×160 兩張各 5,552／5,740 個像素不同，第一個不同的點 (545,242)
+remake `3`、原版 `9`。
+
+矩陣的 `m4s` 現在寫著「兩張各 0／20,480」——**那是重錄之前的數字**。
+要先分清楚是 remake 畫錯，還是新收據停在別的遊戲時點
+（`docs/re/276` 的形狀三／四），再決定改哪一邊。
+
+**與左下角摘要面板無關**——同一次重錄暴露出來的另一件事。
+
+**做完的判準**：`s3cmdfl3` 與 `s3cmdsq3` 的文字區 (480,242) 128×160 各 0／20,480，或者差異已分類並在矩陣 `m4s` 寫成核准差異。
+
+**證據**：[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)、[`docs/re/118-battle-unit-panel-layout.md`](docs/re/118-battle-unit-panel-layout.md)
+
+**核實**：要人判——訊號是 `internal/screen.TestUnitPanelMatchesOracle` 紅不紅，而 `verify` 不跑測試。修好時連 `m4s` 那一列的數字一起改。
 
 #### ai-seat-order — 戰略 AI 的座位順序與原版不同
 
@@ -785,7 +836,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-7 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+8 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -807,6 +858,34 @@ pkg-config，標準建置 image 沒有——放進 internal 會讓 `go test ./..
 **證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
 
 **核實**：`TestMissingListsExactlyTheAbsentOnes` 釘在 `internal/audio`
+
+#### region-summary-panel-trigger — 左下角星域摘要面板什麼時候填、什麼時候清
+
+*re（逆向：機制還沒讀出來）*
+
+那塊寫的是**游標底下**那一格星域，不是右鍵選中的那一格；游標離開星圖就
+整塊清空；選單或疊上去的視窗一開就凍住，保留開起來之前的內容
+（`docs/re/277` 三組受控對照，`docs/spec/001` 的「什麼時候填、什麼時候清」）。
+
+實作是 `internal/game.refreshHoverRegion`：**每一次輸入事件做完之後**重算，
+判準是「這次做完還在地圖介面嗎」。點命令列開選單時做完已經不在地圖介面，
+所以不重算——重算的時機放在點擊帶著的那次滑鼠移動上，凍住的會變成命令列
+（星圖外 ＝ 空的），40 份收據一份都對不上。畫在底板那一層
+（`drawLeftSummary` 的預設分支），疊上去的視窗蓋得住它。
+
+驗收是**照每一份收據自己的輸入順序**走：`cmd1e`／`lstmenu1e`／`sysmenu1e`
+是「先點選單、再搬滑鼠」，`tax1e` 那幾份根本沒搬——串成一條路走會多一次或
+少一次移動，整塊內容就不一樣。`TestCommandPhaseNavigation` 十二組各走三遍，
+整張 640×480 逐位元組相同。
+
+**同盟那條路凍住的內容與帝國相反，機制還沒解**
+（`region-panel-freeze-differs-by-faction`）。
+
+**做完的判準**：帝國那條路的十五張子畫面與 `dec1`，在各自收據的輸入順序下整張 640×480 逐位元組相同。
+
+**證據**：[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)、[`docs/re/277-region-panel-follows-the-cursor.md`](docs/re/277-region-panel-follows-the-cursor.md)、[`docs/re/278-region-panel-frozen-content-differs-by-faction.md`](docs/re/278-region-panel-frozen-content-differs-by-faction.md)、[`docs/spec/001-region-summary-panel.md`](docs/spec/001-region-summary-panel.md)
+
+**核實**：`internal/game/game.go` 裡出現 `refreshHoverRegion` 就是做好了
 
 #### music-screen-mapping — 原版哪個畫面播哪一首
 
@@ -900,6 +979,8 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
 
 <!-- worklist:end -->
+
+
 
 
 
