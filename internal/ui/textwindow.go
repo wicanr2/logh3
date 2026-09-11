@@ -45,13 +45,17 @@ type TextWindow struct {
 	OriginX, OriginY   int // 第一格**字身**左上角相對外框的位移
 	CellPadY           int // 格子矩形比字身高出來的上緣（原版是 2）
 	ColPitch, RowPitch int
-	Frame              Frame
+	Frame              TileFrame
 	Shadow             Shadow
 	Cells              []Cell
 }
 
 // NewTextWindow 造一個清空的文字視窗。attr 是清除時填進每一格的屬性。
-func NewTextWindow(x, y, cols, rows int, f Frame, attr, shadow uint8) *TextWindow {
+//
+// 外框是 `FRAME.BLK` 的圖塊（`TileFrame`）：原版的視窗位置存的是**格**
+// （`視窗[+5]`／`[+6]`，`docs/internals/47`），框那一圈是寫進畫面格表的
+// 八個字碼，所以視窗只可能落在 16 × 20 的格線上。
+func NewTextWindow(x, y, cols, rows int, f TileFrame, attr, shadow uint8) *TextWindow {
 	w := &TextWindow{
 		X: x, Y: y, Cols: cols, Rows: rows,
 		CellPadY: 2,
@@ -136,8 +140,11 @@ func (w *TextWindow) drawCell(fb *gfx.Framebuffer, fnt *font.Font, c, r int) uin
 
 // Draw 畫外框與所有格子。缺字（字型裡沒有那個碼）會被跳過並回報，
 // **不畫成空白**——空白與缺字在畫面上分不出來。
+//
+// 矩形對不上格線時 `DrawRect` 不畫框（寧可少一個框也不要畫錯位置）。
+// 產品裡用到的每一個矩形都由 `TestMenuRectsAreCellAligned` 釘著。
 func (w *TextWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, frameW, frameH int) []uint16 {
-	w.Frame.Draw(fb, w.X, w.Y, frameW, frameH)
+	w.Frame.DrawRect(fb, w.X, w.Y, frameW, frameH)
 	var missing []uint16
 	for r := 0; r < w.Rows; r++ {
 		missing = append(missing, w.DrawRow(fb, fnt, r)...)

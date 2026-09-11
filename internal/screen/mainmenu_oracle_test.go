@@ -47,7 +47,8 @@ func checkOracle(t *testing.T, batch string, mx, my int) {
 	}
 	oraclePath := filepath.Join(root, "workplace/oracle", batch, "screen.bin")
 	palPath := filepath.Join(root, "workplace/oracle", batch, "pal.bin")
-	for _, p := range []string{fontPath, oraclePath, palPath} {
+	framePath := filepath.Join(root, "org_game/extracted/FRAME.BLK")
+	for _, p := range []string{fontPath, oraclePath, palPath, framePath} {
 		if _, err := os.Stat(p); err != nil {
 			t.Skipf("缺 %s，跳過同狀態對拍（不用代用品）", p)
 		}
@@ -65,8 +66,16 @@ func checkOracle(t *testing.T, batch string, mx, my int) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	blk, err := os.ReadFile(framePath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	tiles, err := ui.LoadFrameTiles(blk)
+	if err != nil {
+		t.Fatal(err)
+	}
 	// 表裡是收據的滑鼠座標；RowAt 吃畫面座標，兩者差 ui.MouseDY。
-	fb, missing := MainMenuAt(spec, fnt, RowAt(spec, my+ui.MouseDY), cur, mx, my)
+	fb, missing := MainMenuAt(spec, fnt, tiles, RowAt(spec, my+ui.MouseDY), cur, mx, my)
 	if len(missing) != 0 {
 		t.Fatalf("有缺字：%04X", missing)
 	}

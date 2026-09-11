@@ -138,17 +138,17 @@ func (s *CommandMenuSpec) CommandMenuRowAt(kind CommandMenuKind, left, top, x, y
 // sel 是游標所在的那一項（-1 ＝ 不在任何一項上）；enabled 逐項對應
 // 「可不可選」。不可選的項目字色 8，**而且游標停在上面也不畫反白帶**
 // （收據 `s3cmdoff`）。回沒有字模的字碼。
+//
+// 框與戰術選單同一組（`FRAME.BLK` 起始碼 9）；tiles 缺了就不畫框。
 func DrawCommandMenu(s *CommandMenuSpec, fb *gfx.Framebuffer, fnt *font.Font,
-	kind CommandMenuKind, enabled []bool, x, y, sel int) []uint16 {
+	tiles *ui.FrameTiles, kind CommandMenuKind, enabled []bool, x, y, sel int) []uint16 {
 	items := s.Menus[kind].Items
 	if len(items) == 0 {
 		return nil
 	}
 	l := &s.Layout
 	w, h := s.Size(kind, len(items))
-	f := ui.MenuFrame()
-	f.Fill = l.Fill
-	f.Draw(fb, x, y, w, h)
+	ui.MenuFrame(tiles, l.Fill).DrawRect(fb, x, y, w, h)
 
 	hx, hy := x+l.HighlightDX, y+l.HighlightDY
 	on := func(r int) bool { return r >= len(enabled) || enabled[r] }

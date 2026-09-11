@@ -11,19 +11,23 @@ import "github.com/wicanr2/logh3/internal/gfx"
 // （`docs/internals/data/frame-profile.json`）。
 type Layer struct{ Top, Right, Bottom, Left uint8 }
 
-// Patch 是一個明列的角落像素。座標為負表示從右／下數回來
+// Patch 是一個明列的像素。座標為負表示從右／下數回來
 // （-1 ＝ 最後一個像素）。
+//
+// 修正像素是「線條模型與畫面實際長相的差」，不是遊戲裡的東西。對得上
+// 16 × 20 格線的框**不需要它**——那種框是 `FRAME.BLK` 的圖塊貼出來的，
+// 角落就是圖塊自己的像素（`TileFrame`、`docs/re/289`）。
 type Patch struct {
 	DX, DY int
 	Color  uint8
 }
 
-// Frame 是一組由外往內的層，加上內部填色與角落修正。
+// Frame 是一組由外往內的層，加上內部填色與修正像素。
 //
-// ⚠ **角落規則還沒逆向出來。** 斜角在四個角的切法不是單純的「誰後畫誰贏」
-// ——不同層的切點不一致（`docs/internals/07-window-frame.md`）。目前用
-// 量自 oracle 的七個像素修正，做得到逐位元組一致，但**換一個視窗尺寸
-// 一定要重驗**：這些座標是相對矩形算的，規則對不對還沒被第二個樣本檢驗過。
+// 這是**線條重建版**，只給還沒對到圖塊的那些框用（主遊戲的大盤面、
+// 防拷畫面等）：它們的矩形都不落在 16 × 20 的格線上，畫的常式不是
+// `2376:0E4A` 那一條，所以還不知道像素從哪裡來。視窗那種對得上格線的框
+// 一律走 `TileFrame`。
 type Frame struct {
 	Layers  []Layer
 	Fill    uint8
@@ -40,27 +44,6 @@ type Frame struct {
 	// 防拷問答那個視窗的左緣就是這樣畫的（8 與 15 交錯）——
 	// 當成純色會得到「一半的像素對、一半不對」，而框看起來完全正常。
 	Alt []Layer
-}
-
-// MenuFrame 是主選單那種視窗的外框，量自 oracle 收據。
-func MenuFrame() Frame {
-	return Frame{
-		Layers: []Layer{
-			{15, 15, 8, 8},   // 外凸斜角：亮 15 / 暗 8
-			{7, 7, 3, 3},     // 第二道斜角：亮 7 / 暗 3
-			{15, 15, 15, 15}, // 亮帶
-			{15, 15, 15, 15},
-			{3, 3, 7, 7}, // 內凹斜角（亮暗反過來）
-			{8, 8, 8, 8},
-			{3, 3, 3, 3},
-		},
-		Fill: 9,
-		// 量自 oracle（`workplace/re06/screen.bin`）的角落像素。
-		Patches: []Patch{
-			{0, 1, 15}, {1, 1, 3}, {4, 5, 8},
-			{-6, -5, 8}, {-5, -5, 8}, {-2, -2, 3}, {-2, -1, 15},
-		},
-	}
 }
 
 // hline／vline 畫一條線；alt 非 0 時依 (x+y) 的奇偶交錯兩個色號。

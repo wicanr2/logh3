@@ -19,9 +19,13 @@ type BattleMenuSpec struct {
 	Items  []label `json:"items"`
 	Layout struct {
 		Window struct{ X, Y, W, H int } `json:"window"`
-		Cursor struct {
-			DX, DY int
-		} `json:"cursor_offset"`
+		Origin struct {
+			CellW          int `json:"cell_w"`
+			CellH          int `json:"cell_h"`
+			OriginBias     int `json:"origin_bias"`
+			CursorCellBias int `json:"cursor_cell_bias"`
+			ClampRows      int `json:"clamp_rows"`
+		} `json:"origin"`
 		Text struct {
 			X, Y        int
 			ColPitch    int `json:"col_pitch"`
@@ -52,8 +56,30 @@ func LoadBattleMenuSpec(path string) (*BattleMenuSpec, error) {
 }
 
 // BattleMenuAt 回把選單開在游標 (mx,my) 時，框的左上角在哪裡。
+//
+// 位置是**格**不是像素：全遊戲 22 張選單共用同一支開啟常式
+// （`3667:0004`），位置參數是兩個 byte（`341B:04DB`，放不下 480），
+// 格 ＝ 游標所在格 − (1,1)，再由 `3982:0198` 夾成「格y ≤ 19 − 項目數」，
+// 框左上角 ＝ `(格x × 16 + 1, 格y × 20 + 1)`（`docs/re/117`）。
+//
+// 先前這裡寫的是「游標 ＋ (−15,−19)」。收據 `s3menu` 的游標落在
+// (240,240)——剛好是 16 與 20 的整數倍，兩個模型在那一點給出同一個答案，
+// 所以那一份收據分不出對錯。像素模型在游標不落在格線上時會給出對不上
+// 格線的框，而原版的視窗位置存的就是格（`視窗[+5]`／`[+6]`），畫不出來。
 func (s *BattleMenuSpec) BattleMenuAt(mx, my int) (int, int) {
-	return mx + s.Layout.Cursor.DX, my + s.Layout.Cursor.DY
+	o := &s.Layout.Origin
+	cx := mx/o.CellW + o.CursorCellBias
+	cy := my/o.CellH + o.CursorCellBias
+	if cx < 0 {
+		cx = 0
+	}
+	if cy < 0 {
+		cy = 0
+	}
+	if max := o.ClampRows - len(s.Items); cy > max {
+		cy = max
+	}
+	return cx*o.CellW + o.OriginBias, cy*o.CellH + o.OriginBias
 }
 
 // BattleMenuRowAt 回畫面座標 (x,y) 落在第幾項，-1 ＝ 不在任何一項上。
@@ -79,13 +105,13 @@ func (s *BattleMenuSpec) BattleMenuRowAt(left, top, x, y int) int {
 
 // DrawBattleMenu 把戰術選單畫在 (x,y)（框的左上角），sel 是反白哪一項。
 //
-// 框與主選單同一組（`ui.MenuFrame`）；文字用遊戲既有的立體邊規則——
-// 本體色 7、立體邊色 3，字模每列左移一位再上移一列（`docs/internals/25`）。
-func DrawBattleMenu(s *BattleMenuSpec, fb *gfx.Framebuffer, fnt *font.Font, x, y, sel int) []uint16 {
+// 框與主選單同一組（`FRAME.BLK` 起始碼 9）；文字用遊戲既有的立體邊規則
+// ——本體色 7、立體邊色 3，字模每列左移一位再上移一列（`docs/internals/25`）。
+// tiles 缺了就不畫框（不用代用品）。
+func DrawBattleMenu(s *BattleMenuSpec, fb *gfx.Framebuffer, fnt *font.Font,
+	tiles *ui.FrameTiles, x, y, sel int) []uint16 {
 	l := &s.Layout
-	f := ui.MenuFrame()
-	f.Fill = l.Fill
-	f.Draw(fb, x, y, l.Window.W, l.Window.H)
+	ui.MenuFrame(tiles, l.Fill).DrawRect(fb, x, y, l.Window.W, l.Window.H)
 
 	tx := x + (l.Text.X - l.Window.X)
 	ty := y + (l.Text.Y - l.Window.Y)

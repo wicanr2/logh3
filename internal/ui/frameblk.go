@@ -75,6 +75,18 @@ type TileFrame struct {
 	Fill  uint8
 }
 
+// MenuFrame 是主選單、戰術選單與命令選單共用的那個框：`FRAME.BLK` 的
+// 第二組圖塊（起始碼 9）。fill 是視窗顏色 `[+1]` 的高四位，圖塊裡色號 0
+// 的像素都填它。
+//
+// **四個角不是算出來的，是圖塊 8／10／13／15 本身的像素**（`docs/re/289`）。
+// 先前那版用七層線條重建整個框，四個角要另外列七個修正像素才對得上；
+// 那七個像素就是線條模型與圖塊資料的差，不是遊戲裡的東西——原版從頭到尾
+// 只是把八張圖塊貼進畫面格表。
+func MenuFrame(tiles *FrameTiles, fill uint8) TileFrame {
+	return TileFrame{Tiles: tiles, Style: MainMenuFrameStyle, Fill: fill}
+}
+
 // Draw 把 cols × rows 格的框畫在畫面格 (cellX, cellY)。
 //
 // 格座標的原點在畫面上方 40 像素處——`2376:040E` 的畫面位移從 `0x0C80`

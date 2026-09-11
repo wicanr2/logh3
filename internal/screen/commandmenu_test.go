@@ -37,6 +37,14 @@ func TestCommandMenuMatchesOracle(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	blk, err := os.ReadFile(filepath.Join(root, "org_game/extracted/FRAME.BLK"))
+	if err != nil {
+		t.Skipf("缺 FRAME.BLK，跳過：%v", err)
+	}
+	tiles, err := ui.LoadFrameTiles(blk)
+	if err != nil {
+		t.Fatal(err)
+	}
 	cases := []struct {
 		batch   string
 		kind    CommandMenuKind
@@ -60,7 +68,7 @@ func TestCommandMenuMatchesOracle(t *testing.T) {
 			w, h := s.Size(c.kind, n)
 			fb := gfx.NewFramebuffer(0)
 			sel := s.CommandMenuRowAt(c.kind, x, y, sx, sy, n)
-			if m := DrawCommandMenu(s, fb, fnt, c.kind, c.enabled, x, y, sel); len(m) > 0 {
+			if m := DrawCommandMenu(s, fb, fnt, tiles, c.kind, c.enabled, x, y, sel); len(m) > 0 {
 				t.Fatalf("缺字 %04X", m)
 			}
 			cur.Draw(fb, c.mx, c.my)

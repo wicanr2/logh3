@@ -23,7 +23,7 @@ func load(t *testing.T) *Resources {
 	need := []string{
 		filepath.Join(orig, "GRAPH.IMG"), filepath.Join(orig, "FACE.AMG"),
 		filepath.Join(orig, "ADMIRAL.DTX"), filepath.Join(orig, "STRMAP.BIT"),
-		filepath.Join(orig, "STRMAP.RGN"),
+		filepath.Join(orig, "STRMAP.RGN"), filepath.Join(orig, "FRAME.BLK"),
 	}
 	for _, p := range need {
 		if _, err := os.Stat(p); err != nil {
@@ -31,6 +31,16 @@ func load(t *testing.T) *Resources {
 		}
 	}
 	fnt, err := font.Load(filepath.Join(orig, "GRAPH.IMG"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	// 視窗外框是 `FRAME.BLK` 的圖塊（`docs/internals/47`）；少了它主選單
+	// 那個框整塊不畫，而畫面上只是「框不見了」，不會報錯。
+	blk, err := os.ReadFile(filepath.Join(orig, "FRAME.BLK"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	frameTiles, err := ui.LoadFrameTiles(blk)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -213,6 +223,7 @@ func load(t *testing.T) *Resources {
 		t.Fatal(err)
 	}
 	return &Resources{Font: fnt, OrigDir: orig, Faces: faces, Cursor: cur, Menu: menu,
+		FrameTiles:   frameTiles,
 		AdmiralNames: names, StarListOrder: starOrder,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		StarBit: bit, StarRGN: rgn, RegionColours: colours,

@@ -2061,8 +2061,8 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawSpecStaff(fb, spec)
 			return fb
 		}
-		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.highlight,
-			g.res.Cursor, g.mouseX, g.mouseY-mouseDY)
+		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.res.FrameTiles,
+			g.highlight, g.res.Cursor, g.mouseX, g.mouseY-mouseDY)
 		return fb
 	}
 }
@@ -3229,7 +3229,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		})
 	}
 	if g.battleMenu && g.res.BattleMenu != nil && g.res.Font != nil {
-		screen.DrawBattleMenu(g.res.BattleMenu, fb, g.res.Font,
+		screen.DrawBattleMenu(g.res.BattleMenu, fb, g.res.Font, g.res.FrameTiles,
 			g.battleMenuX, g.battleMenuY, 0)
 	}
 	// 命令選單開在游標處，反白帶跟著游標走（`docs/spec/023`）。
@@ -3238,7 +3238,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		cm := g.res.CommandMenus
 		n := cm.ItemCount(g.battleCmdKind)
 		sel := cm.CommandMenuRowAt(g.battleCmdKind, g.battleCmdX, g.battleCmdY, g.mouseX, g.mouseY, n)
-		screen.DrawCommandMenu(cm, fb, g.res.Font, g.battleCmdKind,
+		screen.DrawCommandMenu(cm, fb, g.res.Font, g.res.FrameTiles, g.battleCmdKind,
 			g.commandMenuEnabled(g.battleCmdKind, g.battleUnits[g.battleCmdUnit]),
 			g.battleCmdX, g.battleCmdY, sel)
 	}

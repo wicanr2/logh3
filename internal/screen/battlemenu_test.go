@@ -33,9 +33,17 @@ func TestBattleMenuMatchesOracle(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	blk, err := os.ReadFile(filepath.Join(root, "org_game/extracted/FRAME.BLK"))
+	if err != nil {
+		t.Skipf("缺 FRAME.BLK，跳過：%v", err)
+	}
+	tiles, err := ui.LoadFrameTiles(blk)
+	if err != nil {
+		t.Fatal(err)
+	}
 	x, y := s.BattleMenuAt(240, 240)
 	fb := gfx.NewFramebuffer(0)
-	if m := DrawBattleMenu(s, fb, fnt, x, y, 0); len(m) > 0 {
+	if m := DrawBattleMenu(s, fb, fnt, tiles, x, y, 0); len(m) > 0 {
 		t.Fatalf("缺字 %04X", m)
 	}
 	// 收據上有游標——原版自己畫它，壓在第一項上。游標吃的是**滑鼠**座標

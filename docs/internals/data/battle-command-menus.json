@@ -209,6 +209,6 @@
   "highlight_ink": 2,
   "disabled_ink": 8,
   "fill": 9,
-  "frame": "ui.MenuFrame"
+  "frame": "FRAME.BLK 起始碼 9（ui.MenuFrame）；四個角是圖塊本身的像素，沒有修正表（docs/re/289）"
  }
 }

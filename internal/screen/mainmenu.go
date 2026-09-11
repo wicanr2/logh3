@@ -75,17 +75,17 @@ func big5(s string) uint16 {
 }
 
 // MainMenu 畫主選單，反白列取規格裡的預設值。
-func MainMenu(s *MenuSpec, fnt *font.Font) (*gfx.Framebuffer, []uint16) {
+func MainMenu(s *MenuSpec, fnt *font.Font, tiles *ui.FrameTiles) (*gfx.Framebuffer, []uint16) {
 	row := -1
 	if s.Highlight != nil {
 		row = s.Highlight.Row
 	}
-	return MainMenuWith(s, fnt, row)
+	return MainMenuWith(s, fnt, tiles, row)
 }
 
 // MainMenuWith 畫主選單並指定反白哪一列（-1 ＝ 不反白）。
-func MainMenuWith(s *MenuSpec, fnt *font.Font, highlight int) (*gfx.Framebuffer, []uint16) {
-	return MainMenuAt(s, fnt, highlight, nil, -1, -1)
+func MainMenuWith(s *MenuSpec, fnt *font.Font, tiles *ui.FrameTiles, highlight int) (*gfx.Framebuffer, []uint16) {
+	return MainMenuAt(s, fnt, tiles, highlight, nil, -1, -1)
 }
 
 // CursorHotY 是游標熱點相對**畫面** y 的位移。
@@ -112,10 +112,15 @@ func RowAt(s *MenuSpec, y int) int {
 }
 
 // MainMenuAt 畫主選單，並在指定的滑鼠座標畫游標（cur 為 nil 或座標為負就不畫）。
-func MainMenuAt(s *MenuSpec, fnt *font.Font, highlight int, cur *ui.Cursor, mx, my int) (*gfx.Framebuffer, []uint16) {
+//
+// tiles 是 `FRAME.BLK` 的外框圖塊（原版素材，玩家自備）。缺了就不畫框
+// ——不用代用品。
+func MainMenuAt(s *MenuSpec, fnt *font.Font, tiles *ui.FrameTiles, highlight int, cur *ui.Cursor, mx, my int) (*gfx.Framebuffer, []uint16) {
 	fb := gfx.NewFramebuffer(s.Background)
+	// 框的底色是**視窗顏色的高四位**（`2376:0E4A` 的 `bl = cl >> 4`）。
+	// 主選單的視窗顏色就是格子的預設屬性 0x97，所以底色 9。
 	w := ui.NewTextWindow(s.Window.X, s.Window.Y, len(s.Text.ColsX), len(s.Text.RowsY),
-		ui.MenuFrame(), s.Text.AttrNormal, s.Text.ShadowNormal)
+		ui.MenuFrame(tiles, s.Text.AttrNormal>>4), s.Text.AttrNormal, s.Text.ShadowNormal)
 	w.ColPitch, w.RowPitch = s.Text.ColPitch, s.Text.RowPitch
 	w.CellPadY = s.Text.CellPadY
 	w.OriginX = s.Text.ColsX[0] - s.Window.X
