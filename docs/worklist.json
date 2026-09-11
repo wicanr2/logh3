@@ -303,14 +303,16 @@
         "那一類要把 `-clicks`／`-steps` 重新挑一次對準原本的畫面，並把「為什麼是",
         "這個步數」一起寫進收據。",
         "",
-        "已重錄 53 份（22 份游標位置 ＋ 31 份被 go test 綁著的）；覆蓋前的原件在",
+        "已重錄 59 份（22 份游標位置 ＋ 31 份被 go test 綁著的 ＋ 6 份防拷問答的輸入游標）；覆蓋前的原件在",
         "`workplace/oracle-prev/`，同一批的獨立第二跑在 `workplace/check/`——",
-        "已重錄的 47 份與第二跑逐位元組相同，所以那 47 份是重現得出來的。",
+        "已重錄的 53 份與第二跑逐位元組相同，所以那 53 份是重現得出來的。",
+        "（2026-09-11 10:42 重比全量：358 份一致、96 份對不上。）",
         "",
         "重錄之後轉紅的那批已經處理完：左下角摘要面板接上了",
         "（`region-summary-panel-trigger`），規格裡烘著的舊游標刮掉了",
-        "（`docs/re/279`）。**還紅著的兩件與這次重錄有關但各自獨立**：",
-        "`copyprot-16x2-block-at-240-283` 與 `battle-unit-panel-after-rerecord`。",
+        "（`docs/re/279`），防拷問答少畫的輸入游標補上了",
+        "（`copyprot-16x2-block-at-240-283`）。**還紅著的是**",
+        "`battle-unit-panel-after-rerecord`。",
         "",
         "**不要改回舊收據讓測試變綠**——舊收據是在會改寫遊戲程式碼的執行器上錄的。"
       ],
@@ -407,27 +409,99 @@
     {
       "id": "copyprot-16x2-block-at-240-283",
       "legacy_id": null,
-      "status": "open",
+      "status": "done",
       "layer": "parity",
-      "title": "防拷問答還差 (240,283) 的一塊 16×2（32 個像素）",
+      "title": "防拷問答少的那塊 16×2 是輸入游標",
       "body": [
-        "執行器修好之後（`docs/re/270`），`cb1`／`typed138` 從「差 0」變成差 32 個",
-        "像素：(240,283) 的一塊 16×2，remake 色號 `F`（四個 plane 全設）、",
-        "原版 `9`（只有 plane 0 與 3）。",
+        "那 32 個像素是**輸入游標**：下一個要打的那一格底下的一條 16×2 底線",
+        "（色號 15），x ＝ 240 ＋ 16 × 已輸入位數。四個位數各一個資料點",
+        "（`cb1` 在 240、`typed138` 在 288，1／2 位的 probe 旗標記在 `docs/re/281`）。",
         "",
-        "`docs/re/270` 的驗收表已經記著這件事，但沒有人追下去。紅的是",
-        "`internal/game.TestPlayerPathReachesGame` 與",
-        "`internal/screen.TestCopyProtectionMatchesOracle`。",
+        "**方向本來記反了**：這一條原本寫「remake 色號 `F`、原版 `9`」，",
+        "實際是原版 `15`、remake `9`——remake 少畫，不是多畫。`docs/re/270` 的",
+        "原文（「色號新版 `F`、收據 `9`」）沒有錯，錯的是抄成 remake vs 原版。",
         "",
-        "**與左下角摘要面板無關**——同一次重錄暴露出來的另一件事。"
+        "原版的游標會閃：畫與擦各隔 320 次計時器中斷，整個週期 640 次（約 1.1 秒）。",
+        "舊收據是滅的，因為舊執行器的 `-tick` 被 PIT 的重算蓋掉、計時器快了四倍",
+        "（`docs/re/270`），同樣的步數落在週期的另一半。",
+        "",
+        "修法：規格多一個 `input_caret`，`internal/screen.CopyProtection` 依已輸入",
+        "位數把它塗上去。同一個原因的六份收據（`cb1`／`cbAlly`／`typed138`／",
+        "`click5`／`click6`／`click7`／`vs1`）全部重錄，每一份都與獨立第二跑逐位元組相同。",
+        "",
+        "**閃爍還沒接**（remake 恆亮）——另立 `copyprot-caret-blink`。"
       ],
       "evidence": [
-        "docs/re/270-enter-works-the-divergence-is-after-it.md"
+        "docs/re/270-enter-works-the-divergence-is-after-it.md",
+        "docs/re/281-copy-protection-caret-blinks.md"
       ],
       "acceptance": "`cb1` 與 `typed138` 整張 640×480 逐位元組相同。",
       "verify": {
+        "kind": "absent",
+        "paths": [
+          "internal/screen/copyprot.go"
+        ],
+        "pattern": "InputCaret",
+        "note": "接上的東西是 `CopyProtSpec.InputCaret` 與畫它的那一段；不見了就是有人把游標拆掉了，`internal/screen.TestCopyProtectionMatchesOracle` 會同時轉紅。"
+      }
+    },
+    {
+      "id": "copyprot-caret-blink",
+      "legacy_id": null,
+      "status": "open",
+      "layer": "feature",
+      "title": "防拷問答的輸入游標會閃，remake 畫成恆亮",
+      "body": [
+        "原版那條 16×2 底線是**閃的**：畫（`2376:0DB1`）與擦（`2376:107F`）各隔",
+        "320 次計時器中斷，整個週期 640 次。本作把 PIT 分頻設成 2048（582.8 Hz），",
+        "所以一個週期約 1.1 秒。時間軸與四個轉折的指令數在 `docs/re/281`。",
+        "",
+        "remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以對拍是綠的——",
+        "**換一個步數錄一份新的就可能錄到滅的那半邊**，那時候紅的是相位不是版面。",
+        "",
+        "要接得先決定 remake 這張畫面的時鐘從哪來（現在 `screen.CopyProtection`",
+        "是純函式，沒有時間這個輸入），那是一個跨畫面的取捨，不是這一格的事。"
+      ],
+      "evidence": [
+        "docs/re/281-copy-protection-caret-blinks.md"
+      ],
+      "acceptance": "remake 的防拷問答游標依同一個週期（畫／擦各 320 次計時器中斷）翻面，且與一份錄在滅的半週期的收據逐位元組相同。",
+      "verify": {
         "kind": "manual",
-        "note": "沒有可綁的產品程式碼訊號（沒有自承註解，也沒有「接上就會出現」的型別）。訊號是 `internal/screen.TestCopyProtectionMatchesOracle` 紅不紅，而 `verify` 不跑測試；修好時把這一條關掉並在 `docs/re/` 留紀錄。"
+        "note": "現在沒有可綁的訊號：`InputCaret` 已經在了（恆亮那一版也有），而閃爍要靠一個還不存在的時間輸入。接上的時候把這條改成 absent，綁那個時間參數的名字。"
+      }
+    },
+    {
+      "id": "gui-check-load1e-vs3",
+      "legacy_id": null,
+      "status": "open",
+      "layer": "parity",
+      "title": "`tools/gui_check.sh` 十例裡 `load1e`／`vs3` 對不上",
+      "body": [
+        "Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量到兩例紅：",
+        "",
+        "| 例 | 差異 | 位置 |",
+        "|---|---:|---|",
+        "| `load1e` | 2,265 | `x[16,303] y[361,395]` |",
+        "| `vs3` | 274 | `x[300,412] y[250,277]` |",
+        "",
+        "`load1e` 那 2,265 是左下角星域摘要面板的簽章數字（`docs/re/276` 形狀二）。",
+        "**`internal/game` 用同一份收據是綠的**，所以畫的人沒錯，是 `cmd/gin3` 的",
+        "腳本驅動沒有把滑鼠停留餵成同一個狀態（`refreshHoverRegion` 的觸發時機，",
+        "`docs/re/277`）。",
+        "",
+        "`vs3` 那 274 個像素還沒分類（`unknown`）。",
+        "",
+        "矩陣 `mG1` 那一列原本寫著十例全部逐位元組相同——已改成現況。"
+      ],
+      "evidence": [
+        "docs/re/281-copy-protection-caret-blinks.md",
+        "docs/re/277-region-panel-follows-the-cursor.md"
+      ],
+      "acceptance": "`tools/gui_check.sh` 十例全部逐位元組相同，或差異已分類並在 `mG1` 寫成核准差異。",
+      "verify": {
+        "kind": "manual",
+        "note": "訊號是 `tools/gui_check.sh` 的輸出（要 Xvfb 起 Ebiten），`verify` 不跑它。修好時連 `mG1` 那一列的數字一起改。"
       }
     },
     {
@@ -1070,9 +1144,9 @@
       "section": "s1",
       "cells": {
         "#": "G1",
-        "備註": "`cmd/gin3` 畫出來的色號陣列與 `r0`／`cb1`／`key1`／`cbAlly`／`keyAlly`／`main1e`／`load1e`／`vs3`／`vs4`／`vs5` 逐位元組相同。**「視窗開得起來」不算數**——比的是同一條玩家路徑跑完的畫面",
+        "備註": "`cmd/gin3` 畫出來的色號陣列與 `r0`／`cb1`／`key1`／`cbAlly`／`keyAlly`／`main1e`／`vs4`／`vs5` 逐位元組相同。**「視窗開得起來」不算數**——比的是同一條玩家路徑跑完的畫面。`load1e`（2,265）與 `vs3`（274）對不上，見 `gui-check-load1e-vs3`",
         "收據": "`tools/gui_check.sh`",
-        "未核准差異": "0",
+        "未核准差異": "2 例",
         "等級": "`same-state`",
         "項目": "Ebiten 視窗版走玩家路徑"
       },
@@ -1207,8 +1281,8 @@
       "section": "s2",
       "cells": {
         "#": "4b",
-        "備註": "打進去的數字是 `GRAPH.IMG` 的**全形**數字（`A2AF` 起），不是半形——先前搜不到是因為只試了半形的打包方式",
-        "收據": "收據 `typed138`；[`docs/re/56`](docs/re/56-typed-digits-are-full-width.md)",
+        "備註": "打進去的數字是 `GRAPH.IMG` 的**全形**數字（`A2AF` 起），不是半形——先前搜不到是因為只試了半形的打包方式。輸入游標跟著往右走（`docs/re/281`）",
+        "收據": "收據 `typed138`；[`docs/re/56`](docs/re/56-typed-digits-are-full-width.md)、[`docs/re/281`](docs/re/281-copy-protection-caret-blinks.md)",
         "未核准差異": "0",
         "畫面": "防拷問答（輸入中的數字）",
         "等級": "`same-state`"
@@ -1226,7 +1300,7 @@
       "section": "s2",
       "cells": {
         "#": "4",
-        "備註": "全畫面 640×480 逐位元組一致（框、頭像、三行字、輸入框）",
+        "備註": "全畫面 640×480 逐位元組一致（框、頭像、三行字、輸入框、輸入游標）",
         "收據": "[`docs/playtest/003-copy-protection.md`](docs/playtest/003-copy-protection.md)",
         "未核准差異": "0",
         "畫面": "防拷問答",

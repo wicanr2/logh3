@@ -360,7 +360,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 32 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 33 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -425,14 +425,16 @@ PIT 的重算蓋掉。`main1e`（2.2 億道指令、走到帝國軍主畫面）�
 那一類要把 `-clicks`／`-steps` 重新挑一次對準原本的畫面，並把「為什麼是
 這個步數」一起寫進收據。
 
-已重錄 53 份（22 份游標位置 ＋ 31 份被 go test 綁著的）；覆蓋前的原件在
+已重錄 59 份（22 份游標位置 ＋ 31 份被 go test 綁著的 ＋ 6 份防拷問答的輸入游標）；覆蓋前的原件在
 `workplace/oracle-prev/`，同一批的獨立第二跑在 `workplace/check/`——
-已重錄的 47 份與第二跑逐位元組相同，所以那 47 份是重現得出來的。
+已重錄的 53 份與第二跑逐位元組相同，所以那 53 份是重現得出來的。
+（2026-09-11 10:42 重比全量：358 份一致、96 份對不上。）
 
 重錄之後轉紅的那批已經處理完：左下角摘要面板接上了
 （`region-summary-panel-trigger`），規格裡烘著的舊游標刮掉了
-（`docs/re/279`）。**還紅著的兩件與這次重錄有關但各自獨立**：
-`copyprot-16x2-block-at-240-283` 與 `battle-unit-panel-after-rerecord`。
+（`docs/re/279`），防拷問答少畫的輸入游標補上了
+（`copyprot-16x2-block-at-240-283`）。**還紅著的是**
+`battle-unit-panel-after-rerecord`。
 
 **不要改回舊收據讓測試變綠**——舊收據是在會改寫遊戲程式碼的執行器上錄的。
 
@@ -471,25 +473,51 @@ PIT 的重算蓋掉。`main1e`（2.2 億道指令、走到帝國軍主畫面）�
 
 **核實**：`internal/game/game.go` 裡還找得到 `同盟那條路凍住的內容與這裡相反`（自承還在 ＝ 還沒做）
 
-#### copyprot-16x2-block-at-240-283 — 防拷問答還差 (240,283) 的一塊 16×2（32 個像素）
+#### copyprot-caret-blink — 防拷問答的輸入游標會閃，remake 畫成恆亮
+
+*feature（功能：玩家會撞到、但 remake 還沒有）*
+
+原版那條 16×2 底線是**閃的**：畫（`2376:0DB1`）與擦（`2376:107F`）各隔
+320 次計時器中斷，整個週期 640 次。本作把 PIT 分頻設成 2048（582.8 Hz），
+所以一個週期約 1.1 秒。時間軸與四個轉折的指令數在 `docs/re/281`。
+
+remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以對拍是綠的——
+**換一個步數錄一份新的就可能錄到滅的那半邊**，那時候紅的是相位不是版面。
+
+要接得先決定 remake 這張畫面的時鐘從哪來（現在 `screen.CopyProtection`
+是純函式，沒有時間這個輸入），那是一個跨畫面的取捨，不是這一格的事。
+
+**做完的判準**：remake 的防拷問答游標依同一個週期（畫／擦各 320 次計時器中斷）翻面，且與一份錄在滅的半週期的收據逐位元組相同。
+
+**證據**：[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)
+
+**核實**：要人判——現在沒有可綁的訊號：`InputCaret` 已經在了（恆亮那一版也有），而閃爍要靠一個還不存在的時間輸入。接上的時候把這條改成 absent，綁那個時間參數的名字。
+
+#### gui-check-load1e-vs3 — `tools/gui_check.sh` 十例裡 `load1e`／`vs3` 對不上
 
 *parity（對拍：要與原版逐位元組相同）*
 
-執行器修好之後（`docs/re/270`），`cb1`／`typed138` 從「差 0」變成差 32 個
-像素：(240,283) 的一塊 16×2，remake 色號 `F`（四個 plane 全設）、
-原版 `9`（只有 plane 0 與 3）。
+Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量到兩例紅：
 
-`docs/re/270` 的驗收表已經記著這件事，但沒有人追下去。紅的是
-`internal/game.TestPlayerPathReachesGame` 與
-`internal/screen.TestCopyProtectionMatchesOracle`。
+| 例 | 差異 | 位置 |
+|---|---:|---|
+| `load1e` | 2,265 | `x[16,303] y[361,395]` |
+| `vs3` | 274 | `x[300,412] y[250,277]` |
 
-**與左下角摘要面板無關**——同一次重錄暴露出來的另一件事。
+`load1e` 那 2,265 是左下角星域摘要面板的簽章數字（`docs/re/276` 形狀二）。
+**`internal/game` 用同一份收據是綠的**，所以畫的人沒錯，是 `cmd/gin3` 的
+腳本驅動沒有把滑鼠停留餵成同一個狀態（`refreshHoverRegion` 的觸發時機，
+`docs/re/277`）。
 
-**做完的判準**：`cb1` 與 `typed138` 整張 640×480 逐位元組相同。
+`vs3` 那 274 個像素還沒分類（`unknown`）。
 
-**證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
+矩陣 `mG1` 那一列原本寫著十例全部逐位元組相同——已改成現況。
 
-**核實**：要人判——沒有可綁的產品程式碼訊號（沒有自承註解，也沒有「接上就會出現」的型別）。訊號是 `internal/screen.TestCopyProtectionMatchesOracle` 紅不紅，而 `verify` 不跑測試；修好時把這一條關掉並在 `docs/re/` 留紀錄。
+**做完的判準**：`tools/gui_check.sh` 十例全部逐位元組相同，或差異已分類並在 `mG1` 寫成核准差異。
+
+**證據**：[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)、[`docs/re/277-region-panel-follows-the-cursor.md`](docs/re/277-region-panel-follows-the-cursor.md)
+
+**核實**：要人判——訊號是 `tools/gui_check.sh` 的輸出（要 Xvfb 起 Ebiten），`verify` 不跑它。修好時連 `mG1` 那一列的數字一起改。
 
 #### battle-unit-panel-after-rerecord — 戰場分隊面板重錄後對不上（s3cmdfl3 5,552／s3cmdsq3 5,740）
 
@@ -836,7 +864,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-8 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+9 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -886,6 +914,34 @@ pkg-config，標準建置 image 沒有——放進 internal 會讓 `go test ./..
 **證據**：[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)、[`docs/re/277-region-panel-follows-the-cursor.md`](docs/re/277-region-panel-follows-the-cursor.md)、[`docs/re/278-region-panel-frozen-content-differs-by-faction.md`](docs/re/278-region-panel-frozen-content-differs-by-faction.md)、[`docs/spec/001-region-summary-panel.md`](docs/spec/001-region-summary-panel.md)
 
 **核實**：`internal/game/game.go` 裡出現 `refreshHoverRegion` 就是做好了
+
+#### copyprot-16x2-block-at-240-283 — 防拷問答少的那塊 16×2 是輸入游標
+
+*parity（對拍：要與原版逐位元組相同）*
+
+那 32 個像素是**輸入游標**：下一個要打的那一格底下的一條 16×2 底線
+（色號 15），x ＝ 240 ＋ 16 × 已輸入位數。四個位數各一個資料點
+（`cb1` 在 240、`typed138` 在 288，1／2 位的 probe 旗標記在 `docs/re/281`）。
+
+**方向本來記反了**：這一條原本寫「remake 色號 `F`、原版 `9`」，
+實際是原版 `15`、remake `9`——remake 少畫，不是多畫。`docs/re/270` 的
+原文（「色號新版 `F`、收據 `9`」）沒有錯，錯的是抄成 remake vs 原版。
+
+原版的游標會閃：畫與擦各隔 320 次計時器中斷，整個週期 640 次（約 1.1 秒）。
+舊收據是滅的，因為舊執行器的 `-tick` 被 PIT 的重算蓋掉、計時器快了四倍
+（`docs/re/270`），同樣的步數落在週期的另一半。
+
+修法：規格多一個 `input_caret`，`internal/screen.CopyProtection` 依已輸入
+位數把它塗上去。同一個原因的六份收據（`cb1`／`cbAlly`／`typed138`／
+`click5`／`click6`／`click7`／`vs1`）全部重錄，每一份都與獨立第二跑逐位元組相同。
+
+**閃爍還沒接**（remake 恆亮）——另立 `copyprot-caret-blink`。
+
+**做完的判準**：`cb1` 與 `typed138` 整張 640×480 逐位元組相同。
+
+**證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)、[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)
+
+**核實**：`internal/screen/copyprot.go` 裡出現 `InputCaret` 就是做好了
 
 #### music-screen-mapping — 原版哪個畫面播哪一首
 
@@ -979,6 +1035,8 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
 
 <!-- worklist:end -->
+
+
 
 
 

@@ -16,7 +16,7 @@
 
 | # | 項目 | 等級 | 未核准差異 | 收據 | 備註 |
 |---|---|---|---:|---|---|
-| G1 | Ebiten 視窗版走玩家路徑 | `same-state` | 0 | `tools/gui_check.sh` | `cmd/gin3` 畫出來的色號陣列與 `r0`／`cb1`／`key1`／`cbAlly`／`keyAlly`／`main1e`／`load1e`／`vs3`／`vs4`／`vs5` 逐位元組相同。**「視窗開得起來」不算數**——比的是同一條玩家路徑跑完的畫面 |
+| G1 | Ebiten 視窗版走玩家路徑 | `same-state` | 2 例 | `tools/gui_check.sh` | `cmd/gin3` 畫出來的色號陣列與 `r0`／`cb1`／`key1`／`cbAlly`／`keyAlly`／`main1e`／`vs4`／`vs5` 逐位元組相同。**「視窗開得起來」不算數**——比的是同一條玩家路徑跑完的畫面。`load1e`（2,265）與 `vs3`（274）對不上，見 `gui-check-load1e-vs3` |
 
 ## 畫面
 
@@ -28,8 +28,8 @@
 | 4x | **開頭動畫的調色盤與播放速度** | `same-state`（調色盤） | 0 | 收據 `introvram`／`introtime2`／`introtime10`；[`docs/re/110`](docs/re/110-intro-playback-timing-and-palette.md) | `BU16IBM.RGB` 的值 ×4 ＝ 6 位元 DAC 值，48 個位元組與收據逐一相符（`TestIntroPaletteMatchesOracle`）。播放速度：PIT 除數 `0x0800`（582.6 Hz），一格 **73 個計時器中斷** ＝ 125.3 ms（約 8 fps），`-tick 20000` 下三次量到 1,459,999／1,460,000／1,459,999 道指令，換 tick 步數跟著縮放 |
 | 3a | 正常玩家路徑（選單→防拷→本體） | `same-state` | 0 | [`docs/playtest/005-player-path.md`](docs/playtest/005-player-path.md) | 三個畫面都是前一步的輸入帶進去的，不是 direct-entry |
 | 3 | 主選單（互動） | `same-state` | 0 | 收據 `r0`–`r3`／`cur300`／`curfill`；[`docs/re/158`](docs/re/158-main-menu-highlight-transition.md)、[`docs/internals/07`](docs/internals/07-window-frame.md) | 六個狀態逐位元組相同：四列反白、滑鼠在選單外（只有游標）、游標壓在視窗下緣外框上。**切換過程沒有殘留**——六組列與列的搬動、三種搬動時機、兩組「畫之前定位 vs 畫之後搬過去」的對照全部一個像素不差，所以靜態畫面就是全部；點擊推進到下一畫面見 3a |
-| 4b | 防拷問答（輸入中的數字） | `same-state` | 0 | 收據 `typed138`；[`docs/re/56`](docs/re/56-typed-digits-are-full-width.md) | 打進去的數字是 `GRAPH.IMG` 的**全形**數字（`A2AF` 起），不是半形——先前搜不到是因為只試了半形的打包方式 |
-| 4 | 防拷問答 | `same-state` | 0 | [`docs/playtest/003-copy-protection.md`](docs/playtest/003-copy-protection.md) | 全畫面 640×480 逐位元組一致（框、頭像、三行字、輸入框） |
+| 4b | 防拷問答（輸入中的數字） | `same-state` | 0 | 收據 `typed138`；[`docs/re/56`](docs/re/56-typed-digits-are-full-width.md)、[`docs/re/281`](docs/re/281-copy-protection-caret-blinks.md) | 打進去的數字是 `GRAPH.IMG` 的**全形**數字（`A2AF` 起），不是半形——先前搜不到是因為只試了半形的打包方式。輸入游標跟著往右走（`docs/re/281`） |
+| 4 | 防拷問答 | `same-state` | 0 | [`docs/playtest/003-copy-protection.md`](docs/playtest/003-copy-protection.md) | 全畫面 640×480 逐位元組一致（框、頭像、三行字、輸入框、輸入游標） |
 | 4y | **開頭動畫的第 0 格** | `same-state` | 0 | 收據 `introseq`（`-watch 27616-2BD05`）；[`docs/re/108`](docs/re/108-intro-plane-buffers-located.md) | 收據錄到第 0 格 plane 0 的 12 筆寫入（di 9,406 起每次 +80，值 `C0 80 20 30 70 10 30 08 14 0C 02 06`），與 `asset.IntroDecoder` 產生的**逐位元組相同**，其餘 18,148 個位元組都是 0（`TestIntroFirstFrameMatchesOracle`）。畫面畫在頁面第 61 列也量過（`docs/spec/020`） |
 | 4z | **開頭動畫的解碼器**（`IBM16.350` 374 格） | — | — | [`docs/re/71`](docs/re/71-intro-chunks-are-cut-at-frame-boundaries.md)、[`docs/re/72`](docs/re/72-intro-decoder-solved.md)、[`docs/internals/19`](docs/internals/19-ibm16-350.md) | 解碼器對得起來（逐格長度相符、整檔吃光、兩處場景黑幕累加歸零、解出來是船艦）。**先前「還不是畫面對拍」的兩個成因都解掉了**：CRTC 顯示起點 dosgolem 已補（[`docs/re/73`](docs/re/73-intro-planes-not-combined-on-dosgolem.md)），而「怎麼比都對不上」是因為原版在第一次搬圖之前就換過緩衝區、第 1–116 格從來沒被解過（[`docs/re/108`](docs/re/108-intro-plane-buffers-located.md)）。第 0 格現在逐位元組對上了，見 4y；整段動畫的畫面對拍還要先決定要不要照抄原版那個緩衝副作用（[`docs/spec/020`](docs/spec/020-intro-animation.md)） |
 | 4w | **戰術選單「資料」（三個分頁）** | `same-state` | 0 | 收據 `s3data`／`s3data0`／`s3data_planet`／`s3data_enemy`；[`docs/re/111`](docs/re/111-battle-data-screen-layout.md)、[`docs/spec/021`](docs/spec/021-battle-data-screen.md) | 三張分頁的視窗 (16,60) 447×360 全部**逐位元組一致**（各 0／160,920，含原版自己畫的游標）：`TestBattleDataMatchesOracle`（艦隊）、`TestBattleDataTabsMatchOracle`（行星、敵艦隊）。文字照原版的字串引擎排——一格 16 像素、半形兩個併一格，立體邊與加粗整格一起做。已接進玩家路徑（`TestBattleDataOpensFromMenu`）。**內容也對拍過**：`TestBattleDataContentMatchesOracle` 用遊戲自己從原版資料檔算出來的列去比收據，0／160,920。士氣是艦艇記錄 `+0x06`（`-poke` 驗過，收據 `s3morale`）。行星分頁的內容也對上（名字 `+0x00`、經濟力 `+0x1A`、防衛力 `+0x14`、陣營色 `+0x11`）。補給欄的判準反組譯出來了（`0x140A5`：不是玩家陣營整段遮蔽，否則 M 看 `+0x3C`、F 看 `+0x40`、七格看 `+0x20 + 艦種 × 4`，一律「32 位元非不非零」）——**沒有允許差異** |

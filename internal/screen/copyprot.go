@@ -67,6 +67,14 @@ type CopyProtSpec struct {
 		Ink   uint8 `json:"ink"`
 	} `json:"input_text"`
 
+	// InputCaret 是輸入游標：**下一個**要打的那一格底下的一條 16×2 底線。
+	// X 是還沒打字時的位置，每打一位往右一個 Pitch。
+	InputCaret *struct {
+		X, Y, W, H int
+		Pitch      int   `json:"pitch"`
+		Ink        uint8 `json:"ink"`
+	} `json:"input_caret"`
+
 	Palette6bit [][3]uint8 `json:"palette_6bit"`
 }
 
@@ -149,6 +157,7 @@ func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed st
 			}
 		}
 	}
+	digits := 0
 	if t := s.InputText; t != nil {
 		// 打進去的數字用**全形**字型（Big5 `A2AF` 起的 ０–９），
 		// 不是半形——量出來的字比半形高也寬，而點陣在 GRAPH.IMG 的
@@ -157,9 +166,21 @@ func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed st
 			if c < '0' || c > '9' {
 				continue
 			}
+			digits++
 			code := fullDigit0 + uint16(c-'0')
 			if !ui.DrawGlyph(fb, fnt, t.X+i*t.Pitch, t.Y, code, t.Ink, 0, 0, false) {
 				missing = append(missing, code)
+			}
+		}
+	}
+	if c := s.InputCaret; c != nil {
+		// 輸入游標畫在**下一個**要打的那一格底下（`docs/re/281`）。
+		// 原版會閃（畫／擦各隔 320 次計時器中斷），remake 這裡恆亮：
+		// 收據停在亮著的那半個週期，而 remake 的這張畫面還沒有時鐘。
+		x0 := c.X + digits*c.Pitch
+		for dy := 0; dy < c.H; dy++ {
+			for dx := 0; dx < c.W; dx++ {
+				fb.Set(x0+dx, c.Y+dy, c.Ink)
 			}
 		}
 	}

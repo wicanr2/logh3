@@ -119,7 +119,11 @@ func TestCopyProtectionTypedMatchesOracle(t *testing.T) {
 	}
 }
 
-// TestCopyProtectionDrawsTyped 釘「打進去的數字落在量到的位置上」。
+// TestCopyProtectionDrawsTyped 釘「打進去的數字與輸入游標落在量到的位置上」。
+//
+// 打了三位數之後畫面上會變的有兩樣：數字本身，以及**跟著移動的輸入游標**
+// （`docs/re/281`）。所以這裡不是只看數字——兩份收據 `cb1`（沒打）與
+// `typed138`（打了 138）逐位元組相減，差異的外框就是下面這兩組數字。
 func TestCopyProtectionDrawsTyped(t *testing.T) {
 	root := "../.."
 	specPath := filepath.Join(root, "docs/internals/data/screen-copy-protection.json")
@@ -139,10 +143,16 @@ func TestCopyProtectionDrawsTyped(t *testing.T) {
 	}
 	blank, _ := CopyProtection(s, fnt, nil, "")
 	typed, _ := CopyProtection(s, fnt, nil, "138")
-	var minX, maxX, minY, maxY = 1 << 30, -1, 1 << 30, -1
-	for i := range blank.Pix {
-		if blank.Pix[i] != typed.Pix[i] {
+	bbox := func(keep func(y int) bool) (int, int, int, int) {
+		minX, maxX, minY, maxY := 1<<30, -1, 1<<30, -1
+		for i := range blank.Pix {
+			if blank.Pix[i] == typed.Pix[i] {
+				continue
+			}
 			x, y := i%640, i/640
+			if !keep(y) {
+				continue
+			}
 			if x < minX {
 				minX = x
 			}
@@ -156,12 +166,16 @@ func TestCopyProtectionDrawsTyped(t *testing.T) {
 				maxY = y
 			}
 		}
+		return minX, minY, maxX, maxY
 	}
-	if maxX < 0 {
+	// 數字 ＋ 游標：`cb1` 與 `typed138` 相減量到 x[240,303] y[270,284]。
+	if x0, y0, x1, y1 := bbox(func(int) bool { return true }); x1 < 0 {
 		t.Fatal("打了 138 但畫面沒有任何變化")
+	} else if x0 != 240 || y0 != 270 || x1 != 303 || y1 != 284 {
+		t.Fatalf("數字＋游標畫在 (%d,%d)-(%d,%d)，原版量到的是 (240,270)-(303,284)", x0, y0, x1, y1)
 	}
-	// 原版量到的範圍是 x 244–285、y 270–283（收據 typed138）。
-	if minX < 243 || maxX > 286 || minY < 266 || maxY > 284 {
-		t.Fatalf("數字畫在 (%d,%d)-(%d,%d)，超出原版量到的範圍", minX, minY, maxX, maxY)
+	// 只看游標那兩列以上的部分 ＝ 數字本身：x[245,285] y[270,282]。
+	if x0, y0, x1, y1 := bbox(func(y int) bool { return y < 283 }); x0 != 245 || y0 != 270 || x1 != 285 || y1 != 282 {
+		t.Fatalf("數字畫在 (%d,%d)-(%d,%d)，原版量到的是 (245,270)-(285,282)", x0, y0, x1, y1)
 	}
 }
