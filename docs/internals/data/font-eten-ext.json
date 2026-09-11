@@ -1,0 +1,2937 @@
+{
+  "file": "GRAPH.IMG",
+  "block": "倚天擴充區（假名／西里爾／筆畫字根／合字）",
+  "code_range": [
+    "C6A1",
+    "C8D3"
+  ],
+  "glyphs": 365,
+  "start_offset": 16080,
+  "end_offset": 27030,
+  "index": "offset = 16080 + (big5_index(code) - big5_index(0xC6A1)) * 30；公式出自 ENDING.EXE 0x0DE3–0x0DEB",
+  "evidence_level": "confirmed",
+  "glyph_bytes_sha256": "564e99411ce03cb11922d867dce24f8ac23dda4df17c2cdef362b8b22944e376",
+  "note": "前 63 格（C6A1–C6DF，位移 16080–17970）以前被算進「全形符號區」的 471 格；後 302 格（C6E0–C8D3，位移 17970–27030）是本表要解的那一段。source=big5hkscs 表示字元由 ETen／HKSCS 表給出，glyph 表示 ETen 表查無、由點陣目視辨識，null 表示尚未辨識（C8A5–C8CC 那 40 格合字）。",
+  "entries": [
+    {
+      "big5": "C6A1",
+      "offset": 16080,
+      "char": "①",
+      "unicode": "U+2460",
+      "name": "CIRCLED DIGIT ONE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6A2",
+      "offset": 16110,
+      "char": "②",
+      "unicode": "U+2461",
+      "name": "CIRCLED DIGIT TWO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6A3",
+      "offset": 16140,
+      "char": "③",
+      "unicode": "U+2462",
+      "name": "CIRCLED DIGIT THREE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6A4",
+      "offset": 16170,
+      "char": "④",
+      "unicode": "U+2463",
+      "name": "CIRCLED DIGIT FOUR",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6A5",
+      "offset": 16200,
+      "char": "⑤",
+      "unicode": "U+2464",
+      "name": "CIRCLED DIGIT FIVE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6A6",
+      "offset": 16230,
+      "char": "⑥",
+      "unicode": "U+2465",
+      "name": "CIRCLED DIGIT SIX",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6A7",
+      "offset": 16260,
+      "char": "⑦",
+      "unicode": "U+2466",
+      "name": "CIRCLED DIGIT SEVEN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6A8",
+      "offset": 16290,
+      "char": "⑧",
+      "unicode": "U+2467",
+      "name": "CIRCLED DIGIT EIGHT",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6A9",
+      "offset": 16320,
+      "char": "⑨",
+      "unicode": "U+2468",
+      "name": "CIRCLED DIGIT NINE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6AA",
+      "offset": 16350,
+      "char": "⑩",
+      "unicode": "U+2469",
+      "name": "CIRCLED NUMBER TEN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6AB",
+      "offset": 16380,
+      "char": "⑴",
+      "unicode": "U+2474",
+      "name": "PARENTHESIZED DIGIT ONE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6AC",
+      "offset": 16410,
+      "char": "⑵",
+      "unicode": "U+2475",
+      "name": "PARENTHESIZED DIGIT TWO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6AD",
+      "offset": 16440,
+      "char": "⑶",
+      "unicode": "U+2476",
+      "name": "PARENTHESIZED DIGIT THREE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6AE",
+      "offset": 16470,
+      "char": "⑷",
+      "unicode": "U+2477",
+      "name": "PARENTHESIZED DIGIT FOUR",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6AF",
+      "offset": 16500,
+      "char": "⑸",
+      "unicode": "U+2478",
+      "name": "PARENTHESIZED DIGIT FIVE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6B0",
+      "offset": 16530,
+      "char": "⑹",
+      "unicode": "U+2479",
+      "name": "PARENTHESIZED DIGIT SIX",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6B1",
+      "offset": 16560,
+      "char": "⑺",
+      "unicode": "U+247A",
+      "name": "PARENTHESIZED DIGIT SEVEN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6B2",
+      "offset": 16590,
+      "char": "⑻",
+      "unicode": "U+247B",
+      "name": "PARENTHESIZED DIGIT EIGHT",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6B3",
+      "offset": 16620,
+      "char": "⑼",
+      "unicode": "U+247C",
+      "name": "PARENTHESIZED DIGIT NINE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6B4",
+      "offset": 16650,
+      "char": "⑽",
+      "unicode": "U+247D",
+      "name": "PARENTHESIZED NUMBER TEN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6B5",
+      "offset": 16680,
+      "char": "ⅰ",
+      "unicode": "U+2170",
+      "name": "SMALL ROMAN NUMERAL ONE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6B6",
+      "offset": 16710,
+      "char": "ⅱ",
+      "unicode": "U+2171",
+      "name": "SMALL ROMAN NUMERAL TWO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6B7",
+      "offset": 16740,
+      "char": "ⅲ",
+      "unicode": "U+2172",
+      "name": "SMALL ROMAN NUMERAL THREE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6B8",
+      "offset": 16770,
+      "char": "ⅳ",
+      "unicode": "U+2173",
+      "name": "SMALL ROMAN NUMERAL FOUR",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6B9",
+      "offset": 16800,
+      "char": "ⅴ",
+      "unicode": "U+2174",
+      "name": "SMALL ROMAN NUMERAL FIVE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6BA",
+      "offset": 16830,
+      "char": "ⅵ",
+      "unicode": "U+2175",
+      "name": "SMALL ROMAN NUMERAL SIX",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6BB",
+      "offset": 16860,
+      "char": "ⅶ",
+      "unicode": "U+2176",
+      "name": "SMALL ROMAN NUMERAL SEVEN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6BC",
+      "offset": 16890,
+      "char": "ⅷ",
+      "unicode": "U+2177",
+      "name": "SMALL ROMAN NUMERAL EIGHT",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6BD",
+      "offset": 16920,
+      "char": "ⅸ",
+      "unicode": "U+2178",
+      "name": "SMALL ROMAN NUMERAL NINE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6BE",
+      "offset": 16950,
+      "char": "ⅹ",
+      "unicode": "U+2179",
+      "name": "SMALL ROMAN NUMERAL TEN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6BF",
+      "offset": 16980,
+      "char": "丶",
+      "unicode": "U+4E36",
+      "name": "CJK UNIFIED IDEOGRAPH-4E36",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6C0",
+      "offset": 17010,
+      "char": "丿",
+      "unicode": "U+4E3F",
+      "name": "CJK UNIFIED IDEOGRAPH-4E3F",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6C1",
+      "offset": 17040,
+      "char": "亅",
+      "unicode": "U+4E85",
+      "name": "CJK UNIFIED IDEOGRAPH-4E85",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6C2",
+      "offset": 17070,
+      "char": "亠",
+      "unicode": "U+4EA0",
+      "name": "CJK UNIFIED IDEOGRAPH-4EA0",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6C3",
+      "offset": 17100,
+      "char": "冂",
+      "unicode": "U+5182",
+      "name": "CJK UNIFIED IDEOGRAPH-5182",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6C4",
+      "offset": 17130,
+      "char": "冖",
+      "unicode": "U+5196",
+      "name": "CJK UNIFIED IDEOGRAPH-5196",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6C5",
+      "offset": 17160,
+      "char": "冫",
+      "unicode": "U+51AB",
+      "name": "CJK UNIFIED IDEOGRAPH-51AB",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6C6",
+      "offset": 17190,
+      "char": "勹",
+      "unicode": "U+52F9",
+      "name": "CJK UNIFIED IDEOGRAPH-52F9",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6C7",
+      "offset": 17220,
+      "char": "匸",
+      "unicode": "U+5338",
+      "name": "CJK UNIFIED IDEOGRAPH-5338",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6C8",
+      "offset": 17250,
+      "char": "卩",
+      "unicode": "U+5369",
+      "name": "CJK UNIFIED IDEOGRAPH-5369",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6C9",
+      "offset": 17280,
+      "char": "厶",
+      "unicode": "U+53B6",
+      "name": "CJK UNIFIED IDEOGRAPH-53B6",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6CA",
+      "offset": 17310,
+      "char": "夊",
+      "unicode": "U+590A",
+      "name": "CJK UNIFIED IDEOGRAPH-590A",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6CB",
+      "offset": 17340,
+      "char": "宀",
+      "unicode": "U+5B80",
+      "name": "CJK UNIFIED IDEOGRAPH-5B80",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6CC",
+      "offset": 17370,
+      "char": "巛",
+      "unicode": "U+5DDB",
+      "name": "CJK UNIFIED IDEOGRAPH-5DDB",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6CD",
+      "offset": 17400,
+      "char": "⼳",
+      "unicode": "U+2F33",
+      "name": "KANGXI RADICAL SHORT THREAD",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6CE",
+      "offset": 17430,
+      "char": "广",
+      "unicode": "U+5E7F",
+      "name": "CJK UNIFIED IDEOGRAPH-5E7F",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6CF",
+      "offset": 17460,
+      "char": "廴",
+      "unicode": "U+5EF4",
+      "name": "CJK UNIFIED IDEOGRAPH-5EF4",
+      "source": "glyph"
+    },
+    {
+      "big5": "C6D0",
+      "offset": 17490,
+      "char": "彐",
+      "unicode": "U+5F50",
+      "name": "CJK UNIFIED IDEOGRAPH-5F50",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6D1",
+      "offset": 17520,
+      "char": "彡",
+      "unicode": "U+5F61",
+      "name": "CJK UNIFIED IDEOGRAPH-5F61",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6D2",
+      "offset": 17550,
+      "char": "攴",
+      "unicode": "U+6534",
+      "name": "CJK UNIFIED IDEOGRAPH-6534",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6D3",
+      "offset": 17580,
+      "char": "无",
+      "unicode": "U+65E0",
+      "name": "CJK UNIFIED IDEOGRAPH-65E0",
+      "source": "glyph"
+    },
+    {
+      "big5": "C6D4",
+      "offset": 17610,
+      "char": "疒",
+      "unicode": "U+7592",
+      "name": "CJK UNIFIED IDEOGRAPH-7592",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6D5",
+      "offset": 17640,
+      "char": "癶",
+      "unicode": "U+7676",
+      "name": "CJK UNIFIED IDEOGRAPH-7676",
+      "source": "glyph"
+    },
+    {
+      "big5": "C6D6",
+      "offset": 17670,
+      "char": "辵",
+      "unicode": "U+8FB5",
+      "name": "CJK UNIFIED IDEOGRAPH-8FB5",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6D7",
+      "offset": 17700,
+      "char": "隶",
+      "unicode": "U+96B6",
+      "name": "CJK UNIFIED IDEOGRAPH-96B6",
+      "source": "glyph"
+    },
+    {
+      "big5": "C6D8",
+      "offset": 17730,
+      "char": "¨",
+      "unicode": "U+00A8",
+      "name": "DIAERESIS",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6D9",
+      "offset": 17760,
+      "char": "ˆ",
+      "unicode": "U+02C6",
+      "name": "MODIFIER LETTER CIRCUMFLEX ACCENT",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6DA",
+      "offset": 17790,
+      "char": "ヽ",
+      "unicode": "U+30FD",
+      "name": "KATAKANA ITERATION MARK",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6DB",
+      "offset": 17820,
+      "char": "ヾ",
+      "unicode": "U+30FE",
+      "name": "KATAKANA VOICED ITERATION MARK",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6DC",
+      "offset": 17850,
+      "char": "ゝ",
+      "unicode": "U+309D",
+      "name": "HIRAGANA ITERATION MARK",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6DD",
+      "offset": 17880,
+      "char": "ゞ",
+      "unicode": "U+309E",
+      "name": "HIRAGANA VOICED ITERATION MARK",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6DE",
+      "offset": 17910,
+      "char": "〃",
+      "unicode": "U+3003",
+      "name": "DITTO MARK",
+      "source": "glyph"
+    },
+    {
+      "big5": "C6DF",
+      "offset": 17940,
+      "char": "仝",
+      "unicode": "U+4EDD",
+      "name": "CJK UNIFIED IDEOGRAPH-4EDD",
+      "source": "glyph"
+    },
+    {
+      "big5": "C6E0",
+      "offset": 17970,
+      "char": "々",
+      "unicode": "U+3005",
+      "name": "IDEOGRAPHIC ITERATION MARK",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6E1",
+      "offset": 18000,
+      "char": "〆",
+      "unicode": "U+3006",
+      "name": "IDEOGRAPHIC CLOSING MARK",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6E2",
+      "offset": 18030,
+      "char": "〇",
+      "unicode": "U+3007",
+      "name": "IDEOGRAPHIC NUMBER ZERO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6E3",
+      "offset": 18060,
+      "char": "ー",
+      "unicode": "U+30FC",
+      "name": "KATAKANA-HIRAGANA PROLONGED SOUND MARK",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6E4",
+      "offset": 18090,
+      "char": "［",
+      "unicode": "U+FF3B",
+      "name": "FULLWIDTH LEFT SQUARE BRACKET",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6E5",
+      "offset": 18120,
+      "char": "］",
+      "unicode": "U+FF3D",
+      "name": "FULLWIDTH RIGHT SQUARE BRACKET",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6E6",
+      "offset": 18150,
+      "char": "✽",
+      "unicode": "U+273D",
+      "name": "HEAVY TEARDROP-SPOKED ASTERISK",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6E7",
+      "offset": 18180,
+      "char": "ぁ",
+      "unicode": "U+3041",
+      "name": "HIRAGANA LETTER SMALL A",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6E8",
+      "offset": 18210,
+      "char": "あ",
+      "unicode": "U+3042",
+      "name": "HIRAGANA LETTER A",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6E9",
+      "offset": 18240,
+      "char": "ぃ",
+      "unicode": "U+3043",
+      "name": "HIRAGANA LETTER SMALL I",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6EA",
+      "offset": 18270,
+      "char": "い",
+      "unicode": "U+3044",
+      "name": "HIRAGANA LETTER I",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6EB",
+      "offset": 18300,
+      "char": "ぅ",
+      "unicode": "U+3045",
+      "name": "HIRAGANA LETTER SMALL U",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6EC",
+      "offset": 18330,
+      "char": "う",
+      "unicode": "U+3046",
+      "name": "HIRAGANA LETTER U",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6ED",
+      "offset": 18360,
+      "char": "ぇ",
+      "unicode": "U+3047",
+      "name": "HIRAGANA LETTER SMALL E",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6EE",
+      "offset": 18390,
+      "char": "え",
+      "unicode": "U+3048",
+      "name": "HIRAGANA LETTER E",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6EF",
+      "offset": 18420,
+      "char": "ぉ",
+      "unicode": "U+3049",
+      "name": "HIRAGANA LETTER SMALL O",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6F0",
+      "offset": 18450,
+      "char": "お",
+      "unicode": "U+304A",
+      "name": "HIRAGANA LETTER O",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6F1",
+      "offset": 18480,
+      "char": "か",
+      "unicode": "U+304B",
+      "name": "HIRAGANA LETTER KA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6F2",
+      "offset": 18510,
+      "char": "が",
+      "unicode": "U+304C",
+      "name": "HIRAGANA LETTER GA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6F3",
+      "offset": 18540,
+      "char": "き",
+      "unicode": "U+304D",
+      "name": "HIRAGANA LETTER KI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6F4",
+      "offset": 18570,
+      "char": "ぎ",
+      "unicode": "U+304E",
+      "name": "HIRAGANA LETTER GI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6F5",
+      "offset": 18600,
+      "char": "く",
+      "unicode": "U+304F",
+      "name": "HIRAGANA LETTER KU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6F6",
+      "offset": 18630,
+      "char": "ぐ",
+      "unicode": "U+3050",
+      "name": "HIRAGANA LETTER GU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6F7",
+      "offset": 18660,
+      "char": "け",
+      "unicode": "U+3051",
+      "name": "HIRAGANA LETTER KE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6F8",
+      "offset": 18690,
+      "char": "げ",
+      "unicode": "U+3052",
+      "name": "HIRAGANA LETTER GE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6F9",
+      "offset": 18720,
+      "char": "こ",
+      "unicode": "U+3053",
+      "name": "HIRAGANA LETTER KO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6FA",
+      "offset": 18750,
+      "char": "ご",
+      "unicode": "U+3054",
+      "name": "HIRAGANA LETTER GO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6FB",
+      "offset": 18780,
+      "char": "さ",
+      "unicode": "U+3055",
+      "name": "HIRAGANA LETTER SA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6FC",
+      "offset": 18810,
+      "char": "ざ",
+      "unicode": "U+3056",
+      "name": "HIRAGANA LETTER ZA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6FD",
+      "offset": 18840,
+      "char": "し",
+      "unicode": "U+3057",
+      "name": "HIRAGANA LETTER SI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C6FE",
+      "offset": 18870,
+      "char": "じ",
+      "unicode": "U+3058",
+      "name": "HIRAGANA LETTER ZI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C740",
+      "offset": 18900,
+      "char": "す",
+      "unicode": "U+3059",
+      "name": "HIRAGANA LETTER SU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C741",
+      "offset": 18930,
+      "char": "ず",
+      "unicode": "U+305A",
+      "name": "HIRAGANA LETTER ZU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C742",
+      "offset": 18960,
+      "char": "せ",
+      "unicode": "U+305B",
+      "name": "HIRAGANA LETTER SE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C743",
+      "offset": 18990,
+      "char": "ぜ",
+      "unicode": "U+305C",
+      "name": "HIRAGANA LETTER ZE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C744",
+      "offset": 19020,
+      "char": "そ",
+      "unicode": "U+305D",
+      "name": "HIRAGANA LETTER SO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C745",
+      "offset": 19050,
+      "char": "ぞ",
+      "unicode": "U+305E",
+      "name": "HIRAGANA LETTER ZO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C746",
+      "offset": 19080,
+      "char": "た",
+      "unicode": "U+305F",
+      "name": "HIRAGANA LETTER TA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C747",
+      "offset": 19110,
+      "char": "だ",
+      "unicode": "U+3060",
+      "name": "HIRAGANA LETTER DA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C748",
+      "offset": 19140,
+      "char": "ち",
+      "unicode": "U+3061",
+      "name": "HIRAGANA LETTER TI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C749",
+      "offset": 19170,
+      "char": "ぢ",
+      "unicode": "U+3062",
+      "name": "HIRAGANA LETTER DI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C74A",
+      "offset": 19200,
+      "char": "っ",
+      "unicode": "U+3063",
+      "name": "HIRAGANA LETTER SMALL TU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C74B",
+      "offset": 19230,
+      "char": "つ",
+      "unicode": "U+3064",
+      "name": "HIRAGANA LETTER TU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C74C",
+      "offset": 19260,
+      "char": "づ",
+      "unicode": "U+3065",
+      "name": "HIRAGANA LETTER DU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C74D",
+      "offset": 19290,
+      "char": "て",
+      "unicode": "U+3066",
+      "name": "HIRAGANA LETTER TE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C74E",
+      "offset": 19320,
+      "char": "で",
+      "unicode": "U+3067",
+      "name": "HIRAGANA LETTER DE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C74F",
+      "offset": 19350,
+      "char": "と",
+      "unicode": "U+3068",
+      "name": "HIRAGANA LETTER TO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C750",
+      "offset": 19380,
+      "char": "ど",
+      "unicode": "U+3069",
+      "name": "HIRAGANA LETTER DO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C751",
+      "offset": 19410,
+      "char": "な",
+      "unicode": "U+306A",
+      "name": "HIRAGANA LETTER NA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C752",
+      "offset": 19440,
+      "char": "に",
+      "unicode": "U+306B",
+      "name": "HIRAGANA LETTER NI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C753",
+      "offset": 19470,
+      "char": "ぬ",
+      "unicode": "U+306C",
+      "name": "HIRAGANA LETTER NU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C754",
+      "offset": 19500,
+      "char": "ね",
+      "unicode": "U+306D",
+      "name": "HIRAGANA LETTER NE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C755",
+      "offset": 19530,
+      "char": "の",
+      "unicode": "U+306E",
+      "name": "HIRAGANA LETTER NO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C756",
+      "offset": 19560,
+      "char": "は",
+      "unicode": "U+306F",
+      "name": "HIRAGANA LETTER HA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C757",
+      "offset": 19590,
+      "char": "ば",
+      "unicode": "U+3070",
+      "name": "HIRAGANA LETTER BA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C758",
+      "offset": 19620,
+      "char": "ぱ",
+      "unicode": "U+3071",
+      "name": "HIRAGANA LETTER PA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C759",
+      "offset": 19650,
+      "char": "ひ",
+      "unicode": "U+3072",
+      "name": "HIRAGANA LETTER HI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C75A",
+      "offset": 19680,
+      "char": "び",
+      "unicode": "U+3073",
+      "name": "HIRAGANA LETTER BI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C75B",
+      "offset": 19710,
+      "char": "ぴ",
+      "unicode": "U+3074",
+      "name": "HIRAGANA LETTER PI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C75C",
+      "offset": 19740,
+      "char": "ふ",
+      "unicode": "U+3075",
+      "name": "HIRAGANA LETTER HU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C75D",
+      "offset": 19770,
+      "char": "ぶ",
+      "unicode": "U+3076",
+      "name": "HIRAGANA LETTER BU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C75E",
+      "offset": 19800,
+      "char": "ぷ",
+      "unicode": "U+3077",
+      "name": "HIRAGANA LETTER PU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C75F",
+      "offset": 19830,
+      "char": "へ",
+      "unicode": "U+3078",
+      "name": "HIRAGANA LETTER HE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C760",
+      "offset": 19860,
+      "char": "べ",
+      "unicode": "U+3079",
+      "name": "HIRAGANA LETTER BE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C761",
+      "offset": 19890,
+      "char": "ぺ",
+      "unicode": "U+307A",
+      "name": "HIRAGANA LETTER PE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C762",
+      "offset": 19920,
+      "char": "ほ",
+      "unicode": "U+307B",
+      "name": "HIRAGANA LETTER HO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C763",
+      "offset": 19950,
+      "char": "ぼ",
+      "unicode": "U+307C",
+      "name": "HIRAGANA LETTER BO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C764",
+      "offset": 19980,
+      "char": "ぽ",
+      "unicode": "U+307D",
+      "name": "HIRAGANA LETTER PO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C765",
+      "offset": 20010,
+      "char": "ま",
+      "unicode": "U+307E",
+      "name": "HIRAGANA LETTER MA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C766",
+      "offset": 20040,
+      "char": "み",
+      "unicode": "U+307F",
+      "name": "HIRAGANA LETTER MI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C767",
+      "offset": 20070,
+      "char": "む",
+      "unicode": "U+3080",
+      "name": "HIRAGANA LETTER MU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C768",
+      "offset": 20100,
+      "char": "め",
+      "unicode": "U+3081",
+      "name": "HIRAGANA LETTER ME",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C769",
+      "offset": 20130,
+      "char": "も",
+      "unicode": "U+3082",
+      "name": "HIRAGANA LETTER MO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C76A",
+      "offset": 20160,
+      "char": "ゃ",
+      "unicode": "U+3083",
+      "name": "HIRAGANA LETTER SMALL YA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C76B",
+      "offset": 20190,
+      "char": "や",
+      "unicode": "U+3084",
+      "name": "HIRAGANA LETTER YA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C76C",
+      "offset": 20220,
+      "char": "ゅ",
+      "unicode": "U+3085",
+      "name": "HIRAGANA LETTER SMALL YU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C76D",
+      "offset": 20250,
+      "char": "ゆ",
+      "unicode": "U+3086",
+      "name": "HIRAGANA LETTER YU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C76E",
+      "offset": 20280,
+      "char": "ょ",
+      "unicode": "U+3087",
+      "name": "HIRAGANA LETTER SMALL YO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C76F",
+      "offset": 20310,
+      "char": "よ",
+      "unicode": "U+3088",
+      "name": "HIRAGANA LETTER YO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C770",
+      "offset": 20340,
+      "char": "ら",
+      "unicode": "U+3089",
+      "name": "HIRAGANA LETTER RA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C771",
+      "offset": 20370,
+      "char": "り",
+      "unicode": "U+308A",
+      "name": "HIRAGANA LETTER RI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C772",
+      "offset": 20400,
+      "char": "る",
+      "unicode": "U+308B",
+      "name": "HIRAGANA LETTER RU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C773",
+      "offset": 20430,
+      "char": "れ",
+      "unicode": "U+308C",
+      "name": "HIRAGANA LETTER RE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C774",
+      "offset": 20460,
+      "char": "ろ",
+      "unicode": "U+308D",
+      "name": "HIRAGANA LETTER RO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C775",
+      "offset": 20490,
+      "char": "ゎ",
+      "unicode": "U+308E",
+      "name": "HIRAGANA LETTER SMALL WA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C776",
+      "offset": 20520,
+      "char": "わ",
+      "unicode": "U+308F",
+      "name": "HIRAGANA LETTER WA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C777",
+      "offset": 20550,
+      "char": "ゐ",
+      "unicode": "U+3090",
+      "name": "HIRAGANA LETTER WI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C778",
+      "offset": 20580,
+      "char": "ゑ",
+      "unicode": "U+3091",
+      "name": "HIRAGANA LETTER WE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C779",
+      "offset": 20610,
+      "char": "を",
+      "unicode": "U+3092",
+      "name": "HIRAGANA LETTER WO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C77A",
+      "offset": 20640,
+      "char": "ん",
+      "unicode": "U+3093",
+      "name": "HIRAGANA LETTER N",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C77B",
+      "offset": 20670,
+      "char": "ァ",
+      "unicode": "U+30A1",
+      "name": "KATAKANA LETTER SMALL A",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C77C",
+      "offset": 20700,
+      "char": "ア",
+      "unicode": "U+30A2",
+      "name": "KATAKANA LETTER A",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C77D",
+      "offset": 20730,
+      "char": "ィ",
+      "unicode": "U+30A3",
+      "name": "KATAKANA LETTER SMALL I",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C77E",
+      "offset": 20760,
+      "char": "イ",
+      "unicode": "U+30A4",
+      "name": "KATAKANA LETTER I",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7A1",
+      "offset": 20790,
+      "char": "ゥ",
+      "unicode": "U+30A5",
+      "name": "KATAKANA LETTER SMALL U",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7A2",
+      "offset": 20820,
+      "char": "ウ",
+      "unicode": "U+30A6",
+      "name": "KATAKANA LETTER U",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7A3",
+      "offset": 20850,
+      "char": "ェ",
+      "unicode": "U+30A7",
+      "name": "KATAKANA LETTER SMALL E",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7A4",
+      "offset": 20880,
+      "char": "エ",
+      "unicode": "U+30A8",
+      "name": "KATAKANA LETTER E",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7A5",
+      "offset": 20910,
+      "char": "ォ",
+      "unicode": "U+30A9",
+      "name": "KATAKANA LETTER SMALL O",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7A6",
+      "offset": 20940,
+      "char": "オ",
+      "unicode": "U+30AA",
+      "name": "KATAKANA LETTER O",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7A7",
+      "offset": 20970,
+      "char": "カ",
+      "unicode": "U+30AB",
+      "name": "KATAKANA LETTER KA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7A8",
+      "offset": 21000,
+      "char": "ガ",
+      "unicode": "U+30AC",
+      "name": "KATAKANA LETTER GA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7A9",
+      "offset": 21030,
+      "char": "キ",
+      "unicode": "U+30AD",
+      "name": "KATAKANA LETTER KI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7AA",
+      "offset": 21060,
+      "char": "ギ",
+      "unicode": "U+30AE",
+      "name": "KATAKANA LETTER GI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7AB",
+      "offset": 21090,
+      "char": "ク",
+      "unicode": "U+30AF",
+      "name": "KATAKANA LETTER KU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7AC",
+      "offset": 21120,
+      "char": "グ",
+      "unicode": "U+30B0",
+      "name": "KATAKANA LETTER GU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7AD",
+      "offset": 21150,
+      "char": "ケ",
+      "unicode": "U+30B1",
+      "name": "KATAKANA LETTER KE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7AE",
+      "offset": 21180,
+      "char": "ゲ",
+      "unicode": "U+30B2",
+      "name": "KATAKANA LETTER GE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7AF",
+      "offset": 21210,
+      "char": "コ",
+      "unicode": "U+30B3",
+      "name": "KATAKANA LETTER KO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7B0",
+      "offset": 21240,
+      "char": "ゴ",
+      "unicode": "U+30B4",
+      "name": "KATAKANA LETTER GO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7B1",
+      "offset": 21270,
+      "char": "サ",
+      "unicode": "U+30B5",
+      "name": "KATAKANA LETTER SA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7B2",
+      "offset": 21300,
+      "char": "ザ",
+      "unicode": "U+30B6",
+      "name": "KATAKANA LETTER ZA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7B3",
+      "offset": 21330,
+      "char": "シ",
+      "unicode": "U+30B7",
+      "name": "KATAKANA LETTER SI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7B4",
+      "offset": 21360,
+      "char": "ジ",
+      "unicode": "U+30B8",
+      "name": "KATAKANA LETTER ZI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7B5",
+      "offset": 21390,
+      "char": "ス",
+      "unicode": "U+30B9",
+      "name": "KATAKANA LETTER SU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7B6",
+      "offset": 21420,
+      "char": "ズ",
+      "unicode": "U+30BA",
+      "name": "KATAKANA LETTER ZU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7B7",
+      "offset": 21450,
+      "char": "セ",
+      "unicode": "U+30BB",
+      "name": "KATAKANA LETTER SE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7B8",
+      "offset": 21480,
+      "char": "ゼ",
+      "unicode": "U+30BC",
+      "name": "KATAKANA LETTER ZE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7B9",
+      "offset": 21510,
+      "char": "ソ",
+      "unicode": "U+30BD",
+      "name": "KATAKANA LETTER SO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7BA",
+      "offset": 21540,
+      "char": "ゾ",
+      "unicode": "U+30BE",
+      "name": "KATAKANA LETTER ZO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7BB",
+      "offset": 21570,
+      "char": "タ",
+      "unicode": "U+30BF",
+      "name": "KATAKANA LETTER TA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7BC",
+      "offset": 21600,
+      "char": "ダ",
+      "unicode": "U+30C0",
+      "name": "KATAKANA LETTER DA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7BD",
+      "offset": 21630,
+      "char": "チ",
+      "unicode": "U+30C1",
+      "name": "KATAKANA LETTER TI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7BE",
+      "offset": 21660,
+      "char": "ヂ",
+      "unicode": "U+30C2",
+      "name": "KATAKANA LETTER DI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7BF",
+      "offset": 21690,
+      "char": "ッ",
+      "unicode": "U+30C3",
+      "name": "KATAKANA LETTER SMALL TU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7C0",
+      "offset": 21720,
+      "char": "ツ",
+      "unicode": "U+30C4",
+      "name": "KATAKANA LETTER TU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7C1",
+      "offset": 21750,
+      "char": "ヅ",
+      "unicode": "U+30C5",
+      "name": "KATAKANA LETTER DU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7C2",
+      "offset": 21780,
+      "char": "テ",
+      "unicode": "U+30C6",
+      "name": "KATAKANA LETTER TE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7C3",
+      "offset": 21810,
+      "char": "デ",
+      "unicode": "U+30C7",
+      "name": "KATAKANA LETTER DE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7C4",
+      "offset": 21840,
+      "char": "ト",
+      "unicode": "U+30C8",
+      "name": "KATAKANA LETTER TO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7C5",
+      "offset": 21870,
+      "char": "ド",
+      "unicode": "U+30C9",
+      "name": "KATAKANA LETTER DO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7C6",
+      "offset": 21900,
+      "char": "ナ",
+      "unicode": "U+30CA",
+      "name": "KATAKANA LETTER NA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7C7",
+      "offset": 21930,
+      "char": "ニ",
+      "unicode": "U+30CB",
+      "name": "KATAKANA LETTER NI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7C8",
+      "offset": 21960,
+      "char": "ヌ",
+      "unicode": "U+30CC",
+      "name": "KATAKANA LETTER NU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7C9",
+      "offset": 21990,
+      "char": "ネ",
+      "unicode": "U+30CD",
+      "name": "KATAKANA LETTER NE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7CA",
+      "offset": 22020,
+      "char": "ノ",
+      "unicode": "U+30CE",
+      "name": "KATAKANA LETTER NO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7CB",
+      "offset": 22050,
+      "char": "ハ",
+      "unicode": "U+30CF",
+      "name": "KATAKANA LETTER HA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7CC",
+      "offset": 22080,
+      "char": "バ",
+      "unicode": "U+30D0",
+      "name": "KATAKANA LETTER BA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7CD",
+      "offset": 22110,
+      "char": "パ",
+      "unicode": "U+30D1",
+      "name": "KATAKANA LETTER PA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7CE",
+      "offset": 22140,
+      "char": "ヒ",
+      "unicode": "U+30D2",
+      "name": "KATAKANA LETTER HI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7CF",
+      "offset": 22170,
+      "char": "ビ",
+      "unicode": "U+30D3",
+      "name": "KATAKANA LETTER BI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7D0",
+      "offset": 22200,
+      "char": "ピ",
+      "unicode": "U+30D4",
+      "name": "KATAKANA LETTER PI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7D1",
+      "offset": 22230,
+      "char": "フ",
+      "unicode": "U+30D5",
+      "name": "KATAKANA LETTER HU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7D2",
+      "offset": 22260,
+      "char": "ブ",
+      "unicode": "U+30D6",
+      "name": "KATAKANA LETTER BU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7D3",
+      "offset": 22290,
+      "char": "プ",
+      "unicode": "U+30D7",
+      "name": "KATAKANA LETTER PU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7D4",
+      "offset": 22320,
+      "char": "ヘ",
+      "unicode": "U+30D8",
+      "name": "KATAKANA LETTER HE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7D5",
+      "offset": 22350,
+      "char": "ベ",
+      "unicode": "U+30D9",
+      "name": "KATAKANA LETTER BE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7D6",
+      "offset": 22380,
+      "char": "ペ",
+      "unicode": "U+30DA",
+      "name": "KATAKANA LETTER PE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7D7",
+      "offset": 22410,
+      "char": "ホ",
+      "unicode": "U+30DB",
+      "name": "KATAKANA LETTER HO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7D8",
+      "offset": 22440,
+      "char": "ボ",
+      "unicode": "U+30DC",
+      "name": "KATAKANA LETTER BO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7D9",
+      "offset": 22470,
+      "char": "ポ",
+      "unicode": "U+30DD",
+      "name": "KATAKANA LETTER PO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7DA",
+      "offset": 22500,
+      "char": "マ",
+      "unicode": "U+30DE",
+      "name": "KATAKANA LETTER MA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7DB",
+      "offset": 22530,
+      "char": "ミ",
+      "unicode": "U+30DF",
+      "name": "KATAKANA LETTER MI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7DC",
+      "offset": 22560,
+      "char": "ム",
+      "unicode": "U+30E0",
+      "name": "KATAKANA LETTER MU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7DD",
+      "offset": 22590,
+      "char": "メ",
+      "unicode": "U+30E1",
+      "name": "KATAKANA LETTER ME",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7DE",
+      "offset": 22620,
+      "char": "モ",
+      "unicode": "U+30E2",
+      "name": "KATAKANA LETTER MO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7DF",
+      "offset": 22650,
+      "char": "ャ",
+      "unicode": "U+30E3",
+      "name": "KATAKANA LETTER SMALL YA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7E0",
+      "offset": 22680,
+      "char": "ヤ",
+      "unicode": "U+30E4",
+      "name": "KATAKANA LETTER YA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7E1",
+      "offset": 22710,
+      "char": "ュ",
+      "unicode": "U+30E5",
+      "name": "KATAKANA LETTER SMALL YU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7E2",
+      "offset": 22740,
+      "char": "ユ",
+      "unicode": "U+30E6",
+      "name": "KATAKANA LETTER YU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7E3",
+      "offset": 22770,
+      "char": "ョ",
+      "unicode": "U+30E7",
+      "name": "KATAKANA LETTER SMALL YO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7E4",
+      "offset": 22800,
+      "char": "ヨ",
+      "unicode": "U+30E8",
+      "name": "KATAKANA LETTER YO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7E5",
+      "offset": 22830,
+      "char": "ラ",
+      "unicode": "U+30E9",
+      "name": "KATAKANA LETTER RA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7E6",
+      "offset": 22860,
+      "char": "リ",
+      "unicode": "U+30EA",
+      "name": "KATAKANA LETTER RI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7E7",
+      "offset": 22890,
+      "char": "ル",
+      "unicode": "U+30EB",
+      "name": "KATAKANA LETTER RU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7E8",
+      "offset": 22920,
+      "char": "レ",
+      "unicode": "U+30EC",
+      "name": "KATAKANA LETTER RE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7E9",
+      "offset": 22950,
+      "char": "ロ",
+      "unicode": "U+30ED",
+      "name": "KATAKANA LETTER RO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7EA",
+      "offset": 22980,
+      "char": "ヮ",
+      "unicode": "U+30EE",
+      "name": "KATAKANA LETTER SMALL WA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7EB",
+      "offset": 23010,
+      "char": "ワ",
+      "unicode": "U+30EF",
+      "name": "KATAKANA LETTER WA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7EC",
+      "offset": 23040,
+      "char": "ヰ",
+      "unicode": "U+30F0",
+      "name": "KATAKANA LETTER WI",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7ED",
+      "offset": 23070,
+      "char": "ヱ",
+      "unicode": "U+30F1",
+      "name": "KATAKANA LETTER WE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7EE",
+      "offset": 23100,
+      "char": "ヲ",
+      "unicode": "U+30F2",
+      "name": "KATAKANA LETTER WO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7EF",
+      "offset": 23130,
+      "char": "ン",
+      "unicode": "U+30F3",
+      "name": "KATAKANA LETTER N",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7F0",
+      "offset": 23160,
+      "char": "ヴ",
+      "unicode": "U+30F4",
+      "name": "KATAKANA LETTER VU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7F1",
+      "offset": 23190,
+      "char": "ヵ",
+      "unicode": "U+30F5",
+      "name": "KATAKANA LETTER SMALL KA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7F2",
+      "offset": 23220,
+      "char": "ヶ",
+      "unicode": "U+30F6",
+      "name": "KATAKANA LETTER SMALL KE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7F3",
+      "offset": 23250,
+      "char": "А",
+      "unicode": "U+0410",
+      "name": "CYRILLIC CAPITAL LETTER A",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7F4",
+      "offset": 23280,
+      "char": "Б",
+      "unicode": "U+0411",
+      "name": "CYRILLIC CAPITAL LETTER BE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7F5",
+      "offset": 23310,
+      "char": "В",
+      "unicode": "U+0412",
+      "name": "CYRILLIC CAPITAL LETTER VE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7F6",
+      "offset": 23340,
+      "char": "Г",
+      "unicode": "U+0413",
+      "name": "CYRILLIC CAPITAL LETTER GHE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7F7",
+      "offset": 23370,
+      "char": "Д",
+      "unicode": "U+0414",
+      "name": "CYRILLIC CAPITAL LETTER DE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7F8",
+      "offset": 23400,
+      "char": "Е",
+      "unicode": "U+0415",
+      "name": "CYRILLIC CAPITAL LETTER IE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7F9",
+      "offset": 23430,
+      "char": "Ё",
+      "unicode": "U+0401",
+      "name": "CYRILLIC CAPITAL LETTER IO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7FA",
+      "offset": 23460,
+      "char": "Ж",
+      "unicode": "U+0416",
+      "name": "CYRILLIC CAPITAL LETTER ZHE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7FB",
+      "offset": 23490,
+      "char": "З",
+      "unicode": "U+0417",
+      "name": "CYRILLIC CAPITAL LETTER ZE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7FC",
+      "offset": 23520,
+      "char": "И",
+      "unicode": "U+0418",
+      "name": "CYRILLIC CAPITAL LETTER I",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7FD",
+      "offset": 23550,
+      "char": "Й",
+      "unicode": "U+0419",
+      "name": "CYRILLIC CAPITAL LETTER SHORT I",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C7FE",
+      "offset": 23580,
+      "char": "К",
+      "unicode": "U+041A",
+      "name": "CYRILLIC CAPITAL LETTER KA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C840",
+      "offset": 23610,
+      "char": "Л",
+      "unicode": "U+041B",
+      "name": "CYRILLIC CAPITAL LETTER EL",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C841",
+      "offset": 23640,
+      "char": "М",
+      "unicode": "U+041C",
+      "name": "CYRILLIC CAPITAL LETTER EM",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C842",
+      "offset": 23670,
+      "char": "Н",
+      "unicode": "U+041D",
+      "name": "CYRILLIC CAPITAL LETTER EN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C843",
+      "offset": 23700,
+      "char": "О",
+      "unicode": "U+041E",
+      "name": "CYRILLIC CAPITAL LETTER O",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C844",
+      "offset": 23730,
+      "char": "П",
+      "unicode": "U+041F",
+      "name": "CYRILLIC CAPITAL LETTER PE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C845",
+      "offset": 23760,
+      "char": "Р",
+      "unicode": "U+0420",
+      "name": "CYRILLIC CAPITAL LETTER ER",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C846",
+      "offset": 23790,
+      "char": "С",
+      "unicode": "U+0421",
+      "name": "CYRILLIC CAPITAL LETTER ES",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C847",
+      "offset": 23820,
+      "char": "Т",
+      "unicode": "U+0422",
+      "name": "CYRILLIC CAPITAL LETTER TE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C848",
+      "offset": 23850,
+      "char": "У",
+      "unicode": "U+0423",
+      "name": "CYRILLIC CAPITAL LETTER U",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C849",
+      "offset": 23880,
+      "char": "Ф",
+      "unicode": "U+0424",
+      "name": "CYRILLIC CAPITAL LETTER EF",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C84A",
+      "offset": 23910,
+      "char": "Х",
+      "unicode": "U+0425",
+      "name": "CYRILLIC CAPITAL LETTER HA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C84B",
+      "offset": 23940,
+      "char": "Ц",
+      "unicode": "U+0426",
+      "name": "CYRILLIC CAPITAL LETTER TSE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C84C",
+      "offset": 23970,
+      "char": "Ч",
+      "unicode": "U+0427",
+      "name": "CYRILLIC CAPITAL LETTER CHE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C84D",
+      "offset": 24000,
+      "char": "Ш",
+      "unicode": "U+0428",
+      "name": "CYRILLIC CAPITAL LETTER SHA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C84E",
+      "offset": 24030,
+      "char": "Щ",
+      "unicode": "U+0429",
+      "name": "CYRILLIC CAPITAL LETTER SHCHA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C84F",
+      "offset": 24060,
+      "char": "Ъ",
+      "unicode": "U+042A",
+      "name": "CYRILLIC CAPITAL LETTER HARD SIGN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C850",
+      "offset": 24090,
+      "char": "Ы",
+      "unicode": "U+042B",
+      "name": "CYRILLIC CAPITAL LETTER YERU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C851",
+      "offset": 24120,
+      "char": "Ь",
+      "unicode": "U+042C",
+      "name": "CYRILLIC CAPITAL LETTER SOFT SIGN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C852",
+      "offset": 24150,
+      "char": "Э",
+      "unicode": "U+042D",
+      "name": "CYRILLIC CAPITAL LETTER E",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C853",
+      "offset": 24180,
+      "char": "Ю",
+      "unicode": "U+042E",
+      "name": "CYRILLIC CAPITAL LETTER YU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C854",
+      "offset": 24210,
+      "char": "Я",
+      "unicode": "U+042F",
+      "name": "CYRILLIC CAPITAL LETTER YA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C855",
+      "offset": 24240,
+      "char": "а",
+      "unicode": "U+0430",
+      "name": "CYRILLIC SMALL LETTER A",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C856",
+      "offset": 24270,
+      "char": "б",
+      "unicode": "U+0431",
+      "name": "CYRILLIC SMALL LETTER BE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C857",
+      "offset": 24300,
+      "char": "в",
+      "unicode": "U+0432",
+      "name": "CYRILLIC SMALL LETTER VE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C858",
+      "offset": 24330,
+      "char": "г",
+      "unicode": "U+0433",
+      "name": "CYRILLIC SMALL LETTER GHE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C859",
+      "offset": 24360,
+      "char": "д",
+      "unicode": "U+0434",
+      "name": "CYRILLIC SMALL LETTER DE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C85A",
+      "offset": 24390,
+      "char": "е",
+      "unicode": "U+0435",
+      "name": "CYRILLIC SMALL LETTER IE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C85B",
+      "offset": 24420,
+      "char": "ё",
+      "unicode": "U+0451",
+      "name": "CYRILLIC SMALL LETTER IO",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C85C",
+      "offset": 24450,
+      "char": "ж",
+      "unicode": "U+0436",
+      "name": "CYRILLIC SMALL LETTER ZHE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C85D",
+      "offset": 24480,
+      "char": "з",
+      "unicode": "U+0437",
+      "name": "CYRILLIC SMALL LETTER ZE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C85E",
+      "offset": 24510,
+      "char": "и",
+      "unicode": "U+0438",
+      "name": "CYRILLIC SMALL LETTER I",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C85F",
+      "offset": 24540,
+      "char": "й",
+      "unicode": "U+0439",
+      "name": "CYRILLIC SMALL LETTER SHORT I",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C860",
+      "offset": 24570,
+      "char": "к",
+      "unicode": "U+043A",
+      "name": "CYRILLIC SMALL LETTER KA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C861",
+      "offset": 24600,
+      "char": "л",
+      "unicode": "U+043B",
+      "name": "CYRILLIC SMALL LETTER EL",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C862",
+      "offset": 24630,
+      "char": "м",
+      "unicode": "U+043C",
+      "name": "CYRILLIC SMALL LETTER EM",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C863",
+      "offset": 24660,
+      "char": "н",
+      "unicode": "U+043D",
+      "name": "CYRILLIC SMALL LETTER EN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C864",
+      "offset": 24690,
+      "char": "о",
+      "unicode": "U+043E",
+      "name": "CYRILLIC SMALL LETTER O",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C865",
+      "offset": 24720,
+      "char": "п",
+      "unicode": "U+043F",
+      "name": "CYRILLIC SMALL LETTER PE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C866",
+      "offset": 24750,
+      "char": "р",
+      "unicode": "U+0440",
+      "name": "CYRILLIC SMALL LETTER ER",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C867",
+      "offset": 24780,
+      "char": "с",
+      "unicode": "U+0441",
+      "name": "CYRILLIC SMALL LETTER ES",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C868",
+      "offset": 24810,
+      "char": "т",
+      "unicode": "U+0442",
+      "name": "CYRILLIC SMALL LETTER TE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C869",
+      "offset": 24840,
+      "char": "у",
+      "unicode": "U+0443",
+      "name": "CYRILLIC SMALL LETTER U",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C86A",
+      "offset": 24870,
+      "char": "ф",
+      "unicode": "U+0444",
+      "name": "CYRILLIC SMALL LETTER EF",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C86B",
+      "offset": 24900,
+      "char": "х",
+      "unicode": "U+0445",
+      "name": "CYRILLIC SMALL LETTER HA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C86C",
+      "offset": 24930,
+      "char": "ц",
+      "unicode": "U+0446",
+      "name": "CYRILLIC SMALL LETTER TSE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C86D",
+      "offset": 24960,
+      "char": "ч",
+      "unicode": "U+0447",
+      "name": "CYRILLIC SMALL LETTER CHE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C86E",
+      "offset": 24990,
+      "char": "ш",
+      "unicode": "U+0448",
+      "name": "CYRILLIC SMALL LETTER SHA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C86F",
+      "offset": 25020,
+      "char": "щ",
+      "unicode": "U+0449",
+      "name": "CYRILLIC SMALL LETTER SHCHA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C870",
+      "offset": 25050,
+      "char": "ъ",
+      "unicode": "U+044A",
+      "name": "CYRILLIC SMALL LETTER HARD SIGN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C871",
+      "offset": 25080,
+      "char": "ы",
+      "unicode": "U+044B",
+      "name": "CYRILLIC SMALL LETTER YERU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C872",
+      "offset": 25110,
+      "char": "ь",
+      "unicode": "U+044C",
+      "name": "CYRILLIC SMALL LETTER SOFT SIGN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C873",
+      "offset": 25140,
+      "char": "э",
+      "unicode": "U+044D",
+      "name": "CYRILLIC SMALL LETTER E",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C874",
+      "offset": 25170,
+      "char": "ю",
+      "unicode": "U+044E",
+      "name": "CYRILLIC SMALL LETTER YU",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C875",
+      "offset": 25200,
+      "char": "я",
+      "unicode": "U+044F",
+      "name": "CYRILLIC SMALL LETTER YA",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C876",
+      "offset": 25230,
+      "char": "⇧",
+      "unicode": "U+21E7",
+      "name": "UPWARDS WHITE ARROW",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C877",
+      "offset": 25260,
+      "char": "↸",
+      "unicode": "U+21B8",
+      "name": "NORTH WEST ARROW TO LONG BAR",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C878",
+      "offset": 25290,
+      "char": "↹",
+      "unicode": "U+21B9",
+      "name": "LEFTWARDS ARROW TO BAR OVER RIGHTWARDS ARROW TO BAR",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C879",
+      "offset": 25320,
+      "char": "㇏",
+      "unicode": "U+31CF",
+      "name": "CJK STROKE N",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C87A",
+      "offset": 25350,
+      "char": "𠃌",
+      "unicode": "U+200CC",
+      "name": "CJK UNIFIED IDEOGRAPH-200CC",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C87B",
+      "offset": 25380,
+      "char": "乚",
+      "unicode": "U+4E5A",
+      "name": "CJK UNIFIED IDEOGRAPH-4E5A",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C87C",
+      "offset": 25410,
+      "char": "𠂊",
+      "unicode": "U+2008A",
+      "name": "CJK UNIFIED IDEOGRAPH-2008A",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C87D",
+      "offset": 25440,
+      "char": "刂",
+      "unicode": "U+5202",
+      "name": "CJK UNIFIED IDEOGRAPH-5202",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C87E",
+      "offset": 25470,
+      "char": "䒑",
+      "unicode": "U+4491",
+      "name": "CJK UNIFIED IDEOGRAPH-4491",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8A1",
+      "offset": 25500,
+      "char": "龰",
+      "unicode": "U+9FB0",
+      "name": "CJK UNIFIED IDEOGRAPH-9FB0",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8A2",
+      "offset": 25530,
+      "char": "冈",
+      "unicode": "U+5188",
+      "name": "CJK UNIFIED IDEOGRAPH-5188",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8A3",
+      "offset": 25560,
+      "char": "龱",
+      "unicode": "U+9FB1",
+      "name": "CJK UNIFIED IDEOGRAPH-9FB1",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8A4",
+      "offset": 25590,
+      "char": "𧘇",
+      "unicode": "U+27607",
+      "name": "CJK UNIFIED IDEOGRAPH-27607",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8A5",
+      "offset": 25620,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8A6",
+      "offset": 25650,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8A7",
+      "offset": 25680,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8A8",
+      "offset": 25710,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8A9",
+      "offset": 25740,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8AA",
+      "offset": 25770,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8AB",
+      "offset": 25800,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8AC",
+      "offset": 25830,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8AD",
+      "offset": 25860,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8AE",
+      "offset": 25890,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8AF",
+      "offset": 25920,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8B0",
+      "offset": 25950,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8B1",
+      "offset": 25980,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8B2",
+      "offset": 26010,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8B3",
+      "offset": 26040,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8B4",
+      "offset": 26070,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8B5",
+      "offset": 26100,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8B6",
+      "offset": 26130,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8B7",
+      "offset": 26160,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8B8",
+      "offset": 26190,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8B9",
+      "offset": 26220,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8BA",
+      "offset": 26250,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8BB",
+      "offset": 26280,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8BC",
+      "offset": 26310,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8BD",
+      "offset": 26340,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8BE",
+      "offset": 26370,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8BF",
+      "offset": 26400,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8C0",
+      "offset": 26430,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8C1",
+      "offset": 26460,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8C2",
+      "offset": 26490,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8C3",
+      "offset": 26520,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8C4",
+      "offset": 26550,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8C5",
+      "offset": 26580,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8C6",
+      "offset": 26610,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8C7",
+      "offset": 26640,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8C8",
+      "offset": 26670,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8C9",
+      "offset": 26700,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8CA",
+      "offset": 26730,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8CB",
+      "offset": 26760,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8CC",
+      "offset": 26790,
+      "char": null,
+      "unicode": null,
+      "name": null,
+      "source": null
+    },
+    {
+      "big5": "C8CD",
+      "offset": 26820,
+      "char": "￢",
+      "unicode": "U+FFE2",
+      "name": "FULLWIDTH NOT SIGN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8CE",
+      "offset": 26850,
+      "char": "￤",
+      "unicode": "U+FFE4",
+      "name": "FULLWIDTH BROKEN BAR",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8CF",
+      "offset": 26880,
+      "char": "＇",
+      "unicode": "U+FF07",
+      "name": "FULLWIDTH APOSTROPHE",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8D0",
+      "offset": 26910,
+      "char": "＂",
+      "unicode": "U+FF02",
+      "name": "FULLWIDTH QUOTATION MARK",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8D1",
+      "offset": 26940,
+      "char": "㈱",
+      "unicode": "U+3231",
+      "name": "PARENTHESIZED IDEOGRAPH STOCK",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8D2",
+      "offset": 26970,
+      "char": "№",
+      "unicode": "U+2116",
+      "name": "NUMERO SIGN",
+      "source": "big5hkscs"
+    },
+    {
+      "big5": "C8D3",
+      "offset": 27000,
+      "char": "℡",
+      "unicode": "U+2121",
+      "name": "TELEPHONE SIGN",
+      "source": "big5hkscs"
+    }
+  ]
+}

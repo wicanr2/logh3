@@ -24,19 +24,33 @@
       "evidence_level": "confirmed"
     },
     {
-      "name": "full-width symbols (Big5 0xA1–0xA3)",
-      "start": 3840, "end": 17970, "glyphs": 471,
+      "name": "full-width symbols (Big5 0xA140-0xA3BF)",
+      "start": 3840, "end": 16080, "glyphs": 408,
       "index": "offset = 3840 + big5_index(code) * 30",
       "evidence_level": "confirmed",
-      "positive_control": "注音 ㄅ(0xA374) 依公式算出 0x39E4，該處確為 ㄅㄆㄇㄈ…ㄩ 與 ˙ˊˇˋ"
+      "positive_control": "注音 ㄅ(0xA374) 依公式算出 0x39E4，該處確為 ㄅㄆㄇㄈ…ㄩ 與 ˙ˊˇˋ",
+      "note": "上界 0xA3BF 出自 ENDING.EXE 的字型分派 cmp ax,025Dh；0xA3C0-0xA3FE 沒有字形。以前記成 471 格到 17970，那是把後面 63 格的倚天擴充區 0xC6A1-0xC6DF 算了進來"
     },
     {
-      "name": "kana / Cyrillic / box-drawing / circled numbers",
-      "start": 17970, "end": 27030, "glyphs": 302,
-      "index": null,
-      "evidence_level": "未確認",
-      "note": "內容已由渲染辨識（平假名→片假名→西里爾大小寫→框線→圈號→㊣No.正），但字碼對應尚未解出。已排除『以 Big5 0xC6A1 為起點連續存放』：依該假說算出的 ジ(0xC7B4) 位置實際是西里爾大寫。",
-      "test_method": "在遊戲內找到會顯示假名的畫面（ENDING.EXE 的版權行有 ジャパン／キティフィルム），用 probe 的檔案存取記錄看它 seek 到哪個偏移"
+      "name": "ETen extension (Big5 0xC6A1-0xC8D3)",
+      "start": 16080, "end": 27030, "glyphs": 365,
+      "index": "offset = 16080 + (big5_index(code) - big5_index(0xC6A1)) * 30",
+      "evidence_level": "confirmed",
+      "table": "data/font-eten-ext.json",
+      "positive_control": "ENDING.EXE 版權行的 13 個假名碼位（C7B4=ジ、C7DF=ャ、C7CD=パ、C7EF=ン 等）經此公式查出的字形，畫出來就是「德間ジャパン．キティフィルム」",
+      "source_of_formula": "ENDING.EXE 0x0DDC-0x0DEB：cmp ax,2771h / sub ax,25A2h / call 0x0D11 / add ax,3ED0h",
+      "content": [
+        {"range": ["C6A1", "C6BE"], "what": "①-⑩ ⑴-⑽ ⅰ-ⅹ", "evidence_level": "強證據"},
+        {"range": ["C6BF", "C6DF"], "what": "部首與符號", "evidence_level": "強證據"},
+        {"range": ["C6E0", "C6E6"], "what": "々〆〇ー［］✽", "evidence_level": "confirmed"},
+        {"range": ["C6E7", "C77A"], "what": "平假名 ぁ-ん（83）", "evidence_level": "confirmed"},
+        {"range": ["C77B", "C7F2"], "what": "片假名 ァ-ヶ（86）", "evidence_level": "confirmed"},
+        {"range": ["C7F3", "C854"], "what": "西里爾大寫 А-Я（33）", "evidence_level": "confirmed"},
+        {"range": ["C855", "C875"], "what": "西里爾小寫 а-я（33）", "evidence_level": "confirmed"},
+        {"range": ["C876", "C8A4"], "what": "箭頭與筆畫字根（13）", "evidence_level": "confirmed"},
+        {"range": ["C8A5", "C8CC"], "what": "粗體數字 0-9 ＋ 右側小符號的合字（40），用途未知", "evidence_level": "未知"},
+        {"range": ["C8CD", "C8D3"], "what": "￢￤＇＂㈱№℡", "evidence_level": "confirmed"}
+      ]
     },
     {
       "name": "hanzi (Big5 0xA440 起)",
@@ -71,6 +85,7 @@
   "exports": {
     "sheet": "workplace/assets/font/graph-img-sheet.png（全部 13995 個字形，1536×2190）",
     "halfwidth": "workplace/assets/font/graph-img-head-8x15.png",
-    "regions": ["region-b-16x15.png", "region-c-16x15.png", "gap-17970-27030.png"]
+    "regions": ["region-b-16x15.png", "region-c-16x15.png", "gap-17970-27030.png"],
+    "rebuild": "tools/py.sh tools/scripts/kana_charcodes.py sheet|art|text|presym|checks|emit"
   }
 }
