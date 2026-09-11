@@ -770,44 +770,80 @@
     {
       "id": "month-end-2b5f02b2",
       "legacy_id": "18p",
-      "status": "open",
+      "status": "done",
       "layer": "re",
-      "title": "月底那一支每回合都跑的 `2B5F:02B2` 沒讀",
+      "title": "`2B5F:02B2` 是每回合的飛彈／艦載機存量回充",
       "body": [
-        "`0654:0007` 的第一件事就是它，而且在 `ds:8F18 mod 10` 那道閘門**之前**",
-        "——所以它每個回合都跑，不是月底限定。內容還沒讀。"
+        "`0654:0007` 在十回合閘門**之前**呼叫它，所以每個回合都跑。內容與錢無關：",
+        "32 格逐一把星域記錄的 `+0x68`（飛彈）與 `+0x70`（艦載機）往上補",
+        "`⌊(經濟力 ＋ 防衛力) ÷ 10⌋`，夾在經濟力＋防衛力；無主星域與 `+0x13`",
+        "bit0 有設（到自己首都的補給線斷了）的星域跳過。",
+        "**remake 整段沒有**——見 `region-supply-pool-missing`。"
       ],
       "evidence": [
-        "docs/re/267-monthly-growth-and-tax-rate-recompute.md",
-        "docs/spec/035-month-end-gate.md"
+        "docs/re/273-region-supply-pool-refill.md",
+        "docs/spec/039-region-supply-pool.md"
       ],
-      "acceptance": "讀出來並確認 remake 有沒有缺這一步。",
       "verify": {
-        "kind": "manual",
-        "note": "讀完之後若要補實作，會在 internal/game 多一支月底步驟；到時綁那個函式名。現在沒有自承可綁——remake 不知道自己缺這一步。"
+        "kind": "spec_status",
+        "spec": "docs/re/273-region-supply-pool-refill.md",
+        "state": "2B5F:02B2"
+      }
+    },
+    {
+      "id": "region-supply-pool-missing",
+      "status": "open",
+      "layer": "feature",
+      "title": "飛彈／艦載機存量的每回合回充 remake 沒有",
+      "body": [
+        "原版每個回合把星域記錄的 `+0x68`／`+0x70` 補一成、夾在經濟力＋防衛力，",
+        "再按行星經濟力比例分回行星的 `+0x3C`／`+0x40`。remake 兩層都沒有：",
+        "行星存量只被戰場補給扣，沒有任何一處加回去，開局水位也還是",
+        "`PLADAT.DAT` 的原值（原版第一個回合就夾下來，奧丁 200000 → 108600）。"
+      ],
+      "evidence": [
+        "docs/re/273-region-supply-pool-refill.md",
+        "docs/spec/039-region-supply-pool.md"
+      ],
+      "acceptance": "回合 1 的 32 格 `+0x68`／`+0x70` 與收據 `re273clamp` 的 `re273_rpost.bin` 逐位元組相同。",
+      "verify": {
+        "kind": "absent",
+        "paths": [
+          "internal/rules",
+          "internal/game"
+        ],
+        "pattern": "RefillRegionSupply|RegionSupplyPool"
       }
     },
     {
       "id": "face-draw-index-source",
-      "status": "open",
+      "status": "done",
       "layer": "re",
-      "title": "原版怎麼把提督索引交給畫頭像的常式，還沒從反組譯讀出來",
+      "title": "原版把提督索引原樣交給畫頭像的常式（`3958:0215`）",
       "body": [
-        "「`FACE.AMG` 第 n 張 ＝ 提督索引 n」已經 confirmed，但撐著它的是收據、",
-        "制服色的分界與人物傳的內容對應（`docs/re/271`），不是程式碼。解碼常式在",
-        "`348A:02F9`；呼叫端——易主報告那條路上是 `3958:0215`——把 SI 與編號",
-        "準備好的那一段沒有反組譯過。",
-        "讀出來才知道編號是直接傳索引、還是中間過一張表；現在只知道**不是**",
-        "提督記錄裡的欄位（28 個位移沒有一欄等於記錄索引）。"
+        "畫頭像的入口 `3958:0215` 收三個 byte 參數 `(編號, 行, 列)`。編號只有兩個",
+        "特例：`0xFF` 換成 `0x52`（＝ 82，那一格空白）、`0xFE` 跳過載入直接重畫",
+        "緩衝區裡現有的；其餘原樣往下傳。載入端 `332E:0401` 補上檔名 `ds:6AAF`",
+        "＝ `face.amg`，通用常式 `332E:0B8E` 用 **`n × 6` 直接 seek 索引表**，",
+        "中間沒有轉換表——所以 `docs/re/271` 的 1:1 對應不是巧合。",
+        "最短的證據在提督詳細資料那個呼叫端（線性 `0x0D98B`）：同一個區域變數",
+        "先 `× 28` 加上提督表 `ds:B77C` 印欄位，再原樣推給 `3958:0215` 當頭像編號。",
+        "順帶解出艦隊記錄 `+0x04` ＝ 提督索引，以及落點換算 `x ＝ 行 × 8`、",
+        "`y ＝ 列 × 4 ＋ 40`（`3A8D:003A`）。"
       ],
       "evidence": [
+        "docs/re/272-face-index-is-the-caller-argument.md",
         "docs/re/271-face-amg-index-is-the-admiral-index.md",
         "docs/internals/09-face-amg.md"
       ],
       "acceptance": "`3958:0215`（或另一條路上的同一支常式）讀出來，寫明編號從哪個位址取、有沒有經過轉換，並在 `docs/internals/09` 用位址與位元組佐證。",
       "verify": {
-        "kind": "manual",
-        "note": "這是原版程式碼的閱讀進度，remake 端沒有對應的缺席可綁——remake 本來就直接用提督索引取圖，接不接這一條它都是綠的。讀完之後會在 docs/internals/09 多一段反組譯，到時改成 present 綁那段裡的位址字串 `3958:0215`。"
+        "kind": "absent",
+        "paths": [
+          "docs/internals/09-face-amg.md"
+        ],
+        "pattern": "3958:0215",
+        "note": "綁的是 docs/internals/09 裡那段反組譯的入口位址：那一節被刪掉或改寫掉，這一條就回到「沒讀」。remake 端沒有可綁的缺席——它本來就直接用提督索引取圖，接不接這一條都是綠的。"
       }
     },
     {

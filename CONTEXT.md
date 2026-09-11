@@ -270,6 +270,7 @@
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
+| `ds:8F4F[陣營]` 是**統治者**的提督編號 | `docs/re/34`、`docs/re/220`、`docs/re/222` 末節、`docs/internals/22` bit1、`docs/internals/55` | `docs/re/268`：對那一格設監看抓到兩個寫入者（`090A:021B` 玩家手動任命、`2D10:02ED` AI 指派），而 AI 在自己回合的收尾 `2D10:0038` 會**重新挑人**——常數不會每回合換。`docs/internals/30` 的 `WORK` 版面把六格定死：`ds:8F4B` 軍事／`ds:8F4D` 情報／`ds:8F4F` **內政**專任參謀，各陣營一格。受影響的是稅率公式（`docs/internals/55`，乘的是內政參謀的能力）與叛亂判定（`docs/internals/22` bit1，查的是情報參謀）。**統治者存在哪一格仍未定位** |
 | 船艦建造的單價是十四個常數（帝國 8/12/4/24/4/7/22、同盟 9/14/5/23/3/7/24）| `docs/internals/32`、`docs/re/12`、`docs/re/62` | `docs/re/265`：單價 ＝ ⌊艦種表基價 × 100 ÷ 軍事專任參謀的營運⌋（`2B5F:014D`）。那十四個數是 796/1 兩位參謀（帝國提督 6 營運 112、同盟提督 79 營運 106）下算出來的值——用基價代回去 14/14。「只有運補艦兩邊同價」也不是巧合以外的東西：基價兩邊都是 8，`8×100÷112` 與 `8×100÷106` 都是 7 |
 | `2703:02E5` 有不只一條進入路徑，呼叫者是 `090A:0E6A` | `docs/re/254` | `docs/re/255`：`0x09F0A` 是前一支函式的 `pop si`，進入點是 `090A:0E6D`（`0x09F0D`），差三個 byte。斷在 epilogue 上只會在前一支跑的時候命中，於是看起來像另有一條路徑。`9a e5 02 03 27` 掃全份 1 MB 傾印只有一處 |
 | `原定 − 建造費 − 那三項` 對不上實際的軍事費，**還有沒找到的支出項目** | `docs/internals/27` | `docs/re/258`：沒有沒找到的支出項目——「那三項」拿錯了兩格。該扣的是三個**累計**欄位（`ds:8F94`／`ds:8F7A`／`ds:8F8A`），`ds:8F72`／`ds:8F82` 是本回合的預估，混進來會重複算。三格存檔 × 兩個陣營六組全中 |
@@ -359,7 +360,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 30 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 29 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -678,35 +679,20 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：要人判——解一格就會多一個具名常數在 internal/rules/fleet.go，到時改成 json_len 綁 docs/internals/data 那份欄位表的項數。
 
-#### month-end-2b5f02b2 — 月底那一支每回合都跑的 `2B5F:02B2` 沒讀
+#### region-supply-pool-missing — 飛彈／艦載機存量的每回合回充 remake 沒有
 
-*原編號 18p · re（逆向：機制還沒讀出來）*
+*feature（功能：玩家會撞到、但 remake 還沒有）*
 
-`0654:0007` 的第一件事就是它，而且在 `ds:8F18 mod 10` 那道閘門**之前**
-——所以它每個回合都跑，不是月底限定。內容還沒讀。
+原版每個回合把星域記錄的 `+0x68`／`+0x70` 補一成、夾在經濟力＋防衛力，
+再按行星經濟力比例分回行星的 `+0x3C`／`+0x40`。remake 兩層都沒有：
+行星存量只被戰場補給扣，沒有任何一處加回去，開局水位也還是
+`PLADAT.DAT` 的原值（原版第一個回合就夾下來，奧丁 200000 → 108600）。
 
-**做完的判準**：讀出來並確認 remake 有沒有缺這一步。
+**做完的判準**：回合 1 的 32 格 `+0x68`／`+0x70` 與收據 `re273clamp` 的 `re273_rpost.bin` 逐位元組相同。
 
-**證據**：[`docs/re/267-monthly-growth-and-tax-rate-recompute.md`](docs/re/267-monthly-growth-and-tax-rate-recompute.md)、[`docs/spec/035-month-end-gate.md`](docs/spec/035-month-end-gate.md)
+**證據**：[`docs/re/273-region-supply-pool-refill.md`](docs/re/273-region-supply-pool-refill.md)、[`docs/spec/039-region-supply-pool.md`](docs/spec/039-region-supply-pool.md)
 
-**核實**：要人判——讀完之後若要補實作，會在 internal/game 多一支月底步驟；到時綁那個函式名。現在沒有自承可綁——remake 不知道自己缺這一步。
-
-#### face-draw-index-source — 原版怎麼把提督索引交給畫頭像的常式，還沒從反組譯讀出來
-
-*re（逆向：機制還沒讀出來）*
-
-「`FACE.AMG` 第 n 張 ＝ 提督索引 n」已經 confirmed，但撐著它的是收據、
-制服色的分界與人物傳的內容對應（`docs/re/271`），不是程式碼。解碼常式在
-`348A:02F9`；呼叫端——易主報告那條路上是 `3958:0215`——把 SI 與編號
-準備好的那一段沒有反組譯過。
-讀出來才知道編號是直接傳索引、還是中間過一張表；現在只知道**不是**
-提督記錄裡的欄位（28 個位移沒有一欄等於記錄索引）。
-
-**做完的判準**：`3958:0215`（或另一條路上的同一支常式）讀出來，寫明編號從哪個位址取、有沒有經過轉換，並在 `docs/internals/09` 用位址與位元組佐證。
-
-**證據**：[`docs/re/271-face-amg-index-is-the-admiral-index.md`](docs/re/271-face-amg-index-is-the-admiral-index.md)、[`docs/internals/09-face-amg.md`](docs/internals/09-face-amg.md)
-
-**核實**：要人判——這是原版程式碼的閱讀進度，remake 端沒有對應的缺席可綁——remake 本來就直接用提督索引取圖，接不接這一條它都是綠的。讀完之後會在 docs/internals/09 多一段反組譯，到時改成 present 綁那段裡的位址字串 `3958:0215`。
+**核實**：`internal/rules`、`internal/game` 裡出現 `RefillRegionSupply|RegionSupplyPool` 就是做好了
 
 #### delivery-report-details — 月底報告的兩個細節還沒模型化
 
@@ -753,7 +739,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-4 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+6 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -812,7 +798,43 @@ pkg-config，標準建置 image 沒有——放進 internal 會讓 `go test ./..
 
 **核實**：`TestMonthEndMatchesWorkBlock` 釘在 `internal/game`
 
+#### month-end-2b5f02b2 — `2B5F:02B2` 是每回合的飛彈／艦載機存量回充
+
+*原編號 18p · re（逆向：機制還沒讀出來）*
+
+`0654:0007` 在十回合閘門**之前**呼叫它，所以每個回合都跑。內容與錢無關：
+32 格逐一把星域記錄的 `+0x68`（飛彈）與 `+0x70`（艦載機）往上補
+`⌊(經濟力 ＋ 防衛力) ÷ 10⌋`，夾在經濟力＋防衛力；無主星域與 `+0x13`
+bit0 有設（到自己首都的補給線斷了）的星域跳過。
+**remake 整段沒有**——見 `region-supply-pool-missing`。
+
+**證據**：[`docs/re/273-region-supply-pool-refill.md`](docs/re/273-region-supply-pool-refill.md)、[`docs/spec/039-region-supply-pool.md`](docs/spec/039-region-supply-pool.md)
+
+**核實**：`docs/re/273-region-supply-pool-refill.md` 標到 `2B5F:02B2`
+
+#### face-draw-index-source — 原版把提督索引原樣交給畫頭像的常式（`3958:0215`）
+
+*re（逆向：機制還沒讀出來）*
+
+畫頭像的入口 `3958:0215` 收三個 byte 參數 `(編號, 行, 列)`。編號只有兩個
+特例：`0xFF` 換成 `0x52`（＝ 82，那一格空白）、`0xFE` 跳過載入直接重畫
+緩衝區裡現有的；其餘原樣往下傳。載入端 `332E:0401` 補上檔名 `ds:6AAF`
+＝ `face.amg`，通用常式 `332E:0B8E` 用 **`n × 6` 直接 seek 索引表**，
+中間沒有轉換表——所以 `docs/re/271` 的 1:1 對應不是巧合。
+最短的證據在提督詳細資料那個呼叫端（線性 `0x0D98B`）：同一個區域變數
+先 `× 28` 加上提督表 `ds:B77C` 印欄位，再原樣推給 `3958:0215` 當頭像編號。
+順帶解出艦隊記錄 `+0x04` ＝ 提督索引，以及落點換算 `x ＝ 行 × 8`、
+`y ＝ 列 × 4 ＋ 40`（`3A8D:003A`）。
+
+**做完的判準**：`3958:0215`（或另一條路上的同一支常式）讀出來，寫明編號從哪個位址取、有沒有經過轉換，並在 `docs/internals/09` 用位址與位元組佐證。
+
+**證據**：[`docs/re/272-face-index-is-the-caller-argument.md`](docs/re/272-face-index-is-the-caller-argument.md)、[`docs/re/271-face-amg-index-is-the-admiral-index.md`](docs/re/271-face-amg-index-is-the-admiral-index.md)、[`docs/internals/09-face-amg.md`](docs/internals/09-face-amg.md)
+
+**核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
+
 <!-- worklist:end -->
+
+
 
 
 

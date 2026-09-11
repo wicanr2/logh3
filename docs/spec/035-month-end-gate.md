@@ -92,8 +92,11 @@ ds:8F8A/8C[陣營] ← 0                 已支付移動經費歸零
 第 2 條的實作是 `Game.refreshTaxEstimate()`，`Game.finishTurn` 每個回合呼叫
 一次（月底那一趟在 `monthEnd()` 之後，與原版共同尾巴的位置相同）。
 
+`0654:0007` 在 mod 10 之前每回合都跑的那一支是 `2B5F:02B2`：32 格回充
+飛彈與艦載機存量，與錢無關（[`docs/spec/039`](039-region-supply-pool.md)、
+[`docs/re/273`](../re/273-region-supply-pool-refill.md)）。
+
 ## 還沒解
 
-- `2B5F:02B2`（`0654:0007` 在 mod 10 之前每回合都跑的那一支）。
 - 旗標 0 與旗標 1 兩趟加總的是同一組行星（`monthgateD` 逐筆相同），
   所以 `docs/re/35` 量到的「兩種稅差 9」不是集合差異造成的，仍未解釋。
