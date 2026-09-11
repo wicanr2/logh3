@@ -336,7 +336,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 31 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 29 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -673,18 +673,6 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
-#### window-frame-corners — 視窗外框的角落規則沒逆向
-
-*原編號 12 · re（逆向：機制還沒讀出來）*
-
-斜角在四個角的切法目前靠一張明列的像素修正表撐著。
-
-**做完的判準**：角落由規則算出來，修正表清空而收據不變。
-
-**證據**：[`docs/internals/07-window-frame.md`](docs/internals/07-window-frame.md)
-
-**核實**：`internal/ui/bevel.go` 裡還找得到 `角落規則還沒逆向出來`（自承還在 ＝ 還沒做）
-
 #### battle-data-scroll — 戰術選單「資料」的捲動沒量
 
 *原編號 4w · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -765,20 +753,6 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：要人判——解出來會多一支 rules 的算式（大概叫 RegionMorale 之類），到時綁那個函式名；現在程式裡填的是量到的常數，沒有自承可綁。
 
-#### fleet-record-fields — 艦隊記錄 122 bytes 裡還有欄位沒解
-
-*原編號 20 · re（逆向：機制還沒讀出來）*
-
-`ds:C074` 一筆 122 bytes，`+0x01` 陣營、`+0x04` 沒在用、`+0x06` 所在星域、
-`+0x07`／`+0x08` 目的地與移動狀態、`+0x09` 類別、`+0x3C`–`+0x4F` 那一批能力值
-都解出來了；**其餘欄位仍未解**。三份存檔可以互相對照，不必再跑模擬器。
-
-**做完的判準**：122 bytes 逐欄有語意，或明列哪幾格確定沒被讀過。
-
-**證據**：[`docs/internals/33-fleet-table.md`](docs/internals/33-fleet-table.md)
-
-**核實**：要人判——解一格就會多一個具名常數在 internal/rules/fleet.go，到時改成 json_len 綁 docs/internals/data 那份欄位表的項數。
-
 #### region-supply-pool-missing — 飛彈／艦載機存量的每回合回充 remake 沒有
 
 *feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -839,7 +813,7 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-12 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+14 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1018,6 +992,38 @@ remake 接在 `internal/audio.TuneFor`，曲號從 `Game` 那三格讀；
 
 **核實**：`internal/game` 裡出現 `msg-speed-inc` 就是做好了
 
+#### window-frame-corners — 視窗外框的角落：沒有規則，是圖塊裡的美術
+
+*原編號 12 · re（逆向：機制還沒讀出來）*
+
+**外框不是畫出來的，是貼出來的**：`FRAME.BLK` 起始碼 9 的八張圖塊，
+四個角就是圖塊 8／10／13／15 本身的像素（`docs/re/289`）。切法不規則
+是因為那是有人畫的圖，不是演算法——所以沒有「角落規則」可以推。
+
+先前那張七個像素的修正表已經清空。它不是角落規則，是**線條重建模型
+與圖塊資料的差**：五個尺寸（5×6、4×4、8×9、22×6、10×10 格）差的都是
+同樣這七個點，右上與左下兩個角一個像素都不差，而且每一個都對得回
+圖塊 8 或 15 在那一點的色號。
+
+主選單、戰術選單、命令選單都改走 `ui.MenuFrame(tiles, fill)` ＝
+`TileFrame{Style: 9}`。圖塊版多畫最外圈一像素，那一圈是色號 3，
+與主選單背景同色（三份收據量過），所以收據一個位元組都沒變。
+
+順帶解掉的：戰術選單的位置原本寫成「游標 ＋ (−15,−19)」，實際是格
+（`格 = 游標所在格 − (1,1)`，`docs/re/117`）。收據 `s3menu` 的游標落在
+(240,240)，剛好是 16 與 20 的整數倍，兩個模型在那一點同值——那份收據
+分不出對錯。
+
+**還沒解的**：`ui.Frame` 與 `Patch` 沒有刪。主遊戲大盤面、防拷畫面那些
+框的矩形沒有一個對得上 16 × 20 格線，不是這條路畫的，像素從哪來還不知道；
+那些 `patches` 陣列的處境與這七個像素相同，要解的是它們由哪一支常式畫。
+
+**做完的判準**：角落由規則算出來，修正表清空而收據不變。
+
+**證據**：[`docs/re/289-menu-frame-corners-are-tile-pixels.md`](docs/re/289-menu-frame-corners-are-tile-pixels.md)、[`docs/re/138-window-frame-tiles.md`](docs/re/138-window-frame-tiles.md)、[`docs/internals/07-window-frame.md`](docs/internals/07-window-frame.md)、[`docs/internals/47-window-frame-tiles.md`](docs/internals/47-window-frame-tiles.md)
+
+**核實**：`internal/ui`、`internal/screen` 裡還找得到 `\{-6, -5, 8\}|MenuFrame\(\)`（自承還在 ＝ 還沒做）
+
 #### strategic-ai-advance-turn — 戰略 AI 接進 `advanceTurn`
 
 *原編號 24 · parity（對拍：要與原版逐位元組相同）*
@@ -1054,6 +1060,25 @@ remake 接在 `internal/audio.TuneFor`，曲號從 `Game` 那三格讀；
 
 **核實**：`TestMonthEndMatchesWorkBlock` 釘在 `internal/game`
 
+#### fleet-record-fields — 艦隊記錄 122 bytes 逐格都有交代了
+
+*原編號 20 · re（逆向：機制還沒讀出來）*
+
+`ds:C074` 一筆 122 bytes。這一輪補上 `+0x74`／`+0x76`／`+0x78`（敵方艦隊這回合
+的預計落點，`+0x44` 決定 AI 信不信它）、`+0x5B`（要去打哪一顆行星）、
+`+0x6B`／`+0x6C`–`+0x6F`（戰場圖示物件的遠指標與兩個快取），並把散在
+`docs/re/118`／`215`／`119`／`132`／`120` 裡的 `+0x02`／`+0x03`／`+0x38`／
+`+0x3A`／`+0x3B`／`+0x60` 搬回版面表。
+**`+0x4B` 與 `+0x50` 寫了沒人讀；`+0x51`／`+0x68`／`+0x69`／`+0x71`／`+0x72`／
+`+0x73` 完全沒有存取；`+0x49` 只有 bit0 有語意。** 其餘位移不是欄位，
+是相鄰 word／遠指標的高位元組。
+
+**做完的判準**：122 bytes 逐欄有語意，或明列哪幾格確定沒被讀過。
+
+**證據**：[`docs/internals/33-fleet-table.md`](docs/internals/33-fleet-table.md)、[`docs/re/288-fleet-record-remaining-fields.md`](docs/re/288-fleet-record-remaining-fields.md)
+
+**核實**：`docs/internals/33-fleet-table.md` 標到 `逐格總表（122 bytes 全覆蓋）`
+
 #### month-end-2b5f02b2 — `2B5F:02B2` 是每回合的飛彈／艦載機存量回充
 
 *原編號 18p · re（逆向：機制還沒讀出來）*
@@ -1089,6 +1114,8 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
 
 <!-- worklist:end -->
+
+
 
 
 

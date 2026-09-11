@@ -4,6 +4,14 @@
 
 只收 mod=01（disp8）且基底是 bx／si／di 的 modrm——bp 是堆疊框，
 排除掉才看得見結構欄位。輸出的線性位址要自己換算回段:位移。
+
+**Borland 還有第二種寫法**，`mod=01` 這一關攔不到：要把欄位的**位址**
+傳出去（`push es:[bx]` 之前先 `add bx,64h`）或連續存取同一格時，
+編譯器會先 `83 C3 <位移>`／`83 C6`／`83 C7` 把基底加上去，再用 `[bx]`
+（`mod=00`）存取。只掃 `mod=01` 會把這些漏掉，於是「這一格沒有消費者」
+可能只是**過濾器有洞**——`+0x64`／`+0x66`／`+0x6C` 這種常被取位址的欄位
+幾乎都走這條路。所以本支把 `add bx/si/di, imm8` 一併列出（標
+`[add reg,imm]`），判「沒有消費者」時兩份都要是空的。
 """
 import sys
 
@@ -59,3 +67,14 @@ for t in sys.argv[3:]:
             base + i, name, pfx, BASE[m & 7], disp, tail))
         n += 1
     print("    共 %d 處" % n)
+    # 第二種寫法：先 add bx/si/di, imm8 再用 mod=00 存取。
+    ADDREG = {0xC3: "bx", 0xC6: "si", 0xC7: "di"}
+    m = 0
+    for i in range(len(dump) - 3):
+        if dump[i] != 0x83 or dump[i + 1] not in ADDREG or dump[i + 2] != disp:
+            continue
+        tail = " ".join("%02X" % b for b in dump[i:i + 6])
+        print("    lin %05X  [add reg,imm] add %s,%02X  %s" % (
+            base + i, ADDREG[dump[i + 1]], disp, tail))
+        m += 1
+    print("    其中 add reg,imm 形式 %d 處" % m)
