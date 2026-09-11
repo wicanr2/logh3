@@ -1306,6 +1306,12 @@ func (g *Game) moveMouse(x, y int) {
 
 // refreshHoverRegion 重算左下角那塊要寫哪一格星域（`docs/re/277`）。
 //
+// ⚠ **從別的畫面「回到」地圖介面的那一次輸入不重算。** 原版讓左下角留著
+// 上一張畫面在那裡畫的東西：收據 `dec1` 是從艦隊組成按「決定」回地圖，
+// 游標停在 (510,310)（星圖外），而那塊寫的是艦隊那幾張畫上去的首都摘要
+// ——照「游標底下那一格」重算會把它擦掉，差 2,354 個像素。所以
+// `Click`／`RightClick` 只在**輸入之前就已經在地圖介面**時才重算。
+//
 // **只在戰略地圖介面是最上層的時候重算**：選單或疊上去的視窗開著的時候
 // 一個字都不動，所以那幾張畫面留著的是開起來之前的內容（收據 `cmd1e`：
 // 選單開著，滑鼠已經搬到右側面板上，左下角照樣寫著艾流塞拉）。
@@ -1335,13 +1341,58 @@ func (g *Game) refreshHoverRegion() {
 	}
 }
 
+// moveBeforePress 在按下之前先讓游標「移動到」那個位置一次。
+//
+// ⚠ **這一步不是多餘的。** 真的滑鼠不可能在同一瞬間移到新位置又按下去
+// ——驅動程式一定先送一個移動事件，遊戲因此在處理按下**之前**就看過
+// 新座標。左下角那塊摘要跟著游標走、選單一開就凍住（`docs/re/277`），
+// 所以「有沒有先移動」決定凍住的是哪一格。
+//
+// 少了它，遊戲照樣開得了選單、框與內容逐位元組相同，只是「游標經過
+// 那裡」帶起來的副作用整批不見，而畫面看起來完全正常。原版 oracle 那側
+// 同一件事在 dosgolem 的 `-click-move-lead`（`docs/spec/004` §4.20.1）
+// ——它曾經在改寫命令列時掉過，42 份收據因此重跑出另一個畫面
+// （`docs/re/282`）。
+func (g *Game) moveBeforePress(x, y int) {
+	if g.state == StateIntro {
+		return // 動畫期間任何輸入都是「跳過」，沒有游標語意
+	}
+	g.MoveMouse(x, y)
+}
+
+// forcedLeftRegion 回「這個畫面自己要寫進左下角的那一格」，−1 ＝ 不寫
+// （那就跟著游標，見 `refreshHoverRegion`）。
+//
+// ⚠ **寫進去之後會留著。** 原版的左下角是**黏的**：提督與艦隊那一族畫面
+// 把自己的首都摘要寫上去，按「決定」回到地圖之後那塊**不會被擦掉**
+// （收據 `dec1`，游標停在星圖外的 (510,310)，那塊仍是首都摘要）。
+// 所以這個值要存進 `hoverRegion`，不能只在繪製的時候套用——只在繪製時
+// 套用的話，回到地圖的那一幀就變回「跟著游標」，差 2,354 個像素。
+func (g *Game) forcedLeftRegion(s State) int {
+	switch s {
+	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList,
+		StateAdmiralDetail, StateAdmiralBio, StateFleetOrg,
+		StateFleetNumber, StateFleetAdjutant, StateFleetComposition,
+		StateFormation:
+		return rules.CapitalRegion(g.faction)
+	}
+	return -1
+}
+
 // Click 按一下左鍵。
 //
 // **主選單只從事件回呼收按下**（`docs/re/08`）——那是原版的實作細節，
 // 在這裡的意義是：點擊要落在某一列上才算數，不是點到視窗內就好。
 func (g *Game) Click(x, y int) {
+	onMap := g.state == StateCommandPhase
+	g.moveBeforePress(x, y)
 	g.click(x, y)
-	g.refreshHoverRegion()
+	if onMap {
+		g.refreshHoverRegion()
+	}
+	if r := g.forcedLeftRegion(g.state); r >= 0 {
+		g.hoverRegion = r
+	}
 }
 
 func (g *Game) click(x, y int) {
@@ -1575,8 +1626,15 @@ func (g *Game) click(x, y int) {
 // **座標目前不影響結果**——實測 (300,240) 那一點在報告視窗上與在地圖上
 // 都關得掉；哪裡按不算數還沒量過。
 func (g *Game) RightClick(x, y int) {
+	onMap := g.state == StateCommandPhase
+	g.moveBeforePress(x, y)
 	g.rightClick(x, y)
-	g.refreshHoverRegion()
+	if onMap {
+		g.refreshHoverRegion()
+	}
+	if r := g.forcedLeftRegion(g.state); r >= 0 {
+		g.hoverRegion = r
+	}
 }
 
 func (g *Game) rightClick(x, y int) {
@@ -2644,12 +2702,10 @@ func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 		return
 	}
 	region := g.hoverRegion
+	if r := g.forcedLeftRegion(g.state); r >= 0 {
+		region = r
+	}
 	switch g.state {
-	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList,
-		StateAdmiralDetail, StateAdmiralBio, StateFleetOrg,
-		StateFleetNumber, StateFleetAdjutant, StateFleetComposition,
-		StateFormation:
-		region = rules.CapitalRegion(g.faction)
 	case StateStarList:
 		if spec := g.commandSpec(g.state); spec != nil {
 			region = g.starListSelected(spec)
