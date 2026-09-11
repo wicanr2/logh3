@@ -360,7 +360,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 29 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 30 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -414,20 +414,52 @@
 釋放它名下的 MCB，標頭因此留在接手程式的記憶體裡改寫程式碼；另外 `-tick` 會被
 PIT 的重算蓋掉。`main1e`（2.2 億道指令、走到帝國軍主畫面）現在**畫面與調色盤
 都逐位元組重現**。
-剩下的是**時序**：抽驗 18 份有 9 份完全一致，其餘差在游標位置（各 251 ＝ 兩個
-13×16 方塊）或動畫相位（`monthdismiss` 105,328、`introtick10000` 37,015、
-`s3detailmem` 10,195、`s3cmd4` 4,984、`chain6` 2,265、`intro347` 26）。
-新版在同樣的指令數內跑得比舊版遠（到 mode 03h 領先 10.3M 道），而且新版的
-BIOS 計時器計數只在遊戲 chain 回 BIOS 時才加（每 32 刻一次，正確），舊版每刻都加。
-**新版對、舊版錯**，所以這些差異不是要修回去的，是收據要重錄的理由。
+
+全量比對完了（`tools/check_receipts.sh`，2026-09-11）：**454 份裡 327 份**
+在新執行器上逐位元組重現，149 份畫面變了。變的那些分成五種形狀
+（`docs/re/276`）：游標位置 22、只差左下角摘要面板 40、小面積 21、
+中等面積 8、整塊不同 58（其中 22 份是開場動畫的相位）。
+
+**「整塊不同」那一類不是重錄就好**——`own24`／`pladump`／`rgndump`／`turn10`
+舊收據是下拉選單開著、新的已經關了，同樣的步數落在遊戲的另一個時刻。
+那一類要把 `-clicks`／`-steps` 重新挑一次對準原本的畫面，並把「為什麼是
+這個步數」一起寫進收據。
+
+已重錄 53 份（22 份游標位置 ＋ 31 份被 go test 綁著的）；覆蓋前的原件在
+`workplace/oracle-prev/`。重錄之後 `go test ./...` 轉紅，紅的內容是
+`region-summary-panel-trigger`——**那是要的**，不要改回舊收據讓它變綠。
 
 **卡在**：重錄要逐份確認畫面停在同一個遊戲狀態，不能只看「有沒有畫出東西」——`docs/re/270` 記著一次用錯判準的例子。
 
 **做完的判準**：455 份收據在 `logh3-oracle` 上重錄，每一份的畫面對應的遊戲狀態與原收據相同（步數可重新標定），且重錄後兩次獨立重跑逐位元組一致。
 
-**證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
+**證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)、[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)
 
 **核實**：要人判——要人判：`tools/check_receipts.sh` 已經會產出 `workplace/receipt-check.json`（批次 → 差幾個位元組），但 `workplace/` 不進版控，綁它等於綁一個別人 clone 之後不存在的檔。等重錄完、把「哪幾份通過」釘進 docs/ 之後再改成機器訊號。
+
+#### region-summary-panel-trigger — 左下角星域摘要面板什麼時候填、什麼時候清，沒讀
+
+*re（逆向：機制還沒讀出來）*
+
+面板本身 remake 會畫（`docs/spec/001` CONFORMED，版面在
+`docs/internals/data/region-panel.json`），缺的是**觸發條件**。
+
+執行器修好之後量到：`main1e`（2.2 億步）那塊是空的、逐位元組重現；
+`cmd1e`（2.3 億步，中間多一次 `180000000:352:85` 的點擊）那塊有字，
+內容是右鍵點過的星域 30（艾流塞拉）。兩份只差一次點擊與一千萬步。
+
+remake 現在等同「永遠空著」，所以 **40 份收據**（`cmd1e`／`lstmenu1e`／
+`sysmenu1e`／`load1e`／`save1e`／`quit1e`／`tax1e`／`prod1e`…）的差異
+全部落在那塊 320×80 裡，每份 2,265 個像素。
+
+**不要猜一個條件填上去**——填錯星域與空著在對拍上都是紅的，
+但填錯會讓人以為做完了。
+
+**做完的判準**：那 40 份收據重錄後，remake 在同一條輸入路徑上與它們逐位元組相同。
+
+**證據**：[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)、[`docs/spec/001-region-summary-panel.md`](docs/spec/001-region-summary-panel.md)
+
+**核實**：`internal/game/game.go` 裡還找得到 `觸發條件還沒讀，所以這塊在 remake 等同永遠空著`（自承還在 ＝ 還沒做）
 
 #### ai-seat-order — 戰略 AI 的座位順序與原版不同
 
@@ -858,6 +890,8 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
 
 <!-- worklist:end -->
+
+
 
 
 

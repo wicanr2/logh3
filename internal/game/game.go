@@ -2571,8 +2571,15 @@ func (g *Game) fleetRows() []screen.FleetRow {
 
 // drawRegionPanel 把選中星域的摘要畫進左下角那塊。
 //
-// **只有戰略地圖介面畫**：疊在上面的那幾張（一覽表、出擊命令…）會把
-// 左下角改寫成自己的內容，它們的規格裡已經有了。
+// ⚠ **觸發條件還沒讀，所以這塊在 remake 等同永遠空著**（`docs/re/276`）。
+// 原版的行為量到兩個點：`main1e`（2.2 億步）那塊是空的，`cmd1e`（2.3 億步、
+// 中間多一次點擊）那塊有字，內容是右鍵點過的星域 30。**出擊命令的選單開著
+// 的時候左下角照樣顯示摘要**——先前這裡寫「疊在上面的那幾張會把左下角改寫
+// 成自己的內容」，`cmd1e` 的畫面否定了它。
+//
+// 現在的條件（`state == StateCommandPhase && selectedRegion >= 0`）只對得上
+// 空著的那一半，40 份收據因此各差 2,265 個像素。**不要猜一個條件補上去**：
+// 填錯星域與空著在對拍上都是紅的，但填錯會讓人以為做完了。
 func (g *Game) drawRegionPanel(fb *gfx.Framebuffer) {
 	if g.state != StateCommandPhase || g.selectedRegion < 0 ||
 		g.res.RegionPanel == nil || g.res.Planets == nil {
