@@ -19,6 +19,9 @@ func TestIssueRoundTrip(t *testing.T) {
 	}
 	for i := range doc.Items {
 		it := doc.Items[i]
+		if it.Issue > 0 {
+			continue // 佔位：內容在 GitHub，它本身只是指標，不會再被畫成 issue
+		}
 		body, err := IssueBody(&it)
 		if err != nil {
 			t.Fatalf("%s：%v", it.ID, err)
