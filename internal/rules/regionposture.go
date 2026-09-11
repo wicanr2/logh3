@@ -107,8 +107,10 @@ func (g *StarGraph) Postures(owner []int, fleets []Fleet) [32]RegionPosture {
 // **bit1 不在裡面**：它是叛亂，來自 `2703:1789`——非首都、非無主、該陣營
 // 在這一格沒有駐軍，再拿兩個 `亂數 % 400` 的和比一個由未安定度、情報專任
 // 參謀的營運與「已失格數」算出來的門檻；效果是 `2703:1908` 把行星翻成無主
-// （`docs/re/292`、`docs/internals/22`）。**remake 還沒接這條規則**——
-// 這裡只清不設，也沒有任何地方讀 bit1。
+// （`docs/re/292`、`docs/internals/22`）。remake 在 `rebellion.go`
+// （`DecideRebellions`／`Rebel`，`docs/spec/041`）：判完直接套效果，
+// bit1 這個「同一次實行裡傳一次的訊號」不落進 `+0x13`，這裡照樣只清不設
+// ——原版在效果那一步也會把它清掉，任何時點的傾印看到的 bit1 都是 0。
 type RegionOccupation struct {
 	Contested bool // bit2：這一格雙方都有艦隊
 	// Occupied 是 bit4：**單方面占據**——有一方的艦隊停在不屬於它的星域裡，

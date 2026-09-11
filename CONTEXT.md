@@ -244,6 +244,11 @@
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
+| 費沙事件的觸發點不在傾印裡（沒載入的 overlay 或執行期填的間接呼叫）；包裝在 `1213:0235` | `docs/re/193`、`docs/spec/029`、worklist `phezzan-event-trigger` | `docs/re/296`：`1213:0235` 落在前一支 `1213:01B8` 的 far call 中間，包裝的進入點是 **`1213:023B`**，呼叫點 `1213:019E`。整條鏈常駐、全是直接 far call：回合尾巴 `056A:078E` → 易主通知 `056A:0855` → `1213:007B` 登記 `ds:988E` → 同一個回合尾巴 `1213:0096` 發動。觸發條件 ＝ 費沙那一格第一次易主（收據 `pzx296`／`pzx296n`／`pzx296g`）。`docs/spec/029`、`docs/internals/54` 已改；`docs/re/193` 是調查紀錄，照規矩不改寫，末尾加指標 |
+| `ds:8F48` 唯一的寫入點是費沙事件本體 | `docs/re/179`、`docs/internals/54` | `docs/re/296`：新遊戲初始化（`0374` 段，線性 `0x03A2F`，`a2 48 8f`）也寫它（清 0）；它跟著存檔 `WORK.DT?` 的 `+0x34` 走，出貨的 `WORK.DTA` 是 `0xFF`。`docs/internals/54` 已改 |
+| 回合尾巴那一支（逐格重算擁有者）的進入點是 `056A:078B` | `docs/re/245`、`docs/spec/034` | `docs/re/296` 末節：`078B` 是前一支結尾的 `pop si`，進入點 **`056A:078E`**。`docs/spec/034` 已改，`docs/re/245` 末尾加指標 |
+| `Blend` 變動那條路徑（`090A:0B93`）不碰未安定度 `+0x7D` | `docs/spec/030` 末節 | `docs/re/297`：`rbx292_a`（`#212,000,000`）→ `rbx292_b`（`#216,000,000`）之間同盟 13 格的 `+0x7D` 各降 4–5、帝國不變，同一段時間同盟的 `Blend` 2 → 0、情報與內政參謀換人。寫入者最可能是 `090A:0B93` 之後的 `090A:0E6D`（hypothesis）。`docs/spec/030` 那一句已改；remake 不重算，列在 `region-unrest-recompute` |
+| `rebellion_check.py` 拿前傾印的 `+0x28`／`+0x29` 當 `056A:0469` 當下的駐軍數 | `tools/scripts/rebellion_check.py`、`docs/re/292` 的重播 | `docs/re/297`：`056A:0469` 的前一步是 `2703:0853`（重數艦隊），而 `rbx292e_pre` 等前傾印都倒在它之前，那兩格是艦隊移動之前的舊值。同盟 20／30 兩格因此被多擲了亂數；判定結果不變，亂數次數以收據 `rbx297w` 為準（190 次）。腳本已改成自己重數 |
 | `+0x13` bit1／bit2／bit4 那一圈的進入點是 `056A:0468`，呼叫點靜態掃不到（走模組管理器的間接向量） | `docs/re/245`、`docs/re/292`、`docs/internals/22`、`internal/rules/regionposture.go`、`internal/game/regionturn.go` 的註解、矩陣 `s9-12` | `docs/re/295` 末節：`056A:000C` 那一串的第九支是 `9a 69 04 6a 05`，進入點 **`056A:0469`**；線性 `0x05B08`（`0468`）是前一支 `056A:03E0`（艦隊移動）的 `retf`。掃不到呼叫點是因為拿 `0468` 去掃。`flagpass`／`rbx292c` 的 `-regs-at 056A:0468` 命中的是 `03E0` 的返回，那一支每回合也只跑一次，所以「一次」「在 `2703:08DE` 之前」「在 `0374:0556` 之前」都還成立，只是步數早了 `2703:051D`＋`2703:0853` 那一段。`docs/internals/22`、矩陣 `s9-12` 與 Go 註解已改；`docs/re/` 是調查紀錄，照規矩不改寫 |
 | `1C03:0361` 是「慢慢轉向 `+0x4C`」的邏輯 | `docs/re/102` 末段、`internal/rules/battle.go` 的註解 | `docs/re/294`：`1C03:0361` 是與 `1C03:0185` 並列的實行常式，由 `1C03:015C` 依 `+0x48` bit4 選——**短程平移**，還沒到時不轉身、每一步重新瞄準目的地直線前進。bit4 由 `2583:052C` 在下命令時設（距離 < 行程 ÷ 3 ＋ 4.0）。「到了才轉向 `+0x4C`」是兩支共同的抵達分支，`docs/re/122` 早就讀到 |
 | 艦隊 `+0x49` bit0 是「這一輪到位了」 | `docs/re/95`、`docs/internals/33` | `docs/re/294`：唯一的設定者 `1C03:021E` 在 `1C03:0185` 還沒到的那一段、`1C03:0524` 回 1 之後；抵達分支與 `1C03:0361` 都不設。bit0 ＝ 「這一次實行轉過身」，讀者 `1C03:093D` 拿它把跟隊形走的分隊步長從 8 改成 16 |
@@ -342,7 +347,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 27 條**。
+權威是 [`docs/worklist.json`](docs/worklist.json)：**還剩 29 條**。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
 「這一條的斷言還成立嗎」——清單與現況對不上會當場紅掉。
 
@@ -552,6 +557,9 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 訊息表 86 條已經解出來並進版控（`ds:0490`–`ds:09F0`，含易主／侵略／
 叛亂／提督生死與勝負頁），畫面本身 remake 一張都還沒畫。
 
+叛亂那一則（`056A:06F3`，模態、滑鼠關）的**結果** remake 已經有：`Game.Rebellions()`
+回這一回合叛亂的星域（[`docs/spec/041`](docs/spec/041-rebellion.md)），缺的是畫面。
+
 **做完的判準**：報告畫面走得到、逐位元組對上原版收據。
 
 **證據**：[`docs/re/247-strategy-report-strings.md`](docs/re/247-strategy-report-strings.md)、[`docs/internals/data/strategy-report-strings.json`](docs/internals/data/strategy-report-strings.json)
@@ -737,45 +745,80 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：要人判——沒有可綁的訊號——它是一份收據上的像素差異，不是程式裡的缺席。查出來之後會有一支新的繪製函式，到時綁它。
 
-#### rebellion-rule-in-remake — 叛亂規則還沒接進 remake
-
-*feature（功能：玩家會撞到、但 remake 還沒有）*
-
-規則與效果都讀完了（[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md)），
-`internal/rules` 還沒有對應的實作：`RegionOccupation` 只清 bit1 不設，
-也沒有任何地方讀它，所以 remake 打到天荒地老都不會有星系叛變。
-
-接的時候要一起接的三件事：判定用的亂數**一格抽十次**（只用第 1 與第 6 次），
-抽少了後面每一格都會歪；`ds:B75C` 那份**載入當下的擁有者快照**要留著
-（機率的分母是「從載入到現在已失幾格」）；還有 `2703:1908` 那趟
-**排了沒用的 qsort**——照原版翻切片的第 0 顆或最後一顆，不是最有錢那顆。
-
-報告 `056A:06F3` 是模態的，會把逐格迴圈擋在中間，接上去之後
-remake 的回合處理也要照這個時序。
-
-**做完的判準**：remake 跑同一個局面時叛亂的星域與原版逐格相同，被翻的行星與經濟力／防衛力也相同。
-
-**證據**：[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)
-
-**核實**：`internal/rules` 裡出現 `Rebellion` 就是做好了
-
-#### phezzan-event-trigger — 費沙事件的觸發條件未解
+#### ai-attack-reachability — 戰略 AI 階段四多抽 9 次亂數：`ds:D50E` remake 10 格非零、原版只有伊謝爾倫
 
 *re（逆向：機制還沒讀出來）*
 
-結算那一段讀完了（`0x1238D` 的呼叫者把 `ds:8F48` 設起來，緊接著處理費沙），
-**觸發條件四種掃法 0 命中**——不在傾印裡。
-不擋主流程：AI 的一般回合不看它。
+新遊戲第一個 AI 回合，原版抽 7 次亂數（建三支 × 2 ＋ 階段四伊謝爾倫 1，`docs/re/209`），
+remake 正式入口抽 16 次：`AttackScore` 算出星域 0–2、4–9 各 2048 與 13 的 4096，
+`AttackNeed` 每個非零格抽一次。原版那一刻 `ds:D50E` 只有 `[13] = 4096`
+（[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)）。
 
-包裝裡的第二支 `1213:03F5` 讀出來了（`docs/re/295`）：費沙的擁有者是人類座位時，
-那一方其餘每一格的行星經濟力扣 `ds:328E[回合 ÷ 100]`%（50／40／30／20／10，
-回合 500–599 越界讀到 12），民心一律設成 100；電腦方拿到費沙不受罰。
+最可能的原因是 `2B99:0392` 的可達表（`2B99:028F < 0x800`）在那個局面不是全 1，
+而 remake 預設全 1（`hypothesis`；距離值還沒從執行期取到）。叛亂判定與它共用
+同一個亂數序列，這一條不修，remake 自己走到的叛亂結果就與原版不同
+（`TestRebellionSameStateRandom` 把 16 釘住，數字變了會停下來）。
 
-**做完的判準**：觸發條件查出來，`docs/spec/029` 那一列不再標「未解」。
+**做完的判準**：第一個 AI 回合 remake 抽的亂數次數與原版相同（7 次），叛亂那一圈進場時的種子是 AF5AAD71。
 
-**證據**：[`docs/spec/029-strategic-ai-turn.md`](docs/spec/029-strategic-ai-turn.md)、[`docs/re/193-phezzan-trigger-not-in-dump.md`](docs/re/193-phezzan-trigger-not-in-dump.md)
+**證據**：[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/re/209-first-natural-ai-turn.md`](docs/re/209-first-natural-ai-turn.md)、[`docs/re/174-ai-five-phases.md`](docs/re/174-ai-five-phases.md)、[`docs/spec/041-rebellion.md`](docs/spec/041-rebellion.md)
 
-**核實**：`docs/spec/029-strategic-ai-turn.md` 裡還找得到 `費沙事件的\*\*觸發條件\*\* \| \*\*未解\*\*`（自承還在 ＝ 還沒做）
+**核實**：`internal/ai/original_board.go` 裡還找得到 `ai-attack-reachability`（自承還在 ＝ 還沒做）
+
+#### region-unrest-recompute — 未安定度 `+0x7D` remake 載入之後就不再重算
+
+*feature（功能：玩家會撞到、但 remake 還沒有）*
+
+remake 只在新遊戲與讀存檔時算未安定度。原版在第一個 AI 回合裡就重算了同盟那 13 格
+（`rbx292_a` → `rbx292_b` 各降 4–5，與 `Blend` 2 → 0、參謀換人落在同一段；
+寫入者最可能是 `090A:0B93` 之後的 `090A:0E6D`，`hypothesis`），回合尾巴的
+`2703:08DE` 也逐格跑 `2703:0DA1`（[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)）。
+
+叛亂的門檻讀的就是它：同一個局面同盟那 10 格的門檻 remake 高一兩級
+（[`docs/spec/041`](docs/spec/041-rebellion.md)）。星圖的治安色也讀它。
+
+**做完的判準**：新遊戲按一次實行之後，32 格的 `+0x7D` 與收據 `rbx292_b` 逐格相同。
+
+**證據**：[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/re/220-tax-rates-recomputed-on-blend-change.md`](docs/re/220-tax-rates-recomputed-on-blend-change.md)、[`docs/spec/030-blend-and-tax-rate.md`](docs/spec/030-blend-and-tax-rate.md)、[`docs/spec/041-rebellion.md`](docs/spec/041-rebellion.md)
+
+**核實**：`internal/game/game.go` 裡還找得到 `region-unrest-recompute`（自承還在 ＝ 還沒做）
+
+#### region-turn-upkeep-0556 — `0374:0556` 每回合逐格那三支 remake 沒有（`2703:1B48`／`1CD7`／`1D85`）
+
+*feature（功能：玩家會撞到、但 remake 還沒有）*
+
+沒有戰鬥的格子每回合都跑（[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md) 末節）：
+`2703:1B48` 無主而且還有他陣營行星的格子**隨機**再跑掉一顆（抽亂數）、
+`2703:1CD7` 防衛力回復（每輪 `+0x16 × +0x18 ÷ 100`，最多九輪）、
+`2703:1D85` 要塞砲的 `+0x45`／`+0x50` 重置。remake 三支都沒有。
+
+`1CD7` 在同一格裡排在叛亂效果之前（被翻的行星先回復再扣）；`1B48` 抽亂數，
+接上之前叛亂之後的亂數序列還會再差（[`docs/spec/041`](docs/spec/041-rebellion.md)）。
+
+**做完的判準**：三支都接上，並有收據對過一次含無主格與防衛力未滿的局面。
+
+**證據**：[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/internals/29-planets-and-economy.md`](docs/internals/29-planets-and-economy.md)、[`docs/spec/041-rebellion.md`](docs/spec/041-rebellion.md)
+
+**核實**：`internal/game/rebellion.go` 裡還找得到 `region-turn-upkeep-0556`（自承還在 ＝ 還沒做）
+
+#### phezzan-event-impl — remake 還沒有費沙事件
+
+*feature（功能：玩家會撞到、但 remake 還沒有）*
+
+觸發與效果都讀完了（`docs/internals/57`、`docs/re/296`）：費沙那一格第一次易主的回合尾巴，
+`ds:8F48 ← 1`、費沙行星八成經濟力搬到對手首都的行星、拿下的一方在鄰接清單裡沒駐軍的星域整格叛離
+（與每回合叛亂同一支效果，旗標 1）、拿下的一方是人類座位時其餘星域行星經濟力扣 `ds:328E[回合 ÷ 100]`%、民心 100。
+remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠是 false，
+戰略態勢碼只會落在 0／4／8（`docs/spec/029`「不能做的」）。
+
+接的位置：回合尾巴逐格重算擁有者之後、判勝負之前；戰術戰鬥結束時的擁有者重算也要登記（限人類座位是新擁有者）。
+對拍用收據 `pzx296` 的 `#228,000,000`／`#230,000,000`／`#232,000,000` 三份切片，預測與 `tools/scripts/phezzan_event_check.py` 同一套。
+
+**做完的判準**：remake 在費沙第一次易主的回合尾巴跑費沙事件，與收據 `pzx296` 的本體、懲罰逐格相同；沒換手（`pzx296n`）與已發生過（`pzx296g`）兩種局面不觸發。
+
+**證據**：[`docs/internals/57-phezzan-event.md`](docs/internals/57-phezzan-event.md)、[`docs/re/296-phezzan-event-trigger.md`](docs/re/296-phezzan-event-trigger.md)、[`docs/internals/data/phezzan-event.json`](docs/internals/data/phezzan-event.json)
+
+**核實**：`internal/rules/morale.go` 裡還找得到 `費沙事件本身 remake 還沒有`（自承還在 ＝ 還沒做）
 
 #### region-supply-pool-missing — 飛彈／艦載機存量的每回合回充 remake 沒有
 
@@ -837,7 +880,7 @@ remake 的回合處理也要照這個時序。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-17 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+19 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1132,13 +1175,60 @@ ETen 與 HKSCS 表都查無，**代表什麼字未知**，重畫字型只能照�
 （未安定度 > 80）或最後一顆（≤ 80）——原版的 bug，remake 要照著重現。
 
 報告是 `056A:06F3`（`ds:085D` ＋ `ds:086F`），模態、會把逐格迴圈擋住。
-remake 端還沒接，另立一條 `rebellion-rule-in-remake`。
+remake 端接上了（`rebellion-rule-in-remake`，[`docs/spec/041`](docs/spec/041-rebellion.md)）。
 
 **做完的判準**：叛亂會發生，且與收據的 bit1 逐格相同。
 
 **證據**：[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/re/245-region-flag-bits-one-and-four.md`](docs/re/245-region-flag-bits-one-and-four.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)
 
 **核實**：`docs/internals/22-stellar-dt.md` 裡出現 `2703:1908` 就是做好了
+
+#### rebellion-rule-in-remake — 叛亂規則接進 remake：判定、效果與回合裡的位置
+
+*feature（功能：玩家會撞到、但 remake 還沒有）*
+
+`rules.DecideRebellions`／`rules.Rebel`，由 `Game.runRebellions` 接在 `advanceTurn`
+的艦隊移動之後、找交戰星域之前（[`docs/spec/041`](docs/spec/041-rebellion.md) CONFORMED）。
+三件一定要照做的都照做了：**一格固定抽十次**（只用第 1、6 次；擋在閘門的一次都不抽）、
+開局快照 `ds:B75C` 用 `worldStellar`（讀存檔不換，[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)）、
+**照原版翻切片的第 0 顆或最後一顆**（排了沒用的 qsort 照樣保存）。
+
+收據：`rbx292e` 從收據的種子重播 32 格逐格相同（7 格叛亂、兩個邊界值），
+`rbx297w` 量到一格十次、整圈 190 次、20／30 兩格因為 `2703:0853` 剛重數的自家艦隊不擲；
+`rbx292d` 由 remake 自己走同一條玩家路徑，九格叛亂、九顆行星、81 顆擁有者、
+32 格回合結束的擁有者逐一相同。
+
+remake 自己走到亂數有關的局面還對不上，差在上游、不在這一支：第一個 AI 回合 remake
+抽 16 次亂數、原版 7 次（`ai-attack-reachability`），同盟的未安定度 remake 沒有在
+AI 回合重算（`region-unrest-recompute`）。報告畫面跟著 `strategy-report-screen`，
+`0374:0556` 的其餘三支跟著 `region-turn-upkeep-0556`。
+
+**做完的判準**：remake 跑同一個局面時叛亂的星域與原版逐格相同，被翻的行星與經濟力／防衛力也相同。
+
+**證據**：[`docs/spec/041-rebellion.md`](docs/spec/041-rebellion.md)、[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)
+
+**核實**：`internal/game/game.go` 裡出現 `g\.runRebellions\(\)` 就是做好了
+
+#### phezzan-event-trigger — 費沙事件的觸發：費沙那一格第一次易主
+
+*re（逆向：機制還沒讀出來）*
+
+回合尾巴 `056A:078E` 逐格依行星重算擁有者，星域 14 換了擁有者就走易主通知 `056A:0855`，
+它最後一行不看座位呼叫 `1213:007B`：`ds:8F48 == 0` 而且是星域 14 → `ds:988E ← 1`（登記）。
+同一個回合尾巴逐格跑完之後 `1213:0096` 看到登記就發動：兩頁訊息 → 本體 `1213:025D`
+→ 懲罰 `1213:03F5` → `090A:0E6D`；`ds:8F48` 設起來之後一局不再發生。
+戰術戰鬥結束時的擁有者重算（`185C:02DA` → `185C:03C6`）也會登記，但只在人類座位自己拿下費沙時（反組譯，沒有收據）。
+條件裡沒有回合數、伊謝爾倫、亂數——那些是電腦願不願意去打費沙（`2E54:0F93`）。
+
+`docs/re/193` 的「掃不到」是位址錯了：包裝是 `1213:023B`，不是 `1213:0235`。
+收據 `pzx296`（觸發；本體與懲罰逐位元組重播 0 不符）、`pzx296n`（費沙已是帝國的但沒換手 → 不觸發）、
+`pzx296g`（換手了但 `ds:8F48` 已設 → 不觸發）。整理在 `docs/internals/57`；remake 那一側是 `phezzan-event-impl`。
+
+**做完的判準**：觸發條件查出來，`docs/spec/029` 那一列不再標「未解」。
+
+**證據**：[`docs/re/296-phezzan-event-trigger.md`](docs/re/296-phezzan-event-trigger.md)、[`docs/internals/57-phezzan-event.md`](docs/internals/57-phezzan-event.md)、[`docs/spec/029-strategic-ai-turn.md`](docs/spec/029-strategic-ai-turn.md)
+
+**核實**：`docs/spec/029-strategic-ai-turn.md` 裡還找得到 `費沙事件的\*\*觸發條件\*\* \| \*\*未解\*\*`（自承還在 ＝ 還沒做）
 
 #### region-morale-7c — 民心 `+0x7C` 怎麼變化：每回合往擁有者的目標值走一格
 
@@ -1156,7 +1246,7 @@ remake 端還沒接，另立一條 `rebellion-rule-in-remake`。
 `mrx295f`（回合 9 起跨過月底）共 192 格逐格相同。remake 是
 `rules.DriftRegionMorale`，接進 `advanceTurn`（[`docs/spec/040`](docs/spec/040-region-morale-drift.md)）。
 
-費沙事件那一個寫入者 remake 還沒有，跟著 `phezzan-event-trigger` 走（觸發點沒找到）。
+費沙事件那一個寫入者 remake 還沒有，跟著 `phezzan-event-impl` 走（觸發與效果見 `docs/internals/57`）。
 
 **做完的判準**：民心由規則算出來，跨月之後與收據逐格相同。
 

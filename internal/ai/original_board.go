@@ -76,6 +76,11 @@ func DefenceBoard(in TurnInput, held [RegionCount]int) Board {
 // `state` 是戰略態勢碼（`StateCode`），`routes` 是進軍路線表。
 // **會消耗亂數**：每個 `Priority != 0` 的格子取一次，依星域編號由小到大
 // ——次序是量出來的（`docs/re/184`）。
+//
+// ⚠ 新遊戲第一個 AI 回合這裡算出 10 格非零（星域 0–2、4–9 與 13），原版
+// 那一刻只有 13 非零，所以這一支多抽 9 次亂數（remake 16 次、原版 7 次，
+// `docs/re/297`；worklist `ai-attack-reachability`）。最可能是 `Reachable`
+// 在那個局面不該是全 1。叛亂判定與它共用同一個序列（`docs/spec/041`）。
 func AttackBoard(in TurnInput, routes *AdvanceRoutes, state int, held [RegionCount]int) Board {
 	var b Board
 	b.Held = held

@@ -536,8 +536,15 @@ type Game struct {
 	saveErr error
 
 	// strategyRand 是戰略 AI 的亂數（原版 `ds:94DC`，`docs/re/184`）。
-	// **跨回合沿用同一份**——原版的種子是全域的。
+	// **跨回合沿用同一份**——原版的種子是全域的。叛亂判定抽的也是它
+	// （`docs/spec/041`），取用一律走 `rand94DC`。
 	strategyRand *rules.Rand
+
+	// rebellionRolls／rebellions 是這一回合叛亂判定的逐格結果與叛亂的
+	// 星域（`runRebellions`，`docs/spec/041`）。報告畫面還沒有
+	// （`strategy-report-screen`），先留給測試與之後的報告用。
+	rebellionRolls [rules.RegionCount]rules.RebellionRoll
+	rebellions     []int
 
 	// slot 是目前這個局面從哪一格存檔來的（新遊戲是 nil）。
 	// 存檔寫出要靠它——`WORK` 那 230 bytes 只解出三個欄位，
@@ -783,6 +790,14 @@ func (g *Game) advanceTurn() {
 			g.paidMove[f.Faction] += cost // ds:8F8A，月底歸零
 		}
 	}
+	// 叛亂（`docs/spec/041`）：原版命令階段那一串的最後一支 `056A:0469`
+	// 逐格判定，排在艦隊移動與重數艦隊（`2703:0853`）之後、逐格開戰之前；
+	// 效果（`2703:1908`）在逐格開戰那一圈沒有戰鬥的格子裡套上。兩段之間
+	// 互不相干，這裡判完就直接套。亂數與戰略 AI 同一個序列，排在 AI 之後。
+	//
+	// ⚠ 原版每一格叛亂都跳一則模態報告（`056A:06F3`），remake 還沒有畫面
+	// （`strategy-report-screen`）；結果在 `g.rebellions`。
+	g.runRebellions()
 	// 兩邊的艦隊走到同一個星域就直接切進戰術畫面（`docs/internals/34`
 	// 「怎麼走到」：S3 按六次實行，雙方會合在達希利就開戰）。
 	// **哪一個星域先打、能不能不打，都還沒解**——同時有多個星域符合時
@@ -1039,6 +1054,10 @@ func (g *Game) assignStaff(faction int) {
 
 // refreshBlend 走原版 `2D10:0319` 的後半：寫下等級，接著用它當下標
 // 重算那個陣營所有星域的稅率（`090A:0B93`），最後把預估徵稅額跟著更新。
+//
+// ⚠ 未安定度 `+0x7D` 這裡不重算，remake 載入之後就不再動它；原版在第一個
+// AI 回合裡重算了同盟那 13 格（`docs/re/297`，worklist
+// `region-unrest-recompute`）。叛亂的門檻讀的就是它（`docs/spec/041`）。
 func (g *Game) refreshBlend(faction, level int) {
 	g.blend[faction] = level
 	pr := g.res.UnrestParams

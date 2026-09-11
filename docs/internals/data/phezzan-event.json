@@ -1,0 +1,128 @@
+{
+  "source": "workplace/s3datamem.bin（DS = 0x54B30）；規則見 docs/internals/57-phezzan-event.md",
+  "evidence": [
+    "docs/re/192-phezzan-event.md",
+    "docs/re/292-rebellion-decision-and-effect.md",
+    "docs/re/295-region-morale-writers.md",
+    "docs/re/296-phezzan-event-trigger.md"
+  ],
+  "phezzan_region": 14,
+  "phezzan_planet": 34,
+  "transfer_percent": 80,
+  "by_owner": {
+    "0": {
+      "target_region": 31,
+      "target_slice_index": 4,
+      "target_planet": 80,
+      "rebel_list_ds": "3280",
+      "rebel_list": [
+        10,
+        11,
+        12
+      ]
+    },
+    "other": {
+      "target_region": 0,
+      "target_slice_index": 0,
+      "target_planet": 0,
+      "rebel_list_ds": "3284",
+      "rebel_list": [
+        15,
+        22,
+        23,
+        24,
+        25,
+        28,
+        29,
+        30
+      ]
+    }
+  },
+  "penalty": {
+    "only_if_owner_is_human_seat": true,
+    "turn_limit": 600,
+    "percent_by_turn_div_100": [
+      50,
+      40,
+      30,
+      20,
+      10,
+      12
+    ],
+    "note": "索引 0–4 是 ds:328E 的五格；索引 5（回合 500–599）越界讀到 ds:3293 的第一個 byte",
+    "morale_after": 100,
+    "skips_region": 14
+  },
+  "messages": [
+    {
+      "ds": "3016",
+      "kind": "pick_target",
+      "faction": 0,
+      "when": "選費沙當移動目標、ds:8F1D＝帝國（1213:0003）",
+      "pages": [
+        "  占領費沙自治領地可能會導致費沙的經\n  濟力流向同盟軍。  \n            ",
+        "  而且，強硬的占領政策可能會造成邊境\n  星系的情勢惡化。                "
+      ]
+    },
+    {
+      "ds": "301E",
+      "kind": "pick_target",
+      "faction": 1,
+      "when": "選費沙當移動目標、ds:8F1D＝同盟（1213:0003）",
+      "pages": [
+        "  破壞和平條約將會使費沙龐大的經濟力\n  流向帝國軍那一方。\n        ",
+        "  而且有可能會使得同盟星系發生叛亂。\n  你確定要占領費沙嗎？  "
+      ]
+    },
+    {
+      "ds": "3260",
+      "kind": "captured_owner",
+      "faction": 0,
+      "when": "帝國拿下、給帝國（人類座位）看（1213:0096）",
+      "pages": [
+        "  雖然我方完全占領了費沙星系；但是\n  費沙的經濟資源多已流到同盟軍手中。\n",
+        "  同時，支持費沙自治領地的邊境星系\n  目前情勢正持續惡化中。          "
+      ]
+    },
+    {
+      "ds": "3268",
+      "kind": "captured_owner",
+      "faction": 1,
+      "when": "同盟拿下、給同盟（人類座位）看（1213:0096）",
+      "pages": [
+        "  雖然費沙自治領地的占領行動已經成功\n  。但是，破壞條約的背信行為卻造成\n  我方邊境星系接連不斷地發生叛亂。\n",
+        "  而且，費沙的經濟力大部份好像已經轉\n  移到帝國軍那邊的樣子。      "
+      ]
+    },
+    {
+      "ds": "3278",
+      "kind": "captured_opponent",
+      "faction": 0,
+      "when": "帝國拿下、給同盟（人類座位）看（1213:0096）",
+      "pages": [
+        "  因為費沙自治領地已被帝國大軍占領。\n  有許多費沙的流亡者前來請求庇護。\n",
+        "  而且，帝國邊境的星系目前好像發生叛\n  亂的樣子。      "
+      ]
+    },
+    {
+      "ds": "3270",
+      "kind": "captured_opponent",
+      "faction": 1,
+      "when": "同盟拿下、給帝國（人類座位）看（1213:0096）",
+      "pages": [
+        "  由於費沙星系被同盟軍占領的緣故；  \n  目前邊境正流入大量的難民。  \n",
+        "  另外，同盟邊境地帶的情勢正陷入混亂\n  的狀態。    "
+      ]
+    }
+  ],
+  "rebellion_line": {
+    "ds": [
+      "329B",
+      "32A8"
+    ],
+    "text": [
+      "\f%s星系上  \n",
+      "發生叛亂。"
+    ]
+  }
+}

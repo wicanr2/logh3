@@ -599,7 +599,10 @@
       "title": "戰略模式報告畫面還沒做",
       "body": [
         "訊息表 86 條已經解出來並進版控（`ds:0490`–`ds:09F0`，含易主／侵略／",
-        "叛亂／提督生死與勝負頁），畫面本身 remake 一張都還沒畫。"
+        "叛亂／提督生死與勝負頁），畫面本身 remake 一張都還沒畫。",
+        "",
+        "叛亂那一則（`056A:06F3`，模態、滑鼠關）的**結果** remake 已經有：`Game.Rebellions()`",
+        "回這一回合叛亂的星域（[`docs/spec/041`](docs/spec/041-rebellion.md)），缺的是畫面。"
       ],
       "evidence": [
         "docs/re/247-strategy-report-strings.md",
@@ -1141,7 +1144,7 @@
         "（未安定度 > 80）或最後一顆（≤ 80）——原版的 bug，remake 要照著重現。",
         "",
         "報告是 `056A:06F3`（`ds:085D` ＋ `ds:086F`），模態、會把逐格迴圈擋住。",
-        "remake 端還沒接，另立一條 `rebellion-rule-in-remake`。"
+        "remake 端接上了（`rebellion-rule-in-remake`，[`docs/spec/041`](docs/spec/041-rebellion.md)）。"
       ],
       "evidence": [
         "docs/re/292-rebellion-decision-and-effect.md",
@@ -1160,53 +1163,154 @@
     },
     {
       "id": "rebellion-rule-in-remake",
-      "status": "open",
+      "status": "done",
       "layer": "feature",
-      "title": "叛亂規則還沒接進 remake",
+      "title": "叛亂規則接進 remake：判定、效果與回合裡的位置",
       "body": [
-        "規則與效果都讀完了（[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md)），",
-        "`internal/rules` 還沒有對應的實作：`RegionOccupation` 只清 bit1 不設，",
-        "也沒有任何地方讀它，所以 remake 打到天荒地老都不會有星系叛變。",
+        "`rules.DecideRebellions`／`rules.Rebel`，由 `Game.runRebellions` 接在 `advanceTurn`",
+        "的艦隊移動之後、找交戰星域之前（[`docs/spec/041`](docs/spec/041-rebellion.md) CONFORMED）。",
+        "三件一定要照做的都照做了：**一格固定抽十次**（只用第 1、6 次；擋在閘門的一次都不抽）、",
+        "開局快照 `ds:B75C` 用 `worldStellar`（讀存檔不換，[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)）、",
+        "**照原版翻切片的第 0 顆或最後一顆**（排了沒用的 qsort 照樣保存）。",
         "",
-        "接的時候要一起接的三件事：判定用的亂數**一格抽十次**（只用第 1 與第 6 次），",
-        "抽少了後面每一格都會歪；`ds:B75C` 那份**載入當下的擁有者快照**要留著",
-        "（機率的分母是「從載入到現在已失幾格」）；還有 `2703:1908` 那趟",
-        "**排了沒用的 qsort**——照原版翻切片的第 0 顆或最後一顆，不是最有錢那顆。",
+        "收據：`rbx292e` 從收據的種子重播 32 格逐格相同（7 格叛亂、兩個邊界值），",
+        "`rbx297w` 量到一格十次、整圈 190 次、20／30 兩格因為 `2703:0853` 剛重數的自家艦隊不擲；",
+        "`rbx292d` 由 remake 自己走同一條玩家路徑，九格叛亂、九顆行星、81 顆擁有者、",
+        "32 格回合結束的擁有者逐一相同。",
         "",
-        "報告 `056A:06F3` 是模態的，會把逐格迴圈擋在中間，接上去之後",
-        "remake 的回合處理也要照這個時序。"
+        "remake 自己走到亂數有關的局面還對不上，差在上游、不在這一支：第一個 AI 回合 remake",
+        "抽 16 次亂數、原版 7 次（`ai-attack-reachability`），同盟的未安定度 remake 沒有在",
+        "AI 回合重算（`region-unrest-recompute`）。報告畫面跟著 `strategy-report-screen`，",
+        "`0374:0556` 的其餘三支跟著 `region-turn-upkeep-0556`。"
       ],
       "evidence": [
+        "docs/spec/041-rebellion.md",
         "docs/re/292-rebellion-decision-and-effect.md",
+        "docs/re/297-rebellion-garrison-recount-and-rng.md",
         "docs/internals/22-stellar-dt.md"
       ],
       "acceptance": "remake 跑同一個局面時叛亂的星域與原版逐格相同，被翻的行星與經濟力／防衛力也相同。",
       "verify": {
         "kind": "absent",
         "paths": [
-          "internal/rules"
+          "internal/game/game.go"
         ],
-        "pattern": "Rebellion",
-        "note": "接上時一定會出現的東西：`internal/rules` 裡叫得出 Rebellion 的型別或函式。"
+        "pattern": "g\\.runRebellions\\(\\)",
+        "note": "綁的是 `advanceTurn` 裡的呼叫點。規則本身由 `rules.TestRebellionMatchesReceipt*` 對收據驗（不經過呼叫點，拆掉也不會紅）；經過呼叫點的是 `game.TestRebellionSameState*`。"
+      }
+    },
+    {
+      "id": "ai-attack-reachability",
+      "status": "open",
+      "layer": "re",
+      "title": "戰略 AI 階段四多抽 9 次亂數：`ds:D50E` remake 10 格非零、原版只有伊謝爾倫",
+      "body": [
+        "新遊戲第一個 AI 回合，原版抽 7 次亂數（建三支 × 2 ＋ 階段四伊謝爾倫 1，`docs/re/209`），",
+        "remake 正式入口抽 16 次：`AttackScore` 算出星域 0–2、4–9 各 2048 與 13 的 4096，",
+        "`AttackNeed` 每個非零格抽一次。原版那一刻 `ds:D50E` 只有 `[13] = 4096`",
+        "（[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)）。",
+        "",
+        "最可能的原因是 `2B99:0392` 的可達表（`2B99:028F < 0x800`）在那個局面不是全 1，",
+        "而 remake 預設全 1（`hypothesis`；距離值還沒從執行期取到）。叛亂判定與它共用",
+        "同一個亂數序列，這一條不修，remake 自己走到的叛亂結果就與原版不同",
+        "（`TestRebellionSameStateRandom` 把 16 釘住，數字變了會停下來）。"
+      ],
+      "evidence": [
+        "docs/re/297-rebellion-garrison-recount-and-rng.md",
+        "docs/re/209-first-natural-ai-turn.md",
+        "docs/re/174-ai-five-phases.md",
+        "docs/spec/041-rebellion.md"
+      ],
+      "acceptance": "第一個 AI 回合 remake 抽的亂數次數與原版相同（7 次），叛亂那一圈進場時的種子是 AF5AAD71。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/ai/original_board.go"
+        ],
+        "pattern": "ai-attack-reachability",
+        "note": "綁的是 `AttackBoard` 上的自承註解；修好時把那段註解拿掉，並把 `TestRebellionSameStateRandom` 改成逐格比 r1 ＋ r2。"
+      }
+    },
+    {
+      "id": "region-unrest-recompute",
+      "status": "open",
+      "layer": "feature",
+      "title": "未安定度 `+0x7D` remake 載入之後就不再重算",
+      "body": [
+        "remake 只在新遊戲與讀存檔時算未安定度。原版在第一個 AI 回合裡就重算了同盟那 13 格",
+        "（`rbx292_a` → `rbx292_b` 各降 4–5，與 `Blend` 2 → 0、參謀換人落在同一段；",
+        "寫入者最可能是 `090A:0B93` 之後的 `090A:0E6D`，`hypothesis`），回合尾巴的",
+        "`2703:08DE` 也逐格跑 `2703:0DA1`（[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)）。",
+        "",
+        "叛亂的門檻讀的就是它：同一個局面同盟那 10 格的門檻 remake 高一兩級",
+        "（[`docs/spec/041`](docs/spec/041-rebellion.md)）。星圖的治安色也讀它。"
+      ],
+      "evidence": [
+        "docs/re/297-rebellion-garrison-recount-and-rng.md",
+        "docs/re/220-tax-rates-recomputed-on-blend-change.md",
+        "docs/spec/030-blend-and-tax-rate.md",
+        "docs/spec/041-rebellion.md"
+      ],
+      "acceptance": "新遊戲按一次實行之後，32 格的 `+0x7D` 與收據 `rbx292_b` 逐格相同。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/game/game.go"
+        ],
+        "pattern": "region-unrest-recompute",
+        "note": "綁的是 `refreshBlend` 上的自承註解；接上重算時一併拿掉。"
+      }
+    },
+    {
+      "id": "region-turn-upkeep-0556",
+      "status": "open",
+      "layer": "feature",
+      "title": "`0374:0556` 每回合逐格那三支 remake 沒有（`2703:1B48`／`1CD7`／`1D85`）",
+      "body": [
+        "沒有戰鬥的格子每回合都跑（[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md) 末節）：",
+        "`2703:1B48` 無主而且還有他陣營行星的格子**隨機**再跑掉一顆（抽亂數）、",
+        "`2703:1CD7` 防衛力回復（每輪 `+0x16 × +0x18 ÷ 100`，最多九輪）、",
+        "`2703:1D85` 要塞砲的 `+0x45`／`+0x50` 重置。remake 三支都沒有。",
+        "",
+        "`1CD7` 在同一格裡排在叛亂效果之前（被翻的行星先回復再扣）；`1B48` 抽亂數，",
+        "接上之前叛亂之後的亂數序列還會再差（[`docs/spec/041`](docs/spec/041-rebellion.md)）。"
+      ],
+      "evidence": [
+        "docs/re/292-rebellion-decision-and-effect.md",
+        "docs/internals/29-planets-and-economy.md",
+        "docs/spec/041-rebellion.md"
+      ],
+      "acceptance": "三支都接上，並有收據對過一次含無主格與防衛力未滿的局面。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/game/rebellion.go"
+        ],
+        "pattern": "region-turn-upkeep-0556",
+        "note": "綁的是 `rebellion.go` 開頭的自承註解；三支接上時一併拿掉。"
       }
     },
     {
       "id": "phezzan-event-trigger",
-      "status": "open",
+      "status": "done",
       "layer": "re",
-      "title": "費沙事件的觸發條件未解",
+      "title": "費沙事件的觸發：費沙那一格第一次易主",
       "body": [
-        "結算那一段讀完了（`0x1238D` 的呼叫者把 `ds:8F48` 設起來，緊接著處理費沙），",
-        "**觸發條件四種掃法 0 命中**——不在傾印裡。",
-        "不擋主流程：AI 的一般回合不看它。",
+        "回合尾巴 `056A:078E` 逐格依行星重算擁有者，星域 14 換了擁有者就走易主通知 `056A:0855`，",
+        "它最後一行不看座位呼叫 `1213:007B`：`ds:8F48 == 0` 而且是星域 14 → `ds:988E ← 1`（登記）。",
+        "同一個回合尾巴逐格跑完之後 `1213:0096` 看到登記就發動：兩頁訊息 → 本體 `1213:025D`",
+        "→ 懲罰 `1213:03F5` → `090A:0E6D`；`ds:8F48` 設起來之後一局不再發生。",
+        "戰術戰鬥結束時的擁有者重算（`185C:02DA` → `185C:03C6`）也會登記，但只在人類座位自己拿下費沙時（反組譯，沒有收據）。",
+        "條件裡沒有回合數、伊謝爾倫、亂數——那些是電腦願不願意去打費沙（`2E54:0F93`）。",
         "",
-        "包裝裡的第二支 `1213:03F5` 讀出來了（`docs/re/295`）：費沙的擁有者是人類座位時，",
-        "那一方其餘每一格的行星經濟力扣 `ds:328E[回合 ÷ 100]`%（50／40／30／20／10，",
-        "回合 500–599 越界讀到 12），民心一律設成 100；電腦方拿到費沙不受罰。"
+        "`docs/re/193` 的「掃不到」是位址錯了：包裝是 `1213:023B`，不是 `1213:0235`。",
+        "收據 `pzx296`（觸發；本體與懲罰逐位元組重播 0 不符）、`pzx296n`（費沙已是帝國的但沒換手 → 不觸發）、",
+        "`pzx296g`（換手了但 `ds:8F48` 已設 → 不觸發）。整理在 `docs/internals/57`；remake 那一側是 `phezzan-event-impl`。"
       ],
       "evidence": [
-        "docs/spec/029-strategic-ai-turn.md",
-        "docs/re/193-phezzan-trigger-not-in-dump.md"
+        "docs/re/296-phezzan-event-trigger.md",
+        "docs/internals/57-phezzan-event.md",
+        "docs/spec/029-strategic-ai-turn.md"
       ],
       "acceptance": "觸發條件查出來，`docs/spec/029` 那一列不再標「未解」。",
       "verify": {
@@ -1215,6 +1319,36 @@
           "docs/spec/029-strategic-ai-turn.md"
         ],
         "pattern": "費沙事件的\\*\\*觸發條件\\*\\* \\| \\*\\*未解\\*\\*"
+      }
+    },
+    {
+      "id": "phezzan-event-impl",
+      "status": "open",
+      "layer": "feature",
+      "title": "remake 還沒有費沙事件",
+      "body": [
+        "觸發與效果都讀完了（`docs/internals/57`、`docs/re/296`）：費沙那一格第一次易主的回合尾巴，",
+        "`ds:8F48 ← 1`、費沙行星八成經濟力搬到對手首都的行星、拿下的一方在鄰接清單裡沒駐軍的星域整格叛離",
+        "（與每回合叛亂同一支效果，旗標 1）、拿下的一方是人類座位時其餘星域行星經濟力扣 `ds:328E[回合 ÷ 100]`%、民心 100。",
+        "remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠是 false，",
+        "戰略態勢碼只會落在 0／4／8（`docs/spec/029`「不能做的」）。",
+        "",
+        "接的位置：回合尾巴逐格重算擁有者之後、判勝負之前；戰術戰鬥結束時的擁有者重算也要登記（限人類座位是新擁有者）。",
+        "對拍用收據 `pzx296` 的 `#228,000,000`／`#230,000,000`／`#232,000,000` 三份切片，預測與 `tools/scripts/phezzan_event_check.py` 同一套。"
+      ],
+      "evidence": [
+        "docs/internals/57-phezzan-event.md",
+        "docs/re/296-phezzan-event-trigger.md",
+        "docs/internals/data/phezzan-event.json"
+      ],
+      "acceptance": "remake 在費沙第一次易主的回合尾巴跑費沙事件，與收據 `pzx296` 的本體、懲罰逐格相同；沒換手（`pzx296n`）與已發生過（`pzx296g`）兩種局面不觸發。",
+      "verify": {
+        "kind": "present",
+        "paths": [
+          "internal/rules/morale.go"
+        ],
+        "pattern": "費沙事件本身 remake 還沒有",
+        "note": "綁的是 `rules/morale.go` 開頭的自承註解。接上之後刪掉那一句，並改綁會出現的函式名或對 `pzx296` 的 go_test。"
       }
     },
     {
@@ -1235,7 +1369,7 @@
         "`mrx295f`（回合 9 起跨過月底）共 192 格逐格相同。remake 是",
         "`rules.DriftRegionMorale`，接進 `advanceTurn`（[`docs/spec/040`](docs/spec/040-region-morale-drift.md)）。",
         "",
-        "費沙事件那一個寫入者 remake 還沒有，跟著 `phezzan-event-trigger` 走（觸發點沒找到）。"
+        "費沙事件那一個寫入者 remake 還沒有，跟著 `phezzan-event-impl` 走（觸發與效果見 `docs/internals/57`）。"
       ],
       "evidence": [
         "docs/re/295-region-morale-writers.md",
@@ -3612,7 +3746,7 @@
       "section": "s7",
       "cells": {
         "狀態": "**已逆向，未實作**",
-        "證據": "[`docs/re/180`](docs/re/180-admiral-fleet-slot.md)–[`182`](docs/re/182-admiral-flags-and-fleet-cost.md)、[`190`](docs/re/190-fleet-class-meaning.md)–[`192`](docs/re/192-phezzan-event.md)",
+        "證據": "[`docs/re/180`](docs/re/180-admiral-fleet-slot.md)–[`182`](docs/re/182-admiral-flags-and-fleet-cost.md)、[`190`](docs/re/190-fleet-class-meaning.md)–[`192`](docs/re/192-phezzan-event.md)、[`296`](docs/re/296-phezzan-event-trigger.md)",
         "項目": "指派、費沙事件"
       },
       "verify": {
@@ -3976,7 +4110,7 @@
       "cells": {
         "狀態": "通過",
         "規則": "星域旗標的執行順序（`056A:0469` → `2703:08DE` → 回合計數器）",
-        "證據": "收據 `flagpass`：`-regs-at` 抓到 `#218118662` / `#218904226` / `#221187705`，[`docs/re/245`](docs/re/245-region-flag-bits-one-and-four.md)。`+0x13` bit4（單方面占據）已實作（`rules.Occupations`）；bit1 只清不設（`2703:1789` 後半未讀）。進入點是 `056A:0469`：`flagpass` 斷的 `056A:0468` 是前一支 `056A:03E0` 的 `retf`，那一支每回合也只跑一次，先後結論不變（[`docs/re/295`](docs/re/295-region-morale-writers.md) 末節）"
+        "證據": "收據 `flagpass`：`-regs-at` 抓到 `#218118662` / `#218904226` / `#221187705`，[`docs/re/245`](docs/re/245-region-flag-bits-one-and-four.md)。`+0x13` bit4（單方面占據）已實作（`rules.Occupations`）；bit1 的判定與效果接上了（`2703:1789`／`2703:1908`，[`docs/spec/041`](docs/spec/041-rebellion.md)），不落進 `+0x13`——原版也在同一次實行裡清掉。進入點是 `056A:0469`：`flagpass` 斷的 `056A:0468` 是前一支 `056A:03E0` 的 `retf`，那一支每回合也只跑一次，先後結論不變（[`docs/re/295`](docs/re/295-region-morale-writers.md) 末節）"
       },
       "verify": {
         "kind": "manual",
@@ -4259,6 +4393,25 @@
           "mrx295f_r0p.bin": "7139f13fd5203894c0afe1c5374534487771664f1cfde3999b3ace91998f983d",
           "mrx295f_r1.bin": "09a9138fa274e8d2d8cc9e4952827d1a337dffddc8e80c4f584dc82387000ace",
           "mrx295f_r2.bin": "7dec69d294e98d0c8a6e9d19303b37b744f43d8865f64a3af949c85645570c67"
+        }
+      }
+    },
+    {
+      "id": "s9-30",
+      "status": "done",
+      "layer": "matrix",
+      "title": "叛亂的判定與效果（2703:1789 → 2703:1908）",
+      "section": "s9",
+      "cells": {
+        "狀態": "**通過**（收據種子上 32 格逐格相同；remake 自己走的與亂數無關局面 32 格逐格相同）",
+        "規則": "叛亂的判定與效果（`2703:1789` → `2703:1908`）",
+        "證據": "[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/re/297`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/spec/041`](docs/spec/041-rebellion.md) CONFORMED、`rules.DecideRebellions`／`rules.Rebel`。`rbx292e`（營運 4，結果由亂數決定）從收據種子重播 7 格叛亂、32 格逐格相同，含 748 ≥ 250、407 ≥ 350 兩個邊界；`rbx297w` 監看種子量到一格十次、整圈 190 次（936A823B）；`rbx292d`（營運 1）remake 自己走同一條玩家路徑，九格叛亂、九顆行星的擁有者／經濟力／防衛力、81 顆擁有者、32 格回合結束的擁有者逐一相同。亂數有關的局面 remake 自己走還對不上（上游 AI 多抽 9 次，`ai-attack-reachability`）"
+      },
+      "verify": {
+        "kind": "receipt",
+        "batch": "rbx297w",
+        "files": {
+          "report.txt": "c2139e87670661bbb9b3cff87b348c71ae46a2bcd66bfc065b9b6de12e73ca2d"
         }
       }
     }

@@ -26,9 +26,7 @@ func (g *Game) OriginalBrain() ai.Brain {
 	if g.res == nil || g.res.Graph == nil || len(g.res.Stellar) == 0 {
 		return nil
 	}
-	if g.strategyRand == nil {
-		g.strategyRand = rules.NewRand(strategyRandSeed)
-	}
+	rnd := g.rand94DC() // 與叛亂判定共用同一個序列（`docs/spec/041`）
 	return ai.OriginalStrategy{
 		Contested:   g.regionContested,
 		Blocked:     g.regionBlocked,
@@ -36,7 +34,7 @@ func (g *Game) OriginalBrain() ai.Brain {
 		Split:       func(f rules.Fleet) bool { return f.Flags&1 != 0 },
 		Ships:       g.fleetShipTotals,
 		Routes:      g.res.AdvanceRoutes,
-		Rand:        g.strategyRand,
+		Rand:        rnd,
 		Support:     g.buildSupport(),
 	}
 }
