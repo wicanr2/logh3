@@ -56,6 +56,10 @@ type Doc struct {
 	Matrix *Matrix `json:"matrix,omitempty"`
 
 	Items []Item `json:"items"`
+
+	// IssuesNote 是「未完成項那一半從哪來」的說明，每個子命令都印。
+	// 不進 JSON——它描述的是這一次讀取，不是資料。
+	IssuesNote string `json:"-"`
 }
 
 // Item 是一條斷言。
@@ -138,7 +142,7 @@ func (r Result) String() string {
 func main() {
 	args := os.Args[1:]
 	if len(args) == 0 {
-		fmt.Fprintln(os.Stderr, "用法: worklist {verify [id...]|render [-w]|render-matrix [-w]|import-matrix|check|score}")
+		fmt.Fprintln(os.Stderr, "用法: worklist {verify [id...]|render [-w]|render-matrix [-w]|import-matrix|check|score|export-issues}")
 		os.Exit(2)
 	}
 	doc, err := Load(dataPath)
@@ -146,7 +150,26 @@ func main() {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+	// 搬移用的匯出只看 JSON 本身——那時候 GitHub 上還沒有 issue。
+	if args[0] != "export-issues" {
+		if err := attachIssues(doc, issuesPath); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		if doc.IssuesNote != "" {
+			fmt.Fprintln(os.Stderr, doc.IssuesNote)
+		}
+	}
 	switch args[0] {
+	case "export-issues":
+		out, err := ExportOpen(doc)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		js, _ := json.MarshalIndent(out, "", "  ")
+		fmt.Println(string(js))
+		return
 	case "verify":
 		os.Exit(runVerify(doc, args[1:]))
 	case "render":
@@ -199,6 +222,33 @@ func main() {
 		fmt.Fprintf(os.Stderr, "不認得的子命令 %q\n", args[0])
 		os.Exit(2)
 	}
+}
+
+// attachIssues 把 GitHub issue 快照併進清單（`issues.go`）。
+//
+// ⚠ **沒有快照時不能安靜。** 未完成項的權威在 GitHub，快照不在就代表
+// 清單上缺了那一整半，而 verify 對剩下的歷史照樣會回「0 條斷言不成立」。
+func attachIssues(doc *Doc, path string) error {
+	recs, ok, err := loadIssues(path)
+	if err != nil {
+		return err
+	}
+	if !ok {
+		doc.IssuesNote = "⚠ 沒有 " + path + "：未完成項的權威在 GitHub issue，這一次**只看到搬移前做完的歷史**。\n" +
+			"   先在主機跑 tools/issues_snapshot.sh 抓快照。"
+		return nil
+	}
+	if err := MergeIssues(doc, recs); err != nil {
+		return err
+	}
+	open := 0
+	for _, r := range recs {
+		if hasLabel(r, labelAll) && !strings.EqualFold(r.State, "CLOSED") {
+			open++
+		}
+	}
+	doc.IssuesNote = fmt.Sprintf("（未完成項讀自 %s：%d 張 issue、其中 %d 張 open）", path, len(recs), open)
+	return nil
 }
 
 // Load 讀權威檔。
