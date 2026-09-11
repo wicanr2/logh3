@@ -584,15 +584,22 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 
 **核實**：`tools/music_fm_capture.sh` 裡還找得到 `這條路還沒走通`（自承還在 ＝ 還沒做）
 
-#### battle-formation-letters — 編隊那八格的字母規則沒解
+#### battle-formation-letters — 編隊那一行的字母規則解了，還差第二個局面的收據
 
 *re（逆向：機制還沒讀出來）*
 
-收據只有一個資料點，字母怎麼決定還沒解出來。
+規則已經反組譯出來（`docs/re/293`、`docs/internals/56`）：格數 ＝ 艦隊
+`+0x0E`、前 `+0x0F` 格印 `ds:6172[該組艦種]` 的全形字母（Ｂ Ｈ Ｃ Ａ Ｄ
+Ｔ Ｅ Ｐ）、顏色由艘數比滿編分三段、其餘印「□」。remake 已改成照規則畫，
+收據 `fok`／`row3`／`form1`–`3` 整張仍然 0 個差異像素。
+差的是**第二個局面**：現有收據那一支艦隊只有旗艦一組，畫面上看得到的
+字母只有一個Ｂ，所以「兩份以上收據逐格相同」還沒達成。要補一份用
+`-poke` 造出多組編制的收據（命令列與預期畫面寫在 `docs/re/293` 末節），
+這一輪沒做是因為機器負載太高，按規則不開新的 dosgolem 執行。
 
-**做完的判準**：八格的字母由規則算出來，兩份以上收據逐格相同。
+**做完的判準**：多組編制那一份收據做出來，規則算出來的每一格與它逐格相同。
 
-**核實**：`internal/screen/compositionpanel.go` 裡還找得到 `字母怎麼決定還沒解`（自承還在 ＝ 還沒做）
+**核實**：要人判——收據 `fmx1` 做出來之後改綁 kind=receipt、batch=fmx1、files 放 screen.bin 的雜湊。在那之前沒有機器訊號——規則本身已經釘在 TestFleetCompositionMatchesOracle 與 TestCompositionLettersMatchShipKindLetters，但那兩支證明的是「同一個局面」，不是這一條要的第二份收據。
 
 #### alliance-squad-spacing — 同盟分隊的間距與排法沒解
 
@@ -1144,6 +1151,8 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
 
 <!-- worklist:end -->
+
+
 
 
 

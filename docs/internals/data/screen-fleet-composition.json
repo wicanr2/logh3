@@ -12489,7 +12489,9 @@
     "source": "SPRITE.SPR",
     "empty": 44,
     "unit": 36,
-    "note": "(欄 + 列) 偶數的 41 格才畫；中央 (4,4) 是編隊的第一格。"
+    "note": "(欄 + 列) 偶數的 41 格才畫。**`unit` 是基底不是圖塊編號**：那一格有部隊就畫 `unit ＋ 艦種`（原版 `ds:984E ＋ 艦種`），空的畫 `empty`（`ds:984D`）。兩個數都分陣營（`0FF4:0098`：帝國 36／44、同盟 66／74）。槽 → 欄列見 `fleet-composition-panel.json` 的 `grid_slots`。",
+    "empty_alliance": 74,
+    "unit_alliance": 66
    }
   }
  },

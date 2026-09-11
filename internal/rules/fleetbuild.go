@@ -21,9 +21,21 @@ type FleetGroup struct {
 	Kind  int `json:"kind"`  // 艦種（艦艇 `+0x04`）
 	Ships int `json:"ships"` // 現有艘數（艦艇 `+0x08`）
 	Full  int `json:"full"`  // 滿編艘數（艦艇 `+0x0A`）
-	Slot2 int `json:"slot2"` // 編制槽 `[2]`，抄自樣板（語意未解）
+	// Slot2 ＝ 編制槽的 `[2]`，抄自樣板。**就是這一組的艦種**（與 Kind
+	// 同值，也與該筆艦艇的 `+0x04` 同值）——艦隊組成畫面的編隊那一行
+	// 拿它去查全形代號字母（`docs/internals/56`），`docs/internals/33`
+	// 的版面表早就這樣寫了。
+	Slot2 int `json:"slot2"`
 	Slot3 int `json:"slot3"` // 編制槽 `[3]`，抄自樣板 ＝ 隊形槽索引
 }
+
+// FlagshipFormationSlot 是旗艦那一組的隊形槽 ＝ 格盤正中央。
+//
+// 編制樣板 `ds:2BC6` 十六個類別鍵的第 0 組 `[3]` 都是 20
+// （`docs/re/224`）；開艦隊組成那一下寫進艦隊 `+0x13` 的也是 20
+// （`docs/re/70`），`FLEET.DT[89A]` 84 筆在用的記錄 `+0x13` 恆為 20
+// （`docs/internals/33`）。
+const FlagshipFormationSlot = 20
 
 // CompositionTables 是新編艦隊要用的兩張原版資料表。
 type CompositionTables struct {

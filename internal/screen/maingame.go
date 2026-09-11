@@ -164,6 +164,10 @@ type GameWindow struct {
 
 	// Grid 是格盤：一格一張 `SPRITE.SPR` 的圖塊。圖塊由呼叫端畫
 	// （這一層拿不到素材），這裡只記版面。
+	//
+	// **`Unit` 是基底不是圖塊編號**：有部隊的那一格畫 `Unit ＋ 艦種`
+	// （原版 `ds:984E ＋ 艦種`）。兩個數都分陣營，`0FF4:0098` 依
+	// `ds:8F1D` 選一組（`docs/internals/56`）。
 	Grid *struct {
 		X, Y       int
 		Cols, Rows int
@@ -171,6 +175,9 @@ type GameWindow struct {
 		Source     string
 		Empty      int
 		Unit       int
+		// 同盟那一組；零值代表這張規格沒分陣營，兩邊共用上面那組。
+		EmptyAlliance int `json:"empty_alliance"`
+		UnitAlliance  int `json:"unit_alliance"`
 	} `json:"grid"`
 
 	// Hover 是「滑鼠停在哪一列，那一列就整條刷成反白」的清單

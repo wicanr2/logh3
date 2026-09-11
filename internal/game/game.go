@@ -2279,20 +2279,47 @@ func (g *Game) drawFleetComposition(fb *gfx.Framebuffer) {
 	if region < 0 || o+rules.RegionRecord > len(g.res.Stellar) {
 		return
 	}
+	ships := rules.RegionShips(g.res.Stellar[o:o+rules.RegionRecord], g.faction)
 	v := screen.CompositionView{
-		Ships:    rules.RegionShips(g.res.Stellar[o:o+rules.RegionRecord], g.faction),
+		Ships:    ships,
 		PerUnit:  rules.ShipsPerUnit[:],
-		Units:    1,
-		Mobility: 100,
-		Slots:    []int{0},
+		Mobility: rules.NewFleetMorale,
+		Groups:   g.compositionGroups(ships),
+		Slots: rules.FleetSlots(
+			rules.AdmiralLevel(g.admiralRecord(g.detailAdmiral))),
 	}
 	p := g.res.CompositionPanel
 	p.Draw(fb, g.res.Font, v)
 	g.drawCompositionGrid(fb, v)
 }
 
-// drawCompositionGrid 鋪格盤那 9 × 9 的圖塊（`docs/re/67`）：
-// `(欄 + 列)` 為偶數的 41 格才畫，中央那一格畫部隊的圖塊。
+// compositionGroups 是這張畫面上「已經編成」的那幾組。
+//
+// 進這張畫面時原版只填了**旗艦那一組**：`297B:00BD` 那一批寫入把
+// `+0x0F` 設成 1、`+0x12`／`+0x13`（第 0 組的艦種與隊形槽）設成
+// 0 與 20（`docs/re/70`）。艦種取提督 `+0x08` 的低四位、隊形槽取
+// 編制樣板第 0 組的 `[3]`（十六個類別鍵都是 20，`docs/re/224`）。
+//
+// 艘數是 `min(滿編, 星域待命艘數)`（原版 `2AD2:0029` 從待命部隊拿，
+// `docs/re/215`）；收據 `fok` 的瓦爾哈拉有 75000 艘戰艦，所以那一組
+// 是滿編、字母印色 7。
+func (g *Game) compositionGroups(ships []int) []screen.CompositionGroup {
+	kind := rules.AdmiralAbility(g.admiralRecord(g.detailAdmiral), 0x08) & 0x0F
+	if kind < 0 || kind >= len(rules.ShipsPerUnit) {
+		return nil
+	}
+	full := rules.ShipsPerUnit[kind]
+	have := full
+	if kind < len(ships) && ships[kind] < full {
+		have = ships[kind]
+	}
+	return []screen.CompositionGroup{{
+		Kind: kind, Slot: rules.FlagshipFormationSlot, Ships: have, Full: full,
+	}}
+}
+
+// drawCompositionGrid 鋪格盤那 9 × 9 的圖塊（`docs/re/67`、`docs/internals/56`）：
+// `(欄 + 列)` 為偶數的 41 格才畫，有部隊的那一格畫 `Unit ＋ 艦種`。
 func (g *Game) drawCompositionGrid(fb *gfx.Framebuffer, v screen.CompositionView) {
 	spec := g.commandSpec(g.state)
 	if spec == nil || g.res.Sprites == nil {
@@ -2303,16 +2330,28 @@ func (g *Game) drawCompositionGrid(fb *gfx.Framebuffer, v screen.CompositionView
 		return
 	}
 	gr := w.Grid
+	empty, unit := gr.Empty, gr.Unit
+	if g.faction == 1 && gr.UnitAlliance > 0 {
+		empty, unit = gr.EmptyAlliance, gr.UnitAlliance
+	}
+	// 隊形槽 → 欄列 → 圖塊。原版是 41 個顯示物件，各自被
+	// `0FF4:0EF1(隊形槽, 艦種)` 換掉圖形（`docs/internals/56`）。
+	tiles := map[[2]int]int{}
+	for _, u := range v.Groups {
+		col, row, ok := g.res.CompositionPanel.GridCell(u.Slot)
+		if !ok {
+			continue
+		}
+		tiles[[2]int{col, row}] = unit + u.Kind
+	}
 	for row := 0; row < gr.Rows; row++ {
 		for col := 0; col < gr.Cols; col++ {
 			if (col+row)%2 != 0 {
 				continue
 			}
-			tile := gr.Empty
-			if col == gr.Cols/2 && row == gr.Rows/2 && len(v.Slots) > 0 {
-				if t := g.res.CompositionPanel.TileAt(0); t >= 0 {
-					tile = t
-				}
+			tile := empty
+			if t, ok := tiles[[2]int{col, row}]; ok {
+				tile = t
 			}
 			if tile < 0 || tile >= len(g.res.Sprites) {
 				continue
