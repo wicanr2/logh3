@@ -149,3 +149,19 @@ call far ptr 53Eh:17CAh
 - 反組譯：`workplace/ida/seg0349.com`、`workplace/ida/seg053E.com`
   （由 `tools/scripts/seg_to_com.py` 從 `openmem` 切出，載入段 0）。
 - 逐位元組驗證：`tools/py.sh tools/scripts/intro_bufoverlap.py`。
+
+---
+
+> **本文「兩個緩衝區只差 40 個位元組」不成立（2026-09-11）。** 收據
+> `openmem`／`openrd` 錄在 `4732181` 之前的 dosgolem 上，那一版的 MCB
+> 洩漏把 DOS 的空間表寫壞（`docs/re/270`），第二次 `farmalloc` 因此落在
+> `175F`。在 `2e9dd3b` 上量到的是 `275D:0016`——一塊完整的 64 KB，不再
+> 蓋掉前一塊，**第 1–116 格照樣會播**，見
+> [`283`](283-intro-plays-in-file-order.md)。
+>
+> 本文對**遊戲本身**那段算術的分析仍然成立：`053E:194C` 的 16 位元加法
+> 在 `farmalloc(65500)` 上進位到 `0x10000`，把區段結尾寫成 `0x0000`，
+> 所以第二次配置一定另開一段。`2e9dd3b` 上倒出來的堆積表頭
+> `175C:0004 ＝ 0000` 與本文記的完全相同。被推翻的是「另開的那一段落在
+> 哪裡」，不是那段算術。30 塊的分塊表、兩張 uint16 表的位址與載入器
+> 雙緩衝流程也都不受影響。

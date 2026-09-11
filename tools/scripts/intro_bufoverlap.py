@@ -42,8 +42,14 @@ stream = dump[a_lin:a_lin + gap + n]
 expect = film[:gap] + film[c1:c1 + n]
 print("解碼器看到的資料流 ＝ 檔案[0:%d] ＋ 檔案[%d:]：%s"
       % (gap, c1, stream == expect))
-print("因此第 0 塊的 %d 格裡，只有第 0 格的前 %d 個位元組被解到，"
-      "其餘 %d 格永遠不會出現" % (frames[0], gap, frames[0] - 1))
+if gap < lens[0]:
+    print("因此第 0 塊的 %d 格裡，只有第 0 格的前 %d 個位元組被解到，"
+          "其餘 %d 格永遠不會出現" % (frames[0], gap, frames[0] - 1))
+else:
+    # `docs/re/283`：兩個緩衝區在修好的執行器上相差一整塊，不重疊。
+    # 舊傾印會走上面那一路——**先確認 openmem 是哪一版執行器錄的**。
+    print("兩塊不重疊（相差 %d ≥ 第 0 塊的 %d bytes），沒有覆蓋問題"
+          % (gap, lens[0]))
 
 # 用 `IBMFLS16.350` 的逐格長度回算每一塊裝了幾格
 fls = open("/orig/IBMFLS16.350", "rb").read()

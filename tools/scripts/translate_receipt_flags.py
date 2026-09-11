@@ -19,6 +19,20 @@
 `-click-hold`，所以一份收據裡的 hold 不一致時這支會拒絕翻譯並說出來，
 不會自己挑一個。
 
+⚠ **第四處差異這支沒有翻：每次點擊的 20 萬步前移。** 舊 probe
+（`ef5be47:cmd/probe/main.go` 的 `const moveLead = 200_000`）在每一次腳本
+點擊的 `at − 200000` 送一次 `EvMove`，而且座標沒變也照送；新版是同一道
+指令裡 `MoveMouse` ＋ `PressMouse`，而 `MoveMouse` 座標沒變就直接 return。
+**遊戲分得出來**：`s3cmdfl3` 少了那次前移之後，艦隊選單照樣開，右側卻
+不換成分隊面板（`docs/re/282`）。要補回來有兩條路——`-click-premove`
+（依**輪詢次數**，會延到按下，而且套用到每一次點擊），或
+`-mouse-x/-mouse-y/-mouse-at`（只補得了最後那一次，但步數是精確的）。
+
+自動補等於改掉全部 455 份的旗標、要連帶重錄一遍，所以這支**維持原樣**；
+改成自動補是父層決策，先問使用者。為了不讓手補過的旗標被下一次
+`--all` 無聲洗掉，已經存在而且內容不同的 `flags-new/<批次>.txt`
+**不覆蓋**，要蓋掉加 `--force`。
+
 輸出寫到 `workplace/flags-new/<批次>.txt`（一行一個旗標，與 flags.txt 同格式）。
 """
 import pathlib
@@ -156,10 +170,12 @@ def translate(flags):
 
 def main():
     args = sys.argv[1:]
+    force = "--force" in args
+    args = [a for a in args if a != "--force"]
     if args == ["--all"]:
         args = sorted(p.name for p in ORACLE.iterdir() if p.is_dir())
     OUT.mkdir(parents=True, exist_ok=True)
-    ok = bad = skip = 0
+    ok = bad = skip = kept = 0
     for batch in args:
         flags, src = read_flags(batch)
         if flags is None:
@@ -172,14 +188,25 @@ def main():
             print("%-28s ⚠ %s" % (batch, e))
             bad += 1
             continue
-        (OUT / (batch + ".txt")).write_text("\n".join(new) + "\n", encoding="utf-8")
+        # ⚠ **手改過的旗標不覆蓋。** 翻譯翻不出「每次點擊的 20 萬步前移」
+        # （見開頭），有幾份收據靠手加的 `-mouse-at`／`-click-premove` 才
+        # 停得到該停的畫面。無聲覆蓋掉的話，下一次重錄會錄成另一個狀態，
+        # 而旗標檔看起來完全正常。
+        out_path = OUT / (batch + ".txt")
+        text = "\n".join(new) + "\n"
+        if out_path.exists() and out_path.read_text(encoding="utf-8") != text and not force:
+            print("%-28s 旗標與翻譯結果不同（手改過？）→ 保留不覆蓋，要蓋掉加 --force" % batch)
+            kept += 1
+            continue
+        out_path.write_text(text, encoding="utf-8")
         ok += 1
         if len(args) <= 5:
             print("%-28s ← %s" % (batch, src))
             for n in notes:
                 print("    ·", n)
             print("    " + " ".join(new))
-    print("\n翻好 %d 份、%d 份要人處理、%d 份沒有旗標" % (ok, bad, skip))
+    print("\n翻好 %d 份、保留手改的 %d 份、%d 份要人處理、%d 份沒有旗標"
+          % (ok, kept, bad, skip))
 
 
 main()
