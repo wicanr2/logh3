@@ -24,6 +24,8 @@ func TestFleetMoveOrderTwoStages(t *testing.T) {
 		t.Skip("找不到艦隊記錄，跳過")
 	}
 	bf.Flag0 = false
+	// 移動命令必須把上一個戰鬥行動整個覆寫成 0，再另算 bit4。
+	bf.Action = fleetActionBattle
 	fx, fy := g.battleUnits[flag].X, g.battleUnits[flag].Y
 
 	ux, uy := unitScreenPos(g, flag)
@@ -94,6 +96,10 @@ func TestFleetMoveOrderTwoStages(t *testing.T) {
 	}
 	if bf.Action == fleetActionBattle {
 		t.Error("「移動」不該把艦隊行動寫成戰鬥")
+	}
+	wantShort := rules.Distance16(fx, fy, wx, wy) < int64(bf.PerTurn/3+4*rules.FixOne)
+	if bf.ShortMove != wantShort {
+		t.Errorf("短程 bit4 是 %v，依距離與門檻應為 %v", bf.ShortMove, wantShort)
 	}
 }
 

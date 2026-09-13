@@ -176,7 +176,7 @@ func TestAdvanceFleetTurnStationsSquadrons(t *testing.T) {
 func TestAdvanceFleetArrives(t *testing.T) {
 	f := &FleetMover{
 		X: 1000, Y: 1000, DestX: 1000, DestY: 980,
-		Facing: 192, TurnSpeed: 15, PerTurn: 160 * FixOne,
+		Facing: 192, TargetFacing: 192, TurnSpeed: 15, PerTurn: 160 * FixOne,
 	}
 	RunFleetTurn(f, nil)
 	if f.X != f.DestX || f.Y != f.DestY {
@@ -184,5 +184,62 @@ func TestAdvanceFleetArrives(t *testing.T) {
 	}
 	if !f.Arrived {
 		t.Error("到了該把 Arrived 立起來")
+	}
+}
+
+// 原版收據 `s3fltseq` 的槽 30：距離 3.16，bit4 已設；一步抵達後
+// |178−170| ≤ 回轉速度 10，所以免費對準抵達朝向。剩餘額度逐位元是
+// `0x00CCD678`（`docs/re/294`）。
+func TestShortFleetArrivalMatchesS3FleetSequence(t *testing.T) {
+	f := &FleetMover{
+		X: 1169, Y: 1163, DestX: 1168, DestY: 1160,
+		Facing: 178, TargetFacing: 170, TurnSpeed: 10,
+		PerTurn: 208 * FixOne, ShortMove: true,
+	}
+	RunFleetTurn(f, nil)
+	if f.X != 1168 || f.Y != 1160 || f.Facing != 170 {
+		t.Fatalf("抵達狀態 (%d,%d) 朝向 %d，要 (1168,1160) 朝向 170", f.X, f.Y, f.Facing)
+	}
+	if f.Budget != 0x00CCD678 {
+		t.Fatalf("抵達後剩 %#08x，要收據的 0x00CCD678", f.Budget)
+	}
+	if !f.Arrived {
+		t.Fatal("位置與抵達朝向都對齊後該標成抵達")
+	}
+}
+
+// 受控 dosgolem 收據 `s3short-slot30-east-seq`：在同一個槽 30 把目的地
+// 改成正東 12 像素。bit4 分支先平移 8、再平移 4，途中朝向維持 178；
+// 到了之後才免費轉成目標朝向 170。四份傾印的 SHA-256 與命令列記在
+// `docs/playtest/` 的收據說明。
+func TestShortFleetStrafeMatchesControlledReceipt(t *testing.T) {
+	f := &FleetMover{
+		X: 1169, Y: 1163, DestX: 1181, DestY: 1163,
+		Facing: 178, TargetFacing: 170, TurnSpeed: 10,
+		PerTurn: 208 * FixOne, ShortMove: true,
+	}
+	RefillFleetBudget(f)
+	if !AdvanceFleet(f, nil) {
+		t.Fatal("短程平移第一步沒有執行")
+	}
+	if f.X != 1177 || f.Y != 1163 || f.Facing != 178 || f.Budget != 200*FixOne {
+		t.Fatalf("第一步是 (%d,%d) 朝向 %d 額度 %#x；要 (1177,1163)、178、200.0",
+			f.X, f.Y, f.Facing, f.Budget)
+	}
+	if !AdvanceFleet(f, nil) {
+		t.Fatal("短程平移第二步沒有執行")
+	}
+	if f.X != 1181 || f.Y != 1163 || f.Facing != 178 || f.Budget != 196*FixOne {
+		t.Fatalf("第二步是 (%d,%d) 朝向 %d 額度 %#x；要 (1181,1163)、178、196.0",
+			f.X, f.Y, f.Facing, f.Budget)
+	}
+	if !AdvanceFleet(f, nil) {
+		t.Fatal("抵達後轉向沒有執行")
+	}
+	if f.Facing != 170 || f.Budget != 196*FixOne {
+		t.Fatalf("抵達轉向後朝向 %d、額度 %#x；要 170 且不扣 196.0", f.Facing, f.Budget)
+	}
+	if AdvanceFleet(f, nil) || !f.Arrived {
+		t.Fatal("對齊抵達朝向後應停止並標成抵達")
 	}
 }

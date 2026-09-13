@@ -8,14 +8,16 @@ package rules
 
 // FleetMover 是艦隊移動要用到的那幾格（`docs/internals/33`）。
 type FleetMover struct {
-	X, Y      int // +0x5C／+0x5E 現在位置
-	DestX     int // +0x64
-	DestY     int // +0x66
-	Facing    int // +0x4A 現在朝向（一整圈 256）
-	TurnSpeed int // +0x4D 回轉速度
-	Budget    int // +0x56／+0x58 這一回合剩下的行程，16.16
-	PerTurn   int // +0x52／+0x54 每回合行程，16.16
-	Arrived   bool
+	X, Y         int  // +0x5C／+0x5E 現在位置
+	DestX        int  // +0x64
+	DestY        int  // +0x66
+	Facing       int  // +0x4A 現在朝向（一整圈 256）
+	TargetFacing int  // +0x4C 抵達朝向
+	TurnSpeed    int  // +0x4D 回轉速度
+	Budget       int  // +0x56／+0x58 這一回合剩下的行程，16.16
+	PerTurn      int  // +0x52／+0x54 每回合行程，16.16
+	ShortMove    bool // +0x48 bit4：短程平移，途中不轉身
+	Arrived      bool
 }
 
 // RefillFleetBudget 是每回合開頭那一下（`1C03:0040`）：**無條件覆蓋**，
@@ -76,22 +78,29 @@ func turnFleet(f *FleetMover, bearing int) bool {
 	return true
 }
 
-// AdvanceFleet 走一次「實行」（原版 `1C03:01B5`）：先轉一步，**同一次
-// 呼叫接著就前進一步**，所以第一步用的是轉到一半的朝向。
+// AdvanceFleet 走一次「實行」（原版 `1C03:0185`／`1C03:0361`）。一般
+// 移動先轉一步，同一次呼叫接著以前進後的朝向走；ShortMove 則保持艦隊
+// 朝向，以每一步重新計算的目的地方位直線平移。兩支抵達後都逐步轉向
+// TargetFacing，對齊後不再扣額度（`docs/re/294`）。
 //
 // `passable` 回 true 表示那個點站得住（原版 `2583:040C` 回 0）。傳 nil
 // 當成處處可站。回 true 表示這一次還有得做，false 表示額度用完了。
-//
-// ⚠ 這裡只有 `+0x48` bit4 沒設的那一支（`1C03:01B5` ＝ `1C03:0185`）。
-// 短程平移（`1C03:0361`）與抵達轉向 `+0x4C` remake 還沒接：原版到了之後
-// 用 `1C03:0524` 逐步轉向 `+0x4C`、轉完就回，不再扣額度；這裡到了之後
-// 不轉，而且每叫一次扣 1，扣到不足一步才停（`docs/re/294`）。
 func AdvanceFleet(f *FleetMover, passable func(x, y int) bool) bool {
 	if f == nil {
 		return false
 	}
-	if f.X != f.DestX || f.Y != f.DestY {
-		if bearing := atan256(f.DestX-f.X, f.DestY-f.Y); bearing != f.Facing {
+	if f.X == f.DestX && f.Y == f.DestY {
+		if turnFleet(f, f.TargetFacing) {
+			return true
+		}
+		if f.Facing == f.TargetFacing {
+			f.Arrived = true
+		}
+		return false
+	}
+	bearing := atan256(f.DestX-f.X, f.DestY-f.Y)
+	if !f.ShortMove {
+		if bearing != f.Facing {
 			turnFleet(f, bearing)
 		}
 	}
@@ -100,7 +109,11 @@ func AdvanceFleet(f *FleetMover, passable func(x, y int) bool) bool {
 	}
 	nx, ny := f.DestX, f.DestY
 	if Distance16(f.X, f.Y, f.DestX, f.DestY) > fleetStepCost {
-		nx, ny = StepAlong(f.X, f.Y, f.Facing, BattleStep)
+		stepFacing := f.Facing
+		if f.ShortMove {
+			stepFacing = bearing
+		}
+		nx, ny = StepAlong(f.X, f.Y, stepFacing, BattleStep)
 	}
 	d := Distance16(f.X, f.Y, nx, ny)
 	if d == 0 {
@@ -109,9 +122,6 @@ func AdvanceFleet(f *FleetMover, passable func(x, y int) bool) bool {
 	f.Budget -= int(d)
 	if passable == nil || passable(nx, ny) {
 		f.X, f.Y = nx, ny
-		if f.X == f.DestX && f.Y == f.DestY {
-			f.Arrived = true
-		}
 	}
 	return true
 }

@@ -57,11 +57,14 @@ type BattleFleet struct {
 	// 下面五格是艦隊層的「移動／戰鬥」命令寫進去的（`2583:0003`，
 	// `docs/re/120`–`122`）。原版對應 `+0x60`／`+0x62`（下令前的位置
 	// 備份）、`+0x64`／`+0x66`（要去的點）、`+0x4C`（抵達朝向）。
-	OriginX int `json:"origin_x,omitempty"`
-	OriginY int `json:"origin_y,omitempty"`
-	DestX   int `json:"dest_x,omitempty"`
-	DestY   int `json:"dest_y,omitempty"`
-	TargetFacing     int `json:"target_facing,omitempty"`
+	OriginX      int `json:"origin_x,omitempty"`
+	OriginY      int `json:"origin_y,omitempty"`
+	DestX        int `json:"dest_x,omitempty"`
+	DestY        int `json:"dest_y,omitempty"`
+	TargetFacing int `json:"target_facing,omitempty"`
+	// ShortMove 是 `+0x48` bit4：目的地距離小於「每回合行程 ÷ 3 ＋ 4」
+	// 時，下令當下設一次；途中保持朝向直線平移（`docs/re/294`）。
+	ShortMove bool `json:"short_move,omitempty"`
 
 	// Ordered ＝ 這一支收到過移動／戰鬥命令（上面五格才有意義）。
 	Ordered bool `json:"ordered,omitempty"`
@@ -69,11 +72,11 @@ type BattleFleet struct {
 	// X／Y 是艦隊自己的位置（`+0x5C`／`+0x5E`，＝ 旗艦的位置），
 	// Budget／PerTurn 是行程額度（`+0x56`/`+0x58` 與 `+0x52`/`+0x54`，
 	// 16.16）。艦隊層的移動引擎用它們（`docs/re/129`）。
-	X       int `json:"x,omitempty"`
-	Y       int `json:"y,omitempty"`
-	Budget  int `json:"budget,omitempty"`
-	PerTurn int `json:"per_turn,omitempty"`
-	TurnSpeed       int `json:"turn_speed,omitempty"`
+	X         int `json:"x,omitempty"`
+	Y         int `json:"y,omitempty"`
+	Budget    int `json:"budget,omitempty"`
+	PerTurn   int `json:"per_turn,omitempty"`
+	TurnSpeed int `json:"turn_speed,omitempty"`
 
 	// Action 是艦隊記錄 `+0x48` 的低四位。「戰鬥」成功之後寫 1
 	// （`1CC5:08BD`）。

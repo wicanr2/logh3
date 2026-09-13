@@ -413,14 +413,14 @@ func (g *Game) advanceOrderedFleets() {
 		}
 		m := rules.FleetMover{
 			X: f.X, Y: f.Y, DestX: f.DestX, DestY: f.DestY,
-			Facing: f.Facing, TurnSpeed: f.TurnSpeed, PerTurn: f.PerTurn,
+			Facing: f.Facing, TargetFacing: f.TargetFacing,
+			TurnSpeed: f.TurnSpeed, PerTurn: f.PerTurn, ShortMove: f.ShortMove,
 		}
 		rules.AdvanceFleetTurn(&m, g.res.Formation, g.battleUnits, idx, passable)
 		f.X, f.Y, f.Facing = m.X, m.Y, m.Facing
 		f.Budget = m.Budget
 		if m.Arrived {
 			f.Ordered = false
-			f.Facing = f.TargetFacing
 		}
 	}
 }

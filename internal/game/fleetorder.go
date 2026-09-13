@@ -122,9 +122,12 @@ func (g *Game) commitFleetOrder() {
 	// 回轉速度是艦隊記錄的 `+0x4D`。兩者都取各分隊的最小值
 	// （`docs/re/112`）。
 	f.TurnSpeed, f.PerTurn = g.fleetSpeeds(f.Index, battle)
+	f.Action = 0
 	if battle {
 		f.Action = fleetActionBattle
 	}
+	f.ShortMove = rules.Distance16(f.X, f.Y, f.DestX, f.DestY) <
+		int64(f.PerTurn/3+4*rules.FixOne)
 	g.battleUnits[unit].Action = squadronMove
 }
 
