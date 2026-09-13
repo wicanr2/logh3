@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 29 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 28 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -392,58 +392,6 @@
 **證據**：[`docs/re/283-intro-plays-in-file-order.md`](docs/re/283-intro-plays-in-file-order.md)、[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)、[`docs/spec/020-intro-animation.md`](docs/spec/020-intro-animation.md)
 
 **核實**：`docs/spec/020-intro-animation.md` 標到 `CONFORMED`
-
-#### oracle-runaway-after-copy-protection — 收據要在 logh3-oracle 上重錄（新舊執行器的時序不同）
-
-*[#3](https://github.com/wicanr2/logh3/issues/3) · parity（對拍：要與原版逐位元組相同）*
-
-跑飛的根因已解並修好（dosgolem `4732181`／`2951243`）：子行程結束時執行器沒有
-釋放它名下的 MCB，標頭因此留在接手程式的記憶體裡改寫程式碼；另外 `-tick` 會被
-PIT 的重算蓋掉。`main1e`（2.2 億道指令、走到帝國軍主畫面）現在**畫面與調色盤
-都逐位元組重現**。
-
-全量比對完了（`tools/check_receipts.sh`，2026-09-11）：**454 份裡 327 份**
-在新執行器上逐位元組重現，149 份畫面變了。變的那些分成五種形狀
-（`docs/re/276`）：游標位置 22、只差左下角摘要面板 40、小面積 21、
-中等面積 8、整塊不同 58（其中 22 份是開場動畫的相位）。
-
-**「整塊不同」那一類不是重錄就好**——`own24`／`pladump`／`rgndump`／`turn10`
-舊收據是下拉選單開著、新的已經關了，同樣的步數落在遊戲的另一個時刻。
-那一類要把 `-clicks`／`-steps` 重新挑一次對準原本的畫面，並把「為什麼是
-這個步數」一起寫進收據。
-
-已重錄 59 份（22 份游標位置 ＋ 31 份被 go test 綁著的 ＋ 6 份防拷問答的輸入游標）；覆蓋前的原件在
-`workplace/oracle-prev/`，同一批的獨立第二跑在 `workplace/check/`——
-已重錄的 53 份與第二跑逐位元組相同，所以那 53 份是重現得出來的。
-（2026-09-11 10:42 重比全量：358 份一致、96 份對不上。）
-
-重錄之後轉紅的那批已經處理完：左下角摘要面板接上了
-（`region-summary-panel-trigger`），規格裡烘著的舊游標刮掉了
-（`docs/re/279`），防拷問答少畫的輸入游標補上了
-（`copyprot-16x2-block-at-240-283`），戰場分隊面板是**旗標翻譯掉了前移**
-（`battle-unit-panel-after-rerecord`）。
-
-**翻譯還缺一處，而且會讓收據停在別的狀態。** 舊 probe 每一次腳本點擊都在
-`at − 200000` 送一次移動事件（`ef5be47` 的 `const moveLead = 200_000`），
-新版是移動與按下同一道指令。`tools/scripts/translate_receipt_flags.py` 沒翻這一項，
-而**遊戲分得出來**：`s3cmdfl3` 少了那次前移，艦隊選單照樣開、右側卻不換成分隊面板
-（`docs/re/282`）。補回前移之後與舊收據**全畫面 640×480 差 0**。
-目前只手補了 `s3cmdfl3`／`s3cmdsq3` 兩份；差異七成以上落在右側面板的還有十份
-（`s3cmdsq3v`／`s3cmdoff`／`s3cmdface`／`s3cmdrange`／`s3cmd4`／`s3rec137`／
-`s3form`／`s3msg`／`s3plinfo`／`decwatch2`），22 份「只差游標位置」的很可能同源，
-**都還沒逐份驗過**。讓翻譯自動補前移等於改掉全部 455 份旗標、要連帶重錄一遍，
-是父層決策——先問使用者。翻譯腳本已加保護：手改過的 `flags-new/*.txt` 不再被
-`--all` 無聲覆蓋（要蓋掉加 `--force`）。
-
-**不要改回舊收據讓測試變綠**——舊收據是在會改寫遊戲程式碼的執行器上錄的。
-
-**卡在**：重錄要逐份確認畫面停在同一個遊戲狀態，不能只看「有沒有畫出東西」——`docs/re/270` 記著一次用錯判準的例子。
-
-**做完的判準**：454 份收據在 `logh3-oracle` 上重錄，每一份的畫面對應的遊戲狀態與原收據相同（步數可重新標定），且重錄後兩次獨立重跑逐位元組一致。
-
-**證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)、[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)
-
-**核實**：要人判——要人判：`tools/check_receipts.sh` 已經會產出 `workplace/receipt-check.json`（批次 → 差幾個位元組），但 `workplace/` 不進版控，綁它等於綁一個別人 clone 之後不存在的檔。等重錄完、把「哪幾份通過」釘進 docs/ 之後再改成機器訊號。
 
 #### region-panel-freeze-differs-by-faction — 左下角摘要凍住的內容，同盟與帝國相反
 
@@ -880,7 +828,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-22 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+23 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -951,6 +899,40 @@ tools/oracle.sh s3datamem \
 **證據**：[`workplace/oracle/s3datamem/meta.txt`](workplace/oracle/s3datamem/meta.txt)、[`workplace/oracle/s3datamem/flags.txt`](workplace/oracle/s3datamem/flags.txt)、[`workplace/oracle/s3datamem/memory.bin`](workplace/oracle/s3datamem/memory.bin)、[`workplace/check/s3datamem-rerun2/`](workplace/check/s3datamem-rerun2/)、[`docs/re/111-battle-data-screen-layout.md`](docs/re/111-battle-data-screen-layout.md)、[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
 
 **核實**：收據 `s3datamem` 的 3 個檔案雜湊相符
+
+#### oracle-runaway-after-copy-protection — 收據要在 logh3-oracle 上重錄（新舊執行器的時序不同）
+
+*[#3](https://github.com/wicanr2/logh3/issues/3) · parity（對拍：要與原版逐位元組相同）*
+
+跑飛根因已解並修好：dosgolem 子行程結束時原本沒有釋放其 MCB，殘留標頭會改寫
+接手程式的程式碼；另有 `-tick` 被 PIT 重算覆蓋。正式重錄使用乾淨的
+`logh3-oracle` `e0b6a03`。
+
+2026-09-13 已完成全部 454 份收據的裁決與重錄。不是單純把新畫面覆蓋舊畫面：
+
+- 游標差異以至多兩個 13×16 矩形的完整像素覆蓋證明；
+- 系統選單與月報收據重新標定輸入時點，對準原本要證明的畫面；
+- 20 份 `intro*` 舊畫面已由 `docs/re/283` 證實是 MCB 重疊造成的無效產物；
+- 最後五份戰鬥收據另比對艦隊快照、完整艦隊表、受擊艦艇欄位與射擊閘門，確認
+  規則狀態相同，差異只在顯示／動畫相位後才重錄。
+
+覆蓋前原件保留於 `workplace/oracle-prev/`；全部正式旗標與 metadata 保存在
+`workplace/oracle/`。每一份都以相同旗標獨立跑第二次，最終 454/454 份的
+framebuffer 與 palette 逐位元組相同。`workplace/receipt-check.json` 的 SHA-256 是
+`da23b4b4302bd9d26693706f4b58f1c0d8b4338c87b019b23bde115f9c267076`。
+
+完整分組、代表雜湊、戰鬥結構欄位與證據等級已進版控於 `docs/re/276`。目前
+`internal/asset.TestVO5MatchesOriginalScreen` 的 plane 2／3 紅燈屬 #1
+`intro-full-diff` 已明列的尾段播放取捨，不屬於本項的收據可重現判準。
+
+**卡在**：無。
+
+**做完的判準**：454 份收據在 `logh3-oracle` 上重錄，每一份的畫面對應的遊戲狀態與原收據相同
+（步數可重新標定），且重錄後兩次獨立重跑逐位元組一致。
+
+**證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)、[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)、[`docs/re/282-the-translation-dropped-the-click-pre-move.md`](docs/re/282-the-translation-dropped-the-click-pre-move.md)、[`docs/re/283-intro-plays-in-file-order.md`](docs/re/283-intro-plays-in-file-order.md)、[`WORKLOG.md`](WORKLOG.md)
+
+**核實**：`docs/re/276-what-the-executor-fix-changed-on-screen.md` 裡出現 `2026-09-13 收尾：454/454 份可重現` 就是做好了
 
 #### region-summary-panel-trigger — 左下角星域摘要面板什麼時候填、什麼時候清
 
