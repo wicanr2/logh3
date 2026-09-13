@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 27 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 26 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -465,22 +465,6 @@ Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量
 **證據**：[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)、[`docs/re/277-region-panel-follows-the-cursor.md`](docs/re/277-region-panel-follows-the-cursor.md)
 
 **核實**：要人判——訊號是 `tools/gui_check.sh` 的輸出（要 Xvfb 起 Ebiten），`verify` 不跑它。修好時連 `mG1` 那一列的數字一起改。
-
-#### ai-seat-order — 戰略 AI 的座位順序與原版不同
-
-*[#7](https://github.com/wicanr2/logh3/issues/7) · parity（對拍：要與原版逐位元組相同）*
-
-原版一次「實行」是**逐座位**跑的：帝國座位的月底結算（含 `0654:0007`
-那一次性的成長與稅率重算）在**同盟座位的 AI 之前**；remake 的
-`advanceTurn` 把 AI 放在整個回合的最前面。
-後果是回合 10 的同盟 `Blend` 兩邊不同（原版 2、remake 0），
-月底重算稅率的 `Base` 差一格，同盟那十三格的稅率整排差一倍。
-
-**做完的判準**：`advanceTurn` 拆成逐座位；同盟座位跑完之後的收據逐格對上稅率。
-
-**證據**：[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)
-
-**核實**：`internal/game/game.go` 裡還找得到 `remake 還沒有原版的逐座位順序`（自承還在 ＝ 還沒做）
 
 #### strategy-report-screen — 戰略模式報告畫面還沒做
 
@@ -810,7 +794,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-24 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+25 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -998,6 +982,22 @@ framebuffer 與 palette 逐位元組相同。`workplace/receipt-check.json` 的 
 **證據**：[`docs/re/282-the-translation-dropped-the-click-pre-move.md`](docs/re/282-the-translation-dropped-the-click-pre-move.md)、[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)、[`docs/re/118-battle-unit-panel-layout.md`](docs/re/118-battle-unit-panel-layout.md)
 
 **核實**：要人判——訊號是 `internal/screen.TestUnitPanelMatchesOracle` 紅不紅，而 `verify` 不跑測試。
+
+#### ai-seat-order — 戰略 AI 的座位順序與原版不同
+
+*[#7](https://github.com/wicanr2/logh3/issues/7) · parity（對拍：要與原版逐位元組相同）*
+
+原版一次「實行」是**逐座位**跑的：帝國座位的月底結算（含 `0654:0007`
+那一次性的成長與稅率重算）在**同盟座位的 AI 之前**；remake 的
+`advanceTurn` 把 AI 放在整個回合的最前面。
+後果是回合 10 的同盟 `Blend` 兩邊不同（原版 2、remake 0），
+月底重算稅率的 `Base` 差一格，同盟那十三格的稅率整排差一倍。
+
+**做完的判準**：`advanceTurn` 拆成逐座位；同盟座位跑完之後的收據逐格對上稅率。
+
+**證據**：[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)
+
+**核實**：`internal/game/game.go` 裡還找得到 `remake 還沒有原版的逐座位順序`（自承還在 ＝ 還沒做）
 
 #### music-screen-mapping — 原版哪個畫面播哪一首
 
