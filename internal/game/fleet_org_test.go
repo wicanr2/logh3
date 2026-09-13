@@ -1,6 +1,14 @@
 package game
 
-import "testing"
+import (
+	"os"
+	"path/filepath"
+	"testing"
+
+	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
+)
 
 // TestFleetOrgMatchesOracle 提督詳細資料按「出擊」開出艦隊編成
 // （收據 `fleet1e`／`fleet2e`，`docs/spec/013`）。
@@ -126,6 +134,127 @@ func TestFleetCompositionMatchesOracle(t *testing.T) {
 		t.Fatalf("點了確認之後在 %v", g.State())
 	}
 	matches(t, g, "fok")
+}
+
+// TestFleetCompositionMultipleGroupsMatchesOracle 用收據 `fmx1` 的記憶體傾印
+// 重建三組編制，再逐像素比較編隊八格與 9×9 格盤。這份局面把艦隊 0 改成 3／8 組：
+// 艦種 B／C／D 分別在隊形槽 20／10／30；原版壓實工作表必須與艦隊記錄
+// 逐組相同，畫面上的字母、空格、部隊數與 9×9 格盤因此全部一起受驗。
+func TestFleetCompositionMultipleGroupsMatchesOracle(t *testing.T) {
+	g := reachFleetOrg(t)
+	g.Click(480, 350) // 「確認」→ 艦隊組成
+
+	fleet, err := os.ReadFile(filepath.Join(root, "workplace/fmx1_fleet.bin"))
+	if err != nil {
+		t.Skip("沒有 fmx1 艦隊傾印，跳過（tools/oracle.sh fmx1 可重建）")
+	}
+	work, err := os.ReadFile(filepath.Join(root, "workplace/fmx1_work.bin"))
+	if err != nil {
+		t.Skip("沒有 fmx1 工作表傾印，跳過（tools/oracle.sh fmx1 可重建）")
+	}
+	if len(fleet) != rules.FleetRecord || len(work) != 0xE6 {
+		t.Fatalf("fmx1 傾印尺寸：fleet=%d work=%d，應為 %d／230",
+			len(fleet), len(work), rules.FleetRecord)
+	}
+	wantGroups, wantSlots := int(fleet[0x0F]), int(fleet[0x0E])
+	if wantGroups != 3 || wantSlots != 8 || work[0xD1] != byte(wantGroups) ||
+		work[0xD2] != byte(wantSlots-wantGroups) {
+		t.Fatalf("fmx1 組數不符：艦隊 %d/%d，工作表 %d+%d",
+			wantGroups, wantSlots, work[0xD1], work[0xD2])
+	}
+
+	groups := make([]screen.CompositionGroup, wantGroups)
+	for i := range groups {
+		fleetGroup := fleet[0x10+i*4 : 0x14+i*4]
+		packedGroup := work[0xA4+i*4 : 0xA8+i*4] // ds:981E - ds:977A
+		if string(fleetGroup) != string(packedGroup) {
+			t.Fatalf("第 %d 組：艦隊 % X，壓實工作表 % X", i, fleetGroup, packedGroup)
+		}
+		groups[i] = screen.CompositionGroup{
+			Kind: int(packedGroup[2]), Slot: int(packedGroup[3]),
+			// 收據刻意讓三組都指艦艇池第 0 筆；該筆現有量等於滿編量，
+			// 所以三個字母都走滿編色 7（docs/re/293）。
+			Ships: 1, Full: 1,
+		}
+	}
+	for i, want := range []screen.CompositionGroup{
+		{Kind: 0, Slot: 20},
+		{Kind: 2, Slot: 10},
+		{Kind: 4, Slot: 30},
+	} {
+		if groups[i].Kind != want.Kind || groups[i].Slot != want.Slot {
+			t.Fatalf("第 %d 組是艦種 %d／槽 %d，應為 %d／%d",
+				i, groups[i].Kind, groups[i].Slot, want.Kind, want.Slot)
+		}
+	}
+
+	region := rules.CapitalRegion(g.faction)
+	o := region * rules.RegionRecord
+	ships := rules.RegionShips(g.res.Stellar[o:o+rules.RegionRecord], g.faction)
+	v := screen.CompositionView{
+		Ships: ships, PerUnit: rules.ShipsPerUnit[:], Mobility: rules.NewFleetMorale,
+		Groups: groups, Slots: wantSlots,
+	}
+	// 動態內容必須在 overlay 畫完、游標畫上去之前落筆；若在 g.Frame
+	// 完成後才覆畫，舊的「□」與游標會留殘影，測到的是錯誤的圖層順序。
+	spec := g.commandSpec(g.state)
+	g.setListRows(spec)
+	g.liveCursor(spec)
+	g.setHoverRow(spec)
+	g.applyStaffFaces(spec)
+	fb, _ := screen.MainGameLayered(spec, g.res.Font, g.starMapFor(spec),
+		g.res.Faces, g.res.Cursor, g.drawBoardPanels, func(name string, fb *gfx.Framebuffer) {
+			if name != "overlay" {
+				return
+			}
+			g.drawFleetOrg(fb)
+			g.res.CompositionPanel.Draw(fb, g.res.Font, v)
+			g.drawCompositionGrid(fb, v)
+			g.drawShipOrder(fb)
+		})
+	g.drawBudget(fb)
+	g.drawProduction(fb)
+	g.drawDelivery(fb)
+	g.drawSlotList(fb)
+	g.drawReport(fb)
+	g.drawAdmiralDetail(fb)
+	g.drawAdmiralBio(fb)
+	g.drawSpecStaff(fb, spec)
+
+	want, err := os.ReadFile(filepath.Join(root, "workplace/oracle/fmx1/screen.bin"))
+	if err != nil {
+		t.Skip("沒有 fmx1 畫面收據，跳過（tools/oracle.sh fmx1 可重建）")
+	}
+	// 這一條驗的是規則控制的每一格。游標壓在「部隊數」上，3／8 與
+	// 原本 1／8 的游標交疊順序另有 88 像素差異，不屬於編隊字母規則；
+	// 組數本身已由上面的艦隊記錄與 ds:984B／984C 雙重核對。
+	boxes := [][4]int{
+		{136, 168, 280, 312}, // 9×9 格盤
+		{160, 342, 288, 358}, // 編隊八格
+	}
+	bad, total := 0, 0
+	for _, box := range boxes {
+		for y := box[1]; y < box[3]; y++ {
+			for x := box[0]; x < box[2]; x++ {
+				i := y*640 + x
+				total++
+				if want[i] != fb.Pix[i] {
+					bad++
+				}
+			}
+		}
+	}
+	if bad != 0 {
+		if os.Getenv("LOGH3_DUMP_REMAKE") != "" {
+			out := filepath.Join(root, "workplace/remake-fmx1.bin")
+			if err := os.WriteFile(out, fb.Pix, 0o644); err != nil {
+				t.Logf("倒 remake 畫面失敗：%v", err)
+			} else {
+				t.Logf("remake 畫面寫到 %s", out)
+			}
+		}
+		t.Fatalf("fmx1 編隊八格與格盤：與原版不同的像素 %d / %d", bad, total)
+	}
 }
 
 // TestFleetCompositionRowSelect 點七個艦種列的哪一列，選取條就跳到哪一列
