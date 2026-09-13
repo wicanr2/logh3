@@ -16,7 +16,7 @@
 
 | # | 項目 | 等級 | 未核准差異 | 收據 | 備註 |
 |---|---|---|---:|---|---|
-| G1 | Ebiten 視窗版走玩家路徑 | `same-state` | 2 例 | `tools/gui_check.sh` | `cmd/gin3` 畫出來的色號陣列與 `r0`／`cb1`／`key1`／`cbAlly`／`keyAlly`／`main1e`／`vs4`／`vs5` 逐位元組相同。**「視窗開得起來」不算數**——比的是同一條玩家路徑跑完的畫面。`load1e`（2,265）與 `vs3`（274）對不上，見 `gui-check-load1e-vs3` |
+| G1 | Ebiten 視窗版走玩家路徑 | `same-state` | 0 | `tools/gui_check.sh` | `cmd/gin3` 畫出來的色號陣列與 `r0`／`cb1`／`key1`／`cbAlly`／`keyAlly`／`main1e`／`load1e`／`vs3`／`vs4`／`vs5` 十例逐位元組相同。**「視窗開得起來」不算數**——比的是同一條玩家路徑跑完的畫面。`vs3` 原先 274 像素的差異是 GUI 腳本漏送收據最後一次框內、熱區外點擊，只差兩個 13×16 游標位置；補齊輸入後為 0。 |
 
 ## 畫面
 

@@ -126,9 +126,12 @@
   摘要面板，2,265 正是 [`276`](276-what-the-executor-fix-changed-on-screen.md)
   形狀二的簽章數字。`internal/game` 的同一份收據是綠的，所以缺的是
   `cmd/gin3` 的腳本驅動沒有把滑鼠停留的位置餵成同一個狀態。
-- `vs3` 差 274 個像素，落在 `x[300,412] y[250,277]`，分類 `unknown`。
+- `vs3` 的 274 個像素已於 2026-09-13 分成兩塊各 137 像素的 13×16 游標：
+  原版在 `(400,262)`、Ebiten 腳本停在 `(300,250)`。根因是 `tools/gui_check.sh`
+  漏掉收據最後一次框內、熱區外點擊；補上 `click 400 262` 後逐位元組相同。
 
-兩件都記進 worklist 的 `gui-check-load1e-vs3`。
+`load1e` 與 `vs3` 都已修正並由 `tools/gui_check.sh` 十例全綠收尾；詳見該
+worklist issue 的完成紀錄。
 
 ## 三條方法
 

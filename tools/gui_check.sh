@@ -17,7 +17,9 @@ cases=(
   "keyAlly|move 300 230; click; type 138; enter"
   "main1e|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340"
   "load1e|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145"
-  "vs3|move 300 250; click; type 126; enter"
+  # vs3 收據在交棒視窗出現後還點了 (400,262)；那點在確認框內、熱區外，
+  # 狀態不變但游標會搬過去（docs/re/280）。漏掉就只差兩個游標位置 274 px。
+  "vs3|move 300 250; click; type 126; enter; click 400 262"
   "vs4|move 300 250; click; type 126; enter; click 432 263"
   "vs5|move 300 250; click; type 126; enter; click 432 263; rclick 300 240; rclick 300 240; click 544 125; click 560 125"
 )
