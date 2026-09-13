@@ -963,8 +963,11 @@ func (g *Game) runBrain() {
 	g.assignStaff(foe)
 	// 回合的最後一件事是 `2D10:0319(0)`：月底照軍事費再算一次，
 	// 平時把 `Blend` 歸零。兩條都會再重算一次稅率。
+	//
+	// 原版在這一刻的 `ds:8F18` 還沒進位；remake 已在 `advanceTurn` 開頭
+	// 把 `g.turn` 加一，所以原版計數器是 `g.turn - 1`（`docs/re/299`）。
 	level := 0
-	if g.turn%10 == 9 {
+	if (g.turn-1)%rules.TurnsPerMonth == rules.TurnsPerMonth-1 {
 		level = rules.BlendForFunds(g.military[foe])
 	}
 	g.refreshBlend(foe, level)

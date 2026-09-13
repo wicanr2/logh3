@@ -387,7 +387,9 @@ func TestTaxRateRecomputeMatchesReceipt(t *testing.T) {
 // 平時（`回合數 % 10 != 9`）結尾把 `Blend` 歸零，稅率跟著掉到等級 0；
 // 月底那一條照軍事費重算，等級留在 1。同一條序列、同一個時點，
 // 原版只差一個回合計數器：對照組 `Blend[同盟] = 0`／總稅收 6696，
-// 月底 `Blend[同盟] = 1`／總稅收 10213。
+// 月底 `Blend[同盟] = 1`／總稅收 10213。`advanceTurn` 開頭已先把
+// `g.turn` 加一，所以收據 poke 的原版計數器 9 對應呼叫前的 `g.turn = 9`，
+// 不是舊測試寫的 8（`docs/re/299`）。
 func TestMonthEndKeepsBlend(t *testing.T) {
 	run := func(before int) (turn, blend, tax int) {
 		g := reachBrainPhase(t)
@@ -398,10 +400,11 @@ func TestMonthEndKeepsBlend(t *testing.T) {
 		return g.turn, g.blend[1], g.taxTotal[1]
 	}
 	plainTurn, plainBlend, plainTax := run(0)
-	monthTurn, monthBlend, monthTax := run(8)
+	monthTurn, monthBlend, monthTax := run(9)
 
-	if plainTurn%10 == 9 || monthTurn%10 != 9 {
-		t.Fatalf("回合數不對：平時 %d、月底 %d", plainTurn, monthTurn)
+	if (plainTurn-1)%rules.TurnsPerMonth == rules.TurnsPerMonth-1 ||
+		(monthTurn-1)%rules.TurnsPerMonth != rules.TurnsPerMonth-1 {
+		t.Fatalf("原版計數器不對：平時 %d、月底 %d", plainTurn-1, monthTurn-1)
 	}
 	if plainBlend != 0 {
 		t.Errorf("平時結尾的 Blend ＝ %d，原版歸零", plainBlend)

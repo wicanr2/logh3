@@ -114,5 +114,6 @@ AI 回合結束：
 - **月底分支的回合數差一格**：`runBrain` 用 `g.turn % 10 == 9`，但 remake 的
   `g.turn` 在 `advanceTurn` 開頭就先加了（第一次「實行」AI 跑的時候原版
   `ds:8F18` 是 0、`g.turn` 是 1），原版的條件對應 `(g.turn − 1) % 10 == 9`
-  （`docs/re/299` 順帶）。`TestMonthEndKeepsBlend` 設 `g.turn = 8` 對的是原版
-  計數器 8，收據 `monthblend` poke 的是 9。還沒改。
+  （`docs/re/299` 順帶）。**2026-09-13 已修正**：正式判斷改讀 `g.turn − 1`，
+  `TestMonthEndKeepsBlend` 也改用收據 `monthblend` 的原版計數器 9；同盟
+  `Blend` 保留為 1、總稅收 10213，與收據相同。

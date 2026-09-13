@@ -6407,3 +6407,12 @@ GitHub 的 issue 時間軸承擔。
 - `tools/go.sh test ./...` 的其他套件通過；唯一紅燈是
   `internal/asset.TestVO5MatchesOriginalScreen` 的 plane 2／3。這是 #1
   `intro-full-diff` 已明列、等待使用者決定的尾段播放取捨，不屬於 #3 的收據可重現判準。
+
+## 2026-09-13 — 修正 #20 AI 月底分支的回合偏移
+
+- `advanceTurn` 開頭已把 `g.turn` 加一，但 `runBrain` 原本直接判
+  `g.turn % 10 == 9`，比原版 `ds:8F18 % 10 == 9` 早一回合。
+- 判斷改用 `(g.turn - 1) % rules.TurnsPerMonth`；`TestMonthEndKeepsBlend`
+  改從 `g.turn = 9` 起跑，對應 `monthblend` 收據 poke 的原版計數器 9。
+- #20 目標測試與相鄰的稅率、AI 正常玩家路徑測試通過；這同時移除 #7
+  逐座位順序前方的一個狀態偏移，但尚未宣稱 #7 完成。
