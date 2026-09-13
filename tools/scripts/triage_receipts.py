@@ -34,6 +34,43 @@ W, H = 640, 480
 CURSOR_W, CURSOR_H = 13, 16
 
 
+def covered_by_cursor_boxes(diff_idx, limit=2):
+    """差異像素能否由至多 limit 個 13×16 游標矩形覆蓋。
+
+    舊判準先按相鄰列分群；兩個游標若在同一列附近，會被併成一個寬群而
+    假陰性。這裡直接驗幾何覆蓋，游標彼此重疊或同列也不受影響。
+    """
+    points = {(i % W, i // W) for i in diff_idx}
+    if not points:
+        return True
+
+    def fits_one(group):
+        if not group:
+            return True
+        xs = [p[0] for p in group]
+        ys = [p[1] for p in group]
+        return max(xs) - min(xs) < CURSOR_W and max(ys) - min(ys) < CURSOR_H
+
+    if fits_one(points):
+        return True
+    if limit < 2:
+        return False
+
+    # 任一可行的第一個矩形都必須蓋住最左上的一個差異點；枚舉該點在
+    # 13×16 矩形內的所有位置，再檢查剩餘像素是否落在第二個矩形內。
+    px, py = min(points, key=lambda p: (p[1], p[0]))
+    for x0 in range(px - CURSOR_W + 1, px + 1):
+        for y0 in range(py - CURSOR_H + 1, py + 1):
+            rest = {
+                (x, y)
+                for x, y in points
+                if not (x0 <= x < x0 + CURSOR_W and y0 <= y < y0 + CURSOR_H)
+            }
+            if fits_one(rest):
+                return True
+    return False
+
+
 def clusters(diff_idx):
     """把差異像素按「相鄰的列」分群，回每一群的 (x0, x1, y0, y1, 像素數)。"""
     rows = collections.defaultdict(list)
@@ -69,7 +106,7 @@ def classify(old, new, pal_diff):
     # 游標是 13×16 的實心方塊；新舊各畫一個就是兩群。
     def is_cursor(c):
         return (c[1] - c[0] + 1) <= CURSOR_W and (c[3] - c[2] + 1) <= CURSOR_H
-    if len(cl) <= 2 and all(is_cursor(c) for c in cl):
+    if len(d) <= 2 * CURSOR_W * CURSOR_H and covered_by_cursor_boxes(d):
         return "cursor-only", info
     if len(d) <= 64 and len(cl) == 1 and is_cursor(cl[0]):
         return "tiny", info
@@ -107,4 +144,5 @@ def main():
     print(f"\n寫出 {OUT}")
 
 
-main()
+if __name__ == "__main__":
+    main()

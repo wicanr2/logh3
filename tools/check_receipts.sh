@@ -104,24 +104,10 @@ if [[ ${#names[@]} -gt 0 ]]; then
 fi
 
 # JSON 一律從 TSV 全量重出，所以續跑與一次跑完的結果相同。
-python3 - "$TSV" "$ROOT/workplace/receipt-check.json" "$(git -C "$GOLEM" rev-parse --short HEAD)" <<'PY'
-import json, sys, datetime
-# 指名重比的那幾份會在 TSV 裡多一列——**後面那一列才算數**，
-# 不然重比完的結果會被舊的蓋掉，而報表看起來完全正常。
-seen = {}
-for line in open(sys.argv[1], encoding="utf-8"):
-    f = line.rstrip("\n").split("\t")
-    if len(f) == 3:
-        seen[f[0]] = {"name": f[0], "screen_diff": int(f[1]), "pal_diff": int(f[2])}
-rows = sorted(seen.values(), key=lambda r: r["name"])
-bad = [r["name"] for r in rows if r["screen_diff"] != 0 or r["pal_diff"] != 0]
-json.dump({"generated": datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
-           "golem_head": sys.argv[3], "checked": len(rows),
-           "mismatched": bad, "results": rows},
-          open(sys.argv[2], "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-open(sys.argv[2], "a", encoding="utf-8").write("\n")
-print(f"\n比對 {len(rows)} 份：{len(rows)-len(bad)} 份逐位元組一致、{len(bad)} 份對不上")
-PY
+"$ROOT/tools/py.sh" tools/scripts/receipt_check_report.py \
+  /work/workplace/receipt-check.tsv \
+  /work/workplace/receipt-check.json \
+  "$(git -C "$GOLEM" rev-parse --short HEAD)"
 
 
 } # main

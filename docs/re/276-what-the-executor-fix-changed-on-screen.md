@@ -80,3 +80,37 @@ remake 現在的行為等同「永遠空著」，所以這 40 份全部對不上
 > 移動，游標沒有經過星圖再離開，左下角就停在另一個內容。加回前移之後
 > （dosgolem `-click-move-lead`）那 40 份逐位元組回到原件。
 > 本文其餘四種形狀不受影響：80 份重跑之後 42 份回到原件、38 份仍不同。
+
+## 2026-09-13 追記：同列游標的分類假陰性
+
+現行 dosgolem `e0b6a03` 全量重跑後仍有 54 份畫面不同。舊分類器先按相鄰列
+分群；兩個游標若落在相同列附近，會被合併成一個寬群，因而不能通過「每群
+至多 13×16」的判準。
+
+`tools/scripts/triage_receipts.py` 現改為直接驗證：全部差異像素是否可由至多兩個
+13×16 矩形覆蓋。正反合成案例已驗證：同列、互相接近的兩個矩形可通過，三個
+彼此分離的矩形不可通過。重新分類後共有八份 `cursor-only`：
+
+- `lstlate`、`hov205`、`hov215`；
+- `shipdeliver3`、`shipdeliver4`、`shipdeliver5`、`shipdeliver6`、`watchmonth2`。
+
+後五份的差異都恰為 206 個像素，差異邊界框（bounding box）都是
+`(544,125)–(572,140)`；四份 `shipdeliver*` 的差異遮罩與色號轉換集合也完全相同。
+所有矩形外像素逐位元組一致，所以這八份可客觀判為同一畫面狀態、只有游標位置
+不同，不需要人工目視裁決。這個結論只授權重錄該八份，不延伸到其餘 46 份。
+
+八份已用正式 `tools/rerun_receipts.sh` 重錄，覆蓋前原件都保留在
+`workplace/oracle-prev/`；正式收據與先前的獨立 `workplace/check/` 重跑在
+framebuffer 與 palette 上逐位元組相同。metadata 全部綁定乾淨的 dosgolem
+`e0b6a03` 與完整旗標。SHA-256 如下：
+
+| 收據 | `screen.bin` SHA-256 |
+|---|---|
+| `lstlate` | `a86540d68e12dbd6aa15dff4e23cd015764d0c8461486342b38557120c4b93ae` |
+| `hov205` | `88157ec0df5a8995678357f35a3c8a542192d433e0c8780691247e339039a0fb` |
+| `hov215` | `f7e3c8ee5fb6695554bb8a9ca4ec4140df271df54f5400fdd12d8cdf999dc066` |
+| `shipdeliver3`／`shipdeliver4`／`shipdeliver5`／`shipdeliver6`／`watchmonth2` | `f9bf1f3081899ee414fa30c29f44d3e41494588b4d8e004591aab54a5cb6b879` |
+
+八份的 `pal.bin` SHA-256 都是
+`28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8`。
+把這八筆最新結果併回報表後，454 份裡 408 份一致、46 份仍不同。
