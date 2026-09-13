@@ -54,3 +54,7 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`039`](039-region-supply-pool.md) | 星域的飛彈／艦載機存量每回合回充 | DRAFT |
 | [`040`](040-region-morale-drift.md) | 民心每回合往擁有者的目標值走一格 | CONFORMED |
 | [`041`](041-rebellion.md) | 叛亂：判定、效果與接進回合的位置 | CONFORMED |
+| [`042`](042-region-unrest-recompute.md) | 星域未安定度重算與呼叫點 | CONFORMED |
+| [`043`](043-ai-capital-reach.md) | 戰略 AI 的首都可達表 | CONFORMED |
+| [`044`](044-ending-image-position.md) | 400 列結局 VO5 的垂直位置 | CONFORMED |
+| [`045`](045-ship-delivery-screen-details.md) | 月底船艦接收報告的底板細節 | CONFORMED |

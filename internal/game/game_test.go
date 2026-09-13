@@ -403,10 +403,9 @@ func TestExecuteTurnMatchesOracle(t *testing.T) {
 
 // TestShipDeliveryMatchesOracle 月底的船艦接收報告。
 //
-// **只比對話框那一塊**（`layout-only` 不夠、`same-state` 不到）：整張畫面
-// 對不上，因為那一刻的地圖已經是結算後的樣子——有兩個星域換了顏色
-// （`docs/re/54`），而 remake 還沒有那條規則。對話框本身與原版
-// 逐位元組相同，含年月、參謀的姓名軍階與十四個數字。
+// 對話框本身、結算中不重塗的首都與捲軸上下箭頭逐位元組相同。
+// 整張畫面仍不能比：原版在先前九回合已由戰略 AI 打下星域 24／28，
+// remake 尚未接那條戰略行星攻占規則（`docs/re/55`）。
 func TestShipDeliveryMatchesOracle(t *testing.T) {
 	g := reachCommandPhase(t)
 	for i := 0; i < rules.TurnsPerMonth; i++ {
@@ -419,6 +418,11 @@ func TestShipDeliveryMatchesOracle(t *testing.T) {
 	matchesBox(t, g, "turnmonth2", 144, 80, 495, 399)
 	// 右側面板的字被清掉、只留「戰略模式處理中」那一行，也對得上。
 	matchesBox(t, g, "turnmonth2", 320, 40, 639, 79)
+	// 結算中的首都使用普通帝國色 1，不重塗成玩家色 6。
+	matchesBox(t, g, "turnmonth2", 0, 40, 79, 119)
+	// 這兩個箭頭只在結算期間出現（`docs/spec/045`）。
+	matchesBox(t, g, "turnmonth2", 612, 305, 621, 314)
+	matchesBox(t, g, "turnmonth2", 612, 385, 621, 394)
 
 	// 按掉接收報告之後接著是會計報告與訂造報告（`docs/re/259`，收據
 	// `monthacct`／`monthorder`），兩下右鍵才回地圖介面。

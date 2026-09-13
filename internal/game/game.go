@@ -2336,6 +2336,7 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 		if g.res.CapitalPanel != nil {
 			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
 		}
+		screen.DrawSettlementScrollArrows(fb)
 		return
 	}
 	// 易主報告是同一塊底板加上兩行字與一張頭像（`docs/spec/034`）。
@@ -2989,8 +2990,9 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 
 // playerStarMap 回勢力色那一張：開局時照陣營重建過的優先。
 func (g *Game) playerStarMap() *asset.Image {
-	// 交棒視窗那一刻地圖不上玩家色（收據 `vs3`／`vs5`）。
-	if g.state == StateVersusInput && g.plainMap != nil {
+	// 交棒視窗與月底結算中的地圖不上玩家色（收據 `vs3`／`vs5`、
+	// `turnmonth2`；`docs/spec/045`）。
+	if (g.state == StateVersusInput || g.state == StateShipDelivery) && g.plainMap != nil {
 		return g.plainMap
 	}
 	if g.starMap != nil {

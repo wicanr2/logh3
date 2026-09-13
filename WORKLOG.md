@@ -6607,3 +6607,14 @@ GitHub 的 issue 時間軸承擔。
 - 新增 `docs/re/301` 保存新舊收據、素材雜湊與全量反對照；`docs/spec/044`
   經 READY 契約實作並升為 CONFORMED。完整 `internal/asset`、`internal/game`
   回歸全數通過，原先唯一已知的遊戲層紅燈消除。
+
+## 2026-09-14 — #25 月底船艦接收報告的底板細節
+
+- `StateShipDelivery` 改用既有 `plainMap`，結算期間帝國首都維持普通星域色 1，
+  不再重塗成玩家色 6；包含整個首都的 80×80 區域與原版逐位元組相同。
+- 新增 `screen.DrawSettlementScrollArrows`，保存 `turnmonth2` 量得的上下兩張
+  10×10 色號矩陣，只在月底報告的底板上繪製；兩區各 100 像素全數相同。
+- `TestShipDeliveryMatchesOracle` 從正常玩家路徑跨月驗收上述兩項。整張畫面
+  尚有星域 24／28 的歸屬差異，那是未接的戰略行星攻占規則，未混入本題。
+  收據綁 dosgolem `2833ec9`，`screen.bin` SHA-256 為
+  `ae3622b8887b830ff1adf629d7223cd0a0be5e47a0862fb6a55057057ac30613`。
