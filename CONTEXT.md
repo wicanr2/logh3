@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 30 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 27 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -792,63 +792,6 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 **核實**：要人判——這一列的完成度由它自己的證據欄撐著，沒有可綁的自動訊號
 
-#### gui-window-resize — 視窗版無法放大或調整尺寸
-
-*[#38](https://github.com/wicanr2/logh3/issues/38) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-使用者於實際操作中發現：遊戲視窗無法放大。測試版本與平台目前不確定。
-
-目前 `cmd/gin3` 已提供 `-scale`，啟動時呼叫 `ebiten.SetWindowSize`，也設定 `WindowResizingModeEnabled`；因此「程式碼看似已開啟」不能當作功能可用的證據。需從實際發行／啟動入口確認是視窗管理器、容器、平台包裝、Ebitengine 設定或輸入縮放哪一層失效。
-
-**卡在**：原始回報沒有版本與平台；需先在目前 HEAD 及實際交付入口重現。縮放策略的價值取捨只在確認技術根因後才會成為阻塞。
-
-**做完的判準**：- 記錄可重現版本、平台、啟動方式與視窗管理環境；分別驗證 `-scale 2` 啟動尺寸與使用視窗邊框拖曳放大。
-- 至少能把 640×480 邏輯畫布放大到 2×，畫面比例與最近鄰像素呈現符合已確認的顯示策略；不得因放大而裁掉內容或改變遊戲邏輯座標。
-- 放大後滑鼠移動、點擊熱區與遊戲游標仍一致；與 #37 的座標驗收共同抽測。
-- 若任意比例、整數比例、全螢幕或 letterbox 之間需要產品取捨，先提供可丟棄 prototype 讓使用者決定；本 issue 不預先替使用者選定。
-
-**證據**：[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`tools/gui.sh`](tools/gui.sh)
-
-**核實**：要人判——目前只有未固定版本與平台的 GUI 症狀；建立視窗尺寸與縮放後輸入測試後，改綁該 GUI 收據或平台 smoke。
-
-#### gui-mouse-position-lag — 視窗內遊戲游標與實際滑鼠位置不同步
-
-*[#37](https://github.com/wicanr2/logh3/issues/37) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-使用者於實際操作中發現：視窗內遊戲游標相對作業系統的實際滑鼠位置有延遲或不同步。測試版本目前不確定；「延遲」可能是時間落後、座標偏移、縮放後換算錯誤或繪製晚一幀，現階段一律標為 `unknown`，不先猜根因。
-
-`cmd/gin3.Update` 目前每格讀 `ebiten.CursorPosition()`，依序呼叫 `Game.MoveMouse` 再處理 Click；`Layout` 固定回 640×480。既有 #6 處理腳本驅動的兩張 framebuffer 差異，不足以涵蓋真實滑鼠游標同步問題。
-
-**卡在**：原始回報沒有版本、平台與視窗倍率；需先在目前 HEAD 的正常 GUI 路徑做儀器化重現。
-
-**做完的判準**：- 記錄可重現版本、平台、顯示縮放、視窗大小與移動／點擊序列；分清楚是時間延遲、固定偏移、比例誤差或只在縮放後出現。
-- 在 1× 與至少一個放大尺寸記錄原始游標座標、送進 `Game` 的邏輯座標、遊戲游標繪製位置與同格點擊命中結果。
-- 修正後，遊戲游標在可接受的同一更新格內對應實際滑鼠位置，點擊命中與畫面上看到的位置一致；快速移動與視窗邊界也不得留下系統性偏差。
-- 新增可重現的 GUI／座標轉換測試；若與 #36 同根因，可以共用修正，但兩個症狀各自保留驗收。
-
-**證據**：[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`internal/game/game.go`](internal/game/game.go)、[`docs/internals/data/cursor.json`](docs/internals/data/cursor.json)
-
-**核實**：要人判——目前只有未固定版本與平台的執行期症狀；建立座標／更新格回歸測試後，改綁該 go_test 或 GUI receipt。
-
-#### gui-nested-menu-click — 視窗版的第二層選單無法點選
-
-*[#36](https://github.com/wicanr2/logh3/issues/36) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-使用者於實際操作中發現：開啟第二層選單後，畫面上的項目無法以滑鼠點選。測試所用版本目前不確定，因此這裡只登記可觀察症狀，不先假定是熱區、視窗層級、事件時序或座標換算哪一層出錯。
-
-本項指視窗版 `cmd/gin3` 的正常玩家路徑；既有 #15 是原版戰場行星命中判定的逆向缺口，#17 是戰術資料表捲動，兩者都不涵蓋一般性的「第二層選單無法點選」。
-
-**卡在**：原始回報沒有版本與確切選單路徑；Codex 應先在目前 HEAD 的 GUI 正常路徑重現並縮小範圍，不把查證責任推回使用者。
-
-**做完的判準**：- 先記錄可重現版本（Git HEAD／封包版本）、平台、啟動命令、視窗大小、從主選單開始的完整輸入路徑，以及實際失效的是哪一張第二層選單。
-- 以正常玩家路徑自動重播：第一層項目可開啟第二層，第二層每個可用項目都能命中並產生預期狀態轉移；點選單外與右鍵仍維持既有取消語意。
-- 至少抽測戰略下拉選單的一張子畫面，以及戰術／艦隊命令中一張會再開下一層的畫面，避免只修單一座標。
-- 若根因涉及正式熱區或原版語意，先回到 RE → READY spec；若只是 Ebiten 輸入轉接 bug，保留同狀態回歸測試即可。
-
-**證據**：[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`internal/game/game.go`](internal/game/game.go)、[`docs/internals/23-hotspot-lists.md`](docs/internals/23-hotspot-lists.md)、[`docs/spec/023-battle-command-menus.md`](docs/spec/023-battle-command-menus.md)
-
-**核實**：要人判——這是尚未固定版本與路徑的 GUI 行為症狀；重現後建立正常玩家路徑測試，再把 verify 改綁該 go_test 或 GUI 收據。
-
 #### music-player-path-integration — 配樂尚未納入可重現的正常玩家路徑整合驗收
 
 *[#35](https://github.com/wicanr2/logh3/issues/35) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -870,7 +813,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-25 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+28 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1467,6 +1410,67 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **證據**：[`docs/re/272-face-index-is-the-caller-argument.md`](docs/re/272-face-index-is-the-caller-argument.md)、[`docs/re/271-face-amg-index-is-the-admiral-index.md`](docs/re/271-face-amg-index-is-the-admiral-index.md)、[`docs/internals/09-face-amg.md`](docs/internals/09-face-amg.md)
 
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
+
+#### gui-window-resize — 視窗版無法放大或調整尺寸
+
+*[#38](https://github.com/wicanr2/logh3/issues/38) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+使用者回報的版本與平台不明；目前乾淨 HEAD `0d872dc` 已用真正 X11 視窗事件驗證。
+外部調整尺寸與命令列啟動倍率都正常，並有放大後輸入映射收據。
+
+**卡在**：無。原始未知版本的失敗無法追溯；目前入口已受黑箱回歸測試保護。
+
+**做完的判準**：- 一般入口先建立 640×480 視窗，再由 X11 尺寸事件調整為 960×720；狀態收據確認
+  實際視窗已改變。
+- 放大後以實際 (840,218) 點擊，Ebiten 回報邏輯 (560,145)，並進入
+  `StateLoadGame`，未裁切內容或改變 640×480 邏輯座標。
+- `cmd/gin3 -scale 2` 獨立建立 1280×960 視窗。
+- 本項不新增任意比例／全螢幕等產品取捨，只驗既有 `Layout` 與 resize 契約。
+
+**證據**：[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`tools/gui_input_check.sh`](tools/gui_input_check.sh)、[`docs/playtest/007-gui-x11-input-and-resize.md`](docs/playtest/007-gui-x11-input-and-resize.md)
+
+**核實**：`tools/gui_input_check.sh` 裡出現 `run_startup_scale_case` 就是做好了
+
+#### gui-mouse-position-lag — 視窗內遊戲游標與實際滑鼠位置不同步
+
+*[#37](https://github.com/wicanr2/logh3/issues/37) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+根因已縮小為雙游標：遊戲用原版素材自行畫游標，但 `cmd/gin3` 沒有隱藏作業系統
+游標。硬體游標即時移動，遊戲游標則在更新格讀取 `ebiten.CursorPosition()` 後重畫，
+同時看見兩支箭頭就會呈現延遲／不同步。現已設定 `CursorModeHidden`，只保留遊戲游標。
+
+**卡在**：無。根因等級為 `strong inference`；本項不冒稱 Windows／macOS 實機主觀手感已驗收。
+
+**做完的判準**：- 真實 X11 測試於 640×480 記錄實際／邏輯 (560,145)，可命中「取進度」。
+- 視窗調整為 960×720 後，實際 (840,218) 映射為同一邏輯 (560,145)，仍命中同項。
+- 收據確認 `cursor_mode=1`（Ebitengine v2.8.8 的 `CursorModeHidden`）。
+- 艦隊多層路徑另以最後邏輯座標 (368,350) 命中，排除只對單一熱區成立。
+
+**證據**：[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`tools/gui_input_check.sh`](tools/gui_input_check.sh)、[`docs/playtest/007-gui-x11-input-and-resize.md`](docs/playtest/007-gui-x11-input-and-resize.md)
+
+**核實**：`cmd/gin3/main.go` 裡出現 `CursorModeHidden` 就是做好了
+
+#### gui-nested-menu-click — 視窗版的第二層選單無法點選
+
+*[#36](https://github.com/wicanr2/logh3/issues/36) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+使用者回報的版本不明；在目前乾淨 HEAD `0d872dc` 以真正 X11 事件重播後，未重現
+Ebiten 輸入轉接或熱區故障。原程式同時顯示作業系統游標與遊戲自繪游標，使用者可能
+依前者判斷位置、實際遊戲狀態則畫後者；該雙游標已由 #37 的共同修正移除。
+
+**卡在**：無。原始未知版本無法追溯；本項裁決目前產品入口並留下回歸測試。
+
+**做完的判準**：- `tools/gui_input_check.sh` 不使用 `-script`，從主選單送真正滑鼠／鍵盤事件。
+- 640×480 與調整後 960×720 都能依次點開「系統指令 → 取進度」，最後狀態為
+  `StateLoadGame`，放大後 (840,218) 正確映射為邏輯 (560,145)。
+- 另一條正常玩家路徑走過「戰略命令 → 出擊命令 → 提督詳細資料 → 艦隊編成 →
+  艦隊編號」，最後為 `StateFleetNumber`。
+- `internal/game` 的命令階段全項與艦隊選單測試同時通過；點界外與右鍵的既有取消
+  語意未改動。
+
+**證據**：[`tools/gui_input_check.sh`](tools/gui_input_check.sh)、[`docs/playtest/007-gui-x11-input-and-resize.md`](docs/playtest/007-gui-x11-input-and-resize.md)
+
+**核實**：`tools/gui_input_check.sh` 裡出現 `StateFleetNumber` 就是做好了
 
 <!-- worklist:end -->
 
