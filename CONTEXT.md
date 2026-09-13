@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 27 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 26 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -792,28 +792,9 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 **核實**：要人判——這一列的完成度由它自己的證據欄撐著，沒有可綁的自動訊號
 
-#### music-player-path-integration — 配樂尚未納入可重現的正常玩家路徑整合驗收
-
-*[#35](https://github.com/wicanr2/logh3/issues/35) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-基礎播放層其實已存在：`internal/audio` 管曲庫與曲目選擇，`cmd/gin3/music.go` 用 Ebitengine 解碼、循環播放 OGG，`cmd/gin3 -music` 接受玩家自備的合法轉檔目錄；設定畫面的音源、平時配樂與戰鬥配樂也已接到存檔。
-
-目前缺的是一張 GitHub worklist issue，追蹤「正式入口真的在正常玩家路徑切換曲目」的整合驗收。既有 #9 只處理 `_F` 原版 FM 擷取，與播放整合不同。原版及其衍生 OGG 不得加入 Git 或公開包。
-
-**卡在**：尚未建立正式入口的音訊整合收據；#9 的 `END_1F`／`END_2F` 擷取缺口獨立追蹤，不應讓已有曲目的整合測試全數等待。
-
-**做完的判準**：- 以玩家自備原版資料經既有工具產生 OGG，從 `cmd/gin3` 的穩定入口啟動。
-- 可重現地驗證主選單／防拷無配樂、進入遊戲後選到平時曲、設定畫面換曲會切換、關閉音源會停止；可到達的戰鬥曲狀態也需驗證。
-- 收據記錄 Git HEAD、完整命令、曲庫清單、預期與實際曲名、切換時點及錯誤輸出；缺檔或無音效裝置不得讓遊戲崩潰。
-- 自動化驗收只裁決曲目選擇、播放器狀態與錯誤處理；主觀音量／音色聽感另列人類驗收，不阻塞本項客觀工作。
-
-**證據**：[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`cmd/gin3/music.go`](cmd/gin3/music.go)、[`internal/audio/tune.go`](internal/audio/tune.go)、[`internal/audio/library.go`](internal/audio/library.go)、[`tools/music_to_ogg.sh`](tools/music_to_ogg.sh)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
-
-**核實**：要人判——目前沒有一個能代表正式入口音訊切換收據的受版控訊號；建立整合測試或收據索引後，改綁該測試或 receipt 雜湊。
-
 ### 做完的（不在矩陣裡的那幾條）
 
-28 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+29 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1471,6 +1452,30 @@ Ebiten 輸入轉接或熱區故障。原程式同時顯示作業系統游標與�
 **證據**：[`tools/gui_input_check.sh`](tools/gui_input_check.sh)、[`docs/playtest/007-gui-x11-input-and-resize.md`](docs/playtest/007-gui-x11-input-and-resize.md)
 
 **核實**：`tools/gui_input_check.sh` 裡出現 `StateFleetNumber` 就是做好了
+
+#### music-player-path-integration — 配樂尚未納入可重現的正常玩家路徑整合驗收
+
+*[#35](https://github.com/wicanr2/logh3/issues/35) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+正常玩家路徑的客觀整合收據已建立。正式 `Game` 狀態經 `app.syncMusic` 驅動播放器；
+無音效裝置的測試替身只記錄切換，不替代主觀人耳驗收。玩家自備 OGG 仍留在
+`workplace/`，沒有加入 Git 或公開包。
+
+**卡在**：無。#9 的 `END_1F`／`END_2F` 原版 FM 擷取真實性仍是獨立 issue，不阻塞播放整合。
+
+**做完的判準**：- 主選單與防拷保持安靜；進遊戲播放 `BGM_0F`；設定改平時曲切到 `BGM_1F`；
+  改戰鬥曲不試聽；關閉音源停止；重開 FM 恢復 `BGM_1F`。
+- 本機玩家自備曲庫 22/22 個名稱逐首走正式 Vorbis 解碼與 44.1 kHz 閘門，全數通過；
+  收據記錄四首代表檔的 SHA-256。
+- 缺檔會略過、壞 OGG 回含曲名的明確錯誤；真實 X11 `-music` 入口在沒有
+  `/dev/snd` 時印警告但不崩潰。
+- 正式產品尚無獨立交戰演出狀態，因此目前沒有可到達、會把 `BattleTune` 送進
+  播放器的玩家路徑；既有測試只裁決戰鬥曲映射，不冒稱該畫面已整合。
+- 主觀音量、音色與實機喇叭不屬本項客觀完成聲明。
+
+**證據**：[`cmd/gin3/music_integration_test.go`](cmd/gin3/music_integration_test.go)、[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`cmd/gin3/music.go`](cmd/gin3/music.go)、[`tools/gui_input_check.sh`](tools/gui_input_check.sh)、[`docs/playtest/008-music-player-path-integration.md`](docs/playtest/008-music-player-path-integration.md)
+
+**核實**：`cmd/gin3/main.go` 裡出現 `syncMusic` 就是做好了
 
 <!-- worklist:end -->
 
