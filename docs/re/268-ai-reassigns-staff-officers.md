@@ -200,3 +200,18 @@ remake 現在同盟那格永遠是 60，因為 **`internal/ai` 的 `Original` �
     d53672955511d68738ce6a2514910707eac5d8d62f0e34626c2778164f1599a3  staffpick/staffpre.bin
     8fb26011b543b810e9dccb97c857221c47a533c567c2c9e0a486088f2861f3e5  staffpick/staffpost.bin
     716fbb8f8838404cd528663fdb622adc5f0aeeda165b6404ebdd701da046afa3  staffpick/staffwork.bin
+
+## 2026-09-13 勘誤：不是逐座位順序差異
+
+本篇「對 remake 的意義」只證明同盟 AI 會把內政參謀 60 換成 63；後來把
+`monthwork3` 的 `Blend 2` 對 remake 的 `Blend 0` 歸因成 `advanceTurn` 沒有
+逐座位，是錯的。`docs/re/299` 的同一次「實行」時間線已顯示：AI 尾段使用
+尚未進位的原版計數器，之後才進到新回合的座位開頭。remake 在函式開頭先把
+`g.turn` 加一，所以差異來自 `runBrain` 少減一回合，不是 AI 與月底結算次序。
+
+#20 修正後，`TestAllianceStaffSwitchesToReceipt` 在回合 10 量到同盟
+`Blend = 2`、內政參謀 63。`monthwork3` 實際有 15 個同盟星域；用收據自己的
+成長率、民心與這組 Base／參謀重算，15/15 稅率相同。當前 remake 與收據輸入
+本身相同的 8 格也可直接逐格相同。其餘 7 格中，5 格成長率已不同，另 2 格連
+擁有者、成長率與民心都不同；它們只能標為非同狀態，不能再拿來支持或否定
+「逐座位」假說。原始 #7 結論因此被新時間線否定，保留本段作可追溯勘誤。

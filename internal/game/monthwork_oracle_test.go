@@ -98,18 +98,17 @@ func TestMonthEndMatchesWorkBlock(t *testing.T) {
 	}
 }
 
-// TestAllianceStaffSwitchesToReceipt 是同盟那一側的驗收。
+// TestAllianceStaffSwitchesToReceipt 是同盟月底邊界的驗收。
 //
 // 稅率算式要乘的那位提督（原版 `ds:8F4F + 陣營`，內政專任參謀）**不是
 // 常數**：796/1 是 60（`main1eAlly` 逐位元組要它），回合 10 是 63
 // ——電腦在自己回合的尾巴重新指派（`2D10:0038` → `2D10:0213`，
 // `docs/re/268`）。接上戰略 AI 之後 remake 也會換，換到的是同一位。
 //
-// ⚠ **逐格比稅率要另一份收據。** `monthwork3` 倒在同盟座位跑完之前
-// （`docs/re/267`：那一趟同盟座位沒跑，所以那些格子是「長完但還沒課稅」），
-// 它的 `Blend` 還是 2；remake 這一側同盟的 AI 已經跑完、`Blend` 歸 0，
-// 於是 `Base[0]` 對 `Base[2]` ——稅率整排差一半。那是**狀態不同**不是
-// 算錯，所以這裡拿收據自己的星域資料算，只換提督那一個變因。
+// `monthwork3` 倒在同盟座位的月底結算之前：那些格子已長完、稅率已重算，
+// 但還沒課稅（`docs/re/267`）。#20 修正 AI 月底分支的回合偏移後，remake
+// 在同一個回合也保留 `Blend = 2`；原先歸因於「逐座位順序」的 Base[0]/Base[2]
+// 差異因此消失。其餘非同狀態輸入另分類，不拿來裁決這條稅率規則。
 func TestAllianceStaffSwitchesToReceipt(t *testing.T) {
 	p := filepath.Join("..", "..", "workplace", "oracle", "monthwork3", "mr1820.bin")
 	b, err := os.ReadFile(p)
@@ -133,28 +132,44 @@ func TestAllianceStaffSwitchesToReceipt(t *testing.T) {
 	if got := g.taxRateAdmiral(0); got != 16 {
 		t.Errorf("帝國的內政參謀變成提督 %d，原版全程是 16", got)
 	}
-
-	// 拿收據自己的星域資料重算：換上 remake 現在用的那位提督，
-	// 十三格要逐格相同。`Base` 用收據那一刻的 `Blend`（2）。
+	if got := g.blend[1]; got != 2 {
+		t.Fatalf("回合 %d 同盟 Blend = %d，收據是 2", g.turn, got)
+	}
 	ruler := g.admiralRecord(g.taxRateAdmiral(1))
 	if ruler == nil {
 		t.Fatalf("拿不到提督 %d", g.taxRateAdmiral(1))
 	}
-	base := g.res.UnrestParams.Base[2]
-	ok, bad := 0, 0
+	base := g.res.UnrestParams.Base[g.blend[1]]
+	receiptAllies, ruleOK, sameInput := 0, 0, 0
 	for i := 0; i < 32; i++ {
-		if g.res.Planets.RegionOwner(i) != 1 {
+		want := b[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		if int(want[regionOwnerOff]) != 1 {
 			continue
 		}
-		r := b[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
-		if rules.TaxRatePerMille(rules.RegionGrowth(r), int(r[rules.RegionMorale]),
-			1, base, ruler) == rules.RegionTaxRate(r) {
-			ok++
-		} else {
-			bad++
+		receiptAllies++
+		calculated := rules.TaxRatePerMille(rules.RegionGrowth(want),
+			int(want[rules.RegionMorale]), 1, base, ruler)
+		if calculated != rules.RegionTaxRate(want) {
+			t.Errorf("星域 %d 依收據輸入重算稅率 %d，收據是 %d", i,
+				calculated, rules.RegionTaxRate(want))
+			continue
+		}
+		ruleOK++
+
+		current := g.regionRecord(i)
+		if int(current[regionOwnerOff]) != 1 ||
+			rules.RegionGrowth(current) != rules.RegionGrowth(want) ||
+			current[rules.RegionMorale] != want[rules.RegionMorale] {
+			continue
+		}
+		sameInput++
+		if got := rules.RegionTaxRate(current); got != rules.RegionTaxRate(want) {
+			t.Errorf("星域 %d 同輸入稅率：remake %d、收據 %d", i, got,
+				rules.RegionTaxRate(want))
 		}
 	}
-	if bad != 0 || ok != 13 {
-		t.Errorf("同盟星域稅率：對 %d 格、錯 %d 格，收據是 13／0", ok, bad)
+	if receiptAllies != 15 || ruleOK != receiptAllies || sameInput == 0 {
+		t.Errorf("同盟星域稅率：收據同盟 %d 格、重算對 %d 格、同狀態直接比較 %d 格",
+			receiptAllies, ruleOK, sameInput)
 	}
 }
