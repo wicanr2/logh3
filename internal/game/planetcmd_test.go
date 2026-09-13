@@ -150,6 +150,82 @@ func TestPlanetMenuItems(t *testing.T) {
 	}
 }
 
+// TestPlanetCommandPlayerPaths 把行星選單的四個入口各走一次正式 Click 路徑。
+// 數值公式與原版收據分別由 internal/rules、internal/screen 的窄測試裁決；
+// 這裡釘住的是「選到該列後，production path 真的進入對應狀態並改到資料」。
+func TestPlanetCommandPlayerPaths(t *testing.T) {
+	for _, tc := range []struct {
+		name  string
+		row   int
+		check func(*testing.T, *Game, int, int)
+	}{
+		{"情報", 0, func(t *testing.T, g *Game, planet, _ int) {
+			if !g.PlanetInfoOpen() || g.planetInfo != planet {
+				t.Fatalf("情報列沒有開啟行星 %d 的情報視窗", planet)
+			}
+		}},
+		{"補給", 1, func(t *testing.T, g *Game, planet, unit int) {
+			if !g.SupplyPickPending() || g.SupplyPickRepair() {
+				t.Fatal("補給列沒有進入行星補給選取狀態")
+			}
+			beforeUnit := g.battleUnits[unit].Missiles
+			beforeStock := g.battlePlanets[planet].Stock.Missiles
+			x, y := unitScreenPos(g, unit)
+			g.Click(x+8, y+8)
+			if g.battleUnits[unit].Missiles <= beforeUnit ||
+				g.battlePlanets[planet].Stock.Missiles >= beforeStock {
+				t.Fatal("行星補給沒有把飛彈從存量搬到分隊")
+			}
+		}},
+		{"補充", 2, func(t *testing.T, g *Game, planet, unit int) {
+			if !g.SupplyPickPending() || !g.SupplyPickRepair() {
+				t.Fatal("補充列沒有進入行星補充選取狀態")
+			}
+			beforeUnit := g.battleUnits[unit].Ships
+			beforeStock := g.battlePlanets[planet].Stock.Ships[g.battleUnits[unit].Kind]
+			x, y := unitScreenPos(g, unit)
+			g.Click(x+8, y+8)
+			if g.battleUnits[unit].Ships <= beforeUnit ||
+				g.battlePlanets[planet].Stock.Ships[g.battleUnits[unit].Kind] >= beforeStock {
+				t.Fatal("行星補充沒有把艦艇從存量補進分隊")
+			}
+		}},
+		{"要塞砲", 3, func(t *testing.T, g *Game, planet, _ int) {
+			if !g.FortressTargetPending() || g.battleGun != planet {
+				t.Fatalf("要塞砲列沒有進入行星 %d 的瞄準狀態", planet)
+			}
+		}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			g := commandTestGame(t)
+			if g == nil {
+				return
+			}
+			loadKinds(t, g)
+			if len(g.battlePlanets) == 0 || len(g.battleUnits) == 0 {
+				t.Skip("這個局面沒有行星或分隊")
+			}
+			planet, unit := 0, 0
+			p, u := &g.battlePlanets[planet], &g.battleUnits[unit]
+			p.Owner, p.X, p.Y = g.faction, u.X, u.Y
+			p.Defence, p.DefenceMax = 12800, 12800
+			p.Fortress, p.GunState = tc.row == 3, rules.FortressGunIdle
+			u.Faction, u.Kind, u.Out = g.faction, 0, false
+			u.Ships, u.FullShips, u.Missiles = 1, 2, 0
+			p.Stock.Missiles, p.Stock.Ships[u.Kind] = 1000, 1
+
+			g.openPlanetMenu(planet, 100, 100)
+			if !g.PlanetMenuOpen() {
+				t.Fatal("測試 fixture 沒有開啟行星選單")
+			}
+			s := g.res.CommandMenus
+			g.Click(g.battleCmdX+s.Layout.HighlightDX+8,
+				g.battleCmdY+s.Layout.HighlightDY+tc.row*s.Layout.RowPitch+8)
+			tc.check(t, g, planet, unit)
+		})
+	}
+}
+
 func clampTestInt(v, lo, hi int) int {
 	if v < lo {
 		return lo
