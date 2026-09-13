@@ -85,19 +85,34 @@ func reachCommandPhaseAlly(t *testing.T) *Game {
 	return g
 }
 
+// reachCommandPhaseOnMapAlly 與原版命令列收據相同：關掉兩張月初報告後，
+// 游標仍留在最後一次右鍵的位置，尚未先搬到右側面板。
+func reachCommandPhaseOnMapAlly(t *testing.T) *Game {
+	t.Helper()
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 230)
+	for _, c := range []byte{'1', '3', '8', '\r'} {
+		g.Key(c)
+	}
+	g.RightClick(300, 240)
+	g.RightClick(300, 240)
+	if g.State() != StateCommandPhase {
+		t.Fatalf("右鍵兩下之後在 %v", g.State())
+	}
+	return g
+}
+
 // TestAllianceCommandPhaseScreens 同盟的命令階段子畫面。
 //
 // 這幾張的規格是照帝國的收據量的，底板右側那幾行也在裡面；
 // `drawBoardPanels` 會蓋過去，但**蓋不掉比較長的舊字**——這幾張就是
 // 在驗那件事有沒有發生。
 //
-// ⚠ **這條路是串起來的，不是照每一份收據自己的輸入順序走**，與帝國那邊的
-// `TestCommandPhaseNavigation` 不同。原因是同盟的收據與帝國的對不起來：
-// 同一條序列（右鍵兩下 → 點命令列 → 點項目 → 搬滑鼠）帝國那邊左下角凍著
-// 艾流塞拉，同盟那邊整塊是空的（`docs/re/278`，六組受控對照）。走串起來
-// 這條路，開選單之前滑鼠已經搬到 (600,340) ＝ 星圖外，左下角本來就該是空的
-// ——十二張都對得上，但**對上的理由還沒解**。解開之前不要把這裡改成
-// 「照收據順序」，那會讓十二張一起變紅而且不知道為什麼。
+// 每張都照自己的收據順序獨立重走。先前為了遷就舊執行器少送點擊前移事件
+// 而把十二張串成一條路；`docs/re/302` 已證明陣營差異不存在。
 func TestAllianceCommandPhaseScreens(t *testing.T) {
 	for _, c := range []struct {
 		name         string
@@ -124,12 +139,15 @@ func TestAllianceCommandPhaseScreens(t *testing.T) {
 		{"結束", 544, 560, 205, "sysmenu1eAlly", "quit1eAlly", StateQuitConfirm, false},
 	} {
 		t.Run(c.name, func(t *testing.T) {
-			g := reachCommandPhaseAlly(t)
-			matches(t, g, "main1eAlly")
+			matches(t, reachCommandPhaseAlly(t), "main1eAlly")
 
+			g := reachCommandPhaseOnMapAlly(t)
 			g.Click(c.menuX, 125)
+			g.MoveMouse(600, 340)
 			matches(t, g, c.menuBatch)
 
+			g = reachCommandPhaseOnMapAlly(t)
+			g.Click(c.menuX, 125)
 			g.Click(c.itemX, c.itemY)
 			if g.State() != c.state {
 				t.Fatalf("點了「%s」之後在 %v", c.name, g.State())

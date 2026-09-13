@@ -6626,3 +6626,12 @@ GitHub 的 issue 時間軸承擔。
 - 在 Docker 重跑 `internal/asset.TestIntroDecoder`：374 格全部解完、逐格長度
   相符、輸入完整吃光，兩段場景黑幕共 14 格的四個 plane 正好全部歸零。
 - GitHub #28 的核對由 `manual` 改綁該測試並關閉，不變更播放器行為。
+
+## 2026-09-14 — #4 左下摘要的陣營差異是過期收據
+
+- 依 `use-ida-pro-9-4` 流程先核對工具契約；在進一步靜態追查前，發現 #4
+  引用 dosgolem `6841e68` 的舊收據，而後續 `e0b6a03` 已修復點擊前移事件。
+- 用 `e0b6a03` 重錄同盟原輸入，整張與既有 `cmd1eAlly` 雜湊相同；帝國與
+  同盟左下區均為 88 個非底色像素（只有外框），不存在陣營相反規則。
+- `TestAllianceCommandPhaseScreens` 移除串接 workaround，十二張各自依收據
+  輸入順序從正常玩家路徑重走並逐位元組通過；勘誤與雜湊見 `docs/re/302`。
