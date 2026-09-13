@@ -34,7 +34,7 @@ main() {
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GOLEM="${DOSGOLEM_DIR:-$HOME/cht/dosgolem-logh3}"
 FLAGS="$ROOT/workplace/flags-new"
-OUT="$GOLEM/workplace/check"
+OUT="$ROOT/workplace/check"
 TSV="$ROOT/workplace/receipt-check.tsv"
 JOBS="${JOBS:-2}"
 mkdir -p "$OUT"
@@ -74,9 +74,10 @@ one() {
   # Go 的 flag 取最後一個，這樣才確定倒的是我們要比的那一份。
   (cd "$GOLEM" && DOSGOLEM_CPUS="${DOSGOLEM_CPUS:-2}" \
      DOSGOLEM_ORIG="$ROOT/org_game/extracted" DOSGOLEM_TIMEOUT="${DOSGOLEM_TIMEOUT:-30m}" \
+     DOSGOLEM_EXTRA_MOUNT="$ROOT/workplace:/logh3-workplace" \
      tools/go.sh run ./cmd/probe -exe "${exe:-/orig/GIN3.COM}" -root /orig -empty-env \
-     "${fl[@]}" -dump-ega "/src/workplace/check/$name.png" \
-     -dump-palette "/src/workplace/check/$name.pal" >/dev/null 2>&1)
+     "${fl[@]}" -dump-ega "/logh3-workplace/check/$name.png" \
+     -dump-palette "/logh3-workplace/check/$name.pal" >/dev/null 2>&1)
   local s p ref="$ROOT/workplace/oracle/$name/screen.bin"
   # ⚠ **收據不在就不能比。** `cmp` 對不存在的檔會失敗，而失敗的輸出是空的
   # ——`wc -l` 回 0，於是「沒有東西可比」被記成「差 0 ＝ 一致」。

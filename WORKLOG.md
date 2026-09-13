@@ -6362,3 +6362,16 @@ GitHub 的 issue 時間軸承擔。
 - 正式收據在 `workplace/oracle/s3datamem/`；第二跑移到
   `workplace/check/s3datamem-rerun2/`，避免探索輸出混入收據。方法與雜湊追加在
   `docs/re/270-enter-works-the-divergence-is-after-it.md`。
+
+## 2026-09-13 — 修正全量收據檢查器的輸出邊界
+
+- `tools/check_receipts.sh` 原先把重跑畫面留在 dosgolem 工作副本的
+  `workplace/check/`，與 logh3 文件所稱的 `workplace/check/` 不是同一個目錄；人工
+  從專案端核對檔案時會看到舊輸出。現改以 `DOSGOLEM_EXTRA_MOUNT` 明掛本專案
+  `workplace/`，並讓 `OUT`、probe 輸出與比較端共同指向該目錄。
+- 以短收據 `introtime10` 驗證修正後流程：腳本正常產生新畫面、回報
+  `screen_diff=19346`、`pal_diff=0`，並把 dosgolem `e0b6a03` 與 454 筆結果重新寫入
+  `workplace/receipt-check.json`。
+- 代表性的右側面板收據 `s3cmdsq3v` 已在現行預設前移語意下獨立重跑；新輸出與正式
+  收據的 307,200-byte framebuffer、768-byte palette 都逐位元組相同。這只證明該筆
+  收據，issue #3 的 454 筆重錄與同狀態裁決仍未完成。
