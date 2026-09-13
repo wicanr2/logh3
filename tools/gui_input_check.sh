@@ -135,6 +135,25 @@ run_startup_scale_case() {
   echo "  scale2: -scale 2 啟動尺寸 1280x960 通過"
 }
 
+run_music_no_device_case() {
+  music_dir=/src/workplace/assets/music/ogg
+  if ! test -d "$music_dir"; then
+    echo "  music-no-device: 沒有玩家自備 OGG，跳過"
+    return
+  fi
+  receipt=/tmp/logh3-gui-music-no-device.txt
+  log=/tmp/logh3-gui-music-no-device.log
+  /tmp/logh3-gui-input -orig /orig -data /src/docs/internals/data \
+    -intro=false -music "$music_dir" -shot-bin /tmp/logh3-gui-music-no-device.bin \
+    -state-out "$receipt" -shot-after 60 >"$log" 2>&1 &
+  game_pid=$!
+  xdotool search --sync --onlyvisible --name '^銀河英雄傳說III SP$' >/dev/null
+  wait "$game_pid"
+  grep -q '配樂：這台機器沒有音效裝置' "$log"
+  grep -qx 'state=StateMainMenu' "$receipt"
+  echo "  music-no-device: 正式 -music 入口無裝置時留在主選單且不崩潰"
+}
+
 # 1×：X11 座標就是 640×480 邏輯座標。
 run_case 1x 640 480 300 210 300 240 544 125 560 145 560,145
 
@@ -143,6 +162,9 @@ run_case 1_5x 960 720 450 315 450 360 816 188 840 218 560,145
 
 # 命令列的穩定入口也要能直接用整數倍率啟動。
 run_startup_scale_case
+
+# 真實 OGG 目錄存在時，無音效裝置的隔離環境不得拖垮遊戲入口。
+run_music_no_device_case
 
 # 另一族的巢狀介面：戰略命令 → 出擊命令 → 提督 → 艦隊編成 → 艦隊編號。
 run_fleet_case

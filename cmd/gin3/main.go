@@ -33,7 +33,7 @@ type app struct {
 	g      *game.Game
 	pal    [gfx.Colors]color.RGBA
 	screen *ebiten.Image
-	music  *musicPlayer
+	music  musicPlayback
 	buf    []byte
 
 	shot      string
@@ -48,8 +48,16 @@ type app struct {
 	fed    bool
 }
 
+// musicPlayback 是正常玩家路徑與音訊裝置之間的窄邊界。正式執行放
+// musicPlayer；測試放不開裝置的記錄器，仍然能驗「哪個狀態要求哪首曲」。
+type musicPlayback interface {
+	Play(string) error
+	Stop()
+	Playing() string
+}
+
 // tuneFor 回這個狀態該播哪一首。對照表本身在 `internal/audio`
-// （純的、測得到；這個套件連結時要 ALSA，放不了測試），
+// （純的、測得到；這個套件連結時要 ALSA，測試須走 GUI image），
 // 來源是 `docs/internals/17` §哪個畫面播哪一首 與 `docs/re/274`。
 //
 // 三格設定從遊戲狀態讀（設定畫面點了就換、存檔帶得走）。**試聽是這裡
@@ -66,14 +74,23 @@ func (a *app) musicSettings() audio.Settings {
 	return audio.Settings{Device: m.Device, BGM: m.BGM, Battle: m.Battle}
 }
 
+// syncMusic 把目前遊戲狀態同步到播放器。獨立成一支是為了讓沒有音效裝置的
+// 容器仍能驗正式 app 與 Game 的接線，不用拿合成音訊冒充人耳驗收。
+func (a *app) syncMusic() error {
+	tune := a.tuneFor()
+	if tune == "" {
+		a.music.Stop()
+		return nil
+	}
+	return a.music.Play(tune)
+}
+
 func (a *app) Update() error {
 	// 時間往前走一格。目前只有開頭動畫在用（一格 125.3 ms，
 	// `docs/spec/020`）；其他畫面都是事件驅動的。
 	a.g.Tick(time.Second / time.Duration(ebiten.TPS()))
 	if a.music != nil {
-		if tune := a.tuneFor(); tune == "" {
-			a.music.Stop()
-		} else if err := a.music.Play(tune); err != nil {
+		if err := a.syncMusic(); err != nil {
 			// 配樂出錯不該把遊戲帶走，但**要留下痕跡**——安靜地沒有音樂
 			// 與「還沒接播放層」長得一樣。
 			fmt.Fprintln(os.Stderr, "配樂：", err)

@@ -67,24 +67,9 @@ func (p *musicPlayer) Play(track string) error {
 	if p.name == track && p.cur != nil && p.cur.IsPlaying() {
 		return nil
 	}
-	path, ok := p.lib.Path(track)
-	if !ok {
-		return nil
-	}
-	raw, err := os.ReadFile(path)
-	if err != nil {
-		return fmt.Errorf("讀配樂 %s：%w", track, err)
-	}
-	st, err := vorbis.DecodeWithoutResampling(bytes.NewReader(raw))
-	if err != nil {
-		return fmt.Errorf("解 %s 的 OGG：%w", track, err)
-	}
-	if got := st.SampleRate(); got != sampleRate {
-		// **取樣率不對要說出來，不要默默重取樣。** 轉檔工具與這裡用
-		// 同一個常數，對不上就是轉檔那一端跑錯設定了——播出來只是
-		// 速度與音高不對，聽起來像「音源不一樣」而不是像設定錯。
-		return fmt.Errorf("配樂 %s 的取樣率是 %d，預期 %d（轉檔時的 -ar 設定不對）",
-			track, got, sampleRate)
+	st, ok, err := p.decode(track)
+	if err != nil || !ok {
+		return err
 	}
 	p.Stop()
 	loop := eaudio.NewInfiniteLoop(st, st.Length())
@@ -95,6 +80,32 @@ func (p *musicPlayer) Play(track string) error {
 	pl.Play()
 	p.cur, p.name = pl, track
 	return nil
+}
+
+// decode 驗曲庫中的一首，但不碰音效裝置。正式 Play 與無裝置整合測試共用
+// 同一支，避免「測過的解碼條件」與真正播放器分岔。
+func (p *musicPlayer) decode(track string) (*vorbis.Stream, bool, error) {
+	path, ok := p.lib.Path(track)
+	if !ok {
+		return nil, false, nil
+	}
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		return nil, false, fmt.Errorf("讀配樂 %s：%w", track, err)
+	}
+	st, err := vorbis.DecodeWithoutResampling(bytes.NewReader(raw))
+	if err != nil {
+		return nil, false, fmt.Errorf("解 %s 的 OGG：%w", track, err)
+	}
+	if got := st.SampleRate(); got != sampleRate {
+		// **取樣率不對要說出來，不要默默重取樣。** 轉檔工具與這裡用
+		// 同一個常數，對不上就是轉檔那一端跑錯設定了——播出來只是
+		// 速度與音高不對，聽起來像「音源不一樣」而不是像設定錯。
+		return nil, false, fmt.Errorf(
+			"配樂 %s 的取樣率是 %d，預期 %d（轉檔時的 -ar 設定不對）",
+			track, got, sampleRate)
+	}
+	return st, true, nil
 }
 
 // Stop 停掉目前這首。沒在播就什麼都不做。
