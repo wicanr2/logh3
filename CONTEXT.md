@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 26 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 25 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -439,32 +439,6 @@ remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以
 **證據**：[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)
 
 **核實**：要人判——現在沒有可綁的訊號：`InputCaret` 已經在了（恆亮那一版也有），而閃爍要靠一個還不存在的時間輸入。接上的時候把這條改成 absent，綁那個時間參數的名字。
-
-#### gui-check-load1e-vs3 — `tools/gui_check.sh` 十例裡 `load1e`／`vs3` 對不上
-
-*[#6](https://github.com/wicanr2/logh3/issues/6) · parity（對拍：要與原版逐位元組相同）*
-
-Ebiten 顯示層走玩家路徑（`tools/gui_check.sh`）十例，2026-09-11 量到兩例紅：
-
-| 例 | 差異 | 位置 |
-|---|---:|---|
-| `load1e` | 2,265 | `x[16,303] y[361,395]` |
-| `vs3` | 274 | `x[300,412] y[250,277]` |
-
-`load1e` 那 2,265 是左下角星域摘要面板的簽章數字（`docs/re/276` 形狀二）。
-**`internal/game` 用同一份收據是綠的**，所以畫的人沒錯，是 `cmd/gin3` 的
-腳本驅動沒有把滑鼠停留餵成同一個狀態（`refreshHoverRegion` 的觸發時機，
-`docs/re/277`）。
-
-`vs3` 那 274 個像素還沒分類（`unknown`）。
-
-矩陣 `mG1` 那一列原本寫著十例全部逐位元組相同——已改成現況。
-
-**做完的判準**：`tools/gui_check.sh` 十例全部逐位元組相同，或差異已分類並在 `mG1` 寫成核准差異。
-
-**證據**：[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)、[`docs/re/277-region-panel-follows-the-cursor.md`](docs/re/277-region-panel-follows-the-cursor.md)
-
-**核實**：要人判——訊號是 `tools/gui_check.sh` 的輸出（要 Xvfb 起 Ebiten），`verify` 不跑它。修好時連 `mG1` 那一列的數字一起改。
 
 #### strategy-report-screen — 戰略模式報告畫面還沒做
 
@@ -794,7 +768,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-29 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+30 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -955,6 +929,27 @@ framebuffer 與 palette 逐位元組相同。`workplace/receipt-check.json` 的 
 **證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)、[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)
 
 **核實**：`internal/screen/copyprot.go` 裡出現 `InputCaret` 就是做好了
+
+#### gui-check-load1e-vs3 — `tools/gui_check.sh` 十例裡 `load1e`／`vs3` 對不上
+
+*[#6](https://github.com/wicanr2/logh3/issues/6) · parity（對拍：要與原版逐位元組相同）*
+
+Ebiten 顯示層十例已在乾淨 HEAD `9915ced` 全數逐位元組相同。`load1e` 在目前狀態
+已是綠燈；`vs3` 的 274 像素已證明只是一筆漏送輸入造成的兩個游標位置差異。
+
+**卡在**：無。
+
+**做完的判準**：- `r0`、`cb1`、`key1`、`cbAlly`、`keyAlly`、`main1e`、`load1e`、`vs3`、
+  `vs4`、`vs5` 十例全數逐位元組相同。
+- `vs3` 原差異分成兩個各 137 像素、13×16 的連通區：原版游標在 (400,262)，
+  remake 在 (300,250)，其餘像素完全相同。
+- 原版收據在交棒視窗出現後還送一次 (400,262) 的框內、熱區外點擊；它不改狀態，
+  只搬游標。`tools/gui_check.sh` 補齊該輸入後差異歸零。
+- 驗證矩陣 `mG1` 已更新為 0 個未核准差異。
+
+**證據**：[`tools/gui_check.sh`](tools/gui_check.sh)、[`tools/scripts/diff_parts.py`](tools/scripts/diff_parts.py)、[`docs/re/280-cursor-baked-into-screen-specs.md`](docs/re/280-cursor-baked-into-screen-specs.md)、[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)、[`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)
+
+**核實**：`tools/gui_check.sh` 裡出現 `click 400 262` 就是做好了
 
 #### battle-unit-panel-after-rerecord — 戰場分隊面板重錄後對不上：翻譯掉了點擊的前移
 
