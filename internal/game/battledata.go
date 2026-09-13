@@ -49,7 +49,7 @@ func battleDataInk(faction int) uint8 {
 
 // OpenBattleData 打開「資料」，停在第一個分頁。
 func (g *Game) OpenBattleData() {
-	g.battleData, g.battleDataTab = true, 0
+	g.battleData, g.battleDataTab, g.battleDataOffset = true, 0, 0
 }
 
 // CloseBattleData 關掉「資料」。
@@ -78,15 +78,52 @@ func (g *Game) battleDataClick(x, y int) bool {
 	}
 	if s := g.res.BattleData; s != nil {
 		if t := s.BattleDataTabAt(x, y); t >= 0 {
-			g.battleDataTab = t
+			g.battleDataTab, g.battleDataOffset = t, 0
 			return true
 		}
-		if r := s.BattleDataRowAt(x, y); r >= 0 && g.OpenFleetDetail(r) {
+		rows := g.battleDataRows(g.battleDataTab)
+		if dir := s.BattleDataScrollAt(x, y); dir != 0 && len(rows) > s.Row.Count {
+			last := len(rows) - s.Row.Count
+			if dir < 0 && g.battleDataOffset > 0 {
+				g.battleDataOffset--
+			}
+			if dir > 0 && g.battleDataOffset < last {
+				g.battleDataOffset++
+			}
+			return true
+		}
+		if r := s.BattleDataRowAt(x, y); r >= 0 &&
+			g.battleDataOffset+r < len(rows) && g.OpenFleetDetail(g.battleDataOffset+r) {
 			return true
 		}
 	}
 	g.battleData = false
 	return true
+}
+
+// battleDataVisibleRows 回目前偏移後最多十四列。原版只保存一個活動表格
+// 偏移；開窗或換頁籤會歸零（`docs/re/303`）。
+func (g *Game) battleDataVisibleRows() [][]screen.BattleDataRun {
+	rows := g.battleDataRows(g.battleDataTab)
+	count := 14
+	if g.res.BattleData != nil && g.res.BattleData.Row.Count > 0 {
+		count = g.res.BattleData.Row.Count
+	}
+	last := len(rows) - count
+	if last < 0 {
+		last = 0
+	}
+	if g.battleDataOffset < 0 {
+		g.battleDataOffset = 0
+	}
+	if g.battleDataOffset > last {
+		g.battleDataOffset = last
+	}
+	end := g.battleDataOffset + count
+	if end > len(rows) {
+		end = len(rows)
+	}
+	return rows[g.battleDataOffset:end]
 }
 
 // battleDataRows 組出表上的每一列。

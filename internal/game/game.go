@@ -639,9 +639,10 @@ type Game struct {
 	battleMenu bool
 
 	// battleData ＝ 戰術選單「資料」開著沒有，battleDataTab 是看哪一個
-	// 分頁（0 艦隊／1 行星／2 敵艦隊）。
-	battleData    bool
-	battleDataTab int
+	// 分頁（0 艦隊／1 行星／2 敵艦隊），battleDataOffset 是第一個可見列。
+	battleData       bool
+	battleDataTab    int
+	battleDataOffset int
 
 	// battleDetail ＝ 艦隊詳細資料那一層開著沒有，battleDetailRow 是
 	// 點的是表上第幾列。
@@ -3455,7 +3456,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 			}
 		} else {
 			screen.DrawBattleData(g.res.BattleData, fb, g.res.Font,
-				g.battleDataTab, g.battleDataRows(g.battleDataTab))
+				g.battleDataTab, g.battleDataVisibleRows())
 		}
 	}
 	// 行星情報視窗（`docs/re/144`）。

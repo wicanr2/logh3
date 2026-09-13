@@ -155,6 +155,25 @@ func (s *BattleDataSpec) BattleDataTabAt(x, y int) int {
 	return -1
 }
 
+// BattleDataScrollAt 回捲軸按鈕方向：上是 -1、下是 1；中間槽或外面是 0。
+// 原版熱區是 Scroll.Boxes 的第一與最後一格，中間長槽不接受點擊。
+func (s *BattleDataSpec) BattleDataScrollAt(x, y int) int {
+	if x < s.Scroll.X || x >= s.Scroll.X+s.Scroll.W || len(s.Scroll.Boxes) < 2 {
+		return 0
+	}
+	for _, b := range []struct {
+		y, h, dir int
+	}{
+		{s.Scroll.Boxes[0].Y, s.Scroll.Boxes[0].H, -1},
+		{s.Scroll.Boxes[len(s.Scroll.Boxes)-1].Y, s.Scroll.Boxes[len(s.Scroll.Boxes)-1].H, 1},
+	} {
+		if y >= b.y && y < b.y+b.h {
+			return b.dir
+		}
+	}
+	return 0
+}
+
 // DrawBattleData 畫這張畫面：外框 → 三個標籤 → 十四列 ＋ 捲軸槽 →
 // 表頭 → 每一列的字。回畫不出來的字碼。
 //

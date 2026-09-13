@@ -115,6 +115,51 @@ func TestBattleDataContentMatchesOracle(t *testing.T) {
 	}
 }
 
+// TestBattleDataScrollMatchesOriginal 驗證 `seg000:4608` 起的捲動處理契約：
+// 每次移一列、十四列視窗、上下界夾住，換頁籤歸零；捲動後點列要開
+// 原清單中的絕對列，而不是畫面上的相對列（`docs/re/303`）。
+func TestBattleDataScrollMatchesOriginal(t *testing.T) {
+	s, err := screen.LoadBattleDataSpec(filepath.Join(root,
+		"docs/internals/data/battle-data.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g := &Game{res: &Resources{BattleData: s}, faction: 0}
+	for i := 0; i < 40; i++ {
+		g.battleUnits = append(g.battleUnits, rules.BattleUnit{
+			Faction: 0, Fleet: i, Squadron: 0, Kind: 0, Ships: i + 1, FullShips: 40,
+		})
+	}
+	g.OpenBattleData()
+	if got := len(g.battleDataVisibleRows()); got != 14 {
+		t.Fatalf("可見列數 %d，預期 14", got)
+	}
+
+	// 下按鈕每次一列，最多到 40-14=26；邊界點擊仍由資料視窗吃掉。
+	for i := 0; i < 30; i++ {
+		g.battleDataClick(s.Scroll.X, s.Scroll.Boxes[len(s.Scroll.Boxes)-1].Y)
+	}
+	if g.battleDataOffset != 26 || !g.battleData {
+		t.Fatalf("下界後 offset=%d、open=%v，預期 26、true", g.battleDataOffset, g.battleData)
+	}
+	g.battleDataClick(s.Scroll.X, s.Scroll.Boxes[0].Y)
+	if g.battleDataOffset != 25 {
+		t.Fatalf("向上一次 offset=%d，預期 25", g.battleDataOffset)
+	}
+
+	// 明細資源只需非 nil 才能驗證絕對列索引。
+	g.res.FleetDetail = &screen.FleetDetailSpec{}
+	g.battleDataClick(s.Row.X, s.Row.Y)
+	if !g.battleDetail || g.battleDetailRow != 25 {
+		t.Fatalf("捲動後首列開到 %d（open=%v），預期絕對列 25", g.battleDetailRow, g.battleDetail)
+	}
+	g.battleDetail = false
+	g.battleDataClick(s.Tab.Xs[1], s.Tab.Y)
+	if g.battleDataTab != 1 || g.battleDataOffset != 0 {
+		t.Fatalf("換頁後 tab=%d、offset=%d，預期 1、0", g.battleDataTab, g.battleDataOffset)
+	}
+}
+
 // inAny 回這個點在不在任何一個矩形裡。
 func inAny(rs [][4]int, x, y int) bool {
 	for _, r := range rs {

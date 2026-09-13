@@ -10,6 +10,25 @@ import (
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
+func TestBattleDataScrollHitboxesMatchOriginal(t *testing.T) {
+	s, err := LoadBattleDataSpec(filepath.Join("../..", "docs/internals/data/battle-data.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, tc := range []struct {
+		x, y, want int
+	}{
+		{434, 120, -1}, {447, 139, -1},
+		{434, 140, 0}, {447, 379, 0},
+		{434, 380, 1}, {447, 399, 1},
+		{433, 120, 0}, {448, 399, 0}, {434, 400, 0},
+	} {
+		if got := s.BattleDataScrollAt(tc.x, tc.y); got != tc.want {
+			t.Errorf("(%d,%d)：方向 %d，預期 %d", tc.x, tc.y, got, tc.want)
+		}
+	}
+}
+
 // 收據 `s3data` 那一局表上的字（`docs/re/111` 逐格讀出來的）。
 // 這裡是**繪製**的對拍：內容當固定輸入，證明版面與字的落點對得上原版；
 // 內容怎麼從戰場狀態算出來由 internal/game 那一側負責。
