@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 25 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 24 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -484,23 +484,6 @@ remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以
 **證據**：[`docs/re/275-fm-capture-from-opl.md`](docs/re/275-fm-capture-from-opl.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
 
 **核實**：`tools/music_fm_capture.sh` 裡還找得到 `這條路還沒走通`（自承還在 ＝ 還沒做）
-
-#### battle-formation-letters — 編隊那一行的字母規則解了，還差第二個局面的收據
-
-*[#10](https://github.com/wicanr2/logh3/issues/10) · re（逆向：機制還沒讀出來）*
-
-規則已經反組譯出來（`docs/re/293`、`docs/internals/56`）：格數 ＝ 艦隊
-`+0x0E`、前 `+0x0F` 格印 `ds:6172[該組艦種]` 的全形字母（Ｂ Ｈ Ｃ Ａ Ｄ
-Ｔ Ｅ Ｐ）、顏色由艘數比滿編分三段、其餘印「□」。remake 已改成照規則畫，
-收據 `fok`／`row3`／`form1`–`3` 整張仍然 0 個差異像素。
-差的是**第二個局面**：現有收據那一支艦隊只有旗艦一組，畫面上看得到的
-字母只有一個Ｂ，所以「兩份以上收據逐格相同」還沒達成。要補一份用
-`-poke` 造出多組編制的收據（命令列與預期畫面寫在 `docs/re/293` 末節），
-這一輪沒做是因為機器負載太高，按規則不開新的 dosgolem 執行。
-
-**做完的判準**：多組編制那一份收據做出來，規則算出來的每一格與它逐格相同。
-
-**核實**：要人判——收據 `fmx1` 做出來之後改綁 kind=receipt、batch=fmx1、files 放 screen.bin 的雜湊。在那之前沒有機器訊號——規則本身已經釘在 TestFleetCompositionMatchesOracle 與 TestCompositionLettersMatchShipKindLetters，但那兩支證明的是「同一個局面」，不是這一條要的第二份收據。
 
 #### alliance-squad-spacing — 同盟分隊的間距與排法沒解
 
@@ -768,7 +751,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-30 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+31 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1066,6 +1049,28 @@ remake 接在 `internal/audio.TuneFor`，曲號從 `Game` 那三格讀；
 **證據**：[`docs/re/285-settings-screen-hotspots.md`](docs/re/285-settings-screen-hotspots.md)、[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)
 
 **核實**：`internal/game` 裡出現 `msg-speed-inc` 就是做好了
+
+#### battle-formation-letters — 編隊那一行的字母規則解了，還差第二個局面的收據
+
+*[#10](https://github.com/wicanr2/logh3/issues/10) · re（逆向：機制還沒讀出來）*
+
+規則已經反組譯出來（`docs/re/293`、`docs/internals/56`）：格數 ＝ 艦隊
+`+0x0E`、前 `+0x0F` 格印 `ds:6172[該組艦種]` 的全形字母（Ｂ Ｈ Ｃ Ａ Ｄ
+Ｔ Ｅ Ｐ）、顏色由艘數比滿編分三段、其餘印「□」。remake 已改成照規則畫，
+收據 `fok`／`row3`／`form1`–`3` 整張仍然 0 個差異像素。
+
+第二個局面 `fmx1` 已完成：用 `-poke` 造出 B／C／D 三組編制，原版的艦隊記錄、
+壓實工作表與 `3/8` 組數互相吻合。remake 直接讀兩份記憶體傾印重建同狀態；
+編隊八格與 9×9 格盤共 22,784 像素逐格相同。可重生指令、雜湊、比較邊界與
+游標交疊區的降級理由記在 `docs/re/293` 與 `docs/playtest/009`。
+
+**卡在**：已解除。`fmx1` 的記憶體與指定區域 same-state 收據已由自動測試釘住。
+
+**做完的判準**：多組編制那一份收據做出來，規則算出來的每一格與它逐格相同。
+
+**證據**：[`docs/playtest/009-fleet-composition-multiple-groups.md`](docs/playtest/009-fleet-composition-multiple-groups.md)、[`docs/re/293-fleet-composition-letters.md`](docs/re/293-fleet-composition-letters.md)、[`internal/game/fleet_org_test.go`](internal/game/fleet_org_test.go)
+
+**核實**：收據 `fmx1` 的 1 個檔案雜湊相符
 
 #### window-frame-corners — 視窗外框的角落：沒有規則，是圖塊裡的美術
 
