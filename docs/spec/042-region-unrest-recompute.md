@@ -128,8 +128,10 @@ Game.recomputeUnrest(計數器)                                                 
 
 - remake 的 `g.turn` 在 `advanceTurn` 開頭就先加一，原版的計數器到回合尾巴之後
   才進位，所以回合中那幾次是 `g.turn − 1`。
-- `rate` 讀存檔時取 `WORK.DT?` 的 `+0xE4`、存檔時寫回（`rules.WorkFields.Rate`），
-  新遊戲取 `UnrestParams.Rate`（2／2）。
+- 載入存檔當下的 `Turn`、`Blend`、`Rate` 與統治者都取剛載入的 WORK；
+  `Rate` 是 `+0xE4`，統治者是兩邊的內政專任參謀。第 8 格的 32 格收據見
+  [`docs/playtest/014`](../playtest/014-load-slot8-unrest.md)。存檔時 `Rate`
+  仍寫回；新遊戲取 `UnrestParams.Rate`（2／2）。
 - 路徑表每一次照現在的 `+0x12` 建（`StarGraph.UnrestPaths`）。
 - 載入存檔當下那一次照舊走 `Slot.RecomputeUnrest`（`Paths` 為 nil，`docs/spec/006`）；
   新遊戲那一次照舊走 `NewGameRegions`。

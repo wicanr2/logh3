@@ -6585,5 +6585,14 @@ GitHub 的 issue 時間軸承擔。
   戰鬥或單方占據的格子跳過。
 - dosgolem `e0b6a03` 的 `rtu22b` 受控收據同時覆蓋無主但含一顆帝國行星、
   防衛力 1000／7000／2% 與仍瞄準的要塞；remake 重播後各欄位相同。
-- `tools/oracle.sh` 配合 dosgolem 現行介面，明寫 `-dump-ega 640x480=...`，
-  讓收據包裝器能恢復產生完整畫面、metadata 與逐行旗標。
+- `tools/oracle.sh` 配合 dosgolem 現行介面，改用 `-dump-screen` 與
+  `-dump-screen-png`，讓收據包裝器恢復產生完整色號、畫面、metadata 與旗標。
+
+## 2026-09-14 — #21 第 8 格載入時的未安定度參數
+
+- `loadSlotFromDisk` 重算未安定度之前，除了回合數，也從該格 WORK 取
+  `Blend`、`Rate` 與兩邊內政專任參謀；不再沿用 bootstrap 的固定值。
+- dosgolem `e0b6a03` 由正常「取進度 → 第 8 格」路徑倒出 32 筆星域表；
+  `TestLoadSlot8UnrestMatchesReceipt` 逐格比 `+0x7D` 全部相同。
+- `tools/oracle.sh` 改用現行 `-dump-screen` 與 `-dump-screen-png` 兩個入口，
+  重新同時保存色號陣列與 PNG，避免只產生 PNG 後在收尾複製失敗。

@@ -2044,9 +2044,18 @@ func (g *Game) loadSlotFromDisk(n int) {
 	if err != nil {
 		return
 	}
-	// 算式要的回合數就是這一格存檔的（`ds:8F18`，`docs/re/43`）。
+	// 載入當下那次未安定度重算讀的也是剛載入的 WORK：回合數、Blend、
+	// Rate 與兩邊的內政專任參謀（統治者）都不能沿用新遊戲固定值
+	// （`docs/spec/006`、`docs/spec/042`）。
 	params := g.res.UnrestParams
 	params.Turn = sl.Turn
+	params.Blend = sl.Blend
+	params.Rate = sl.Rate
+	for f := 0; f < 2; f++ {
+		if i := rules.StaffAdmiral(sl.Work, rules.PostDomestic, f); i >= 0 {
+			params.Ruler[f] = i
+		}
+	}
 	sl.RecomputeUnrest(g.res.Graph, params)
 	g.res.Admiral = sl.Admiral
 	g.LoadSlot(sl)

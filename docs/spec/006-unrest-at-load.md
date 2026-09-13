@@ -1,6 +1,6 @@
 # SPEC 006 — 載入時重算未安定度
 
-狀態：**CONFORMED**（已實作；三個局面 ×32 個星域算出來與量到的逐一相同）
+狀態：**CONFORMED**（四個局面 ×32 個星域逐一相同，含參數不同的第 8 格）
 證據：[`docs/re/43`](../re/43-unrest-full-disassembly.md)、
 [`docs/re/34`](../re/34-unrest-formula-skeleton.md)、
 [`docs/internals/26`](../internals/26-star-region-graph.md)
@@ -103,22 +103,23 @@ f6 = Σ艦隊+0x0F × max(指揮官 +0x0B) × max(指揮官 +0x13) / 10000
 
 ## 參數從哪裡來
 
-`Blend`（`ds:8FD4`）、`Rate`（`ds:8FF8`）、`Table`（`ds:4B28`）、
-`Base`（`ds:147E`）、統治者編號（`ds:8F4F`）與回合數（`ds:8F18`）
-**都不在原版資料檔裡**，只能從記憶體量。S3 那一格量到的值記在
-`unrest-at-load.json` 的 `params`：
+`Blend`（`ds:8FD4`）、`Rate`（`ds:8FF8`）、統治者編號（`ds:8F4F`）與
+回合數（`ds:8F18`）都在 `WORK.DT?` 對應區塊；統治者就是兩邊的內政
+專任參謀。`Table`（`ds:4B28`）與 `Base`（`ds:147E`）才是只存在執行期的
+常數。既有量測值記在 `unrest-at-load.json` 的 `params`，第 8 格另由
+`WORK.DT8` 與 `load8unrest` 收據確認：
 
-| 參數 | 新遊戲 796/1 | S2 諸神的黃昏 | S3 巴米利恩會戰 |
-|---|---|---|---|
-| `Turn` | 0 | 346 | 380 |
-| `Ruler` | 帝國 16、同盟 60 | 同左 | 同左 |
-| `Blend` | **兩邊都是 2** | 帝國 1、同盟 2 | 帝國 1、同盟 2 |
-| `Rate` | 兩邊都是 2 | 同左 | 同左 |
-| `Table` | 170 150 130 90 60 | 同左 | 同左 |
-| `Base` | 50 75 100 150 200 | 同左 | 同左 |
+| 參數 | 新遊戲 796/1 | 第 8 格亞姆力札 | S2 諸神的黃昏 | S3 巴米利恩會戰 |
+|---|---|---|---|---|
+| `Turn` | 0 | 93 | 346 | 380 |
+| `Ruler` | 帝國 16、同盟 60 | **帝國 32、同盟 60** | 帝國 16、同盟 60 | 同左 |
+| `Blend` | **兩邊都是 2** | **兩邊都是 2** | 帝國 1、同盟 2 | 帝國 1、同盟 2 |
+| `Rate` | 兩邊都是 2 | 同左 | 同左 | 同左 |
+| `Table` | 170 150 130 90 60 | 同左 | 同左 | 同左 |
+| `Base` | 50 75 100 150 200 | 同左 | 同左 | 同左 |
 
-只有 `Turn` 與新遊戲的 `Blend` 不一樣。`Blend[帝國]` 在新遊戲是 2、
-在兩格存檔都是 1——**那不是兩種難度設定，是同一個量在三百多回合之間
+`Turn`、第 8 格的帝國統治者與各局面的 `Blend` 會不同。`Blend[帝國]` 在新遊戲是 2、
+在較晚的 S2／S3 存檔都是 1——**那不是兩種難度設定，是同一個量在三百多回合之間
 掉了一級**（`docs/re/207`）。
 
 `Blend`（`ds:8FD4`）是一個 **0–4 的等級**，存檔的工作區塊 `+0xC0`
@@ -140,10 +141,14 @@ f6 = Σ艦隊+0x0F × max(指揮官 +0x0B) × max(指揮官 +0x13) / 10000
 
 ## 驗收
 
-- `internal/rules.TestUnrestAtLoad`：三個局面（新遊戲 796/1、S2、S3）
+- `internal/rules.TestUnrestAtLoad`：三個既有局面（新遊戲 796/1、S2、S3）
   各 32 個星域，算出來的未安定度與量到的**逐一相同**。
   S2、S3 的輸入直接讀存檔；新遊戲那一組的星域表載入時整份重算過，
   所以拿量到的記錄當輸入（`raw_at_load`）。
+- `internal/game.TestLoadSlot8UnrestMatchesReceipt`：走產品的第 8 格載入路徑，
+  以該格 WORK 的統治者 32／60、Blend 2／2、Rate 2／2 重算，32 格逐格與
+  dosgolem `e0b6a03` 的 `load8unrest` 收據相同。方法與雜湊見
+  [`docs/playtest/014`](../playtest/014-load-slot8-unrest.md)。
 - `internal/screen.TestRegionPanelMatchesOracle/s3rgn`：面板上的治安改成
   算出來的，那塊 320×80 仍與原版逐位元組相同。
 

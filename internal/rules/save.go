@@ -369,7 +369,8 @@ func (s *Slot) SetUnrest(region, unrest int) {
 // （規格 `docs/spec/006`）。存檔裡那一欄是存檔當下的值，原版載入時
 // 不用它——所以讀完存檔要跑這一支，畫面上的治安才會對。
 //
-// `params` 不在存檔裡（是難度與統治者那幾個全域），要另外給。
+// `params` 由呼叫端組成：Turn、Ruler、Blend、Rate 取這一格 WORK，Table 與
+// Base 取執行期常數（`docs/spec/006`）。
 func (s *Slot) RecomputeUnrest(g *StarGraph, params UnrestParams) {
 	st := &UnrestState{
 		Regions: s.Stellar, Planets: s.Planets, Fleets: s.Fleet,

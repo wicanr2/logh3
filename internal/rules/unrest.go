@@ -28,7 +28,8 @@ const (
 	admiralRule    = 0x0E // 統治者的這一格拿來乘
 )
 
-// UnrestParams 是算式要的執行期參數。都不在原版資料檔裡，只能從記憶體量
+// UnrestParams 是算式要的執行期參數。Turn、Ruler、Blend、Rate 載入存檔時
+// 來自 WORK；Table 與 Base 才是只存在執行期的常數
 // （`docs/internals/data/unrest-at-load.json` 的 `params`）。
 type UnrestParams struct {
 	// Turn 是 `ds:8F18`；算式只用它除以 10 的餘數。
