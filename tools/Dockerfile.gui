@@ -11,7 +11,7 @@ FROM golang:1.24-bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends \
       libgl1-mesa-dev libxrandr-dev libxcursor-dev libxinerama-dev \
       libxi-dev libxxf86vm-dev libasound2-dev pkg-config \
-      xvfb xauth x11-xserver-utils libgl1-mesa-dri \
+      xvfb xauth x11-xserver-utils xdotool libgl1-mesa-dri \
  && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix

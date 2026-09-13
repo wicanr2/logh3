@@ -38,6 +38,7 @@ type app struct {
 
 	shot      string
 	shotBin   string
+	stateOut  string
 	shotAfter int
 	ticks     int
 
@@ -141,6 +142,15 @@ func (a *app) dump() error {
 			return err
 		}
 	}
+	if a.stateOut != "" {
+		windowW, windowH := ebiten.WindowSize()
+		x, y := ebiten.CursorPosition()
+		receipt := fmt.Sprintf("state=%s\nwindow=%dx%d\ncursor=%d,%d\ncursor_mode=%d\n",
+			a.g.State(), windowW, windowH, x, y, ebiten.CursorMode())
+		if err := os.WriteFile(a.stateOut, []byte(receipt), 0o644); err != nil {
+			return err
+		}
+	}
 	return ebiten.Termination
 }
 
@@ -184,6 +194,7 @@ func main() {
 	script := flag.String("script", "", "開場先送進去的輸入，分號分隔："+
 		"move X Y／click [X Y]／rclick [X Y]／type 數字／enter／back")
 	shotBin := flag.String("shot-bin", "", "同 -shot，但倒的是色號陣列（可與收據逐位元組比）")
+	stateOut := flag.String("state-out", "", "倒圖時另寫 GUI 狀態、視窗與邏輯游標收據")
 	shotAfter := flag.Int("shot-after", 4, "倒圖前先跑幾格")
 	// **預設是原版**：原版按「實行」時電腦不下任何命令（`docs/re/79`），
 	// 對拍收據都靠這個前提。強化版要玩家自己開（`docs/spec/017`）。
@@ -226,6 +237,7 @@ func main() {
 		buf:       make([]byte, gfx.Width*gfx.Height*4),
 		shot:      *shot,
 		shotBin:   *shotBin,
+		stateOut:  *stateOut,
 		shotAfter: *shotAfter,
 		script:    *script,
 	}
@@ -254,6 +266,9 @@ func main() {
 	ebiten.SetWindowSize(int(float64(gfx.Width)*(*scale)), int(float64(gfx.Height)*(*scale)))
 	ebiten.SetWindowTitle("銀河英雄傳說III SP")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
+	// 遊戲會依原版素材自行畫游標；若保留作業系統游標，使用者會同時看到
+	// 即時的硬體游標與下一更新格才重畫的遊戲游標，視覺上必然不同步。
+	ebiten.SetCursorMode(ebiten.CursorModeHidden)
 	err = ebiten.RunGame(a)
 	if err != nil && err != ebiten.Termination && a.music != nil &&
 		strings.Contains(err.Error(), "oto:") {

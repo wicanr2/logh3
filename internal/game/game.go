@@ -141,6 +141,30 @@ const (
 	StateVersusShipOrder
 )
 
+// String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
+// 比較；收據不用只記一個容易因日後追加狀態而看不懂的整數。
+func (s State) String() string {
+	names := [...]string{
+		"StateMainMenu", "StateCopyProtection", "StateMainGame",
+		"StateShipOrder", "StateBuildPlan", "StateBudgetPlan",
+		"StateAdmiralList", "StateEnding", "StateCommandPhase",
+		"StateCmdMenu", "StateListMenu", "StateSysMenu",
+		"StateStandbyAdmirals", "StateInfo", "StateTaxPlan",
+		"StateProductionPlan", "StateStarList", "StateFleetList",
+		"StateAdmiralListView", "StateEnemyList", "StateExecute",
+		"StateLoadGame", "StateSaveGame", "StateSettings",
+		"StateQuitConfirm", "StateAdmiralDetail", "StateAdmiralBio",
+		"StateFleetOrg", "StateFleetNumber", "StateFleetAdjutant",
+		"StateFleetComposition", "StateFormation", "StateBattle",
+		"StateShipDelivery", "StateRegionFlipReport", "StateVersusInput",
+		"StateVersusAccount", "StateIntro", "StateVersusShipOrder",
+	}
+	if int(s) >= 0 && int(s) < len(names) {
+		return names[s]
+	}
+	return fmt.Sprintf("State(%d)", s)
+}
+
 // screenSpecName 是每個命令階段狀態對應的規格名（`docs/internals/data/`）。
 // 「實行」不在裡面——它不開畫面。
 var screenSpecName = map[State]string{
