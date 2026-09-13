@@ -15,19 +15,20 @@ import "encoding/binary"
 // 座標空間比看得到的戰場（448×360）大很多：整張戰場 128×102 格、
 // 一格 16×20，所以是 2048×2040，右上角小地圖上的白框就是視野。
 type BattleUnit struct {
-	Fleet     int `json:"fleet"`    // 屬於戰略地圖上的哪一支艦隊
-	Squadron  int `json:"squadron"` // 在艦隊裡的第幾個分隊，0 ＝ 旗艦
-	Faction   int `json:"faction"`  // 0 帝國、1 同盟
-	X         int `json:"x"`        // 現在的位置
-	Y         int `json:"y"`
-	TargetX   int `json:"target_x"` // 要去的點
-	TargetY   int `json:"target_y"`
-	Speed     int `json:"speed"`      // 一回合走多遠
-	Strength  int `json:"strength"`   // 戰力（`StrengthWeights` 算的）
-	Kind      int `json:"kind"`       // 艦種（艦艇記錄 `+0x04`）
-	Detail    int `json:"detail"`     // 顯示層級（艦艇記錄 `+0x17`）
-	Ships     int `json:"ships"`      // 現有艘數（艦艇記錄 `+0x08`）
-	FullShips int `json:"full_ships"` // 建制滿編艘數（艦艇記錄 `+0x0A`）
+	Fleet       int `json:"fleet"`        // 屬於戰略地圖上的哪一支艦隊
+	FleetNumber int `json:"fleet_number"` // 畫面上的艦隊編號（1 起）
+	Squadron    int `json:"squadron"`     // 在艦隊裡的第幾個分隊，0 ＝ 旗艦
+	Faction     int `json:"faction"`      // 0 帝國、1 同盟
+	X           int `json:"x"`            // 現在的位置
+	Y           int `json:"y"`
+	TargetX     int `json:"target_x"` // 要去的點
+	TargetY     int `json:"target_y"`
+	Speed       int `json:"speed"`      // 一回合走多遠
+	Strength    int `json:"strength"`   // 戰力（`StrengthWeights` 算的）
+	Kind        int `json:"kind"`       // 艦種（艦艇記錄 `+0x04`）
+	Detail      int `json:"detail"`     // 顯示層級（艦艇記錄 `+0x17`）
+	Ships       int `json:"ships"`      // 現有艘數（艦艇記錄 `+0x08`）
+	FullShips   int `json:"full_ships"` // 建制滿編艘數（艦艇記錄 `+0x0A`）
 
 	// RepairCap 是「修理」補得回來的上限（艦艇記錄 `+0x0C`）。它與
 	// `+0x0A` 不同——戰損會把它扣掉一點（永久損失），`+0x0A` 不動。
@@ -67,6 +68,11 @@ type BattleUnit struct {
 	// （0 移動／1 編隊／2 索敵／3 歸隊，0x7F ＝ 沒有）。
 	// 戰場命令選單用它決定「移動」可不可選（`docs/spec/023`）。
 	Action int `json:"action"`
+
+	// Seen／DetailHold 對應艦艇 `+0x16` bit0 與 `+0x18`。Seen 表示這一輪
+	// 已被敵方觀測；DetailHold 是顯示層級 3 還要維持幾輪（`docs/re/290`）。
+	Seen       bool `json:"seen,omitempty"`
+	DetailHold int  `json:"detail_hold,omitempty"`
 }
 
 // EngagementRange 回一個分隊的射程（`docs/spec/018`）。
@@ -129,6 +135,26 @@ func BattleSprite(faction, detail, kind int) int {
 	return BlankSprite
 }
 
+// BattleUnitSprite 是 `25DB:03E8` 的完整戰場分支。己方（viewer）或已到
+// Detail 3 時，旗艦畫艦隊編號，其餘畫艦種；敵方 Detail 1／2 才走概略／
+// 詳細圖示（`docs/re/85`）。
+func BattleUnitSprite(u BattleUnit, viewer int) int {
+	if u.Kind == 7 {
+		return BlankSprite
+	}
+	base := AllianceSpriteBase
+	if u.Faction == 0 {
+		base = EmpireSpriteBase
+	}
+	if u.Faction == viewer || u.Detail == SpottingMax {
+		if u.Squadron == 0 && u.FleetNumber > 0 {
+			return base + u.FleetNumber - 1
+		}
+		return base + spriteDetailOffset + u.Kind
+	}
+	return BattleSprite(u.Faction, u.Detail, u.Kind)
+}
+
 // `SPRITE.SPR` 裡單位圖示的位置（`docs/re/85`）。
 const (
 	EmpireSpriteBase   = 20 // 陣營 0 的基底
@@ -138,14 +164,9 @@ const (
 	spriteRoughOffset  = 24 // 概略：基底 ＋ 24
 )
 
-// DefaultDetail 是佈陣時給的顯示層級。
-//
-// 原版的艦艇記錄 `+0x17` 是索敵的結果：每被敵方看到一輪 ＋1（上限 3）、
-// 沒被看到就每輪掉一級，掉到 0 就不畫（`docs/re/290`、`docs/internals/38`）。
-// **索敵本身還沒接進來**（觀測者、半徑、每回合的升降都還沒有），
-// 所以這裡先一律給 2 ——單位依艦種畫成不同的圖示，不隨回合淡出。
-// 這一項是 remake 自己的選擇，不能拿去對拍。
-const DefaultDetail = 2
+// DefaultDetail 是佈陣時給的顯示層級。原版佈陣把 `+0x17` 清成 0，
+// 之後才由每回合索敵逐級升降（`docs/re/290`）。
+const DefaultDetail = 0
 
 // FormationSpacing 是舊的十格近似表使用的分隊間距（`docs/internals/38`）。
 //
@@ -315,12 +336,13 @@ func (s *Slot) Deploy(w StrengthWeights, formation *FormationSlots,
 	out := make([]BattleUnit, 0, len(ships))
 	for n, ship := range ships {
 		u := BattleUnit{
-			Fleet:    f.Index,
-			Squadron: n,
-			Faction:  f.Faction,
-			Speed:    DefaultBattleSpeed,
-			Kind:     -1,
-			Detail:   DefaultDetail,
+			Fleet:       f.Index,
+			FleetNumber: f.Number,
+			Squadron:    n,
+			Faction:     f.Faction,
+			Speed:       DefaultBattleSpeed,
+			Kind:        -1,
+			Detail:      DefaultDetail,
 		}
 		s.fillFromShip(&u, ship, w)
 		u.X, u.Y = formation.Station(x, y, facing, u.Slot)
@@ -439,7 +461,7 @@ func (s *Slot) ScoutUnit(w StrengthWeights, f Fleet, x, y int) (BattleUnit, bool
 		return BattleUnit{}, false
 	}
 	u := BattleUnit{
-		Fleet: f.Index, Squadron: scoutSquadron, Faction: f.Faction,
+		Fleet: f.Index, FleetNumber: f.Number, Squadron: scoutSquadron, Faction: f.Faction,
 		X: x, Y: y, TargetX: x, TargetY: y,
 		Speed: DefaultBattleSpeed, Kind: -1, Detail: DefaultDetail,
 	}

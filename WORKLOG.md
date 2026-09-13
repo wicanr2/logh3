@@ -6552,3 +6552,17 @@ GitHub 的 issue 時間軸承擔。
   ＋逐分隊分攤；`SkirmishDamage`／`AttackCoefficient` 只保存未執行路徑，
   不接 production。修正 `internal/rules/resolve.go` 的過期自承與 `docs/re/96`
   的追加勘誤，沒有改動結算行為。
+
+## 2026-09-14 — #12 戰場索敵升降與逐筆收據
+
+- 新增 `DecaySpotting`／`UpdateSpotting`：旗艦 200、偵察隊 250、有主行星
+  `clamp(Defence,1500,6000)/25`；候選使用分隊目的地，同輪只升一級，
+  看不到才依 3→2→1→0 與 hold 衰減。佈陣初值從 remake 自訂的 2 改回原版 0；
+  renderer 補齊 `25DB:03E8`：己方或敵方 Detail 3 的旗艦畫艦隊編號，
+  其餘分隊畫艦種。
+- 接上打有主行星時攻方 hold=2 的立即揭露，以及 AI 從第 7 回合起完全失明時
+  hold=6 的防僵局揭露；一般索敵在移動與結算後執行，衰減在回合開頭執行。
+- 從 `s3fltmove.bin`（SHA-256
+  `f365c46fa6087590b2da4db001109e457e6d604218a73f946829297aac3e9758`）摘出
+  55 筆非素材欄位作測試 fixture，最終 `+0x17`／`+0x16` bit0 55／55 一致。
+  詳細限制與方法見 `docs/playtest/012-battle-spotting.md`。

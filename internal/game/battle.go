@@ -8,13 +8,7 @@ import (
 )
 
 // battleSprite 回一個分隊要畫哪一塊 `SPRITE.SPR`（`rules.BattleSprite`）。
-func battleSprite(u rules.BattleUnit) int {
-	kind := u.Kind
-	if kind < 0 {
-		kind = -1
-	}
-	return rules.BattleSprite(u.Faction, u.Detail, kind)
-}
+func battleSprite(u rules.BattleUnit, viewer int) int { return rules.BattleUnitSprite(u, viewer) }
 
 // StartBattle 在某個星域開一場戰鬥。
 //
@@ -120,6 +114,13 @@ func (g *Game) AdvanceBattleTurn() {
 	if g.battleRand == nil {
 		g.battleRand = rules.NewRand(uint32(g.battleTurn))
 	}
+	rules.DecaySpotting(g.battleUnits)
+	for _, faction := range []int{0, 1} {
+		if faction == g.faction && !g.autoBattle {
+			continue
+		}
+		rules.RevealEnemiesIfBlind(g.battleUnits, faction, g.battleTurn)
+	}
 	if g.tactic != nil {
 		b := ai.Battlefield{
 			Units: g.battleUnits, Planets: g.battlePlanets,
@@ -166,14 +167,25 @@ func (g *Game) AdvanceBattleTurn() {
 	}
 	// 打行星讀艦隊的編制完整度（`+0x3C`），先重算一次（`docs/re/153`）。
 	rules.RefreshFleetIntegrity(g.battleFleets, g.battleUnits)
+	planetOwners := make([]int, len(g.battlePlanets))
+	for i := range g.battlePlanets {
+		planetOwners[i] = g.battlePlanets[i].Owner
+	}
 	g.battleAssaults = rules.PlanetAssault(g.battlePlanets, g.battleFleets,
 		g.battleUnits, g.res.ShipKinds, g.battleRand)
 	for _, h := range g.battleAssaults {
+		if h.Planet >= 0 && h.Planet < len(planetOwners) {
+			owner := planetOwners[h.Planet]
+			if owner == 0 || owner == 1 {
+				rules.RevealFleet(g.battleUnits, h.Fleet, 2)
+			}
+		}
 		if h.Scorer >= 0 && h.Scorer < 2 {
 			g.battleScore[h.Scorer] += h.Score
 		}
 	}
 	rules.FortressGunTickAll(g.battlePlanets)
+	rules.UpdateSpotting(g.battleUnits, g.battlePlanets)
 	g.battleTurn++
 	// 九個回合打完就結束（`docs/re/92`）；中途一方歸零也結束。
 	g.battleOver = g.battleTurn > rules.MaxBattleTurns || battleDecided(g.battleUnits)

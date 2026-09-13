@@ -51,3 +51,26 @@ func TestBattleSpriteFormula(t *testing.T) {
 		}
 	}
 }
+
+func TestBattleUnitSpriteVisibility(t *testing.T) {
+	flag := BattleUnit{Faction: 1, FleetNumber: 13, Squadron: 0, Kind: 0}
+	if got := BattleUnitSprite(flag, 1); got != 62 {
+		t.Fatalf("己方第 13 艦隊旗艦圖示 %d，要 62", got)
+	}
+	flag.Detail = 3
+	if got := BattleUnitSprite(flag, 0); got != 62 {
+		t.Fatalf("敵方 Detail 3 旗艦圖示 %d，要 62", got)
+	}
+	u := BattleUnit{Faction: 1, FleetNumber: 13, Squadron: 2, Kind: 4, Detail: 2}
+	if got := BattleUnitSprite(u, 0); got != 70 {
+		t.Fatalf("敵方 Detail 2 艦種圖示 %d，要 70", got)
+	}
+	u.Detail = 1
+	if got := BattleUnitSprite(u, 0); got != 74 {
+		t.Fatalf("敵方 Detail 1 概略圖示 %d，要 74", got)
+	}
+	u.Kind = 7
+	if got := BattleUnitSprite(u, 0); got != BlankSprite {
+		t.Fatalf("偵察隊圖示 %d，要空白 %d", got, BlankSprite)
+	}
+}

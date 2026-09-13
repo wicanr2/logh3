@@ -11,6 +11,7 @@
 | 戰術層的參考點 | 未解 | `31DB:01B6` 的參考點是呼叫端傳的，那一層還沒逆向。remake 先取敵方行星、沒有才取最近的敵艦 |
 | 一回合走多遠 | `CONFORMED` | `1C03:01B6` 逐行讀完（`docs/re/102`）：行程 ＝ 艦隊 `+0x4E × 8`，沿方位每次走 8，剩不到 8 就停。remake 兩個回合的落點與收據 `s3move` 逐像素相同 |
 | 戰場地形通行 | `READY` | `1588:891`／`4EA`／`621` 逐行讀完，兩張表倒進 `battle-terrain.json`（`docs/internals/43`）|
+| 戰場索敵 | `CONFORMED` | `2526:000E`／`2526:00F8`（`docs/re/290`）；`s3fltmove` 55 筆 `+0x17`／`+0x16` bit0 全對 |
 | 損失分攤到分隊 | `CONFORMED` | `203A:0593`，九個分隊實測相同 |
 | 單擊的分母 K | `READY` | `docs/re/94`：橢圓極座標式，整條鏈照原版的 16.16 定點重算 |
 | 單擊的攻擊係數 | `READY` | `rules.ShipKindTable.SkirmishAttack`：攻擊方 `+0x16` ÷ K，K 是**目標**的方向性防禦 |
@@ -34,6 +35,26 @@
 | `Attack` | `+0x16` | 攻擊力：決定射程，也是單擊係數的分子 |
 | `X`／`Y` | `+0x28`／`+0x2A` | 現在的位置 |
 | `TargetX`／`TargetY` | `+0x34`／`+0x36` | 要去的點——**空間查詢比的是這一組** |
+
+## 戰場索敵（`CONFORMED`）
+
+`rules.DecaySpotting` 在回合開頭處理上一輪結果；`rules.UpdateSpotting` 在
+移動與結算後依原版兩個座位各跑一次：
+
+- 每支艦隊只有旗艦是觀測者，半徑 200；已放出的偵察隊半徑 250；
+- 有主行星半徑為 `clamp(Defence, 1500, 6000) ÷ 25`；
+- 候選是敵方、未出局、非偵察隊的分隊，距離比較使用其
+  `TargetX/TargetY`；同一輪被多個觀測者覆蓋也只升一級；
+- 被看到時 `Detail` 每輪加一、上限 3；升到 3 時 `DetailHold=2`。
+  沒被看到時 2→1→0；層級 3 先扣 hold，歸零才降成 2；
+- 在有主星域打行星的攻方整支揭露為 3、hold=2；AI 從畫面第 7 回合起
+  完全看不到敵人時，把敵方一般分隊揭露為 3、hold=6。
+
+`Detail` 保存敵方對該分隊的可見層級；己方走 `25DB:03E8` 的完整分支：
+旗艦顯示艦隊編號，其餘顯示艦種。敵方升到 Detail 3 時也走同一分支。
+`TestSpottingMatchesS3FleetMoveReceipt` 以 `s3fltmove.bin` 的 55 筆在場分隊
+逐筆核對 `+0x17` 與 `+0x16` bit0，詳見
+`docs/playtest/012-battle-spotting.md`。
 
 ## 射程（`READY`）
 
