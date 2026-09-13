@@ -6541,3 +6541,14 @@ GitHub 的 issue 時間軸承擔。
 - 可追溯收據、注入位址、執行器版本與 SHA-256 記於
   `docs/playtest/011-fleet-short-move-strafe.md`；`docs/re/294` 以追加勘誤保留
   舊缺口形成原因，`docs/spec/027` 將這一段標為 `CONFORMED`。
+
+## 2026-09-14 — #14 逐一開火 issue 的前提已被收據推翻
+
+- #14 仍沿用 `docs/re/86` 的舊推論，要求把結算換成 `2350:0023` 的逐一
+  開火並追 `+0x46/+0x48` 寫入者；但 `docs/re/97` 已用 `s3kfire`／`s3kall`
+  兩次完整 14 億步戰鬥證明該路徑 0 次，正對照 `203A:06C0` 命中 6 次、
+  `20B4:1110` 也命中 6 次。
+- 活規格 `docs/spec/018` 已正確記載：原版實際跑的是現有 remake 的艦隊總損失
+  ＋逐分隊分攤；`SkirmishDamage`／`AttackCoefficient` 只保存未執行路徑，
+  不接 production。修正 `internal/rules/resolve.go` 的過期自承與 `docs/re/96`
+  的追加勘誤，沒有改動結算行為。
