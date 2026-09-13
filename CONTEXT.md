@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 28 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 27 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -695,24 +695,6 @@ remake 用命令階段那一次的值；讀存檔之後到第一次回合尾巴�
 
 **核實**：要人判——沒有可掃的自承或缺席訊號（`recomputeUnrest` 已經存在，缺的是呼叫點）。接上時綁那一支同狀態測試（`go_test`）。
 
-#### ai-month-branch-turn-offset — `runBrain` 的月底分支早一個回合（`g.turn % 10 == 9`）
-
-*[#20](https://github.com/wicanr2/logh3/issues/20) · parity（對拍：要與原版逐位元組相同）*
-
-原版 `2D10:0319` 在 AI 回合尾巴判 `ds:8F18 % 10 == 9`（月底照軍事費重算 `Blend`，否則歸零）。
-remake 的 `g.turn` 在 `advanceTurn` 開頭就先加一：第一次「實行」AI 跑的時候原版計數器是 0（`rbx292_b`）、
-`g.turn` 是 1，所以原版的條件對應 `(g.turn − 1) % 10 == 9`，現在的寫法對的是原版計數器 8。
-`TestMonthEndKeepsBlend` 設 `g.turn = 8` 再按實行；收據 `monthblend` poke 的是 9、跑完是 10。
-
-`ai-seat-order` 記的「回合 10 的同盟 `Blend` 兩邊不同（原版 2、remake 0）」與差這一格的結果相同，
-月底抄進 `ds:8FF8` 的值也跟著差（未安定度的 f1，[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md)）。
-
-**做完的判準**：月底分支改成照原版的計數器判，`TestMonthEndKeepsBlend` 改成對應 `monthblend` 的計數器 9；回合 10 的同盟 `Blend` 與收據相同。
-
-**證據**：[`docs/re/299-region-unrest-writers-and-recompute.md`](docs/re/299-region-unrest-writers-and-recompute.md)、[`docs/re/238-month-end-blend-and-fiscal-fields.md`](docs/re/238-month-end-blend-and-fiscal-fields.md)、[`docs/spec/030-blend-and-tax-rate.md`](docs/spec/030-blend-and-tax-rate.md)
-
-**核實**：`internal/game/game.go` 裡還找得到 `g\.turn%10 == 9`（自承還在 ＝ 還沒做）
-
 #### load-unrest-params-from-work — 讀存檔時算未安定度，`Blend`／`ds:8FF8`／統治者用的是固定值，不是那一格存檔的
 
 *[#21](https://github.com/wicanr2/logh3/issues/21) · parity（對拍：要與原版逐位元組相同）*
@@ -828,7 +810,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-23 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+24 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1285,6 +1267,32 @@ remake：`Game.recomputeUnrest` 接在 `refreshBlend` 的尾巴、`advanceTurn` 
 **證據**：[`docs/spec/042-region-unrest-recompute.md`](docs/spec/042-region-unrest-recompute.md)、[`docs/re/299-region-unrest-writers-and-recompute.md`](docs/re/299-region-unrest-writers-and-recompute.md)、[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/spec/006-unrest-at-load.md`](docs/spec/006-unrest-at-load.md)
 
 **核實**：`TestUnrestSameStateAfterAITurn` 釘在 `internal/game`
+
+#### ai-month-branch-turn-offset — `runBrain` 的月底分支早一個回合（`g.turn % 10 == 9`）
+
+*[#20](https://github.com/wicanr2/logh3/issues/20) · parity（對拍：要與原版逐位元組相同）*
+
+原版 `2D10:0319` 在 AI 回合尾巴判 `ds:8F18 % 10 == 9`：月底照軍事費重算
+`Blend`，否則歸零。remake 的 `g.turn` 在 `advanceTurn` 開頭已先加一，原版
+計數器因此對應 `g.turn - 1`。
+
+2026-09-13 已修正：`runBrain` 改判
+`(g.turn - 1) % rules.TurnsPerMonth == rules.TurnsPerMonth - 1`；
+`TestMonthEndKeepsBlend` 改從 `g.turn = 9` 起跑，對應 `monthblend` 收據 poke 的
+原版計數器 9。月底案例保留同盟 `Blend = 1`、總稅收 10213；平時案例仍歸零，
+相鄰的稅率與正常玩家路徑 AI 測試通過。
+
+完整 `internal/game` 測試唯一紅燈仍是 #1 已登錄的開頭動畫尾段 plane 2／3 差異，
+沒有新增回合流程失敗。
+
+**卡在**：無。
+
+**做完的判準**：月底分支改成照原版的計數器判，`TestMonthEndKeepsBlend` 改成對應
+`monthblend` 的計數器 9；回合 10 的同盟 `Blend` 與收據相同。
+
+**證據**：[`docs/re/299-region-unrest-writers-and-recompute.md`](docs/re/299-region-unrest-writers-and-recompute.md)、[`docs/re/238-month-end-blend-and-fiscal-fields.md`](docs/re/238-month-end-blend-and-fiscal-fields.md)、[`docs/spec/030-blend-and-tax-rate.md`](docs/spec/030-blend-and-tax-rate.md)、[`internal/game/builder_test.go`](internal/game/builder_test.go)
+
+**核實**：`internal/game/game.go` 裡還找得到 `g\.turn%10 == 9`（自承還在 ＝ 還沒做）
 
 #### phezzan-event-trigger — 費沙事件的觸發：費沙那一格第一次易主
 
