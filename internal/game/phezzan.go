@@ -27,6 +27,10 @@ func (g *Game) runPhezzanEvent() {
 		func(region, faction int) int {
 			return rules.CountFleets(g.fleets, region, faction)
 		})
+	// 原版費沙包裝器 `1213:023B` 在本體回來後於 `1213:0256`
+	// 立即呼叫 `090A:0E6D`（`docs/re/299`、`docs/re/304`）。事件會改
+	// 經濟、民心及叛亂格，不能留到下一個座位回合才重算。
+	g.recomputeUnrest(turn)
 	g.phezzanRebellions = append(g.phezzanRebellions[:0], result.Rebellions...)
 }
 

@@ -1213,6 +1213,8 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 			Operations:  nf.Operations,
 			// `297B:0066` 建立艦隊時寫 `+0x3C = 100`（`docs/re/214`）。
 			Morale: rules.NewFleetMorale,
+			// 原版新艦隊的 `+0x08` 是 5；下到移動命令才離開停駐狀態。
+			Parked: true,
 		})
 		// 原版 `2D76:0611` 配到艦隊槽時把提督記錄的 `+0x09` 寫成
 		// 「bit7 清掉、低七位是槽號」，副官那一筆寫同一個槽
@@ -1228,6 +1230,9 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 		}
 		led[nf.Admiral] = true
 		n++
+		// `297B:0546` 每處理完一支就由 `297B:05A6` 重算一次。
+		// AI 回合發生在原版計數器進位之前。
+		g.recomputeUnrest(g.turn - 1)
 	}
 }
 
@@ -1686,6 +1691,7 @@ func (g *Game) click(x, y int) {
 				// 帶了第幾艦隊」。
 				if g.commandSpec(StateCommandPhase) != nil {
 					g.fleets = append(g.fleets, rules.Fleet{
+						Index:    len(g.fleets),
 						Number:   len(g.fleets) + 1,
 						Faction:  g.faction,
 						Admiral:  g.detailAdmiral,
@@ -1702,7 +1708,12 @@ func (g *Game) click(x, y int) {
 						// （`docs/re/70` 的收據 `dec1` 就是這個狀態）。
 						Region: rules.CapitalRegion(g.faction),
 						Target: rules.NoTarget,
+						Parked: true,
 					})
+					// 玩家編成走 `297B:0546`，尾巴的 `297B:05A6`
+					// 立即呼叫 `090A:0E6D`；命令階段當下的治安色不能等到
+					// 下一次「實行」才更新（`docs/re/304`）。
+					g.recomputeUnrest(g.turn)
 					// 右下角清單跟著看首都那一格——剛編成的艦隊停在
 					// 那裡，回到地圖之後「艦隊」分頁要多出一列
 					// （收據 `dec1`，`docs/re/70`）。

@@ -309,3 +309,48 @@ func TestFleetDecideMatchesOracle(t *testing.T) {
 	}
 	matches(t, g, "dec1")
 }
+
+// TestFleetDecideRecomputesUnrestLikeOriginal 釘住玩家編成的
+// `297B:0546 → 297B:05A6 → 090A:0E6D` 呼叫點（`docs/re/304`）。
+func TestFleetDecideRecomputesUnrestLikeOriginal(t *testing.T) {
+	g := reachFleetOrg(t)
+	g.res.UnrestParams = rules.UnrestParams{
+		Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
+		Table: []int{170, 150, 130, 90, 60}, Base: []int{50, 75, 100, 150, 200},
+	}
+	graph, err := rules.LoadStarGraph(filepath.Join(root,
+		"docs/internals/data/star-graph.json"))
+	if err != nil {
+		t.Fatalf("讀星域圖：%v", err)
+	}
+	g.res.Graph = graph
+	if !g.regionsReady() {
+		t.Fatalf("未安定度 fixture 不完整：planets=%v graph=%v stellar=%d",
+			g.res.Planets != nil, g.res.Graph != nil, len(g.res.Stellar))
+	}
+	before := len(g.fleets)
+	for i := 0; i < rules.RegionCount; i++ {
+		rec := g.regionRecord(i)
+		if rec == nil {
+			t.Fatalf("缺星域 %d 記錄", i)
+		}
+		rec[rules.RegionUnrest] = 0xFF
+	}
+	g.Click(480, 350) // 「確認」→ 艦隊組成
+	g.Click(510, 350) // 「決定」→ 建成艦隊
+	if g.State() != StateCommandPhase {
+		t.Fatalf("點了決定之後在 %v", g.State())
+	}
+	if len(g.fleets) != before+1 || !g.fleets[len(g.fleets)-1].Parked {
+		t.Fatal("新艦隊未保留原版 +0x08 == 5 的停駐狀態")
+	}
+	changed := 0
+	for i := 0; i < rules.RegionCount; i++ {
+		if g.regionRecord(i)[rules.RegionUnrest] != 0xFF {
+			changed++
+		}
+	}
+	if changed == 0 {
+		t.Fatal("建成艦隊後 32 格未安定度都沒有立即重算")
+	}
+}

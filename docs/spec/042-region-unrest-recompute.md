@@ -6,7 +6,8 @@
 證據：[`docs/re/299`](../re/299-region-unrest-writers-and-recompute.md)（寫入者、
 呼叫端、收據 `urx299w` 的時間線、`urx299c`）、[`docs/re/43`](../re/43-unrest-full-disassembly.md)
 （`2703:0DA1` 全文）、[`docs/re/297`](../re/297-rebellion-garrison-recount-and-rng.md)
-（`rbx292_a` → `rbx292_b`）
+（`rbx292_a` → `rbx292_b`）、[`docs/re/304`](../re/304-unrest-immediate-recompute-callers.md)
+（玩家／AI 編成、整補與費沙事件的立即接線）
 相關：[`docs/spec/006`](006-unrest-at-load.md)（同一支算式在載入時）、
 [`docs/spec/035`](035-month-end-gate.md)（`090A:0E6D` 是每個座位回合都跑的共同尾巴）、
 [`docs/spec/030`](030-blend-and-tax-rate.md)（`Blend`）、
@@ -125,6 +126,8 @@ Game.recomputeUnrest(計數器)                                                 
 | `2703:08DE` | `refreshRegionPosture` 的尾巴 | `g.turn − 1` |
 | 下一個座位回合開頭 `0654:0034` → `090A:0E6D` | `finishTurn` 重算預估稅之後 | `g.turn` |
 | `2703:03AF`：`ds:8FF8 ← Blend` | `monthEnd` 開頭 `rate = blend` | — |
+| 玩家／AI `297B:0546` → `297B:05A6` | 玩家按編成「決定」；`buildFleets`／`refitFleets` 每支完成後 | 玩家 `g.turn`；AI `g.turn − 1` |
+| 費沙 `1213:023B` → `1213:0256` | `runPhezzanEvent` 本體完成後 | `g.turn − 1` |
 
 - remake 的 `g.turn` 在 `advanceTurn` 開頭就先加一，原版的計數器到回合尾巴之後
   才進位，所以回合中那幾次是 `g.turn − 1`。
@@ -167,8 +170,9 @@ Game.recomputeUnrest(計數器)                                                 
 
 ## 沒有驗到的
 
-- **其餘的 `090A:0E6D` 呼叫端 remake 沒有接**：玩家那一方的指令（編制、整補等
-  `297B` 那幾處）、費沙事件、`2E54` 與另外幾處沒讀的。原版在那些時點當場重算，
+- **其餘的 `090A:0E6D` 呼叫端 remake 沒有接**：玩家／AI 編制、整補與費沙事件
+  已由 [`docs/re/304`](../re/304-unrest-immediate-recompute-callers.md) 接上；仍缺
+  `2E54` 與另外幾處沒讀的。原版在那些時點當場重算，
   remake 要到下一次「實行」的第一次重算才跟上——命令階段的面板與治安色會
   慢一步；叛亂讀的那一次之前 remake 一定重算過，所以判定不受影響。
 - **戰鬥中的重算**：原版逐格開戰那一圈裡，戰鬥會動到艦隊（`297B:0546` 等），

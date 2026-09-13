@@ -90,6 +90,10 @@ func newPhezzanTurnGame(t *testing.T) *Game {
 
 func TestPhezzanEventRunsAfterFlipReportOnce(t *testing.T) {
 	g := newPhezzanTurnGame(t)
+	g.res.UnrestParams = rules.UnrestParams{
+		Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
+		Table: []int{170, 150, 130, 90, 60}, Base: []int{50, 75, 100, 150, 200},
+	}
 	if !g.runRegionPass(g.finishTurn) {
 		t.Fatal("費沙易主應先停在易主報告")
 	}
@@ -121,6 +125,29 @@ func TestPhezzanEventRunsAfterFlipReportOnce(t *testing.T) {
 	g.runPhezzanEvent()
 	if got := g.res.Planets.PlanetEconomy(34); got != 20620 {
 		t.Errorf("事件重複發生：費沙經濟力又變成 %d", got)
+	}
+}
+
+func TestPhezzanEventRecomputesUnrestImmediately(t *testing.T) {
+	g := newPhezzanTurnGame(t)
+	g.res.UnrestParams = rules.UnrestParams{
+		Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
+		Table: []int{170, 150, 130, 90, 60}, Base: []int{50, 75, 100, 150, 200},
+	}
+	g.regionRecord(rules.PhezzanRegion)[regionOwnerOff] = 0
+	g.phezzanPending = true
+	for i := 0; i < rules.RegionCount; i++ {
+		g.regionRecord(i)[rules.RegionUnrest] = 0xFF
+	}
+	g.runPhezzanEvent()
+	changed := 0
+	for i := 0; i < rules.RegionCount; i++ {
+		if g.regionRecord(i)[rules.RegionUnrest] != 0xFF {
+			changed++
+		}
+	}
+	if changed == 0 {
+		t.Fatal("費沙事件後 32 格未安定度都沒有立即重算")
 	}
 }
 
