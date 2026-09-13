@@ -12,15 +12,10 @@ import "github.com/wicanr2/logh3/internal/rules"
 //	            → 056A:0469（bit2／bit4／bit1）
 //	0374:03E8:  for 星域: bit2 → 開戰；否則 0374:0556（… → 2703:1908）
 //
-// 效果只改那一格自己的行星與 `+0x12`，不用亂數、不讀艦隊，而開戰只動
-// 開戰那一格——兩者互不相干，所以 remake 在判定之後**直接逐格套效果**，
-// 不必拆進戰鬥的續掃裡；結果與原版的交錯順序相同。
-//
-// ⚠ `0374:0556` 在同一格裡、叛亂效果之前還有三支 remake 沒有
-// （worklist `region-turn-upkeep-0556`，`docs/re/292` 末節）：`2703:1B48`
-// （無主格裡再跑掉一顆行星，**抽亂數**）、`2703:1CD7`（防衛力回復）、
-// `2703:1D85`（要塞砲重置）。接上 `1CD7` 時要排在叛亂效果之前——被翻的
-// 行星先回復再扣三分之一。
+// 沒有戰鬥或單方占據的格子先依序跑 `2703:1B48`（無主格再跑掉一顆
+// 行星）、`2703:1CD7`（防衛力回復）、`2703:1D85`（要塞砲重置），最後才
+// 套叛亂效果。這個順序很重要：前者會抽一次共用亂數，而叛亂行星是先回復
+// 再扣三分之一。
 
 // rand94DC 回原版的全域亂數（`ds:94DC`）。戰略 AI 與叛亂判定抽的是
 // 同一個序列（`docs/re/87`、`docs/re/209`），所以只有一份。
@@ -83,12 +78,19 @@ func (g *Game) runRebellions() []int {
 		in.Ops[f] = rules.StaffOps(g.workRecord(), g.res.Admiral, rules.PostIntel, f)
 	}
 	g.rebellionRolls = rules.DecideRebellions(in)
-	for _, roll := range g.rebellionRolls {
-		if !roll.Rebels {
+	for r, roll := range g.rebellionRolls {
+		// 原版 `0374:03E8` 的 bit2（戰鬥）與 bit4（單方占據）分支都不進
+		// `0374:0556`，所以三支月底處理與叛亂效果都只在這個分支執行。
+		if in.Occupation[r].Contested || in.Occupation[r].Occupied {
 			continue
 		}
-		rules.Rebel(g.regionRecord(roll.Region), g.res.Planets, roll.Region, false)
-		g.rebellions = append(g.rebellions, roll.Region)
+		rules.DepartNeutralPlanet(g.regionRecord(r), g.res.Planets, r, in.Rand)
+		rules.RecoverRegionDefences(g.res.Planets, r)
+		rules.ResetRegionFortressGuns(g.res.Planets, r)
+		if roll.Rebels {
+			rules.Rebel(g.regionRecord(r), g.res.Planets, r, false)
+			g.rebellions = append(g.rebellions, r)
+		}
 	}
 	return g.rebellions
 }

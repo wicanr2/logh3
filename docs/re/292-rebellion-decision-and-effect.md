@@ -324,3 +324,8 @@ poke 成 **4**（`-poke lin:60426@211000000=04`），帝國那邊的門檻掉到
 > 同盟 20／30 兩格因此多擲了亂數。判定結果不受影響，亂數次數要以
 > [`297`](297-rebellion-garrison-recount-and-rng.md) 為準（整圈 190 次，收據 `rbx297w`）。
 > remake 的實作見 [`docs/spec/041`](../spec/041-rebellion.md)。
+
+> 2026-09-14 補：三支已接入 remake。dosgolem `e0b6a03` 的受控收據
+> `rtu22b` 同時包含無主星域仍有一顆帝國行星、防衛力未滿與要塞砲仍瞄準；
+> 前後傾印與 remake production 規則逐欄位相同。可重生旗標、雜湊與限制見
+> [`docs/playtest/013`](../playtest/013-region-turn-upkeep.md)。

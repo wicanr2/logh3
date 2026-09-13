@@ -1,6 +1,6 @@
 # SPEC 041 — 叛亂：判定、效果與接進回合的位置
 
-狀態：**CONFORMED**（判定與效果；範圍與限制見「驗收」與「沒有驗到的」）
+狀態：**CONFORMED**（判定、效果及同一逐格分支的三支回合處理）
 證據：[`docs/re/292`](../re/292-rebellion-decision-and-effect.md)（反組譯
 `2703:1789`／`2703:1908`／`2703:1ADB` ＋ 收據 `rbx292`／`rbx292d`／`rbx292e`）、
 [`docs/re/297`](../re/297-rebellion-garrison-recount-and-rng.md)（駐軍閘門讀的是
@@ -100,14 +100,15 @@ u ≤ 80              → 最後一顆
 
 ```go
 rules.DecideRebellions(rules.RebellionInput{…})  // internal/rules/rebellion.go
+rules.DepartNeutralPlanet / RecoverRegionDefences / ResetRegionFortressGuns
 rules.Rebel(星域記錄, 行星表, 星域, false)
 Game.runRebellions()                            // internal/game/rebellion.go
 ```
 
 - 接在 `Game.advanceTurn` 艦隊移動（含移動花費）之後、找交戰星域之前。
-  判完 32 格就直接逐格套效果：效果只動那一格自己的行星與 `+0x12`，不抽
-  亂數、不讀艦隊；開戰只動開戰那一格——兩者互不相干，與原版「判定 →
-  （開戰與效果交錯）」的結果相同。
+  判完 32 格後逐格檢查 bit2／bit4 對應態勢；有戰鬥或單方占據就跳過，
+  否則依原順序執行 `1B48 → 1CD7 → 1D85 → 1908`。無主格的 `1B48`
+  與叛亂共用 `Game.rand94DC()`；防衛力先回復，之後才套叛亂扣除。
 - 亂數用 `Game.rand94DC()`，就是戰略 AI 那一份（`strategyRand`，原版
   `ds:94DC`，開局種子 `D3DC167E`）。原版只有一個全域種子，remake 也只留
   一份；`OriginalBrain` 改成從同一支取。
@@ -146,6 +147,9 @@ Game.runRebellions()                            // internal/game/rebellion.go
   回合尾巴依行星重算的 32 格擁有者都與收據相同。
 - 另有門檻階梯、翻哪一顆（含「排序沒用」）、`2703:1ADB` 兩條分支、
   「一格十次、閘門不抽」的單元測試。缺收據就 skip。
+- `internal/rules/regionupkeep_test.go` 的 `TestRegionUpkeepMatchesReceipt` 重播
+  `rtu22b`：含「星域無主但仍有一顆帝國行星」與防衛力未滿、要塞砲仍瞄準的
+  受控局面；三支結果逐欄位相同。完整收據見 [`docs/playtest/013`](../playtest/013-region-turn-upkeep.md)。
 
 `internal/game/rebellion_test.go`（remake 自己走同一條玩家路徑：新遊戲 →
 同一時點 poke 提督 13 的營運 → 系統指令 → 實行）：
