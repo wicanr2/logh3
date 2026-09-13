@@ -21,6 +21,14 @@ func newTestGame(t *testing.T) *Game {
 		t.Fatal(err)
 	}
 	res.Entries = e
+	if res.Formation == nil {
+		formation, err := rules.LoadFormationSlots(filepath.Join(root,
+			"docs/internals/data/battle-formation-slots.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.Formation = formation
+	}
 	if res.Graph == nil {
 		graph, err := rules.LoadStarGraph(filepath.Join(root,
 			"docs/internals/data/star-graph.json"))
@@ -132,12 +140,14 @@ func TestStartBattleDeploys(t *testing.T) {
 		t.Errorf("旗艦在 (%d,%d)，不是星域 %d 的任何一個入口", u.X, u.Y, region)
 	}
 	// 分隊要散開，不能疊在一起。
-	seen := map[[2]int]bool{}
-	for _, v := range g.battleUnits {
-		if seen[[2]int{v.X, v.Y}] {
-			t.Fatalf("有兩個分隊疊在 (%d,%d)", v.X, v.Y)
+	seen := map[[2]int]int{}
+	for i, v := range g.battleUnits {
+		if prev, ok := seen[[2]int{v.X, v.Y}]; ok {
+			p := g.battleUnits[prev]
+			t.Fatalf("第 %d 個分隊（艦隊 %d／分隊 %d／槽 %d）與第 %d 個（艦隊 %d／分隊 %d／槽 %d）疊在 (%d,%d)",
+				prev, p.Fleet, p.Squadron, p.Slot, i, v.Fleet, v.Squadron, v.Slot, v.X, v.Y)
 		}
-		seen[[2]int{v.X, v.Y}] = true
+		seen[[2]int{v.X, v.Y}] = i
 	}
 }
 

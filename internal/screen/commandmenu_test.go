@@ -10,7 +10,7 @@ import (
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
-// TestCommandMenuMatchesOracle 把三張命令選單逐位元組對收據
+// TestCommandMenuMatchesOracle 把四張命令選單逐位元組對收據
 // （`docs/spec/023`）。
 //
 // 三份收據走同一條前置序列，只差最後一下點在哪個分隊上：
@@ -18,6 +18,7 @@ import (
 //	s3cmdsq3  分隊選單（移動／編隊），游標在第一項上
 //	s3cmdfl3  艦隊選單（移動／戰鬥／索敵），被夾到上面、游標在框外
 //	s3cmdoff  分隊行動改成 0 讓「移動」不可選
+//	s3plmenu  點行星後的情報／補給／補充選單
 //
 // 框不透明，所以畫在空白畫布上就能直接比那個矩形。收據上有原版自己畫的
 // 游標，壓在框裡面，所以這裡也要畫——它吃的是**滑鼠**座標
@@ -54,6 +55,7 @@ func TestCommandMenuMatchesOracle(t *testing.T) {
 		{"s3cmdsq3", CommandMenuSquadron, 261, 258, []bool{true, true}},
 		{"s3cmdfl3", CommandMenuFleet, 298, 369, []bool{true, true, true}},
 		{"s3cmdoff", CommandMenuSquadron, 261, 258, []bool{false, true}},
+		{"s3plmenu", CommandMenuPlanet, 60, 60, []bool{true, true, true}},
 	}
 	for _, c := range cases {
 		t.Run(c.batch, func(t *testing.T) {

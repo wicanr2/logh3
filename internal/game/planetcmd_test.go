@@ -1,9 +1,12 @@
 package game
 
 import (
+	"os"
 	"path/filepath"
 	"testing"
 
+	"github.com/wicanr2/logh3/internal/asset"
+	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 
 	"github.com/wicanr2/logh3/internal/screen"
@@ -83,6 +86,35 @@ func TestPlanetMenuOpensAndEnables(t *testing.T) {
 	// 選單開著的時候右側不換分隊面板（點的是行星不是分隊）。
 	if _, ok := g.unitPanelView(); ok {
 		t.Error("點行星不該把右側換成分隊面板")
+	}
+
+	// 行星選單必須真的畫出來。這曾被 drawBattle 的「一定要有分隊索引」
+	// 條件擋掉：狀態開了、點擊也能吃，畫面卻完全沒有選單。
+	if g.res.BattlePanel == nil {
+		b, err := os.ReadFile(filepath.Join(root, "org_game/extracted/ANI_PNL0.A98"))
+		if err != nil {
+			t.Skipf("缺 ANI_PNL0.A98，跳過：%v", err)
+		}
+		g.res.BattlePanel, err = asset.DecodeAMGImage(b)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	g.battleCmd = false
+	base := append([]byte(nil), g.Frame().Pix...)
+	g.battleCmd = true
+	got := g.Frame().Pix
+	mw, mh := g.res.CommandMenus.Size(g.battleCmdKind, n)
+	diff := 0
+	for y := g.battleCmdY; y < g.battleCmdY+mh; y++ {
+		for x := g.battleCmdX; x < g.battleCmdX+mw; x++ {
+			if got[y*gfx.Width+x] != base[y*gfx.Width+x] {
+				diff++
+			}
+		}
+	}
+	if diff == 0 {
+		t.Error("行星選單狀態已開，但 Frame 沒畫出任何選單像素")
 	}
 	// 右鍵關掉。
 	g.RightClick(px, py)

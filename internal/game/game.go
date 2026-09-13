@@ -3394,14 +3394,23 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 			g.battleMenuX, g.battleMenuY, 0)
 	}
 	// 命令選單開在游標處，反白帶跟著游標走（`docs/spec/023`）。
-	if g.battleCmd && g.res.CommandMenus != nil && g.res.Font != nil &&
-		g.battleCmdUnit >= 0 && g.battleCmdUnit < len(g.battleUnits) {
+	if g.battleCmd && g.res.CommandMenus != nil && g.res.Font != nil {
 		cm := g.res.CommandMenus
 		n := cm.ItemCount(g.battleCmdKind)
-		sel := cm.CommandMenuRowAt(g.battleCmdKind, g.battleCmdX, g.battleCmdY, g.mouseX, g.mouseY, n)
-		screen.DrawCommandMenu(cm, fb, g.res.Font, g.res.FrameTiles, g.battleCmdKind,
-			g.commandMenuEnabled(g.battleCmdKind, g.battleUnits[g.battleCmdUnit]),
-			g.battleCmdX, g.battleCmdY, sel)
+		var enabled []bool
+		switch {
+		case g.battleCmdUnit >= 0 && g.battleCmdUnit < len(g.battleUnits):
+			enabled = g.commandMenuEnabled(g.battleCmdKind, g.battleUnits[g.battleCmdUnit])
+		case g.battleCmdPlanet >= 0 && g.battleCmdPlanet < len(g.battlePlanets):
+			enabled = g.planetMenuEnabled(g.battleCmdPlanet)
+		default:
+			n = 0
+		}
+		if n > 0 {
+			sel := cm.CommandMenuRowAt(g.battleCmdKind, g.battleCmdX, g.battleCmdY, g.mouseX, g.mouseY, n)
+			screen.DrawCommandMenu(cm, fb, g.res.Font, g.res.FrameTiles, g.battleCmdKind,
+				enabled, g.battleCmdX, g.battleCmdY, sel)
+		}
 	}
 	// 「資料」是不透明的一層，蓋掉戰場那一塊（`docs/spec/021`）。
 	if g.battleData && g.res.BattleData != nil && g.res.Font != nil {
