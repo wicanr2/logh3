@@ -3405,6 +3405,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	screen.DrawMinimapPlanets(g.res.Battle, fb,
 		rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH))
 	screen.DrawMinimapUnits(g.res.Battle, fb, g.battleUnits)
+	screen.DrawBattleGridResidue(g.res.Battle, fb)
 	screen.DrawBattleStatusFrame(g.res.Battle, fb, g.res.FrameTiles)
 	// 點到自己的分隊時右側換成分隊面板（`docs/re/118`）。
 	if v, ok := g.unitPanelView(); ok && g.res.Font != nil {

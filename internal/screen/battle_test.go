@@ -77,14 +77,10 @@ func TestBattleMatchesOracle(t *testing.T) {
 	DrawMinimap(s, fb, cells, BattleView{Col: 66, Row: 30})
 	DrawMinimapPlanets(s, fb, rules.PlanetSites(cells, s.Field.TileW, s.Field.TileH))
 	DrawMinimapUnits(s, fb, battleMinimapUnits)
-	// 兩處排除，都寫明理由：
-	//   1. 收據上的滑鼠游標（dosgolem 畫的，remake 不畫）；
-	//   2. 小地圖下緣那一列（`docs/re/89`，內容還沒解）。
+	DrawBattleGridResidue(s, fb)
+	// 收據上的滑鼠游標由 dosgolem 畫、remake 不畫，因此只排除這一處。
 	skip := func(x, y int) bool {
-		if x >= 560 && x <= 571 && y >= 125 && y <= 140 {
-			return true
-		}
-		return y == 203 && x >= s.Minimap.X && x < s.Minimap.X+s.Minimap.W
+		return x >= 560 && x <= 571 && y >= 125 && y <= 140
 	}
 	if os.Getenv("LOGH3_DUMP_RESIDUAL") != "" {
 		for y := s.Panel.Y; y < s.Panel.Y+panel.H; y++ {

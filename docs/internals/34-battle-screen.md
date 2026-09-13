@@ -257,8 +257,10 @@ remake 照這個規則畫出來的面板 ＋ 地形 ＋ 格線與收據 `s3ai6`
 `internal/screen/battle.go` 的 `DrawMinimap`、`DrawMinimapPlanets`
 與 `DrawMinimapUnits`）。
 
-小地圖下緣 y=203 那一列（128 像素）不屬於小地圖，內容還沒解——
-不是地形的任何一列（最好的對齊只有 72/128），也不是面板的底色。
+小地圖下緣 y=203 那一列（128 像素）不屬於小地圖。它是格表重畫空白
+內容格時，`2376:10B7` 的 19／20／20 列合成留下的固定殘留；小地圖只覆蓋
+到 y=202，所以底列仍可見。固定遮罩與呼叫證據見
+[`docs/spec/046`](../spec/046-battle-grid-residue.md) 與 [`docs/re/103`](../re/103-minimap-y203-strip.md)。
 
 排除掉的假設：不是 `BLOCK_3.BLK`、不在 `ANI_PNL1`／`ANI_PNL2` 裡、
 也不是星域地圖 `STRMAP.BIT` 的縮圖（最好的對齊只有 15% 吻合）。

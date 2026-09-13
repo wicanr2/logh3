@@ -344,6 +344,30 @@ type MinimapSpec struct {
 	PlanetInk     uint8          `json:"planet_ink"`
 }
 
+// battleGridResidueMask 是原版格表在小地圖下方留下的固定一列。
+// 它來自空白內容格的 19／20 列字形合成，不是小地圖第 129 列
+// （docs/spec/046）。每一位由高位到低位對應由左到右的像素。
+var battleGridResidueMask = [...]byte{
+	0xCE, 0xCE, 0xC5, 0xCE, 0xC5, 0xCE, 0xC5, 0xCE,
+	0xE5, 0xCE, 0xE5, 0xCE, 0xE5, 0xCE, 0xC5, 0xCE,
+}
+
+// DrawBattleGridResidue 重現原版格表重畫漏在小地圖下方的固定底列。
+func DrawBattleGridResidue(s *BattleSpec, fb *gfx.Framebuffer) {
+	m := &s.Minimap
+	if m.W != len(battleGridResidueMask)*8 {
+		return
+	}
+	y := m.Y + m.H
+	for i, bits := range battleGridResidueMask {
+		for bit := 0; bit < 8; bit++ {
+			if bits&(0x80>>bit) != 0 {
+				fb.Set(m.X+i*8+bit, y, 1)
+			}
+		}
+	}
+}
+
 // DrawMinimap 畫右上角的小地圖。
 //
 // 三層（`docs/internals/34`）：

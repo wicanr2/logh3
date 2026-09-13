@@ -6635,3 +6635,11 @@ GitHub 的 issue 時間軸承擔。
   同盟左下區均為 88 個非底色像素（只有外框），不存在陣營相反規則。
 - `TestAllianceCommandPhaseScreens` 移除串接 workaround，十二張各自依收據
   輸入順序從正常玩家路徑重走並逐位元組通過；勘誤與雜湊見 `docs/re/302`。
+# 2026-09-14：解出戰場 y=203 格表殘留（issue #18）
+
+- 用 dosgolem `e0b6a03` 重跑 `s3strip-write-calls`／`s3strip-source-calls`，把
+  `y=203` 追到 `341B:00EE → 2376:0E0D → 10B7` 的空白內容格繪製；確認舊
+  「七個元件」解讀其實是同一畫面重畫七次。
+- 新增 READY／CONFORMED 規格 `docs/spec/046` 與
+  `screen.DrawBattleGridResidue`，把固定殘留與 128×128 小地圖資料分開。
+- `TestBattleMatchesOracle` 移除 y=203 排除，只保留 dosgolem 滑鼠游標排除。
