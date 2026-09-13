@@ -6390,3 +6390,20 @@ GitHub 的 issue 時間軸承擔。
 - 原先把報表 Python 由主機改走 `tools/py.sh` 時使用 heredoc，但包裝器沒有 `docker
   run -i`，容器只收到 EOF，會靜默成功而不更新 JSON。現把邏輯拆成受版控的
   `tools/scripts/receipt_check_report.py`；實測重複名稱採最後一列，壞欄數會失敗即關閉。
+
+## 2026-09-13 — #3 收據全數重錄完成
+
+- 從 408/454 繼續逐組裁決其餘 46 份：重新對準四份系統選單與三份月報時點，重錄
+  六份 VGA、兩份結局、20 份已證實為舊執行器錯誤產物的開場診斷，以及
+  `click4`、`main1b`、`main1c`、`save3e`、`plan59`、`shippct2`。
+- 最後五份戰鬥收據先比結構化狀態：艦隊移動的 11 個快照與完整艦隊表一致，17 艘
+  受擊艦艇的前後欄位與差值一致，閒置射擊案例只剩行星動畫欄位不同。確認規則狀態
+  相同、差異限於顯示／動畫相位後才重錄。
+- 全部正式收據都綁定乾淨的 dosgolem `e0b6a03` 與完整旗標，覆蓋前原件保留於
+  `workplace/oracle-prev/`；獨立第二跑共 454/454 份 framebuffer 與 palette
+  逐位元組相同。最終 `workplace/receipt-check.json` SHA-256 為
+  `da23b4b4302bd9d26693706f4b58f1c0d8b4338c87b019b23bde115f9c267076`。
+- 詳細分組、代表雜湊、戰鬥欄位證據與推論等級已追加到 `docs/re/276`。
+- `tools/go.sh test ./...` 的其他套件通過；唯一紅燈是
+  `internal/asset.TestVO5MatchesOriginalScreen` 的 plane 2／3。這是 #1
+  `intro-full-diff` 已明列、等待使用者決定的尾段播放取捨，不屬於 #3 的收據可重現判準。

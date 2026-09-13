@@ -114,3 +114,63 @@ framebuffer 與 palette 上逐位元組相同。metadata 全部綁定乾淨的 d
 八份的 `pal.bin` SHA-256 都是
 `28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8`。
 把這八筆最新結果併回報表後，454 份裡 408 份一致、46 份仍不同。
+
+## 2026-09-13 收尾：454/454 份可重現
+
+其餘 46 份沒有用「看起來差不多」一概覆蓋，而是依各自證據重新對準輸入時點、
+重跑診斷或核對結構化狀態。正式收據仍在 `workplace/oracle/`，覆蓋前原件保留於
+`workplace/oracle-prev/`；每份正式收據另以相同旗標獨立跑第二次。最終報表
+`workplace/receipt-check.json` 記錄 dosgolem `e0b6a03`、454 份全數
+`screen_diff=0` 且 `pal_diff=0`，其 SHA-256 為
+`da23b4b4302bd9d26693706f4b58f1c0d8b4338c87b019b23bde115f9c267076`。
+
+處置分組如下：
+
+- `own24`、`pladump`、`rgndump`、`turn10`：把最後一次系統選單點擊重新對準
+  600,000,000 指令；四份最後畫面相同，SHA-256
+  `7be793b40d9029d20b7682bc3021c73d0831fa526821c37f2dfcc04f1f8996a5`。
+- `capDATE`、`capNUM`、`s2fleet2`、`fltlst`、`s2poke`、`s2poke2`：用修正後的
+  VGA 執行語意重錄；例如 `capDATE` 為
+  `c2bf2f975d402c1714a74273c415dbe754fe6a7ed8225579d0a2748cdb567fc1`。
+- `ending-empire`、`ending-alliance`：依原旗標重錄，畫面分別為
+  `9762640a21897ada24b5452bf6ac94fb79f6e1ffa48f02a2b00507c5b6eb9e92`、
+  `4f1b3914fa3337c02c0bc6f1815057e1dbecacc5659a4bd34aa45ee18601240a`。
+- 20 份 `intro*` 診斷收據：`docs/re/283` 已證實舊執行器的 MCB 重疊讓兩個
+  緩衝區只差 40 bytes，舊 framebuffer 是執行器改寫程式碼後的無效產物；修正後
+  緩衝區分離、421 組資料按檔案順序解碼，且 48 幀與 remake 逐位元組相同。因此
+  保留同一診斷旗標與事件條件重錄，不要求正確執行器重現錯誤 framebuffer。
+- `monthorder`、`monthdismiss`、`monthreports`：用乾淨輸入掃描月報時點，右鍵事件
+  定在 249m、255m、261m；`monthorder` 只剩兩個 13×16 游標矩形差異後重錄，另兩份
+  在 265m 已與舊畫面逐位元組相同。其畫面 SHA-256 分別為
+  `dc2841caa79790235c9bddeb13a485add485a9da05284e43677d9d5cf99000fe` 與
+  `e8e7cbb89b0e8c1c4d80a449106f9f69abc9f6560ed74c8814bfba9beb16a1a2`。
+- `click4`、`main1b`、`main1c`、`save3e`：以既有正常輸入路徑重錄；畫面 SHA-256
+  分別為 `04c188f1fa162dce0f286eab1bbedf341631b18f97aa4cb8994ebb94c2abd9cd`、
+  `1e82a6461410d8e63f5374976f3005f79ed8b776fc2f5734023428a30333cf4e`（後兩份相同）、
+  `95b3592702cfe7eaf8ecdad46202d77d623f90f09538507a8bc41a53c8d7f4a0`。
+- `plan59`、`shippct2`：診斷事件仍命中同一組位址與值轉移；前者在 `543A9`
+  觀察到 `00→01→00`，後者在 `5DAC3` 觀察到 `19→14→07`。畫面 SHA-256 分別為
+  `2a735a6a6a94e302a5377b58fa1aec012f8504a477af82ea6ccfd2f02e8e69a6`、
+  `e79d3ed45682967773fa68221d914ea6753971e6cdde8cb1985acd4137a3bf32`。
+
+最後五份戰鬥收據另外做了結構化同狀態核對，不能只靠游標或版面分類器：
+
+- `s3fltseq` 的 11 個快照中，艦隊 28、30 的行動、旗標、朝向、目標朝向、每回合預算、
+  剩餘預算、位置、起點與終點逐欄相同；最後整張 32×122-byte 艦隊表也相同。
+- `s3gunfire2` 的 17 艘實際受擊艦艇，在欄位 `+0x0C`、`+0x0E`、`+0x12` 的前值、
+  後值與差值全部與舊收據相同。
+- `s3gunidle` 的完整艦隊表相同；注入行星的 65-byte 區域只在 `+0x4C/+0x4D`
+  動畫相關欄位不同，射擊與閘門資料相同。
+
+因此五份可判為相同戰鬥語意、只有顯示／動畫相位不同，之後才重錄。`s3fltmove`、
+`s3fltseq`、`s3fltstep` 的畫面 SHA-256 同為
+`50667808126bc5a302fadc597e73a4f40ab5b994d9886f4b21bf4680dcd96e8b`；
+`s3gunidle` 為 `bce056a90b15cd54eac29ac2712ddcfe0a4c2408be11c11182cfe88300766a38`；
+`s3gunfire2` 為 `0d16f649fdb56fafee52d7cebdef9654883e72096fa3dad0651d23a66d86ef9f`。
+五份 palette SHA-256 都是
+`765462f42f56e5e5d135948bf27f15c171abe8824290b1ae7a73fd445e8f73f9`。
+
+證據等級：454 份第二跑的 framebuffer／palette 一致性與上述結構欄位比較為
+`proven`；五份戰鬥畫面差異只由顯示／動畫相位造成，依相同規則狀態與資料表結果判為
+`strong inference`。這項結論只證明這 454 份已登錄收據在 dosgolem `e0b6a03`
+可重現，不延伸宣稱尚未收錄的玩家路徑或整款遊戲已完成 parity。
