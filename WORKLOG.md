@@ -6596,3 +6596,14 @@ GitHub 的 issue 時間軸承擔。
   `TestLoadSlot8UnrestMatchesReceipt` 逐格比 `+0x7D` 全部相同。
 - `tools/oracle.sh` 改用現行 `-dump-screen` 與 `-dump-screen-png` 兩個入口，
   重新同時保存色號陣列與 PNG，避免只產生 PNG 後在收尾複製失敗。
+
+## 2026-09-14 — #39 結局圖 plane 2／3 新收據對拍
+
+- 全 50 張 VO5 對 dosgolem `e0b6a03` 新 `ending-empire` 收據做候選位置
+  比較，唯一零差異組合是 `ENDT30.VO5 @ (0,40)`；舊 `(0,80)` 只與會
+  覆寫程式碼的舊執行器收據相同。
+- `screen.EndingImageY` 從 80 修正為 40，與原註解「640×400 在 640×480
+  上下各留 40 列」一致；VO5 解碼層與產品顯示層的 plane 2／3 均歸零。
+- 新增 `docs/re/301` 保存新舊收據、素材雜湊與全量反對照；`docs/spec/044`
+  經 READY 契約實作並升為 CONFORMED。完整 `internal/asset`、`internal/game`
+  回歸全數通過，原先唯一已知的遊戲層紅燈消除。

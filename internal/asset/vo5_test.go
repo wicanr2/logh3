@@ -56,7 +56,9 @@ func TestVO5MatchesOriginalScreen(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	const W, offY = 640, 80
+	// 400 列圖在 480 列畫布上下各留 40 列（`docs/spec/044`）。asset
+	// 不能反向 import screen（會形成循環），所以這裡明寫收據座標。
+	const W, offY = 640, 40
 	for _, plane := range []uint8{2, 3} {
 		bad := 0
 		for y := 0; y < img.H; y++ {
