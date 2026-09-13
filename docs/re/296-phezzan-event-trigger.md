@@ -338,3 +338,16 @@ ds:988E 從頭到尾沒有被寫；ds:8F48 0；回合計數器在 #222,000,000 �
 旗標一個一行存在 `workplace/oracle/pzx296{,n,g,s}/flags.txt`。`pzx296` 的 probe 跑完之後
 `tools/oracle.sh` 在複製階段被外層 `timeout 580` 中斷，`meta.txt`／`flags.txt`／`screen.*`
 依同一套步驟補齊（`meta.txt` 裡寫明）。
+
+## 2026-09-14 remake 續接
+
+`internal/rules.RunPhezzanEvent` 與 `internal/game` 已把本篇的觸發、本體、懲罰、
+一次性 `WORK +0x34` 旗標及戰略 AI 態勢碼接進正式回合。測試
+`TestPhezzanEventMatchesPZX296Receipt` 直接拿本篇 `#228M` 與 `#232M` 切片重播：
+81 筆行星資料逐位元組一致；星域欄位只略過本測試不重複驗、且已有獨立規則的
+`+0x7D` 未安定度。另有不換手、重複登記、存檔保存，以及戰術戰鬥僅人類勝者
+登記的遊戲層測試。
+
+這項續接沒有把「戰術層缺原版收據」升格：該分支仍是本篇反組譯已證實、
+remake 接線測試通過，但不是原版同狀態收據。事件訊息畫面則留在獨立的
+`strategy-report-screen` worklist，不混入本篇規則完成聲明。

@@ -210,7 +210,7 @@ func RebelPlanets(unrest, count int, all bool) []int {
 // `RebelPlanets` 挑的那幾顆各跑一次 `RebelPlanet`。
 //
 // 每回合的叛亂 `全部旗標` 是 0；費沙事件那一個呼叫端傳 1（整格脫離，
-// `docs/re/292` 末節，remake 還沒有費沙事件）。
+// `docs/re/292` 末節，見 `RunPhezzanEvent`）。
 //
 // `+0x12 = 2` 是暫時的：回合尾巴會依行星重算擁有者（`2703:159B`）。
 // 開局那種「一格全是同一方」的星域掉一顆之後混雜，重算出來也是 2，

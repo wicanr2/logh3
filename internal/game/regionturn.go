@@ -60,9 +60,14 @@ func (g *Game) recomputeRegionOwners() int {
 			changed++
 			g.pendingFlips = append(g.pendingFlips,
 				RegionFlip{Region: i, OldOwner: old, NewOwner: o})
+			if i == rules.PhezzanRegion && !g.phezzanBattleResolved &&
+				!rules.PhezzanOccurred(g.workRecord()) {
+				g.phezzanPending = true
+			}
 		}
 		rec[regionOwnerOff] = byte(o)
 	}
+	g.phezzanBattleResolved = false
 	return changed
 }
 

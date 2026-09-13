@@ -35,7 +35,10 @@ func (g *Game) OriginalBrain() ai.Brain {
 		Ships:       g.fleetShipTotals,
 		Routes:      g.res.AdvanceRoutes,
 		Rand:        rnd,
-		Support:     g.buildSupport(),
+		PhezzanOpenNow: func() bool {
+			return rules.PhezzanOccurred(g.workRecord())
+		},
+		Support: g.buildSupport(),
 	}
 }
 

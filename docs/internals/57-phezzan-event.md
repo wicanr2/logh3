@@ -160,6 +160,15 @@ pct = t >= 600 ? 0 : ds:328E[t ÷ 100]
 
 ## remake
 
-還沒有（worklist `phezzan-event-impl`）。接的位置：回合尾巴逐格重算擁有者之後、判勝負之前；
-戰術戰鬥結束時的擁有者重算也要登記（限人類座位是新擁有者）。`internal/ai.StateCode` 的
-`phezzanOpen` 就是 `ds:8F48 != 0`。
+2026-09-14 已接上（GitHub #23）：
+
+- `rules.RunPhezzanEvent` 實作經濟力轉移、無駐軍邊境整格叛離、人類座位懲罰與
+  星域經濟力重算；本機測試直接重播 `pzx296_228.bin` → `pzx296_232.bin`，
+  81 筆行星逐位元組相同，星域只略過已有獨立規則與收據的 `+0x7D`。
+- `Game` 在逐格重算擁有者時登記，易主報告全部關閉後、月底與勝負處理前發動；
+  戰術戰鬥保留原版「只有人類座位是新擁有者才登記」的分支。
+- 一次性旗標直接讀寫 `WORK.DT? +0x34`，存檔會保留；`OriginalStrategy` 每回合
+  動態讀這一格，因此 `StateCode` 的 `phezzanOpen` 不再固定為 false。
+
+事件兩頁訊息與逐格叛亂報告仍由 worklist `strategy-report-screen`（#8）負責；
+這不影響本頁已證實的狀態轉移。

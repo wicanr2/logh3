@@ -319,7 +319,21 @@ func (g *Game) EndBattle() {
 		g.fleets = g.slot.Fleets(g.res.Weights)
 	}
 	if g.res.Planets != nil {
+		oldOwner := rules.RegionOwnerNone
+		if rec := g.regionRecord(g.battleRegion); rec != nil {
+			oldOwner = rules.RegionOwnerOf(rec)
+		}
 		g.res.Planets.ApplyBattlePlanets(g.battlePlanets)
+		newOwner := g.res.Planets.RegionOwner(g.battleRegion)
+		if g.battleRegion == rules.PhezzanRegion && oldOwner != newOwner {
+			// 戰術戰鬥的原版呼叫端只有在人類座位自己拿下時登記；電腦
+			// 拿下後，回合尾巴因 +0x12 已更新，也不會補登記。
+			g.phezzanBattleResolved = true
+			if (g.versus || newOwner == g.faction) &&
+				!rules.PhezzanOccurred(g.workRecord()) {
+				g.phezzanPending = true
+			}
+		}
 	}
 	// 原版一個回合會把**每一個**交戰星域都打完：`0374:03E8` 逐格掃，
 	// 打完一格接著掃下一格，全部打完才走回合結束那條鏈

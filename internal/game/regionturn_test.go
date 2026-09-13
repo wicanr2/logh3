@@ -2,6 +2,7 @@ package game
 
 import (
 	"encoding/binary"
+	"os"
 	"path/filepath"
 	"testing"
 
@@ -50,6 +51,117 @@ func regionPass(g *Game) int {
 	g.pendingFlips = nil
 	g.refreshRegionPosture()
 	return n
+}
+
+func newPhezzanTurnGame(t *testing.T) *Game {
+	t.Helper()
+	g := newRegionTurnGame(t)
+	per := make([]int, rules.RegionCount)
+	per[0], per[1], per[10], per[14], per[16], per[31] = 1, 32, 1, 1, 45, 1
+	g.res.Planets = &rules.Planets{PerRegion: per,
+		Data: make([]byte, rules.PlanetHeader+81*rules.PlanetRecord)}
+	for i := 0; i < 81; i++ {
+		g.res.Planets.Record(i)[0x11] = rules.RegionOwnerNone
+	}
+	for r := 0; r < rules.RegionCount; r++ {
+		g.regionRecord(r)[0x12] = rules.RegionOwnerNone
+	}
+	setOwner := func(region, owner int) {
+		start, n := g.res.Planets.Range(region)
+		for i := start; i < start+n; i++ {
+			g.res.Planets.Record(i)[0x11] = byte(owner)
+		}
+		g.regionRecord(region)[0x12] = byte(owner)
+	}
+	for _, region := range []int{0, 1, 10} {
+		setOwner(region, 0)
+	}
+	setOwner(31, 1)
+	g.res.Planets.Record(34)[0x11] = 0 // 費沙剛被帝國拿下；星域仍是無主。
+	g.res.Planets.SetPlanetEconomy(0, 1000)
+	g.res.Planets.SetPlanetEconomy(33, 900)
+	g.res.Planets.SetPlanetEconomy(34, 103100)
+	g.res.Planets.SetPlanetEconomy(80, 1000)
+	g.res.WorkTemplate = make([]byte, rules.WorkRecord)
+	g.faction = 0
+	g.turn = 1
+	return g
+}
+
+func TestPhezzanEventRunsAfterFlipReportOnce(t *testing.T) {
+	g := newPhezzanTurnGame(t)
+	if !g.runRegionPass(g.finishTurn) {
+		t.Fatal("費沙易主應先停在易主報告")
+	}
+	if rules.PhezzanOccurred(g.workRecord()) {
+		t.Fatal("易主報告還沒關就先跑費沙事件")
+	}
+	for len(g.PendingFlips()) > 0 {
+		g.dismissFlip()
+	}
+	if !rules.PhezzanOccurred(g.workRecord()) {
+		t.Fatal("易主報告關掉後沒有登記 WORK +0x34")
+	}
+	dir := t.TempDir()
+	if err := g.SaveSlot(dir, 0); err != nil {
+		t.Fatalf("保存費沙旗標：%v", err)
+	}
+	work, err := os.ReadFile(filepath.Join(dir, "WORK.DT0"))
+	if err != nil || len(work) <= 0x34 || work[0x34] != 1 {
+		t.Fatalf("存檔沒有保留 WORK +0x34：長度 %d、錯誤 %v", len(work), err)
+	}
+	if got := g.res.Planets.PlanetEconomy(34); got != 20620 {
+		t.Errorf("費沙經濟力 ＝ %d，預期 20620", got)
+	}
+	if got := g.PhezzanRebellions(); len(got) != 3 || got[0] != 10 || got[1] != 11 || got[2] != 12 {
+		t.Errorf("事件叛離星域 ＝ %v，預期 [10 11 12]", got)
+	}
+	// 即使有人錯誤地再登記，存檔旗標仍要讓事件失敗即關閉。
+	g.phezzanPending = true
+	g.runPhezzanEvent()
+	if got := g.res.Planets.PlanetEconomy(34); got != 20620 {
+		t.Errorf("事件重複發生：費沙經濟力又變成 %d", got)
+	}
+}
+
+func TestPhezzanEventNeedsActualOwnerChange(t *testing.T) {
+	g := newPhezzanTurnGame(t)
+	g.regionRecord(rules.PhezzanRegion)[0x12] = 0
+	regionPass(g)
+	g.finishTurn()
+	if rules.PhezzanOccurred(g.workRecord()) {
+		t.Fatal("費沙已屬帝國、這回合沒換手仍觸發事件")
+	}
+	if got := g.res.Planets.PlanetEconomy(34); got != 103100 {
+		t.Errorf("沒換手仍搬走經濟力：%d", got)
+	}
+}
+
+func TestPhezzanTacticalCaptureRegistersOnlyHumanWinner(t *testing.T) {
+	for _, c := range []struct {
+		name, winner int
+		want         bool
+	}{
+		{name: 0, winner: 0, want: true},
+		{name: 1, winner: 1, want: false},
+	} {
+		t.Run([]string{"human", "computer"}[c.name], func(t *testing.T) {
+			g := newPhezzanTurnGame(t)
+			g.res.Planets.Record(34)[0x11] = rules.RegionOwnerNone
+			g.regionRecord(rules.PhezzanRegion)[0x12] = rules.RegionOwnerNone
+			g.battleRegion = rules.PhezzanRegion
+			g.battlePlanets = []rules.BattlePlanet{{
+				Index: 34, Owner: c.winner, Economy: 103100,
+			}}
+			g.EndBattle()
+			for len(g.PendingFlips()) > 0 {
+				g.dismissFlip()
+			}
+			if got := rules.PhezzanOccurred(g.workRecord()); got != c.want {
+				t.Errorf("戰術戰鬥勝者 %d：費沙事件 ＝ %v，預期 %v", c.winner, got, c.want)
+			}
+		})
+	}
 }
 
 func TestRecomputeRegionsFollowsPlanets(t *testing.T) {

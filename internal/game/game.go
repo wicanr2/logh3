@@ -575,6 +575,12 @@ type Game struct {
 	rebellionRolls [rules.RegionCount]rules.RebellionRoll
 	rebellions     []int
 
+	// 費沙事件：pending 是還沒在回合尾巴發動的登記；battleResolved 用來
+	// 保留原版「戰術戰鬥只有人類拿下才登記」的例外。
+	phezzanPending        bool
+	phezzanBattleResolved bool
+	phezzanRebellions     []int
+
 	// slot 是目前這個局面從哪一格存檔來的（新遊戲是 nil）。
 	// 存檔寫出要靠它——`WORK` 那 230 bytes 只解出三個欄位，
 	// 其餘得原樣抄回去（`docs/spec/009`）。
@@ -857,6 +863,8 @@ func (g *Game) endOfTurn() {
 // finishTurn 是回合結束的尾段：跨月結算與下一個畫面。易主報告會把它
 // 延後到報告全部按掉之後（`docs/spec/034`）。
 func (g *Game) finishTurn() {
+	// 費沙事件在逐格易主報告與擁有者重算之後、勝負／月底結算之前。
+	g.runPhezzanEvent()
 	// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
 	// 並跳出船艦接收報告。
 	//
@@ -1266,6 +1274,10 @@ func (g *Game) enterSide(faction int) {
 
 func (g *Game) startNewGame(faction int) {
 	g.restoreWorld()
+	g.work = nil
+	g.phezzanPending = false
+	g.phezzanBattleResolved = false
+	g.phezzanRebellions = nil
 	g.faction = faction
 	g.starMap = g.factionStarMap(faction, true)
 	g.plainMap = g.factionStarMap(faction, false)
@@ -1359,6 +1371,10 @@ func New(res *Resources) (*Game, error) {
 // `docs/re/24`）。要對畫面的地方得自己 `Slot.SetUnrest` 蓋成量到的值。
 func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.slot = sl
+	g.work = nil
+	g.phezzanPending = false
+	g.phezzanBattleResolved = false
+	g.phezzanRebellions = nil
 	g.res.Stellar = sl.Stellar
 	g.res.Planets = sl.Planets
 	g.turn = sl.Turn
@@ -2061,6 +2077,11 @@ func (g *Game) SaveSlot(dir string, index int) error {
 		for i := range g.slot.Ship {
 			g.slot.Ship[i] = 0xFF
 		}
+	}
+	// `WORK` 尚未全部提升成結構欄位；費沙旗標與動態參謀都直接改可寫
+	// 複本，因此存檔前先整段同步，未知位元組仍維持原樣。
+	if work := g.workRecord(); len(work) >= rules.WorkRecord {
+		g.slot.Work = append(g.slot.Work[:0], work[:rules.WorkRecord]...)
 	}
 	g.slot.Turn = g.turn
 	g.slot.Military = g.military

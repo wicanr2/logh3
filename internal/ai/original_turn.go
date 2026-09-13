@@ -322,6 +322,9 @@ type OriginalStrategy struct {
 	Rand *rules.Rand
 	// PhezzanOpen 是 `ds:8F48`（費沙進入戰局，`docs/re/179`）。
 	PhezzanOpen bool
+	// PhezzanOpenNow 讓長存活的決策器每回合讀最新旗標；nil 時沿用
+	// PhezzanOpen，保留純規則測試的值型輸入。
+	PhezzanOpenNow func() bool
 	// Support 是階段一（建艦隊）要的、`World` 帶不到的東西。
 	// nil ＝ 不建艦隊（`original_buildpass.go`）。
 	Support *BuildSupport
@@ -329,11 +332,15 @@ type OriginalStrategy struct {
 
 // Orders 跑一個戰略回合（`docs/spec/029` 的階段二、三、五）。
 func (o OriginalStrategy) Orders(w World, faction, _ int) []Order {
+	phezzanOpen := o.PhezzanOpen
+	if o.PhezzanOpenNow != nil {
+		phezzanOpen = o.PhezzanOpenNow()
+	}
 	return Turn(StrategyInput{
 		Faction: faction, Fleets: w.Fleets, Graph: w.Graph,
 		Owner: w.Owner, Contested: o.Contested, Split: o.Split,
 		Blocked: o.Blocked, EnemyFleets: o.EnemyFleets,
 		Strength: w.Strength, Ships: o.Ships,
-		Routes: o.Routes, Rand: o.Rand, PhezzanOpen: o.PhezzanOpen,
+		Routes: o.Routes, Rand: o.Rand, PhezzanOpen: phezzanOpen,
 	})
 }
