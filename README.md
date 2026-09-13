@@ -193,6 +193,7 @@ DOS 執行器）產生，它是本專案唯一的 oracle。
 | [`docs/re/`](docs/re/) | 逐次調查紀錄 |
 | [`docs/lore/`](docs/lore/) | 從遊戲裡抓出來的人物傳等文本 |
 | [`docs/playtest/`](docs/playtest/) | 對拍收據 |
+| [`docs/playtest/007-gui-x11-input-and-resize.md`](docs/playtest/007-gui-x11-input-and-resize.md) | 真實 X11 滑鼠、第二層選單與視窗縮放黑箱收據 |
 | [`WORKLOG.md`](WORKLOG.md) | 流水帳 |
 
 ## 授權

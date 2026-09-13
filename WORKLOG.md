@@ -6440,3 +6440,18 @@ GitHub 的 issue 時間軸承擔。
   記錄版本、平台、視窗尺寸與正常玩家路徑，不預先猜成同一個根因。
 - 重抓後共有 38 張 worklist issue（34 open、4 closed）；`worklist verify`
   為 218 條核實、0 條斷言不成立、19 條目前沒有機器訊號、56 條一致。
+
+## 2026-09-13 — #36–#38 真實 GUI 輸入與縮放驗收
+
+- GUI image 增加 `xdotool` 並升為 `logh3-ebiten:2`；`tools/gui.sh xrun` 可在同一個
+  有界 Xvfb 容器內執行黑箱腳本。新增的 `tools/gui_input_check.sh` 不走程式內建
+  `-script`，而是送真正的 X11 按鍵與有按下時間的滑鼠事件。
+- 乾淨 HEAD `0d872dc` 通過四案：640×480 與外部調整後的 960×720 都走到
+  `StateLoadGame`，實際 (840,218) 被換成邏輯 (560,145)；`-scale 2` 建立
+  1280×960；另一條正常玩家路徑走到 `StateFleetNumber`。
+- `cmd/gin3` 原本同時保留作業系統游標與原版素材畫出的遊戲游標。前者即時、後者
+  每個更新格重畫，形成不同步的直接條件；現以 `CursorModeHidden` 只留遊戲游標，
+  GUI 收據同時核對該模式。
+- #36 在目前 HEAD 無法重現為事件或熱區故障；#38 的外部調整與啟動倍率也都可用。
+  兩者與 #37 共用黑箱回歸收據，完整環境、命令、證據等級與平台限制記於
+  `docs/playtest/007-gui-x11-input-and-resize.md`。
