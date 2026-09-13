@@ -117,3 +117,37 @@ chain 都自己加，等於 BIOS 時鐘快了 32 倍。
   分歧點兩邊只有 `SS:SP` 差 `0x29`；把那個奇數的 41 個位元組當線索往回推
   一步，就是被改寫的立即數。先前花在 EMS 頁框、著色迴圈、環境區塊、
   配置器行為上的十一項對照全部「相同」——**它們相同正是因為問題不在那裡**。
+
+## 2026-09-13 追記：`s3datamem` 已用還原旗標重錄
+
+狀態：**confirmed**。使用 dosgolem `logh3-oracle` 的
+`e0b6a03c5338ea4aa5676e81c5a19825d847ab51`（乾淨工作樹），由未修改的
+`GIN3.COM`（SHA-256
+`770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918`）
+重跑 1,200,000,000 道指令。22 次點擊、按住時間、鍵盤序列與 PIT 間隔完整保存在
+`workplace/oracle/s3datamem/flags.txt`；正式收據的雜湊是：
+
+| 檔案 | 大小 | SHA-256 |
+|---|---:|---|
+| `screen.bin` | 307,200 | `da72a461f7380bd7682c2af04d6ebdc6e1b7bc08903e1e9e3fe5caf2453ce3e6` |
+| `pal.bin` | 768 | `28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8` |
+| `memory.bin` | 1,048,576 | `e630e5a2aaadc62aaafea51b99a4b74bad9800af0e153a598e9a683ccb9770fb` |
+
+第二次獨立重跑的 `screen.bin` 與 `pal.bin` 分別逐位元組相同；輸出留在
+`workplace/check/s3datamem-rerun2/`。完整記憶體的雜湊與重錄前由研究文件引用的
+`workplace/s3datamem.bin` 相同，所以既有位址證據沒有漂移。另逐欄回查
+`docs/re/111`：`ds:CFF8` 仍指到線性 `0x54560`、`ds:CFFC` 仍是 771 筆；前三筆
+行星仍為雷奧米爾／謝拉德／達希利，擁有者 0／1／1、防衛力
+3300／3800／4700、經濟力 4215／3403／5870。第 12 筆艦隊的 `+0x0F` 仍是 8，
+艦艇池仍在線性 `0x668B2`。因此 `docs/re/111` 的行星與艦艇記錄版面繼續成立。
+
+重錄時也確認兩個不會報錯的旗標陷阱：
+
+- 舊式 `-dump-mem 0-FFFFF:...` 的上界不含，只會輸出 1,048,575 bytes；正式 1 MiB
+  傾印改用 `-dump-mem lin:0:1048576:...`，位址為十六進位、長度為十進位。
+- `tools/oracle.sh` 進入 dosgolem 的 `tools/go.sh` 後，容器 `/src` 是
+  `dosgolem-logh3`，不是本專案。正式命令以
+  `DOSGOLEM_EXTRA_MOUNT="$PWD/workplace:/logh3-workplace"` 明掛既有目錄，再把
+  傾印寫到 `/logh3-workplace/s3datamem.bin`；沒有讓 Docker 代建 host 路徑。
+
+這兩項只訂正重錄方法，不推翻先前的記憶體版面或欄位語意。

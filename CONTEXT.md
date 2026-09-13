@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 30 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 29 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -392,28 +392,6 @@
 **證據**：[`docs/re/283-intro-plays-in-file-order.md`](docs/re/283-intro-plays-in-file-order.md)、[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)、[`docs/spec/020-intro-animation.md`](docs/spec/020-intro-animation.md)
 
 **核實**：`docs/spec/020-intro-animation.md` 標到 `CONFORMED`
-
-#### s3datamem-rerecord — 收據 s3datamem 要重錄（原本那份的旗標在錄製時就壞了）
-
-*[#2](https://github.com/wicanr2/logh3/issues/2) · parity（對拍：要與原版逐位元組相同）*
-
-原收據的 `-clicks` 值裡混進了整行旗標的複本（空白被換成 `x`），
-所以那份畫面**沒有任何一組旗標能重現**，已經刪掉（2026-09-11）。
-它引用的 1 MB 執行期傾印 `workplace/s3datamem.bin` **沒有跟著刪**——
-`docs/re/111`（行星記錄版面）、`docs/re/256`、`internal/rules/planetcmd_test.go`
-與 `tools/scripts/battlecmd_spec.py` 都靠它，那份是另外倒出來的檔案。
-點擊清單從爛值裡還原得出來（22 次、每項都合格），重錄用：
-
-```
--clicks 40000000:300:230,95000000:300:230,190000000:300:282,240000000:318:168,300000000:544:85,330000000:560:85,405000000:544:85,435000000:560:85,510000000:544:85,540000000:560:85,615000000:544:85,645000000:560:85,720000000:544:85,750000000:560:85,825000000:544:85,855000000:560:85,920000000:240:200,935000000:240:200,1000000000:240:200,1015000000:240:200,1080000000:240:200,1095000000:240:220 -click-hold 3000000
--tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 -steps 1200000000 -dump-mem 0-FFFFF:/src/workplace/s3datamem.bin
-```
-
-**做完的判準**：`workplace/oracle/s3datamem/` 用還原的旗標在 `logh3-oracle` 上重錄，且重錄後的 1 MB 傾印仍然支持 `docs/re/111` 量到的行星記錄版面。
-
-**證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
-
-**核實**：要人判——要人判：收據不進版控，沒有可掃的產品程式碼訊號。（試過用 absent 綁一個哨兵字串，但 pattern 本身就寫在 docs/worklist.json 裡，掃同一個檔會自己中自己。）重錄之後把這一條刪掉。
 
 #### oracle-runaway-after-copy-protection — 收據要在 logh3-oracle 上重錄（新舊執行器的時序不同）
 
@@ -902,7 +880,7 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-21 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+22 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -924,6 +902,55 @@ pkg-config，標準建置 image 沒有——放進 internal 會讓 `go test ./..
 **證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
 
 **核實**：`TestMissingListsExactlyTheAbsentOnes` 釘在 `internal/audio`
+
+#### s3datamem-rerecord — 收據 s3datamem 要重錄（原本那份的旗標在錄製時就壞了）
+
+*[#2](https://github.com/wicanr2/logh3/issues/2) · parity（對拍：要與原版逐位元組相同）*
+
+原收據的 `-clicks` 值裡混進了整行旗標的複本（空白被換成 `x`），所以那份畫面
+沒有任何一組旗標能重現，已於 2026-09-11 刪除。
+
+2026-09-13 已用還原出的 22 次點擊重錄完成。執行器是 `logh3-oracle`
+`e0b6a03c5338ea4aa5676e81c5a19825d847ab51`（乾淨工作樹），原版
+`GIN3.COM` SHA-256 是
+`770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918`。
+完整旗標保存在 `workplace/oracle/s3datamem/flags.txt`。
+
+正式重錄命令在專案根目錄執行，記憶體傾印必須使用長度語法並明掛 logh3 的
+`workplace`：
+
+```sh
+DOSGOLEM_EXTRA_MOUNT="$PWD/workplace:/logh3-workplace" \
+tools/oracle.sh s3datamem \
+  -clicks 40000000:300:230,95000000:300:230,190000000:300:282,240000000:318:168,300000000:544:85,330000000:560:85,405000000:544:85,435000000:560:85,510000000:544:85,540000000:560:85,615000000:544:85,645000000:560:85,720000000:544:85,750000000:560:85,825000000:544:85,855000000:560:85,920000000:240:200,935000000:240:200,1000000000:240:200,1015000000:240:200,1080000000:240:200,1095000000:240:220 \
+  -click-hold 3000000 -tick 20000 -press 1,3,8,enter \
+  -press-at 105000000 -press-every 2000000 -steps 1200000000 \
+  -dump-mem lin:0:1048576:/logh3-workplace/s3datamem.bin
+```
+
+`0-FFFFF` 舊式範圍的上界不含，只會輸出 1,048,575 bytes；`/src` 在這條包裝器路徑
+又是 dosgolem 副本，不是 logh3 repo。上面的命令修正這兩點。
+
+**做完的判準**：`workplace/oracle/s3datamem/` 用還原旗標在 `logh3-oracle` 上重錄，且重錄後的
+1 MiB 傾印仍支持 `docs/re/111` 量到的行星記錄版面。
+
+### 重錄結果
+
+- `screen.bin` 是 307,200 bytes，SHA-256
+  `da72a461f7380bd7682c2af04d6ebdc6e1b7bc08903e1e9e3fe5caf2453ce3e6`。
+- `pal.bin` 是 768 bytes，SHA-256
+  `28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8`。
+- `memory.bin` 是 1,048,576 bytes，SHA-256
+  `e630e5a2aaadc62aaafea51b99a4b74bad9800af0e153a598e9a683ccb9770fb`。
+- 第二次獨立重跑的畫面與調色盤逐位元組相同，輸出在
+  `workplace/check/s3datamem-rerun2/`。
+- `ds:CFF8` 仍指到行星表線性 `0x54560`、`ds:CFFC` 仍為 771 筆；前三筆行星的
+  名稱、擁有者、防衛力與經濟力逐欄符合 `docs/re/111`。完整傾印雜湊也與原研究
+  引用相同。
+
+**證據**：[`workplace/oracle/s3datamem/meta.txt`](workplace/oracle/s3datamem/meta.txt)、[`workplace/oracle/s3datamem/flags.txt`](workplace/oracle/s3datamem/flags.txt)、[`workplace/oracle/s3datamem/memory.bin`](workplace/oracle/s3datamem/memory.bin)、[`workplace/check/s3datamem-rerun2/`](workplace/check/s3datamem-rerun2/)、[`docs/re/111-battle-data-screen-layout.md`](docs/re/111-battle-data-screen-layout.md)、[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
+
+**核實**：收據 `s3datamem` 的 3 個檔案雜湊相符
 
 #### region-summary-panel-trigger — 左下角星域摘要面板什麼時候填、什麼時候清
 

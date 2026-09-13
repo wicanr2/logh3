@@ -6348,3 +6348,17 @@ worklist `ai-attack-reachability` → done。沒有新跑 dosgolem：`turn260mem
 ⚠ 取捨：在 GitHub 上改 issue 不會留在 git 歷史裡（`rulebook/61` 反對把清單放在
 git diff 看不到的地方，理由正是這個）。核對邏輯（verify）保住了，編輯歷史改由
 GitHub 的 issue 時間軸承擔。
+
+## 2026-09-13 — `s3datamem` 用還原旗標重錄
+
+- goal 開工快照：GitHub `worklist` 34 張 open、0 張 closed；`worklist verify`
+  共 214 條、0 條斷言失效、17 條沒有機器訊號。工作樹起始乾淨。
+- 先處理會影響既有 RE 證據的 issue #2 `s3datamem-rerecord`。dosgolem
+  `e0b6a03c5338ea4aa5676e81c5a19825d847ab51` 用還原的 22 次點擊跑完
+  1,200,000,000 道指令；兩次獨立畫面與調色盤逐位元組相同。
+- 正式 1 MiB 傾印改用 `lin:0:1048576` 並明掛 logh3 `workplace`。結果 SHA-256
+  `e630e5a2aaadc62aaafea51b99a4b74bad9800af0e153a598e9a683ccb9770fb`，與既有研究
+  引用完全相同；`docs/re/111` 的行星表、艦隊表與艦艇池定位逐欄回查相符。
+- 正式收據在 `workplace/oracle/s3datamem/`；第二跑移到
+  `workplace/check/s3datamem-rerun2/`，避免探索輸出混入收據。方法與雜湊追加在
+  `docs/re/270-enter-works-the-divergence-is-after-it.md`。
