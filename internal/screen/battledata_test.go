@@ -19,9 +19,11 @@ func TestBattleDataScrollHitboxesMatchOriginal(t *testing.T) {
 		x, y, want int
 	}{
 		{434, 120, -1}, {447, 139, -1},
+		{432, 120, -1}, {433, 139, -1},
 		{434, 140, 0}, {447, 379, 0},
 		{434, 380, 1}, {447, 399, 1},
-		{433, 120, 0}, {448, 399, 0}, {434, 400, 0},
+		{432, 380, 1}, {433, 399, 1},
+		{431, 120, 0}, {448, 399, 0}, {434, 400, 0},
 	} {
 		if got := s.BattleDataScrollAt(tc.x, tc.y); got != tc.want {
 			t.Errorf("(%d,%d)：方向 %d，預期 %d", tc.x, tc.y, got, tc.want)

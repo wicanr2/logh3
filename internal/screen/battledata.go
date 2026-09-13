@@ -158,7 +158,9 @@ func (s *BattleDataSpec) BattleDataTabAt(x, y int) int {
 // BattleDataScrollAt 回捲軸按鈕方向：上是 -1、下是 1；中間槽或外面是 0。
 // 原版熱區是 Scroll.Boxes 的第一與最後一格，中間長槽不接受點擊。
 func (s *BattleDataSpec) BattleDataScrollAt(x, y int) int {
-	if x < s.Scroll.X || x >= s.Scroll.X+s.Scroll.W || len(s.Scroll.Boxes) < 2 {
+	// 畫框是 x=434..447；原版熱區表用一個 16 像素格，從 x=432 開始。
+	// 左邊多出的 2 像素是刻意保留的互動邊界（`docs/re/303`）。
+	if x < s.Scroll.X-2 || x >= s.Scroll.X+s.Scroll.W || len(s.Scroll.Boxes) < 2 {
 		return 0
 	}
 	for _, b := range []struct {
