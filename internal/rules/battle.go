@@ -147,7 +147,7 @@ const (
 // 這一項是 remake 自己的選擇，不能拿去對拍。
 const DefaultDetail = 2
 
-// FormationSpacing 是分隊之間的間距（`docs/internals/38`）。
+// FormationSpacing 是舊的十格近似表使用的分隊間距（`docs/internals/38`）。
 //
 // 量到的基底向量長度都落在 22–23。
 const FormationSpacing = 23
@@ -168,7 +168,8 @@ var formationSlots = [10][2]int{
 //
 // 方向本身由 BattleFacing 算：原版量到的十二支帝國艦隊，基底的方向
 // 都是「指向戰場中心的角度減 96」（`docs/internals/39`）。同盟那幾支
-// 的間距與排法不同，規則還沒解，所以呼叫端要自己給基底。
+// 這支只保留給 AI 的合成測試；正式佈陣改由 Deploy 讀每支分隊既有的
+// `+0x05` 槽索引，再走原版同一張 41 槽表（`2BE1:0000`／`:0059`）。
 //
 // 位移是基底的整數倍。原版在 a 或 b 到 3 的時候會比整數倍少 1，
 // 看得出它是沿同一個角度取距離、每一步各自取整；十個格點裡有八個
@@ -302,7 +303,8 @@ func BattleStrength(units []BattleUnit, faction int) int {
 //
 // 戰力平均分給每個分隊——原版是每個分隊各自帶自己那筆艦艇的艘數，
 // 這裡先用艦隊總戰力除以分隊數，等分隊層的戰鬥結算解出來再換掉。
-func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit {
+func (s *Slot) Deploy(w StrengthWeights, formation *FormationSlots,
+	f Fleet, x, y, facing int) []BattleUnit {
 	ships := s.FleetShips(f.Index)
 	if len(ships) == 0 {
 		return nil
@@ -312,20 +314,17 @@ func (s *Slot) Deploy(w StrengthWeights, f Fleet, x, y, dx, dy int) []BattleUnit
 	}
 	out := make([]BattleUnit, 0, len(ships))
 	for n, ship := range ships {
-		ox, oy := Formation(n, dx, dy)
 		u := BattleUnit{
 			Fleet:    f.Index,
 			Squadron: n,
 			Faction:  f.Faction,
-			X:        x + ox,
-			Y:        y + oy,
-			TargetX:  x + ox,
-			TargetY:  y + oy,
 			Speed:    DefaultBattleSpeed,
 			Kind:     -1,
 			Detail:   DefaultDetail,
 		}
 		s.fillFromShip(&u, ship, w)
+		u.X, u.Y = formation.Station(x, y, facing, u.Slot)
+		u.TargetX, u.TargetY = u.X, u.Y
 		out = append(out, u)
 	}
 	return out

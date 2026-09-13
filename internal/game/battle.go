@@ -52,8 +52,9 @@ func (g *Game) StartBattle(region int) {
 		n := seen[e.From]
 		seen[e.From]++
 		x, y := e.X, e.Y-n*battleFleetGap
-		ux, uy := rules.FormationBase(rules.BattleFacing(x, y))
-		for _, u := range g.slot.Deploy(g.res.Weights, f, x, y, ux, uy) {
+		facing := rules.BattleFacing(x, y)
+		for _, u := range g.slot.Deploy(
+			g.res.Weights, g.res.Formation, f, x, y, facing) {
 			g.battleUnits = append(g.battleUnits, u)
 		}
 		joined = append(joined, f.Index)
