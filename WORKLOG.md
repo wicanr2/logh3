@@ -6710,3 +6710,13 @@ GitHub 的 issue 時間軸承擔。
   對 remake 均為 0 差異。
 - 新增 `StateVictoryReport`、整局分數存讀與雙陣營結局預覽路由；screen、game、
   rules、bootstrap 回歸通過。完整結局序列仍保留為證據限制，不混稱已完成。
+
+## 2026-09-14 — #24 星域飛彈／艦載機每回合回充
+
+- 用 IDA Pro 9.4 補完 `2703:0590`：逐顆以整數經濟力百分比分配，所有捨去
+  餘數交給最大經濟力行星，同值時後一顆取代前一顆；SPEC 039 因此由 DRAFT
+  經 READY 實作並升為 CONFORMED。
+- 新增星域兩陣營存量彙總、`2B5F:02B2` 一成回充／上限／斷路閘門，以及分回
+  行星的雙層規則；`Game.advanceTurn` 在 AI 與月底結算前逐格執行。
+- `re273_rpre.bin` 經 remake 規則生出的完整 4,032 bytes 與原版
+  `re273_rpost.bin` 逐位元組相同；另有餘數與正常回合產品接線測試。

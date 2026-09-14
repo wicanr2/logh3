@@ -836,6 +836,7 @@ func (g *Game) execute() {
 // advanceTurn 推進一個回合 ＝ 三天。
 func (g *Game) advanceTurn() {
 	g.turn++
+	g.refillRegionSupply()
 	// 電腦那一方先下命令，再讓所有艦隊走。
 	// `runBrain` 讀的原版回合計數器是 `g.turn - 1`；它跑完之後原版才把
 	// 計數器進位，接著進新回合的月底報告（`docs/re/299` 時間線）。

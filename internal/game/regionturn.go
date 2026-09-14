@@ -44,6 +44,25 @@ func (g *Game) regionsReady() bool {
 		len(g.res.Stellar) >= rules.RegionCount*rules.RegionRecord
 }
 
+// refillRegionSupply 是原版 `0654:0007` 在月底閘門之前每回合都跑的
+// `2B5F:02B2` ＋ `2703:0590`。先由行星彙總、回充擁有者，再照整數百分比
+// 分回行星；因此戰鬥／補給命令消耗的行星存量會進入下一回合的基數。
+func (g *Game) refillRegionSupply() {
+	if !g.regionsReady() {
+		return
+	}
+	for region := 0; region < rules.RegionCount; region++ {
+		rec := g.regionRecord(region)
+		if !rules.AggregateRegionSupply(rec, g.res.Planets, region) ||
+			!rules.RefillRegionSupply(rec) {
+			continue
+		}
+		for faction := 0; faction < 2; faction++ {
+			rules.DistributeRegionSupply(rec, g.res.Planets, region, faction)
+		}
+	}
+}
+
 // recomputeRegionOwners 跑第一步：逐格依行星重算 `+0x12`（`2703:159B`），
 // 把易主的排進 `pendingFlips`（原版每一格易主跳一則報告，`docs/spec/034`）。
 // 回這一輪有幾格易主。

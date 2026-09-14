@@ -55,6 +55,21 @@ func regionPass(g *Game) int {
 	return n
 }
 
+func TestAdvanceTurnRefillsRegionSupply(t *testing.T) {
+	g := newRegionTurnGame(t)
+	g.regionRecord(0)[regionOwnerOff] = 0
+	binary.LittleEndian.PutUint32(g.regionRecord(0)[0x1A:], 900)
+	binary.LittleEndian.PutUint16(g.regionRecord(0)[0x20:], 100)
+	g.res.Planets.SetPlanetEconomy(0, 900)
+	stock := rules.PlanetStock{}
+	rules.WritePlanetStock(g.res.Planets.Record(0), stock)
+	g.advanceTurn()
+	got, ok := rules.ReadPlanetStock(g.res.Planets.Record(0))
+	if !ok || got.Missiles != 100 || got.Fighters != 100 {
+		t.Fatalf("回合 1 行星回充=%+v，預期飛彈／艦載機各 100", got)
+	}
+}
+
 func newPhezzanTurnGame(t *testing.T) *Game {
 	t.Helper()
 	g := newRegionTurnGame(t)
