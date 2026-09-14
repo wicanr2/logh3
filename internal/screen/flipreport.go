@@ -81,3 +81,30 @@ func (p *FlipReportPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font,
 		drawFull(fb, fnt, p.Message.X, p.Message.Y+i*step, line, p.Message.Ink)
 	}
 }
+
+// DrawInline 畫占據報告：訊息第一行不是另起一列，而是直接接在星域名後；
+// 第二行才回到 Message.X／Message.Y（原版 `056A:059E`、SPEC 047）。
+func (p *FlipReportPanel) DrawInline(fb *gfx.Framebuffer, fnt *font.Font,
+	name []uint16, owner int, key string) {
+	ink := uint8(7)
+	if owner >= 0 && owner < len(p.Name.InkByOwner) {
+		ink = p.Name.InkByOwner[owner]
+	}
+	x := p.Name.X
+	for _, c := range name {
+		drawFull(fb, fnt, x, p.Name.Y, []uint16{c}, ink)
+		x += font.GlyphW
+	}
+	m, ok := p.Messages[key]
+	if !ok || len(m.Lines) == 0 {
+		return
+	}
+	drawFull(fb, fnt, x, p.Name.Y, m.Lines[0], p.Message.Ink)
+	step := p.LineStep
+	if step == 0 {
+		step = 20
+	}
+	for i, line := range m.Lines[1:] {
+		drawFull(fb, fnt, p.Message.X, p.Message.Y+i*step, line, p.Message.Ink)
+	}
+}

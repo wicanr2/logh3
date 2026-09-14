@@ -6668,3 +6668,13 @@ GitHub 的 issue 時間軸承擔。
 - 新增 READY／CONFORMED 規格 `docs/spec/046` 與
   `screen.DrawBattleGridResidue`，把固定殘留與 128×128 小地圖資料分開。
 - `TestBattleMatchesOracle` 移除 y=203 排除，只保留 dosgolem 滑鼠游標排除。
+
+## 2026-09-14 — #8 單方面占據的四種戰略報告
+
+- 以 IDA Pro 9.4 可丟棄資料庫副本補齊 `056A:0469 → 053F → 0571 → 059E`
+  呼叫鏈：新的 bit4 決定是否報告，舊 bit4 與占據者相對座位決定四句。
+- dosgolem `e0b6a03` 從新遊戲正常「實行」路徑，以最小艦隊欄位注入形成
+  `occupation-report3`；畫面為「亞斯提星系已被攻入／目前轉移至占領狀態。」。
+- 新增獨立 `StateOccupationReport`、逐則左右鍵 lifecycle 與
+  `FlipReportPanel.DrawInline`；文字矩形對原版 0 像素差異。完整 game、screen、
+  rules 回歸通過；逐格暫停與對戰雙座位仍明列證據限制。

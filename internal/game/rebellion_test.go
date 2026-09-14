@@ -27,10 +27,18 @@ import (
 const intelStaffEmpire = 13 // 帝國的情報專任參謀（`docs/internals/30`）
 
 // dismissAllRebellionReports 讓既有「實行後」收據測試走到原本的比較時點。
-// 報告本身的逐則與左右鍵行為另由專門測試釘住。
+// `056A:0469` 先顯示占據報告、再顯示叛亂報告；兩者的逐則與左右鍵行為
+// 另由專門測試釘住。函式名保留，避免把所有舊收據測試做無關改名。
 func dismissAllRebellionReports(g *Game) {
-	for g.State() == StateRebellionReport && len(g.pendingRebellionReports) > 0 {
-		g.Click(2, 470)
+	for {
+		switch g.State() {
+		case StateOccupationReport:
+			g.Click(2, 470)
+		case StateRebellionReport:
+			g.Click(2, 470)
+		default:
+			return
+		}
 	}
 }
 

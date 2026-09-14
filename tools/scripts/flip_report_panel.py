@@ -1,4 +1,4 @@
-"""從訊息表產生戰略報告的共用版面規格（`docs/spec/034`、`046`）。
+"""從訊息表產生戰略報告的共用版面規格（`docs/spec/034`、`046`、`047`）。
 
     tools/py.sh tools/scripts/flip_report_panel.py <訊息表json> <輸出json>
 
@@ -35,8 +35,27 @@ def lines(ds):
     return [fullwidth(p) for p in parts if fullwidth(p)]
 
 
+def raw_from(ds):
+    """從涵蓋 ds 的來源項目切到 NUL；ds:0732 落在 0722 那筆原始塊內。"""
+    target = int(ds, 16)
+    for s in src["strings"]:
+        start = int(s["ds"], 16)
+        raw = bytes.fromhex(s["raw"])
+        if start <= target < start + len(raw):
+            out = raw[target - start:]
+            return out.split(b"\0", 1)[0]
+    raise KeyError(ds)
+
+
+def split_lines(raw):
+    parts = raw.split(b"\n")
+    if len(parts) > 1 and set(parts[0]) <= {0xA1, 0x40, 0x20}:
+        parts = parts[1:]
+    return [fullwidth(p) for p in parts if fullwidth(p)]
+
+
 def entry(ds):
-    ls = lines(ds)
+    ls = split_lines(raw_from(ds))
     return {"ds": ds, "lines": ls,
             "text": [bytes(b for c in l for b in (c >> 8, c & 0xFF)).decode("big5")
                      for l in ls]}
@@ -44,7 +63,7 @@ def entry(ds):
 panel = {
     "note": ("星域易主報告的版面（`docs/spec/034`）。座標量自收據 `chain3`，"
              "文字取自 `strategy-report-strings.json`，字碼與原版逐位元組相同；"
-             "叛亂報告共用同一版面（`docs/spec/046`）。"),
+             "叛亂與占據報告共用同一版面（`docs/spec/046`、`047`）。"),
     "line_step": 20,
     # 星系名的字色跟著**新的擁有者**走，三格都是量到的：
     #   chain7 打下敵方星域 → 0（帝國）色 6
@@ -68,6 +87,10 @@ panel = {
         "our_grip_lost": entry("088B"),
         "we_partly_landed": entry("08BC"),
         "rebellion": entry("086F"),
+        "occupation_new_us": entry("0732"),
+        "occupation_new_enemy": entry("0756"),
+        "occupation_continuing_us": entry("0778"),
+        "occupation_continuing_enemy": entry("079A"),
     },
     "evidence": {
         "taken_by_us": "量到（訊息表；收據 chain7 打下敵方星域畫的就是這句）",
@@ -75,6 +98,10 @@ panel = {
         "our_grip_lost": "量到（收據 chain6：自己的星域變混雜就成無主）",
         "we_partly_landed": "量到（收據 chain8：敵方的星域變混雜就成無主）",
         "rebellion": "量到（收據 rbx292）",
+        "occupation_new_us": "量到（收據 occupation-report3；docs/re/306）",
+        "occupation_new_enemy": "原始分支與訊息表（056A:059E；docs/re/306）",
+        "occupation_continuing_us": "原始分支與訊息表（056A:059E；docs/re/306）",
+        "occupation_continuing_enemy": "原始分支與訊息表（056A:059E；docs/re/306）",
     },
 }
 json.dump(panel, open(sys.argv[2], "w", encoding="utf-8"),

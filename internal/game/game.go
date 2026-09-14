@@ -143,8 +143,13 @@ const (
 	// StateRebellionReport 是逐格叛亂判定跳出的模態戰略報告。
 	// 星域名、擁有者字色與情報參謀頭像照 `056A:06F3`；滑鼠任一鍵
 	// 關一則，全部關完才接回戰鬥掃描（`docs/spec/046`）。
-	// strategy-report-screen：侵略／提督生死／勝負／費沙事件報告仍未接。
+	// strategy-report-screen：提督生死／勝負／費沙事件報告仍未接。
 	StateRebellionReport
+
+	// StateOccupationReport 是單方面占據（星域 +0x13 bit4）的模態報告。
+	// 首次與持續、我方與敵方共四句；全部關完才繼續逐格叛亂與戰鬥掃描
+	// （`docs/spec/047`、`docs/re/306`）。
+	StateOccupationReport
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -164,7 +169,7 @@ func (s State) String() string {
 		"StateFleetComposition", "StateFormation", "StateBattle",
 		"StateShipDelivery", "StateRegionFlipReport", "StateVersusInput",
 		"StateVersusAccount", "StateIntro", "StateVersusShipOrder",
-		"StateRebellionReport",
+		"StateRebellionReport", "StateOccupationReport",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -204,6 +209,7 @@ var screenSpecName = map[State]string{
 	StateVersusAccount:    "screen-versus-account",
 	StateVersusShipOrder:  "screen-versus-ship-order",
 	StateRebellionReport:  "screen-command-phase",
+	StateOccupationReport: "screen-command-phase",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -470,7 +476,13 @@ type Game struct {
 	rebellionReports        []RebellionReport
 	pendingRebellionReports []RebellionReport
 	afterRebellionReports   func()
-	state                   State
+
+	// 單方面占據報告也是獨立 scene lifecycle；它發生在同一支
+	// `056A:0469` 裡、但先於叛亂與戰鬥掃描（`docs/spec/047`）。
+	occupationReports        []OccupationReport
+	pendingOccupationReports []OccupationReport
+	afterOccupationReports   func()
+	state                    State
 
 	// 主選單：滑鼠位置與反白到哪一列。
 	mouseX, mouseY int
@@ -584,8 +596,7 @@ type Game struct {
 	strategyRand *rules.Rand
 
 	// rebellionRolls／rebellions 是這一回合叛亂判定的逐格結果與叛亂的
-	// 星域（`runRebellions`，`docs/spec/041`）。報告畫面還沒有
-	// （`strategy-report-screen`），先留給測試與之後的報告用。
+	// 星域（`runRebellions`，`docs/spec/041`）；畫面見 SPEC 046。
 	rebellionRolls [rules.RegionCount]rules.RebellionRoll
 	rebellions     []int
 
@@ -841,6 +852,18 @@ func (g *Game) advanceTurn() {
 			g.paidMove[f.Faction] += cost // ds:8F8A，月底歸零
 		}
 	}
+	// 單方面占據與叛亂都在原版命令階段那一串的最後一支 `056A:0469`。
+	// 先重算 bit2／bit4 並顯示 bit4 報告；全部關掉之後才進叛亂判定。
+	g.prepareOccupationReports()
+	if g.startOccupationReports(g.continueAfterOccupationReports) {
+		return
+	}
+	g.continueAfterOccupationReports()
+}
+
+// continueAfterOccupationReports 接回 `056A:0469` 裡排在 bit4 報告之後的
+// 叛亂判定，再接既有叛亂報告與戰鬥掃描。
+func (g *Game) continueAfterOccupationReports() {
 	// 叛亂（`docs/spec/041`）：原版命令階段那一串的最後一支 `056A:0469`
 	// 逐格判定，排在艦隊移動與重數艦隊（`2703:0853`）之後、逐格開戰之前；
 	// 效果（`2703:1908`）在逐格開戰那一圈沒有戰鬥的格子裡套上。兩段之間
@@ -1307,6 +1330,9 @@ func (g *Game) startNewGame(faction int) {
 	g.pendingRebellionReports = nil
 	g.rebellionReports = nil
 	g.afterRebellionReports = nil
+	g.pendingOccupationReports = nil
+	g.occupationReports = nil
+	g.afterOccupationReports = nil
 	g.phezzanPending = false
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
@@ -1407,6 +1433,9 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.pendingRebellionReports = nil
 	g.rebellionReports = nil
 	g.afterRebellionReports = nil
+	g.pendingOccupationReports = nil
+	g.occupationReports = nil
+	g.afterOccupationReports = nil
 	g.phezzanPending = false
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
@@ -1635,6 +1664,8 @@ func (g *Game) click(x, y int) {
 	case StateRebellionReport:
 		// `3765:006C` 只認滑鼠事件碼 1／2，座標不參與判定（`docs/spec/046`）。
 		g.dismissRebellionReport()
+	case StateOccupationReport:
+		g.dismissOccupationReport()
 	case StateVersusInput:
 		// 交棒視窗只有「確認」一顆（`docs/re/76`）。點在框裡但熱區外
 		// 什麼都不會發生（收據 `vs3`），所以走 `BoxAt`。
@@ -1873,6 +1904,8 @@ func (g *Game) rightClick(x, y int) {
 	case StateRebellionReport:
 		// 原版事件碼 1／2 都能關，右鍵不能走 generic「回命令畫面」捷徑。
 		g.dismissRebellionReport()
+	case StateOccupationReport:
+		g.dismissOccupationReport()
 	case StateShipDelivery:
 		// 接收報告也是右鍵關掉的（收據 `mreponlyr`：三張報告全部只用右鍵
 		// 就依序退場，第三下之後露出地圖介面）。左鍵那一路在 `Click`
@@ -2403,6 +2436,13 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
 		}
 		g.drawRebellionReport(fb)
+		return
+	}
+	if g.state == StateOccupationReport {
+		if g.res.CapitalPanel != nil {
+			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
+		}
+		g.drawOccupationReport(fb)
 		return
 	}
 	g.drawCapitalPanel(fb)

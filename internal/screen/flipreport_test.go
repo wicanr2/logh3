@@ -48,7 +48,9 @@ func TestFlipReportPanelLayout(t *testing.T) {
 		t.Errorf("`星系` ＝ %v 色 %d，預期兩個字、色 7", p.Suffix.Codes, p.Suffix.Ink)
 	}
 	for _, k := range []string{"taken_by_us", "lost_to_enemy",
-		"our_grip_lost", "we_partly_landed", "rebellion"} {
+		"our_grip_lost", "we_partly_landed", "rebellion",
+		"occupation_new_us", "occupation_new_enemy",
+		"occupation_continuing_us", "occupation_continuing_enemy"} {
 		m, ok := p.Messages[k]
 		if !ok || len(m.Lines) == 0 || len(m.Lines[0]) == 0 {
 			t.Errorf("缺 %s 那一句", k)
@@ -57,6 +59,39 @@ func TestFlipReportPanelLayout(t *testing.T) {
 	// 「已被敵軍占領。」七個字（收據 chain3 畫的就是這句）。
 	if got := p.Messages["lost_to_enemy"].Lines; len(got) != 1 || len(got[0]) != 7 {
 		t.Errorf("`已被敵軍占領。` ＝ %v，預期一行七個字", got)
+	}
+}
+
+// 收據 `occupation-report3` 是正常「實行」路徑加最小艦隊狀態注入，畫出
+// 「亞斯提星系已被攻入／目前轉移至占領狀態。」（`docs/spec/047`）。
+func TestOccupationReportTextMatchesOracle(t *testing.T) {
+	root := filepath.Join("..", "..")
+	scr, err := os.ReadFile(filepath.Join(root, "workplace", "oracle",
+		"occupation-report3", "screen.bin"))
+	if err != nil || len(scr) != 640*480 {
+		t.Skip("缺收據 occupation-report3，跳過（不用代用品）")
+	}
+	fnt, err := font.Load(filepath.Join(root, "org_game/extracted/GRAPH.IMG"))
+	if err != nil {
+		t.Skip("缺 GRAPH.IMG，跳過")
+	}
+	p := loadFlipPanel(t)
+	// 亞斯提；Big5 A8C8 B4B5 B4A3。
+	name := []uint16{43208, 46261, 46243}
+	fb := gfx.NewFramebuffer(9)
+	p.DrawInline(fb, fnt, name, 1, "occupation_new_us")
+
+	bad, total := 0, 0
+	for y := 178; y < 240; y++ {
+		for x := 334; x < 535; x++ {
+			total++
+			if fb.At(x, y) != scr[y*640+x] {
+				bad++
+			}
+		}
+	}
+	if bad != 0 {
+		t.Errorf("占據報告文字與收據差 %d／%d 個像素，預期 0", bad, total)
 	}
 }
 
