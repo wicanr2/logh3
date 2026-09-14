@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 5 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 4 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -468,27 +468,9 @@ remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
-#### unrest-recompute-other-callers — 未安定度：其餘 `090A:0E6D` 呼叫端與戰鬥中的重算 remake 沒有接
-
-*[#19](https://github.com/wicanr2/logh3/issues/19) · parity（對拍：要與原版逐位元組相同）*
-
-`090A:0E6D` 有 18 個呼叫點（[`docs/re/299`](docs/re/299-region-unrest-writers-and-recompute.md)），remake 接了影響叛亂與回合尾巴的那幾個
-（[`docs/spec/042`](docs/spec/042-region-unrest-recompute.md)）。沒接的：玩家那一方的指令（編制、整補等 `297B` 那幾處）、
-費沙事件 `1213:0256`、`2E54:04FB` 與 9 處沒讀的。原版在那些時點當場重算，remake 要到下一次「實行」才跟上，
-命令階段的面板與治安色會慢一步。
-
-另外兩件同一類的：逐格開戰那一圈裡戰鬥可能先動到叛亂那一格的輸入（`2703:1908` 讀 `+0x7D`），
-remake 用命令階段那一次的值；讀存檔之後到第一次回合尾巴之間原版讀哪一份路徑表沒有量。
-
-**做完的判準**：玩家在命令階段做一次會跑 `090A:0E6D` 的指令（例如編一支艦隊停在某一格）之後，面板上的治安與原版同一時點的傾印相同。
-
-**證據**：[`docs/spec/042-region-unrest-recompute.md`](docs/spec/042-region-unrest-recompute.md)、[`docs/re/299-region-unrest-writers-and-recompute.md`](docs/re/299-region-unrest-writers-and-recompute.md)
-
-**核實**：要人判——沒有可掃的自承或缺席訊號（`recomputeUnrest` 已經存在，缺的是呼叫點）。接上時綁那一支同狀態測試（`go_test`）。
-
 ### 做完的（不在矩陣裡的那幾條）
 
-46 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+47 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1178,6 +1160,22 @@ remake：`Game.recomputeUnrest` 接在 `refreshBlend` 的尾巴、`advanceTurn` 
 **證據**：[`docs/spec/042-region-unrest-recompute.md`](docs/spec/042-region-unrest-recompute.md)、[`docs/re/299-region-unrest-writers-and-recompute.md`](docs/re/299-region-unrest-writers-and-recompute.md)、[`docs/re/297-rebellion-garrison-recount-and-rng.md`](docs/re/297-rebellion-garrison-recount-and-rng.md)、[`docs/spec/006-unrest-at-load.md`](docs/spec/006-unrest-at-load.md)
 
 **核實**：`TestUnrestSameStateAfterAITurn` 釘在 `internal/game`
+
+#### unrest-recompute-other-callers — 未安定度：其餘 `090A:0E6D` 呼叫端與戰鬥中的重算 remake 沒有接
+
+*[#19](https://github.com/wicanr2/logh3/issues/19) · parity（對拍：要與原版逐位元組相同）*
+
+`090A:0E6D` 的 18 個呼叫點已全部分類。玩家／AI 艦隊編制、整補與費沙事件的立即重算已接線；戰鬥後改為先重算全圖未安定度，再從下一個星域續跑月底被動效果與叛亂效果。現行產品尚未提供的參謀任命、戰略艦隊命令／解散入口不在本 issue 猜造，但接線條件已保存。
+
+讀檔後的路徑表時序亦已補測：正常讀第 8 格並在第二層選同盟時，`04F8:003E` 先重建兩陣營路徑表，之後才進第一次 `090A:0E6D`；不是沿用載入當下的空表。
+
+**卡在**：已完成，沒有阻塞。戰鬥＋叛亂混合局面的控制流已由 IDA 證實並有可區分戰前／戰後值的產品回歸；尚未建立該特定混合局面的原版逐位元組收據，因此文件不宣稱該局面為 same-state 對拍。
+
+**做完的判準**：玩家在命令階段編成一支停駐艦隊後立即重算未安定度；同回合較小編號戰鬥結束後，較大編號星域的叛亂效果讀戰後重算的 `+0x7D`。兩條產品路徑均有回歸測試，既有同狀態畫面不得退步。
+
+**證據**：[`docs/spec/042-region-unrest-recompute.md`](docs/spec/042-region-unrest-recompute.md)、[`docs/re/299-region-unrest-writers-and-recompute.md`](docs/re/299-region-unrest-writers-and-recompute.md)、[`docs/re/304-unrest-immediate-recompute-callers.md`](docs/re/304-unrest-immediate-recompute-callers.md)、[`docs/re/310-unrest-battle-region-scan-order.md`](docs/re/310-unrest-battle-region-scan-order.md)、[`internal/game/fleet_org_test.go` 的 `TestFleetDecideRecomputesUnrestLikeOriginal`](internal/game/fleet_org_test.go` 的 `TestFleetDecideRecomputesUnrestLikeOriginal)、[`internal/game/regionturn_test.go` 的 `TestBattleRecomputesUnrestBeforeLaterRebellionEffect`](internal/game/regionturn_test.go` 的 `TestBattleRecomputesUnrestBeforeLaterRebellionEffect)
+
+**核實**：`TestBattleRecomputesUnrestBeforeLaterRebellionEffect` 釘在 `internal/game`
 
 #### ai-month-branch-turn-offset — `runBrain` 的月底分支早一個回合（`g.turn % 10 == 9`）
 
