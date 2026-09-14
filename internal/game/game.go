@@ -150,6 +150,11 @@ const (
 	// 首次與持續、我方與敵方共四句；全部關完才繼續逐格叛亂與戰鬥掃描
 	// （`docs/spec/047`、`docs/re/306`）。
 	StateOccupationReport
+
+	// StateAdmiralFateReport 是每回合早段 `056A:0219` 判出的失蹤提督
+	// 死亡／生還報告；滑鼠任一鍵逐則關閉（`docs/spec/048`）。
+	// strategy-report-screen：勝負／費沙事件報告仍未接。
+	StateAdmiralFateReport
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -169,7 +174,7 @@ func (s State) String() string {
 		"StateFleetComposition", "StateFormation", "StateBattle",
 		"StateShipDelivery", "StateRegionFlipReport", "StateVersusInput",
 		"StateVersusAccount", "StateIntro", "StateVersusShipOrder",
-		"StateRebellionReport", "StateOccupationReport",
+		"StateRebellionReport", "StateOccupationReport", "StateAdmiralFateReport",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -180,36 +185,37 @@ func (s State) String() string {
 // screenSpecName 是每個命令階段狀態對應的規格名（`docs/internals/data/`）。
 // 「實行」不在裡面——它不開畫面。
 var screenSpecName = map[State]string{
-	StateCommandPhase:     "screen-command-phase",
-	StateCmdMenu:          "screen-cmd-menu",
-	StateListMenu:         "screen-list-menu",
-	StateSysMenu:          "screen-sys-menu",
-	StateStandbyAdmirals:  "screen-standby-admirals",
-	StateInfo:             "screen-info",
-	StateTaxPlan:          "screen-tax-plan",
-	StateProductionPlan:   "screen-production-plan",
-	StateStarList:         "screen-star-list",
-	StateFleetList:        "screen-fleet-list",
-	StateAdmiralListView:  "screen-admiral-list-view",
-	StateEnemyList:        "screen-enemy-list",
-	StateLoadGame:         "screen-load-game",
-	StateSaveGame:         "screen-save-game",
-	StateSettings:         "screen-settings",
-	StateQuitConfirm:      "screen-quit-confirm",
-	StateShipDelivery:     "screen-ship-delivery",
-	StateRegionFlipReport: "screen-command-phase",
-	StateAdmiralDetail:    "screen-admiral-detail",
-	StateAdmiralBio:       "screen-admiral-bio",
-	StateFleetOrg:         "screen-fleet-org",
-	StateFleetNumber:      "screen-fleet-number",
-	StateFleetAdjutant:    "screen-fleet-adjutant",
-	StateFleetComposition: "screen-fleet-composition",
-	StateFormation:        "screen-formation",
-	StateVersusInput:      "screen-versus-input",
-	StateVersusAccount:    "screen-versus-account",
-	StateVersusShipOrder:  "screen-versus-ship-order",
-	StateRebellionReport:  "screen-command-phase",
-	StateOccupationReport: "screen-command-phase",
+	StateCommandPhase:      "screen-command-phase",
+	StateCmdMenu:           "screen-cmd-menu",
+	StateListMenu:          "screen-list-menu",
+	StateSysMenu:           "screen-sys-menu",
+	StateStandbyAdmirals:   "screen-standby-admirals",
+	StateInfo:              "screen-info",
+	StateTaxPlan:           "screen-tax-plan",
+	StateProductionPlan:    "screen-production-plan",
+	StateStarList:          "screen-star-list",
+	StateFleetList:         "screen-fleet-list",
+	StateAdmiralListView:   "screen-admiral-list-view",
+	StateEnemyList:         "screen-enemy-list",
+	StateLoadGame:          "screen-load-game",
+	StateSaveGame:          "screen-save-game",
+	StateSettings:          "screen-settings",
+	StateQuitConfirm:       "screen-quit-confirm",
+	StateShipDelivery:      "screen-ship-delivery",
+	StateRegionFlipReport:  "screen-command-phase",
+	StateAdmiralDetail:     "screen-admiral-detail",
+	StateAdmiralBio:        "screen-admiral-bio",
+	StateFleetOrg:          "screen-fleet-org",
+	StateFleetNumber:       "screen-fleet-number",
+	StateFleetAdjutant:     "screen-fleet-adjutant",
+	StateFleetComposition:  "screen-fleet-composition",
+	StateFormation:         "screen-formation",
+	StateVersusInput:       "screen-versus-input",
+	StateVersusAccount:     "screen-versus-account",
+	StateVersusShipOrder:   "screen-versus-ship-order",
+	StateRebellionReport:   "screen-command-phase",
+	StateOccupationReport:  "screen-command-phase",
+	StateAdmiralFateReport: "screen-command-phase",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -482,7 +488,13 @@ type Game struct {
 	occupationReports        []OccupationReport
 	pendingOccupationReports []OccupationReport
 	afterOccupationReports   func()
-	state                    State
+
+	// 失蹤提督的 fate pass 位於 upkeep／移動之前，報告全部關掉才續跑
+	// 本回合其餘命令階段（`docs/spec/048`）。
+	admiralFateReports        []AdmiralFateReport
+	pendingAdmiralFateReports []AdmiralFateReport
+	afterAdmiralFateReports   func()
+	state                     State
 
 	// 主選單：滑鼠位置與反白到哪一列。
 	mouseX, mouseY int
@@ -814,6 +826,16 @@ func (g *Game) advanceTurn() {
 	// `runBrain` 讀的原版回合計數器是 `g.turn - 1`；它跑完之後原版才把
 	// 計數器進位，接著進新回合的月底報告（`docs/re/299` 時間線）。
 	g.runBrain()
+	g.resolveAdmiralFates()
+	if g.startAdmiralFateReports(g.continueAfterAdmiralFateReports) {
+		return
+	}
+	g.continueAfterAdmiralFateReports()
+}
+
+// continueAfterAdmiralFateReports 接回原版 `056A:0219` 後面的 upkeep、
+// 民心、移動、占據、叛亂與戰鬥掃描。
+func (g *Game) continueAfterAdmiralFateReports() {
 	// 命令階段那一串的第一支 `056A:09EB` 一進去就先跑 `090A:0E6D`，把 32 格的
 	// 未安定度整份重算（`docs/spec/042`）——叛亂的門檻讀的就是這一次的值。
 	// 回合計數器要到回合尾巴才進位，remake 的 `g.turn` 在開頭就先加了，
@@ -1333,6 +1355,9 @@ func (g *Game) startNewGame(faction int) {
 	g.pendingOccupationReports = nil
 	g.occupationReports = nil
 	g.afterOccupationReports = nil
+	g.pendingAdmiralFateReports = nil
+	g.admiralFateReports = nil
+	g.afterAdmiralFateReports = nil
 	g.phezzanPending = false
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
@@ -1436,6 +1461,9 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.pendingOccupationReports = nil
 	g.occupationReports = nil
 	g.afterOccupationReports = nil
+	g.pendingAdmiralFateReports = nil
+	g.admiralFateReports = nil
+	g.afterAdmiralFateReports = nil
 	g.phezzanPending = false
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
@@ -1666,6 +1694,8 @@ func (g *Game) click(x, y int) {
 		g.dismissRebellionReport()
 	case StateOccupationReport:
 		g.dismissOccupationReport()
+	case StateAdmiralFateReport:
+		g.dismissAdmiralFateReport()
 	case StateVersusInput:
 		// 交棒視窗只有「確認」一顆（`docs/re/76`）。點在框裡但熱區外
 		// 什麼都不會發生（收據 `vs3`），所以走 `BoxAt`。
@@ -1906,6 +1936,8 @@ func (g *Game) rightClick(x, y int) {
 		g.dismissRebellionReport()
 	case StateOccupationReport:
 		g.dismissOccupationReport()
+	case StateAdmiralFateReport:
+		g.dismissAdmiralFateReport()
 	case StateShipDelivery:
 		// 接收報告也是右鍵關掉的（收據 `mreponlyr`：三張報告全部只用右鍵
 		// 就依序退場，第三下之後露出地圖介面）。左鍵那一路在 `Click`
@@ -2443,6 +2475,13 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
 		}
 		g.drawOccupationReport(fb)
+		return
+	}
+	if g.state == StateAdmiralFateReport {
+		if g.res.CapitalPanel != nil {
+			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
+		}
+		g.drawAdmiralFateReport(fb)
 		return
 	}
 	g.drawCapitalPanel(fb)

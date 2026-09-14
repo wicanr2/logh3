@@ -50,7 +50,9 @@ func TestFlipReportPanelLayout(t *testing.T) {
 	for _, k := range []string{"taken_by_us", "lost_to_enemy",
 		"our_grip_lost", "we_partly_landed", "rebellion",
 		"occupation_new_us", "occupation_new_enemy",
-		"occupation_continuing_us", "occupation_continuing_enemy"} {
+		"occupation_continuing_us", "occupation_continuing_enemy",
+		"admiral_missing_title", "admiral_name_suffix", "admiral_dead",
+		"admiral_survived"} {
 		m, ok := p.Messages[k]
 		if !ok || len(m.Lines) == 0 || len(m.Lines[0]) == 0 {
 			t.Errorf("缺 %s 那一句", k)

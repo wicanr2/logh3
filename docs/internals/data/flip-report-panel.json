@@ -1,5 +1,5 @@
 {
- "note": "星域易主報告的版面（`docs/spec/034`）。座標量自收據 `chain3`，文字取自 `strategy-report-strings.json`，字碼與原版逐位元組相同；叛亂與占據報告共用同一版面（`docs/spec/046`、`047`）。",
+ "note": "星域易主報告的版面（`docs/spec/034`）。座標量自收據 `chain3`，文字取自 `strategy-report-strings.json`，字碼與原版逐位元組相同；叛亂、占據與提督 fate 報告共用同一版面（`docs/spec/046`、`047`、`048`）。",
  "line_step": 20,
  "name": {
   "x": 336,
@@ -251,6 +251,75 @@
     "星系上　",
     "敵方艦隊正在侵略中。"
    ]
+  },
+  "admiral_missing_title": {
+   "ds": "080A",
+   "lines": [
+    [
+     42069,
+     47272,
+     42147,
+     43514,
+     43706,
+     46243,
+     47102,
+     41280
+    ]
+   ],
+   "text": [
+    "下落不明的提督　"
+   ]
+  },
+  "admiral_name_suffix": {
+   "ds": "081D",
+   "lines": [
+    [
+     42103,
+     47207
+    ]
+   ],
+   "text": [
+    "已經"
+   ]
+  },
+  "admiral_dead": {
+   "ds": "0825",
+   "lines": [
+    [
+     48468,
+     47995,
+     42682,
+     42080,
+     41283,
+     41280,
+     41280,
+     41280,
+     41280,
+     41280
+    ]
+   ],
+   "text": [
+    "確認死亡。　　　　　"
+   ]
+  },
+  "admiral_survived": {
+   "ds": "083A",
+   "lines": [
+    [
+     45798,
+     49911,
+     42664,
+     42401,
+     48468,
+     43383,
+     42445,
+     49625,
+     41283
+    ]
+   ],
+   "text": [
+    "脫離成央確定生還。"
+   ]
   }
  },
  "evidence": {
@@ -262,6 +331,10 @@
   "occupation_new_us": "量到（收據 occupation-report3；docs/re/306）",
   "occupation_new_enemy": "原始分支與訊息表（056A:059E；docs/re/306）",
   "occupation_continuing_us": "原始分支與訊息表（056A:059E；docs/re/306）",
-  "occupation_continuing_enemy": "原始分支與訊息表（056A:059E；docs/re/306）"
+  "occupation_continuing_enemy": "原始分支與訊息表（056A:059E；docs/re/306）",
+  "admiral_missing_title": "原始組字與訊息表（056A:0311；docs/re/307）",
+  "admiral_name_suffix": "原始組字與訊息表（056A:0311；docs/re/307）",
+  "admiral_dead": "原始死亡分支與訊息表（056A:0311；docs/re/307）",
+  "admiral_survived": "原始生還分支與訊息表（056A:0311；docs/re/307）"
  }
 }

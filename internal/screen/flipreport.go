@@ -108,3 +108,28 @@ func (p *FlipReportPanel) DrawInline(fb *gfx.Framebuffer, fnt *font.Font,
 		drawFull(fb, fnt, p.Message.X, p.Message.Y+i*step, line, p.Message.Ink)
 	}
 }
+
+// DrawAdmiralFate 畫失蹤提督的三行報告：標題、姓名＋「已經」、結果。
+// `056A:0311` 仍走 `3826:0307`，因此沿用同一個 panel 的文字原點與行距。
+func (p *FlipReportPanel) DrawAdmiralFate(fb *gfx.Framebuffer, fnt *font.Font,
+	name []uint16, dead bool) {
+	line := func(key string) []uint16 {
+		m, ok := p.Messages[key]
+		if !ok || len(m.Lines) == 0 {
+			return nil
+		}
+		return m.Lines[0]
+	}
+	step := p.LineStep
+	if step == 0 {
+		step = 20
+	}
+	drawFull(fb, fnt, p.Name.X, p.Name.Y, line("admiral_missing_title"), p.Message.Ink)
+	second := append(append([]uint16(nil), name...), line("admiral_name_suffix")...)
+	drawFull(fb, fnt, p.Message.X, p.Name.Y+step, second, p.Message.Ink)
+	key := "admiral_survived"
+	if dead {
+		key = "admiral_dead"
+	}
+	drawFull(fb, fnt, p.Message.X, p.Name.Y+2*step, line(key), p.Message.Ink)
+}

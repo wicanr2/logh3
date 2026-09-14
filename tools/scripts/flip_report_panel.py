@@ -63,7 +63,7 @@ def entry(ds):
 panel = {
     "note": ("星域易主報告的版面（`docs/spec/034`）。座標量自收據 `chain3`，"
              "文字取自 `strategy-report-strings.json`，字碼與原版逐位元組相同；"
-             "叛亂與占據報告共用同一版面（`docs/spec/046`、`047`）。"),
+             "叛亂、占據與提督 fate 報告共用同一版面（`docs/spec/046`、`047`、`048`）。"),
     "line_step": 20,
     # 星系名的字色跟著**新的擁有者**走，三格都是量到的：
     #   chain7 打下敵方星域 → 0（帝國）色 6
@@ -91,6 +91,10 @@ panel = {
         "occupation_new_enemy": entry("0756"),
         "occupation_continuing_us": entry("0778"),
         "occupation_continuing_enemy": entry("079A"),
+        "admiral_missing_title": entry("080A"),
+        "admiral_name_suffix": entry("081D"),
+        "admiral_dead": entry("0825"),
+        "admiral_survived": entry("083A"),
     },
     "evidence": {
         "taken_by_us": "量到（訊息表；收據 chain7 打下敵方星域畫的就是這句）",
@@ -102,6 +106,10 @@ panel = {
         "occupation_new_enemy": "原始分支與訊息表（056A:059E；docs/re/306）",
         "occupation_continuing_us": "原始分支與訊息表（056A:059E；docs/re/306）",
         "occupation_continuing_enemy": "原始分支與訊息表（056A:059E；docs/re/306）",
+        "admiral_missing_title": "原始組字與訊息表（056A:0311；docs/re/307）",
+        "admiral_name_suffix": "原始組字與訊息表（056A:0311；docs/re/307）",
+        "admiral_dead": "原始死亡分支與訊息表（056A:0311；docs/re/307）",
+        "admiral_survived": "原始生還分支與訊息表（056A:0311；docs/re/307）",
     },
 }
 json.dump(panel, open(sys.argv[2], "w", encoding="utf-8"),

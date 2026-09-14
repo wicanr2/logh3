@@ -6678,3 +6678,14 @@ GitHub 的 issue 時間軸承擔。
 - 新增獨立 `StateOccupationReport`、逐則左右鍵 lifecycle 與
   `FlipReportPanel.DrawInline`；文字矩形對原版 0 像素差異。完整 game、screen、
   rules 回歸通過；逐格暫停與對戰雙座位仍明列證據限制。
+
+## 2026-09-14 — #8 失蹤提督生死判定與報告
+
+- IDA Pro 9.4 可丟棄資料庫副本解出 `056A:0219` 的兩階段亂數門檻、
+  特殊提督 0／52、`28E0:057F` 死亡清理與 `056A:0311` 三行組字。
+- dosgolem `e0b6a03` 以新遊戲正常「實行」路徑、提督狀態注入與固定
+  `ds:94DC=0`，命中特殊提督生還及報告呼叫；off-screen compositor 的
+  framebuffer 尚不可用，因此只作控制流／狀態收據，不宣稱畫面對拍。
+- 新增原版 LCG fate 規則、精確記錄寫回、獨立 `StateAdmiralFateReport`、
+  三行原始字碼與本人頭像路由。rules、screen、game 全套測試通過；
+  SPEC 048 維持 READY／已實作，等待可用的原版畫面收據才升 CONFORMED。
