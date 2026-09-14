@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 6 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 5 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -486,24 +486,9 @@ remake 用命令階段那一次的值；讀存檔之後到第一次回合尾巴�
 
 **核實**：要人判——沒有可掃的自承或缺席訊號（`recomputeUnrest` 已經存在，缺的是呼叫點）。接上時綁那一支同狀態測試（`go_test`）。
 
-#### region-supply-pool-missing — 飛彈／艦載機存量的每回合回充 remake 沒有
-
-*[#24](https://github.com/wicanr2/logh3/issues/24) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-原版每個回合把星域記錄的 `+0x68`／`+0x70` 補一成、夾在經濟力＋防衛力，
-再按行星經濟力比例分回行星的 `+0x3C`／`+0x40`。remake 兩層都沒有：
-行星存量只被戰場補給扣，沒有任何一處加回去，開局水位也還是
-`PLADAT.DAT` 的原值（原版第一個回合就夾下來，奧丁 200000 → 108600）。
-
-**做完的判準**：回合 1 的 32 格 `+0x68`／`+0x70` 與收據 `re273clamp` 的 `re273_rpost.bin` 逐位元組相同。
-
-**證據**：[`docs/re/273-region-supply-pool-refill.md`](docs/re/273-region-supply-pool-refill.md)、[`docs/spec/039-region-supply-pool.md`](docs/spec/039-region-supply-pool.md)
-
-**核實**：`internal/rules`、`internal/game` 裡出現 `RefillRegionSupply|RegionSupplyPool` 就是做好了
-
 ### 做完的（不在矩陣裡的那幾條）
 
-45 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+46 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -1352,6 +1337,24 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **證據**：[`docs/re/273-region-supply-pool-refill.md`](docs/re/273-region-supply-pool-refill.md)、[`docs/spec/039-region-supply-pool.md`](docs/spec/039-region-supply-pool.md)
 
 **核實**：`docs/re/273-region-supply-pool-refill.md` 標到 `2B5F:02B2`
+
+#### region-supply-pool-missing — 飛彈／艦載機存量的每回合回充 remake 沒有
+
+*[#24](https://github.com/wicanr2/logh3/issues/24) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+原版每個回合把星域記錄的 `+0x68`／`+0x70` 補一成、夾在經濟力＋防衛力，
+再以逐顆整數經濟力百分比分回行星的 `+0x3C`／`+0x40`；捨去餘數全交給
+最大經濟力行星，同值時取最後一顆。remake 已依相同雙層模型接入每回合路徑。
+
+**卡在**：無。`2703:0590` 的分配與餘數規則已由 IDA Pro 9.4 補完，SPEC 039 已
+CONFORMED。
+
+**做完的判準**：回合 1 的 32 格 `+0x68`／`+0x70` 與收據 `re273clamp` 的
+`re273_rpost.bin` 逐位元組相同。
+
+**證據**：[`docs/re/273-region-supply-pool-refill.md`](docs/re/273-region-supply-pool-refill.md)、[`docs/spec/039-region-supply-pool.md`](docs/spec/039-region-supply-pool.md)、[`internal/rules/region_supply.go`](internal/rules/region_supply.go)、[`internal/rules/region_supply_test.go`](internal/rules/region_supply_test.go)、[`internal/game/regionturn_test.go`](internal/game/regionturn_test.go)
+
+**核實**：`TestRefillRegionSupplyMatchesOracle` 釘在 `./internal/rules`
 
 #### face-draw-index-source — 原版把提督索引原樣交給畫頭像的常式（`3958:0215`）
 
