@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 4 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 3 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -413,35 +413,6 @@ remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以
 
 **核實**：要人判——現在沒有可綁的訊號：`InputCaret` 已經在了（恆亮那一版也有），而閃爍要靠一個還不存在的時間輸入。接上的時候把這條改成 absent，綁那個時間參數的名字。
 
-#### music-fm-capture — `_F` 那一組的 FM 原音：11 首錄到 9 首，結局那兩首還卡住
-
-*[#9](https://github.com/wicanr2/logh3/issues/9) · re（逆向：機制還沒讀出來）*
-
-`_F` 是寫給 OPL 的（`docs/re/274`：`'f'` 那個外皮接的是 OPL 播放常式），
-用 GM 音色庫合只會得到「同一首曲子、不同的音源」。
-**11 首裡 9 首已經是原版 OPL 的輸出**（`docs/re/275`）：dosgolem 加了
-`-dump-vgm` 與 `-vgm-clear-on-open`（`docs/spec/190-opl-vgm-dump`），
-`tools/music_fm_capture.sh` 逐首讓原版自己去播再錄，AdPlug 離線合成。
-`BGM_0F`–`BGM_7F` 用 `-poke` 寫 `ds:8F34` 選曲（連兩首戰鬥曲都不必打到戰鬥）；
-`OPEN_F` 原版永遠不會開它（`docs/re/274` §8），用換檔內容讓 OPL 驅動
-演奏那份資料，收據標 `FM(substituted)`。
-**還缺 `END_1F`／`END_2F`**：`ENDING.EXE` 跑 2,000,000,000 道指令
-（約 172 秒遊戲時間）沒有開過任何 `.MDS`，也沒有寫過 388／389。
-它有 `'f'`／`'m'` 兩個外皮（檔案位移 `0x31C6`／`0x31F0`），但整支執行檔裡
-**一個 `0x0388` 字面值都沒有**（`OPEN.EXE` 有兩處），所以它的 OPL 埠
-不是寫死的、或者 ＦＭ 輸出根本不在這支裡——先解那件事才錄得到。
-另有一個待裁決項：ＦＭ 那組的音量比 `_M` 那組低 10–20 dB，而那個落差是
-原版自己寫進 OPL 音量暫存器的。`FM_NORM=batch`（預設）保留曲子之間的
-音量關係，`FM_NORM=track` 聽感一致但抹掉那個關係。**要使用者裁決**。
-
-**卡在**：`ENDING.EXE` 的音樂路徑還沒走通（見 body），所以 `END_1F`／`END_2F` 錄不到。
-
-**做完的判準**：`_F` 那 11 首的 OGG 出自原版 OPL 的輸出，而不是 GM 音色庫。
-
-**證據**：[`docs/re/275-fm-capture-from-opl.md`](docs/re/275-fm-capture-from-opl.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
-
-**核實**：`tools/music_fm_capture.sh` 裡還找得到 `這條路還沒走通`（自承還在 ＝ 還沒做）
-
 #### admiral-unknown-fields — 提督記錄的 `+20`／`+22` 還沒有名字
 
 *[#16](https://github.com/wicanr2/logh3/issues/16) · 原編號 17 · re（逆向：機制還沒讀出來）*
@@ -470,7 +441,7 @@ remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以
 
 ### 做完的（不在矩陣裡的那幾條）
 
-47 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+48 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -804,6 +775,37 @@ remake 接在 `internal/audio.TuneFor`，曲號從 `Game` 那三格讀；
 **證據**：[`docs/re/285-settings-screen-hotspots.md`](docs/re/285-settings-screen-hotspots.md)、[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)
 
 **核實**：`internal/game` 裡出現 `msg-speed-inc` 就是做好了
+
+#### music-fm-capture — `_F` 那一組的 FM 原音：11 首全數完成原版 OPL 擷取
+
+*[#9](https://github.com/wicanr2/logh3/issues/9) · re（逆向：機制還沒讀出來）*
+
+`_F` 是寫給 OPL 的（`docs/re/274`：`'f'` 外皮接的是 OPL 播放常式），
+用 GM 音色庫合只會得到「同一首曲子、不同的音源」。
+
+**11 首已全部由原版 OPL 輸出取得**（`docs/re/275`）：dosgolem 提供
+`-dump-vgm` 與 `-vgm-clear-on-open`，`tools/music_fm_capture.sh` 逐首讓
+原版自己播放、記錄暫存器序列，再由 AdPlug 離線合成。
+
+- `BGM_0F`–`BGM_7F`：用 `-poke` 寫 `ds:8F34` 選曲。
+- `OPEN_F`：出貨程式不會直接開它；以換檔內容讓原版 OPL 驅動演奏，
+  收據明標 `FM(substituted)`。
+- `END_1F`／`END_2F`：`ENDING.EXE` 先掃 Sound Blaster DSP 基底，
+  在 `220h` 成功後由 `228h/229h` 寫 OPL。dosgolem `453c32e` 新增明示
+  `-sound-blaster` 的通用入口後，兩首皆連續重錄兩次且 VGM 雜湊相同。
+
+音量正規化仍是可逆輸出設定：`FM_NORM=batch`（預設）保留曲目間關係、
+`track` 拉齊每首峰值、`off` 不調整。這項主觀取捨不影響「原版 OPL
+暫存器串已完整取得」的客觀完成判準。
+
+**卡在**：無。音量取捨保留為可重算設定，不阻擋本項客觀完成。
+
+**做完的判準**：`_F` 11 首 OGG 均出自原版 OPL 暫存器輸出而非 GM 音色庫；所有檔案可解碼且
+為 44.1 kHz，兩首新增片尾曲有綁定執行器版本的決定性 VGM 收據。
+
+**證據**：[`docs/re/275-fm-capture-from-opl.md`](docs/re/275-fm-capture-from-opl.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`tools/music_fm_capture.sh`](tools/music_fm_capture.sh)
+
+**核實**：`tools/music_fm_capture.sh` 裡出現 `-sound-blaster` 就是做好了
 
 #### battle-formation-letters — 編隊那一行的字母規則解了，還差第二個局面的收據
 
