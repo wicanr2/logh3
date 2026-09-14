@@ -529,6 +529,19 @@ func TestReadWorkMonthFlag(t *testing.T) {
 	}
 }
 
+func TestReadWorkStrategicScore(t *testing.T) {
+	raw := make([]byte, WorkRecord)
+	put32(raw, workStrategicScore, 12345)
+	put32(raw, workStrategicScore+4, 2345)
+	w, err := ReadWork(raw)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if w.StrategicScore != [2]int{12345, 2345} {
+		t.Fatalf("整局戰略分數=%v", w.StrategicScore)
+	}
+}
+
 // TestWorkMusicSettings 釘住 `WORK.DT?` 的 `+0x1F`／`+0x20`／`+0x21`
 // （＝ `ds:8F33`／`8F34`／`8F35`，設定畫面上那三行，`docs/re/274`）。
 //

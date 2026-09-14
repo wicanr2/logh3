@@ -1,0 +1,44 @@
+{
+ "note": "勝負確定報告（04C8:00F3；docs/spec/050、re/309）。",
+ "cell_x": 10,
+ "cell_y": 5,
+ "cols": 20,
+ "rows": 10,
+ "style": 1,
+ "colour": 151,
+ "face": {
+  "x": 416,
+  "y": 160,
+  "w": 80,
+  "h": 100
+ },
+ "button": {
+  "cell_x": 17,
+  "cell_y": 9,
+  "cols": 2,
+  "colour": 135,
+  "codes": [
+   "BD54",
+   "BB7B"
+  ],
+  "text": "確認"
+ },
+ "formats": {
+  "date": "0c06a674a97abee4253364a67e253264a4eb253264a4e9070a0a",
+  "win_intro": "a477b867b14ebcc4a4e8aabaa544ad6eac50a874a7f0b3b4a1430a",
+  "win_name": "2573bed4b3d3a143202020200a0a",
+  "win_regions": "a7daa4e8ac50a874c160bcc620202020202020202532640a",
+  "loss_intro": "adbab3a3a9d2a662aabaac50a874a477b867b351a565bbe2a1430a",
+  "loss_name": "2573bed4b1d1a143202020200a0a0a",
+  "victory": "b3d3a751c249202020202531326c640a",
+  "score": "253673202020202531326c640a"
+ },
+ "faction_names": [
+  "035b3135302cabd2b0eaad78035b3135312c",
+  "035b3134392ca650b7f9ad78035b3135312c"
+ ],
+ "plain_names": [
+  "abd2b0eaad78",
+  "a650b7f9ad78"
+ ]
+}

@@ -312,8 +312,12 @@ func (g *Game) Withdraw() {
 // 要塞砲狀態與被打掉的存量打完就留在那裡（`docs/re/150`）。remake 為了
 // 讓戰場層是純函式而先複製一份，所以這裡補寫回去。
 //
-// 戰後會不會撤退、分數怎麼結算還沒解。
+// 每場戰術得分在這裡累加進整局分數，供最終勝負報告顯示
+// （`ds:8FEC`／`ds:8FF0`，`docs/re/309`）。戰後撤退仍未解。
 func (g *Game) EndBattle() {
+	for f := 0; f < 2; f++ {
+		g.campaignScore[f] += g.battleScore[f]
+	}
 	if g.slot != nil {
 		g.slot.ApplyBattleResult(g.battleUnits)
 		g.fleets = g.slot.Fleets(g.res.Weights)

@@ -153,11 +153,13 @@ const (
 
 	// StateAdmiralFateReport 是每回合早段 `056A:0219` 判出的失蹤提督
 	// 死亡／生還報告；滑鼠任一鍵逐則關閉（`docs/spec/048`）。
-	// strategy-report-screen：勝負報告仍未接。
 	StateAdmiralFateReport
 
 	// StatePhezzanReport 是費沙第一次易主後、事件本體之前的雙頁報告。
 	StatePhezzanReport
+
+	// StateVictoryReport 是首都陷落後唯一一位人類座位看到的勝負報告。
+	StateVictoryReport
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -178,7 +180,7 @@ func (s State) String() string {
 		"StateShipDelivery", "StateRegionFlipReport", "StateVersusInput",
 		"StateVersusAccount", "StateIntro", "StateVersusShipOrder",
 		"StateRebellionReport", "StateOccupationReport", "StateAdmiralFateReport",
-		"StatePhezzanReport",
+		"StatePhezzanReport", "StateVictoryReport",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -305,6 +307,8 @@ type Resources struct {
 	// FlipReport 是星域易主報告那一頁的版面（`docs/spec/034`）。
 	FlipReport    *screen.FlipReportPanel
 	PhezzanReport *screen.PhezzanReportPanel
+	VictoryReport *screen.VictoryReportPanel
+	Endings       [2]*asset.Image
 
 	// Reporter 是報告頭像用的提督編號，＝ 原版的 `ds:8F4D[陣營]`
 	// （`docs/re/248`）。**不是統治者**（那個是 `ds:8F4F`）。
@@ -502,6 +506,7 @@ type Game struct {
 	afterAdmiralFateReports   func()
 	pendingPhezzanReports     []PhezzanReport
 	afterPhezzanReports       func()
+	victoryReport             VictoryReport
 	state                     State
 
 	// 主選單：滑鼠位置與反白到哪一列。
@@ -759,6 +764,7 @@ type Game struct {
 	battleRand    *rules.Rand
 	battleLosses  []rules.BattleLoss
 	battleScore   [2]int
+	campaignScore [2]int
 	battleOver    bool
 
 	// work／admirals 是這一局**可寫**的 `WORK` 區塊與提督表。
@@ -949,6 +955,9 @@ func (g *Game) finishTurn() {
 }
 
 func (g *Game) finishAfterPhezzanReports() {
+	if g.startVictoryReport() {
+		return
+	}
 	// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
 	// 並跳出船艦接收報告。
 	//
@@ -1375,6 +1384,7 @@ func (g *Game) startNewGame(faction int) {
 	g.afterAdmiralFateReports = nil
 	g.pendingPhezzanReports = nil
 	g.afterPhezzanReports = nil
+	g.victoryReport = VictoryReport{Winner: -1}
 	g.phezzanPending = false
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
@@ -1382,6 +1392,7 @@ func (g *Game) startNewGame(faction int) {
 	g.starMap = g.factionStarMap(faction, true)
 	g.plainMap = g.factionStarMap(faction, false)
 	g.turn = 0
+	g.campaignScore = [2]int{}
 	// 兩個陣營的起始軍事費相同（796/1 量到帝國 50000，`docs/re/35`）。
 	g.military = [2]int{g.res.StartMilitary, g.res.StartMilitary}
 	g.blend = [2]int{rules.NewGameBlend, rules.NewGameBlend}
@@ -1483,12 +1494,14 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.afterAdmiralFateReports = nil
 	g.pendingPhezzanReports = nil
 	g.afterPhezzanReports = nil
+	g.victoryReport = VictoryReport{Winner: -1}
 	g.phezzanPending = false
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
 	g.res.Stellar = sl.Stellar
 	g.res.Planets = sl.Planets
 	g.turn = sl.Turn
+	g.campaignScore = sl.StrategicScore
 	g.military = sl.Military
 	g.taxTotal = sl.TaxTotal
 	g.blend = sl.Blend
@@ -1717,6 +1730,8 @@ func (g *Game) click(x, y int) {
 		g.dismissAdmiralFateReport()
 	case StatePhezzanReport:
 		g.dismissPhezzanReport()
+	case StateVictoryReport:
+		g.dismissVictoryReport()
 	case StateVersusInput:
 		// 交棒視窗只有「確認」一顆（`docs/re/76`）。點在框裡但熱區外
 		// 什麼都不會發生（收據 `vs3`），所以走 `BoxAt`。
@@ -1961,6 +1976,8 @@ func (g *Game) rightClick(x, y int) {
 		g.dismissAdmiralFateReport()
 	case StatePhezzanReport:
 		g.dismissPhezzanReport()
+	case StateVictoryReport:
+		g.dismissVictoryReport()
 	case StateShipDelivery:
 		// 接收報告也是右鍵關掉的（收據 `mreponlyr`：三張報告全部只用右鍵
 		// 就依序退場，第三下之後露出地圖介面）。左鍵那一路在 `Click`
@@ -2240,6 +2257,7 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	g.slot.Building = g.building
 	g.slot.PaidUpkeep = g.paidUpkeep
 	g.slot.PaidMove = g.paidMove
+	g.slot.StrategicScore = g.campaignScore
 	// 那三格音樂設定。**新遊戲的底稿在這一格上是 0**（`work-796-01.json`
 	// 量自第 71,200,000 步，那時候音源偵測還沒跑），而原版存檔的時候
 	// `ds:8F33` 已經是 1——三格出貨存檔的 `+0x1F` 都是 1，所以照現在的值寫。
@@ -2298,6 +2316,8 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		return screen.IntroScreen(g.introPage)
 	case StateEnding:
 		return screen.Ending(g.ending)
+	case StateVictoryReport:
+		return g.drawVictoryReport()
 	case StateAdmiralList:
 		g.setListRows(g.res.AdmiralList)
 		g.applyStaffFaces(g.res.AdmiralList)

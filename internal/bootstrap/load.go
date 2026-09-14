@@ -120,6 +120,16 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	victoryReport, err := screen.LoadVictoryReportPanel(filepath.Join(data, "victory-report-panel.json"))
+	if err != nil {
+		return nil, err
+	}
+	var endings [2]*asset.Image
+	for i, name := range []string{"ENDT30.VO5", "ENDD30.VO5"} {
+		if b, readErr := os.ReadFile(filepath.Join(orig, name)); readErr == nil {
+			endings[i], _ = asset.DecodeVO5(b)
+		}
+	}
 	bioPanel, err := screen.LoadBioPanel(filepath.Join(data, "admiral-bio-panel.json"))
 	if err != nil {
 		return nil, err
@@ -310,6 +320,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		// `ds:8F4D`：報告頭像用的提督編號，量自新遊戲那一份傾印
 		// （`docs/re/248`）。**不是統治者**。
 		Reporter: [2]int{13, 75}, FlipReport: flipReport, PhezzanReport: phezzanReport,
+		VictoryReport: victoryReport, Endings: endings,
 		Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
 		StarBit: bit, StarRGN: rgn, RegionColours: colours,

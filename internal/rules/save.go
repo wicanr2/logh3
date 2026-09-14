@@ -41,6 +41,8 @@ const (
 	// 建造中的船艦（＝ ds:8F9C）：32 位元 × 七個艦種 × 陣營，
 	// 月底 `2B5F:001F` 交付的就是這一組（`docs/re/264`）。
 	workBuilding = 0x88
+	// 勝負報告顯示的整局累積戰略分數（＝ ds:8FEC／8FF0）。
+	workStrategicScore = 0xD8
 	// 設定畫面上那三行音樂設定（＝ ds:8F33／8F34／8F35，`docs/re/274`）。
 	// 三格出貨存檔的 `+0x20` 分別是 0／1／3，與它們載入之後實際打開的
 	// `bgm_0f`／`bgm_1f`／`bgm_3f.mds` 逐一對上。
@@ -243,6 +245,10 @@ type WorkFields struct {
 	// 月底把它整組交進首都行星與首都星域（`docs/spec/036`、`docs/re/264`）。
 	Building [2]Building
 
+	// StrategicScore 是兩邊整局累積的戰術得分；勝負報告以兩者相減顯示
+	// 「勝利點」（`docs/re/309`）。
+	StrategicScore [2]int
+
 	// MusicDevice／MusicBGM／MusicBattle 是設定畫面上那三行
 	// （`ds:8F33`／`8F34`／`8F35`，`docs/re/274`）。**不分陣營**，
 	// 一份存檔一組——它是玩家的偏好，不是局面的一部分。
@@ -291,6 +297,7 @@ func ReadWork(w []byte) (WorkFields, error) {
 		f.PaidMove[i] = u32(w, workPaidMove+i*4)
 		f.Upkeep[i] = u32(w, workUpkeep+i*4)
 		f.MoveCost[i] = u32(w, workMoveCost+i*4)
+		f.StrategicScore[i] = u32(w, workStrategicScore+i*4)
 		f.MonthFlag[i] = int(w[workMonthFlag+i])
 		for row := 0; row < BuildPlanRows; row++ {
 			f.BuildPct[i][row] = int(w[workBuildPct+i*BuildPlanRows+row])
@@ -586,6 +593,7 @@ func (s *Slot) Save(dir string, index int) error {
 		put32(work, workShipPaid+4*f, s.ShipPaid[f])
 		put32(work, workPaidUpkeep+4*f, s.PaidUpkeep[f])
 		put32(work, workPaidMove+4*f, s.PaidMove[f])
+		put32(work, workStrategicScore+4*f, s.StrategicScore[f])
 		for row := 0; row < BuildPlanRows; row++ {
 			work[workBuildPct+f*BuildPlanRows+row] = byte(s.BuildPct[f][row])
 			put32(work, workBuilding+(f*BuildPlanRows+row)*4, s.Building[f][row])
