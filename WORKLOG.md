@@ -6689,3 +6689,13 @@ GitHub 的 issue 時間軸承擔。
 - 新增原版 LCG fate 規則、精確記錄寫回、獨立 `StateAdmiralFateReport`、
   三行原始字碼與本人頭像路由。rules、screen、game 全套測試通過；
   SPEC 048 維持 READY／已實作，等待可用的原版畫面收據才升 CONFORMED。
+
+## 2026-09-14 — #8 費沙事件雙頁報告
+
+- 沿用 pzx296 正常玩家路徑與注入，分別停在事件本體之前的第一、第二頁；
+  dosgolem `e0b6a03` 取得兩份可用 framebuffer 收據。
+- 新增 24×5 `PhezzanReportPanel`、四組 owner／viewer 雙頁 Big5 資料、
+  軍事專任參謀本人頭像與獨立 `StatePhezzanReport` lifecycle；兩頁關完後
+  才執行既有費沙本體。
+- 帝國 owner 兩頁的 `(112,160)`–`(527,299)` overlay 各 58,240 像素
+  對原版 0 差異；SPEC 049 在此範圍 CONFORMED。

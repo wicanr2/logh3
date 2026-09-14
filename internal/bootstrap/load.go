@@ -116,6 +116,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	phezzanReport, err := screen.LoadPhezzanReportPanel(filepath.Join(data, "phezzan-report-panel.json"))
+	if err != nil {
+		return nil, err
+	}
 	bioPanel, err := screen.LoadBioPanel(filepath.Join(data, "admiral-bio-panel.json"))
 	if err != nil {
 		return nil, err
@@ -305,7 +309,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		},
 		// `ds:8F4D`：報告頭像用的提督編號，量自新遊戲那一份傾印
 		// （`docs/re/248`）。**不是統治者**。
-		Reporter: [2]int{13, 75}, FlipReport: flipReport,
+		Reporter: [2]int{13, 75}, FlipReport: flipReport, PhezzanReport: phezzanReport,
 		Faces: faces, Cursor: cur, Menu: menu,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral,
 		StarBit: bit, StarRGN: rgn, RegionColours: colours,

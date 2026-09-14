@@ -4,9 +4,11 @@ import (
 	"encoding/binary"
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 
 	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
 )
 
 // 回合結束那條鏈（`docs/re/244`、`docs/spec/032`）：行星易主 → 星域易主 →
@@ -125,6 +127,52 @@ func TestPhezzanEventRunsAfterFlipReportOnce(t *testing.T) {
 	g.runPhezzanEvent()
 	if got := g.res.Planets.PlanetEconomy(34); got != 20620 {
 		t.Errorf("事件重複發生：費沙經濟力又變成 %d", got)
+	}
+}
+
+func TestPhezzanReportsRunBeforeEventBody(t *testing.T) {
+	g := newPhezzanTurnGame(t)
+	g.res.PhezzanReport = &screen.PhezzanReportPanel{}
+	if !g.runRegionPass(g.finishTurn) {
+		t.Fatal("費沙易主應先停在易主報告")
+	}
+	for len(g.PendingFlips()) > 0 {
+		g.dismissFlip()
+	}
+	if g.state != StatePhezzanReport || rules.PhezzanOccurred(g.workRecord()) {
+		t.Fatalf("第一頁狀態=%v occurred=%v", g.state, rules.PhezzanOccurred(g.workRecord()))
+	}
+	if r, ok := g.CurrentPhezzanReport(); !ok || r.Key() != "owner_0" || r.Page != 0 {
+		t.Fatalf("第一頁 %+v,%v", r, ok)
+	}
+	g.Click(300, 220)
+	if r, ok := g.CurrentPhezzanReport(); !ok || r.Page != 1 || rules.PhezzanOccurred(g.workRecord()) {
+		t.Fatalf("第二頁 %+v,%v occurred=%v", r, ok, rules.PhezzanOccurred(g.workRecord()))
+	}
+	g.RightClick(300, 220)
+	if !rules.PhezzanOccurred(g.workRecord()) || g.state == StatePhezzanReport {
+		t.Fatalf("兩頁關完 occurred=%v state=%v", rules.PhezzanOccurred(g.workRecord()), g.state)
+	}
+}
+
+func TestPhezzanReportsVersusOwnerThenOpponent(t *testing.T) {
+	g := newPhezzanTurnGame(t)
+	g.versus = true
+	g.res.PhezzanReport = &screen.PhezzanReportPanel{}
+	if !g.runRegionPass(g.finishTurn) {
+		t.Fatal("費沙易主應先停在易主報告")
+	}
+	for len(g.PendingFlips()) > 0 {
+		g.dismissFlip()
+	}
+	want := []PhezzanReport{
+		{Owner: 0, Viewer: 0, Page: 0},
+		{Owner: 0, Viewer: 0, Page: 1},
+		{Owner: 0, Viewer: 1, Page: 0},
+		{Owner: 0, Viewer: 1, Page: 1},
+	}
+	if !reflect.DeepEqual(g.pendingPhezzanReports, want) {
+		t.Fatalf("費沙報告順序=%+v，預期=%+v", g.pendingPhezzanReports, want)
 	}
 }
 

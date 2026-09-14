@@ -1,0 +1,70 @@
+{
+ "note": "費沙事件雙頁報告（1213:01B8；docs/spec/049、re/308）。",
+ "cell_x": 7,
+ "cell_y": 6,
+ "cols": 24,
+ "rows": 5,
+ "style": 1,
+ "colour": 151,
+ "face": {
+  "x": 432,
+  "y": 180,
+  "w": 80,
+  "h": 100,
+  "index_from": "WORK +0x37 military staff for viewer faction"
+ },
+ "reports": {
+  "owner_0": {
+   "ds": "3260",
+   "pages": [
+    {
+     "raw": "2020c1f6b54da7daa4e8a7b9a5fea565bbe2a446b64fa846ac50a874a146a6fdac4f0a2020b64fa846aabab867c0d9b8eab7bda668a477ac79a8eca650b7f9ad78a4e2a4a4a1430a",
+     "text": "  雖然我方完全占領了費沙星系；但是\n  費沙的經濟資源多已流到同盟軍手中。\n"
+    },
+    {
+     "raw": "2020a650aec9a141a4e4abf9b64fa846a6dbaa76bbe2a661aabac3e4b9d2ac50a8740a2020a5d8ab65b1a1b6d5a5bfabf9c4f2b463a4c6a4a4a14320202020202020202020",
+     "text": "  同時，支持費沙自治領地的邊境星系\n  目前情勢正持續惡化中。          "
+    }
+   ]
+  },
+  "owner_1": {
+   "ds": "3268",
+   "pages": [
+    {
+     "raw": "2020c1f6b54db64fa846a6dbaa76bbe2a661aabaa565bbe2a6e6b0caa477b867a6a8a55c0a2020a143a6fdac4fa141af7dc361b1f8acf9aabaad49ab48a6e6acb0ab6fb379a6a80a2020a7daa4e8c3e4b9d2ac50a874b1b5b373a4a3c25fa661b56fa5cdab71b6c3a1430a",
+     "text": "  雖然費沙自治領地的占領行動已經成功\n  。但是，破壞條約的背信行為卻造成\n  我方邊境星系接連不斷地發生叛亂。\n"
+    },
+    {
+     "raw": "2020a6d3a542a141b64fa846aabab867c0d9a44fa46ab3a1a5f7a66eb9b3a477b867c2e00a2020b2bea8ecabd2b0eaad78a8bac3e4aababccba46ca143202020202020",
+     "text": "  而且，費沙的經濟力大部份好像已經轉\n  移到帝國軍那邊的樣子。      "
+    }
+   ]
+  },
+  "opponent_0": {
+   "ds": "3278",
+   "pages": [
+    {
+     "raw": "2020a65dacb0b64fa846a6dbaa76bbe2a661a477b351abd2b0eaa46aad78a565bbe2a1430a2020a6b3b35ca668b64fa846aabaac79a460aaccab65a8d3bdd0a844a7c8c540a1430a",
+     "text": "  因為費沙自治領地已被帝國大軍占領。\n  有許多費沙的流亡者前來請求庇護。\n"
+    },
+    {
+     "raw": "2020a6d3a542a141abd2b0eac3e4b9d2aabaac50a874a5d8ab65a66eb9b3b56fa5cdab710a2020b6c3aababccba46ca143202020202020",
+     "text": "  而且，帝國邊境的星系目前好像發生叛\n  亂的樣子。      "
+    }
+   ]
+  },
+  "opponent_1": {
+   "ds": "3270",
+   "pages": [
+    {
+     "raw": "2020a5d1a9f3b64fa846ac50a874b351a650b7f9ad78a565bbe2aababd74ac47a14620200a2020a5d8ab65c3e4b9d2a5bfac79a44aa46ab671aabac3f8a5c1a14320200a",
+     "text": "  由於費沙星系被同盟軍占領的緣故；  \n  目前邊境正流入大量的難民。  \n"
+    },
+    {
+     "raw": "2020a574a57ea141a650b7f9c3e4b9d2a661b161aabab1a1b6d5a5bfb3b4a44ab256b6c30a2020aabaaaacba41a14320202020",
+     "text": "  另外，同盟邊境地帶的情勢正陷入混亂\n  的狀態。    "
+    }
+   ]
+  }
+ }
+}

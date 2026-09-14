@@ -170,5 +170,6 @@ pct = t >= 600 ? 0 : ds:328E[t ÷ 100]
 - 一次性旗標直接讀寫 `WORK.DT? +0x34`，存檔會保留；`OriginalStrategy` 每回合
   動態讀這一格，因此 `StateCode` 的 `phezzanOpen` 不再固定為 false。
 
-事件兩頁訊息與逐格叛亂報告仍由 worklist `strategy-report-screen`（#8）負責；
-這不影響本頁已證實的狀態轉移。
+事件兩頁訊息已由 SPEC 049 接進正式回合：先顯示、後執行本體；帝國 owner
+兩頁的 416×140 overlay 對 dosgolem 收據逐像素 0 差異（`docs/re/308`）。
+本體內逐格叛離時的額外單句仍保留 `視窗[0] == 2` 語意未知的限制。

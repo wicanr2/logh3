@@ -153,8 +153,11 @@ const (
 
 	// StateAdmiralFateReport 是每回合早段 `056A:0219` 判出的失蹤提督
 	// 死亡／生還報告；滑鼠任一鍵逐則關閉（`docs/spec/048`）。
-	// strategy-report-screen：勝負／費沙事件報告仍未接。
+	// strategy-report-screen：勝負報告仍未接。
 	StateAdmiralFateReport
+
+	// StatePhezzanReport 是費沙第一次易主後、事件本體之前的雙頁報告。
+	StatePhezzanReport
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -175,6 +178,7 @@ func (s State) String() string {
 		"StateShipDelivery", "StateRegionFlipReport", "StateVersusInput",
 		"StateVersusAccount", "StateIntro", "StateVersusShipOrder",
 		"StateRebellionReport", "StateOccupationReport", "StateAdmiralFateReport",
+		"StatePhezzanReport",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -216,6 +220,7 @@ var screenSpecName = map[State]string{
 	StateRebellionReport:   "screen-command-phase",
 	StateOccupationReport:  "screen-command-phase",
 	StateAdmiralFateReport: "screen-command-phase",
+	StatePhezzanReport:     "screen-command-phase",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -298,7 +303,8 @@ type Resources struct {
 	ReportPanel *screen.ReportPanel
 
 	// FlipReport 是星域易主報告那一頁的版面（`docs/spec/034`）。
-	FlipReport *screen.FlipReportPanel
+	FlipReport    *screen.FlipReportPanel
+	PhezzanReport *screen.PhezzanReportPanel
 
 	// Reporter 是報告頭像用的提督編號，＝ 原版的 `ds:8F4D[陣營]`
 	// （`docs/re/248`）。**不是統治者**（那個是 `ds:8F4F`）。
@@ -494,6 +500,8 @@ type Game struct {
 	admiralFateReports        []AdmiralFateReport
 	pendingAdmiralFateReports []AdmiralFateReport
 	afterAdmiralFateReports   func()
+	pendingPhezzanReports     []PhezzanReport
+	afterPhezzanReports       func()
 	state                     State
 
 	// 主選單：滑鼠位置與反白到哪一列。
@@ -933,7 +941,14 @@ func (g *Game) endOfTurn() {
 // 延後到報告全部按掉之後（`docs/spec/034`）。
 func (g *Game) finishTurn() {
 	// 費沙事件在逐格易主報告與擁有者重算之後、勝負／月底結算之前。
+	if g.startPhezzanReports(g.finishAfterPhezzanReports) {
+		return
+	}
 	g.runPhezzanEvent()
+	g.finishAfterPhezzanReports()
+}
+
+func (g *Game) finishAfterPhezzanReports() {
 	// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
 	// 並跳出船艦接收報告。
 	//
@@ -1358,6 +1373,8 @@ func (g *Game) startNewGame(faction int) {
 	g.pendingAdmiralFateReports = nil
 	g.admiralFateReports = nil
 	g.afterAdmiralFateReports = nil
+	g.pendingPhezzanReports = nil
+	g.afterPhezzanReports = nil
 	g.phezzanPending = false
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
@@ -1464,6 +1481,8 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.pendingAdmiralFateReports = nil
 	g.admiralFateReports = nil
 	g.afterAdmiralFateReports = nil
+	g.pendingPhezzanReports = nil
+	g.afterPhezzanReports = nil
 	g.phezzanPending = false
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
@@ -1696,6 +1715,8 @@ func (g *Game) click(x, y int) {
 		g.dismissOccupationReport()
 	case StateAdmiralFateReport:
 		g.dismissAdmiralFateReport()
+	case StatePhezzanReport:
+		g.dismissPhezzanReport()
 	case StateVersusInput:
 		// 交棒視窗只有「確認」一顆（`docs/re/76`）。點在框裡但熱區外
 		// 什麼都不會發生（收據 `vs3`），所以走 `BoxAt`。
@@ -1938,6 +1959,8 @@ func (g *Game) rightClick(x, y int) {
 		g.dismissOccupationReport()
 	case StateAdmiralFateReport:
 		g.dismissAdmiralFateReport()
+	case StatePhezzanReport:
+		g.dismissPhezzanReport()
 	case StateShipDelivery:
 		// 接收報告也是右鍵關掉的（收據 `mreponlyr`：三張報告全部只用右鍵
 		// 就依序退場，第三下之後露出地圖介面）。左鍵那一路在 `Click`
@@ -2482,6 +2505,13 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
 		}
 		g.drawAdmiralFateReport(fb)
+		return
+	}
+	if g.state == StatePhezzanReport {
+		if g.res.CapitalPanel != nil {
+			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
+		}
+		g.drawPhezzanReport(fb)
 		return
 	}
 	g.drawCapitalPanel(fb)

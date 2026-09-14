@@ -417,29 +417,30 @@ remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以
 
 *[#8](https://github.com/wicanr2/logh3/issues/8) · 原編號 242 · feature（功能：玩家會撞到、但 remake 還沒有）*
 
-戰略報告已有四個可玩的 report family：星域易主四種報告由
+戰略報告已有五個可玩的 report family：星域易主四種報告由
 `StateRegionFlipReport` 完成（SPEC 034）；逐格叛亂由獨立
 `StateRebellionReport` 完成（SPEC 046）；單方面占據四句由獨立
-`StateOccupationReport` 完成（SPEC 047）；提督失蹤的死亡／生還判定、
-狀態寫回與逐則模態報告由 `StateAdmiralFateReport` 完成（SPEC 048）。
+`StateOccupationReport` 完成（SPEC 047）；提督失蹤的死亡／生還由
+`StateAdmiralFateReport` 完成（SPEC 048）；費沙事件四組雙頁由
+`StatePhezzanReport` 完成（SPEC 049）。
 
-目前仍未接的是勝敗頁，以及費沙事件兩頁。原版 86 條訊息表已保存，
-但各 scene owner、觸發順序、頭像／版面與 dismiss lifecycle 仍需逐族取得
-客觀收據，不能只把字串塞進既有 panel 就宣稱完成。
+目前仍未接的是勝敗頁。原版 86 條訊息表已保存，但其 scene owner、觸發順序、
+頭像／版面與 dismiss lifecycle 仍需客觀收據，不能只把字串塞進既有 panel。
 
-**卡在**：下一個客觀切片是勝敗頁或費沙事件兩頁。提督 fate 的規則、寫回、組字、
-本人頭像路由與 lifecycle 已接；但 dosgolem 在 `3826:0307` off-screen compositor
-停於等待時未產生可用 framebuffer，因此 SPEC 048 尚未升為 CONFORMED，
-不宣稱該頁逐像素 parity。占據報告的逐格暫停與對戰雙座位限制仍保留。
+**卡在**：下一個客觀切片是勝敗頁。提督 fate 的規則與 lifecycle 已接，但 dosgolem
+在該 off-screen compositor 路徑尚無可用 framebuffer，因此 SPEC 048 不宣稱
+逐像素 CONFORMED。費沙事件帝國 owner 的兩頁主 overlay 已逐像素 0 差異；
+同盟 owner／雙人座位及 overlay 外「確認」提示保留明示限制。占據報告的
+逐格暫停與對戰雙座位限制也仍保留。
 
-**做完的判準**：- 每一個仍缺的報告 family 都從正常玩家路徑可達；
+**做完的判準**：- 勝敗報告 family 從正常玩家路徑可達；
 - scene owner、觸發時點、文字／頭像／框、模態 dismiss 與返回流程有原版收據；
-- 各自只在已證實區域宣稱逐像素或同狀態，所有差異均已分類；
+- 只在已證實區域宣稱逐像素或同狀態，所有差異均已分類；
 - 建立單一機器測試覆蓋所有戰略報告 family 後，才關閉本 issue。
 
-**證據**：[`docs/spec/034-region-flip-report.md`](docs/spec/034-region-flip-report.md)、[`docs/spec/046-rebellion-report.md`](docs/spec/046-rebellion-report.md)、[`docs/spec/047-occupation-report.md`](docs/spec/047-occupation-report.md)、[`docs/spec/048-admiral-fate-report.md`](docs/spec/048-admiral-fate-report.md)、[`docs/playtest/016-rebellion-report.md`](docs/playtest/016-rebellion-report.md)、[`docs/playtest/017-occupation-report.md`](docs/playtest/017-occupation-report.md)、[`docs/playtest/018-admiral-fate-report.md`](docs/playtest/018-admiral-fate-report.md)、[`docs/re/306-occupation-report-caller-and-receipt.md`](docs/re/306-occupation-report-caller-and-receipt.md)、[`docs/re/307-admiral-fate-pass-and-report.md`](docs/re/307-admiral-fate-pass-and-report.md)、[`docs/re/247-strategy-report-strings.md`](docs/re/247-strategy-report-strings.md)、[`docs/internals/data/strategy-report-strings.json`](docs/internals/data/strategy-report-strings.json)、[`docs/internals/data/flip-report-panel.json`](docs/internals/data/flip-report-panel.json)
+**證據**：[`docs/spec/034-region-flip-report.md`](docs/spec/034-region-flip-report.md)、[`docs/spec/046-rebellion-report.md`](docs/spec/046-rebellion-report.md)、[`docs/spec/047-occupation-report.md`](docs/spec/047-occupation-report.md)、[`docs/spec/048-admiral-fate-report.md`](docs/spec/048-admiral-fate-report.md)、[`docs/spec/049-phezzan-event-report.md`](docs/spec/049-phezzan-event-report.md)、[`docs/playtest/018-admiral-fate-report.md`](docs/playtest/018-admiral-fate-report.md)、[`docs/playtest/019-phezzan-event-report.md`](docs/playtest/019-phezzan-event-report.md)、[`docs/re/307-admiral-fate-pass-and-report.md`](docs/re/307-admiral-fate-pass-and-report.md)、[`docs/re/308-phezzan-report-receipts.md`](docs/re/308-phezzan-report-receipts.md)、[`docs/re/247-strategy-report-strings.md`](docs/re/247-strategy-report-strings.md)、[`docs/internals/data/strategy-report-strings.json`](docs/internals/data/strategy-report-strings.json)、[`docs/internals/data/phezzan-report-panel.json`](docs/internals/data/phezzan-report-panel.json)
 
-**核實**：`internal/game` 裡還找得到 `strategy-report-screen：勝負／費沙事件報告仍未接`（自承還在 ＝ 還沒做）
+**核實**：`internal/game` 裡還找得到 `strategy-report-screen：勝負報告仍未接`（自承還在 ＝ 還沒做）
 
 #### music-fm-capture — `_F` 那一組的 FM 原音：11 首錄到 9 首，結局那兩首還卡住
 
