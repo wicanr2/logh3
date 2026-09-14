@@ -72,6 +72,16 @@
 原版完整品目錄確認另附「登場人物初期資料表」，但尚無可讀掃描；查找範圍
 與連結記於 [`../re/287`](../re/287-admiral-remaining-fields.md)。
 
+### 人物傳／無名過場角色查核（2026-09-14）
+
+`docs/internals/data/keireki.json` 的 82 筆人物傳（索引 0–81）每筆都有姓名
+與內文；`docs/internals/data/face-amg.json` 的第 82 張才是沒有對應人物的
+刻意空白格，沒有另一筆「無名字但其實是過場 NPC」的人物傳資料。這個對照
+由 `internal/rules.TestBiographyCoversNamedAdmiralsAndTheBlankFaceSlot`
+自動核對。結論只確認人物身分範圍，不替 `+20`／`+22` 的內部用途猜紙本
+欄名；兩格的用途與未命名狀態仍依 [`../re/287`](../re/287-admiral-remaining-fields.md)
+保存。
+
 `+14`（營運）有兩個已知的消費者，而且看的是**不同的提督**：艦隊維持費與
 移動經費用的是**那支艦隊的提督**（`(200 − 營運)` 那一項，`docs/re/263`）；
 船艦建造的單價用的是**軍事專任參謀**（`ds:8F4B[陣營]`）——

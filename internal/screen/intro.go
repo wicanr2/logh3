@@ -25,7 +25,7 @@ const (
 //
 // 頁面其餘的列留 0——原版那兩塊也是 0（收據 `intro52` 的 `A0000` 兩頁
 // 各只有兩、三千個非零位元組，`docs/re/104`）。
-func IntroPage(d *asset.IntroDecoder) *asset.Image {
+func IntroPage(d interface{ Pixels() *asset.Image }) *asset.Image {
 	page := &asset.Image{
 		W: IntroPageCols, H: IntroPageRows,
 		Pix: make([]uint8, IntroPageCols*IntroPageRows),
@@ -75,18 +75,52 @@ func IntroPalette(b []byte) (gfx.Palette, error) {
 // ＝ 65536。所以動畫期間計時器是 1193182 / 2048 ≈ 582.6 Hz。
 //
 // 一格要解四個 plane，量到的解碼器入口（`041F:024B`）四個一組；
-// 組與組的間隔在 `-tick 20000` 下三次都是 73 個計時器中斷
-// （1,459,999／1,460,000／1,459,999 道指令，收據 `introtime2`）。
-// 換算 73 × 2048 / 1193182 ≈ 125.3 ms，約每秒 8 格。
+// 組與組的間隔在修正後的 dosgolem `introfull` 收據是 75 個計時器中斷；
+// 尾段是 77 個（完整時程見 `docs/re/283`）。
+// 換算 75 × 2048 / 1193182 ≈ 128.7 ms，約每秒 7.8 格。
 const (
 	IntroPITHz         = 1193182 // PIT 的輸入頻率
 	IntroPITDivisor    = 0x0800  // OPEN.EXE 設的除數
-	IntroTicksPerFrame = 73      // 一格幾個計時器中斷
+	IntroTicksPerFrame = 75      // 前段一格幾個計時器中斷
+	IntroTailTicks     = 77      // 尾段一格幾個計時器中斷
 )
 
-// IntroFrameInterval 是一格的長度（約 125.3 ms）。
+// IntroFrameInterval 是前段一格的長度（約 128.7 ms）。
 const IntroFrameInterval = time.Duration(IntroTicksPerFrame) *
 	IntroPITDivisor * time.Second / IntroPITHz
+
+// IntroTicksToFrame 回「切到指定播放格之前」原版等待的 PIT 中斷數。
+// 播放格是玩家可見序列的索引：0–348 是前段，349–420 是尾段三趟。
+// 336、2236、2850、1798、1240 是 dosgolem `introfull` 收據量出的停頓；
+// 原版儲存這些值的位置尚未解出，因此明確保留為量測常數。
+func IntroTicksToFrame(frame int) int {
+	switch {
+	case frame == 102:
+		return 336
+	case frame == 247:
+		return 2236
+	case frame >= 349:
+		pass := (frame - 349) / 24
+		within := (frame - 349) % 24
+		if within == 0 {
+			if pass == 0 {
+				return 2850
+			}
+			return 1240
+		}
+		if pass == 0 && within == 1 {
+			return 1798
+		}
+		return IntroTailTicks
+	default:
+		return IntroTicksPerFrame
+	}
+}
+
+// IntroFrameIntervalAt 是切到指定播放格之前的等待時間。
+func IntroFrameIntervalAt(frame int) time.Duration {
+	return time.Duration(IntroTicksToFrame(frame)) * IntroPITDivisor * time.Second / IntroPITHz
+}
 
 // IntroScreenTop 是 350 列的頁面畫在 640×480 畫布上的第幾列。
 //

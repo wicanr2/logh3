@@ -6756,3 +6756,20 @@ GitHub 的 issue 時間軸承擔。
 - DOS/V 完整品目錄確認盒內另附「登場人物初期資料表」；日文、繁中、英文
   題名及 Internet Archive 搜尋均未取得可讀掃描。#16 因此仍需原始紙本影像，
   不以功能猜測冒充欄名。
+
+## 2026-09-14 — #1/#5/#16/#26/#27 dosgolem 收尾準備
+
+- 依 `docs/re/283` 的 `2e9dd3b` 收據，把開頭動畫接成玩家可見序列
+  `0–348, 350–373 × 3`，每趟尾段清除四個 plane，並接上 75／77 刻與量到
+  的場景停頓；`docs/spec/020` 改為 CONFORMED，新增收據抽樣測試。
+- 依 `docs/re/281` 把防拷游標改成可重播 PIT 相位：亮／滅各 320 次中斷，
+  `Game.Tick` 只在正式防拷入口累加 duration；新增亮／滅半週期回歸測試與
+  更新畫面規格。
+- 依使用者補充，從 `keireki.json`／`face-amg.json` 完整核對「無名字的過場
+  NPC」可能性：82 筆人物傳全有姓名與內文，第 82 張頭像是刻意空白格；新增
+  `TestBiographyCoversNamedAdmiralsAndTheBlankFaceSlot`，不以空白格猜
+  `+20`／`+22` 欄名。
+- 本輪 Docker daemon 連線遭環境拒絕，提升權限亦因使用額度限制失敗；依
+  Docker-only 規則未在主機執行 gofmt、測試或專案程式。GitHub host `gh`
+  的登入核對同樣只能看到 sandbox 偽失敗，issue 回覆／關閉、快照、render
+  與 push 待權限恢復後以同一批命令完成。

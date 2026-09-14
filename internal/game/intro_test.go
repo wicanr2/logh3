@@ -25,7 +25,7 @@ func loadIntro(t *testing.T, res *Resources) {
 	if err != nil {
 		t.Skipf("缺原版素材，跳過：%v", err)
 	}
-	dec, err := asset.NewIntroDecoder(data, lengths)
+	dec, err := asset.NewIntroPlaybackDecoder(data, lengths)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -51,8 +51,8 @@ func TestNewWithoutIntroStartsAtMainMenu(t *testing.T) {
 
 // TestIntroAdvancesOneFramePerInterval 釘住播放速度與收尾。
 //
-// 一格 125.3 ms 是量出來的（73 個計時器中斷 × PIT 除數 0x0800，
-// `docs/re/110`）。走到 IntroFrameInterval 才換下一格，不到不換。
+// 前段一格約 128.7 ms（75 個計時器中斷 × PIT 除數 0x0800，
+// `docs/re/283`）。走到 IntroFrameInterval 才換下一格，不到不換。
 func TestIntroAdvancesOneFramePerInterval(t *testing.T) {
 	res := load(t)
 	loadIntro(t, res)
@@ -119,7 +119,7 @@ func TestIntroSkipsToMainMenu(t *testing.T) {
 	}
 }
 
-// TestIntroEndsAtMainMenu 釘住「374 格播完自己進主選單」。
+// TestIntroEndsAtMainMenu 釘住「421 個玩家可見格播完自己進主選單」。
 func TestIntroEndsAtMainMenu(t *testing.T) {
 	res := load(t)
 	loadIntro(t, res)
@@ -129,7 +129,7 @@ func TestIntroEndsAtMainMenu(t *testing.T) {
 		t.Fatal(err)
 	}
 	for i := 0; i < frames+1 && g.State() == StateIntro; i++ {
-		g.Tick(screen.IntroFrameInterval)
+		g.Tick(screen.IntroFrameIntervalAt(g.IntroFrame() + 1))
 	}
 	if g.State() != StateMainMenu {
 		t.Fatalf("播完之後在 %v，預期主選單", g.State())

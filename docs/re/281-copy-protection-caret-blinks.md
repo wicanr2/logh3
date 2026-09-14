@@ -5,7 +5,7 @@
 本案的每一次擷取都在 `2e9dd3b` 上，並且與 `6841e68` 錄的 `cb1` 逐位元組相同——
 `screen.bin` SHA-256 `10dd957db9f5a5d3c0954176b34e9c6e1f3ba885bfde0dc4a6de756f4f88ff61`）
 狀態：**confirmed**（四個輸入位數各一個資料點；閃爍有 71 個取樣點的時間軸
-與畫／擦兩支常式的指令數）
+與畫／擦兩支常式的指令數；remake 已接上可重播相位）
 
 ## 症狀
 
@@ -109,13 +109,11 @@
 ## remake 怎麼改
 
 規格 `docs/internals/data/screen-copy-protection.json` 多一個 `input_caret`
-（`x=240 y=283 w=16 h=2 pitch=16 ink=15`），`internal/screen.CopyProtection`
-在畫完數字之後把它塗上去，位置由**已輸入的位數**決定。
-
-**remake 目前恆亮，閃爍還沒接。** 收據都停在亮著的那半個週期，所以對拍
-是綠的；但「畫面上該有一條底線」與「它每 320 次計時器中斷翻一次」是兩件事，
-後者還沒有時鐘可以掛。已另立 worklist 條目 `copyprot-caret-blink`，
-不要把這一份當成閃爍也做完了。
+（`x=240 y=283 w=16 h=2 pitch=16 ink=15`）。`internal/screen.CopyProtectionAt`
+在畫完數字後依**已輸入的位數**定位游標，並以 `pitTicks % 640 < 320`
+決定亮／滅；`internal/game.Game.Tick` 在正式防拷入口累加可重播的 PIT
+中斷數。`TestCopyProtectionCaretBlinkMatchesMeasuredPhase` 固定核對亮相位
+色號 15、滅相位視窗底色 9 與 320／320 週期。
 
 ## 順帶量到、但與本案無關的兩件事
 

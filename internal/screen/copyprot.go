@@ -11,6 +11,15 @@ import (
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
+// CopyProtPITHz 與 CopyProtPITDivisor 是 OPEN.EXE 在防拷問答期間使用的
+// PIT 設定。原版游標每 320 次中斷翻一次，完整週期 640 次（`docs/re/281`）。
+const (
+	CopyProtPITHz          = 1193182
+	CopyProtPITDivisor     = 0x0800
+	CopyProtCaretHalfTicks = 320
+	CopyProtCaretPeriod    = CopyProtCaretHalfTicks * 2
+)
+
 // CopyProtSpec 是防拷問答畫面的版面規格（量自 oracle，見
 // `docs/internals/data/screen-copy-protection.json`）。
 type CopyProtSpec struct {
@@ -119,6 +128,13 @@ func (s *CopyProtSpec) Frame() ui.Frame {
 // （nil 就不畫，用來單獨驗版面），typed 是玩家已經打進去的數字。
 // 回傳畫不出來的字碼。
 func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed string) (*gfx.Framebuffer, []uint16) {
+	return CopyProtectionAt(s, fnt, face, typed, 0)
+}
+
+// CopyProtectionAt 畫指定 PIT 相位的防拷問答畫面。pitTicks 是進入問答後
+// 累積的計時器中斷數；相位 0–319 畫游標，320–639 還原游標底下的底色。
+// 以中斷數而不是牆上時間作輸入，讓 dosgolem 與 remake 可固定同一相位。
+func CopyProtectionAt(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed string, pitTicks uint64) (*gfx.Framebuffer, []uint16) {
 	fb := gfx.NewFramebuffer(s.Background)
 	s.Frame().Draw(fb, s.Window.X, s.Window.Y, s.Window.W, s.Window.H)
 	if face != nil {
@@ -173,10 +189,8 @@ func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed st
 			}
 		}
 	}
-	if c := s.InputCaret; c != nil {
+	if c := s.InputCaret; c != nil && CaretVisible(pitTicks) {
 		// 輸入游標畫在**下一個**要打的那一格底下（`docs/re/281`）。
-		// 原版會閃（畫／擦各隔 320 次計時器中斷），remake 這裡恆亮：
-		// 收據停在亮著的那半個週期，而 remake 的這張畫面還沒有時鐘。
 		x0 := c.X + digits*c.Pitch
 		for dy := 0; dy < c.H; dy++ {
 			for dx := 0; dx < c.W; dx++ {
@@ -185,6 +199,11 @@ func CopyProtection(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed st
 		}
 	}
 	return fb, missing
+}
+
+// CaretVisible 回指定 PIT 相位是否應畫游標。
+func CaretVisible(pitTicks uint64) bool {
+	return pitTicks%CopyProtCaretPeriod < CopyProtCaretHalfTicks
 }
 
 // FaceFrom 從自備的 `FACE.AMG` 取規格指定的那一張頭像。

@@ -1,6 +1,7 @@
 package rules
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"testing"
@@ -113,5 +114,71 @@ func TestStaffAdmiralsByFaction(t *testing.T) {
 	}
 	if got := StaffAdmiral(work, PostDomestic, 1); got != 60 {
 		t.Fatalf("同盟的內政專任參謀是 %d，預期 60（邱吾權）", got)
+	}
+}
+
+// TestBiographyCoversNamedAdmiralsAndTheBlankFaceSlot 把「沒有名字的是不是
+// 過場人物／NPC」這個可能性釘在目前可追溯的資料上：KEIREKI.DAT 的 82 筆
+// 人物傳每一筆都有姓名與內文；FACE.AMG 的第 82 張才是沒有對應人物的
+// 刻意空白格。不能把空白格或未命名的過場角色猜成 ADMIRAL.DT 的隱藏欄名。
+func TestBiographyCoversNamedAdmiralsAndTheBlankFaceSlot(t *testing.T) {
+	root := filepath.Join("..", "..", "docs", "internals", "data")
+	type biographyRecord struct {
+		Index     int    `json:"index"`
+		Name      string `json:"name"`
+		TextCodes []int  `json:"text_codes"`
+	}
+	var biographies struct {
+		Count   int               `json:"count"`
+		Records []biographyRecord `json:"records"`
+	}
+	b, err := os.ReadFile(filepath.Join(root, "keireki.json"))
+	if err != nil {
+		t.Skipf("缺人物傳資料，跳過：%v", err)
+	}
+	if err := json.Unmarshal(b, &biographies); err != nil {
+		t.Fatal(err)
+	}
+	if biographies.Count != 82 || len(biographies.Records) != 82 {
+		t.Fatalf("人物傳宣告／實際筆數是 %d／%d，預期都是 82", biographies.Count, len(biographies.Records))
+	}
+	for i, record := range biographies.Records {
+		if record.Index != i {
+			t.Fatalf("人物傳第 %d 筆索引是 %d", i, record.Index)
+		}
+		if record.Name == "" || len(record.TextCodes) == 0 {
+			t.Fatalf("人物傳第 %d 沒有姓名或內文，不能排除未命名 NPC", i)
+		}
+	}
+
+	type faceImage struct {
+		Index   int  `json:"index"`
+		Admiral *int `json:"admiral"`
+	}
+	var faces struct {
+		Count  int         `json:"count"`
+		Images []faceImage `json:"images"`
+	}
+	b, err = os.ReadFile(filepath.Join(root, "face-amg.json"))
+	if err != nil {
+		t.Skipf("缺頭像索引資料，跳過：%v", err)
+	}
+	if err := json.Unmarshal(b, &faces); err != nil {
+		t.Fatal(err)
+	}
+	if faces.Count != 83 || len(faces.Images) != 83 {
+		t.Fatalf("頭像宣告／實際筆數是 %d／%d，預期都是 83", faces.Count, len(faces.Images))
+	}
+	for i, image := range faces.Images {
+		if image.Index != i {
+			t.Fatalf("頭像第 %d 筆索引是 %d", i, image.Index)
+		}
+		if i < 82 {
+			if image.Admiral == nil || *image.Admiral != i {
+				t.Fatalf("頭像 %d 沒有對應同索引提督", i)
+			}
+		} else if image.Admiral != nil {
+			t.Fatalf("頭像 82 應是刻意空白格，卻對應提督 %d", *image.Admiral)
+		}
 	}
 }

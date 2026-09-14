@@ -115,17 +115,28 @@ func TestIntroPaletteMatchesOracle(t *testing.T) {
 
 // TestIntroFrameIntervalMatchesMeasurement 釘住量到的播放速度。
 //
-// `OPEN.EXE` 把 PIT 除數改成 0x0800，解碼器入口四個一組、組與組相差
-// 73 個計時器中斷（收據 `introtime2`，`docs/re/110`）。
+// `OPEN.EXE` 把 PIT 除數改成 0x0800，解碼器入口四個一組、前段每格相差
+// 75 個計時器中斷（dosgolem 收據 `introfull`，`docs/re/283`）。
 func TestIntroFrameIntervalMatchesMeasurement(t *testing.T) {
 	want := time.Duration(IntroTicksPerFrame) * IntroPITDivisor * time.Second / IntroPITHz
 	if IntroFrameInterval != want {
 		t.Fatalf("一格 %v，算出來是 %v", IntroFrameInterval, want)
 	}
-	if IntroFrameInterval < 124*time.Millisecond || IntroFrameInterval > 126*time.Millisecond {
-		t.Fatalf("一格 %v 不在 125 ms 附近", IntroFrameInterval)
+	if IntroFrameInterval < 128*time.Millisecond || IntroFrameInterval > 130*time.Millisecond {
+		t.Fatalf("一格 %v 不在 129 ms 附近", IntroFrameInterval)
 	}
 	if IntroScreenTop+IntroTopRow != (gfx.Height-asset.IntroPlaneRows)/2 {
 		t.Fatalf("畫面沒有垂直置中：%d + %d", IntroScreenTop, IntroTopRow)
+	}
+}
+
+func TestIntroFrameScheduleMatchesDosgolem(t *testing.T) {
+	want := map[int]int{0: 75, 1: 75, 102: 336, 247: 2236,
+		348: 75, 349: 2850, 350: 1798, 372: 77, 373: 1240,
+		396: 77, 397: 1240, 420: 77}
+	for frame, ticks := range want {
+		if got := IntroTicksToFrame(frame); got != ticks {
+			t.Errorf("播放格 %d 等待 %d ticks，預期 %d", frame, got, ticks)
+		}
 	}
 }

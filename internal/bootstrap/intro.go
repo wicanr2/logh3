@@ -30,7 +30,7 @@ func LoadIntro(res *game.Resources, orig string) error {
 	if err != nil {
 		return nil
 	}
-	dec, err := asset.NewIntroDecoder(data, lengths)
+	dec, err := asset.NewIntroPlaybackDecoder(data, lengths)
 	if err != nil {
 		return err
 	}

@@ -170,7 +170,7 @@ remake 這一側用 `tools/scripts/intro_decode.py`（與 `internal/asset.IntroD
 
 | 結論 | 等級 |
 |---|---|
-| 原版照檔案順序播第 0、1、2… 格 | `proven`（421 組的檔案位移全部落在格邊界上；41 個時點逐位元組相同）|
+| 原版前段照檔案順序播 0–348、尾段 350–373 重播三趟 | `proven`（421 組的檔案位移全部落在格邊界上；前段與尾段抽樣逐位元組相同）|
 | 舊執行器上的 +40 緩衝重疊是執行器造成的 | `proven`（同一組旗標、同一個斷點，兩版量到 `175F` 與 `275D`；`docs/re/270` 的 MCB 洩漏有獨立的一手驗證）|
 | 遊戲的 `farmalloc(65500)` 仍然算術溢位（區段結尾寫成 0）| `proven`（堆積表頭 `175C:0004 ＝ 0000`）|
 | 第 349 格從來不會被解碼 | `proven`（421 組裡沒有它；加回去就差 5,657 個像素）|
@@ -244,3 +244,13 @@ tools/oracle.sh introclear2 -tick 20000 -steps 860000000 -regs-from 650000000 -w
 - 動畫結束之後到 `SPTIT.350` 標題畫面、再到主選單的轉場；
 - `workplace/openmem.bin` 是舊執行器的傾印，`tools/scripts/intro_bufoverlap.py`
   讀它，所以那支目前印的是舊世界的數字。要用它之前先重錄 `openmem`。
+
+## 2026-09-14 實作交接
+
+`internal/asset.IntroPlaybackDecoder` 已把玩家可見序列固定為
+`0–348, 350–373 × 3`，每趟尾段前清除四個 plane；`screen.IntroFrameIntervalAt`
+已接上 75／77 刻與五個量測停頓。`internal/asset/intro_playback_test.go`
+在 `workplace/oracle/introframes/frames/` 收據存在時，抽查格 348、350、355、
+360、365、370、373 的 640×350 色號陣列；收據不存在就 skip，不用替代品。
+這使 `docs/spec/020` 從 READY／待裁決升為 CONFORMED。尾段趟數與停頓原始
+資料位置仍保留 `unknown`，不把量測常數誤寫成已解出的規則。

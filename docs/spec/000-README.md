@@ -32,7 +32,7 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`017`](017-computer-ai.md) | 電腦 AI：原版行為與強化版 | 兩層都有了 |
 | [`018`](018-battle-resolution.md) | 戰鬥結算（射程、攻擊名單、損失分攤）| 部分 `READY`（逐節標示）|
 | [`019`](019-planet-assault.md) | 攻打行星 | READY |
-| [`020`](020-intro-animation.md) | 開頭動畫 | READY（畫面與速度）／播放順序未解 |
+| [`020`](020-intro-animation.md) | 開頭動畫 | CONFORMED（dosgolem 播放順序、尾段與時程抽樣對拍） |
 | [`021`](021-battle-data-screen.md) | 戰術選單「資料」 | CONFORMED |
 | [`022`](022-fleet-detail.md) | 艦隊詳細資料 | CONFORMED |
 | [`023`](023-battle-command-menus.md) | 戰場的命令選單 | CONFORMED |

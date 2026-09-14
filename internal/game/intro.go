@@ -10,12 +10,13 @@ import (
 // 開頭動畫（`docs/spec/020`）。
 //
 // 原版的路徑是 `GIN3.COM` → `OPEN.EXE` → 主選單，動畫那一段在
-// `OPEN.EXE` 裡跑：mode 10h（640×350）、374 格、一格四個 plane。
+// `OPEN.EXE` 裡跑：mode 10h（640×350）、來源 374 格（一格四個 plane），
+// 原版玩家可見序列是 421 格。
 // remake 這一側把它接在主選單前面，素材缺一個就整段跳過。
 //
-// **播的是檔案順序。** 原版實際播出來的順序被讀檔緩衝的副作用打亂了
-// （第 1–116 格從來沒被解過，`docs/re/108`），成因未解；那是原版的
-// 瑕疵不是動畫的內容，所以 remake 不照抄。要不要重現等成因解出來再談。
+// **播的是原版的分塊順序。** dosgolem 收據證明原版顯示 0–348、略過
+// 349，再把 350–373 播三趟；`asset.IntroPlaybackDecoder` 封裝這個
+// 玩家可見序列與每趟前的 plane 清除。
 
 // startIntro 解第一格，切到開頭動畫。
 func (g *Game) startIntro() error {
@@ -28,7 +29,8 @@ func (g *Game) startIntro() error {
 	}
 	g.introPage = screen.IntroPage(g.res.Intro)
 	g.introFrame = 0
-	g.introLeft = screen.IntroFrameInterval
+	// 第 0 格已經畫出；下一次等待是切到第 1 格之前的時程。
+	g.introLeft = screen.IntroFrameIntervalAt(1)
 	g.state = StateIntro
 	return nil
 }
@@ -47,7 +49,18 @@ func (g *Game) IntroFrame() int { return g.introFrame }
 // **不讀牆上時鐘**：顯示層把每格的長度傳進來，所以同一串 Tick 一定
 // 重現同一串畫面，無頭驗收與視窗跑出來的東西一樣。
 func (g *Game) Tick(d time.Duration) {
-	if g.state != StateIntro || d <= 0 {
+	if d <= 0 {
+		return
+	}
+	if g.state == StateCopyProtection {
+		g.copyProtTickRemainder += d
+		period := time.Duration(screen.CopyProtPITDivisor) * time.Second / screen.CopyProtPITHz
+		for g.copyProtTickRemainder >= period {
+			g.copyProtTickRemainder -= period
+			g.copyProtTicks++
+		}
+	}
+	if g.state != StateIntro {
 		return
 	}
 	g.introLeft -= d
@@ -60,7 +73,9 @@ func (g *Game) Tick(d time.Duration) {
 		}
 		g.introFrame++
 		g.introPage = screen.IntroPage(g.res.Intro)
-		g.introLeft += screen.IntroFrameInterval
+		// IntroTicksToFrame 的量測定義是「切到該格之前」；目前已切到
+		// introFrame，所以累加下一格的等待。
+		g.introLeft += screen.IntroFrameIntervalAt(g.introFrame + 1)
 	}
 }
 

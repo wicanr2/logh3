@@ -230,6 +230,21 @@ call 307D:03B5
 
 ## 方法
 
+## 2026-09-14 人物傳／過場 NPC 查核
+
+依本輪補充要求，先不把「沒有名字」直接當成隱藏能力欄或過場 NPC，改從
+人物傳與頭像索引做完整對照：`docs/internals/data/keireki.json` 宣告 82 筆，
+索引 0–81 每筆都有非空姓名與人物傳內文；`face-amg.json` 則有 83 張，
+0–81 一一對應提督，只有索引 82 是 `admiral: null` 的刻意空白格
+（[`docs/re/271`](271-face-amg-index-is-the-admiral-index.md)）。因此目前
+證據**排除「另有沒有名字的 KEIREKI 提督／NPC 記錄」**；空白格不能拿來
+替 `ADMIRAL.DT` 的 `+20`／`+22` 猜名字。
+
+這個結論已由 `internal/rules.TestBiographyCoversNamedAdmiralsAndTheBlankFaceSlot`
+自動核對。`+20`／`+22` 的用途仍已由本篇前文證實，但紙本資料表沒有公開
+可讀掃描，欄名仍維持 `unknown`；這是「人物身分查核完成」與「內部數值欄名
+尚未取得原始表面證據」兩個不同層次，不能混成一個答案。
+
 **「還剩什麼」的清單會比 repo 本身老。** 這一條未完成項列著五格未知，
 其中兩格的答案分別躺在 `docs/re/77` 與 `docs/re/204` 的正文裡，
 而且都不是順帶一提，是那兩篇的結論。差別只在於它們沒有被

@@ -436,7 +436,7 @@ type Resources struct {
 	// Intro 是開頭動畫的解碼器（`IBM16.350` ＋ `IBMFLS16.350`），
 	// IntroPal 是它的調色盤（`BU16IBM.RGB`）。**nil ＝ 直接從主選單開始**
 	// ——測試與對拍腳本都不帶開頭動畫，帶了整條輸入序列就會位移。
-	Intro    *asset.IntroDecoder
+	Intro    asset.IntroPlayer
 	IntroPal gfx.Palette
 
 	// Weights 是戰力權重表（原版的 `ds:6032`，`docs/re/79`）。
@@ -532,6 +532,11 @@ type Game struct {
 	introPage  *asset.Image
 	introFrame int
 	introLeft  time.Duration
+
+	// 防拷問答的 PIT 相位。用可重播的中斷數，不直接讀牆上時鐘；
+	// Tick 只在正式入口把經過的 duration 累加進來。
+	copyProtTicks         uint64
+	copyProtTickRemainder time.Duration
 
 	// 命令階段：第幾個回合。遊戲只存這一個數，年月日是印的時候算出來的
 	// （`docs/re/25`）。開局 0。
@@ -1692,6 +1697,8 @@ func (g *Game) click(x, y int) {
 			g.menuRow = g.highlight
 			g.state = StateCopyProtection
 			g.typed = nil
+			g.copyProtTicks = 0
+			g.copyProtTickRemainder = 0
 		}
 	case StateLoadGame:
 		if n := SlotAt(y); n >= 0 {
@@ -2294,7 +2301,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		return g.drawBattle()
 	case StateCopyProtection:
 		face, _ := g.res.Faces.Decode(g.res.CopyProt.Face.Index)
-		fb, _ := screen.CopyProtection(g.res.CopyProt, g.res.Font, face, string(g.typed))
+		fb, _ := screen.CopyProtectionAt(g.res.CopyProt, g.res.Font, face, string(g.typed), g.copyProtTicks)
 		return fb
 	case StateMainGame:
 		// 底板上的首都摘要與報告裡的署名／金額都是算出來的

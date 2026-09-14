@@ -179,3 +179,41 @@ func TestCopyProtectionDrawsTyped(t *testing.T) {
 		t.Fatalf("數字畫在 (%d,%d)-(%d,%d)，原版量到的是 (245,270)-(285,282)", x0, y0, x1, y1)
 	}
 }
+
+// TestCopyProtectionCaretBlinkMatchesMeasuredPhase 以 dosgolem 量到的 320／320
+// PIT 中斷相位驗證游標：亮半週期是色號 15，滅半週期還原成視窗底色 9。
+// 不依賴牆上時鐘，所以每次測試都能重現原版的兩張狀態。
+func TestCopyProtectionCaretBlinkMatchesMeasuredPhase(t *testing.T) {
+	root := "../.."
+	specPath := filepath.Join(root, "docs/internals/data/screen-copy-protection.json")
+	fontPath := filepath.Join(root, "org_game/extracted/GRAPH.IMG")
+	for _, p := range []string{specPath, fontPath} {
+		if _, err := os.Stat(p); err != nil {
+			t.Skipf("缺 %s，跳過防拷游標相位測試", p)
+		}
+	}
+	s, err := LoadCopyProtSpec(specPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fnt, err := font.Load(fontPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	bright, _ := CopyProtectionAt(s, fnt, nil, "", 0)
+	dark, _ := CopyProtectionAt(s, fnt, nil, "", CopyProtCaretHalfTicks)
+	for y := 283; y <= 284; y++ {
+		for x := 240; x < 256; x++ {
+			if got := bright.Pix[y*640+x]; got != 15 {
+				t.Fatalf("亮相位 (%d,%d) 是色號 %d，預期 15", x, y, got)
+			}
+			if got := dark.Pix[y*640+x]; got != 9 {
+				t.Fatalf("滅相位 (%d,%d) 是色號 %d，預期視窗底色 9", x, y, got)
+			}
+		}
+	}
+	if !CaretVisible(0) || CaretVisible(CopyProtCaretHalfTicks) ||
+		!CaretVisible(CopyProtCaretPeriod) {
+		t.Fatal("游標亮／滅週期不是 320／320 PIT 中斷")
+	}
+}
