@@ -124,6 +124,7 @@ func TestAllianceStaffSwitchesToReceipt(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		g.Click(544, 125)
 		g.Click(560, 125)
+		dismissAllRebellionReports(g)
 	}
 	if got := g.taxRateAdmiral(1); got != 63 {
 		t.Fatalf("回合 %d 同盟的內政參謀是提督 %d，收據是 63", g.turn, got)

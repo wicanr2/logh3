@@ -8,6 +8,7 @@ import (
 
 	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
 )
 
 // 叛亂的同狀態對拍（`docs/spec/041`）：remake 從新遊戲走同一條玩家路徑、
@@ -25,7 +26,15 @@ import (
 // （見 `TestRebellionSameStateRandom`）。
 const intelStaffEmpire = 13 // 帝國的情報專任參謀（`docs/internals/30`）
 
-func runRebellionTurn(t *testing.T, ops byte) *Game {
+// dismissAllRebellionReports 讓既有「實行後」收據測試走到原本的比較時點。
+// 報告本身的逐則與左右鍵行為另由專門測試釘住。
+func dismissAllRebellionReports(g *Game) {
+	for g.State() == StateRebellionReport && len(g.pendingRebellionReports) > 0 {
+		g.Click(2, 470)
+	}
+}
+
+func prepareRebellionTurn(t *testing.T, ops byte) *Game {
 	t.Helper()
 	g := reachBrainPhase(t)
 	// 進軍路線表：正式入口（`internal/bootstrap`）會載，`reachBrainPhase`
@@ -45,12 +54,56 @@ func runRebellionTurn(t *testing.T, ops byte) *Game {
 		t.Fatalf("帝國的情報專任參謀是提督 %d，開局應該是 13", got)
 	}
 	g.mutableAdmirals()[intelStaffEmpire*rules.AdmiralRecord+0x0E] = ops
+	return g
+}
+
+func runRebellionTurn(t *testing.T, ops byte) *Game {
+	t.Helper()
+	g := prepareRebellionTurn(t, ops)
 	g.Click(544, 125) // 系統指令
 	g.Click(560, 125) // 實行
+	if len(g.rebellions) > 0 {
+		if g.State() != StateRebellionReport {
+			t.Fatalf("叛亂後在 %v，預期先進 StateRebellionReport", g.State())
+		}
+		dismissAllRebellionReports(g)
+	}
 	if g.State() != StateCommandPhase {
 		t.Fatalf("實行之後在 %v", g.State())
 	}
 	return g
+}
+
+// 從主選單／防拷／月初報告走到「實行」，停在原版 rbx292 的第一則叛亂
+// 報告；產品 Frame 的文字與頭像區都要逐像素相同（`docs/spec/046`）。
+func TestRebellionReportPlayerPathMatchesOriginal(t *testing.T) {
+	want, err := os.ReadFile(filepath.Join(root, "workplace", "oracle", "rbx292", "screen.bin"))
+	if err != nil || len(want) != 640*480 {
+		t.Skip("缺收據 rbx292，跳過（不用代用品）")
+	}
+	g := prepareRebellionTurn(t, 1)
+	g.Click(544, 125)
+	g.Click(560, 125)
+	if g.State() != StateRebellionReport {
+		t.Fatalf("實行後在 %v，預期 StateRebellionReport", g.State())
+	}
+	if r, ok := g.CurrentRebellionReport(); !ok || r.Region != 1 || r.Owner != 0 {
+		t.Fatalf("第一則報告 ＝ %+v,%v，原版 rbx292 是帝國的星域 1", r, ok)
+	}
+	got := g.Frame().Pix
+	bad := 0
+	for _, box := range [][4]int{{334, 178, 510, 220}, {544, 180, 616, 273}} {
+		for y := box[1]; y < box[3]; y++ {
+			for x := box[0]; x < box[2]; x++ {
+				if got[y*640+x] != want[y*640+x] {
+					bad++
+				}
+			}
+		}
+	}
+	if bad != 0 {
+		t.Errorf("正常玩家路徑的叛亂文字＋頭像與 rbx292 差 %d 個像素，預期 0", bad)
+	}
 }
 
 // TestRebellionSameStateRandom 對收據 `rbx292e`（營運 4，門檻 225–625，
@@ -234,6 +287,39 @@ func readWorkplace(t *testing.T, name string) []byte {
 		t.Skipf("缺收據 %s，跳過（不用代用品）", p)
 	}
 	return b
+}
+
+// 原版 `056A:06F3` 每格一則，報告未關掉前不准進戰鬥掃描；滑鼠任一鍵
+// 只收掉目前一則（收據 rbx292/rbx292d，`docs/spec/046`）。
+func TestRebellionReportsQueueAndResume(t *testing.T) {
+	g := &Game{
+		res: &Resources{FlipReport: &screen.FlipReportPanel{}},
+		rebellionReports: []RebellionReport{
+			{Region: 1, Owner: 0}, {Region: 4, Owner: 1},
+		},
+		state: StateCommandPhase,
+	}
+	resumed := 0
+	if !g.startRebellionReports(func() { resumed++ }) {
+		t.Fatal("兩格叛亂沒有開報告")
+	}
+	if g.state != StateRebellionReport {
+		t.Fatalf("狀態 %v，預期 StateRebellionReport", g.state)
+	}
+	if r, ok := g.CurrentRebellionReport(); !ok || r.Region != 1 || r.Owner != 0 {
+		t.Fatalf("第一則 ＝ %+v,%v，預期帝國星域 1", r, ok)
+	}
+	g.Click(2, 470)
+	if r, ok := g.CurrentRebellionReport(); !ok || r.Region != 4 || r.Owner != 1 || resumed != 0 {
+		t.Fatalf("第一下後 ＝ %+v,%v resumed=%d，預期同盟星域 4、尚未續跑", r, ok, resumed)
+	}
+	g.RightClick(300, 200)
+	if _, ok := g.CurrentRebellionReport(); ok || resumed != 1 {
+		t.Fatalf("第二下後仍有報告或續跑 %d 次，預期清空且一次", resumed)
+	}
+	if g.afterRebellionReports != nil {
+		t.Fatal("報告清空後仍保留續跑 callback")
+	}
 }
 
 func equalInts(a, b []int) bool {

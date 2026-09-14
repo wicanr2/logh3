@@ -320,7 +320,7 @@ func TestEndBattleRecomputesRegions(t *testing.T) {
 	if after := binary.LittleEndian.Uint16(g.regionRecord(20)[0x24:]); after != before {
 		t.Errorf("報告還沒按掉就重算了 +0x24：%d → %d", before, after)
 	}
-	g.Click(300, 200) // 滑鼠任一鍵可關（收據 chain4／chain5）
+	g.RightClick(300, 200) // 右鍵也必須走 callback（收據 chain4；左鍵是 chain5）
 	if g.state != StateCommandPhase {
 		t.Errorf("按掉之後狀態 ＝ %v，預期回指令畫面", g.state)
 	}

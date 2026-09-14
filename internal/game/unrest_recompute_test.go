@@ -125,6 +125,7 @@ func TestUnrestSameStateAfterTurn(t *testing.T) {
 	want := readUnrestReceipt(t, "rbx292d_reg_post.bin")
 	g.Click(544, 125) // 系統指令
 	g.Click(560, 125) // 實行
+	dismissAllRebellionReports(g)
 	if g.State() != StateCommandPhase {
 		t.Fatalf("實行之後在 %v", g.State())
 	}
@@ -143,6 +144,7 @@ func TestUnrestSameStateRebellionReads(t *testing.T) {
 	mem := readUnrestReceipt(t, "rbx292e_pre.bin")
 	g.Click(544, 125)
 	g.Click(560, 125)
+	dismissAllRebellionReports(g)
 	if g.State() != StateCommandPhase {
 		t.Fatalf("實行之後在 %v", g.State())
 	}

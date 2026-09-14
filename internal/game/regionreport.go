@@ -112,14 +112,24 @@ func (g *Game) drawFlipReport(fb *gfx.Framebuffer) {
 	}
 	p.Draw(fb, g.res.Font, g.FlipRegionName(f), f.NewOwner,
 		flipMessageKey(f.Message(g.faction)))
+	g.drawReportFace(fb, g.faction)
+}
+
+// drawReportFace 畫戰略報告共用的情報參謀頭像。易主報告的索引是座位
+// 陣營；叛亂報告則是發生叛亂前的星域擁有者（`docs/spec/034`、`046`）。
+func (g *Game) drawReportFace(fb *gfx.Framebuffer, owner int) {
+	p := g.res.FlipReport
+	if p == nil {
+		return
+	}
 	if g.res.Faces == nil {
 		return
 	}
 	// 頭像是 `FACE.AMG` 第 `ds:8F4D[座位陣營]` 張，**只畫左上 72×93**
 	// ——整張是 80×100，畫上去的是裁切過的（`docs/re/248`）。
 	n := 0
-	if g.faction >= 0 && g.faction < len(g.res.Reporter) {
-		n = g.res.Reporter[g.faction]
+	if owner >= 0 && owner < len(g.res.Reporter) {
+		n = g.res.Reporter[owner]
 	}
 	img, err := g.res.Faces.Decode(n)
 	if err != nil {

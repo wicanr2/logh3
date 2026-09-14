@@ -172,7 +172,8 @@ Game.runRebellions()                            // internal/game/rebellion.go
   的值（`docs/spec/042`「沒有驗到的」）。同一回合裡同時有叛亂與戰鬥時才可能不同。
 - **報告畫面**：原版每一格叛亂跳一則模態報告（`056A:06F3`，`ds:085D`＋
   `ds:086F`，字色 `ds:6096[擁有者]`、頭像 `ds:8F4D[擁有者]`），滑鼠關；
-  remake 只把結果放在 `g.rebellions`（`strategy-report-screen`）。
+  remake 的玩家可見切片與剩餘時序限制見
+  [`docs/spec/046`](046-rebellion-report.md)。
 - **`0374:0556` 的其餘三支**（`2703:1B48` 無主格裡再跑掉一顆行星——**抽亂數**、
   `2703:1CD7` 防衛力回復、`2703:1D85` 要塞砲重置）remake 都沒有
   （`region-turn-upkeep-0556`）。`1CD7` 在同一格排在叛亂效果之前，接上時要

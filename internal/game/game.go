@@ -139,6 +139,12 @@ const (
 	// 內容與單人那張（`StateShipOrder`）相同，底板是交棒之後那一張
 	// （收據 `vs7`，`docs/re/260`）。同樣排在最後不動既有編號。
 	StateVersusShipOrder
+
+	// StateRebellionReport 是逐格叛亂判定跳出的模態戰略報告。
+	// 星域名、擁有者字色與情報參謀頭像照 `056A:06F3`；滑鼠任一鍵
+	// 關一則，全部關完才接回戰鬥掃描（`docs/spec/046`）。
+	// strategy-report-screen：侵略／提督生死／勝負／費沙事件報告仍未接。
+	StateRebellionReport
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -158,6 +164,7 @@ func (s State) String() string {
 		"StateFleetComposition", "StateFormation", "StateBattle",
 		"StateShipDelivery", "StateRegionFlipReport", "StateVersusInput",
 		"StateVersusAccount", "StateIntro", "StateVersusShipOrder",
+		"StateRebellionReport",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -196,6 +203,7 @@ var screenSpecName = map[State]string{
 	StateVersusInput:      "screen-versus-input",
 	StateVersusAccount:    "screen-versus-account",
 	StateVersusShipOrder:  "screen-versus-ship-order",
+	StateRebellionReport:  "screen-command-phase",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -456,7 +464,13 @@ type Game struct {
 	// 要接回去的那條路（`docs/spec/034`）。
 	pendingFlips []RegionFlip
 	afterFlips   func()
-	state        State
+
+	// pendingRebellionReports 與 afterRebellionReports 是叛亂報告自己的
+	// scene lifecycle；不與易主報告混成同一種 transaction（`docs/spec/046`）。
+	rebellionReports        []RebellionReport
+	pendingRebellionReports []RebellionReport
+	afterRebellionReports   func()
+	state                   State
 
 	// 主選單：滑鼠位置與反白到哪一列。
 	mouseX, mouseY int
@@ -832,9 +846,18 @@ func (g *Game) advanceTurn() {
 	// 效果（`2703:1908`）在逐格開戰那一圈沒有戰鬥的格子裡套上。兩段之間
 	// 互不相干，這裡判完就直接套。亂數與戰略 AI 同一個序列，排在 AI 之後。
 	//
-	// ⚠ 原版每一格叛亂都跳一則模態報告（`056A:06F3`），remake 還沒有畫面
-	// （`strategy-report-screen`）；結果在 `g.rebellions`。
+	// 原版每一格叛亂都跳一則模態報告（`056A:06F3`）。remake 先依既有
+	// CONFORMED 規則算完整圈，再逐則顯示；原版「判到一格就暫停」的內部
+	// 時序仍是 `docs/spec/046` 明列的證據限制。
 	g.runRebellions()
+	if g.startRebellionReports(g.continueAfterRebellionReports) {
+		return
+	}
+	g.continueAfterRebellionReports()
+}
+
+// continueAfterRebellionReports 接回原本排在叛亂報告之後的戰鬥掃描。
+func (g *Game) continueAfterRebellionReports() {
 	// 兩邊的艦隊走到同一個星域就直接切進戰術畫面（`docs/internals/34`
 	// 「怎麼走到」：S3 按六次實行，雙方會合在達希利就開戰）。
 	// **哪一個星域先打、能不能不打，都還沒解**——同時有多個星域符合時
@@ -1281,6 +1304,9 @@ func (g *Game) enterSide(faction int) {
 func (g *Game) startNewGame(faction int) {
 	g.restoreWorld()
 	g.work = nil
+	g.pendingRebellionReports = nil
+	g.rebellionReports = nil
+	g.afterRebellionReports = nil
 	g.phezzanPending = false
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
@@ -1378,6 +1404,9 @@ func New(res *Resources) (*Game, error) {
 func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.slot = sl
 	g.work = nil
+	g.pendingRebellionReports = nil
+	g.rebellionReports = nil
+	g.afterRebellionReports = nil
 	g.phezzanPending = false
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
@@ -1603,6 +1632,9 @@ func (g *Game) click(x, y int) {
 		// 滑鼠任一鍵關掉一則（收據 `chain4` 右鍵、`chain5` 左鍵）；
 		// 兩份都點在地圖上，其他位置沒量過。
 		g.dismissFlip()
+	case StateRebellionReport:
+		// `3765:006C` 只認滑鼠事件碼 1／2，座標不參與判定（`docs/spec/046`）。
+		g.dismissRebellionReport()
 	case StateVersusInput:
 		// 交棒視窗只有「確認」一顆（`docs/re/76`）。點在框裡但熱區外
 		// 什麼都不會發生（收據 `vs3`），所以走 `BoxAt`。
@@ -1835,6 +1867,12 @@ func (g *Game) rightClick(x, y int) {
 		}
 	}
 	switch g.state {
+	case StateRegionFlipReport:
+		// 與左鍵相同，只收掉目前一則並保留續跑 callback（`docs/spec/034`）。
+		g.dismissFlip()
+	case StateRebellionReport:
+		// 原版事件碼 1／2 都能關，右鍵不能走 generic「回命令畫面」捷徑。
+		g.dismissRebellionReport()
 	case StateShipDelivery:
 		// 接收報告也是右鍵關掉的（收據 `mreponlyr`：三張報告全部只用右鍵
 		// 就依序退場，第三下之後露出地圖介面）。左鍵那一路在 `Click`
@@ -2356,6 +2394,15 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
 		}
 		g.drawFlipReport(fb)
+		return
+	}
+	// 叛亂報告有自己的 scene owner，但畫面 composition 與易主報告共用
+	// 同一份已證實的戰略報告版面（`docs/spec/046`）。
+	if g.state == StateRebellionReport {
+		if g.res.CapitalPanel != nil {
+			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
+		}
+		g.drawRebellionReport(fb)
 		return
 	}
 	g.drawCapitalPanel(fb)

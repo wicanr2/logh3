@@ -417,17 +417,29 @@ remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以
 
 *[#8](https://github.com/wicanr2/logh3/issues/8) · 原編號 242 · feature（功能：玩家會撞到、但 remake 還沒有）*
 
-訊息表 86 條已經解出來並進版控（`ds:0490`–`ds:09F0`，含易主／侵略／
-叛亂／提督生死與勝負頁），畫面本身 remake 一張都還沒畫。
+戰略報告不是「一張都沒畫」：星域易主的四種報告已由
+`StateRegionFlipReport` 完成（SPEC 034），逐格叛亂的
+`亞爾迪巴朗星系／發生叛亂。` 也已由獨立
+`StateRebellionReport` 接進正常「實行」路徑（SPEC 046）。
 
-叛亂那一則（`056A:06F3`，模態、滑鼠關）的**結果** remake 已經有：`Game.Rebellions()`
-回這一回合叛亂的星域（[`docs/spec/041`](docs/spec/041-rebellion.md)），缺的是畫面。
+目前仍未接的是其他 report family：侵略／占領持續中、提督失蹤與
+死亡／生還、勝敗頁，以及費沙事件兩頁。原版 86 條訊息表已保存，但各
+scene owner、觸發順序、頭像／版面與 dismiss lifecycle 仍需逐族取得收據，
+不能只把字串塞進既有 panel 就宣稱完成。
 
-**做完的判準**：報告畫面走得到、逐位元組對上原版收據。
+**卡在**：下一個客觀切片是侵略／占領持續中的三句（`ds:0756`、`0778`、
+`079A`）：需先取得其 direct caller、觸發狀態與正常玩家路徑收據。
+叛亂報告另有一項非視覺限制：原版判到一格便暫停，remake 目前先算完整圈
+再顯示；完整記憶體／RNG same-state 尚未成立。
 
-**證據**：[`docs/re/247-strategy-report-strings.md`](docs/re/247-strategy-report-strings.md)、[`docs/internals/data/strategy-report-strings.json`](docs/internals/data/strategy-report-strings.json)
+**做完的判準**：- 每一個仍缺的報告 family 都從正常玩家路徑可達；
+- scene owner、觸發時點、文字／頭像／框、模態 dismiss 與返回流程有原版收據；
+- 各自只在已證實區域宣稱逐像素或同狀態，所有差異均已分類；
+- 建立單一機器測試覆蓋所有戰略報告 family 後，才關閉本 issue。
 
-**核實**：`internal/screen`、`internal/game` 裡出現 `strategy-report-strings|StrategyReport` 就是做好了
+**證據**：[`docs/spec/034-region-flip-report.md`](docs/spec/034-region-flip-report.md)、[`docs/spec/046-rebellion-report.md`](docs/spec/046-rebellion-report.md)、[`docs/playtest/016-rebellion-report.md`](docs/playtest/016-rebellion-report.md)、[`docs/re/247-strategy-report-strings.md`](docs/re/247-strategy-report-strings.md)、[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/internals/data/strategy-report-strings.json`](docs/internals/data/strategy-report-strings.json)、[`docs/internals/data/flip-report-panel.json`](docs/internals/data/flip-report-panel.json)
+
+**核實**：`internal/game` 裡還找得到 `strategy-report-screen：侵略／提督生死／勝負／費沙事件報告仍未接`（自承還在 ＝ 還沒做）
 
 #### music-fm-capture — `_F` 那一組的 FM 原音：11 首錄到 9 首，結局那兩首還卡住
 

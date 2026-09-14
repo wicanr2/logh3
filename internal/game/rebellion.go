@@ -1,6 +1,9 @@
 package game
 
-import "github.com/wicanr2/logh3/internal/rules"
+import (
+	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
+)
 
 // 叛亂接進回合（`docs/spec/041`、`docs/re/292`、`docs/re/297`）。
 //
@@ -56,6 +59,7 @@ func (g *Game) openingOwners() []byte {
 //   - 擁有者 `+0x12` 與未安定度 `+0x7D`：上一個回合尾巴留下來的值。
 func (g *Game) runRebellions() []int {
 	g.rebellions = nil
+	g.rebellionReports = nil
 	if !g.regionsReady() {
 		return nil
 	}
@@ -88,12 +92,76 @@ func (g *Game) runRebellions() []int {
 		rules.RecoverRegionDefences(g.res.Planets, r)
 		rules.ResetRegionFortressGuns(g.res.Planets, r)
 		if roll.Rebels {
+			// `056A:06F3` 在叛亂效果把星域改成無主之前取擁有者；報告
+			// 必須把事件前值保存下來，不能在 Draw 時重讀（`docs/spec/046`）。
+			owner := int(g.regionRecord(r)[regionOwnerOff])
 			rules.Rebel(g.regionRecord(r), g.res.Planets, r, false)
 			g.rebellions = append(g.rebellions, r)
+			g.rebellionReports = append(g.rebellionReports, RebellionReport{Region: r, Owner: owner})
 		}
 	}
 	return g.rebellions
 }
 
-// Rebellions 回這一回合叛亂的星域（還沒有報告畫面，`strategy-report-screen`）。
+// Rebellions 回這一回合叛亂的星域。
 func (g *Game) Rebellions() []int { return g.rebellions }
+
+// RebellionReport 保存報告發生的星域與**事件前**擁有者。叛亂效果會先把
+// 星域改成無主；延遲到 Draw 才讀 owner 會選錯名字顏色與情報參謀頭像。
+type RebellionReport struct {
+	Region int
+	Owner  int
+}
+
+// startRebellionReports 把本回合的每一格叛亂排成模態報告。原版逐格
+// `056A:06F3` 一格一則；沒有叛亂時不切 state。
+func (g *Game) startRebellionReports(after func()) bool {
+	if len(g.rebellionReports) == 0 || g.res == nil || g.res.FlipReport == nil {
+		return false
+	}
+	g.pendingRebellionReports = append(g.pendingRebellionReports[:0], g.rebellionReports...)
+	g.afterRebellionReports = after
+	g.state = StateRebellionReport
+	return true
+}
+
+// CurrentRebellionReport 回現在顯示的星域編號。
+func (g *Game) CurrentRebellionReport() (RebellionReport, bool) {
+	if len(g.pendingRebellionReports) == 0 {
+		return RebellionReport{}, false
+	}
+	return g.pendingRebellionReports[0], true
+}
+
+// dismissRebellionReport 收掉一則；全部看完才接回戰鬥掃描。
+func (g *Game) dismissRebellionReport() {
+	if len(g.pendingRebellionReports) > 0 {
+		g.pendingRebellionReports = g.pendingRebellionReports[1:]
+	}
+	if len(g.pendingRebellionReports) > 0 {
+		return
+	}
+	after := g.afterRebellionReports
+	g.afterRebellionReports = nil
+	if after != nil {
+		after()
+		return
+	}
+	g.state = StateCommandPhase
+}
+
+// drawRebellionReport 畫 `056A:06F3`：星域名、`發生叛亂。` 與該星域
+// 擁有者的情報參謀頭像。文字與幾何共用已由 chain3/6/7/8 證實的 panel，
+// rbx292 另釘住 rebellion 這個 message key（`docs/spec/046`）。
+func (g *Game) drawRebellionReport(fb *gfx.Framebuffer) {
+	report, ok := g.CurrentRebellionReport()
+	if !ok || g.res == nil || g.res.FlipReport == nil {
+		return
+	}
+	rec := g.regionRecord(report.Region)
+	if rec == nil {
+		return
+	}
+	g.res.FlipReport.Draw(fb, g.res.Font, rules.RegionName(rec), report.Owner, "rebellion")
+	g.drawReportFace(fb, report.Owner)
+}

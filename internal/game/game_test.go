@@ -130,6 +130,11 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	flipReport, err := screen.LoadFlipReportPanel(filepath.Join(root,
+		"docs/internals/data/flip-report-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	bioPanel, err := screen.LoadBioPanel(filepath.Join(root, "docs/internals/data/admiral-bio-panel.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -230,7 +235,7 @@ func load(t *testing.T) *Resources {
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,
 		Regions: regions, RegionPanel: panel, CapitalPanel: capital,
 		BudgetPanel: budget, ProductionPanel: production, DeliveryPanel: delivery,
-		ReportPanel: report, BuildPlanPanel: buildPanel, AdmiralPanel: admPanel, FleetPanel: fleetPanel, CompositionPanel: composition, FleetList: fleetList, Sprites: sprites, Flagships: flagships, BioPanel: bioPanel, Biographies: bios,
+		ReportPanel: report, FlipReport: flipReport, Reporter: [2]int{13, 75}, BuildPlanPanel: buildPanel, AdmiralPanel: admPanel, FleetPanel: fleetPanel, CompositionPanel: composition, FleetList: fleetList, Sprites: sprites, Flagships: flagships, BioPanel: bioPanel, Biographies: bios,
 		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		// 與正式路徑（`internal/bootstrap`）同一組——月底的稅率重算

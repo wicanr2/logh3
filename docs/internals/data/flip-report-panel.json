@@ -1,5 +1,5 @@
 {
- "note": "星域易主報告的版面（`docs/spec/034`）。座標量自收據 `chain3`，文字取自 `strategy-report-strings.json`，字碼與原版逐位元組相同。",
+ "note": "星域易主報告的版面（`docs/spec/034`）。座標量自收據 `chain3`，文字取自 `strategy-report-strings.json`，字碼與原版逐位元組相同；叛亂報告共用同一版面（`docs/spec/046`）。",
  "line_step": 20,
  "name": {
   "x": 336,
@@ -124,12 +124,28 @@
    "text": [
     "部分行星我軍已成功進駐。"
    ]
+  },
+  "rebellion": {
+   "ds": "086F",
+   "lines": [
+    [
+     46447,
+     42445,
+     43889,
+     46787,
+     41283
+    ]
+   ],
+   "text": [
+    "發生叛亂。"
+   ]
   }
  },
  "evidence": {
   "taken_by_us": "量到（訊息表；收據 chain7 打下敵方星域畫的就是這句）",
   "lost_to_enemy": "量到（收據 chain3）",
   "our_grip_lost": "量到（收據 chain6：自己的星域變混雜就成無主）",
-  "we_partly_landed": "量到（收據 chain8：敵方的星域變混雜就成無主）"
+  "we_partly_landed": "量到（收據 chain8：敵方的星域變混雜就成無主）",
+  "rebellion": "量到（收據 rbx292）"
  }
 }

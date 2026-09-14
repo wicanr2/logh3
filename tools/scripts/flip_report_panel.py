@@ -1,4 +1,4 @@
-"""從訊息表產生易主報告的版面規格（`docs/spec/034`）。
+"""從訊息表產生戰略報告的共用版面規格（`docs/spec/034`、`046`）。
 
     tools/py.sh tools/scripts/flip_report_panel.py <訊息表json> <輸出json>
 
@@ -43,7 +43,8 @@ def entry(ds):
 
 panel = {
     "note": ("星域易主報告的版面（`docs/spec/034`）。座標量自收據 `chain3`，"
-             "文字取自 `strategy-report-strings.json`，字碼與原版逐位元組相同。"),
+             "文字取自 `strategy-report-strings.json`，字碼與原版逐位元組相同；"
+             "叛亂報告共用同一版面（`docs/spec/046`）。"),
     "line_step": 20,
     # 星系名的字色跟著**新的擁有者**走，三格都是量到的：
     #   chain7 打下敵方星域 → 0（帝國）色 6
@@ -66,12 +67,14 @@ panel = {
         "lost_to_enemy": entry("08EE"),
         "our_grip_lost": entry("088B"),
         "we_partly_landed": entry("08BC"),
+        "rebellion": entry("086F"),
     },
     "evidence": {
         "taken_by_us": "量到（訊息表；收據 chain7 打下敵方星域畫的就是這句）",
         "lost_to_enemy": "量到（收據 chain3）",
         "our_grip_lost": "量到（收據 chain6：自己的星域變混雜就成無主）",
         "we_partly_landed": "量到（收據 chain8：敵方的星域變混雜就成無主）",
+        "rebellion": "量到（收據 rbx292）",
     },
 }
 json.dump(panel, open(sys.argv[2], "w", encoding="utf-8"),

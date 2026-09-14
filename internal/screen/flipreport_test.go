@@ -48,7 +48,7 @@ func TestFlipReportPanelLayout(t *testing.T) {
 		t.Errorf("`星系` ＝ %v 色 %d，預期兩個字、色 7", p.Suffix.Codes, p.Suffix.Ink)
 	}
 	for _, k := range []string{"taken_by_us", "lost_to_enemy",
-		"our_grip_lost", "we_partly_landed"} {
+		"our_grip_lost", "we_partly_landed", "rebellion"} {
 		m, ok := p.Messages[k]
 		if !ok || len(m.Lines) == 0 || len(m.Lines[0]) == 0 {
 			t.Errorf("缺 %s 那一句", k)
@@ -57,6 +57,38 @@ func TestFlipReportPanelLayout(t *testing.T) {
 	// 「已被敵軍占領。」七個字（收據 chain3 畫的就是這句）。
 	if got := p.Messages["lost_to_enemy"].Lines; len(got) != 1 || len(got[0]) != 7 {
 		t.Errorf("`已被敵軍占領。` ＝ %v，預期一行七個字", got)
+	}
+}
+
+// 收據 `rbx292` 畫的是「亞爾迪巴朗星系／發生叛亂。」；它與易主
+// 報告共用 `3826:0307` 的版面，但訊息來源是 ds:086F（`docs/spec/046`）。
+func TestRebellionReportTextMatchesOracle(t *testing.T) {
+	root := filepath.Join("..", "..")
+	scr, err := os.ReadFile(filepath.Join(root, "workplace", "oracle", "rbx292", "screen.bin"))
+	if err != nil || len(scr) != 640*480 {
+		t.Skip("缺收據 rbx292，跳過（不用代用品）")
+	}
+	fnt, err := font.Load(filepath.Join(root, "org_game/extracted/GRAPH.IMG"))
+	if err != nil {
+		t.Skip("缺 GRAPH.IMG，跳過")
+	}
+	p := loadFlipPanel(t)
+	// 亞爾迪巴朗；Big5 字碼由原版畫面文字直接轉得。
+	name := []uint16{43208, 47800, 44413, 42202, 44756}
+	fb := gfx.NewFramebuffer(9)
+	p.Draw(fb, fnt, name, 0, "rebellion")
+
+	bad, total := 0, 0
+	for y := 178; y < 220; y++ {
+		for x := 334; x < 510; x++ {
+			total++
+			if fb.At(x, y) != scr[y*640+x] {
+				bad++
+			}
+		}
+	}
+	if bad != 0 {
+		t.Errorf("叛亂報告文字與收據差 %d／%d 個像素，預期 0", bad, total)
 	}
 }
 

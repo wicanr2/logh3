@@ -21,6 +21,11 @@
   艦隊 `+0x38/+0x3A/+0x3B` 與偵察隊 #110 的行動、標記、起點、目的地
   均由 `TestScoutOrderMatchesOriginalReceipt` 對上；再以單一總閘門覆蓋
   移動、戰鬥與索敵三項。證據見 `docs/re/305`、`docs/playtest/015`。
+- 推進 GitHub #8 的叛亂報告垂直切片：新增獨立
+  `StateRebellionReport`、事件前擁有者快照、逐則左右鍵 dismiss 與續跑
+  callback；正常玩家路徑的文字與 72×93 頭像對 `rbx292` 均為 0 像素差。
+  同時修正易主報告右鍵會繞過 callback 的既有缺陷。侵略、提督生死、勝負
+  與費沙事件報告仍留在 #8；見 `docs/spec/046`、`docs/playtest/016`。
 
 ## 2026-09-06
 
