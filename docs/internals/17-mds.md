@@ -109,6 +109,13 @@
 | `GIN3PS.EXE` | `bgm_%1d%c.mds` | `ds:8F34`（平時）或 `ds:8F35 + 6`（戰鬥）|
 | `ENDING.EXE` | `end_%1d%c.mds` | 命令列的第二個數字（`9 1`／`9 2`）|
 
+`ENDING.EXE` 的 FM 硬體路徑與 `GIN3PS.EXE` 不同：它先掃 Sound Blaster
+DSP 基底 `210h`–`260h`，在標準 `220h` 成功後用 `base+8/+9`，也就是
+`228h/229h`，存取 OPL。這是 **confirmed**：IDA 線性 `0x11E47`
+保存成功基底、`0x11F7F` 做兩次 `out`，dosgolem `453c32e` 的兩次原版
+實跑則分別得到 `END_1F` 13,045 筆與 `END_2F` 4,611 筆相同 VGM 寫入。
+完整原始指令、雜湊與硬體近似邊界見 [`docs/re/275`](../re/275-fm-capture-from-opl.md) §3c。
+
 ### 曲號 ↔ 曲名 ↔ 時機
 
 | 檔 | 設定畫面上的名字 | 什麼時候播 |

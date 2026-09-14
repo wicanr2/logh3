@@ -27,13 +27,10 @@
 # 太早（#116M、#117.000M）poke 會被清掉，太晚（#117.023M）檔名已經
 # `sprintf` 完了，兩種都安靜地回到 `BGM_0F`。**改了輸入腳本就要重掃。**
 #
-# ⚠ **`END_1F`／`END_2F` 這條路還沒走通。** `ENDING.EXE` 跑
-# 2,000,000,000 道指令（約 172 秒遊戲時間）**沒有開過任何 `.MDS`，
-# 也沒有寫過 388／389**；它有 `'f'`／`'m'` 兩個外皮（檔案位移 `0x31C6`／
-# `0x31F0`），但整支執行檔裡**一個 `0x0388` 字面值都沒有**（`OPEN.EXE` 有
-# 兩處：`0x2065`、`0x21F5`）。所以它的 OPL 埠不是寫死的、或者 ＦＭ 輸出
-# 根本不在這支裡——先解那件事才錄得到。腳本裡那一條分支留著，
-# 走到就會產出，走不到就缺檔（worklist `music-fm-capture`）。
+# ⚠ **`END_1F`／`END_2F` 走 Sound Blaster 相容埠。** `ENDING.EXE` 先掃
+# `210h`–`260h` 的 DSP reset／ready 埠，在標準基底 `220h` 找到裝置後，
+# 從 `base+8/+9`（`228h/229h`）送 OPL。它因此沒有 `0388h` 字面值；
+# 這不是沒走 FM。該分支必須傳 `-sound-blaster`，不能只傳 `-adlib`。
 #
 # ⚠ **`OPEN_F.MDS` 在出貨的遊戲裡是死素材。** `OPEN.EXE` 的 ＦＭ 與 MIDI
 # 兩個外皮都寫死 `'m'`，所以不論偵測到什麼音源，開頭動畫一律讀
@@ -111,7 +108,8 @@ for n in "${names[@]}"; do
       ;;
     END_1F|END_2F)
       # 曲號就是命令列的第二個數字（`docs/re/274` §9）。
-      run_probe "$n" /orig/ENDING.EXE "$END_STEPS" "$ORIG" "$n.MDS" -args " 9 ${n:4:1}"
+      run_probe "$n" /orig/ENDING.EXE "$END_STEPS" "$ORIG" "$n.MDS" \
+        -sound-blaster -args " 9 ${n:4:1}"
       ;;
     OPEN_F)
       # 換檔內容觸發。暫存遊戲目錄建一次就好，之後只換那一個檔。
