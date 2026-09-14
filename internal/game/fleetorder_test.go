@@ -7,6 +7,14 @@ import (
 	"github.com/wicanr2/logh3/internal/screen"
 )
 
+// TestFleetCommandBehaviorsMatchOriginalReceipts 是 #32 的單一機器閘門：
+// 移動、戰鬥與索敵三條玩家路徑都必須通過各自的原版證據驗證。
+func TestFleetCommandBehaviorsMatchOriginalReceipts(t *testing.T) {
+	t.Run("移動", TestFleetMoveOrderTwoStages)
+	t.Run("戰鬥", TestFleetBattleOrderSetsAction)
+	t.Run("索敵", TestScoutOrderMatchesOriginalReceipt)
+}
+
 // 艦隊的「移動」是兩段：點目的地 → 繞著它轉游標選抵達朝向 → 左鍵確定
 // （`docs/re/120`–`122`）。
 func TestFleetMoveOrderTwoStages(t *testing.T) {

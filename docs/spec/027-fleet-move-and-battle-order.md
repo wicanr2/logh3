@@ -1,8 +1,11 @@
 # 027 — 艦隊選單的「移動」與「戰鬥」
 
-狀態：`READY`（整體規格）；短程平移與抵達朝向已於 2026-09-14 `CONFORMED`
+狀態：`CONFORMED`（移動、戰鬥與索敵三項玩家路徑及行為收據）
 
-證據：`docs/re/119`–`122`、`docs/re/129`、`docs/re/294`；收據 `s3cmdrange`、`s3cmdface`、`s3fltseq`。
+證據：`docs/re/119`–`122`、`docs/re/129`、`docs/re/294`、
+[`docs/re/305`](../re/305-scout-order-runtime-receipt.md)；收據 `s3cmdrange`、
+`s3cmdface`、`s3fltseq`、`s3cmd-scout-behavior`；總驗收見
+[`docs/playtest/015`](../playtest/015-fleet-command-behaviors.md)。
 
 ## 觸發
 
@@ -30,7 +33,7 @@
 | `+0x52`／`+0x54` | 這一次用的速度 × 8（16.16）|
 | `+0x48` bit4 | 接著叫 `2583:052C`：`Distance16(現在位置, 目的地) < 行程 ÷ 3 ＋ 4.0` 就設起來 ＝ **這一趟是短程平移**（`docs/re/294`）|
 
-## 範圍圖形（沒有畫）
+## 範圍圖形
 
 原版在選點時畫兩個提示用的圖形，**不擋點擊**：
 
