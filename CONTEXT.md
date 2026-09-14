@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 7 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 6 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -412,35 +412,6 @@ remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以
 **證據**：[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)
 
 **核實**：要人判——現在沒有可綁的訊號：`InputCaret` 已經在了（恆亮那一版也有），而閃爍要靠一個還不存在的時間輸入。接上的時候把這條改成 absent，綁那個時間參數的名字。
-
-#### strategy-report-screen — 戰略模式報告畫面還沒做
-
-*[#8](https://github.com/wicanr2/logh3/issues/8) · 原編號 242 · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-戰略報告已有五個可玩的 report family：星域易主四種報告由
-`StateRegionFlipReport` 完成（SPEC 034）；逐格叛亂由獨立
-`StateRebellionReport` 完成（SPEC 046）；單方面占據四句由獨立
-`StateOccupationReport` 完成（SPEC 047）；提督失蹤的死亡／生還由
-`StateAdmiralFateReport` 完成（SPEC 048）；費沙事件四組雙頁由
-`StatePhezzanReport` 完成（SPEC 049）。
-
-目前仍未接的是勝敗頁。原版 86 條訊息表已保存，但其 scene owner、觸發順序、
-頭像／版面與 dismiss lifecycle 仍需客觀收據，不能只把字串塞進既有 panel。
-
-**卡在**：下一個客觀切片是勝敗頁。提督 fate 的規則與 lifecycle 已接，但 dosgolem
-在該 off-screen compositor 路徑尚無可用 framebuffer，因此 SPEC 048 不宣稱
-逐像素 CONFORMED。費沙事件帝國 owner 的兩頁主 overlay 已逐像素 0 差異；
-同盟 owner／雙人座位及 overlay 外「確認」提示保留明示限制。占據報告的
-逐格暫停與對戰雙座位限制也仍保留。
-
-**做完的判準**：- 勝敗報告 family 從正常玩家路徑可達；
-- scene owner、觸發時點、文字／頭像／框、模態 dismiss 與返回流程有原版收據；
-- 只在已證實區域宣稱逐像素或同狀態，所有差異均已分類；
-- 建立單一機器測試覆蓋所有戰略報告 family 後，才關閉本 issue。
-
-**證據**：[`docs/spec/034-region-flip-report.md`](docs/spec/034-region-flip-report.md)、[`docs/spec/046-rebellion-report.md`](docs/spec/046-rebellion-report.md)、[`docs/spec/047-occupation-report.md`](docs/spec/047-occupation-report.md)、[`docs/spec/048-admiral-fate-report.md`](docs/spec/048-admiral-fate-report.md)、[`docs/spec/049-phezzan-event-report.md`](docs/spec/049-phezzan-event-report.md)、[`docs/playtest/018-admiral-fate-report.md`](docs/playtest/018-admiral-fate-report.md)、[`docs/playtest/019-phezzan-event-report.md`](docs/playtest/019-phezzan-event-report.md)、[`docs/re/307-admiral-fate-pass-and-report.md`](docs/re/307-admiral-fate-pass-and-report.md)、[`docs/re/308-phezzan-report-receipts.md`](docs/re/308-phezzan-report-receipts.md)、[`docs/re/247-strategy-report-strings.md`](docs/re/247-strategy-report-strings.md)、[`docs/internals/data/strategy-report-strings.json`](docs/internals/data/strategy-report-strings.json)、[`docs/internals/data/phezzan-report-panel.json`](docs/internals/data/phezzan-report-panel.json)
-
-**核實**：`internal/game` 裡還找得到 `strategy-report-screen：勝負報告仍未接`（自承還在 ＝ 還沒做）
 
 #### music-fm-capture — `_F` 那一組的 FM 原音：11 首錄到 9 首，結局那兩首還卡住
 
@@ -532,7 +503,7 @@ remake 用命令階段那一次的值；讀存檔之後到第一次回合尾巴�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-44 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+45 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -772,6 +743,27 @@ Ebiten 顯示層十例已在乾淨 HEAD `9915ced` 全數逐位元組相同。`lo
 **證據**：[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)
 
 **核實**：`internal/game/game.go` 裡還找得到 `remake 還沒有原版的逐座位順序`（自承還在 ＝ 還沒做）
+
+#### strategy-report-screen — 戰略模式報告畫面還沒做
+
+*[#8](https://github.com/wicanr2/logh3/issues/8) · 原編號 242 · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+戰略報告六個可玩 report family 已完成：星域易主（SPEC 034）、逐格叛亂
+（SPEC 046）、單方面占據（SPEC 047）、提督失蹤死亡／生還（SPEC 048）、
+費沙事件四組雙頁（SPEC 049），以及首都陷落後的勝負報告與結局轉場
+（SPEC 050）。
+
+**卡在**：無。勝、敗兩張報告的完整矩形均已逐像素零差異；完整結局動畫序列仍是另一個
+證據限制，不影響本 issue 的戰略報告完成判定。
+
+**做完的判準**：- 勝敗報告 family 從正常玩家路徑可達；
+- scene owner、觸發時點、文字／頭像／框、模態 dismiss 與返回流程有原版收據；
+- 只在已證實區域宣稱逐像素或同狀態，所有差異均已分類；
+- 建立單一機器測試覆蓋所有戰略報告 family 後，才關閉本 issue。
+
+**證據**：[`docs/spec/034-region-flip-report.md`](docs/spec/034-region-flip-report.md)、[`docs/spec/046-rebellion-report.md`](docs/spec/046-rebellion-report.md)、[`docs/spec/047-occupation-report.md`](docs/spec/047-occupation-report.md)、[`docs/spec/048-admiral-fate-report.md`](docs/spec/048-admiral-fate-report.md)、[`docs/spec/049-phezzan-event-report.md`](docs/spec/049-phezzan-event-report.md)、[`docs/spec/050-victory-defeat-report.md`](docs/spec/050-victory-defeat-report.md)、[`docs/playtest/018-admiral-fate-report.md`](docs/playtest/018-admiral-fate-report.md)、[`docs/playtest/019-phezzan-event-report.md`](docs/playtest/019-phezzan-event-report.md)、[`docs/playtest/020-victory-report.md`](docs/playtest/020-victory-report.md)、[`docs/re/307-admiral-fate-pass-and-report.md`](docs/re/307-admiral-fate-pass-and-report.md)、[`docs/re/308-phezzan-report-receipts.md`](docs/re/308-phezzan-report-receipts.md)、[`docs/re/309-victory-report-and-ending-branch.md`](docs/re/309-victory-report-and-ending-branch.md)、[`docs/internals/data/strategy-report-strings.json`](docs/internals/data/strategy-report-strings.json)、[`docs/internals/data/phezzan-report-panel.json`](docs/internals/data/phezzan-report-panel.json)、[`docs/internals/data/victory-report-panel.json`](docs/internals/data/victory-report-panel.json)
+
+**核實**：`TestStrategyReportFamiliesRegistered` 釘在 `./internal/game`
 
 #### music-screen-mapping — 原版哪個畫面播哪一首
 
