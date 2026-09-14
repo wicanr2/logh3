@@ -351,7 +351,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 24 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 7 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -392,33 +392,6 @@
 **證據**：[`docs/re/283-intro-plays-in-file-order.md`](docs/re/283-intro-plays-in-file-order.md)、[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)、[`docs/spec/020-intro-animation.md`](docs/spec/020-intro-animation.md)
 
 **核實**：`docs/spec/020-intro-animation.md` 標到 `CONFORMED`
-
-#### region-panel-freeze-differs-by-faction — 左下角摘要凍住的內容，同盟與帝國相反
-
-*[#4](https://github.com/wicanr2/logh3/issues/4) · re（逆向：機制還沒讀出來）*
-
-同一條輸入序列（右鍵兩下關月初報告 → 點命令列開選單 → 搬滑鼠），
-帝國那邊左下角凍著游標底下那一格（`cmd1e`，墨 2,353），同盟那邊整塊是空的
-（`cmd1eAlly`，墨 88）。兩份都重現得出來。
-
-六組受控對照（`docs/re/278`）排除了三個解釋：不是同盟畫不出來
-（沒開選單時那塊是滿的）、不是時點（選單開在更早的步數也一樣空）、
-不是自家／敵方星域。剩下的變因是「開選單之前最後一次動作是右鍵還是
-單純移動滑鼠」，而兩個陣營的答案**剛好對調**——看起來像奇偶性
-（畫過幾次／畫在哪一頁），不像一條規則。
-
-在這條解開之前，`TestAllianceCommandPhaseScreens` 走的是串起來的那條路
-（開選單之前滑鼠已經在星圖外），十二張對得上但**對上的理由還沒解**。
-改成照收據順序會讓十二張一起變紅。
-
-下一步：找出「選單開起來的那一刻用什麼重畫左下角那塊」的那一支，
-往回追它讀哪個變數、誰寫那個變數。輸入面的變因已經刨到只剩一個。
-
-**做完的判準**：同盟與帝國的凍結內容由同一條規則推得出來，且 `TestAllianceCommandPhaseScreens` 改成照每一份收據自己的輸入順序走之後仍然逐位元組相同。
-
-**證據**：[`docs/re/278-region-panel-frozen-content-differs-by-faction.md`](docs/re/278-region-panel-frozen-content-differs-by-faction.md)、[`docs/spec/001-region-summary-panel.md`](docs/spec/001-region-summary-panel.md)
-
-**核實**：`internal/game/game.go` 裡還找得到 `同盟那條路凍住的內容與這裡相反`（自承還在 ＝ 還沒做）
 
 #### copyprot-caret-blink — 防拷問答的輸入游標會閃，remake 畫成恆亮
 
@@ -485,87 +458,6 @@ remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以
 
 **核實**：`tools/music_fm_capture.sh` 裡還找得到 `這條路還沒走通`（自承還在 ＝ 還沒做）
 
-#### alliance-squad-spacing — 同盟分隊的間距與排法沒解
-
-*[#11](https://github.com/wicanr2/logh3/issues/11) · re（逆向：機制還沒讀出來）*
-
-帝國那十二支的排法解出來了（旗艦周圍間距 22–23 的正交格點，
-方向是艦隊朝向減 96），同盟那幾支的間距與排法不同。
-
-**做完的判準**：同盟的分隊佈陣與收據逐支相同。
-
-**核實**：`internal/rules/battle.go` 裡還找得到 `間距與排法不同，規則還沒解`（自承還在 ＝ 還沒做）
-
-#### battle-seen-flag — 戰場的索敵還沒接（艦艇 `+0x17` 一律給 2）
-
-*[#12](https://github.com/wicanr2/logh3/issues/12) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-條件解出來了（[`docs/re/290`](docs/re/290-battle-spotting-solved.md)、
-[`docs/internals/38`](docs/internals/38-battle-units.md)）：`+0x17` **不是**「被看到就設 3」，
-是每被敵方看到一輪 ＋1、上限 3（`2526:02D7`，線性 `0x25537` 的 `26 FE 07`），
-沒被看到就每輪掉一級。觀測者是各艦隊的旗艦分隊（半徑 200）、已放出的
-偵察隊（艦種 7，半徑 250）與己方在該星域的行星
-（`clamp(+0x14, 1500, 6000) ÷ 25`）；`+0x1E` bit7 設起來的（偵察隊）看不到。
-兩個直接寫 3 的特例也讀出來了：戰略層在**有主**星域打行星揭露攻方
-（`20B4:18C2`），電腦在第 7 回合起完全看不到敵人時全面揭露六回合（`3009:008D`）。
-**還差的是 remake 這一端**：寫成 spec、把觀測者／半徑／每回合升降接進戰鬥回合，
-再補一份逐筆對 `+0x17` 的收據。目前 `rules.DefaultDetail` 一律給 2。
-
-**做完的判準**：索敵由規則算出來（觀測者、半徑、每回合升降），收據上的 `+0x17` 逐筆相同。
-
-**核實**：`internal/rules/battle.go` 裡還找得到 `索敵本身還沒接進來`（自承還在 ＝ 還沒做）
-
-#### battle-arrival-facing — 艦隊的短程平移與抵達轉向 remake 還沒照原版（`1C03:0361`／`1C03:0524`）
-
-*[#13](https://github.com/wicanr2/logh3/issues/13) · parity（對拍：要與原版逐位元組相同）*
-
-原版的規則讀完了（[`docs/re/294`](docs/re/294-short-move-strafe-and-arrival-facing.md)）：
-`+0x48` bit4 在下命令時由 `2583:052C` 設（距離 < 行程 ÷ 3 ＋ 4.0），`1C03:015C` 依它選實行常式——
-有設走 `1C03:0361`，不轉身、每一步直指目的地平移，朝向整段不變；沒設走 `1C03:0185`
-（先轉身再沿 `+0x4A` 走，`docs/re/129`）。兩支都在到了之後才用 `1C03:0524` 逐步轉向 `+0x4C`，
-轉完就回、不再扣額度。`+0x4C` 的四個寫入者（開戰、玩家命令、AI 兩條）也列齊了。
-
-**還差的是 remake 這一端**，三件：
-
-1. `AdvanceFleet` 沒有 bit4 那一支，短程移動也先轉身，隊形跟著轉。
-2. 到了之後不轉向 `+0x4C`，改由 `internal/game` 直接切換（`docs/spec/027` 的已知差異）。
-3. 到了之後每叫一次扣 1：拿 `s3fltseq` 槽 30 的起點量過，會多繞 12,899,962 次、花 0.87 秒，
-   額度剩 `0x7FFFF`（原版 `0xCCD678`）。
-
-平移那一段**現有收據沒有樣本**：78 份傾印裡 bit4 有設的 32 筆，唯一在路上的離目的地只有 3.16，
-兩支常式在這裡結果相同。要一份目的地選在內圈裡、距離 > 8、抵達朝向與方位差很多的收據，
-`實行` 前後各倒一份（`docs/re/294` 末節）。
-
-**做完的判準**：`s3fltseq` 槽 30 的 `ft02` → `ft03` 由 remake 跑出朝向 170、額度 `0xCCD678`；另一份短程平移（距離 > 8）的 same-state 收據，實行前後艦隊的 `+0x4A`／`+0x5C`／`+0x5E`／`+0x56` 與 remake 逐位元相同。
-
-**證據**：[`docs/re/294-short-move-strafe-and-arrival-facing.md`](docs/re/294-short-move-strafe-and-arrival-facing.md)、[`docs/spec/027-fleet-move-and-battle-order.md`](docs/spec/027-fleet-move-and-battle-order.md)
-
-**核實**：`internal/rules/fleetmove.go` 裡還找得到 `短程平移（`1C03:0361`）與抵達轉向 `\+0x4C` remake 還沒接`（自承還在 ＝ 還沒做）
-
-#### skirmish-per-attack — 每回合的結算還沒換成「照攻擊名單逐一開火」
-
-*[#14](https://github.com/wicanr2/logh3/issues/14) · parity（對拍：要與原版逐位元組相同）*
-
-算式、係數與分母 K 都解出來了（`SkirmishDamage` ＋ `AttackCoefficient`），
-remake 仍走艦隊層那條一次算總損失再分攤。
-
-**卡在**：卡在「誰寫艦艇記錄的攻擊時座標」還沒查出來。
-
-**做完的判準**：逐一開火的結果與收據逐分隊相同。
-
-**核實**：`internal/rules/resolve.go` 裡還找得到 `還沒換過來`（自承還在 ＝ 還沒做）
-
-#### planet-command-hit-test — 戰場行星命令選單還不能標對拍（`341B:039D` 沒讀）
-
-*[#15](https://github.com/wicanr2/logh3/issues/15) · 原編號 4f · re（逆向：機制還沒讀出來）*
-
-開哪一張與可選旗標全解出來、四項行為也都逆向過了；
-缺的是原版的行星命中判定，remake 先用整格。
-
-**做完的判準**：命中判定照原版分層，選單對拍標得上 `same-state`。
-
-**核實**：`internal/game/planetcmd.go` 裡還找得到 ``341B:039D` 的分層邏輯`（自承還在 ＝ 還沒做）
-
 #### admiral-unknown-fields — 提督記錄的 `+20`／`+22` 還沒有名字
 
 *[#16](https://github.com/wicanr2/logh3/issues/16) · 原編號 17 · re（逆向：機制還沒讀出來）*
@@ -592,32 +484,6 @@ remake 仍走艦隊層那條一次算總損失再分攤。
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
-#### battle-data-scroll — 戰術選單「資料」的捲動沒量
-
-*[#17](https://github.com/wicanr2/logh3/issues/17) · 原編號 4w · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-三個分頁都逐位元組對上了。行星分頁結構上不可能超過 5 列
-（`PLADAT.DAT` 檔頭 32 個星域的行星數最大 5），要量捲動得先有
-玩家兩支以上艦隊同場的戰鬥。
-
-**做完的判準**：捲動的行為與收據相同。
-
-**核實**：要人判——接上時會出現捲動狀態（大概在 internal/game 的戰術資料畫面），到時綁那個欄位名；現在程式裡沒有任何自承可綁。
-
-#### minimap-row-203 — 小地圖下緣 y=203 那一列在畫哪個元件沒對出來
-
-*[#18](https://github.com/wicanr2/logh3/issues/18) · re（逆向：機制還沒讀出來）*
-
-整張 640×480 的戰場畫面只剩兩處排除：原版自己畫的滑鼠游標，
-以及這一列——`2376:10EA`／`110B`／`1132` 三趟的列數是 19／20／20，
-多出來那一列只被部分 plane 寫到。
-
-**做完的判準**：那一列的來源查出來，戰場畫面的排除清單只剩游標。
-
-**證據**：[`docs/re/103-minimap-y203-strip.md`](docs/re/103-minimap-y203-strip.md)
-
-**核實**：要人判——沒有可綁的訊號——它是一份收據上的像素差異，不是程式裡的缺席。查出來之後會有一支新的繪製函式，到時綁它。
-
 #### unrest-recompute-other-callers — 未安定度：其餘 `090A:0E6D` 呼叫端與戰鬥中的重算 remake 沒有接
 
 *[#19](https://github.com/wicanr2/logh3/issues/19) · parity（對拍：要與原版逐位元組相同）*
@@ -636,61 +502,6 @@ remake 用命令階段那一次的值；讀存檔之後到第一次回合尾巴�
 
 **核實**：要人判——沒有可掃的自承或缺席訊號（`recomputeUnrest` 已經存在，缺的是呼叫點）。接上時綁那一支同狀態測試（`go_test`）。
 
-#### load-unrest-params-from-work — 讀存檔時算未安定度，`Blend`／`ds:8FF8`／統治者用的是固定值，不是那一格存檔的
-
-*[#21](https://github.com/wicanr2/logh3/issues/21) · parity（對拍：要與原版逐位元組相同）*
-
-`loadSlotFromDisk` 拿 `Resources.UnrestParams`（統治者 16／60、`Blend` 1／2、`Rate` 2／2）只換掉回合數。
-這三個全域在執行期就是 `WORK.DT?` 那一塊（`ds:8F14` 起：統治者 ＝ 內政專任參謀 `+0x3B`、`Blend` `+0xC0`、
-`ds:8FF8` `+0xE4`），讀檔之後照檔案。S2／S3（第 9、10 格）的檔案值剛好與固定值相同，所以
-`TestUnrestAtLoad` 對得上；**第 8 格是統治者 32／60、`Blend` 2／2**，照現在的寫法會用錯。
-remake 自己存的檔也一樣（`Game.rate`／`blend`／參謀都會寫回 `WORK`，讀回來卻不用）。
-
-改法是從 `sl.WorkFields` 與 `rules.StaffAdmiral(sl.Work, PostDomestic, 陣營)` 取；第 8 格要一份載入當下的收據。
-
-**做完的判準**：讀第 8 格存檔之後 32 格的 `+0x7D` 與原版載入當下的傾印逐格相同。
-
-**證據**：[`docs/spec/006-unrest-at-load.md`](docs/spec/006-unrest-at-load.md)、[`docs/spec/042-region-unrest-recompute.md`](docs/spec/042-region-unrest-recompute.md)
-
-**核實**：`internal/game/game.go` 裡出現 `params\.Rate = sl\.Rate` 就是做好了
-
-#### region-turn-upkeep-0556 — `0374:0556` 每回合逐格那三支 remake 沒有（`2703:1B48`／`1CD7`／`1D85`）
-
-*[#22](https://github.com/wicanr2/logh3/issues/22) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-沒有戰鬥的格子每回合都跑（[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md) 末節）：
-`2703:1B48` 無主而且還有他陣營行星的格子**隨機**再跑掉一顆（抽亂數）、
-`2703:1CD7` 防衛力回復（每輪 `+0x16 × +0x18 ÷ 100`，最多九輪）、
-`2703:1D85` 要塞砲的 `+0x45`／`+0x50` 重置。remake 三支都沒有。
-
-`1CD7` 在同一格裡排在叛亂效果之前（被翻的行星先回復再扣）；`1B48` 抽亂數，
-接上之前叛亂之後的亂數序列還會再差（[`docs/spec/041`](docs/spec/041-rebellion.md)）。
-
-**做完的判準**：三支都接上，並有收據對過一次含無主格與防衛力未滿的局面。
-
-**證據**：[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/internals/29-planets-and-economy.md`](docs/internals/29-planets-and-economy.md)、[`docs/spec/041-rebellion.md`](docs/spec/041-rebellion.md)
-
-**核實**：`internal/game/rebellion.go` 裡還找得到 `region-turn-upkeep-0556`（自承還在 ＝ 還沒做）
-
-#### phezzan-event-impl — remake 還沒有費沙事件
-
-*[#23](https://github.com/wicanr2/logh3/issues/23) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-觸發與效果都讀完了（`docs/internals/57`、`docs/re/296`）：費沙那一格第一次易主的回合尾巴，
-`ds:8F48 ← 1`、費沙行星八成經濟力搬到對手首都的行星、拿下的一方在鄰接清單裡沒駐軍的星域整格叛離
-（與每回合叛亂同一支效果，旗標 1）、拿下的一方是人類座位時其餘星域行星經濟力扣 `ds:328E[回合 ÷ 100]`%、民心 100。
-remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠是 false，
-戰略態勢碼只會落在 0／4／8（`docs/spec/029`「不能做的」）。
-
-接的位置：回合尾巴逐格重算擁有者之後、判勝負之前；戰術戰鬥結束時的擁有者重算也要登記（限人類座位是新擁有者）。
-對拍用收據 `pzx296` 的 `#228,000,000`／`#230,000,000`／`#232,000,000` 三份切片，預測與 `tools/scripts/phezzan_event_check.py` 同一套。
-
-**做完的判準**：remake 在費沙第一次易主的回合尾巴跑費沙事件，與收據 `pzx296` 的本體、懲罰逐格相同；沒換手（`pzx296n`）與已發生過（`pzx296g`）兩種局面不觸發。
-
-**證據**：[`docs/internals/57-phezzan-event.md`](docs/internals/57-phezzan-event.md)、[`docs/re/296-phezzan-event-trigger.md`](docs/re/296-phezzan-event-trigger.md)、[`docs/internals/data/phezzan-event.json`](docs/internals/data/phezzan-event.json)
-
-**核實**：`internal/rules/morale.go` 裡還找得到 `費沙事件本身 remake 還沒有`（自承還在 ＝ 還沒做）
-
 #### region-supply-pool-missing — 飛彈／艦載機存量的每回合回充 remake 沒有
 
 *[#24](https://github.com/wicanr2/logh3/issues/24) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -706,52 +517,9 @@ remake 目前沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 永遠�
 
 **核實**：`internal/rules`、`internal/game` 裡出現 `RefillRegionSupply|RegionSupplyPool` 就是做好了
 
-#### delivery-report-details — 月底報告的兩個細節還沒模型化
-
-*[#25](https://github.com/wicanr2/logh3/issues/25) · 原編號 22 · parity（對拍：要與原版逐位元組相同）*
-
-船艦接收報告本身已經逐位元組對上。兩件沒做：
-**結算中地圖不重塗首都**、以及**捲軸會多出上下箭頭**。
-
-**做完的判準**：兩個細節照原版畫，收據逐位元組相同。
-
-**證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)
-
-**核實**：要人判——接上時會在 internal/screen 多出箭頭的繪製與首都重塗的分支，到時綁那兩個函式名。
-
-#### m4u — 「資料」帶進去的戰場
-
-*[#29](https://github.com/wicanr2/logh3/issues/29) · matrix（驗證矩陣的一列（完成度））*
-
-**核實**：要人判——完成度由收據 `s3detail_back` 撐著，還沒把雜湊釘進來；要自動回歸偵測就改成 receipt 並補 files 的 SHA-256
-
-#### m4g — 行星命令的四項行為
-
-*[#30](https://github.com/wicanr2/logh3/issues/30) · matrix（驗證矩陣的一列（完成度））*
-
-**核實**：要人判——這一列的完成度由它自己的證據欄撐著，沒有可綁的自動訊號
-
-#### m4e — 戰場的「索敵」「移動（艦隊）」「戰鬥」
-
-*[#32](https://github.com/wicanr2/logh3/issues/32) · matrix（驗證矩陣的一列（完成度））*
-
-**核實**：要人判——備註裡「艦隊層移動引擎還沒接」已經過期並修掉了；這一列仍標 `—` 是因為三項命令的**行為**沒有逐位元組收據。要人判還缺什麼——不要綁 TestManoeuvreOuterMatchesOracle，那只釘住範圍圖形那一小塊。
-
-#### m4d — 戰場的「補給」「修理」命令
-
-*[#33](https://github.com/wicanr2/logh3/issues/33) · matrix（驗證矩陣的一列（完成度））*
-
-**核實**：要人判——完成度由收據 `s3form` 撐著，還沒把雜湊釘進來；要自動回歸偵測就改成 receipt 並補 files 的 SHA-256
-
-#### s6-11 — 其他
-
-*[#34](https://github.com/wicanr2/logh3/issues/34) · matrix（驗證矩陣的一列（完成度））*
-
-**核實**：要人判——這一列的完成度由它自己的證據欄撐著，沒有可綁的自動訊號
-
 ### 做完的（不在矩陣裡的那幾條）
 
-31 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+44 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
@@ -884,6 +652,21 @@ framebuffer 與 palette 逐位元組相同。`workplace/receipt-check.json` 的 
 **證據**：[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)、[`docs/re/277-region-panel-follows-the-cursor.md`](docs/re/277-region-panel-follows-the-cursor.md)、[`docs/re/278-region-panel-frozen-content-differs-by-faction.md`](docs/re/278-region-panel-frozen-content-differs-by-faction.md)、[`docs/spec/001-region-summary-panel.md`](docs/spec/001-region-summary-panel.md)
 
 **核實**：`internal/game/game.go` 裡出現 `refreshHoverRegion` 就是做好了
+
+#### region-panel-freeze-differs-by-faction — 左下角摘要凍住的內容，同盟與帝國相反
+
+*[#4](https://github.com/wicanr2/logh3/issues/4) · re（逆向：機制還沒讀出來）*
+
+原先觀測到的「同盟與帝國相反」已被後續執行器修正與重錄推翻：舊版漏送
+點擊前的游標移動事件。使用 dosgolem `e0b6a03` 時，兩方都依同一條黏性摘要
+規則運作，命令選單開啟後左下角皆只剩外框。
+
+**做完的判準**：同盟與帝國的凍結內容由同一條規則推得出來，且 `TestAllianceCommandPhaseScreens`
+照每一份收據自己的輸入順序走之後仍然逐位元組相同。
+
+**證據**：[`docs/re/302-region-panel-faction-difference-was-stale.md`](docs/re/302-region-panel-faction-difference-was-stale.md)、[`docs/re/284-the-left-panel-is-sticky.md`](docs/re/284-the-left-panel-is-sticky.md)、[`docs/re/278-region-panel-frozen-content-differs-by-faction.md`（保留的舊觀測）`](docs/re/278-region-panel-frozen-content-differs-by-faction.md`（保留的舊觀測）)、[`docs/spec/001-region-summary-panel.md`](docs/spec/001-region-summary-panel.md)
+
+**核實**：`TestAllianceCommandPhaseScreens` 釘在 `internal/game`
 
 #### copyprot-16x2-block-at-240-283 — 防拷問答少的那塊 16×2 是輸入游標
 
@@ -1072,6 +855,113 @@ remake 接在 `internal/audio.TuneFor`，曲號從 `Game` 那三格讀；
 
 **核實**：收據 `fmx1` 的 1 個檔案雜湊相符
 
+#### alliance-squad-spacing — 同盟分隊的間距與排法沒解
+
+*[#11](https://github.com/wicanr2/logh3/issues/11) · re（逆向：機制還沒讀出來）*
+
+原版沒有帝國／同盟兩套硬編碼佈陣。`297B:091D → 2BE1:0000 →
+2BE1:0059` 逐支讀艦艇 `+0x05` 的既有槽索引，再用同一張 `ds:59BA`
+41 槽表依艦隊朝向旋轉定位；兩方外觀不同，是各分隊原有槽索引不同。
+
+**卡在**：無。
+
+**做完的判準**：同盟的分隊佈陣與收據逐支相同。
+
+**證據**：[`docs/re/300-opening-deployment-uses-formation-slots.md`](docs/re/300-opening-deployment-uses-formation-slots.md)、[`docs/internals/38-battle-units.md`](docs/internals/38-battle-units.md)、[`docs/spec/025-battle-formation-order.md`](docs/spec/025-battle-formation-order.md)、[`internal/rules/battle_deploy_oracle_test.go`](internal/rules/battle_deploy_oracle_test.go)
+
+**核實**：`TestAllianceDeploymentMatchesOracle` 釘在 `internal/rules`
+
+#### battle-seen-flag — 戰場的索敵還沒接（艦艇 `+0x17` 一律給 2）
+
+*[#12](https://github.com/wicanr2/logh3/issues/12) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+戰場索敵已依 `2526:000E`／`2526:00F8` 接進 remake。`+0x17` 對應
+`BattleUnit.Detail`：每被敵方看到一輪加 1、上限 3；沒被看到才在下一輪
+開頭衰減。佈陣初值改回原版的 0，己方單位的 renderer 顯示不受敵方索敵
+層級限制。
+
+**卡在**：已完成。主觀圖示可讀性與實機觀察不在本 issue；客觀規則與逐筆欄位已有
+自動回歸。
+
+**做完的判準**：- 觀測者：各艦隊旗艦半徑 200、已放出的艦種 7 偵察隊半徑 250、有主行星
+  半徑 `clamp(防衛力,1500,6000)/25`。
+- 候選使用分隊 `TargetX/TargetY`；`+0x1E` bit7 設起來的偵察隊不會被看到；
+  同輪被多個觀測者覆蓋只升一級。
+- 升到 3 時 hold=2；視野外依 hold、3→2→1→0 衰減。
+- 打有主行星時攻方整支立即揭露為 3／hold=2；AI 從第 7 回合起完全看不到
+  敵人時，把敵方一般分隊揭露為 3／hold=6。
+- `s3fltmove.bin` 的 55 筆在場分隊，remake 的最終 `Detail`／`Seen` 與原版
+  `+0x17`／`+0x16` bit0 逐筆 55／55 相同。
+
+**證據**：[`docs/playtest/012-battle-spotting.md`](docs/playtest/012-battle-spotting.md)、[`docs/re/290-battle-spotting-solved.md`](docs/re/290-battle-spotting-solved.md)、[`docs/spec/018-battle-resolution.md`](docs/spec/018-battle-resolution.md)、[`internal/rules/spotting.go`](internal/rules/spotting.go)、[`internal/rules/spotting_test.go`](internal/rules/spotting_test.go)、[`internal/game/battle.go`](internal/game/battle.go)
+
+**核實**：`TestSpottingMatchesS3FleetMoveReceipt` 釘在 `internal/rules`
+
+#### battle-arrival-facing — 艦隊的短程平移與抵達轉向 remake 還沒照原版（`1C03:0361`／`1C03:0524`）
+
+*[#13](https://github.com/wicanr2/logh3/issues/13) · parity（對拍：要與原版逐位元組相同）*
+
+原版規則與 remake 已接合。`+0x48` bit4 仍在下命令時依
+`Distance16(現在位置, 目的地) < 每回合行程 ÷ 3 ＋ 4.0` 設定；bit4 有設時走
+短程平移：途中不改 `+0x4A`，每一步重新指向目的地。位置抵達後，兩個分支都依
+`1C03:0524` 逐步轉向 `+0x4C`；對齊後停止，不再重複扣 1。
+
+**卡在**：已完成。主觀操作手感與實機平台驗收不屬於本 issue；本單裁決的原版記憶體欄位與
+remake 規則已有自動回歸。
+
+**做完的判準**：- `s3fltseq` 槽 30 的 `ft02` → `ft03`：remake 得到朝向 170、額度
+  `0x00CCD678`。
+- 新增距離 12 的 `same-state` 受控收據：原版與 remake 都依序得到
+  `(1177,1163, facing=178, budget=200.0)`、
+  `(1181,1163, facing=178, budget=196.0)`、
+  `(1181,1163, facing=170, budget=196.0)`。
+- 「移動」會把先前的戰鬥行動整個覆寫成 0，再另算 bit4；「戰鬥」保留低四位 1。
+
+**證據**：[`docs/playtest/011-fleet-short-move-strafe.md`](docs/playtest/011-fleet-short-move-strafe.md)、[`docs/re/294-short-move-strafe-and-arrival-facing.md`](docs/re/294-short-move-strafe-and-arrival-facing.md)、[`docs/spec/027-fleet-move-and-battle-order.md`](docs/spec/027-fleet-move-and-battle-order.md)、[`internal/rules/fleetmove_test.go`：`TestShortFleetArrivalMatchesS3FleetSequence`、`TestShortFleetStrafeMatchesControlledReceipt`](internal/rules/fleetmove_test.go`：`TestShortFleetArrivalMatchesS3FleetSequence`、`TestShortFleetStrafeMatchesControlledReceipt)、[`internal/game/fleetorder_test.go`：`TestFleetMoveOrderTwoStages`](internal/game/fleetorder_test.go`：`TestFleetMoveOrderTwoStages)
+
+**核實**：`TestShortFleetStrafeMatchesControlledReceipt` 釘在 `internal/rules`
+
+#### skirmish-per-attack — 每回合的結算還沒換成「照攻擊名單逐一開火」
+
+*[#14](https://github.com/wicanr2/logh3/issues/14) · parity（對拍：要與原版逐位元組相同）*
+
+本 issue 的前提已被後續原版收據推翻。`2350:0023` 的單擊算式與
+`2264:0FC3` 的分母 K 雖已保存，但不是本作這場戰鬥實際執行的結算路徑；
+remake 不應為了符合舊推論而改成逐一開火。
+
+**卡在**：已完成。本 issue 不再卡在「誰寫攻擊時座標」；`+0x46/+0x48` 在完整樣本中
+一直是 `0xFFFF`，而讀取它們的單擊函式本來就沒有執行。
+
+**做完的判準**：- `s3kfire` 與 `s3kall` 的完整 14 億步戰鬥中，`2264:0FC3` 均為 0 次；因為
+  它是 `2350:0023` 的無條件第一個呼叫，所以單擊路徑整場未執行。
+- 正對照 `203A:06C0` 命中 6 次；修正 CS:IP 基準後，艦隊層分攤點
+  `20B4:1110` 亦命中 6 次，且步數與逐分隊扣除交錯。
+- remake 保留目前的艦隊總損失＋逐分隊比例分攤；`SkirmishDamage` 與
+  `AttackCoefficient` 只作未執行原版路徑的保存成果，不接入 production。
+
+**證據**：[`docs/re/97-skirmish-path-never-runs.md`](docs/re/97-skirmish-path-never-runs.md)、[`docs/re/96-ship-46-48-never-written.md`](docs/re/96-ship-46-48-never-written.md)、[`docs/re/86-battle-damage-bookkeeping.md`](docs/re/86-battle-damage-bookkeeping.md)、[`docs/spec/018-battle-resolution.md`](docs/spec/018-battle-resolution.md)、[`internal/rules/resolve.go`](internal/rules/resolve.go)
+
+**核實**：`TestResolveBattleTurnDeducts` 釘在 `internal/rules`
+
+#### planet-command-hit-test — 戰場行星命令選單還不能標對拍（`341B:039D` 沒讀）
+
+*[#15](https://github.com/wicanr2/logh3/issues/15) · 原編號 4f · re（逆向：機制還沒讀出來）*
+
+`341B:039D` 的命中判定其實已完整保存在 `docs/re/136`：像素先換成
+16×20 格，再依視窗串列的 z-order 命中。戰場 viewport 的原點與尺寸都是
+完整格，因此 remake 的行星整格命中在該視窗內與原版等價。
+
+實際缺陷是行星命令選單已建立狀態，但 `drawBattle` 只在有分隊索引時繪製，
+所以畫面不可見；現已修正。
+
+**卡在**：無。
+
+**做完的判準**：命中判定照原版分層，選單對拍標得上 `same-state`。
+
+**證據**：[`docs/re/136-region-hit-test.md`：`341B:039D` 的格座標與視窗串列規則。`](docs/re/136-region-hit-test.md`：`341B:039D` 的格座標與視窗串列規則。)、[`docs/playtest/010-planet-command-menu.md`：`s3plmenu` 在 dosgolem `e0b6a03c5338ea4aa5676e81c5a19825d847ab51` 獨立重現兩次；選單矩形 `(33,81)`、`62×98` 共 6,076 像素，remake 差異 0。`](docs/playtest/010-planet-command-menu.md`：`s3plmenu` 在 dosgolem `e0b6a03c5338ea4aa5676e81c5a19825d847ab51` 獨立重現兩次；選單矩形 `(33,81)`、`62×98` 共 6,076 像素，remake 差異 0。)、[`internal/game/planetcmd_test.go`：`TestPlanetMenuOpensAndEnables` 從正式 `Game.Frame()` 路徑確認行星選單真的畫出。`](internal/game/planetcmd_test.go`：`TestPlanetMenuOpensAndEnables` 從正式 `Game.Frame()` 路徑確認行星選單真的畫出。)、[`internal/screen/commandmenu_test.go`：`TestCommandMenuMatchesOracle/s3plmenu` 逐位元組收據通過。`](internal/screen/commandmenu_test.go`：`TestCommandMenuMatchesOracle/s3plmenu` 逐位元組收據通過。)
+
+**核實**：`TestPlanetMenuOpensAndEnables` 釘在 `internal/game`
+
 #### window-frame-corners — 視窗外框的角落：沒有規則，是圖塊裡的美術
 
 *原編號 12 · re（逆向：機制還沒讀出來）*
@@ -1103,6 +993,37 @@ remake 接在 `internal/audio.TuneFor`，曲號從 `Game` 那三格讀；
 **證據**：[`docs/re/289-menu-frame-corners-are-tile-pixels.md`](docs/re/289-menu-frame-corners-are-tile-pixels.md)、[`docs/re/138-window-frame-tiles.md`](docs/re/138-window-frame-tiles.md)、[`docs/internals/07-window-frame.md`](docs/internals/07-window-frame.md)、[`docs/internals/47-window-frame-tiles.md`](docs/internals/47-window-frame-tiles.md)
 
 **核實**：`internal/ui`、`internal/screen` 裡還找得到 `\{-6, -5, 8\}|MenuFrame\(\)`（自承還在 ＝ 還沒做）
+
+#### battle-data-scroll — 戰術選單「資料」清單捲動與明細列索引
+
+*[#17](https://github.com/wicanr2/logh3/issues/17) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+原版的十四列資料清單捲動規則已取證並接進 remake。右側上下按鈕每輪移動
+一列，偏移限制為 `0..max(0, 總列數-14)`；開窗或換頁籤會歸零。捲動後
+點選畫面列，會以「偏移＋畫面列」開啟正確的艦隊明細。
+
+**卡在**：無。
+
+**做完的判準**：捲動的行為與原版資料流相同，40 列測例可到達最大偏移 26，且不會越界或
+在邊界點擊時誤關視窗。
+
+**證據**：[`docs/re/303-battle-data-scroll-rules.md`](docs/re/303-battle-data-scroll-rules.md)、[`docs/spec/021-battle-data-screen.md`](docs/spec/021-battle-data-screen.md)、[`internal/game/battledata_test.go::TestBattleDataScrollMatchesOriginal`](internal/game/battledata_test.go::TestBattleDataScrollMatchesOriginal)、[`internal/screen/battledata_test.go::TestBattleDataScrollHitboxesMatchOriginal`](internal/screen/battledata_test.go::TestBattleDataScrollHitboxesMatchOriginal)
+
+**核實**：`TestBattleDataScrollMatchesOriginal` 釘在 `internal/game`
+
+#### minimap-row-203 — 小地圖下緣 y=203 那一列在畫哪個元件沒對出來
+
+*[#18](https://github.com/wicanr2/logh3/issues/18) · re（逆向：機制還沒讀出來）*
+
+整張 640×480 的戰場畫面原本排除兩處：原版自己畫的滑鼠游標，以及
+`y=203`、`x=480–607` 這一列。現已確認後者是全域格表重畫空白內容格
+`0x0020` 時，19／20／20 列合成留下的固定底列；不是小地圖第 129 列。
+
+**做完的判準**：那一列的來源查出來，戰場畫面的排除清單只剩游標。
+
+**證據**：[`docs/re/103-minimap-y203-strip.md`](docs/re/103-minimap-y203-strip.md)、[`docs/spec/046-battle-grid-residue.md`](docs/spec/046-battle-grid-residue.md)、[`internal/screen/battle_test.go::TestBattleMatchesOracle`](internal/screen/battle_test.go::TestBattleMatchesOracle)
+
+**核實**：`TestBattleMatchesOracle` 釘在 `internal/screen`
 
 #### kana-charcodes — 假名／西里爾那 302 個字形的字碼對應
 
@@ -1294,6 +1215,42 @@ remake：`Game.recomputeUnrest` 接在 `refreshBlend` 的尾巴、`advanceTurn` 
 
 **核實**：`internal/game/game.go` 裡還找得到 `g\.turn%10 == 9`（自承還在 ＝ 還沒做）
 
+#### load-unrest-params-from-work — 讀存檔時算未安定度，`Blend`／`ds:8FF8`／統治者用的是固定值，不是那一格存檔的
+
+*[#21](https://github.com/wicanr2/logh3/issues/21) · parity（對拍：要與原版逐位元組相同）*
+
+`loadSlotFromDisk` 拿 `Resources.UnrestParams`（統治者 16／60、`Blend` 1／2、`Rate` 2／2）只換掉回合數。
+這三個全域在執行期就是 `WORK.DT?` 那一塊（`ds:8F14` 起：統治者 ＝ 內政專任參謀 `+0x3B`、`Blend` `+0xC0`、
+`ds:8FF8` `+0xE4`），讀檔之後照檔案。S2／S3（第 9、10 格）的檔案值剛好與固定值相同，所以
+`TestUnrestAtLoad` 對得上；**第 8 格是統治者 32／60、`Blend` 2／2**，照現在的寫法會用錯。
+remake 自己存的檔也一樣（`Game.rate`／`blend`／參謀都會寫回 `WORK`，讀回來卻不用）。
+
+改法是從 `sl.WorkFields` 與 `rules.StaffAdmiral(sl.Work, PostDomestic, 陣營)` 取；第 8 格要一份載入當下的收據。
+
+**做完的判準**：讀第 8 格存檔之後 32 格的 `+0x7D` 與原版載入當下的傾印逐格相同。
+
+**證據**：[`docs/spec/006-unrest-at-load.md`](docs/spec/006-unrest-at-load.md)、[`docs/spec/042-region-unrest-recompute.md`](docs/spec/042-region-unrest-recompute.md)、[`docs/playtest/014-load-slot8-unrest.md`](docs/playtest/014-load-slot8-unrest.md)
+
+**核實**：`TestLoadSlot8UnrestMatchesReceipt` 釘在 `./internal/game`
+
+#### region-turn-upkeep-0556 — `0374:0556` 每回合逐格那三支 remake 沒有（`2703:1B48`／`1CD7`／`1D85`）
+
+*[#22](https://github.com/wicanr2/logh3/issues/22) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+沒有戰鬥的格子每回合都跑（[`docs/re/292`](docs/re/292-rebellion-decision-and-effect.md) 末節）：
+`2703:1B48` 無主而且還有他陣營行星的格子**隨機**再跑掉一顆（抽亂數）、
+`2703:1CD7` 防衛力回復（每輪 `+0x16 × +0x18 ÷ 100`，最多九輪）、
+`2703:1D85` 要塞砲的 `+0x45`／`+0x50` 重置。remake 三支都沒有。
+
+`1CD7` 在同一格裡排在叛亂效果之前（被翻的行星先回復再扣）；`1B48` 抽亂數，
+接上之前叛亂之後的亂數序列還會再差（[`docs/spec/041`](docs/spec/041-rebellion.md)）。
+
+**做完的判準**：三支都接上，並有收據對過一次含無主格與防衛力未滿的局面。
+
+**證據**：[`docs/re/292-rebellion-decision-and-effect.md`](docs/re/292-rebellion-decision-and-effect.md)、[`docs/internals/29-planets-and-economy.md`](docs/internals/29-planets-and-economy.md)、[`docs/spec/041-rebellion.md`](docs/spec/041-rebellion.md)、[`docs/playtest/013-region-turn-upkeep.md`](docs/playtest/013-region-turn-upkeep.md)
+
+**核實**：`TestRegionUpkeepMatchesReceipt` 釘在 `./internal/rules`
+
 #### phezzan-event-trigger — 費沙事件的觸發：費沙那一格第一次易主
 
 *re（逆向：機制還沒讀出來）*
@@ -1314,6 +1271,25 @@ remake：`Game.recomputeUnrest` 接在 `refreshBlend` 的尾巴、`advanceTurn` 
 **證據**：[`docs/re/296-phezzan-event-trigger.md`](docs/re/296-phezzan-event-trigger.md)、[`docs/internals/57-phezzan-event.md`](docs/internals/57-phezzan-event.md)、[`docs/spec/029-strategic-ai-turn.md`](docs/spec/029-strategic-ai-turn.md)
 
 **核實**：`docs/spec/029-strategic-ai-turn.md` 裡還找得到 `費沙事件的\*\*觸發條件\*\* \| \*\*未解\*\*`（自承還在 ＝ 還沒做）
+
+#### phezzan-event-impl — remake 還沒有費沙事件
+
+*[#23](https://github.com/wicanr2/logh3/issues/23) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+觸發與效果都讀完了（`docs/internals/57`、`docs/re/296`）：費沙那一格第一次易主的回合尾巴，
+`ds:8F48 ← 1`、費沙行星八成經濟力搬到對手首都的行星、拿下的一方在鄰接清單裡沒駐軍的星域整格叛離
+（與每回合叛亂同一支效果，旗標 1）、拿下的一方是人類座位時其餘星域行星經濟力扣 `ds:328E[回合 ÷ 100]`%、民心 100。
+remake 原先沒有這一段，`internal/ai.StateCode` 的 `phezzanOpen` 固定為 false；
+現已由 `WORK.DT? +0x34` 動態提供真值。
+
+接的位置：回合尾巴逐格重算擁有者之後、判勝負之前；戰術戰鬥結束時的擁有者重算也要登記（限人類座位是新擁有者）。
+對拍用收據 `pzx296` 的 `#228,000,000`／`#230,000,000`／`#232,000,000` 三份切片，預測與 `tools/scripts/phezzan_event_check.py` 同一套。
+
+**做完的判準**：remake 在費沙第一次易主的回合尾巴跑費沙事件，與收據 `pzx296` 的本體、懲罰逐格相同；沒換手（`pzx296n`）與已發生過（`pzx296g`）兩種局面不觸發。
+
+**證據**：[`docs/internals/57-phezzan-event.md`](docs/internals/57-phezzan-event.md)、[`docs/re/296-phezzan-event-trigger.md`](docs/re/296-phezzan-event-trigger.md)、[`docs/internals/data/phezzan-event.json`](docs/internals/data/phezzan-event.json)
+
+**核實**：`TestPhezzanEventMatchesPZX296Receipt` 釘在 `internal/rules`
 
 #### region-morale-7c — 民心 `+0x7C` 怎麼變化：每回合往擁有者的目標值走一格
 
@@ -1391,6 +1367,39 @@ bit0 有設（到自己首都的補給線斷了）的星域跳過。
 **證據**：[`docs/re/272-face-index-is-the-caller-argument.md`](docs/re/272-face-index-is-the-caller-argument.md)、[`docs/re/271-face-amg-index-is-the-admiral-index.md`](docs/re/271-face-amg-index-is-the-admiral-index.md)、[`docs/internals/09-face-amg.md`](docs/internals/09-face-amg.md)
 
 **核實**：`docs/internals/09-face-amg.md` 裡出現 `3958:0215` 就是做好了
+
+#### delivery-report-details — 月底報告的兩個細節還沒模型化
+
+*[#25](https://github.com/wicanr2/logh3/issues/25) · 原編號 22 · parity（對拍：要與原版逐位元組相同）*
+
+船艦接收報告本身、**結算中地圖不重塗首都**與**捲軸上下箭頭**均已照原版繪製。
+
+**做完的判準**：兩個細節照原版畫，收據逐位元組相同。
+
+**證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
+
+**核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### ending-screen-planes-parity — 結局畫面與重錄收據的 plane 2／3 不一致
+
+*[#39](https://github.com/wicanr2/logh3/issues/39) · parity（對拍：要與原版逐位元組相同）*
+
+dosgolem 執行器修正後，`ending-empire` 已依原旗標重錄；remake 的
+`TestEndingScreenMatchesOriginalPlanes` 原先對新版原版收據失敗：plane 2 差
+40,139 個位元，plane 3 差 17,185 個位元。反對照全 50 張 VO5 後，已證明根因是
+640×400 圖片垂直位置應為 y=40；修正後產品顯示層 plane 2／3 均為 0 差異。
+
+**卡在**：已完成，沒有剩餘阻塞。
+
+**做完的判準**：- 釐清新版 `ending-empire` 收據與 `ENDT30.VO5` 解碼／合成的差異來源；
+- 保存原版位址、bytes、工具版本與推論等級；
+- 規格達 READY 後修正 remake；
+- `TestEndingScreenMatchesOriginalPlanes` 對綁定 dosgolem `e0b6a03` 的重錄收據通過；
+- 若聲明擴大到完整結局畫面，另補正常玩家路徑與完整疊圖收據；本 issue 只裁決既有 plane 2／3 範圍。
+
+**證據**：[`docs/re/276-what-the-executor-fix-changed-on-screen.md`](docs/re/276-what-the-executor-fix-changed-on-screen.md)、[`docs/re/301-ending-image-y-is-40.md`](docs/re/301-ending-image-y-is-40.md)、[`docs/spec/044-ending-image-position.md`](docs/spec/044-ending-image-position.md)、[`internal/asset/vo5_test.go`](internal/asset/vo5_test.go)、[`internal/game/game_test.go`](internal/game/game_test.go)
+
+**核實**：`TestEndingScreenMatchesOriginalPlanes` 釘在 `./internal/game`
 
 #### gui-window-resize — 視窗版無法放大或調整尺寸
 
