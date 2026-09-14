@@ -49,8 +49,10 @@ func (g *Game) openingOwners() []byte {
 	return out
 }
 
-// runRebellions 判這一回合的叛亂並套上效果（`056A:0469` 的 bit1 那一條
-// ＋ `0374:0556` 的 `2703:1908`）。回叛亂的星域編號（遞增）。
+// runRebellions 判這一回合的叛亂並排好報告（`056A:0469` 的 bit1 那一條）。
+// 效果不能在這裡先套：原版要等報告結束，再由 `0374:03E8` 逐格掃描；較小
+// 編號的戰鬥可能先重算未安定度，較大編號的叛亂效果才讀到新值
+// （`docs/spec/042`、`docs/re/310`）。
 //
 // 讀的狀態都是**艦隊移動之後**的：
 //   - bit2／bit4：同一圈先算（`Occupations`，停在自家星域的不算占據）。
@@ -60,6 +62,7 @@ func (g *Game) openingOwners() []byte {
 func (g *Game) runRebellions() []int {
 	g.rebellions = nil
 	g.rebellionReports = nil
+	g.rebellionOccupation = [rules.RegionCount]rules.RegionOccupation{}
 	if !g.regionsReady() {
 		return nil
 	}
@@ -73,6 +76,7 @@ func (g *Game) runRebellions() []int {
 		Occupation: g.res.Graph.Occupations(owner, g.fleets),
 		Rand:       g.rand94DC(),
 	}
+	g.rebellionOccupation = in.Occupation
 	for r := 0; r < rules.RegionCount; r++ {
 		for f := 0; f < 2; f++ {
 			in.Garrison[r][f] = rules.CountFleets(g.fleets, r, f)
@@ -83,24 +87,38 @@ func (g *Game) runRebellions() []int {
 	}
 	g.rebellionRolls = rules.DecideRebellions(in)
 	for r, roll := range g.rebellionRolls {
-		// 原版 `0374:03E8` 的 bit2（戰鬥）與 bit4（單方占據）分支都不進
-		// `0374:0556`，所以三支月底處理與叛亂效果都只在這個分支執行。
-		if in.Occupation[r].Contested || in.Occupation[r].Occupied {
-			continue
-		}
-		rules.DepartNeutralPlanet(g.regionRecord(r), g.res.Planets, r, in.Rand)
-		rules.RecoverRegionDefences(g.res.Planets, r)
-		rules.ResetRegionFortressGuns(g.res.Planets, r)
 		if roll.Rebels {
-			// `056A:06F3` 在叛亂效果把星域改成無主之前取擁有者；報告
-			// 必須把事件前值保存下來，不能在 Draw 時重讀（`docs/spec/046`）。
+			// `056A:06F3` 在之後的效果把星域改成無主之前取擁有者；報告
+			// 必須在判定時保存，不能在 Draw 時重讀（`docs/spec/046`）。
 			owner := int(g.regionRecord(r)[regionOwnerOff])
-			rules.Rebel(g.regionRecord(r), g.res.Planets, r, false)
 			g.rebellions = append(g.rebellions, r)
 			g.rebellionReports = append(g.rebellionReports, RebellionReport{Region: r, Owner: owner})
 		}
 	}
 	return g.rebellions
+}
+
+// scanRegionsFrom 跑原版 `0374:03E8` 的逐星域迴圈。碰到判定時已有 bit2 的
+// 星域便進戰鬥並暫停；`EndBattle` 從下一格接回。其餘格子的被動效果與叛亂
+// 效果只在實際掃到時執行，讓它讀到先前戰鬥之後重算的 `+0x7D`。
+func (g *Game) scanRegionsFrom(from int) {
+	for r := from; r < rules.RegionCount; r++ {
+		occ := g.rebellionOccupation[r]
+		if occ.Contested {
+			g.StartBattle(r)
+			return
+		}
+		if occ.Occupied {
+			continue
+		}
+		rules.DepartNeutralPlanet(g.regionRecord(r), g.res.Planets, r, g.rand94DC())
+		rules.RecoverRegionDefences(g.res.Planets, r)
+		rules.ResetRegionFortressGuns(g.res.Planets, r)
+		if g.rebellionRolls[r].Rebels {
+			rules.Rebel(g.regionRecord(r), g.res.Planets, r, false)
+		}
+	}
+	g.endOfTurn()
 }
 
 // Rebellions 回這一回合叛亂的星域。

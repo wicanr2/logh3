@@ -108,7 +108,8 @@ func (g *StarGraph) Postures(owner []int, fleets []Fleet) [32]RegionPosture {
 // 在這一格沒有駐軍，再拿兩個 `亂數 % 400` 的和比一個由未安定度、情報專任
 // 參謀的營運與「已失格數」算出來的門檻；效果是 `2703:1908` 把行星翻成無主
 // （`docs/re/292`、`docs/internals/22`）。remake 在 `rebellion.go`
-// （`DecideRebellions`／`Rebel`，`docs/spec/041`）：判完直接套效果，
+// （`DecideRebellions`／`Rebel`，`docs/spec/041`）：先判定與顯示報告，再由
+// `scanRegionsFrom` 依原版逐格順序套效果（`docs/spec/042`），
 // bit1 這個「同一次實行裡傳一次的訊號」不落進 `+0x13`，這裡照樣只清不設
 // ——原版在效果那一步也會把它清掉，任何時點的傾印看到的 bit1 都是 0。
 type RegionOccupation struct {

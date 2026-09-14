@@ -622,8 +622,9 @@ type Game struct {
 
 	// rebellionRolls／rebellions 是這一回合叛亂判定的逐格結果與叛亂的
 	// 星域（`runRebellions`，`docs/spec/041`）；畫面見 SPEC 046。
-	rebellionRolls [rules.RegionCount]rules.RebellionRoll
-	rebellions     []int
+	rebellionRolls      [rules.RegionCount]rules.RebellionRoll
+	rebellionOccupation [rules.RegionCount]rules.RegionOccupation
+	rebellions          []int
 
 	// 費沙事件：pending 是還沒在回合尾巴發動的登記；battleResolved 用來
 	// 保留原版「戰術戰鬥只有人類拿下才登記」的例外。
@@ -903,8 +904,9 @@ func (g *Game) continueAfterAdmiralFateReports() {
 func (g *Game) continueAfterOccupationReports() {
 	// 叛亂（`docs/spec/041`）：原版命令階段那一串的最後一支 `056A:0469`
 	// 逐格判定，排在艦隊移動與重數艦隊（`2703:0853`）之後、逐格開戰之前；
-	// 效果（`2703:1908`）在逐格開戰那一圈沒有戰鬥的格子裡套上。兩段之間
-	// 互不相干，這裡判完就直接套。亂數與戰略 AI 同一個序列，排在 AI 之後。
+	// 效果（`2703:1908`）在逐格開戰那一圈沒有戰鬥的格子裡套上。這裡只
+	// 保存判定與報告；報告關完後才逐格套效果。亂數與戰略 AI 同一個序列，
+	// 排在 AI 之後（`docs/spec/042`、`docs/re/310`）。
 	//
 	// 原版每一格叛亂都跳一則模態報告（`056A:06F3`）。remake 先依既有
 	// CONFORMED 規則算完整圈，再逐則顯示；原版「判到一格就暫停」的內部
@@ -926,11 +928,7 @@ func (g *Game) continueAfterRebellionReports() {
 	// 原版 `0374:03E8` 逐格掃，`+0x13` bit2 有設的就開打，**打完接著掃
 	// 下一格**；全部打完才走回合結束（`docs/re/251`）。所以這裡進戰鬥
 	// 之後由 `EndBattle` 接著掃，不是就此結束這個回合。
-	if r := g.contestedRegion(); r >= 0 {
-		g.StartBattle(r)
-		return
-	}
-	g.endOfTurn()
+	g.scanRegionsFrom(0)
 }
 
 // endOfTurn 是所有戰鬥都打完之後的那一段（原版主迴圈的 `056A:078E`

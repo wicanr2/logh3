@@ -339,18 +339,11 @@ func (g *Game) EndBattle() {
 			}
 		}
 	}
-	// 原版一個回合會把**每一個**交戰星域都打完：`0374:03E8` 逐格掃，
-	// 打完一格接著掃下一格，全部打完才走回合結束那條鏈
-	// （`docs/re/251`）。所以這裡接著掃，掃完才收尾。
-	if r := g.contestedRegionFrom(g.battleRegion + 1); r >= 0 {
-		g.StartBattle(r)
-		return
-	}
-	// 回合結束那條鏈確實會跑（收據 `s3win`，`docs/re/105`：它記的
-	// `2703:0944`／`2703:0990` 就是 `2703:0933` 的內部寫入點，而
-	// `2703:0933` 只有新遊戲初始化與 `2703:08DE` 兩個呼叫者）。
-	// 那一份 `+0x12` 沒變是因為達希利的行星仍然混雜、重算出同一個值。
-	g.endOfTurn()
+	// 原版的戰後艦隊解散／能力重算會先經 `090A:0E6D` 重算全圖未安定度，
+	// 然後 `0374:03E8` 才從下一個星域續掃。後面的叛亂效果必須讀這份戰後值，
+	// 不能在第一場戰鬥前就批次套完（`docs/spec/042`、`docs/re/310`）。
+	g.recomputeUnrest(g.turn - 1)
+	g.scanRegionsFrom(g.battleRegion + 1)
 }
 
 // battleRegionPlanets 回這個星域的行星在戰場上的樣子（`docs/re/99`）。

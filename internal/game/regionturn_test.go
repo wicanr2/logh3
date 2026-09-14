@@ -449,6 +449,8 @@ func TestBattleScanContinuesToNextRegion(t *testing.T) {
 		{Faction: 0, Region: 5}, {Faction: 1, Region: 5},
 		{Faction: 0, Region: 20}, {Faction: 1, Region: 20},
 	}
+	g.rebellionOccupation[5].Contested = true
+	g.rebellionOccupation[20].Contested = true
 	if got := g.contestedRegion(); got != 5 {
 		t.Fatalf("第一格 ＝ %d，預期 5", got)
 	}
@@ -472,6 +474,58 @@ func TestBattleScanContinuesToNextRegion(t *testing.T) {
 	g.EndBattle()
 	if g.state == StateBattle {
 		t.Error("都打完了還停在戰場")
+	}
+}
+
+// 較小編號的戰鬥結束後，原版先經 `090A:0E6D` 重算，再讓逐星域迴圈
+// 繼續；後方叛亂效果用重算後的 `+0x7D` 決定翻幾顆（SPEC 042 READY）。
+func TestBattleRecomputesUnrestBeforeLaterRebellionEffect(t *testing.T) {
+	g := newRegionTurnGame(t)
+	const rebelRegion = 10
+
+	// 星域 10 放三顆行星，才能區分戰前未安定度 200（全翻）與戰後重算的
+	// <= 80（只翻切片最後一顆）。其餘星域仍各一顆。
+	g.res.Planets.PerRegion[rebelRegion] = 3
+	total := rules.RegionCount + 2
+	g.res.Planets.Data = make([]byte, rules.PlanetHeader+total*rules.PlanetRecord)
+	n := 0
+	for r, count := range g.res.Planets.PerRegion {
+		owner := byte(0)
+		if r >= 16 {
+			owner = 1
+		}
+		g.regionRecord(r)[regionOwnerOff] = owner
+		for k := 0; k < count; k++ {
+			g.res.Planets.Record(n)[0x11] = owner
+			n++
+		}
+	}
+
+	g.res.WorkTemplate = make([]byte, rules.WorkRecord)
+	rules.SetStaffAdmiral(g.res.WorkTemplate, rules.PostDomestic, 0, 0)
+	rules.SetStaffAdmiral(g.res.WorkTemplate, rules.PostDomestic, 1, 0)
+	g.res.Admiral = make([]byte, 82*rules.AdmiralRecord)
+	g.res.Admiral[0x0E] = 100
+	g.res.UnrestParams = rules.UnrestParams{
+		Ruler: [2]int{0, 0}, Blend: [2]int{0, 0}, Rate: [2]int{0, 0},
+		Table: []int{170}, Base: []int{50},
+	}
+	g.turn = 1
+	g.battleRegion = 5
+	g.regionRecord(rebelRegion)[rules.RegionUnrest] = 200
+	g.rebellionRolls[rebelRegion].Rebels = true
+
+	g.EndBattle()
+
+	start, count := g.res.Planets.Range(rebelRegion)
+	neutral := 0
+	for i := start; i < start+count; i++ {
+		if g.res.Planets.Owner(i) == rules.RegionOwnerNone {
+			neutral++
+		}
+	}
+	if neutral != 1 {
+		t.Fatalf("戰後重算後翻了 %d 顆，預期未安定度 <= 80 只翻 1 顆", neutral)
 	}
 }
 

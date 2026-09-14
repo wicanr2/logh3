@@ -168,4 +168,7 @@
 
 路徑表另外在新遊戲初始化（`2703:0195`）與座位回合開頭（`04F8:003E`）重建；
 未安定度另外由 `090A:0E6D` 在回合中重算好幾次（見上表 `+0x7D`，
-[`../re/299`](../re/299-region-unrest-writers-and-recompute.md)）。
+[`../re/299`](../re/299-region-unrest-writers-and-recompute.md)）。戰鬥與叛亂效果則由
+`0374:03E8` 依星域編號交錯：較小編號戰鬥的艦隊清理先經 `090A:0E6D` 重算，
+較大編號星域的 `2703:1908` 才讀新 `+0x7D`（[`../re/310`](../re/310-unrest-battle-region-scan-order.md)、
+[`../spec/042`](../spec/042-region-unrest-recompute.md)）。
