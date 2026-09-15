@@ -1235,7 +1235,7 @@
       "section": "s2",
       "cells": {
         "#": "4x",
-        "備註": "`BU16IBM.RGB` 的值 ×4 ＝ 6 位元 DAC 值，48 個位元組與收據逐一相符（`TestIntroPaletteMatchesOracle`）。播放速度：PIT 除數 `0x0800`（582.6 Hz），一格 **73 個計時器中斷** ＝ 125.3 ms（約 8 fps），`-tick 20000` 下三次量到 1,459,999／1,460,000／1,459,999 道指令，換 tick 步數跟著縮放",
+        "備註": "`BU16IBM.RGB` 的值 ×4 ＝ 6 位元 DAC 值，48 個位元組與收據逐一相符（`TestIntroPaletteMatchesOracle`）。播放速度：PIT 除數 `0x0800`（582.6 Hz），一格 **75 個計時器中斷** ＝ 128.7 ms（約 7.8 fps；舊執行器上量到 73，是 MCB 洩漏造成的，修好後在 `introfull` 收據上量到 75，[`docs/re/283`](docs/re/283-intro-plays-in-file-order.md)），換 tick 步數跟著縮放",
         "收據": "收據 `introvram`／`introtime2`／`introtime10`；[`docs/re/110`](docs/re/110-intro-playback-timing-and-palette.md)",
         "未核准差異": "0",
         "畫面": "**開頭動畫的調色盤與播放速度**",

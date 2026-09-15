@@ -144,3 +144,12 @@ worklist issue 的完成紀錄。
   `-dump-at` 可以在同一次執行裡倒幾十張，代價與跑一次一樣（這裡 1.3 億道
   指令 8 秒）。而 `-vram-at` 只回答「誰寫過這個位元組」，回答不了「什麼時候」——
   兩個一起用才把「亮著」與「一直亮著」分開。
+
+## 後續：滅相位的同狀態收據（2026-09-15）
+
+`cb1dark`（dosgolem `453c32e`，`-steps 110000000`，其餘旗標與 `cb1` 相同）
+停在上表 #107.6M–#114.0M 那段滅半週期：`screen.bin` SHA-256
+`6b11b9bb5d054b81cdac9cf8759db9c5e6897c2583066e50e18eb31370f9b702`，
+與 `cb1` 只差 (240,283) 起 16×2 那 32 個像素（15 → 9）。remake 在第 320 次
+中斷之後畫的畫面與它 0／307,200（`TestCopyProtectionDarkPhaseMatchesOracle`，
+收據記在 `docs/playtest/003`）。

@@ -170,5 +170,7 @@ remake 以 `asset.IntroPlaybackDecoder` 重現這個玩家可見序列；每趟�
 - 原版在動畫**之前**還有 `GIN3.COM` 的 launcher 畫面，remake 沒有；
 - 動畫**之後**原版先讀 `SPTIT.RGB` ＋ `SPTIT.350`（標題畫面，
   `#913,165,418` 開檔，`docs/re/283`），再怎麼走到主選單還沒量；
-- 格 102 與格 247 那兩段停頓的長度存在哪裡、尾段為什麼跑三趟，還沒查；
-- 音樂還沒接。
+- 格 102 與格 247 那兩段停頓的長度存在哪裡、尾段為什麼跑三趟，還沒查。
+
+配樂已接：`audio.TuneFor(StateIntro)` 回 `OPEN_M`（`OPEN.EXE` 兩個外皮都
+寫死 `'m'`，`docs/internals/17`），`cmd/gin3` 每一幀同步播放器。

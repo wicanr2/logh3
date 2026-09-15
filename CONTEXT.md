@@ -112,11 +112,12 @@
   （每塊格數表第 23 筆寫 10，實際裝 11 格）；進尾段前載入器 `0349:056B` 把
   四個 plane 緩衝區清成 0，尾段 350–373 一格 77 個中斷、跑三趟，每趟之前都再清。
   第一趟 0→373 是 34,864 個中斷 ≈ 59.8 秒，含尾段共 ≈ 70.2 秒。
-  **還沒做的只有尾段**：remake 不跳第 349 格、也不清緩衝，所以格 350–373
-  每一格差 5,657 個像素（第 348 格的戰艦透過標題圖露出來）。要不要補是取捨題
-  ——甲（照原版播）與乙（維持現況、寫成核准差異）兩案在 `docs/spec/020`
-  最後一節，**等使用者裁決**。`screen.IntroTicksPerFrame` 目前是 73，
-  那是舊執行器上量的，兩案都要改成 75。
+  **尾段也照原版做了**（甲案定案，`docs/spec/020` CONFORMED）：略過第 349 格、
+  進尾段前清四個 plane、350–373 三趟、75／77 刻與五處停頓照收據；
+  `TestIntroPlaybackMatchesDosgolemReceipts` 抽 48 個時點全部逐位元組相同。
+  尾段趟數與停頓值的**原始資料來源**仍是 `unknown`——它們是收據量到的行為常數。
+  動畫之後原版還有 `SPTIT.350` 標題畫面（`docs/re/283` 看到開檔），
+  怎麼走到主選單沒量，remake 也沒有。
 
 - **對戰是兩人輪流下命令**（`docs/re/74`、`docs/re/76`、`docs/spec/016`）：
   主選單第 2 列 → 防拷問答 → 戰略地圖上疊一個「帝國軍的戰略輸入」視窗。
@@ -203,11 +204,24 @@
   飛彈與戰鬥機拿現有量比兩個門檻）全部反組譯過，文字區兩張收據各
   0／20,480。按艦種換的那一行（運補艦「補給物資」、修護艦「最高修理數」、
   索敵分遣隊「剩餘燃料」）規則讀出來了但沒有收據，還沒做。
-- 還沒有：「資料」的捲動、開頭動畫的整段畫面對拍、配樂（`.MDS` 已經解成
-  MIDI，remake 沒有播放層）、戰略 AI 的**座位順序**（AI 本身已經接上，
-  但原版逐座位跑、月底結算在同盟 AI 之前）、戰場的行星命令選單對拍、
-  艦隊記錄部分欄位的語意，以及編隊那八格的字母規則。
-  完成度見 `VERIFICATION-MATRIX.md`。
+- **玩家還碰不到的功能**（2026-09-15 讀 `internal/game/game.go` 的 `click`
+  盤點，不是憑印象）：
+  - 整套不存在：**戰略艦隊命令**（在戰略地圖上派艦隊去別的星域——現在
+    艦隊編成完只能停在首都，仗只能靠 AI 或讀檔觸發；原版的流程還沒逆向，
+    熱區清單 `21C0` 作戰／變更／結束、`2DB8` 占領／待命只有標籤，
+    `docs/re/310` 記了共同尾端 `0EF0:025E`）、參謀任命（`090A:0248`）、
+    艦隊解散（`297B:0332`）、**交戰演出**（`ANI_PNL1.A98` ＋ `COMANI.BMG`；
+    也是戰鬥曲唯一的出口）。
+  - 戰略地圖本身：右下角 艦隊／行星／敵艦隊／提督 四個分頁（熱區 `0BEE`）
+    不能切、艦隊列不能點；左鍵點星圖沒有反應（只有右鍵會選星域）。
+  - 開得起來但只能右鍵關：情報收集的 治安／勢力／敵艦 三個分頁與
+    參謀／確認（`1738`）、徵稅計劃與生產計劃的 參謀／結束、預算計劃的箭頭
+    （`26E2`）、一覽表四張的列、艦隊編號清單／副官「變更／卸任」／陣形清單
+    的列、結束確認的 中止／決定、設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與 `BUG!`。
+    （情報與徵稅那兩顆「參謀」就是參謀任命的入口。）
+  - 其餘：「資料」的捲動、動畫之後的 `SPTIT.350` 標題畫面。
+  配樂的播放層在（`internal/audio`，22 首 OGG 在本機 `workplace/`），
+  缺的是戰鬥曲出口與玩家自產曲庫的管線。完成度見 `VERIFICATION-MATRIX.md`。
 - **原版側與 remake 側都在**：dosgolem 跑原版產生收據，remake 走同一條
   玩家路徑畫出來，兩邊逐位元組比。命令階段十二張子畫面、月底的船艦
   接收報告、按一次「實行」的整張畫面都已對上。
@@ -351,7 +365,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 3 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 1 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -360,6 +374,37 @@
 > 未完成項與完成度的權威。CONTEXT.md 的 worklist 一節由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改。每一條掛一個 verify，`verify` 子命令回答「這一條的斷言還成立嗎」——status=open 卻驗到做好了就是過期斷言，status=done 卻驗不到就是回歸。
 
 ### 還沒做的
+
+#### admiral-unknown-fields — 提督記錄的 `+20`／`+22` 還沒有名字
+
+*[#16](https://github.com/wicanr2/logh3/issues/16) · 原編號 17 · re（逆向：機制還沒讀出來）*
+
+十四個能力欄位裡十個從提督詳細資料那張畫面標到名字。剩下的在
+[`docs/re/287`](docs/re/287-admiral-remaining-fields.md) 收斂成兩件事：
+**`+8`／`+10` 不是未知**——`+10` 是所在星域（`113A:047D` 的寫入點 ＋ 開局
+全在自己首都 ＋ 詳細資料那張的「現在位置」），`+8` 低四位是能帶哪一種艦、
+高四位是艦隊類別鍵（`2D76:0576`）。**`+24` 也不是「沒有名字」，是沒有消費者**：
+四份不同階段的 1 MB 傾印裡，`+0x18` 一個讀取指令都沒有（同一支掃描在
+`+0x17` 找到 11 處、`+0x15` 4 處），它也不被抄進艦隊記錄，而且值域是
+5–100 不是能力值那段 80–140。
+**還差的是 `+20` 與 `+22` 的名字。** 用途已經齊了——`+20` 有四個消費者
+（稅率、治安分段、AI 類別 0 評分、戰鬥層的 `ds:D61A` 完整度門檻），
+`+22` 合成進艦隊 `+0x45` 之後決定分隊挑不挑得中分數最高的攻擊目標
+（`1F6F:024C`）。但原版沒有任何畫面印這兩格的欄名，所以掃消費者這條路
+已經走到底。下一步是**原版說明書附的提督資料表**（防拷問答要玩家查的
+就是它，`ds:8D10` 的字串寫著「請查閱提督資料表」），拿到就同時解掉
+`+20`／`+22`／`+24` 三個名字。
+
+**做完的判準**：`+20` 與 `+22` 有畫面或紙本資料表給的名字。
+
+**證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
+
+**核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
+
+### 做完的（不在矩陣裡的那幾條）
+
+50 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+[`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
 
@@ -392,57 +437,6 @@
 **證據**：[`docs/re/283-intro-plays-in-file-order.md`](docs/re/283-intro-plays-in-file-order.md)、[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)、[`docs/spec/020-intro-animation.md`](docs/spec/020-intro-animation.md)
 
 **核實**：`docs/spec/020-intro-animation.md` 標到 `CONFORMED`
-
-#### copyprot-caret-blink — 防拷問答的輸入游標會閃，remake 畫成恆亮
-
-*[#5](https://github.com/wicanr2/logh3/issues/5) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-原版那條 16×2 底線是**閃的**：畫（`2376:0DB1`）與擦（`2376:107F`）各隔
-320 次計時器中斷，整個週期 640 次。本作把 PIT 分頻設成 2048（582.8 Hz），
-所以一個週期約 1.1 秒。時間軸與四個轉折的指令數在 `docs/re/281`。
-
-remake 目前**恆亮**。六份收據都停在亮著的那半個週期，所以對拍是綠的——
-**換一個步數錄一份新的就可能錄到滅的那半邊**，那時候紅的是相位不是版面。
-
-要接得先決定 remake 這張畫面的時鐘從哪來（現在 `screen.CopyProtection`
-是純函式，沒有時間這個輸入），那是一個跨畫面的取捨，不是這一格的事。
-
-**做完的判準**：remake 的防拷問答游標依同一個週期（畫／擦各 320 次計時器中斷）翻面，且與一份錄在滅的半週期的收據逐位元組相同。
-
-**證據**：[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)
-
-**核實**：要人判——現在沒有可綁的訊號：`InputCaret` 已經在了（恆亮那一版也有），而閃爍要靠一個還不存在的時間輸入。接上的時候把這條改成 absent，綁那個時間參數的名字。
-
-#### admiral-unknown-fields — 提督記錄的 `+20`／`+22` 還沒有名字
-
-*[#16](https://github.com/wicanr2/logh3/issues/16) · 原編號 17 · re（逆向：機制還沒讀出來）*
-
-十四個能力欄位裡十個從提督詳細資料那張畫面標到名字。剩下的在
-[`docs/re/287`](docs/re/287-admiral-remaining-fields.md) 收斂成兩件事：
-**`+8`／`+10` 不是未知**——`+10` 是所在星域（`113A:047D` 的寫入點 ＋ 開局
-全在自己首都 ＋ 詳細資料那張的「現在位置」），`+8` 低四位是能帶哪一種艦、
-高四位是艦隊類別鍵（`2D76:0576`）。**`+24` 也不是「沒有名字」，是沒有消費者**：
-四份不同階段的 1 MB 傾印裡，`+0x18` 一個讀取指令都沒有（同一支掃描在
-`+0x17` 找到 11 處、`+0x15` 4 處），它也不被抄進艦隊記錄，而且值域是
-5–100 不是能力值那段 80–140。
-**還差的是 `+20` 與 `+22` 的名字。** 用途已經齊了——`+20` 有四個消費者
-（稅率、治安分段、AI 類別 0 評分、戰鬥層的 `ds:D61A` 完整度門檻），
-`+22` 合成進艦隊 `+0x45` 之後決定分隊挑不挑得中分數最高的攻擊目標
-（`1F6F:024C`）。但原版沒有任何畫面印這兩格的欄名，所以掃消費者這條路
-已經走到底。下一步是**原版說明書附的提督資料表**（防拷問答要玩家查的
-就是它，`ds:8D10` 的字串寫著「請查閱提督資料表」），拿到就同時解掉
-`+20`／`+22`／`+24` 三個名字。
-
-**做完的判準**：`+20` 與 `+22` 有畫面或紙本資料表給的名字。
-
-**證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
-
-**核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
-
-### 做完的（不在矩陣裡的那幾條）
-
-48 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
-[`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### music-playback — 配樂的播放層（OGG）
 
@@ -617,6 +611,28 @@ framebuffer 與 palette 逐位元組相同。`workplace/receipt-check.json` 的 
 **證據**：[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)、[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)
 
 **核實**：`internal/screen/copyprot.go` 裡出現 `InputCaret` 就是做好了
+
+#### copyprot-caret-blink — 防拷問答的輸入游標會閃，remake 畫成恆亮
+
+*[#5](https://github.com/wicanr2/logh3/issues/5) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+原版那條 16×2 底線是**閃的**：畫（`2376:0DB1`）與擦（`2376:107F`）各隔
+320 次計時器中斷，整個週期 640 次。本作把 PIT 分頻設成 2048（582.8 Hz），
+所以一個週期約 1.1 秒。時間軸與四個轉折的指令數在 `docs/re/281`。
+
+remake 原本**恆亮**；六份既有收據都停在亮著的那半個週期，所以對拍當時是綠的。
+現在 `screen.CopyProtectionAt` 吃可重播的 PIT 中斷數（`Game.Tick` 在防拷入口累加），
+亮／滅各 320 次；另錄一份停在滅半週期的 `cb1dark`（`docs/playtest/003`），
+remake 兩個相位都 0／307,200。
+
+時鐘的來源定案為「累積的 PIT 中斷數」而不是牆上時間：dosgolem 與 remake
+都能固定同一相位，收據才對得上。
+
+**做完的判準**：remake 的防拷問答游標依同一個週期（畫／擦各 320 次計時器中斷）翻面，且與一份錄在滅的半週期的收據逐位元組相同。
+
+**證據**：[`docs/re/281-copy-protection-caret-blinks.md`](docs/re/281-copy-protection-caret-blinks.md)
+
+**核實**：`TestCopyProtectionDarkPhaseMatchesOracle` 釘在 `internal/screen`
 
 #### gui-check-load1e-vs3 — `tools/gui_check.sh` 十例裡 `load1e`／`vs3` 對不上
 

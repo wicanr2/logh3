@@ -59,8 +59,10 @@
 量法與時間軸見 [`docs/re/281`](../re/281-copy-protection-caret-blinks.md)。
 
 remake 由 `screen.CopyProtectionAt` 接收可重播的 PIT 中斷相位：0–319 畫底線，
-320–639 還原視窗底色，週期 640。`internal/screen/copyprot_test.go` 固定
-核對兩個半週期；正式入口由 `Game.Tick` 累加經過的 duration，不讀牆上時鐘。
+320–639 還原視窗底色，週期 640。亮／滅兩個半週期各有一份同狀態收據
+（`cb1`／`cb1dark`，[`docs/playtest/003`](../playtest/003-copy-protection.md)），
+remake 兩邊都 0／307,200；正式入口由 `Game.Tick` 累加經過的 duration，
+不讀牆上時鐘。
 
 ## 角落
 

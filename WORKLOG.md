@@ -6773,3 +6773,23 @@ GitHub 的 issue 時間軸承擔。
   Docker-only 規則未在主機執行 gofmt、測試或專案程式。GitHub host `gh`
   的登入核對同樣只能看到 sandbox 偽失敗，issue 回覆／關閉、快照、render
   與 push 待權限恢復後以同一批命令完成。
+
+## 2026-09-15 — #1/#5/#26/#27 收尾與現況盤點
+
+- Docker 與 `gh` 恢復後補跑上一輪沒跑的驗證：純 Go 9 個套件與 GUI image 的
+  `cmd/gin3`／`internal/audio` 全綠；`TestIntroPlaybackMatchesDosgolemReceipts`
+  在本機收據上是 PASS 不是 skip。根目錄 `gin3` 重建（原本是 9/11 的舊版）。
+- #5 的判準後半補齊：錄 `cb1dark`（dosgolem `453c32e`，`-steps 110000000`）
+  停在 `docs/re/281` 量到的滅半週期，與 `cb1` 只差那 32 個像素；新增
+  `TestCopyProtectionDarkPhaseMatchesOracle` 0／307,200。verify 改綁這支測試。
+- 關 #1、#26、#27（開頭動畫甲案已實作、spec 020 CONFORMED）與 #5；重抓快照、
+  `verify` 0 條斷言不成立、`render -w`／`render-matrix -w` 重產。
+- 勘誤：`docs/worklist.json` 4x 的「一格 73 個計時器中斷」是舊執行器量的，
+  改成 75 並指向 `docs/re/283`；`docs/spec/020` 的「音樂還沒接」已過期
+  （`audio.TuneFor` 播 `OPEN_M`）。
+- `CONTEXT.md` 現況一覽的「還沒有」那條改成從 `game.click` 盤點出來的
+  「玩家還碰不到的功能」清單：戰略艦隊命令、參謀任命、艦隊解散、交戰演出
+  整套不存在；右下角分頁與艦隊列、左鍵點星圖沒接；十來張畫面只能右鍵關。
+- 使用者裁決（2026-09-15）：先做戰略艦隊命令；新畫面維持每張 same-state
+  收據的契約；音樂要 交戰演出＋戰鬥曲、玩家自產曲庫管線、MIDI 音色對
+  MPU-401 三項。

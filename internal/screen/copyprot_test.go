@@ -217,3 +217,62 @@ func TestCopyProtectionCaretBlinkMatchesMeasuredPhase(t *testing.T) {
 		t.Fatal("游標亮／滅週期不是 320／320 PIT 中斷")
 	}
 }
+
+// TestCopyProtectionDarkPhaseMatchesOracle 是**滅相位**的同狀態對拍：收據
+// `cb1dark` 用與 `cb1` 相同的輸入序列、只把 `-steps` 停在 110,000,000
+// （`docs/re/281` 量到的滅半週期 #107.6M–#114.0M 之內），remake 在
+// 第 320 次計時器中斷之後畫出來的畫面要與它逐位元組相同。
+// `cb1` 與 `cb1dark` 之間只差那 32 個像素（(240,283) 起 16×2，15 → 9）。
+func TestCopyProtectionDarkPhaseMatchesOracle(t *testing.T) {
+	root := "../.."
+	specPath := filepath.Join(root, "docs/internals/data/screen-copy-protection.json")
+	oracle := filepath.Join(root, "workplace/oracle/cb1dark/screen.bin")
+	fontPath := filepath.Join(root, "org_game/extracted/GRAPH.IMG")
+	facePath := filepath.Join(root, "org_game/extracted/FACE.AMG")
+	for _, p := range []string{specPath, oracle, fontPath, facePath} {
+		if _, err := os.Stat(p); err != nil {
+			t.Skipf("缺 %s，跳過滅相位同狀態對拍（不用代用品）", p)
+		}
+	}
+	s, err := LoadCopyProtSpec(specPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fnt, err := font.Load(fontPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	faceData, err := os.ReadFile(facePath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	face, err := FaceFrom(faceData, s)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fb, missing := CopyProtectionAt(s, fnt, face, "", CopyProtCaretHalfTicks)
+	if len(missing) > 0 {
+		t.Fatalf("有 %d 個字碼畫不出來：%04X", len(missing), missing)
+	}
+	want, err := os.ReadFile(oracle)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(want) != len(fb.Pix) {
+		t.Fatalf("收據 %d bytes，畫布 %d bytes", len(want), len(fb.Pix))
+	}
+	bad := 0
+	firstX, firstY := -1, -1
+	for i := range want {
+		if want[i] != fb.Pix[i] {
+			if bad == 0 {
+				firstX, firstY = i%640, i/640
+			}
+			bad++
+		}
+	}
+	if bad != 0 {
+		_ = os.WriteFile(filepath.Join(root, "workplace/remake-copyprot-dark.bin"), fb.Pix, 0o644)
+		t.Fatalf("滅相位與原版不同的像素 %d / %d，第一個在 (%d,%d)", bad, len(want), firstX, firstY)
+	}
+}
