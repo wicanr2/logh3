@@ -169,7 +169,7 @@ func (f TileFrame) DrawRect(fb *gfx.Framebuffer, x, y, w, h int) bool {
 // 高位元組）。`2376:1144`／`2376:1180`／`2376:1193` 依這些位元加裝飾，
 // 位置與色號都寫死在程式裡（`docs/re/138`）。
 const (
-	CellUnderline   = 0x01 // 字上方一條線（色 15）
+	CellUnderline   = 0x01 // 格子最後一列整條色 15（`docs/internals/25`）
 	CellDither      = 0x02 // 網點
 	CellBold        = 0x04 // 加粗
 	CellButtonBody  = 0x08 // 按鈕的上下兩條邊
@@ -181,6 +181,8 @@ const (
 const (
 	ButtonLightInk = 7
 	ButtonDarkInk  = 3
+	// UnderlineInk 是底線的色號（`2376:1180` 設 15 再寫 `0xFFFF`）。
+	UnderlineInk = 15
 )
 
 // DrawCellDecor 把一格的按鈕裝飾畫上去，(x, y) 是那一格的左上角像素。
@@ -190,6 +192,13 @@ const (
 // 列不同色**——左端最後一列的最右邊那個像素是暗色，右端第一列的最左邊
 // 那個像素是亮色。四個角就是靠這兩個像素接起來的。
 func DrawCellDecor(fb *gfx.Framebuffer, x, y int, flags uint8) {
+	// 底線 `2376:1180`：格子最後一列整條填 15（`mov word es:[di-0x50], FFFF`，
+	// `docs/internals/25`；收據 `fcmd-win` 的分隔列量到 y ＝ 格頂 ＋ 19）。
+	if flags&CellUnderline != 0 {
+		for i := 0; i < FrameTileW; i++ {
+			fb.Set(x+i, y+FrameTileH-1, UnderlineInk)
+		}
+	}
 	if flags&CellButtonBody != 0 {
 		for i := 0; i < FrameTileW; i++ {
 			fb.Set(x+i, y, ButtonLightInk)

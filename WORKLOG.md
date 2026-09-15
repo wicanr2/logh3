@@ -6812,3 +6812,46 @@ GitHub 的 issue 時間軸承擔。
   捲動）、#44（星系情報視窗）；規格索引補 046–051。
 - `clickgrid` 整張掃太慢（一格 6 秒，狀態檔要解 17 MB），改用定點探測；
   找互動點以後先讀分派碼再點。
+
+## 2026-09-15 — 戰略艦隊命令第一片接上、十五批收據 0 差異（關 #40）
+
+- `internal/game/fleetcmd.go` 五個狀態（視窗／作戰選單／目的地選取／訊息框／
+  確認框）＋ `internal/screen/fleetwindow.go`（視窗內容照原版格式字串的
+  呼叫順序重播，`ui.Sprintf` 新增）＋ `docs/internals/data/fleet-window.json`、
+  `fleet-command-menu.json`。測試用 `loadWithRules`（`load` 再補星圖、艦種、
+  編制、預設副官、訊息框、艦隊視窗與選單）；先前 `load` 沒這幾份，視窗根本
+  開不起來。
+- 對拍逐張收斂時補了六件通用的事，每件都有收據：
+  1. 底線裝飾 `0x01` remake 從沒畫過——畫在格子最後一列、色 15
+     （`ui.DrawCellDecor`；`docs/re/138` 的「字上方」是錯的）。
+  2. 清單被點那一列反白（底色 8→2，`FleetList.Draw` 的 `pressed`）。
+  3. 目的地選取不關視窗：x < 320 那一半回到底板（著色地圖 ＋ 左下角連框）。
+  4. 玩家「決定」建的艦隊先前沒編制：現在與 AI 同走 `newComposition`，
+     `ClassKey` ＝ `rules.NoClassKey`（0xFF）、旗艦一組、隊形槽 20
+     （`BuildComposition` 的無樣板分支改成常數 `FlagshipSlot3`）；
+     `Move ＝ 5` 兩條路都寫。
+  5. 星域記錄 `+0x28`／`+0x29` 是導出值：`rules.RecountRegionFleets` 在建艦隊、
+     走完一格、讀檔、開局重數（探索 `fcx-peek-base`：`dec1` 狀態星域 0 已是 1）。
+  6. 左下角與右側首都摘要都是「寫進去那一刻的文字」（`hoverSnap`／
+     `capitalSnap`），左下角只在「游標底下那一格變了」才重寫（`hoverProbe`；
+     目的地選取自己一份 `fleetCmd.probe`，進去時 −1）。`docs/re/284` 的
+     「回到地圖那一次不重算」是這條在游標沒動時的樣子，規格 001 規則 4–7
+     改寫、CONTEXT 推翻表加兩列。
+- 新收據 `fcmd-hover-home`（`dec1` 之後游標移到首都 → 艦隊 1：0）與兩個 peek
+  探索批次；`docs/playtest/021` 收十五批的雜湊。`tools/gui_check.sh` 加
+  `fcmd-win`／`fcmd-done`（後者用 `cmp_except.py` 排除清單第 0 列），兩例相同。
+- 反組譯補讀 `0DEA:0F16`–`0DEA:1116`（`fcx0DEA-loop.txt`）：視窗迴圈的分派與
+  作戰選單五項的啟用旗標（不是自己的星域／有戰鬥只剩移動；`+0x00` bit0 關
+  占領與輸送）——收據只覆蓋全開那種，記在 `docs/re/312` §7.6 給 #41。
+  `fcx0654.com.i64` 連續開關壞掉一次（`error code 4`），刪掉重建。
+- 文件：`docs/re/312` §七、`docs/internals/58`（新）、`22`／`25`／`33` 補
+  一句、規格 051 CONFORMED（第一片）、`docs/playtest/021`。#40 的 verify 換成
+  `go_test TestFleetMoveOrderWritesFleet` 並加矩陣列 5x；關 #40、重抓快照、
+  `verify` 0 條斷言不成立、`render -w`／`render-matrix -w` 重產。
+- 工具：`tools/scripts/celldiff.py`（差異按 16×20 格列）、`planerows.py`（印
+  字元平面某幾列的字碼／屬性／樣式）、`crop_png.py`（兩張 screen.bin 裁塊並排
+  成 PNG）——對拍收斂的三步都靠這三支。
+- 順手補：玩家建艦隊時提督與副官記錄的 `+0x09` 也要寫槽號（peek 兩筆
+  80 → 00，`docs/re/312` §7.9）；AI 路徑早有 `SetFleetSlot`，玩家路徑漏了。
+- 沒做、留給後面：飛彈／戰鬥機的現量（編制沒帶艦艇記錄 `+0x0E`／`+0x12`，
+  新編艦隊本來就 100%）、清單那一列的移動圖示。

@@ -33,6 +33,13 @@ type FleetList struct {
 		Right int
 		Ink   uint8
 	} `json:"value"`
+	// Row 是一列按鈕樣式的那 17 格：點開艦隊視窗時整列底色換成
+	// `PressedBg`（`0AD0:0272` 的 `3603:00DB(…, 0x20, …)`，`docs/re/312`）。
+	// 上下各 `Inset` 列是按鈕的立體邊，不動。
+	Row struct {
+		X, W, Top, Inset int
+		PressedBg        uint8 `json:"pressed_bg"`
+	} `json:"row"`
 }
 
 // LoadFleetList 讀版面。
@@ -59,17 +66,22 @@ type FleetRow struct {
 var fleetRowPrefix = []uint16{0xB2C4}
 var fleetRowSuffix = []uint16{0xC4A5, 0xB6A4}
 
-// Draw 畫這幾列。
+// Draw 畫這幾列；`pressed` 是被點開視窗的那一列（−1 ＝ 沒有），整列底色
+// 換成 `Row.PressedBg`，字照畫在上面（收據 `fcmd-win`）。
 //
 // **每一列的字裁在自己那一列裡**：立體邊那一趟會往上移一列，不裁的話
 // 會咬掉上面那條分隔線（收據 `dec1`：那 16 個像素原版是線的色 7）。
 // 與按鈕上的字同一件事（`ui.DrawGlyphClipped`）。
-func (l *FleetList) Draw(fb *gfx.Framebuffer, fnt *font.Font, rows []FleetRow) {
+func (l *FleetList) Draw(fb *gfx.Framebuffer, fnt *font.Font, rows []FleetRow, pressed int) {
 	for i, r := range rows {
 		if i >= l.Rows {
 			break
 		}
 		y := l.Y + i*l.Pitch
+		if i == pressed && l.Row.W > 0 {
+			top := l.Row.Top + i*l.Pitch
+			fb.FillRect(l.Row.X, top+l.Row.Inset, l.Row.W, l.Pitch-2*l.Row.Inset, l.Row.PressedBg)
+		}
 		full := func(x int, codes []uint16, ink uint8) {
 			for _, c := range codes {
 				ui.DrawGlyphClipped(fb, fnt, x, y, c, ink, panelShadow, -1, false,

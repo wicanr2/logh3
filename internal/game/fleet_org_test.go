@@ -44,7 +44,12 @@ func TestFleetOrgMatchesOracle(t *testing.T) {
 // reachFleetOrg 走玩家路徑走到萊因哈特那張艦隊編成。
 func reachFleetOrg(t *testing.T) *Game {
 	t.Helper()
-	g := reachCommandPhase(t)
+	return reachFleetOrgFrom(t, reachCommandPhase(t))
+}
+
+// reachFleetOrgFrom 從已經停在戰略地圖（游標在 (600,340)）的一局接下去走。
+func reachFleetOrgFrom(t *testing.T, g *Game) *Game {
+	t.Helper()
 	g.Click(352, 125) // 戰略命令
 	g.Click(400, 125) // 出擊命令
 	g.Click(400, 85)  // 第 0 列 萊因哈特

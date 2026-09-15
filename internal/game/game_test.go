@@ -268,7 +268,14 @@ func load(t *testing.T) *Resources {
 // 游標走，而選單一開就凍住（`docs/re/277`），多一次滑鼠移動就換一張畫面。
 func reachCommandPhaseOnMap(t *testing.T) *Game {
 	t.Helper()
-	g, err := New(load(t))
+	return reachCommandPhaseOnMapWith(t, load(t))
+}
+
+// reachCommandPhaseOnMapWith 同上，但資源由呼叫端給（要規則表的測試用
+// `loadWithRules`）。
+func reachCommandPhaseOnMapWith(t *testing.T, res *Resources) *Game {
+	t.Helper()
+	g, err := New(res)
 	if err != nil {
 		t.Fatal(err)
 	}

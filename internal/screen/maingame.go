@@ -794,3 +794,16 @@ func (w *GameWindow) DrawFactionText(fb *gfx.Framebuffer, fnt *font.Font, factio
 		drawFull(fb, fnt, t.X, t.Y, t.Variants[faction], ink)
 	}
 }
+
+// DrawStarMap 把一張星圖貼在 (x,y)。目的地選取時地圖視窗被提到艦隊視窗
+// 之上（`docs/spec/051`），所以要能在視窗之後再貼一次。
+func DrawStarMap(fb *gfx.Framebuffer, img *asset.Image, x, y int) {
+	if fb == nil || img == nil {
+		return
+	}
+	for j := 0; j < img.H; j++ {
+		for i := 0; i < img.W; i++ {
+			fb.Set(x+i, y+j, img.Pix[j*img.W+i])
+		}
+	}
+}

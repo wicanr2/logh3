@@ -7,12 +7,22 @@ import (
 
 	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
 )
 
 // reachBrainPhase 與 `reachCommandPhase` 一樣走到戰略地圖，另外把星域圖
 // 接上——`runBrain` 缺 `Resources.Graph` 會整段跳過（`World` 帶不到圖，
 // 決策層沒有東西可以走）。正式入口在 `internal/bootstrap` 會載它。
 func reachBrainPhase(t *testing.T) *Game {
+	t.Helper()
+	return reachCommandPhaseOnMapWith(t, loadWithRules(t))
+}
+
+// loadWithRules ＝ `load` 再補上決策層與艦隊命令要的規則表：星圖、艦種表、
+// 兩張編制表、預設副官、訊息框與艦隊視窗的版面。`load()` 只給畫面要的
+// 東西，正式入口 `internal/bootstrap` 才會載這幾份；少了艦種表，
+// 「出擊命令」編出來的艦隊就沒有編制。
+func loadWithRules(t *testing.T) *Resources {
 	t.Helper()
 	res := load(t)
 	graph, err := rules.LoadStarGraph(filepath.Join(root,
@@ -21,15 +31,6 @@ func reachBrainPhase(t *testing.T) *Game {
 		t.Fatal(err)
 	}
 	res.Graph = graph
-	// `Blend` 一動就要重算稅率，那條路要統治者編號與難度表
-	// （`docs/spec/030`）——與 `internal/bootstrap` 給的同一組。
-	res.UnrestParams = rules.UnrestParams{
-		Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
-		Table: []int{170, 150, 130, 90, 60},
-		Base:  []int{50, 75, 100, 150, 200},
-	}
-	// 決策層還要艦種表與兩張編制表；`load()` 只給畫面要的東西，
-	// 正式入口 `internal/bootstrap` 才會載這幾份。
 	data := filepath.Join(root, "docs/internals/data")
 	if res.ShipKinds, err = rules.LoadShipKindTable(
 		filepath.Join(data, "ship-kind-table.json")); err != nil {
@@ -44,20 +45,19 @@ func reachBrainPhase(t *testing.T) *Game {
 		filepath.Join(data, "ship-kind-fallback.json")); err != nil {
 		t.Fatal(err)
 	}
-	g, err := New(res)
-	if err != nil {
+	if res.MessageBox, err = screen.LoadMessageBoxSpec(
+		filepath.Join(data, "message-box.json")); err != nil {
 		t.Fatal(err)
 	}
-	g.Click(300, 210)
-	for _, c := range []byte{'1', '3', '8', '\r'} {
-		g.Key(c)
+	if res.FleetWindow, err = screen.LoadFleetWindowSpec(
+		filepath.Join(data, "fleet-window.json")); err != nil {
+		t.Fatal(err)
 	}
-	g.RightClick(300, 240)
-	g.RightClick(300, 240)
-	if g.State() != StateCommandPhase {
-		t.Fatalf("右鍵兩下之後在 %v，不是戰略地圖介面", g.State())
+	if res.FleetActionMenu, err = screen.LoadCommandMenuSpec(
+		filepath.Join(data, "fleet-command-menu.json")); err != nil {
+		t.Fatal(err)
 	}
-	return g
+	return res
 }
 
 // stubBuilder 是一個只會建艦隊、不下命令的 `Brain`。

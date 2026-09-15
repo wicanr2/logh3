@@ -101,6 +101,10 @@ func readJSON(path string, v any) error {
 	return nil
 }
 
+// FlagshipSlot3 是旗艦那一組的隊形槽 `[3]`（艦隊記錄 `+0x13`）：
+// `297B:0066` 建艦隊時寫死 20（`docs/re/214`）。
+const FlagshipSlot3 = 20
+
 // shipKindStandalone 是不從星域存量扣的那個艦種（`2AD2:0029` 對它有
 // 獨立分支，直接拿滿編艘數，`docs/re/215`）。
 const shipKindStandalone = 7
@@ -235,13 +239,15 @@ func (in BuildInput) take(kind, slot2, slot3 int) FleetGroup {
 func BuildComposition(in BuildInput) []FleetGroup {
 	n := FleetSlots(in.AdmiralLevel)
 	out := make([]FleetGroup, 0, n)
+	// 旗艦那一組是 `297B:0066` 自己填的：`+0x13`（＝ 第 0 組的 `[3]`）
+	// 直接寫 20，不查樣板（`docs/re/214`）。玩家「出擊命令」編的那一支
+	// 沒有類別鍵（`+0x09` ＝ 0xFF）也是 20（收據 `fcmd-win` 的
+	// `fleet0.bin`，`docs/re/312`）。
+	out = append(out, in.take(in.AdmiralKind, in.AdmiralKind, FlagshipSlot3))
 	if in.Tables == nil || in.ClassKey < 0 || in.ClassKey >= len(in.Tables.Template) {
-		return append(out, in.take(in.AdmiralKind, in.AdmiralKind, 0))
+		return out
 	}
 	tpl := in.Tables.Template[in.ClassKey]
-	// 旗艦那一組的 `[3]` 取樣板第 0 組的（十六個鍵都是 20，所以收據
-	// 分不出它是查表還是寫死）。
-	out = append(out, in.take(in.AdmiralKind, in.AdmiralKind, tpl[0][1]))
 	for i := 1; i < n && i < len(tpl); i++ {
 		a := tpl[i][0]
 		if in.AdmiralKind == 1 && a == 0 {

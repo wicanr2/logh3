@@ -204,16 +204,22 @@
   飛彈與戰鬥機拿現有量比兩個門檻）全部反組譯過，文字區兩張收據各
   0／20,480。按艦種換的那一行（運補艦「補給物資」、修護艦「最高修理數」、
   索敵分遣隊「剩餘燃料」）規則讀出來了但沒有收據，還沒做。
+- **戰略艦隊命令接上了（第一片，2026-09-15）**：右下角「艦隊」分頁點一列開
+  艦隊視窗 → 作戰 → 移動 → 點目的地 → 決定，命令寫進 `Fleet.Target`／`Move`，
+  下一次「實行」艦隊就走（規格 `docs/spec/051` CONFORMED，十五批 `fcmd-*`
+  收據整張逐位元組，`docs/playtest/021`）。順手定下的通用規則：底線裝飾、
+  清單反白、左下角與右側面板是「寫進去那一刻的文字」且只在游標底下那一格
+  變了才重寫（規格 001 規則 4–7）、星域記錄艦隊數建艦隊時就重數、玩家「決定」
+  建的艦隊有編制（旗艦一組、沒有類別鍵）。
 - **玩家還碰不到的功能**（2026-09-15 讀 `internal/game/game.go` 的 `click`
   盤點，不是憑印象）：
-  - 整套不存在：**戰略艦隊命令**（在戰略地圖上派艦隊去別的星域——現在
-    艦隊編成完只能停在首都，仗只能靠 AI 或讀檔觸發；原版的流程還沒逆向，
-    熱區清單 `21C0` 作戰／變更／結束、`2DB8` 占領／待命只有標籤，
-    `docs/re/310` 記了共同尾端 `0EF0:025E`）、參謀任命（`090A:0248`）、
+  - 整套不存在：艦隊命令的其餘四項 占領／駐留／輸送／待命 與「變更」
+    （issue #41、#42；選單上點了只關選單）、參謀任命（`090A:0248`）、
     艦隊解散（`297B:0332`）、**交戰演出**（`ANI_PNL1.A98` ＋ `COMANI.BMG`；
     也是戰鬥曲唯一的出口）。
-  - 戰略地圖本身：右下角 艦隊／行星／敵艦隊／提督 四個分頁（熱區 `0BEE`）
-    不能切、艦隊列不能點；左鍵點星圖沒有反應（只有右鍵會選星域）。
+  - 戰略地圖本身：右下角 行星／敵艦隊／提督 三個分頁（熱區 `0BEE`）不能切、
+    清單不能捲（#43）；左鍵點星圖沒有反應（只有右鍵會選星域；星域資料
+    視窗 #44）；下了命令之後清單那一列的移動圖示不畫（規格 051 已知差異）。
   - 開得起來但只能右鍵關：情報收集的 治安／勢力／敵艦 三個分頁與
     參謀／確認（`1738`）、徵稅計劃與生產計劃的 參謀／結束、預算計劃的箭頭
     （`26E2`）、一覽表四張的列、艦隊編號清單／副官「變更／卸任」／陣形清單
@@ -258,6 +264,8 @@
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
+| 左下角摘要「從別的畫面回到地圖介面的那一次輸入不重算」（規則四），且內容每幀從星域記錄現算 | `docs/re/284`、`docs/spec/001` 舊版規則 4、`internal/game.refreshHoverRegion` 舊註解 | `docs/re/312` §7.7–7.8：`fcmd-win-rclick`（右鍵回地圖、游標在艾流塞拉）那塊換成艾流塞拉，同一視窗按「結束」回來的 `fcmd-close` 仍是首都——判準是「游標底下那一格變了沒」，`dec1` 只是沒變的情況；`fcmd-hover-home` 對 `dec1`：星域 0 的 `+0x28` 已是 1、面板仍寫 0：0，面板是寫進去那一刻的文字。規格 001 規則 4–7 已改寫 |
+| 字元裝飾 `0x01`（底線）畫在「字上方」 | `docs/re/138` | `docs/re/312` §7.1：`fcmd-win` 分隔列量到格頂 ＋ 19 那一列、色 15，與 `docs/internals/25` 原本的描述一致；remake 先前根本沒畫它 |
 | 星圖全連通，所以 `2B99:0392`（從首都走得到嗎）在正常局面下填全 1，`ai` 的 `Reachable` 預設全部走得到就是原版行為 | `docs/re/185`、`docs/spec/029`（證據表與「remake 需要補的資料」）、`internal/ai` 的註解 | `docs/re/298`：`2B99:0392` 比的是帶領土罰則的距離（`1024 × k ＋ 邊權`）`< 0x800`，也就是 `k ≤ 1`。`t260_post.bin`（新遊戲第一個 AI 回合剛跑完）分頁框裡的四張表與照擁有者重算的逐格相同：同盟從巴拉特出發走不到 0–12、25，帝國那一側只有伊謝爾倫可達。remake 當成全 1 於是階段四多算 9 格、多抽 9 次亂數（`docs/re/297`）。改照擁有者算（`ai.CapitalReach`，`docs/spec/043`）之後抽 7 次、叛亂進場種子 AF5AAD71。`docs/spec/029`、`docs/internals/26`／`54` 已改；`docs/re/185` 末尾加指標 |
 | 費沙事件的觸發點不在傾印裡（沒載入的 overlay 或執行期填的間接呼叫）；包裝在 `1213:0235` | `docs/re/193`、`docs/spec/029`、worklist `phezzan-event-trigger` | `docs/re/296`：`1213:0235` 落在前一支 `1213:01B8` 的 far call 中間，包裝的進入點是 **`1213:023B`**，呼叫點 `1213:019E`。整條鏈常駐、全是直接 far call：回合尾巴 `056A:078E` → 易主通知 `056A:0855` → `1213:007B` 登記 `ds:988E` → 同一個回合尾巴 `1213:0096` 發動。觸發條件 ＝ 費沙那一格第一次易主（收據 `pzx296`／`pzx296n`／`pzx296g`）。`docs/spec/029`、`docs/internals/54` 已改；`docs/re/193` 是調查紀錄，照規矩不改寫，末尾加指標 |
 | `ds:8F48` 唯一的寫入點是費沙事件本體 | `docs/re/179`、`docs/internals/54` | `docs/re/296`：新遊戲初始化（`0374` 段，線性 `0x03A2F`，`a2 48 8f`）也寫它（清 0）；它跟著存檔 `WORK.DT?` 的 `+0x34` 走，出貨的 `WORK.DTA` 是 `0xFF`。`docs/internals/54` 已改 |
@@ -365,7 +373,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 6 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 5 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -460,27 +468,6 @@
 **證據**：[`docs/re/312-strategic-fleet-command-flow.md` §三、§六`](docs/re/312-strategic-fleet-command-flow.md` §三、§六)
 
 **核實**：`docs/spec/051-strategic-fleet-command.md` 裡還找得到 `選單上點這四項本片\*\*只關選單\*\*`（自承還在 ＝ 還沒做）
-
-#### fleet-command-move — 戰略地圖上的艦隊命令：清單點列 → 艦隊視窗 → 作戰 → 移動 → 確認（第一片）
-
-*[#40](https://github.com/wicanr2/logh3/issues/40) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-玩家派艦隊的入口在戰略地圖介面右下角「艦隊」分頁：點清單一列開艦隊視窗
-（作戰／變更／結束），「作戰」拉出 移動／占領／駐留／輸送／待命，「移動」把地圖
-露出來讓玩家點目的地（依可達性重新著色），確認框「要移動至…星系嗎？」按「決定」
-就把 `+0x07`（目的地）與 `+0x08`（動作碼 0）寫進艦隊記錄。流程、分派鏈、允許表、
-訊息與十四批收據都在 `docs/re/312`；第一片的 typed input／state 表在 `docs/spec/051`。
-
-remake 目前**整套不存在**：艦隊編成完只能停在首都，仗只有 AI 或讀檔才觸發得了。
-
-**做完的判準**：`docs/spec/051` 第一片的路徑（清單點列 → 艦隊視窗 → 作戰 → 移動 → 目的地 → 決定／中止，
-含各層右鍵與「結束」）走得通，`fcmd-win`／`fcmd-menu`／`fcmd-menu-hover`／`fcmd-pick`／
-`fcmd-confirm`／`fcmd-far`／`fcmd-self`／`fcmd-cancel`／`fcmd-close` 與三張右鍵收據整張逐位元組相同，
-`fcmd-done` 除清單第 0 列那 288×20 之外 0 差異，且艦隊記錄寫的是 `Target＝2`、動作＝移動。
-
-**證據**：[`docs/re/312-strategic-fleet-command-flow.md`](docs/re/312-strategic-fleet-command-flow.md)、[`docs/spec/051-strategic-fleet-command.md`](docs/spec/051-strategic-fleet-command.md)、[`tools/fleetcmd_receipts.sh`](tools/fleetcmd_receipts.sh)
-
-**核實**：`docs/spec/051-strategic-fleet-command.md` 標到 `CONFORMED`
 
 ### 做完的（不在矩陣裡的那幾條）
 

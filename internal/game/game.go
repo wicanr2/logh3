@@ -160,6 +160,15 @@ const (
 
 	// StateVictoryReport 是首都陷落後唯一一位人類座位看到的勝負報告。
 	StateVictoryReport
+
+	// 戰略地圖上的艦隊命令（`docs/spec/051`）：右下角清單點一列開的
+	// 艦隊視窗、它的「作戰」五項選單、目的地選取（地圖露出來）、
+	// 「這是無法前往的星系。」訊息框、「要移動至…星系嗎？」確認框。
+	StateFleetWindow
+	StateFleetActionMenu
+	StateFleetTargetPick
+	StateFleetMessage
+	StateFleetConfirm
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -181,6 +190,8 @@ func (s State) String() string {
 		"StateVersusAccount", "StateIntro", "StateVersusShipOrder",
 		"StateRebellionReport", "StateOccupationReport", "StateAdmiralFateReport",
 		"StatePhezzanReport", "StateVictoryReport",
+		"StateFleetWindow", "StateFleetActionMenu", "StateFleetTargetPick",
+		"StateFleetMessage", "StateFleetConfirm",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -223,6 +234,11 @@ var screenSpecName = map[State]string{
 	StateOccupationReport:  "screen-command-phase",
 	StateAdmiralFateReport: "screen-command-phase",
 	StatePhezzanReport:     "screen-command-phase",
+	StateFleetWindow:       "screen-command-phase",
+	StateFleetActionMenu:   "screen-command-phase",
+	StateFleetTargetPick:   "screen-command-phase",
+	StateFleetMessage:      "screen-command-phase",
+	StateFleetConfirm:      "screen-command-phase",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -396,6 +412,11 @@ type Resources struct {
 	Terrain *rules.BattleTerrain
 
 	// BattleData 是戰術選單「資料」那張畫面的版面（`docs/spec/021`），
+	// FleetWindow 是戰略地圖上點清單一列開出來的艦隊視窗，
+	// FleetActionMenu 是它的「作戰」五項選單（`docs/spec/051`）。
+	FleetWindow     *screen.FleetWindowSpec
+	FleetActionMenu *screen.CommandMenuSpec
+
 	// FleetDetail 是點一列開出來的艦隊詳細資料（`docs/spec/022`）。
 	BattleData  *screen.BattleDataSpec
 	FleetDetail *screen.FleetDetailSpec
@@ -607,6 +628,27 @@ type Game struct {
 	// 重算的地方只有 `refreshHoverRegion` 一處。
 	hoverRegion int
 
+	// hoverProbe 是 `refreshHoverRegion` 上一次量到的「游標底下那一格」
+	// （−1 ＝ 星圖外）。與 `hoverRegion` 分開記：畫面自己寫進左下角的
+	// 內容（`forcedLeftRegion`）不會動它，所以游標在星圖外再動一下也不會
+	// 把那塊擦掉（收據 `fcmd-win`）。
+	hoverProbe int
+
+	// hoverSnap 是左下角那塊**寫進去的時候**算出來的摘要。原版那塊是文字
+	// 緩衝區，寫進去之後數字不會跟著局面變：`dec1` 的首都摘要是艦隊那幾張
+	// 畫面在編成**之前**寫的，回到地圖仍是「艦隊 0：0」，而同一個星域在
+	// 游標移過去重寫時已經是「1：0」（收據 `fcmd-hover-home`，`docs/re/312`）。
+	// 只在 `setHoverRegion` 重算。
+	hoverSnap rules.RegionSummary
+
+	// capitalSnap 是右側面板首都摘要那一塊（治安／行星／艦隊）的快照，
+	// 在回合處理完進命令階段、開新局、讀檔、對戰交棒時重算
+	// （`refreshCapitalSnap`）。同一回合裡不重算：編成艦隊之後右側面板
+	// 整條 `fcmd-*` 鏈仍寫「艦隊 0：0」（`docs/re/312`）。其餘欄位沒有
+	// 證據說會凍住，照舊每幀算。
+	capitalSnap   rules.RegionSummary
+	capitalSnapOK bool
+
 	// music 是設定畫面上那三行：音源、平時配樂、戰鬥配樂。
 	// 原版的 `ds:8F33`／`8F34`／`8F35`，跟著存檔走（`WORK.DT?` 的
 	// `+0x1F`／`+0x20`／`+0x21`，`docs/internals/30`）。
@@ -662,6 +704,9 @@ type Game struct {
 	// fleets 是已經編成的艦隊，順序就是艦隊編號 − 1
 	// （`internal/rules.Fleet`，對應原版的執行期艦隊表）。
 	fleets []rules.Fleet
+
+	// fcmd 是戰略地圖上艦隊命令那條路的狀態（`fleetcmd.go`）。
+	fcmd fleetCmd
 
 	// starMap 是照玩家陣營重建的勢力色地圖（首都那格的顏色跟著玩家走）。
 	// nil 表示還沒建，畫的時候退回 `Resources.StarMap`。
@@ -895,6 +940,9 @@ func (g *Game) continueAfterAdmiralFateReports() {
 			g.paidMove[f.Faction] += cost // ds:8F8A，月底歸零
 		}
 	}
+	// 走完就重數每一格的艦隊數（`2703:0853`，排在移動之後、叛亂判定之前，
+	// `docs/re/297`）。
+	g.recountRegionFleets()
 	// 單方面占據與叛亂都在原版命令階段那一串的最後一支 `056A:0469`。
 	// 先重算 bit2／bit4 並顯示 bit4 報告；全部關掉之後才進叛亂判定。
 	g.prepareOccupationReports()
@@ -987,6 +1035,8 @@ func (g *Game) finishAfterPhezzanReports() {
 	// `2703:0DA1`）。這時回合計數器已經進位，路徑表也在座位回合開頭
 	// （`04F8:003E` → `2B99:0003`）照新的擁有者重建過（`docs/spec/042`）。
 	g.recomputeUnrest(g.turn)
+	// 右側面板首都摘要那一塊在這裡重印（之後這一回合不再動）。
+	g.refreshCapitalSnap()
 	if month {
 		if g.commandSpec(StateShipDelivery) != nil {
 			g.state = StateShipDelivery
@@ -1229,6 +1279,16 @@ func (g *Game) refreshBlend(faction, level int) {
 // 那一位）、星域旗標與民心、行星、`+0x08 == 5` 的艦隊，以及照現在的擁有者
 // 建的路徑表（`2B99:0003` 在回合尾巴與玩家座位回合開頭重建，擁有者只在回合
 // 尾巴那一段會變，所以兩者相同）。
+// recountRegionFleets 把每一格的艦隊數（星域記錄 `+0x28`／`+0x29`）照
+// 現在的艦隊表重數（`rules.RecountRegionFleets`）。左下角摘要的「艦隊 a：b」
+// 與戰略 AI 的退兵判斷讀的都是這兩格。
+func (g *Game) recountRegionFleets() {
+	if g.res == nil || len(g.res.Stellar) < rules.RegionRecord {
+		return
+	}
+	rules.RecountRegionFleets(g.res.Stellar, g.fleets)
+}
+
 func (g *Game) recomputeUnrest(counter int) {
 	if !g.regionsReady() || len(g.res.UnrestParams.Base) == 0 ||
 		len(g.res.UnrestParams.Table) == 0 {
@@ -1310,6 +1370,7 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 			// `297B:0066` 建立艦隊時寫 `+0x3C = 100`（`docs/re/214`）。
 			Morale: rules.NewFleetMorale,
 			// 原版新艦隊的 `+0x08` 是 5；下到移動命令才離開停駐狀態。
+			Move:   fleetMoveParked,
 			Parked: true,
 		})
 		// 原版 `2D76:0611` 配到艦隊槽時把提督記錄的 `+0x09` 寫成
@@ -1326,6 +1387,7 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 		}
 		led[nf.Admiral] = true
 		n++
+		g.recountRegionFleets()
 		// `297B:0546` 每處理完一支就由 `297B:05A6` 重算一次。
 		// AI 回合發生在原版計數器進位之前。
 		g.recomputeUnrest(g.turn - 1)
@@ -1366,10 +1428,11 @@ func (g *Game) enterSide(faction int) {
 	g.pct = s.pct
 	g.treasury, g.monthReport = s.treasury, s.monthReport
 	g.fleets = s.fleets
+	g.refreshCapitalSnap()
 	// 交棒的當下底板是乾淨的：右側面板只剩陣營那一行與按鈕，
 	// 左下角是空的（收據 `vs3`／`vs5`）。
 	g.selectedRegion = -1
-	g.hoverRegion = -1
+	g.hoverRegion, g.hoverProbe = -1, -1
 	g.detailAdmiral = -1
 	g.reportLayer = 0
 }
@@ -1412,6 +1475,8 @@ func (g *Game) startNewGame(faction int) {
 	g.music.BGM, g.music.Battle = 0, 0
 	g.slot = nil
 	g.monthEnd()
+	g.recountRegionFleets()
+	g.refreshCapitalSnap()
 }
 
 // snapshotWorld 記下星域記錄與行星表的開局值。
@@ -1453,7 +1518,7 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		hoverRegion: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1,
+		hoverRegion: -1, hoverProbe: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1,
 		// 音源是開機偵測的結果，不是每局重來的東西：沒有 MPU-401 就退到
 		// OPL（`docs/re/274` §3）。remake 不模擬 MIDI 介面，所以與出貨的
 		// 原版一樣一律 ＦＭ——既有的執行期傾印 `ds:8F33` 全是 1，收據
@@ -1535,8 +1600,12 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	// 存檔裡就有兩邊的艦隊（`FLEET.DT?` ＝ 執行期那張表，`docs/re/41`）。
 	// 讀進來之後 remake 才有敵方的艦隊可以畫、可以推進。
 	g.fleets = sl.Fleets(g.res.Weights)
+	// 原版讀檔之後就重數一次（`docs/re/40` 載入 S2 時看到 `2703:087A` 歸零
+	// 再 `2703:08CE` 遞增）。
+	g.recountRegionFleets()
+	g.refreshCapitalSnap()
 	g.selectedRegion = -1
-	g.hoverRegion = -1
+	g.hoverRegion, g.hoverProbe = -1, -1
 	g.state = StateCommandPhase
 	// 星域記錄與行星表剛剛才換成存檔那一份，戰略 AI 的地基跟著換，
 	// 所以重接一次。
@@ -1593,15 +1662,11 @@ func (g *Game) moveMouse(x, y int) {
 	g.fleetOrderMouse(x, y)
 	// 要塞砲的射程橢圓也跟著游標轉（`docs/re/145`）。
 	g.fortressAimMouse(x, y)
+	// 艦隊視窗的「作戰」選單反白跟著游標走（`docs/spec/051`）。
+	g.fleetCmdMouseMove(x, y)
 }
 
 // refreshHoverRegion 重算左下角那塊要寫哪一格星域（`docs/re/277`）。
-//
-// ⚠ **從別的畫面「回到」地圖介面的那一次輸入不重算。** 原版讓左下角留著
-// 上一張畫面在那裡畫的東西：收據 `dec1` 是從艦隊組成按「決定」回地圖，
-// 游標停在 (510,310)（星圖外），而那塊寫的是艦隊那幾張畫上去的首都摘要
-// ——照「游標底下那一格」重算會把它擦掉，差 2,354 個像素。所以
-// `Click`／`RightClick` 只在**輸入之前就已經在地圖介面**時才重算。
 //
 // **只在戰略地圖介面是最上層的時候重算**：選單或疊上去的視窗開著的時候
 // 一個字都不動，所以那幾張畫面留著的是開起來之前的內容（收據 `cmd1e`：
@@ -1610,24 +1675,62 @@ func (g *Game) moveMouse(x, y int) {
 // 游標不在星圖上就是 −1 ＝ 整塊只剩外框（收據 `main1e`：滑鼠在 (600,340)，
 // 那塊 0 個非底色像素）。
 //
-// 呼叫點是三個輸入入口的**結尾**——「這次輸入做完之後還在地圖介面嗎」
+// 呼叫點是三個輸入入口的**結尾**——「這次輸入做完之後在地圖介面嗎」
 // 才是判準。左鍵點命令列把選單開起來時，結尾的狀態已經不是地圖介面，
 // 所以不重算，凍住的就是點下去之前游標底下那一格。
 //
+// **只有「游標底下那一格」變了才重寫。** `hoverProbe` 記上一次量到的那一格，
+// 畫面自己寫進左下角的內容（`forcedLeftRegion`）不動它。這一條同時解釋
+// 三份收據：
+//
+//   - `dec1`：從艦隊組成按「決定」回地圖，游標停在星圖外的 (510,350)；
+//     探針原本就是 −1（進子畫面之前游標在命令列），沒變，所以那塊留著
+//     艦隊那幾張畫上去的首都摘要——不是「回到地圖的那一次不重算」，
+//     是量到的值沒變（`docs/re/284` 的規則四改寫成這樣）。
+//   - `fcmd-win`：接著點右下角清單 (450,308)，星圖外 → 星圖外，仍是首都。
+//   - `fcmd-win-rclick`：艦隊視窗上按右鍵 (300,240) 回地圖，游標落在
+//     艾流塞拉，探針從 −1 變 30，那塊就換成艾流塞拉；同一個位置按
+//     「結束」(490,390) 回來的 `fcmd-close` 仍是首都（`docs/re/312`）。
+//
 // 舊收據曾看似有陣營差異；`docs/re/302` 以目前執行器重錄後證明那是少送
 // 點擊前移事件的產物，兩邊都遵守同一組規則。
+//
+// 艦隊命令的目的地選取（`113A:0003`）是另一個會看游標的迴圈，規則相同，
+// 但探針是它自己那一份（`fleetCmd.probe`，進選取時歸 −1）；回到地圖介面
+// 之後用回地圖介面的探針——所以「決定」回來那塊留著目的地的摘要
+// （`fcmd-done`），「中止」回到選取那塊卻清空（`fcmd-cancel`）。
 func (g *Game) refreshHoverRegion() {
-	if g.state != StateCommandPhase {
+	probe := &g.hoverProbe
+	switch g.state {
+	case StateCommandPhase:
+	case StateFleetTargetPick:
+		probe = &g.fcmd.probe
+	default:
 		return
 	}
-	g.hoverRegion = -1
-	if g.res.Regions == nil ||
-		g.mouseX < mapX || g.mouseX >= mapX+mapW ||
-		g.mouseY < mapY || g.mouseY >= mapY+mapH {
+	r := -1
+	if g.res.Regions != nil &&
+		g.mouseX >= mapX && g.mouseX < mapX+mapW &&
+		g.mouseY >= mapY && g.mouseY < mapY+mapH {
+		r = asset.RegionAt(g.res.Regions, g.mouseX-mapX, g.mouseY-mapY, tileW, tileH)
+	}
+	if r == *probe {
 		return
 	}
-	if i := asset.RegionAt(g.res.Regions, g.mouseX-mapX, g.mouseY-mapY, tileW, tileH); i >= 0 {
-		g.hoverRegion = i
+	*probe = r
+	g.setHoverRegion(r)
+}
+
+// setHoverRegion 把左下角那塊寫成星域 r 的摘要（−1 ＝ 清空）。摘要在
+// **這一刻**算好存進 `hoverSnap`，之後局面變了那塊也不會跟著變。
+func (g *Game) setHoverRegion(r int) {
+	g.hoverRegion = r
+	g.hoverSnap = rules.RegionSummary{}
+	if r < 0 || g.res == nil {
+		return
+	}
+	if rec := g.regionRecord(r); rec != nil {
+		g.hoverSnap = rules.Summarise(rec, g.res.Planets, r, g.faction)
 	}
 }
 
@@ -1674,14 +1777,11 @@ func (g *Game) forcedLeftRegion(s State) int {
 // **主選單只從事件回呼收按下**（`docs/re/08`）——那是原版的實作細節，
 // 在這裡的意義是：點擊要落在某一列上才算數，不是點到視窗內就好。
 func (g *Game) Click(x, y int) {
-	onMap := g.state == StateCommandPhase
 	g.moveBeforePress(x, y)
 	g.click(x, y)
-	if onMap {
-		g.refreshHoverRegion()
-	}
+	g.refreshHoverRegion()
 	if r := g.forcedLeftRegion(g.state); r >= 0 {
-		g.hoverRegion = r
+		g.setHoverRegion(r)
 	}
 }
 
@@ -1822,15 +1922,27 @@ func (g *Game) click(x, y int) {
 				return
 			case "decide":
 				// 艦隊建成，回戰略地圖（收據 `dec1`）。艦隊記錄怎麼填
-				// 見 `docs/internals/33`；remake 目前只記「這一位提督
-				// 帶了第幾艦隊」。
+				// 見 `docs/internals/33`。
 				if g.commandSpec(StateCommandPhase) != nil {
+					region := rules.CapitalRegion(g.faction)
+					adjutant := rules.Adjutant(g.admiralRecord(g.detailAdmiral))
+					// 編制與 AI 建艦隊走同一支 `297B:0066`：旗艦那一組從
+					// 首都的待命部隊扣出來；玩家這一支沒有類別鍵
+					// （`+0x09` ＝ 0xFF），所以只有旗艦那一組
+					// （收據 `fcmd-win` 的 `fleet0.bin`：`+0x0F` ＝ 1、
+					// `+0x10` ＝ `00 00 00 14`，`docs/re/312`）。
+					comp := g.newComposition(g.faction, region, g.detailAdmiral, rules.NoClassKey)
+					ops := g.fleetOperations(g.detailAdmiral, adjutant)
 					g.fleets = append(g.fleets, rules.Fleet{
-						Index:    len(g.fleets),
-						Number:   len(g.fleets) + 1,
-						Faction:  g.faction,
-						Admiral:  g.detailAdmiral,
-						Adjutant: rules.Adjutant(g.admiralRecord(g.detailAdmiral)),
+						Index:       len(g.fleets),
+						Number:      len(g.fleets) + 1,
+						Faction:     g.faction,
+						Admiral:     g.detailAdmiral,
+						Adjutant:    adjutant,
+						ClassKey:    rules.NoClassKey,
+						Composition: comp,
+						Groups:      len(comp),
+						Operations:  ops,
 						// 應有組數由提督等級決定（原版 `297B:0066` →
 						// `297B:0209`，`docs/re/214`）。**玩家這條路與 AI
 						// 建艦隊走同一支** `297B:0066`（兩個呼叫者：
@@ -1841,10 +1953,30 @@ func (g *Game) click(x, y int) {
 						Morale: rules.NewFleetMorale,
 						// 編成完停在自己的首都，還沒有移動命令
 						// （`docs/re/70` 的收據 `dec1` 就是這個狀態）。
-						Region: rules.CapitalRegion(g.faction),
+						Region: region,
 						Target: rules.NoTarget,
+						Move:   fleetMoveParked,
 						Parked: true,
 					})
+					// 提督與副官記錄的 `+0x09` 寫成陣營內的槽號（bit7 清掉）：
+					// 建艦隊前兩筆都是 0x80、「決定」之後都是 0x00
+					// （探索批次 `fcx-peek-slot-pre`／`fcx-peek-slot`，
+					// `docs/re/312` §7.9）——與 AI 的 `2D76:0611` 同一件事。
+					slot := 0
+					for _, f := range g.fleets[:len(g.fleets)-1] {
+						if f.Faction == g.faction {
+							slot++
+						}
+					}
+					g.mutableAdmirals()
+					if r := g.admiralRecord(g.detailAdmiral); r != nil {
+						rules.SetFleetSlot(r, slot)
+					}
+					if r := g.admiralRecord(adjutant); r != nil {
+						rules.SetFleetSlot(r, slot)
+					}
+					// 星域記錄的艦隊數跟著加（收據 `fcmd-hover-home`）。
+					g.recountRegionFleets()
 					// 玩家編成走 `297B:0546`，尾巴的 `297B:05A6`
 					// 立即呼叫 `090A:0E6D`；命令階段當下的治安色不能等到
 					// 下一次「實行」才更新（`docs/re/304`）。
@@ -1905,6 +2037,19 @@ func (g *Game) click(x, y int) {
 				return
 			}
 		}
+		// 右下角「艦隊」分頁的清單：點一列開那支艦隊的視窗
+		// （`docs/spec/051`；那一列沒有艦隊就什麼都不做）。
+		if i := g.fleetListFleetAt(fleetListRowAt(x, y)); i >= 0 {
+			g.openFleetWindow(i)
+		}
+	case StateFleetWindow:
+		g.fleetWindowClick(x, y)
+	case StateFleetActionMenu:
+		g.fleetMenuClick(x, y)
+	case StateFleetTargetPick:
+		g.fleetPickClick(x, y)
+	case StateFleetMessage, StateFleetConfirm:
+		g.fleetMessageClick(x, y)
 	case StateSettings:
 		// 六組都在這裡：音源／平時配樂／戰鬥配樂三組單選（`docs/re/285`）、
 		// 訊息速度的上下箭頭、動畫效果與動畫速度，以及「結束」
@@ -1940,14 +2085,11 @@ func (g *Game) click(x, y int) {
 // **座標目前不影響結果**——實測 (300,240) 那一點在報告視窗上與在地圖上
 // 都關得掉；哪裡按不算數還沒量過。
 func (g *Game) RightClick(x, y int) {
-	onMap := g.state == StateCommandPhase
 	g.moveBeforePress(x, y)
 	g.rightClick(x, y)
-	if onMap {
-		g.refreshHoverRegion()
-	}
+	g.refreshHoverRegion()
 	if r := g.forcedLeftRegion(g.state); r >= 0 {
-		g.hoverRegion = r
+		g.setHoverRegion(r)
 	}
 }
 
@@ -2076,6 +2218,8 @@ func (g *Game) rightClick(x, y int) {
 		g.battleMenu = false
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
+	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm:
+		g.fleetCmdRightClick()
 	case StateVersusInput:
 		// 交棒視窗按右鍵會怎樣**沒有量過**，先什麼都不做——
 		// 這一步不能靠猜，猜錯會讓對戰模式跳掉一方的回合。
@@ -2553,9 +2697,31 @@ func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
 	if o+rules.RegionRecord > len(g.res.Stellar) {
 		return rules.CapitalSummary{}, 0, false
 	}
-	return rules.SummariseCapital(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
+	c := rules.SummariseCapital(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
 		r, g.faction, g.turn, rules.Epoch,
-		g.military[g.faction], g.taxTotal[g.faction]), r, true
+		g.military[g.faction], g.taxTotal[g.faction])
+	// 首都摘要那一塊用回合開頭的快照（`capitalSnap`）：右側面板是文字
+	// 緩衝區，編成艦隊之後整條 `fcmd-*` 鏈仍寫「艦隊 0：0」（`docs/re/312`）。
+	if !g.capitalSnapOK {
+		g.refreshCapitalSnap()
+	}
+	c.Region = g.capitalSnap
+	return c, r, true
+}
+
+// refreshCapitalSnap 重算右側面板首都摘要那一塊的快照。
+func (g *Game) refreshCapitalSnap() {
+	g.capitalSnapOK = false
+	if g.res == nil || g.res.Planets == nil {
+		return
+	}
+	r := rules.CapitalRegion(g.faction)
+	rec := g.regionRecord(r)
+	if rec == nil {
+		return
+	}
+	g.capitalSnap = rules.Summarise(rec, g.res.Planets, r, g.faction)
+	g.capitalSnapOK = true
 }
 
 // liveCursor 讓戰略地圖介面的游標跟著滑鼠跑。
@@ -2575,6 +2741,8 @@ func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
+		StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick,
+		StateFleetMessage, StateFleetConfirm,
 		StateFleetOrg, StateFleetNumber, StateFleetAdjutant,
 		StateFleetComposition, StateFormation,
 		// 這五張的收據末尾都有一次 `-mouse-at`（搬到 (600,340)），
@@ -2606,6 +2774,9 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 		// 「戰艦」那一列的數字上，順序反了就差 32 個像素。
 		g.drawShipOrder(fb)
 	}
+	// 戰略地圖介面的規格沒有疊層（order 空 → 只叫一次 "report"），艦隊命令
+	// 那幾層就在這裡畫：在清單列與游標之前，原版的游標永遠在最上面。
+	g.drawFleetCommand(fb)
 }
 
 // drawFleetComposition 畫艦隊組成裡算出來的那幾塊（`docs/spec/015`）。
@@ -3088,7 +3259,12 @@ func (g *Game) drawFleetRows(fb *gfx.Framebuffer) {
 		return
 	}
 	rows := g.fleetRows()
-	g.res.FleetList.Draw(fb, g.res.Font, rows)
+	// 艦隊視窗開著時，被點的那一列反白（`docs/spec/051`）。
+	pressed := -1
+	if i := g.FleetCommandFleet(); i >= 0 {
+		pressed = g.fleetListRowOf(i)
+	}
+	g.res.FleetList.Draw(fb, g.res.Font, rows, pressed)
 }
 
 // fleetRows 回右下角「艦隊」分頁要列的那幾列。
@@ -3132,23 +3308,26 @@ func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 	if g.res.RegionPanel == nil || g.res.Planets == nil {
 		return
 	}
-	region := g.hoverRegion
-	if r := g.forcedLeftRegion(g.state); r >= 0 {
-		region = r
-	}
-	switch g.state {
-	case StateStarList:
+	// 星系資料那張跟著游標所在的那一列即時重寫。
+	if g.state == StateStarList {
 		if spec := g.commandSpec(g.state); spec != nil {
-			region = g.starListSelected(spec)
+			if rec := g.regionRecord(g.starListSelected(spec)); rec != nil {
+				sum := rules.Summarise(rec, g.res.Planets, g.starListSelected(spec), g.faction)
+				g.res.RegionPanel.Draw(fb, g.res.Font, sum, g.faction)
+			}
 		}
-	}
-	o := region * rules.RegionRecord
-	if region < 0 || o+rules.RegionRecord > len(g.res.Stellar) {
 		return
 	}
-	sum := rules.Summarise(g.res.Stellar[o:o+rules.RegionRecord], g.res.Planets,
-		region, g.faction)
-	g.res.RegionPanel.Draw(fb, g.res.Font, sum, g.faction)
+	// 其餘畫面畫的是寫進去那一刻的快照（`hoverSnap`）。畫面自己要寫首都的
+	// 那幾張（`forcedLeftRegion`）在輸入結尾已經寫進去了；這裡只補「不是
+	// 經由輸入進到那個畫面」的情況。
+	if r := g.forcedLeftRegion(g.state); r >= 0 && g.hoverRegion != r {
+		g.setHoverRegion(r)
+	}
+	if g.hoverRegion < 0 {
+		return
+	}
+	g.res.RegionPanel.Draw(fb, g.res.Font, g.hoverSnap, g.faction)
 }
 
 // commandSpec 回這個命令階段狀態的規格；沒有就回 nil。

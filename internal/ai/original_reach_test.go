@@ -155,3 +155,42 @@ func TestCapitalReachIsDirectionFree(t *testing.T) {
 		}
 	}
 }
+
+// TestReachFromCapitalMatchesCapitalReach 從首都起算的 ReachFrom 就是
+// CapitalReach；起點換成別的星域時表會不同（伊謝爾倫出發看得到同盟那邊）。
+func TestReachFromCapitalMatchesCapitalReach(t *testing.T) {
+	g := testGraph(t)
+	owner := ownerFromString(ownersNewGame)
+	for faction := 0; faction < 2; faction++ {
+		if a, b := ReachFrom(g, owner, faction, Capitals[faction]), CapitalReach(g, owner, faction); a != b {
+			t.Errorf("陣營 %d：ReachFrom(首都) %s ≠ CapitalReach %s", faction, reachString(a), reachString(b))
+		}
+	}
+	// 新遊戲帝國從伊謝爾倫（13）出發的表與從首都的**相同**——同盟那一側
+	// 緊貼著的 15／16 從首都就已經在 k ≤ 1 裡。起點推進到亞斯提（16）才
+	// 看得到差別：傑姆席德（21）從 16 只要罰一條邊，從首都要罰兩條。
+	if from13 := ReachFrom(g, owner, 0, 13); from13 != CapitalReach(g, owner, 0) {
+		t.Errorf("從伊謝爾倫出發的可達表 %s 與從首都的不同", reachString(from13))
+	}
+	from16 := ReachFrom(g, owner, 0, 16)
+	if !from16[21] || CapitalReach(g, owner, 0)[21] {
+		t.Errorf("傑姆席德（21）：從亞斯提出發 %v、從首都 %v；要 true／false", from16[21], CapitalReach(g, owner, 0)[21])
+	}
+}
+
+// TestReachFromMatchesFleetCommandReceipts 是玩家派艦隊那條路的允許表
+// （`docs/spec/051`）：新遊戲帝國第１艦隊在瓦爾哈拉（0），原版讓玩家
+// 移動到亞爾提那（2）、香陶（6）、伊謝爾倫（13），對費沙（14）與巴拉特（31）
+// 回「這是無法前往的星系。」（收據 `fcmd-confirm`／`fcx-mv-*`／`fcmd-far`）。
+// 允許 ＝ 可達 ∧（擁有者是自己 ∨ 現在位置）。
+func TestReachFromMatchesFleetCommandReceipts(t *testing.T) {
+	g := testGraph(t)
+	owner := ownerFromString(ownersNewGame)
+	reach := ReachFrom(g, owner, 0, 0)
+	allowed := func(r int) bool { return reach[r] && (owner(r) == 0 || r == 0) }
+	for r, want := range map[int]bool{2: true, 6: true, 13: true, 14: false, 31: false, 0: true} {
+		if allowed(r) != want {
+			t.Errorf("星域 %d 允許＝%v，原版是 %v（可達 %v、擁有者 %d）", r, allowed(r), want, reach[r], owner(r))
+		}
+	}
+}

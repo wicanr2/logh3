@@ -1,0 +1,68 @@
+{
+ "_note": "艦隊視窗「作戰」開的五項選單（docs/spec/051、re/312 §三）。項目字串 ds:21F0 起；選了第 n 項就是艦隊 +0x08 的動作碼 n。版面與戰場命令選單同一套元件。",
+ "width": 2,
+ "menus": {
+  "strategic-action": {
+   "address": "ds:21F0",
+   "when": "艦隊視窗按「作戰」",
+   "items": [
+    {
+     "text": "移動",
+     "codes": [
+      45758,
+      45258
+     ]
+    },
+    {
+     "text": "占領",
+     "codes": [
+      42341,
+      48098
+     ]
+    },
+    {
+     "text": "駐留",
+     "codes": [
+      48750,
+      44900
+     ]
+    },
+    {
+     "text": "輸送",
+     "codes": [
+      49129,
+      45157
+     ]
+    },
+    {
+     "text": "待命",
+     "codes": [
+      43997,
+      43346
+     ]
+    }
+   ]
+  }
+ },
+ "layout": {
+  "_measured_from": "與戰場命令選單同一套（3667:0004），只有 clamp_rows 不同：戰略地圖的板子把選單夾在 19−2 列裡（收據 fcmd-menu：游標在格列 15，框開在列 12 ＝ 17−5）",
+  "cell_w": 16,
+  "cell_h": 20,
+  "origin_bias": 1,
+  "cursor_cell_bias": -1,
+  "clamp_rows": 17,
+  "frame_pad_w": 30,
+  "frame_pad_h": 38,
+  "highlight_dx": 15,
+  "highlight_dy": 19,
+  "text_dy": 2,
+  "col_pitch": 16,
+  "row_pitch": 20,
+  "ink": 7,
+  "shadow": 3,
+  "highlight_ink": 2,
+  "disabled_ink": 8,
+  "fill": 9,
+  "frame": "FRAME.BLK 起始碼 9（ui.MenuFrame）；四個角是圖塊本身的像素，沒有修正表（docs/re/289）"
+ }
+}

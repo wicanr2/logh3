@@ -54,6 +54,28 @@ func CapitalReach(g *rules.StarGraph, owner func(region int) int, faction int) [
 	return out
 }
 
+// ReachFrom 是同一支 `2B99:0392`，但起點換成任一星域。玩家在戰略地圖上
+// 派艦隊時（`113A:00BE`，`docs/re/312`）原版就是拿艦隊**現在所在的星域**
+// 呼叫它，再與擁有者一起合成允許表（`docs/spec/051`）。
+func ReachFrom(g *rules.StarGraph, owner func(region int) int, faction, from int) [RegionCount]bool {
+	if g == nil || len(g.EdgeCost) != RegionCount {
+		panic(fmt.Sprintf("ReachFrom：星圖沒有 %d 列的邊權表", RegionCount))
+	}
+	if from < 0 || from >= RegionCount {
+		panic(fmt.Sprintf("ReachFrom：起點 %d 不是星域", from))
+	}
+	owners := make([]int, RegionCount)
+	for i := range owners {
+		owners[i] = owner(i)
+	}
+	dist, _ := g.BuildTables(owners, faction)
+	var out [RegionCount]bool
+	for i := range out {
+		out[i] = dist[from][i] < ReachLimit
+	}
+	return out
+}
+
 // reachFunc 把 `CapitalReach` 包成查詢函式；表只算一次。
 func reachFunc(g *rules.StarGraph, owner func(region int) int, faction int) func(int) bool {
 	t := CapitalReach(g, owner, faction)

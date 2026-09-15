@@ -21,11 +21,11 @@ import (
 // MessageBoxSpec 是訊息框的版面。
 type MessageBoxSpec struct {
 	Templates []struct {
-		Kind   int `json:"kind"`
-		CellX  int `json:"cell_x"`
-		CellY  int `json:"cell_y"`
-		Cols   int `json:"cols"`
-		Rows   int `json:"rows"`
+		Kind  int `json:"kind"`
+		CellX int `json:"cell_x"`
+		CellY int `json:"cell_y"`
+		Cols  int `json:"cols"`
+		Rows  int `json:"rows"`
 	} `json:"templates"`
 	RowBias int `json:"row_bias"` // 樣板的格 y 要再加幾格
 	Style   int `json:"style"`    // 外框樣式的起始碼（`視窗[+3]`）
@@ -209,4 +209,18 @@ func (s *MessageBoxSpec) MessageBoxButtonAt(kind, x, y int) (int, bool) {
 		}
 	}
 	return 0, false
+}
+
+// ButtonIsDecide 回第 kind 種訊息框的第 i 顆鈕是不是「決定」／「確認」
+// （另一顆是「中止」）。`MessageBoxButtonAt` 回的是子元件表裡的順序，
+// 兩顆鈕的框裡「中止」排在前面，所以不能拿索引 0 當「決定」。
+func (s *MessageBoxSpec) ButtonIsDecide(kind, i int) bool {
+	for _, c := range s.Children {
+		if c.Kind != kind || i < 0 || i >= len(c.Items) {
+			continue
+		}
+		t := c.Items[i].Text
+		return t == "決定" || t == "確認"
+	}
+	return false
 }

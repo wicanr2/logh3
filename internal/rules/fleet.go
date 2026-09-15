@@ -82,6 +82,11 @@ type Fleet struct {
 // NoTarget ＝ 沒有移動命令。原版在那一格填 `0xFF`（`docs/re/77`）。
 const NoTarget = -1
 
+// NoClassKey ＝ 沒有類別鍵：玩家走「出擊命令」編的艦隊 `+0x09` 就是這個
+// 值（收據 `fcmd-win` 的 `fleet0.bin`，`docs/re/312`），編制只有旗艦那
+// 一組、整補時也不套樣板（`BuildComposition`、`Refit` 都把它當「沒有」）。
+const NoClassKey = 0xFF
+
 // Moving 回這一支這回合會不會走。
 //
 // 原版的判斷在 `113A:0350`：`+0x08` 是 5 就不動，否則有目的地就往那邊走。

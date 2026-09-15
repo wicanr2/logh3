@@ -48,6 +48,29 @@ func RegionFleets(record []byte, faction int) int {
 	return int(record[regionFleets+faction])
 }
 
+// RecountRegionFleets ＝ 原版 `2703:0853`：把每一格的 `+0x28`／`+0x29`
+// 歸零（`2703:087A`），再掃一遍艦隊表對所在星域的 `+0x28 ＋ 陣營` 遞增
+// （`2703:08CE`，`docs/re/40`）。這兩格是**導出值**——艦隊表一動就要
+// 重數：讀存檔時、命令階段艦隊走完一格之後（`docs/re/297`）、以及新編
+// 艦隊時（收據 `fcmd-hover-home`：「決定」剛回地圖，游標移到首都，
+// 左下角就寫「艦隊 1：0」；`docs/re/312`）。
+//
+// `records` 是整張星域表（一筆 `RegionRecord`）。陣營不是 0／1 或所在
+// 星域不在表裡的艦隊跳過。
+func RecountRegionFleets(records []byte, fleets []Fleet) {
+	n := len(records) / RegionRecord
+	for r := 0; r < n; r++ {
+		o := r*RegionRecord + regionFleets
+		records[o], records[o+1] = 0, 0
+	}
+	for _, f := range fleets {
+		if f.Faction < 0 || f.Faction > 1 || f.Region < 0 || f.Region >= n {
+			continue
+		}
+		records[f.Region*RegionRecord+regionFleets+f.Faction]++
+	}
+}
+
 // RegionEconomy 回星域記錄裡的經濟力（32 位元）。
 func RegionEconomy(record []byte) int {
 	if len(record) < regionEconomy+4 {
@@ -396,8 +419,8 @@ func Tax(economy, ratePerMille int) int {
 
 // Treasury 是一個陣營這個月的財政（`docs/internals/27`）。
 type Treasury struct {
-	Budget      int // 原定軍事費：這個月一開始有多少（ds:8F62）
-	ShipPaid    int // 已支付的船艦建造費（ds:8F94）
+	Budget   int // 原定軍事費：這個月一開始有多少（ds:8F62）
+	ShipPaid int // 已支付的船艦建造費（ds:8F94）
 	// 底下四格照畫面上的兩組（「已支付」與「本次預定」），
 	// 對應的全域由收據 `fiscalrows5` 逐格釘出來（`docs/re/239`）。
 	FleetUpkeep  int // 已支付 艦隊維持費（ds:8F7A ＝ 累計已付）

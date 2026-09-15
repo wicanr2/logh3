@@ -268,6 +268,14 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	fleetWindow, err := screen.LoadFleetWindowSpec(filepath.Join(data, "fleet-window.json"))
+	if err != nil {
+		return nil, err
+	}
+	fleetActionMenu, err := screen.LoadCommandMenuSpec(filepath.Join(data, "fleet-command-menu.json"))
+	if err != nil {
+		return nil, err
+	}
 	routes, err := ai.LoadAdvanceRoutes(filepath.Join(data, "ai-advance-routes.json"))
 	if err != nil {
 		return nil, err
@@ -334,6 +342,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
 		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds, AdvanceRoutes: routes,
+		FleetWindow: fleetWindow, FleetActionMenu: fleetActionMenu,
 		Composition: compTables, DefaultAdjutants: adjutants,
 		MessageBox: msgBox, FrameTiles: frameTiles,
 		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,

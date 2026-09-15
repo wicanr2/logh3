@@ -31,21 +31,21 @@ type PlanetInfoSpec struct {
 	OwnerNames []hexStr `json:"owner_names"`
 
 	Lines struct {
-		Region        hexStr `json:"region"`
-		RegionName    hexStr `json:"region_name"`
-		Fortress      hexStr `json:"fortress"`
-		Planet        hexStr `json:"planet"`
-		KindAndOwner  hexStr `json:"kind_and_owner"`
-		PlanetName    hexStr `json:"planet_name"`
-		Blank         hexStr `json:"blank"`
-		Economy       hexStr `json:"economy"`
-		Defence       hexStr `json:"defence"`
-		KindHeader    hexStr `json:"kind_header"`
-		KindValue     hexStr `json:"kind_value"`
-		StockHeader   hexStr `json:"stock_header"`
-		StockValue    hexStr `json:"stock_value"`
-		EconomyOther  hexStr `json:"economy_other"`
-		DefenceOther  hexStr `json:"defence_other"`
+		Region       hexStr `json:"region"`
+		RegionName   hexStr `json:"region_name"`
+		Fortress     hexStr `json:"fortress"`
+		Planet       hexStr `json:"planet"`
+		KindAndOwner hexStr `json:"kind_and_owner"`
+		PlanetName   hexStr `json:"planet_name"`
+		Blank        hexStr `json:"blank"`
+		Economy      hexStr `json:"economy"`
+		Defence      hexStr `json:"defence"`
+		KindHeader   hexStr `json:"kind_header"`
+		KindValue    hexStr `json:"kind_value"`
+		StockHeader  hexStr `json:"stock_header"`
+		StockValue   hexStr `json:"stock_value"`
+		EconomyOther hexStr `json:"economy_other"`
+		DefenceOther hexStr `json:"defence_other"`
 	} `json:"lines"`
 }
 
@@ -74,10 +74,10 @@ type PlanetInfo struct {
 	// 不是的話經濟力與防衛力那兩行換成 `----` 的版本，後面幾段不印。
 	Own bool
 
-	Economy            int64 // `+0x1A` 32 位元
-	GrowthInt, GrowthF int   // 成長率的整數與小數（`2703:0D47` ÷ 10）
-	Defence, DefenceMax int  // `+0x14`／`+0x16`
-	Recover            int   // `+0x18`
+	Economy             int64 // `+0x1A` 32 位元
+	GrowthInt, GrowthF  int   // 成長率的整數與小數（`2703:0D47` ÷ 10）
+	Defence, DefenceMax int   // `+0x14`／`+0x16`
+	Recover             int   // `+0x18`
 
 	Kinds    [7]int // 七個艦種的補充存量
 	Missiles int64

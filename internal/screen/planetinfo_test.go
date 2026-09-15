@@ -48,10 +48,10 @@ func TestPlanetInfoMatchesOracle(t *testing.T) {
 
 	fb := gfx.NewFramebuffer(0)
 	DrawPlanetInfo(fb, s, fnt, tiles, PlanetInfo{
-		RegionOwner: 2,                        // 中立（收據當下的星域 +0x12）
-		RegionName:  h("b946a7c6a751"),        // 達希利
-		PlanetOwner: 0,                        // 帝國
-		PlanetName:  h("b970b6f8a6ccbab8"),    // 雷奧米爾
+		RegionOwner: 2,                     // 中立（收據當下的星域 +0x12）
+		RegionName:  h("b946a7c6a751"),     // 達希利
+		PlanetOwner: 0,                     // 帝國
+		PlanetName:  h("b970b6f8a6ccbab8"), // 雷奧米爾
 		Own:         true,
 		Economy:     4215, // 行星 +0x1A
 		GrowthInt:   6,    // `2703:0D47` 回 64，除 10 取商與餘

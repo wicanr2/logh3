@@ -1,0 +1,173 @@
+{
+ "note": "戰略地圖上的艦隊視窗（0DEA:0040；docs/spec/051、re/312）。格式字串逐位元組抄自資料段，順序就是原版呼叫 3617:003A 的順序。",
+ "cell_x": 7,
+ "cell_y": 0,
+ "cols": 25,
+ "rows": 17,
+ "style": 1,
+ "colour": 151,
+ "face": {
+  "x": 448,
+  "y": 60,
+  "w": 80,
+  "h": 100,
+  "note": "3958:0215(提督索引, 0x38, 5)；矩形量自 fcmd-win"
+ },
+ "buttons": [
+  {
+   "name": "ops",
+   "text": "作戰",
+   "cell_x": 22,
+   "cell_y": 14,
+   "cols": 2,
+   "codes": [
+    "a740bed4"
+   ]
+  },
+  {
+   "name": "change",
+   "text": "變更",
+   "cell_x": 22,
+   "cell_y": 15,
+   "cols": 2,
+   "codes": [
+    "c5dca7f3"
+   ]
+  },
+  {
+   "name": "close",
+   "text": "結束",
+   "cell_x": 22,
+   "cell_y": 16,
+   "cols": 2,
+   "codes": [
+    "b5b2a7f4"
+   ]
+  }
+ ],
+ "button_colour": 135,
+ "faction_names_coloured": [
+  "035b3135302cabd2b0eaad78035b3135312c",
+  "035b3134392ca650b7f9ad78035b3135312c",
+  "035b3135312ca4a4a5dfad78035b3135312c"
+ ],
+ "faction_names": [
+  "abd2b0eaad78",
+  "a650b7f9ad78",
+  "a4a4a5dfad78"
+ ],
+ "faction_colour": [
+  150,
+  149,
+  151
+ ],
+ "kind_letters": [
+  "a2d0",
+  "a2d6",
+  "a2d1",
+  "a2cf",
+  "a2d2",
+  "a2e2",
+  "a2d3",
+  "a2de"
+ ],
+ "move_names": [
+  "b2beb0ca",
+  "a565bbe2",
+  "be6eaf64",
+  "bfe9b065",
+  "aaf0afe8",
+  "abdda952"
+ ],
+ "speed_shrink_table": [
+  0,
+  0,
+  7,
+  14,
+  21,
+  28,
+  35,
+  42,
+  49,
+  56,
+  63,
+  0
+ ],
+ "formats": {
+  "clear": "0c",
+  "fleet_no": "257320202020b2c4",
+  "fleet_no_tail": "c4a5b6a40a",
+  "commander": "b4a3b7fe202020202020257325730a",
+  "cmd_level": "20202020202020202020b5a5afc5202020202532642020b867c5e7adc8",
+  "exp": "25366c752020202020200a",
+  "rule": "202020202020202020202020202020202020202020202020202020202020202020202020202020200a",
+  "ops_label": "a740bed4",
+  "goto": "015b25642c25642c",
+  "position": "b27ba662a6ecb86d20202020",
+  "space": "20",
+  "nl_pad50": "0a25353073",
+  "status_head": "0aaaacba41202020202020b3a1b6a4b2d5a6a80a",
+  "pad50": "25353073",
+  "adjutant_label": "b0c6a9780a",
+  "costs": "c0e7b942b867b64f2020bafbabf9b64f20202020202020202020b2beb0cab867b64f20202020202020202020202020202020",
+  "abil_head": "c4a5b6a4afe0a44f2020c4a5b6a4a468aef0adc8202020202020a5fabd75afa50a",
+  "abil_2": "20202020202020202020b2ceb276a44f20202020202020202020adb8bc75202020200a",
+  "abil_3": "20202020202020202020a65ec2e0b374abd72020202020202020bed4b0abbef70a",
+  "abil_4": "20202020202020202020a8b5afe8b374abd72020202020202020a565bbe20a",
+  "abil_5": "20202020202020202020bed4b0abb374abd72020202020202020a8bebf6d",
+  "ops_fight": "2573bed4b0ab",
+  "ops_in_fight": "bed4b0aba4a42020",
+  "ops_occupying": "a565bbe2a4a42020",
+  "move_target": "b2beb0caa5d8bcd020202020",
+  "standby_planet": "abdda952a6e6ac5020202020",
+  "standby": "202020202020202020202020abdda952a4a420202020202020202020",
+  "colour_str": "035b25642c2573",
+  "empty_slot": "a1bc",
+  "two_spaces": "2020",
+  "missile_label": "adb8bc752020202020202020",
+  "pct": "25336c642525",
+  "dashes": "2d2d2d2d",
+  "fighter_label": "20202020bed4b0abbef7202020202020",
+  "name_rank": "25732573",
+  "adj_name": "252d323673",
+  "adj_level": "b5a5afc5202020202532642020b867c5e7adc8",
+  "adj_exp": "25366c75",
+  "none": "a853a6b3",
+  "adj_none_level": "b5a5afc5202020202d2d2020b867c5e7adc8202d2d2d2d2d",
+  "colour_num6": "035b25642c253664",
+  "num6": "253664",
+  "num3": "20253375",
+  "colour_num3": "035b25642c20253375"
+ },
+ "action_menu": {
+  "note": "「作戰」開的五項選單（3667:0004 那一套，版面與戰場命令選單相同，但夾在戰略地圖的板子裡：clamp_rows 17；量自 fcmd-menu）",
+  "items": [
+   "移動",
+   "占領",
+   "駐留",
+   "輸送",
+   "待命"
+  ],
+  "item_hex": [
+   "b2beb0ca",
+   "a565bbe2",
+   "be6eaf64",
+   "bfe9b065",
+   "abdda952"
+  ],
+  "width": 2,
+  "clamp_rows": 17
+ },
+ "verbs": [
+  "b2beb0caa6dc",
+  "a565bbe2",
+  "be6eaf64a662",
+  "bfe9b065aaabb8eaa6dc",
+  "abdda952a9f3"
+ ],
+ "verb_standby": "abdda952",
+ "confirm_format": "ad6e2573035b25642c2573035b25642c2573ac50a874b6dca14820200a",
+ "unreachable": "b36fac4fb54caa6bab65a9b9aabaac50a874a143",
+ "unreachable_kind": 0,
+ "confirm_kind": 1
+}

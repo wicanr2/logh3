@@ -15,6 +15,19 @@ import "strconv"
 // Printf 把格式化的結果寫進緩衝區。args 依序對應格式字串裡的轉換：
 // `%s` 吃 []byte 或 string，數字吃 int／int64／uint16 之類。
 func (b *TextBuffer) Printf(format []byte, args ...any) {
+	formatTo(b.PutByte, format, args...)
+}
+
+// Sprintf 是同一支 printf，但把結果收成位元組串而不是寫進視窗
+// ——原版 `3ACA:001B` 就是這樣先排進暫存區再交給訊息框的
+// （確認框「要移動至…星系嗎？」，`docs/re/312` §四）。
+func Sprintf(format []byte, args ...any) []byte {
+	var out []byte
+	formatTo(func(c byte) { out = append(out, c) }, format, args...)
+	return out
+}
+
+func formatTo(put func(byte), format []byte, args ...any) {
 	ai := 0
 	next := func() any {
 		if ai >= len(args) {
@@ -27,11 +40,11 @@ func (b *TextBuffer) Printf(format []byte, args ...any) {
 	for i := 0; i < len(format); i++ {
 		c := format[i]
 		if c != '%' {
-			b.PutByte(c)
+			put(c)
 			continue
 		}
 		if i+1 < len(format) && format[i+1] == '%' {
-			b.PutByte('%')
+			put('%')
 			i++
 			continue
 		}
@@ -54,7 +67,7 @@ func (b *TextBuffer) Printf(format []byte, args ...any) {
 			j++
 		}
 		if j >= len(format) {
-			b.PutByte(c)
+			put(c)
 			continue
 		}
 		var out []byte
@@ -76,7 +89,9 @@ func (b *TextBuffer) Printf(format []byte, args ...any) {
 			}
 		default:
 			// 沒見過的轉換：原樣輸出那一段，等有證據再補。
-			b.Write(format[i : j+1])
+			for _, c := range format[i : j+1] {
+				put(c)
+			}
 			i = j
 			continue
 		}
@@ -87,13 +102,15 @@ func (b *TextBuffer) Printf(format []byte, args ...any) {
 				fill = '0'
 			}
 			for k := 0; k < pad; k++ {
-				b.PutByte(fill)
+				put(fill)
 			}
 		}
-		b.Write(out)
+		for _, c := range out {
+			put(c)
+		}
 		if pad > 0 && left {
 			for k := 0; k < pad; k++ {
-				b.PutByte(' ')
+				put(' ')
 			}
 		}
 		i = j

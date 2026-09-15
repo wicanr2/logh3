@@ -70,3 +70,6 @@ rec fcmd-menu-rclick 495000000 fcmd-menu - -rclicks 472000000:300:200 -click-hol
 rec fcmd-win-rclick  470000000 fcmd-win  - -rclicks 447000000:300:200 -click-hold $HOLD
 # 「結束」→ 回地圖。
 rec fcmd-close   470000000 fcmd-win - -clicks 447000000:490:350 -click-hold $HOLD
+# 6. 從 `dec1` 只把游標移到瓦爾哈拉（不按）→ 左下角照游標重寫：剛編成的
+#    第１艦隊算不算進「艦隊 a：b」（星域記錄 `+0x28` 建艦隊時就加了）。
+rec fcmd-hover-home 440000000 fcmd-base - -mouse-x 32 -mouse-y 32 -mouse-at 421000000

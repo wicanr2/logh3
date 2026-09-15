@@ -22,10 +22,15 @@ cases=(
   "vs3|move 300 250; click; type 126; enter; click 400 262"
   "vs4|move 300 250; click; type 126; enter; click 432 263"
   "vs5|move 300 250; click; type 126; enter; click 432 263; rclick 300 240; rclick 300 240; click 544 125; click 560 125"
+  # 戰略艦隊命令（docs/spec/051）：dec1 的序列再點右下角清單第 0 列開艦隊視窗；
+  # fcmd-done 走完「作戰 → 移動 → 亞爾提那 → 決定」，清單第 0 列左端的移動
+  # 圖示 remake 還沒畫（規格的已知差異），那一列 (336,300) 288×20 不比。
+  "fcmd-win|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308"
+  "fcmd-done|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 312; click 85 128; click 432 263|336,300,288,20"
 )
 fail=0
 for c in "${cases[@]}"; do
-  batch="${c%%|*}"; script="${c#*|}"
+  IFS='|' read -r batch script except <<<"$c"
   oracle="workplace/oracle/$batch/screen.bin"
   if [[ ! -f "$oracle" ]]; then
     echo "  $batch 缺收據，跳過"
@@ -34,7 +39,15 @@ for c in "${cases[@]}"; do
   tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data \
     -script "$script" -shot-bin /src/workplace/gui-check.bin -shot-after 2 \
     >/dev/null 2>&1
-  if cmp -s workplace/gui-check.bin "$oracle"; then
+  if [[ -n "$except" ]]; then
+    # 有排除矩形的用 python 比（x,y,w,h 之外要逐位元組相同）。
+    if tools/py.sh tools/scripts/cmp_except.py workplace/gui-check.bin "$oracle" "$except"; then
+      echo "  $batch 排除 ($except) 之外逐位元組相同"
+    else
+      echo "  $batch **不同**"
+      fail=1
+    fi
+  elif cmp -s workplace/gui-check.bin "$oracle"; then
     echo "  $batch 逐位元組相同"
   else
     echo "  $batch **不同**"
