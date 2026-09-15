@@ -58,3 +58,10 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`043`](043-ai-capital-reach.md) | 戰略 AI 的首都可達表 | CONFORMED |
 | [`044`](044-ending-image-position.md) | 400 列結局 VO5 的垂直位置 | CONFORMED |
 | [`045`](045-ship-delivery-screen-details.md) | 月底船艦接收報告的底板細節 | CONFORMED |
+| [`046`](046-battle-grid-residue.md) | 戰場小地圖下方的格表殘留 | READY |
+| [`046`](046-rebellion-report.md) | 逐格叛亂的戰略報告 | CONFORMED |
+| [`047`](047-occupation-report.md) | 單方面占據的戰略報告 | CONFORMED |
+| [`048`](048-admiral-fate-report.md) | 失蹤提督生死判定與報告 | READY／已實作 |
+| [`049`](049-phezzan-event-report.md) | 費沙事件雙頁報告 | CONFORMED |
+| [`050`](050-victory-defeat-report.md) | 勝負報告與結局轉場 | CONFORMED |
+| [`051`](051-strategic-fleet-command.md) | 戰略地圖上的艦隊命令（艦隊視窗 → 作戰 → 移動 → 確認） | READY（第一片） |

@@ -365,7 +365,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 1 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 6 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -400,6 +400,87 @@
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
+
+#### region-info-window — 左鍵點星圖開的星系情報視窗
+
+*[#44](https://github.com/wicanr2/logh3/issues/44) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+戰略地圖介面上左鍵點星圖的一格會開**星系情報視窗**：星系名、區域小圖與行星名、
+「待命船艦」七列（艦數／部隊／補給物資）與「結束」（探索批次 `fcx-cap`，
+`docs/re/312`；熱區清單應是 `0DA2`）。remake 左鍵點星圖沒有反應（只有右鍵選星域）。
+
+**做完的判準**：星系情報視窗有規格與同狀態收據，remake 左鍵點星圖開得起來、「結束」與右鍵關得掉。
+
+**證據**：[`docs/re/312-strategic-fleet-command-flow.md`](docs/re/312-strategic-fleet-command-flow.md)
+
+**核實**：`internal/game` 裡出現 `StateRegionInfo` 就是做好了
+
+#### fleet-list-tabs-and-scroll — 右下角清單的四個分頁與捲動
+
+*[#43](https://github.com/wicanr2/logh3/issues/43) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+戰略地圖介面右下角那張清單有四個分頁（艦隊／行星／敵艦隊／提督，熱區 `0BEE`）與
+欄 17 的上下捲動鈕（`0AD0:0236`）。分派讀出來了：換分頁時 `04F8:05ED` 換掉
+`[ds:9582]`／`[ds:957E]` 兩個函式指標（`docs/re/312` §一）；remake 只畫「艦隊」分頁、
+分頁不能切、清單不能捲。
+
+**做完的判準**：四個分頁各有規格與同狀態收據，remake 切得動、捲得動。
+
+**證據**：[`docs/re/312-strategic-fleet-command-flow.md` §一`](docs/re/312-strategic-fleet-command-flow.md` §一)
+
+**核實**：`docs/spec/051-strategic-fleet-command.md` 裡還找得到 `清單的捲動（欄 17 的上下鈕）與四個分頁`（自承還在 ＝ 還沒做）
+
+#### fleet-command-change-menu — 艦隊視窗「變更」→ 副官／編組
+
+*[#42](https://github.com/wicanr2/logh3/issues/42) · re（逆向：機制還沒讀出來）*
+
+艦隊視窗的「變更」開一個兩項小選單 副官／編組（`fcx-henkou`，`docs/re/312`），
+兩項的行為沒讀。remake 的艦隊視窗那顆鈕點了什麼都不做。
+
+**做完的判準**：副官／編組兩項有規格（typed input → 狀態）與同狀態收據並接進 remake。
+
+**證據**：[`docs/re/312-strategic-fleet-command-flow.md`](docs/re/312-strategic-fleet-command-flow.md)
+
+**核實**：`docs/spec/051-strategic-fleet-command.md` 裡還找得到 `「變更」→ 副官／編組`（自承還在 ＝ 還沒做）
+
+#### fleet-command-other-actions — 作戰選單的 占領／駐留／輸送／待命 四項
+
+*[#41](https://github.com/wicanr2/logh3/issues/41) · re（逆向：機制還沒讀出來）*
+
+作戰選單的另外四項。分派讀出來了（`docs/re/312` §三）：占領（動作 1）的允許表換成
+敵方＋中立，對費沙先跳參謀警告「占領費沙自治領地可能會導致費沙的經濟力流向同盟軍。」
+（`ds:2F06`）再問「你確定要占領費沙嗎」（`ds:2FF0`）；駐留寫 `+0x08 ← 2`、輸送寫 3
+（`fcx-act-305`／`fcx-act-322`）；待命走 `0DEA:1320`「指定待命行星」列出現在位置的行星，
+寫 `+0x08 ← 5`、`+0x07 ← 回傳值`。每一項的畫面收據與回合裡的效果（`113A:0B46` 印
+「出發前往／已經到達／已經駐留」、`113A:0797`「無法前往敵方的星系」、`113A:0899`
+「無法直接到達此星系」「要占領此星系嗎」、`113A:0A4E`「由於移動經費不足無法移動」）都還沒讀。
+
+**做完的判準**：四項各有規格段落（typed input → 艦隊記錄）與同狀態收據，remake 選單上那四項不再只是關選單。
+
+**證據**：[`docs/re/312-strategic-fleet-command-flow.md` §三、§六`](docs/re/312-strategic-fleet-command-flow.md` §三、§六)
+
+**核實**：`docs/spec/051-strategic-fleet-command.md` 裡還找得到 `選單上點這四項本片\*\*只關選單\*\*`（自承還在 ＝ 還沒做）
+
+#### fleet-command-move — 戰略地圖上的艦隊命令：清單點列 → 艦隊視窗 → 作戰 → 移動 → 確認（第一片）
+
+*[#40](https://github.com/wicanr2/logh3/issues/40) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+玩家派艦隊的入口在戰略地圖介面右下角「艦隊」分頁：點清單一列開艦隊視窗
+（作戰／變更／結束），「作戰」拉出 移動／占領／駐留／輸送／待命，「移動」把地圖
+露出來讓玩家點目的地（依可達性重新著色），確認框「要移動至…星系嗎？」按「決定」
+就把 `+0x07`（目的地）與 `+0x08`（動作碼 0）寫進艦隊記錄。流程、分派鏈、允許表、
+訊息與十四批收據都在 `docs/re/312`；第一片的 typed input／state 表在 `docs/spec/051`。
+
+remake 目前**整套不存在**：艦隊編成完只能停在首都，仗只有 AI 或讀檔才觸發得了。
+
+**做完的判準**：`docs/spec/051` 第一片的路徑（清單點列 → 艦隊視窗 → 作戰 → 移動 → 目的地 → 決定／中止，
+含各層右鍵與「結束」）走得通，`fcmd-win`／`fcmd-menu`／`fcmd-menu-hover`／`fcmd-pick`／
+`fcmd-confirm`／`fcmd-far`／`fcmd-self`／`fcmd-cancel`／`fcmd-close` 與三張右鍵收據整張逐位元組相同，
+`fcmd-done` 除清單第 0 列那 288×20 之外 0 差異，且艦隊記錄寫的是 `Target＝2`、動作＝移動。
+
+**證據**：[`docs/re/312-strategic-fleet-command-flow.md`](docs/re/312-strategic-fleet-command-flow.md)、[`docs/spec/051-strategic-fleet-command.md`](docs/spec/051-strategic-fleet-command.md)、[`tools/fleetcmd_receipts.sh`](tools/fleetcmd_receipts.sh)
+
+**核實**：`docs/spec/051-strategic-fleet-command.md` 標到 `CONFORMED`
 
 ### 做完的（不在矩陣裡的那幾條）
 
