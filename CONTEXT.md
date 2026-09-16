@@ -410,7 +410,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 2 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 6 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -445,6 +445,121 @@
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
+
+#### enemy-tab-intel-rows — 右下角「敵艦隊」分頁有索敵等級的列與它的視窗
+
+*[#49](https://github.com/wicanr2/logh3/issues/49) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+右下角清單的「敵艦隊」分頁（規格 052）只對過空清單。原版 `0B20:003B` 列的是別的
+陣營、在這一格、**索敵等級**（艦艇 `+0x17` 在各組取最大）不是 0 的艦隊：等級 3 印
+「第Ｎ艦隊／提督名／士氣」，其餘印「第？艦隊」＋九個「？」；點一列開 `0B20:0336`
+的視窗，等級不到 3 印「情報資料來源不足」（`docs/re/319` §敵艦隊）。remake 的戰略層
+`FleetGroup` 還沒帶著 `+0x17`（那是戰場上累積的，`docs/internals/38`），所以
+`enemyFleetsInRegion` 永遠回空。
+
+線索：
+- 要打過仗的局面：S3 六次實行進戰場、打完回地圖，或用 `-poke` 把某支敵艦隊的
+  艦艇 `+0x17` 寫成 1／3 再開分頁（規格 014「改記憶體不靠運氣」）。
+- 視窗 `0B20:0336` 的內容讀了沒接（`docs/re/319`）；等級 3 的列與視窗各一份收據。
+- 索敵等級怎麼累積（索敵分遣隊的「剩餘燃料」那一行也還沒做，規格 051 已知差異）
+  是另一條，這一條只要清單與視窗照 `+0x17` 印。
+
+**做完的判準**：敵艦隊分頁有索敵等級的列與它的視窗有同狀態收據，remake 戰略層艦隊帶著 `+0x17`、
+分頁照等級印、視窗開得起來。
+
+**證據**：[`docs/re/319-fleet-list-tabs.md`](docs/re/319-fleet-list-tabs.md)、[`docs/spec/052-fleet-list-tabs.md`](docs/spec/052-fleet-list-tabs.md)、[`docs/internals/38-battle-units.md`](docs/internals/38-battle-units.md)
+
+**核實**：`internal/game/listtabs.go` 裡還找得到 `所以目前永遠是空的`（自承還在 ＝ 還沒做）
+
+#### engagement-animation — 交戰演出（ANI_PNL1 ＋ COMANI.BMG）與戰鬥曲的出口
+
+*[#48](https://github.com/wicanr2/logh3/issues/48) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+**交戰演出**：戰場上兩支艦隊交火那一刻原版切一段人物動畫（`ANI_PNL1.A98` 的面板
+＋ `COMANI.BMG` 的圖庫），**這一段是戰鬥曲唯一的出口**——`s3assault` 的檔案時間線：
+`#1140.7M read bgm_6f.mds`（換戰鬥曲）→ `comani.bmg` 連續數十次 → `#1169.3M read
+bgm_3f.mds`（換回平時曲），下一次交戰再來一遍（`docs/re/274` §七）。remake 的戰術
+戰鬥直接結算，沒有這個狀態，所以設定畫面存得下的戰鬥配樂（`audio.Settings.BattleTune`）
+沒有畫面會播；「動畫效果」（`ds:8F36`，0 ＝ 跳過演出）與「動畫速度」（`ds:8F37`）
+也沒有人讀（`docs/re/286`）。
+
+線索：
+- `play_music(1)` 只有兩個呼叫點在戰鬥端：線性 `0x1DFB8`（先釋放兩個緩衝區再換曲）
+  與 `0x1EDD0`（`docs/re/274` §七的表）——從那兩處往上找演出的入口與「動畫效果 ＝ 0
+  就跳過」的判斷。
+- `COMANI.BMG`（1,036,159 bytes）的格式未解：不是開頭動畫那套編碼（`docs/re/46`）；
+  `ANI_PNL1.A98` 的容器格式與 `ANI_PNL0` 同一種（`docs/internals/37`），面板本身應該
+  解得開，還沒對到畫面。
+- 收據：S3 六次實行進戰場（`docs/internals/34`「怎麼走到」），再往前跑到 `#1140M`
+  附近用 `-watch-screen` 抓演出的每一幀；`-poke ds:8F36 ← 0` 對照跳過的版本。
+  `s3assault` 那一份的時間線已經有三次交戰的步數可以直接對。
+- 音樂：演出開始 `BattleTune()`、結束換回 `TuneFor`；`Battle ＝ 2` 沿用平時曲時
+  原版有沒有重開那首（`read bgm_3f.mds` 會不會出現）要另量。
+
+**做完的判準**：交戰演出的觸發點、跳過條件、面板與圖庫格式、幀序與節奏（動畫速度）都有反組譯與
+收據；remake 在同一時點播同一段、換同一首，`Settings.BattleTune` 有出口；
+`TestEveryTuneIsReachable` 覆蓋到 `BGM_6`／`BGM_7`。
+
+**證據**：[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)、[`docs/re/46-comani-not-intro-codec.md`](docs/re/46-comani-not-intro-codec.md)、[`docs/internals/37-ani-pnl-a98.md`](docs/internals/37-ani-pnl-a98.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
+
+**核實**：`internal/audio/tune.go` 裡還找得到 `還沒有交戰演出那個狀態`（自承還在 ＝ 還沒做）
+
+#### list-screen-rows — 一覽表四張的列點一列開視窗
+
+*[#47](https://github.com/wicanr2/logh3/issues/47) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+一覽表的四張（星系資料／艦隊資料／提督資料／敵將資料）開得起來、內容逐位元組對過
+（`docs/re/37`、`docs/re/50`），但**列點不動**，只能右鍵關。原版點一列開什麼還沒量；
+合理的猜測（待驗）：提督與敵將那兩張開 `0D92:000D` 的提督詳細資料（右下角提督
+分頁那一支已接，旗標 0 是 經歷／結束 兩顆鈕）、星系資料開 `073F:060A` 的星系情報
+視窗（左鍵點星圖那一支已接）、艦隊資料開艦隊視窗或艦隊詳細資料。四張視窗 remake
+都已經有，所以這一條主要是量熱區與確認開的是哪一張。
+
+線索：
+- 四張的熱區清單在 `docs/internals/23`（`ds:03D8` 那種表）——先找到每張的清單，
+  列的碼與命中函式就有了；`docs/re/312` §一 是右下角清單的做法，可以照抄。
+- 收據從 `fcmd-base.state`（796/01 帝國，一覽表提督資料 35 列、艦隊資料一列）開
+  一覽表 → 各張 → 點第 0 列；星系資料的列順序未解（`docs/re/50` §未解）。
+- 一覽表四張的右側面板還是量好畫死的（`docs/spec/002`），開視窗之後若右側重印會
+  一起浮出來。
+
+**做完的判準**：四張的列各有規格與同狀態收據，remake 點一列開得出原版開的那張視窗、關得回清單。
+
+**證據**：[`docs/re/37-empty-lists.md`](docs/re/37-empty-lists.md)、[`docs/re/50-admiral-lists.md`](docs/re/50-admiral-lists.md)、[`docs/internals/23-hotspot-lists.md`](docs/internals/23-hotspot-lists.md)
+
+**核實**：`internal/game/game.go` 裡還找得到 `一覽表四張的列還點不動`（自承還在 ＝ 還沒做）
+
+#### fleet-arrival-effects — 占領命令走到之後的效果與回合裡的兩張報告（規格 051 的排除範圍）
+
+*[#46](https://github.com/wicanr2/logh3/issues/46) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+戰略艦隊命令的作戰五項都下得了、艦隊也會走（規格 051），但**走到之後的那一路**
+還沒接：規格 051 的排除範圍列了三件事——占領命令的效果（走到敵方星域之後
+`113A:0545`、`113A:0899`「無法直接到達此星系」「要占領此星系嗎」）、回合裡的兩張
+報告「無法前往敵方的星系」「由於移動經費不足無法移動」、以及 `1213:0003(星域)`
+那道檢查的語意（三個收據都過但沒讀）。remake 的 `advanceTurn` 只把艦隊往目的地
+走一格、扣移動費、到了清命令；單方面占據（bit2／bit4）與逐格開戰是另一條既有的鏈
+（`prepareOccupationReports`／`scanRegionsFrom`），要弄清楚占領命令到達時與它
+怎麼接。
+
+線索：
+- 回合處理在 `113A` 段（移動費 `113A:0729`、錢流進行星 `113A:06C3`，`docs/re/237`、
+  `docs/re/313`）；切片 `workplace/ida/fcx0654.com` 不含它，要另切（線性 `0x113A0` 起）。
+- 訊息字串「無法直接到達此星系」「要占領此星系嗎」「無法前往敵方的星系」
+  「由於移動經費不足無法移動」在資料段，先 `strings` 找位址再找 `push` 它的呼叫點
+  （`docs/re/312` 的做法）。
+- 收據：從 `fcmd-done.state`（第５艦隊往亞爾提那的移動命令已下）按「實行」走到
+  目的地；占領那條要先把目的地換成敵方或中立的相鄰格（`fcmd-occupy-*` 系列的
+  檢查點），到了之後看是哪一張報告。移動經費不足用 `-poke` 把軍事費（`ds:8F52` 起，
+  `docs/re/236`）寫成 0。
+- 「一回合走一格」仍是假設待驗（`advanceTurn` 的註解），這一條順便釘。
+
+**做完的判準**：占領命令走到目的地之後的效果、兩張回合報告與 `1213:0003` 的語意都有反組譯與
+收據，remake 照原版接進 `advanceTurn`，規格 051 的排除範圍拿掉那三條。
+
+**證據**：[`docs/spec/051-strategic-fleet-command.md`](docs/spec/051-strategic-fleet-command.md)、[`docs/re/313-fleet-command-round-2.md`](docs/re/313-fleet-command-round-2.md)、[`docs/re/237-move-cost-is-the-other-cost.md`](docs/re/237-move-cost-is-the-other-cost.md)
+
+**核實**：`internal/game/game.go` 裡還找得到 `到了之後的那一路還沒接`（自承還在 ＝ 還沒做）
 
 #### month-end-tax-per-seat — 月底結算的收稅要逐座位、中立不扣（別家星域的經濟力比原版少）
 

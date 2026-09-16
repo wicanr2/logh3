@@ -993,6 +993,11 @@ func (g *Game) continueAfterAdmiralFateReports() {
 	}
 	// 有命令的艦隊往目的地走一格（`docs/re/77`、`internal/rules.Advance`）。
 	// **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
+	//
+	// 到了之後的那一路還沒接：占領命令的效果（`113A:0545`／`0899`
+	// 「無法直接到達此星系」「要占領此星系嗎」）與回合裡的兩張報告
+	// 「無法前往敵方的星系」「由於移動經費不足無法移動」（規格 051 的排除
+	// 範圍，worklist #46 `fleet-arrival-effects`）。
 	if g.res.Graph != nil {
 		for i := range g.fleets {
 			from := g.fleets[i].Region
@@ -2234,6 +2239,10 @@ func (g *Game) click(x, y int) {
 		}
 		// 點在選單項目外面就把選單關掉——實測四個方向的界外點都回主畫面。
 		g.state = StateCommandPhase
+	case StateStarList, StateFleetList, StateAdmiralListView, StateEnemyList:
+		// 一覽表四張的列還點不動，只能右鍵關（worklist #47 `list-screen-rows`）：
+		// 原版點一列開什麼還沒量（提督那兩張多半是 `0D92:000D` 的詳細資料、
+		// 星系那張多半是 `073F:060A` 的星系情報視窗）。
 	}
 }
 

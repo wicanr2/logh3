@@ -7071,3 +7071,15 @@ GitHub 的 issue 時間軸承擔。
 - 文件：`docs/re/320`、規格 053（新）、051／013 指標、re/22／23／89 指標、internals 58、
   playtest 021（一百四十五批）、CONTEXT；gui_check 加 `fcmd-rinfo`（23 全過）。
   關 #44（verify → go_test）。
+
+## 2026-09-16 — 第三輪收尾：issue 狀態與第四輪 kickoff
+
+- 開 #46（占領命令走到之後的效果與回合裡的兩張報告，規格 051 排除範圍）、#47（一覽表
+  四張的列）、#48（交戰演出與戰鬥曲的出口）、#49（敵艦隊分頁有索敵等級的列）；每張綁
+  `present` 的自承註解（`advanceTurn` 走一格那段、`click` 的一覽表空 case、
+  `audio/tune.go`、`listtabs.go` 的 `enemyFleetsInRegion`），接上時把那句拿掉換 `go_test`。
+  open：#45–#49、#16；verify 229 條 0 斷言不成立。
+- `tools/fleetcmd_rerun.sh`：只重跑 `fleetcmd_receipts.sh` 的一批或一段（第三輪一直放在
+  scratchpad 的兩支合成一支）；`fcmd-map-rclick` 重跑雜湊相同。
+- kickoff `docs/kickoff/2026-09-16-fleet-arrival-round-4.md`：A #45 → B #46 → C #47 →
+  D #48 → E #49（順手）。#46 排在一覽表前面的理由：它是艦隊命令那一族的尾巴。
