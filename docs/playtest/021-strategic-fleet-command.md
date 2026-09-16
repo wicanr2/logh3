@@ -1,9 +1,9 @@
 # 戰略艦隊命令同狀態對拍（清單點列 → 艦隊視窗 → 作戰 → 五項 → 確認）
 
-日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更、艦隊組成編輯器、副官）
+日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更、艦隊組成編輯器、副官、右下角清單的分頁與捲動）
 
 比較等級：`same-state`（整張 640×480）。
-原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：九十七批是正常玩家路徑、沒有
+原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：一百二十三批是正常玩家路徑、沒有
 注入——冷啟動走 `dec1` 的序列（主選單 → 防拷 → 出擊命令 → 萊因哈特 → 出擊 →
 確認 → 決定）到戰略地圖存檢查點，之後每一張從上一張的檢查點只多一個輸入
 （`tools/fleetcmd_receipts.sh`；每批附 `plane.bin` 字元平面與 `fleet0.bin`
@@ -14,7 +14,7 @@
 `fleetedit_test.go`）。
 
 `GIN3.COM` SHA-256 `770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918`；
-一百零九份 `pal.bin` SHA-256 都是
+一百三十五份 `pal.bin` SHA-256 都是
 `28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8`。
 座標是滑鼠座標（畫面 y ＝ 滑鼠 y ＋ 40）。
 
@@ -129,6 +129,32 @@
 | `fcmd-fadj-change-pick` | 左鍵 (450,70) | `d56711025b0e546bffb22ea5c7e8a1071ffecd86cc1aefe05f2ebef02d2979d3` | 0 |
 | `fcmd-fadj-pick-confirm` | 左鍵 (496,280) | `42a69af008a6476f05e98e025c558362cb2934093b808bb52d275a6dc059cf27` | 0 |
 | `fcmd-fadj-confirm-fleet` | 左鍵 (480,310) 確認、(510,310) 決定 → 地圖（艦隊 `+0x05` ＝ 2）| `3c8e6d5a149ba65457b3367aafa3373935c14ab33be4ad8a59da5ea9a3326434` | 0 |
+| `fcmd-tab-planet` | （從 `fcmd-base`）左鍵 (415,250) 行星分頁 → 瓦爾哈拉四顆行星 | `01903bc07e685dcc739ded0459bb9ceb7e8ff4512b75928f301a65b048d12331` | 0 |
+| `fcmd-tab-planet-row` | 左鍵 (450,268) 列 0 → 奧丁的行星情報視窗（列反白） | `6cd8f243d632eb0733278a12849eef40cad995e242c96590ec491367e8308673` | 0 |
+| `fcmd-tab-planet-ok` | 左鍵 (462,289) 確認 → 關窗、反白還原 | `e5e1fd8efa46580d888e81fdf19bba0da6f99393120c529d6fb339e0b79540a6` | 0 |
+| `fcmd-tab-planet-rclick` | （從 `fcmd-tab-planet-row`）右鍵 → 關窗 | `9082a46e674a6312009ae9e079eb80ba9c8badc2da97f870928c37dba3267c30` | 0 |
+| `fcmd-tab-planet-scroll` | （從 `fcmd-tab-planet`）左鍵 (617,250) 欄 17 列 6 → 只有游標動 | `06013047e4bd2ae5951f2b047765f0d8889c1d923037c89e9910d3cf86ae1144` | 0 |
+| `fcmd-tab-enemy` | （從 `fcmd-base`）左鍵 (490,250) 敵艦隊分頁 → 空頁 | `d8e4f9d44e57efc58149c921ac4e6d0dc5ada0cdcaed3f16cb56029e63d995cd` | 0 |
+| `fcmd-tab-enemy-row` | 左鍵 (450,268) 空列 → 不動 | `841a878e045ca37535cad8a6e90009c022f27fcb962591e3dd97e54ed3cfecb0` | 0 |
+| `fcmd-tab-admiral` | （從 `fcmd-base`）左鍵 (560,250) 提督分頁 → 35 位、▲▼ | `ae52019660673172e44de5fce149300f5d5afc8172c5c1588466241016fb2c50` | 0 |
+| `fcmd-tab-admiral-down` | 左鍵 (617,348) ▼ 按住 0.3M 步 → 位移 5 | `edbd2bec6acd24323119e2463036fdace17dbf19f87b09e78e5c6c82cc212d44` | 0 |
+| `fcmd-tab-admiral-down2` | 再一次 ▼ → 位移 10 | `54da800fa4212c6ba4587b26c4b9160204466008c5b5a9cb83294dfd8d6c9d05` | 0 |
+| `fcmd-tab-admiral-up` | （從 `fcmd-tab-admiral-down`）左鍵 (617,268) ▲ → 位移 0 | `c69aab032dc8527306384da7733891d89d7f71fb41f43ca4f47643dccfe32159` | 0 |
+| `fcmd-tab-admiral-end` | （從 `fcmd-tab-admiral`）▼ 按住 3M 步 → 到底、位移 30 | `8f2450590f344cb9e30075c5295a00d97cca1b06bcafd3f190b315dfde0f8d6e` | 0 |
+| `fcmd-tab-admiral-row` | （從 `fcmd-tab-admiral`）左鍵 (450,268) 列 0 → 吉爾菲艾斯的詳細資料 | `3f8261509a1221a7aa9c7ce53b31574485dcf416d9597ff4c648d9df66344725` | 0 |
+| `fcmd-tab-admiral-cancel` | 左鍵 (448,280) 中止 → 關窗、反白還原 | `9c606e8fc4aa107ddc6de757b2c47cb854b52bfe504bb3b2c2c7e4d1775ef8ad` | 0 |
+| `fcmd-tab-admiral-rclick` | （從 `fcmd-tab-admiral-row`）右鍵 → 關窗、清單不動 | `f00e0276f84654f8ccfcee56b7e4141a9c14dc15fa848501a33e1291cb94e39f` | 0 |
+| `fcmd-tab-admiral-sortie` | （從 `fcmd-tab-admiral-row`）左鍵 (496,280) 出擊 → 艦隊編成 | `13f30e0535a539895feb0e6acb8c6d2055fc93d2eed382443673e9eeab908132` | 0 |
+| `fcmd-tab-sortie-rclick` | 右鍵 → 艦隊組成（出擊那條路的艦隊編成右鍵 ＝ 確認） | `8bfbe45a8027622dd05438186ba5f6e495c7cbad6084cb97eb1a8f85fb4ee2ae` | 0 |
+| `fcmd-forg-rclick` | 冷啟動同 `fcmd-fok`，艦隊編成那一下換成右鍵 → 艦隊組成（雜湊 ＝ `fcmd-fok-rclick`） | `7fea9d30203f0f052457bf5a5c12e86f48002fe00b5539e3e7f3ce639d5a0298` | 0 |
+| `fcmd-tab-fleet2` | （從 `fcmd-tab-admiral-sortie`）左鍵 (480,310) 確認、(510,310) 決定 → 第２艦隊；提督分頁還選著、少兩位 | `dab8c85922316bea893ea1d39179ff0f4c94bd75a676abec73f2d391ef0104fd` | 0 |
+| `fcmd-tab-fleet2-list` | 左鍵 (350,250) 艦隊分頁 → 兩支 | `e52262bc8ad747db34b77158666ea9133d2e961602c23eca7cb94645149d9e8a` | 0 |
+| `fcmd-tab-fleet6` | （從 `fcmd-tab-fleet2`）再出擊四位（列 0、出擊、確認、決定 × 4）→ 六支 | `25597c8ba654be0f45f7cb50559086ffbba530c6a534adfaee4b56ba99fa961e` | 0 |
+| `fcmd-tab-fleet6-list` | 左鍵 (350,250) 艦隊分頁 → 六支、▲▼ | `34dbeb5fa11add3bde3afd6b966060929612f7ffca88c20cdc79701051b09df3` | 0 |
+| `fcmd-tab-fleet6-down` | 左鍵 (617,348) ▼ → 第 2–6 艦隊、位移 1 | `fe80039ea5d459e42c319e91cdf7aa02ee891edc320619cefa7efe9b94b75e7c` | 0 |
+| `fcmd-tab-fleet6-up` | 左鍵 (617,268) ▲ → 位移 0 | `e5bc4d16b3ba80a03dd1be488e3f4c399b542bc2faa0c5a9e466fae52c5a25d2` | 0 |
+| `fcmd-tab-fleet6-row` | （從 `fcmd-tab-fleet6-down`）左鍵 (450,348) 列 4 → 第６艦隊的視窗 | `43f8f82c5404f860cf8b6c666c9e6feaa24229c964a045642056459c12be5a77` | 0 |
+| `fcmd-tab-fleet6-close` | 左鍵 (490,350) 結束 → 地圖、位移仍 1 | `602d0a3aa64727b59bcedbbb922aa76c7605c9d8b099ec787133e5496c6dafd7` | 0 |
 
 記憶體：`fcmd-done/fleet0.bin` 與 `fcmd-base/fleet0.bin` 只差 `+0x07`（FF→02）
 與 `+0x08`（05→00）；remake 的 `Fleet.Target`／`Move`／`Parked` 逐一對上
@@ -170,10 +196,14 @@
 （`fleetadj_test.go`）`TestFleetChangeAdjutantMenuMatchesOracle`、
 `TestFleetAdjutantDismissMatchesOracle`、`TestFleetAdjutantChangeMatchesOracle`、
 `TestFleetAdjutantSortiePathMatchesOracle`（二十二批整張，另比提督記錄的 +07／+09
-與艦隊的副官／營運）；
+與艦隊的副官／營運）；右下角清單的分頁（`listtabs_test.go`，規格 052）
+`TestListTabPlanetMatchesOracle`、`TestListTabEnemyMatchesOracle`、
+`TestListTabAdmiralMatchesOracle`、`TestListTabFleetScrollMatchesOracle`、
+`TestFleetOrgRightClickIsConfirm`（二十六批整張，另比四個分頁的筆數與位移）；
 顯示層 `tools/gui_check.sh` 的 `fcmd-win`、`fcmd-done`、`fcmd-exec`、
 `fcmd-occupy-phezzan3`、`fcmd-change-org`、`fcmd-edit-full-msg`、`fcmd-fok-decide`、
-`fcmd-adj-confirm-close`（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
+`fcmd-adj-confirm-close`、`fcmd-tab-planet-row`、`fcmd-tab-admiral-down`、
+`fcmd-tab-fleet2`（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
 
 過程中改到的通用規則（不只這條路徑）：底線裝飾（`ui.DrawCellDecor`）、
 清單被點那一列的反白、左下角與右側面板「寫進去那一刻的文字」與

@@ -197,7 +197,7 @@ remake 到目前為止玩家建得了艦隊、打得了仗，卻**派不出去**
 
 - 占領命令在回合裡的效果（走到敵方星域之後那一路：`113A:0545`、
   `113A:0899`「無法直接到達此星系」「要占領此星系嗎」）——本片只到下命令那一刻。
-- 清單的捲動（欄 17 的上下鈕）與四個分頁（行星／敵艦隊／提督）。
+- 清單的四個分頁與 ▲▼ 見規格 [`052`](052-fleet-list-tabs.md)（艦隊／行星／提督三頁 CONFORMED；敵艦隊那頁只對過空清單）。
 - `1213:0003(星域)` 那道檢查（三個收據都過，語意沒讀）；回合裡的三張報告
   「無法前往敵方的星系」「由於移動經費不足無法移動」與占領那一路。
 
@@ -226,6 +226,7 @@ remake 到目前為止玩家建得了艦隊、打得了仗，卻**派不出去**
 - 編組的編輯器（`fleetedit_test.go`，規格 015 E1–E7）：`TestFleetEditPlaceMatchesOracle`／`ReplaceMatchesOracle`／`RemoveMatchesOracle`／`FlagshipKindMessageMatchesOracle`／`CancelAndDecideMatchOracle`／`FormationMatchesOracle`／`PoorStockMatchesOracle`（`fcmd-edit-*` 二十一批整張，另比七個存量與 `fleet0.bin` 的組數、每組的艦種／槽）、`TestFleetEditSortiePathMatchesOracle`（出擊那條路 `fcmd-fok`／`-place1`／`-row2`／`-place2`／`-decide`／`-form`／`-form-pick` 整張）。
 - 右鍵三層與中止：`fcmd-win-rclick`／`fcmd-menu-rclick`／`fcmd-pick-rclick`／`fcmd-cancel`／`fcmd-close` 各一張整張對拍。
 - `TestFleetHoverHomeCountsNewFleet`：決定之後首都記錄的艦隊數是 1，游標移到首都那塊重寫成 1：0（`fcmd-hover-home`）。
+- 出擊那條路的艦隊編成按右鍵 ＝ 確認（`07F9:00D5` 不看 `043F` 的結果就建艦隊、進艦隊組成，`docs/re/319` §五）：`TestFleetOrgRightClickIsConfirm`（`fcmd-forg-rclick`）、`TestListTabAdmiralMatchesOracle/rclick-is-confirm`（`fcmd-tab-sortie-rclick`）。
 - GUI：`tools/gui_check.sh` 的 `fcmd-win`、`fcmd-done`、`fcmd-exec`、`fcmd-occupy-phezzan3`、`fcmd-change-org`、`fcmd-edit-full-msg`、`fcmd-fok-decide`、`fcmd-adj-confirm-close`（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
 
 以上全綠（2026-09-16；`go test ./...` 與 `tools/gui_check.sh`）。

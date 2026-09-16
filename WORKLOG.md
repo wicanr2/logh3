@@ -6979,6 +6979,38 @@ GitHub 的 issue 時間軸承擔。
   `fleet-composition-panel.json` 艦種列熱區、playtest 021、CONTEXT；gui_check 加
   `fcmd-edit-full-msg`／`fcmd-fok-decide`（18 案例全過）。
 
+## 2026-09-16 — 右下角清單的四個分頁與捲動（#43）；出擊那條路艦隊編成右鍵＝確認
+
+- `04F8:05ED` 讀出來了（`docs/re/319`）：不是 `docs/re/78` 猜的「艦隊移動那一趟」，是換分頁
+  ——依 `ds:8F1F`（每個玩家一份在 `ds:8F29[座位]`）換掉印整頁 `[ds:957E]` 與點擊 `[ds:9582]`
+  兩個函式指標、重建那一頁（位移歸零）、核取方塊換色。四頁同一套五列一頁：艦隊 `0AD0`、
+  行星 `0B99`、敵艦隊 `0B20`、提督 `0BCE`，印之前夾 `位移 ＋ 5 > 筆數`；▲▼ 是 `FRAME.BLK`
+  第 16／20 張圖塊（箭頭裡填視窗底色 9）、筆數 ≤ 5 印第 32 張；按住一次一列。行星那頁
+  沒有 ▲▼、捲動熱區在列 6／11 而且方向相反，但行星最多五顆所以永遠不動。
+- 行星列點開 `2AF5:0226` 行星情報視窗（與戰場那張同一家族的格式字串；艦種那列印
+  「補充存量 ÷ 滿編」；開窗先 `2703:0540` 把星域層存量分回行星；「確認」／右鍵關）。
+  提督列 ＝ `28E0:0103(星域, 0x25)` 的閒置提督，點開 `0D92:000D`，「出擊」走 `07F9:00D5`
+  （與出擊命令同一支；首都還在且艦隊 < 16 才有那顆鈕，否則 經歷／結束 兩顆往右挪）。
+  敵艦隊列 ＝ 索敵等級 > 0 的敵方艦隊（等級 3 才印全名）；視窗 `0B20:0336` 讀了沒接。
+- **出擊那條路的艦隊編成按右鍵 ＝ 確認**：`07F9:00D5` 從 `043F` 回來不看結果就 `297B:0066`
+  建艦隊進艦隊組成（`fcmd-tab-sortie-rclick`、`fcmd-forg-rclick` 雜湊 ＝ `fcmd-fok-rclick`）。
+  remake 原本右鍵回詳細資料是沒收據的假設，改掉（`Game.fleetOrgConfirm`）。
+- 收據二十六批（第 17 段，每批倒分頁編號與四頁的筆數／位移）：從 `fcmd-base` 展開行星 5、
+  敵艦隊 2、提督 9（含 0.3M／3M 步的按住）、出擊建到六支艦隊再捲艦隊頁 8；整張 0 差異。
+- remake：`internal/game/listtabs.go`（分頁狀態、兩張視窗、`073F:0522` 的重建時機）、
+  `internal/screen/listtabs.go`＋`fleet-list-panel.json` 的 `tabs`、`ui.FrameTiles.DrawTile`、
+  `rules.IdleAdmiralsInRegion`／`ListPage`、`planet-info-strategic.json`（`PlanetInfoSpec` 多
+  `other_tail`／`button`）、`CapitalPanel.SetTab`、`GameWindow.MoveBox`／`SetBoxCodes`／`DropBox`。
+  順手接上兩條規則：`rules.DistributeRegionSupply` 加七種艦艇（`docs/re/273` 讀過沒接），
+  開新局先 `ResumRegionEconomy` ＋ `refillRegionSupply`（原版開機那次回充把飛彈夾成
+  「行星加總的經濟力 ＋ 防衛力」；奧丁 70590 才對得上）；左下角那塊只在清單那幾張寫首都
+  （`forcedLeftRegion`），詳細資料／艦隊編成／艦隊組成沿用快照（出擊五次仍「82%／0：0」）。
+- 已知差異：▲▼ 一下一頁（同副官清單）。沒做：敵艦隊有索敵等級的列與視窗（要打過仗的局面，
+  remake 戰略層艦隊還沒帶 `+0x17`）。
+- 文件：`docs/re/319`、規格 052（新）、051 排除句改指標、013 右鍵句、internals 58／29、
+  re/78／318 指標、playtest 021（一百三十五批）、CONTEXT；gui_check 加三案例（22 全過）。
+  關 #43（verify → go_test）。
+
 ## 2026-09-16 — 副官：變更／卸任（#42 後半；出擊那條路同一支）
 
 - `07F9:043F`／`05B4`／`085D`／`0A80`／`0B35` 與清單 `0C0A:000F`／`00F0`／`015D`／`01D7`／`0235`

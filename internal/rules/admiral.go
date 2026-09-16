@@ -260,3 +260,62 @@ func SetAdjutant(admiral, old, new []byte, adj int) {
 	}
 	admiral[admiralFleet] = byte(adj)
 }
+
+// IdleAdmiralsInRegion 回某一格裡閒置的提督索引（照提督表的順序）＝ 原版
+// `28E0:0103(&清單, 星域, 0x25, 0)`（`docs/re/208`、`docs/re/319`）：
+//
+//	同陣營（+0x01）、沒有職務（+0x00 == 0xFF）、沒帶艦隊（+0x09 bit7）、
+//	所在星域（+0x0A）是那一格
+//
+// 「沒帶艦隊」與 `AdjutantCandidates` 一樣交給 busy 回答（理由見那一支）。
+func IdleAdmiralsInRegion(all []Admiral, faction, region int, busy func(int) bool) []int {
+	out := make([]int, 0, len(all))
+	for _, a := range all {
+		r := a.Record
+		if a.Faction != faction || len(r) <= admiralRegion || int(r[admiralRegion]) != region {
+			continue
+		}
+		if r[0] != 0xFF {
+			continue
+		}
+		if busy != nil && busy(a.Index) {
+			continue
+		}
+		out = append(out, a.Index)
+	}
+	return out
+}
+
+// ListPage 是右下角清單那種「五列一頁」的捲動狀態（`docs/re/319`）：
+// Count 筆、從 Scroll 起印五列。
+type ListPage struct {
+	Count, Scroll int
+}
+
+// ListPageRows 是右下角清單一頁幾列。
+const ListPageRows = 5
+
+// Clamp 照原版每次印之前的夾法：`位移 ＋ 5 > 筆數` 就退到
+// `筆數 − 5`（不足五筆就 0）。
+func (p *ListPage) Clamp() {
+	if p.Scroll+ListPageRows > p.Count {
+		if p.Count >= ListPageRows {
+			p.Scroll = p.Count - ListPageRows
+		} else {
+			p.Scroll = 0
+		}
+	}
+	if p.Scroll < 0 {
+		p.Scroll = 0
+	}
+}
+
+// Step 是 ▲（dir −1）／▼（＋1）按一下：原版一次一列、按住連捲；
+// remake 一下捲一頁，再夾回範圍。
+func (p *ListPage) Step(dir int) {
+	p.Scroll += dir * ListPageRows
+	p.Clamp()
+}
+
+// Arrows 回這一頁要不要印 ▲▼（原版只看筆數 > 5）。
+func (p ListPage) Arrows() bool { return p.Count > ListPageRows }

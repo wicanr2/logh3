@@ -1,0 +1,441 @@
+package game
+
+import (
+	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
+)
+
+// 戰略地圖介面右下角清單的四個分頁與捲動（`docs/re/319`、`docs/spec/052`）。
+//
+// 原版：分頁鈕是熱區 `0BEE[1..4]`，點了把 `ds:8F1F`（也抄一份到
+// `ds:8F29[座位]`）設成 0–3、叫 `04F8:05ED` 換掉列印與點擊兩個函式指標、
+// 重建那一頁的清單（捲動位移歸零）、四顆分頁鈕的核取方塊換色（選中 0x27、
+// 其餘 0x97）、印整頁。每個分頁都是「筆數／捲動位移／五列一頁」同一套；
+// 欄 17 的 ▲▼ 筆數超過五才印，原版按住一次一列（`3765:0255`），remake
+// 一下一頁（與副官清單同一個已知差異）。
+
+// listTabFleet 等是分頁編號（`ds:8F1F`）。
+const (
+	listTabFleet = iota
+	listTabPlanet
+	listTabEnemy
+	listTabAdmiral
+	listTabCount
+)
+
+// listTabs 是分頁與清單的執行期狀態。
+type listTabs struct {
+	// tab 每個陣營各一份（`ds:8F29[座位]`）；目前那一份就是 `ds:8F1F`。
+	tab [2]int
+	// page 是四個分頁各自的筆數與捲動位移。筆數每次畫之前重算（remake 的
+	// 清單是從狀態算的，原版是換分頁／關窗時重建），位移照原版夾進範圍。
+	page [listTabCount]rules.ListPage
+	// detail 是「提督」分頁點開的詳細資料（提督索引；−1 沒開），
+	// detailSortie 是那一張有沒有「出擊」（`ds:8F49[陣營] < 16` 且首都還在）。
+	detail       int
+	detailSortie bool
+	// planet 是「行星」分頁點開的行星情報視窗：那一格裡的第幾顆（−1 沒開）。
+	planet       int
+	planetRegion int
+	// pressed 是點開視窗時反白的那一列（−1 沒有）。
+	pressed int
+}
+
+func newListTabs() listTabs {
+	return listTabs{detail: -1, planet: -1, pressed: -1}
+}
+
+// listTab 回目前這個陣營選著的分頁。
+func (g *Game) listTab() int {
+	if g.faction < 0 || g.faction >= len(g.tabs.tab) {
+		return listTabFleet
+	}
+	return g.tabs.tab[g.faction]
+}
+
+// listRegion 回清單看的那一格：右鍵選過的星域，沒有就自己的首都
+// （與「艦隊」分頁的 `fleetRows` 同一條規則）。
+func (g *Game) listRegion() int {
+	if g.selectedRegion >= 0 {
+		return g.selectedRegion
+	}
+	return rules.CapitalRegion(g.faction)
+}
+
+// listTabAt 回畫面座標落在哪一顆分頁鈕上；沒有回 −1。熱區是 `0BEE[1..4]`：
+// 視窗 9518 的列 6，欄 0–2／4–6／8–11／13–15（與畫出來的鈕同寬）。
+func (g *Game) listTabAt(x, y int) int {
+	p := g.res.CapitalPanel
+	if p == nil || p.Tabs == nil {
+		return -1
+	}
+	t := p.Tabs
+	if y < t.Y || y >= t.Y+t.H {
+		return -1
+	}
+	for i, it := range t.Items {
+		if x >= it.X && x < it.X+it.W {
+			return i
+		}
+	}
+	return -1
+}
+
+// selectListTab 是點了分頁鈕（`04F8:05ED`）：換分頁、那一頁的位移歸零。
+func (g *Game) selectListTab(tab int) {
+	if tab < 0 || tab >= listTabCount || g.faction < 0 || g.faction >= len(g.tabs.tab) {
+		return
+	}
+	g.tabs.tab[g.faction] = tab
+	g.tabs.page[tab].Scroll = 0
+	g.tabs.pressed = -1
+}
+
+// listRefresh 是原版 `073F:0522`：「艦隊」與「提督」兩頁重建（位移歸零），
+// 目前那一頁重印。「變更 → 副官」關窗、出擊那條路建完艦隊都走它。
+func (g *Game) listRefresh() {
+	g.tabs.page[listTabFleet].Scroll = 0
+	g.tabs.page[listTabAdmiral].Scroll = 0
+	g.tabs.pressed = -1
+}
+
+// listPage 回目前分頁夾好的頁（筆數重算、位移夾進範圍）。
+func (g *Game) listPage(tab int) rules.ListPage {
+	p := &g.tabs.page[tab]
+	switch tab {
+	case listTabFleet:
+		p.Count = len(g.fleetRows())
+	case listTabPlanet:
+		_, n := g.res.Planets.Range(g.listRegion())
+		p.Count = n
+	case listTabEnemy:
+		p.Count = len(g.enemyFleetsInRegion())
+	case listTabAdmiral:
+		p.Count = len(g.idleAdmiralsInRegion())
+	}
+	p.Clamp()
+	return *p
+}
+
+// listScroll 是 ▲（−1）／▼（＋1）：一下一頁。
+func (g *Game) listScroll(dir int) {
+	tab := g.listTab()
+	g.listPage(tab)
+	g.tabs.page[tab].Step(dir)
+}
+
+// idleAdmiralsInRegion 回「提督」分頁列的人（`28E0:0103(星域, 0x25)`）。
+func (g *Game) idleAdmiralsInRegion() []int {
+	return rules.IdleAdmiralsInRegion(rules.ParseAdmirals(g.res.Admiral),
+		g.faction, g.listRegion(), g.adjBusy(-1))
+}
+
+// enemyFleetsInRegion 回「敵艦隊」分頁列的艦隊（`0B20:003B`）：別的陣營、
+// 在這一格、而且**索敵等級**（艦艇 `+0x17` 在各組取最大）不是 0。remake
+// 的戰略層還沒帶著索敵等級（那是戰場上 `+0x17` 的累積，`docs/internals/38`），
+// 所以目前永遠是空的——與新遊戲第一回合的收據（`fcmd-tab-enemy`）一致，
+// 打過仗之後的局面還沒對（`docs/spec/052`「還沒做的」）。
+func (g *Game) enemyFleetsInRegion() []int {
+	return nil
+}
+
+// listClick 處理戰略地圖介面上落在右下角清單那塊的左鍵：分頁鈕、▲▼、
+// 一列。回 true ＝ 吃掉了。
+func (g *Game) listClick(x, y int) bool {
+	if tab := g.listTabAt(x, y); tab >= 0 {
+		g.selectListTab(tab)
+		return true
+	}
+	if g.res.FleetList == nil {
+		return false
+	}
+	tab := g.listTab()
+	if dir := g.res.FleetList.ScrollAt(x, y); dir != 0 {
+		// 「行星」分頁沒有 ▲▼，它的捲動熱區在列 6 與 11、而且方向相反
+		// （`0B99:0220`）；行星最多五顆（`PLADAT.DAT` 檔頭），夾回去永遠是 0，
+		// 畫面上看不出來，所以這裡一律不理。
+		if tab != listTabPlanet {
+			g.listScroll(dir)
+		}
+		return true
+	}
+	row := fleetListRowAt(x, y)
+	if row < 0 {
+		return false
+	}
+	page := g.listPage(tab)
+	idx := page.Scroll + row
+	if idx >= page.Count {
+		return true
+	}
+	switch tab {
+	case listTabFleet:
+		if i := g.fleetListFleetAt(idx); i >= 0 {
+			g.openFleetWindow(i)
+		}
+	case listTabPlanet:
+		// `2AF5:0226(星域, 行星)`：那一列反白、開行星情報視窗。
+		g.tabs.planet, g.tabs.planetRegion, g.tabs.pressed = idx, g.listRegion(), row
+	case listTabAdmiral:
+		// `0BCE:02F4`：那一列反白、開提督詳細資料（有沒有「出擊」看艦隊數
+		// 與首都）。
+		list := g.idleAdmiralsInRegion()
+		if idx < len(list) {
+			g.tabs.detail, g.tabs.pressed = list[idx], row
+			g.tabs.detailSortie = g.sortieAllowed()
+		}
+	case listTabEnemy:
+		// 敵艦隊視窗（`0B20:0336`）還沒接（`docs/spec/052`）。
+	}
+	return true
+}
+
+// sortieAllowed 是提督分頁點開詳細資料時「出擊」鈕有沒有（`0BCE:02F4`）：
+// 首都還是自己的、而且艦隊數（`ds:8F49[陣營]`）不到 16。
+func (g *Game) sortieAllowed() bool {
+	capital := rules.CapitalRegion(g.faction)
+	if rec := g.regionRecord(capital); rec == nil || int(rec[0x12]) != g.faction {
+		return false
+	}
+	n := 0
+	for _, f := range g.fleets {
+		if f.Faction == g.faction {
+			n++
+		}
+	}
+	return n < fleetsPerFaction
+}
+
+// fleetsPerFaction 是艦隊表每邊的槽數（`ds:8F49[陣營] < 16`，`docs/internals/33`）。
+const fleetsPerFaction = 16
+
+// listOverlayOn 回清單點出來的視窗（行星情報／提督詳細資料）有沒有開著。
+func (g *Game) listOverlayOn() bool {
+	return g.tabs.planet >= 0 || g.tabs.detail >= 0
+}
+
+// listOverlayClick 處理那兩張視窗開著時的左鍵。回 true ＝ 視窗吃掉了。
+func (g *Game) listOverlayClick(x, y int) bool {
+	switch {
+	case g.tabs.planet >= 0:
+		// 左鍵只認「確認」（`2AF5:0226` 的事件迴圈）。
+		if s := g.res.PlanetInfoMap; s != nil && s.ButtonAt(x, y) {
+			g.closeListOverlay()
+		}
+		return true
+	case g.tabs.detail >= 0:
+		if g.res.AdmiralPanel == nil {
+			return true
+		}
+		switch g.tabDetailButtonAt(x, y) {
+		case "bio":
+			if g.commandSpec(StateAdmiralBio) != nil {
+				g.detailAdmiral = g.tabs.detail
+				g.state = StateAdmiralBio
+			}
+		case "cancel", "close":
+			g.closeListOverlay()
+		case "sortie":
+			// `07F9:00D5`：與出擊命令那條路同一支——進艦隊編成就配槽。
+			if g.commandSpec(StateFleetOrg) != nil {
+				g.detailAdmiral = g.tabs.detail
+				g.closeListOverlay()
+				g.sortieSlots(true)
+				g.state = StateFleetOrg
+			}
+		}
+		return true
+	}
+	return false
+}
+
+// tabDetailButtonAt 回提督分頁那張詳細資料的按鈕：有「出擊」時是
+// 經歷／中止／出擊（熱區 `1F34`）；沒有時只剩 經歷／結束，而且往右挪到
+// 中止與出擊的位置（`1FAE`）。
+func (g *Game) tabDetailButtonAt(x, y int) string {
+	act := g.res.AdmiralPanel.ButtonAt(x, y)
+	if g.tabs.detailSortie {
+		return act
+	}
+	switch act {
+	case "cancel":
+		return "bio"
+	case "sortie":
+		return "close"
+	}
+	return ""
+}
+
+// listOverlayRightClick 是那兩張視窗的右鍵：都只是關掉。
+func (g *Game) listOverlayRightClick() bool {
+	if !g.listOverlayOn() {
+		return false
+	}
+	g.closeListOverlay()
+	return true
+}
+
+// closeListOverlay 關掉行星情報／提督詳細資料，那一列的反白還原。
+func (g *Game) closeListOverlay() {
+	g.tabs.planet, g.tabs.detail, g.tabs.pressed = -1, -1, -1
+}
+
+// drawListRows 畫右下角清單目前分頁的幾列與 ▲▼（畫在底板那一層）。
+// 「艦隊」分頁交給 `drawFleetRows`。
+func (g *Game) drawListRows(fb *gfx.Framebuffer) {
+	l := g.res.FleetList
+	if l == nil || l.Tabs == nil || !g.listShown() {
+		return
+	}
+	tab := g.listTab()
+	page := g.listPage(tab)
+	if tab != listTabPlanet {
+		l.DrawScroll(fb, g.res.FrameTiles, page.Arrows())
+	}
+	switch tab {
+	case listTabPlanet:
+		start, n := g.res.Planets.Range(g.listRegion())
+		rows := make([]screen.PlanetRow, 0, rules.ListPageRows)
+		for i := page.Scroll; i < n && len(rows) < rules.ListPageRows; i++ {
+			rec := g.res.Planets.Record(start + i)
+			if rec == nil {
+				break
+			}
+			rows = append(rows, screen.PlanetRow{
+				Owner:    g.res.Planets.Owner(start + i),
+				Fortress: rec[0x12] != 0,
+				Name:     g.res.Planets.Name(start + i),
+				Defence:  g.res.Planets.Defence(start + i),
+				Max:      g.res.Planets.GrowthDefence(start + i),
+			})
+		}
+		l.DrawPlanets(fb, g.res.Font, rows, g.tabs.pressed)
+	case listTabAdmiral:
+		list := g.idleAdmiralsInRegion()
+		rows := make([]screen.AdmiralRow, 0, rules.ListPageRows)
+		for i := page.Scroll; i < len(list) && len(rows) < rules.ListPageRows; i++ {
+			a := list[i]
+			var name []uint16
+			if a < len(g.res.AdmiralNames) {
+				name = g.res.AdmiralNames[a]
+			}
+			rows = append(rows, screen.AdmiralRow{Name: name,
+				Rank: g.rankCodes(rules.RankOf(rules.AdmiralLevel(g.admiralRecord(a))))})
+		}
+		l.DrawAdmirals(fb, g.res.Font, rows, g.tabs.pressed)
+	case listTabEnemy:
+		l.DrawEnemies(fb, g.res.Font, nil, -1)
+	}
+}
+
+// listShown 回右下角清單這一刻有沒有印出來：戰略地圖介面與疊在它上面的
+// 艦隊命令、出擊那幾張。月初報告那幾張右側面板還是空的（`DrawOpening`），
+// 分頁鈕都沒畫，▲▼ 那兩格自然也沒有。
+func (g *Game) listShown() bool {
+	switch g.state {
+	case StateCommandPhase, StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick,
+		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
+		StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg,
+		StateFleetOrg, StateFleetNumber, StateFleetAdjutant, StateFleetComposition, StateFormation:
+		return true
+	}
+	return false
+}
+
+// drawListOverlays 畫清單點出來的視窗（在艦隊命令那幾層之後、游標之前）。
+func (g *Game) drawListOverlays(fb *gfx.Framebuffer) {
+	switch {
+	case g.tabs.planet >= 0:
+		g.drawMapPlanetInfo(fb)
+	case g.tabs.detail >= 0:
+		g.drawTabAdmiralDetail(fb)
+	}
+}
+
+// drawMapPlanetInfo 畫戰略地圖那張行星情報（`2AF5:02C3`）。
+func (g *Game) drawMapPlanetInfo(fb *gfx.Framebuffer) {
+	s := g.res.PlanetInfoMap
+	if s == nil || g.res.Planets == nil || g.res.FrameTiles == nil {
+		return
+	}
+	region := g.tabs.planetRegion
+	start, n := g.res.Planets.Range(region)
+	if g.tabs.planet >= n {
+		return
+	}
+	// 開窗前先把這一格星域層的存量分回行星（`2AF5:0226` 一進來就叫
+	// `2703:0540(星域)`，兩個陣營各一趟）。
+	if rec := g.regionRecord(region); rec != nil {
+		for faction := 0; faction < 2; faction++ {
+			rules.DistributeRegionSupply(rec, g.res.Planets, region, faction)
+		}
+	}
+	i := start + g.tabs.planet
+	rec := g.res.Planets.Record(i)
+	if rec == nil {
+		return
+	}
+	v := screen.PlanetInfo{
+		RegionOwner: g.regionOwnerOf(region),
+		RegionName:  g.regionNameBytesOf(region),
+		PlanetOwner: g.res.Planets.Owner(i),
+		PlanetName:  planetNameBytes(rec),
+		Fortress:    rec[0x12] != 0,
+		Own:         g.res.Planets.Owner(i) == g.faction,
+		Economy:     int64(g.res.Planets.PlanetEconomy(i)),
+		Defence:     g.res.Planets.Defence(i),
+		DefenceMax:  g.res.Planets.GrowthDefence(i),
+		Recover:     int(rec[0x18]),
+	}
+	// 成長率 `2703:0D47(行星)` ＝ 經濟力查階梯表（防衛力上限不到門檻再加成），
+	// 除 10 取商與餘。
+	if g.res.Growth != nil {
+		r := g.res.Growth.Rate(int(v.Economy), v.DefenceMax)
+		v.GrowthInt, v.GrowthF = r/10, r%10
+	}
+	// 艦種那一列印「補充存量 ÷ 那個陣營的滿編艘數」（`3CC9:0020` 長除法，
+	// 除數是艦種表 `ds:4E3A` 的 word 0）。
+	if stock, ok := rules.ReadPlanetStock(rec); ok {
+		v.Missiles, v.Fighters = int64(stock.Missiles), int64(stock.Fighters)
+		for k := range v.Kinds {
+			if kind, ok := g.res.ShipKinds.Kind(g.faction, k); ok && kind.FullShips > 0 {
+				v.Kinds[k] = stock.Ships[k] / kind.FullShips
+			}
+		}
+	}
+	screen.DrawPlanetInfo(fb, s, g.res.Font, g.res.FrameTiles, v)
+}
+
+// planetNameBytes 回行星記錄開頭那個名字（Big5，`00` 結尾）。
+func planetNameBytes(rec []byte) []byte {
+	for i := 0; i+1 < len(rec) && i < 0x11; i += 2 {
+		if rec[i] == 0 {
+			return rec[:i]
+		}
+	}
+	return rec[:0x10]
+}
+
+// drawTabAdmiralDetail 畫提督分頁點開的詳細資料：與副官那條路同一張
+// overlay；沒有「出擊」時只剩 經歷／結束 兩顆、往右挪（熱區 `1FAE`）。
+func (g *Game) drawTabAdmiralDetail(fb *gfx.Framebuffer) {
+	spec := g.res.Screens["screen-admiral-detail"]
+	if spec == nil || spec.Windows["overlay"] == nil {
+		return
+	}
+	w := *spec.Windows["overlay"]
+	if !g.tabs.detailSortie {
+		// 三顆鈕（經歷／中止／出擊）變兩顆：經歷挪到中止的位置、出擊那顆
+		// 改印「結束」。
+		w.MoveBox(0, w.Boxes[1].X)
+		w.SetBoxCodes(2, adminDetailCloseCodes)
+		w.DropBox(1)
+	}
+	w.Draw(fb, g.res.Font, 3, g.res.Faces)
+	w.DrawFactionText(fb, g.res.Font, g.faction)
+	g.drawAdmiralDetailFor(fb, g.tabs.detail, true)
+}
+
+// 「結束」兩個字（Big5 B5B2 A7F4）。
+var adminDetailCloseCodes = []uint16{0xB5B2, 0xA7F4}

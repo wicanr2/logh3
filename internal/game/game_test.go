@@ -237,9 +237,14 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	planetInfoMap, err := screen.LoadPlanetInfoSpec(filepath.Join("../..", "docs/internals/data/planet-info-strategic.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	return &Resources{Font: fnt, OrigDir: orig, Faces: faces, Cursor: cur, Menu: menu,
-		FrameTiles:   frameTiles,
-		AdmiralNames: names, StarListOrder: starOrder,
+		FrameTiles:    frameTiles,
+		PlanetInfoMap: planetInfoMap,
+		AdmiralNames:  names, StarListOrder: starOrder,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		StarBit: bit, StarRGN: rgn, RegionColours: colours,
 		BuildPlan: bp, BudgetPlan: bg, AdmiralList: al, Screens: screens, StarMaps: maps,

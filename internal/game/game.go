@@ -447,8 +447,10 @@ type Resources struct {
 	MessageBox *screen.MessageBoxSpec
 	FrameTiles *ui.FrameTiles
 
-	// PlanetInfo 是行星情報視窗的版面（`docs/re/144`）。
-	PlanetInfo *screen.PlanetInfoSpec
+	// PlanetInfo 是戰場的行星情報視窗（`docs/re/144`）；PlanetInfoMap 是
+	// 戰略地圖那張（右下角清單「行星」分頁點一列，`docs/re/319`）。
+	PlanetInfo    *screen.PlanetInfoSpec
+	PlanetInfoMap *screen.PlanetInfoSpec
 
 	// SupplyPanel 是「補給」選對象時右側那個面板（`docs/re/143`）。
 	SupplyPanel *screen.SupplyPanelSpec
@@ -745,6 +747,9 @@ type Game struct {
 
 	// fcmd 是戰略地圖上艦隊命令那條路的狀態（`fleetcmd.go`）。
 	fcmd fleetCmd
+
+	// tabs 是右下角清單的分頁與捲動（`listtabs.go`）。
+	tabs listTabs
 
 	// mapCache 是戰略地圖兩種樣子（[1] 有反白格、[0] 沒有）的快取：
 	// 32 格的色號一變就重建（`strategicMapColours`）。
@@ -1103,6 +1108,7 @@ func (g *Game) finishAfterPhezzanReports() {
 			return
 		}
 	}
+	g.listRefresh()
 	if g.versus {
 		g.state = StateVersusInput
 		return
@@ -1537,6 +1543,14 @@ func (g *Game) startNewGame(faction int) {
 	// `docs/re/274` §4）——**音源那一格不清**，它是開機偵測的結果。
 	g.music.BGM, g.music.Battle = 0, 0
 	g.slot = nil
+	// 開機那一次月底結算之前先跑一趟回充與分配（`0654:0007` → `2B5F:02B2`、
+	// `2703:0590`）：`PLADAT.DAT` 給的飛彈／艦載機遠高於上限，第一個回合就被
+	// 夾成經濟力＋防衛力再按經濟力比例分回行星，七種艦艇也照同一比例從星域層
+	// 分下去（`docs/re/273`；收據 `fcmd-tab-planet-row` 奧丁 70590、戰艦 16 個部隊）。
+	// 上限用的經濟力是載入時從行星加總的（`2703:00F8`；瓦爾哈拉 81300 ＋ 防衛力
+	// 27300 ＝ 108600），不是 `STELLAR.DT` 檔案裡那一格，也不是成長過後的。
+	rules.ResumRegionEconomy(g.res.Stellar, g.res.Planets)
+	g.refillRegionSupply()
 	g.monthEnd()
 	g.recountRegionFleets()
 	g.refreshCapitalSnap()
@@ -1582,6 +1596,7 @@ func New(res *Resources) (*Game, error) {
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
 		hoverRegion: -1, hoverProbe: -1, mapHighlight: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1,
+		tabs: newListTabs(),
 		// 音源是開機偵測的結果，不是每局重來的東西：沒有 MPU-401 就退到
 		// OPL（`docs/re/274` §3）。remake 不模擬 MIDI 介面，所以與出貨的
 		// 原版一樣一律 ＦＭ——既有的執行期傾印 `ds:8F33` 全是 1，收據
@@ -1670,6 +1685,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.mapHighlight = rules.CapitalRegion(g.faction)
 	g.selectedRegion = -1
 	g.hoverRegion, g.hoverProbe = -1, -1
+	g.listRefresh()
 	g.state = StateCommandPhase
 	// 星域記錄與行星表剛剛才換成存檔那一份，戰略 AI 的地基跟著換，
 	// 所以重接一次。
@@ -1826,11 +1842,12 @@ func (g *Game) moveBeforePress(x, y int) {
 // 所以這個值要存進 `hoverRegion`，不能只在繪製的時候套用——只在繪製時
 // 套用的話，回到地圖的那一幀就變回「跟著游標」，差 2,354 個像素。
 func (g *Game) forcedLeftRegion(s State) int {
+	// 只有清單那幾張自己寫首都；從清單開出去的詳細資料、艦隊編成、艦隊組成
+	// 都不重寫，沿用寫進去那一刻的快照——從右下角「提督」分頁走同一串視窗
+	// （`0D92:000D` → `07F9:00D5`）左下角一個字都不動（收據 `fcmd-tab-fleet6`：
+	// 出擊了五次仍是「治安 82%／艦隊 0：0」）。
 	switch s {
-	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList,
-		StateAdmiralDetail, StateAdmiralBio, StateFleetOrg,
-		StateFleetNumber, StateFleetAdjutant, StateFleetComposition,
-		StateFormation:
+	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList:
 		return rules.CapitalRegion(g.faction)
 	}
 	return -1
@@ -2000,6 +2017,7 @@ func (g *Game) click(x, y int) {
 				}
 				g.refundProvisional()
 				g.closeFleetEditor()
+				g.listRefresh()
 				if g.commandSpec(StateCommandPhase) != nil {
 					g.state = StateCommandPhase
 				}
@@ -2082,6 +2100,9 @@ func (g *Game) click(x, y int) {
 					// 左下角那塊不看這個：`dec1` 的游標按完「決定」停在
 					// (510,350)，不在星圖上，所以整塊是空的。
 					g.selectedRegion = rules.CapitalRegion(g.faction)
+					// 清單重建（`073F:0522`）：艦隊與提督兩頁位移歸零，選著的分頁不變
+					// （收據 `fcmd-tab-fleet2`：出擊完提督分頁還在、少了那一位）。
+					g.listRefresh()
 					g.state = StateCommandPhase
 					return
 				}
@@ -2124,17 +2145,7 @@ func (g *Game) click(x, y int) {
 				g.state = StateFleetAdjutant
 			}
 		case "confirm":
-			if g.commandSpec(StateFleetComposition) != nil {
-				g.selectedRow = 0
-				// 旗艦那一組在**進艦隊組成**這一刻就從首都的待命部隊扣出來
-				// （原版首都戰艦 78000 → 75000，`fcx-peek-stock-300`／`-350`），
-				// 「決定」不再扣、「中止」退回（`docs/re/316` §四）。
-				g.provisional = g.takeProvisional()
-				g.openFleetEditor(rules.CapitalRegion(g.faction), g.faction,
-					rules.FleetSlots(rules.AdmiralLevel(g.admiralRecord(g.detailAdmiral))),
-					g.provisional)
-				g.state = StateFleetComposition
-			}
+			g.fleetOrgConfirm()
 		}
 	case StateStandbyAdmirals:
 		// 點清單的一列開那位提督的詳細資料（`docs/re/65`）。
@@ -2143,6 +2154,10 @@ func (g *Game) click(x, y int) {
 			g.state = StateAdmiralDetail
 		}
 	case StateCommandPhase:
+		// 清單點出來的行星情報／提督詳細資料開著時，左鍵全給它。
+		if g.listOverlayClick(x, y) {
+			return
+		}
 		for _, b := range commandBar {
 			if x >= b.X && x < b.X+b.W && y >= barRow && y < barRow+rowHeight {
 				if g.commandSpec(b.Menu) != nil {
@@ -2151,11 +2166,9 @@ func (g *Game) click(x, y int) {
 				return
 			}
 		}
-		// 右下角「艦隊」分頁的清單：點一列開那支艦隊的視窗
-		// （`docs/spec/051`；那一列沒有艦隊就什麼都不做）。
-		if i := g.fleetListFleetAt(fleetListRowAt(x, y)); i >= 0 {
-			g.openFleetWindow(i)
-		}
+		// 右下角清單：分頁鈕、▲▼、一列（「艦隊」分頁點一列開那支艦隊的視窗，
+		// `docs/spec/051`；其餘三頁 `docs/spec/052`）。
+		g.listClick(x, y)
 	case StateFleetWindow:
 		g.fleetWindowClick(x, y)
 	case StateFleetActionMenu:
@@ -2229,7 +2242,11 @@ func (g *Game) rightClick(x, y int) {
 	// 星圖上（`main1e` 的 `-rclicks 300,200` 兩次），而那張畫面右下角
 	// 列的是首都的艦隊。左下角那塊不看這個，看的是游標底下那一格
 	// （`refreshHoverRegion`，`docs/re/277`）。
-	if g.state == StateCommandPhase && g.res.Regions != nil &&
+	//
+	// 清單點出來的行星情報／提督詳細資料開著時右鍵只關那張視窗
+	// （`2AF5:0226`／`0BCE:02F4` 的事件迴圈吃掉了它），不換星域
+	// （收據 `fcmd-tab-admiral-rclick`：清單還是瓦爾哈拉那 35 位）。
+	if g.state == StateCommandPhase && g.res.Regions != nil && !g.listOverlayOn() &&
 		x >= mapX && x < mapX+mapW && y >= mapY && y < mapY+mapH {
 		if i := asset.RegionAt(g.res.Regions, x-mapX, y-mapY, tileW, tileH); i >= 0 {
 			g.selectedRegion = i
@@ -2297,6 +2314,9 @@ func (g *Game) rightClick(x, y int) {
 		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
 		}
+	case StateCommandPhase:
+		// 清單點出來的行星情報／提督詳細資料：右鍵只是關掉。
+		g.listOverlayRightClick()
 	case StateFormation:
 		g.state = StateFleetComposition
 	case StateFleetComposition:
@@ -2313,8 +2333,10 @@ func (g *Game) rightClick(x, y int) {
 		if g.adjRightClick() {
 			return
 		}
-		g.sortieSlots(false)
-		g.state = StateAdmiralDetail
+		// 出擊那條路的艦隊編成按右鍵 ＝ 確認：`07F9:00D5` 從 `043F` 回來不看
+		// 結果就 `297B:0066` 建艦隊、進艦隊組成（收據 `fcmd-forg-rclick`／
+		// `fcmd-tab-sortie-rclick`）。
+		g.fleetOrgConfirm()
 	case StateAdmiralBio:
 		g.state = StateAdmiralDetail
 	case StateAdmiralDetail:
@@ -2750,7 +2772,13 @@ func (g *Game) estimateTaxFor(faction int) int {
 // 同一塊底板，右側面板在每一張上都看得到（被疊上去的視窗蓋住的部分除外）。
 func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 	g.drawLeftSummary(fb)
-	g.drawFleetRows(fb)
+	if g.res.CapitalPanel != nil {
+		g.res.CapitalPanel.SetTab(g.listTab())
+	}
+	if g.listTab() == listTabFleet {
+		g.drawFleetRows(fb)
+	}
+	g.drawListRows(fb)
 	switch g.state {
 	case StateMainGame, StateShipOrder, StateBuildPlan, StateAdmiralList, StateBudgetPlan:
 		if c, _, ok := g.capitalSummary(); ok {
@@ -2917,6 +2945,10 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 	// 戰略地圖介面的規格沒有疊層（order 空 → 只叫一次 "report"），艦隊命令
 	// 那幾層就在這裡畫：在清單列與游標之前，原版的游標永遠在最上面。
 	g.drawFleetCommand(fb)
+	// 右下角清單點出來的行星情報／提督詳細資料（`listtabs.go`）。
+	if g.state == StateCommandPhase {
+		g.drawListOverlays(fb)
+	}
 	// 模態的訊息框（艦隊組成編輯器那四句）疊在最後一層之上、游標之下。
 	if g.msgOn && g.lastLayer() == name {
 		g.drawMessage(fb)
@@ -3042,6 +3074,22 @@ func (g *Game) refundProvisional() {
 		}
 	}
 	g.provisional = nil
+}
+
+// fleetOrgConfirm 是出擊那條路的艦隊編成按「確認」（右鍵同一件事）：進艦隊組成。
+func (g *Game) fleetOrgConfirm() {
+	if g.commandSpec(StateFleetComposition) == nil {
+		return
+	}
+	g.selectedRow = 0
+	// 旗艦那一組在**進艦隊組成**這一刻就從首都的待命部隊扣出來
+	// （原版首都戰艦 78000 → 75000，`fcx-peek-stock-300`／`-350`），
+	// 「決定」不再扣、「中止」退回（`docs/re/316` §四）。
+	g.provisional = g.takeProvisional()
+	g.openFleetEditor(rules.CapitalRegion(g.faction), g.faction,
+		rules.FleetSlots(rules.AdmiralLevel(g.admiralRecord(g.detailAdmiral))),
+		g.provisional)
+	g.state = StateFleetComposition
 }
 
 // sortieSlots 是出擊命令進艦隊編成那一刻（`07F9:043F` 帶旗標 1）對提督記錄
@@ -3538,6 +3586,12 @@ func (g *Game) drawFleetRows(fb *gfx.Framebuffer) {
 	pressed := -1
 	if i := g.FleetCommandFleet(); i >= 0 && !g.fcmd.listUnpressed {
 		pressed = g.fleetListRowOf(i)
+	}
+	// 捲動：從位移那一筆起印五列（`0AD0:002A`，`docs/re/319`）。
+	scroll := g.listPage(listTabFleet).Scroll
+	if scroll > 0 && scroll <= len(rows) {
+		rows = rows[scroll:]
+		pressed -= scroll
 	}
 	g.res.FleetList.Draw(fb, g.res.Font, rows, pressed)
 }

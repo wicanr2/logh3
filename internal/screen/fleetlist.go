@@ -61,6 +61,8 @@ type FleetList struct {
 		X, W, Top, Inset int
 		PressedBg        uint8 `json:"pressed_bg"`
 	} `json:"row"`
+	// Tabs 是其餘三個分頁與 ▲▼ 的版面（`listtabs.go`）。
+	Tabs *ListTabsLayout `json:"tabs"`
 }
 
 // LoadFleetList 讀版面。

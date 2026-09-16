@@ -2,6 +2,7 @@ package screen
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/wicanr2/logh3/internal/font"
@@ -46,7 +47,63 @@ type PlanetInfoSpec struct {
 		StockValue   hexStr `json:"stock_value"`
 		EconomyOther hexStr `json:"economy_other"`
 		DefenceOther hexStr `json:"defence_other"`
+		// OtherTail 是不是自己的行星時，防衛力那一行之後還印的幾段
+		// （戰略地圖那張印艦種標題與整排 `----`；戰場那張沒有）。
+		OtherTail []hexStr `json:"other_tail"`
 	} `json:"lines"`
+
+	// Button 是戰略地圖那張右下角的「確認」（熱區清單 `ds:5198`，一顆）：
+	// 內容格 (CellX, CellY) 起 Cols 格，字那幾格換成 Colour 並帶按鈕旗標。
+	// 戰場那張沒有按鈕（按任一鍵就關）。
+	Button *struct {
+		CellX  int      `json:"cell_x"`
+		CellY  int      `json:"cell_y"`
+		Cols   int      `json:"cols"`
+		Colour int      `json:"colour"`
+		Codes  []string `json:"codes"`
+	} `json:"button"`
+}
+
+// ButtonAt 回畫面座標 (x, y) 有沒有落在「確認」上。命中範圍是按鈕那幾格
+// 本身（`37A9:01F9` → `341B:044A`），左右的端點裝飾不算。
+func (s *PlanetInfoSpec) ButtonAt(x, y int) bool {
+	b := s.Button
+	if b == nil {
+		return false
+	}
+	x0 := (s.CellX + 1 + b.CellX) * ui.FrameTileW
+	y0 := (s.CellY+1+b.CellY)*ui.FrameTileH + ui.FrameCellOriginY
+	return x >= x0 && x < x0+b.Cols*ui.FrameTileW && y >= y0 && y < y0+ui.FrameTileH
+}
+
+// putButton 把「確認」寫進內容緩衝區（與訊息框的 `putButtons` 同一套：
+// 字那幾格換顏色帶 `0x08`，左邊一格 `0x10`、右邊一格 `0x20`）。
+func (s *PlanetInfoSpec) putButton(b *ui.TextBuffer) {
+	bt := s.Button
+	if bt == nil {
+		return
+	}
+	if cell := b.At(bt.CellX-1, bt.CellY); cell != nil {
+		cell.Flags |= ui.CellButtonLeft
+	}
+	for i := 0; i < bt.Cols; i++ {
+		if cell := b.At(bt.CellX+i, bt.CellY); cell != nil {
+			cell.Colour = uint8(bt.Colour)
+			cell.Flags |= ui.CellButtonBody
+		}
+	}
+	if cell := b.At(bt.CellX+bt.Cols, bt.CellY); cell != nil {
+		cell.Flags |= ui.CellButtonRight
+	}
+	for i, h := range bt.Codes {
+		var code uint16
+		if _, err := fmt.Sscanf(h, "%04X", &code); err != nil {
+			continue
+		}
+		if cell := b.At(bt.CellX+i, bt.CellY); cell != nil {
+			cell.Code = code
+		}
+	}
 }
 
 // LoadPlanetInfoSpec 讀情報視窗的版面。
@@ -115,6 +172,10 @@ func DrawPlanetInfo(fb *gfx.Framebuffer, s *PlanetInfoSpec, fnt *font.Font,
 	if !p.Own {
 		b.Printf(l.EconomyOther.Raw(), p.Economy)
 		b.Printf(l.DefenceOther.Raw(), p.Defence, p.DefenceMax)
+		for _, t := range l.OtherTail {
+			b.Write(t.Raw())
+		}
+		s.putButton(b)
 		ui.DrawTextBuffer(fb, fnt, tiles, b, s.CellX+1, s.CellY+1)
 		return
 	}
@@ -126,6 +187,7 @@ func DrawPlanetInfo(fb *gfx.Framebuffer, s *PlanetInfoSpec, fnt *font.Font,
 	}
 	b.Write(l.StockHeader.Raw())
 	b.Printf(l.StockValue.Raw(), p.Missiles, p.Fighters)
+	s.putButton(b)
 	ui.DrawTextBuffer(fb, fnt, tiles, b, s.CellX+1, s.CellY+1)
 }
 

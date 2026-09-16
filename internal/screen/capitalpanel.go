@@ -275,6 +275,15 @@ func (f *PanelField) value(c rules.CapitalSummary) string {
 	return strconv.Itoa(v)
 }
 
+// SetTab 換掉畫出來時選中的分頁（核取方塊填 `FillOn` 的那一顆）。
+// 選中的是遊戲狀態（`ds:8F1F`），不是版面常數；規格檔裡的 `selected`
+// 只是開局的預設。
+func (p *CapitalPanel) SetTab(i int) {
+	if p.Tabs != nil && i >= 0 && i < len(p.Tabs.Items) {
+		p.Tabs.Selected = i
+	}
+}
+
 // drawTabs 畫一覽表那四個分頁鈕。
 func (p *CapitalPanel) drawTabs(fb *gfx.Framebuffer, fnt *font.Font) {
 	t := p.Tabs

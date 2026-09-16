@@ -165,3 +165,63 @@ func TestAdjutantCandidatesAndSetAdjutant(t *testing.T) {
 		t.Fatalf("卸任之後 +07=%#x 舊副官 +09=%#x", recs[0][admiralFleet], recs[1][admiralStaffFlag])
 	}
 }
+
+// 右下角「提督」分頁的清單與五列一頁（`docs/re/319`）。
+func TestIdleAdmiralsInRegionAndListPage(t *testing.T) {
+	mk := func(faction, region int, post byte) []byte {
+		r := make([]byte, AdmiralRecord)
+		r[0], r[admiralFaction], r[admiralFleet], r[admiralStaffFlag], r[admiralRegion] = post, byte(faction), 0xFF, 0x80, byte(region)
+		return r
+	}
+	recs := [][]byte{
+		mk(0, 0, 0xFF), // 0 合格
+		mk(0, 1, 0xFF), // 1 別的星域
+		mk(1, 0, 0xFF), // 2 別的陣營
+		mk(0, 0, 0x02), // 3 有職務
+		mk(0, 0, 0xFF), // 4 合格，但呼叫端說在艦隊裡
+		mk(0, 0, 0xFF), // 5 合格
+	}
+	all := make([]Admiral, 0, len(recs))
+	for i, r := range recs {
+		all = append(all, Admiral{Index: i, Faction: int(r[admiralFaction]), Record: r})
+	}
+	got := IdleAdmiralsInRegion(all, 0, 0, func(i int) bool { return i == 4 })
+	if len(got) != 2 || got[0] != 0 || got[1] != 5 {
+		t.Fatalf("閒置提督 %v，要 [0 5]", got)
+	}
+	p := ListPage{Count: 35}
+	if p.Arrows() != true {
+		t.Fatal("35 筆要有 ▲▼")
+	}
+	p.Step(1)
+	p.Step(1)
+	if p.Scroll != 10 {
+		t.Fatalf("▼ 兩下位移 %d，要 10", p.Scroll)
+	}
+	for i := 0; i < 10; i++ {
+		p.Step(1)
+	}
+	if p.Scroll != 30 {
+		t.Fatalf("捲到底位移 %d，要 30（35 − 5）", p.Scroll)
+	}
+	p.Step(-1)
+	p.Step(-1)
+	p.Step(-1)
+	p.Step(-1)
+	p.Step(-1)
+	p.Step(-1)
+	p.Step(-1)
+	if p.Scroll != 0 {
+		t.Fatalf("▲ 到頂位移 %d，要 0", p.Scroll)
+	}
+	p = ListPage{Count: 4, Scroll: 3}
+	p.Clamp()
+	if p.Scroll != 0 || p.Arrows() {
+		t.Fatalf("四筆的頁 %+v，要位移 0、沒有 ▲▼", p)
+	}
+	p = ListPage{Count: 6, Scroll: 5}
+	p.Clamp()
+	if p.Scroll != 1 {
+		t.Fatalf("六筆位移 5 夾成 %d，要 1", p.Scroll)
+	}
+}

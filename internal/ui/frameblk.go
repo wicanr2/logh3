@@ -136,15 +136,22 @@ func ringTile(c, r, cols, rows int) (int, bool) {
 }
 
 func (f TileFrame) drawTile(fb *gfx.Framebuffer, x, y, idx int) {
-	if idx < 0 || idx >= len(f.Tiles.Tiles) {
+	f.Tiles.DrawTile(fb, x, y, idx, f.Fill)
+}
+
+// DrawTile 把第 idx 張圖塊貼在像素 (x, y)，色號 0 填 fill。文字引擎的
+// `0xFF nn` 字碼走的就是這一條（`2376:0E4A`，索引 ＝ nn − 1）——右下角
+// 清單的 ▲▼ 是 `\xFF\x11`／`\xFF\x15`（第 16／20 張），空白是第 32 張。
+func (t *FrameTiles) DrawTile(fb *gfx.Framebuffer, x, y, idx int, fill uint8) {
+	if t == nil || idx < 0 || idx >= len(t.Tiles) {
 		return
 	}
-	img := f.Tiles.Tiles[idx]
+	img := t.Tiles[idx]
 	for ty := 0; ty < img.H; ty++ {
 		for tx := 0; tx < img.W; tx++ {
 			v := img.Pix[ty*img.W+tx]
 			if v == 0 {
-				v = f.Fill
+				v = fill
 			}
 			fb.Set(x+tx, y+ty, v)
 		}

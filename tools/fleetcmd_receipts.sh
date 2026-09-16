@@ -24,6 +24,8 @@ FLEET_HI=$(printf '%X' $((0x${DS}*16 + 0xC074 + 122)))
 HOLD=3000000
 STOCK="-peek lin:5F2FC:28"      # 星域 0 帝國七種存量（第 13、14 段）
 ADM="-peek lin:602AC:28,lin:602E4:28,lin:6062C:28"   # 提督記錄 0／2／32（第 15 段）
+HOLD5=300000                    # ▲▼ 按住 0.3M 步 ＝ 五列（第 17 段）
+TABS="-peek lin:5DA4F:1,lin:5E0C2:2,lin:5E0E4:2,lin:5E108:2,lin:61B2C:1,lin:5E106:1"   # 分頁編號與四個分頁的筆數／位移（第 17 段）
 
 # rec <批次> <步數上限> <上一個檢查點|-> <ck|-> <旗標...>
 # 每一批都倒：畫面、調色盤、字元平面、艦隊表第 0 筆。`ck` ＝ 在上限的前一道
@@ -233,3 +235,44 @@ rec fcmd-fadj-confirm-fleet 485000000 fcmd-fadj-pick-confirm - -clicks 437000000
 # 6. 從 `dec1` 只把游標移到瓦爾哈拉（不按）→ 左下角照游標重寫：剛編成的
 #    第１艦隊算不算進「艦隊 a：b」（星域記錄 `+0x28` 建艦隊時就加了）。
 rec fcmd-hover-home 440000000 fcmd-base - -mouse-x 32 -mouse-y 32 -mouse-at 421000000
+# 17. 右下角清單的四個分頁與捲動（04F8:05ED 換 [ds:957E]／[ds:9582]，docs/re/319）。
+#     分頁鈕（滑鼠）：艦隊 (350,250)、行星 (415,250)、敵艦隊 (490,250)、提督 (560,250)；
+#     列 k 在 (450, 268＋20k)；▲ (617,268)、▼ (617,348) 是按住一次一列（3765:0255），
+#     這裡按 0.3M 步 ＝ 剛好五列（一頁）。每批多倒分頁編號 ds:8F1F 與四個分頁的
+#     筆數／捲動位移（$TABS：9592/9593 艦隊、95B4/95B5 敵艦隊、95D8/95D9 提督、CFFC／95D6 行星）。
+rec fcmd-tab-planet        445000000 fcmd-base           ck -clicks 421000000:415:250 -click-hold $HOLD $TABS
+rec fcmd-tab-planet-row    470000000 fcmd-tab-planet     ck -clicks 446000000:450:268 -click-hold $HOLD $TABS
+rec fcmd-tab-planet-ok     495000000 fcmd-tab-planet-row -  -clicks 471000000:462:289 -click-hold $HOLD $TABS
+rec fcmd-tab-planet-rclick 495000000 fcmd-tab-planet-row -  -rclicks 471000000:300:200 -click-hold $HOLD $TABS
+rec fcmd-tab-planet-scroll 470000000 fcmd-tab-planet     -  -clicks 446000000:617:250 -click-hold $HOLD5 $TABS
+rec fcmd-tab-enemy         445000000 fcmd-base           ck -clicks 421000000:490:250 -click-hold $HOLD $TABS
+rec fcmd-tab-enemy-row     470000000 fcmd-tab-enemy      -  -clicks 446000000:450:268 -click-hold $HOLD $TABS
+rec fcmd-tab-admiral       445000000 fcmd-base           ck -clicks 421000000:560:250 -click-hold $HOLD $TABS
+rec fcmd-tab-admiral-down  470000000 fcmd-tab-admiral    ck -clicks 446000000:617:348 -click-hold $HOLD5 $TABS
+rec fcmd-tab-admiral-down2 495000000 fcmd-tab-admiral-down - -clicks 471000000:617:348 -click-hold $HOLD5 $TABS
+rec fcmd-tab-admiral-up    495000000 fcmd-tab-admiral-down - -clicks 471000000:617:268 -click-hold $HOLD5 $TABS
+rec fcmd-tab-admiral-end   470000000 fcmd-tab-admiral    -  -clicks 446000000:617:348 -click-hold $HOLD $TABS
+rec fcmd-tab-admiral-row   470000000 fcmd-tab-admiral    ck -clicks 446000000:450:268 -click-hold $HOLD $TABS
+rec fcmd-tab-admiral-cancel 495000000 fcmd-tab-admiral-row - -clicks 471000000:448:280 -click-hold $HOLD $TABS
+rec fcmd-tab-admiral-rclick 495000000 fcmd-tab-admiral-row - -rclicks 471000000:300:200 -click-hold $HOLD $TABS
+rec fcmd-tab-admiral-sortie 495000000 fcmd-tab-admiral-row ck -clicks 471000000:496:280 -click-hold $HOLD $TABS
+#     出擊那條路（07F9:00D5）的艦隊編成按右鍵 ＝ 確認：直接進艦隊組成（043F 回來不看結果就 297B:0066 建艦隊）。
+#     提督分頁與出擊命令兩條路各一批（後者冷啟動同 fcmd-fok，只是 320M 那一下換成右鍵）。
+rec fcmd-tab-sortie-rclick 520000000 fcmd-tab-admiral-sortie - -rclicks 496000000:300:200 -click-hold $HOLD $TABS $STOCK
+rec fcmd-forg-rclick 350000000 - - \
+  -tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 \
+  -rclicks 130000000:300:200,155000000:300:200,320000000:300:200 \
+  -clicks 40000000:300:170,95000000:300:170,180000000:352:85,210000000:400:85,240000000:400:45,270000000:488:290 \
+  -click-hold $HOLD $STOCK
+#     編成確認、組成決定 → 第２艦隊，提督分頁還選著、清單少一位；再點艦隊分頁 → 兩支。
+rec fcmd-tab-fleet2        545000000 fcmd-tab-admiral-sortie ck -clicks 496000000:480:310,521000000:510:310 -click-hold $HOLD $TABS
+rec fcmd-tab-fleet2-list   570000000 fcmd-tab-fleet2     -  -clicks 546000000:350:250 -click-hold $HOLD $TABS
+#     再出擊四位（每位：列 0 → 出擊 → 確認 → 決定）→ 六支艦隊；艦隊分頁出現 ▲▼，▼ 捲到第 1–5 列。
+rec fcmd-tab-fleet6        945000000 fcmd-tab-fleet2     ck \
+  -clicks 546000000:450:268,571000000:496:280,596000000:480:310,621000000:510:310,646000000:450:268,671000000:496:280,696000000:480:310,721000000:510:310,746000000:450:268,771000000:496:280,796000000:480:310,821000000:510:310,846000000:450:268,871000000:496:280,896000000:480:310,921000000:510:310 \
+  -click-hold $HOLD $TABS
+rec fcmd-tab-fleet6-list   970000000 fcmd-tab-fleet6     ck -clicks 946000000:350:250 -click-hold $HOLD $TABS
+rec fcmd-tab-fleet6-down   995000000 fcmd-tab-fleet6-list ck -clicks 971000000:617:348 -click-hold $HOLD5 $TABS
+rec fcmd-tab-fleet6-up     1020000000 fcmd-tab-fleet6-down - -clicks 996000000:617:268 -click-hold $HOLD5 $TABS
+rec fcmd-tab-fleet6-row    1020000000 fcmd-tab-fleet6-down ck -clicks 996000000:450:348 -click-hold $HOLD $TABS
+rec fcmd-tab-fleet6-close  1045000000 fcmd-tab-fleet6-row - -clicks 1021000000:490:350 -click-hold $HOLD $TABS

@@ -112,7 +112,7 @@ func (g *Game) fleetListFleetAt(row int) int {
 // fleetListRowOf 是 `fleetListFleetAt` 的反向：g.fleets 的第 i 支在清單第幾列，
 // 不在清單上回 -1。
 func (g *Game) fleetListRowOf(i int) int {
-	for row := 0; row < 5; row++ {
+	for row := 0; row < len(g.fleets); row++ {
 		if g.fleetListFleetAt(row) == i {
 			return row
 		}

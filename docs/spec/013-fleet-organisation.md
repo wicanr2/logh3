@@ -89,7 +89,10 @@
 能力值等到整張畫完再補的話，會在艦隊編號那張清單的右緣戳出一排洞
 （`screen.MainGameLayered` 的 `afterWindow`）。
 
-「確認」開出的**艦隊組成**還沒做（`docs/re/67`）。
+「確認」開出的**艦隊組成**見規格 [`015`](015-fleet-composition.md)。**出擊那條路在這張
+視窗按右鍵等於「確認」**：呼叫端 `07F9:00D5` 從視窗迴圈回來不看結果就建艦隊、進
+艦隊組成（收據 `fcmd-forg-rclick`、`fcmd-tab-sortie-rclick`，`docs/re/319` §五）；
+要作廢得在艦隊組成按「中止」。「變更 → 副官」那張變體的右鍵才是回艦隊視窗（下）。
 
 ## 副官：變更／卸任（`07F9:085D` → `0A80`，[`docs/re/318`](../re/318-fleet-adjutant-change.md)）
 

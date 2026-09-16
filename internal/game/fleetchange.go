@@ -110,6 +110,7 @@ func (g *Game) closeFleetChangeAdj() {
 		f.Operations = g.fleetOperations(f.Admiral, f.Adjutant)
 	}
 	g.fcmd.listUnpressed = true
+	g.listRefresh()
 	g.fcmd.changeItem = -1
 	g.state = StateFleetWindow
 }

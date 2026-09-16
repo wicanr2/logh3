@@ -1,0 +1,146 @@
+{
+ "_note": "戰略地圖的行星情報視窗（2AF5:0226(星域, 行星)，右下角清單「行星」分頁點一列開的；docs/re/319）。視窗 3603:0006(色 0x97, 格 (9,5), 內容 21×9 格, 旗標 1) → 實際 23×11 格。與戰場那張（planet-info.json）同一套格式字串家族，差在成長率／回復率的尾巴、飛彈與戰鬥機各一行、艦種那一列印的是「補充存量 ÷ 滿編」（3CC9:0020 長除法），以及右下角一顆「確認」（熱區 ds:5198：內容格 (18,8) 兩格）。不是自己的行星時後面幾段印 ----。左鍵點確認或右鍵關（2AF5:0226 的事件迴圈）。",
+ "cell_x": 9,
+ "cell_y": 5,
+ "cols": 21,
+ "rows": 9,
+ "colour": 151,
+ "owner_ink": [
+  6,
+  5,
+  7
+ ],
+ "owner_colour": [
+  150,
+  149,
+  151
+ ],
+ "owner_names": [
+  {
+   "offset": "ds:6099",
+   "bytes": "abd2b0eaad78",
+   "text": "帝國軍"
+  },
+  {
+   "offset": "ds:60A0",
+   "bytes": "a650b7f9ad78",
+   "text": "同盟軍"
+  },
+  {
+   "offset": "ds:60A7",
+   "bytes": "a4a4a5dfad78",
+   "text": "中立軍"
+  }
+ ],
+ "lines": {
+  "region": {
+   "offset": "ds:51B4",
+   "bytes": "2573ac50a8742020",
+   "text": "%s星系  "
+  },
+  "region_name": {
+   "offset": "ds:51BD",
+   "bytes": "25730a",
+   "text": "%s\\n"
+  },
+  "fortress": {
+   "offset": "ds:51C1",
+   "bytes": "ad6eb6eb",
+   "text": "要塞"
+  },
+  "planet": {
+   "offset": "ds:51C6",
+   "bytes": "a6e6ac50",
+   "text": "行星"
+  },
+  "kind_and_owner": {
+   "offset": "ds:51CB",
+   "bytes": "257325732020",
+   "text": "%s%s  "
+  },
+  "planet_name": {
+   "offset": "ds:51D2",
+   "bytes": "25730a",
+   "text": "%s\\n"
+  },
+  "blank": {
+   "offset": "ds:51D6",
+   "bytes": "0a",
+   "text": "\\n"
+  },
+  "economy": {
+   "offset": "ds:51D8＋51F1",
+   "bytes": "b867c0d9a44f202020202531306c75a152a6a8aaf8b276202532642e25316425250a",
+   "text": "經濟力    %10lu﹕成長率 %2d.%1d%%\\n（原版分兩次印，同色，接起來一樣）"
+  },
+  "defence": {
+   "offset": "ds:51FC",
+   "bytes": "a8bebdc3a44f2020202535752f253575a152a65eb45fb276202025336425250a",
+   "text": "防衛力   %5u/%5u﹕回復率  %3d%%\\n"
+  },
+  "kind_header": {
+   "offset": "ds:521D",
+   "bytes": "2020a2d020202020a2d620202020a2d120202020a2cf20202020a2d220202020a2e220202020a2d30a",
+   "text": "  Ｂ    Ｈ    Ｃ    Ａ    Ｄ    Ｔ    Ｅ\\n"
+  },
+  "kind_value": {
+   "offset": "ds:5247",
+   "bytes": "2534642020",
+   "text": "%4d  （補充存量 ÷ 艦種表滿編）"
+  },
+  "stock_header": {
+   "offset": "ds:524D 前半",
+   "bytes": "0a",
+   "text": "\\n"
+  },
+  "stock_value": {
+   "offset": "ds:524D＋5261",
+   "bytes": "2020adb8bc752020202020202531306c750a2020bed4b0abbef7202020202531306c75",
+   "text": "  飛彈      %10lu\\n  戰鬥機    %10lu"
+  },
+  "economy_other": {
+   "offset": "ds:5273",
+   "bytes": "b867c0d9a44f202020202531306c75a152a6a8aaf8b27620202d2d2d2d0a",
+   "text": "經濟力    %10lu﹕成長率  ----\\n"
+  },
+  "defence_other": {
+   "offset": "ds:5292",
+   "bytes": "a8bebdc3a44f2020202535752f253575a152a65eb45fb27620202d2d2d2d0a",
+   "text": "防衛力   %5u/%5u﹕回復率  ----\\n"
+  },
+  "other_tail": [
+   {
+    "offset": "ds:52B2",
+    "bytes": "2020a2d020202020a2d620202020a2d120202020a2cf20202020a2d220202020a2e220202020a2d30a",
+    "text": "  Ｂ    Ｈ    Ｃ    Ａ    Ｄ    Ｔ    Ｅ\\n"
+   },
+   {
+    "offset": "ds:52DC",
+    "bytes": "2d2d2d2d20202d2d2d2d20202d2d2d2d20202d2d2d2d20202d2d2d2d20202d2d2d2d20202d2d2d2d0a",
+    "text": "----  ----  ----  ----  ----  ----  ----\\n"
+   },
+   {
+    "offset": "ds:5306",
+    "bytes": "2020adb8bc752020202020202d2d2d2d2d2d2d2d2d2d0a",
+    "text": "  飛彈      ----------\\n"
+   },
+   {
+    "offset": "ds:531E",
+    "bytes": "2020bed4b0abbef7202020202d2d2d2d2d2d2d2d2d2d",
+    "text": "  戰鬥機    ----------"
+   }
+  ]
+ },
+ "button": {
+  "cell_x": 18,
+  "cell_y": 8,
+  "cols": 2,
+  "colour": 135,
+  "codes": [
+   "BD54",
+   "BB7B"
+  ],
+  "text": "確認",
+  "note": "熱區 ds:5198 一筆：x 18、y 8、寬 2、高 1；字色 0x87（字元平面 a87 s08，左右各一格 s10／s20）。"
+ }
+}

@@ -84,13 +84,17 @@ func RefillRegionSupply(record []byte) bool {
 	return writeRegionSupply(record, pool)
 }
 
-// DistributeRegionSupply 照 `2703:0590` 把某陣營的星域層存量分回行星。
-// 每顆先取整數百分比；逐顆捨去後的餘額全給最大經濟力行星，同值後者勝。
+// DistributeRegionSupply 照 `2703:0590` 把某陣營的星域層存量分回行星：
+// 七種艦艇的待命艘數（`+0x30 ＋ 陣營 × 0x1C`）進行星的補充存量 `+0x20`，
+// 飛彈／艦載機（`+0x68`／`+0x70`）進 `+0x3C`／`+0x40`。
+// 每顆先取整數百分比；逐顆捨去後的餘額全給最大經濟力行星，同值後者勝
+// （`docs/re/273`；艦艇那七輪在 `+06E0`，餘額在 `+0800`）。
 func DistributeRegionSupply(record []byte, planets *Planets, region, faction int) bool {
 	pool, ok := ReadRegionSupply(record)
 	if !ok || planets == nil || faction < 0 || faction > 1 {
 		return false
 	}
+	ships := RegionShips(record, faction)
 	start, n := planets.Range(region)
 	total, maxEconomy, maxPlanet := 0, 0, -1
 	for i := start; i < start+n; i++ {
@@ -107,6 +111,8 @@ func DistributeRegionSupply(record []byte, planets *Planets, region, faction int
 		return true
 	}
 	leftM, leftF := pool.Missiles[faction], pool.Fighters[faction]
+	var leftS [7]int
+	copy(leftS[:], ships)
 	for i := start; i < start+n; i++ {
 		if planets.Owner(i) != faction {
 			continue
@@ -118,6 +124,14 @@ func DistributeRegionSupply(record []byte, planets *Planets, region, faction int
 		if !ok {
 			return false
 		}
+		for k := range stock.Ships {
+			v := 0
+			if k < len(ships) {
+				v = ships[k] * pct / 100
+			}
+			stock.Ships[k] = v
+			leftS[k] -= v
+		}
 		stock.Missiles, stock.Fighters = m, f
 		WritePlanetStock(planets.Record(i), stock)
 		leftM, leftF = leftM-m, leftF-f
@@ -125,6 +139,9 @@ func DistributeRegionSupply(record []byte, planets *Planets, region, faction int
 	stock, ok := ReadPlanetStock(planets.Record(maxPlanet))
 	if !ok {
 		return false
+	}
+	for k := range stock.Ships {
+		stock.Ships[k] += leftS[k]
 	}
 	stock.Missiles += leftM
 	stock.Fighters += leftF

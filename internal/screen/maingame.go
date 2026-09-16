@@ -253,6 +253,40 @@ func (w *GameWindow) SetLineCode(line, cell int, code uint16) {
 	w.Lines = lines
 }
 
+// copyBoxes 把 Boxes 複製一份再改，在視窗的**複本**上呼叫不會動到規格本身
+// （與 SetLineCode 同一個理由）。
+func (w *GameWindow) copyBoxes() {
+	w.Boxes = append(w.Boxes[:0:0], w.Boxes...)
+}
+
+// MoveBox 把第 i 個小框的 x 挪到 x（框上的字跟著挪同樣的距離）。
+func (w *GameWindow) MoveBox(i, x int) {
+	if i < 0 || i >= len(w.Boxes) {
+		return
+	}
+	w.copyBoxes()
+	w.Boxes[i].TextX += x - w.Boxes[i].X
+	w.Boxes[i].X = x
+}
+
+// SetBoxCodes 換掉第 i 個小框上的字。
+func (w *GameWindow) SetBoxCodes(i int, codes []uint16) {
+	if i < 0 || i >= len(w.Boxes) {
+		return
+	}
+	w.copyBoxes()
+	w.Boxes[i].Codes = append([]uint16(nil), codes...)
+}
+
+// DropBox 拿掉第 i 個小框。
+func (w *GameWindow) DropBox(i int) {
+	if i < 0 || i >= len(w.Boxes) {
+		return
+	}
+	w.copyBoxes()
+	w.Boxes = append(w.Boxes[:i], w.Boxes[i+1:]...)
+}
+
 // TextField 是視窗內容裡一塊會變的字，靠右對齊。與 NumField 的差別是
 // 它帶自己的 `Y`——那幾塊在規格裡是 `lines` 的一行，不是 `fields` 的一列。
 type TextField struct {
