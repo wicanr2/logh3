@@ -319,3 +319,45 @@ func (p *ListPage) Step(dir int) {
 
 // Arrows 回這一頁要不要印 ▲▼（原版只看筆數 > 5）。
 func (p ListPage) Arrows() bool { return p.Count > ListPageRows }
+
+// AdmiralRegion 回一筆提督記錄的所在星域（`+0x0A`）；記錄不完整回 −1。
+func AdmiralRegion(record []byte) int {
+	if len(record) <= admiralRegion {
+		return -1
+	}
+	return int(record[admiralRegion])
+}
+
+// AdmiralDuty 是提督詳細資料那張把 `+0x09` 分成的三種（`0D92:00B7`）：
+// bit7 有設 ＝ 待命中（沒帶艦隊）、`0x7F` ＝ 執勤中（幕僚職）、其餘 ＝ 出擊中
+// （低七位是帶的艦隊槽）。
+type AdmiralDuty int
+
+const (
+	DutyIdle   AdmiralDuty = iota // 待命中
+	DutyStaff                     // 執勤中（參謀）
+	DutySortie                    // 出擊中
+)
+
+// AdmiralDutyOf 回這一筆的三種之一。
+func AdmiralDutyOf(record []byte) AdmiralDuty {
+	if len(record) <= admiralStaffFlag {
+		return DutyIdle
+	}
+	switch v := record[admiralStaffFlag]; {
+	case v&0x80 != 0:
+		return DutyIdle
+	case v == 0x7F:
+		return DutyStaff
+	}
+	return DutySortie
+}
+
+// AdmiralAlive 回這一筆的 `+0x00`：0 ＝ 死亡、`0x80` ＝ 下落不明，其餘活著
+// （詳細資料的「現在位置」印的就是這三種，`0D92:00B7`）。
+func AdmiralAlive(record []byte) (dead, missing bool) {
+	if len(record) == 0 {
+		return false, false
+	}
+	return record[0] == 0, record[0] == 0x80
+}

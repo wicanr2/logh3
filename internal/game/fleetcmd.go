@@ -153,10 +153,11 @@ func (g *Game) fleetChangeHidden(f *rules.Fleet) bool {
 	return g.res.Planets == nil || g.res.Planets.RegionOwner(f.Region) != f.Faction
 }
 
-// closeFleetWindow 回到戰略地圖介面。
+// closeFleetWindow 回到戰略地圖介面（從艦隊資料開的回那張清單）。
 func (g *Game) closeFleetWindow() {
 	g.fcmd = fleetCmd{fleet: -1, hover: -1, target: -1, msgKind: -1}
-	g.state = StateCommandPhase
+	g.state = g.fleetWindowReturn()
+	g.resumeListScreen()
 }
 
 // openFleetActionMenu 開「作戰」的五項選單。框的位置照戰場命令選單那條公式

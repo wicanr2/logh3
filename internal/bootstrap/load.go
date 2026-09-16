@@ -323,6 +323,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	listScreen, err := screen.LoadListScreenSpec(filepath.Join(data, "list-screen-panel.json"))
+	if err != nil {
+		return nil, err
+	}
 	regionInfo, err := screen.LoadRegionInfoSpec(filepath.Join(data, "region-info-panel.json"))
 	if err != nil {
 		return nil, err
@@ -370,6 +374,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		PlanetInfoMap: planetInfoMap,
 		RegionInfo:    regionInfo,
 		OccupyAsk:     occupyAsk,
+		ListScreen:    listScreen,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
 

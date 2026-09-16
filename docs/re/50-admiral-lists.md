@@ -54,6 +54,10 @@ tools/py.sh tools/scripts/plane_json.py /work/workplace/x.bin /work/workplace/x.
 
 ## 未解：星系資料那張的列順序
 
+> 後記：已解——資料段 `ds:1DB2` 起 64 bytes，兩個陣營各 32（`docs/re/64`、
+> `docs/internals/data/star-list-order.json`）；開清單時 `0D05:0006` 把 `ds:1DB2 ＋ 座位 × 32`
+> 的遠指標存進 `ds:96E8`，列印與點列都從它查（`docs/re/323`）。
+
 「星系資料」列的是 32 個星域的名字與兩邊的艦隊數。名字、陣營色與
 「﹕」都對得上，**列的順序不是 `STELLAR.DT*` 的順序**：
 

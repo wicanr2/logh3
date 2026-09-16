@@ -14331,6 +14331,8 @@
     "ink": 7,
     "shadow": 3,
     "staff_mark": 41395,
+    "sortie_mark": 41401,
+    "marks_note": "記號依提督 +0x09：0x7F 幕僚職 ○（A1B3）、低七位是艦隊槽的 ★（A1B9，收據 fcmd-lst-adm 的萊因哈特）、bit7 待命中空白",
     "ranks": [
      [
       42198,

@@ -28,6 +28,15 @@ type AdmiralPanel struct {
 	Location struct {
 		X, Y int
 	} `json:"location"`
+	// Prefix 是姓名那一列最左的一格：帶艦隊的印「第Ｎ艦隊」、幕僚職印
+	// 「參謀」、其餘空白（`0D92:00B7` 的 `ds:1FD7`／`1FE6`／`1FF5`）。
+	Prefix struct {
+		X, Y int
+	} `json:"prefix"`
+	// Status 是現在位置後面那一段「：待命中／執勤中／出擊中」。
+	Status struct {
+		X, Y int
+	} `json:"status"`
 	Flagship struct {
 		X, Y   int
 		LabelX int      `json:"label_x"`
@@ -70,7 +79,9 @@ func LoadAdmiralPanel(path string) (*AdmiralPanel, error) {
 // AdmiralView 是畫這張畫面要的一整組值。
 type AdmiralView struct {
 	Name, Rank []uint16 // 姓名與軍階的字碼
-	Location   []uint16 // 現在位置的星域名
+	Location   []uint16 // 現在位置的星域名（或敵將那張的 ＊＊＊＊＊＊＊＊）
+	Prefix     []uint16 // 姓名前那一格：第Ｎ艦隊／參謀；空 ＝ 不印
+	Status     []uint16 // 現在位置後面的「：待命中」那一段；空 ＝ 不印
 	Flagship   []uint16 // 旗艦名；空 ＝ 沒有艦隊，那一行不畫
 	Level, Exp int
 	Record     []byte // ADMIRAL.DT* 的那一筆，能力值直接照位移取
@@ -87,6 +98,12 @@ func (p *AdmiralPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, v AdmiralView, 
 	drawFull(fb, fnt, p.Rank.X, p.Rank.Y, v.Rank, p.Ink)
 	if len(v.Location) > 0 {
 		drawFull(fb, fnt, p.Location.X, p.Location.Y, v.Location, p.Ink)
+	}
+	if len(v.Prefix) > 0 {
+		drawFull(fb, fnt, p.Prefix.X, p.Prefix.Y, v.Prefix, p.Ink)
+	}
+	if len(v.Status) > 0 {
+		drawFull(fb, fnt, p.Status.X, p.Status.Y, v.Status, p.Ink)
 	}
 	// 沒有艦隊的提督連「旗艦」那個標籤都不畫（收據 `adm15e`）。
 	if len(v.Flagship) > 0 {

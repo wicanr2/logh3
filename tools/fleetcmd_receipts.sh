@@ -25,7 +25,9 @@ HOLD=3000000
 STOCK="-peek lin:5F2FC:28"      # 星域 0 帝國七種存量（第 13、14 段）
 ADM="-peek lin:602AC:28,lin:602E4:28,lin:6062C:28"   # 提督記錄 0／2／32（第 15 段）
 HOLD5=300000                    # ▲▼ 按住 0.3M 步 ＝ 五列（第 17 段）
+HOLD1=100000                    # 一覽表的 ▲▼ 按住 0.1M 步 ＝ 一列（第 20 段）
 TABS="-peek lin:5DA4F:1,lin:5E0C2:2,lin:5E0E4:2,lin:5E108:2,lin:61B2C:1,lin:5E106:1"   # 分頁編號與四個分頁的筆數／位移（第 17 段）
+LST="-peek lin:5E0B8:1,lin:5E216:1,lin:5E21C:1,lin:5E1F2:2,lin:5DA5D:2,lin:56922:2,lin:5DA61:2,lin:5E1D0:2,lin:63CB2:2"   # 一覽表四張的分頁／位移／筆數（第 20 段）
 
 # rec <批次> <步數上限> <上一個檢查點|-> <ck|-> <旗標...>
 # 每一批都倒：畫面、調色盤、字元平面、艦隊表第 0 筆。`ck` ＝ 在上限的前一道
@@ -43,6 +45,9 @@ rec() {
   printf '%s  %s\n' "$name" "$(sed -n 's/^screen.bin SHA-256: //p' "$ROOT/workplace/oracle/$name/meta.txt" | cut -c1-16)"
 }
 
+# mvc／mvr <步數> <x> <y>：先把游標移過去，10M 步之後才按（第 20 段的坑：移動與按鍵同一瞬間會被丟掉）。
+mvc() { echo "-mouse-x $2 -mouse-y $3 -mouse-at $1 -clicks $(($1 + 10000000)):$2:$3"; }
+mvr() { echo "-mouse-x $2 -mouse-y $3 -mouse-at $1 -rclicks $(($1 + 10000000)):$2:$3"; }
 cd "$ROOT"
 # 0. 戰略地圖介面，右下角清單有剛編成的第１艦隊（＝ 收據 `dec1` 的序列）。
 rec fcmd-base 420000000 - ck \
@@ -310,3 +315,57 @@ rec fcmd-occ-phz-t2      835000000 fcmd-occ-phz-t1   ck -clicks 716000000:544:85
 rec fcmd-occ-phz-t3      955000000 fcmd-occ-phz-t2   ck -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
 rec fcmd-occ-phz-t3b    1000000000 fcmd-occ-phz-t3   ck -clicks 956000000:300:200 -click-hold $HOLD $OCC
 rec fcmd-occ-phz-t4     1120000000 fcmd-occ-phz-t3b  -  -clicks 1001000000:544:85,1004000000:560:85 -click-hold $HOLD $OCC
+
+# 20. 一覽表四張的列（0ABD 段的四支：星系資料 0D05、艦隊資料 0C7F、提督／敵將 0ABD:00D6 → 0C0A；
+#     docs/re/323）。一覽表 (448,85) → 星系資料 (460,85)／艦隊資料 (460,105)／提督資料 (460,125)／
+#     敵將資料 (460,145)。列 k 在畫面 y 80＋20k → 滑鼠 (460, 50＋20k)；分頁 (456|520|584, 30)；
+#     ▲ (615,50)、▼ (615,350)（按住 0.1M ＝ 一列；0.3M 是兩列）。提督詳細資料（旗標 0）經歷 (448,280)／結束 (496,280)。
+#     ⚠ 游標移到會換地圖反白的列（或移出清單）的**同一瞬間**按鍵，原版把那一下丟掉
+#     （fcx-lst-star-row0／-r1 沒跑到 0D05:0141；先移再按就收得到，fcx-lst-star-r0b／fcx-lst-adm-rr）
+#     ——所以這一段的列與鈕都先 -mouse-at 移過去、10M 步之後才按。
+#     另倒：ds:9588 選著的星域、ds:96E6／96EC 星系清單的分頁與位移、ds:96C2／96C3 艦隊清單筆數與位移、
+#     ds:8F2D／1DF2 每座位記住的星系分頁與位移、ds:8F31 艦隊清單分頁、ds:96A0／96A1 提督清單筆數與位移、
+#     ds:F182／F183 地圖反白的格與開清單前存起來的那一格。
+#     (a) 星系資料：點列 ＝ 換選那一格（073F:02EE）＋ 關清單 ＋ 星系情報視窗（073F:05CB）；分頁與位移每座位記住。
+rec fcmd-lst-star          470000000 fcmd-base     ck -clicks 421000000:448:85,446000000:460:85 -click-hold $HOLD $LST
+rec fcmd-lst-star-row      495000000 fcmd-lst-star ck $(mvc 471000000 460 50) -click-hold $HOLD $LST
+rec fcmd-lst-star-row-close 520000000 fcmd-lst-star-row - $(mvc 496000000 270 350) -click-hold $HOLD $LST
+rec fcmd-lst-star-row2     495000000 fcmd-lst-star ck $(mvc 471000000 460 90) -click-hold $HOLD $LST
+rec fcmd-lst-star-row2-close 520000000 fcmd-lst-star-row2 - $(mvc 496000000 270 350) -click-hold $HOLD $LST
+rec fcmd-lst-star-hover    485000000 fcmd-lst-star - -mouse-x 460 -mouse-y 250 -mouse-at 471000000 $LST
+rec fcmd-lst-star-hover-out 485000000 fcmd-lst-star - -mouse-x 100 -mouse-y 100 -mouse-at 471000000 $LST
+rec fcmd-lst-star-tab-assign 495000000 fcmd-lst-star - $(mvc 471000000 520 30) -click-hold $HOLD $LST
+rec fcmd-lst-star-tab-tax  495000000 fcmd-lst-star ck $(mvc 471000000 584 30) -click-hold $HOLD $LST
+rec fcmd-lst-star-tax-rclick 520000000 fcmd-lst-star-tab-tax ck $(mvr 496000000 300 200) -click-hold $HOLD $LST
+rec fcmd-lst-star-reopen   570000000 fcmd-lst-star-tax-rclick - -clicks 521000000:448:85,546000000:460:85 -click-hold $HOLD $LST
+rec fcmd-lst-star-down     495000000 fcmd-lst-star ck $(mvc 471000000 615 350) -click-hold $HOLD1 $LST
+rec fcmd-lst-star-down-row 520000000 fcmd-lst-star-down - $(mvc 496000000 460 50) -click-hold $HOLD $LST
+rec fcmd-lst-star-up       520000000 fcmd-lst-star-down - $(mvc 496000000 615 50) -click-hold $HOLD1 $LST
+rec fcmd-lst-star-rclick   495000000 fcmd-lst-star - $(mvr 471000000 300 200) -click-hold $HOLD $LST
+#     (b) 艦隊資料：點列 ＝ 艦隊視窗（0DEA:0003，與右下角清單同一支），關了回清單。
+rec fcmd-lst-fleet         470000000 fcmd-base      ck -clicks 421000000:448:85,446000000:460:105 -click-hold $HOLD $LST
+rec fcmd-lst-fleet-row     495000000 fcmd-lst-fleet ck $(mvc 471000000 460 50) -click-hold $HOLD $LST
+rec fcmd-lst-fleet-row-close 520000000 fcmd-lst-fleet-row - $(mvc 496000000 480 340) -click-hold $HOLD $LST
+rec fcmd-lst-fleet-row-rclick 520000000 fcmd-lst-fleet-row - $(mvr 496000000 300 200) -click-hold $HOLD $LST
+rec fcmd-lst-fleet-row1    495000000 fcmd-lst-fleet - $(mvc 471000000 460 70) -click-hold $HOLD $LST
+rec fcmd-lst-fleet-tab-unit 495000000 fcmd-lst-fleet - $(mvc 471000000 520 30) -click-hold $HOLD $LST
+rec fcmd-lst-fleet-tab-ops 495000000 fcmd-lst-fleet - $(mvc 471000000 584 30) -click-hold $HOLD $LST
+rec fcmd-lst-fleet-rclick  495000000 fcmd-lst-fleet - $(mvr 471000000 300 200) -click-hold $HOLD $LST
+#     (c) 提督資料：點列 ＝ 提督詳細資料（0D92:000D(r, 0, 1, 0)：經歷／結束），關了回清單。
+rec fcmd-lst-adm           470000000 fcmd-base    ck -clicks 421000000:448:85,446000000:460:125 -click-hold $HOLD $LST
+rec fcmd-lst-adm-row       495000000 fcmd-lst-adm ck $(mvc 471000000 460 50) -click-hold $HOLD $LST
+rec fcmd-lst-adm-row-close 520000000 fcmd-lst-adm-row - $(mvc 496000000 496 280) -click-hold $HOLD $LST
+rec fcmd-lst-adm-row-bio   520000000 fcmd-lst-adm-row ck $(mvc 496000000 448 280) -click-hold $HOLD $LST
+rec fcmd-lst-adm-row-bio-close 545000000 fcmd-lst-adm-row-bio - $(mvc 521000000 496 280) -click-hold $HOLD $LST
+rec fcmd-lst-adm-row-rclick 520000000 fcmd-lst-adm-row - $(mvr 496000000 300 200) -click-hold $HOLD $LST
+rec fcmd-lst-adm-hover     485000000 fcmd-lst-adm - -mouse-x 460 -mouse-y 210 -mouse-at 471000000 $LST
+rec fcmd-lst-adm-down      495000000 fcmd-lst-adm ck $(mvc 471000000 615 350) -click-hold $HOLD1 $LST
+rec fcmd-lst-adm-down-row  520000000 fcmd-lst-adm-down - $(mvc 496000000 460 50) -click-hold $HOLD $LST
+rec fcmd-lst-adm-rclick    495000000 fcmd-lst-adm - $(mvr 471000000 300 200) -click-hold $HOLD $LST
+rec fcmd-lst-adm-outside   495000000 fcmd-lst-adm - $(mvc 471000000 100 100) -click-hold $HOLD $LST
+#     (d) 敵將資料：同 (c)，旗標 (r, 0, 0, 0)；沒有列的游標反白（0C0A:0351 的第三個參數 0）。
+rec fcmd-lst-enemy         470000000 fcmd-base      ck -clicks 421000000:448:85,446000000:460:145 -click-hold $HOLD $LST
+rec fcmd-lst-enemy-row     495000000 fcmd-lst-enemy ck $(mvc 471000000 460 50) -click-hold $HOLD $LST
+rec fcmd-lst-enemy-row-close 520000000 fcmd-lst-enemy-row - $(mvc 496000000 496 280) -click-hold $HOLD $LST
+rec fcmd-lst-enemy-hover   485000000 fcmd-lst-enemy - -mouse-x 460 -mouse-y 210 -mouse-at 471000000 $LST
+rec fcmd-lst-enemy-rclick  495000000 fcmd-lst-enemy - $(mvr 471000000 300 200) -click-hold $HOLD $LST

@@ -466,6 +466,9 @@ type Resources struct {
 	// OccupyAsk 是回合裡占領命令的問話（`docs/internals/data/occupy-ask-panel.json`）。
 	OccupyAsk *screen.OccupyAskSpec
 
+	// ListScreen 是一覽表四張共用的清單版面（規格 055）。
+	ListScreen *screen.ListScreenSpec
+
 	// SupplyPanel 是「補給」選對象時右側那個面板（`docs/re/143`）。
 	SupplyPanel *screen.SupplyPanelSpec
 
@@ -778,6 +781,11 @@ type Game struct {
 		cols []uint8
 		img  *asset.Image
 	}
+	// lst 是一覽表四張的清單狀態（`listscreen.go`）；listScreenAdmiralCount 是
+	// 提督／敵將資料那張這一次算出來的筆數（位移切掉之前）。
+	lst                    listScreen
+	listScreenAdmiralCount int
+
 	// mapHighlight 是地圖上反白的那一格（原版 `ds:F182`）：開局、讀檔、交棒
 	// 時是自己的首都，艦隊命令的目的地選取結束時換成清單看的那一格
 	// （`3705:0284(ds:9588)`，`docs/re/313`）。
@@ -1720,6 +1728,7 @@ func New(res *Resources) (*Game, error) {
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
 		hoverRegion: -1, hoverProbe: -1, mapHighlight: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1,
+		lst:  newListScreen(),
 		tabs: newListTabs(), rinfo: -1,
 		// 音源是開機偵測的結果，不是每局重來的東西：沒有 MPU-401 就退到
 		// OPL（`docs/re/274` §3）。remake 不模擬 MIDI 介面，所以與出貨的
@@ -1868,6 +1877,8 @@ func (g *Game) moveMouse(x, y int) {
 	g.fortressAimMouse(x, y)
 	// 艦隊視窗的「作戰」選單反白跟著游標走（`docs/spec/051`）。
 	g.fleetCmdMouseMove(x, y)
+	// 一覽表的清單：游標停的那一列換地圖反白與左下角（`3705:0591`）。
+	g.listScreenHover()
 }
 
 // refreshHoverRegion 重算左下角那塊要寫哪一格星域（`docs/re/277`）。
@@ -1971,7 +1982,7 @@ func (g *Game) forcedLeftRegion(s State) int {
 	// （`0D92:000D` → `07F9:00D5`）左下角一個字都不動（收據 `fcmd-tab-fleet6`：
 	// 出擊了五次仍是「治安 82%／艦隊 0：0」）。
 	switch s {
-	case StateAdmiralListView, StateStandbyAdmirals, StateAdmiralList:
+	case StateStandbyAdmirals, StateAdmiralList:
 		return rules.CapitalRegion(g.faction)
 	}
 	return -1
@@ -2346,7 +2357,11 @@ func (g *Game) click(x, y int) {
 					return
 				}
 				if g.commandSpec(item) != nil {
-					g.state = item
+					if isListScreen(item) {
+						g.openListScreen(item)
+					} else {
+						g.state = item
+					}
 				}
 				return
 			}
@@ -2354,9 +2369,7 @@ func (g *Game) click(x, y int) {
 		// 點在選單項目外面就把選單關掉——實測四個方向的界外點都回主畫面。
 		g.state = StateCommandPhase
 	case StateStarList, StateFleetList, StateAdmiralListView, StateEnemyList:
-		// 一覽表四張的列還點不動，只能右鍵關（worklist #47 `list-screen-rows`）：
-		// 原版點一列開什麼還沒量（提督那兩張多半是 `0D92:000D` 的詳細資料、
-		// 星系那張多半是 `073F:060A` 的星系情報視窗）。
+		g.listScreenClick(x, y)
 	}
 }
 
@@ -2520,6 +2533,8 @@ func (g *Game) rightClick(x, y int) {
 	case StateRegionInfo:
 		// 右鍵關星系情報視窗（`073F:0AFD` 的事件迴圈：碼 2 就結束）。
 		g.closeRegionInfo()
+	case StateStarList, StateFleetList, StateAdmiralListView, StateEnemyList:
+		g.listScreenRightClick()
 	case StateOccupyAsk:
 		// 問話不吃右鍵（`113A:0899`：只有命中鈕的左鍵會離開迴圈）。
 	case StateVersusInput:
@@ -2809,6 +2824,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			// （`docs/spec/002`）。
 			fb, _ := screen.MainGameLayered(spec, g.res.Font, g.starMapFor(spec),
 				g.res.Faces, g.res.Cursor, g.drawBoardPanels, g.afterWindow)
+			g.drawListScreenOverlays(fb)
 			g.drawBudget(fb)
 			g.drawProduction(fb)
 			g.drawDelivery(fb)
@@ -3085,7 +3101,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 		// 而畫面上的箭頭跟著搬過去了：`info1e`／`lst1e`／`lst2e`／
 		// `lst3e`／`settings1e` 與同盟的五張，十份都是同一個結論。
 		StateInfo, StateFleetList, StateAdmiralListView, StateEnemyList,
-		StateSettings,
+		StateStarList, StateSettings,
 		// 交棒視窗的游標停在剛剛按下確認／實行的地方：`vs3` 在主選單
 		// 那一列 (300,250)，`vs5`／`vs6` 在「實行」那一格 (560,125)。
 		StateVersusInput, StateVersusAccount:
@@ -3109,6 +3125,11 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 		// 訂造報告那七列要畫在**游標之前**——收據 `vs7` 的游標正好壓在
 		// 「戰艦」那一列的數字上，順序反了就差 32 個像素。
 		g.drawShipOrder(fb)
+	}
+	// 一覽表的反白列與艦隊資料的列（`listscreen.go`）：在從它開出來的艦隊
+	// 視窗之前。
+	if name == g.lastLayer() {
+		g.drawListScreenBand(fb)
 	}
 	// 戰略地圖介面的規格沒有疊層（order 空 → 只叫一次 "report"），艦隊命令
 	// 那幾層就在這裡畫：在清單列與游標之前，原版的游標永遠在最上面。
@@ -3578,29 +3599,39 @@ func (g *Game) drawAdmiralDetail(fb *gfx.Framebuffer) {
 // drawAdmiralDetailFor 把第 i 位提督的詳細資料畫進那張視窗（視窗本身由
 // 呼叫端畫）；buttons ＝ 要不要畫下緣三顆鈕的字。
 func (g *Game) drawAdmiralDetailFor(fb *gfx.Framebuffer, i int, buttons bool) {
-	if g.res.AdmiralPanel == nil {
+	v, ok := g.admiralView(i)
+	if !ok {
 		return
 	}
-	if i < 0 || (i+1)*rules.AdmiralRecord > len(g.res.Admiral) {
-		return
+	g.drawAdmiralView(fb, v, i, buttons)
+}
+
+// admiralView 算第 i 位提督詳細資料裡跟著提督走的那幾塊（姓名、軍階、
+// 現在位置、旗艦、等級與能力值）。
+func (g *Game) admiralView(i int) (screen.AdmiralView, bool) {
+	if g.res.AdmiralPanel == nil || i < 0 || (i+1)*rules.AdmiralRecord > len(g.res.Admiral) {
+		return screen.AdmiralView{}, false
 	}
-	p := g.res.AdmiralPanel
 	rec := g.res.Admiral[i*rules.AdmiralRecord : (i+1)*rules.AdmiralRecord]
 	v := screen.AdmiralView{Record: rec, Level: rules.AdmiralLevel(rec)}
 	if i < len(g.res.AdmiralNames) {
 		v.Name = g.res.AdmiralNames[i]
 	}
 	v.Rank = g.rankCodes(rules.RankOf(rules.AdmiralLevel(rec)))
-	// 待命中的提督站在自己陣營的首都（三張收據都是瓦爾哈拉，假設待驗）。
-	if r := rules.CapitalRegion(rules.AdmiralFaction(rec)); r >= 0 {
-		o := r * rules.RegionRecord
-		if o+rules.RegionRecord <= len(g.res.Stellar) {
-			v.Location = rules.RegionName(g.res.Stellar[o : o+rules.RegionRecord])
-		}
+	// 現在位置是提督記錄的 `+0x0A`（`0D92:00B7`）；待命中的提督站在自己
+	// 陣營的首都。
+	if r := rules.AdmiralRegion(rec); r >= 0 {
+		v.Location = rules.RegionName(g.regionRecord(r))
 	}
 	if slot := rules.FlagshipSlot(rec, i); slot >= 0 {
 		v.Flagship = g.res.Flagships.Name(rules.AdmiralFaction(rec), slot)
 	}
+	return v, true
+}
+
+// drawAdmiralView 把算好的 v 畫進去，頭像用第 i 位的。
+func (g *Game) drawAdmiralView(fb *gfx.Framebuffer, v screen.AdmiralView, i int, buttons bool) {
+	p := g.res.AdmiralPanel
 	p.Draw(fb, g.res.Font, v, buttons)
 	if g.res.Faces == nil {
 		return
@@ -3816,16 +3847,6 @@ func (g *Game) drawLeftSummary(fb *gfx.Framebuffer) {
 	if g.res.RegionPanel == nil || g.res.Planets == nil {
 		return
 	}
-	// 星系資料那張跟著游標所在的那一列即時重寫。
-	if g.state == StateStarList {
-		if spec := g.commandSpec(g.state); spec != nil {
-			if rec := g.regionRecord(g.starListSelected(spec)); rec != nil {
-				sum := rules.Summarise(rec, g.res.Planets, g.starListSelected(spec), g.faction)
-				g.res.RegionPanel.Draw(fb, g.res.Font, sum, g.faction)
-			}
-		}
-		return
-	}
 	// 其餘畫面畫的是寫進去那一刻的快照（`hoverSnap`）。畫面自己要寫首都的
 	// 那幾張（`forcedLeftRegion`）在輸入結尾已經寫進去了；這裡只補「不是
 	// 經由輸入進到那個畫面」的情況。
@@ -3844,6 +3865,12 @@ func (g *Game) commandSpec(s State) *screen.MainGameSpec {
 	if !ok || g.res.Screens == nil {
 		return nil
 	}
+	// 從艦隊資料開的艦隊視窗那一族：底下畫的是艦隊資料那張，不是地圖介面。
+	if g.lst.fleetFrom && fleetWindowFamily(s) {
+		if n, ok := screenSpecName[StateFleetList]; ok {
+			name = n
+		}
+	}
 	return g.res.Screens[name]
 }
 
@@ -3856,9 +3883,10 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 			return m
 		}
 	case starListColours:
-		if m := g.starListStarMap(spec); m != nil {
-			return m
-		}
+		// 星系資料那張就是戰略地圖本身（擁有者色、有自軍艦隊的格變黑、
+		// 反白跟著游標停的那一列；收據 `fcmd-lst-star`：瓦爾哈拉有艦隊、
+		// 沒反白時是色 0）。
+		return g.playerStarMap()
 	}
 	if spec.Map.Colours != "" && g.res.StarMaps != nil {
 		if m := g.res.StarMaps[spec.Map.Colours]; m != nil {
@@ -3902,58 +3930,6 @@ const (
 	securityColours = "colour_796_01_security"
 	starListColours = "colour_796_01_star_list"
 )
-
-// starListStarMap 依現在的局面重建「星系資料」那張地圖。
-//
-// 底色是星域的勢力色（`rules.RegionColour`：帝國 1、同盟 12、無主 3），
-// **選中那一格另外用陣營的文字色**（`rules.FactionColour`：帝國 6、
-// 同盟 5、無主 7）。選中的是滑鼠停的那一列——帝國那張停在第 2 列 ＝
-// 卡斯特羅普（無主，色 7），同盟那張同樣第 2 列 ＝ 凱利姆（同盟，色 5），
-// 兩張的色號不同正是因為擁有者不同（`docs/re/64`）。
-func (g *Game) starListStarMap(spec *screen.MainGameSpec) *asset.Image {
-	if g.res.StarBit == nil || g.res.StarRGN == nil || g.res.Planets == nil {
-		return nil
-	}
-	n := len(g.res.Stellar) / rules.RegionRecord
-	if n == 0 {
-		return nil
-	}
-	cols := make([]uint8, n)
-	for i := range cols {
-		cols[i] = rules.RegionColour(g.res.Planets.RegionOwner(i))
-	}
-	if r := g.starListSelected(spec); r >= 0 && r < n {
-		cols[r] = rules.FactionColour(g.res.Planets.RegionOwner(r))
-	}
-	img, err := asset.BuildStarMap(g.res.StarBit, g.res.StarRGN, cols, 16, 20, 20)
-	if err != nil {
-		return nil
-	}
-	return img
-}
-
-// starListSelected 回星系清單上滑鼠停的那一列對應的星域；問不到回 -1。
-func (g *Game) starListSelected(spec *screen.MainGameSpec) int {
-	order := g.starListOrder()
-	var l *screen.ListSpec
-	for _, w := range spec.Windows {
-		if w != nil && w.List != nil {
-			l = w.List
-		}
-	}
-	if l == nil || l.Pitch <= 0 || len(order) == 0 {
-		return -1
-	}
-	y := g.mouseY
-	if y < 0 && spec.Mouse != nil {
-		y = spec.Mouse.Y + mouseDY
-	}
-	row := (y - l.Y) / l.Pitch
-	if y < l.Y || row < 0 || row >= l.Rows || row >= len(order) {
-		return -1
-	}
-	return order[row]
-}
 
 // securityStarMap 依現在的局面重建戰略情報報告那張地圖。
 //
@@ -4018,6 +3994,10 @@ func (g *Game) strategicMapColours(faction int, tint bool) []uint8 {
 		hl = g.mapHighlight
 		if hl < 0 {
 			hl = rules.CapitalRegion(faction)
+		}
+		// 一覽表的清單開著：反白跟著游標停的那一列走（`listscreen.go`）。
+		if v, ok := g.listScreenMapHighlight(); ok {
+			hl = v
 		}
 	}
 	cols := make([]uint8, n)
@@ -4087,6 +4067,7 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 		g.setStarRows(spec)
 		return
 	}
+	g.listScreenAdmiralCount = 0
 	faction, standby, ok := g.listState(g.state)
 	if !ok || len(g.res.Admiral) == 0 || len(g.res.AdmiralNames) == 0 {
 		return
@@ -4096,15 +4077,26 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 	for _, i := range staff {
 		isStaff[i] = true
 	}
+	// 一覽表的提督／敵將資料從位移那一筆起印十六列（`ds:96A1`）。
+	skip := 0
+	if g.state == StateAdmiralListView || g.state == StateEnemyList {
+		skip = g.lst.admScroll
+	}
 	for _, a := range rules.AdmiralList(rules.ParseAdmirals(g.res.Admiral), faction, standby, staff) {
+		g.listScreenAdmiralCount++
+		if skip > 0 {
+			skip--
+			continue
+		}
 		var name []uint16
 		if a.Index < len(g.res.AdmiralNames) {
 			name = g.res.AdmiralNames[a.Index]
 		}
 		spec.ListRows = append(spec.ListRows, screen.ListRow{
-			Staff: isStaff[a.Index],
-			Name:  name,
-			Rank:  rules.RankOf(a.Merit),
+			Staff:  isStaff[a.Index],
+			Sortie: rules.AdmiralDutyOf(a.Record) == rules.DutySortie,
+			Name:   name,
+			Rank:   rules.RankOf(a.Merit),
 		})
 		g.listIndex = append(g.listIndex, a.Index)
 	}
@@ -4244,17 +4236,23 @@ func (g *Game) setStarRows(spec *screen.MainGameSpec) {
 		return
 	}
 	order := g.starListOrder()
+	if v := g.listScreenScroll(); v > 0 && v < len(order) {
+		order = order[v:]
+	}
 	for _, i := range order {
 		if (i+1)*rules.RegionRecord > len(g.res.Stellar) {
 			continue
 		}
 		rec := g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
 		owner := g.res.Planets.RegionOwner(i)
+		// 兩個數是這一格帝國／同盟的艦隊數（固定左帝國右同盟，各用陣營色；
+		// 收據 `fcmd-lst-star`：瓦爾哈拉「1﹕0」）。星域記錄的 `+0x28` 不是它的
+		// 來源（`docs/re/37`），照艦隊表數。
 		spec.ListRows = append(spec.ListRows, screen.ListRow{Cells: []screen.ListCell{
 			{X: l.NameX, Ink: rules.FactionColour(owner), Codes: rules.RegionName(rec)},
-			{X: l.OwnX, Ink: rules.FactionColour(0), Text: " 0"},
+			{X: l.OwnX, Ink: rules.FactionColour(0), Text: fmt.Sprintf("%2d", rules.CountFleets(g.fleets, i, 0))},
 			{X: l.SepX, Ink: l.Ink, Codes: []uint16{l.SepCode}},
-			{X: l.EnemyX, Ink: rules.FactionColour(1), Text: " 0"},
+			{X: l.EnemyX, Ink: rules.FactionColour(1), Text: fmt.Sprintf("%2d", rules.CountFleets(g.fleets, i, 1))},
 		}})
 	}
 }

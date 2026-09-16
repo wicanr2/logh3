@@ -22,8 +22,10 @@ type ListSpec struct {
 	Ink    uint8 `json:"ink"`
 	Shadow uint8 `json:"shadow"`
 
-	// StaffMark 是幕僚職那一列前面的記號（○）。
-	StaffMark uint16 `json:"staff_mark"`
+	// StaffMark 是幕僚職那一列前面的記號（○），SortieMark 是帶著艦隊那一列的
+	// （★；`+0x09` 低七位是艦隊槽，`docs/re/323`）。
+	StaffMark  uint16 `json:"staff_mark"`
+	SortieMark uint16 `json:"sortie_mark"`
 	// Ranks 是十個軍階的字碼，由低到高，對上 rules.RankNames。
 	Ranks [][]uint16 `json:"ranks"`
 
@@ -47,10 +49,11 @@ type ListCell struct {
 // 提督清單用 Staff／Name／Rank 三段固定欄位；星系清單那種欄位不一樣的，
 // 由呼叫端算好座標放進 Cells。
 type ListRow struct {
-	Staff bool
-	Name  []uint16
-	Rank  int
-	Cells []ListCell
+	Staff  bool
+	Sortie bool
+	Name   []uint16
+	Rank   int
+	Cells  []ListCell
 }
 
 // Draw 畫清單的列。超過 Rows 的部分不畫——原版一頁就十六列。
@@ -90,6 +93,8 @@ func (l *ListSpec) drawIn(fb *gfx.Framebuffer, fnt *font.Font, rows []ListRow,
 		}
 		if r.Staff && l.StaffMark != 0 {
 			draw(l.MarkerX, l.StaffMark)
+		} else if r.Sortie && l.SortieMark != 0 {
+			draw(l.MarkerX, l.SortieMark)
 		}
 		for j, c := range r.Name {
 			draw(l.NameX+j*font.GlyphW, c)

@@ -12280,6 +12280,10 @@
      "x": 112,
      "y": 102,
      "ink": 6,
+     "inks": [
+      6,
+      5
+     ],
      "text": [
       "帝國軍",
       "同盟軍"
@@ -12296,7 +12300,7 @@
        44408
       ]
      ],
-     "note": "字碼與右側面板的陣營前綴同一份（capital-panel.json 的 faction_line.prefix，量自 main1e／main1eAlly）。"
+     "note": "字碼與右側面板的陣營前綴同一份（capital-panel.json 的 faction_line.prefix，量自 main1e／main1eAlly）；陣營色 帝國 6、同盟 5（敵將資料點開的詳細資料印「同盟軍」用 5，收據 fcmd-lst-enemy-row）。"
     }
    ]
   }

@@ -253,6 +253,23 @@ func (w *GameWindow) SetLineCode(line, cell int, code uint16) {
 	w.Lines = lines
 }
 
+// DropLineCellsFrom 把第 line 行 x ≥ from 的格子拿掉（同樣在複本上改）：
+// 提督詳細資料那張量死的「：待命中」要換成算出來的狀態時用。
+func (w *GameWindow) DropLineCellsFrom(line, from int) {
+	if line < 0 || line >= len(w.Lines) {
+		return
+	}
+	lines := append(w.Lines[:0:0], w.Lines...)
+	cells := lines[line].Cells[:0:0]
+	for _, c := range lines[line].Cells {
+		if c.X < from {
+			cells = append(cells, c)
+		}
+	}
+	lines[line].Cells = cells
+	w.Lines = lines
+}
+
 // copyBoxes 把 Boxes 複製一份再改，在視窗的**複本**上呼叫不會動到規格本身
 // （與 SetLineCode 同一個理由）。
 func (w *GameWindow) copyBoxes() {

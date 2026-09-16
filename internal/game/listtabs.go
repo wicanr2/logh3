@@ -254,8 +254,13 @@ func (g *Game) listOverlayClick(x, y int) bool {
 // 經歷／中止／出擊（熱區 `1F34`）；沒有時只剩 經歷／結束，而且往右挪到
 // 中止與出擊的位置（`1FAE`）。
 func (g *Game) tabDetailButtonAt(x, y int) string {
+	return g.tabDetailButtonAtFor(x, y, g.tabs.detailSortie)
+}
+
+// tabDetailButtonAtFor 是 tabDetailButtonAt 給一覽表那兩張用的版本。
+func (g *Game) tabDetailButtonAtFor(x, y int, sortie bool) string {
 	act := g.res.AdmiralPanel.ButtonAt(x, y)
-	if g.tabs.detailSortie {
+	if sortie {
 		return act
 	}
 	switch act {
@@ -420,21 +425,7 @@ func planetNameBytes(rec []byte) []byte {
 // drawTabAdmiralDetail 畫提督分頁點開的詳細資料：與副官那條路同一張
 // overlay；沒有「出擊」時只剩 經歷／結束 兩顆、往右挪（熱區 `1FAE`）。
 func (g *Game) drawTabAdmiralDetail(fb *gfx.Framebuffer) {
-	spec := g.res.Screens["screen-admiral-detail"]
-	if spec == nil || spec.Windows["overlay"] == nil {
-		return
-	}
-	w := *spec.Windows["overlay"]
-	if !g.tabs.detailSortie {
-		// 三顆鈕（經歷／中止／出擊）變兩顆：經歷挪到中止的位置、出擊那顆
-		// 改印「結束」。
-		w.MoveBox(0, w.Boxes[1].X)
-		w.SetBoxCodes(2, adminDetailCloseCodes)
-		w.DropBox(1)
-	}
-	w.Draw(fb, g.res.Font, 3, g.res.Faces)
-	w.DrawFactionText(fb, g.res.Font, g.faction)
-	g.drawAdmiralDetailFor(fb, g.tabs.detail, true)
+	g.drawAdmiralDetailOverlay(fb, g.tabs.detail, g.tabs.detailSortie, true)
 }
 
 // 「結束」兩個字（Big5 B5B2 A7F4）。

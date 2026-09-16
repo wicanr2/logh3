@@ -245,6 +245,10 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	listScreen, err := screen.LoadListScreenSpec(filepath.Join("../..", "docs/internals/data/list-screen-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	regionInfo, err := screen.LoadRegionInfoSpec(filepath.Join("../..", "docs/internals/data/region-info-panel.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -254,6 +258,7 @@ func load(t *testing.T) *Resources {
 		PlanetInfoMap: planetInfoMap,
 		RegionInfo:    regionInfo,
 		OccupyAsk:     occupyAsk,
+		ListScreen:    listScreen,
 		AdmiralNames:  names, StarListOrder: starOrder,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		StarBit: bit, StarRGN: rgn, RegionColours: colours,

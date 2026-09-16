@@ -1,9 +1,9 @@
 # 戰略艦隊命令同狀態對拍（清單點列 → 艦隊視窗 → 作戰 → 五項 → 確認）
 
-日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更、艦隊組成編輯器、副官、右下角清單的分頁與捲動、星系情報視窗、艦隊走到之後）
+日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更、艦隊組成編輯器、副官、右下角清單的分頁與捲動、星系情報視窗、艦隊走到之後、一覽表四張的列）
 
 比較等級：`same-state`（整張 640×480）。
-原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：一百四十六批是正常玩家路徑、沒有
+原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：一百八十五批是正常玩家路徑、沒有
 注入——冷啟動走 `dec1` 的序列（主選單 → 防拷 → 出擊命令 → 萊因哈特 → 出擊 →
 確認 → 決定）到戰略地圖存檢查點，之後每一張從上一張的檢查點只多一個輸入
 （`tools/fleetcmd_receipts.sh`；每批附 `plane.bin` 字元平面與 `fleet0.bin`
@@ -14,7 +14,7 @@
 `fleetedit_test.go`）。
 
 `GIN3.COM` SHA-256 `770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918`；
-一百五十八份 `pal.bin` SHA-256 都是
+一百九十七份 `pal.bin` SHA-256 都是
 `28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8`。
 座標是滑鼠座標（畫面 y ＝ 滑鼠 y ＋ 40）。
 
@@ -178,6 +178,45 @@
 | `fcmd-occ-phz-t3` | 再實行 → 14 費沙：停駐、bit4、8800→8792、`+3C` 47、停在士氣報告 | `006288b49ad1e138d1556932f4a9ad984aac320cf7905c2e688b65ea7c8b38c9` | 不比 |
 | `fcmd-occ-phz-t3b` | 左鍵 (300,200) 關報告 | `4a7b2f0b91b3e1a0caba34bb5742e73cc5807f15c326922061bde3e821230884` | 不比 |
 | `fcmd-occ-phz-t4` | 再實行：8792 不動 | `4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74` | 不比 |
+| `fcmd-lst-star` | （從 `fcmd-base`）一覽表 (448,85) → 星系資料 (460,85)；游標停在列 2 卡斯特羅普：地圖反白 3、左下角卡斯特羅普；瓦爾哈拉那一列「1﹕0」 | `257b2e6ffdd365d35055888838cb14ebbccb4f461eca6421ab53f139b7fee265` | 0 |
+| `fcmd-lst-star-row` | 列 0 瓦爾哈拉 (460,50) → 換選、關清單、星系情報視窗 | `95789b6188c109f1d1f17a56c0f2067aea2d8851c462e9933b3c6784a69fd461` | 小圖最後一列 |
+| `fcmd-lst-star-row-close` | 結束 (270,350) → 地圖，左下角瓦爾哈拉 1﹕0 | `64dac6060a3cde6905455442302a458091bf5229383117994ba41e450ff80bd0` | 0 |
+| `fcmd-lst-star-row2` | 列 2 卡斯特羅普 (460,90) → 面板換成卡斯特羅普、視窗 | `d9ab73eba4553a8836975a16a46e32ffd6bfb55deae63a35ca9d00622b72d33d` | 小圖最後一列 |
+| `fcmd-lst-star-row2-close` | 結束 → 地圖，面板仍卡斯特羅普 | `82c844e336298fdb108c74ad0c39c6372a596610e7fd6807fdbe1fb27670b47d` | 0 |
+| `fcmd-lst-star-hover` | 游標移到列 10 (460,250) 杜威爾格 | `26723130c39554707f1360be0cee6aac73f845f0584c55a2637889e582d1cd2a` | 0 |
+| `fcmd-lst-star-hover-out` | 游標移到清單外 (100,100)：反白與左下角不動 | `c2f33d06a5025faed4d55e154156db4c5fd79a4db4c271c547e0d7d0409f5529` | 0 |
+| `fcmd-lst-star-tab-assign` | 分頁「配屬」(520,30)：每格七種存量有無（BHCADTE） | `5c7d03be8635403ce5e71588ea44f6d44362fcd32b4b18f62b54ac9b6d05c20a` | 不比（#51） |
+| `fcmd-lst-star-tab-tax` | 分頁「稅金」(584,30)：徵稅額（稅率） | `c4a471ab0618940ab1671f471e3d7cfca17169a7901ae05d94c48731c478075d` | 不比（#51） |
+| `fcmd-lst-star-tax-rclick` | 右鍵 → 地圖 | `492e4e2dcb9097d606fa6b34b8ef31ac6169a6184215e8689dfe9f5d8b2588d5` | 0（= `fcmd-rinfo-rclick`） |
+| `fcmd-lst-star-reopen` | 再開星系資料：分頁仍是稅金（`ds:8F2D[座位]`） | `b43d0cbff7d143e94b486a5090937a8ea8db376345bf37b1c646920f05455da4` | 不比（#51） |
+| `fcmd-lst-star-down` | ▼ (615,350) 按住 0.1M ＝ 一列（`ds:96EC` 1） | `5e27572bac760a60aaceb1426963c9ee89ba6a40dbde36e7d44ad8c714b7d6dd` | 0 |
+| `fcmd-lst-star-down-row` | 再點列 0 → 菲利亞（星域 4）的視窗 | `76f9ad7253b99a63f82a9b7c27e767085b3801993806724fb10cfcd1898fe113` | 小圖最後一列 |
+| `fcmd-lst-star-up` | ▲ (615,50) → 位移 0 | `89382fdf14f9a33c7973d17cdf57b8f005bc91667b8ccb4b411fc3e284536e4d` | 0 |
+| `fcmd-lst-star-rclick` | 右鍵 (300,200) → 地圖 | `492e4e2dcb9097d606fa6b34b8ef31ac6169a6184215e8689dfe9f5d8b2588d5` | 0 |
+| `fcmd-lst-fleet` | 艦隊資料 (460,105)：一列「第１艦隊萊因哈特 100」；游標在空列，反白不動 | `2b38efde3c5525cb39d309a6718ba3177d39d25211e122112deb1528fd9de2a8` | 0 |
+| `fcmd-lst-fleet-row` | 列 0 (460,50) → 艦隊視窗疊上來、那一列刷成色 2；左下角瓦爾哈拉 1﹕0 | `cc6af078f473f65c8601e3db7b6a7b1e485e4c5682417d655d891561f6d0eb8b` | 0 |
+| `fcmd-lst-fleet-row-close` | 結束 (480,340) → 清單，反白還原；地圖沒反白、左下角空白 | `a42de2508e36967c26b8762d1736f6bac28c7088e7dd13bd67e94705d698d051` | 0 |
+| `fcmd-lst-fleet-row-rclick` | 艦隊視窗上右鍵 → 同上 | `14713e3a9541aa002e066cffb38e20a9d1d3ba51390df31a7b8970019345f4b2` | 0 |
+| `fcmd-lst-fleet-row1` | 點空列 (460,70) → 沒事 | `afdca5f9075d56a38d5e2fc81aef2c9c58cfd6fd9e67b281343f598457440110` | 0 |
+| `fcmd-lst-fleet-tab-unit` | 分頁「部隊」：1/ 8 | `330c76d33ab9ec42787c1ada47e94390e0d00af2d066c0b7881d0b84373a5a74` | 不比（#51） |
+| `fcmd-lst-fleet-tab-ops` | 分頁「作戰」：待命 | `d4237bc2b66c915be51bf34afa8b227d76928b9125661438498e53567a6cfb2a` | 不比（#51） |
+| `fcmd-lst-fleet-rclick` | 右鍵 → 地圖 | `492e4e2dcb9097d606fa6b34b8ef31ac6169a6184215e8689dfe9f5d8b2588d5` | 0 |
+| `fcmd-lst-adm` | 提督資料 (460,125)：★萊因哈特 上將 … ○梅克林格；游標在列 4 → 瓦爾哈拉 | `678ab14cca681bf8d3e04dde9b034ca2e411991fcb84c12e7c0c03d1e0d67050` | 0 |
+| `fcmd-lst-adm-row` | 列 0 → 詳細資料：第１艦隊／萊因哈特 上將／現在位置 瓦爾哈拉 ：出擊中／旗艦 伯倫希爾／經歷／結束；列 0 反白 | `a1a8c0080c23a2ac97c258a32402787d8128d311555164b19989e5bec2c61734` | 0 |
+| `fcmd-lst-adm-row-close` | 結束 (496,280) → 清單；游標在列外 → 反白取消、左下角空白 | `ea46d33e8ea17ecdb3d2b5d7f7ffc6abd632cc9859eb22855777c5f0293f6bf8` | 0 |
+| `fcmd-lst-adm-row-bio` | 經歷 (448,280) → 人物傳疊上來 | `7966d9d2cf3ef5e15a1e22b6de7ae47f7d1bf53b0bf76d508a3edba3eb5e94d7` | 0 |
+| `fcmd-lst-adm-row-bio-close` | 經歷上左鍵 (496,280) → 不動（只認右鍵） | `2b13d5cfce3b17d1bae6ae8a3ce14bce0e0dd95ee89ed84a517aefb340c72cd6` | 0 |
+| `fcmd-lst-adm-row-rclick` | 詳細資料上右鍵 → 清單 | `da1f53a3d35b86d815d41628bddbf9ef33bec359f03cbfa88d4748f5cf8c96a0` | 0 |
+| `fcmd-lst-adm-hover` | 游標移到列 8 瓦列 → 瓦爾哈拉 1﹕0 | `8dc783309b06539e337d9f9de61a8fba00e1fb58b9d511bb3c4a52e4de06b80c` | 0 |
+| `fcmd-lst-adm-down` | ▼ 0.1M ＝ 一列（`ds:96A1` 1）；游標在 ▼ 算列 15 → 瓦爾哈拉 | `330e3b7225be933342ec5c151d9d099bdecb35fa294d1b3da310455e36680cc2` | 0 |
+| `fcmd-lst-adm-down-row` | 再點列 0 → 吉爾菲艾斯的詳細資料 | `0698ca1269355f0d7dbdc81287bc9c3abb7939aeb2e14ddd81504205792fc908` | 0 |
+| `fcmd-lst-adm-rclick` | 右鍵 (300,200) → 地圖（先移再按；同一瞬間會被丟掉，見 §六） | `492e4e2dcb9097d606fa6b34b8ef31ac6169a6184215e8689dfe9f5d8b2588d5` | 0 |
+| `fcmd-lst-adm-outside` | 左鍵清單外 (100,100) → 不動；左下角空白 | `7eb659bd66729bff0bcb399b02608e433d708d7b1fbc5640e14978f6c5b90c28` | 0 |
+| `fcmd-lst-enemy` | 敵將資料 (460,145)：亞典波羅 准將 …；游標不看列（左下角留著開清單前的字） | `0ee3c2b21a1b73cf8dc6a7dd93187c0359937c92a21d0e2553923f138a75d64e` | 0 |
+| `fcmd-lst-enemy-row` | 列 0 → 同盟軍（色 5）亞典波羅 准將／現在位置 ＊＊＊＊＊＊＊＊／旗艦 特里古拉夫／經歷／結束 | `1dcfc7438fb0e04b0a32c2482bba60ab4a1193e2d24434d0c7c137d69e14f211` | 0 |
+| `fcmd-lst-enemy-row-close` | 結束 → 清單 | `47b5d83a5f95d0fc67e3a221f349e5b67e221d459d86eb81eb177869f84c9828` | 0 |
+| `fcmd-lst-enemy-hover` | 游標移到列 8 → 不動 | `821e40fc619ac82ddb3cafc654ceb084977e71a2d03ee0c791df58947e3a4bc5` | 0 |
+| `fcmd-lst-enemy-rclick` | 右鍵 → 地圖 | `492e4e2dcb9097d606fa6b34b8ef31ac6169a6184215e8689dfe9f5d8b2588d5` | 0 |
 
 記憶體：`fcmd-done/fleet0.bin` 與 `fcmd-base/fleet0.bin` 只差 `+0x07`（FF→02）
 與 `+0x08`（05→00）；remake 的 `Fleet.Target`／`Move`／`Parked` 逐一對上
@@ -227,10 +266,12 @@
 `TestMapRightClickKeepsPanel`（十批，小圖最後一列與換看別家時的經濟力數字事先排除，理由在規格 053）；
 艦隊走到之後（`occupation_test.go`，規格 054）`TestOccupyAstarteArrivalMatchesOracle`（t1／t2 整張，t1–t5 艦隊記錄與星域旗標）、
 `TestOccupyPhezzanArrivalMatchesOracle`、`TestPlanStepBranches`（十三批 `fcmd-occ-*`，每批另附艦隊 0／星域表／行星表的 `-peek`）；
+一覽表四張的列（`listscreen_test.go`，規格 055）`TestListStarRowsMatchOracle`、`TestListFleetRowsMatchOracle`、
+`TestListAdmiralRowsMatchOracle`、`TestListEnemyRowsMatchOracle`（三十九批 `fcmd-lst-*` 裡三十四批整張，星系情報視窗那三批排除小圖最後一列，分頁那五批不比）；
 顯示層 `tools/gui_check.sh` 的 `fcmd-win`、`fcmd-done`、`fcmd-exec`、
 `fcmd-occupy-phezzan3`、`fcmd-change-org`、`fcmd-edit-full-msg`、`fcmd-fok-decide`、
 `fcmd-adj-confirm-close`、`fcmd-tab-planet-row`、`fcmd-tab-admiral-down`、
-`fcmd-tab-fleet2`、`fcmd-occ-t2`（都整張）、`fcmd-standby-pick`、`fcmd-rinfo`（各排除小圖最後一列那 128 個像素）。
+`fcmd-tab-fleet2`、`fcmd-occ-t2`、`fcmd-lst-adm-row`、`fcmd-lst-fleet-row`（都整張）、`fcmd-standby-pick`、`fcmd-rinfo`（各排除小圖最後一列那 128 個像素）。
 
 過程中改到的通用規則（不只這條路徑）：底線裝飾（`ui.DrawCellDecor`）、
 清單被點那一列的反白、左下角與右側面板「寫進去那一刻的文字」與

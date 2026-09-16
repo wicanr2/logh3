@@ -86,3 +86,6 @@ func fullDigits(n int) []uint16 {
 func drawFullDigits(fb *gfx.Framebuffer, fnt *font.Font, x, y, n int, ink uint8) {
 	drawFull(fb, fnt, x, y, fullDigits(n), ink)
 }
+
+// FullDigits 是 fullDigits 給外面用的版本（提督詳細資料的「第Ｎ艦隊」）。
+func FullDigits(n int) []uint16 { return fullDigits(n) }

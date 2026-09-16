@@ -7136,3 +7136,32 @@ GitHub 的 issue 時間軸承擔。
   整理成總表。綁 `battle.go` 的自承註解，kickoff 排 F。
 - 文件：`docs/re/322`、規格 054（新）、051 排除段改指標、playtest 021（＋13 批，158 份 pal）、
   internals 33／58、CONTEXT。
+
+## 2026-09-16 — 一覽表四張的列（#47）；探測的坑：移動與按鍵同一瞬間會被丟掉
+
+- 四個項目各是 `0ABD` 段的一支（從 `hittest-sites.json` 引用 `1BF2` 的兩處往上追 `0C0A:000F`
+  的六個呼叫者，`0x0AC84` 的 `mov bx, 1A12h` 就是「提督資料」）：星系 `0ABD:0000`
+  （`0D05:00D7` 迴圈；點列 → `073F:02EE` 換選、`0D05:089F` 關清單、`073F:05CB` 星系情報視窗）、
+  艦隊 `0061`（`0C7F:00DE`；點列 → `0DEA:0003` 艦隊視窗、回來繼續迴圈）、提督／敵將
+  `00B0`／`00C2` → `00D6`（`0C0A:00F0`；點列 → `0D92:000D(r, 0, 自軍, 0)` 經歷／結束）。
+  游標三種規則（`3705:0591`）；▲▼ 按住連捲一列一次；星系的位移與分頁每座位記住
+  （`ds:1DF2`／`8F2D`）；列順序表 `ds:1DB2`（`docs/re/50` 的未解早在 `re/64` 解了）。
+- 提督詳細資料多讀出三段（`0D92:00B7`）：姓名前「第Ｎ艦隊／參謀／空」、現在位置後
+  「：待命中／執勤中／出擊中」（都看 `+0x09`）、敵將印 ＊＊＊＊＊＊＊＊、「同盟軍」色 5；清單記號
+  ★ ＝ 帶艦隊。規格 012 的「：待命中是量死的」到期。
+- **探測的坑**：`-clicks` 把游標搬到會換反白的列並在同一步按下，原版把那一下丟掉
+  （`0D05:0141` 0 次；先 `-mouse-at` 再按就收得到）。`docs/re/318` §六「副官清單右鍵不關」
+  是同一件事。第 20 段一律 `mvc`／`mvr`（先搬、10M 步後按）。成因（事件佇列在重畫期間掉
+  事件的位置）沒讀。
+- ▼ 按住 0.3M 是兩列（清單重印一次約 0.15M）；改 0.1M ＝ 一列，remake 一下一列。
+- remake：`listscreen.go`（`Game.lst`：位移、反白格 `hl`／`hlDrawn`、反白列、詳細資料、
+  從艦隊資料開的艦隊視窗回清單）、`screen.ListScreenSpec`（`list-screen-panel.json`：熱區、
+  反白帶、艦隊列）、`AdmiralPanel` 的 `prefix`／`status`、`GameWindow.DropLineCellsFrom`、
+  `rules.AdmiralDutyOf`／`AdmiralAlive`／`AdmiralRegion`、清單 `sortie_mark`、星系列的兩個
+  數字改數艦隊表、星系資料的地圖改用戰略地圖本身（有艦隊的格變黑）。
+  `forcedLeftRegion` 不再替提督資料寫首都——原本 `lst2e` 對得上是游標剛好停在瓦爾哈拉
+  的提督那一列。
+- 收據：第 20 段三十九批 `fcmd-lst-*`（`LST` 那組 `-peek`），三十四批整張；四支
+  `TestList*RowsMatchOracle`；GUI `fcmd-lst-adm-row`／`fcmd-lst-fleet-row`（26 案例全過）。
+- 文件：`docs/re/323`、規格 055（新）、012、013（右鍵那列改成探測時序）、internals 59（新）、
+  playtest 021（＋39 批，197 份 pal）、CONTEXT。關 #47（verify → go_test）；開 #51（分頁鈕）。
