@@ -449,7 +449,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 5 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 4 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -508,31 +508,6 @@
 **證據**：[`docs/re/323-list-screen-rows.md`](docs/re/323-list-screen-rows.md)、[`docs/spec/055-list-screen-rows.md`](docs/spec/055-list-screen-rows.md)、[`docs/playtest/021-strategic-fleet-command.md`](docs/playtest/021-strategic-fleet-command.md)
 
 **核實**：`internal/game/listscreen.go` 裡還找得到 `一覽表的分頁鈕還沒接`（自承還在 ＝ 還沒做）
-
-#### mouse-edge-scroll-and-roles — 滑鼠在原版的作用調查：戰場邊緣捲動視野等，remake 照做
-
-*[#50](https://github.com/wicanr2/logh3/issues/50) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-原版把滑鼠停在戰場邊緣會捲動視野（鏡頭 `ds:9BF4`／`ds:9BF6`，`docs/re/113`、`docs/re/135`）；
-remake 的 `battleView` 開戰時置中到旗艦之後就不再動。除了邊緣捲動，原版滑鼠在各張畫面
-還有哪些作用（右鍵在哪幾張等於確認、哪幾張什麼都不做、按住不放會不會連發、游標形狀
-什麼時候換）目前只零散地記在各篇 `docs/re/`（`312` 右鍵取消、`317` 右鍵＝確認、
-`320` 右鍵點星圖什麼都不換），沒有一份總表。
-
-要做的：
-- 讀滑鼠輪詢那一支（戰場的事件迴圈裡看游標座標落在哪一圈觸發捲動：門檻幾個像素、
-  一次捲幾格、速度跟訊息速度有沒有關係）；戰略地圖固定一張不捲。
-- 把原版滑鼠的作用整理成 `docs/internals/` 一張總表（按畫面：左鍵、右鍵、按住、邊緣、
-  游標形狀），每一格掛證據。
-- remake 照做：戰場邊緣捲動要有同狀態收據（`-clicks`／`-click-hold` 把游標停在邊緣後
-  傾印 `ds:9BF4`／`9BF6` 與畫面）。
-
-**做完的判準**：戰場邊緣捲動有同狀態收據且 remake 逐位元組相同；滑鼠作用總表寫在 `docs/internals/`，
-每一格有證據；總表上原版有、remake 沒有的作用列成已知差異或各自開條。
-
-**證據**：[`docs/re/113-battle-data-display-mode.md`](docs/re/113-battle-data-display-mode.md)、[`docs/re/135-manoeuvre-boundary.md`](docs/re/135-manoeuvre-boundary.md)、[`docs/re/320-region-info-window.md`](docs/re/320-region-info-window.md)
-
-**核實**：`internal/game/battle.go` 裡還找得到 `原版滑鼠停在戰場邊緣會捲動視野`（自承還在 ＝ 還沒做）
 
 #### engagement-animation — 交戰演出（ANI_PNL1 ＋ COMANI.BMG）與戰鬥曲的出口
 
@@ -597,7 +572,7 @@ remake 的 `battleView` 開戰時置中到旗艦之後就不再動。除了邊�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-52 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+53 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1597,6 +1572,29 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### mouse-edge-scroll-and-roles — 滑鼠在原版的作用調查：戰場邊緣捲動視野等，remake 照做
+
+*[#50](https://github.com/wicanr2/logh3/issues/50) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+原版戰場視野（鏡頭 `ds:9BF4`／`ds:9BF6`）怎麼跟著滑鼠動，以及滑鼠在每張畫面的作用總表。
+
+做完（2026-09-17，commit `6f2348d`）：
+- 讀出來的不是「游標停在邊緣」，是**按住右鍵**：戰場視窗上什麼都沒開時，每一圈重讀游標、
+  往它相對於滑鼠座標 (224,180) 的八方位走一格（`1588:043F` → `1588:03A9`），放開才停；
+  游標停在邊緣不按什麼都不動（`docs/re/326`）。十九批 `cam-*` 收據視野格全對、戰場那一塊
+  逐位元組（`tools/camera_receipts.sh`、`docs/playtest/024`、規格 057 CONFORMED）。
+- remake：`rules.ViewScrollDir`／`ViewScrollStep`、右鍵按下走一格、按著每幀一格；順手修掉
+  格線畫在有圖塊的格上、視野邊界那一欄／列漏畫、戰場沒畫游標。
+- 總表 `docs/internals/60-mouse-roles.md`：戰略層與戰術層每張畫面的左鍵／右鍵／按住／游標
+  經過，逐格掛證據；原版有、remake 沒有的（▲▼ 與右鍵按住的速度、幾張沒量的畫面）列在最後。
+
+**做完的判準**：戰場視野的滑鼠捲動有同狀態收據且 remake 逐位元組相同；滑鼠作用總表寫在 `docs/internals/`，
+每一格有證據；總表上原版有、remake 沒有的作用列成已知差異或各自開條。
+
+**證據**：[`docs/re/326-battle-view-scroll.md`](docs/re/326-battle-view-scroll.md)、[`docs/spec/057-battle-view-scroll.md`](docs/spec/057-battle-view-scroll.md)、[`docs/internals/60-mouse-roles.md`](docs/internals/60-mouse-roles.md)、[`docs/playtest/024-battle-view-scroll.md`](docs/playtest/024-battle-view-scroll.md)
+
+**核實**：`TestBattleScrollMatchesOracle` 釘在 `./internal/game`
 
 #### enemy-tab-intel-rows — 右下角「敵艦隊」分頁有索敵等級的列與它的視窗
 
