@@ -3,6 +3,7 @@ package rules
 import (
 	"encoding/binary"
 	"fmt"
+	"sort"
 )
 
 // 星域與行星的記錄版面（`docs/internals/22`、`docs/re/17`、`docs/re/23`）。
@@ -504,15 +505,19 @@ func RegionShips(record []byte, faction int) []int {
 	return out
 }
 
-// 行星在星域地圖上的位置（`docs/re/89`）。
+// 行星在星域地圖上的位置（`docs/re/89`、`docs/re/320` §四）。
 //
-// `PLADAT.DAT` 裡沒有座標，是載入星域地圖時算出來的：地圖上圖塊編號
-// 為 `PlanetTile` 的格子依列序對到該星域的行星，位置取格子的中心偏移。
+// `PLADAT.DAT` 裡沒有座標，是載入星域地圖時算出來的（`2AF5:01CB`）：先收圖塊
+// `PlanetTile` 的格子（最多五格），不夠再收 `FortressTile`（要塞是 2×2 的圖塊
+// 22／23／30／31，左上那格）；位置取格子的中心偏移，**先依 y 再依 x 排序**
+// （`3C6A:000D` 的 qsort，比較器 `2AF5:0198`）之後依序對到該星域的行星。
 const (
 	PlanetTile   = 6  // 星域地圖上代表行星的圖塊
+	FortressTile = 22 // 要塞行星那 2×2 圖塊的左上格
 	planetOffX   = 8  // 一格 16 寬，取中央
 	planetOffY   = 12 // 一格 20 高
 	planetMapCol = 128
+	planetSites  = 5 // 原版的緩衝區五筆
 )
 
 // PlanetSite 是一顆行星在星域地圖上的位置。
@@ -523,23 +528,31 @@ type PlanetSite struct {
 	Y   int `json:"y"`
 }
 
-// PlanetSites 掃一張星域地圖，回上面的行星位置（依列序）。
+// PlanetSites 掃一張星域地圖，回上面的行星位置（依 y、x 排好）。
 func PlanetSites(cells []uint8, tileW, tileH int) []PlanetSite {
 	if tileW <= 0 || tileH <= 0 {
 		return nil
 	}
 	var out []PlanetSite
-	for i, c := range cells {
-		if c != PlanetTile {
-			continue
+	for _, tile := range []uint8{PlanetTile, FortressTile} {
+		for i, c := range cells {
+			if c != tile || len(out) >= planetSites {
+				continue
+			}
+			col, row := i%planetMapCol, i/planetMapCol
+			out = append(out, PlanetSite{
+				Col: col, Row: row,
+				X: col*tileW + planetOffX,
+				Y: row*tileH + planetOffY,
+			})
 		}
-		col, row := i%planetMapCol, i/planetMapCol
-		out = append(out, PlanetSite{
-			Col: col, Row: row,
-			X: col*tileW + planetOffX,
-			Y: row*tileH + planetOffY,
-		})
 	}
+	sort.SliceStable(out, func(a, b int) bool {
+		if out[a].Y != out[b].Y {
+			return out[a].Y < out[b].Y
+		}
+		return out[a].X < out[b].X
+	})
 	return out
 }
 

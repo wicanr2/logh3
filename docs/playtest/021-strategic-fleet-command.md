@@ -1,9 +1,9 @@
 # 戰略艦隊命令同狀態對拍（清單點列 → 艦隊視窗 → 作戰 → 五項 → 確認）
 
-日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更、艦隊組成編輯器、副官、右下角清單的分頁與捲動）
+日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更、艦隊組成編輯器、副官、右下角清單的分頁與捲動、星系情報視窗）
 
 比較等級：`same-state`（整張 640×480）。
-原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：一百二十三批是正常玩家路徑、沒有
+原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：一百三十三批是正常玩家路徑、沒有
 注入——冷啟動走 `dec1` 的序列（主選單 → 防拷 → 出擊命令 → 萊因哈特 → 出擊 →
 確認 → 決定）到戰略地圖存檢查點，之後每一張從上一張的檢查點只多一個輸入
 （`tools/fleetcmd_receipts.sh`；每批附 `plane.bin` 字元平面與 `fleet0.bin`
@@ -14,7 +14,7 @@
 `fleetedit_test.go`）。
 
 `GIN3.COM` SHA-256 `770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918`；
-一百三十五份 `pal.bin` SHA-256 都是
+一百四十五份 `pal.bin` SHA-256 都是
 `28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8`。
 座標是滑鼠座標（畫面 y ＝ 滑鼠 y ＋ 40）。
 
@@ -155,6 +155,16 @@
 | `fcmd-tab-fleet6-up` | 左鍵 (617,268) ▲ → 位移 0 | `e5bc4d16b3ba80a03dd1be488e3f4c399b542bc2faa0c5a9e466fae52c5a25d2` | 0 |
 | `fcmd-tab-fleet6-row` | （從 `fcmd-tab-fleet6-down`）左鍵 (450,348) 列 4 → 第６艦隊的視窗 | `43f8f82c5404f860cf8b6c666c9e6feaa24229c964a045642056459c12be5a77` | 0 |
 | `fcmd-tab-fleet6-close` | 左鍵 (490,350) 結束 → 地圖、位移仍 1 | `602d0a3aa64727b59bcedbbb922aa76c7605c9d8b099ec787133e5496c6dafd7` | 0 |
+| `fcmd-rinfo` | （從 `fcmd-base`）左鍵 (32,32) 瓦爾哈拉（面板看的那一格）→ 星系情報視窗 | `24f4f7b8107457fe4875d5560a13cf34ad80eefd5a5af6163d1927d44905dba9` | 小圖最後一列 |
+| `fcmd-rinfo-close` | 左鍵 (270,350) 結束 → 回地圖、左下角那塊空 | `55d1083fb4627488bb401a2caf921a89c8e643b4824c353c27cc930ee3cbcc62` | 0 |
+| `fcmd-rinfo-rclick` | （從 `fcmd-rinfo`）右鍵 → 回地圖 | `492e4e2dcb9097d606fa6b34b8ef31ac6169a6184215e8689dfe9f5d8b2588d5` | 0 |
+| `fcmd-rinfo-outside` | （從 `fcmd-rinfo`）左鍵 (100,100) → 視窗不動 | `a80c7282d9737b3b21599cf9e098f703309b980abe73cb602ca72970589f1b83` | 小圖最後一列 |
+| `fcmd-rinfo-fezzan` | （從 `fcmd-base`）左鍵 (163,96) 費沙 → 換選：右側面板中立軍星系費沙、清單空 | `722c17e6d47cd4f219fb43c431213ebe3c78379d46a827c1bc3eae4e1f06a8cc` | 經濟力數字 |
+| `fcmd-rinfo-fezzan2` | 再點費沙 → 視窗（破折號版） | `e652632554f2f6eb078d050b82fe6990cb7693ac22e60362407ee29fe2b60779` | 小圖最後一列、經濟力數字 |
+| `fcmd-rinfo-ballat` | （從 `fcmd-base`）左鍵 (300,270) 巴拉特 → 換選：同盟軍星系、成長率／徵稅額／稅率 `----` | `3ae6d451f1b02ea513f7ca28ca63aecd26bc7c47af802104a17516f058bd003c` | 經濟力數字 |
+| `fcmd-rinfo-ballat2` | 再點巴拉特 → 視窗：五顆行星（魯德米拉在要塞格） | `aab8ea9ed75bc373bdce1016443a3a7a2b0ac64b3ecfdabf6a20518f23867c09` | 小圖最後一列、經濟力數字 |
+| `fcmd-rinfo-ballat2-close` | 左鍵 (270,350) 結束 → 回地圖、面板仍看巴拉特 | `cd04db95e2f03aa8e1fc4a3b347d9a34d66c479c6e94dd58482417c6980bdf4d` | 經濟力數字 |
+| `fcmd-map-rclick` | （從 `fcmd-base`）**右鍵** (300,270) 巴拉特 → 什麼都不換（`ds:9588` 仍 00、面板與清單仍瓦爾哈拉），左下角跟著游標寫巴拉特 | `9e1111bcb6157795ce3b7e9b28cdf3805c640a81e0747fe40b6105bd3566cfa7` | 0 |
 
 記憶體：`fcmd-done/fleet0.bin` 與 `fcmd-base/fleet0.bin` 只差 `+0x07`（FF→02）
 與 `+0x08`（05→00）；remake 的 `Fleet.Target`／`Move`／`Parked` 逐一對上
@@ -199,11 +209,13 @@
 與艦隊的副官／營運）；右下角清單的分頁（`listtabs_test.go`，規格 052）
 `TestListTabPlanetMatchesOracle`、`TestListTabEnemyMatchesOracle`、
 `TestListTabAdmiralMatchesOracle`、`TestListTabFleetScrollMatchesOracle`、
-`TestFleetOrgRightClickIsConfirm`（二十六批整張，另比四個分頁的筆數與位移）；
+`TestFleetOrgRightClickIsConfirm`（二十六批整張，另比四個分頁的筆數與位移）；星系情報視窗
+（`regioninfo_test.go`，規格 053）`TestRegionInfoMatchesOracle`、`TestRegionInfoOtherRegionsMatchOracle`、
+`TestMapRightClickKeepsPanel`（十批，小圖最後一列與換看別家時的經濟力數字事先排除，理由在規格 053）；
 顯示層 `tools/gui_check.sh` 的 `fcmd-win`、`fcmd-done`、`fcmd-exec`、
 `fcmd-occupy-phezzan3`、`fcmd-change-org`、`fcmd-edit-full-msg`、`fcmd-fok-decide`、
 `fcmd-adj-confirm-close`、`fcmd-tab-planet-row`、`fcmd-tab-admiral-down`、
-`fcmd-tab-fleet2`（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
+`fcmd-tab-fleet2`（都整張）、`fcmd-standby-pick`、`fcmd-rinfo`（各排除小圖最後一列那 128 個像素）。
 
 過程中改到的通用規則（不只這條路徑）：底線裝飾（`ui.DrawCellDecor`）、
 清單被點那一列的反白、左下角與右側面板「寫進去那一刻的文字」與

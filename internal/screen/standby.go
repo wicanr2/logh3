@@ -39,28 +39,44 @@ type FleetStandbySpec struct {
 	PressedColour int    `json:"pressed_colour"`
 	Decide        string `json:"decide"`
 	Cancel        string `json:"cancel"`
-	Minimap       struct {
-		X, Y, W, H int
-		Frame      struct {
-			X0  int `json:"x0"`
-			Y0  int `json:"y0"`
-			X1  int `json:"x1"`
-			Y1  int `json:"y1"`
-			Ink int `json:"ink"`
-		} `json:"frame"`
-		Ink            int   `json:"ink"`
-		Bg             int   `json:"bg"`
-		GridRowEvery   int   `json:"grid_row_every"`
-		GridColEvery   int   `json:"grid_col_every"`
-		EmptyTiles     []int `json:"empty_tiles"`
-		RowRepeatEvery int   `json:"row_repeat_every"`
-	} `json:"minimap"`
-	Leader struct {
-		X0        int `json:"x0"`
-		Y0Base    int `json:"y0_base"`
-		Y0Pitch   int `json:"y0_pitch"`
-		ShadowInk int `json:"shadow_ink"`
-	} `json:"leader"`
+	Minimap       RegionMinimapSpec `json:"minimap"`
+	Leader        LeaderSpec  `json:"leader"`
+}
+
+// RegionMinimapSpec 是 128×128 的星域小圖：`1727:05C6` 縮圖、`2376:0B44` 貼在 (X, Y)、
+// `3870:0723` 的外框。指定待命行星那張與星系情報視窗共用（`docs/re/314` §四、
+// `docs/re/320`）。
+type RegionMinimapSpec struct {
+	X, Y, W, H int
+	Frame      struct {
+		X0  int `json:"x0"`
+		Y0  int `json:"y0"`
+		X1  int `json:"x1"`
+		Y1  int `json:"y1"`
+		Ink int `json:"ink"`
+	} `json:"frame"`
+	Ink            int   `json:"ink"`
+	Bg             int   `json:"bg"`
+	GridRowEvery   int   `json:"grid_row_every"`
+	GridColEvery   int   `json:"grid_col_every"`
+	EmptyTiles     []int `json:"empty_tiles"`
+	RowRepeatEvery int   `json:"row_repeat_every"`
+}
+
+// LeaderSpec 是每顆行星從文字拉到小圖上位置的引線（`3870:07C9`，先畫往左上
+// 偏一個像素的影子）。
+type LeaderSpec struct {
+	X0        int `json:"x0"`
+	Y0Base    int `json:"y0_base"`
+	Y0Pitch   int `json:"y0_pitch"`
+	ShadowInk int `json:"shadow_ink"`
+}
+
+// MinimapPlanet 是小圖上一顆行星：位置（載入戰場地圖時算的，`rules.PlanetSites`）
+// 與擁有者（引線的顏色）。
+type MinimapPlanet struct {
+	Owner int
+	X, Y  int
 }
 
 // 熱區表 `ds:2248` 的動作碼：0–4 是第幾顆行星，5 決定、6 中止。
@@ -195,7 +211,11 @@ func (s *FleetStandbySpec) Buffer(v *FleetStandbyView) *ui.TextBuffer {
 // 最後一列（127）的來源列是 102，超出地圖——原版讀到緩衝區後面的東西，
 // 那 128 個像素是垃圾；remake 畫底色，規格列為已知差異。
 func (s *FleetStandbySpec) drawMinimap(fb *gfx.Framebuffer, v *FleetStandbyView) {
-	m := &s.Minimap
+	s.Minimap.Draw(fb, v.Cells, v.MapCols, v.MapRows)
+}
+
+// Draw 把地圖（MapCols × MapRows 的圖塊）縮成小圖貼上去。
+func (m *RegionMinimapSpec) Draw(fb *gfx.Framebuffer, cells []uint8, mapCols, mapRows int) {
 	ink, bg := uint8(m.Ink), uint8(m.Bg)
 	empty := func(t uint8) bool {
 		for _, e := range m.EmptyTiles {
@@ -212,8 +232,8 @@ func (s *FleetStandbySpec) drawMinimap(fb *gfx.Framebuffer, v *FleetStandbyView)
 		}
 		for px := 0; px < m.W; px++ {
 			c := bg
-			if v.Cells != nil && src < v.MapRows && px < v.MapCols {
-				t := v.Cells[src*v.MapCols+px]
+			if cells != nil && src < mapRows && px < mapCols {
+				t := cells[src*mapCols+px]
 				grid := t == 0 && ((m.GridRowEvery > 0 && src%m.GridRowEvery == 0) ||
 					(m.GridColEvery > 0 && px%m.GridColEvery == 0))
 				if grid || !empty(t) {
@@ -229,17 +249,26 @@ func (s *FleetStandbySpec) drawMinimap(fb *gfx.Framebuffer, v *FleetStandbyView)
 // 行星從鈕的左緣拉一條線到小圖上的位置——先畫往左上偏一個像素的影子
 // （色 ShadowInk），再畫擁有者陣營色的本體。線是 `3870:07C9` 的直接上色版。
 func (s *FleetStandbySpec) drawLeaders(fb *gfx.Framebuffer, v *FleetStandbyView) {
+	planets := make([]MinimapPlanet, len(v.Planets))
+	for i, p := range v.Planets {
+		planets[i] = MinimapPlanet{Owner: p.Owner, X: p.X, Y: p.Y}
+	}
+	s.Leader.Draw(fb, &s.Minimap, planets)
+}
+
+// Draw 畫小圖外框與每顆行星的引線。
+func (l *LeaderSpec) Draw(fb *gfx.Framebuffer, m *RegionMinimapSpec, planets []MinimapPlanet) {
 	clip := ClipRect{X0: 0, Y0: 0, X1: gfx.Width - 1, Y1: gfx.Height - 1}
-	fr := s.Minimap.Frame
+	fr := m.Frame
 	ink := uint8(fr.Ink)
 	clip.Line(fb, fr.X0, fr.Y0, fr.X1, fr.Y0, ink)
 	clip.Line(fb, fr.X0, fr.Y1, fr.X1, fr.Y1, ink)
 	clip.Line(fb, fr.X0, fr.Y0, fr.X0, fr.Y1, ink)
 	clip.Line(fb, fr.X1, fr.Y0, fr.X1, fr.Y1, ink)
-	for i, p := range v.Planets {
-		x0, y0 := s.Leader.X0, s.Leader.Y0Base+i*s.Leader.Y0Pitch
-		x1, y1 := s.Minimap.X+p.X>>4, s.Minimap.Y+p.Y>>4
-		clip.Line(fb, x0-1, y0-1, x1-1, y1-1, uint8(s.Leader.ShadowInk))
+	for i, p := range planets {
+		x0, y0 := l.X0, l.Y0Base+i*l.Y0Pitch
+		x1, y1 := m.X+p.X>>4, m.Y+p.Y>>4
+		clip.Line(fb, x0-1, y0-1, x1-1, y1-1, uint8(l.ShadowInk))
 		clip.Line(fb, x0, y0, x1, y1, rules.FactionColour(p.Owner))
 	}
 }

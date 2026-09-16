@@ -104,6 +104,10 @@ type CapitalSummary struct {
 
 	// GrowthPerMille／TaxRatePerMille 以千分之一為單位，畫面印成 `4.5%`。
 	GrowthPerMille, TaxRatePerMille int
+
+	// Foreign ＝ 這一格不是玩家陣營的（右側面板改看別的星域時，`073F:02EE`）：
+	// 成長率、徵稅額、稅率印 `----`，防衛力與經濟力照印（收據 `fcmd-rinfo-ballat`）。
+	Foreign bool
 }
 
 // SummariseCapital 把首都那一筆記錄與遊戲狀態整理成右側面板要印的東西。
@@ -124,5 +128,6 @@ func SummariseCapital(record []byte, planets *Planets, region, faction, turn, ep
 	if planets != nil {
 		c.Defence = planets.RegionDefence(region)
 	}
+	c.Foreign = RegionOwnerOf(record) != faction
 	return c
 }

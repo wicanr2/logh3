@@ -181,6 +181,9 @@ const (
 	StateFleetChangeMenu
 	StateFleetChangeAdj
 	StateFleetChangeOrg
+	// StateRegionInfo 是左鍵點右側面板看的那一格星域開的星系情報視窗
+	// （`073F:060A`，`docs/spec/053`）。
+	StateRegionInfo
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -205,6 +208,7 @@ func (s State) String() string {
 		"StateFleetWindow", "StateFleetActionMenu", "StateFleetTargetPick",
 		"StateFleetMessage", "StateFleetConfirm", "StateFleetStandby",
 		"StateFleetOccupyWarn", "StateFleetChangeMenu", "StateFleetChangeAdj", "StateFleetChangeOrg",
+		"StateRegionInfo",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -248,6 +252,7 @@ var screenSpecName = map[State]string{
 	StateAdmiralFateReport: "screen-command-phase",
 	StatePhezzanReport:     "screen-command-phase",
 	StateFleetWindow:       "screen-command-phase",
+	StateRegionInfo:        "screen-command-phase",
 	StateFleetActionMenu:   "screen-command-phase",
 	StateFleetTargetPick:   "screen-command-phase",
 	StateFleetMessage:      "screen-command-phase",
@@ -452,6 +457,9 @@ type Resources struct {
 	PlanetInfo    *screen.PlanetInfoSpec
 	PlanetInfoMap *screen.PlanetInfoSpec
 
+	// RegionInfo 是左鍵點星圖開的星系情報視窗（`docs/re/320`）。
+	RegionInfo *screen.RegionInfoSpec
+
 	// SupplyPanel 是「補給」選對象時右側那個面板（`docs/re/143`）。
 	SupplyPanel *screen.SupplyPanelSpec
 
@@ -642,9 +650,11 @@ type Game struct {
 	delivered               rules.Building
 	reportYear, reportMonth int
 
-	// 目前選中的星域：對星圖按右鍵選的那一格。**右下角清單的「艦隊」
-	// 分頁看的是它**（`fleetRows`）；左下角那塊看的是 `hoverRegion`，
-	// 不是這個。**還沒選過是 −1** ＝ 退回自己的首都。
+	// 右側面板看的那一格（原版 `ds:9588`）：左鍵點星圖上別的格換過去
+	// （`selectRegion`，`docs/re/320`），右鍵不動它（收據 `fcmd-map-rclick`）。
+	// **右下角清單四個分頁與右側面板摘要看的都是它**（`listRegion`）；
+	// 左下角那塊看的是 `hoverRegion`，不是這個。**還沒選過是 −1** ＝
+	// 自己的首都。
 	selectedRegion int
 
 	// hoverRegion 是左下角那塊現在寫著哪一格星域，−1 ＝ 整塊空的
@@ -750,6 +760,9 @@ type Game struct {
 
 	// tabs 是右下角清單的分頁與捲動（`listtabs.go`）。
 	tabs listTabs
+
+	// rinfo 是星系情報視窗看的星域（`regioninfo.go`）；−1 ＝ 沒開。
+	rinfo int
 
 	// mapCache 是戰略地圖兩種樣子（[1] 有反白格、[0] 沒有）的快取：
 	// 32 格的色號一變就重建（`strategicMapColours`）。
@@ -1596,7 +1609,7 @@ func New(res *Resources) (*Game, error) {
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
 		hoverRegion: -1, hoverProbe: -1, mapHighlight: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1,
-		tabs: newListTabs(),
+		tabs: newListTabs(), rinfo: -1,
 		// 音源是開機偵測的結果，不是每局重來的東西：沒有 MPU-401 就退到
 		// OPL（`docs/re/274` §3）。remake 不模擬 MIDI 介面，所以與出貨的
 		// 原版一樣一律 ＦＭ——既有的執行期傾印 `ds:8F33` 全是 1，收據
@@ -2153,9 +2166,19 @@ func (g *Game) click(x, y int) {
 			g.detailAdmiral = i
 			g.state = StateAdmiralDetail
 		}
+	case StateRegionInfo:
+		// 左鍵只認「結束」（熱區 `0DA2`），其餘不動。
+		if s := g.res.RegionInfo; s != nil && s.ButtonAt(x, y) {
+			g.closeRegionInfo()
+		}
 	case StateCommandPhase:
 		// 清單點出來的行星情報／提督詳細資料開著時，左鍵全給它。
 		if g.listOverlayClick(x, y) {
+			return
+		}
+		// 左鍵點星圖（`06E8` 段 +0A35）：點的是右側面板看的那一格就開星系情報
+		// 視窗，別的格是換選星域——與右鍵同一件事（`073F:02EE`）。
+		if g.mapClick(x, y) {
 			return
 		}
 		for _, b := range commandBar {
@@ -2236,22 +2259,12 @@ func (g *Game) rightClick(x, y int) {
 		return
 	}
 	g.moveMouse(x, y)
-	// 按在星圖上會順便換掉選中的星域（右下角的艦隊分頁看的是它）。
-	//
-	// **只有已經在戰略地圖介面時才算**：關月初報告的那兩下右鍵也點在
-	// 星圖上（`main1e` 的 `-rclicks 300,200` 兩次），而那張畫面右下角
-	// 列的是首都的艦隊。左下角那塊不看這個，看的是游標底下那一格
-	// （`refreshHoverRegion`，`docs/re/277`）。
-	//
-	// 清單點出來的行星情報／提督詳細資料開著時右鍵只關那張視窗
-	// （`2AF5:0226`／`0BCE:02F4` 的事件迴圈吃掉了它），不換星域
-	// （收據 `fcmd-tab-admiral-rclick`：清單還是瓦爾哈拉那 35 位）。
-	if g.state == StateCommandPhase && g.res.Regions != nil && !g.listOverlayOn() &&
-		x >= mapX && x < mapX+mapW && y >= mapY && y < mapY+mapH {
-		if i := asset.RegionAt(g.res.Regions, x-mapX, y-mapY, tileW, tileH); i >= 0 {
-			g.selectedRegion = i
-		}
-	}
+	// 戰略地圖介面上右鍵點星圖**什麼都不換**：右側面板看的那一格
+	// （`ds:9588`）、地圖反白與右下角清單都不動，只有左下角那塊跟著
+	// 游標（`refreshHoverRegion`，`docs/re/277`）。換選星域是左鍵的事
+	// （`073F:02EE`，`selectRegion`）——收據 `fcmd-map-rclick`（右鍵巴拉特，
+	// `ds:9588` 仍是 0、清單仍是瓦爾哈拉那一列）與 `fcmd-rinfo-ballat`
+	// （左鍵同一格，面板換成同盟軍星系巴拉特）是同一個落點的兩份對照。
 	switch g.state {
 	case StateRegionFlipReport:
 		// 與左鍵相同，只收掉目前一則並保留續跑 callback（`docs/spec/034`）。
@@ -2381,6 +2394,9 @@ func (g *Game) rightClick(x, y int) {
 	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm,
 		StateFleetStandby, StateFleetOccupyWarn, StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg:
 		g.fleetCmdRightClick(x, y)
+	case StateRegionInfo:
+		// 右鍵關星系情報視窗（`073F:0AFD` 的事件迴圈：碼 2 就結束）。
+		g.closeRegionInfo()
 	case StateVersusInput:
 		// 交棒視窗按右鍵會怎樣**沒有量過**，先什麼都不做——
 		// 這一步不能靠猜，猜錯會讓對戰模式跳掉一方的回合。
@@ -2859,7 +2875,9 @@ func (g *Game) capitalSummary() (rules.CapitalSummary, int, bool) {
 	if g.res.CapitalPanel == nil || g.res.RegionPanel == nil || g.res.Planets == nil {
 		return rules.CapitalSummary{}, 0, false
 	}
-	r := rules.CapitalRegion(g.faction)
+	// 右側面板看的那一格（`ds:9588`）：開局是首都，左鍵點星圖上別的格換過去
+	// （`selectRegion`）。
+	r := g.listRegion()
 	o := r * rules.RegionRecord
 	if o+rules.RegionRecord > len(g.res.Stellar) {
 		return rules.CapitalSummary{}, 0, false
@@ -2912,7 +2930,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
 		StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg,
 		StateFleetOrg, StateFleetNumber, StateFleetAdjutant,
-		StateFleetComposition, StateFormation,
+		StateFleetComposition, StateFormation, StateRegionInfo,
 		// 這五張的收據末尾都有一次 `-mouse-at`（搬到 (600,340)），
 		// 而畫面上的箭頭跟著搬過去了：`info1e`／`lst1e`／`lst2e`／
 		// `lst3e`／`settings1e` 與同盟的五張，十份都是同一個結論。
@@ -2948,6 +2966,9 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 	// 右下角清單點出來的行星情報／提督詳細資料（`listtabs.go`）。
 	if g.state == StateCommandPhase {
 		g.drawListOverlays(fb)
+	}
+	if g.state == StateRegionInfo {
+		g.drawRegionInfo(fb)
 	}
 	// 模態的訊息框（艦隊組成編輯器那四句）疊在最後一層之上、游標之下。
 	if g.msgOn && g.lastLayer() == name {

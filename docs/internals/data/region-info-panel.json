@@ -1,0 +1,182 @@
+{
+ "_note": "戰略地圖介面左鍵點右側面板看的那一格星域開的星系情報視窗（073F:05CB → 060A → 06C5 印內容、2376:0B44 貼小圖、073F:0A39 引線與外框、0AFD 事件迴圈；docs/re/320）。視窗 3603:0006(0, 0x97, 格 (0,0), 內容 18×17, 旗標 1) → 實際 20×19 格，蓋住整個左半（含左下角那塊）。內容格 (c,r) 的像素 ＝ ((1＋c)×16, 40＋(1＋r)×20)。小圖貼在滑鼠座標 (24,45) ＝ 畫面 (24,85)，外框 (23,84)–(152,213)；引線從 (160, 110＋20i) 拉到 (24＋X>>4, 85＋Y>>4)。左鍵只認「結束」（熱區 ds:0DA2：內容格 (15,16) 兩格），右鍵也關；點別的格是換選星域（073F:02EE），與右鍵同一件事。",
+ "cell_x": 0,
+ "cell_y": 0,
+ "cols": 18,
+ "rows": 17,
+ "colour": 151,
+ "style": 1,
+ "formats": {
+  "title": {
+   "offset": "ds:0F2A",
+   "bytes": "035b25642c2573ac50a874035b25642c20202573",
+   "text": "\u0003[%d,%s星系\u0003[%d,  %s"
+  },
+  "planets_label": {
+   "offset": "ds:0F48",
+   "bytes": "ac50a874a4baa6e6ac50",
+   "text": "星系內行星"
+  },
+  "goto": {
+   "offset": "ds:0F53",
+   "bytes": "015b25642c25642c",
+   "text": "\u0001[%d,%d,"
+  },
+  "ships_header": {
+   "offset": "ds:0F5C",
+   "bytes": "abdda952b2eec4a52020c4a5bcc62020b3a1b6a42020b8c9b5b9aaabb8ea0a",
+   "text": "待命船艦  艦數  部隊  補給物資\n"
+  },
+  "ships_row": {
+   "offset": "ds:0F7C",
+   "bytes": "202025732531306c7525366c750a",
+   "text": "  %s%10lu%6lu\n"
+  },
+  "missiles_label": {
+   "offset": "ds:0F94",
+   "bytes": "adb8bc7520202020",
+   "text": "飛彈    "
+  },
+  "missiles_value": {
+   "offset": "ds:0FA6",
+   "bytes": "2531306c75",
+   "text": "%10lu"
+  },
+  "fighters_label": {
+   "offset": "ds:0FB5",
+   "bytes": "bed4b0abbef7",
+   "text": "戰鬥機"
+  },
+  "fighters_value": {
+   "offset": "ds:0FC5",
+   "bytes": "2531306c75",
+   "text": "%10lu"
+  },
+  "other_rows": [
+   {
+    "offset": "ds:0FCB",
+    "bytes": "2020a2d020202d2d2d2d2d2d2d2d20202d2d2d2d2020adb8bc75202020200a",
+    "text": "  Ｂ  --------  ----  飛彈    \n"
+   },
+   {
+    "offset": "ds:0FEB",
+    "bytes": "2020a2d620202d2d2d2d2d2d2d2d20202d2d2d2d202020202d2d2d2d2d2d2d2d2d2d0a",
+    "text": "  Ｈ  --------  ----    ----------\n"
+   },
+   {
+    "offset": "ds:100F",
+    "bytes": "2020a2d120202d2d2d2d2d2d2d2d20202d2d2d2d2020bed4b0abbef70a",
+    "text": "  Ｃ  --------  ----  戰鬥機\n"
+   },
+   {
+    "offset": "ds:102D",
+    "bytes": "2020a2cf20202d2d2d2d2d2d2d2d20202d2d2d2d202020202d2d2d2d2d2d2d2d2d2d0a",
+    "text": "  Ａ  --------  ----    ----------\n"
+   },
+   {
+    "offset": "ds:1051",
+    "bytes": "2020a2d220202d2d2d2d2d2d2d2d20202d2d2d2d0a",
+    "text": "  Ｄ  --------  ----\n"
+   },
+   {
+    "offset": "ds:1067",
+    "bytes": "2020a2e120202d2d2d2d2d2d2d2d20202d2d2d2d0a",
+    "text": "  Ｓ  --------  ----\n"
+   },
+   {
+    "offset": "ds:107D",
+    "bytes": "2020a2d320202d2d2d2d2d2d2d2d20202d2d2d2d0a",
+    "text": "  Ｅ  --------  ----\n"
+   }
+  ]
+ },
+ "kind_letters": [
+  "Ｂ",
+  "Ｈ",
+  "Ｃ",
+  "Ａ",
+  "Ｄ",
+  "Ｔ",
+  "Ｅ"
+ ],
+ "kind_letters_note": "ds:6172 那八筆遠指標（docs/internals/40）；不是自己的星域時印的是 other_rows 裡寫死的字母——第六行是「Ｓ」不是「Ｔ」，原版的錯字，照印。",
+ "layout": {
+  "planets_label_at": [
+   9,
+   1
+  ],
+  "planet_name_col": [
+   9
+  ],
+  "planet_name_row0": [
+   2
+  ],
+  "ships_header_at": [
+   0,
+   8
+  ],
+  "missiles_label_at": [
+   11,
+   9
+  ],
+  "missiles_value_at": [
+   12,
+   10
+  ],
+  "fighters_label_at": [
+   11,
+   11
+  ],
+  "fighters_value_at": [
+   12,
+   12
+  ]
+ },
+ "hotspots": [
+  {
+   "cell_x": 15,
+   "cell_y": 16,
+   "cols": 2,
+   "rows": 1,
+   "code": 2,
+   "text": "結束",
+   "note": "ds:0DA2 一筆；字色 0x87",
+   "codes": [
+    "B5B2",
+    "A7F4"
+   ]
+  }
+ ],
+ "button_colour": 135,
+ "minimap": {
+  "x": 24,
+  "y": 85,
+  "w": 128,
+  "h": 128,
+  "frame": {
+   "x0": 23,
+   "y0": 84,
+   "x1": 152,
+   "y1": 213,
+   "ink": 7
+  },
+  "ink": 1,
+  "bg": 3,
+  "grid_row_every": 12,
+  "grid_col_every": 15,
+  "empty_tiles": [
+   0,
+   1,
+   5
+  ],
+  "row_repeat_every": 5,
+  "note": "與 fleet-standby-panel.json 同一套（1727:05C6 縮圖；最後一列讀到地圖外，remake 畫底色）"
+ },
+ "leader": {
+  "x0": 160,
+  "y0_base": 110,
+  "y0_pitch": 20,
+  "shadow_ink": 3,
+  "note": "073F:0A39：從 (160, 110＋20i) 拉到 (24＋X>>4, 85＋Y>>4)，顏色 ds:6092[擁有者]，先畫 (−1,−1) 的色 3 影子"
+ }
+}

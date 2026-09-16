@@ -185,6 +185,11 @@ func MonthEndTotals(records []byte, p *Planets, t *GrowthTable,
 		recomputeRates()
 	}
 	// 第二趟（原版 `2703:0AB8` 旗標 1）：用新稅率收稅。
+	//
+	// remake 還把 32 格的稅在同一趟扣掉；原版是各座位在自己的回合只扣
+	// 自己那些星域的、中立從不扣，所以帝國回合看到的同盟與中立星域經濟力
+	// 只有成長（巴拉特 68282、費沙 103100；remake 65826／99904，`docs/re/320`
+	// §五，worklist `month-end-tax-per-seat`）。玩家自己的星域與總稅收不受影響。
 	var total [2]int
 	for i := 0; i*RegionRecord+RegionRecord <= len(records); i++ {
 		rec := records[i*RegionRecord : (i+1)*RegionRecord]

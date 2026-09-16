@@ -241,9 +241,14 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	regionInfo, err := screen.LoadRegionInfoSpec(filepath.Join("../..", "docs/internals/data/region-info-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	return &Resources{Font: fnt, OrigDir: orig, Faces: faces, Cursor: cur, Menu: menu,
 		FrameTiles:    frameTiles,
 		PlanetInfoMap: planetInfoMap,
+		RegionInfo:    regionInfo,
 		AdmiralNames:  names, StarListOrder: starOrder,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,
 		StarBit: bit, StarRGN: rgn, RegionColours: colours,
@@ -795,10 +800,12 @@ func TestEndingScreenMatchesOriginalPlanes(t *testing.T) {
 	}
 }
 
-// TestRightClickSelectsRegion 按在星圖上會換掉選中的星域。
-// 每一筆的預期值都是實測：原版按下去之後左下角那塊寫出來的星系名
-// （收據 `hovA`／`hovB`／`hovC`／`rcback`）。
-func TestRightClickSelectsRegion(t *testing.T) {
+// TestRightClickOnMapKeepsSelection 右鍵按在星圖上**不換**右側面板看的那一格
+// （原版 `ds:9588`，收據 `fcmd-map-rclick`）；跟著換的只有左下角那塊，而那塊
+// 寫的是游標底下那一格（`hoverRegion`，`docs/re/277`）。每一筆的預期值都是
+// 實測：原版按下去之後左下角那塊寫出來的星系名（收據 `hovA`／`hovB`／`hovC`／
+// `rcback`）。
+func TestRightClickOnMapKeepsSelection(t *testing.T) {
 	for _, c := range []struct {
 		x, y int
 		want int
@@ -812,16 +819,20 @@ func TestRightClickSelectsRegion(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			g := reachCommandPhase(t)
 			g.RightClick(c.x, c.y)
-			if g.SelectedRegion() != c.want {
-				t.Fatalf("(%d,%d) 選到星域 %d，預期 %d（%s）",
-					c.x, c.y, g.SelectedRegion(), c.want, c.name)
+			if g.SelectedRegion() != -1 {
+				t.Fatalf("(%d,%d) 右鍵換掉了右側面板那一格：%d（%s）",
+					c.x, c.y, g.SelectedRegion(), c.name)
+			}
+			if g.hoverRegion != c.want {
+				t.Fatalf("(%d,%d) 左下角寫的是星域 %d，預期 %d（%s）",
+					c.x, c.y, g.hoverRegion, c.want, c.name)
 			}
 		})
 	}
 }
 
-// TestRegionPanelOnPlayerPath 走正常玩家路徑到戰略地圖介面，右鍵選一個星域，
-// 左下角那塊要與原版逐位元組相同（規格 `docs/spec/001`）。
+// TestRegionPanelOnPlayerPath 走正常玩家路徑到戰略地圖介面，右鍵按在一個星域上
+// （游標停在那裡），左下角那塊要與原版逐位元組相同（規格 `docs/spec/001`）。
 //
 // 只比面板那塊 320×80：這張畫面的游標還是規格裡量到的位置（遊戲目前不會
 // 把游標跟著滑鼠搬，那是另一件事），所以整張比會差在游標上。
@@ -844,8 +855,8 @@ func TestRegionPanelOnPlayerPath(t *testing.T) {
 			}
 			g := reachCommandPhase(t)
 			g.RightClick(c.x, c.y)
-			if g.SelectedRegion() != c.region {
-				t.Fatalf("選到星域 %d，預期 %d", g.SelectedRegion(), c.region)
+			if g.hoverRegion != c.region {
+				t.Fatalf("左下角寫的是星域 %d，預期 %d", g.hoverRegion, c.region)
 			}
 			fb := g.Frame()
 			bad := 0

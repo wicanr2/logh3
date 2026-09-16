@@ -276,3 +276,17 @@ rec fcmd-tab-fleet6-down   995000000 fcmd-tab-fleet6-list ck -clicks 971000000:6
 rec fcmd-tab-fleet6-up     1020000000 fcmd-tab-fleet6-down - -clicks 996000000:617:268 -click-hold $HOLD5 $TABS
 rec fcmd-tab-fleet6-row    1020000000 fcmd-tab-fleet6-down ck -clicks 996000000:450:348 -click-hold $HOLD $TABS
 rec fcmd-tab-fleet6-close  1045000000 fcmd-tab-fleet6-row - -clicks 1021000000:490:350 -click-hold $HOLD $TABS
+# 18. 左鍵點星圖（06E8 段 +0A35：3705:00DC 找星域；點的是右側面板看的那一格 ds:9588 → 星系情報視窗
+#     073F:05CB → 060A → 06C5／0A39／0AFD；別的格 → 073F:02EE 換選星域；docs/re/320）。
+#     右鍵點星圖什麼都不換（fcmd-map-rclick：ds:9588 仍是 0、右側面板與清單不動，只有左下角跟著游標）。
+#     瓦爾哈拉 (32,32)、費沙 (163,96)（中立）、巴拉特 (300,270)（同盟）；「結束」在內容格 (15,16) → 滑鼠 (270,350)。
+rec fcmd-rinfo             445000000 fcmd-base       ck -clicks 421000000:32:32 -click-hold $HOLD
+rec fcmd-rinfo-close       470000000 fcmd-rinfo      -  -clicks 446000000:270:350 -click-hold $HOLD
+rec fcmd-rinfo-rclick      470000000 fcmd-rinfo      -  -rclicks 446000000:300:200 -click-hold $HOLD
+rec fcmd-rinfo-outside     470000000 fcmd-rinfo      -  -clicks 446000000:100:100 -click-hold $HOLD
+rec fcmd-rinfo-fezzan      445000000 fcmd-base       ck -clicks 421000000:163:96 -click-hold $HOLD
+rec fcmd-rinfo-fezzan2     470000000 fcmd-rinfo-fezzan - -clicks 446000000:163:96 -click-hold $HOLD
+rec fcmd-rinfo-ballat      445000000 fcmd-base       ck -clicks 421000000:300:270 -click-hold $HOLD
+rec fcmd-rinfo-ballat2     470000000 fcmd-rinfo-ballat ck -clicks 446000000:300:270 -click-hold $HOLD
+rec fcmd-rinfo-ballat2-close 495000000 fcmd-rinfo-ballat2 - -clicks 471000000:270:350 -click-hold $HOLD
+rec fcmd-map-rclick        445000000 fcmd-base       -  -rclicks 421000000:300:270 -click-hold $HOLD -peek lin:5E0B8:1

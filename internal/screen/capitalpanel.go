@@ -123,6 +123,8 @@ type PanelField struct {
 
 	// Format 是 `per_mille` 時印成 `4.5%`（千分之一 → 一位小數的百分比）。
 	Format string `json:"format"`
+	// Unknown 是不是自己的星域時印的字（`------`）；空字串 ＝ 照印數字。
+	Unknown string `json:"unknown"`
 }
 
 // LoadCapitalPanel 讀右側面板的版面。
@@ -251,6 +253,9 @@ func (p *CapitalPanel) drawButtons(fb *gfx.Framebuffer, fnt *font.Font) {
 
 // value 回這一格要印的字串。
 func (f *PanelField) value(c rules.CapitalSummary) string {
+	if c.Foreign && f.Unknown != "" {
+		return f.Unknown
+	}
 	var v int
 	switch f.Field {
 	case "military":

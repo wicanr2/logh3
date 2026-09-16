@@ -380,8 +380,8 @@ func (g *Game) applyFleetOrder() {
 	g.state = StateFleetWindow
 }
 
-// fleetListRegion 是右下角清單看的那一格（原版 `ds:9588`）：右鍵選的星域，
-// 沒選過就是自己的首都。
+// fleetListRegion 是右下角清單看的那一格（原版 `ds:9588`）：左鍵點星圖
+// 換選過的星域，沒選過就是自己的首都。
 func (g *Game) fleetListRegion() int {
 	if g.selectedRegion >= 0 {
 		return g.selectedRegion

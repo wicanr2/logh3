@@ -1,5 +1,5 @@
 {
- "note": "戰略地圖介面右側那塊（右上的日期與錢、下面自己首都的摘要）。量自收據 main1e（796/1）與 turnnext（796/2），對齊用 -poke 造的 capDATE／capNUM 定下來。規格 docs/spec/002。",
+ "note": "戰略地圖介面右側那塊（右上的日期與錢、下面自己首都的摘要）。量自收據 main1e（796/1）與 turnnext（796/2），對齊用 -poke 造的 capDATE／capNUM 定下來。規格 docs/spec/002。 右側面板改看別的星域（073F:02EE，左鍵點別的格或右鍵）時摘要換成那一格：不是自己的星域成長率／徵稅額／稅率印 unknown 那串（收據 fcmd-rinfo-ballat，docs/re/320）。",
  "summary": {
   "dx": 320,
   "dy": -200
@@ -108,7 +108,8 @@
     "text": "成長率",
     "right": 624,
     "field": "growth_per_mille",
-    "format": "per_mille"
+    "format": "per_mille",
+    "unknown": "------"
    }
   },
   {
@@ -122,7 +123,8 @@
     ],
     "text": "徵稅額",
     "right": 480,
-    "field": "tax"
+    "field": "tax",
+    "unknown": "----------"
    },
    "right": {
     "label_x": 496,
@@ -133,7 +135,8 @@
     "text": "稅率",
     "right": 624,
     "field": "tax_rate_per_mille",
-    "format": "per_mille"
+    "format": "per_mille",
+    "unknown": "-----"
    }
   }
  ],

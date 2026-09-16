@@ -47,6 +47,8 @@ cases=(
   "fcmd-tab-planet-row|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 415 290; click 450 308"
   "fcmd-tab-admiral-down|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 560 290; click 617 388"
   "fcmd-tab-fleet2|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 560 290; click 450 308; click 496 320; click 480 350; click 510 350"
+  # 左鍵點瓦爾哈拉 → 星系情報視窗（排除小圖最後一列 128 個像素，docs/re/320）。
+  "fcmd-rinfo|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 32 72|24,212,128,1"
   "fcmd-adj-confirm-close|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 365; click 497 372; click 430 340; click 430 350; click 450 110; click 496 320; click 480 340"
 )
 fail=0

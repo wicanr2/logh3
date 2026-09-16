@@ -54,8 +54,8 @@ func (g *Game) listTab() int {
 	return g.tabs.tab[g.faction]
 }
 
-// listRegion 回清單看的那一格：右鍵選過的星域，沒有就自己的首都
-// （與「艦隊」分頁的 `fleetRows` 同一條規則）。
+// listRegion 回清單看的那一格（原版 `ds:9588`）：左鍵點星圖換選過的星域，
+// 沒有就自己的首都（與「艦隊」分頁的 `fleetRows` 同一條規則）。
 func (g *Game) listRegion() int {
 	if g.selectedRegion >= 0 {
 		return g.selectedRegion

@@ -205,6 +205,9 @@ func (s *PlanetInfoSpec) ownerColour(n int) int {
 	return s.OwnerColour[n]
 }
 
+// OwnerName 回擁有者名（`ds:60AE`：帝國軍／同盟軍／中立軍，沒有跳脫碼）。
+func (s *PlanetInfoSpec) OwnerName(n int) []byte { return s.ownerName(n) }
+
 func (s *PlanetInfoSpec) ownerName(n int) []byte {
 	if n < 0 || n >= len(s.OwnerNames) {
 		return nil

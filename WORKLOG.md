@@ -7036,3 +7036,38 @@ GitHub 的 issue 時間軸承擔。
 - 文件：`docs/re/318`、規格 013「副官」一節與已知差異、規格 051 V2''、internals 08／58、
   `fleet-org-panel.json` 的 `no_adjutant`、playtest 021、CONTEXT；gui_check 加
   `fcmd-adj-confirm-close`（19 案例全過）。關 #42（verify → go_test）。
+
+## 2026-09-16 — 左鍵點星圖：星系情報視窗與換選星域（#44）；右鍵點星圖什麼都不換
+
+- `06E8` 段 +0A35 的地圖點擊分派讀出來了（`docs/re/320`）：`3705:00DC` 找那一格，
+  **點的是右側面板看的那一格（`ds:9588`）→ `073F:05CB` 開星系情報視窗**，別的格
+  → `073F:02EE` 換選星域（舊格取消反白、`ds:9588 ← r`、反白換格、四個分頁重建、
+  `073F:0387` 重印右側摘要——別家的成長率／徵稅額／稅率印 `----`）。看別家的情報
+  要點兩下。視窗 `073F:060A`／`06C5`：格 (0,0) 起 18×17 內容蓋住整個左半，
+  `1727:05C6` 縮 128×128 小圖貼在畫面 (24,85)、外框 (23,84)–(152,213)、每顆行星從
+  (160,110＋20i) 拉引線到 (24＋X>>4, 85＋Y>>4)（先色 3 影子）；自己的星域印七種艦艇的
+  待命艘數（`+0x30`）與 ÷ 滿編、飛彈 `+0x68`／戰鬥機 `+0x70`；別家的印七行寫死的
+  破折號，**第六行「Ｓ」是原版錯字**照印；「結束」熱區碼 2，左鍵只認它、右鍵也關。
+- **右鍵點星圖什麼都不換**（`fcmd-map-rclick`：右鍵巴拉特之後 `ds:9588` 仍 00，畫面與
+  `fcmd-base` 只差左下角那塊與游標；同一落點左鍵的 `fcmd-rinfo-ballat` 面板換成同盟軍
+  星系巴拉特）。remake 原本「右鍵選星域、艦隊分頁看它」是 `docs/re/22` 時代沒收據的
+  假設（那時左下角還沒認出是游標底下那一格），改掉：`selectedRegion` 只有左鍵
+  `selectRegion` 會動，`TestRightClickSelectsRegion` 改成 `TestRightClickOnMapKeepsSelection`。
+  `docs/re/23`「右側那塊一直是自己的首都」講的就是右鍵，仍然成立。
+- 行星位置的來源修正（`2AF5:01CB`）：圖塊 6 最多五格、不夠補要塞圖塊 22，每格
+  (欄×16＋8, 列×20＋12)，qsort 先 y 再 x。`docs/re/89` 只看到圖塊 6；巴拉特第五顆
+  魯德米拉在要塞格（`fcmd-rinfo-ballat2`）。`rules.PlanetSites` 照改（待命行星共用）。
+- 對拍時揪出兩條規則：開新局的回充要把七種艦艇也按經濟力比例分回行星
+  （`rules.DistributeRegionSupply`，視窗的部隊數才對）；別家星域的經濟力 remake 少一截
+  ——月底結算把同盟與中立的稅在同一趟扣掉，原版 `2703:0AB8` 各座位只扣自己的、中立
+  從不扣（巴拉特 68282 對 65826、費沙 103100 對 99904）。後者是既有缺口，事先列成
+  排除區（x 432–479、y 224–233）並開 #45。
+- 收據十批（第 18 段）：瓦爾哈拉開窗／結束／右鍵／點別處、費沙與巴拉特各「換選 →
+  開窗」、巴拉特關窗、右鍵巴拉特；整張逐位元組（排除小圖最後一列與經濟力那格）。
+- remake：`internal/game/regioninfo.go`（`mapClick`／`selectRegion`／視窗）、
+  `internal/screen/regioninfo.go`＋`region-info-panel.json`、`RegionMinimapSpec`／`LeaderSpec`
+  從指定待命行星那張抽出來共用、`CapitalSummary.Foreign`＋`capital-panel.json` 的
+  `unknown`、`capitalSummary()` 改看 `listRegion()`。
+- 文件：`docs/re/320`、規格 053（新）、051／013 指標、re/22／23／89 指標、internals 58、
+  playtest 021（一百四十五批）、CONTEXT；gui_check 加 `fcmd-rinfo`（23 全過）。
+  關 #44（verify → go_test）。
