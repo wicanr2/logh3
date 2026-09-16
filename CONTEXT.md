@@ -260,7 +260,12 @@
   `fcmd-lst-*`，三十四批整張。詳細資料多了「第Ｎ艦隊／參謀」與「：待命中／執勤中／出擊中」
   （規格 012 到期）。分頁鈕沒接（#51）。探測的坑：游標搬到會換反白的列與按鍵同一瞬間，
   原版把那一下丟掉——收據一律先搬再按（`mvc`／`mvr`），`docs/re/318` §六的「右鍵不關」
-  也是它。左下角摘要多了星域名後面的狀態字
+  也是它。**交戰演出（#48 前半，`docs/re/324`、規格 056 DRAFT）**：戰鬥曲的出口接上了——
+  戰場回合處理打行星那一步有結果就切 `StateEngagement`（`ANI_PNL1.A98` 底圖＋三個文字視窗
+  照原版格式字串印：行星／防衛力、防衛攻擊／擊毀、第？艦隊／船艦總數），開場幀 → 結果幀
+  → 回戰場，`audio.TuneFor(StateEngagement)` ＝ 戰鬥曲；十二批 `eng-*`，`eng-open`／`eng-end`
+  扣掉四塊排除區逐位元組（直接進入的診斷比對）。行星圖、艦隊圖、量表、方塊動畫
+  （`COMANI.BMG` 編碼未解）與計時沒做；艦隊對艦隊與要塞砲那兩種演出沒接。左下角摘要多了星域名後面的狀態字
   「處於戰鬥狀態／占領狀態／孤立狀態」（規格 001）。艦隊組成的「中止」照原版整支
   作廢回地圖、右鍵不認；首都戰艦的待命艘數開局是 78000，進艦隊組成才扣旗艦那一組
   （`docs/re/316` §四）。順手定下的通用規則：底線裝飾、清單反白、
@@ -273,8 +278,8 @@
   盤點，不是憑印象）：
   - 整套不存在：占據格的戰略打行星（`20B4:1497`）、駐留到達的解散、
     回合裡的過場視窗、參謀任命（`090A:0248`）、
-    艦隊解散（`297B:0332`）、**交戰演出**（`ANI_PNL1.A98` ＋ `COMANI.BMG`；
-    也是戰鬥曲唯一的出口）。
+    艦隊解散（`297B:0332`）、**交戰演出的圖與動畫**（`COMANI.BMG` 編碼未解；
+    面板、三個視窗與戰鬥曲的出口已接）。
   - 戰略地圖本身：右下角「敵艦隊」分頁有索敵等級的列與它的視窗（要打過仗的局面）。
   - 開得起來但只能右鍵關：情報收集的 治安／勢力／敵艦 三個分頁與
     參謀／確認（`1738`）、徵稅計劃與生產計劃的 參謀／結束、預算計劃的箭頭
@@ -283,7 +288,7 @@
     （情報與徵稅那兩顆「參謀」就是參謀任命的入口。）
   - 其餘：「資料」的捲動、動畫之後的 `SPTIT.350` 標題畫面。
   配樂的播放層在（`internal/audio`，22 首 OGG 在本機 `workplace/`），
-  缺的是戰鬥曲出口與玩家自產曲庫的管線。完成度見 `VERIFICATION-MATRIX.md`。
+  戰鬥曲從交戰演出出口，缺的是玩家自產曲庫的管線。完成度見 `VERIFICATION-MATRIX.md`。
 - **原版側與 remake 側都在**：dosgolem 跑原版產生收據，remake 走同一條
   玩家路徑畫出來，兩邊逐位元組比。命令階段十二張子畫面、月底的船艦
   接收報告、按一次「實行」的整張畫面都已對上。
@@ -545,34 +550,29 @@ remake 的 `battleView` 開戰時置中到旗艦之後就不再動。除了邊�
 
 *[#48](https://github.com/wicanr2/logh3/issues/48) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
-**交戰演出**：戰場上兩支艦隊交火那一刻原版切一段人物動畫（`ANI_PNL1.A98` 的面板
-＋ `COMANI.BMG` 的圖庫），**這一段是戰鬥曲唯一的出口**——`s3assault` 的檔案時間線：
-`#1140.7M read bgm_6f.mds`（換戰鬥曲）→ `comani.bmg` 連續數十次 → `#1169.3M read
-bgm_3f.mds`（換回平時曲），下一次交戰再來一遍（`docs/re/274` §七）。remake 的戰術
-戰鬥直接結算，沒有這個狀態，所以設定畫面存得下的戰鬥配樂（`audio.Settings.BattleTune`）
-沒有畫面會播；「動畫效果」（`ds:8F36`，0 ＝ 跳過演出）與「動畫速度」（`ds:8F37`）
-也沒有人讀（`docs/re/286`）。
+**交戰演出**：戰場回合處理裡打行星（`20B4:0276`）、艦隊對艦隊（`1DD6:0009`）、要塞砲
+（`2264:02BB`）各自開的一段（`1DD6:0152` 開場 → 各自的演出 → `1DD6:026B` 收場），
+**戰鬥曲唯一的出口**（開場 `play_music(1)`、收場換回）。讀出來並接上的（`docs/re/324`、
+規格 056）：入口與三種呼叫者、開場常式的三個樣式 0 文字視窗（格 (1,6)／(17,6)／(24,6)，
+底圖 `ANI_PNL1.A98`）、格式字串（`ds:4801`–`48C1`、陣營名 `ds:60F4`）、時間線（S3 第五回合
+#1140.09M–#1169.07M）、按鍵只跳動畫不縮短、動畫效果關掉照開只是短九百萬步；remake
+`StateEngagement`（打行星那一種：開場幀 → 結果幀 → 回戰場）、`audio.TuneFor(StateEngagement)`
+＝ 戰鬥曲。`eng-open`／`eng-end` 扣掉四塊排除區逐位元組相同（直接進入的診斷比對）。
 
-線索：
-- `play_music(1)` 只有兩個呼叫點在戰鬥端：線性 `0x1DFB8`（先釋放兩個緩衝區再換曲）
-  與 `0x1EDD0`（`docs/re/274` §七的表）——從那兩處往上找演出的入口與「動畫效果 ＝ 0
-  就跳過」的判斷。
-- `COMANI.BMG`（1,036,159 bytes）的格式未解：不是開頭動畫那套編碼（`docs/re/46`）；
-  `ANI_PNL1.A98` 的容器格式與 `ANI_PNL0` 同一種（`docs/internals/37`），面板本身應該
-  解得開，還沒對到畫面。
-- 收據：S3 六次實行進戰場（`docs/internals/34`「怎麼走到」），再往前跑到 `#1140M`
-  附近用 `-watch-screen` 抓演出的每一幀；`-poke ds:8F36 ← 0` 對照跳過的版本。
-  `s3assault` 那一份的時間線已經有三次交戰的步數可以直接對。
-- 音樂：演出開始 `BattleTune()`、結束換回 `TuneFor`；`Battle ＝ 2` 沿用平時曲時
-  原版有沒有重開那首（`read bgm_3f.mds` 會不會出現）要另量。
+**卡在**：- `COMANI.BMG` 的編碼（`docs/internals/20`）：這一場讀 `PPD0`（行星圖）、`FÀD0`（同盟艦圖）、
+  `PPAB`（打的動畫）——現在有原版畫出來的樣子（`eng-text`）可以當明文對，還沒解。
+- 兩條量表、戰場透視格線與方塊動畫（`3931`／`3B74` 段）、演出的計時（約 29M 步）沒讀。
+- 艦隊對艦隊（先問「第Ｎ艦隊的戰鬥命令」自動／防禦）與要塞砲那兩種演出沒接。
+- remake 的戰場模擬走不到與原版同一個第五回合（戰術 AI 與亂數各走各的），正常路徑的
+  收據要等對齊；目前是直接進入的診斷比對。
 
 **做完的判準**：交戰演出的觸發點、跳過條件、面板與圖庫格式、幀序與節奏（動畫速度）都有反組譯與
 收據；remake 在同一時點播同一段、換同一首，`Settings.BattleTune` 有出口；
 `TestEveryTuneIsReachable` 覆蓋到 `BGM_6`／`BGM_7`。
 
-**證據**：[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)、[`docs/re/46-comani-not-intro-codec.md`](docs/re/46-comani-not-intro-codec.md)、[`docs/internals/37-ani-pnl-a98.md`](docs/internals/37-ani-pnl-a98.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)
+**證據**：[`docs/re/324-engagement-scene.md`](docs/re/324-engagement-scene.md)、[`docs/spec/056-engagement-scene.md`](docs/spec/056-engagement-scene.md)、[`docs/playtest/022-engagement-scene.md`](docs/playtest/022-engagement-scene.md)、[`docs/internals/20-comani-bmg.md`](docs/internals/20-comani-bmg.md)
 
-**核實**：`internal/audio/tune.go` 裡還找得到 `還沒有交戰演出那個狀態`（自承還在 ＝ 還沒做）
+**核實**：`internal/game/engagement.go` 裡還找得到 `方塊動畫沒畫`（自承還在 ＝ 還沒做）
 
 #### fleet-arrival-effects — 占領命令走到之後的效果與回合裡的兩張報告（規格 051 的排除範圍）
 

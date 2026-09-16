@@ -54,16 +54,19 @@ func (s Settings) suffix() string {
 //
 //   - 開頭動畫一律 `OPEN_M`。`OPEN.EXE` 的 FM 與 MIDI 兩個外皮都寫死 `'m'`，
 //     所以 `OPEN_F` 在原版裡永遠不會被打開。
+//
 //   - **主選單與防拷問答沒有配樂**：`GIN3PS.EXE` 從啟動到答完防拷題之間
 //     一個 `.MDS` 都沒開過（收據 `key1`／`main1e`／`chain1` 的檔案存取序列）。
+//
 //   - 結局照命令列的第二個數字：`9 1` ＝ 帝國勝利 → `END_1`、
 //     `9 2` ＝ 同盟勝利 → `END_2`（`docs/internals/16`）。
+//
 //   - 其餘畫面都是平時配樂，**戰術畫面（戰場）也是**：收據 `s3assault` 裡
 //     `BGM_3F` 一路撐過進戰場那一段，換成戰鬥曲的是交戰演出
 //     （`ANI_PNL1.A98` ＋ `COMANI.BMG`）而不是進戰場本身。
 //
-// remake 還沒有交戰演出那個狀態，所以 [Settings.Battle] 目前沒有出口；
-// 欄位先擺著，接上演出之後那一支畫面直接呼叫 [Settings.BattleTune]。
+//   - 交戰演出（`StateEngagement`）是戰鬥曲唯一的出口：開場 `play_music(1)`
+//     換成 [Settings.BattleTune]，收場換回平時曲（規格 056）。
 func TuneFor(st game.State, faction int, s Settings) string {
 	suf := s.suffix()
 	if suf == "" {
@@ -76,6 +79,8 @@ func TuneFor(st game.State, faction int, s Settings) string {
 		return ""
 	case game.StateEnding:
 		return fmt.Sprintf("END_%d%s", faction+1, suf)
+	case game.StateEngagement:
+		return s.BattleTune()
 	}
 	return fmt.Sprintf("BGM_%d%s", s.BGM, suf)
 }

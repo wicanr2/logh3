@@ -187,6 +187,10 @@ const (
 	// StateOccupyAsk 是回合處理中占領命令碰到不能直接到達的星域時那張問話
 	// （`113A:0899`：占領／待命兩顆鈕），停在那一支艦隊上等玩家。
 	StateOccupyAsk
+	// StateEngagement 是戰場回合處理裡打行星那一步的交戰演出
+	// （`20B4:0276` → `1DD6:0152`；`ANI_PNL1.A98` ＋ 三個文字視窗，戰鬥曲的出口；
+	// `docs/re/324`、規格 056）。
+	StateEngagement
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -211,7 +215,7 @@ func (s State) String() string {
 		"StateFleetWindow", "StateFleetActionMenu", "StateFleetTargetPick",
 		"StateFleetMessage", "StateFleetConfirm", "StateFleetStandby",
 		"StateFleetOccupyWarn", "StateFleetChangeMenu", "StateFleetChangeAdj", "StateFleetChangeOrg",
-		"StateRegionInfo", "StateOccupyAsk",
+		"StateRegionInfo", "StateOccupyAsk", "StateEngagement",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -468,6 +472,11 @@ type Resources struct {
 
 	// ListScreen 是一覽表四張共用的清單版面（規格 055）。
 	ListScreen *screen.ListScreenSpec
+
+	// Engagement 是交戰演出的版面，EngagementPanel 是它的底圖（`ANI_PNL1.A98`；
+	// 規格 056）。
+	Engagement      *screen.EngagementSpec
+	EngagementPanel *asset.Image
 
 	// SupplyPanel 是「補給」選對象時右側那個面板（`docs/re/143`）。
 	SupplyPanel *screen.SupplyPanelSpec
@@ -882,6 +891,10 @@ type Game struct {
 	// battleAssaults 是上一回合打行星的結果（`docs/spec/019`）。
 	battleGunHits  []rules.FortressGunHit
 	battleAssaults []rules.PlanetAssaultHit
+	// engQueue 是排隊等演的交戰演出（`engagement.go`），engPhase 0 ＝ 開場那一幀、
+	// 1 ＝ 結果那一幀。
+	engQueue []engagement
+	engPhase int
 	// battleGunAim 是射程橢圓現在的傾角（一整圈 256）；瞄準當下由
 	// 游標的方位算，按下左鍵才寫進行星記錄的 `+0x50`。
 	battleGunAim int
@@ -2293,6 +2306,8 @@ func (g *Game) click(x, y int) {
 		if s := g.res.RegionInfo; s != nil && s.ButtonAt(x, y) {
 			g.closeRegionInfo()
 		}
+	case StateEngagement:
+		g.engagementClick()
 	case StateOccupyAsk:
 		// 「要占領此星系嗎？」只認兩顆鈕（熱區 `2DB8`：占領碼 0、待命碼 1），
 		// 點別處與右鍵都不動（`113A:0899` 的事件迴圈只收命中的左鍵）。
@@ -2537,6 +2552,8 @@ func (g *Game) rightClick(x, y int) {
 		g.listScreenRightClick()
 	case StateOccupyAsk:
 		// 問話不吃右鍵（`113A:0899`：只有命中鈕的左鍵會離開迴圈）。
+	case StateEngagement:
+		g.engagementClick()
 	case StateVersusInput:
 		// 交棒視窗按右鍵會怎樣**沒有量過**，先什麼都不做——
 		// 這一步不能靠猜，猜錯會讓對戰模式跳掉一方的回合。
@@ -2760,6 +2777,8 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	switch g.state {
 	case StateBattle:
 		return g.drawBattle()
+	case StateEngagement:
+		return g.drawEngagement()
 	case StateCopyProtection:
 		face, _ := g.res.Faces.Decode(g.res.CopyProt.Face.Index)
 		fb, _ := screen.CopyProtectionAt(g.res.CopyProt, g.res.Font, face, string(g.typed), g.copyProtTicks)

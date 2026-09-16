@@ -1,0 +1,99 @@
+{
+ "note": "交戰演出（打行星那一種：20B4:0276 → 1DD6:0152 開場、20B4:0486 演出、1DD6:026B 收場；docs/re/324）。底圖是 ANI_PNL1.A98 畫在 y=40（三個視窗的底色 14／0／12 已在圖上）；三個視窗 3603:0006(desc 0, 顏色, 格 x, y, 寬, 高, 樣式 0)——樣式 0 不畫框，內容就在 (x,y) 起。文字用原版的格式字串（formats 是 Big5 位元組的十六進位，*_text 是給人看的）（ds:4867／488C／48A7／48B1／4801／4882／4886；\\u000c 是清視窗、\\u0001[c,r, 是跳到格、\\u0003[n, 是換顏色），陣營名是 ds:60F4 那兩個帶色碼的字串。演出開始換戰鬥曲（play_music(1)）、結束換回平時曲。",
+ "panel": {
+  "file": "ANI_PNL1.A98",
+  "y": 40
+ },
+ "windows": {
+  "planet": {
+   "x": 1,
+   "y": 6,
+   "w": 15,
+   "h": 2,
+   "colour": 228
+  },
+  "middle": {
+   "x": 17,
+   "y": 6,
+   "w": 6,
+   "h": 2,
+   "colour": 2
+  },
+  "fleet": {
+   "x": 24,
+   "y": 6,
+   "w": 15,
+   "h": 2,
+   "colour": 196
+  }
+ },
+ "formats": {
+  "faction": [
+   "035b3232362cabd2b0eaad78035b3232382c",
+   "035b3232362ca650b7f9ad78035b3232382c"
+  ],
+  "faction_text": [
+   "\\x03[226,帝國軍\\x03[228,",
+   "\\x03[226,同盟軍\\x03[228,"
+  ],
+  "planet_title": "0c2573",
+  "planet_title_text": "\\x0c%s",
+  "planet_name": "257325730a",
+  "planet_name_text": "%s%s\n",
+  "planet_kind": "a6e6ac50",
+  "planet_kind_text": "行星",
+  "planet_defence": "a8bebdc3a44f202020202020202020202020202535752f253575",
+  "planet_defence_text": "防衛力             %5u/%5u",
+  "fleet_unknown": "0cb2c4a148c4a5b6a42020a148a148a148a148a148a148a148a148a1480a",
+  "fleet_unknown_text": "\\x0c第？艦隊  ？？？？？？？？？\n",
+  "fleet_known_prefix": "0cb2c4",
+  "fleet_known_prefix_text": "\\x0c第",
+  "fleet_known_suffix": "c4a5b6a42020",
+  "fleet_known_suffix_text": "艦隊  ",
+  "fleet_known_name": "252d3138730a",
+  "fleet_known_name_text": "%-18s\n",
+  "fleet_ships": "b2eec4a5c160bcc620202020202020202020202535752f253575",
+  "fleet_ships_text": "船艦總數           %5u/%5u",
+  "label_defence": "0ca8bebdc3a7f0c0bb",
+  "label_defence_text": "\\x0c防衛攻擊",
+  "label_landing": "0cb56eb3b0c4a5a7f0c0bb",
+  "label_landing_text": "\\x0c登陸艦攻擊",
+  "label_captured": "0ca565bbe2a6a8a55c",
+  "label_captured_text": "\\x0c占領成功",
+  "label_failed": "0ca565bbe2a5a2b1d1",
+  "label_failed_text": "\\x0c占領失敗",
+  "destroyed": "015b302c312c035b31332cc0bbb7b42020253675",
+  "destroyed_text": "\\x01[0,1,\\x03[13,擊毀  %6u"
+ },
+ "known_diff": [
+  {
+   "x": 8,
+   "y": 56,
+   "w": 257,
+   "h": 102,
+   "why": "行星圖：COMANI.BMG 的 PPD0 段，編碼未解"
+  },
+  {
+   "x": 376,
+   "y": 56,
+   "w": 256,
+   "h": 102,
+   "why": "艦隊圖：COMANI.BMG 的 F?D0 段（艦種），編碼未解"
+  },
+  {
+   "x": 297,
+   "y": 62,
+   "w": 48,
+   "h": 68,
+   "why": "兩條量表（防衛力／艦數的比例條），畫法沒讀"
+  },
+  {
+   "x": 6,
+   "y": 207,
+   "w": 627,
+   "h": 226,
+   "why": "戰場：透視格線與方塊動畫（COMANI PPAB／3931 段），沒讀"
+  }
+ ],
+ "formats_note": "原版的字串是 ds:60F4「\\x03[150,帝國軍\\x03[151,」與 ds:48B1「\\x01[0,1,擊毀  %6u」、中間視窗顏色 4；這三個視窗走字元平面的 0x10「彩色文字路徑」，色碼的換算沒讀，所以這裡直接寫量到的屬性（字元平面 eng-open／eng-end：帝國軍 E2、行星名與防衛力 E4、防衛攻擊 02、擊毀 0D、艦隊那格 C4）。假設待驗：同盟的行星是不是同一組色。"
+}

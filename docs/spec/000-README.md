@@ -64,4 +64,9 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`048`](048-admiral-fate-report.md) | 失蹤提督生死判定與報告 | READY／已實作 |
 | [`049`](049-phezzan-event-report.md) | 費沙事件雙頁報告 | CONFORMED |
 | [`050`](050-victory-defeat-report.md) | 勝負報告與結局轉場 | CONFORMED |
-| [`051`](051-strategic-fleet-command.md) | 戰略地圖上的艦隊命令（艦隊視窗 → 作戰 → 移動 → 確認） | READY（第一片） |
+| [`051`](051-strategic-fleet-command.md) | 戰略地圖上的艦隊命令（艦隊視窗 → 作戰 → 五項 → 確認、變更、副官、編組） | CONFORMED |
+| [`052`](052-fleet-list-tabs.md) | 右下角清單的四個分頁與捲動 | CONFORMED（敵艦隊頁只對過空清單） |
+| [`053`](053-region-info-window.md) | 左鍵點星圖：星系情報視窗與換選星域 | CONFORMED |
+| [`054`](054-fleet-arrival.md) | 艦隊走到之後：回合裡的一格、到達收尾、占據旗標與戰略打行星 | 走一格 CONFORMED／打行星 DRAFT |
+| [`055`](055-list-screen-rows.md) | 一覽表四張的列 | CONFORMED（分頁 DRAFT） |
+| [`056`](056-engagement-scene.md) | 交戰演出（打行星那一種）與戰鬥曲的出口 | DRAFT |

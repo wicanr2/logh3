@@ -327,6 +327,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	engagement, engagementPanel, err := loadEngagement(data, orig)
+	if err != nil {
+		return nil, err
+	}
 	regionInfo, err := screen.LoadRegionInfoSpec(filepath.Join(data, "region-info-panel.json"))
 	if err != nil {
 		return nil, err
@@ -370,18 +374,37 @@ func Load(orig, data string) (*game.Resources, error) {
 		Composition: compTables, EditorTables: editorTables, DefaultAdjutants: adjutants,
 		MessageBox: msgBox, FrameTiles: frameTiles,
 		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,
-		PlanetInfo:    planetInfo,
-		PlanetInfoMap: planetInfoMap,
-		RegionInfo:    regionInfo,
-		OccupyAsk:     occupyAsk,
-		ListScreen:    listScreen,
-		StartMilitary: 50000, ShipPct: 25}, nil
+		PlanetInfo:      planetInfo,
+		PlanetInfoMap:   planetInfoMap,
+		RegionInfo:      regionInfo,
+		OccupyAsk:       occupyAsk,
+		ListScreen:      listScreen,
+		Engagement:      engagement,
+		EngagementPanel: engagementPanel,
+		StartMilitary:   50000, ShipPct: 25}, nil
 }
 
 // loadBattle 讀戰場畫面要的東西：版面、面板背景、圖塊庫與 32 張地圖
 // （`docs/internals/34`、`36`、`37`）。
 //
 // 原版檔案是玩家自備的，缺了就回 nil——戰場畫面開不起來，其他畫面照常。
+// loadEngagement 讀交戰演出的版面與底圖（`ANI_PNL1.A98`；缺原版檔就留空）。
+func loadEngagement(data, orig string) (*screen.EngagementSpec, *asset.Image, error) {
+	spec, err := screen.LoadEngagementSpec(filepath.Join(data, "engagement-panel.json"))
+	if err != nil {
+		return nil, nil, err
+	}
+	b, err := os.ReadFile(filepath.Join(orig, spec.Panel.File))
+	if err != nil {
+		return spec, nil, nil
+	}
+	panel, err := asset.DecodeAMGImage(b)
+	if err != nil {
+		return nil, nil, err
+	}
+	return spec, panel, nil
+}
+
 func loadBattle(data, orig string) (*screen.BattleSpec, *asset.Image, []*asset.Image, [][]uint8, error) {
 	spec, err := screen.LoadBattleSpec(filepath.Join(data, "screen-battle.json"))
 	if err != nil {

@@ -83,9 +83,10 @@ func TestEveryTuneIsReachable(t *testing.T) {
 				reached[TuneFor(game.StateMainGame, f, s)] = true
 				reached[TuneFor(game.StateEnding, f, s)] = true
 				reached[TuneFor(game.StateIntro, f, s)] = true
+				// 戰鬥曲從交戰演出那個狀態走到（規格 056）。
 				for b := 0; b < 3; b++ {
 					s.Battle = b
-					reached[s.BattleTune()] = true
+					reached[TuneFor(game.StateEngagement, f, s)] = true
 				}
 			}
 		}

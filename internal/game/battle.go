@@ -186,6 +186,16 @@ func (g *Game) AdvanceBattleTurn() {
 			g.battleScore[h.Scorer] += h.Score
 		}
 	}
+	// 打行星那一步有人打就切交戰演出（`20B4:0276` → `1DD6:0152`，規格 056），
+	// 看完再回來做這一回合剩下的（`finishBattleTurn`）。
+	if g.queueEngagements(g.battleAssaults) {
+		return
+	}
+	g.finishBattleTurn()
+}
+
+// finishBattleTurn 是一回合最後的幾步：要塞砲倒數、索敵、回合數與結束判定。
+func (g *Game) finishBattleTurn() {
 	rules.FortressGunTickAll(g.battlePlanets)
 	rules.UpdateSpotting(g.battleUnits, g.battlePlanets)
 	g.battleTurn++

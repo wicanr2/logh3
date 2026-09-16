@@ -7165,3 +7165,24 @@ GitHub 的 issue 時間軸承擔。
   `TestList*RowsMatchOracle`；GUI `fcmd-lst-adm-row`／`fcmd-lst-fleet-row`（26 案例全過）。
 - 文件：`docs/re/323`、規格 055（新）、012、013（右鍵那列改成探測時序）、internals 59（新）、
   playtest 021（＋39 批，197 份 pal）、CONTEXT。關 #47（verify → go_test）；開 #51（分頁鈕）。
+
+## 2026-09-16 — 交戰演出（#48 前半）：入口、三個視窗、換曲接上；圖與動畫留著
+
+- `play_music(1)` 的兩個戰鬥端呼叫點各自歸位：`1DD6:0258` 在演出開場常式 `1DD6:0152`、
+  `1ED2:00B0` 在「第Ｎ艦隊的戰鬥命令」（自動／防禦）問話前。開場常式的三個呼叫者：
+  `1DD6:0025`（艦隊對艦隊）、`20B4:0276`（打行星，每一顆有人打的行星一場）、`2264:02BB`
+  （要塞砲）。S3 第五回合那一場是打行星（`-regs-at`）。開場：載 `ANI_PNL1.A98`、三個樣式 0
+  文字視窗（(1,6) 15×2 `0xE4`、(17,6) 6×2 `4`、(24,6) 15×2 `0xC4`）、`play_music(1)`；收場關窗換回。
+- 收據 `tools/engagement_receipts.sh`（S3 六次實行進戰場、四個回合、第五回合 #1140.09M–
+  #1169.07M）十二批：開場／中段／結果／回戰場、動畫效果關掉（照開、照換曲、短九百萬步）、
+  #1146M 按鍵（只把動畫跳到結果，演出長度不變）。`COMANI.BMG` 這一場讀 `PPD0`／`FÀD0`／`PPAB`。
+- 三個視窗走字元平面的 0x10「彩色文字路徑」，`\x03[150,` 那種色碼怎麼變成 `E2` 沒讀——
+  remake 直接寫量到的屬性。
+- remake：`StateEngagement`（`engagement.go`：打行星有結果就排演出，開場幀 → 結果幀 → 回戰場
+  做完那一回合；`AdvanceBattleTurn` 拆出 `finishBattleTurn`）、`screen.EngagementSpec`
+  （`engagement-panel.json`：底圖、視窗、Big5 格式字串、四塊排除區）、`audio.TuneFor(StateEngagement)`
+  ＝ 戰鬥曲（`TestEveryTuneIsReachable` 改從它走到 `BGM_6`／`BGM_7`）。`TestEngagementMatchesOracle`
+  是直接進入的診斷比對（remake 的戰場走不到同一個第五回合）。
+- 文件：`docs/re/324`、規格 056（DRAFT）、playtest 022、internals 20 補一段、規格索引補 051–056、
+  CONTEXT。#48 留著（卡在：COMANI 編碼、量表、動畫、計時、另外兩種演出），verify 改綁
+  `engagement.go` 的自承註解。
