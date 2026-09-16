@@ -56,20 +56,34 @@ rec fcmd-menu-hover 480000000 fcmd-menu - -mouse-x 497 -mouse-y 272 -mouse-at 47
 rec fcmd-pick    495000000 fcmd-menu ck -clicks 472000000:497:272 -click-hold $HOLD
 # 4. 點亞爾提那（星域 2）→ 確認框「要移動至帝國軍亞爾提那星系嗎？」。
 rec fcmd-confirm 520000000 fcmd-pick ck -clicks 497000000:85:88 -click-hold $HOLD
-# 5. 點「決定」→ 回地圖，艦隊記錄 +0x07=2、+0x08=0，清單列多一個移動圖示。
-rec fcmd-done    545000000 fcmd-confirm - -clicks 522000000:432:223 -click-hold $HOLD
+# 5. 點「決定」→ 回地圖，艦隊記錄 +0x07=2、+0x08=0，清單列多一個 ☆（Big5 A1B8、字色 0）。
+rec fcmd-done    545000000 fcmd-confirm ck -clicks 522000000:432:223 -click-hold $HOLD
+# 5a. 下了命令之後再點清單第 0 列 → 視窗第 5–7 列印移動目標（+0x08 != 5 那一種）。
+rec fcmd-reopen  570000000 fcmd-done ck -clicks 547000000:450:268 -click-hold $HOLD
+# 5b. 下了命令之後按 系統指令 → 實行：回合處理有沒有出發／到達報告（113A:0B46）。
+rec fcmd-exec    640000000 fcmd-done - -clicks 547000000:544:85,572000000:560:85 -click-hold $HOLD
 # 5'. 點「中止」→ 回目的地選取（艦隊記錄不變）。
 rec fcmd-cancel  545000000 fcmd-confirm - -clicks 522000000:383:223 -click-hold $HOLD
 # 4'. 目的地點巴拉特（星域 31，走不到）→「這是無法前往的星系。」。
 rec fcmd-far     520000000 fcmd-pick - -clicks 497000000:300:270 -click-hold $HOLD
 # 4''. 目的地點自己所在的瓦爾哈拉 →「要待命於…嗎？」（選現在位置 ＝ 取消命令）。
-rec fcmd-self    520000000 fcmd-pick - -clicks 497000000:32:32 -click-hold $HOLD
+rec fcmd-self    520000000 fcmd-pick ck -clicks 497000000:32:32 -click-hold $HOLD
+# 4'''. 那一框按「決定」→ 回地圖：+0x07 仍是 FF、+0x08 = 5，清單列**沒有** ☆。
+rec fcmd-self-done 545000000 fcmd-self - -clicks 522000000:432:223 -click-hold $HOLD
 # 右鍵：目的地選取 → 回艦隊視窗；選單 → 關選單；艦隊視窗 → 回地圖。
 rec fcmd-pick-rclick 520000000 fcmd-pick - -rclicks 497000000:300:200 -click-hold $HOLD
 rec fcmd-menu-rclick 495000000 fcmd-menu - -rclicks 472000000:300:200 -click-hold $HOLD
 rec fcmd-win-rclick  470000000 fcmd-win  - -rclicks 447000000:300:200 -click-hold $HOLD
 # 「結束」→ 回地圖。
 rec fcmd-close   470000000 fcmd-win - -clicks 447000000:490:350 -click-hold $HOLD
+# 7. 作戰選單第 2 項「駐留」（滑鼠 y 312）與第 3 項「輸送」（y 332）：與移動同一個
+#    目的地迴圈，各走 目的地 → 亞爾提那 → 決定，看 +0x08 ＝ 2／3 與動詞。
+rec fcmd-garrison-pick    495000000 fcmd-menu ck -clicks 472000000:497:312 -click-hold $HOLD
+rec fcmd-garrison-confirm 520000000 fcmd-garrison-pick ck -clicks 497000000:85:88 -click-hold $HOLD
+rec fcmd-garrison-done    545000000 fcmd-garrison-confirm - -clicks 522000000:432:223 -click-hold $HOLD
+rec fcmd-transport-pick    495000000 fcmd-menu ck -clicks 472000000:497:332 -click-hold $HOLD
+rec fcmd-transport-confirm 520000000 fcmd-transport-pick ck -clicks 497000000:85:88 -click-hold $HOLD
+rec fcmd-transport-done    545000000 fcmd-transport-confirm - -clicks 522000000:432:223 -click-hold $HOLD
 # 6. 從 `dec1` 只把游標移到瓦爾哈拉（不按）→ 左下角照游標重寫：剛編成的
 #    第１艦隊算不算進「艦隊 a：b」（星域記錄 `+0x28` 建艦隊時就加了）。
 rec fcmd-hover-home 440000000 fcmd-base - -mouse-x 32 -mouse-y 32 -mouse-at 421000000

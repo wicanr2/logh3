@@ -23,10 +23,11 @@ cases=(
   "vs4|move 300 250; click; type 126; enter; click 432 263"
   "vs5|move 300 250; click; type 126; enter; click 432 263; rclick 300 240; rclick 300 240; click 544 125; click 560 125"
   # 戰略艦隊命令（docs/spec/051）：dec1 的序列再點右下角清單第 0 列開艦隊視窗；
-  # fcmd-done 走完「作戰 → 移動 → 亞爾提那 → 決定」，清單第 0 列左端的移動
-  # 圖示 remake 還沒畫（規格的已知差異），那一列 (336,300) 288×20 不比。
+  # fcmd-done 走完「作戰 → 移動 → 亞爾提那 → 決定」；fcmd-exec 再按 系統指令 → 實行
+  # （艦隊走到亞爾提那、那一格變黑、首都經濟力 82339）。
   "fcmd-win|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308"
-  "fcmd-done|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 312; click 85 128; click 432 263|336,300,288,20"
+  "fcmd-done|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 312; click 85 128; click 432 263"
+  "fcmd-exec|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 312; click 85 128; click 432 263; click 544 125; click 560 125"
 )
 fail=0
 for c in "${cases[@]}"; do

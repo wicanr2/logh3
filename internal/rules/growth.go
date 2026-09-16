@@ -217,3 +217,62 @@ func RegionEconomyAndGrowth(p *Planets, t *GrowthTable, region int) (economy, gr
 	}
 	return economy, growth
 }
+
+// planetShare 是行星記錄的 `+0x13`：這顆佔該星域經濟力的整數百分比
+// （`docs/internals/29`）。
+const planetShare = 0x13
+
+// PayIntoRegion ＝ 原版 `2703:1C11(星域, 金額)`：軍事費花出去的錢**流進那一格
+// 行星的經濟力**——逐顆 `經濟力 += 金額 × +0x13 ÷ 100`，除不盡的餘數全給
+// 百分比最大的那一顆（相同時取後面那一顆，`jb` 是嚴格小於才跳過）。
+//
+// 兩個呼叫者（`docs/re/313`）：
+//   - 維持費（`056A:09EB`）：艦隊所在星域是自己的才付，付 `+0x0A ÷ 2`；
+//   - 移動經費（`113A:06C3`）：走一格時付整筆 `+0x0C`，自己擁有現在這一格就
+//     付給它，否則付給下一格。
+//
+// 星域記錄的經濟力不在這裡動——它是 `090A:0E6D` 每次把行星加總回去的
+// （`2703:02E5` → `2703:034E`，`ResumRegionEconomy`）。
+func (p *Planets) PayIntoRegion(region, amount int) {
+	if p == nil || amount <= 0 {
+		return
+	}
+	start, n := p.Range(region)
+	if n == 0 {
+		return
+	}
+	best, bestShare := -1, -1
+	left := amount
+	for i := start; i < start+n; i++ {
+		r := p.rec(i)
+		share := int(r[planetShare])
+		if share >= bestShare {
+			best, bestShare = i, share
+		}
+		part := amount * share / 100
+		p.SetPlanetEconomy(i, p.PlanetEconomy(i)+part)
+		left -= part
+	}
+	if left != 0 && best >= 0 {
+		p.SetPlanetEconomy(best, p.PlanetEconomy(best)+left)
+	}
+}
+
+// ResumRegionEconomy ＝ `2703:02E5` 的第一件事：每一格的經濟力
+// `+0x1A` ← 該格行星經濟力相加（`2703:034E`）。`090A:0E6D` 每跑一次都做，
+// 所以花進行星的錢下一次重算就反映在星域與徵稅額上（收據 `fcmd-exec`：
+// 首都 82302 → 82339、徵稅額 2633 → 2634）。
+func ResumRegionEconomy(records []byte, p *Planets) {
+	if p == nil {
+		return
+	}
+	n := len(records) / RegionRecord
+	for r := 0; r < n; r++ {
+		start, cnt := p.Range(r)
+		sum := 0
+		for i := start; i < start+cnt; i++ {
+			sum += p.PlanetEconomy(i)
+		}
+		SetRegionEconomy(records[r*RegionRecord:(r+1)*RegionRecord], sum)
+	}
+}

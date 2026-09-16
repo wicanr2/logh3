@@ -59,8 +59,12 @@ GANDHARVA、ISERLOHN、TIAMAT、DORIA、BALLAT…）、航路連線、星球圖�
 remake 端是 `asset.PaintRegion`（在色號陣列上就是同一個條件）。
 
 星域形狀遮罩（`[bp+00]`）來自 `STRMAP.RGN`；顏色（`[bp+12]`）取自
-`ds:F162` 的 32 個 bytes，那份表由 `STELLAR.DT*` 每一筆的 `+18`
-（擁有者）查 `ds:8BD2` 的「擁有者 → 色號」表填出來（`docs/re/17`）。
+`ds:F162` 的 32 個 bytes，那份表由 `3705:037F` 逐格填：`STELLAR.DT*` 每一筆的
+`+0x12`（擁有者）查「擁有者 → 色號」表——**沒有自軍艦隊**（`+0x28 ＋ 看地圖
+的陣營` 是 0）查 `ds:8BD2` {1, 12, 3}，**有**就查 `ds:8BD6` {0, 2, 15}
+（帝國自己的星域駐了艦隊就變黑）；反白的那一格（`ds:F182`，開局是自己的
+首都，`3705:0284`）查 `ds:8BDA` {6, 5, 7}（`docs/re/17`、`docs/re/313` §3.2；
+remake `rules.StrategicMapColour`）。
 開局讀的是 **`DTX`**；`MAP*.CMP` 走到主畫面為止一份都沒被讀。
 
 搬運本身是逐星域的：`3CA9:0002` 的 `memmove` 被呼叫 32 次，

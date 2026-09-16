@@ -1,14 +1,15 @@
 # 051 — 戰略地圖上的艦隊命令（艦隊視窗 → 作戰 → 目的地 → 確認）
 
-狀態：**CONFORMED（第一片）**：清單點列、艦隊視窗、作戰選單、「移動」的
-目的地選取、確認框、寫入命令、關窗與各層右鍵——十五批 `fcmd-*` 收據在
-正常玩家路徑下整張 640×480 逐位元組相同（`fcmd-done` 除清單第 0 列那
-288×20），顯示層（Ebiten）`fcmd-win`／`fcmd-done` 同樣相同
-（`tools/gui_check.sh`）。占領／駐留／輸送／待命、「變更」那兩項、
-下了命令之後視窗上的文字，**不在這一片**（見「排除範圍」）。
+狀態：**CONFORMED（移動／駐留／輸送）**：清單點列、艦隊視窗、作戰選單、
+移動／駐留／輸送的目的地選取、確認框、寫入命令、取消命令、關窗與各層右鍵、
+下了命令之後再開視窗、按「實行」之後的一回合——二十四批 `fcmd-*` 收據在
+正常玩家路徑下整張 640×480 逐位元組相同，顯示層（Ebiten）`fcmd-win`／
+`fcmd-done`／`fcmd-exec` 同樣相同（`tools/gui_check.sh`）。占領、待命、
+「變更」那兩項、選單的停用旗標**還不在**（見「排除範圍」）。
 證據：[`docs/re/312`](../re/312-strategic-fleet-command-flow.md)（§七是實作
-對拍時補讀的）。
-收據：`fcmd-*` 十五批（`tools/fleetcmd_receipts.sh`，dosgolem `b5485eb`），
+對拍時補讀的）、[`docs/re/313`](../re/313-fleet-command-round-2.md)（第二輪：
+記號、取消規則、駐留／輸送、實行之後的錢與地圖）。
+收據：`fcmd-*` 二十四批（`tools/fleetcmd_receipts.sh`，dosgolem `b5485eb`），
 摘要在 [`docs/playtest/021`](../playtest/021-strategic-fleet-command.md)。
 相關：[`043`](043-ai-capital-reach.md)（可達表，本片從艦隊所在星域起算）、
 [`022`](022-fleet-detail.md)（十二個能力值與色 5 的規則同源）、
@@ -33,15 +34,17 @@ remake 到目前為止玩家建得了艦隊、打得了仗，卻**派不出去**
 | 2'' | 同上 | 左鍵「變更」(480,360) | **本片不接**（原版開 副官／編組 小選單）| — |
 | 3 | `StateFleetActionMenu` | 游標移動 | 反白跟著游標：第 n 項 `y` 300＋20n … ＋19（n＝0–4），`x` 464–527 | `fcmd-menu-hover` |
 | 3' | 同上 | 右鍵；左鍵點在五項外 | `StateFleetWindow`（選單關掉，「作戰」鈕不反白）| `fcmd-menu-rclick`、`fcx-pop-255` |
-| 3'' | 同上 | 左鍵第 0 項「移動」 | `StateFleetTargetPick`（動作 0）| `fcmd-pick` |
-| 3''' | 同上 | 左鍵第 1–4 項 | **本片不接**（見排除範圍；先照 3' 關選單）| — |
+| 3'' | 同上 | 左鍵第 0 項「移動」、第 2 項「駐留」、第 3 項「輸送」 | `StateFleetTargetPick`（動作 0／2／3；動詞 移動至／駐留在／輸送物資至）| `fcmd-pick`、`fcmd-garrison-pick`、`fcmd-transport-pick` |
+| 3''' | 同上 | 左鍵第 1 項「占領」、第 4 項「待命」 | **還沒接**（見排除範圍；先照 3' 關選單）| — |
 | 4 | `StateFleetTargetPick` | 左鍵點地圖上的星域 r，`允許[r] == 1`，r ≠ 現在位置 | `StateFleetConfirm(r)`：「要移動至<陣營色><陣營名>◇<星域名>星系嗎？」中止／決定 | `fcmd-confirm` |
 | 4' | 同上 | 左鍵點星域 r，`允許[r] == 0` | `StateFleetMessage`：「這是無法前往的星系。」只有「確認」；關掉回 `StateFleetTargetPick` | `fcmd-far` |
-| 4'' | 同上 | 左鍵點現在位置 | `StateFleetConfirm(現在位置)`，動詞換成「待命」；決定 ＝ 取消既有命令（`+0x08 ← 5`、`+0x07 ← 0xFF`）| `fcmd-self` |
+| 4'' | 同上 | 左鍵點現在位置 | `StateFleetConfirm(現在位置)`，動詞換成「待命」；決定 ＝ 取消既有命令（`+0x08 ← 5`、`+0x07 ← 0xFF`），**不算有改，視窗留著**（回 `StateFleetWindow`）；駐留例外——一律寫 `+0x08 ← 2`、`+0x07 ← 現在位置` 並關窗（`docs/re/313` §二，讀自程式碼）| `fcmd-self`、`fcmd-self-done` |
 | 4''' | 同上 | 左鍵點地圖外（星域 0xFF、或最上層不是地圖視窗）| 不變 | （反組譯 `113A:01AB`）|
 | 4'''' | 同上 | 右鍵 | `StateFleetWindow`（視窗整張回來）| `fcmd-pick-rclick` |
-| 5 | `StateFleetConfirm(r)` | 左鍵「決定」(416,300) 32×20 | 寫命令 → `StateCommandPhase` | `fcmd-done` |
+| 5 | `StateFleetConfirm(r)` | 左鍵「決定」(416,300) 32×20 | 寫命令（`+0x07 ← r`、`+0x08 ← 動作碼`）→ `StateCommandPhase`；清單那一列「第」前面印記號（移動 ☆、駐留 ＊、輸送 ◎，`fleet-list-panel.json` 的 `marker`）| `fcmd-done`、`fcmd-garrison-done`、`fcmd-transport-done` |
 | 5' | 同上 | 左鍵「中止」(368,300) 32×20 | `StateFleetTargetPick` | `fcmd-cancel` |
+| 6 | `StateCommandPhase` | 再點清單那一列 | `StateFleetWindow`：第 5–7 列印「移動戰鬥／現在位置／移動目標 ◇星域名」（`+0x08 != 5` 的分支）| `fcmd-reopen` |
+| 7 | `StateCommandPhase` | 系統指令 → 實行 | 艦隊走一格（`rules.Advance`）；到了就 `+0x07 ← 0xFF`、`+0x08 ← 5`；**沒有**出發／到達報告；維持費的一半與移動經費流進行星經濟力、星域經濟力重加總、有自軍艦隊的星域在地圖上換色表（[`docs/re/313`](../re/313-fleet-command-round-2.md) §三）| `fcmd-exec` |
 
 決定之後寫的東西（`fcmd-done/fleet0.bin` 與 `fcmd-base/fleet0.bin` 的差）：
 `+0x07 ← r`、`+0x08 ← 0`（移動）；其餘 120 個位元組不動。之後
@@ -114,21 +117,19 @@ remake 到目前為止玩家建得了艦隊、打得了仗，卻**派不出去**
 （`fcmd-win/fleet0.bin`：22／26）。星域記錄的艦隊數（`+0x28`／`+0x29`）當場重數
 （`rules.RecountRegionFleets`）。
 
-## 排除範圍（本片不做，另開 issue）
+## 排除範圍（還沒做，另開 issue）
 
-- 占領（動作 1：允許表換成 敵方＋中立、費沙警告、「你確定要占領費沙嗎」）、
-  駐留（2）、輸送（3）、待命（4：指定待命行星）。選單上點這四項本片**只關選單**。
+- 占領（動作 1：允許表換成 敵方＋中立、費沙警告、「你確定要占領費沙嗎」）與
+  待命（4：指定待命行星 `0DEA:1320`）。選單上點這兩項**只關選單**。
 - 「變更」→ 副官／編組。
-- 下了命令之後艦隊視窗第 5–7 列印什麼、清單那一列多出來的小圖示是哪張圖
-  （`fcmd-done` 的畫面對拍因此**只能到清單那一列以外**，那 16×16 列為已知差異）。
 - 清單的捲動（欄 17 的上下鈕）與四個分頁（行星／敵艦隊／提督）。
-- `1213:0003(星域)` 那道檢查（三個收據都過，語意沒讀）。
+- `1213:0003(星域)` 那道檢查（三個收據都過，語意沒讀）；回合裡的三張報告
+  「無法前往敵方的星系」「由於移動經費不足無法移動」與占領那一路。
 
 ## 已知差異
 
 | 差異 | 類別 | 到期條件 |
 |---|---|---|
-| `fcmd-done` 清單第 0 列左端的小圖示 remake 不畫 | remake-owned | 查到那張圖與規則就照畫 |
 | 飛彈／戰鬥機現量：remake 的 `FleetGroup` 沒有每組的 `+0x0E`／`+0x12`，一律印上限（新編艦隊本來就是 100%）| 資料缺口 | 編制帶艦艇記錄的現量（打過仗、讀檔的艦隊）就照 §7.5 算 |
 | 作戰選單五項的啟用旗標（不是自己的星域／有戰鬥只剩「移動」；艦隊 `+0x00` bit0 關掉占領與輸送）本片沒接，五項一律可點 | 排除範圍（#41）| 接其餘四項時一起做，收據要含停用的樣子 |
 
@@ -138,9 +139,10 @@ remake 到目前為止玩家建得了艦隊、打得了仗，卻**派不出去**
 - `TestFleetActionMenuMatchesOracle`：`fcmd-menu`（反白第三項）、`fcmd-menu-hover`（反白第一項）。
 - `TestFleetTargetPickMatchesOracle`：`fcmd-pick` 整張（含重新著色的地圖）。
 - `TestFleetConfirmMatchesOracle`：`fcmd-confirm`、`fcmd-self`（動詞「待命」）、`fcmd-far`（訊息框）。
-- `TestFleetMoveOrderWritesFleet`：走完 1→5，艦隊的 `Target ＝ 2`、動作 ＝ 移動；`fcmd-done` 畫面除清單第 0 列 (336,300) 288×20 之外 0 差異。
+- `TestFleetMoveOrderWritesFleet`：走完 1→5，艦隊的 `Target ＝ 2`、動作 ＝ 移動；`fcmd-done` 整張 0 差異（含清單那一列的 ☆）。
+- `TestFleetReopenShowsTarget`（`fcmd-reopen`）、`TestFleetCancelOrderKeepsWindow`（`fcmd-self-done`）、`TestFleetGarrisonAndTransportOrders`（六張）、`TestFleetOrderThenExecuteMatchesOracle`（`fcmd-exec`：走到星域 2、命令清掉、整張相同）。
 - 右鍵三層與中止：`fcmd-win-rclick`／`fcmd-menu-rclick`／`fcmd-pick-rclick`／`fcmd-cancel`／`fcmd-close` 各一張整張對拍。
 - `TestFleetHoverHomeCountsNewFleet`：決定之後首都記錄的艦隊數是 1，游標移到首都那塊重寫成 1：0（`fcmd-hover-home`）。
-- GUI：`tools/gui_check.sh` 的 `fcmd-win`（整張）、`fcmd-done`（排除清單第 0 列）。
+- GUI：`tools/gui_check.sh` 的 `fcmd-win`、`fcmd-done`、`fcmd-exec`（都整張）。
 
-以上全綠（2026-09-15；`go test ./internal/game` 與 `tools/gui_check.sh`）。
+以上全綠（2026-09-16；`go test ./...` 與 `tools/gui_check.sh`）。

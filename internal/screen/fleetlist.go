@@ -32,7 +32,28 @@ type FleetList struct {
 	Value struct {
 		Right int
 		Ink   uint8
+		// 士氣值低於 AlertBelow 換成 AlertInk（`cmp [bx+3Ch], 32h`）。
+		AlertBelow int   `json:"alert_below"`
+		AlertInk   uint8 `json:"alert_ink"`
 	} `json:"value"`
+	// Marker 是「第」前面那一格的記號（`ds:1A66` 那張表，依 `+0x08` 查；
+	// 停駐的再看星域旗標）。
+	Marker struct {
+		X      int
+		ByMove []struct {
+			Move int    `json:"move"`
+			Code string `json:"code"`
+			Ink  uint8  `json:"ink"`
+		} `json:"by_move"`
+		ParkedBattle struct {
+			Code string `json:"code"`
+			Ink  uint8  `json:"ink"`
+		} `json:"parked_battle"`
+		ParkedBit4 struct {
+			Code string `json:"code"`
+			Ink  uint8  `json:"ink"`
+		} `json:"parked_bit4"`
+	} `json:"marker"`
 	// Row 是一列按鈕樣式的那 17 格：點開艦隊視窗時整列底色換成
 	// `PressedBg`（`0AD0:0272` 的 `3603:00DB(…, 0x20, …)`，`docs/re/312`）。
 	// 上下各 `Inset` 列是按鈕的立體邊，不動。
@@ -59,7 +80,46 @@ func LoadFleetList(path string) (*FleetList, error) {
 type FleetRow struct {
 	Number int      // 第幾艦隊
 	Name   []uint16 // 帶隊提督的姓名
-	Value  int      // 右邊那個數字
+	Value  int      // 右邊那個數字 ＝ 士氣值（`+0x3C`）
+	// Move 是艦隊的 `+0x08`；停駐（5）時 RegionFlags 是所在星域的 `+0x13`，
+	// 兩者決定「第」前面那一格印哪個記號。
+	Move        int
+	RegionFlags int
+}
+
+// markerFor 回這一列要印的記號（Big5 字碼）與字色；不印回 0。
+func (l *FleetList) markerFor(r FleetRow) (uint16, uint8) {
+	for _, m := range l.Marker.ByMove {
+		if m.Move == r.Move {
+			return big5Code(m.Code), m.Ink
+		}
+	}
+	switch {
+	case r.RegionFlags&0x04 != 0:
+		return big5Code(l.Marker.ParkedBattle.Code), l.Marker.ParkedBattle.Ink
+	case r.RegionFlags&0x10 != 0:
+		return big5Code(l.Marker.ParkedBit4.Code), l.Marker.ParkedBit4.Ink
+	}
+	return 0, 0
+}
+
+// big5Code 把規格檔裡的 "a1b8" 換成字碼 0xA1B8。
+func big5Code(hex string) uint16 {
+	var v uint16
+	for i := 0; i < len(hex); i++ {
+		c := hex[i]
+		var n uint16
+		switch {
+		case c >= '0' && c <= '9':
+			n = uint16(c - '0')
+		case c >= 'a' && c <= 'f':
+			n = uint16(c-'a') + 10
+		case c >= 'A' && c <= 'F':
+			n = uint16(c-'A') + 10
+		}
+		v = v<<4 | n
+	}
+	return v
 }
 
 // Prefix／Suffix 是「第」與「艦隊」的字碼——固定的字，不隨局面變。
@@ -89,14 +149,21 @@ func (l *FleetList) Draw(fb *gfx.Framebuffer, fnt *font.Font, rows []FleetRow, p
 				x += font.GlyphW
 			}
 		}
+		if code, ink := l.markerFor(r); code != 0 {
+			full(l.Marker.X, []uint16{code}, ink)
+		}
 		full(l.Number.PrefixX, fleetRowPrefix, l.Number.Ink)
 		full(l.Number.DigitsX, fullDigits(r.Number), l.Number.Ink)
 		full(l.Number.SuffixX, fleetRowSuffix, l.Number.Ink)
 		full(l.Name.X, r.Name, l.Name.Ink)
 		s := strconv.Itoa(r.Value)
 		x := l.Value.Right - len(s)*font.HalfW
+		ink := l.Value.Ink
+		if l.Value.AlertBelow > 0 && r.Value < l.Value.AlertBelow {
+			ink = l.Value.AlertInk
+		}
 		for k := 0; k < len(s); k++ {
-			ui.DrawHalfGlyphClipped(fb, fnt, x, y, s[k], l.Value.Ink, panelShadow,
+			ui.DrawHalfGlyphClipped(fb, fnt, x, y, s[k], ink, panelShadow,
 				-1, false, 0, y, gfx.Width, l.Pitch)
 			x += font.HalfW
 		}

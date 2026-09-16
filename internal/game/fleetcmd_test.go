@@ -182,10 +182,7 @@ func TestFleetConfirmMatchesOracle(t *testing.T) {
 }
 
 // 「決定」寫命令回地圖：艦隊記錄 `+0x07 ← 2`、`+0x08 ← 0`（`fcmd-done`）；
-// 「中止」回目的地選取（`fcmd-cancel`）。
-//
-// `fcmd-done` 那張整張比不了：清單第 0 列左端多一個移動圖示，那張圖與規則
-// 還沒查（規格 051 的已知差異），所以比的是**那一列以外**的整張畫面。
+// 清單第 0 列「第」前面印 ☆（`+0x08` 查 `ds:1A66` 那張記號表，`docs/re/313`）。
 func TestFleetMoveOrderWritesFleet(t *testing.T) {
 	g := reachFleetTargetPick(t)
 	g.Click(85, 128)  // 亞爾提那
@@ -203,11 +200,91 @@ func TestFleetMoveOrderWritesFleet(t *testing.T) {
 			t.Fatalf("原版艦隊記錄 +0x07=%d +0x08=%d，remake Target=%d Move=%d", rec[7], rec[8], f.Target, f.Move)
 		}
 	}
-	// 清單第 0 列 (336,300) 288×20 之外整張相同。
-	matchesBox(t, g, "fcmd-done", 0, 0, 639, 299)
-	matchesBox(t, g, "fcmd-done", 0, 320, 639, 479)
-	matchesBox(t, g, "fcmd-done", 0, 300, 335, 319)
-	matchesBox(t, g, "fcmd-done", 624, 300, 639, 319)
+	matches(t, g, "fcmd-done")
+}
+
+// 下了命令之後再點清單那一列：視窗第 5–7 列換成「移動戰鬥／現在位置／移動目標」
+// （`0DEA:03F9`／`04C0` 對 `+0x08 != 5` 的分支，收據 `fcmd-reopen`）。
+func TestFleetReopenShowsTarget(t *testing.T) {
+	g := reachFleetTargetPick(t)
+	g.Click(85, 128)  // 亞爾提那
+	g.Click(432, 263) // 「決定」
+	g.Click(450, 308) // 清單第 0 列
+	if g.State() != StateFleetWindow {
+		t.Fatalf("再點清單之後在 %v", g.State())
+	}
+	matches(t, g, "fcmd-reopen")
+}
+
+// 目的地點自己所在的星域再按「決定」＝ 取消命令：本來就沒有命令時什麼都
+// 不改，而且**視窗留著**（`fcmd-self-done` 與 `fcmd-win` 只差游標）；
+// 清單那一列沒有記號。
+func TestFleetCancelOrderKeepsWindow(t *testing.T) {
+	g := reachFleetTargetPick(t)
+	g.Click(32, 72)   // 瓦爾哈拉
+	g.Click(432, 263) // 「決定」
+	if g.State() != StateFleetWindow {
+		t.Fatalf("取消命令之後在 %v，原版回到艦隊視窗", g.State())
+	}
+	if f := g.fleets[0]; f.Target != rules.NoTarget || f.Move != rules.MoveParked || !f.Parked {
+		t.Fatalf("取消之後艦隊記錄 %+v", f)
+	}
+	matches(t, g, "fcmd-self-done")
+}
+
+// 駐留（第 2 項）與輸送（第 3 項）走同一個目的地迴圈，差在 `+0x08` 寫 2／3
+// （`fcmd-garrison-*`／`fcmd-transport-*`）。
+func TestFleetGarrisonAndTransportOrders(t *testing.T) {
+	for _, c := range []struct {
+		name  string
+		y     int
+		move  int
+		batch string
+	}{
+		{"駐留", 352, fleetActionGarrison, "fcmd-garrison"},
+		{"輸送", 372, fleetActionTransport, "fcmd-transport"},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			g := reachFleetWindow(t)
+			g.Click(490, 345) // 「作戰」
+			g.Click(497, c.y)
+			if g.State() != StateFleetTargetPick {
+				t.Fatalf("點了%s之後在 %v", c.name, g.State())
+			}
+			matches(t, g, c.batch+"-pick")
+			g.Click(85, 128) // 亞爾提那
+			if g.State() != StateFleetConfirm {
+				t.Fatalf("點了亞爾提那之後在 %v", g.State())
+			}
+			matches(t, g, c.batch+"-confirm")
+			g.Click(432, 263) // 「決定」
+			if g.State() != StateCommandPhase {
+				t.Fatalf("點了決定之後在 %v", g.State())
+			}
+			if f := g.fleets[0]; f.Target != 2 || f.Move != c.move || f.Parked {
+				t.Fatalf("決定之後艦隊記錄 Target=%d Move=%d Parked=%v，原版 +0x07=2、+0x08=%d",
+					f.Target, f.Move, f.Parked, c.move)
+			}
+			matches(t, g, c.batch+"-done")
+		})
+	}
+}
+
+// 下了移動命令之後按「實行」：艦隊走一格到亞爾提那、命令清掉（`+0x07` FF、
+// `+0x08` 05），沒有任何出發／到達報告，直接回地圖（`fcmd-exec`）。
+func TestFleetOrderThenExecuteMatchesOracle(t *testing.T) {
+	g := reachFleetTargetPick(t)
+	g.Click(85, 128)  // 亞爾提那
+	g.Click(432, 263) // 「決定」
+	g.Click(544, 125) // 系統指令
+	g.Click(560, 125) // 實行
+	if g.State() != StateCommandPhase {
+		t.Fatalf("實行之後在 %v", g.State())
+	}
+	if f := g.fleets[0]; f.Region != 2 || f.Target != rules.NoTarget || f.Move != rules.MoveParked || !f.Parked {
+		t.Fatalf("實行之後艦隊記錄 %+v，原版在星域 2、+0x07=FF、+0x08=5", f)
+	}
+	matches(t, g, "fcmd-exec")
 }
 
 func TestFleetConfirmCancelMatchesOracle(t *testing.T) {

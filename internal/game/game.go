@@ -5,6 +5,7 @@
 package game
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -708,12 +709,16 @@ type Game struct {
 	// fcmd 是戰略地圖上艦隊命令那條路的狀態（`fleetcmd.go`）。
 	fcmd fleetCmd
 
-	// starMap 是照玩家陣營重建的勢力色地圖（首都那格的顏色跟著玩家走）。
-	// nil 表示還沒建，畫的時候退回 `Resources.StarMap`。
-	//
-	// plainMap 是同一張但**不塗玩家色**：對戰的交棒視窗用它
-	// （`docs/spec/016`）。
-	starMap, plainMap *asset.Image
+	// mapCache 是戰略地圖兩種樣子（[1] 有反白格、[0] 沒有）的快取：
+	// 32 格的色號一變就重建（`strategicMapColours`）。
+	mapCache [2]struct {
+		cols []uint8
+		img  *asset.Image
+	}
+	// mapHighlight 是地圖上反白的那一格（原版 `ds:F182`）：開局、讀檔、交棒
+	// 時是自己的首都，艦隊命令的目的地選取結束時換成清單看的那一格
+	// （`3705:0284(ds:9588)`，`docs/re/313`）。
+	mapHighlight int
 
 	// menuRow 是主選單點了哪一列（-1 ＝ 還沒點）。防拷答對之後要靠它
 	// 決定是開新遊戲還是進存檔畫面。
@@ -910,10 +915,20 @@ func (g *Game) continueAfterAdmiralFateReports() {
 	// 每個戰略回合逐支扣艦隊維持費（原版 `056A:09EB` 的
 	// `sub [bx+8F52], si`，`docs/re/236`）：**兩邊一起扣**，扣的是那一支
 	// 自己陣營的那一格。順序照原版——在 AI 回合之後、艦隊移動之前。
-	for f := 0; f < 2; f++ {
-		up := g.fleetUpkeep(f)
-		g.military[f] -= up
-		g.paidUpkeep[f] += up // ds:8F7A，月底歸零
+	// 艦隊停在自己的星域時，**維持費的一半流進那一格行星的經濟力**
+	// （`056A:0A5A`–`0A8D` → `2703:1C11`，`docs/re/313`）。
+	if g.res.ShipKinds != nil {
+		for _, f := range g.fleets {
+			if f.Faction < 0 || f.Faction > 1 {
+				continue
+			}
+			up := rules.FleetUpkeep(g.res.ShipKinds, f.Faction, f.Composition, f.Operations)
+			g.military[f.Faction] -= up
+			g.paidUpkeep[f.Faction] += up // ds:8F7A，月底歸零
+			if rec := g.regionRecord(f.Region); rec != nil && int(rec[regionOwnerOff]) == f.Faction {
+				g.res.Planets.PayIntoRegion(f.Region, up/2)
+			}
+		}
 	}
 	// 民心往擁有者的目標值走一格（原版 `056A:0AA5`，`docs/spec/040`）：
 	// 同一串裡緊接在扣維持費之後、艦隊移動之前。擁有者讀星域記錄的
@@ -925,11 +940,14 @@ func (g *Game) continueAfterAdmiralFateReports() {
 	// **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
 	if g.res.Graph != nil {
 		for i := range g.fleets {
+			from := g.fleets[i].Region
 			if !g.res.Graph.Advance(&g.fleets[i]) {
 				continue
 			}
 			// 走一格要錢：艦隊記錄的 `+0x0C`，原版 `113A:0729` 逐支從
-			// 那一支陣營的軍事費扣（`docs/re/237`）。
+			// 那一支陣營的軍事費扣（`docs/re/237`）。**那筆錢流進行星的
+			// 經濟力**：離開的那一格是自己的就付給它，否則付給走到的那一格
+			// （`113A:06C3` → `2703:1C11`，`docs/re/313`）。
 			f := g.fleets[i]
 			if f.Faction < 0 || f.Faction > 1 {
 				continue
@@ -938,6 +956,11 @@ func (g *Game) continueAfterAdmiralFateReports() {
 				g.res.ShipKinds, f.Faction, f.Composition, f.Operations)
 			g.military[f.Faction] -= cost
 			g.paidMove[f.Faction] += cost // ds:8F8A，月底歸零
+			payTo := f.Region
+			if rec := g.regionRecord(from); rec != nil && int(rec[regionOwnerOff]) == f.Faction {
+				payTo = from
+			}
+			g.res.Planets.PayIntoRegion(payTo, cost)
 		}
 	}
 	// 走完就重數每一格的艦隊數（`2703:0853`，排在移動之後、叛亂判定之前，
@@ -1297,6 +1320,11 @@ func (g *Game) recomputeUnrest(counter int) {
 	if counter < 0 {
 		counter = 0
 	}
+	// `090A:0E6D` ＝ `2703:02E5` 三件事：每一格 經濟力 ← 行星加總、預估稅
+	// 重算、未安定度（`docs/spec/042`）。前兩件在這裡一起做，花進行星的錢
+	// 才會反映到星域與右側面板（收據 `fcmd-exec`）。
+	rules.ResumRegionEconomy(g.res.Stellar, g.res.Planets)
+	g.refreshTaxEstimate()
 	params := g.res.UnrestParams
 	params.Turn = counter
 	params.Blend = g.blend
@@ -1422,8 +1450,7 @@ func (g *Game) side() side {
 // enterSide 換到某一方：陣營、地圖顏色與那一方的錢一起換過去。
 func (g *Game) enterSide(faction int) {
 	g.faction = faction
-	g.starMap = g.factionStarMap(faction, true)
-	g.plainMap = g.factionStarMap(faction, false)
+	g.mapHighlight = rules.CapitalRegion(faction)
 	s := g.sides[faction]
 	g.pct = s.pct
 	g.treasury, g.monthReport = s.treasury, s.monthReport
@@ -1456,8 +1483,7 @@ func (g *Game) startNewGame(faction int) {
 	g.phezzanBattleResolved = false
 	g.phezzanRebellions = nil
 	g.faction = faction
-	g.starMap = g.factionStarMap(faction, true)
-	g.plainMap = g.factionStarMap(faction, false)
+	g.mapHighlight = rules.CapitalRegion(faction)
 	g.turn = 0
 	g.campaignScore = [2]int{}
 	// 兩個陣營的起始軍事費相同（796/1 量到帝國 50000，`docs/re/35`）。
@@ -1518,7 +1544,7 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		hoverRegion: -1, hoverProbe: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1,
+		hoverRegion: -1, hoverProbe: -1, mapHighlight: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1,
 		// 音源是開機偵測的結果，不是每局重來的東西：沒有 MPU-401 就退到
 		// OPL（`docs/re/274` §3）。remake 不模擬 MIDI 介面，所以與出貨的
 		// 原版一樣一律 ＦＭ——既有的執行期傾印 `ds:8F33` 全是 1，收據
@@ -1604,6 +1630,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	// 再 `2703:08CE` 遞增）。
 	g.recountRegionFleets()
 	g.refreshCapitalSnap()
+	g.mapHighlight = rules.CapitalRegion(g.faction)
 	g.selectedRegion = -1
 	g.hoverRegion, g.hoverProbe = -1, -1
 	g.state = StateCommandPhase
@@ -3286,9 +3313,14 @@ func (g *Game) fleetRows() []screen.FleetRow {
 		if f.Admiral >= 0 && f.Admiral < len(g.res.AdmiralNames) {
 			name = g.res.AdmiralNames[f.Admiral]
 		}
-		// 右邊那個數字目前一律 100——與艦隊組成上的「機動力」相同，
-		// 是不是機動力還沒驗（只有一個資料點，`docs/re/70`）。
-		rows = append(rows, screen.FleetRow{Number: f.Number, Name: name, Value: 100})
+		// 右邊那個數字是士氣值 `+0x3C`（列印常式讀 `es:[bx+3Ch]`，低於 50
+		// 換色 2）；「第」前面那一格依 `+0x08` 印記號（`docs/re/313`）。
+		flags := 0
+		if rec := g.regionRecord(f.Region); rec != nil {
+			flags = int(rec[0x13])
+		}
+		rows = append(rows, screen.FleetRow{Number: f.Number, Name: name, Value: f.Morale,
+			Move: f.Move, RegionFlags: flags})
 	}
 	return rows
 }
@@ -3360,17 +3392,32 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 	return g.playerStarMap()
 }
 
-// playerStarMap 回勢力色那一張：開局時照陣營重建過的優先。
+// playerStarMap 回戰略地圖現在的樣子：照星域記錄與艦隊表逐格著色，
+// 色號沒變就用快取。
 func (g *Game) playerStarMap() *asset.Image {
-	// 交棒視窗與月底結算中的地圖不上玩家色（收據 `vs3`／`vs5`、
-	// `turnmonth2`；`docs/spec/045`）。
-	if (g.state == StateVersusInput || g.state == StateShipDelivery) && g.plainMap != nil {
-		return g.plainMap
+	// 交棒視窗與月底結算中的地圖沒有反白格（收據 `vs3`／`vs5`、
+	// `turnmonth2`；`docs/spec/045`）——原版那一刻 `ds:F182` 是 0xFF。
+	tint := g.state != StateVersusInput && g.state != StateShipDelivery
+	cols := g.strategicMapColours(g.faction, tint)
+	if cols == nil {
+		return g.res.StarMap
 	}
-	if g.starMap != nil {
-		return g.starMap
+	c := &g.mapCache[b2i(tint)]
+	if c.img == nil || !bytes.Equal(c.cols, cols) {
+		img, err := asset.BuildStarMap(g.res.StarBit, g.res.StarRGN, cols, 16, 20, 20)
+		if err != nil {
+			return g.res.StarMap
+		}
+		c.cols, c.img = cols, img
 	}
-	return g.res.StarMap
+	return c.img
+}
+
+func b2i(b bool) int {
+	if b {
+		return 1
+	}
+	return 0
 }
 
 // securityColours 是戰略情報報告那張地圖用的色表名，
@@ -3477,18 +3524,39 @@ func (g *Game) securityStarMap() *asset.Image {
 // `tint` ＝ 要不要塗那一格。**對戰的交棒視窗那一刻不塗**（`vs5` 對 `vs3`
 // 扣掉游標只差六個字，兩邊的地圖完全一樣）；按下確認之後那張月初報告
 // 又塗回來了（`vs4`）。所以它跟著**畫面**走，不是跟著模式走。
-func (g *Game) factionStarMap(faction int, tint bool) *asset.Image {
-	if g.res.StarBit == nil || g.res.StarRGN == nil || len(g.res.RegionColours) == 0 {
+//
+// 現在逐格照原版 `3705:037F` 算（`rules.StrategicMapColour`，`docs/re/313`）：
+// 擁有者查 `ds:8BD2` {1, 12, 3}；**這一格有自軍艦隊**（`+0x28 ＋ 陣營`）就
+// 改查 `ds:8BD6` {0, 2, 15}（收據 `fcmd-exec`：第１艦隊走到亞爾提那那一格
+// 變黑）；反白的那一格查 `ds:8BDA` {6, 5, 7}。
+func (g *Game) strategicMapColours(faction int, tint bool) []uint8 {
+	if g.res.StarBit == nil || g.res.StarRGN == nil {
 		return nil
 	}
-	cols := append([]uint8(nil), g.res.RegionColours...)
-	for f := 0; f < 2; f++ {
-		if r := rules.CapitalRegion(f); r >= 0 && r < len(cols) {
-			cols[r] = rules.RegionColour(f)
+	n := len(g.res.Stellar) / rules.RegionRecord
+	if n != rules.RegionCount {
+		return nil
+	}
+	hl := -1
+	if tint {
+		hl = g.mapHighlight
+		if hl < 0 {
+			hl = rules.CapitalRegion(faction)
 		}
 	}
-	if r := rules.CapitalRegion(faction); r >= 0 && r < len(cols) && tint {
-		cols[r] = rules.FactionColour(faction)
+	cols := make([]uint8, n)
+	for i := range cols {
+		cols[i] = rules.StrategicMapColour(g.regionRecord(i), faction, i == hl)
+	}
+	return cols
+}
+
+// factionStarMap 照現在的局面建一張新的地圖（測試與診斷用；畫面走
+// `playerStarMap` 的快取）。
+func (g *Game) factionStarMap(faction int, tint bool) *asset.Image {
+	cols := g.strategicMapColours(faction, tint)
+	if cols == nil {
+		return nil
 	}
 	img, err := asset.BuildStarMap(g.res.StarBit, g.res.StarRGN, cols, 16, 20, 20)
 	if err != nil {

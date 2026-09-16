@@ -50,7 +50,7 @@ const (
 )
 
 // fleetMoveParked 是艦隊記錄 `+0x08` 的「不動」（`docs/internals/33`）。
-const fleetMoveParked = 5
+const fleetMoveParked = rules.MoveParked
 
 // fleetListRowAt 回畫面座標 (x,y) 落在右下角清單的第幾列（0–4），不在清單上
 // 回 -1。熱區是 `0BEE[0]`：視窗 9518 的格 (0,7) 起 18×5 ＝ 畫面 x 336–623、
@@ -157,12 +157,13 @@ func (g *Game) fleetMenuClick(x, y int) {
 	g.fleetMenuHover(x, y)
 	item := g.fcmd.hover
 	g.fcmd.hover = -1
-	if item != fleetActionMove {
-		// 其餘四項這一片不接：先照「點在外面」收掉選單。
+	switch item {
+	case fleetActionMove, fleetActionGarrison, fleetActionTransport:
+		g.startFleetTargetPick(item)
+	default:
+		// 占領與待命還沒接（#41 後半）：先照「點在外面」收掉選單。
 		g.state = StateFleetWindow
-		return
 	}
-	g.startFleetTargetPick(item)
 }
 
 // startFleetTargetPick 進入目的地選取（`113A:0003`）：建允許表，地圖露出來。
@@ -256,16 +257,43 @@ func (g *Game) fleetMessageClick(x, y int) {
 // applyFleetOrder 是確認框按「決定」之後那一段（`0DEA:11xx`，`docs/re/312` §三）：
 // 點的是現在位置 → 取消既有命令（`+0x08 ← 5`、`+0x07 ← 0xFF`）；
 // 否則 `+0x08 ← 動作碼`、`+0x07 ← 目的地`。結尾 `090A:0E6D` 重算未安定度。
+//
+// 原版 `0DEA:1037` 的三個區塊（`docs/re/313`）：移動／占領／輸送走同一段——
+// 目的地是現在位置就取消既有命令（`+0x08 ← 5`、`+0x07 ← 0xFF`），而且
+// **不算「有改」**，視窗留著（收據 `fcmd-self-done`：與 `fcmd-win` 只差游標）；
+// 別的星域才寫命令、關窗。駐留（2）是另一段：不管目的地是不是現在位置一律
+// 寫 `+0x08 ← 2`、`+0x07 ← r` 並關窗（`fcmd-garrison-done`）。
 func (g *Game) applyFleetOrder() {
 	f := &g.fleets[g.fcmd.fleet]
 	r := g.fcmd.target
-	if r == f.Region {
+	changed := true
+	switch {
+	case g.fcmd.action == fleetActionGarrison:
+		f.Target, f.Move, f.Parked = r, fleetActionGarrison, false
+	case r == f.Region:
 		f.Target, f.Move, f.Parked = rules.NoTarget, fleetMoveParked, true
-	} else {
+		changed = false
+	default:
 		f.Target, f.Move, f.Parked = r, g.fcmd.action, false
 	}
 	g.recomputeUnrest(g.turn)
-	g.closeFleetWindow()
+	// 目的地迴圈結束時地圖畫回原樣、再反白清單看的那一格
+	// （`3705:0349(0)`、`3705:0284(ds:9588)`，`docs/re/312` §四）。
+	g.mapHighlight = g.fleetListRegion()
+	if changed {
+		g.closeFleetWindow()
+		return
+	}
+	g.state = StateFleetWindow
+}
+
+// fleetListRegion 是右下角清單看的那一格（原版 `ds:9588`）：右鍵選的星域，
+// 沒選過就是自己的首都。
+func (g *Game) fleetListRegion() int {
+	if g.selectedRegion >= 0 {
+		return g.selectedRegion
+	}
+	return rules.CapitalRegion(g.faction)
 }
 
 // fleetCmdRightClick 是這條路上每一層的右鍵：關最上面那一層
@@ -278,6 +306,7 @@ func (g *Game) fleetCmdRightClick() {
 		g.fcmd.hover = -1
 		g.state = StateFleetWindow
 	case StateFleetTargetPick:
+		g.mapHighlight = g.fleetListRegion()
 		g.state = StateFleetWindow
 	case StateFleetMessage, StateFleetConfirm:
 		// 訊息框只認左鍵（`3826:023B`）。

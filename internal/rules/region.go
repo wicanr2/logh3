@@ -220,6 +220,38 @@ func SecurityMapColour(unrest int, own bool, divisor int) uint8 {
 	return securityMapColours[band]
 }
 
+// 戰略地圖每一格的色號（`3705:037F`，`docs/re/313`）：三張表都在 `ds:8BD2` 起，
+// 索引是星域記錄的擁有者 `+0x12`。
+var (
+	// mapOwnerColours 是 `ds:8BD2`：沒有自軍艦隊時 帝國 1、同盟 12、中立 3。
+	mapOwnerColours = [3]uint8{1, 12, 3}
+	// mapGarrisonColours 是 `ds:8BD6`：**這一格有自軍艦隊**（`+0x28 ＋ 陣營`
+	// 不是 0）時 帝國 0、同盟 2、中立 15（收據 `fcmd-exec`：第１艦隊走到
+	// 亞爾提那，那一格從 1 變成 0；S2 的 2／7／8 三格同理）。
+	mapGarrisonColours = [3]uint8{0, 2, 15}
+	// mapHighlightColours 是 `ds:8BDA`：反白那一格（`ds:F182`，開局是自己的
+	// 首都）帝國 6、同盟 5、中立 7（`3705:0284`）。
+	mapHighlightColours = [3]uint8{6, 5, 7}
+)
+
+// StrategicMapColour 回戰略地圖上一個星域該塗的色號。`faction` 是看地圖的
+// 那一方（`ds:8F1D`），`highlighted` 是它是不是反白的那一格。
+func StrategicMapColour(record []byte, faction int, highlighted bool) uint8 {
+	owner := RegionOwnerOf(record)
+	if owner < 0 || owner > 2 {
+		owner = 2
+	}
+	if highlighted {
+		return mapHighlightColours[owner]
+	}
+	if faction == 0 || faction == 1 {
+		if RegionFleets(record, faction) != 0 {
+			return mapGarrisonColours[owner]
+		}
+	}
+	return mapOwnerColours[owner]
+}
+
 // FleetsUnknown 是「看不到」的艦隊數；畫面上印 `--`。
 const FleetsUnknown = 0xFF
 

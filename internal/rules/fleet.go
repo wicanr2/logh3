@@ -82,6 +82,10 @@ type Fleet struct {
 // NoTarget ＝ 沒有移動命令。原版在那一格填 `0xFF`（`docs/re/77`）。
 const NoTarget = -1
 
+// MoveParked ＝ `+0x08` 的「停駐」：沒有命令、抵達之後、或取消命令時都寫 5
+// （`docs/internals/33`）。
+const MoveParked = 5
+
 // NoClassKey ＝ 沒有類別鍵：玩家走「出擊命令」編的艦隊 `+0x09` 就是這個
 // 值（收據 `fcmd-win` 的 `fleet0.bin`，`docs/re/312`），編制只有旗艦那
 // 一組、整補時也不套樣板（`BuildComposition`、`Refit` 都把它當「沒有」）。
@@ -119,8 +123,10 @@ func (g *StarGraph) Advance(f *Fleet) bool {
 	}
 	f.Region = route[1]
 	if f.Region == f.Target {
-		// 到了：原版同時寫 `+0x08 = 5` 與 `+0x07 = 0xFF`（`113A:0350`）。
+		// 到了：原版同時寫 `+0x08 = 5` 與 `+0x07 = 0xFF`（`113A:0350`；
+		// 收據 `fcmd-exec`：走一格到亞爾提那之後 `+0x07` FF、`+0x08` 05）。
 		f.Target = NoTarget
+		f.Move = MoveParked
 		f.Parked = true
 	}
 	return true
