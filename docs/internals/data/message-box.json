@@ -205,6 +205,15 @@
    "text": "無法撤離旗艦。",
    "bytes": "b54caa6bba4dc2f7ba58c4a5a143202020202020202020202020202020202020",
    "note": "字串後面帶 18 個半形空格（原版就是這樣寫的，docs/re/317）"
+  },
+  {
+   "name": "enemy_no_intel",
+   "offset": "ds:1AE4",
+   "kind": 0,
+   "colour": 151,
+   "text": "情報資料來源不足",
+   "bytes": "b1a1b3f8b8eaaec6a8d3b7bda4a3a8ac",
+   "note": "右下角「敵艦隊」分頁點了索敵等級不到 3 的一列（0B20:0336，docs/re/325）"
   }
  ]
 }

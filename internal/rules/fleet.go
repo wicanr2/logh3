@@ -172,3 +172,34 @@ func FleetClass(key int) int {
 	}
 	return fleetClassTable[key]
 }
+
+// Spotting 回這一支被敵方看到的程度：各組艦艇 `+0x17` 取最大（原版
+// `0B20:003B` 逐支算、寫進艦隊 `+0x70`；3 ＝ 看得清楚，`docs/re/325`）。
+func (f *Fleet) Spotting() int {
+	level := 0
+	for _, gp := range f.Composition {
+		if gp.Detail > level {
+			level = gp.Detail
+		}
+	}
+	return level
+}
+
+// SpottingClear 是「看得清楚」的門檻：右下角「敵艦隊」分頁印編號與提督、
+// 點列開視窗都要到這一級（`0B20:059B`、`0B20:0336` 的 `cmp [+0x70], 3`）。
+const SpottingClear = 3
+
+// EnemyFleetsInRegion 回右下角「敵艦隊」分頁列的艦隊（在 fleets 裡的位置，
+// 照表的順序）：別的陣營、在那一格、而且索敵等級不是 0（`0B20:0006` →
+// `297B:131C(&清單, 星域, 2)` 再由 `0B20:003B` 篩掉等級 0 的）。
+func EnemyFleetsInRegion(fleets []Fleet, faction, region int) []int {
+	var out []int
+	for i := range fleets {
+		f := &fleets[i]
+		if f.Faction == faction || f.Region != region || f.Spotting() == 0 {
+			continue
+		}
+		out = append(out, i)
+	}
+	return out
+}

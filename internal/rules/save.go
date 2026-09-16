@@ -486,11 +486,12 @@ func (s *Slot) FleetComposition(i int) []FleetGroup {
 			continue
 		}
 		out = append(out, FleetGroup{
-			Kind:  int(sh[shipKind]),
-			Ships: int(sh[shipAlive]) | int(sh[shipAlive+1])<<8,
-			Full:  int(sh[shipFull]) | int(sh[shipFull+1])<<8,
-			Slot2: int(r[o+2]),
-			Slot3: int(r[o+3]),
+			Kind:   int(sh[shipKind]),
+			Ships:  int(sh[shipAlive]) | int(sh[shipAlive+1])<<8,
+			Full:   int(sh[shipFull]) | int(sh[shipFull+1])<<8,
+			Slot2:  int(r[o+2]),
+			Slot3:  int(r[o+3]),
+			Detail: int(sh[shipDetail]),
 		})
 	}
 	return out

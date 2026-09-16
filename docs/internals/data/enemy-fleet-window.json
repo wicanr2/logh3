@@ -1,0 +1,65 @@
+{
+ "note": "戰略地圖右下角「敵艦隊」分頁點一列開的視窗（0B20:0336 → 0B20:0411；docs/re/325、規格 052）。索敵等級 3 才開：3603:0006(&win, 0x97, 8, 6, 24, 6, 1)——內容格 (8,6) 起 24×6、外面再包一格框。內容是把原版那六次 3617:003A 逐一重播（formats 是 Big5 位元組的十六進位，*_text 給人看）：\\x0c%s  第 ＋ 全形編號（3982:0038）＋ 艦隊\\n、提督      %s%s\\n\\n\\n（姓名 ds:6428[提督] ＋ 軍階 28E0:004F）、部隊種類  ＋ 各組（艦隊 +0x0F 組）艦艇 +0x17 ≥ 2 印艦種字母 ds:6172[艦種]、1 印「？」、0 不印。之後 37A9:000F 畫「結束」鈕（熱區 ds:1AA8：格 (21,5) 寬 2）、341B:0145 貼上去、3958:0215(提督, 0x38, 0x23) 畫頭像（x 56×8、y 40＋35×4）。事件迴圈 3765:0036 只收左鍵命中「結束」（子元件 +5 == 0）與右鍵，兩者都關窗。等級 ≠ 3 改跳 3826:0005(0, 0x97, 情報資料來源不足)（message-box.json 的 enemy_no_intel）。",
+ "cell_x": 8,
+ "cell_y": 6,
+ "cols": 24,
+ "rows": 6,
+ "style": 1,
+ "colour": 151,
+ "face": {
+  "x": 448,
+  "y": 180,
+  "w": 80,
+  "h": 100,
+  "note": "3958:0215(提督索引, 0x38, 0x23)；矩形量自 enm-l3-row"
+ },
+ "buttons": [
+  {
+   "name": "close",
+   "text": "結束",
+   "cell_x": 21,
+   "cell_y": 5,
+   "cols": 2,
+   "codes": [
+    "b5b2a7f4"
+   ]
+  }
+ ],
+ "button_colour": 135,
+ "faction_names_coloured": [
+  "035b3135302cabd2b0eaad78035b3135312c",
+  "035b3134392ca650b7f9ad78035b3135312c",
+  "035b3135312ca4a4a5dfad78035b3135312c"
+ ],
+ "faction_names_text": [
+  "\\x03[150,帝國軍\\x03[151,",
+  "\\x03[149,同盟軍\\x03[151,",
+  "\\x03[151,中立軍\\x03[151,"
+ ],
+ "kind_letters": [
+  "a2d0",
+  "a2d6",
+  "a2d1",
+  "a2cf",
+  "a2d2",
+  "a2e2",
+  "a2d3",
+  "a2de"
+ ],
+ "kind_letters_text": "ＢＨＣＡＤＴＥＰ（ds:6172 那張表，艦種 0–7）",
+ "formats": {
+  "head": "0c25732020b2c4",
+  "head_text": "\\x0c%s  第",
+  "head_tail": "c4a5b6a40a",
+  "head_tail_text": "艦隊\\n",
+  "admiral": "b4a3b7fe202020202020257325730a0a0a",
+  "admiral_text": "提督      %s%s\\n\\n\\n",
+  "kinds_label": "b3a1b6a4bad8c3fe2020",
+  "kinds_label_text": "部隊種類  ",
+  "kind": "2573",
+  "kind_text": "%s",
+  "kind_unknown": "a148",
+  "kind_unknown_text": "？"
+ },
+ "no_intel_message": "enemy_no_intel"
+}

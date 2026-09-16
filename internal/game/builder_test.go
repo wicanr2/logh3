@@ -68,6 +68,10 @@ func loadWithRules(t *testing.T) *Resources {
 		filepath.Join(data, "fleet-window.json")); err != nil {
 		t.Fatal(err)
 	}
+	if res.EnemyWindow, err = screen.LoadEnemyWindowSpec(
+		filepath.Join(data, "enemy-fleet-window.json")); err != nil {
+		t.Fatal(err)
+	}
 	if res.FleetActionMenu, err = screen.LoadCommandMenuSpec(
 		filepath.Join(data, "fleet-command-menu.json")); err != nil {
 		t.Fatal(err)

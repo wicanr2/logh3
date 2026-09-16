@@ -272,6 +272,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	enemyWindow, err := screen.LoadEnemyWindowSpec(filepath.Join(data, "enemy-fleet-window.json"))
+	if err != nil {
+		return nil, err
+	}
 	fleetActionMenu, err := screen.LoadCommandMenuSpec(filepath.Join(data, "fleet-command-menu.json"))
 	if err != nil {
 		return nil, err
@@ -371,6 +375,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds, AdvanceRoutes: routes,
 		FleetWindow: fleetWindow, FleetActionMenu: fleetActionMenu, FleetStandby: fleetStandby,
+		EnemyWindow: enemyWindow,
 		Composition: compTables, EditorTables: editorTables, DefaultAdjutants: adjutants,
 		MessageBox: msgBox, FrameTiles: frameTiles,
 		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,

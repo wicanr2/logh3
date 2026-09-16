@@ -65,7 +65,7 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`049`](049-phezzan-event-report.md) | 費沙事件雙頁報告 | CONFORMED |
 | [`050`](050-victory-defeat-report.md) | 勝負報告與結局轉場 | CONFORMED |
 | [`051`](051-strategic-fleet-command.md) | 戰略地圖上的艦隊命令（艦隊視窗 → 作戰 → 五項 → 確認、變更、副官、編組） | CONFORMED |
-| [`052`](052-fleet-list-tabs.md) | 右下角清單的四個分頁與捲動 | CONFORMED（敵艦隊頁只對過空清單） |
+| [`052`](052-fleet-list-tabs.md) | 右下角清單的四個分頁與捲動 | CONFORMED（敵艦隊頁有列的局面用改記憶體造，`docs/re/325`） |
 | [`053`](053-region-info-window.md) | 左鍵點星圖：星系情報視窗與換選星域 | CONFORMED |
 | [`054`](054-fleet-arrival.md) | 艦隊走到之後：回合裡的一格、到達收尾、占據旗標與戰略打行星 | 走一格 CONFORMED／打行星 DRAFT |
 | [`055`](055-list-screen-rows.md) | 一覽表四張的列 | CONFORMED（分頁 DRAFT） |

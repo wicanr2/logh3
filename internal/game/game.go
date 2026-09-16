@@ -445,7 +445,9 @@ type Resources struct {
 	// BattleData 是戰術選單「資料」那張畫面的版面（`docs/spec/021`），
 	// FleetWindow 是戰略地圖上點清單一列開出來的艦隊視窗，
 	// FleetActionMenu 是它的「作戰」五項選單（`docs/spec/051`）。
-	FleetWindow     *screen.FleetWindowSpec
+	FleetWindow *screen.FleetWindowSpec
+	// EnemyWindow 是右下角「敵艦隊」分頁點一列開的視窗（`docs/re/325`）。
+	EnemyWindow     *screen.EnemyWindowSpec
 	FleetActionMenu *screen.CommandMenuSpec
 	// FleetStandby 是「待命」開的「指定待命行星」（`docs/re/314`）。
 	FleetStandby *screen.FleetStandbySpec
@@ -1931,6 +1933,13 @@ func (g *Game) refreshHoverRegion() {
 	probe := &g.hoverProbe
 	switch g.state {
 	case StateCommandPhase:
+		// 右下角清單點出來的視窗與它的訊息框各有自己的事件迴圈
+		// （`2AF5:0226`、`0BCE:02F4`、`0B20:0336`、`3826:023B`），開著時
+		// 游標經過星圖左下角不動（收據 `enm-l1-row-miss`：滑鼠搬到
+		// 艾流塞拉上，那塊仍是空的）。
+		if g.listOverlayOn() {
+			return
+		}
 	case StateFleetTargetPick:
 		probe = &g.fcmd.probe
 	default:

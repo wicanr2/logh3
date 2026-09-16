@@ -11,6 +11,10 @@ const (
 	shipKind  = 0x04 // 艦種 0–6；7 ＝ 每支艦隊多出來的那一筆；0xFF ＝ 空的
 	shipAlive = 0x08 // 現有艘數（word）
 	shipFull  = 0x0A // 滿編艘數（word）
+	// shipDetail 是索敵等級 0–3（`docs/internals/38`）：戰場上每被看到一輪
+	// ＋1、沒被看到就掉一級；佈陣時清 0，戰後留在記錄裡，戰略地圖右下角
+	// 「敵艦隊」分頁與交戰演出的艦隊那格都拿它判「看得清不清楚」。
+	shipDetail = 0x17
 
 	shipKindEmpty = 0xFF
 )

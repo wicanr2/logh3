@@ -1,6 +1,7 @@
 package game
 
 import (
+	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
@@ -38,12 +39,17 @@ type listTabs struct {
 	// planet 是「行星」分頁點開的行星情報視窗：那一格裡的第幾顆（−1 沒開）。
 	planet       int
 	planetRegion int
+	// enemy 是「敵艦隊」分頁點開的視窗：那一支在 `g.fleets` 裡的位置
+	// （−1 沒開）；enemyMsg ＝ 點的那一列看不清楚、跳的是訊息框，關掉時
+	// 要把列的反白一起還原。
+	enemy    int
+	enemyMsg bool
 	// pressed 是點開視窗時反白的那一列（−1 沒有）。
 	pressed int
 }
 
 func newListTabs() listTabs {
-	return listTabs{detail: -1, planet: -1, pressed: -1}
+	return listTabs{detail: -1, planet: -1, enemy: -1, pressed: -1}
 }
 
 // listTab 回目前這個陣營選著的分頁。
@@ -131,13 +137,77 @@ func (g *Game) idleAdmiralsInRegion() []int {
 		g.faction, g.listRegion(), g.adjBusy(-1))
 }
 
-// enemyFleetsInRegion 回「敵艦隊」分頁列的艦隊（`0B20:003B`）：別的陣營、
-// 在這一格、而且**索敵等級**（艦艇 `+0x17` 在各組取最大）不是 0。remake
-// 的戰略層還沒帶著索敵等級（那是戰場上 `+0x17` 的累積，`docs/internals/38`），
-// 所以目前永遠是空的——與新遊戲第一回合的收據（`fcmd-tab-enemy`）一致，
-// 打過仗之後的局面還沒對（`docs/spec/052`「還沒做的」）。
+// enemyFleetsInRegion 回「敵艦隊」分頁列的艦隊（在 `g.fleets` 裡的位置，
+// `0B20:0006` → `0B20:003B`）：別的陣營、在這一格、而且索敵等級（艦艇
+// `+0x17` 在各組取最大）不是 0。索敵等級是戰場上累積、戰後留在艦艇池裡的
+// （`docs/internals/38`）；新編的艦隊沒有艦艇池，永遠 0（收據 `fcmd-tab-enemy`
+// 空清單），打過仗或改了記憶體的局面才有列（收據 `enm-*`，`docs/re/325`）。
 func (g *Game) enemyFleetsInRegion() []int {
-	return nil
+	return rules.EnemyFleetsInRegion(g.fleets, g.faction, g.listRegion())
+}
+
+// enemyRows 回「敵艦隊」分頁這一頁的列（`0B20:059B`）。
+func (g *Game) enemyRows(page rules.ListPage) []screen.EnemyRow {
+	list := g.enemyFleetsInRegion()
+	rows := make([]screen.EnemyRow, 0, rules.ListPageRows)
+	for i := page.Scroll; i < len(list) && len(rows) < rules.ListPageRows; i++ {
+		f := &g.fleets[list[i]]
+		r := screen.EnemyRow{Known: f.Spotting() >= rules.SpottingClear,
+			Faction: f.Faction, Number: f.Number, Morale: f.Morale}
+		if f.Admiral >= 0 && f.Admiral < len(g.res.AdmiralNames) {
+			r.Name = g.res.AdmiralNames[f.Admiral]
+		}
+		rows = append(rows, r)
+	}
+	return rows
+}
+
+// openEnemyWindow 是點了「敵艦隊」分頁的一列（`0B20:02D0` → `0B20:0336`）：
+// 那一列反白；看得清楚（索敵等級 3）開視窗，否則跳「情報資料來源不足」。
+func (g *Game) openEnemyWindow(idx, row int) {
+	list := g.enemyFleetsInRegion()
+	if idx < 0 || idx >= len(list) {
+		return
+	}
+	g.tabs.pressed = row
+	if g.fleets[list[idx]].Spotting() >= rules.SpottingClear {
+		g.tabs.enemy = list[idx]
+		return
+	}
+	name := "enemy_no_intel"
+	if s := g.res.EnemyWindow; s != nil && s.NoIntelMessage != "" {
+		name = s.NoIntelMessage
+	}
+	if g.showMessage(name) {
+		g.tabs.enemyMsg = true
+	} else {
+		g.tabs.pressed = -1
+	}
+}
+
+// enemyWindowView 把開著的那一支排成視窗要印的東西；頭像另外貼。
+func (g *Game) enemyWindowView() (*screen.EnemyWindowView, *asset.Image) {
+	if g.tabs.enemy < 0 || g.tabs.enemy >= len(g.fleets) {
+		return nil, nil
+	}
+	f := &g.fleets[g.tabs.enemy]
+	v := &screen.EnemyWindowView{Faction: f.Faction, Number: f.Number}
+	if f.Admiral >= 0 && f.Admiral < len(g.res.AdmiralNames) {
+		v.Name = codesBig5(g.res.AdmiralNames[f.Admiral])
+	}
+	if adm := g.admiralRecord(f.Admiral); adm != nil {
+		v.Rank = codesBig5(g.rankCodes(rules.RankOf(int(adm[admiralMeritOff]))))
+	}
+	for _, gp := range f.Composition {
+		v.Groups = append(v.Groups, screen.EnemyGroup{Kind: gp.Kind, Detail: gp.Detail})
+	}
+	var face *asset.Image
+	if g.res.Faces != nil {
+		if img, err := g.res.Faces.Decode(f.Admiral); err == nil {
+			face = img
+		}
+	}
+	return v, face
 }
 
 // listClick 處理戰略地圖介面上落在右下角清單那塊的左鍵：分頁鈕、▲▼、
@@ -186,7 +256,7 @@ func (g *Game) listClick(x, y int) bool {
 			g.tabs.detailSortie = g.sortieAllowed()
 		}
 	case listTabEnemy:
-		// 敵艦隊視窗（`0B20:0336`）還沒接（`docs/spec/052`）。
+		g.openEnemyWindow(idx, row)
 	}
 	return true
 }
@@ -210,14 +280,28 @@ func (g *Game) sortieAllowed() bool {
 // fleetsPerFaction 是艦隊表每邊的槽數（`ds:8F49[陣營] < 16`，`docs/internals/33`）。
 const fleetsPerFaction = 16
 
-// listOverlayOn 回清單點出來的視窗（行星情報／提督詳細資料）有沒有開著。
+// listOverlayOn 回清單點出來的視窗（行星情報／提督詳細資料／敵艦隊）
+// 或「情報資料來源不足」那個訊息框有沒有開著。
 func (g *Game) listOverlayOn() bool {
-	return g.tabs.planet >= 0 || g.tabs.detail >= 0
+	return g.tabs.planet >= 0 || g.tabs.detail >= 0 || g.tabs.enemy >= 0 || g.tabs.enemyMsg
 }
 
-// listOverlayClick 處理那兩張視窗開著時的左鍵。回 true ＝ 視窗吃掉了。
+// listOverlayClick 處理那幾張視窗開著時的左鍵。回 true ＝ 視窗吃掉了。
 func (g *Game) listOverlayClick(x, y int) bool {
 	switch {
+	case g.tabs.enemyMsg:
+		// 訊息框是模態的，只認「確認」（`3826:023B`）；關了那一列的反白還原。
+		g.messageClick(x, y)
+		if !g.msgOn {
+			g.tabs.enemyMsg, g.tabs.pressed = false, -1
+		}
+		return true
+	case g.tabs.enemy >= 0:
+		// 左鍵只認「結束」（`0B20:0336` 的事件迴圈）。
+		if s := g.res.EnemyWindow; s != nil && s.ButtonAt(x, y) == "close" {
+			g.closeListOverlay()
+		}
+		return true
 	case g.tabs.planet >= 0:
 		// 左鍵只認「確認」（`2AF5:0226` 的事件迴圈）。
 		if s := g.res.PlanetInfoMap; s != nil && s.ButtonAt(x, y) {
@@ -272,18 +356,20 @@ func (g *Game) tabDetailButtonAtFor(x, y int, sortie bool) string {
 	return ""
 }
 
-// listOverlayRightClick 是那兩張視窗的右鍵：都只是關掉。
+// listOverlayRightClick 是那幾張視窗的右鍵：都只是關掉；訊息框不理右鍵。
 func (g *Game) listOverlayRightClick() bool {
 	if !g.listOverlayOn() {
 		return false
 	}
-	g.closeListOverlay()
+	if !g.tabs.enemyMsg {
+		g.closeListOverlay()
+	}
 	return true
 }
 
-// closeListOverlay 關掉行星情報／提督詳細資料，那一列的反白還原。
+// closeListOverlay 關掉行星情報／提督詳細資料／敵艦隊視窗，那一列的反白還原。
 func (g *Game) closeListOverlay() {
-	g.tabs.planet, g.tabs.detail, g.tabs.pressed = -1, -1, -1
+	g.tabs.planet, g.tabs.detail, g.tabs.enemy, g.tabs.pressed = -1, -1, -1, -1
 }
 
 // drawListRows 畫右下角清單目前分頁的幾列與 ▲▼（畫在底板那一層）。
@@ -330,7 +416,7 @@ func (g *Game) drawListRows(fb *gfx.Framebuffer) {
 		}
 		l.DrawAdmirals(fb, g.res.Font, rows, g.tabs.pressed)
 	case listTabEnemy:
-		l.DrawEnemies(fb, g.res.Font, nil, -1)
+		l.DrawEnemies(fb, g.res.Font, g.enemyRows(page), g.tabs.pressed)
 	}
 }
 
@@ -355,6 +441,10 @@ func (g *Game) drawListOverlays(fb *gfx.Framebuffer) {
 		g.drawMapPlanetInfo(fb)
 	case g.tabs.detail >= 0:
 		g.drawTabAdmiralDetail(fb)
+	case g.tabs.enemy >= 0:
+		if v, face := g.enemyWindowView(); v != nil && g.res.EnemyWindow != nil {
+			g.res.EnemyWindow.Draw(fb, g.res.Font, g.res.FrameTiles, v, face)
+		}
 	}
 }
 

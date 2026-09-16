@@ -56,7 +56,7 @@ type FleetList struct {
 	} `json:"marker"`
 	// Row 是一列按鈕樣式的那 17 格：點開艦隊視窗時整列底色換成
 	// `PressedBg`（`0AD0:0272` 的 `3603:00DB(…, 0x20, …)`，`docs/re/312`）。
-	// 上下各 `Inset` 列是按鈕的立體邊，不動。
+	// 上下各 `Inset` 列與左邊兩個像素是按鈕的立體邊，不動（X 已扣掉）。
 	Row struct {
 		X, W, Top, Inset int
 		PressedBg        uint8 `json:"pressed_bg"`

@@ -262,10 +262,10 @@ func (s *Slot) admiral(i int) []byte {
 	return s.Admiral[i*AdmiralRecord : (i+1)*AdmiralRecord]
 }
 
-// ApplyBattleResult 把戰場上剩下的艘數寫回艦艇池。
+// ApplyBattleResult 把戰場上剩下的艘數與索敵等級寫回艦艇池。
 //
-// 只寫 `+0x08`（現有艘數）。原版戰後還會動什麼（撤退、星域易主、
-// 分數怎麼結算）還沒解，所以這裡就只做這一件確定的事。
+// 只寫 `+0x08`（現有艘數）與 `+0x17`（索敵等級）。原版戰後還會動什麼
+// （撤退、星域易主、分數怎麼結算）還沒解，所以這裡就只做這兩件確定的事。
 func (s *Slot) ApplyBattleResult(units []BattleUnit) int {
 	changed := 0
 	for _, u := range units {
@@ -278,6 +278,9 @@ func (s *Slot) ApplyBattleResult(units []BattleUnit) int {
 			continue
 		}
 		rec := s.Ship[n*ShipRecord : (n+1)*ShipRecord]
+		// 索敵等級跟著留在記錄裡（原版的分隊就是艦艇記錄本身，`+0x17`
+		// 戰後自然還在；右下角「敵艦隊」分頁讀的就是它）。
+		rec[shipDetail] = byte(u.Detail)
 		if int(binary.LittleEndian.Uint16(rec[8:])) == u.Ships {
 			continue
 		}

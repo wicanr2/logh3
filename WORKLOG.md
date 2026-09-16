@@ -7186,3 +7186,23 @@ GitHub 的 issue 時間軸承擔。
 - 文件：`docs/re/324`、規格 056（DRAFT）、playtest 022、internals 20 補一段、規格索引補 051–056、
   CONTEXT。#48 留著（卡在：COMANI 編碼、量表、動畫、計時、另外兩種演出），verify 改綁
   `engagement.go` 的自承註解。
+
+## 2026-09-17 — 右下角「敵艦隊」分頁有列的時候（關 #49）
+
+- 局面照規格 014 用改記憶體造：S3 帝國第一回合戰略地圖（#300M，檢查點 `enm-map`），
+  槽 17（同盟第２艦隊）`+0x06 ← 0`、四組艦艇 `+0x17` 寫成 3／1／混合／0；艦艇池 far
+  指標 `ds:CFB4` 在那個檢查點是 `668B:0002`（每批倒它）。`tools/enemytab_receipts.sh` 十三批
+  `enm-*`，全部整張逐位元組。
+- 讀完 `docs/re/319` §七的尾巴：列的兩格空白、陣營色 `ds:6092`、`ds:1B51` 的半形「 ?? 」；
+  視窗 `0B20:0411` 的部隊種類三種情形（≥2 字母、1 「？」、0 不印）、頭像 `3958:0215(+0x04, 0x38, 0x23)`
+  ＝ (448,180)、「結束」熱區 `1AA8`、事件迴圈只認「結束」與右鍵；等級 ≠ 3 的訊息框是模態的
+  （框內別處、右鍵都不動）。`+0x70` 在戰略地圖上是索敵等級（`0B20:003B` 寫），戰場上才是距離帶。
+- remake：`rules.FleetGroup.Detail`（`FleetComposition` 讀 `+0x17`、`ApplyBattleResult` 寫回）、
+  `Fleet.Spotting`／`rules.EnemyFleetsInRegion`、`screen.EnemyWindowSpec`（`enemy-fleet-window.json`）、
+  訊息 `enemy_no_intel`、`listTabs.enemy`／`enemyMsg`。`newTestGame` 直接 `LoadSlot` 的 S3
+  治安是 99%，原版 93%——測試改走 `loadSlotFromDisk(10)`（載入當下的未安定度重算）。
+- 順手修掉的既有偏差：列按下去的底色蓋到鈕左邊兩個像素的亮邊（`row.x`／`w` 338／270，
+  `enm-l1-row` 抓到）；清單的視窗或訊息框開著時左下角仍跟著游標重算（`refreshHoverRegion`
+  加 `listOverlayOn` 判斷，`enm-l1-row-miss` 抓到）。
+- 文件：`docs/re/325`、規格 052（T7a–T7c、敵艦隊視窗一節、還沒做的改成「正常路徑的收據」）、
+  playtest 023、internals 33（`+0x70`）、58、規格索引、CONTEXT。GUI 沒有案例（局面靠改記憶體）。

@@ -51,7 +51,10 @@ type ListTabsLayout struct {
 	Enemy struct {
 		UnknownX int      `json:"unknown_x"`
 		Unknown  []uint16 `json:"unknown"`
-		Prefix   []uint16 `json:"prefix"`
+		// UnknownTail 是九個問號後面那幾個半形字（原版 `ds:1B51` 的尾巴
+		// 「 ?? 」：士氣那一格看不清楚）。
+		UnknownTail string   `json:"unknown_tail"`
+		Prefix      []uint16 `json:"prefix"`
 	} `json:"enemy"`
 }
 
@@ -195,6 +198,12 @@ func (l *FleetList) DrawEnemies(fb *gfx.Framebuffer, fnt *font.Font, rows []Enem
 		if !r.Known {
 			l.rowText(fb, fnt, l.Number.PrefixX, y, t.Enemy.Prefix, faction)
 			l.rowText(fb, fnt, t.Enemy.UnknownX, y, t.Enemy.Unknown, l.Name.Ink)
+			x := t.Enemy.UnknownX + len(t.Enemy.Unknown)*font.GlyphW
+			for k := 0; k < len(t.Enemy.UnknownTail); k++ {
+				ui.DrawHalfGlyphClipped(fb, fnt, x, y, t.Enemy.UnknownTail[k], l.Name.Ink, panelShadow,
+					-1, false, 0, y, gfx.Width, l.Pitch)
+				x += font.HalfW
+			}
 			continue
 		}
 		l.rowText(fb, fnt, l.Number.PrefixX, y, fleetRowPrefix, faction)
