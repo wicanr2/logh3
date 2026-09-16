@@ -471,6 +471,11 @@ type Resources struct {
 	// 只有旗艦那一組。
 	Composition *rules.CompositionTables
 
+	// EditorTables 是艦隊組成編輯器的三張表（八個陣形樣板 `ds:2D06`、
+	// 替代表 `ds:2986`、機動力係數 `ds:4E2E`，`docs/re/317`）。nil ＝
+	// 「陣形」套不出東西、機動力一律 100。
+	EditorTables *rules.EditorTables
+
 	// ShipKinds 是艦種屬性表（`docs/internals/40`）。
 	ShipKinds *rules.ShipKindTable
 
@@ -726,6 +731,10 @@ type Game struct {
 
 	// selectedRow 是有選取條那種清單目前選在第幾列（艦隊組成的七個艦種）。
 	selectedRow int
+
+	// editor 是開著的艦隊組成編輯器（出擊那條路與「變更 → 編組」共用，
+	// `fleetedit.go`）；nil ＝ 沒開。
+	editor *rules.FleetEditor
 
 	// fleets 是已經編成的艦隊，順序就是艦隊編號 − 1
 	// （`internal/rules.Fleet`，對應原版的執行期艦隊表）。
@@ -1960,7 +1969,16 @@ func (g *Game) click(x, y int) {
 				g.state = StateFleetOrg
 			}
 		}
+	case StateFormation:
+		// 陣形清單：選到就整批套用（`0FF4:0A4B`），點在外面只關清單
+		// （`3667:00F2` 回 0xFF），兩種都回艦隊組成。
+		g.fleetEditorFormationPick(x, y)
+		g.state = StateFleetComposition
 	case StateFleetComposition:
+		// 訊息框是模態的（放不了那一格時跳的四句，`docs/re/317`）。
+		if g.messageClick(x, y) {
+			return
+		}
 		// 下緣三顆按鈕：陣形／中止／決定（熱區清單 `2A00`）。
 		if p := g.res.CompositionPanel; p != nil {
 			switch p.ButtonAt(x, y) {
@@ -1970,9 +1988,14 @@ func (g *Game) click(x, y int) {
 					return
 				}
 			case "cancel":
-				// 「中止」整支作廢：艘數退回首都、回戰略地圖，不是回艦隊編成
+				// 「中止」整支作廢：編輯器先把存量倒回進來那一刻（`0FF4:1127`），
+				// 旗艦那一組再退回首都、回戰略地圖，不是回艦隊編成
 				// （收據 `fcmd-fok-cancel`：地圖、清單空、存量 78000）。
+				if g.editor != nil {
+					g.editor.Cancel()
+				}
 				g.refundProvisional()
+				g.closeFleetEditor()
 				if g.commandSpec(StateCommandPhase) != nil {
 					g.state = StateCommandPhase
 				}
@@ -1985,14 +2008,20 @@ func (g *Game) click(x, y int) {
 					adjutant := rules.Adjutant(g.admiralRecord(g.detailAdmiral))
 					// 編制與 AI 建艦隊走同一支 `297B:0066`：旗艦那一組從
 					// 首都的待命部隊扣出來；玩家這一支沒有類別鍵
-					// （`+0x09` ＝ 0xFF），所以只有旗艦那一組
+					// （`+0x09` ＝ 0xFF），所以進編輯器時只有旗艦那一組
 					// （收據 `fcmd-win` 的 `fleet0.bin`：`+0x0F` ＝ 1、
-					// `+0x10` ＝ `00 00 00 14`，`docs/re/312`）。
+					// `+0x10` ＝ `00 00 00 14`，`docs/re/312`）；之後放的
+					// 幾組由編輯器壓實排序寫回（`0FF4:10C1`，收據
+					// `fcmd-fok-decide`：`+0x0F` ＝ 3）。
 					comp := g.provisional
+					if g.editor != nil {
+						comp = g.editor.Groups()
+					}
 					if comp == nil {
 						comp = g.newComposition(g.faction, region, g.detailAdmiral, rules.NoClassKey)
 					}
 					g.provisional = nil
+					g.closeFleetEditor()
 					ops := g.fleetOperations(g.detailAdmiral, adjutant)
 					g.fleets = append(g.fleets, rules.Fleet{
 						Index:       len(g.fleets),
@@ -2054,7 +2083,11 @@ func (g *Game) click(x, y int) {
 				}
 			}
 		}
-		// 點七個艦種列的哪一列，選取條就跳到哪一列（收據 `row3`）。
+		// 點七個艦種列的哪一列，選取條就跳到哪一列（收據 `row3`）；
+		// 點格盤放一組（收據 `fcmd-fok-place1`）。
+		if g.fleetEditorClick(g.commandSpec(g.state), x, y) {
+			return
+		}
 		if spec := g.commandSpec(g.state); spec != nil {
 			if w := spec.Windows["overlay"]; w != nil {
 				if i := w.SelectRowAt(x, y); i >= 0 {
@@ -2084,6 +2117,9 @@ func (g *Game) click(x, y int) {
 				// （原版首都戰艦 78000 → 75000，`fcx-peek-stock-300`／`-350`），
 				// 「決定」不再扣、「中止」退回（`docs/re/316` §四）。
 				g.provisional = g.takeProvisional()
+				g.openFleetEditor(rules.CapitalRegion(g.faction), g.faction,
+					rules.FleetSlots(rules.AdmiralLevel(g.admiralRecord(g.detailAdmiral))),
+					g.provisional)
 				g.state = StateFleetComposition
 			}
 		}
@@ -2251,8 +2287,12 @@ func (g *Game) rightClick(x, y int) {
 	case StateFormation:
 		g.state = StateFleetComposition
 	case StateFleetComposition:
-		// 艦隊組成不認右鍵（收據 `fcmd-fok-rclick`／`fcmd-change-org-rclick`：
-		// 畫面只有游標動、存量不變）。
+		// 右鍵不關窗（收據 `fcmd-fok-rclick`／`fcmd-change-org-rclick`：
+		// 畫面只有游標動、存量不變），只拆格盤那一格（`0FF4:0B85`）；
+		// 訊息框開著不理（`3826:023B` 只認左鍵）。
+		if !g.msgOn {
+			g.fleetEditorRightClick(g.commandSpec(g.state), x, y)
+		}
 	case StateFleetNumber, StateFleetAdjutant:
 		g.state = StateFleetOrg
 	case StateAdmiralBio, StateFleetOrg:
@@ -2298,7 +2338,7 @@ func (g *Game) rightClick(x, y int) {
 		g.state = StateCommandPhase
 	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm,
 		StateFleetStandby, StateFleetOccupyWarn, StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg:
-		g.fleetCmdRightClick()
+		g.fleetCmdRightClick(x, y)
 	case StateVersusInput:
 		// 交棒視窗按右鍵會怎樣**沒有量過**，先什麼都不做——
 		// 這一步不能靠猜，猜錯會讓對戰模式跳掉一方的回合。
@@ -2857,6 +2897,19 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 	// 戰略地圖介面的規格沒有疊層（order 空 → 只叫一次 "report"），艦隊命令
 	// 那幾層就在這裡畫：在清單列與游標之前，原版的游標永遠在最上面。
 	g.drawFleetCommand(fb)
+	// 模態的訊息框（艦隊組成編輯器那四句）疊在最後一層之上、游標之下。
+	if g.msgOn && g.lastLayer() == name {
+		g.drawMessage(fb)
+	}
+}
+
+// lastLayer 回目前畫面規格疊層的最後一層名字（沒寫 order 就是 "report"）。
+func (g *Game) lastLayer() string {
+	spec := g.commandSpec(g.state)
+	if spec == nil || len(spec.Order) == 0 {
+		return "report"
+	}
+	return spec.Order[len(spec.Order)-1]
 }
 
 // drawFleetComposition 畫艦隊組成裡算出來的那幾塊（`docs/spec/015`）。
@@ -2884,6 +2937,9 @@ func (g *Game) drawFleetComposition(fb *gfx.Framebuffer) {
 		Groups:   g.compositionGroups(ships),
 		Slots: rules.FleetSlots(
 			rules.AdmiralLevel(g.admiralRecord(g.detailAdmiral))),
+	}
+	if g.editor != nil {
+		v = g.editorView(g.detailAdmiral, rules.Adjutant(g.admiralRecord(g.detailAdmiral)))
 	}
 	p := g.res.CompositionPanel
 	p.Draw(fb, g.res.Font, v)

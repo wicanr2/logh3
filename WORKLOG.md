@@ -6954,3 +6954,27 @@ GitHub 的 issue 時間軸承擔。
   陣形與決定寫回（`0FF4:0909`／`10C1`）——出擊那條路同一件事。
 - 文件：`docs/re/316`、規格 051「變更」一節、013／015 補一段、internals 58、
   playtest 021、CONTEXT；gui_check 加 `fcmd-change-org`。
+
+## 2026-09-16 — 艦隊組成編輯器（#42 編組那一半；出擊那條路同一支）
+
+- `0FF4:000A` 整支讀完（`docs/re/317`，`workplace/ida/fcx0FF4-all.txt`）：進來抄工作表、
+  備份存量與艦艇記錄；左鍵派送 `07D3`（熱區 `ds:2A00`：艦種列／陣形／中止／決定；格盤物件
+  `0C06` 逐槽比 `ds:28B8`）；放 `0C80`（中央只收 0／1、沒貨、先拆再放、沒空位）；右鍵拆
+  `0B85`→`0DB1`（旗艦拆不掉）；陣形 `09D9`（選單固定在格 (30,9)）→ `0A4B`（旗艦以外全拆、
+  照 `ds:2D06` 樣板放到空位用完、缺的照 `ds:2986` 換、換不到整批停）；決定 `10C1` 壓實
+  排序寫回、中止 `1127` 抄回備份。機動力 `297B:083F` ＝ `100 − (270 − 2 × max(運用)) × ds:4E2E[組數] ÷ 100`。
+- 收據二十九批（`tools/fleetcmd_receipts.sh` 第 13、14 段，每批 `-peek lin:5F2FC:28` 倒七個存量）：
+  從 `fcmd-change-org` 展開 21 批（含 `-poke` 運補艦 0 的五批 `fcmd-edit-poor*`）、出擊那條路
+  新檢查點 `fcmd-fok`（350M）展開 7 批。全部整張 0 差異；存量與 `fleet0.bin` 的組數、每組艦種／槽
+  逐一對上。
+- remake：`rules.FleetEditor`（`internal/rules/fleetedit.go`：Place／Remove／ApplyFormation／
+  Groups／Cancel，表從 `fleet-editor.json` 載）＋ `internal/game/fleetedit.go`（座標 → 槽／列／
+  陣形項、訊息框）；`StateFleetComposition`／`StateFormation` 與 `StateFleetChangeOrg`（陣形清單用
+  `fcmd.formOn` 旗標疊 `screen-formation` 的 `formation` 視窗）共用。訊息框改在最後一層之後、
+  游標之前畫（`afterWindow` 看 `lastLayer`）。
+- 踩到：`-poke` 的多位元組要用逗號或空格分開（`00000000` 只寫一個 byte）；hover 收據的
+  `-mouse-at` 要落在檢查點步數之後；子測試不能複製 `Game` 結構（editor 指標與星域記錄共用）。
+- 文件：`docs/re/317`、規格 015「編輯」一節 CONFORMED、規格 051 V3 列與排除範圍、
+  internals 56（編輯一節）／58、`fleet-editor.json`、`message-box.json` 四句 `edit_*`、
+  `fleet-composition-panel.json` 艦種列熱區、playtest 021、CONTEXT；gui_check 加
+  `fcmd-edit-full-msg`／`fcmd-fok-decide`（18 案例全過）。

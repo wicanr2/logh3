@@ -45,6 +45,10 @@ func loadWithRules(t *testing.T) *Resources {
 		filepath.Join(data, "ship-kind-fallback.json")); err != nil {
 		t.Fatal(err)
 	}
+	if res.EditorTables, err = rules.LoadEditorTables(
+		filepath.Join(data, "fleet-editor.json")); err != nil {
+		t.Fatal(err)
+	}
 	if res.MessageBox, err = screen.LoadMessageBoxSpec(
 		filepath.Join(data, "message-box.json")); err != nil {
 		t.Fatal(err)

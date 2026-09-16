@@ -22,6 +22,7 @@ PLANE_HI=$(printf '%X' $((0x${DS}*16 + 0xD81E + 4800)))
 FLEET_LO=$(printf '%X' $((0x${DS}*16 + 0xC074)))   # 艦隊表第 0 筆 122 bytes
 FLEET_HI=$(printf '%X' $((0x${DS}*16 + 0xC074 + 122)))
 HOLD=3000000
+STOCK="-peek lin:5F2FC:28"      # 星域 0 帝國七種存量（第 13、14 段）
 
 # rec <批次> <步數上限> <上一個檢查點|-> <ck|-> <旗標...>
 # 每一批都倒：畫面、調色盤、字元平面、艦隊表第 0 筆。`ck` ＝ 在上限的前一道
@@ -151,6 +152,49 @@ rec fcmd-fok-rclick 380000000 - - \
   -rclicks 130000000:300:200,155000000:300:200,352000000:300:200 \
   -clicks 40000000:300:170,95000000:300:170,180000000:352:85,210000000:400:85,240000000:400:45,270000000:488:290,320000000:480:310 \
   -click-hold $HOLD -peek lin:5F2FC:4
+# 13. 艦隊組成編輯器本體（0FF4:000A，docs/re/317）。座標（滑鼠）：格盤一格 16 px，
+#     隊形槽 (欄,列) 的中心在 (144＋16欄, 136＋16列)——槽 19＝(2,4)→(176,200)、
+#     槽 20 中央＝(4,4)→(208,200)、槽 21＝(6,4)→(240,200)、槽 0＝(0,0)→(144,136)；
+#     艦種列 i 在 (360, 130＋20i)；陣形 (510,270)、中止 (510,280)、決定 (510,300)；
+#     訊息框「確認」(432,223)；陣形選單第 i 項 (505, 210＋20i)。
+#     每一批多倒星域 0 帝國七種存量（$STOCK ＝ -peek lin:5F2FC:28，值在 report.txt）。
+#     從 fcmd-change-org（既有艦隊、只有旗艦在中央、應有 8 組、戰艦列反白）展開：
+rec fcmd-edit-place1      520000000 fcmd-change-org    ck -clicks 497000000:176:200 -click-hold $HOLD $STOCK
+rec fcmd-edit-row2        545000000 fcmd-edit-place1   ck -clicks 522000000:360:170 -click-hold $HOLD $STOCK
+rec fcmd-edit-place2      570000000 fcmd-edit-row2     ck -clicks 547000000:240:200 -click-hold $HOLD $STOCK
+rec fcmd-edit-replace     595000000 fcmd-edit-place2   -  -clicks 572000000:176:200 -click-hold $HOLD $STOCK
+rec fcmd-edit-remove      595000000 fcmd-edit-place2   ck -rclicks 572000000:176:200 -click-hold $HOLD $STOCK
+rec fcmd-edit-centre-msg  595000000 fcmd-edit-place2   ck -clicks 572000000:208:200 -click-hold $HOLD $STOCK
+rec fcmd-edit-centre-ok   620000000 fcmd-edit-centre-msg - -clicks 597000000:432:223 -click-hold $HOLD $STOCK
+rec fcmd-edit-flag-rclick 595000000 fcmd-edit-place2   -  -rclicks 572000000:208:200 -click-hold $HOLD $STOCK
+rec fcmd-edit-cancel      595000000 fcmd-edit-place2   -  -clicks 572000000:510:280 -click-hold $HOLD $STOCK
+rec fcmd-edit-decide      595000000 fcmd-edit-place2   ck -clicks 572000000:510:300 -click-hold $HOLD $STOCK
+rec fcmd-edit-formation   620000000 fcmd-edit-remove   ck -clicks 597000000:510:270 -click-hold $HOLD $STOCK
+rec fcmd-edit-form-hover  630000000 fcmd-edit-formation - -mouse-x 505 -mouse-y 350 -mouse-at 622000000
+rec fcmd-edit-form-rclick 645000000 fcmd-edit-formation - -rclicks 622000000:300:200 -click-hold $HOLD $STOCK
+rec fcmd-edit-form-pick   645000000 fcmd-edit-formation ck -clicks 622000000:505:210 -click-hold $HOLD $STOCK
+rec fcmd-edit-full-msg    670000000 fcmd-edit-form-pick -  -clicks 647000000:144:136 -click-hold $HOLD $STOCK
+rec fcmd-edit-form-decide 670000000 fcmd-edit-form-pick ck -clicks 647000000:510:300 -click-hold $HOLD $STOCK
+#     運補艦存量改成 0 再開編組（docs/spec/014：要狀態就直接改記憶體）：
+#     選運補艦列再放 → 「船艦數量不足。」；陣形 → 圓錐時 (5,29) 那一組換成替代表的第一個有貨的艦種。
+rec fcmd-edit-poor        495000000 fcmd-change-menu   ck -poke lin:5F310@471000000=00,00,00,00 -clicks 472000000:497:352 -click-hold $HOLD $STOCK
+rec fcmd-edit-poor-row5   520000000 fcmd-edit-poor     ck -clicks 497000000:360:230 -click-hold $HOLD $STOCK
+rec fcmd-edit-poor-msg    545000000 fcmd-edit-poor-row5 - -clicks 522000000:176:200 -click-hold $HOLD $STOCK
+rec fcmd-edit-poor-form   520000000 fcmd-edit-poor     ck -clicks 497000000:510:270 -click-hold $HOLD $STOCK
+rec fcmd-edit-poor-pick   545000000 fcmd-edit-poor-form - -clicks 522000000:505:210 -click-hold $HOLD $STOCK
+# 14. 出擊命令那條路的同一支編輯器（fcmd-base 的冷啟動序列跑到 350M：艦隊編成按了決定、
+#     艦隊組成剛開）。同一組操作，證明兩條路共用同一套規則；決定回戰略地圖。
+rec fcmd-fok 350000000 - ck \
+  -tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 \
+  -rclicks 130000000:300:200,155000000:300:200 \
+  -clicks 40000000:300:170,95000000:300:170,180000000:352:85,210000000:400:85,240000000:400:45,270000000:488:290,320000000:480:310 \
+  -click-hold $HOLD $STOCK
+rec fcmd-fok-place1       375000000 fcmd-fok           ck -clicks 352000000:176:200 -click-hold $HOLD $STOCK
+rec fcmd-fok-row2         400000000 fcmd-fok-place1    ck -clicks 377000000:360:170 -click-hold $HOLD $STOCK
+rec fcmd-fok-place2       425000000 fcmd-fok-row2      ck -clicks 402000000:240:200 -click-hold $HOLD $STOCK
+rec fcmd-fok-decide       450000000 fcmd-fok-place2    -  -clicks 427000000:510:300 -click-hold $HOLD $STOCK
+rec fcmd-fok-form         425000000 fcmd-fok-row2      ck -clicks 402000000:510:270 -click-hold $HOLD $STOCK
+rec fcmd-fok-form-pick    450000000 fcmd-fok-form      -  -clicks 427000000:505:210 -click-hold $HOLD $STOCK
 # 6. 從 `dec1` 只把游標移到瓦爾哈拉（不按）→ 左下角照游標重寫：剛編成的
 #    第１艦隊算不算進「艦隊 a：b」（星域記錄 `+0x28` 建艦隊時就加了）。
 rec fcmd-hover-home 440000000 fcmd-base - -mouse-x 32 -mouse-y 32 -mouse-at 421000000

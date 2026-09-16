@@ -14,9 +14,9 @@ import (
 // `07F9:043F`），「編組」開這一支的艦隊組成（`0FF4:000A`）。子視窗開著時
 // 「變更」鈕仍反白、小選單留在底下、選的那一項反白。
 //
-// 這一片只接到兩張子視窗的開與關：副官那張的「副官」鈕（變更／卸任）與
-// 艦隊組成的編輯（點艦種、格盤、陣形、決定寫回編制）還沒接
-// （issue #42「卡在」）。
+// 「編組」那張是同一支編輯器（`fleetedit.go`）：待命部隊照這一支所在的
+// 星域、編制照這一支，「決定」寫回艦隊記錄、「中止」把存量倒回。副官那張的
+// 「副官」鈕（變更／卸任）還沒接（issue #42「卡在」）。
 
 // fleetChangeMenuKind 是規格檔裡那張兩項選單的名字。
 const fleetChangeMenuKind screen.CommandMenuKind = "strategic-change"
@@ -65,6 +65,9 @@ func (g *Game) fleetChangeMenuClick(x, y int) {
 	case fleetChangeOrganise:
 		g.fcmd.changeItem = item
 		g.selectedRow = 0
+		f := &g.fleets[g.fcmd.fleet]
+		g.openFleetEditor(f.Region, f.Faction, f.Expected, f.Composition)
+		g.fcmd.formOn = false
 		g.state = StateFleetChangeOrg
 	default:
 		g.closeFleetChangeMenu()
@@ -106,30 +109,66 @@ func (g *Game) closeFleetChangeAdj() {
 	g.state = StateFleetWindow
 }
 
-// fleetChangeOrgClick 是這一支的艦隊組成：中止／決定都回艦隊視窗（沒改編制時
-// 決定與中止只差游標，`fcmd-change-org-decide`），陣形與格盤的編輯還沒接；
-// 點七個艦種列的哪一列選取條就跳到哪一列（與出擊那條路同一張畫面）。
+// fleetChangeOrgClick 是這一支的艦隊組成（`0FF4:000A` 從 `0DEA:189F` 進來）：
+// 訊息框開著只認它的「確認」；陣形清單開著就選一個套用（點在外面只關清單）；
+// 「中止」把存量倒回、「決定」把工作表寫回這一支（`0FF4:10C1`：`+0x0F` 與
+// `+0x10` 起每組 4 bytes），兩個都回艦隊視窗；其餘交給編輯器（艦種列、格盤）。
 func (g *Game) fleetChangeOrgClick(x, y int) {
+	if g.messageClick(x, y) {
+		return
+	}
+	if g.fcmd.formOn {
+		g.fleetEditorFormationPick(x, y)
+		g.fcmd.formOn = false
+		return
+	}
 	p := g.res.CompositionPanel
 	if p == nil {
 		return
 	}
+	f := &g.fleets[g.fcmd.fleet]
 	switch p.ButtonAt(x, y) {
-	case "cancel", "decide":
-		g.fcmd.changeItem = -1
-		g.state = StateFleetWindow
+	case "cancel":
+		if g.editor != nil {
+			g.editor.Cancel()
+		}
+		g.closeFleetChangeOrg()
+		return
+	case "decide":
+		if g.editor != nil {
+			f.Composition = g.editor.Groups()
+			f.Groups = len(f.Composition)
+		}
+		g.closeFleetChangeOrg()
 		return
 	case "formation":
-		// 陣形清單：issue #42 後半。
+		if g.editor != nil {
+			g.fcmd.formOn = true
+		}
 		return
 	}
-	if spec := g.res.Screens["screen-fleet-composition"]; spec != nil {
-		if w := spec.Windows["overlay"]; w != nil {
-			if i := w.SelectRowAt(x, y); i >= 0 {
-				g.selectedRow = i
-			}
-		}
+	g.fleetEditorClick(g.res.Screens["screen-fleet-composition"], x, y)
+}
+
+// closeFleetChangeOrg 關掉編組那張回艦隊視窗。
+func (g *Game) closeFleetChangeOrg() {
+	g.closeFleetEditor()
+	g.fcmd.formOn = false
+	g.fcmd.changeItem = -1
+	g.state = StateFleetWindow
+}
+
+// fleetChangeOrgRightClick 是編組那張的右鍵：陣形清單開著就關清單、訊息框
+// 開著不理（`3826:023B` 只認左鍵）、其餘拆格盤那一格（`0FF4:0B85`）。
+func (g *Game) fleetChangeOrgRightClick(x, y int) {
+	if g.msgOn {
+		return
 	}
+	if g.fcmd.formOn {
+		g.fcmd.formOn = false
+		return
+	}
+	g.fleetEditorRightClick(g.res.Screens["screen-fleet-composition"], x, y)
 }
 
 // drawFleetChange 畫小選單與（開著的話）子視窗。
@@ -192,17 +231,25 @@ func (g *Game) drawFleetChangeOrg(fb *gfx.Framebuffer) {
 	w.SetSelected(g.selectedRow)
 	w.Draw(fb, g.res.Font, 3, g.res.Faces)
 	f := &g.fleets[g.fcmd.fleet]
-	rec := g.regionRecord(f.Region)
-	if rec == nil {
-		return
-	}
-	v := screen.CompositionView{
-		Ships:    rules.RegionShips(rec, f.Faction),
-		PerUnit:  rules.ShipsPerUnit[:],
-		Mobility: f.Morale,
-		Groups:   compositionViewGroups(f.Composition),
-		Slots:    f.Expected,
+	var v screen.CompositionView
+	if g.editor != nil {
+		v = g.editorView(f.Admiral, f.Adjutant)
+	} else {
+		rec := g.regionRecord(f.Region)
+		if rec == nil {
+			return
+		}
+		v = screen.CompositionView{
+			Ships:    rules.RegionShips(rec, f.Faction),
+			PerUnit:  rules.ShipsPerUnit[:],
+			Mobility: f.Morale,
+			Groups:   compositionViewGroups(f.Composition),
+			Slots:    f.Expected,
+		}
 	}
 	g.res.CompositionPanel.Draw(fb, g.res.Font, v)
 	g.drawCompositionGridWith(fb, spec, v)
+	if g.fcmd.formOn {
+		g.drawEditorFormationMenu(fb)
+	}
 }

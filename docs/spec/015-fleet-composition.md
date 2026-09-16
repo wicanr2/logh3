@@ -1,12 +1,18 @@
 # SPEC 015 — 艦隊組成
 
-狀態：**CONFORMED**（收據 `fok` 整張 640×480 逐位元組相同）
+狀態：**CONFORMED**（版面：收據 `fok` 整張 640×480 逐位元組相同；編輯：
+二十九批 `fcmd-edit-*`／`fcmd-fok-*` 整張逐位元組相同，每一步的存量與
+「決定」寫回的艦隊記錄逐一對上）
 證據：[`docs/re/67`](../re/67-fleet-org-buttons.md)、
-[`docs/re/69`](../re/69-region-ship-strength.md)
+[`docs/re/69`](../re/69-region-ship-strength.md)、
+[`docs/re/293`](../re/293-fleet-composition-letters.md)（編隊那一行）、
+[`docs/re/316`](../re/316-fleet-change-menu.md)（中止、右鍵、存量時序）、
+[`docs/re/317`](../re/317-fleet-composition-editor.md)（編輯：放、拆、陣形、決定、中止）
 資料：[`docs/internals/data/fleet-composition-panel.json`](../internals/data/fleet-composition-panel.json)、
+[`docs/internals/data/fleet-editor.json`](../internals/data/fleet-editor.json)、
 [`docs/internals/data/region-ships-796-01.json`](../internals/data/region-ships-796-01.json)、
 [`docs/internals/data/ship-type-table.json`](../internals/data/ship-type-table.json)
-執行器：dosgolem-logh3 `2833ec9`
+執行器：dosgolem-logh3 `2833ec9`（版面）、`b5485eb`（編輯）
 
 ## 怎麼到得了
 
@@ -85,19 +91,43 @@ n     = 現有組數            ; 進這張畫面時只有旗艦一組
 
 ## 陣形
 
-「陣形」開出 (480,220)–(543,418) 的八列清單：**圓錐／紡錘／半月／Ｕ字／
+「陣形」開出 (480,220)–(543,418) 的八列清單：**圓錐／紡錘／半月／Ｖ字／
 Ｍ字／Ｔ字／分散／密集**（`screen-formation`，收據 `form1`／`form2`／
-`form3`，`docs/re/70`）。反白條跟著滑鼠走，與艦隊編號清單同一種。
+`form3`，`docs/re/70`；原版 `0FF4:09D9` 把選單固定建在格 (30,9)，項目表
+`ds:2A64`）。反白條跟著滑鼠走，與艦隊編號清單同一種；右鍵或點在項目外只關
+清單。選一項的效果見下一節。
+
+## 編輯（`0FF4:000A`，[`docs/re/317`](../re/317-fleet-composition-editor.md)）
+
+出擊命令那條路（艦隊編成按「確認」）與艦隊視窗「變更 → 編組」進的是**同一支
+編輯器**（`rules.FleetEditor`，`internal/game/fleetedit.go`）。它不直接改艦隊
+記錄：進來時把編制抄成「隊形槽 → 一組」的工作表，之後每一步改工作表與
+**那一格星域的待命存量**；「決定」才寫回、「中止」把存量倒回進來那一刻。
+
+| # | 輸入 | 規則 | 收據 |
+|---|---|---|---|
+| E1 | 左鍵艦種列（畫面 (336,160) 起 64 × 140，一列 20）| 選取條跳到那一列；之後放的都是這一種 | `fcmd-edit-row2` |
+| E2 | 左鍵格盤一格（槽 (欄,列) 佔 (136 ＋ 16 欄, 168 ＋ 16 列) 起 16 × 16）| **中央（槽 20）只收戰艦／高速戰艦**，否則「只有戰艦或者高速戰艦才能當做旗艦。」；那一種 存量 ÷ 滿編 ＝ 0 → 「船艦數量不足。」；那一格已經有人 → 先拆掉退回存量；沒有空位（已編成 ＝ `+0x0E`）→ 「無法超過目前統率能力以上的船艦數量。」；否則放一組，艘數 ＝ min(滿編, 存量)、從存量扣掉 | `fcmd-edit-place1`／`-place2`／`-replace`／`-centre-msg`／`-poor-msg`／`-full-msg` |
+| E3 | 右鍵格盤一格 | 空格不動；中央 → 「無法撤離旗艦。」；其餘拆掉、艘數退回存量。右鍵不關窗 | `fcmd-edit-remove`／`-flag-rclick` |
+| E4 | 「陣形」→ 選一項 | 旗艦以外**全部拆掉**（退回存量），再照樣板第 1 組起放，放到空位用完；旗艦是高速戰艦時樣板的戰艦改成高速戰艦；那一種編不出一組就照替代表 `ds:2986` 換第一個有貨的，換不到整批停下來 | `fcmd-edit-form-pick`／`-poor-pick`／`fcmd-fok-form-pick` |
+| E5 | 訊息框 | 樣式 0（20 × 4 格、只有「確認」）、模態、只認左鍵；關掉回編輯器、存量不動 | `fcmd-edit-centre-ok` |
+| E6 | 「決定」 | 工作表壓實排序（旗艦第一、其餘艦種再隊形槽升冪）寫回 `+0x0F`／`+0x10`；出擊那條路回戰略地圖、編組那條路回艦隊視窗（維持費／移動經費／巡航速度跟著編制變）| `fcmd-edit-decide`／`-form-decide`／`fcmd-fok-decide` |
+| E7 | 「中止」 | 存量倒回進來那一刻、編制不動；出擊那條路再退回旗艦那一組、整支作廢回地圖 | `fcmd-edit-cancel`／`fcmd-fok-cancel` |
+
+畫面上的三個數跟著工作表走：待命部隊 ＝ 現在的存量 ÷ 滿編；部隊數 ＝
+已編成／`+0x0E`；**機動力 ＝ `100 − (270 − 2 × max(提督 +23, 副官 +23)) × 表[組數] ÷ 100`**
+（`297B:083F`，表 `[0,0,7,14,21,28,35,42,49,56,63,0]`，`rules.FleetMobility`）
+——一組 100％、萊因哈特那一支 2／3／8 組 98／95／81％。
+
+樣板、替代表、選單項目、熱區與機動力表都在 `fleet-editor.json`；四句訊息在
+`message-box.json`（`edit_*`）。
 
 ## 還沒做的
 
-- **編隊那一行只有一個局面的收據**：現有收據那一支艦隊只有旗艦一組，
-  畫面上看得到的字母只有一個Ｂ。規則是反組譯出來的（`docs/re/293`
-  confirmed），但「兩份以上收據逐格相同」還沒達成——要補一份用
-  `-poke` 造出多組編制的收據，命令列寫在 `docs/re/293` 末節。
-- 選了某一個陣形之後怎麼樣、點艦種列與格盤怎麼改編制（`0FF4:0909` 的事件
-  迴圈沒讀，`docs/re/316` §三）。「決定」建出來的艦隊記錄已對上
-  （`fcmd-win/fleet0.bin`，`docs/re/312`）。
+- 旗艦是高速戰艦時「陣形」把樣板的戰艦改成高速戰艦：只有反組譯（`docs/re/317`
+  §六 strong inference），這一局沒有高速戰艦旗艦的提督可以錄收據。
+- 編輯器分配的艦艇池索引（原版新組拿到 2、3、4…）remake 沒有模型：編制只記
+  艦種、艘數、滿編、隊形槽。
 - 星域記錄的艦艇艘數在 `STELLAR.DT*` 檔案裡是全 0，載入時才填，
   填的那一步未解——開局值目前是量到的（`region-ships-796-01.json`），
   與未安定度／經濟力／成長率／稅率是同一種缺口。

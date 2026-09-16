@@ -1,18 +1,20 @@
 # 戰略艦隊命令同狀態對拍（清單點列 → 艦隊視窗 → 作戰 → 五項 → 確認）
 
-日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更）
+日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更、艦隊組成編輯器）
 
 比較等級：`same-state`（整張 640×480）。
-原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：五十一批是正常玩家路徑、沒有
+原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：七十五批是正常玩家路徑、沒有
 注入——冷啟動走 `dec1` 的序列（主選單 → 防拷 → 出擊命令 → 萊因哈特 → 出擊 →
 確認 → 決定）到戰略地圖存檢查點，之後每一張從上一張的檢查點只多一個輸入
 （`tools/fleetcmd_receipts.sh`；每批附 `plane.bin` 字元平面與 `fleet0.bin`
 艦隊表第 0 筆）。停用旗標那七批（`fcmd-battle-*`、`fcmd-flag1-*`）用 `-poke`
-造局面，注入的位址、步數與值寫在 `docs/re/315` §三，remake 在同一個時點改
-同一個欄位。remake 走同一條路徑（`internal/game/fleetcmd_test.go`）。
+造局面，注入的位址、步數與值寫在 `docs/re/315` §三；艦隊組成編輯器的
+`fcmd-edit-poor*` 五批把運補艦存量 poke 成 0（`docs/re/317` §九）；remake 在
+同一個時點改同一個欄位。remake 走同一條路徑（`internal/game/fleetcmd_test.go`、
+`fleetedit_test.go`）。
 
 `GIN3.COM` SHA-256 `770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918`；
-五十八份 `pal.bin` SHA-256 都是
+八十七份 `pal.bin` SHA-256 都是
 `28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8`。
 座標是滑鼠座標（畫面 y ＝ 滑鼠 y ＋ 40）。
 
@@ -76,6 +78,34 @@
 | `fcmd-change-org-rclick` | （從 `fcmd-change-org`）右鍵 (300,200) → 不動 | `015473d94ca5e1966f4a902b05b6fa44cc238afc453e9287679a2eba656b290b` | 0 |
 | `fcmd-fok-cancel` | 冷啟動同 `fcmd-base`，艦隊組成按中止 (510,280) → 回地圖、存量 78000 | `284f41b4d9872ad3c873c3febbb9703096d9ef94801eb98be83e9ea9b83dc09f` | 0 |
 | `fcmd-fok-rclick` | 冷啟動同上，艦隊組成按右鍵 → 不動 | `7fea9d30203f0f052457bf5a5c12e86f48002fe00b5539e3e7f3ce639d5a0298` | 0 |
+| `fcmd-edit-place1` | （從 `fcmd-change-org`）左鍵 (176,200) 槽 19 放戰艦 | `9d73928a392583cdd565d35fa041969221a207648b2ee068997c3488beefc4a2` | 0 |
+| `fcmd-edit-row2` | 左鍵 (360,170) 巡航艦列 | `9d96001b90d918d194cbb97306527db67ed6e1988af7717b66c20ce45b744871` | 0 |
+| `fcmd-edit-place2` | 左鍵 (240,200) 槽 21 放巡航艦 | `474b900fcdf37f051d3543d9a828fbae3980fe2a95185211cb5e11a378dd4600` | 0 |
+| `fcmd-edit-replace` | （從 `fcmd-edit-place2`）左鍵 (176,200) 槽 19 換成巡航艦 | `41b4923f11f9b86c5833b8671ff7b3605f92830176f9f08f20ca19a36a822f07` | 0 |
+| `fcmd-edit-remove` | （從 `fcmd-edit-place2`）右鍵 (176,200) 拆槽 19 | `764247354046d3ec879b4aa1c8329e1e51c8e1838f8896dd03a8f9061aacc33f` | 0 |
+| `fcmd-edit-centre-msg` | （從 `fcmd-edit-place2`）左鍵 (208,200) 巡航艦放中央 → 訊息框 | `dcef66450939da92e294fdabc0e7807bdbb582268cebfba2a79ad41dea25bc41` | 0 |
+| `fcmd-edit-centre-ok` | 左鍵 (432,223) 確認 | `2065261289159a5e5d5a611d0d67ec87ac9f248a12111591313e1112a0f82b8f` | 0 |
+| `fcmd-edit-flag-rclick` | （從 `fcmd-edit-place2`）右鍵 (208,200) 中央 → 「無法撤離旗艦。」| `78ab08e24f20ebf502ed1fc3bfce66ddf72193472292affc05d3b821d3766427` | 0 |
+| `fcmd-edit-cancel` | （從 `fcmd-edit-place2`）左鍵 (510,280) 中止 → 存量倒回 | `1327506be7002eac56052b3363e76e3176390d87088b19cba63e7e2020f9d4c4` | 0 |
+| `fcmd-edit-decide` | （從 `fcmd-edit-place2`）左鍵 (510,300) 決定（`+0x0F` ＝ 3）| `8669e400742fc8c77d491de64a141f69a7b41177988bf4eeb12582f998c2cf6a` | 0 |
+| `fcmd-edit-formation` | （從 `fcmd-edit-remove`）左鍵 (510,270) 陣形 | `6c7661b90d970b44d64cfbfcff480a2f5cf16eecd422c2721bbf1fe3ffe680ca` | 0 |
+| `fcmd-edit-form-hover` | 游標移到 (505,350) 密集 | `c4710bca22436ab2a0975d3a2e0d9453d5e8dd57bca4e2f5e2e298b29a78bdb0` | 0 |
+| `fcmd-edit-form-rclick` | （從 `fcmd-edit-formation`）右鍵 (300,200) | `23061a2af590bf70b05a32a22fb613a7cd5323630dc150b31da16de3797e4bea` | 0 |
+| `fcmd-edit-form-pick` | （從 `fcmd-edit-formation`）左鍵 (505,210) 圓錐 → 8/8、81％ | `9fe58c6fb2994f5b949b86fd9bcde37dccdfc907e577f3348572a6188bc4fb62` | 0 |
+| `fcmd-edit-full-msg` | 左鍵 (144,136) 槽 0 → 「無法超過…」| `47893b787168e13a540cf6a4ccf8fa07da065c84d9dcc097e31e417851b9a290` | 0 |
+| `fcmd-edit-form-decide` | （從 `fcmd-edit-form-pick`）左鍵 (510,300) 決定（`+0x0F` ＝ 8）| `6f570476544b5913c0c7c95c592aee6c344b269e20d8cbd9cfd5e2a1c2fdf8b9` | 0 |
+| `fcmd-edit-poor` | （從 `fcmd-change-menu`）471M 步 `-poke lin:5F310=00,00,00,00`（運補艦 0）；左鍵 (497,352) 編組 | `1c3a8296c24da680500fd0107c035f72cf5da79d54832903a287375156212f27` | 0 |
+| `fcmd-edit-poor-row5` | 左鍵 (360,230) 運補艦列 | `9af313ffd78da0b6b7926c32e369cf33d0264ff22469cdc1a09829c14a941890` | 0 |
+| `fcmd-edit-poor-msg` | 左鍵 (176,200) → 「船艦數量不足。」| `50420c27d3df5d430e1f949a39919a3004003dec2bde394d3453d7dc2f0da0b8` | 0 |
+| `fcmd-edit-poor-form` | （從 `fcmd-edit-poor`）左鍵 (510,270) 陣形 | `3fce8834fd1bcd4b62e77fa99ef0371eaf720048ec33d36de5001aa327a23e6a` | 0 |
+| `fcmd-edit-poor-pick` | 左鍵 (505,210) 圓錐 → (5,29) 換成修護艦 | `4d671bbed080d7400b324cfc78f4967576272322f9fdc5fc13a6c211e2401b4a` | 0 |
+| `fcmd-fok` | 冷啟動同 `fcmd-base`，350M 截（艦隊組成剛開）| `767fb3660a681deb410882d1305beff0faa6039d99eb2a71710e3f59891252b3` | 0 |
+| `fcmd-fok-place1` | 左鍵 (176,200) | `28b13e7e6fd81f15a74ef191ae7c509fa4aa0b503b97e7c2d2ba62c5f2f09faf` | 0 |
+| `fcmd-fok-row2` | 左鍵 (360,170) | `5cb6ae1486b6a2ca1b3a8181f02bfa946530bcad41578d2dda8e2a2483f6d78c` | 0 |
+| `fcmd-fok-place2` | 左鍵 (240,200) | `5a4337a027ad3f6288dc220a8ee0c72223f2ea4fb639afd9a6137adec0284a68` | 0 |
+| `fcmd-fok-decide` | 左鍵 (510,300) 決定 → 地圖（`+0x0F` ＝ 3）| `b7a824f3153d94cab8d1434efdf618d9c8b727594fbf94dfbb3b5fc42eafc4ce` | 0 |
+| `fcmd-fok-form` | （從 `fcmd-fok-row2`）左鍵 (510,270) 陣形 | `a29dc2dbdbf3162756b49abe83ba424e45b54d0ed1bc06815d99092a026c35fb` | 0 |
+| `fcmd-fok-form-pick` | 左鍵 (505,210) 圓錐 | `4e44f62495e4560137250a1bbf9fee9d6179b9496b156f7c1e52ef61e12a1cd3` | 0 |
 
 記憶體：`fcmd-done/fleet0.bin` 與 `fcmd-base/fleet0.bin` 只差 `+0x07`（FF→02）
 與 `+0x08`（05→00）；remake 的 `Fleet.Target`／`Move`／`Parked` 逐一對上
@@ -88,7 +118,8 @@
 那張視窗（小圖、引線、只重畫變過的格子）見 `docs/re/314`；占領的允許表、費沙
 兩頁提醒、選單停用旗標、不畫「變更」與左下角「處於戰鬥狀態」見 `docs/re/315`；
 「變更」的小選單、兩張子視窗與艦隊組成的中止／右鍵、待命艘數的扣法（開局 78000）
-見 `docs/re/316`。
+見 `docs/re/316`；艦隊組成編輯器（放、拆、陣形、決定寫回、每一步的存量）見
+`docs/re/317`——二十九批各附 `-peek lin:5F2FC:28` 的七個存量與 `fleet0.bin`。
 `fcmd-standby`／`fcmd-standby-pick` 排除的那一列（畫面 y 347、x 152–279）是原版
 小圖的第 128 列：來源列 102 超出 102 列的地圖，讀到緩衝區後面的東西
 （規格 051 已知差異）；其餘 307,072 個像素相同。
@@ -105,9 +136,15 @@
 `TestFleetOccupyPhezzanWarningMatchesOracle`、`TestFleetMenuDisabledInBattleRegion`、
 `TestFleetMenuDisabledByFleetFlag`、`TestFleetChangeMenuMatchesOracle`、
 `TestFleetChangeAdjutantWindowMatchesOracle`、`TestFleetChangeOrganiseWindowMatchesOracle`、
-`TestFleetCompositionCancelAndRightClick`；
+`TestFleetCompositionCancelAndRightClick`；編輯器（`fleetedit_test.go`）
+`TestFleetEditPlaceMatchesOracle`、`TestFleetEditReplaceMatchesOracle`、
+`TestFleetEditRemoveMatchesOracle`、`TestFleetEditFlagshipKindMessageMatchesOracle`、
+`TestFleetEditCancelAndDecideMatchOracle`、`TestFleetEditFormationMatchesOracle`、
+`TestFleetEditPoorStockMatchesOracle`、`TestFleetEditSortiePathMatchesOracle`
+（二十九批整張，另比七個存量與 `fleet0.bin` 的組數與每組的艦種／槽）；
 顯示層 `tools/gui_check.sh` 的 `fcmd-win`、`fcmd-done`、`fcmd-exec`、
-`fcmd-occupy-phezzan3`、`fcmd-change-org`（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
+`fcmd-occupy-phezzan3`、`fcmd-change-org`、`fcmd-edit-full-msg`、`fcmd-fok-decide`
+（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
 
 過程中改到的通用規則（不只這條路徑）：底線裝飾（`ui.DrawCellDecor`）、
 清單被點那一列的反白、左下角與右側面板「寫進去那一刻的文字」與

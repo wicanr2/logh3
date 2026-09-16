@@ -23,6 +23,11 @@ type CompositionPanel struct {
 		Count         int
 		CountRight    int `json:"count_right"`
 		QuantityRight int `json:"quantity_right"`
+		// Hotspot 是點哪一列算數的矩形（熱區清單 `2A00` 第 0 筆，比框
+		// 左右各窄 2 px）；一列 Pitch 高。
+		Hotspot struct {
+			X, Y, W, H int
+		} `json:"hotspot"`
 	} `json:"rows"`
 	Units struct {
 		Y                int
@@ -168,6 +173,20 @@ func (p *CompositionPanel) GridCell(slot int) (col, row int, ok bool) {
 		}
 	}
 	return 0, 0, false
+}
+
+// RowAt 回畫面座標 (x,y) 落在七個艦種列的哪一列；沒有回 -1
+// （原版 `0FF4:087A` 查到熱區代碼 0 之後 `列號 ＝ 格列 − 2`，`0FF4:0909`）。
+func (p *CompositionPanel) RowAt(x, y int) int {
+	h := p.Rows.Hotspot
+	if h.W <= 0 || p.Rows.Pitch <= 0 || x < h.X || x >= h.X+h.W || y < h.Y || y >= h.Y+h.H {
+		return -1
+	}
+	i := (y - h.Y) / p.Rows.Pitch
+	if i >= p.Rows.Count {
+		return -1
+	}
+	return i
 }
 
 // ButtonAt 回畫面座標 (x,y) 落在哪一顆按鈕上；沒有回空字串。

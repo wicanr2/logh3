@@ -295,6 +295,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	editorTables, err := rules.LoadEditorTables(filepath.Join(data, "fleet-editor.json"))
+	if err != nil {
+		return nil, err
+	}
 	shipKinds, err := rules.LoadShipKindTable(filepath.Join(data, "ship-kind-table.json"))
 	if err != nil {
 		return nil, err
@@ -347,7 +351,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds, AdvanceRoutes: routes,
 		FleetWindow: fleetWindow, FleetActionMenu: fleetActionMenu, FleetStandby: fleetStandby,
-		Composition: compTables, DefaultAdjutants: adjutants,
+		Composition: compTables, EditorTables: editorTables, DefaultAdjutants: adjutants,
 		MessageBox: msgBox, FrameTiles: frameTiles,
 		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,
 		PlanetInfo:    planetInfo,

@@ -35,6 +35,11 @@ cases=(
   "fcmd-occupy-phezzan3|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 332; click 163 136; click 300 240; click 300 240"
   # 變更 → 編組：這一支的艦隊組成疊在艦隊視窗上（docs/re/316）。
   "fcmd-change-org|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 365; click 497 392"
+  # 編組的編輯器（docs/re/317）：槽 19 放戰艦 → 換巡航艦列 → 槽 21 放 → 右鍵拆槽 19
+  # → 陣形 → 圓錐（8/8、機動力 81％）→ 再點槽 0 跳「無法超過…」訊息框。
+  "fcmd-edit-full-msg|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 365; click 497 392; click 176 240; click 360 210; click 240 240; rclick 176 240; click 510 310; click 505 250; click 144 176"
+  # 出擊命令那條路的同一支編輯器：槽 19 放戰艦、換列、槽 21 放巡航艦、決定 → 地圖。
+  "fcmd-fok-decide|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 176 240; click 360 210; click 240 240; click 510 340"
 )
 fail=0
 for c in "${cases[@]}"; do

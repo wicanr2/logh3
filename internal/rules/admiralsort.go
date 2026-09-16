@@ -6,6 +6,10 @@ import "sort"
 const (
 	admiralCommand = 0x0B // +11 統率力
 	admiralOperate = 0x17 // +23 運用
+
+	// AdmiralOperationsAbility 是 admiralOperate 給外面用的名字：艦隊組成的
+	// 「機動力」看提督與副官這一項取大（`297B:083F`，`rules.FleetMobility`）。
+	AdmiralOperationsAbility = admiralOperate
 )
 
 // AdmiralAbility 回一筆提督記錄的某一項能力值（位移就是 `docs/internals/08`

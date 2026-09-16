@@ -1,5 +1,5 @@
 {
- "_note": "訊息框的版面（原版 3826:0005，樣板表在 ds:8BEC，一種 6 bytes；docs/re/137）。外框是 FRAME.BLK 的圖塊，起始碼 1（docs/re/138）。樣板寫的是**內容**的格數，旗標讓外面再包兩格框；格 y 的 row_bias 就是格座標系原點的 40 像素。文字的排版不在這裡——內容走通用的文字緩衝區（docs/re/141、internals/49）。按鈕來自 37A9:000F 的子元件表（ds:8CFA + 種類×4），左右各多一格畫端點。",
+ "_note": "訊息框的版面（原版 3826:0005，樣板表在 ds:8BEC，一種 6 bytes；docs/re/137）。外框是 FRAME.BLK 的圖塊，起始碼 1（docs/re/138）。樣板寫的是**內容**的格數，旗標讓外面再包兩格框；格 y 的 row_bias 就是格座標系原點的 40 像素。文字的排版不在這裡——內容走通用的文字緩衝區（docs/re/141、internals/49）。按鈕來自 37A9:000F 的子元件表（ds:8CFA + 種類×4），左右各多一格畫端點。 艦隊組成編輯器的四句（edit_*）是 0FF4:0C80／0FF4:0DB1 開的樣式 0 框（docs/re/317）。",
  "row_bias": 2,
  "templates": [
   {
@@ -172,6 +172,39 @@
    "colour": 151,
    "text": "沒有可以補充的船艦。",
    "bytes": "a853a6b3a569a548b8c9a552aabab2eec4a5a143"
+  },
+  {
+   "name": "edit_flagship_kind",
+   "offset": "ds:2B4E",
+   "kind": 0,
+   "colour": 151,
+   "text": "只有戰艦或者高速戰艦才能當做旗艦。",
+   "bytes": "a575a6b3bed4c4a5a9ceaaccb0aab374bed4c4a5a47eafe0b7edb0b5ba58c4a5a143"
+  },
+  {
+   "name": "edit_no_ships",
+   "offset": "ds:2B71",
+   "kind": 0,
+   "colour": 151,
+   "text": "船艦數量不足。",
+   "bytes": "b2eec4a5bcc6b671a4a3a8aca143"
+  },
+  {
+   "name": "edit_over_capacity",
+   "offset": "ds:2B80",
+   "kind": 0,
+   "colour": 151,
+   "text": "無法超過目前統率能力以上的船艦數量。",
+   "bytes": "b54caa6bb657b94ca5d8ab65b2ceb276afe0a44fa548a457aabab2eec4a5bcc6b671a143"
+  },
+  {
+   "name": "edit_flagship_remove",
+   "offset": "ds:2BA5",
+   "kind": 0,
+   "colour": 151,
+   "text": "無法撤離旗艦。",
+   "bytes": "b54caa6bba4dc2f7ba58c4a5a143202020202020202020202020202020202020",
+   "note": "字串後面帶 18 個半形空格（原版就是這樣寫的，docs/re/317）"
   }
  ]
 }

@@ -55,6 +55,9 @@ type fleetCmd struct {
 	changeHover      int
 	changeItem       int
 	listUnpressed    bool
+	// formOn ＝ 「變更 → 編組」那張的陣形清單開著（出擊那條路用
+	// `StateFormation`，這條路疊在艦隊視窗上沒有自己的畫面規格）。
+	formOn bool
 }
 
 // 作戰選單的五項（原版 `+0x08` 的動作碼就是項目索引，`docs/re/312` §三）。
@@ -384,8 +387,9 @@ func (g *Game) fleetListRegion() int {
 }
 
 // fleetCmdRightClick 是這條路上每一層的右鍵：關最上面那一層
-// （收據 `fcmd-win-rclick`／`fcmd-menu-rclick`／`fcmd-pick-rclick`）。
-func (g *Game) fleetCmdRightClick() {
+// （收據 `fcmd-win-rclick`／`fcmd-menu-rclick`／`fcmd-pick-rclick`）；
+// 座標只有編組那張用得到（拆格盤的哪一格）。
+func (g *Game) fleetCmdRightClick(x, y int) {
 	switch g.state {
 	case StateFleetWindow:
 		g.closeFleetWindow()
@@ -409,7 +413,9 @@ func (g *Game) fleetCmdRightClick() {
 		// 副官那張右鍵 ＝ 結束（`fcmd-change-adj-rclick`）。
 		g.closeFleetChangeAdj()
 	case StateFleetChangeOrg:
-		// 艦隊組成不認右鍵（`fcmd-change-org-rclick`）。
+		// 右鍵不關窗（`fcmd-change-org-rclick`），只拆格盤那一格
+		// （`fcmd-edit-remove`）或關陣形清單。
+		g.fleetChangeOrgRightClick(x, y)
 	}
 }
 
