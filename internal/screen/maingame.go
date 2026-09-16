@@ -239,6 +239,20 @@ type GameWindow struct {
 	} `json:"lines"`
 }
 
+// SetLineCode 把第 line 行第 cell 格的字碼換掉。那一行會先複製出來，所以
+// 在視窗的**複本**上呼叫不會動到規格本身（「待命中副官資料」拿「待命中提督資料」
+// 那張換兩個字）。
+func (w *GameWindow) SetLineCode(line, cell int, code uint16) {
+	if line < 0 || line >= len(w.Lines) || cell < 0 || cell >= len(w.Lines[line].Cells) {
+		return
+	}
+	lines := append(w.Lines[:0:0], w.Lines...)
+	cells := append(lines[line].Cells[:0:0], lines[line].Cells...)
+	cells[cell].Code = code
+	lines[line].Cells = cells
+	w.Lines = lines
+}
+
 // TextField 是視窗內容裡一塊會變的字，靠右對齊。與 NumField 的差別是
 // 它帶自己的 `Y`——那幾塊在規格裡是 `lines` 的一行，不是 `fields` 的一列。
 type TextField struct {

@@ -40,6 +40,9 @@ cases=(
   "fcmd-edit-full-msg|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 365; click 497 392; click 176 240; click 360 210; click 240 240; rclick 176 240; click 510 310; click 505 250; click 144 176"
   # 出擊命令那條路的同一支編輯器：槽 19 放戰艦、換列、槽 21 放巡航艦、決定 → 地圖。
   "fcmd-fok-decide|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 176 240; click 360 210; click 240 240; click 510 340"
+  # 變更 → 副官 → 副官 → 變更 → 待命中副官資料第 1 列（米達麥亞）→ 出擊(決定) → 結束：
+  # 艦隊視窗的副官換成米達麥亞、維持費 29（docs/re/318）。
+  "fcmd-adj-confirm-close|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 365; click 497 372; click 430 340; click 430 350; click 450 110; click 496 320; click 480 340"
 )
 fail=0
 for c in "${cases[@]}"; do

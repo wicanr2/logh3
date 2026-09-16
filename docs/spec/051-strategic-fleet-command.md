@@ -11,9 +11,9 @@
 同樣相同（`tools/gui_check.sh`）。
 「變更」那顆鈕：小選單與兩張子視窗的開關接上了（十批 `fcmd-change-*`），
 「編組」那張裡面的編輯（放、拆、陣形、決定寫回；二十九批 `fcmd-edit-*`／
-`fcmd-fok-*`）也接上了——規則在 [`015`](015-fleet-composition.md) 「編輯」一節，
-與出擊那條路同一支；副官那張的「副官」（變更／卸任）還不在（見「排除範圍」，
-issue #42）。
+`fcmd-fok-*`）與副官那張的「副官」→ 變更／卸任（二十二批 `fcmd-adj-*`／`fcmd-fadj-*`）
+也都接上了——規則在 [`015`](015-fleet-composition.md) 「編輯」一節與
+[`013`](013-fleet-organisation.md) 「副官」一節，與出擊那條路同一支。
 證據：[`docs/re/312`](../re/312-strategic-fleet-command-flow.md)（§七是實作
 對拍時補讀的）、[`docs/re/313`](../re/313-fleet-command-round-2.md)（第二輪：
 記號、取消規則、駐留／輸送、實行之後的錢與地圖）、
@@ -21,8 +21,9 @@ issue #42）。
 [`docs/re/315`](../re/315-fleet-occupy-and-menu-flags.md)（占領、費沙提醒、
 停用旗標、左下角狀態字）、[`docs/re/316`](../re/316-fleet-change-menu.md)
 （變更：副官／編組、艦隊組成的中止與存量時序）、
-[`docs/re/317`](../re/317-fleet-composition-editor.md)（艦隊組成編輯器）。
-收據：`fcmd-*` 八十七批（`tools/fleetcmd_receipts.sh`，dosgolem `b5485eb`），
+[`docs/re/317`](../re/317-fleet-composition-editor.md)（艦隊組成編輯器）、
+[`docs/re/318`](../re/318-fleet-adjutant-change.md)（副官：變更／卸任）。
+收據：`fcmd-*` 一百零九批（`tools/fleetcmd_receipts.sh`，dosgolem `b5485eb`），
 摘要在 [`docs/playtest/021`](../playtest/021-strategic-fleet-command.md)。
 相關：[`043`](043-ai-capital-reach.md)（可達表，本片從艦隊所在星域起算）、
 [`022`](022-fleet-detail.md)（十二個能力值與色 5 的規則同源）、
@@ -114,7 +115,7 @@ remake 到目前為止玩家建得了艦隊、打得了仗，卻**派不出去**
 | V1' | 同上 | 右鍵；左鍵點在兩項外 | `StateFleetWindow`（與作戰選單右鍵那張逐位元組相同）| `fcmd-change-menu-rclick` |
 | V2 | 同上 | 左鍵「副官」 | `StateFleetChangeAdj`：艦隊編成那張視窗（[`013`](013-fleet-organisation.md)）的變體疊上來——同一個版面、沒有「艦隊編號」、「確認」印成「結束」；提督／副官／編號取自這一支艦隊 | `fcmd-change-adj` |
 | V2' | `StateFleetChangeAdj` | 左鍵「結束」(464,340) 32×20；或右鍵 | `StateFleetWindow`；副官抄自提督記錄 `+0x07`、費用重算；**右下角清單那一列不再反白**（`073F:0522` 重畫成沒按下的樣子）| `fcmd-change-adj-close`、`-adj-rclick` |
-| V2'' | 同上 | 左鍵「副官」(416,340) | **還沒接**（原版開 變更／卸任 小選單，`fcx-change-adj-menu`；issue #42）| — |
+| V2'' | 同上 | 左鍵「副官」(416,340) | 變更／卸任 小選單 → 規格 [`013`](013-fleet-organisation.md) 「副官」的 A1–A5：卸任、變更 → 「待命中副官資料」→ 詳細資料 → 出擊(決定)；改的是提督記錄，「結束」才抄回艦隊 `+0x05` 並重算營運與費用 | `fcmd-adj-*` 十六批 |
 | V3 | `StateFleetChangeMenu` | 左鍵「編組」 | `StateFleetChangeOrg`：這一支的艦隊組成（[`015`](015-fleet-composition.md) 同一張、同一支編輯器）疊上來——待命部隊照所在星域、編制照這一支、部隊數 n／應有數、機動力照組數（`rules.FleetMobility`，一組 100％）| `fcmd-change-org` |
 | V3' | `StateFleetChangeOrg` | 左鍵「中止」或「決定」 | `StateFleetWindow`：中止把存量倒回進來那一刻、編制不動；決定把工作表寫回這一支（`+0x0F`、`+0x10` 起），維持費／移動經費／巡航速度跟著變；清單那一列仍反白 | `fcmd-change-org-cancel`、`-org-decide`、`fcmd-edit-cancel`、`-decide`、`-form-decide` |
 | V3'' | 同上 | 右鍵 | 不關窗：拆格盤那一格（空格不動、中央「無法撤離旗艦。」）；陣形清單開著就只關清單 | `fcmd-change-org-rclick`、`fcmd-edit-remove`、`-flag-rclick`、`-form-rclick` |
@@ -194,7 +195,6 @@ remake 到目前為止玩家建得了艦隊、打得了仗，卻**派不出去**
 
 ## 排除範圍（還沒做，另開 issue）
 
-- 「變更」副官那張裡面的「副官」→ 變更／卸任（換人的清單、卸任的效果；issue #42）。
 - 占領命令在回合裡的效果（走到敵方星域之後那一路：`113A:0545`、
   `113A:0899`「無法直接到達此星系」「要占領此星系嗎」）——本片只到下命令那一刻。
 - 清單的捲動（欄 17 的上下鈕）與四個分頁（行星／敵艦隊／提督）。
@@ -222,9 +222,10 @@ remake 到目前為止玩家建得了艦隊、打得了仗，卻**派不出去**
 - 占領：`TestFleetOccupyOrderMatchesOracle`（允許表六格；`fcmd-occupy-pick`／`-far`／`-confirm`／`-done`（`Target ＝ 16`、`Move ＝ 1`）／`-reopen` 整張）、`TestFleetOccupyPhezzanWarningMatchesOracle`（`fcmd-occupy-phezzan`／`-phezzan2`／`-phezzan3`／`-phezzan-done`（`Target ＝ 14`）整張）。
 - 停用旗標：`TestFleetMenuDisabledInBattleRegion`（首都 `+0x13 ← 4` 之後 `fcmd-battle-base`／`-win`／`-menu`／`-menu-hover`／`-menu-click` 整張，含左下角「處於戰鬥狀態」與不畫「變更」）、`TestFleetMenuDisabledByFleetFlag`（`Fleet.Flags |= 1`；`fcmd-flag1-menu`／`-menu-click` 整張）。
 - 變更：`TestFleetChangeMenuMatchesOracle`（`fcmd-change-menu`／`-hover`／`-rclick`）、`TestFleetChangeAdjutantWindowMatchesOracle`（`fcmd-change-adj`／`-close`／`-rclick`）、`TestFleetChangeOrganiseWindowMatchesOracle`（`fcmd-change-org`／`-cancel`／`-decide`／`-rclick`）；艦隊組成的中止與右鍵（出擊那條路）：`TestFleetCompositionCancelAndRightClick`（`fcmd-fok-cancel`：回地圖、存量退回 78000；`fcmd-fok-rclick`）。
+- 副官（`fleetadj_test.go`，規格 013 A1–A5）：`TestFleetChangeAdjutantMenuMatchesOracle`（`fcmd-adj-menu`／`-hover`／`-rclick`）、`TestFleetAdjutantDismissMatchesOracle`（`fcmd-adj-dismiss`／`-close`，提督記錄 +07／+09 與艦隊 副官／營運）、`TestFleetAdjutantChangeMatchesOracle`（`fcmd-adj-change`／`-hover`／`-down`／`-down2`／`-up`／`-pick`／`-pick2`／`-pick-rclick`／`-pick-cancel`／`-pick-confirm`／`-confirm-close`；`-change-rclick` 不比，見規格 013 已知差異）、`TestFleetAdjutantSortiePathMatchesOracle`（`fcmd-fadj`／`-dismiss`／`-change`／`-change-pick`／`-pick-confirm`／`-confirm-fleet`）。
 - 編組的編輯器（`fleetedit_test.go`，規格 015 E1–E7）：`TestFleetEditPlaceMatchesOracle`／`ReplaceMatchesOracle`／`RemoveMatchesOracle`／`FlagshipKindMessageMatchesOracle`／`CancelAndDecideMatchOracle`／`FormationMatchesOracle`／`PoorStockMatchesOracle`（`fcmd-edit-*` 二十一批整張，另比七個存量與 `fleet0.bin` 的組數、每組的艦種／槽）、`TestFleetEditSortiePathMatchesOracle`（出擊那條路 `fcmd-fok`／`-place1`／`-row2`／`-place2`／`-decide`／`-form`／`-form-pick` 整張）。
 - 右鍵三層與中止：`fcmd-win-rclick`／`fcmd-menu-rclick`／`fcmd-pick-rclick`／`fcmd-cancel`／`fcmd-close` 各一張整張對拍。
 - `TestFleetHoverHomeCountsNewFleet`：決定之後首都記錄的艦隊數是 1，游標移到首都那塊重寫成 1：0（`fcmd-hover-home`）。
-- GUI：`tools/gui_check.sh` 的 `fcmd-win`、`fcmd-done`、`fcmd-exec`、`fcmd-occupy-phezzan3`、`fcmd-change-org`、`fcmd-edit-full-msg`、`fcmd-fok-decide`（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
+- GUI：`tools/gui_check.sh` 的 `fcmd-win`、`fcmd-done`、`fcmd-exec`、`fcmd-occupy-phezzan3`、`fcmd-change-org`、`fcmd-edit-full-msg`、`fcmd-fok-decide`、`fcmd-adj-confirm-close`（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
 
 以上全綠（2026-09-16；`go test ./...` 與 `tools/gui_check.sh`）。

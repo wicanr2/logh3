@@ -23,6 +23,7 @@ FLEET_LO=$(printf '%X' $((0x${DS}*16 + 0xC074)))   # 艦隊表第 0 筆 122 byte
 FLEET_HI=$(printf '%X' $((0x${DS}*16 + 0xC074 + 122)))
 HOLD=3000000
 STOCK="-peek lin:5F2FC:28"      # 星域 0 帝國七種存量（第 13、14 段）
+ADM="-peek lin:602AC:28,lin:602E4:28,lin:6062C:28"   # 提督記錄 0／2／32（第 15 段）
 
 # rec <批次> <步數上限> <上一個檢查點|-> <ck|-> <旗標...>
 # 每一批都倒：畫面、調色盤、字元平面、艦隊表第 0 筆。`ck` ＝ 在上限的前一道
@@ -195,6 +196,40 @@ rec fcmd-fok-place2       425000000 fcmd-fok-row2      ck -clicks 402000000:240:
 rec fcmd-fok-decide       450000000 fcmd-fok-place2    -  -clicks 427000000:510:300 -click-hold $HOLD $STOCK
 rec fcmd-fok-form         425000000 fcmd-fok-row2      ck -clicks 402000000:510:270 -click-hold $HOLD $STOCK
 rec fcmd-fok-form-pick    450000000 fcmd-fok-form      -  -clicks 427000000:505:210 -click-hold $HOLD $STOCK
+# 15. 「變更 → 副官」那張的「副官」鈕 (430,300) → 變更／卸任 小選單（07F9:0A80，框在格 (25,14)，
+#     變更 (430,310)、卸任 (430,330)）：卸任 → 副官那幾列清掉；變更 → 「待命中副官資料」清單
+#     （0C0A:000F(星域, 0x65, 等級)，列 i 在 (450, 62＋20i)）→ 點一列 → 提督詳細資料 → 決定／中止。
+#     每批多倒提督記錄 0（萊因哈特）、2（米達麥亞）、32（修特萊）各 28 bytes（$ADM）。
+rec fcmd-adj-menu          520000000 fcmd-change-adj ck -clicks 497000000:430:300 -click-hold $HOLD $ADM
+rec fcmd-adj-menu-hover    530000000 fcmd-adj-menu   -  -mouse-x 430 -mouse-y 330 -mouse-at 522000000
+rec fcmd-adj-menu-rclick   545000000 fcmd-adj-menu   -  -rclicks 522000000:300:200 -click-hold $HOLD $ADM
+rec fcmd-adj-dismiss       545000000 fcmd-adj-menu   ck -clicks 522000000:430:330 -click-hold $HOLD $ADM
+rec fcmd-adj-dismiss-close 570000000 fcmd-adj-dismiss - -clicks 547000000:480:300 -click-hold $HOLD $ADM
+rec fcmd-adj-change        545000000 fcmd-adj-menu   ck -clicks 522000000:430:310 -click-hold $HOLD $ADM
+rec fcmd-adj-change-hover  555000000 fcmd-adj-change -  -mouse-x 450 -mouse-y 150 -mouse-at 547000000
+rec fcmd-adj-change-rclick 570000000 fcmd-adj-change -  -rclicks 547000000:300:200 -click-hold $HOLD $ADM
+rec fcmd-adj-change-pick   570000000 fcmd-adj-change ck -clicks 547000000:450:70 -click-hold $HOLD $ADM
+#     清單右緣的 ▲ (617,50)／▼ (617,350) 一次捲一頁（十六列），到底就停在最後十六列：
+rec fcmd-adj-change-down   570000000 fcmd-adj-change ck -clicks 547000000:617:350 -click-hold $HOLD $ADM
+rec fcmd-adj-change-down2  595000000 fcmd-adj-change-down - -clicks 572000000:617:350 -click-hold $HOLD $ADM
+rec fcmd-adj-change-up     595000000 fcmd-adj-change-down - -clicks 572000000:617:50 -click-hold $HOLD $ADM
+rec fcmd-adj-change-pick2  595000000 fcmd-adj-change-down - -clicks 572000000:450:70 -click-hold $HOLD $ADM
+rec fcmd-adj-pick-rclick   595000000 fcmd-adj-change-pick - -rclicks 572000000:300:200 -click-hold $HOLD $ADM
+rec fcmd-adj-pick-cancel   595000000 fcmd-adj-change-pick - -clicks 572000000:448:280 -click-hold $HOLD $ADM
+rec fcmd-adj-pick-confirm  595000000 fcmd-adj-change-pick ck -clicks 572000000:496:280 -click-hold $HOLD $ADM
+rec fcmd-adj-confirm-close 620000000 fcmd-adj-pick-confirm - -clicks 597000000:480:300 -click-hold $HOLD $ADM
+# 16. 出擊命令那條路的同一張「副官」小選單（收據 `fadj` 的序列：艦隊編成按副官 (432,310)，360M）：
+#     卸任、變更 → 清單 → 詳細資料 → 出擊(決定) → 回艦隊編成 → 確認 → 決定 建出帶新副官的艦隊。
+rec fcmd-fadj 360000000 - ck \
+  -tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 \
+  -rclicks 130000000:300:200,155000000:300:200 \
+  -clicks 40000000:300:170,95000000:300:170,180000000:352:85,210000000:400:85,240000000:400:45,270000000:488:290,320000000:432:310 \
+  -click-hold $HOLD $ADM
+rec fcmd-fadj-dismiss      385000000 fcmd-fadj        -  -clicks 362000000:430:330 -click-hold $HOLD $ADM
+rec fcmd-fadj-change       385000000 fcmd-fadj        ck -clicks 362000000:430:310 -click-hold $HOLD $ADM
+rec fcmd-fadj-change-pick  410000000 fcmd-fadj-change ck -clicks 387000000:450:70 -click-hold $HOLD $ADM
+rec fcmd-fadj-pick-confirm 435000000 fcmd-fadj-change-pick ck -clicks 412000000:496:280 -click-hold $HOLD $ADM
+rec fcmd-fadj-confirm-fleet 485000000 fcmd-fadj-pick-confirm - -clicks 437000000:480:310,462000000:510:310 -click-hold $HOLD $ADM
 # 6. 從 `dec1` 只把游標移到瓦爾哈拉（不按）→ 左下角照游標重寫：剛編成的
 #    第１艦隊算不算進「艦隊 a：b」（星域記錄 `+0x28` 建艦隊時就加了）。
 rec fcmd-hover-home 440000000 fcmd-base - -mouse-x 32 -mouse-y 32 -mouse-at 421000000

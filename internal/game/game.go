@@ -736,6 +736,9 @@ type Game struct {
 	// `fleetedit.go`）；nil ＝ 沒開。
 	editor *rules.FleetEditor
 
+	// adj 是艦隊編成視窗「副官」那條路上開著的東西（`fleetadj.go`）。
+	adj adjPick
+
 	// fleets 是已經編成的艦隊，順序就是艦隊編號 − 1
 	// （`internal/rules.Fleet`，對應原版的執行期艦隊表）。
 	fleets []rules.Fleet
@@ -1966,6 +1969,7 @@ func (g *Game) click(x, y int) {
 			g.state = StateStandbyAdmirals
 		case "sortie":
 			if g.commandSpec(StateFleetOrg) != nil {
+				g.sortieSlots(true)
 				g.state = StateFleetOrg
 			}
 		}
@@ -2095,7 +2099,16 @@ func (g *Game) click(x, y int) {
 				}
 			}
 		}
+	case StateFleetAdjutant:
+		// 變更／卸任：選了就做（`07F9:0A80`），點在外面只關選單；三種都回艦隊編成。
+		row := g.adjMenuRowAt(x, y)
+		g.state = StateFleetOrg
+		g.adjMenuPick(row)
 	case StateFleetOrg:
+		// 副官那條路的清單或詳細資料開著時先給它（`fleetadj.go`）。
+		if g.adjClick(x, y) {
+			return
+		}
 		// 下緣三顆按鈕：艦隊編號／副官／確認（熱區清單 `10BC`，
 		// `docs/re/68`）。座標是熱區，比畫出來的框左右各窄 2 像素。
 		if g.res.FleetPanel == nil {
@@ -2295,7 +2308,14 @@ func (g *Game) rightClick(x, y int) {
 		}
 	case StateFleetNumber, StateFleetAdjutant:
 		g.state = StateFleetOrg
-	case StateAdmiralBio, StateFleetOrg:
+	case StateFleetOrg:
+		// 副官那條路的清單／詳細資料開著就只關那一層（`fcmd-fadj-*`）。
+		if g.adjRightClick() {
+			return
+		}
+		g.sortieSlots(false)
+		g.state = StateAdmiralDetail
+	case StateAdmiralBio:
 		g.state = StateAdmiralDetail
 	case StateAdmiralDetail:
 		g.state = StateStandbyAdmirals
@@ -3010,6 +3030,7 @@ func (g *Game) takeProvisional() []rules.FleetGroup {
 // refundProvisional 把進艦隊組成時扣掉的那幾組還回首都的待命部隊
 // （`rules.ReturnRegionShips`，艦種 7 不走存量）。
 func (g *Game) refundProvisional() {
+	g.sortieSlots(false)
 	if g.provisional == nil {
 		return
 	}
@@ -3021,6 +3042,36 @@ func (g *Game) refundProvisional() {
 		}
 	}
 	g.provisional = nil
+}
+
+// sortieSlots 是出擊命令進艦隊編成那一刻（`07F9:043F` 帶旗標 1）對提督記錄
+// `+0x09` 的那一下：提督與副官都寫成「這一支會拿到的槽」（bit7 清掉；收據
+// `fcmd-fadj`：萊因哈特與修特萊兩筆都是 0x00，不用等到「決定」）。取消出擊
+// （艦隊編成右鍵、艦隊組成中止）寫回 0x80（**假設待驗**：原版的還原點沒讀，
+// 只有這樣兩位才能再被挑；`docs/re/318`）。
+func (g *Game) sortieSlots(take bool) {
+	rec := g.admiralRecord(g.detailAdmiral)
+	if rec == nil {
+		return
+	}
+	g.mutableAdmirals()
+	rec = g.admiralRecord(g.detailAdmiral)
+	slot := 0
+	for _, f := range g.fleets {
+		if f.Faction == g.faction {
+			slot++
+		}
+	}
+	for _, r := range []([]byte){rec, g.admiralRecord(rules.Adjutant(rec))} {
+		if r == nil {
+			continue
+		}
+		if take {
+			rules.SetFleetSlot(r, slot)
+		} else {
+			rules.LeaveStaffPost(r)
+		}
+	}
 }
 
 // drawCompositionGrid 鋪格盤那 9 × 9 的圖塊（`docs/re/67`、`docs/internals/56`）：
@@ -3250,8 +3301,13 @@ func (g *Game) drawSpecStaff(fb *gfx.Framebuffer, spec *screen.MainGameSpec) {
 	if spec == nil {
 		return
 	}
-	for _, w := range spec.Windows {
+	for name, w := range spec.Windows {
 		if w == nil {
+			continue
+		}
+		// 艦隊編成上疊著副官清單／詳細資料時，那張的陣營字已經在底下印過
+		// （drawFleetOrg），這裡再印會壓到疊上去的視窗。
+		if name == "overlay" && g.state == StateFleetOrg && (g.adj.listOn || g.adj.detailOn) {
 			continue
 		}
 		w.DrawFactionText(fb, g.res.Font, g.faction)
@@ -3291,13 +3347,18 @@ func (g *Game) drawShipOrder(fb *gfx.Framebuffer) {
 // 經歷的視窗只蓋住 y ≥ 200，上面那塊是同一份。下半（等級、經驗值與
 // 十個能力值）只有詳細資料那張有。
 func (g *Game) drawAdmiralDetail(fb *gfx.Framebuffer) {
-	if g.res.AdmiralPanel == nil {
-		return
-	}
 	if g.state != StateAdmiralDetail && g.state != StateAdmiralBio {
 		return
 	}
-	i := g.detailAdmiral
+	g.drawAdmiralDetailFor(fb, g.detailAdmiral, g.state == StateAdmiralDetail)
+}
+
+// drawAdmiralDetailFor 把第 i 位提督的詳細資料畫進那張視窗（視窗本身由
+// 呼叫端畫）；buttons ＝ 要不要畫下緣三顆鈕的字。
+func (g *Game) drawAdmiralDetailFor(fb *gfx.Framebuffer, i int, buttons bool) {
+	if g.res.AdmiralPanel == nil {
+		return
+	}
 	if i < 0 || (i+1)*rules.AdmiralRecord > len(g.res.Admiral) {
 		return
 	}
@@ -3318,7 +3379,7 @@ func (g *Game) drawAdmiralDetail(fb *gfx.Framebuffer) {
 	if slot := rules.FlagshipSlot(rec, i); slot >= 0 {
 		v.Flagship = g.res.Flagships.Name(rules.AdmiralFaction(rec), slot)
 	}
-	p.Draw(fb, g.res.Font, v, g.state == StateAdmiralDetail)
+	p.Draw(fb, g.res.Font, v, buttons)
 	if g.res.Faces == nil {
 		return
 	}
@@ -3350,40 +3411,49 @@ func (g *Game) drawFleetOrg(fb *gfx.Framebuffer) {
 	if rec == nil {
 		return
 	}
-	slot := rules.FlagshipSlot(rec, i)
-	// 艦隊編號 ＝ 旗艦的欄位 ＋ 1（假設待驗，兩個資料點：`docs/re/66`）。
-	g.drawFleetOrgFor(fb, i, rules.Adjutant(rec), slot+1)
+	// 艦隊編號 ＝ 提督在自己陣營裡的序號 ＋ 1（假設待驗，兩個資料點：`docs/re/66`；
+	// 卸任之後副官是 0xFF 仍印「第１艦隊」，收據 `fcmd-fadj-dismiss`）。
+	g.drawFleetOrgFor(fb, i, rules.Adjutant(rec), rules.FactionAdmiralIndex(rec, i)+1)
+	// 副官那條路的清單與詳細資料疊在這一張上（小選單是 `StateFleetAdjutant`
+	// 自己的規格畫的）。這張的「帝國軍」平常由 drawSpecStaff 最後補，
+	// 疊了東西就要先印在底下（否則會戳到詳細資料視窗上）。
+	if g.state == StateFleetOrg && (g.adj.listOn || g.adj.detailOn) {
+		if spec := g.commandSpec(g.state); spec != nil && spec.Windows["overlay"] != nil {
+			spec.Windows["overlay"].DrawFactionText(fb, g.res.Font, g.faction)
+		}
+		g.drawAdjPick(fb)
+	}
 }
 
-// drawFleetOrgFor 畫艦隊編成視窗裡算出來的部分：提督 i、副官 adj、艦隊編號
-// number。出擊那條路從提督記錄拿副官，「變更 → 副官」那張從艦隊記錄拿。
+// drawFleetOrgFor 畫艦隊編成視窗裡算出來的部分：提督 i、副官 adj（-1 ＝
+// 沒有：副官那三格與頭像不印）、艦隊編號 number。兩條路都從提督記錄的
+// `+0x07` 拿副官（「變更 → 副官」那張改的也是那一格，關窗才抄回艦隊記錄）。
 func (g *Game) drawFleetOrgFor(fb *gfx.Framebuffer, i, adj, number int) {
 	rec := g.admiralRecord(i)
 	if rec == nil {
 		return
 	}
 	arec := g.admiralRecord(adj)
-	if arec == nil {
-		return
-	}
 	p := g.res.FleetPanel
 	v := screen.FleetView{
 		AdmiralRecord:  rec,
 		AdjutantRecord: arec,
 		AdmiralLevel:   rules.AdmiralLevel(rec),
 		AdjutantLevel:  rules.AdmiralLevel(arec),
+		NoAdjutant:     arec == nil,
 	}
 	if i < len(g.res.AdmiralNames) {
 		v.AdmiralName = g.res.AdmiralNames[i]
 	}
-	if adj < len(g.res.AdmiralNames) {
+	if adj >= 0 && adj < len(g.res.AdmiralNames) {
 		v.AdjutantName = g.res.AdmiralNames[adj]
 	}
 	v.AdmiralRank = g.rankCodes(rules.RankOf(v.AdmiralLevel))
 	v.AdjutantRank = g.rankCodes(rules.RankOf(v.AdjutantLevel))
-	if slot := rules.FlagshipSlot(rec, i); slot >= 0 {
-		v.Flagship = g.res.Flagships.Name(rules.AdmiralFaction(rec), slot)
-	}
+	// 旗艦名照提督在自己陣營裡的序號查（`07F9:063F` 走 `ds:6428` 那張每人一筆的
+	// 表），**不看 `+0x07`**：卸任之後副官是 0xFF，伯倫希爾仍然印著
+	// （收據 `fcmd-adj-dismiss`）。詳細資料那張的「沒副官就不印旗艦」是另一支。
+	v.Flagship = g.res.Flagships.Name(rules.AdmiralFaction(rec), rules.FactionAdmiralIndex(rec, i))
 	v.Number = number
 	p.Draw(fb, g.res.Font, v)
 	if g.res.Faces == nil {
@@ -3395,6 +3465,9 @@ func (g *Game) drawFleetOrgFor(fb *gfx.Framebuffer, i, adj, number int) {
 		{i, p.Admiral.Face.X, p.Admiral.Face.Y},
 		{adj, p.Adjutant.Face.X, p.Adjutant.Face.Y},
 	} {
+		if f.index < 0 {
+			continue
+		}
 		img, err := g.res.Faces.Decode(f.index)
 		if err != nil {
 			continue

@@ -130,3 +130,38 @@ func TestFleetMobility(t *testing.T) {
 		}
 	}
 }
+
+// 副官候選與換副官（`docs/re/318`）。
+func TestAdjutantCandidatesAndSetAdjutant(t *testing.T) {
+	mk := func(faction, region, level int, post byte) []byte {
+		r := make([]byte, AdmiralRecord)
+		r[0], r[admiralFaction], r[admiralMerit], r[admiralFleet], r[admiralStaffFlag], r[admiralRegion] = post, byte(faction), byte(level), 0xFF, 0x80, byte(region)
+		return r
+	}
+	recs := [][]byte{
+		mk(0, 0, 29, 0xFF), // 0 帶隊提督
+		mk(0, 0, 20, 0xFF), // 1 合格
+		mk(0, 1, 20, 0xFF), // 2 別的星域
+		mk(1, 0, 10, 0xFF), // 3 別的陣營
+		mk(0, 0, 29, 0xFF), // 4 等級不比提督低
+		mk(0, 0, 8, 0x01),  // 5 有職務
+		mk(0, 0, 8, 0xFF),  // 6 合格，但呼叫端說在艦隊裡
+	}
+	all := make([]Admiral, 0, len(recs))
+	for i, r := range recs {
+		all = append(all, Admiral{Index: i, Faction: int(r[admiralFaction]), Merit: int(r[admiralMerit]), Record: r})
+	}
+	busy := func(i int) bool { return i == 0 || i == 6 }
+	if got := AdjutantCandidates(all, recs[0], busy); len(got) != 1 || got[0] != 1 {
+		t.Fatalf("候選 %v，要 [1]", got)
+	}
+	recs[0][admiralStaffFlag] = 0x03 // 帶隊提督在槽 3
+	SetAdjutant(recs[0], nil, recs[1], 1)
+	if recs[0][admiralFleet] != 1 || recs[1][admiralStaffFlag] != 0x03 {
+		t.Fatalf("換副官之後 +07=%#x 新副官 +09=%#x", recs[0][admiralFleet], recs[1][admiralStaffFlag])
+	}
+	SetAdjutant(recs[0], recs[1], nil, -1)
+	if recs[0][admiralFleet] != 0xFF || recs[1][admiralStaffFlag] != 0x80 {
+		t.Fatalf("卸任之後 +07=%#x 舊副官 +09=%#x", recs[0][admiralFleet], recs[1][admiralStaffFlag])
+	}
+}

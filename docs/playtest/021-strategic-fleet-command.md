@@ -1,9 +1,9 @@
 # 戰略艦隊命令同狀態對拍（清單點列 → 艦隊視窗 → 作戰 → 五項 → 確認）
 
-日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更、艦隊組成編輯器）
+日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更、艦隊組成編輯器、副官）
 
 比較等級：`same-state`（整張 640×480）。
-原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：七十五批是正常玩家路徑、沒有
+原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：九十七批是正常玩家路徑、沒有
 注入——冷啟動走 `dec1` 的序列（主選單 → 防拷 → 出擊命令 → 萊因哈特 → 出擊 →
 確認 → 決定）到戰略地圖存檢查點，之後每一張從上一張的檢查點只多一個輸入
 （`tools/fleetcmd_receipts.sh`；每批附 `plane.bin` 字元平面與 `fleet0.bin`
@@ -14,7 +14,7 @@
 `fleetedit_test.go`）。
 
 `GIN3.COM` SHA-256 `770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918`；
-八十七份 `pal.bin` SHA-256 都是
+一百零九份 `pal.bin` SHA-256 都是
 `28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8`。
 座標是滑鼠座標（畫面 y ＝ 滑鼠 y ＋ 40）。
 
@@ -106,6 +106,29 @@
 | `fcmd-fok-decide` | 左鍵 (510,300) 決定 → 地圖（`+0x0F` ＝ 3）| `b7a824f3153d94cab8d1434efdf618d9c8b727594fbf94dfbb3b5fc42eafc4ce` | 0 |
 | `fcmd-fok-form` | （從 `fcmd-fok-row2`）左鍵 (510,270) 陣形 | `a29dc2dbdbf3162756b49abe83ba424e45b54d0ed1bc06815d99092a026c35fb` | 0 |
 | `fcmd-fok-form-pick` | 左鍵 (505,210) 圓錐 | `4e44f62495e4560137250a1bbf9fee9d6179b9496b156f7c1e52ef61e12a1cd3` | 0 |
+| `fcmd-adj-menu` | （從 `fcmd-change-adj`）左鍵 (430,300) 副官 → 變更／卸任 | `992c7d5d728f89d348b4327bc4b1377c8dfcd1790d4ecfc8ab002bdbb99dd0db` | 0 |
+| `fcmd-adj-menu-hover` | 游標移到 (430,330) 卸任 | `3846cb00a461d31e02bd6077010f1167975f288bf09852a9e351557c0e89c279` | 0 |
+| `fcmd-adj-menu-rclick` | （從 `fcmd-adj-menu`）右鍵 (300,200) | `0c4a19a70a470e30a6c841e72cfb3e7ad55dded98b4e19153a330af1731446fc` | 0 |
+| `fcmd-adj-dismiss` | （從 `fcmd-adj-menu`）左鍵 (430,330) 卸任 | `3f60ad34533bdf53546ce0fdd18821abce9e9477342effd3e4b7f248095279f4` | 0 |
+| `fcmd-adj-dismiss-close` | 左鍵 (480,300) 結束（艦隊 `+0x05` ＝ 0xFF、營運 100）| `24e8bac68504b2e294198c4f9a855ce25cf71230921f727673c0a8c93e3a1e97` | 0 |
+| `fcmd-adj-change` | （從 `fcmd-adj-menu`）左鍵 (430,310) 變更 → 待命中副官資料 | `6748f8b04c66a0fb8d037cf47008e9cf28e42180151b333502dccc831c1cb1db` | 0 |
+| `fcmd-adj-change-hover` | 游標移到 (450,150) | `dd1462f225f3071db44d9a91315f550064f33e6553be6f4e586bff8c46d7318a` | 0 |
+| `fcmd-adj-change-rclick` | （從 `fcmd-adj-change`）右鍵 (300,200) → 原版清單留著、之後沒反應 | `1226bffc349b72a9a9e1aaa0beee1f03786dc283f0c2cbcc3b627b83ff90b652` | 不比（規格 013 已知差異）|
+| `fcmd-adj-change-pick` | （從 `fcmd-adj-change`）左鍵 (450,70) 米達麥亞 → 詳細資料 | `2bb79ace513cef01ebef704a3ee569e566f3db3d831f18c82aa95d2cdb13a249` | 0 |
+| `fcmd-adj-change-down` | （從 `fcmd-adj-change`）左鍵 (617,350) ▼ | `25febf16d6f2cc0762a1ef550a937f8ffdfc554838918689440eaa5611dcdbcf` | 0 |
+| `fcmd-adj-change-down2` | 左鍵 (617,350) ▼（到底）| `4be3777def5805563995723d2d6c5842d486cd60945458e7b060c550f2c82a0e` | 0 |
+| `fcmd-adj-change-up` | （從 `fcmd-adj-change-down`）左鍵 (617,50) ▲ | `eac58f1a4403f64eb9a90b40509672266a80a583b21717b34738c8301d23e85f` | 0 |
+| `fcmd-adj-change-pick2` | （從 `fcmd-adj-change-down`）左鍵 (450,70) 瑞文茲 | `a7a345f7d333b9f69a319211548a326a8a996f48a6f14ff7c477a04635c58a67` | 0 |
+| `fcmd-adj-pick-rclick` | （從 `fcmd-adj-change-pick`）右鍵 (300,200) → 回視窗不換 | `e86b3b2483162125eb8d468f11b4229d1ac85d4cabc94906b24910cce0c8e902` | 0 |
+| `fcmd-adj-pick-cancel` | （從 `fcmd-adj-change-pick`）左鍵 (448,280) 中止 | `733061c4df33427d823ad5a48cfbe2b7762838555aeb8bf2388cf029a51ffac6` | 0 |
+| `fcmd-adj-pick-confirm` | （從 `fcmd-adj-change-pick`）左鍵 (496,280) 出擊 ＝ 決定 | `2a227faa14d70af9512b2c37c9f7a8d61db824a0ca2c4e1db76bc34c175859b5` | 0 |
+| `fcmd-adj-confirm-close` | 左鍵 (480,300) 結束（艦隊 `+0x05` ＝ 2、營運 102）| `eca31b764ff84958d9fd9a4df95e5d9a90033e71fa4b45a569a7f20c9506b5cc` | 0 |
+| `fcmd-fadj` | 冷啟動 `fadj` 的序列，360M 截（艦隊編成按副官）| `1c9a944d192e828583459931b27ed1c811c1b3b929ef2adffd028ec3bafab454` | 0 |
+| `fcmd-fadj-dismiss` | 左鍵 (430,330) 卸任 | `7558fdb7df8e0b9627931d5db6ef8865d63f6373d9b54848f576eddd48eea40e` | 0 |
+| `fcmd-fadj-change` | （從 `fcmd-fadj`）左鍵 (430,310) 變更 | `328d349c5aca298b5e6acce3b7b2152eaef416b800efe20f4b4485a70063c2b2` | 0 |
+| `fcmd-fadj-change-pick` | 左鍵 (450,70) | `d56711025b0e546bffb22ea5c7e8a1071ffecd86cc1aefe05f2ebef02d2979d3` | 0 |
+| `fcmd-fadj-pick-confirm` | 左鍵 (496,280) | `42a69af008a6476f05e98e025c558362cb2934093b808bb52d275a6dc059cf27` | 0 |
+| `fcmd-fadj-confirm-fleet` | 左鍵 (480,310) 確認、(510,310) 決定 → 地圖（艦隊 `+0x05` ＝ 2）| `3c8e6d5a149ba65457b3367aafa3373935c14ab33be4ad8a59da5ea9a3326434` | 0 |
 
 記憶體：`fcmd-done/fleet0.bin` 與 `fcmd-base/fleet0.bin` 只差 `+0x07`（FF→02）
 與 `+0x08`（05→00）；remake 的 `Fleet.Target`／`Move`／`Parked` 逐一對上
@@ -119,7 +142,9 @@
 兩頁提醒、選單停用旗標、不畫「變更」與左下角「處於戰鬥狀態」見 `docs/re/315`；
 「變更」的小選單、兩張子視窗與艦隊組成的中止／右鍵、待命艘數的扣法（開局 78000）
 見 `docs/re/316`；艦隊組成編輯器（放、拆、陣形、決定寫回、每一步的存量）見
-`docs/re/317`——二十九批各附 `-peek lin:5F2FC:28` 的七個存量與 `fleet0.bin`。
+`docs/re/317`——二十九批各附 `-peek lin:5F2FC:28` 的七個存量與 `fleet0.bin`；
+副官的變更／卸任（候選、寫回提督記錄的哪幾格、清單捲動與右鍵）見 `docs/re/318`
+——二十三批各附提督 0／2／32 的記錄。
 `fcmd-standby`／`fcmd-standby-pick` 排除的那一列（畫面 y 347、x 152–279）是原版
 小圖的第 128 列：來源列 102 超出 102 列的地圖，讀到緩衝區後面的東西
 （規格 051 已知差異）；其餘 307,072 個像素相同。
@@ -141,10 +166,14 @@
 `TestFleetEditRemoveMatchesOracle`、`TestFleetEditFlagshipKindMessageMatchesOracle`、
 `TestFleetEditCancelAndDecideMatchOracle`、`TestFleetEditFormationMatchesOracle`、
 `TestFleetEditPoorStockMatchesOracle`、`TestFleetEditSortiePathMatchesOracle`
-（二十九批整張，另比七個存量與 `fleet0.bin` 的組數與每組的艦種／槽）；
+（二十九批整張，另比七個存量與 `fleet0.bin` 的組數與每組的艦種／槽）；副官
+（`fleetadj_test.go`）`TestFleetChangeAdjutantMenuMatchesOracle`、
+`TestFleetAdjutantDismissMatchesOracle`、`TestFleetAdjutantChangeMatchesOracle`、
+`TestFleetAdjutantSortiePathMatchesOracle`（二十二批整張，另比提督記錄的 +07／+09
+與艦隊的副官／營運）；
 顯示層 `tools/gui_check.sh` 的 `fcmd-win`、`fcmd-done`、`fcmd-exec`、
-`fcmd-occupy-phezzan3`、`fcmd-change-org`、`fcmd-edit-full-msg`、`fcmd-fok-decide`
-（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
+`fcmd-occupy-phezzan3`、`fcmd-change-org`、`fcmd-edit-full-msg`、`fcmd-fok-decide`、
+`fcmd-adj-confirm-close`（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
 
 過程中改到的通用規則（不只這條路徑）：底線裝飾（`ui.DrawCellDecor`）、
 清單被點那一列的反白、左下角與右側面板「寫進去那一刻的文字」與

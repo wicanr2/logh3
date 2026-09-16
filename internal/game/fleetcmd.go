@@ -58,6 +58,9 @@ type fleetCmd struct {
 	// formOn ＝ 「變更 → 編組」那張的陣形清單開著（出擊那條路用
 	// `StateFormation`，這條路疊在艦隊視窗上沒有自己的畫面規格）。
 	formOn bool
+	// faceErased ＝ 艦隊視窗右上角的頭像被疊上來的清單抹掉了（`fleetadj.go`），
+	// 關掉「變更 → 副官」那張才重貼。
+	faceErased bool
 }
 
 // 作戰選單的五項（原版 `+0x08` 的動作碼就是項目索引，`docs/re/312` §三）。
@@ -410,7 +413,11 @@ func (g *Game) fleetCmdRightClick(x, y int) {
 	case StateFleetChangeMenu:
 		g.closeFleetChangeMenu()
 	case StateFleetChangeAdj:
-		// 副官那張右鍵 ＝ 結束（`fcmd-change-adj-rclick`）。
+		// 小選單／清單／詳細資料開著就只關那一層；否則右鍵 ＝ 結束
+		// （`fcmd-change-adj-rclick`）。
+		if g.adjRightClick() {
+			return
+		}
 		g.closeFleetChangeAdj()
 	case StateFleetChangeOrg:
 		// 右鍵不關窗（`fcmd-change-org-rclick`），只拆格盤那一格
@@ -529,8 +536,11 @@ func (g *Game) fleetWindowView() (*screen.FleetWindowView, *asset.Image) {
 	v.SpeedAdjBetter = [3]bool{better(0x0D), better(0x0C), better(0x0C)}
 	v.AbilAdjBetter = [5]bool{better(0x0F), better(0x10), better(0x11), better(0x13), better(0x12)}
 
+	// 頭像是直接貼上去的，不在視窗的文字緩衝區裡：疊在上面的清單關掉時
+	// 視窗從緩衝區重畫，頭像就不見了，要等關掉「變更 → 副官」那張時
+	// `3958:0215` 再貼（收據 `fcmd-adj-change-pick`／`-pick-cancel`／`-confirm-close`）。
 	var face *asset.Image
-	if g.res.Faces != nil {
+	if g.res.Faces != nil && !g.fcmd.faceErased {
 		if img, err := g.res.Faces.Decode(f.Admiral); err == nil {
 			face = img
 		}

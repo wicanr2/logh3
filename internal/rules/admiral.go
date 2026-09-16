@@ -152,6 +152,15 @@ func FlagshipSlot(record []byte, index int) int {
 	return index - AllianceFirstAdmiral
 }
 
+// FactionAdmiralIndex 回一位提督在自己陣營裡的序號（帝國 ＝ 提督索引、同盟 ＝
+// 提督索引 − 40），不看有沒有艦隊——旗艦名表 `ds:6428` 就是照它索引的。
+func FactionAdmiralIndex(record []byte, index int) int {
+	if AdmiralFaction(record) == 0 {
+		return index
+	}
+	return index - AllianceFirstAdmiral
+}
+
 // AllianceFirstAdmiral 是同盟那一段提督的起點（`+0x01` 在 0–39 是 0、
 // 40–81 是 1，`docs/internals/08`）。
 const AllianceFirstAdmiral = 40
@@ -199,4 +208,55 @@ func SetStaffAdmiral(work []byte, post, faction, admiral int) {
 		return
 	}
 	work[workStaffOff+post*2+faction] = byte(admiral)
+}
+
+// AdjutantCandidates 回可以當副官的提督索引（照提督表的順序）＝ 原版
+// `28E0:0103(&清單, 提督[+0x0A], 0x65, 提督[+0x06])`（`docs/re/318`）：
+//
+//	同一個星域（+0x0A）、同陣營（+0x01）、沒有職務（+0x00 == 0xFF）、
+//	閒置（+0x09 bit7）、等級（+0x06）比帶隊提督低
+//
+// 「閒置」這一項不讀 `+0x09` bit7：remake 的記錄在職幕僚仍帶 bit7
+// （原版在職者是 `0x7F`），載入存檔時也可能被夾掉，所以由呼叫端用
+// `busy` 回答「這一位在職或在艦隊裡」（幕僚職、艦隊的提督與副官）。
+func AdjutantCandidates(all []Admiral, admiral []byte, busy func(int) bool) []int {
+	if len(admiral) <= admiralRegion {
+		return nil
+	}
+	faction, region, level := int(admiral[admiralFaction]), int(admiral[admiralRegion]), int(admiral[admiralMerit])
+	out := make([]int, 0, len(all))
+	for _, a := range all {
+		r := a.Record
+		if a.Faction != faction || len(r) <= admiralRegion || int(r[admiralRegion]) != region {
+			continue
+		}
+		if r[0] != 0xFF || int(r[admiralMerit]) >= level {
+			continue
+		}
+		if busy != nil && busy(a.Index) {
+			continue
+		}
+		out = append(out, a.Index)
+	}
+	return out
+}
+
+// SetAdjutant 把提督記錄的副官（`+0x07`）換成 adj（-1 ＝ 卸任）＝ 原版
+// `07F9:085D` 的副官那一支：舊副官的 `+0x09` 寫 0x80（閒置）、新副官的
+// `+0x09` 抄帶隊提督的（同一個艦隊槽）。old／new 是那兩位的記錄，可以是 nil。
+func SetAdjutant(admiral, old, new []byte, adj int) {
+	if len(admiral) <= admiralStaffFlag {
+		return
+	}
+	if len(old) > admiralStaffFlag {
+		old[admiralStaffFlag] = 0x80
+	}
+	if adj < 0 {
+		admiral[admiralFleet] = 0xFF
+		return
+	}
+	if len(new) > admiralStaffFlag {
+		new[admiralStaffFlag] = admiral[admiralStaffFlag]
+	}
+	admiral[admiralFleet] = byte(adj)
 }

@@ -220,7 +220,11 @@
   倒回——出擊那條路與「變更 → 編組」共用 `rules.FleetEditor`，二十九批
   `fcmd-edit-*`／`fcmd-fok-*` 整張逐位元組、每步的存量與艦隊記錄逐一對上
   （規格 015 「編輯」一節 CONFORMED）；機動力 ＝ `100 − (270 − 2 × 運用) × 表[組數] ÷ 100`。
-  副官那張的「副官」（變更／卸任）還沒接（#42）。左下角摘要多了星域名後面的狀態字
+  **副官的變更／卸任也接上了（`docs/re/318`）**：卸任清副官、變更開「待命中副官資料」
+  （同星域、沒有職務、閒置、等級較低）→ 詳細資料 → 出擊(決定) 換人，只改提督記錄
+  `+0x07`／`+0x09`，關窗才抄回艦隊並重算營運與費用；出擊那條路同一支，二十二批
+  `fcmd-adj-*`／`fcmd-fadj-*` 整張逐位元組（規格 013 「副官」一節；清單右鍵與按住
+  捲動是已知差異）。#42 關掉。左下角摘要多了星域名後面的狀態字
   「處於戰鬥狀態／占領狀態／孤立狀態」（規格 001）。艦隊組成的「中止」照原版整支
   作廢回地圖、右鍵不認；首都戰艦的待命艘數開局是 78000，進艦隊組成才扣旗艦那一組
   （`docs/re/316` §四）。順手定下的通用規則：底線裝飾、清單反白、
@@ -231,8 +235,7 @@
   **戰略地圖逐格照記錄著色**（有自軍艦隊的星域用另一張色表，`docs/re/313`）。
 - **玩家還碰不到的功能**（2026-09-15 讀 `internal/game/game.go` 的 `click`
   盤點，不是憑印象）：
-  - 整套不存在：艦隊視窗「變更 → 副官」那張裡的換副官／卸任（issue #42），
-    占領命令在回合裡的效果
+  - 整套不存在：占領命令在回合裡的效果
     （走到敵方星域之後那一路）、參謀任命（`090A:0248`）、
     艦隊解散（`297B:0332`）、**交戰演出**（`ANI_PNL1.A98` ＋ `COMANI.BMG`；
     也是戰鬥曲唯一的出口）。
@@ -241,7 +244,7 @@
     視窗 #44）。
   - 開得起來但只能右鍵關：情報收集的 治安／勢力／敵艦 三個分頁與
     參謀／確認（`1738`）、徵稅計劃與生產計劃的 參謀／結束、預算計劃的箭頭
-    （`26E2`）、一覽表四張的列、艦隊編號清單／副官「變更／卸任」的列、
+    （`26E2`）、一覽表四張的列、艦隊編號清單的列、
     結束確認的 中止／決定、設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與 `BUG!`。
     （情報與徵稅那兩顆「參謀」就是參謀任命的入口。）
   - 其餘：「資料」的捲動、動畫之後的 `SPTIT.350` 標題畫面。
@@ -394,7 +397,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 4 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 3 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -489,38 +492,6 @@
 **證據**：[`docs/re/312-strategic-fleet-command-flow.md` §一`](docs/re/312-strategic-fleet-command-flow.md` §一)、[`docs/re/313-fleet-command-round-2.md` §一（艦隊分頁的列印常式）`](docs/re/313-fleet-command-round-2.md` §一（艦隊分頁的列印常式）)
 
 **核實**：`docs/spec/051-strategic-fleet-command.md` 裡還找得到 `清單的捲動（欄 17 的上下鈕）與四個分頁`（自承還在 ＝ 還沒做）
-
-#### fleet-command-change-menu — 艦隊視窗「變更」→ 副官／編組
-
-*[#42](https://github.com/wicanr2/logh3/issues/42) · re（逆向：機制還沒讀出來）*
-
-艦隊視窗的「變更」開一個兩項小選單 副官／編組（`fcx-henkou`，`docs/re/312`），
-兩項的行為沒讀。remake 的艦隊視窗那顆鈕點了什麼都不做。
-
-2026-09-15 補：視窗迴圈 `0DEA:0F80` 的分派讀出來了（`docs/re/312` §7.6、`workplace/ida/fcx0DEA-loop.txt`），
-「變更」是鈕 1 → **`0DEA:17A9(艦隊)`**，回傳值當「要不要重印視窗」；反組譯從線性 `0x7960 + 0x17A9` 起讀。
-第一片的視窗、鈕與收據鏈（`fcmd-win.state`）都在，從那裡點 (490,365)（滑鼠座標 490:325）就是 `fcx-henkou` 那張。
-
-2026-09-16 前半做完（`docs/re/316`，規格 051「變更」一節，十批 `fcmd-change-*` 整張相同）：
-小選單（四格寬——原版把標籤位元組長度當寬度傳）、副官 → 艦隊編成視窗的「副官／結束」變體
-（`297B:04EF` → `07F9:043F`，結束／右鍵回視窗、清單那一列不再反白）、編組 → 這一支的艦隊組成
-（`0FF4:000A`，中止／決定回視窗、右鍵不認）。順帶修了出擊那條路：艦隊組成「中止」整支作廢回地圖、
-右鍵不認、首都戰艦開局 78000 而旗艦那一組在進艦隊組成時才扣（`fcmd-fok-cancel`／`-rclick`）。
-
-**卡在**：- `07F9:043F` 的「副官」→ 變更／卸任：換人的清單怎麼列、選了寫什麼、卸任寫什麼、
-  回來之後 `297B:0546` 重算（探索批次 `fcx-change-adj-menu` 只看到小選單；出擊那條路的
-  `fadj` 同一張）。
-- `0FF4:000A` 的編輯迴圈 `0FF4:0909`：點艦種列、點格盤、陣形樣板怎麼改編制；決定 `0FF4:10C1`
-  寫回什麼、扣多少存量；`0FF4:0094`／`1127` 是不是扣與退的那兩支（`docs/re/316` §三、§四）。
-- 收據從 `fcmd-change-adj.state`／`fcmd-change-org.state` 接下去即可（`tools/fleetcmd_receipts.sh` 第 11 段）。
-
-**做完的判準**：副官／編組兩項有規格（typed input → 狀態）與同狀態收據並接進 remake：
-副官那張的「副官」→ 變更／卸任能換人、能卸任；艦隊組成能點艦種／格盤／陣形改編制、
-「決定」寫回艦隊記錄與存量（出擊那條路的艦隊組成同一件事）。
-
-**證據**：[`docs/re/312-strategic-fleet-command-flow.md`](docs/re/312-strategic-fleet-command-flow.md)、[`docs/re/316-fleet-change-menu.md`](docs/re/316-fleet-change-menu.md)
-
-**核實**：`docs/spec/051-strategic-fleet-command.md` 裡還找得到 `「變更」兩張子視窗裡面的編輯`（自承還在 ＝ 還沒做）
 
 ### 做完的（不在矩陣裡的那幾條）
 

@@ -6978,3 +6978,29 @@ GitHub 的 issue 時間軸承擔。
   internals 56（編輯一節）／58、`fleet-editor.json`、`message-box.json` 四句 `edit_*`、
   `fleet-composition-panel.json` 艦種列熱區、playtest 021、CONTEXT；gui_check 加
   `fcmd-edit-full-msg`／`fcmd-fok-decide`（18 案例全過）。
+
+## 2026-09-16 — 副官：變更／卸任（#42 後半；出擊那條路同一支）
+
+- `07F9:043F`／`05B4`／`085D`／`0A80`／`0B35` 與清單 `0C0A:000F`／`00F0`／`015D`／`01D7`／`0235`
+  讀完（`docs/re/318`）：卸任寫 `+0x07 ← 0xFF`、舊副官 `+0x09 ← 0x80`；變更開
+  「待命中副官資料」（`28E0:0103(星域, 0x65, 等級)`：同星域、同陣營、沒職務、閒置、等級較低）
+  → 詳細資料（同一支 `0D92:000D`）→ 出擊(決定) 寫 `+0x07`、新副官 `+0x09` 抄提督的；
+  艦隊 `+0x05` 關窗才抄（`297B:04EF`）。出擊那條路進艦隊編成那一刻就把提督與副官的
+  `+0x09` 配成槽（`fcmd-fadj`），不是決定才寫。
+- 收據二十二批（第 15、16 段，每批倒提督 0／2／32 的記錄）：從 `fcmd-change-adj` 展開 16 批
+  （含 ▲▼ 捲動四批）、出擊那條路新檢查點 `fcmd-fadj`（360M）展開 6 批。整張 0 差異；
+  `fcmd-adj-change-rclick` 不比（見下）。
+- remake：`rules.AdjutantCandidates`／`SetAdjutant`／`FactionAdmiralIndex`、`internal/game/fleetadj.go`
+  （小選單旗標、清單、詳細資料疊在艦隊編成上；兩條路共用）、`FleetView.NoAdjutant`
+  （卸任後等級列連標籤蓋成底色）、`fleetCmd.faceErased`（清單關掉後艦隊視窗頭像不見，關窗重貼）、
+  `Game.sortieSlots`（進艦隊編成配槽、取消寫回 0x80 假設待驗）、`screen-fleet-adjutant.json`
+  小選單框改 80 高（底列色 3）＋ 一個角落補丁、`GameWindow.SetLineCode`（標題換兩個字）。
+- 兩個沒解／刻意差異（規格 013 已知差異）：(1) 從「副官」進來的清單按右鍵，原版清單留在
+  畫面上、之後左鍵沒反應（`-regs-at` 看到迴圈只收到碼 0，事件去向沒讀；出擊命令的同一個
+  清單右鍵會關）——remake 關清單；(2) ▲▼ 原版是按住一次一列（`3765:0255` 迴圈），
+  3M 步的收據剛好 16 列——remake 一下一頁。
+- 踩到：`fcx3765.com` 切片沒有 0x100 前綴（`disasm_funcs.py` 的慣例對它不成立），
+  `3765:0036` 只是 `00BF` 的包裝、事件佇列在 `ds:F184`（16 × 12）。`-peek` 多段用逗號不是分號。
+- 文件：`docs/re/318`、規格 013「副官」一節與已知差異、規格 051 V2''、internals 08／58、
+  `fleet-org-panel.json` 的 `no_adjutant`、playtest 021、CONTEXT；gui_check 加
+  `fcmd-adj-confirm-close`（19 案例全過）。關 #42（verify → go_test）。

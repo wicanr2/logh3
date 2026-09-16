@@ -82,8 +82,11 @@ func (g *Game) closeFleetChangeMenu() {
 }
 
 // fleetChangeAdjClick 是「副官」那張變體視窗的左鍵：只有 副官／結束 兩顆鈕
-// （艦隊編號那顆沒畫）。「副官」→ 變更／卸任 還沒接；「結束」關窗。
+// （艦隊編號那顆沒畫）。「副官」→ 變更／卸任 小選單（`fleetadj.go`）；「結束」關窗。
 func (g *Game) fleetChangeAdjClick(x, y int) {
+	if g.adjClick(x, y) {
+		return
+	}
 	if g.res.FleetPanel == nil {
 		return
 	}
@@ -91,7 +94,7 @@ func (g *Game) fleetChangeAdjClick(x, y int) {
 	case "confirm": // 這張上面那顆印的是「結束」
 		g.closeFleetChangeAdj()
 	case "adjutant":
-		// 變更／卸任小選單（`fcx-change-adj-menu`）：issue #42 後半。
+		g.adj.menuOn = true
 	}
 }
 
@@ -99,6 +102,8 @@ func (g *Game) fleetChangeAdjClick(x, y int) {
 // 記錄的 `+0x07`、重印副官與費用那幾列、頭像；最後 `073F:0522` 把右下角清單
 // 重畫成**沒按下**的樣子（收據 `fcmd-change-adj-close`：那一列底色回 8）。
 func (g *Game) closeFleetChangeAdj() {
+	g.closeAdj()
+	g.fcmd.faceErased = false
 	f := &g.fleets[g.fcmd.fleet]
 	if rec := g.admiralRecord(f.Admiral); rec != nil {
 		f.Adjutant = rules.Adjutant(rec)
@@ -217,7 +222,9 @@ func (g *Game) drawFleetChangeAdj(fb *gfx.Framebuffer) {
 	w.Draw(fb, g.res.Font, 3, g.res.Faces)
 	w.DrawFactionText(fb, g.res.Font, g.faction)
 	f := &g.fleets[g.fcmd.fleet]
-	g.drawFleetOrgFor(fb, f.Admiral, f.Adjutant, f.Number)
+	// 副官看提督記錄的 `+0x07`：這張上面換了人、卸了任，關窗才抄回艦隊記錄。
+	g.drawFleetOrgFor(fb, f.Admiral, rules.Adjutant(g.admiralRecord(f.Admiral)), f.Number)
+	g.drawAdjPick(fb)
 }
 
 // drawFleetChangeOrg 把這一支的艦隊組成疊上去：`screen-fleet-composition` 的
