@@ -91,7 +91,7 @@ func TestUnrestSameStateAfterAITurn(t *testing.T) {
 	mem := readUnrestReceipt(t, "rbx292_b.bin")
 	before := append([]byte(nil), g.res.Stellar...)
 
-	g.turn++ // advanceTurn 的第一步
+	g.beginTurn() // advanceTurn 的第一步（含同盟座位的月底：收自己那些星域的稅）
 	g.runBrain()
 
 	// 輸入先對：Blend、內政專任參謀（原版 `ds:8FD4`／`ds:8F4F`）。

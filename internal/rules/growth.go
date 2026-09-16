@@ -157,48 +157,54 @@ func SetRegionEconomy(record []byte, v int) {
 	record[regionEconomy+3] = byte(v >> 24)
 }
 
-// MonthEnd 跑一次完整的月底結算：每個星域逐行星成長與收稅，
-// 經濟力寫回星域記錄，稅率抄一份到 `+0x27`，回玩家陣營收到的總稅收。
-//
-// 順序照 `docs/re/26` 量到的：總稅收歸零 → 逐星域累加 → 軍事費 += 總稅收
-// （加錢那一步由呼叫端做）。
+// MonthEnd 跑一個陣營看得到的完整月底結算：一個月一次的成長（`MonthEndGrow`）
+// 加上這個陣營自己座位的收稅（`CollectTax`），回它進國庫的稅。
 func MonthEnd(records []byte, p *Planets, t *GrowthTable, faction int) int {
-	return MonthEndTotals(records, p, t, nil)[faction]
+	MonthEndGrow(records, p, t, nil)
+	return CollectTax(records, p, faction)
 }
 
-// MonthEndTotals 是同一趟結算，但**兩個陣營的徵稅額一起回**。
+// MonthEndGrow 是月底**一個月只跑一次、跑在逐座位之前**的那一步（原版
+// `0654:0007` → `2703:0BF2` ＋ `090A:0B5E`，`docs/re/267`）：32 格全部成長，
+// 用實際成長重算成長率，再重算稅率（稅率吃成長率，所以在收稅之前）。
 //
-// 成長是就地寫回的，一個月只能跑一次，所以要兩邊的數字就得在同一趟裡拿
-// （原版的 `ds:8F6A` 本來就是每個陣營一格，`docs/internals/27`）。
-func MonthEndTotals(records []byte, p *Planets, t *GrowthTable,
-	recomputeRates func()) [2]int {
-	// 第一趟（原版 `0654:0007` → `2703:0BF2`，一個月只跑一次，而且跑在
-	// 逐座位之前）：32 格全部成長，並用實際成長重算成長率。
+// 成長是就地寫回的，一個月只能跑一次；收稅是各座位在自己的回合做
+// （`CollectTax`），不在這裡。
+func MonthEndGrow(records []byte, p *Planets, t *GrowthTable, recomputeRates func()) {
 	for i := 0; i*RegionRecord+RegionRecord <= len(records); i++ {
 		rec := records[i*RegionRecord : (i+1)*RegionRecord]
 		before, after := p.GrowRegion(t, i)
 		SetRegionEconomy(rec, after)
 		SetRegionGrowth(rec, GrowthFromChange(before, after))
 	}
-	// 稅率吃成長率，所以在收稅**之前**重算（原版 `090A:0B5E`）。
 	if recomputeRates != nil {
 		recomputeRates()
 	}
-	// 第二趟（原版 `2703:0AB8` 旗標 1）：用新稅率收稅。
-	//
-	// remake 還把 32 格的稅在同一趟扣掉；原版是各座位在自己的回合只扣
-	// 自己那些星域的、中立從不扣，所以帝國回合看到的同盟與中立星域經濟力
-	// 只有成長（巴拉特 68282、費沙 103100；remake 65826／99904，`docs/re/320`
-	// §五，worklist `month-end-tax-per-seat`）。玩家自己的星域與總稅收不受影響。
-	var total [2]int
+}
+
+// CollectTax 是**一個座位**的收稅（原版 `2703:03AF` → `2703:0AB8(星域, 1)`，
+// `docs/re/321`）：只掃擁有者 ＝ faction 的星域，逐行星扣稅、稅率抄進
+// `+0x27`，回進國庫的稅（各星域「成長後、扣稅前的總和 × 稅率」相加）。
+//
+// 別的陣營的星域在**它自己的座位回合**才扣，中立星域（擁有者 2）從不扣
+// ——`2703:0AB8` 一進去就把擁有者 2 的擋掉，而旗標 1 那一趟只有 `2703:03AF`
+// 會叫，它只掃 `+0x12 == ds:8F1D`（這個座位的陣營）的格子。所以帝國回合
+// 看到的同盟與中立星域經濟力只有成長（收據 `monthwork3`：796/02 帝國的
+// 命令階段，同盟十五格與中立八格都還沒扣）。
+//
+// `2703:0AB8` 另外還會跳過 `+0x13` bit0–bit2 有設的星域（戰鬥／占據中）：
+// 讀出來了但沒有收據，這裡先不接。
+func CollectTax(records []byte, p *Planets, faction int) int {
+	total := 0
 	for i := 0; i*RegionRecord+RegionRecord <= len(records); i++ {
+		if p.RegionOwner(i) != faction {
+			continue
+		}
 		rec := records[i*RegionRecord : (i+1)*RegionRecord]
 		tax, economy := p.TaxRegion(i, RegionTaxRate(rec))
 		SetRegionEconomy(rec, economy)
 		rec[0x27] = rec[regionTaxRate]
-		if o := p.RegionOwner(i); o == 0 || o == 1 {
-			total[o] += tax
-		}
+		total += tax
 	}
 	return total
 }

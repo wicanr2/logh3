@@ -18,6 +18,17 @@ func reachBrainPhase(t *testing.T) *Game {
 	return reachCommandPhaseOnMapWith(t, loadWithRules(t))
 }
 
+// reachAITurn 是 `reachBrainPhase` 再把**同盟座位的開局月底**跑掉：原版
+// 同盟座位在玩家第一次「實行」之後、AI 下命令之前才收自己那些星域的稅
+// （`docs/spec/035`），`t260_pre` 那類「AI 回合開頭」的收據都是那之後倒的。
+// 不按「實行」是為了不讓 AI 真的下命令、艦隊真的走。
+func reachAITurn(t *testing.T) *Game {
+	t.Helper()
+	g := reachBrainPhase(t)
+	g.monthEndSeatsAfterPlayer()
+	return g
+}
+
 // loadWithRules ＝ `load` 再補上決策層與艦隊命令要的規則表：星圖、艦種表、
 // 兩張編制表、預設副官、訊息框與艦隊視窗的版面。`load()` 只給畫面要的
 // 東西，正式入口 `internal/bootstrap` 才會載這幾份；少了艦種表，
@@ -370,7 +381,7 @@ func TestFirstAITurnMatchesReceipt(t *testing.T) {
 //	等級 2（開局值）→ 10599      `t260_pre` 的 ds:8F6A[同盟]
 //	等級 1（軍事費 45848）→ 7852 `t260_post` 的同一格
 func TestTaxRateRecomputeMatchesReceipt(t *testing.T) {
-	g := reachBrainPhase(t)
+	g := reachAITurn(t)
 	if got, want := g.military[1], 45848; got != want {
 		t.Errorf("同盟的軍事費 ＝ %d，收據是 %d", got, want)
 	}
@@ -400,7 +411,7 @@ func TestTaxRateRecomputeMatchesReceipt(t *testing.T) {
 // 不是舊測試寫的 8（`docs/re/299`）。
 func TestMonthEndKeepsBlend(t *testing.T) {
 	run := func(before int) (turn, blend, tax int) {
-		g := reachBrainPhase(t)
+		g := reachAITurn(t)
 		g.SetBrain(g.OriginalBrain())
 		g.turn = before
 		g.Click(544, 125)

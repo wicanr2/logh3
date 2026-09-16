@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/rules"
 )
 
@@ -172,5 +173,177 @@ func TestAllianceStaffSwitchesToReceipt(t *testing.T) {
 	if receiptAllies != 15 || ruleOK != receiptAllies || sameInput == 0 {
 		t.Errorf("同盟星域稅率：收據同盟 %d 格、重算對 %d 格、同狀態直接比較 %d 格",
 			receiptAllies, ruleOK, sameInput)
+	}
+}
+
+// TestMonthEndTaxesOnlyOwnSeat 釘月底收稅是**逐座位**的（#45，`docs/re/321`）：
+// `monthwork3` 的星域表倒在 796/02 帝國的命令階段——帝國座位的月底跑完、
+// 同盟座位的還沒跑。所以帝國的星域已扣稅、同盟與中立的只有成長；同盟星域的
+// `+0x27`（上個月的稅率）也還是開局那一份、沒被抄成新的；無主星域的稅率是
+// 新的成長率（`090A:0DC0`）而 `+0x27` 是載入時抄的那一份。remake 走同一條路
+// （十次「實行」、關掉月報）之後 32 格逐格比。
+//
+// 兩件事先說明：星域 9／24／28 兩邊擁有者不同（remake 的叛亂判定讓它們變成
+// 無主、原版沒有），不比；同盟星域的**經濟力**只印不比——差的那一截是 AI
+// 艦隊的維持費與移動費流進行星（`PayIntoRegion`）的多寡，AI 決策的對拍是
+// 另一條，這裡要釘的是「還沒扣稅」（`+0x27` 仍是舊稅率）。
+func TestMonthEndTaxesOnlyOwnSeat(t *testing.T) {
+	p := filepath.Join("..", "..", "workplace", "oracle", "monthwork3", "mr1820.bin")
+	want, err := os.ReadFile(p)
+	if err != nil {
+		t.Skipf("缺收據 %s，跳過（不用代用品）", p)
+	}
+	g := reachBrainPhase(t)
+	for i := 0; i < 10; i++ {
+		g.Click(544, 125)
+		g.Click(560, 125)
+		dismissAllRebellionReports(g)
+	}
+	if y, m, _ := g.Date(); y != 796 || m != 2 {
+		t.Fatalf("日期 %d/%d，應該是 796/2", y, m)
+	}
+	skipped := 0
+	var byOwner [3]int
+	for i := 0; i < rules.RegionCount; i++ {
+		w := want[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		got := g.regionRecord(i)
+		owner := int(w[regionOwnerOff])
+		if owner != int(got[regionOwnerOff]) {
+			skipped++
+			continue
+		}
+		byOwner[owner]++
+		if w[0x26] != got[0x26] && owner != 1 {
+			t.Errorf("星域 %d（擁有者 %d）稅率 +0x26：原版 %d、remake %d", i, owner, w[0x26], got[0x26])
+		}
+		if w[0x27] != got[0x27] {
+			t.Errorf("星域 %d（擁有者 %d）上個月的稅率 +0x27：原版 %d、remake %d", i, owner, w[0x27], got[0x27])
+		}
+		we, ge := rules.RegionEconomy(w), rules.RegionEconomy(got)
+		if owner == 1 {
+			if we != ge {
+				t.Logf("星域 %d（同盟）經濟力：原版 %d、remake %d（AI 艦隊花費的差，不比）", i, we, ge)
+			}
+			continue
+		}
+		if we != ge {
+			t.Errorf("星域 %d（擁有者 %d）經濟力：原版 %d、remake %d", i, owner, we, ge)
+		}
+		if rules.RegionGrowth(w) != rules.RegionGrowth(got) {
+			t.Errorf("星域 %d（擁有者 %d）成長率：原版 %d、remake %d", i, owner, rules.RegionGrowth(w), rules.RegionGrowth(got))
+		}
+	}
+	if skipped > 3 || byOwner[0] < 9 || byOwner[1] < 12 || byOwner[2] < 7 {
+		t.Fatalf("比了帝國 %d、同盟 %d、中立 %d 格，跳過 %d 格", byOwner[0], byOwner[1], byOwner[2], skipped)
+	}
+}
+
+// dismissMonthReports 用右鍵把月初那三張報告（接收 → 會計 → 訂造）關回地圖介面
+// （收據 `mreponlyr`；`monthwork3`／`monthwork4` 的序列也是右鍵關的）。
+func dismissMonthReports(g *Game) {
+	for i := 0; i < 6; i++ {
+		switch g.State() {
+		case StateShipDelivery, StateMainGame, StateShipOrder:
+			g.RightClick(300, 240)
+		default:
+			return
+		}
+	}
+}
+
+// TestMonthEndAllianceSeatAfterExecute 是 #45 的另一半：`monthwork4` 比 `monthwork3`
+// 多按一次「實行」（回合 11），中間輪過同盟座位——同盟星域這時才扣稅、`+0x27`
+// 才被抄成回合 10 的 `+0x26`（原版兩份傾印逐格：`mr1990[+0x27] == mr1820[+0x26]`）；
+// 帝國與無主星域沒有月底也沒有艦隊，`+0x27` 與經濟力和回合 10 一字不差。
+// remake 開原版 AI 走同一條路，驗同一組關係。
+//
+// 同盟的經濟力只驗「扣過了」（比回合 10 少），`+0x27` 驗「抄的是回合 10 的 `+0x26`」
+// 而不逐格比數字——同盟在回合 10 的稅率兩邊本來就差一點（AI 艦隊流進行星的錢不同，
+// `TestMonthEndTaxesOnlyOwnSeat` 的說明）；回合 10 稅率相同的格子才直接比。
+func TestMonthEndAllianceSeatAfterExecute(t *testing.T) {
+	p := filepath.Join("..", "..", "workplace", "oracle", "monthwork4", "mr1990.bin")
+	want, err := os.ReadFile(p)
+	if err != nil {
+		t.Skipf("缺收據 %s，跳過（不用代用品）", p)
+	}
+	p3 := filepath.Join("..", "..", "workplace", "oracle", "monthwork3", "mr1820.bin")
+	turn10, err := os.ReadFile(p3)
+	if err != nil {
+		t.Skipf("缺收據 %s，跳過（不用代用品）", p3)
+	}
+	// 先看原版自己：回合 10 → 11 之間只有同盟的 +0x27 動了，抄的是回合 10 的 +0x26。
+	for i := 0; i < rules.RegionCount; i++ {
+		w := want[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		q := turn10[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		if w[regionOwnerOff] != q[regionOwnerOff] {
+			continue
+		}
+		if w[regionOwnerOff] == 1 {
+			if w[0x27] != q[0x26] || rules.RegionEconomy(w) >= rules.RegionEconomy(q) {
+				t.Errorf("原版同盟星域 %d：回合 11 的 +0x27 %d／經濟力 %d，回合 10 的 +0x26 %d／經濟力 %d",
+					i, w[0x27], rules.RegionEconomy(w), q[0x26], rules.RegionEconomy(q))
+			}
+		} else if w[0x27] != q[0x27] || rules.RegionEconomy(w) != rules.RegionEconomy(q) {
+			t.Errorf("原版星域 %d（擁有者 %d）回合 10 → 11 動了：+0x27 %d → %d、經濟力 %d → %d",
+				i, w[regionOwnerOff], q[0x27], w[0x27], rules.RegionEconomy(q), rules.RegionEconomy(w))
+		}
+	}
+
+	g := reachBrainPhase(t)
+	routes, err := ai.LoadAdvanceRoutes(filepath.Join(root, "docs/internals/data/ai-advance-routes.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.res.AdvanceRoutes = routes
+	g.SetBrain(g.OriginalBrain())
+	for i := 0; i < 10; i++ {
+		g.Click(544, 125)
+		g.Click(560, 125)
+		dismissAllRebellionReports(g)
+	}
+	dismissMonthReports(g)
+	if g.State() != StateCommandPhase || g.turn != 10 {
+		t.Fatalf("關完月報在 %v、回合 %d", g.State(), g.turn)
+	}
+	before := append([]byte(nil), g.res.Stellar...)
+	g.Click(544, 125)
+	g.Click(560, 125)
+	dismissAllRebellionReports(g)
+	if g.State() != StateCommandPhase || g.turn != 11 {
+		t.Fatalf("第十一次實行之後在 %v、回合 %d", g.State(), g.turn)
+	}
+	var byOwner [3]int
+	for i := 0; i < rules.RegionCount; i++ {
+		w := want[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		q := turn10[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		got := g.regionRecord(i)
+		prev := before[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
+		owner := int(w[regionOwnerOff])
+		if owner != int(got[regionOwnerOff]) || owner != int(prev[regionOwnerOff]) {
+			continue
+		}
+		byOwner[owner]++
+		we, ge, pe := rules.RegionEconomy(w), rules.RegionEconomy(got), rules.RegionEconomy(prev)
+		if owner == 1 {
+			if got[0x27] != prev[0x26] {
+				t.Errorf("同盟星域 %d 的 +0x27 %d 不是回合 10 的 +0x26 %d", i, got[0x27], prev[0x26])
+			}
+			if prev[0x26] == q[0x26] && got[0x27] != w[0x27] {
+				t.Errorf("同盟星域 %d 的 +0x27：原版 %d、remake %d（回合 10 稅率相同）", i, w[0x27], got[0x27])
+			}
+			if ge >= pe {
+				t.Errorf("同盟星域 %d 輪過同盟座位之後經濟力 %d 沒有比回合 10 的 %d 少（原版 %d）", i, ge, pe, we)
+			}
+			continue
+		}
+		if w[0x27] != got[0x27] || got[0x27] != prev[0x27] {
+			t.Errorf("星域 %d（擁有者 %d）+0x27：原版 %d、remake %d、remake 回合 10 %d", i, owner, w[0x27], got[0x27], prev[0x27])
+		}
+		if we != ge || ge != pe {
+			t.Errorf("星域 %d（擁有者 %d）經濟力：原版 %d、remake %d、remake 回合 10 %d", i, owner, we, ge, pe)
+		}
+	}
+	if byOwner[0] < 9 || byOwner[1] < 12 || byOwner[2] < 6 {
+		t.Fatalf("比了帝國 %d、同盟 %d、中立 %d 格", byOwner[0], byOwner[1], byOwner[2])
 	}
 }

@@ -1,8 +1,8 @@
 # 053 — 星系情報視窗（戰略地圖介面左鍵點星圖）
 
-狀態：**CONFORMED**：十批收據（九批 `fcmd-rinfo-*`、`fcmd-map-rclick`）整張 640×480 逐位元組相同（兩塊事先列出
-的排除區：小圖最後一列 128 個像素、換看別家星域時右側面板「經濟力」那個數字，見已知
-差異）；顯示層（Ebiten）`fcmd-rinfo` 同樣相同（`tools/gui_check.sh`）。
+狀態：**CONFORMED**：十批收據（九批 `fcmd-rinfo-*`、`fcmd-map-rclick`）整張 640×480 逐位元組相同（一塊事先列出
+的排除區：小圖最後一列 128 個像素，見已知差異）；顯示層（Ebiten）`fcmd-rinfo` 同樣相同
+（`tools/gui_check.sh`）。
 證據：[`docs/re/320`](../re/320-region-info-window.md)、[`docs/re/314`](../re/314-fleet-standby-planet.md)
 §四（小圖）、[`docs/re/89`](../re/89-minimap-unit-markers.md)（行星位置）
 資料：[`docs/internals/data/region-info-panel.json`](../internals/data/region-info-panel.json)、
@@ -30,12 +30,12 @@
 | 差異 | 類別 | 到期條件 |
 |---|---|---|
 | 小圖最後一列（畫面 y 212、x 24–151）：原版那一列的來源列超出地圖，讀到的是緩衝區後面的東西；remake 畫底色。對拍時跳過那 128 個像素（與規格 051 指定待命行星那條同一件事） | 原版讀越界 | 不到期 |
-| 換看同盟或中立星域時右側面板的「經濟力」（x 432–479、y 224–233）：remake 的月底結算把別家與中立星域的稅在同一趟扣掉，原版是各座位在自己的回合只扣自己的、中立從不扣——796/01 帝國看到的巴拉特是 68282（只有成長），remake 65826；費沙 103100 對 99904。自己的星域相同 | 既有的規則缺口（月底結算的座位順序） | 月底結算改成逐座位扣稅、中立不扣之後，把這一格拿掉重跑 |
+| ~~換看同盟或中立星域時右側面板的「經濟力」（x 432–479、y 224–233）~~ | 已到期（2026-09-16，#45）：月底收稅改成逐座位、中立不扣（`docs/re/321`）之後整張都比，巴拉特 68282／費沙 103100 相同 | — |
 
 ## 驗證
 
 - `TestRegionInfoMatchesOracle`：`fcmd-rinfo`／`-outside`（排除小圖最後一列）、`-rclick`／`-close` 整張。
-- `TestRegionInfoOtherRegionsMatchOracle`：`fcmd-rinfo-fezzan`／`-ballat`（排除經濟力數字）、`-fezzan2`／`-ballat2`（兩塊都排除）、`-ballat2-close`（排除經濟力數字）；`selectedRegion` 14／31。
+- `TestRegionInfoOtherRegionsMatchOracle`：`fcmd-rinfo-fezzan`／`-ballat`／`-ballat2-close` 整張、`-fezzan2`／`-ballat2`（排除小圖最後一列）；`selectedRegion` 14／31。
 - `TestMapRightClickKeepsPanel`：`fcmd-map-rclick` 整張；`TestRightClickOnMapKeepsSelection`：右鍵四個星域之後 `SelectedRegion()` 仍是 −1、左下角是游標底下那一格。
 - GUI：`tools/gui_check.sh` 的 `fcmd-rinfo`（排除那 128 個像素）。
 

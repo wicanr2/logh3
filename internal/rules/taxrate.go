@@ -61,3 +61,25 @@ func RecomputeTaxRates(records []byte, faction, base int, ruler []byte, owner fu
 		rec[regionTaxRate] = byte(rate)
 	}
 }
+
+// NeutralTaxLevel 是原版重算無主星域稅率時傳的難度下標（`090A:0B5E` 第三段
+// `090A:0DC0(2)`），`Base[2]` ＝ 100，所以無主星域的稅率就是它的成長率。
+const NeutralTaxLevel = 2
+
+// RecomputeNeutralTaxRates 把無主星域（擁有者 2）的稅率重算一遍（原版
+// `090A:0DC0(等級)`，`docs/re/321`）：成長率 ≤ 0 → `base × 5 ÷ 100`，否則
+// `成長率 × base ÷ 100`，只寫低位元組、沒有夾限。一個月一次，跟在兩個陣營
+// 的 `RecomputeTaxRates` 後面。
+func RecomputeNeutralTaxRates(records []byte, base int, owner func(int) int) {
+	for i := 0; (i+1)*RegionRecord <= len(records); i++ {
+		if owner(i) != RegionOwnerNone {
+			continue
+		}
+		rec := records[i*RegionRecord : (i+1)*RegionRecord]
+		v := base * 5 / 100
+		if g := RegionGrowth(rec); g > 0 {
+			v = g * base / 100
+		}
+		rec[regionTaxRate] = byte(v)
+	}
+}

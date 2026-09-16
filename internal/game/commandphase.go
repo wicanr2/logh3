@@ -103,6 +103,9 @@ func LoadRegionRecords(stellar []byte, measuredPath, shipsPath string) ([]byte, 
 		out[o+0x1D] = byte(r.Economy >> 24)
 		out[o+0x1E] = byte(r.Growth)
 		out[o+0x26] = byte(r.TaxRate)
+		// 載入時 `2703:01BD` 把 `+0x26` 抄進 `+0x27`（`docs/re/44`）；之後只有
+		// 自己座位的月底會再抄（`rules.CollectTax`），無主星域一直留著這一份。
+		out[o+0x27] = out[o+0x26]
 	}
 	// 艦隊數同樣清掉。796 年 1 月每一份收據上都是 `0：0`，而檔案裡不是
 	// 全零（`STELLAR.DTA` 星域 14 的 `+0x28` 是 1）——那一格在載入時

@@ -53,17 +53,11 @@ func TestMapRightClickKeepsPanel(t *testing.T) {
 	matches(t, g, "fcmd-map-rclick")
 }
 
-// 兩塊事先列出的排除區：
-//   - 小圖最後一列（畫面 y 212、x 24–151）：原版那一列的來源列超出地圖，讀到的是
-//     緩衝區後面的東西（與指定待命行星那張同一個已知差異，規格 051／053）；
-//   - 右側面板「經濟力」那個數字（x 432–479、y 224–233）：remake 的月底結算把同盟
-//     與中立星域的稅在同一趟扣掉，原版是各座位在自己的回合扣、中立不扣，所以
-//     796/01 帝國看到的別家經濟力比 remake 多一點（巴拉特 68282 對 65826、費沙
-//     103100 對 99904；規格 053 已知差異）。
-var (
-	skipMinimapLastRow = [4]int{24, 212, 151, 212}
-	skipForeignEconomy = [4]int{432, 224, 479, 233}
-)
+// 事先列出的排除區只剩一塊：小圖最後一列（畫面 y 212、x 24–151）——原版那一列
+// 的來源列超出地圖，讀到的是緩衝區後面的東西（與指定待命行星那張同一個已知
+// 差異，規格 051／053）。換看別家時右側面板的「經濟力」曾經也排除（remake 把
+// 同盟與中立的稅在同一趟扣掉），月底結算改成逐座位之後（#45）整張都比。
+var skipMinimapLastRow = [4]int{24, 212, 151, 212}
 
 func matchesRegionInfo(t *testing.T, g *Game, batch string) {
 	t.Helper()
@@ -72,12 +66,12 @@ func matchesRegionInfo(t *testing.T, g *Game, batch string) {
 
 func matchesForeignRegionInfo(t *testing.T, g *Game, batch string) {
 	t.Helper()
-	matchesExcept(t, g, batch, [][4]int{skipMinimapLastRow, skipForeignEconomy})
+	matchesRegionInfo(t, g, batch)
 }
 
 func matchesForeignPanel(t *testing.T, g *Game, batch string) {
 	t.Helper()
-	matchesExcept(t, g, batch, [][4]int{skipForeignEconomy})
+	matches(t, g, batch)
 }
 
 // 點別的格是換選星域（右側面板與清單跟著換），再點一次同一格才開視窗：

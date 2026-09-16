@@ -946,8 +946,7 @@ func (g *Game) execute() {
 
 // advanceTurn 推進一個回合 ＝ 三天。
 func (g *Game) advanceTurn() {
-	g.turn++
-	g.refillRegionSupply()
+	g.beginTurn()
 	// 電腦那一方先下命令，再讓所有艦隊走。
 	// `runBrain` 讀的原版回合計數器是 `g.turn - 1`；它跑完之後原版才把
 	// 計數器進位，接著進新回合的月底報告（`docs/re/299` 時間線）。
@@ -957,6 +956,18 @@ func (g *Game) advanceTurn() {
 		return
 	}
 	g.continueAfterAdmiralFateReports()
+}
+
+// beginTurn 是 `advanceTurn` 在電腦下命令之前的那幾步：回合計數器、回充，
+// 以及月初那個回合玩家按完「實行」之後、排在玩家之後的座位先過的月底
+// （收自己那些星域的稅，`docs/spec/035`；`g.turn` 在開頭就先加了，所以看
+// 的是 `g.turn − 1`）。測試要手動走到 `runBrain` 之前就叫它。
+func (g *Game) beginTurn() {
+	g.turn++
+	g.refillRegionSupply()
+	if (g.turn-1)%rules.TurnsPerMonth == 0 {
+		g.monthEndSeatsAfterPlayer()
+	}
 }
 
 // continueAfterAdmiralFateReports 接回原版 `056A:0219` 後面的 upkeep、
@@ -1263,6 +1274,10 @@ func (g *Game) recomputeAllTaxRates() {
 			continue
 		}
 		rules.RecomputeTaxRates(g.res.Stellar, f, pr.Base[level], ruler, owner)
+	}
+	// 第三段：無主星域走另一支（`090A:0DC0(2)`），稅率 ＝ 成長率。
+	if rules.NeutralTaxLevel < len(pr.Base) {
+		rules.RecomputeNeutralTaxRates(g.res.Stellar, pr.Base[rules.NeutralTaxLevel], owner)
 	}
 }
 
@@ -2709,53 +2724,78 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	}
 }
 
-// monthEnd 跑月底結算：逐行星成長與收稅，軍事費 += 總稅收。
+// monthEnd 跑月底結算裡**玩家看得到的那一半**：一個月一次的成長與稅率重算
+// （原版 `0654:0007`，跑在逐座位之前），然後依座位順序（帝國 0、同盟 1）
+// 把排在玩家之前的座位與玩家自己的座位各結算一次（`monthEndSeat`）。
+// 排在玩家之後的座位（單人模式的電腦那一方）在玩家按「實行」之後、電腦
+// 下命令之前才結算（`advanceTurn`）——所以帝國玩家在月初看到的同盟星域
+// 經濟力只有成長、還沒扣稅（收據 `monthwork3`、`fcmd-rinfo-ballat`）。
 //
-// **還沒做的**：船艦交付與扣款（`docs/re/21`）、未安定度與成長率的重算
-// （`docs/re/33` 只解出骨架）。
+// **還沒做的**：船艦交付（`deliverShips`）仍是兩邊一起做，沒有逐座位的收據。
+// 對戰模式的跨月沒有量過（`docs/spec/016`）：兩個座位都在這裡結算。
 func (g *Game) monthEnd() {
 	if g.res.Growth == nil || g.res.Planets == nil || len(g.res.Stellar) == 0 {
 		return
 	}
-	before := g.military
+	// 1. 一個月一次：32 格成長、重算成長率與稅率。
+	rules.MonthEndGrow(g.res.Stellar, g.res.Planets, g.res.Growth, g.recomputeAllTaxRates)
+	// 2. 逐座位：玩家之前的座位、玩家自己；對戰模式兩個都做。
+	for f := 0; f < 2; f++ {
+		if f <= g.faction || g.versus {
+			g.monthEndSeat(f)
+		}
+	}
+	// 3. 結算完之後重算下個月的預估徵稅額——徵稅計劃那張印的是這個，
+	//    與剛剛實收的那筆不是同一個數（`docs/spec/003`）。
+	g.refreshTaxEstimate()
+}
+
+// monthEndSeatsAfterPlayer 是排在玩家之後的座位的月底結算（單人模式的電腦
+// 那一方）：原版 `04F8:01B9(座位 1)` 一進去就過 `0654:0034` 的閘門，在
+// AI 下命令之前把自己那些星域的稅扣掉（`docs/spec/035`）。remake 在玩家
+// 按「實行」之後的 `advanceTurn` 裡、`runBrain` 之前做。
+func (g *Game) monthEndSeatsAfterPlayer() {
+	if g.versus || g.res.Growth == nil || g.res.Planets == nil || len(g.res.Stellar) == 0 {
+		return
+	}
+	for f := g.faction + 1; f < 2; f++ {
+		g.monthEndSeat(f)
+	}
+	g.refreshTaxEstimate()
+}
+
+// monthEndSeat 是一個座位的月底結算（原版 `0654:0034` 閘門開著時多做的那些，
+// `docs/spec/035`）：稅率等級抄過去、收自己那些星域的稅、軍事費 += 總稅收、
+// 切給造船、扣掉實付、累計的維持費與移動經費歸零。
+func (g *Game) monthEndSeat(f int) {
+	before := g.military[f]
 	// 0. `2703:03AF` 的第一件事：`ds:8FF8[陣營] ← ds:8FD4[陣營]`（`docs/re/252`）。
-	//    原版是逐座位各做自己那一格；remake 兩邊一起結算，就兩格一起抄。
-	g.rate = g.blend
-	// 1. 逐星域結算。成長是就地寫回的，一個月只能跑一次，所以兩個陣營
-	//    的徵稅額要在同一趟裡拿。
-	collected := rules.MonthEndTotals(g.res.Stellar, g.res.Planets, g.res.Growth,
-		g.recomputeAllTaxRates)
+	g.rate[f] = g.blend[f]
+	// 1. 收自己那些星域的稅（`2703:03AF` → `2703:0AB8(星域, 1)`）。
+	collected := rules.CollectTax(g.res.Stellar, g.res.Planets, f)
 	// 2. 照百分比切給造船，各列只買得起整數艘，零頭退回；扣掉實際花掉的。
 	//    百分比與各列的分配都是每個陣營自己的（`shipPct`／`buildPctFor`，
 	//    原版 `ds:8F92`／`ds:8FD6`）——電腦那一方在回合收尾按自己的總稅收
 	//    設百分比，各列則寫回一張固定表（`docs/re/257`）。
-	for f := 0; f < 2; f++ {
-		// 建造費的基數是「軍事費 ＋ 總稅收 − 維持費 − 移動經費」，
-		// 取的是**結算前**的軍事費——原版算 `ds:8F5A` 的那一趟
-		// （`090A:0E88`）跑在 `軍事費 += 總稅收` 之前（`docs/re/256`）。
-		b := rules.Budget{Treasury: before[f], Tax: collected[f],
-			ShipPct: g.factionShipPct(f), Upkeep: g.fleetUpkeep(f),
-			MoveCost: g.fleetMoveCost(f)}
-		budget := b.Military()
-		plan := rules.BuildPlan{Cost: b.ShipCost(), Pct: g.buildPctFor(f),
-			Faction: f, StaffOps: g.staffOps(f)}
-		paid := plan.Paid()
-		g.military[f] = budget - paid
-		// **兩個陣營都留一份**：下個月底各自交付到自己首都
-		// （`docs/spec/036`）。
-		g.building[f] = plan.Building()
-		if f != g.faction {
-			continue
-		}
+	//    建造費的基數是「軍事費 ＋ 總稅收 − 維持費 − 移動經費」，
+	//    取的是**結算前**的軍事費——原版算 `ds:8F5A` 的那一趟
+	//    （`090A:0E88`）跑在 `軍事費 += 總稅收` 之前（`docs/re/256`）。
+	b := rules.Budget{Treasury: before, Tax: collected,
+		ShipPct: g.factionShipPct(f), Upkeep: g.fleetUpkeep(f),
+		MoveCost: g.fleetMoveCost(f)}
+	budget := b.Military()
+	plan := rules.BuildPlan{Cost: b.ShipCost(), Pct: g.buildPctFor(f),
+		Faction: f, StaffOps: g.staffOps(f)}
+	paid := plan.Paid()
+	g.military[f] = budget - paid
+	// **兩個陣營都留一份**：下個月底各自交付到自己首都（`docs/spec/036`）。
+	g.building[f] = plan.Building()
+	// `ds:8F7A` 與 `ds:8F8A` 在 `0654:0034` 的尾段歸零（`docs/re/255`）。
+	g.paidUpkeep[f], g.paidMove[f] = 0, 0
+	if f == g.faction {
 		g.treasury = rules.Treasury{Budget: budget, ShipPaid: paid}
 		g.monthReport = b
 	}
-	// `ds:8F7A` 與 `ds:8F8A` 在 `0654:0034` 的尾段歸零（`docs/re/255`）。
-	g.paidUpkeep = [2]int{}
-	g.paidMove = [2]int{}
-	// 3. 結算完之後重算下個月的預估徵稅額——徵稅計劃那張印的是這個，
-	//    與剛剛實收的那筆不是同一個數（`docs/spec/003`）。
-	g.refreshTaxEstimate()
 }
 
 // refreshTaxEstimate 重算兩個陣營下個月的預估徵稅額。

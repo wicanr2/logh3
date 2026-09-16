@@ -236,10 +236,14 @@
   ——別家的成長率／徵稅額／稅率印 `----`——四個分頁重建）；**右鍵點星圖什麼都不換**
   （`fcmd-map-rclick`：`ds:9588` 不動，左下角只是跟著游標），remake 原本「右鍵選星域、
   清單看它」那條規則沒有收據，改掉。十批 `fcmd-rinfo-*`／`fcmd-map-rclick` 整張
-  逐位元組（兩塊事先列出的排除：小圖最後一列、換看別家時的經濟力——後者是月底
-  結算座位順序的既有缺口，#45）；行星位置改成圖塊 6 不夠補要塞圖塊 22、
+  逐位元組（一塊事先列出的排除：小圖最後一列）；行星位置改成圖塊 6 不夠補要塞圖塊 22、
   先 y 再 x 排序（`rules.PlanetSites`）；開新局的回充也把七種艦艇按比例分回行星
-  （`rules.DistributeRegionSupply`）。#44 關掉。左下角摘要多了星域名後面的狀態字
+  （`rules.DistributeRegionSupply`）。#44 關掉。**月底收稅改成逐座位、中立不扣（#45，
+  `docs/re/321`）**：`2703:0AB8` 旗標 0 只估、旗標 1 才扣，旗標 1 只有自己座位的
+  `2703:03AF` 會叫——帝國玩家月初看到的同盟星域只有成長，等按完「實行」輪到同盟
+  座位才扣（`Game.beginTurn`）；無主星域的稅率每月 `090A:0DC0(2)` 重算 ＝ 成長率；
+  載入時 `+0x27 ← +0x26`。`monthwork3`／`monthwork4` 兩份星域表逐格、規格 053 的
+  經濟力排除區拿掉整張相同。左下角摘要多了星域名後面的狀態字
   「處於戰鬥狀態／占領狀態／孤立狀態」（規格 001）。艦隊組成的「中止」照原版整支
   作廢回地圖、右鍵不認；首都戰艦的待命艘數開局是 78000，進艦隊組成才扣旗艦那一組
   （`docs/re/316` §四）。順手定下的通用規則：底線裝飾、清單反白、
@@ -410,7 +414,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 6 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 5 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -561,30 +565,9 @@ bgm_3f.mds`（換回平時曲），下一次交戰再來一遍（`docs/re/274` �
 
 **核實**：`internal/game/game.go` 裡還找得到 `到了之後的那一路還沒接`（自承還在 ＝ 還沒做）
 
-#### month-end-tax-per-seat — 月底結算的收稅要逐座位、中立不扣（別家星域的經濟力比原版少）
-
-*[#45](https://github.com/wicanr2/logh3/issues/45) · parity（對拍：要與原版逐位元組相同）*
-
-月底結算的第二趟（收稅）remake 把 32 格的稅在同一趟扣掉（`rules.MonthEndTotals`），
-原版 `2703:0AB8` 是**各座位在自己的回合只扣自己那些星域的、中立從不扣**。玩家自己的
-星域與總稅收兩邊相同，差在**別家與中立星域的經濟力**：796/01 帝國回合換看巴拉特，
-原版是 68282（65100 × 1.0489，只有成長），remake 65826（成長再扣稅）；費沙 103100 對
-99904（`docs/re/320` §五，收據 `fcmd-rinfo-ballat`／`fcmd-rinfo-fezzan`）。規格 053 把右側
-面板那一格（x 432–479、y 224–233）列成事先排除區。
-
-要驗的不只是 796/01：同盟回合扣同盟的稅之後，帝國下一個月看到的數字也要對得上
-（座位順序見 #7 `ai-seat-order`）；中立星域整局都只長不扣。
-
-**做完的判準**：`rules.MonthEndTotals`（或替代它的那一支）逐座位扣稅、中立不扣；規格 053 的經濟力排除區
-拿掉之後 `TestRegionInfoOtherRegionsMatchOracle` 整張逐位元組仍過，再補一份跨月之後的收據。
-
-**證據**：[`docs/re/320-region-info-window.md`](docs/re/320-region-info-window.md)、[`docs/spec/053-region-info-window.md`](docs/spec/053-region-info-window.md)、[`internal/rules/growth.go`](internal/rules/growth.go)
-
-**核實**：`internal/rules/growth.go` 裡還找得到 `remake 還把 32 格的稅在同一趟扣掉`（自承還在 ＝ 還沒做）
-
 ### 做完的（不在矩陣裡的那幾條）
 
-50 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+51 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1584,6 +1567,38 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### month-end-tax-per-seat — 月底結算的收稅要逐座位、中立不扣（別家星域的經濟力比原版少）
+
+*[#45](https://github.com/wicanr2/logh3/issues/45) · parity（對拍：要與原版逐位元組相同）*
+
+月底結算的第二趟（收稅）remake 把 32 格的稅在同一趟扣掉（`rules.MonthEndTotals`），
+原版 `2703:0AB8` 是**各座位在自己的回合只扣自己那些星域的、中立從不扣**。玩家自己的
+星域與總稅收兩邊相同，差在**別家與中立星域的經濟力**：796/01 帝國回合換看巴拉特，
+原版是 68282（65100 × 1.0489，只有成長），remake 65826（成長再扣稅）；費沙 103100 對
+99904（`docs/re/320` §五，收據 `fcmd-rinfo-ballat`／`fcmd-rinfo-fezzan`）。規格 053 把右側
+面板那一格（x 432–479、y 224–233）列成事先排除區。
+
+要驗的不只是 796/01：同盟回合扣同盟的稅之後，帝國下一個月看到的數字也要對得上
+（座位順序見 #7 `ai-seat-order`）；中立星域整局都只長不扣。
+
+2026-09-16 做完（`docs/re/321`）：`2703:0AB8(星域, 旗標)` 旗標 0 只累加預估、**旗標 1 才從
+行星扣**，旗標 1 只有 `2703:03AF` 會叫、它只掃 `+0x12 == ds:8F1D` 的格子；無主一進去就被擋掉。
+順帶讀出 `090A:0DC0(2)`（無主星域的稅率 ＝ 成長率，每月重算）與 `+0x27` 的三個寫入點（載入
+`2703:01BD`、自己座位的 `03AF`、無主之後沒人抄）。remake：`rules.MonthEndGrow` ＋ `CollectTax(陣營)`，
+`Game.monthEnd` 做玩家之前的座位與自己、`Game.beginTurn`（「實行」之後、`runBrain` 之前）做之後的
+座位；`LoadRegionRecords` 載入時抄 `+0x27`。收據 `monthwork3`（796/02 帝國命令階段：同盟 `+0x27`
+仍是舊稅率、無主稅率＝新成長率）、`monthwork4`（新，再一次「實行」：同盟 `+0x27` ＝ 回合 10 的
+`+0x26`、經濟力扣過；帝國與無主一字不差）、`fcmd-rinfo-ballat`／`-fezzan` 排除區拿掉整張相同。
+沒接（讀出來了、沒收據）：`0AB8` 開頭擋 `+0x13` bit0–bit2 的格子、首都丟了那一方不累加總稅收。
+同盟星域的經濟力兩邊仍差 −595～＋88（hypothesis：AI 艦隊流進行星的錢），與收稅無關。
+
+**做完的判準**：`rules.MonthEndTotals`（或替代它的那一支）逐座位扣稅、中立不扣；規格 053 的經濟力排除區
+拿掉之後 `TestRegionInfoOtherRegionsMatchOracle` 整張逐位元組仍過，再補一份跨月之後的收據。
+
+**證據**：[`docs/re/321-month-end-tax-per-seat.md`](docs/re/321-month-end-tax-per-seat.md)、[`docs/spec/035-month-end-gate.md`](docs/spec/035-month-end-gate.md)、[`docs/spec/053-region-info-window.md`](docs/spec/053-region-info-window.md)、[`internal/rules/growth.go`](internal/rules/growth.go)
+
+**核實**：`TestMonthEndTaxesOnlyOwnSeat` 釘在 `./internal/game`
 
 #### ending-screen-planes-parity — 結局畫面與重錄收據的 plane 2／3 不一致
 
