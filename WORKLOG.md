@@ -6884,3 +6884,28 @@ GitHub 的 issue 時間軸承擔。
   12／22／29／33／58、playtest 021、CONTEXT 推翻表加兩列（士氣值、地圖顏色）。
 - 還沒做（#41 後半）：占領（要 poke 局面）、待命（`0DEA:1320` 新畫面）、
   選單停用旗標；#42 變更。
+
+## 2026-09-16 — 待命：「指定待命行星」接上（#41 第三片）
+
+- `0DEA:1320` 整段讀完（`docs/re/314`）：視窗 `3603:0006(0,0x97,8,4,18,11,1)`、
+  `0DEA:1433` 排行星鈕標籤（`%-16s`，只啟用 i < 顆數）、`0DEA:14D2` 列印與既有
+  待命行星的反白、`1727:05C6` 小圖（欄不縮、列 `py − ⌊py/5⌋`，102 列拉 128 列；
+  `1588:073C`／`078C` 載入時塞進的格線圖塊也算有東西）、`0DEA:1594` 外框與引線
+  （`3870:0723`／`07C9` → `39D7:0647`，與戰場 XOR 線同一套步進）、`0DEA:165A`／
+  `16AB` 事件迴圈（右鍵 ＝ 決定；中止清反白）、`37A9:0332` 只改本體格顏色後
+  `341B:02E5` 只重畫變過的格子。
+- 收據六批（`fcmd-standby`／`-pick`／`-done`／`-cancel`／`-rclick`／`-reopen`，
+  `b5485eb`）整張 0 差異；`fcmd-standby`／`-pick` 各排除小圖最後一列 128 個像素
+  ——原版那一列來源是第 102 列，超出地圖，讀到堆積區的鄰居（規格 051 已知差異）。
+  `tools/gui_check.sh` 加 `fcmd-standby-pick`（同樣排除），四例全過。
+- 差過一個像素才抓到的規則：反白換色之後原版只重畫變過的格子，所以點過的鈕
+  蓋在引線上、沒點過的引線仍壓在字上（`fcmd-standby-pick` 的 (288,250)）。
+  remake 用 `standbyRepainted` 記哪幾顆鈕重畫過，`ui.DrawTextBufferRect` 只補那幾格。
+- `+0x07` 在 `+0x08 == 5` 時是**星域內的行星序號**（`docs/internals/33` 已加）；
+  艦隊視窗第 7 列「待命行星 <行星名>」（擁有者色）跟著接上（`fcmd-standby-reopen`）。
+- remake：`internal/screen/standby.go`（`FleetStandbySpec`／`View`／`Draw`／
+  `HotspotAt`）、`ClipRect.Line`（`XorLine` 抽成共用步進）、`internal/game/
+  fleetstandby.go`（`StateFleetStandby`）、`fleet-standby-panel.json`
+  （`tools/scripts/standby_spec.py`）、bootstrap 載入。
+- 不模型化：`0DEA:1759` 抄進艦隊 `+0x5C`／`+0x5E` 的行星位置（記錄沒這兩格）。
+- 還沒做（#41 後半）：占領（要 poke 局面）、選單停用旗標；#42 變更。

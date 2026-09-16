@@ -136,11 +136,22 @@ func (r ClipRect) Clip(x0, y0, x1, y1 int) (int, int, int, int, bool) {
 // 共用端點會被畫兩次 ——XOR 之後就消失，原版的折線在每個轉折上
 // 都少一個像素，那不是漏畫。
 func (r ClipRect) XorLine(fb *gfx.Framebuffer, x0, y0, x1, y1 int, ink uint8) {
+	r.line(x0, y0, x1, y1, func(x, y int) { fb.Set(x, y, fb.At(x, y)^ink) })
+}
+
+// Line 是同一條線的**直接上色**版：`3870:07C9` → `39D7:0647`，
+// 一樣先按 x 排端點、一樣的定點累加，只是把顏色寫上去而不是 XOR
+// （指定待命行星的引線與外框，`docs/re/314`）。
+func (r ClipRect) Line(fb *gfx.Framebuffer, x0, y0, x1, y1 int, ink uint8) {
+	r.line(x0, y0, x1, y1, func(x, y int) { fb.Set(x, y, ink) })
+}
+
+// line 是兩個版本共用的裁切與步進，每個像素叫一次 put。
+func (r ClipRect) line(x0, y0, x1, y1 int, put func(x, y int)) {
 	cx0, cy0, cx1, cy1, ok := r.Clip(x0, y0, x1, y1)
 	if !ok {
 		return
 	}
-	put := func(x, y int) { fb.Set(x, y, fb.At(x, y)^ink) }
 	if cx1 < cx0 {
 		cx0, cy0, cx1, cy1 = cx1, cy1, cx0, cy0
 	}

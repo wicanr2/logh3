@@ -41,6 +41,27 @@ func DrawTextBuffer(fb *gfx.Framebuffer, fnt *font.Font, tiles *FrameTiles,
 	return missing
 }
 
+// DrawTextBufferRect 只畫緩衝區裡 (col,row) 起 cols×rows 那一塊格子——
+// 原版改了幾格的顏色之後 `341B:02E5` 只重畫**變過的格子**，畫在格表之外
+// 直接塗上去的東西（小圖、引線）在其他格子上留著（`docs/re/314`）。
+func DrawTextBufferRect(fb *gfx.Framebuffer, fnt *font.Font, tiles *FrameTiles,
+	b *TextBuffer, cellX, cellY, col, row, cols, rows int) {
+	if fb == nil || b == nil {
+		return
+	}
+	for r := row; r < row+rows && r < b.Rows; r++ {
+		for c := col; c < col+cols && c < b.Cols; c++ {
+			if r < 0 || c < 0 {
+				continue
+			}
+			cell := b.Cells[r*b.Cols+c]
+			x := (cellX + c) * FrameTileW
+			y := (cellY+r)*FrameTileH + FrameCellOriginY
+			drawContentCell(fb, fnt, tiles, cell, x, y)
+		}
+	}
+}
+
 func drawContentCell(fb *gfx.Framebuffer, fnt *font.Font, tiles *FrameTiles,
 	cell ContentCell, x, y int) uint16 {
 	hi := uint8(cell.Code >> 8)

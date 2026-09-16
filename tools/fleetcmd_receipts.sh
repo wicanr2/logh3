@@ -84,6 +84,15 @@ rec fcmd-garrison-done    545000000 fcmd-garrison-confirm - -clicks 522000000:43
 rec fcmd-transport-pick    495000000 fcmd-menu ck -clicks 472000000:497:332 -click-hold $HOLD
 rec fcmd-transport-confirm 520000000 fcmd-transport-pick ck -clicks 497000000:85:88 -click-hold $HOLD
 rec fcmd-transport-done    545000000 fcmd-transport-confirm - -clicks 522000000:432:223 -click-hold $HOLD
+# 8. 作戰選單第 4 項「待命」（滑鼠 y 352）→「指定待命行星」（docs/re/314）：
+#    點第 1 顆（布倫希爾，鈕列 1 ＝ 畫面 y 240–259 → 滑鼠 210）→ 決定 (400,310)／中止 (350,310)／右鍵；
+#    決定之後再開視窗看「待命行星」那一列。
+rec fcmd-standby        495000000 fcmd-menu ck -clicks 472000000:497:352 -click-hold $HOLD
+rec fcmd-standby-pick   520000000 fcmd-standby ck -clicks 497000000:350:210 -click-hold $HOLD
+rec fcmd-standby-done   545000000 fcmd-standby-pick ck -clicks 522000000:400:310 -click-hold $HOLD
+rec fcmd-standby-cancel 545000000 fcmd-standby-pick - -clicks 522000000:350:310 -click-hold $HOLD
+rec fcmd-standby-rclick 545000000 fcmd-standby-pick - -rclicks 522000000:300:200 -click-hold $HOLD
+rec fcmd-standby-reopen 570000000 fcmd-standby-done - -clicks 547000000:450:268 -click-hold $HOLD
 # 6. 從 `dec1` 只把游標移到瓦爾哈拉（不按）→ 左下角照游標重寫：剛編成的
 #    第１艦隊算不算進「艦隊 a：b」（星域記錄 `+0x28` 建艦隊時就加了）。
 rec fcmd-hover-home 440000000 fcmd-base - -mouse-x 32 -mouse-y 32 -mouse-at 421000000

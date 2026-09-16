@@ -57,6 +57,10 @@ func loadWithRules(t *testing.T) *Resources {
 		filepath.Join(data, "fleet-command-menu.json")); err != nil {
 		t.Fatal(err)
 	}
+	if res.FleetStandby, err = screen.LoadFleetStandbySpec(
+		filepath.Join(data, "fleet-standby-panel.json")); err != nil {
+		t.Fatal(err)
+	}
 	return res
 }
 

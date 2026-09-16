@@ -13,10 +13,13 @@ import (
 // 的 `fcmd-*` 收據逐位元組比。座標是畫面座標（收據旗標的滑鼠 y ＋ 40）。
 
 // reachFleetDecided 走到 `dec1`：第１艦隊剛編成、停在首都。資源要帶規則表
-// （`loadWithRules`）：艦隊視窗印的編制、費用與速度都從艦種表算。
+// （`loadWithRules`）：艦隊視窗印的編制、費用與速度都從艦種表算；
+// 「指定待命行星」的小圖與行星位置還要掃星域地圖（`loadBattleMaps`）。
 func reachFleetDecided(t *testing.T) *Game {
 	t.Helper()
-	g := reachCommandPhaseOnMapWith(t, loadWithRules(t))
+	res := loadWithRules(t)
+	loadBattleMaps(t, res)
+	g := reachCommandPhaseOnMapWith(t, res)
 	g.MoveMouse(600, 340)
 	g = reachFleetOrgFrom(t, g)
 	g.Click(480, 350) // 「確認」→ 艦隊組成
@@ -298,4 +301,129 @@ func TestFleetConfirmCancelMatchesOracle(t *testing.T) {
 		t.Fatalf("中止之後艦隊記錄變了：%+v", f)
 	}
 	matches(t, g, "fcmd-cancel")
+}
+
+// ── 待命（第 4 項）：「指定待命行星」（`docs/re/314`）──
+
+// reachFleetStandby 選「待命」→ 指定待命行星（`fcmd-standby`）。
+func reachFleetStandby(t *testing.T) *Game {
+	t.Helper()
+	g := reachFleetWindow(t)
+	g.Click(490, 345) // 「作戰」
+	g.Click(497, 392) // 「待命」
+	if g.State() != StateFleetStandby {
+		t.Fatalf("點了待命之後在 %v", g.State())
+	}
+	return g
+}
+
+// matchesStandby 是整張比，只放過小圖最後一列（y 347、x 152–279）：原版那
+// 一列的來源列是 102，超出 102 列的地圖，讀到的是緩衝區後面的東西
+// （`docs/spec/051` 已知差異）。
+func matchesStandby(t *testing.T, g *Game, batch string) {
+	t.Helper()
+	matchesExcept(t, g, batch, [][4]int{{152, 347, 279, 347}})
+}
+
+// matchesExcept 整張比，但跳過列出的矩形（含端點）；每一塊都要在呼叫端
+// 寫清楚理由。
+func matchesExcept(t *testing.T, g *Game, batch string, skip [][4]int) {
+	t.Helper()
+	want, err := os.ReadFile(filepath.Join(root, "workplace/oracle", batch, "screen.bin"))
+	if err != nil {
+		t.Skipf("沒有收據 %s，跳過（tools/oracle.sh 可重建）", batch)
+	}
+	got := g.Frame().Pix
+	bad := 0
+	for i := range want {
+		x, y := i%640, i/640
+		skipped := false
+		for _, b := range skip {
+			if x >= b[0] && x <= b[2] && y >= b[1] && y <= b[3] {
+				skipped = true
+				break
+			}
+		}
+		if !skipped && want[i] != got[i] {
+			bad++
+		}
+	}
+	if bad != 0 {
+		if os.Getenv("LOGH3_DUMP_REMAKE") != "" {
+			out := filepath.Join(root, "workplace", "remake-"+batch+".bin")
+			if err := os.WriteFile(out, got, 0o644); err != nil {
+				t.Logf("倒 remake 畫面失敗：%v", err)
+			} else {
+				t.Logf("remake 畫面寫到 %s", out)
+			}
+		}
+		t.Fatalf("%s：與原版不同的像素 %d / %d（已跳過 %d 塊）", batch, bad, len(want), len(skip))
+	}
+}
+
+// 「指定待命行星」開出來：四顆行星四顆鈕、小圖、引線（`fcmd-standby`）；
+// 點第 1 顆（布連娜）反白（`fcmd-standby-pick`）。
+func TestFleetStandbyMatchesOracle(t *testing.T) {
+	g := reachFleetStandby(t)
+	matchesStandby(t, g, "fcmd-standby")
+	g.Click(350, 250) // 第 1 顆：布連娜
+	if g.State() != StateFleetStandby || g.fcmd.standbySel != 1 {
+		t.Fatalf("點了行星之後在 %v，反白 %d", g.State(), g.fcmd.standbySel)
+	}
+	matchesStandby(t, g, "fcmd-standby-pick")
+}
+
+// 「決定」寫 `+0x07 ← 1`、`+0x08` 留 5、關視窗回地圖（`fcmd-standby-done`）；
+// 再點清單那一列，視窗第 7 列印「待命行星 布連娜」（`fcmd-standby-reopen`）。
+func TestFleetStandbyDecideWritesPlanet(t *testing.T) {
+	g := reachFleetStandby(t)
+	g.Click(350, 250) // 布連娜
+	g.Click(400, 350) // 「決定」
+	if g.State() != StateCommandPhase {
+		t.Fatalf("點了決定之後在 %v", g.State())
+	}
+	f := g.fleets[0]
+	if f.Target != 1 || f.Move != rules.MoveParked || !f.Parked {
+		t.Fatalf("決定之後艦隊記錄 Target=%d Move=%d Parked=%v，原版 +0x07=1、+0x08=5", f.Target, f.Move, f.Parked)
+	}
+	if rec, err := os.ReadFile(filepath.Join(root, "workplace/oracle/fcmd-standby-done/fleet0.bin")); err == nil && len(rec) >= 9 {
+		if int(rec[7]) != f.Target || int(rec[8]) != f.Move {
+			t.Fatalf("原版艦隊記錄 +0x07=%d +0x08=%d，remake Target=%d Move=%d", rec[7], rec[8], f.Target, f.Move)
+		}
+	}
+	matches(t, g, "fcmd-standby-done")
+	g.Click(450, 308) // 清單第 0 列
+	if g.State() != StateFleetWindow {
+		t.Fatalf("再點清單之後在 %v", g.State())
+	}
+	matches(t, g, "fcmd-standby-reopen")
+}
+
+// 「中止」清掉反白、回艦隊視窗，艦隊記錄不動（`fcmd-standby-cancel`）；
+// 右鍵等於「決定」：反白的那一顆照樣寫進去（`fcmd-standby-rclick`）。
+func TestFleetStandbyCancelAndRightClick(t *testing.T) {
+	t.Run("cancel", func(t *testing.T) {
+		g := reachFleetStandby(t)
+		g.Click(350, 250) // 布連娜
+		g.Click(350, 350) // 「中止」
+		if g.State() != StateFleetWindow {
+			t.Fatalf("點了中止之後在 %v", g.State())
+		}
+		if f := g.fleets[0]; f.Target != rules.NoTarget || !f.Parked {
+			t.Fatalf("中止之後艦隊記錄變了：%+v", f)
+		}
+		matches(t, g, "fcmd-standby-cancel")
+	})
+	t.Run("rclick", func(t *testing.T) {
+		g := reachFleetStandby(t)
+		g.Click(350, 250) // 布連娜
+		g.RightClick(300, 240)
+		if g.State() != StateCommandPhase {
+			t.Fatalf("右鍵之後在 %v", g.State())
+		}
+		if f := g.fleets[0]; f.Target != 1 || f.Move != rules.MoveParked {
+			t.Fatalf("右鍵之後艦隊記錄 %+v，原版 +0x07=1、+0x08=5", f)
+		}
+		matches(t, g, "fcmd-standby-rclick")
+	})
 }

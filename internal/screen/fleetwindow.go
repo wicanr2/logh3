@@ -375,24 +375,7 @@ func adjInk(better bool) int {
 // （與 `VictoryReportPanel.putButton` 同一套旗標）。codes 是每一格的
 // 字碼（hex）。
 func putTextButton(b *ui.TextBuffer, x, y, cols int, colour uint8, codes []string) {
-	if c := b.At(x-1, y); c != nil {
-		c.Flags |= ui.CellButtonLeft
-	}
-	raw := decodeHex(joinHex(codes))
-	for i := 0; i < cols; i++ {
-		c := b.At(x+i, y)
-		if c == nil {
-			continue
-		}
-		c.Colour = colour
-		c.Flags |= ui.CellButtonBody
-		if 2*i+1 < len(raw) {
-			c.Code = uint16(raw[2*i])<<8 | uint16(raw[2*i+1])
-		}
-	}
-	if c := b.At(x+cols, y); c != nil {
-		c.Flags |= ui.CellButtonRight
-	}
+	putRawButton(b, x, y, cols, colour, decodeHex(joinHex(codes)))
 }
 
 func joinHex(parts []string) string {

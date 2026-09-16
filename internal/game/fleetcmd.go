@@ -16,8 +16,9 @@ import (
 // 點目的地，確認框按「決定」就寫進艦隊記錄——原版 `+0x07` 目的地、
 // `+0x08` 動作碼，remake 是 `Fleet.Target`／`Fleet.Move`／`Fleet.Parked`。
 //
-// 這一片只接「移動」；占領／駐留／輸送／待命與「變更」點了只關選單
-// （規格的排除範圍，各自另有 issue）。
+// 第一片只接「移動」；第二輪補上駐留／輸送（同一個目的地迴圈）與
+// 待命（另一張「指定待命行星」，`fleetstandby.go`）。占領與「變更」
+// 點了還是只關選單（規格的排除範圍，各自另有 issue）。
 
 // fleetCmd 是這條路上跨狀態要記的東西。
 type fleetCmd struct {
@@ -38,6 +39,11 @@ type fleetCmd struct {
 	// 回地圖介面走的是地圖介面自己的探針，那塊留著剛寫的目的地摘要
 	// （`fcmd-done`）。
 	probe int
+	// standbySel 是「指定待命行星」反白的那一顆（區內序號，−1 ＝ 沒有；
+	// 原版 `ds:971C` 指著的熱區）；standbyRepainted 記視窗顯示之後換過
+	// 顏色的鈕（只有那幾顆會蓋在引線上，`docs/re/314`）。
+	standbySel       int
+	standbyRepainted [5]bool
 }
 
 // 作戰選單的五項（原版 `+0x08` 的動作碼就是項目索引，`docs/re/312` §三）。
@@ -160,8 +166,10 @@ func (g *Game) fleetMenuClick(x, y int) {
 	switch item {
 	case fleetActionMove, fleetActionGarrison, fleetActionTransport:
 		g.startFleetTargetPick(item)
+	case fleetActionStandby:
+		g.openFleetStandby()
 	default:
-		// 占領與待命還沒接（#41 後半）：先照「點在外面」收掉選單。
+		// 占領還沒接（#41 後半）：先照「點在外面」收掉選單。
 		g.state = StateFleetWindow
 	}
 }
@@ -310,6 +318,10 @@ func (g *Game) fleetCmdRightClick() {
 		g.state = StateFleetWindow
 	case StateFleetMessage, StateFleetConfirm:
 		// 訊息框只認左鍵（`3826:023B`）。
+	case StateFleetStandby:
+		// 右鍵＝「決定」：有反白的就寫進去（`0DEA:165A` 的事件 2 直接跳出
+		// 迴圈，`1320` 回目前反白那一筆；收據 `fcmd-standby-rclick`）。
+		g.finishFleetStandby()
 	}
 }
 
@@ -323,7 +335,8 @@ func (g *Game) fleetCmdMouseMove(x, y int) {
 // FleetCommandFleet 回艦隊視窗正在看哪一支（-1 ＝ 沒開）。
 func (g *Game) FleetCommandFleet() int {
 	switch g.state {
-	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm:
+	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm,
+		StateFleetStandby:
 		return g.fcmd.fleet
 	}
 	return -1
@@ -355,11 +368,19 @@ func (g *Game) fleetWindowView() (*screen.FleetWindowView, *asset.Image) {
 		Morale:      f.Morale,
 		Command:     byteAt(adm, admiralCommandOff),
 		OpsPressed: g.state == StateFleetActionMenu || g.state == StateFleetTargetPick ||
-			g.state == StateFleetMessage || g.state == StateFleetConfirm,
+			g.state == StateFleetMessage || g.state == StateFleetConfirm || g.state == StateFleetStandby,
 	}
 	if f.Move != fleetMoveParked && f.Target >= 0 {
 		v.TargetName = codesBig5(g.regionName(f.Target))
 		v.TargetOwner = g.res.Planets.RegionOwner(f.Target)
+	}
+	// 停駐且 `+0x07` 不是 0xFF ＝ 待命行星：所在星域的第幾顆
+	// （`0DEA:04C0` 先 `2AF5:0036(星域)` 再 `ds:CFF8 + 0x52×+0x07`，收據 `fcmd-standby-reopen`）。
+	if f.Move == fleetMoveParked && f.Target >= 0 && g.res.Planets != nil {
+		if p := g.standbyPlanetIndex(f); p >= 0 {
+			v.StandbyPlanetName = codesBig5(g.res.Planets.Name(p))
+			v.StandbyPlanetOwner = g.res.Planets.Owner(p)
+		}
 	}
 	if adj != nil {
 		v.AdjPresent = true
@@ -511,6 +532,8 @@ func (g *Game) drawFleetCommand(fb *gfx.Framebuffer) {
 	}
 	g.res.FleetWindow.Draw(fb, g.res.Font, g.res.FrameTiles, v, face)
 	switch g.state {
+	case StateFleetStandby:
+		g.drawFleetStandby(fb)
 	case StateFleetActionMenu:
 		if m := g.res.FleetActionMenu; m != nil {
 			screen.DrawCommandMenu(m, fb, g.res.Font, g.res.FrameTiles, fleetActionMenuKind,

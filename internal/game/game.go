@@ -170,6 +170,9 @@ const (
 	StateFleetTargetPick
 	StateFleetMessage
 	StateFleetConfirm
+	// StateFleetStandby 是「作戰」第 4 項「待命」開的「指定待命行星」
+	// （`0DEA:1320`，`docs/re/314`）。
+	StateFleetStandby
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -192,7 +195,7 @@ func (s State) String() string {
 		"StateRebellionReport", "StateOccupationReport", "StateAdmiralFateReport",
 		"StatePhezzanReport", "StateVictoryReport",
 		"StateFleetWindow", "StateFleetActionMenu", "StateFleetTargetPick",
-		"StateFleetMessage", "StateFleetConfirm",
+		"StateFleetMessage", "StateFleetConfirm", "StateFleetStandby",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -240,6 +243,7 @@ var screenSpecName = map[State]string{
 	StateFleetTargetPick:   "screen-command-phase",
 	StateFleetMessage:      "screen-command-phase",
 	StateFleetConfirm:      "screen-command-phase",
+	StateFleetStandby:      "screen-command-phase",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -417,6 +421,8 @@ type Resources struct {
 	// FleetActionMenu 是它的「作戰」五項選單（`docs/spec/051`）。
 	FleetWindow     *screen.FleetWindowSpec
 	FleetActionMenu *screen.CommandMenuSpec
+	// FleetStandby 是「待命」開的「指定待命行星」（`docs/re/314`）。
+	FleetStandby *screen.FleetStandbySpec
 
 	// FleetDetail 是點一列開出來的艦隊詳細資料（`docs/spec/022`）。
 	BattleData  *screen.BattleDataSpec
@@ -2077,6 +2083,8 @@ func (g *Game) click(x, y int) {
 		g.fleetPickClick(x, y)
 	case StateFleetMessage, StateFleetConfirm:
 		g.fleetMessageClick(x, y)
+	case StateFleetStandby:
+		g.fleetStandbyClick(x, y)
 	case StateSettings:
 		// 六組都在這裡：音源／平時配樂／戰鬥配樂三組單選（`docs/re/285`）、
 		// 訊息速度的上下箭頭、動畫效果與動畫速度，以及「結束」
@@ -2245,7 +2253,8 @@ func (g *Game) rightClick(x, y int) {
 		g.battleMenu = false
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
-	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm:
+	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm,
+		StateFleetStandby:
 		g.fleetCmdRightClick()
 	case StateVersusInput:
 		// 交棒視窗按右鍵會怎樣**沒有量過**，先什麼都不做——
@@ -2769,7 +2778,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
 		StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick,
-		StateFleetMessage, StateFleetConfirm,
+		StateFleetMessage, StateFleetConfirm, StateFleetStandby,
 		StateFleetOrg, StateFleetNumber, StateFleetAdjutant,
 		StateFleetComposition, StateFormation,
 		// 這五張的收據末尾都有一次 `-mouse-at`（搬到 (600,340)），

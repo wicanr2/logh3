@@ -37,31 +37,7 @@ func newTestGame(t *testing.T) *Game {
 		}
 		res.Graph = graph
 	}
-	if res.Battle == nil {
-		spec, err := screen.LoadBattleSpec(filepath.Join(root,
-			"docs/internals/data/screen-battle.json"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		res.Battle = spec
-	}
-	// 戰鬥要行星，行星的位置要掃星域地圖（`docs/re/99`）。
-	if res.Battle != nil && res.BattleMaps == nil {
-		maps := make([][]uint8, 32)
-		for i := range maps {
-			b, err := os.ReadFile(filepath.Join(root, "org_game/extracted",
-				fmt.Sprintf("MAP%02d.CMP", i)))
-			if err != nil {
-				continue
-			}
-			cells, err := asset.DecodeCMP(b, res.Battle.Field.MapCols, res.Battle.Field.MapRows)
-			if err != nil {
-				continue
-			}
-			maps[i] = cells
-		}
-		res.BattleMaps = maps
-	}
+	loadBattleMaps(t, res)
 	if res.Terrain == nil {
 		terrain, err := rules.LoadBattleTerrain(filepath.Join(root,
 			"docs/internals/data/battle-terrain.json"))
@@ -177,4 +153,36 @@ func TestAdvanceBattleTurnMoves(t *testing.T) {
 	if g.battleUnits[0].TargetX != 400 || g.battleUnits[0].TargetY != 400 {
 		t.Error("玩家那一支的目標被 AI 改了")
 	}
+}
+
+// loadBattleMaps 補上戰場版面與 32 張星域地圖（缺原版檔就留空）。
+// 戰鬥要行星，行星的位置要掃星域地圖（`docs/re/99`）；「指定待命行星」的
+// 小圖也從同一張地圖縮出來（`docs/re/314`）。
+func loadBattleMaps(t *testing.T, res *Resources) {
+	t.Helper()
+	if res.Battle == nil {
+		spec, err := screen.LoadBattleSpec(filepath.Join(root,
+			"docs/internals/data/screen-battle.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.Battle = spec
+	}
+	if res.BattleMaps != nil {
+		return
+	}
+	maps := make([][]uint8, 32)
+	for i := range maps {
+		b, err := os.ReadFile(filepath.Join(root, "org_game/extracted",
+			fmt.Sprintf("MAP%02d.CMP", i)))
+		if err != nil {
+			continue
+		}
+		cells, err := asset.DecodeCMP(b, res.Battle.Field.MapCols, res.Battle.Field.MapRows)
+		if err != nil {
+			continue
+		}
+		maps[i] = cells
+	}
+	res.BattleMaps = maps
 }

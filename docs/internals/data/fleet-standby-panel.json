@@ -1,0 +1,102 @@
+{
+ "note": "「指定待命行星」：作戰選單第 4 項開的視窗（0DEA:1320；docs/re/314、docs/spec/051 §待命）。視窗 3603:0006(0, 0x97, 8, 4, 18, 11, 1)；文字照 0DEA:14D2 的順序：標題、3982:00B6 的「%s第Ｎ艦隊  提督」、星系那一列、37A9:000F 畫熱區表 ds:2248 的鈕（前五筆是行星，只畫 i < 行星數的；第 6 筆決定、第 7 筆中止）、艦隊 +0x08==5 且 +0x07!=FF 時那一顆鈕用 0x27。之後 2376:0B44 把 MAP<nn>.CMP 縮成的 128×128 單色圖貼在 (152,220)，0DEA:1594 畫外框與每顆行星的引線。",
+ "cell_x": 8,
+ "cell_y": 4,
+ "cols": 18,
+ "rows": 11,
+ "style": 1,
+ "colour": 151,
+ "formats": {
+  "title": "0cabfca977abdda952a6e6ac500a",
+  "fleet_prefix": "2573b2c4",
+  "fleet_suffix": "c4a5b6a420202573",
+  "region": "0a202020202020ac50a87420202020202025730a",
+  "planet_label": "252d313673"
+ },
+ "hotspots": [
+  {
+   "cell_x": 9,
+   "cell_y": 4,
+   "cols": 8,
+   "rows": 1,
+   "code": 0
+  },
+  {
+   "cell_x": 9,
+   "cell_y": 5,
+   "cols": 8,
+   "rows": 1,
+   "code": 1
+  },
+  {
+   "cell_x": 9,
+   "cell_y": 6,
+   "cols": 8,
+   "rows": 1,
+   "code": 2
+  },
+  {
+   "cell_x": 9,
+   "cell_y": 7,
+   "cols": 8,
+   "rows": 1,
+   "code": 3
+  },
+  {
+   "cell_x": 9,
+   "cell_y": 8,
+   "cols": 8,
+   "rows": 1,
+   "code": 4
+  },
+  {
+   "cell_x": 15,
+   "cell_y": 10,
+   "cols": 2,
+   "rows": 1,
+   "code": 5
+  },
+  {
+   "cell_x": 12,
+   "cell_y": 10,
+   "cols": 2,
+   "rows": 1,
+   "code": 6
+  }
+ ],
+ "button_colour": 135,
+ "pressed_colour": 39,
+ "decide": "a84da977",
+ "cancel": "a4a4a4ee",
+ "minimap": {
+  "x": 152,
+  "y": 220,
+  "w": 128,
+  "h": 128,
+  "frame": {
+   "x0": 151,
+   "y0": 219,
+   "x1": 280,
+   "y1": 348,
+   "ink": 7
+  },
+  "ink": 1,
+  "bg": 3,
+  "grid_row_every": 12,
+  "grid_col_every": 15,
+  "empty_tiles": [
+   0,
+   1,
+   5
+  ],
+  "row_repeat_every": 5,
+  "note": "1727:05C6：來源列每輸出 5 列重用一列（102 列拉成 128 列；第 127 列讀到地圖緩衝區外——那 128 個像素是垃圾，規格列為已知差異）。1588:073C／078C 先把格線塞進圖塊：列 %12==0 的空格 → 3、欄 %15==0 的空格 → 4（3 → 2）；ds:3C8C 的表：圖塊 0／1／5 不算，其餘都算。"
+ },
+ "leader": {
+  "x0": 288,
+  "y0_base": 230,
+  "y0_pitch": 20,
+  "shadow_ink": 3,
+  "note": "0DEA:1594：每顆行星從 (288, 230+20i) 拉到 (152+X>>4, 220+Y>>4)，顏色 ds:6092[擁有者]；先畫一條 (−1,−1) 的色 3 影子。行星位置是載入戰場地圖時算的（rules.PlanetSites）。"
+ }
+}
