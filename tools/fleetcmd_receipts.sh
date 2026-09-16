@@ -290,3 +290,23 @@ rec fcmd-rinfo-ballat      445000000 fcmd-base       ck -clicks 421000000:300:27
 rec fcmd-rinfo-ballat2     470000000 fcmd-rinfo-ballat ck -clicks 446000000:300:270 -click-hold $HOLD
 rec fcmd-rinfo-ballat2-close 495000000 fcmd-rinfo-ballat2 - -clicks 471000000:270:350 -click-hold $HOLD
 rec fcmd-map-rclick        445000000 fcmd-base       -  -rclicks 421000000:300:270 -click-hold $HOLD -peek lin:5E0B8:1
+
+# 19. 占領命令走到之後（113A:0350／047D 逐支走一格、056A:0469 的 bit4 占據與 0374:0556 → 20B4:1497 的
+#     戰略打行星；docs/re/322）。一回合的處理（AI 思考、出發前往／已經到達的過場、占據報告與士氣報告的
+#     等待）約 90M 步，每批隔 120M；停在報告上的批次先點一下關掉再實行。每批另倒星域表與行星表。
+#     (a) 亞斯提（同盟，fcmd-occupy-done 的命令）：0 → 2 → 7 → 8 → 13 → 16，第五回合到達、占據、打行星。
+OCC="-peek lin:60BA4:122,lin:5F2CC:4032,lin:53132:6642"
+rec fcmd-occ-t1          665000000 fcmd-occupy-done ck -clicks 546000000:544:85,549000000:560:85 -click-hold $HOLD $OCC
+rec fcmd-occ-t2          785000000 fcmd-occ-t1      ck -clicks 666000000:544:85,669000000:560:85 -click-hold $HOLD $OCC
+rec fcmd-occ-t3          905000000 fcmd-occ-t2      ck -clicks 786000000:544:85,789000000:560:85 -click-hold $HOLD $OCC
+rec fcmd-occ-t4         1025000000 fcmd-occ-t3      ck -clicks 906000000:544:85,909000000:560:85 -click-hold $HOLD $OCC
+rec fcmd-occ-t5         1145000000 fcmd-occ-t4      ck -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD $OCC
+rec fcmd-occ-t5b        1190000000 fcmd-occ-t5      ck -clicks 1146000000:300:200 -click-hold $HOLD $OCC
+rec fcmd-occ-t6         1310000000 fcmd-occ-t5b     -  -clicks 1191000000:544:85,1194000000:560:85 -click-hold $HOLD $OCC
+#     (b) 費沙（中立）：0 → 2 → 6 → 14，第三回合到達、占據、打行星（之後停在「士氣值低落」報告上）。
+rec fcmd-occ-phz-done    595000000 fcmd-occupy-phezzan3 ck -clicks 572000000:432:223 -click-hold $HOLD $OCC
+rec fcmd-occ-phz-t1      715000000 fcmd-occ-phz-done ck -clicks 596000000:544:85,599000000:560:85 -click-hold $HOLD $OCC
+rec fcmd-occ-phz-t2      835000000 fcmd-occ-phz-t1   ck -clicks 716000000:544:85,719000000:560:85 -click-hold $HOLD $OCC
+rec fcmd-occ-phz-t3      955000000 fcmd-occ-phz-t2   ck -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
+rec fcmd-occ-phz-t3b    1000000000 fcmd-occ-phz-t3   ck -clicks 956000000:300:200 -click-hold $HOLD $OCC
+rec fcmd-occ-phz-t4     1120000000 fcmd-occ-phz-t3b  -  -clicks 1001000000:544:85,1004000000:560:85 -click-hold $HOLD $OCC

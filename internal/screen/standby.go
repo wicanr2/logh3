@@ -35,12 +35,12 @@ type FleetStandbySpec struct {
 		Rows  int `json:"rows"`
 		Code  int `json:"code"`
 	} `json:"hotspots"`
-	ButtonColour  int    `json:"button_colour"`
-	PressedColour int    `json:"pressed_colour"`
-	Decide        string `json:"decide"`
-	Cancel        string `json:"cancel"`
+	ButtonColour  int               `json:"button_colour"`
+	PressedColour int               `json:"pressed_colour"`
+	Decide        string            `json:"decide"`
+	Cancel        string            `json:"cancel"`
 	Minimap       RegionMinimapSpec `json:"minimap"`
-	Leader        LeaderSpec  `json:"leader"`
+	Leader        LeaderSpec        `json:"leader"`
 }
 
 // RegionMinimapSpec 是 128×128 的星域小圖：`1727:05C6` 縮圖、`2376:0B44` 貼在 (X, Y)、

@@ -130,3 +130,38 @@ func (g *Game) drawRegionInfo(fb *gfx.Framebuffer) {
 		g.res.RegionInfo.Draw(fb, g.res.Font, g.res.FrameTiles, v)
 	}
 }
+
+// occupyAskView 湊齊回合裡「要占領此星系嗎？」那張問話要印的值（`113A:0899`）。
+func (g *Game) occupyAskView() (*screen.OccupyAskView, *asset.Image) {
+	i := g.occupyAsk.fleet
+	if i < 0 || i >= len(g.fleets) || g.res.FleetWindow == nil {
+		return nil, nil
+	}
+	f := &g.fleets[i]
+	adm := g.admiralRec(f.Admiral)
+	v := &screen.OccupyAskView{
+		FactionName: decodeHexBytes(g.res.FleetWindow.FactionNamesColoured[f.Faction]),
+		Number:      f.Number,
+		AdmiralName: codesBig5(g.admiralNameCodes(f.Admiral)),
+		Rank:        codesBig5(g.rankCodes(rules.RankOf(byteAt(adm, admiralMeritOff)))),
+		TargetName:  codesBig5(g.regionName(f.Target)),
+		NextName:    codesBig5(g.regionName(g.occupyAsk.next)),
+	}
+	var face *asset.Image
+	if g.res.Faces != nil {
+		if img, err := g.res.Faces.Decode(f.Admiral); err == nil {
+			face = img
+		}
+	}
+	return v, face
+}
+
+// drawOccupyAsk 把問話疊在戰略地圖介面上。
+func (g *Game) drawOccupyAsk(fb *gfx.Framebuffer) {
+	if g.res.OccupyAsk == nil {
+		return
+	}
+	if v, face := g.occupyAskView(); v != nil {
+		g.res.OccupyAsk.Draw(fb, g.res.Font, g.res.FrameTiles, v, face)
+	}
+}

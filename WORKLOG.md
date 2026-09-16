@@ -7106,3 +7106,33 @@ GitHub 的 issue 時間軸承擔。
   對不上的：星域 9／24／28 remake 叛亂翻成無主（亂數）；同盟經濟力差 −595～＋88
   （hypothesis：AI 艦隊花費流進行星的多寡）。
 - 文件：`docs/re/321`、規格 035（逐座位一節）、053（排除區到期）、internals 22／27、CONTEXT。
+
+## 2026-09-16 — 艦隊走到之後：走一格的四條分支、到達收尾、占據旗標（#46 前半）；戰略打行星讀了沒接
+
+- `113A:047D` 逐行讀完（`docs/re/322`）：現在格與下一格都不是自己的 → `0797`「無法前往
+  敵方的星系」（清命令停駐）；下一格不是自己的且不是占領 → 同上；占領且下一格 ≠ 目的地 →
+  `0899` 問「<目的地>無法直接到達此星系。<下一格>要占領此星系嗎？」（占領／待命，電腦座位
+  一律占領）；`06C3` 軍事費不夠 → `0A4E` 不動；否則走，到達：輸送 → 4 回首都、駐留 →
+  `297B:025D` 整支解散、其餘停駐。停駐而 `+0x07 == FF` 的下一回合 `03D5` 用 `2AF5:060D`
+  補該陣營經濟力最高那顆。`1213:0003` 只是費沙兩頁提醒（回值恆 1）；占領的目的地只能選
+  可達表 k ≤ 1（特利布拉「這是無法前往的星系」）。
+- `056A:0469` 重算 bit2／bit4 → bit4 占據報告；`0374:0556` bit4 → **`20B4:1497` 戰略打行星**
+  （`1512`：三次回復 `15E1`、`1662` 打第一顆不是自己的行星——`0D96` 的量、`0E2C` 換手、
+  `0E7E` 反擊——拿下再三次回復，最多九回合）。收據裡亞斯提 4200→3768、艦隊 `+3C` 100→67；
+  費沙 8800→8792、`+3C` 47 → 「士氣值低落」報告。
+- remake：`rules.PlanStep`／`BlockByEnemy`／`Arrive`／`StandbyPlanet`（`fleetstep.go`），
+  `Game.moveFleetsFrom`／`stepFleet`／`moveFleetTo`／`StateOccupyAsk`（`screen.OccupyAskSpec`、
+  `occupy-ask-panel.json`，版面照反組譯、沒有畫面收據）。`continueAfterAdmiralFateReports`
+  之後才走艦隊（原版順序）。`TestBuilderAddsFleets` 改成看 `Moving()||!Parked`（停駐的艦隊
+  現在會補上待命行星）。
+- 收據：第 19 段十三批 `fcmd-occ-*`（120M 步一回合；60M 太密會把下一次「實行」吃進上一回合
+  的過場；`t5b`／`phz-t3b` 是關報告）。`TestOccupyAstarteArrivalMatchesOracle`（t1／t2 整張；
+  第三回合起 remake 的叛亂亂數分岔，只比記憶體）、`TestOccupyPhezzanArrivalMatchesOracle`、
+  `TestPlanStepBranches`；GUI `fcmd-occ-t2`。
+- 沒接、#46 留著：占據格的戰略打行星（新遊戲艦隊沒有艦艇池，`rules.PlanetAssault` 吃不到；
+  亂數要同序）、駐留解散、回合裡的過場視窗（處理中／思考中、出發前往／已經到達）、士氣報告
+  家族（門檻沒讀）、問話視窗的畫面收據。
+- 使用者追加 #50：原版滑鼠停在戰場邊緣會捲動視野，remake 要照做；順便把滑鼠在各畫面的作用
+  整理成總表。綁 `battle.go` 的自承註解，kickoff 排 F。
+- 文件：`docs/re/322`、規格 054（新）、051 排除段改指標、playtest 021（＋13 批，158 份 pal）、
+  internals 33／58、CONTEXT。

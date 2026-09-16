@@ -114,8 +114,10 @@ func TestBuilderAddsFleets(t *testing.T) {
 		if f.Region != capital {
 			t.Errorf("第 %d 支在星域 %d，預期首都 %d", i, f.Region, capital)
 		}
-		if f.Target != rules.NoTarget {
-			t.Errorf("第 %d 支有目的地 %d，新編的不該有", i, f.Target)
+		// 新編的沒有移動命令；停駐的艦隊回合裡會被 `113A:03D5` 補上一顆
+		// 待命行星（`Target` 這時是行星序號，`docs/re/322`），所以只驗「不動」。
+		if f.Moving() || !f.Parked {
+			t.Errorf("第 %d 支有移動命令（目的地 %d、狀態 %d），新編的不該有", i, f.Target, f.Move)
 		}
 		if f.Number != i+1 {
 			t.Errorf("第 %d 支的編號 ＝ %d，預期 %d", i, f.Number, i+1)

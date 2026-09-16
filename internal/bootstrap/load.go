@@ -319,6 +319,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	occupyAsk, err := screen.LoadOccupyAskSpec(filepath.Join(data, "occupy-ask-panel.json"))
+	if err != nil {
+		return nil, err
+	}
 	regionInfo, err := screen.LoadRegionInfoSpec(filepath.Join(data, "region-info-panel.json"))
 	if err != nil {
 		return nil, err
@@ -365,6 +369,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		PlanetInfo:    planetInfo,
 		PlanetInfoMap: planetInfoMap,
 		RegionInfo:    regionInfo,
+		OccupyAsk:     occupyAsk,
 		StartMilitary: 50000, ShipPct: 25}, nil
 }
 

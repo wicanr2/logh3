@@ -76,6 +76,8 @@ func (g *Game) StartBattle(region int) {
 			cols, rows = g.res.Battle.Field.Cols, g.res.Battle.Field.Rows
 		}
 		u := g.battleUnits[0]
+		// 視野開戰後就不再動：原版滑鼠停在戰場邊緣會捲動視野（`ds:9BF4`／
+		// `ds:9BF6`），還沒讀也沒接（#50）。
 		g.battleView = screen.BattleView{
 			Col: clampCol(u.X/tw-cols/2, cols),
 			Row: clampRow(u.Y/th-rows/2, rows),

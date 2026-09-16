@@ -243,7 +243,16 @@
   `2703:03AF` 會叫——帝國玩家月初看到的同盟星域只有成長，等按完「實行」輪到同盟
   座位才扣（`Game.beginTurn`）；無主星域的稅率每月 `090A:0DC0(2)` 重算 ＝ 成長率；
   載入時 `+0x27 ← +0x26`。`monthwork3`／`monthwork4` 兩份星域表逐格、規格 053 的
-  經濟力排除區拿掉整張相同。左下角摘要多了星域名後面的狀態字
+  經濟力排除區拿掉整張相同。**艦隊走到之後（#46 前半，`docs/re/322`、規格 054）**：
+  回合裡每一支走一格的四條分支（`113A:047D`：現在格與下一格都不是自己的、或下一格
+  不是自己的而命令不是占領 → 「無法前往敵方的星系」清命令停駐；占領而下一格 ≠ 目的地
+  → 問「要占領此星系嗎」`StateOccupyAsk`；軍事費不夠 → 不動）、到達的收尾（輸送 → 回程
+  首都、駐留 → 原版解散、其餘停駐）、停駐補待命行星（`2AF5:060D` 經濟力最高那顆）、
+  單方面占據 bit4 與占據報告——十三批 `fcmd-occ-*` 的艦隊／星域／行星表逐位元組、
+  前兩回合整張畫面相同（第三回合起 remake 的叛亂亂數分岔）。占領的目的地只能選
+  可達表 k ≤ 1 的格子；`1213:0003` 只是費沙的兩頁提醒。**占據格的戰略打行星
+  （`20B4:1497`）讀出來了沒接**：新遊戲的艦隊沒有艦艇池，`rules.PlanetAssault` 那組
+  吃不到；駐留解散、回合裡的過場視窗與士氣報告也沒接（#46 留著）。左下角摘要多了星域名後面的狀態字
   「處於戰鬥狀態／占領狀態／孤立狀態」（規格 001）。艦隊組成的「中止」照原版整支
   作廢回地圖、右鍵不認；首都戰艦的待命艘數開局是 78000，進艦隊組成才扣旗艦那一組
   （`docs/re/316` §四）。順手定下的通用規則：底線裝飾、清單反白、
@@ -414,7 +423,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 5 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 6 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -449,6 +458,31 @@
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
+
+#### mouse-edge-scroll-and-roles — 滑鼠在原版的作用調查：戰場邊緣捲動視野等，remake 照做
+
+*[#50](https://github.com/wicanr2/logh3/issues/50) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+原版把滑鼠停在戰場邊緣會捲動視野（鏡頭 `ds:9BF4`／`ds:9BF6`，`docs/re/113`、`docs/re/135`）；
+remake 的 `battleView` 開戰時置中到旗艦之後就不再動。除了邊緣捲動，原版滑鼠在各張畫面
+還有哪些作用（右鍵在哪幾張等於確認、哪幾張什麼都不做、按住不放會不會連發、游標形狀
+什麼時候換）目前只零散地記在各篇 `docs/re/`（`312` 右鍵取消、`317` 右鍵＝確認、
+`320` 右鍵點星圖什麼都不換），沒有一份總表。
+
+要做的：
+- 讀滑鼠輪詢那一支（戰場的事件迴圈裡看游標座標落在哪一圈觸發捲動：門檻幾個像素、
+  一次捲幾格、速度跟訊息速度有沒有關係）；戰略地圖固定一張不捲。
+- 把原版滑鼠的作用整理成 `docs/internals/` 一張總表（按畫面：左鍵、右鍵、按住、邊緣、
+  游標形狀），每一格掛證據。
+- remake 照做：戰場邊緣捲動要有同狀態收據（`-clicks`／`-click-hold` 把游標停在邊緣後
+  傾印 `ds:9BF4`／`9BF6` 與畫面）。
+
+**做完的判準**：戰場邊緣捲動有同狀態收據且 remake 逐位元組相同；滑鼠作用總表寫在 `docs/internals/`，
+每一格有證據；總表上原版有、remake 沒有的作用列成已知差異或各自開條。
+
+**證據**：[`docs/re/113-battle-data-display-mode.md`](docs/re/113-battle-data-display-mode.md)、[`docs/re/135-manoeuvre-boundary.md`](docs/re/135-manoeuvre-boundary.md)、[`docs/re/320-region-info-window.md`](docs/re/320-region-info-window.md)
+
+**核實**：`internal/game/battle.go` 裡還找得到 `原版滑鼠停在戰場邊緣會捲動視野`（自承還在 ＝ 還沒做）
 
 #### enemy-tab-intel-rows — 右下角「敵艦隊」分頁有索敵等級的列與它的視窗
 
@@ -537,33 +571,34 @@ bgm_3f.mds`（換回平時曲），下一次交戰再來一遍（`docs/re/274` �
 
 *[#46](https://github.com/wicanr2/logh3/issues/46) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
-戰略艦隊命令的作戰五項都下得了、艦隊也會走（規格 051），但**走到之後的那一路**
-還沒接：規格 051 的排除範圍列了三件事——占領命令的效果（走到敵方星域之後
-`113A:0545`、`113A:0899`「無法直接到達此星系」「要占領此星系嗎」）、回合裡的兩張
-報告「無法前往敵方的星系」「由於移動經費不足無法移動」、以及 `1213:0003(星域)`
-那道檢查的語意（三個收據都過但沒讀）。remake 的 `advanceTurn` 只把艦隊往目的地
-走一格、扣移動費、到了清命令；單方面占據（bit2／bit4）與逐格開戰是另一條既有的鏈
-（`prepareOccupationReports`／`scanRegionsFrom`），要弄清楚占領命令到達時與它
-怎麼接。
+戰略艦隊命令的作戰五項都下得了、艦隊也會走（規格 051）；**走到之後的那一路**讀完
+（`docs/re/322`），前半接上了（規格 054）：
 
-線索：
-- 回合處理在 `113A` 段（移動費 `113A:0729`、錢流進行星 `113A:06C3`，`docs/re/237`、
-  `docs/re/313`）；切片 `workplace/ida/fcx0654.com` 不含它，要另切（線性 `0x113A0` 起）。
-- 訊息字串「無法直接到達此星系」「要占領此星系嗎」「無法前往敵方的星系」
-  「由於移動經費不足無法移動」在資料段，先 `strings` 找位址再找 `push` 它的呼叫點
-  （`docs/re/312` 的做法）。
-- 收據：從 `fcmd-done.state`（第５艦隊往亞爾提那的移動命令已下）按「實行」走到
-  目的地；占領那條要先把目的地換成敵方或中立的相鄰格（`fcmd-occupy-*` 系列的
-  檢查點），到了之後看是哪一張報告。移動經費不足用 `-poke` 把軍事費（`ds:8F52` 起，
-  `docs/re/236`）寫成 0。
-- 「一回合走一格」仍是假設待驗（`advanceTurn` 的註解），這一條順便釘。
+- 回合裡每一支走一格的四條分支（`113A:047D`）：「無法前往敵方的星系」清命令停駐、
+  占領而下一格不是目的地 → 問「<目的地>無法直接到達此星系。<下一格>要占領此星系嗎？」
+  （`StateOccupyAsk`）、「由於移動經費不足無法移動」不動、否則走。
+- 到達的收尾：輸送 → 回程首都、駐留 → 原版整支解散、其餘停駐；停駐而沒待命行星的
+  下一回合補該陣營經濟力最高那顆（`2AF5:060D`）。
+- 單方面占據 bit4 與占據報告；`1213:0003` 只是費沙的兩頁提醒（回值恆 1）。
+- 十三批 `fcmd-occ-*` 收據：艦隊／星域／行星表逐位元組，前兩回合整張畫面相同。
 
-**做完的判準**：占領命令走到目的地之後的效果、兩張回合報告與 `1213:0003` 的語意都有反組譯與
-收據，remake 照原版接進 `advanceTurn`，規格 051 的排除範圍拿掉那三條。
+**卡在**：- 戰略打行星（`20B4:1512`：三次回復 → 打第一顆不是自己的行星（`0D96` 的量、`0E2C` 換手、
+  `0E7E` 反擊）→ 拿下再三次回復，最多九回合）吃艦艇記錄，而**新遊戲的艦隊沒有艦艇池**
+  （`Slot` 是 nil）——這也是新遊戲走進戰鬥會撞到的同一個洞，要先補艦艇池；亂數
+  （`ds:94DC`）要與原版同序，同狀態對拍才有意義。
+- 駐留到達的解散（`297B:025D`）與艦隊解散（`297B:0332`）是同一支，一起做。
+- 回合裡的過場視窗（「戰略模式處理中／思考中」、每支艦隊的「出發前往／已經到達／已經
+  駐留」與地圖反白、三張錯誤報告）remake 同步跑完不畫；士氣報告家族（「士氣值低落的
+  關係，已經無法戰鬥」等，`ds:32B4`）的門檻與誰印沒讀。
+- 問話視窗 `113A:0899` 的版面照反組譯排、沒有畫面收據：正常路徑碰不到它（目的地只能選
+  可達表 k ≤ 1 的格子，要路上那一格中途易主才會問）。
 
-**證據**：[`docs/spec/051-strategic-fleet-command.md`](docs/spec/051-strategic-fleet-command.md)、[`docs/re/313-fleet-command-round-2.md`](docs/re/313-fleet-command-round-2.md)、[`docs/re/237-move-cost-is-the-other-cost.md`](docs/re/237-move-cost-is-the-other-cost.md)
+**做完的判準**：占據那一格的戰略打行星（`20B4:1497`）接進 remake 且有同狀態收據（亞斯提 4200→3768、
+費沙 8800→8792、艦隊 `+0x3C`）；駐留到達整支解散；`rebellion.go` 的自承註解拿掉。
 
-**核實**：`internal/game/game.go` 裡還找得到 `到了之後的那一路還沒接`（自承還在 ＝ 還沒做）
+**證據**：[`docs/re/322-fleet-arrival-and-occupation.md`](docs/re/322-fleet-arrival-and-occupation.md)、[`docs/spec/054-fleet-arrival.md`](docs/spec/054-fleet-arrival.md)、[`docs/spec/051-strategic-fleet-command.md`](docs/spec/051-strategic-fleet-command.md)、[`docs/playtest/021-strategic-fleet-command.md`](docs/playtest/021-strategic-fleet-command.md)
+
+**核實**：`internal/game/rebellion.go` 裡還找得到 `戰略打行星還沒接`（自承還在 ＝ 還沒做）
 
 ### 做完的（不在矩陣裡的那幾條）
 

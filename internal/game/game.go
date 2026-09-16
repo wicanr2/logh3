@@ -184,6 +184,9 @@ const (
 	// StateRegionInfo 是左鍵點右側面板看的那一格星域開的星系情報視窗
 	// （`073F:060A`，`docs/spec/053`）。
 	StateRegionInfo
+	// StateOccupyAsk 是回合處理中占領命令碰到不能直接到達的星域時那張問話
+	// （`113A:0899`：占領／待命兩顆鈕），停在那一支艦隊上等玩家。
+	StateOccupyAsk
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -208,7 +211,7 @@ func (s State) String() string {
 		"StateFleetWindow", "StateFleetActionMenu", "StateFleetTargetPick",
 		"StateFleetMessage", "StateFleetConfirm", "StateFleetStandby",
 		"StateFleetOccupyWarn", "StateFleetChangeMenu", "StateFleetChangeAdj", "StateFleetChangeOrg",
-		"StateRegionInfo",
+		"StateRegionInfo", "StateOccupyAsk",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -253,6 +256,7 @@ var screenSpecName = map[State]string{
 	StatePhezzanReport:     "screen-command-phase",
 	StateFleetWindow:       "screen-command-phase",
 	StateRegionInfo:        "screen-command-phase",
+	StateOccupyAsk:         "screen-command-phase",
 	StateFleetActionMenu:   "screen-command-phase",
 	StateFleetTargetPick:   "screen-command-phase",
 	StateFleetMessage:      "screen-command-phase",
@@ -459,6 +463,8 @@ type Resources struct {
 
 	// RegionInfo 是左鍵點星圖開的星系情報視窗（`docs/re/320`）。
 	RegionInfo *screen.RegionInfoSpec
+	// OccupyAsk 是回合裡占領命令的問話（`docs/internals/data/occupy-ask-panel.json`）。
+	OccupyAsk *screen.OccupyAskSpec
 
 	// SupplyPanel 是「補給」選對象時右側那個面板（`docs/re/143`）。
 	SupplyPanel *screen.SupplyPanelSpec
@@ -763,6 +769,8 @@ type Game struct {
 
 	// rinfo 是星系情報視窗看的星域（`regioninfo.go`）；−1 ＝ 沒開。
 	rinfo int
+	// occupyAsk 是回合處理中那張「要占領此星系嗎？」問話停下來的地方。
+	occupyAsk occupyAskState
 
 	// mapCache 是戰略地圖兩種樣子（[1] 有反白格、[0] 沒有）的快取：
 	// 32 格的色號一變就重建（`strategicMapColours`）。
@@ -1002,38 +1010,121 @@ func (g *Game) continueAfterAdmiralFateReports() {
 	if g.res != nil {
 		rules.DriftRegionMorale(g.res.Stellar)
 	}
-	// 有命令的艦隊往目的地走一格（`docs/re/77`、`internal/rules.Advance`）。
-	// **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
-	//
-	// 到了之後的那一路還沒接：占領命令的效果（`113A:0545`／`0899`
-	// 「無法直接到達此星系」「要占領此星系嗎」）與回合裡的兩張報告
-	// 「無法前往敵方的星系」「由於移動經費不足無法移動」（規格 051 的排除
-	// 範圍，worklist #46 `fleet-arrival-effects`）。
-	if g.res.Graph != nil {
-		for i := range g.fleets {
-			from := g.fleets[i].Region
-			if !g.res.Graph.Advance(&g.fleets[i]) {
-				continue
-			}
-			// 走一格要錢：艦隊記錄的 `+0x0C`，原版 `113A:0729` 逐支從
-			// 那一支陣營的軍事費扣（`docs/re/237`）。**那筆錢流進行星的
-			// 經濟力**：離開的那一格是自己的就付給它，否則付給走到的那一格
-			// （`113A:06C3` → `2703:1C11`，`docs/re/313`）。
-			f := g.fleets[i]
-			if f.Faction < 0 || f.Faction > 1 {
-				continue
-			}
-			cost := rules.FleetOtherCost(
-				g.res.ShipKinds, f.Faction, f.Composition, f.Operations)
-			g.military[f.Faction] -= cost
-			g.paidMove[f.Faction] += cost // ds:8F8A，月底歸零
-			payTo := f.Region
-			if rec := g.regionRecord(from); rec != nil && int(rec[regionOwnerOff]) == f.Faction {
-				payTo = from
-			}
-			g.res.Planets.PayIntoRegion(payTo, cost)
+	// 32 筆艦隊逐一走（`056A:03E0` → `113A:0350`，`docs/re/322`）。占領命令
+	// 要問玩家時停在那一支，問完從下一支接回（`resumeFleetMoves`）。
+	g.moveFleetsFrom(0)
+}
+
+// moveFleetsFrom 從第 i 支起逐支跑 `113A:0350`；碰到要問「要占領此星系嗎？」
+// 就開 `StateOccupyAsk` 停下，回答之後從那一支接回。全部跑完接
+// `afterFleetMoves`。
+func (g *Game) moveFleetsFrom(i int) {
+	for ; i < len(g.fleets); i++ {
+		if g.stepFleet(i) {
+			g.occupyAsk.fleet = i
+			g.occupyAsk.resume = g.state
+			g.state = StateOccupyAsk
+			return
 		}
 	}
+	g.afterFleetMoves()
+}
+
+// stepFleet 是 `113A:0350` 對一支艦隊做的事。回 true ＝ 要問玩家、先停下。
+//
+// **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
+func (g *Game) stepFleet(i int) bool {
+	if g.res.Graph == nil || g.res.Planets == nil {
+		return false
+	}
+	f := &g.fleets[i]
+	if f.Faction < 0 || f.Faction > 1 {
+		return false
+	}
+	// 命令是移動／占領而所在星域已經是目的地：停駐（`+036B`）。
+	if (f.Move == rules.MoveMove || f.Move == rules.MoveOccupy) && f.Target == f.Region {
+		f.Target, f.Move, f.Parked = rules.NoTarget, rules.MoveParked, true
+	}
+	if f.Parked {
+		// `113A:03D5`：停駐而沒指定待命行星、星域沒在打仗 → 挑經濟力最高的
+		// 自家行星（`2AF5:060D`）。
+		if f.Target == rules.NoTarget {
+			if rec := g.regionRecord(f.Region); rec != nil && rec[regionFlagsOff]&0x04 == 0 {
+				if pl := g.res.Planets.StandbyPlanet(f.Faction, f.Region); pl >= 0 {
+					f.Target = pl
+				}
+			}
+		}
+		return false
+	}
+	cost := rules.FleetOtherCost(g.res.ShipKinds, f.Faction, f.Composition, f.Operations)
+	plan := g.res.Graph.PlanStep(f, g.res.Planets.RegionOwner, g.military[f.Faction], cost)
+	switch plan.Outcome {
+	case rules.StepBlockedEnemy:
+		// 「無法前往敵方的星系」（`113A:0797`）：命令清掉、停駐。報告視窗
+		// 是回合處理中的過場，remake 不畫。
+		rules.BlockByEnemy(f)
+	case rules.StepAskOccupy:
+		g.occupyAsk.next = plan.Next
+		return true
+	case rules.StepNoFunds:
+		// 「由於移動經費不足無法移動」（`113A:0A4E`）：不動、命令留著。
+	case rules.StepMoved:
+		g.moveFleetTo(i, plan.Next, plan.Cost)
+	}
+	return false
+}
+
+// moveFleetTo 把第 i 支走到 next（`113A:047D` 的 `+0585` 起）：扣移動經費、
+// 錢流進行星、改所在星域，到了目的地就照命令收尾（`rules.Arrive`）。
+func (g *Game) moveFleetTo(i, next, cost int) {
+	f := &g.fleets[i]
+	from := f.Region
+	// 走一格要錢：艦隊記錄的 `+0x0C`，原版 `113A:0729` 逐支從
+	// 那一支陣營的軍事費扣（`docs/re/237`）。**那筆錢流進行星的
+	// 經濟力**：離開的那一格是自己的就付給它，否則付給走到的那一格
+	// （`113A:06C3` → `2703:1C11`，`docs/re/313`）。
+	g.military[f.Faction] -= cost
+	g.paidMove[f.Faction] += cost // ds:8F8A，月底歸零
+	f.Region = next
+	payTo := next
+	if rec := g.regionRecord(from); rec != nil && int(rec[regionOwnerOff]) == f.Faction {
+		payTo = from
+	}
+	g.res.Planets.PayIntoRegion(payTo, cost)
+	if rules.Arrive(f) {
+		// 駐留到了目的地原版整支解散（`297B:025D`）；remake 還沒有解散那一支
+		// （worklist `fleet-disband`），先停駐。
+		f.Target, f.Move, f.Parked = rules.NoTarget, rules.MoveParked, true
+	}
+}
+
+// occupyAsk 是回合裡「<目的地>無法直接到達此星系。<下一格>要占領此星系嗎？」
+// 那張問話（`113A:0899`）停下來的地方。
+type occupyAskState struct {
+	fleet  int   // 停在第幾支
+	next   int   // 問的是哪一格
+	resume State // 問完回哪個狀態繼續跑回合
+}
+
+// answerOccupyAsk 是那張問話的兩顆鈕：占領（碼 0）→ 目的地改成那一格再走；
+// 待命（碼 1）→ 這回合不動、命令留著。之後從下一支接回。
+func (g *Game) answerOccupyAsk(occupy bool) {
+	i := g.occupyAsk.fleet
+	g.state = g.occupyAsk.resume
+	if i >= 0 && i < len(g.fleets) && occupy {
+		f := &g.fleets[i]
+		f.Target = g.occupyAsk.next
+		cost := rules.FleetOtherCost(g.res.ShipKinds, f.Faction, f.Composition, f.Operations)
+		if plan := g.res.Graph.PlanStep(f, g.res.Planets.RegionOwner, g.military[f.Faction], cost); plan.Outcome == rules.StepMoved {
+			g.moveFleetTo(i, plan.Next, plan.Cost)
+		}
+	}
+	g.moveFleetsFrom(i + 1)
+}
+
+// afterFleetMoves 接回 32 支走完之後的那一串：重數艦隊、占據與叛亂。
+func (g *Game) afterFleetMoves() {
 	// 走完就重數每一格的艦隊數（`2703:0853`，排在移動之後、叛亂判定之前，
 	// `docs/re/297`）。
 	g.recountRegionFleets()
@@ -2191,6 +2282,14 @@ func (g *Game) click(x, y int) {
 		if s := g.res.RegionInfo; s != nil && s.ButtonAt(x, y) {
 			g.closeRegionInfo()
 		}
+	case StateOccupyAsk:
+		// 「要占領此星系嗎？」只認兩顆鈕（熱區 `2DB8`：占領碼 0、待命碼 1），
+		// 點別處與右鍵都不動（`113A:0899` 的事件迴圈只收命中的左鍵）。
+		if s := g.res.OccupyAsk; s != nil {
+			if code := s.ButtonAt(x, y); code >= 0 {
+				g.answerOccupyAsk(code == 0)
+			}
+		}
 	case StateCommandPhase:
 		// 清單點出來的行星情報／提督詳細資料開著時，左鍵全給它。
 		if g.listOverlayClick(x, y) {
@@ -2421,6 +2520,8 @@ func (g *Game) rightClick(x, y int) {
 	case StateRegionInfo:
 		// 右鍵關星系情報視窗（`073F:0AFD` 的事件迴圈：碼 2 就結束）。
 		g.closeRegionInfo()
+	case StateOccupyAsk:
+		// 問話不吃右鍵（`113A:0899`：只有命中鈕的左鍵會離開迴圈）。
 	case StateVersusInput:
 		// 交棒視窗按右鍵會怎樣**沒有量過**，先什麼都不做——
 		// 這一步不能靠猜，猜錯會讓對戰模式跳掉一方的回合。
@@ -2979,7 +3080,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
 		StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg,
 		StateFleetOrg, StateFleetNumber, StateFleetAdjutant,
-		StateFleetComposition, StateFormation, StateRegionInfo,
+		StateFleetComposition, StateFormation, StateRegionInfo, StateOccupyAsk,
 		// 這五張的收據末尾都有一次 `-mouse-at`（搬到 (600,340)），
 		// 而畫面上的箭頭跟著搬過去了：`info1e`／`lst1e`／`lst2e`／
 		// `lst3e`／`settings1e` 與同盟的五張，十份都是同一個結論。
@@ -3015,6 +3116,9 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 	// 右下角清單點出來的行星情報／提督詳細資料（`listtabs.go`）。
 	if g.state == StateCommandPhase {
 		g.drawListOverlays(fb)
+	}
+	if g.state == StateOccupyAsk {
+		g.drawOccupyAsk(fb)
 	}
 	if g.state == StateRegionInfo {
 		g.drawRegionInfo(fb)

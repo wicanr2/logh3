@@ -17,21 +17,21 @@ import (
 
 // RegionInfoSpec 是版面與格式字串（`docs/internals/data/region-info-panel.json`）。
 type RegionInfoSpec struct {
-	CellX    int                `json:"cell_x"`
-	CellY    int                `json:"cell_y"`
-	Cols     int                `json:"cols"`
-	Rows     int                `json:"rows"`
-	Colour   int                `json:"colour"`
-	Style    int                `json:"style"`
-	Formats  map[string]hexStr  `json:"-"`
-	RawFmts  map[string]any     `json:"formats"`
-	Letters  []string           `json:"kind_letters"`
-	Layout   map[string][]int   `json:"layout"`
+	CellX    int               `json:"cell_x"`
+	CellY    int               `json:"cell_y"`
+	Cols     int               `json:"cols"`
+	Rows     int               `json:"rows"`
+	Colour   int               `json:"colour"`
+	Style    int               `json:"style"`
+	Formats  map[string]hexStr `json:"-"`
+	RawFmts  map[string]any    `json:"formats"`
+	Letters  []string          `json:"kind_letters"`
+	Layout   map[string][]int  `json:"layout"`
 	Hotspots []struct {
-		CellX int `json:"cell_x"`
-		CellY int `json:"cell_y"`
-		Cols  int `json:"cols"`
-		Rows  int `json:"rows"`
+		CellX int      `json:"cell_x"`
+		CellY int      `json:"cell_y"`
+		Cols  int      `json:"cols"`
+		Rows  int      `json:"rows"`
 		Code  int      `json:"code"`
 		Codes []string `json:"codes"`
 	} `json:"hotspots"`
