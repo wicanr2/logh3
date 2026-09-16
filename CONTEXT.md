@@ -432,9 +432,18 @@
 「待命船艦」七列（艦數／部隊／補給物資）與「結束」（探索批次 `fcx-cap`，
 `docs/re/312`；熱區清單應是 `0DA2`）。remake 左鍵點星圖沒有反應（只有右鍵選星域）。
 
+2026-09-16 補：這張視窗的「區域小圖與行星名」多半與「指定待命行星」同一套——
+`1727:05C6` 把 `MAP<nn>.CMP` 縮成 128×128 單色小圖（列 `py−⌊py/5⌋`、格線圖塊算有東西）、
+`2AF5:0036(星域)` 選行星表、行星位置 `+0x46`／`+0x48`（`docs/re/314` §四、§五）；remake 這一側
+`screen.FleetStandbySpec.drawMinimap`／`drawLeaders` 與 `Planets.Range`／`Name`／`Owner` 可以直接搬。
+「待命船艦」七列 ＝ 星域記錄 `+0x30` 起的艘數 ÷ 一單位幾艘（`rules.RegionShips`、`ShipsPerUnit`；
+首都戰艦開局是 78000，`docs/re/316` §四）。左鍵點星圖找星域用 `asset.RegionAt`（艦隊命令的
+目的地選取 `fleetPickClick` 同一支）；星域 0xFF 或最上層不是地圖視窗就不開（`341B:039D`）。
+收據從 `fcmd-base.state` 點地圖任一格即可（例如亞爾提那 (85,88)、費沙 (163,96)、亞斯提 (193,205)，滑鼠座標）。
+
 **做完的判準**：星系情報視窗有規格與同狀態收據，remake 左鍵點星圖開得起來、「結束」與右鍵關得掉。
 
-**證據**：[`docs/re/312-strategic-fleet-command-flow.md`](docs/re/312-strategic-fleet-command-flow.md)
+**證據**：[`docs/re/312-strategic-fleet-command-flow.md`](docs/re/312-strategic-fleet-command-flow.md)、[`docs/re/314-fleet-standby-planet.md` §四、§五（小圖與行星位置）`](docs/re/314-fleet-standby-planet.md` §四、§五（小圖與行星位置）)
 
 **核實**：`internal/game` 裡出現 `StateRegionInfo` 就是做好了
 
@@ -454,9 +463,24 @@
 右側面板整塊是視窗 9518（字元平面擁有者 11），首都摘要與清單同一個緩衝區——
 換分頁時哪些格被重印會影響「右側面板是回合開頭的快照」那條規則（規格 001 規則 6），收據要含這一點。
 
+2026-09-16 補（#41 那一輪順手挖到的，`docs/re/313`–`316`）：
+
+- 「艦隊」分頁一列印什麼已全部讀出並接上（`0AD0` 段的列印常式：記號表 `ds:1A66` 依 `+0x08`、
+  停駐再看星域 `+0x13`（bit2 紅▼、bit4 紅▽）、士氣值 `+0x3C` <50 變紅；`fleet-list-panel.json`）。
+  另外三個分頁的列印常式應在同一段附近，四個 `[ds:9582]`／`[ds:957E]` 指標對照 `04F8:05ED`。
+- 清單整塊重畫的入口是 `073F:0522()`（「變更 → 副官」關窗時叫它，列底色回 8：收據 `fcmd-change-adj-close`）——
+  換分頁多半也是走它，可以拿來當斷點找分頁的列印常式。
+- 局面：`fcmd-base.state`（首都一支艦隊）之後直接點分頁鈕；分頁鈕在畫面 y 280–299
+  （滑鼠 y 240–259），四顆的 x 大約 340／405／465／545 起（`fcmd-*` 任一張截圖量）。
+  敵艦隊分頁要有敵艦隊在同一格才有內容——用 `-poke` 把一支艦隊的 `+0x06` 改到那一格並同步
+  `+0x28`／`+0x29`（原版每次重數，remake `recountRegionFleets`）；poke 要在畫面重畫**之前**
+  （`docs/re/315` §三那個 170M 的做法），不然原版畫面殘留舊值而 remake 逐幀算會對不上。
+- 捲動：清單五列、捲動位移 `ds:9593`；要六支以上艦隊才捲得動——多編幾支（出擊命令那條路，
+  `reachFleetDecided` 可以重複走）或 poke 艦隊表。
+
 **做完的判準**：四個分頁各有規格與同狀態收據，remake 切得動、捲得動。
 
-**證據**：[`docs/re/312-strategic-fleet-command-flow.md` §一`](docs/re/312-strategic-fleet-command-flow.md` §一)
+**證據**：[`docs/re/312-strategic-fleet-command-flow.md` §一`](docs/re/312-strategic-fleet-command-flow.md` §一)、[`docs/re/313-fleet-command-round-2.md` §一（艦隊分頁的列印常式）`](docs/re/313-fleet-command-round-2.md` §一（艦隊分頁的列印常式）)
 
 **核實**：`docs/spec/051-strategic-fleet-command.md` 裡還找得到 `清單的捲動（欄 17 的上下鈕）與四個分頁`（自承還在 ＝ 還沒做）
 
