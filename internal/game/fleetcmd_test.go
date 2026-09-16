@@ -589,3 +589,145 @@ func TestFleetMenuDisabledByFleetFlag(t *testing.T) {
 	}
 	matches(t, g, "fcmd-flag1-menu-click")
 }
+
+// ── 艦隊組成的「中止」與右鍵（出擊命令那條路，`docs/re/316` §四）──
+
+// 「中止」整支作廢：回戰略地圖、清單空、首都的待命艘數退回開局的 78000
+// （進艦隊組成時先扣了旗艦那一組 3000；`fcmd-fok-cancel`）。右鍵什麼都不做
+// （`fcmd-fok-rclick`：畫面只有游標動、存量 75000 不變）。
+func TestFleetCompositionCancelAndRightClick(t *testing.T) {
+	stock := func(g *Game) int {
+		o := rules.CapitalRegion(g.faction) * rules.RegionRecord
+		return rules.RegionShips(g.res.Stellar[o:o+rules.RegionRecord], g.faction)[0]
+	}
+	t.Run("cancel", func(t *testing.T) {
+		res := loadWithRules(t)
+		g := reachCommandPhaseOnMapWith(t, res)
+		if got := stock(g); got != 78000 {
+			t.Fatalf("開局首都戰艦 %d，原版 78000（fcx-peek-stock-170）", got)
+		}
+		g.MoveMouse(600, 340)
+		g = reachFleetOrgFrom(t, g)
+		g.Click(480, 350) // 「確認」→ 艦隊組成
+		if got := stock(g); got != 75000 {
+			t.Fatalf("進艦隊組成之後首都戰艦 %d，原版 75000（fcx-peek-stock-350）", got)
+		}
+		g.Click(510, 320) // 「中止」
+		if g.State() != StateCommandPhase {
+			t.Fatalf("點了中止之後在 %v，原版回戰略地圖", g.State())
+		}
+		if len(g.fleets) != 0 || stock(g) != 78000 {
+			t.Fatalf("中止之後艦隊 %d 支、首都戰艦 %d，原版 0 支、78000", len(g.fleets), stock(g))
+		}
+		matches(t, g, "fcmd-fok-cancel")
+	})
+	t.Run("rclick", func(t *testing.T) {
+		g := reachCommandPhaseOnMapWith(t, loadWithRules(t))
+		g.MoveMouse(600, 340)
+		g = reachFleetOrgFrom(t, g)
+		g.Click(480, 350) // 「確認」
+		g.RightClick(300, 240)
+		if g.State() != StateFleetComposition || stock(g) != 75000 {
+			t.Fatalf("右鍵之後在 %v、首都戰艦 %d，原版不動", g.State(), stock(g))
+		}
+		matches(t, g, "fcmd-fok-rclick")
+	})
+}
+
+// ── 「變更」→ 副官／編組（`docs/re/316`）──
+
+// reachFleetChangeMenu 在艦隊視窗按「變更」→ 兩項小選單（`fcmd-change-menu`）。
+func reachFleetChangeMenu(t *testing.T) *Game {
+	t.Helper()
+	g := reachFleetWindow(t)
+	g.Click(490, 365) // 「變更」
+	if g.State() != StateFleetChangeMenu {
+		t.Fatalf("點了變更之後在 %v", g.State())
+	}
+	return g
+}
+
+// 小選單：游標在第一項「副官」反白（`fcmd-change-menu`），移到「編組」反白跟著走
+// （`fcmd-change-menu-hover`），右鍵只關選單（`fcmd-change-menu-rclick` 與
+// `fcmd-menu-rclick` 逐位元組相同）。
+func TestFleetChangeMenuMatchesOracle(t *testing.T) {
+	g := reachFleetChangeMenu(t)
+	matches(t, g, "fcmd-change-menu")
+	g.MoveMouse(497, 392)
+	matches(t, g, "fcmd-change-menu-hover")
+	g.RightClick(300, 240)
+	if g.State() != StateFleetWindow {
+		t.Fatalf("右鍵之後在 %v", g.State())
+	}
+	matches(t, g, "fcmd-change-menu-rclick")
+}
+
+// 「副官」→ 艦隊編成那張視窗的「副官／結束」變體（`fcmd-change-adj`）；
+// 「結束」或右鍵回艦隊視窗，清單那一列不再反白（`fcmd-change-adj-close`、
+// `fcmd-change-adj-rclick`）。
+func TestFleetChangeAdjutantWindowMatchesOracle(t *testing.T) {
+	t.Run("close", func(t *testing.T) {
+		g := reachFleetChangeMenu(t)
+		g.Click(497, 372) // 「副官」
+		if g.State() != StateFleetChangeAdj {
+			t.Fatalf("點了副官之後在 %v", g.State())
+		}
+		matches(t, g, "fcmd-change-adj")
+		g.Click(480, 340) // 「結束」
+		if g.State() != StateFleetWindow {
+			t.Fatalf("點了結束之後在 %v", g.State())
+		}
+		matches(t, g, "fcmd-change-adj-close")
+	})
+	t.Run("rclick", func(t *testing.T) {
+		g := reachFleetChangeMenu(t)
+		g.Click(497, 372)
+		g.RightClick(300, 240)
+		if g.State() != StateFleetWindow {
+			t.Fatalf("右鍵之後在 %v", g.State())
+		}
+		matches(t, g, "fcmd-change-adj-rclick")
+	})
+}
+
+// 「編組」→ 這一支的艦隊組成（`fcmd-change-org`：待命部隊照所在星域、旗艦那一組在
+// 格盤中央）；中止／決定回艦隊視窗、記錄不動（`fcmd-change-org-cancel`／`-decide`），
+// 右鍵什麼都不做（`fcmd-change-org-rclick`）。
+func TestFleetChangeOrganiseWindowMatchesOracle(t *testing.T) {
+	for _, c := range []struct {
+		name  string
+		x, y  int
+		batch string
+		state State
+	}{
+		{"cancel", 510, 320, "fcmd-change-org-cancel", StateFleetWindow},
+		{"decide", 510, 340, "fcmd-change-org-decide", StateFleetWindow},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			g := reachFleetChangeMenu(t)
+			g.Click(497, 392) // 「編組」
+			if g.State() != StateFleetChangeOrg {
+				t.Fatalf("點了編組之後在 %v", g.State())
+			}
+			matches(t, g, "fcmd-change-org")
+			before := g.fleets[0]
+			g.Click(c.x, c.y)
+			if g.State() != c.state {
+				t.Fatalf("點了%s之後在 %v", c.name, g.State())
+			}
+			if after := g.fleets[0]; after.Target != before.Target || after.Move != before.Move || len(after.Composition) != len(before.Composition) {
+				t.Fatalf("點了%s之後艦隊記錄變了：%+v", c.name, after)
+			}
+			matches(t, g, c.batch)
+		})
+	}
+	t.Run("rclick", func(t *testing.T) {
+		g := reachFleetChangeMenu(t)
+		g.Click(497, 392)
+		g.RightClick(300, 240)
+		if g.State() != StateFleetChangeOrg {
+			t.Fatalf("右鍵之後在 %v，原版不動", g.State())
+		}
+		matches(t, g, "fcmd-change-org-rclick")
+	})
+}

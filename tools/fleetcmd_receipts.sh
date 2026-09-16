@@ -125,6 +125,32 @@ rec fcmd-battle-menu-click 495000000 fcmd-battle-menu - -clicks 472000000:497:31
 #        再點作戰：占領（1）與輸送（3）停用；點停用的「占領」→ 看收據。
 rec fcmd-flag1-menu       470000000 fcmd-win ck -poke "lin:60BA4@446000000=01" -clicks 447000000:490:305 -click-hold $HOLD
 rec fcmd-flag1-menu-click 495000000 fcmd-flag1-menu - -clicks 472000000:497:292 -click-hold $HOLD
+# 11. 艦隊視窗「變更」(490,325) → 副官／編組 兩項小選單（0DEA:17A9，docs/re/316）：
+#     副官 (497,332) → 艦隊編成那張視窗的「副官／結束」變體（297B:04EF），結束 (480,300) 回視窗；
+#     編組 (497,352) → 艦隊組成（0FF4:000A），中止 (510,280)／決定 (510,300) 回視窗。
+rec fcmd-change-menu       470000000 fcmd-win ck -clicks 447000000:490:325 -click-hold $HOLD
+rec fcmd-change-menu-hover 480000000 fcmd-change-menu - -mouse-x 497 -mouse-y 352 -mouse-at 472000000
+rec fcmd-change-menu-rclick 495000000 fcmd-change-menu - -rclicks 472000000:300:200 -click-hold $HOLD
+rec fcmd-change-adj        495000000 fcmd-change-menu ck -clicks 472000000:497:332 -click-hold $HOLD
+rec fcmd-change-adj-close  520000000 fcmd-change-adj - -clicks 497000000:480:300 -click-hold $HOLD
+rec fcmd-change-org        495000000 fcmd-change-menu ck -clicks 472000000:497:352 -click-hold $HOLD
+rec fcmd-change-org-cancel 520000000 fcmd-change-org - -clicks 497000000:510:280 -click-hold $HOLD
+rec fcmd-change-org-decide 520000000 fcmd-change-org - -clicks 497000000:510:300 -click-hold $HOLD
+rec fcmd-change-adj-rclick 520000000 fcmd-change-adj - -rclicks 497000000:300:200 -click-hold $HOLD
+rec fcmd-change-org-rclick 520000000 fcmd-change-org - -rclicks 497000000:300:200 -click-hold $HOLD
+# 12. 艦隊組成（出擊命令那條路的最後一張）按「中止」或右鍵（docs/re/316 §四）：
+#     中止 → 整支艦隊作廢、回戰略地圖，首都的待命艘數退回 78000（開局值；進艦隊組成時
+#     先扣了旗艦那一組 3000）；右鍵 → 什麼都不做。與 fcmd-base 同一條冷啟動序列。
+rec fcmd-fok-cancel 400000000 - - \
+  -tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 \
+  -rclicks 130000000:300:200,155000000:300:200 \
+  -clicks 40000000:300:170,95000000:300:170,180000000:352:85,210000000:400:85,240000000:400:45,270000000:488:290,320000000:480:310,352000000:510:280 \
+  -click-hold $HOLD -peek lin:5F2FC:4
+rec fcmd-fok-rclick 380000000 - - \
+  -tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 \
+  -rclicks 130000000:300:200,155000000:300:200,352000000:300:200 \
+  -clicks 40000000:300:170,95000000:300:170,180000000:352:85,210000000:400:85,240000000:400:45,270000000:488:290,320000000:480:310 \
+  -click-hold $HOLD -peek lin:5F2FC:4
 # 6. 從 `dec1` 只把游標移到瓦爾哈拉（不按）→ 左下角照游標重寫：剛編成的
 #    第１艦隊算不算進「艦隊 a：b」（星域記錄 `+0x28` 建艦隊時就加了）。
 rec fcmd-hover-home 440000000 fcmd-base - -mouse-x 32 -mouse-y 32 -mouse-at 421000000

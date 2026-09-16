@@ -142,6 +142,8 @@ type FleetWindowView struct {
 	// （`0DEA:0040` 開頭把熱區表 `ds:21C0` 第 1 筆的啟用旗標清 0，
 	// 收據 `fcmd-battle-win`，`docs/re/315`）。
 	ChangeHidden bool
+	// ChangePressed ＝ 「變更」鈕反白（副官／編組小選單開著，`docs/re/316`）。
+	ChangePressed bool
 }
 
 // Colour bytes the original writes into the window before each print.
@@ -363,7 +365,7 @@ func (s *FleetWindowSpec) Buffer(v *FleetWindowView) *ui.TextBuffer {
 			continue
 		}
 		colour := uint8(s.ButtonColour)
-		if bt.Name == "ops" && v.OpsPressed {
+		if (bt.Name == "ops" && v.OpsPressed) || (bt.Name == "change" && v.ChangePressed) {
 			colour = fleetWindowInkPressed
 		}
 		putTextButton(b, bt.CellX, bt.CellY, bt.Cols, colour, bt.Codes)

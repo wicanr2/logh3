@@ -33,6 +33,8 @@ cases=(
   "fcmd-standby-pick|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 392; click 350 250|152,347,128,1"
   # 占領 → 費沙 → 參謀提醒兩頁 → 「要占領中立軍費沙星系嗎？」（docs/re/315）。
   "fcmd-occupy-phezzan3|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 332; click 163 136; click 300 240; click 300 240"
+  # 變更 → 編組：這一支的艦隊組成疊在艦隊視窗上（docs/re/316）。
+  "fcmd-change-org|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 365; click 497 392"
 )
 fail=0
 for c in "${cases[@]}"; do

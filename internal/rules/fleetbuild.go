@@ -109,6 +109,10 @@ const FlagshipSlot3 = 20
 // 獨立分支，直接拿滿編艘數，`docs/re/215`）。
 const shipKindStandalone = 7
 
+// ShipKindStandalone 是 shipKindStandalone 給外面用的名字（艦隊組成的中止要退存量，
+// 這一種不退）。
+const ShipKindStandalone = shipKindStandalone
+
 // BuildInput 是新編一支艦隊要的東西。
 type BuildInput struct {
 	// Region 是**執行期星域記錄**，一筆 `RegionRecord`。

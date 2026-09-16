@@ -176,6 +176,11 @@ const (
 	// StateFleetOccupyWarn 是占領目的地選了費沙時的兩頁參謀提醒
 	// （`1213:0003`，`docs/re/315`）。
 	StateFleetOccupyWarn
+	// 「變更」那顆鈕（`0DEA:17A9`，`docs/re/316`）：副官／編組兩項小選單，
+	// 副官開艦隊編成那張視窗的「副官／結束」變體，編組開這一支的艦隊組成。
+	StateFleetChangeMenu
+	StateFleetChangeAdj
+	StateFleetChangeOrg
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -199,7 +204,7 @@ func (s State) String() string {
 		"StatePhezzanReport", "StateVictoryReport",
 		"StateFleetWindow", "StateFleetActionMenu", "StateFleetTargetPick",
 		"StateFleetMessage", "StateFleetConfirm", "StateFleetStandby",
-		"StateFleetOccupyWarn",
+		"StateFleetOccupyWarn", "StateFleetChangeMenu", "StateFleetChangeAdj", "StateFleetChangeOrg",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -249,6 +254,9 @@ var screenSpecName = map[State]string{
 	StateFleetConfirm:      "screen-command-phase",
 	StateFleetStandby:      "screen-command-phase",
 	StateFleetOccupyWarn:   "screen-command-phase",
+	StateFleetChangeMenu:   "screen-command-phase",
+	StateFleetChangeAdj:    "screen-command-phase",
+	StateFleetChangeOrg:    "screen-command-phase",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -709,6 +717,12 @@ type Game struct {
 
 	// detailAdmiral 是提督詳細資料那張畫面在看哪一位；-1 ＝ 沒有。
 	detailAdmiral int
+
+	// provisional 是「出擊命令」那條路進艦隊組成時先編好的那一組（旗艦）：
+	// 進畫面那一刻就從首都的待命部隊扣（原版 78000 → 75000），「決定」
+	// 照這一份建艦隊、「中止」整批退回（收據 `fcmd-fok-cancel`，
+	// `docs/re/316` §四）。nil ＝ 不在那張畫面上。
+	provisional []rules.FleetGroup
 
 	// selectedRow 是有選取條那種清單目前選在第幾列（艦隊組成的七個艦種）。
 	selectedRow int
@@ -1956,7 +1970,12 @@ func (g *Game) click(x, y int) {
 					return
 				}
 			case "cancel":
-				g.state = StateFleetOrg
+				// 「中止」整支作廢：艘數退回首都、回戰略地圖，不是回艦隊編成
+				// （收據 `fcmd-fok-cancel`：地圖、清單空、存量 78000）。
+				g.refundProvisional()
+				if g.commandSpec(StateCommandPhase) != nil {
+					g.state = StateCommandPhase
+				}
 				return
 			case "decide":
 				// 艦隊建成，回戰略地圖（收據 `dec1`）。艦隊記錄怎麼填
@@ -1969,7 +1988,11 @@ func (g *Game) click(x, y int) {
 					// （`+0x09` ＝ 0xFF），所以只有旗艦那一組
 					// （收據 `fcmd-win` 的 `fleet0.bin`：`+0x0F` ＝ 1、
 					// `+0x10` ＝ `00 00 00 14`，`docs/re/312`）。
-					comp := g.newComposition(g.faction, region, g.detailAdmiral, rules.NoClassKey)
+					comp := g.provisional
+					if comp == nil {
+						comp = g.newComposition(g.faction, region, g.detailAdmiral, rules.NoClassKey)
+					}
+					g.provisional = nil
 					ops := g.fleetOperations(g.detailAdmiral, adjutant)
 					g.fleets = append(g.fleets, rules.Fleet{
 						Index:       len(g.fleets),
@@ -2057,6 +2080,10 @@ func (g *Game) click(x, y int) {
 		case "confirm":
 			if g.commandSpec(StateFleetComposition) != nil {
 				g.selectedRow = 0
+				// 旗艦那一組在**進艦隊組成**這一刻就從首都的待命部隊扣出來
+				// （原版首都戰艦 78000 → 75000，`fcx-peek-stock-300`／`-350`），
+				// 「決定」不再扣、「中止」退回（`docs/re/316` §四）。
+				g.provisional = g.takeProvisional()
 				g.state = StateFleetComposition
 			}
 		}
@@ -2092,6 +2119,12 @@ func (g *Game) click(x, y int) {
 		g.fleetStandbyClick(x, y)
 	case StateFleetOccupyWarn:
 		g.fleetOccupyWarnClick()
+	case StateFleetChangeMenu:
+		g.fleetChangeMenuClick(x, y)
+	case StateFleetChangeAdj:
+		g.fleetChangeAdjClick(x, y)
+	case StateFleetChangeOrg:
+		g.fleetChangeOrgClick(x, y)
 	case StateSettings:
 		// 六組都在這裡：音源／平時配樂／戰鬥配樂三組單選（`docs/re/285`）、
 		// 訊息速度的上下箭頭、動畫效果與動畫速度，以及「結束」
@@ -2217,7 +2250,10 @@ func (g *Game) rightClick(x, y int) {
 		}
 	case StateFormation:
 		g.state = StateFleetComposition
-	case StateFleetNumber, StateFleetAdjutant, StateFleetComposition:
+	case StateFleetComposition:
+		// 艦隊組成不認右鍵（收據 `fcmd-fok-rclick`／`fcmd-change-org-rclick`：
+		// 畫面只有游標動、存量不變）。
+	case StateFleetNumber, StateFleetAdjutant:
 		g.state = StateFleetOrg
 	case StateAdmiralBio, StateFleetOrg:
 		g.state = StateAdmiralDetail
@@ -2261,7 +2297,7 @@ func (g *Game) rightClick(x, y int) {
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
 	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm,
-		StateFleetStandby, StateFleetOccupyWarn:
+		StateFleetStandby, StateFleetOccupyWarn, StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg:
 		g.fleetCmdRightClick()
 	case StateVersusInput:
 		// 交棒視窗按右鍵會怎樣**沒有量過**，先什麼都不做——
@@ -2786,6 +2822,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
 		StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick,
 		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
+		StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg,
 		StateFleetOrg, StateFleetNumber, StateFleetAdjutant,
 		StateFleetComposition, StateFormation,
 		// 這五張的收據末尾都有一次 `-mouse-at`（搬到 (600,340)），
@@ -2864,6 +2901,9 @@ func (g *Game) drawFleetComposition(fb *gfx.Framebuffer) {
 // `docs/re/215`）；收據 `fok` 的瓦爾哈拉有 75000 艘戰艦，所以那一組
 // 是滿編、字母印色 7。
 func (g *Game) compositionGroups(ships []int) []screen.CompositionGroup {
+	if g.provisional != nil {
+		return compositionViewGroups(g.provisional)
+	}
 	kind := rules.AdmiralAbility(g.admiralRecord(g.detailAdmiral), 0x08) & 0x0F
 	if kind < 0 || kind >= len(rules.ShipsPerUnit) {
 		return nil
@@ -2878,10 +2918,64 @@ func (g *Game) compositionGroups(ships []int) []screen.CompositionGroup {
 	}}
 }
 
+// compositionViewGroups 把一份編制換成畫面上的那幾組。
+func compositionViewGroups(comp []rules.FleetGroup) []screen.CompositionGroup {
+	out := make([]screen.CompositionGroup, 0, len(comp))
+	for _, gp := range comp {
+		out = append(out, screen.CompositionGroup{Kind: gp.Kind, Slot: gp.Slot3, Ships: gp.Ships, Full: gp.Full})
+	}
+	return out
+}
+
+// takeProvisional 進艦隊組成時把旗艦那一組從首都的待命部隊扣出來。
+// 有艦種表就走 `newComposition`（與 AI 同一支）；畫面測試那種沒帶規則表的
+// 資源就只算旗艦一組：艦種 ＝ 提督 `+0x08` 低四位、艘數 ＝ min(滿編, 存量)。
+func (g *Game) takeProvisional() []rules.FleetGroup {
+	region := rules.CapitalRegion(g.faction)
+	if comp := g.newComposition(g.faction, region, g.detailAdmiral, rules.NoClassKey); comp != nil {
+		return comp
+	}
+	rec := g.regionRecord(region)
+	adm := g.admiralRecord(g.detailAdmiral)
+	if rec == nil || adm == nil {
+		return nil
+	}
+	kind := rules.AdmiralAbility(adm, 0x08) & 0x0F
+	if kind < 0 || kind >= len(rules.ShipsPerUnit) {
+		return nil
+	}
+	full := rules.ShipsPerUnit[kind]
+	return []rules.FleetGroup{{
+		Kind: kind, Full: full, Slot2: kind, Slot3: rules.FlagshipSlot3,
+		Ships: rules.TakeRegionShips(rec, g.faction, kind, full),
+	}}
+}
+
+// refundProvisional 把進艦隊組成時扣掉的那幾組還回首都的待命部隊
+// （`rules.ReturnRegionShips`，艦種 7 不走存量）。
+func (g *Game) refundProvisional() {
+	if g.provisional == nil {
+		return
+	}
+	if rec := g.regionRecord(rules.CapitalRegion(g.faction)); rec != nil {
+		for _, gp := range g.provisional {
+			if gp.Kind != rules.ShipKindStandalone {
+				rules.ReturnRegionShips(rec, g.faction, gp.Kind, gp.Ships)
+			}
+		}
+	}
+	g.provisional = nil
+}
+
 // drawCompositionGrid 鋪格盤那 9 × 9 的圖塊（`docs/re/67`、`docs/internals/56`）：
 // `(欄 + 列)` 為偶數的 41 格才畫，有部隊的那一格畫 `Unit ＋ 艦種`。
 func (g *Game) drawCompositionGrid(fb *gfx.Framebuffer, v screen.CompositionView) {
-	spec := g.commandSpec(g.state)
+	g.drawCompositionGridWith(fb, g.commandSpec(g.state), v)
+}
+
+// drawCompositionGridWith 同上，但格盤版面從給定的畫面規格拿（「變更 → 編組」
+// 那張疊在艦隊視窗上，沒有自己的畫面規格）。
+func (g *Game) drawCompositionGridWith(fb *gfx.Framebuffer, spec *screen.MainGameSpec, v screen.CompositionView) {
 	if spec == nil || g.res.Sprites == nil {
 		return
 	}
@@ -3200,7 +3294,18 @@ func (g *Game) drawFleetOrg(fb *gfx.Framebuffer) {
 	if rec == nil {
 		return
 	}
-	adj := rules.Adjutant(rec)
+	slot := rules.FlagshipSlot(rec, i)
+	// 艦隊編號 ＝ 旗艦的欄位 ＋ 1（假設待驗，兩個資料點：`docs/re/66`）。
+	g.drawFleetOrgFor(fb, i, rules.Adjutant(rec), slot+1)
+}
+
+// drawFleetOrgFor 畫艦隊編成視窗裡算出來的部分：提督 i、副官 adj、艦隊編號
+// number。出擊那條路從提督記錄拿副官，「變更 → 副官」那張從艦隊記錄拿。
+func (g *Game) drawFleetOrgFor(fb *gfx.Framebuffer, i, adj, number int) {
+	rec := g.admiralRecord(i)
+	if rec == nil {
+		return
+	}
 	arec := g.admiralRecord(adj)
 	if arec == nil {
 		return
@@ -3220,12 +3325,10 @@ func (g *Game) drawFleetOrg(fb *gfx.Framebuffer) {
 	}
 	v.AdmiralRank = g.rankCodes(rules.RankOf(v.AdmiralLevel))
 	v.AdjutantRank = g.rankCodes(rules.RankOf(v.AdjutantLevel))
-	slot := rules.FlagshipSlot(rec, i)
-	if slot >= 0 {
+	if slot := rules.FlagshipSlot(rec, i); slot >= 0 {
 		v.Flagship = g.res.Flagships.Name(rules.AdmiralFaction(rec), slot)
-		// 艦隊編號 ＝ 旗艦的欄位 ＋ 1（假設待驗，兩個資料點：`docs/re/66`）。
-		v.Number = slot + 1
 	}
+	v.Number = number
 	p.Draw(fb, g.res.Font, v)
 	if g.res.Faces == nil {
 		return
@@ -3304,7 +3407,7 @@ func (g *Game) drawFleetRows(fb *gfx.Framebuffer) {
 	rows := g.fleetRows()
 	// 艦隊視窗開著時，被點的那一列反白（`docs/spec/051`）。
 	pressed := -1
-	if i := g.FleetCommandFleet(); i >= 0 {
+	if i := g.FleetCommandFleet(); i >= 0 && !g.fcmd.listUnpressed {
 		pressed = g.fleetListRowOf(i)
 	}
 	g.res.FleetList.Draw(fb, g.res.Font, rows, pressed)

@@ -48,6 +48,13 @@ type fleetCmd struct {
 	// warnPage 是占領費沙前那兩頁參謀提醒翻到第幾頁（`1213:0003`，
 	// `StateFleetOccupyWarn`）。
 	warnPage int
+	// 「變更」那條路（`fleetchange.go`）：小選單的位置與游標所在項、選了哪一項
+	// （子視窗開著時選單留在底下、那一項反白），以及副官那張關掉之後清單
+	// 那一列不再反白（`073F:0522` 把清單重畫回未按下的樣子）。
+	changeX, changeY int
+	changeHover      int
+	changeItem       int
+	listUnpressed    bool
 }
 
 // 作戰選單的五項（原版 `+0x08` 的動作碼就是項目索引，`docs/re/312` §三）。
@@ -124,8 +131,10 @@ func (g *Game) fleetWindowClick(x, y int) {
 	case "close":
 		g.closeFleetWindow()
 	case "change":
-		// 「變更」→ 副官／編組小選單，這一片不接（issue #42）；星域有戰鬥或
-		// 不是自己的時這顆鈕根本沒畫（`fleetChangeHidden`）。
+		// 星域有戰鬥或不是自己的時這顆鈕根本沒畫（`fleetChangeHidden`）。
+		if !g.fleetChangeHidden(&g.fleets[g.fcmd.fleet]) {
+			g.openFleetChangeMenu(x, y)
+		}
 	}
 }
 
@@ -394,13 +403,23 @@ func (g *Game) fleetCmdRightClick() {
 		// 右鍵＝「決定」：有反白的就寫進去（`0DEA:165A` 的事件 2 直接跳出
 		// 迴圈，`1320` 回目前反白那一筆；收據 `fcmd-standby-rclick`）。
 		g.finishFleetStandby()
+	case StateFleetChangeMenu:
+		g.closeFleetChangeMenu()
+	case StateFleetChangeAdj:
+		// 副官那張右鍵 ＝ 結束（`fcmd-change-adj-rclick`）。
+		g.closeFleetChangeAdj()
+	case StateFleetChangeOrg:
+		// 艦隊組成不認右鍵（`fcmd-change-org-rclick`）。
 	}
 }
 
 // fleetCmdMouseMove 是這條路上的游標移動：選單的反白跟著走。
 func (g *Game) fleetCmdMouseMove(x, y int) {
-	if g.state == StateFleetActionMenu {
+	switch g.state {
+	case StateFleetActionMenu:
 		g.fleetMenuHover(x, y)
+	case StateFleetChangeMenu:
+		g.fleetChangeMenuHover(x, y)
 	}
 }
 
@@ -408,7 +427,7 @@ func (g *Game) fleetCmdMouseMove(x, y int) {
 func (g *Game) FleetCommandFleet() int {
 	switch g.state {
 	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm,
-		StateFleetStandby, StateFleetOccupyWarn:
+		StateFleetStandby, StateFleetOccupyWarn, StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg:
 		return g.fcmd.fleet
 	}
 	return -1
@@ -442,7 +461,8 @@ func (g *Game) fleetWindowView() (*screen.FleetWindowView, *asset.Image) {
 		OpsPressed: g.state == StateFleetActionMenu || g.state == StateFleetTargetPick ||
 			g.state == StateFleetMessage || g.state == StateFleetConfirm || g.state == StateFleetStandby ||
 			g.state == StateFleetOccupyWarn,
-		ChangeHidden: g.fleetChangeHidden(f),
+		ChangeHidden:  g.fleetChangeHidden(f),
+		ChangePressed: g.state == StateFleetChangeMenu || g.state == StateFleetChangeAdj || g.state == StateFleetChangeOrg,
 	}
 	if f.Move != fleetMoveParked && f.Target >= 0 {
 		v.TargetName = codesBig5(g.regionName(f.Target))
@@ -606,6 +626,8 @@ func (g *Game) drawFleetCommand(fb *gfx.Framebuffer) {
 	}
 	g.res.FleetWindow.Draw(fb, g.res.Font, g.res.FrameTiles, v, face)
 	switch g.state {
+	case StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg:
+		g.drawFleetChange(fb)
 	case StateFleetStandby:
 		g.drawFleetStandby(fb)
 	case StateFleetActionMenu:

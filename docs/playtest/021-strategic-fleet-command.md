@@ -1,9 +1,9 @@
 # 戰略艦隊命令同狀態對拍（清單點列 → 艦隊視窗 → 作戰 → 五項 → 確認）
 
-日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標）
+日期：2026-09-15（第一片）、2026-09-16（駐留／輸送、實行、待命、占領、停用旗標、變更）
 
 比較等級：`same-state`（整張 640×480）。
-原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：三十九批是正常玩家路徑、沒有
+原版全部是 dosgolem-logh3 `b5485eb`、帝國新遊戲：五十一批是正常玩家路徑、沒有
 注入——冷啟動走 `dec1` 的序列（主選單 → 防拷 → 出擊命令 → 萊因哈特 → 出擊 →
 確認 → 決定）到戰略地圖存檢查點，之後每一張從上一張的檢查點只多一個輸入
 （`tools/fleetcmd_receipts.sh`；每批附 `plane.bin` 字元平面與 `fleet0.bin`
@@ -12,7 +12,7 @@
 同一個欄位。remake 走同一條路徑（`internal/game/fleetcmd_test.go`）。
 
 `GIN3.COM` SHA-256 `770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918`；
-四十六份 `pal.bin` SHA-256 都是
+五十八份 `pal.bin` SHA-256 都是
 `28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8`。
 座標是滑鼠座標（畫面 y ＝ 滑鼠 y ＋ 40）。
 
@@ -64,6 +64,18 @@
 | `fcmd-battle-menu-click` | （從 `fcmd-battle-menu`）左鍵 (497,312) 停用的駐留 → 只關選單 | `14f9ea7d0138ef8971ffb3e74a8406d425db37aeb98ef32265235094b9d4ad6c` | 0 |
 | `fcmd-flag1-menu` | （從 `fcmd-win`）446M 步 `-poke lin:60BA4=01`（艦隊 `+0x00` bit0）；左鍵 (490,305) 作戰 | `f1b0028007c68c6ddc2d1a9b154af900322a5c70bf54b6ec4025572c08c3a569` | 0 |
 | `fcmd-flag1-menu-click` | 左鍵 (497,292) 停用的占領 → 只關選單 | `6c2888185595234094c54fc7d5773589f7e75602205f15e831cf5d9634a2f1d7` | 0 |
+| `fcmd-change-menu` | （從 `fcmd-win`）左鍵 (490,325) 變更 → 副官／編組 | `ef930a43722cd909a7b78f844b4131a63ac513af20c0432da31f07fb1a640d84` | 0 |
+| `fcmd-change-menu-hover` | 游標移到 (497,352) 編組 | `5076b5d2cfac178e9ff1ceb1eabf9d865b21c3a481d14af5d9de914e88e0550b` | 0 |
+| `fcmd-change-menu-rclick` | （從 `fcmd-change-menu`）右鍵 (300,200) | `0adf02d86c0d8b54d48ced4af0fa2ab5467b2954650027d46670e6a5d8e493b6` | 0 |
+| `fcmd-change-adj` | （從 `fcmd-change-menu`）左鍵 (497,332) 副官 → 艦隊編成視窗的變體 | `5954644f1a34b3bd4b66967ac3decd73078cc637c179ccd8ced41f7fb6c5aac6` | 0 |
+| `fcmd-change-adj-close` | 左鍵 (480,300) 結束 → 回視窗、清單那一列不反白 | `cc68e5e842ecc076fc187c8f85b2526345a6ecedead05501d9ae8c17613ebf56` | 0 |
+| `fcmd-change-adj-rclick` | （從 `fcmd-change-adj`）右鍵 (300,200) | `e6368b493b5cf533d4752c0a8b91493d0e642b4aa5e2e89b6c6cb10d048b9619` | 0 |
+| `fcmd-change-org` | （從 `fcmd-change-menu`）左鍵 (497,352) 編組 → 這一支的艦隊組成 | `06219d971be8b3a6e43a4d8c5d6cb56dc0fbc46d9de0b1a97f868d697ce61449` | 0 |
+| `fcmd-change-org-cancel` | 左鍵 (510,280) 中止 | `1327506be7002eac56052b3363e76e3176390d87088b19cba63e7e2020f9d4c4` | 0 |
+| `fcmd-change-org-decide` | （從 `fcmd-change-org`）左鍵 (510,300) 決定 | `25f4ea051d0e227f7a30a343607d2dfc4dd4a1f50880cb0b6522351c51d50b82` | 0 |
+| `fcmd-change-org-rclick` | （從 `fcmd-change-org`）右鍵 (300,200) → 不動 | `015473d94ca5e1966f4a902b05b6fa44cc238afc453e9287679a2eba656b290b` | 0 |
+| `fcmd-fok-cancel` | 冷啟動同 `fcmd-base`，艦隊組成按中止 (510,280) → 回地圖、存量 78000 | `284f41b4d9872ad3c873c3febbb9703096d9ef94801eb98be83e9ea9b83dc09f` | 0 |
+| `fcmd-fok-rclick` | 冷啟動同上，艦隊組成按右鍵 → 不動 | `7fea9d30203f0f052457bf5a5c12e86f48002fe00b5539e3e7f3ce639d5a0298` | 0 |
 
 記憶體：`fcmd-done/fleet0.bin` 與 `fcmd-base/fleet0.bin` 只差 `+0x07`（FF→02）
 與 `+0x08`（05→00）；remake 的 `Fleet.Target`／`Move`／`Parked` 逐一對上
@@ -74,7 +86,9 @@
 `fcmd-exec` 那一回合的兩條規則（軍事費流進行星、有自軍艦隊的星域換色表）與
 清單記號、取消命令留著視窗、駐留／輸送的寫法，見 `docs/re/313`；「指定待命行星」
 那張視窗（小圖、引線、只重畫變過的格子）見 `docs/re/314`；占領的允許表、費沙
-兩頁提醒、選單停用旗標、不畫「變更」與左下角「處於戰鬥狀態」見 `docs/re/315`。
+兩頁提醒、選單停用旗標、不畫「變更」與左下角「處於戰鬥狀態」見 `docs/re/315`；
+「變更」的小選單、兩張子視窗與艦隊組成的中止／右鍵、待命艘數的扣法（開局 78000）
+見 `docs/re/316`。
 `fcmd-standby`／`fcmd-standby-pick` 排除的那一列（畫面 y 347、x 152–279）是原版
 小圖的第 128 列：來源列 102 超出 102 列的地圖，讀到緩衝區後面的東西
 （規格 051 已知差異）；其餘 307,072 個像素相同。
@@ -89,9 +103,11 @@
 `TestFleetStandbyMatchesOracle`、`TestFleetStandbyDecideWritesPlanet`、
 `TestFleetStandbyCancelAndRightClick`、`TestFleetOccupyOrderMatchesOracle`、
 `TestFleetOccupyPhezzanWarningMatchesOracle`、`TestFleetMenuDisabledInBattleRegion`、
-`TestFleetMenuDisabledByFleetFlag`；
+`TestFleetMenuDisabledByFleetFlag`、`TestFleetChangeMenuMatchesOracle`、
+`TestFleetChangeAdjutantWindowMatchesOracle`、`TestFleetChangeOrganiseWindowMatchesOracle`、
+`TestFleetCompositionCancelAndRightClick`；
 顯示層 `tools/gui_check.sh` 的 `fcmd-win`、`fcmd-done`、`fcmd-exec`、
-`fcmd-occupy-phezzan3`（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
+`fcmd-occupy-phezzan3`、`fcmd-change-org`（都整張）、`fcmd-standby-pick`（排除那 128 個像素）。
 
 過程中改到的通用規則（不只這條路徑）：底線裝飾（`ui.DrawCellDecor`）、
 清單被點那一列的反白、左下角與右側面板「寫進去那一刻的文字」與

@@ -6935,3 +6935,22 @@ GitHub 的 issue 時間軸承擔。
 - 文件：`docs/re/315`、規格 051 CONFORMED（作戰五項全部）、規格 001、internals
   22／33／58、playtest 021、CONTEXT；gui_check 加 `fcmd-occupy-phezzan3`。
 - 關 #41（verify 換成 `go_test TestFleetOccupyOrderMatchesOracle`）。剩 #42 變更。
+
+## 2026-09-16 — 「變更」：副官／編組小選單與兩張子視窗（#42 前半），艦隊組成的中止與存量時序
+
+- `0DEA:17A9` 讀完（`docs/re/316`）：小選單四格寬是原版把標籤位元組長度當寬度傳；
+  副官 → `297B:04EF` → `07F9:043F`（艦隊編成視窗的「副官／結束」變體），回來
+  `073F:0522` 把清單重畫成沒按下；編組 → `0FF4:000A`（艦隊組成）。十批
+  `fcmd-change-*` 整張 0 差異；子視窗用既有 `screen-fleet-org`／`screen-fleet-composition`
+  的 overlay 疊在活的艦隊視窗上（`GameWindow.Draw` 單獨畫一個視窗；
+  `drawFleetOrgFor`／`drawCompositionGridWith` 拆出來共用）。
+- 探索時發現兩件既有實作的錯：艦隊組成「中止」原版**整支作廢回戰略地圖**
+  （remake 原本回艦隊編成）、右鍵原版**不認**（remake 原本回艦隊編成）；
+  五次 `-peek` 量到首都戰艦開局是 **78000** 不是 75000——旗艦那一組在進艦隊組成
+  那一刻扣、決定留著、中止退回；舊的 `region-ships-796-01.json` 是艦隊組成開著時量的。
+  改法：開局表 78000、`Game.provisional`（進畫面扣、中止退、決定照用），
+  `fcmd-fok-cancel`／`fcmd-fok-rclick` 兩批冷啟動收據釘住；fok／form 等舊收據仍綠。
+- 沒接（#42 卡在）：副官那張的「副官」→ 變更／卸任；艦隊組成的點艦種／格盤／
+  陣形與決定寫回（`0FF4:0909`／`10C1`）——出擊那條路同一件事。
+- 文件：`docs/re/316`、規格 051「變更」一節、013／015 補一段、internals 58、
+  playtest 021、CONTEXT；gui_check 加 `fcmd-change-org`。
