@@ -79,7 +79,7 @@ func Battle(s *BattleSpec, panel *asset.Image, tiles []*asset.Image, cells []uin
 		}
 	}
 	drawTerrain(fb, s, tiles, cells, v)
-	drawBattleGrid(fb, s, v)
+	drawBattleGrid(fb, s, cells, v)
 	return fb
 }
 
@@ -109,8 +109,10 @@ func drawTerrain(fb *gfx.Framebuffer, s *BattleSpec, tiles []*asset.Image, cells
 //
 // 線在**世界座標**每 Pitch 像素一條，橫豎都是；畫出來是虛線——只有
 // x 是 DotX 的倍數、而且 y 除以 DotY 的餘數小於 2 的像素才畫，
-// 餘 0 用 Ink、餘 1 用 Shadow（`docs/internals/34`）。
-func drawBattleGrid(fb *gfx.Framebuffer, s *BattleSpec, v BattleView) {
+// 餘 0 用 Ink、餘 1 用 Shadow（`docs/internals/34`）。**只畫在空格上**：
+// 有地形圖塊的格子（編號不是 0）上沒有點（收據 `cam-e`：橫線走到星雲
+// 那一格就斷，`docs/re/326`）。
+func drawBattleGrid(fb *gfx.Framebuffer, s *BattleSpec, cells []uint8, v BattleView) {
 	p := s.Grid.Pitch
 	if p <= 0 {
 		return
@@ -120,8 +122,17 @@ func drawBattleGrid(fb *gfx.Framebuffer, s *BattleSpec, v BattleView) {
 	wy0 := v.Row * s.Field.TileH
 	w := s.Field.Cols * s.Field.TileW
 	h := s.Field.Rows * s.Field.TileH
+	empty := func(x, y int) bool {
+		if len(cells) == 0 {
+			return true
+		}
+		c := v.Col + (x-s.Field.X)/s.Field.TileW
+		r := v.Row + (y-s.Field.Y)/s.Field.TileH
+		i := r*s.Field.MapCols + c
+		return i < 0 || i >= len(cells) || cells[i] == 0
+	}
 	dot := func(x, y int) {
-		if x%s.Grid.DotX != 0 {
+		if x%s.Grid.DotX != 0 || !empty(x, y) {
 			return
 		}
 		switch y % s.Grid.DotY {
@@ -131,13 +142,14 @@ func drawBattleGrid(fb *gfx.Framebuffer, s *BattleSpec, v BattleView) {
 			fb.Set(x, y, s.Grid.Shadow)
 		}
 	}
-	for wx := (wx0/p + 1) * p; wx < wx0+w; wx += p {
+	// 視野左上角正好落在線上時那條線也要畫（收據 `cam-w`／`cam-n`：x ＝ 16、y ＝ 60）。
+	for wx := (wx0 + p - 1) / p * p; wx < wx0+w; wx += p {
 		x := s.Field.X + wx - wx0
 		for y := s.Field.Y; y < s.Field.Y+h; y++ {
 			dot(x, y)
 		}
 	}
-	for wy := (wy0/p + 1) * p; wy < wy0+h; wy += p {
+	for wy := (wy0 + p - 1) / p * p; wy < wy0+h; wy += p {
 		// 橫線佔兩列——上列 Ink、下列 Shadow，與豎線每 4 列取 2 列同一個相位。
 		for y := s.Field.Y + wy - wy0; y < s.Field.Y+wy-wy0+2; y++ {
 			for x := s.Field.X; x < s.Field.X+w; x++ {

@@ -5,6 +5,7 @@ import (
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
+	"github.com/wicanr2/logh3/internal/ui"
 )
 
 // battleSprite 回一個分隊要畫哪一塊 `SPRITE.SPR`（`rules.BattleSprite`）。
@@ -76,8 +77,7 @@ func (g *Game) StartBattle(region int) {
 			cols, rows = g.res.Battle.Field.Cols, g.res.Battle.Field.Rows
 		}
 		u := g.battleUnits[0]
-		// 視野開戰後就不再動：原版滑鼠停在戰場邊緣會捲動視野（`ds:9BF4`／
-		// `ds:9BF6`），還沒讀也沒接（#50）。
+		// 開戰置中到第一支分隊；之後只有按住右鍵會動它（`battleScroll`）。
 		g.battleView = screen.BattleView{
 			Col: clampCol(u.X/tw-cols/2, cols),
 			Row: clampRow(u.Y/th-rows/2, rows),
@@ -459,3 +459,34 @@ func (g *Game) advanceOrderedFleets() {
 		}
 	}
 }
+
+// battleScroll 是戰場視野的滑鼠捲動（`1588:043F` → `1588:03A9`，`docs/re/326`）：
+// 戰場視窗上沒開任何東西時按住右鍵，每一圈重讀游標、往它相對於滑鼠座標
+// (224,180) 的方位走一格，放開才停；游標停在邊緣不按什麼都不動（收據
+// `cam-edge-*`）。remake 沒有「一圈多久」：按下那一刻走一格（原版至少走一格
+// 才看放開），之後顯示層每一幀按著就再走一格（`RightHold`）——一次按住走幾格
+// 是已知差異（規格 023）。
+func (g *Game) battleScroll(x, y int) {
+	s := g.res.Battle
+	if s == nil || x < s.Field.X || x >= s.Field.X+s.Field.Cols*s.Field.TileW ||
+		y < s.Field.Y || y >= s.Field.Y+s.Field.Rows*s.Field.TileH {
+		return
+	}
+	dir := rules.ViewScrollDir(x, y-ui.FrameCellOriginY)
+	col, row, moved := rules.ViewScrollStep(g.battleView.Col, g.battleView.Row, dir)
+	if moved {
+		g.battleView = screen.BattleView{Col: col, Row: row}
+	}
+}
+
+// RightHold 是右鍵按著沒放的每一幀：戰場上就再捲一格。
+func (g *Game) RightHold(x, y int) {
+	if g.state != StateBattle || !g.battleScrollHeld {
+		return
+	}
+	g.moveMouse(x, y)
+	g.battleScroll(x, y)
+}
+
+// RightRelease 是右鍵放開。
+func (g *Game) RightRelease() { g.battleScrollHeld = false }

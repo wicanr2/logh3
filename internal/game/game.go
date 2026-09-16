@@ -814,10 +814,12 @@ type Game struct {
 	// 在整張戰場上的位置（單位是格）。-1 ＝ 還沒進過戰場。
 	battleRegion int
 	battleView   screen.BattleView
-	battleTurn   int
-	battleUnits  []rules.BattleUnit
-	tactic       ai.Tactic
-	autoBattle   bool
+	// battleScrollHeld ＝ 右鍵在戰場上按著沒放（每一幀 `RightHold` 再捲一格）。
+	battleScrollHeld bool
+	battleTurn       int
+	battleUnits      []rules.BattleUnit
+	tactic           ai.Tactic
+	autoBattle       bool
 
 	// 結算用的（`docs/spec/018`）：參戰艦隊、亂數、上一回合的交火紀錄，
 	// 以及「有一方全沒了」。
@@ -2548,7 +2550,14 @@ func (g *Game) rightClick(x, y int) {
 			g.closeCommandMenu()
 			return
 		}
-		g.battleMenu = false
+		if g.battleMenu {
+			// 戰術選單是另一個視窗：右鍵只關它、不捲（收據 `cam-menu`）。
+			g.battleMenu = false
+			return
+		}
+		// 什麼都沒開：按住右鍵捲視野（`battleScroll`）。
+		g.battleScrollHeld = true
+		g.battleScroll(x, y)
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
 	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm,
@@ -4407,6 +4416,11 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	}
 	// 訊息框畫在最上面（模態）。
 	g.drawMessage(fb)
+	// 游標永遠在最上面（收據 `cam-*`）；捲視野那一圈原版把它藏起來，
+	// remake 一幀一格、沒有那一圈，所以一直畫。
+	if g.res.Cursor != nil {
+		g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)
+	}
 	return fb
 }
 

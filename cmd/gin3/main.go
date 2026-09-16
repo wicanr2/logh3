@@ -117,8 +117,14 @@ func (a *app) Update() error {
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		a.g.Click(x, y)
 	}
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+	switch {
+	case inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight):
 		a.g.RightClick(x, y)
+	case ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight):
+		// 按著沒放：戰場上每一幀再捲一格視野（`docs/re/326`）。
+		a.g.RightHold(x, y)
+	case inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonRight):
+		a.g.RightRelease()
 	}
 	for k := ebiten.Key0; k <= ebiten.Key9; k++ {
 		if inpututil.IsKeyJustPressed(k) {

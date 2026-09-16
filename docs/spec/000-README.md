@@ -70,3 +70,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`054`](054-fleet-arrival.md) | 艦隊走到之後：回合裡的一格、到達收尾、占據旗標與戰略打行星 | 走一格 CONFORMED／打行星 DRAFT |
 | [`055`](055-list-screen-rows.md) | 一覽表四張的列 | CONFORMED（分頁 DRAFT） |
 | [`056`](056-engagement-scene.md) | 交戰演出（打行星那一種）與戰鬥曲的出口 | DRAFT |
+| [`057`](057-battle-view-scroll.md) | 戰場視野的滑鼠捲動（按住右鍵） | CONFORMED |

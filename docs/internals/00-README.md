@@ -120,3 +120,4 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [`57-phezzan-event.md`](57-phezzan-event.md)：費沙事件——第一次易主時觸發、經濟力流向對手首都、邊境叛離、人類座位受罰。
 - [`58-strategic-fleet-window.md`](58-strategic-fleet-window.md)：戰略地圖上的艦隊視窗與命令（清單點列 → 作戰 → 目的地 → 確認）。
 - [`59-list-screens.md`](59-list-screens.md)：一覽表四張（星系／艦隊／提督／敵將資料）：點列開什麼、游標反白、位移與分頁的變數。
+- [`60-mouse-roles.md`](60-mouse-roles.md)：滑鼠在每張畫面的作用總表（左鍵、右鍵、按住、游標經過），逐格掛證據；原版有、remake 沒有的列在最後。
