@@ -443,7 +443,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 6 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 5 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -528,31 +528,6 @@ remake 的 `battleView` 開戰時置中到旗艦之後就不再動。除了邊�
 
 **核實**：`internal/game/battle.go` 裡還找得到 `原版滑鼠停在戰場邊緣會捲動視野`（自承還在 ＝ 還沒做）
 
-#### enemy-tab-intel-rows — 右下角「敵艦隊」分頁有索敵等級的列與它的視窗
-
-*[#49](https://github.com/wicanr2/logh3/issues/49) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-右下角清單的「敵艦隊」分頁（規格 052）只對過空清單。原版 `0B20:003B` 列的是別的
-陣營、在這一格、**索敵等級**（艦艇 `+0x17` 在各組取最大）不是 0 的艦隊：等級 3 印
-「第Ｎ艦隊／提督名／士氣」，其餘印「第？艦隊」＋九個「？」；點一列開 `0B20:0336`
-的視窗，等級不到 3 印「情報資料來源不足」（`docs/re/319` §敵艦隊）。remake 的戰略層
-`FleetGroup` 還沒帶著 `+0x17`（那是戰場上累積的，`docs/internals/38`），所以
-`enemyFleetsInRegion` 永遠回空。
-
-線索：
-- 要打過仗的局面：S3 六次實行進戰場、打完回地圖，或用 `-poke` 把某支敵艦隊的
-  艦艇 `+0x17` 寫成 1／3 再開分頁（規格 014「改記憶體不靠運氣」）。
-- 視窗 `0B20:0336` 的內容讀了沒接（`docs/re/319`）；等級 3 的列與視窗各一份收據。
-- 索敵等級怎麼累積（索敵分遣隊的「剩餘燃料」那一行也還沒做，規格 051 已知差異）
-  是另一條，這一條只要清單與視窗照 `+0x17` 印。
-
-**做完的判準**：敵艦隊分頁有索敵等級的列與它的視窗有同狀態收據，remake 戰略層艦隊帶著 `+0x17`、
-分頁照等級印、視窗開得起來。
-
-**證據**：[`docs/re/319-fleet-list-tabs.md`](docs/re/319-fleet-list-tabs.md)、[`docs/spec/052-fleet-list-tabs.md`](docs/spec/052-fleet-list-tabs.md)、[`docs/internals/38-battle-units.md`](docs/internals/38-battle-units.md)
-
-**核實**：`internal/game/listtabs.go` 裡還找得到 `所以目前永遠是空的`（自承還在 ＝ 還沒做）
-
 #### engagement-animation — 交戰演出（ANI_PNL1 ＋ COMANI.BMG）與戰鬥曲的出口
 
 *[#48](https://github.com/wicanr2/logh3/issues/48) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -616,7 +591,7 @@ remake 的 `battleView` 開戰時置中到旗艦之後就不再動。除了邊�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-51 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+52 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1616,6 +1591,33 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### enemy-tab-intel-rows — 右下角「敵艦隊」分頁有索敵等級的列與它的視窗
+
+*[#49](https://github.com/wicanr2/logh3/issues/49) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+右下角清單的「敵艦隊」分頁（規格 052）原本只對過空清單。原版 `0B20:003B` 列的是別的
+陣營、在這一格、**索敵等級**（艦艇 `+0x17` 在各組取最大）不是 0 的艦隊：等級 3 印
+「第Ｎ艦隊／提督名／士氣」，其餘印「第？艦隊」＋九個「？」＋「 ?? 」；點一列開
+`0B20:0336` 的視窗，等級不到 3 跳「情報資料來源不足」（`docs/re/325`）。
+
+做完（2026-09-17，commit `1c9a18d`）：
+- 索敵等級進了戰略層：`rules.FleetGroup.Detail`（載存檔讀艦艇 `+0x17`、戰後
+  `ApplyBattleResult` 寫回）、`Fleet.Spotting`、`rules.EnemyFleetsInRegion`。
+- 列、視窗（軍名、第Ｎ艦隊、提督＋軍階、部隊種類 ≥2 字母／1「？」、頭像、結束）、
+  模態訊息框都接上；局面用 S3 ＋ `-poke` 造（規格 014），十三批 `enm-*` 整張逐位元組
+  （`tools/enemytab_receipts.sh`、`docs/playtest/023`）。
+- 順手修掉列按下去蓋到鈕左邊亮邊、清單視窗開著左下角還跟著游標兩處既有偏差。
+
+沒做（不擋這一條）：正常玩家路徑（打過仗回戰略地圖）的收據要等戰術層與原版對齊；
+同盟座位看帝國艦隊的陣營色只從 `ds:6092` 推。
+
+**做完的判準**：敵艦隊分頁有索敵等級的列與它的視窗有同狀態收據，remake 戰略層艦隊帶著 `+0x17`、
+分頁照等級印、視窗開得起來。
+
+**證據**：[`docs/re/325-enemy-tab-rows-and-window.md`](docs/re/325-enemy-tab-rows-and-window.md)、[`docs/spec/052-fleet-list-tabs.md`](docs/spec/052-fleet-list-tabs.md)、[`docs/playtest/023-enemy-tab.md`](docs/playtest/023-enemy-tab.md)、[`docs/internals/data/enemy-fleet-window.json`](docs/internals/data/enemy-fleet-window.json)
+
+**核實**：`TestEnemyTabClearMatchesOracle` 釘在 `./internal/game`
 
 #### month-end-tax-per-seat — 月底結算的收稅要逐座位、中立不扣（別家星域的經濟力比原版少）
 
