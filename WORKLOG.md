@@ -6909,3 +6909,29 @@ GitHub 的 issue 時間軸承擔。
   （`tools/scripts/standby_spec.py`）、bootstrap 載入。
 - 不模型化：`0DEA:1759` 抄進艦隊 `+0x5C`／`+0x5E` 的行星位置（記錄沒這兩格）。
 - 還沒做（#41 後半）：占領（要 poke 局面）、選單停用旗標；#42 變更。
+
+## 2026-09-16 — 占領、費沙提醒、選單停用旗標、左下角狀態字（#41 收尾）
+
+- 占領不用 poke：從瓦爾哈拉出發的可達表裡本來就有六個敵方／中立星域
+  （remake 的 `fleetTargetsAllowed(占領)` 先算出來，收據 `fcmd-occupy-pick` 的
+  地圖著色證實）。九批 `fcmd-occupy-*` 整張 0 差異，實作只開一道閘門
+  （`fleetMenuClick` 放行動作 1）＋ 費沙提醒那一層。
+- 費沙提醒（`1213:0003` ＝ `113A:0D93`）與費沙事件報告同一支 `1213:01B8`：
+  `phezzan-report-panel.json` 加 `occupy_0`／`occupy_1` 兩組（`ds:3016`／`301E`），
+  新狀態 `StateFleetOccupyWarn` 任一鍵翻頁。逾時（`3765:006C` 把 `ds:8EFE` 交給
+  計時器倒數；這條鏈量到一頁 36M 步 ＝ 1800 IRQ 對 n＝180）沒做，列已知差異。
+  收據的取樣點要在自動翻頁之前：25M 一批、點了之後 23M 就截，來得及。
+- 停用旗標用 `-poke` 造兩個局面：首都 `+0x13 ← 04` 在 **170M**（地圖畫好、還沒進
+  戰略命令；之後整條編成路徑回地圖整張重畫，畫面上讀旗標的每一處都跟著出現，
+  與 `fcmd-base` 只差 881 px：紅▼、「處於戰鬥狀態」、「：」變紅）；艦隊 `+0x00 ← 01`
+  在 `fcmd-win` 之後（沒有別處顯示它）。七批整張 0 差異。
+- 差出來的規則：**左下角星域名後面的狀態字**（`06E8` 段的列印常式：bit2 戰鬥 ＞
+  bit4 占領 ＞ bit0 孤立；字串自帶顏色碼，「艦隊 a：b」的「：」沿用）——
+  `rules.RegionSummary.Flags`、`region-panel.json` 的 `status`、規格 001 補一節；
+  右側首都摘要不印。**「變更」鈕在有戰鬥／非自己星域時不畫**（`0DEA:0040` 開頭
+  清掉熱區表旗標）——`FleetWindowView.ChangeHidden`。
+- 選單停用：`fleetMenuEnabled` 照 `docs/re/312` §7.6；`DrawCommandMenu` 本來就
+  吃 `enabled`（戰場那套），停用項不畫反白、點了只關選單與戰場一致。
+- 文件：`docs/re/315`、規格 051 CONFORMED（作戰五項全部）、規格 001、internals
+  22／33／58、playtest 021、CONTEXT；gui_check 加 `fcmd-occupy-phezzan3`。
+- 關 #41（verify 換成 `go_test TestFleetOccupyOrderMatchesOracle`）。剩 #42 變更。

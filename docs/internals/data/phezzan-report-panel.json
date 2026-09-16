@@ -1,5 +1,5 @@
 {
- "note": "費沙事件雙頁報告（1213:01B8；docs/spec/049、re/308）。",
+ "note": "費沙事件雙頁報告（1213:01B8；docs/spec/049、re/308）。 occupy_0／occupy_1 是玩家把費沙選成占領目標時的參謀提醒（1213:0003 → 同一支 1213:01B8；表 ds:3016 帝國、ds:301E 同盟，docs/re/315），事件發生過（ds:8F48 != 0）就不再出現。",
  "cell_x": 7,
  "cell_y": 6,
  "cols": 24,
@@ -65,6 +65,32 @@
      "text": "  另外，同盟邊境地帶的情勢正陷入混亂\n  的狀態。    "
     }
    ]
+  },
+  "occupy_0": {
+   "pages": [
+    {
+     "raw": "2020a565bbe2b64fa846a6dbaa76bbe2a661a569afe0b77cbec9ad50b64fa846aabab8670a2020c0d9a44fac79a656a650b7f9ad78a14320200a202020202020202020202020",
+     "text": "  占領費沙自治領地可能會導致費沙的經\n  濟力流向同盟軍。  \n            "
+    },
+    {
+     "raw": "2020a6d3a542a141b16ab577aabaa565bbe2ac46b5a6a569afe0b77cb379a6a8c3e4b9d20a2020ac50a874aabab1a1b6d5b463a4c6a14320202020202020202020202020202020",
+     "text": "  而且，強硬的占領政策可能會造成邊境\n  星系的情勢惡化。                "
+    }
+   ],
+   "source": "ds:3016 → ds:2F06, ds:2F4D"
+  },
+  "occupy_1": {
+   "pages": [
+    {
+     "raw": "2020af7dc361a94da5adb1f8acf9b14eb77ca8cfb64fa846c365a46aaabab867c0d9a44f0a2020ac79a656abd2b0eaad78a8baa440a4e8a1430a2020202020202020",
+     "text": "  破壞和平條約將會使費沙龐大的經濟力\n  流向帝國軍那一方。\n        "
+    },
+    {
+     "raw": "2020a6d3a542a6b3a569afe0b77ca8cfb16fa650b7f9ac50a874b56fa5cdab71b6c3a1430a2020a741bd54a977ad6ea565bbe2b64fa846b6dca1482020",
+     "text": "  而且有可能會使得同盟星系發生叛亂。\n  你確定要占領費沙嗎？  "
+    }
+   ],
+   "source": "ds:301E → ds:2F95, ds:2FD8"
   }
  }
 }

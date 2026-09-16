@@ -60,6 +60,37 @@ type RegionPanel struct {
 			EnemyInk uint8 `json:"enemy_ink"`
 		} `json:"fleets"`
 	} `json:"value_line"`
+
+	// Status 是星域名後面那一句狀態（`docs/re/315`）：依 `+0x13` 挑一句，
+	// 字串自帶顏色碼，之後「艦隊 a：b」的「：」沿用那個顏色。只有左下角
+	// 印它，右側首都摘要是另一支常式，不印。
+	Status struct {
+		X, Y     int
+		Battle   StatusText `json:"battle"`
+		Occupied StatusText `json:"occupied"`
+		Isolated StatusText `json:"isolated"`
+		NoneInk  uint8      `json:"none_ink"`
+	} `json:"status"`
+}
+
+// StatusText 是一句狀態字與它的墨色。
+type StatusText struct {
+	Codes []uint16 `json:"codes"`
+	Ink   uint8    `json:"ink"`
+}
+
+// status 回這個星域要印的狀態字（沒有就回 nil）與之後沿用的墨色。
+func (p *RegionPanel) status(flags int) ([]uint16, uint8) {
+	st := &p.Status
+	switch {
+	case flags&rules.RegionFlagBattle != 0:
+		return st.Battle.Codes, st.Battle.Ink
+	case flags&rules.RegionFlagOccupied != 0:
+		return st.Occupied.Codes, st.Occupied.Ink
+	case flags&rules.RegionFlagIsolated != 0:
+		return st.Isolated.Codes, st.Isolated.Ink
+	}
+	return nil, st.NoneInk
 }
 
 // LoadRegionPanel 讀面板版面。
@@ -82,7 +113,14 @@ const panelShadow = 3
 //
 // faction 是玩家陣營（決定「自軍」是哪一邊，以及數字用什麼顏色）。
 func (p *RegionPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, s rules.RegionSummary, faction int) {
-	p.DrawAt(fb, fnt, s, faction, 0, 0)
+	codes, ink := p.status(s.Flags)
+	if ink == 0 {
+		ink = p.ValueLine.LabelInk
+	}
+	if codes != nil {
+		p.full(fb, fnt, p.Status.X, p.Status.Y, codes, ink)
+	}
+	p.drawAt(fb, fnt, s, faction, 0, 0, ink)
 }
 
 // DrawAt 同 Draw，但整塊平移 (dx, dy)。
@@ -92,6 +130,13 @@ func (p *RegionPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, s rules.RegionSu
 // 行星、艦隊、陣營前綴、星系名全部對得上（`docs/spec/002`）。
 func (p *RegionPanel) DrawAt(fb *gfx.Framebuffer, fnt *font.Font, s rules.RegionSummary,
 	faction, dx, dy int) {
+	p.drawAt(fb, fnt, s, faction, dx, dy, p.ValueLine.LabelInk)
+}
+
+// drawAt 是兩個入口共用的本體；colonInk 是「艦隊 a：b」那個「：」的墨色
+// ——左下角沿用狀態字留下的顏色（`docs/re/315`），右側是標籤色。
+func (p *RegionPanel) drawAt(fb *gfx.Framebuffer, fnt *font.Font, s rules.RegionSummary,
+	faction, dx, dy int, colonInk uint8) {
 	// 行星那個分子用**玩家的陣營色**，艦隊那兩個數字用兩個常數——
 	// 同一行上兩種規則，`main1eAlly` 才分得出來（`docs/re/61`）。
 	own := rules.FactionColour(faction)
@@ -130,7 +175,7 @@ func (p *RegionPanel) DrawAt(fb *gfx.Framebuffer, fnt *font.Font, s rules.Region
 	fl := p.ValueLine.Fleets
 	p.full(fb, fnt, fx(fl.LabelX), y, fl.Label, ink)
 	p.right(fb, fnt, fx(fl.OwnRight), y, strconv.Itoa(s.OwnFleets), fleetOwn)
-	p.full(fb, fnt, fx(fl.ColonX), y, []uint16{fl.Colon}, ink)
+	p.full(fb, fnt, fx(fl.ColonX), y, []uint16{fl.Colon}, colonInk)
 	p.right(fb, fnt, fx(fl.EnemyRight), y, strconv.Itoa(s.EnemyFleets), fleetEnemy)
 }
 

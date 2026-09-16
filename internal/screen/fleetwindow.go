@@ -138,6 +138,10 @@ type FleetWindowView struct {
 
 	// OpsPressed ＝ 「作戰」鈕反白（選單開著或正在選目的地，收據 `fcmd-pick`）。
 	OpsPressed bool
+	// ChangeHidden ＝ 「變更」鈕不畫：所在星域有戰鬥（`+0x13 & 4`）或不是自己的
+	// （`0DEA:0040` 開頭把熱區表 `ds:21C0` 第 1 筆的啟用旗標清 0，
+	// 收據 `fcmd-battle-win`，`docs/re/315`）。
+	ChangeHidden bool
 }
 
 // Colour bytes the original writes into the window before each print.
@@ -355,6 +359,9 @@ func (s *FleetWindowSpec) Buffer(v *FleetWindowView) *ui.TextBuffer {
 
 	// ── 三顆鈕（`37A9:000F` 的子元件，與勝負報告的「確認」同一種畫法）──
 	for _, bt := range s.Buttons {
+		if bt.Name == "change" && v.ChangeHidden {
+			continue
+		}
 		colour := uint8(s.ButtonColour)
 		if bt.Name == "ops" && v.OpsPressed {
 			colour = fleetWindowInkPressed

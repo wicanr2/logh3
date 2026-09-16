@@ -427,3 +427,165 @@ func TestFleetStandbyCancelAndRightClick(t *testing.T) {
 		matches(t, g, "fcmd-standby-rclick")
 	})
 }
+
+// ── 占領（第 1 項）：允許表換成敵方＋中立、費沙先跳參謀提醒（`docs/re/315`）──
+
+// reachFleetOccupyPick 選「占領」→ 目的地選取（`fcmd-occupy-pick`）。
+func reachFleetOccupyPick(t *testing.T) *Game {
+	t.Helper()
+	g := reachFleetWindow(t)
+	g.Click(490, 345) // 「作戰」
+	g.Click(497, 332) // 「占領」
+	if g.State() != StateFleetTargetPick {
+		t.Fatalf("點了占領之後在 %v", g.State())
+	}
+	return g
+}
+
+// 占領的允許表：可達 ∧ 擁有者是敵方或中立（`0DEA:12CC` 給 `113A:0003` 的
+// (敵方, 2)），地圖照它著色（`fcmd-occupy-pick`）；點自己的亞爾提那 →
+// 「這是無法前往的星系。」（`fcmd-occupy-far`）；點同盟的亞斯提 →
+// 「要占領同盟軍亞斯提星系嗎？」（`fcmd-occupy-confirm`）→ 決定寫 `+0x08 ← 1`、
+// `+0x07 ← 16`，清單那一列印紅☆（`fcmd-occupy-done`）；再開視窗第 5–7 列印
+// 「占領戰鬥／現在位置／移動目標 亞斯提」（`fcmd-occupy-reopen`）。
+func TestFleetOccupyOrderMatchesOracle(t *testing.T) {
+	g := reachFleetOccupyPick(t)
+	allowed := g.FleetTargetsAllowed()
+	for r, want := range map[int]bool{0: true, 2: false, 3: true, 14: true, 16: true, 31: false} {
+		if allowed[r] != want {
+			t.Errorf("星域 %d 允許＝%v，原版是 %v", r, allowed[r], want)
+		}
+	}
+	matches(t, g, "fcmd-occupy-pick")
+	t.Run("far", func(t *testing.T) {
+		g := reachFleetOccupyPick(t)
+		g.Click(85, 128) // 亞爾提那（自己的）
+		if g.State() != StateFleetMessage {
+			t.Fatalf("點了亞爾提那之後在 %v", g.State())
+		}
+		matches(t, g, "fcmd-occupy-far")
+	})
+	g.Click(193, 245) // 亞斯提
+	if g.State() != StateFleetConfirm {
+		t.Fatalf("點了亞斯提之後在 %v", g.State())
+	}
+	matches(t, g, "fcmd-occupy-confirm")
+	g.Click(432, 263) // 「決定」
+	if g.State() != StateCommandPhase {
+		t.Fatalf("點了決定之後在 %v", g.State())
+	}
+	if f := g.fleets[0]; f.Target != 16 || f.Move != fleetActionOccupy || f.Parked {
+		t.Fatalf("決定之後艦隊記錄 Target=%d Move=%d Parked=%v，原版 +0x07=16、+0x08=1", f.Target, f.Move, f.Parked)
+	}
+	matches(t, g, "fcmd-occupy-done")
+	g.Click(450, 308) // 清單第 0 列
+	if g.State() != StateFleetWindow {
+		t.Fatalf("再點清單之後在 %v", g.State())
+	}
+	matches(t, g, "fcmd-occupy-reopen")
+}
+
+// 占領目的地點費沙：先兩頁參謀提醒（`1213:0003` → `1213:01B8`，任一鍵翻頁），
+// 再「要占領中立軍費沙星系嗎？」，決定寫 `+0x07 ← 14`、`+0x08 ← 1`
+// （`fcmd-occupy-phezzan`／`-phezzan2`／`-phezzan3`／`-phezzan-done`）。
+func TestFleetOccupyPhezzanWarningMatchesOracle(t *testing.T) {
+	g := reachFleetOccupyPick(t)
+	g.Click(163, 136) // 費沙
+	if g.State() != StateFleetOccupyWarn {
+		t.Fatalf("點了費沙之後在 %v", g.State())
+	}
+	matches(t, g, "fcmd-occupy-phezzan")
+	g.Click(300, 240)
+	if g.State() != StateFleetOccupyWarn || g.fcmd.warnPage != 1 {
+		t.Fatalf("第一頁點了之後在 %v 第 %d 頁", g.State(), g.fcmd.warnPage)
+	}
+	matches(t, g, "fcmd-occupy-phezzan2")
+	g.Click(300, 240)
+	if g.State() != StateFleetConfirm {
+		t.Fatalf("第二頁點了之後在 %v", g.State())
+	}
+	matches(t, g, "fcmd-occupy-phezzan3")
+	g.Click(432, 263) // 「決定」
+	if g.State() != StateCommandPhase {
+		t.Fatalf("點了決定之後在 %v", g.State())
+	}
+	if f := g.fleets[0]; f.Target != rules.PhezzanRegion || f.Move != fleetActionOccupy {
+		t.Fatalf("決定之後艦隊記錄 %+v，原版 +0x07=14、+0x08=1", f)
+	}
+	matches(t, g, "fcmd-occupy-phezzan-done")
+}
+
+// ── 作戰選單五項的停用旗標（`docs/re/312` §7.6、`docs/re/315`）──
+
+// reachFleetDecidedBattle 與 `reachFleetDecided` 同一條路，只是在戰略地圖
+// 畫好、還沒點「戰略命令」之前把首都的 `+0x13` 設成 4（有戰鬥）——與收據
+// `fcmd-battle-base` 在 170M 的 `-poke lin:5F2DF=04` 同一個時點。
+func reachFleetDecidedBattle(t *testing.T) *Game {
+	t.Helper()
+	res := loadWithRules(t)
+	loadBattleMaps(t, res)
+	g := reachCommandPhaseOnMapWith(t, res)
+	g.res.Stellar[rules.CapitalRegion(g.faction)*rules.RegionRecord+0x13] = rules.RegionFlagBattle
+	g.MoveMouse(600, 340)
+	g = reachFleetOrgFrom(t, g)
+	g.Click(480, 350) // 「確認」→ 艦隊組成
+	g.Click(510, 350) // 「決定」
+	if g.State() != StateCommandPhase {
+		t.Fatalf("點了決定之後在 %v", g.State())
+	}
+	return g
+}
+
+// 首都有戰鬥：清單那一列印紅▼、左下角星域名後面「處於戰鬥狀態」且
+// 「艦隊 a：b」的「：」跟著變紅（`fcmd-battle-base`）；艦隊視窗「作戰」列印
+// 紅字「戰鬥中」（`fcmd-battle-win`）；作戰選單只剩「移動」可選——停用的四項
+// 色 8，游標停在停用項上不畫反白（`fcmd-battle-menu`：游標在第三項）、移到
+// 「移動」才畫（`fcmd-battle-menu-hover`）；點停用的「駐留」只關選單
+// （`fcmd-battle-menu-click`）。
+func TestFleetMenuDisabledInBattleRegion(t *testing.T) {
+	g := reachFleetDecidedBattle(t)
+	matches(t, g, "fcmd-battle-base")
+	g.Click(450, 308) // 清單第 0 列
+	if g.State() != StateFleetWindow {
+		t.Fatalf("點了清單之後在 %v", g.State())
+	}
+	matches(t, g, "fcmd-battle-win")
+	g.Click(490, 345) // 「作戰」
+	if g.State() != StateFleetActionMenu {
+		t.Fatalf("點了作戰之後在 %v", g.State())
+	}
+	if on := g.fleetMenuEnabled(); !on[0] || on[1] || on[2] || on[3] || on[4] {
+		t.Fatalf("有戰鬥的星域啟用表 %v，原版只剩「移動」", on)
+	}
+	matches(t, g, "fcmd-battle-menu")
+	g.MoveMouse(497, 312)
+	matches(t, g, "fcmd-battle-menu-hover")
+	g.Click(497, 352) // 停用的「駐留」
+	if g.State() != StateFleetWindow {
+		t.Fatalf("點了停用的駐留之後在 %v，原版只關選單", g.State())
+	}
+	if f := g.fleets[0]; f.Target != rules.NoTarget || f.Move != rules.MoveParked {
+		t.Fatalf("點了停用的駐留之後艦隊記錄變了：%+v", f)
+	}
+	matches(t, g, "fcmd-battle-menu-click")
+}
+
+// 艦隊 `+0x00` bit0：占領與輸送停用（`fcmd-flag1-menu`，從 `fcmd-win` 把那一個
+// byte 改成 01 再點作戰）；點停用的「占領」只關選單（`fcmd-flag1-menu-click`）。
+func TestFleetMenuDisabledByFleetFlag(t *testing.T) {
+	g := reachFleetWindow(t)
+	g.fleets[0].Flags |= 1
+	g.Click(490, 345) // 「作戰」
+	if g.State() != StateFleetActionMenu {
+		t.Fatalf("點了作戰之後在 %v", g.State())
+	}
+	if on := g.fleetMenuEnabled(); !on[0] || on[1] || !on[2] || on[3] || !on[4] {
+		t.Fatalf("+0x00 bit0 的啟用表 %v，原版關掉占領與輸送", on)
+	}
+	matches(t, g, "fcmd-flag1-menu")
+	g.Click(497, 332) // 停用的「占領」
+	if g.State() != StateFleetWindow {
+		t.Fatalf("點了停用的占領之後在 %v", g.State())
+	}
+	matches(t, g, "fcmd-flag1-menu-click")
+}

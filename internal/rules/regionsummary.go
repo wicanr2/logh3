@@ -22,7 +22,19 @@ type RegionSummary struct {
 
 	// OwnFleets／EnemyFleets 是「艦隊 a：b」那兩個數字。
 	OwnFleets, EnemyFleets int
+
+	// Flags 是星域記錄的 `+0x13`：左下角在星域名後面依它印「處於戰鬥狀態」
+	// （bit2）／「處於占領狀態」（bit4）／「處於孤立狀態」（bit0）
+	// （`docs/re/315`，規格 `docs/spec/001`）。
+	Flags int
 }
+
+// 星域 `+0x13` 的三個位元（`docs/internals/22`）。
+const (
+	RegionFlagIsolated = 0x01
+	RegionFlagBattle   = 0x04
+	RegionFlagOccupied = 0x10
+)
 
 // Security 回治安百分比。
 func (s RegionSummary) Security() int { return Security(s.Unrest) }
@@ -65,8 +77,14 @@ func Summarise(record []byte, planets *Planets, region, faction int) RegionSumma
 		s.Unrest = int(record[RegionUnrest])
 	}
 	s.OwnFleets, s.EnemyFleets = Fleets(record, faction)
+	if len(record) > regionFlagsOff {
+		s.Flags = int(record[regionFlagsOff])
+	}
 	return s
 }
+
+// regionFlagsOff 是星域記錄的旗標位移（`+0x13`）。
+const regionFlagsOff = 0x13
 
 // CapitalSummary 是右側面板要印的東西（規格 `docs/spec/002`）。
 //

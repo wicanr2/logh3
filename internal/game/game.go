@@ -173,6 +173,9 @@ const (
 	// StateFleetStandby 是「作戰」第 4 項「待命」開的「指定待命行星」
 	// （`0DEA:1320`，`docs/re/314`）。
 	StateFleetStandby
+	// StateFleetOccupyWarn 是占領目的地選了費沙時的兩頁參謀提醒
+	// （`1213:0003`，`docs/re/315`）。
+	StateFleetOccupyWarn
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -196,6 +199,7 @@ func (s State) String() string {
 		"StatePhezzanReport", "StateVictoryReport",
 		"StateFleetWindow", "StateFleetActionMenu", "StateFleetTargetPick",
 		"StateFleetMessage", "StateFleetConfirm", "StateFleetStandby",
+		"StateFleetOccupyWarn",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -244,6 +248,7 @@ var screenSpecName = map[State]string{
 	StateFleetMessage:      "screen-command-phase",
 	StateFleetConfirm:      "screen-command-phase",
 	StateFleetStandby:      "screen-command-phase",
+	StateFleetOccupyWarn:   "screen-command-phase",
 }
 
 // barRow 是命令列那一排在畫面上的 y（三格都一樣高，20 像素）。
@@ -2085,6 +2090,8 @@ func (g *Game) click(x, y int) {
 		g.fleetMessageClick(x, y)
 	case StateFleetStandby:
 		g.fleetStandbyClick(x, y)
+	case StateFleetOccupyWarn:
+		g.fleetOccupyWarnClick()
 	case StateSettings:
 		// 六組都在這裡：音源／平時配樂／戰鬥配樂三組單選（`docs/re/285`）、
 		// 訊息速度的上下箭頭、動畫效果與動畫速度，以及「結束」
@@ -2254,7 +2261,7 @@ func (g *Game) rightClick(x, y int) {
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
 	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm,
-		StateFleetStandby:
+		StateFleetStandby, StateFleetOccupyWarn:
 		g.fleetCmdRightClick()
 	case StateVersusInput:
 		// 交棒視窗按右鍵會怎樣**沒有量過**，先什麼都不做——
@@ -2778,7 +2785,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
 		StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick,
-		StateFleetMessage, StateFleetConfirm, StateFleetStandby,
+		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
 		StateFleetOrg, StateFleetNumber, StateFleetAdjutant,
 		StateFleetComposition, StateFormation,
 		// 這五張的收據末尾都有一次 `-mouse-at`（搬到 (600,340)），

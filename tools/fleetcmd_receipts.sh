@@ -93,6 +93,38 @@ rec fcmd-standby-done   545000000 fcmd-standby-pick ck -clicks 522000000:400:310
 rec fcmd-standby-cancel 545000000 fcmd-standby-pick - -clicks 522000000:350:310 -click-hold $HOLD
 rec fcmd-standby-rclick 545000000 fcmd-standby-pick - -rclicks 522000000:300:200 -click-hold $HOLD
 rec fcmd-standby-reopen 570000000 fcmd-standby-done - -clicks 547000000:450:268 -click-hold $HOLD
+# 9. 作戰選單第 1 項「占領」（滑鼠 y 292）→ 目的地選取（允許的是敵方與中立）：
+#    亞爾提那（自己的）→「無法前往」；亞斯提（同盟，16）→ 確認框 → 決定 → 再開視窗；
+#    費沙（中立，14）→ 參謀警告兩頁（1213:0003；每頁「訊息速度×2 ＝ 180」個慢 tick 沒點就
+#    自動翻頁，這條鏈量到是 36M 步——探索批次 fcx-occ-phz2：頁 1 在 497.2M、頁 2 在 533.2M；
+#    25M 一批、點了之後 23M 就截，來得及）→ 確認框 → 決定。
+rec fcmd-occupy-pick    495000000 fcmd-menu ck -clicks 472000000:497:292 -click-hold $HOLD
+rec fcmd-occupy-far     520000000 fcmd-occupy-pick - -clicks 497000000:85:88 -click-hold $HOLD
+rec fcmd-occupy-confirm 520000000 fcmd-occupy-pick ck -clicks 497000000:193:205 -click-hold $HOLD
+rec fcmd-occupy-done    545000000 fcmd-occupy-confirm ck -clicks 522000000:432:223 -click-hold $HOLD
+rec fcmd-occupy-reopen  570000000 fcmd-occupy-done - -clicks 547000000:450:268 -click-hold $HOLD
+rec fcmd-occupy-phezzan  520000000 fcmd-occupy-pick ck -clicks 497000000:163:96 -click-hold $HOLD
+rec fcmd-occupy-phezzan2 545000000 fcmd-occupy-phezzan ck -clicks 522000000:300:200 -click-hold $HOLD
+rec fcmd-occupy-phezzan3 570000000 fcmd-occupy-phezzan2 ck -clicks 547000000:300:200 -click-hold $HOLD
+rec fcmd-occupy-phezzan-done 595000000 fcmd-occupy-phezzan3 - -clicks 572000000:432:223 -click-hold $HOLD
+# 10. 作戰選單五項的停用旗標（docs/re/312 §7.6、docs/re/315）：
+#    (a) 首都「有戰鬥」——在 170M（戰略地圖已畫好、還沒點戰略命令）把星域 0 的 +0x13
+#        （線性 5F2DF）改成 04，其餘照 fcmd-base 的序列走到地圖：清單那一列 ▼、
+#        左下角「處於戰鬥狀態」；開視窗（作戰 戰鬥中）→ 作戰 → 項 1–4 停用（色 0x98）。
+#        游標停在第三項（停用）不畫反白、移到第一項才畫；點停用的那一項 → 看收據。
+rec fcmd-battle-base 420000000 - ck \
+  -tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 \
+  -rclicks 130000000:300:200,155000000:300:200 \
+  -clicks 40000000:300:170,95000000:300:170,180000000:352:85,210000000:400:85,240000000:400:45,270000000:488:290,320000000:480:310,380000000:510:310 \
+  -click-hold $HOLD -poke "lin:5F2DF@170000000=04"
+rec fcmd-battle-win        445000000 fcmd-battle-base ck -clicks 421000000:450:268 -click-hold $HOLD
+rec fcmd-battle-menu       470000000 fcmd-battle-win ck -clicks 447000000:490:305 -click-hold $HOLD
+rec fcmd-battle-menu-hover 480000000 fcmd-battle-menu - -mouse-x 497 -mouse-y 272 -mouse-at 472000000
+rec fcmd-battle-menu-click 495000000 fcmd-battle-menu - -clicks 472000000:497:312 -click-hold $HOLD
+#    (b) 艦隊 +0x00 bit0——從 fcmd-win 在 446M 把艦隊記錄第 0 筆的 +0x00（線性 60BA4）改成 01
+#        再點作戰：占領（1）與輸送（3）停用；點停用的「占領」→ 看收據。
+rec fcmd-flag1-menu       470000000 fcmd-win ck -poke "lin:60BA4@446000000=01" -clicks 447000000:490:305 -click-hold $HOLD
+rec fcmd-flag1-menu-click 495000000 fcmd-flag1-menu - -clicks 472000000:497:292 -click-hold $HOLD
 # 6. 從 `dec1` 只把游標移到瓦爾哈拉（不按）→ 左下角照游標重寫：剛編成的
 #    第１艦隊算不算進「艦隊 a：b」（星域記錄 `+0x28` 建艦隊時就加了）。
 rec fcmd-hover-home 440000000 fcmd-base - -mouse-x 32 -mouse-y 32 -mouse-at 421000000

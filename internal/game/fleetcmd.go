@@ -16,9 +16,10 @@ import (
 // 點目的地，確認框按「決定」就寫進艦隊記錄——原版 `+0x07` 目的地、
 // `+0x08` 動作碼，remake 是 `Fleet.Target`／`Fleet.Move`／`Fleet.Parked`。
 //
-// 第一片只接「移動」；第二輪補上駐留／輸送（同一個目的地迴圈）與
-// 待命（另一張「指定待命行星」，`fleetstandby.go`）。占領與「變更」
-// 點了還是只關選單（規格的排除範圍，各自另有 issue）。
+// 第一片只接「移動」；第二輪補上駐留／輸送／占領（同一個目的地迴圈，
+// 占領的允許表換成敵方＋中立、對費沙先跳參謀提醒）與待命（另一張
+// 「指定待命行星」，`fleetstandby.go`）。「變更」點了還是只關選單
+// （規格的排除範圍，issue #42）。
 
 // fleetCmd 是這條路上跨狀態要記的東西。
 type fleetCmd struct {
@@ -44,6 +45,9 @@ type fleetCmd struct {
 	// 顏色的鈕（只有那幾顆會蓋在引線上，`docs/re/314`）。
 	standbySel       int
 	standbyRepainted [5]bool
+	// warnPage 是占領費沙前那兩頁參謀提醒翻到第幾頁（`1213:0003`，
+	// `StateFleetOccupyWarn`）。
+	warnPage int
 }
 
 // 作戰選單的五項（原版 `+0x08` 的動作碼就是項目索引，`docs/re/312` §三）。
@@ -120,8 +124,18 @@ func (g *Game) fleetWindowClick(x, y int) {
 	case "close":
 		g.closeFleetWindow()
 	case "change":
-		// 「變更」→ 副官／編組小選單，這一片不接（issue fleet-command-change-menu）。
+		// 「變更」→ 副官／編組小選單，這一片不接（issue #42）；星域有戰鬥或
+		// 不是自己的時這顆鈕根本沒畫（`fleetChangeHidden`）。
 	}
+}
+
+// fleetChangeHidden 是 `0DEA:0040` 開頭那道判斷：所在星域有戰鬥或不是自己的，
+// 「變更」鈕不畫也不能點。
+func (g *Game) fleetChangeHidden(f *rules.Fleet) bool {
+	if g.regionFlags(f.Region)&rules.RegionFlagBattle != 0 {
+		return true
+	}
+	return g.res.Planets == nil || g.res.Planets.RegionOwner(f.Region) != f.Faction
 }
 
 // closeFleetWindow 回到戰略地圖介面。
@@ -157,19 +171,41 @@ func (g *Game) fleetMenuHover(x, y int) {
 	g.fcmd.hover = m.CommandMenuRowAt(fleetActionMenuKind, g.fcmd.menuX, g.fcmd.menuY, x, y, n)
 }
 
-// fleetMenuClick 是選單開著時的左鍵：點在項目上就選它，點在外面關選單
-// （探索批次 `fcx-pop-255`：點在第一項上方只把選單收掉）。
+// fleetMenuEnabled 是五項的啟用旗標（`0DEA:1037` 開選單前算的，`docs/re/312`
+// §7.6）：所在星域有戰鬥（`+0x13 & 6`）或不是自己的 → 只剩「移動」；
+// 艦隊 `+0x00` bit0 → 占領與輸送關掉。停用的印色 8、游標停在上面不畫反白、
+// 點了只關選單（收據 `fcmd-battle-menu*`、`fcmd-flag1-menu*`，`docs/re/315`）。
+func (g *Game) fleetMenuEnabled() []bool {
+	on := []bool{true, true, true, true, true}
+	if g.fcmd.fleet < 0 || g.fcmd.fleet >= len(g.fleets) {
+		return on
+	}
+	f := &g.fleets[g.fcmd.fleet]
+	if g.regionFlags(f.Region)&6 != 0 || g.res.Planets == nil || g.res.Planets.RegionOwner(f.Region) != f.Faction {
+		on[fleetActionOccupy], on[fleetActionGarrison], on[fleetActionTransport], on[fleetActionStandby] = false, false, false, false
+	}
+	if f.Flags&1 != 0 {
+		on[fleetActionOccupy], on[fleetActionTransport] = false, false
+	}
+	return on
+}
+
+// fleetMenuClick 是選單開著時的左鍵：點在項目上就選它，點在外面或點到停用的
+// 關選單（探索批次 `fcx-pop-255`：點在第一項上方只把選單收掉；
+// `fcmd-battle-menu-click`／`fcmd-flag1-menu-click`：點停用的項也是）。
 func (g *Game) fleetMenuClick(x, y int) {
 	g.fleetMenuHover(x, y)
 	item := g.fcmd.hover
 	g.fcmd.hover = -1
+	if on := g.fleetMenuEnabled(); item >= 0 && item < len(on) && !on[item] {
+		item = -1
+	}
 	switch item {
-	case fleetActionMove, fleetActionGarrison, fleetActionTransport:
+	case fleetActionMove, fleetActionOccupy, fleetActionGarrison, fleetActionTransport:
 		g.startFleetTargetPick(item)
 	case fleetActionStandby:
 		g.openFleetStandby()
 	default:
-		// 占領還沒接（#41 後半）：先照「點在外面」收掉選單。
 		g.state = StateFleetWindow
 	}
 }
@@ -223,20 +259,54 @@ func (g *Game) fleetPickClick(x, y int) {
 		g.state = StateFleetMessage
 		return
 	}
-	// `113A:023B`：動詞是「待命」（點的是現在位置）或這一項的動詞；
-	// 陣營名用 `ds:6092[擁有者] | 0x90` 的顏色，星域名用 0x97。
+	g.fcmd.target = r
+	// `1213:0003`：目的地是費沙而且費沙事件還沒發生過（`ds:8F48 == 0`）
+	// → 先給兩頁參謀提醒（與費沙事件的報告同一支 `1213:01B8`），
+	// 每頁一次點擊（或訊息速度 × 2 的逾時）才往下走到確認框
+	// （收據 `fcmd-occupy-phezzan`／`-phezzan2`／`-phezzan3`，`docs/re/315`）。
+	if r == rules.PhezzanRegion && !rules.PhezzanOccurred(g.workRecord()) && g.res.PhezzanReport != nil {
+		g.fcmd.warnPage = 0
+		g.state = StateFleetOccupyWarn
+		return
+	}
+	g.openFleetConfirm()
+}
+
+// openFleetConfirm 是 `113A:023B(星域)`：動詞是「待命」（點的是現在位置）或
+// 這一項的動詞；陣營名用 `ds:6092[擁有者] | 0x90` 的顏色，星域名用 0x97。
+func (g *Game) openFleetConfirm() {
+	spec := g.res.FleetWindow
 	f := &g.fleets[g.fcmd.fleet]
+	r := g.fcmd.target
 	verb := decodeHexBytes(spec.Verbs[g.fcmd.action])
 	if r == f.Region {
 		verb = decodeHexBytes(spec.VerbStandby)
 	}
 	owner := g.res.Planets.RegionOwner(r)
-	g.fcmd.target = r
 	g.fcmd.msgKind, g.fcmd.msgConf = spec.ConfirmKind, true
 	g.fcmd.msgRaw = ui.Sprintf(decodeHexBytes(spec.ConfirmFormat),
 		verb, 0x90|int(rules.FactionColour(owner)), decodeHexBytes(spec.FactionNames[owner]),
 		0x97, codesBig5(g.regionName(r)))
 	g.state = StateFleetConfirm
+}
+
+// fleetOccupyWarnClick 是參謀提醒開著時的任一鍵（`3765:006C` 只認事件碼 1／2，
+// 不看座標）：翻頁，第二頁翻過去就開確認框。
+func (g *Game) fleetOccupyWarnClick() {
+	g.fcmd.warnPage++
+	if g.fcmd.warnPage < 2 {
+		return
+	}
+	g.openFleetConfirm()
+}
+
+// occupyWarnKey 是這一頁在 `phezzan-report-panel.json` 裡的鍵：帝國看 `ds:3016`
+// 那兩頁、同盟看 `ds:301E` 那兩頁。
+func (g *Game) occupyWarnKey() string {
+	if g.faction == 1 {
+		return "occupy_1"
+	}
+	return "occupy_0"
 }
 
 // fleetMessageClick 是目的地選取跳出來的兩種訊息框的左鍵。
@@ -318,6 +388,8 @@ func (g *Game) fleetCmdRightClick() {
 		g.state = StateFleetWindow
 	case StateFleetMessage, StateFleetConfirm:
 		// 訊息框只認左鍵（`3826:023B`）。
+	case StateFleetOccupyWarn:
+		g.fleetOccupyWarnClick()
 	case StateFleetStandby:
 		// 右鍵＝「決定」：有反白的就寫進去（`0DEA:165A` 的事件 2 直接跳出
 		// 迴圈，`1320` 回目前反白那一筆；收據 `fcmd-standby-rclick`）。
@@ -336,7 +408,7 @@ func (g *Game) fleetCmdMouseMove(x, y int) {
 func (g *Game) FleetCommandFleet() int {
 	switch g.state {
 	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm,
-		StateFleetStandby:
+		StateFleetStandby, StateFleetOccupyWarn:
 		return g.fcmd.fleet
 	}
 	return -1
@@ -368,7 +440,9 @@ func (g *Game) fleetWindowView() (*screen.FleetWindowView, *asset.Image) {
 		Morale:      f.Morale,
 		Command:     byteAt(adm, admiralCommandOff),
 		OpsPressed: g.state == StateFleetActionMenu || g.state == StateFleetTargetPick ||
-			g.state == StateFleetMessage || g.state == StateFleetConfirm || g.state == StateFleetStandby,
+			g.state == StateFleetMessage || g.state == StateFleetConfirm || g.state == StateFleetStandby ||
+			g.state == StateFleetOccupyWarn,
+		ChangeHidden: g.fleetChangeHidden(f),
 	}
 	if f.Move != fleetMoveParked && f.Target >= 0 {
 		v.TargetName = codesBig5(g.regionName(f.Target))
@@ -526,7 +600,7 @@ func (g *Game) drawFleetCommand(fb *gfx.Framebuffer) {
 	// remake 先把畫視窗之前的左半留一份，畫完視窗放回去。
 	var left []uint8
 	picking := g.state == StateFleetTargetPick || g.state == StateFleetMessage ||
-		g.state == StateFleetConfirm
+		g.state == StateFleetConfirm || g.state == StateFleetOccupyWarn
 	if picking {
 		left = append([]uint8(nil), fb.Pix...)
 	}
@@ -537,16 +611,25 @@ func (g *Game) drawFleetCommand(fb *gfx.Framebuffer) {
 	case StateFleetActionMenu:
 		if m := g.res.FleetActionMenu; m != nil {
 			screen.DrawCommandMenu(m, fb, g.res.Font, g.res.FrameTiles, fleetActionMenuKind,
-				nil, g.fcmd.menuX, g.fcmd.menuY, g.fcmd.hover)
+				g.fleetMenuEnabled(), g.fcmd.menuX, g.fcmd.menuY, g.fcmd.hover)
 		}
-	case StateFleetTargetPick, StateFleetMessage, StateFleetConfirm:
+	case StateFleetTargetPick, StateFleetMessage, StateFleetConfirm, StateFleetOccupyWarn:
 		for y := 0; y < gfx.Height; y++ {
 			copy(fb.Pix[y*gfx.Width:y*gfx.Width+mapX+mapW], left[y*gfx.Width:y*gfx.Width+mapX+mapW])
 		}
 		if m := g.pickStarMap(); m != nil {
 			screen.DrawStarMap(fb, m, mapX, mapY)
 		}
-		if g.state != StateFleetTargetPick && g.res.MessageBox != nil {
+		switch {
+		case g.state == StateFleetOccupyWarn:
+			// 參謀提醒與費沙事件的報告同一張版面、同一張頭像（觀看陣營的
+			// 軍事專任參謀，`ds:8F4B[陣營]`）。
+			var face *asset.Image
+			if idx := rules.StaffAdmiral(g.workRecord(), rules.PostMilitary, g.faction); g.res.Faces != nil && idx >= 0 {
+				face, _ = g.res.Faces.Decode(idx)
+			}
+			g.res.PhezzanReport.Draw(fb, g.res.Font, g.res.FrameTiles, g.occupyWarnKey(), g.fcmd.warnPage, face)
+		case g.state != StateFleetTargetPick && g.res.MessageBox != nil:
 			screen.DrawMessageBox(fb, g.res.MessageBox, g.fcmd.msgKind,
 				g.res.FrameTiles, g.res.Font, g.fcmd.msgRaw)
 		}
