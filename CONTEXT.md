@@ -20,7 +20,8 @@
 - 逆向出來的結構化資料整理在 **`docs/internals/`**（素材清單、執行檔與製作
   名單、啟動與記憶體、文字視窗與編碼、調色盤、字型），機器可讀版本在
   `docs/internals/data/*.json`，素材匯出成 PNG 放 `workplace/assets/`；要保存進版控的
-  複製到 `assets/original/`（目前只有頭像 `face/`，規則見 `AGENTS.md`）。
+  複製到 `assets/original/`（圖塊、外框、頭像、星圖、結局圖、字型、樂曲 MIDI／VGM／OGG；
+  清單 `assets/original/README.md`，規則見 `AGENTS.md`）。
   提督頭像與能力值的對照表在 `docs/lookup/admiral-portraits.md`（給 #16 人工查紙本用）。
   `docs/re/` 是逐次調查紀錄。
 - **中文字型已解出**：`GRAPH.IMG` ＝ 倚天中文系統字型（半形 8×15、全形

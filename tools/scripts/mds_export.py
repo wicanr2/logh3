@@ -187,7 +187,7 @@ for f in sorted(glob.glob(SRC)):
           % (name, title, len(tracks), barlen, notes,
              'MIDI 已輸出' if sane else 'MIDI 已輸出（小節線引數是垃圾，一律前進一小節）'))
 
-json.dump({'note': '.MDS 樂曲索引；MIDI 由 tools/scripts/mds_export.py 從自備原版重建，不進 Git',
+json.dump({'note': '.MDS 樂曲索引；MIDI 由 tools/scripts/mds_export.py 從自備原版重建，保存版在 assets/original/music/mid/',
            'ticks_per_quarter': TPQ, 'songs': index},
           open(f'{OUT_JSON}/index.json', 'w', encoding='utf-8'),
           ensure_ascii=False, indent=1)

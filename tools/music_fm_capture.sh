@@ -10,8 +10,8 @@
 #      （dosgolem `docs/spec/190-opl-vgm-dump`）
 #   3. **合成**：AdPlug（`tools/opl2wav.cpp`）算成 WAV，ffmpeg 編成 OGG
 #
-# 產物落在 gitignore 的 `workplace/assets/music/`，**不進版控**——
-# 它是從原版素材轉出來的，所以它就是原版素材（CLAUDE.md）。
+# 產物落在 gitignore 的 `workplace/assets/music/`；進版控的保存版在
+# `assets/original/music/vgm/`（手動複製，AGENTS.md）。
 #
 # ## 三條觸發路徑（`docs/re/274`、`docs/re/275`）
 #

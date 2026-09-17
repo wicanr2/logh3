@@ -2,8 +2,8 @@
 
 資料：`docs/internals/data/mds/`（每首一份 JSON ＋ `index.json`）、
 `docs/internals/data/music-mapping.json`（曲號 ↔ 曲名 ↔ 播放時機）
-素材：`workplace/assets/music/*.mid`（22 首，一次性產物，不進 Git；
-以 `tools/py.sh tools/scripts/mds_export.py` 從自備原版重建）
+素材：`assets/original/music/mid/*.mid`（22 首，進版控；同目錄另有 `vgm/`、`ogg/`；
+以 `tools/py.sh tools/scripts/mds_export.py` 從自備原版重建；清單與雜湊見 [`assets/original/README.md`](../../assets/original/README.md)）
 證據等級：版面與事件語意 **強證據**（小節長度、曲目節拍與已知樂曲吻合）；
 速度數值的單位 **未確認**。
 

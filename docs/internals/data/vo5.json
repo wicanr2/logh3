@@ -1,5 +1,5 @@
 {
- "note": ".VO5 結局圖；PNG 由 tools/scripts/vo5_export.py 從自備原版重建，不進 Git",
+ "note": ".VO5 結局圖；PNG 由 tools/scripts/vo5_export.py 從自備原版重建，保存版在 assets/original/vo5/",
  "images": [
   {
    "file": "ENDA10.VO5",

@@ -7240,3 +7240,23 @@ GitHub 的 issue 時間軸承擔。
   上面那條 `docs/kickoff/2026-09-16-fleet-arrival-round-4.md` 現在在 `docs/goal/`。
 - 第五輪 goal：`docs/goal/2026-09-17-list-tabs-strategic-assault-round-5.md`（#51 → #46 → #48，
   #16 等使用者人工查）。
+
+## 2026-09-17 — 已解出的原版素材全部進 `assets/original/`
+
+- 使用者指示「素材都先搬進去」。`workplace/assets/` 混著探索用的試切圖（`com_flag-WxH-xN`、
+  `sheet-com_flag-*`、`sheet-block_3-*`、`cf-*`、字型的 `hyp*`／`sym-hyp*`／`gap`／`region-*`／`knx-*`）
+  與切錯版面的舊檔（`frame/`、`block_3/` 當年切成 16×16，正確是 16×20），所以**不整包複製**：
+  舊目錄改名 `workplace/assets-pre-20260917/` 留著，照各份 internals 記的參數重新匯出。
+- 重跑結果：`face`、`sprite`、`vo5`、MIDI、字型總表與舊檔逐位元組相同；`frame` 33 張、`block_3`
+  128 張 16×20（舊的是 41／160 張 16×16）。音樂 `ogg/`、`vgm/` 沒重擷取（要 dosgolem），從舊目錄複製，
+  `_F` 11 首的 OGG 與 VGM 雜湊和 `SOURCES.tsv` 全部相符；`_M` 11 首是 fluidsynth ＋ FluidR3_GM
+  合成的，沒有來源雜湊表。
+- `assets/original/` 共 446 個檔、57 MB；`tools/scripts/assets_manifest.py` 產生 `README.md`
+  （分類、來源檔、產生命令、格式文件）與 `MANIFEST.tsv`（逐檔 SHA-256）。`tools/py.sh` 加掛
+  `/work/assets`。沒進的：`strmap-live.png`（畫面擷取，屬收據）與上面那批探索圖；還沒有匯出器的
+  `ANI_PNL0`、`BLOCK_0`–`2`、`MAP*.CMP`、`IBM16.350`、`SPTIT.350`、`COMANI.BMG`。
+- **坑**：`font_extract.py` 會用舊格式把人工整理過的 `docs/internals/data/font-graph-img.json`
+  整份蓋掉（77 行變 62 行）。這次 `git checkout` 還原；重跑那支之前要先處理。
+- 「不進 Git」的敘述改成現況：internals 10／12／17／18／21、人物傳（`keireki_export.py` 同步）、
+  `vo5`／`mds` 的 JSON note、`internal/audio/library.go`、`cmd/gin3` 的 `-music` 說明、兩支音樂腳本。
+  發行包仍不含這些素材。

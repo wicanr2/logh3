@@ -1,8 +1,8 @@
 # SPRITE.SPR — 16 × 16 圖塊庫（艦隊組成的格盤用它）
 
 證據等級：**強證據**（版面來自原版 blit 常式；圖形可辨識且完整對齊）
-素材：`workplace/assets/sprite/spr-NN.png`（75 張，不進 Git；
-以 `tools/py.sh tools/scripts/spr_export.py 16 SPRITE.SPR` 重建）
+素材：`assets/original/sprite/spr-NN.png`（75 張，進版控；
+以 `tools/py.sh tools/scripts/spr_export.py 16 SPRITE.SPR` 重建；清單與雜湊見 [`assets/original/README.md`](../../assets/original/README.md)）
 實作：`internal/asset/spr.go`
 
 ## 版面

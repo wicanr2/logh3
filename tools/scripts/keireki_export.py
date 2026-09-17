@@ -98,7 +98,7 @@ def wrap(t, width=38):
     return "\n".join(t[i:i + width] for i in range(0, len(t), width))
 
 
-# 頭像引用：原版素材不進 Git，所以只寫「哪一張 ＋ 解碼後像素的 SHA-256」。
+# 頭像引用：每篇只寫「哪一張 ＋ 解碼後像素的 SHA-256」，圖本身在 assets/original/face/。
 # 拿的是 sha256_pixels 不是 sha256_png——像素雜湊只看解碼結果，換一個
 # zlib 版本不會變；PNG 雜湊會，掛在 82 篇底下會安靜地全部過期。
 faces = {}
@@ -144,7 +144,8 @@ with open(OUT_MD, "w", encoding="utf-8") as f:
 提督索引 n**，證據與逐項等級見 [`docs/internals/09`](../internals/09-face-amg.md)
 與 [`docs/re/271`](../re/271-face-amg-index-is-the-admiral-index.md)。
 
-原版素材不進版控，所以這裡只寫編號與雜湊。要拿到圖：自備原版之後跑
+頭像在 [`assets/original/face/`](../../assets/original/face/)（進版控，第 n 張 ＝ 提督 n）；
+這裡只寫編號與像素雜湊，重做的方法：自備原版之後跑
 
 ```
 tools/py.sh tools/scripts/amg_export.py

@@ -8,11 +8,12 @@
 #   /work/workplace  一次性證據，可寫
 #   /work/docs       產出的文件，可寫
 #   /work/tools      腳本本身，唯讀
+#   /work/assets     進版控的原版素材（`assets/original/`，AGENTS.md），可寫
 # 沒列在上面的目錄容器看不到——包含 .git。
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 IMAGE="${LOGH3_PY_IMAGE:-python:3.12-slim}"
-mkdir -p "$ROOT/workplace"
+mkdir -p "$ROOT/workplace" "$ROOT/assets"
 # 需要額外的唯讀參考資料時（例如倚天字型）用 LOGH3_EXTRA_RO 指目錄，掛在 /ref。
 EXTRA=()
 [[ -n "${LOGH3_EXTRA_RO:-}" ]] && EXTRA+=(-v "$(cd "$LOGH3_EXTRA_RO" && pwd):/ref:ro")
@@ -25,6 +26,7 @@ exec timeout "${LOGH3_TIMEOUT:-15m}" docker run --rm --network none \
   -v "$ROOT/workplace:/work/workplace" \
   -v "$ROOT/docs:/work/docs" \
   -v "$ROOT/tools:/work/tools:ro" \
+  -v "$ROOT/assets:/work/assets" \
   "${EXTRA[@]}" \
   -e HOME=/tmp -e RECT="${RECT:-}" -w /work \
   "$IMAGE" python3 "$@"

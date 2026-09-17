@@ -1,8 +1,8 @@
 # STRMAP.BIT — 星域地圖底圖
 
 證據等級：**confirmed**（版面來自原版 blit 常式；非透明像素與原版畫面完全相同）
-素材：`workplace/assets/strmap.png`（不進 Git；
-以 `tools/py.sh tools/scripts/strmap_export.py` 從自備原版重建）
+素材：`assets/original/strmap/strmap.png`（進版控；
+以 `tools/py.sh tools/scripts/strmap_export.py` 從自備原版重建；清單與雜湊見 [`assets/original/README.md`](../../assets/original/README.md)）
 實作：`internal/asset/spr.go` 的 `DecodeSheet`
 
 ## 版面

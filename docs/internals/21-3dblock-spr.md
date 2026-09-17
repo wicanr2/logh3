@@ -1,7 +1,7 @@
 # `3DBLOCK.SPR` — 等距方塊
 
-素材：`workplace/assets/sheet-3dblock-48x64.png`（一次性產物，不進 Git；
-以 `tools/py.sh tools/scripts/spr_sheet.py 3DBLOCK.SPR 48 64 4 4 row` 重建）
+素材：`assets/original/3dblock/sheet-3dblock-48x64.png`（進版控；
+以 `tools/py.sh tools/scripts/spr_sheet.py 3DBLOCK.SPR 48 64 4 4 row` 重建；清單與雜湊見 [`assets/original/README.md`](../../assets/original/README.md)）
 證據等級：**強證據**（版面與 `SPRITE.SPR` 相同，圖形完整對齊）。
 
 ## 版面

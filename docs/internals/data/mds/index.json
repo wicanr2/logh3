@@ -1,5 +1,5 @@
 {
- "note": ".MDS 樂曲索引；MIDI 由 tools/scripts/mds_export.py 從自備原版重建，不進 Git",
+ "note": ".MDS 樂曲索引；MIDI 由 tools/scripts/mds_export.py 從自備原版重建，保存版在 assets/original/music/mid/",
  "ticks_per_quarter": 48,
  "songs": [
   {

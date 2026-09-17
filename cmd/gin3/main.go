@@ -226,8 +226,9 @@ func main() {
 	aiLevel := flag.Int("ai", -1, "電腦 AI：-1 ＝ 原版（不動）；0–3 ＝ 強化版，"+
 		"數字越大越兇（會挑目標、集結、包圍）")
 	musicDir := flag.String("music", "",
-		"配樂目錄（OGG）；空的 ＝ 不放音樂。**不進版控**——曲子是從原版\n"+
-			"    素材轉出來的，玩家自備原版之後用 tools/music_to_ogg.sh 自己轉。\n"+
+		"配樂目錄（OGG）；空的 ＝ 不放音樂。發行包不帶曲子——它是從原版\n"+
+			"    素材轉出來的，玩家自備原版之後用 tools/music_to_ogg.sh 自己轉\n"+
+			"    （repo 內保存的一份在 assets/original/music/ogg/）。\n"+
 			"    預設關著是刻意的：沒有音效裝置的機器（容器、CI、無頭對拍）\n"+
 			"    一開音訊就整個跑不起來，而對拍流程不該因為配樂多一種死法")
 	flag.Parse()

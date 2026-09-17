@@ -17,8 +17,8 @@
 #
 # 這支腳本照名字分流，`-gm` 可以強制整批走 GM 那條（要拿來對照時用）。
 #
-# 產物落在 `workplace/assets/music/ogg/`，**不進版控**——它是從原版素材
-# 轉出來的，所以它就是原版素材（AGENTS.md）。remake 用 `-music` 指到那裡；
+# 產物落在 `workplace/assets/music/ogg/`；進版控的保存版在
+# `assets/original/music/ogg/`（手動複製，AGENTS.md）。remake 用 `-music` 指到其中一個；
 # 缺檔就不播，而且會在 stderr 說缺哪幾首。
 #
 # ⚠ **不要拿檔頭曲名去判哪一組是 ＦＭ，會判反**（`OPEN_F.MDS` 的曲名寫

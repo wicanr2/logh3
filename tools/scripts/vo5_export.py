@@ -43,7 +43,7 @@ for f in sorted(glob.glob('/orig/*.VO5')):
                   'bytes': len(d), 'consumed': used, 'ok': used == len(d)})
     print('%-10s %d×%d  用掉 %d / %d bytes %s'
           % (name, w, h, used, len(d), '' if used == len(d) else '← 有剩'))
-json.dump({'note': '.VO5 結局圖；PNG 由 tools/scripts/vo5_export.py 從自備原版重建，不進 Git',
+json.dump({'note': '.VO5 結局圖；PNG 由 tools/scripts/vo5_export.py 從自備原版重建，保存版在 assets/original/vo5/',
            'images': index},
           open('/work/docs/internals/data/vo5.json', 'w', encoding='utf-8'),
           ensure_ascii=False, indent=1)
