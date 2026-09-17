@@ -64,10 +64,13 @@ func enter(g *game.Game, it barItem) game.State {
 
 // knownDead 是已登記、還沒接的項目（issue）。這裡的項目開始有反應，測試就失敗，提醒回頭關 issue。
 var knownDead = map[string]string{
-	"徵稅計劃": "#64", "生產計劃": "#64", "結束": "#65",
+	"情報收集": "#63", "徵稅計劃": "#64", "生產計劃": "#64", "結束": "#65",
 }
 
 func TestEveryCommandItemWorks(t *testing.T) {
+	if os.Getenv("LOGH3_TOUR") == "" {
+		t.Skip("功能巡覽要跑十幾分鐘：設 LOGH3_TOUR=1（tools/feature_check.sh）")
+	}
 	starts := monkeyStarts[:1]
 	if os.Getenv("LOGH3_TOUR_ALL") != "" {
 		starts = monkeyStarts[:3] // 帝國、同盟、對戰
@@ -105,6 +108,9 @@ func TestEveryCommandItemWorks(t *testing.T) {
 						for cx := 0; cx < 40; cx++ {
 							x, y := cx*16+8, cy*20+10
 							cur = fmt.Sprintf("點 (%d,%d)", x, y)
+							// 先把游標移過去再取基準：否則游標重畫就讓雜湊變了，量不出點擊本身有沒有作用。
+							g.MoveMouse(x, y)
+							base = frameHash(g)
 							before := g.State()
 							g.Click(x, y)
 							if g.State() != before || frameHash(g) != base {
@@ -113,7 +119,8 @@ func TestEveryCommandItemWorks(t *testing.T) {
 							if it.wantScreen == game.StateQuitConfirm && g.State() == game.StateMainMenu {
 								return // 「結束」真的結束了，這一局不能再用
 							}
-							if g.State() != it.wantScreen {
+							// 有變化（開了疊加視窗、換了畫面）就退回去重新進入：否則後面的格子都點在疊加視窗上。
+							if g.State() != it.wantScreen || frameHash(g) != base {
 								if !backToCommand(g) {
 									t.Fatalf("%s：%s 之後回不到命令階段（停在 %v）", it.name, cur, g.State())
 								}
@@ -122,6 +129,13 @@ func TestEveryCommandItemWorks(t *testing.T) {
 								}
 							}
 							base = frameHash(g)
+						}
+					}
+					if it.wantScreen == game.StateSaveGame {
+						// 存進度的作用是寫檔，畫面不一定變。
+						if ents, _ := os.ReadDir(lastSaveDir); len(ents) > 0 {
+							changed += len(ents)
+							t.Logf("存進度：寫出 %d 個檔", len(ents))
 						}
 					}
 					if changed == 0 {
@@ -143,6 +157,71 @@ func TestEveryCommandItemWorks(t *testing.T) {
 				if !seen[d] {
 					t.Errorf("%s 開始有反應了——回頭核對 %s 能不能關", d, issue)
 				}
+			}
+		})
+	}
+}
+
+// deepStarts 是命令列之外、要從腳本走進去的畫面。
+var deepStarts = []struct {
+	name   string
+	script string
+	want   game.State
+}{
+	{"艦隊視窗", monkeyStarts[4].script, game.StateFleetWindow},
+	{"作戰選單", monkeyStarts[4].script + "; click 490 345", game.StateFleetActionMenu},
+	{"變更選單", monkeyStarts[4].script + "; click 490 365", game.StateFleetChangeMenu},
+	{"戰場", monkeyStarts[5].script, game.StateBattle},
+}
+
+// TestDeepScreensNoPanic：`deepStarts` 逐格點，有變化就重開一局走回去；記下點到哪些狀態。
+// 戰場預設隔一格點（240 點），`LOGH3_TOUR_ALL` 設了就全點。
+func TestDeepScreensNoPanic(t *testing.T) {
+	if os.Getenv("LOGH3_TOUR") == "" {
+		t.Skip("功能巡覽要跑十幾分鐘：設 LOGH3_TOUR=1（tools/feature_check.sh）")
+	}
+	for _, st := range deepStarts {
+		st := st
+		t.Run(st.name, func(t *testing.T) {
+			step := 1
+			if st.want == game.StateBattle && os.Getenv("LOGH3_TOUR_ALL") == "" {
+				step = 2
+			}
+			fresh := func() *game.Game {
+				g := loadGame(t)
+				feed(g, st.script)
+				if g.State() != st.want {
+					t.Fatalf("起點腳本之後在 %v，應該是 %v", g.State(), st.want)
+				}
+				return g
+			}
+			g := fresh()
+			changed, total, cur := 0, 0, ""
+			went := map[string]int{}
+			defer func() {
+				if p := recover(); p != nil {
+					t.Fatalf("panic（%s，狀態 %v）：%v\n%s", cur, g.State(), p, debug.Stack())
+				}
+			}()
+			for cy := 0; cy < 24; cy += step {
+				for cx := 0; cx < 40; cx += step {
+					x, y := cx*16+8, cy*20+10
+					cur = fmt.Sprintf("點 (%d,%d)", x, y)
+					g.MoveMouse(x, y)
+					base := frameHash(g)
+					g.Click(x, y)
+					g.Frame()
+					total++
+					if g.State() != st.want || frameHash(g) != base {
+						changed++
+						went[g.State().String()]++
+						g = fresh()
+					}
+				}
+			}
+			t.Logf("%s：%d 點裡 %d 點有變化，去向 %v", st.name, total, changed, went)
+			if changed == 0 {
+				t.Errorf("%s 怎麼點都沒反應", st.name)
 			}
 		})
 	}

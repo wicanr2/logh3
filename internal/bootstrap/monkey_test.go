@@ -21,9 +21,12 @@ import (
 // 左鍵、右鍵、移動、按鍵、時間與「系統指令 → 實行」，**每一步都畫一次畫面**。任何 panic 都印出起點、種子、
 // 第幾步與最後 40 個動作，照那一串就能重現。另外統計走到過哪些狀態，列出從沒走到的畫面。
 //
-// 預設每個起點 × 種子跑 `LOGH3_MONKEY_STEPS`（預設 1500）步；深度驗證把它調大。
+// 預設每個起點 × 種子跑 `LOGH3_MONKEY_STEPS`（預設 400，冒煙用）步；深度驗證用 `tools/feature_check.sh`。
 
 const root = "../.."
+
+// lastSaveDir 是最近一次 loadGame 的存檔目錄（檢查「存進度」有沒有真的寫檔）。
+var lastSaveDir string
 
 type monkeyStart struct {
 	name   string
@@ -35,6 +38,9 @@ var monkeyStarts = []monkeyStart{
 	{"同盟新局", "move 300 230; click; type 138; enter; rclick 300 240; rclick 300 240"},
 	{"對戰", "move 300 250; click; type 126; enter; click 432 263"},
 	{"主選單", ""},
+	// 深層畫面：艦隊視窗（`tools/gui_check.sh` 的 fcmd-win）與 S3 第一回合進戰場（`battleTestGame` 的序列，實行之後照計時走過思考中與過場）。
+	{"艦隊視窗", "move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308"},
+	{"戰場", "move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 322; click 318 208; click 544 125; click 560 125; tick 800"},
 }
 
 // lcg 是測試自己的決定性亂數（不碰遊戲的亂數序列）。
@@ -47,6 +53,12 @@ func (r *lcg) next(n int) int {
 
 func loadGame(t *testing.T) *game.Game {
 	t.Helper()
+	return loadGameSaveDir(t, t.TempDir())
+}
+
+// loadGameSaveDir 同 loadGame，但存檔目錄由呼叫端給（走正式的 `bootstrap.UseSaveDir`）。
+func loadGameSaveDir(t *testing.T, saveDir string) *game.Game {
+	t.Helper()
 	orig := filepath.Join(root, "org_game/extracted")
 	if _, err := os.Stat(filepath.Join(orig, "GIN3.COM")); err != nil {
 		t.Skip("沒有原版素材 org_game/extracted，跳過")
@@ -55,7 +67,10 @@ func loadGame(t *testing.T) *game.Game {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res.SaveDir = t.TempDir() // 存進度寫到暫存目錄（正式入口沒設，原版目錄一律唯讀）
+	if err := bootstrap.UseSaveDir(res, saveDir); err != nil { // 存進度寫到暫存目錄，原版目錄一律唯讀
+		t.Fatal(err)
+	}
+	lastSaveDir = res.SaveDir
 	g, err := game.New(res)
 	if err != nil {
 		t.Fatal(err)
@@ -92,6 +107,11 @@ func feed(g *game.Game, script string) {
 			}
 		case "enter":
 			g.Key('\r')
+		case "tick":
+			n, _ := strconv.Atoi(f[1])
+			for i := 0; i < n && g.State() != game.StateBattle; i++ {
+				g.Tick(g.TimerTick())
+			}
 		}
 	}
 }
@@ -142,7 +162,7 @@ func monkeySteps() int {
 	if n, err := strconv.Atoi(os.Getenv("LOGH3_MONKEY_STEPS")); err == nil && n > 0 {
 		return n
 	}
-	return 1500
+	return 400
 }
 
 func TestMonkeyNoPanic(t *testing.T) {

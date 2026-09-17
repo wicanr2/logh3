@@ -577,3 +577,22 @@ func loadNameTables(path string) (factions, kinds [][]byte, err error) {
 	}
 	return factions, kinds, nil
 }
+
+// UseSaveDir 設定玩家存檔的目錄（「存進度」寫這裡、「取進度」先讀這裡）。原版目錄一律唯讀，
+// 所以存檔不能跟出貨的存檔放在一起。目錄不存在就建；裡面已經有 `SAVEDATA.IDX` 就用它的清單。
+func UseSaveDir(res *game.Resources, dir string) error {
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		return err
+	}
+	res.SaveDir = dir
+	b, err := os.ReadFile(filepath.Join(dir, "SAVEDATA.IDX"))
+	if err != nil {
+		return nil
+	}
+	idx, err := rules.ParseSaveIndex(b)
+	if err != nil {
+		return fmt.Errorf("存檔目錄的 SAVEDATA.IDX：%w", err)
+	}
+	res.SaveIndex = idx
+	return nil
+}

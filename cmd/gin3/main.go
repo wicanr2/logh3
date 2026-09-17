@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"image/color"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -223,6 +224,7 @@ func main() {
 	// 對拍收據都靠這個前提。強化版要玩家自己開（`docs/spec/017`）。
 	intro := flag.Bool("intro", true, "從開頭動畫開始（`OPEN.EXE` 的 374 格）；"+
 		"素材不齊就自動跳過")
+	saveDir := flag.String("save", defaultSaveDir(), "玩家存檔的目錄（「存進度」寫這裡，原版目錄一律唯讀）")
 	aiLevel := flag.Int("ai", -1, "電腦 AI：-1 ＝ 原版（不動）；0–3 ＝ 強化版，"+
 		"數字越大越兇（會挑目標、集結、包圍）")
 	musicDir := flag.String("music", "",
@@ -241,6 +243,11 @@ func main() {
 	// 前面多一張畫面整條序列就對不上收據。
 	if *intro && *script == "" {
 		if err := bootstrap.LoadIntro(res, *orig); err != nil {
+			die(err)
+		}
+	}
+	if *saveDir != "" {
+		if err := bootstrap.UseSaveDir(res, *saveDir); err != nil {
 			die(err)
 		}
 	}
@@ -356,4 +363,13 @@ func feed(g *game.Game, script string) error {
 		}
 	}
 	return nil
+}
+
+// defaultSaveDir 是使用者設定目錄底下的 logh3/save；拿不到設定目錄就不存。
+func defaultSaveDir() string {
+	d, err := os.UserConfigDir()
+	if err != nil {
+		return ""
+	}
+	return filepath.Join(d, "logh3", "save")
 }

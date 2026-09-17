@@ -2901,8 +2901,15 @@ func (g *Game) loadSlotFromDisk(n int) {
 		return
 	}
 	ext := rules.SlotExt(n)
+	// 玩家存過的格子在存檔目錄（`SaveDir`），沒存過的讀原版出貨的那一份。一格的六個檔要從同一處讀。
+	dir := g.res.OrigDir
+	if g.res.SaveDir != "" {
+		if _, err := os.Stat(filepath.Join(g.res.SaveDir, "WORK.DT"+ext)); err == nil {
+			dir = g.res.SaveDir
+		}
+	}
 	read := func(name string) []byte {
-		b, err := os.ReadFile(filepath.Join(g.res.OrigDir, name))
+		b, err := os.ReadFile(filepath.Join(dir, name))
 		if err != nil {
 			return nil
 		}
@@ -2912,7 +2919,7 @@ func (g *Game) loadSlotFromDisk(n int) {
 		Stellar: read("STELLAR.DT" + ext), Planet: read("PLANET.DT" + ext),
 		Admiral: read("ADMIRAL.DT" + ext), Fleet: read("FLEET.DT" + ext),
 		Ship: read("SHIP.DT" + ext), Work: read("WORK.DT" + ext),
-		PlanetHeader: read("PLADAT.DAT"),
+		PlanetHeader: readOrig(g.res.OrigDir, "PLADAT.DAT"),
 	}
 	sl, err := rules.LoadSlot(f)
 	if err != nil {
@@ -2997,15 +3004,34 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	if len(g.res.SaveIndex) == 0 {
 		return nil
 	}
-	b, err := os.ReadFile(filepath.Join(g.res.OrigDir, "SAVEDATA.IDX"))
+	// 索引接著存檔目錄那一份寫（存過好幾格要累積），第一次存才從原版那一份起頭。
+	b, err := os.ReadFile(filepath.Join(dir, "SAVEDATA.IDX"))
 	if err != nil {
-		return err
+		if b, err = os.ReadFile(filepath.Join(g.res.OrigDir, "SAVEDATA.IDX")); err != nil {
+			return err
+		}
 	}
 	name := g.res.SaveIndex[index].Name
 	if err := rules.WriteSaveIndex(b, index, g.turn, name); err != nil {
 		return err
 	}
-	return os.WriteFile(filepath.Join(dir, "SAVEDATA.IDX"), b, 0o644)
+	if err := os.WriteFile(filepath.Join(dir, "SAVEDATA.IDX"), b, 0o644); err != nil {
+		return err
+	}
+	// 畫面上的清單跟著換（下一次開存讀檔畫面就看得到這一格的日期）。
+	if idx, err := rules.ParseSaveIndex(b); err == nil {
+		g.res.SaveIndex = idx
+	}
+	return nil
+}
+
+// readOrig 讀原版目錄的一個檔；缺檔回 nil。
+func readOrig(dir, name string) []byte {
+	b, err := os.ReadFile(filepath.Join(dir, name))
+	if err != nil {
+		return nil
+	}
+	return b
 }
 
 // Frame 畫出目前的畫面。
