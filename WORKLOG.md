@@ -7223,3 +7223,20 @@ GitHub 的 issue 時間軸承擔。
 - 文件：`docs/re/326`、規格 057（新）、023 加右鍵指標、001 那句「右鍵會選中星域」改掉
   （`docs/re/320` 早已推翻）、internals 34 補視野與格線、**internals 60 滑鼠作用總表**（新）、
   playtest 024、CONTEXT。
+
+## 2026-09-17 — 第四輪收尾：素材進版控規則、提督頭像對照表、goal 目錄與第五輪 goal
+
+- 上一輪狀態核對：工作樹乾淨、`main` 與 dosgolem `logh3-oracle`（`b5485eb`）都已推，沒有殘留
+  `logh3-*` 容器、沒有 root 擁有的檔；`verify` 231 條、0 條斷言不成立；open 剩 #51、#48、#46、#16。
+- 使用者裁決：**解出來的原版素材可以進版控**，放 `assets/original/<種類>/`，用途是保存與日後
+  重新繪圖（`AGENTS.md`「Docker-only 與原版素材邊界」改寫；`org_game/`、收據 dump、快照、`.i64`
+  仍不進；發行包仍不內嵌）。repo 是 private，轉公開前要另外裁決。
+- 頭像 83 張進 `assets/original/face/`：`amg_export.py` 重跑，`face-amg.json` 無差異（PNG 雜湊與
+  記錄相同）後複製。新增 `tools/scripts/admiral_lookup.py` → `docs/lookup/admiral-portraits.md`
+  （`ADMIRAL.DTX` 82 列，頭像、姓名、陣營、十個已命名欄位與 `+20`／`+21`／`+22`／`+24`），
+  給 #16 人工查紙本「登場人物初期資料表」。第 0 列與 `docs/internals/08` 記的 14 個值相同。
+- #46 併入玩家下的艦隊解散（`297B:0332`），判準與「卡在」改寫。
+- goal 提示詞改放 `docs/goal/`（`docs/kickoff/` 三份搬過去，`AGENTS.md` 文件分工一節登記）。
+  上面那條 `docs/kickoff/2026-09-16-fleet-arrival-round-4.md` 現在在 `docs/goal/`。
+- 第五輪 goal：`docs/goal/2026-09-17-list-tabs-strategic-assault-round-5.md`（#51 → #46 → #48，
+  #16 等使用者人工查）。

@@ -62,8 +62,15 @@ MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分�
   不要手打另一套 `docker run`，也不要因一次啟動失敗就另建重複 image。
 - 一次性容器必須 `--rm --network none`、設定 memory／CPU／PID／log 上限，並以
   `-u "$(id -u):$(id -g)"` 寫入。原版輸入只讀掛載，輸出只准寫明確目錄。
-- `org_game/`、解包原版素材、模擬器快照、錄影及 `.i64` 都是本機 oracle，不得加入
-  Git 或公開發行包。remake 不內嵌原版遊戲檔與素材。
+- **解出來的原版素材可以進版控**，放 `assets/original/<種類>/`（例如頭像
+  `assets/original/face/`）。目的是保存遊戲資產、給日後重新繪圖當參考。進版控的
+  只限解碼後的可檢視格式（PNG、MIDI 這一類），而且必須由 `tools/scripts/` 的匯出
+  腳本產生；雜湊記在 `docs/internals/data/*.json`，不要手改圖檔。
+  這個 repo 目前是 **private**，要轉公開之前先請使用者裁決怎麼處理
+  `assets/original/`——它已經在歷史裡，只刪檔案不夠。
+- `org_game/`（bundle 與原始遊戲檔本體）、模擬器快照與收據 dump、錄影及 `.i64`
+  仍是本機 oracle，不得加入 Git。remake 的發行包（`dist-all/`）不內嵌原版遊戲檔與
+  素材，`assets/original/` 也不例外。
 - 寫入前以 `stat` 檢查目標與輸出目錄 UID/GID，寫入後抽查擁有權。只修已確認的個別
   root-owned 檔案或明確輸出目錄，禁止遞迴處理整個儲存庫。
 - 每批工作後檢查 `logh3-*` 的執行中／已停止容器；只停止並刪除本次不再需要的專案
@@ -286,7 +293,9 @@ direct-entry 能開畫面，都不能單獨標為同狀態對拍完成。
   既有 issue 的格式開（或先加進 JSON 再跑 `tools/issues_migrate.sh --apply`）。
   `WORKLOG.md` 是唯一流水帳；`CONTEXT.md` 其餘部分是目前真相；
   `VERIFICATION-MATRIX.md` 是完成度唯一數字來源；逆向證據放 `docs/re/`，對拍收據放
-  `docs/playtest/`，規格放 `docs/spec/`。更早的逆向歷程（舊 worklist 那 65 條的原文）
+  `docs/playtest/`，規格放 `docs/spec/`。每一輪的開場提示詞（goal）放
+  `docs/goal/<日期>-<主題>-round-<N>.md`，由當輪開著的 issue 產生；它是那一輪的
+  計畫快照，不是清單權威——與 issue 對不上時以 issue 為準。更早的逆向歷程（舊 worklist 那 65 條的原文）
   在 `docs/solved-history.md`——**那是快照、不再維護，裡面有過期斷言**，
   不要拿它當「還剩多少」的依據。
 - **每一條未完成項掛一個 `verify`，跑起來要能自己開口。** 訊號由穩到不穩是

@@ -19,7 +19,9 @@
   文字用 Big5，日文假名走 **ETen／HKSCS 擴充區**（標準 Big5 表會解錯）。
 - 逆向出來的結構化資料整理在 **`docs/internals/`**（素材清單、執行檔與製作
   名單、啟動與記憶體、文字視窗與編碼、調色盤、字型），機器可讀版本在
-  `docs/internals/data/*.json`，素材匯出成 PNG 放 `workplace/assets/`。
+  `docs/internals/data/*.json`，素材匯出成 PNG 放 `workplace/assets/`；要保存進版控的
+  複製到 `assets/original/`（目前只有頭像 `face/`，規則見 `AGENTS.md`）。
+  提督頭像與能力值的對照表在 `docs/lookup/admiral-portraits.md`（給 #16 人工查紙本用）。
   `docs/re/` 是逐次調查紀錄。
 - **中文字型已解出**：`GRAPH.IMG` ＝ 倚天中文系統字型（半形 8×15、全形
   16×15），索引公式與存取方式見 `docs/internals/06`。字型是按需 seek+read，
@@ -556,7 +558,8 @@
   `0E7E` 反擊）→ 拿下再三次回復，最多九回合）吃艦艇記錄，而**新遊戲的艦隊沒有艦艇池**
   （`Slot` 是 nil）——這也是新遊戲走進戰鬥會撞到的同一個洞，要先補艦艇池；亂數
   （`ds:94DC`）要與原版同序，同狀態對拍才有意義。
-- 駐留到達的解散（`297B:025D`）與艦隊解散（`297B:0332`）是同一支，一起做。
+- 駐留到達的解散（`297B:025D`）與艦隊解散（`297B:0332`）一起做（2026-09-17 使用者裁決併進這一條）；
+  `297B:0332` 還沒讀（`docs/re/310` 只標了用途），玩家從哪張畫面下解散也還沒找。
 - 回合裡的過場視窗（「戰略模式處理中／思考中」、每支艦隊的「出發前往／已經到達／已經
   駐留」與地圖反白、三張錯誤報告）remake 同步跑完不畫；士氣報告家族（「士氣值低落的
   關係，已經無法戰鬥」等，`ds:32B4`）的門檻與誰印沒讀。
@@ -564,7 +567,9 @@
   可達表 k ≤ 1 的格子，要路上那一格中途易主才會問）。
 
 **做完的判準**：占據那一格的戰略打行星（`20B4:1497`）接進 remake 且有同狀態收據（亞斯提 4200→3768、
-費沙 8800→8792、艦隊 `+0x3C`）；駐留到達整支解散；`rebellion.go` 的自承註解拿掉。
+費沙 8800→8792、艦隊 `+0x3C`）；駐留到達整支解散；**玩家下的艦隊解散**（`297B:0332`：
+歸還艦艇、釋放提督與副官、減星域艦隊數，入口畫面待找）接上且有同狀態收據；
+`rebellion.go` 的自承註解拿掉。
 
 **證據**：[`docs/re/322-fleet-arrival-and-occupation.md`](docs/re/322-fleet-arrival-and-occupation.md)、[`docs/spec/054-fleet-arrival.md`](docs/spec/054-fleet-arrival.md)、[`docs/spec/051-strategic-fleet-command.md`](docs/spec/051-strategic-fleet-command.md)、[`docs/playtest/021-strategic-fleet-command.md`](docs/playtest/021-strategic-fleet-command.md)
 

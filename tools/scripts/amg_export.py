@@ -1,5 +1,6 @@
 # FACE.AMG → 83 張 PNG（4bpp 調色盤圖）＋ 格式 JSON。
-# PNG 落在 workplace/（原版素材不進 Git），JSON 只放版面、索引與雜湊。
+# PNG 落在 workplace/assets/face/，進版控的那份複製到 assets/original/face/
+# （容器看不到 repo 根目錄）；JSON 只放版面、索引與雜湊。
 #
 # 第 n 張 ＝ 提督索引 n（`ADMIRAL.DT*` 第 n 筆、`KEIREKI.DAT` 第 n 段），
 # 證據見 docs/internals/09 與 docs/re/271。提督姓名與陣營從

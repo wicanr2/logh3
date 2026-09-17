@@ -3,8 +3,10 @@
 證據等級：**confirmed**（反組譯原版解碼常式 ＋ 與原版畫面逐像素相同）
 資料：`docs/internals/data/face-amg.json`
 實作：`internal/asset/amg.go`、測試 `internal/asset/amg_test.go`
-素材：`workplace/assets/face/face-NN.png`（83 張，一次性產物，不進 Git；
-以 `tools/py.sh tools/scripts/amg_export.py` 從自備原版重建）
+素材：`assets/original/face/face-NN.png`（83 張，進版控；`tools/py.sh
+tools/scripts/amg_export.py` 從原版匯出到 `workplace/assets/face/` 再複製過去，
+PNG 雜湊與 `face-amg.json` 的 `sha256_png` 相同）
+對照表：[`docs/lookup/admiral-portraits.md`](../lookup/admiral-portraits.md)（頭像 ＋ 能力值）
 
 `FACE.AMG` 本身 263,568 bytes，SHA-256
 `514c1ea9b2c63b85f4ecf1b9d473f46691dc70140272027d8e62fd16d768e0d4`。
