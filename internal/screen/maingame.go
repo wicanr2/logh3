@@ -535,8 +535,28 @@ func (w *GameWindow) DrawBoxFills(fb *gfx.Framebuffer, cx, cy, cw, ch int) {
 		if b.X >= cx+cw || cx >= b.X+b.W || b.Y >= cy+ch || cy >= b.Y+b.H {
 			continue
 		}
+		// 分頁鈕底下那幾個框不重填：重刷的是清單列，分頁鈕在點了之後由
+		// `37A9:02B1` 整顆重畫、游標疊在上面（收據 `fcmd-lst-star-tab-assign`）。
+		if w.underTab(b.X, b.Y) {
+			continue
+		}
 		fb.FillRect(b.X+n, b.Y+n, b.W-2*n, b.H-2*n, b.Fill)
 	}
+}
+
+// underTab 回 (x, y) 是不是落在某一顆分頁鈕上。
+func (w *GameWindow) underTab(x, y int) bool {
+	if w.Tabs == nil {
+		return false
+	}
+	for _, r := range w.Tabs.Rows {
+		for _, it := range r.Items {
+			if x >= it.X && x < it.X+it.W && y >= r.Y && y < r.Y+w.Tabs.H {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // DrawBoxes 只畫視窗裡的小框。拆出來是因為原版有些畫面**先畫游標、

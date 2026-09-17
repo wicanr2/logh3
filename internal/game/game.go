@@ -4100,6 +4100,9 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 	}
 	spec.ListRows = nil
 	g.listIndex = nil
+	if g.state == StateFleetList || (g.lst.fleetFrom && fleetWindowFamily(g.state)) {
+		setTabsOn(spec, g.listScreenTab())
+	}
 	if g.state == StateStarList {
 		g.setStarRows(spec)
 		return
@@ -4276,21 +4279,29 @@ func (g *Game) setStarRows(spec *screen.MainGameSpec) {
 	if v := g.listScreenScroll(); v > 0 && v < len(order) {
 		order = order[v:]
 	}
+	tab := g.listScreenTab()
+	setTabsOn(spec, tab)
 	for _, i := range order {
 		if (i+1)*rules.RegionRecord > len(g.res.Stellar) {
 			continue
 		}
 		rec := g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
 		owner := g.res.Planets.RegionOwner(i)
-		// 兩個數是這一格帝國／同盟的艦隊數（固定左帝國右同盟，各用陣營色；
-		// 收據 `fcmd-lst-star`：瓦爾哈拉「1﹕0」）。星域記錄的 `+0x28` 不是它的
-		// 來源（`docs/re/37`），照艦隊表數。
-		spec.ListRows = append(spec.ListRows, screen.ListRow{Cells: []screen.ListCell{
-			{X: l.NameX, Ink: rules.FactionColour(owner), Codes: rules.RegionName(rec)},
-			{X: l.OwnX, Ink: rules.FactionColour(0), Text: fmt.Sprintf("%2d", rules.CountFleets(g.fleets, i, 0))},
-			{X: l.SepX, Ink: l.Ink, Codes: []uint16{l.SepCode}},
-			{X: l.EnemyX, Ink: rules.FactionColour(1), Text: fmt.Sprintf("%2d", rules.CountFleets(g.fleets, i, 1))},
-		}})
+		cells := []screen.ListCell{{X: l.NameX, Ink: rules.FactionColour(owner), Codes: rules.RegionName(rec)}}
+		switch tab {
+		case 1, 2:
+			// 配屬／稅金（`0D05:0642`／`073E`）：名字後面那一段從第 18 格起。
+			cells = append(cells, screen.ListCell{X: l.NameX + 16*8, Ink: l.Ink, Text: g.starTabText(tab, rec)})
+		default:
+			// 兩個數是這一格帝國／同盟的艦隊數（固定左帝國右同盟，各用陣營色；
+			// 收據 `fcmd-lst-star`：瓦爾哈拉「1﹕0」）。星域記錄的 `+0x28` 不是它的
+			// 來源（`docs/re/37`），照艦隊表數。
+			cells = append(cells,
+				screen.ListCell{X: l.OwnX, Ink: rules.FactionColour(0), Text: fmt.Sprintf("%2d", rules.CountFleets(g.fleets, i, 0))},
+				screen.ListCell{X: l.SepX, Ink: starSepInk(l.Ink, rec), Codes: []uint16{l.SepCode}},
+				screen.ListCell{X: l.EnemyX, Ink: rules.FactionColour(1), Text: fmt.Sprintf("%2d", rules.CountFleets(g.fleets, i, 1))})
+		}
+		spec.ListRows = append(spec.ListRows, screen.ListRow{Cells: cells})
 	}
 }
 

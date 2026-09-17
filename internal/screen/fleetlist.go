@@ -87,6 +87,10 @@ type FleetRow struct {
 	// 兩者決定「第」前面那一格印哪個記號。
 	Move        int
 	RegionFlags int
+	// ValueText／ValueCodes 換掉右邊那個數字（一覽表艦隊資料的「部隊」「作戰」
+	// 分頁）：半形字串或全形字碼，一樣靠右對齊 `Value.Right`。
+	ValueText  string
+	ValueCodes []uint16
 }
 
 // markerFor 回這一列要印的記號（Big5 字碼）與字色；不印回 0。
@@ -158,15 +162,23 @@ func (l *FleetList) Draw(fb *gfx.Framebuffer, fnt *font.Font, rows []FleetRow, p
 		full(l.Number.DigitsX, fullDigits(r.Number), l.Number.Ink)
 		full(l.Number.SuffixX, fleetRowSuffix, l.Number.Ink)
 		full(l.Name.X, r.Name, l.Name.Ink)
+		if len(r.ValueCodes) > 0 {
+			full(l.Value.Right-len(r.ValueCodes)*font.GlyphW, r.ValueCodes, l.Value.Ink)
+			continue
+		}
 		s := strconv.Itoa(r.Value)
-		x := l.Value.Right - len(s)*font.HalfW
 		ink := l.Value.Ink
-		if l.Value.AlertBelow > 0 && r.Value < l.Value.AlertBelow {
+		if r.ValueText != "" {
+			s = r.ValueText
+		} else if l.Value.AlertBelow > 0 && r.Value < l.Value.AlertBelow {
 			ink = l.Value.AlertInk
 		}
+		x := l.Value.Right - len(s)*font.HalfW
 		for k := 0; k < len(s); k++ {
-			ui.DrawHalfGlyphClipped(fb, fnt, x, y, s[k], ink, panelShadow,
-				-1, false, 0, y, gfx.Width, l.Pitch)
+			if s[k] != ' ' {
+				ui.DrawHalfGlyphClipped(fb, fnt, x, y, s[k], ink, panelShadow,
+					-1, false, 0, y, gfx.Width, l.Pitch)
+			}
 			x += font.HalfW
 		}
 	}

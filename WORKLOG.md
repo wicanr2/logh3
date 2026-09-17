@@ -7260,3 +7260,18 @@ GitHub 的 issue 時間軸承擔。
 - 「不進 Git」的敘述改成現況：internals 10／12／17／18／21、人物傳（`keireki_export.py` 同步）、
   `vo5`／`mds` 的 JSON note、`internal/audio/library.go`、`cmd/gin3` 的 `-music` 說明、兩支音樂腳本。
   發行包仍不含這些素材。
+
+## 2026-09-17 — 一覽表的分頁鈕（關 #51）
+
+- 第五輪 goal A。反組譯 `0D05:02FC`–`089E` 與 `0C7F:0339`／`046F`–`079C`（`docs/re/327`）：兩張的分頁鈕
+  `37A9:02B1` 選中 0x27、其餘 0x97（核取方塊填 2／9），換頁整頁重印，兩張都每座位記住。星系
+  配屬 ＝ 存量對艦種表滿編艘數（0 `-`、不到小寫、否則大寫 `BHCADTE`），稅金 ＝ 經濟力 × 稅率 ÷ 1000
+  與稅率；艦隊 部隊 ＝ `+0x0F`／`+0x0E`、作戰 ＝ 星域 bit2 戰鬥／bit4 占領／命令名表 `ds:68EA`。
+  規格 055「士氣低於 50 換色是假設」由 `cmp +0x3C, 32h` 證實。
+- 星系「艦隊」分頁原版讀的是星域 `+0x28`–`+0x2B`（依座位挑兩格、`0xFF` 印 `--`），remake 照艦隊表數；
+  帝國座位收據都對上，同盟座位與敵方數字是已知差異（hypothesis）。
+- remake：`listScreen.starTab`／`fleetTab`、`setTabsOn`、`starTabText`、`fleetOpsWord`、`starSepInk`、
+  `screen.FleetRow.ValueText`／`ValueCodes`。**坑**：星系資料那份規格的 `mouse.after_box_fills`
+  在游標壓到分頁鈕時連鈕一起洗掉（remake 畫出空白鈕、422 像素差）——`DrawBoxFills` 跳過分頁鈕底下的框。
+- 收據：既有五批整張逐位元組（`TestListScreenTabsMatchOracle`）；GUI `fcmd-lst-star-tab-tax`；
+  `internal/...` 全部測試通過。文件：`docs/re/327`（新）、規格 055、internals 59、playtest 021、CONTEXT。

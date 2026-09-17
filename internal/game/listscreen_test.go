@@ -239,3 +239,46 @@ func TestListEnemyRowsMatchOracle(t *testing.T) {
 		matches(t, g, "fcmd-lst-enemy-rclick")
 	})
 }
+
+// 一覽表的分頁鈕（規格 055 分頁一節、`docs/re/327`）：星系資料 艦隊／配屬／稅金
+// （`0D05:02FC`，`ds:8F2D[座位]`）、艦隊資料 士氣／部隊／作戰（`0C7F:0339`，
+// `ds:8F31[座位]`）；分頁鈕在 (432|496|560, 60) 48×20，收據點 (520,70)／(584,70)。
+func TestListScreenTabsMatchOracle(t *testing.T) {
+	t.Run("star-assign", func(t *testing.T) {
+		g := reachListScreen(t, 0)
+		g.Click(520, 70)
+		if g.lst.starTab[0] != 1 {
+			t.Fatalf("配屬之後分頁 %d", g.lst.starTab[0])
+		}
+		matches(t, g, "fcmd-lst-star-tab-assign")
+	})
+	t.Run("star-tax-reopen", func(t *testing.T) {
+		g := reachListScreen(t, 0)
+		g.Click(584, 70)
+		matches(t, g, "fcmd-lst-star-tab-tax")
+		g.RightClick(300, 240)
+		if g.State() != StateCommandPhase {
+			t.Fatalf("右鍵之後在 %v", g.State())
+		}
+		matches(t, g, "fcmd-lst-star-tax-rclick")
+		g.Click(448, 125)
+		g.Click(460, 125)
+		if g.State() != StateStarList || g.lst.starTab[0] != 2 {
+			t.Fatalf("再開之後在 %v、分頁 %d（原版記住稅金）", g.State(), g.lst.starTab[0])
+		}
+		matches(t, g, "fcmd-lst-star-reopen")
+	})
+	t.Run("fleet-unit", func(t *testing.T) {
+		g := reachListScreen(t, 1)
+		g.Click(520, 70)
+		if g.lst.fleetTab[0] != 1 {
+			t.Fatalf("部隊之後分頁 %d", g.lst.fleetTab[0])
+		}
+		matches(t, g, "fcmd-lst-fleet-tab-unit")
+	})
+	t.Run("fleet-ops", func(t *testing.T) {
+		g := reachListScreen(t, 1)
+		g.Click(584, 70)
+		matches(t, g, "fcmd-lst-fleet-tab-ops")
+	})
+}

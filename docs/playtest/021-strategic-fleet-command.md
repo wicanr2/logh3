@@ -185,10 +185,10 @@
 | `fcmd-lst-star-row2-close` | 結束 → 地圖，面板仍卡斯特羅普 | `82c844e336298fdb108c74ad0c39c6372a596610e7fd6807fdbe1fb27670b47d` | 0 |
 | `fcmd-lst-star-hover` | 游標移到列 10 (460,250) 杜威爾格 | `26723130c39554707f1360be0cee6aac73f845f0584c55a2637889e582d1cd2a` | 0 |
 | `fcmd-lst-star-hover-out` | 游標移到清單外 (100,100)：反白與左下角不動 | `c2f33d06a5025faed4d55e154156db4c5fd79a4db4c271c547e0d7d0409f5529` | 0 |
-| `fcmd-lst-star-tab-assign` | 分頁「配屬」(520,30)：每格七種存量有無（BHCADTE） | `5c7d03be8635403ce5e71588ea44f6d44362fcd32b4b18f62b54ac9b6d05c20a` | 不比（#51） |
-| `fcmd-lst-star-tab-tax` | 分頁「稅金」(584,30)：徵稅額（稅率） | `c4a471ab0618940ab1671f471e3d7cfca17169a7901ae05d94c48731c478075d` | 不比（#51） |
+| `fcmd-lst-star-tab-assign` | 分頁「配屬」(520,30)：每格七種存量有無（BHCADTE） | `5c7d03be8635403ce5e71588ea44f6d44362fcd32b4b18f62b54ac9b6d05c20a` | 0（`docs/re/327`） |
+| `fcmd-lst-star-tab-tax` | 分頁「稅金」(584,30)：徵稅額（稅率） | `c4a471ab0618940ab1671f471e3d7cfca17169a7901ae05d94c48731c478075d` | 0（`docs/re/327`） |
 | `fcmd-lst-star-tax-rclick` | 右鍵 → 地圖 | `492e4e2dcb9097d606fa6b34b8ef31ac6169a6184215e8689dfe9f5d8b2588d5` | 0（= `fcmd-rinfo-rclick`） |
-| `fcmd-lst-star-reopen` | 再開星系資料：分頁仍是稅金（`ds:8F2D[座位]`） | `b43d0cbff7d143e94b486a5090937a8ea8db376345bf37b1c646920f05455da4` | 不比（#51） |
+| `fcmd-lst-star-reopen` | 再開星系資料：分頁仍是稅金（`ds:8F2D[座位]`） | `b43d0cbff7d143e94b486a5090937a8ea8db376345bf37b1c646920f05455da4` | 0（`docs/re/327`） |
 | `fcmd-lst-star-down` | ▼ (615,350) 按住 0.1M ＝ 一列（`ds:96EC` 1） | `5e27572bac760a60aaceb1426963c9ee89ba6a40dbde36e7d44ad8c714b7d6dd` | 0 |
 | `fcmd-lst-star-down-row` | 再點列 0 → 菲利亞（星域 4）的視窗 | `76f9ad7253b99a63f82a9b7c27e767085b3801993806724fb10cfcd1898fe113` | 小圖最後一列 |
 | `fcmd-lst-star-up` | ▲ (615,50) → 位移 0 | `89382fdf14f9a33c7973d17cdf57b8f005bc91667b8ccb4b411fc3e284536e4d` | 0 |
@@ -198,8 +198,8 @@
 | `fcmd-lst-fleet-row-close` | 結束 (480,340) → 清單，反白還原；地圖沒反白、左下角空白 | `a42de2508e36967c26b8762d1736f6bac28c7088e7dd13bd67e94705d698d051` | 0 |
 | `fcmd-lst-fleet-row-rclick` | 艦隊視窗上右鍵 → 同上 | `14713e3a9541aa002e066cffb38e20a9d1d3ba51390df31a7b8970019345f4b2` | 0 |
 | `fcmd-lst-fleet-row1` | 點空列 (460,70) → 沒事 | `afdca5f9075d56a38d5e2fc81aef2c9c58cfd6fd9e67b281343f598457440110` | 0 |
-| `fcmd-lst-fleet-tab-unit` | 分頁「部隊」：1/ 8 | `330c76d33ab9ec42787c1ada47e94390e0d00af2d066c0b7881d0b84373a5a74` | 不比（#51） |
-| `fcmd-lst-fleet-tab-ops` | 分頁「作戰」：待命 | `d4237bc2b66c915be51bf34afa8b227d76928b9125661438498e53567a6cfb2a` | 不比（#51） |
+| `fcmd-lst-fleet-tab-unit` | 分頁「部隊」：1/ 8 | `330c76d33ab9ec42787c1ada47e94390e0d00af2d066c0b7881d0b84373a5a74` | 0（`docs/re/327`） |
+| `fcmd-lst-fleet-tab-ops` | 分頁「作戰」：待命 | `d4237bc2b66c915be51bf34afa8b227d76928b9125661438498e53567a6cfb2a` | 0（`docs/re/327`） |
 | `fcmd-lst-fleet-rclick` | 右鍵 → 地圖 | `492e4e2dcb9097d606fa6b34b8ef31ac6169a6184215e8689dfe9f5d8b2588d5` | 0 |
 | `fcmd-lst-adm` | 提督資料 (460,125)：★萊因哈特 上將 … ○梅克林格；游標在列 4 → 瓦爾哈拉 | `678ab14cca681bf8d3e04dde9b034ca2e411991fcb84c12e7c0c03d1e0d67050` | 0 |
 | `fcmd-lst-adm-row` | 列 0 → 詳細資料：第１艦隊／萊因哈特 上將／現在位置 瓦爾哈拉 ：出擊中／旗艦 伯倫希爾／經歷／結束；列 0 反白 | `a1a8c0080c23a2ac97c258a32402787d8128d311555164b19989e5bec2c61734` | 0 |

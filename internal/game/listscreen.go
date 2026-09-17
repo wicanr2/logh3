@@ -1,6 +1,8 @@
 package game
 
 import (
+	"fmt"
+
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
@@ -17,12 +19,15 @@ import (
 // 換地圖反白與左下角摘要（`3705:0591`）：星系那張只在列上才換、離開不動；
 // 艦隊與提督那兩張離開列就取消反白、左下角清空；敵將那張不看游標。
 //
-// 一覽表的分頁鈕還沒接（#51）：星系資料的 艦隊／配屬／稅金 與艦隊資料的
-// 士氣／部隊／作戰 畫面上是量死的第一頁，點了沒事。
+// 分頁鈕（`0D05:02FC`／`0C7F:0339`，`docs/re/327`）：星系資料 艦隊／配屬／稅金、
+// 艦隊資料 士氣／部隊／作戰，兩張的分頁都每座位記住（`ds:8F2D`／`ds:8F31`）。
 
 type listScreen struct {
 	// starScroll 是星系資料的位移，每座位記住（`ds:1DF2[座位]`，關了再開還在）。
 	starScroll [2]int
+	// starTab／fleetTab 是星系資料（艦隊／配屬／稅金，`ds:8F2D[座位]`）與艦隊資料
+	// （士氣／部隊／作戰，`ds:8F31[座位]`）的分頁，兩張都每座位記住。
+	starTab, fleetTab [2]int
 	// fleetScroll／admScroll 是艦隊資料與提督／敵將資料的位移（`ds:96C3`／
 	// `ds:96A1`），開清單歸零。
 	fleetScroll, admScroll int
@@ -252,6 +257,17 @@ func (g *Game) listScreenClick(x, y int) {
 		g.listScreenStep(dir)
 		return
 	}
+	// 分頁鈕（熱區碼 3／4／5）：只有星系與艦隊那兩張的熱區清單有
+	// （`ds:1E04`／`ds:1CCE`；提督那份 `ds:1BF2` 沒有）。換了就整頁重印。
+	if tab := spec.TabAt(x, y); tab >= 0 && g.faction >= 0 && g.faction < 2 {
+		switch g.state {
+		case StateStarList:
+			g.lst.starTab[g.faction] = tab
+		case StateFleetList:
+			g.lst.fleetTab[g.faction] = tab
+		}
+		return
+	}
 	row := spec.RowAt(x, y)
 	if row < 0 {
 		return
@@ -341,12 +357,80 @@ func fleetWindowFamily(s State) bool {
 	return false
 }
 
-// listScreenFleetRows 回艦隊資料「士氣」分頁要印的列（從位移起十六列）。
+// listScreenTab 回目前這張的分頁（星系 `ds:8F2D[座位]`、艦隊 `ds:8F31[座位]`）。
+func (g *Game) listScreenTab() int {
+	if g.faction < 0 || g.faction >= 2 {
+		return 0
+	}
+	if g.state == StateFleetList || g.lst.fleetFrom {
+		return g.lst.fleetTab[g.faction]
+	}
+	return g.lst.starTab[g.faction]
+}
+
+// setTabsOn 把畫面規格裡的分頁鈕換成第 tab 顆選中（`37A9:02B1` 選中 0x27、
+// 其餘 0x97：核取方塊填色 2／9）。
+func setTabsOn(spec *screen.MainGameSpec, tab int) {
+	for _, w := range spec.Windows {
+		if w.Tabs == nil {
+			continue
+		}
+		for r := range w.Tabs.Rows {
+			for i := range w.Tabs.Rows[r].Items {
+				w.Tabs.Rows[r].Items[i].On = i == tab
+			}
+		}
+	}
+}
+
+// starBerthLetters 是配屬分頁的七個字母（`ds:1EA6`／`ds:1EAE`）：大寫 ＝ 存量
+// 至少一個滿編單位、小寫 ＝ 不到、`-` ＝ 0。
+const starBerthUpper, starBerthLower = "BHCADTE", "bhcadte"
+
+// starTabText 回星系資料 配屬（1）／稅金（2）分頁名字後面那十六個半形字：
+//
+//   - 配屬 `0D05:0642`：自己的格（`+0x12` ＝ 座位）印「        」＋「 」＋ 七種艦艇
+//     各一個字母（存量 `+0x30＋座位×28＋種×4` 與艦種表滿編艘數 `ds:4E3A` 比）；
+//     別家 「        」＋「 -------」。
+//   - 稅金 `0D05:073E`：自己的格「%8lu (%2d.%1d%%)」＝ 經濟力 × 稅率 ÷ 1000 與稅率
+//     （千分之一）；別家「     --- (-----)」。
+func (g *Game) starTabText(tab int, rec []byte) string {
+	own := rules.RegionOwnerOf(rec) == g.faction
+	if tab == 2 {
+		if !own {
+			return "     --- (-----)"
+		}
+		rate := rules.RegionTaxRate(rec)
+		return fmt.Sprintf("%8d (%2d.%1d%%)", uint32(rules.RegionEconomy(rec))*uint32(rate)/1000, rate/10, rate%10)
+	}
+	if !own {
+		return "         -------"
+	}
+	b := []byte("         ")
+	ships := rules.RegionShips(rec, g.faction)
+	for k := 0; k < len(starBerthUpper); k++ {
+		c := byte('-')
+		if k < len(ships) && ships[k] != 0 {
+			c = starBerthLower[k]
+			if kind, ok := g.res.ShipKinds.Kind(g.faction, k); ok && ships[k] >= kind.FullShips {
+				c = starBerthUpper[k]
+			}
+		}
+		b = append(b, c)
+	}
+	return string(b)
+}
+
+// listScreenFleetRows 回艦隊資料目前分頁要印的列（從位移起十六列；
+// `0C7F:0515`）：士氣 `0642`「　 %3d」（低於 50 換色 2）、部隊 `0682`
+// 「 %2d/%2d」（`+0x0F`／`+0x0E`）、作戰 `06B7`「　%4s」——所在星域 `+0x13`
+// bit2「戰鬥」、bit4「占領」，否則命令名（`ds:68EA[+0x08]`）。
 func (g *Game) listScreenFleetRows() []screen.FleetRow {
 	spec := g.res.ListScreen
 	if spec == nil {
 		return nil
 	}
+	tab := g.listScreenTab()
 	fl := g.listScreenFleets()
 	var rows []screen.FleetRow
 	for i := g.lst.fleetScroll; i < len(fl) && len(rows) < spec.Rows; i++ {
@@ -355,7 +439,14 @@ func (g *Game) listScreenFleetRows() []screen.FleetRow {
 		if f.Admiral >= 0 && f.Admiral < len(g.res.AdmiralNames) {
 			name = g.res.AdmiralNames[f.Admiral]
 		}
-		rows = append(rows, screen.FleetRow{Number: f.Number, Name: name, Value: f.Morale})
+		row := screen.FleetRow{Number: f.Number, Name: name, Value: f.Morale}
+		switch tab {
+		case 1:
+			row.ValueText = fmt.Sprintf("%2d/%2d", f.Groups, f.Expected)
+		case 2:
+			row.ValueCodes = g.fleetOpsWord(f)
+		}
+		rows = append(rows, row)
 	}
 	return rows
 }
@@ -484,4 +575,39 @@ func (g *Game) admiralDetailExtras(admiral int, own bool, location []uint16) (pr
 		rules.DutyIdle: detailIdle, rules.DutyStaff: detailOnDuty, rules.DutySortie: detailSortie,
 	}[duty]...)
 	return prefix, status, location
+}
+
+// fleetOpsWords 是作戰分頁的字（`ds:68EA` 命令名表：移動／占領／駐留／輸送／
+// 返航／待命，`ds:1D6C`「戰鬥」、`ds:1D71`「占領」）。
+var (
+	fleetOpsByMove = [][]uint16{
+		{0xB2BE, 0xB0CA}, {0xA565, 0xBBE2}, {0xBE6E, 0xAF64},
+		{0xBFE9, 0xB065}, {0xAAF0, 0xAFE8}, {0xABDD, 0xA952},
+	}
+	fleetOpsBattle = []uint16{0xBED4, 0xB0AB}
+	fleetOpsOccupy = []uint16{0xA565, 0xBBE2}
+)
+
+// fleetOpsWord 回作戰分頁那一列的兩個字（`0C7F:06B7`）：所在星域 `+0x13`
+// bit2 → 戰鬥、bit4 → 占領，否則照 `+0x08` 查命令名。
+func (g *Game) fleetOpsWord(f rules.Fleet) []uint16 {
+	flags := g.regionFlags(f.Region)
+	switch {
+	case flags&0x04 != 0:
+		return fleetOpsBattle
+	case flags&0x10 != 0:
+		return fleetOpsOccupy
+	case f.Move >= 0 && f.Move < len(fleetOpsByMove):
+		return fleetOpsByMove[f.Move]
+	}
+	return nil
+}
+
+// starSepInk 是艦隊分頁中間那個「﹕」的字色（`0D05:05E0`）：星域 `+0x13` bit2
+// （戰鬥中）用色 2，否則照清單字色。
+func starSepInk(ink uint8, rec []byte) uint8 {
+	if len(rec) > 0x13 && rec[0x13]&0x04 != 0 {
+		return 2
+	}
+	return ink
 }

@@ -299,7 +299,7 @@
     （新編的艦隊沒有艦艇池，索敵等級永遠 0——與原版一樣）。
   - 開得起來但只能右鍵關：情報收集的 治安／勢力／敵艦 三個分頁與
     參謀／確認（`1738`）、徵稅計劃與生產計劃的 參謀／結束、預算計劃的箭頭
-    （`26E2`）、一覽表的分頁鈕（配屬／稅金、部隊／作戰）、艦隊編號清單的列、
+    （`26E2`）、艦隊編號清單的列、
     結束確認的 中止／決定、設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與 `BUG!`。
     （情報與徵稅那兩顆「參謀」就是參謀任命的入口。）
   - 其餘：「資料」的捲動、動畫之後的 `SPTIT.350` 標題畫面。
@@ -452,7 +452,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 4 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 3 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -487,30 +487,6 @@
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
-
-#### list-screen-tabs — 一覽表的分頁鈕：星系資料 艦隊／配屬／稅金、艦隊資料 士氣／部隊／作戰
-
-*[#51](https://github.com/wicanr2/logh3/issues/51) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-一覽表的星系資料有三個分頁（艦隊／配屬／稅金，熱區 `ds:1E04` 碼 3／4／5 → `0D05:02FC`）、
-艦隊資料也有三個（士氣／部隊／作戰，`ds:1CCE` → `0C7F:0339`）；分頁每座位記住
-（`ds:8F2D[座位]`／`ds:8F31[座位]`，關了再開還在）。remake 只畫量死的第一頁、點了沒事
-（`docs/re/323` §五）。收據已錄：`fcmd-lst-star-tab-assign`（自己的格印七種存量有無
-`BHCADTE`、別家 `-------`）、`fcmd-lst-star-tab-tax`（「徵稅額 ( 稅率%)」、別家
-`--- (-----)`）、`fcmd-lst-star-reopen`（關了再開仍是稅金）、`fcmd-lst-fleet-tab-unit`
-（`1/ 8`）、`fcmd-lst-fleet-tab-ops`（`待命`）。
-
-線索：
-- `0D05:02FC` 依 `ds:96E6` 印三種列；`0C7F:0339(分頁)` 依參數印三種列並存 `ds:8F31[座位]`——
-  兩支都在 `workplace/ida/fcx0D05.com`／`fcx0C7F.com`（`docs/re/323` 的切片），直接反組譯。
-- 版面從五批的字元平面讀（`plane.bin`），與 `list-screen-panel.json` 同一份。
-- ▲▼ 原版按住連捲；remake 一下一列（規格 055 已知差異）——做「按住」時一起接。
-
-**做完的判準**：兩張的三個分頁各有規格與同狀態收據（那五批整張逐位元組），分頁每座位記住。
-
-**證據**：[`docs/re/323-list-screen-rows.md`](docs/re/323-list-screen-rows.md)、[`docs/spec/055-list-screen-rows.md`](docs/spec/055-list-screen-rows.md)、[`docs/playtest/021-strategic-fleet-command.md`](docs/playtest/021-strategic-fleet-command.md)
-
-**核實**：`internal/game/listscreen.go` 裡還找得到 `一覽表的分頁鈕還沒接`（自承還在 ＝ 還沒做）
 
 #### engagement-animation — 交戰演出（ANI_PNL1 ＋ COMANI.BMG）與戰鬥曲的出口
 
@@ -578,7 +554,7 @@
 
 ### 做完的（不在矩陣裡的那幾條）
 
-53 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+54 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1578,6 +1554,30 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### list-screen-tabs — 一覽表的分頁鈕：星系資料 艦隊／配屬／稅金、艦隊資料 士氣／部隊／作戰
+
+*[#51](https://github.com/wicanr2/logh3/issues/51) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+一覽表的星系資料有三個分頁（艦隊／配屬／稅金，熱區 `ds:1E04` 碼 3／4／5 → `0D05:02FC`）、
+艦隊資料也有三個（士氣／部隊／作戰，`ds:1CCE` → `0C7F:0339`）；分頁每座位記住
+（`ds:8F2D[座位]`／`ds:8F31[座位]`，關了再開還在）。remake 只畫量死的第一頁、點了沒事
+（`docs/re/323` §五）。收據已錄：`fcmd-lst-star-tab-assign`（自己的格印七種存量有無
+`BHCADTE`、別家 `-------`）、`fcmd-lst-star-tab-tax`（「徵稅額 ( 稅率%)」、別家
+`--- (-----)`）、`fcmd-lst-star-reopen`（關了再開仍是稅金）、`fcmd-lst-fleet-tab-unit`
+（`1/ 8`）、`fcmd-lst-fleet-tab-ops`（`待命`）。
+
+線索：
+- `0D05:02FC` 依 `ds:96E6` 印三種列；`0C7F:0339(分頁)` 依參數印三種列並存 `ds:8F31[座位]`——
+  兩支都在 `workplace/ida/fcx0D05.com`／`fcx0C7F.com`（`docs/re/323` 的切片），直接反組譯。
+- 版面從五批的字元平面讀（`plane.bin`），與 `list-screen-panel.json` 同一份。
+- ▲▼ 原版按住連捲；remake 一下一列（規格 055 已知差異）——做「按住」時一起接。
+
+**做完的判準**：兩張的三個分頁各有規格與同狀態收據（那五批整張逐位元組），分頁每座位記住。
+
+**證據**：[`docs/re/327-list-screen-tabs.md`](docs/re/327-list-screen-tabs.md)、[`docs/re/323-list-screen-rows.md`](docs/re/323-list-screen-rows.md)、[`docs/spec/055-list-screen-rows.md`](docs/spec/055-list-screen-rows.md)、[`docs/playtest/021-strategic-fleet-command.md`](docs/playtest/021-strategic-fleet-command.md)
+
+**核實**：`TestListScreenTabsMatchOracle` 釘在 `./internal/game`
 
 #### mouse-edge-scroll-and-roles — 滑鼠在原版的作用調查：戰場邊緣捲動視野等，remake 照做
 

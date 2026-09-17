@@ -39,6 +39,8 @@ cases=(
   "fcmd-lst-adm-row|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 448 125; click 460 165; click 460 90"
   # 一覽表 → 艦隊資料 → 點列 0 → 艦隊視窗疊在清單上，那一列反白。
   "fcmd-lst-fleet-row|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 448 125; click 460 145; click 460 90"
+  # 一覽表 → 星系資料 → 稅金分頁：自己的格「徵稅額 ( 稅率%)」、別家 --- (-----)（docs/re/327）。
+  "fcmd-lst-star-tab-tax|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 448 125; click 460 125; click 584 70"
   # 變更 → 編組：這一支的艦隊組成疊在艦隊視窗上（docs/re/316）。
   "fcmd-change-org|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 365; click 497 392"
   # 編組的編輯器（docs/re/317）：槽 19 放戰艦 → 換巡航艦列 → 槽 21 放 → 右鍵拆槽 19
