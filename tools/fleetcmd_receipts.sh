@@ -29,6 +29,7 @@ HOLD1=100000                    # 一覽表的 ▲▼ 按住 0.1M 步 ＝ 一列
 TABS="-peek lin:5DA4F:1,lin:5E0C2:2,lin:5E0E4:2,lin:5E108:2,lin:61B2C:1,lin:5E106:1"   # 分頁編號與四個分頁的筆數／位移（第 17 段）
 LST="-peek lin:5E0B8:1,lin:5E216:1,lin:5E21C:1,lin:5E1F2:2,lin:5DA5D:2,lin:56922:2,lin:5DA61:2,lin:5E1D0:2,lin:63CB2:2"   # 一覽表四張的分頁／位移／筆數（第 20 段）
 DIS="-peek lin:60BA4:122,lin:5F2CC:4032,lin:602AC:28,lin:6062C:28,lin:5DA79:2,lin:61AE4:4,lin:668B2:78,lin:66900:78"   # 駐留解散：艦隊 0、星域 32 筆、提督 0／32、ds:8F49、ds:CFB4（668B:0002）、艦艇 0／1（第 21 段）
+OCC="-peek lin:60BA4:122,lin:5F2CC:4032,lin:53132:6642"   # 占領與打行星：艦隊 0、星域 32 筆、行星 81 筆（第 19、22 段）
 
 # rec <批次> <步數上限> <上一個檢查點|-> <ck|-> <旗標...>
 # 每一批都倒：畫面、調色盤、字元平面、艦隊表第 0 筆。`ck` ＝ 在上限的前一道
@@ -44,6 +45,15 @@ rec() {
   cp "$CK/$name-plane.bin" "$ROOT/workplace/oracle/$name/plane.bin"
   cp "$CK/$name-fleet0.bin" "$ROOT/workplace/oracle/$name/fleet0.bin"
   printf '%s  %s\n' "$name" "$(sed -n 's/^screen.bin SHA-256: //p' "$ROOT/workplace/oracle/$name/meta.txt" | cut -c1-16)"
+}
+
+# recmem <批次> <進入步數> <離開步數> <rec 的其餘參數…>：同 rec，另外在兩個步數各倒一份 1 MB 記憶體
+# （線性 0 起），複製成批次目錄的 mem-in.bin／mem-out.bin（第 22 段：原版進出 `20B4:1497` 的那一刻）。
+recmem() {
+  local name=$1 at_in=$2 at_out=$3; shift 3
+  rec "$name" "$@" -dump-mem-at "$at_in:lin:0:1048576:/src/workplace/fcmd/$name-in.bin;$at_out:lin:0:1048576:/src/workplace/fcmd/$name-out.bin"
+  cp "$CK/$name-in.bin" "$ROOT/workplace/oracle/$name/mem-in.bin"
+  cp "$CK/$name-out.bin" "$ROOT/workplace/oracle/$name/mem-out.bin"
 }
 
 # mvc／mvr <步數> <x> <y>：先把游標移過去，10M 步之後才按（第 20 段的坑：移動與按鍵同一瞬間會被丟掉）。
@@ -301,7 +311,6 @@ rec fcmd-map-rclick        445000000 fcmd-base       -  -rclicks 421000000:300:2
 #     戰略打行星；docs/re/322）。一回合的處理（AI 思考、出發前往／已經到達的過場、占據報告與士氣報告的
 #     等待）約 90M 步，每批隔 120M；停在報告上的批次先點一下關掉再實行。每批另倒星域表與行星表。
 #     (a) 亞斯提（同盟，fcmd-occupy-done 的命令）：0 → 2 → 7 → 8 → 13 → 16，第五回合到達、占據、打行星。
-OCC="-peek lin:60BA4:122,lin:5F2CC:4032,lin:53132:6642"
 rec fcmd-occ-t1          665000000 fcmd-occupy-done ck -clicks 546000000:544:85,549000000:560:85 -click-hold $HOLD $OCC
 rec fcmd-occ-t2          785000000 fcmd-occ-t1      ck -clicks 666000000:544:85,669000000:560:85 -click-hold $HOLD $OCC
 rec fcmd-occ-t3          905000000 fcmd-occ-t2      ck -clicks 786000000:544:85,789000000:560:85 -click-hold $HOLD $OCC
@@ -381,3 +390,10 @@ rec fcmd-garrison-self         520000000 fcmd-garrison-pick ck -clicks 497000000
 rec fcmd-garrison-self-done    545000000 fcmd-garrison-self ck -clicks 522000000:432:223 -click-hold $HOLD $DIS
 rec fcmd-garrison-self-report  570000000 fcmd-garrison-self-done - -clicks 546000000:544:85,549000000:560:85 -click-hold $HOLD $DIS
 rec fcmd-garrison-self-t1      665000000 fcmd-garrison-self-done - -clicks 546000000:544:85,549000000:560:85 -click-hold $HOLD $DIS
+
+# 22. 戰略打行星（20B4:1497，docs/re/330）的同狀態收據：輸入與 fcmd-occ-t5／phz-t3 相同，在進入 1497
+#     與它回到 0374:0556 之前（20B4:1507）各倒一份 1 MB。remake 的回合亂數第三回合起就岔開，
+#     所以對拍是「拿 mem-in 的狀態驅動 remake 的打行星，比 mem-out」（規格 014：改記憶體，不靠運氣）。
+#     步數來自探索批次 fcx-assault-ast／-phz 的 -regs-at（本機證據）。
+recmem fcmd-assault-ast 1102006030 1102557471 1145000000 fcmd-occ-t4 - -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD $OCC
+recmem fcmd-assault-phz 912160349 912742120 955000000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC

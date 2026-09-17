@@ -250,12 +250,14 @@
   回合裡每一支走一格的四條分支（`113A:047D`：現在格與下一格都不是自己的、或下一格
   不是自己的而命令不是占領 → 「無法前往敵方的星系」清命令停駐；占領而下一格 ≠ 目的地
   → 問「要占領此星系嗎」`StateOccupyAsk`；軍事費不夠 → 不動）、到達的收尾（輸送 → 回程
-  首都、駐留 → 原版解散、其餘停駐）、停駐補待命行星（`2AF5:060D` 經濟力最高那顆）、
+  首都、駐留 → 整支解散（`docs/re/329`；原版沒有另外的「解散」鈕）、其餘停駐）、停駐補待命行星（`2AF5:060D` 經濟力最高那顆）、
   單方面占據 bit4 與占據報告——十三批 `fcmd-occ-*` 的艦隊／星域／行星表逐位元組、
   前兩回合整張畫面相同（第三回合起 remake 的叛亂亂數分岔）。占領的目的地只能選
   可達表 k ≤ 1 的格子；`1213:0003` 只是費沙的兩頁提醒。**占據格的戰略打行星
-  （`20B4:1497`）讀出來了沒接**：新遊戲的艦隊沒有艦艇池，`rules.PlanetAssault` 那組
-  吃不到；駐留解散、回合裡的過場視窗與士氣報告也沒接（#46 留著）。**一覽表四張的列
+  （`20B4:1497`，規格 058、`docs/re/330`）也接上了**：與戰場上的打行星是另一條算式（距離 0、
+  沒有減守軍、士氣由累計損失重算），以原版進出 1497 的兩份 1 MB 傾印驅動、逐欄相同；
+  回合結束不重算 bit4（原本 remake 多算的那一次拿掉了）。拿下行星的訊息框、士氣低落報告與
+  回合裡的過場視窗沒接。**一覽表四張的列
   （#47，`docs/re/323`、規格 055）**：星系資料點列 ＝ 換選那一格＋關清單＋星系情報視窗、
   艦隊資料點列 ＝ 艦隊視窗疊在清單上（關了回清單）、提督／敵將資料點列 ＝ 提督詳細資料
   （經歷／結束；敵將的現在位置印 ＊、同盟軍色 5）；▲▼ 一列、右鍵一層一層關；三種游標
@@ -291,8 +293,7 @@
   **戰略地圖逐格照記錄著色**（有自軍艦隊的星域用另一張色表，`docs/re/313`）。
 - **玩家還碰不到的功能**（2026-09-15 讀 `internal/game/game.go` 的 `click`
   盤點，不是憑印象）：
-  - 整套不存在：占據格的戰略打行星（`20B4:1497`）、
-    回合裡的過場視窗、參謀任命（`090A:0248`）、**交戰演出的圖與動畫**（`COMANI.BMG` 編碼未解；
+  - 整套不存在：回合裡的過場視窗（含拿下行星的訊息框、士氣低落報告）、參謀任命（`090A:0248`）、**交戰演出的圖與動畫**（`COMANI.BMG` 編碼未解；
     面板、三個視窗與戰鬥曲的出口已接）。
   - 戰略地圖本身：右下角「敵艦隊」分頁的列只在載存檔或打過仗之後才有東西
     （新編的艦隊沒有艦艇池，索敵等級永遠 0——與原版一樣）。
@@ -451,7 +452,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 3 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 4 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -487,6 +488,53 @@
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
+#### battle-assault-byte-mismatches — 戰場層打行星與位元組三處不符（103D 尾段、0593 艦種 5、Atan256 查表）
+
+*[#53](https://github.com/wicanr2/logh3/issues/53) · parity（對拍：要與原版逐位元組相同）*
+
+戰場層打行星有三處與位元組不符（戰略打行星讀 `20B4:103D`／`203A:0593`／`2BE1:011D` 時發現，
+`docs/re/330` §12；戰略層的 `strategicassault.go` 已照位元組寫，戰場層沒動）：
+
+1. `spreadOverFleet`（`20B4:103D`）尾段：原版把「留一艘」寫進 `[bp+2]`、呼叫 `203A:0593` 時 push 的卻是
+   `[bp+6]`（剩餘量），實際**不夾**——尾段可以把最大那組打光。`docs/re/152` 寫成「同樣夾」。
+2. `ApplyShipLoss`（`203A:0593`）兩格存量 `+0x0E`／`+0x12` 的縮減條件：原版艦種 5 **無條件**縮、其他艦種才看
+   艦種表是不是 0xFF（`0620: cmp al,5; jz 062B`）；remake 與 `docs/re/147` 寫成艦種 5 不縮。
+3. `Atan256`（sin／cos 二分法）與原版 `ds:593A` 查表（`rules.AtanTable256`）在 |dx|、|dy| 0..599 裡約 8,130 組差 1
+   （subagent 手抄 Python 比的，strong inference）。
+
+**卡在**：- 既有戰場收據（`s3assault` 等）剛好都沒有「剩餘量 ≥ 最大分隊」「艦種 5 被打」的局面，要用 `-poke` 造。
+- `Atan256` 用在戰場移動與射程，換掉會動到許多既有收據，要整批重跑比較。
+
+**做完的判準**：三處各有能區分兩種寫法的同狀態收據（或證明既有收據踩不到），戰場層改成位元組的寫法之後既有戰場收據全過。
+
+**證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/re/152-planet-counter-attack.md`](docs/re/152-planet-counter-attack.md)、[`docs/re/147-fortress-gun-damage.md`](docs/re/147-fortress-gun-damage.md)
+
+**核實**：`internal/rules/planetassault.go` 裡還找得到 `戰場層與位元組三處不符還沒修`（自承還在 ＝ 還沒做）
+
+#### turn-transition-windows — 回合裡的過場視窗與報告（出發前往／已經到達／已經駐留、攻占訊息框、士氣報告）
+
+*[#52](https://github.com/wicanr2/logh3/issues/52) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+回合裡的過場視窗與報告：remake 的回合同步跑完、不停下來畫。原版在「實行」之後會依序出現：
+
+- 右側面板「戰略模式處理中」（電腦座位「戰略模式思考中」）、清單暫時清掉；
+- 每一支艦隊走一格的「出發前往／已經到達／已經駐留在星系上。」與地圖上現在格、下一格各反白一次；
+  「無法前往敵方的星系」「由於移動經費不足無法移動」兩張錯誤報告（`docs/re/322` §六；
+  收據 `fcmd-garrison-report`／`-self-report` 在 #570M 就是「已經駐留」那一張）；
+- 戰略打行星拿下行星時的訊息框（`20B4:1922`：「我軍第Ｎ艦隊…正在攻占…已經歸屬…掌控之中」，
+  人類座位約 18M 步，`docs/re/330` §2.6）；
+- 士氣報告家族（`ds:32B4`：「士氣值低落的關係，已經無法戰鬥」「已經恢復，可以進行戰鬥」
+  「已全軍覆沒」；`1261:0104`，呼叫者沒查）。
+
+**卡在**：- remake 的回合處理是同步函式，要改成可以在中途停下來的狀態機（占領問話 `StateOccupyAsk` 已經是這種寫法，可以照抄）。
+- 士氣報告的門檻與呼叫者、電腦座位會不會顯示都沒讀。
+
+**做完的判準**：上面幾種視窗各有反組譯與同狀態收據，remake 在同一時點停下、畫同一張、同一種關法（或逾時）。
+
+**證據**：[`docs/re/322-fleet-arrival-and-occupation.md`](docs/re/322-fleet-arrival-and-occupation.md)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/spec/054-fleet-arrival.md`](docs/spec/054-fleet-arrival.md)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)
+
+**核實**：`internal/game/rebellion.go` 裡還找得到 `回合過場的訊息框還沒畫`（自承還在 ＝ 還沒做）
+
 #### engagement-animation — 交戰演出（ANI_PNL1 ＋ COMANI.BMG）與戰鬥曲的出口
 
 *[#48](https://github.com/wicanr2/logh3/issues/48) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -518,47 +566,9 @@
 
 **核實**：`internal/game/engagement.go` 裡還找得到 `方塊動畫沒畫`（自承還在 ＝ 還沒做）
 
-#### fleet-arrival-effects — 占領命令走到之後的效果與回合裡的兩張報告（規格 051 的排除範圍）
-
-*[#46](https://github.com/wicanr2/logh3/issues/46) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-戰略艦隊命令的作戰五項都下得了、艦隊也會走（規格 051）；**走到之後的那一路**讀完
-（`docs/re/322`），前半接上了（規格 054）：
-
-- 回合裡每一支走一格的四條分支（`113A:047D`）：「無法前往敵方的星系」清命令停駐、
-  占領而下一格不是目的地 → 問「<目的地>無法直接到達此星系。<下一格>要占領此星系嗎？」
-  （`StateOccupyAsk`）、「由於移動經費不足無法移動」不動、否則走。
-- 到達的收尾：輸送 → 回程首都、駐留 → 原版整支解散、其餘停駐；停駐而沒待命行星的
-  下一回合補該陣營經濟力最高那顆（`2AF5:060D`）。
-- 單方面占據 bit4 與占據報告；`1213:0003` 只是費沙的兩頁提醒（回值恆 1）。
-- 十三批 `fcmd-occ-*` 收據：艦隊／星域／行星表逐位元組，前兩回合整張畫面相同。
-
-**卡在**：- 戰略打行星（`20B4:1512`：三次回復 → 打第一顆不是自己的行星（`0D96` 的量、`0E2C` 換手、
-  `0E7E` 反擊）→ 拿下再三次回復，最多九回合）吃艦艇記錄，而**新遊戲的艦隊沒有艦艇池**
-  （`Slot` 是 nil）——這也是新遊戲走進戰鬥會撞到的同一個洞，要先補艦艇池；亂數
-  （`ds:94DC`）要與原版同序，同狀態對拍才有意義。
-- 戰略打行星的算式整條讀完、兩份收據逐擊對帳（subagent，本機筆記 `workplace/re-notes/strategic-assault.md`，
-  待整理成 `docs/re/330`）：`0D96` 戰略版不減守軍、距離 0；士氣 `+0x3C` 由 `1261:03C2` 依損失重算；
-  功績 `203A:0743` 是提督 `+0x02`。remake 要補：九回合迴圈、戰略打掉量、單步回復、功績、每次扣艘數後
-  重算士氣，並修 `spreadOverFleet` 尾段（死碼）與 `ApplyShipLoss` 艦種 5。
-- 回合裡的過場視窗（「戰略模式處理中／思考中」、每支艦隊的「出發前往／已經到達／已經
-  駐留」與地圖反白、三張錯誤報告）remake 同步跑完不畫；士氣報告家族（「士氣值低落的
-  關係，已經無法戰鬥」等，`ds:32B4`）的門檻與誰印沒讀。
-- 問話視窗 `113A:0899` 的版面照反組譯排、沒有畫面收據：正常路徑碰不到它（目的地只能選
-  可達表 k ≤ 1 的格子，要路上那一格中途易主才會問）。
-
-**做完的判準**：占據那一格的戰略打行星（`20B4:1497`）接進 remake 且有同狀態收據（亞斯提 4200→3768、
-費沙 8800→8792、艦隊 `+0x3C`）；`rebellion.go` 的自承註解拿掉。
-（駐留到達整支解散已接上：`docs/re/329`、`TestGarrisonArrivalDisbandsMatchesOracle`。原版玩家介面
-沒有另外的「解散」鈕，駐留就是解散；`297B:0332` 不是函式入口。）
-
-**證據**：[`docs/re/322-fleet-arrival-and-occupation.md`](docs/re/322-fleet-arrival-and-occupation.md)、[`docs/spec/054-fleet-arrival.md`](docs/spec/054-fleet-arrival.md)、[`docs/spec/051-strategic-fleet-command.md`](docs/spec/051-strategic-fleet-command.md)、[`docs/playtest/021-strategic-fleet-command.md`](docs/playtest/021-strategic-fleet-command.md)、[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)
-
-**核實**：`internal/game/rebellion.go` 裡還找得到 `戰略打行星還沒接`（自承還在 ＝ 還沒做）
-
 ### 做完的（不在矩陣裡的那幾條）
 
-54 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+55 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1632,6 +1642,44 @@ CONFORMED。
 **證據**：[`docs/re/325-enemy-tab-rows-and-window.md`](docs/re/325-enemy-tab-rows-and-window.md)、[`docs/spec/052-fleet-list-tabs.md`](docs/spec/052-fleet-list-tabs.md)、[`docs/playtest/023-enemy-tab.md`](docs/playtest/023-enemy-tab.md)、[`docs/internals/data/enemy-fleet-window.json`](docs/internals/data/enemy-fleet-window.json)
 
 **核實**：`TestEnemyTabClearMatchesOracle` 釘在 `./internal/game`
+
+#### fleet-arrival-effects — 占領命令走到之後的效果與回合裡的兩張報告（規格 051 的排除範圍）
+
+*[#46](https://github.com/wicanr2/logh3/issues/46) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+戰略艦隊命令的作戰五項都下得了、艦隊也會走（規格 051）；**走到之後的那一路**讀完
+（`docs/re/322`），前半接上了（規格 054）：
+
+- 回合裡每一支走一格的四條分支（`113A:047D`）：「無法前往敵方的星系」清命令停駐、
+  占領而下一格不是目的地 → 問「<目的地>無法直接到達此星系。<下一格>要占領此星系嗎？」
+  （`StateOccupyAsk`）、「由於移動經費不足無法移動」不動、否則走。
+- 到達的收尾：輸送 → 回程首都、駐留 → 原版整支解散、其餘停駐；停駐而沒待命行星的
+  下一回合補該陣營經濟力最高那顆（`2AF5:060D`）。
+- 單方面占據 bit4 與占據報告；`1213:0003` 只是費沙的兩頁提醒（回值恆 1）。
+- 十三批 `fcmd-occ-*` 收據：艦隊／星域／行星表逐位元組，前兩回合整張畫面相同。
+
+**卡在**：- 戰略打行星（`20B4:1512`：三次回復 → 打第一顆不是自己的行星（`0D96` 的量、`0E2C` 換手、
+  `0E7E` 反擊）→ 拿下再三次回復，最多九回合）吃艦艇記錄，而**新遊戲的艦隊沒有艦艇池**
+  （`Slot` 是 nil）——這也是新遊戲走進戰鬥會撞到的同一個洞，要先補艦艇池；亂數
+  （`ds:94DC`）要與原版同序，同狀態對拍才有意義。
+- 戰略打行星的算式整條讀完、兩份收據逐擊對帳（subagent，本機筆記 `workplace/re-notes/strategic-assault.md`，
+  待整理成 `docs/re/330`）：`0D96` 戰略版不減守軍、距離 0；士氣 `+0x3C` 由 `1261:03C2` 依損失重算；
+  功績 `203A:0743` 是提督 `+0x02`。remake 要補：九回合迴圈、戰略打掉量、單步回復、功績、每次扣艘數後
+  重算士氣，並修 `spreadOverFleet` 尾段（死碼）與 `ApplyShipLoss` 艦種 5。
+- 回合裡的過場視窗（「戰略模式處理中／思考中」、每支艦隊的「出發前往／已經到達／已經
+  駐留」與地圖反白、三張錯誤報告）remake 同步跑完不畫；士氣報告家族（「士氣值低落的
+  關係，已經無法戰鬥」等，`ds:32B4`）的門檻與誰印沒讀。
+- 問話視窗 `113A:0899` 的版面照反組譯排、沒有畫面收據：正常路徑碰不到它（目的地只能選
+  可達表 k ≤ 1 的格子，要路上那一格中途易主才會問）。
+
+**做完的判準**：占據那一格的戰略打行星（`20B4:1497`）接進 remake 且有同狀態收據（亞斯提 4200→3768、
+費沙 8800→8792、艦隊 `+0x3C`）；`rebellion.go` 的自承註解拿掉。
+（駐留到達整支解散已接上：`docs/re/329`、`TestGarrisonArrivalDisbandsMatchesOracle`。原版玩家介面
+沒有另外的「解散」鈕，駐留就是解散；`297B:0332` 不是函式入口。）
+
+**證據**：[`docs/re/322-fleet-arrival-and-occupation.md`](docs/re/322-fleet-arrival-and-occupation.md)、[`docs/spec/054-fleet-arrival.md`](docs/spec/054-fleet-arrival.md)、[`docs/spec/051-strategic-fleet-command.md`](docs/spec/051-strategic-fleet-command.md)、[`docs/playtest/021-strategic-fleet-command.md`](docs/playtest/021-strategic-fleet-command.md)、[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)
+
+**核實**：`TestStrategicAssaultMatchesOracle` 釘在 `./internal/rules`
 
 #### month-end-tax-per-seat — 月底結算的收稅要逐座位、中立不扣（別家星域的經濟力比原版少）
 

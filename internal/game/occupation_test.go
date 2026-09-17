@@ -1,7 +1,10 @@
 package game
 
 import (
+	"encoding/binary"
 	"fmt"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/wicanr2/logh3/internal/rules"
@@ -133,5 +136,44 @@ func TestPlanStepBranches(t *testing.T) {
 	g.Click(480, 270) // 待命（內容格 (21,5)）
 	if g.State() == StateOccupyAsk || g.fleets[0].Region != 13 || g.fleets[0].Target != 19 {
 		t.Fatalf("按了待命之後 %v、艦隊 %+v，預期不動、命令留著", g.State(), g.fleets[0])
+	}
+}
+
+// 占據那一格的戰略打行星接進回合（規格 058）：remake 的回合亂數第三回合起就與原版分岔，
+// 同狀態的逐擊對拍在 `rules.TestStrategicAssaultMatchesOracle`（`fcmd-assault-*` 的
+// mem-in／mem-out）。這裡釘三件事：行星座標與原版 `2AF5:00CB` 算的相同（mem-out 的
+// `+0x46`／`+0x48`）、走進亞斯提那一回合巴溫真的被打（防衛力下降、艦隊士氣下降、提督有功績）、
+// 同一套回合流程照常收尾。
+func TestOccupyAstarteRunsStrategicAssault(t *testing.T) {
+	out, err := os.ReadFile(filepath.Join(root, "workplace/oracle/fcmd-assault-ast/mem-out.bin"))
+	if err != nil || len(out) != 1<<20 {
+		t.Skip("缺收據 fcmd-assault-ast 的 mem-out.bin")
+	}
+	g := reachOccupyAstarte(t)
+	start, n := g.res.Planets.Range(16)
+	sites := rules.PlanetSites(g.battleCells(16), g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
+	if len(sites) < n {
+		t.Fatalf("亞斯提的行星座標 %d 筆，行星 %d 顆", len(sites), n)
+	}
+	for i := 0; i < n; i++ {
+		o := 0x53132 + (start+i)*rules.PlanetRecord
+		x, y := int(binary.LittleEndian.Uint16(out[o+0x46:])), int(binary.LittleEndian.Uint16(out[o+0x48:]))
+		if sites[i].X != x || sites[i].Y != y {
+			t.Fatalf("行星 %d 座標 (%d,%d)，原版 (%d,%d)", start+i, sites[i].X, sites[i].Y, x, y)
+		}
+	}
+	for turn := 0; turn < 5; turn++ {
+		executeTurn(t, g)
+	}
+	baw := g.res.Planets.Record(start)
+	if d := int(binary.LittleEndian.Uint16(baw[0x14:])); d >= 4200 || baw[0x11] != 1 {
+		t.Fatalf("第五回合之後巴溫防衛力 %d、擁有者 %d，應該被打過（原版 3768）", d, baw[0x11])
+	}
+	f := g.fleets[0]
+	if f.Morale >= 100 || f.Morale < 50 {
+		t.Fatalf("第五回合之後艦隊士氣 %d，應該掉一些（原版 67）", f.Morale)
+	}
+	if m := binary.LittleEndian.Uint32(g.admiralRecord(f.Admiral)[2:]); m == 0 {
+		t.Fatal("提督功績沒有加（原版 845）")
 	}
 }

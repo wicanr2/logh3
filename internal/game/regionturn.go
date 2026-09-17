@@ -101,13 +101,10 @@ func (g *Game) refreshRegionPosture() {
 	for i := range owner {
 		owner[i] = int(g.regionRecord(i)[regionOwnerOff])
 	}
-	// `056A:0469` 先跑（收據 `flagpass` 量到它在 `2703:08DE` 之前，
-	// 兩支都在回合計數器遞增之前，`docs/re/245`）。
-	occ := g.res.Graph.Occupations(owner, g.fleets)
-	for i := 0; i < rules.RegionCount; i++ {
-		rec := g.regionRecord(i)
-		rec[regionFlagsOff] = rules.ApplyOccupation(rec[regionFlagsOff], occ[i])
-	}
+	// `056A:0469`（bit1／bit2／bit4）**不在這裡**：它在命令階段那一串走完艦隊之後、
+	// 逐格掃描之前跑（`prepareOccupationReports`；`docs/re/245` 的斷點其實是 `056A:03E0`
+	// 的返回）。收據 `fcmd-occ-phz-t3`：戰略打行星把艦隊士氣打到 bit0 之後，回合
+	// 結束時費沙的 `+0x13` 仍是 18——這一圈若重算 bit4 就會清掉（`docs/re/330`）。
 	for i, p := range g.res.Graph.Postures(owner, g.fleets) {
 		rec := g.regionRecord(i)
 		rec[regionFlagsOff] = rules.ApplyPosture(rec[regionFlagsOff], p)

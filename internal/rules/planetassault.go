@@ -247,6 +247,10 @@ func assaultCounter(p *BattlePlanet, f *BattleFleet, bits int,
 // spreadOverFleet 是 `20B4:103D`：把量按「艘數佔全隊的百分比」分攤到各
 // 分隊，餘數丟給艘數最多的那一支，而且**不打光**（每支至少留一艘）。
 //
+// 戰場層與位元組三處不符還沒修：尾段原版不夾「留一艘」、`ApplyShipLoss` 艦種 5
+// 的存量條件寫反、`Atan256` 與 `ds:593A` 查表差 1（`docs/re/330` §12；戰略層的
+// `strategicassault.go` 已照位元組）。
+//
 // 兩段整數捨去（先算百分比再乘）是原版的形狀，換成一次乘除會差幾艘。
 func spreadOverFleet(f *BattleFleet, units []BattleUnit,
 	kinds *ShipKindTable, amount int) int {
@@ -309,9 +313,9 @@ func spreadOverFleet(f *BattleFleet, units []BattleUnit,
 // capturePlanet 是換手的效果（`20B4:0503` 尾巴，收據 `s3assault` 逐一相符）。
 func capturePlanet(p *BattlePlanet, faction int) {
 	p.Owner = faction
-	p.Stock.Ships = [7]int{}        // `+0x20`–`+0x3B` ← 0
-	p.Stock.Missiles /= 2           // `+0x3C` 右移一位
-	p.Stock.Fighters = 0            // `+0x40` ← 0
+	p.Stock.Ships = [7]int{} // `+0x20`–`+0x3B` ← 0
+	p.Stock.Missiles /= 2    // `+0x3C` 右移一位
+	p.Stock.Fighters = 0     // `+0x40` ← 0
 }
 
 // FleetIntegrity 重算一支艦隊的編制完整度（記錄 `+0x3C`，`docs/re/153`）：

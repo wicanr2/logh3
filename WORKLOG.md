@@ -7302,3 +7302,21 @@ GitHub 的 issue 時間軸承擔。
 - `TestGarrisonArrivalDisbandsMatchesOracle` 兩條路整張逐位元組；GUI `fcmd-garrison-t1`；`internal/...` 全過。
 - 文件：`docs/re/329`（新）、規格 054、internals 33、playtest 021、CONTEXT。#46 判準改寫（解散拿掉、留戰略打行星）。
 - 戰略打行星的反組譯 subagent 也回來了（逐擊對帳，筆記在 `workplace/re-notes/strategic-assault.md`），下一步整理成 `docs/re/330` 並實作。
+
+## 2026-09-17 — 戰略打行星接上（關 #46）；開 #52 過場視窗、#53 戰場層三處位元組出入
+
+- subagent 把 `20B4:1497` 整條讀完（`1512` 九回合迴圈、戰略版 `0D96`、`0E7E`／`103D`／`0593`、士氣 `1261:032B`、功績 `203A:0743`、
+  換手、亂數順序），在兩份收據上逐擊算回 3768／67、8792／47（`docs/re/330`，由筆記整理）。
+- 收據第 22 段 `recmem`：輸入同 `fcmd-occ-t5`／`phz-t3`（畫面雜湊相同），在進 1497 與回到 `1507` 各倒 1 MB。步數取自 subagent 的
+  `-regs-at` 時間線；主 session 核對了進入時種子低位元組 `7D`、離開時 3768／67 與 8792／47。`fleetcmd_rerun.sh` 認得 `recmem`，
+  `OCC`／`DIS` 移到標頭（單批重跑原本讀不到）。
+- remake：`rules.StrategicAssault`（`strategicassault.go`，含 `AtanTable256` 查表）、`Game.strategicAssault`。
+  `TestStrategicAssaultMatchesOracle` 第一次就兩批逐欄相同；突變檢查（方位表錯一格、士氣低落不跳過）都會失敗。
+  沒有重用戰場層的 `assaultCounter`／`spreadOverFleet`／`ApplyShipLoss`：它們與位元組有三處出入（開 #53）。
+- 回合時序修正：`refreshRegionPosture`（回合結束）也跑了一次 `056A:0469` 的 bit4 重算，打完士氣低落的費沙被清成 08（原版 18）。
+  `docs/re/245` 的斷點其實是 `056A:03E0` 的返回，0469 只在走完艦隊之後跑——拿掉回合結束那一次；
+  `TestRecomputeRegionsMarksOccupation` 原本依舊時序寫、沒有收據，改成檢查 `prepareOccupationReports` 並加「回合結束不清 bit4」。
+- 行星座標：`rules.PlanetSites` 與原版 mem-out 的 `+0x46`／`+0x48` 相同（`TestOccupyAstarteRunsStrategicAssault`）。
+- `internal/...` 全過、GUI 全部案例逐位元組相同。文件：`docs/re/330`（新）、規格 058（新）、054、internals 53 改寫、08（`+2…+5` ＝ 功績）、
+  `docs/re/152`／`147`／`322` 加更正指標、playtest 021、規格索引、CONTEXT。
+- 關 #46（verify → go_test）；開 #52（回合過場視窗與報告）、#53（戰場層打行星三處位元組出入）。

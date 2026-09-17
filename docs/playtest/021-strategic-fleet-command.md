@@ -184,6 +184,8 @@
 | `fcmd-garrison-self-done` | 決定：記錄仍是駐留（+0x08=2） | `f4392aa99cf3ac7764a5d4ef5e03d868b862ebd72838a96d9016ede90b72e5ee` | 不比 |
 | `fcmd-garrison-self-report` | 實行 → #570M 報告 | `977b9c3356a4188acf8989c9c972ce5c9f5e6b93e8d08b1fe93fa3000f7302ce` | 不比（過場不畫） |
 | `fcmd-garrison-self-t1` | #665M：就地解散、瓦爾哈拉存量 75000→78000、不扣移動費 | `86532c2ba52f5fd3baf736f359174ecd1282b945ed4accce27ac193c59025b39` | 0 |
+| `fcmd-assault-ast` | （第 22 段，從 `fcmd-occ-t4`，輸入同 `fcmd-occ-t5`）進 `20B4:1497` #1102006030、回到 `1507` #1102557471 各倒 1 MB；巴溫 4200→3768、`+3C` 67；mem-in `7982f0667c4395ee…`、mem-out `4df59b3e17dd45fb…` | `8f5855bc3f73975d2f0bf63c5bda9722b715aeb4d551482415ab1b718ce53e92` | 不比畫面（＝ t5／phz-t3）；記憶體逐欄 0（`TestStrategicAssaultMatchesOracle`） |
+| `fcmd-assault-phz` | （從 `fcmd-occ-phz-t2`，輸入同 `phz-t3`）#912160349／#912742120；費沙 8800→8792、`+3C` 47、`+00` 05；mem-in `7cbffccff1c8bedf…`、mem-out `34cac788670c116a…` | `006288b49ad1e138d1556932f4a9ad984aac320cf7905c2e688b65ea7c8b38c9` | 不比畫面（＝ t5／phz-t3）；記憶體逐欄 0（`TestStrategicAssaultMatchesOracle`） |
 | `fcmd-lst-star` | （從 `fcmd-base`）一覽表 (448,85) → 星系資料 (460,85)；游標停在列 2 卡斯特羅普：地圖反白 3、左下角卡斯特羅普；瓦爾哈拉那一列「1﹕0」 | `257b2e6ffdd365d35055888838cb14ebbccb4f461eca6421ab53f139b7fee265` | 0 |
 | `fcmd-lst-star-row` | 列 0 瓦爾哈拉 (460,50) → 換選、關清單、星系情報視窗 | `95789b6188c109f1d1f17a56c0f2067aea2d8851c462e9933b3c6784a69fd461` | 小圖最後一列 |
 | `fcmd-lst-star-row-close` | 結束 (270,350) → 地圖，左下角瓦爾哈拉 1﹕0 | `64dac6060a3cde6905455442302a458091bf5229383117994ba41e450ff80bd0` | 0 |

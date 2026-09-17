@@ -71,3 +71,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`055`](055-list-screen-rows.md) | 一覽表四張的列 | CONFORMED（分頁 DRAFT） |
 | [`056`](056-engagement-scene.md) | 交戰演出（打行星那一種）與戰鬥曲的出口 | DRAFT |
 | [`057`](057-battle-view-scroll.md) | 戰場視野的滑鼠捲動（按住右鍵） | CONFORMED |
+| [`058`](058-strategic-planet-assault.md) | 戰略打行星（占據那一格每回合打行星、反擊、士氣、換手） | CONFORMED（規則層）；訊息框 DRAFT |

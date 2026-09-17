@@ -1,6 +1,8 @@
 package game
 
 import (
+	"encoding/binary"
+
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 )
@@ -110,10 +112,9 @@ func (g *Game) scanRegionsFrom(from int) {
 			return
 		}
 		if occ.Occupied {
-			// 原版在這一格改跑戰略打行星（`20B4:1497`：三次回復、打第一顆不是
-			// 自己的行星、反擊、換手，最多九回合；`docs/re/322` §五）。占據格的
-			// 戰略打行星還沒接——新遊戲的艦隊沒有艦艇池，`rules.PlanetAssault`
-			// 那組吃不到（#46）。
+			// 單方面占據的格子改跑戰略打行星（`20B4:1497`：三次回復、打第一顆不是
+			// 自己的行星、反擊、換手，最多九回合；規格 058、`docs/re/330`）。
+			g.strategicAssault(r)
 			continue
 		}
 		rules.DepartNeutralPlanet(g.regionRecord(r), g.res.Planets, r, g.rand94DC())
@@ -187,4 +188,60 @@ func (g *Game) drawRebellionReport(fb *gfx.Framebuffer) {
 	}
 	g.res.FlipReport.Draw(fb, g.res.Font, rules.RegionName(rec), report.Owner, "rebellion")
 	g.drawReportFace(fb, report.Owner)
+}
+
+// strategicAssault 是 `20B4:1497(星域)`：攻方 ＝ 這一格有帝國艦隊（士氣低落的不算，
+// `297B:14F8`）就是帝國、否則同盟；攻方在場的艦隊依艦隊表順序排進 `rules.StrategicAssault`。
+// 行星記錄就地改、艦隊的艘數與士氣改在結構上、功績寫提督 `+0x02`、兩個計分器照加。
+//
+// 回合過場的訊息框還沒畫：拿下行星那一框（`20B4:1922`）與士氣低落報告（`1261:0104`）
+// remake 同步跑完不停（規格 058 已知差異）。
+func (g *Game) strategicAssault(region int) {
+	if g.res.Planets == nil {
+		return
+	}
+	attacker := 1
+	for _, f := range g.fleets {
+		if f.Region == region && f.Faction == 0 && f.Flags&0x01 == 0 {
+			attacker = 0
+		}
+	}
+	start, n := g.res.Planets.Range(region)
+	if n == 0 {
+		return
+	}
+	lo := rules.PlanetHeader + start*rules.PlanetRecord
+	planets := g.res.Planets.Data[lo : lo+n*rules.PlanetRecord]
+	var sites []rules.PlanetSite
+	if cells := g.battleCells(region); len(cells) > 0 && g.res.Battle != nil {
+		sites = rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
+	}
+	var sfs []rules.StrategicFleet
+	for i := range g.fleets {
+		f := &g.fleets[i]
+		if f.Region != region || f.Faction != attacker {
+			continue
+		}
+		adm := g.admiralRecord(f.Admiral)
+		ab := rules.FleetAbilities(adm, g.admiralRecord(f.Adjutant))
+		command := 0
+		if len(adm) > 0x0B {
+			command = int(adm[0x0B])
+		}
+		sfs = append(sfs, rules.StrategicFleet{Fleet: f, Ability40: int(ab[3]), Ability41: int(ab[4]), Command: command})
+	}
+	if len(sfs) == 0 {
+		return
+	}
+	res := rules.StrategicAssault(planets, sites, attacker, sfs, g.rand94DC())
+	g.mutableAdmirals()
+	for a, v := range res.Merit {
+		if rec := g.admiralRecord(a); len(rec) >= 6 {
+			binary.LittleEndian.PutUint32(rec[2:], binary.LittleEndian.Uint32(rec[2:])+uint32(v))
+		}
+	}
+	for f := 0; f < 2; f++ {
+		g.battleScore[f] += res.Score[f]
+		g.campaignScore[f] += res.Score[f]
+	}
 }

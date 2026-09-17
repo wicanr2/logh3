@@ -317,27 +317,37 @@ func TestRecomputeRegionsKeepsOtherFlagBits(t *testing.T) {
 }
 
 // bit4 ＝ 單方面占據：艦隊停在不屬於它的星域、而對方沒有艦隊。
-// 待在自家地盤不算（`056A:0469`，`docs/re/245`）。
+// 待在自家地盤不算（`056A:0469`）。那一圈在命令階段走完艦隊之後跑
+// （`prepareOccupationReports`），**回合結束的 `regionPass` 不重算 bit4**
+// （`docs/re/245` 的斷點是 `056A:03E0` 的返回；收據 `fcmd-occ-phz-t3`，`docs/re/330`）。
 func TestRecomputeRegionsMarksOccupation(t *testing.T) {
 	g := newRegionTurnGame(t) // 0–15 帝國、16–31 同盟
 	// 帝國一支停在同盟的星域 20 → bit4；停在自己的星域 5 → 不設。
 	g.fleets = []rules.Fleet{{Faction: 0, Region: 20}, {Faction: 0, Region: 5}}
-	regionPass(g)
+	regionPass(g) // 先照行星把星域擁有者算出來
+	g.prepareOccupationReports()
 	if got := g.regionRecord(20)[0x13]; got&0x10 == 0 {
 		t.Errorf("星域 20 應該設 bit4，+0x13 ＝ %02X", got)
 	}
 	if got := g.regionRecord(5)[0x13]; got&0x10 != 0 {
 		t.Errorf("星域 5 是自家地盤，不該設 bit4，+0x13 ＝ %02X", got)
 	}
+	// 回合結束那一圈不動 bit4：艦隊士氣低落（bit0）了也一樣留著，下一次 0469 才清。
+	g.fleets[0].Flags = 1
+	regionPass(g)
+	if got := g.regionRecord(20)[0x13]; got&0x10 == 0 {
+		t.Errorf("回合結束不該清 bit4，+0x13 ＝ %02X", got)
+	}
+	g.fleets[0].Flags = 0
 	// 雙方都在 → bit2，而且 bit4 不設。
 	g.fleets = append(g.fleets, rules.Fleet{Faction: 1, Region: 20})
-	regionPass(g)
+	g.prepareOccupationReports()
 	if got := g.regionRecord(20)[0x13]; got&0x04 == 0 || got&0x10 != 0 {
 		t.Errorf("星域 20 應該只設 bit2，+0x13 ＝ %02X", got)
 	}
 	// `Flags` bit0 有設的不計（`297B:14F8` 的 `test 1`）。
 	g.fleets = []rules.Fleet{{Faction: 0, Region: 20, Flags: 1}}
-	regionPass(g)
+	g.prepareOccupationReports()
 	if got := g.regionRecord(20)[0x13]; got&0x14 != 0 {
 		t.Errorf("bit0 有設的不該算進去，+0x13 ＝ %02X", got)
 	}

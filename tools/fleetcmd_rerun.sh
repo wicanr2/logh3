@@ -22,7 +22,7 @@ if [[ "${1:-}" == -s ]]; then
 else
   name=${1:?用法：fleetcmd_rerun.sh <批次名> | -s <段號>}
   line=$(awk -v n="$name" '
-    $0 ~ "^rec "n" " {p=1}
+    $0 ~ "^rec(mem)? "n" " {p=1}
     p {print; if ($0 !~ /\\$/) {exit}}' "$MAIN")
   [[ -n "$line" ]] || { echo "找不到批次 $name" >&2; exit 1; }
   eval "$line"
