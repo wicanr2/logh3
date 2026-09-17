@@ -1,7 +1,8 @@
-"""解 GRAPH.IMG 的中文字型：釘住格式與索引，輸出 JSON 與 PNG。
+"""解 GRAPH.IMG 的中文字型：驗證格式與索引，輸出字形圖集 PNG。
 
-⚠ 會整份覆寫 docs/internals/data/font-graph-img.json：那份後來人工補過欄位，這支還是舊格式，
-重跑之前先處理（2026-09-17 踩過，git checkout 還原）。
+`docs/internals/data/font-graph-img.json` 是人工整理的知識檔（區塊、證據、正對照），**這支不寫它**，
+只讀它、核對其中算得出來的幾項（檔長、各區塊字形數加總、九個 seek 偏移）；對不上就失敗。
+（這支原本會用當年的舊模型整份覆寫那份 JSON，#61。）
 
 驗證用畫面當 oracle（九個已知字逐位元吻合），再用倚天 stdfont.15 做外部
 對照，確認遊戲是不是直接內嵌了倚天字型。
@@ -90,7 +91,6 @@ for g in range(0, min(BASE, 3)):
     print('   ' + '-' * 16)
 
 os.makedirs('/work/workplace/assets/font', exist_ok=True)
-os.makedirs('/work/docs/internals/data', exist_ok=True)
 
 # PNG：整份字型做成圖集，每列 96 個字
 per_row = 96
@@ -107,18 +107,24 @@ png.write_mono('/work/workplace/assets/font/graph-img-sheet.png',
 print(f"\n寫出 workplace/assets/font/graph-img-sheet.png"
       f"（{per_row*WIDTH}×{nrow*ROWS}，{total} 個字形）")
 
-meta = dict(
-    file='GRAPH.IMG', bytes=len(img), glyphs=total,
-    format=dict(width=WIDTH, rows=ROWS, stride=STRIDE,
-                bit_order='MSB 在左', row_bytes='每列 2 bytes，高位在前'),
-    index=dict(
-        formula='offset = (big5_index(code) + base) * 30',
-        big5_index='(lead-0xA1)*157 + (trail<=0x7E ? trail-0x40 : trail-0xA1+63)',
-        base=BASE,
-        note=f'字碼序號 0 對應 Big5 0xA140；它前面還有 {BASE} 個字形，內容未確認'),
-    verified_against='workplace/re06/screen.bin（主選單，dosgolem oracle）',
-    verified=table,
-    external_reference=ext)
-with open('/work/docs/internals/data/font-graph-img.json', 'w') as f:
-    json.dump(meta, f, ensure_ascii=False, indent=2)
-print("寫出 docs/internals/data/font-graph-img.json")
+# 核對人工整理的那份 JSON（不寫它）。
+meta = json.load(open('/work/docs/internals/data/font-graph-img.json'))
+problems = []
+if meta['bytes'] != len(img):
+    problems.append(f"bytes {meta['bytes']} ≠ 檔案 {len(img)}")
+half = next(b for b in meta['blocks'] if b['start'] == 0)
+full_glyphs = sum(b['glyphs'] for b in meta['blocks'] if b['start'] != 0)
+if half['end'] // 15 != half['glyphs'] or (len(img) - half['end']) // STRIDE != full_glyphs:
+    problems.append(f"區塊字形數：半形 {half['glyphs']}、全形合計 {full_glyphs}，檔案算出 {(len(img) - half['end']) // STRIDE}")
+for s in meta['verified_seeks']:
+    o = offset_of(int(s['big5'], 16))
+    if o != s['offset']:
+        problems.append(f"{s['char']} {s['big5']}：公式 {o}，JSON {s['offset']}")
+    row = next((r for r in table if r['big5'] == s['big5']), None)
+    if row is not None and not row['verified']:
+        problems.append(f"{s['char']} 與主選單畫面不吻合")
+if ok != len(CHARS):
+    problems.append(f"畫面比對 {ok}/{len(CHARS)}")
+if problems:
+    sys.exit("font-graph-img.json 與 GRAPH.IMG 對不上：\n  " + "\n  ".join(problems))
+print("font-graph-img.json 核對通過（檔長、區塊字形數、九個 seek 偏移、畫面比對）")

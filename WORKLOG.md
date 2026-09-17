@@ -7355,3 +7355,10 @@ GitHub 的 issue 時間軸承擔。
   快照張數對了才跑 verify（第一次抓到 53 張、verify 看不到 #54）。249 條、0 條斷言不成立。
 - CONTEXT「玩家還碰不到的功能」改成 issue 索引；配樂位置改成 `assets/original/music/ogg/`。
 - 第六輪 goal：`docs/goal/2026-09-17-turn-transition-windows-round-6.md`（A #61 暖身 → B #52 回合過場視窗 → C #57 全滅）。
+
+## 2026-09-17 — font_extract.py 不再覆寫 font-graph-img.json（關 #61；第六輪 A）
+
+- 比對兩份：版控那份是人工知識檔（區塊、正對照、seek 驗證），腳本寫出的是舊模型（`base`、「前面還有 N 個字形，內容未確認」），
+  寫回去是倒退。改成腳本讀它、核對檔長／區塊字形數加總／九個 seek 偏移／畫面比對，對不上就失敗；不改任何欄位語意。
+- 重跑：JSON 不變、`graph-img-sheet.png` 與 `assets/original/font/` 相同；反向檢查把「帝」偏移改 63361 會報錯。
+- 順手：JSON `exports` 與 internals 06 的圖集位置改成 `assets/original/font/`。#61 verify → absent（`json.dump(meta`）。

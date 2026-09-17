@@ -1,7 +1,7 @@
 # 中文字型：`GRAPH.IMG`
 
 機器可讀版本在 [`data/font-graph-img.json`](data/font-graph-img.json)；
-點陣圖集在 `workplace/assets/font/`（本機，gitignore）。
+點陣圖集與半形字頭在 `assets/original/font/`（進版控；`tools/scripts/font_extract.py`／`font_head.py` 產生，前者同時核對 `data/font-graph-img.json`），其餘探索用的圖在 `workplace/assets/font/`（本機）。
 
 ## 結論（confirmed）
 

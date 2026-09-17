@@ -83,8 +83,8 @@
     "external": "與倚天 stdfont.15／ascfont.15 逐位元組比對"
   },
   "exports": {
-    "sheet": "workplace/assets/font/graph-img-sheet.png（全部 13995 個字形，1536×2190）",
-    "halfwidth": "workplace/assets/font/graph-img-head-8x15.png",
+    "sheet": "assets/original/font/graph-img-sheet.png（全部 13995 個字形，1536×2190；tools/scripts/font_extract.py 產生並核對本檔）",
+    "halfwidth": "assets/original/font/graph-img-head-8x15.png",
     "regions": ["region-b-16x15.png", "region-c-16x15.png", "gap-17970-27030.png"],
     "rebuild": "tools/py.sh tools/scripts/kana_charcodes.py sheet|art|text|presym|checks|emit"
   }

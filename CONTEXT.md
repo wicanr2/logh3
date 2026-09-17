@@ -451,7 +451,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 20 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 19 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -600,20 +600,6 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 **證據**：[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)、[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)
 
 **核實**：要人判——remake 沒有對應的程式碼可綁；接上時綁 absent 或 go_test（參謀任命的收據）。
-
-#### font-extract-overwrites-json — font_extract.py 重跑會整份蓋掉人工補過的 font-graph-img.json
-
-*[#61](https://github.com/wicanr2/logh3/issues/61) · decision（取捨：等使用者裁決）*
-
-`tools/scripts/font_extract.py` 輸出的 `docs/internals/data/font-graph-img.json` 是舊格式（62 行），而版控裡那份後來人工補過欄位（77 行）。
-2026-09-17 為了把字型素材搬進 `assets/original/` 重跑時整份被蓋掉，用 `git checkout` 還原。重跑那支之前要先決定：改腳本輸出新格式、
-還是拆成兩個檔（腳本產生的與人工整理的）。
-
-**做完的判準**：腳本重跑之後 `font-graph-img.json` 不變（或人工那份另存、腳本不碰）。
-
-**證據**：[`docs/internals/06-font-graph-img.md`](docs/internals/06-font-graph-img.md)
-
-**核實**：`tools/scripts/font_extract.py` 裡還找得到 `會整份覆寫 docs/internals/data/font-graph-img.json`（自承還在 ＝ 還沒做）
 
 #### hold-to-scroll — ▲▼ 按住連捲（一覽表、右下角清單、提督清單、艦隊組成）
 
@@ -816,7 +802,7 @@ remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、
 
 ### 做完的（不在矩陣裡的那幾條）
 
-55 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+56 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1816,6 +1802,22 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### font-extract-overwrites-json — font_extract.py 重跑會整份蓋掉人工補過的 font-graph-img.json
+
+*[#61](https://github.com/wicanr2/logh3/issues/61) · decision（取捨：等使用者裁決）*
+
+`tools/scripts/font_extract.py` 輸出的 `docs/internals/data/font-graph-img.json` 是舊格式（62 行），而版控裡那份後來人工補過欄位（77 行）。
+2026-09-17 為了把字型素材搬進 `assets/original/` 重跑時整份被蓋掉，用 `git checkout` 還原。重跑那支之前要先決定：改腳本輸出新格式、
+還是拆成兩個檔（腳本產生的與人工整理的）。
+
+做法（2026-09-17）：人工那份是知識檔，腳本寫出的是當年的舊模型（「前面還有 N 個字形，內容未確認」），所以腳本**不再寫**，改成核對。反向檢查：把「帝」的偏移改成 63361，腳本報「公式 63360，JSON 63361」失敗。
+
+**做完的判準**：腳本重跑之後 `font-graph-img.json` 不變（或人工那份另存、腳本不碰）。
+
+**證據**：[`docs/internals/06-font-graph-img.md`](docs/internals/06-font-graph-img.md)
+
+**核實**：`tools/scripts/font_extract.py` 裡出現 `json.dump(meta` 就是做好了
 
 #### list-screen-tabs — 一覽表的分頁鈕：星系資料 艦隊／配屬／稅金、艦隊資料 士氣／部隊／作戰
 
