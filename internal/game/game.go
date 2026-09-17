@@ -4323,7 +4323,7 @@ func (g *Game) setStarRows(spec *screen.MainGameSpec) {
 		switch tab {
 		case 1, 2:
 			// 配屬／稅金（`0D05:0642`／`073E`）：名字後面那一段從第 18 格起。
-			cells = append(cells, screen.ListCell{X: l.NameX + 16*8, Ink: l.Ink, Text: g.starTabText(tab, rec)})
+			cells = append(cells, screen.ListCell{X: l.TabX, Ink: l.Ink, Text: g.starTabText(tab, rec)})
 		default:
 			// 兩個數是這一格帝國／同盟的艦隊數（固定左帝國右同盟，各用陣營色；
 			// 收據 `fcmd-lst-star`：瓦爾哈拉「1﹕0」）。星域記錄的 `+0x28` 不是它的

@@ -34,6 +34,8 @@ type ListSpec struct {
 	SepX    int    `json:"sep_x"`
 	EnemyX  int    `json:"enemy_x"`
 	SepCode uint16 `json:"sep_code"`
+	// TabX 是配屬／稅金分頁那十六個半形字的起點（`docs/re/327`）。
+	TabX int `json:"tab_x"`
 }
 
 // ListCell 是清單一列上的一段字：全形用 Codes、半形（數字）用 Text。

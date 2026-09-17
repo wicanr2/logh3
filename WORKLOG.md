@@ -7333,3 +7333,12 @@ GitHub 的 issue 時間軸承擔。
   少一格（1,797 像素）。fixture 原本挑同盟第一支（提督 40，碼 B1），原版那一場是費雪（55，C0），改挑費雪。
 - `TestEngagementMatchesOracle`（六批）、`TestEngagementClickQueuesUntilPause`、`TestEngagementAnimationOffMatchesOracle`；`internal/...` 全過、GUI 全相同。
 - 文件：`docs/re/331`（新）、規格 056、playtest 022、`docs/re/324`／`328` 指標、internals 20、60、CONTEXT。#48 留著（量表、戰場方塊、另外三種演出）。
+
+## 2026-09-17 — 第五輪 goal 對照收尾
+
+- 重讀 `docs/goal/2026-09-17-list-tabs-strategic-assault-round-5.md` 逐項對完成定義：A-2「版面單一來源」漏了——配屬／稅金那段的
+  起點原本寫死 `NameX + 16*8`，改成 `screen-star-list.json` 的 `tab_x`（480）。
+- 與 goal 寫法不同的地方：B-1「先補新遊戲的艦艇池」沒做——戰略打行星用 `rules.Fleet.Composition`（艦種、艘數、滿編）就夠，
+  兩批收據逐欄相同；分隊 `+0x06`／`+0x0C`／`+0x0E`／`+0x12` 沒模型化，列在規格 058 已知差異。B-4 士氣報告的已知差異寫在規格 058
+  而不是 054。C 的收據沿用既有 `eng-*`，沒有新錄；交戰演出是直接進入的診斷比對，沒有 GUI 案例。「不在這一輪」裡的「其餘素材搬進
+  `assets/original/`」是使用者中途指示做的。
