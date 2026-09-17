@@ -54,10 +54,10 @@ func bytesContains(b, sub []byte) bool {
 
 // Big5 標記：電腦那一路的「企圖占領」、人類那一路的「正在攻占」、士氣報告的「士氣值」、「已全軍覆沒」的「覆沒」。
 var (
-	markAICapture = []byte("\xa5\xf8\xb9\xcf\xa5\x65\xbb\xe2")
-	markCapture   = []byte("\xa5\xbf\xa6\x62\xa7\xf0\xa5\x65")
-	markMorale    = []byte("\xa4\x68\xae\xf0\xad\xc8")
-	markNoShips   = []byte("\xc2\xd0\xa8\x53")
+	markAICapture   = []byte("\xa5\xf8\xb9\xcf\xa5\x65\xbb\xe2")
+	markCapture     = []byte("\xa5\xbf\xa6\x62\xa7\xf0\xa5\x65")
+	markMorale      = []byte("\xa4\x68\xae\xf0\xad\xc8")
+	markNoShips     = []byte("\xc2\xd0\xa8\x53")
 	markAnnihilated = []byte("\xa5\xfe\xb7\xc0") // 「全滅」
 )
 
