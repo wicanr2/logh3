@@ -108,6 +108,7 @@ func (g *Game) scanRegionsFrom(from int) {
 	for r := from; r < rules.RegionCount; r++ {
 		occ := g.rebellionOccupation[r]
 		if occ.Contested {
+			// 開戰前的「<星域>星系內發現敵方艦隊。」報告框（`3826:0307`，`0374:0489` 一帶，收據 `fcx-r7-s3shots`）還沒接。
 			g.StartBattle(r)
 			return
 		}

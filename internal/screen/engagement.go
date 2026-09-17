@@ -123,6 +123,7 @@ func fmtBytes(h string) []byte {
 }
 
 // wideNumber 是 `3982:0038`：編號印成全形數字。
+// `3982:0038` 兩位數編號應印 `%2d` 半形（`docs/re/143`、`docs/re/336` §六），這裡還是一律全形。
 func wideNumber(n int) []byte {
 	var out []byte
 	for _, c := range fullDigits(n) {

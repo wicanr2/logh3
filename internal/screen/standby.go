@@ -171,6 +171,7 @@ func (s *FleetStandbySpec) Buffer(v *FleetStandbyView) *ui.TextBuffer {
 	b := ui.NewTextBuffer(s.Cols, s.Rows, uint8(s.Colour))
 	b.Write(f("title"))
 	// `3982:00B6`：「%s第」帶色的陣營名、`3982:0038` 全形編號、「艦隊  %s」提督。
+	// `3982:0038` 兩位數編號應印 `%2d` 半形（`docs/re/143`、`docs/re/336` §六），這裡還是一律全形。
 	b.Printf(f("fleet_prefix"), v.FactionName)
 	b.Attr |= ui.AttrWiden
 	b.Printf([]byte("%d"), v.Number)
