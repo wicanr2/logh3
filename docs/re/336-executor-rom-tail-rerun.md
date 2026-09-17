@@ -38,7 +38,23 @@ GIN3 正常路徑不碰這一段（P，對這四條）；讀的只有全滅崩�
 
 ## 三、收據重跑
 
-（重跑進行中；完成後回填：份數、畫面有變的逐條原因。）
+重跑前把 `workplace/oracle/` 全部 4,228 個 `.bin`／`.png` 的 SHA-256 記下（`workplace/receipts-pre-191.sha256`），重跑後逐檔比。
+
+- **收據腳本**（`fleetcmd_receipts.sh`、`engagement_receipts.sh` → `camera_receipts.sh`、`enemytab_receipts.sh`）：整條鏈在 `f7523f9`
+  從冷開機重錄。
+- **其他收據**：使用者裁決（2026-09-17）先重跑測試與 GUI 檢查用到的 126 份（測試檔的字串常值與格式樣式比對），`screen.bin` 全部不變；
+  其餘 344 份一般收據背景續跑；**探索批次 `fcx-*` 不重跑**（那些是探索紀錄，文件引用時本來就綁當時的執行器版本）。
+
+有變化的檔（其餘 `.bin` 全部相同）：
+
+| 檔 | 原因 |
+|---|---|
+| 14 份 `mem-in.bin`／`mem-out.bin`（`fcmd-assault-*`、`fcmd-turn-*`） | 1 MB 傾印的最後 16 bytes 是新的 ROM 尾巴：把新檔的 `FFFF0`–`FFFFF` 清 0 之後雜湊與舊檔相同（`workplace/r7_romzero.py`，P） |
+| `fcmd-occ-phz-t4` 的 `screen.bin`／`plane.bin`／`fleet0.bin` | 不再崩潰（§四） |
+| 約 190 份 `screen.png` | 只有 PNG 編碼不同，同一份的 `screen.bin` 相同 |
+
+新版收據下 `go test ./internal/...` 全過、`tools/gui_check.sh` 34 例全同。重跑中途停過一次換成優先順序，被中斷的只有探索批次 `fcx-base-battle`
+（`report.txt` 被截斷，備份在 `workplace/oracle-prev/`）。
 
 ## 四、全滅那條在新版執行器
 

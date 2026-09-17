@@ -272,6 +272,10 @@
   （報告修成正常文字、提督與副官失蹤），費沙那條第四回合全滅、第五回合命令階段整張相同。**執行器 dosgolem `f7523f9`**（#73、#54）：
   BIOS ROM 尾巴照 DOSBox 填、ROM 唯讀、狀態檔存 A20，`-watch` 多段、`-regs-at` 不去重；全滅不再轉跑 `ENDING.EXE`。
   **執行器的程式載入位置比 DOSBox 低**，GIN3 鍵盤常式的原版 bug（`0400h`）因此寫壞 `0374:0896` 那 16 bytes（#76，要裁決）。
+  **戰場上的電腦方不造成傷害**（使用者裁決，規格 061，刻意偏離原版；原版規則層不改、`originalBattleAI` 可關）。
+  **存進度會真的存**（`-save`，預設使用者設定目錄 `logh3/save`，取進度先讀那裡）。功能選項的驗證用 `tools/feature_check.sh`
+  （命令列 12 項、艦隊視窗與作戰／變更選單逐格巡覽、存讀一圈、固定種子隨機點擊），沒有 crash；沒反應的只有 #63／#64／#65 那幾項。
+  收據在 `f7523f9` 重跑：測試與 GUI 用到的全部重跑過，探索批次 `fcx-*` 不重跑（`docs/re/336` §三）。
   **一覽表四張的列
   （#47，`docs/re/323`、規格 055）**：星系資料點列 ＝ 換選那一格＋關清單＋星系情報視窗、
   艦隊資料點列 ＝ 艦隊視窗疊在清單上（關了回清單）、提督／敵將資料點列 ＝ 提督詳細資料
@@ -502,50 +506,67 @@
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
-#### dosgolem-bios-rom-tail — dosgolem 的 BIOS ROM 尾巴是 0（戰略全滅轉跑 ENDING.EXE 的成因）
+#### dosgolem-load-address — dosgolem 的程式載入位置比 DOSBox 低，GIN3 鍵盤常式的 0400h bug 寫壞 0374:0896（需裁決）
 
-*[#73](https://github.com/wicanr2/logh3/issues/73) · executor*
+*[#76](https://github.com/wicanr2/logh3/issues/76) · decision（取捨：等使用者裁決）*
 
-dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且可寫。原版執行環境（DOSBox）那裡是 PC/AT 的重置跳躍、BIOS 日期與機型位元組
-（DOSBox-X `bios.cpp`：`EA 5B E0 00 F0` ＋ `"01/01/92"` ＋ `00 FC 55`）。GIN3 在戰略全滅時把 `FFFF:FFFF` 當物件指標讀，讀到 0 之後
-把資料段寫壞、轉跑 `ENDING.EXE`；只把那 16 bytes poke 成 DOSBox 的值（`fcx-a20-rom`），回合照常走完（`docs/re/334`）。
+GIN3 自己的鍵盤常式（int 09h／16h，`348A:0038`／`0074`／`00A0`／`00E3`）寫 `mov bx,0400h / mov ds,bx`，把 BIOS 鍵盤緩衝區的
+頭尾與鍵字寫到 `0400:001A` 起（正確是 `0040:001A`）——**原版 bug**（位元組 P：解包後的映像同樣是 `bb 00 04 8e db`）。
+寫到的線性位址 `0x401A`–`0x403D` 落在哪裡取決於程式載入位置：dosgolem 把第一支程式的 PSP 寫死在 `0x0100`
+（`internal/machine/machine.go`），GIN3PS 的載入段是 `0349`，那一段正好是 `0374:08DA`–`08FD`，也就是 `0374:0896`
+（戰略耗損「沒全滅」那一支）的中間。開機 #58.34M 解包完成時那 16 bytes 是對的（獨立 Python 解包鏈，六層，與 dosgolem 逐位元組相同），
+第一次按鍵之後就被寫壞；92 份傾印都是壞的（`docs/re/336` §九，批次 `fcx-r7-glue-w3`／`w4`）。
 
-問題登記在 logh3（使用者 2026-09-17 的慣例）；改的是 dosgolem 副本 `~/cht/dosgolem-logh3`（branch `logh3-oracle`）。
+真機／DOSBox 的載入位置比較高（DOSBox-X 的 DOS 記憶體從 `0x158` 起、`GIN3.COM` 先縮成保留 `237h` 段再執行），那 36 bytes
+很可能落在 GIN3.COM 的保留區、沒有傷害——**hypothesis**，實際載入段沒有量。
 
-**卡在**：- 唯讀化之前要先普查既有收據有沒有程式寫 `F0000–FFFFF`（`-watch`，注意 #54 那個旗標只看第一段）。
-- `.state` 沒存 `a20`／`hma`／`hmaOwned`／`a20Local`，順手補要改狀態檔版本。
-- 改了執行器就要整條收據重跑（CLAUDE.md「收據綁執行器版本」），另排一輪。
+**卡在**：- **要使用者決定**：①把 dosgolem 第一支程式的載入位置調成與 DOSBox 一致——所有程式的線性位址都會位移，文件裡以 `DS=54B3`
+  換算的線性位址與全部收據（含 `-poke`／`-peek`）都要重做；②執行器不動，logh3 這邊記下這個重疊，受影響的只有 `0374:08DA`–`08FD`，
+  「沒全滅」那一支改用別的方式取證（例如在解包完成後、第一次按鍵前把那 16 bytes 寫回原碼）。
+- 真機／DOSBox 的實際載入段沒有量（量的話要讀 DOSBox 原始碼推，或使用者同意跑一次 DOSBox）。
 
-**做完的判準**：dosgolem 開機時 `FFFF0–FFFFF` 有 PC/AT 的內容、`F0000–FFFFF` 寫入忽略（規格寫明硬體語意與參考來源、`FFFFF` 那一格照原版執行環境的取捨），
-有單元測試；logh3 全部收據重跑、雜湊有變的逐條核對；`fcmd-occ-phz-t4` 不再轉跑 `ENDING.EXE`。
+**做完的判準**：使用者決定執行器怎麼處理（見卡在）；照決定做完之後，`0374:0896` 在收據裡是解包後的原碼，「沒全滅」那一支有同狀態收據，
+remake（規格 060 規則 6，含 `297B:0546`）對上。
 
-**證據**：[`docs/re/334-annihilation-crash-is-executor.md`](docs/re/334-annihilation-crash-is-executor.md)、[`docs/re/333-turn-reports.md`](docs/re/333-turn-reports.md)
+**證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)
 
-**核實**：要人判——改的是 dosgolem 副本，logh3 的產品程式碼沒有訊號；修完之後可綁 fcmd-occ-phz-t4 重錄後的 report.txt 沒有 ending.exe（receipt）或 dosgolem 的單元測試名。
+**核實**：要人判——執行器配置的決定，logh3 產品程式碼沒有訊號。決定後：選①綁 dosgolem 的單元測試或收據（0374:08D9 16 bytes 為解包原碼）；選②綁 docs/spec/060 規則 6 的狀態。
 
-#### turn-transition-edges — 回合過場的邊角：「戰略模式思考中」的停留、兩支人類艦隊、戰鬥中的士氣報告
+#### enemy-fleet-found-report — 開戰前「<星域>星系內發現敵方艦隊。」報告框（0374:0489）
 
-*[#72](https://github.com/wicanr2/logh3/issues/72) · feature（功能：玩家會撞到、但 remake 還沒有）*
+*[#75](https://github.com/wicanr2/logh3/issues/75) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
-回合過場視窗與報告框（規格 059）接上之後剩下的邊角：
+逐格開戰之前原版先印「<星域>星系內發現敵方艦隊。」報告框（`3826:0307` 持久視窗、情報參謀頭像；S3 帝國第一回合
+#390.11M，`fcx-r7-s3exec`、`fcx-r7-s3shots`，`docs/re/336` §六），之後才進戰場。remake 碰到有兩方艦隊的格子直接
+`StartBattle`，沒有這一張。字串在 `docs/internals/14`（「發現敵方艦隊。」）。
 
-- **「戰略模式思考中」的停留**：原版實行之後兩個座位各印一次「<陣營> 宇宙曆…／戰略模式思考中」，電腦座位那一次停到 AI 算完
-  （約 5M 步，`fcmd-turn-think`）。停多久取決於 AI 的運算時間，不是計時器；remake 的 AI 是瞬間算完，所以不停也不畫。
-  **使用者裁決（2026-09-17）：要重現，固定 18 tick**（dosgolem 量到的長度，座位 1 印出 #551.02M → 處理中 #554.75M），`fcmd-turn-think` 整張比。
-- 同一回合兩支以上人類艦隊：前一支「下一格」的色 5 在原版留到下一支第一段上畫面才消失，視窗只顯示一次（`docs/re/332` §二、§七）。沒有收據。
-- `ds:8F1C` bit0（隱藏除錯選單「顯示」）讓電腦座位的艦隊也印過場（`fcx-turnwin-show`）；remake 沒有除錯選單。
-- 戰鬥中（`ds:8F16 != 0`）士氣報告改走 `3826:0405` 的另一個視窗（(2,7) 24×5、頭像 (0x2C,0x28)），沒有收據。
-- `1261:0067` 的 `ds:8F72[陣營] ← 297B:10DE` 沒讀。
-- `056A:011C` 印完標題窗只剩一列的原因（`docs/re/332` §五，與 `docs/internals/49` 不一致）。
+**卡在**：- `0374:0489` 沒讀（`workplace/re-notes/round7-57-static.md` §1.1 標了「開打前的人類座位畫面，未讀」）。
+- 報告之後進戰場的畫面 remake 是否同狀態，要一起確認。
 
-**卡在**：- 思考中：已裁決；等 #73 改完執行器、收據重跑之後重量一次再接（第七輪 goal B.1）。
-- 兩支人類艦隊、戰鬥中的士氣報告：要造局面錄收據。
+**做完的判準**：`0374:03E8` 開戰前那一段（`0374:0489` 起）的呼叫順序、頭像與等待讀完寫進 `docs/re/`；remake 開戰前停在這張報告，
+S3 帝國第一回合的收據（達希利，#390M 起那一段）整張相同。
 
-**做完的判準**：思考中那一段有使用者的裁決並照裁決做；其餘各項有收據或位元組，remake 的寫法與它們一致（或列成規格 059 的已知差異並說明理由）。
+**證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/internals/14-screen-strings.md`](docs/internals/14-screen-strings.md)
 
-**證據**：[`docs/re/332-turn-transition-windows.md`](docs/re/332-turn-transition-windows.md)、[`docs/re/333-turn-reports.md`](docs/re/333-turn-reports.md)、[`docs/spec/059-turn-transition-windows.md`](docs/spec/059-turn-transition-windows.md)
+**核實**：`internal/game/rebellion.go` 裡還找得到 `星系內發現敵方艦隊。」報告框`（自承還在 ＝ 還沒做）
 
-**核實**：要人判——六件事散在不同地方，沒有單一程式訊號。思考中裁決後若做成狀態，綁那個狀態名（absent → present）；兩支人類艦隊綁新收據的 go_test。
+#### fleet-number-two-digit — 艦隊編號 10 以上的四個畫面印成全形（3982:0038 的 %2d 那條路）
+
+*[#74](https://github.com/wicanr2/logh3/issues/74) · parity（對拍：要與原版逐位元組相同）*
+
+`3982:0038(視窗, 編號)` 印艦隊編號的規則是「小於 10 → `\x06%d\x07` 全形；否則 `%2d` 兩個半形塞一格」（`docs/re/143`）。
+過場視窗原本寫成一律全形，S3 第１３艦隊的收據 `fcmd-s3-w2a` 印的是半形「13」，已改（`docs/re/336` §六）。同樣標著
+`3982:0038` 的另外四處仍然一律全形：艦隊視窗（`internal/screen/fleetwindow.go`）、敵艦隊視窗（`enemywindow.go`）、
+待命（`standby.go`）、交戰演出（`engagement.go` 的 `wideNumber`）。現有收據的艦隊編號都小於 10，所以測試沒抓到。
+
+**卡在**：- 各畫面要錄一份兩位數編號的收據（S3 開局帝國槽 9 起編號 ≥ 10）。
+- 交戰演出的段名另有 `ds:8E34` 那條路，改之前先確認演出用的是不是 `3982:0038`。
+
+**做完的判準**：四處都照 `3982:0038` 的兩條路印；各有一份兩位數編號的同狀態收據（S3 開局就有第１０艦隊以上，`fcmd-s3-base` 可當載具）整張相同。
+
+**證據**：[`docs/re/143-supply-panel.md`](docs/re/143-supply-panel.md)、[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)
+
+**核實**：`internal/screen/fleetwindow.go`、`internal/screen/enemywindow.go`、`internal/screen/standby.go`、`internal/screen/engagement.go` 裡還找得到 `這裡還是一律全形`（自承還在 ＝ 還沒做）
 
 #### region-ship-resupply — 自家星域的艦艇補充（1AAB:0FAF）與「士氣值已經恢復」
 
@@ -733,37 +754,23 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 
 *[#57](https://github.com/wicanr2/logh3/issues/57) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
-`297B:034A(艦隊)` 是全滅那一支（`docs/re/329` §二）：釋放戰場圖示、提督與副官走 `28E0:057F(…, 0)`（`+0x00 ← 0x80` 失蹤、
-`+0x02..+0x05 ← 0`）、艦艇由呼叫者先用 `2AD2:01EF` 作廢**不還存量**、星域 `+0x28` 與 `ds:8F49` 減一、`090A:0E6D`。
-兩個呼叫者：戰略階段 `0374:0888`（包在 `0374:073F`，印「…第Ｎ艦隊…已經全滅。」）、戰場一回合結算 `185C:016A`。
-remake 戰場打完是從存檔表重讀艦隊，新遊戲與戰略階段都沒有這一條。
+`297B:034A(艦隊)` 是全滅那一支。兩個呼叫者：戰略階段 `0374:0888`（包在 `0374:073F`）、戰場一回合結算 `185C:016A`。
 
-已讀（2026-09-17，`workplace/re-notes/turn-reports.md` §四，待寫成 `docs/re/334`）：
+- ~~戰略階段~~：第七輪接上（規格 060、`docs/re/336` §九）。`0374:0608` 條件、`06BC` 扣兵、只看第 0 組、`073F` 報告（照使用者裁決修成正常文字）、
+  `297B:034A`（提督與副官失蹤、星域 `+0x28` 與 `ds:8F49` 減一、`090A:0E6D`）。收據第 26 段 `fcmd-turn-annihilated-report`／`fcmd-turn-annihilated`
+  （mem-in／mem-out）與第五回合 `fcmd-occ-phz-t4` 在正常玩家路徑整張／逐欄相同。崩潰成因是執行器 ROM 尾巴（#73，已修）。
+- 戰場那一條 `185C:016A`（`181B:03F0` 第 8 步 → `185C:001D`：只看第 0 組、`028E` 報告走 `3826:0405`、`00F0` 擦小地圖點＋作廢、`034A`）：沒接。
+- 戰略「沒全滅」那一支 `0374:0896`：remake 照解包後的原碼移掉 0 艘的組；結尾的 `297B:0546`（能力與速度重算，靜態讀到會寫 `+0x3C ← 100`）沒接。
+  dosgolem 上這支被 GIN3 鍵盤常式的 `0400h` bug 寫壞（載入位置的問題，#76），執行期不能當對照。
 
-- 戰略階段的全滅在逐格處理的每一格（`0374:0556` → `0374:0608(星域)`）：艦隊在這一格、**陣營 ≠ 星域擁有者**、`+0x00` bit0（士氣 < 50）
-  → `0374:06BC` 每組扣 `+0x0A ÷ 6` 艘（夾在現有艘數）→ 第 0 組艘數 0 → `0374:073F`「已經全滅」＋`297B:034A`；否則 `0374:0896`。
-  士氣低落的艦隊留在敵方／中立星域，六回合內全滅。
-- **`fcmd-occ-phz-t4` 是崩潰殘留**：費沙那條第四回合自然全滅，`297B:034A` 把 `+0x6C` 的 `FFFFFFFF` 當指標交給 `35D1:0102`，
-  #1049.708M 轉跑 `ENDING.EXE`（`report.txt` HLT、「NULL function pointer」）。`+0x6C` 清 0 繞過之後回合照常：艦隊拿掉、
-  艦艇不還、提督與副官失蹤（`28E0:057F`）、功績歸零、星域 `+0x28` 與 `ds:8F49` 減一。
-- 「已經全滅」的格式字串 `ds:01CD` 開頭多一個 `\x03`，dosgolem 畫成三列花紋。
+**卡在**：- 戰場：remake 的戰場回合結算沒有 `181B:000A` 的八步模型（同一件事擋著戰鬥中的士氣報告觸發點，規格 059 已知差異）。
+- `0896`：等 #76 的裁決。
 
-**使用者裁決（2026-09-17）**：
-1. 崩潰：**先查執行器再做**——確認 `FFFF:FFFF` 那幾次存取在 DOSBox 語意下會怎樣、是不是 dosgolem 造成的；remake 的全滅這一輪不動。
-2. 「已經全滅」報告：**修成正常文字**（「<陣營>第Ｎ艦隊／提督名軍階／已經全滅。」＋頭像），列成規格的刻意差異。
+**做完的判準**：戰場那一條有同狀態收據並接上（艦隊表、提督、星域、艦艇池逐欄對上）；`0896` 的 `297B:0546` 在 #76 決定之後有收據並接上。
 
-**卡在**：- 執行器調查有結論（`docs/re/334`）：崩潰是 dosgolem 造成的——BIOS ROM 尾巴 `FFFF0–FFFFF` 在 dosgolem 是 0，`2376:02DE` 從 `FFFF1`
-  讀到 0 當比對編號，迴圈把資料段寫壞；補上 DOSBox 的 16 bytes（`fcx-a20-rom`）回合照常走完。要先修執行器（另開 issue）、
-  整條收據重跑，才能錄全滅的同狀態收據。
-- `0374:0896` 在傾印裡 `08D9`–`08E8` 解出不合理的指令，本意 unknown；`185C:028E`／`0177` 沒讀。
-- remake 的新遊戲沒有艦艇池（#55），耗損與全滅判定要照 `rules.FleetGroup` 做。
+**證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)、[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/334-annihilation-crash-is-executor.md`](docs/re/334-annihilation-crash-is-executor.md)
 
-**做完的判準**：崩潰的成因有結論（執行器偏差就修執行器並重跑收據；原版本來就壞就請使用者決定 remake 的走法）；之後兩條路（戰略 `0374:0608`、
-戰場 `185C:016A`）各有同狀態收據，艦隊表、提督、星域、艦艇池逐欄對上；報告照裁決 2 畫。
-
-**證據**：[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/re/333-turn-reports.md`（附：對既有收據的影響）`](docs/re/333-turn-reports.md`（附：對既有收據的影響）)
-
-**核實**：`internal/rules/fleetstep.go` 裡還找得到 `全滅那一支（`297B:034A``（自承還在 ＝ 還沒做）
+**核實**：`internal/rules/fleetstep.go` 裡還找得到 `戰場那一條（`185C:016A`）還沒接`（自承還在 ＝ 還沒做）
 
 #### strategic-assault-edge-cases — 戰略打行星沒有收據的三種局面（多支攻方、同回合打過仗、電腦座位）
 
@@ -802,25 +809,6 @@ remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、
 **證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/spec/015-fleet-composition.md`](docs/spec/015-fleet-composition.md)、[`docs/internals/38-battle-units.md`](docs/internals/38-battle-units.md)
 
 **核實**：`internal/rules/fleetbuild.go` 裡還找得到 `新遊戲的艦艇池還沒模型化`（自承還在 ＝ 還沒做）
-
-#### dosgolem-watch-regs-bugs — dosgolem：-watch 只吃第一段範圍、-regs-at 偶爾漏抓命中
-
-*[#54](https://github.com/wicanr2/logh3/issues/54) · decision（取捨：等使用者裁決）*
-
-第五輪三個 subagent 在 dosgolem-logh3 `b5485eb` 上遇到的兩個執行器問題（`docs/re/330` §9、`docs/re/331` §六）：
-
-- `-watch A-B,C-D` 只監看第一段，逗號後面的被忽略，報告沒有提示。
-- `-regs-at` 偶爾漏抓（例：`fcx-assault-ast` 星域 28 第一擊少了 `17B8`／`17C6`／`0EB5`／`18AF` 四個命中，前後命中都在；`-regs-from 1160000000` 下 `3765:006C` 0 命中而 `-watch` 同時看到）。
-
-修在 dosgolem 副本 `~/cht/dosgolem-logh3`（branch `logh3-oracle`）。**修完要整條 `fcmd-*`／`eng-*` 收據重跑**（收據綁執行器版本）。
-
-**卡在**：- 需要先確認 `-regs-at` 漏抓的條件（指令邊界、REP 前綴、中斷中？）。
-
-**做完的判準**：兩個旗標各有單元測試；修完之後所有收據重跑、雜湊與既有相同（或重做收據並記錄）。
-
-**證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/re/331-engagement-picture-sequence.md`](docs/re/331-engagement-picture-sequence.md)
-
-**核實**：要人判——執行器在另一個 repo，logh3 這邊沒有程式碼訊號。修完後綁 dosgolem-logh3 的 commit（note 寫雜湊）或改成 go_test 跑 dosgolem 的單元測試。
 
 #### battle-assault-byte-mismatches — 戰場層打行星與位元組三處不符（103D 尾段、0593 艦種 5、Atan256 查表）
 
@@ -876,7 +864,7 @@ remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、
 
 ### 做完的（不在矩陣裡的那幾條）
 
-57 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+60 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1877,6 +1865,52 @@ CONFORMED。
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
 
+#### dosgolem-bios-rom-tail — dosgolem 的 BIOS ROM 尾巴是 0（戰略全滅轉跑 ENDING.EXE 的成因）
+
+*[#73](https://github.com/wicanr2/logh3/issues/73) · executor*
+
+dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且可寫；GIN3 在戰略全滅時把 `FFFF:FFFF` 當物件指標讀，讀到 0 之後
+把資料段寫壞、轉跑 `ENDING.EXE`（`docs/re/334`）。
+
+**第七輪修完**（dosgolem-logh3 `f7523f9`，規格 `191-bios-rom-tail`；`docs/re/336`）：開機填 `EA 5B E0 00 F0 "01/01/92" 00 FC 55`、
+`F0000–FFFFF` 寫入忽略但記下來（普查四條長收據 GIN3 正常路徑不讀不寫這一段）、讀狀態檔後重填、狀態檔 v3 存 A20／HMA（仍讀 v2）。
+收據：收據腳本整條重錄；測試與 GUI 用到的 126 份在新版 `screen.bin` 全部不變，變的只有 1 MB 傾印的 ROM 尾巴與 `fcmd-occ-phz-t4`
+（不再崩潰：第四回合全滅、第五回合命令階段）；其餘一般收據背景續跑，探索批次 `fcx-*` 照使用者裁決不重跑。
+
+**卡在**：- 無（做完）。載入位置的問題另開 #76。
+
+**做完的判準**：dosgolem 開機時 `FFFF0–FFFFF` 有 PC/AT 的內容、`F0000–FFFFF` 寫入忽略（規格寫明硬體語意與參考來源、`FFFFF` 那一格照原版執行環境的取捨），
+有單元測試；logh3 收據重跑、雜湊有變的逐條核對；`fcmd-occ-phz-t4` 不再轉跑 `ENDING.EXE`。
+
+**證據**：[`docs/re/334-annihilation-crash-is-executor.md`](docs/re/334-annihilation-crash-is-executor.md)、[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)
+
+**核實**：收據 `fcmd-occ-phz-t4` 的 1 個檔案雜湊相符
+
+#### turn-transition-edges — 回合過場的邊角：「戰略模式思考中」的停留、兩支人類艦隊、戰鬥中的士氣報告
+
+*[#72](https://github.com/wicanr2/logh3/issues/72) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+回合過場視窗與報告框（規格 059）接上之後剩下的邊角，第七輪做完（`docs/re/336` §五–§八）：
+
+- ~~「戰略模式思考中」的停留~~：使用者裁決（2026-09-17）固定 18 tick。`StateTurnThinking`，`fcmd-turn-think`、`fcmd-s3-think` 整張相同；
+  思考中不吃點擊（呼叫樹沒有讀事件，期間的點擊由處理中的 `056A:0983` 吃掉，`fcx-turnwin-clkai`）。
+- ~~同一回合兩支以上人類艦隊~~：S3 帝國第一回合三支（收據第 25 段 `fcmd-s3-*`）六張整張相同；途中修了兩位數編號（`3982:0038` 半形）。
+- ~~戰鬥中的士氣報告~~：`3826:0405` 臨時視窗已接並對 `eng-morale-low` 視窗內逐位元組；觸發點（戰場結算最後一步 `181B:03F0` → `185C:001D`）
+  remake 沒有，列規格 059 已知差異（等戰場回合結算模型化）。
+- ~~`1261:0067` 的 `ds:8F72[陣營] ← 297B:10DE`~~：維持費總和，讀者與寫入點讀完；remake 在讀者處現算，時差列已知差異。
+- ~~`056A:011C` 印完標題窗只剩一列~~：換行溢出且不可捲動時列回 0、整窗清空（`3617:049C`），更正 `docs/internals/49` 與 `ui.TextBuffer`。
+- ~~`ds:8F1C` bit0（隱藏除錯選單「顯示」）~~：remake 沒有除錯選單，列規格 059 已知差異。
+
+途中另開：#74（另外四個畫面的兩位數編號）、#75（開戰前「發現敵方艦隊」報告）。
+
+**卡在**：- 無（做完）。
+
+**做完的判準**：思考中那一段有使用者的裁決並照裁決做；其餘各項有收據或位元組，remake 的寫法與它們一致（或列成規格 059 的已知差異並說明理由）。
+
+**證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/re/332-turn-transition-windows.md`](docs/re/332-turn-transition-windows.md)、[`docs/re/333-turn-reports.md`](docs/re/333-turn-reports.md)、[`docs/spec/059-turn-transition-windows.md`](docs/spec/059-turn-transition-windows.md)
+
+**核實**：`TestTurnThinkingMatchesOracle` 釘在 `internal/game`
+
 #### font-extract-overwrites-json — font_extract.py 重跑會整份蓋掉人工補過的 font-graph-img.json
 
 *[#61](https://github.com/wicanr2/logh3/issues/61) · decision（取捨：等使用者裁決）*
@@ -1892,6 +1926,26 @@ CONFORMED。
 **證據**：[`docs/internals/06-font-graph-img.md`](docs/internals/06-font-graph-img.md)
 
 **核實**：`tools/scripts/font_extract.py` 裡出現 `json.dump(meta` 就是做好了
+
+#### dosgolem-watch-regs-bugs — dosgolem：-watch 只吃第一段範圍、-regs-at 偶爾漏抓命中
+
+*[#54](https://github.com/wicanr2/logh3/issues/54) · decision（取捨：等使用者裁決）*
+
+第五輪三個 subagent 在 dosgolem-logh3 `b5485eb` 上遇到的兩個執行器問題（`docs/re/330` §9、`docs/re/331` §六）。
+
+**第七輪修完**（dosgolem-logh3 `f7523f9`，規格 `191-bios-rom-tail` §5；`docs/re/336` §一）：
+
+- `-watch A-B,C-D` 只監看第一段：改成逗號分隔的每一段都監看（解不出來就報錯），各掛一個 `WatchWrite`，不再被 `-watch-video` 蓋掉。
+- `-regs-at` 漏抓：成因是 probe 寫死「DS:SI 比上一筆往前 1–16 就跳過」的 blit 去重（`fcx-assault-ast` 第二批第一擊 SI `0000`→`0004` 被吞掉，P）；
+  改成預設不去重、舊行為改名 `-regs-skip-blit`。issue 的第二例（`-regs-from` 下 `3765:006C` 0 命中）重現不出來（12 份報告都有命中，U）。
+
+**卡在**：- 無（做完）。
+
+**做完的判準**：兩個旗標各有單元測試；修完之後收據重跑、雜湊與既有相同（或重做收據並記錄）。
+
+**證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/re/331-engagement-picture-sequence.md`](docs/re/331-engagement-picture-sequence.md)
+
+**核實**：要人判——執行器在另一個 repo，logh3 這邊沒有程式碼訊號。修在 dosgolem-logh3 f7523f9：cmd/probe 的 TestParseWatchRangesKeepsEveryRange、TestParseWatchRangesRejectsJunk、TestRegsAtKeepsNearbyPointers。
 
 #### turn-transition-windows — 回合裡的過場視窗與報告（出發前往／已經到達／已經駐留、攻占訊息框、士氣報告）
 
