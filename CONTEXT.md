@@ -263,14 +263,16 @@
   （經歷／結束；敵將的現在位置印 ＊、同盟軍色 5）；▲▼ 一列、右鍵一層一層關；三種游標
   規則（星系只認列、艦隊與提督離開列就取消反白＋清左下角、敵將不看）——三十九批
   `fcmd-lst-*`，三十四批整張。詳細資料多了「第Ｎ艦隊／參謀」與「：待命中／執勤中／出擊中」
-  （規格 012 到期）。分頁鈕沒接（#51）。探測的坑：游標搬到會換反白的列與按鍵同一瞬間，
+  （規格 012 到期）。分頁鈕也接上了（#51，`docs/re/327`）。探測的坑：游標搬到會換反白的列與按鍵同一瞬間，
   原版把那一下丟掉——收據一律先搬再按（`mvc`／`mvr`），`docs/re/318` §六的「右鍵不關」
   也是它。**交戰演出（#48 前半，`docs/re/324`、規格 056 DRAFT）**：戰鬥曲的出口接上了——
   戰場回合處理打行星那一步有結果就切 `StateEngagement`（`ANI_PNL1.A98` 底圖＋三個文字視窗
-  照原版格式字串印：行星／防衛力、防衛攻擊／擊毀、第？艦隊／船艦總數），開場幀 → 結果幀
-  → 回戰場，`audio.TuneFor(StateEngagement)` ＝ 戰鬥曲；十二批 `eng-*`，`eng-open`／`eng-end`
-  扣掉四塊排除區逐位元組（直接進入的診斷比對）。行星圖、艦隊圖、量表、方塊動畫
-  （`COMANI.BMG` 編碼未解）與計時沒做；艦隊對艦隊與要塞砲那兩種演出沒接。**右下角
+  照原版格式字串印：行星／防衛力、防衛攻擊／擊毀、第？艦隊／船艦總數），
+  `audio.TuneFor(StateEngagement)` ＝ 戰鬥曲。`COMANI.BMG` 解出來了（`docs/re/328`，目錄位移從 +2 算、
+  覆寫／XOR 兩種格），圖的序列與計時也接上了（`docs/re/331`）：演出照計時器 tick 走（每格 8／4／0 tick、
+  擊毀之後停頓訊息速度），段名由行星與提督推（`ds:8E34`），播放中按鍵排隊、停頓時才讀。六批 `eng-*` 與
+  `eng-skip-mid` 扣掉量表與戰場兩塊逐位元組（直接進入的診斷比對）。量表、戰場方塊、音效沒做；
+  登陸艦攻擊、艦隊對艦隊與要塞砲那幾種演出的圖沒接。**右下角
   「敵艦隊」分頁有列的時候（#49，`docs/re/325`）**：索敵等級進了戰略層（`rules.FleetGroup.Detail`
   讀艦艇 `+0x17`、戰後寫回），等級 3 的列印第Ｎ艦隊／提督／士氣、其餘「第？艦隊」＋
   「？？？？？？？？？ ??」；點列開 `0B20:0336` 的視窗（軍名、第Ｎ艦隊、提督＋軍階、
@@ -293,8 +295,7 @@
   **戰略地圖逐格照記錄著色**（有自軍艦隊的星域用另一張色表，`docs/re/313`）。
 - **玩家還碰不到的功能**（2026-09-15 讀 `internal/game/game.go` 的 `click`
   盤點，不是憑印象）：
-  - 整套不存在：回合裡的過場視窗（含拿下行星的訊息框、士氣低落報告）、參謀任命（`090A:0248`）、**交戰演出的圖與動畫**（`COMANI.BMG` 編碼未解；
-    面板、三個視窗與戰鬥曲的出口已接）。
+  - 整套不存在：回合裡的過場視窗（含拿下行星的訊息框、士氣低落報告）、參謀任命（`090A:0248`）、**交戰演出的量表與戰場方塊**（兩個圖視窗的序列、計時與按鍵已接，`docs/re/331`；艦隊對艦隊、要塞砲、登陸艦那幾種的圖沒接）。
   - 戰略地圖本身：右下角「敵艦隊」分頁的列只在載存檔或打過仗之後才有東西
     （新編的艦隊沒有艦艇池，索敵等級永遠 0——與原版一樣）。
   - 開得起來但只能右鍵關：情報收集的 治安／勢力／敵艦 三個分頁與
@@ -548,21 +549,18 @@
 `StateEngagement`（打行星那一種：開場幀 → 結果幀 → 回戰場）、`audio.TuneFor(StateEngagement)`
 ＝ 戰鬥曲。`eng-open`／`eng-end` 扣掉四塊排除區逐位元組相同（直接進入的診斷比對）。
 
-**卡在**：- `COMANI.BMG` 的編碼**已解**（`docs/re/328`、`internal/asset.BMG`、`TestBMGEngagementMatchesOracle`
-  逐格對上 `eng-text`／`-mid`／`-mid2`／`-end`；素材匯出在 `assets/original/comani/`），
-  **還沒接進 `StateEngagement`**：要把名字組法（`3958:0041`）與逐格計時（`348A:0281`，
-  `ds:8F10[ds:8F37]`）接上。另外 `docs/re/324` 的「按鍵跳到結果」被推翻（按鍵沒有可見效果），
-  remake 目前靠按鍵換幀要一起改。
-- 兩條量表、戰場透視格線與方塊動畫（`3931`／`3B74` 段）、演出的計時（約 29M 步）沒讀。
-- 艦隊對艦隊（先問「第Ｎ艦隊的戰鬥命令」自動／防禦）與要塞砲那兩種演出沒接。
-- remake 的戰場模擬走不到與原版同一個第五回合（戰術 AI 與亂數各走各的），正常路徑的
-  收據要等對齊；目前是直接進入的診斷比對。
+**卡在**：- **打行星（行星防衛攻擊）那一種的圖已接**：`COMANI.BMG` 解碼（`docs/re/328`）、`3958:0041` 的記錄與段名、
+  計時器 tick、按鍵排隊（`docs/re/331`）；六批 `eng-*` 與 `eng-skip-mid` 扣掉量表與戰場逐位元組。
+- 兩條量表（`321F:0D11`／`0DF7`，算式已讀、座標 strong inference）與戰場方塊（`321F:008A`／`0897`／`06FC`，沒讀）沒畫。
+- 登陸艦攻擊（`20B4:0681`）、艦隊對艦隊（`1DD6:05D7`）、要塞砲（`2264`）三種的圖序列只讀了程式碼，沒有收據、沒接。
+- 停頓起點差一個 tick（原版方塊畫完才開始停頓）；動畫效果關掉時原版在 tick 8 才開始停頓；音效 `3B74:031A` 沒讀。
+- remake 的戰場模擬走不到與原版同一個第五回合，正常路徑的收據要等對齊；目前是直接進入的診斷比對。
 
 **做完的判準**：交戰演出的觸發點、跳過條件、面板與圖庫格式、幀序與節奏（動畫速度）都有反組譯與
 收據；remake 在同一時點播同一段、換同一首，`Settings.BattleTune` 有出口；
 `TestEveryTuneIsReachable` 覆蓋到 `BGM_6`／`BGM_7`。
 
-**證據**：[`docs/re/324-engagement-scene.md`](docs/re/324-engagement-scene.md)、[`docs/spec/056-engagement-scene.md`](docs/spec/056-engagement-scene.md)、[`docs/playtest/022-engagement-scene.md`](docs/playtest/022-engagement-scene.md)、[`docs/internals/20-comani-bmg.md`](docs/internals/20-comani-bmg.md)、[`docs/re/328-comani-bmg-codec.md`](docs/re/328-comani-bmg-codec.md)
+**證據**：[`docs/re/324-engagement-scene.md`](docs/re/324-engagement-scene.md)、[`docs/spec/056-engagement-scene.md`](docs/spec/056-engagement-scene.md)、[`docs/playtest/022-engagement-scene.md`](docs/playtest/022-engagement-scene.md)、[`docs/internals/20-comani-bmg.md`](docs/internals/20-comani-bmg.md)、[`docs/re/328-comani-bmg-codec.md`](docs/re/328-comani-bmg-codec.md)、[`docs/re/331-engagement-picture-sequence.md`](docs/re/331-engagement-picture-sequence.md)
 
 **核實**：`internal/game/engagement.go` 裡還找得到 `方塊動畫沒畫`（自承還在 ＝ 還沒做）
 

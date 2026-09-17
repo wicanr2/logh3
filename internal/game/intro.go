@@ -44,7 +44,8 @@ func (g *Game) SkipIntro() {
 // IntroFrame 回開頭動畫播到第幾格（0 起算）。
 func (g *Game) IntroFrame() int { return g.introFrame }
 
-// Tick 讓時間往前走 d。目前只有開頭動畫在用；其他畫面都是事件驅動的。
+// Tick 讓時間往前走 d。開頭動畫、防拷問答的計時與交戰演出（`engagement.go`）在用；
+// 其他畫面都是事件驅動的。
 //
 // **不讀牆上時鐘**：顯示層把每格的長度傳進來，所以同一串 Tick 一定
 // 重現同一串畫面，無頭驗收與視窗跑出來的東西一樣。
@@ -59,6 +60,15 @@ func (g *Game) Tick(d time.Duration) {
 			g.copyProtTickRemainder -= period
 			g.copyProtTicks++
 		}
+	}
+	if g.state == StateEngagement {
+		g.engTickRemainder += d
+		n := 0
+		for tick := g.engagementTickDuration(); g.engTickRemainder >= tick; g.engTickRemainder -= tick {
+			n++
+		}
+		g.engagementTick(n)
+		return
 	}
 	if g.state != StateIntro {
 		return

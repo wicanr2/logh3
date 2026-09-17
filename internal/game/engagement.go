@@ -1,6 +1,10 @@
 package game
 
 import (
+	"encoding/hex"
+	"time"
+
+	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
@@ -11,13 +15,15 @@ import (
 // 原版戰場回合處理的打行星那一步（`20B4:0222` 起）對每一顆有人打的行星：
 // `1DD6:0152` 開場（`ANI_PNL1.A98` 底圖、三個樣式 0 的文字視窗、換戰鬥曲）→
 // `20B4:0486` 打（同時放方塊動畫、印「擊毀」）→ `1DD6:026B` 收場（換回平時曲）。
-// 演出約 29M 步，按鍵只把動畫跳到結果、不縮短；動畫效果（`ds:8F36`）關掉時
-// 沒有方塊動畫、演出短九百萬步，面板與換曲照舊。
+// 行星防衛攻擊（`20B4:08B1`，`docs/re/331`）的時間線以計時器 tick 計（底圖畫下去
+// 是 tick 0，間隔 I ＝ `ds:8F10[動畫速度]` ＝ 8／4／0）：I 行星 `P?D0` 第 0 格、2I 艦隊
+// `??D0` 第 0 格、3I–12I 行星 `P?AB` 十格、13I 起艦隊 `??D{0,1,2}` 整段 → 印「擊毀」與
+// 反擊後的艘數 → 停頓「訊息速度」tick（`3765:006C`）→ 收場。播放中**不讀輸入**：
+// 左／右鍵排進佇列，到停頓時才讀、讀到就提早收場。動畫效果關掉時四次畫圖都跳過、
+// 直接到「擊毀」與停頓。
 //
-// remake 接的是「兩幀」：開場那一幀（反擊之前的數字）與結果那一幀（「擊毀」與
-// 反擊之後的艘數），左鍵或右鍵換幀，看完回戰場繼續那一回合剩下的處理。
-// **行星圖、艦隊圖、量表與方塊動畫沒畫**：`COMANI.BMG` 的編碼還沒解
-// （`docs/internals/20`），事先列在版面的 `known_diff`。
+// 量表（`321F:0D11`／`0DF7`）與戰場方塊動畫沒畫（`321F:008A`／`0897`），事先列在版面的
+// `known_diff`；艦隊對艦隊、要塞砲、登陸艦攻擊（`20B4:0681`）那幾種的圖沒接。
 
 // engagement 是一場演出要印的數。
 type engagement struct {
@@ -27,6 +33,11 @@ type engagement struct {
 	ships, shipsMax     int
 	destroyed           int
 	label               screen.EngagementLabel
+	// planetSide／fleetSide 是行星與艦隊畫在哪個視窗（0 左、1 右，`3958:0041` 的 `+0`）；
+	// planetKind 是段名第二個字元（P 行星、F 要塞、Z 伊謝爾倫）、fleetName 是艦隊段名前兩個字元。
+	planetSide, fleetSide int
+	planetKind            byte
+	fleetName             [2]byte
 }
 
 // queueEngagements 把這一回合打行星的結果排成演出（一顆行星一場：原版
@@ -64,9 +75,150 @@ func (g *Game) queueEngagements(hits []rules.PlanetAssaultHit) bool {
 	if len(g.engQueue) == 0 {
 		return false
 	}
-	g.engPhase = 0
+	for i := range g.engQueue {
+		g.fillEngagementNames(&g.engQueue[i])
+	}
+	g.startEngagement()
 	g.state = StateEngagement
 	return true
+}
+
+// fillEngagementNames 算這一場的段名與左右（`20B4:1370`／`1269` 組的記錄，`docs/re/331` §1.4）。
+func (g *Game) fillEngagementNames(e *engagement) {
+	if e.planet < 0 || e.planet >= len(g.battlePlanets) {
+		return
+	}
+	p := g.battlePlanets[e.planet]
+	faction := 0
+	admiral := -1
+	for _, f := range g.battleFleets {
+		if f.Index == e.fleet {
+			faction = f.Faction
+		}
+	}
+	admiral = g.fleetAdmiral(e.fleet)
+	e.fleetSide = faction
+	e.planetSide = p.Owner
+	if p.Owner != 0 && p.Owner != 1 { // 中立的行星畫在艦隊的對面
+		e.planetSide = 1 - faction
+	}
+	e.planetKind = 'P'
+	if p.Fortress {
+		e.planetKind = 'F'
+		if g.res.Engagement != nil && g.battleRegion == g.res.Engagement.Animation.FortressRegion {
+			e.planetKind = 'Z'
+		}
+	}
+	e.fleetName = [2]byte{"EF"[faction%2], 0xDD}
+	if g.res.Engagement != nil {
+		if codes, err := hex.DecodeString(g.res.Engagement.Animation.FlagshipCodes); err == nil &&
+			admiral >= 0 && admiral < len(codes) {
+			e.fleetName[1] = codes[admiral]
+		}
+	}
+}
+
+// startEngagement 把佇列最前面那一場從 tick 0 開始。
+func (g *Game) startEngagement() {
+	g.engTick, g.engTickRemainder, g.engClick = 0, 0, false
+}
+
+// engagementPicture 是時間線上的一次畫圖：哪一段、哪一格、哪個視窗、第幾 tick。
+type engagementPicture struct {
+	segment string
+	frame   int
+	side    int
+	tick    int
+}
+
+// engagementTimeline 回這一場的畫圖序列與「擊毀」那一刻的 tick（`20B4:08B1`）。
+func (g *Game) engagementTimeline(e engagement) (pics []engagementPicture, result int) {
+	if g.res.Comani == nil || g.res.Engagement == nil || g.display.Anim == 0 {
+		return nil, 0
+	}
+	interval := 8
+	if iv := g.res.Engagement.Animation.Intervals; g.display.AnimSpeed >= 0 && g.display.AnimSpeed < len(iv) {
+		interval = iv[g.display.AnimSpeed]
+	}
+	tick := 0
+	add := func(seg string, frames []int, side int) {
+		for _, f := range frames {
+			tick += interval
+			pics = append(pics, engagementPicture{segment: seg, frame: f, side: side, tick: tick})
+		}
+	}
+	planetD0 := string([]byte{'P', e.planetKind, 'D', '0'})
+	planetAB := string([]byte{'P', e.planetKind, 'A', 'B'})
+	fleetD0 := string([]byte{e.fleetName[0], e.fleetName[1], 'D', '0'})
+	add(planetD0, []int{0}, e.planetSide)
+	add(fleetD0, []int{0}, e.fleetSide)
+	add(planetAB, g.comaniFrames(planetAB), e.planetSide)
+	// 損失百分比（`20B4:103D` 設的 `ds:A768`）：< 20 → D0、< 40 → D1、其餘 D2；0 → 只重畫 D0 第 0 格。
+	pct := 0
+	if e.ships > 0 {
+		pct = e.destroyed * 100 / e.ships
+		if pct == 0 && e.destroyed > 0 {
+			pct = 1
+		}
+	}
+	switch {
+	case pct == 0:
+		add(fleetD0, []int{0}, e.fleetSide)
+	default:
+		sub := byte('2')
+		if pct < 20 {
+			sub = '0'
+		} else if pct < 40 {
+			sub = '1'
+		}
+		seg := string([]byte{e.fleetName[0], e.fleetName[1], 'D', sub})
+		add(seg, g.comaniFrames(seg), e.fleetSide)
+	}
+	return pics, tick
+}
+
+// comaniFrames 回一段的全部格序號（段不存在回 nil）。
+func (g *Game) comaniFrames(seg string) []int {
+	fr, err := g.res.Comani.Frames(seg)
+	if err != nil {
+		return nil
+	}
+	out := make([]int, len(fr))
+	for i := range out {
+		out[i] = i
+	}
+	return out
+}
+
+// engagementTickDuration 是一個計時器 tick 的長度。
+func (g *Game) engagementTickDuration() time.Duration {
+	if g.res.Engagement != nil && g.res.Engagement.Animation.TickNS > 0 {
+		return time.Duration(g.res.Engagement.Animation.TickNS)
+	}
+	return 17164 * time.Microsecond
+}
+
+// engagementTick 讓演出往前走 n 個計時器 tick：擊毀之後停頓滿「訊息速度」或停頓時
+// 佇列裡有按鍵就收場。
+func (g *Game) engagementTick(n int) {
+	for ; n > 0 && g.state == StateEngagement; n-- {
+		g.engTick++
+		g.engagementMaybeEnd()
+	}
+}
+
+// engagementMaybeEnd 看停頓該不該結束（`3765:006C`）。
+func (g *Game) engagementMaybeEnd() {
+	if len(g.engQueue) == 0 {
+		return
+	}
+	_, result := g.engagementTimeline(g.engQueue[0])
+	if g.engTick < result {
+		return
+	}
+	if g.engClick || g.engTick >= result+g.display.MsgSpeed {
+		g.finishEngagement()
+	}
 }
 
 // battleFleetShips 回這一支現在的艘數合計（船艦總數的分子）。
@@ -106,9 +258,10 @@ func (g *Game) engagementView() *screen.EngagementView {
 		Faction: p.Owner, PlanetName: g.battlePlanetName(e.planet),
 		Defence: e.defence, DefenceMax: e.defenceMax,
 		Ships: e.ships, ShipsMax: e.shipsMax,
-		Label: e.label, Destroyed: e.destroyed, ShowResult: g.engPhase > 0,
+		Label: e.label, Destroyed: e.destroyed,
 	}
-	if g.engPhase > 0 {
+	if _, result := g.engagementTimeline(e); g.engTick >= result {
+		v.ShowResult = true
 		v.Ships = e.ships - e.destroyed
 	}
 	// 艦隊那格：自軍或索敵等級 3 的才印編號與提督（`ds:4801` 那句「第？艦隊
@@ -159,17 +312,19 @@ func (g *Game) battlePlanetName(i int) []byte {
 	return planetNameBytes(g.res.Planets.Record(start + i))
 }
 
-// engagementClick 是演出期間的左鍵／右鍵：開場那一幀 → 結果那一幀 → 下一場
-// 或回戰場（原版按鍵只把動畫跳到結果，演出的長度不變；remake 沒有計時）。
+// engagementClick 是演出期間的左鍵／右鍵：排進佇列（播放中不讀），停頓時讀到就收場
+// （`docs/re/331` §三）。
 func (g *Game) engagementClick() {
-	if g.engPhase == 0 {
-		g.engPhase = 1
-		return
-	}
+	g.engClick = true
+	g.engagementMaybeEnd()
+}
+
+// finishEngagement 收場：下一場從頭開始，沒有了就回戰場做完那一回合。
+func (g *Game) finishEngagement() {
 	if len(g.engQueue) > 0 {
 		g.engQueue = g.engQueue[1:]
 	}
-	g.engPhase = 0
+	g.startEngagement()
 	if len(g.engQueue) > 0 {
 		return
 	}
@@ -184,5 +339,41 @@ func (g *Game) drawEngagement() *gfx.Framebuffer {
 		return fb
 	}
 	g.res.Engagement.Draw(fb, g.res.Font, g.res.FrameTiles, g.res.EngagementPanel, g.engagementView())
+	g.drawEngagementPictures(fb)
 	return fb
+}
+
+// drawEngagementPictures 把時間線上到現在為止的每一格依序疊上兩個視窗（覆寫格與 XOR 格
+// 都照 `internal/asset.BMGFrame.Draw`），從底圖重算，所以任何 tick 都畫得出來。
+func (g *Game) drawEngagementPictures(fb *gfx.Framebuffer) {
+	if len(g.engQueue) == 0 || g.res.Comani == nil || g.res.Engagement == nil {
+		return
+	}
+	pics, _ := g.engagementTimeline(g.engQueue[0])
+	win := g.res.Engagement.Animation.Windows
+	var planes asset.Planes
+	drawn := false
+	for _, pc := range pics {
+		if pc.tick > g.engTick || pc.side < 0 || pc.side >= len(win) {
+			break
+		}
+		fr, err := g.res.Comani.Frames(pc.segment)
+		if err != nil || pc.frame >= len(fr) {
+			continue
+		}
+		if !drawn {
+			planes, drawn = asset.PlanesFrom(fb.Pix), true
+		}
+		_ = fr[pc.frame].Draw(planes, asset.BMGWindowBase(win[pc.side][0], win[pc.side][1]))
+	}
+	if !drawn {
+		return
+	}
+	pix := planes.Pixels()
+	for _, w := range win {
+		x0, y0 := w[0]*8, 40+w[1]*4
+		for y := y0; y < y0+102 && y < gfx.Height; y++ {
+			copy(fb.Pix[y*gfx.Width+x0:y*gfx.Width+x0+256], pix[y*gfx.Width+x0:y*gfx.Width+x0+256])
+		}
+	}
 }

@@ -67,20 +67,6 @@
  },
  "known_diff": [
   {
-   "x": 8,
-   "y": 56,
-   "w": 257,
-   "h": 102,
-   "why": "行星圖：COMANI.BMG 的 PPD0 段，編碼未解"
-  },
-  {
-   "x": 376,
-   "y": 56,
-   "w": 256,
-   "h": 102,
-   "why": "艦隊圖：COMANI.BMG 的 F?D0 段（艦種），編碼未解"
-  },
-  {
    "x": 297,
    "y": 62,
    "w": 48,
@@ -95,5 +81,27 @@
    "why": "戰場：透視格線與方塊動畫（COMANI PPAB／3931 段），沒讀"
   }
  ],
- "formats_note": "原版的字串是 ds:60F4「\\x03[150,帝國軍\\x03[151,」與 ds:48B1「\\x01[0,1,擊毀  %6u」、中間視窗顏色 4；這三個視窗走字元平面的 0x10「彩色文字路徑」，色碼的換算沒讀，所以這裡直接寫量到的屬性（字元平面 eng-open／eng-end：帝國軍 E2、行星名與防衛力 E4、防衛攻擊 02、擊毀 0D、艦隊那格 C4）。假設待驗：同盟的行星是不是同一組色。"
+ "formats_note": "原版的字串是 ds:60F4「\\x03[150,帝國軍\\x03[151,」與 ds:48B1「\\x01[0,1,擊毀  %6u」、中間視窗顏色 4；這三個視窗走字元平面的 0x10「彩色文字路徑」，色碼的換算沒讀，所以這裡直接寫量到的屬性（字元平面 eng-open／eng-end：帝國軍 E2、行星名與防衛力 E4、防衛攻擊 02、擊毀 0D、艦隊那格 C4）。假設待驗：同盟的行星是不是同一組色。",
+ "animation": {
+  "note": "交戰演出的圖（COMANI.BMG，docs/re/328、docs/re/331）。每一格之前等計時器到 0 再設成 intervals[動畫速度]（348A:0281；1 tick ＝ PIT 分頻 2048 的 IRQ0 十次 ≈ 17.16 ms）；陣營 0 畫左視窗、1 畫右視窗（3958:0041；3A8D:003A 的格座標）。flagship_codes ＝ ds:8E34（提督索引 → 艦隊段名第二個字元）；fortress_region ＝ ds:8F17 為伊謝爾倫時要塞行星用 Z。",
+  "file": "COMANI.BMG",
+  "intervals": [
+   8,
+   4,
+   0
+  ],
+  "tick_ns": 17164000,
+  "windows": [
+   [
+    1,
+    4
+   ],
+   [
+    47,
+    4
+   ]
+  ],
+  "flagship_codes": "b1b2b3b4b5b6bab9b8bfb7bdbbbcbeddddddddddddddddddddddddddddddddddddddddddddddddddb1ddb3ddb5ddb7b8b9baddbcbdbebec0dddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "fortress_region": 13
+ }
 }

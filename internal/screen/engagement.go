@@ -42,7 +42,22 @@ type EngagementSpec struct {
 		LabelFailed      string   `json:"label_failed"`
 		Destroyed        string   `json:"destroyed"`
 	} `json:"formats"`
-	KnownDiff []EngagementRect `json:"known_diff"`
+	KnownDiff []EngagementRect    `json:"known_diff"`
+	Animation EngagementAnimation `json:"animation"`
+}
+
+// EngagementAnimation 是演出的圖要用的常數（`COMANI.BMG`，`docs/re/331`）。
+type EngagementAnimation struct {
+	File string `json:"file"`
+	// Intervals 是每格的間隔（計時器 tick），索引是動畫速度（`ds:8F10`）。
+	Intervals []int `json:"intervals"`
+	// TickNS 是一個計時器 tick 的長度（奈秒）。
+	TickNS int64 `json:"tick_ns"`
+	// Windows 是左（陣營 0）右（陣營 1）兩個視窗的格座標（`3A8D:003A`）。
+	Windows [][2]int `json:"windows"`
+	// FlagshipCodes 是 `ds:8E34`（hex）：提督索引 → 艦隊段名第二個字元。
+	FlagshipCodes  string `json:"flagship_codes"`
+	FortressRegion int    `json:"fortress_region"`
 }
 
 // EngagementRect 是事先列出的排除區（畫面座標）與理由。

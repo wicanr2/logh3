@@ -72,5 +72,6 @@
 
 ## 還沒解的
 
-見 [`docs/re/328`](../re/328-comani-bmg-codec.md) §五：其餘 251 段沒有收據、名字語意與 `0xB1…`
-對照表、`ds:8F10` 的單位與 `ds:8EFE` 由誰遞減、`3B74:031A`（推測音效）。
+見 [`docs/re/328`](../re/328-comani-bmg-codec.md) §五與 [`docs/re/331`](../re/331-engagement-picture-sequence.md) §七：
+其餘段在遊戲裡的場面沒有收據、`3B74:031A`（推測音效）。名字的組法與 `ds:8E34`（提督 → 旗艦圖碼）、每格間隔
+（`ds:8F10` ＝ 8／4／0 tick，1 tick ≈ 17.16 ms，IRQ0 每十次減一次 `ds:8EFE`）已解（`docs/re/331`）。

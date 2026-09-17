@@ -479,6 +479,8 @@ type Resources struct {
 	// 規格 056）。
 	Engagement      *screen.EngagementSpec
 	EngagementPanel *asset.Image
+	// Comani 是交戰演出的動畫庫（`COMANI.BMG`，`docs/internals/20`）；缺原版檔就是 nil（不畫圖）。
+	Comani *asset.BMG
 
 	// SupplyPanel 是「補給」選對象時右側那個面板（`docs/re/143`）。
 	SupplyPanel *screen.SupplyPanelSpec
@@ -895,10 +897,13 @@ type Game struct {
 	// battleAssaults 是上一回合打行星的結果（`docs/spec/019`）。
 	battleGunHits  []rules.FortressGunHit
 	battleAssaults []rules.PlanetAssaultHit
-	// engQueue 是排隊等演的交戰演出（`engagement.go`），engPhase 0 ＝ 開場那一幀、
-	// 1 ＝ 結果那一幀。
-	engQueue []engagement
-	engPhase int
+	// engQueue 是排隊等演的交戰演出（`engagement.go`）；engTick 是目前這一場從底圖
+	// 畫下去算起的計時器 tick、engTickRemainder 是還不滿一 tick 的時間、engClick ＝
+	// 演出中按過左／右鍵（排進佇列，停頓時才讀）。
+	engQueue         []engagement
+	engTick          int
+	engTickRemainder time.Duration
+	engClick         bool
 	// battleGunAim 是射程橢圓現在的傾角（一整圈 256）；瞄準當下由
 	// 游標的方位算，按下左鍵才寫進行星記錄的 `+0x50`。
 	battleGunAim int

@@ -7320,3 +7320,16 @@ GitHub 的 issue 時間軸承擔。
 - `internal/...` 全過、GUI 全部案例逐位元組相同。文件：`docs/re/330`（新）、規格 058（新）、054、internals 53 改寫、08（`+2…+5` ＝ 功績）、
   `docs/re/152`／`147`／`322` 加更正指標、playtest 021、規格索引、CONTEXT。
 - 關 #46（verify → go_test）；開 #52（回合過場視窗與報告）、#53（戰場層打行星三處位元組出入）。
+
+## 2026-09-17 — 交戰演出的圖接上：記錄、計時器 tick、按鍵排隊（#48）
+
+- subagent 反組譯 `20B4:08B1`／`1370`／`1269` 組 `3958:0041` 記錄的方式、`ds:8E34` 提督 → 旗艦圖碼、計時器（PIT 2048、IRQ0 十次一 tick、
+  `ds:8F10` 8／4／0）、按鍵（播放中排隊、停頓讀到按下就收場），十三批 `fcx-engrec-*`（`docs/re/331`）。
+- 主 session 核對：`eng-after`（#1172M）仍是演出畫面、`eng-end` 戰場區是暫態（與 `eng-after` 差 2,680 像素）。**推翻** `docs/re/324`
+  「#1169.07M 收場」「方塊在戰場上動」「關掉動畫沒有方塊」，`playtest/022` 對應列改寫。
+- remake：`StateEngagement` 從「按鍵換兩幀」改成 tick 驅動（`engagementTimeline`／`drawEngagementPictures`／`engagementTick`，
+  `Tick` 轉發）；段名與左右由資料推（`fillEngagementNames`）；`Resources.Comani`；版面 JSON 加 `animation`、`known_diff` 拿掉兩個圖視窗。
+- **坑**：步數換 tick 要照遞減相位算——第 n 次遞減在 #1140.145018M ＋ (n−1)×0.2M，不是從底圖那一步起算，否則 `eng-mid2`
+  少一格（1,797 像素）。fixture 原本挑同盟第一支（提督 40，碼 B1），原版那一場是費雪（55，C0），改挑費雪。
+- `TestEngagementMatchesOracle`（六批）、`TestEngagementClickQueuesUntilPause`、`TestEngagementAnimationOffMatchesOracle`；`internal/...` 全過、GUI 全相同。
+- 文件：`docs/re/331`（新）、規格 056、playtest 022、`docs/re/324`／`328` 指標、internals 20、60、CONTEXT。#48 留著（量表、戰場方塊、另外三種演出）。

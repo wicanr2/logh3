@@ -332,6 +332,14 @@ func Load(orig, data string) (*game.Resources, error) {
 		return nil, err
 	}
 	engagement, engagementPanel, err := loadEngagement(data, orig)
+	var comani *asset.BMG
+	if engagement != nil && engagement.Animation.File != "" {
+		if b, err := os.ReadFile(filepath.Join(orig, engagement.Animation.File)); err == nil {
+			if comani, err = asset.OpenBMG(b); err != nil {
+				return nil, err
+			}
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -386,6 +394,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		ListScreen:      listScreen,
 		Engagement:      engagement,
 		EngagementPanel: engagementPanel,
+		Comani:          comani,
 		StartMilitary:   50000, ShipPct: 25}, nil
 }
 
