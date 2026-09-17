@@ -36,6 +36,10 @@ func dismissAllRebellionReports(g *Game) {
 			g.Click(2, 470)
 		case StateRebellionReport:
 			g.Click(2, 470)
+		case StateTurnReport, StateTurnWindow, StateRegionFlipReport:
+			// 回合裡的報告框與過場視窗（規格 059）、易主報告：電腦的艦隊會走進無主與敵方星域、
+			// 拿下行星，這幾張也會停。
+			g.Click(2, 470)
 		default:
 			return
 		}

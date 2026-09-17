@@ -95,12 +95,12 @@ func (in StrategyInput) candidates(decided map[int]bool) []Candidate {
 	return out
 }
 
-// fleetAction 把 remake 的 `Parked` 換回原版 `+0x08` 的值。
+// fleetAction 回原版 `+0x08` 的值：停駐是 5，其餘照艦隊記錄的命令。
 func fleetAction(f rules.Fleet) int {
 	if f.Parked {
-		return 5
+		return rules.MoveParked
 	}
-	return 0
+	return f.Move
 }
 
 // Turn 跑一個戰略回合，回這一回合要下的命令。
@@ -148,7 +148,7 @@ func Turn(in StrategyInput) []Order {
 		}
 		decided[i] = true
 		if d.Decision == DecisionIdle && d.Target >= 0 {
-			orders = append(orders, Order{Fleet: i, Target: d.Target})
+			orders = append(orders, Order{Fleet: i, Target: d.Target, Move: d.Move, Direct: true})
 		}
 	}
 
@@ -195,7 +195,7 @@ func (in StrategyInput) phaseNeutral(decided map[int]bool) []Order {
 	}
 	out := make([]Order, 0, 2)
 	for _, i := range picked {
-		out = append(out, Order{Fleet: i, Target: target})
+		out = append(out, Order{Fleet: i, Target: target, Move: rules.MoveOccupy}) // 2E54:1B17(f, 1, 星域)
 	}
 	return out
 }
@@ -229,7 +229,7 @@ func (in StrategyInput) phaseDefence(decided map[int]bool, held [RegionCount]int
 		decided[i] = true
 		b.Assigned[cell]++
 		if in.Fleets[i].Region != cell {
-			out = append(out, Order{Fleet: i, Target: cell})
+			out = append(out, Order{Fleet: i, Target: cell, Move: rules.MoveMove}) // 2E54:1B17(f, 0, 星域)
 		}
 	}
 }
@@ -268,13 +268,18 @@ func (in StrategyInput) phaseFinal(decided map[int]bool, held [RegionCount]int) 
 		if f.Faction != in.Faction || decided[i] {
 			continue
 		}
+		// `2E54:1243`：回首都寫 2（駐留）；往前進基地時士氣 < 60 或原本就是 3 寫 3，否則 0。
 		switch {
 		case f.Expected != 0 && f.Groups == f.Expected:
-			out = append(out, Order{Fleet: i, Target: capital})
+			out = append(out, Order{Fleet: i, Target: capital, Move: rules.MoveGarrison})
 		case base >= 0 && in.Graph.Hops(f.Region, base) >= 0:
-			out = append(out, Order{Fleet: i, Target: base})
+			mv := rules.MoveMove
+			if f.Morale < 60 || fleetAction(f) == rules.MoveTransport {
+				mv = rules.MoveTransport
+			}
+			out = append(out, Order{Fleet: i, Target: base, Move: mv})
 		case in.Graph.Hops(f.Region, capital) >= 0:
-			out = append(out, Order{Fleet: i, Target: capital})
+			out = append(out, Order{Fleet: i, Target: capital, Move: rules.MoveGarrison})
 		}
 		decided[i] = true
 	}

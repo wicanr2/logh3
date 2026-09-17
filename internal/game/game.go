@@ -1492,8 +1492,17 @@ func (g *Game) runBrain() {
 		if o.Fleet < 0 || o.Fleet >= len(g.fleets) {
 			continue
 		}
-		g.fleets[o.Fleet].Target = o.Target
-		g.fleets[o.Fleet].Parked = false
+		f := &g.fleets[o.Fleet]
+		// 命令種類照原版寫進 `+0x08`（移動／占領／駐留／輸送）。少了這一格，電腦的艦隊
+		// 走進無主或敵方星域時會被當成「不是占領命令」擋下來（`docs/re/335`）。
+		if !o.Direct && o.Target == f.Region {
+			// `2E54:1B17`：已經在目標格 → 停駐。
+			if !f.Parked {
+				f.Target, f.Move, f.Parked = rules.NoTarget, rules.MoveParked, true
+			}
+			continue
+		}
+		f.Target, f.Move, f.Parked = o.Target, o.Move, o.Move == rules.MoveParked
 	}
 	// `2D10:0038` 的前兩步：重新指派情報與內政專任參謀（`docs/re/268`）。
 	// 排在 `Blend` 之前——換了人之後那一步重算稅率才會用到新的那位。

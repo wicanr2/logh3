@@ -31,6 +31,12 @@ import "github.com/wicanr2/logh3/internal/rules"
 type Order struct {
 	Fleet  int `json:"fleet"`  // 索引，對應 World.Fleets
 	Target int `json:"target"` // 目的地星域
+	// Move 是寫進艦隊 `+0x08` 的命令（0 移動、1 占領、2 駐留、3 輸送；`docs/internals/33`）。
+	// 原版每一條下命令的路都寫這一格（`docs/internals/54`）；零值 ＝ 移動。
+	Move int `json:"move"`
+	// Direct ＝ 直接寫 `+0x07`／`+0x08`（`2E54:005D` 的原地出擊與退一格）；否則走 `2E54:1B17`：
+	// 艦隊已經在目標格就改成停駐（`+0x08 = 5`、`+0x07 = 0xFF`）。
+	Direct bool `json:"direct,omitempty"`
 }
 
 // World 是 AI 看得到的局面。**只讀**——AI 只回命令，不自己改狀態。
