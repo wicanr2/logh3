@@ -40,6 +40,15 @@ func battleTestGame(t *testing.T) *Game {
 	for _, p := range [][2]int{{544, 125}, {560, 145}, {300, 322}, {318, 208}, {544, 125}, {560, 125}} {
 		g.Click(p[0], p[1])
 	}
+	// 實行之後：思考中、三張出發前往（S3 第一回合，`fcmd-s3-*`）照計時走完，不多點——游標要停在收據那個位置。
+	for i := 0; i < 2000 && g.State() != StateBattle; i++ {
+		switch g.State() {
+		case StateTurnThinking, StateTurnWindow, StateTurnReport:
+			g.Tick(g.engagementTickDuration())
+		default:
+			i = 2000
+		}
+	}
 	if g.State() != StateBattle {
 		t.Skipf("走不到戰術畫面（現在 %v），跳過", g.State())
 		return nil
