@@ -45,6 +45,9 @@ type StrategicAssaultResult struct {
 	Score [2]int
 	// Captured 是拿下的行星（切片內序號，依拿下的順序）。
 	Captured []int
+	// CapturedBy 與 Captured 一一對應：拿下那一顆的艦隊（回呼 `20B4:1922` 的第一個參數，
+	// 攻占訊息框印它的編號與提督）。
+	CapturedBy []*Fleet
 	// Hits 是開火的次數（除錯用）。
 	Hits int
 }
@@ -140,12 +143,27 @@ func strategicAttackRound(planets []byte, pi int, sites []PlanetSite, attacker i
 			binary.LittleEndian.PutUint32(p[planetFighters:], 0)
 			res.Score[attacker] += max / captureScoreDiv
 			res.Captured = append(res.Captured, pi)
+			res.CapturedBy = append(res.CapturedBy, f)
 			addMerit(res, f, max)
 			return true
 		}
 		strategicCounter(p, facing, sf, attacker, r, res)
 	}
 	return false
+}
+
+// FleetFlagMoraleFlip／FleetFlagNoShips 是回合尾巴 `1261:0104` 讀的兩個位元：士氣跨過 50（bit2）、
+// 全隊沒有艘數（bit3）。讀完就清。
+const (
+	FleetFlagMoraleFlip = fleetFlagMoraleFlip
+	FleetFlagNoShips    = fleetFlagNoShips
+	FleetFlagLowMorale  = fleetFlagLowMorale
+)
+
+// RecomputeMorale ＝ `1261:032B(艦隊)`：照編制重算士氣與 `+0x00` 的 bit0／bit2／bit3。command 是提督的
+// 統率力（提督記錄 `+0x0B`）。
+func RecomputeMorale(f *Fleet, command int) {
+	strategicMorale(StrategicFleet{Fleet: f, Command: command})
 }
 
 // fleetFlagLowMorale 是艦隊 `+0x00` bit0：士氣低於 50（`1261:032B`）。

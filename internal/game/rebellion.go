@@ -111,10 +111,16 @@ func (g *Game) scanRegionsFrom(from int) {
 			g.StartBattle(r)
 			return
 		}
+		// 自家星域的艦艇補充（`1AAB:0FAF`：擁有者的艦隊從星域存量補到編制數、補完 `1261:0067(f, 1)` 可能印
+		// 「已經恢復」，`docs/re/333` §三）還沒接；原版排在這一格的全滅判定與打行星之前。
 		if occ.Occupied {
 			// 單方面占據的格子改跑戰略打行星（`20B4:1497`：三次回復、打第一顆不是
 			// 自己的行星、反擊、換手，最多九回合；規格 058、`docs/re/330`）。
-			g.strategicAssault(r)
+			// 拿下行星的訊息框（`20B4:1922`）不改狀態、不耗亂數，停在打完之後印。
+			next := r + 1
+			if g.startTurnReports(g.strategicAssault(r), func() { g.scanRegionsFrom(next) }) {
+				return
+			}
 			continue
 		}
 		rules.DepartNeutralPlanet(g.regionRecord(r), g.res.Planets, r, g.rand94DC())
@@ -194,11 +200,10 @@ func (g *Game) drawRebellionReport(fb *gfx.Framebuffer) {
 // `297B:14F8`）就是帝國、否則同盟；攻方在場的艦隊依艦隊表順序排進 `rules.StrategicAssault`。
 // 行星記錄就地改、艦隊的艘數與士氣改在結構上、功績寫提督 `+0x02`、兩個計分器照加。
 //
-// 回合過場的訊息框還沒畫：拿下行星那一框（`20B4:1922`）與士氣低落報告（`1261:0104`）
-// remake 同步跑完不停（規格 058 已知差異）。
-func (g *Game) strategicAssault(region int) {
+// 回傳拿下行星的訊息框（`20B4:1922`，每拿下一顆一則，依拿下的順序）。
+func (g *Game) strategicAssault(region int) []turnReport {
 	if g.res.Planets == nil {
-		return
+		return nil
 	}
 	attacker := 1
 	for _, f := range g.fleets {
@@ -208,7 +213,7 @@ func (g *Game) strategicAssault(region int) {
 	}
 	start, n := g.res.Planets.Range(region)
 	if n == 0 {
-		return
+		return nil
 	}
 	lo := rules.PlanetHeader + start*rules.PlanetRecord
 	planets := g.res.Planets.Data[lo : lo+n*rules.PlanetRecord]
@@ -231,7 +236,7 @@ func (g *Game) strategicAssault(region int) {
 		sfs = append(sfs, rules.StrategicFleet{Fleet: f, Ability40: int(ab[3]), Ability41: int(ab[4]), Command: command})
 	}
 	if len(sfs) == 0 {
-		return
+		return nil
 	}
 	res := rules.StrategicAssault(planets, sites, attacker, sfs, g.rand94DC())
 	g.mutableAdmirals()
@@ -244,4 +249,11 @@ func (g *Game) strategicAssault(region int) {
 		g.battleScore[f] += res.Score[f]
 		g.campaignScore[f] += res.Score[f]
 	}
+	var reports []turnReport
+	if g.res.TurnWindow != nil {
+		for k, pi := range res.Captured {
+			reports = append(reports, g.captureReport(res.CapturedBy[k], region, pi))
+		}
+	}
+	return reports
 }

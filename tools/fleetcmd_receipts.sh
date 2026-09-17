@@ -419,3 +419,14 @@ rec fcmd-turn-ask          680000000 fcmd-occ-t1 - -clicks 666000000:544:85,6690
 rec fcmd-turn-ask-depart   704000000 fcmd-occ-t1 - -clicks 666000000:544:85,669000000:560:85,700000000:424:230 -click-hold $HOLD -poke lin:5F650@665500000=01 $TURN
 rec fcmd-turn-ask-onward   716000000 fcmd-occ-t1 - -clicks 666000000:544:85,669000000:560:85,700000000:424:230 -click-hold $HOLD -poke lin:5F650@665500000=01 $TURN
 rec fcmd-turn-clk22        565000000 fcmd-done - -clicks 546000000:544:85,549000000:560:85,558000000:560:85 -click-hold $HOLD $TURN
+
+# 24. 回合裡的報告框（3826:0307；docs/re/333、規格 059）：拿下行星（20B4:1922，人類／電腦）、士氣值低落與
+#     已經恢復（1261:0138）、已全軍覆沒（1261:0267）。錄在 90 tick 等待的中間。
+#     人類拿下：fcmd-occ-t4 在實行前把巴溫（行星 +0x14 防衛力，lin:53D20）改成 100，第五回合一打就換手。
+#     已經恢復：fcmd-base 把第１艦隊 +0x00 ← 01、+0x3C ← 40、艦艇 0 +0x06 ← 40、+0x08 ← 100 艘，實行時瓦爾哈拉補回（1AAB:0FAF）。
+#     已全軍覆沒：fcmd-occ-t4 把艦艇 0 +0x08 改 0，走一格之後 113A:03C5 → 1261:0067(f,1) 設 bit3。
+rec fcmd-turn-capture      1111500000 fcmd-occ-t4 - -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD -poke "lin:53D20@1025000050=64 00" $OCC
+rec fcmd-turn-ai-capture    923400000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
+rec fcmd-turn-morale-low    961800000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
+rec fcmd-turn-recover       442100000 fcmd-base - -clicks 421000000:544:85,424000000:560:85 -click-hold $HOLD -poke "lin:60BA4@420000050=01;lin:60BE0@420000050=28;lin:668B8@420000050=28;lin:668BA@420000050=64 00" $TURN
+rec fcmd-turn-no-ships     1068200000 fcmd-occ-t4 - -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD -poke "lin:668BA@1025000050=00 00" $OCC

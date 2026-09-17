@@ -194,6 +194,8 @@ const (
 	// StateTurnWindow 是回合處理中每支人類艦隊的過場視窗（出發前往／已經到達、
 	// 被擋、經費不足；`113A:0B46`／`0797`／`0A4E`，規格 059），等計時或一次點擊。
 	StateTurnWindow
+	// StateTurnReport 是回合裡的報告框（攻占訊息框、士氣報告、全軍覆沒；`3826:0307`，規格 059）。
+	StateTurnReport
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -219,6 +221,7 @@ func (s State) String() string {
 		"StateFleetMessage", "StateFleetConfirm", "StateFleetStandby",
 		"StateFleetOccupyWarn", "StateFleetChangeMenu", "StateFleetChangeAdj", "StateFleetChangeOrg",
 		"StateRegionInfo", "StateOccupyAsk", "StateEngagement", "StateTurnWindow",
+		"StateTurnReport",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -265,6 +268,7 @@ var screenSpecName = map[State]string{
 	StateRegionInfo:        "screen-command-phase",
 	StateOccupyAsk:         "screen-command-phase",
 	StateTurnWindow:        "screen-command-phase",
+	StateTurnReport:        "screen-command-phase",
 	StateFleetActionMenu:   "screen-command-phase",
 	StateFleetTargetPick:   "screen-command-phase",
 	StateFleetMessage:      "screen-command-phase",
@@ -795,6 +799,8 @@ type Game struct {
 	occupyAsk occupyAskState
 	// turnWin 是回合處理中的過場視窗停在哪一支、第幾段（`turnwindow.go`）。
 	turnWin turnWindowState
+	// turnRep 是回合裡排隊中的報告框（`turnreport.go`）。
+	turnRep turnReportState
 
 	// mapCache 是戰略地圖兩種樣子（[1] 有反白格、[0] 沒有）的快取：
 	// 32 格的色號一變就重建（`strategicMapColours`）。
@@ -1063,6 +1069,11 @@ func (g *Game) moveFleetsFrom(i int) {
 		step := g.stepFleet(i)
 		if len(g.fleets) < n {
 			i-- // 這一支解散了，下一支補進同一個索引
+		} else if step == fleetStepWalked {
+			next := i + 1
+			if g.startTurnReports(g.fleetStepMorale(i), func() { g.moveFleetsFrom(next) }) {
+				return
+			}
 		}
 		switch step {
 		case fleetStepAsk:
@@ -1082,6 +1093,7 @@ type fleetStep int
 
 const (
 	fleetStepDone   fleetStep = iota
+	fleetStepWalked           // 走過 `113A:047D`（沒停）：接著 `113A:03C5` 的士氣檢查
 	fleetStepAsk              // 停在問話（StateOccupyAsk）
 	fleetStepWindow           // 停在過場視窗（StateTurnWindow），結束時自己接回
 )
@@ -1145,7 +1157,31 @@ func (g *Game) stepFleet(i int) fleetStep {
 		g.moveFleetTo(i, plan.Next, plan.Cost)
 		g.arriveFleet(i)
 	}
-	return fleetStepDone
+	return fleetStepWalked
+}
+
+// fleetStepMorale 是 `113A:0350` 的 `+03C5`：命令不是停駐的那一支走完 `047D` 之後叫
+// `1261:0067(艦隊, 1)`——照編制重算士氣（`1261:032B`），接著 `1261:0104` 印士氣報告或
+// 「已全軍覆沒」（`docs/re/333`）。`ds:8F72[陣營] ← 297B:10DE` 那一步沒有模型化。
+//
+// 編制裡有艘數卻沒有滿編數（remake 的修理拆出來的組）時不重算——那種組原版一定有 `+0x0A`，
+// 照 0 算會把整支當成沒有艘數。
+func (g *Game) fleetStepMorale(i int) []turnReport {
+	if i < 0 || i >= len(g.fleets) {
+		return nil
+	}
+	f := &g.fleets[i]
+	for _, gp := range f.Composition {
+		if gp.Ships > 0 && gp.Full == 0 {
+			return nil
+		}
+	}
+	command := 0
+	if adm := g.admiralRecord(f.Admiral); len(adm) > 0x0B {
+		command = int(adm[0x0B])
+	}
+	rules.RecomputeMorale(f, command)
+	return g.moraleReports(f)
 }
 
 // openDepartWindow 是 `113A:0B46`「出發前往」那一張。
@@ -1183,6 +1219,8 @@ func (g *Game) moveFleetTo(i, next, cost int) {
 		payTo = from
 	}
 	g.res.Planets.PayIntoRegion(payTo, cost)
+	// 原版走一格時 `297B:08D8(艦隊, cur, next)` 還會動兩格的星域艦隊數（strong inference），位元組沒讀；
+	// remake 在 32 支走完之後才重數（`recountRegionFleets`）。
 }
 
 // arriveFleet 是 `113A:047D` 的 `+065B` 起：到了目的地就照命令收尾。人類座位的
@@ -1237,8 +1275,16 @@ func (g *Game) answerOccupyAsk(occupy bool) {
 			}
 			g.moveFleetTo(i, plan.Next, plan.Cost)
 			if g.arriveFleet(i) {
-				i--
+				g.moveFleetsFrom(i)
+				return
 			}
+		}
+	}
+	// 待命或電腦那一路也是 `047D` 回到 `0350`，接 `+03C5` 的士氣檢查。
+	if i >= 0 && i < len(g.fleets) {
+		next := i + 1
+		if g.startTurnReports(g.fleetStepMorale(i), func() { g.moveFleetsFrom(next) }) {
+			return
 		}
 	}
 	g.moveFleetsFrom(i + 1)
@@ -1304,6 +1350,15 @@ func (g *Game) endOfTurn() {
 // finishTurn 是回合結束的尾段：跨月結算與下一個畫面。易主報告會把它
 // 延後到報告全部按掉之後（`docs/spec/034`）。
 func (g *Game) finishTurn() {
+	// 易主報告之後、費沙事件之前是 `1261:00C8`：士氣低落／恢復與全軍覆沒的報告
+	// （`056A:0802`，`docs/re/333`）。
+	if g.startTurnReports(g.endOfTurnMoraleReports(), g.finishAfterMoraleReports) {
+		return
+	}
+	g.finishAfterMoraleReports()
+}
+
+func (g *Game) finishAfterMoraleReports() {
 	// 費沙事件在逐格易主報告與擁有者重算之後、勝負／月底結算之前。
 	if g.startPhezzanReports(g.finishAfterPhezzanReports) {
 		return
@@ -2418,6 +2473,8 @@ func (g *Game) click(x, y int) {
 	case StateTurnWindow:
 		// `3765:006C` 讀到左鍵按下就結束這一段，座標不參與（規格 059）。
 		g.endTurnWindowStage()
+	case StateTurnReport:
+		g.dismissTurnReport()
 	case StateOccupyAsk:
 		// 「要占領此星系嗎？」只認兩顆鈕（熱區 `2DB8`：占領碼 0、待命碼 1），
 		// 點別處與右鍵都不動（`113A:0899` 的事件迴圈只收命中的左鍵）。
@@ -2670,6 +2727,8 @@ func (g *Game) rightClick(x, y int) {
 	case StateTurnWindow:
 		// 右鍵按下同樣結束這一段（收據 `fcx-turnwin-rclk90`，`docs/re/332` §四）。
 		g.endTurnWindowStage()
+	case StateTurnReport:
+		g.dismissTurnReport()
 	case StateOccupyAsk:
 		// 問話不吃右鍵（`113A:0899`：只有命中鈕的左鍵會離開迴圈）。
 	case StateEngagement:
@@ -3247,7 +3306,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
 		StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg,
 		StateFleetOrg, StateFleetNumber, StateFleetAdjutant,
-		StateFleetComposition, StateFormation, StateRegionInfo, StateOccupyAsk, StateTurnWindow,
+		StateFleetComposition, StateFormation, StateRegionInfo, StateOccupyAsk, StateTurnWindow, StateTurnReport,
 		// 這五張的收據末尾都有一次 `-mouse-at`（搬到 (600,340)），
 		// 而畫面上的箭頭跟著搬過去了：`info1e`／`lst1e`／`lst2e`／
 		// `lst3e`／`settings1e` 與同盟的五張，十份都是同一個結論。
@@ -3294,6 +3353,9 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 	}
 	if g.state == StateTurnWindow {
 		g.drawTurnWindow(fb)
+	}
+	if g.state == StateTurnReport {
+		g.drawTurnReport(fb)
 	}
 	if g.state == StateRegionInfo {
 		g.drawRegionInfo(fb)

@@ -35,7 +35,7 @@ type turnWindowState struct {
 // turnProcessing 回現在是不是「實行」之後、回合處理中停下來的畫面（過場視窗或問話）：
 // 右側標題只剩「戰略模式處理中」、清單清空、地圖不看座位（規格 059）。
 func (g *Game) turnProcessing() bool {
-	return g.state == StateTurnWindow || g.state == StateOccupyAsk
+	return g.state == StateTurnWindow || g.state == StateOccupyAsk || g.state == StateTurnReport
 }
 
 // humanSeat 回這個陣營的艦隊走的時候要不要印（`113A:060F`：`3982:022D(陣營) == 0`，
@@ -116,11 +116,16 @@ func (g *Game) endTurnWindowStage() {
 		return
 	}
 	g.state = w.resume
-	next := w.fleet + 1
+	i := w.fleet
 	if w.apply != nil && w.apply() {
-		next = w.fleet // 這一支解散了，下一支補進同一個索引
+		g.moveFleetsFrom(i) // 這一支解散了，下一支補進同一個索引
+		return
 	}
-	g.moveFleetsFrom(next)
+	// `047D` 回到 `0350` 之後的士氣檢查（`+03C5`）。
+	if g.startTurnReports(g.fleetStepMorale(i), func() { g.moveFleetsFrom(i + 1) }) {
+		return
+	}
+	g.moveFleetsFrom(i + 1)
 }
 
 // turnWindowMapColour 回過場時地圖上被塗色 5 的那一格（第一段現在格、第二段下一格）；

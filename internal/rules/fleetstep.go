@@ -80,8 +80,8 @@ func (g *StarGraph) PlanStep(f *Fleet, owner func(int) int, funds, cost int) Ste
 		if f.Move != MoveGarrison {
 			return none
 		}
-		// 就地駐留不扣移動經費的成因沒讀（`113A:06C3`）；錢也不流進行星（收據 `fcmd-garrison-self-t1`：
-		// 軍事費 45570、瓦爾哈拉經濟力 82313，照扣的話各差 26）。
+		// 就地駐留不扣移動經費、錢也不流進行星：`113A:047D +0585` 先比 cur == next 就跳過 `06C3` 直接到
+		// `+05C4`（`docs/re/322` §一 的位元組；收據 `fcmd-garrison-self-t1`：軍事費 45570、瓦爾哈拉經濟力 82313）。
 		return StepPlan{Outcome: StepMoved, Next: next}
 	}
 	if funds < cost {

@@ -20,6 +20,27 @@
   "blocked": "b54caa6bab65a9b9bcc4a4e8aabaac50a8740aa14320202020202020202020",
   "no_funds": "a5d1a9f3b2beb0cab867b64fa4a3a8acb54caa6bb2beb0caa143"
  },
+ "report_note": "3826:0307(buf, 座位, 提督)：持久視窗 ds:8D0A（與過場視窗同一個矩形 3603:0006(0x97, 20, 6, 18, 6, 1)），\\x0c 清空、印 buf、頭像 3958:0215(座位 == FFFF ? 提督 : ds:8F4D[座位], 0x44, 0x23)、3765:006C(ds:8F38)。攻占 20B4:1922、士氣 1261:0138、全軍覆沒 1261:0267 的字串照 ds 位移列在 report_formats；編號 3982:0073（< 10 用 ds:8E8F 全形，否則 ds:8E94）、名字 3982:0296 寬度 0（ds:8ECE）。docs/re/333。",
+ "report_formats": {
+  "number_small": "06256407",
+  "number_large": "253264",
+  "name_plain": "035b25642c2573035b25642c",
+  "capture_us": "a7daad78b2c4",
+  "capture_us_admiral": "c4a5b6a40a25730a",
+  "capture_us_verb": "a5bfa662a7f0a565",
+  "capture_ai": "2573c4a5b6a4202020200a",
+  "capture_ai_verb": "a5f8b9cfa565bbe2",
+  "capture_planet": "0aac50a874a4baa6e6ac50",
+  "capture_newline": "0a",
+  "capture_tail": "a477b867c26bc4dd2573b478b1b1a4a7a4a40a",
+  "morale_prefix": "2573b2c4",
+  "morale_admiral": "c4a5b6a4202025730aa468aef0adc8",
+  "morale_low": "a743b8a8aabac3f6ab59a1410aa477b867b54caa6bbed4b0aba14320202020202020200a",
+  "morale_recovered": "a477b867abecb45fa1410aa569a548b669a6e6bed4b0aba143a140a140a140a1400a",
+  "morale_value": "c4a5b6a4a468aef0adc8a1402534750a",
+  "no_ships_prefix": "2573b2c4",
+  "no_ships_body": "c4a5b6a40a25730aa477a5fead78c2d0a853a143a1400a"
+ },
  "busy_title": {"cell_x": 20, "cell_y": 0, "cols": 18, "rows": 2, "text": "bed4b2a4bcd2a6a1b342b27aa4a4", "note": "056A:011C 印完之後標題窗 ds:94F6（3603:0006(94F6, 0x97, 20, 0, 18, 2, 1)）的緩衝區只剩列 0「戰略模式處理中」（ds:07E1；peek lin:6D3F4:144 @#554.86M，docs/re/332 §五）"},
  "face": {"x": 544, "y": 180, "w": 80, "h": 100, "source": "FACE.AMG"}
 }

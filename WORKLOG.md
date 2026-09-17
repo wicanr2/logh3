@@ -7378,3 +7378,19 @@ GitHub 的 issue 時間軸承擔。
   改走 `executeTurn`（原本註解「沒有任何出發／到達報告」是舊現況）。GUI 加 `fcmd-turn-depart`／`-arrive`，`fcmd-exec`／`occ-t2`／
   `garrison-t1` 補點掉過場的兩下，30 例全相同。
 - 還沒做：B-5 攻占訊息框、B-6 士氣報告；#52 留著。
+
+## 2026-09-17 — 回合裡的報告框：拿下行星、士氣報告、已全軍覆沒（關 #52；第六輪 B-5、B-6）
+
+- 核對 subagent 的筆記（`workplace/re-notes/turn-reports.md`）：格式字串從 `fcmd-assault-ast/mem-in.bin` 重抽、`3982:0073`／`0296`
+  位元組自己讀；腳本化成 `tools/fleetcmd_receipts.sh` 第 24 段五批，雜湊與筆記兩趟收據全同。
+- `docs/re/333`、規格 059 加「報告框」一節、058 已知差異改指標、internals 33（`+0x00` bit2）／61、playtest 021；更正 `docs/re/330` §2.6
+  「已經歸屬…」的位置（指標）。
+- remake：`StateTurnReport`（`turnreport.go`）；`strategicAssault` 回傳攻占框、`scanRegionsFrom` 停在框上；回合尾巴 `finishTurn` 先跑
+  `1261:00C8`；走完一格 `fleetStepMorale`（`113A:03C5`：照編制重算士氣、`1261:0104`）；`rules.CapturedBy`、`rules.RecomputeMorale`。
+- 對拍的限制：這幾張都在第三回合之後，remake 的亂數已經分岔，只比框與標題。攻占框（亞斯提 remake 是無主）與士氣低落（remake 48、原版 47）
+  在正常路徑停到那一則之後，照收據改回一個欄位重組再比；電腦座位的攻占 remake 碰不到同一場，是直接進入的診斷比對。
+  試過「實行前把 32 格擁有者照原版改回來」：remake 走進另一條分岔（停在系統指令選單），放棄。
+- 順手：`#58` 的第一件（就地駐留不扣移動費）在 `docs/re/322` §一 的位元組裡就有答案（`+0585` cur == next 跳過 `06C3`），
+  改寫 `fleetstep.go` 註解、`#58` 本文只剩 `297B:08D8`、verify 換到 `game.go` 的新自承註解。
+- issue：關 #52（verify → go_test `TestTurnWindowDepartArriveMatchesOracle`；`run` 只收單一函式名，寫 `A|B` 會報「沒有這支測試」）；
+  新開 #71 自家星域補充、#72 回合過場的邊角（「戰略模式思考中」的停留是忠實度裁決，沒有自己決定）。verify 251 條、0 條斷言不成立。

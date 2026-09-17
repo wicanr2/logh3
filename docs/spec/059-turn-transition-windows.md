@@ -1,9 +1,10 @@
-# 059 — 回合裡的過場視窗（出發前往／已經到達／錯誤報告／處理中面板）
+# 059 — 回合裡的過場視窗與報告框（出發前往／已經到達／錯誤報告／處理中面板／攻占訊息框／士氣報告）
 
-狀態：**CONFORMED**（移動那一族：`113A:0B46`、`0797`、`0A4E`、`0899` 的畫面，與右側「戰略模式處理中」）。
-攻占訊息框（`20B4:1922`）與士氣報告（`1261:0104`）**DRAFT**，另節。
-證據：[`docs/re/332`](../re/332-turn-transition-windows.md)（整合 `docs/re/322` §一、§六 並更正其中 `+060F` 的條件）。
-收據：`tools/fleetcmd_receipts.sh` 第 23 段；摘要 [`docs/playtest/021`](../playtest/021-strategic-fleet-command.md)。
+狀態：**CONFORMED**（移動那一族：`113A:0B46`、`0797`、`0A4E`、`0899` 的畫面，與右側「戰略模式處理中」；
+報告框：攻占訊息框 `20B4:1922`、士氣值低落、已全軍覆沒）。「已經恢復」**DRAFT**（remake 沒有自家星域補充，碰不到）。
+證據：[`docs/re/332`](../re/332-turn-transition-windows.md)（整合 `docs/re/322` §一、§六 並更正其中 `+060F` 的條件）、
+[`docs/re/333`](../re/333-turn-reports.md)（報告框）。
+收據：`tools/fleetcmd_receipts.sh` 第 23、24 段；摘要 [`docs/playtest/021`](../playtest/021-strategic-fleet-command.md)。
 相關：[`054`](054-fleet-arrival.md)（走一格的四條分支本身）、[`058`](058-strategic-planet-assault.md)（戰略打行星）、
 [`047`](047-occupation-report.md)（占據報告，接在移動之後）。
 
@@ -22,7 +23,9 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
           ├ StepBlockedEnemy ─→ StateTurnWindow{被擋, 90} ─結束→ 套結果、接 i+1
           ├ StepNoFunds      ─→ StateTurnWindow{經費不足, 90} ─結束→ 接 i+1
           └ StepMoved        ─→ StateTurnWindow{出發前往, 22} ─結束→ {到達句, 90} ─結束→ 走過去（可能解散）、接 i 或 i+1
-     └ afterFleetMoves：重數艦隊 → 占據報告（047）→ 叛亂 → 逐格掃描（戰鬥／戰略打行星）→ 回合尾巴
+          └ 每一支走完 047D（非停駐）：113A:03C5 重算士氣 → StateTurnReport{士氣／已全軍覆沒} ─看完→ 接下一支
+     └ afterFleetMoves：重數艦隊 → 占據報告（047）→ 叛亂 → 逐格掃描（戰鬥／戰略打行星 → StateTurnReport{拿下行星}）
+     └ 回合尾巴：易主報告 → 1261:00C8 → StateTurnReport{士氣} → 費沙事件 → 勝負 → 月底
 ```
 
 「結束」＝ 計時到，或一次滑鼠左／右鍵按下。一次按下只結束一段。鍵盤不算。
@@ -59,11 +62,31 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
 **remake：`Game.moveFleetsFrom`／`stepFleet`、`StateTurnWindow`（`internal/game/turnwindow.go`）、
 `screen.TurnWindowSpec`（`docs/internals/data/turn-window-panel.json`）。**
 
+## 報告框（`3826:0307`）
+
+9. 同一個矩形、同一種等法（`ds:8F38` tick 或一次左／右鍵按下）；每一則 `\x0c` 清空重印，頭像 `3958:0215(…, 0x44, 0x23)` 整張 80×100。
+   座位參數 FFFF → 頭像是那一支的提督；否則 `ds:8F4D[座位]`（情報參謀）。
+10. **拿下行星**（`20B4:1922`，行星換手的當下，人類與電腦座位都印、都等）：
+    人類「我軍第Ｎ艦隊／提督名／正在攻占<星域名>／星系內行星<行星名>／已經歸屬<陣營名>掌控之中」＋提督頭像；
+    電腦「<陣營名>艦隊／企圖占領<星域名>／…」＋對手陣營的情報參謀頭像。星域名用星域記錄 `+0x12` 的顏色（這時還沒重算），
+    行星名用換手之後的顏色。編號 `3982:0073`（< 10 全形）；名字 `3982:0296` 不補寬。
+11. **士氣報告**（`1261:0104`）：bit2（士氣跨過 50）且人類座位 →「<陣營>第Ｎ艦隊  提督名／士氣值低落的關係，／已經無法戰鬥。」或
+    「士氣值已經恢復，／可以進行戰鬥。」＋「艦隊士氣值　%4u」；bit3（全隊艘數 0，不看座位）→「<陣營>第Ｎ艦隊／提督名／已全軍覆沒。」；
+    印完清 bit2／bit3。跑的時點：每支非停駐的艦隊走完 `047D` 之後先照編制重算士氣（`113A:03C5` → `1261:0067(f, 1)`），
+    以及回合尾巴易主報告之後（`1261:00C8`）。戰略打行星裡只記 bit2、不印。
+12. 艦隊留著：「已全軍覆沒」只是報告；全滅（整支拿掉）是 `0374:0608` 另一條（規格 054、`docs/re/334`）。
+
+**remake：`StateTurnReport`（`internal/game/turnreport.go`）、`Game.fleetStepMorale`、`rules.RecomputeMorale`、
+`rules.StrategicAssaultResult.CapturedBy`；字串在 `turn-window-panel.json` 的 `report_formats`。**
+
 ## 已知差異
 
 | 差異 | 類別 | 到期條件 |
 |---|---|---|
-| 「戰略模式思考中」那一段（實行後到電腦下完約 5M 步 ≈ 25 tick）remake 不停、不畫 | 刻意省略（沒有輸入、沒有等待，原版是 AI 在算） | 若要忠實重現「思考中」的停留時間，另開規格 |
+| 「戰略模式思考中」那一段（實行後到電腦下完約 5M 步）remake 不停、不畫。原版停多久是 AI 的運算時間，不是計時器 | 未實作；要不要重現、重現多久是忠實度裁決 | 使用者裁決（issue） |
+| 「已經恢復」：remake 沒有自家星域的艦艇補充（`1AAB:0FAF`），士氣回不到 50 以上 | 規則沒接 | 補充接上時一起對 `fcmd-turn-recover`（issue） |
+| `1261:0067` 的 `ds:8F72[陣營] ← 297B:10DE` 沒有模型化；編制裡有艘數卻沒有滿編數的組（remake 修理拆出來的）不重算士氣 | 沒讀／資料模型 | 艦艇池模型化（#55）時一起 |
+| 戰鬥中（`ds:8F16 != 0`）士氣報告改走 `3826:0405` 的另一個視窗 | 沒有收據 | 錄一份戰場裡扣到士氣翻轉的收據 |
 | `ds:8F1C` bit0（除錯選單「顯示」）讓電腦座位的艦隊也印：remake 沒有除錯選單 | 未實作 | 做隱藏除錯選單時一起 |
 | 同一回合兩支以上人類艦隊：前一支的「下一格色 5」原版留到下一支第一段上畫面才消失；remake 每張只塗自己的兩格 | 沒有收據 | 錄一份兩支人類艦隊同回合移動的收據 |
 | 等待的時間以 remake 的 `Tick` 累計，不重現原版遞減相位（第一個 tick 可能差一個相位點） | 計時近似 | 需要逐 tick 對拍時照 `docs/re/331` 的相位公式 |
@@ -75,5 +98,8 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
 - `internal/game/garrison_test.go`：`fcmd-garrison-report`、`fcmd-garrison-self-report`（就地駐留「瓦爾哈拉 出發前往 瓦爾哈拉」）。
 - `tools/gui_check.sh`：`fcmd-turn-depart`、`fcmd-turn-arrive`，以及改成點掉過場的 `fcmd-exec`、`fcmd-occ-t2`、`fcmd-garrison-t1`。
 - `fcmd-turn-think`、`fcmd-turn-busy`、`fcmd-turn-block`（AI 之後 poke）是原版的對照，remake 沒有停在那裡的狀態，不比。
+- `turnwindow_test.go` 的 `TestTurnReportCaptureMatchesOracle`、`TestTurnReportMoraleLowMatchesOracle`、`TestTurnReportNoShipsMatchesOracle`
+  （正常路徑停在那一則；框與標題逐位元組，其餘畫面是第三回合起分岔的局面；前兩個比框時照收據改回一個欄位重組，理由寫在測試）、
+  `TestTurnReportAICaptureLayout`（直接進入的診斷比對）。GUI 沒有加例：這幾張的整張畫面受分岔影響。
 - `internal/game/fleetcmd_test.go`、`garrison_test.go`、`occupation_test.go`：既有的回合後收據（`fcmd-exec`、`fcmd-garrison-t1`、
   `fcmd-occ-*`）照舊通過（`executeTurn` 會把過場視窗點掉）。

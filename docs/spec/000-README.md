@@ -72,4 +72,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`056`](056-engagement-scene.md) | 交戰演出（打行星那一種）與戰鬥曲的出口 | DRAFT |
 | [`057`](057-battle-view-scroll.md) | 戰場視野的滑鼠捲動（按住右鍵） | CONFORMED |
 | [`058`](058-strategic-planet-assault.md) | 戰略打行星（占據那一格每回合打行星、反擊、士氣、換手） | CONFORMED（規則層）；訊息框 DRAFT |
-| [`059`](059-turn-transition-windows.md) | 回合裡的過場視窗（出發前往／已經到達、被擋、經費不足、問話、處理中面板） | CONFORMED（移動那一族）；攻占訊息框、士氣報告 DRAFT |
+| [`059`](059-turn-transition-windows.md) | 回合裡的過場視窗與報告框（出發前往／已經到達、被擋、經費不足、問話、處理中面板、攻占訊息框、士氣報告、已全軍覆沒） | CONFORMED；「已經恢復」DRAFT |

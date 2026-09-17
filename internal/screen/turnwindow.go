@@ -28,6 +28,7 @@ type TurnWindowSpec struct {
 	FirstWaitShift int               `json:"first_wait_shift"`
 	DepartColour   int               `json:"depart_colour"`
 	Formats        map[string]string `json:"formats"`
+	ReportFormats  map[string]string `json:"report_formats"`
 	BusyTitle      struct {
 		CellX int    `json:"cell_x"`
 		CellY int    `json:"cell_y"`
@@ -163,4 +164,46 @@ func (s *TurnWindowSpec) DrawBusyTitle(fb *gfx.Framebuffer, fnt *font.Font, tile
 	b := ui.NewTextBuffer(t.Cols, t.Rows, uint8(s.Colour))
 	b.Write(decodeHex(t.Text))
 	ui.DrawTextBuffer(fb, fnt, tiles, b, t.CellX+1, t.CellY+1)
+}
+
+// ReportFormat 回報告用的一條格式字串（`report_formats`）。
+func (s *TurnWindowSpec) ReportFormat(name string) []byte { return decodeHex(s.ReportFormats[name]) }
+
+// FleetNumber 是 `3982:0073`：編號小於 10 印全形（`\x06%d\x07`），否則兩個半形。
+func (s *TurnWindowSpec) FleetNumber(n int) []byte {
+	if n < 10 {
+		return ui.Sprintf(s.ReportFormat("number_small"), n)
+	}
+	return ui.Sprintf(s.ReportFormat("number_large"), n)
+}
+
+// PlainName 是 `3982:0296(…, 擁有者, 0, 記錄)`：擁有者色的名字，不補寬。
+func (s *TurnWindowSpec) PlainName(name []byte, owner int) []byte {
+	if owner < 0 || owner >= len(s.RegionInk) {
+		owner = len(s.RegionInk) - 1
+	}
+	return ui.Sprintf(s.ReportFormat("name_plain"), s.RegionInk[owner], name, s.Colour)
+}
+
+// DrawReport 是 `3826:0307`：同一個矩形開窗、清空、印 text、畫頭像。
+func (s *TurnWindowSpec) DrawReport(fb *gfx.Framebuffer, fnt *font.Font, tiles *ui.FrameTiles,
+	text []byte, face *asset.Image) []uint16 {
+	if s == nil || fb == nil {
+		return nil
+	}
+	if tiles != nil {
+		(ui.TileFrame{Tiles: tiles, Style: s.Style, Fill: uint8(s.Colour >> 4)}).
+			Draw(fb, s.CellX, s.CellY, s.Cols+2, s.Rows+2)
+	}
+	b := ui.NewTextBuffer(s.Cols, s.Rows, uint8(s.Colour))
+	b.Write(text)
+	missing := ui.DrawTextBuffer(fb, fnt, tiles, b, s.CellX+1, s.CellY+1)
+	if face != nil {
+		for y := 0; y < s.Face.H && y < face.H; y++ {
+			for x := 0; x < s.Face.W && x < face.W; x++ {
+				fb.Set(s.Face.X+x, s.Face.Y+y, face.Pix[y*face.W+x])
+			}
+		}
+	}
+	return missing
 }

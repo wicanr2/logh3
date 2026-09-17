@@ -40,7 +40,7 @@ func finishTurn(t *testing.T, g *Game) {
 	t.Helper()
 	for i := 0; i < 64; i++ {
 		switch g.State() {
-		case StateOccupationReport, StateRebellionReport, StateRegionFlipReport, StateTurnWindow:
+		case StateOccupationReport, StateRebellionReport, StateRegionFlipReport, StateTurnWindow, StateTurnReport:
 			g.Click(560, 125)
 		default:
 			return
