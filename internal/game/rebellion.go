@@ -165,6 +165,7 @@ func (g *Game) CurrentRebellionReport() (RebellionReport, bool) {
 
 // dismissRebellionReport 收掉一則；全部看完才接回戰鬥掃描。
 func (g *Game) dismissRebellionReport() {
+	g.keepMapMark()
 	if len(g.pendingRebellionReports) > 0 {
 		g.pendingRebellionReports = g.pendingRebellionReports[1:]
 	}
@@ -218,8 +219,14 @@ func (g *Game) strategicAssault(region int) []turnReport {
 	lo := rules.PlanetHeader + start*rules.PlanetRecord
 	planets := g.res.Planets.Data[lo : lo+n*rules.PlanetRecord]
 	var sites []rules.PlanetSite
-	if cells := g.battleCells(region); len(cells) > 0 && g.res.Battle != nil {
+	cells := g.battleCells(region)
+	if len(cells) > 0 && g.res.Battle != nil {
 		sites = rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
+	}
+	// 每一圈的定位（`0DEA:1759`）：同一格兩支以上時後面的被擠開，距離不是 0（`docs/re/335` §六）。
+	place := &rules.StrategicPlacement{Slots: g.res.Formation}
+	if g.res.Terrain != nil && len(cells) > 0 {
+		place.Passable = func(x, y int) bool { return g.res.Terrain.Passable(cells, x, y) }
 	}
 	var sfs []rules.StrategicFleet
 	for i := range g.fleets {
@@ -238,7 +245,12 @@ func (g *Game) strategicAssault(region int) []turnReport {
 	if len(sfs) == 0 {
 		return nil
 	}
-	res := rules.StrategicAssault(planets, sites, attacker, sfs, g.rand94DC())
+	for i := range g.fleets {
+		if f := &g.fleets[i]; f.Region == region && f.Faction != attacker {
+			place.Others = append(place.Others, f)
+		}
+	}
+	res := rules.StrategicAssault(planets, sites, attacker, sfs, g.rand94DC(), place)
 	g.mutableAdmirals()
 	for a, v := range res.Merit {
 		if rec := g.admiralRecord(a); len(rec) >= 6 {

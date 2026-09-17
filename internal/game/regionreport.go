@@ -73,6 +73,7 @@ func (g *Game) FlipRegionName(f RegionFlip) []uint16 {
 // dismissFlip 收掉最前面那一則。全部看完之後才把後半段跑完
 // ——重建路徑表、32 格態勢，然後接回原本的流程。
 func (g *Game) dismissFlip() {
+	g.keepMapMark()
 	if f, ok := g.CurrentFlip(); ok && f.NewOwner != rules.RegionOwnerNone {
 		// 原版在組報告時就把 `+0x13` bit4 清掉（`056A:089D` 的
 		// `and 0EFh`），而且只在「新擁有者不是無主」那一路

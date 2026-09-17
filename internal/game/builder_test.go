@@ -43,6 +43,11 @@ func loadWithRules(t *testing.T) *Resources {
 	}
 	res.Graph = graph
 	data := filepath.Join(root, "docs/internals/data")
+	// 進軍路線表：正式入口（`internal/bootstrap`）會載。少了它電腦 AI 的階段四／五整段不跑、亂數少用，
+	// 回合一多就與原版分岔（`docs/re/335` §九）。
+	if res.AdvanceRoutes, err = ai.LoadAdvanceRoutes(filepath.Join(data, "ai-advance-routes.json")); err != nil {
+		t.Fatal(err)
+	}
 	if res.ShipKinds, err = rules.LoadShipKindTable(
 		filepath.Join(data, "ship-kind-table.json")); err != nil {
 		t.Fatal(err)
@@ -123,8 +128,12 @@ func TestBuilderAddsFleets(t *testing.T) {
 		if f.Moving() || !f.Parked {
 			t.Errorf("第 %d 支有移動命令（目的地 %d、狀態 %d），新編的不該有", i, f.Target, f.Move)
 		}
-		if f.Number != i+1 {
-			t.Errorf("第 %d 支的編號 ＝ %d，預期 %d", i, f.Number, i+1)
+		// 編號 ＝ 陣營內槽號 ＋ 1，槽號由 `07F9:03AC` 照提督 `+0x09` 配（`docs/re/335` §九）。
+		if want := f.Index - rules.FleetTableIndex(foe, 0) + 1; f.Number != want {
+			t.Errorf("第 %d 支（表 #%d）的編號 ＝ %d，預期 %d", i, f.Index, f.Number, want)
+		}
+		if i > 0 && g.fleets[i-1].Index >= f.Index {
+			t.Errorf("艦隊沒有依表的位置排：#%d 在 #%d 後面", f.Index, g.fleets[i-1].Index)
 		}
 	}
 	if g.fleets[0].ClassKey != 0x0A || g.fleets[1].ClassKey != 0x0E {
@@ -322,23 +331,30 @@ func TestFirstAITurnMatchesReceipt(t *testing.T) {
 	// 運用（`+0x47`）、維持費（`+0x0A`）與編制都是收據上的
 	// （`docs/re/218`、`docs/re/224`、`docs/re/225`）。編制逐組寫成
 	// `{艦種, 艘數, 隊形槽}`，順序就是原版排序之後的。
+	//
+	// `g.fleets` 依艦隊表的位置排：槽號由 `07F9:03AC` 照提督 `+0x09` 配（47 → 7、52 → 12、55 → 15），
+	// 收據的艦隊表是 #23 第８艦隊、#28 第13艦隊、#31 第16艦隊（`docs/re/335` §九）。
 	want := []struct {
+		index, number                     int
 		admiral, key, target, ops, upkeep int
 		comp                              [][3]int
 	}{
-		// 階段二打無主
-		{52, 0x04, 24, 128, 85, [][3]int{
-			{0, 3000, 20}, {0, 3000, 10}, {0, 3000, 12}, {6, 1000, 29}}},
-		// 同上，湊滿兩支
-		{55, 0x0B, 24, 120, 124, [][3]int{
-			{1, 3000, 20}, {1, 3000, 10}, {1, 3000, 11}, {1, 3000, 12}}},
 		// 階段三的指派
-		{47, 0x0C, 15, 102, 217, [][3]int{
+		{23, 8, 47, 0x0C, 15, 102, 217, [][3]int{
 			{0, 3000, 20}, {0, 3000, 10}, {3, 2000, 5}, {3, 2000, 8},
 			{5, 3000, 29}, {6, 1000, 34}}},
+		// 階段二打無主
+		{28, 13, 52, 0x04, 24, 128, 85, [][3]int{
+			{0, 3000, 20}, {0, 3000, 10}, {0, 3000, 12}, {6, 1000, 29}}},
+		// 同上，湊滿兩支
+		{31, 16, 55, 0x0B, 24, 120, 124, [][3]int{
+			{1, 3000, 20}, {1, 3000, 10}, {1, 3000, 11}, {1, 3000, 12}}},
 	}
 	for i, w := range want {
 		f := g.fleets[i]
+		if f.Index != w.index || f.Number != w.number {
+			t.Errorf("第 %d 支在艦隊表 #%d、第%d艦隊，收據是 #%d、第%d艦隊", i, f.Index, f.Number, w.index, w.number)
+		}
 		if f.Admiral != w.admiral || f.ClassKey != w.key || f.Target != w.target {
 			t.Errorf("第 %d 支 ＝ 提督 %d／鍵 %02X／目的地 %d，收據是 %d／%02X／%d",
 				i, f.Admiral, f.ClassKey, f.Target, w.admiral, w.key, w.target)

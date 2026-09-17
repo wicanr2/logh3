@@ -75,15 +75,22 @@ func (g *Game) enemyFleets(r int) int {
 	return rules.RegionFleets(rec, g.faction)
 }
 
-// fleetShipTotals 回一支艦隊的艘數與主力槽數。
+// fleetShipTotals 回一支艦隊的艘數與主力槽數（`2E54:1574`：Σ 各組艦艇 `+0x08`、艦種 0／1 的組數）。
 //
-// 新遊戲沒有存檔（`g.slot` 是 nil）也沒有艦艇——原版的新遊戲樣板同樣
-// 沒有 `SHIP.DTX`（`docs/re/200`），所以兩個都回 0 是對的。
+// 新遊戲沒有存檔（`g.slot` 是 nil）：開局樣板沒有艦艇（`docs/re/200`），但之後建出來的艦隊有編制——
+// 原版 `2D76:0611` 當場在艦艇池配好艘數，候選評分讀得到（收據 `turn260mem` 第一個 AI 回合派 52、55 打無主、
+// 47 去補缺口）。這時照 remake 的編制算；原本一律回 0 會讓三支分數都掉到 1、平手取表上第一支（`docs/re/335` §九）。
 func (g *Game) fleetShipTotals(f rules.Fleet) (ships, mainSlots int) {
-	if g.slot == nil {
-		return 0, 0
+	if g.slot != nil {
+		return g.slot.FleetShipTotals(f.Index)
 	}
-	return g.slot.FleetShipTotals(f.Index)
+	for _, gp := range f.Composition {
+		ships += gp.Ships
+		if gp.Kind == 0 || gp.Kind == 1 {
+			mainSlots++
+		}
+	}
+	return ships, mainSlots
 }
 
 // buildSupport 把階段一（建艦隊）要的東西接起來（`docs/re/202`–`205`）。

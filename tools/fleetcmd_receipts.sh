@@ -399,6 +399,8 @@ rec fcmd-garrison-self-t1      665000000 fcmd-garrison-self-done - -clicks 54600
 #     步數來自探索批次 fcx-assault-ast／-phz 的 -regs-at（本機證據）。
 recmem fcmd-assault-ast 1102006030 1102557471 1145000000 fcmd-occ-t4 - -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD $OCC
 recmem fcmd-assault-phz 912160349 912742120 955000000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
+#     同一條輸入第二次進 1497：同盟攻方在馬爾・亞迪特（24）拿下威爾勃恩（docs/re/335 §六）。1922 的攻占框等 90 tick，1507 在 #932.35M。
+recmem fcmd-assault-ai24 912920224 932345563 933000000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
 
 # 23. 回合裡的過場視窗（113A:0B46／0797／0A4E／0899，056A:011C「戰略模式處理中」；docs/re/332、規格 059）。
 #     每一張錄在 -watch-screen 量到的穩定區間中間（區間與第二個取樣點見 docs/re/332 §六）。
@@ -425,8 +427,10 @@ rec fcmd-turn-clk22        565000000 fcmd-done - -clicks 546000000:544:85,549000
 #     人類拿下：fcmd-occ-t4 在實行前把巴溫（行星 +0x14 防衛力，lin:53D20）改成 100，第五回合一打就換手。
 #     已經恢復：fcmd-base 把第１艦隊 +0x00 ← 01、+0x3C ← 40、艦艇 0 +0x06 ← 40、+0x08 ← 100 艘，實行時瓦爾哈拉補回（1AAB:0FAF）。
 #     已全軍覆沒：fcmd-occ-t4 把艦艇 0 +0x08 改 0，走一格之後 113A:03C5 → 1261:0067(f,1) 設 bit3。
-rec fcmd-turn-capture      1111500000 fcmd-occ-t4 - -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD -poke "lin:53D20@1025000050=64 00" $OCC
-rec fcmd-turn-ai-capture    923400000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
-rec fcmd-turn-morale-low    961800000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
+#     拿下行星（人類與電腦）、士氣值低落、已全軍覆沒四批用 recmem：mem-in 是那一回合實行之前（poke 之前）的局面、
+#     mem-out 是報告框停著的那一刻，分岔時拿來逐欄找差在哪（docs/re/335 §七）。
+recmem fcmd-turn-capture 1025000040 1111000000 1111500000 fcmd-occ-t4 - -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD -poke "lin:53D20@1025000050=64 00" $OCC
+recmem fcmd-turn-ai-capture 835000040 923000000 923400000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
+recmem fcmd-turn-morale-low 835000040 961000000 961800000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
 rec fcmd-turn-recover       442100000 fcmd-base - -clicks 421000000:544:85,424000000:560:85 -click-hold $HOLD -poke "lin:60BA4@420000050=01;lin:60BE0@420000050=28;lin:668B8@420000050=28;lin:668BA@420000050=64 00" $TURN
-rec fcmd-turn-no-ships     1068200000 fcmd-occ-t4 - -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD -poke "lin:668BA@1025000050=00 00" $OCC
+recmem fcmd-turn-no-ships 1025000040 1068000000 1068200000 fcmd-occ-t4 - -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD -poke "lin:668BA@1025000050=00 00" $OCC

@@ -252,7 +252,7 @@
   → 問「要占領此星系嗎」`StateOccupyAsk`；軍事費不夠 → 不動）、到達的收尾（輸送 → 回程
   首都、駐留 → 整支解散（`docs/re/329`；原版沒有另外的「解散」鈕）、其餘停駐）、停駐補待命行星（`2AF5:060D` 經濟力最高那顆）、
   單方面占據 bit4 與占據報告——十三批 `fcmd-occ-*` 的艦隊／星域／行星表逐位元組、
-  前兩回合整張畫面相同（第三回合起 remake 的叛亂亂數分岔）。占領的目的地只能選
+  前四回合整張畫面相同。占領的目的地只能選
   可達表 k ≤ 1 的格子；`1213:0003` 只是費沙的兩頁提醒。**占據格的戰略打行星
   （`20B4:1497`，規格 058、`docs/re/330`）也接上了**：與戰場上的打行星是另一條算式（距離 0、
   沒有減守軍、士氣由累計損失重算），以原版進出 1497 的兩份 1 MB 傾印驅動、逐欄相同；
@@ -261,7 +261,12 @@
   或按一下滑鼠），右側只剩「戰略模式處理中」、清單清空、地圖不看座位；位置先改、等完才到達收尾（駐留在那一張之後解散）。
   十二批 `fcmd-turn-*` 整張相同，問話視窗也有了收據（頭像是整張 80×100）。**報告框（#52 後半，`docs/re/333`）**：
   拿下行星的訊息框（人類與電腦座位都印、都等）、士氣值低落（回合尾巴 `1261:00C8`）、已全軍覆沒（走一格之後 `113A:03C5`
-  先照編制重算士氣）接上，框逐位元組；「已經恢復」要先有自家星域補充（`1AAB:0FAF`，#71）。
+  先照編制重算士氣）接上，四張正常玩家路徑整張逐位元組相同。「已經恢復」要先有自家星域補充（`1AAB:0FAF`，#71）。
+  **電腦 AI 對齊到第四回合**（`docs/re/335`）：AI 命令寫進命令種類（`+0x08`）、建艦隊照原版配槽（表格位置 ＝ 陣營基底 ＋ 槽、
+  編號 ＝ 槽 ＋ 1）、新遊戲的候選評分讀編制艘數、電腦座位碰到問話一律待命（規格 054 原寫「當占領」，已更正）；
+  **戰略打行星多支攻方**的定位、碰撞擠開與距離衰減接上（收據 `fcmd-assault-ai24` 逐欄相同）；地圖上報告與過場留下的色 5 照原版留著。
+  占領亞斯提那條路第 1–4 回合整張相同。
+  **#57 全滅之後轉跑 `ENDING.EXE` 是執行器造成的**（dosgolem 的 BIOS ROM 尾巴是 0，`docs/re/334`）；執行器修正與收據重跑另排（issue）。
   **一覽表四張的列
   （#47，`docs/re/323`、規格 055）**：星系資料點列 ＝ 換選那一格＋關清單＋星系情報視窗、
   艦隊資料點列 ＝ 艦隊視窗疊在清單上（關了回清單）、提督／敵將資料點列 ＝ 提督詳細資料
@@ -456,7 +461,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 20 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 21 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -491,6 +496,27 @@
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
+
+#### dosgolem-bios-rom-tail — dosgolem 的 BIOS ROM 尾巴是 0（戰略全滅轉跑 ENDING.EXE 的成因）
+
+*[#73](https://github.com/wicanr2/logh3/issues/73) · executor*
+
+dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且可寫。原版執行環境（DOSBox）那裡是 PC/AT 的重置跳躍、BIOS 日期與機型位元組
+（DOSBox-X `bios.cpp`：`EA 5B E0 00 F0` ＋ `"01/01/92"` ＋ `00 FC 55`）。GIN3 在戰略全滅時把 `FFFF:FFFF` 當物件指標讀，讀到 0 之後
+把資料段寫壞、轉跑 `ENDING.EXE`；只把那 16 bytes poke 成 DOSBox 的值（`fcx-a20-rom`），回合照常走完（`docs/re/334`）。
+
+問題登記在 logh3（使用者 2026-09-17 的慣例）；改的是 dosgolem 副本 `~/cht/dosgolem-logh3`（branch `logh3-oracle`）。
+
+**卡在**：- 唯讀化之前要先普查既有收據有沒有程式寫 `F0000–FFFFF`（`-watch`，注意 #54 那個旗標只看第一段）。
+- `.state` 沒存 `a20`／`hma`／`hmaOwned`／`a20Local`，順手補要改狀態檔版本。
+- 改了執行器就要整條收據重跑（CLAUDE.md「收據綁執行器版本」），另排一輪。
+
+**做完的判準**：dosgolem 開機時 `FFFF0–FFFFF` 有 PC/AT 的內容、`F0000–FFFFF` 寫入忽略（規格寫明硬體語意與參考來源、`FFFFF` 那一格照原版執行環境的取捨），
+有單元測試；logh3 全部收據重跑、雜湊有變的逐條核對；`fcmd-occ-phz-t4` 不再轉跑 `ENDING.EXE`。
+
+**證據**：[`docs/re/334-annihilation-crash-is-executor.md`](docs/re/334-annihilation-crash-is-executor.md)、[`docs/re/333-turn-reports.md`](docs/re/333-turn-reports.md)
+
+**核實**：要人判——改的是 dosgolem 副本，logh3 的產品程式碼沒有訊號；修完之後可綁 fcmd-occ-phz-t4 重錄後的 report.txt 沒有 ending.exe（receipt）或 dosgolem 的單元測試名。
 
 #### turn-transition-edges — 回合過場的邊角：「戰略模式思考中」的停留（需裁決）、兩支人類艦隊、戰鬥中的士氣報告
 
@@ -707,12 +733,30 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 兩個呼叫者：戰略階段 `0374:0888`（包在 `0374:073F`，印「…第Ｎ艦隊…已經全滅。」）、戰場一回合結算 `185C:016A`。
 remake 戰場打完是從存檔表重讀艦隊，新遊戲與戰略階段都沒有這一條。
 
-**卡在**：- `0374:0608` 的呼叫者、`0374:06BC`／`0896`、`185C:028E`／`0177` 沒讀。
-- `phz-t4` 艦隊 `+0x00` bit3（全隊沒艘數）從哪來沒查（`phz-t3` 還剩 452 艘）。
+已讀（2026-09-17，`workplace/re-notes/turn-reports.md` §四，待寫成 `docs/re/334`）：
 
-**做完的判準**：兩條路各有同狀態收據（`-poke` 把第 0 組艦艇 `+0x08` 改成 0 造局面），艦隊表、提督、星域、艦艇池逐欄對上；報告畫面列入 #52 或同條完成。
+- 戰略階段的全滅在逐格處理的每一格（`0374:0556` → `0374:0608(星域)`）：艦隊在這一格、**陣營 ≠ 星域擁有者**、`+0x00` bit0（士氣 < 50）
+  → `0374:06BC` 每組扣 `+0x0A ÷ 6` 艘（夾在現有艘數）→ 第 0 組艘數 0 → `0374:073F`「已經全滅」＋`297B:034A`；否則 `0374:0896`。
+  士氣低落的艦隊留在敵方／中立星域，六回合內全滅。
+- **`fcmd-occ-phz-t4` 是崩潰殘留**：費沙那條第四回合自然全滅，`297B:034A` 把 `+0x6C` 的 `FFFFFFFF` 當指標交給 `35D1:0102`，
+  #1049.708M 轉跑 `ENDING.EXE`（`report.txt` HLT、「NULL function pointer」）。`+0x6C` 清 0 繞過之後回合照常：艦隊拿掉、
+  艦艇不還、提督與副官失蹤（`28E0:057F`）、功績歸零、星域 `+0x28` 與 `ds:8F49` 減一。
+- 「已經全滅」的格式字串 `ds:01CD` 開頭多一個 `\x03`，dosgolem 畫成三列花紋。
 
-**證據**：[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)
+**使用者裁決（2026-09-17）**：
+1. 崩潰：**先查執行器再做**——確認 `FFFF:FFFF` 那幾次存取在 DOSBox 語意下會怎樣、是不是 dosgolem 造成的；remake 的全滅這一輪不動。
+2. 「已經全滅」報告：**修成正常文字**（「<陣營>第Ｎ艦隊／提督名軍階／已經全滅。」＋頭像），列成規格的刻意差異。
+
+**卡在**：- 執行器調查有結論（`docs/re/334`）：崩潰是 dosgolem 造成的——BIOS ROM 尾巴 `FFFF0–FFFFF` 在 dosgolem 是 0，`2376:02DE` 從 `FFFF1`
+  讀到 0 當比對編號，迴圈把資料段寫壞；補上 DOSBox 的 16 bytes（`fcx-a20-rom`）回合照常走完。要先修執行器（另開 issue）、
+  整條收據重跑，才能錄全滅的同狀態收據。
+- `0374:0896` 在傾印裡 `08D9`–`08E8` 解出不合理的指令，本意 unknown；`185C:028E`／`0177` 沒讀。
+- remake 的新遊戲沒有艦艇池（#55），耗損與全滅判定要照 `rules.FleetGroup` 做。
+
+**做完的判準**：崩潰的成因有結論（執行器偏差就修執行器並重跑收據；原版本來就壞就請使用者決定 remake 的走法）；之後兩條路（戰略 `0374:0608`、
+戰場 `185C:016A`）各有同狀態收據，艦隊表、提督、星域、艦艇池逐欄對上；報告照裁決 2 畫。
+
+**證據**：[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/re/333-turn-reports.md`（附：對既有收據的影響）`](docs/re/333-turn-reports.md`（附：對既有收據的影響）)
 
 **核實**：`internal/rules/fleetstep.go` 裡還找得到 `全滅那一支（`297B:034A``（自承還在 ＝ 還沒做）
 
@@ -722,17 +766,19 @@ remake 戰場打完是從存檔表重讀艦隊，新遊戲與戰略階段都沒�
 
 規格 058 的規則層是兩份收據（一支攻方、帝國人類座位）逐欄對上的。以下三種只讀了位元組、沒有收據，remake 照最簡單的情形做：
 
-- 同一格兩支以上攻方：`297B:0BD6` 把後定位的擠開 32 像素的倍數 → 距離 ≠ 0（打掉量有衰減、反擊方向不同）；remake 一律距離 0、同朝向。
+- ~~同一格兩支以上攻方~~：已接（2026-09-17）：收據 `fcmd-assault-ai24`（費沙那條第三回合，同盟兩支攻方拿下威爾勃恩）逐欄相同，
+  含艦隊與分隊位置（`docs/re/335` §六、規格 058 規則 3）。
 - 同一回合先打過仗：守軍 `203A:04D1` 掃的是戰場單位表 `ds:98BA`／`ds:9896`，可能殘留 → 守軍不是 0。
-- 電腦座位拿下行星：`20B4:1922` 的訊息框會不會顯示、會不會等；功績與計分器照加。
+- ~~電腦座位拿下行星~~：會顯示、會等（`docs/re/333` §二，收據 `fcmd-turn-ai-capture` 正常路徑整張相同）。
+- 擠開之後壓到戰場地圖擋路格：規則層測試不帶地形，還沒有收據。
 
-**卡在**：- 多支攻方的碰撞要模型化分隊位置（`297B:0D99`、`2BE1:0000`），remake 的戰略層沒有座標。
+**卡在**：- 同回合打過仗的局面要造（`-poke` 或走一場戰鬥之後占據），守軍 `203A:04D1` 讀戰場單位表。
 
 **做完的判準**：三種局面各有同狀態收據（可用 `-poke` 造），remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 **證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/internals/53-strategic-planet-assault.md`](docs/internals/53-strategic-planet-assault.md)
 
-**核實**：`internal/rules/strategicassault.go` 裡還找得到 `碰撞位移（`297B:0BD6`）沒模型化`（自承還在 ＝ 還沒做）
+**核實**：`internal/rules/strategicassault.go` 裡還找得到 `同一回合先打過仗時守軍殘留沒驗`（自承還在 ＝ 還沒做）
 
 #### new-game-ship-pool — 新遊戲的艦艇池模型（分隊士氣、戰力、兩格存量、池索引）
 

@@ -92,6 +92,7 @@ func (g *Game) CurrentOccupationReport() (OccupationReport, bool) {
 }
 
 func (g *Game) dismissOccupationReport() {
+	g.keepMapMark()
 	if len(g.pendingOccupationReports) > 0 {
 		g.pendingOccupationReports = g.pendingOccupationReports[1:]
 	}

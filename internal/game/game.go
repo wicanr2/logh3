@@ -801,6 +801,8 @@ type Game struct {
 	turnWin turnWindowState
 	// turnRep 是回合裡排隊中的報告框（`turnreport.go`）。
 	turnRep turnReportState
+	// mapMark 是回合處理中留在地圖上的色 5 那一格（`turnMapMark`）；−1 ＝ 沒有。
+	mapMark int
 
 	// mapCache 是戰略地圖兩種樣子（[1] 有反白格、[0] 沒有）的快取：
 	// 32 格的色號一變就重建（`strategicMapColours`）。
@@ -1015,6 +1017,7 @@ func (g *Game) advanceTurn() {
 // （收自己那些星域的稅，`docs/spec/035`；`g.turn` 在開頭就先加了，所以看
 // 的是 `g.turn − 1`）。測試要手動走到 `runBrain` 之前就叫它。
 func (g *Game) beginTurn() {
+	g.mapMark = -1 // `04F8:02E7` 的 `3705:0349(1)`
 	g.turn++
 	g.refillRegionSupply()
 	if (g.turn-1)%rules.TurnsPerMonth == 0 {
@@ -1141,6 +1144,10 @@ func (g *Game) stepFleet(i int) fleetStep {
 		}
 		rules.BlockByEnemy(f)
 	case rules.StepAskOccupy:
+		// 電腦座位不問：`113A:0899` 進門 `3982:022D == 1` 就回 1，`047D +056E` 回非 0 就不動、命令留著（待命）。
+		if !g.humanSeat(f.Faction) {
+			return fleetStepWalked
+		}
 		g.occupyAsk.next = plan.Next
 		return fleetStepAsk
 	case rules.StepNoFunds:
@@ -1292,6 +1299,8 @@ func (g *Game) answerOccupyAsk(occupy bool) {
 
 // afterFleetMoves 接回 32 支走完之後的那一串：重數艦隊、占據與叛亂。
 func (g *Game) afterFleetMoves() {
+	// `056A:044B`：32 支走完，`3705:0349(1)` 整片還原（過場留下的下一格色 5 在這裡消失）。
+	g.mapMark = -1
 	// 走完就重數每一格的艦隊數（`2703:0853`，排在移動之後、叛亂判定之前，
 	// `docs/re/297`）。
 	g.recountRegionFleets()
@@ -1732,9 +1741,23 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 		if nf.Region < 0 || nf.Region >= rules.RegionCount || led[nf.Admiral] {
 			continue
 		}
-		g.fleets = append(g.fleets, rules.Fleet{
-			Index:    len(g.fleets),
-			Number:   len(g.fleets) + 1,
+		// 配槽（`2D76:0611` → `07F9:03AC`）：艦隊表的位置 ＝ 陣營基底 ＋ 槽、編號 ＝ 槽 ＋ 1。32 支逐支處理的
+		// 迴圈都照表的位置走，所以 `g.fleets` 依 Index 排（`docs/re/335` §九）。
+		slot := rules.PickFleetSlot(g.admiralRecord(nf.Admiral), func(s int) bool {
+			idx := rules.FleetTableIndex(faction, s)
+			for _, f := range g.fleets {
+				if f.Index == idx {
+					return true
+				}
+			}
+			return false
+		})
+		if slot < 0 {
+			return
+		}
+		g.insertFleet(rules.Fleet{
+			Index:    rules.FleetTableIndex(faction, slot),
+			Number:   slot + 1,
 			Faction:  faction,
 			Admiral:  nf.Admiral,
 			Adjutant: nf.Adjutant,
@@ -1760,10 +1783,10 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 		// 挑去坐參謀，候選集就與原版不同。
 		g.mutableAdmirals()
 		if r := g.admiralRecord(nf.Admiral); r != nil {
-			rules.SetFleetSlot(r, n)
+			rules.SetFleetSlot(r, slot)
 		}
 		if r := g.admiralRecord(nf.Adjutant); r != nil {
-			rules.SetFleetSlot(r, n)
+			rules.SetFleetSlot(r, slot)
 		}
 		led[nf.Admiral] = true
 		n++
@@ -1772,6 +1795,20 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 		// AI 回合發生在原版計數器進位之前。
 		g.recomputeUnrest(g.turn - 1)
 	}
+}
+
+// insertFleet 依艦隊表的位置（Index）把 f 插進 `g.fleets`。
+func (g *Game) insertFleet(f rules.Fleet) {
+	i := len(g.fleets)
+	for k, e := range g.fleets {
+		if e.Index > f.Index {
+			i = k
+			break
+		}
+	}
+	g.fleets = append(g.fleets, rules.Fleet{})
+	copy(g.fleets[i+1:], g.fleets[i:])
+	g.fleets[i] = f
 }
 
 // startVersus 開一局對戰。
@@ -1905,8 +1942,9 @@ func New(res *Resources) (*Game, error) {
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
 		hoverRegion: -1, hoverProbe: -1, mapHighlight: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1,
-		lst:  newListScreen(),
-		tabs: newListTabs(), rinfo: -1,
+		mapMark: -1,
+		lst:     newListScreen(),
+		tabs:    newListTabs(), rinfo: -1,
 		// 音源是開機偵測的結果，不是每局重來的東西：沒有 MPU-401 就退到
 		// OPL（`docs/re/274` §3）。remake 不模擬 MIDI 介面，所以與出貨的
 		// 原版一樣一律 ＦＭ——既有的執行期傾印 `ds:8F33` 全是 1，收據
@@ -4126,9 +4164,9 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 func (g *Game) playerStarMap() *asset.Image {
 	// 交棒視窗與月底結算中的地圖沒有反白格（收據 `vs3`／`vs5`、
 	// `turnmonth2`；`docs/spec/045`）——原版那一刻 `ds:F182` 是 0xFF。
-	tint := g.state != StateVersusInput && g.state != StateShipDelivery && !g.turnProcessing()
+	tint := g.state != StateVersusInput && g.state != StateShipDelivery && !g.mapProcessing()
 	seat := g.faction
-	if g.turnProcessing() {
+	if g.mapProcessing() {
 		// 回合處理中 `ds:8F1D` 是 FF：`3705:037F` 對 0／1 以外的座位一律當「沒有自軍艦隊」，
 		// 32 格都塗擁有者色（`fcmd-turn-nofund` 瓦爾哈拉色 1）。
 		seat = -1
@@ -4235,9 +4273,9 @@ func (g *Game) strategicMapColours(faction int, tint bool) []uint8 {
 	for i := range cols {
 		cols[i] = rules.StrategicMapColour(g.regionRecord(i), faction, i == hl)
 	}
-	// 回合過場那一格塗色 5（`3705:03FD`，規格 059）。
-	if r, c := g.turnWindowMapColour(); r >= 0 && r < n {
-		cols[r] = c
+	// 回合處理中塗色 5 的那一格（`3705:03FD`，規格 059）。
+	if r := g.turnMapMark(); r >= 0 && r < n && g.mapProcessing() {
+		cols[r] = g.mapMarkColour()
 	}
 	return cols
 }

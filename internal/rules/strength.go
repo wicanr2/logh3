@@ -15,6 +15,8 @@ const (
 	// ＋1、沒被看到就掉一級；佈陣時清 0，戰後留在記錄裡，戰略地圖右下角
 	// 「敵艦隊」分頁與交戰演出的艦隊那格都拿它判「看得清不清楚」。
 	shipDetail = 0x17
+	// shipPosX 是分隊位置 x（word，+0x36 是 y）：`297B:0D99` 寫、`297B:0C74` 拿來判佔用。
+	shipPosX = 0x34
 
 	shipKindEmpty = 0xFF
 )

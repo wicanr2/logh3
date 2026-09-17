@@ -23,6 +23,11 @@ type Fleet struct {
 	Region   int `json:"region"`   // 現在在哪一個星域
 	Target   int `json:"target"`   // 要去哪一個星域
 
+	// X／Y 是艦隊記錄 `+0x5C`／`+0x5E`：在戰場地圖上的座標。戰略打行星每一圈都重新定位
+	// （`0DEA:1759` → `297B:0BD6`），同一格後定位的艦隊會被前面的擠開（`docs/re/335` §六）。
+	X int `json:"x,omitempty"`
+	Y int `json:"y,omitempty"`
+
 	// Strength 是這一支的戰力（`ShipStrength` 的算式加總）。
 	// 0 ＝ 算不出來（沒有艦艇池或權重表），AI 那邊會退回「每支算 1」。
 	Strength int `json:"strength"`

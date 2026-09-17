@@ -115,6 +115,7 @@ func (g *Game) endTurnWindowStage() {
 		w.view.Second = true
 		return
 	}
+	g.keepMapMark()
 	g.state = w.resume
 	i := w.fleet
 	if w.apply != nil && w.apply() {
@@ -128,16 +129,55 @@ func (g *Game) endTurnWindowStage() {
 	g.moveFleetsFrom(i + 1)
 }
 
-// turnWindowMapColour 回過場時地圖上被塗色 5 的那一格（第一段現在格、第二段下一格）；
-// 沒有回 −1。錯誤報告不動地圖。
-func (g *Game) turnWindowMapColour() (region int, colour uint8) {
-	if g.state != StateTurnWindow || g.turnWin.view.Kind != screen.TurnWindowDepart || g.res.TurnWindow == nil {
-		return -1, 0
+// turnMapMark 回回合處理中地圖上塗色 5 的那一格（`3705:03FD(星域, 5)`），沒有回 −1。
+//
+// 塗了就留著，要等下一次 `3705:0349` 整片還原（`docs/re/332` §二、`docs/re/335` §五）：
+//   - 過場視窗：第一段現在格、第二段下一格；視窗關掉之後下一格留著，到 32 支走完（`056A:044B`）才還原。
+//   - 占據（`056A:059E`）、叛亂（`06F3`）、易主（`089D`）報告：先整片還原，再塗報告那一格，印完不還原。
+//   - 回合結束回到命令階段時整片還原（`04F8` 的 `3705:0349(1)`）。
+func (g *Game) turnMapMark() int {
+	switch g.state {
+	case StateTurnWindow:
+		if g.turnWin.view.Kind == screen.TurnWindowDepart {
+			if g.turnWin.stage == 0 {
+				return g.turnWin.from
+			}
+			return g.turnWin.next
+		}
+	case StateOccupationReport:
+		if r, ok := g.CurrentOccupationReport(); ok {
+			return r.Region
+		}
+	case StateRebellionReport:
+		if r, ok := g.CurrentRebellionReport(); ok {
+			return r.Region
+		}
+	case StateRegionFlipReport:
+		if f, ok := g.CurrentFlip(); ok {
+			return f.Region
+		}
 	}
-	if g.turnWin.stage == 0 {
-		return g.turnWin.from, uint8(g.res.TurnWindow.DepartColour)
+	return g.mapMark
+}
+
+// mapMarkColour 是 `3705:03FD` 塗的色號。
+func (g *Game) mapMarkColour() uint8 {
+	if g.res.TurnWindow == nil {
+		return 5
 	}
-	return g.turnWin.next, uint8(g.res.TurnWindow.DepartColour)
+	return uint8(g.res.TurnWindow.DepartColour)
+}
+
+// keepMapMark 在報告或過場關掉的那一刻把當下塗的那一格留下來。
+func (g *Game) keepMapMark() { g.mapMark = g.turnMapMark() }
+
+// mapProcessing 回地圖是不是回合處理中的樣子：沒有反白格（`ds:F182 = FF`）、不看座位（`ds:8F1D = FF`）。
+func (g *Game) mapProcessing() bool {
+	switch g.state {
+	case StateOccupationReport, StateRebellionReport, StateRegionFlipReport:
+		return true
+	}
+	return g.turnProcessing()
 }
 
 // drawTurnWindow 把過場視窗疊在戰略地圖介面上。

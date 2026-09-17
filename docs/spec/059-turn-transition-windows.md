@@ -47,7 +47,8 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
    - 被擋（`0797`）：第 2 列「無法前往敵方的星系」、第 3 列「。」（原版字串的換行，照印）。
    - 經費不足（`0A4E`）：第 2 列「由於移動經費不足無法移動。」。
 4. **地圖**：整回合處理中地圖沒有反白格（`ds:F182 = FF`）。出發前往第一段把現在格塗色 5，第二段現在格還原、
-   下一格塗色 5；錯誤報告不動地圖。
+   下一格塗色 5，視窗關掉之後下一格的色 5 留到 32 支走完（`056A:044B`）；錯誤報告不動地圖。占據、叛亂、易主報告先整片還原、
+   再把報告那一格塗色 5，關掉之後留著（`docs/re/335` §五）；回合結束回到命令階段整片還原。
 5. **等多久**：出發前往第一段 `ds:8F38 >> 2`（預設 22 tick），第二段與錯誤報告 `ds:8F38`（預設 90 tick）。
    `ds:8F38` 是設定畫面的訊息速度。
 6. **右側標題窗**：實行之後、移動與之後的報告期間只有「戰略模式處理中」一列，清單與摘要清空；分頁鈕、命令鈕、
@@ -88,7 +89,7 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
 | `1261:0067` 的 `ds:8F72[陣營] ← 297B:10DE` 沒有模型化；編制裡有艘數卻沒有滿編數的組（remake 修理拆出來的）不重算士氣 | 沒讀／資料模型 | 艦艇池模型化（#55）時一起 |
 | 戰鬥中（`ds:8F16 != 0`）士氣報告改走 `3826:0405` 的另一個視窗 | 沒有收據 | 錄一份戰場裡扣到士氣翻轉的收據 |
 | `ds:8F1C` bit0（除錯選單「顯示」）讓電腦座位的艦隊也印：remake 沒有除錯選單 | 未實作 | 做隱藏除錯選單時一起 |
-| 同一回合兩支以上人類艦隊：前一支的「下一格色 5」原版留到下一支第一段上畫面才消失；remake 每張只塗自己的兩格 | 沒有收據 | 錄一份兩支人類艦隊同回合移動的收據 |
+| 同一回合兩支以上人類艦隊：原版前一支的「下一格色 5」在後一支第一段的緩衝區裡就還原（`0B46` 第 1 步），remake 同；視窗 `341B:0145` 只顯示一次的畫面沒有收據 | 沒有收據 | 錄一份兩支人類艦隊同回合移動的收據 |
 | 等待的時間以 remake 的 `Tick` 累計，不重現原版遞減相位（第一個 tick 可能差一個相位點） | 計時近似 | 需要逐 tick 對拍時照 `docs/re/331` 的相位公式 |
 
 ## 驗證
@@ -98,8 +99,8 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
 - `internal/game/garrison_test.go`：`fcmd-garrison-report`、`fcmd-garrison-self-report`（就地駐留「瓦爾哈拉 出發前往 瓦爾哈拉」）。
 - `tools/gui_check.sh`：`fcmd-turn-depart`、`fcmd-turn-arrive`，以及改成點掉過場的 `fcmd-exec`、`fcmd-occ-t2`、`fcmd-garrison-t1`。
 - `fcmd-turn-think`、`fcmd-turn-busy`、`fcmd-turn-block`（AI 之後 poke）是原版的對照，remake 沒有停在那裡的狀態，不比。
-- `turnwindow_test.go` 的 `TestTurnReportCaptureMatchesOracle`、`TestTurnReportMoraleLowMatchesOracle`、`TestTurnReportNoShipsMatchesOracle`
-  （正常路徑停在那一則；框與標題逐位元組，其餘畫面是第三回合起分岔的局面；前兩個比框時照收據改回一個欄位重組，理由寫在測試）、
-  `TestTurnReportAICaptureLayout`（直接進入的診斷比對）。GUI 沒有加例：這幾張的整張畫面受分岔影響。
+- `turnreport_test.go`：`TestTurnReportCaptureMatchesOracle`、`TestTurnReportNoShipsMatchesOracle`（收據同一個 poke）、
+  `TestTurnReportAICaptureMatchesOracle`、`TestTurnReportMoraleLowMatchesOracle`，正常玩家路徑整張逐位元組相同。
+  GUI：`fcmd-turn-ai-capture`、`fcmd-turn-morale-low`（另兩張要改記憶體，GUI 腳本做不到）。
 - `internal/game/fleetcmd_test.go`、`garrison_test.go`、`occupation_test.go`：既有的回合後收據（`fcmd-exec`、`fcmd-garrison-t1`、
   `fcmd-occ-*`）照舊通過（`executeTurn` 會把過場視窗點掉）。

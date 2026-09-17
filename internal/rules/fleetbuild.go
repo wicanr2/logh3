@@ -33,6 +33,9 @@ type FleetGroup struct {
 	// Detail 是這一組艦艇的索敵等級（艦艇 `+0x17`，0–3）——敵方看它看得
 	// 多清楚。打過仗才會不是 0；新編的艦隊沒有艦艇池，永遠 0。
 	Detail int `json:"detail,omitempty"`
+	// X／Y 是這一組艦艇的位置（艦艇 `+0x34`／`+0x36`）：別的艦隊定位時拿它判佔用（`297B:0C74`）。
+	X int `json:"x,omitempty"`
+	Y int `json:"y,omitempty"`
 }
 
 // FlagshipFormationSlot 是旗艦那一組的隊形槽 ＝ 格盤正中央。

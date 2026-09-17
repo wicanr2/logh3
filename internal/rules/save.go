@@ -80,6 +80,7 @@ const (
 	fleetClassKey = 0x09 // 艦隊類別鍵 0–15，經 ds:5F52 換成 0–3（docs/re/190）
 	fleetExpected = 0x0E // 編制槽的**應有**數；+0x0F 是現有數（docs/re/194）
 	fleetGroups   = 0x0F // 這一支有幾組編制
+	fleetPosX     = 0x5C // 戰場座標 x（+0x5E 是 y）
 	fleetSlots    = 0x10 // 十個 4-byte 的槽，前兩 byte 是艦艇索引
 	// fleetOps ＝ 艦隊能力第 10 項（`+0x47`）＝ max(提督, 副官) 的
 	// `ADMIRAL` `+14`（`docs/re/218`）；維持費與移動經費的
@@ -435,6 +436,8 @@ func (s *Slot) Fleets(w StrengthWeights) []Fleet {
 			// 維持費與移動經費的 `(200 − 營運)` 那一項要它，
 			// 沒填的話兩筆都會多算一倍（`docs/re/263`）。
 			Operations: int(r[fleetOps]),
+			X:          int(r[fleetPosX]) | int(r[fleetPosX+1])<<8,
+			Y:          int(r[fleetPosX+2]) | int(r[fleetPosX+3])<<8,
 		}
 		if r[fleetAdjutant] == 0xFF {
 			f.Adjutant = -1
@@ -492,6 +495,8 @@ func (s *Slot) FleetComposition(i int) []FleetGroup {
 			Slot2:  int(r[o+2]),
 			Slot3:  int(r[o+3]),
 			Detail: int(sh[shipDetail]),
+			X:      int(sh[shipPosX]) | int(sh[shipPosX+1])<<8,
+			Y:      int(sh[shipPosX+2]) | int(sh[shipPosX+3])<<8,
 		})
 	}
 	return out

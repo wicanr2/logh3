@@ -109,6 +109,33 @@ func LeaveStaffPost(record []byte) {
 //
 // 挑專任參謀的候選清單看的就是 bit7（`docs/re/268`），所以帶隊之後
 // 那位提督不會再被挑去坐參謀。
+// PickFleetSlot 是原版 `07F9:03AC(提督)`：提督 `+0x09` 低七位那一槽空著就沿用，否則本陣營 16 格裡第一個空的
+// （`docs/re/181`）——提督換艦隊不會換槽號。used 回陣營內那一槽是不是已經有艦隊；沒有空槽回 −1。
+func PickFleetSlot(record []byte, used func(slot int) bool) int {
+	if len(record) > admiralStaffFlag {
+		if s := int(record[admiralStaffFlag] & 0x7F); s < FleetsPerFaction && !used(s) {
+			return s
+		}
+	}
+	for s := 0; s < FleetsPerFaction; s++ {
+		if !used(s) {
+			return s
+		}
+	}
+	return -1
+}
+
+// FleetsPerFaction 是每個陣營在艦隊表裡的槽數（帝國 0–15、同盟 16–31）。
+const FleetsPerFaction = 16
+
+// FleetTableIndex 回陣營內槽號在艦隊表（`ds:C074`）的位置。
+func FleetTableIndex(faction, slot int) int {
+	if faction == 1 {
+		return FleetsPerFaction + slot
+	}
+	return slot
+}
+
 func SetFleetSlot(record []byte, slot int) {
 	if len(record) > admiralStaffFlag && slot >= 0 {
 		record[admiralStaffFlag] = byte(slot & 0x7F)

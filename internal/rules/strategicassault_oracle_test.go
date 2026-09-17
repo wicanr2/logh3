@@ -31,6 +31,7 @@ func TestStrategicAssaultMatchesOracle(t *testing.T) {
 	}{
 		{"fcmd-assault-ast", 16, 3768, 67}, // 亞斯提：艦隊 0 打巴溫
 		{"fcmd-assault-phz", 14, 8792, 47}, // 費沙（無主）
+		{"fcmd-assault-ai24", 24, 745, 89}, // 馬爾・亞迪特（無主）：同盟攻方兩支，拿下威爾勃恩
 	} {
 		t.Run(c.batch, func(t *testing.T) {
 			in, out := readMem(t, c.batch, "in"), readMem(t, c.batch, "out")
@@ -82,7 +83,13 @@ func TestStrategicAssaultMatchesOracle(t *testing.T) {
 				t.Fatal("這一格沒有攻方艦隊")
 			}
 			r := NewRand(binary.LittleEndian.Uint32(in[memDS+0x94DC:]))
-			res := StrategicAssault(planets, sites, attacker, sfs, r)
+			// 定位：同一格的艦隊位置與各分隊位置取進入時的記憶體（`+0x5C`／`+0x5E`、艦艇 `+0x34`／`+0x36`）。
+			// 地圖站不站得住不在這一層（戰場地圖要讀原版素材），這幾份收據的落點都不壓到擋路格。
+			slots, err := LoadFormationSlots(filepath.Join("..", "..", "docs", "internals", "data", "battle-formation-slots.json"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			res := StrategicAssault(planets, sites, attacker, sfs, r, &StrategicPlacement{Slots: slots})
 
 			if got, want := r.Seed(), binary.LittleEndian.Uint32(out[memDS+0x94DC:]); got != want {
 				t.Errorf("亂數種子 %08X，原版 %08X（消耗次數對不上）", got, want)
@@ -114,6 +121,12 @@ func TestStrategicAssaultMatchesOracle(t *testing.T) {
 					if gi < len(wantC) && g.Ships != wantC[gi].Ships {
 						t.Errorf("艦隊 %d 第 %d 組 %d 艘，原版 %d", f.Index, gi, g.Ships, wantC[gi].Ships)
 					}
+					if gi < len(wantC) && (g.X != wantC[gi].X || g.Y != wantC[gi].Y) {
+						t.Errorf("艦隊 %d 第 %d 組位置 (%d,%d)，原版 (%d,%d)", f.Index, gi, g.X, g.Y, wantC[gi].X, wantC[gi].Y)
+					}
+				}
+				if wx, wy := int(binary.LittleEndian.Uint16(wantF[0x5C:])), int(binary.LittleEndian.Uint16(wantF[0x5E:])); f.X != wx || f.Y != wy {
+					t.Errorf("艦隊 %d 位置 (%d,%d)，原版 (%d,%d)", f.Index, f.X, f.Y, wx, wy)
 				}
 			}
 			admOut := out[memDS+0xB77C:]

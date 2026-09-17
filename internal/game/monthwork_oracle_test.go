@@ -194,12 +194,10 @@ func TestMonthEndTaxesOnlyOwnSeat(t *testing.T) {
 		t.Skipf("缺收據 %s，跳過（不用代用品）", p)
 	}
 	g := reachBrainPhase(t)
-	visited := map[int]bool{}
 	for i := 0; i < 10; i++ {
 		g.Click(544, 125)
 		g.Click(560, 125)
 		dismissAllRebellionReports(g)
-		markAllianceVisits(g, visited)
 	}
 	if y, m, _ := g.Date(); y != 796 || m != 2 {
 		t.Fatalf("日期 %d/%d，應該是 796/2", y, m)
@@ -215,16 +213,16 @@ func TestMonthEndTaxesOnlyOwnSeat(t *testing.T) {
 			continue
 		}
 		byOwner[owner]++
-		if w[0x26] != got[0x26] && owner != 1 && !visited[i] {
+		if w[0x26] != got[0x26] && owner != 1 {
 			t.Errorf("星域 %d（擁有者 %d）稅率 +0x26：原版 %d、remake %d", i, owner, w[0x26], got[0x26])
 		}
 		if w[0x27] != got[0x27] {
 			t.Errorf("星域 %d（擁有者 %d）上個月的稅率 +0x27：原版 %d、remake %d", i, owner, w[0x27], got[0x27])
 		}
 		we, ge := rules.RegionEconomy(w), rules.RegionEconomy(got)
-		if owner == 1 || visited[i] {
-			if we != ge || w[0x26] != got[0x26] {
-				t.Logf("星域 %d（擁有者 %d）經濟力：原版 %d、remake %d；稅率 %d／%d（AI 艦隊花費的差，不比）", i, owner, we, ge, w[0x26], got[0x26])
+		if owner == 1 {
+			if we != ge {
+				t.Logf("星域 %d（同盟）經濟力：原版 %d、remake %d（AI 艦隊花費的差，不比）", i, we, ge)
 			}
 			continue
 		}
@@ -298,12 +296,10 @@ func TestMonthEndAllianceSeatAfterExecute(t *testing.T) {
 	}
 	g.res.AdvanceRoutes = routes
 	g.SetBrain(g.OriginalBrain())
-	visited := map[int]bool{}
 	for i := 0; i < 10; i++ {
 		g.Click(544, 125)
 		g.Click(560, 125)
 		dismissAllRebellionReports(g)
-		markAllianceVisits(g, visited)
 	}
 	dismissMonthReports(g)
 	if g.State() != StateCommandPhase || g.turn != 10 {
@@ -313,7 +309,6 @@ func TestMonthEndAllianceSeatAfterExecute(t *testing.T) {
 	g.Click(544, 125)
 	g.Click(560, 125)
 	dismissAllRebellionReports(g)
-	markAllianceVisits(g, visited)
 	if g.State() != StateCommandPhase || g.turn != 11 {
 		t.Fatalf("第十一次實行之後在 %v、回合 %d", g.State(), g.turn)
 	}
@@ -344,31 +339,11 @@ func TestMonthEndAllianceSeatAfterExecute(t *testing.T) {
 		if w[0x27] != got[0x27] || got[0x27] != prev[0x27] {
 			t.Errorf("星域 %d（擁有者 %d）+0x27：原版 %d、remake %d、remake 回合 10 %d", i, owner, w[0x27], got[0x27], prev[0x27])
 		}
-		if visited[i] {
-			if ge != pe {
-				t.Errorf("星域 %d（擁有者 %d）輪過同盟座位之後經濟力 %d 變了（回合 10 %d）", i, owner, ge, pe)
-			}
-			if we != ge {
-				t.Logf("星域 %d（擁有者 %d）經濟力：原版 %d、remake %d（AI 艦隊花費的差，不比）", i, owner, we, ge)
-			}
-			continue
-		}
 		if we != ge || ge != pe {
 			t.Errorf("星域 %d（擁有者 %d）經濟力：原版 %d、remake %d、remake 回合 10 %d", i, owner, we, ge, pe)
 		}
 	}
 	if byOwner[0] < 9 || byOwner[1] < 12 || byOwner[2] < 6 {
 		t.Fatalf("比了帝國 %d、同盟 %d、中立 %d 格", byOwner[0], byOwner[1], byOwner[2])
-	}
-}
-
-// markAllianceVisits 記下 remake 的同盟艦隊站過的星域。電腦艦隊走一格付的移動經費流進行星
-// （`113A:06C3`），那幾格的經濟力、成長率與稅率跟著 AI 的走法變；remake 的 AI 建艦隊與亂數還沒與原版
-// 對齊（`docs/re/335`、issue），同盟艦隊待過的無主星域與同盟星域一樣只印不比。
-func markAllianceVisits(g *Game, visited map[int]bool) {
-	for _, f := range g.fleets {
-		if f.Faction == 1 && f.Region >= 0 && f.Region < rules.RegionCount {
-			visited[f.Region] = true
-		}
 	}
 }

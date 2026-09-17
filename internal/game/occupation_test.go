@@ -51,8 +51,8 @@ func finishTurn(t *testing.T, g *Game) {
 // 亞斯提那條路：0 → 2 → 7 → 8 → 13 一回合一格（路徑表，全在自己的星域），
 // 第五回合走進亞斯提（同盟、目的地）→ 停駐、`+0x07 ← FF`；同一回合星域 16
 // 設 bit4（單方面占據）、跳「亞斯提星系已被攻入 目前轉移至占領狀態」；
-// 收據 `fcmd-occ-t1`–`t5`。畫面前兩回合整張比（第三回合起 remake 的叛亂在
-// 別的格子分岔），之後只比艦隊記錄與星域旗標。
+// 收據 `fcmd-occ-t1`–`t5`。畫面前四回合整張比（`fcmd-occ-t5` 停在回合中的報告上，時點與點到底不同），
+// 第五回合比艦隊記錄與星域旗標。
 func TestOccupyAstarteArrivalMatchesOracle(t *testing.T) {
 	g := reachOccupyAstarte(t)
 	want := []int{2, 7, 8, 13, 16}
@@ -66,9 +66,9 @@ func TestOccupyAstarteArrivalMatchesOracle(t *testing.T) {
 			if f.Move != rules.MoveOccupy || f.Target != 16 || f.Parked {
 				t.Fatalf("第 %d 回合之後艦隊記錄 %+v，原版 +0x07=16、+0x08=1", turn+1, f)
 			}
-			// 第三回合起 remake 的叛亂判定在別的格子分岔（電腦那一方不下命令，
-			// 亂數序列與原版對不齊；`docs/spec/046` 的證據限制），畫面只比前兩回合。
-			if turn < 2 {
+			// 電腦 AI 的命令種類、配槽順序、候選評分與進軍路線表接齊之後，第三、四回合也整張相同
+			// （`docs/re/335` §九；原本第三回合起分岔）。
+			if turn < 4 {
 				matches(t, g, fmt.Sprintf("fcmd-occ-t%d", turn+1))
 			}
 			continue

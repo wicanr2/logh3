@@ -169,6 +169,7 @@ if 行星 != NULL:
 - `TestTurnReportNoShipsMatchesOracle`：正常路徑，框與標題逐位元組，艦隊留著。
 - 只比框與標題的理由都是第三回合起分岔的局面（規格 054 已知差異），地圖與左下角不是這一框的差異。GUI 沒有加例：`tools/gui_check.sh`
   只能比整張，這四張的整張畫面受分岔影響。
+  → 已改成正常玩家路徑的整張對拍（`internal/game/turnreport_test.go`），分岔的成因與修法：`docs/re/335` §五、§六、§九。
 - `fcmd-turn-recover` 沒有對拍：remake 沒有 `1AAB:0FAF` 補充，士氣回不到 50 以上。
 
 ## 八、還沒解
