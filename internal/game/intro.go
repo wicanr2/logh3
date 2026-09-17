@@ -70,6 +70,15 @@ func (g *Game) Tick(d time.Duration) {
 		g.turnReportTick(n)
 		return
 	}
+	if g.state == StateTurnThinking {
+		g.turnThink.rem += d
+		n := 0
+		for tick := g.engagementTickDuration(); g.turnThink.rem >= tick; g.turnThink.rem -= tick {
+			n++
+		}
+		g.turnThinkTick(n)
+		return
+	}
 	if g.state == StateTurnWindow {
 		g.turnWin.rem += d
 		n := 0

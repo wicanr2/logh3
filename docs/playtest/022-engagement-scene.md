@@ -30,6 +30,7 @@
 | `eng-skip-mid` | 動畫效果關：#1150M 兩個視窗只剩底圖（戰場方塊照畫） | `875e1e189cd3bbe84168045399c108dc30ffab96d34d5929b339141c00433bb2` | 0（`TestEngagementAnimationOffMatchesOracle`） |
 | `eng-click` | #1146M 左鍵 → #1152M | `2740b8980cdc07527bdfd57209c5a245aa10e33f99264c1981437c682b419de9` | ＝ 沒按鍵的 #1151.15M（PPAB 第 5 格之後；`docs/re/328` §六），≠ `eng-end` |
 | `eng-rclick` | #1146M 右鍵 → 同上 | `2740b8980cdc07527bdfd57209c5a245aa10e33f99264c1981437c682b419de9` | 同上 |
+| `eng-morale-low` | （第 5 段，從 `eng-t5`）#1170M 把第１３艦隊 `+0x00` 寫 05、`+0x3C` 寫 40 → 第五回合結算最後一步 #1197M「士氣值低落」臨時視窗（`3826:0405`） | `918b92643f65e17c56bbc24f37fdc73f9e54b6a82a08cc9dc1e0f81cdcea379e` | 視窗內 0（其餘戰場到不了同一局面，規格 059） |
 
 測試：`TestEngagementMatchesOracle`（六批，步數換 tick 的公式在測試開頭註解）、`TestEngagementClickQueuesUntilPause`、
 `TestEngagementAnimationOffMatchesOracle`、`TestEngagementQueuedFromAssault`；

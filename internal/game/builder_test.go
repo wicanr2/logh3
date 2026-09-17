@@ -112,6 +112,7 @@ func TestBuilderAddsFleets(t *testing.T) {
 	}})
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 
 	if len(g.fleets) != 2 {
 		t.Fatalf("建出 %d 支，預期 2", len(g.fleets))
@@ -161,6 +162,7 @@ func TestBuilderRespectsCapAndOneFleetPerAdmiral(t *testing.T) {
 	g.SetBrain(stubBuilder{want: want})
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 	if len(g.fleets) != ai.FleetCap {
 		t.Fatalf("建出 %d 支，預期停在上限 %d", len(g.fleets), ai.FleetCap)
 	}
@@ -180,6 +182,7 @@ func TestPlainBrainBuildsNothing(t *testing.T) {
 	g.SetBrain(plainBrain{})
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 	if len(g.fleets) != 0 {
 		t.Errorf("沒實作 Builder 卻建出 %d 支", len(g.fleets))
 	}
@@ -215,6 +218,7 @@ func TestOriginalBrainBuildsWithComposition(t *testing.T) {
 	g.SetBrain(g.OriginalBrain())
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 
 	if len(g.fleets) == 0 {
 		t.Fatal("一支都沒建")
@@ -268,6 +272,7 @@ func TestOriginalBrainNeedsStock(t *testing.T) {
 	g.SetBrain(g.OriginalBrain())
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 	if len(g.fleets) != 0 {
 		t.Errorf("沒有待命部隊卻建出 %d 支", len(g.fleets))
 	}
@@ -321,6 +326,7 @@ func TestFirstAITurnMatchesReceipt(t *testing.T) {
 	g.SetBrain(g.OriginalBrain())
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 
 	if len(g.fleets) < 3 {
 		t.Fatalf("只建了 %d 支", len(g.fleets))
@@ -438,6 +444,7 @@ func TestMonthEndKeepsBlend(t *testing.T) {
 		g.turn = before
 		g.Click(544, 125)
 		g.Click(560, 125)
+		thinkThrough(g)
 		return g.turn, g.blend[1], g.taxTotal[1]
 	}
 	plainTurn, plainBlend, plainTax := run(0)
@@ -476,6 +483,7 @@ func TestExecuteTurnWithBrainMatchesOracle(t *testing.T) {
 			}
 			g.Click(544, 125) // 系統指令
 			g.Click(560, 125) // 實行
+			thinkThrough(g)
 			if g.State() != StateCommandPhase {
 				t.Fatalf("實行之後在 %v", g.State())
 			}

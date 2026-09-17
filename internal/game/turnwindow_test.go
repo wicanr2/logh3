@@ -1,9 +1,12 @@
 package game
 
 import (
+	"fmt"
+	"path/filepath"
 	"testing"
 
 	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
 )
 
 // 回合裡的過場視窗（規格 059、`docs/re/332`）：與 `tools/fleetcmd_receipts.sh` 第 23 段的
@@ -13,6 +16,7 @@ import (
 func pressExecute(g *Game) {
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 }
 
 // tickTurnWindow 讓過場視窗走 n 個計時器 tick。
@@ -105,6 +109,7 @@ func TestTurnWindowNoFundsMatchesOracle(t *testing.T) {
 	g.Click(544, 125)
 	g.military[0] = 32
 	g.Click(560, 125)
+	thinkThrough(g)
 	wantState(t, g, StateTurnWindow, "實行之後")
 	matches(t, g, "fcmd-turn-nofund")
 	tickTurnWindow(g, 89)
@@ -125,6 +130,7 @@ func TestTurnWindowBlockedMatchesOracle(t *testing.T) {
 	g.Click(544, 125)
 	g.regionRecord(2)[regionOwnerOff] = 1
 	g.Click(560, 125)
+	thinkThrough(g)
 	wantState(t, g, StateTurnWindow, "實行之後")
 	matches(t, g, "fcmd-turn-block-pre")
 	g.Click(560, 125)
@@ -144,6 +150,7 @@ func TestTurnWindowOccupyAskMatchesOracle(t *testing.T) {
 	g.Click(544, 125)
 	g.regionRecord(7)[regionOwnerOff] = 1
 	g.Click(560, 125)
+	thinkThrough(g)
 	wantState(t, g, StateOccupyAsk, "實行之後")
 	matches(t, g, "fcmd-turn-ask")
 	g.Click(424, 270) // 「占領」
@@ -168,4 +175,62 @@ func clickThroughUntil(t *testing.T, g *Game, want State) {
 		}
 	}
 	t.Fatalf("點了 64 下還沒到 %v（在 %v）", want, g.State())
+}
+
+// thinkThrough 走完「實行」之後的「戰略模式思考中」（18 tick，規格 059）。
+func thinkThrough(g *Game) {
+	for i := 0; i < 64 && g.State() == StateTurnThinking; i++ {
+		g.Tick(g.engagementTickDuration())
+	}
+}
+
+// 「戰略模式思考中」：實行之後標題窗印電腦座位的陣營與日期、列 1「戰略模式思考中」，
+// 清單清空（`fcmd-turn-think`）；停 18 tick（使用者裁決）才進回合處理（出發前往）。
+func TestTurnThinkingMatchesOracle(t *testing.T) {
+	g := reachFleetTargetPick(t)
+	g.Click(85, 128)  // 亞爾提那
+	g.Click(432, 263) // 「決定」
+	g.Click(544, 125)
+	g.Click(560, 125)
+	wantState(t, g, StateTurnThinking, "實行之後")
+	if f := g.fleets[0]; f.Region != 0 {
+		t.Fatalf("思考中艦隊已經在 %d；回合處理還沒開始，應該還在 0", f.Region)
+	}
+	matches(t, g, "fcmd-turn-think")
+	tickTurnWindow(g, 17)
+	wantState(t, g, StateTurnThinking, "17 tick 之後")
+	matches(t, g, "fcmd-turn-think")
+	tickTurnWindow(g, 1)
+	wantState(t, g, StateTurnWindow, "18 tick 之後")
+	matches(t, g, "fcmd-turn-depart")
+}
+
+// 同一回合多支人類艦隊（#72）：S3 帝國第一回合開局就有三支帶命令的艦隊（槽 8、12、14），
+// 實行之後連續三張出發前往（`fcmd-s3-*`，`tools/fleetcmd_receipts.sh` 第 25 段）。
+// 前一支留在地圖上的下一格色 5、第二張起視窗不重開，都在整張比對裡。
+func TestTurnWindowThreeHumanFleetsMatchOracle(t *testing.T) {
+	g := newTestGame(t)
+	// 過場第 0 列的陣營名取自艦隊視窗的版面（正式入口 `internal/bootstrap` 會載，`load()` 不載）。
+	var err error
+	if g.res.FleetWindow, err = screen.LoadFleetWindowSpec(
+		filepath.Join(root, "docs/internals/data/fleet-window.json")); err != nil {
+		t.Fatal(err)
+	}
+	g.res.OrigDir = filepath.Join(root, "org_game/extracted")
+	g.loadSlotFromDisk(10)
+	if g.State() != StateCommandPhase || g.faction != 0 {
+		t.Fatalf("S3 載進來在 %v、座位 %d", g.State(), g.faction)
+	}
+	g.Click(544, 125)
+	g.Click(560, 125)
+	wantState(t, g, StateTurnThinking, "實行之後")
+	matches(t, g, "fcmd-s3-think")
+	thinkThrough(g)
+	for k, name := range []string{"w1", "w2", "w3"} {
+		wantState(t, g, StateTurnWindow, fmt.Sprintf("第 %d 張過場", k+1))
+		matches(t, g, "fcmd-s3-"+name+"a")
+		tickTurnWindow(g, 22)
+		matches(t, g, "fcmd-s3-"+name+"b")
+		tickTurnWindow(g, 90)
+	}
 }

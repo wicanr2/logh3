@@ -74,6 +74,7 @@ func runRebellionTurn(t *testing.T, ops byte) *Game {
 	g := prepareRebellionTurn(t, ops)
 	g.Click(544, 125) // 系統指令
 	g.Click(560, 125) // 實行
+	thinkThrough(g)
 	if len(g.rebellions) > 0 {
 		if g.State() != StateRebellionReport {
 			t.Fatalf("叛亂後在 %v，預期先進 StateRebellionReport", g.State())
@@ -96,6 +97,7 @@ func TestRebellionReportPlayerPathMatchesOriginal(t *testing.T) {
 	g := prepareRebellionTurn(t, 1)
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 	if g.State() != StateRebellionReport {
 		t.Fatalf("實行後在 %v，預期 StateRebellionReport", g.State())
 	}

@@ -191,6 +191,10 @@ func (g *Game) comaniFrames(seg string) []int {
 }
 
 // engagementTickDuration 是一個計時器 tick 的長度。
+// TimerTick 是原版一個計時器 tick 的長度（`3765:006C` 等待數的單位）。
+// 腳本化的驗收（`cmd/gin3 -script` 的 `tick N`）用它推進時間。
+func (g *Game) TimerTick() time.Duration { return g.engagementTickDuration() }
+
 func (g *Game) engagementTickDuration() time.Duration {
 	if g.res.Engagement != nil && g.res.Engagement.Animation.TickNS > 0 {
 		return time.Duration(g.res.Engagement.Animation.TickNS)

@@ -196,6 +196,8 @@ const (
 	StateTurnWindow
 	// StateTurnReport 是回合裡的報告框（攻占訊息框、士氣報告、全軍覆沒；`3826:0307`，規格 059）。
 	StateTurnReport
+	// StateTurnThinking 是「實行」之後電腦座位的「戰略模式思考中」（`04F8:0355(1)`，規格 059）。
+	StateTurnThinking
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -221,7 +223,7 @@ func (s State) String() string {
 		"StateFleetMessage", "StateFleetConfirm", "StateFleetStandby",
 		"StateFleetOccupyWarn", "StateFleetChangeMenu", "StateFleetChangeAdj", "StateFleetChangeOrg",
 		"StateRegionInfo", "StateOccupyAsk", "StateEngagement", "StateTurnWindow",
-		"StateTurnReport",
+		"StateTurnReport", "StateTurnThinking",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -269,6 +271,7 @@ var screenSpecName = map[State]string{
 	StateOccupyAsk:         "screen-command-phase",
 	StateTurnWindow:        "screen-command-phase",
 	StateTurnReport:        "screen-command-phase",
+	StateTurnThinking:      "screen-command-phase",
 	StateFleetActionMenu:   "screen-command-phase",
 	StateFleetTargetPick:   "screen-command-phase",
 	StateFleetMessage:      "screen-command-phase",
@@ -801,6 +804,8 @@ type Game struct {
 	turnWin turnWindowState
 	// turnRep 是回合裡排隊中的報告框（`turnreport.go`）。
 	turnRep turnReportState
+	// turnThink 是「戰略模式思考中」停了多久（`turnthink.go`）。
+	turnThink turnThinkState
 	// mapMark 是回合處理中留在地圖上的色 5 那一格（`turnMapMark`）；−1 ＝ 沒有。
 	mapMark int
 
@@ -995,6 +1000,9 @@ func (g *Game) execute() {
 		}
 		// 換回帝國 ＝ 這一輪兩邊都下完了，日期才推進。
 	}
+	if g.startTurnThinking() {
+		return
+	}
 	g.advanceTurn()
 }
 
@@ -1169,7 +1177,7 @@ func (g *Game) stepFleet(i int) fleetStep {
 
 // fleetStepMorale 是 `113A:0350` 的 `+03C5`：命令不是停駐的那一支走完 `047D` 之後叫
 // `1261:0067(艦隊, 1)`——照編制重算士氣（`1261:032B`），接著 `1261:0104` 印士氣報告或
-// 「已全軍覆沒」（`docs/re/333`）。`ds:8F72[陣營] ← 297B:10DE` 那一步沒有模型化。
+// 「已全軍覆沒」（`docs/re/333`）。`ds:8F72[陣營] ← 297B:10DE`（維持費總和）remake 在讀者處現算，不在這裡存。
 //
 // 編制裡有艘數卻沒有滿編數（remake 的修理拆出來的組）時不重算——那種組原版一定有 `+0x0A`，
 // 照 0 算會把整支當成沒有艘數。
@@ -3272,7 +3280,11 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 		if g.res.CapitalPanel != nil {
 			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
 		}
-		g.res.TurnWindow.DrawBusyTitle(fb, g.res.Font, g.res.FrameTiles)
+		if g.state == StateTurnThinking {
+			g.drawThinkTitle(fb)
+		} else {
+			g.res.TurnWindow.DrawBusyTitle(fb, g.res.Font, g.res.FrameTiles)
+		}
 		screen.DrawSettlementScrollArrows(fb)
 		return
 	}
@@ -3353,7 +3365,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
 		StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg,
 		StateFleetOrg, StateFleetNumber, StateFleetAdjutant,
-		StateFleetComposition, StateFormation, StateRegionInfo, StateOccupyAsk, StateTurnWindow, StateTurnReport,
+		StateFleetComposition, StateFormation, StateRegionInfo, StateOccupyAsk, StateTurnWindow, StateTurnReport, StateTurnThinking,
 		// 這五張的收據末尾都有一次 `-mouse-at`（搬到 (600,340)），
 		// 而畫面上的箭頭跟著搬過去了：`info1e`／`lst1e`／`lst2e`／
 		// `lst3e`／`settings1e` 與同盟的五張，十份都是同一個結論。

@@ -4,7 +4,7 @@
 報告框：攻占訊息框 `20B4:1922`、士氣值低落、已全軍覆沒）。「已經恢復」**DRAFT**（remake 沒有自家星域補充，碰不到）。
 證據：[`docs/re/332`](../re/332-turn-transition-windows.md)（整合 `docs/re/322` §一、§六 並更正其中 `+060F` 的條件）、
 [`docs/re/333`](../re/333-turn-reports.md)（報告框）。
-收據：`tools/fleetcmd_receipts.sh` 第 23、24 段；摘要 [`docs/playtest/021`](../playtest/021-strategic-fleet-command.md)。
+收據：`tools/fleetcmd_receipts.sh` 第 23、24、25 段；摘要 [`docs/playtest/021`](../playtest/021-strategic-fleet-command.md)。
 相關：[`054`](054-fleet-arrival.md)（走一格的四條分支本身）、[`058`](058-strategic-planet-assault.md)（戰略打行星）、
 [`047`](047-occupation-report.md)（占據報告，接在移動之後）。
 
@@ -15,6 +15,7 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
 
 ```
 實行
+ └ StateTurnThinking（單人模式；標題窗「電腦陣營 宇宙曆…／戰略模式思考中」、清單清空）─18 tick→
  └ advanceTurn：beginTurn → 電腦下命令 → 提督結局報告 → 維持費、民心
      └ moveFleetsFrom(i)               ← 32 支逐支（113A:0350）
           ├ 電腦座位的艦隊：直接套結果，不停
@@ -29,6 +30,9 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
 ```
 
 「結束」＝ 計時到，或一次滑鼠左／右鍵按下。一次按下只結束一段。鍵盤不算。
+
+「思考中」不吃點擊：`04F8:0355` 回來到 `056A:000C` 之間的呼叫樹沒有讀事件（`3765:0003` 在 AI 之前清一次佇列），
+期間的點擊留在佇列，由處理中各步之間的 `056A:0983` 吃掉，不會結束後面的過場（`fcx-turnwin-clkai`，`docs/re/336` §七）。
 
 ## 規則
 
@@ -84,12 +88,11 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
 
 | 差異 | 類別 | 到期條件 |
 |---|---|---|
-| 「戰略模式思考中」那一段（實行後到電腦下完約 5M 步）remake 不停、不畫。原版停多久是 AI 的運算時間，不是計時器 | 未實作；使用者裁決（2026-09-17）固定 18 tick、`fcmd-turn-think` 整張比，等 #73 收據重跑後接 | #72 |
+| 「戰略模式思考中」的停留：原版停到戰略 AI 算完（`fcmd-done` 那條 18.6 tick、S3 第一回合 7.7 tick），remake 固定 18 tick | 使用者裁決（2026-09-17） | 不到期（裁決） |
 | 「已經恢復」：remake 沒有自家星域的艦艇補充（`1AAB:0FAF`），士氣回不到 50 以上 | 規則沒接 | 補充接上時一起對 `fcmd-turn-recover`（issue） |
-| `1261:0067` 的 `ds:8F72[陣營] ← 297B:10DE` 沒有模型化；編制裡有艘數卻沒有滿編數的組（remake 修理拆出來的）不重算士氣 | 沒讀／資料模型 | 艦艇池模型化（#55）時一起 |
-| 戰鬥中（`ds:8F16 != 0`）士氣報告改走 `3826:0405` 的另一個視窗 | 沒有收據 | 錄一份戰場裡扣到士氣翻轉的收據 |
+| `1261:0067` 的 `ds:8F72[陣營] ← 297B:10DE`：該陣營所有艦隊維持費的總和（同時重寫各艦隊 `+0x0A`／`+0x0C` 與 `ds:8F82`，`docs/re/336` §七）。remake 在讀者（預算畫面、造船基數、AI 建艦隊門檻）現算；原版只在 `1261:00A8` 與 `090A:0EA1` 更新，兩次之間編制變了的時差沒有對拍。編制裡有艘數卻沒有滿編數的組（remake 修理拆出來的）不重算士氣 | 時差沒對拍／資料模型 | 艦艇池模型化（#55）時一起 |
+| 戰鬥中（`ds:8F16 != 0`）士氣報告走 `3826:0405` 的臨時視窗（(2,7) 24×5、頭像 (352,200)）：視窗版面與文字已接（`TurnWindowSpec.DrawBattleReport`，收據 `eng-morale-low` 視窗內逐位元組相同），但 remake 的戰場沒有結算最後一步（`181B:03F0` → `185C:001D` 對沒被消滅的艦隊叫 `1261:0104`）與修理階段等當場印的時點，**觸發點沒接**，也到不了同一個戰場局面，所以只比視窗 | 戰場結算沒有階段模型 | 戰場回合結算照 `181B:000A` 八步模型化時一起接上，改整張比 |
 | `ds:8F1C` bit0（除錯選單「顯示」）讓電腦座位的艦隊也印：remake 沒有除錯選單 | 未實作 | 做隱藏除錯選單時一起 |
-| 同一回合兩支以上人類艦隊：原版前一支的「下一格色 5」在後一支第一段的緩衝區裡就還原（`0B46` 第 1 步），remake 同；視窗 `341B:0145` 只顯示一次的畫面沒有收據 | 沒有收據 | 錄一份兩支人類艦隊同回合移動的收據 |
 | 等待的時間以 remake 的 `Tick` 累計，不重現原版遞減相位（第一個 tick 可能差一個相位點） | 計時近似 | 需要逐 tick 對拍時照 `docs/re/331` 的相位公式 |
 
 ## 驗證
@@ -97,8 +100,12 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
 - `internal/game/turnwindow_test.go`：出發前往、已經到達、已經駐留、占領第一回合（沒到達句）、經費不足、被擋（實行前 poke 那一份）、
   問話與問完之後兩張、點一次只結束一段（`fcmd-turn-clk22`）逐位元組整張比對；計時 22／90 tick 各自結束。
 - `internal/game/garrison_test.go`：`fcmd-garrison-report`、`fcmd-garrison-self-report`（就地駐留「瓦爾哈拉 出發前往 瓦爾哈拉」）。
-- `tools/gui_check.sh`：`fcmd-turn-depart`、`fcmd-turn-arrive`，以及改成點掉過場的 `fcmd-exec`、`fcmd-occ-t2`、`fcmd-garrison-t1`。
-- `fcmd-turn-think`、`fcmd-turn-busy`、`fcmd-turn-block`（AI 之後 poke）是原版的對照，remake 沒有停在那裡的狀態，不比。
+- `tools/gui_check.sh`：`fcmd-turn-think`、`fcmd-turn-depart`、`fcmd-turn-arrive`，以及改成點掉過場的 `fcmd-exec`、`fcmd-occ-t2`、`fcmd-garrison-t1`。
+- `TestTurnThinkingMatchesOracle`：`fcmd-turn-think` 整張相同、17 tick 仍在、第 18 tick 進出發前往。
+- `TestBattleMoraleReportWindowMatchesOracle`：`eng-morale-low` 視窗矩形（先塗掉再畫）逐位元組相同，排除收據游標 16×20（見已知差異）。
+- `TestTurnWindowThreeHumanFleetsMatchOracle`：S3 帝國第一回合三支人類艦隊（`fcmd-s3-think`、`fcmd-s3-w1a`–`w3b`，第 25 段），
+  前一支的下一格色 5、視窗不重開、兩位數編號（`3982:0038` 半形）都在整張比對裡。
+- `fcmd-turn-busy`、`fcmd-turn-block`（AI 之後 poke）是原版的對照，remake 沒有停在那裡的狀態，不比。
 - `turnreport_test.go`：`TestTurnReportCaptureMatchesOracle`、`TestTurnReportNoShipsMatchesOracle`（收據同一個 poke）、
   `TestTurnReportAICaptureMatchesOracle`、`TestTurnReportMoraleLowMatchesOracle`，正常玩家路徑整張逐位元組相同。
   GUI：`fcmd-turn-ai-capture`、`fcmd-turn-morale-low`（另兩張要改記憶體，GUI 腳本做不到）。

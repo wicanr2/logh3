@@ -26,6 +26,7 @@ func TestMonthEndSecondMonthEconomy(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		g.Click(544, 125) // 系統指令
 		g.Click(560, 125) // 實行
+		thinkThrough(g)
 	}
 	if y, m, _ := g.Date(); y != 796 || m != 2 {
 		t.Fatalf("十次實行之後是 %d 年 %d 月，預期 796/2", y, m)

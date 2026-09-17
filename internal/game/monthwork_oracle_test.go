@@ -57,6 +57,7 @@ func TestMonthEndMatchesWorkBlock(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		g.Click(544, 125) // 系統指令
 		g.Click(560, 125) // 實行
+		thinkThrough(g)
 	}
 	if y, m, _ := g.Date(); y != 796 || m != 2 {
 		t.Fatalf("十次實行之後是 %d 年 %d 月，預期 796/2", y, m)
@@ -125,6 +126,7 @@ func TestAllianceStaffSwitchesToReceipt(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		g.Click(544, 125)
 		g.Click(560, 125)
+		thinkThrough(g)
 		dismissAllRebellionReports(g)
 	}
 	if got := g.taxRateAdmiral(1); got != 63 {
@@ -197,6 +199,7 @@ func TestMonthEndTaxesOnlyOwnSeat(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		g.Click(544, 125)
 		g.Click(560, 125)
+		thinkThrough(g)
 		dismissAllRebellionReports(g)
 	}
 	if y, m, _ := g.Date(); y != 796 || m != 2 {
@@ -299,6 +302,7 @@ func TestMonthEndAllianceSeatAfterExecute(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		g.Click(544, 125)
 		g.Click(560, 125)
+		thinkThrough(g)
 		dismissAllRebellionReports(g)
 	}
 	dismissMonthReports(g)
@@ -308,6 +312,7 @@ func TestMonthEndAllianceSeatAfterExecute(t *testing.T) {
 	before := append([]byte(nil), g.res.Stellar...)
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 	dismissAllRebellionReports(g)
 	if g.State() != StateCommandPhase || g.turn != 11 {
 		t.Fatalf("第十一次實行之後在 %v、回合 %d", g.State(), g.turn)

@@ -2,7 +2,13 @@ package game
 
 import (
 	"encoding/binary"
+	"os"
+	"path/filepath"
 	"testing"
+
+	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
 )
 
 // 回合裡的報告框（規格 059「報告框」、`docs/re/333`）：正常玩家路徑走到第三回合之後，與
@@ -112,5 +118,59 @@ func TestTurnReportMoraleLowMatchesOracle(t *testing.T) {
 	matches(t, g, "fcmd-turn-morale-low")
 	if f := g.fleets[0]; f.Morale != 47 || f.Flags&0x0C != 0 {
 		t.Fatalf("艦隊 0 士氣 %d、+00 %02X；原版 47、bit2／bit3 清掉", f.Morale, f.Flags)
+	}
+}
+
+// 戰鬥中的士氣報告（`3826:0405` 臨時視窗，#72）：收據 `eng-morale-low` 是 S3 交戰第五回合結算的最後一步，
+// 第１３艦隊（槽 12，舒坦梅茲）照規格 014 寫成士氣 40、bit0｜bit2。remake 的戰場沒有結算最後一步
+// （`181B:03F0` → `185C:001D`），到不了同一個局面，所以這裡**只驗視窗**：拿收據畫面當底、畫上 remake 的
+// 報告框再整張比——視窗外的像素本來就來自收據。排除收據游標 (240,240) 那一塊（點實行留下的，
+// 不在視窗語意裡）。
+func TestBattleMoraleReportWindowMatchesOracle(t *testing.T) {
+	want, err := os.ReadFile(filepath.Join(root, "workplace/oracle/eng-morale-low/screen.bin"))
+	if err != nil {
+		t.Skip("沒有收據 eng-morale-low，跳過（tools/engagement_receipts.sh 第 5 段）")
+	}
+	g := newTestGame(t)
+	if g.res.FleetWindow, err = screen.LoadFleetWindowSpec(
+		filepath.Join(root, "docs/internals/data/fleet-window.json")); err != nil {
+		t.Fatal(err)
+	}
+	g.res.OrigDir = filepath.Join(root, "org_game/extracted")
+	g.loadSlotFromDisk(10)
+	f := g.fleetBySlot(t, 12)
+	f.Flags |= rules.FleetFlagLowMorale | rules.FleetFlagMoraleFlip
+	f.Morale = 40
+	reps := g.moraleReports(f)
+	if len(reps) != 1 {
+		t.Fatalf("士氣報告 %d 則", len(reps))
+	}
+	face, err := g.res.Faces.Decode(reps[0].face)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fb := gfx.NewFramebuffer(0)
+	copy(fb.Pix, want)
+	// 視窗矩形先塗掉：不這樣的話 remake 什麼都沒畫也會通過（底圖就是收據）。
+	fb.FillRect(32, 180, 416, 140, 0)
+	if miss := g.res.TurnWindow.DrawBattleReport(fb, g.res.Font, g.res.FrameTiles, reps[0].text, face); len(miss) != 0 {
+		t.Fatalf("字庫缺字 %04X", miss)
+	}
+	bad := 0
+	for y := 0; y < 480; y++ {
+		for x := 0; x < 640; x++ {
+			if x >= 240 && x < 256 && y >= 240 && y < 260 {
+				continue // 收據的游標
+			}
+			if fb.Pix[y*640+x] != want[y*640+x] {
+				bad++
+			}
+		}
+	}
+	if bad != 0 {
+		if os.Getenv("LOGH3_DUMP_REMAKE") != "" {
+			_ = os.WriteFile(filepath.Join(root, "workplace", "remake-eng-morale-low.bin"), fb.Pix, 0o644)
+		}
+		t.Fatalf("eng-morale-low：視窗內與原版不同的像素 %d", bad)
 	}
 }

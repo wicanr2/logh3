@@ -56,3 +56,8 @@ rec eng-skip-mid 1150000000 eng-t5 - -poke lin:5DA66@1139500000=00 -clicks 11400
 # 4. 演出中按左鍵／右鍵會不會提早結束（#1146M 按、#1152M 看）。
 rec eng-click 1152000000 eng-text - -clicks 1146000000:300:200 -click-hold $HOLD -watch-screen 1000000 -screen-delta 3000 $ENG
 rec eng-rclick 1152000000 eng-text - -rclicks 1146000000:300:200 -click-hold $HOLD -watch-screen 1000000 -screen-delta 3000 $ENG
+# 5. 戰鬥中的士氣報告（`3826:0405` 臨時視窗，#72、規格 059、`docs/re/336` §八）：戰場結算最後一步 `181B:03F0` →
+#    `185C:001D` 對沒被消滅的艦隊叫 `1261:0104`。前五回合沒有自然翻轉，照規格 014 在 #1170M 把第１３艦隊
+#    （槽 12，lin 6115C）`+0x00` 寫成 05（bit0 士氣低落＋bit2 翻轉）、`+0x3C`（lin 61198）寫成 40。
+#    #1187.96M 開窗、#1188.57M 起等 90 tick、#1206.55M 關；錄在中間。
+rec eng-morale-low 1197000000 eng-t5 - -poke "lin:6115C@1170000000=05;lin:61198@1170000000=28" -clicks 1140000000:240:200 -click-hold $HOLD $ENG

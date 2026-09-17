@@ -32,6 +32,7 @@ DIS="-peek lin:60BA4:122,lin:5F2CC:4032,lin:602AC:28,lin:6062C:28,lin:5DA79:2,li
 OCC="-peek lin:60BA4:122,lin:5F2CC:4032,lin:53132:6642"   # 占領與打行星：艦隊 0、星域 32 筆、行星 81 筆（第 19、22 段）
 TURN="-peek lin:60BA4:122,lin:5DA82:8,lin:5DA4C:12"   # 回合過場：艦隊 0、ds:8F52 兩陣營軍事費、ds:8F1C–8F27 座位旗標（第 23 段）
 EXEC="-clicks 546000000:544:85,549000000:560:85 -click-hold 3000000"   # 系統指令、實行（第 23 段）
+S3EXEC="-clicks 301000000:544:85,304000000:560:85 -click-hold 3000000"   # S3 帝國第一回合的系統指令、實行（第 25 段）
 
 # rec <批次> <步數上限> <上一個檢查點|-> <ck|-> <旗標...>
 # 每一批都倒：畫面、調色盤、字元平面、艦隊表第 0 筆。`ck` ＝ 在上限的前一道
@@ -434,3 +435,20 @@ recmem fcmd-turn-ai-capture 835000040 923000000 923400000 fcmd-occ-phz-t2 - -cli
 recmem fcmd-turn-morale-low 835000040 961000000 961800000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
 rec fcmd-turn-recover       442100000 fcmd-base - -clicks 421000000:544:85,424000000:560:85 -click-hold $HOLD -poke "lin:60BA4@420000050=01;lin:60BE0@420000050=28;lin:668B8@420000050=28;lin:668BA@420000050=64 00" $TURN
 recmem fcmd-turn-no-ships 1025000040 1068000000 1068200000 fcmd-occ-t4 - -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD -poke "lin:668BA@1025000050=00 00" $OCC
+
+# 25. 同一回合多支人類艦隊的過場（#72、規格 059）：S3「巴米利恩會戰」帝國第一回合（冷啟動序列同
+#     `tools/enemytab_receipts.sh` 的 `enm-map`），開局第９艦隊（槽 8，23→25 移動）、第１３艦隊（槽 12，
+#     28→26 占領）、第１５艦隊（槽 14，23→25 移動）已經有命令，按實行就連續三張出發前往，不必改記憶體。
+#     時間軸（`docs/re/336` §三）：思考中 #305.90M–#307.44M；過場 `113A:0B46` #307.86M／#333.26M／#358.66M，
+#     每張第一段 22 tick、第二段 90 tick；每張錄在停頓中間。
+rec fcmd-s3-base 300000000 - ck \
+  -tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 \
+  -clicks 40000000:300:230,95000000:300:230,190000000:300:282,240000000:318:168 \
+  -click-hold $HOLD
+rec fcmd-s3-think 306800000 fcmd-s3-base - $S3EXEC $TURN
+rec fcmd-s3-w1a   311500000 fcmd-s3-base - $S3EXEC $TURN
+rec fcmd-s3-w1b   323000000 fcmd-s3-base - $S3EXEC $TURN
+rec fcmd-s3-w2a   337000000 fcmd-s3-base - $S3EXEC $TURN
+rec fcmd-s3-w2b   348000000 fcmd-s3-base - $S3EXEC $TURN
+rec fcmd-s3-w3a   362500000 fcmd-s3-base - $S3EXEC $TURN
+rec fcmd-s3-w3b   374000000 fcmd-s3-base - $S3EXEC $TURN

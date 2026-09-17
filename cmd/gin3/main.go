@@ -342,6 +342,15 @@ func feed(g *game.Game, script string) error {
 			g.Key('\r')
 		case "back":
 			g.Key(8)
+		case "tick":
+			// tick N：推進 N 個原版計時器 tick（回合裡的「思考中」與過場要等計時才換畫面）。
+			n, err := strconv.Atoi(f[1])
+			if err != nil || len(f) != 2 {
+				return fmt.Errorf("tick 要一個整數：%q", cmd)
+			}
+			for i := 0; i < n; i++ {
+				g.Tick(g.TimerTick())
+			}
 		default:
 			return fmt.Errorf("看不懂的指令：%q", cmd)
 		}

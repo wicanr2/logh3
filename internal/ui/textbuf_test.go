@@ -60,7 +60,8 @@ func TestTextBufferEscapes(t *testing.T) {
 	}
 }
 
-// 捲動：`AttrScroll` 沒設就停在最後一列，設了就把內容往上搬一列。
+// 捲動：`AttrScroll` 沒設就列回 0、整窗清空（`3617:049C` → `35AA:0068`，`docs/re/336` §七），
+// 設了就把內容往上搬一列。
 func TestTextBufferScroll(t *testing.T) {
 	mk := func(attr uint8) *TextBuffer {
 		b := NewTextBuffer(1, 2, 0x97)
@@ -68,8 +69,8 @@ func TestTextBufferScroll(t *testing.T) {
 		b.Write([]byte{0xB3, 0x6F, 0x0A, 0xAC, 0x4F, 0x0A, 0xB5, 0x4C})
 		return b
 	}
-	if b := mk(0); b.At(0, 0).Code != 0xB36F || b.At(0, 1).Code != 0xB54C {
-		t.Errorf("不捲動時是 %04X／%04X，該是 B36F／B54C",
+	if b := mk(0); b.At(0, 0).Code != 0xB54C || b.At(0, 1).Code != 0x2020 {
+		t.Errorf("不捲動時是 %04X／%04X，該是 B54C／2020",
 			b.At(0, 0).Code, b.At(0, 1).Code)
 	}
 	if b := mk(AttrScroll); b.At(0, 0).Code != 0xAC4F || b.At(0, 1).Code != 0xB54C {

@@ -187,7 +187,7 @@
 | `fcmd-assault-ast` | （第 22 段，從 `fcmd-occ-t4`，輸入同 `fcmd-occ-t5`）進 `20B4:1497` #1102006030、回到 `1507` #1102557471 各倒 1 MB；巴溫 4200→3768、`+3C` 67；mem-in `7982f0667c4395ee…`、mem-out `4df59b3e17dd45fb…` | `8f5855bc3f73975d2f0bf63c5bda9722b715aeb4d551482415ab1b718ce53e92` | 不比畫面（＝ t5／phz-t3）；記憶體逐欄 0（`TestStrategicAssaultMatchesOracle`） |
 | `fcmd-assault-phz` | （從 `fcmd-occ-phz-t2`，輸入同 `phz-t3`）#912160349／#912742120；費沙 8800→8792、`+3C` 47、`+00` 05；mem-in `7cbffccff1c8bedf…`、mem-out `34cac788670c116a…` | `006288b49ad1e138d1556932f4a9ad984aac320cf7905c2e688b65ea7c8b38c9` | 不比畫面（＝ t5／phz-t3）；記憶體逐欄 0（`TestStrategicAssaultMatchesOracle`） |
 | `fcmd-assault-ai24` | （從 `fcmd-occ-phz-t2`，輸入同 `phz-t3`）第二次進 `20B4:1497`（馬爾・亞迪特，同盟兩支攻方）#912920224／回到 `1507` #932345563；威爾勃恩 → 同盟、防衛 745、艦隊 28／31 士氣 89／86；mem-in `90db9282a46624c1…`、mem-out `adbbeeaf90fedb29…` | `005831a22231fd37c34cae8949a8cc307b518e782b65245dda3c08523263ba6d` | 不比畫面；記憶體逐欄 0，含艦隊與分隊位置（`TestStrategicAssaultMatchesOracle`） |
-| `fcmd-turn-think` | （第 23 段，從 `fcmd-done`）系統指令、實行 → #552.6M 同盟「戰略模式思考中」（AI） | `073a234bf27a69dd63b0478f593c0ae8be4cd58081790ca699261a6925502cf8` | 不比（remake 不停在這裡，規格 059） |
+| `fcmd-turn-think` | （第 23 段，從 `fcmd-done`）系統指令、實行 → #552.6M 同盟「戰略模式思考中」（AI） | `073a234bf27a69dd63b0478f593c0ae8be4cd58081790ca699261a6925502cf8` | 0（`StateTurnThinking` 停 18 tick，規格 059、`docs/re/336` §五） |
 | `fcmd-turn-busy` | #555.3M「戰略模式處理中」、清單清空 | `44c30d0f0135001a648a66006776f19e0f5a8e743d5485fb2e3bacef84ce02af` | 不比（同上） |
 | `fcmd-turn-depart` | #558.8M「瓦爾哈拉 出發前往 亞爾提那」、瓦爾哈拉色 5 | `0820a84e7b165e8b7cbe4fb76e2cb806329274130ed42a0752caffaf9df61097` | 0 |
 | `fcmd-turn-arrive` | #570M「已經到達目標星系。」、亞爾提那色 5 | `20a1209a52572cadee645c4e3601024e9eb5d4bfc1074fa20eecba3bbae45528` | 0 |
@@ -206,6 +206,14 @@
 | `fcmd-turn-morale-low` | （從 `fcmd-occ-phz-t2`）實行 → #961.8M「士氣值低落的關係，已經無法戰鬥。艦隊士氣值 47」（＝ `fcmd-occ-phz-t3`） | `006288b49ad1e138d1556932f4a9ad984aac320cf7905c2e688b65ea7c8b38c9` | 0（整張，正常路徑；`docs/re/335` §九） |
 | `fcmd-turn-recover` | （從 `fcmd-base`）poke 第１艦隊士氣 40、第 0 組 100 艘 → 實行 → #442.1M「士氣值已經恢復，可以進行戰鬥。艦隊士氣值 100」 | `1b4284bba4716ce5954b68f3d5940d6538a9b49b52e06ba001f6299018665aa0` | 不比（remake 沒有自家星域補充） |
 | `fcmd-turn-no-ships` | （從 `fcmd-occ-t4`）`-poke "lin:668BA@1025000050=00 00"`（第 0 組 0 艘）→ #1068.2M「帝國軍第１艦隊／萊因哈特／已全軍覆沒。」 | `c4ac3766adab015fff70d6ac2ef43effcad8747b4057d01cefd7d286499d8c38` | 0（整張，正常路徑；`docs/re/335` §九） |
+| `fcmd-s3-base` | （第 25 段，冷啟動同 `enm-map`）S3 帝國第一回合戰略地圖 #300M | `69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc` | 不比（載具） |
+| `fcmd-s3-think` | 系統指令、實行 → #306.8M 同盟「戰略模式思考中」 | `e565739575221e6b92cde8683dea3e6088eaefbfc2c7974d4931bcb0a6427af5` | 0 |
+| `fcmd-s3-w1a` | #311.5M 第９艦隊「波列多 出發前往 干達巴爾」第一段 | `7a222ad65c087d76e11ec290cebe133b81a4223cf166a2212cfd31fc71883282` | 0 |
+| `fcmd-s3-w1b` | #323M 第一張第二段「已經到達目標星系。」 | `ade744da3e37a980fab8a9e514897400c074f359266ba925d2dc1b72af835f4e` | 0 |
+| `fcmd-s3-w2a` | #337M 第１３艦隊（半形兩位數編號）第一段 | `954127ef2c4358aecf9902af197b04b4bc0bae289dd13e725d4140e9ed3395a1` | 0 |
+| `fcmd-s3-w2b` | #348M 第二張第二段 | `7e0a808c06f7abfa9e1a481ed7bd6a6290e1495b0987533ff4955816075f9eb9` | 0 |
+| `fcmd-s3-w3a` | #362.5M 第１５艦隊第一段 | `0d37108fc562b37f773e00a75e8160cec56e24857609605b461beddad0d83f25` | 0 |
+| `fcmd-s3-w3b` | #374M 第三張第二段 | `e98191198c7972b492d50ab0fa61d57c19739a78be8fd98b0e6b7d07524ce170` | 0 |
 | `fcmd-lst-star` | （從 `fcmd-base`）一覽表 (448,85) → 星系資料 (460,85)；游標停在列 2 卡斯特羅普：地圖反白 3、左下角卡斯特羅普；瓦爾哈拉那一列「1﹕0」 | `257b2e6ffdd365d35055888838cb14ebbccb4f461eca6421ab53f139b7fee265` | 0 |
 | `fcmd-lst-star-row` | 列 0 瓦爾哈拉 (460,50) → 換選、關清單、星系情報視窗 | `95789b6188c109f1d1f17a56c0f2067aea2d8851c462e9933b3c6784a69fd461` | 小圖最後一列 |
 | `fcmd-lst-star-row-close` | 結束 (270,350) → 地圖，左下角瓦爾哈拉 1﹕0 | `64dac6060a3cde6905455442302a458091bf5229383117994ba41e450ff80bd0` | 0 |

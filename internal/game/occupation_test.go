@@ -32,6 +32,7 @@ func executeTurn(t *testing.T, g *Game) {
 	t.Helper()
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 	finishTurn(t, g)
 }
 

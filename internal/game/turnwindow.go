@@ -35,7 +35,8 @@ type turnWindowState struct {
 // turnProcessing 回現在是不是「實行」之後、回合處理中停下來的畫面（過場視窗或問話）：
 // 右側標題只剩「戰略模式處理中」、清單清空、地圖不看座位（規格 059）。
 func (g *Game) turnProcessing() bool {
-	return g.state == StateTurnWindow || g.state == StateOccupyAsk || g.state == StateTurnReport
+	return g.state == StateTurnWindow || g.state == StateOccupyAsk || g.state == StateTurnReport ||
+		g.state == StateTurnThinking
 }
 
 // humanSeat 回這個陣營的艦隊走的時候要不要印（`113A:060F`：`3982:022D(陣營) == 0`，

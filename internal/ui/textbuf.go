@@ -156,7 +156,9 @@ func (b *TextBuffer) control(c byte) {
 }
 
 // newline 換行（`3617:03BE`）。寫到最後一列還要換行時，`AttrScroll`
-// 決定是把內容往上捲一列還是停在原地。
+// 決定是把內容往上捲一列，還是**列回 0、整窗清空**（`3617:049C` → `35AA:0068`，
+// 與 `\x0c` 同一支清空；半形暫存 `[+1B]` 不動）。標題窗印超過兩列之後只剩
+// 「戰略模式處理中」在列 0 就是這個（`docs/re/336` §七）。
 func (b *TextBuffer) newline() {
 	b.Col = 0
 	b.Row++
@@ -164,7 +166,10 @@ func (b *TextBuffer) newline() {
 		return
 	}
 	if b.Attr&AttrScroll == 0 {
-		b.Row = b.Rows - 1
+		for i := range b.Cells {
+			b.Cells[i] = ContentCell{Code: 0x2020, Colour: b.Colour}
+		}
+		b.Row = 0
 		return
 	}
 	copy(b.Cells, b.Cells[b.Cols:])

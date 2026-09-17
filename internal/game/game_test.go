@@ -409,6 +409,7 @@ func TestExecuteAdvancesThreeDays(t *testing.T) {
 	} {
 		g.Click(544, 125)
 		g.Click(560, 125)
+		thinkThrough(g)
 		if g.State() != StateCommandPhase {
 			t.Fatalf("第 %d 次實行之後在 %v", i+1, g.State())
 		}
@@ -421,6 +422,7 @@ func TestExecuteAdvancesThreeDays(t *testing.T) {
 	for i := 0; i < 7; i++ {
 		g.Click(544, 125)
 		g.Click(560, 125)
+		thinkThrough(g)
 	}
 	if _, m, d := g.Date(); m != 2 || d != 1 {
 		t.Fatalf("第十次實行之後是 %d月%d日，預期 2月1日", m, d)
@@ -441,6 +443,7 @@ func TestExecuteTurnMatchesOracle(t *testing.T) {
 			g := reachCommandPhase(t)
 			g.Click(544, 125)
 			g.Click(560, 125)
+			thinkThrough(g)
 			if g.State() != StateCommandPhase {
 				t.Fatalf("實行之後在 %v", g.State())
 			}
@@ -459,6 +462,7 @@ func TestShipDeliveryMatchesOracle(t *testing.T) {
 	for i := 0; i < rules.TurnsPerMonth; i++ {
 		g.Click(544, 125) // 系統指令
 		g.Click(560, 125) // 實行
+		thinkThrough(g)
 	}
 	if g.State() != StateShipDelivery {
 		t.Fatalf("跨月之後在 %v，不是船艦接收報告", g.State())
@@ -904,6 +908,7 @@ func TestMonthEndAdvancesMoneyAndDate(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		g.Click(544, 125) // 系統指令
 		g.Click(560, 125) // 實行
+		thinkThrough(g)
 	}
 	y, m, d := g.Date()
 	if y != 796 || m != 2 || d != 1 {
@@ -1323,6 +1328,7 @@ func TestVersusHandover(t *testing.T) {
 	}
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 	if g.State() != StateVersusInput || g.faction != 1 {
 		t.Fatalf("帝國按完實行在 %v／陣營 %d，預期同盟的交棒視窗",
 			g.State(), g.faction)
@@ -1338,6 +1344,7 @@ func TestVersusHandover(t *testing.T) {
 	g.RightClick(300, 240)
 	g.Click(544, 125)
 	g.Click(560, 125)
+	thinkThrough(g)
 	if g.State() != StateVersusInput || g.faction != 0 {
 		t.Fatalf("同盟按完實行在 %v／陣營 %d，預期換回帝國", g.State(), g.faction)
 	}

@@ -159,6 +159,12 @@ func (p *CapitalPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font, region *RegionP
 	region.DrawAt(fb, fnt, c.Region, faction, p.Summary.DX, p.Summary.DY)
 }
 
+// DrawFactionLine 只畫最上面那一行（回合處理中「戰略模式思考中」的列 0，規格 059）。
+func (p *CapitalPanel) DrawFactionLine(fb *gfx.Framebuffer, fnt *font.Font,
+	c rules.CapitalSummary, faction int) {
+	p.drawFactionLine(fb, fnt, c, faction)
+}
+
 // drawFactionLine 畫最上面那一行：陣營名（陣營色）＋ 宇宙曆年月日。
 func (p *CapitalPanel) drawFactionLine(fb *gfx.Framebuffer, fnt *font.Font,
 	c rules.CapitalSummary, faction int) {

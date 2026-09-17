@@ -1,6 +1,7 @@
 package screen
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -36,6 +37,27 @@ type TurnWindowSpec struct {
 		Rows  int    `json:"rows"`
 		Text  string `json:"text"`
 	} `json:"busy_title"`
+	// ThinkTitle 是「戰略模式思考中」：列 Row 的字與停留的 tick 數（規格 059）。
+	ThinkTitle struct {
+		CellX int    `json:"cell_x"`
+		CellY int    `json:"cell_y"`
+		Cols  int    `json:"cols"`
+		Rows  int    `json:"rows"`
+		Row   int    `json:"row"`
+		Text  string `json:"text"`
+		Ticks int    `json:"ticks"`
+	} `json:"think_title"`
+	// BattleReport 是戰鬥中的士氣報告視窗（`3826:0405`）：格座標、內容格數、頭像左上角。
+	BattleReport struct {
+		CellX int `json:"cell_x"`
+		CellY int `json:"cell_y"`
+		Cols  int `json:"cols"`
+		Rows  int `json:"rows"`
+		Face  struct {
+			X int `json:"x"`
+			Y int `json:"y"`
+		} `json:"face"`
+	} `json:"battle_report"`
 	Face struct {
 		X, Y, W, H int
 	} `json:"face"`
@@ -109,9 +131,8 @@ func (s *TurnWindowSpec) regionName(b *ui.TextBuffer, name []byte, owner int) {
 func (s *TurnWindowSpec) Buffer(v *TurnWindowView) *ui.TextBuffer {
 	b := ui.NewTextBuffer(s.Cols, s.Rows, uint8(s.Colour))
 	b.Printf(s.fmtBytes("fleet_prefix"), v.FactionName)
-	b.Attr |= ui.AttrWiden
-	b.Printf([]byte("%d"), v.Number)
-	b.Attr &^= ui.AttrWiden
+	// `3982:0038`：小於 10 全形、否則 `%2d` 兩個半形（`docs/re/143`；收據 `fcmd-s3-w2a` 第１３艦隊）。
+	b.Write(s.FleetNumber(v.Number))
 	b.Printf(s.fmtBytes("fleet_suffix"), v.AdmiralName, v.Rank)
 	switch v.Kind {
 	case TurnWindowBlocked:
@@ -166,10 +187,22 @@ func (s *TurnWindowSpec) DrawBusyTitle(fb *gfx.Framebuffer, fnt *font.Font, tile
 	ui.DrawTextBuffer(fb, fnt, tiles, b, t.CellX+1, t.CellY+1)
 }
 
+// DrawThinkTitle 是 `04F8:0355(1)` 的標題窗：整窗清空，列 Row 印「戰略模式思考中」。
+// 列 0 的陣營與日期由呼叫端照命令階段那一行畫。
+func (s *TurnWindowSpec) DrawThinkTitle(fb *gfx.Framebuffer, fnt *font.Font, tiles *ui.FrameTiles) {
+	if s == nil || fb == nil || s.ThinkTitle.Cols == 0 {
+		return
+	}
+	t := s.ThinkTitle
+	b := ui.NewTextBuffer(t.Cols, t.Rows, uint8(s.Colour))
+	b.Write(append(bytes.Repeat([]byte{'\n'}, t.Row), decodeHex(t.Text)...))
+	ui.DrawTextBuffer(fb, fnt, tiles, b, t.CellX+1, t.CellY+1)
+}
+
 // ReportFormat 回報告用的一條格式字串（`report_formats`）。
 func (s *TurnWindowSpec) ReportFormat(name string) []byte { return decodeHex(s.ReportFormats[name]) }
 
-// FleetNumber 是 `3982:0073`：編號小於 10 印全形（`\x06%d\x07`），否則兩個半形。
+// FleetNumber 是 `3982:0073`（過場視窗的 `3982:0038` 同一套）：編號小於 10 印全形（`\x06%d\x07`），否則兩個半形。
 func (s *TurnWindowSpec) FleetNumber(n int) []byte {
 	if n < 10 {
 		return ui.Sprintf(s.ReportFormat("number_small"), n)
@@ -188,20 +221,40 @@ func (s *TurnWindowSpec) PlainName(name []byte, owner int) []byte {
 // DrawReport 是 `3826:0307`：同一個矩形開窗、清空、印 text、畫頭像。
 func (s *TurnWindowSpec) DrawReport(fb *gfx.Framebuffer, fnt *font.Font, tiles *ui.FrameTiles,
 	text []byte, face *asset.Image) []uint16 {
-	if s == nil || fb == nil {
+	if s == nil {
+		return nil
+	}
+	return s.drawReportIn(fb, fnt, tiles, s.CellX, s.CellY, s.Cols, s.Rows, s.Face.X, s.Face.Y, text, face)
+}
+
+// DrawBattleReport 是 `3826:0405`：戰鬥中（`ds:8F16 != 0`）的士氣報告。每次在堆疊上開臨時視窗
+// `3603:0006(&local, 0x97, 2, 7, 24, 5, 1)`、清空、印、頭像 `3958:0215(提督, 0x2C, 0x28)`、等、關
+// （`docs/re/336` §七、§八）。文字與戰略階段那一則相同。
+func (s *TurnWindowSpec) DrawBattleReport(fb *gfx.Framebuffer, fnt *font.Font, tiles *ui.FrameTiles,
+	text []byte, face *asset.Image) []uint16 {
+	if s == nil || s.BattleReport.Cols == 0 {
+		return nil
+	}
+	r := s.BattleReport
+	return s.drawReportIn(fb, fnt, tiles, r.CellX, r.CellY, r.Cols, r.Rows, r.Face.X, r.Face.Y, text, face)
+}
+
+func (s *TurnWindowSpec) drawReportIn(fb *gfx.Framebuffer, fnt *font.Font, tiles *ui.FrameTiles,
+	cx, cy, cols, rows, faceX, faceY int, text []byte, face *asset.Image) []uint16 {
+	if fb == nil {
 		return nil
 	}
 	if tiles != nil {
 		(ui.TileFrame{Tiles: tiles, Style: s.Style, Fill: uint8(s.Colour >> 4)}).
-			Draw(fb, s.CellX, s.CellY, s.Cols+2, s.Rows+2)
+			Draw(fb, cx, cy, cols+2, rows+2)
 	}
-	b := ui.NewTextBuffer(s.Cols, s.Rows, uint8(s.Colour))
+	b := ui.NewTextBuffer(cols, rows, uint8(s.Colour))
 	b.Write(text)
-	missing := ui.DrawTextBuffer(fb, fnt, tiles, b, s.CellX+1, s.CellY+1)
+	missing := ui.DrawTextBuffer(fb, fnt, tiles, b, cx+1, cy+1)
 	if face != nil {
 		for y := 0; y < s.Face.H && y < face.H; y++ {
 			for x := 0; x < s.Face.W && x < face.W; x++ {
-				fb.Set(s.Face.X+x, s.Face.Y+y, face.Pix[y*face.W+x])
+				fb.Set(faceX+x, faceY+y, face.Pix[y*face.W+x])
 			}
 		}
 	}
