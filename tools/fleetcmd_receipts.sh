@@ -28,6 +28,7 @@ HOLD5=300000                    # ▲▼ 按住 0.3M 步 ＝ 五列（第 17 段
 HOLD1=100000                    # 一覽表的 ▲▼ 按住 0.1M 步 ＝ 一列（第 20 段）
 TABS="-peek lin:5DA4F:1,lin:5E0C2:2,lin:5E0E4:2,lin:5E108:2,lin:61B2C:1,lin:5E106:1"   # 分頁編號與四個分頁的筆數／位移（第 17 段）
 LST="-peek lin:5E0B8:1,lin:5E216:1,lin:5E21C:1,lin:5E1F2:2,lin:5DA5D:2,lin:56922:2,lin:5DA61:2,lin:5E1D0:2,lin:63CB2:2"   # 一覽表四張的分頁／位移／筆數（第 20 段）
+DIS="-peek lin:60BA4:122,lin:5F2CC:4032,lin:602AC:28,lin:6062C:28,lin:5DA79:2,lin:61AE4:4,lin:668B2:78,lin:66900:78"   # 駐留解散：艦隊 0、星域 32 筆、提督 0／32、ds:8F49、ds:CFB4（668B:0002）、艦艇 0／1（第 21 段）
 
 # rec <批次> <步數上限> <上一個檢查點|-> <ck|-> <旗標...>
 # 每一批都倒：畫面、調色盤、字元平面、艦隊表第 0 筆。`ck` ＝ 在上限的前一道
@@ -89,7 +90,7 @@ rec fcmd-close   470000000 fcmd-win - -clicks 447000000:490:350 -click-hold $HOL
 #    目的地迴圈，各走 目的地 → 亞爾提那 → 決定，看 +0x08 ＝ 2／3 與動詞。
 rec fcmd-garrison-pick    495000000 fcmd-menu ck -clicks 472000000:497:312 -click-hold $HOLD
 rec fcmd-garrison-confirm 520000000 fcmd-garrison-pick ck -clicks 497000000:85:88 -click-hold $HOLD
-rec fcmd-garrison-done    545000000 fcmd-garrison-confirm - -clicks 522000000:432:223 -click-hold $HOLD
+rec fcmd-garrison-done    545000000 fcmd-garrison-confirm ck -clicks 522000000:432:223 -click-hold $HOLD
 rec fcmd-transport-pick    495000000 fcmd-menu ck -clicks 472000000:497:332 -click-hold $HOLD
 rec fcmd-transport-confirm 520000000 fcmd-transport-pick ck -clicks 497000000:85:88 -click-hold $HOLD
 rec fcmd-transport-done    545000000 fcmd-transport-confirm - -clicks 522000000:432:223 -click-hold $HOLD
@@ -369,3 +370,14 @@ rec fcmd-lst-enemy-row     495000000 fcmd-lst-enemy ck $(mvc 471000000 460 50) -
 rec fcmd-lst-enemy-row-close 520000000 fcmd-lst-enemy-row - $(mvc 496000000 496 280) -click-hold $HOLD $LST
 rec fcmd-lst-enemy-hover   485000000 fcmd-lst-enemy - -mouse-x 460 -mouse-y 210 -mouse-at 471000000 $LST
 rec fcmd-lst-enemy-rclick  495000000 fcmd-lst-enemy - $(mvr 471000000 300 200) -click-hold $HOLD $LST
+
+# 21. 駐留命令走到目的地 → 整支解散（113A:06A6 → 297B:025D：提督與副官 +0x09 |= 80、艦隊 +0x04/+0x05 ← FF、
+#     各組艦艇還回所在星域的存量（艦種 7 不還）、星域 +0x28 −1、090A:0E6D、ds:8F49 −1；docs/re/329）。
+#     玩家介面沒有「解散」鈕，駐留就是解散；駐留點自己所在的星域 → 下一次實行就地解散。
+#     peek 見標頭的 DIS。
+rec fcmd-garrison-report  570000000 fcmd-garrison-done -  -clicks 546000000:544:85,549000000:560:85 -click-hold $HOLD $DIS
+rec fcmd-garrison-t1      665000000 fcmd-garrison-done -  -clicks 546000000:544:85,549000000:560:85 -click-hold $HOLD $DIS
+rec fcmd-garrison-self         520000000 fcmd-garrison-pick ck -clicks 497000000:32:32 -click-hold $HOLD
+rec fcmd-garrison-self-done    545000000 fcmd-garrison-self ck -clicks 522000000:432:223 -click-hold $HOLD $DIS
+rec fcmd-garrison-self-report  570000000 fcmd-garrison-self-done - -clicks 546000000:544:85,549000000:560:85 -click-hold $HOLD $DIS
+rec fcmd-garrison-self-t1      665000000 fcmd-garrison-self-done - -clicks 546000000:544:85,549000000:560:85 -click-hold $HOLD $DIS

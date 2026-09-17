@@ -34,6 +34,8 @@ cases=(
   # 占領 → 費沙 → 參謀提醒兩頁 → 「要占領中立軍費沙星系嗎？」（docs/re/315）。
   # fcmd-occ-t2 走完「占領 → 亞斯提 → 決定」再按兩次 系統指令 → 實行（第二回合在星域 7）
   "fcmd-occ-t2|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 332; click 193 245; click 432 263; click 544 125; click 560 125; click 544 125; click 560 125"
+  # 作戰 → 駐留 → 亞爾提那 → 決定 → 實行：走到目的地整支解散（docs/re/329）。
+  "fcmd-garrison-t1|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 352; click 85 128; click 432 263; click 544 125; click 560 125"
   "fcmd-occupy-phezzan3|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 332; click 163 136; click 300 240; click 300 240"
   # 一覽表 → 提督資料 → 點列 0 → 萊因哈特的詳細資料（第１艦隊／出擊中／經歷／結束）疊在清單上（docs/re/323）。
   "fcmd-lst-adm-row|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 448 125; click 460 165; click 460 90"

@@ -7289,3 +7289,16 @@ GitHub 的 issue 時間軸承擔。
   PPAB 第 5 格之後；按鍵沒有可見效果（remake 靠按鍵換幀列為規格 056 已知差異）。`docs/playtest/022` 的 pal 雜湊
   更正（進演出之後的九份是 `765462f4…`）。
 - 還沒接進 `StateEngagement`（名字組法、逐格計時），#48 留著、卡在改寫。
+
+## 2026-09-17 — 駐留走到目的地就是解散（#46 解散那一半）；原版沒有「解散」鈕
+
+- subagent 反組譯 `297B:025D`／`034A` 與呼叫者、58 份傾印掃「艦隊解散」選單表 `ds:0D4E` 的引用（0 筆，有正對照）：
+  **玩家介面沒有解散指令**，駐留命令走到目的地（`113A:06A6`）就是解散；`297B:0332`／`03D2` 是兩支解散常式裡
+  `call far 090A:0E6D` 的位址（主 session 核對位元組），`docs/re/310`／`299` 加指標。
+- 收據第 21 段七批（`fcmd-garrison-done` 改 ck、`-report`／`-t1`、`-self*`），雜湊與探索批次相同。
+- remake：`rules.Disband`、`Game.disbandFleet`（拿掉那一筆、重數星域艦隊數、重算未安定度）、`moveFleetsFrom` 拿掉一支後
+  不跳下一支。兩批 `-t1` 逼出來的：走一格要寫提督與副官 `+0x0A`（remake 先前沒寫）；駐留點自己所在的星域照樣到達解散、
+  **不扣移動費也不流進行星**（原版軍事費 45570／經濟力 82313，照扣各差 26；成因沒讀）。
+- `TestGarrisonArrivalDisbandsMatchesOracle` 兩條路整張逐位元組；GUI `fcmd-garrison-t1`；`internal/...` 全過。
+- 文件：`docs/re/329`（新）、規格 054、internals 33、playtest 021、CONTEXT。#46 判準改寫（解散拿掉、留戰略打行星）。
+- 戰略打行星的反組譯 subagent 也回來了（逐擊對帳，筆記在 `workplace/re-notes/strategic-assault.md`），下一步整理成 `docs/re/330` 並實作。

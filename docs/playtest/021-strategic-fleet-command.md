@@ -178,6 +178,12 @@
 | `fcmd-occ-phz-t3` | 再實行 → 14 費沙：停駐、bit4、8800→8792、`+3C` 47、停在士氣報告 | `006288b49ad1e138d1556932f4a9ad984aac320cf7905c2e688b65ea7c8b38c9` | 不比 |
 | `fcmd-occ-phz-t3b` | 左鍵 (300,200) 關報告 | `4a7b2f0b91b3e1a0caba34bb5742e73cc5807f15c326922061bde3e821230884` | 不比 |
 | `fcmd-occ-phz-t4` | 再實行：8792 不動 | `4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74` | 不比 |
+| `fcmd-garrison-report` | （第 21 段，從 `fcmd-garrison-done`）系統指令、實行 → #570M「已經駐留在星系上。」 | `6b7cd40f6c17b5626e1348ec0815247155164b3af87bcc6e96f83b3e0c475fc3` | 不比（過場不畫） |
+| `fcmd-garrison-t1` | #665M：第１艦隊解散、亞爾提那戰艦存量 3000→6000、提督 +09 80 | `0a564540f6ae5cea48d5cf5a032764b12f7c6661f8c14cf16c4a67bd4d2039e6` | 0 |
+| `fcmd-garrison-self` | （從 `fcmd-garrison-pick`）點瓦爾哈拉 (32,32)：「要待命於…」 | `f74d52c79d50acb1c523a5e1bef0a270c673226606e7db9060a51a1e1517cf3f` | 不比 |
+| `fcmd-garrison-self-done` | 決定：記錄仍是駐留（+0x08=2） | `f4392aa99cf3ac7764a5d4ef5e03d868b862ebd72838a96d9016ede90b72e5ee` | 不比 |
+| `fcmd-garrison-self-report` | 實行 → #570M 報告 | `977b9c3356a4188acf8989c9c972ce5c9f5e6b93e8d08b1fe93fa3000f7302ce` | 不比（過場不畫） |
+| `fcmd-garrison-self-t1` | #665M：就地解散、瓦爾哈拉存量 75000→78000、不扣移動費 | `86532c2ba52f5fd3baf736f359174ecd1282b945ed4accce27ac193c59025b39` | 0 |
 | `fcmd-lst-star` | （從 `fcmd-base`）一覽表 (448,85) → 星系資料 (460,85)；游標停在列 2 卡斯特羅普：地圖反白 3、左下角卡斯特羅普；瓦爾哈拉那一列「1﹕0」 | `257b2e6ffdd365d35055888838cb14ebbccb4f461eca6421ab53f139b7fee265` | 0 |
 | `fcmd-lst-star-row` | 列 0 瓦爾哈拉 (460,50) → 換選、關清單、星系情報視窗 | `95789b6188c109f1d1f17a56c0f2067aea2d8851c462e9933b3c6784a69fd461` | 小圖最後一列 |
 | `fcmd-lst-star-row-close` | 結束 (270,350) → 地圖，左下角瓦爾哈拉 1﹕0 | `64dac6060a3cde6905455442302a458091bf5229383117994ba41e450ff80bd0` | 0 |

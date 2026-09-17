@@ -1045,7 +1045,12 @@ func (g *Game) continueAfterAdmiralFateReports() {
 // `afterFleetMoves`。
 func (g *Game) moveFleetsFrom(i int) {
 	for ; i < len(g.fleets); i++ {
-		if g.stepFleet(i) {
+		n := len(g.fleets)
+		ask := g.stepFleet(i)
+		if len(g.fleets) < n {
+			i-- // 這一支解散了，下一支補進同一個索引
+		}
+		if ask {
 			g.occupyAsk.fleet = i
 			g.occupyAsk.resume = g.state
 			g.state = StateOccupyAsk
@@ -1112,16 +1117,38 @@ func (g *Game) moveFleetTo(i, next, cost int) {
 	g.military[f.Faction] -= cost
 	g.paidMove[f.Faction] += cost // ds:8F8A，月底歸零
 	f.Region = next
+	// 提督與副官的所在星域 `+0x0A` 跟著走（`113A:047D` 線性 `0x05E6`，`docs/re/77`）。
+	g.mutableAdmirals()
+	for _, a := range []int{f.Admiral, f.Adjutant} {
+		if r := g.admiralRecord(a); len(r) > 0x0A {
+			r[0x0A] = byte(next)
+		}
+	}
 	payTo := next
 	if rec := g.regionRecord(from); rec != nil && int(rec[regionOwnerOff]) == f.Faction {
 		payTo = from
 	}
 	g.res.Planets.PayIntoRegion(payTo, cost)
 	if rules.Arrive(f) {
-		// 駐留到了目的地原版整支解散（`297B:025D`）；remake 還沒有解散那一支
-		// （worklist `fleet-disband`），先停駐。
-		f.Target, f.Move, f.Parked = rules.NoTarget, rules.MoveParked, true
+		// 駐留到了目的地：整支解散（`113A:06A6` → `297B:025D`，`docs/re/329`）。
+		g.disbandFleet(i)
 	}
+}
+
+// disbandFleet 拿掉第 i 支（`297B:025D`）：提督與副官卸下、艦艇還回所在星域，
+// 艦隊表少一筆、星域艦隊數重數，最後 `090A:0E6D` 重算。
+func (g *Game) disbandFleet(i int) {
+	if i < 0 || i >= len(g.fleets) {
+		return
+	}
+	f := g.fleets[i]
+	g.mutableAdmirals()
+	rules.Disband(f, g.regionRecord(f.Region), g.admiralRecord)
+	g.fleets = append(g.fleets[:i], g.fleets[i+1:]...)
+	if len(g.res.Stellar) > 0 {
+		rules.RecountRegionFleets(g.res.Stellar, g.fleets)
+	}
+	g.recomputeUnrest(g.turn)
 }
 
 // occupyAsk 是回合裡「<目的地>無法直接到達此星系。<下一格>要占領此星系嗎？」

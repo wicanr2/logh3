@@ -48,14 +48,21 @@ type StepPlan struct {
 // （0／1／2），funds 是這一支陣營手上的軍事費，cost 是這一支的移動經費。
 func (g *StarGraph) PlanStep(f *Fleet, owner func(int) int, funds, cost int) StepPlan {
 	none := StepPlan{Outcome: StepNone, Next: -1}
-	if g == nil || f == nil || !f.Moving() {
+	// `Moving` 把「目的地就是所在星域」當成不動；駐留點自己那一格例外（下面）。
+	if g == nil || f == nil || !(f.Moving() || (!f.Parked && f.Move == MoveGarrison && f.Target == f.Region)) {
 		return none
 	}
-	route := g.Route(f.Region, f.Target, f.Faction)
-	if len(route) < 2 {
+	next := -1
+	if route := g.Route(f.Region, f.Target, f.Faction); len(route) >= 2 {
+		next = route[1]
+	} else if f.Move == MoveGarrison && f.Target == f.Region {
+		// 駐留點自己所在的星域：原版的下一格就是現在這一格，照樣「走」一步、
+		// 到達就解散（收據 `fcmd-garrison-self-t1`；報告「瓦爾哈拉 出發前往
+		// 瓦爾哈拉」）。移動／占領點自己在 `113A:0350` 就先停駐了，到不了這裡。
+		next = f.Region
+	} else {
 		return none
 	}
-	next := route[1]
 	curOwn := owner(f.Region) == f.Faction
 	nextOwn := owner(next) == f.Faction
 	if !curOwn && !nextOwn {
@@ -70,7 +77,12 @@ func (g *StarGraph) PlanStep(f *Fleet, owner func(int) int, funds, cost int) Ste
 		}
 	}
 	if next == f.Region {
-		return none
+		if f.Move != MoveGarrison {
+			return none
+		}
+		// 就地駐留不扣移動經費、錢也不流進行星（收據 `fcmd-garrison-self-t1`：
+		// 軍事費 45570、瓦爾哈拉經濟力 82313，照扣的話各差 26）。
+		return StepPlan{Outcome: StepMoved, Next: next}
 	}
 	if funds < cost {
 		return StepPlan{Outcome: StepNoFunds, Next: next}
@@ -116,4 +128,27 @@ func (p *Planets) StandbyPlanet(faction, region int) int {
 		}
 	}
 	return best
+}
+
+// Disband ＝ 原版 `297B:025D(艦隊編號)`：**整支解散，艦艇還回所在星域**
+// （`docs/re/329`）。呼叫者是駐留命令走到目的地（`113A:06A6`）與出擊時艦隊組成
+// 按「中止」（`07F9:01EE`）；原版玩家介面沒有另外的「解散」鈕。
+//
+//   - 提督與副官 `+0x09 |= 0x80`（`28E0:054A`，沒帶艦隊）；`+0x0A` 不動。
+//   - 每一組艦艇的艘數加回 `record`（所在星域）的存量（`2AD2:018C` → `2703:155B`），
+//     艦種 7 不還。
+//
+// 艦隊記錄本身（`+0x04`／`+0x05 ← FF`）、星域 `+0x28` 減一、`ds:8F49` 減一與
+// `090A:0E6D` 的重算由呼叫端做（remake 的艦隊表是切片，拿掉那一筆再重數）。
+func Disband(f Fleet, record []byte, admiral func(int) []byte) {
+	for _, a := range []int{f.Admiral, f.Adjutant} {
+		if r := admiral(a); len(r) > admiralStaffFlag {
+			r[admiralStaffFlag] |= 0x80
+		}
+	}
+	for _, gp := range f.Composition {
+		if gp.Kind != ShipKindStandalone {
+			ReturnRegionShips(record, f.Faction, gp.Kind, gp.Ships)
+		}
+	}
 }

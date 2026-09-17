@@ -291,9 +291,8 @@
   **戰略地圖逐格照記錄著色**（有自軍艦隊的星域用另一張色表，`docs/re/313`）。
 - **玩家還碰不到的功能**（2026-09-15 讀 `internal/game/game.go` 的 `click`
   盤點，不是憑印象）：
-  - 整套不存在：占據格的戰略打行星（`20B4:1497`）、駐留到達的解散、
-    回合裡的過場視窗、參謀任命（`090A:0248`）、
-    艦隊解散（`297B:0332`）、**交戰演出的圖與動畫**（`COMANI.BMG` 編碼未解；
+  - 整套不存在：占據格的戰略打行星（`20B4:1497`）、
+    回合裡的過場視窗、參謀任命（`090A:0248`）、**交戰演出的圖與動畫**（`COMANI.BMG` 編碼未解；
     面板、三個視窗與戰鬥曲的出口已接）。
   - 戰略地圖本身：右下角「敵艦隊」分頁的列只在載存檔或打過仗之後才有東西
     （新編的艦隊沒有艦艇池，索敵等級永遠 0——與原版一樣）。
@@ -501,8 +500,11 @@
 `StateEngagement`（打行星那一種：開場幀 → 結果幀 → 回戰場）、`audio.TuneFor(StateEngagement)`
 ＝ 戰鬥曲。`eng-open`／`eng-end` 扣掉四塊排除區逐位元組相同（直接進入的診斷比對）。
 
-**卡在**：- `COMANI.BMG` 的編碼（`docs/internals/20`）：這一場讀 `PPD0`（行星圖）、`FÀD0`（同盟艦圖）、
-  `PPAB`（打的動畫）——現在有原版畫出來的樣子（`eng-text`）可以當明文對，還沒解。
+**卡在**：- `COMANI.BMG` 的編碼**已解**（`docs/re/328`、`internal/asset.BMG`、`TestBMGEngagementMatchesOracle`
+  逐格對上 `eng-text`／`-mid`／`-mid2`／`-end`；素材匯出在 `assets/original/comani/`），
+  **還沒接進 `StateEngagement`**：要把名字組法（`3958:0041`）與逐格計時（`348A:0281`，
+  `ds:8F10[ds:8F37]`）接上。另外 `docs/re/324` 的「按鍵跳到結果」被推翻（按鍵沒有可見效果），
+  remake 目前靠按鍵換幀要一起改。
 - 兩條量表、戰場透視格線與方塊動畫（`3931`／`3B74` 段）、演出的計時（約 29M 步）沒讀。
 - 艦隊對艦隊（先問「第Ｎ艦隊的戰鬥命令」自動／防禦）與要塞砲那兩種演出沒接。
 - remake 的戰場模擬走不到與原版同一個第五回合（戰術 AI 與亂數各走各的），正常路徑的
@@ -512,7 +514,7 @@
 收據；remake 在同一時點播同一段、換同一首，`Settings.BattleTune` 有出口；
 `TestEveryTuneIsReachable` 覆蓋到 `BGM_6`／`BGM_7`。
 
-**證據**：[`docs/re/324-engagement-scene.md`](docs/re/324-engagement-scene.md)、[`docs/spec/056-engagement-scene.md`](docs/spec/056-engagement-scene.md)、[`docs/playtest/022-engagement-scene.md`](docs/playtest/022-engagement-scene.md)、[`docs/internals/20-comani-bmg.md`](docs/internals/20-comani-bmg.md)
+**證據**：[`docs/re/324-engagement-scene.md`](docs/re/324-engagement-scene.md)、[`docs/spec/056-engagement-scene.md`](docs/spec/056-engagement-scene.md)、[`docs/playtest/022-engagement-scene.md`](docs/playtest/022-engagement-scene.md)、[`docs/internals/20-comani-bmg.md`](docs/internals/20-comani-bmg.md)、[`docs/re/328-comani-bmg-codec.md`](docs/re/328-comani-bmg-codec.md)
 
 **核實**：`internal/game/engagement.go` 裡還找得到 `方塊動畫沒畫`（自承還在 ＝ 還沒做）
 
@@ -535,8 +537,10 @@
   `0E7E` 反擊）→ 拿下再三次回復，最多九回合）吃艦艇記錄，而**新遊戲的艦隊沒有艦艇池**
   （`Slot` 是 nil）——這也是新遊戲走進戰鬥會撞到的同一個洞，要先補艦艇池；亂數
   （`ds:94DC`）要與原版同序，同狀態對拍才有意義。
-- 駐留到達的解散（`297B:025D`）與艦隊解散（`297B:0332`）一起做（2026-09-17 使用者裁決併進這一條）；
-  `297B:0332` 還沒讀（`docs/re/310` 只標了用途），玩家從哪張畫面下解散也還沒找。
+- 戰略打行星的算式整條讀完、兩份收據逐擊對帳（subagent，本機筆記 `workplace/re-notes/strategic-assault.md`，
+  待整理成 `docs/re/330`）：`0D96` 戰略版不減守軍、距離 0；士氣 `+0x3C` 由 `1261:03C2` 依損失重算；
+  功績 `203A:0743` 是提督 `+0x02`。remake 要補：九回合迴圈、戰略打掉量、單步回復、功績、每次扣艘數後
+  重算士氣，並修 `spreadOverFleet` 尾段（死碼）與 `ApplyShipLoss` 艦種 5。
 - 回合裡的過場視窗（「戰略模式處理中／思考中」、每支艦隊的「出發前往／已經到達／已經
   駐留」與地圖反白、三張錯誤報告）remake 同步跑完不畫；士氣報告家族（「士氣值低落的
   關係，已經無法戰鬥」等，`ds:32B4`）的門檻與誰印沒讀。
@@ -544,11 +548,11 @@
   可達表 k ≤ 1 的格子，要路上那一格中途易主才會問）。
 
 **做完的判準**：占據那一格的戰略打行星（`20B4:1497`）接進 remake 且有同狀態收據（亞斯提 4200→3768、
-費沙 8800→8792、艦隊 `+0x3C`）；駐留到達整支解散；**玩家下的艦隊解散**（`297B:0332`：
-歸還艦艇、釋放提督與副官、減星域艦隊數，入口畫面待找）接上且有同狀態收據；
-`rebellion.go` 的自承註解拿掉。
+費沙 8800→8792、艦隊 `+0x3C`）；`rebellion.go` 的自承註解拿掉。
+（駐留到達整支解散已接上：`docs/re/329`、`TestGarrisonArrivalDisbandsMatchesOracle`。原版玩家介面
+沒有另外的「解散」鈕，駐留就是解散；`297B:0332` 不是函式入口。）
 
-**證據**：[`docs/re/322-fleet-arrival-and-occupation.md`](docs/re/322-fleet-arrival-and-occupation.md)、[`docs/spec/054-fleet-arrival.md`](docs/spec/054-fleet-arrival.md)、[`docs/spec/051-strategic-fleet-command.md`](docs/spec/051-strategic-fleet-command.md)、[`docs/playtest/021-strategic-fleet-command.md`](docs/playtest/021-strategic-fleet-command.md)
+**證據**：[`docs/re/322-fleet-arrival-and-occupation.md`](docs/re/322-fleet-arrival-and-occupation.md)、[`docs/spec/054-fleet-arrival.md`](docs/spec/054-fleet-arrival.md)、[`docs/spec/051-strategic-fleet-command.md`](docs/spec/051-strategic-fleet-command.md)、[`docs/playtest/021-strategic-fleet-command.md`](docs/playtest/021-strategic-fleet-command.md)、[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)
 
 **核實**：`internal/game/rebellion.go` 裡還找得到 `戰略打行星還沒接`（自承還在 ＝ 還沒做）
 
