@@ -15,6 +15,7 @@ KINDS = [
     ('comflag', 'COM_FLAG.SPR', 'comflag_export.py', '指揮旗標籤五張 ＋ 總表', 'docs/internals/01-assets-inventory.md'),
     ('strmap', 'STRMAP.BIT', 'strmap_export.py', '戰略星圖底圖', 'docs/internals/12-strmap-bit.md'),
     ('vo5', 'END*.VO5', 'vo5_export.py', '結局圖 50 張', 'docs/internals/18-vo5.md'),
+    ('comani', 'COMANI.BMG', 'bmg_export.py', '交戰演出動畫 254 段 1,438 格，每張 256×102 是畫完那一格之後的視窗；XOR 開頭的段疊在同單位 D0 第 0 格上', 'docs/internals/20-comani-bmg.md'),
     ('font', 'GRAPH.IMG', 'font_extract.py；font_head.py', '倚天中文字型總表與半形字頭', 'docs/internals/06-font-graph-img.md'),
     ('music/mid', '*.MDS', 'mds_export.py', '22 首樂曲轉標準 MIDI', 'docs/internals/17-mds.md'),
     ('music/vgm', '*_F.MDS', 'tools/music_fm_capture.sh', 'ＦＭ版 11 首在 dosgolem 裡跑出來的 OPL 暫存器記錄（.meta 是擷取參數）', 'docs/internals/17-mds.md'),
@@ -24,11 +25,11 @@ KINDS = [
 rows, counts = [], {}
 for d, *_ in KINDS:
     base = f'{ROOT}/{d}'
-    for fn in sorted(os.listdir(base)):
-        p = f'{base}/{fn}'
-        if os.path.isfile(p):
+    for dp, _, fns in sorted(os.walk(base)):
+        for fn in sorted(fns):
+            p = f'{dp}/{fn}'
             h = hashlib.sha256(open(p, 'rb').read()).hexdigest()
-            rows.append((f'{d}/{fn}', os.path.getsize(p), h))
+            rows.append((os.path.relpath(p, ROOT), os.path.getsize(p), h))
             counts[d] = counts.get(d, 0) + 1
 
 known = {r[0] for r in rows}
@@ -51,13 +52,13 @@ md = ['# 原版素材（保存用）', '',
       '進版控是為了保存遊戲資產、給日後重新繪圖當參考。規則見 `AGENTS.md`「Docker-only 與',
       '原版素材邊界」：只放匯出腳本產生的可檢視格式，不手改；**remake 的發行包不含這個目錄**；',
       'repo 轉公開前要先處理這個目錄（它在 git 歷史裡）。', '',
-      '重做：自備原版放 `org_game/extracted/`，`tools/py.sh tools/scripts/<命令>` 會寫到',
-      '`workplace/assets/`，再複製過來；然後 `tools/py.sh tools/scripts/assets_manifest.py`',
+      '重做：自備原版放 `org_game/extracted/`，`tools/py.sh tools/scripts/<命令>` 多半寫到',
+      '`workplace/assets/`，再複製過來（`bmg_export.py` 直接寫這裡）；然後 `tools/py.sh tools/scripts/assets_manifest.py`',
       '重產這份說明與 `MANIFEST.tsv`（逐檔 SHA-256）。音樂那兩支是 shell 包裝器，要 dosgolem。', '',
       '| 目錄 | 檔數 | 原版檔 | 產生命令 | 內容 | 格式文件 |', '|---|---:|---|---|---|---|']
 for d, src, cmd, what, doc in KINDS:
     md.append(f'| `{d}/` | {counts.get(d, 0)} | `{src}` | `{cmd}` | {what} | [`{os.path.basename(doc)}`](../../{doc}) |')
-md += ['', '還沒匯出成圖的（解碼在 `internal/asset` 或只有格式文件）：`ANI_PNL0.A98`、',
-       '`BLOCK_0`–`2.BLK`、`MAP*.CMP`、`IBM16.350`（開頭動畫）、`SPTIT.350`、`COMANI.BMG`（編碼未解）。', '']
+md += ['', '還沒匯出成圖的（解碼在 `internal/asset` 或只有格式文件）：`ANI_PNL0`–`2.A98`、',
+       '`BLOCK_0`–`2.BLK`、`MAP*.CMP`、`IBM16.350`（開頭動畫）、`SPTIT.350`。', '']
 open(f'{ROOT}/README.md', 'w').write('\n'.join(md))
 print('寫出 README.md 與 MANIFEST.tsv：%d 個檔' % len(rows))

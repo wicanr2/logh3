@@ -6,7 +6,8 @@
 反組譯輸入（切自 `workplace/s3datamem.bin`）：`workplace/ida/fcx1DD6.com`（線性 `0x1DD60`–`0x1ED20`；
 `fcx1DD6-eng.txt`／`-eng2.txt`）、`fcx1ED2.com`（`0x1ED20`–`0x1F6F0`；`fcx1ED2-eng.txt`）、
 既有的 `fcx20B4.com`（`fcx20B4-scene.txt`）。
-狀態：§一入口與三個視窗 **proven**；§二時間線與按鍵 **proven（收據）**；§三素材 **未解**。
+狀態：§一入口與三個視窗 **proven**；§二時間線與按鍵 **proven（收據）**；§三素材 **未解**
+（→ 已解，見 [`docs/re/328`](328-comani-bmg-codec.md)；按鍵那一句也在那裡更正）。
 
 ## 結論
 
@@ -39,7 +40,9 @@
    #1159.3M `FÀD0` 再一次 → 方塊在戰場上動（#1146–#1159M 每格幾十到一千多個像素）→
    #1169.0M 印「擊毀 290」、艦數 21710/22000 → #1169.07M 收場、#1169.5M 回戰場。
    **按鍵不縮短演出**：#1146M 按左鍵或右鍵，#1152M 的畫面已是結果那一幀（`eng-click`／
-   `eng-rclick` ＝ `eng-end`），回戰場仍在 #1169–1170M。**動畫效果關掉**（`-poke ds:8F36 ← 0`）
+   `eng-rclick` ＝ `eng-end`），回戰場仍在 #1169–1170M。
+   > ⚠ 「#1152M 已是結果那一幀」被 [`docs/re/328`](328-comani-bmg-codec.md) §六推翻：那張與
+   > `eng-end` 雜湊不同，是 PPAB 第 5 格之後的中段，按鍵沒有可見效果。**動畫效果關掉**（`-poke ds:8F36 ← 0`）
    演出照開、照換曲，只是沒有方塊動畫、#1160M 就收場（短九百萬步）。
 5. remake（規格 056，DRAFT）：`StateEngagement`——回合處理的打行星那一步有結果就切演出
    （`Game.queueEngagements`），底圖 `ANI_PNL1.A98` ＋ 三個視窗照原版格式字串印，開場幀

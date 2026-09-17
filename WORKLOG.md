@@ -7275,3 +7275,17 @@ GitHub 的 issue 時間軸承擔。
   在游標壓到分頁鈕時連鈕一起洗掉（remake 畫出空白鈕、422 像素差）——`DrawBoxFills` 跳過分頁鈕底下的框。
 - 收據：既有五批整張逐位元組（`TestListScreenTabsMatchOracle`）；GUI `fcmd-lst-star-tab-tax`；
   `internal/...` 全部測試通過。文件：`docs/re/327`（新）、規格 055、internals 59、playtest 021、CONTEXT。
+
+## 2026-09-17 — `COMANI.BMG` 的編碼解出來了（#48 素材那一半）
+
+- 交給 subagent 反組譯（`348A:01DC`／`0228`／`02F9`／`03A3`、`3958:0041`、`3A8D:003A`），主 session 在容器重跑
+  它的驗證腳本（PPAB 10 格、FÀD0 6 格兩個視窗全 0）之後收進 repo（`docs/re/328`）。根因：**目錄位移從
+  +2 算起**，先前每段錯位兩個 byte；目錄 254 筆（檔尾那段是 `PZD2`）。每段一串格，格種 0 ＝ `.AMG` 覆寫、
+  格種 1 ＝ XOR 差分（GC read mode 1 ＋ XOR）。`ANI_PNL?.A98` 就是一格的同格式段。
+- remake：`internal/asset.BMG`／`BMGFrame.Draw`／`Planes`；`TestBMGWholeFileParses`（254 段 1,438 格每格剛好吃完）、
+  `TestBMGEngagementMatchesOracle`（從 `eng-text` 逐格疊到 `eng-mid`／`eng-mid2`／`eng-end`，兩個視窗逐位元組）。
+  `tools/scripts/bmg_export.py` 改寫 → `assets/original/comani/`（1,438 張）＋ `docs/internals/data/comani-bmg.json`。
+- 推翻：`docs/re/324` 的「#1146M 按鍵、#1152M 已是結果幀」——`eng-click` 與 `eng-end` 雜湊不同，等於沒按鍵的
+  PPAB 第 5 格之後；按鍵沒有可見效果（remake 靠按鍵換幀列為規格 056 已知差異）。`docs/playtest/022` 的 pal 雜湊
+  更正（進演出之後的九份是 `765462f4…`）。
+- 還沒接進 `StateEngagement`（名字組法、逐格計時），#48 留著、卡在改寫。
