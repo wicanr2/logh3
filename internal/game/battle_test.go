@@ -140,6 +140,7 @@ func TestAdvanceBattleTurnMoves(t *testing.T) {
 	g.battleTurn = 1
 	g.faction = 0
 	g.SetTactic(ai.OriginalTactic{}, false)
+	g.originalBattleAI = true // 驗的是原版戰術層會讓敵方移動（規格 061 在遊戲層關掉它）
 	before := g.battleUnits[1]
 	g.AdvanceBattleTurn()
 	after := g.battleUnits[1]

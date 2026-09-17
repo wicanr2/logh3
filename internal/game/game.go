@@ -843,6 +843,8 @@ type Game struct {
 	battleUnits      []rules.BattleUnit
 	tactic           ai.Tactic
 	autoBattle       bool
+	// originalBattleAI 關掉「戰場上電腦不造成傷害」（`passivebattle.go`，使用者裁決）；只有對拍原版戰場的測試會設。
+	originalBattleAI bool
 
 	// 結算用的（`docs/spec/018`）：參戰艦隊、亂數、上一回合的交火紀錄，
 	// 以及「有一方全沒了」。

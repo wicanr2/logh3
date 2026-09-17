@@ -70,6 +70,7 @@ func TestBattleLossMagnitude(t *testing.T) {
 	// 沒有戰術層就沒有人會動，距離項會把基本量吃光——量級要在兩邊
 	// 真的靠過去之後才有意義。
 	g.SetTactic(ai.OriginalTactic{}, true)
+	g.originalBattleAI = true // 量的是原版交火量級（規格 061 之前的規則）
 	g.state = StateCommandPhase
 	for turn := 0; turn < 40 && g.state != StateBattle; turn++ {
 		g.advanceTurn()

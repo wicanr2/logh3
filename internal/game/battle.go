@@ -129,9 +129,13 @@ func (g *Game) AdvanceBattleTurn() {
 			Rally: g.battleRally, Terrain: g.res.Terrain,
 			Cells: g.battleCells(g.battleRegion), Rand: g.battleRand,
 		}
+		cpu, passive := g.passiveComputer()
 		for _, faction := range []int{0, 1} {
 			if faction == g.faction && !g.autoBattle {
 				continue // 玩家自己下令
+			}
+			if passive && faction == cpu {
+				continue // 電腦不下令、留在原地（`passivebattle.go`）
 			}
 			for _, m := range g.tactic.Moves(b, faction, g.battleTurn) {
 				if m.Unit >= 0 && m.Unit < len(g.battleUnits) {
@@ -149,8 +153,7 @@ func (g *Game) AdvanceBattleTurn() {
 	for i := range g.battleUnits {
 		rules.AdvanceBattle(&g.battleUnits[i], g.res.Terrain, g.battleCells(g.battleRegion))
 	}
-	g.battleLosses = rules.ResolveBattleTurn(g.battlePlanets, g.battleFleets,
-		g.battleUnits, g.battleRand)
+	g.battleLosses = g.resolveBattleTurn()
 	for _, l := range g.battleLosses {
 		if l.Scorer >= 0 && l.Scorer < 2 {
 			g.battleScore[l.Scorer] += l.Score
@@ -160,8 +163,7 @@ func (g *Game) AdvanceBattleTurn() {
 	// `docs/spec/028`）、第六步是打行星（`181B:03D0`，規格
 	// `docs/spec/019`）。**順序有意義**：瞄好的要塞砲會讓敵方那一回合
 	// 打不到這顆行星，所以倒數要排在打行星之後（`docs/re/149`）。
-	g.battleGunHits = rules.FortressGunFire(g.battlePlanets, g.battleFleets,
-		g.battleUnits, g.res.ShipKinds, g.battleRand)
+	g.battleGunHits = g.fortressGunFire()
 	for _, h := range g.battleGunHits {
 		if h.Scorer >= 0 && h.Scorer < 2 {
 			g.battleScore[h.Scorer] += h.Score
@@ -173,8 +175,7 @@ func (g *Game) AdvanceBattleTurn() {
 	for i := range g.battlePlanets {
 		planetOwners[i] = g.battlePlanets[i].Owner
 	}
-	g.battleAssaults = rules.PlanetAssault(g.battlePlanets, g.battleFleets,
-		g.battleUnits, g.res.ShipKinds, g.battleRand)
+	g.battleAssaults = g.planetAssault()
 	for _, h := range g.battleAssaults {
 		if h.Planet >= 0 && h.Planet < len(planetOwners) {
 			owner := planetOwners[h.Planet]
