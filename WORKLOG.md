@@ -7394,3 +7394,12 @@ GitHub 的 issue 時間軸承擔。
   改寫 `fleetstep.go` 註解、`#58` 本文只剩 `297B:08D8`、verify 換到 `game.go` 的新自承註解。
 - issue：關 #52（verify → go_test `TestTurnWindowDepartArriveMatchesOracle`；`run` 只收單一函式名，寫 `A|B` 會報「沒有這支測試」）；
   新開 #71 自家星域補充、#72 回合過場的邊角（「戰略模式思考中」的停留是忠實度裁決，沒有自己決定）。verify 251 條、0 條斷言不成立。
+
+## 2026-09-17 — #57 艦隊全滅：兩個使用者裁決、`fcmd-occ-phz-t4` 是崩潰殘留（第六輪 C 開頭）
+
+- 使用者裁決：(1) 全滅在 dosgolem 上崩潰轉跑 `ENDING.EXE` → **先查執行器再做**，remake 的全滅這一輪不動；
+  (2) 「已經全滅」的格式字串多一個 `\x03` 畫成花紋 → remake **修成正常文字**，列刻意差異。記進 #57 本文。
+- 主 session 核對 `fcmd-occ-phz-t4` 的 `report.txt`：停止原因 HLT、開過 `ending.exe`、主控台「NULL function pointer」、`fleet0.bin` `+00` ＝ 09。
+  `docs/re/322` §四表、`docs/re/330` 兩處、playtest 021 那一列加更正指標；`docs/re/333` 附一節。
+- `0374:0608` 的位元組自己讀過（陣營 ≠ 擁有者、bit0、第 0 組 `+0x08 == 0` → `073F`，否則 `0896`）。
+- 執行器調查（`35D1:0102`／`2376` 對 `FFFF:FFFF` 的存取、dosgolem 與 DOSBox 的 A20／HMA）派背景 subagent，探索批次 `fcx-a20-*`。

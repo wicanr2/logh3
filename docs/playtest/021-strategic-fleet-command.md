@@ -177,7 +177,7 @@
 | `fcmd-occ-phz-t2` | 再實行 → 6 | `16f29f72098733fa10ddfe145775f1c1959fbb4cb9d47e3d1c9b7a44db2fea3d` | 不比 |
 | `fcmd-occ-phz-t3` | 再實行 → 14 費沙：停駐、bit4、8800→8792、`+3C` 47、停在士氣報告 | `006288b49ad1e138d1556932f4a9ad984aac320cf7905c2e688b65ea7c8b38c9` | 不比 |
 | `fcmd-occ-phz-t3b` | 左鍵 (300,200) 關報告 | `4a7b2f0b91b3e1a0caba34bb5742e73cc5807f15c326922061bde3e821230884` | 不比 |
-| `fcmd-occ-phz-t4` | 再實行：8792 不動 | `4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74` | 不比 |
+| `fcmd-occ-phz-t4` | 再實行：8792 不動（⚠ #1049.345M 全滅後原版在 dosgolem 上崩潰轉跑 `ENDING.EXE`，這一批是崩潰殘留；#57） | `4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74` | 不比 |
 | `fcmd-garrison-report` | （第 21 段，從 `fcmd-garrison-done`）系統指令、實行 → #570M「已經駐留在星系上。」 | `6b7cd40f6c17b5626e1348ec0815247155164b3af87bcc6e96f83b3e0c475fc3` | 0（規格 059） |
 | `fcmd-garrison-t1` | #665M：第１艦隊解散、亞爾提那戰艦存量 3000→6000、提督 +09 80 | `0a564540f6ae5cea48d5cf5a032764b12f7c6661f8c14cf16c4a67bd4d2039e6` | 0 |
 | `fcmd-garrison-self` | （從 `fcmd-garrison-pick`）點瓦爾哈拉 (32,32)：「要待命於…」 | `f74d52c79d50acb1c523a5e1bef0a270c673226606e7db9060a51a1e1517cf3f` | 不比 |
