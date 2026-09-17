@@ -4326,7 +4326,8 @@ func (g *Game) setStarRows(spec *screen.MainGameSpec) {
 			cells = append(cells, screen.ListCell{X: l.TabX, Ink: l.Ink, Text: g.starTabText(tab, rec)})
 		default:
 			// 兩個數是這一格帝國／同盟的艦隊數（固定左帝國右同盟，各用陣營色；
-			// 收據 `fcmd-lst-star`：瓦爾哈拉「1﹕0」）。星域記錄的 `+0x28` 不是它的
+			// 收據 `fcmd-lst-star`：瓦爾哈拉「1﹕0」）。同盟座位看敵方的數原版可能印 --
+			// （`0D05:0568` 讀 `+0x28`–`+0x2B`，沒有收據，`docs/re/327` §四）。星域記錄的 `+0x28` 不是它的
 			// 來源（`docs/re/37`），照艦隊表數。
 			cells = append(cells,
 				screen.ListCell{X: l.OwnX, Ink: rules.FactionColour(0), Text: fmt.Sprintf("%2d", rules.CountFleets(g.fleets, i, 0))},

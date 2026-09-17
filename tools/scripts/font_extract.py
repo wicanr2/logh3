@@ -1,5 +1,8 @@
 """解 GRAPH.IMG 的中文字型：釘住格式與索引，輸出 JSON 與 PNG。
 
+⚠ 會整份覆寫 docs/internals/data/font-graph-img.json：那份後來人工補過欄位，這支還是舊格式，
+重跑之前先處理（2026-09-17 踩過，git checkout 還原）。
+
 驗證用畫面當 oracle（九個已知字逐位元吻合），再用倚天 stdfont.15 做外部
 對照，確認遊戲是不是直接內嵌了倚天字型。
 """

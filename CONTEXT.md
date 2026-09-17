@@ -293,19 +293,17 @@
   有編制（旗艦一組、沒有類別鍵）、**軍事費花出去的錢流進行星經濟力**（維持費
   一半、移動費整筆，`rules.PayIntoRegion`）、`090A:0E6D` 每次把行星加總回星域、
   **戰略地圖逐格照記錄著色**（有自軍艦隊的星域用另一張色表，`docs/re/313`）。
-- **玩家還碰不到的功能**（2026-09-15 讀 `internal/game/game.go` 的 `click`
-  盤點，不是憑印象）：
-  - 整套不存在：回合裡的過場視窗（含拿下行星的訊息框、士氣低落報告）、參謀任命（`090A:0248`）、**交戰演出的量表與戰場方塊**（兩個圖視窗的序列、計時與按鍵已接，`docs/re/331`；艦隊對艦隊、要塞砲、登陸艦那幾種的圖沒接）。
-  - 戰略地圖本身：右下角「敵艦隊」分頁的列只在載存檔或打過仗之後才有東西
-    （新編的艦隊沒有艦艇池，索敵等級永遠 0——與原版一樣）。
-  - 開得起來但只能右鍵關：情報收集的 治安／勢力／敵艦 三個分頁與
-    參謀／確認（`1738`）、徵稅計劃與生產計劃的 參謀／結束、預算計劃的箭頭
-    （`26E2`）、艦隊編號清單的列、
-    結束確認的 中止／決定、設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與 `BUG!`。
-    （情報與徵稅那兩顆「參謀」就是參謀任命的入口。）
-  - 其餘：「資料」的捲動、動畫之後的 `SPTIT.350` 標題畫面。
-  配樂的播放層在（`internal/audio`，22 首 OGG 在本機 `workplace/`），
-  戰鬥曲從交戰演出出口，缺的是玩家自產曲庫的管線。完成度見 `VERIFICATION-MATRIX.md`。
+- **玩家還碰不到的功能**（2026-09-15 讀 `internal/game/game.go` 的 `click` 盤點、2026-09-17 對照
+  第五輪之後全部登記成 issue；清單的權威是 issue，這裡只是索引）：
+  - 整套不存在：回合裡的過場視窗與報告（出發前往／已經到達／已經駐留、拿下行星的訊息框、士氣低落報告，#52）、
+    艦隊全滅（`297B:034A`，#57）、參謀任命（`090A:0248`，#62）、交戰演出的量表與戰場方塊與另外三種演出（#48）。
+  - 開得起來但只能右鍵關：情報收集的 治安／勢力／敵艦 三個分頁與確認（#63）、徵稅計劃與生產計劃的「結束」
+    與預算計劃的箭頭（#64）、艦隊編號清單的列與結束確認的中止／決定（#65）、設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與
+    `BUG!`（#66）；情報與徵稅那兩顆「參謀」是參謀任命的入口（#62）。
+  - 輸入：▲▼ 按住連捲（#60）。
+  - 其餘：戰場「資料」的捲動（#67）、動畫之後的 `SPTIT.350` 標題畫面（#68）、新遊戲的艦艇池模型（#55）。
+  配樂的播放層在（`internal/audio`，22 首 OGG 在 `assets/original/music/ogg/`），戰鬥曲從交戰演出出口，缺的是
+  玩家不靠開發環境就能自產曲庫的管線（#69）。完成度見 `VERIFICATION-MATRIX.md`。
 - **原版側與 remake 側都在**：dosgolem 跑原版產生收據，remake 走同一條
   玩家路徑畫出來，兩邊逐位元組比。命令階段十二張子畫面、月底的船艦
   接收報告、按一次「實行」的整張畫面都已對上。
@@ -453,7 +451,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 4 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 20 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -488,6 +486,257 @@
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
+
+#### export-remaining-assets — 其餘原版素材匯出進 assets/original/（ANI_PNL、BLOCK_0–2、MAP*.CMP、IBM16.350、SPTIT.350）
+
+*[#70](https://github.com/wicanr2/logh3/issues/70) · decision（取捨：等使用者裁決）*
+
+`assets/original/` 已有頭像、圖塊、外框、戰場圖塊、星圖、結局圖、字型、樂曲、交戰動畫（`assets/original/README.md`）。
+還沒匯出成可檢視格式的：`ANI_PNL0`–`2.A98`（解碼在 `internal/asset`）、`BLOCK_0`–`2.BLK`、`MAP*.CMP`、`IBM16.350` 開頭動畫的各格、
+`SPTIT.350`（編碼未確認）。規則見 `AGENTS.md`：由 `tools/scripts/` 的匯出腳本產生、雜湊進清單。
+
+**卡在**：- `SPTIT.350` 要先確認編碼。
+
+**做完的判準**：上列素材各有匯出腳本、PNG 進 `assets/original/`、`assets_manifest.py` 的 KINDS 有對應列。
+
+**證據**：[`docs/internals/37-ani-pnl-a98.md`](docs/internals/37-ani-pnl-a98.md)、[`docs/internals/35-block3-blk.md`](docs/internals/35-block3-blk.md)、[`docs/internals/36-map-cmp.md`](docs/internals/36-map-cmp.md)
+
+**核實**：要人判——可以綁 json_len 或檔案存在；清單腳本裡那句「還沒匯出成圖的」拿掉時改綁 absent（tools/scripts/assets_manifest.py 的「還沒匯出成圖的」）。
+
+#### music-library-pipeline — 玩家自產曲庫的管線與 MIDI 音色（MPU-401）
+
+*[#69](https://github.com/wicanr2/logh3/issues/69) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+配樂播放層在（`internal/audio`，22 首 OGG），但曲子要玩家自備原版後用 `tools/music_fm_capture.sh`／`tools/music_to_ogg.sh` 轉，
+需要 dosgolem 與容器；`_M` 那 11 首是 fluidsynth ＋ FluidR3_GM 合成，不是原版 MPU-401 的音色。發行版要給玩家一條不需要開發環境的轉檔路。
+
+**卡在**：- `_M` 音色是忠實度取捨，要使用者決定。
+
+**做完的判準**：玩家自備原版後有一個不需要 Docker 的轉檔入口（或 remake 內建合成），`_F` 雜湊與 `SOURCES.tsv` 相同；`_M` 的音色取捨經使用者裁決。
+
+**證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
+
+**核實**：要人判——沒有程式碼訊號；做完綁 go_test（轉檔入口的測試）。
+
+#### title-screen-sptit — 開頭動畫之後的 SPTIT.350 標題畫面
+
+*[#68](https://github.com/wicanr2/logh3/issues/68) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+原版開頭動畫播完之後還有 `SPTIT.350` 標題畫面（`docs/re/283` 看到開檔，調色盤 `SPTIT.RGB`），怎麼走到主選單沒量；remake 動畫播完直接進主選單。
+
+**卡在**：- `SPTIT.350` 是不是與 `IBM16.350` 同一套編碼沒確認。
+
+**做完的判準**：`SPTIT.350` 解碼、標題畫面的時序與按鍵有收據，remake 從動畫 → 標題 → 主選單整條逐位元組。
+
+**證據**：[`docs/re/283-intro-plays-in-file-order.md`](docs/re/283-intro-plays-in-file-order.md)、[`docs/spec/020-intro-animation.md`](docs/spec/020-intro-animation.md)
+
+**核實**：要人判——remake 沒有標題畫面的程式碼可綁；接上時綁 go_test（標題畫面的收據）。
+
+#### settings-midi-if-and-bug — 設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與 BUG!
+
+*[#66](https://github.com/wicanr2/logh3/issues/66) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+設定畫面的「ＭＩＤＩ Ｉ／Ｆ」（動作碼 22）要先有 `MUSIC.INI` 的讀寫，`BUG!` 沒讀；兩個點下去什麼都不會發生（`docs/re/286`）。
+
+**做完的判準**：兩項有反組譯與同狀態收據，remake 照原版反應；`MUSIC.INI` 的格式寫進 `docs/internals/`。
+
+**證據**：[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)
+
+**核實**：`internal/game/settingsscreen.go` 裡還找得到 `與 `BUG!` 也還沒接`（自承還在 ＝ 還沒做）
+
+#### fleet-number-list-and-quit-confirm — 艦隊編號清單的列、結束確認的中止／決定
+
+*[#65](https://github.com/wicanr2/logh3/issues/65) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+出擊那條路的艦隊編號清單（`StateFleetNumber`）點列沒事；系統指令「結束」的確認框（`StateQuitConfirm`）中止／決定沒接，只能右鍵關。
+
+**卡在**：- 沒讀，沒有收據。
+
+**做完的判準**：兩張各有反組譯與同狀態收據，remake 整張逐位元組；結束確認的「決定」照原版回主選單或結束程式。
+
+**證據**：[`docs/spec/013-fleet-organisation.md`](docs/spec/013-fleet-organisation.md)
+
+**核實**：要人判——remake 沒有對應的程式碼可綁；接上時綁 go_test。
+
+#### tax-production-budget-buttons — 徵稅計劃與生產計劃的「結束」、預算計劃的箭頭（26E2）
+
+*[#64](https://github.com/wicanr2/logh3/issues/64) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+徵稅計劃、生產計劃畫面開得起來，「結束」點了沒事、只能右鍵關；預算計劃的箭頭（`26E2`）沒接。
+
+**卡在**：- 沒讀，沒有收據。
+
+**做完的判準**：各鈕的熱區與行為有反組譯與同狀態收據，remake 整張逐位元組、數值照原版改。
+
+**證據**：[`docs/spec/003-budget-panel.md`](docs/spec/003-budget-panel.md)
+
+**核實**：要人判——remake 沒有對應的程式碼可綁；接上時綁 go_test。
+
+#### info-screen-tabs — 情報收集的三個分頁（治安／勢力／敵艦）與「確認」
+
+*[#63](https://github.com/wicanr2/logh3/issues/63) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+情報收集畫面（`screen-info`）只畫第一頁，治安／勢力／敵艦三個分頁與「確認」（熱區 `1738`）點了沒事、只能右鍵關。
+
+**卡在**：- 沒讀，沒有收據。
+
+**做完的判準**：三個分頁與確認各有反組譯與同狀態收據，remake 整張逐位元組。
+
+**證據**：[`docs/re/16-window-list-right-button.md`](docs/re/16-window-list-right-button.md)
+
+**核實**：要人判——remake 沒有分頁的程式碼可綁；接上時綁 go_test（三個分頁的收據）。
+
+#### staff-appointment — 參謀任命（090A:0248）與情報收集／徵稅計劃的「參謀」鈕
+
+*[#62](https://github.com/wicanr2/logh3/issues/62) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+情報收集與徵稅計劃畫面的「參謀」鈕是參謀任命的入口（`090A:0248`），remake 開得起來但點了沒事、只能右鍵關（CONTEXT「玩家還碰不到的功能」）。
+AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），玩家這一條沒有。
+
+**卡在**：- 沒讀，沒有收據。
+
+**做完的判準**：`090A:0248` 反組譯、候選清單與就任／卸任畫面有同狀態收據，remake 整張逐位元組；提督 `+0x09` 與 `ds:8F4B` 起的專任參謀表照原版改。
+
+**證據**：[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)、[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)
+
+**核實**：要人判——remake 沒有對應的程式碼可綁；接上時綁 absent 或 go_test（參謀任命的收據）。
+
+#### font-extract-overwrites-json — font_extract.py 重跑會整份蓋掉人工補過的 font-graph-img.json
+
+*[#61](https://github.com/wicanr2/logh3/issues/61) · decision（取捨：等使用者裁決）*
+
+`tools/scripts/font_extract.py` 輸出的 `docs/internals/data/font-graph-img.json` 是舊格式（62 行），而版控裡那份後來人工補過欄位（77 行）。
+2026-09-17 為了把字型素材搬進 `assets/original/` 重跑時整份被蓋掉，用 `git checkout` 還原。重跑那支之前要先決定：改腳本輸出新格式、
+還是拆成兩個檔（腳本產生的與人工整理的）。
+
+**做完的判準**：腳本重跑之後 `font-graph-img.json` 不變（或人工那份另存、腳本不碰）。
+
+**證據**：[`docs/internals/06-font-graph-img.md`](docs/internals/06-font-graph-img.md)
+
+**核實**：`tools/scripts/font_extract.py` 裡還找得到 `會整份覆寫 docs/internals/data/font-graph-img.json`（自承還在 ＝ 還沒做）
+
+#### hold-to-scroll — ▲▼ 按住連捲（一覽表、右下角清單、提督清單、艦隊組成）
+
+*[#60](https://github.com/wicanr2/logh3/issues/60) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+原版的 ▲▼ 按住會連續捲動（`3765:0255` 看事件佇列有沒有放開，按住 0.1M 步一列、0.3M 步兩列），remake 一下一列。
+規格 013、052、055 都列成已知差異「做『按住』時一起接」。
+
+**卡在**：- remake 的輸入模型沒有「按住」的時間，要像戰場右鍵捲動（規格 057）那樣補。
+
+**做完的判準**：按住的時間與捲動列數與原版收據相同（既有 `fcmd-lst-star-down` 按住 0.1M、第 17 段按住 0.3M），顯示層按著每幀送事件。
+
+**證據**：[`docs/spec/055-list-screen-rows.md`](docs/spec/055-list-screen-rows.md)、[`docs/spec/052-fleet-list-tabs.md`](docs/spec/052-fleet-list-tabs.md)、[`docs/spec/013-fleet-organisation.md`](docs/spec/013-fleet-organisation.md)、[`docs/spec/057-battle-view-scroll.md`](docs/spec/057-battle-view-scroll.md)
+
+**核實**：`internal/game/listscreen.go` 裡還找得到 `原版按住連捲`（自承還在 ＝ 還沒做）
+
+#### list-tabs-unverified — 一覽表分頁沒有收據的幾種情形（同盟座位、戰鬥中、占領中、士氣低落）
+
+*[#59](https://github.com/wicanr2/logh3/issues/59) · parity（對拍：要與原版逐位元組相同）*
+
+#51 的五批收據都是帝國座位、沒有戰鬥的局面。以下是照反組譯接的、沒有收據（`docs/re/327`）：
+
+- 星系「艦隊」分頁原版讀星域 `+0x28`–`+0x2B`（依座位挑兩格、`0xFF` 印 `--`），remake 照艦隊表數：同盟座位與敵方數字可能不同。
+- 「﹕」在 `+0x13` bit2（戰鬥中）用色 2。
+- 艦隊「作戰」分頁：所在星域 bit2「戰鬥」、bit4「占領」。
+- 艦隊「士氣」分頁小於 50 用色 2。
+
+**卡在**：- `+0x2A`／`+0x2B` 誰寫、`0xFF` 何時出現沒讀。
+
+**做完的判準**：四種情形各有同狀態收據（可用 `-poke` 造），整張逐位元組；`+0x28`–`+0x2B` 的寫入者讀完。
+
+**證據**：[`docs/re/327-list-screen-tabs.md`](docs/re/327-list-screen-tabs.md)、[`docs/spec/055-list-screen-rows.md`](docs/spec/055-list-screen-rows.md)
+
+**核實**：`internal/game/game.go` 裡還找得到 `同盟座位看敵方的數原版可能印 --`（自承還在 ＝ 還沒做）
+
+#### garrison-self-and-step-count — 就地駐留不扣移動費的成因、走一格時星域艦隊數（297B:08D8）
+
+*[#58](https://github.com/wicanr2/logh3/issues/58) · re（逆向：機制還沒讀出來）*
+
+兩件只從收據數字推、位元組沒讀的事（`docs/re/329`）：
+
+- 駐留點自己所在的星域：原版照樣「走一步」到達解散，但**不扣移動經費、錢也不流進行星**（軍事費 45570／經濟力 82313，照扣的話各差 26）。
+  `113A:06C3` 是不是先比 cur 與 next 沒讀；remake 照收據在 `PlanStep` 回 `Cost: 0`。
+- 走一格時星域 `+0x28` 一減一加是 `297B:08D8(艦隊, cur, next)` 做的（strong inference），沒讀。
+
+**做完的判準**：兩支的位元組讀完寫進 `docs/re/`，remake 的寫法有位元組依據（或改掉）。
+
+**證據**：[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/322-fleet-arrival-and-occupation.md`](docs/re/322-fleet-arrival-and-occupation.md)
+
+**核實**：`internal/rules/fleetstep.go` 裡還找得到 `就地駐留不扣移動經費的成因沒讀`（自承還在 ＝ 還沒做）
+
+#### fleet-annihilation — 艦隊全滅（297B:034A）：艦艇不還、提督記成失蹤、「已經全滅」報告
+
+*[#57](https://github.com/wicanr2/logh3/issues/57) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+`297B:034A(艦隊)` 是全滅那一支（`docs/re/329` §二）：釋放戰場圖示、提督與副官走 `28E0:057F(…, 0)`（`+0x00 ← 0x80` 失蹤、
+`+0x02..+0x05 ← 0`）、艦艇由呼叫者先用 `2AD2:01EF` 作廢**不還存量**、星域 `+0x28` 與 `ds:8F49` 減一、`090A:0E6D`。
+兩個呼叫者：戰略階段 `0374:0888`（包在 `0374:073F`，印「…第Ｎ艦隊…已經全滅。」）、戰場一回合結算 `185C:016A`。
+remake 戰場打完是從存檔表重讀艦隊，新遊戲與戰略階段都沒有這一條。
+
+**卡在**：- `0374:0608` 的呼叫者、`0374:06BC`／`0896`、`185C:028E`／`0177` 沒讀。
+- `phz-t4` 艦隊 `+0x00` bit3（全隊沒艘數）從哪來沒查（`phz-t3` 還剩 452 艘）。
+
+**做完的判準**：兩條路各有同狀態收據（`-poke` 把第 0 組艦艇 `+0x08` 改成 0 造局面），艦隊表、提督、星域、艦艇池逐欄對上；報告畫面列入 #52 或同條完成。
+
+**證據**：[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)
+
+**核實**：`internal/rules/fleetstep.go` 裡還找得到 `全滅那一支（`297B:034A``（自承還在 ＝ 還沒做）
+
+#### strategic-assault-edge-cases — 戰略打行星沒有收據的三種局面（多支攻方、同回合打過仗、電腦座位）
+
+*[#56](https://github.com/wicanr2/logh3/issues/56) · parity（對拍：要與原版逐位元組相同）*
+
+規格 058 的規則層是兩份收據（一支攻方、帝國人類座位）逐欄對上的。以下三種只讀了位元組、沒有收據，remake 照最簡單的情形做：
+
+- 同一格兩支以上攻方：`297B:0BD6` 把後定位的擠開 32 像素的倍數 → 距離 ≠ 0（打掉量有衰減、反擊方向不同）；remake 一律距離 0、同朝向。
+- 同一回合先打過仗：守軍 `203A:04D1` 掃的是戰場單位表 `ds:98BA`／`ds:9896`，可能殘留 → 守軍不是 0。
+- 電腦座位拿下行星：`20B4:1922` 的訊息框會不會顯示、會不會等；功績與計分器照加。
+
+**卡在**：- 多支攻方的碰撞要模型化分隊位置（`297B:0D99`、`2BE1:0000`），remake 的戰略層沒有座標。
+
+**做完的判準**：三種局面各有同狀態收據（可用 `-poke` 造），remake 與原版逐欄相同或差異列入規格 058 並說明。
+
+**證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/internals/53-strategic-planet-assault.md`](docs/internals/53-strategic-planet-assault.md)
+
+**核實**：`internal/rules/strategicassault.go` 裡還找得到 `碰撞位移（`297B:0BD6`）沒模型化`（自承還在 ＝ 還沒做）
+
+#### new-game-ship-pool — 新遊戲的艦艇池模型（分隊士氣、戰力、兩格存量、池索引）
+
+*[#55](https://github.com/wicanr2/logh3/issues/55) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、槽 `[2]`／`[3]`、索敵等級），沒有原版艦艇池
+（`ds:CFB4`，352 × 78）那一筆的其他欄位：分隊 `+0x06` 士氣（`1261:03FB` 每次扣艘數後寫）、`+0x0C` 戰力
+（`203A:0593` 扣 實扣² ÷ 滿編）、`+0x0E`／`+0x12` 兩格存量（按剩餘比例縮）、池索引（艦隊組成「決定」時分配，
+新組拿到 2、3、4…）。戰略打行星（規格 058）用不到這幾格所以對得上，但它們會帶進之後的戰場與補給。
+
+**卡在**：- 從 `0FF4:000A` 的「決定」分支往下找寫艦艇池的那一支，還沒讀。
+- 既有 `fcmd-*` 收據沒倒艦艇池（`ds:CFB4` 的 far 指標每批要先讀再倒）。
+
+**做完的判準**：新遊戲建艦隊時照原版分配池索引並填分隊記錄；戰略打行星與戰場扣艘數時這幾格照原版更新；有同狀態收據（建完艦隊與打完一次的艦艇池傾印）。
+
+**證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/spec/015-fleet-composition.md`](docs/spec/015-fleet-composition.md)、[`docs/internals/38-battle-units.md`](docs/internals/38-battle-units.md)
+
+**核實**：`internal/rules/fleetbuild.go` 裡還找得到 `新遊戲的艦艇池還沒模型化`（自承還在 ＝ 還沒做）
+
+#### dosgolem-watch-regs-bugs — dosgolem：-watch 只吃第一段範圍、-regs-at 偶爾漏抓命中
+
+*[#54](https://github.com/wicanr2/logh3/issues/54) · decision（取捨：等使用者裁決）*
+
+第五輪三個 subagent 在 dosgolem-logh3 `b5485eb` 上遇到的兩個執行器問題（`docs/re/330` §9、`docs/re/331` §六）：
+
+- `-watch A-B,C-D` 只監看第一段，逗號後面的被忽略，報告沒有提示。
+- `-regs-at` 偶爾漏抓（例：`fcx-assault-ast` 星域 28 第一擊少了 `17B8`／`17C6`／`0EB5`／`18AF` 四個命中，前後命中都在；`-regs-from 1160000000` 下 `3765:006C` 0 命中而 `-watch` 同時看到）。
+
+修在 dosgolem 副本 `~/cht/dosgolem-logh3`（branch `logh3-oracle`）。**修完要整條 `fcmd-*`／`eng-*` 收據重跑**（收據綁執行器版本）。
+
+**卡在**：- 需要先確認 `-regs-at` 漏抓的條件（指令邊界、REP 前綴、中斷中？）。
+
+**做完的判準**：兩個旗標各有單元測試；修完之後所有收據重跑、雜湊與既有相同（或重做收據並記錄）。
+
+**證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/re/331-engagement-picture-sequence.md`](docs/re/331-engagement-picture-sequence.md)
+
+**核實**：要人判——執行器在另一個 repo，logh3 這邊沒有程式碼訊號。修完後綁 dosgolem-logh3 的 commit（note 寫雜湊）或改成 go_test 跑 dosgolem 的單元測試。
 
 #### battle-assault-byte-mismatches — 戰場層打行星與位元組三處不符（103D 尾段、0593 艦種 5、Atan256 查表）
 
@@ -554,6 +803,7 @@
 - 兩條量表（`321F:0D11`／`0DF7`，算式已讀、座標 strong inference）與戰場方塊（`321F:008A`／`0897`／`06FC`，沒讀）沒畫。
 - 登陸艦攻擊（`20B4:0681`）、艦隊對艦隊（`1DD6:05D7`）、要塞砲（`2264`）三種的圖序列只讀了程式碼，沒有收據、沒接。
 - 停頓起點差一個 tick（原版方塊畫完才開始停頓）；動畫效果關掉時原版在 tick 8 才開始停頓；音效 `3B74:031A` 沒讀。
+- 演出中點過滑鼠的那一趟，回戰場之後的畫面（`317d97d8…`）與沒點的（`1e9a68f0…`）不同，原因沒查（佇列裡剩下的放開事件，`docs/re/331` §三）。
 - remake 的戰場模擬走不到與原版同一個第五回合，正常路徑的收據要等對齊；目前是直接進入的診斷比對。
 
 **做完的判準**：交戰演出的觸發點、跳過條件、面板與圖庫格式、幀序與節奏（動畫速度）都有反組譯與

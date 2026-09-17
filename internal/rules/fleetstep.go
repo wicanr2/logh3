@@ -80,7 +80,7 @@ func (g *StarGraph) PlanStep(f *Fleet, owner func(int) int, funds, cost int) Ste
 		if f.Move != MoveGarrison {
 			return none
 		}
-		// 就地駐留不扣移動經費、錢也不流進行星（收據 `fcmd-garrison-self-t1`：
+		// 就地駐留不扣移動經費的成因沒讀（`113A:06C3`）；錢也不流進行星（收據 `fcmd-garrison-self-t1`：
 		// 軍事費 45570、瓦爾哈拉經濟力 82313，照扣的話各差 26）。
 		return StepPlan{Outcome: StepMoved, Next: next}
 	}
@@ -140,6 +140,8 @@ func (p *Planets) StandbyPlanet(faction, region int) int {
 //
 // 艦隊記錄本身（`+0x04`／`+0x05 ← FF`）、星域 `+0x28` 減一、`ds:8F49` 減一與
 // `090A:0E6D` 的重算由呼叫端做（remake 的艦隊表是切片，拿掉那一筆再重數）。
+//
+// 全滅那一支（`297B:034A`：艦艇不還、提督記成失蹤、「已經全滅」報告）還沒接。
 func Disband(f Fleet, record []byte, admiral func(int) []byte) {
 	for _, a := range []int{f.Admiral, f.Adjutant} {
 		if r := admiral(a); len(r) > admiralStaffFlag {

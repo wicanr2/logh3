@@ -7342,3 +7342,16 @@ GitHub 的 issue 時間軸承擔。
   兩批收據逐欄相同；分隊 `+0x06`／`+0x0C`／`+0x0E`／`+0x12` 沒模型化，列在規格 058 已知差異。B-4 士氣報告的已知差異寫在規格 058
   而不是 054。C 的收據沿用既有 `eng-*`，沒有新錄；交戰演出是直接進入的診斷比對，沒有 GUI 案例。「不在這一輪」裡的「其餘素材搬進
   `assets/original/`」是使用者中途指示做的。
+
+## 2026-09-17 — 第五輪沒做的全部登記成 issue（#54–#70）；第六輪 goal
+
+- 使用者指示：本輪留下的與原本沒有 issue 的功能都開成 worklist issue；dosgolem 兩個旗標問題登記在 logh3；下一輪主軸 #52。
+- 新開 17 張：#54 dosgolem `-watch`／`-regs-at`、#55 新遊戲艦艇池、#56 戰略打行星邊角局面、#57 艦隊全滅、#58 就地駐留與
+  `297B:08D8`、#59 一覽表分頁沒收據的情形、#60 ▲▼ 按住連捲、#61 font_extract 覆寫、#62 參謀任命、#63 情報收集分頁、
+  #64 徵稅／生產／預算的鈕、#65 艦隊編號清單與結束確認、#66 ＭＩＤＩ Ｉ／Ｆ 與 BUG!、#67 戰場資料捲動、#68 SPTIT.350、
+  #69 自產曲庫、#70 其餘素材匯出。#48 補一條（點過滑鼠那一趟回戰場的畫面不同）。
+- verify：能綁程式碼的補了自承註解當 `present` 錨點（`fleetbuild.go`、`fleetstep.go` 兩處、`strategicassault.go`、`game.go`
+  setStarRows、`font_extract.py`），其餘 8 張標 `manual` 並在 note 寫將來綁什麼。開完 issue 之後 GitHub 列表要幾秒才看得到，
+  快照張數對了才跑 verify（第一次抓到 53 張、verify 看不到 #54）。249 條、0 條斷言不成立。
+- CONTEXT「玩家還碰不到的功能」改成 issue 索引；配樂位置改成 `assets/original/music/ogg/`。
+- 第六輪 goal：`docs/goal/2026-09-17-turn-transition-windows-round-6.md`（A #61 暖身 → B #52 回合過場視窗 → C #57 全滅）。
