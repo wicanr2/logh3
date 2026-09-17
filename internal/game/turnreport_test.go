@@ -58,6 +58,7 @@ var (
 	markCapture   = []byte("\xa5\xbf\xa6\x62\xa7\xf0\xa5\x65")
 	markMorale    = []byte("\xa4\x68\xae\xf0\xad\xc8")
 	markNoShips   = []byte("\xc2\xd0\xa8\x53")
+	markAnnihilated = []byte("\xa5\xfe\xb7\xc0") // 「全滅」
 )
 
 // 拿下行星的訊息框（人類座位）：占領亞斯提那條路第五回合，實行前把巴溫的防衛力改成 100（收據同一個 poke），
@@ -173,4 +174,72 @@ func TestBattleMoraleReportWindowMatchesOracle(t *testing.T) {
 		}
 		t.Fatalf("eng-morale-low：視窗內與原版不同的像素 %d", bad)
 	}
+}
+
+// 艦隊全滅（#57，`0374:0608` → `06BC` → `073F` → `297B:034A`）：費沙那條第四回合，士氣 47 停在無主的費沙，
+// 扣兵之後第 0 組 0 艘 →「…已經全滅。」→ 看完拿掉這一支、提督與副官失蹤（`fcmd-turn-annihilated-report`、
+// `fcmd-turn-annihilated` 的 mem-in／mem-out）→ 第五回合命令階段整張（`fcmd-occ-phz-t4`）。
+// 報告視窗 (320,160)–(639,319) 是刻意差異：原版格式字串多一個 `\x03` 畫成花紋，使用者裁決修成正常文字。
+func TestTurnReportAnnihilatedMatchesOracle(t *testing.T) {
+	out, err := os.ReadFile(filepath.Join(root, "workplace/oracle/fcmd-turn-annihilated/mem-out.bin"))
+	if err != nil {
+		t.Skip("沒有收據 fcmd-turn-annihilated，跳過（tools/fleetcmd_receipts.sh 第 26 段）")
+	}
+	g := reachPhezzanOrder(t)
+	executeTurn(t, g)
+	executeTurn(t, g)
+	// 第三回合照收據的輸入：士氣值低落那一則在地圖上 (300,240) 點掉（`fcmd-occ-phz-t3b`），游標留在艾流塞拉上；
+	// 第四回合按系統指令時游標離開地圖，左下角摘要才清掉。
+	pressExecute(g)
+	clickUntilReport(t, g, markMorale)
+	g.Click(300, 240)
+	wantState(t, g, StateCommandPhase, "第三回合點掉士氣報告之後")
+	matches(t, g, "fcmd-occ-phz-t3b")
+	before := g.fleets[0]
+	before.Composition = append([]rules.FleetGroup(nil), before.Composition...)
+	pressExecute(g)
+	clickUntilReport(t, g, markAnnihilated)
+	matchesExcept(t, g, "fcmd-turn-annihilated-report", [][4]int{{320, 160, 639, 319}})
+	f := g.fleets[0]
+	if f.Number != 1 || f.Composition[0].Ships != 0 {
+		t.Fatalf("報告開著時艦隊 0 是第 %d 艦隊、第 0 組 %d 艘；原版報告在拿掉之前、第 0 組已經 0 艘", f.Number, f.Composition[0].Ships)
+	}
+	adm, adj := f.Admiral, f.Adjutant
+	in, err := os.ReadFile(filepath.Join(root, "workplace/oracle/fcmd-turn-annihilated/mem-in.bin"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	// 計分器 `ds:8FE4[對手]`（lin 5DB18）：耗損每組 ÷ 20 加給同盟。
+	wantScore := int(binary.LittleEndian.Uint32(out[0x5DB18:])) - int(binary.LittleEndian.Uint32(in[0x5DB18:]))
+	if score, gone := rules.StrategicAttrition(&before, int(g.admiralRecord(before.Admiral)[0x0B])); score != [2]int{0, wantScore} || !gone {
+		t.Errorf("第四回合前的艦隊 0 單獨耗損：計分 %v、全滅 %v；原版同盟 +%d、全滅", score, gone, wantScore)
+	}
+	for k := range before.Composition {
+		if before.Composition[k].Ships != f.Composition[k].Ships {
+			t.Errorf("第 %d 組：單獨耗損 %d 艘、回合裡 %d 艘", k, before.Composition[k].Ships, f.Composition[k].Ships)
+		}
+	}
+	region := f.Region
+	g.Click(560, 125)
+	if got, want := g.regionRecord(region)[0x28], out[0x5F2CC+region*126+0x28]; got != want {
+		t.Errorf("星域 %d +0x28 = %d，原版 %d", region, got, want)
+	}
+	for _, fl := range g.fleets {
+		if fl.Number == 1 && fl.Faction == 0 {
+			t.Fatal("看完報告之後第１艦隊還在")
+		}
+	}
+	for _, a := range []int{adm, adj} {
+		if a < 0 {
+			continue
+		}
+		got := g.admiralRecord(a)
+		want := out[0x602AC+a*rules.AdmiralRecord-0 : 0x602AC+(a+1)*rules.AdmiralRecord]
+		if got[0] != want[0] || got[0x09]&0x80 != want[0x09]&0x80 || string(got[2:6]) != string(want[2:6]) {
+			t.Errorf("提督 %d：+00 %02X／+09 %02X／+02 % X，原版 %02X／%02X／% X", a, got[0], got[9], got[2:6], want[0], want[9], want[2:6])
+		}
+	}
+	finishTurn(t, g)
+	wantState(t, g, StateCommandPhase, "全滅那一回合跑完")
+	matches(t, g, "fcmd-occ-phz-t4")
 }

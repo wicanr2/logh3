@@ -114,24 +114,44 @@ func (g *Game) scanRegionsFrom(from int) {
 		}
 		// 自家星域的艦艇補充（`1AAB:0FAF`：擁有者的艦隊從星域存量補到編制數、補完 `1261:0067(f, 1)` 可能印
 		// 「已經恢復」，`docs/re/333` §三）還沒接；原版排在這一格的全滅判定與打行星之前。
-		if occ.Occupied {
-			// 單方面占據的格子改跑戰略打行星（`20B4:1497`：三次回復、打第一顆不是
-			// 自己的行星、反擊、換手，最多九回合；規格 058、`docs/re/330`）。
-			// 拿下行星的訊息框（`20B4:1922`）不改狀態、不耗亂數，停在打完之後印。
-			next := r + 1
-			if g.startTurnReports(g.strategicAssault(r), func() { g.scanRegionsFrom(next) }) {
-				return
-			}
-			continue
+		// 耗損與全滅（`0374:0608`）：停在全滅報告上就等看完，從這一格重跑（被拿掉的那一支已不在表上）。
+		region := r
+		if g.attritionFrom(r, 0, func() { g.scanRegionsAfterAttrition(region) }) {
+			return
 		}
-		rules.DepartNeutralPlanet(g.regionRecord(r), g.res.Planets, r, g.rand94DC())
-		rules.RecoverRegionDefences(g.res.Planets, r)
-		rules.ResetRegionFortressGuns(g.res.Planets, r)
-		if g.rebellionRolls[r].Rebels {
-			rules.Rebel(g.regionRecord(r), g.res.Planets, r, false)
+		if g.scanRegionTail(r) {
+			return
 		}
 	}
 	g.endOfTurn()
+}
+
+// scanRegionsAfterAttrition 是全滅報告看完之後：這一格剩下的部分，再接下一格。
+func (g *Game) scanRegionsAfterAttrition(r int) {
+	if g.scanRegionTail(r) {
+		return
+	}
+	g.scanRegionsFrom(r + 1)
+}
+
+// scanRegionTail 是 `0374:0556` 在全滅判定之後的部分：單方面占據的打行星，或被動效果與叛亂。
+// 停在報告上回 true（報告看完自己接下一格）。
+func (g *Game) scanRegionTail(r int) bool {
+	if g.rebellionOccupation[r].Occupied {
+		// 單方面占據的格子改跑戰略打行星（`20B4:1497`：三次回復、打第一顆不是
+		// 自己的行星、反擊、換手，最多九回合；規格 058、`docs/re/330`）。
+		// 拿下行星的訊息框（`20B4:1922`）不改狀態、不耗亂數，停在打完之後印。
+		// bit4 是 `056A:0469` 先算好的，全滅拿掉攻方之後照樣進來（攻方空了就不打）。
+		next := r + 1
+		return g.startTurnReports(g.strategicAssault(r), func() { g.scanRegionsFrom(next) })
+	}
+	rules.DepartNeutralPlanet(g.regionRecord(r), g.res.Planets, r, g.rand94DC())
+	rules.RecoverRegionDefences(g.res.Planets, r)
+	rules.ResetRegionFortressGuns(g.res.Planets, r)
+	if g.rebellionRolls[r].Rebels {
+		rules.Rebel(g.regionRecord(r), g.res.Planets, r, false)
+	}
+	return false
 }
 
 // Rebellions 回這一回合叛亂的星域。

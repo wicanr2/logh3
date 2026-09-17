@@ -452,3 +452,11 @@ rec fcmd-s3-w2a   337000000 fcmd-s3-base - $S3EXEC $TURN
 rec fcmd-s3-w2b   348000000 fcmd-s3-base - $S3EXEC $TURN
 rec fcmd-s3-w3a   362500000 fcmd-s3-base - $S3EXEC $TURN
 rec fcmd-s3-w3b   374000000 fcmd-s3-base - $S3EXEC $TURN
+
+# 26. 戰略階段的艦隊全滅（#57，`0374:0608` → `06BC` 耗損 → `073F` 報告 → `297B:034A`；`docs/re/336` §九）：
+#     費沙那條第三回合士氣掉到 47（回合尾巴才設 bit0，同回合不耗損），第四回合逐格掃到費沙：
+#     #1031.357M `06BC` 扣兵、第 0 組 0 艘 → #1031.363M `3826:0307`「…已經全滅。」→ 90 tick → #1049.345M `034A`
+#     （先把 `+0x6C` 的假指標交給 `35D1:0102`，那段迴圈跑到 #1056.12M 才進提督那一步）→ #1057.45M 下一則報告。
+#     `-report` 錄在報告等待中間；另一批 mem-in 在第四回合掃描之前、mem-out 在 `034A` 之後。執行器 f7523f9 起不再崩潰（#73）。
+rec fcmd-turn-annihilated-report 1040000000 fcmd-occ-phz-t3b - -clicks 1001000000:544:85,1004000000:560:85 -click-hold $HOLD $OCC
+recmem fcmd-turn-annihilated 1031000000 1057000000 1057100000 fcmd-occ-phz-t3b - -clicks 1001000000:544:85,1004000000:560:85 -click-hold $HOLD $OCC

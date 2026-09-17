@@ -79,7 +79,7 @@ remake 把每個停頓點做成一個狀態，停下來的時候保存「接回�
     「士氣值已經恢復，／可以進行戰鬥。」＋「艦隊士氣值　%4u」；bit3（全隊艘數 0，不看座位）→「<陣營>第Ｎ艦隊／提督名／已全軍覆沒。」；
     印完清 bit2／bit3。跑的時點：每支非停駐的艦隊走完 `047D` 之後先照編制重算士氣（`113A:03C5` → `1261:0067(f, 1)`），
     以及回合尾巴易主報告之後（`1261:00C8`）。戰略打行星裡只記 bit2、不印。
-12. 艦隊留著：「已全軍覆沒」只是報告；全滅（整支拿掉）是 `0374:0608` 另一條（規格 054、`docs/re/334`）。
+12. 艦隊留著：「已全軍覆沒」只是報告；全滅（整支拿掉）是 `0374:0608` 另一條（規格 060）。
 
 **remake：`StateTurnReport`（`internal/game/turnreport.go`）、`Game.fleetStepMorale`、`rules.RecomputeMorale`、
 `rules.StrategicAssaultResult.CapturedBy`；字串在 `turn-window-panel.json` 的 `report_formats`。**

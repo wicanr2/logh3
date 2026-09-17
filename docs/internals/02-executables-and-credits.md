@@ -27,10 +27,15 @@
 單獨執行 `GIN3PS.EXE`（不經啟動器）會印出
 `TINYPROG says, "Bad program file!"` 並以離開碼 255 結束（confirmed，
 `docs/re/02` §2）。TINYPROG 是另一套 DOS 的壓縮／overlay 載入器殼。
-**GLUE 與 TINYPROG 的關係未知**——可能是兩層（GLUE 包住一支 TINYPROG
-程式），也可能 `TINYPROG says` 就是 GLUE 解壓殼自己的訊息。跑完到主選單
-之後，記憶體裡搜不到 `TINYPROG` 也搜不到 `GLUE V1`（解壓殼已被覆蓋），
-所以這個問題要單獨追才有答案。
+
+**封裝是六層**（confirmed：照各層解壓殼的位元組獨立重寫解包，每層自帶的檢查和／CRC 都通過、每層輸出與執行期傾印逐位元組相同；
+`docs/re/336` §9.3）：
+
+```
+GLUE → TINYPROG → GLUE → TINYPROG → GLUE → PKLITE 系（搬運 stub 550 bytes、literal／match 解壓、重定位 5,991 項）
+```
+
+最內層解開的映像 371,594 bytes，入口 `0349:0079`（dosgolem 的載入位置）。
 
 ### 工具鏈（confirmed）
 

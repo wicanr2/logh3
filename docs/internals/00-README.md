@@ -53,7 +53,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 | `tools/py.sh` | Python 分析（`python:3.12-slim`）。原版素材唯讀掛在 `/orig`，倚天字型之類的外部參照用 `LOGH3_EXTRA_RO` 掛在 `/ref`。|
 | `tools/ida.sh` | IDA Pro 9.4 headless。`analyze <exe>` 建 `.i64`，`script <exe> <py>` 跑 IDAPython。**exit code 不能當證據，只看輸出檔**；腳本一律寫檔，一支腳本一次處理多個目標（對同一個 `.i64` 連續開關會弄壞它）。|
 
-`GIN3PS.EXE` 是 GLUE 封裝的，IDA 只看得到解壓殼——本體要在執行期逆向
+`GIN3PS.EXE` 是六層封裝（GLUE／TINYPROG／PKLITE 系，見 `02`），IDA 只看得到最外層的解壓殼——本體要在執行期逆向
 （dosgolem 的 `-peek`／`-find`／trace／檔案存取記錄）。`OPEN.EXE` 與
 `ENDING.EXE` 沒有封裝，適合 IDA。
 
@@ -122,3 +122,4 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [`59-list-screens.md`](59-list-screens.md)：一覽表四張（星系／艦隊／提督／敵將資料）：點列開什麼、游標反白、位移與分頁的變數。
 - [`60-mouse-roles.md`](60-mouse-roles.md)：滑鼠在每張畫面的作用總表（左鍵、右鍵、按住、游標經過），逐格掛證據；原版有、remake 沒有的列在最後。
 - [`61-turn-transition-windows.md`](61-turn-transition-windows.md)：回合處理中的畫面（「戰略模式處理中」、清單清空、地圖不看座位）與每支艦隊走一格的過場視窗（出發前往、被擋、經費不足、問話）、等待怎麼結束；報告框（拿下行星、士氣、已全軍覆沒）。
+- [`62-strategic-attrition.md`](62-strategic-attrition.md)：戰略階段士氣低落停在別人星域的艦隊每回合扣兵、第 0 組 0 艘就全滅（報告、艦艇作廢、提督失蹤、星域與陣營艦隊數減一），沒全滅就移掉 0 艘的組。

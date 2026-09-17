@@ -134,3 +134,55 @@ remake `TestTurnWindowThreeHumanFleetsMatchOracle` 六張整張相同。第一�
 臨時視窗「帝國軍第13艦隊　舒坦梅茲／士氣值低落的關係，／已經無法戰鬥。／艦隊士氣值　40」＋頭像。文字與戰略階段那一則相同，
 編號是半形「13」。remake 的戰場沒有結算最後一步，到不了這個局面；`TestBattleMoraleReportWindowMatchesOracle` 只驗視窗
 （視窗矩形先塗掉再由 remake 畫），逐位元組相同。
+
+## 九、戰略階段的耗損與全滅（#57）
+
+### 9.1 靜態（subagent，筆記 `workplace/re-notes/round7-57-static.md`）
+
+`0374:03E8` 逐格：`+0x13` bit2（這回合有戰鬥）→ `12AA:000E`，**不跑** `0374:0556`；否則 `0556` → `1AAB:0FAF` → `0374:0608` →
+`0919` → `0AF2` → 打行星或被動效果。`0608` 的條件、`06BC` 的扣兵算式、`203A:0593` 的副作用、`073F` 的報告與順序、
+`297B:034A` 的副作用清單都逐條讀了位元組（規格 060 規則 1–6）。閉包 214 支沒有亂數（S，正對照 `20B4:1497` 抓得到兩處 rand）。
+戰場那一條 `185C:001D`（`181B:03F0` 第 8 步）只看第 0 組、`3826:0405` 報告、擦小地圖點（P，位元組；沒接）。
+
+### 9.2 執行期（`f7523f9`，費沙那條）
+
+`fcx-r7-ann-timeline`（`fcmd-occ-phz-t2.state` 起，第三、四回合的輸入同收據鏈）：
+
+```
+#952.77M   1261:0138「士氣值低落」（第三回合尾巴 1261:00C8；同回合的逐格掃描時 bit0 還沒設 → 第三回合不扣）
+#1031.357M 0374:066C 扣兵（第四回合，費沙）   #1031.360M 0374:0692 全滅   #1031.363M 3826:0307 報告
+#1049.345M 297B:034A → 35D1:0102（+0x6C 的假指標，docs/re/334 那段迴圈）→ #1056.12M 297B:0379（提督那一步）→ #1057.45M 下一則報告
+0374:069F（沒全滅那一支）0 命中
+```
+
+收據（第 26 段）：`fcmd-turn-annihilated-report`（#1040M）`cee13064ebbda7d9…`——報告視窗被開頭多的 `\x03` 畫成三列花紋；
+`fcmd-turn-annihilated`（#1057.1M，畫面同上）mem-in #1031.0M `48cc15661c1f3745…`、mem-out #1057.0M `9ed8280ac36015d6…`。
+mem-in → mem-out（`workplace/r7_memdiff.py`）：
+
+```
+艦隊 0   +00 01→09（bit3 沒艘數）  +04 00→FF  +05 20→FF  +0A、+0C → 0
+提督 0   +00 FF→80  +02..+03 → 0  +09 00→80        提督 32（副官）同
+星域 14（費沙）+28 01→00            ds:8F49 01→00    ds:8FE8／8FF0（同盟計分器）+22
+其餘：090A:0E6D 重算（各格 +7D、ds:8F5E／8F6E／8F72）與掃到第 28 格為止的各格處理
+```
+
+（mem-out 一開始錄在 #1050M，那時 `034A` 還在釋放迴圈裡、提督與星域都還沒動，改到 #1057M。）第四回合跑完 `fcmd-occ-phz-t4`
+`9f32a4b4fce9b92d…`：第五回合命令階段，第１艦隊不在。
+
+remake：`rules.StrategicAttrition`／`RemoveEmptyGroups`／`MarkAdmiralMissing`、`game.attritionFrom`（逐格掃描在打行星之前），
+`TestTurnReportAnnihilatedMatchesOracle` 對上述三份收據（報告視窗是刻意差異，規格 060）。第一次跑時報告畫面差在左下角摘要：
+測試用 (560,125) 點掉第三回合的士氣報告，收據是在地圖 (300,240) 點的——游標停在地圖上、第四回合按系統指令才離開，摘要因此清空；
+照收據的輸入改了測試之後 `fcmd-occ-phz-t3b` 與報告畫面都整張相同。
+
+### 9.3 `0374:08D9` 那 16 bytes（subagent，筆記 `workplace/re-notes/round7-glue.md`；主 session 核對了下列位元組）
+
+- `GIN3PS.EXE`（`1efa4bd95e73415e…`）是六層（GLUE → TINYPROG → GLUE → TINYPROG → GLUE → PKLITE 系）。subagent 照各層 stub
+  用 Python 重寫解包（`workplace/r7glue/chain.py`），各層自帶的檢查和／CRC 都過，每層輸出與 dosgolem 傾印逐位元組相同。
+  解包映像 `gin3ps-unpacked-image.bin`（`c3fa47da504d3b94…`，線性 `03490` 起）在 `0374:08D9`（線性 `4019`）是
+  `8e c1 26 83 7c 08 00 75 1b 51 56 9a ef 01 d2 2a`（主 session 讀檔核對），＝ 孿生 `185C:0177` 的形狀（P）。
+- 寫壞的是 GIN3 自己的鍵盤常式：`fcx-r7-glue-w3`（冷開機序列同 `fcmd-base`、`-watch 4019-4028`）#58,339,757 `348A:00AA`／`00AF`
+  把 `401C`／`401A` 寫成 `1E`，#105,000,037 起 `348A:0056`／`0059`／`0095` 把 `-press` 的鍵字寫進 `401E` 起（主 session 核對報告）。
+  `348A:0036` 起 `8a 07 bb 00 04 8e db`（`mov bx,0400h; mov ds,bx`），解包映像同樣位元組 → 原版 bug（P）：BIOS 鍵盤緩衝區應是 `0040h`。
+- 落在 `0374:08DA` 是因為 dosgolem 的載入位置（第一支程式 PSP `0x0100` → GIN3PS 載入段 `0349`）（S）。真機／DOSBox 會寫到哪：H。
+  → #76（要使用者決定執行器怎麼處理）。remake 的「沒全滅」照解包後的原碼（規格 060 規則 6）。
+- 主 session 核對這 16 bytes 時在主機上直接跑了一行 python 讀檔（違反 Docker-only），記在這裡；讀的是 workplace 的檔，沒有寫入。

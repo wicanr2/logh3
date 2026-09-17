@@ -141,7 +141,7 @@ func (p *Planets) StandbyPlanet(faction, region int) int {
 // 艦隊記錄本身（`+0x04`／`+0x05 ← FF`）、星域 `+0x28` 減一、`ds:8F49` 減一與
 // `090A:0E6D` 的重算由呼叫端做（remake 的艦隊表是切片，拿掉那一筆再重數）。
 //
-// 全滅那一支（`297B:034A`：艦艇不還、提督記成失蹤、「已經全滅」報告）還沒接。
+// 全滅那一支（`297B:034A`）不走這裡：戰略階段在 `annihilation.go`；戰場那一條（`185C:016A`）還沒接。
 func Disband(f Fleet, record []byte, admiral func(int) []byte) {
 	for _, a := range []int{f.Admiral, f.Adjutant} {
 		if r := admiral(a); len(r) > admiralStaffFlag {

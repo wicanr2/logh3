@@ -177,7 +177,7 @@
 | `fcmd-occ-phz-t2` | 再實行 → 6 | `16f29f72098733fa10ddfe145775f1c1959fbb4cb9d47e3d1c9b7a44db2fea3d` | 不比 |
 | `fcmd-occ-phz-t3` | 再實行 → 14 費沙：停駐、bit4、8800→8792、`+3C` 47、停在士氣報告 | `006288b49ad1e138d1556932f4a9ad984aac320cf7905c2e688b65ea7c8b38c9` | 不比 |
 | `fcmd-occ-phz-t3b` | 左鍵 (300,200) 關報告 | `4a7b2f0b91b3e1a0caba34bb5742e73cc5807f15c326922061bde3e821230884` | 不比 |
-| `fcmd-occ-phz-t4` | 再實行：8792 不動（⚠ #1049.345M 全滅後原版在 dosgolem 上崩潰轉跑 `ENDING.EXE`，這一批是崩潰殘留；#57） | `4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74` | 不比 |
+| `fcmd-occ-phz-t4` | 再實行：第四回合費沙全滅（第 26 段）、跑完到第五回合命令階段，第１艦隊不在（執行器 `f7523f9` 起；之前的 `4f798803…` 是崩潰殘留，`docs/re/334`、`336` §四） | `9f32a4b4fce9b92d900efd41497ef77c413b49cb23aef5eb685e65eaef19af41` | 0（`TestTurnReportAnnihilatedMatchesOracle`） |
 | `fcmd-garrison-report` | （第 21 段，從 `fcmd-garrison-done`）系統指令、實行 → #570M「已經駐留在星系上。」 | `6b7cd40f6c17b5626e1348ec0815247155164b3af87bcc6e96f83b3e0c475fc3` | 0（規格 059） |
 | `fcmd-garrison-t1` | #665M：第１艦隊解散、亞爾提那戰艦存量 3000→6000、提督 +09 80 | `0a564540f6ae5cea48d5cf5a032764b12f7c6661f8c14cf16c4a67bd4d2039e6` | 0 |
 | `fcmd-garrison-self` | （從 `fcmd-garrison-pick`）點瓦爾哈拉 (32,32)：「要待命於…」 | `f74d52c79d50acb1c523a5e1bef0a270c673226606e7db9060a51a1e1517cf3f` | 不比 |
@@ -214,6 +214,8 @@
 | `fcmd-s3-w2b` | #348M 第二張第二段 | `7e0a808c06f7abfa9e1a481ed7bd6a6290e1495b0987533ff4955816075f9eb9` | 0 |
 | `fcmd-s3-w3a` | #362.5M 第１５艦隊第一段 | `0d37108fc562b37f773e00a75e8160cec56e24857609605b461beddad0d83f25` | 0 |
 | `fcmd-s3-w3b` | #374M 第三張第二段 | `e98191198c7972b492d50ab0fa61d57c19739a78be8fd98b0e6b7d07524ce170` | 0 |
+| `fcmd-turn-annihilated-report` | （第 26 段，從 `fcmd-occ-phz-t3b`）實行 → 第四回合費沙扣兵、第 0 組 0 艘 → #1040M「…已經全滅。」（原版報告視窗畫成花紋） | `cee13064ebbda7d9c49892ee5d51b0599385d94e82b1b2931e1d0715dbadb723` | 報告視窗外 0（視窗是刻意差異，規格 060） |
+| `fcmd-turn-annihilated` | 同上；mem-in #1031.0M `48cc15661c1f3745…`、mem-out #1057.0M `9ed8280ac36015d6…`（`034A` 之後：艦隊 +04／+05 FF、提督 0／32 失蹤、費沙 +28 −1、ds:8F49 −1） | `cee13064ebbda7d9c49892ee5d51b0599385d94e82b1b2931e1d0715dbadb723` | 逐欄（`TestTurnReportAnnihilatedMatchesOracle`） |
 | `fcmd-lst-star` | （從 `fcmd-base`）一覽表 (448,85) → 星系資料 (460,85)；游標停在列 2 卡斯特羅普：地圖反白 3、左下角卡斯特羅普；瓦爾哈拉那一列「1﹕0」 | `257b2e6ffdd365d35055888838cb14ebbccb4f461eca6421ab53f139b7fee265` | 0 |
 | `fcmd-lst-star-row` | 列 0 瓦爾哈拉 (460,50) → 換選、關清單、星系情報視窗 | `95789b6188c109f1d1f17a56c0f2067aea2d8851c462e9933b3c6784a69fd461` | 小圖最後一列 |
 | `fcmd-lst-star-row-close` | 結束 (270,350) → 地圖，左下角瓦爾哈拉 1﹕0 | `64dac6060a3cde6905455442302a458091bf5229383117994ba41e450ff80bd0` | 0 |
