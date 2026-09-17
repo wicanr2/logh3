@@ -191,6 +191,9 @@ const (
 	// （`20B4:0276` → `1DD6:0152`；`ANI_PNL1.A98` ＋ 三個文字視窗，戰鬥曲的出口；
 	// `docs/re/324`、規格 056）。
 	StateEngagement
+	// StateTurnWindow 是回合處理中每支人類艦隊的過場視窗（出發前往／已經到達、
+	// 被擋、經費不足；`113A:0B46`／`0797`／`0A4E`，規格 059），等計時或一次點擊。
+	StateTurnWindow
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -215,7 +218,7 @@ func (s State) String() string {
 		"StateFleetWindow", "StateFleetActionMenu", "StateFleetTargetPick",
 		"StateFleetMessage", "StateFleetConfirm", "StateFleetStandby",
 		"StateFleetOccupyWarn", "StateFleetChangeMenu", "StateFleetChangeAdj", "StateFleetChangeOrg",
-		"StateRegionInfo", "StateOccupyAsk", "StateEngagement",
+		"StateRegionInfo", "StateOccupyAsk", "StateEngagement", "StateTurnWindow",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -261,6 +264,7 @@ var screenSpecName = map[State]string{
 	StateFleetWindow:       "screen-command-phase",
 	StateRegionInfo:        "screen-command-phase",
 	StateOccupyAsk:         "screen-command-phase",
+	StateTurnWindow:        "screen-command-phase",
 	StateFleetActionMenu:   "screen-command-phase",
 	StateFleetTargetPick:   "screen-command-phase",
 	StateFleetMessage:      "screen-command-phase",
@@ -471,6 +475,8 @@ type Resources struct {
 	RegionInfo *screen.RegionInfoSpec
 	// OccupyAsk 是回合裡占領命令的問話（`docs/internals/data/occupy-ask-panel.json`）。
 	OccupyAsk *screen.OccupyAskSpec
+	// TurnWindow 是回合裡的過場視窗（出發前往／被擋／經費不足，規格 059）。
+	TurnWindow *screen.TurnWindowSpec
 
 	// ListScreen 是一覽表四張共用的清單版面（規格 055）。
 	ListScreen *screen.ListScreenSpec
@@ -787,6 +793,8 @@ type Game struct {
 	rinfo int
 	// occupyAsk 是回合處理中那張「要占領此星系嗎？」問話停下來的地方。
 	occupyAsk occupyAskState
+	// turnWin 是回合處理中的過場視窗停在哪一支、第幾段（`turnwindow.go`）。
+	turnWin turnWindowState
 
 	// mapCache 是戰略地圖兩種樣子（[1] 有反白格、[0] 沒有）的快取：
 	// 32 格的色號一變就重建（`strategicMapColours`）。
@@ -1046,35 +1054,48 @@ func (g *Game) continueAfterAdmiralFateReports() {
 }
 
 // moveFleetsFrom 從第 i 支起逐支跑 `113A:0350`；碰到要問「要占領此星系嗎？」
-// 就開 `StateOccupyAsk` 停下，回答之後從那一支接回。全部跑完接
+// 就開 `StateOccupyAsk` 停下，人類座位的艦隊走一格（或走不了）開
+// `StateTurnWindow` 停下（規格 059），關掉之後從下一支接回。全部跑完接
 // `afterFleetMoves`。
 func (g *Game) moveFleetsFrom(i int) {
 	for ; i < len(g.fleets); i++ {
 		n := len(g.fleets)
-		ask := g.stepFleet(i)
+		step := g.stepFleet(i)
 		if len(g.fleets) < n {
 			i-- // 這一支解散了，下一支補進同一個索引
 		}
-		if ask {
+		switch step {
+		case fleetStepAsk:
 			g.occupyAsk.fleet = i
 			g.occupyAsk.resume = g.state
 			g.state = StateOccupyAsk
+			return
+		case fleetStepWindow:
 			return
 		}
 	}
 	g.afterFleetMoves()
 }
 
-// stepFleet 是 `113A:0350` 對一支艦隊做的事。回 true ＝ 要問玩家、先停下。
+// fleetStep 是 `stepFleet` 跑完一支之後回合要不要停。
+type fleetStep int
+
+const (
+	fleetStepDone   fleetStep = iota
+	fleetStepAsk              // 停在問話（StateOccupyAsk）
+	fleetStepWindow           // 停在過場視窗（StateTurnWindow），結束時自己接回
+)
+
+// stepFleet 是 `113A:0350` 對一支艦隊做的事。
 //
 // **一回合走一格是假設待驗**——量到的三組移動都只隔一格。
-func (g *Game) stepFleet(i int) bool {
+func (g *Game) stepFleet(i int) fleetStep {
 	if g.res.Graph == nil || g.res.Planets == nil {
-		return false
+		return fleetStepDone
 	}
 	f := &g.fleets[i]
 	if f.Faction < 0 || f.Faction > 1 {
-		return false
+		return fleetStepDone
 	}
 	// 命令是移動／占領而所在星域已經是目的地：停駐（`+036B`）。
 	if (f.Move == rules.MoveMove || f.Move == rules.MoveOccupy) && f.Target == f.Region {
@@ -1090,28 +1111,56 @@ func (g *Game) stepFleet(i int) bool {
 				}
 			}
 		}
-		return false
+		return fleetStepDone
 	}
 	cost := rules.FleetOtherCost(g.res.ShipKinds, f.Faction, f.Composition, f.Operations)
-	plan := g.res.Graph.PlanStep(f, g.res.Planets.RegionOwner, g.military[f.Faction], cost)
+	// 「自己的」讀星域記錄的 `+0x12`（`113A:04DC`／`0514`），不是由行星數出來的擁有者。
+	plan := g.res.Graph.PlanStep(f, g.regionOwner, g.military[f.Faction], cost)
+	show := g.humanSeat(f.Faction) && g.res.TurnWindow != nil
 	switch plan.Outcome {
 	case rules.StepBlockedEnemy:
-		// 「無法前往敵方的星系」（`113A:0797`）：命令清掉、停駐。報告視窗
-		// 是回合處理中的過場，remake 不畫。
+		// 「無法前往敵方的星系」（`113A:0797`）：命令清掉、停駐。
+		if show {
+			g.openTurnWindow(i, screen.TurnWindowBlocked, f.Region, plan, func() bool {
+				rules.BlockByEnemy(&g.fleets[i])
+				return false
+			})
+			return fleetStepWindow
+		}
 		rules.BlockByEnemy(f)
 	case rules.StepAskOccupy:
 		g.occupyAsk.next = plan.Next
-		return true
+		return fleetStepAsk
 	case rules.StepNoFunds:
 		// 「由於移動經費不足無法移動」（`113A:0A4E`）：不動、命令留著。
+		if show {
+			g.openTurnWindow(i, screen.TurnWindowNoFunds, f.Region, plan, nil)
+			return fleetStepWindow
+		}
 	case rules.StepMoved:
+		if show {
+			g.openDepartWindow(i, plan)
+			return fleetStepWindow
+		}
 		g.moveFleetTo(i, plan.Next, plan.Cost)
+		g.arriveFleet(i)
 	}
-	return false
+	return fleetStepDone
 }
 
-// moveFleetTo 把第 i 支走到 next（`113A:047D` 的 `+0585` 起）：扣移動經費、
-// 錢流進行星、改所在星域，到了目的地就照命令收尾（`rules.Arrive`）。
+// openDepartWindow 是 `113A:0B46`「出發前往」那一張。
+//
+// 順序照原版：先扣錢、改位置（`+05C4`），再印（`+060F`），等完才到達收尾（`+065B`，
+// 駐留在這裡解散）。
+func (g *Game) openDepartWindow(i int, plan rules.StepPlan) {
+	from := g.fleets[i].Region
+	g.moveFleetTo(i, plan.Next, plan.Cost)
+	g.openTurnWindow(i, screen.TurnWindowDepart, from, plan, func() bool { return g.arriveFleet(i) })
+}
+
+// moveFleetTo 把第 i 支走到 next（`113A:047D` 的 `+0585`–`+060F`）：扣移動經費、
+// 錢流進行星、改所在星域。到了目的地的收尾是 `arriveFleet`，人類座位的艦隊
+// 在過場視窗之後才跑（`openDepartWindow`）。
 func (g *Game) moveFleetTo(i, next, cost int) {
 	f := &g.fleets[i]
 	from := f.Region
@@ -1134,10 +1183,17 @@ func (g *Game) moveFleetTo(i, next, cost int) {
 		payTo = from
 	}
 	g.res.Planets.PayIntoRegion(payTo, cost)
-	if rules.Arrive(f) {
+}
+
+// arriveFleet 是 `113A:047D` 的 `+065B` 起：到了目的地就照命令收尾。人類座位的
+// 艦隊在過場視窗（`+060F` → `0B46`）等完之後才跑這一段。回 true ＝ 這一支解散了。
+func (g *Game) arriveFleet(i int) bool {
+	if rules.Arrive(&g.fleets[i]) {
 		// 駐留到了目的地：整支解散（`113A:06A6` → `297B:025D`，`docs/re/329`）。
 		g.disbandFleet(i)
+		return true
 	}
+	return false
 }
 
 // disbandFleet 拿掉第 i 支（`297B:025D`）：提督與副官卸下、艦艇還回所在星域，
@@ -1173,8 +1229,16 @@ func (g *Game) answerOccupyAsk(occupy bool) {
 		f := &g.fleets[i]
 		f.Target = g.occupyAsk.next
 		cost := rules.FleetOtherCost(g.res.ShipKinds, f.Faction, f.Composition, f.Operations)
-		if plan := g.res.Graph.PlanStep(f, g.res.Planets.RegionOwner, g.military[f.Faction], cost); plan.Outcome == rules.StepMoved {
+		if plan := g.res.Graph.PlanStep(f, g.regionOwner, g.military[f.Faction], cost); plan.Outcome == rules.StepMoved {
+			// 占領之後照樣走 `0B46`（收據 `fcmd-turn-ask-depart`／`-onward`）。
+			if g.humanSeat(f.Faction) && g.res.TurnWindow != nil {
+				g.openDepartWindow(i, plan)
+				return
+			}
 			g.moveFleetTo(i, plan.Next, plan.Cost)
+			if g.arriveFleet(i) {
+				i--
+			}
 		}
 	}
 	g.moveFleetsFrom(i + 1)
@@ -2351,6 +2415,9 @@ func (g *Game) click(x, y int) {
 		}
 	case StateEngagement:
 		g.engagementClick()
+	case StateTurnWindow:
+		// `3765:006C` 讀到左鍵按下就結束這一段，座標不參與（規格 059）。
+		g.endTurnWindowStage()
 	case StateOccupyAsk:
 		// 「要占領此星系嗎？」只認兩顆鈕（熱區 `2DB8`：占領碼 0、待命碼 1），
 		// 點別處與右鍵都不動（`113A:0899` 的事件迴圈只收命中的左鍵）。
@@ -2600,6 +2667,9 @@ func (g *Game) rightClick(x, y int) {
 		g.closeRegionInfo()
 	case StateStarList, StateFleetList, StateAdmiralListView, StateEnemyList:
 		g.listScreenRightClick()
+	case StateTurnWindow:
+		// 右鍵按下同樣結束這一段（收據 `fcx-turnwin-rclk90`，`docs/re/332` §四）。
+		g.endTurnWindowStage()
 	case StateOccupyAsk:
 		// 問話不吃右鍵（`113A:0899`：只有命中鈕的左鍵會離開迴圈）。
 	case StateEngagement:
@@ -3026,10 +3096,13 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 	if g.res.CapitalPanel != nil {
 		g.res.CapitalPanel.SetTab(g.listTab())
 	}
-	if g.listTab() == listTabFleet {
-		g.drawFleetRows(fb)
+	// 回合處理中清單清空（`04F8:0355(1)`、`056A:011C` 的 `%216s`，規格 059）。
+	if !g.turnProcessing() {
+		if g.listTab() == listTabFleet {
+			g.drawFleetRows(fb)
+		}
+		g.drawListRows(fb)
 	}
-	g.drawListRows(fb)
 	switch g.state {
 	case StateMainGame, StateShipOrder, StateBuildPlan, StateAdmiralList, StateBudgetPlan:
 		if c, _, ok := g.capitalSummary(); ok {
@@ -3086,6 +3159,15 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
 		}
 		g.drawOccupationReport(fb)
+		return
+	}
+	// 回合過場與問話（規格 059）：右側只剩「戰略模式處理中」，視窗在 afterWindow 疊上去。
+	if g.turnProcessing() {
+		if g.res.CapitalPanel != nil {
+			g.res.CapitalPanel.DrawChrome(fb, g.res.Font)
+		}
+		g.res.TurnWindow.DrawBusyTitle(fb, g.res.Font, g.res.FrameTiles)
+		screen.DrawSettlementScrollArrows(fb)
 		return
 	}
 	if g.state == StateAdmiralFateReport {
@@ -3165,7 +3247,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
 		StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg,
 		StateFleetOrg, StateFleetNumber, StateFleetAdjutant,
-		StateFleetComposition, StateFormation, StateRegionInfo, StateOccupyAsk,
+		StateFleetComposition, StateFormation, StateRegionInfo, StateOccupyAsk, StateTurnWindow,
 		// 這五張的收據末尾都有一次 `-mouse-at`（搬到 (600,340)），
 		// 而畫面上的箭頭跟著搬過去了：`info1e`／`lst1e`／`lst2e`／
 		// `lst3e`／`settings1e` 與同盟的五張，十份都是同一個結論。
@@ -3209,6 +3291,9 @@ func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
 	}
 	if g.state == StateOccupyAsk {
 		g.drawOccupyAsk(fb)
+	}
+	if g.state == StateTurnWindow {
+		g.drawTurnWindow(fb)
 	}
 	if g.state == StateRegionInfo {
 		g.drawRegionInfo(fb)
@@ -3970,8 +4055,14 @@ func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
 func (g *Game) playerStarMap() *asset.Image {
 	// 交棒視窗與月底結算中的地圖沒有反白格（收據 `vs3`／`vs5`、
 	// `turnmonth2`；`docs/spec/045`）——原版那一刻 `ds:F182` 是 0xFF。
-	tint := g.state != StateVersusInput && g.state != StateShipDelivery
-	cols := g.strategicMapColours(g.faction, tint)
+	tint := g.state != StateVersusInput && g.state != StateShipDelivery && !g.turnProcessing()
+	seat := g.faction
+	if g.turnProcessing() {
+		// 回合處理中 `ds:8F1D` 是 FF：`3705:037F` 對 0／1 以外的座位一律當「沒有自軍艦隊」，
+		// 32 格都塗擁有者色（`fcmd-turn-nofund` 瓦爾哈拉色 1）。
+		seat = -1
+	}
+	cols := g.strategicMapColours(seat, tint)
 	if cols == nil {
 		return g.res.StarMap
 	}
@@ -4072,6 +4163,10 @@ func (g *Game) strategicMapColours(faction int, tint bool) []uint8 {
 	cols := make([]uint8, n)
 	for i := range cols {
 		cols[i] = rules.StrategicMapColour(g.regionRecord(i), faction, i == hl)
+	}
+	// 回合過場那一格塗色 5（`3705:03FD`，規格 059）。
+	if r, c := g.turnWindowMapColour(); r >= 0 && r < n {
+		cols[r] = c
 	}
 	return cols
 }

@@ -327,6 +327,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	turnWindow, err := screen.LoadTurnWindowSpec(filepath.Join(data, "turn-window-panel.json"))
+	if err != nil {
+		return nil, err
+	}
 	listScreen, err := screen.LoadListScreenSpec(filepath.Join(data, "list-screen-panel.json"))
 	if err != nil {
 		return nil, err
@@ -391,6 +395,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		PlanetInfoMap:   planetInfoMap,
 		RegionInfo:      regionInfo,
 		OccupyAsk:       occupyAsk,
+		TurnWindow:      turnWindow,
 		ListScreen:      listScreen,
 		Engagement:      engagement,
 		EngagementPanel: engagementPanel,

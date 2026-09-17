@@ -26,15 +26,21 @@ func reachOccupyAstarte(t *testing.T) *Game {
 	return g
 }
 
-// executeTurn 按一次「實行」，把回合裡跳出來的模態報告（占據／叛亂／士氣）
+// executeTurn 按一次「實行」，把回合裡跳出來的過場視窗與模態報告（占據／叛亂／士氣）
 // 用同一個落點關掉，回到命令階段。
 func executeTurn(t *testing.T, g *Game) {
 	t.Helper()
 	g.Click(544, 125)
 	g.Click(560, 125)
-	for i := 0; i < 8; i++ {
+	finishTurn(t, g)
+}
+
+// finishTurn 從回合中途停下來的地方（過場視窗或報告）一路點到回合跑完。
+func finishTurn(t *testing.T, g *Game) {
+	t.Helper()
+	for i := 0; i < 64; i++ {
 		switch g.State() {
-		case StateOccupationReport, StateRebellionReport, StateRegionFlipReport:
+		case StateOccupationReport, StateRebellionReport, StateRegionFlipReport, StateTurnWindow:
 			g.Click(560, 125)
 		default:
 			return

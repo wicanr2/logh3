@@ -7362,3 +7362,19 @@ GitHub 的 issue 時間軸承擔。
   寫回去是倒退。改成腳本讀它、核對檔長／區塊字形數加總／九個 seek 偏移／畫面比對，對不上就失敗；不改任何欄位語意。
 - 重跑：JSON 不變、`graph-img-sheet.png` 與 `assets/original/font/` 相同；反向檢查把「帝」偏移改 63361 會報錯。
 - 順手：JSON `exports` 與 internals 06 的圖集位置改成 `assets/original/font/`。#61 verify → absent（`json.dump(meta`）。
+
+## 2026-09-17 — 回合裡的過場視窗：移動那一族（#52 前半；第六輪 B-1～B-4、B-7）
+
+- 自己核對 subagent 的筆記（`workplace/re-notes/turn-move-windows.md`）：十八批探索收據雜湊一致；`3705:037F` 位元組確認
+  `ds:8F1D` 不是 0／1 就當沒有自軍艦隊。腳本化成 `tools/fleetcmd_receipts.sh` 第 23 段（十四批，重錄雜湊全同），另加
+  `fcmd-turn-block-pre`（實行前 poke，remake 的地圖每幀重算，對不上 AI 之後 poke 那一份保留的舊色）。
+- 規格 059（先寫狀態圖再動程式）、`docs/re/332`、internals 61；更正 `docs/re/322` §一 `+060F` 的括號（指標）、internals 49 的
+  換行敘述加待定指標、規格 054 過場那一列改指標、問話視窗升 CONFORMED。
+- remake：`StateTurnWindow`（`turnwindow.go`）、`stepFleet` 回 `fleetStep`、`moveFleetTo`／`arriveFleet` 拆開（先改位置、
+  等完才收尾）；處理中畫面（標題只剩「戰略模式處理中」、清單清空、結算那組捲動箭頭、地圖座位 −1）也套在問話視窗上；
+  `Printf` 補 `%*s`；PlanStep 的「自己的」改讀記錄 `+0x12`。
+- 對拍時抓到的：頭像是整張 80×100（易主報告那種 72×93 是另一回事，問話視窗的版面 JSON 一起改）；處理中地圖瓦爾哈拉色 1 不是 0。
+- 測試：`turnwindow_test.go` 七個（十二批整張）、`garrison_test.go` 多比 `-report` 兩批；`TestFleetOrderThenExecuteMatchesOracle`
+  改走 `executeTurn`（原本註解「沒有任何出發／到達報告」是舊現況）。GUI 加 `fcmd-turn-depart`／`-arrive`，`fcmd-exec`／`occ-t2`／
+  `garrison-t1` 補點掉過場的兩下，30 例全相同。
+- 還沒做：B-5 攻占訊息框、B-6 士氣報告；#52 留著。

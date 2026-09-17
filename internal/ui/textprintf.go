@@ -9,7 +9,7 @@ import "strconv"
 // 都在 PutByte 那一層處理，這裡只負責把 `%…` 換成位元組。
 //
 // 只做原版格式字串用得到的幾種：`%s`、`%c`、`%d`／`%u`／`%ld`／`%lu`，
-// 加上 `-`（靠左）、`0`（補零）與寬度。`l` 只影響取值的寬度，輸出一樣。
+// 加上 `-`（靠左）、`0`（補零）與寬度（含 `*` 由參數給）。`l` 只影響取值的寬度，輸出一樣。
 // 沒見過的轉換原樣輸出，**不猜**。
 
 // Printf 把格式化的結果寫進緩衝區。args 依序對應格式字串裡的轉換：
@@ -59,6 +59,16 @@ func formatTo(put func(byte), format []byte, args ...any) {
 			j++
 		}
 		width := 0
+		if j < len(format) && format[j] == '*' {
+			// 寬度從參數取，負數 ＝ 靠左（`3982:0263` 的 `%*s` 帶 −16）。
+			if v, ok := toInt(next()); ok {
+				if v < 0 {
+					left, v = true, -v
+				}
+				width = int(v)
+			}
+			j++
+		}
 		for j < len(format) && format[j] >= '0' && format[j] <= '9' {
 			width = width*10 + int(format[j]-'0')
 			j++

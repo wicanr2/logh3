@@ -61,6 +61,15 @@ func (g *Game) Tick(d time.Duration) {
 			g.copyProtTicks++
 		}
 	}
+	if g.state == StateTurnWindow {
+		g.turnWin.rem += d
+		n := 0
+		for tick := g.engagementTickDuration(); g.turnWin.rem >= tick; g.turnWin.rem -= tick {
+			n++
+		}
+		g.turnWindowTick(n)
+		return
+	}
 	if g.state == StateEngagement {
 		g.engTickRemainder += d
 		n := 0

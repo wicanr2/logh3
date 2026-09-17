@@ -245,6 +245,10 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	turnWindow, err := screen.LoadTurnWindowSpec(filepath.Join("../..", "docs/internals/data/turn-window-panel.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	listScreen, err := screen.LoadListScreenSpec(filepath.Join("../..", "docs/internals/data/list-screen-panel.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -258,6 +262,7 @@ func load(t *testing.T) *Resources {
 		PlanetInfoMap: planetInfoMap,
 		RegionInfo:    regionInfo,
 		OccupyAsk:     occupyAsk,
+		TurnWindow:    turnWindow,
 		ListScreen:    listScreen,
 		AdmiralNames:  names, StarListOrder: starOrder,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,

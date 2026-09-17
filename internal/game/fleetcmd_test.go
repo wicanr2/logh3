@@ -274,13 +274,13 @@ func TestFleetGarrisonAndTransportOrders(t *testing.T) {
 }
 
 // 下了移動命令之後按「實行」：艦隊走一格到亞爾提那、命令清掉（`+0x07` FF、
-// `+0x08` 05），沒有任何出發／到達報告，直接回地圖（`fcmd-exec`）。
+// `+0x08` 05），「出發前往／已經到達」那張過場（規格 059，`turnwindow_test.go`）
+// 關掉之後回地圖（`fcmd-exec`）。
 func TestFleetOrderThenExecuteMatchesOracle(t *testing.T) {
 	g := reachFleetTargetPick(t)
 	g.Click(85, 128)  // 亞爾提那
 	g.Click(432, 263) // 「決定」
-	g.Click(544, 125) // 系統指令
-	g.Click(560, 125) // 實行
+	executeTurn(t, g)
 	if g.State() != StateCommandPhase {
 		t.Fatalf("實行之後在 %v", g.State())
 	}

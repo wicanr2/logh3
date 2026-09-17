@@ -178,14 +178,28 @@
 | `fcmd-occ-phz-t3` | 再實行 → 14 費沙：停駐、bit4、8800→8792、`+3C` 47、停在士氣報告 | `006288b49ad1e138d1556932f4a9ad984aac320cf7905c2e688b65ea7c8b38c9` | 不比 |
 | `fcmd-occ-phz-t3b` | 左鍵 (300,200) 關報告 | `4a7b2f0b91b3e1a0caba34bb5742e73cc5807f15c326922061bde3e821230884` | 不比 |
 | `fcmd-occ-phz-t4` | 再實行：8792 不動 | `4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74` | 不比 |
-| `fcmd-garrison-report` | （第 21 段，從 `fcmd-garrison-done`）系統指令、實行 → #570M「已經駐留在星系上。」 | `6b7cd40f6c17b5626e1348ec0815247155164b3af87bcc6e96f83b3e0c475fc3` | 不比（過場不畫） |
+| `fcmd-garrison-report` | （第 21 段，從 `fcmd-garrison-done`）系統指令、實行 → #570M「已經駐留在星系上。」 | `6b7cd40f6c17b5626e1348ec0815247155164b3af87bcc6e96f83b3e0c475fc3` | 0（規格 059） |
 | `fcmd-garrison-t1` | #665M：第１艦隊解散、亞爾提那戰艦存量 3000→6000、提督 +09 80 | `0a564540f6ae5cea48d5cf5a032764b12f7c6661f8c14cf16c4a67bd4d2039e6` | 0 |
 | `fcmd-garrison-self` | （從 `fcmd-garrison-pick`）點瓦爾哈拉 (32,32)：「要待命於…」 | `f74d52c79d50acb1c523a5e1bef0a270c673226606e7db9060a51a1e1517cf3f` | 不比 |
 | `fcmd-garrison-self-done` | 決定：記錄仍是駐留（+0x08=2） | `f4392aa99cf3ac7764a5d4ef5e03d868b862ebd72838a96d9016ede90b72e5ee` | 不比 |
-| `fcmd-garrison-self-report` | 實行 → #570M 報告 | `977b9c3356a4188acf8989c9c972ce5c9f5e6b93e8d08b1fe93fa3000f7302ce` | 不比（過場不畫） |
+| `fcmd-garrison-self-report` | 實行 → #570M 報告 | `977b9c3356a4188acf8989c9c972ce5c9f5e6b93e8d08b1fe93fa3000f7302ce` | 0（規格 059） |
 | `fcmd-garrison-self-t1` | #665M：就地解散、瓦爾哈拉存量 75000→78000、不扣移動費 | `86532c2ba52f5fd3baf736f359174ecd1282b945ed4accce27ac193c59025b39` | 0 |
 | `fcmd-assault-ast` | （第 22 段，從 `fcmd-occ-t4`，輸入同 `fcmd-occ-t5`）進 `20B4:1497` #1102006030、回到 `1507` #1102557471 各倒 1 MB；巴溫 4200→3768、`+3C` 67；mem-in `7982f0667c4395ee…`、mem-out `4df59b3e17dd45fb…` | `8f5855bc3f73975d2f0bf63c5bda9722b715aeb4d551482415ab1b718ce53e92` | 不比畫面（＝ t5／phz-t3）；記憶體逐欄 0（`TestStrategicAssaultMatchesOracle`） |
 | `fcmd-assault-phz` | （從 `fcmd-occ-phz-t2`，輸入同 `phz-t3`）#912160349／#912742120；費沙 8800→8792、`+3C` 47、`+00` 05；mem-in `7cbffccff1c8bedf…`、mem-out `34cac788670c116a…` | `006288b49ad1e138d1556932f4a9ad984aac320cf7905c2e688b65ea7c8b38c9` | 不比畫面（＝ t5／phz-t3）；記憶體逐欄 0（`TestStrategicAssaultMatchesOracle`） |
+| `fcmd-turn-think` | （第 23 段，從 `fcmd-done`）系統指令、實行 → #552.6M 同盟「戰略模式思考中」（AI） | `073a234bf27a69dd63b0478f593c0ae8be4cd58081790ca699261a6925502cf8` | 不比（remake 不停在這裡，規格 059） |
+| `fcmd-turn-busy` | #555.3M「戰略模式處理中」、清單清空 | `44c30d0f0135001a648a66006776f19e0f5a8e743d5485fb2e3bacef84ce02af` | 不比（同上） |
+| `fcmd-turn-depart` | #558.8M「瓦爾哈拉 出發前往 亞爾提那」、瓦爾哈拉色 5 | `0820a84e7b165e8b7cbe4fb76e2cb806329274130ed42a0752caffaf9df61097` | 0 |
+| `fcmd-turn-arrive` | #570M「已經到達目標星系。」、亞爾提那色 5 | `20a1209a52572cadee645c4e3601024e9eb5d4bfc1074fa20eecba3bbae45528` | 0 |
+| `fcmd-turn-garrison` | （從 `fcmd-garrison-done`）#570M「已經駐留在星系上。」（＝ `fcmd-garrison-report`） | `6b7cd40f6c17b5626e1348ec0815247155164b3af87bcc6e96f83b3e0c475fc3` | 0 |
+| `fcmd-turn-occ-depart` | （從 `fcmd-occupy-done`）#558.8M 出發前往 | `04bedab24d628af4a4d3e2db6b8bff2307af6644f9b5f62f47ecbf497f7659e3` | 0 |
+| `fcmd-turn-occ-onward` | #570M 沒有到達句 | `f5d6cca075651a7d90e6d8e0e16ba8453bbdca0b11dc5a803c5f4dbfa39dbd9d` | 0 |
+| `fcmd-turn-nofund` | `-poke lin:5DA82@548000000=20,00,00,00`（軍事費 32）→ #565M「由於移動經費不足無法移動。」 | `2396b6bdd95a56825067e78d85ef876f06d1062322b9075e364a70d72ed7408c` | 0 |
+| `fcmd-turn-block` | `-poke lin:5F3DA@554500000=01`（AI 之後把亞爾提那改成同盟）→ #565M「無法前往敵方的星系／。」 | `30e48aacd673ec0477ef1f716e69b1116380c5473cb5393cd9e16273a020dbc2` | 不比（地圖保留舊色，remake 每幀重算） |
+| `fcmd-turn-block-pre` | 同上但 poke 在實行之前 #548M | `fc2d65105a9cc5df8f9403b2339c6d20e30641371f2767c3080fa66c2adf6bdb` | 0 |
+| `fcmd-turn-ask` | （從 `fcmd-occ-t1`）`-poke lin:5F650@665500000=01`（亞爾維斯改成同盟）、系統指令、實行 → #680M 問話 | `d30709bb6a96c2ba7b851339a1f4f73a1954e0768cd3deb753ca048d8667aa0b` | 0 |
+| `fcmd-turn-ask-depart` | #700M 左鍵 (424,230) 占領 → #704M「亞爾提那 出發前往 亞爾維斯」 | `00cf1500fb1dcbd60b7e5509450b7583ae46e5482e69d8f7081eca92132e8ec6` | 0 |
+| `fcmd-turn-ask-onward` | #716M 沒有到達句 | `9d6c1a5ea3ee03f78932656a7565abdab64657d8735549a8d34bdb74bc3c27b4` | 0 |
+| `fcmd-turn-clk22` | （從 `fcmd-done`）實行後 #558M 左鍵 (560,85) → #565M 已經換第二段（＝ `fcmd-turn-arrive`） | `20a1209a52572cadee645c4e3601024e9eb5d4bfc1074fa20eecba3bbae45528` | 0 |
 | `fcmd-lst-star` | （從 `fcmd-base`）一覽表 (448,85) → 星系資料 (460,85)；游標停在列 2 卡斯特羅普：地圖反白 3、左下角卡斯特羅普；瓦爾哈拉那一列「1﹕0」 | `257b2e6ffdd365d35055888838cb14ebbccb4f461eca6421ab53f139b7fee265` | 0 |
 | `fcmd-lst-star-row` | 列 0 瓦爾哈拉 (460,50) → 換選、關清單、星系情報視窗 | `95789b6188c109f1d1f17a56c0f2067aea2d8851c462e9933b3c6784a69fd461` | 小圖最後一列 |
 | `fcmd-lst-star-row-close` | 結束 (270,350) → 地圖，左下角瓦爾哈拉 1﹕0 | `64dac6060a3cde6905455442302a458091bf5229383117994ba41e450ff80bd0` | 0 |

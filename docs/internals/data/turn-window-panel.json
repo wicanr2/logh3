@@ -1,0 +1,25 @@
+{
+ "note": "回合處理中的過場視窗（056A:03E0 開、32 支跑完才關；113A:0B46 出發前往／到達、0797 被擋、0A4E 經費不足；docs/re/332、規格 059）。視窗 3603:0006(NULL, 0x97, 20, 6, 18, 6, 1)：外框 (320,160)–(639,319)、內容 (336,180) 起 18×6 格。文字：ds:2EBA「\\x0c%s  第」帶色陣營名、3982:0038 全形編號、ds:2EC2「艦隊\\n%s%s\\n」提督名＋軍階；0B46 再印 3982:0263 的 ds:8EB2「\\x03[%d,%*s\\x03[%d,」（色 ds:6096[擁有者]、寬 −16、名字、0x97）現在格、ds:2ECD「出發前往\\n」、下一格；第二段 ds:2ED7 到達／ds:2EEF 駐留。0797 本文 ds:2E29、0A4E 本文 ds:2E9F（前兩列的格式字串在 2E16／2E1E、2E8C／2E94，位元組與 2EBA／2EC2 相同）。頭像 3958:0215(提督, 0x44, 0x23) ＝ (544,180)。等待 3765:006C：出發前往 ds:8F38 >> 2，其餘 ds:8F38。",
+ "cell_x": 20,
+ "cell_y": 6,
+ "cols": 18,
+ "rows": 6,
+ "style": 1,
+ "colour": 151,
+ "region_ink": [150, 149, 151],
+ "region_width": -16,
+ "first_wait_shift": 2,
+ "depart_colour": 5,
+ "formats": {
+  "fleet_prefix": "0c25732020b2c4",
+  "fleet_suffix": "c4a5b6a40a257325730a",
+  "region_name": "035b25642c252a73035b25642c",
+  "depart": "a558b56fab65a9b90a",
+  "arrived": "0aa477b867a8ecb946a5d8bcd0ac50a874a14320202020",
+  "garrisoned": "0aa477b867be6eaf64a662ac50a874a457a1432020",
+  "blocked": "b54caa6bab65a9b9bcc4a4e8aabaac50a8740aa14320202020202020202020",
+  "no_funds": "a5d1a9f3b2beb0cab867b64fa4a3a8acb54caa6bb2beb0caa143"
+ },
+ "busy_title": {"cell_x": 20, "cell_y": 0, "cols": 18, "rows": 2, "text": "bed4b2a4bcd2a6a1b342b27aa4a4", "note": "056A:011C 印完之後標題窗 ds:94F6（3603:0006(94F6, 0x97, 20, 0, 18, 2, 1)）的緩衝區只剩列 0「戰略模式處理中」（ds:07E1；peek lin:6D3F4:144 @#554.86M，docs/re/332 §五）"},
+ "face": {"x": 544, "y": 180, "w": 80, "h": 100, "source": "FACE.AMG"}
+}

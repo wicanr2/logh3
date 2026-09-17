@@ -17,7 +17,7 @@ import (
 //   - 亞爾提那：`fcmd-garrison-done` 按實行 → `fcmd-garrison-t1`（#665M）。
 //   - 就地（瓦爾哈拉）：`fcmd-garrison-self-done` → `fcmd-garrison-self-t1`。
 //
-// 回合裡的「已經駐留在星系上。」過場報告（`-report`）remake 不畫（規格 054 已知差異），不比。
+// 回合裡的「已經駐留在星系上。」那一張過場（`-report`，#570M）也整張比（規格 059）。
 func TestGarrisonArrivalDisbandsMatchesOracle(t *testing.T) {
 	for _, c := range []struct {
 		name         string
@@ -40,7 +40,13 @@ func TestGarrisonArrivalDisbandsMatchesOracle(t *testing.T) {
 			}
 			matches(t, g, c.batch+"-done")
 			stock := rules.RegionShips(g.regionRecord(c.region), 0)[0]
-			executeTurn(t, g)
+			pressExecute(g)
+			g.Click(560, 125) // 出發前往 → 已經駐留在星系上。
+			if g.State() != StateTurnWindow || len(g.fleets) == 0 || g.fleets[0].Faction != 0 {
+				t.Fatalf("「已經駐留」那一張：%v、艦隊 %d 支；原版等完之後才解散", g.State(), len(g.fleets))
+			}
+			matches(t, g, c.batch+"-report")
+			finishTurn(t, g)
 			own := 0
 			for _, f := range g.fleets {
 				if f.Faction == 0 {

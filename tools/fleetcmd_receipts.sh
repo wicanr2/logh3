@@ -30,6 +30,8 @@ TABS="-peek lin:5DA4F:1,lin:5E0C2:2,lin:5E0E4:2,lin:5E108:2,lin:61B2C:1,lin:5E10
 LST="-peek lin:5E0B8:1,lin:5E216:1,lin:5E21C:1,lin:5E1F2:2,lin:5DA5D:2,lin:56922:2,lin:5DA61:2,lin:5E1D0:2,lin:63CB2:2"   # 一覽表四張的分頁／位移／筆數（第 20 段）
 DIS="-peek lin:60BA4:122,lin:5F2CC:4032,lin:602AC:28,lin:6062C:28,lin:5DA79:2,lin:61AE4:4,lin:668B2:78,lin:66900:78"   # 駐留解散：艦隊 0、星域 32 筆、提督 0／32、ds:8F49、ds:CFB4（668B:0002）、艦艇 0／1（第 21 段）
 OCC="-peek lin:60BA4:122,lin:5F2CC:4032,lin:53132:6642"   # 占領與打行星：艦隊 0、星域 32 筆、行星 81 筆（第 19、22 段）
+TURN="-peek lin:60BA4:122,lin:5DA82:8,lin:5DA4C:12"   # 回合過場：艦隊 0、ds:8F52 兩陣營軍事費、ds:8F1C–8F27 座位旗標（第 23 段）
+EXEC="-clicks 546000000:544:85,549000000:560:85 -click-hold 3000000"   # 系統指令、實行（第 23 段）
 
 # rec <批次> <步數上限> <上一個檢查點|-> <ck|-> <旗標...>
 # 每一批都倒：畫面、調色盤、字元平面、艦隊表第 0 筆。`ck` ＝ 在上限的前一道
@@ -397,3 +399,23 @@ rec fcmd-garrison-self-t1      665000000 fcmd-garrison-self-done - -clicks 54600
 #     步數來自探索批次 fcx-assault-ast／-phz 的 -regs-at（本機證據）。
 recmem fcmd-assault-ast 1102006030 1102557471 1145000000 fcmd-occ-t4 - -clicks 1026000000:544:85,1029000000:560:85 -click-hold $HOLD $OCC
 recmem fcmd-assault-phz 912160349 912742120 955000000 fcmd-occ-phz-t2 - -clicks 836000000:544:85,839000000:560:85 -click-hold $HOLD $OCC
+
+# 23. 回合裡的過場視窗（113A:0B46／0797／0A4E／0899，056A:011C「戰略模式處理中」；docs/re/332、規格 059）。
+#     每一張錄在 -watch-screen 量到的穩定區間中間（區間與第二個取樣點見 docs/re/332 §六）。
+#     錯誤報告的局面用 -poke 造（規格 014）：經費不足把 ds:8F52[0] 寫成 32（< 維持費 22 ＋ 移動費 26），
+#     被擋把亞爾提那（星域 2）的擁有者 +0x12 改成同盟——在電腦下完之後（#554.5M）改，AI 看到的局面不變。
+#     問話：fcmd-occ-t1（艦隊在亞爾提那、往亞斯提）在實行前把亞爾維斯（星域 7）改成同盟，點「占領」(424,230)。
+rec fcmd-turn-think        552600000 fcmd-done - $EXEC $TURN
+rec fcmd-turn-busy         555300000 fcmd-done - $EXEC $TURN
+rec fcmd-turn-depart       558800000 fcmd-done - $EXEC $TURN
+rec fcmd-turn-arrive       570000000 fcmd-done - $EXEC $TURN
+rec fcmd-turn-garrison     570000000 fcmd-garrison-done - $EXEC $TURN
+rec fcmd-turn-occ-depart   558800000 fcmd-occupy-done - $EXEC $TURN
+rec fcmd-turn-occ-onward   570000000 fcmd-occupy-done - $EXEC $TURN
+rec fcmd-turn-nofund       565000000 fcmd-done - $EXEC -poke lin:5DA82@548000000=20,00,00,00 $TURN
+rec fcmd-turn-block        565000000 fcmd-done - $EXEC -poke lin:5F3DA@554500000=01 $TURN
+rec fcmd-turn-block-pre    565000000 fcmd-done - $EXEC -poke lin:5F3DA@548000000=01 $TURN
+rec fcmd-turn-ask          680000000 fcmd-occ-t1 - -clicks 666000000:544:85,669000000:560:85,700000000:424:230 -click-hold $HOLD -poke lin:5F650@665500000=01 $TURN
+rec fcmd-turn-ask-depart   704000000 fcmd-occ-t1 - -clicks 666000000:544:85,669000000:560:85,700000000:424:230 -click-hold $HOLD -poke lin:5F650@665500000=01 $TURN
+rec fcmd-turn-ask-onward   716000000 fcmd-occ-t1 - -clicks 666000000:544:85,669000000:560:85,700000000:424:230 -click-hold $HOLD -poke lin:5F650@665500000=01 $TURN
+rec fcmd-turn-clk22        565000000 fcmd-done - -clicks 546000000:544:85,549000000:560:85,558000000:560:85 -click-hold $HOLD $TURN
