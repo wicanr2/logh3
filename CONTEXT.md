@@ -473,7 +473,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 15 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 14 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -508,46 +508,6 @@
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
-
-#### battle-tests-never-run — 九支戰場測試從來沒跑過（AI 不下命令，一直 skip 在「沒走到戰場」）
-
-*[#81](https://github.com/wicanr2/logh3/issues/81) · tooling*
-
-九支戰場測試從來沒有真的跑過，一直是 `t.Skip("沒走到戰場")`：
-
-```
-TestBattleIsDeterministic        TestEncircleChangesOutcome     TestBattleLossMagnitude
-TestBattleDoubleClickAdvances    TestBattleStartsOnContact      TestBattleTurnsDeduct
-TestBattleEndsAfterNineTurns     TestBattleResultPersists       TestBattleComputerDealsNoDamage
-```
-
-根因只有一個：它們都靠「跑 40 個回合，等 AI 把兩邊帶到同一格開戰」
-（`internal/game/battle_ai_test.go:19`、`battle_trigger_test.go:47`），而
-**預設的 `ai.Original` 一道命令都不下，兩邊不會動**——`TestBattleStartsOnContact`
-自己的 skip 訊息就寫著這一句。
-
-不是回歸：在第八輪起點 `cab9b3d` 用 worktree 跑同樣三支，一樣 skip。
-
-影響：戰場的決定性（`docs/re/87` 的亂數從回合數起種）、包圍會不會改變結果、
-損失量級、九回合結束、結果寫回艦艇池、電腦不造成傷害（規格 061）——這幾條規則
-目前**沒有任何自動回歸**。#57 接上的戰場全滅是靠 `eng-*` 收據測的，不走這幾支。
-
-與第七輪修掉的那次（`battleTestGame` 停在 `StateTurnWindow`，二十多支靜默 skip）
-是同一種形狀：測試全綠，但其中一批根本沒執行。
-
-**卡在**：- 要決定用哪一種局面。直接 `StartBattle` 最省事，但那是 direct-entry，
-  按 `CLAUDE.md` 的對拍契約只能做窄幅診斷，不能代替正常玩家路徑——
-  這幾支測的是規則不是畫面，應該可以接受，但要寫明。
-- `TestBattleStartsOnContact` 本身測的就是「兩邊走到同一格會開戰」，
-  它不能用 `StartBattle` 繞過去，得另外想。
-
-**做完的判準**：九支都真的跑起來（不是刪掉 skip 讓它 fail）：給一個會開戰的固定局面——
-`-poke` 式的 fixture、直接 `StartBattle(星域)`，或讓測試用會下命令的 AI。
-`go test ./internal/... -v | grep SKIP` 剩下的每一支都說得出理由。
-
-**證據**：[`internal/game/battle_ai_test.go`、`battle_trigger_test.go`、`battle_input_test.go`、`passivebattle_test.go`](internal/game/battle_ai_test.go`、`battle_trigger_test.go`、`battle_input_test.go`、`passivebattle_test.go)、[`docs/spec/061`（電腦不造成傷害）、`docs/spec/018`（戰場回合）`](docs/spec/061`（電腦不造成傷害）、`docs/spec/018`（戰場回合）)
-
-**核實**：要人判——verify 只掃產品程式碼、不掃測試檔，所以綁不到 t.Skip。人工核對方式：go test ./internal/game/ -v 2>&1 | grep -c '沒走到戰場' 要是 0。
 
 #### plan-arrow-pressed-pixels — 徵稅／預算計劃四顆箭頭鈕剛點過時差 17–21 個像素
 
@@ -641,11 +601,18 @@ VGM SHA-256／OGG SHA-256／dosgolem HEAD）。另外兩項都沒動：`cmd/` �
 `tools/music_to_ogg.sh` 與 `music_fm_capture.sh` 都要容器；`_M` 的音色取捨沒有任何裁決紀錄
 （`WORKLOG.md`／`CONTEXT.md` 都查過）。
 
-`_M` 那 11 首的三個選項（**要使用者先選，工程再動**）：
+## 使用者裁決（2026-09-19）：**內建 GM soundfont**
 
-1. **維持現狀**：fluidsynth ＋ FluidR3_GM 合成，與原版 MPU-401 的音色不同，發行包照出。
-2. **remake 內建一份 GM soundfont**：玩家不必自備，但發行包變大、授權要另外確認。
-3. **只出 `_F`**（FM 那 11 首），`_M` 缺曲——最忠實於「不假造原版沒有的東西」，但少一半曲目。
+`_M` 那 11 首維持合成，但**soundfont 隨 remake 發行**，玩家不必自備、也不必裝 fluidsynth。
+原本列的另外兩個選項（維持現狀要玩家自備、只出 `_F` 缺一半曲目）不再考慮。
+
+接著要辦的（**順序不能換，授權沒確認就不要先接管線**）：
+
+1. **挑 soundfont 並確認授權能不能隨包發行**。目前轉檔用的 FluidR3_GM 要先查清楚
+   授權條款與姓名標示要求；不合用就換一份（發行包會變大數十 MB，這是已接受的代價）。
+2. soundfont 進 repo 還是發行時下載？`assets/original/` 是原版素材，這一份不是——
+   位置與 `.gitignore` 規則要另外定。
+3. 再接不需要 Docker 的轉檔入口（判準第一項），`_F` 的雜湊與 `SOURCES.tsv` 對得上。
 
 **做完的判準**：玩家自備原版後有一個不需要 Docker 的轉檔入口（或 remake 內建合成），`_F` 雜湊與 `SOURCES.tsv` 相同；`_M` 的音色取捨經使用者裁決。
 
@@ -905,7 +872,7 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-72 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+73 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1905,6 +1872,53 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### battle-tests-never-run — 九支戰場測試從來沒跑過（AI 不下命令，一直 skip 在「沒走到戰場」）
+
+*[#81](https://github.com/wicanr2/logh3/issues/81) · tooling*
+
+九支戰場測試從來沒有真的跑過，一直是 `t.Skip("沒走到戰場")`：
+
+```
+TestBattleIsDeterministic        TestEncircleChangesOutcome     TestBattleLossMagnitude
+TestBattleDoubleClickAdvances    TestBattleStartsOnContact      TestBattleTurnsDeduct
+TestBattleEndsAfterNineTurns     TestBattleResultPersists       TestBattleComputerDealsNoDamage
+```
+
+根因只有一個：它們都靠「跑 40 個回合，等 AI 把兩邊帶到同一格開戰」
+（`internal/game/battle_ai_test.go:19`、`battle_trigger_test.go:47`），而
+**預設的 `ai.Original` 一道命令都不下，兩邊不會動**——`TestBattleStartsOnContact`
+自己的 skip 訊息就寫著這一句。
+
+不是回歸：在第八輪起點 `cab9b3d` 用 worktree 跑同樣三支，一樣 skip。
+
+影響：戰場的決定性（`docs/re/87` 的亂數從回合數起種）、包圍會不會改變結果、
+損失量級、九回合結束、結果寫回艦艇池、電腦不造成傷害（規格 061）——這幾條規則
+目前**沒有任何自動回歸**。#57 接上的戰場全滅是靠 `eng-*` 收據測的，不走這幾支。
+
+與第七輪修掉的那次（`battleTestGame` 停在 `StateTurnWindow`，二十多支靜默 skip）
+是同一種形狀：測試全綠，但其中一批根本沒執行。
+
+**卡在**：（已解，2026-09-19）**skip 訊息本身是錯的**——不是「AI 一道命令都不下」。量過：第一回合
+就有 17 支艦隊拿到目的地。真正的原因是那九支用 `g.advanceTurn()` 直接推進回合，而回合中途
+會停在過場視窗與報告框（第六輪加的），沒點掉的話下一次 `advanceTurn` 什麼都不做。
+
+改用 `advanceUntilBattle`（按「實行」＋把視窗點掉）之後，S3 那份存檔**第一個回合就在
+達希利（星域 26）開戰**，九支全部真的跑起來而且全過。`t.Skip` 換成 `t.Fatal`。
+
+順帶抓到第十支同類的（`TestFortressAimStoresBearing`，skip 在「挑不到戰場裡的一點」）——
+那顆行星在 (1320,812)、視窗只有 448 像素寬，預設視野根本看不到它。加 `centreViewOn` 之後
+它真的跑起來，然後**紅了**：`fortressTargetClick` 先把 `battleGunOn` 設成 false 才呼叫
+`fortressAimAt`，而後者開頭就檢查那個旗標——**左鍵瞄準永遠寫不進方位**。這是被 skip
+掩蓋了不知道多久的產品 bug，一併修掉。
+
+**做完的判準**：九支都真的跑起來（不是刪掉 skip 讓它 fail）：給一個會開戰的固定局面——
+`-poke` 式的 fixture、直接 `StartBattle(星域)`，或讓測試用會下命令的 AI。
+`go test ./internal/... -v | grep SKIP` 剩下的每一支都說得出理由。
+
+**證據**：[`internal/game/battle_ai_test.go`、`battle_trigger_test.go`、`battle_input_test.go`、`passivebattle_test.go`](internal/game/battle_ai_test.go`、`battle_trigger_test.go`、`battle_input_test.go`、`passivebattle_test.go)、[`docs/spec/061`（電腦不造成傷害）、`docs/spec/018`（戰場回合）`](docs/spec/061`（電腦不造成傷害）、`docs/spec/018`（戰場回合）)
+
+**核實**：`TestBattleStartsOnContact` 釘在 `internal/game`
 
 #### strategic-annihilate-slot-writeback — 戰略全滅沒有寫回存檔表：存檔之後那一支會復活
 
