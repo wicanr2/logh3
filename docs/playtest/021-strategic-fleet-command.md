@@ -316,3 +316,22 @@
 「游標底下那一格變了才重寫」（規格 001 規則 4–7）、星域記錄艦隊數的重數
 時機（`rules.RecountRegionFleets`）、玩家「決定」建的艦隊補上編制。
 全套 `go test ./...`（除 GUI 套件）與既有 454 份收據的測試仍綠。
+
+## 兩位數編號（#74，2026-09-18）
+
+`tools/fleetcmd_receipts.sh` 第 27 段：S3「巴米利恩會戰」開局帝國槽 9 就是第１０艦隊
+（艾齊納哈上將，在費沙），不必改記憶體。一覽表 → 艦隊資料 → 第 8 列 → 艦隊視窗 →
+作戰 → 待命。
+
+| 批次 | 畫面 | `screen.bin` SHA-256 | 差異 |
+|---|---|---|---|
+| `fcmd-s3-n10-list` | 一覽表・艦隊資料（十二列，五列是兩位數編號）| `5fe3481d2a758aa21e8ff65d61d3fbc856cec5a3e9562def9c050dfd4c7e6ae0` | 0 |
+| `fcmd-s3-n10-win` | 艦隊視窗「帝國軍　第10艦隊」 | `a8b9a921cdbf9c3f696b4927968c435dd5677995a6038cd981e8420a6efdb033` | 0 |
+| `fcmd-s3-n10-menu` | 作戰選單 | `a3397cdad4718ed5aadaecb43ccf7cc5807c381e25c91eeeb80f842f088931e4` | 0 |
+| `fcmd-s3-n10-standby` | 指定待命行星「帝國軍第10艦隊　艾齊納哈」 | `8bbc4b6cb56d15fab349a51e0691f5b764e977d3a5e8f5a12a6b88377f24d859` | 小圖第 127 列（既有已知差異）之外 0 |
+
+測試 `TestFleetNumberTwoDigitMatchesOracle`；`tools/gui_check.sh` 另有 `fcmd-s3-n10-win`／
+`fcmd-s3-n10-standby` 兩例走 Ebiten 顯示層。
+
+**點清單的列要先移游標再按**：探索時把移動與按鍵寫在同一步，原版把那一下丟掉，
+畫面停在清單上，看起來像「這一列點不開」（`docs/re/323` §六 的老坑）。

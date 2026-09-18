@@ -460,3 +460,13 @@ rec fcmd-s3-w3b   374000000 fcmd-s3-base - $S3EXEC $TURN
 #     `-report` 錄在報告等待中間；另一批 mem-in 在第四回合掃描之前、mem-out 在 `034A` 之後。執行器 f7523f9 起不再崩潰（#73）。
 rec fcmd-turn-annihilated-report 1040000000 fcmd-occ-phz-t3b - -clicks 1001000000:544:85,1004000000:560:85 -click-hold $HOLD $OCC
 recmem fcmd-turn-annihilated 1031000000 1057000000 1057100000 fcmd-occ-phz-t3b - -clicks 1001000000:544:85,1004000000:560:85 -click-hold $HOLD $OCC
+
+# 27. 兩位數艦隊編號（#74，`3982:0038` 的 `%2d` 那條路；`docs/re/143`）。S3 開局帝國槽 9 就是
+#     第１０艦隊，不必改記憶體：一覽表（資料 (448,85) → 艦隊 (460,105)）點第 8 列（列 7，滑鼠 y 50＋20×7）
+#     → 艦隊視窗；再 作戰 (490,305) → 待命 (497,352) → 指定待命行星。兩張視窗的標題都印半形「10」。
+#     ⚠ 點列會換反白，移游標與按鍵要分兩批（$(mvc …)），否則那一下被丟掉——探索時踩過一次。
+rec fcmd-s3-n10-list    340000000 fcmd-s3-base ck \
+  -mouse-x 448 -mouse-y 85 -mouse-at 301000000 -clicks 311000000:448:85,321000000:460:105 -click-hold $HOLD
+rec fcmd-s3-n10-win     365000000 fcmd-s3-n10-list ck $(mvc 341000000 450 190) -click-hold $HOLD
+rec fcmd-s3-n10-menu    390000000 fcmd-s3-n10-win  ck $(mvc 366000000 490 305) -click-hold $HOLD
+rec fcmd-s3-n10-standby 415000000 fcmd-s3-n10-menu -  $(mvc 391000000 497 352) -click-hold $HOLD

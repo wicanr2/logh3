@@ -41,3 +41,17 @@ remake 這一側是**直接改狀態**的診斷比對（`internal/game/enemytab_
 差異分類：全部 0。做的時候修掉兩處 remake 的既有偏差：列按下去的底色蓋到了鈕左邊
 兩個像素的亮邊（`fleet-list-panel.json` 的 `row.x`／`w` 改 338／270）；清單的視窗或
 訊息框開著時左下角仍跟著游標重算（`refreshHoverRegion`）。
+
+## 兩位數編號（#74，2026-09-18）
+
+`tools/enemytab_receipts.sh` 第 5 段：S3 同盟槽 28 是第１３艦隊（楊威利），同樣把 `+0x06`
+寫成 0 搬進瓦爾哈拉、九筆艦艇 `+0x17` 寫成 3。列與視窗的編號都印半形「13」
+（`3982:0038` 的 `%2d`，`docs/re/338`）。
+
+| 批次 | 畫面 | `screen.bin` SHA-256 | 差異 |
+|---|---|---|---|
+| `enm-n13` | 敵艦隊分頁的列 | `86c959da2222f8da7bab0e2845af11fa474743d741c99bb08d201efedefd80d6` | 0 |
+| `enm-n13-row` | 點列開的敵艦隊視窗 | `4d945f19614c160c8b2f842bddb25715963a6615921086c960f160f38754cf74` | 0 |
+
+測試 `TestEnemyWindowTwoDigitMatchesOracle`。做的時候修掉一處既有偏差：清單列上的編號
+（`FleetList.Draw`、`DrawEnemies`）原本一律印全形，原版在那裡也走兩位數半形那條路。

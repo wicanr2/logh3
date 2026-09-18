@@ -170,12 +170,9 @@ func (s *FleetStandbySpec) Buffer(v *FleetStandbyView) *ui.TextBuffer {
 	f := s.fmtBytes
 	b := ui.NewTextBuffer(s.Cols, s.Rows, uint8(s.Colour))
 	b.Write(f("title"))
-	// `3982:00B6`：「%s第」帶色的陣營名、`3982:0038` 全形編號、「艦隊  %s」提督。
-	// `3982:0038` 兩位數編號應印 `%2d` 半形（`docs/re/143`、`docs/re/336` §六），這裡還是一律全形。
+	// `3982:00B6`：「%s第」帶色的陣營名、`3982:0038` 編號、「艦隊  %s」提督。
 	b.Printf(f("fleet_prefix"), v.FactionName)
-	b.Attr |= ui.AttrWiden
-	b.Printf([]byte("%d"), v.Number)
-	b.Attr &^= ui.AttrWiden
+	writeFleetNumber(b, v.Number)
 	b.Printf(f("fleet_suffix"), v.AdmiralName)
 	b.Printf(f("region"), v.RegionName)
 	// `37A9:000F` 畫熱區表上啟用的鈕：行星鈕的標籤是 `0DEA:1433` 排好的

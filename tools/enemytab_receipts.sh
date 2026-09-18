@@ -74,3 +74,9 @@ rec enm-mix-row0  365000000 enm-mix    -  $(mvc 340000000 450 268) -click-hold $
 rec enm-mix-row1  365000000 enm-mix    -  $(mvc 340000000 450 288) -click-hold $HOLD $ENM
 # 4. 等級 0 的不列（槽 17 搬進來但 +0x17 全 0）。
 rec enm-l0        335000000 enm-map    -  -poke "$P17;$(S17 00 00 00 00)" $(mvc 310000000 490 250) -click-hold $HOLD $ENM
+# 5. 兩位數編號（#74）：S3 同盟槽 28 是第１３艦隊（九組艦艇 109／111–118），同樣把 `+0x06`
+#    寫成 0 搬進瓦爾哈拉、九筆 `+0x17` 寫成 3；列與視窗的編號都印半形「13」。
+P28="lin:61902@$AT=00"
+S28() { local a; for a in 689FF 68B37 68A9B 68AE9 68B85 68BD3 68C21 68C6F 68CBD; do printf 'lin:%s@%s=%s;' "$a" "$AT" "$1"; done; }
+rec enm-n13     335000000 enm-map ck -poke "$P28;$(S28 03)" $(mvc 310000000 490 250) -click-hold $HOLD $ENM
+rec enm-n13-row 365000000 enm-n13 -  $(mvc 340000000 450 268) -click-hold $HOLD $ENM

@@ -48,3 +48,33 @@ func MarkAdmiralMissing(rec []byte) {
 		rec[o] = 0
 	}
 }
+
+// AnnihilateSlotFleet 把存檔表裡第 i 支標成全滅——`297B:034A` 與 `185C:00F0`／`0374:0815`
+// 真正寫進表裡的那幾個 byte（`docs/re/339` §九 1 MB 逐位元組對過）：
+//
+//	艦隊記錄 +0x04（提督）與 +0x05（副官） ← FF。`+0x04` 同時就是「這一格沒在用」，
+//	    所以整筆不必填 FF；原版也沒有動 +0x01（陣營）、+0x0F（組數）。
+//	編制那幾組與 +0x38 的索敵分遣隊，艦艇記錄 +0x01（擁有者） ← FF ＝ 作廢（`2AD2:01EF`）。
+//
+// 提督的失蹤旗標走 MarkAdmiralMissing、星域的艦隊數由呼叫端重數。
+func (s *Slot) AnnihilateFleet(i int) {
+	r := s.fleet(i)
+	if r == nil {
+		return
+	}
+	void := func(ship int) {
+		if ship == 0xFFFF {
+			return
+		}
+		if rec := s.ShipAt(ship); len(rec) > 1 {
+			rec[1] = 0xFF
+		}
+	}
+	for g := 0; g < fleetSlotN; g++ {
+		o := fleetSlots + g*4
+		void(int(r[o]) | int(r[o+1])<<8)
+	}
+	void(int(r[fleetScout]) | int(r[fleetScout+1])<<8)
+	r[fleetUnused] = 0xFF
+	r[fleetAdjutant] = 0xFF
+}

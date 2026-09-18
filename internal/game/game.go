@@ -3036,6 +3036,12 @@ func readOrig(dir, name string) []byte {
 
 // Frame 畫出目前的畫面。
 func (g *Game) Frame() *gfx.Framebuffer {
+	// 戰鬥中的報告框（`3826:0405`）疊在戰場上，不是戰略地圖（規格 062）。
+	if g.state == StateTurnReport && g.turnRep.battle {
+		fb := g.drawBattle()
+		g.drawTurnReport(fb)
+		return fb
+	}
 	switch g.state {
 	case StateBattle:
 		return g.drawBattle()

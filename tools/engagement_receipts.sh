@@ -61,3 +61,22 @@ rec eng-rclick 1152000000 eng-text - -rclicks 1146000000:300:200 -click-hold $HO
 #    （槽 12，lin 6115C）`+0x00` 寫成 05（bit0 士氣低落＋bit2 翻轉）、`+0x3C`（lin 61198）寫成 40。
 #    #1187.96M 開窗、#1188.57M 起等 90 tick、#1206.55M 關；錄在中間。
 rec eng-morale-low 1197000000 eng-t5 - -poke "lin:6115C@1170000000=05;lin:61198@1170000000=28" -clicks 1140000000:240:200 -click-hold $HOLD $ENG
+# 6. 兩位數編號（#74）：打雷奧米爾的是同盟第１６艦隊（槽 31，艦艇 135／137–141／147），但索敵
+#    等級 0 時演出印的是「第？艦隊　？？？…」。照規格 014 把那七筆艦艇的 `+0x17` 寫成 3，
+#    演出的右框就印「第16艦隊　曹雪」——半形兩位數（`3982:0038` 的 `%2d`）。
+KNOWN=$(for a in 691EB 69287 692D5 69323 69371 693BF 69593; do printf 'lin:%s@1139500000=03;' "$a"; done)
+rec eng-known 1144000000 eng-t5 - -poke "$KNOWN" -clicks 1140000000:240:200 -click-hold $HOLD $ENG
+# 7. 戰場那一條的艦隊全滅（#57，規格 062 的子步 8-1）：`185C:001D` 只看第 0 組艘數，
+#    0 就走 `028E` 報告（`3826:0405` 臨時視窗「<陣營>第Ｎ艦隊<提督>\n已經全滅。」）
+#    ＋ `00F0` 擦小地圖點、作廢艦艇、`297B:034A` 提督失蹤。前五回合沒有自然全滅，
+#    照規格 014 造局面：帝國槽 12（第１３艦隊 舒坦梅茲，`lin:6115C`）第 0 組的艦艇池
+#    索引是 80（`f[+0x10]`），該筆記錄 `lin:668B2 + 80×78 = 68112`，艘數 `+0x08`
+#    ＝ `lin:6811A`。在第 ⑧ 步之前（#1187.90M，步 ⑦ 已經跑完）寫成 0。
+#    時間線：#1187.92M 進第 ⑧ 步 → #1188.1M 報告還在畫、#1188.4M 才畫完（收據錄在 1188.4M）→ 等 90 tick。
+#    mem-in 在寫完之後、第 ⑧ 步之前；mem-out 留到 `35D1:0102` 那段長迴圈跑完（第七輪的坑）。
+ANN="lin:6811A@1187900000=00,00"
+rec eng-annihilate 1188400000 eng-t5 - -poke "$ANN" -clicks 1140000000:240:200 -click-hold $HOLD $ENG
+rec eng-annihilate-mem 1189900000 eng-t5 - -poke "$ANN" -clicks 1140000000:240:200 -click-hold $HOLD $ENG \
+  -dump-mem-at "1187910000:lin:0:1048576:/src/workplace/fcmd/eng-annihilate-in.bin;1189800000:lin:0:1048576:/src/workplace/fcmd/eng-annihilate-out.bin"
+cp "$CK/eng-annihilate-in.bin" "$ROOT/workplace/oracle/eng-annihilate-mem/mem-in.bin"
+cp "$CK/eng-annihilate-out.bin" "$ROOT/workplace/oracle/eng-annihilate-mem/mem-out.bin"

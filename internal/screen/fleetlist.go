@@ -159,7 +159,7 @@ func (l *FleetList) Draw(fb *gfx.Framebuffer, fnt *font.Font, rows []FleetRow, p
 			full(l.Marker.X, []uint16{code}, ink)
 		}
 		full(l.Number.PrefixX, fleetRowPrefix, l.Number.Ink)
-		full(l.Number.DigitsX, fullDigits(r.Number), l.Number.Ink)
+		drawFleetNumberRow(fb, fnt, l.Number.DigitsX, y, r.Number, l.Number.Ink, l.Pitch)
 		full(l.Number.SuffixX, fleetRowSuffix, l.Number.Ink)
 		full(l.Name.X, r.Name, l.Name.Ink)
 		if len(r.ValueCodes) > 0 {

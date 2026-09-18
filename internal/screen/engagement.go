@@ -122,16 +122,6 @@ func fmtBytes(h string) []byte {
 	return b
 }
 
-// wideNumber 是 `3982:0038`：編號印成全形數字。
-// `3982:0038` 兩位數編號應印 `%2d` 半形（`docs/re/143`、`docs/re/336` §六），這裡還是一律全形。
-func wideNumber(n int) []byte {
-	var out []byte
-	for _, c := range fullDigits(n) {
-		out = append(out, byte(c>>8), byte(c))
-	}
-	return out
-}
-
 // Buffers 回三個視窗的內容（照原版的格式字串排）。
 func (s *EngagementSpec) Buffers(v *EngagementView) (planet, middle, fleet *ui.TextBuffer) {
 	f := s.Formats
@@ -147,7 +137,7 @@ func (s *EngagementSpec) Buffers(v *EngagementView) (planet, middle, fleet *ui.T
 	fleet = ui.NewTextBuffer(s.Windows.Fleet.W, s.Windows.Fleet.H, uint8(s.Windows.Fleet.Colour))
 	if v.FleetKnown {
 		fleet.Write(fmtBytes(f.FleetKnownPrefix))
-		fleet.Write(wideNumber(v.FleetNumber))
+		fleet.Write(fleetNumberBytes(v.FleetNumber)) // `3982:0038`
 		fleet.Write(fmtBytes(f.FleetKnownSuffix))
 		fleet.Printf(fmtBytes(f.FleetKnownName), v.AdmiralName)
 	} else {

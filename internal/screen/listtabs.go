@@ -207,7 +207,7 @@ func (l *FleetList) DrawEnemies(fb *gfx.Framebuffer, fnt *font.Font, rows []Enem
 			continue
 		}
 		l.rowText(fb, fnt, l.Number.PrefixX, y, fleetRowPrefix, faction)
-		l.rowText(fb, fnt, l.Number.DigitsX, y, fullDigits(r.Number), faction)
+		drawFleetNumberRow(fb, fnt, l.Number.DigitsX, y, r.Number, faction, l.Pitch)
 		l.rowText(fb, fnt, l.Number.SuffixX, y, fleetRowSuffix, faction)
 		l.rowText(fb, fnt, l.Name.X, y, r.Name, l.Name.Ink)
 		ink := l.Value.Ink

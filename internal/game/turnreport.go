@@ -24,16 +24,28 @@ type turnReportState struct {
 	pending []turnReport
 	after   func()
 	resume  State
-	ticks   int
-	rem     time.Duration
+	// battle ＝ 戰鬥中（原版 `ds:8F16 != 0`）：走 `3826:0405` 的臨時視窗、
+	// 底下畫的是戰場而不是戰略地圖（規格 062）。
+	battle bool
+	ticks  int
+	rem    time.Duration
 }
 
 // startTurnReports 把 reports 排成報告；沒有報告回 false、不切狀態。
 func (g *Game) startTurnReports(reports []turnReport, after func()) bool {
+	return g.startReports(reports, false, after)
+}
+
+// startBattleReports 是戰鬥中的同一件事（`3826:0405`）。
+func (g *Game) startBattleReports(reports []turnReport, after func()) bool {
+	return g.startReports(reports, true, after)
+}
+
+func (g *Game) startReports(reports []turnReport, battle bool, after func()) bool {
 	if len(reports) == 0 || g.res.TurnWindow == nil {
 		return false
 	}
-	g.turnRep = turnReportState{pending: reports, after: after, resume: g.state}
+	g.turnRep = turnReportState{pending: reports, after: after, resume: g.state, battle: battle}
 	g.state = StateTurnReport
 	return true
 }
@@ -78,6 +90,10 @@ func (g *Game) drawTurnReport(fb *gfx.Framebuffer) {
 		if img, err := g.res.Faces.Decode(cur.face); err == nil {
 			face = img
 		}
+	}
+	if g.turnRep.battle {
+		p.DrawBattleReport(fb, g.res.Font, g.res.FrameTiles, cur.text, face)
+		return
 	}
 	p.DrawReport(fb, g.res.Font, g.res.FrameTiles, cur.text, face)
 }

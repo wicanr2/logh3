@@ -75,3 +75,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`059`](059-turn-transition-windows.md) | 回合裡的過場視窗與報告框（出發前往／已經到達、被擋、經費不足、問話、處理中面板、攻占訊息框、士氣報告、已全軍覆沒） | CONFORMED；「已經恢復」DRAFT |
 | [`060`](060-strategic-attrition-annihilation.md) | 戰略階段的耗損與艦隊全滅（士氣低落停在別人星域每回合扣兵、第 0 組 0 艘就全滅、提督失蹤） | CONFORMED（全滅）；「沒全滅」那一支 DRAFT |
 | [`061`](061-passive-battle-computer.md) | 戰場上的電腦方不造成傷害（使用者裁決，刻意偏離原版；`originalBattleAI` 關掉） | CONFORMED（remake 規則） |
+| [`062`](062-battle-turn-eight-steps.md) | 戰場一個回合的結算：原版的八步與第 8 步的五個子步驟（全滅、星域換手、索敵燃料、提督升級、結束判定） | DRAFT |

@@ -196,7 +196,18 @@ func (g *Game) AdvanceBattleTurn() {
 }
 
 // finishBattleTurn 是一回合最後的幾步：要塞砲倒數、索敵、回合數與結束判定。
+//
+// 原版的第 ⑧ 步（`181B:03F0` → `185C:0001`，規格 062）排在這裡的最前面：全滅判定、
+// 報告、清掉空的組、重建戰場表（子步 8-1）。報告會停下來等，所以走 `battleFinalPhase`
+// 的續接寫法——停住時這一回合剩下的幾步由報告看完之後接回來。
 func (g *Game) finishBattleTurn() {
+	if g.battleFinalPhase(0, g.endBattleTurn) {
+		return
+	}
+	g.endBattleTurn()
+}
+
+func (g *Game) endBattleTurn() {
 	rules.FortressGunTickAll(g.battlePlanets)
 	rules.UpdateSpotting(g.battleUnits, g.battlePlanets)
 	g.battleTurn++

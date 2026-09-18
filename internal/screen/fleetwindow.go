@@ -195,11 +195,7 @@ func (s *FleetWindowSpec) Buffer(v *FleetWindowView) *ui.TextBuffer {
 	// ── 0DEA:0040 本體 ──
 	b.Write(f("clear"))
 	b.Printf(f("fleet_no"), decodeHex(s.FactionNamesColoured[v.Faction]))
-	// `3982:0038` 兩位數編號應印 `%2d` 半形（`docs/re/143`、`docs/re/336` §六），這裡還是一律全形。
-	// `3982:0038`：編號印成全形數字。
-	b.Attr |= ui.AttrWiden
-	b.Printf([]byte("%d"), v.Number)
-	b.Attr &^= ui.AttrWiden
+	writeFleetNumber(b, v.Number) // `3982:0038`
 	b.Write(f("fleet_no_tail"))
 	b.Printf(f("commander"), v.CmdName, v.CmdRank)
 	b.Printf(f("cmd_level"), v.CmdLevel)

@@ -32,6 +32,10 @@
 | `eng-rclick` | #1146M 右鍵 → 同上 | `2740b8980cdc07527bdfd57209c5a245aa10e33f99264c1981437c682b419de9` | 同上 |
 | `eng-morale-low` | （第 5 段，從 `eng-t5`）#1170M 把第１３艦隊 `+0x00` 寫 05、`+0x3C` 寫 40 → 第五回合結算最後一步 #1197M「士氣值低落」臨時視窗（`3826:0405`） | `918b92643f65e17c56bbc24f37fdc73f9e54b6a82a08cc9dc1e0f81cdcea379e` | 視窗內 0（其餘戰場到不了同一局面，規格 059） |
 
+| `eng-known` | （第 6 段）同 `eng-text` 的 #1144M，但七筆同盟艦艇 `+0x17` 寫 3：右框印「第16艦隊　費雪」而不是「第？艦隊」（#74）| `614bc7da162865a49918273e32e2688addc6c4d320e894fe3d52e00bdcc7cd3d` | 0（`TestEngagementTwoDigitMatchesOracle`，排除區同 `eng-text`）|
+| `eng-annihilate` | （第 7 段，從 `eng-t5`）#1187.90M 把帝國第１３艦隊第 0 組艘數（`lin:6811A`）寫 0 → #1188.40M「帝國軍第13艦隊舒坦梅茲／已經全滅。」臨時視窗，**沒有頭像** | `803ec3880500ace39075fc5e704b62a13ee4fd359e73102a71e0bb5245083bee` | 視窗內 0（`TestBattleAnnihilationReportWindowMatchesOracle`）|
+| `eng-annihilate-mem` | 同一條，mem-in #1187.91M／mem-out #1234.0M（報告等滿 90 tick 才跑 `185C:00F0`）| `6b753819f22269e5a6630472d43f5fa97f85b640b68be1f1c274e627834c3a6d` | 逐欄對，結果在 `docs/re/339` §九 |
+
 測試：`TestEngagementMatchesOracle`（六批，步數換 tick 的公式在測試開頭註解）、`TestEngagementClickQueuesUntilPause`、
 `TestEngagementAnimationOffMatchesOracle`、`TestEngagementQueuedFromAssault`；
 戰鬥曲 `TestEveryTuneIsReachable`。

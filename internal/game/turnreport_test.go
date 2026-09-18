@@ -243,3 +243,49 @@ func TestTurnReportAnnihilatedMatchesOracle(t *testing.T) {
 	wantState(t, g, StateCommandPhase, "全滅那一回合跑完")
 	matches(t, g, "fcmd-occ-phz-t4")
 }
+
+// 戰場那一條的全滅報告（`185C:028E` → `3826:0405`，#57、規格 062）：收據 `eng-annihilate`
+// 是 S3 交戰第五回合的最後階段，帝國第１３艦隊（槽 12）照規格 014 把第 0 組艘數寫成 0。
+// remake 的戰場走不到同一個局面（回合結算的前七步還沒對齊，`docs/re/339` §六），所以
+// 與士氣報告那一支一樣**只驗視窗**：拿收據當底、塗掉視窗矩形、畫上 remake 的報告再整張比。
+// 排除收據游標 (240,240) 那一塊。
+func TestBattleAnnihilationReportWindowMatchesOracle(t *testing.T) {
+	want, err := os.ReadFile(filepath.Join(root, "workplace/oracle/eng-annihilate/screen.bin"))
+	if err != nil {
+		t.Skip("沒有收據 eng-annihilate，跳過（tools/engagement_receipts.sh 第 7 段）")
+	}
+	g := newTestGame(t)
+	if g.res.FleetWindow, err = screen.LoadFleetWindowSpec(
+		filepath.Join(root, "docs/internals/data/fleet-window.json")); err != nil {
+		t.Fatal(err)
+	}
+	g.res.OrigDir = filepath.Join(root, "org_game/extracted")
+	g.loadSlotFromDisk(10)
+	rep := g.battleAnnihilationReport(g.fleetBySlot(t, 12))
+	if rep.face >= 0 {
+		t.Fatal("全滅報告不該有頭像（3826:0405 第二個參數 0xFFFF）")
+	}
+	fb := gfx.NewFramebuffer(0)
+	copy(fb.Pix, want)
+	fb.FillRect(32, 180, 416, 140, 0) // 不塗掉的話 remake 什麼都沒畫也會通過
+	if miss := g.res.TurnWindow.DrawBattleReport(fb, g.res.Font, g.res.FrameTiles, rep.text, nil); len(miss) != 0 {
+		t.Fatalf("字庫缺字 %04X", miss)
+	}
+	bad := 0
+	for y := 0; y < 480; y++ {
+		for x := 0; x < 640; x++ {
+			if x >= 240 && x < 256 && y >= 240 && y < 260 {
+				continue // 收據的游標
+			}
+			if fb.Pix[y*640+x] != want[y*640+x] {
+				bad++
+			}
+		}
+	}
+	if bad != 0 {
+		if os.Getenv("LOGH3_DUMP_REMAKE") != "" {
+			_ = os.WriteFile(filepath.Join(root, "workplace", "remake-eng-annihilate.bin"), fb.Pix, 0o644)
+		}
+		t.Fatalf("eng-annihilate：視窗內與原版不同的像素 %d", bad)
+	}
+}

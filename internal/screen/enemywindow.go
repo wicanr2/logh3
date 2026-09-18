@@ -81,11 +81,7 @@ func (s *EnemyWindowSpec) Buffer(v *EnemyWindowView) *ui.TextBuffer {
 		faction = decodeHex(s.FactionNamesColoured[v.Faction])
 	}
 	b.Printf(f("head"), faction)
-	// `3982:0038` 兩位數編號應印 `%2d` 半形（`docs/re/143`、`docs/re/336` §六），這裡還是一律全形。
-	// `3982:0038`：編號印成全形數字。
-	b.Attr |= ui.AttrWiden
-	b.Printf([]byte("%d"), v.Number)
-	b.Attr &^= ui.AttrWiden
+	writeFleetNumber(b, v.Number) // `3982:0038`
 	b.Write(f("head_tail"))
 	b.Printf(f("admiral"), v.Name, v.Rank)
 	b.Write(f("kinds_label"))

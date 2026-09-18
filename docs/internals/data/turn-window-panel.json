@@ -43,7 +43,10 @@
   "annihilated_prefix": "2573b2c4",
   "annihilated_body": "c4a5b6a40a257325730a",
   "annihilated_tail": "a477b867a5feb7c0a143202020200a",
-  "annihilated_note": "0374:073F：ds:01CD「\\x03%s第」＋3982:0073 編號＋ds:01D3「艦隊\\n%s%s\\n」（提督名＋28E0:004F 軍階）＋ds:01DE「已經全滅。    \\n」。原版開頭多一個 \\x03，文字引擎把後面吃成跳脫碼、畫成三列花紋（收據 fcmd-turn-annihilated-report）；使用者裁決（2026-09-17）修成正常文字：prefix 去掉那個 \\x03，列規格 059 刻意差異"
+  "annihilated_note": "0374:073F：ds:01CD「\\x03%s第」＋3982:0073 編號＋ds:01D3「艦隊\\n%s%s\\n」（提督名＋28E0:004F 軍階）＋ds:01DE「已經全滅。    \\n」。原版開頭多一個 \\x03，文字引擎把後面吃成跳脫碼、畫成三列花紋（收據 fcmd-turn-annihilated-report）；使用者裁決（2026-09-17）修成正常文字：prefix 去掉那個 \\x03，列規格 059 刻意差異",
+  "battle_annihilated_prefix": "2573b2c4",
+  "battle_annihilated_body": "c4a5b6a4257320200aa477b867a5feb7c0a14320202020",
+  "battle_annihilated_note": "185C:028E（戰場那一條）：3982:011D ＝ ds:8EA6「%s第」＋3982:0073 編號＋ds:8EAB「艦隊%s」（提督名，**沒有軍階**），再接 ds:3D46「  \\n已經全滅。    」；視窗是 3826:0405 的臨時視窗，不是 3826:0307。位元組取自 eng-annihilate-mem/mem-in.bin（docs/re/339 §3.1、§九）"
  },
  "busy_title": {"cell_x": 20, "cell_y": 0, "cols": 18, "rows": 2, "text": "bed4b2a4bcd2a6a1b342b27aa4a4", "note": "056A:011C 印完之後標題窗 ds:94F6（3603:0006(94F6, 0x97, 20, 0, 18, 2, 1)）的緩衝區只剩列 0「戰略模式處理中」（ds:07E1；peek lin:6D3F4:144 @#554.86M，docs/re/332 §五）"},
  "think_title": {"cell_x": 20, "cell_y": 0, "cols": 18, "rows": 2, "row": 1, "text": "bed4b2a4bcd2a6a1abe4a6d2a4a42020", "ticks": 18, "note": "04F8:0355(1)：標題窗整窗清空，列 0 陣營與日期（同命令階段那一行，電腦座位），列 1「戰略模式思考中  」（ds:06E9，docs/re/332 §一、§七）。ticks：原版停到戰略 AI 算完，不是計時器；使用者裁決 2026-09-17 固定 18（dosgolem f7523f9 在 fcmd-done 鏈量：座位 1 印出 #551.02M → 056A:000C #554.75M，3.73M 步 ÷ 200,000）"},
