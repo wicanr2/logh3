@@ -86,3 +86,60 @@ func regionSupplyAt(record []byte, off, faction int) int {
 	}
 	return int(le32(record[o:]))
 }
+
+// 星域層的飛彈／艦載機補給（`1930:1572`，`docs/re/349` §三）：拿同一份收據驗
+// **兩支加起來**的結果。原版的順序是 `1930:1572` → `1AAB:0FAF`，所以：
+//
+//	1930:15F4   把星域存量補進兩格（缺口用補充「前」的艘數算）
+//	1AAB:0FAF   補艘數，再照 2703:14CF 加「係數 × 這次補了幾艘」
+//
+// remake 在缺口為負時夾 0、不照抄原版的無號溢位（使用者裁決 2026-09-19），
+// 所以**收據那一筆走的正是溢位分支，這裡只驗不溢位的那一半**：
+// 星域存量夠、缺口為正時兩邊該一致。
+func TestSupplyRegionFleetsFillsToFull(t *testing.T) {
+	root := "../.."
+	kinds, err := LoadShipKindTable(filepath.Join(root, "docs/internals/data/ship-kind-table.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	k, ok := kinds.Kind(0, 0)
+	if !ok {
+		t.Fatal("艦種表讀不到帝國艦種 0")
+	}
+	perMissile, perFighter := k.Byte(kindMissilePer), k.Byte(kindFighterFull)
+
+	rec := make([]byte, RegionRecord)
+	rec[regionOwner] = 0
+	putLE32(rec[regionMissiles:], 100000)
+	putLE32(rec[regionFighters:], 100000)
+
+	// 一組 1000 艘、兩格都空的編制：缺口是正的，補到滿就停。
+	f := &Fleet{Faction: 0, Region: 3, Composition: []FleetGroup{{Kind: 0, Ships: 1000}}}
+	SupplyRegionFleets(rec, 3, []*Fleet{f}, kinds)
+
+	g := f.Composition[0]
+	if want := perMissile * 1000; g.Missiles != want {
+		t.Errorf("飛彈補成 %d，該補到滿 %d", g.Missiles, want)
+	}
+	if want := perFighter * 1000; g.Fighters != want {
+		t.Errorf("艦載機補成 %d，該補到滿 %d", g.Fighters, want)
+	}
+	if want := 100000 - perMissile*1000; int(le32(rec[regionMissiles:])) != want {
+		t.Errorf("星域飛彈剩 %d，該剩 %d", le32(rec[regionMissiles:]), want)
+	}
+
+	// 再跑一次：已經滿了，不該再動（缺口 0）。
+	before := int(le32(rec[regionMissiles:]))
+	SupplyRegionFleets(rec, 3, []*Fleet{f}, kinds)
+	if got := int(le32(rec[regionMissiles:])); got != before {
+		t.Errorf("滿編之後又補了 %d", before-got)
+	}
+
+	// 缺口為負（超編）時夾 0——**不照抄原版的無號溢位**（`docs/re/349` §四）。
+	f.Composition[0].Missiles = perMissile*1000 + 5000
+	before = int(le32(rec[regionMissiles:]))
+	SupplyRegionFleets(rec, 3, []*Fleet{f}, kinds)
+	if got := int(le32(rec[regionMissiles:])); got != before {
+		t.Errorf("超編時動了星域存量 %d → %d；原版會被抽乾，remake 該夾 0 不補", before, got)
+	}
+}

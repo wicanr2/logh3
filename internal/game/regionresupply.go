@@ -23,6 +23,10 @@ func (g *Game) resupplyRegion(r int, next func()) bool {
 		ptrs[i] = &g.fleets[i]
 		at[ptrs[i]] = i
 	}
+	// `1930:1572` 排在 `1AAB:0FAF` 之前：先把星域的飛彈／艦載機補進各組
+	// （`docs/re/349`、規格 063），再補艦艇。順序不能換——原版的艘數是後面那一支
+	// 才加上去的，所以這一支算「補到滿的缺口」時看到的是**補充前**的艘數。
+	rules.SupplyRegionFleets(rec, r, ptrs, g.res.ShipKinds)
 	mine := rules.ResupplyRegion(rec, g.res.Planets, r, ptrs, g.res.ShipKinds)
 	if len(mine) == 0 {
 		return false

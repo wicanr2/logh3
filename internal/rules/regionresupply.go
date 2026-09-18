@@ -106,9 +106,9 @@ func ResupplyRegion(record []byte, planets *Planets, region int, fleets []*Fleet
 //   - `+0x0C` 修理上限 ＋= min(give, 滿編 − 修理上限)；
 //   - `+0x0E`／`+0x12` ＋= 艦種表係數 × give（`2703:14CF`，`docs/re/345`）。
 //
-// 原版的收據上兩格各多一塊 108600，那是星域層的飛彈／艦載機被整批補給進來
-// （`docs/re/345` 末節，做這件事的多半是還沒讀的 `1930:1572`），不屬於這一支，
-// 所以這裡只加係數那一項——補到滿編時的值會與存檔裡的「係數 × 滿編」一致。
+// 收據上兩格各多的那一塊 108600 是**排在前面**的 `SupplyRegionFleets`
+// （`1930:1572`）補的，不屬於這一支（`docs/re/349` §三逐值對過）。
+// 這裡只加係數那一項。
 func addGroupShips(kinds *ShipKindTable, faction int, g *FleetGroup, give int) {
 	g.Ships += give
 	if room := g.Full - g.RepairCap; room > 0 {
@@ -167,4 +167,68 @@ func regionShipStock(record []byte, faction, kind int) int {
 		return 0
 	}
 	return int(le32(record[o:]))
+}
+
+// SupplyRegionFleets ＝ `1930:1572` → `1930:15F4`（`docs/re/349` §二）：把這一格的
+// 飛彈與艦載機存量（星域 `+0x68`／`+0x70`）補進擁有者艦隊的每一組編制。
+//
+// 排在艦艇補充（`ResupplyRegion`）**之前**，逐格掃描的序列是
+// `1930:1572` → `1AAB:0FAF` → `0374:0608`（`docs/internals/62`）。
+//
+// 規則（都照原版）：
+//
+//   - 挑艦隊的條件與艦艇補充相同（所在星域 ＋ 陣營，`297B:131C` 同一支同旗標）；
+//   - 逐組取 `min(星域存量, 補到滿的缺口)`，**先到先拿**——前面的組拿光，後面的拿 0；
+//   - **不篩艦種**，補給艦與修護艦也一起補；碰不到索敵分遣隊（只走編制陣列）。
+//
+// **一處刻意偏離**（使用者裁決 2026-09-19，`docs/re/349` §四）：原版算缺口用帶符號
+// 減、卻用無號比較，所以目標超編時缺口會變成接近 2³²、把整格存量抽乾。這裡
+// **缺口為負就當 0**（不補）。代價是玩家局面真的走到「某一組超編」時會與原版分岔。
+func SupplyRegionFleets(record []byte, region int, fleets []*Fleet, kinds *ShipKindTable) {
+	if len(record) < RegionRecord {
+		return
+	}
+	owner := int(record[regionOwner])
+	if owner < 0 || owner > 1 {
+		return // 無主星域
+	}
+	for _, f := range fleets {
+		if f == nil || f.Region != region || f.Faction != owner {
+			continue
+		}
+		for i := range f.Composition {
+			g := &f.Composition[i]
+			k, ok := kinds.Kind(f.Faction, g.Kind)
+			if !ok {
+				continue
+			}
+			supplyOne(record, owner, regionMissiles, &g.Missiles,
+				k.Byte(kindMissilePer)*g.Ships)
+			supplyOne(record, owner, regionFighters, &g.Fighters,
+				k.Byte(kindFighterFull)*g.Ships)
+		}
+	}
+}
+
+// supplyOne 把一格存量補到 have 上，補到 full 為止；回補了多少。
+// 缺口為負時當 0——不照抄原版那個無號比較的溢位（見 SupplyRegionFleets）。
+func supplyOne(record []byte, faction, off int, have *int, full int) {
+	need := full - *have
+	if need <= 0 {
+		return
+	}
+	o := off + faction*4
+	if o+4 > len(record) {
+		return
+	}
+	stock := int(le32(record[o:]))
+	give := need
+	if stock < give {
+		give = stock
+	}
+	if give <= 0 {
+		return
+	}
+	*have += give
+	putLE32(record[o:], stock-give)
 }
