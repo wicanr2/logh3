@@ -72,7 +72,13 @@ func (g *Game) planScreenClick(x, y int) bool {
 		if planPctDown.hit(x, y) {
 			return g.stepShipPct(-planPctStep)
 		}
-		return planStaff.hit(x, y) // 參謀：吃掉但還沒接（#62）
+		// 參謀：開參謀任命，換的是**內政**專任參謀（`ds:8F4F`）——與情報收集
+		// 那一顆同一套清單與詳細視窗，只差寫哪一格（#62、`docs/re/348` §六）。
+		if planStaff.hit(x, y) {
+			g.beginStaffPick(rules.PostDomestic, g.state)
+			return true
+		}
+		return false
 	case StateProductionPlan:
 		if planProdEnd.hit(x, y) {
 			g.state = StateCommandPhase

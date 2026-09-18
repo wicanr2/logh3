@@ -77,3 +77,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`061`](061-passive-battle-computer.md) | 戰場上的電腦方不造成傷害（使用者裁決，刻意偏離原版；`originalBattleAI` 關掉） | CONFORMED（remake 規則） |
 | [`062`](062-battle-turn-eight-steps.md) | 戰場一個回合的結算：原版的八步與第 8 步的五個子步驟（全滅、星域換手、索敵燃料、提督升級、結束判定） | DRAFT |
 | [`063`](063-region-resupply.md) | 自家星域的艦艇補充（逐艦種補到滿編、修護艦重置、補完印「士氣值已經恢復」） | READY |
+| [`064`](064-staff-appointment.md) | 參謀任命（情報收集與徵稅計劃的「參謀」鈕：清單、詳細資料、決定／中止、換內政參謀會重算稅收） | CONFORMED |

@@ -83,6 +83,7 @@ cases=(
   "fcmd-quit|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 544 125; click 560 205"
   # 情報收集 → 勢力分頁（#63）：標題與五行圖例整段換掉、地圖照各格自軍編制組數著色。
   "fcmd-info-power|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 352 125; click 400 145; click 424 168"
+  "fcmd-staff-decide|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 352 125; click 400 145; click 543 388; click 450 92; click 497 330"
 )
 fail=0
 for c in "${cases[@]}"; do

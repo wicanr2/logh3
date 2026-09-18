@@ -592,3 +592,10 @@ rec fcmd-staff-decide 700000000 fcmd-info-open -  \
 # 「中止」(455,290)：回到清單（不是關窗），`ds:8F4D` 留在原值。
 rec fcmd-staff-cancel 700000000 fcmd-info-open -  \
   -mouse-x 543 -mouse-y 348 -mouse-at 472000000 -clicks 482000000:543:348,540000000:450:52,620000000:455:290 -click-hold $HOLD $STAFF
+# 徵稅計劃那一顆參謀（`090A:0248`）：同一套清單與詳細視窗，換的是**內政**
+# 專任參謀 `ds:8F4F`（`-peek lin:5DA7D:8` 的第 3 個位元組：決定前 10、決定後 01，
+# 情報那一格 0D 不動）。熱區畫面 (398,360)-(433,379)，滑鼠 y ＝ 畫面 y − 40。
+rec fcmd-taxstaff-list   560000000 fcmd-plan-tax - \
+  -mouse-x 415 -mouse-y 330 -mouse-at 472000000 -clicks 482000000:415:330 -click-hold $HOLD $STAFF
+rec fcmd-taxstaff-decide 700000000 fcmd-plan-tax - \
+  -mouse-x 415 -mouse-y 330 -mouse-at 472000000 -clicks 482000000:415:330,560000000:450:52,640000000:497:290 -click-hold $HOLD $STAFF

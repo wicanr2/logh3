@@ -2239,6 +2239,10 @@ func (g *Game) forcedLeftRegion(s State) int {
 	case StateStandbyAdmirals, StateAdmiralList:
 		return rules.CapitalRegion(g.faction)
 	}
+	// 參謀任命的清單是同一張規格疊上去的（#62），左下角一樣寫首都。
+	if g.staff.on() {
+		return rules.CapitalRegion(g.faction)
+	}
 	return -1
 }
 
@@ -2374,12 +2378,6 @@ func (g *Game) click(x, y int) {
 		case "cancel":
 			g.state = StateStandbyAdmirals
 		case "sortie":
-			// 參謀任命走同一套清單與詳細視窗，但第三顆鈕是「決定」——
-			// 寫專任參謀表、回情報收集（#62、`docs/re/348`）。
-			if g.staff.on {
-				g.staffPickDecide()
-				return
-			}
 			if g.commandSpec(StateFleetOrg) != nil {
 				g.orgSlot = -1 // 每次出擊重來（#65）
 				g.sortieSlots(true)
@@ -2550,9 +2548,17 @@ func (g *Game) click(x, y int) {
 			g.fleetOrgConfirm()
 		}
 	case StateTaxPlan, StateProductionPlan, StateBudgetPlan:
+		// 參謀任命的清單／詳細資料疊在這一張上面，開著就由它先吃（#62）。
+		if g.staffPickClick(x, y) {
+			return
+		}
 		// 結束鈕與兩組箭頭（#64，`docs/re/343`）。
 		g.planScreenClick(x, y)
 	case StateInfo:
+		// 參謀任命的清單／詳細資料疊在這一張上面，開著就由它先吃（#62）。
+		if g.staffPickClick(x, y) {
+			return
+		}
 		// 三個分頁與「確認」（#63，`docs/re/342`）。
 		g.infoScreenClick(g.commandSpec(StateInfo), x, y)
 	case StateFleetNumber:
@@ -2690,6 +2696,10 @@ func (g *Game) rightClick(x, y int) {
 		return
 	}
 	g.moveMouse(x, y)
+	// 參謀任命的疊層（#62）開著就逐層關掉，不動底下那一張的狀態。
+	if g.staffPickRightClick() {
+		return
+	}
 	// 戰略地圖介面上右鍵點星圖**什麼都不換**：右側面板看的那一格
 	// （`ds:9588`）、地圖反白與右下角清單都不動，只有左下角那塊跟著
 	// 游標（`refreshHoverRegion`，`docs/re/277`）。換選星域是左鍵的事
@@ -2785,16 +2795,6 @@ func (g *Game) rightClick(x, y int) {
 		g.state = StateAdmiralDetail
 	case StateAdmiralDetail:
 		g.state = StateStandbyAdmirals
-	case StateStandbyAdmirals:
-		// 參謀任命那條路上的清單：右鍵整條收掉、回進來時那一張
-		// （#62、`docs/re/348`）。出擊那條路沿用原本的收尾（下面的 default）。
-		if g.staff.on {
-			g.staffPickClose()
-			return
-		}
-		if g.commandSpec(StateCommandPhase) != nil {
-			g.state = StateCommandPhase
-		}
 	case StateBattle:
 		// 右鍵關掉最上面那一層：詳細資料 → 「資料」 → 命令選單 → 選單。
 		if g.battleDetail {
@@ -3195,6 +3195,15 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawAdmiralDetail(fb)
 			g.drawAdmiralBio(fb)
 			g.drawSpecStaff(fb, spec)
+			// 參謀任命的清單與詳細資料疊在**所有**內容之上（#62）——底層那幾條
+			// 分隔線是在 `afterWindow` 之後才畫的，接在那裡會被它們戳穿。
+			// 游標本來由 `MainGameLayered` 畫，被蓋掉了所以自己補一次。
+			if g.staff.on() {
+				g.drawStaffPick(fb)
+				if spec.Mouse != nil && g.res.Cursor != nil && g.mouseY >= 0 {
+					g.res.Cursor.Draw(fb, spec.Mouse.X, spec.Mouse.Y)
+				}
+			}
 			return fb
 		}
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.res.FrameTiles,
@@ -3470,8 +3479,6 @@ func (g *Game) refreshCapitalSnap() {
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
-		// 待命中提督清單：出擊那條路的收據游標剛好停在規格檔的預設位置，所以
-		// 以前沒加也對得上；參謀任命那條路（#62）從別的座標進來就露餡了。
 		StateStandbyAdmirals,
 		StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick,
 		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
@@ -3809,6 +3816,12 @@ func (g *Game) drawBudget(fb *gfx.Framebuffer) {
 	if g.res.BudgetPanel == nil {
 		return
 	}
+	// 參謀任命的清單疊上來時，這一張的數字欄位在原版是**空的**（收據
+	// `fcmd-taxstaff-list`：那幾格只有底色 8，沒有數字）。remake 每一幀重畫，
+	// 所以這裡要跟著停（#62）。關掉清單就會回來。
+	if g.staff.on() {
+		return
+	}
 	switch g.state {
 	case StateTaxPlan:
 		g.res.BudgetPanel.Draw(fb, g.res.Font, g.currentTreasury(), g.nextBudget())
@@ -3951,6 +3964,14 @@ func (g *Game) drawSpecStaff(fb *gfx.Framebuffer, spec *screen.MainGameSpec) {
 		}
 		w.DrawFactionText(fb, g.res.Font, g.faction)
 		if w.Staff == nil {
+			continue
+		}
+		// 參謀任命的清單疊上來時，**落在清單那一半**的署名會被蓋住（原版的清單
+		// 視窗不透明）。remake 每一幀重畫，不跳過的話那一行會戳到清單第二列上
+		// （#62；副官那條路踩過同一個坑，見上面那一條）。
+		// 情報收集的署名在右半要跳過；預算計劃的在左半，照畫（收據
+		// `fcmd-taxstaff-list` 左邊那個視窗仍然印著「內政專任參謀　奧貝斯坦上校」）。
+		if g.staff.on() && w.Staff.X >= staffRowX {
 			continue
 		}
 		name, rank := g.staffAdmiral(w.Staff.Post)
@@ -4278,14 +4299,6 @@ func (g *Game) commandSpec(s State) *screen.MainGameSpec {
 // starMapFor 回這張規格要用的地圖。**不能共用同一張**：情報報告的地圖
 // 跟著治安換色、星系資料又是另一組（`strmap-regions.json` 的 colour_fields）。
 func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
-	// 參謀任命的清單與詳細資料是**疊在情報收集上面**的：原版只重畫右半，
-	// 左邊那張地圖維持進來時那一頁的著色（收據 `fcmd-staff-list`：左半與
-	// `fcmd-info-open` 相同）。remake 每一幀重畫整張，所以要自己記得沿用。
-	if g.staff.on && g.staff.back == StateInfo {
-		if m := g.securityStarMap(); m != nil {
-			return m
-		}
-	}
 	switch spec.Map.Colours {
 	case securityColours:
 		if m := g.securityStarMap(); m != nil {
