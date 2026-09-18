@@ -473,7 +473,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 14 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 13 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -711,35 +711,6 @@ VGM SHA-256／OGG SHA-256／dosgolem HEAD）。另外兩項都沒動：`cmd/` �
 
 **核實**：`internal/game/settingsscreen.go` 裡還找得到 `與 `BUG!` 也還沒接`（自承還在 ＝ 還沒做）
 
-#### staff-appointment — 參謀任命（090A:0248）與情報收集／徵稅計劃的「參謀」鈕
-
-*[#62](https://github.com/wicanr2/logh3/issues/62) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-情報收集與徵稅計劃畫面的「參謀」鈕是參謀任命的入口（`090A:0248`），remake 開得起來但點了沒事、只能右鍵關（CONTEXT「玩家還碰不到的功能」）。
-AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），玩家這一條沒有。
-
-**卡在**：**情報收集那一顆的 RE 已經 proven 到位元組**（`docs/re/342` §5，2026-09-18 核實）：
-熱區 `(525,378)-(562,399)`、點擊配色 `0x27`→`0x87`、呼叫 `0A02:0AC4()` 重新指派情報參謀、
-挑到合格提督時寫 `ds:8F4D[ds:8F1D] ← 新提督編號`、共用出口 `0A02:0B3A` 重畫「情報專任參謀」
-的姓名與頭像。本文原本寫的「沒讀，沒有收據」**只對徵稅計劃那一顆成立**。
-
-剩下的：
-
-- `090A:0248`（徵稅計劃那顆，換的是**內政**專任參謀 `ds:8F4F`）沒有對應的 RE 文件——
-  `docs/re/268` 只到 `090A:021B` 那一行。
-- 合格檢查 `0D92:0422`／`0D92:04E3` 的內部條件沒反查（`docs/re/342` §5 標 unknown）。
-- 候選清單與就任／卸任畫面沒有同狀態收據。
-- remake 兩個入口都只吃掉點擊：`internal/game/infoscreen.go`（「是 #62，還沒接」）、
-  `internal/game/planscreens.go`（「參謀：吃掉但還沒接（#62）」）；`ds:8F4B` 起那張表目前只讀不寫。
-
-最小下一步：**先只接情報收集那一顆**（RE 已足夠），拿 `docs/re/342` 的點擊序列補一份收據。
-
-**做完的判準**：`090A:0248` 反組譯、候選清單與就任／卸任畫面有同狀態收據，remake 整張逐位元組；提督 `+0x09` 與 `ds:8F4B` 起的專任參謀表照原版改。
-
-**證據**：[`docs/re/342-info-screen-tabs.md` §5（情報收集那一顆，proven）`](docs/re/342-info-screen-tabs.md` §5（情報收集那一顆，proven）)、[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)、[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)
-
-**核實**：`internal/game/planscreens.go` 裡還找得到 `還沒接（#62）`（自承還在 ＝ 還沒做）
-
 #### hold-to-scroll — ▲▼ 按住連捲（一覽表、右下角清單、提督清單、艦隊組成、徵稅／預算計劃的箭頭）
 
 *[#60](https://github.com/wicanr2/logh3/issues/60) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -872,7 +843,7 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-73 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+74 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -2143,6 +2114,35 @@ dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且�
 **證據**：[`docs/re/16-window-list-right-button.md`](docs/re/16-window-list-right-button.md)、[`docs/re/342-info-screen-tabs.md`](docs/re/342-info-screen-tabs.md)、[`docs/re/347-enemy-tab-threshold-is-the-distance-table.md`](docs/re/347-enemy-tab-threshold-is-the-distance-table.md)、[`docs/internals/63-info-screen-tabs.md`](docs/internals/63-info-screen-tabs.md)
 
 **核實**：`TestInfoScreenEnemyTabMatchesOracle` 釘在 `internal/game`
+
+#### staff-appointment — 參謀任命（090A:0248）與情報收集／徵稅計劃的「參謀」鈕
+
+*[#62](https://github.com/wicanr2/logh3/issues/62) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+情報收集與徵稅計劃畫面的「參謀」鈕是參謀任命的入口（`090A:0248`），remake 開得起來但點了沒事、只能右鍵關（CONTEXT「玩家還碰不到的功能」）。
+AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），玩家這一條沒有。
+
+**卡在**：**情報收集那一顆的 RE 已經 proven 到位元組**（`docs/re/342` §5，2026-09-18 核實）：
+熱區 `(525,378)-(562,399)`、點擊配色 `0x27`→`0x87`、呼叫 `0A02:0AC4()` 重新指派情報參謀、
+挑到合格提督時寫 `ds:8F4D[ds:8F1D] ← 新提督編號`、共用出口 `0A02:0B3A` 重畫「情報專任參謀」
+的姓名與頭像。本文原本寫的「沒讀，沒有收據」**只對徵稅計劃那一顆成立**。
+
+剩下的：
+
+- `090A:0248`（徵稅計劃那顆，換的是**內政**專任參謀 `ds:8F4F`）沒有對應的 RE 文件——
+  `docs/re/268` 只到 `090A:021B` 那一行。
+- 合格檢查 `0D92:0422`／`0D92:04E3` 的內部條件沒反查（`docs/re/342` §5 標 unknown）。
+- 候選清單與就任／卸任畫面沒有同狀態收據。
+- remake 兩個入口都只吃掉點擊：`internal/game/infoscreen.go`（「是 #62，還沒接」）、
+  `internal/game/planscreens.go`（「參謀：吃掉但還沒接（#62）」）；`ds:8F4B` 起那張表目前只讀不寫。
+
+最小下一步：**先只接情報收集那一顆**（RE 已足夠），拿 `docs/re/342` 的點擊序列補一份收據。
+
+**做完的判準**：`090A:0248` 反組譯、候選清單與就任／卸任畫面有同狀態收據，remake 整張逐位元組；提督 `+0x09` 與 `ds:8F4B` 起的專任參謀表照原版改。
+
+**證據**：[`docs/re/342-info-screen-tabs.md` §5（情報收集那一顆，proven）`](docs/re/342-info-screen-tabs.md` §5（情報收集那一顆，proven）)、[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)、[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)
+
+**核實**：`TestStaffPickMatchesOracle` 釘在 `internal/game`
 
 #### font-extract-overwrites-json — font_extract.py 重跑會整份蓋掉人工補過的 font-graph-img.json
 
