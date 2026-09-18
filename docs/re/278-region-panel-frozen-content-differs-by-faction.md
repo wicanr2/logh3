@@ -4,7 +4,10 @@
 執行器：`logh3-oracle` `6841e68`（工作樹有 9 個未提交檔案，全部是別的 session
 在加 `-dump-vgm`／`-vgm-clear-on-open`；兩支旗標沒給就整段 return，對本文
 用到的旗標沒有影響）
-狀態：**量到了，機制未解**（六組受控對照，每組只改一個變因）
+狀態：**已被推翻**（2026-09-18）——本文的收據錄在 dosgolem 掉了 `-click-move-lead` 的那段期間（`6841e68`，工作樹還不乾淨）。
+在正確的執行器上重量：**開了選單就是空的，兩個陣營一樣**，沒有奇偶性，見 [`337`](337-region-panel-frozen-recheck.md)。
+機制在 [`282`](282-the-translation-dropped-the-click-pre-move.md)／[`302`](302-region-panel-faction-difference-was-stale.md) 已解（2026-09-14），規則在 `docs/spec/001`。
+以下保留原文（不改寫），只作為當時量到什麼的紀錄。
 
 ## 問題
 
