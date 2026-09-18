@@ -533,7 +533,7 @@
 
 **證據**：[`docs/re/343-plan-screen-buttons.md`](docs/re/343-plan-screen-buttons.md)、[`docs/spec/003-budget-panel.md`](docs/spec/003-budget-panel.md)
 
-**核實**：`internal/game/planscreens_test.go` 裡還找得到 `planArrowSkip`（自承還在 ＝ 還沒做）
+**核實**：`internal/game/planscreens.go` 裡還找得到 `剛點過的那顆箭頭鈕還差 17–21 個像素`（自承還在 ＝ 還沒做）
 
 #### battle-turn-eight-steps — 戰場回合結算對齊原版八步（規格 062 的其餘七步與子步 8-2–8-5）
 
