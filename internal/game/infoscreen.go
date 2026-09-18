@@ -1,6 +1,7 @@
 package game
 
 import (
+	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
 )
@@ -150,6 +151,7 @@ func (g *Game) infoStarMapColours() []uint8 {
 	tab := g.infoScreenTab()
 	div := rules.SecurityDivisor(g.res.Admiral,
 		rules.StaffAdmiral(g.workRecord(), rules.PostIntel, g.faction))
+	dist := g.capitalDistances()
 	cols := make([]uint8, n)
 	for i := range cols {
 		rec := g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
@@ -158,13 +160,7 @@ func (g *Game) infoStarMapColours() []uint8 {
 		case infoTabPower:
 			band = rules.OwnPowerBand(g.regionFleetGroups(i, g.faction))
 		case infoTabEnemy:
-			// 敵艦那一頁的等級先過一道門檻（`0A02:0672` → `2B99:028F` 查表）：
-			// 表在 `ds:0D062`／`ds:0D066` 的遠指標後面，指到 **0xD0000 一帶的 UMB 區**，
-			// 內容看起來像位元圖樣而不是距離值——**那張表是什麼還沒解**
-			// （`docs/re/342` 附錄 B）。門檻決定要走「掃艦隊表拿確定答案」還是
-			// 「只看 `+0x13` bit4 猜」，兩條路的算式都已經解出來（同一份附錄），
-			// 但沒有門檻就選不了，所以整張先塗「情報資料不足」。
-			band = 4
+			band = enemyBand(dist[i], g.enemyGroupsAt(i), rec)
 		default:
 			own := g.res.Planets.RegionOwner(i) == g.faction
 			band = rules.SecurityBand(int(rec[rules.RegionUnrest]), own, div)
@@ -183,4 +179,73 @@ func (g *Game) regionFleetGroups(r, faction int) int {
 		}
 	}
 	return n
+}
+
+// capitalDistances 回「從自己陣營的基準星域到每一格」的距離
+// （`2B99:028F(陣營, 星域, X)` 查的那張 32×32 word 表，X 由
+// `3982:0329(陣營)` 給，帝國 0、同盟 31）。
+//
+// 那張表的遠指標存在 `ds:0D062`／`ds:0D066`，指到 EMS 分頁框——所以拿線性
+// 位址去傾印讀到的是**當時映射的那一頁**，看起來像位元圖樣（`docs/re/342`
+// 附錄 B 卡在這裡）。表本身 `docs/re/185`／`241`／`298` 早就解完了：
+// 值 ＝ `TerritoryPenalty × 踏過幾條不全是自己的邊 ＋ 小成本`，
+// remake 這一側是 `rules.(*StarGraph).BuildTables`。
+func (g *Game) capitalDistances() []int {
+	n := len(g.res.Stellar) / rules.RegionRecord
+	if g.res.Graph == nil || g.res.Planets == nil || n == 0 {
+		return make([]int, n)
+	}
+	owners := make([]int, ai.RegionCount)
+	for i := range owners {
+		owners[i] = g.res.Planets.RegionOwner(i)
+	}
+	dist, _ := g.res.Graph.BuildTables(owners, g.faction)
+	base := ai.Capitals[g.faction]
+	if base < 0 || base >= len(dist) {
+		return make([]int, n)
+	}
+	out := make([]int, n)
+	copy(out, dist[base])
+	return out
+}
+
+// enemyGroupsAt ＝ 敵艦分頁的加總（`0A02:0540` 的內層迴圈）：這一格所有
+// **敵方**艦隊的編制組數（`+0x0F`）合計，但 `+0x00` bit0（士氣低落、無法
+// 戰鬥）的那幾支不算（`docs/re/342` 附錄 A 四(d)）。
+func (g *Game) enemyGroupsAt(r int) int {
+	n := 0
+	for i := range g.fleets {
+		f := &g.fleets[i]
+		if f.Region != r || f.Faction == g.faction {
+			continue
+		}
+		if f.Flags&0x01 != 0 {
+			continue
+		}
+		n += f.Groups
+	}
+	return n
+}
+
+// enemyBand 是敵艦分頁一格的等級（`0A02:0672` 的門檻 ＋ 兩條路）：
+//
+//   - 距離 ÷ `TerritoryPenalty` **小於 2**（從自己的地盤出發最多踏過一條
+//     不全是自己的邊）→ 看得清楚，掃艦隊表給確定答案：
+//     ≥20 組 → 3（大規模）、>0 → 2（小規模）、0 → 0（沒有敵方艦隊）；
+//   - 否則看不清楚，只讀星域 `+0x13` 的 bit4：設起來 → 1（可能有敵方艦隊
+//     出沒）、沒設 → 4（情報資料不足）。
+func enemyBand(dist, groups int, rec []byte) int {
+	if dist/rules.TerritoryPenalty >= 2 {
+		if len(rec) > regionFlagsOff && rec[regionFlagsOff]&rules.RegionFlagOccupied != 0 {
+			return 1
+		}
+		return 4
+	}
+	switch {
+	case groups >= 20:
+		return 3
+	case groups > 0:
+		return 2
+	}
+	return 0
 }

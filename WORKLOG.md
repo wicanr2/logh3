@@ -7570,3 +7570,16 @@ goal：`docs/goal/2026-09-17-executor-rom-thinking-round-7.md`。紀錄 `docs/re
   結果把每一格的行星存量整批重分配，`TestShipDeliveryOnlyCapital` 一次噴了幾十行。
   remake 已經在 `beginTurn` 的 `refillRegionSupply` 做過同一件事；改成
   **只有真的補到東西才分回行星**，沒補到時兩者的星域層結果相同。兩條偏離都寫進規格 063。
+
+## 2026-09-18（續）— 第八輪 E 收尾：#63 的敵艦分頁
+
+- **卡住的那張表就是距離表**（`docs/re/347`）。`docs/re/342` 附錄 B 把 `0A02:0672`
+  的門檻表停在「指到 0xD0000 的 UMB 區、內容像位元圖樣、unknown」。
+  `docs/re/185` 八個月前寫過一模一樣的段落：同樣的 `0000`／`0800` 偏移、
+  同樣的 `0x5555`／`0xAAAA`／`0xFFFF`、同樣的「像別的頁」——**那是 EMS 分頁框**。
+  `docs/re/241` 把數值倒進 `star-distance.json`、`docs/re/298` 給了語意
+  （`0x400 × 踏過幾條不全是自己的邊 ＋ 小成本`），所以 `shr ax,10` 就是「踏過幾條」。
+- 接上之後 `fcmd-info-enemy` 一次就整張逐位元組相同，#63 關掉。
+- **教訓**：`rules/00-rules-index.md` 的啟動檢查點列過「要說『解不出來』之前先 grep
+  自己的 `docs/`」。這一次手上握著三個足以搜到 `185` 的特徵，仍然寫下了 unknown。
+  **那一刻不像「任務開始」，像「收尾」**——與 `rulebook/63` 記過的漏點同一種形狀。

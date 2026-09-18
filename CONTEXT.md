@@ -322,7 +322,6 @@
   - 整套不存在：參謀任命（`090A:0248`，#62）、交戰演出的量表與戰場方塊與另外三種演出（#48）。
   - 開得起來但只能右鍵關：設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與
     `BUG!`（#66）；情報與徵稅那兩顆「參謀」是參謀任命的入口（#62）。
-    情報收集的敵艦分頁**文字對了、地圖著色還沒接**（門檻表指到 0xD0000，#63）。
   - 輸入：▲▼ 按住連捲（#60）。
   - 其餘：戰場「資料」的捲動（#67）、動畫之後的 `SPTIT.350` 標題畫面（#68）。
   配樂的播放層在（`internal/audio`，22 首 OGG 在 `assets/original/music/ogg/`），戰鬥曲從交戰演出出口，缺的是
@@ -474,7 +473,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 16 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 15 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -643,20 +642,6 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 
 **核實**：`internal/game/settingsscreen.go` 裡還找得到 `與 `BUG!` 也還沒接`（自承還在 ＝ 還沒做）
 
-#### info-screen-tabs — 情報收集的三個分頁（治安／勢力／敵艦）與「確認」
-
-*[#63](https://github.com/wicanr2/logh3/issues/63) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-情報收集畫面（`screen-info`）只畫第一頁，治安／勢力／敵艦三個分頁與「確認」（熱區 `1738`）點了沒事、只能右鍵關。
-
-**卡在**：- 沒讀，沒有收據。
-
-**做完的判準**：三個分頁與確認各有反組譯與同狀態收據，remake 整張逐位元組。
-
-**證據**：[`docs/re/16-window-list-right-button.md`](docs/re/16-window-list-right-button.md)
-
-**核實**：要人判——remake 沒有分頁的程式碼可綁；接上時綁 go_test（三個分頁的收據）。
-
 #### staff-appointment — 參謀任命（090A:0248）與情報收集／徵稅計劃的「參謀」鈕
 
 *[#62](https://github.com/wicanr2/logh3/issues/62) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -800,7 +785,7 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-69 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+70 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1980,6 +1965,24 @@ dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且�
 **證據**：[`docs/spec/003-budget-panel.md`](docs/spec/003-budget-panel.md)
 
 **核實**：`TestTaxPlanArrows` 釘在 `internal/game`
+
+#### info-screen-tabs — 情報收集的三個分頁（治安／勢力／敵艦）與「確認」
+
+*[#63](https://github.com/wicanr2/logh3/issues/63) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+情報收集畫面（`screen-info`）只畫第一頁，治安／勢力／敵艦三個分頁與「確認」（熱區 `1738`）點了沒事、只能右鍵關。
+
+**卡在**：（已解）三個分頁的等級算式與「確認」都反組譯完（`docs/re/342`、`docs/internals/63`）。
+敵艦分頁的門檻表一度以為未解，實際上就是**距離表**（`docs/re/347`）——`docs/re/241`
+早就把數值倒進 `star-distance.json`，`>>10` ＝ 踏過幾條不全是自己的邊。
+
+「參謀」鈕是參謀任命的入口，那一條在 #62。
+
+**做完的判準**：三個分頁與確認各有反組譯與同狀態收據，remake 整張逐位元組。
+
+**證據**：[`docs/re/16-window-list-right-button.md`](docs/re/16-window-list-right-button.md)、[`docs/re/342-info-screen-tabs.md`](docs/re/342-info-screen-tabs.md)、[`docs/re/347-enemy-tab-threshold-is-the-distance-table.md`](docs/re/347-enemy-tab-threshold-is-the-distance-table.md)、[`docs/internals/63-info-screen-tabs.md`](docs/internals/63-info-screen-tabs.md)
+
+**核實**：`TestInfoScreenEnemyTabMatchesOracle` 釘在 `internal/game`
 
 #### font-extract-overwrites-json — font_extract.py 重跑會整份蓋掉人工補過的 font-graph-img.json
 

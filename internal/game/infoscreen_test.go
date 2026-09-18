@@ -42,11 +42,9 @@ func TestInfoScreenTabsMatchOracle(t *testing.T) {
 
 }
 
-// 敵艦那一頁的等級還缺「索敵等級」（`0A02:0672` 還沒讀，#63 的未解項）：
-// 文字與核取方塊已經對得上，**地圖著色還不算數**，所以整張比會失敗。
-// 那一支讀出來、`infoStarMapColours` 的 `infoTabEnemy` 分支接上時拿掉這個 skip。
+// 敵艦那一頁：文字、核取方塊與地圖著色。門檻走 `0A02:0672`＝距離表 `>>10`
+// （`docs/re/342` 附錄 A ＋ `docs/re/347`），兩條路的等級照附錄 A 的謂詞。
 func TestInfoScreenEnemyTabMatchesOracle(t *testing.T) {
-	t.Skip("敵艦分頁的地圖著色卡在 0A02:0672 的門檻表（指到 0xD0000，docs/re/342 附錄 B）")
 	g := reachInfoScreen(t)
 	g.Click(488, 168)
 	if g.infoScreenTab() != infoTabEnemy {
