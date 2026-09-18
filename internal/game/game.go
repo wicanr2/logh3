@@ -770,6 +770,15 @@ type Game struct {
 	// detailAdmiral 是提督詳細資料那張畫面在看哪一位；-1 ＝ 沒有。
 	detailAdmiral int
 
+	// orgSlot 是編成中的艦隊被指定要進艦隊表的哪一格（陣營內的槽號，
+	// 編號 ＝ 槽號 ＋ 1）。−1 ＝ 玩家沒有從「艦隊編號」清單挑過，
+	// 用第一個空的（`fleetnumberlist.go`，#65）。
+	orgSlot int
+
+	// quit ＝ 系統指令的「結束」按了「決定」。原版走 DOS 的 `AH=4C`
+	// 直接結束程式（探索批次 `fcx-r8-65-quit-ok`），remake 由顯示層收掉。
+	quit bool
+
 	// provisional 是「出擊命令」那條路進艦隊組成時先編好的那一組（旗艦）：
 	// 進畫面那一刻就從首都的待命部隊扣（原版 78000 → 75000），「決定」
 	// 照這一份建艦隊、「中止」整批退回（收據 `fcmd-fok-cancel`，
@@ -1951,7 +1960,7 @@ func New(res *Resources) (*Game, error) {
 		return nil, fmt.Errorf("缺少必要的資源（字型與三個畫面的規格）")
 	}
 	g := &Game{res: res, highlight: -1, mouseX: -1, mouseY: -1, selectedRegion: -1,
-		hoverRegion: -1, hoverProbe: -1, mapHighlight: -1, menuRow: -1, detailAdmiral: -1, battleRegion: -1,
+		hoverRegion: -1, hoverProbe: -1, mapHighlight: -1, menuRow: -1, detailAdmiral: -1, orgSlot: -1, battleRegion: -1,
 		mapMark: -1,
 		lst:     newListScreen(),
 		tabs:    newListTabs(), rinfo: -1,
@@ -2353,6 +2362,7 @@ func (g *Game) click(x, y int) {
 			g.state = StateStandbyAdmirals
 		case "sortie":
 			if g.commandSpec(StateFleetOrg) != nil {
+				g.orgSlot = -1 // 每次出擊重來（#65）
 				g.sortieSlots(true)
 				g.state = StateFleetOrg
 			}
@@ -2412,9 +2422,15 @@ func (g *Game) click(x, y int) {
 					g.provisional = nil
 					g.closeFleetEditor()
 					ops := g.fleetOperations(g.detailAdmiral, adjutant)
+					// 玩家從「艦隊編號」清單挑過就進那一格（編號 ＝ 槽號 ＋ 1，
+					// 收據 `fcmd-fnum-decide`：挑第 3 列之後那一支在槽 2）。
+					index, number := len(g.fleets), len(g.fleets)+1
+					if k := g.orgFleetSlot(); k >= 0 {
+						index, number = rules.FleetTableIndex(g.faction, k), k+1
+					}
 					g.fleets = append(g.fleets, rules.Fleet{
-						Index:       len(g.fleets),
-						Number:      len(g.fleets) + 1,
+						Index:       index,
+						Number:      number,
 						Faction:     g.faction,
 						Admiral:     g.detailAdmiral,
 						Adjutant:    adjutant,
@@ -2513,6 +2529,21 @@ func (g *Game) click(x, y int) {
 			}
 		case "confirm":
 			g.fleetOrgConfirm()
+		}
+	case StateFleetNumber:
+		// 十六列清單：點一列 ＝ 挑這一支要進艦隊表的哪一格（`fleetnumberlist.go`，#65）。
+		g.fleetNumberClick(x, y)
+	case StateQuitConfirm:
+		// 「您確定要結束這個遊戲嗎？」是 1 號訊息框（中止／決定）。
+		// 「決定」原版走 DOS 的 `AH=4C` 直接結束程式（探索批次 `fcx-r8-65-quit-ok`）。
+		if s := g.res.MessageBox; s != nil {
+			if i, ok := s.MessageBoxButtonAt(quitConfirmKind, x, y); ok {
+				if s.ButtonIsDecide(quitConfirmKind, i) {
+					g.quit = true
+					return
+				}
+				g.state = StateCommandPhase
+			}
 		}
 	case StateStandbyAdmirals:
 		// 點清單的一列開那位提督的詳細資料（`docs/re/65`）。
@@ -3106,6 +3137,9 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.applyStaffFaces(spec)
 			if g.state == StateSettings {
 				g.applySettings(spec)
+			}
+			if g.state == StateFleetNumber {
+				g.applyFleetNumberList(spec)
 			}
 			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
 			// （`docs/spec/002`）。
@@ -3975,7 +4009,11 @@ func (g *Game) drawFleetOrg(fb *gfx.Framebuffer) {
 	}
 	// 艦隊編號 ＝ 提督在自己陣營裡的序號 ＋ 1（假設待驗，兩個資料點：`docs/re/66`；
 	// 卸任之後副官是 0xFF 仍印「第１艦隊」，收據 `fcmd-fadj-dismiss`）。
-	g.drawFleetOrgFor(fb, i, rules.Adjutant(rec), rules.FactionAdmiralIndex(rec, i)+1)
+	number := rules.FactionAdmiralIndex(rec, i) + 1
+	if k := g.orgFleetSlot(); k >= 0 {
+		number = k + 1 // 玩家從「艦隊編號」清單挑過（#65）
+	}
+	g.drawFleetOrgFor(fb, i, rules.Adjutant(rec), number)
 	// 副官那條路的清單與詳細資料疊在這一張上（小選單是 `StateFleetAdjutant`
 	// 自己的規格畫的）。這張的「帝國軍」平常由 drawSpecStaff 最後補，
 	// 疊了東西就要先印在底下（否則會戳到詳細資料視窗上）。

@@ -349,3 +349,26 @@
 
 **第一版差 269 個像素**，外接矩形正好是達希利那一格：`0374:04DA` 先 `3705:0349(0)` 整片還原，
 再 `3705:03FD(星域, 5)` 把要開戰的那一格塗起來——報告的文字對了，地圖沒跟著動。
+
+## 艦隊編號清單與結束確認（#65，2026-09-18）
+
+`tools/fleetcmd_receipts.sh` 第 29 段。逆向與量到的值在 `docs/re/341`。
+
+| 批次 | 畫面 | `screen.bin` SHA-256 | 差異 |
+|---|---|---|---|
+| `fcmd-fnum` | 十六列清單（新局，沒有在用的格）| `1453f31bd2a70f99103ca7c88513a969253aef780c7df11eebabaee7a9ce791b` | 0 |
+| `fcmd-fnum-row` | 點第 3 列 → 標題變「第３艦隊」 | `664ecc45614d2743604930f08d5e672d902e5a65b9a10d5efad6bd36be402cda` | 0 |
+| `fcmd-fnum-decide` | 確認 → 決定 → 地圖（那一支在**槽 2**）| `7740764c7baf5e2dfe0e22c09431c448259725985b3e766e89367b12addd67c2` | 0 |
+| `fcmd-fnum2` | 已有第１艦隊時：列 0 是暗色（ink 8）| `407cfaae4080b00490b7953fa06a1b034191c2c3a3e9af0003c6364347a72843` | 0 |
+| `fcmd-fnum2-used` | 點已用的列：只關清單，標題仍是「第２艦隊」 | `29422b700da8fcc01cab86ca7a87e810b6b6e7278fd0e131b8df8b595c4eee80` | 0 |
+| `fcmd-quit` | 「您確定要結束這個遊戲嗎？」（訊息框 1 號）| `542ca093ebdfeffc5bec44fd270a3cbd5a0fbad8dcfdf26908872c9ce026b74d` | 0 |
+| `fcmd-quit-cancel` | 中止 → 回地圖 | `022e7a71dbd113f53c81cd474e019d79bd885d3d4e60edf90be785a9b3c86a3f` | 0 |
+
+「決定」走 DOS 的 `AH=4C` 直接結束程式，沒有畫面可以比，所以只驗 `Game.Quit()`。
+
+測試 `TestFleetNumberListPicksSlot`、`TestFleetNumberListUsedRow`、`TestQuitConfirmButtons`；
+`tools/gui_check.sh` 另有 `fcmd-fnum-row`／`fcmd-quit` 兩例走 Ebiten 顯示層。
+
+**做這一條時修掉一個既有缺口**：「待命中提督資料」沒有濾掉已經帶隊的提督
+（`rules.AdmiralList(standby=true)` 原本只濾幕僚職）。既有收據抓不到——它們只在
+還沒有任何艦隊的時候開過這張清單。

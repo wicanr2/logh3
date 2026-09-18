@@ -325,6 +325,7 @@ func (g *Game) listOverlayClick(x, y int) bool {
 			if g.commandSpec(StateFleetOrg) != nil {
 				g.detailAdmiral = g.tabs.detail
 				g.closeListOverlay()
+				g.orgSlot = -1 // 每次出擊重來（#65）
 				g.sortieSlots(true)
 				g.state = StateFleetOrg
 			}

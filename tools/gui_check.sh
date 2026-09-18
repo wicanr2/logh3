@@ -77,6 +77,10 @@ cases=(
   # 逐格開戰之前的「達希利星系內／發現敵方艦隊。」（#75、docs/re/340）：S3 帝國第一回合
   # 實行之後三張過場各等滿 90 tick（報告在第 354 tick 出現，等 90 tick），掃到達希利那一格先印這一張再進戰場。
   "fcmd-s3-found|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 322; click 318 208; click 544 125; click 560 125; tick 400"
+  # 艦隊編號清單（#65）：艦隊編成按「艦隊編號」開十六列，點第 3 列 → 標題變第３艦隊。
+  "fcmd-fnum-row|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 368 350; click 368 130"
+  # 系統指令 → 結束 →「您確定要結束這個遊戲嗎？」（1 號訊息框，中止／決定）。
+  "fcmd-quit|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 544 125; click 560 205"
 )
 fail=0
 for c in "${cases[@]}"; do

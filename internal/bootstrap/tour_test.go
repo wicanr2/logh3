@@ -64,7 +64,7 @@ func enter(g *game.Game, it barItem) game.State {
 
 // knownDead 是已登記、還沒接的項目（issue）。這裡的項目開始有反應，測試就失敗，提醒回頭關 issue。
 var knownDead = map[string]string{
-	"情報收集": "#63", "徵稅計劃": "#64", "生產計劃": "#64", "結束": "#65",
+	"情報收集": "#63", "徵稅計劃": "#64", "生產計劃": "#64",
 }
 
 func TestEveryCommandItemWorks(t *testing.T) {

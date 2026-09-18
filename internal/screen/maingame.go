@@ -253,6 +253,17 @@ func (w *GameWindow) SetLineCode(line, cell int, code uint16) {
 	w.Lines = lines
 }
 
+// SetLineInk 把第 line 行的字色換掉（同樣在複本上改）：艦隊編號清單把已經在用的
+// 那幾列畫成暗色（原版 ink 8，收據 `fcmd-fnum2`）。
+func (w *GameWindow) SetLineInk(line int, ink uint8) {
+	if line < 0 || line >= len(w.Lines) || w.Lines[line].Ink == ink {
+		return
+	}
+	lines := append(w.Lines[:0:0], w.Lines...)
+	lines[line].Ink = ink
+	w.Lines = lines
+}
+
 // DropLineCellsFrom 把第 line 行 x ≥ from 的格子拿掉（同樣在複本上改）：
 // 提督詳細資料那張量死的「：待命中」要換成算出來的狀態時用。
 func (w *GameWindow) DropLineCellsFrom(line, from int) {

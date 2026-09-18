@@ -479,3 +479,28 @@ rec fcmd-s3-n10-standby 415000000 fcmd-s3-n10-menu -  $(mvc 391000000 497 352) -
 #     訊息速度、情報參謀表。
 FOUND="-peek lin:5DA47:1,lin:5DA51:2,lin:5DA55:2,lin:5DA68:2,lin:5DA7D:8"
 rec fcmd-s3-found 394000000 fcmd-s3-base - $S3EXEC $FOUND
+
+# 29. 艦隊編號清單與結束確認（#65）。
+#     (a) 冷啟動走到艦隊編成（同 `fcmd-base` 的序列，但最後一下按「艦隊編號」(368,310) 而不是「確認」）：
+#         十六列第01–第16艦隊，游標停哪一列哪一列反白。點第 3 列 → 清單關掉、標題變「第３艦隊」；
+#         再 確認 (480,310) → 決定 (510,310)，右下角清單是「第３艦隊萊因哈特」，**艦隊進的是槽 2**
+#         （`$FNUM` 倒艦隊表前四筆：槽 0 整筆 FF、槽 2 才是那一支）——所以編號就是槽號＋1，
+#         這張清單選的是艦隊表的位置。
+FNUM="-peek lin:60BA4:488"
+COLD65="-tick 20000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 -rclicks 130000000:300:200,155000000:300:200"
+rec fcmd-fnum 350000000 - ck $COLD65 \
+  -clicks 40000000:300:170,95000000:300:170,180000000:352:85,210000000:400:85,240000000:400:45,270000000:488:290,320000000:368:310 \
+  -click-hold $HOLD $FNUM
+rec fcmd-fnum-row    380000000 fcmd-fnum ck $(mvc 351000000 368 90) -click-hold $HOLD $FNUM
+rec fcmd-fnum-decide 430000000 fcmd-fnum-row - -clicks 381000000:480:310,405000000:510:310 -click-hold $HOLD $FNUM
+#     (b) 已經有第１艦隊時（從 `fcmd-base` 再出擊一支）：清單第 01 列畫成暗色，點它只關清單、不換編號
+#         （標題仍是「第２艦隊」；探索批次 `fcx-r8-65-fnum2-click`）。
+rec fcmd-fnum2 520000000 fcmd-base ck \
+  -clicks 425000000:352:85,440000000:400:85,455000000:400:45,470000000:488:290,500000000:368:310 \
+  -click-hold $HOLD $FNUM
+rec fcmd-fnum2-used 560000000 fcmd-fnum2 - $(mvc 530000000 368 50) -click-hold $HOLD $FNUM
+#     (c) 系統指令 → 結束 →「您確定要結束這個遊戲嗎？」（1 號訊息框：中止 (383,223)／決定 (432,223)）。
+#         **「決定」走 DOS 的 `AH=4C` 直接結束程式**（探索批次 `fcx-r8-65-quit-ok` 的 int 21h 記錄），
+#         沒有畫面可以比，所以只錄開框與中止兩張。
+rec fcmd-quit        450000000 fcmd-base ck -clicks 421000000:544:85,431000000:560:165 -click-hold $HOLD
+rec fcmd-quit-cancel 480000000 fcmd-quit -  -clicks 455000000:383:223 -click-hold $HOLD

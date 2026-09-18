@@ -322,7 +322,7 @@
   - 整套不存在：自家星域的艦艇補充與「已經恢復」（`1AAB:0FAF`，#71）、
     參謀任命（`090A:0248`，#62）、交戰演出的量表與戰場方塊與另外三種演出（#48）。
   - 開得起來但只能右鍵關：情報收集的 治安／勢力／敵艦 三個分頁與確認（#63）、徵稅計劃與生產計劃的「結束」
-    與預算計劃的箭頭（#64）、艦隊編號清單的列與結束確認的中止／決定（#65）、設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與
+    與預算計劃的箭頭（#64）、設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與
     `BUG!`（#66）；情報與徵稅那兩顆「參謀」是參謀任命的入口（#62）。
   - 輸入：▲▼ 按住連捲（#60）。
   - 其餘：戰場「資料」的捲動（#67）、動畫之後的 `SPTIT.350` 標題畫面（#68）、新遊戲的艦艇池模型（#55）。
@@ -475,7 +475,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 19 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 18 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -637,20 +637,6 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 **證據**：[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)
 
 **核實**：`internal/game/settingsscreen.go` 裡還找得到 `與 `BUG!` 也還沒接`（自承還在 ＝ 還沒做）
-
-#### fleet-number-list-and-quit-confirm — 艦隊編號清單的列、結束確認的中止／決定
-
-*[#65](https://github.com/wicanr2/logh3/issues/65) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-出擊那條路的艦隊編號清單（`StateFleetNumber`）點列沒事；系統指令「結束」的確認框（`StateQuitConfirm`）中止／決定沒接，只能右鍵關。
-
-**卡在**：- 沒讀，沒有收據。
-
-**做完的判準**：兩張各有反組譯與同狀態收據，remake 整張逐位元組；結束確認的「決定」照原版回主選單或結束程式。
-
-**證據**：[`docs/spec/013-fleet-organisation.md`](docs/spec/013-fleet-organisation.md)
-
-**核實**：要人判——remake 沒有對應的程式碼可綁；接上時綁 go_test。
 
 #### tax-production-budget-buttons — 徵稅計劃與生產計劃的「結束」、預算計劃的箭頭（26E2）
 
@@ -841,7 +827,7 @@ remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、
 
 ### 做完的（不在矩陣裡的那幾條）
 
-65 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+66 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1974,6 +1960,20 @@ dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且�
 **證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/re/332-turn-transition-windows.md`](docs/re/332-turn-transition-windows.md)、[`docs/re/333-turn-reports.md`](docs/re/333-turn-reports.md)、[`docs/spec/059-turn-transition-windows.md`](docs/spec/059-turn-transition-windows.md)
 
 **核實**：`TestTurnThinkingMatchesOracle` 釘在 `internal/game`
+
+#### fleet-number-list-and-quit-confirm — 艦隊編號清單的列、結束確認的中止／決定
+
+*[#65](https://github.com/wicanr2/logh3/issues/65) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+出擊那條路的艦隊編號清單（`StateFleetNumber`）點列沒事；系統指令「結束」的確認框（`StateQuitConfirm`）中止／決定沒接，只能右鍵關。
+
+**卡在**：- 沒讀，沒有收據。
+
+**做完的判準**：兩張各有反組譯與同狀態收據，remake 整張逐位元組；結束確認的「決定」照原版回主選單或結束程式。
+
+**證據**：[`docs/spec/013-fleet-organisation.md`](docs/spec/013-fleet-organisation.md)
+
+**核實**：`TestFleetNumberListPicksSlot` 釘在 `internal/game`
 
 #### font-extract-overwrites-json — font_extract.py 重跑會整份蓋掉人工補過的 font-graph-img.json
 

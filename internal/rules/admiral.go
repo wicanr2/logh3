@@ -101,8 +101,13 @@ func (a Admiral) Rank() string { return RankNames[RankOf(a.Merit)] }
 
 // AdmiralList 回某個陣營的提督，照提督表的順序。
 //
-// standby ＝ 只要待命中的（把幕僚職濾掉）——「出擊命令」那張清單用這個，
-// 「提督資料」那張不濾（幕僚職照列，只是前面標一個 ○）。
+// standby ＝ 只要**待命中**的——「出擊命令」那張「待命中提督資料」用這個：
+// 幕僚職與**已經帶隊（出擊中）的**都濾掉（`+0x09` bit7 沒設就是有職務，
+// `AdmiralDutyOf`）。「提督資料」那張不濾（幕僚職照列，只是前面標一個 ○，
+// 出擊中的在現在位置後面標「：出擊中」）。
+//
+// 「出擊中的也要濾掉」是收據 `fcx-r8-65-standby` 量到的：第１艦隊編成之後
+// 再開這張清單，萊因哈特不在上面，第一列是吉爾菲艾斯（#65）。
 func AdmiralList(all []Admiral, faction int, standby bool, staff []int) []Admiral {
 	isStaff := make(map[int]bool, len(staff))
 	for _, i := range staff {
@@ -113,7 +118,7 @@ func AdmiralList(all []Admiral, faction int, standby bool, staff []int) []Admira
 		if a.Faction != faction {
 			continue
 		}
-		if standby && isStaff[a.Index] {
+		if standby && (isStaff[a.Index] || AdmiralDutyOf(a.Record) == DutySortie) {
 			continue
 		}
 		out = append(out, a)

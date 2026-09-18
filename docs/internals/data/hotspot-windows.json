@@ -2,6 +2,17 @@
  "note": "熱區清單 ↔ 登錄它的視窗；簽章 9A 0F 00 A9 37",
  "calls": 25,
  "map": {
+  "03D8": [
+   {
+    "code_at": "04605",
+    "window_static": [],
+    "window_global": [
+     "94F2",
+     "94F0"
+    ],
+    "window_local": []
+   }
+  ],
   "0578": [
    {
     "code_at": "04F0E",
@@ -30,6 +41,26 @@
     "window_static": [
      "9518",
      "955C"
+    ],
+    "window_global": [],
+    "window_local": []
+   }
+  ],
+  "0BEE": [
+   {
+    "code_at": "053CE",
+    "window_static": [
+     "955C",
+     "9518"
+    ],
+    "window_global": [],
+    "window_local": []
+   },
+   {
+    "code_at": "0587E",
+    "window_static": [
+     "955C",
+     "9518"
     ],
     "window_global": [],
     "window_local": []
@@ -92,6 +123,27 @@
      "bp+28",
      "bp+26"
     ]
+   }
+  ],
+  "1CCE": [
+   {
+    "code_at": "0C856",
+    "window_static": [
+     "1C9C"
+    ],
+    "window_global": [],
+    "window_local": []
+   }
+  ],
+  "1E04": [
+   {
+    "code_at": "0D0B3",
+    "window_static": [
+     "96C4",
+     "96C4"
+    ],
+    "window_global": [],
+    "window_local": []
    }
   ],
   "21C0": [
