@@ -473,7 +473,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 15 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 16 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -508,6 +508,46 @@
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
+
+#### battle-tests-never-run — 九支戰場測試從來沒跑過（AI 不下命令，一直 skip 在「沒走到戰場」）
+
+*[#81](https://github.com/wicanr2/logh3/issues/81) · tooling*
+
+九支戰場測試從來沒有真的跑過，一直是 `t.Skip("沒走到戰場")`：
+
+```
+TestBattleIsDeterministic        TestEncircleChangesOutcome     TestBattleLossMagnitude
+TestBattleDoubleClickAdvances    TestBattleStartsOnContact      TestBattleTurnsDeduct
+TestBattleEndsAfterNineTurns     TestBattleResultPersists       TestBattleComputerDealsNoDamage
+```
+
+根因只有一個：它們都靠「跑 40 個回合，等 AI 把兩邊帶到同一格開戰」
+（`internal/game/battle_ai_test.go:19`、`battle_trigger_test.go:47`），而
+**預設的 `ai.Original` 一道命令都不下，兩邊不會動**——`TestBattleStartsOnContact`
+自己的 skip 訊息就寫著這一句。
+
+不是回歸：在第八輪起點 `cab9b3d` 用 worktree 跑同樣三支，一樣 skip。
+
+影響：戰場的決定性（`docs/re/87` 的亂數從回合數起種）、包圍會不會改變結果、
+損失量級、九回合結束、結果寫回艦艇池、電腦不造成傷害（規格 061）——這幾條規則
+目前**沒有任何自動回歸**。#57 接上的戰場全滅是靠 `eng-*` 收據測的，不走這幾支。
+
+與第七輪修掉的那次（`battleTestGame` 停在 `StateTurnWindow`，二十多支靜默 skip）
+是同一種形狀：測試全綠，但其中一批根本沒執行。
+
+**卡在**：- 要決定用哪一種局面。直接 `StartBattle` 最省事，但那是 direct-entry，
+  按 `CLAUDE.md` 的對拍契約只能做窄幅診斷，不能代替正常玩家路徑——
+  這幾支測的是規則不是畫面，應該可以接受，但要寫明。
+- `TestBattleStartsOnContact` 本身測的就是「兩邊走到同一格會開戰」，
+  它不能用 `StartBattle` 繞過去，得另外想。
+
+**做完的判準**：九支都真的跑起來（不是刪掉 skip 讓它 fail）：給一個會開戰的固定局面——
+`-poke` 式的 fixture、直接 `StartBattle(星域)`，或讓測試用會下命令的 AI。
+`go test ./internal/... -v | grep SKIP` 剩下的每一支都說得出理由。
+
+**證據**：[`internal/game/battle_ai_test.go`、`battle_trigger_test.go`、`battle_input_test.go`、`passivebattle_test.go`](internal/game/battle_ai_test.go`、`battle_trigger_test.go`、`battle_input_test.go`、`passivebattle_test.go)、[`docs/spec/061`（電腦不造成傷害）、`docs/spec/018`（戰場回合）`](docs/spec/061`（電腦不造成傷害）、`docs/spec/018`（戰場回合）)
+
+**核實**：要人判——verify 只掃產品程式碼、不掃測試檔，所以綁不到 t.Skip。人工核對方式：go test ./internal/game/ -v 2>&1 | grep -c '沒走到戰場' 要是 0。
 
 #### plan-arrow-pressed-pixels — 徵稅／預算計劃四顆箭頭鈕剛點過時差 17–21 個像素
 
