@@ -48,8 +48,12 @@ func (g *Game) infoScreenClick(spec *screen.MainGameSpec, x, y int) {
 		g.infoTab[g.seatIndex()] = k
 		return
 	}
-	// 確認 (573,378) 38×22 關窗回戰略地圖；參謀 (525,378) 是 #62，還沒接。
-	if b := infoButtonAt(spec, x, y); b == 1 {
+	// 確認 (573,378) 38×22 關窗回戰略地圖；參謀 (525,378) 開參謀任命
+	// （`0A02:0AC4`，#62、`docs/re/348`）。
+	switch infoButtonAt(spec, x, y) {
+	case 0:
+		g.beginStaffPick(rules.PostIntel, StateInfo)
+	case 1:
 		g.state = StateCommandPhase
 	}
 }

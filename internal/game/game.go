@@ -772,6 +772,8 @@ type Game struct {
 
 	// detailAdmiral 是提督詳細資料那張畫面在看哪一位；-1 ＝ 沒有。
 	detailAdmiral int
+	// staff 是參謀任命那條路（#62，`internal/game/staffpick.go`）。
+	staff staffPick
 
 	// infoTab 是情報收集畫面停在哪一頁（`ds:8F2F[座位]`，一個座位一格；
 	// 關窗不清，下次開還停在同一頁。#63、`docs/re/342`）。
@@ -2372,6 +2374,12 @@ func (g *Game) click(x, y int) {
 		case "cancel":
 			g.state = StateStandbyAdmirals
 		case "sortie":
+			// 參謀任命走同一套清單與詳細視窗，但第三顆鈕是「決定」——
+			// 寫專任參謀表、回情報收集（#62、`docs/re/348`）。
+			if g.staff.on {
+				g.staffPickDecide()
+				return
+			}
 			if g.commandSpec(StateFleetOrg) != nil {
 				g.orgSlot = -1 // 每次出擊重來（#65）
 				g.sortieSlots(true)
@@ -2777,6 +2785,16 @@ func (g *Game) rightClick(x, y int) {
 		g.state = StateAdmiralDetail
 	case StateAdmiralDetail:
 		g.state = StateStandbyAdmirals
+	case StateStandbyAdmirals:
+		// 參謀任命那條路上的清單：右鍵整條收掉、回進來時那一張
+		// （#62、`docs/re/348`）。出擊那條路沿用原本的收尾（下面的 default）。
+		if g.staff.on {
+			g.staffPickClose()
+			return
+		}
+		if g.commandSpec(StateCommandPhase) != nil {
+			g.state = StateCommandPhase
+		}
 	case StateBattle:
 		// 右鍵關掉最上面那一層：詳細資料 → 「資料」 → 命令選單 → 選單。
 		if g.battleDetail {
@@ -3452,6 +3470,9 @@ func (g *Game) refreshCapitalSnap() {
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
+		// 待命中提督清單：出擊那條路的收據游標剛好停在規格檔的預設位置，所以
+		// 以前沒加也對得上；參謀任命那條路（#62）從別的座標進來就露餡了。
+		StateStandbyAdmirals,
 		StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick,
 		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
 		StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg,
@@ -4257,6 +4278,14 @@ func (g *Game) commandSpec(s State) *screen.MainGameSpec {
 // starMapFor 回這張規格要用的地圖。**不能共用同一張**：情報報告的地圖
 // 跟著治安換色、星系資料又是另一組（`strmap-regions.json` 的 colour_fields）。
 func (g *Game) starMapFor(spec *screen.MainGameSpec) *asset.Image {
+	// 參謀任命的清單與詳細資料是**疊在情報收集上面**的：原版只重畫右半，
+	// 左邊那張地圖維持進來時那一頁的著色（收據 `fcmd-staff-list`：左半與
+	// `fcmd-info-open` 相同）。remake 每一幀重畫整張，所以要自己記得沿用。
+	if g.staff.on && g.staff.back == StateInfo {
+		if m := g.securityStarMap(); m != nil {
+			return m
+		}
+	}
 	switch spec.Map.Colours {
 	case securityColours:
 		if m := g.securityStarMap(); m != nil {

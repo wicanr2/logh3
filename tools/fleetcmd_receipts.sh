@@ -576,3 +576,19 @@ for f in pool-before pool-after region-before region-after; do
   cp "$CK/fcmd-supply-$f.bin" "$ROOT/workplace/oracle/fcmd-supply-mem/$f.bin"
 done
 printf '%s  %s\n' fcmd-supply-mem "$(sed -n 's/^screen.bin SHA-256: //p' "$ROOT/workplace/oracle/fcmd-supply-mem/meta.txt" | cut -c1-16)"
+
+# 35. 參謀任命（#62，`docs/re/342` §5、`docs/re/348`）。情報收集畫面的「參謀」鈕
+#     （熱區 (525,378)-(562,399)，滑鼠 y ＝ 畫面 y − 40，**要點中央 (543,348)**，
+#     點上邊界 338 會落在熱區外）→ `0A02:0AC4` → `0C0A:00F0(1)` 開「待命中提督資料」
+#     → 選一列開該提督的詳細資料（`0D92:000D`）→「決定」才寫 `ds:8F4D[座位]`。
+#     `-peek lin:5DA7D:8` 是 `ds:8F4D`（兩個座位各一個位元組）：決定之前 0D、之後 01。
+STAFF="-peek lin:5DA7D:8"
+rec fcmd-staff-list   520000000 fcmd-info-open ck \
+  -mouse-x 543 -mouse-y 348 -mouse-at 472000000 -clicks 482000000:543:348 -click-hold $HOLD $STAFF
+rec fcmd-staff-detail 640000000 fcmd-info-open -  \
+  -mouse-x 543 -mouse-y 348 -mouse-at 472000000 -clicks 482000000:543:348,540000000:450:52 -click-hold $HOLD $STAFF
+rec fcmd-staff-decide 700000000 fcmd-info-open -  \
+  -mouse-x 543 -mouse-y 348 -mouse-at 472000000 -clicks 482000000:543:348,540000000:450:52,620000000:497:290 -click-hold $HOLD $STAFF
+# 「中止」(455,290)：回到清單（不是關窗），`ds:8F4D` 留在原值。
+rec fcmd-staff-cancel 700000000 fcmd-info-open -  \
+  -mouse-x 543 -mouse-y 348 -mouse-at 472000000 -clicks 482000000:543:348,540000000:450:52,620000000:455:290 -click-hold $HOLD $STAFF
