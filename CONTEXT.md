@@ -610,7 +610,17 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 還沒匯出成可檢視格式的：`ANI_PNL0`–`2.A98`（解碼在 `internal/asset`）、`BLOCK_0`–`2.BLK`、`MAP*.CMP`、`IBM16.350` 開頭動畫的各格、
 `SPTIT.350`（編碼未確認）。規則見 `AGENTS.md`：由 `tools/scripts/` 的匯出腳本產生、雜湊進清單。
 
-**卡在**：- `SPTIT.350` 要先確認編碼。
+**卡在**：**五項的難度差很多**（2026-09-18 核實）：
+
+| 項目 | 狀態 | 最小下一步 |
+|---|---|---|
+| `BLOCK_0`–`2.BLK` | **工具現成** | `BLOCK_3` 就是 `tools/scripts/spr_export.py 20 BLOCK_3.BLK` 出來的，同格式直接跑三次 ＋ 補三列 KINDS ＋ 重跑 manifest。零新工具 |
+| `IBM16.350` 各格 | 腳本有、產物不進版控 | `tools/scripts/intro_frames.py` 能出 PNG，但它的 docstring 自己寫「輸出是一次性產物，不進 Git」——改成進版控的產物即可 |
+| `ANI_PNL0`–`2.A98` | 解碼只在 Go 端 | `internal/asset/amg.go` 有解碼器，python 端沒有；要搬一份或加一支 `cmd/` 匯出器 |
+| `MAP*.CMP` | 同上 | 解碼在 `internal/asset/cmp.go` 的 `DecodeCMP`，由 `internal/bootstrap/load.go` 讀 `MAP%02d.CMP` |
+| `SPTIT.350` | **硬卡點** | 編碼未確認（`docs/internals/01` 仍寫「`.350` 不是單一格式」）。與 #68 共用同一個前提 |
+
+建議先做 `BLOCK_0`–`2`（一次就少一項），`SPTIT.350` 留到 #68 解掉編碼再說。
 
 **做完的判準**：上列素材各有匯出腳本、PNG 進 `assets/original/`、`assets_manifest.py` 的 KINDS 有對應列。
 
@@ -625,7 +635,17 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 配樂播放層在（`internal/audio`，22 首 OGG），但曲子要玩家自備原版後用 `tools/music_fm_capture.sh`／`tools/music_to_ogg.sh` 轉，
 需要 dosgolem 與容器；`_M` 那 11 首是 fluidsynth ＋ FluidR3_GM 合成，不是原版 MPU-401 的音色。發行版要給玩家一條不需要開發環境的轉檔路。
 
-**卡在**：- `_M` 音色是忠實度取捨，要使用者決定。
+**卡在**：**瓶頸是裁決，不是工程**（2026-09-18 核實）：判準三項裡只有「`SOURCES.tsv` 當基準」那一項
+有東西可比（`assets/original/music/ogg/SOURCES.tsv` 欄位齊全：曲名／來源／增益／`.MDS` SHA-256／
+VGM SHA-256／OGG SHA-256／dosgolem HEAD）。另外兩項都沒動：`cmd/` 底下六支沒有一支是轉檔器，
+`tools/music_to_ogg.sh` 與 `music_fm_capture.sh` 都要容器；`_M` 的音色取捨沒有任何裁決紀錄
+（`WORKLOG.md`／`CONTEXT.md` 都查過）。
+
+`_M` 那 11 首的三個選項（**要使用者先選，工程再動**）：
+
+1. **維持現狀**：fluidsynth ＋ FluidR3_GM 合成，與原版 MPU-401 的音色不同，發行包照出。
+2. **remake 內建一份 GM soundfont**：玩家不必自備，但發行包變大、授權要另外確認。
+3. **只出 `_F`**（FM 那 11 首），`_M` 缺曲——最忠實於「不假造原版沒有的東西」，但少一半曲目。
 
 **做完的判準**：玩家自備原版後有一個不需要 Docker 的轉檔入口（或 remake 內建合成），`_F` 雜湊與 `SOURCES.tsv` 相同；`_M` 的音色取捨經使用者裁決。
 
@@ -640,6 +660,22 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 原版開頭動畫播完之後還有 `SPTIT.350` 標題畫面（`docs/re/283` 看到開檔，調色盤 `SPTIT.RGB`），怎麼走到主選單沒量；remake 動畫播完直接進主選單。
 
 **卡在**：- `SPTIT.350` 是不是與 `IBM16.350` 同一套編碼沒確認。
+
+手上已經有的線索（2026-09-18 核實，**都只是線索、還沒驗**）：
+
+- 兩個檔都以 `00 00` 開頭再接一個 word（`SPTIT` 是 `02E5`、`IBM16` 是 `293F`），形狀類似。
+- `IBM16.350`（1,764,911 bytes）配一份 748 bytes 的長度表 `IBMFLS16.350`；
+  **`SPTIT.350`（33,346 bytes）沒有對應的長度表檔**。可能是「不是同一套」，
+  也可能只是因為它單張圖不需要分格——兩種解釋都還沒排除。
+- 調色盤是 `SPTIT.RGB`，48 bytes ＝ 16 色（`docs/internals/05`）；
+  同目錄還有名字顛倒的 `TITSPT.RGB`（`docs/internals/01`）。
+- 640×350 的 4bpp planar 未壓縮是 112,000 bytes，檔案只有 33,346 → **壓縮過**。
+
+- remake 這一側一行都沒有：`grep -rni sptit internal/ cmd/` 零命中，
+  `internal/game/intro.go` 是「播完（或解不下去）就進主選單」。
+- 時序只有 strong inference：`docs/re/283` 記到 `#913,165,418` 開檔讀 33,346 bytes。
+
+**解掉這個編碼同時解掉 #70 的最後一項卡點**（那五項素材裡只剩 `SPTIT.350`）。
 
 **做完的判準**：`SPTIT.350` 解碼、標題畫面的時序與按鍵有收據，remake 從動畫 → 標題 → 主選單整條逐位元組。
 
@@ -715,11 +751,25 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 情報收集與徵稅計劃畫面的「參謀」鈕是參謀任命的入口（`090A:0248`），remake 開得起來但點了沒事、只能右鍵關（CONTEXT「玩家還碰不到的功能」）。
 AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），玩家這一條沒有。
 
-**卡在**：- 沒讀，沒有收據。
+**卡在**：**情報收集那一顆的 RE 已經 proven 到位元組**（`docs/re/342` §5，2026-09-18 核實）：
+熱區 `(525,378)-(562,399)`、點擊配色 `0x27`→`0x87`、呼叫 `0A02:0AC4()` 重新指派情報參謀、
+挑到合格提督時寫 `ds:8F4D[ds:8F1D] ← 新提督編號`、共用出口 `0A02:0B3A` 重畫「情報專任參謀」
+的姓名與頭像。本文原本寫的「沒讀，沒有收據」**只對徵稅計劃那一顆成立**。
+
+剩下的：
+
+- `090A:0248`（徵稅計劃那顆，換的是**內政**專任參謀 `ds:8F4F`）沒有對應的 RE 文件——
+  `docs/re/268` 只到 `090A:021B` 那一行。
+- 合格檢查 `0D92:0422`／`0D92:04E3` 的內部條件沒反查（`docs/re/342` §5 標 unknown）。
+- 候選清單與就任／卸任畫面沒有同狀態收據。
+- remake 兩個入口都只吃掉點擊：`internal/game/infoscreen.go`（「是 #62，還沒接」）、
+  `internal/game/planscreens.go`（「參謀：吃掉但還沒接（#62）」）；`ds:8F4B` 起那張表目前只讀不寫。
+
+最小下一步：**先只接情報收集那一顆**（RE 已足夠），拿 `docs/re/342` 的點擊序列補一份收據。
 
 **做完的判準**：`090A:0248` 反組譯、候選清單與就任／卸任畫面有同狀態收據，remake 整張逐位元組；提督 `+0x09` 與 `ds:8F4B` 起的專任參謀表照原版改。
 
-**證據**：[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)、[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)
+**證據**：[`docs/re/342-info-screen-tabs.md` §5（情報收集那一顆，proven）`](docs/re/342-info-screen-tabs.md` §5（情報收集那一顆，proven）)、[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)、[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)
 
 **核實**：`internal/game/planscreens.go` 裡還找得到 `還沒接（#62）`（自承還在 ＝ 還沒做）
 
@@ -759,7 +809,17 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 - 艦隊「作戰」分頁：所在星域 bit2「戰鬥」、bit4「占領」。
 - 艦隊「士氣」分頁小於 50 用色 2。
 
-**卡在**：- `+0x2A`／`+0x2B` 誰寫、`0xFF` 何時出現沒讀。
+**卡在**：- `+0x2A`／`+0x2B` 誰寫、`0xFF` 何時出現沒讀（`docs/internals/22` 仍標「兩者怎麼並存假設待驗」）。
+- **同盟座位那一份收據存在，但對這個差異是盲的**（2026-09-18 核實）：
+  `workplace/oracle/star1eAlly` 是同盟座位的星系資料整張收據、`TestAllianceCommandPhaseScreens/星系資料`
+  逐位元組 PASS，但畫面上十四列**全是「0 ： 0」**——那是開局、雙方都還沒編成艦隊。
+  原版左欄印的是 `+0x2A`（25 份傾印與三個劇本資料檔裡恆為 0），remake 印的是
+  `CountFleets(帝國)`，兩者在「帝國艦隊數 ＝ 0」時同值。這正是判準裡
+  「（或證明既有收據踩不到）」那種情形。
+
+最小下一步：`-poke` 把某格的 `+0x2A`／`+0x2B` 寫成非 0 與 `0xFF` 各一份、同時讓那格有帝國艦隊，
+看原版印 `--` 還是數字——**這一份同時回答 `+0x2A`／`+0x2B` 的語意**，投資報酬率最高。
+其餘三種也都是 `-poke` 造：星域 `+0x13` 的 bit2／bit4、艦隊 `+0x3C` 壓到 50 以下。
 
 **做完的判準**：四種情形各有同狀態收據（可用 `-poke` 造），整張逐位元組；`+0x28`–`+0x2B` 的寫入者讀完。
 
