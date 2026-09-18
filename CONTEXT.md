@@ -506,31 +506,33 @@
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
-#### dosgolem-load-address — dosgolem 的程式載入位置比 DOSBox 低，GIN3 鍵盤常式的 0400h bug 寫壞 0374:0896（需裁決）
+#### region-panel-frozen-recheck — re/278 左下角凍住的內容：舊收據錄在 -click-move-lead 掉了的那段期間，結論要重驗
 
-*[#76](https://github.com/wicanr2/logh3/issues/76) · decision（取捨：等使用者裁決）*
+*[#77](https://github.com/wicanr2/logh3/issues/77) · parity（對拍：要與原版逐位元組相同）*
 
-GIN3 自己的鍵盤常式（int 09h／16h，`348A:0038`／`0074`／`00A0`／`00E3`）寫 `mov bx,0400h / mov ds,bx`，把 BIOS 鍵盤緩衝區的
-頭尾與鍵字寫到 `0400:001A` 起（正確是 `0040:001A`）——**原版 bug**（位元組 P：解包後的映像同樣是 `bb 00 04 8e db`）。
-寫到的線性位址 `0x401A`–`0x403D` 落在哪裡取決於程式載入位置：dosgolem 把第一支程式的 PSP 寫死在 `0x0100`
-（`internal/machine/machine.go`），GIN3PS 的載入段是 `0349`，那一段正好是 `0374:08DA`–`08FD`，也就是 `0374:0896`
-（戰略耗損「沒全滅」那一支）的中間。開機 #58.34M 解包完成時那 16 bytes 是對的（獨立 Python 解包鏈，六層，與 dosgolem 逐位元組相同），
-第一次按鍵之後就被寫壞；92 份傾印都是壞的（`docs/re/336` §九，批次 `fcx-r7-glue-w3`／`w4`）。
+`docs/re/278`（左下角星域摘要「凍住的內容」隨座位不同）那張表是在 dosgolem **掉了 `-click-move-lead`** 的那段期間錄的
+（收據的 HEAD `6841e68`，而且當時工作樹有 9 個未提交檔案）。第七輪重跑之後，四份的左下角從「有字」變成「空的」：
 
-真機／DOSBox 的載入位置比較高（DOSBox-X 的 DOS 記憶體從 `0x158` 起、`GIN3.COM` 先縮成保留 `237h` 段再執行），那 36 bytes
-很可能落在 GIN3.COM 的保留區、沒有傷害——**hypothesis**，實際載入段沒有量。
+| 收據 | `docs/re/278` 的墨（`x[15,312] y[356,399]` 非色 9） | 現在（`f7523f9`） |
+|---|---:|---:|
+| `rgnAllyHoverMenu` | 2,624 | 88 |
+| `rgnAllyEnemyMenu` | 2,429 | 88 |
+| `rgnEmpOwnMenu` | 2,515 | 88 |
+| `rgnEmpLateMenu` | 2,353 | 88 |
 
-**卡在**：- **要使用者決定**：①把 dosgolem 第一支程式的載入位置調成與 DOSBox 一致——所有程式的線性位址都會位移，文件裡以 `DS=54B3`
-  換算的線性位址與全部收據（含 `-poke`／`-peek`）都要重做；②執行器不動，logh3 這邊記下這個重疊，受影響的只有 `0374:08DA`–`08FD`，
-  「沒全滅」那一支改用別的方式取證（例如在解包完成後、第一次按鍵前把那 16 bytes 寫回原碼）。
-- 真機／DOSBox 的實際載入段沒有量（量的話要讀 DOSBox 原始碼推，或使用者同意跑一次 DOSBox）。
+成因已定位（P）：同一份旗標在 `2e9dd3b` 跑出 2,624、在 `e0b6a03`（把 `-click-move-lead` 加回來，預設 200,000）之後跑出 88；
+`b5485eb` 與 `f7523f9` 都是 88。點擊會先把游標移過去再按，於是「開選單之前最後做的事」變了，凍住的內容跟著變。
+另外 11 份 `s3data-scroll-*`（#60 按住連捲的探針）也跟著變，它們的步數綁在重新產生的檢查點上。
 
-**做完的判準**：使用者決定執行器怎麼處理（見卡在）；照決定做完之後，`0374:0896` 在收據裡是解包後的原碼，「沒全滅」那一支有同狀態收據，
-remake（規格 060 規則 6，含 `297B:0546`）對上。
+**卡在**：- 舊結論影響了規格 001 規則 4–7 的寫法，改之前要先有新的一整組收據。
 
-**證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)
+**做完的判準**：用 `f7523f9` 重錄 `docs/re/278` 那一整組（含對照組），重新判「左下角凍住的內容」到底跟什麼有關（座位？開選單之前的最後一個動作？
+游標位置？），結論寫進 `docs/re/`；規格 001 規則 4–7 與 remake 的寫法照新結論對齊，或說明為什麼不變。
+`s3data-scroll-*` 那 11 份重新量步數（#60 要用）。
 
-**核實**：要人判——執行器配置的決定，logh3 產品程式碼沒有訊號。決定後：選①綁 dosgolem 的單元測試或收據（0374:08D9 16 bytes 為解包原碼）；選②綁 docs/spec/060 規則 6 的狀態。
+**證據**：[`docs/re/278-region-panel-frozen-content-differs-by-faction.md`](docs/re/278-region-panel-frozen-content-differs-by-faction.md)、[`docs/re/336-executor-rom-tail-rerun.md` §三`](docs/re/336-executor-rom-tail-rerun.md` §三)
+
+**核實**：要人判——重錄那一組之前沒有可綁的訊號（收據雜湊「相符」只代表還沒重錄）。重驗完把結論寫進 docs/re/ 與規格 001，verify 換成新的收據雜湊或 go_test。
 
 #### enemy-fleet-found-report — 開戰前「<星域>星系內發現敵方艦隊。」報告框（0374:0489）
 
@@ -864,7 +866,7 @@ remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、
 
 ### 做完的（不在矩陣裡的那幾條）
 
-60 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+61 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1864,6 +1866,30 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### dosgolem-load-address — dosgolem 的程式載入位置比 DOSBox 低，GIN3 鍵盤常式的 0400h bug 寫壞 0374:0896（需裁決）
+
+*[#76](https://github.com/wicanr2/logh3/issues/76) · decision（取捨：等使用者裁決）*
+
+GIN3 自己的鍵盤常式（`348A:0038`／`0074`／`00A0`／`00E3`）寫 `mov bx,0400h / mov ds,bx`，把 BIOS 鍵盤緩衝區寫到 `0400:001A` 起
+（正確是 `0040:001A`）——**原版 bug**。寫到的線性 `0x401A`–`0x403D` 落在哪裡取決於載入位置；dosgolem 的第一支程式 PSP 是 `0x0100`，
+GIN3PS 載入段 `0349`，那一段正好是 `0374:08DA`–`08FD`（`0374:0896` 裡面）。解包完成時那 16 bytes 是對的，第一次按鍵之後被寫壞
+（`docs/re/336` §9.3，獨立六層解包 P）。
+
+**使用者裁決（2026-09-18）：執行器不動，remake 只要做出一樣的效果就好**——這個專案是把遊戲機制抓出來重寫，不是逐位元組複製原版的
+執行環境。所以：
+
+- dosgolem 的載入位置**不改**（改了所有線性位址位移、全部收據重做，換不到等值的東西）。
+- remake 照**解包後的原碼**語意做（規格 060 規則 6：艘數 0 的組作廢並移除、`297B:0546` 重算），不照被寫壞的碼。
+- 「沒全滅」那一支在 dosgolem 上沒有可信的執行期對照，效果對得上就算數；規格 060 已知差異表記這一條。
+
+**卡在**：- 無（裁決結案）。
+
+**做完的判準**：規格 060 的已知差異表寫明這個取捨（做完）。
+
+**證據**：[`docs/re/336-executor-rom-tail-rerun.md` §9.3`](docs/re/336-executor-rom-tail-rerun.md` §9.3)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)
+
+**核實**：`docs/spec/060-strategic-attrition-annihilation.md` 標到 `使用者裁決（2026-09-18）執行器不動`
 
 #### dosgolem-bios-rom-tail — dosgolem 的 BIOS ROM 尾巴是 0（戰略全滅轉跑 ENDING.EXE 的成因）
 

@@ -53,6 +53,13 @@ GIN3 正常路徑不碰這一段（P，對這四條）；讀的只有全滅崩�
 | `fcmd-occ-phz-t4` 的 `screen.bin`／`plane.bin`／`fleet0.bin` | 不再崩潰（§四） |
 | 約 190 份 `screen.png` | 只有 PNG 編碼不同，同一份的 `screen.bin` 相同 |
 
+**15 份真的變了，成因是更早的執行器版本**（2026-09-18 續跑抓到）：`rgnAllyHoverMenu`／`rgnAllyEnemyMenu`／`rgnEmpOwnMenu`／
+`rgnEmpLateMenu` 的左下角摘要墨從 2,624／2,429／2,515／2,353 變成 88（空的），另外 11 份 `s3data-scroll-*` 的 ▼ 按住相位變了。
+前四份的舊值錄在 `6841e68`（而且當時工作樹有 9 個未提交檔案）；同一份旗標在 `2e9dd3b` 跑出 2,624、在 `e0b6a03`
+（把 `-click-move-lead` 加回來）之後跑出 88，`b5485eb` 與 `f7523f9` 都是 88（P，三個版本各跑一次）。也就是說
+`docs/re/278` 那張表是在「移動前移掉了」的那段期間量的，結論要重驗 → #77。`s3data-scroll-*` 的步數綁在重新產生的檢查點上，
+#60 要用時重量。
+
 新版收據下 `go test ./internal/...` 全過、`tools/gui_check.sh` 34 例全同。重跑中途停過一次換成優先順序，被中斷的只有探索批次 `fcx-base-battle`
 （`report.txt` 被截斷，備份在 `workplace/oracle-prev/`）。
 

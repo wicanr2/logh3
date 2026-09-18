@@ -3999,8 +3999,9 @@
         "kind": "receipt",
         "batch": "rbx297w",
         "files": {
-          "report.txt": "c2139e87670661bbb9b3cff87b348c71ae46a2bcd66bfc065b9b6de12e73ca2d"
-        }
+          "screen.bin": "c07ff3a0446e7e2bffb4eb607ae8e8e50abf2e8be4ffdb60a8ae798488ad21a3"
+        },
+        "note": "原本綁 report.txt，但報告裡有「執行 N 道指令，耗時 …」那一行，每次重跑都不一樣（2026-09-18 換掉）；監看種子的證據仍在 report.txt 與 docs/re/297。"
       }
     },
     {
@@ -4018,9 +4019,9 @@
         "kind": "receipt",
         "batch": "urx299w",
         "files": {
-          "report.txt": "000c696bfb2705f7474fd709dbea42d7d7de675581cb8b4d5a9580d6fc30a58a",
           "screen.bin": "27c1d17a274eab1cf824b5a70ad967e7468462654e177de9c40243173ac475ba"
-        }
+        },
+        "note": "同 s9-30：拿掉 report.txt（含耗時那一行，重跑就變）。"
       }
     }
   ]
