@@ -38,8 +38,8 @@ type FleetGroup struct {
 	Y int `json:"y,omitempty"`
 
 	// 以下是艦艇池那一筆的其餘欄位（`docs/internals/64`，#55）。存檔讀進來時
-	// 一起帶著，寫回去時原樣寫回——**remake 還沒有自己算它們的規則**，
-	// 所以新編的艦隊這幾格是 0，與原版不同（規格 015 已知差異）。
+	// 一起帶著，寫回去時原樣寫回；新編艦隊由 `InitGroupStock` 照原版的
+	// `2AD2:0029` ＋ `2703:14CF` 填（`docs/re/345`）。
 
 	// Pool 是這一組在艦艇池裡的索引（艦隊記錄 `+0x10＋4k` 的 `[0..1]`）。
 	// −1 ＝ 這一組不是從池裡讀出來的（新編、還沒配過）。
@@ -49,10 +49,39 @@ type FleetGroup struct {
 	// RepairCap 是修理／損失上限（艦艇 `+0x0C`）：建立時等於現有艘數，
 	// 戰損時用 `Σ實扣² ÷ 滿編` 往下扣。
 	RepairCap int `json:"repair_cap,omitempty"`
-	// Stock1／Stock2 是兩格隨艦種變的存量（艦艇 `+0x0E`／`+0x12`，**32 位元**）：
-	// 建立時抄艦種表，戰損時按剩餘比例縮。艦種 7 兩格都是 0。
-	Stock1 int `json:"stock1,omitempty"`
-	Stock2 int `json:"stock2,omitempty"`
+	// Missiles／Fighters 是飛彈與艦載機存量（艦艇 `+0x0E`／`+0x12`，**32 位元**）：
+	// 建立時 ＝ 艦種表的「每艘幾發／幾架」× 現有艘數，戰損時按剩餘比例縮。
+	// 艦種 7 兩格都是 0。戰場那一層讀的是同兩格（`BattleUnit.Missiles`／
+	// `Fighters`），補給就是往這裡加。
+	Missiles int `json:"missiles,omitempty"`
+	Fighters int `json:"fighters,omitempty"`
+}
+
+// InitGroupStock 把一組新編艦艇在池裡的其餘欄位填成原版建立時的值
+// （`2AD2:0029` ＋ `2703:14CF`，`docs/re/345`）：
+//
+//   - 修理上限 `+0x0C` ＝ 現有艘數；
+//   - 飛彈 `+0x0E` ＝ 艦種表 `+0x10`（每艘幾發）× 現有艘數；
+//   - 艦載機 `+0x12` ＝ 艦種表 `+0x14`（每艘幾架）× 現有艘數。
+//
+// 艦種 7（索敵分遣隊）走的是 `2AD2:0029` 的另一條分支，不呼叫 `2703:14CF`，
+// 所以兩格存量留 0、修理上限取滿編。
+func InitGroupStock(t *ShipKindTable, faction int, g *FleetGroup) {
+	if g == nil {
+		return
+	}
+	g.Missiles, g.Fighters = 0, 0
+	if g.Kind == shipKindStandalone {
+		g.RepairCap = g.Full
+		return
+	}
+	g.RepairCap = g.Ships
+	k, ok := t.Kind(faction, g.Kind)
+	if !ok {
+		return
+	}
+	g.Missiles = k.Byte(kindMissilePer) * g.Ships
+	g.Fighters = k.Byte(kindFighterFull) * g.Ships
 }
 
 // FlagshipFormationSlot 是旗艦那一組的隊形槽 ＝ 格盤正中央。
@@ -246,9 +275,11 @@ func (in BuildInput) take(kind, slot2, slot3 int) FleetGroup {
 	g := FleetGroup{Kind: kind, Full: f, Slot2: slot2, Slot3: slot3}
 	if kind == shipKindStandalone {
 		g.Ships = f // 不扣存量
+		InitGroupStock(in.Kinds, in.Faction, &g)
 		return g
 	}
 	g.Ships = TakeRegionShips(in.Region, in.Faction, kind, f)
+	InitGroupStock(in.Kinds, in.Faction, &g)
 	return g
 }
 

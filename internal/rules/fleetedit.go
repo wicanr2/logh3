@@ -261,9 +261,11 @@ func (e *FleetEditor) take(kind, slot int) FleetGroup {
 	g := FleetGroup{Kind: kind, Full: f, Slot2: kind, Slot3: slot}
 	if kind == shipKindStandalone {
 		g.Ships = f
+		InitGroupStock(e.In.Kinds, e.In.Faction, &g)
 		return g
 	}
 	g.Ships = TakeRegionShips(e.In.Region, e.In.Faction, kind, f)
+	InitGroupStock(e.In.Kinds, e.In.Faction, &g)
 	return g
 }
 

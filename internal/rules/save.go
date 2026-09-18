@@ -502,8 +502,8 @@ func (s *Slot) FleetComposition(i int) []FleetGroup {
 			Pool:      idx,
 			Morale:    int(sh[shipMorale]),
 			RepairCap: int(sh[shipRepairCap]) | int(sh[shipRepairCap+1])<<8,
-			Stock1:    dwordAt(sh, shipStock1),
-			Stock2:    dwordAt(sh, shipStock2),
+			Missiles: dwordAt(sh, shipMissiles),
+			Fighters: dwordAt(sh, shipFighters),
 		})
 	}
 	return out

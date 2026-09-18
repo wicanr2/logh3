@@ -3613,10 +3613,12 @@ func (g *Game) takeProvisional() []rules.FleetGroup {
 		return nil
 	}
 	full := rules.ShipsPerUnit[kind]
-	return []rules.FleetGroup{{
+	grp := rules.FleetGroup{
 		Kind: kind, Full: full, Slot2: kind, Slot3: rules.FlagshipSlot3,
 		Ships: rules.TakeRegionShips(rec, g.faction, kind, full),
-	}}
+	}
+	rules.InitGroupStock(g.res.ShipKinds, g.faction, &grp)
+	return []rules.FleetGroup{grp}
 }
 
 // refundProvisional 把進艦隊組成時扣掉的那幾組還回首都的待命部隊
