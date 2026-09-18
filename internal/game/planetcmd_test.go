@@ -253,6 +253,10 @@ func TestFortressAimStoresBearing(t *testing.T) {
 	g.battlePlanets[idx].Fortress = true
 	g.battlePlanets[idx].DefenceMax = 12800 // 伊謝爾倫那一顆的防衛力上限
 	g.battlePlanets[idx].GunState = 0
+	// **視野要先移到那顆行星上**，否則下面挑不到「在戰場那一塊裡」的點，整支測試
+	// 就靜靜地 skip 掉。戰場地圖比視窗大得多（那一顆在 (1320,812)，視窗只有
+	// 28×16 ＝ 448 像素寬），預設視野多半看不到它。
+	centreViewOn(g, g.battlePlanets[idx])
 	g.beginFortressTarget(idx)
 	if !g.FortressTargetPending() {
 		t.Fatal("該進入瞄準的狀態")

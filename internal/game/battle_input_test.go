@@ -12,14 +12,8 @@ func TestBattleDoubleClickAdvances(t *testing.T) {
 		t.Skip("沒有入口表")
 	}
 	g.state = StateCommandPhase
-	for turn := 0; turn < 40 && g.state != StateBattle; turn++ {
-		g.advanceTurn()
-		if g.state == StateShipDelivery {
-			g.state = StateCommandPhase
-		}
-	}
-	if g.state != StateBattle {
-		t.Skip("沒走到戰場")
+	if !advanceUntilBattle(t, g, 40) {
+		t.Fatal("四十回合都沒開戰——S3 那份存檔第一回合就該在達希利開戰（#81）")
 	}
 	start := g.battleTurn
 

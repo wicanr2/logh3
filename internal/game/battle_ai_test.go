@@ -16,14 +16,8 @@ func playBattle(t *testing.T, tactic ai.Tactic) ([2]int, int) {
 	}
 	g.SetTactic(tactic, true) // 兩邊都交給戰術層，比較才公平
 	g.state = StateCommandPhase
-	for turn := 0; turn < 40 && g.state != StateBattle; turn++ {
-		g.advanceTurn()
-		if g.state == StateShipDelivery {
-			g.state = StateCommandPhase
-		}
-	}
-	if g.state != StateBattle {
-		t.Skip("沒走到戰場")
+	if !advanceUntilBattle(t, g, 40) {
+		t.Fatal("四十回合都沒開戰——S3 那份存檔第一回合就該在達希利開戰（#81）")
 	}
 	left := 0
 	for i := 0; i < rules.MaxBattleTurns; i++ {
@@ -72,14 +66,8 @@ func TestBattleLossMagnitude(t *testing.T) {
 	g.SetTactic(ai.OriginalTactic{}, true)
 	g.originalBattleAI = true // 量的是原版交火量級（規格 061 之前的規則）
 	g.state = StateCommandPhase
-	for turn := 0; turn < 40 && g.state != StateBattle; turn++ {
-		g.advanceTurn()
-		if g.state == StateShipDelivery {
-			g.state = StateCommandPhase
-		}
-	}
-	if g.state != StateBattle {
-		t.Skip("沒走到戰場")
+	if !advanceUntilBattle(t, g, 40) {
+		t.Fatal("四十回合都沒開戰——S3 那份存檔第一回合就該在達希利開戰（#81）")
 	}
 	sum, n, max := 0, 0, 0
 	for i := 0; i < rules.MaxBattleTurns; i++ {

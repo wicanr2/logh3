@@ -171,11 +171,15 @@ func (g *Game) fortressTargetClick(x, y int) bool {
 		return false
 	}
 	planet := g.battleGun
-	g.battleGunOn = false
 	if planet < 0 || planet >= len(g.battlePlanets) {
+		g.battleGunOn = false
 		return true
 	}
+	// **先算方位再關掉瞄準狀態**：`fortressAimAt` 開頭會檢查 `battleGunOn`，
+	// 順序反過來的話它一律回 `ok == false`，方位就永遠寫不進去（#81 讓
+	// `TestFortressAimStoresBearing` 真的跑起來之後才抓到）。
 	aim, ok := g.fortressAimAt(x, y)
+	g.battleGunOn = false
 	if !ok {
 		return true
 	}

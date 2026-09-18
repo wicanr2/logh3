@@ -187,3 +187,52 @@ func loadBattleMaps(t *testing.T, res *Resources) {
 	}
 	res.BattleMaps = maps
 }
+
+// advanceUntilBattle 一直按「實行」並把過場視窗與報告點掉，直到開戰或用完 turns 個回合。
+// 回有沒有開戰。
+//
+// **不要用 `g.advanceTurn()` 直接推進**：回合中途會停在過場視窗與報告框（第六輪加的），
+// 沒點掉的話下一次 `advanceTurn` 什麼都不做，於是「四十回合都沒會合」——那就是 #81 那
+// 九支戰場測試一直被跳過的真正原因。舊的訊息寫「預設的 ai.Original
+// 一道命令都不下」是**錯的**：量過，第一回合就有 17 支艦隊拿到目的地。
+//
+// S3「巴米利恩會戰」那份存檔用這條路**第一個回合就會在達希利（星域 26）開戰**。
+func advanceUntilBattle(t *testing.T, g *Game, turns int) bool {
+	t.Helper()
+	g.state = StateCommandPhase
+	for turn := 0; turn < turns; turn++ {
+		pressExecute(g)
+		for i := 0; i < 64 && g.State() != StateBattle; i++ {
+			switch g.State() {
+			case StateOccupationReport, StateRebellionReport, StateRegionFlipReport,
+				StateTurnWindow, StateTurnReport, StateShipDelivery:
+				g.Click(560, 125)
+			default:
+				i = 64
+			}
+		}
+		if g.State() == StateBattle {
+			return true
+		}
+	}
+	return false
+}
+
+// centreViewOn 把戰場視野移到某顆行星上。戰場地圖比視窗大得多，預設視野常常
+// 看不到指定的那一顆——測試若靠「挑一個畫面上的點」來驗東西，看不到就會靜靜
+// 地 skip 掉（`TestFortressAimStoresBearing` 踩過，#81 收尾時抓到）。
+func centreViewOn(g *Game, p rules.BattlePlanet) {
+	s := g.res.Battle
+	if s == nil {
+		return
+	}
+	col := (p.X+fortressCentreBias)/s.Field.TileW - s.Field.Cols/2
+	row := (p.Y+fortressCentreBias)/s.Field.TileH - s.Field.Rows/2
+	if col < 0 {
+		col = 0
+	}
+	if row < 0 {
+		row = 0
+	}
+	g.battleView = screen.BattleView{Col: col, Row: row}
+}
