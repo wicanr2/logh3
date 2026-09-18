@@ -280,3 +280,25 @@ remake 側 **0 / 307,200**（`TestMainGameMatchesOracle` 的 `main1e`）。
 `TestInfoScreenNoHoverHighlight`；敵艦那一頁的 `TestInfoScreenEnemyTabMatchesOracle`
 **明著 skip 並寫出理由**，`0A02:0672` 讀出來就拿掉。
 `tools/gui_check.sh` 另有 `fcmd-info-power` 一例走 Ebiten 顯示層。
+
+## 徵稅計劃／生產計劃的「結束」與預算計劃的兩組箭頭（#64，2026-09-18）
+
+`tools/fleetcmd_receipts.sh` 第 31 段；逆向在 `docs/re/343`。
+
+| 批次 | 畫面 | `screen.bin` SHA-256 | 差異 |
+|---|---|---|---|
+| `fcmd-plan-tax` | 徵稅計劃開著 | `ace5f100565d3789050b4244abcdd19d2ad08c86cb9b4e17be6b9dfb75bfcd91` | 0 |
+| `fcmd-plan-tax-end` | 結束 → 回命令階段 | `28271323c05972c93c3128317642db1f85323dfa5ca54b02510bf6ec13356d12` | 0 |
+| `fcmd-plan-tax-up` | 稅率檔位 ＋（普通 → 重稅）| `46a34b92b76a6ee54a0439349a01dab9a6eb670ec1a9fd73b8c561a828ae05ce` | 箭頭格之外 0 |
+| `fcmd-plan-tax-down` | 稅率檔位 －（普通 → 輕稅）| `9e43598a042ce8cc30d6a57ad33f55a0d9b5a4dab6e267b2e5e15652756c70f1` | 同上 |
+| `fcmd-plan-pct-up` | 建造費％ ＋（25 → 26）| `5a2de892f446394e62f3f09ac53c5bff87283e2f9a4b8dba59291b7e44540088` | 同上 |
+| `fcmd-plan-prod` | 生產計劃開著 | `03589c1d9425995f9e7c0a6070c00365d5886c6fb89783c88105aff17a4a9741` | 0 |
+| `fcmd-plan-prod-end` | 結束 → 回命令階段 | `4fdf361a1cceb7c1ba5f2b5ba1383f44c622f51f3d597819d828d180f2d6fbbb` | 0 |
+
+**未解的 17–21 個像素**（`planArrowSkip` 排除的四顆箭頭格）：剛點過的那顆鈕裡，
+原版寫色 8、remake 寫色 9。游標本身兩邊位置相同，所以不是游標畫錯位置；
+「剛點過的鈕有沒有留下按下的樣子」還沒逆向（`docs/re/343` §七第 3 點）。
+**標成未解，不是核准的差異。**
+
+測試 `TestTaxPlanEndClosesOverlay`、`TestProductionPlanEndClosesOverlay`、
+`TestTaxPlanArrows`、`TestTaxPlanShipPctArrow`。

@@ -158,8 +158,12 @@ func (g *Game) infoStarMapColours() []uint8 {
 		case infoTabPower:
 			band = rules.OwnPowerBand(g.regionFleetGroups(i, g.faction))
 		case infoTabEnemy:
-			// 敵艦那一頁的等級還要一個「索敵等級」（`0A02:0672`）才算得出來，
-			// 那一支還沒讀（#63 的未解項），所以整張先塗「情報資料不足」。
+			// 敵艦那一頁的等級先過一道門檻（`0A02:0672` → `2B99:028F` 查表）：
+			// 表在 `ds:0D062`／`ds:0D066` 的遠指標後面，指到 **0xD0000 一帶的 UMB 區**，
+			// 內容看起來像位元圖樣而不是距離值——**那張表是什麼還沒解**
+			// （`docs/re/342` 附錄 B）。門檻決定要走「掃艦隊表拿確定答案」還是
+			// 「只看 `+0x13` bit4 猜」，兩條路的算式都已經解出來（同一份附錄），
+			// 但沒有門檻就選不了，所以整張先塗「情報資料不足」。
 			band = 4
 		default:
 			own := g.res.Planets.RegionOwner(i) == g.faction

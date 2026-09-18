@@ -83,3 +83,7 @@ func RecomputeNeutralTaxRates(records []byte, base int, owner func(int) int) {
 		rec[regionTaxRate] = byte(v)
 	}
 }
+
+// MaxBlendLevel 是稅率檔位的上限：0–4 對應 微稅／輕稅／普通／重稅／緊急
+// （預算計劃那兩顆箭頭 clamp 在這個範圍，`docs/re/343`）。
+const MaxBlendLevel = 4

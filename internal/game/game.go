@@ -2537,6 +2537,9 @@ func (g *Game) click(x, y int) {
 		case "confirm":
 			g.fleetOrgConfirm()
 		}
+	case StateTaxPlan, StateProductionPlan, StateBudgetPlan:
+		// 結束鈕與兩組箭頭（#64，`docs/re/343`）。
+		g.planScreenClick(x, y)
 	case StateInfo:
 		// 三個分頁與「確認」（#63，`docs/re/342`）。
 		g.infoScreenClick(g.commandSpec(StateInfo), x, y)
@@ -3154,6 +3157,9 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			if g.state == StateInfo {
 				g.applyInfoScreen(spec)
 			}
+			if g.state == StateTaxPlan || g.state == StateBudgetPlan {
+				g.applyPlanScreen(spec)
+			}
 			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
 			// （`docs/spec/002`）。
 			fb, _ := screen.MainGameLayered(spec, g.res.Font, g.starMapFor(spec),
@@ -3452,6 +3458,9 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 		// `lst3e`／`settings1e` 與同盟的五張，十份都是同一個結論。
 		StateInfo, StateFleetList, StateAdmiralListView, StateEnemyList,
 		StateStarList, StateSettings,
+		// 徵稅／生產／次月份預算計劃接上鈕之後游標也要跟著搬（收據
+		// `fcmd-plan-tax-up`／`-pct-up`：點完箭頭游標停在那顆鈕上）。
+		StateTaxPlan, StateProductionPlan, StateBudgetPlan,
 		// 交棒視窗的游標停在剛剛按下確認／實行的地方：`vs3` 在主選單
 		// 那一列 (300,250)，`vs5`／`vs6` 在「實行」那一格 (560,125)。
 		StateVersusInput, StateVersusAccount:

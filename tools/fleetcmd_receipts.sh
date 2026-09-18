@@ -517,3 +517,18 @@ rec fcmd-info-confirm 500000000 fcmd-info-open -  $(mvc 472000000 591 348) -clic
 rec fcmd-info-hover   480000000 fcmd-info-open -  -mouse-x 424 -mouse-y 128 -mouse-at 472000000 $INFO
 rec fcmd-info-enemy-confirm 520000000 fcmd-info-enemy - $(mvc 502000000 591 348) -click-hold $HOLD $INFO
 rec fcmd-info-reopen        560000000 fcmd-info-enemy - -clicks 502000000:591:348,530000000:352:85,550000000:400:105 -click-hold $HOLD $INFO
+
+# 31. 徵稅計劃／生產計劃的「結束」與預算計劃的兩組箭頭（#64，`docs/re/343`）。
+#     戰略命令 (352,85) → 徵稅計劃 (400,125)／生產計劃 (400,145)。
+#     面板自己的熱區（滑鼠座標）：稅率檔位 ＋(471,249) －(487,249)、
+#     建造費％ ＋(471,289) －(487,289)、參謀 (415,329)、結束 (463,329)；
+#     生產計劃的結束在 (511,329)。**點面板裡的熱區要先移游標再按**。
+#     `$PLAN` 倒財政那幾格：現行陣營、稅率檔位 ×2、造船％ ×2、軍事費／建造費／稅收。
+PLAN="-peek lin:5DA4D:1,lin:5DB04:2,lin:5DAC2:2,lin:5DA82:8,lin:5DA8A:8,lin:5DA9A:8"
+rec fcmd-plan-tax      450000000 fcmd-base      ck -clicks 421000000:352:85,446000000:400:125 -click-hold $HOLD $PLAN
+rec fcmd-plan-tax-end  490000000 fcmd-plan-tax  -  $(mvc 452000000 463 329) -click-hold $HOLD $PLAN
+rec fcmd-plan-tax-up   490000000 fcmd-plan-tax  -  $(mvc 452000000 471 249) -click-hold $HOLD1 $PLAN
+rec fcmd-plan-tax-down 490000000 fcmd-plan-tax  -  $(mvc 452000000 487 249) -click-hold $HOLD1 $PLAN
+rec fcmd-plan-pct-up   490000000 fcmd-plan-tax  -  $(mvc 452000000 471 289) -click-hold $HOLD1 $PLAN
+rec fcmd-plan-prod     450000000 fcmd-base      ck -clicks 421000000:352:85,446000000:400:145 -click-hold $HOLD $PLAN
+rec fcmd-plan-prod-end 490000000 fcmd-plan-prod -  $(mvc 452000000 511 329) -click-hold $HOLD $PLAN
