@@ -532,3 +532,15 @@ rec fcmd-plan-tax-down 490000000 fcmd-plan-tax  -  $(mvc 452000000 487 249) -cli
 rec fcmd-plan-pct-up   490000000 fcmd-plan-tax  -  $(mvc 452000000 471 289) -click-hold $HOLD1 $PLAN
 rec fcmd-plan-prod     450000000 fcmd-base      ck -clicks 421000000:352:85,446000000:400:145 -click-hold $HOLD $PLAN
 rec fcmd-plan-prod-end 490000000 fcmd-plan-prod -  $(mvc 452000000 511 329) -click-hold $HOLD $PLAN
+
+# 32. 新艦隊進哪一格（#65 的延伸，`docs/re/341` §五原本標「假設待驗」）：
+#     第１艦隊已經在的情況下，戰略命令 → 出擊 → 清單第 3 列（羅嚴塔爾，提督 3）→ 出擊
+#     → 確認 → 決定。原版把他放進**槽 3**（第４艦隊），槽 1／2 還空著——
+#     所以配槽走 `07F9:03AC`（提督 `+0x09` 低七位那一槽空著就沿用），
+#     **不是**「下一個空槽」也不是「已有幾支」。新遊戲底稿 `ADMIRAL.DTX` 的 `+0x09`
+#     就是 `0x80｜陣營序號`，兩種算法在開局同值，所以要挑一位序號 ≠ 下一個空槽的提督才分得出來。
+#     清單列 k 在滑鼠 (400, 45＋20k)。$FNUM 倒艦隊表前四筆。
+rec fcmd-sortie-adm3     540000000 fcmd-base ck \
+  -clicks 425000000:352:85,440000000:400:85,470000000:400:85,500000000:488:290 -click-hold $HOLD $FNUM
+rec fcmd-sortie-adm3-done 600000000 fcmd-sortie-adm3 - \
+  -clicks 542000000:480:310,570000000:510:310 -click-hold $HOLD $FNUM

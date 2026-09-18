@@ -2429,8 +2429,8 @@ func (g *Game) click(x, y int) {
 					g.provisional = nil
 					g.closeFleetEditor()
 					ops := g.fleetOperations(g.detailAdmiral, adjutant)
-					// 玩家從「艦隊編號」清單挑過就進那一格（編號 ＝ 槽號 ＋ 1，
-					// 收據 `fcmd-fnum-decide`：挑第 3 列之後那一支在槽 2）。
+					// 進哪一格由 `orgFleetSlot` 決定（玩家挑過就是挑的，否則
+					// 原版的 `07F9:03AC`）。編號 ＝ 槽號 ＋ 1。
 					index, number := len(g.fleets), len(g.fleets)+1
 					if k := g.orgFleetSlot(); k >= 0 {
 						index, number = rules.FleetTableIndex(g.faction, k), k+1
@@ -3664,11 +3664,15 @@ func (g *Game) sortieSlots(take bool) {
 	}
 	g.mutableAdmirals()
 	rec = g.admiralRecord(g.detailAdmiral)
-	slot := 0
-	for _, f := range g.fleets {
-		if f.Faction == g.faction {
-			slot++
-		}
+	// 配槽走原版 `07F9:03AC`：提督 `+0x09` 低七位那一槽空著就沿用，否則本陣營
+	// 第一個空的（`rules.PickFleetSlot`）。新遊戲的底稿 `ADMIRAL.DTX` 把每位的
+	// `+0x09` 寫成 `0x80｜陣營序號`，所以開局等於「提督序號那一格」——
+	// 收據 `fcmd-sortie-adm3`：第１艦隊已經在的情況下讓羅嚴塔爾（提督 3）出擊，
+	// 建出來的在**槽 3**（第４艦隊），槽 1／2 還空著。原本這裡數「已有幾支」，
+	// 那會把他放進槽 1。
+	slot := rules.PickFleetSlot(rec, func(s int) bool { return g.fleetSlotUsed(s) })
+	if slot < 0 {
+		return
 	}
 	for _, r := range []([]byte){rec, g.admiralRecord(rules.Adjutant(rec))} {
 		if r == nil {
@@ -4031,9 +4035,10 @@ func (g *Game) drawFleetOrg(fb *gfx.Framebuffer) {
 	}
 	// 艦隊編號 ＝ 提督在自己陣營裡的序號 ＋ 1（假設待驗，兩個資料點：`docs/re/66`；
 	// 卸任之後副官是 0xFF 仍印「第１艦隊」，收據 `fcmd-fadj-dismiss`）。
+	// 標題的編號 ＝ 這一支要進的那一格 ＋ 1（`orgFleetSlot`）。
 	number := rules.FactionAdmiralIndex(rec, i) + 1
 	if k := g.orgFleetSlot(); k >= 0 {
-		number = k + 1 // 玩家從「艦隊編號」清單挑過（#65）
+		number = k + 1
 	}
 	g.drawFleetOrgFor(fb, i, rules.Adjutant(rec), number)
 	// 副官那條路的清單與詳細資料疊在這一張上（小選單是 `StateFleetAdjutant`

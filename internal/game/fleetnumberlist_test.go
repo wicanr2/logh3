@@ -107,3 +107,43 @@ func TestQuitConfirmButtons(t *testing.T) {
 		t.Error("按了決定但沒有要結束")
 	}
 }
+
+// 新艦隊進哪一格：走原版 `07F9:03AC`（提督 `+0x09` 低七位那一槽空著就沿用），
+// **不是**「下一個空槽」。收據 `fcmd-sortie-adm3-done`：第１艦隊已經在的情況下
+// 讓羅嚴塔爾（提督 3）出擊，建出來的在槽 3（第４艦隊），槽 1／2 還空著。
+func TestSortieUsesAdmiralSlot(t *testing.T) {
+	g := reachFleetDecided(t)
+	g.Click(352, 125) // 戰略命令
+	g.Click(400, 125) // 出擊
+	g.Click(400, 125) // 清單第 3 列（羅嚴塔爾）
+	g.Click(488, 330) // 出擊
+	if g.State() != StateFleetOrg || g.detailAdmiral != 3 {
+		t.Fatalf("在 %v、看的是提督 %d；預期艦隊編成、提督 3（羅嚴塔爾）", g.State(), g.detailAdmiral)
+	}
+	if k := g.orgFleetSlot(); k != 3 {
+		t.Fatalf("配到槽 %d，原版是槽 3（第４艦隊）", k)
+	}
+	matches(t, g, "fcmd-sortie-adm3")
+
+	g.Click(480, 350) // 確認
+	g.Click(510, 350) // 決定
+	if g.State() != StateCommandPhase {
+		t.Fatalf("決定之後在 %v", g.State())
+	}
+	var got *rules.Fleet
+	for i := range g.fleets {
+		if g.fleets[i].Admiral == 3 {
+			got = &g.fleets[i]
+		}
+	}
+	if got == nil {
+		t.Fatal("羅嚴塔爾那一支沒建出來")
+	}
+	if got.Index != rules.FleetTableIndex(g.faction, 3) || got.Number != 4 {
+		t.Fatalf("建出來的在槽 %d、編號 %d；原版是槽 3、第４艦隊", got.Index, got.Number)
+	}
+	if g.fleetSlotUsed(1) || g.fleetSlotUsed(2) {
+		t.Error("槽 1／2 被占掉了；原版那兩格還空著")
+	}
+	matches(t, g, "fcmd-sortie-adm3-done")
+}

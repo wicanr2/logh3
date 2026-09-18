@@ -61,17 +61,20 @@ func (g *Game) fleetNumberClick(x, y int) {
 	g.state = StateFleetOrg
 }
 
-// orgFleetSlot 回**玩家從清單挑的**那一格；沒挑過回 −1，由呼叫端沿用原本的預設。
+// orgFleetSlot 回這一支編成中的艦隊要進哪一格（陣營內的槽號）：玩家從「艦隊編號」
+// 清單挑過就用挑的，沒挑就走原版 `07F9:03AC`（`rules.PickFleetSlot`：提督 `+0x09`
+// 低七位那一槽空著就沿用，否則本陣營第一個空的）。
 //
-// 預設值那條規則（remake 現在算「提督在自己陣營裡的序號 ＋ 1」）仍然是
-// **假設待驗**（`docs/re/66`）：手上兩個資料點（新局的萊因哈特、已有一支時的
-// 吉爾菲艾斯）在「提督序號」與「下一個空槽」兩種算法下同值，分不出來。
-// 這裡不動它——挑過才覆蓋。
+// 新遊戲的底稿 `ADMIRAL.DTX` 把每位的 `+0x09` 寫成 `0x80｜陣營序號`，所以開局
+// 等於「提督序號那一格」——**不是**「下一個空槽」。收據 `fcmd-sortie-adm3`：
+// 第１艦隊已經在的情況下讓羅嚴塔爾（提督 3）出擊，建出來的在槽 3（第４艦隊），
+// 槽 1／2 還空著。
 func (g *Game) orgFleetSlot() int {
 	if g.orgSlot >= 0 && g.orgSlot < fleetNumberRows && !g.fleetSlotUsed(g.orgSlot) {
 		return g.orgSlot
 	}
-	return -1
+	return rules.PickFleetSlot(g.admiralRecord(g.detailAdmiral),
+		func(s int) bool { return g.fleetSlotUsed(s) })
 }
 
 // quitConfirmKind 是「您確定要結束這個遊戲嗎？」那個框在訊息框表裡的種類：
