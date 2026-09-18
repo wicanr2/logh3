@@ -473,7 +473,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 16 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 15 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -602,32 +602,9 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 
 **核實**：`docs/spec/062-battle-turn-eight-steps.md` 標到 `CONFORMED`
 
-#### strategic-annihilate-slot-writeback — 戰略全滅沒有寫回存檔表：存檔之後那一支會復活
-
-*[#78](https://github.com/wicanr2/logh3/issues/78) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-戰略階段的艦隊全滅（`internal/game/annihilation.go` 的 `annihilateFleet`）只改 `g.fleets`（執行期切片）與
-`g.res.Stellar` 的星域艦隊數，**沒有寫回 `g.slot.Fleet`**。存檔是從 `g.slot` 寫出去的（`SaveSlot`），所以
-全滅那一支在存檔裡還活著；讀回來就復活。戰場那一條（#57，第八輪）已經補上
-`rules.(*Slot).AnnihilateFleet`（`+0x04`／`+0x05` ← FF、編制與索敵那幾筆艦艇 `+0x01` ← FF，
-逐欄照 `docs/re/339` §九），戰略那一條還沒用它。
-
-同一類問題可能不只這一處：**凡是只改 `g.fleets` 而沒有同步 `g.slot` 的戰略動作，存檔都會漏掉**
-（駐留解散、編制變更、士氣變動⋯⋯）。要先盤點哪些欄位靠 `g.slot`、哪些靠執行期切片。
-
-**卡在**：- 沒有「存 → 讀 → 比」的回歸測試可以掛。
-- 還沒盤點 `g.fleets` 與 `g.slot` 的同步邊界。
-
-**做完的判準**：戰略全滅之後存檔、讀回來，那一支不在艦隊表裡、提督仍是失蹤、星域艦隊數對得上；
-盤點結果寫進 `docs/spec/009`（存檔）或 `docs/internals/30`。
-
-**證據**：[`docs/re/339-battle-turn-eight-steps.md` §九`](docs/re/339-battle-turn-eight-steps.md` §九)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)
-
-**核實**：`internal/game/annihilation.go` 裡出現 `AnnihilateFleet` 就是做好了
-
 #### export-remaining-assets — 其餘原版素材匯出進 assets/original/（ANI_PNL、BLOCK_0–2、MAP*.CMP、IBM16.350、SPTIT.350）
 
-*[#70](https://github.com/wicanr2/logh3/issues/70) · decision（取捨：等使用者裁決）*
+*[#70](https://github.com/wicanr2/logh3/issues/70) · asset*
 
 `assets/original/` 已有頭像、圖塊、外框、戰場圖塊、星圖、結局圖、字型、樂曲、交戰動畫（`assets/original/README.md`）。
 還沒匯出成可檢視格式的：`ANI_PNL0`–`2.A98`（解碼在 `internal/asset`）、`BLOCK_0`–`2.BLK`、`MAP*.CMP`、`IBM16.350` 開頭動畫的各格、
@@ -639,7 +616,7 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 
 **證據**：[`docs/internals/37-ani-pnl-a98.md`](docs/internals/37-ani-pnl-a98.md)、[`docs/internals/35-block3-blk.md`](docs/internals/35-block3-blk.md)、[`docs/internals/36-map-cmp.md`](docs/internals/36-map-cmp.md)
 
-**核實**：要人判——可以綁 json_len 或檔案存在；清單腳本裡那句「還沒匯出成圖的」拿掉時改綁 absent（tools/scripts/assets_manifest.py 的「還沒匯出成圖的」）。
+**核實**：`tools/scripts/assets_manifest.py` 裡還找得到 `還沒匯出成圖的`（自承還在 ＝ 還沒做）
 
 #### music-library-pipeline — 玩家自產曲庫的管線與 MIDI 音色（MPU-401）
 
@@ -670,6 +647,37 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 
 **核實**：要人判——remake 沒有標題畫面的程式碼可綁；接上時綁 go_test（標題畫面的收據）。
 
+#### battle-data-scroll-receipt — 戰場「資料」視窗捲動的同狀態收據（現有 11 份踩不到捲動）
+
+*[#67](https://github.com/wicanr2/logh3/issues/67) · parity（對拍：要與原版逐位元組相同）*
+
+戰場命令選單的「資料」視窗（`StateBattle` 的 `battleData`）的捲動**還沒有同狀態收據**。
+
+> **id 換過**（2026-09-18）：原本是 `battle-data-scroll`，與**已關閉的 #17** 撞號——
+> `cmd/worklist` 以 id 為鍵，於是 `CONTEXT.md` 同一份文件裡一處說完成、一處說未完成。
+> #17 收的是「反組譯 ＋ remake 接上 ＋ 契約測試」，這一張收的是**收據對拍**那一層。
+
+**卡在**：反組譯與實作都已經完成，缺的只有收據：
+
+- 反組譯 **proven**：`docs/re/303`（`seg000:4608` 上下捲、活動偏移 `ds:9B86`、總列數 `ds:9B88`、
+  夾在 `0 ≤ ds:9B86 ≤ max(0, ds:9B88 − 14)`、開窗歸零）。本文原本寫的「沒讀」已經過期。
+- remake **已接**：`internal/game/battledata.go:84`（每次一列、上下界）、`:104`（十四列視窗），
+  契約測試 `TestBattleDataScrollMatchesOriginal` 拿 40 筆合成單位釘住。
+- **現有收據踩不到捲動**：`workplace/oracle/s3data-scroll-*` 那 11 份的清單剛好 14 列
+  （第1艦隊 6 ＋ 第2艦隊 4 ＋ 第13艦隊 4），而視窗就是 14 列
+  （`docs/internals/data/battle-data.json` 的 `count: 14`）——所以 `s3data-scroll-down1` 與
+  `s3data-scroll-released` 的 `screen.bin` SHA-256 **一模一樣**（`085e502386824973…`，量過）。
+- 那 11 份的步數還綁在 2026-09-18 重產過的 `logh3-s3data-scroll0.state` 上，
+  取樣相位變了（`docs/re/337` §三），**要先 `-watch-screen` 重量**。
+
+最小下一步：`-poke` 把某一方的部隊數灌到 15 列以上（或挑艦隊較多的局面），錄三張。
+
+**做完的判準**：有一份**列數超過視窗**（>14 列）的局面收據，偏移 0／1／上界各一張，remake 整張逐位元組。
+
+**證據**：[`docs/re/303-battle-data-scroll-rules.md`](docs/re/303-battle-data-scroll-rules.md)、[`docs/spec/023-battle-command-menus.md`](docs/spec/023-battle-command-menus.md)、[`docs/re/337-region-panel-frozen-recheck.md` §三`](docs/re/337-region-panel-frozen-recheck.md` §三)
+
+**核實**：要人判——捲動的程式碼與契約測試已經有了（TestBattleDataScrollMatchesOriginal），綁它會給人「收據也有了」的假象。錄到 >14 列的收據之後改綁 go_test（那支整張比的測試）。
+
 #### settings-midi-if-and-bug — 設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與 BUG!
 
 *[#66](https://github.com/wicanr2/logh3/issues/66) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -695,7 +703,7 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 
 **證據**：[`docs/re/268-ai-reassigns-staff-officers.md`](docs/re/268-ai-reassigns-staff-officers.md)、[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)
 
-**核實**：要人判——remake 沒有對應的程式碼可綁；接上時綁 absent 或 go_test（參謀任命的收據）。
+**核實**：`internal/game/planscreens.go` 裡還找得到 `還沒接（#62）`（自承還在 ＝ 還沒做）
 
 #### hold-to-scroll — ▲▼ 按住連捲（一覽表、右下角清單、提督清單、艦隊組成）
 
@@ -734,22 +742,6 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 **證據**：[`docs/re/327-list-screen-tabs.md`](docs/re/327-list-screen-tabs.md)、[`docs/spec/055-list-screen-rows.md`](docs/spec/055-list-screen-rows.md)
 
 **核實**：`internal/game/game.go` 裡還找得到 `同盟座位看敵方的數原版可能印 --`（自承還在 ＝ 還沒做）
-
-#### garrison-self-and-step-count — 就地駐留不扣移動費的成因、走一格時星域艦隊數（297B:08D8）
-
-*[#58](https://github.com/wicanr2/logh3/issues/58) · re（逆向：機制還沒讀出來）*
-
-原本兩件只從收據數字推、位元組沒讀的事（`docs/re/329`），剩第二件：
-
-- ~~駐留點自己所在的星域不扣移動經費~~：已讀，`113A:047D +0585` 先比 cur == next 就跳過 `06C3`（`docs/re/322` §一 的位元組，
-  2026-09-17 對照 `docs/re/332` 時確認）；remake 的 `PlanStep` 回 `Cost: 0` 與它一致。
-- 走一格時星域 `+0x28` 一減一加是 `297B:08D8(艦隊, cur, next)` 做的（strong inference），沒讀。
-
-**做完的判準**：`297B:08D8` 的位元組讀完寫進 `docs/re/`，remake 的寫法有位元組依據（或改掉）。
-
-**證據**：[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/322-fleet-arrival-and-occupation.md`](docs/re/322-fleet-arrival-and-occupation.md)
-
-**核實**：`internal/game/game.go` 裡還找得到 `還會動兩格的星域艦隊數（strong inference），位元組沒讀`（自承還在 ＝ 還沒做）
 
 #### strategic-assault-edge-cases — 戰略打行星沒有收據的三種局面（多支攻方、同回合打過仗、電腦座位）
 
@@ -825,7 +817,7 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 
 ### 做完的（不在矩陣裡的那幾條）
 
-70 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+72 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1826,6 +1818,32 @@ CONFORMED。
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
 
+#### strategic-annihilate-slot-writeback — 戰略全滅沒有寫回存檔表：存檔之後那一支會復活
+
+*[#78](https://github.com/wicanr2/logh3/issues/78) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+戰略階段的艦隊全滅（`internal/game/annihilation.go` 的 `annihilateFleet`）只改 `g.fleets`（執行期切片）與
+`g.res.Stellar` 的星域艦隊數，**沒有寫回 `g.slot.Fleet`**。存檔是從 `g.slot` 寫出去的（`SaveSlot`），所以
+全滅那一支在存檔裡還活著；讀回來就復活。戰場那一條（#57，第八輪）已經補上
+`rules.(*Slot).AnnihilateFleet`（`+0x04`／`+0x05` ← FF、編制與索敵那幾筆艦艇 `+0x01` ← FF，
+逐欄照 `docs/re/339` §九），戰略那一條還沒用它。
+
+同一類問題可能不只這一處：**凡是只改 `g.fleets` 而沒有同步 `g.slot` 的戰略動作，存檔都會漏掉**
+（駐留解散、編制變更、士氣變動⋯⋯）。要先盤點哪些欄位靠 `g.slot`、哪些靠執行期切片。
+
+**卡在**：（已解）兩項判準都達成了：存檔寫回走 `rules.(*Slot).AnnihilateFleet`（測試
+`TestStrategicAnnihilationWritesBackToSlot`），同步邊界的盤點寫進 `docs/internals/30`
+最後一節。盤點還順手抓到同類的第二處：`mutableAdmirals()` 換可寫副本時沒有同步
+`g.slot.Admiral`，提督失蹤／升級／任命從第一次改提督起就不進存檔
+（測試 `TestAdmiralWritesStayInSlot`）。
+
+**做完的判準**：戰略全滅之後存檔、讀回來，那一支不在艦隊表裡、提督仍是失蹤、星域艦隊數對得上；
+盤點結果寫進 `docs/spec/009`（存檔）或 `docs/internals/30`。
+
+**證據**：[`docs/re/339-battle-turn-eight-steps.md` §九`](docs/re/339-battle-turn-eight-steps.md` §九)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)
+
+**核實**：`TestStrategicAnnihilationWritesBackToSlot` 釘在 `internal/game`
+
 #### region-panel-frozen-recheck — re/278 左下角凍住的內容：舊收據錄在 -click-move-lead 掉了的那段期間，結論要重驗
 
 *[#77](https://github.com/wicanr2/logh3/issues/77) · parity（對拍：要與原版逐位元組相同）*
@@ -2039,6 +2057,22 @@ dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且�
 **證據**：[`docs/internals/06-font-graph-img.md`](docs/internals/06-font-graph-img.md)
 
 **核實**：`tools/scripts/font_extract.py` 裡出現 `json.dump(meta` 就是做好了
+
+#### garrison-self-and-step-count — 就地駐留不扣移動費的成因、走一格時星域艦隊數（297B:08D8）
+
+*[#58](https://github.com/wicanr2/logh3/issues/58) · parity（對拍：要與原版逐位元組相同）*
+
+原本兩件只從收據數字推、位元組沒讀的事（`docs/re/329`），剩第二件：
+
+- ~~駐留點自己所在的星域不扣移動經費~~：已讀，`113A:047D +0585` 先比 cur == next 就跳過 `06C3`（`docs/re/322` §一 的位元組，
+  2026-09-17 對照 `docs/re/332` 時確認）；remake 的 `PlanStep` 回 `Cost: 0` 與它一致。
+- 走一格時星域 `+0x28` 一減一加是 `297B:08D8(艦隊, cur, next)` 做的（strong inference），沒讀。
+
+**做完的判準**：`297B:08D8` 的位元組讀完寫進 `docs/re/`，remake 的寫法有位元組依據（或改掉）。
+
+**證據**：[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/322-fleet-arrival-and-occupation.md`](docs/re/322-fleet-arrival-and-occupation.md)
+
+**核實**：`TestGarrisonArrivalDisbandsMatchesOracle` 釘在 `internal/game`
 
 #### fleet-annihilation — 艦隊全滅（297B:034A）：艦艇不還、提督記成失蹤、「已經全滅」報告
 

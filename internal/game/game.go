@@ -1252,8 +1252,12 @@ func (g *Game) moveFleetTo(i, next, cost int) {
 		payTo = from
 	}
 	g.res.Planets.PayIntoRegion(payTo, cost)
-	// 原版走一格時 `297B:08D8(艦隊, cur, next)` 還會動兩格的星域艦隊數（strong inference），位元組沒讀；
-	// remake 在 32 支走完之後才重數（`recountRegionFleets`）。
+	// 星域艦隊數（`+0x28`／`+0x29`）不是走一格的時候改的：原版在 32 支全部走完之後
+	// 由 `2703:0853` 整批重數（呼叫點 `056A:000C +0x0052`，`docs/re/297` §一），
+	// 它先把 32 格清 0 再逐支加一，沒有提早返回。`297B:08D8` 只清戰鬥暫存
+	// （`+0x3A`／`+0x3B`／`+0x48`／`+0x5A`／`+0x5B` 與每組艦艇那幾格），
+	// **完全不碰 `+0x28`**（`docs/re/230`、`docs/re/235`）。
+	// 所以 remake 的 `recountRegionFleets` 放在 32 支走完之後，就是原版的做法。
 }
 
 // arriveFleet 是 `113A:047D` 的 `+065B` 起：到了目的地就照命令收尾。人類座位的
@@ -4509,6 +4513,12 @@ func (g *Game) mutableAdmirals() []byte {
 	if len(g.admirals) == 0 {
 		g.admirals = append([]byte(nil), g.res.Admiral...)
 		g.res.Admiral = g.admirals
+		// 存檔寫出去的是 `g.slot.Admiral`（`rules.(*Slot).Save`）。這裡換了副本
+		// 卻不換它的話，**從第一次改提督那一刻起兩份就分家**——之後的失蹤、
+		// 升級、任命全部不會進存檔（#78 的「同一類問題不只這一處」）。
+		if g.slot != nil {
+			g.slot.Admiral = g.admirals
+		}
 	}
 	return g.admirals
 }

@@ -83,6 +83,13 @@ func (g *Game) annihilateFleet(i int) {
 	if f.Adjutant >= 0 {
 		rules.MarkAdmiralMissing(g.admiralRecord(f.Adjutant))
 	}
+	// 存檔是從 `g.slot` 寫出去的（`SaveSlot`），只改執行期切片的話那一支在存檔裡
+	// 還活著，讀回來就復活（#78）。走的是戰場那一條共用的出口
+	// （`rules.(*Slot).AnnihilateFleet`：`+0x04`／`+0x05` ← FF、編制與索敵那幾筆
+	// 艦艇 `+0x01` ← FF）。
+	if g.slot != nil {
+		g.slot.AnnihilateFleet(f.Index)
+	}
 	g.fleets = append(g.fleets[:i], g.fleets[i+1:]...)
 	if len(g.res.Stellar) > 0 {
 		rules.RecountRegionFleets(g.res.Stellar, g.fleets)

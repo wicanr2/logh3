@@ -184,3 +184,33 @@ AI 沒有對應的指派常式**——`2D10:0038` 只換情報與內政兩個。
 
 清單畫面用得到它：「提督資料」在這三人前面標一個 ○，「待命中提督資料」
 把他們濾掉——收據 `lst2e`／`sortie1e` 的十六列順序完全對得上。
+
+## remake 這一側：哪些東西寫得進存檔（#78）
+
+`rules.(*Slot).Save` 寫出去的是**六份原始位元組**：`s.Stellar`、`s.Planets.Data`、
+`s.Admiral`、`s.Fleet`、`s.Ship`、`s.Work`。所以判斷「這個改動會不會進存檔」只有一條規則：
+
+> **有沒有寫到那六份切片本身。**
+
+`Game` 這一側分成兩類：
+
+| 類別 | 例子 | 進不進存檔 |
+|---|---|---|
+| **就是那六份**（同一個切片）| `g.res.Stellar`、`g.res.Planets` | 進——`LoadSlot` 直接接過去 |
+| **解析出來的結構** | `g.fleets`（`[]rules.Fleet`）| **不進**，要另外寫回 `s.Fleet`／`s.Ship` |
+
+已知要另外寫回的出口：
+
+- **艦隊全滅** → `rules.(*Slot).AnnihilateFleet(槽)`（`+0x04`／`+0x05` ← FF、編制與索敵
+  那幾筆艦艇 `+0x01` ← FF）。戰場那一條在 `game.annihilateBattleFleet`、戰略那一條在
+  `game.annihilateFleet`，兩邊都走它。
+
+### 會讓兩份「分家」的陷阱
+
+`Game.mutableAdmirals()` 第一次改提督時，把 `g.res.Admiral` 換成一份可寫的副本。
+**換了就必須同時換 `g.slot.Admiral`**——否則從那一刻起存檔寫的還是舊那份，
+之後的失蹤、升級、任命全部漏掉。測試 `TestAdmiralWritesStayInSlot` 釘住這一條。
+
+同樣的形狀只要出現「把 `g.res.X` 換成新的切片」就會重演。目前只有提督表這一處
+（`grep -n "g.res\..* = " internal/game/game.go` 看得到全部）；新增這種可寫副本時，
+記得同步 `g.slot` 的對應欄位。
