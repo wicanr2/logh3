@@ -81,6 +81,8 @@ cases=(
   "fcmd-fnum-row|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 368 350; click 368 130"
   # 系統指令 → 結束 →「您確定要結束這個遊戲嗎？」（1 號訊息框，中止／決定）。
   "fcmd-quit|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 544 125; click 560 205"
+  # 情報收集 → 勢力分頁（#63）：標題與五行圖例整段換掉、地圖照各格自軍編制組數著色。
+  "fcmd-info-power|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 352 125; click 400 145; click 424 168"
 )
 fail=0
 for c in "${cases[@]}"; do

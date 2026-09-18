@@ -504,3 +504,16 @@ rec fcmd-fnum2-used 560000000 fcmd-fnum2 - $(mvc 530000000 368 50) -click-hold $
 #         沒有畫面可以比，所以只錄開框與中止兩張。
 rec fcmd-quit        450000000 fcmd-base ck -clicks 421000000:544:85,431000000:560:165 -click-hold $HOLD
 rec fcmd-quit-cancel 480000000 fcmd-quit -  -clicks 455000000:383:223 -click-hold $HOLD
+
+# 30. 情報收集畫面的三個分頁與「確認」（#63，`docs/re/342`）。分頁鈕（滑鼠）治安 (360,128)、
+#     勢力 (424,128)、敵艦 (488,128)；參謀 (543,348)、確認 (591,348)。
+#     分頁狀態在 `ds:8F2F[座位]`（`$INFO` 第一格），**關窗不清**——切到敵艦按確認再重開，
+#     還停在敵艦那一頁。游標經過不反白（`fcmd-info-hover` 與 `fcmd-info-open` 只差游標本身）。
+INFO="-peek lin:5DA5F:1,lin:5DA4E:1,lin:5DA7D:8"   # ds:8F2F[座位]、ds:8F1E 座位、ds:8F4D 情報參謀 ×2
+rec fcmd-info-open    470000000 fcmd-base      ck -clicks 421000000:352:85,446000000:400:105 -click-hold $HOLD $INFO
+rec fcmd-info-power   500000000 fcmd-info-open -  $(mvc 472000000 424 128) -click-hold $HOLD $INFO
+rec fcmd-info-enemy   500000000 fcmd-info-open ck $(mvc 472000000 488 128) -click-hold $HOLD $INFO
+rec fcmd-info-confirm 500000000 fcmd-info-open -  $(mvc 472000000 591 348) -click-hold $HOLD $INFO
+rec fcmd-info-hover   480000000 fcmd-info-open -  -mouse-x 424 -mouse-y 128 -mouse-at 472000000 $INFO
+rec fcmd-info-enemy-confirm 520000000 fcmd-info-enemy - $(mvc 502000000 591 348) -click-hold $HOLD $INFO
+rec fcmd-info-reopen        560000000 fcmd-info-enemy - -clicks 502000000:591:348,530000000:352:85,550000000:400:105 -click-hold $HOLD $INFO

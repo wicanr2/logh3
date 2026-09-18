@@ -253,6 +253,27 @@ func (w *GameWindow) SetLineCode(line, cell int, code uint16) {
 	w.Lines = lines
 }
 
+// SetLineText 把第 line 行整行換成從 x 起的一串全形字碼（同樣在複本上改）：
+// 情報收集換分頁時整段標題與圖例都換掉（`docs/re/342`）。
+func (w *GameWindow) SetLineText(line, x int, codes []uint16) {
+	if line < 0 || line >= len(w.Lines) {
+		return
+	}
+	lines := append(w.Lines[:0:0], w.Lines...)
+	cells := lines[line].Cells[:0:0]
+	for _, c := range codes {
+		cell := struct {
+			X    int    `json:"x"`
+			W    int    `json:"w"`
+			Code uint16 `json:"code"`
+		}{X: x, W: ui.FrameTileW, Code: c}
+		cells = append(cells, cell)
+		x += ui.FrameTileW
+	}
+	lines[line].Cells = cells
+	w.Lines = lines
+}
+
 // SetLineInk 把第 line 行的字色換掉（同樣在複本上改）：艦隊編號清單把已經在用的
 // 那幾列畫成暗色（原版 ink 8，收據 `fcmd-fnum2`）。
 func (w *GameWindow) SetLineInk(line int, ink uint8) {

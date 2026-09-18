@@ -463,6 +463,9 @@ type Resources struct {
 	// FleetStandby 是「待命」開的「指定待命行星」（`docs/re/314`）。
 	FleetStandby *screen.FleetStandbySpec
 
+	// InfoPanel 是情報收集畫面三個分頁的字串與地圖色表（`docs/re/342`）。
+	InfoPanel *screen.InfoPanel
+
 	// FleetDetail 是點一列開出來的艦隊詳細資料（`docs/spec/022`）。
 	BattleData  *screen.BattleDataSpec
 	FleetDetail *screen.FleetDetailSpec
@@ -769,6 +772,10 @@ type Game struct {
 
 	// detailAdmiral 是提督詳細資料那張畫面在看哪一位；-1 ＝ 沒有。
 	detailAdmiral int
+
+	// infoTab 是情報收集畫面停在哪一頁（`ds:8F2F[座位]`，一個座位一格；
+	// 關窗不清，下次開還停在同一頁。#63、`docs/re/342`）。
+	infoTab [2]int
 
 	// orgSlot 是編成中的艦隊被指定要進艦隊表的哪一格（陣營內的槽號，
 	// 編號 ＝ 槽號 ＋ 1）。−1 ＝ 玩家沒有從「艦隊編號」清單挑過，
@@ -2530,6 +2537,9 @@ func (g *Game) click(x, y int) {
 		case "confirm":
 			g.fleetOrgConfirm()
 		}
+	case StateInfo:
+		// 三個分頁與「確認」（#63，`docs/re/342`）。
+		g.infoScreenClick(g.commandSpec(StateInfo), x, y)
 	case StateFleetNumber:
 		// 十六列清單：點一列 ＝ 挑這一支要進艦隊表的哪一格（`fleetnumberlist.go`，#65）。
 		g.fleetNumberClick(x, y)
@@ -3140,6 +3150,9 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			}
 			if g.state == StateFleetNumber {
 				g.applyFleetNumberList(spec)
+			}
+			if g.state == StateInfo {
+				g.applyInfoScreen(spec)
 			}
 			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
 			// （`docs/spec/002`）。
@@ -4297,17 +4310,9 @@ func (g *Game) securityStarMap() *asset.Image {
 	if g.res.StarBit == nil || g.res.StarRGN == nil || g.res.Planets == nil {
 		return nil
 	}
-	n := len(g.res.Stellar) / rules.RegionRecord
-	if n == 0 {
+	cols := g.infoStarMapColours()
+	if cols == nil {
 		return nil
-	}
-	div := rules.SecurityDivisor(g.res.Admiral,
-		rules.StaffAdmiral(g.workRecord(), rules.PostIntel, g.faction))
-	cols := make([]uint8, n)
-	for i := range cols {
-		rec := g.res.Stellar[i*rules.RegionRecord : (i+1)*rules.RegionRecord]
-		own := g.res.Planets.RegionOwner(i) == g.faction
-		cols[i] = rules.SecurityMapColour(int(rec[rules.RegionUnrest]), own, div)
 	}
 	img, err := asset.BuildStarMap(g.res.StarBit, g.res.StarRGN, cols, 16, 20, 20)
 	if err != nil {

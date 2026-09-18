@@ -284,6 +284,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	infoPanel, err := screen.LoadInfoPanel(filepath.Join(data, "info-panel.json"))
+	if err != nil {
+		return nil, err
+	}
 	routes, err := ai.LoadAdvanceRoutes(filepath.Join(data, "ai-advance-routes.json"))
 	if err != nil {
 		return nil, err
@@ -386,7 +390,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
 		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds, AdvanceRoutes: routes,
-		FleetWindow: fleetWindow, FleetActionMenu: fleetActionMenu, FleetStandby: fleetStandby,
+		FleetWindow: fleetWindow, FleetActionMenu: fleetActionMenu, FleetStandby: fleetStandby, InfoPanel: infoPanel,
 		EnemyWindow: enemyWindow,
 		Composition: compTables, EditorTables: editorTables, DefaultAdjutants: adjutants,
 		MessageBox: msgBox, FrameTiles: frameTiles,

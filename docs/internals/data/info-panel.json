@@ -1,0 +1,70 @@
+{
+ "_note": "情報收集畫面（screen-info）三個分頁的標題與五行圖例（`0A02:02CE`／`0483`／`06A3`，docs/re/342）。順序與畫面上的分頁鈕相同：治安、勢力、敵艦。字串是原版資料段的 Big5 位元組（ds 位移記在 offsets）。分頁狀態存 ds:8F2F[座位]，關窗不清。",
+ "map_colours": [
+  6,
+  1,
+  5,
+  2,
+  3
+ ],
+ "map_colours_note": "ds:1780[等級]：三個分頁共用同一張表（等級 0–4 → 色 6／1／5／2／3），與治安那張的 securityMapColours 相同。",
+ "tabs": [
+  {
+   "name": "security",
+   "title_offset": "ds:17BE",
+   "title": "a5d8ab65a655ac50a874aabaaa76a677aaacba41a147",
+   "legend_offsets": [
+    "ds:17DE",
+    "ds:17FE",
+    "ds:181E",
+    "ds:183E",
+    "ds:185E"
+   ],
+   "legend": [
+    "a7b9a5fea853a6b3b0ddc34420202020202020202020",
+    "a46aad50a457c1d9bae2a5adc0522020202020202020",
+    "aa76a677a5bfb376baa5b463a4c62020202020202020",
+    "b342a9f3a64dc049aaacba4120202020202020202020",
+    "a7b9a5feb54caa6ba4e4b074aabab0cfb0ec20202020"
+   ]
+  },
+  {
+   "name": "power",
+   "title_offset": "ds:193E",
+   "title": "a5d8ab65a7daa4e8c4a5b6a4aabab6d5a44fb9cfa147",
+   "legend_offsets": [
+    "ds:195E",
+    "ds:197E",
+    "ds:199E",
+    "ds:19BE",
+    "ds:19DE"
+   ],
+   "legend": [
+    "a5bfb6b0b5b2a46ab357bcd2aabac4a5b6a420202020",
+    "a6b3a4a4b5a5b357bcd2aabac4a5b6a4b87320202020",
+    "a6b3a4d6bcc6aabac4a5b6a4b8732020202020202020",
+    "a575a6b3a4d6bcc6aabab2eec4a52020202020202020",
+    "a853a6b3a7daa4e8c4a5b6a4aabaa673a66220202020"
+   ]
+  },
+  {
+   "name": "enemy",
+   "title_offset": "ds:187E",
+   "title": "a5d8ab65bcc4c4a5b6a4aabab074b86db1a1b3f82020",
+   "legend_offsets": [
+    "ds:189E",
+    "ds:18BE",
+    "ds:18DE",
+    "ds:18FE",
+    "ds:191E"
+   ],
+   "legend": [
+    "a853a6b3a558b27bbcc4a4e8c4a5b6a4202020202020",
+    "a569afe0a6b3bcc4a4e8aabac4a5b6a4a558a8532020",
+    "a558b27ba470b357bcd2aababcc4a4e8c4a5b6a42020",
+    "a558b27ba46ab357bcd2aababcc4a4e8c4a5b6a42020",
+    "b1a1b3f8b8eaaec6a4a3a8aca141b54caa6bbd54bb7b"
+   ]
+  }
+ ]
+}

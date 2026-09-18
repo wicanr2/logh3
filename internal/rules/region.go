@@ -600,3 +600,49 @@ func ReturnRegionShips(record []byte, faction, kind, n int) {
 	have := int(binary.LittleEndian.Uint32(record[o : o+4]))
 	binary.LittleEndian.PutUint32(record[o:o+4], uint32(have+n))
 }
+
+// 情報收集畫面（`screen-info`）三個分頁的等級（0–4），三頁共用同一張色表
+// `ds:1780`（＝ `securityMapColours`）。`docs/re/342`、#63。
+
+// SecurityBand 是治安那一頁（`0A02:02CE`）：不是自己的星域固定 4
+// （完全無法支配的區域），否則 `未安定度 × 100 ÷ 除數 ÷ 50` 分四段。
+// 與 `SecurityMapColour` 同一條規則，只是回等級而不是色號。
+func SecurityBand(unrest int, own bool, divisor int) int {
+	if !own {
+		return 4
+	}
+	if divisor <= 0 {
+		divisor = DefaultSecurityDivisor
+	}
+	band := unrest * 100 / divisor / 50
+	if band > 3 {
+		band = 3
+	}
+	return band
+}
+
+// OwnPowerBand 是勢力那一頁（`0A02:06A3`）：把這一格上自己的艦隊編制組數
+// （艦隊記錄 `+0x0F`）加總，≥30 → 0（正集結大規模的艦隊）、≥20 → 1、
+// ≥10 → 2、>0 → 3、0 → 4（沒有我方艦隊的存在）。
+func OwnPowerBand(groups int) int {
+	switch {
+	case groups >= 30:
+		return 0
+	case groups >= 20:
+		return 1
+	case groups >= 10:
+		return 2
+	case groups > 0:
+		return 3
+	}
+	return 4
+}
+
+// InfoMapColour 是 `ds:1780[等級]`：情報收集三個分頁共用的那張色表
+// （等級 0–4 → 色 6／1／5／2／3）。
+func InfoMapColour(band int) uint8 {
+	if band < 0 || band >= len(securityMapColours) {
+		return securityMapColours[len(securityMapColours)-1]
+	}
+	return securityMapColours[band]
+}

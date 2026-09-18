@@ -261,3 +261,22 @@ remake 側 **0 / 307,200**（`TestMainGameMatchesOracle` 的 `main1e`）。
 十個回合裡換了擁有者（`docs/re/57`）、結算中地圖不重塗首都、
 捲軸多出上下箭頭（那對箭頭只有這個狀態才畫，`main1e` 與 `turn450`
 都沒有）。
+
+## 情報收集的三個分頁與「確認」（#63，2026-09-18）
+
+`tools/fleetcmd_receipts.sh` 第 30 段；逆向在 `docs/re/342`。分頁狀態存 `ds:8F2F[座位]`
+（動作碼：治安 0、敵艦 1、勢力 2），**關窗不清**——切到敵艦按確認再重開還停在敵艦那一頁。
+
+| 批次 | 畫面 | `screen.bin` SHA-256 | 差異 |
+|---|---|---|---|
+| `fcmd-info-open` | 治安分頁（開出來的預設）| `cc86f7a47479932a88eec11458003a87a7e2e6878710d89563a8f093ab9b6677` | 0 |
+| `fcmd-info-power` | 勢力分頁 | `24a4f963804e19c8384f8ffdea87cd71eefdc79db535e384b589c9b1e6e39a51` | 0 |
+| `fcmd-info-enemy` | 敵艦分頁 | `518e88d746f90b8a56581c7ce74f9a2c8ac3bf54f6f23122f288d53331b842d3` | **地圖著色還沒接**（缺 `0A02:0672` 的索敵等級）|
+| `fcmd-info-confirm` | 確認 → 回戰略地圖 | `2174d3b097b3d61987884d3772299603a0d3c7debb8600889e2ee2aeed99a68f` | 0 |
+| `fcmd-info-hover` | 只搬游標到勢力鈕上（不點）| `e8f4c520ed27ce64ec869c27a12683ece601e3088f86621239ea08a5284b2166` | 0（游標經過不反白）|
+| `fcmd-info-reopen` | 敵艦 → 確認 → 重開：`ds:8F2F` 還是 01 | `be051deab9cc91d54a2b6277c00dea14fd7c7ea8ae182c2dc53ed476ce1a1fa5` | — |
+
+測試 `TestInfoScreenTabsMatchOracle`（治安＋勢力整張）、`TestInfoScreenConfirmKeepsTab`、
+`TestInfoScreenNoHoverHighlight`；敵艦那一頁的 `TestInfoScreenEnemyTabMatchesOracle`
+**明著 skip 並寫出理由**，`0A02:0672` 讀出來就拿掉。
+`tools/gui_check.sh` 另有 `fcmd-info-power` 一例走 Ebiten 顯示層。
