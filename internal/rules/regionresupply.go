@@ -60,10 +60,12 @@ func ResupplyRegion(record []byte, planets *Planets, region int, fleets []*Fleet
 			mine = append(mine, f)
 		}
 	}
-	// 原版在這裡先跑 `2703:12EB`（從行星重算這一格的存量）。remake 已經在
-	// 每回合開頭的 `refillRegionSupply` 做過同一件事（`2B5F:02B2` ＋
-	// `2703:0590`），在這裡再做一次會把行星存量整批重分配，所以略過；
-	// 執行期收據裡這一支在這個位置也沒有改動任何位元組（`docs/re/346` §六）。
+	// 原版在這裡先跑 `2703:12EB`：它把星域的 `+0x30`／`+0x68`／`+0x70` 清掉再從
+	// 每顆行星重算（`docs/re/349` §2.3）。remake 已經在每回合開頭的
+	// `refillRegionSupply` 做過同一件事（`2B5F:02B2` ＋ `2703:0590`），在這裡
+	// 再做一次會把行星存量整批重分配，所以略過。
+	// （收據上這一支前後的位元組相同，那只是因為重算的結果與原值相同，
+	// 不是因為它什麼都沒做——規格 063 原本寫錯了理由。）
 	gave := false
 	for kind := 0; kind < regionShipKinds; kind++ {
 		cands := resupplyCandidates(mine, kind)
