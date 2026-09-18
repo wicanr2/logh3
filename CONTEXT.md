@@ -682,11 +682,29 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 
 *[#66](https://github.com/wicanr2/logh3/issues/66) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
-設定畫面的「ＭＩＤＩ Ｉ／Ｆ」（動作碼 22）要先有 `MUSIC.INI` 的讀寫，`BUG!` 沒讀；兩個點下去什麼都不會發生（`docs/re/286`）。
+設定畫面的「ＭＩＤＩ Ｉ／Ｆ」（動作碼 22）與 `BUG!`（動作碼 20）兩個點下去什麼都不會發生
+（`docs/re/286`、`internal/game/settingsscreen.go`）。
 
-**做完的判準**：兩項有反組譯與同狀態收據，remake 照原版反應；`MUSIC.INI` 的格式寫進 `docs/internals/`。
+**卡在**：`BUG!` 那張除錯選單的 RE 已經完整，**remake 側可以直接實作**（七個動作碼都只是改兩三個
+`WORK` 欄位）。真正還沒讀的只有 `midi-if`（22）。
 
-**證據**：[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)
+**做完的判準**：四項裡**兩項已經達成**（2026-09-18 核實）：
+
+- ~~`BUG!` 的反組譯~~ **已達成**：`docs/re/286` §六——動作碼 20 呼叫 `3A9C:0000`，
+  跳躍表 `ds:908C` 七筆逐一對上（自動１／手動１／自動２／手動２／顯示／不顯示／結束
+  → `3A9C:00E3`…`0133`），寫 `ds:8F23`／`8F24`／`8F1C`。順帶解掉 `docs/internals/23`
+  那個「`ds:902C` 屬於哪張畫面未知」。
+- ~~`MUSIC.INI` 的格式寫進 `docs/internals/`~~ **已達成**：`docs/internals/17-mds.md`
+  §「`_F` 還是 `_M`：`MUSIC.INI` 只說『有沒有 MIDI 介面』」（六個位元組、與 `MUSIC.ORG`
+  相同、`RESSOUND.COM` 偵測 MPU-401 後回寫、玩家在設定畫面改的音源只進存檔不回寫）。
+
+剩下的兩項：
+
+- 「ＭＩＤＩ Ｉ／Ｆ」（22）的反組譯——`docs/re/286` 只到分派那一行
+  （`cmp byte es:[bx+05],16`），沒有往下追目標。
+- 兩者的同狀態收據，remake 照原版反應。
+
+**證據**：[`docs/re/286-settings-other-rows.md` §六、§七`](docs/re/286-settings-other-rows.md` §六、§七)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/internals/23`](docs/internals/23)
 
 **核實**：`internal/game/settingsscreen.go` 裡還找得到 `與 `BUG!` 也還沒接`（自承還在 ＝ 還沒做）
 
@@ -705,7 +723,7 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 
 **核實**：`internal/game/planscreens.go` 裡還找得到 `還沒接（#62）`（自承還在 ＝ 還沒做）
 
-#### hold-to-scroll — ▲▼ 按住連捲（一覽表、右下角清單、提督清單、艦隊組成）
+#### hold-to-scroll — ▲▼ 按住連捲（一覽表、右下角清單、提督清單、艦隊組成、徵稅／預算計劃的箭頭）
 
 *[#60](https://github.com/wicanr2/logh3/issues/60) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
@@ -713,6 +731,12 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 規格 013、052、055 都列成已知差異「做『按住』時一起接」。
 
 **卡在**：- remake 的輸入模型沒有「按住」的時間，要像戰場右鍵捲動（規格 057）那樣補。
+  產品程式碼裡目前**只有一條按住路徑**：`internal/game/battle.go` 的 `RightHold`，
+  由 `cmd/gin3/main.go` 每幀送 `IsMouseButtonPressed(MouseButtonRight)`。**左鍵完全沒有按住分支**。
+
+⚠ **範圍比標題大**：徵稅計劃與預算計劃的兩組箭頭（稅率檔位、建造費％）按住也會連發
+（`internal/game/planscreens.go` 的註解：`-click-hold 3000000` 時稅率一次跳兩階、建造費％也是 2），
+那是同一件事，接的時候一起做。
 
 **做完的判準**：按住的時間與捲動列數與原版收據相同（既有 `fcmd-lst-star-down` 按住 0.1M、第 17 段按住 0.3M），顯示層按著每幀送事件。
 
@@ -743,7 +767,7 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 
 **核實**：`internal/game/game.go` 裡還找得到 `同盟座位看敵方的數原版可能印 --`（自承還在 ＝ 還沒做）
 
-#### strategic-assault-edge-cases — 戰略打行星沒有收據的三種局面（多支攻方、同回合打過仗、電腦座位）
+#### strategic-assault-edge-cases — 戰略打行星沒有收據的兩種局面（同回合打過仗、擠開壓到擋路格）
 
 *[#56](https://github.com/wicanr2/logh3/issues/56) · parity（對拍：要與原版逐位元組相同）*
 
@@ -757,7 +781,11 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 
 **卡在**：- 同回合打過仗的局面要造（`-poke` 或走一場戰鬥之後占據），守軍 `203A:04D1` 讀戰場單位表。
 
-**做完的判準**：三種局面各有同狀態收據（可用 `-poke` 造），remake 與原版逐欄相同或差異列入規格 058 並說明。
+**做完的判準**：**剩下的兩種**（上面四項裡沒有畫掉的那兩項）各有同狀態收據（可用 `-poke` 造），
+remake 與原版逐欄相同或差異列入規格 058 並說明。
+
+> 標題與本文原本寫「三種」，其實列了四項、其中兩項（多支攻方、電腦座位）2026-09-17
+> 就做完並畫掉了。剩「同回合打過仗守軍殘留」與「擠開壓到擋路格」。
 
 **證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/internals/53-strategic-planet-assault.md`](docs/internals/53-strategic-planet-assault.md)
 
