@@ -385,3 +385,17 @@
 配槽走 `07F9:03AC`（`rules.PickFleetSlot`：提督 `+0x09` 低七位那一槽空著就沿用），
 **不是「下一個空槽」也不是「已有幾支」**。remake 原本建艦隊用 `len(g.fleets)`，
 在這一例會把他放進槽 1——**存檔會不一樣**。測試 `TestSortieUsesAdmiralSlot`。
+
+## 艦艇池（#55，2026-09-18）
+
+`tools/fleetcmd_receipts.sh` 第 33 段；欄位表在 `docs/internals/64`、逆向在 `docs/re/344`。
+池的遠指標在 `ds:CFB4`（`lin:61AE4`）——**每次都要先讀再算基底，不要寫死**。
+
+| 批次 | 倒了什麼 | 用途 |
+|---|---|---|
+| `fcmd-pool-base` | 遠指標 ＋ 前四筆（312 bytes）| 看新編艦隊的旗艦與索敵分遣隊長什麼樣 |
+| `fcmd-pool-s3` | 整池 352 × 78（`pool.bin`）| `TestFleetCompositionMatchesOraclePool` 逐欄比 |
+
+**那支測試不是循環驗證**：左邊是原版跑起來之後記憶體裡的池，右邊是 remake 自己照
+欄位位移從存檔解出來的 `FleetGroup`。S3 開局 130 組 × 十個欄位（艦種、現有艘數、滿編、
+士氣、修理上限、兩格存量、索敵等級、隊形槽、擁有者）全部相同——位移錯一格就對不上。

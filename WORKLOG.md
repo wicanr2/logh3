@@ -7531,3 +7531,19 @@ goal：`docs/goal/2026-09-17-executor-rom-thinking-round-7.md`。紀錄 `docs/re
   加上 #75 那一支，這一輪四個 RE agent 裡有三個踩到同一條——**prompt 裡已經寫了
   「連 `python3 -c` 做十六進位換算都不行」，還是會犯**。下一輪把「主機上唯一允許的
   算術是 `printf '%x' $((...))`」放進 prompt 的第一段，不要埋在硬規則清單裡。
+
+## 2026-09-18（續）— 第八輪 C：#55 的艦艇池
+
+- **艦艇池一筆 78 bytes 的欄位表解出來了**（`docs/re/344`、`docs/internals/64`）。
+  remake 這一側：`internal/rules/strength.go` 的欄位常數從五個補到十六個、
+  `FleetGroup` 加 `Pool`／`Morale`／`RepairCap`／`Stock1`／`Stock2`，
+  `Slot.FleetComposition` 讀進來。
+- **驗法**：`fcmd-pool-s3` 把原版執行期的整池倒出來，跟 remake 從同一格存檔解出來的
+  130 組 × 十個欄位逐欄比（`TestFleetCompositionMatchesOraclePool`）。
+  **不是循環驗證**——左邊是原版記憶體、右邊是 remake 自己照位移解的。
+- **順帶推翻／解掉 `docs/re/42` 兩條**：①`+0x02` 不是「首都星域」是**所在星域**
+  （當年只看到 0／31 是取樣巧合，那幾支還沒離開首都）；②「每支艦隊多一筆沒被十個槽
+  引用的記錄」＝ **索敵分遣隊**（`297B:0066` 建艦隊時無條件多配一筆，艦種 7、寫進 `+0x38`）。
+  兩條都照 `rulebook/63` 在 `docs/re/42` 留指標、正文改成正確現況。
+- **還沒做的**：`+0x0E`／`+0x12` 兩格存量與 `+0x0C` 在 remake **只是讀進來帶著**，
+  新編艦隊那幾格仍是 0（原版會抄艦種表）——那要接上配置那一側才算完，#55 先不關。

@@ -544,3 +544,16 @@ rec fcmd-sortie-adm3     540000000 fcmd-base ck \
   -clicks 425000000:352:85,440000000:400:85,470000000:400:85,500000000:488:290 -click-hold $HOLD $FNUM
 rec fcmd-sortie-adm3-done 600000000 fcmd-sortie-adm3 - \
   -clicks 542000000:480:310,570000000:510:310 -click-hold $HOLD $FNUM
+
+# 33. 艦艇池（#55，`docs/internals/64`、`docs/re/344`）。池的遠指標在 `ds:CFB4`
+#     （`lin:61AE4`，4 bytes）——**每次都要先讀再算基底，不要寫死**（那是 farmalloc 給的）。
+#     這一批讀到 `668B:0002` ＝ `lin:668B2`，一筆 78、352 筆。
+#     `fcmd-pool-base` 倒前四筆看新編艦隊的旗艦與索敵分遣隊；
+#     `fcmd-pool-s3` 倒整池，給 `TestFleetCompositionMatchesOraclePool` 逐欄比。
+POOL_LO=668B2
+POOL_HI=$(printf '%X' $((0x668B2 + 27456)))
+rec fcmd-pool-base 421000000 fcmd-base    - -peek lin:61AE4:4,lin:668B2:312
+tools/oracle.sh fcmd-pool-s3 -load-state /src/workplace/fcmd/fcmd-s3-base.state -steps 300100000 \
+  -peek lin:61AE4:4 -dump-mem "$POOL_LO-$POOL_HI:/src/workplace/fcmd/fcmd-pool-s3-pool.bin" >/dev/null
+cp "$CK/fcmd-pool-s3-pool.bin" "$ROOT/workplace/oracle/fcmd-pool-s3/pool.bin"
+printf '%s  %s\n' fcmd-pool-s3 "$(sed -n 's/^screen.bin SHA-256: //p' "$ROOT/workplace/oracle/fcmd-pool-s3/meta.txt" | cut -c1-16)"

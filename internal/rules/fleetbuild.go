@@ -18,8 +18,8 @@ import (
 // 原版把艦艇放在艦艇池（`ds:CFB4`，一筆 78 bytes），艦隊記錄 `+0x10`
 // 起每組 4 bytes 指過去；remake 直接把解出來的欄位帶在艦隊上。
 //
-// 新遊戲的艦艇池還沒模型化：分隊的 `+0x06` 士氣、`+0x0C` 戰力、`+0x0E`／`+0x12`
-// 兩格存量、池索引（艦隊組成「決定」時分配）都沒有（規格 058、015 已知差異）。
+// 艦艇池那一筆的其餘欄位（士氣、修理上限、兩格存量、池索引）**讀存檔時會帶進來**，
+// 但 remake 還沒有自己算它們的規則，所以新編的艦隊那幾格是 0（規格 015 已知差異、#55）。
 type FleetGroup struct {
 	Kind  int `json:"kind"`  // 艦種（艦艇 `+0x04`）
 	Ships int `json:"ships"` // 現有艘數（艦艇 `+0x08`）
@@ -36,6 +36,23 @@ type FleetGroup struct {
 	// X／Y 是這一組艦艇的位置（艦艇 `+0x34`／`+0x36`）：別的艦隊定位時拿它判佔用（`297B:0C74`）。
 	X int `json:"x,omitempty"`
 	Y int `json:"y,omitempty"`
+
+	// 以下是艦艇池那一筆的其餘欄位（`docs/internals/64`，#55）。存檔讀進來時
+	// 一起帶著，寫回去時原樣寫回——**remake 還沒有自己算它們的規則**，
+	// 所以新編的艦隊這幾格是 0，與原版不同（規格 015 已知差異）。
+
+	// Pool 是這一組在艦艇池裡的索引（艦隊記錄 `+0x10＋4k` 的 `[0..1]`）。
+	// −1 ＝ 這一組不是從池裡讀出來的（新編、還沒配過）。
+	Pool int `json:"pool,omitempty"`
+	// Morale 是分隊士氣（艦艇 `+0x06`）＝ `(滿編 − 折算損失) × 100 ÷ 滿編`。
+	Morale int `json:"morale,omitempty"`
+	// RepairCap 是修理／損失上限（艦艇 `+0x0C`）：建立時等於現有艘數，
+	// 戰損時用 `Σ實扣² ÷ 滿編` 往下扣。
+	RepairCap int `json:"repair_cap,omitempty"`
+	// Stock1／Stock2 是兩格隨艦種變的存量（艦艇 `+0x0E`／`+0x12`，**32 位元**）：
+	// 建立時抄艦種表，戰損時按剩餘比例縮。艦種 7 兩格都是 0。
+	Stock1 int `json:"stock1,omitempty"`
+	Stock2 int `json:"stock2,omitempty"`
 }
 
 // FlagshipFormationSlot 是旗艦那一組的隊形槽 ＝ 格盤正中央。

@@ -497,6 +497,13 @@ func (s *Slot) FleetComposition(i int) []FleetGroup {
 			Detail: int(sh[shipDetail]),
 			X:      int(sh[shipPosX]) | int(sh[shipPosX+1])<<8,
 			Y:      int(sh[shipPosX+2]) | int(sh[shipPosX+3])<<8,
+			// 艦艇池那一筆的其餘欄位（`docs/internals/64`，#55）：讀進來帶著，
+			// 存回去時原樣寫回。
+			Pool:      idx,
+			Morale:    int(sh[shipMorale]),
+			RepairCap: int(sh[shipRepairCap]) | int(sh[shipRepairCap+1])<<8,
+			Stock1:    dwordAt(sh, shipStock1),
+			Stock2:    dwordAt(sh, shipStock2),
 		})
 	}
 	return out
@@ -671,4 +678,12 @@ func LoadWorkTemplate(path string) ([]byte, error) {
 		return nil, fmt.Errorf("%s: WORK 有 %d bytes，要 %d", path, len(out), WorkRecord)
 	}
 	return out, nil
+}
+
+// dwordAt 讀一個 32 位元小端欄位（艦艇記錄的 `+0x0E`／`+0x12` 兩格存量）。
+func dwordAt(rec []byte, off int) int {
+	if len(rec) < off+4 {
+		return 0
+	}
+	return int(rec[off]) | int(rec[off+1])<<8 | int(rec[off+2])<<16 | int(rec[off+3])<<24
 }
