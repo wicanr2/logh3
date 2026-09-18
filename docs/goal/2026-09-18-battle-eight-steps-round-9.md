@@ -13,7 +13,7 @@
 
 收尾狀態：`main` 已推到 `4831038`，dosgolem 副本仍是 `f7523f9`（本輪沒動執行器，收據不必重跑）。
 `go test ./internal/...` 全過、`tools/gui_check.sh` 40 例逐位元組相同、`tools/feature_check.sh` 沒有 crash
-且 `knownDead` 是空的、worklist verify 0 條斷言不成立。open 的 worklist issue 剩 13 條。
+且 `knownDead` 是空的、worklist verify 0 條斷言不成立。open 的 worklist issue 剩 14 條（含收尾檢查補跑時新開的 #81）。
 
 **本輪新開的未解項**（都寫在 `docs/re/345` 末節與規格 063）：
 
@@ -106,4 +106,6 @@ B 才有護欄。判準與卡在寫在 issue 裡（`TestBattleStartsOnContact` �
 `tools/gui_check.sh`（目前 40 例）、`tools/feature_check.sh`（`knownDead` 要維持空的）、
 `go test ./internal/...`、worklist verify 0 條斷言不成立；
 `CONTEXT.md` 走 `render -w`、`VERIFICATION-MATRIX.md` 走 `render-matrix -w`（產生前先抓 issue 快照）；
+**`go test ./internal/... -v | grep SKIP` 要真的跑一遍**，每一支 skip 的理由都說得出來——
+第八輪把這一條寫進「已知的坑」卻跳過了，補跑才發現九支戰場測試從來沒執行過（#81）。
 `WORKLOG.md` 記這一輪的流水帳與踩到的坑。動到 dosgolem 就整組收據重跑。
