@@ -475,7 +475,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 17 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 18 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -510,6 +510,30 @@
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
+
+#### plan-arrow-pressed-pixels — 徵稅／預算計劃四顆箭頭鈕剛點過時差 17–21 個像素
+
+*[#80](https://github.com/wicanr2/logh3/issues/80) · parity（對拍：要與原版逐位元組相同）*
+
+徵稅計劃／預算計劃那四顆箭頭鈕，**剛點過的那一顆**裡有 17–21 個像素對不上：
+原版寫色 8、remake 寫色 9，形狀是游標周圍的一小塊。游標本身（色 7 本體、色 3 描邊）
+兩邊位置相同，所以**不是游標畫錯位置**。
+
+目前測試用 `planArrowSkip`（`internal/game/planscreens_test.go`）把四顆箭頭的格子排除，
+並在 `docs/spec/003` 與 `docs/re/343` §七第 3 點**標成未解、不是核准的差異**。
+
+猜測方向（都沒驗）：剛點過的鈕留下「按下」的樣子（像清單列那種 `pressed` 底色）、
+或箭頭圖塊本身在按下那一幀被換過。
+
+**卡在**：- 沒有逐幀收據看「按下 → 放開」那一段（`-watch-screen` 可以）。
+- 畫箭頭的那一支還沒定位（熱區清單 `ds:14A8` 的 idx 0／1／4／5，kind 6）。
+
+**做完的判準**：那 17–21 個像素的成因寫進 `docs/re/`；remake 照原版畫，`planArrowSkip` 拿掉，
+`fcmd-plan-tax-up`／`-tax-down`／`-pct-up` 三份整張相同。
+
+**證據**：[`docs/re/343-plan-screen-buttons.md`](docs/re/343-plan-screen-buttons.md)、[`docs/spec/003-budget-panel.md`](docs/spec/003-budget-panel.md)
+
+**核實**：`internal/game/planscreens_test.go` 裡還找得到 `planArrowSkip`（自承還在 ＝ 還沒做）
 
 #### battle-turn-eight-steps — 戰場回合結算對齊原版八步（規格 062 的其餘七步與子步 8-2–8-5）
 
