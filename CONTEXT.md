@@ -474,7 +474,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 18 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 16 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -585,24 +585,6 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 **證據**：[`docs/re/339-battle-turn-eight-steps.md` §九`](docs/re/339-battle-turn-eight-steps.md` §九)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)
 
 **核實**：`internal/game/annihilation.go` 裡出現 `AnnihilateFleet` 就是做好了
-
-#### region-ship-resupply — 自家星域的艦艇補充（1AAB:0FAF）與「士氣值已經恢復」
-
-*[#71](https://github.com/wicanr2/logh3/issues/71) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-自家星域的艦艇補充（`1AAB:0FAF(星域)`）：原版每回合逐格處理時，擁有者陣營停在自己星域的艦隊，逐艦種從那一格的存量補到
-編制數，補完對那幾支叫 `1261:0067(f, 1)`——士氣照編制重算，翻回 50 以上就當場印「士氣值已經恢復，可以進行戰鬥。」
-（`docs/re/333` §三；收據 `fcmd-turn-recover`）。remake 沒有這條，所以士氣掉下去之後回不來，「已經恢復」那一則也碰不到。
-
-**卡在**：- 補充的 `+0x0C`、`+0x0E`／`+0x12`、`2703:14CF`、`2703:0540`、`1AAB:1235` 只讀到骨架。
-- remake 的新遊戲沒有艦艇池（#55），分隊的 `+0x0C`／`+0x0E`／`+0x12` 沒有對應的欄位。
-
-**做完的判準**：`1AAB:0FAF` 的補充量讀完寫進 `docs/re/`；remake 在逐格處理那一步照原版補（存量、艘數、士氣重算、報告）；
-`fcmd-turn-recover` 的框與記錄（艦艇 0 補回 3000、瓦爾哈拉帝國戰艦存量 75000 → 72100）對上。
-
-**證據**：[`docs/re/333-turn-reports.md`](docs/re/333-turn-reports.md)、[`docs/spec/059-turn-transition-windows.md`](docs/spec/059-turn-transition-windows.md)
-
-**核實**：`internal/game/rebellion.go` 裡還找得到 `自家星域的艦艇補充（`1AAB:0FAF``（自承還在 ＝ 還沒做）
 
 #### export-remaining-assets — 其餘原版素材匯出進 assets/original/（ANI_PNL、BLOCK_0–2、MAP*.CMP、IBM16.350、SPTIT.350）
 
@@ -764,24 +746,6 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 
 **核實**：`internal/rules/strategicassault.go` 裡還找得到 `同一回合先打過仗時守軍殘留沒驗`（自承還在 ＝ 還沒做）
 
-#### new-game-ship-pool — 新遊戲的艦艇池模型（分隊士氣、戰力、兩格存量、池索引）
-
-*[#55](https://github.com/wicanr2/logh3/issues/55) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、槽 `[2]`／`[3]`、索敵等級），沒有原版艦艇池
-（`ds:CFB4`，352 × 78）那一筆的其他欄位：分隊 `+0x06` 士氣（`1261:03FB` 每次扣艘數後寫）、`+0x0C` 戰力
-（`203A:0593` 扣 實扣² ÷ 滿編）、`+0x0E`／`+0x12` 兩格存量（按剩餘比例縮）、池索引（艦隊組成「決定」時分配，
-新組拿到 2、3、4…）。戰略打行星（規格 058）用不到這幾格所以對得上，但它們會帶進之後的戰場與補給。
-
-**卡在**：- 從 `0FF4:000A` 的「決定」分支往下找寫艦艇池的那一支，還沒讀。
-- 既有 `fcmd-*` 收據沒倒艦艇池（`ds:CFB4` 的 far 指標每批要先讀再倒）。
-
-**做完的判準**：新遊戲建艦隊時照原版分配池索引並填分隊記錄；戰略打行星與戰場扣艘數時這幾格照原版更新；有同狀態收據（建完艦隊與打完一次的艦艇池傾印）。
-
-**證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/spec/015-fleet-composition.md`](docs/spec/015-fleet-composition.md)、[`docs/internals/38-battle-units.md`](docs/internals/38-battle-units.md)
-
-**核實**：`internal/rules/fleetbuild.go` 裡還找得到 `新遊戲的艦艇池還沒模型化`（自承還在 ＝ 還沒做）
-
 #### battle-assault-byte-mismatches — 戰場層打行星與位元組三處不符（103D 尾段、0593 艦種 5、Atan256 查表）
 
 *[#53](https://github.com/wicanr2/logh3/issues/53) · parity（對拍：要與原版逐位元組相同）*
@@ -836,7 +800,7 @@ remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、
 
 ### 做完的（不在矩陣裡的那幾條）
 
-67 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+69 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1970,6 +1934,25 @@ dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且�
 
 **核實**：`TestTurnThinkingMatchesOracle` 釘在 `internal/game`
 
+#### region-ship-resupply — 自家星域的艦艇補充（1AAB:0FAF）與「士氣值已經恢復」
+
+*[#71](https://github.com/wicanr2/logh3/issues/71) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+自家星域的艦艇補充（`1AAB:0FAF(星域)`）：原版每回合逐格處理時，擁有者陣營停在自己星域的艦隊，逐艦種從那一格的存量補到
+編制數，補完對那幾支叫 `1261:0067(f, 1)`——士氣照編制重算，翻回 50 以上就當場印「士氣值已經恢復，可以進行戰鬥。」
+（`docs/re/333` §三；收據 `fcmd-turn-recover`）。remake 沒有這條，所以士氣掉下去之後回不來，「已經恢復」那一則也碰不到。
+
+**卡在**：（已解）五支都讀完了（`docs/re/346`、`docs/re/345`），艦艇池的欄位也接上了（#55）。
+剩下一件：兩格存量原版各多加一塊 108600 ＝ 星域的 `+0x68`／`+0x70`，那不屬於
+`1AAB:0FAF`，多半是還沒讀的 `1930:1572`——已在規格 063 記成已知偏離。
+
+**做完的判準**：`1AAB:0FAF` 的補充量讀完寫進 `docs/re/`；remake 在逐格處理那一步照原版補（存量、艘數、士氣重算、報告）；
+`fcmd-turn-recover` 的框與記錄（艦艇 0 補回 3000、瓦爾哈拉帝國戰艦存量 75000 → 72100）對上。
+
+**證據**：[`docs/re/333-turn-reports.md`](docs/re/333-turn-reports.md)、[`docs/spec/059-turn-transition-windows.md`](docs/spec/059-turn-transition-windows.md)
+
+**核實**：`TestRegionResupplyRecoveredMatchesOracle` 釘在 `internal/game`
+
 #### fleet-number-list-and-quit-confirm — 艦隊編號清單的列、結束確認的中止／決定
 
 *[#65](https://github.com/wicanr2/logh3/issues/65) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -2035,6 +2018,24 @@ dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且�
 **證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)、[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/334-annihilation-crash-is-executor.md`](docs/re/334-annihilation-crash-is-executor.md)
 
 **核實**：`TestBattleAnnihilationRemovesFleet` 釘在 `internal/game`
+
+#### new-game-ship-pool — 新遊戲的艦艇池模型（分隊士氣、戰力、兩格存量、池索引）
+
+*[#55](https://github.com/wicanr2/logh3/issues/55) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、槽 `[2]`／`[3]`、索敵等級），沒有原版艦艇池
+（`ds:CFB4`，352 × 78）那一筆的其他欄位：分隊 `+0x06` 士氣（`1261:03FB` 每次扣艘數後寫）、`+0x0C` 戰力
+（`203A:0593` 扣 實扣² ÷ 滿編）、`+0x0E`／`+0x12` 兩格存量（按剩餘比例縮）、池索引（艦隊組成「決定」時分配，
+新組拿到 2、3、4…）。戰略打行星（規格 058）用不到這幾格所以對得上，但它們會帶進之後的戰場與補給。
+
+**卡在**：（已解）「決定」那一側寫池的是 `297B:0066` → `2AD2:0029`（`docs/re/344`），兩格存量由
+`2703:14CF` 填（`docs/re/345`）。收據 `fcmd-pool-base`／`fcmd-pool-s3` 已經把 `ds:CFB4` 的池倒出來。
+
+**做完的判準**：新遊戲建艦隊時照原版分配池索引並填分隊記錄；戰略打行星與戰場扣艘數時這幾格照原版更新；有同狀態收據（建完艦隊與打完一次的艦艇池傾印）。
+
+**證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/spec/015-fleet-composition.md`](docs/spec/015-fleet-composition.md)、[`docs/internals/38-battle-units.md`](docs/internals/38-battle-units.md)
+
+**核實**：`TestInitGroupStockMatchesOraclePool` 釘在 `internal/rules`
 
 #### dosgolem-watch-regs-bugs — dosgolem：-watch 只吃第一段範圍、-regs-at 偶爾漏抓命中
 
