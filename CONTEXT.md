@@ -320,7 +320,7 @@
 - **玩家還碰不到的功能**（2026-09-15 讀 `internal/game/game.go` 的 `click` 盤點、2026-09-17 對照
   第五輪之後全部登記成 issue；清單的權威是 issue，這裡只是索引）：
   - 整套不存在：自家星域的艦艇補充與「已經恢復」（`1AAB:0FAF`，#71）、
-    開戰前「發現敵方艦隊」報告（#75）、參謀任命（`090A:0248`，#62）、交戰演出的量表與戰場方塊與另外三種演出（#48）。
+    參謀任命（`090A:0248`，#62）、交戰演出的量表與戰場方塊與另外三種演出（#48）。
   - 開得起來但只能右鍵關：情報收集的 治安／勢力／敵艦 三個分頁與確認（#63）、徵稅計劃與生產計劃的「結束」
     與預算計劃的箭頭（#64）、艦隊編號清單的列與結束確認的中止／決定（#65）、設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與
     `BUG!`（#66）；情報與徵稅那兩顆「參謀」是參謀任命的入口（#62）。
@@ -475,7 +475,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 20 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 19 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -562,24 +562,6 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 **證據**：[`docs/re/339-battle-turn-eight-steps.md` §九`](docs/re/339-battle-turn-eight-steps.md` §九)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)
 
 **核實**：`internal/game/annihilation.go` 裡出現 `AnnihilateFleet` 就是做好了
-
-#### enemy-fleet-found-report — 開戰前「<星域>星系內發現敵方艦隊。」報告框（0374:0489）
-
-*[#75](https://github.com/wicanr2/logh3/issues/75) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-逐格開戰之前原版先印「<星域>星系內發現敵方艦隊。」報告框（`3826:0307` 持久視窗、情報參謀頭像；S3 帝國第一回合
-#390.11M，`fcx-r7-s3exec`、`fcx-r7-s3shots`，`docs/re/336` §六），之後才進戰場。remake 碰到有兩方艦隊的格子直接
-`StartBattle`，沒有這一張。字串在 `docs/internals/14`（「發現敵方艦隊。」）。
-
-**卡在**：- `0374:0489` 沒讀（`workplace/re-notes/round7-57-static.md` §1.1 標了「開打前的人類座位畫面，未讀」）。
-- 報告之後進戰場的畫面 remake 是否同狀態，要一起確認。
-
-**做完的判準**：`0374:03E8` 開戰前那一段（`0374:0489` 起）的呼叫順序、頭像與等待讀完寫進 `docs/re/`；remake 開戰前停在這張報告，
-S3 帝國第一回合的收據（達希利，#390M 起那一段）整張相同。
-
-**證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/internals/14-screen-strings.md`](docs/internals/14-screen-strings.md)
-
-**核實**：`internal/game/rebellion.go` 裡還找得到 `星系內發現敵方艦隊。」報告框`（自承還在 ＝ 還沒做）
 
 #### region-ship-resupply — 自家星域的艦艇補充（1AAB:0FAF）與「士氣值已經恢復」
 
@@ -859,7 +841,7 @@ remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、
 
 ### 做完的（不在矩陣裡的那幾條）
 
-64 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+65 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1910,6 +1892,24 @@ GIN3PS 載入段 `0349`，那一段正好是 `0374:08DA`–`08FD`（`0374:0896` 
 **證據**：[`docs/re/336-executor-rom-tail-rerun.md` §9.3`](docs/re/336-executor-rom-tail-rerun.md` §9.3)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)
 
 **核實**：`docs/spec/060-strategic-attrition-annihilation.md` 標到 `使用者裁決（2026-09-18）執行器不動`
+
+#### enemy-fleet-found-report — 開戰前「<星域>星系內發現敵方艦隊。」報告框（0374:0489）
+
+*[#75](https://github.com/wicanr2/logh3/issues/75) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+逐格開戰之前原版先印「<星域>星系內發現敵方艦隊。」報告框（`3826:0307` 持久視窗、情報參謀頭像；S3 帝國第一回合
+#390.11M，`fcx-r7-s3exec`、`fcx-r7-s3shots`，`docs/re/336` §六），之後才進戰場。remake 碰到有兩方艦隊的格子直接
+`StartBattle`，沒有這一張。字串在 `docs/internals/14`（「發現敵方艦隊。」）。
+
+**卡在**：- `0374:0489` 沒讀（`workplace/re-notes/round7-57-static.md` §1.1 標了「開打前的人類座位畫面，未讀」）。
+- 報告之後進戰場的畫面 remake 是否同狀態，要一起確認。
+
+**做完的判準**：`0374:03E8` 開戰前那一段（`0374:0489` 起）的呼叫順序、頭像與等待讀完寫進 `docs/re/`；remake 開戰前停在這張報告，
+S3 帝國第一回合的收據（達希利，#390M 起那一段）整張相同。
+
+**證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/internals/14-screen-strings.md`](docs/internals/14-screen-strings.md)
+
+**核實**：`TestEnemyFleetFoundReportMatchesOracle` 釘在 `internal/game`
 
 #### fleet-number-two-digit — 艦隊編號 10 以上的四個畫面印成全形（3982:0038 的 %2d 那條路）
 

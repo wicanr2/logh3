@@ -3,6 +3,8 @@ package game
 import (
 	"path/filepath"
 	"testing"
+
+	"github.com/wicanr2/logh3/internal/rules"
 )
 
 // 兩位數艦隊編號（#74）：`3982:0038` 小於 10 印全形、否則 `%2d` 兩個半形塞一格
@@ -17,6 +19,20 @@ func reachS3Map(t *testing.T) *Game {
 	t.Helper()
 	res := loadWithRules(t)
 	loadBattleMaps(t, res)
+	// 開戰前的報告看完要真的進戰場，所以戰場那幾份資源也要載（同 `newTestGame`）。
+	var err error
+	if res.Entries, err = rules.LoadBattleEntries(
+		filepath.Join(root, "docs/internals/data/battle-entry-points.json")); err != nil {
+		t.Fatal(err)
+	}
+	if res.Formation, err = rules.LoadFormationSlots(
+		filepath.Join(root, "docs/internals/data/battle-formation-slots.json")); err != nil {
+		t.Fatal(err)
+	}
+	if res.Terrain, err = rules.LoadBattleTerrain(
+		filepath.Join(root, "docs/internals/data/battle-terrain.json")); err != nil {
+		t.Fatal(err)
+	}
 	g, err := New(res)
 	if err != nil {
 		t.Fatal(err)
@@ -98,4 +114,38 @@ func TestEngagementTwoDigitMatchesOracle(t *testing.T) {
 		t.Fatal("tick 20 就收場了")
 	}
 	matchesExcept(t, g, "eng-known", engagementSkips(g))
+}
+
+// 逐格開戰之前的「<星域>星系內／發現敵方艦隊。」（#75、規格 059、`docs/re/340`）：
+// S3 帝國第一回合實行，三張過場各等滿，掃到達希利（26）那一格時先印這一張再進戰場。
+// 收據 `fcmd-s3-found`（`tools/fleetcmd_receipts.sh` 第 28 段，#394M）。
+func TestEnemyFleetFoundReportMatchesOracle(t *testing.T) {
+	g := reachS3Map(t)
+	g.Click(544, 125)
+	g.Click(560, 125)
+	wantState(t, g, StateTurnThinking, "實行之後")
+	thinkThrough(g)
+	// 三張過場（出發前往／已經到達）各等滿 90 tick，之後是這一張報告。
+	for i := 0; i < 4000 && g.State() != StateTurnReport; i++ {
+		if g.State() != StateTurnWindow && g.State() != StateTurnReport {
+			t.Fatalf("第 %d tick 在 %v，預期過場或報告", i, g.State())
+		}
+		tickTurnWindow(g, 1)
+	}
+	wantState(t, g, StateTurnReport, "三張過場之後")
+	if g.turnRep.battle {
+		t.Error("開戰前的報告走了戰鬥中那個臨時視窗")
+	}
+	if got := g.turnRep.pending[0].face; got != g.res.Reporter[0] {
+		t.Errorf("頭像是提督 %d，原版是座位自己的情報參謀 %d", got, g.res.Reporter[0])
+	}
+	if n := len(g.turnRep.pending); n != 1 {
+		t.Errorf("排了 %d 則；單人局只有座位 0 是人", n)
+	}
+	matches(t, g, "fcmd-s3-found")
+	// 看完就進戰場（`0374:043B` 關持久視窗 → `12AA:000E`）。
+	for i := 0; i < 200 && g.State() == StateTurnReport; i++ {
+		g.turnReportTick(1)
+	}
+	wantState(t, g, StateBattle, "報告看完之後")
 }

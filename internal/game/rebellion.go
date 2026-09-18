@@ -108,7 +108,13 @@ func (g *Game) scanRegionsFrom(from int) {
 	for r := from; r < rules.RegionCount; r++ {
 		occ := g.rebellionOccupation[r]
 		if occ.Contested {
-			// 開戰前的「<星域>星系內發現敵方艦隊。」報告框（`3826:0307`，`0374:0489` 一帶，收據 `fcx-r7-s3shots`）還沒接。
+			// 開戰之前先報告「<星域>星系內／發現敵方艦隊。」（`0374:0489`，規格 059、`docs/re/340`）。
+			// `0374:04DA` 先 `3705:0349(0)` 整片還原，再 `3705:03FD(星域, 5)` 把要開戰的那一格塗起來。
+			g.mapMark = r
+			region := r
+			if g.startTurnReports(g.enemyFleetFoundReports(r), func() { g.StartBattle(region) }) {
+				return
+			}
 			g.StartBattle(r)
 			return
 		}

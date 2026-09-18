@@ -470,3 +470,12 @@ rec fcmd-s3-n10-list    340000000 fcmd-s3-base ck \
 rec fcmd-s3-n10-win     365000000 fcmd-s3-n10-list ck $(mvc 341000000 450 190) -click-hold $HOLD
 rec fcmd-s3-n10-menu    390000000 fcmd-s3-n10-win  ck $(mvc 366000000 490 305) -click-hold $HOLD
 rec fcmd-s3-n10-standby 415000000 fcmd-s3-n10-menu -  $(mvc 391000000 497 352) -click-hold $HOLD
+
+# 28. 逐格開戰之前的「<星域>星系內／發現敵方艦隊。」（#75，`0374:0489` → `04B8` → `3826:0307`；
+#     `docs/re/340`）。S3 帝國第一回合：實行之後三張過場各等滿 90 tick，#388M 起這一格
+#     （達希利 26）要開戰，報告在 #392–#410M 之間（#410M 整片換掉 ＝ 進戰場）。
+#     只對人類座位印；兩個座位都是人的話同一個視窗連開兩次。這一局座位 1 是電腦（`ds:8F22`＝1），
+#     所以只印一次。$FOUND 倒的是判斷用的那幾格：目前格、兩個座位是不是電腦、座位的陣營、
+#     訊息速度、情報參謀表。
+FOUND="-peek lin:5DA47:1,lin:5DA51:2,lin:5DA55:2,lin:5DA68:2,lin:5DA7D:8"
+rec fcmd-s3-found 394000000 fcmd-s3-base - $S3EXEC $FOUND

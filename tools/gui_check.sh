@@ -74,6 +74,9 @@ cases=(
   # → 艦隊視窗；再 作戰 → 待命 → 指定待命行星。兩張的編號都是半形兩位數（#74、docs/re/338）。
   "fcmd-s3-n10-win|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 322; click 318 208; click 448 125; click 460 145; click 450 230"
   "fcmd-s3-n10-standby|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 322; click 318 208; click 448 125; click 460 145; click 450 230; click 490 345; click 497 392|152,347,128,1"
+  # 逐格開戰之前的「達希利星系內／發現敵方艦隊。」（#75、docs/re/340）：S3 帝國第一回合
+  # 實行之後三張過場各等滿 90 tick（報告在第 354 tick 出現，等 90 tick），掃到達希利那一格先印這一張再進戰場。
+  "fcmd-s3-found|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 322; click 318 208; click 544 125; click 560 125; tick 400"
 )
 fail=0
 for c in "${cases[@]}"; do

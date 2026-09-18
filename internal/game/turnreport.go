@@ -179,3 +179,28 @@ func (g *Game) endOfTurnMoraleReports() []turnReport {
 	}
 	return out
 }
+
+// enemyFleetFoundReports 是 `0374:0489(星域)`：逐格開戰之前先報告
+// 「<星域>星系內／發現敵方艦隊。」（`0374:04B8` → `3826:0307`，規格 059、`docs/re/340`）。
+//
+// **對每一個人類座位各印一次**：原版直接查 `ds:8F21`（座位 0）／`ds:8F22`（座位 1），
+// 不比對這一仗跟哪個座位有關——兩邊都是人就同一個視窗連開兩次、各自等滿。
+// 星域名用**擁有者**的顏色（與別處的 `3982:0296` 同一段），頭像是**收到報告那個座位
+// 自己的情報參謀**（`ds:8F4D[陣營]`），不是敵方、也不是任何一支艦隊的提督。
+func (g *Game) enemyFleetFoundReports(region int) []turnReport {
+	p := g.res.TurnWindow
+	if p == nil {
+		return nil
+	}
+	var b []byte
+	b = append(b, p.PlainName(codesBig5(g.regionName(region)), g.regionOwner(region))...)
+	b = append(b, p.ReportFormat("found_region_suffix")...)
+	b = append(b, p.ReportFormat("found_body")...)
+	var out []turnReport
+	for faction := 0; faction < 2; faction++ {
+		if g.humanSeat(faction) {
+			out = append(out, turnReport{text: b, face: g.res.Reporter[faction]})
+		}
+	}
+	return out
+}
