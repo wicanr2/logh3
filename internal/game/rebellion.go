@@ -118,10 +118,14 @@ func (g *Game) scanRegionsFrom(from int) {
 			g.StartBattle(r)
 			return
 		}
-		// 自家星域的艦艇補充（`1AAB:0FAF`：擁有者的艦隊從星域存量補到編制數、補完 `1261:0067(f, 1)` 可能印
-		// 「已經恢復」，`docs/re/333` §三）還沒接；原版排在這一格的全滅判定與打行星之前。
-		// 耗損與全滅（`0374:0608`）：停在全滅報告上就等看完，從這一格重跑（被拿掉的那一支已不在表上）。
+		// 自家星域的艦艇補充（`1AAB:0FAF`，規格 063、`docs/re/346`）：擁有者停在這一格的艦隊
+		// 逐艦種補到滿編，補完逐支 `1261:0067(f, 1)` 可能印「已經恢復」。原版排在這一格的
+		// 全滅判定與打行星之前，所以補上去的艘數會進到同一格的耗損判定。
 		region := r
+		if g.resupplyRegion(r, func() { g.scanRegionAfterResupply(region) }) {
+			return
+		}
+		// 耗損與全滅（`0374:0608`）：停在全滅報告上就等看完，從這一格重跑（被拿掉的那一支已不在表上）。
 		if g.attritionFrom(r, 0, func() { g.scanRegionsAfterAttrition(region) }) {
 			return
 		}
@@ -130,6 +134,17 @@ func (g *Game) scanRegionsFrom(from int) {
 		}
 	}
 	g.endOfTurn()
+}
+
+// scanRegionAfterResupply 是補充的士氣報告看完之後：接這一格的耗損／全滅判定。
+func (g *Game) scanRegionAfterResupply(r int) {
+	if g.attritionFrom(r, 0, func() { g.scanRegionsAfterAttrition(r) }) {
+		return
+	}
+	if g.scanRegionTail(r) {
+		return
+	}
+	g.scanRegionsFrom(r + 1)
 }
 
 // scanRegionsAfterAttrition 是全滅報告看完之後：這一格剩下的部分，再接下一格。

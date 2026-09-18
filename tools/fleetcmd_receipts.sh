@@ -557,3 +557,22 @@ tools/oracle.sh fcmd-pool-s3 -load-state /src/workplace/fcmd/fcmd-s3-base.state 
   -peek lin:61AE4:4 -dump-mem "$POOL_LO-$POOL_HI:/src/workplace/fcmd/fcmd-pool-s3-pool.bin" >/dev/null
 cp "$CK/fcmd-pool-s3-pool.bin" "$ROOT/workplace/oracle/fcmd-pool-s3/pool.bin"
 printf '%s  %s\n' fcmd-pool-s3 "$(sed -n 's/^screen.bin SHA-256: //p' "$ROOT/workplace/oracle/fcmd-pool-s3/meta.txt" | cut -c1-16)"
+
+# 34. 自家星域的艦艇補充（#71，規格 063、`docs/re/346`）。
+#     局面用 poke 造：帝國第 1 艦隊（停在首都星域 0）士氣旗標設成「低落」、士氣值 40、
+#     旗艦那一組的現有艘數壓到 100（滿編仍是 3000）。逐格掃描到星域 0 時補充把它補回
+#     3000 艘，士氣重算成 100，於是當場印「士氣值已經恢復，可以進行戰鬥。」。
+#     `1AAB:0FAF` 命中在 #432.906M、報告在 #432.924M 開始，等 90 tick。
+#     poke 的四個位址：艦隊槽 0 的 `+0x00`（旗標）與 `+0x3C`（士氣值）在 `lin:60BA4` 起的
+#     122 bytes 裡；艦艇池 #0 的 `+0x06`（士氣）與 `+0x08`（現有艘數）在 `lin:668B2` 起。
+SUPPLY_POKE="lin:60BA4@420000050=01;lin:60BE0@420000050=28;lin:668B8@420000050=28;lin:668BA@420000050=64 00"
+rec fcmd-supply-recovered 433600000 fcmd-base - \
+  -clicks 421000000:544:85,424000000:560:85 -click-hold 3000000 -poke "$SUPPLY_POKE"
+# 補充跑完之後的艦艇池與星域記錄（給規則層逐欄比）。
+tools/oracle.sh fcmd-supply-mem -load-state /src/workplace/fcmd/fcmd-base.state -steps 433600000 \
+  -clicks 421000000:544:85,424000000:560:85 -click-hold 3000000 -poke "$SUPPLY_POKE" \
+  -dump-mem-at "432800000:lin:668B2:4680:/src/workplace/fcmd/fcmd-supply-pool-before.bin;432950000:lin:668B2:4680:/src/workplace/fcmd/fcmd-supply-pool-after.bin;432800000:lin:5F2CC:4032:/src/workplace/fcmd/fcmd-supply-region-before.bin;432950000:lin:5F2CC:4032:/src/workplace/fcmd/fcmd-supply-region-after.bin" >/dev/null
+for f in pool-before pool-after region-before region-after; do
+  cp "$CK/fcmd-supply-$f.bin" "$ROOT/workplace/oracle/fcmd-supply-mem/$f.bin"
+done
+printf '%s  %s\n' fcmd-supply-mem "$(sed -n 's/^screen.bin SHA-256: //p' "$ROOT/workplace/oracle/fcmd-supply-mem/meta.txt" | cut -c1-16)"

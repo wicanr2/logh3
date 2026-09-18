@@ -76,3 +76,4 @@ RE 證據 → DRAFT spec → 證據審查 → READY → implementation → 同�
 | [`060`](060-strategic-attrition-annihilation.md) | 戰略階段的耗損與艦隊全滅（士氣低落停在別人星域每回合扣兵、第 0 組 0 艘就全滅、提督失蹤） | CONFORMED（全滅）；「沒全滅」那一支 DRAFT |
 | [`061`](061-passive-battle-computer.md) | 戰場上的電腦方不造成傷害（使用者裁決，刻意偏離原版；`originalBattleAI` 關掉） | CONFORMED（remake 規則） |
 | [`062`](062-battle-turn-eight-steps.md) | 戰場一個回合的結算：原版的八步與第 8 步的五個子步驟（全滅、星域換手、索敵燃料、提督升級、結束判定） | DRAFT |
+| [`063`](063-region-resupply.md) | 自家星域的艦艇補充（逐艦種補到滿編、修護艦重置、補完印「士氣值已經恢復」） | READY |
