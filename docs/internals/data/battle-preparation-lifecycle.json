@@ -1,0 +1,480 @@
+{
+  "schema": "logh3.battle-preparation-lifecycle.v1",
+  "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "golem_dirty": false,
+  "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "seed": "0x12345678",
+  "probe_sha256": "f1a95e05dbdc0aec055c10ae07de89ae93ea1a76f1b4d8a6d09b59c280d82c27",
+  "probe_rows": [
+    {
+      "entry": "1930:05EC",
+      "name": "manual-supply-write",
+      "rng_after_hex": "78563412",
+      "scope": "假far frame局部診斷；只到來源寫入後，不執行返回，不證明手動UI或正常玩家路徑。",
+      "source_after_hex": "ec008b66",
+      "steps": 20,
+      "stop": "1930:0623"
+    },
+    {
+      "entry": "1AAB:0583",
+      "name": "manual-repair-write",
+      "rng_after_hex": "78563412",
+      "scope": "假far frame局部診斷；只到來源寫入後，不執行返回，不證明手動UI或正常玩家路徑。",
+      "source_after_hex": "ec008b66",
+      "steps": 20,
+      "stop": "1AAB:05BC"
+    },
+    {
+      "entry": "1AAB:0190",
+      "name": "cpu-repair-write",
+      "rng_after_hex": "78563412",
+      "scope": "假far frame局部診斷；只到來源寫入後，不執行返回，不證明手動UI或正常玩家路徑。",
+      "source_after_hex": "ec008b66",
+      "steps": 29,
+      "stop": "1AAB:01E7"
+    },
+    {
+      "name": "retained-and-reused-pool",
+      "phases": [
+        {
+          "entry": "1AAB:006D",
+          "phase": 0,
+          "physical_one": 0,
+          "rng_after_hex": "78563412",
+          "source_after_hex": "ec008b66",
+          "source_fleet_byte": 17,
+          "steps": 953,
+          "target_ships": [
+            70,
+            50
+          ]
+        },
+        {
+          "entry": "1AAB:006D",
+          "phase": 1,
+          "physical_one": 0,
+          "rng_after_hex": "78563412",
+          "source_after_hex": "ec008b66",
+          "source_fleet_byte": 16,
+          "steps": 1169,
+          "target_ships": [
+            50,
+            70
+          ]
+        }
+      ],
+      "scope": "常式診斷；本次無種類6，保留來源；池槽重用為明示注入。"
+    },
+    {
+      "name": "null-source-physical-one-zero",
+      "phases": [
+        {
+          "entry": "1AAB:006D",
+          "phase": 0,
+          "physical_one": 0,
+          "rng_after_hex": "78563412",
+          "source_after_hex": "00000000",
+          "source_fleet_byte": 17,
+          "steps": 953,
+          "target_ships": [
+            70,
+            50
+          ]
+        }
+      ],
+      "scope": "常式診斷；本次無種類6，保留來源；池槽重用為明示注入。"
+    },
+    {
+      "name": "null-source-physical-one-sixteen",
+      "phases": [
+        {
+          "entry": "1AAB:006D",
+          "phase": 0,
+          "physical_one": 16,
+          "rng_after_hex": "78563412",
+          "source_after_hex": "00000000",
+          "source_fleet_byte": 17,
+          "steps": 1169,
+          "target_ships": [
+            50,
+            70
+          ]
+        }
+      ],
+      "scope": "常式診斷；本次無種類6，保留來源；池槽重用為明示注入。"
+    }
+  ],
+  "semantic_index_sha256": "b988d451bb15e1671d06d13299e085521640e383fa3ec318c1a5f6adf6f38981",
+  "ida_exports": [
+    {
+      "segment": "1930",
+      "input_sha256": "9e448baf09b748601da82f9febb5d00f6c3161432e7f0a52bef0643461b385ae",
+      "export_sha256": "7a84337a807478716a98a55881d43e204ebede4cfb9f1115fc40b22a9d0b32f9",
+      "reviewed_entries": 6,
+      "function_locations": [
+        "1930:05EC",
+        "1930:0AA2"
+      ]
+    },
+    {
+      "segment": "1AAB",
+      "input_sha256": "92f8d0a53dbb26d5c8ed27474e66560f73390a2933b69c526749ab28156252a2",
+      "export_sha256": "402d6a2cd17f162e2298219e834ec7fa43f5498894d20448d6df63f5df9edf32",
+      "reviewed_entries": 9,
+      "function_locations": [
+        "1AAB:0190",
+        "1AAB:0583",
+        "1AAB:08FB"
+      ]
+    }
+  ],
+  "boot": {
+    "memory_sha256": "153b32b19ac630602fbda27796a887fe8617ac34a87ab91e24f832e485ecd5da",
+    "source_pointer_hex": "00000000",
+    "physical_one": 0,
+    "scope": "固定執行器主選單狀態；不外推所有真實DOS的中斷向量內容。"
+  },
+  "batches": [
+    {
+      "mode": "supply-panel",
+      "scope": "原版注入診斷局面，沿既有正常控制流；不是remake同狀態對拍。",
+      "memory_in_sha256": "f4b7b10baeaa196d016976317c944d8a5e9c9b3fc4be73c823f683632b860407",
+      "memory_out_sha256": "ddfd3878bab7fce38a6e74ab09cf4859080980826a03d5c976376c171e123a22",
+      "screen_sha256": "6f49482e9d25a5e20f0dfd41190e4c6109f25dcf3cd33202ffbbb56115339c75",
+      "palette_sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "rng_before_hex": "78563412",
+      "rng_after_hex": "78563412",
+      "fleet12_flags_before": 0,
+      "fleet12_flags_after": 0,
+      "fleet12_morale_after": 100,
+      "supply_source_after_hex": "d21a8b66",
+      "repair_source_after_hex": "cc2c8b66",
+      "units_after": [
+        {
+          "pool_index": 80,
+          "fleet": 12,
+          "kind": 0,
+          "ships": 3000,
+          "full_ships": 3000,
+          "repair_cap": 3000,
+          "missiles": 2000,
+          "fighters": 2000
+        },
+        {
+          "pool_index": 88,
+          "fleet": 12,
+          "kind": 5,
+          "ships": 4000,
+          "full_ships": 4000,
+          "repair_cap": 4000,
+          "missiles": 0,
+          "fighters": 0
+        }
+      ],
+      "receipts": [
+        {
+          "batch": "battle79-life-supply-panel-a",
+          "flags_sha256": "51fdf4b62b062dcc7754d683909cf1cf2832cd3b8dfa17788ff0b207461e33de",
+          "report_sha256": "bdb79632d615df2a69b9c9d39a9220af99635508fc394502963537b0c16d85b9",
+          "png_sha256": "5ddef15d0138d5f0b8875c59ecba43005c2f5bd9c95f9e4ff878a7cd16ee75e3"
+        },
+        {
+          "batch": "battle79-life-supply-panel-b",
+          "flags_sha256": "fc4a0ec21d6dfbf5ca521fcd99103f9f893d504a995f42f2ab89e458bb427850",
+          "report_sha256": "3312ae3033a7c93ad5c9507064d1ea2e3a12bd6925986093cc5a8f938daadf0f",
+          "png_sha256": "5ddef15d0138d5f0b8875c59ecba43005c2f5bd9c95f9e4ff878a7cd16ee75e3"
+        }
+      ]
+    },
+    {
+      "mode": "supply-end",
+      "scope": "原版注入診斷局面，沿既有正常控制流；不是remake同狀態對拍。",
+      "memory_in_sha256": "f4b7b10baeaa196d016976317c944d8a5e9c9b3fc4be73c823f683632b860407",
+      "memory_out_sha256": "9a203e42181c66b72edfc4e1742dec920b05cd6a1b234e837f5b2f052c45689e",
+      "screen_sha256": "150dad4379ec534e0df952ee721b6e1978dfce1d0bb9ae3b5ea24d6dccbab36e",
+      "palette_sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "rng_before_hex": "78563412",
+      "rng_after_hex": "78563412",
+      "fleet12_flags_before": 0,
+      "fleet12_flags_after": 0,
+      "fleet12_morale_after": 100,
+      "supply_source_after_hex": "72298b66",
+      "repair_source_after_hex": "cc2c8b66",
+      "units_after": [
+        {
+          "pool_index": 80,
+          "fleet": 12,
+          "kind": 0,
+          "ships": 3000,
+          "full_ships": 3000,
+          "repair_cap": 3000,
+          "missiles": 2000,
+          "fighters": 2000
+        },
+        {
+          "pool_index": 88,
+          "fleet": 12,
+          "kind": 5,
+          "ships": 4000,
+          "full_ships": 4000,
+          "repair_cap": 4000,
+          "missiles": 0,
+          "fighters": 0
+        }
+      ],
+      "receipts": [
+        {
+          "batch": "battle79-life-supply-end-a",
+          "flags_sha256": "19e26ad016c93e3478125ded0bef0b2c32d3a0c2d08a7a137cae78a67968b893",
+          "report_sha256": "20a812ab9f9f077ec027449132d8553aaf7025cda4923debc925d2fb9e4916c3",
+          "png_sha256": "eb74e25f49b40b6b9e14c157ffcd72e7dc61ffe0535f65b28d34ada9470fac4b"
+        },
+        {
+          "batch": "battle79-life-supply-end-b",
+          "flags_sha256": "839b66cd0101d6d905e253052b0cc000e96ff4606629a80c0f3eb3a626212a09",
+          "report_sha256": "3278dfbf81a3bbff92d8d643b1baa550ac12793e5dadfaf3d95668aa564293ed",
+          "png_sha256": "eb74e25f49b40b6b9e14c157ffcd72e7dc61ffe0535f65b28d34ada9470fac4b"
+        }
+      ]
+    },
+    {
+      "mode": "repair-panel",
+      "scope": "原版注入診斷局面，沿既有正常控制流；不是remake同狀態對拍。",
+      "memory_in_sha256": "ffc02c2627e062249e11fee6ac3fbd9522bae50fbbbcec71cec43d02c4959808",
+      "memory_out_sha256": "7dd546b48bd1f5873fd08bf88af75a099c22798ac18497f3a9be504c096599d8",
+      "screen_sha256": "01d088e0a9bcb879485cce91189a61b0a5ce759e6a8e499cfd917102b99ce1fe",
+      "palette_sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "rng_before_hex": "78563412",
+      "rng_after_hex": "78563412",
+      "fleet12_flags_before": 0,
+      "fleet12_flags_after": 0,
+      "fleet12_morale_after": 100,
+      "supply_source_after_hex": "72298b66",
+      "repair_source_after_hex": "d21a8b66",
+      "units_after": [
+        {
+          "pool_index": 80,
+          "fleet": 12,
+          "kind": 0,
+          "ships": 70,
+          "full_ships": 3000,
+          "repair_cap": 75,
+          "missiles": 0,
+          "fighters": 0
+        },
+        {
+          "pool_index": 88,
+          "fleet": 12,
+          "kind": 6,
+          "ships": 4000,
+          "full_ships": 4000,
+          "repair_cap": 4000,
+          "missiles": 0,
+          "fighters": 0
+        }
+      ],
+      "receipts": [
+        {
+          "batch": "battle79-life-repair-panel-a",
+          "flags_sha256": "4db556405c92a41dc7b02d081c4267d8e64dc14a6dcc99cdb6daaa2e2a214ec7",
+          "report_sha256": "75b22adf94b83887ce07bc38a2e07c3a4628a70bcd5c529189487af37d9c717a",
+          "png_sha256": "07615cdacf26cbd6d10f190c22f14fe221363ad30324a57a7906034cdd38a6ed"
+        },
+        {
+          "batch": "battle79-life-repair-panel-b",
+          "flags_sha256": "96d385fd19dd3a53fc961b0cd4ba0f524a23f012e9f65d36cb21f8a89a570478",
+          "report_sha256": "24d2bc29a3eceab3895592e3f8fa6814b6143d9a2864d098b7ae24b49d7eaf3f",
+          "png_sha256": "07615cdacf26cbd6d10f190c22f14fe221363ad30324a57a7906034cdd38a6ed"
+        }
+      ]
+    },
+    {
+      "mode": "repair-end",
+      "scope": "原版注入診斷局面，沿既有正常控制流；不是remake同狀態對拍。",
+      "memory_in_sha256": "ffc02c2627e062249e11fee6ac3fbd9522bae50fbbbcec71cec43d02c4959808",
+      "memory_out_sha256": "baa40c3836ef10a2c754fc1430b85d7ef006224ad9be0b570e8c68c67afb2d25",
+      "screen_sha256": "01d088e0a9bcb879485cce91189a61b0a5ce759e6a8e499cfd917102b99ce1fe",
+      "palette_sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "rng_before_hex": "78563412",
+      "rng_after_hex": "78563412",
+      "fleet12_flags_before": 0,
+      "fleet12_flags_after": 0,
+      "fleet12_morale_after": 87,
+      "supply_source_after_hex": "72298b66",
+      "repair_source_after_hex": "cc2c8b66",
+      "units_after": [
+        {
+          "pool_index": 80,
+          "fleet": 12,
+          "kind": 0,
+          "ships": 70,
+          "full_ships": 3000,
+          "repair_cap": 75,
+          "missiles": 0,
+          "fighters": 0
+        },
+        {
+          "pool_index": 88,
+          "fleet": 12,
+          "kind": 6,
+          "ships": 4000,
+          "full_ships": 4000,
+          "repair_cap": 4000,
+          "missiles": 0,
+          "fighters": 0
+        }
+      ],
+      "receipts": [
+        {
+          "batch": "battle79-life-repair-end-a",
+          "flags_sha256": "c05c3318ecff91d53832b5f5763624b188f814f1082f8425423c5da964e5a809",
+          "report_sha256": "6b4cb052e5a9501e70ba36d16bdc46e0080318bddebc32177971645deca8e07e",
+          "png_sha256": "07615cdacf26cbd6d10f190c22f14fe221363ad30324a57a7906034cdd38a6ed"
+        },
+        {
+          "batch": "battle79-life-repair-end-b",
+          "flags_sha256": "e59b8244446792fbfbfe6c4209dcd48307ffa190c2a74e015d82e137edf205ac",
+          "report_sha256": "8adc257808e583e7cb2d018fca1692307241cb474ded96880c2763b3bbb5ed9a",
+          "png_sha256": "07615cdacf26cbd6d10f190c22f14fe221363ad30324a57a7906034cdd38a6ed"
+        }
+      ]
+    },
+    {
+      "mode": "morale-panel",
+      "scope": "原版注入診斷局面，沿既有正常控制流；不是remake同狀態對拍。",
+      "memory_in_sha256": "52747ee86fa85ead1c9b8603474534c0b0cb780bafbaf59320b9d2ef3b6edfca",
+      "memory_out_sha256": "d11614131ec47e3b7c8d44737f6dc403ffc9d73508bf8eb90908b944cbbc9372",
+      "screen_sha256": "c861b09f27b34ce20a8e2b3816816c329aef9701cc9beadbc23492323f2b66f4",
+      "palette_sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "rng_before_hex": "78563412",
+      "rng_after_hex": "78563412",
+      "fleet12_flags_before": 1,
+      "fleet12_flags_after": 4,
+      "fleet12_morale_after": 100,
+      "supply_source_after_hex": "72298b66",
+      "repair_source_after_hex": "cc2c8b66",
+      "units_after": [
+        {
+          "pool_index": 80,
+          "fleet": 12,
+          "kind": 0,
+          "ships": 3000,
+          "full_ships": 3000,
+          "repair_cap": 3000,
+          "missiles": 12000,
+          "fighters": 36000
+        },
+        {
+          "pool_index": 88,
+          "fleet": 12,
+          "kind": 2,
+          "ships": 4000,
+          "full_ships": 4000,
+          "repair_cap": 4000,
+          "missiles": 48000,
+          "fighters": 20000
+        }
+      ],
+      "receipts": [
+        {
+          "batch": "battle79-life-morale-panel-a",
+          "flags_sha256": "bf379025c6e65ce33cd53330e64046b4354c71b7ebfab683a84331c347b0364e",
+          "report_sha256": "8885480192bce197395465e301fa00135716f0c636d9b05bf5c128969afa3dff",
+          "png_sha256": "ecb08001423139604fe65efa827c9d91e337b22c0335a6a0f86a8877af565cf8"
+        },
+        {
+          "batch": "battle79-life-morale-panel-b",
+          "flags_sha256": "de3e69de4dc7dfd52455eb418c83b61b4371d0767c7bd045749ce5fed389016a",
+          "report_sha256": "834e803ebb6c60aa3e1a7165595a3130e110b0a3fe17c8e3affb1991c4d71441",
+          "png_sha256": "ecb08001423139604fe65efa827c9d91e337b22c0335a6a0f86a8877af565cf8"
+        }
+      ]
+    },
+    {
+      "mode": "morale-end",
+      "scope": "原版注入診斷局面，沿既有正常控制流；不是remake同狀態對拍。",
+      "memory_in_sha256": "52747ee86fa85ead1c9b8603474534c0b0cb780bafbaf59320b9d2ef3b6edfca",
+      "memory_out_sha256": "7d5d2174ed239a43c8f89fcd8d10ae0d5e16917d0ad8061a9f125b472d299107",
+      "screen_sha256": "150dad4379ec534e0df952ee721b6e1978dfce1d0bb9ae3b5ea24d6dccbab36e",
+      "palette_sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "rng_before_hex": "78563412",
+      "rng_after_hex": "78563412",
+      "fleet12_flags_before": 1,
+      "fleet12_flags_after": 0,
+      "fleet12_morale_after": 100,
+      "supply_source_after_hex": "72298b66",
+      "repair_source_after_hex": "cc2c8b66",
+      "units_after": [
+        {
+          "pool_index": 80,
+          "fleet": 12,
+          "kind": 0,
+          "ships": 3000,
+          "full_ships": 3000,
+          "repair_cap": 3000,
+          "missiles": 12000,
+          "fighters": 36000
+        },
+        {
+          "pool_index": 88,
+          "fleet": 12,
+          "kind": 2,
+          "ships": 4000,
+          "full_ships": 4000,
+          "repair_cap": 4000,
+          "missiles": 48000,
+          "fighters": 20000
+        }
+      ],
+      "receipts": [
+        {
+          "batch": "battle79-life-morale-end-a",
+          "flags_sha256": "c4ecf37d110978b81f76532af06e6ae7d8a33e6bb845e38bdf6a488ac544768d",
+          "report_sha256": "41b39154c6caf7f083338e22e342f4f733072217bc3d66d7d219a058e3294f08",
+          "png_sha256": "eb74e25f49b40b6b9e14c157ffcd72e7dc61ffe0535f65b28d34ada9470fac4b"
+        },
+        {
+          "batch": "battle79-life-morale-end-b",
+          "flags_sha256": "41e23bc2ef8adf6ef2d392105eedf197daa4b34218a59727f323b739f3c4e796",
+          "report_sha256": "c0ea0f65bad8ad7e0788a32b88e3c52742fdc57d1aa19f312d8d4ceed1b28427",
+          "png_sha256": "eb74e25f49b40b6b9e14c157ffcd72e7dc61ffe0535f65b28d34ada9470fac4b"
+        }
+      ]
+    }
+  ],
+  "resolution_backlinks": [
+    {
+      "old_document": "docs/re/367-battle-preparation.md",
+      "required_marker": "2026-10-02／研究369續證",
+      "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "original_locations": [
+        "1930:05EC",
+        "1AAB:0583",
+        "1AAB:0190"
+      ],
+      "scope": "只補已解來源／結果／等待；完整第一階段仍未完成。"
+    },
+    {
+      "old_document": "docs/re/368-battle-preparation-sort.md",
+      "required_marker": "2026-10-02／研究369續證",
+      "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "original_locations": [
+        "1930:05EC",
+        "1AAB:0583",
+        "1AAB:0190"
+      ],
+      "scope": "只補已解來源／結果／等待；完整第一階段仍未完成。"
+    },
+    {
+      "old_document": "docs/playtest/040-battle-preparation-sort.md",
+      "required_marker": "2026-10-02／研究369續證",
+      "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "original_locations": [
+        "1930:05EC",
+        "1AAB:0583",
+        "1AAB:0190"
+      ],
+      "scope": "只補已解來源／結果／等待；完整第一階段仍未完成。"
+    }
+  ]
+}

@@ -30,6 +30,12 @@
 審查索引：[battle-preparation-sort-semantics.json](data/battle-preparation-sort-semantics.json)；
 重驗入口：`tools/scripts/battle_preparation_sort_receipt.py`，方法與限制見研究368。
 驗證範圍：[040 — 自動候選排序](../playtest/040-battle-preparation-sort.md)。
+來源生命週期接續：[第二十七輪](../goal/2026-10-02-battle-preparation-round-27.md)、
+[研究369](../re/369-battle-preparation-lifecycle.md)。
+來源及結果驗證：[041](../playtest/041-battle-preparation-lifecycle.md)，
+解出欄位：[battle-preparation-lifecycle.json](data/battle-preparation-lifecycle.json)，
+審查索引：[battle-preparation-lifecycle-semantics.json](data/battle-preparation-lifecycle-semantics.json)。
+重播／匯出工具的入口與限制見研究369，完整第一階段仍由規格079管理。
 
 音色庫來源與完整授權索引：[`player-music-library.json`](data/player-music-library.json)，
 用途與原版素材邊界見 [`17-mds.md`](17-mds.md)。

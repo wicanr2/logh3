@@ -5,13 +5,23 @@
 
 ## 現況一覽
 
+- **目前接續（2026-10-02，第二十七輪）**：#79來源與人類結果續證。
+  六案局部來源診斷及六組補給／修理／士氣完整原版收據各雙跑相同；
+  手動命令開始找候選前寫來源，池槽重用後優先對象讀目前艦隊byte。
+  人類資源結果面板自行返回；士氣報告等待結束後才回復防衛力。
+  五個IDA函式／十五項分級語意已核對；首次主選單來源為零，只限固定執行器狀態。
+  完整第一階段仍DRAFT：換戰場／重新開始／讀檔是否重設來源、正式接線與整步UI／存讀對拍待接續。
+  入口：[第二十七輪](docs/goal/2026-10-02-battle-preparation-round-27.md)、
+  [研究369](docs/re/369-battle-preparation-lifecycle.md)、[驗證041](docs/playtest/041-battle-preparation-lifecycle.md)。
+  本輪沒有新增正式第一階段接線，#79保持開啟，原Goal繼續。
+
 - **目前接續（2026-10-02，第二十六輪）**：#79跨艦隊候選排序未知已解。
   原版75案兩次完整收據相同；72案符合梳狀排序模型，平手可能因較遠交換換位，
   穩定排序七筆反例已保存。三案確認行星補彈藥沿用最後艦艇，補艦數沿用最後修護艦，
   本次沒有則保留舊來源；零庫存修護艦仍更新指標。
   七個IDA函式／十三項分級語意核對、欄位重生及18個標準產品套件通過。
-  排序子規格READY；正式第一階段仍DRAFT，首次來源／手動命令／池槽重用／換戰場、
-  人類結果顯示、士氣報告續接與整步正式對拍仍須接續，#79保持開啟。
+  排序子規格READY；首次來源／手動命令／池槽重用、人類結果／士氣續接的原版證據
+  已由第二十七輪補齊指定範圍；換戰場／重新開始／讀檔重設與正式第一階段仍待接續，#79保持開啟。
   入口：[第二十六輪](docs/goal/2026-10-02-battle-preparation-round-26.md)、
   [研究368](docs/re/368-battle-preparation-sort.md)、[規格079](docs/spec/079-battle-preparation.md)、
   [驗證040](docs/playtest/040-battle-preparation-sort.md)。本輪沒有新增正式第一階段接線。
@@ -693,14 +703,16 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 
 2026-10-02 第二十六輪：跨艦隊排序未知已解。原版75案兩次完整收據相同，72案排序符合梳狀排序模型；平手可能因較遠交換換位，不能用穩定排序。三案行星資源驗證確認補彈藥沿用最後艦艇、補艦數沿用最後修護艦／本次沒有則保留舊來源。七個IDA函式、十三項分級語意已核對，欄位重生相同、18個標準產品套件通過。排序子規格READY；正式第一階段仍DRAFT，剩首次來源／手動命令／換戰場／池槽重用、人類結果顯示、士氣報告續接與整步正式對拍。只完成受控證據，沒有新增正式第一階段接線；保持open。
 
+2026-10-02 第二十七輪：六案來源局部診斷及六組補給／修理／士氣完整原版收據雙跑相同，五個IDA函式／十五項分級核對。首次主選單兩來源為零，只限固定執行器；手動命令先寫來源再找候選，保留來源讀池槽目前艦隊byte。人類結果面板直接返回；士氣報告等待結束後才回復防衛力。已量測子契約READY，完整第一階段仍DRAFT，換戰場／重新開始／讀檔重設、正式回合接線與整步UI／存讀對拍待完成，保持open。
+
 **卡在**：- 每一步都要收據才能動 production path（規格 062「收據」一節）。
-- 第①步已有艦艇池、完整候選排序及來源更新／保留條件；仍缺首次來源／手動命令／換戰場／池槽重用、人類結果顯示、士氣報告續接及整步正式入口對拍；提督成長算式仍待有限玩家路徑證據。
+- 第①步已量測來源首次值、三個寫入端、池槽活指標及人類結果／士氣等待；仍缺換戰場／重新開始／讀檔重設、正式回合接線與整步入口UI／存讀對拍；提督成長算式仍待有限玩家路徑證據。
 - `185C:060D` 提督那一支旗標寫死 2（只印官階、不印能力）是不是原版 bug 未裁決（H）。
 
 **做完的判準**：規格 062 的每一步各有 same-state 收據，remake 的順序與原版相同；打贏之後會自動占領行星、
 士氣全崩但船還在時會結束戰鬥。規格 062 從 DRAFT 升到 CONFORMED。
 
-**證據**：[`docs/spec/062-battle-turn-eight-steps.md`](docs/spec/062-battle-turn-eight-steps.md)、[`docs/re/339-battle-turn-eight-steps.md`](docs/re/339-battle-turn-eight-steps.md)、[`docs/spec/079-battle-preparation.md`](docs/spec/079-battle-preparation.md)、[`docs/re/367-battle-preparation.md`](docs/re/367-battle-preparation.md)、[`docs/internals/65-battle-preparation.md`](docs/internals/65-battle-preparation.md)、[`docs/internals/data/battle-preparation.json`](docs/internals/data/battle-preparation.json)、[`docs/playtest/039-battle-preparation.md`](docs/playtest/039-battle-preparation.md)、[`docs/re/368-battle-preparation-sort.md`](docs/re/368-battle-preparation-sort.md)、[`docs/internals/data/battle-preparation-sort.json`](docs/internals/data/battle-preparation-sort.json)、[`docs/internals/data/battle-preparation-sort-semantics.json`](docs/internals/data/battle-preparation-sort-semantics.json)、[`docs/playtest/040-battle-preparation-sort.md`](docs/playtest/040-battle-preparation-sort.md)
+**證據**：[`docs/spec/062-battle-turn-eight-steps.md`](docs/spec/062-battle-turn-eight-steps.md)、[`docs/re/339-battle-turn-eight-steps.md`](docs/re/339-battle-turn-eight-steps.md)、[`docs/spec/079-battle-preparation.md`](docs/spec/079-battle-preparation.md)、[`docs/re/367-battle-preparation.md`](docs/re/367-battle-preparation.md)、[`docs/internals/65-battle-preparation.md`](docs/internals/65-battle-preparation.md)、[`docs/internals/data/battle-preparation.json`](docs/internals/data/battle-preparation.json)、[`docs/playtest/039-battle-preparation.md`](docs/playtest/039-battle-preparation.md)、[`docs/re/368-battle-preparation-sort.md`](docs/re/368-battle-preparation-sort.md)、[`docs/internals/data/battle-preparation-sort.json`](docs/internals/data/battle-preparation-sort.json)、[`docs/internals/data/battle-preparation-sort-semantics.json`](docs/internals/data/battle-preparation-sort-semantics.json)、[`docs/playtest/040-battle-preparation-sort.md`](docs/playtest/040-battle-preparation-sort.md)、[`docs/re/369-battle-preparation-lifecycle.md`](docs/re/369-battle-preparation-lifecycle.md)、[`docs/internals/data/battle-preparation-lifecycle.json`](docs/internals/data/battle-preparation-lifecycle.json)、[`docs/internals/data/battle-preparation-lifecycle-semantics.json`](docs/internals/data/battle-preparation-lifecycle-semantics.json)、[`docs/playtest/041-battle-preparation-lifecycle.md`](docs/playtest/041-battle-preparation-lifecycle.md)
 
 **核實**：`docs/spec/062-battle-turn-eight-steps.md` 標到 `CONFORMED`
 

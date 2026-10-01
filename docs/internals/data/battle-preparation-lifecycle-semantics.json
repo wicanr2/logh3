@@ -1,0 +1,25 @@
+{
+  "schema": "logh3.battle-preparation-semantics.v1",
+  "source": "研究369逐指令人工審查；不從散文自動提升語意",
+  "inputs": {
+    "1930": "9e448baf09b748601da82f9febb5d00f6c3161432e7f0a52bef0643461b385ae",
+    "1AAB": "92f8d0a53dbb26d5c8ed27474e66560f73390a2933b69c526749ab28156252a2"
+  },
+  "entries": [
+    {"kind":"function","original_location":"1930:05EC","semantic":"手動運補目標選取；開始找候選之前保存引數艦艇來源遠指標。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；原始控制流與局部寫入雙跑"},
+    {"kind":"function","original_location":"1930:0AA2","semantic":"人類運補結果右側面板；刷新後返回，沒有本身的按鍵等待。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；補給面板與第一階段完成雙跑"},
+    {"kind":"function","original_location":"1AAB:0190","semantic":"指定陣營的電腦前置修理；種類6且陣營吻合時更新來源，末尾重算士氣。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；原始控制流與局部寫入雙跑"},
+    {"kind":"function","original_location":"1AAB:0583","semantic":"手動修理目標選取；開始找候選之前保存引數艦艇來源遠指標。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；原始控制流與局部寫入雙跑"},
+    {"kind":"function","original_location":"1AAB:08FB","semantic":"人類修理結果右側面板；刷新後返回，沒有本身的按鍵等待。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；修理面板與第一階段完成雙跑"},
+    {"kind":"instruction","original_location":"1930:061C","original_bytes_hex":"a3 30 a4","semantic":"保存運補來源段值。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；切段雜湊見inputs"},
+    {"kind":"instruction","original_location":"1930:061F","original_bytes_hex":"89 1e 2e a4","semantic":"保存運補來源位移；此時尚未找候選。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；切段雜湊見inputs"},
+    {"kind":"instruction","original_location":"1AAB:01DF","original_bytes_hex":"89 0e 42 a4","semantic":"保存電腦前置修理的來源段值。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；01CE檢查種類6，01DA檢查陣營"},
+    {"kind":"instruction","original_location":"1AAB:01E3","original_bytes_hex":"89 36 40 a4","semantic":"保存電腦前置修理的來源位移。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；切段雜湊見inputs"},
+    {"kind":"instruction","original_location":"1AAB:05B5","original_bytes_hex":"a3 42 a4","semantic":"保存手動修理來源段值。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；切段雜湊見inputs"},
+    {"kind":"instruction","original_location":"1AAB:05B8","original_bytes_hex":"89 1e 40 a4","semantic":"保存手動修理來源位移；此時尚未找候選。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；切段雜湊見inputs"},
+    {"kind":"instruction","original_location":"1930:0D94","original_bytes_hex":"9a e5 02 1b 34","semantic":"刷新人類運補結果面板。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；固定原版流程刷新後自行進入修理"},
+    {"kind":"instruction","original_location":"1930:0D99","original_bytes_hex":"89 ec","semantic":"面板刷新後開始恢復堆疊並返回，無確認按鍵等待。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；0DA1 retf與完整原版流程"},
+    {"kind":"instruction","original_location":"1AAB:0A25","original_bytes_hex":"9a e5 02 1b 34","semantic":"刷新人類修理結果面板。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；固定原版流程刷新後自行進入士氣與防衛力"},
+    {"kind":"instruction","original_location":"1AAB:0A2A","original_bytes_hex":"89 ec","semantic":"面板刷新後開始恢復堆疊並返回，無確認按鍵等待。","grade":"proven","source":"docs/re/369-battle-preparation-lifecycle.md；0A32 retf與完整原版流程"}
+  ]
+}
