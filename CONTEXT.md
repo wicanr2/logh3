@@ -5,6 +5,15 @@
 
 ## 現況一覽
 
+- **目前接續（2026-10-02，第二十一輪）**：#69 Windows GM 固定來源與中文路徑技術驗收完成。
+  十四組來源加兩組額外來源、完整來源 tar 與十四個程式／DLL 已核對；
+  正式匯入器拒絕音色庫載入失敗，中文／空白路徑十一首 GM 及正式解碼通過。
+  三首 WAV／PCM 與 SDK 相同，十一首 Vorbis 音訊封包相同，未改 DSP 或音色庫。
+  入口：[輪次快照](docs/goal/2026-10-01-windows-music-sources-round-21.md)、
+  [研究 363](docs/re/363-windows-music-source-build.md)、[規格 075](docs/spec/075-windows-gm-unicode.md)、
+  [驗證 035](docs/playtest/035-windows-gm-sources-unicode.md)。Windows 合併正式封包、
+  macOS、實機及聆聽／循環仍待完成，#69 保持開啟。
+
 - **目前接續（2026-10-01，第二十輪）**：#69 Windows 原生曲庫技術驗收完成。
   十一首 FM 的 VGM／WAV／增益後 PCM 符合 Linux 基準，三路獨立重跑四種產物相同；
   十一首 GM 亦真實生成，Windows 22 首由正式播放器完整解碼，標準產品測試通過。
@@ -14,7 +23,7 @@
   使用者已裁決跨平台 FM 改驗完整 VGM／WAV／增益後 PCM 相同，允許各平台 OGG 差異。
   正式接線與十一首驗收依 [規格 074](docs/spec/074-cross-platform-fm-pcm.md)；
   舊 Linux OGG 收據與 Windows 差異反例保留；完整收據在
-  [驗證 034](docs/playtest/034-windows-music-pcm.md)。Windows 完整依賴來源／授權封裝、
+  [驗證 034](docs/playtest/034-windows-music-pcm.md)。Windows 固定來源與 GM 技術封裝由第二十一輪補齊；合併正式封包、
   macOS、正式交付與聆聽／循環仍缺，不宣稱實機已通過，#69 保持開啟。
 
 - **目前接續（2026-10-01，第十九輪）**：#69 接續 Linux 音樂工具對應來源集合，
@@ -668,7 +677,7 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 
 配樂播放層支援二十二首 OGG；原生 `cmd/music-import` 已可生成完整 Linux 曲庫及 Windows 曲庫，玩家入口不呼叫 Docker／Python／shell。尚待三平台工具與依賴的正式來源／授權封裝、macOS 實跑、聆聽及循環接點驗收。
 
-**卡在**：2026-10-01 使用者裁決：改驗 VGM／WAV／增益後 PCM 相同，允許各平台 OGG 差異。BGM_0F 抽驗的完整 WAV 與 -1.00 dB 後 PCM 已相同，原同版本 Vorbis OGG 有 260 個音訊封包差異（共同解碼最大絕對差 0.0037054196）。依規格 074 接續十一首原生 FM 無損閘門驗收；不將單首抽驗外推全曲庫，保留既有 Linux OGG 與 Windows 反例。Windows 十一首 GM 已真實生成且正式播放器完整解碼，官方 SDK 的完整依賴來源／授權封裝仍未完成。
+**卡在**：2026-10-01 使用者裁決：改驗 VGM／WAV／增益後 PCM 相同，允許各平台 OGG 差異。第二十輪已完成十一首 Windows FM 無損閘門，保留 Linux OGG 與 Windows 差異反例。第二十一輪（2026-10-02 收尾）：固定來源 FluidSynth 2.3.1 保持 float DSP，修正 Windows Unicode 命令列、重複 ANSI 轉碼及檔案渲染入口。中文／空白路徑完整十一首 GM 真實匯入，正式播放器完整解碼及正常玩家狀態選曲通過。十一首 MIDI、時長、峰值及 Vorbis 音訊封包與官方 SDK 相同；三首完整 WAV／PCM 相同，BGM_0M 兩側獨立重跑相同。未修版 SDK 成功退出但載入失敗已被新匯入器拒絕，沒有提交 OGG。十四組 Debian 來源與兩組額外來源、完整來源 tar、十四個程式／DLL 引用閉合與 49 份完整授權文字已核對，五組邊界拒絕與標準產品測試通過。規格 075 CONFORMED 限 Wine 原生 CLI、固定來源及 Linux 正式播放層技術驗收；完整命令與雜湊見驗證 035。
 
 目前（2026-10-01，第十七輪）：完整原生曲庫入口已通過指定 Linux 驗收。`cmd/music-import` 預設處理二十二首，不呼叫 Docker／Python／shell，也不搜尋玩家 PATH；原版只讀，在獨立暫存副本執行固定版本 dosgolem。十一首 FM 的完整 VGM／固定封裝 OGG 全數與 SOURCES.tsv 相同，BGM_0F／END_2F／OPEN_F 三路徑獨立重跑逐位元組一致。十一首 GM 真實合成；二十二首由正式播放器完整解碼，正常玩家選曲、六種 CLI 前置拒絕及標準產品測試通過。來源／工具 HEAD、程式及輸出雜湊與完整命令均保存於驗證 031。
 
@@ -678,15 +687,15 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 
 第二十輪（2026-10-01）：依使用者裁決及規格 074，Windows 原生匯入器重新擷取原版並完成十一首 FM；完整 VGM／WAV／-1.00 dB 後 f32le PCM 全數符合 Linux 基準。十一首 Windows OGG 全數不同，記實際雜湊，沒有外推有損解碼一致。BGM_0F／END_2F／OPEN_F 獨立重跑，VGM／WAV／PCM／OGG 與同平台首次相同；Linux 三路新閘門與舊 OGG 回歸通過。十一首 Windows GM 亦真實生成，正式播放器完整解碼 22 首、正常玩家狀態選曲、無損拒絕測試及標準產品測試通過。完整來源與程式／工具／收據身份見驗證 034；只驗 Wine 原生 CLI 及 Linux 正式播放層，不宣稱實機、人耳或正式封裝完成。
 
-**剩餘阻塞：Windows 完整依賴來源／授權封裝及 macOS 合成器／編碼器與依賴封裝、已取得 Linux 完整來源集合的正式交付及跨平台來源／建置核對、實際聆聽及 loop 接點驗收。** Linux 當輪容器抽驗不等於所有發行版或實機；Windows amd64／macOS amd64／arm64 匯入器本體交叉建置也不等於工具封裝。暫存包保留完整著作權與來源身份，Linux 完整對應來源集合已取得並封成本機 tar，但尚未隨正式版交付，沒有發佈正式封包。合成時間仍為 hardware-spec approximation，OPEN_F 是替換暫存 MDS 診斷路徑，部分 GM 峰值 1.0 未聲稱無 clipping。#69 保持開啟。
+**剩餘阻塞：Windows 合併 FM／GM 的正式工具與來源／授權封包、macOS 合成器／編碼器與依賴封裝、已取得 Linux 完整來源集合的正式交付及跨平台來源／建置核對、實際聆聽及循環接點驗收。** Linux 當輪容器抽驗不等於所有發行版或實機；Windows amd64／macOS amd64／arm64 匯入器本體交叉建置也不等於工具封裝。暫存包保留完整著作權與來源身份，Linux 完整對應來源集合已取得並封成本機 tar，但尚未隨正式版交付，沒有發佈正式封包。合成時間仍為 hardware-spec approximation，OPEN_F 是替換暫存 MDS 診斷路徑，部分 GM 峰值 1.0 未聲稱無 clipping。#69 保持開啟。
 
 有效使用者裁決仍保留：2026-09-19 選定 GM 音色庫隨包，玩家不自備音色庫、不另裝 FluidSynth；維持玩家自備音色庫或只出 FM 兩個選項已排除。2026-10-01 選定建置時固定版本下載並驗 SHA-256，排除 Git LFS。來源與授權確認先於管線接線，完成後才提供全曲庫入口；目前已完成來源確認、完整 FM／GM 匯入與正式解碼；平台封裝與聆聽仍待接續。
 
 **做完的判準**：玩家自備原版後有一個不需要 Docker 的轉檔入口（或 remake 內建合成），`_F` 的原版 VGM、合成 WAV、增益後 PCM 符合固定基準，允許各平台 OGG 差異；`_M` 的音色取捨經使用者裁決。
 
-**證據**：[`docs/playtest/034-windows-music-pcm.md`](docs/playtest/034-windows-music-pcm.md)、[`docs/internals/data/windows-fm-pcm.json`](docs/internals/data/windows-fm-pcm.json)、[`tools/scripts/music_windows_fm_receipt.py`](tools/scripts/music_windows_fm_receipt.py)、[`docs/spec/074-cross-platform-fm-pcm.md`](docs/spec/074-cross-platform-fm-pcm.md)、[`docs/re/362-windows-music-tools.md`](docs/re/362-windows-music-tools.md)、[`docs/internals/data/windows-music-probes.json`](docs/internals/data/windows-music-probes.json)、[`docs/re/361-linux-music-source-closure.md`](docs/re/361-linux-music-source-closure.md)、[`docs/spec/073-linux-music-source-closure.md`](docs/spec/073-linux-music-source-closure.md)、[`docs/playtest/033-linux-music-sources.md`](docs/playtest/033-linux-music-sources.md)、[`docs/internals/data/linux-music-source-lock.json`](docs/internals/data/linux-music-source-lock.json)、[`docs/internals/data/linux-music-sources.json`](docs/internals/data/linux-music-sources.json)、[`tools/scripts/music_linux_sources.py`](tools/scripts/music_linux_sources.py)、[`docs/re/360-linux-bundled-music-tools.md`](docs/re/360-linux-bundled-music-tools.md)、[`docs/spec/072-linux-music-tools.md`](docs/spec/072-linux-music-tools.md)、[`docs/playtest/032-linux-music-tools.md`](docs/playtest/032-linux-music-tools.md)、[`docs/internals/data/linux-music-tools.json`](docs/internals/data/linux-music-tools.json)、[`cmd/music-tool/`](cmd/music-tool/)、[`docs/re/359-native-fm-import.md`](docs/re/359-native-fm-import.md)、[`docs/spec/070-deterministic-ogg-framing.md`](docs/spec/070-deterministic-ogg-framing.md)、[`docs/spec/071-native-fm-import.md`](docs/spec/071-native-fm-import.md)、[`docs/playtest/031-native-fm-import.md`](docs/playtest/031-native-fm-import.md)、[`docs/internals/data/native-fm-import.json`](docs/internals/data/native-fm-import.json)、[`docs/internals/data/fm-import-lock.json`](docs/internals/data/fm-import-lock.json)、[`docs/re/358-native-gm-import.md`](docs/re/358-native-gm-import.md)、[`docs/spec/069-native-gm-import.md`](docs/spec/069-native-gm-import.md)、[`docs/playtest/030-native-gm-import.md`](docs/playtest/030-native-gm-import.md)、[`docs/internals/data/native-gm-import.json`](docs/internals/data/native-gm-import.json)、[`cmd/music-import/`](cmd/music-import/)、[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
+**證據**：[`docs/playtest/035-windows-gm-sources-unicode.md`](docs/playtest/035-windows-gm-sources-unicode.md)、[`docs/spec/075-windows-gm-unicode.md`](docs/spec/075-windows-gm-unicode.md)、[`docs/re/363-windows-music-source-build.md`](docs/re/363-windows-music-source-build.md)、[`docs/internals/data/windows-music-source-lock.json`](docs/internals/data/windows-music-source-lock.json)、[`docs/internals/data/windows-gm-source-tools.json`](docs/internals/data/windows-gm-source-tools.json)、[`tools/scripts/music_windows_sources.py`](tools/scripts/music_windows_sources.py)、[`tools/scripts/music_windows_gm_source_receipt.py`](tools/scripts/music_windows_gm_source_receipt.py)、[`docs/playtest/034-windows-music-pcm.md`](docs/playtest/034-windows-music-pcm.md)、[`docs/internals/data/windows-fm-pcm.json`](docs/internals/data/windows-fm-pcm.json)、[`tools/scripts/music_windows_fm_receipt.py`](tools/scripts/music_windows_fm_receipt.py)、[`docs/spec/074-cross-platform-fm-pcm.md`](docs/spec/074-cross-platform-fm-pcm.md)、[`docs/re/362-windows-music-tools.md`](docs/re/362-windows-music-tools.md)、[`docs/internals/data/windows-music-probes.json`](docs/internals/data/windows-music-probes.json)、[`docs/re/361-linux-music-source-closure.md`](docs/re/361-linux-music-source-closure.md)、[`docs/spec/073-linux-music-source-closure.md`](docs/spec/073-linux-music-source-closure.md)、[`docs/playtest/033-linux-music-sources.md`](docs/playtest/033-linux-music-sources.md)、[`docs/internals/data/linux-music-source-lock.json`](docs/internals/data/linux-music-source-lock.json)、[`docs/internals/data/linux-music-sources.json`](docs/internals/data/linux-music-sources.json)、[`tools/scripts/music_linux_sources.py`](tools/scripts/music_linux_sources.py)、[`docs/re/360-linux-bundled-music-tools.md`](docs/re/360-linux-bundled-music-tools.md)、[`docs/spec/072-linux-music-tools.md`](docs/spec/072-linux-music-tools.md)、[`docs/playtest/032-linux-music-tools.md`](docs/playtest/032-linux-music-tools.md)、[`docs/internals/data/linux-music-tools.json`](docs/internals/data/linux-music-tools.json)、[`cmd/music-tool/`](cmd/music-tool/)、[`docs/re/359-native-fm-import.md`](docs/re/359-native-fm-import.md)、[`docs/spec/070-deterministic-ogg-framing.md`](docs/spec/070-deterministic-ogg-framing.md)、[`docs/spec/071-native-fm-import.md`](docs/spec/071-native-fm-import.md)、[`docs/playtest/031-native-fm-import.md`](docs/playtest/031-native-fm-import.md)、[`docs/internals/data/native-fm-import.json`](docs/internals/data/native-fm-import.json)、[`docs/internals/data/fm-import-lock.json`](docs/internals/data/fm-import-lock.json)、[`docs/re/358-native-gm-import.md`](docs/re/358-native-gm-import.md)、[`docs/spec/069-native-gm-import.md`](docs/spec/069-native-gm-import.md)、[`docs/playtest/030-native-gm-import.md`](docs/playtest/030-native-gm-import.md)、[`docs/internals/data/native-gm-import.json`](docs/internals/data/native-gm-import.json)、[`cmd/music-import/`](cmd/music-import/)、[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
 
-**核實**：要人判——Linux 完整匯入／隨包工具與 Windows 原生 22 首技術驗收已驗；Windows 完整依賴來源／授權、macOS、正式交付、聆聽與循環仍缺，完成後綁正式隨包玩家曲庫入口測試，不能用 Wine／Linux 解碼或交叉建置宣稱實機與整項完成。
+**核實**：要人判——Linux 完整匯入／隨包工具、Windows 原生 22 首及 GM 固定來源／Unicode 路徑技術驗收已驗；Windows 合併正式封包、macOS、正式交付、聆聽與循環仍缺，完成後綁正式隨包玩家曲庫入口測試，不能用 Wine／Linux 解碼宣稱實機與整項完成。
 
 #### title-screen-sptit — 開頭動畫之後的 SPTIT.350 標題畫面
 

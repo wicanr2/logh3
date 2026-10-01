@@ -213,6 +213,15 @@ func command(args []string, timeout time.Duration) (string, error) {
 	return string(out), nil
 }
 
+// FluidSynth 2.3.1 可能在音色庫載入失敗後返回 0，仍寫出抖動噪聲。
+// 規格 075：退出碼不能取代工具明示的載入錯誤，也不能只靠低靜音閾值驗收。
+func checkGMToolOutput(output string) error {
+	if strings.Contains(output, "fluidsynth: error:") || strings.Contains(output, "not a SoundFont or MIDI file") {
+		return fmt.Errorf("FluidSynth 明示合成或載入失敗：%s", output)
+	}
+	return nil
+}
+
 func oggStats(path string) (seconds, peak float64, err error) {
 	f, err := os.Open(path)
 	if err != nil {
@@ -382,8 +391,14 @@ func run(o options) (result error) {
 			{ff, "-v", "error", "-y", "-i", wav, "-ar", fmt.Sprint(audio.SampleRate), "-c:a", "libvorbis", "-q:a", "5", ogg},
 		}
 		for _, args := range commands {
-			if _, err := command(args, 15*time.Minute); err != nil {
+			output, err := command(args, 15*time.Minute)
+			if err != nil {
 				return fmt.Errorf("曲目 %s：%w", n, err)
+			}
+			if args[0] == fs {
+				if err := checkGMToolOutput(output); err != nil {
+					return fmt.Errorf("曲目 %s：%w", n, err)
+				}
 			}
 		}
 		seconds, peak, err := oggStats(ogg)

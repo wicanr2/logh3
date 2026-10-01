@@ -1,0 +1,2465 @@
+{
+  "schema": "logh3.music-tools.windows.gm-sources.v1",
+  "date": "2026-10-01",
+  "status": "Windows GM 固定來源、Unicode 路徑與十一首原生技術驗收通過；正式交付未完成",
+  "source_parent_head": "851a2f402a2d836b27e4df6e2c83f5294b5bdeb2",
+  "source_dirty": true,
+  "original_bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "source_lock_sha256": "c0f01816d77de17f041e58a6d6a30ee3fe82ff19b7c2dc3063018f0ec20b3767",
+  "sources": {
+    "status": "complete-fixed-windows-probe-source-cache",
+    "lock_sha256": "c0f01816d77de17f041e58a6d6a30ee3fe82ff19b7c2dc3063018f0ec20b3767",
+    "debian_sources": 14,
+    "extra_sources": 2,
+    "files": {
+      "adplug_2.3.3+dfsg-2.dsc": {
+        "bytes": 2018,
+        "filename": "adplug_2.3.3+dfsg-2.dsc",
+        "sha256": "900c50fba37097c1307d6d537bf4f86a819ec6355a67ba2ab23f9a7bf56fa4a1",
+        "url": "https://deb.debian.org/debian/pool/main/a/adplug/adplug_2.3.3%2Bdfsg-2.dsc"
+      },
+      "adplug_2.3.3+dfsg-2.debian.tar.xz": {
+        "bytes": 10272,
+        "sha256": "7349ef9c534c763e5a27ae350330e482d03684a22b08d305b321ebbe3c106f8e",
+        "url": "https://deb.debian.org/debian/pool/main/a/adplug/adplug_2.3.3%2Bdfsg-2.debian.tar.xz",
+        "filename": "adplug_2.3.3+dfsg-2.debian.tar.xz"
+      },
+      "adplug_2.3.3+dfsg.orig.tar.xz": {
+        "bytes": 568972,
+        "sha256": "ab3fdf20a1a7ae31da9064d70b5f5f5ce8f2d0252f5e8f5c0773f08b93863486",
+        "url": "https://deb.debian.org/debian/pool/main/a/adplug/adplug_2.3.3%2Bdfsg.orig.tar.xz",
+        "filename": "adplug_2.3.3+dfsg.orig.tar.xz"
+      },
+      "ffmpeg_5.1.9-0+deb12u1.dsc": {
+        "bytes": 5323,
+        "filename": "ffmpeg_5.1.9-0+deb12u1.dsc",
+        "sha256": "055f82fca9a92f1d47216be2c2488d09373c7ca154806fbc36b0127c191d5104",
+        "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9-0%2Bdeb12u1.dsc"
+      },
+      "ffmpeg_5.1.9-0+deb12u1.debian.tar.xz": {
+        "bytes": 53444,
+        "sha256": "71b20472ecd2764bc98e3229d34c0f7c8dcfe4a6cbacc23fd5604c23bac04632",
+        "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9-0%2Bdeb12u1.debian.tar.xz",
+        "filename": "ffmpeg_5.1.9-0+deb12u1.debian.tar.xz"
+      },
+      "ffmpeg_5.1.9.orig.tar.xz": {
+        "bytes": 10034840,
+        "sha256": "d9b593bb2ba93d4b50f74177e0cdcd41747e708596367deed0c30348a71dd176",
+        "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9.orig.tar.xz",
+        "filename": "ffmpeg_5.1.9.orig.tar.xz"
+      },
+      "ffmpeg_5.1.9.orig.tar.xz.asc": {
+        "bytes": 520,
+        "sha256": "443e6cdfe1560aab22f90ec40a967866ee04d5bbea32bc32625bd6e514d589f4",
+        "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9.orig.tar.xz.asc",
+        "filename": "ffmpeg_5.1.9.orig.tar.xz.asc"
+      },
+      "fluidsynth_2.3.1-2.dsc": {
+        "bytes": 2541,
+        "filename": "fluidsynth_2.3.1-2.dsc",
+        "sha256": "d500a241c2e50a60bedb99f3719626a86fefde8b0f70914f74c761fffe1937b8",
+        "url": "https://deb.debian.org/debian/pool/main/f/fluidsynth/fluidsynth_2.3.1-2.dsc"
+      },
+      "fluidsynth_2.3.1-2.debian.tar.xz": {
+        "bytes": 20468,
+        "sha256": "4266b3a5d21890c89cf30d21731641e3ca309119a6a69cee90ccb9fe73f34c57",
+        "url": "https://deb.debian.org/debian/pool/main/f/fluidsynth/fluidsynth_2.3.1-2.debian.tar.xz",
+        "filename": "fluidsynth_2.3.1-2.debian.tar.xz"
+      },
+      "fluidsynth_2.3.1.orig.tar.gz": {
+        "bytes": 1758632,
+        "sha256": "d734e4cf488be763cf123e5976f3154f0094815093eecdf71e0e9ae148431883",
+        "url": "https://deb.debian.org/debian/pool/main/f/fluidsynth/fluidsynth_2.3.1.orig.tar.gz",
+        "filename": "fluidsynth_2.3.1.orig.tar.gz"
+      },
+      "gcc-12_12.2.0-14+deb12u1.dsc": {
+        "bytes": 27330,
+        "filename": "gcc-12_12.2.0-14+deb12u1.dsc",
+        "sha256": "3aed0b189189c744dc9f4b74798a51d3e512ea85e492568db788a927c88e20ba",
+        "url": "https://deb.debian.org/debian/pool/main/g/gcc-12/gcc-12_12.2.0-14%2Bdeb12u1.dsc"
+      },
+      "gcc-12_12.2.0-14+deb12u1.debian.tar.xz": {
+        "bytes": 1675204,
+        "sha256": "59f7f7763a0c355e3f27ff9e7ac80d06382b29939361a87e7b139226bfe7402e",
+        "url": "https://deb.debian.org/debian/pool/main/g/gcc-12/gcc-12_12.2.0-14%2Bdeb12u1.debian.tar.xz",
+        "filename": "gcc-12_12.2.0-14+deb12u1.debian.tar.xz"
+      },
+      "gcc-12_12.2.0.orig.tar.gz": {
+        "bytes": 87090343,
+        "sha256": "b8298be16aeeb96a889c6afed0a8e2241b47452e89cc81fe65ea849d5c740fcb",
+        "url": "https://deb.debian.org/debian/pool/main/g/gcc-12/gcc-12_12.2.0.orig.tar.gz",
+        "filename": "gcc-12_12.2.0.orig.tar.gz"
+      },
+      "glib2.0_2.74.6-2+deb12u9.dsc": {
+        "bytes": 3669,
+        "filename": "glib2.0_2.74.6-2+deb12u9.dsc",
+        "sha256": "bd8e8cd8d251c2365a02258bf4d6c44721289ac44c3a2477c140ce253bdb4b41",
+        "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6-2%2Bdeb12u9.dsc"
+      },
+      "glib2.0_2.74.6-2+deb12u9.debian.tar.xz": {
+        "bytes": 158056,
+        "sha256": "ccfe76a05463099331f31fc2fde1677ce3c5e0d054112890541b511c0b3321ff",
+        "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6-2%2Bdeb12u9.debian.tar.xz",
+        "filename": "glib2.0_2.74.6-2+deb12u9.debian.tar.xz"
+      },
+      "glib2.0_2.74.6.orig-unicode-data.tar.xz": {
+        "bytes": 267596,
+        "sha256": "dabcaff9298aa111a94e580561d2f29371f3e61b356c925ec5e0792df2b11ff2",
+        "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6.orig-unicode-data.tar.xz",
+        "filename": "glib2.0_2.74.6.orig-unicode-data.tar.xz"
+      },
+      "glib2.0_2.74.6.orig.tar.xz": {
+        "bytes": 5217312,
+        "sha256": "069cf7e51cd261eb163aaf06c8d1754c6835f31252180aff5814e5afc7757fbc",
+        "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6.orig.tar.xz",
+        "filename": "glib2.0_2.74.6.orig.tar.xz"
+      },
+      "libbinio_1.5+dfsg-0.1.dsc": {
+        "bytes": 1942,
+        "filename": "libbinio_1.5+dfsg-0.1.dsc",
+        "sha256": "e737e347d697425d9dc806abeac7c583b421a7529029fe9fedfde2415dc5e9e4",
+        "url": "https://deb.debian.org/debian/pool/main/libb/libbinio/libbinio_1.5%2Bdfsg-0.1.dsc"
+      },
+      "libbinio_1.5+dfsg-0.1.debian.tar.xz": {
+        "bytes": 5836,
+        "sha256": "64b77c869b90caf40377accd279821b9b540427cfdbaa99a01fce0e20bcd2498",
+        "url": "https://deb.debian.org/debian/pool/main/libb/libbinio/libbinio_1.5%2Bdfsg-0.1.debian.tar.xz",
+        "filename": "libbinio_1.5+dfsg-0.1.debian.tar.xz"
+      },
+      "libbinio_1.5+dfsg.orig.tar.gz": {
+        "bytes": 38022,
+        "sha256": "fe204822d7ac1b409b07c4ae4e3d657bc3d53352df73211215a97cdf39da0b9b",
+        "url": "https://deb.debian.org/debian/pool/main/libb/libbinio/libbinio_1.5%2Bdfsg.orig.tar.gz",
+        "filename": "libbinio_1.5+dfsg.orig.tar.gz"
+      },
+      "libffi_3.4.4-1.dsc": {
+        "bytes": 1951,
+        "filename": "libffi_3.4.4-1.dsc",
+        "sha256": "21c9ef156b6766535cb014e0765142c8104ffbcd73f003ecfa80cfb314baa4f0",
+        "url": "https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.4.4-1.dsc"
+      },
+      "libffi_3.4.4-1.debian.tar.xz": {
+        "bytes": 10380,
+        "sha256": "161b210bfd2ada0b15b0d2a2a98ffc779cd4a68661a7fdf46f61732493db0895",
+        "url": "https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.4.4-1.debian.tar.xz",
+        "filename": "libffi_3.4.4-1.debian.tar.xz"
+      },
+      "libffi_3.4.4.orig.tar.gz": {
+        "bytes": 1362394,
+        "sha256": "d66c56ad259a82cf2a9dfc408b32bf5da52371500b84745f7fb8b645712df676",
+        "url": "https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.4.4.orig.tar.gz",
+        "filename": "libffi_3.4.4.orig.tar.gz"
+      },
+      "libogg_1.3.5-3.dsc": {
+        "bytes": 2206,
+        "filename": "libogg_1.3.5-3.dsc",
+        "sha256": "dd0bac7c6961f95290250f82940aba93582edc3924372afc8fd310af5db995a0",
+        "url": "https://deb.debian.org/debian/pool/main/libo/libogg/libogg_1.3.5-3.dsc"
+      },
+      "libogg_1.3.5-3.debian.tar.xz": {
+        "bytes": 18012,
+        "sha256": "980cc7c95d72d2a9c56cf9d602b8296c6551528890f28fee6769b801ea0e54f3",
+        "url": "https://deb.debian.org/debian/pool/main/libo/libogg/libogg_1.3.5-3.debian.tar.xz",
+        "filename": "libogg_1.3.5-3.debian.tar.xz"
+      },
+      "libogg_1.3.5.orig.tar.xz": {
+        "bytes": 429076,
+        "sha256": "c4d91be36fc8e54deae7575241e03f4211eb102afb3fc0775fbbc1b740016705",
+        "url": "https://deb.debian.org/debian/pool/main/libo/libogg/libogg_1.3.5.orig.tar.xz",
+        "filename": "libogg_1.3.5.orig.tar.xz"
+      },
+      "libsndfile_1.2.0-1+deb12u1.dsc": {
+        "bytes": 2418,
+        "filename": "libsndfile_1.2.0-1+deb12u1.dsc",
+        "sha256": "74686b038b925f4b238d0a37e36671e5b924fe1678083037494923140403fa8e",
+        "url": "https://deb.debian.org/debian/pool/main/libs/libsndfile/libsndfile_1.2.0-1%2Bdeb12u1.dsc"
+      },
+      "libsndfile_1.2.0-1+deb12u1.debian.tar.xz": {
+        "bytes": 21412,
+        "sha256": "77b8c1c5fc6d110f08535ccb76f65c284a441e544a0698e3dee65c5bda882eee",
+        "url": "https://deb.debian.org/debian/pool/main/libs/libsndfile/libsndfile_1.2.0-1%2Bdeb12u1.debian.tar.xz",
+        "filename": "libsndfile_1.2.0-1+deb12u1.debian.tar.xz"
+      },
+      "libsndfile_1.2.0.orig.tar.gz": {
+        "bytes": 684253,
+        "sha256": "62dc4e2bcd45f6f0e89cbc3522cc90eb174dca0eef0a0d19ead289833b390cd7",
+        "url": "https://deb.debian.org/debian/pool/main/libs/libsndfile/libsndfile_1.2.0.orig.tar.gz",
+        "filename": "libsndfile_1.2.0.orig.tar.gz"
+      },
+      "libvorbis_1.3.7-1.dsc": {
+        "bytes": 2362,
+        "filename": "libvorbis_1.3.7-1.dsc",
+        "sha256": "b25d27beb9162607c95cf58aa2b764d110bd1a1568d3926a96c523320b49171f",
+        "url": "https://deb.debian.org/debian/pool/main/libv/libvorbis/libvorbis_1.3.7-1.dsc"
+      },
+      "libvorbis_1.3.7-1.debian.tar.xz": {
+        "bytes": 11600,
+        "sha256": "c5c40944a3fc1cdd1ce019ef21f580ce5ed3b9f30e0cba7b3d859e8d9fea631f",
+        "url": "https://deb.debian.org/debian/pool/main/libv/libvorbis/libvorbis_1.3.7-1.debian.tar.xz",
+        "filename": "libvorbis_1.3.7-1.debian.tar.xz"
+      },
+      "libvorbis_1.3.7.orig.tar.gz": {
+        "bytes": 1658963,
+        "sha256": "0e982409a9c3fc82ee06e08205b1355e5c6aa4c36bca58146ef399621b0ce5ab",
+        "url": "https://deb.debian.org/debian/pool/main/libv/libvorbis/libvorbis_1.3.7.orig.tar.gz",
+        "filename": "libvorbis_1.3.7.orig.tar.gz"
+      },
+      "pcre2_10.42-1.dsc": {
+        "bytes": 2302,
+        "filename": "pcre2_10.42-1.dsc",
+        "sha256": "726dafe7a8d07332d4df61edf23f384ddb158b2b263846273d1103b6b9a7c176",
+        "url": "https://deb.debian.org/debian/pool/main/p/pcre2/pcre2_10.42-1.dsc"
+      },
+      "pcre2_10.42-1.diff.gz": {
+        "bytes": 7895,
+        "sha256": "8267c3acacb04e8a077235f676187393e295443fc16ff46ddbe5f6476879c8cb",
+        "url": "https://deb.debian.org/debian/pool/main/p/pcre2/pcre2_10.42-1.diff.gz",
+        "filename": "pcre2_10.42-1.diff.gz"
+      },
+      "pcre2_10.42.orig.tar.gz": {
+        "bytes": 2397194,
+        "sha256": "c33b418e3b936ee3153de2c61cc638e7e4fe3156022a5c77d0711bcbb9d64f1f",
+        "url": "https://deb.debian.org/debian/pool/main/p/pcre2/pcre2_10.42.orig.tar.gz",
+        "filename": "pcre2_10.42.orig.tar.gz"
+      },
+      "zlib_1.2.13.dfsg-1.dsc": {
+        "bytes": 2399,
+        "filename": "zlib_1.2.13.dfsg-1.dsc",
+        "sha256": "3fa1e6b2fc525062aa88207dda52fed8e045373c809d362fe8a2bfbf7cf515a8",
+        "url": "https://deb.debian.org/debian/pool/main/z/zlib/zlib_1.2.13.dfsg-1.dsc"
+      },
+      "zlib_1.2.13.dfsg-1.debian.tar.xz": {
+        "bytes": 15700,
+        "sha256": "f66cf3d4f2d7defcd4d1fd1fb0a11ee39f1e01b42ec7d059c9dc5c1695133c44",
+        "url": "https://deb.debian.org/debian/pool/main/z/zlib/zlib_1.2.13.dfsg-1.debian.tar.xz",
+        "filename": "zlib_1.2.13.dfsg-1.debian.tar.xz"
+      },
+      "zlib_1.2.13.dfsg.orig.tar.bz2": {
+        "bytes": 1239825,
+        "sha256": "71feb7947e3c00ef125f83b79a4e529bde31171e5babe48b391f06758d1ab0a1",
+        "url": "https://deb.debian.org/debian/pool/main/z/zlib/zlib_1.2.13.dfsg.orig.tar.bz2",
+        "filename": "zlib_1.2.13.dfsg.orig.tar.bz2"
+      },
+      "gcc-mingw-w64_25.2.dsc": {
+        "filename": "gcc-mingw-w64_25.2.dsc",
+        "url": "https://deb.debian.org/debian/pool/main/g/gcc-mingw-w64/gcc-mingw-w64_25.2.dsc",
+        "bytes": 6777,
+        "sha256": "e13b26127b841fce135df476b207db9ddd542153d7bd5abbb28e81d412a65522"
+      },
+      "gcc-mingw-w64_25.2.tar.xz": {
+        "sha256": "a7e141adfc524cf2cff65a0d5da66ab24f1a73b69d44f562852ca0a3674044d9",
+        "bytes": 34952,
+        "url": "https://deb.debian.org/debian/pool/main/g/gcc-mingw-w64/gcc-mingw-w64_25.2.tar.xz",
+        "filename": "gcc-mingw-w64_25.2.tar.xz"
+      },
+      "mingw-w64_10.0.0-3.dsc": {
+        "filename": "mingw-w64_10.0.0-3.dsc",
+        "url": "https://deb.debian.org/debian/pool/main/m/mingw-w64/mingw-w64_10.0.0-3.dsc",
+        "bytes": 2517,
+        "sha256": "8ea9e74761e39cf6fc93be1f254ef105b847a85a1fc6fdb09cbf16d6e4411b8a"
+      },
+      "mingw-w64_10.0.0.orig.tar.bz2": {
+        "sha256": "ba6b430aed72c63a3768531f6a3ffc2b0fde2c57a3b251450dcf489a894f0894",
+        "bytes": 9620291,
+        "url": "https://deb.debian.org/debian/pool/main/m/mingw-w64/mingw-w64_10.0.0.orig.tar.bz2",
+        "filename": "mingw-w64_10.0.0.orig.tar.bz2"
+      },
+      "mingw-w64_10.0.0.orig.tar.bz2.asc": {
+        "sha256": "11fa49f55916cb7eb8f08fef92805c13bce38d5f76655d3734584e751354c33c",
+        "bytes": 269,
+        "url": "https://deb.debian.org/debian/pool/main/m/mingw-w64/mingw-w64_10.0.0.orig.tar.bz2.asc",
+        "filename": "mingw-w64_10.0.0.orig.tar.bz2.asc"
+      },
+      "mingw-w64_10.0.0-3.debian.tar.xz": {
+        "sha256": "3ba56abfee3dc1fe3fad3b66105c5abde1f5aaa93df216f9938fc918b319de58",
+        "bytes": 106032,
+        "url": "https://deb.debian.org/debian/pool/main/m/mingw-w64/mingw-w64_10.0.0-3.debian.tar.xz",
+        "filename": "mingw-w64_10.0.0-3.debian.tar.xz"
+      },
+      "proxy-libintl-c03e1a74b17fa7ec467e110130775409e4828a4c.tar.gz": {
+        "commit": "c03e1a74b17fa7ec467e110130775409e4828a4c",
+        "url": "https://codeload.github.com/frida/proxy-libintl/tar.gz/c03e1a74b17fa7ec467e110130775409e4828a4c",
+        "filename": "proxy-libintl-c03e1a74b17fa7ec467e110130775409e4828a4c.tar.gz",
+        "bytes": 13034,
+        "sha256": "b2be1569c4e6b0131a446d857665a192674d36185e2fa534614eece0b0ea70c3",
+        "source": "proxy-libintl",
+        "role": "GLib 固定 fallback"
+      },
+      "zlib-1.2.13.tar.gz": {
+        "source": "zlib-upstream",
+        "version": "1.2.13",
+        "url": "https://zlib.net/fossils/zlib-1.2.13.tar.gz",
+        "filename": "zlib-1.2.13.tar.gz",
+        "bytes": 1497445,
+        "sha256": "b3a24de97a8fdbc835b9833169501030b8977031bcb54b3b3ac13740f846ab30",
+        "role": "包含 Windows RC 的完整同版本上游來源"
+      }
+    },
+    "total_bytes": 126093999,
+    "signature_trust_verified": false,
+    "formal_delivery_complete": false
+  },
+  "source_bundle": {
+    "scope": "本機 Windows 固定來源試驗封包；正式交付未完成",
+    "path": "workplace/music69-windows/source-delivery/windows-music-fixed-sources.tar",
+    "sha256": "e94d2c6fc4f013bb6684bf1f33eaad963ea103daed27baef1d848273f0cdbce4",
+    "bytes": 127129600,
+    "entries": 112,
+    "lock_sha256": "c0f01816d77de17f041e58a6d6a30ee3fe82ff19b7c2dc3063018f0ec20b3767",
+    "formal_delivery_complete": false
+  },
+  "gm_build": {
+    "status": "compiled-probe-only",
+    "commands": [
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/libffi_3.4.4-1.dsc",
+          "/out/gm-build-utf8/src/libffi"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/pcre2_10.42-1.dsc",
+          "/out/gm-build-utf8/src/pcre2"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/glib2.0_2.74.6-2+deb12u9.dsc",
+          "/out/gm-build-utf8/src/glib2.0"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/libsndfile_1.2.0-1+deb12u1.dsc",
+          "/out/gm-build-utf8/src/libsndfile"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/fluidsynth_2.3.1-2.dsc",
+          "/out/gm-build-utf8/src/fluidsynth"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "patch",
+          "--dry-run",
+          "-p1",
+          "-i",
+          "/tools/scripts/music_windows_fluidsynth_utf8.patch"
+        ],
+        "cwd": "/out/gm-build-utf8/src/fluidsynth"
+      },
+      {
+        "args": [
+          "patch",
+          "-p1",
+          "-i",
+          "/tools/scripts/music_windows_fluidsynth_utf8.patch"
+        ],
+        "cwd": "/out/gm-build-utf8/src/fluidsynth"
+      },
+      {
+        "args": [
+          "./configure",
+          "--host=x86_64-w64-mingw32",
+          "--prefix=/out/gm-build-utf8/prefix",
+          "--enable-shared",
+          "--disable-static",
+          "--disable-docs"
+        ],
+        "cwd": "/out/gm-build-utf8/src/libffi"
+      },
+      {
+        "args": [
+          "make",
+          "-j2"
+        ],
+        "cwd": "/out/gm-build-utf8/src/libffi"
+      },
+      {
+        "args": [
+          "make",
+          "install"
+        ],
+        "cwd": "/out/gm-build-utf8/src/libffi"
+      },
+      {
+        "args": [
+          "./configure",
+          "--host=x86_64-w64-mingw32",
+          "--prefix=/out/gm-build-utf8/prefix",
+          "--enable-shared",
+          "--disable-static",
+          "--disable-pcre2grep",
+          "--disable-pcre2test",
+          "--disable-pcre2-16",
+          "--disable-pcre2-32"
+        ],
+        "cwd": "/out/gm-build-utf8/src/pcre2"
+      },
+      {
+        "args": [
+          "make",
+          "-j2"
+        ],
+        "cwd": "/out/gm-build-utf8/src/pcre2"
+      },
+      {
+        "args": [
+          "make",
+          "install"
+        ],
+        "cwd": "/out/gm-build-utf8/src/pcre2"
+      },
+      {
+        "args": [
+          "make",
+          "-j2",
+          "-fwin32/Makefile.gcc",
+          "PREFIX=x86_64-w64-mingw32-",
+          "SHARED_MODE=1",
+          "prefix=/out/gm-build-utf8/prefix",
+          "BINARY_PATH=/out/gm-build-utf8/prefix/bin",
+          "INCLUDE_PATH=/out/gm-build-utf8/prefix/include",
+          "LIBRARY_PATH=/out/gm-build-utf8/prefix/lib"
+        ],
+        "cwd": "/out/gm-build-utf8/src/zlib"
+      },
+      {
+        "args": [
+          "make",
+          "install",
+          "-fwin32/Makefile.gcc",
+          "PREFIX=x86_64-w64-mingw32-",
+          "SHARED_MODE=1",
+          "prefix=/out/gm-build-utf8/prefix",
+          "BINARY_PATH=/out/gm-build-utf8/prefix/bin",
+          "INCLUDE_PATH=/out/gm-build-utf8/prefix/include",
+          "LIBRARY_PATH=/out/gm-build-utf8/prefix/lib"
+        ],
+        "cwd": "/out/gm-build-utf8/src/zlib"
+      },
+      {
+        "args": [
+          "meson",
+          "setup",
+          "/out/gm-build-utf8/glib-build",
+          "/out/gm-build-utf8/src/glib2.0",
+          "--cross-file",
+          "/out/gm-build-utf8/windows.ini",
+          "--wrap-mode=nodownload",
+          "--prefix=/out/gm-build-utf8/prefix",
+          "--libdir=lib",
+          "--buildtype=release",
+          "-Ddefault_library=shared",
+          "-Dtests=false",
+          "-Dinstalled_tests=false",
+          "-Dnls=disabled",
+          "-Dlibmount=disabled",
+          "-Dxattr=false",
+          "-Dselinux=disabled",
+          "-Dman=false",
+          "-Dgtk_doc=false",
+          "-Dlibelf=disabled",
+          "-Dsysprof=disabled"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "ninja",
+          "-C",
+          "/out/gm-build-utf8/glib-build",
+          "-j2"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "ninja",
+          "-C",
+          "/out/gm-build-utf8/glib-build",
+          "install"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "cmake",
+          "-S",
+          "/out/gm-build-utf8/src/libsndfile",
+          "-B",
+          "/out/gm-build-utf8/libsndfile-build",
+          "-DCMAKE_SYSTEM_NAME=Windows",
+          "-DCMAKE_SYSTEM_VERSION=10",
+          "-DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc",
+          "-DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++",
+          "-DCMAKE_RC_COMPILER=x86_64-w64-mingw32-windres",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_INSTALL_PREFIX=/out/gm-build-utf8/prefix",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-DENABLE_EXTERNAL_LIBS=OFF",
+          "-DENABLE_MPEG=OFF",
+          "-DBUILD_TESTING=OFF",
+          "-DBUILD_PROGRAMS=OFF",
+          "-DBUILD_EXAMPLES=OFF",
+          "-DENABLE_COMPATIBLE_LIBSNDFILE_NAME=ON"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "cmake",
+          "--build",
+          "/out/gm-build-utf8/libsndfile-build",
+          "-j2"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "cmake",
+          "--install",
+          "/out/gm-build-utf8/libsndfile-build"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "cmake",
+          "-S",
+          "/out/gm-build-utf8/src/fluidsynth",
+          "-B",
+          "/out/gm-build-utf8/fluidsynth-build",
+          "-DCMAKE_SYSTEM_NAME=Windows",
+          "-DCMAKE_SYSTEM_VERSION=10",
+          "-DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc",
+          "-DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++",
+          "-DCMAKE_RC_COMPILER=x86_64-w64-mingw32-windres",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_INSTALL_PREFIX=/out/gm-build-utf8/prefix",
+          "-DCMAKE_INSTALL_LIBDIR=lib",
+          "-DBUILD_SHARED_LIBS=ON",
+          "-Denable-floats=ON",
+          "-Denable-libinstpatch=OFF",
+          "-Denable-network=OFF",
+          "-Denable-dbus=OFF",
+          "-Denable-readline=OFF",
+          "-Denable-ladspa=OFF",
+          "-DBUILD_TESTING=OFF",
+          "-Denable-dsound=OFF",
+          "-Denable-wasapi=OFF",
+          "-Denable-waveout=OFF",
+          "-Denable-winmidi=OFF",
+          "-Denable-jack=OFF",
+          "-Denable-portaudio=OFF",
+          "-Denable-oss=OFF",
+          "-Denable-pulseaudio=OFF",
+          "-Denable-pipewire=OFF",
+          "-Denable-sdl2=OFF",
+          "-Denable-midishare=OFF",
+          "-Denable-opensles=OFF",
+          "-Denable-oboe=OFF"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "cmake",
+          "--build",
+          "/out/gm-build-utf8/fluidsynth-build",
+          "-j2"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      },
+      {
+        "args": [
+          "cmake",
+          "--install",
+          "/out/gm-build-utf8/fluidsynth-build"
+        ],
+        "cwd": "/out/gm-build-utf8"
+      }
+    ],
+    "sources": [
+      {
+        "description": {
+          "bytes": 1951,
+          "filename": "libffi_3.4.4-1.dsc",
+          "sha256": "21c9ef156b6766535cb014e0765142c8104ffbcd73f003ecfa80cfb314baa4f0",
+          "url": "https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.4.4-1.dsc"
+        },
+        "files": {
+          "libffi_3.4.4-1.debian.tar.xz": {
+            "bytes": 10380,
+            "sha256": "161b210bfd2ada0b15b0d2a2a98ffc779cd4a68661a7fdf46f61732493db0895",
+            "url": "https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.4.4-1.debian.tar.xz"
+          },
+          "libffi_3.4.4.orig.tar.gz": {
+            "bytes": 1362394,
+            "sha256": "d66c56ad259a82cf2a9dfc408b32bf5da52371500b84745f7fb8b645712df676",
+            "url": "https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.4.4.orig.tar.gz"
+          }
+        },
+        "source": "libffi",
+        "version": "3.4.4-1"
+      },
+      {
+        "description": {
+          "bytes": 2302,
+          "filename": "pcre2_10.42-1.dsc",
+          "sha256": "726dafe7a8d07332d4df61edf23f384ddb158b2b263846273d1103b6b9a7c176",
+          "url": "https://deb.debian.org/debian/pool/main/p/pcre2/pcre2_10.42-1.dsc"
+        },
+        "files": {
+          "pcre2_10.42-1.diff.gz": {
+            "bytes": 7895,
+            "sha256": "8267c3acacb04e8a077235f676187393e295443fc16ff46ddbe5f6476879c8cb",
+            "url": "https://deb.debian.org/debian/pool/main/p/pcre2/pcre2_10.42-1.diff.gz"
+          },
+          "pcre2_10.42.orig.tar.gz": {
+            "bytes": 2397194,
+            "sha256": "c33b418e3b936ee3153de2c61cc638e7e4fe3156022a5c77d0711bcbb9d64f1f",
+            "url": "https://deb.debian.org/debian/pool/main/p/pcre2/pcre2_10.42.orig.tar.gz"
+          }
+        },
+        "source": "pcre2",
+        "version": "10.42-1"
+      },
+      {
+        "description": {
+          "bytes": 3669,
+          "filename": "glib2.0_2.74.6-2+deb12u9.dsc",
+          "sha256": "bd8e8cd8d251c2365a02258bf4d6c44721289ac44c3a2477c140ce253bdb4b41",
+          "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6-2%2Bdeb12u9.dsc"
+        },
+        "files": {
+          "glib2.0_2.74.6-2+deb12u9.debian.tar.xz": {
+            "bytes": 158056,
+            "sha256": "ccfe76a05463099331f31fc2fde1677ce3c5e0d054112890541b511c0b3321ff",
+            "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6-2%2Bdeb12u9.debian.tar.xz"
+          },
+          "glib2.0_2.74.6.orig-unicode-data.tar.xz": {
+            "bytes": 267596,
+            "sha256": "dabcaff9298aa111a94e580561d2f29371f3e61b356c925ec5e0792df2b11ff2",
+            "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6.orig-unicode-data.tar.xz"
+          },
+          "glib2.0_2.74.6.orig.tar.xz": {
+            "bytes": 5217312,
+            "sha256": "069cf7e51cd261eb163aaf06c8d1754c6835f31252180aff5814e5afc7757fbc",
+            "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6.orig.tar.xz"
+          }
+        },
+        "source": "glib2.0",
+        "version": "2.74.6-2+deb12u9"
+      },
+      {
+        "description": {
+          "bytes": 2418,
+          "filename": "libsndfile_1.2.0-1+deb12u1.dsc",
+          "sha256": "74686b038b925f4b238d0a37e36671e5b924fe1678083037494923140403fa8e",
+          "url": "https://deb.debian.org/debian/pool/main/libs/libsndfile/libsndfile_1.2.0-1%2Bdeb12u1.dsc"
+        },
+        "files": {
+          "libsndfile_1.2.0-1+deb12u1.debian.tar.xz": {
+            "bytes": 21412,
+            "sha256": "77b8c1c5fc6d110f08535ccb76f65c284a441e544a0698e3dee65c5bda882eee",
+            "url": "https://deb.debian.org/debian/pool/main/libs/libsndfile/libsndfile_1.2.0-1%2Bdeb12u1.debian.tar.xz"
+          },
+          "libsndfile_1.2.0.orig.tar.gz": {
+            "bytes": 684253,
+            "sha256": "62dc4e2bcd45f6f0e89cbc3522cc90eb174dca0eef0a0d19ead289833b390cd7",
+            "url": "https://deb.debian.org/debian/pool/main/libs/libsndfile/libsndfile_1.2.0.orig.tar.gz"
+          }
+        },
+        "source": "libsndfile",
+        "version": "1.2.0-1+deb12u1"
+      },
+      {
+        "description": {
+          "bytes": 2541,
+          "filename": "fluidsynth_2.3.1-2.dsc",
+          "sha256": "d500a241c2e50a60bedb99f3719626a86fefde8b0f70914f74c761fffe1937b8",
+          "url": "https://deb.debian.org/debian/pool/main/f/fluidsynth/fluidsynth_2.3.1-2.dsc"
+        },
+        "files": {
+          "fluidsynth_2.3.1-2.debian.tar.xz": {
+            "bytes": 20468,
+            "sha256": "4266b3a5d21890c89cf30d21731641e3ca309119a6a69cee90ccb9fe73f34c57",
+            "url": "https://deb.debian.org/debian/pool/main/f/fluidsynth/fluidsynth_2.3.1-2.debian.tar.xz"
+          },
+          "fluidsynth_2.3.1.orig.tar.gz": {
+            "bytes": 1758632,
+            "sha256": "d734e4cf488be763cf123e5976f3154f0094815093eecdf71e0e9ae148431883",
+            "url": "https://deb.debian.org/debian/pool/main/f/fluidsynth/fluidsynth_2.3.1.orig.tar.gz"
+          }
+        },
+        "source": "fluidsynth",
+        "version": "2.3.1-2"
+      }
+    ],
+    "extra_sources": [
+      {
+        "commit": "c03e1a74b17fa7ec467e110130775409e4828a4c",
+        "url": "https://codeload.github.com/frida/proxy-libintl/tar.gz/c03e1a74b17fa7ec467e110130775409e4828a4c",
+        "filename": "proxy-libintl-c03e1a74b17fa7ec467e110130775409e4828a4c.tar.gz",
+        "bytes": 13034,
+        "sha256": "b2be1569c4e6b0131a446d857665a192674d36185e2fa534614eece0b0ea70c3",
+        "source": "proxy-libintl",
+        "role": "GLib 固定 fallback"
+      },
+      {
+        "source": "zlib-upstream",
+        "version": "1.2.13",
+        "url": "https://zlib.net/fossils/zlib-1.2.13.tar.gz",
+        "filename": "zlib-1.2.13.tar.gz",
+        "bytes": 1497445,
+        "sha256": "b3a24de97a8fdbc835b9833169501030b8977031bcb54b3b3ac13740f846ab30",
+        "role": "包含 Windows RC 的完整同版本上游來源"
+      }
+    ],
+    "cli_patch": {
+      "purpose": "Windows CLI Unicode 參數探針；不改 DSP",
+      "patch_sha256": "588bdc3ab15a0b6e2f54294fd895252af5b9ed8bf68a115eabead5fc1f4ab694",
+      "patched_source_sha256": "f58111143d09cada85f51b5da0af9650fe9c1fd06f36ab086ecce8a9badb3d27",
+      "patched_renderer_sha256": "cfee88aad5861aea81e2d3ad8558ab519cc125b85dfdf48fb2cf5f9da92088a5"
+    },
+    "builder_sha256": "ac74a9c575a72d7cc7fb355d93f28f1ae1e642150df6c8a4d31fe50bf77dba9f",
+    "cross_file": "[binaries]\nc = 'x86_64-w64-mingw32-gcc'\ncpp = 'x86_64-w64-mingw32-g++'\nar = 'x86_64-w64-mingw32-ar'\nstrip = 'x86_64-w64-mingw32-strip'\nwindres = 'x86_64-w64-mingw32-windres'\npkgconfig = 'pkg-config'\n[host_machine]\nsystem = 'windows'\ncpu_family = 'x86_64'\ncpu = 'x86_64'\nendian = 'little'\n[properties]\nneeds_exe_wrapper = true\n",
+    "files": {
+      "fluidsynth.exe": {
+        "bytes": 164737,
+        "sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff"
+      },
+      "gdbus-codegen": {
+        "bytes": 2063,
+        "sha256": "64b5ed78403492bc57de9c0dc49cd9a6748e86bce812a2ac0075ddc7f208ccf8"
+      },
+      "gdbus.exe": {
+        "bytes": 169383,
+        "sha256": "0e76c3926909d3447d6180b9e4519dac5e6f755fba5ca35e001dd1e92d6e3563"
+      },
+      "gio-querymodules.exe": {
+        "bytes": 125866,
+        "sha256": "602a927b8f48fa2a875fc25295f298da3cd4efed738575c792137bf6d9e8020e"
+      },
+      "gio.exe": {
+        "bytes": 225066,
+        "sha256": "8b43f1531df54ae8b242f017e87e1c9396e737bf2185a2c8c90a4ba514a75174"
+      },
+      "glib-compile-resources.exe": {
+        "bytes": 181565,
+        "sha256": "33a24260c6b58f049d71ade516edb9fa527bf69e592e73d6633afb4fb7f8a88e"
+      },
+      "glib-compile-schemas.exe": {
+        "bytes": 315576,
+        "sha256": "a91defea79631b086d4ea38878b6dd52466f5afd11121da7597b857ab0d56e80"
+      },
+      "glib-genmarshal": {
+        "bytes": 41109,
+        "sha256": "f8ae3dd074846baad5b144dcb3c50f978fd573affeaf8b5e7266b7c42ac82867"
+      },
+      "glib-gettextize": {
+        "bytes": 5496,
+        "sha256": "1401c46f0e0e437eafd30e512b55cf2dc11776f9f1cd303e4b852777f2451a06"
+      },
+      "glib-mkenums": {
+        "bytes": 30941,
+        "sha256": "c165ba9383213be9fe79d16a8b109f72145c91e4630355eb93c088467c963f08"
+      },
+      "gobject-query.exe": {
+        "bytes": 120476,
+        "sha256": "9b32acf2b0ff2792462367247c238a6dd5f24cd254f66f42e465d6fc00659f69"
+      },
+      "gresource.exe": {
+        "bytes": 126714,
+        "sha256": "05dcf538da8f443324872480db8af09928175bb5bc6febe65d0e3e409753d308"
+      },
+      "gsettings.exe": {
+        "bytes": 143583,
+        "sha256": "bfd795fca2bfbb3e01bc425c0a4905a709cc8b776222afff6f9d7dd60818da70"
+      },
+      "gspawn-win64-helper-console.exe": {
+        "bytes": 126579,
+        "sha256": "09e8606fbf162a625b133125c6635a2397ba8f0bdf0e21c18c7197de030f3f17"
+      },
+      "gspawn-win64-helper.exe": {
+        "bytes": 127942,
+        "sha256": "352b3d77ffee0bffe836328d5477470ef3ee8faabd36d19c42b38275ff542732"
+      },
+      "gtester-report": {
+        "bytes": 19095,
+        "sha256": "12c82544ee4e7e7f0129ec42c7fc7b08245ed30a96537eea4841b3df35dbab16"
+      },
+      "libffi-8.dll": {
+        "bytes": 109646,
+        "sha256": "4f0433468060e22acd5c7ecc964b214a7e7ac48ec56151a46a35902a274ababe"
+      },
+      "libfluidsynth-3.dll": {
+        "bytes": 562696,
+        "sha256": "24908c123138e890ffa8bbc036f0f9b6d4dfcd10c3ea017c747c02e087e86d3e"
+      },
+      "libgcc_s_seh-1.dll": {
+        "bytes": 681726,
+        "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7"
+      },
+      "libgio-2.0-0.dll": {
+        "bytes": 2924662,
+        "sha256": "b16c2c0a402055791b8559509561a710bf6125d1badb3a7386f1c4182b226132"
+      },
+      "libglib-2.0-0.dll": {
+        "bytes": 2150059,
+        "sha256": "81a9ddc58f0d895f98dee23198c9e4eca63317e3b56206739cb1532bad1f9950"
+      },
+      "libgmodule-2.0-0.dll": {
+        "bytes": 103768,
+        "sha256": "369085fcc1ad17b87a5745941da800c2e033afc7548e28f6a90cbd3907d10117"
+      },
+      "libgobject-2.0-0.dll": {
+        "bytes": 504600,
+        "sha256": "e52957cc6a2bcd024325646bcfef4c489225fc39c60afbdcad801b9606f5fcd3"
+      },
+      "libgomp-1.dll": {
+        "bytes": 1615161,
+        "sha256": "2b5b74416a061c70b3dc2bfcc19f26bfc2777d8fa1a21a81f8f656c9671cfc97"
+      },
+      "libgthread-2.0-0.dll": {
+        "bytes": 88498,
+        "sha256": "0de8eb536125a8eee567f906323fe70a53f37abd3f0da2e5cbe3a89d7fd50066"
+      },
+      "libintl-8.dll": {
+        "bytes": 89644,
+        "sha256": "29220a214565b405a499a7b5500097db5c1edd9357d08a2ed8d15147f8bfcb45"
+      },
+      "libpcre2-8-0.dll": {
+        "bytes": 482642,
+        "sha256": "70c3fe87f27a2ebd74778dba91f024af7064545636e926889cd039e44c2714d3"
+      },
+      "libpcre2-posix-3.dll": {
+        "bytes": 216406,
+        "sha256": "b5fa25e6a7f9661d237162df3ba1ae4d7335b56a9663bc01f6efb03ebcb3793a"
+      },
+      "libsndfile-1.dll": {
+        "bytes": 1007840,
+        "sha256": "08bad562b55010889bbcf55fbb8b595d22860777ba424daf1e0075fb76ade866"
+      },
+      "libstdc++-6.dll": {
+        "bytes": 23703447,
+        "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203"
+      },
+      "libwinpthread-1.dll": {
+        "bytes": 319336,
+        "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329"
+      },
+      "pcre2-config": {
+        "bytes": 1993,
+        "sha256": "7e9e0467b053f0dc4ef2ffff2d65dd393e91cf0362f2942855bcfb9745a0a604"
+      },
+      "pcre2grep.exe": {
+        "bytes": 311351,
+        "sha256": "1023c9afcb5e72794e90e0da813baa49d163b8cef4663b3ebd4507d4fc7722f8"
+      },
+      "pcre2test.exe": {
+        "bytes": 362205,
+        "sha256": "34332fb6a7d24969c0c4592d5a534f3679a4a0414c9847ca1faf8770429f49da"
+      },
+      "zlib1.dll": {
+        "bytes": 137216,
+        "sha256": "ad7d69ca4ba44f09226f55607bc12aa9edf432e8ae97e7fcca6b0dc93d7306b1"
+      }
+    }
+  },
+  "package": {
+    "status": "isolated-gm-source-probe-only",
+    "gm_build_sha256": "7a8b5cec87b194449709f480552bb4d26369a3636fe5d4571a04003e6c37eb42",
+    "files": {
+      "ffmpeg.exe": {
+        "filename": "ffmpeg.exe",
+        "source": "pcm-gate/封裝 測試/tools/ffmpeg.exe",
+        "sha256": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+        "bytes": 1751552,
+        "imports": [
+          "libvorbis-0.dll",
+          "libvorbisenc-2.dll",
+          "bcrypt.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "SHELL32.dll"
+        ]
+      },
+      "libvorbisenc-2.dll": {
+        "filename": "libvorbisenc-2.dll",
+        "source": "pcm-gate/封裝 測試/tools/libvorbisenc-2.dll",
+        "sha256": "92dad65c8c4b5f6aede7e9c1e5452b1b9a74ee386603f5197276d6466ad7da34",
+        "bytes": 750574,
+        "imports": [
+          "libvorbis-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libvorbis-0.dll": {
+        "filename": "libvorbis-0.dll",
+        "source": "pcm-gate/封裝 測試/tools/libvorbis-0.dll",
+        "sha256": "d07b5ff4e939b538f77ce0806c7ca5c6438f5b08f08a164dcc9bfda031a156b7",
+        "bytes": 306231,
+        "imports": [
+          "libogg-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libogg-0.dll": {
+        "filename": "libogg-0.dll",
+        "source": "pcm-gate/封裝 測試/tools/libogg-0.dll",
+        "sha256": "d17a6e849530abf809f10f32b3f6b90765a73c7497eda8198ca7afdb599941a7",
+        "bytes": 110050,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "fluidsynth.exe": {
+        "filename": "fluidsynth.exe",
+        "source": "gm-build-utf8/prefix/bin/fluidsynth.exe",
+        "sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff",
+        "bytes": 164737,
+        "imports": [
+          "libglib-2.0-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libfluidsynth-3.dll"
+        ]
+      },
+      "libfluidsynth-3.dll": {
+        "filename": "libfluidsynth-3.dll",
+        "source": "gm-build-utf8/prefix/bin/libfluidsynth-3.dll",
+        "sha256": "24908c123138e890ffa8bbc036f0f9b6d4dfcd10c3ea017c747c02e087e86d3e",
+        "bytes": 562696,
+        "imports": [
+          "libglib-2.0-0.dll",
+          "libsndfile-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libgcc_s_seh-1.dll",
+          "libgomp-1.dll",
+          "libstdc++-6.dll"
+        ]
+      },
+      "libstdc++-6.dll": {
+        "filename": "libstdc++-6.dll",
+        "source": "gm-build-utf8/prefix/bin/libstdc++-6.dll",
+        "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203",
+        "bytes": 23703447,
+        "imports": [
+          "libgcc_s_seh-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libgcc_s_seh-1.dll": {
+        "filename": "libgcc_s_seh-1.dll",
+        "source": "gm-build-utf8/prefix/bin/libgcc_s_seh-1.dll",
+        "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7",
+        "bytes": 681726,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libgomp-1.dll": {
+        "filename": "libgomp-1.dll",
+        "source": "gm-build-utf8/prefix/bin/libgomp-1.dll",
+        "sha256": "2b5b74416a061c70b3dc2bfcc19f26bfc2777d8fa1a21a81f8f656c9671cfc97",
+        "bytes": 1615161,
+        "imports": [
+          "libgcc_s_seh-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libwinpthread-1.dll"
+        ]
+      },
+      "libwinpthread-1.dll": {
+        "filename": "libwinpthread-1.dll",
+        "source": "gm-build-utf8/prefix/bin/libwinpthread-1.dll",
+        "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329",
+        "bytes": 319336,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libsndfile-1.dll": {
+        "filename": "libsndfile-1.dll",
+        "source": "gm-build-utf8/prefix/bin/libsndfile-1.dll",
+        "sha256": "08bad562b55010889bbcf55fbb8b595d22860777ba424daf1e0075fb76ade866",
+        "bytes": 1007840,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libglib-2.0-0.dll": {
+        "filename": "libglib-2.0-0.dll",
+        "source": "gm-build-utf8/prefix/bin/libglib-2.0-0.dll",
+        "sha256": "81a9ddc58f0d895f98dee23198c9e4eca63317e3b56206739cb1532bad1f9950",
+        "bytes": 2150059,
+        "imports": [
+          "libpcre2-8-0.dll",
+          "ADVAPI32.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "ole32.dll",
+          "SHELL32.dll",
+          "USER32.dll",
+          "WS2_32.dll",
+          "libintl-8.dll"
+        ]
+      },
+      "libintl-8.dll": {
+        "filename": "libintl-8.dll",
+        "source": "gm-build-utf8/prefix/bin/libintl-8.dll",
+        "sha256": "29220a214565b405a499a7b5500097db5c1edd9357d08a2ed8d15147f8bfcb45",
+        "bytes": 89644,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libpcre2-8-0.dll": {
+        "filename": "libpcre2-8-0.dll",
+        "source": "gm-build-utf8/prefix/bin/libpcre2-8-0.dll",
+        "sha256": "70c3fe87f27a2ebd74778dba91f024af7064545636e926889cd039e44c2714d3",
+        "bytes": 482642,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      }
+    },
+    "program_sha256": "6ed783fc065429c0472fd2be550f216324b92ccdc34351dad6e1fdde818b903f",
+    "soundfont_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+    "licenses_sha256": {
+      "fluidsynth/debian/copyright": "a203c481ca905bd39bff52e5bb357a2f6c819aa251f9ff9024797bfc12145b2e",
+      "fluidsynth/LICENSE": "9b872a8a070b8ad329c4bd380fb1bf0000f564c75023ec8e1e6803f15364b9e9",
+      "fluidsynth/AUTHORS": "78139528287e8632dd19bc243a642eed43771b3261b590e930ee55f8b586a4a0",
+      "zlib/LICENSE": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+      "glib2.0/debian/copyright": "03cbcd6142c92bb14c997af557b8c73b1534710c34fe7f69788f8e8fc5fd941d",
+      "glib2.0/COPYING": "fa6f36630bb1e0c571d34b2bbdf188d08495c9dbf58f28cac112f303fc1f58fb",
+      "glib2.0/subprojects/proxy-libintl/COPYING": "d245807f90032872d1438d741ed21e2490e1175dc8aa3afa5ddb6c8e529b58e5",
+      "libffi/debian/copyright": "f83d2ecba1ea4d99957e81c50bebbd076a128194288a3ec22cc8ccdb77c43087",
+      "libffi/LICENSE": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388",
+      "libffi/LICENSE-BUILDTOOLS": "e67978cd18816c0cb7d29aaaacde7b7447402c2fb321a051698890a8eaedda94",
+      "libsndfile/debian/copyright": "56bc3dae5803b8b2d59adf72fcd526eef2f4ac929d2442562d12248867222335",
+      "libsndfile/AUTHORS": "373fb9abaa154db5da8ab692853da32ced8977b817a713913953c63e50eb4499",
+      "libsndfile/COPYING": "ad01ea5cd2755f6048383c8d54c88459cd6fcb17757c5c8892f8c5ea060f6140",
+      "pcre2/debian/copyright": "030511beb4d9d620ad09914c369c36ec0528dcf301d1923cc643c948ee7c6a38",
+      "pcre2/AUTHORS": "430c8e1ae1c643cef5b14af882ada140bd8f675198d704cf88aa65addac3ab78",
+      "pcre2/COPYING": "99272c55f3dcfa07a8a7e15a5c1a33096e4727de74241d65fa049fccfdd59507",
+      "ffmpeg/debian/copyright": "7447a836ec8522b699ba022d5de6c9ab39cd1682054facf550ce84589f161e2a",
+      "ffmpeg/COPYING.GPLv2": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "ffmpeg/COPYING.LGPLv3": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+      "ffmpeg/COPYING.LGPLv2.1": "246041b6ecf9bc32d718a62c57877c78b5eb397b6467e74ed7ae2626ab189c30",
+      "ffmpeg/COPYING.GPLv3": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "ffmpeg/LICENSE.md": "cb48bf09a11f5fb576cddb0431c8f5ed0a60157a9ec942adffc13907cbe083f2",
+      "libogg/debian/copyright": "36bb02bf6a764f4fac0ca9d38d2563932513df6015d98bd162624b18feaf096c",
+      "libogg/AUTHORS": "6fcb33d0cdd60b5054e7df820916388b590427514288c2bab01c626bb8ae9506",
+      "libogg/COPYING": "d2ab5758336489da61c12cc5bb757da5339c4ae9001f9bb0562b4370249af814",
+      "libvorbis/debian/copyright": "47badad9f7f750f92cd12f44db08b6937e5b4d47935ba1cc60de0ea3a2adff9b",
+      "libvorbis/AUTHORS": "f5cab9f16035f770f50299f85cf2938c06dc3a9a30425961067788102ec896d3",
+      "libvorbis/COPYING": "ec1815db59fcd302846df949d7424876cb2e2dc5ed1606c5fb0b36787b1cf43a",
+      "soundfont/COPYING": "8ef830b65c97a976b86e34bb5fde08d99dfb1db13c4149b5b20bc837ac6c4568",
+      "soundfont/README": "2f92d462684629f207e43815115b79d7f1ce130d30ca8792b7d82b398a8306f9",
+      "gcc-mingw-w64-x86-64-win32-runtime-copyright": "a481f772f7a53335f13b32c6c54eb1c8577ce97704edd3757ab7ed4287a8e96a",
+      "mingw-w64-x86-64-dev-copyright": "f27a58667538b6913ea23cb9e07e270922761ebf7c22d94bda7f819aaf08ea08",
+      "common/GFDL-1.3": "110535522396708cea37c72a802c5e7e81391139f5f7985631c93ef242b206a4",
+      "common/GFDL": "110535522396708cea37c72a802c5e7e81391139f5f7985631c93ef242b206a4",
+      "common/GPL-3": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "common/GPL-1": "d77d235e41d54594865151f4751e835c5a82322b0e87ace266567c3391a4b912",
+      "common/MPL-1.1": "f849fc26a7a99981611a3a370e83078deb617d12a45776d6c4cada4d338be469",
+      "common/LGPL": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "common/Artistic": "b7fd9b73ea99602016a326e0b62e6646060d18febdd065ceca8bb482208c3d88",
+      "common/BSD": "5d588eb3b157d52112afea935c88a7ff9efddc1e2d95a42c25d3b96ad9055008",
+      "common/GPL": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "common/MPL-2.0": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+      "common/GFDL-1.2": "d8e94ae5fdb5433fcae2961aeb1a8cf17174d6f4a0465d24bf37dd8a038bd439",
+      "common/GPL-2": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "common/Apache-2.0": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "common/LGPL-3": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "common/LGPL-2.1": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "common/LGPL-2": "681e386e44a19d7d0674b4320272c90e66b6610b741e7e6305f8219c42e85366",
+      "common/CC0-1.0": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    "formal_delivery_complete": false
+  },
+  "gm": {
+    "scope": "GM 合成收據；FM 另見 FM-SOURCES.json，平台封包未驗收",
+    "status": "complete-gm-stage",
+    "approximation": "legacy approximation：FA 當 BPM；raw 時間沿用匯出器；FB／FC 不展開反覆；非原版 MPU 音色",
+    "platform": "windows/amd64",
+    "program_sha256": "6ed783fc065429c0472fd2be550f216324b92ccdc34351dad6e1fdde818b903f",
+    "soundfont_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+    "tools_sha256": {
+      "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+      "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff"
+    },
+    "tool_versions": {
+      "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe": "ffmpeg version 5.1.9 Copyright (c) 2000-2026 the FFmpeg developers\r\nbuilt with gcc 12-win32 (GCC)\r\nconfiguration: --enable-cross-compile --target-os=mingw32 --arch=x86_64 --cross-prefix=x86_64-w64-mingw32- --pkg-config=pkg-config --prefix=/out/prefix --disable-autodetect --disable-everything --disable-network --disable-doc --disable-debug --disable-x86asm --disable-ffplay --disable-ffprobe --enable-ffmpeg --enable-protocol=file --enable-demuxer='wav,ogg' --enable-decoder='pcm_s16le,pcm_f32le,vorbis' --enable-encoder='libvorbis,pcm_f32le' --enable-muxer='ogg,pcm_f32le' --enable-filter='volume,aresample,anull' --enable-libvorbis --enable-static --disable-shared\r\nlibavutil      57. 28.100 / 57. 28.100\r\nlibavcodec     59. 37.100 / 59. 37.100\r\nlibavformat    59. 27.100 / 59. 27.100\r\nlibavdevice    59.  7.100 / 59.  7.100\r\nlibavfilter     8. 44.100 /  8. 44.100\r\nlibswscale      6.  7.100 /  6.  7.100\r\nlibswresample   4.  7.100 /  4.  7.100\r\n",
+      "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe": "FluidSynth runtime version 2.3.1\r\nCopyright (C) 2000-2022 Peter Hanappe and others.\r\nDistributed under the LGPL license.\r\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\r\n\r\nFluidSynth executable version 2.3.1\r\nSample type=float\r\n"
+    },
+    "tracks": [
+      {
+        "track": "BGM_0M",
+        "source": "Z:\\orig\\BGM_0M.MDS",
+        "source_sha256": "f8f977b0a5733d1a22c9febb3be800d7f981976cc7ced84188a44339127c87d9",
+        "midi_sha256": "ad07749f3dfa2ebbc2cfedd792c04e1e6a2306b1693c0a6ebc1e370ffc907b01",
+        "ogg_sha256": "4bf515c9c52992a723cf46c0a77f72db8d82ea2e8e78172bcbff7017d327e489",
+        "seconds": 201.5027664399093,
+        "peak": 1,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_0M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_0M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_0M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_0M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_1M",
+        "source": "Z:\\orig\\BGM_1M.MDS",
+        "source_sha256": "b5687e2ec5cf1e5f269653015e8ae5ba6c77673ca8b1916899be097e0a48ab0f",
+        "midi_sha256": "ee6e6f4ed93f45fcfc0121ddd06157f14040b33c2277cb770969bc3b904d7687",
+        "ogg_sha256": "897b0997e71481986bb21ddf2ee3b208c648628d2fef85de50889aaad8bad825",
+        "seconds": 213.8093424036281,
+        "peak": 1,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_1M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_1M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_1M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_1M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_2M",
+        "source": "Z:\\orig\\BGM_2M.MDS",
+        "source_sha256": "46beeb710af3f704c01c61dcda72c94cb9eb13ec0d5d5b7ca94f3a37842d7403",
+        "midi_sha256": "cee571b06d86e04a28e1029a6a4e792eb3174fc19f14cc8585f04f95185f8286",
+        "ogg_sha256": "fee8f83702763f6d2a2b12ee9e59e79278a93e186ab7ffb46a4803d0b1942297",
+        "seconds": 333.3340589569161,
+        "peak": 0.8251432776451111,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_2M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_2M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_2M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_2M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_3M",
+        "source": "Z:\\orig\\BGM_3M.MDS",
+        "source_sha256": "d3c98d5f79b0e061cea55b66b41306fe3bd015913f70d66d3fbf1ab7f9b5502e",
+        "midi_sha256": "d7b10b3b8863c1206516c04b206be150021c0b26d61a8ba54526819d322e3c71",
+        "ogg_sha256": "4f74bec50b130b9988a3db290a02bdadad6a79014ecf9b8c4054192e8daf7017",
+        "seconds": 141.59528344671202,
+        "peak": 1,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_3M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_3M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_3M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_3M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_4M",
+        "source": "Z:\\orig\\BGM_4M.MDS",
+        "source_sha256": "5df7c68c487910f7659fd2f9438d8973fb911e8ba3293dedccbe35f689e1e99d",
+        "midi_sha256": "791b78c9512866fbec05052420ea15b24f83514f2c836a7e8a9428d77b969f7a",
+        "ogg_sha256": "403eb96c85a86080ae10e35a2f422cd540763fb194bc3c512c68813a31bc18f1",
+        "seconds": 185.5390476190476,
+        "peak": 0.6204141974449158,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_4M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_4M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_4M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_4M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_5M",
+        "source": "Z:\\orig\\BGM_5M.MDS",
+        "source_sha256": "33b94d4ab3d0bc376ceceda9db593202086d737602a57e4b6a5a2c7dbc7632a0",
+        "midi_sha256": "78e5f858afb0a670fb914241cbc66ee491ae26ab18f74c53365cd3885e7d7d48",
+        "ogg_sha256": "870eaa470e3c2cc9b920bdd4223d73f228aa92f60554dd85d36a449f4aaebb9b",
+        "seconds": 60.02358276643991,
+        "peak": 0.3428286612033844,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_5M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_5M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_5M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_5M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_6M",
+        "source": "Z:\\orig\\BGM_6M.MDS",
+        "source_sha256": "5189b57e696a0bdceaf19ee4a25dcffbc3d58906106a014c9c535c1239c8b6cf",
+        "midi_sha256": "540d0a921ae32a4b30ff427ced3cd5699d4b7155641771a302b88f4218912bde",
+        "ogg_sha256": "3060fdef9514e4afb442be51f2430f27e696fe7bbb9f3eeb65bac1c54aa4ea46",
+        "seconds": 31.24244897959184,
+        "peak": 1,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_6M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_6M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_6M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_6M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_7M",
+        "source": "Z:\\orig\\BGM_7M.MDS",
+        "source_sha256": "a86364d5071a1f0d06097dbe310c5caa16ffeb35aba5127b4cc65684f6140832",
+        "midi_sha256": "8b85586e6b9bb5a477e81441a5cc9d480c174d7ffd706fcf741ca04b0e0056cc",
+        "ogg_sha256": "a40bce69d8a2cd0c417e86d5bbbd725afba5e526cfdb261e299e13a0217b8393",
+        "seconds": 37.33768707482993,
+        "peak": 0.942932665348053,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_7M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_7M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_7M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\BGM_7M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_1M",
+        "source": "Z:\\orig\\END_1M.MDS",
+        "source_sha256": "c0154a70b741e60a303e11f9027c212467122a4fa09480d74e128750de18d340",
+        "midi_sha256": "a2abfc2469e1695d9007cf6545e477f654e8e1f1e02ec8986e7dbee2a43e3e59",
+        "ogg_sha256": "53ca9a7e05e8ee41eecf0bdc77bae334c7d394ec3ca5f075a4c8056b0b3d2727",
+        "seconds": 161.5760544217687,
+        "peak": 0.796677827835083,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\END_1M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\END_1M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\END_1M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\END_1M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_2M",
+        "source": "Z:\\orig\\END_2M.MDS",
+        "source_sha256": "706125fdf5038229dc0a3a4b666cf98cbe04fba9580176d65cede9dd1dc94444",
+        "midi_sha256": "3163fa0846ddeae9541ba2e2c4a3a7701f7cbe2b618956571d435f1c0215c4b8",
+        "ogg_sha256": "4aaa604310bd2084d3d9d15d331d8833cc7676a7dd5defe5b917744f83d7f46a",
+        "seconds": 284.57215419501136,
+        "peak": 0.6512147784233093,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\END_2M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\END_2M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\END_2M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\END_2M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "OPEN_M",
+        "source": "Z:\\orig\\OPEN_M.MDS",
+        "source_sha256": "277504853b9067b3ecb6867ec33b1ec9146912cb14dbfdf09554cf19250553fa",
+        "midi_sha256": "93a27c3ca0ea6a008f2e3ac1bcff9eb6a19fed90a6270d105d083766393b8c39",
+        "ogg_sha256": "399c4188e28a125be8d9d5df63daa3f953b0375cb44c71b7ac7cb12db234b60e",
+        "seconds": 139.13396825396825,
+        "peak": 1,
+        "commands": [
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\OPEN_M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\OPEN_M.mid"
+          ],
+          [
+            "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\OPEN_M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-utf8-full\\生成 曲庫\\.gm-import-1985013500\\OPEN_M.ogg"
+          ]
+        ]
+      }
+    ]
+  },
+  "waveform": {
+    "scope": "同 MIDI／SF2／2.3.1 float DSP／合成參數的 SDK 與來源試建比較",
+    "soundfont_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+    "commands": [
+      [
+        "wine",
+        "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+        "-ni",
+        "-F",
+        "Z:\\out\\gm-wave-utf8-comparison\\BGM_0M-sdk.wav",
+        "-r",
+        "44100",
+        "-g",
+        "0.8",
+        "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+        "Z:\\out\\gm-source-mid\\BGM_0M.mid"
+      ],
+      [
+        "wine",
+        "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+        "-ni",
+        "-F",
+        "Z:\\out\\gm-wave-utf8-comparison\\輸出 波形\\BGM_0M-source.wav",
+        "-r",
+        "44100",
+        "-g",
+        "0.8",
+        "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+        "Z:\\out\\gm-wave-utf8-comparison\\輸入 曲目\\BGM_0M.mid"
+      ],
+      [
+        "wine",
+        "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+        "-ni",
+        "-F",
+        "Z:\\out\\gm-wave-utf8-comparison\\輸出 波形\\BGM_0M-source-repeat.wav",
+        "-r",
+        "44100",
+        "-g",
+        "0.8",
+        "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+        "Z:\\out\\gm-wave-utf8-comparison\\輸入 曲目\\BGM_0M.mid"
+      ],
+      [
+        "wine",
+        "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+        "-ni",
+        "-F",
+        "Z:\\out\\gm-wave-utf8-comparison\\BGM_0M-sdk-repeat.wav",
+        "-r",
+        "44100",
+        "-g",
+        "0.8",
+        "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+        "Z:\\out\\gm-source-mid\\BGM_0M.mid"
+      ],
+      [
+        "wine",
+        "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+        "-ni",
+        "-F",
+        "Z:\\out\\gm-wave-utf8-comparison\\END_2M-sdk.wav",
+        "-r",
+        "44100",
+        "-g",
+        "0.8",
+        "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+        "Z:\\out\\gm-source-mid\\END_2M.mid"
+      ],
+      [
+        "wine",
+        "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+        "-ni",
+        "-F",
+        "Z:\\out\\gm-wave-utf8-comparison\\輸出 波形\\END_2M-source.wav",
+        "-r",
+        "44100",
+        "-g",
+        "0.8",
+        "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+        "Z:\\out\\gm-wave-utf8-comparison\\輸入 曲目\\END_2M.mid"
+      ],
+      [
+        "wine",
+        "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+        "-ni",
+        "-F",
+        "Z:\\out\\gm-wave-utf8-comparison\\OPEN_M-sdk.wav",
+        "-r",
+        "44100",
+        "-g",
+        "0.8",
+        "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+        "Z:\\out\\gm-source-mid\\OPEN_M.mid"
+      ],
+      [
+        "wine",
+        "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\tools\\fluidsynth.exe",
+        "-ni",
+        "-F",
+        "Z:\\out\\gm-wave-utf8-comparison\\輸出 波形\\OPEN_M-source.wav",
+        "-r",
+        "44100",
+        "-g",
+        "0.8",
+        "Z:\\out\\gm-source-utf8-probe\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+        "Z:\\out\\gm-wave-utf8-comparison\\輸入 曲目\\OPEN_M.mid"
+      ]
+    ],
+    "tracks": {
+      "BGM_0M": {
+        "midi_sha256": "ad07749f3dfa2ebbc2cfedd792c04e1e6a2306b1693c0a6ebc1e370ffc907b01",
+        "renders": {
+          "sdk": {
+            "path": "gm-wave-utf8-comparison/BGM_0M-sdk.wav",
+            "frames": 8886272,
+            "wav_sha256": "c8e0fca11ddddc41e0d1208601a57b19645047d0cf44b2f5691fbbe2711bc5e1",
+            "pcm_sha256": "105aa7d3aa85c34dec2546f2c01ed1c044d4db0102d3e21db27e2a9bc9b452f1",
+            "program_sha256": "0d6b4a6a747bd0cd5c62a1a42e21f8f1b7b579ce4c8dae105c6920b12ae9d25e"
+          },
+          "source": {
+            "path": "gm-wave-utf8-comparison/輸出 波形/BGM_0M-source.wav",
+            "frames": 8886272,
+            "wav_sha256": "c8e0fca11ddddc41e0d1208601a57b19645047d0cf44b2f5691fbbe2711bc5e1",
+            "pcm_sha256": "105aa7d3aa85c34dec2546f2c01ed1c044d4db0102d3e21db27e2a9bc9b452f1",
+            "program_sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff"
+          },
+          "source-repeat": {
+            "path": "gm-wave-utf8-comparison/輸出 波形/BGM_0M-source-repeat.wav",
+            "frames": 8886272,
+            "wav_sha256": "c8e0fca11ddddc41e0d1208601a57b19645047d0cf44b2f5691fbbe2711bc5e1",
+            "pcm_sha256": "105aa7d3aa85c34dec2546f2c01ed1c044d4db0102d3e21db27e2a9bc9b452f1",
+            "program_sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff"
+          },
+          "sdk-repeat": {
+            "path": "gm-wave-utf8-comparison/BGM_0M-sdk-repeat.wav",
+            "frames": 8886272,
+            "wav_sha256": "c8e0fca11ddddc41e0d1208601a57b19645047d0cf44b2f5691fbbe2711bc5e1",
+            "pcm_sha256": "105aa7d3aa85c34dec2546f2c01ed1c044d4db0102d3e21db27e2a9bc9b452f1",
+            "program_sha256": "0d6b4a6a747bd0cd5c62a1a42e21f8f1b7b579ce4c8dae105c6920b12ae9d25e"
+          }
+        },
+        "equal_pcm": true,
+        "compared_samples": 17772544,
+        "length_difference_samples": 0,
+        "different_samples": 0,
+        "max_abs_difference_s16": 0,
+        "rmse_s16": 0.0,
+        "source_repeat_equal_pcm": true,
+        "sdk_repeat_equal_pcm": true
+      },
+      "END_2M": {
+        "midi_sha256": "3163fa0846ddeae9541ba2e2c4a3a7701f7cbe2b618956571d435f1c0215c4b8",
+        "renders": {
+          "sdk": {
+            "path": "gm-wave-utf8-comparison/END_2M-sdk.wav",
+            "frames": 12549632,
+            "wav_sha256": "bae28205f77bd154dd195debf372bea75534ccb1353247482f32d98f1a5668a2",
+            "pcm_sha256": "b0132823d9f1b5a21cfeadd023a93fbd4bd7ba8185f8b8be20ac1cccfe27c3a8",
+            "program_sha256": "0d6b4a6a747bd0cd5c62a1a42e21f8f1b7b579ce4c8dae105c6920b12ae9d25e"
+          },
+          "source": {
+            "path": "gm-wave-utf8-comparison/輸出 波形/END_2M-source.wav",
+            "frames": 12549632,
+            "wav_sha256": "bae28205f77bd154dd195debf372bea75534ccb1353247482f32d98f1a5668a2",
+            "pcm_sha256": "b0132823d9f1b5a21cfeadd023a93fbd4bd7ba8185f8b8be20ac1cccfe27c3a8",
+            "program_sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff"
+          }
+        },
+        "equal_pcm": true,
+        "compared_samples": 25099264,
+        "length_difference_samples": 0,
+        "different_samples": 0,
+        "max_abs_difference_s16": 0,
+        "rmse_s16": 0.0
+      },
+      "OPEN_M": {
+        "midi_sha256": "93a27c3ca0ea6a008f2e3ac1bcff9eb6a19fed90a6270d105d083766393b8c39",
+        "renders": {
+          "sdk": {
+            "path": "gm-wave-utf8-comparison/OPEN_M-sdk.wav",
+            "frames": 6135808,
+            "wav_sha256": "13c979156b8980007672446ef4cc9dec671698a560db9b8a9f4f043df06b57e0",
+            "pcm_sha256": "ca9bdf92c18ebad6b1f483257a4623faabec79c6741696e9e262474a83629bd2",
+            "program_sha256": "0d6b4a6a747bd0cd5c62a1a42e21f8f1b7b579ce4c8dae105c6920b12ae9d25e"
+          },
+          "source": {
+            "path": "gm-wave-utf8-comparison/輸出 波形/OPEN_M-source.wav",
+            "frames": 6135808,
+            "wav_sha256": "13c979156b8980007672446ef4cc9dec671698a560db9b8a9f4f043df06b57e0",
+            "pcm_sha256": "ca9bdf92c18ebad6b1f483257a4623faabec79c6741696e9e262474a83629bd2",
+            "program_sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff"
+          }
+        },
+        "equal_pcm": true,
+        "compared_samples": 12271616,
+        "length_difference_samples": 0,
+        "different_samples": 0,
+        "max_abs_difference_s16": 0,
+        "rmse_s16": 0.0
+      }
+    },
+    "human_listening_verified": false,
+    "formal_tool_replacement": false
+  },
+  "ogg_sdk_comparison": {
+    "BGM_0M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 14835,
+      "audio_packet_sha256": "e8c843e2a39cae7c9ec509c3c257f69b9dab07b38403c2b57bd5acb814ea08e3"
+    },
+    "BGM_1M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 20103,
+      "audio_packet_sha256": "5ae4ffdbc8634fc2f6473b8706faeef3c1bb158ee937002c7a73012ecd951745"
+    },
+    "BGM_2M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 18493,
+      "audio_packet_sha256": "e26eb39e71e5638d08c2c05e6d40d10d0b063698895c31eeb2f0ae068f415ba7"
+    },
+    "BGM_3M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 8576,
+      "audio_packet_sha256": "f7a426f8aab6abfcb77a500f9063195e19f21f7f1f849edf9918094ef45f22a5"
+    },
+    "BGM_4M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 8031,
+      "audio_packet_sha256": "28e78536ede5ec474f1f5954c3f742db3a61e5a3af69d223ceef1e73cce240e1"
+    },
+    "BGM_5M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 2592,
+      "audio_packet_sha256": "fc25c1937d690079a61f0806bacb0e811b0801fb51d635c80430b7d097bcb721"
+    },
+    "BGM_6M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 1557,
+      "audio_packet_sha256": "1e340bd38bc23a0f5bd265833ebb3faf2872f3be336c26a670f5e67cc1f82da2"
+    },
+    "BGM_7M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 1950,
+      "audio_packet_sha256": "e49a7280bc1d302e10b87446a86ee456edeacb1f47ca24fa32a126d9e7178960"
+    },
+    "END_1M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 10507,
+      "audio_packet_sha256": "df901643e8b5d9936b4976c09bd0496434744d0813b42d50cc7acfa6665894da"
+    },
+    "END_2M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 16079,
+      "audio_packet_sha256": "101f18a95e8878f8c70f8deee291c013d90e4e171df73838756f62047f7843b4"
+    },
+    "OPEN_M": {
+      "vorbis_audio_packets_equal": true,
+      "audio_packets": 6142,
+      "audio_packet_sha256": "f8802d56bb70dbca531407b60c331b6de1ff9a293d837f900b47a62e538af9fe"
+    }
+  },
+  "rejected": {
+    "scope": "GM 合成收據；FM 另見 FM-SOURCES.json，平台封包未驗收",
+    "status": "failed",
+    "approximation": "legacy approximation：FA 當 BPM；raw 時間沿用匯出器；FB／FC 不展開反覆；非原版 MPU 音色",
+    "platform": "windows/amd64",
+    "program_sha256": "6ed783fc065429c0472fd2be550f216324b92ccdc34351dad6e1fdde818b903f",
+    "soundfont_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+    "tools_sha256": {
+      "Z:\\out\\gm-probe\\tools\\ffmpeg.exe": "a46e1ec68cca3f124f685b60fb38ea8be25b0913206f6a285ba17a840c7a7c15",
+      "Z:\\out\\gm-probe\\tools\\fluidsynth.exe": "0d6b4a6a747bd0cd5c62a1a42e21f8f1b7b579ce4c8dae105c6920b12ae9d25e"
+    },
+    "tool_versions": {
+      "Z:\\out\\gm-probe\\tools\\ffmpeg.exe": "ffmpeg version 5.1.9 Copyright (c) 2000-2026 the FFmpeg developers\r\nbuilt with gcc 12-win32 (GCC)\r\nconfiguration: --enable-cross-compile --target-os=mingw32 --arch=x86_64 --cross-prefix=x86_64-w64-mingw32- --pkg-config=pkg-config --prefix=/out/prefix --disable-autodetect --disable-everything --disable-network --disable-doc --disable-debug --disable-x86asm --disable-ffplay --disable-ffprobe --enable-ffmpeg --enable-protocol=file --enable-demuxer='wav,ogg' --enable-decoder='pcm_s16le,pcm_f32le,vorbis' --enable-encoder=libvorbis --enable-muxer=ogg --enable-filter='volume,aresample,anull' --enable-libvorbis --enable-static --disable-shared\r\nlibavutil      57. 28.100 / 57. 28.100\r\nlibavcodec     59. 37.100 / 59. 37.100\r\nlibavformat    59. 27.100 / 59. 27.100\r\nlibavdevice    59.  7.100 / 59.  7.100\r\nlibavfilter     8. 44.100 /  8. 44.100\r\nlibswscale      6.  7.100 /  6.  7.100\r\nlibswresample   4.  7.100 /  4.  7.100\r\n",
+      "Z:\\out\\gm-probe\\tools\\fluidsynth.exe": "FluidSynth runtime version 2.3.1\r\nCopyright (C) 2000-2022 Peter Hanappe and others.\r\nDistributed under the LGPL license.\r\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\r\n\r\nFluidSynth executable version 2.3.1\r\nSample type=float\r\n"
+    },
+    "tracks": null,
+    "error": "曲目 BGM_0M：FluidSynth 明示合成或載入失敗：FluidSynth runtime version 2.3.1\r\nCopyright (C) 2000-2022 Peter Hanappe and others.\r\nDistributed under the LGPL license.\r\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\r\n\r\nfluidsynth: error: fluid_is_soundfont(): fopen() failed: 'File does not exist.'\r\nfluidsynth: error: fluid_sfloader_load(): Failed to open 'C:\\ProgramData\\soundfonts\\default.sf2': File does not exist.\r\nfluidsynth: error: Unable to open file 'C:\\ProgramData\\soundfonts\\default.sf2'\r\nfluidsynth: error: ipatch_file_open() failed with error: 'No such file or directory'\r\nfluidsynth: error: Failed to load SoundFont \"C:\\ProgramData\\soundfonts\\default.sf2\"\r\nRendering audio to file 'Z:\\out\\gm-utf8-rejected\\.gm-import-3204037276\\BGM_0M.wav'..\r\nfluidsynth: warning: No preset found on channel 4 [bank=0 prog=6]\r\nfluidsynth: warning: No preset found on channel 5 [bank=0 prog=6]\r\nfluidsynth: warning: No preset found on channel 6 [bank=0 prog=51]\r\nfluidsynth: warning: No preset found on channel 7 [bank=0 prog=51]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=72]\r\nfluidsynth: warning: No preset found on channel 4 [bank=0 prog=51]\r\nfluidsynth: warning: No preset found on channel 0 [bank=0 prog=114]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=72]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=73]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=73]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=86]\r\nfluidsynth: warning: No preset found on channel 6 [bank=0 prog=6]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=82]\r\nfluidsynth: warning: No preset found on channel 4 [bank=0 prog=6]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=86]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=83]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=83]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=86]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=83]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=86]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=82]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=96]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=83]\r\nfluidsynth: warning: No preset found on channel 7 [bank=0 prog=6]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=89]\r\nfluidsynth: warning: No preset found on channel 2 [bank=0 prog=83]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=75]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=79]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=75]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=79]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=89]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=80]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=89]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=80]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=81]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=81]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=83]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=83]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=82]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=91]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=82]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=91]\r\nfluidsynth: warning: No preset found on channel 1 [bank=0 prog=83]\r\nfluidsynth: warning: No preset found on channel 3 [bank=0 prog=83]\r\nParameter 'Z:\\out\\gm-source-utf8-probe\\?? ??\\soundfont\\FluidR3_GM.sf2' not a SoundFont or MIDI file or error occurred identifying it.\r\n"
+  },
+  "buildinfo": "workplace/music69-windows/music-import-utf8-gate.exe: go1.24.13\n\tpath\tgithub.com/wicanr2/logh3/cmd/music-import\n\tmod\tgithub.com/wicanr2/logh3\tv0.0.0-20261001142803-851a2f402a2d+dirty\t\n\tdep\tgithub.com/jfreymuth/oggvorbis\tv1.0.5\th1:u+Ck+R0eLSRhgq8WTmffYnrVtSztJcYrl588DM4e3kQ=\n\tdep\tgithub.com/jfreymuth/vorbis\tv1.0.2\th1:m1xH6+ZI4thH927pgKD8JOH4eaGRm18rEE9/0WKjvNE=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=windows\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=851a2f402a2d836b27e4df6e2c83f5294b5bdeb2\n\tbuild\tvcs.time=2026-10-01T14:28:03Z\n\tbuild\tvcs.modified=true\n",
+  "scripts_sha256": {
+    "music_windows_sources.py": "6e97880f4894ac652197544c7a3024d9e1c2c06ce76a6ebe7594e932604beeba",
+    "music_windows_sources_test.py": "d6fb9c0f1147d1c2b373e2d0f15249c321e00e18ae4d3962ba1a9a736ee490f2",
+    "music_windows_gm_probe.py": "ac74a9c575a72d7cc7fb355d93f28f1ae1e642150df6c8a4d31fe50bf77dba9f",
+    "music_windows_gm_package_probe.py": "713b425190f27eb0c07a8287a068cdd1fa587b13dee63d91ddb110a8dd5cf89d",
+    "music_windows_gm_wave_probe.py": "8c5722ed01050d9117c9a8b2f6dda0b192e727fa02c285271ffeddbece843709",
+    "music_windows_gm_encoding_probe.py": "455305f4ec8b37604b22a132d2150bc61df957feb793fc9cf85bc3a32a712297",
+    "music_windows_path_probe.c": "2ef3775ae6cb60c2b6d05ad83647c91041fe86711bd706dcd5ceb7c5999c5329",
+    "music_windows_gm_source_receipt.py": "4840c5fd0a196e9827a6676b599f622c0c460725bfb773ff2920026b6a936cb7",
+    "music_windows_fluidsynth_utf8.patch": "588bdc3ab15a0b6e2f54294fd895252af5b9ed8bf68a115eabead5fc1f4ab694"
+  },
+  "product_sha256": {
+    "cmd/music-import/main.go": "c23459867dc2f5deac95609ca17092aa2042eaf8ed9b702ff5115c94b279622c",
+    "cmd/music-import/main_test.go": "a2e0556ddb77fa53028a7263a01144d648ee7ce504840b3a0f4e18d398a17a1a",
+    "cmd/gin3/music_integration_test.go": "3cdc73643614b696567321be64799bc6a5a6817e0deab91e710954bd48f9347d"
+  },
+  "logs_sha256": {
+    "gm-build-utf8-2.log": "2f872f02d6d0ac1b50f55eda85a0a08f48528c12f613cbbd47e84476c0cb6bab",
+    "gm-wave-utf8-comparison-2.log": "16a8c7688fd5466cb02501bd6e3d2c4194664717e4fe31b2f5a72877aa7ce09e",
+    "gm-utf8-full.log": "9c8e30be33a924ddb9c4bc3ac14849cf4b44335c1c34f3df440e5b39a8e1cb27",
+    "gm-utf8-rejected.log": "dd3e5a52e4d0bbad211e5d3843e7443a8415fd9361a00b7938ec4a33844b3610",
+    "source-boundary-tests.log": "2d014bb427120fb1a5014d7499096989061fd0fdf40acb471c2e2667de60e71e",
+    "source-bundle.log": "c399bb739df32348acc31bd5c7d9b55dbf7f6bcd268160a4c85bc32fa21e4261",
+    "player-utf8-test.log": "0e03deb835052212d393ddde16a0623cecf833ab7789f4eb43f5199b74ee0a44",
+    "product-utf8-tests.log": "257605c61bff98f2af7c27fc12409e0b5af91ebc985694ac0b173abf728c2d80",
+    "gm-font-cjk.log": "54f45b408175c6b9f02a4b708ec1705f334979df9340b3fa0d60a666e631e9e6",
+    "gm-unicode-path-api-2.log": "edb60055617a8043ae4bdc1ea3e9531064db77a31354ce49a7b8cc6633719220",
+    "gm-build-probe-3.log": "7a64b7335e9956e586f5c1ed0f8e6f9a4c2c79b7536d60ea9349934a34922999",
+    "gm-build-utf8.log": "2f872f02d6d0ac1b50f55eda85a0a08f48528c12f613cbbd47e84476c0cb6bab",
+    "gm-wave-utf8-comparison.log": "e3acd2acb671c2ea28a4cc40777f2cfc17b578a114cda469263af085d19b3d82",
+    "gm-encoding-probe.log": "1eef84db51c2b4ea8d4bf804d826d6f65f0bcc3233e393c8093a3efa61c9f298"
+  },
+  "first_unicode_attempt": {
+    "build": {
+      "status": "compiled-probe-only",
+      "commands": [
+        {
+          "args": [
+            "dpkg-source",
+            "--no-check",
+            "-x",
+            "/source-cache/libffi_3.4.4-1.dsc",
+            "/out/gm-build-utf8/src/libffi"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "dpkg-source",
+            "--no-check",
+            "-x",
+            "/source-cache/pcre2_10.42-1.dsc",
+            "/out/gm-build-utf8/src/pcre2"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "dpkg-source",
+            "--no-check",
+            "-x",
+            "/source-cache/glib2.0_2.74.6-2+deb12u9.dsc",
+            "/out/gm-build-utf8/src/glib2.0"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "dpkg-source",
+            "--no-check",
+            "-x",
+            "/source-cache/libsndfile_1.2.0-1+deb12u1.dsc",
+            "/out/gm-build-utf8/src/libsndfile"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "dpkg-source",
+            "--no-check",
+            "-x",
+            "/source-cache/fluidsynth_2.3.1-2.dsc",
+            "/out/gm-build-utf8/src/fluidsynth"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "patch",
+            "--dry-run",
+            "-p1",
+            "-i",
+            "/tools/scripts/music_windows_fluidsynth_utf8.patch"
+          ],
+          "cwd": "/out/gm-build-utf8/src/fluidsynth"
+        },
+        {
+          "args": [
+            "patch",
+            "-p1",
+            "-i",
+            "/tools/scripts/music_windows_fluidsynth_utf8.patch"
+          ],
+          "cwd": "/out/gm-build-utf8/src/fluidsynth"
+        },
+        {
+          "args": [
+            "./configure",
+            "--host=x86_64-w64-mingw32",
+            "--prefix=/out/gm-build-utf8/prefix",
+            "--enable-shared",
+            "--disable-static",
+            "--disable-docs"
+          ],
+          "cwd": "/out/gm-build-utf8/src/libffi"
+        },
+        {
+          "args": [
+            "make",
+            "-j2"
+          ],
+          "cwd": "/out/gm-build-utf8/src/libffi"
+        },
+        {
+          "args": [
+            "make",
+            "install"
+          ],
+          "cwd": "/out/gm-build-utf8/src/libffi"
+        },
+        {
+          "args": [
+            "./configure",
+            "--host=x86_64-w64-mingw32",
+            "--prefix=/out/gm-build-utf8/prefix",
+            "--enable-shared",
+            "--disable-static",
+            "--disable-pcre2grep",
+            "--disable-pcre2test",
+            "--disable-pcre2-16",
+            "--disable-pcre2-32"
+          ],
+          "cwd": "/out/gm-build-utf8/src/pcre2"
+        },
+        {
+          "args": [
+            "make",
+            "-j2"
+          ],
+          "cwd": "/out/gm-build-utf8/src/pcre2"
+        },
+        {
+          "args": [
+            "make",
+            "install"
+          ],
+          "cwd": "/out/gm-build-utf8/src/pcre2"
+        },
+        {
+          "args": [
+            "make",
+            "-j2",
+            "-fwin32/Makefile.gcc",
+            "PREFIX=x86_64-w64-mingw32-",
+            "SHARED_MODE=1",
+            "prefix=/out/gm-build-utf8/prefix",
+            "BINARY_PATH=/out/gm-build-utf8/prefix/bin",
+            "INCLUDE_PATH=/out/gm-build-utf8/prefix/include",
+            "LIBRARY_PATH=/out/gm-build-utf8/prefix/lib"
+          ],
+          "cwd": "/out/gm-build-utf8/src/zlib"
+        },
+        {
+          "args": [
+            "make",
+            "install",
+            "-fwin32/Makefile.gcc",
+            "PREFIX=x86_64-w64-mingw32-",
+            "SHARED_MODE=1",
+            "prefix=/out/gm-build-utf8/prefix",
+            "BINARY_PATH=/out/gm-build-utf8/prefix/bin",
+            "INCLUDE_PATH=/out/gm-build-utf8/prefix/include",
+            "LIBRARY_PATH=/out/gm-build-utf8/prefix/lib"
+          ],
+          "cwd": "/out/gm-build-utf8/src/zlib"
+        },
+        {
+          "args": [
+            "meson",
+            "setup",
+            "/out/gm-build-utf8/glib-build",
+            "/out/gm-build-utf8/src/glib2.0",
+            "--cross-file",
+            "/out/gm-build-utf8/windows.ini",
+            "--wrap-mode=nodownload",
+            "--prefix=/out/gm-build-utf8/prefix",
+            "--libdir=lib",
+            "--buildtype=release",
+            "-Ddefault_library=shared",
+            "-Dtests=false",
+            "-Dinstalled_tests=false",
+            "-Dnls=disabled",
+            "-Dlibmount=disabled",
+            "-Dxattr=false",
+            "-Dselinux=disabled",
+            "-Dman=false",
+            "-Dgtk_doc=false",
+            "-Dlibelf=disabled",
+            "-Dsysprof=disabled"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "ninja",
+            "-C",
+            "/out/gm-build-utf8/glib-build",
+            "-j2"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "ninja",
+            "-C",
+            "/out/gm-build-utf8/glib-build",
+            "install"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "cmake",
+            "-S",
+            "/out/gm-build-utf8/src/libsndfile",
+            "-B",
+            "/out/gm-build-utf8/libsndfile-build",
+            "-DCMAKE_SYSTEM_NAME=Windows",
+            "-DCMAKE_SYSTEM_VERSION=10",
+            "-DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc",
+            "-DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++",
+            "-DCMAKE_RC_COMPILER=x86_64-w64-mingw32-windres",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DCMAKE_INSTALL_PREFIX=/out/gm-build-utf8/prefix",
+            "-DCMAKE_INSTALL_LIBDIR=lib",
+            "-DBUILD_SHARED_LIBS=ON",
+            "-DENABLE_EXTERNAL_LIBS=OFF",
+            "-DENABLE_MPEG=OFF",
+            "-DBUILD_TESTING=OFF",
+            "-DBUILD_PROGRAMS=OFF",
+            "-DBUILD_EXAMPLES=OFF",
+            "-DENABLE_COMPATIBLE_LIBSNDFILE_NAME=ON"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "cmake",
+            "--build",
+            "/out/gm-build-utf8/libsndfile-build",
+            "-j2"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "cmake",
+            "--install",
+            "/out/gm-build-utf8/libsndfile-build"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "cmake",
+            "-S",
+            "/out/gm-build-utf8/src/fluidsynth",
+            "-B",
+            "/out/gm-build-utf8/fluidsynth-build",
+            "-DCMAKE_SYSTEM_NAME=Windows",
+            "-DCMAKE_SYSTEM_VERSION=10",
+            "-DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc",
+            "-DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++",
+            "-DCMAKE_RC_COMPILER=x86_64-w64-mingw32-windres",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DCMAKE_INSTALL_PREFIX=/out/gm-build-utf8/prefix",
+            "-DCMAKE_INSTALL_LIBDIR=lib",
+            "-DBUILD_SHARED_LIBS=ON",
+            "-Denable-floats=ON",
+            "-Denable-libinstpatch=OFF",
+            "-Denable-network=OFF",
+            "-Denable-dbus=OFF",
+            "-Denable-readline=OFF",
+            "-Denable-ladspa=OFF",
+            "-DBUILD_TESTING=OFF",
+            "-Denable-dsound=OFF",
+            "-Denable-wasapi=OFF",
+            "-Denable-waveout=OFF",
+            "-Denable-winmidi=OFF",
+            "-Denable-jack=OFF",
+            "-Denable-portaudio=OFF",
+            "-Denable-oss=OFF",
+            "-Denable-pulseaudio=OFF",
+            "-Denable-pipewire=OFF",
+            "-Denable-sdl2=OFF",
+            "-Denable-midishare=OFF",
+            "-Denable-opensles=OFF",
+            "-Denable-oboe=OFF"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "cmake",
+            "--build",
+            "/out/gm-build-utf8/fluidsynth-build",
+            "-j2"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        },
+        {
+          "args": [
+            "cmake",
+            "--install",
+            "/out/gm-build-utf8/fluidsynth-build"
+          ],
+          "cwd": "/out/gm-build-utf8"
+        }
+      ],
+      "sources": [
+        {
+          "description": {
+            "bytes": 1951,
+            "filename": "libffi_3.4.4-1.dsc",
+            "sha256": "21c9ef156b6766535cb014e0765142c8104ffbcd73f003ecfa80cfb314baa4f0",
+            "url": "https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.4.4-1.dsc"
+          },
+          "files": {
+            "libffi_3.4.4-1.debian.tar.xz": {
+              "bytes": 10380,
+              "sha256": "161b210bfd2ada0b15b0d2a2a98ffc779cd4a68661a7fdf46f61732493db0895",
+              "url": "https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.4.4-1.debian.tar.xz"
+            },
+            "libffi_3.4.4.orig.tar.gz": {
+              "bytes": 1362394,
+              "sha256": "d66c56ad259a82cf2a9dfc408b32bf5da52371500b84745f7fb8b645712df676",
+              "url": "https://deb.debian.org/debian/pool/main/libf/libffi/libffi_3.4.4.orig.tar.gz"
+            }
+          },
+          "source": "libffi",
+          "version": "3.4.4-1"
+        },
+        {
+          "description": {
+            "bytes": 2302,
+            "filename": "pcre2_10.42-1.dsc",
+            "sha256": "726dafe7a8d07332d4df61edf23f384ddb158b2b263846273d1103b6b9a7c176",
+            "url": "https://deb.debian.org/debian/pool/main/p/pcre2/pcre2_10.42-1.dsc"
+          },
+          "files": {
+            "pcre2_10.42-1.diff.gz": {
+              "bytes": 7895,
+              "sha256": "8267c3acacb04e8a077235f676187393e295443fc16ff46ddbe5f6476879c8cb",
+              "url": "https://deb.debian.org/debian/pool/main/p/pcre2/pcre2_10.42-1.diff.gz"
+            },
+            "pcre2_10.42.orig.tar.gz": {
+              "bytes": 2397194,
+              "sha256": "c33b418e3b936ee3153de2c61cc638e7e4fe3156022a5c77d0711bcbb9d64f1f",
+              "url": "https://deb.debian.org/debian/pool/main/p/pcre2/pcre2_10.42.orig.tar.gz"
+            }
+          },
+          "source": "pcre2",
+          "version": "10.42-1"
+        },
+        {
+          "description": {
+            "bytes": 3669,
+            "filename": "glib2.0_2.74.6-2+deb12u9.dsc",
+            "sha256": "bd8e8cd8d251c2365a02258bf4d6c44721289ac44c3a2477c140ce253bdb4b41",
+            "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6-2%2Bdeb12u9.dsc"
+          },
+          "files": {
+            "glib2.0_2.74.6-2+deb12u9.debian.tar.xz": {
+              "bytes": 158056,
+              "sha256": "ccfe76a05463099331f31fc2fde1677ce3c5e0d054112890541b511c0b3321ff",
+              "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6-2%2Bdeb12u9.debian.tar.xz"
+            },
+            "glib2.0_2.74.6.orig-unicode-data.tar.xz": {
+              "bytes": 267596,
+              "sha256": "dabcaff9298aa111a94e580561d2f29371f3e61b356c925ec5e0792df2b11ff2",
+              "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6.orig-unicode-data.tar.xz"
+            },
+            "glib2.0_2.74.6.orig.tar.xz": {
+              "bytes": 5217312,
+              "sha256": "069cf7e51cd261eb163aaf06c8d1754c6835f31252180aff5814e5afc7757fbc",
+              "url": "https://deb.debian.org/debian/pool/main/g/glib2.0/glib2.0_2.74.6.orig.tar.xz"
+            }
+          },
+          "source": "glib2.0",
+          "version": "2.74.6-2+deb12u9"
+        },
+        {
+          "description": {
+            "bytes": 2418,
+            "filename": "libsndfile_1.2.0-1+deb12u1.dsc",
+            "sha256": "74686b038b925f4b238d0a37e36671e5b924fe1678083037494923140403fa8e",
+            "url": "https://deb.debian.org/debian/pool/main/libs/libsndfile/libsndfile_1.2.0-1%2Bdeb12u1.dsc"
+          },
+          "files": {
+            "libsndfile_1.2.0-1+deb12u1.debian.tar.xz": {
+              "bytes": 21412,
+              "sha256": "77b8c1c5fc6d110f08535ccb76f65c284a441e544a0698e3dee65c5bda882eee",
+              "url": "https://deb.debian.org/debian/pool/main/libs/libsndfile/libsndfile_1.2.0-1%2Bdeb12u1.debian.tar.xz"
+            },
+            "libsndfile_1.2.0.orig.tar.gz": {
+              "bytes": 684253,
+              "sha256": "62dc4e2bcd45f6f0e89cbc3522cc90eb174dca0eef0a0d19ead289833b390cd7",
+              "url": "https://deb.debian.org/debian/pool/main/libs/libsndfile/libsndfile_1.2.0.orig.tar.gz"
+            }
+          },
+          "source": "libsndfile",
+          "version": "1.2.0-1+deb12u1"
+        },
+        {
+          "description": {
+            "bytes": 2541,
+            "filename": "fluidsynth_2.3.1-2.dsc",
+            "sha256": "d500a241c2e50a60bedb99f3719626a86fefde8b0f70914f74c761fffe1937b8",
+            "url": "https://deb.debian.org/debian/pool/main/f/fluidsynth/fluidsynth_2.3.1-2.dsc"
+          },
+          "files": {
+            "fluidsynth_2.3.1-2.debian.tar.xz": {
+              "bytes": 20468,
+              "sha256": "4266b3a5d21890c89cf30d21731641e3ca309119a6a69cee90ccb9fe73f34c57",
+              "url": "https://deb.debian.org/debian/pool/main/f/fluidsynth/fluidsynth_2.3.1-2.debian.tar.xz"
+            },
+            "fluidsynth_2.3.1.orig.tar.gz": {
+              "bytes": 1758632,
+              "sha256": "d734e4cf488be763cf123e5976f3154f0094815093eecdf71e0e9ae148431883",
+              "url": "https://deb.debian.org/debian/pool/main/f/fluidsynth/fluidsynth_2.3.1.orig.tar.gz"
+            }
+          },
+          "source": "fluidsynth",
+          "version": "2.3.1-2"
+        }
+      ],
+      "extra_sources": [
+        {
+          "commit": "c03e1a74b17fa7ec467e110130775409e4828a4c",
+          "url": "https://codeload.github.com/frida/proxy-libintl/tar.gz/c03e1a74b17fa7ec467e110130775409e4828a4c",
+          "filename": "proxy-libintl-c03e1a74b17fa7ec467e110130775409e4828a4c.tar.gz",
+          "bytes": 13034,
+          "sha256": "b2be1569c4e6b0131a446d857665a192674d36185e2fa534614eece0b0ea70c3",
+          "source": "proxy-libintl",
+          "role": "GLib 固定 fallback"
+        },
+        {
+          "source": "zlib-upstream",
+          "version": "1.2.13",
+          "url": "https://zlib.net/fossils/zlib-1.2.13.tar.gz",
+          "filename": "zlib-1.2.13.tar.gz",
+          "bytes": 1497445,
+          "sha256": "b3a24de97a8fdbc835b9833169501030b8977031bcb54b3b3ac13740f846ab30",
+          "role": "包含 Windows RC 的完整同版本上游來源"
+        }
+      ],
+      "cli_patch": {
+        "purpose": "Windows CLI Unicode 參數探針；不改 DSP",
+        "patch_sha256": "0fa50ba66a5b8dd01dde6083ae96644151ddd150ac145cfb797dd1f5efdaa2fb",
+        "patched_source_sha256": "961eb782c762cdddc0b06b964e01ebcc4b02736f2ff56ad44ed4779d81c10fa7"
+      },
+      "builder_sha256": "73428a48c58a50bf9591210e1669eb7d7807d488984f6707f427d2dc088c31e9",
+      "cross_file": "[binaries]\nc = 'x86_64-w64-mingw32-gcc'\ncpp = 'x86_64-w64-mingw32-g++'\nar = 'x86_64-w64-mingw32-ar'\nstrip = 'x86_64-w64-mingw32-strip'\nwindres = 'x86_64-w64-mingw32-windres'\npkgconfig = 'pkg-config'\n[host_machine]\nsystem = 'windows'\ncpu_family = 'x86_64'\ncpu = 'x86_64'\nendian = 'little'\n[properties]\nneeds_exe_wrapper = true\n",
+      "files": {
+        "fluidsynth.exe": {
+          "bytes": 165665,
+          "sha256": "564395df7b1637142ab84a253c34aac068e08600883749eea036db0564bacf11"
+        },
+        "gdbus-codegen": {
+          "bytes": 2063,
+          "sha256": "64b5ed78403492bc57de9c0dc49cd9a6748e86bce812a2ac0075ddc7f208ccf8"
+        },
+        "gdbus.exe": {
+          "bytes": 169383,
+          "sha256": "df2b23061a1ca41c53decf1196caf7fe79bbe39629e85ea8432b1183ef5cbb56"
+        },
+        "gio-querymodules.exe": {
+          "bytes": 125866,
+          "sha256": "12c82f921a4d2b5981aab8c8046a522f6fd9b46e52ddb06cf557517333da325d"
+        },
+        "gio.exe": {
+          "bytes": 225066,
+          "sha256": "3fb020f0a4f5b177a07ece4c3c0c46165edcf9dedcdf78e19889ff73173dda6c"
+        },
+        "glib-compile-resources.exe": {
+          "bytes": 181565,
+          "sha256": "11504bf9a75e41308a8a89858dafde3f57e1a66d8a3970a20849b213dc04f18f"
+        },
+        "glib-compile-schemas.exe": {
+          "bytes": 315576,
+          "sha256": "4b879163fb908870a9fca7e7c99fdcee4d1a8ea15eb60d03d229b8b1e193d5c3"
+        },
+        "glib-genmarshal": {
+          "bytes": 41109,
+          "sha256": "f8ae3dd074846baad5b144dcb3c50f978fd573affeaf8b5e7266b7c42ac82867"
+        },
+        "glib-gettextize": {
+          "bytes": 5496,
+          "sha256": "1401c46f0e0e437eafd30e512b55cf2dc11776f9f1cd303e4b852777f2451a06"
+        },
+        "glib-mkenums": {
+          "bytes": 30941,
+          "sha256": "c165ba9383213be9fe79d16a8b109f72145c91e4630355eb93c088467c963f08"
+        },
+        "gobject-query.exe": {
+          "bytes": 120476,
+          "sha256": "bb70856ae9390faf670c16a845381a2ed30d2bd589f4f16bd7247726d266733a"
+        },
+        "gresource.exe": {
+          "bytes": 126714,
+          "sha256": "f3788f2c2078d3e23f0e21c462a9e17c02d17c9e4f3e53e98acd675368c3923d"
+        },
+        "gsettings.exe": {
+          "bytes": 143583,
+          "sha256": "9810683aabe2ee50e47e72abcf876cb5b0be29db9fcc1a7ef7609a42c025ac20"
+        },
+        "gspawn-win64-helper-console.exe": {
+          "bytes": 126579,
+          "sha256": "1a2bc8ffeb66d540baca51c86b99b871697e50ae3f39fd535977f99d3291a1a7"
+        },
+        "gspawn-win64-helper.exe": {
+          "bytes": 127942,
+          "sha256": "607e4c5668cc9ea13871ce5ebf1947815d8b34ac20e71673792721de10f48b9f"
+        },
+        "gtester-report": {
+          "bytes": 19095,
+          "sha256": "12c82544ee4e7e7f0129ec42c7fc7b08245ed30a96537eea4841b3df35dbab16"
+        },
+        "libffi-8.dll": {
+          "bytes": 109646,
+          "sha256": "8c6cb2e389456cafbfd06339e6c55881fc14d8e7e24e2fd38e0c16ea2f4718cd"
+        },
+        "libfluidsynth-3.dll": {
+          "bytes": 562512,
+          "sha256": "885fe83c961aa4473dc7f985464eca18f725dce8f0a62dd95140d2242fe9f53c"
+        },
+        "libgcc_s_seh-1.dll": {
+          "bytes": 681726,
+          "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7"
+        },
+        "libgio-2.0-0.dll": {
+          "bytes": 2924662,
+          "sha256": "aedd0918c1418aa2504c2e525761f3cff9c78c369f20cb7f688672cc84c7faf0"
+        },
+        "libglib-2.0-0.dll": {
+          "bytes": 2150059,
+          "sha256": "7705dd2901fc13f3babb7f0b0127db97ab37c8a5009507a0362eb121e57f4beb"
+        },
+        "libgmodule-2.0-0.dll": {
+          "bytes": 103768,
+          "sha256": "965befd0472b6153fc4bac3ed5195ca062e9c5b43dfc692df4f7adae4783bfb5"
+        },
+        "libgobject-2.0-0.dll": {
+          "bytes": 504600,
+          "sha256": "76155f225bd7f804a260cf598962ecb4dbb18c2b06914411c0e873f4a668d444"
+        },
+        "libgomp-1.dll": {
+          "bytes": 1615161,
+          "sha256": "2b5b74416a061c70b3dc2bfcc19f26bfc2777d8fa1a21a81f8f656c9671cfc97"
+        },
+        "libgthread-2.0-0.dll": {
+          "bytes": 88498,
+          "sha256": "358f65bfeb139b55f0753589f646a58da10e67ab269bb084979ea2a5e3f90d01"
+        },
+        "libintl-8.dll": {
+          "bytes": 89644,
+          "sha256": "8e3ae1a3c5d57e32e90ccd69fac380a57b59d93cbc3bde07bf9c1312909a7a52"
+        },
+        "libpcre2-8-0.dll": {
+          "bytes": 482642,
+          "sha256": "e854aa5f579f6e994851e156352c3e8b466bc164fc52cf0e0afc6f2590ede71e"
+        },
+        "libpcre2-posix-3.dll": {
+          "bytes": 216406,
+          "sha256": "fa66b712a70bc9e9e9ceb7ea563a5f7d379cc0b883ed92494808a6556c6cc3e7"
+        },
+        "libsndfile-1.dll": {
+          "bytes": 1007840,
+          "sha256": "ce502a7429762da37dd18ccb9c9f79a25e0c3308d9d349b2213a0df59b380edb"
+        },
+        "libstdc++-6.dll": {
+          "bytes": 23703447,
+          "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203"
+        },
+        "libwinpthread-1.dll": {
+          "bytes": 319336,
+          "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329"
+        },
+        "pcre2-config": {
+          "bytes": 1993,
+          "sha256": "7e9e0467b053f0dc4ef2ffff2d65dd393e91cf0362f2942855bcfb9745a0a604"
+        },
+        "pcre2grep.exe": {
+          "bytes": 311351,
+          "sha256": "1870a51497db1e41721d9fb6a4d64cee23776fd8605f937ebd742f6f21cad914"
+        },
+        "pcre2test.exe": {
+          "bytes": 362205,
+          "sha256": "3657573f341f2689e0f87ac9b77564ba853c2e971b08bdb28d082749a4e149f8"
+        },
+        "zlib1.dll": {
+          "bytes": 137216,
+          "sha256": "896a801020eecf6419eefabee1dcbd91f69b2eb8660abbc712d9f33ea4e98006"
+        }
+      }
+    },
+    "patch_sha256": "0fa50ba66a5b8dd01dde6083ae96644151ddd150ac145cfb797dd1f5efdaa2fb",
+    "build_sha256": "41859de2fc0420fb720845dc31319d3e31e8feb6c70b3f6dafb008c7f3b67be7",
+    "limit": "命令列轉 UTF-8 後仍有第二次 ANSI 轉碼；波形診斷失敗，未採用此產物"
+  },
+  "images": {
+    "cross": "sha256:0745d96e4029b152f468e2fee63c01e20bd859a369efe80de681e95cf17f0541",
+    "wine": "sha256:7d3c7ff554db39300e3e7a92a7b79c2d5fcd647289596d22fa10899baac61201",
+    "python": "sha256:229a2c5bfa27522db7815ea81f9bed70af17ccb9de9fc7ad142b1877b5830d36",
+    "go": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+    "gui": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8"
+  },
+  "receipt_python": "3.12.13 (main, Aug  5 2026, 01:10:24) [GCC 14.2.0]",
+  "formal_delivery_complete": false,
+  "limits": "只驗 Windows Wine 原生 CLI 與 Linux 正式播放層；不外推實機、人耳、循環或 macOS。GM 保留既有近似，部分峰值 1.0 未聲稱無 clipping；未逐套重建執行期或驗來源簽章信任鏈。"
+}

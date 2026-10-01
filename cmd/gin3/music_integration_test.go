@@ -21,6 +21,10 @@ func TestWindowsGMImportPlayerDecode(t *testing.T) {
 	testWindowsImportPlayerDecode(t, "GM", "M")
 }
 
+func TestWindowsUnicodeGMImportPlayerDecode(t *testing.T) {
+	testWindowsImportPlayerDecodeAt(t, "GM", "M", filepath.Join("..", "..", "workplace", "music69-windows", "gm-utf8-full", "生成 曲庫"))
+}
+
 func TestWindowsFMImportPlayerDecode(t *testing.T) {
 	testWindowsImportPlayerDecode(t, "FM", "F")
 }
@@ -28,6 +32,11 @@ func TestWindowsFMImportPlayerDecode(t *testing.T) {
 func testWindowsImportPlayerDecode(t *testing.T, stage, suffix string) {
 	t.Helper()
 	dir := filepath.Join("..", "..", "workplace", "music69-windows", strings.ToLower(stage)+"-full")
+	testWindowsImportPlayerDecodeAt(t, stage, suffix, dir)
+}
+
+func testWindowsImportPlayerDecodeAt(t *testing.T, stage, suffix, dir string) {
+	t.Helper()
 	raw, err := os.ReadFile(filepath.Join(dir, stage+"-SOURCES.json"))
 	if os.IsNotExist(err) {
 		t.Skip("缺 Windows 原生 " + stage + " 驗證批次")

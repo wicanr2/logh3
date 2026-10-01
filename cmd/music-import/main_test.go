@@ -3,8 +3,25 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
+
+func TestGMRejectsReportedFailureDespiteSuccessfulExit(t *testing.T) {
+	for _, output := range []string{
+		"fluidsynth: error: Failed to load SoundFont\r\nRendering audio to file",
+		"Parameter 'Z:\\??\\FluidR3_GM.sf2' not a SoundFont or MIDI file or error occurred identifying it.",
+	} {
+		if err := checkGMToolOutput(output); err == nil || !strings.Contains(err.Error(), output) {
+			t.Fatalf("未保留並拒絕成功退出的載入失敗：%v", err)
+		}
+	}
+	for _, output := range []string{"", "FluidSynth runtime version 2.3.1\r\nRendering audio to file", "fluidsynth: warning: Failed to set thread to high priority"} {
+		if err := checkGMToolOutput(output); err != nil {
+			t.Fatalf("正常輸出或非致命警告被誤拒絕：%v", err)
+		}
+	}
+}
 
 func TestMusicImportPreflight(t *testing.T) {
 	source := t.TempDir()
