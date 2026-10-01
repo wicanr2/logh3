@@ -1,6 +1,7 @@
 package game
 
 import (
+	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
 )
@@ -16,12 +17,11 @@ import (
 //
 //   - 稅率檔位（`ds:8FD4[陣營]`，微稅／輕稅／普通／重稅／緊急）：一下一階，
 //     clamp 在 0–4。改完連動預估徵稅額、預估軍事費、船艦建造費、剩餘軍事費。
-//   - 建造費％（`ds:8F92[陣營]`）：**按住會連發**（短按就 +2），只連動建造費
+//   - 建造費％（`ds:8F92[陣營]`）：短按一下一格，只連動建造費
 //     與剩餘軍事費，不影響稅收。上限沒量到（`docs/re/343` 的未解項）。
 //
-// **剛點過的那顆箭頭鈕還差 17–21 個像素**（原版色 8、remake 色 9，游標周圍一小塊；
-// 不是游標畫錯位置——游標本身兩邊同位置）。成因沒查，測試用 `planArrowSkip` 排除，
-// 那是未解不是核准的差異（#80、`docs/re/343` §七第 3 點）。
+// 點過的箭頭各自保留色號 9→8，關窗再開才重設；游標移開不還原
+// （#80、`docs/re/350`）。轉色畫在游標之前，沿用命中測試的矩形。
 //
 // 熱區來自 `ds:14A8` 那份六筆的清單（預算計劃與徵稅計劃共用同一支繪圖與事件碼，
 // 只差呼叫端傳進來的視窗結構）；生產計劃的「結束」在 `ds:26E2` 那一份。
@@ -40,7 +40,7 @@ var (
 	// 建造費％的加／減（第 4、5 筆）。
 	planPctUp   = planBox{464, 320, 479, 339}
 	planPctDown = planBox{480, 320, 495, 339}
-	// 參謀（第 2 筆）＝ 換內政專任參謀，是 #62，還沒接。
+	// 參謀（第 2 筆）＝ 換內政專任參謀（#62）。
 	planStaff = planBox{398, 360, 433, 379}
 	// 結束：徵稅計劃與預算計劃共用（第 3 筆）；生產計劃那份在 `ds:26E2`。
 	planEnd     = planBox{446, 360, 481, 379}
@@ -61,15 +61,19 @@ func (g *Game) planScreenClick(x, y int) bool {
 			return true
 		}
 		if planTaxUp.hit(x, y) {
+			g.planArrowsDim[0] = true
 			return g.stepTaxLevel(+1)
 		}
 		if planTaxDown.hit(x, y) {
+			g.planArrowsDim[1] = true
 			return g.stepTaxLevel(-1)
 		}
 		if planPctUp.hit(x, y) {
+			g.planArrowsDim[2] = true
 			return g.stepShipPct(+planPctStep)
 		}
 		if planPctDown.hit(x, y) {
+			g.planArrowsDim[3] = true
 			return g.stepShipPct(-planPctStep)
 		}
 		// 參謀：開參謀任命，換的是**內政**專任參謀（`ds:8F4F`）——與情報收集
@@ -107,7 +111,8 @@ func (g *Game) stepTaxLevel(d int) bool {
 		level = rules.MaxBlendLevel
 	}
 	if level == g.blend[g.faction] {
-		return true // clamp 住了，畫面不變
+		g.refreshCapitalSnap() // clamp 住了仍重寫首都摘要（planarrow-clamp）。
+		return true
 	}
 	g.refreshBlend(g.faction, level)
 	// 改稅率檔位會把整條重算鏈跑一次（`090A:0B93` → `090A:0E6D`），右側面板的
@@ -165,5 +170,25 @@ func (g *Game) applyPlanScreen(spec *screen.MainGameSpec) {
 	}
 	for i, c := range planTaxLevelCodes[level] {
 		w.SetLineCode(planTaxLevelLine, planTaxLevelCell0+i, c)
+	}
+}
+
+// drawPlanArrows 在本層畫完、游標畫上去之前轉色。只改 framebuffer，
+// 不改共享的規格／圖塊；目前視窗中點過的各顆箭頭都要保留。
+func (g *Game) drawPlanArrows(fb *gfx.Framebuffer) {
+	if g.state != StateTaxPlan && g.state != StateBudgetPlan {
+		return
+	}
+	for i, b := range [...]planBox{planTaxUp, planTaxDown, planPctUp, planPctDown} {
+		if !g.planArrowsDim[i] {
+			continue
+		}
+		for y := b.Y0; y <= b.Y1; y++ {
+			for x := b.X0; x <= b.X1; x++ {
+				if fb.At(x, y) == 9 {
+					fb.Set(x, y, 8)
+				}
+			}
+		}
 	}
 }

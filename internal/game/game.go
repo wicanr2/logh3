@@ -619,6 +619,10 @@ type Game struct {
 	// plan 是建造計劃畫面當下那一份（建造費用月初報告那一組算）。
 	plan *rules.BuildPlan
 
+	// planArrowsDim 是目前預算視窗四顆箭頭的呈現狀態（規格 003）。
+	// 各自保留點擊後的色號 9→8；重新開窗歸零，不屬於存檔資料。
+	planArrowsDim [4]bool
+
 	// 結局：目前顯示哪一張 CG。
 	ending *asset.Image
 
@@ -2661,6 +2665,9 @@ func (g *Game) click(x, y int) {
 					if isListScreen(item) {
 						g.openListScreen(item)
 					} else {
+						if item == StateTaxPlan {
+							g.planArrowsDim = [4]bool{}
+						}
 						g.state = item
 					}
 				}
@@ -3510,6 +3517,9 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 // 艦隊編成那張的姓名與能力值屬於 `overlay` 那一層：等整張畫完再補，
 // 疊在上面的艦隊編號清單就會被戳出一排洞（`docs/spec/013`）。
 func (g *Game) afterWindow(name string, fb *gfx.Framebuffer) {
+	if name == g.lastLayer() {
+		g.drawPlanArrows(fb)
+	}
 	if name == "overlay" {
 		g.drawFleetOrg(fb)
 		g.drawFleetComposition(fb)

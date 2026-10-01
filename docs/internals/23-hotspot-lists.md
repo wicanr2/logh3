@@ -367,6 +367,17 @@ FF 76 18        push [bp+18]     ; 視窗 far 指標
 滑鼠座標與畫面座標差 40（畫面 y ＝ 滑鼠 y ＋ 40），與游標的
 `offset_from_mouse` 一致。
 
+## 預算／徵稅箭頭的轉色（2026-10-01，confirmed）
+
+`ds:14A8` 第 0／1／4／5 筆的箭頭，點擊後整顆色號 9→8，其餘色號不變。
+四顆各自保留此呈現狀態，懸停不轉色、游標移開不還原、數值已達上界仍轉色，
+關窗再開全部重設。向上箭頭總共 26 點轉色，既有收據被游標遮住 5 點，故只看見 21 點。
+此為執行期已證實，不推定內部函式或「停用」語意。
+
+來源與輸入雜湊：[研究 350](../re/350-plan-arrows-retain-dim-colour.md)；
+重生工具：`bash tools/plan_arrow_receipts.sh`；正式規格：[003](../spec/003-budget-panel.md)；
+機器可讀版本：[data/plan-arrow-render.json](data/plan-arrow-render.json)。
+
 ## 未知
 
 - 清單與畫面的對應：命中測試呼叫點把兩者綁死了

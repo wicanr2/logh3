@@ -60,14 +60,14 @@ func TestTaxPlanArrows(t *testing.T) {
 	if g.blend[g.faction] != 3 {
 		t.Fatalf("加一下之後是 %d，收據 fcmd-plan-tax-up 的 ds:8FD4 ＝ 03", g.blend[g.faction])
 	}
-	matchesExcept(t, g, "fcmd-plan-tax-up", planArrowSkip)
+	matches(t, g, "fcmd-plan-tax-up")
 
 	g = reachTaxPlan(t)
 	g.Click(487, 289) // －
 	if g.blend[g.faction] != 1 {
 		t.Fatalf("減一下之後是 %d，收據 fcmd-plan-tax-down 的 ds:8FD4 ＝ 01", g.blend[g.faction])
 	}
-	matchesExcept(t, g, "fcmd-plan-tax-down", planArrowSkip)
+	matches(t, g, "fcmd-plan-tax-down")
 
 	// clamp：連按到底不會溢出。
 	for i := 0; i < 8; i++ {
@@ -97,16 +97,54 @@ func TestTaxPlanShipPctArrow(t *testing.T) {
 	if g.taxTotal != tax {
 		t.Errorf("建造費％動到了稅收（%v→%v）；原版兩顆箭頭各自獨立重算", tax, g.taxTotal)
 	}
-	matchesExcept(t, g, "fcmd-plan-pct-up", planArrowSkip)
+	matches(t, g, "fcmd-plan-pct-up")
 }
 
-// planArrowSkip 是剛點過的那顆箭頭鈕（畫面 (464,320)–(479,339) 與 (464,280)–(479,299)
-// 兩顆合起來的範圍）。**這是未解的 21 個像素**，不是核准的差異：
-// 原版在那一格寫色 8、remake 寫色 9，形狀是游標周圍的一小塊。
-// 游標本身（色 7 本體、色 3 描邊）的位置兩邊相同，所以不是游標畫錯位置；
-// 「剛點過的鈕有沒有留下按下的樣子」還沒逆向（#64 的未解項，`docs/re/343` §五）。
-// 那一塊查清楚就把這個排除區拿掉。
-var planArrowSkip = [][4]int{
-	{464, 280, 479, 299}, {480, 280, 495, 299},
-	{464, 320, 479, 339}, {480, 320, 495, 339},
+// 四顆箭頭及呈現狀態生命週期都以原版整張收據核對（規格 003、研究 350）。
+func TestPlanArrowRenderingMatchesOriginal(t *testing.T) {
+	for _, tc := range []struct {
+		batch string
+		x, y  int
+	}{
+		{"tax-up", 471, 289}, {"tax-down", 487, 289},
+		{"pct-up", 471, 329}, {"pct-down", 487, 329},
+	} {
+		t.Run(tc.batch, func(t *testing.T) {
+			g := reachTaxPlan(t)
+			g.Click(tc.x, tc.y)
+			matches(t, g, "planarrow-"+tc.batch)
+		})
+	}
+	t.Run("懸停", func(t *testing.T) {
+		g := reachTaxPlan(t)
+		g.MoveMouse(471, 289)
+		matches(t, g, "planarrow-hover")
+	})
+	t.Run("移開仍保留", func(t *testing.T) {
+		g := reachTaxPlan(t)
+		g.Click(471, 289)
+		g.MoveMouse(600, 380)
+		matches(t, g, "planarrow-moved")
+	})
+	t.Run("兩顆各自保留", func(t *testing.T) {
+		g := reachTaxPlan(t)
+		g.Click(471, 289)
+		g.Click(487, 289)
+		matches(t, g, "planarrow-updown")
+	})
+	t.Run("關窗重開", func(t *testing.T) {
+		g := reachTaxPlan(t)
+		g.Click(471, 289)
+		g.Click(463, 369)
+		g.Click(352, 125)
+		g.Click(400, 165)
+		matches(t, g, "planarrow-reopen")
+	})
+	t.Run("上界仍轉色", func(t *testing.T) {
+		g := reachTaxPlan(t)
+		// 與原版明示注入相同：只改檔位，不預先跑重算。
+		g.blend[g.faction] = 4
+		g.Click(471, 289)
+		matches(t, g, "planarrow-clamp")
+	})
 }

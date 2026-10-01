@@ -85,26 +85,52 @@ cases=(
   "fcmd-info-power|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 352 125; click 400 145; click 424 168"
   "fcmd-staff-decide|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 352 125; click 400 145; click 543 388; click 450 92; click 497 330"
 )
+# #80：完整正常玩家路徑到徵稅面板，八份都不排除箭頭或游標。
+plan_path="move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 352 125; click 400 165"
+cases+=(
+  "planarrow-tax-up|$plan_path; click 471 289"
+  "planarrow-tax-down|$plan_path; click 487 289"
+  "planarrow-pct-up|$plan_path; click 471 329"
+  "planarrow-pct-down|$plan_path; click 487 329"
+  "planarrow-hover|$plan_path; move 471 289"
+  "planarrow-moved|$plan_path; click 471 289; move 600 380"
+  "planarrow-updown|$plan_path; click 471 289; click 487 289"
+  "planarrow-reopen|$plan_path; click 471 289; click 463 369; click 352 125; click 400 165"
+)
 fail=0
 for c in "${cases[@]}"; do
   IFS='|' read -r batch script except <<<"$c"
+  [[ -z "${LOGH3_GUI_PREFIX:-}" || "$batch" == "$LOGH3_GUI_PREFIX"* ]] || continue
   oracle="workplace/oracle/$batch/screen.bin"
   if [[ ! -f "$oracle" ]]; then
     echo "  $batch 缺收據，跳過"
     continue
   fi
+  shots=(-shot-bin /src/workplace/gui-check.bin)
+  if [[ "$batch" == planarrow-* ]]; then
+    shots=(-shot-bin "/src/workplace/oracle/$batch/remake.bin" -shot "/src/workplace/oracle/$batch/remake.png")
+    # 記錄實際輸入；不在主機執行資料分析。
+    printf '%s\n' "$script" > "workplace/oracle/$batch/remake-script.txt"
+    LOGH3_EXTRA_RO="$ROOT" tools/py.sh -c '
+import hashlib,json,pathlib,sys
+root=pathlib.Path("/ref"); out=pathlib.Path("workplace/oracle",sys.argv[1])
+sources=["internal/game/game.go","internal/game/planscreens.go","internal/game/planscreens_test.go","tools/gui_check.sh"]
+out.joinpath("remake-meta.json").write_text(json.dumps({"git_head":sys.argv[2],"working_tree":sys.argv[3],"image":sys.argv[4],"command":"tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2","source_sha256":{p:hashlib.sha256(root.joinpath(p).read_bytes()).hexdigest() for p in sources},"rng":"正常劇本 1 帝國，箭頭不含亂數判定","scenario":"S1 帝國 796-01-01","input":"remake-script.txt 完整正常玩家路徑；未注入"},ensure_ascii=False,indent=2)+"\n")
+' "$batch" "$(git rev-parse HEAD)" "$(git status --porcelain)" "${LOGH3_GUI_IMAGE:-logh3-ebiten:2}"
+  fi
   tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data \
-    -script "$script" -shot-bin /src/workplace/gui-check.bin -shot-after 2 \
+    -script "$script" "${shots[@]}" -shot-after 2 \
     >/dev/null 2>&1
+  actual="${shots[1]#/src/}"
   if [[ -n "$except" ]]; then
     # 有排除矩形的用 python 比（x,y,w,h 之外要逐位元組相同）。
-    if tools/py.sh tools/scripts/cmp_except.py workplace/gui-check.bin "$oracle" "$except"; then
+    if tools/py.sh tools/scripts/cmp_except.py "$actual" "$oracle" "$except"; then
       echo "  $batch 排除 ($except) 之外逐位元組相同"
     else
       echo "  $batch **不同**"
       fail=1
     fi
-  elif cmp -s workplace/gui-check.bin "$oracle"; then
+  elif tools/py.sh tools/scripts/cmp_except.py "$actual" "$oracle" 0,0,0,0; then
     echo "  $batch 逐位元組相同"
   else
     echo "  $batch **不同**"

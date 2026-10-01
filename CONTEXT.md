@@ -1,8 +1,17 @@
 # CONTEXT — 銀河英雄傳說III SP 專案目前真相
 
-本檔是目前真相與唯一剩餘工作。流水帳在 `WORKLOG.md`；協作規範在 `AGENTS.md`。
+本檔保存目前真相；剩餘工作的權威是 GitHub 上的 `worklist` Issue。
+流水帳在 `WORKLOG.md`；協作規範在 `AGENTS.md`。
 
 ## 現況一覽
+
+- **最近驗證（2026-10-01）**：#80 徵稅箭頭轉色修正完成，移除四顆箭頭的測試排除區。
+  八份正常玩家入口完整畫面及 RGB 零差異，上界另有明示注入診斷；14 份原版收據兩輪
+  全部重現。48 份 GUI 驗收與全部正式產品套件測試通過，詳見
+  [對拍 025](docs/playtest/025-plan-arrows.md) 與 [研究 350](docs/re/350-plan-arrows-retain-dim-colour.md)。
+  月初預算尚有 **#82**：remake 已扣稅，原版仍在扣稅前，不能用命令階段 `taxTotal`
+  直接更新報告；[規格 003](docs/spec/003-budget-panel.md) 此擴充為 DRAFT，試作已撤回。
+  本輪範圍快照與下一閘門見 [第十輪](docs/goal/2026-10-01-plan-arrows-round-10.md)。
 
 - 遊戲：《銀河英雄傳說III SP》（Micronet，1994），PC DOS 版，啟動程式 `GIN3.COM`。
 - 原版 bundle：`org_game/银河英雄传说3SP.zip`，
@@ -362,6 +371,7 @@
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
+| 預算箭頭只是游標附近 17–21 點未知差異；月初預算的 10741 表示已收稅 | `docs/re/343`、`docs/spec/003` 舊版 | `docs/re/350`：移開游標後仍有 26 點色號 9→8，先加後減兩顆各自保留，關窗重開才重設；完整記憶體顯示月初原版星域經濟力 85020、remake 已扣到 82302。原版此時為收稅前預估，未操作時才與後續實收相等。呈現缺口 #80 已修；結算生命週期留 #82，未通過試作已撤回 |
 | 左下角摘要「從別的畫面回到地圖介面的那一次輸入不重算」（規則四），且內容每幀從星域記錄現算 | `docs/re/284`、`docs/spec/001` 舊版規則 4、`internal/game.refreshHoverRegion` 舊註解 | `docs/re/312` §7.7–7.8：`fcmd-win-rclick`（右鍵回地圖、游標在艾流塞拉）那塊換成艾流塞拉，同一視窗按「結束」回來的 `fcmd-close` 仍是首都——判準是「游標底下那一格變了沒」，`dec1` 只是沒變的情況；`fcmd-hover-home` 對 `dec1`：星域 0 的 `+0x28` 已是 1、面板仍寫 0：0，面板是寫進去那一刻的文字。規格 001 規則 4–7 已改寫 |
 | 右下角清單右邊那個數字「一律 100，是不是機動力還沒驗」 | `docs/re/70`、`fleet-list-panel.json` 舊註、`internal/game.fleetRows` 舊註解 | `docs/re/313` §一：列印常式讀艦隊 `+0x3C`（士氣值），低於 50 變紅；記號欄依 `+0x08` 印 ☆／＊／◎ |
 | 戰略地圖的顏色只由擁有者查 `ds:8BD2` 決定，開局建一張就夠 | `docs/re/17`、`docs/internals/12`、`internal/game.factionStarMap` 舊版 | `docs/re/313` §3.2：`3705:037F` 先看 `+0x28 ＋ 陣營`——有自軍艦隊改查 `ds:8BD6` {0, 2, 15}（收據 `fcmd-exec`、S2 的 2／7／8 三格）；反白格查 `ds:8BDA`。地圖現在每幀照記錄算 |
@@ -509,29 +519,23 @@
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
-#### plan-arrow-pressed-pixels — 徵稅／預算計劃四顆箭頭鈕剛點過時差 17–21 個像素
+#### budget-plan-arrow-live-render — 月初預算箭頭未更新畫面，且收稅結算時序與原版不同
 
-*[#80](https://github.com/wicanr2/logh3/issues/80) · parity（對拍：要與原版逐位元組相同）*
+*[#82](https://github.com/wicanr2/logh3/issues/82) · parity（對拍：要與原版逐位元組相同）*
 
-徵稅計劃／預算計劃那四顆箭頭鈕，**剛點過的那一顆**裡有 17–21 個像素對不上：
-原版寫色 8、remake 寫色 9，形狀是游標周圍的一小塊。游標本身（色 7 本體、色 3 描邊）
-兩邊位置相同，所以**不是游標畫錯位置**。
+月初「次月份預算計劃」的四顆箭頭會改變原版的當月預算，但 remake 使用靜態報告與游標，沒有即時顯示新數字；進一步同狀態記憶體核對證明結算時序也有差異。
 
-目前測試用 `planArrowSkip`（`internal/game/planscreens_test.go`）把四顆箭頭的格子排除，
-並在 `docs/spec/003` 與 `docs/re/343` §七第 3 點**標成未解、不是核准的差異**。
+原版顯示這張預算時尚未扣稅，remake 的 `monthEndSeat` 已執行 `CollectTax`。同一帝國星域經濟力為 85020／82302；加稅後兩側稅率同為 47，但總稅額為 16070／15472。因此不能只把 `monthReport.Tax` 換成 `taxTotal`。這項試作已撤回，規格 003 此擴充為 DRAFT。
 
-猜測方向（都沒驗）：剛點過的鈕留下「按下」的樣子（像清單列那種 `pressed` 底色）、
-或箭頭圖塊本身在按下那一幀被換過。
+**卡在**：- 原版四顆箭頭收據已取得且兩輪逐位元組重現；真正收稅與造船的後續生命週期尚未核對完整。
+- remake 月初報告使用已結算狀態；需要依證據決定結算何時執行及 UI 使用何種狀態，不能猜補或另造數字。
+- 月初稅率標籤是 `report` 第 9 行，徵稅是 `overlay` 第 8 行；開窗游標映射與後續即時游標也要分別核對。
 
-**卡在**：- 沒有逐幀收據看「按下 → 放開」那一段（`-watch-screen` 可以）。
-- 畫箭頭的那一支還沒定位（熱區清單 `ds:14A8` 的 idx 0／1／4／5，kind 6）。
+**做完的判準**：從月初扣稅前的同一局面操作四顆箭頭，完整畫面、游標、稅率標籤與預算數字同狀態對上原版；再關預算、經會計／訂造報告到命令階段，核對實收稅、實際造船、資金、星域／行星經濟力及存檔。確認只收一次稅，且改預算真正影響結算。規格經證據審查到 READY 後才修改正式流程。
 
-**做完的判準**：那 17–21 個像素的成因寫進 `docs/re/`；remake 照原版畫，`planArrowSkip` 拿掉，
-`fcmd-plan-tax-up`／`-tax-down`／`-pct-up` 三份整張相同。
+**證據**：[`docs/re/350-plan-arrows-retain-dim-colour.md`](docs/re/350-plan-arrows-retain-dim-colour.md)、[`docs/spec/003-budget-panel.md`](docs/spec/003-budget-panel.md)、[`tools/plan_arrow_receipts.sh`](tools/plan_arrow_receipts.sh)
 
-**證據**：[`docs/re/343-plan-screen-buttons.md`](docs/re/343-plan-screen-buttons.md)、[`docs/spec/003-budget-panel.md`](docs/spec/003-budget-panel.md)
-
-**核實**：`internal/game/planscreens.go` 裡還找得到 `剛點過的那顆箭頭鈕還差 17–21 個像素`（自承還在 ＝ 還沒做）
+**核實**：要人判——規格 003 月初擴充仍為 DRAFT；正式接上後綁 go_test，涵蓋四箭頭整張比與原版實收稅／造船／資金的結算鏈，不能只驗靜態預算或 remake 內部自洽。
 
 #### battle-turn-eight-steps — 戰場回合結算對齊原版八步（規格 062 的其餘七步與子步 8-2–8-5）
 
@@ -843,7 +847,7 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-74 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+75 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1890,6 +1894,22 @@ TestBattleEndsAfterNineTurns     TestBattleResultPersists       TestBattleComput
 **證據**：[`internal/game/battle_ai_test.go`、`battle_trigger_test.go`、`battle_input_test.go`、`passivebattle_test.go`](internal/game/battle_ai_test.go`、`battle_trigger_test.go`、`battle_input_test.go`、`passivebattle_test.go)、[`docs/spec/061`（電腦不造成傷害）、`docs/spec/018`（戰場回合）`](docs/spec/061`（電腦不造成傷害）、`docs/spec/018`（戰場回合）)
 
 **核實**：`TestBattleStartsOnContact` 釘在 `internal/game`
+
+#### plan-arrow-pressed-pixels — 徵稅／預算計劃四顆箭頭鈕剛點過時差 17–21 個像素
+
+*[#80](https://github.com/wicanr2/logh3/issues/80) · parity（對拍：要與原版逐位元組相同）*
+
+徵稅計劃四顆箭頭原有 17–21 像素差異已解出並修正。原版點擊後整顆箭頭的色號 9→8，各顆獨立保留，游標移開不還原，關窗再開全部重設。原先游標附近只看見部分差異，是其餘像素被游標遮住。
+
+**卡在**：本條原判準已完成。月初預算入口另外發現即時畫面與收稅結算時序差異，拆到 #82（規格 003 月初擴充 DRAFT），不能把本條完成解讀成月初整條結算已對上。按住連發仍由 #60 處理。原版內部造成轉色的 callee 仍 unknown；已證實的有限執行期行為足以修正呈現。
+
+**做完的判準**：已完成：成因、雜湊與工具版本寫入研究 350；remake 照原版轉色；`planArrowSkip` 移除；`fcmd-plan-tax-up`／`-tax-down`／`-pct-up` 改成整張比並通過。
+
+擴充驗收亦完成：四顆箭頭、懸停、移開、先加後減、重新開窗，共八份正常入口畫面全部 640×480 色號與 RGB 零差異；上界另由明示注入診斷整張核對。14 份原版收據兩輪逐位元組重現；48 份 GUI 驗收與全部正式產品套件測試通過。
+
+**證據**：[`docs/re/350-plan-arrows-retain-dim-colour.md`](docs/re/350-plan-arrows-retain-dim-colour.md)、[`docs/internals/23-hotspot-lists.md`](docs/internals/23-hotspot-lists.md)、[`docs/internals/data/plan-arrow-render.json`](docs/internals/data/plan-arrow-render.json)、[`docs/spec/003-budget-panel.md`](docs/spec/003-budget-panel.md)、[`docs/playtest/025-plan-arrows.md`](docs/playtest/025-plan-arrows.md)、[`tools/plan_arrow_receipts.sh`](tools/plan_arrow_receipts.sh)、[`tools/gui_check.sh`](tools/gui_check.sh)、[`tools/scripts/plan_arrow_stats.py`](tools/scripts/plan_arrow_stats.py)
+
+**核實**：`TestPlanArrowRenderingMatchesOriginal` 釘在 `internal/game`
 
 #### strategic-annihilate-slot-writeback — 戰略全滅沒有寫回存檔表：存檔之後那一支會復活
 
