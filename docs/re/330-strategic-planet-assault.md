@@ -485,3 +485,11 @@ for 星域 in 0..31，星域[+0x13] bit4:                      ; 0374:03E8 的�
 | `docs/re/147`、remake `ApplyShipLoss` | 存量縮減「艦種 ≠ 5 且表不是 0xFF」 | 艦種 5 無條件縮 |
 | remake `Atan256` | sin／cos 二分 | 與 `ds:593A` 查表 0..599 裡約 8,130 組差 1（strong inference）|
 | `docs/internals/08` | `+2…+5` 用途未知 | 功績累計（`203A:0743`）|
+
+
+## 2026-10-02 勘誤與實作回填
+
+研究 366 已用固定原版常式兩輪收據與 IDA 原始指令證實三處差異；
+戰场分攤尾額不夾值、種類 5 兩格庫存無條件縮減、方位共用原版 64 格反正切表。
+原研究與形成原因保留；目前規則以[規格 078](../spec/078-battle-rule-corrections.md)及
+[研究 366](366-battle-rule-corrections.md)為準，完整驗收見[對拍 038](../playtest/038-battle-rule-corrections.md)。

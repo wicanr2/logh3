@@ -245,11 +245,10 @@ func assaultCounter(p *BattlePlanet, f *BattleFleet, bits int,
 }
 
 // spreadOverFleet 是 `20B4:103D`：把量按「艘數佔全隊的百分比」分攤到各
-// 分隊，餘數丟給艘數最多的那一支，而且**不打光**（每支至少留一艘）。
+// 分隊；主迴圈每支至少留一艘，餘數整筆丟給原先艘數最多的那一支。
 //
-// 戰場層與位元組三處不符還沒修：尾段原版不夾「留一艘」、`ApplyShipLoss` 艦種 5
-// 的存量條件寫反、`Atan256` 與 `ds:593A` 查表差 1（`docs/re/330` §12；戰略層的
-// `strategicassault.go` 已照位元組）。
+// 尾段不夾「留一艘」：原版寫了 [bp+2]，實際推入 [bp+6] 完整餘額。
+// 規格 078／研究 366 的受控原版收據確認最大分隊可以被尾段打光。
 //
 // 兩段整數捨去（先算百分比再乘）是原版的形狀，換成一次乘除會差幾艘。
 func spreadOverFleet(f *BattleFleet, units []BattleUnit,
@@ -299,12 +298,8 @@ func spreadOverFleet(f *BattleFleet, units []BattleUnit,
 	}
 	if left > 0 && big >= 0 && units[big].Ships > 0 {
 		u := &units[big]
-		share := left
-		if share >= u.Ships {
-			share = u.Ships - 1
-		}
 		if k, ok := kinds.Kind(u.Faction, u.Kind); ok {
-			done += ApplyShipLoss(u, k, share)
+			done += ApplyShipLoss(u, k, left)
 		}
 	}
 	return done

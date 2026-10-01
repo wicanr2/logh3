@@ -1,0 +1,68 @@
+{
+  "schema": "logh3.battle-rule-semantics.v1",
+  "source": "研究 366 的逐指令人工審查",
+  "inputs": {
+    "203A": "48dad4bc7ddb71094453c27e0f46ce00b235edf94be628a35b82d8a9c61bd02f",
+    "20B4": "3419e8c334c3744eb3d80041c63e9aed1bba9e9815c2ec6a1a74158a51cf4e29",
+    "2BE1": "c177c8dcd4d5ad1d8d544374d1ec87c857722263f63561e1303f2abde496ba3a"
+  },
+  "address_contract": "逐項 CS:IP 為本次 dosgolem runtime；必須另保留 IDA .COM 位址及原始 bytes。長期資料以切段雜湊與原始指令簽章定位。",
+  "entries": [
+    {
+      "kind": "instruction",
+      "original_location": "203A:0620",
+      "original_bytes_hex": "74 09",
+      "semantic": "種類 5 跳到飛彈縮減分支，繞過表旗標 FF 排除。",
+      "grade": "proven",
+      "source": "docs/re/366-battle-rule-corrections.md；原版受控兩輪 SHA-256 529062efcbfcb3a55fcddcb233dd0e56868ae5afe5f9a4a75c456e1a581659dd"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "203A:0668",
+      "original_bytes_hex": "74 0a",
+      "semantic": "種類 5 跳到戰機縮減分支，繞過表旗標 FF 排除。",
+      "grade": "proven",
+      "source": "docs/re/366-battle-rule-corrections.md；原版受控兩輪 SHA-256 529062efcbfcb3a55fcddcb233dd0e56868ae5afe5f9a4a75c456e1a581659dd"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "20B4:11C9",
+      "original_bytes_hex": "89 4e 02",
+      "semantic": "尾額夾到艘數減一後寫到 [bp+2]；後續 call 沒有推入這個 local。",
+      "grade": "proven",
+      "source": "docs/re/366-battle-rule-corrections.md；原版受控兩輪 SHA-256 529062efcbfcb3a55fcddcb233dd0e56868ae5afe5f9a4a75c456e1a581659dd"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "20B4:11D2",
+      "original_bytes_hex": "ff 76 06",
+      "semantic": "尾額 call 的量來自 [bp+6] 完整剩餘量，未套用 [bp+2] 夾值。",
+      "grade": "proven",
+      "source": "docs/re/366-battle-rule-corrections.md；原版受控兩輪 SHA-256 529062efcbfcb3a55fcddcb233dd0e56868ae5afe5f9a4a75c456e1a581659dd"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "20B4:1215",
+      "original_bytes_hex": "8b 46 08",
+      "semantic": "返回 AX 載入 [bp+8] 實扣艘數；百分比先另寫 ds:A768。",
+      "grade": "proven",
+      "source": "docs/re/366-battle-rule-corrections.md；原版受控兩輪 SHA-256 529062efcbfcb3a55fcddcb233dd0e56868ae5afe5f9a4a75c456e1a581659dd"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "2BE1:01EE",
+      "original_bytes_hex": "c7 46 02 3a 59",
+      "semantic": "反正切查表起點為原版資料段偏移 593A。",
+      "grade": "proven",
+      "source": "docs/re/366-battle-rule-corrections.md；原版受控兩輪 SHA-256 529062efcbfcb3a55fcddcb233dd0e56868ae5afe5f9a4a75c456e1a581659dd"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "2BE1:0202",
+      "original_bytes_hex": "80 7e 00 40",
+      "semantic": "查表索引上限 64；表範圍 593A..59B9 的 64 個 word 已逐值核對。",
+      "grade": "proven",
+      "source": "docs/re/366-battle-rule-corrections.md；原版受控兩輪 SHA-256 529062efcbfcb3a55fcddcb233dd0e56868ae5afe5f9a4a75c456e1a581659dd"
+    }
+  ]
+}

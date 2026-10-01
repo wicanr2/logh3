@@ -121,8 +121,8 @@ type FortressGunHit struct {
 }
 
 // 艦種表裡「這個艦種有沒有飛彈／艦載機」的旗標位移（值 0xFF ＝ 沒有）。
-// 損失時那兩格要按剩餘比例縮減，而艦種 5（運補艦）不縮
-// （`203A:0593`，`docs/re/147`）。
+// 艦種 5（運補艦）無條件縮減兩格，其他艦種才檢查旗標。
+// （`203A:0593`，規格 078／研究 366；研究 147 的反向敘述已勘誤）。
 const (
 	kindMissileFlag = 0x0E
 	kindFighterFlag = 0x12
@@ -226,8 +226,8 @@ func fireOne(pi int, p *BattlePlanet, i int, fleets []BattleFleet,
 //
 //	艦種 7（索敵分遣隊）不受損，直接回它現有的艘數
 //	實扣 ＝ min(艘數, 量)
-//	`+0x0E`／`+0x12`（飛彈／艦載機）按剩餘比例縮減（艦種 ≠ 5，
-//	而且艦種表對應欄位不是 0xFF）
+//	`+0x0E`／`+0x12`（飛彈／艦載機）按剩餘比例縮減（艦種 5，
+//	或艦種表對應欄位不是 0xFF；規格 078）
 //	`+0x08` −= 實扣、`+0x0C` −= 實扣² ÷ 滿編
 func ApplyShipLoss(u *BattleUnit, k ShipKind, amount int) int {
 	if u.Kind == kindScout {
@@ -248,13 +248,11 @@ func ApplyShipLoss(u *BattleUnit, k ShipKind, amount int) int {
 			u.RepairCap = 0
 		}
 	}
-	if u.Kind != kindSupply {
-		if k.Byte(kindMissileFlag) != 0xFF {
-			u.Missiles = u.Missiles / before * (before - lost)
-		}
-		if k.Byte(kindFighterFlag) != 0xFF {
-			u.Fighters = u.Fighters / before * (before - lost)
-		}
+	if u.Kind == kindSupply || k.Byte(kindMissileFlag) != 0xFF {
+		u.Missiles = u.Missiles / before * (before - lost)
+	}
+	if u.Kind == kindSupply || k.Byte(kindFighterFlag) != 0xFF {
+		u.Fighters = u.Fighters / before * (before - lost)
 	}
 	return lost
 }

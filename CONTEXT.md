@@ -5,6 +5,16 @@
 
 ## 現況一覽
 
+- **目前接續（2026-10-02，第二十四輪）**：#53 戰場三項規則差異已補原版受控證據並修正。
+  分攤尾額可以打光最大分隊、種類 5 兩格庫存無條件縮減、戰場與戰略共用原版反正切表。
+  兩輪原版常式完整收據相同；舊寫法十個子案例失敗，修正後 19 個子案例通過。
+  既有戰場／戰略及玩家路徑回歸 54 個通過事件、零跳過，標準產品套件與三份正常 GUI 通過；
+  正式 FLEET 3904／SHIP 27456 bytes 存讀零差異。入口：
+  [第二十四輪](docs/goal/2026-10-02-battle-rules-round-24.md)、
+  [規格 078](docs/spec/078-battle-rule-corrections.md)、[研究 366](docs/re/366-battle-rule-corrections.md)、
+  [對拍 038](docs/playtest/038-battle-rule-corrections.md)。原版常式診斷只證明指定欄位，
+  正常 GUI 是 remake 路徑抽樣；完整八步 #79 與其他 Issue 仍須接續。
+
 - **目前接續（2026-10-02，第二十三輪）**：#69 本作品 RRSAL-1.0 全文與音樂來源套件技術準備完成。
   固定來源包 2,361 檔、兩次 tar 完整雜湊相同；完整必要 Go 依賴與第三方授權保留，
   不含原版檔／素材／生成曲庫。空模組快取、無網路重建五種指定原生 Go 入口，
@@ -601,7 +611,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 12 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 11 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -891,29 +901,6 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 **核實**：`internal/rules/strategicassault.go` 裡還找得到 `同一回合先打過仗時守軍殘留沒驗`（自承還在 ＝ 還沒做）
 
-#### battle-assault-byte-mismatches — 戰場層打行星與位元組三處不符（103D 尾段、0593 艦種 5、Atan256 查表）
-
-*[#53](https://github.com/wicanr2/logh3/issues/53) · parity（對拍：要與原版逐位元組相同）*
-
-戰場層打行星有三處與位元組不符（戰略打行星讀 `20B4:103D`／`203A:0593`／`2BE1:011D` 時發現，
-`docs/re/330` §12；戰略層的 `strategicassault.go` 已照位元組寫，戰場層沒動）：
-
-1. `spreadOverFleet`（`20B4:103D`）尾段：原版把「留一艘」寫進 `[bp+2]`、呼叫 `203A:0593` 時 push 的卻是
-   `[bp+6]`（剩餘量），實際**不夾**——尾段可以把最大那組打光。`docs/re/152` 寫成「同樣夾」。
-2. `ApplyShipLoss`（`203A:0593`）兩格存量 `+0x0E`／`+0x12` 的縮減條件：原版艦種 5 **無條件**縮、其他艦種才看
-   艦種表是不是 0xFF（`0620: cmp al,5; jz 062B`）；remake 與 `docs/re/147` 寫成艦種 5 不縮。
-3. `Atan256`（sin／cos 二分法）與原版 `ds:593A` 查表（`rules.AtanTable256`）在 |dx|、|dy| 0..599 裡約 8,130 組差 1
-   （subagent 手抄 Python 比的，strong inference）。
-
-**卡在**：- 既有戰場收據（`s3assault` 等）剛好都沒有「剩餘量 ≥ 最大分隊」「艦種 5 被打」的局面，要用 `-poke` 造。
-- `Atan256` 用在戰場移動與射程，換掉會動到許多既有收據，要整批重跑比較。
-
-**做完的判準**：三處各有能區分兩種寫法的同狀態收據（或證明既有收據踩不到），戰場層改成位元組的寫法之後既有戰場收據全過。
-
-**證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/re/152-planet-counter-attack.md`](docs/re/152-planet-counter-attack.md)、[`docs/re/147-fortress-gun-damage.md`](docs/re/147-fortress-gun-damage.md)
-
-**核實**：`internal/rules/planetassault.go` 裡還找得到 `戰場層與位元組三處不符還沒修`（自承還在 ＝ 還沒做）
-
 #### engagement-animation — 交戰演出（ANI_PNL1 ＋ COMANI.BMG）與戰鬥曲的出口
 
 *[#48](https://github.com/wicanr2/logh3/issues/48) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -945,7 +932,7 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-78 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+79 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -2402,6 +2389,30 @@ remake 的新遊戲艦隊只帶 `rules.FleetGroup`（艦種、艘數、滿編、
 **證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/re/331-engagement-picture-sequence.md`](docs/re/331-engagement-picture-sequence.md)
 
 **核實**：要人判——執行器在另一個 repo，logh3 這邊沒有程式碼訊號。修在 dosgolem-logh3 f7523f9：cmd/probe 的 TestParseWatchRangesKeepsEveryRange、TestParseWatchRangesRejectsJunk、TestRegsAtKeepsNearbyPointers。
+
+#### battle-assault-byte-mismatches — 戰場層打行星與位元組三處不符（103D 尾段、0593 艦種 5、Atan256 查表）
+
+*[#53](https://github.com/wicanr2/logh3/issues/53) · parity（對拍：要與原版逐位元組相同）*
+
+2026-10-02 已完成三項戰場修正，先由原版證據審查至規格 078 READY，才實作並驗證：
+
+1. `spreadOverFleet` 尾段不再夾到剩一艘。原版一組 100 艘受量 130 變 0；兩組各 100 艘受量 201 變 0／1，回實扣 199。
+2. `ApplyShipLoss` 種類 5 無條件縮兩格庫存，其他種類才檢查旗標。五組原版條件包含種類 0／5 的 0／FF、種類 7。
+3. 共用 `atan256` 改用原版反正切表，涵蓋戰場移動、地形、射程與反擊。64 個原表值及 12 組原版呼叫核對相同。
+
+**卡在**：本項三處差異已解除。原版直接常式診斷只證明指定欄位，正常 GUI 是 remake 路徑抽樣；完整八步時機仍由 #79 管理，不把本項升格為整場戰鬥一致。
+
+唯一欄位摘要 SHA-256 `59bfe878dbdcc7431075e36f0c662eb06ad44c98a9cbc175b0a8a45b25608b0b`，
+原版兩輪完整受控收據 SHA-256 `529062efcbfcb3a55fcddcb233dd0e56868ae5afe5f9a4a75c456e1a581659dd`。
+固定乾淨 dosgolem `f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c`，執行器未修改。
+
+**做完的判準**：三處各有能區分兩種寫法的同狀態原版常式收據，兩次獨立重生逐位元組相同；舊 remake 十個子案例失敗，修正後 19 個子案例通過。
+既有戰場／戰略與玩家路徑回歸 54 個通過事件，零跳過、零失敗；全部標準產品套件通過。
+正式正常 GUI S3 戰場第一／第二回合抽樣、獨立正式編隊存讀亦通過，FLEET 3904／SHIP 27456 bytes 零差異。
+
+**證據**：[`docs/spec/078-battle-rule-corrections.md`](docs/spec/078-battle-rule-corrections.md)、[`docs/re/366-battle-rule-corrections.md`](docs/re/366-battle-rule-corrections.md)、[`docs/playtest/038-battle-rule-corrections.md`](docs/playtest/038-battle-rule-corrections.md)、[`docs/internals/data/battle-rule-corrections.json`](docs/internals/data/battle-rule-corrections.json)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)
+
+**核實**：`TestBattleRulesMatchesOracle` 釘在 `internal/rules`
 
 #### turn-transition-windows — 回合裡的過場視窗與報告（出發前往／已經到達／已經駐留、攻占訊息框、士氣報告）
 

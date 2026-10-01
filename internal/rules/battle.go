@@ -380,42 +380,11 @@ func FormationBase(facing int) (int, int) {
 
 // atan256 是一整圈 256 的 atan2，**只用整數**。
 //
-// 原版查的是反正切表；這裡用二分逼近同一個定義域，兩者在量到的
-// 十八個樣本上一致或差 1。
+// 原版與 remake 都查反正切表；舊二分逼近的差一格已依規格 078 修正。
 func atan256(dx, dy int) int {
-	ax, ay := abs32(dx), abs32(dy)
-	var a int
-	switch {
-	case ax == 0:
-		// **(0,0) 也回 64。** 原版 `2BE1:011D` 只看 dx 是不是 0：是就把
-		// 比值當成 0xFFFF 去查反正切表，得到 64，dy 是多少都一樣。
-		// 收據 `s3gunfire2` 裡有一支分隊剛好站在要塞正上方（距離 0），
-		// 回 0 會讓防禦係數算成 55 而不是 50，量從 3364 掉到 1602
-		// （`docs/re/148`）。
-		a = 64
-	default:
-		// 在 0–64 裡找角度，判準是 tan 的比較（全部化成乘法，不做除法）。
-		lo, hi := 0, 64
-		for lo < hi {
-			mid := (lo + hi) / 2
-			// tan(mid) ≥ ay/ax  ⇔  sin(mid)*ax ≥ cos(mid)*ay
-			if sin256(mid)*ax >= cos256(mid)*ay {
-				hi = mid
-			} else {
-				lo = mid + 1
-			}
-		}
-		a = lo
-	}
-	switch {
-	case dx < 0 && dy >= 0:
-		return (128 - a) % BattleTurn
-	case dx < 0 && dy < 0:
-		return (a + 128) % BattleTurn
-	case dy < 0:
-		return (BattleTurn - a) % BattleTurn
-	}
-	return a
+	// 戰場與戰略都呼叫原版 `2BE1:011D`，以 ds:593A 的截斷比值查表。
+	// sin／cos 二分法在 (1,1)、(4,1) 等點差一格；規格 078、研究 366。
+	return AtanTable256(dx, dy)
 }
 
 func abs32(n int) int {

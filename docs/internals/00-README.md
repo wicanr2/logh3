@@ -11,6 +11,13 @@
 
 ## 這裡的東西怎麼寫
 
+戰場傷害與方位規則接續範圍：[第二十四輪](../goal/2026-10-02-battle-rules-round-24.md)，工作項目 #53。
+
+三項戰場規則勘誤：[規格 078](../spec/078-battle-rule-corrections.md)、
+[研究 366](../re/366-battle-rule-corrections.md)、[對拍 038](../playtest/038-battle-rule-corrections.md)。
+解出的事實：[欄位摘要](data/battle-rule-corrections.json)、
+[IDA 自動合併分級索引](data/battle-rule-semantics.json)。
+
 音色庫來源與完整授權索引：[`player-music-library.json`](data/player-music-library.json)，
 用途與原版素材邊界見 [`17-mds.md`](17-mds.md)。
 原生 GM 移植與真實轉檔驗收索引：[`native-gm-import.json`](data/native-gm-import.json)，

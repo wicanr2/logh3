@@ -1,0 +1,565 @@
+{
+  "schema": "logh3.battle-rule-corrections.v1",
+  "date": "2026-10-02",
+  "issue": 53,
+  "grade": "proven",
+  "scope": "原版常式同狀態受控診斷；不證明正常玩家路徑或八步呼叫時機",
+  "input_sha256": "3d8d1e7b6a5332253736d31aca9c056c9d2a16255a568fa0498237e5dc954ae6",
+  "exe_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "golem_dirty": false,
+  "remake_parent": "1b4b08012f447e230ad9c42e80114ecf7c8b1883",
+  "remake_worktree": " M CONTEXT.md\n M WORKLOG.md\n M docs/internals/00-README.md\n M docs/internals/41-sin-table.md\n M docs/internals/50-fortress-gun.md\n M docs/re/147-fortress-gun-damage.md\n M docs/re/152-planet-counter-attack.md\n M docs/re/330-strategic-planet-assault.md\n M docs/spec/019-planet-assault.md\n M docs/spec/028-fortress-gun-fire.md\n M internal/rules/battle.go\n M internal/rules/fortressgun.go\n M internal/rules/planetassault.go\n M internal/rules/strategicassault.go\n?? docs/goal/2026-10-02-battle-rules-round-24.md\n?? docs/internals/data/battle-rule-corrections.json\n?? docs/internals/data/battle-rule-semantics.json\n?? docs/playtest/038-battle-rule-corrections.md\n?? docs/re/366-battle-rule-corrections.md\n?? docs/spec/078-battle-rule-corrections.md\n?? internal/rules/battle_rules_oracle_test.go\n?? tools/scripts/battle_rules_gui_check.py\n?? tools/scripts/battle_rules_ida.py\n?? tools/scripts/battle_rules_probe.go\n?? tools/scripts/battle_rules_receipt.py",
+  "go_image": "golang:1.24-bookworm",
+  "go_image_id": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+  "original_command": "DOSGOLEM_ORIG=/home/anr2/cht/logh3/org_game/extracted DOSGOLEM_EXTRA_MOUNT=/home/anr2/cht/logh3/workplace:/out bash /home/anr2/cht/dosgolem-logh3/tools/go.sh run /out/battle_rules_probe.go -output /out/oracle/battle53-routines/run-{c,d}.json",
+  "seed": "0x12345678",
+  "seed_location": "lin:5E00C",
+  "remake_seed": "0x12345678",
+  "rng_method": "兩側事前固定 0x12345678；三支受控常式無亂數判定；原版執行後種子 bytes 不變。remake 同初始欄位，不以相同 seed 數字證明完整骰序。",
+  "injection": "新 LoadProgram 的堆疊；完整注入 1 MiB；CallNear F000:0000 設 DS=ES=54B3；每案 Restore；扣損五案及分攤兩案的全部注入 bytes 與位址保留在兩份本機收據",
+  "runs": [
+    {
+      "path": "workplace/oracle/battle53-routines/run-c.json",
+      "sha256": "529062efcbfcb3a55fcddcb233dd0e56868ae5afe5f9a4a75c456e1a581659dd"
+    },
+    {
+      "path": "workplace/oracle/battle53-routines/run-d.json",
+      "sha256": "529062efcbfcb3a55fcddcb233dd0e56868ae5afe5f9a4a75c456e1a581659dd"
+    }
+  ],
+  "baseline_meta_sha256": "acec1587157e0c6ec977998c56d9cf9d6048de0f1307a5861a9605f8a32ebc19",
+  "baseline_flags_sha256": "fd1fc0bfaa94dc7be28358944097ad332568f7401651ee2cf9da367e9356957b",
+  "atan_table": [
+    0,
+    25,
+    50,
+    75,
+    100,
+    126,
+    151,
+    177,
+    203,
+    229,
+    256,
+    283,
+    310,
+    338,
+    366,
+    395,
+    424,
+    453,
+    484,
+    515,
+    547,
+    580,
+    613,
+    648,
+    684,
+    721,
+    759,
+    799,
+    840,
+    883,
+    928,
+    974,
+    1023,
+    1075,
+    1129,
+    1187,
+    1247,
+    1312,
+    1380,
+    1453,
+    1532,
+    1617,
+    1708,
+    1807,
+    1915,
+    2034,
+    2165,
+    2310,
+    2472,
+    2654,
+    2861,
+    3099,
+    3375,
+    3700,
+    4088,
+    4560,
+    5147,
+    5901,
+    6903,
+    8302,
+    10396,
+    13882,
+    20843,
+    41713
+  ],
+  "atan_table_sha256": "ae8f29f8a84f496742ae96a08b1fbad33520bc3bee5fc3469cc077418df2d614",
+  "rows": [
+    {
+      "angle": 64,
+      "dx": 0,
+      "dy": 0
+    },
+    {
+      "angle": 33,
+      "dx": 1,
+      "dy": 1
+    },
+    {
+      "angle": 10,
+      "dx": 4,
+      "dy": 1
+    },
+    {
+      "angle": 55,
+      "dx": 1,
+      "dy": 4
+    },
+    {
+      "angle": 95,
+      "dx": -1,
+      "dy": 1
+    },
+    {
+      "angle": 223,
+      "dx": 1,
+      "dy": -1
+    },
+    {
+      "angle": 161,
+      "dx": -1,
+      "dy": -1
+    },
+    {
+      "angle": 64,
+      "dx": 0,
+      "dy": 1
+    },
+    {
+      "angle": 192,
+      "dx": 0,
+      "dy": -1
+    },
+    {
+      "angle": 0,
+      "dx": 1,
+      "dy": 0
+    },
+    {
+      "angle": 128,
+      "dx": -1,
+      "dy": 0
+    },
+    {
+      "angle": 32,
+      "dx": 2031,
+      "dy": 2023
+    }
+  ],
+  "losses": [
+    {
+      "kind": 0,
+      "amount": 30,
+      "return": 30,
+      "kind_flags": 255,
+      "before": {
+        "ships": 100,
+        "full_ships": 100,
+        "repair_cap": 100,
+        "missiles": 1003,
+        "fighters": 301
+      },
+      "after": {
+        "ships": 70,
+        "full_ships": 100,
+        "repair_cap": 91,
+        "missiles": 1003,
+        "fighters": 301
+      }
+    },
+    {
+      "kind": 0,
+      "amount": 30,
+      "return": 30,
+      "kind_flags": 0,
+      "before": {
+        "ships": 100,
+        "full_ships": 100,
+        "repair_cap": 100,
+        "missiles": 1003,
+        "fighters": 301
+      },
+      "after": {
+        "ships": 70,
+        "full_ships": 100,
+        "repair_cap": 91,
+        "missiles": 700,
+        "fighters": 210
+      }
+    },
+    {
+      "kind": 5,
+      "amount": 30,
+      "return": 30,
+      "kind_flags": 255,
+      "before": {
+        "ships": 100,
+        "full_ships": 100,
+        "repair_cap": 100,
+        "missiles": 1003,
+        "fighters": 301
+      },
+      "after": {
+        "ships": 70,
+        "full_ships": 100,
+        "repair_cap": 91,
+        "missiles": 700,
+        "fighters": 210
+      }
+    },
+    {
+      "kind": 5,
+      "amount": 30,
+      "return": 30,
+      "kind_flags": 0,
+      "before": {
+        "ships": 100,
+        "full_ships": 100,
+        "repair_cap": 100,
+        "missiles": 1003,
+        "fighters": 301
+      },
+      "after": {
+        "ships": 70,
+        "full_ships": 100,
+        "repair_cap": 91,
+        "missiles": 700,
+        "fighters": 210
+      }
+    },
+    {
+      "kind": 7,
+      "amount": 30,
+      "return": 100,
+      "kind_flags": 255,
+      "before": {
+        "ships": 100,
+        "full_ships": 100,
+        "repair_cap": 100,
+        "missiles": 1003,
+        "fighters": 301
+      },
+      "after": {
+        "ships": 100,
+        "full_ships": 100,
+        "repair_cap": 100,
+        "missiles": 1003,
+        "fighters": 301
+      }
+    }
+  ],
+  "spreads": [
+    {
+      "amount": 130,
+      "flag": 0,
+      "return": 100,
+      "display_percent": 100,
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 1003,
+          "fighters": 301
+        }
+      ],
+      "after": [
+        {
+          "ships": 0,
+          "full_ships": 100,
+          "repair_cap": 2,
+          "missiles": 0,
+          "fighters": 0
+        }
+      ]
+    },
+    {
+      "amount": 201,
+      "flag": 0,
+      "return": 199,
+      "display_percent": 99,
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 1003,
+          "fighters": 301
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 1003,
+          "fighters": 301
+        }
+      ],
+      "after": [
+        {
+          "ships": 0,
+          "full_ships": 100,
+          "repair_cap": 2,
+          "missiles": 0,
+          "fighters": 0
+        },
+        {
+          "ships": 1,
+          "full_ships": 100,
+          "repair_cap": 2,
+          "missiles": 10,
+          "fighters": 3
+        }
+      ]
+    }
+  ],
+  "source_sha256": {
+    "tools/scripts/battle_rules_probe.go": "3da6f8c35f0e2ee677bcece1c1c88df9c45f8c9706ffa3aa023f2e3d8e9a8bc4",
+    "tools/scripts/battle_rules_receipt.py": "a76954420d4cf76eb409795dec20c61507b9f1d3d68b21eaa293fa33c31de96f",
+    "tools/scripts/battle_rules_ida.py": "9986486fa756f25ac9b380a12ea14d9a64b2d023dc1ab68b04b04496034fc1d4",
+    "internal/rules/battle.go": "0ed176cc37877e6eab96da5a7f4970363a1da80ef9a2b320be1deff580835fce",
+    "internal/rules/fortressgun.go": "40660ecca5ca33b623524ca2047eb09e61ddd134816f5bbeb8bb281f7675c6f4",
+    "internal/rules/planetassault.go": "6d06c73e64c12c4eebdb2741437f45d31286229aabec19c67964180abdbb745d",
+    "internal/rules/strategicassault.go": "1d264d86e5b285c7e2187f9ba0fdaaf98f2e291189726a8e8e87444b7d074b4e",
+    "internal/rules/battle_rules_oracle_test.go": "e703d6ad5038bcf92cdcee78468190e316a81dedeb162b6a8764c3aa92ff9460",
+    "tools/scripts/battle_rules_gui_check.py": "17597739b0ac6e054495b2fb542a54057f2937ee94715aa1f72fefbd239bc7ad"
+  },
+  "validation": {
+    "battle_test_pass_events": 54,
+    "battle_tests": [
+      "TestBattleMoveMatchesOracle",
+      "TestBattleRulesMatchesOracle/angle_0_0",
+      "TestBattleRulesMatchesOracle/angle_1_1",
+      "TestBattleRulesMatchesOracle/angle_4_1",
+      "TestBattleRulesMatchesOracle/angle_1_4",
+      "TestBattleRulesMatchesOracle/angle_-1_1",
+      "TestBattleRulesMatchesOracle/angle_1_-1",
+      "TestBattleRulesMatchesOracle/angle_-1_-1",
+      "TestBattleRulesMatchesOracle/angle_0_1",
+      "TestBattleRulesMatchesOracle/angle_0_-1",
+      "TestBattleRulesMatchesOracle/angle_1_0",
+      "TestBattleRulesMatchesOracle/angle_-1_0",
+      "TestBattleRulesMatchesOracle/angle_2031_2023",
+      "TestBattleRulesMatchesOracle/loss_0_255",
+      "TestBattleRulesMatchesOracle/loss_0_0",
+      "TestBattleRulesMatchesOracle/loss_5_255",
+      "TestBattleRulesMatchesOracle/loss_5_0",
+      "TestBattleRulesMatchesOracle/loss_7_255",
+      "TestBattleRulesMatchesOracle/spread_130",
+      "TestBattleRulesMatchesOracle/spread_201",
+      "TestBattleRulesMatchesOracle",
+      "TestBattleFacingMatchesOriginal",
+      "TestFormationBaseMatchesOriginal",
+      "TestFortressGunMatchesOracle",
+      "TestPlanetAssaultMatchesOracle",
+      "TestStrategicAssaultMatchesOracle/fcmd-assault-ast",
+      "TestStrategicAssaultMatchesOracle/fcmd-assault-phz",
+      "TestStrategicAssaultMatchesOracle/fcmd-assault-ai24",
+      "TestStrategicAssaultMatchesOracle",
+      "TestBattleMatchesOracle",
+      "TestBattleDataMatchesOracle",
+      "TestBattleMenuMatchesOracle",
+      "TestBattleUnitsMatchOracle",
+      "TestFortressRangeMatchesOracle",
+      "TestBattleDoubleClickAdvances",
+      "TestBattleStartsOnContact",
+      "TestBattleTurnsDeduct",
+      "TestBattleEndsAfterNineTurns",
+      "TestBattleResultPersists",
+      "TestBattleScrollMatchesOracle/cam-e",
+      "TestBattleScrollMatchesOracle/cam-w",
+      "TestBattleScrollMatchesOracle/cam-s",
+      "TestBattleScrollMatchesOracle/cam-n",
+      "TestBattleScrollMatchesOracle/cam-se",
+      "TestBattleScrollMatchesOracle/cam-sw",
+      "TestBattleScrollMatchesOracle/cam-ne",
+      "TestBattleScrollMatchesOracle/cam-nw",
+      "TestBattleScrollMatchesOracle/cam-tap",
+      "TestBattleScrollMatchesOracle/cam-long",
+      "TestBattleScrollMatchesOracle/cam-zero",
+      "TestBattleScrollMatchesOracle/cam-anchor",
+      "TestBattleScrollMatchesOracle",
+      "TestFortressAimStoresBearing",
+      "TestFortressGunFiresOnTurn"
+    ],
+    "skipped": 0,
+    "failed": 0,
+    "normal_gui": {
+      "scope": "remake 正常 GUI 入口、戰術實行、正式存讀抽樣；不宣稱同狀態原版畫面或八步 parity",
+      "head": "1b4b08012f447e230ad9c42e80114ecf7c8b1883",
+      "dirty": " M CONTEXT.md\n M WORKLOG.md\n M docs/internals/00-README.md\n M docs/internals/41-sin-table.md\n M docs/internals/50-fortress-gun.md\n M docs/re/147-fortress-gun-damage.md\n M docs/re/152-planet-counter-attack.md\n M docs/re/330-strategic-planet-assault.md\n M docs/spec/019-planet-assault.md\n M docs/spec/028-fortress-gun-fire.md\n M internal/rules/battle.go\n M internal/rules/fortressgun.go\n M internal/rules/planetassault.go\n M internal/rules/strategicassault.go\n?? docs/goal/2026-10-02-battle-rules-round-24.md\n?? docs/internals/data/battle-rule-corrections.json\n?? docs/internals/data/battle-rule-semantics.json\n?? docs/playtest/038-battle-rule-corrections.md\n?? docs/re/366-battle-rule-corrections.md\n?? docs/spec/078-battle-rule-corrections.md\n?? internal/rules/battle_rules_oracle_test.go\n?? tools/scripts/battle_rules_gui_check.py\n?? tools/scripts/battle_rules_ida.py\n?? tools/scripts/battle_rules_probe.go\n?? tools/scripts/battle_rules_receipt.py",
+      "image": "logh3-ebiten:2",
+      "image_id": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+      "cases": [
+        {
+          "name": "normal-entry",
+          "command": [
+            "/tmp/logh3-battle53",
+            "-orig",
+            "/orig",
+            "-data",
+            "/src/docs/internals/data",
+            "-intro=false",
+            "-script",
+            "move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 322; click 318 208; click 544 125; click 560 125; tick 400; click 300 240; tick 2",
+            "-shot",
+            "/src/workplace/oracle/battle53-routines/gui-final/normal-entry.png",
+            "-shot-bin",
+            "/src/workplace/oracle/battle53-routines/gui-final/normal-entry.bin",
+            "-state-out",
+            "/src/workplace/oracle/battle53-routines/gui-final/normal-entry.txt",
+            "-shot-after",
+            "2"
+          ],
+          "state": "state=StateBattle\nwindow=640x480\ncursor=320,294\ncursor_mode=1\n",
+          "sha256": {
+            "png": "fd9e3de691cb1b44c96a85cafafa2275962aa7637dcc16b570251a4143393a60",
+            "bin": "32702d2cf8e7ae631b6760219c10bfc7a3a84c54b818cbf599109d5d0adc08fb",
+            "txt": "1b58f355b79d4782ba8e9e9aeaee41991df39abd5172a2055ade9768e6238ad0",
+            "log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a",
+            "script": "2d3927b2941b89267953b4b40d642e5430b43c2ee3d35b9abac6c8de13dbdabb"
+          }
+        },
+        {
+          "name": "normal-turn",
+          "command": [
+            "/tmp/logh3-battle53",
+            "-orig",
+            "/orig",
+            "-data",
+            "/src/docs/internals/data",
+            "-intro=false",
+            "-script",
+            "move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 322; click 318 208; click 544 125; click 560 125; tick 400; click 300 240; tick 2; click 240 240; click 240 240",
+            "-shot",
+            "/src/workplace/oracle/battle53-routines/gui-final/normal-turn.png",
+            "-shot-bin",
+            "/src/workplace/oracle/battle53-routines/gui-final/normal-turn.bin",
+            "-state-out",
+            "/src/workplace/oracle/battle53-routines/gui-final/normal-turn.txt",
+            "-shot-after",
+            "2"
+          ],
+          "state": "state=StateBattle\nwindow=640x480\ncursor=320,294\ncursor_mode=1\n",
+          "sha256": {
+            "png": "9a0e8581387cb41d6af998c16da430f3ec7ab99b979ba3d026e91c1590b67382",
+            "bin": "cbc3d3588737812c41c9bf7bbadf3d5ca59de74d6b9531aaf593a7c3504d9cd5",
+            "txt": "1b58f355b79d4782ba8e9e9aeaee41991df39abd5172a2055ade9768e6238ad0",
+            "log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a",
+            "script": "9065be4cf26dd93d5096ed0b252e96a05d2af49de44d7880748e7c80acda0411"
+          }
+        },
+        {
+          "name": "normal-save",
+          "command": [
+            "/tmp/logh3-battle53",
+            "-orig",
+            "/orig",
+            "-data",
+            "/src/docs/internals/data",
+            "-intro=false",
+            "-script",
+            "move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 544 125; click 560 125; tick 18; click 544 125; click 560 165; click 300 142; rclick 300 142; click 544 125; click 560 145; click 300 122; click 544 125; click 560 165; click 300 162",
+            "-shot",
+            "/src/workplace/oracle/battle53-routines/gui-final/normal-save.png",
+            "-shot-bin",
+            "/src/workplace/oracle/battle53-routines/gui-final/normal-save.bin",
+            "-state-out",
+            "/src/workplace/oracle/battle53-routines/gui-final/normal-save.txt",
+            "-shot-after",
+            "2",
+            "-save",
+            "/src/workplace/oracle/battle53-routines/gui-final/save"
+          ],
+          "state": "state=StateSaveGame\nwindow=640x480\ncursor=320,294\ncursor_mode=1\n",
+          "sha256": {
+            "png": "3e70d0b574484b209c847d0dc55f23c329828b149f0e3a1ab4f908922ac2ddd8",
+            "bin": "f21fe1026e63edeb9b8f6acfef6e1dd98b9083dced89a267323b5356e352b56b",
+            "txt": "f4304c781f8308d3909df38b076bf222d501066497e31f3e74f9cab3d57206e2",
+            "log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a",
+            "script": "6397ccb6b413987c8f4cc81a81e06a0443cbfcd0bdfcf997304dc8eb9c619740"
+          }
+        }
+      ],
+      "source_sha256": {
+        "internal/rules/battle.go": "0ed176cc37877e6eab96da5a7f4970363a1da80ef9a2b320be1deff580835fce",
+        "internal/rules/planetassault.go": "6d06c73e64c12c4eebdb2741437f45d31286229aabec19c67964180abdbb745d",
+        "internal/rules/fortressgun.go": "40660ecca5ca33b623524ca2047eb09e61ddd134816f5bbeb8bb281f7675c6f4",
+        "internal/rules/strategicassault.go": "1d264d86e5b285c7e2187f9ba0fdaaf98f2e291189726a8e8e87444b7d074b4e",
+        "tools/scripts/battle_rules_gui_check.py": "17597739b0ac6e054495b2fb542a54057f2937ee94715aa1f72fefbd239bc7ad"
+      },
+      "save": {
+        "scope": "正常新遊戲編隊、回合、存、讀、再存；沒有保存中途戰場的聲明",
+        "fleet_counts": [
+          1,
+          3
+        ],
+        "fleet_bytes": 3904,
+        "ship_bytes": 27456,
+        "different": 0,
+        "sha256": {
+          "STELLAR.DT0": "165df5763d562d00df5dacd9cc3f40ea7ccbbea9618bce399ed8860c569014ba",
+          "STELLAR.DT1": "165df5763d562d00df5dacd9cc3f40ea7ccbbea9618bce399ed8860c569014ba",
+          "PLANET.DT0": "759db1cf4ef72bc7c510c05b927cdb8549b053f7d7b44cbccfc30c6d74f717a0",
+          "PLANET.DT1": "759db1cf4ef72bc7c510c05b927cdb8549b053f7d7b44cbccfc30c6d74f717a0",
+          "ADMIRAL.DT0": "c3f17ca1d1e56e0c94a013ce844f03df131fcf37465c174dddd6fae460ae0069",
+          "ADMIRAL.DT1": "c3f17ca1d1e56e0c94a013ce844f03df131fcf37465c174dddd6fae460ae0069",
+          "FLEET.DT0": "919c4daf11fcd67dd9a4fa6a600b7a1d6dc4eddba23c106a90aed6b8e70cee0c",
+          "FLEET.DT1": "919c4daf11fcd67dd9a4fa6a600b7a1d6dc4eddba23c106a90aed6b8e70cee0c",
+          "SHIP.DT0": "b7f2d7629e82c9676a79f4e4f6b4a6bbebef78493f42ca2a222fa48c7e7bef29",
+          "SHIP.DT1": "b7f2d7629e82c9676a79f4e4f6b4a6bbebef78493f42ca2a222fa48c7e7bef29",
+          "WORK.DT0": "7f8d907388875180c33bdd611cb0bd520ef0b282f1ffbde7af64e083cc64c8b2",
+          "WORK.DT1": "7f8d907388875180c33bdd611cb0bd520ef0b282f1ffbde7af64e083cc64c8b2"
+        }
+      }
+    },
+    "go_version": "go version go1.24.13 linux/amd64",
+    "commands": [
+      "bash tools/gui.sh test -count=1 ./internal/... ./cmd/...",
+      "bash tools/gui.sh test -count=1 -json ./internal/rules ./internal/game ./internal/screen -run <對拍 038 的固定測試名稱>",
+      "bash tools/gui.sh xrun python3 tools/scripts/battle_rules_gui_check.py --head <Git HEAD> --dirty <工作樹狀態> --image-id <Docker image ID>"
+    ],
+    "files": {
+      "before-tests.log": "a54bf3a407221182db80f8e19c281d699beed05962de1e294d3cf2dc09ac30eb",
+      "after-tests.log": "1764aa5bfe18deaa64f766d7e1243b1b55fff899140b99638a01713f630be8a2",
+      "after-verified-tests.log": "f9f736eecd25049bf0a881bb097601909f382cb6ed8b917cd7a6da62a131f8e1",
+      "product-tests.log": "98edcfc2ab7c5e00c5d4e90c2f055489d7725801ec04beedd69b712b22d5922f",
+      "battle-regressions.jsonl": "928dcaa9c6db71c1d34706ce020923098a6be414151f252c5fb2179e5133ef9e",
+      "gui-final/gui-check.json": "6e8bd2257968defc9feaca8c9299e7cdb93584c90765fff5962d3347ee7e1655"
+    }
+  },
+  "ida": {
+    "image": "ida-pro-9.4-idapython:locked-v1",
+    "image_id": "sha256:6f6d59af49d0008c4109a5295b5f374bdc007e2d1ab28cb9de08779584de2780",
+    "exports": [
+      {
+        "path": "workplace/ida/re53-loss-reviewed-ida.json",
+        "sha256": "e1cd7137ac231bd41ead7e81d88177677c44b877b553cf083964e01ed0c044bb",
+        "tool": "IDA Pro 9.4"
+      },
+      {
+        "path": "workplace/ida/re53-spread-reviewed-ida.json",
+        "sha256": "203622e50eae4c01f918e8650ac7077d6609f34035b38e625c534875f6ea5ce3",
+        "tool": "IDA Pro 9.4"
+      },
+      {
+        "path": "workplace/ida/re53-atan-reviewed-ida.json",
+        "sha256": "e1638bc306f47f6d0f9f94bc8df370e1515c15fba39a270d080c90094b36ea2f",
+        "tool": "IDA Pro 9.4"
+      }
+    ]
+  }
+}

@@ -45,3 +45,16 @@ x 夾進 0–0x7EF（2031）、y 夾進 0–0x7E7（2023）
 注意這與**佈陣**那邊不同：開場佈陣的座標是截斷的（`docs/internals/39`），
 所以捨去方式是**逐呼叫端**的，不能從表本身推。
 
+## 反正切表與共用方位（2026-10-02）
+
+已證實（proven）：反正切另用 `ds:593A` 起的 64 個 word，而非以正弦表二分搜尋。
+128 bytes 原表 SHA-256 `ae8f29f8a84f496742ae96a08b1fbad33520bc3bee5fc3469cc077418df2d614`；
+全部值及 12 組原版常式輸出存於[欄位摘要](data/battle-rule-corrections.json)。
+先取 `abs(dy) * 1024 / abs(dx)`，夾 `FFFF`，再找第一格值大於等於比值，
+找不到回 64。`dx=0` 取 `FFFF`，因此零向量也回 64；最後按象限折回 0..255。
+`(1,1)=33`、`(4,1)=10`；共用 `atan256`／`Atan256`／`AtanTable256`。
+
+輸入為固定 `GIN3.COM` 及記憶體切段，IDA Pro 9.4 與 dosgolem 固定版本／地址空間
+見[研究 366](../re/366-battle-rule-corrections.md)。原始指令簽章與工具位址逐項保留於
+[分級索引](data/battle-rule-semantics.json)，由 `tools/scripts/battle_rules_ida.py` 自動合併。
+規格及完成範圍見[078](../spec/078-battle-rule-corrections.md)。

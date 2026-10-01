@@ -1,5 +1,9 @@
 # 規格 028：要塞砲開火
 
+2026-10-02 現行勘誤：種類 5 扣損時兩格庫存無條件縮減，其他種類才看表旗標；
+戰場方位改共用原版反正切查表。見[規格 078](078-battle-rule-corrections.md)及
+[對拍 038](../playtest/038-battle-rule-corrections.md)，不升格既有原版八步時機聲明。
+
 狀態：**READY**（收據 `s3gunfire2`，
 [`docs/re/148`](../re/148-fortress-gun-fire-receipt.md)：射程判定 33 支、
 損失 17 支、`+0x0C`／`+0x0E`／`+0x12` 與兩個計分器全部逐一相同）。
