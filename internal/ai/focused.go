@@ -9,8 +9,8 @@ import (
 // Focused 是強化版：**一次投入大量兵力，包圍、集中、殲滅**
 // （`docs/spec/017`）。
 //
-// 原版那一層只會把艦隊往家裡收（`docs/re/79`），從不主動挑目標；
-// 這裡補的就是「選目標 → 集結 → 同回合壓上去」這三件事。
+// 原版完整 AI 見規格 029；這裡採規格 017 的「選目標 → 集結 → 同回合壓上去」。
+// 正式入口沿用原版建隊與整補（規格 068），只替換這一層命令。
 //
 // 「適度」調的**不是拳頭大小，是節奏**：一次攻勢能集中的都上，
 // 但兩次之間要隔幾回合、家裡要留守軍、同時只打一個地方。
@@ -244,7 +244,7 @@ func (b *Focused) marchToward(w World, mine []int, target int) []Order {
 func orders(fleets []int, target int) []Order {
 	var out []Order
 	for _, i := range fleets {
-		out = append(out, Order{Fleet: i, Target: target})
+		out = append(out, Order{Fleet: i, Target: target, Move: rules.MoveOccupy})
 	}
 	return out
 }

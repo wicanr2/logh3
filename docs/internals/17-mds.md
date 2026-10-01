@@ -4,6 +4,8 @@
 `docs/internals/data/music-mapping.json`（曲號 ↔ 曲名 ↔ 播放時機）
 素材：`assets/original/music/mid/*.mid`（22 首，進版控；同目錄另有 `vgm/`、`ogg/`；
 以 `tools/py.sh tools/scripts/mds_export.py` 從自備原版重建；清單與雜湊見 [`assets/original/README.md`](../../assets/original/README.md)）
+音訊工具查詢入口：`bash tools/audio.sh <命令>`，沿用 `logh3-audio:2`；
+原版及儲存庫唯讀，輸出限 `workplace/`，無網路、有資源與逾時限制。
 證據等級：版面與事件語意 **強證據**（小節長度、曲目節拍與已知樂曲吻合）；
 速度數值的單位 **未確認**。
 
@@ -94,6 +96,18 @@
 22 首，`index.json` 有完整清單。除了 `GEN3 BGM1`／`FIGHT1`／`FIGHT2`
 這些自製曲，配樂大量取自古典樂：拉威爾《波麗露》、貝多芬第三號交響曲
 《英雄》、德弗札克《新世界》第四樂章。
+
+## GM 音色庫與玩家轉檔前置證據
+
+目前轉檔使用 FluidR3_GM（Debian `fluid-soundfont-gm 3.1-5.3`），音色庫本體採 MIT，
+可隨 remake 封包發行，必須保留完整著作權、授權及貢獻者資訊。
+它不屬於原版素材，也不由專案 RRSAL 授權覆蓋。來源、148,398,306-byte 實物雜湊、
+完整授權及 11 首 FM 基準核對見[研究 356](../re/356-player-music-library.md)、
+[`player-music-library.json`](data/player-music-library.json)。
+使用者已選音色庫隨包，建置時下載固定版本並驗 SHA-256，不採 Git LFS；
+原生免 Docker 轉檔器尚未完成（#69）。
+建置音色庫入口：`LOGH3_NET=1 tools/py.sh tools/scripts/soundfont_prepare.py --download`；
+離線快取重跑與授權核對方法見[研究 356](../re/356-player-music-library.md)。
 
 ## 哪個畫面播哪一首
 

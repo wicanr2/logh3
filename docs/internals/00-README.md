@@ -11,6 +11,11 @@
 
 ## 這裡的東西怎麼寫
 
+音色庫來源與完整授權索引：[`player-music-library.json`](data/player-music-library.json)，
+用途與原版素材邊界見 [`17-mds.md`](17-mds.md)。
+remake 增強策略的正式入口驗證索引：[`enhanced-ai-player-path.json`](data/enhanced-ai-player-path.json)，
+範圍及原版差異見[規格 068](../spec/068-enhanced-ai-player-path.md)。
+
 **每一項都要標推論等級**：`confirmed`（有實測或反組譯位元組證據）、
 `強證據`、`假說`、`未知`。推測不得因為「看起來很合理」就升格，
 升格要補證據並註明來源。

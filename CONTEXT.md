@@ -5,6 +5,14 @@
 
 ## 現況一覽
 
+- **目前接續（2026-10-01，第十五輪）**：#69 的 FluidR3_GM 實物與 MIT 授權已核對，
+  11 首 FM 的來源／VGM／OGG 雜湊全數符合 `SOURCES.tsv`；使用者選定建置時下載固定版本並驗 SHA-256，
+  原生轉檔器仍未完成。入口：[研究 356](docs/re/356-player-music-library.md)、
+  [第十五輪](docs/goal/2026-10-01-ai-music-round-15.md)。#87 已補增強策略建隊／整補、正式占領命令、
+  現況戰力及讀檔保留模式；兩陣營正常入口與正式 CLI 兩次重現通過，
+  見[規格 068](docs/spec/068-enhanced-ai-player-path.md)、[驗證 029](docs/playtest/029-enhanced-ai-player-path.md)。
+  2026-09-17 被動戰場裁決仍有效，電腦正常戰場不下令、不造成傷害；不聲稱戰術攻擊已增強。
+
 - **目前接續（2026-10-01）**：#86 現況艦隊存讀閉環已完成指定驗收。正常 GUI 帝國 1／同盟 3 支，
   FLEET 3904／SHIP 27456 bytes 存讀零差異，池身份、位置、命令、組成與艘數保留；
   正常下一回合及全產品測試通過，原版三份未操作整表與 19 組速度抽驗通過。
@@ -618,7 +626,9 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 配樂播放層在（`internal/audio`，22 首 OGG），但曲子要玩家自備原版後用 `tools/music_fm_capture.sh`／`tools/music_to_ogg.sh` 轉，
 需要 dosgolem 與容器；`_M` 那 11 首是 fluidsynth ＋ FluidR3_GM 合成，不是原版 MPU-401 的音色。發行版要給玩家一條不需要開發環境的轉檔路。
 
-**卡在**：**瓶頸是裁決，不是工程**（2026-09-18 核實）：判準三項裡只有「`SOURCES.tsv` 當基準」那一項
+**卡在**：目前（2026-10-01）：音色庫本體 MIT 授權已由實物及 Debian 同版本來源確認，完整著作權、授權與貢獻者資訊保存進 Git。使用者已選建置時下載固定版本並驗 SHA-256，排除 Git LFS；封包含音色庫，玩家不另行下載。來源取得與核對入口為 `tools/py.sh tools/scripts/soundfont_prepare.py`（建置工具），不是玩家轉檔器。**剩餘阻塞是免 Docker 的原生轉檔器、合成器／編碼器跨平台封裝與音訊聆聽驗收**，不可因授權確認就關閉本項。
+
+2026-09-18 的歷史核實（下述未裁決狀態已由後續決定收窄）：判準三項裡只有「`SOURCES.tsv` 當基準」那一項
 有東西可比（`assets/original/music/ogg/SOURCES.tsv` 欄位齊全：曲名／來源／增益／`.MDS` SHA-256／
 VGM SHA-256／OGG SHA-256／dosgolem HEAD）。另外兩項都沒動：`cmd/` 底下六支沒有一支是轉檔器，
 `tools/music_to_ogg.sh` 與 `music_fm_capture.sh` 都要容器；`_M` 的音色取捨沒有任何裁決紀錄
@@ -639,9 +649,9 @@ VGM SHA-256／OGG SHA-256／dosgolem HEAD）。另外兩項都沒動：`cmd/` �
 
 **做完的判準**：玩家自備原版後有一個不需要 Docker 的轉檔入口（或 remake 內建合成），`_F` 雜湊與 `SOURCES.tsv` 相同；`_M` 的音色取捨經使用者裁決。
 
-**證據**：[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
+**證據**：[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
 
-**核實**：要人判——沒有程式碼訊號；做完綁 go_test（轉檔入口的測試）。
+**核實**：要人判——固定來源與授權已核對；玩家免 Docker 轉檔器仍缺，完成後綁正式轉檔入口的 go_test，不能把建置音色庫準備器當成完整曲庫管線。
 
 #### title-screen-sptit — 開頭動畫之後的 SPTIT.350 標題畫面
 
@@ -866,7 +876,7 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-77 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+78 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1866,6 +1876,25 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### enhanced-ai-player-path — 增強 AI 在正常玩家路徑的接線與效果驗收
+
+*[#87](https://github.com/wicanr2/logh3/issues/87) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+原 Goal 明確要求確保增強 AI 有作用。目前 worklist 的 12 張 open Issue 未涵蓋
+替代 AI 的正常玩家入口及效果驗收，先建立獨立工作項目；不得以型別存在或孤立測試
+宣稱正式遊戲已生效。
+
+**卡在**：已完成指定策略接線與模式生命週期驗收：原版建隊／整補接到增強策略，攻勢使用正式占領命令；現況戰力不讀舊快取，載入後保留難度並重接來源。兩陣營正常新局與存讀通過，正式 CLI 兩模式各重現兩次，首回合均 1／3 支、續回合均 1／4 支，命令差異保持。全產品測試通過。2026-09-17 被動戰場裁決保留，電腦正常戰場不下令、不造成傷害；此項不聲稱戰術攻擊已增強。
+
+**做完的判準**：核對目前內建的 AI 選項、正式入口與策略／戰術消費端；以正常玩家流程及執行前固定的
+種子，證明替代 AI 實際被選用且影響決策。比較原版模式與增強模式的指定初始狀態、
+輸入及結果，記錄差異與限制；原版模式仍遵守原有對拍契約。
+若現有模式尚有功能缺口，先補證據與 READY 規格，再修正；改變策略方向的取捨另請使用者決定。
+
+**證據**：[`docs/re/357-enhanced-ai-player-path.md`](docs/re/357-enhanced-ai-player-path.md)、[`docs/spec/068-enhanced-ai-player-path.md`](docs/spec/068-enhanced-ai-player-path.md)、[`docs/playtest/029-enhanced-ai-player-path.md`](docs/playtest/029-enhanced-ai-player-path.md)、[`tools/enhanced_ai_check.sh`](tools/enhanced_ai_check.sh)、[`internal/ai/ai.go`](internal/ai/ai.go)、[`internal/ai/focused.go`](internal/ai/focused.go)、[`internal/ai/tactical.go`](internal/ai/tactical.go)、[`internal/game/battle.go`](internal/game/battle.go)、[`cmd/gin3/`](cmd/gin3/)
+
+**核實**：`TestEnhancedAINormalPlayerPath` 釘在 `./internal/game`
 
 #### opening-runtime-table-differences — 開局執行期星域／行星資料表的非財政差異尚未分類
 

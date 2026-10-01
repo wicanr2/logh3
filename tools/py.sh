@@ -13,12 +13,14 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 IMAGE="${LOGH3_PY_IMAGE:-python:3.12-slim}"
+NET=(--network none)
+[[ "${LOGH3_NET:-0}" == 1 ]] && NET=() # 僅明確下載公開來源時開放。
 mkdir -p "$ROOT/workplace" "$ROOT/assets"
 # 需要額外的唯讀參考資料時（例如倚天字型）用 LOGH3_EXTRA_RO 指目錄，掛在 /ref。
 EXTRA=()
 [[ -n "${LOGH3_EXTRA_RO:-}" ]] && EXTRA+=(-v "$(cd "$LOGH3_EXTRA_RO" && pwd):/ref:ro")
 
-exec timeout "${LOGH3_TIMEOUT:-15m}" docker run --rm --network none \
+exec timeout "${LOGH3_TIMEOUT:-15m}" docker run --rm "${NET[@]}" \
   --memory "${LOGH3_MEM:-2g}" --cpus "${LOGH3_CPUS:-2}" --pids-limit 128 \
   --log-opt max-size=10m --log-opt max-file=3 \
   -u "$(id -u):$(id -g)" \

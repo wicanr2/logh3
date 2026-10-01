@@ -1,0 +1,193 @@
+{
+  "original": {
+    "turns": [
+      {
+        "slot": "0",
+        "counts": [
+          1,
+          3
+        ],
+        "commands": [
+          [
+            23,
+            20,
+            15,
+            0
+          ],
+          [
+            28,
+            30,
+            24,
+            1
+          ],
+          [
+            31,
+            30,
+            24,
+            1
+          ]
+        ]
+      },
+      {
+        "slot": "2",
+        "counts": [
+          1,
+          4
+        ],
+        "commands": [
+          [
+            16,
+            20,
+            16,
+            0
+          ],
+          [
+            23,
+            18,
+            15,
+            0
+          ],
+          [
+            28,
+            29,
+            24,
+            1
+          ],
+          [
+            31,
+            29,
+            24,
+            1
+          ]
+        ]
+      }
+    ],
+    "sha256": {
+      "ADMIRAL.DT0": "c3f17ca1d1e56e0c94a013ce844f03df131fcf37465c174dddd6fae460ae0069",
+      "FLEET.DT2": "cdcd60d05dd0cc275f660498a46fb02e3d88f7c4e31181c02f7b020b919c12f6",
+      "script.txt": "2e06928ac9861025f17e56bebb490c743a836bc088a49ccf1d75919374411312",
+      "SHIP.DT0": "b7f2d7629e82c9676a79f4e4f6b4a6bbebef78493f42ca2a222fa48c7e7bef29",
+      "WORK.DT2": "d566f46426dddd67c3e834b981d26ca2fe9bbddfb1cf7fa25a20fe0cd2352fda",
+      "WORK.DT0": "7f8d907388875180c33bdd611cb0bd520ef0b282f1ffbde7af64e083cc64c8b2",
+      "SHIP.DT1": "b7f2d7629e82c9676a79f4e4f6b4a6bbebef78493f42ca2a222fa48c7e7bef29",
+      "SHIP.DT2": "2ae4b19fc49f674835f7c7350084e4535b373f8378697426837dba8c1ea48fcb",
+      "FLEET.DT0": "919c4daf11fcd67dd9a4fa6a600b7a1d6dc4eddba23c106a90aed6b8e70cee0c",
+      "STELLAR.DT1": "165df5763d562d00df5dacd9cc3f40ea7ccbbea9618bce399ed8860c569014ba",
+      "ADMIRAL.DT2": "a6317044523719e7299ae2f52a9f15a1367e9c5de868c15118c89ace74b11e57",
+      "WORK.DT1": "7f8d907388875180c33bdd611cb0bd520ef0b282f1ffbde7af64e083cc64c8b2",
+      "ADMIRAL.DT1": "c3f17ca1d1e56e0c94a013ce844f03df131fcf37465c174dddd6fae460ae0069",
+      "FLEET.DT1": "919c4daf11fcd67dd9a4fa6a600b7a1d6dc4eddba23c106a90aed6b8e70cee0c",
+      "STELLAR.DT2": "5758c02e46ef0ff5fef232b306ecad3a24d4ad86441484e904dbc8ca469c852b",
+      "PLANET.DT2": "02e143a39e2563c4fbf9b7e095b087376973057199f0d5e36bb3e58e2b45940d",
+      "PLANET.DT0": "759db1cf4ef72bc7c510c05b927cdb8549b053f7d7b44cbccfc30c6d74f717a0",
+      "state.txt": "f4304c781f8308d3909df38b076bf222d501066497e31f3e74f9cab3d57206e2",
+      "PLANET.DT1": "759db1cf4ef72bc7c510c05b927cdb8549b053f7d7b44cbccfc30c6d74f717a0",
+      "STELLAR.DT0": "165df5763d562d00df5dacd9cc3f40ea7ccbbea9618bce399ed8860c569014ba",
+      "SAVEDATA.IDX": "d37730dfbf3df945e2754442ced2b5a43aed32b23f7030d15a1c3df4c415fc07",
+      "gui.png": "1cc4560276b90a1e714165edae9f8133318ebd7242bb9e57e300aa6ae9c826e1"
+    }
+  },
+  "enhanced": {
+    "turns": [
+      {
+        "slot": "0",
+        "counts": [
+          1,
+          3
+        ],
+        "commands": [
+          [
+            23,
+            31,
+            4,
+            5
+          ],
+          [
+            28,
+            20,
+            15,
+            0
+          ],
+          [
+            31,
+            20,
+            15,
+            0
+          ]
+        ]
+      },
+      {
+        "slot": "2",
+        "counts": [
+          1,
+          4
+        ],
+        "commands": [
+          [
+            19,
+            31,
+            4,
+            5
+          ],
+          [
+            23,
+            20,
+            15,
+            0
+          ],
+          [
+            28,
+            18,
+            15,
+            0
+          ],
+          [
+            31,
+            18,
+            15,
+            0
+          ]
+        ]
+      }
+    ],
+    "sha256": {
+      "ADMIRAL.DT0": "afe69d7a907fc74375be0985999cb2ba95a3fdb0927d89a4befcb9053a143bd5",
+      "FLEET.DT2": "aff5d2ba1cee9b498a8a0481878f31a4fc8e3e7bc1c334fb4dc45dc43bc99300",
+      "script.txt": "2e06928ac9861025f17e56bebb490c743a836bc088a49ccf1d75919374411312",
+      "SHIP.DT0": "b6e48d1517fa65f11850d3ae733d68091189ccdf207beb8c8fc36b4dcc73a9a0",
+      "WORK.DT2": "2d5f65adfc760c9ccc819f4d01d9c097341652457bf6ca574d03aad80c79d50a",
+      "WORK.DT0": "4759ce4aaa1441a0ca1b9ca4eb3b8bbc9b424dc42d5621b28c025e4a5acaccb0",
+      "SHIP.DT1": "b6e48d1517fa65f11850d3ae733d68091189ccdf207beb8c8fc36b4dcc73a9a0",
+      "SHIP.DT2": "426baf61782114c21791dfb1ff9d9896ff53e88c725aaa7db8d965c619430901",
+      "FLEET.DT0": "15fd9c50cc6eabafc71b31bee0a0fd862202f39f31fafd8ed6267c7040f0a40f",
+      "STELLAR.DT1": "b6ead7414028ed591b1d4f02ba6f8241c228b1f0fecd96234e2d00c81e84a74c",
+      "ADMIRAL.DT2": "6fc7c7a6b2834524fe2ab66b1f0552de8ca05ad24fdfa87888acdba0e71a5380",
+      "WORK.DT1": "4759ce4aaa1441a0ca1b9ca4eb3b8bbc9b424dc42d5621b28c025e4a5acaccb0",
+      "ADMIRAL.DT1": "afe69d7a907fc74375be0985999cb2ba95a3fdb0927d89a4befcb9053a143bd5",
+      "FLEET.DT1": "15fd9c50cc6eabafc71b31bee0a0fd862202f39f31fafd8ed6267c7040f0a40f",
+      "STELLAR.DT2": "c5148498032be5d22bd60257314ff415fe9a7ac0c1335c280ecc4396bae04bd9",
+      "PLANET.DT2": "ac3b8356e74443e9267c8fbbc05aba38c509df2a0663061f2baae655a3ca6cab",
+      "PLANET.DT0": "1bb9d183560eafdeba9d4fa50486f22585dc4afec1ee82e40711b032432f10c3",
+      "state.txt": "f4304c781f8308d3909df38b076bf222d501066497e31f3e74f9cab3d57206e2",
+      "PLANET.DT1": "1bb9d183560eafdeba9d4fa50486f22585dc4afec1ee82e40711b032432f10c3",
+      "STELLAR.DT0": "b6ead7414028ed591b1d4f02ba6f8241c228b1f0fecd96234e2d00c81e84a74c",
+      "SAVEDATA.IDX": "d37730dfbf3df945e2754442ced2b5a43aed32b23f7030d15a1c3df4c415fc07",
+      "gui.png": "1cc4560276b90a1e714165edae9f8133318ebd7242bb9e57e300aa6ae9c826e1"
+    }
+  },
+  "kind": "remake 正常 CLI 的增強策略效果／存讀／續回合；不宣稱原版同狀態 parity",
+  "git_head": "2fbd0d13f4380861b9d945fd7a7377ca17ae723c",
+  "working_tree": " M CONTEXT.md\n M cmd/gin3/main.go\n M docs/internals/00-README.md\n M docs/internals/17-mds.md\n M docs/spec/017-computer-ai.md\n M internal/ai/focused.go\n M internal/ai/focused_test.go\n M internal/game/game.go\n M internal/game/originalbrain.go\n?? docs/goal/2026-10-01-ai-music-round-15.md\n?? docs/internals/data/fluidr3-gm-copyright.txt\n?? docs/internals/data/player-music-library.json\n?? docs/re/356-player-music-library.md\n?? docs/re/357-enhanced-ai-player-path.md\n?? docs/spec/068-enhanced-ai-player-path.md\n?? internal/game/aimode.go\n?? internal/game/aimode_test.go\n?? tools/audio.sh\n?? tools/enhanced_ai_check.sh",
+  "image": "logh3-ebiten:2",
+  "initial_seed": "0xD3DC167E（執行前固定；續回合沿用正常載入器的既有種子設定）",
+  "input": "1/<模式>/script.txt；兩次未注入正常重現",
+  "replays": 2,
+  "source_sha256": {
+    "cmd/gin3/main.go": "b81b4092677d45c953114e79865e9c82603a0c685e70693aaec0d93e5aaa3798",
+    "internal/game/aimode.go": "4110ef4da0b2f9b9a52e20bc41a65072314067e470fa89c8fc8f8cb426f580bc",
+    "internal/game/game.go": "ce50c891766b498fe27b27ec6ec9d4c4aa91d6a5797c6fc1c1543a90b12f08f6",
+    "internal/ai/focused.go": "88c6d4a5a7933732d4ae7ec6677d72dd76d01fb44eca847b4888949359cb25ea",
+    "tools/enhanced_ai_check.sh": "a1f7a85c1452506c1c5e53c88196c2c32a522a589153262ece4e71e7efd7d339"
+  },
+  "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -ai <-1|1> -save /src/workplace/playtest/ai87/<1|2>/<模式> -script <script.txt> -shot <gui.png> -state-out <state.txt> -shot-after 2"
+}

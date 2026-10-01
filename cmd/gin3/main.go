@@ -23,7 +23,6 @@ import (
 	eaudio "github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
-	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/audio"
 	"github.com/wicanr2/logh3/internal/bootstrap"
 	"github.com/wicanr2/logh3/internal/game"
@@ -220,12 +219,11 @@ func main() {
 	shotBin := flag.String("shot-bin", "", "同 -shot，但倒的是色號陣列（可與收據逐位元組比）")
 	stateOut := flag.String("state-out", "", "倒圖時另寫 GUI 狀態、視窗與邏輯游標收據")
 	shotAfter := flag.Int("shot-after", 4, "倒圖前先跑幾格")
-	// **預設是原版**：原版按「實行」時電腦不下任何命令（`docs/re/79`），
-	// 對拍收據都靠這個前提。強化版要玩家自己開（`docs/spec/017`）。
+	// 預設走已接上的原版戰略 AI；強化版由玩家選用（規格 017／068）。
 	intro := flag.Bool("intro", true, "從開頭動畫開始（`OPEN.EXE` 的 374 格）；"+
 		"素材不齊就自動跳過")
 	saveDir := flag.String("save", defaultSaveDir(), "玩家存檔的目錄（「存進度」寫這裡，原版目錄一律唯讀）")
-	aiLevel := flag.Int("ai", -1, "電腦 AI：-1 ＝ 原版（不動）；0–3 ＝ 強化版，"+
+	aiLevel := flag.Int("ai", -1, "電腦 AI：-1 ＝ 原版；0–3 ＝ 強化版，"+
 		"數字越大越兇（會挑目標、集結、包圍）")
 	musicDir := flag.String("music", "",
 		"配樂目錄（OGG）；空的 ＝ 不放音樂。發行包不帶曲子——它是從原版\n"+
@@ -255,12 +253,8 @@ func main() {
 	if err != nil {
 		die(err)
 	}
-	if *aiLevel >= 0 {
-		g.SetBrain(&ai.Focused{Difficulty: *aiLevel})
-		g.SetTactic(&ai.Encircle{Difficulty: *aiLevel}, false)
-	} else {
-		// 預設走原版：戰術層整批朝同一點壓上去（`docs/re/80`）。
-		g.SetTactic(ai.OriginalTactic{}, false)
+	if err := g.SetAILevel(*aiLevel); err != nil {
+		die(err)
 	}
 	a := &app{
 		g:         g,

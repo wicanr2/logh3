@@ -180,3 +180,31 @@ func TestFocusedDoesNotTrickle(t *testing.T) {
 		t.Fatalf("二十回合裡最多只有 %d 支同時到，沒有集中", best)
 	}
 }
+
+// 舊的 step helper 跳過 PlanStep；正式攻勢必須通過占領命令閘門。
+func TestFocusedAttackUsesProductionMoveGate(t *testing.T) {
+	w := world(t, map[int]int{0: 0, 4: 0, 6: 0, 3: 2}, []rules.Fleet{
+		{Faction: 0, Region: 4, Target: rules.NoTarget},
+		{Faction: 0, Region: 6, Target: rules.NoTarget},
+		{Faction: 0, Region: 0, Target: rules.NoTarget},
+	})
+	w.Value = func(r int) int {
+		if r == 3 {
+			return 100
+		}
+		return 1
+	}
+	b := &Focused{}
+	orders := b.Orders(w, 0, 0)
+	if len(orders) != 2 {
+		t.Fatalf("未形成雙向集中攻勢：%v", orders)
+	}
+	for _, o := range orders {
+		f := w.Fleets[o.Fleet]
+		f.Target, f.Move, f.Parked = o.Target, o.Move, false
+		plan := w.Graph.PlanStep(&f, w.Owner, 10000, 1)
+		if o.Target != 3 || o.Move != rules.MoveOccupy || plan.Outcome != rules.StepMoved || plan.Next != 3 {
+			t.Fatalf("集中攻勢被正式門檻擋下：%+v／%+v", o, plan)
+		}
+	}
+}

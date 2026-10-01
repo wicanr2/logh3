@@ -976,10 +976,10 @@ type Game struct {
 
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
 	//
-	// **預設是 nil ＝ 按實行時什麼都不做**，與 `ai.Original` 同義
-	// （那一支也回 nil）。要原版那套戰略 AI 是 `SetBrain(OriginalBrain())`
-	// ——那一步是 `docs/spec/029` 末節的裁決；要強化版就換成 `ai.Focused`。
-	brain ai.Brain
+	// New 預設接原版完整戰略 AI；正式強化模式由 SetAILevel 配置，
+	// 保留原版建隊／整補並在載入後重接（規格 068）。
+	brain  ai.Brain
+	aiMode int // 0 原版，1–4 增強難度 0–3；執行期偏好，不進存檔。
 
 	// sides 是對戰模式下兩邊各自的錢與造船計劃，索引就是陣營。
 	// 世界資料（星域記錄、行星表）兩邊共用一份——月底的成長是就地
@@ -1502,15 +1502,10 @@ func (g *Game) runBrain() {
 	}
 	foe := 1 - g.faction
 	w := ai.World{
-		Fleets: g.fleets,
-		Graph:  g.res.Graph,
-		Owner:  func(r int) int { return g.res.Planets.RegionOwner(r) },
-		Strength: func(f rules.Fleet) int {
-			if f.Strength > 0 {
-				return f.Strength
-			}
-			return 1
-		},
+		Fleets:   g.fleets,
+		Graph:    g.res.Graph,
+		Owner:    func(r int) int { return g.res.Planets.RegionOwner(r) },
+		Strength: g.liveFleetStrength,
 		Value: func(r int) int {
 			o := r * rules.RegionRecord
 			if o+rules.RegionRecord > len(g.res.Stellar) {
@@ -1965,6 +1960,9 @@ func (g *Game) startNewGame(faction int) {
 	g.monthEnd()
 	g.recountRegionFleets()
 	g.refreshCapitalSnap()
+	if g.aiMode > 0 {
+		g.reconnectAI()
+	}
 }
 
 // snapshotWorld 記下星域記錄與行星表的開局值。
@@ -2104,7 +2102,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.state = StateCommandPhase
 	// 星域記錄與行星表剛剛才換成存檔那一份，戰略 AI 的地基跟著換，
 	// 所以重接一次。
-	g.SetBrain(g.OriginalBrain())
+	g.reconnectAI()
 }
 
 // pickQuestion 決定防拷問答的題目與答案。

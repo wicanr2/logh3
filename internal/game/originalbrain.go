@@ -8,9 +8,8 @@ import (
 
 // 把 `ai.OriginalStrategy` 接上這一局的資料（規格 `docs/spec/029`）。
 //
-// **這裡不動預設。** `New` 建出來的 `Game` 仍然用 `ai.Original`
-// （什麼都不做）；要換是 `SetBrain(g.OriginalBrain())`，那一步是
-// `docs/spec/029` 末節那個裁決。
+// New 已依 2026-09-10 裁決預設接原版策略；規格 068 的增強模式
+// 也沿用這裡的建隊來源，只替換命令決策。
 
 // strategyRandSeed 是戰略 AI 亂數的起始種子（原版 `ds:94DC`）。
 //
