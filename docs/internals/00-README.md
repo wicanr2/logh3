@@ -19,6 +19,8 @@
 原版觸發與重生限制見[規格 071](../spec/071-native-fm-import.md)、[研究 359](../re/359-native-fm-import.md)。
 完整原生曲庫匯入與三路徑重跑收據：[`native-fm-import.json`](data/native-fm-import.json)，
 正式解碼、重生命令與平台限制見[驗證 031](../playtest/031-native-fm-import.md)。
+Linux 隨包工具、共享依賴與授權索引：[`linux-music-tools.json`](data/linux-music-tools.json)，
+原生啟動、乾淨容器抽驗與交付限制見[驗證 032](../playtest/032-linux-music-tools.md)。
 remake 增強策略的正式入口驗證索引：[`enhanced-ai-player-path.json`](data/enhanced-ai-player-path.json)，
 範圍及原版差異見[規格 068](../spec/068-enhanced-ai-player-path.md)。
 

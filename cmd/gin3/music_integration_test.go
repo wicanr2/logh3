@@ -14,6 +14,36 @@ import (
 	"github.com/wicanr2/logh3/internal/game"
 )
 
+// 隨包 Linux 工具在乾淨容器產生的實物，仍須交給正式播放層完整解碼。
+func TestBundledLinuxMusicImportPlayerDecode(t *testing.T) {
+	base := filepath.Join("..", "..", "workplace", "music69-linux")
+	raw, err := os.ReadFile(filepath.Join(base, "CHECK.json"))
+	if os.IsNotExist(err) {
+		t.Skip("缺 Linux 隨包工具驗收批次")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	var receipt struct {
+		Status string `json:"status"`
+	}
+	if err := json.Unmarshal(raw, &receipt); err != nil || receipt.Status != "complete-linux-tools-sampling" {
+		t.Fatalf("Linux 隨包工具批次尚未成功：%s，%v", receipt.Status, err)
+	}
+	p := newMusicPlayer(nil, intaudio.NewLibrary(filepath.Join(base, "imported")))
+	for _, name := range []string{"BGM_0F", "BGM_0M", "END_2F", "OPEN_F"} {
+		t.Run(name, func(t *testing.T) {
+			st, ok, err := p.decode(name)
+			if err != nil || !ok || st == nil || st.Length() <= 0 {
+				t.Fatalf("隨包曲庫正式解碼失敗：%v", err)
+			}
+			if n, err := io.Copy(io.Discard, st); err != nil || n == 0 {
+				t.Fatalf("隨包曲庫 PCM 串流錯誤：%d，%v", n, err)
+			}
+		})
+	}
+}
+
 // 完整原生匯入器的真實曲庫經正式播放層；進行中的本機批次不冒稱驗收。
 func TestNativeFullMusicImportPlayerDecode(t *testing.T) {
 	dir := filepath.Join("..", "..", "workplace", "music69-fm", "full")

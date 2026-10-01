@@ -5,7 +5,15 @@
 
 ## 現況一覽
 
-- **目前接續（2026-10-01，第十七輪）**：#69 完整原生匯入入口已驗：十一首 FM
+- **目前接續（2026-10-01，第十八輪）**：#69 Linux 原生隨包工具技術抽驗通過，
+  220 共享檔案、198 套件授權／來源身份與固定 SF2 已封裝；無系統音樂工具的乾淨容器，
+  中文／空白搬移與環境清理通過。三種 FM 的 VGM／OGG 全檔、一首 GM 完整 PCM 符合基準，
+  四首正式解碼與產品套件通過。157 個來源套件的完整 archive 交付、Windows／macOS 與聆聽仍未完成。
+  入口：[輪次快照](docs/goal/2026-10-01-linux-music-tools-round-18.md)、
+  [研究 360](docs/re/360-linux-bundled-music-tools.md)、[規格 072](docs/spec/072-linux-music-tools.md)。
+  封裝與驗收入口：[驗證 032](docs/playtest/032-linux-music-tools.md)。
+
+- **上一階段（2026-10-01，第十七輪）**：#69 完整原生匯入入口已驗：十一首 FM
   的 VGM／OGG 全檔與原基準一致，三種觸發路徑獨立重跑相同；十一首 GM 亦真實生成。
   正式播放器完整解碼 22 首、正常玩家選曲與全部產品套件通過。
   入口：[輪次快照](docs/goal/2026-10-01-native-fm-round-17.md)、
@@ -644,15 +652,17 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 
 **卡在**：目前（2026-10-01，第十七輪）：完整原生曲庫入口已通過指定 Linux 驗收。`cmd/music-import` 預設處理二十二首，不呼叫 Docker／Python／shell，也不搜尋玩家 PATH；原版只讀，在獨立暫存副本執行固定版本 dosgolem。十一首 FM 的完整 VGM／固定封裝 OGG 全數與 SOURCES.tsv 相同，BGM_0F／END_2F／OPEN_F 三路徑獨立重跑逐位元組一致。十一首 GM 真實合成；二十二首由正式播放器完整解碼，正常玩家選曲、六種 CLI 前置拒絕及標準產品測試通過。來源／工具 HEAD、程式及輸出雜湊與完整命令均保存於驗證 031。
 
-**剩餘阻塞：三平台合成器／編碼器與依賴封裝、實際聆聽及 loop 接點驗收。** Windows amd64／macOS amd64／arm64 匯入器本體交叉建置通過，不等於依賴封裝或實機驗收。合成時間仍為 hardware-spec approximation，OPEN_F 是替換暫存 MDS 的診斷路徑；部分 GM 峰值 1.0，尚未聲稱無 clipping。#69 保持開啟，不把 Linux 完整匯入當成全部交付完成。
+第十八輪（2026-10-01）：Linux 隨包工具技術抽驗通過。220 個完整共享檔案、198 套件來源版本與授權、固定 MIT SF2 已封裝；原生 Go 啟動器不呼叫 shell／Python／Docker，不搜尋 PATH。中文／空白搬移、載入環境干預清理、缺件／錯名拒絕及全部依賴取自包內均通過。沒有系統音樂工具的乾淨容器實跑三種 FM 路徑：VGM／OGG 全檔相同；一首 GM 完整 PCM 相同，四首再由正式播放器完整解碼。標準產品套件全綠，詳見規格 072、驗證 032。
+
+**剩餘阻塞：Windows／macOS 合成器／編碼器與依賴封裝、157 個 Linux 來源套件完整 archive 的正式交付、實際聆聽及 loop 接點驗收。** Linux 當輪容器抽驗不等於所有發行版或實機；Windows amd64／macOS amd64／arm64 匯入器本體交叉建置也不等於工具封裝。暫存包保留完整著作權與來源身份，但尚未交付全部對應來源碼，沒有發佈正式封包。合成時間仍為 hardware-spec approximation，OPEN_F 是替換暫存 MDS 診斷路徑，部分 GM 峰值 1.0 未聲稱無 clipping。#69 保持開啟。
 
 有效使用者裁決仍保留：2026-09-19 選定 GM 音色庫隨包，玩家不自備音色庫、不另裝 FluidSynth；維持玩家自備音色庫或只出 FM 兩個選項已排除。2026-10-01 選定建置時固定版本下載並驗 SHA-256，排除 Git LFS。來源與授權確認先於管線接線，完成後才提供全曲庫入口；目前已完成來源確認、完整 FM／GM 匯入與正式解碼；平台封裝與聆聽仍待接續。
 
 **做完的判準**：玩家自備原版後有一個不需要 Docker 的轉檔入口（或 remake 內建合成），`_F` 雜湊與 `SOURCES.tsv` 相同；`_M` 的音色取捨經使用者裁決。
 
-**證據**：[`docs/re/359-native-fm-import.md`](docs/re/359-native-fm-import.md)、[`docs/spec/070-deterministic-ogg-framing.md`](docs/spec/070-deterministic-ogg-framing.md)、[`docs/spec/071-native-fm-import.md`](docs/spec/071-native-fm-import.md)、[`docs/playtest/031-native-fm-import.md`](docs/playtest/031-native-fm-import.md)、[`docs/internals/data/native-fm-import.json`](docs/internals/data/native-fm-import.json)、[`docs/internals/data/fm-import-lock.json`](docs/internals/data/fm-import-lock.json)、[`docs/re/358-native-gm-import.md`](docs/re/358-native-gm-import.md)、[`docs/spec/069-native-gm-import.md`](docs/spec/069-native-gm-import.md)、[`docs/playtest/030-native-gm-import.md`](docs/playtest/030-native-gm-import.md)、[`docs/internals/data/native-gm-import.json`](docs/internals/data/native-gm-import.json)、[`cmd/music-import/`](cmd/music-import/)、[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
+**證據**：[`docs/re/360-linux-bundled-music-tools.md`](docs/re/360-linux-bundled-music-tools.md)、[`docs/spec/072-linux-music-tools.md`](docs/spec/072-linux-music-tools.md)、[`docs/playtest/032-linux-music-tools.md`](docs/playtest/032-linux-music-tools.md)、[`docs/internals/data/linux-music-tools.json`](docs/internals/data/linux-music-tools.json)、[`cmd/music-tool/`](cmd/music-tool/)、[`docs/re/359-native-fm-import.md`](docs/re/359-native-fm-import.md)、[`docs/spec/070-deterministic-ogg-framing.md`](docs/spec/070-deterministic-ogg-framing.md)、[`docs/spec/071-native-fm-import.md`](docs/spec/071-native-fm-import.md)、[`docs/playtest/031-native-fm-import.md`](docs/playtest/031-native-fm-import.md)、[`docs/internals/data/native-fm-import.json`](docs/internals/data/native-fm-import.json)、[`docs/internals/data/fm-import-lock.json`](docs/internals/data/fm-import-lock.json)、[`docs/re/358-native-gm-import.md`](docs/re/358-native-gm-import.md)、[`docs/spec/069-native-gm-import.md`](docs/spec/069-native-gm-import.md)、[`docs/playtest/030-native-gm-import.md`](docs/playtest/030-native-gm-import.md)、[`docs/internals/data/native-gm-import.json`](docs/internals/data/native-gm-import.json)、[`cmd/music-import/`](cmd/music-import/)、[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
 
-**核實**：要人判——Linux 完整原生匯入及正式解碼已驗；三平台依賴封裝、聆聽與 loop 仍缺，完成後綁隨包完整玩家曲庫入口測試，不能用 Linux 匯入或交叉建置宣稱全部完成。
+**核實**：要人判——Linux 完整匯入與隨包工具抽驗已驗；Windows／macOS 工具、完整對應來源碼交付、聆聽與 loop 仍缺，完成後綁正式隨包玩家曲庫入口測試，不能用 Linux 容器或交叉建置宣稱全部完成。
 
 #### title-screen-sptit — 開頭動畫之後的 SPTIT.350 標題畫面
 
