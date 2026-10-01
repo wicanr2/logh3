@@ -37,6 +37,12 @@ Windows FM／GM 同包工具與預設完整入口：[規格 076](../spec/076-win
 同包二十二首、Unicode OPL 與中文 ZIP 搬移收據：[`windows-combined-music-tools.json`](data/windows-combined-music-tools.json)，
 由 `tools/scripts/music_windows_bundle_receipt.py` 重驗產生；完整命令、反例與限制見
 [驗證 036](../playtest/036-windows-combined-music-tools.md)。
+音樂工具的本作品授權與可重建來源契約：[規格 077](../spec/077-music-source-delivery.md)，
+本輪範圍見[第二十三輪](../goal/2026-10-02-music-source-delivery-round-23.md)。
+來源重建正式 FM 抽驗入口：`tools/scripts/music_source_import_check.py`，方法見[驗證 037](../playtest/037-music-source-delivery.md)。
+完整來源、授權、重建程式與首批反例的唯一收據：[`music-source-delivery.json`](data/music-source-delivery.json)，
+由 `tools/scripts/music_source_receipt.py` 重驗產生；命令與限制見
+[驗證 037](../playtest/037-music-source-delivery.md)，調查過程見[研究 365](../re/365-music-source-delivery.md)。
 其固定來源工具與原生曲庫驗收收據：[`windows-gm-source-tools.json`](data/windows-gm-source-tools.json)，
 由 `tools/scripts/music_windows_gm_source_receipt.py` 重驗產生；過程與勘誤見[研究 363](../re/363-windows-music-source-build.md)。
 remake 增強策略的正式入口驗證索引：[`enhanced-ai-player-path.json`](data/enhanced-ai-player-path.json)，

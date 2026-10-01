@@ -122,7 +122,7 @@
 ## 還沒做的
 
 **不在這裡列清單。** 還剩什麼的權威是
-[`docs/worklist.json`](docs/worklist.json)，畫成人看的樣子在
+[GitHub 的 worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)，畫成人看的樣子在
 [`CONTEXT.md`](CONTEXT.md) 的 worklist 一節；完成度看
 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)。兩份 markdown 都是產生的。
 
@@ -160,7 +160,8 @@ tools/go.sh run ./cmd/worklist verify     # 每一條的斷言還成立嗎
 
 ## 怎麼跑
 
-需要自備原版遊戲檔（本儲存庫不含原版檔與素材），放在 `org_game/extracted/`。
+需要自備合法取得的原版遊戲檔，放在 `org_game/extracted/`。私有儲存庫的研究素材
+不取代玩家自備資料，也不加入可散布封包。
 
 ```
 tools/gui.sh build ./cmd/gin3                # 建 Ebiten 視窗版
@@ -202,6 +203,8 @@ DOS 執行器）產生，它是本專案唯一的 oracle。
 
 採用 **復古重製 source-available 授權條款 1.0（RRSAL-1.0）**：非商業用途免費，
 含修改與再散布；實況、影片與平台分潤明示允許；商業用途要先洽談。
-儲存庫目前是私有的，`LICENSE` 全文在轉公開之前補上。
+完整條款見 [`LICENSE`](LICENSE)。第三方工具與音色庫依各自授權，完整聲明隨包保留。
 
-原版遊戲檔與素材不屬於本專案，也不隨本專案散布。
+本授權不涵蓋原版遊戲檔、素材、原版譯文或其轉檔產物。儲存庫目前為私有，
+`assets/original/`、`docs/images/` 與 `docs/lore/` 含原版研究素材；它們不加入可散布封包。
+轉公開前須另行裁決這些內容及 Git 歷史的處理方式。

@@ -2,6 +2,53 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-02 — #69 RRSAL 全文與音樂來源離線重建
+
+第二十三輪接續原 Goal、GitHub 工作項目與提交／推送授權；上一輪 0f08832 已推送。
+host gh auth／遠端快照及 verify 開工通過，87 張 worklist Issue、12 張 open、267 條斷言零失效。
+使用逆向重製技能，載入端到端、RRSAL、dist-all／版號與文件職責路由；修正 README
+授權及原版素材邊界前另載入 README 標準。Go vendor 比對失敗後查實際工具鏈原始碼
+與 Go 官方模組文件，第二次來源測試失敗後再核對規格閘門路由，未降低驗收門檻。
+
+根目錄新增完整 RRSAL-1.0，按實際受版控目錄填占位符；範本全文比對通過，原版與
+第三方排除明列，README 連到全文。不公開私有研究素材或 Git 歷史，也不改使用者授權選擇。
+README 的剩餘工作權威改連遠端 worklist Issue，刪除「儲存庫不含素材」的過期描述。
+固定 logh3 0f08832 與 dosgolem f7523f9 Git archive，來源附件／授權另綁身份；
+Go mod vendor 離線匯出 978 檔、十個鎖版模組與完整 LICENSE／PATENTS。
+
+首次來源包 1,912 檔，兩次 tar 相同。第一次一般模組／vendor 比對因 Go buildinfo 的
+h1 欄位不同而失敗；保留兩份 buildinfo，改為目前來源另建對照樹、獨立 vendor，仍要求
+完整二進位相同。三種程式相同後，來源側測試揭露 fm-import-lock.json 漏收；規格 077
+回 DRAFT，補審同 HEAD 的純雜湊鎖才重新 READY，另建 reviewed 包，不改寫首批。
+
+前階段修正版 1,913 檔、四種無 VCS 建置相同，但正式 checkProbe 仍拒絕來源重建的 probe。
+TestFMProbeIdentity 跳過不能代替版本身份驗收；保留舊包／before-vcs JSON，規格再次返回
+DRAFT，固定提交淺層 Git 與完整來源樹探針通過真正 f7523f9／clean 身份後補審 READY。
+pack 保留合法 .rev；完整樹的 rich2.test 是既有 Go 測試程式，只為提交身份留存，不執行。
+第一個 VCS 候選缺 refs，Git 向上找到 logh3；reset 僅觸及外層 index，工作樹內容均保留。
+補真實 branch ref，操作前明設 GIT_DIR／GIT_WORK_TREE 並核對根目錄，保留失敗包與日誌。
+
+最後來源包 2,361 檔、32,819,200 bytes，兩次 tar 全檔相同，逐項與解壓內容核對。
+空模組快取、GOPROXY=off、無網路重建五種指定入口，與同工具鏈／旗標對照逐位元組相同；
+Go 1.24.13、CGO 關閉、amd64。來源 CLI 六個測試通過、零跳過；版本測試真正執行。
+來源重建正常入口在中文／空白目錄，用已核對的 Linux 隨包依賴完成一首 BGM_0F，
+完整 VGM／WAV／增益後 PCM 符合固定鎖，Linux OGG 全檔亦相同。
+四組封裝邊界及十八個產品套件報告通過，大部分產品測試快取。
+收據檢查器的前綴多切一字修正後同命令重跑；屬腳本問題，不是遊戲產品缺陷。
+完整身份及重生入口見[驗證 037](docs/playtest/037-music-source-delivery.md)。
+
+#69 本文與人工核對註記更新，保持 OPEN；重抓快照產生現況與矩陣後，仍為 267 條
+斷言零失效、3 條人工核對、119 條一致、145 條只有文件證據。077 CONFORMED 限來源與
+授權技術準備；合成器／編碼器完整第三方來源仍按 033／035 隨正式包配送，不把 vendor
+當作完整執行期來源。正式版號／dist-all、macOS、實機、聆聽／循環未完成，Goal 繼續，未發布 Release。
+
+沿用既有 GUI／Go／Python images，未新建映像檔；原版未改，專用 dosgolem 工作樹乾淨。
+收尾按工作樹掛載核對無本專案執行中／已停止容器，其他專案容器未動。
+工作根未見 root-owned 或誤建 .md 目錄；文件／來源輸出 UID/GID
+1000:1000，來源收據與目前腳本身份相同，新文件入口及本機引用通過。
+繁體字稽核先誤列共用字，修正字表後重跑通過。授權、重生腳本、收據與文件一併提交
+推送 main，精確提交由 Git 歷史回查；大檔及技術包只留 workplace。
+
 ## 2026-10-02 — #69 Windows 同包二十二首、Unicode OPL 與中文 ZIP
 
 第二十二輪接續原 Goal、GitHub 工作項目及提交／推送授權；開工與收尾均為 87 張
