@@ -61,12 +61,18 @@ func TestAdvanceTurnRefillsRegionSupply(t *testing.T) {
 	binary.LittleEndian.PutUint32(g.regionRecord(0)[0x1A:], 900)
 	binary.LittleEndian.PutUint16(g.regionRecord(0)[0x20:], 100)
 	g.res.Planets.SetPlanetEconomy(0, 900)
+	binary.LittleEndian.PutUint16(g.res.Planets.Record(0)[0x14:], 100)
 	stock := rules.PlanetStock{}
 	rules.WritePlanetStock(g.res.Planets.Record(0), stock)
 	g.advanceTurn()
+	finishTurn(t, g) // 易主報告尚未關閉時，不能提前跑下一座位回充。
 	got, ok := rules.ReadPlanetStock(g.res.Planets.Record(0))
-	if !ok || got.Missiles != 100 || got.Fighters != 100 {
-		t.Fatalf("回合 1 行星回充=%+v，預期飛彈／艦載機各 100", got)
+	if !ok || got.Missiles != 0 || got.Fighters != 0 {
+		t.Fatalf("回合 1 行星=%+v，下一座位回充不寫行星", got)
+	}
+	pool, ok := rules.ReadRegionSupply(g.regionRecord(0))
+	if !ok || pool.Missiles[0] != 100 || pool.Fighters[0] != 100 {
+		t.Fatalf("回合 1 星域回充=%+v，預期各 100", pool)
 	}
 }
 

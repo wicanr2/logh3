@@ -28,6 +28,7 @@ cases=(
   "fcmd-win|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308"
   "fcmd-done|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 312; click 85 128; click 432 263"
   "fcmd-exec|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 312; click 85 128; click 432 263; click 544 125; click 560 125; tick 18; click 560 125; click 560 125"
+  "supply84-gui|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 544 125; click 560 125; tick 18"
   # 實行之後停在「出發前往」那張過場（規格 059），點一下換「已經到達」（docs/re/332）。
   # 實行之後、回合處理之前：電腦座位的「戰略模式思考中」（規格 059，停 18 tick）。
   "fcmd-turn-think|move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 352 125; click 400 125; click 400 85; click 488 330; click 480 350; click 510 350; click 450 308; click 490 345; click 497 312; click 85 128; click 432 263; click 544 125; click 560 125"
@@ -115,7 +116,7 @@ for c in "${cases[@]}"; do
     continue
   fi
   shots=(-shot-bin /src/workplace/gui-check.bin)
-  if [[ "$batch" == planarrow-* ]]; then
+  if [[ "$batch" == planarrow-* || "$batch" == supply84-gui ]]; then
     shots=(-shot-bin "/src/workplace/oracle/$batch/remake.bin" -shot "/src/workplace/oracle/$batch/remake.png")
     # 記錄實際輸入；不在主機執行資料分析。
     printf '%s\n' "$script" > "workplace/oracle/$batch/remake-script.txt"
@@ -123,7 +124,9 @@ for c in "${cases[@]}"; do
 import hashlib,json,pathlib,sys
 root=pathlib.Path("/ref"); out=pathlib.Path("workplace/oracle",sys.argv[1])
 sources=["internal/game/game.go","internal/game/planscreens.go","internal/game/planscreens_test.go","tools/gui_check.sh"]
-out.joinpath("remake-meta.json").write_text(json.dumps({"git_head":sys.argv[2],"working_tree":sys.argv[3],"image":sys.argv[4],"command":"tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2","source_sha256":{p:hashlib.sha256(root.joinpath(p).read_bytes()).hexdigest() for p in sources},"rng":"正常劇本 1 帝國，箭頭不含亂數判定","scenario":"S1 帝國 796-01-01","input":"remake-script.txt 完整正常玩家路徑；未注入"},ensure_ascii=False,indent=2)+"\n")
+is_supply=sys.argv[1]=="supply84-gui"
+if is_supply: sources += ["internal/game/regionturn.go","internal/rules/regionresupply.go","internal/game/originalbrain.go"]
+out.joinpath("remake-meta.json").write_text(json.dumps({"git_head":sys.argv[2],"working_tree":sys.argv[3],"image":sys.argv[4],"command":"tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2","source_sha256":{p:hashlib.sha256(root.joinpath(p).read_bytes()).hexdigest() for p in sources},"rng":"正常劇本 1 帝國；執行前原版檢查點及 remake strategyRandSeed 固定 0xD3DC167E；比較第一回合完整畫面，不宣稱整段骰序一致" if is_supply else "正常劇本 1 帝國，箭頭不含亂數判定","scenario":"S1 帝國 796-01-04" if is_supply else "S1 帝國 796-01-01","input":"remake-script.txt 完整正常玩家路徑；未注入"},ensure_ascii=False,indent=2)+"\n")
 ' "$batch" "$(git rev-parse HEAD)" "$(git status --porcelain)" "${LOGH3_GUI_IMAGE:-logh3-ebiten:2}"
   fi
   tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data \

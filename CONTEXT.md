@@ -20,7 +20,14 @@
   [研究 352](docs/re/352-opening-runtime-tables.md)、[規格 065](docs/spec/065-opening-runtime-tables.md)
   與 [本輪範圍](docs/goal/2026-10-01-opening-tables-round-11.md)。
   [舊差異索引](docs/internals/data/budget-table-differences.json) 保留作發現時的證據。
-  **#84** 接續完整回合分配／補給／彙總／回充時序，未宣稱全回合補給已一致；
+  **#84 指定回合庫存鏈修正**：移動後分配、補給後彙總／再分配、下一座位
+  僅回充星域已接齊；避免提前刷新經濟力，正常回合全部星域／行星庫存零差異。
+  分配與回充的整表階段測試、正常存讀檔、跨月交付與全部產品套件通過；
+  未注入 GUI 全畫面色號／RGB 零差異，正常移動及對戰交棒抽驗通過。入口
+  [研究 353](docs/re/353-region-supply-turn-timing.md) 與
+  [第十二輪](docs/goal/2026-10-01-supply-turn-round-12.md)、
+  [對拍 026](docs/playtest/026-region-supply-turn.md)。**完整回合表仍有星域 18／行星
+  15 bytes 差異，由 #85 追查**，不宣稱整表或所有回合一致；
   剩餘項與 AI／音樂分支仍以遠端 Issue 及原 Goal 為準。
 
 - 遊戲：《銀河英雄傳說III SP》（Micronet，1994），PC DOS 版，啟動程式 `GIN3.COM`。
@@ -530,19 +537,20 @@
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
-#### region-supply-turn-timing — 戰略回合的行星分配、艦隊補給、星域彙總與回充時序
+#### post-turn-runtime-fields — 正常實行後的星域與行星非補給欄位尚未達全表一致
 
-*[#84](https://github.com/wicanr2/logh3/issues/84) · parity（對拍：要與原版逐位元組相同）*
+*[#85](https://github.com/wicanr2/logh3/issues/85) · parity（對拍：要與原版逐位元組相同）*
 
-#83 開局整表調查確認原版分配在 `056A:0048`（艦隊移動後），回充在下一座位回合前的 `0654:0007`。remake 現行 `beginTurn` 把彙總、回充、分配合在 AI／移動之前；`ResupplyRegion` 也以提前做過為由略過原版彙總。開局修正不能代表完整回合補給時序一致。
+#84 的完整回合記憶體比對另發現非補給欄位差異：9 個星域的 `+0x78`／`+0x79`，以及首都四顆行星的 `+0x46`–`+0x49`。開局整表已一致，這些欄位在正式實行回合後才分岔；不能把庫存鏈通過升格為完整執行期表格一致。
 
-**卡在**：呼叫時序已定位，但尚未取得完整回合與消耗後的同狀態資料對拍；不能依既有單一回充 helper 通過就宣稱整條鏈一致。
+**卡在**：已保存完整正常回合收據與差異，但沒有足以修改正式資料語意的證據。`+0x78`／`+0x79` 保持 unknown；行星四欄可能為地圖座標（hypothesis），須核對寫入端，不能憑數值猜補。
+原版 `command.bin` SHA-256 `9193bb29a878a1d7fbe4ca86f6a6f6f1b4fdebe16b334aa530152ba6ab4ea212`；dosgolem-logh3 `f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c`，完整旗標存於收據及腳本，全部階段記憶體兩輪一致。
 
-**做完的判準**：以原版正常玩家入口與可重播固定狀態核對分配 → 艦隊補充／消耗 → 行星彙總 → 下一回合回充的有限垂直鏈；既有規則先核對原始寫入端與 READY 規格，再調整正式接線。至少涵蓋有／無艦隊補給、七種待命艦艇與飛彈／艦載機的星域及行星 bytes，保留正常 GUI、跨月與存讀檔測試。
+**做完的判準**：追查這些欄位的原始寫入者、讀取者與玩家可見用途，保存原始定位／bytes／工具版本／推論等級。若玩家路徑需要，依 RE → DRAFT → READY → implementation 補齊，重新以正常玩家回合的星域 4032／行星 6642 bytes 全表核對；若僅屬非玩家暫存狀態，須有原版資料流支持分類，不能自行排除未知欄位。
 
-**證據**：[`docs/re/352-opening-runtime-tables.md`](docs/re/352-opening-runtime-tables.md)、[`docs/internals/data/opening-runtime-tables.json`](docs/internals/data/opening-runtime-tables.json)、[`docs/spec/039-region-supply-pool.md`](docs/spec/039-region-supply-pool.md)、[`internal/game/regionturn.go`](internal/game/regionturn.go)、[`internal/rules/regionresupply.go`](internal/rules/regionresupply.go)
+**證據**：[`docs/re/353-region-supply-turn-timing.md`](docs/re/353-region-supply-turn-timing.md)、[`tools/region_supply_receipts.sh`](tools/region_supply_receipts.sh)、[`docs/internals/data/region-supply-turn-timing.json`](docs/internals/data/region-supply-turn-timing.json)、[`workplace/oracle/supply84-stationed/command.bin`](workplace/oracle/supply84-stationed/command.bin)、[`workplace/oracle/supply84-stationed/normal-table-differences.json`](workplace/oracle/supply84-stationed/normal-table-differences.json)
 
-**核實**：要人判——待全回合與消耗後原版收據到位，綁正式接線與星域／行星原始 bytes 的 go_test；現有回充 helper 不是整鏈驗收。
+**核實**：要人判——追查正常實行後星域 +0x78/+0x79、行星 +0x46–+0x49 的寫入端；玩家功能接齊後綁全表 bytes 的 go_test，不以單一補給庫存鏈代替。
 
 #### battle-turn-eight-steps — 戰場回合結算對齊原版八步（規格 062 的其餘七步與子步 8-2–8-5）
 

@@ -60,13 +60,10 @@ func ResupplyRegion(record []byte, planets *Planets, region int, fleets []*Fleet
 			mine = append(mine, f)
 		}
 	}
-	// 原版在這裡先跑 `2703:12EB`：它把星域的 `+0x30`／`+0x68`／`+0x70` 清掉再從
-	// 每顆行星重算（`docs/re/349` §2.3）。remake 已經在每回合開頭的
-	// `refillRegionSupply` 做過同一件事（`2B5F:02B2` ＋ `2703:0590`），在這裡
-	// 再做一次會把行星存量整批重分配，所以略過。
-	// （收據上這一支前後的位元組相同，那只是因為重算的結果與原值相同，
-	// 不是因為它什麼都沒做——規格 063 原本寫錯了理由。）
-	gave := false
+	// `2703:12EB` 無條件重建全部庫存，覆蓋前一支 `1930:1572` 的
+	// 星域補給扣款；那是同次呼叫共用的預算，不能帶到下一回合（研究 353）。
+	AggregateRegionShips(record, planets, region)
+	AggregateRegionSupply(record, planets, region)
 	for kind := 0; kind < regionShipKinds; kind++ {
 		cands := resupplyCandidates(mine, kind)
 		if len(cands) == 0 {
@@ -86,16 +83,13 @@ func ResupplyRegion(record []byte, planets *Planets, region int, fleets []*Fleet
 				continue
 			}
 			addGroupShips(kinds, c.fleet.Faction, c.group, give)
-			gave = true
 		}
 	}
 	// `2703:0540`：扣完之後把這一格的存量照經濟力比例分回行星（兩陣營各一趟），
-	// 扣掉的量才會進到下一回合的基數。**沒有真的補到東西就不跑**——分配本身
-	// 會重寫行星的存量欄位，白跑一趟等於平白把行星之間的分布洗一次。
-	if gave {
-		for faction := 0; faction < 2; faction++ {
-			DistributeRegionSupply(record, planets, region, faction)
-		}
+	// 扣掉的量才會進到下一回合的基數。原版沒有「有補到才跑」的條件，
+	// 沒有候補艦隊也分配（研究 353／規格 039、063）。
+	for faction := 0; faction < 2; faction++ {
+		DistributeRegionSupply(record, planets, region, faction)
 	}
 	return mine
 }

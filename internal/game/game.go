@@ -1048,14 +1048,13 @@ func (g *Game) advanceTurn() {
 	g.continueAfterAdmiralFateReports()
 }
 
-// beginTurn 是 `advanceTurn` 在電腦下命令之前的那幾步：回合計數器、回充，
+// beginTurn 是 `advanceTurn` 在電腦下命令之前的那幾步：回合計數器，
 // 以及月初那個回合玩家按完「實行」之後、排在玩家之後的座位先過的月底
 // （收自己那些星域的稅，`docs/spec/035`；`g.turn` 在開頭就先加了，所以看
 // 的是 `g.turn − 1`）。測試要手動走到 `runBrain` 之前就叫它。
 func (g *Game) beginTurn() {
 	g.mapMark = -1 // `04F8:02E7` 的 `3705:0349(1)`
 	g.turn++
-	g.refillRegionSupply()
 	if (g.turn-1)%rules.TurnsPerMonth == 0 {
 		g.monthEndSeatsAfterPlayer()
 	}
@@ -1341,6 +1340,7 @@ func (g *Game) answerOccupyAsk(occupy bool) {
 func (g *Game) afterFleetMoves() {
 	// `056A:044B`：32 支走完，`3705:0349(1)` 整片還原（過場留下的下一格色 5 在這裡消失）。
 	g.mapMark = -1
+	g.distributeRegionStocks() // `056A:0048`，移動後、重數艦隊前（規格 039）。
 	// 走完就重數每一格的艦隊數（`2703:0853`，排在移動之後、叛亂判定之前，
 	// `docs/re/297`）。
 	g.recountRegionFleets()
@@ -1420,6 +1420,9 @@ func (g *Game) finishAfterPhezzanReports() {
 	if g.startVictoryReport() {
 		return
 	}
+	// `0654:0015`，下一回合的星域池回充在月底閘門／交付之前；
+	// 行星保持剛才補充與回合尾巴彙總的值（研究 353／規格 039）。
+	g.refillRegionSupply()
 	// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
 	// 並跳出船艦接收報告。
 	//
@@ -1717,14 +1720,25 @@ func (g *Game) recomputeUnrest(counter int) {
 		len(g.res.UnrestParams.Table) == 0 {
 		return
 	}
-	if counter < 0 {
-		counter = 0
-	}
 	// `090A:0E6D` ＝ `2703:02E5` 三件事：每一格 經濟力 ← 行星加總、預估稅
 	// 重算、未安定度（`docs/spec/042`）。前兩件在這裡一起做，花進行星的錢
 	// 才會反映到星域與右側面板（收據 `fcmd-exec`）。
 	rules.ResumRegionEconomy(g.res.Stellar, g.res.Planets)
 	g.refreshTaxEstimate()
+	g.recomputeRegionUnrest(counter)
+}
+
+// recomputeRegionUnrest 只做 `2703:0DA1`。回合尾巴直接呼叫它，
+// 不能提前執行 `02E5` 的經濟力／預估稅刷新，否則下一座位回充讀錯上限。
+// 證據：研究 353／規格 039，與既有共同入口 `recomputeUnrest` 分開。
+func (g *Game) recomputeRegionUnrest(counter int) {
+	if !g.regionsReady() || len(g.res.UnrestParams.Base) == 0 ||
+		len(g.res.UnrestParams.Table) == 0 {
+		return
+	}
+	if counter < 0 {
+		counter = 0
+	}
 	params := g.res.UnrestParams
 	params.Turn = counter
 	params.Blend = g.blend
@@ -1944,11 +1958,9 @@ func (g *Game) startNewGame(faction int) {
 				rules.DoubleRegionPlanetShips(g.res.Planets, rules.CapitalRegion(f))
 			}
 		}
-		for r := 0; r < rules.RegionCount; r++ {
-			rules.AggregateRegionShips(g.regionRecord(r), g.res.Planets, r)
-		}
 	}
-	g.updateRegionSupply(false)
+	g.aggregateRegionStocks()
+	g.refillRegionSupply()
 	g.monthEnd()
 	g.recountRegionFleets()
 	g.refreshCapitalSnap()

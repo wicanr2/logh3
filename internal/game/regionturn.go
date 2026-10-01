@@ -19,8 +19,8 @@ import (
 // 兩支都在回合計數器遞增之前。
 //
 // **順序不能換**：路徑表是擁有者的函數。這裡做的是第一步、`2703:0933`
-// 與 `2703:0DA1`（未安定度，`recomputeUnrest`，`docs/spec/042`）；彙總
-// remake 各自現算，不需要這一圈。
+// 與 `2703:0DA1`（未安定度，`recomputeUnrest`，`docs/spec/042`）；
+// `2703:12EB` 的七種艦艇與兩種補給彙總也必須保留（研究 353／規格 039）。
 
 // 星域記錄裡這一圈會寫到的三個位移（`docs/internals/22`）。
 const (
@@ -73,27 +73,38 @@ func (g *Game) initializeOpeningRegions() {
 	}
 }
 
-// refillRegionSupply 是原版 `0654:0007` 在月底閘門之前每回合都跑的
-// `2B5F:02B2`。開局只彙總與回充，命令階段還沒分配回行星（規格 065）。
-// 原版整回合的分配在艦隊移動後；既有 beginTurn 接線仍待 #84 校正。
+// refillRegionSupply 是下一座位 `0654:0007` 在月底閘門之前跑的
+// `2B5F:02B2`，只回充星域，不彙總、不寫行星（研究 353／規格 039）。
 func (g *Game) refillRegionSupply() {
-	g.updateRegionSupply(true)
+	if g.res == nil {
+		return
+	}
+	for region := 0; region < len(g.res.Stellar)/rules.RegionRecord; region++ {
+		rules.RefillRegionSupply(g.regionRecord(region))
+	}
 }
 
-func (g *Game) updateRegionSupply(distribute bool) {
+// aggregateRegionStocks ＝ `2703:12EB`，回合尾巴從行星重建全部兩陣營庫存。
+func (g *Game) aggregateRegionStocks() {
 	if !g.regionsReady() {
 		return
 	}
 	for region := 0; region < rules.RegionCount; region++ {
 		rec := g.regionRecord(region)
-		if !rules.AggregateRegionSupply(rec, g.res.Planets, region) ||
-			!rules.RefillRegionSupply(rec) {
-			continue
-		}
-		if distribute {
-			for faction := 0; faction < 2; faction++ {
-				rules.DistributeRegionSupply(rec, g.res.Planets, region, faction)
-			}
+		rules.AggregateRegionShips(rec, g.res.Planets, region)
+		rules.AggregateRegionSupply(rec, g.res.Planets, region)
+	}
+}
+
+// distributeRegionStocks ＝ `056A:0048` → `2703:051D`，艦隊移動後讀星域池
+// 分配回行星。此時不能先彙總，否則會覆蓋命令階段對星域池的增減。
+func (g *Game) distributeRegionStocks() {
+	if !g.regionsReady() {
+		return
+	}
+	for region := 0; region < rules.RegionCount; region++ {
+		for faction := 0; faction < 2; faction++ {
+			rules.DistributeRegionSupply(g.regionRecord(region), g.res.Planets, region, faction)
 		}
 	}
 }
@@ -105,6 +116,7 @@ func (g *Game) recomputeRegionOwners() int {
 	if !g.regionsReady() {
 		return 0
 	}
+	rules.RecomputeRegionPlanets(g.res.Stellar, g.res.Planets)
 	changed := 0
 	for i := 0; i < rules.RegionCount; i++ {
 		rec := g.regionRecord(i)
@@ -147,6 +159,7 @@ func (g *Game) refreshRegionPosture() {
 			binary.LittleEndian.PutUint16(rec[regionCapCostOff:], uint16(p.CapitalCost))
 		}
 	}
+	g.aggregateRegionStocks()
 	// `2703:08DE` 逐格的第三支 `2703:0DA1`。回合計數器還沒進位
 	// （remake 的 `g.turn` 在 advanceTurn 開頭就先加了）。
 	//
@@ -154,7 +167,7 @@ func (g *Game) refreshRegionPosture() {
 	// 編號比它大的鄰居**還沒更新**的 `+0x13`；這裡全部更新完才算。兩者只在
 	// 這一圈改了鄰居的 bit2 時才會不同，而下一個座位回合開頭的那一次
 	// （`finishTurn`）會照更新完的旗標再算一次，玩家看得到的是那一次。
-	g.recomputeUnrest(g.turn - 1)
+	g.recomputeRegionUnrest(g.turn - 1)
 }
 
 // runRegionPass 跑整條回合結束的星域重算，並在有易主時**停在報告上**

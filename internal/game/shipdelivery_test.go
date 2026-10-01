@@ -27,6 +27,11 @@ func TestShipDeliveryGoesToCapitalPlanet(t *testing.T) {
 	if got := g.building[0].Ships(0); got != deliverWant[0] {
 		t.Fatalf("796/1 的建造中第 0 列 ＝ %d，收據是 %d", got, deliverWant[0])
 	}
+	// 先完成九回合的正常分配；交付的原版收據比較的是交付前後，
+	// 不能把開局尚未分配的行星分布當成第十回合交付前的值（研究 353）。
+	for i := 0; i < 9; i++ {
+		executeTurn(t, g)
+	}
 	before := make([][rules.BuildPlanRows]int, 81)
 	for i := range before {
 		before[i] = planetShips(g, i)
@@ -34,11 +39,7 @@ func TestShipDeliveryGoesToCapitalPlanet(t *testing.T) {
 	regionBefore := rules.RegionShips(
 		g.res.Stellar[0:rules.RegionRecord], 0)
 
-	for i := 0; i < 10; i++ {
-		g.Click(544, 125) // 系統指令
-		g.Click(560, 125) // 實行
-		thinkThrough(g)
-	}
+	executeTurn(t, g)
 	if y, m, _ := g.Date(); y != 796 || m != 2 {
 		t.Fatalf("十次實行之後是 %d 年 %d 月，預期 796/2", y, m)
 	}

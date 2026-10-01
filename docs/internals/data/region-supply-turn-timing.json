@@ -1,0 +1,668 @@
+{
+  "source_exe": "GIN3.COM",
+  "source_exe_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "address_space": "dosgolem 執行期線性位址；程式原始定位另保留 CS:IP",
+  "replays": [
+    {
+      "batch": "supply84-stationed",
+      "repeat": "supply84-stationed-r2",
+      "grade": "proven",
+      "scope": "指定完整檢查點、輸入及階段擷取；不宣稱所有回合",
+      "inputs": {
+        "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+        "golem_working_tree": "",
+        "original_image": "golang:1.24-bookworm",
+        "python_image": "python:3.12-slim",
+        "parent": {
+          "path": "/src/workplace/fcmd/fcmd-base.state",
+          "sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26"
+        },
+        "memory": [
+          {
+            "stage": "initial",
+            "step": 420000010,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea"
+          },
+          {
+            "stage": "move-finished",
+            "step": 432635158,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "1e2570db394cd3bdf5593c3d71df39ad312699834631ec7ba9cc36de2104f930"
+          },
+          {
+            "stage": "distributed",
+            "step": 432905201,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "63f598e48c7e28767bd95ca618c3630bd78e7ac068fe7572479c72bfef751e4a"
+          },
+          {
+            "stage": "fleet-supplied",
+            "step": 432905949,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "b6db9cde0e499988399f9516889062fff71f09702f5fbad276c9703c5fbe0b75"
+          },
+          {
+            "stage": "ships-filled",
+            "step": 432909112,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "c35ae25d8cbe37d996ec98f7a43fc80db8b8eaca9ea0d9271f8f2188fa7a86f4"
+          },
+          {
+            "stage": "resupplied",
+            "step": 433600000,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "b213315328fac0f765ba301ba86ba2bbd3620f3bc438811d95c413fbd4021ae0"
+          },
+          {
+            "stage": "empty-supplied",
+            "step": 451152514,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "750386b23c71af1c28fa4286bfb3887ab5cd485b16f9c46c07763c29c1022965"
+          },
+          {
+            "stage": "empty-filled",
+            "step": 451154823,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "e9a38d864bac4d4d7b57ac7ed3da2631c46c6f7dbfb96c533eeeaa5e22f14958"
+          },
+          {
+            "stage": "owner-pass",
+            "step": 451788485,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "c43ade26c71e126da4c6b519dc61372a1db78abbaae2b9e1167851a87f1efb67"
+          },
+          {
+            "stage": "refill-before",
+            "step": 456172977,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "d735e89e099b473eafdcfe3163c5ea3d63f95d45fa79986855a9542218925506"
+          },
+          {
+            "stage": "refill-after",
+            "step": 456183314,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "bc0cbd3e5be0b10540791c62a52842e4eef7ea3f05e959f32ef8662cf78063d7"
+          },
+          {
+            "stage": "command",
+            "step": 499999999,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "9193bb29a878a1d7fbe4ca86f6a6f6f1b4fdebe16b334aa530152ba6ab4ea212"
+          }
+        ],
+        "original_seed_hex": "0xd3dc167e",
+        "original_seed_setup": "執行前從完整原版檢查點固定；initial.bin 實讀 DS:94DC",
+        "remake_seed_hex": "0xd3dc167e",
+        "remake_seed_setup": "正式 strategyRandSeed，執行前固定；不影響未受控正式局的裁決",
+        "rng": "局部庫存公式不取亂數；完整正常回合只裁決相同初始局面及輸入的庫存與指定畫面，不宣稱整段骰序一致。",
+        "canvas": [
+          640,
+          480
+        ],
+        "mouse_y_to_screen_y": 40
+      },
+      "flags": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-base.state",
+        "-steps",
+        "500000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "421000000:544:85,424000000:560:85",
+        "-click-hold",
+        "3000000",
+        "-poke",
+        "lin:60BA4@420000050=01;lin:60BE0@420000050=28;lin:668B8@420000050=28;lin:668BA@420000050=64 00;lin:668C0@420000050=00 00 00 00;lin:668C4@420000050=00 00 00 00",
+        "-dump-mem-at",
+        "420000010:lin:0:1048576:/src/workplace/supply84-stationed-initial.bin;432635158:lin:0:1048576:/src/workplace/supply84-stationed-move-finished.bin;432905201:lin:0:1048576:/src/workplace/supply84-stationed-distributed.bin;432905949:lin:0:1048576:/src/workplace/supply84-stationed-fleet-supplied.bin;432909112:lin:0:1048576:/src/workplace/supply84-stationed-ships-filled.bin;433600000:lin:0:1048576:/src/workplace/supply84-stationed-resupplied.bin;451152514:lin:0:1048576:/src/workplace/supply84-stationed-empty-supplied.bin;451154823:lin:0:1048576:/src/workplace/supply84-stationed-empty-filled.bin;451788485:lin:0:1048576:/src/workplace/supply84-stationed-owner-pass.bin;456172977:lin:0:1048576:/src/workplace/supply84-stationed-refill-before.bin;456183314:lin:0:1048576:/src/workplace/supply84-stationed-refill-after.bin;499999999:lin:0:1048576:/src/workplace/supply84-stationed-command.bin",
+        "-regs-at",
+        "2703:051D,2703:0540,1930:1572,1AAB:0FAF,2703:12EB,2703:08DE,2B5F:02B2,0654:001A",
+        "-regs-from",
+        "420000000",
+        "-regs-max",
+        "80"
+      ],
+      "hashes": {
+        "initial.bin": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea",
+        "move-finished.bin": "1e2570db394cd3bdf5593c3d71df39ad312699834631ec7ba9cc36de2104f930",
+        "distributed.bin": "63f598e48c7e28767bd95ca618c3630bd78e7ac068fe7572479c72bfef751e4a",
+        "fleet-supplied.bin": "b6db9cde0e499988399f9516889062fff71f09702f5fbad276c9703c5fbe0b75",
+        "ships-filled.bin": "c35ae25d8cbe37d996ec98f7a43fc80db8b8eaca9ea0d9271f8f2188fa7a86f4",
+        "resupplied.bin": "b213315328fac0f765ba301ba86ba2bbd3620f3bc438811d95c413fbd4021ae0",
+        "empty-supplied.bin": "750386b23c71af1c28fa4286bfb3887ab5cd485b16f9c46c07763c29c1022965",
+        "empty-filled.bin": "e9a38d864bac4d4d7b57ac7ed3da2631c46c6f7dbfb96c533eeeaa5e22f14958",
+        "owner-pass.bin": "c43ade26c71e126da4c6b519dc61372a1db78abbaae2b9e1167851a87f1efb67",
+        "refill-before.bin": "d735e89e099b473eafdcfe3163c5ea3d63f95d45fa79986855a9542218925506",
+        "refill-after.bin": "bc0cbd3e5be0b10540791c62a52842e4eef7ea3f05e959f32ef8662cf78063d7",
+        "command.bin": "9193bb29a878a1d7fbe4ca86f6a6f6f1b4fdebe16b334aa530152ba6ab4ea212",
+        "screen.bin": "79c9c7697a1f3148062a465fbc3ecbe9149bad77c51e517e071c9975ffd790ee",
+        "screen.png": "271d85301f0e74bc2bfe7d8ec41971464350c0632c93ab7b5ec70389fae31b3b",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+      }
+    },
+    {
+      "batch": "supply84-gui",
+      "repeat": "supply84-gui-r2",
+      "grade": "proven",
+      "scope": "指定完整檢查點、輸入及階段擷取；不宣稱所有回合",
+      "inputs": {
+        "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+        "golem_working_tree": "",
+        "original_image": "golang:1.24-bookworm",
+        "python_image": "python:3.12-slim",
+        "parent": {
+          "path": "/src/workplace/fcmd/fcmd-base.state",
+          "sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26"
+        },
+        "memory": [
+          {
+            "stage": "initial",
+            "step": 420000010,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea"
+          },
+          {
+            "stage": "command",
+            "step": 499999999,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "abf7512aef90dd50e5b809026c12008dc9bf2eda775ea30e95f399df72ef7e52"
+          }
+        ],
+        "original_seed_hex": "0xd3dc167e",
+        "original_seed_setup": "執行前從完整原版檢查點固定；initial.bin 實讀 DS:94DC",
+        "remake_seed_hex": "0xd3dc167e",
+        "remake_seed_setup": "正式 strategyRandSeed，執行前固定；不影響未受控正式局的裁決",
+        "rng": "局部庫存公式不取亂數；完整正常回合只裁決相同初始局面及輸入的庫存與指定畫面，不宣稱整段骰序一致。",
+        "canvas": [
+          640,
+          480
+        ],
+        "mouse_y_to_screen_y": 40
+      },
+      "flags": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-base.state",
+        "-steps",
+        "500000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "421000000:544:85,424000000:560:85",
+        "-click-hold",
+        "3000000",
+        "-dump-mem-at",
+        "420000010:lin:0:1048576:/src/workplace/supply84-gui-initial.bin;499999999:lin:0:1048576:/src/workplace/supply84-gui-command.bin",
+        "-regs-at",
+        "2703:051D,2703:0540,1930:1572,1AAB:0FAF,2703:12EB,2703:08DE,2B5F:02B2,0654:001A",
+        "-regs-from",
+        "420000000",
+        "-regs-max",
+        "80"
+      ],
+      "hashes": {
+        "initial.bin": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea",
+        "command.bin": "abf7512aef90dd50e5b809026c12008dc9bf2eda775ea30e95f399df72ef7e52",
+        "screen.bin": "2bb4cdfcbb83846bf54d91027025c91ea2dafa2d98b81b56939be66c0635d502",
+        "screen.png": "c5b542faf79e233f1e0330e0704d271012a7986c22b04e8cae01705cb725591f",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+      }
+    }
+  ],
+  "callsite": {
+    "original_location": "0654:0015",
+    "linear_hex": "0x6555",
+    "original_bytes_hex": "9a b2 02 5f 2b",
+    "return_location": "0654:001A",
+    "semantic": "呼叫 2B5F:02B2；下一座位前僅回充星域池",
+    "grade": "proven",
+    "source": "refill-before.bin／refill-after.bin、report.txt 的命中及規格 039 證據審查"
+  },
+  "stock_validation": {
+    "grade": "proven",
+    "scope": "S1 帝國首個實行回合，與明示同局面注入",
+    "stellar_bytes_compared": 2304,
+    "planet_bytes_compared": 2916,
+    "different": 0,
+    "test": "TestRegionSupplyNormalTurnMatchesOriginal",
+    "full_tables_equal": false
+  },
+  "full_table_differences": {
+    "stellar": [
+      {
+        "record": 3,
+        "offset_hex": "0x78",
+        "original_linear_hex": "0x5f4be",
+        "original": 109,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 3,
+        "offset_hex": "0x79",
+        "original_linear_hex": "0x5f4bf",
+        "original": 12,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 10,
+        "offset_hex": "0x78",
+        "original_linear_hex": "0x5f830",
+        "original": 112,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 10,
+        "offset_hex": "0x79",
+        "original_linear_hex": "0x5f831",
+        "original": 16,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 11,
+        "offset_hex": "0x78",
+        "original_linear_hex": "0x5f8ae",
+        "original": 79,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 11,
+        "offset_hex": "0x79",
+        "original_linear_hex": "0x5f8af",
+        "original": 8,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 12,
+        "offset_hex": "0x78",
+        "original_linear_hex": "0x5f92c",
+        "original": 97,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 12,
+        "offset_hex": "0x79",
+        "original_linear_hex": "0x5f92d",
+        "original": 12,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 14,
+        "offset_hex": "0x78",
+        "original_linear_hex": "0x5fa28",
+        "original": 80,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 14,
+        "offset_hex": "0x79",
+        "original_linear_hex": "0x5fa29",
+        "original": 4,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 23,
+        "offset_hex": "0x78",
+        "original_linear_hex": "0x5fe96",
+        "original": 69,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 23,
+        "offset_hex": "0x79",
+        "original_linear_hex": "0x5fe97",
+        "original": 4,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 24,
+        "offset_hex": "0x78",
+        "original_linear_hex": "0x5ff14",
+        "original": 46,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 24,
+        "offset_hex": "0x79",
+        "original_linear_hex": "0x5ff15",
+        "original": 4,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 25,
+        "offset_hex": "0x78",
+        "original_linear_hex": "0x5ff92",
+        "original": 64,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 25,
+        "offset_hex": "0x79",
+        "original_linear_hex": "0x5ff93",
+        "original": 8,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 28,
+        "offset_hex": "0x78",
+        "original_linear_hex": "0x6010c",
+        "original": 49,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 28,
+        "offset_hex": "0x79",
+        "original_linear_hex": "0x6010d",
+        "original": 4,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      }
+    ],
+    "planet": [
+      {
+        "record": 0,
+        "offset_hex": "0x46",
+        "original_linear_hex": "0x53178",
+        "original": 56,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 0,
+        "offset_hex": "0x47",
+        "original_linear_hex": "0x53179",
+        "original": 1,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 0,
+        "offset_hex": "0x48",
+        "original_linear_hex": "0x5317a",
+        "original": 16,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 0,
+        "offset_hex": "0x49",
+        "original_linear_hex": "0x5317b",
+        "original": 1,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 1,
+        "offset_hex": "0x46",
+        "original_linear_hex": "0x531ca",
+        "original": 88,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 1,
+        "offset_hex": "0x47",
+        "original_linear_hex": "0x531cb",
+        "original": 4,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 1,
+        "offset_hex": "0x48",
+        "original_linear_hex": "0x531cc",
+        "original": 156,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 1,
+        "offset_hex": "0x49",
+        "original_linear_hex": "0x531cd",
+        "original": 1,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 2,
+        "offset_hex": "0x46",
+        "original_linear_hex": "0x5321c",
+        "original": 248,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 2,
+        "offset_hex": "0x47",
+        "original_linear_hex": "0x5321d",
+        "original": 2,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 2,
+        "offset_hex": "0x48",
+        "original_linear_hex": "0x5321e",
+        "original": 24,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 2,
+        "offset_hex": "0x49",
+        "original_linear_hex": "0x5321f",
+        "original": 3,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 3,
+        "offset_hex": "0x46",
+        "original_linear_hex": "0x5326e",
+        "original": 184,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 3,
+        "offset_hex": "0x48",
+        "original_linear_hex": "0x53270",
+        "original": 244,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      },
+      {
+        "record": 3,
+        "offset_hex": "0x49",
+        "original_linear_hex": "0x53271",
+        "original": 3,
+        "remake": 0,
+        "grade": "unknown",
+        "followup_issue": 85
+      }
+    ]
+  },
+  "remake_hashes": {
+    "remake-stellar.bin": "a82aba5dc35f1e84026657c854f0108cdd6d76ebe2f8ec539ac6dce505c98f07",
+    "remake-planet.bin": "d4cf2b22a73136ed963e8d98f67059c7487f1b746464d5c9e92d1b3070bc5d27",
+    "normal-table-differences.json": "e899eafe490923b70bd11cb0223b6af6a742bb4da79da874954e1b428a8cafb9"
+  },
+  "gui": {
+    "stats": {
+      "comparison": "same-state",
+      "canvas": [
+        640,
+        480
+      ],
+      "crop": null,
+      "scale": 1,
+      "hashes": {
+        "screen.bin": "2bb4cdfcbb83846bf54d91027025c91ea2dafa2d98b81b56939be66c0635d502",
+        "screen.png": "c5b542faf79e233f1e0330e0704d271012a7986c22b04e8cae01705cb725591f",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "remake.bin": "2bb4cdfcbb83846bf54d91027025c91ea2dafa2d98b81b56939be66c0635d502",
+        "remake.png": "7cae8b018e6ce607772486d6c17a1beb618e7ee180d264bb45d552552e9648e8",
+        "flags.txt": "d7a0d53cdec09af7b840899ec47553ae58aeab88c1e53c86ce0bc2f52adaebab",
+        "inputs.json": "f2d366be34e2386272526b5f5d54f660955d0aac37efbd48bf1da12c1182f975",
+        "remake-script.txt": "54b3848636f5422acb7e2b3859a401e5e3f0493778606ac3a17b6af870dcaa13",
+        "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+      },
+      "index_different": 0,
+      "regions": {
+        "full": {
+          "rectangle": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "pixels": 307200,
+          "equal": 307200,
+          "different": 0,
+          "max_channel_difference": 0,
+          "bounding_box": null
+        },
+        "map": {
+          "rectangle": [
+            0,
+            40,
+            320,
+            360
+          ],
+          "pixels": 115200,
+          "equal": 115200,
+          "different": 0,
+          "max_channel_difference": 0,
+          "bounding_box": null
+        },
+        "command": {
+          "rectangle": [
+            320,
+            40,
+            320,
+            260
+          ],
+          "pixels": 83200,
+          "equal": 83200,
+          "different": 0,
+          "max_channel_difference": 0,
+          "bounding_box": null
+        },
+        "fleets": {
+          "rectangle": [
+            320,
+            300,
+            320,
+            100
+          ],
+          "pixels": 32000,
+          "equal": 32000,
+          "different": 0,
+          "max_channel_difference": 0,
+          "bounding_box": null
+        }
+      }
+    },
+    "metadata": {
+      "git_head": "c07b3867b5fef9d5059e97055e75de9189ebaff7",
+      "working_tree": " M CONTEXT.md\n M docs/spec/039-region-supply-pool.md\n M docs/spec/042-region-unrest-recompute.md\n M docs/spec/063-region-resupply.md\n M internal/game/game.go\n M internal/game/regionturn.go\n M internal/game/regionturn_test.go\n M internal/game/shipdelivery_test.go\n M internal/rules/regionresupply.go\n M tools/gui_check.sh\n?? docs/goal/2026-10-01-supply-turn-round-12.md\n?? docs/re/353-region-supply-turn-timing.md\n?? internal/game/region_supply_timing_test.go\n?? tools/region_supply_receipts.sh",
+      "image": "logh3-ebiten:2",
+      "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+      "source_sha256": {
+        "internal/game/game.go": "f48fde2dc3827bd6735d79b80d4dac135240e7019b431447b7760979112c93fe",
+        "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+        "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+        "tools/gui_check.sh": "06daeddf27b8709f75ec617b60041e4ae0ba6206338269785563270ee9cca231",
+        "internal/game/regionturn.go": "6f23d3eaea6aff8f5ab32c0b3d051c3d74a1ae700107005b1bbdddce5e57fb70",
+        "internal/rules/regionresupply.go": "ade290a94ae97bcb33d2d5af58e7d50f6b6b55ee1a3b29386f443f4444fc90d1",
+        "internal/game/originalbrain.go": "c5d27be4709731deb43c11217764e1c7df8ad1f4d3e6e050c03931f1bbdba59f"
+      },
+      "rng": "正常劇本 1 帝國；執行前原版檢查點及 remake strategyRandSeed 固定 0xD3DC167E；比較第一回合完整畫面，不宣稱整段骰序一致",
+      "scenario": "S1 帝國 796-01-04",
+      "input": "remake-script.txt 完整正常玩家路徑；未注入"
+    }
+  },
+  "limitations": [
+    "完整正常回合表尚有星域 18／行星 15 bytes 差異，由 #85 追查。",
+    "保留使用者選定的負補給缺口夾零；不宣稱該情況原版一致。",
+    "固定種子及局部結果不證明整段骰序或所有回合一致。"
+  ]
+}

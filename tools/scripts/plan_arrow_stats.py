@@ -1,12 +1,14 @@
 """#80 對拍統計與差分圖；入口及契約：docs/playtest/025-plan-arrows.md。
 
 tools/py.sh tools/scripts/plan_arrow_stats.py
+tools/py.sh tools/scripts/plan_arrow_stats.py supply84-gui
 只讀收據及正式 GUI 的未縮放輸出；不使用遮罩。輸出各批次 stats.json、diff.png。
 """
 import hashlib
 import json
 import pathlib
 import struct
+import sys
 import zlib
 
 from png import write_rgb
@@ -68,8 +70,13 @@ batches = ['tax-up', 'tax-down', 'pct-up', 'pct-down', 'hover', 'moved', 'updown
 for key in ('tax-up', 'tax-down', 'pct-up', 'pct-down'):
     batches.extend(['budget-' + key, 'budget-' + key + '-post'])
 batches.append('budget-unchanged-post')
-for batch in batches:
-    directory = pathlib.Path('workplace/oracle/planarrow-' + batch)
+directories = [pathlib.Path('workplace/oracle/planarrow-' + batch) for batch in batches]
+if len(sys.argv) > 1:
+    assert sys.argv[1] == 'supply84-gui'
+    directories = [pathlib.Path('workplace/oracle') / sys.argv[1]]
+    regions = {'full': (0, 0, 640, 480), 'map': (0, 40, 320, 360),
+               'command': (320, 40, 320, 260), 'fleets': (320, 300, 320, 100)}
+for directory in directories:
     original, remake = png_rgb(directory / 'screen.png'), png_rgb(directory / 'remake.png')
     a, b = (directory / 'screen.bin').read_bytes(), (directory / 'remake.bin').read_bytes()
     assert len(a) == len(b) == 640 * 480
