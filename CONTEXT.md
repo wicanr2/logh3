@@ -13,10 +13,15 @@
   四箭頭即時文字／游標、十份正式 GUI 完整色號及 RGB 零差異，五組原版完整記憶體
   兩輪一致，財政與所有行星經濟力及存讀檔通過。證據見
   [研究 351](docs/re/351-budget-settlement-after-reports.md)。
-  財政之外的整表 64／759 bytes 差異尚未分類，另由 **#83** 追查，
-  [差異索引](docs/internals/data/budget-table-differences.json) 不冒充整表一致。
-  開工範圍快照見 [第十輪](docs/goal/2026-10-01-plan-arrows-round-10.md)；
-  下一條對拍調查為 #83，剩餘項以遠端 Issue 為準。
+  **#83 開局整表修正**：初始行星數／經濟比例、態勢／首都成本已重算；取消提前
+  分配，補電腦首都艦艇倍增。五組正常預算路徑的星域 4032／行星 6642 bytes
+  全部相同，正式載入器也通過。十份月初 GUI、兩陣營開局、對戰交棒與全部產品
+  套件測試通過；新增寫入監看兩輪重現。詳見
+  [研究 352](docs/re/352-opening-runtime-tables.md)、[規格 065](docs/spec/065-opening-runtime-tables.md)
+  與 [本輪範圍](docs/goal/2026-10-01-opening-tables-round-11.md)。
+  [舊差異索引](docs/internals/data/budget-table-differences.json) 保留作發現時的證據。
+  **#84** 接續完整回合分配／補給／彙總／回充時序，未宣稱全回合補給已一致；
+  剩餘項與 AI／音樂分支仍以遠端 Issue 及原 Goal 為準。
 
 - 遊戲：《銀河英雄傳說III SP》（Micronet，1994），PC DOS 版，啟動程式 `GIN3.COM`。
 - 原版 bundle：`org_game/银河英雄传说3SP.zip`，
@@ -377,6 +382,7 @@
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
 | 預算箭頭只是游標附近 17–21 點未知差異；月初預算的 10741 表示已收稅 | `docs/re/343`、`docs/spec/003` 舊版 | `docs/re/350`：移開游標後仍有 26 點色號 9→8，先加後減兩顆各自保留，關窗重開才重設；完整記憶體顯示月初原版星域經濟力 85020、remake 已扣到 82302。原版此時為收稅前預估，未操作時才與後續實收相等。呈現缺口 #80 已修；結算生命週期當時留 #82，未通過試作已撤回。後續研究 351 證明訂造報告關閉後才結算，修正後十份 GUI 與五組財政對拍通過，#82 已完成；非財政整表差異另列 #83 |
+| 開局回充後應立即按經濟力比例分回全部行星；行星比例由面板現算即可 | `docs/re/273` 的回合尾段證據被誤用成開局；原 `startNewGame`／`LoadRegionRecords` 註解 | `docs/re/352`：初始命令階段星域已夾上限，但行星未分配；`056A:0048` 在移動後才分配。開局另需重算記錄中的行星數／比例與態勢成本；`2703:04F3` 將電腦首都艦艇倍增。#83 指定開局整表修正完成；完整回合補給時序另由 #84 追查 |
 | 左下角摘要「從別的畫面回到地圖介面的那一次輸入不重算」（規則四），且內容每幀從星域記錄現算 | `docs/re/284`、`docs/spec/001` 舊版規則 4、`internal/game.refreshHoverRegion` 舊註解 | `docs/re/312` §7.7–7.8：`fcmd-win-rclick`（右鍵回地圖、游標在艾流塞拉）那塊換成艾流塞拉，同一視窗按「結束」回來的 `fcmd-close` 仍是首都——判準是「游標底下那一格變了沒」，`dec1` 只是沒變的情況；`fcmd-hover-home` 對 `dec1`：星域 0 的 `+0x28` 已是 1、面板仍寫 0：0，面板是寫進去那一刻的文字。規格 001 規則 4–7 已改寫 |
 | 右下角清單右邊那個數字「一律 100，是不是機動力還沒驗」 | `docs/re/70`、`fleet-list-panel.json` 舊註、`internal/game.fleetRows` 舊註解 | `docs/re/313` §一：列印常式讀艦隊 `+0x3C`（士氣值），低於 50 變紅；記號欄依 `+0x08` 印 ☆／＊／◎ |
 | 戰略地圖的顏色只由擁有者查 `ds:8BD2` 決定，開局建一張就夠 | `docs/re/17`、`docs/internals/12`、`internal/game.factionStarMap` 舊版 | `docs/re/313` §3.2：`3705:037F` 先看 `+0x28 ＋ 陣營`——有自軍艦隊改查 `ds:8BD6` {0, 2, 15}（收據 `fcmd-exec`、S2 的 2／7／8 三格）；反白格查 `ds:8BDA`。地圖現在每幀照記錄算 |
@@ -524,19 +530,19 @@
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
-#### opening-runtime-table-differences — 開局執行期星域／行星資料表的非財政差異尚未分類
+#### region-supply-turn-timing — 戰略回合的行星分配、艦隊補給、星域彙總與回充時序
 
-*[#83](https://github.com/wicanr2/logh3/issues/83) · parity（對拍：要與原版逐位元組相同）*
+*[#84](https://github.com/wicanr2/logh3/issues/84) · parity（對拍：要與原版逐位元組相同）*
 
-#82 的五條正常月初操作路徑已對上財政與整張畫面；整表檢查另發現每組星域 64 bytes、行星 759 bytes 不同。原因尚未知，不能憑財政通過宣稱整張執行期資料已對拍。
+#83 開局整表調查確認原版分配在 `056A:0048`（艦隊移動後），回充在下一座位回合前的 `0654:0007`。remake 現行 `beginTurn` 把彙總、回充、分配合在 AI／移動之前；`ResupplyRegion` 也以提前做過為由略過原版彙總。開局修正不能代表完整回合補給時序一致。
 
-**卡在**：目前只有完整記憶體與 remake 表的差異位置；尚未追查初始資料、表更新者與玩家 consumer。
+**卡在**：呼叫時序已定位，但尚未取得完整回合與消耗後的同狀態資料對拍；不能依既有單一回充 helper 通過就宣稱整條鏈一致。
 
-**做完的判準**：以相同原版開局、執行器版本及正常入口，逐項分類非財政的整表差異；先核對測試資源與正式 bootstrap 是否一致，再針對影響玩家的差異取得證據、READY 規格、實作及同狀態驗證。與玩家無關的未建模 bytes 明示限制，不猜補。
+**做完的判準**：以原版正常玩家入口與可重播固定狀態核對分配 → 艦隊補充／消耗 → 行星彙總 → 下一回合回充的有限垂直鏈；既有規則先核對原始寫入端與 READY 規格，再調整正式接線。至少涵蓋有／無艦隊補給、七種待命艦艇與飛彈／艦載機的星域及行星 bytes，保留正常 GUI、跨月與存讀檔測試。
 
-**證據**：[`docs/re/351-budget-settlement-after-reports.md`](docs/re/351-budget-settlement-after-reports.md)、[`docs/internals/data/budget-table-differences.json`](docs/internals/data/budget-table-differences.json)、[`internal/game/planscreens_test.go` 的 `TestBudgetSettlementMatchesOriginal`](internal/game/planscreens_test.go` 的 `TestBudgetSettlementMatchesOriginal)
+**證據**：[`docs/re/352-opening-runtime-tables.md`](docs/re/352-opening-runtime-tables.md)、[`docs/internals/data/opening-runtime-tables.json`](docs/internals/data/opening-runtime-tables.json)、[`docs/spec/039-region-supply-pool.md`](docs/spec/039-region-supply-pool.md)、[`internal/game/regionturn.go`](internal/game/regionturn.go)、[`internal/rules/regionresupply.go`](internal/rules/regionresupply.go)
 
-**核實**：要人判——原因未知；財政測試通過不能代表整表一致。分類後綁涵蓋玩家相關原始 bytes 的 go_test，並保留未知欄位清单。
+**核實**：要人判——待全回合與消耗後原版收據到位，綁正式接線與星域／行星原始 bytes 的 go_test；現有回充 helper 不是整鏈驗收。
 
 #### battle-turn-eight-steps — 戰場回合結算對齊原版八步（規格 062 的其餘七步與子步 8-2–8-5）
 
@@ -848,7 +854,7 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-76 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+77 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1848,6 +1854,20 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### opening-runtime-table-differences — 開局執行期星域／行星資料表的非財政差異尚未分類
+
+*[#83](https://github.com/wicanr2/logh3/issues/83) · parity（對拍：要與原版逐位元組相同）*
+
+#83 已完成：正式載入器也重現原先星域 64／行星 759 bytes 差異；寫入端與正常原版記憶體確認成因是開局導出欄位未重算、提前把星域存量分配回行星，以及電腦首都七種艦艇倍增漏接。原始差異索引保留，修正不硬編最後資料表。
+
+**卡在**：本項無阻塞。完整回合的分配／補給／彙總／回充接線另列 #84，不把這五條開局的一致擴大成全回合或全遊戲一致。
+
+**做完的判準**：已完成：研究 352 與規格 065 經 DRAFT → 證據審查 → READY → 實作 → CONFORMED。五條正常預算路徑每組星域 4032 bytes、行星 6642 bytes 全相同，無排除欄位；正式 bootstrap 未調整開局整表另外驗證。十份正常 GUI 色號／RGB 相同，兩陣營正常開局與全部產品套件測試通過；既有跨月、財政及結算後正常存讀檔通過。原版首都艦艇倍增監看兩輪原樣重播一致，執行器未變動。
+
+**證據**：[`docs/re/352-opening-runtime-tables.md`](docs/re/352-opening-runtime-tables.md)、[`docs/spec/065-opening-runtime-tables.md`](docs/spec/065-opening-runtime-tables.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)、[`docs/internals/29-planets-and-economy.md`](docs/internals/29-planets-and-economy.md)、[`docs/internals/data/opening-runtime-tables.json`](docs/internals/data/opening-runtime-tables.json)、[`docs/playtest/025-plan-arrows.md`](docs/playtest/025-plan-arrows.md)、[`internal/bootstrap/opening_test.go`：`TestOpeningRuntimeTablesMatchesOriginal`](internal/bootstrap/opening_test.go`：`TestOpeningRuntimeTablesMatchesOriginal)、[`internal/game/planscreens_test.go`：`TestBudgetSettlementMatchesOriginal` 已改為完整表嚴格比對`](internal/game/planscreens_test.go`：`TestBudgetSettlementMatchesOriginal` 已改為完整表嚴格比對)
+
+**核實**：`TestOpeningRuntimeTablesMatchesOriginal` 釘在 `internal/bootstrap`
 
 #### budget-plan-arrow-live-render — 月初預算箭頭未更新畫面，且收稅結算時序與原版不同
 

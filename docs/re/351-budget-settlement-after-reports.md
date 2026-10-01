@@ -64,3 +64,7 @@ dosgolem 專用副本 HEAD `f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c`，工作�
 完整結果回填既有 [對拍 025](../playtest/025-plan-arrows.md)。
 整表仍有非財政的星域 64／行星 759 bytes 差異，已另列
 [差異索引](../internals/data/budget-table-differences.json) 與 #83；不能外推整表一致。
+
+後續勘誤：[研究 352](352-opening-runtime-tables.md) 已將上述非財政差異定位為
+開局導出欄位、提前分配及電腦首都艦艇倍增漏接；本段保留發現時的限制，
+最新驗收仍回填 [對拍 025](../playtest/025-plan-arrows.md)，不另立完成度表。

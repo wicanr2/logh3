@@ -44,10 +44,43 @@ func (g *Game) regionsReady() bool {
 		len(g.res.Stellar) >= rules.RegionCount*rules.RegionRecord
 }
 
+// initializeOpeningRegions 還原新遊戲應重算的欄位，不能保留出貨存檔的
+// 行星數、比例、態勢與首都成本。原版寫入端見研究 352／規格 065。
+func (g *Game) initializeOpeningRegions() {
+	if g.res == nil || g.res.Planets == nil {
+		return
+	}
+	rules.RecomputeRegionPlanets(g.res.Stellar, g.res.Planets)
+	owner := make([]int, rules.RegionCount)
+	for i := 0; i < rules.RegionCount; i++ {
+		rec := g.regionRecord(i)
+		if rec == nil {
+			return
+		}
+		owner[i] = g.res.Planets.RegionOwner(i)
+		rec[regionOwnerOff] = byte(owner[i])
+		rec[regionFlagsOff] = 0
+		binary.LittleEndian.PutUint16(rec[regionCapCostOff:], 0)
+	}
+	if g.res.Graph != nil {
+		for i, p := range g.res.Graph.Postures(owner, nil) {
+			rec := g.regionRecord(i)
+			rec[regionFlagsOff] = rules.ApplyPosture(0, p)
+			if p.CapitalCost >= 0 {
+				binary.LittleEndian.PutUint16(rec[regionCapCostOff:], uint16(p.CapitalCost))
+			}
+		}
+	}
+}
+
 // refillRegionSupply 是原版 `0654:0007` 在月底閘門之前每回合都跑的
-// `2B5F:02B2` ＋ `2703:0590`。先由行星彙總、回充擁有者，再照整數百分比
-// 分回行星；因此戰鬥／補給命令消耗的行星存量會進入下一回合的基數。
+// `2B5F:02B2`。開局只彙總與回充，命令階段還沒分配回行星（規格 065）。
+// 原版整回合的分配在艦隊移動後；既有 beginTurn 接線仍待 #84 校正。
 func (g *Game) refillRegionSupply() {
+	g.updateRegionSupply(true)
+}
+
+func (g *Game) updateRegionSupply(distribute bool) {
 	if !g.regionsReady() {
 		return
 	}
@@ -57,8 +90,10 @@ func (g *Game) refillRegionSupply() {
 			!rules.RefillRegionSupply(rec) {
 			continue
 		}
-		for faction := 0; faction < 2; faction++ {
-			rules.DistributeRegionSupply(rec, g.res.Planets, region, faction)
+		if distribute {
+			for faction := 0; faction < 2; faction++ {
+				rules.DistributeRegionSupply(rec, g.res.Planets, region, faction)
+			}
 		}
 	}
 }

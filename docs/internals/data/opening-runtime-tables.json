@@ -1,0 +1,1931 @@
+{
+  "grade": "proven",
+  "original_database_sha256": "abadfa416b6db84595330110cfc0b08f455817f110d756373836c6857f5b15b1",
+  "ida_image": "ida-pro-9.4-idapython:locked-v1",
+  "exports": [
+    {
+      "input": "/work/code2703.com",
+      "input_sha256": "e2f821b085353c1668511e8e2c57ba3db6b0ee915fa8231f1dc656def0916b72",
+      "tool": "IDA Pro 9.4",
+      "kernel_version": "9.4",
+      "address_space": "IDA COM：min_ea=0x10100；段內位移=IDA 位址-0x10200；runtime 段 2703 僅作原始證據定位",
+      "export_sha256": "68f0129681170e9f87370fbfa4f5af8c588c2100d4811d6b71d879d19379ffc5",
+      "evidence_rows": [
+        {
+          "ida_address": "0x10235",
+          "segment_offset": "0x35",
+          "bytes": "26 88 4f 13",
+          "original_name": "",
+          "instruction": "mov     es:[bx+13h], cl",
+          "semantics": "開局星域旗標清零",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §開局初始化；原始指令寫 +0x13",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x1024f",
+          "segment_offset": "0x4f",
+          "bytes": "9a 9b 15 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:159Bh",
+          "semantics": "開局依行星重算星域歸屬與比例",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §開局初始化；call 2703:159B",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x1072f",
+          "segment_offset": "0x52f",
+          "bytes": "9a 40 05 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:540h",
+          "semantics": "逐星域呼叫兩陣營分配",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；call 2703:0540",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x1076d",
+          "segment_offset": "0x56d",
+          "bytes": "9a 90 05 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:590h",
+          "semantics": "分配帝國存量回行星",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；參數 0；call 2703:0590",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x10783",
+          "segment_offset": "0x583",
+          "bytes": "9a 90 05 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:590h",
+          "semantics": "分配同盟存量回行星",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；參數 1；call 2703:0590",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x11853",
+          "segment_offset": "0x1653",
+          "bytes": "26 fe 47 16",
+          "original_name": "",
+          "instruction": "inc     byte ptr es:[bx+16h]",
+          "semantics": "帝國行星數遞增",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；+0x16",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x11875",
+          "segment_offset": "0x1675",
+          "bytes": "26 fe 47 17",
+          "original_name": "",
+          "instruction": "inc     byte ptr es:[bx+17h]",
+          "semantics": "同盟行星數遞增",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；+0x17",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x1187e",
+          "segment_offset": "0x167e",
+          "bytes": "26 fe 47 18",
+          "original_name": "",
+          "instruction": "inc     byte ptr es:[bx+18h]",
+          "semantics": "其他行星數遞增",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；+0x18",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x1189a",
+          "segment_offset": "0x169a",
+          "bytes": "26 01 44 20",
+          "original_name": "",
+          "instruction": "add     es:[si+20h], ax",
+          "semantics": "行星防衛力累加至星域 +0x20",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；讀行星 +0x14",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x118a8",
+          "segment_offset": "0x16a8",
+          "bytes": "26 01 47 22",
+          "original_name": "",
+          "instruction": "add     es:[bx+22h], ax",
+          "semantics": "行星防衛上限累加至星域 +0x22",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；讀行星 +0x16",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x118f7",
+          "segment_offset": "0x16f7",
+          "bytes": "26 88 5c 13",
+          "original_name": "",
+          "instruction": "mov     es:[si+13h], bl",
+          "semantics": "行星經濟力佔星域總額的整數百分比",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；乘 100 後除全部行星經濟力",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x11926",
+          "segment_offset": "0x1726",
+          "bytes": "26 88 5c 14",
+          "original_name": "",
+          "instruction": "mov     es:[si+14h], bl",
+          "semantics": "帝國經濟力佔星域總額的整數百分比",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；+0x14",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x1194c",
+          "segment_offset": "0x174c",
+          "bytes": "26 88 5c 15",
+          "original_name": "",
+          "instruction": "mov     es:[si+15h], bl",
+          "semantics": "同盟經濟力佔星域總額的整數百分比",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；+0x15",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        }
+      ]
+    },
+    {
+      "input": "/work/code2703.com",
+      "input_sha256": "e2f821b085353c1668511e8e2c57ba3db6b0ee915fa8231f1dc656def0916b72",
+      "tool": "IDA Pro 9.4",
+      "kernel_version": "9.4",
+      "address_space": "IDA COM：min_ea=0x10100；段內位移=IDA 位址-0x10200；runtime 段 2703 僅作原始證據定位",
+      "export_sha256": "a45f4eb41a55e6fc1795b6fdf31639dcf7ea81396201659b35857050c6e85a03",
+      "evidence_rows": [
+        {
+          "ida_address": "0x10395",
+          "segment_offset": "0x195",
+          "bytes": "9a 03 00 99 2b",
+          "original_name": "",
+          "instruction": "call    far ptr 2B99h:3",
+          "semantics": "初始化結束後重建路徑表",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；call 2B99:0003",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x103c9",
+          "segment_offset": "0x1c9",
+          "bytes": "9a 33 09 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:933h",
+          "semantics": "開局重算態勢與首都成本",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；call 2703:0933",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x103e6",
+          "segment_offset": "0x1e6",
+          "bytes": "9a eb 12 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:12EBh",
+          "semantics": "開局彙總行星存量至星域",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；call 2703:12EB",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x1179b",
+          "segment_offset": "0x159b",
+          "bytes": "55",
+          "original_name": "",
+          "instruction": "push    bp",
+          "semantics": "重算歸屬 wrapper 的入口",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；55 56 83 ec 02 89 e5",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x117ab",
+          "segment_offset": "0x15ab",
+          "bytes": "9a d5 15 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:15D5h",
+          "semantics": "呼叫行星數／經濟比例重算",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；call 2703:15D5",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        }
+      ]
+    },
+    {
+      "input": "/work/mrx056A.com",
+      "input_sha256": "5bafdb75a75879472ef475819acc033b80d8c077d1ac8c905e0759d6d336ef6d",
+      "tool": "IDA Pro 9.4",
+      "kernel_version": "9.4",
+      "address_space": "IDA COM：min_ea=0x10100；段內位移=IDA 位址-0x10200；runtime 段 056A 僅作原始證據定位",
+      "export_sha256": "58ce38d0a76c2db01d915fa21678166d37712dd22edb200d924bc17426c8f8f5",
+      "evidence_rows": [
+        {
+          "ida_address": "0x1023e",
+          "segment_offset": "0x3e",
+          "bytes": "9a e0 03 6a 05",
+          "original_name": "",
+          "instruction": "call    far ptr 56Ah:3E0h",
+          "semantics": "命令階段移動所有艦隊",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；call 056A:03E0",
+          "runtime_segment": "056A",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x10248",
+          "segment_offset": "0x48",
+          "bytes": "9a 1d 05 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:51Dh",
+          "semantics": "移動後才分配星域存量回行星",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；call 2703:051D",
+          "runtime_segment": "056A",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x10252",
+          "segment_offset": "0x52",
+          "bytes": "9a 53 08 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:853h",
+          "semantics": "分配後重數各星域艦隊",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md；call 2703:0853",
+          "runtime_segment": "056A",
+          "original_function_bounds": null
+        }
+      ]
+    },
+    {
+      "input": "/work/code2703.com",
+      "input_sha256": "e2f821b085353c1668511e8e2c57ba3db6b0ee915fa8231f1dc656def0916b72",
+      "tool": "IDA Pro 9.4",
+      "kernel_version": "9.4",
+      "address_space": "IDA COM：min_ea=0x10100；段內位移=IDA 位址-0x10200；runtime 段 2703 僅作原始證據定位",
+      "export_sha256": "46d25099cb5b4f544476c9fe8eb1f731f164db8b96f0e2787c5a9c05f616f34e",
+      "evidence_rows": [
+        {
+          "ida_address": "0x1066d",
+          "segment_offset": "0x46d",
+          "bytes": "9a 2d 02 82 39",
+          "original_name": "",
+          "instruction": "call    far ptr 3982h:22Dh",
+          "semantics": "以陣營 0 判電腦座位",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x10674",
+          "segment_offset": "0x474",
+          "bytes": "3c 01",
+          "original_name": "",
+          "instruction": "cmp     al, 1",
+          "semantics": "只有回傳 1 才加倍帝國首都",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x1067d",
+          "segment_offset": "0x47d",
+          "bytes": "9a a3 04 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:4A3h",
+          "semantics": "對帝國首都執行加倍",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x10688",
+          "segment_offset": "0x488",
+          "bytes": "9a 2d 02 82 39",
+          "original_name": "",
+          "instruction": "call    far ptr 3982h:22Dh",
+          "semantics": "以陣營 1 判電腦座位",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x10691",
+          "segment_offset": "0x491",
+          "bytes": "3a c1",
+          "original_name": "",
+          "instruction": "cmp     al, cl",
+          "semantics": "只有回傳 1 才加倍同盟首都",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x1069a",
+          "segment_offset": "0x49a",
+          "bytes": "9a a3 04 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:4A3h",
+          "semantics": "對同盟首都執行加倍",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x106d9",
+          "segment_offset": "0x4d9",
+          "bytes": "8a 46 01",
+          "original_name": "loc_106D9",
+          "instruction": "mov     al, [bp+1]",
+          "semantics": "逐艦種處理",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x106dc",
+          "segment_offset": "0x4dc",
+          "bytes": "3c 07",
+          "original_name": "",
+          "instruction": "cmp     al, 7",
+          "semantics": "七種艦艇的迴圈上限",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x106eb",
+          "segment_offset": "0x4eb",
+          "bytes": "83 c6 20",
+          "original_name": "",
+          "instruction": "add     si, 20h ; ' '",
+          "semantics": "行星艦艇存量基底 +0x20",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x106f0",
+          "segment_offset": "0x4f0",
+          "bytes": "26 d1 24",
+          "original_name": "",
+          "instruction": "shl     word ptr es:[si], 1",
+          "semantics": "艦艇 32 位元低字左移一位",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x106f3",
+          "segment_offset": "0x4f3",
+          "bytes": "26 d1 54 02",
+          "original_name": "",
+          "instruction": "rcl     word ptr es:[si+2], 1",
+          "semantics": "艦艇 32 位元高字帶進位左移一位",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x106ff",
+          "segment_offset": "0x4ff",
+          "bytes": "83 46 02 52",
+          "original_name": "",
+          "instruction": "add     word ptr [bp+2], 52h ; 'R'",
+          "semantics": "下一顆行星；記錄長度 82",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        },
+        {
+          "ida_address": "0x10710",
+          "segment_offset": "0x510",
+          "bytes": "9a eb 12 03 27",
+          "original_name": "",
+          "instruction": "call    far ptr 2703h:12EBh",
+          "semantics": "倍增後重新彙總星域艦艇與補給",
+          "grade": "proven",
+          "warning": null,
+          "source": "docs/re/352-opening-runtime-tables.md §電腦座位首都艦艇加倍",
+          "runtime_segment": "2703",
+          "original_function_bounds": null
+        }
+      ]
+    }
+  ],
+  "capital_stock_watch_replays": [
+    {
+      "batch": "opening-stock-write-watch",
+      "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+      "flags": [
+        "-steps",
+        "165000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "40000000:300:170::3000000,95000000:300:170::3000000,130000000:432:300::300000",
+        "-press",
+        "1,3,8,enter",
+        "-press-at",
+        "105000000",
+        "-press-every",
+        "2000000",
+        "-watch",
+        "54ab0-54ab3,54af2-54af5"
+      ],
+      "meta": "批次: opening-stock-write-watch\n日期: 2026-10-01T13:08:13+08:00\ndosgolem HEAD: f7523f9（未提交檔案 0 個）\n執行檔: /orig/GIN3.COM\nprobe 旗標: -steps 165000000 -tick 20000 -clicks 40000000:300:170::3000000,95000000:300:170::3000000,130000000:432:300::300000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 -watch 54ab0-54ab3,54af2-54af5\nGIN3.COM SHA-256: 770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918\nscreen.bin SHA-256: cc901d8e3341b08d2d2f77a9f7d8471454cba46a49f2438dcf02d107a030bacd\npal.bin SHA-256: 28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8\n",
+      "watch_writes": [
+        "[watch] #55841730 54AF4: 00 → 68  ← 63A1:002D",
+        "[watch] #55841730 54AF5: 00 → 3A  ← 63A1:002D",
+        "[watch] #55841730 54AF2: 00 → DD  ← 63A1:002D",
+        "[watch] #55841730 54AF3: 00 → 8F  ← 63A1:002D",
+        "[watch] #55841730 54AB2: 00 → FE  ← 63A1:002D",
+        "[watch] #55841730 54AB3: 00 → 12  ← 63A1:002D",
+        "[watch] #55841730 54AB0: 00 → A4  ← 63A1:002D",
+        "[watch] #55841730 54AB1: 00 → 6D  ← 63A1:002D",
+        "[watch] #58063097 54AB0: A4 → 00  ← 63A1:011B",
+        "[watch] #58063097 54AB1: 6D → 00  ← 63A1:011B",
+        "[watch] #58063097 54AB2: FE → 00  ← 63A1:011B",
+        "[watch] #58063097 54AB3: 12 → 00  ← 63A1:011B",
+        "[watch] #58063097 54AF2: DD → 00  ← 63A1:011B",
+        "[watch] #58063097 54AF3: 8F → 00  ← 63A1:011B",
+        "[watch] #58063097 54AF4: 68 → 00  ← 63A1:011B",
+        "[watch] #58063097 54AF5: 3A → 00  ← 63A1:011B",
+        "[watch] #58356119 54AB0: 00 → B8  ← 3D08:001A",
+        "[watch] #58356119 54AB1: 00 → 0B  ← 3D08:001A",
+        "[watch] #58356119 54AF2: 00 → E0  ← 3D08:001A",
+        "[watch] #58356119 54AF3: 00 → A5  ← 3D08:001A",
+        "[watch] #58356119 54AF4: 00 → 01  ← 3D08:001A",
+        "[watch] #117041007 54AB0: B8 → 70  ← 2703:04F3",
+        "[watch] #117041007 54AB1: 0B → 17  ← 2703:04F3",
+        "[watch] #117041059 54AF2: E0 → C0  ← 2703:04F3",
+        "[watch] #117041059 54AF3: A5 → 4B  ← 2703:04F3",
+        "[watch] #117041060 54AF4: 01 → 03  ← 2703:04F7"
+      ],
+      "watch_sha256": "9e3cef22be93847c1273b17e21ad06c91099db43908fd4c6fb9efaa26c0f30d8",
+      "screen_sha256": "cc901d8e3341b08d2d2f77a9f7d8471454cba46a49f2438dcf02d107a030bacd",
+      "palette_sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+    },
+    {
+      "batch": "opening-stock-write-watch-r2",
+      "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+      "flags": [
+        "-steps",
+        "165000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "40000000:300:170::3000000,95000000:300:170::3000000,130000000:432:300::300000",
+        "-press",
+        "1,3,8,enter",
+        "-press-at",
+        "105000000",
+        "-press-every",
+        "2000000",
+        "-watch",
+        "54ab0-54ab3,54af2-54af5"
+      ],
+      "meta": "批次: opening-stock-write-watch-r2\n日期: 2026-10-01T13:12:18+08:00\ndosgolem HEAD: f7523f9（未提交檔案 0 個）\n執行檔: /orig/GIN3.COM\nprobe 旗標: -steps 165000000 -tick 20000 -clicks 40000000:300:170::3000000,95000000:300:170::3000000,130000000:432:300::300000 -press 1,3,8,enter -press-at 105000000 -press-every 2000000 -watch 54ab0-54ab3,54af2-54af5\nGIN3.COM SHA-256: 770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918\nscreen.bin SHA-256: cc901d8e3341b08d2d2f77a9f7d8471454cba46a49f2438dcf02d107a030bacd\npal.bin SHA-256: 28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8\n",
+      "watch_writes": [
+        "[watch] #55841730 54AF4: 00 → 68  ← 63A1:002D",
+        "[watch] #55841730 54AF5: 00 → 3A  ← 63A1:002D",
+        "[watch] #55841730 54AF2: 00 → DD  ← 63A1:002D",
+        "[watch] #55841730 54AF3: 00 → 8F  ← 63A1:002D",
+        "[watch] #55841730 54AB2: 00 → FE  ← 63A1:002D",
+        "[watch] #55841730 54AB3: 00 → 12  ← 63A1:002D",
+        "[watch] #55841730 54AB0: 00 → A4  ← 63A1:002D",
+        "[watch] #55841730 54AB1: 00 → 6D  ← 63A1:002D",
+        "[watch] #58063097 54AB0: A4 → 00  ← 63A1:011B",
+        "[watch] #58063097 54AB1: 6D → 00  ← 63A1:011B",
+        "[watch] #58063097 54AB2: FE → 00  ← 63A1:011B",
+        "[watch] #58063097 54AB3: 12 → 00  ← 63A1:011B",
+        "[watch] #58063097 54AF2: DD → 00  ← 63A1:011B",
+        "[watch] #58063097 54AF3: 8F → 00  ← 63A1:011B",
+        "[watch] #58063097 54AF4: 68 → 00  ← 63A1:011B",
+        "[watch] #58063097 54AF5: 3A → 00  ← 63A1:011B",
+        "[watch] #58356119 54AB0: 00 → B8  ← 3D08:001A",
+        "[watch] #58356119 54AB1: 00 → 0B  ← 3D08:001A",
+        "[watch] #58356119 54AF2: 00 → E0  ← 3D08:001A",
+        "[watch] #58356119 54AF3: 00 → A5  ← 3D08:001A",
+        "[watch] #58356119 54AF4: 00 → 01  ← 3D08:001A",
+        "[watch] #117041007 54AB0: B8 → 70  ← 2703:04F3",
+        "[watch] #117041007 54AB1: 0B → 17  ← 2703:04F3",
+        "[watch] #117041059 54AF2: E0 → C0  ← 2703:04F3",
+        "[watch] #117041059 54AF3: A5 → 4B  ← 2703:04F3",
+        "[watch] #117041060 54AF4: 01 → 03  ← 2703:04F7"
+      ],
+      "watch_sha256": "9e3cef22be93847c1273b17e21ad06c91099db43908fd4c6fb9efaa26c0f30d8",
+      "screen_sha256": "cc901d8e3341b08d2d2f77a9f7d8471454cba46a49f2438dcf02d107a030bacd",
+      "palette_sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+    }
+  ],
+  "opening_table_comparison": [
+    {
+      "batch": "planarrow-budget-unchanged-post",
+      "memory_sha256": "33fb6f98dceda5ef90466777960584ac8b2d5199cd894759ecc22a5e8d6932a6",
+      "tables": [
+        {
+          "name": "stellar",
+          "address_space": "dosgolem 線性位址",
+          "start": "0x5f2cc",
+          "bytes": 4032,
+          "different_bytes": 0,
+          "original_sha256": "1238cc5bf1920d6b7444d3da2c5dd387206416f88de418073b29865f06c4eb39",
+          "remake_sha256": "1238cc5bf1920d6b7444d3da2c5dd387206416f88de418073b29865f06c4eb39"
+        },
+        {
+          "name": "planet",
+          "address_space": "dosgolem 線性位址",
+          "start": "0x53132",
+          "bytes": 6642,
+          "different_bytes": 0,
+          "original_sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b",
+          "remake_sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        }
+      ]
+    },
+    {
+      "batch": "planarrow-budget-tax-up-post",
+      "memory_sha256": "311b2f5f88c42827925a2468c72d9b67b634d1fad2fc46bce5ef59ee56e57919",
+      "tables": [
+        {
+          "name": "stellar",
+          "address_space": "dosgolem 線性位址",
+          "start": "0x5f2cc",
+          "bytes": 4032,
+          "different_bytes": 0,
+          "original_sha256": "ee3732d84118544b93bec6a48b65ceda5bebeb0b23d970a5aa61ca40c664ef94",
+          "remake_sha256": "ee3732d84118544b93bec6a48b65ceda5bebeb0b23d970a5aa61ca40c664ef94"
+        },
+        {
+          "name": "planet",
+          "address_space": "dosgolem 線性位址",
+          "start": "0x53132",
+          "bytes": 6642,
+          "different_bytes": 0,
+          "original_sha256": "8543f6cbf5593ef20c47bbbea3d908a4f4f95558d058bfd218c1686e64b05db8",
+          "remake_sha256": "8543f6cbf5593ef20c47bbbea3d908a4f4f95558d058bfd218c1686e64b05db8"
+        }
+      ]
+    },
+    {
+      "batch": "planarrow-budget-tax-down-post",
+      "memory_sha256": "8c88106fdeb509cd3188e017ae2bea301b205165cc533af0a1625334b7ab8b60",
+      "tables": [
+        {
+          "name": "stellar",
+          "address_space": "dosgolem 線性位址",
+          "start": "0x5f2cc",
+          "bytes": 4032,
+          "different_bytes": 0,
+          "original_sha256": "722d71e8e5cd0f03c3b395f991d213f952e249ccca210e255e5b54dd319d9781",
+          "remake_sha256": "722d71e8e5cd0f03c3b395f991d213f952e249ccca210e255e5b54dd319d9781"
+        },
+        {
+          "name": "planet",
+          "address_space": "dosgolem 線性位址",
+          "start": "0x53132",
+          "bytes": 6642,
+          "different_bytes": 0,
+          "original_sha256": "135c9ff1107cdade32b7da7cbb77646670b311b9f38b23392734abd1ae754177",
+          "remake_sha256": "135c9ff1107cdade32b7da7cbb77646670b311b9f38b23392734abd1ae754177"
+        }
+      ]
+    },
+    {
+      "batch": "planarrow-budget-pct-up-post",
+      "memory_sha256": "64e7fa495eab32f40ff8eab7ab6a3ab418630cfde865ae007dcd6c2910c1efd5",
+      "tables": [
+        {
+          "name": "stellar",
+          "address_space": "dosgolem 線性位址",
+          "start": "0x5f2cc",
+          "bytes": 4032,
+          "different_bytes": 0,
+          "original_sha256": "1238cc5bf1920d6b7444d3da2c5dd387206416f88de418073b29865f06c4eb39",
+          "remake_sha256": "1238cc5bf1920d6b7444d3da2c5dd387206416f88de418073b29865f06c4eb39"
+        },
+        {
+          "name": "planet",
+          "address_space": "dosgolem 線性位址",
+          "start": "0x53132",
+          "bytes": 6642,
+          "different_bytes": 0,
+          "original_sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b",
+          "remake_sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        }
+      ]
+    },
+    {
+      "batch": "planarrow-budget-pct-down-post",
+      "memory_sha256": "f41889e49164bc2ccc7039fc1dc51ad29a09e6e8094916675d680e495db12eb5",
+      "tables": [
+        {
+          "name": "stellar",
+          "address_space": "dosgolem 線性位址",
+          "start": "0x5f2cc",
+          "bytes": 4032,
+          "different_bytes": 0,
+          "original_sha256": "1238cc5bf1920d6b7444d3da2c5dd387206416f88de418073b29865f06c4eb39",
+          "remake_sha256": "1238cc5bf1920d6b7444d3da2c5dd387206416f88de418073b29865f06c4eb39"
+        },
+        {
+          "name": "planet",
+          "address_space": "dosgolem 線性位址",
+          "start": "0x53132",
+          "bytes": 6642,
+          "different_bytes": 0,
+          "original_sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b",
+          "remake_sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        }
+      ]
+    }
+  ],
+  "remake_revision": "1034d8e 加研究 352／規格 065 開局修正（未提交）",
+  "production_tests": "tools/gui.sh test ./internal/... ./cmd/...：全部通過",
+  "source_sha256": {
+    "internal/game/game.go": "78c54f3175bbf8f66d3b9a1a0d278fbc30cfdc12b50b702417618073b5a0303e",
+    "internal/game/regionturn.go": "80d6af263cbc64a7e3e319bfaaff07e3d9e58fc77f7abe6433894e6d8ad71a0e",
+    "internal/game/commandphase.go": "5438f35156c99ca4b550fb12e1ed573a74c22d3e350127700a418d79628a207a",
+    "internal/rules/regionplanets.go": "5732bf0860e2a992f572b95db6e2a357941bf6fb2cb1d2487e4006cf2dec9a63",
+    "internal/bootstrap/opening_test.go": "37eb6a5068248a343eaf7a53433786f1f496e8555bb019a2a775a97e915f43c6",
+    "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75"
+  },
+  "gui_comparison": [
+    {
+      "batch": "planarrow-budget-base",
+      "stats": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "cc901d8e3341b08d2d2f77a9f7d8471454cba46a49f2438dcf02d107a030bacd",
+          "screen.png": "fc2d4783d242b6717dddf9b036582252ffc858ed9af102eeb0b393668500c7a6",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "cc901d8e3341b08d2d2f77a9f7d8471454cba46a49f2438dcf02d107a030bacd",
+          "remake.png": "6eac17ec16600b05eb2f0e91170f87286348cfdc9a354f6cb3e06de60b1e41ed",
+          "flags.txt": "16d5793d476a6c00d2c8ae9f1f5e78bcaaebfa476feb40e0b914ed5876381354",
+          "inputs.json": "a8f988d423d083b0460cfd07eaeb50b11f75ef06d9f987d2459b0f1dab2385bd",
+          "remake-script.txt": "562622bcc594425b5fd99f52a9d62cc9bb13e6eeefbf6481463f22e01441599f",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_meta": {
+        "git_head": "1034d8e917d15f6f15b70043ae66167ab2ea4b16",
+        "working_tree": " M CONTEXT.md\n M internal/game/commandphase.go\n M internal/game/game.go\n M internal/game/planscreens_test.go\n M internal/game/regionturn.go\n?? docs/goal/2026-10-01-opening-tables-round-11.md\n?? docs/internals/data/opening-runtime-tables.json\n?? docs/re/352-opening-runtime-tables.md\n?? docs/spec/065-opening-runtime-tables.md\n?? internal/bootstrap/opening_test.go\n?? internal/rules/regionplanets.go",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "b611947338a9e0989be68ecdb644dfb135a66bbb5bdb2b498da75fba2f1a1341",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-pct-down",
+      "stats": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "fe83c981052fff789ada1024da4d544ef8273a223f686e85e4ae376fdec39177",
+          "screen.png": "03b8b64ec3ae778d69599f2be05fe68611524c7394a6af6fb81649360ce0e18f",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "fe83c981052fff789ada1024da4d544ef8273a223f686e85e4ae376fdec39177",
+          "remake.png": "72533a79fa01afc48f35f718366db2dbbd5a0ad8a4dd9aa11c2f302c71d3d63f",
+          "flags.txt": "e8b344e1d16c11a9f2a05eb388a88293ff40e28a245242c7bf07bb8618e53f03",
+          "inputs.json": "20489424d3ffe85f80b931d708c20d24dc792139811239165f271b6905a05b63",
+          "remake-script.txt": "cd6306d5a5e8fdacc52f91cab44a0907218ecc558b9fb1ab692bb2602d155a8b",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_meta": {
+        "git_head": "1034d8e917d15f6f15b70043ae66167ab2ea4b16",
+        "working_tree": " M CONTEXT.md\n M internal/game/commandphase.go\n M internal/game/game.go\n M internal/game/planscreens_test.go\n M internal/game/regionturn.go\n?? docs/goal/2026-10-01-opening-tables-round-11.md\n?? docs/internals/data/opening-runtime-tables.json\n?? docs/re/352-opening-runtime-tables.md\n?? docs/spec/065-opening-runtime-tables.md\n?? internal/bootstrap/opening_test.go\n?? internal/rules/regionplanets.go",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "b611947338a9e0989be68ecdb644dfb135a66bbb5bdb2b498da75fba2f1a1341",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-pct-down-post",
+      "stats": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "1912096e0c0054b27e3bb9859408c1a7f1b9ecca780c646ce7c0fd44aba1339b",
+          "screen.png": "7f39ec4e830d6f3b44d2fb3e5639227985075489be2d6c8448e115fcd8ab82c5",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "1912096e0c0054b27e3bb9859408c1a7f1b9ecca780c646ce7c0fd44aba1339b",
+          "remake.png": "f17e177aca41971f55cefeef139cf43482b265794eb3f8f8d3c439028074c7e2",
+          "flags.txt": "9e15994dd8f0e7c45dfc2343a4230088b1fdc7f4fe0882be58b9494ece0f6c56",
+          "inputs.json": "5fd4392b632b70ed1c50b4999e4a51995ef18a43e81c71057384bca7777e722b",
+          "remake-script.txt": "069d1e1172cf6a6c6fb72250a057d130010fa6a824491763e4806703965f6e14",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_meta": {
+        "git_head": "1034d8e917d15f6f15b70043ae66167ab2ea4b16",
+        "working_tree": " M CONTEXT.md\n M internal/game/commandphase.go\n M internal/game/game.go\n M internal/game/planscreens_test.go\n M internal/game/regionturn.go\n?? docs/goal/2026-10-01-opening-tables-round-11.md\n?? docs/internals/data/opening-runtime-tables.json\n?? docs/re/352-opening-runtime-tables.md\n?? docs/spec/065-opening-runtime-tables.md\n?? internal/bootstrap/opening_test.go\n?? internal/rules/regionplanets.go",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "b611947338a9e0989be68ecdb644dfb135a66bbb5bdb2b498da75fba2f1a1341",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-pct-up",
+      "stats": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "07e28842e9f8d05d2d0f4c3ac190c76c4c36767dc74271fc88308871af4e983f",
+          "screen.png": "3b3ca7ca23d4a34f9800b3ee5f304806fecb2207fa1dc5e588a01a52fd45264e",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "07e28842e9f8d05d2d0f4c3ac190c76c4c36767dc74271fc88308871af4e983f",
+          "remake.png": "d1597db69c2fde88d0736656cf769effb749ffebb06dff5ad066e72ec47ebc24",
+          "flags.txt": "685fd95a2b76e4f5d35440d51fc6a5305eed05eeac099cb3af864c54f4a760a3",
+          "inputs.json": "20489424d3ffe85f80b931d708c20d24dc792139811239165f271b6905a05b63",
+          "remake-script.txt": "0d7c06fdb8c37551d2aebf023bb49ca0a6a58c89643e3ca69f6712f259ac2951",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_meta": {
+        "git_head": "1034d8e917d15f6f15b70043ae66167ab2ea4b16",
+        "working_tree": " M CONTEXT.md\n M internal/game/commandphase.go\n M internal/game/game.go\n M internal/game/planscreens_test.go\n M internal/game/regionturn.go\n?? docs/goal/2026-10-01-opening-tables-round-11.md\n?? docs/internals/data/opening-runtime-tables.json\n?? docs/re/352-opening-runtime-tables.md\n?? docs/spec/065-opening-runtime-tables.md\n?? internal/bootstrap/opening_test.go\n?? internal/rules/regionplanets.go",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "b611947338a9e0989be68ecdb644dfb135a66bbb5bdb2b498da75fba2f1a1341",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-pct-up-post",
+      "stats": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "f9e5ee776f819aad6a9e501470201d5659adca8f725a60ce99efa8ae3fb245b9",
+          "screen.png": "1955744c6375f781683fc0cb7ef0f91eb457823418f2280e722942edf1213a82",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "f9e5ee776f819aad6a9e501470201d5659adca8f725a60ce99efa8ae3fb245b9",
+          "remake.png": "d486771168990cebe38d5b2c3c665f4f5658e2dfa0c4c07f75b0a254240c4c3c",
+          "flags.txt": "f73023ef016599c2b4d1329d79f0968288c41e08f6f298c9349c9126d370d96f",
+          "inputs.json": "d4810cf174990208998479caf702c641f6d5a39cc0a789d3299d9f91073c6723",
+          "remake-script.txt": "b23d19ce52772d8fe822918e5497eec4b7a76923ab1250dbbebddcf390aff816",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_meta": {
+        "git_head": "1034d8e917d15f6f15b70043ae66167ab2ea4b16",
+        "working_tree": " M CONTEXT.md\n M internal/game/commandphase.go\n M internal/game/game.go\n M internal/game/planscreens_test.go\n M internal/game/regionturn.go\n?? docs/goal/2026-10-01-opening-tables-round-11.md\n?? docs/internals/data/opening-runtime-tables.json\n?? docs/re/352-opening-runtime-tables.md\n?? docs/spec/065-opening-runtime-tables.md\n?? internal/bootstrap/opening_test.go\n?? internal/rules/regionplanets.go",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "b611947338a9e0989be68ecdb644dfb135a66bbb5bdb2b498da75fba2f1a1341",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-tax-down",
+      "stats": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "4451833fbcb61cbacf54c34a9cf3f92903976eff67761cafa0843a95ce5aee30",
+          "screen.png": "d255c36bdbad89fbbd3df2da649817c2d6634577dbd4488a4b6fe46b1596c143",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "4451833fbcb61cbacf54c34a9cf3f92903976eff67761cafa0843a95ce5aee30",
+          "remake.png": "004ce6ba98c0c6e07de5ac8b6cff6f6524e91ff1d740efffab7936e2713afd00",
+          "flags.txt": "472b1ff3965adc057b58dbf4c6febbc35d9dc0da5646108a26a5fe1c464821b0",
+          "inputs.json": "20489424d3ffe85f80b931d708c20d24dc792139811239165f271b6905a05b63",
+          "remake-script.txt": "112a7925eab99fc4e58813d56edb66666593412a412f16d1b8c93bbfcedd3ee3",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_meta": {
+        "git_head": "1034d8e917d15f6f15b70043ae66167ab2ea4b16",
+        "working_tree": " M CONTEXT.md\n M internal/game/commandphase.go\n M internal/game/game.go\n M internal/game/planscreens_test.go\n M internal/game/regionturn.go\n?? docs/goal/2026-10-01-opening-tables-round-11.md\n?? docs/internals/data/opening-runtime-tables.json\n?? docs/re/352-opening-runtime-tables.md\n?? docs/spec/065-opening-runtime-tables.md\n?? internal/bootstrap/opening_test.go\n?? internal/rules/regionplanets.go",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "b611947338a9e0989be68ecdb644dfb135a66bbb5bdb2b498da75fba2f1a1341",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-tax-down-post",
+      "stats": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "15f1405f095fffefe7a374785462f7276b4a6c80742b0f10d01d617182ba68b7",
+          "screen.png": "2108e0fc8fe652231650e1de8726a8faada6687e966b57f278dd4acc58d2f597",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "15f1405f095fffefe7a374785462f7276b4a6c80742b0f10d01d617182ba68b7",
+          "remake.png": "fef939ca040595a45370ec6ea60120aa62eab5b218ca5753a73294c9300dfe7f",
+          "flags.txt": "629b5b00312d120b4e7505b9aa82c51dfcfc3cce00714987997a1cf40017db0e",
+          "inputs.json": "2e6aa8b8135229e9558c37003a60388032ca90e3953d816799ffa0dcce8247fb",
+          "remake-script.txt": "135247c41090d658fba0e8195f02d4baf11c3b8d6be49058a9952d775ef97908",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_meta": {
+        "git_head": "1034d8e917d15f6f15b70043ae66167ab2ea4b16",
+        "working_tree": " M CONTEXT.md\n M internal/game/commandphase.go\n M internal/game/game.go\n M internal/game/planscreens_test.go\n M internal/game/regionturn.go\n?? docs/goal/2026-10-01-opening-tables-round-11.md\n?? docs/internals/data/opening-runtime-tables.json\n?? docs/re/352-opening-runtime-tables.md\n?? docs/spec/065-opening-runtime-tables.md\n?? internal/bootstrap/opening_test.go\n?? internal/rules/regionplanets.go",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "b611947338a9e0989be68ecdb644dfb135a66bbb5bdb2b498da75fba2f1a1341",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-tax-up",
+      "stats": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "42b002f5852f1949e068755457b1c5f5525f56899758330a9904bf7a4cc1ab77",
+          "screen.png": "9fb102fb1b7676bc2ec7f6bc728c3169f0866bd6b85b1eeae7921fb7f6b7661c",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "42b002f5852f1949e068755457b1c5f5525f56899758330a9904bf7a4cc1ab77",
+          "remake.png": "e3a8aee64a562920e6acfaa9cb1418bb705337f08eb6eff86fb492d0e57032f1",
+          "flags.txt": "8d4790f1af9e5d88f4ead62f9c1cbefbb4cfdefb2f62a6db4b4e22a90e5b6178",
+          "inputs.json": "20489424d3ffe85f80b931d708c20d24dc792139811239165f271b6905a05b63",
+          "remake-script.txt": "a4992bd363e3ded6e8484e1e5e015a2a2fdfcbec4fb745c2272a3da7ed41fdee",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_meta": {
+        "git_head": "1034d8e917d15f6f15b70043ae66167ab2ea4b16",
+        "working_tree": " M CONTEXT.md\n M internal/game/commandphase.go\n M internal/game/game.go\n M internal/game/planscreens_test.go\n M internal/game/regionturn.go\n?? docs/goal/2026-10-01-opening-tables-round-11.md\n?? docs/internals/data/opening-runtime-tables.json\n?? docs/re/352-opening-runtime-tables.md\n?? docs/spec/065-opening-runtime-tables.md\n?? internal/bootstrap/opening_test.go\n?? internal/rules/regionplanets.go",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "b611947338a9e0989be68ecdb644dfb135a66bbb5bdb2b498da75fba2f1a1341",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-tax-up-post",
+      "stats": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "459e2595cdd658f09fc56784b3582a7cacee1353bc910f63315d4a7300b07020",
+          "screen.png": "367181a85c65d0ccf9d54655477190eaa34f4f7316a700917fbfb22978b53be5",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "459e2595cdd658f09fc56784b3582a7cacee1353bc910f63315d4a7300b07020",
+          "remake.png": "25a9d32eb3e58ee3df4410a4a08842d2845c1458e15d0593ea11853722d4fd2a",
+          "flags.txt": "12ac20eb78d72f786925b32bdb7b5606627d83c9a1041526428abb8381c97b4c",
+          "inputs.json": "1af2b932696330093ae361a91d877de00b9003272a4ee429a97159481df8038c",
+          "remake-script.txt": "7b8164d4136257d7c358518e6676ca97e3996f80a4b6ff72f92929d29bee09e1",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_meta": {
+        "git_head": "1034d8e917d15f6f15b70043ae66167ab2ea4b16",
+        "working_tree": " M CONTEXT.md\n M internal/game/commandphase.go\n M internal/game/game.go\n M internal/game/planscreens_test.go\n M internal/game/regionturn.go\n?? docs/goal/2026-10-01-opening-tables-round-11.md\n?? docs/internals/data/opening-runtime-tables.json\n?? docs/re/352-opening-runtime-tables.md\n?? docs/spec/065-opening-runtime-tables.md\n?? internal/bootstrap/opening_test.go\n?? internal/rules/regionplanets.go",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "b611947338a9e0989be68ecdb644dfb135a66bbb5bdb2b498da75fba2f1a1341",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-unchanged-post",
+      "stats": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "8233320898cdbae7e1137bc9b4ab10ac3429af70ce0dc845668f1cd01c2282ae",
+          "screen.png": "773af2bcec4857814ab8b49ce2751955eed63ca8d3c6e8569f293780ca8b37a3",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "8233320898cdbae7e1137bc9b4ab10ac3429af70ce0dc845668f1cd01c2282ae",
+          "remake.png": "8943859bed3b82205b31bcc3e79c1720b7fbc48aef67591abe32496595a70b58",
+          "flags.txt": "09de421b3cb01621c3f4fa9de3765dc54f22f1c4dc32b7218f6dc7821c97a2de",
+          "inputs.json": "9ac1d126c23dc6dd90fbd62493c4a390df7aa23ba47bd9dbfd4680dd794ccf2c",
+          "remake-script.txt": "43eba86b7eef1a82d129d80c7df4cd1df5ce3b309231cb6e71f9a8290ada3f14",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_meta": {
+        "git_head": "1034d8e917d15f6f15b70043ae66167ab2ea4b16",
+        "working_tree": " M CONTEXT.md\n M internal/game/commandphase.go\n M internal/game/game.go\n M internal/game/planscreens_test.go\n M internal/game/regionturn.go\n?? docs/goal/2026-10-01-opening-tables-round-11.md\n?? docs/internals/data/opening-runtime-tables.json\n?? docs/re/352-opening-runtime-tables.md\n?? docs/spec/065-opening-runtime-tables.md\n?? internal/bootstrap/opening_test.go\n?? internal/rules/regionplanets.go",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "b611947338a9e0989be68ecdb644dfb135a66bbb5bdb2b498da75fba2f1a1341",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    }
+  ],
+  "additional_gui": {
+    "key1": "逐位元組相同",
+    "keyAlly": "逐位元組相同",
+    "vs3": "逐位元組相同",
+    "vs4": "逐位元組相同",
+    "vs5": "逐位元組相同"
+  },
+  "current_memory_code_validation": {
+    "memory_batch": "planarrow-budget-unchanged-post",
+    "evidence_rows": 34,
+    "all_bytes_match": true
+  }
+}

@@ -1930,14 +1930,25 @@ func (g *Game) startNewGame(faction int) {
 	// `docs/re/274` §4）——**音源那一格不清**，它是開機偵測的結果。
 	g.music.BGM, g.music.Battle = 0, 0
 	g.slot = nil
-	// 開機那一次月底結算之前先跑一趟回充與分配（`0654:0007` → `2B5F:02B2`、
-	// `2703:0590`）：`PLADAT.DAT` 給的飛彈／艦載機遠高於上限，第一個回合就被
-	// 夾成經濟力＋防衛力再按經濟力比例分回行星，七種艦艇也照同一比例從星域層
-	// 分下去（`docs/re/273`；收據 `fcmd-tab-planet-row` 奧丁 70590、戰艦 16 個部隊）。
+	// 開機月底之前重算初始行星比例、態勢，再彙總及回充星域存量。
+	// 此時不分配回行星；情報窗與實行後分配是其他呼叫點（研究 352／規格 065）。
 	// 上限用的經濟力是載入時從行星加總的（`2703:00F8`；瓦爾哈拉 81300 ＋ 防衛力
 	// 27300 ＝ 108600），不是 `STELLAR.DT` 檔案裡那一格，也不是成長過後的。
+	g.initializeOpeningRegions()
 	rules.ResumRegionEconomy(g.res.Stellar, g.res.Planets)
-	g.refillRegionSupply()
+	// `2703:046A`：只有電腦座位的首都行星艦艇乘二，之後重彙總（研究 352）。
+	// 每次重開前 restoreWorld 已還原行星表，不會把上一局的倍增再疊上去。
+	if g.res.Planets != nil {
+		for f := 0; f < 2; f++ {
+			if !g.humanSeat(f) {
+				rules.DoubleRegionPlanetShips(g.res.Planets, rules.CapitalRegion(f))
+			}
+		}
+		for r := 0; r < rules.RegionCount; r++ {
+			rules.AggregateRegionShips(g.regionRecord(r), g.res.Planets, r)
+		}
+	}
+	g.updateRegionSupply(false)
 	g.monthEnd()
 	g.recountRegionFleets()
 	g.refreshCapitalSnap()

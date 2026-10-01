@@ -67,7 +67,7 @@
 | 5r | **戰後不改星域歸屬** | `same-state` | 0 | 收據 `s3own`／`s3win`；[`docs/re/105`](docs/re/105-battle-does-not-capture-region.md) | 星域記錄 `+0x12`（`ds:A79C` ＋ 26 × 126 ＋ 0x12 ＝ 線性 `5FFAA`）在整場戰鬥中一次都沒有被寫，**連用 `-poke` 把同盟四十個分隊的存活艘數寫成 0、讓戰鬥提早結束也一樣**（`+0x13` 從 12 退回 8 證明戰鬥真的結束了）。remake 的 `EndBattle` 不動星域歸屬因此是照原版。**星域什麼時候易主也解了**（[`docs/re/244`](docs/re/244-region-posture-recompute.md)、[`docs/spec/033`](docs/spec/033-region-ownership-chain.md)）：回合結束逐格依行星重算（`2703:159B`，全屬同一方才算）。這份收據 `+0x12` 沒變是因為達希利的行星仍混雜、重算出同一個值——那一圈確實跑了，收據裡的 `2703:0944`／`2703:0990` 就是`2703:0933` 的內部寫入點 |
 | 5b | 船艦訂造報告（796 年 1 月） | `same-state` | 0 | 收據 `ship1`；同一個繪製器換規格 | 由主畫面熱區 (432,320) 點進去 |
 | 5c | 次月份船艦建造計劃 | `same-state` | 0 | 收據 `plan1` | 由訂造報告熱區 (432,300) 點進去 |
-| 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/spec/003`](docs/spec/003-budget-panel.md) | 由主畫面熱區 (432,300) 點進去；十個數字**從財政狀態算出來**，不是量好畫死的 |
+| 5e | 次月份預算計劃 | `same-state` | 0 | 收據 `budget1`；[`docs/spec/003`](docs/spec/003-budget-panel.md)；[`對拍 025`](docs/playtest/025-plan-arrows.md)、[`研究 352`](docs/re/352-opening-runtime-tables.md)、[`規格 065`](docs/spec/065-opening-runtime-tables.md) | 由主畫面熱區 (432,300) 點進去；十個數字**從財政狀態算出來**，不是量好畫死的。2026-10-01 #80／#82／#83：十份月初 GUI 全畫面色號／RGB 同；五條正常預算路徑的財政及星域 4032／行星 6642 bytes 全同，正式載入器另驗開局；完整回合補給仍 #84，不能擴大宣稱。 |
 | 5g | 月份會計報告 | `same-state` | 0 | 收據 `account1`；[`docs/re/13`](docs/re/13-account-report.md) | 由預算計劃 (472,325) 點進去；獨立驗證了三條錢的公式 |
 | 5f | 待命中提督資料 | `same-state` | 0 | 收據 `admirals1`；[`docs/re/12`](docs/re/12-budget-plan-and-buttons.md) | 三層視窗（底板＋建造計劃＋清單）；正常玩家路徑有回歸測試 |
 | 5d | 建造計劃（改過預算的 34 個局面） | `same-state` | 0 | [`docs/re/11`](docs/re/11-build-plan-rest-amount.md) | 用 `-poke` 把百分比寫進原版記憶體造的局面，含手點到不了的「七列全 0%」與「某列吃滿 100%」；每張 640×480 逐位元組一致 |

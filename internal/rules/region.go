@@ -25,7 +25,7 @@ const (
 	regionFleets  = 0x28 // +0x28 帝國、+0x29 同盟：這一格各有幾支艦隊
 	regionCount   = 0x16 // 三個 byte：帝國／同盟／其他 各有幾顆行星
 	regionEconomy = 0x1A // 32 位元
-	regionDefence = 0x20 // 16 位元，與 +0x22 是同一個值的兩份
+	regionDefence = 0x20 // 16 位元現有防衛力；+0x22 是防衛上限（研究 352）
 	// RegionMorale 是民心（`+0x7C`）：稅率與未安定度都讀它，帝國星域取
 	// 原值、同盟取 `200 −`。
 	RegionMorale = 0x7C

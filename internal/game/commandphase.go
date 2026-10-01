@@ -52,16 +52,10 @@ func LoadCommandScreens(dataDir, regionsPath string, bit, rgn []byte) (
 
 // LoadRegionRecords 湊出 796 年 1 月的執行期星域記錄（一筆 126 bytes）。
 //
-// 名字、稅率、成長率這些直接從 `STELLAR.DTA` 讀；擁有者、行星數、經濟力
-// 原版是載入時依行星重算的（`docs/re/17`、`docs/re/30`），面板要用的那幾格
-// 由 `internal/rules` 現算，不動記錄。
-//
-// **四個欄位是例外**：未安定度、經濟力、成長率、稅率在原版載入時都會被
-// 重算，而檔案裡的值與畫面上的不一樣（星域 0 的稅率檔案寫 22、畫面是 32）。
-// 經濟力的重算已經解出來了（Σ 行星的 `+0x1A`，`docs/re/30`），但那只算到
-// 81300，畫面上的 82302 還經過開場那一次月底結算——**成長那一步未解**。
-// 所以這四欄先用量到的那一組（`month-rollover-796-01.json`）填回去。
-// 解出算式之前，換一個劇本或開局之後的局面這幾欄就不對——已知的缺口。
+// 以出貨記錄提供名稱與初始種子欄位，量測 JSON 提供開局財政及艦艇總量。
+// 這還不是正式開局狀態：Game.startNewGame 按行星重算數量、經濟比例、
+// 防衛力、態勢與首都成本（規格 065），接著由既有成長與月底規則運行。
+// 存檔載入不使用此函式，不可拿這裡的量測值覆蓋遊戲進行中的資料。
 func LoadRegionRecords(stellar []byte, measuredPath, shipsPath string) ([]byte, error) {
 	if len(stellar) < 32*rules.RegionRecord {
 		return nil, fmt.Errorf("STELLAR 太短：%d bytes", len(stellar))

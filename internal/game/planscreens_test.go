@@ -247,7 +247,7 @@ func TestBudgetSettlementMatchesOriginal(t *testing.T) {
 					}
 				}
 				if bad != 0 {
-					t.Logf("%s整表差 %d bytes；財政欄位另逐筆核對，其他欄位不宣稱一致", c.name, bad)
+					t.Errorf("%s整表差 %d bytes；規格 065 不允許排除欄位", c.name, bad)
 				}
 			}
 			for i := 0; i < rules.RegionCount; i++ {

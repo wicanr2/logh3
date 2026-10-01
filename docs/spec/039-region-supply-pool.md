@@ -1,6 +1,10 @@
 # SPEC 039 — 星域的飛彈／艦載機存量每回合回充
 
-狀態：**CONFORMED**
+狀態：**DRAFT（回合接線勘誤，#84）**；既有純函式回充／分配對拍仍通過。
+2026-10-01：[研究 352](../re/352-opening-runtime-tables.md) 證明本文把回充與分配
+合在 AI 前的接線不成立。開局先由 [065](065-opening-runtime-tables.md) 修正；
+完整回合的分配 → 艦隊補給 → 彙總 → 下一座位回充須由 #84 重新驗證。
+下面原接線敘述保留作勘誤來源，不再作 READY 實作依據。
 證據：[`docs/re/273`](../re/273-region-supply-pool-refill.md)（反組譯
 `2B5F:02B2` ＋ 收據 `re273stock`／`re273clamp`／`re273rate`）
 相關：[`docs/internals/22`](../internals/22-stellar-dt.md)（星域記錄
