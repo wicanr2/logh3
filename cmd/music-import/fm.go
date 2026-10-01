@@ -16,6 +16,7 @@ import (
 
 type fmLock struct {
 	SourceSHA256, VGMSHA256, OGGSHA256 string
+	WAVSHA256, PCMSHA256               string
 	Serial                             uint32
 	GainDB, Route                      string
 }
@@ -25,6 +26,10 @@ type fmTrackReceipt struct {
 	Route        string     `json:"route"`
 	SourceSHA256 string     `json:"source_sha256"`
 	VGMSHA256    string     `json:"vgm_sha256"`
+	WAVSHA256    string     `json:"wav_sha256"`
+	PCMSHA256    string     `json:"pcm_sha256"`
+	GainDB       string     `json:"gain_db"`
+	SampleRate   int        `json:"sample_rate"`
 	OGGSHA256    string     `json:"ogg_sha256"`
 	Serial       uint32     `json:"ogg_serial"`
 	Seconds      float64    `json:"seconds"`
@@ -161,6 +166,15 @@ func fmProbeArgs(name, game, probe, vgm string) ([]string, error) {
 	return append(args, "-dump-vgm", vgm), nil
 }
 
+// 規格 074：未鎖定或不符的無損中間產物不得提交，即使 VGM 已符合。
+func checkFMOutputHash(path, want, label string) error {
+	got, err := hashFile(path)
+	if err != nil || len(want) != 64 || got != want {
+		return fmt.Errorf("%s SHA-256 不符或缺檔，拒絕提交", label)
+	}
+	return nil
+}
+
 func runFM(o options) (result error) {
 	if err := validatePaths(&o); err != nil {
 		return err
@@ -241,6 +255,7 @@ func runFM(o options) (result error) {
 	for _, n := range o.tracks {
 		lock := fmLocks[n]
 		vgm, wav, ogg := filepath.Join(tmp, n+".vgm"), filepath.Join(tmp, n+".wav"), filepath.Join(tmp, n+".ogg")
+		pcm := filepath.Join(tmp, n+".f32")
 		args, err := fmProbeArgs(n, game, probe, vgm)
 		if err != nil {
 			return err
@@ -264,10 +279,21 @@ func runFM(o options) (result error) {
 		if err != nil || vh != lock.VGMSHA256 {
 			return fmt.Errorf("%s 缺原版 VGM／未命中錨／SHA-256 不符，拒絕合成；%s", n, log)
 		}
-		commands := [][]string{args, {opl, vgm, wav, fmt.Sprint(audio.SampleRate)}, {ff, "-v", "error", "-y", "-i", wav, "-af", "volume=" + lock.GainDB + "dB", "-ar", fmt.Sprint(audio.SampleRate), "-c:a", "libvorbis", "-q:a", "5", ogg}}
-		for _, cmd := range commands[1:] {
+		commands := [][]string{args, {opl, vgm, wav, fmt.Sprint(audio.SampleRate)},
+			{ff, "-v", "error", "-y", "-i", wav, "-af", "volume=" + lock.GainDB + "dB", "-ar", fmt.Sprint(audio.SampleRate), "-c:a", "pcm_f32le", "-f", "f32le", pcm},
+			{ff, "-v", "error", "-y", "-i", wav, "-af", "volume=" + lock.GainDB + "dB", "-ar", fmt.Sprint(audio.SampleRate), "-c:a", "libvorbis", "-q:a", "5", ogg}}
+		for i, cmd := range commands[1:] {
 			if _, err := command(cmd, 15*time.Minute); err != nil {
 				return err
+			}
+			if i == 0 {
+				if err := checkFMOutputHash(wav, lock.WAVSHA256, n+" 合成 WAV"); err != nil {
+					return err
+				}
+			} else if i == 1 {
+				if err := checkFMOutputHash(pcm, lock.PCMSHA256, n+" 增益後 PCM"); err != nil {
+					return err
+				}
 			}
 		}
 		raw, err := os.ReadFile(ogg)
@@ -278,7 +304,7 @@ func runFM(o options) (result error) {
 		if err != nil {
 			return err
 		}
-		if hashBytes(fixed) != lock.OGGSHA256 {
+		if runtime.GOOS == "linux" && hashBytes(fixed) != lock.OGGSHA256 {
 			return fmt.Errorf("%s 固定封裝後 OGG SHA-256 仍不符，拒絕提交", n)
 		}
 		if err := os.WriteFile(ogg, fixed, 0600); err != nil {
@@ -297,14 +323,20 @@ func runFM(o options) (result error) {
 		if err := os.Rename(vgm, filepath.Join(o.output, n+".vgm")); err != nil {
 			return err
 		}
-		r.Tracks = append(r.Tracks, fmTrackReceipt{n, lock.Route, lock.SourceSHA256, vh, lock.OGGSHA256, lock.Serial, seconds, peak, commands})
+		r.Tracks = append(r.Tracks, fmTrackReceipt{Track: n, Route: lock.Route,
+			SourceSHA256: lock.SourceSHA256, VGMSHA256: vh, WAVSHA256: lock.WAVSHA256,
+			PCMSHA256: lock.PCMSHA256, GainDB: lock.GainDB, SampleRate: audio.SampleRate,
+			OGGSHA256: hashBytes(fixed), Serial: lock.Serial, Seconds: seconds, Peak: peak, Commands: commands})
 		if err := writeJSONReceipt(o.output, "FM-SOURCES.json", r); err != nil {
 			return err
 		}
 		if err := os.Remove(wav); err != nil {
 			return err
 		}
-		fmt.Printf("%s：VGM／OGG 全檔符合基準，%.2f 秒\n", n, seconds)
+		if err := os.Remove(pcm); err != nil {
+			return err
+		}
+		fmt.Printf("%s：VGM／WAV／增益後 PCM 符合基準，OGG 已解碼，%.2f 秒\n", n, seconds)
 	}
 	r.Status = "complete-fm-stage"
 	return writeJSONReceipt(o.output, "FM-SOURCES.json", r)

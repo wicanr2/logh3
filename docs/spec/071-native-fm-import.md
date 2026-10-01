@@ -5,6 +5,10 @@
 [GM 階段 069](069-native-gm-import.md)、[封裝 070](070-deterministic-ogg-framing.md)。
 本規格接續 069 的階段入口：無階段旗標預設完整 22 首；保留 `-gm-only`，另可抽驗 `-fm-only`。
 
+2026-10-01 後續裁決：跨平台 OGG 全檔相同的門檻由
+[074 — VGM／WAV／增益後 PCM](074-cross-platform-fm-pcm.md) 取代。
+本檔的 Linux 實際驗收仍是有效歷史，不外推為所有平台 OGG 相同。
+
 審查：原版三條觸發路徑已由研究 275 證實；目前 clean dosgolem HEAD
 `f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c` 的 BGM_0F 完整 1.6B 指令擷取與保存 VGM 全檔相同。
 其餘曲目依既有流程接線，每首必須先符合已鎖 VGM／OGG SHA-256 才能提交，

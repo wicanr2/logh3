@@ -1,0 +1,1262 @@
+{
+  "schema": "logh3.music-tools.windows.probes.v1",
+  "date": "2026-10-01",
+  "status": "Windows FM 反例與 GM 十一首技術探針完成；正式封裝未完成",
+  "source_parent_head": "456098ca4b48da01b03f9729ec787bc42c1a0df0",
+  "source_dirty": true,
+  "images": {
+    "build_cross": "sha256:829642b4f69c06c48deeeb90b558b90b08e29c6cfeaa3162f120e63f4b51eadb",
+    "current_pinned_cross": "sha256:0745d96e4029b152f468e2fee63c01e20bd859a369efe80de681e95cf17f0541",
+    "wine": "sha256:7d3c7ff554db39300e3e7a92a7b79c2d5fcd647289596d22fa10899baac61201",
+    "linux_audio": "sha256:da8c479c3466feed5cd363ed439b064303d68c9789abc02a37fb09560285b126",
+    "go": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+    "player_test_gui": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8"
+  },
+  "fm_build": {
+    "status": "compiled-probe-only",
+    "commands": [
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/libogg_1.3.5-3.dsc",
+          "/out/src/libogg"
+        ],
+        "cwd": "/out"
+      },
+      {
+        "args": [
+          "./configure",
+          "--host=x86_64-w64-mingw32",
+          "--prefix=/out/prefix",
+          "--enable-shared",
+          "--disable-static",
+          "--disable-dependency-tracking"
+        ],
+        "cwd": "/out/src/libogg"
+      },
+      {
+        "args": [
+          "make",
+          "-j2"
+        ],
+        "cwd": "/out/src/libogg"
+      },
+      {
+        "args": [
+          "make",
+          "install"
+        ],
+        "cwd": "/out/src/libogg"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/libvorbis_1.3.7-1.dsc",
+          "/out/src/libvorbis"
+        ],
+        "cwd": "/out"
+      },
+      {
+        "args": [
+          "./configure",
+          "--host=x86_64-w64-mingw32",
+          "--prefix=/out/prefix",
+          "--enable-shared",
+          "--disable-static",
+          "--disable-dependency-tracking"
+        ],
+        "cwd": "/out/src/libvorbis"
+      },
+      {
+        "args": [
+          "make",
+          "-j2"
+        ],
+        "cwd": "/out/src/libvorbis"
+      },
+      {
+        "args": [
+          "make",
+          "install"
+        ],
+        "cwd": "/out/src/libvorbis"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/libbinio_1.5+dfsg-0.1.dsc",
+          "/out/src/libbinio"
+        ],
+        "cwd": "/out"
+      },
+      {
+        "args": [
+          "autoreconf",
+          "-fi"
+        ],
+        "cwd": "/out/src/libbinio"
+      },
+      {
+        "args": [
+          "./configure",
+          "--host=x86_64-w64-mingw32",
+          "--prefix=/out/prefix",
+          "--enable-shared",
+          "--disable-static",
+          "--disable-dependency-tracking"
+        ],
+        "cwd": "/out/src/libbinio"
+      },
+      {
+        "args": [
+          "make",
+          "-j2",
+          "libbinio_la_LDFLAGS=-no-undefined -version-info 1:0:0"
+        ],
+        "cwd": "/out/src/libbinio"
+      },
+      {
+        "args": [
+          "make",
+          "install",
+          "libbinio_la_LDFLAGS=-no-undefined -version-info 1:0:0"
+        ],
+        "cwd": "/out/src/libbinio"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/adplug_2.3.3+dfsg-2.dsc",
+          "/out/src/adplug"
+        ],
+        "cwd": "/out"
+      },
+      {
+        "args": [
+          "autoreconf",
+          "-fi"
+        ],
+        "cwd": "/out/src/adplug"
+      },
+      {
+        "args": [
+          "./configure",
+          "--host=x86_64-w64-mingw32",
+          "--prefix=/out/prefix",
+          "--enable-shared",
+          "--disable-static",
+          "--disable-dependency-tracking"
+        ],
+        "cwd": "/out/src/adplug"
+      },
+      {
+        "args": [
+          "make",
+          "-j2",
+          "src_libadplug_la_LDFLAGS=-no-undefined -release 2.3.3 -version-info 0"
+        ],
+        "cwd": "/out/src/adplug"
+      },
+      {
+        "args": [
+          "make",
+          "install",
+          "src_libadplug_la_LDFLAGS=-no-undefined -release 2.3.3 -version-info 0"
+        ],
+        "cwd": "/out/src/adplug"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/ffmpeg_5.1.9-0+deb12u1.dsc",
+          "/out/src/ffmpeg"
+        ],
+        "cwd": "/out"
+      },
+      {
+        "args": [
+          "./configure",
+          "--enable-cross-compile",
+          "--target-os=mingw32",
+          "--arch=x86_64",
+          "--cross-prefix=x86_64-w64-mingw32-",
+          "--pkg-config=pkg-config",
+          "--prefix=/out/prefix",
+          "--disable-autodetect",
+          "--disable-everything",
+          "--disable-network",
+          "--disable-doc",
+          "--disable-debug",
+          "--disable-x86asm",
+          "--disable-ffplay",
+          "--disable-ffprobe",
+          "--enable-ffmpeg",
+          "--enable-protocol=file",
+          "--enable-demuxer=wav,ogg",
+          "--enable-decoder=pcm_s16le,pcm_f32le,vorbis",
+          "--enable-encoder=libvorbis",
+          "--enable-muxer=ogg",
+          "--enable-filter=volume,aresample,anull",
+          "--enable-libvorbis",
+          "--enable-static",
+          "--disable-shared"
+        ],
+        "cwd": "/out/src/ffmpeg"
+      },
+      {
+        "args": [
+          "make",
+          "-j2"
+        ],
+        "cwd": "/out/src/ffmpeg"
+      },
+      {
+        "args": [
+          "make",
+          "install"
+        ],
+        "cwd": "/out/src/ffmpeg"
+      },
+      {
+        "args": [
+          "x86_64-w64-mingw32-g++",
+          "-O2",
+          "-std=c++11",
+          "/tools/opl2wav.cpp",
+          "-I/out/prefix/include",
+          "-I/out/prefix/include/libbinio",
+          "-L/out/prefix/lib",
+          "-ladplug",
+          "-lbinio",
+          "-o",
+          "/out/prefix/bin/opl2wav.exe"
+        ],
+        "cwd": "/out"
+      }
+    ],
+    "sources": [
+      {
+        "source": "adplug",
+        "version": "2.3.3+dfsg-2",
+        "description": {
+          "bytes": 2018,
+          "filename": "adplug_2.3.3+dfsg-2.dsc",
+          "sha256": "900c50fba37097c1307d6d537bf4f86a819ec6355a67ba2ab23f9a7bf56fa4a1",
+          "url": "https://deb.debian.org/debian/pool/main/a/adplug/adplug_2.3.3%2Bdfsg-2.dsc"
+        },
+        "files": {
+          "adplug_2.3.3+dfsg-2.debian.tar.xz": {
+            "bytes": 10272,
+            "sha256": "7349ef9c534c763e5a27ae350330e482d03684a22b08d305b321ebbe3c106f8e",
+            "url": "https://deb.debian.org/debian/pool/main/a/adplug/adplug_2.3.3%2Bdfsg-2.debian.tar.xz"
+          },
+          "adplug_2.3.3+dfsg.orig.tar.xz": {
+            "bytes": 568972,
+            "sha256": "ab3fdf20a1a7ae31da9064d70b5f5f5ce8f2d0252f5e8f5c0773f08b93863486",
+            "url": "https://deb.debian.org/debian/pool/main/a/adplug/adplug_2.3.3%2Bdfsg.orig.tar.xz"
+          }
+        }
+      },
+      {
+        "source": "ffmpeg",
+        "version": "7:5.1.9-0+deb12u1",
+        "description": {
+          "bytes": 5323,
+          "filename": "ffmpeg_5.1.9-0+deb12u1.dsc",
+          "sha256": "055f82fca9a92f1d47216be2c2488d09373c7ca154806fbc36b0127c191d5104",
+          "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9-0%2Bdeb12u1.dsc"
+        },
+        "files": {
+          "ffmpeg_5.1.9-0+deb12u1.debian.tar.xz": {
+            "bytes": 53444,
+            "sha256": "71b20472ecd2764bc98e3229d34c0f7c8dcfe4a6cbacc23fd5604c23bac04632",
+            "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9-0%2Bdeb12u1.debian.tar.xz"
+          },
+          "ffmpeg_5.1.9.orig.tar.xz": {
+            "bytes": 10034840,
+            "sha256": "d9b593bb2ba93d4b50f74177e0cdcd41747e708596367deed0c30348a71dd176",
+            "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9.orig.tar.xz"
+          },
+          "ffmpeg_5.1.9.orig.tar.xz.asc": {
+            "bytes": 520,
+            "sha256": "443e6cdfe1560aab22f90ec40a967866ee04d5bbea32bc32625bd6e514d589f4",
+            "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9.orig.tar.xz.asc"
+          }
+        }
+      },
+      {
+        "source": "libbinio",
+        "version": "1.5+dfsg-0.1",
+        "description": {
+          "bytes": 1942,
+          "filename": "libbinio_1.5+dfsg-0.1.dsc",
+          "sha256": "e737e347d697425d9dc806abeac7c583b421a7529029fe9fedfde2415dc5e9e4",
+          "url": "https://deb.debian.org/debian/pool/main/libb/libbinio/libbinio_1.5%2Bdfsg-0.1.dsc"
+        },
+        "files": {
+          "libbinio_1.5+dfsg-0.1.debian.tar.xz": {
+            "bytes": 5836,
+            "sha256": "64b77c869b90caf40377accd279821b9b540427cfdbaa99a01fce0e20bcd2498",
+            "url": "https://deb.debian.org/debian/pool/main/libb/libbinio/libbinio_1.5%2Bdfsg-0.1.debian.tar.xz"
+          },
+          "libbinio_1.5+dfsg.orig.tar.gz": {
+            "bytes": 38022,
+            "sha256": "fe204822d7ac1b409b07c4ae4e3d657bc3d53352df73211215a97cdf39da0b9b",
+            "url": "https://deb.debian.org/debian/pool/main/libb/libbinio/libbinio_1.5%2Bdfsg.orig.tar.gz"
+          }
+        }
+      },
+      {
+        "source": "libogg",
+        "version": "1.3.5-3",
+        "description": {
+          "bytes": 2206,
+          "filename": "libogg_1.3.5-3.dsc",
+          "sha256": "dd0bac7c6961f95290250f82940aba93582edc3924372afc8fd310af5db995a0",
+          "url": "https://deb.debian.org/debian/pool/main/libo/libogg/libogg_1.3.5-3.dsc"
+        },
+        "files": {
+          "libogg_1.3.5-3.debian.tar.xz": {
+            "bytes": 18012,
+            "sha256": "980cc7c95d72d2a9c56cf9d602b8296c6551528890f28fee6769b801ea0e54f3",
+            "url": "https://deb.debian.org/debian/pool/main/libo/libogg/libogg_1.3.5-3.debian.tar.xz"
+          },
+          "libogg_1.3.5.orig.tar.xz": {
+            "bytes": 429076,
+            "sha256": "c4d91be36fc8e54deae7575241e03f4211eb102afb3fc0775fbbc1b740016705",
+            "url": "https://deb.debian.org/debian/pool/main/libo/libogg/libogg_1.3.5.orig.tar.xz"
+          }
+        }
+      },
+      {
+        "source": "libvorbis",
+        "version": "1.3.7-1",
+        "description": {
+          "bytes": 2362,
+          "filename": "libvorbis_1.3.7-1.dsc",
+          "sha256": "b25d27beb9162607c95cf58aa2b764d110bd1a1568d3926a96c523320b49171f",
+          "url": "https://deb.debian.org/debian/pool/main/libv/libvorbis/libvorbis_1.3.7-1.dsc"
+        },
+        "files": {
+          "libvorbis_1.3.7-1.debian.tar.xz": {
+            "bytes": 11600,
+            "sha256": "c5c40944a3fc1cdd1ce019ef21f580ce5ed3b9f30e0cba7b3d859e8d9fea631f",
+            "url": "https://deb.debian.org/debian/pool/main/libv/libvorbis/libvorbis_1.3.7-1.debian.tar.xz"
+          },
+          "libvorbis_1.3.7.orig.tar.gz": {
+            "bytes": 1658963,
+            "sha256": "0e982409a9c3fc82ee06e08205b1355e5c6aa4c36bca58146ef399621b0ce5ab",
+            "url": "https://deb.debian.org/debian/pool/main/libv/libvorbis/libvorbis_1.3.7.orig.tar.gz"
+          }
+        }
+      }
+    ],
+    "files": {
+      "libbinio-1.dll": {
+        "bytes": 180743,
+        "sha256": "de37680c6d1da773948987deeb37ce9deecd80294f53ae86e77788a19d1183a3"
+      },
+      "libgcc_s_seh-1.dll": {
+        "bytes": 681726,
+        "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7"
+      },
+      "libvorbisenc-2.dll": {
+        "bytes": 750574,
+        "sha256": "7e0a56ce0e226aae2d4aa331918a7fb505dd4020f0d8a8341296905c8104b9e1"
+      },
+      "ffmpeg.exe": {
+        "bytes": 1748992,
+        "sha256": "a46e1ec68cca3f124f685b60fb38ea8be25b0913206f6a285ba17a840c7a7c15"
+      },
+      "libwinpthread-1.dll": {
+        "bytes": 319336,
+        "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329"
+      },
+      "libvorbisfile-3.dll": {
+        "bytes": 119618,
+        "sha256": "978a9b37ad2ab17efb6787e0465245d151f1c4e893e8ab6c314592c40fbee551"
+      },
+      "libadplug-2-3-3-0.dll": {
+        "bytes": 946147,
+        "sha256": "b8e1dfa9f92f25182948a946d22a4907cc66edcb927d9dca7e8428dd7fcb155c"
+      },
+      "libvorbis-0.dll": {
+        "bytes": 306231,
+        "sha256": "0dcb47020543770c27d0a771e4a9b22d401099d70abaa015a2fcf51a344d5432"
+      },
+      "adplugdb.exe": {
+        "bytes": 444013,
+        "sha256": "c7432a7fc92040f2ff789828eaf143cb961ee1089e6c7f48c111e67cbe50a9f4"
+      },
+      "libogg-0.dll": {
+        "bytes": 110050,
+        "sha256": "20ab77665c1837325ee19109639d4cc3339e3f8e33768ce114cc39c2894f6d97"
+      },
+      "libstdc++-6.dll": {
+        "bytes": 23703447,
+        "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203"
+      },
+      "opl2wav.exe": {
+        "bytes": 256412,
+        "sha256": "ae753c575c031bdeea7ce3d88e719332fff7444f64bd5e7b7ef58422863672c4"
+      }
+    }
+  },
+  "fm_failure": {
+    "status": "failed",
+    "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "program_sha256": "dd24b6d7451bf4632c13d8bcd692e39b406483f7b55d54b687651ac4bc64466c",
+    "platform": "windows/amd64",
+    "approximation": "hardware-spec approximation；原版 OPL 暫存器串、固定封裝；OPEN_F substituted；未聲稱實機聆聽",
+    "tools_sha256": {
+      "Z:\\out\\封裝 測試\\tools\\dosgolem-probe.exe": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+      "Z:\\out\\封裝 測試\\tools\\ffmpeg.exe": "a46e1ec68cca3f124f685b60fb38ea8be25b0913206f6a285ba17a840c7a7c15",
+      "Z:\\out\\封裝 測試\\tools\\opl2wav.exe": "ae753c575c031bdeea7ce3d88e719332fff7444f64bd5e7b7ef58422863672c4"
+    },
+    "source_executable_sha256": {
+      "ENDING.EXE": "afdafb06b5942a9bca833a3c1f1cb634be886bb6e4d8b5930ab42ac6fa592d8a",
+      "GIN3.COM": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "GIN3PS.EXE": "1efa4bd95e73415efba440af63c6a480665d60a67d8876b5f230f5c391aa2381",
+      "OPEN.EXE": "dde640cd7e10ff1b756e9fc4f38564a389ecc69a343041c874817afbf375ab69"
+    },
+    "tracks": null,
+    "error": "BGM_0F 固定封裝後 OGG SHA-256 仍不符，拒絕提交"
+  },
+  "waveform": {
+    "win": {
+      "frames": 5606647,
+      "channels": 2,
+      "rate": 44100,
+      "pcm_sha256": "c6378fa69a2ef7390c970ae5470a593f8832ab00f1435e618130ff392d37e4c9",
+      "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e"
+    },
+    "linux": {
+      "frames": 5606647,
+      "channels": 2,
+      "rate": 44100,
+      "pcm_sha256": "c6378fa69a2ef7390c970ae5470a593f8832ab00f1435e618130ff392d37e4c9",
+      "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e"
+    }
+  },
+  "post_volume_pcm": {
+    "win": {
+      "bytes": 44853176,
+      "sha256": "6b31f0ed34da50e04b132d6b7569b034b09b46f73d04858413786701de6a093b"
+    },
+    "linux": {
+      "bytes": 44853176,
+      "sha256": "6b31f0ed34da50e04b132d6b7569b034b09b46f73d04858413786701de6a093b"
+    },
+    "equal": true
+  },
+  "encoded": {
+    "win": {
+      "sha256": "fa77257c455ad2e050da72327d308907d9c0a637d8fe9651a070b5e66f73a5c3",
+      "bytes": 1857350,
+      "packets": 7711,
+      "headers_equal": true,
+      "different_packets": 260
+    },
+    "linux": {
+      "sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+      "bytes": 1857348,
+      "packets": 7711,
+      "headers_equal": true
+    },
+    "win-math": {
+      "sha256": "79c0f932a67d54924bfd9bf20ab1edbc5e48eb47d3bce82d2016bf74eb33cf2c",
+      "bytes": 1857354,
+      "packets": 7711,
+      "headers_equal": true,
+      "different_packets": 232
+    }
+  },
+  "decoded_difference": {
+    "samples": 11213294,
+    "different_samples": 410268,
+    "max_abs_difference": 0.003705419600009918,
+    "rmse": 2.5828268848269673e-05,
+    "files_sha256": {
+      "win": "f5fb97e1793c5b7f560f1a2ac07669d54fbee91f3df1557de84382d6ff585b45",
+      "linux": "970fdec1a2b087f582c500adb7e2d10d9dc42e214f820a72bd1857b6ae1a7692"
+    }
+  },
+  "math_probe": {
+    "scope": "probe-only-original-Unix-math-branch",
+    "commands": [
+      [
+        "make",
+        "clean"
+      ],
+      [
+        "make",
+        "-j2"
+      ],
+      [
+        "make",
+        "install"
+      ]
+    ],
+    "source_os_h_sha256": "20ba50daa8b86bdb829bbc792097055049a3e2fa5e3c84af1d780c990589e87f",
+    "libraries": {
+      "libvorbisenc-2.dll": "ff0eda26d9933a4465096bd5c023516acfec9c8282544533a38d467ba6860ec4",
+      "libvorbisfile-3.dll": "6ae4088db5ed74825bc0e84acef99475ba308ae44578242662469af5d2fe4e94",
+      "libvorbis-0.dll": "6bafe07a01c230ce23246d344166cbdc0c72fa02a199ad8bd675a969738cc496"
+    }
+  },
+  "gm": {
+    "scope": "GM 合成收據；FM 另見 FM-SOURCES.json，平台封包未驗收",
+    "status": "complete-gm-stage",
+    "approximation": "legacy approximation：FA 當 BPM；raw 時間沿用匯出器；FB／FC 不展開反覆；非原版 MPU 音色",
+    "platform": "windows/amd64",
+    "program_sha256": "dd24b6d7451bf4632c13d8bcd692e39b406483f7b55d54b687651ac4bc64466c",
+    "soundfont_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+    "tools_sha256": {
+      "Z:\\out\\gm-probe\\tools\\ffmpeg.exe": "a46e1ec68cca3f124f685b60fb38ea8be25b0913206f6a285ba17a840c7a7c15",
+      "Z:\\out\\gm-probe\\tools\\fluidsynth.exe": "0d6b4a6a747bd0cd5c62a1a42e21f8f1b7b579ce4c8dae105c6920b12ae9d25e"
+    },
+    "tool_versions": {
+      "Z:\\out\\gm-probe\\tools\\ffmpeg.exe": "ffmpeg version 5.1.9 Copyright (c) 2000-2026 the FFmpeg developers\r\nbuilt with gcc 12-win32 (GCC)\r\nconfiguration: --enable-cross-compile --target-os=mingw32 --arch=x86_64 --cross-prefix=x86_64-w64-mingw32- --pkg-config=pkg-config --prefix=/out/prefix --disable-autodetect --disable-everything --disable-network --disable-doc --disable-debug --disable-x86asm --disable-ffplay --disable-ffprobe --enable-ffmpeg --enable-protocol=file --enable-demuxer='wav,ogg' --enable-decoder='pcm_s16le,pcm_f32le,vorbis' --enable-encoder=libvorbis --enable-muxer=ogg --enable-filter='volume,aresample,anull' --enable-libvorbis --enable-static --disable-shared\r\nlibavutil      57. 28.100 / 57. 28.100\r\nlibavcodec     59. 37.100 / 59. 37.100\r\nlibavformat    59. 27.100 / 59. 27.100\r\nlibavdevice    59.  7.100 / 59.  7.100\r\nlibavfilter     8. 44.100 /  8. 44.100\r\nlibswscale      6.  7.100 /  6.  7.100\r\nlibswresample   4.  7.100 /  4.  7.100\r\n",
+      "Z:\\out\\gm-probe\\tools\\fluidsynth.exe": "FluidSynth runtime version 2.3.1\r\nCopyright (C) 2000-2022 Peter Hanappe and others.\r\nDistributed under the LGPL license.\r\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\r\n\r\nFluidSynth executable version 2.3.1\r\nSample type=float\r\n"
+    },
+    "tracks": [
+      {
+        "track": "BGM_0M",
+        "source": "Z:\\orig\\BGM_0M.MDS",
+        "source_sha256": "f8f977b0a5733d1a22c9febb3be800d7f981976cc7ced84188a44339127c87d9",
+        "midi_sha256": "ad07749f3dfa2ebbc2cfedd792c04e1e6a2306b1693c0a6ebc1e370ffc907b01",
+        "ogg_sha256": "86148318ccfe716167f46ba6591a6fcb23a57338455d4857fb39ce79fd303c53",
+        "seconds": 201.5027664399093,
+        "peak": 1,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_0M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_0M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_0M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_0M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.005804988662134747
+      },
+      {
+        "track": "BGM_1M",
+        "source": "Z:\\orig\\BGM_1M.MDS",
+        "source_sha256": "b5687e2ec5cf1e5f269653015e8ae5ba6c77673ca8b1916899be097e0a48ab0f",
+        "midi_sha256": "ee6e6f4ed93f45fcfc0121ddd06157f14040b33c2277cb770969bc3b904d7687",
+        "ogg_sha256": "a802a8e51a8652f3eb77fc0d8f9f9f354c0c08cb3b68abf11f2159b7bf17a9ab",
+        "seconds": 213.8093424036281,
+        "peak": 1,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_1M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_1M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_1M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_1M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.010158730158707385
+      },
+      {
+        "track": "BGM_2M",
+        "source": "Z:\\orig\\BGM_2M.MDS",
+        "source_sha256": "46beeb710af3f704c01c61dcda72c94cb9eb13ec0d5d5b7ca94f3a37842d7403",
+        "midi_sha256": "cee571b06d86e04a28e1029a6a4e792eb3174fc19f14cc8585f04f95185f8286",
+        "ogg_sha256": "9feebf3bdfc94000e749bdfb380005449c24c570386166caf895c0cae30d194d",
+        "seconds": 333.3340589569161,
+        "peak": 0.8251432776451111,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_2M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_2M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_2M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_2M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.013061224489831602
+      },
+      {
+        "track": "BGM_3M",
+        "source": "Z:\\orig\\BGM_3M.MDS",
+        "source_sha256": "d3c98d5f79b0e061cea55b66b41306fe3bd015913f70d66d3fbf1ab7f9b5502e",
+        "midi_sha256": "d7b10b3b8863c1206516c04b206be150021c0b26d61a8ba54526819d322e3c71",
+        "ogg_sha256": "373da4f081ee1f2c2169161dffb8d782e2f87b2e70a7c8f5c9e88e8c549fba96",
+        "seconds": 141.59528344671202,
+        "peak": 1,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_3M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_3M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_3M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_3M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.014512471655336867
+      },
+      {
+        "track": "BGM_4M",
+        "source": "Z:\\orig\\BGM_4M.MDS",
+        "source_sha256": "5df7c68c487910f7659fd2f9438d8973fb911e8ba3293dedccbe35f689e1e99d",
+        "midi_sha256": "791b78c9512866fbec05052420ea15b24f83514f2c836a7e8a9428d77b969f7a",
+        "ogg_sha256": "24b9676a020be6180d147a282c5174c37bca8ed2471dfeb01a7b4d595652ca23",
+        "seconds": 185.5390476190476,
+        "peak": 0.6204141974449158,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_4M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_4M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_4M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_4M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.007256235827640012
+      },
+      {
+        "track": "BGM_5M",
+        "source": "Z:\\orig\\BGM_5M.MDS",
+        "source_sha256": "33b94d4ab3d0bc376ceceda9db593202086d737602a57e4b6a5a2c7dbc7632a0",
+        "midi_sha256": "78e5f858afb0a670fb914241cbc66ee491ae26ab18f74c53365cd3885e7d7d48",
+        "ogg_sha256": "d8b3d40112cc65d0369c02d9350fcefdea96812d7807175f8e2c8a23bb50a4b0",
+        "seconds": 60.02358276643991,
+        "peak": 0.3428286612033844,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_5M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_5M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_5M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_5M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.011609977324262388
+      },
+      {
+        "track": "BGM_6M",
+        "source": "Z:\\orig\\BGM_6M.MDS",
+        "source_sha256": "5189b57e696a0bdceaf19ee4a25dcffbc3d58906106a014c9c535c1239c8b6cf",
+        "midi_sha256": "540d0a921ae32a4b30ff427ced3cd5699d4b7155641771a302b88f4218912bde",
+        "ogg_sha256": "8131999558e3354060599d54d982bee0fc7ade8c6745b7413603a09d1335e0c8",
+        "seconds": 31.24244897959184,
+        "peak": 1,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_6M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_6M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_6M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_6M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.014512471655329762
+      },
+      {
+        "track": "BGM_7M",
+        "source": "Z:\\orig\\BGM_7M.MDS",
+        "source_sha256": "a86364d5071a1f0d06097dbe310c5caa16ffeb35aba5127b4cc65684f6140832",
+        "midi_sha256": "8b85586e6b9bb5a477e81441a5cc9d480c174d7ffd706fcf741ca04b0e0056cc",
+        "ogg_sha256": "9f29a7587ee2403271c2b62d55fbb192b169ddffd0e56dba8400c276b7659d73",
+        "seconds": 37.33768707482993,
+        "peak": 0.942932665348053,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_7M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_7M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_7M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\BGM_7M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.010158730158728702
+      },
+      {
+        "track": "END_1M",
+        "source": "Z:\\orig\\END_1M.MDS",
+        "source_sha256": "c0154a70b741e60a303e11f9027c212467122a4fa09480d74e128750de18d340",
+        "midi_sha256": "a2abfc2469e1695d9007cf6545e477f654e8e1f1e02ec8986e7dbee2a43e3e59",
+        "ogg_sha256": "24b98fd732775c87d709d1f04bb486f673febaf6e3b21102119c9b3438a28962",
+        "seconds": 161.5760544217687,
+        "peak": 0.796677827835083,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\END_1M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\END_1M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\END_1M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\END_1M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.01306122448980318
+      },
+      {
+        "track": "END_2M",
+        "source": "Z:\\orig\\END_2M.MDS",
+        "source_sha256": "706125fdf5038229dc0a3a4b666cf98cbe04fba9580176d65cede9dd1dc94444",
+        "midi_sha256": "3163fa0846ddeae9541ba2e2c4a3a7701f7cbe2b618956571d435f1c0215c4b8",
+        "ogg_sha256": "5422f656c72dcf2f36866a0db2e75f8ec3f83beee9380ce3b8b127a5b8b7b914",
+        "seconds": 284.57215419501136,
+        "peak": 0.6512147784233093,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\END_2M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\END_2M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\END_2M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\END_2M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.013061224489831602
+      },
+      {
+        "track": "OPEN_M",
+        "source": "Z:\\orig\\OPEN_M.MDS",
+        "source_sha256": "277504853b9067b3ecb6867ec33b1ec9146912cb14dbfdf09554cf19250553fa",
+        "midi_sha256": "93a27c3ca0ea6a008f2e3ac1bcff9eb6a19fed90a6270d105d083766393b8c39",
+        "ogg_sha256": "e0dd0079d1fbc69fe6ea3818d6bb45c30de8bcb118af1c4d4cf583ceb79d6325",
+        "seconds": 139.13396825396825,
+        "peak": 1,
+        "commands": [
+          [
+            "Z:\\out\\gm-probe\\tools\\fluidsynth.exe",
+            "-ni",
+            "-F",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\OPEN_M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "Z:\\out\\gm-probe\\soundfont\\FluidR3_GM.sf2",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\OPEN_M.mid"
+          ],
+          [
+            "Z:\\out\\gm-probe\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\OPEN_M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\gm-full\\.gm-import-1062216525\\OPEN_M.ogg"
+          ]
+        ],
+        "duration_difference_from_linux": 0.014512471655336867
+      }
+    ]
+  },
+  "gm_sdk": {
+    "url": "https://github.com/FluidSynth/fluidsynth/releases/download/v2.3.1/fluidsynth-2.3.1-win10-x64.zip",
+    "sha256": "7bf4ae8ae1856376266280bf680d465a96d3f66e2b875cdd7f3539b549c4d702",
+    "bytes": 6288695,
+    "files": {
+      "libvorbisenc-2.dll": {
+        "sha256": "7e0a56ce0e226aae2d4aa331918a7fb505dd4020f0d8a8341296905c8104b9e1",
+        "bytes": 750574,
+        "imports": [
+          "libvorbis-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libfluidsynth-3.dll": {
+        "sha256": "d5a8382dabf8f3d9e43eb733afc31ea8477ecb86b2b6ff2a6d1e11f60f982126",
+        "bytes": 691528,
+        "imports": [
+          "libinstpatch-2.dll",
+          "DSOUND.dll",
+          "libgcc_s_sjlj-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "ole32.dll",
+          "USER32.dll",
+          "WINMM.dll",
+          "WS2_32.dll",
+          "libstdc++-6.dll",
+          "libgomp-1.dll",
+          "libglib-2.0-0.dll",
+          "libgobject-2.0-0.dll",
+          "libgthread-2.0-0.dll",
+          "libsndfile-1.dll"
+        ]
+      },
+      "ffmpeg.exe": {
+        "sha256": "a46e1ec68cca3f124f685b60fb38ea8be25b0913206f6a285ba17a840c7a7c15",
+        "bytes": 1748992,
+        "imports": [
+          "libvorbis-0.dll",
+          "libvorbisenc-2.dll",
+          "bcrypt.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "SHELL32.dll"
+        ]
+      },
+      "libwinpthread-1.dll": {
+        "sha256": "5bbef249a0d00e2d32c699d0bbe89f714ebeb872b3990a5cbeccb1d89f63e5e8",
+        "bytes": 52224,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libinstpatch-2.dll": {
+        "sha256": "4c23e92c7c23391f70bde2d5cea6adbd00829fb629f1416b6955644d7811dbf3",
+        "bytes": 1508112,
+        "imports": [
+          "libgobject-2.0-0.dll",
+          "libgthread-2.0-0.dll",
+          "libglib-2.0-0.dll",
+          "libsndfile-1.dll",
+          "KERNEL32.dll"
+        ]
+      },
+      "libgobject-2.0-0.dll": {
+        "sha256": "28ca3fe5392dce2e8c48b6157baa9da31f88ebb7103dc2ce7feeca7d5a3b17ca",
+        "bytes": 426582,
+        "imports": [
+          "libglib-2.0-0.dll",
+          "libgthread-2.0-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libgomp-1.dll": {
+        "sha256": "5c83149ea23973f974be6ff3970b5732142daad238ce60dbae1178ec8f406ffe",
+        "bytes": 156672,
+        "imports": [
+          "libgcc_s_sjlj-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libwinpthread-1.dll",
+          "USER32.dll"
+        ]
+      },
+      "libsndfile-1.dll": {
+        "sha256": "740dc79589813c83f5a6b8ea214b5c1031041881b4dc96703e295a7c04d09f5b",
+        "bytes": 1748992,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "USER32.dll"
+        ]
+      },
+      "libgcc_s_sjlj-1.dll": {
+        "sha256": "2967d9f5049bca8f193357ee537d65d2ed8c17dfdb48c2a7463d144251958dca",
+        "bytes": 85504,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "fluidsynth.exe": {
+        "sha256": "0d6b4a6a747bd0cd5c62a1a42e21f8f1b7b579ce4c8dae105c6920b12ae9d25e",
+        "bytes": 669072,
+        "imports": [
+          "libinstpatch-2.dll",
+          "DSOUND.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "ole32.dll",
+          "USER32.dll",
+          "WINMM.dll",
+          "WS2_32.dll",
+          "libgomp-1.dll",
+          "libglib-2.0-0.dll",
+          "libgobject-2.0-0.dll",
+          "libgthread-2.0-0.dll",
+          "libsndfile-1.dll"
+        ]
+      },
+      "libglib-2.0-0.dll": {
+        "sha256": "0c3720b588874fc3c60f66b486c4172c4976c56b0b0f04908f730d7215c93400",
+        "bytes": 1268114,
+        "imports": [
+          "libintl-8.dll",
+          "ADVAPI32.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "msvcrt.dll",
+          "ole32.dll",
+          "SHELL32.dll",
+          "USER32.dll",
+          "WS2_32.dll"
+        ]
+      },
+      "libvorbis-0.dll": {
+        "sha256": "0dcb47020543770c27d0a771e4a9b22d401099d70abaa015a2fcf51a344d5432",
+        "bytes": 306231,
+        "imports": [
+          "libogg-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libgthread-2.0-0.dll": {
+        "sha256": "f49aabf9d780bcaae8f72870a2f2a6817e987efd115aaee6c9442d401ab4bb34",
+        "bytes": 126615,
+        "imports": [
+          "libglib-2.0-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "USER32.dll"
+        ]
+      },
+      "libintl-8.dll": {
+        "sha256": "7cf5a705c825e082d8e7b57d113ebcba897a9421f465a7e43ad610b89a359b14",
+        "bytes": 240862,
+        "imports": [
+          "ADVAPI32.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libogg-0.dll": {
+        "sha256": "20ab77665c1837325ee19109639d4cc3339e3f8e33768ce114cc39c2894f6d97",
+        "bytes": 110050,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ]
+      },
+      "libstdc++-6.dll": {
+        "sha256": "2a05c903c737315cc69726e8cb141068b1222f8a315d8f06b3dff524a1cf0c44",
+        "bytes": 1739776,
+        "imports": [
+          "libgcc_s_sjlj-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "USER32.dll"
+        ]
+      }
+    },
+    "complete_licenses_and_sources_verified": false
+  },
+  "buildinfo": {
+    "importer": "workplace/music69-windows/music-import.exe: go1.24.13\n\tpath\tgithub.com/wicanr2/logh3/cmd/music-import\n\tmod\tgithub.com/wicanr2/logh3\tv0.0.0-20261001114836-456098ca4b48+dirty\t\n\tdep\tgithub.com/jfreymuth/oggvorbis\tv1.0.5\th1:u+Ck+R0eLSRhgq8WTmffYnrVtSztJcYrl588DM4e3kQ=\n\tdep\tgithub.com/jfreymuth/vorbis\tv1.0.2\th1:m1xH6+ZI4thH927pgKD8JOH4eaGRm18rEE9/0WKjvNE=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=windows\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=456098ca4b48da01b03f9729ec787bc42c1a0df0\n\tbuild\tvcs.time=2026-10-01T11:48:36Z\n\tbuild\tvcs.modified=true\n",
+    "probe": "workplace/music69-windows/dosgolem-probe.exe: go1.24.13\n\tpath\tgithub.com/wicanr2/dosgolem/cmd/probe\n\tmod\tgithub.com/wicanr2/dosgolem\tv0.0.0-20260917101542-f7523f9ac7ed\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=windows\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c\n\tbuild\tvcs.time=2026-09-17T10:15:42Z\n\tbuild\tvcs.modified=false\n"
+  },
+  "test_log_sha256": "a72369cdb8a9e1c73a506be130d9961c434b5e7a878690b70b7d91f4f8c1c207",
+  "scripts_sha256": {
+    "music_windows_fm_probe.py": "dcc9a0e5051df8a30558fba9b00dbdf143dd2c13341d5b5de84496eb8449c99e",
+    "music_windows_vorbis_probe.py": "4ad68b77e58841b8923a8c96430516b7d51f3c5f10e18434bc72c44685ec1014",
+    "music_windows_f32_probe.py": "cf9eeb5f29ecabf4ac29227c31bfe4c589c8d569c241c731a9b72ca63c350974",
+    "music_windows_receipt.py": "b6b460552078d0360fd8f9fd2cee6d21fed8c41dad9ccef9213fc7ae5d516eec"
+  },
+  "diagnostic_files": {
+    "pcm-comparison.json": {
+      "sha256": "96abbacb682e7b2e6a9d4180a7b1df7d6aaa01d20e49163bd7502e4f1150fe49",
+      "bytes": 501
+    },
+    "math-1.log": {
+      "sha256": "c3572afc5090a588b7d11d1aa33adf8b695b8609f1158f2d9aa406b41b5ae82f",
+      "bytes": 150
+    },
+    "win-1.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "BGM_0F-linux.wav": {
+      "sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+      "bytes": 22426632
+    },
+    "win-0.log": {
+      "sha256": "077194659290598c899e273c2799d098b195b21f6240788161f2fd7867cd02ee",
+      "bytes": 103
+    },
+    "linux-opl.log": {
+      "sha256": "494479be5ec941a6924565318e8eeaed2ee384daf1f5d23fc6fee1bfff93bab3",
+      "bytes": 134
+    },
+    "BGM_0F-linux-decoded.f32": {
+      "sha256": "970fdec1a2b087f582c500adb7e2d10d9dc42e214f820a72bd1857b6ae1a7692",
+      "bytes": 44853176
+    },
+    "listen-linux.wav": {
+      "sha256": "d2d88ad0d348448ad65e3740e4491b288d708faf6ae2fb47ac35ff6f0cbda725",
+      "bytes": 1764078
+    },
+    "BGM_0F-win-math.ogg": {
+      "sha256": "e929f3bc050af19df6cb71347269ce7383993c4f2add1bad483aaad758cb2614",
+      "bytes": 1857354
+    },
+    "BGM_0F-win-volume.f32": {
+      "sha256": "6b31f0ed34da50e04b132d6b7569b034b09b46f73d04858413786701de6a093b",
+      "bytes": 44853176
+    },
+    "volume-comparison.json": {
+      "sha256": "67b923691427e937e838b42da77580c972f887454fe3beae298c2c6283b09644",
+      "bytes": 262
+    },
+    "BGM_0F-win-math-fixed.ogg": {
+      "sha256": "79c0f932a67d54924bfd9bf20ab1edbc5e48eb47d3bce82d2016bf74eb33cf2c",
+      "bytes": 1857354
+    },
+    "BGM_0F-linux.ogg": {
+      "sha256": "008a0e43b6a8f0e8f2e309f5c0c2720b8fb2213d4472f752d7ba0f162b70838a",
+      "bytes": 1857348
+    },
+    "BGM_0F-win-decoded.f32": {
+      "sha256": "f5fb97e1793c5b7f560f1a2ac07669d54fbee91f3df1557de84382d6ff585b45",
+      "bytes": 44853176
+    },
+    "BGM_0F-linux-fixed.ogg": {
+      "sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+      "bytes": 1857348
+    },
+    "BGM_0F-win.ogg": {
+      "sha256": "29e96e019ea5eee7bfebf4622caa9044e54064aae9e11e844b6a1bc8cb99bf51",
+      "bytes": 1857350
+    },
+    "BGM_0F.vgm": {
+      "sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+      "bytes": 47106
+    },
+    "listen-windows.wav": {
+      "sha256": "6612d7f830ad84fc487fb698795924d6b3fe6fe8c4f48a0344a13a26457eec93",
+      "bytes": 1764078
+    },
+    "win-2.log": {
+      "sha256": "f3dd04e37787d0924b4b0c398e893ba61302336c80498208f9e84ccdf4e1490c",
+      "bytes": 150
+    },
+    "decoded-difference.json": {
+      "sha256": "7d60b1b04371bb6b63a3ffb741c27d7b7aa4b5db2bbf79383e288faac16452e0",
+      "bytes": 136
+    },
+    "BGM_0F-linux-volume.f32": {
+      "sha256": "6b31f0ed34da50e04b132d6b7569b034b09b46f73d04858413786701de6a093b",
+      "bytes": 44853176
+    },
+    "BGM_0F-win.wav": {
+      "sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+      "bytes": 22426632
+    },
+    "math-0.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "BGM_0F-win-fixed.ogg": {
+      "sha256": "fa77257c455ad2e050da72327d308907d9c0a637d8fe9651a070b5e66f73a5c3",
+      "bytes": 1857350
+    }
+  },
+  "limits": "此探針使用舊 FM 完整 OGG 雜湊門檻；數學路徑試驗仍不符。2026-10-01 使用者另裁決改驗 VGM／WAV／增益後 PCM 相同，允許平台 OGG 差異；正式接線由規格 074 驗收。SDK 與 C++ runtime 隔離，未作正式來源／授權交付。只驗 Wine 原生 CLI 及 Linux 正式播放層解碼，不宣稱 Windows 實機／音效裝置／人耳／循環接點。"
+}

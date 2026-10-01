@@ -6,6 +6,10 @@
 審查：相同波形重編產物只差 serial／CRC，探針恢復完整舊 SHA-256；
 不改 Vorbis 音訊、樣本數、時間位置、分段或排序，沒有新增音色／音量取捨。
 
+後續裁決：[規格 074](074-cross-platform-fm-pcm.md) 允許跨平台 Vorbis 音訊封包差異，
+改驗完整 VGM／WAV／增益後 PCM。此處仍只負責固定 serial／CRC，
+不得把封裝修正當作已消除音訊差異；下列 Linux 歷史驗收保留。
+
 1. typed input：完整 OGG bytes 與已鎖定 uint32 serial；輸入上限 64 MiB。
 2. 逐頁驗 OggS、版本 0、段表與 payload 完整邊界、原始 CRC。
    頁序從 0 連續，單一舊 serial，首頁 BOS、尾頁 EOS；拒絕多串流、串接、截斷與壞 CRC。

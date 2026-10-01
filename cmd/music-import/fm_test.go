@@ -20,6 +20,8 @@ func TestFMImportLocksAndRoutes(t *testing.T) {
 			Source string `json:"source_sha256"`
 			VGM    string `json:"vgm_sha256"`
 			OGG    string `json:"ogg_sha256"`
+			WAV    string `json:"wav_sha256"`
+			PCM    string `json:"pcm_sha256"`
 			Serial uint32 `json:"serial"`
 			Gain   string `json:"gain_db"`
 			Route  string `json:"route"`
@@ -32,7 +34,7 @@ func TestFMImportLocksAndRoutes(t *testing.T) {
 		t.Fatal("原生生成表格與權威 JSON 不一致")
 	}
 	for name, l := range doc.Tracks {
-		if fmLocks[name] != (fmLock{l.Source, l.VGM, l.OGG, l.Serial, l.Gain, l.Route}) {
+		if fmLocks[name] != (fmLock{l.Source, l.VGM, l.OGG, l.WAV, l.PCM, l.Serial, l.Gain, l.Route}) {
 			t.Fatalf("生成表格與 JSON 不一致：%s", name)
 		}
 		args, err := fmProbeArgs(name, "/game", "/probe", "/output.vgm")
@@ -92,6 +94,35 @@ func TestFMImportLocksAndRoutes(t *testing.T) {
 	}
 	if _, _, err := selectTracks([]string{"OPEN_F"}, true, false); err == nil {
 		t.Fatal("FM 被送去 GM")
+	}
+}
+
+func TestFMRejectsChangedLosslessOutput(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "output")
+	data := []byte("固定的無損合成結果")
+	if err := os.WriteFile(p, data, 0600); err != nil {
+		t.Fatal(err)
+	}
+	want := hashBytes(data)
+	for _, label := range []string{"合成 WAV", "增益後 PCM"} {
+		if err := checkFMOutputHash(p, want, label); err != nil {
+			t.Fatal(err)
+		}
+		if err := checkFMOutputHash(p, "", label); err == nil {
+			t.Fatal("缺基準被接受")
+		}
+	}
+	if err := os.WriteFile(p, append(data, 0), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := checkFMOutputHash(p, want, "PCM"); err == nil {
+		t.Fatal("合成結果變更未拒絕")
+	}
+	if err := os.Remove(p); err != nil {
+		t.Fatal(err)
+	}
+	if err := checkFMOutputHash(p, want, "WAV"); err == nil {
+		t.Fatal("缺合成結果未拒絕")
 	}
 }
 

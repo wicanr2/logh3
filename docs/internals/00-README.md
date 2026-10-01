@@ -24,6 +24,11 @@ Linux 隨包工具、共享依賴與授權索引：[`linux-music-tools.json`](da
 Linux 工具固定來源集合：[`linux-music-source-lock.json`](data/linux-music-source-lock.json)，
 完整取得／離線重驗與本機封裝收據：[`linux-music-sources.json`](data/linux-music-sources.json)，
 命令與正式交付限制見[驗證 033](../playtest/033-linux-music-sources.md)。
+Windows FM 反例與完整 GM 探針收據：[`windows-music-probes.json`](data/windows-music-probes.json)，
+重生命令及限制見[研究 362](../re/362-windows-music-tools.md)；
+跨平台 FM 無損雜湊契約見[規格 074](../spec/074-cross-platform-fm-pcm.md)。
+其十一首正式原生匯入與三路重跑收據由 `tools/scripts/music_windows_fm_receipt.py`
+產生 [`windows-fm-pcm.json`](data/windows-fm-pcm.json)，未完成批次不得產生通過收據。
 remake 增強策略的正式入口驗證索引：[`enhanced-ai-player-path.json`](data/enhanced-ai-player-path.json)，
 範圍及原版差異見[規格 068](../spec/068-enhanced-ai-player-path.md)。
 

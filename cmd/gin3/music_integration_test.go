@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"io"
 	"os"
@@ -13,6 +15,103 @@ import (
 	"github.com/wicanr2/logh3/internal/bootstrap"
 	"github.com/wicanr2/logh3/internal/game"
 )
+
+// Windows 原生產物由正式播放層讀完；這只驗解碼，不冒稱 Windows 音效裝置或聆聽。
+func TestWindowsGMImportPlayerDecode(t *testing.T) {
+	testWindowsImportPlayerDecode(t, "GM", "M")
+}
+
+func TestWindowsFMImportPlayerDecode(t *testing.T) {
+	testWindowsImportPlayerDecode(t, "FM", "F")
+}
+
+func testWindowsImportPlayerDecode(t *testing.T, stage, suffix string) {
+	t.Helper()
+	dir := filepath.Join("..", "..", "workplace", "music69-windows", strings.ToLower(stage)+"-full")
+	raw, err := os.ReadFile(filepath.Join(dir, stage+"-SOURCES.json"))
+	if os.IsNotExist(err) {
+		t.Skip("缺 Windows 原生 " + stage + " 驗證批次")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	var receipt struct {
+		Status   string `json:"status"`
+		Platform string `json:"platform"`
+		Tracks   []struct {
+			Track string `json:"track"`
+			Hash  string `json:"ogg_sha256"`
+			VGM   string `json:"vgm_sha256"`
+			WAV   string `json:"wav_sha256"`
+			PCM   string `json:"pcm_sha256"`
+			Gain  string `json:"gain_db"`
+			Rate  int    `json:"sample_rate"`
+		} `json:"tracks"`
+	}
+	if err := json.Unmarshal(raw, &receipt); err != nil || receipt.Status != "complete-"+strings.ToLower(stage)+"-stage" || receipt.Platform != "windows/amd64" {
+		t.Fatalf("Windows %s 批次未完成或平台錯誤：%s／%s，%v", stage, receipt.Status, receipt.Platform, err)
+	}
+	var lock struct {
+		Tracks map[string]struct {
+			VGM string `json:"vgm_sha256"`
+			WAV string `json:"wav_sha256"`
+			PCM string `json:"pcm_sha256"`
+		} `json:"tracks"`
+	}
+	if stage == "FM" {
+		data, err := os.ReadFile("../../docs/internals/data/fm-import-lock.json")
+		if err != nil || json.Unmarshal(data, &lock) != nil {
+			t.Fatal("缺或損壞無損 FM 基準")
+		}
+	}
+	expected := map[string]bool{}
+	for _, name := range intaudio.Tracks {
+		if strings.HasSuffix(name, suffix) {
+			expected[name] = true
+		}
+	}
+	if len(receipt.Tracks) != len(expected) {
+		t.Fatalf("Windows %s 曲數 %d，預期 %d", stage, len(receipt.Tracks), len(expected))
+	}
+	p := newMusicPlayer(nil, intaudio.NewLibrary(dir))
+	for _, track := range receipt.Tracks {
+		if !expected[track.Track] {
+			t.Fatalf("Windows %s 重複或非合法曲目：%q", stage, track.Track)
+		}
+		delete(expected, track.Track)
+		t.Run(track.Track, func(t *testing.T) {
+			if stage == "FM" {
+				want, ok := lock.Tracks[track.Track]
+				if !ok || len(want.WAV) != 64 || len(want.PCM) != 64 || track.VGM != want.VGM || track.WAV != want.WAV || track.PCM != want.PCM || track.Gain != "-1.00" || track.Rate != intaudio.SampleRate {
+					t.Fatal("Windows FM 收據沒有通過完整無損閘門")
+				}
+				vgm, err := os.ReadFile(filepath.Join(dir, track.Track+".vgm"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				h := sha256.Sum256(vgm)
+				if hex.EncodeToString(h[:]) != want.VGM {
+					t.Fatal("Windows 原版 VGM 與基準不同")
+				}
+			}
+			data, err := os.ReadFile(filepath.Join(dir, track.Track+".ogg"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			h := sha256.Sum256(data)
+			if hex.EncodeToString(h[:]) != track.Hash {
+				t.Fatal("Windows " + stage + " 產物與收據雜湊不同")
+			}
+			st, ok, err := p.decode(track.Track)
+			if err != nil || !ok || st == nil || st.Length() <= 0 {
+				t.Fatalf("Windows %s 正式解碼失敗：%v", stage, err)
+			}
+			if n, err := io.Copy(io.Discard, st); err != nil || n == 0 {
+				t.Fatalf("Windows %s PCM 串流錯誤：%d，%v", stage, n, err)
+			}
+		})
+	}
+}
 
 // 隨包 Linux 工具在乾淨容器產生的實物，仍須交給正式播放層完整解碼。
 func TestBundledLinuxMusicImportPlayerDecode(t *testing.T) {

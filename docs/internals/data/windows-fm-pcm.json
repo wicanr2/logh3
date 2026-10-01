@@ -1,0 +1,2095 @@
+{
+  "schema": "logh3.music-tools.windows.fm-pcm.v1",
+  "date": "2026-10-01",
+  "scope": "Windows 原生十一首 FM 無損閘門與三路重跑；Linux 三路回歸；正式播放器解碼",
+  "user_decision": "VGM／WAV／增益後 PCM 相同，允許各平台 OGG 差異",
+  "original_bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "fm_lock_sha256": "ac3805f650740002ae5aeadf11955d8e06b5db4d66d2f72e7cc6c1d16a95d939",
+  "run": {
+    "source_parent_head": "456098ca4b48da01b03f9729ec787bc42c1a0df0",
+    "source_dirty": true,
+    "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "probe_clean": true,
+    "program_sha256": "bb3d765eb75e3a1d1a0ba4f6619bb0aefdcfb9cc79e795f192829bd75334344b",
+    "images": {
+      "cross": "sha256:0745d96e4029b152f468e2fee63c01e20bd859a369efe80de681e95cf17f0541",
+      "wine": "sha256:7d3c7ff554db39300e3e7a92a7b79c2d5fcd647289596d22fa10899baac61201",
+      "linux_audio": "sha256:da8c479c3466feed5cd363ed439b064303d68c9789abc02a37fb09560285b126",
+      "go": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+      "gui": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8"
+    },
+    "full_command": [
+      "LOGH3_TIMEOUT=3h",
+      "bash",
+      "tools/music_wine.sh",
+      "wine",
+      "Z:\\out\\pcm-gate\\封裝 測試\\music-import.exe",
+      "-source",
+      "Z:\\orig",
+      "-output",
+      "Z:\\out\\fm-full",
+      "-fm-only"
+    ],
+    "repeat_command": [
+      "LOGH3_TIMEOUT=1h",
+      "bash",
+      "tools/music_wine.sh",
+      "wine",
+      "Z:\\out\\pcm-gate\\封裝 測試\\music-import.exe",
+      "-source",
+      "Z:\\orig",
+      "-output",
+      "Z:\\out\\fm-repeat",
+      "-fm-only",
+      "-tracks",
+      "BGM_0F,END_2F,OPEN_F"
+    ],
+    "linux_sampling_command": [
+      "bash",
+      "tools/audio.sh",
+      "/work/music69-windows/music-import-pcm-linux",
+      "-source",
+      "/orig",
+      "-tools",
+      "/work/music69-fm/tools",
+      "-output",
+      "/work/music69-windows/linux-pcm-sampling",
+      "-fm-only",
+      "-tracks",
+      "BGM_0F,END_2F,OPEN_F"
+    ],
+    "container_limits": {
+      "network": "none",
+      "memory": "4g for Wine/cross/Go/GUI; 2g for audio/Python",
+      "cpus": "2 for Wine/cross/audio/Python; 4 for Go/GUI",
+      "uid_gid": "1000:1000",
+      "lifecycle": "--rm; bounded Xvfb/Wine trap"
+    }
+  },
+  "fm_build": {
+    "status": "compiled-probe-only",
+    "commands": [
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/libogg_1.3.5-3.dsc",
+          "/out/src/libogg"
+        ],
+        "cwd": "/out"
+      },
+      {
+        "args": [
+          "./configure",
+          "--host=x86_64-w64-mingw32",
+          "--prefix=/out/prefix",
+          "--enable-shared",
+          "--disable-static",
+          "--disable-dependency-tracking"
+        ],
+        "cwd": "/out/src/libogg"
+      },
+      {
+        "args": [
+          "make",
+          "-j2"
+        ],
+        "cwd": "/out/src/libogg"
+      },
+      {
+        "args": [
+          "make",
+          "install"
+        ],
+        "cwd": "/out/src/libogg"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/libvorbis_1.3.7-1.dsc",
+          "/out/src/libvorbis"
+        ],
+        "cwd": "/out"
+      },
+      {
+        "args": [
+          "./configure",
+          "--host=x86_64-w64-mingw32",
+          "--prefix=/out/prefix",
+          "--enable-shared",
+          "--disable-static",
+          "--disable-dependency-tracking"
+        ],
+        "cwd": "/out/src/libvorbis"
+      },
+      {
+        "args": [
+          "make",
+          "-j2"
+        ],
+        "cwd": "/out/src/libvorbis"
+      },
+      {
+        "args": [
+          "make",
+          "install"
+        ],
+        "cwd": "/out/src/libvorbis"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/libbinio_1.5+dfsg-0.1.dsc",
+          "/out/src/libbinio"
+        ],
+        "cwd": "/out"
+      },
+      {
+        "args": [
+          "autoreconf",
+          "-fi"
+        ],
+        "cwd": "/out/src/libbinio"
+      },
+      {
+        "args": [
+          "./configure",
+          "--host=x86_64-w64-mingw32",
+          "--prefix=/out/prefix",
+          "--enable-shared",
+          "--disable-static",
+          "--disable-dependency-tracking"
+        ],
+        "cwd": "/out/src/libbinio"
+      },
+      {
+        "args": [
+          "make",
+          "-j2",
+          "libbinio_la_LDFLAGS=-no-undefined -version-info 1:0:0"
+        ],
+        "cwd": "/out/src/libbinio"
+      },
+      {
+        "args": [
+          "make",
+          "install",
+          "libbinio_la_LDFLAGS=-no-undefined -version-info 1:0:0"
+        ],
+        "cwd": "/out/src/libbinio"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/adplug_2.3.3+dfsg-2.dsc",
+          "/out/src/adplug"
+        ],
+        "cwd": "/out"
+      },
+      {
+        "args": [
+          "autoreconf",
+          "-fi"
+        ],
+        "cwd": "/out/src/adplug"
+      },
+      {
+        "args": [
+          "./configure",
+          "--host=x86_64-w64-mingw32",
+          "--prefix=/out/prefix",
+          "--enable-shared",
+          "--disable-static",
+          "--disable-dependency-tracking"
+        ],
+        "cwd": "/out/src/adplug"
+      },
+      {
+        "args": [
+          "make",
+          "-j2",
+          "src_libadplug_la_LDFLAGS=-no-undefined -release 2.3.3 -version-info 0"
+        ],
+        "cwd": "/out/src/adplug"
+      },
+      {
+        "args": [
+          "make",
+          "install",
+          "src_libadplug_la_LDFLAGS=-no-undefined -release 2.3.3 -version-info 0"
+        ],
+        "cwd": "/out/src/adplug"
+      },
+      {
+        "args": [
+          "dpkg-source",
+          "--no-check",
+          "-x",
+          "/source-cache/ffmpeg_5.1.9-0+deb12u1.dsc",
+          "/out/src/ffmpeg"
+        ],
+        "cwd": "/out"
+      },
+      {
+        "args": [
+          "./configure",
+          "--enable-cross-compile",
+          "--target-os=mingw32",
+          "--arch=x86_64",
+          "--cross-prefix=x86_64-w64-mingw32-",
+          "--pkg-config=pkg-config",
+          "--prefix=/out/prefix",
+          "--disable-autodetect",
+          "--disable-everything",
+          "--disable-network",
+          "--disable-doc",
+          "--disable-debug",
+          "--disable-x86asm",
+          "--disable-ffplay",
+          "--disable-ffprobe",
+          "--enable-ffmpeg",
+          "--enable-protocol=file",
+          "--enable-demuxer=wav,ogg",
+          "--enable-decoder=pcm_s16le,pcm_f32le,vorbis",
+          "--enable-encoder=libvorbis,pcm_f32le",
+          "--enable-muxer=ogg,pcm_f32le",
+          "--enable-filter=volume,aresample,anull",
+          "--enable-libvorbis",
+          "--enable-static",
+          "--disable-shared"
+        ],
+        "cwd": "/out/src/ffmpeg"
+      },
+      {
+        "args": [
+          "make",
+          "-j2"
+        ],
+        "cwd": "/out/src/ffmpeg"
+      },
+      {
+        "args": [
+          "make",
+          "install"
+        ],
+        "cwd": "/out/src/ffmpeg"
+      },
+      {
+        "args": [
+          "x86_64-w64-mingw32-g++",
+          "-O2",
+          "-std=c++11",
+          "/tools/opl2wav.cpp",
+          "-I/out/prefix/include",
+          "-I/out/prefix/include/libbinio",
+          "-L/out/prefix/lib",
+          "-ladplug",
+          "-lbinio",
+          "-o",
+          "/out/prefix/bin/opl2wav.exe"
+        ],
+        "cwd": "/out"
+      }
+    ],
+    "sources": [
+      {
+        "source": "adplug",
+        "version": "2.3.3+dfsg-2",
+        "description": {
+          "bytes": 2018,
+          "filename": "adplug_2.3.3+dfsg-2.dsc",
+          "sha256": "900c50fba37097c1307d6d537bf4f86a819ec6355a67ba2ab23f9a7bf56fa4a1",
+          "url": "https://deb.debian.org/debian/pool/main/a/adplug/adplug_2.3.3%2Bdfsg-2.dsc"
+        },
+        "files": {
+          "adplug_2.3.3+dfsg-2.debian.tar.xz": {
+            "bytes": 10272,
+            "sha256": "7349ef9c534c763e5a27ae350330e482d03684a22b08d305b321ebbe3c106f8e",
+            "url": "https://deb.debian.org/debian/pool/main/a/adplug/adplug_2.3.3%2Bdfsg-2.debian.tar.xz"
+          },
+          "adplug_2.3.3+dfsg.orig.tar.xz": {
+            "bytes": 568972,
+            "sha256": "ab3fdf20a1a7ae31da9064d70b5f5f5ce8f2d0252f5e8f5c0773f08b93863486",
+            "url": "https://deb.debian.org/debian/pool/main/a/adplug/adplug_2.3.3%2Bdfsg.orig.tar.xz"
+          }
+        }
+      },
+      {
+        "source": "ffmpeg",
+        "version": "7:5.1.9-0+deb12u1",
+        "description": {
+          "bytes": 5323,
+          "filename": "ffmpeg_5.1.9-0+deb12u1.dsc",
+          "sha256": "055f82fca9a92f1d47216be2c2488d09373c7ca154806fbc36b0127c191d5104",
+          "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9-0%2Bdeb12u1.dsc"
+        },
+        "files": {
+          "ffmpeg_5.1.9-0+deb12u1.debian.tar.xz": {
+            "bytes": 53444,
+            "sha256": "71b20472ecd2764bc98e3229d34c0f7c8dcfe4a6cbacc23fd5604c23bac04632",
+            "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9-0%2Bdeb12u1.debian.tar.xz"
+          },
+          "ffmpeg_5.1.9.orig.tar.xz": {
+            "bytes": 10034840,
+            "sha256": "d9b593bb2ba93d4b50f74177e0cdcd41747e708596367deed0c30348a71dd176",
+            "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9.orig.tar.xz"
+          },
+          "ffmpeg_5.1.9.orig.tar.xz.asc": {
+            "bytes": 520,
+            "sha256": "443e6cdfe1560aab22f90ec40a967866ee04d5bbea32bc32625bd6e514d589f4",
+            "url": "https://deb.debian.org/debian/pool/main/f/ffmpeg/ffmpeg_5.1.9.orig.tar.xz.asc"
+          }
+        }
+      },
+      {
+        "source": "libbinio",
+        "version": "1.5+dfsg-0.1",
+        "description": {
+          "bytes": 1942,
+          "filename": "libbinio_1.5+dfsg-0.1.dsc",
+          "sha256": "e737e347d697425d9dc806abeac7c583b421a7529029fe9fedfde2415dc5e9e4",
+          "url": "https://deb.debian.org/debian/pool/main/libb/libbinio/libbinio_1.5%2Bdfsg-0.1.dsc"
+        },
+        "files": {
+          "libbinio_1.5+dfsg-0.1.debian.tar.xz": {
+            "bytes": 5836,
+            "sha256": "64b77c869b90caf40377accd279821b9b540427cfdbaa99a01fce0e20bcd2498",
+            "url": "https://deb.debian.org/debian/pool/main/libb/libbinio/libbinio_1.5%2Bdfsg-0.1.debian.tar.xz"
+          },
+          "libbinio_1.5+dfsg.orig.tar.gz": {
+            "bytes": 38022,
+            "sha256": "fe204822d7ac1b409b07c4ae4e3d657bc3d53352df73211215a97cdf39da0b9b",
+            "url": "https://deb.debian.org/debian/pool/main/libb/libbinio/libbinio_1.5%2Bdfsg.orig.tar.gz"
+          }
+        }
+      },
+      {
+        "source": "libogg",
+        "version": "1.3.5-3",
+        "description": {
+          "bytes": 2206,
+          "filename": "libogg_1.3.5-3.dsc",
+          "sha256": "dd0bac7c6961f95290250f82940aba93582edc3924372afc8fd310af5db995a0",
+          "url": "https://deb.debian.org/debian/pool/main/libo/libogg/libogg_1.3.5-3.dsc"
+        },
+        "files": {
+          "libogg_1.3.5-3.debian.tar.xz": {
+            "bytes": 18012,
+            "sha256": "980cc7c95d72d2a9c56cf9d602b8296c6551528890f28fee6769b801ea0e54f3",
+            "url": "https://deb.debian.org/debian/pool/main/libo/libogg/libogg_1.3.5-3.debian.tar.xz"
+          },
+          "libogg_1.3.5.orig.tar.xz": {
+            "bytes": 429076,
+            "sha256": "c4d91be36fc8e54deae7575241e03f4211eb102afb3fc0775fbbc1b740016705",
+            "url": "https://deb.debian.org/debian/pool/main/libo/libogg/libogg_1.3.5.orig.tar.xz"
+          }
+        }
+      },
+      {
+        "source": "libvorbis",
+        "version": "1.3.7-1",
+        "description": {
+          "bytes": 2362,
+          "filename": "libvorbis_1.3.7-1.dsc",
+          "sha256": "b25d27beb9162607c95cf58aa2b764d110bd1a1568d3926a96c523320b49171f",
+          "url": "https://deb.debian.org/debian/pool/main/libv/libvorbis/libvorbis_1.3.7-1.dsc"
+        },
+        "files": {
+          "libvorbis_1.3.7-1.debian.tar.xz": {
+            "bytes": 11600,
+            "sha256": "c5c40944a3fc1cdd1ce019ef21f580ce5ed3b9f30e0cba7b3d859e8d9fea631f",
+            "url": "https://deb.debian.org/debian/pool/main/libv/libvorbis/libvorbis_1.3.7-1.debian.tar.xz"
+          },
+          "libvorbis_1.3.7.orig.tar.gz": {
+            "bytes": 1658963,
+            "sha256": "0e982409a9c3fc82ee06e08205b1355e5c6aa4c36bca58146ef399621b0ce5ab",
+            "url": "https://deb.debian.org/debian/pool/main/libv/libvorbis/libvorbis_1.3.7.orig.tar.gz"
+          }
+        }
+      }
+    ],
+    "files": {
+      "libbinio-1.dll": {
+        "bytes": 180743,
+        "sha256": "f6ee4fe7cd717723195a3ab5cb80737b1de957b9debdc49b1fdb0e92e5bae57f"
+      },
+      "libgcc_s_seh-1.dll": {
+        "bytes": 681726,
+        "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7"
+      },
+      "libvorbisenc-2.dll": {
+        "bytes": 750574,
+        "sha256": "92dad65c8c4b5f6aede7e9c1e5452b1b9a74ee386603f5197276d6466ad7da34"
+      },
+      "ffmpeg.exe": {
+        "bytes": 1751552,
+        "sha256": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc"
+      },
+      "libwinpthread-1.dll": {
+        "bytes": 319336,
+        "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329"
+      },
+      "libvorbisfile-3.dll": {
+        "bytes": 119618,
+        "sha256": "7ca6a294d1bb9449aa91320ba35d0ac26c4a59d3926de4842a298dc3f1638b82"
+      },
+      "libadplug-2-3-3-0.dll": {
+        "bytes": 946147,
+        "sha256": "1c0d4b7299c982aeee022f3d7b8ee9ca4db2e76ef901080d801b10ab5f0270cb"
+      },
+      "libvorbis-0.dll": {
+        "bytes": 306231,
+        "sha256": "d07b5ff4e939b538f77ce0806c7ca5c6438f5b08f08a164dcc9bfda031a156b7"
+      },
+      "adplugdb.exe": {
+        "bytes": 444013,
+        "sha256": "73e6dce676d549c5e31688ca5a5324546e4aff050dda1c7c2faf7e48348b47d9"
+      },
+      "libogg-0.dll": {
+        "bytes": 110050,
+        "sha256": "d17a6e849530abf809f10f32b3f6b90765a73c7497eda8198ca7afdb599941a7"
+      },
+      "libstdc++-6.dll": {
+        "bytes": 23703447,
+        "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203"
+      },
+      "opl2wav.exe": {
+        "bytes": 256412,
+        "sha256": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2"
+      }
+    }
+  },
+  "package_files": {
+    "music-import.exe": {
+      "sha256": "bb3d765eb75e3a1d1a0ba4f6619bb0aefdcfb9cc79e795f192829bd75334344b",
+      "bytes": 4692992,
+      "imports": []
+    },
+    "dosgolem-probe.exe": {
+      "sha256": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+      "bytes": 5490176,
+      "imports": []
+    },
+    "ffmpeg.exe": {
+      "sha256": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+      "bytes": 1751552,
+      "imports": [
+        "libvorbis-0.dll",
+        "libvorbisenc-2.dll",
+        "bcrypt.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "SHELL32.dll"
+      ]
+    },
+    "libadplug-2-3-3-0.dll": {
+      "sha256": "1c0d4b7299c982aeee022f3d7b8ee9ca4db2e76ef901080d801b10ab5f0270cb",
+      "bytes": 946147,
+      "imports": [
+        "libbinio-1.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libgcc_s_seh-1.dll",
+        "libstdc++-6.dll"
+      ]
+    },
+    "libbinio-1.dll": {
+      "sha256": "f6ee4fe7cd717723195a3ab5cb80737b1de957b9debdc49b1fdb0e92e5bae57f",
+      "bytes": 180743,
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libgcc_s_seh-1.dll",
+        "libstdc++-6.dll"
+      ]
+    },
+    "libgcc_s_seh-1.dll": {
+      "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7",
+      "bytes": 681726,
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    "libogg-0.dll": {
+      "sha256": "d17a6e849530abf809f10f32b3f6b90765a73c7497eda8198ca7afdb599941a7",
+      "bytes": 110050,
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    "libstdc++-6.dll": {
+      "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203",
+      "bytes": 23703447,
+      "imports": [
+        "libgcc_s_seh-1.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    "libvorbis-0.dll": {
+      "sha256": "d07b5ff4e939b538f77ce0806c7ca5c6438f5b08f08a164dcc9bfda031a156b7",
+      "bytes": 306231,
+      "imports": [
+        "libogg-0.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    "libvorbisenc-2.dll": {
+      "sha256": "92dad65c8c4b5f6aede7e9c1e5452b1b9a74ee386603f5197276d6466ad7da34",
+      "bytes": 750574,
+      "imports": [
+        "libvorbis-0.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    "libvorbisfile-3.dll": {
+      "sha256": "7ca6a294d1bb9449aa91320ba35d0ac26c4a59d3926de4842a298dc3f1638b82",
+      "bytes": 119618,
+      "imports": [
+        "libvorbis-0.dll",
+        "libogg-0.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    "libwinpthread-1.dll": {
+      "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329",
+      "bytes": 319336,
+      "imports": [
+        "KERNEL32.dll",
+        "msvcrt.dll"
+      ]
+    },
+    "opl2wav.exe": {
+      "sha256": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2",
+      "bytes": 256412,
+      "imports": [
+        "libadplug-2-3-3-0.dll",
+        "KERNEL32.dll",
+        "msvcrt.dll",
+        "libgcc_s_seh-1.dll",
+        "libstdc++-6.dll"
+      ]
+    }
+  },
+  "receipt_runtime": {
+    "python": "3.12.13 (main, Aug  5 2026, 01:10:24) [GCC 14.2.0]",
+    "image": "sha256:229a2c5bfa27522db7815ea81f9bed70af17ccb9de9fc7ad142b1877b5830d36"
+  },
+  "fm": {
+    "status": "complete-fm-stage",
+    "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "program_sha256": "bb3d765eb75e3a1d1a0ba4f6619bb0aefdcfb9cc79e795f192829bd75334344b",
+    "platform": "windows/amd64",
+    "approximation": "hardware-spec approximation；原版 OPL 暫存器串、固定封裝；OPEN_F substituted；未聲稱實機聆聽",
+    "tools_sha256": {
+      "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+      "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+      "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2"
+    },
+    "source_executable_sha256": {
+      "ENDING.EXE": "afdafb06b5942a9bca833a3c1f1cb634be886bb6e4d8b5930ab42ac6fa592d8a",
+      "GIN3.COM": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "GIN3PS.EXE": "1efa4bd95e73415efba440af63c6a480665d60a67d8876b5f230f5c391aa2381",
+      "OPEN.EXE": "dde640cd7e10ff1b756e9fc4f38564a389ecc69a343041c874817afbf375ab69"
+    },
+    "tracks": [
+      {
+        "track": "BGM_0F",
+        "route": "FM",
+        "source_sha256": "f8462fe4fb6c629c4204f90ce8fe7ef35f9abdf6fc92e241260868bce8b7b025",
+        "vgm_sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+        "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+        "pcm_sha256": "6b31f0ed34da50e04b132d6b7569b034b09b46f73d04858413786701de6a093b",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "fa77257c455ad2e050da72327d308907d9c0a637d8fe9651a070b5e66f73a5c3",
+        "ogg_serial": 1091008858,
+        "seconds": 127.13485260770975,
+        "peak": 0.09104543924331665,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_0F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=00",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_0F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_0F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_0F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_0F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_0F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_0F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_0F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_1F",
+        "route": "FM",
+        "source_sha256": "562099eaffa3d3a6f06bb21901b953c237715d2a5d2a4b5732fbaa8040ad9225",
+        "vgm_sha256": "a9b264ff3d9c7243b39a9f557e764ede31d42390f0a3c37000e6982246e252ac",
+        "wav_sha256": "f4585c6b1e1c268394916a62de9c087708ab31324bbc1a0075d2162ca75ef94d",
+        "pcm_sha256": "9e7bd19de898a2050ebd24380812569b4879afdc9c9d98c8ec4067d6678ba01c",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "4927be4458233b830fe300185b76da457f71da5d5489394256e90099cacafc1e",
+        "ogg_serial": 643493807,
+        "seconds": 127.10537414965987,
+        "peak": 0.23356735706329346,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_1F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=01",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_1F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_1F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_1F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_1F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_1F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_1F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_1F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_2F",
+        "route": "FM",
+        "source_sha256": "21c0ff177655ef8e218baaedd24a7e4e889be088b7cb46669363293ec477e017",
+        "vgm_sha256": "43c6eddf5014c0cc5594fb1e81d4ea18c680867d11a8f7deb345b4d49884285f",
+        "wav_sha256": "044cea94a9cd488ad7249afba119a76b619aeb9a1b1eb3725873363b8d88e202",
+        "pcm_sha256": "addac9a50cf8f478c3eb434ae58db4d523f66fd4b3d92dfcd402c3782bba7acb",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "bc44a1abe1f0b3ce4355831c7c7203979565aaa7e23a4ebe67402b2586d92dc6",
+        "ogg_serial": 431260488,
+        "seconds": 127.10680272108844,
+        "peak": 0.24052131175994873,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_2F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=02",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_2F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_2F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_2F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_2F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_2F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_3F",
+        "route": "FM",
+        "source_sha256": "2cf8df6675d471a3e8c29061df45ca7779ac79fa473e97b7b358cc6c57408afb",
+        "vgm_sha256": "51d695fe161c5adbcebaebf86b9f1a9702062efde42f215971d23b9d79a358c7",
+        "wav_sha256": "2e6bbc57a666ddc2440c2af0caa1fb12f281d6ee24beaf40a7f6bb958d45a670",
+        "pcm_sha256": "f84ea7b01c322de6cfc94e8b1c4d0643e6dbdd6f3763e553d1a4e25c3702b94a",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "a2c04c9778a62ff7e727a17631c34018d5d6e3cdf24d6542290aa28074a0483d",
+        "ogg_serial": 107062576,
+        "seconds": 127.1112925170068,
+        "peak": 0.27265632152557373,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_3F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=03",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_3F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_3F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_3F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_3F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_3F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_3F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_3F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_4F",
+        "route": "FM",
+        "source_sha256": "3533eeb39e652c737d2e21972335335cc170b86d38134bfa1c90cb715c05cdd3",
+        "vgm_sha256": "c8e7b375db8506ed2422012660e0b8b6c2e582e38d993dfeef273a31d15ab27e",
+        "wav_sha256": "062c1614b422cb6ec1f806f994be07589a9982b3d87a0ea797cdf794bae8c1bc",
+        "pcm_sha256": "27812a295f4fc206dcb0ce811982558624a27177f2e1f947bce79e5f60b541cd",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "44e79b4e7c77b96658f3c44e081d6247eab4a9f857100c3ccf359874765b1f95",
+        "ogg_serial": 1541827399,
+        "seconds": 126.96827664399093,
+        "peak": 0.24277600646018982,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_4F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=04",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_4F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_4F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_4F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_4F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_4F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_4F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_4F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_5F",
+        "route": "FM",
+        "source_sha256": "e92a8a2167aeb99f87341f4497ba3b6606e4be674b79ca27167939772992375f",
+        "vgm_sha256": "7f6c566d4e1f5aa5f90fa3bc6bce05820d6fcc7aae5d244d91306a28ed43c75f",
+        "wav_sha256": "eb0a53e03ed815db070a2298575f95e40b5e6accf89bad504c9a9b2ff0cdfda5",
+        "pcm_sha256": "850c24a9802793d33e2ae2590f20aa2bc6390fbf2a98ebb0ec097f32d779b1c4",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "8e80c128dd6cb48008aa7e3aa49fdfdcd1fcbbd7e290534b5c52d97818a7661e",
+        "ogg_serial": 565907898,
+        "seconds": 127.14877551020408,
+        "peak": 0.21145538985729218,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_5F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=05",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_5F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_5F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_5F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_5F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_5F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_5F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_5F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_6F",
+        "route": "FM",
+        "source_sha256": "b73fa3564e203a4543dd14f6a0e780cce800b3528346df79e017452b95a04f4c",
+        "vgm_sha256": "b96433f1d3e068cfd753d97721225c542e9efb394720c43a21b474ed8aad8926",
+        "wav_sha256": "6f9a835991d8895a1312e46a641d4e6b28551f420ddd2a4716e1538c65cdb6c9",
+        "pcm_sha256": "3acbba994cc7acd2b20a299f5ae0771a72e01d9006f64ed36ecbecae93262748",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "364694f90d502bf048c9de17617652480704f8e392b173d1441797f64af8fa83",
+        "ogg_serial": 3522034865,
+        "seconds": 127.09877551020408,
+        "peak": 0.24301885068416595,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_6F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=06",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_6F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_6F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_6F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_6F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_6F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_6F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_6F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_7F",
+        "route": "FM",
+        "source_sha256": "d77e8bf70b838e4c7092e9133e51b8422cb039b4012bb827084e3934760cba67",
+        "vgm_sha256": "e0f1f73472b9a9c33eba2f1b0fbeb225ec9b321d8b1ac5e4654fc6f91eb5a8c0",
+        "wav_sha256": "9ebc793db192c1859b018ff8bf4a5140af0cf6005ccdc03d223ba18e59e5d3ec",
+        "pcm_sha256": "7fa93203dc81ee666ec85b57bb09918b902f2cd4278bea9db0bc5e6461bee953",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "550405958e7190402c536e821d2eac07ecebe2a21dc7ee1c9adec0c6efbb8dda",
+        "ogg_serial": 563473986,
+        "seconds": 127.14791383219955,
+        "peak": 0.28475385904312134,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_7F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=07",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_7F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_7F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_7F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_7F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_7F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_7F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\BGM_7F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_1F",
+        "route": "FM",
+        "source_sha256": "69fd022e38b063f9e6754899c0a385f97d95699be727f4b5e440202a63af86c0",
+        "vgm_sha256": "b524a90b4e112386382cd1a50afcf8e9e5aa77031c655655426ac1b465375d83",
+        "wav_sha256": "7e44a58017e55489fba5ca4adf672e820bf1fe4f36e149b93f4a8f107247d7da",
+        "pcm_sha256": "c14d651281aea212edc0cf4a00fe76d14718bd6db892106da3843f66e4ae3b50",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "d30a660ce6bccff9f288f25e9173e7e99607c58fe4932fefcc517ab6ab2e5bf6",
+        "ogg_serial": 2102694839,
+        "seconds": 133.8514058956916,
+        "peak": 0.9561888575553894,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\ENDING.EXE",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "END_1F.MDS",
+            "-sound-blaster",
+            "-args",
+            " 9 1",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_1F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_1F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_1F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_1F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_1F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_1F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_1F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_2F",
+        "route": "FM",
+        "source_sha256": "ad9607b224fbafbd6539ff82145c9342eb5c7c15bd8f81353d3e8c05f543ba73",
+        "vgm_sha256": "2fc59e74d8eec41933127cf15b37e06f060b0196698acdf116821dc77e85e357",
+        "wav_sha256": "91932b9dafbc5d8bcdc58caff8cfd645140864c3bfcdd32625842b640ad989f6",
+        "pcm_sha256": "9e5fd6c4cdac8ac8b0b8a90e497007cdba8fac9f9098811dd77f60f494b6b6fc",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "125d0b001d6055d7479527a99f24bd050faff5b0759b8357d75f97378073f451",
+        "ogg_serial": 3955497126,
+        "seconds": 136.18201814058958,
+        "peak": 0.9503566026687622,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\ENDING.EXE",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "END_2F.MDS",
+            "-sound-blaster",
+            "-args",
+            " 9 2",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_2F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_2F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_2F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_2F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\END_2F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "OPEN_F",
+        "route": "FM(substituted)",
+        "source_sha256": "4520bb37bb66733a4598971df45cc8539def4738bfc3b6aa35b6402dc22f54c3",
+        "vgm_sha256": "b386be533aa1001deb9160ef385cb9b0ae0f672240fe5333632a905aa3287e69",
+        "wav_sha256": "514061a020647fb9ce6666023acea9a8d0521e1f0edc351c9f155d6ba4d2ebf4",
+        "pcm_sha256": "079c0879036be733caf4b865b635a784ea82ee855ee3ff4ffddcc0b8d3691acd",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "c8280ad35763065528d06af849a865e8e63aeb1c89b413b2702f216d52f3fe9e",
+        "ogg_serial": 3046910935,
+        "seconds": 101.27469387755102,
+        "peak": 0.9516538977622986,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1200000000",
+            "-vgm-clear-on-open",
+            "OPEN_M.MDS",
+            "-dump-vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\OPEN_F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\OPEN_F.vgm",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\OPEN_F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\OPEN_F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\OPEN_F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\OPEN_F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-full\\.fm-import-1010066539\\OPEN_F.ogg"
+          ]
+        ]
+      }
+    ]
+  },
+  "repeat": {
+    "status": "complete-fm-stage",
+    "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "program_sha256": "bb3d765eb75e3a1d1a0ba4f6619bb0aefdcfb9cc79e795f192829bd75334344b",
+    "platform": "windows/amd64",
+    "approximation": "hardware-spec approximation；原版 OPL 暫存器串、固定封裝；OPEN_F substituted；未聲稱實機聆聽",
+    "tools_sha256": {
+      "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+      "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+      "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2"
+    },
+    "source_executable_sha256": {
+      "ENDING.EXE": "afdafb06b5942a9bca833a3c1f1cb634be886bb6e4d8b5930ab42ac6fa592d8a",
+      "GIN3.COM": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "GIN3PS.EXE": "1efa4bd95e73415efba440af63c6a480665d60a67d8876b5f230f5c391aa2381",
+      "OPEN.EXE": "dde640cd7e10ff1b756e9fc4f38564a389ecc69a343041c874817afbf375ab69"
+    },
+    "tracks": [
+      {
+        "track": "BGM_0F",
+        "route": "FM",
+        "source_sha256": "f8462fe4fb6c629c4204f90ce8fe7ef35f9abdf6fc92e241260868bce8b7b025",
+        "vgm_sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+        "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+        "pcm_sha256": "6b31f0ed34da50e04b132d6b7569b034b09b46f73d04858413786701de6a093b",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "fa77257c455ad2e050da72327d308907d9c0a637d8fe9651a070b5e66f73a5c3",
+        "ogg_serial": 1091008858,
+        "seconds": 127.13485260770975,
+        "peak": 0.09104543924331665,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_0F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=00",
+            "-dump-vgm",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\BGM_0F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\BGM_0F.vgm",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\BGM_0F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\BGM_0F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\BGM_0F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\BGM_0F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\BGM_0F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_2F",
+        "route": "FM",
+        "source_sha256": "ad9607b224fbafbd6539ff82145c9342eb5c7c15bd8f81353d3e8c05f543ba73",
+        "vgm_sha256": "2fc59e74d8eec41933127cf15b37e06f060b0196698acdf116821dc77e85e357",
+        "wav_sha256": "91932b9dafbc5d8bcdc58caff8cfd645140864c3bfcdd32625842b640ad989f6",
+        "pcm_sha256": "9e5fd6c4cdac8ac8b0b8a90e497007cdba8fac9f9098811dd77f60f494b6b6fc",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "125d0b001d6055d7479527a99f24bd050faff5b0759b8357d75f97378073f451",
+        "ogg_serial": 3955497126,
+        "seconds": 136.18201814058958,
+        "peak": 0.9503566026687622,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\game\\ENDING.EXE",
+            "-root",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "END_2F.MDS",
+            "-sound-blaster",
+            "-args",
+            " 9 2",
+            "-dump-vgm",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\END_2F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\END_2F.vgm",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\END_2F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\END_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\END_2F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\END_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\END_2F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "OPEN_F",
+        "route": "FM(substituted)",
+        "source_sha256": "4520bb37bb66733a4598971df45cc8539def4738bfc3b6aa35b6402dc22f54c3",
+        "vgm_sha256": "b386be533aa1001deb9160ef385cb9b0ae0f672240fe5333632a905aa3287e69",
+        "wav_sha256": "514061a020647fb9ce6666023acea9a8d0521e1f0edc351c9f155d6ba4d2ebf4",
+        "pcm_sha256": "079c0879036be733caf4b865b635a784ea82ee855ee3ff4ffddcc0b8d3691acd",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "c8280ad35763065528d06af849a865e8e63aeb1c89b413b2702f216d52f3fe9e",
+        "ogg_serial": 3046910935,
+        "seconds": 101.27469387755102,
+        "peak": 0.9516538977622986,
+        "commands": [
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\dosgolem-probe.exe",
+            "-exe",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\game\\GIN3.COM",
+            "-root",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1200000000",
+            "-vgm-clear-on-open",
+            "OPEN_M.MDS",
+            "-dump-vgm",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\OPEN_F.vgm"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\OPEN_F.vgm",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\OPEN_F.wav",
+            "44100"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\OPEN_F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\OPEN_F.f32"
+          ],
+          [
+            "Z:\\out\\pcm-gate\\封裝 測試\\tools\\ffmpeg.exe",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\OPEN_F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "Z:\\out\\fm-repeat\\.fm-import-1161992905\\OPEN_F.ogg"
+          ]
+        ]
+      }
+    ]
+  },
+  "linux_sampling": {
+    "status": "complete-fm-stage",
+    "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "program_sha256": "43882825b6c9fb229ce8c6349e25a7c084730bb0fc69b37a0835bfa8b93218f9",
+    "platform": "linux/amd64",
+    "approximation": "hardware-spec approximation；原版 OPL 暫存器串、固定封裝；OPEN_F substituted；未聲稱實機聆聽",
+    "tools_sha256": {
+      "/work/music69-fm/tools/dosgolem-probe": "5ff49ce225476936e063ea8b1a5629a47705bc4e9516487e9f2dab2db542822b",
+      "/work/music69-fm/tools/ffmpeg": "0dafc1360bb07743f76abeb1e4ae16b0aaa1331e9041a0e8d6a8524111dc0cbb",
+      "/work/music69-fm/tools/opl2wav": "fd7864ccb7cd1eeac5f56bd3ca4bdcf23750f59bb6f03eb66d258a11d15ab8e1"
+    },
+    "source_executable_sha256": {
+      "ENDING.EXE": "afdafb06b5942a9bca833a3c1f1cb634be886bb6e4d8b5930ab42ac6fa592d8a",
+      "GIN3.COM": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "GIN3PS.EXE": "1efa4bd95e73415efba440af63c6a480665d60a67d8876b5f230f5c391aa2381",
+      "OPEN.EXE": "dde640cd7e10ff1b756e9fc4f38564a389ecc69a343041c874817afbf375ab69"
+    },
+    "tracks": [
+      {
+        "track": "BGM_0F",
+        "route": "FM",
+        "source_sha256": "f8462fe4fb6c629c4204f90ce8fe7ef35f9abdf6fc92e241260868bce8b7b025",
+        "vgm_sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+        "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+        "pcm_sha256": "6b31f0ed34da50e04b132d6b7569b034b09b46f73d04858413786701de6a093b",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+        "ogg_serial": 1091008858,
+        "seconds": 127.13485260770975,
+        "peak": 0.09104543924331665,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/game/GIN3.COM",
+            "-root",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_0F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=00",
+            "-dump-vgm",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/BGM_0F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/BGM_0F.vgm",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/BGM_0F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/BGM_0F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/BGM_0F.f32"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/BGM_0F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/BGM_0F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_2F",
+        "route": "FM",
+        "source_sha256": "ad9607b224fbafbd6539ff82145c9342eb5c7c15bd8f81353d3e8c05f543ba73",
+        "vgm_sha256": "2fc59e74d8eec41933127cf15b37e06f060b0196698acdf116821dc77e85e357",
+        "wav_sha256": "91932b9dafbc5d8bcdc58caff8cfd645140864c3bfcdd32625842b640ad989f6",
+        "pcm_sha256": "9e5fd6c4cdac8ac8b0b8a90e497007cdba8fac9f9098811dd77f60f494b6b6fc",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "42ccc5f2d5a4316a2d806bdb7a5ecf33aaac8a35e08813e39224cf319ccdff30",
+        "ogg_serial": 3955497126,
+        "seconds": 136.18201814058958,
+        "peak": 0.9503566026687622,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/game/ENDING.EXE",
+            "-root",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "END_2F.MDS",
+            "-sound-blaster",
+            "-args",
+            " 9 2",
+            "-dump-vgm",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/END_2F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/END_2F.vgm",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/END_2F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/END_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/END_2F.f32"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/END_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/END_2F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "OPEN_F",
+        "route": "FM(substituted)",
+        "source_sha256": "4520bb37bb66733a4598971df45cc8539def4738bfc3b6aa35b6402dc22f54c3",
+        "vgm_sha256": "b386be533aa1001deb9160ef385cb9b0ae0f672240fe5333632a905aa3287e69",
+        "wav_sha256": "514061a020647fb9ce6666023acea9a8d0521e1f0edc351c9f155d6ba4d2ebf4",
+        "pcm_sha256": "079c0879036be733caf4b865b635a784ea82ee855ee3ff4ffddcc0b8d3691acd",
+        "gain_db": "-1.00",
+        "sample_rate": 44100,
+        "ogg_sha256": "0e955cf4881511076760b725f25e26ac9158bd8c48edbaba1639a82d48bd04c2",
+        "ogg_serial": 3046910935,
+        "seconds": 101.27469387755102,
+        "peak": 0.9516538977622986,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/game/GIN3.COM",
+            "-root",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1200000000",
+            "-vgm-clear-on-open",
+            "OPEN_M.MDS",
+            "-dump-vgm",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/OPEN_F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/OPEN_F.vgm",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/OPEN_F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/OPEN_F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "pcm_f32le",
+            "-f",
+            "f32le",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/OPEN_F.f32"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/OPEN_F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-windows/linux-pcm-sampling/.fm-import-3941942673/OPEN_F.ogg"
+          ]
+        ]
+      }
+    ]
+  },
+  "platform_differences": {
+    "BGM_0F": {
+      "windows_ogg_sha256": "fa77257c455ad2e050da72327d308907d9c0a637d8fe9651a070b5e66f73a5c3",
+      "linux_historical_ogg_sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    },
+    "BGM_1F": {
+      "windows_ogg_sha256": "4927be4458233b830fe300185b76da457f71da5d5489394256e90099cacafc1e",
+      "linux_historical_ogg_sha256": "f18d1a943769d771e68ee9c2e807b7b899de9bcc567a1a41856778a7dfa227db",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    },
+    "BGM_2F": {
+      "windows_ogg_sha256": "bc44a1abe1f0b3ce4355831c7c7203979565aaa7e23a4ebe67402b2586d92dc6",
+      "linux_historical_ogg_sha256": "fc4b1e9d6e40ddda128b5e6b4e557e8e04069569593307310f754caba7b6246a",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    },
+    "BGM_3F": {
+      "windows_ogg_sha256": "a2c04c9778a62ff7e727a17631c34018d5d6e3cdf24d6542290aa28074a0483d",
+      "linux_historical_ogg_sha256": "ac32e833e38331d96eec8867993f2bc96c0e73e4de83e4d6594894e568b68f5d",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    },
+    "BGM_4F": {
+      "windows_ogg_sha256": "44e79b4e7c77b96658f3c44e081d6247eab4a9f857100c3ccf359874765b1f95",
+      "linux_historical_ogg_sha256": "cdfa00129431f624b3bc2a3833dda7cd689c0a9d895b1eefc8cbd3a5e61daab9",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    },
+    "BGM_5F": {
+      "windows_ogg_sha256": "8e80c128dd6cb48008aa7e3aa49fdfdcd1fcbbd7e290534b5c52d97818a7661e",
+      "linux_historical_ogg_sha256": "f76eebbb7cce15d707dfdda39a86702b705f86521f13a0b06355149298171e61",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    },
+    "BGM_6F": {
+      "windows_ogg_sha256": "364694f90d502bf048c9de17617652480704f8e392b173d1441797f64af8fa83",
+      "linux_historical_ogg_sha256": "311e04f7cf41dd6ed5481239c6b3c3793cd68389b080b77ba61e16b2cd64ee9f",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    },
+    "BGM_7F": {
+      "windows_ogg_sha256": "550405958e7190402c536e821d2eac07ecebe2a21dc7ee1c9adec0c6efbb8dda",
+      "linux_historical_ogg_sha256": "04d81e88c938bb19bd7787e528fd7dc8fd391b315f0f12bd2f6e963de4f9cf18",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    },
+    "END_1F": {
+      "windows_ogg_sha256": "d30a660ce6bccff9f288f25e9173e7e99607c58fe4932fefcc517ab6ab2e5bf6",
+      "linux_historical_ogg_sha256": "e6478b9ad56127ba88a8aec1a5edd0dee2496e8b9e8c09371ae7aca89141b2fa",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    },
+    "END_2F": {
+      "windows_ogg_sha256": "125d0b001d6055d7479527a99f24bd050faff5b0759b8357d75f97378073f451",
+      "linux_historical_ogg_sha256": "42ccc5f2d5a4316a2d806bdb7a5ecf33aaac8a35e08813e39224cf319ccdff30",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    },
+    "OPEN_F": {
+      "windows_ogg_sha256": "c8280ad35763065528d06af849a865e8e63aeb1c89b413b2702f216d52f3fe9e",
+      "linux_historical_ogg_sha256": "0e955cf4881511076760b725f25e26ac9158bd8c48edbaba1639a82d48bd04c2",
+      "ogg_equal": false,
+      "lossless_stages_equal": true
+    }
+  },
+  "scripts_sha256": {
+    "music_windows_fm_probe.py": "dcc9a0e5051df8a30558fba9b00dbdf143dd2c13341d5b5de84496eb8449c99e",
+    "music_windows_fm_receipt.py": "beef86e46f0447e6b0e86695a157f3424289f92a744256c5a953b3cda1a31df4",
+    "music_fm_lock.py": "c2a689fabf319a9fb48fb6987ace34f2f93c8d1d2e2f865c942b09aab2285418",
+    "music_fm_pcm_baseline.sh": "1c0c428452af36afde57c9f0de3ea2e5e49bb2ca3b6054d8f1c55db9bf35e1d4"
+  },
+  "source_sha256": {
+    "cmd/music-import/fm.go": "dfa626da5f28118b4fd7be0ad7d201e2e99a9a2e038edcb62aa2985f0fba545c",
+    "cmd/music-import/fmdata.go": "891e224c5bd3af280684e373d140828bfea132cc7b851d0af4276b9ea9182852",
+    "cmd/music-import/fm_test.go": "0658f283ae1f21feb662aa4f9f2f5f2683e70b7b013f231061133d8fa8c84e63",
+    "cmd/gin3/music_integration_test.go": "08ca9666ce34abdc783f5ef81fbff243711e621f65e17fd3e315f58c0047ffa7"
+  },
+  "receipts_sha256": {
+    "fm-full/FM-SOURCES.json": "f55609d6a5457eb9516294be4cc7c616b299a404caec165728b6ec5210429533",
+    "fm-repeat/FM-SOURCES.json": "f259bef09c2e9580560c146c858c9f812da29c4e904f74974eb885f65a311154",
+    "linux-pcm-sampling/FM-SOURCES.json": "226d73b590a2f10be155fc059e85ff879f91a01b1b37dba25c919b1fa8dedbab",
+    "player-pcm-test.log": "d02dba7bd02c31c3c237baa8e859539e769d5d388e49e7fccfc21f60840e1dcc",
+    "product-tests.log": "1d137d17b8b5f65ada264acab2734026df41abd1b735826bdc3ef0a144bbdd40"
+  },
+  "buildinfo": "workplace/music69-windows/music-import-pcm.exe: go1.24.13\n\tpath\tgithub.com/wicanr2/logh3/cmd/music-import\n\tmod\tgithub.com/wicanr2/logh3\tv0.0.0-20261001114836-456098ca4b48+dirty\t\n\tdep\tgithub.com/jfreymuth/oggvorbis\tv1.0.5\th1:u+Ck+R0eLSRhgq8WTmffYnrVtSztJcYrl588DM4e3kQ=\n\tdep\tgithub.com/jfreymuth/vorbis\tv1.0.2\th1:m1xH6+ZI4thH927pgKD8JOH4eaGRm18rEE9/0WKjvNE=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=windows\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=456098ca4b48da01b03f9729ec787bc42c1a0df0\n\tbuild\tvcs.time=2026-10-01T11:48:36Z\n\tbuild\tvcs.modified=true\n",
+  "limits": "原版 OPL 串已驗；合成仍為 hardware-spec approximation，OPEN_F 為 substituted。只驗 Wine 原生 CLI 與 Linux 正式播放層，不宣稱實機音效、人耳、循環、macOS 或正式來源／授權交付已完成。"
+}
