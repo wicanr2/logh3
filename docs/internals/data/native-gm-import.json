@@ -1,0 +1,592 @@
+{
+  "scope": "GM 階段，FM／完整玩家封包未驗收",
+  "status": "complete-gm-stage",
+  "approximation": "legacy approximation：FA 當 BPM；raw 時間沿用匯出器；FB／FC 不展開反覆；非原版 MPU 音色",
+  "platform": "linux/amd64",
+  "program_sha256": "99dcc4eac09d81340f6cef14bede900f70b48e0d3fdac49416f2c87085c403f8",
+  "soundfont_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+  "tools_sha256": {
+    "/usr/bin/ffmpeg": "0dafc1360bb07743f76abeb1e4ae16b0aaa1331e9041a0e8d6a8524111dc0cbb",
+    "/usr/bin/fluidsynth": "dad02f700f54939178a297b1887b177ee9ccc838490e463fd9e16a8fc554eb1b"
+  },
+  "tool_versions": {
+    "/usr/bin/ffmpeg": "ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\nbuilt with gcc 12 (Debian 12.2.0-14+deb12u1)\nconfiguration: --prefix=/usr --extra-version=0+deb12u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librist --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --disable-sndio --enable-libjxl --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-libplacebo --enable-librav1e --enable-shared\nlibavutil      57. 28.100 / 57. 28.100\nlibavcodec     59. 37.100 / 59. 37.100\nlibavformat    59. 27.100 / 59. 27.100\nlibavdevice    59.  7.100 / 59.  7.100\nlibavfilter     8. 44.100 /  8. 44.100\nlibswscale      6.  7.100 /  6.  7.100\nlibswresample   4.  7.100 /  4.  7.100\nlibpostproc    56.  6.100 / 56.  6.100\n",
+    "/usr/bin/fluidsynth": "FluidSynth runtime version 2.3.1\nCopyright (C) 2000-2022 Peter Hanappe and others.\nDistributed under the LGPL license.\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\n\nFluidSynth executable version 2.3.1\nSample type=double\n"
+  },
+  "tracks": [
+    {
+      "track": "BGM_0M",
+      "source": "/orig/BGM_0M.MDS",
+      "source_sha256": "f8f977b0a5733d1a22c9febb3be800d7f981976cc7ced84188a44339127c87d9",
+      "midi_sha256": "ad07749f3dfa2ebbc2cfedd792c04e1e6a2306b1693c0a6ebc1e370ffc907b01",
+      "ogg_sha256": "6476ddf2ae5ec7ce4bf4b990ac3baee995b55150cb9fc78a458f83eab429fc18",
+      "seconds": 201.49696145124716,
+      "peak": 1,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_0M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_0M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_0M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_0M.ogg"
+        ]
+      ]
+    },
+    {
+      "track": "BGM_1M",
+      "source": "/orig/BGM_1M.MDS",
+      "source_sha256": "b5687e2ec5cf1e5f269653015e8ae5ba6c77673ca8b1916899be097e0a48ab0f",
+      "midi_sha256": "ee6e6f4ed93f45fcfc0121ddd06157f14040b33c2277cb770969bc3b904d7687",
+      "ogg_sha256": "24aaf9945d1f8ea32b799c724a93e134d428a5044eb4cb19c1d861dcd513bc7d",
+      "seconds": 213.7991836734694,
+      "peak": 1,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_1M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_1M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_1M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_1M.ogg"
+        ]
+      ]
+    },
+    {
+      "track": "BGM_2M",
+      "source": "/orig/BGM_2M.MDS",
+      "source_sha256": "46beeb710af3f704c01c61dcda72c94cb9eb13ec0d5d5b7ca94f3a37842d7403",
+      "midi_sha256": "cee571b06d86e04a28e1029a6a4e792eb3174fc19f14cc8585f04f95185f8286",
+      "ogg_sha256": "a0d7b73a4a0235a3b15abeb1c8bf76b5690c0986303021569ca144f8d6883229",
+      "seconds": 333.3209977324263,
+      "peak": 0.8305481672286987,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_2M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_2M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_2M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_2M.ogg"
+        ]
+      ]
+    },
+    {
+      "track": "BGM_3M",
+      "source": "/orig/BGM_3M.MDS",
+      "source_sha256": "d3c98d5f79b0e061cea55b66b41306fe3bd015913f70d66d3fbf1ab7f9b5502e",
+      "midi_sha256": "d7b10b3b8863c1206516c04b206be150021c0b26d61a8ba54526819d322e3c71",
+      "ogg_sha256": "fbc0a8563ee5040296a1a13035eb925775b764a989177bc532862b32206dfbce",
+      "seconds": 141.58077097505668,
+      "peak": 1,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_3M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_3M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_3M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_3M.ogg"
+        ]
+      ]
+    },
+    {
+      "track": "BGM_4M",
+      "source": "/orig/BGM_4M.MDS",
+      "source_sha256": "5df7c68c487910f7659fd2f9438d8973fb911e8ba3293dedccbe35f689e1e99d",
+      "midi_sha256": "791b78c9512866fbec05052420ea15b24f83514f2c836a7e8a9428d77b969f7a",
+      "ogg_sha256": "d71e1af33afe0370e9f16172f86fff4d46bbfd8e573f6267b62587d5dd8d7a35",
+      "seconds": 185.53179138321997,
+      "peak": 0.6162526607513428,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_4M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_4M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_4M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_4M.ogg"
+        ]
+      ]
+    },
+    {
+      "track": "BGM_5M",
+      "source": "/orig/BGM_5M.MDS",
+      "source_sha256": "33b94d4ab3d0bc376ceceda9db593202086d737602a57e4b6a5a2c7dbc7632a0",
+      "midi_sha256": "78e5f858afb0a670fb914241cbc66ee491ae26ab18f74c53365cd3885e7d7d48",
+      "ogg_sha256": "b9eb98068902b0ba5d697b2b01efd47dd878e115390d33ec0a7c0d7e3af25cfd",
+      "seconds": 60.011972789115646,
+      "peak": 0.3428281545639038,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_5M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_5M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_5M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_5M.ogg"
+        ]
+      ]
+    },
+    {
+      "track": "BGM_6M",
+      "source": "/orig/BGM_6M.MDS",
+      "source_sha256": "5189b57e696a0bdceaf19ee4a25dcffbc3d58906106a014c9c535c1239c8b6cf",
+      "midi_sha256": "540d0a921ae32a4b30ff427ced3cd5699d4b7155641771a302b88f4218912bde",
+      "ogg_sha256": "ea742d674815e9d25bafd594c6333e180474d200846606e1bba375856346d81c",
+      "seconds": 31.22793650793651,
+      "peak": 1,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_6M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_6M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_6M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_6M.ogg"
+        ]
+      ]
+    },
+    {
+      "track": "BGM_7M",
+      "source": "/orig/BGM_7M.MDS",
+      "source_sha256": "a86364d5071a1f0d06097dbe310c5caa16ffeb35aba5127b4cc65684f6140832",
+      "midi_sha256": "8b85586e6b9bb5a477e81441a5cc9d480c174d7ffd706fcf741ca04b0e0056cc",
+      "ogg_sha256": "c96bde22ba53060c030d9ba22086c1e7f310a7c4d65af84d41a79711364d8b50",
+      "seconds": 37.3275283446712,
+      "peak": 0.9444688558578491,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_7M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_7M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_7M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/BGM_7M.ogg"
+        ]
+      ]
+    },
+    {
+      "track": "END_1M",
+      "source": "/orig/END_1M.MDS",
+      "source_sha256": "c0154a70b741e60a303e11f9027c212467122a4fa09480d74e128750de18d340",
+      "midi_sha256": "a2abfc2469e1695d9007cf6545e477f654e8e1f1e02ec8986e7dbee2a43e3e59",
+      "ogg_sha256": "91cd0d7e2d6b0df8c5fc2a61860a93f1f02898c3c2307867025aa6c1db182e8e",
+      "seconds": 161.5629931972789,
+      "peak": 0.8095566034317017,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/END_1M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/END_1M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/END_1M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/END_1M.ogg"
+        ]
+      ]
+    },
+    {
+      "track": "END_2M",
+      "source": "/orig/END_2M.MDS",
+      "source_sha256": "706125fdf5038229dc0a3a4b666cf98cbe04fba9580176d65cede9dd1dc94444",
+      "midi_sha256": "3163fa0846ddeae9541ba2e2c4a3a7701f7cbe2b618956571d435f1c0215c4b8",
+      "ogg_sha256": "39b11e9a2bb6aa96bfff0e114705e6cc9d1e38a896cc6fbd4deaf6b206709971",
+      "seconds": 284.55909297052153,
+      "peak": 0.6499912738800049,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/END_2M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/END_2M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/END_2M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/END_2M.ogg"
+        ]
+      ]
+    },
+    {
+      "track": "OPEN_M",
+      "source": "/orig/OPEN_M.MDS",
+      "source_sha256": "277504853b9067b3ecb6867ec33b1ec9146912cb14dbfdf09554cf19250553fa",
+      "midi_sha256": "93a27c3ca0ea6a008f2e3ac1bcff9eb6a19fed90a6270d105d083766393b8c39",
+      "ogg_sha256": "78666e1dd652503b3e4f5c57ddbfdf496fdc5021c3aaa626c2b9326c2f0347a2",
+      "seconds": 139.1194557823129,
+      "peak": 1,
+      "commands": [
+        [
+          "/usr/bin/fluidsynth",
+          "-ni",
+          "-F",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/OPEN_M.wav",
+          "-r",
+          "44100",
+          "-g",
+          "0.8",
+          "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/OPEN_M.mid"
+        ],
+        [
+          "/usr/bin/ffmpeg",
+          "-v",
+          "error",
+          "-y",
+          "-i",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/OPEN_M.wav",
+          "-ar",
+          "44100",
+          "-c:a",
+          "libvorbis",
+          "-q:a",
+          "5",
+          "/work/music69-native/曲庫 測試/.gm-import-876106869/OPEN_M.ogg"
+        ]
+      ]
+    }
+  ],
+  "validation": {
+    "date": "2026-10-01",
+    "gm_manifest_sha256": "4afc54f061a174345db0bcafccdc15e5846878ef3e8a8e2db18205668955604f",
+    "go": "go1.24.13 linux/amd64",
+    "git_head": "fd596959502e3d1861211ecc017ecf96c1ced7a5",
+    "working_tree": " M CONTEXT.md\n M cmd/gin3/music_integration_test.go\n M docs/internals/00-README.md\n M docs/internals/17-mds.md\n M go.mod\n?? cmd/music-import/\n?? docs/goal/2026-10-01-native-music-round-16.md\n?? docs/re/358-native-gm-import.md\n?? docs/spec/069-native-gm-import.md\n?? internal/asset/mds.go\n?? internal/asset/mds_test.go\n?? tools/scripts/music_native_check.sh\n?? tools/scripts/music_native_receipt.py",
+    "images": {
+      "logh3-audio:2": "sha256:da8c479c3466feed5cd363ed439b064303d68c9789abc02a37fb09560285b126",
+      "golang:1.24-bookworm": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+      "logh3-ebiten:2": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8"
+    },
+    "midi": {
+      "BGM_0F.MDS": {
+        "source_sha256": "f8462fe4fb6c629c4204f90ce8fe7ef35f9abdf6fc92e241260868bce8b7b025",
+        "saved_midi_sha256": "8fdb9a66f013dd2b47c931f724375d0b18b760c2ecbbac7b422c78520db99c35"
+      },
+      "BGM_0M.MDS": {
+        "source_sha256": "f8f977b0a5733d1a22c9febb3be800d7f981976cc7ced84188a44339127c87d9",
+        "saved_midi_sha256": "ad07749f3dfa2ebbc2cfedd792c04e1e6a2306b1693c0a6ebc1e370ffc907b01"
+      },
+      "BGM_1F.MDS": {
+        "source_sha256": "562099eaffa3d3a6f06bb21901b953c237715d2a5d2a4b5732fbaa8040ad9225",
+        "saved_midi_sha256": "6a65f023a32aaceb1f59f1a66a3761c92cfa514a520de2cc039f9981dcf492d6"
+      },
+      "BGM_1M.MDS": {
+        "source_sha256": "b5687e2ec5cf1e5f269653015e8ae5ba6c77673ca8b1916899be097e0a48ab0f",
+        "saved_midi_sha256": "ee6e6f4ed93f45fcfc0121ddd06157f14040b33c2277cb770969bc3b904d7687"
+      },
+      "BGM_2F.MDS": {
+        "source_sha256": "21c0ff177655ef8e218baaedd24a7e4e889be088b7cb46669363293ec477e017",
+        "saved_midi_sha256": "ca930ebd623381087e7e6d0f51d914a707178d72c50d6d9296cbc67e39631c9e"
+      },
+      "BGM_2M.MDS": {
+        "source_sha256": "46beeb710af3f704c01c61dcda72c94cb9eb13ec0d5d5b7ca94f3a37842d7403",
+        "saved_midi_sha256": "cee571b06d86e04a28e1029a6a4e792eb3174fc19f14cc8585f04f95185f8286"
+      },
+      "BGM_3F.MDS": {
+        "source_sha256": "2cf8df6675d471a3e8c29061df45ca7779ac79fa473e97b7b358cc6c57408afb",
+        "saved_midi_sha256": "554b4f28d7a8f443f6c2c5996f9cf7d46de218912cddee8270458beaea084800"
+      },
+      "BGM_3M.MDS": {
+        "source_sha256": "d3c98d5f79b0e061cea55b66b41306fe3bd015913f70d66d3fbf1ab7f9b5502e",
+        "saved_midi_sha256": "d7b10b3b8863c1206516c04b206be150021c0b26d61a8ba54526819d322e3c71"
+      },
+      "BGM_4F.MDS": {
+        "source_sha256": "3533eeb39e652c737d2e21972335335cc170b86d38134bfa1c90cb715c05cdd3",
+        "saved_midi_sha256": "d89a39471fc00013fe04342b3348f3a6ff7ddb8b1abe7291a33c7f578684c746"
+      },
+      "BGM_4M.MDS": {
+        "source_sha256": "5df7c68c487910f7659fd2f9438d8973fb911e8ba3293dedccbe35f689e1e99d",
+        "saved_midi_sha256": "791b78c9512866fbec05052420ea15b24f83514f2c836a7e8a9428d77b969f7a"
+      },
+      "BGM_5F.MDS": {
+        "source_sha256": "e92a8a2167aeb99f87341f4497ba3b6606e4be674b79ca27167939772992375f",
+        "saved_midi_sha256": "4ddddcac3bb5f1502411c3da22bd2fed1cae7b59b5223f7f3ce2708d99c8c0c0"
+      },
+      "BGM_5M.MDS": {
+        "source_sha256": "33b94d4ab3d0bc376ceceda9db593202086d737602a57e4b6a5a2c7dbc7632a0",
+        "saved_midi_sha256": "78e5f858afb0a670fb914241cbc66ee491ae26ab18f74c53365cd3885e7d7d48"
+      },
+      "BGM_6F.MDS": {
+        "source_sha256": "b73fa3564e203a4543dd14f6a0e780cce800b3528346df79e017452b95a04f4c",
+        "saved_midi_sha256": "dfb263c5cb6ae09d4f9aa84b8e6e0ab7950f5ea5f6e499fc453c1200be1aa4e0"
+      },
+      "BGM_6M.MDS": {
+        "source_sha256": "5189b57e696a0bdceaf19ee4a25dcffbc3d58906106a014c9c535c1239c8b6cf",
+        "saved_midi_sha256": "540d0a921ae32a4b30ff427ced3cd5699d4b7155641771a302b88f4218912bde"
+      },
+      "BGM_7F.MDS": {
+        "source_sha256": "d77e8bf70b838e4c7092e9133e51b8422cb039b4012bb827084e3934760cba67",
+        "saved_midi_sha256": "39ed3db55b0e19fe28b6f26d45c48ddb4caf1b5d25f8138ba83f36f3041c547c"
+      },
+      "BGM_7M.MDS": {
+        "source_sha256": "a86364d5071a1f0d06097dbe310c5caa16ffeb35aba5127b4cc65684f6140832",
+        "saved_midi_sha256": "8b85586e6b9bb5a477e81441a5cc9d480c174d7ffd706fcf741ca04b0e0056cc"
+      },
+      "END_1F.MDS": {
+        "source_sha256": "69fd022e38b063f9e6754899c0a385f97d95699be727f4b5e440202a63af86c0",
+        "saved_midi_sha256": "5fb06429a6714d4595bf6acf3542681a3d93d00f5e74db4357c9fa4a3cd042a2"
+      },
+      "END_1M.MDS": {
+        "source_sha256": "c0154a70b741e60a303e11f9027c212467122a4fa09480d74e128750de18d340",
+        "saved_midi_sha256": "a2abfc2469e1695d9007cf6545e477f654e8e1f1e02ec8986e7dbee2a43e3e59"
+      },
+      "END_2F.MDS": {
+        "source_sha256": "ad9607b224fbafbd6539ff82145c9342eb5c7c15bd8f81353d3e8c05f543ba73",
+        "saved_midi_sha256": "75c87024c49a7e7b4655c4076061a9a405a852ee0baabc7710a128ae1a182a35"
+      },
+      "END_2M.MDS": {
+        "source_sha256": "706125fdf5038229dc0a3a4b666cf98cbe04fba9580176d65cede9dd1dc94444",
+        "saved_midi_sha256": "3163fa0846ddeae9541ba2e2c4a3a7701f7cbe2b618956571d435f1c0215c4b8"
+      },
+      "OPEN_F.MDS": {
+        "source_sha256": "4520bb37bb66733a4598971df45cc8539def4738bfc3b6aa35b6402dc22f54c3",
+        "saved_midi_sha256": "e48af327f5fc32db63e40ec7a155af7c9d9e0da258a6057d379b63a0e0f4cfdd"
+      },
+      "OPEN_M.MDS": {
+        "source_sha256": "277504853b9067b3ecb6867ec33b1ec9146912cb14dbfdf09554cf19250553fa",
+        "saved_midi_sha256": "93a27c3ca0ea6a008f2e3ac1bcff9eb6a19fed90a6270d105d083766393b8c39"
+      }
+    },
+    "pcm_comparisons": {
+      "BGM_0M": {
+        "decoded_pcm_sha256": "f59f1d7f005303fc11f566b3b1941dafb263af1a168d4b3cb244ac97e4137aef",
+        "reference_ogg_sha256": "476451769c90978c823c037dfb14d0fb95cf256131b60442b3901df6b7e26184",
+        "comparison": "cmp：舊命令與原生解碼 PCM 完全相同"
+      },
+      "END_2M": {
+        "decoded_pcm_sha256": "5704fa72a9fa483085db6ea963bfe2bd170015dfbaff9bec6b55a9a6e6b6a0f8",
+        "reference_ogg_sha256": "89a8986d54d5a6800689a9179dfa3fb3176d0641b632883b69c852705a629af7",
+        "comparison": "cmp：舊命令與原生解碼 PCM 完全相同"
+      },
+      "OPEN_M": {
+        "decoded_pcm_sha256": "d820c2db1ad7220d4bf76571da64c37578d19c6719fed6d9474cc536331bc6b9",
+        "reference_ogg_sha256": "3d581f1165fc7df6eea2c7cd322cfe504fc67da2b9ecb788ff1ef5fefb293e22",
+        "comparison": "cmp：舊命令與原生解碼 PCM 完全相同"
+      }
+    },
+    "rejected": [
+      "no-gm",
+      "fm",
+      "original-output",
+      "missing-tools",
+      "wrong-font",
+      "同長度錯誤 SF2：TestMusicImportPreflight"
+    ],
+    "programs": {
+      "linux/amd64": {
+        "sha256": "99dcc4eac09d81340f6cef14bede900f70b48e0d3fdac49416f2c87085c403f8",
+        "bytes": 3997414,
+        "scope": "Linux 真實執行；其餘只交叉建置與檔頭驗證，未宣稱實機封裝驗收"
+      },
+      "windows/amd64": {
+        "sha256": "5f6e5cac6710dc96a6882bf1fa66940add5a19ad165a3e456be204cb91cc61fb",
+        "bytes": 4132352,
+        "scope": "Linux 真實執行；其餘只交叉建置與檔頭驗證，未宣稱實機封裝驗收"
+      },
+      "darwin/amd64": {
+        "sha256": "409ae8bb2538f42c001021fbe987a41e604aa2769bac091f1f31480199b62d8a",
+        "bytes": 3919168,
+        "scope": "Linux 真實執行；其餘只交叉建置與檔頭驗證，未宣稱實機封裝驗收"
+      },
+      "darwin/arm64": {
+        "sha256": "7c543eaabb703f339baf2c4502c664d9f1ff8c8c3263f1f706ccb4db76161a48",
+        "bytes": 3763122,
+        "scope": "Linux 真實執行；其餘只交叉建置與檔頭驗證，未宣稱實機封裝驗收"
+      }
+    },
+    "source_sha256": {
+      "internal/asset/mds.go": "9b366d9c0114dcfaf3f35ce5cfe0a24231646163f4f02a382320ab35cccc525b",
+      "cmd/music-import/main.go": "11b044b4ac526e3fcd0a2a1d210ee79416b1f53d6993a7b3ec24df868be29262",
+      "tools/scripts/music_native_check.sh": "da0affc373c1b0118f65754391fde3164fef9797393dc846c09164a83cb0698f",
+      "tools/scripts/mds_export.py": "0d4e2529afec33cc8aa63f19542554aa9088e929f45f6017b6a423d72e812f13"
+    },
+    "limits": "GM 階段；FM、三平台依賴封裝、聆聽／loop 未完成；峰值 1.0 曲目沿用舊增益，不冒稱無 clipping。"
+  }
+}

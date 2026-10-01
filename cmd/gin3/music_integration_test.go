@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -11,6 +12,33 @@ import (
 	"github.com/wicanr2/logh3/internal/bootstrap"
 	"github.com/wicanr2/logh3/internal/game"
 )
+
+// 原生匯入器的實際產物須經正式播放器解碼；缺本機批次時 skip，不代造 OGG。
+func TestNativeGMImportPlayerDecode(t *testing.T) {
+	dir := filepath.Join("..", "..", "workplace", "music69-native", "曲庫 測試")
+	if _, err := os.Stat(filepath.Join(dir, "GM-SOURCES.json")); os.IsNotExist(err) {
+		t.Skip("缺原生 GM 驗收批次")
+	} else if err != nil {
+		t.Fatal(err)
+	}
+	p := newMusicPlayer(nil, intaudio.NewLibrary(dir))
+	for _, name := range intaudio.Tracks {
+		if !strings.HasSuffix(name, "M") {
+			continue
+		}
+		t.Run(name, func(t *testing.T) {
+			st, ok, err := p.decode(name)
+			if err != nil || !ok || st == nil || st.Length() <= 0 {
+				t.Fatalf("原生曲庫正式解碼失敗：%v", err)
+			}
+			n, err := io.Copy(io.Discard, st)
+			if err != nil || n <= 0 {
+				t.Fatalf("正式 PCM 串流沒有內容：%d，%v", n, err)
+			}
+			t.Logf("正式播放器 PCM：%d bytes", n)
+		})
+	}
+}
 
 type recordingMusic struct {
 	playing     string

@@ -99,13 +99,16 @@
 
 ## GM 音色庫與玩家轉檔前置證據
 
+原生 MDS／GM 移植規格與近似限制見[規格 069](../spec/069-native-gm-import.md)、
+[研究 358](../re/358-native-gm-import.md)。此階段不將 FM 改用 GM。
+
 目前轉檔使用 FluidR3_GM（Debian `fluid-soundfont-gm 3.1-5.3`），音色庫本體採 MIT，
 可隨 remake 封包發行，必須保留完整著作權、授權及貢獻者資訊。
 它不屬於原版素材，也不由專案 RRSAL 授權覆蓋。來源、148,398,306-byte 實物雜湊、
 完整授權及 11 首 FM 基準核對見[研究 356](../re/356-player-music-library.md)、
 [`player-music-library.json`](data/player-music-library.json)。
 使用者已選音色庫隨包，建置時下載固定版本並驗 SHA-256，不採 Git LFS；
-原生免 Docker 轉檔器尚未完成（#69）。
+原生 GM 階段已由規格 069 驗收；完整免 Docker 曲庫管線尚未完成（#69）。
 建置音色庫入口：`LOGH3_NET=1 tools/py.sh tools/scripts/soundfont_prepare.py --download`；
 離線快取重跑與授權核對方法見[研究 356](../re/356-player-music-library.md)。
 

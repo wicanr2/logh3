@@ -5,9 +5,16 @@
 
 ## 現況一覽
 
-- **目前接續（2026-10-01，第十五輪）**：#69 的 FluidR3_GM 實物與 MIT 授權已核對，
+- **目前接續（2026-10-01，第十六輪）**：#69 原生 MDS／GM 轉檔階段已完成指定驗收：
+  22 首 MIDI 逐 byte 一致，十一首 GM 真實轉檔與正式播放器完整解碼通過，三首 PCM 與舊命令相同。
+  入口：[輪次快照](docs/goal/2026-10-01-native-music-round-16.md)、
+  [研究 358](docs/re/358-native-gm-import.md)、[規格 069](docs/spec/069-native-gm-import.md)、
+  [驗證 030](docs/playtest/030-native-gm-import.md)。
+  完整 FM 原版擷取、三平台依賴封裝與聆聽仍須接續，未宣稱玩家曲庫管線完成。
+
+- **最近接續（2026-10-01，第十五輪）**：#69 的 FluidR3_GM 實物與 MIT 授權已核對，
   11 首 FM 的來源／VGM／OGG 雜湊全數符合 `SOURCES.tsv`；使用者選定建置時下載固定版本並驗 SHA-256，
-  原生轉檔器仍未完成。入口：[研究 356](docs/re/356-player-music-library.md)、
+  完整原生曲庫管線仍未完成。入口：[研究 356](docs/re/356-player-music-library.md)、
   [第十五輪](docs/goal/2026-10-01-ai-music-round-15.md)。#87 已補增強策略建隊／整補、正式占領命令、
   現況戰力及讀檔保留模式；兩陣營正常入口與正式 CLI 兩次重現通過，
   見[規格 068](docs/spec/068-enhanced-ai-player-path.md)、[驗證 029](docs/playtest/029-enhanced-ai-player-path.md)。
@@ -626,32 +633,17 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 配樂播放層在（`internal/audio`，22 首 OGG），但曲子要玩家自備原版後用 `tools/music_fm_capture.sh`／`tools/music_to_ogg.sh` 轉，
 需要 dosgolem 與容器；`_M` 那 11 首是 fluidsynth ＋ FluidR3_GM 合成，不是原版 MPU-401 的音色。發行版要給玩家一條不需要開發環境的轉檔路。
 
-**卡在**：目前（2026-10-01）：音色庫本體 MIT 授權已由實物及 Debian 同版本來源確認，完整著作權、授權與貢獻者資訊保存進 Git。使用者已選建置時下載固定版本並驗 SHA-256，排除 Git LFS；封包含音色庫，玩家不另行下載。來源取得與核對入口為 `tools/py.sh tools/scripts/soundfont_prepare.py`（建置工具），不是玩家轉檔器。**剩餘阻塞是免 Docker 的原生轉檔器、合成器／編碼器跨平台封裝與音訊聆聽驗收**，不可因授權確認就關閉本項。
+**卡在**：目前（2026-10-01，第十六輪）：原生 GM 階段已通過指定驗收。`cmd/music-import` 不呼叫 Docker／Python／shell；22 首 MDS 匯出 MIDI 與保存版逐 byte 一致，十一首 GM 經真實工具轉 OGG、正式播放器完整解碼通過。BGM_0M／END_2M／OPEN_M 的完整 PCM 與舊合成命令相同。當前入口須明示 `-gm-only`，不能將 FM 套 GM。音色庫固定來源下載與 SHA-256、隨包授權仍沿用上一輪定案。
 
-2026-09-18 的歷史核實（下述未裁決狀態已由後續決定收窄）：判準三項裡只有「`SOURCES.tsv` 當基準」那一項
-有東西可比（`assets/original/music/ogg/SOURCES.tsv` 欄位齊全：曲名／來源／增益／`.MDS` SHA-256／
-VGM SHA-256／OGG SHA-256／dosgolem HEAD）。另外兩項都沒動：`cmd/` 底下六支沒有一支是轉檔器，
-`tools/music_to_ogg.sh` 與 `music_fm_capture.sh` 都要容器；`_M` 的音色取捨沒有任何裁決紀錄
-（`WORKLOG.md`／`CONTEXT.md` 都查過）。
+**剩餘阻塞：完整 FM 原版 OPL 擷取接線、三平台合成器／編碼器及依賴封裝、實際聆聽與 loop 接點驗收。** 交叉建置 Windows／macOS 的匯入器本體不等於依賴封裝或實機驗收；部分 GM 峰值 1.0 沿用舊增益，尚未聲稱無 clipping。此項仍未完成，不因 GM 階段通過而關閉。詳見規格 069、驗證 030。
 
-## 使用者裁決（2026-09-19）：**內建 GM soundfont**
-
-`_M` 那 11 首維持合成，但**soundfont 隨 remake 發行**，玩家不必自備、也不必裝 fluidsynth。
-原本列的另外兩個選項（維持現狀要玩家自備、只出 `_F` 缺一半曲目）不再考慮。
-
-接著要辦的（**順序不能換，授權沒確認就不要先接管線**）：
-
-1. **挑 soundfont 並確認授權能不能隨包發行**。目前轉檔用的 FluidR3_GM 要先查清楚
-   授權條款與姓名標示要求；不合用就換一份（發行包會變大數十 MB，這是已接受的代價）。
-2. soundfont 進 repo 還是發行時下載？`assets/original/` 是原版素材，這一份不是——
-   位置與 `.gitignore` 規則要另外定。
-3. 再接不需要 Docker 的轉檔入口（判準第一項），`_F` 的雜湊與 `SOURCES.tsv` 對得上。
+有效使用者裁決仍保留：2026-09-19 選定 GM 音色庫隨包，玩家不自備音色庫、不另裝 FluidSynth；維持玩家自備音色庫或只出 FM 兩個選項已排除。2026-10-01 選定建置時固定版本下載並驗 SHA-256，排除 Git LFS。來源與授權確認先於管線接線，完成後才提供全曲庫入口；目前已完成來源確認與 GM 階段，完整 FM／封裝仍待接續。
 
 **做完的判準**：玩家自備原版後有一個不需要 Docker 的轉檔入口（或 remake 內建合成），`_F` 雜湊與 `SOURCES.tsv` 相同；`_M` 的音色取捨經使用者裁決。
 
-**證據**：[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
+**證據**：[`docs/re/358-native-gm-import.md`](docs/re/358-native-gm-import.md)、[`docs/spec/069-native-gm-import.md`](docs/spec/069-native-gm-import.md)、[`docs/playtest/030-native-gm-import.md`](docs/playtest/030-native-gm-import.md)、[`docs/internals/data/native-gm-import.json`](docs/internals/data/native-gm-import.json)、[`cmd/music-import/`](cmd/music-import/)、[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
 
-**核實**：要人判——固定來源與授權已核對；玩家免 Docker 轉檔器仍缺，完成後綁正式轉檔入口的 go_test，不能把建置音色庫準備器當成完整曲庫管線。
+**核實**：要人判——原生 GM 階段已驗；完整 FM 與三平台依賴封裝仍缺，完成後綁完整玩家曲庫入口測試，不能用 GM 階段或建置音色庫準備器宣稱全部完成。
 
 #### title-screen-sptit — 開頭動畫之後的 SPTIT.350 標題畫面
 
