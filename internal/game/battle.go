@@ -1,6 +1,8 @@
 package game
 
 import (
+	"encoding/binary"
+
 	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/rules"
@@ -385,8 +387,26 @@ func (g *Game) battleRegionPlanets(region int) []rules.BattlePlanet {
 	if len(cells) == 0 {
 		return nil
 	}
-	sites := rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
+	sites := g.loadRegionPlanetSites(region)
 	return g.res.Planets.BattlePlanetsFor(region, sites)
+}
+
+// loadRegionPlanetSites 是 2AF5:00CB 的載圖副作用（研究 354／規格 066）。
+// 只在實際載入事件呼叫，不能在開局預載或 Draw 時提前改整張行星表。
+func (g *Game) loadRegionPlanetSites(region int) []rules.PlanetSite {
+	if g.res.Planets == nil || g.res.Battle == nil {
+		return nil
+	}
+	sites := rules.PlanetSites(g.battleCells(region), g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
+	start, n := g.res.Planets.Range(region)
+	for i := 0; i < n && i < len(sites); i++ {
+		rec := g.res.Planets.Record(start + i)
+		if len(rec) >= 0x4A {
+			binary.LittleEndian.PutUint16(rec[0x46:], uint16(sites[i].X))
+			binary.LittleEndian.PutUint16(rec[0x48:], uint16(sites[i].Y))
+		}
+	}
+	return sites
 }
 
 // battleCells 回一個星域的戰場地形，沒有就回 nil。

@@ -1158,6 +1158,7 @@ func (g *Game) stepFleet(i int) fleetStep {
 			if rec := g.regionRecord(f.Region); rec != nil && rec[regionFlagsOff]&0x04 == 0 {
 				if pl := g.res.Planets.StandbyPlanet(f.Faction, f.Region); pl >= 0 {
 					f.Target = pl
+					g.loadRegionPlanetSites(f.Region) // 113A:0454，找到待命行星才載圖。
 				}
 			}
 		}

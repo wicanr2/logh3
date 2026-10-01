@@ -1,0 +1,542 @@
+{
+  "schema": 1,
+  "comparison": "same-state（指定 S1 首回合全表及未注入 GUI）",
+  "source": "docs/playtest/027-post-turn-runtime-fields.md",
+  "semantic_index": "docs/internals/data/post-turn-runtime-fields.json",
+  "seed": {
+    "original": "0xD3DC167E",
+    "remake": "0xD3DC167E",
+    "setup": "執行前固定檢查點與 strategyRandSeed；初始 dump 實讀 DS:94DC"
+  },
+  "limits": [
+    "不宣稱整段骰序或全遊戲一致",
+    "完全平手的原版 qsort 次序未裁決",
+    "#86 現況艦隊／艦艇保存缺口未完成；本輪只驗全表寫出及新增距離／座標讀回"
+  ],
+  "batches": [
+    {
+      "name": "runtime85-normal",
+      "repeated_original_equal": true,
+      "inputs": {
+        "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+        "golem_working_tree": "",
+        "original_image": "golang:1.24-bookworm",
+        "parent": {
+          "path": "/src/workplace/fcmd/fcmd-base.state",
+          "sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26"
+        },
+        "memory": [
+          {
+            "stage": "initial",
+            "step": 420000010,
+            "bytes": 1048576,
+            "sha256": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea"
+          },
+          {
+            "stage": "ai-ready",
+            "step": 427763580,
+            "bytes": 1048576,
+            "sha256": "fffffb5676bdc1739135912c5750788b2b72fd7cb046f3b5f3918c054f364b60"
+          },
+          {
+            "stage": "map-before",
+            "step": 430530800,
+            "bytes": 1048576,
+            "sha256": "acf068c0a103bf821ad546de1bbe99de9e0189ff73f0fb3966926311565400e4"
+          },
+          {
+            "stage": "map-after",
+            "step": 430535000,
+            "bytes": 1048576,
+            "sha256": "0e16cdbfc41db32dacd9608ac5a7e142065ea13368312416e51891479e8437d3"
+          },
+          {
+            "stage": "command",
+            "step": 499999999,
+            "bytes": 1048576,
+            "sha256": "abf7512aef90dd50e5b809026c12008dc9bf2eda775ea30e95f399df72ef7e52"
+          }
+        ],
+        "original_seed_hex": "0xd3dc167e",
+        "remake_seed_hex": "0xd3dc167e",
+        "seed_setup": "執行前固定原版檢查點及 remake strategyRandSeed；initial.bin 實讀 DS:94DC",
+        "flags": [
+          "-load-state",
+          "/src/workplace/fcmd/fcmd-base.state",
+          "-steps",
+          "500000000",
+          "-tick",
+          "20000",
+          "-clicks",
+          "421000000:544:85,424000000:560:85",
+          "-click-hold",
+          "3000000",
+          "-watch",
+          "5F4BE-5F4BF,53178-5317B",
+          "-regs-at",
+          "2AF5:00CB,2AF5:0036,2AF5:060D,2E54:1108",
+          "-regs-from",
+          "427000000",
+          "-regs-max",
+          "300",
+          "-dump-mem-at",
+          "420000010:lin:0:1048576:/src/workplace/runtime85-normal-initial.bin;427763580:lin:0:1048576:/src/workplace/runtime85-normal-ai-ready.bin;430530800:lin:0:1048576:/src/workplace/runtime85-normal-map-before.bin;430535000:lin:0:1048576:/src/workplace/runtime85-normal-map-after.bin;499999999:lin:0:1048576:/src/workplace/runtime85-normal-command.bin"
+        ],
+        "address_space": "dosgolem 執行期線性位址；CS:IP 另列",
+        "scope": "正常玩家編成與實行；無狀態注入；只裁決指定回合與表格。"
+      },
+      "memory": [
+        {
+          "name": "ai-ready.bin",
+          "bytes": 1048576,
+          "sha256": "fffffb5676bdc1739135912c5750788b2b72fd7cb046f3b5f3918c054f364b60"
+        },
+        {
+          "name": "command.bin",
+          "bytes": 1048576,
+          "sha256": "abf7512aef90dd50e5b809026c12008dc9bf2eda775ea30e95f399df72ef7e52"
+        },
+        {
+          "name": "initial.bin",
+          "bytes": 1048576,
+          "sha256": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea"
+        },
+        {
+          "name": "map-after.bin",
+          "bytes": 1048576,
+          "sha256": "0e16cdbfc41db32dacd9608ac5a7e142065ea13368312416e51891479e8437d3"
+        },
+        {
+          "name": "map-before.bin",
+          "bytes": 1048576,
+          "sha256": "acf068c0a103bf821ad546de1bbe99de9e0189ff73f0fb3966926311565400e4"
+        },
+        {
+          "name": "pal.bin",
+          "bytes": 768,
+          "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+        },
+        {
+          "name": "screen.bin",
+          "bytes": 307200,
+          "sha256": "2bb4cdfcbb83846bf54d91027025c91ea2dafa2d98b81b56939be66c0635d502"
+        }
+      ],
+      "tables": [
+        {
+          "name": "stellar",
+          "original_address_space": "dosgolem 執行期線性位址",
+          "original_linear_hex": "0x5f2cc",
+          "bytes": 4032,
+          "different": 0,
+          "original_sha256": "165df5763d562d00df5dacd9cc3f40ea7ccbbea9618bce399ed8860c569014ba",
+          "remake_sha256": "165df5763d562d00df5dacd9cc3f40ea7ccbbea9618bce399ed8860c569014ba"
+        },
+        {
+          "name": "planet",
+          "original_address_space": "dosgolem 執行期線性位址",
+          "original_linear_hex": "0x53132",
+          "bytes": 6642,
+          "different": 0,
+          "original_sha256": "759db1cf4ef72bc7c510c05b927cdb8549b053f7d7b44cbccfc30c6d74f717a0",
+          "remake_sha256": "759db1cf4ef72bc7c510c05b927cdb8549b053f7d7b44cbccfc30c6d74f717a0"
+        }
+      ],
+      "remake_test": "internal/game.TestRuntimeFieldsNormalTurnMatchesOriginal",
+      "remake_metadata": {
+        "different": 0,
+        "entry": "reachFleetDecided → 正常系統實行 → 命令階段",
+        "injected": false,
+        "planet_bytes": 6642,
+        "seed": 3554416254,
+        "seed_setup": "執行前固定 strategyRandSeed",
+        "stellar_bytes": 4032
+      },
+      "metadata_sha256": {
+        "inputs.json": "7d1422c72d1ca50f1000464ab993c9d6a11005d720b145203adc54991818d7da",
+        "flags.txt": "a695f20971420134f10ff83efb0a38d2073593b8b28fbf1944810d5cf2bc9295",
+        "meta.txt": "e56bfa4d43cf0ca7be01ae72fee3216372d803f09cf32638c832acd45d7a6ca4"
+      },
+      "gui": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "2bb4cdfcbb83846bf54d91027025c91ea2dafa2d98b81b56939be66c0635d502",
+          "screen.png": "c5b542faf79e233f1e0330e0704d271012a7986c22b04e8cae01705cb725591f",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "2bb4cdfcbb83846bf54d91027025c91ea2dafa2d98b81b56939be66c0635d502",
+          "remake.png": "7cae8b018e6ce607772486d6c17a1beb618e7ee180d264bb45d552552e9648e8",
+          "flags.txt": "a695f20971420134f10ff83efb0a38d2073593b8b28fbf1944810d5cf2bc9295",
+          "inputs.json": "7d1422c72d1ca50f1000464ab993c9d6a11005d720b145203adc54991818d7da",
+          "remake-script.txt": "54b3848636f5422acb7e2b3859a401e5e3f0493778606ac3a17b6af870dcaa13",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "map": {
+            "rectangle": [
+              0,
+              40,
+              320,
+              360
+            ],
+            "pixels": 115200,
+            "equal": 115200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "command": {
+            "rectangle": [
+              320,
+              40,
+              320,
+              260
+            ],
+            "pixels": 83200,
+            "equal": 83200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "fleets": {
+            "rectangle": [
+              320,
+              300,
+              320,
+              100
+            ],
+            "pixels": 32000,
+            "equal": 32000,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake_gui_metadata": {
+        "git_head": "f180e571b6f44048ccef0fedc69ae9ba5571eb0b",
+        "working_tree": " M CONTEXT.md\n M internal/ai/original_turn.go\n M internal/game/battle.go\n M internal/game/fleetstandby.go\n M internal/game/game.go\n M internal/game/originalbrain.go\n M internal/game/rebellion.go\n M internal/game/regioninfo.go\n M internal/rules/region.go\n M tools/gui_check.sh\n?? docs/goal/2026-10-01-runtime-fields-round-13.md\n?? docs/internals/data/post-turn-runtime-fields.json\n?? docs/re/354-post-turn-runtime-fields.md\n?? docs/spec/066-post-turn-runtime-fields.md\n?? internal/ai/runtime_fields_test.go\n?? internal/game/runtime_fields_test.go\n?? tools/runtime_fields_receipts.sh\n?? tools/scripts/runtime_fields_ida.py",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "e5370774da3c311615620a065500ad97f19c16b3b647e4b59995ec3d84af82f3",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "d7320002c37379c85e155c9e05f6d59ffb7dcd78068766db37153c6d1e2bfc75",
+          "tools/gui_check.sh": "c6cc183274c27c419e5be7f19b2d6f8f5c162919e1bfcdb8e0ec7a93d5815fb2",
+          "internal/game/regionturn.go": "6f23d3eaea6aff8f5ab32c0b3d051c3d74a1ae700107005b1bbdddce5e57fb70",
+          "internal/rules/regionresupply.go": "ade290a94ae97bcb33d2d5af58e7d50f6b6b55ee1a3b29386f443f4444fc90d1",
+          "internal/game/originalbrain.go": "0640a1135e16d2d0b62dd0058f1bd3b786fadbf82230b714c27bc83d4a03b586",
+          "internal/ai/original_turn.go": "52f93df2c8380801a2998a0021f04f552b6b7cd1984bfa1ab379125c988c75ee",
+          "internal/game/battle.go": "b4c78ef7a8fc5146be77f54c10f14130a94d3c587d3c0d968cdbbe2b60928132",
+          "internal/game/runtime_fields_test.go": "7850931b731bbdb76bfd615897b21bbc791754f4add14b748a4e961019886d8b"
+        },
+        "rng": "正常劇本 1 帝國；執行前原版檢查點及 remake strategyRandSeed 固定 0xD3DC167E；比較第一回合完整畫面，不宣稱整段骰序一致",
+        "scenario": "S1 帝國 796-01-04",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "name": "runtime85-stationed",
+      "repeated_original_equal": true,
+      "inputs": {
+        "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+        "golem_working_tree": "",
+        "original_image": "golang:1.24-bookworm",
+        "python_image": "python:3.12-slim",
+        "parent": {
+          "path": "/src/workplace/fcmd/fcmd-base.state",
+          "sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26"
+        },
+        "memory": [
+          {
+            "stage": "initial",
+            "step": 420000010,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea"
+          },
+          {
+            "stage": "move-finished",
+            "step": 432635158,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "1e2570db394cd3bdf5593c3d71df39ad312699834631ec7ba9cc36de2104f930"
+          },
+          {
+            "stage": "distributed",
+            "step": 432905201,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "63f598e48c7e28767bd95ca618c3630bd78e7ac068fe7572479c72bfef751e4a"
+          },
+          {
+            "stage": "fleet-supplied",
+            "step": 432905949,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "b6db9cde0e499988399f9516889062fff71f09702f5fbad276c9703c5fbe0b75"
+          },
+          {
+            "stage": "ships-filled",
+            "step": 432909112,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "c35ae25d8cbe37d996ec98f7a43fc80db8b8eaca9ea0d9271f8f2188fa7a86f4"
+          },
+          {
+            "stage": "resupplied",
+            "step": 433600000,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "b213315328fac0f765ba301ba86ba2bbd3620f3bc438811d95c413fbd4021ae0"
+          },
+          {
+            "stage": "empty-supplied",
+            "step": 451152514,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "750386b23c71af1c28fa4286bfb3887ab5cd485b16f9c46c07763c29c1022965"
+          },
+          {
+            "stage": "empty-filled",
+            "step": 451154823,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "e9a38d864bac4d4d7b57ac7ed3da2631c46c6f7dbfb96c533eeeaa5e22f14958"
+          },
+          {
+            "stage": "owner-pass",
+            "step": 451788485,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "c43ade26c71e126da4c6b519dc61372a1db78abbaae2b9e1167851a87f1efb67"
+          },
+          {
+            "stage": "refill-before",
+            "step": 456172977,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "d735e89e099b473eafdcfe3163c5ea3d63f95d45fa79986855a9542218925506"
+          },
+          {
+            "stage": "refill-after",
+            "step": 456183314,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "bc0cbd3e5be0b10540791c62a52842e4eef7ea3f05e959f32ef8662cf78063d7"
+          },
+          {
+            "stage": "command",
+            "step": 499999999,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "9193bb29a878a1d7fbe4ca86f6a6f6f1b4fdebe16b334aa530152ba6ab4ea212"
+          }
+        ],
+        "original_seed_hex": "0xd3dc167e",
+        "original_seed_setup": "執行前從完整原版檢查點固定；initial.bin 實讀 DS:94DC",
+        "remake_seed_hex": "0xd3dc167e",
+        "remake_seed_setup": "正式 strategyRandSeed，執行前固定；不影響未受控正式局的裁決",
+        "rng": "局部庫存公式不取亂數；完整正常回合只裁決相同初始局面及輸入的庫存與指定畫面，不宣稱整段骰序一致。",
+        "canvas": [
+          640,
+          480
+        ],
+        "mouse_y_to_screen_y": 40
+      },
+      "memory": [
+        {
+          "name": "command.bin",
+          "bytes": 1048576,
+          "sha256": "9193bb29a878a1d7fbe4ca86f6a6f6f1b4fdebe16b334aa530152ba6ab4ea212"
+        },
+        {
+          "name": "distributed.bin",
+          "bytes": 1048576,
+          "sha256": "63f598e48c7e28767bd95ca618c3630bd78e7ac068fe7572479c72bfef751e4a"
+        },
+        {
+          "name": "empty-filled.bin",
+          "bytes": 1048576,
+          "sha256": "e9a38d864bac4d4d7b57ac7ed3da2631c46c6f7dbfb96c533eeeaa5e22f14958"
+        },
+        {
+          "name": "empty-supplied.bin",
+          "bytes": 1048576,
+          "sha256": "750386b23c71af1c28fa4286bfb3887ab5cd485b16f9c46c07763c29c1022965"
+        },
+        {
+          "name": "fleet-supplied.bin",
+          "bytes": 1048576,
+          "sha256": "b6db9cde0e499988399f9516889062fff71f09702f5fbad276c9703c5fbe0b75"
+        },
+        {
+          "name": "initial.bin",
+          "bytes": 1048576,
+          "sha256": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea"
+        },
+        {
+          "name": "move-finished.bin",
+          "bytes": 1048576,
+          "sha256": "1e2570db394cd3bdf5593c3d71df39ad312699834631ec7ba9cc36de2104f930"
+        },
+        {
+          "name": "owner-pass.bin",
+          "bytes": 1048576,
+          "sha256": "c43ade26c71e126da4c6b519dc61372a1db78abbaae2b9e1167851a87f1efb67"
+        },
+        {
+          "name": "pal.bin",
+          "bytes": 768,
+          "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+        },
+        {
+          "name": "refill-after.bin",
+          "bytes": 1048576,
+          "sha256": "bc0cbd3e5be0b10540791c62a52842e4eef7ea3f05e959f32ef8662cf78063d7"
+        },
+        {
+          "name": "refill-before.bin",
+          "bytes": 1048576,
+          "sha256": "d735e89e099b473eafdcfe3163c5ea3d63f95d45fa79986855a9542218925506"
+        },
+        {
+          "name": "resupplied.bin",
+          "bytes": 1048576,
+          "sha256": "b213315328fac0f765ba301ba86ba2bbd3620f3bc438811d95c413fbd4021ae0"
+        },
+        {
+          "name": "screen.bin",
+          "bytes": 307200,
+          "sha256": "79c9c7697a1f3148062a465fbc3ecbe9149bad77c51e517e071c9975ffd790ee"
+        },
+        {
+          "name": "ships-filled.bin",
+          "bytes": 1048576,
+          "sha256": "c35ae25d8cbe37d996ec98f7a43fc80db8b8eaca9ea0d9271f8f2188fa7a86f4"
+        }
+      ],
+      "tables": [
+        {
+          "name": "stellar",
+          "original_address_space": "dosgolem 執行期線性位址",
+          "original_linear_hex": "0x5f2cc",
+          "bytes": 4032,
+          "different": 0,
+          "original_sha256": "8705bbaf0b8861a1c7a5e4cc1365ce7b932e69ea2c63278b5d8f0807ef651fd2",
+          "remake_sha256": "8705bbaf0b8861a1c7a5e4cc1365ce7b932e69ea2c63278b5d8f0807ef651fd2"
+        },
+        {
+          "name": "planet",
+          "original_address_space": "dosgolem 執行期線性位址",
+          "original_linear_hex": "0x53132",
+          "bytes": 6642,
+          "different": 0,
+          "original_sha256": "9e1654559f572936ba16eece64358bc225891a231cbdd9381bf0f9c1e45a5591",
+          "remake_sha256": "9e1654559f572936ba16eece64358bc225891a231cbdd9381bf0f9c1e45a5591"
+        }
+      ],
+      "remake_test": "internal/game.TestRuntimeFieldsNormalTurnMatchesOriginal",
+      "remake_metadata": {
+        "different": 0,
+        "entry": "reachFleetDecided → 正常系統實行 → 命令階段",
+        "injected": true,
+        "planet_bytes": 6642,
+        "seed": 3554416254,
+        "seed_setup": "執行前固定 strategyRandSeed",
+        "stellar_bytes": 4032
+      },
+      "metadata_sha256": {
+        "inputs.json": "7b9791ba86a1f50971c472ff9182769893488fe21cdf6d0863d7e6484c0c7323",
+        "flags.txt": "f8c3744de3b1e0c80cd8577adeed978db571d04a02f9120a285d27487c0e465a",
+        "meta.txt": "e9847420a62780d0a9f1448e72f55d3d636ccf9fa48e2186c5d58e60693d3873"
+      }
+    }
+  ],
+  "ida_exports": {
+    "re85-113A-reviewed.json": "be08686fd4915a40daa5ec49f1550797160c5853386cb3911c614790b1957988",
+    "re85-2AF5-reviewed.json": "0e640fbf236f063c94633e49650a5105f1e7cc290174a49ccc197d204f952004",
+    "re85-2E54-reviewed.json": "6b5c7b7a1ee04a10daec7d64061284a14714cbfc9becfd5377c63ba13514cbc5"
+  },
+  "resolution_backlinks": [
+    {
+      "original_key": "DOS GIN3.COM 固定雜湊；星域 +0x78／行星 +0x46,+0x48",
+      "evidence": "docs/re/354-post-turn-runtime-fields.md",
+      "older_document": "docs/re/89-minimap-unit-markers.md",
+      "required_marker": "354-post-turn-runtime-fields.md"
+    },
+    {
+      "original_key": "DOS GIN3.COM 固定雜湊；星域 +0x78／行星 +0x46,+0x48",
+      "evidence": "docs/re/354-post-turn-runtime-fields.md",
+      "older_document": "docs/re/320-region-info-window.md",
+      "required_marker": "354-post-turn-runtime-fields.md"
+    },
+    {
+      "original_key": "DOS GIN3.COM 固定雜湊；星域 +0x78／行星 +0x46,+0x48",
+      "evidence": "docs/re/354-post-turn-runtime-fields.md",
+      "older_document": "docs/re/353-region-supply-turn-timing.md",
+      "required_marker": "354-post-turn-runtime-fields.md"
+    },
+    {
+      "original_key": "DOS GIN3.COM 固定雜湊；星域 +0x78／行星 +0x46,+0x48",
+      "evidence": "docs/re/354-post-turn-runtime-fields.md",
+      "older_document": "docs/spec/043-ai-capital-reach.md",
+      "required_marker": "354-post-turn-runtime-fields.md"
+    },
+    {
+      "original_key": "DOS GIN3.COM 固定雜湊；星域 +0x78／行星 +0x46,+0x48",
+      "evidence": "docs/re/354-post-turn-runtime-fields.md",
+      "older_document": "docs/playtest/026-region-supply-turn.md",
+      "required_marker": "354-post-turn-runtime-fields.md"
+    },
+    {
+      "original_key": "DOS GIN3.COM 固定雜湊；星域 +0x78／行星 +0x46,+0x48",
+      "evidence": "docs/re/354-post-turn-runtime-fields.md",
+      "older_document": "docs/internals/22-stellar-dt.md",
+      "required_marker": "354-post-turn-runtime-fields.md"
+    },
+    {
+      "original_key": "DOS GIN3.COM 固定雜湊；星域 +0x78／行星 +0x46,+0x48",
+      "evidence": "docs/re/354-post-turn-runtime-fields.md",
+      "older_document": "docs/internals/29-planets-and-economy.md",
+      "required_marker": "354-post-turn-runtime-fields.md"
+    },
+    {
+      "original_key": "DOS GIN3.COM 固定雜湊；星域 +0x78／行星 +0x46,+0x48",
+      "evidence": "docs/re/354-post-turn-runtime-fields.md",
+      "older_document": "docs/internals/58-strategic-fleet-window.md",
+      "required_marker": "354-post-turn-runtime-fields.md"
+    }
+  ]
+}

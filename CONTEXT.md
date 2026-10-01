@@ -5,6 +5,17 @@
 
 ## 現況一覽
 
+- **最近接續（2026-10-01）**：#85 的 33 bytes 差異已證實為 AI 距離暫存與
+  行星座標寫入；依實際載圖時機接線，正常／低士氣診斷回合完整星域 4032／
+  行星 6642 bytes 零差異，沒有排除欄位。兩輪原版重現、正常 GUI 色號／RGB
+  零差異、待命／情報抽驗及全部產品套件通過。入口
+  [第十三輪](docs/goal/2026-10-01-runtime-fields-round-13.md)、
+  [研究 354](docs/re/354-post-turn-runtime-fields.md)、
+  [規格 066](docs/spec/066-post-turn-runtime-fields.md)、
+  [對拍 027](docs/playtest/027-post-turn-runtime-fields.md)。全表寫出與新增欄位讀回通過；
+  **現況艦隊／艦艇存檔缺口另開 #86，未完成完整局面存讀閉環**。
+  不宣稱所有局面、qsort 完全平手次序或十回合 AI 一致。
+
 - **最近驗證（2026-10-01）**：#80 徵稅箭頭轉色修正完成，移除四顆箭頭的測試排除區。
   八份正常玩家入口完整畫面及 RGB 零差異，上界另有明示注入診斷；14 份原版收據兩輪
   全部重現。48 份 GUI 驗收與全部正式產品套件測試通過，詳見
@@ -26,8 +37,8 @@
   未注入 GUI 全畫面色號／RGB 零差異，正常移動及對戰交棒抽驗通過。入口
   [研究 353](docs/re/353-region-supply-turn-timing.md) 與
   [第十二輪](docs/goal/2026-10-01-supply-turn-round-12.md)、
-  [對拍 026](docs/playtest/026-region-supply-turn.md)。**完整回合表仍有星域 18／行星
-  15 bytes 差異，由 #85 追查**，不宣稱整表或所有回合一致；
+  [對拍 026](docs/playtest/026-region-supply-turn.md)。當時完整回合表尚有星域 18／行星
+  15 bytes 差異，已由研究 354／#85 補證修正，指定回合整表一致；不宣稱所有回合一致。
   剩餘項與 AI／音樂分支仍以遠端 Issue 及原 Goal 為準。
 
 - 遊戲：《銀河英雄傳說III SP》（Micronet，1994），PC DOS 版，啟動程式 `GIN3.COM`。
@@ -388,6 +399,7 @@
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
+| 回合後星域 +0x78 與行星 +0x46–+0x49 語意 unknown；行星計算入口 2AF5:01CB | 研究 353 發現時的差異；研究 89／320 舊定位 | 研究 354：原始寫入 bytes、完整比較器、正常回合監看與 caller 堆疊證實距離與載圖座標；01CB 在比較器內，真正入口 00CB。修正後兩組全表零差異；舊研究與差異索引保留並追加勘誤 |
 | 預算箭頭只是游標附近 17–21 點未知差異；月初預算的 10741 表示已收稅 | `docs/re/343`、`docs/spec/003` 舊版 | `docs/re/350`：移開游標後仍有 26 點色號 9→8，先加後減兩顆各自保留，關窗重開才重設；完整記憶體顯示月初原版星域經濟力 85020、remake 已扣到 82302。原版此時為收稅前預估，未操作時才與後續實收相等。呈現缺口 #80 已修；結算生命週期當時留 #82，未通過試作已撤回。後續研究 351 證明訂造報告關閉後才結算，修正後十份 GUI 與五組財政對拍通過，#82 已完成；非財政整表差異另列 #83 |
 | 開局回充後應立即按經濟力比例分回全部行星；行星比例由面板現算即可 | `docs/re/273` 的回合尾段證據被誤用成開局；原 `startNewGame`／`LoadRegionRecords` 註解 | `docs/re/352`：初始命令階段星域已夾上限，但行星未分配；`056A:0048` 在移動後才分配。開局另需重算記錄中的行星數／比例與態勢成本；`2703:04F3` 將電腦首都艦艇倍增。#83 指定開局整表修正完成；完整回合補給時序另由 #84 追查 |
 | 左下角摘要「從別的畫面回到地圖介面的那一次輸入不重算」（規則四），且內容每幀從星域記錄現算 | `docs/re/284`、`docs/spec/001` 舊版規則 4、`internal/game.refreshHoverRegion` 舊註解 | `docs/re/312` §7.7–7.8：`fcmd-win-rclick`（右鍵回地圖、游標在艾流塞拉）那塊換成艾流塞拉，同一視窗按「結束」回來的 `fcmd-close` 仍是首都——判準是「游標底下那一格變了沒」，`dec1` 只是沒變的情況；`fcmd-hover-home` 對 `dec1`：星域 0 的 `+0x28` 已是 1、面板仍寫 0：0，面板是寫進去那一刻的文字。規格 001 規則 4–7 已改寫 |
@@ -537,20 +549,17 @@
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
-#### post-turn-runtime-fields — 正常實行後的星域與行星非補給欄位尚未達全表一致
+#### save-live-fleet-state — 存進度未同步目前艦隊與艦艇池
 
-*[#85](https://github.com/wicanr2/logh3/issues/85) · parity（對拍：要與原版逐位元組相同）*
+*[#86](https://github.com/wicanr2/logh3/issues/86) · wiring*
 
-#84 的完整回合記憶體比對另發現非補給欄位差異：9 個星域的 `+0x78`／`+0x79`，以及首都四顆行星的 `+0x46`–`+0x49`。開局整表已一致，這些欄位在正式實行回合後才分岔；不能把庫存鏈通過升格為完整執行期表格一致。
+**卡在**：#85 全表回合對拍已通過，但新增存讀檔測試顯示 `Game.SaveSlot` 在新遊戲建立全 FF 的 FLEET／SHIP 底稿後，沒有把 `g.fleets` 同步到原始記錄。取進度重數艦隊時，星域 +0x28/+0x29 四個位元組與保存前局面不同。既有 #84 只驗完整 STELLAR／PLANET 檔案，未覆蓋艦隊存讀閉環。這是獨立產品缺口，不是原版 oracle 不確定。
 
-**卡在**：已保存完整正常回合收據與差異，但沒有足以修改正式資料語意的證據。`+0x78`／`+0x79` 保持 unknown；行星四欄可能為地圖座標（hypothesis），須核對寫入端，不能憑數值猜補。
-原版 `command.bin` SHA-256 `9193bb29a878a1d7fbe4ca86f6a6f6f1b4fdebe16b334aa530152ba6ab4ea212`；dosgolem-logh3 `f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c`，完整旗標存於收據及腳本，全部階段記憶體兩輪一致。
+**做完的判準**：正常新遊戲編成艦隊、實行含 AI 建隊的回合、存進度、取進度後，雙方艦隊的位置、命令、組成與艘數維持目前局面；六份原版格式存檔來自同一份現況。補齊 READY 序列化規格並以正常玩家路徑回歸，不能只驗 STELLAR／PLANET 寫出。
 
-**做完的判準**：追查這些欄位的原始寫入者、讀取者與玩家可見用途，保存原始定位／bytes／工具版本／推論等級。若玩家路徑需要，依 RE → DRAFT → READY → implementation 補齊，重新以正常玩家回合的星域 4032／行星 6642 bytes 全表核對；若僅屬非玩家暫存狀態，須有原版資料流支持分類，不能自行排除未知欄位。
+**證據**：[`internal/game/game.go`：`Game.SaveSlot`／`Game.LoadSlot`。`](internal/game/game.go`：`Game.SaveSlot`／`Game.LoadSlot`。)、[`internal/rules/save.go`：`Slot.Save` 直接寫入 `Slot.Fleet`／`Slot.Ship`。`](internal/rules/save.go`：`Slot.Save` 直接寫入 `Slot.Fleet`／`Slot.Ship`。)、[`internal/game/runtime_fields_test.go` 的新增取進度全表斷言兩組均發現四個 +0x28/+0x29 計數位元組差異；執行前兩側 seed 0xD3DC167E，正常回合原版星域 4032／行星 6642 bytes 全表零差異。`](internal/game/runtime_fields_test.go` 的新增取進度全表斷言兩組均發現四個 +0x28/+0x29 計數位元組差異；執行前兩側 seed 0xD3DC167E，正常回合原版星域 4032／行星 6642 bytes 全表零差異。)
 
-**證據**：[`docs/re/353-region-supply-turn-timing.md`](docs/re/353-region-supply-turn-timing.md)、[`tools/region_supply_receipts.sh`](tools/region_supply_receipts.sh)、[`docs/internals/data/region-supply-turn-timing.json`](docs/internals/data/region-supply-turn-timing.json)、[`workplace/oracle/supply84-stationed/command.bin`](workplace/oracle/supply84-stationed/command.bin)、[`workplace/oracle/supply84-stationed/normal-table-differences.json`](workplace/oracle/supply84-stationed/normal-table-differences.json)
-
-**核實**：要人判——追查正常實行後星域 +0x78/+0x79、行星 +0x46–+0x49 的寫入端；玩家功能接齊後綁全表 bytes 的 go_test，不以單一補給庫存鏈代替。
+**核實**：要人判——缺現況艦隊與艦艇池序列化；完成後綁正常新遊戲跨回合保存／載入的 go_test，需比較雙方艦隊、艦艇及所有星域計數。
 
 #### battle-turn-eight-steps — 戰場回合結算對齊原版八步（規格 062 的其餘七步與子步 8-2–8-5）
 

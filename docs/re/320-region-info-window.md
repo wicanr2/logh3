@@ -90,3 +90,10 @@
 `internal/screen/regioninfo.go`＋`region-info-panel.json`、`RegionMinimapSpec`／`LeaderSpec`
 從指定待命行星那張抽出來共用、`rules.CapitalSummary.Foreign`＋`capital-panel.json` 的
 `unknown`、`rules.PlanetSites` 收圖塊 22 並依 y、x 排序。
+
+## 2026-10-01 定位勘誤
+
+原記錄的 `2AF5:01CB` 是比較器內部，不是行星座標計算入口；實際入口為
+`2AF5:00CB`。原始 call bytes、完整比較器與正常回合寫入監看足以否定舊定位，
+但不否定已驗的座標算法。原始輸入雜湊、工具版本、位址空間與分級見
+[研究 354](354-post-turn-runtime-fields.md)；原文保留供追溯。

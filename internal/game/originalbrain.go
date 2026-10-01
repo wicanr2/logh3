@@ -1,6 +1,7 @@
 package game
 
 import (
+	"encoding/binary"
 	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/rules"
 )
@@ -39,6 +40,18 @@ func (g *Game) OriginalBrain() ai.Brain {
 			return rules.PhezzanOccurred(g.workRecord())
 		},
 		Support: g.buildSupport(),
+		NeutralStats: func(r int) (int, uint32) {
+			rec := g.regionRecord(r)
+			if rec == nil {
+				return 0, 0
+			}
+			return int(binary.LittleEndian.Uint16(rec[0x20:])), binary.LittleEndian.Uint32(rec[0x1A:])
+		},
+		RecordNeutralDistance: func(r, distance int) {
+			if rec := g.regionRecord(r); rec != nil {
+				binary.LittleEndian.PutUint16(rec[0x78:], uint16(distance))
+			}
+		},
 	}
 }
 

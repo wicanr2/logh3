@@ -82,3 +82,10 @@ remake 回合尾巴原先把直接 `2703:0DA1` 與共同 `02E5` 混成一支，�
 完整表雜湊、工具版本保存在 [資料索引](../internals/data/region-supply-turn-timing.json)，
 語意仍為 `unknown`，已登錄 [#85](https://github.com/wicanr2/logh3/issues/85)。
 規格 039 的指定庫存鏈升 CONFORMED；畫面與範圍見 [對拍 026](../playtest/026-region-supply-turn.md)。
+
+## 2026-10-01 後續勘誤
+
+本輪留下的星域 18／行星 15 bytes 差異已由[研究 354](354-post-turn-runtime-fields.md)
+證實為 AI 距離暫存及載圖座標，正式接線後兩組回合全部星域 4032／行星 6642 bytes
+零差異。此處保留發現時的差異與未知分級，不回寫成當時已證實。新增存讀檔驗證
+另發現現況艦隊／艦艇未同步保存，由 #86 追蹤；不宣稱完整局面保存完成。

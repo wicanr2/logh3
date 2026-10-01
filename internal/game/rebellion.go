@@ -263,7 +263,7 @@ func (g *Game) strategicAssault(region int) []turnReport {
 	var sites []rules.PlanetSite
 	cells := g.battleCells(region)
 	if len(cells) > 0 && g.res.Battle != nil {
-		sites = rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
+		sites = g.loadRegionPlanetSites(region)
 	}
 	// 每一圈的定位（`0DEA:1759`）：同一格兩支以上時後面的被擠開，距離不是 0（`docs/re/335` §六）。
 	place := &rules.StrategicPlacement{Slots: g.res.Formation}

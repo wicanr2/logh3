@@ -507,7 +507,7 @@ func RegionShips(record []byte, faction int) []int {
 
 // 行星在星域地圖上的位置（`docs/re/89`、`docs/re/320` §四）。
 //
-// `PLADAT.DAT` 裡沒有座標，是載入星域地圖時算出來的（`2AF5:01CB`）：先收圖塊
+// `PLADAT.DAT` 裡沒有座標，是載入星域地圖時算出來的（`2AF5:00CB`，研究 354 勘誤）：先收圖塊
 // `PlanetTile` 的格子（最多五格），不夠再收 `FortressTile`（要塞是 2×2 的圖塊
 // 22／23／30／31，左上那格）；位置取格子的中心偏移，**先依 y 再依 x 排序**
 // （`3C6A:000D` 的 qsort，比較器 `2AF5:0198`）之後依序對到該星域的行星。

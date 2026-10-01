@@ -60,8 +60,14 @@ S3 戰場（星域 26）時是 `5313:1430`／3，正好是上面檔頭的第 0 �
 所有 81 顆行星七種艦艇及兩種補給 `+0x20`–`+0x43`，共 2916 bytes，
 正常回合與原版全部相同。研究及原始定位見 [353](../re/353-region-supply-turn-timing.md)，
 收據／雜湊見 [資料索引](data/region-supply-turn-timing.json) 與
-[對拍 026](../playtest/026-region-supply-turn.md)。完整正常回合表尚有首都四顆
-行星 `+0x46`–`+0x49` 共 15 bytes 差異，由 #85 追查，語意保留 `unknown`。
+[對拍 026](../playtest/026-region-supply-turn.md)。
+2026-10-01 勘誤（proven）：首都四顆 `+0x46／+0x48` 為載圖時寫入的 X／Y，
+簽章 `26 89 47 46`／`26 89 44 48`，依 Y 再 X 升冪排列。找到待命行星後才載圖，
+開局預載及單純繪圖不提前寫；只更新當次星域。舊定位 `2AF5:01CB` 是比較器內部，
+真正計算入口為 `00CB`，由原始 call bytes 與動態監看證實。
+正常／診斷回合全 6642 bytes 零差異，原始定位與推論等級見
+[研究 354](../re/354-post-turn-runtime-fields.md)、[語意索引](data/post-turn-runtime-fields.json)，
+輸入及輸出雜湊見[收據摘要](data/post-turn-runtime-receipts.json)。舊差異保留研究 353。
 寫入證據、五組整表對拍及兩輪重播見 [研究 352](../re/352-opening-runtime-tables.md) 與
 [資料索引](data/opening-runtime-tables.json)。
 

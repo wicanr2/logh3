@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "review": "2026-10-01；規格 066 READY，原始 bytes、完整比較器與正常回合監看逐項審查",
+  "source": "docs/re/354-post-turn-runtime-fields.md",
+  "tool": "IDA Pro 9.4.0.260610；ida-pro-9.4-idapython:locked-v1",
+  "address_space": "IDA 切段 .COM 基底 0x10200；CS:IP 與 dosgolem 線性位址由匯出分列；固定輸入雜湊才可合併",
+  "inputs": {
+    "2E54": "77d4f56617ac34ead76e49bef8f591e1dc695421384b2f08edc9685191df5b8f",
+    "2AF5": "84e13897f022b395ed03850dafca84ff39e3ce9d9030e85d6cd3a0cd26d49b57",
+    "113A": "6be21e744ef286297eee366a6c129ca0b7fbd1a6f968e20390cb6732f8bb14d3"
+  },
+  "fields": [
+    {"table":"STELLAR","stride":126,"offset_hex":"0x78","size":2,"semantic":"AI 階段二到首都的帶領土罰則距離；全部無主格先寫再過濾","grade":"proven","signature":"26 89 47 78","source":"docs/re/354-post-turn-runtime-fields.md"},
+    {"table":"PLANET","stride":82,"offset_hex":"0x46","size":2,"semantic":"該星域地圖載入時的行星 X；圖塊位置加 8","grade":"proven","signature":"26 89 47 46","source":"docs/re/354-post-turn-runtime-fields.md"},
+    {"table":"PLANET","stride":82,"offset_hex":"0x48","size":2,"semantic":"該星域地圖載入時的行星 Y；圖塊位置加 12","grade":"proven","signature":"26 89 44 48","source":"docs/re/354-post-turn-runtime-fields.md"}
+  ],
+  "entries": [
+    {"kind":"function","original_location":"2E54:0EC2","semantic":"階段二：距離候選 → qsort 比較器 1001 → 指派 1108","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；完整原始呼叫鏈"},
+    {"kind":"function","original_location":"2E54:0F09","semantic":"遍歷全部無主格；保存距離後才判 0x800 與費沙閘門","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；靜態資料流與動態監看"},
+    {"kind":"function","original_location":"2E54:0F93","semantic":"費沙閘門：事件旗標或伊謝爾倫敵方所有且計數達 238／318","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；完整條件分支"},
+    {"kind":"function","original_location":"2E54:1001","semantic":"距離升冪、防衛力升冪、經濟力降冪；不裁決 qsort 完全平手序","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；完整比較器"},
+    {"kind":"function","original_location":"2AF5:0036","semantic":"按星域檔頭定位行星記錄；旗標非零才呼叫座標計算","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；0036 → 00CB 與正常回合堆疊"},
+    {"kind":"function","original_location":"2AF5:00CB","semantic":"取圖塊 6／22，座標加 8／12，依 Y／X 排序回寫行星","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；完整寫入者與正常回合監看"},
+    {"kind":"function","original_location":"2AF5:0198","semantic":"行星地圖位置依 Y、X 升冪排序","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；0198–01F6 完整比較器"},
+    {"kind":"instruction","original_location":"2E54:0F5B","original_bytes_hex":"26 89 47 78","semantic":"星域 +0x78 word ← 距離","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；監看執行後 IP 0F5F"},
+    {"kind":"instruction","original_location":"2AF5:0170","original_bytes_hex":"26 89 47 46","semantic":"行星 +0x46 word ← X","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；監看執行後 IP 0174"},
+    {"kind":"instruction","original_location":"2AF5:0184","original_bytes_hex":"26 89 44 48","semantic":"行星 +0x48 word ← Y","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；監看執行後 IP 0188"},
+    {"kind":"instruction","original_location":"113A:0454","original_bytes_hex":"9a 36 00 f5 2a","semantic":"停駐無目標艦隊挑到自家行星後，要求載圖並寫座標","grade":"proven","source":"docs/re/354-post-turn-runtime-fields.md；caller 原始 bytes 及返回 113A:0459"}
+  ]
+}

@@ -72,7 +72,7 @@ for key in ('tax-up', 'tax-down', 'pct-up', 'pct-down'):
 batches.append('budget-unchanged-post')
 directories = [pathlib.Path('workplace/oracle/planarrow-' + batch) for batch in batches]
 if len(sys.argv) > 1:
-    assert sys.argv[1] == 'supply84-gui'
+    assert sys.argv[1] in ('supply84-gui', 'runtime85-normal')
     directories = [pathlib.Path('workplace/oracle') / sys.argv[1]]
     regions = {'full': (0, 0, 640, 480), 'map': (0, 40, 320, 360),
                'command': (320, 40, 320, 260), 'fleets': (320, 300, 320, 100)}

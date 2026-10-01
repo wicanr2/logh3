@@ -21,6 +21,7 @@ func (g *Game) openFleetStandby() {
 		return
 	}
 	f := &g.fleets[g.fcmd.fleet]
+	g.loadRegionPlanetSites(f.Region)
 	g.fcmd.standbySel = -1
 	g.fcmd.standbyRepainted = [5]bool{}
 	if f.Move == fleetMoveParked && f.Target >= 0 {

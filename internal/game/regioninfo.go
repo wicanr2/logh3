@@ -62,6 +62,7 @@ func (g *Game) openRegionInfo(r int) {
 		return
 	}
 	g.rinfo = r
+	g.loadRegionPlanetSites(r)
 	g.state = StateRegionInfo
 }
 

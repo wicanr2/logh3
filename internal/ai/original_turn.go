@@ -12,6 +12,8 @@ import "github.com/wicanr2/logh3/internal/rules"
 // 每一個都在欄位註解裡寫明退到什麼。
 type StrategyInput struct {
 	Faction int
+	// Counter 是原版尚未進位的回合計數器（規格 066）。
+	Counter int
 	Fleets  []rules.Fleet
 	Graph   *rules.StarGraph
 
@@ -56,6 +58,11 @@ type StrategyInput struct {
 
 	// PhezzanOpen 是原版的 `ds:8F48`（費沙進入戰局，`docs/re/179`）。
 	PhezzanOpen bool
+
+	// NeutralStats 提供排序次鍵：現有防衛力、經濟力；nil 時兩者為零。
+	NeutralStats func(region int) (defence int, economy uint32)
+	// RecordNeutralDistance 保存原版 +0x78 暫存；所有無主格都通知，先於過濾。
+	RecordNeutralDistance func(region, distance int)
 }
 
 func (in StrategyInput) owner(r int) int {
@@ -162,14 +169,32 @@ func Turn(in StrategyInput) []Order {
 // 才打（`docs/re/177`）。
 func (in StrategyInput) phaseNeutral(decided map[int]bool) []Order {
 	target, best := -1, 1<<30
+	bestDefence, bestEconomy := 0, uint32(0)
 	capital := Capitals[in.Faction]
+	owners := make([]int, RegionCount)
+	for r := range owners {
+		owners[r] = in.owner(r)
+	}
+	dist, _ := in.Graph.BuildTables(owners, in.Faction)
 	for r := 0; r < RegionCount; r++ {
-		if in.owner(r) != RegionOwnerNeutral || !in.reachable(r) {
+		if owners[r] != RegionOwnerNeutral {
 			continue
 		}
-		d := in.Graph.Hops(capital, r)
-		if d >= 0 && d < best {
+		d := dist[r][capital] // 2E54:0F51，方向是星域 → 首都。
+		if in.RecordNeutralDistance != nil {
+			in.RecordNeutralDistance(r, d)
+		}
+		if d >= ReachLimit || !in.reachable(r) || r == Phezzan && !in.neutralPhezzanAllowed() {
+			continue
+		}
+		defence, economy := 0, uint32(0)
+		if in.NeutralStats != nil {
+			defence, economy = in.NeutralStats(r)
+		}
+		// 2E54:1001：距離升冪、防衛力升冪、經濟力降冪（規格 066）。
+		if d < best || d == best && (defence < bestDefence || defence == bestDefence && economy > bestEconomy) {
 			target, best = r, d
+			bestDefence, bestEconomy = defence, economy
 		}
 	}
 	if target < 0 {
@@ -198,6 +223,11 @@ func (in StrategyInput) phaseNeutral(decided map[int]bool) []Order {
 		out = append(out, Order{Fleet: i, Target: target, Move: rules.MoveOccupy}) // 2E54:1B17(f, 1, 星域)
 	}
 	return out
+}
+
+func (in StrategyInput) neutralPhezzanAllowed() bool {
+	return in.PhezzanOpen || in.Faction == 0 && in.owner(Iserlohn) == 1 && in.Counter >= 238 ||
+		in.Faction == 1 && in.owner(Iserlohn) == 0 && in.Counter >= 318
 }
 
 // phaseDefence ＝ 階段三：算「要派幾支」，反覆挑滿足率最低的格、
@@ -332,20 +362,23 @@ type OriginalStrategy struct {
 	PhezzanOpenNow func() bool
 	// Support 是階段一（建艦隊）要的、`World` 帶不到的東西。
 	// nil ＝ 不建艦隊（`original_buildpass.go`）。
-	Support *BuildSupport
+	Support               *BuildSupport
+	NeutralStats          func(region int) (defence int, economy uint32)
+	RecordNeutralDistance func(region, distance int)
 }
 
 // Orders 跑一個戰略回合（`docs/spec/029` 的階段二、三、五）。
-func (o OriginalStrategy) Orders(w World, faction, _ int) []Order {
+func (o OriginalStrategy) Orders(w World, faction, turn int) []Order {
 	phezzanOpen := o.PhezzanOpen
 	if o.PhezzanOpenNow != nil {
 		phezzanOpen = o.PhezzanOpenNow()
 	}
 	return Turn(StrategyInput{
-		Faction: faction, Fleets: w.Fleets, Graph: w.Graph,
+		Faction: faction, Counter: turn - 1, Fleets: w.Fleets, Graph: w.Graph,
 		Owner: w.Owner, Contested: o.Contested, Split: o.Split,
 		Blocked: o.Blocked, EnemyFleets: o.EnemyFleets,
 		Strength: w.Strength, Ships: o.Ships,
 		Routes: o.Routes, Rand: o.Rand, PhezzanOpen: phezzanOpen,
+		NeutralStats: o.NeutralStats, RecordNeutralDistance: o.RecordNeutralDistance,
 	})
 }
