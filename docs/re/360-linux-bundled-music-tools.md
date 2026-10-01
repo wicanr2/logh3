@@ -51,3 +51,6 @@ FFmpeg 7:5.1.9-0+deb12u1、FluidSynth 2.3.1-2、AdPlug 2.3.3+dfsg-2，
 FFmpeg 含選配 GPL 組件時整體採 GPL，且散布須提供精確對應來源；來源：
 [FFmpeg 官方授權說明](https://ffmpeg.org/legal.html)。
 建置器的套件／著作權索引不等於對應來源碼已隨正式交付，公開封包 gate 須另核對。
+
+2026-10-01 接續：157 個同版本來源集合的完整取得、離線重驗與本機來源 tar 已完成，
+見[研究 361](361-linux-music-source-closure.md)；正式版交付與其餘平台門檻仍未完成。

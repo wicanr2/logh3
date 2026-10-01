@@ -1,0 +1,25 @@
+{
+  "schema": "logh3.music-tools.linux.sources.v1",
+  "date": "2026-10-01",
+  "status": "完整固定 Debian 來源集合取得、離線重驗及本機封裝通過",
+  "lock_sha256": "f102cbe2028118a0b3e560a2666bf0d733913dcc95f41bd0d86f40c9d7dd7bac",
+  "build_sha256": "e10ba65a53a4d7050025ae4c8b5735e263e961a644ccaa707d02265c9571a56b",
+  "source_packages": 157,
+  "binary_packages": 198,
+  "source_files": 513,
+  "source_bytes": 748421917,
+  "archive": {
+    "path": "workplace/music69-linux/source-delivery/linux-music-debian-sources.tar",
+    "sha256": "c0bf4070d492d41dcff9cf883c56c3aba90e5117abb84feea3bb2241ba1e3f74",
+    "bytes": 752414720,
+    "entries": 734
+  },
+  "scripts_sha256": {
+    "music_linux_sources.py": "cf8b177b61076fb70cd0296d4b5a3968120affc7a3a28bddb1432eddc864475a",
+    "music_linux_sources_test.py": "8a946306d68e259c5086be84cf944561d1cb58f7b6145978c61af5cda8c55268"
+  },
+  "validation_image": "sha256:229a2c5bfa27522db7815ea81f9bed70af17ccb9de9fc7ad142b1877b5830d36",
+  "signature_trust_verified": false,
+  "rebuilt_all_sources": false,
+  "formal_delivery_complete": false
+}

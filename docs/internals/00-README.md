@@ -21,6 +21,9 @@
 正式解碼、重生命令與平台限制見[驗證 031](../playtest/031-native-fm-import.md)。
 Linux 隨包工具、共享依賴與授權索引：[`linux-music-tools.json`](data/linux-music-tools.json)，
 原生啟動、乾淨容器抽驗與交付限制見[驗證 032](../playtest/032-linux-music-tools.md)。
+Linux 工具固定來源集合：[`linux-music-source-lock.json`](data/linux-music-source-lock.json)，
+完整取得／離線重驗與本機封裝收據：[`linux-music-sources.json`](data/linux-music-sources.json)，
+命令與正式交付限制見[驗證 033](../playtest/033-linux-music-sources.md)。
 remake 增強策略的正式入口驗證索引：[`enhanced-ai-player-path.json`](data/enhanced-ai-player-path.json)，
 範圍及原版差異見[規格 068](../spec/068-enhanced-ai-player-path.md)。
 

@@ -5,6 +5,13 @@
 
 ## 現況一覽
 
+- **目前接續（2026-10-01，第十九輪）**：#69 接續 Linux 音樂工具對應來源集合，
+  198 個二進位套件對應的 157 個同版本來源集合已完整取得；513 檔全數符合固定雜湊，
+  無網路全集合重驗、五組拒絕測試及本機來源 tar 逐項重讀通過。
+  入口：[輪次快照](docs/goal/2026-10-01-linux-music-sources-round-19.md)、
+  [規格 073](docs/spec/073-linux-music-source-closure.md)、[研究 361](docs/re/361-linux-music-source-closure.md)、
+  [驗證 033](docs/playtest/033-linux-music-sources.md)。正式交付、其他平台及聆聽仍未完成。
+
 - **目前接續（2026-10-01，第十八輪）**：#69 Linux 原生隨包工具技術抽驗通過，
   220 共享檔案、198 套件授權／來源身份與固定 SF2 已封裝；無系統音樂工具的乾淨容器，
   中文／空白搬移與環境清理通過。三種 FM 的 VGM／OGG 全檔、一首 GM 完整 PCM 符合基準，
@@ -654,15 +661,17 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 
 第十八輪（2026-10-01）：Linux 隨包工具技術抽驗通過。220 個完整共享檔案、198 套件來源版本與授權、固定 MIT SF2 已封裝；原生 Go 啟動器不呼叫 shell／Python／Docker，不搜尋 PATH。中文／空白搬移、載入環境干預清理、缺件／錯名拒絕及全部依賴取自包內均通過。沒有系統音樂工具的乾淨容器實跑三種 FM 路徑：VGM／OGG 全檔相同；一首 GM 完整 PCM 相同，四首再由正式播放器完整解碼。標準產品套件全綠，詳見規格 072、驗證 032。
 
-**剩餘阻塞：Windows／macOS 合成器／編碼器與依賴封裝、157 個 Linux 來源套件完整 archive 的正式交付、實際聆聽及 loop 接點驗收。** Linux 當輪容器抽驗不等於所有發行版或實機；Windows amd64／macOS amd64／arm64 匯入器本體交叉建置也不等於工具封裝。暫存包保留完整著作權與來源身份，但尚未交付全部對應來源碼，沒有發佈正式封包。合成時間仍為 hardware-spec approximation，OPEN_F 是替換暫存 MDS 診斷路徑，部分 GM 峰值 1.0 未聲稱無 clipping。#69 保持開啟。
+第十九輪（2026-10-01）：198 個 Linux 二進位套件對應的 157 個同版本 Debian 來源集合已完整取得。固定鎖保存全部 URL／SHA-256／大小；513 個描述與來源檔、748,421,917 bytes 全數符合鎖，無網路全集合重驗與五組邊界拒絕測試通過。本機來源 tar 734 項、752,414,720 bytes，逐項重讀大小／雜湊一致，包含完整套件著作權／授權與 opl2wav 建置來源。沒有變更工具或音源，也沒有加入原版遊戲／生成曲庫。詳見規格 073、驗證 033。尚未逐套重建或驗 Debian 簽章信任鏈，正式 dist-all 交付仍待完成。
+
+**剩餘阻塞：Windows／macOS 合成器／編碼器與依賴封裝、已取得 Linux 完整來源集合的正式交付及跨平台來源／建置核對、實際聆聽及 loop 接點驗收。** Linux 當輪容器抽驗不等於所有發行版或實機；Windows amd64／macOS amd64／arm64 匯入器本體交叉建置也不等於工具封裝。暫存包保留完整著作權與來源身份，Linux 完整對應來源集合已取得並封成本機 tar，但尚未隨正式版交付，沒有發佈正式封包。合成時間仍為 hardware-spec approximation，OPEN_F 是替換暫存 MDS 診斷路徑，部分 GM 峰值 1.0 未聲稱無 clipping。#69 保持開啟。
 
 有效使用者裁決仍保留：2026-09-19 選定 GM 音色庫隨包，玩家不自備音色庫、不另裝 FluidSynth；維持玩家自備音色庫或只出 FM 兩個選項已排除。2026-10-01 選定建置時固定版本下載並驗 SHA-256，排除 Git LFS。來源與授權確認先於管線接線，完成後才提供全曲庫入口；目前已完成來源確認、完整 FM／GM 匯入與正式解碼；平台封裝與聆聽仍待接續。
 
 **做完的判準**：玩家自備原版後有一個不需要 Docker 的轉檔入口（或 remake 內建合成），`_F` 雜湊與 `SOURCES.tsv` 相同；`_M` 的音色取捨經使用者裁決。
 
-**證據**：[`docs/re/360-linux-bundled-music-tools.md`](docs/re/360-linux-bundled-music-tools.md)、[`docs/spec/072-linux-music-tools.md`](docs/spec/072-linux-music-tools.md)、[`docs/playtest/032-linux-music-tools.md`](docs/playtest/032-linux-music-tools.md)、[`docs/internals/data/linux-music-tools.json`](docs/internals/data/linux-music-tools.json)、[`cmd/music-tool/`](cmd/music-tool/)、[`docs/re/359-native-fm-import.md`](docs/re/359-native-fm-import.md)、[`docs/spec/070-deterministic-ogg-framing.md`](docs/spec/070-deterministic-ogg-framing.md)、[`docs/spec/071-native-fm-import.md`](docs/spec/071-native-fm-import.md)、[`docs/playtest/031-native-fm-import.md`](docs/playtest/031-native-fm-import.md)、[`docs/internals/data/native-fm-import.json`](docs/internals/data/native-fm-import.json)、[`docs/internals/data/fm-import-lock.json`](docs/internals/data/fm-import-lock.json)、[`docs/re/358-native-gm-import.md`](docs/re/358-native-gm-import.md)、[`docs/spec/069-native-gm-import.md`](docs/spec/069-native-gm-import.md)、[`docs/playtest/030-native-gm-import.md`](docs/playtest/030-native-gm-import.md)、[`docs/internals/data/native-gm-import.json`](docs/internals/data/native-gm-import.json)、[`cmd/music-import/`](cmd/music-import/)、[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
+**證據**：[`docs/re/361-linux-music-source-closure.md`](docs/re/361-linux-music-source-closure.md)、[`docs/spec/073-linux-music-source-closure.md`](docs/spec/073-linux-music-source-closure.md)、[`docs/playtest/033-linux-music-sources.md`](docs/playtest/033-linux-music-sources.md)、[`docs/internals/data/linux-music-source-lock.json`](docs/internals/data/linux-music-source-lock.json)、[`docs/internals/data/linux-music-sources.json`](docs/internals/data/linux-music-sources.json)、[`tools/scripts/music_linux_sources.py`](tools/scripts/music_linux_sources.py)、[`docs/re/360-linux-bundled-music-tools.md`](docs/re/360-linux-bundled-music-tools.md)、[`docs/spec/072-linux-music-tools.md`](docs/spec/072-linux-music-tools.md)、[`docs/playtest/032-linux-music-tools.md`](docs/playtest/032-linux-music-tools.md)、[`docs/internals/data/linux-music-tools.json`](docs/internals/data/linux-music-tools.json)、[`cmd/music-tool/`](cmd/music-tool/)、[`docs/re/359-native-fm-import.md`](docs/re/359-native-fm-import.md)、[`docs/spec/070-deterministic-ogg-framing.md`](docs/spec/070-deterministic-ogg-framing.md)、[`docs/spec/071-native-fm-import.md`](docs/spec/071-native-fm-import.md)、[`docs/playtest/031-native-fm-import.md`](docs/playtest/031-native-fm-import.md)、[`docs/internals/data/native-fm-import.json`](docs/internals/data/native-fm-import.json)、[`docs/internals/data/fm-import-lock.json`](docs/internals/data/fm-import-lock.json)、[`docs/re/358-native-gm-import.md`](docs/re/358-native-gm-import.md)、[`docs/spec/069-native-gm-import.md`](docs/spec/069-native-gm-import.md)、[`docs/playtest/030-native-gm-import.md`](docs/playtest/030-native-gm-import.md)、[`docs/internals/data/native-gm-import.json`](docs/internals/data/native-gm-import.json)、[`cmd/music-import/`](cmd/music-import/)、[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
 
-**核實**：要人判——Linux 完整匯入與隨包工具抽驗已驗；Windows／macOS 工具、完整對應來源碼交付、聆聽與 loop 仍缺，完成後綁正式隨包玩家曲庫入口測試，不能用 Linux 容器或交叉建置宣稱全部完成。
+**核實**：要人判——Linux 完整匯入與隨包工具抽驗已驗；Windows／macOS 工具、已取得來源集合的正式交付、跨平台來源／建置、聆聽與 loop 仍缺，完成後綁正式隨包玩家曲庫入口測試，不能用 Linux 容器或交叉建置宣稱全部完成。
 
 #### title-screen-sptit — 開頭動畫之後的 SPTIT.350 標題畫面
 
