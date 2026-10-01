@@ -32,6 +32,11 @@ Windows FM 反例與完整 GM 探針收據：[`windows-music-probes.json`](data/
 Windows 固定建置來源鎖：[`windows-music-source-lock.json`](data/windows-music-source-lock.json)，
 十四組來源與兩組額外來源完整核對，方法與正式交付限制見[驗證 035](../playtest/035-windows-gm-sources-unicode.md)。
 Windows GM 的 Unicode 命令列與載入失敗拒絕契約：[規格 075](../spec/075-windows-gm-unicode.md)。
+Windows FM／GM 同包工具與預設完整入口：[規格 076](../spec/076-windows-combined-music-tools.md)，
+候選依賴與驗證過程見[研究 364](../re/364-windows-combined-music-tools.md)。
+同包二十二首、Unicode OPL 與中文 ZIP 搬移收據：[`windows-combined-music-tools.json`](data/windows-combined-music-tools.json)，
+由 `tools/scripts/music_windows_bundle_receipt.py` 重驗產生；完整命令、反例與限制見
+[驗證 036](../playtest/036-windows-combined-music-tools.md)。
 其固定來源工具與原生曲庫驗收收據：[`windows-gm-source-tools.json`](data/windows-gm-source-tools.json)，
 由 `tools/scripts/music_windows_gm_source_receipt.py` 重驗產生；過程與勘誤見[研究 363](../re/363-windows-music-source-build.md)。
 remake 增強策略的正式入口驗證索引：[`enhanced-ai-player-path.json`](data/enhanced-ai-player-path.json)，

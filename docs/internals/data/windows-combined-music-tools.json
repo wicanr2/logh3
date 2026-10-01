@@ -1,0 +1,3821 @@
+{
+  "schema": "logh3.music-tools.windows.combined.v1",
+  "date": "2026-10-02",
+  "status": "Windows 合併預設二十二首、Unicode OPL 與中文搬移技術驗收通過；正式發行未完成",
+  "source_parent_head": "9a2ce97df1e222a4928dd782ddf210033213a96e",
+  "validation_tree_dirty": true,
+  "original_bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "actual_importer_buildinfo": "workplace/music69-windows/combined-utf8-stage/封裝 測試/music-import.exe: go1.24.13\n\tpath\tgithub.com/wicanr2/logh3/cmd/music-import\n\tmod\tgithub.com/wicanr2/logh3\tv0.0.0-20261001161858-9a2ce97df1e2\t\n\tdep\tgithub.com/jfreymuth/oggvorbis\tv1.0.5\th1:u+Ck+R0eLSRhgq8WTmffYnrVtSztJcYrl588DM4e3kQ=\n\tdep\tgithub.com/jfreymuth/vorbis\tv1.0.2\th1:m1xH6+ZI4thH927pgKD8JOH4eaGRm18rEE9/0WKjvNE=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=windows\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=9a2ce97df1e222a4928dd782ddf210033213a96e\n\tbuild\tvcs.time=2026-10-01T16:18:58Z\n\tbuild\tvcs.modified=false\n",
+  "actual_probe_buildinfo": "workplace/music69-windows/combined-utf8-stage/封裝 測試/tools/dosgolem-probe.exe: go1.24.13\n\tpath\tgithub.com/wicanr2/dosgolem/cmd/probe\n\tmod\tgithub.com/wicanr2/dosgolem\tv0.0.0-20260917101542-f7523f9ac7ed\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=0\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=windows\n\tbuild\tGOAMD64=v1\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c\n\tbuild\tvcs.time=2026-09-17T10:15:42Z\n\tbuild\tvcs.modified=false\n",
+  "bundle": {
+    "schema": "logh3.music-tools.windows.bundle.v1",
+    "status": "staged-for-technical-validation",
+    "program_sha256": "048cc00e40144b5e59cc635c60f8fc994d5814a8a806ba8447c89461f064ba38",
+    "source_head": "9a2ce97df1e222a4928dd782ddf210033213a96e",
+    "source_dirty": false,
+    "builder_sha256": "d9c4c1334ad74fc2713c6b7a470b03b8f34506f16f0bd79ec3360d7cb2d28678",
+    "tools": {
+      "ffmpeg.exe": {
+        "sha256": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+        "bytes": 1751552,
+        "imports": [
+          "libvorbis-0.dll",
+          "libvorbisenc-2.dll",
+          "bcrypt.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "SHELL32.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/ffmpeg.exe",
+        "filename": "ffmpeg.exe",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libvorbisenc-2.dll": {
+        "sha256": "92dad65c8c4b5f6aede7e9c1e5452b1b9a74ee386603f5197276d6466ad7da34",
+        "bytes": 750574,
+        "imports": [
+          "libvorbis-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libvorbisenc-2.dll",
+        "filename": "libvorbisenc-2.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libvorbis-0.dll": {
+        "sha256": "d07b5ff4e939b538f77ce0806c7ca5c6438f5b08f08a164dcc9bfda031a156b7",
+        "bytes": 306231,
+        "imports": [
+          "libogg-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libvorbis-0.dll",
+        "filename": "libvorbis-0.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libogg-0.dll": {
+        "sha256": "d17a6e849530abf809f10f32b3f6b90765a73c7497eda8198ca7afdb599941a7",
+        "bytes": 110050,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libogg-0.dll",
+        "filename": "libogg-0.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "fluidsynth.exe": {
+        "sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff",
+        "bytes": 164737,
+        "imports": [
+          "libglib-2.0-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libfluidsynth-3.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/fluidsynth.exe",
+        "filename": "fluidsynth.exe",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libfluidsynth-3.dll": {
+        "sha256": "24908c123138e890ffa8bbc036f0f9b6d4dfcd10c3ea017c747c02e087e86d3e",
+        "bytes": 562696,
+        "imports": [
+          "libglib-2.0-0.dll",
+          "libsndfile-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libgcc_s_seh-1.dll",
+          "libgomp-1.dll",
+          "libstdc++-6.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libfluidsynth-3.dll",
+        "filename": "libfluidsynth-3.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libstdc++-6.dll": {
+        "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203",
+        "bytes": 23703447,
+        "imports": [
+          "libgcc_s_seh-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libstdc++-6.dll",
+        "filename": "libstdc++-6.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libgcc_s_seh-1.dll": {
+        "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7",
+        "bytes": 681726,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libgcc_s_seh-1.dll",
+        "filename": "libgcc_s_seh-1.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libgomp-1.dll": {
+        "sha256": "2b5b74416a061c70b3dc2bfcc19f26bfc2777d8fa1a21a81f8f656c9671cfc97",
+        "bytes": 1615161,
+        "imports": [
+          "libgcc_s_seh-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libwinpthread-1.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libgomp-1.dll",
+        "filename": "libgomp-1.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libwinpthread-1.dll": {
+        "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329",
+        "bytes": 319336,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libwinpthread-1.dll",
+        "filename": "libwinpthread-1.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libsndfile-1.dll": {
+        "sha256": "08bad562b55010889bbcf55fbb8b595d22860777ba424daf1e0075fb76ade866",
+        "bytes": 1007840,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libsndfile-1.dll",
+        "filename": "libsndfile-1.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libglib-2.0-0.dll": {
+        "sha256": "81a9ddc58f0d895f98dee23198c9e4eca63317e3b56206739cb1532bad1f9950",
+        "bytes": 2150059,
+        "imports": [
+          "libpcre2-8-0.dll",
+          "ADVAPI32.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "ole32.dll",
+          "SHELL32.dll",
+          "USER32.dll",
+          "WS2_32.dll",
+          "libintl-8.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libglib-2.0-0.dll",
+        "filename": "libglib-2.0-0.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libintl-8.dll": {
+        "sha256": "29220a214565b405a499a7b5500097db5c1edd9357d08a2ed8d15147f8bfcb45",
+        "bytes": 89644,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libintl-8.dll",
+        "filename": "libintl-8.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libpcre2-8-0.dll": {
+        "sha256": "70c3fe87f27a2ebd74778dba91f024af7064545636e926889cd039e44c2714d3",
+        "bytes": 482642,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libpcre2-8-0.dll",
+        "filename": "libpcre2-8-0.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "dosgolem-probe.exe": {
+        "sha256": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+        "bytes": 5490176,
+        "imports": [],
+        "source": "pcm-gate/封裝 測試/tools/dosgolem-probe.exe",
+        "filename": "dosgolem-probe.exe",
+        "groups": [
+          "fm"
+        ]
+      },
+      "libadplug-2-3-3-0.dll": {
+        "sha256": "1c0d4b7299c982aeee022f3d7b8ee9ca4db2e76ef901080d801b10ab5f0270cb",
+        "bytes": 946147,
+        "imports": [
+          "libbinio-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libgcc_s_seh-1.dll",
+          "libstdc++-6.dll"
+        ],
+        "source": "pcm-gate/封裝 測試/tools/libadplug-2-3-3-0.dll",
+        "filename": "libadplug-2-3-3-0.dll",
+        "groups": [
+          "fm"
+        ]
+      },
+      "libbinio-1.dll": {
+        "sha256": "f6ee4fe7cd717723195a3ab5cb80737b1de957b9debdc49b1fdb0e92e5bae57f",
+        "bytes": 180743,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libgcc_s_seh-1.dll",
+          "libstdc++-6.dll"
+        ],
+        "source": "pcm-gate/封裝 測試/tools/libbinio-1.dll",
+        "filename": "libbinio-1.dll",
+        "groups": [
+          "fm"
+        ]
+      },
+      "libvorbisfile-3.dll": {
+        "sha256": "7ca6a294d1bb9449aa91320ba35d0ac26c4a59d3926de4842a298dc3f1638b82",
+        "bytes": 119618,
+        "imports": [
+          "libvorbis-0.dll",
+          "libogg-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "pcm-gate/封裝 測試/tools/libvorbisfile-3.dll",
+        "filename": "libvorbisfile-3.dll",
+        "groups": [
+          "fm"
+        ]
+      },
+      "opl2wav.exe": {
+        "filename": "opl2wav.exe",
+        "sha256": "6ae83b64f238cf5073ef4e9601bc71ddd9567fd018d894316f037de83217d5e0",
+        "bytes": 276561,
+        "imports": [
+          "libadplug-2-3-3-0.dll",
+          "libbinio-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "SHELL32.dll",
+          "libgcc_s_seh-1.dll",
+          "libstdc++-6.dll"
+        ],
+        "source": "opl-unicode-production/opl2wav.exe",
+        "groups": [
+          "fm-unicode"
+        ]
+      }
+    },
+    "identical_overlaps": [
+      "ffmpeg.exe",
+      "libgcc_s_seh-1.dll",
+      "libogg-0.dll",
+      "libstdc++-6.dll",
+      "libvorbis-0.dll",
+      "libvorbisenc-2.dll",
+      "libwinpthread-1.dll"
+    ],
+    "renderer_update": {
+      "scope": "Windows Unicode 參數／檔案入口；原 DSP 不改",
+      "command": [
+        "x86_64-w64-mingw32-g++",
+        "-O2",
+        "-std=c++11",
+        "/tools/opl2wav.cpp",
+        "-I/out/prefix/include",
+        "-I/out/prefix/include/libbinio",
+        "-L/out/prefix/lib",
+        "-ladplug",
+        "-lbinio",
+        "-lshell32",
+        "-o",
+        "/out/opl-unicode-production/opl2wav.exe"
+      ],
+      "source_sha256": "2e2b6afba914dd18b023d5c813dfe7e39fa915467bd8ccb8a4b7f0cdab74298e",
+      "program_sha256": "6ae83b64f238cf5073ef4e9601bc71ddd9567fd018d894316f037de83217d5e0",
+      "probe_wave_sha256": "db4dcfe14ab3bc9150d298740bec549e5b95a25662823bf6977c0d4b843258a1",
+      "builder_sha256": "29697f440eb6a238b3f1845222304bb34bc80c2a0fbb1236b67904f2e950e4d5"
+    },
+    "files": {
+      "music-import.exe": {
+        "sha256": "048cc00e40144b5e59cc635c60f8fc994d5814a8a806ba8447c89461f064ba38",
+        "bytes": 4694528
+      },
+      "soundfont/FluidR3_GM.sf2": {
+        "sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+        "bytes": 148398306
+      },
+      "sources/windows-music-fixed-sources.tar": {
+        "sha256": "e94d2c6fc4f013bb6684bf1f33eaad963ea103daed27baef1d848273f0cdbce4",
+        "bytes": 127129600
+      },
+      "metadata/GM-TOOLS.json": {
+        "sha256": "49c07dac366671e95ec5b6589f83efaecf4ff2ac8df88ee0d45023a14cd8dded",
+        "bytes": 105414
+      },
+      "metadata/FM-TOOLS.json": {
+        "sha256": "4fc93a59c4a9b1f65b9e1a0114bc919126471b0d13fcef9102fdc29df93bac5a",
+        "bytes": 72660
+      },
+      "metadata/IMPORTER-BUILDINFO.txt": {
+        "sha256": "9802cfeb027e08a87d717137d2c298586a25bbb9abc8a11730df37cb41e5fabc",
+        "bytes": 616
+      },
+      "tools/ffmpeg.exe": {
+        "sha256": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+        "bytes": 1751552
+      },
+      "tools/libvorbisenc-2.dll": {
+        "sha256": "92dad65c8c4b5f6aede7e9c1e5452b1b9a74ee386603f5197276d6466ad7da34",
+        "bytes": 750574
+      },
+      "tools/libvorbis-0.dll": {
+        "sha256": "d07b5ff4e939b538f77ce0806c7ca5c6438f5b08f08a164dcc9bfda031a156b7",
+        "bytes": 306231
+      },
+      "tools/libogg-0.dll": {
+        "sha256": "d17a6e849530abf809f10f32b3f6b90765a73c7497eda8198ca7afdb599941a7",
+        "bytes": 110050
+      },
+      "tools/fluidsynth.exe": {
+        "sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff",
+        "bytes": 164737
+      },
+      "tools/libfluidsynth-3.dll": {
+        "sha256": "24908c123138e890ffa8bbc036f0f9b6d4dfcd10c3ea017c747c02e087e86d3e",
+        "bytes": 562696
+      },
+      "tools/libstdc++-6.dll": {
+        "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203",
+        "bytes": 23703447
+      },
+      "tools/libgcc_s_seh-1.dll": {
+        "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7",
+        "bytes": 681726
+      },
+      "tools/libgomp-1.dll": {
+        "sha256": "2b5b74416a061c70b3dc2bfcc19f26bfc2777d8fa1a21a81f8f656c9671cfc97",
+        "bytes": 1615161
+      },
+      "tools/libwinpthread-1.dll": {
+        "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329",
+        "bytes": 319336
+      },
+      "tools/libsndfile-1.dll": {
+        "sha256": "08bad562b55010889bbcf55fbb8b595d22860777ba424daf1e0075fb76ade866",
+        "bytes": 1007840
+      },
+      "tools/libglib-2.0-0.dll": {
+        "sha256": "81a9ddc58f0d895f98dee23198c9e4eca63317e3b56206739cb1532bad1f9950",
+        "bytes": 2150059
+      },
+      "tools/libintl-8.dll": {
+        "sha256": "29220a214565b405a499a7b5500097db5c1edd9357d08a2ed8d15147f8bfcb45",
+        "bytes": 89644
+      },
+      "tools/libpcre2-8-0.dll": {
+        "sha256": "70c3fe87f27a2ebd74778dba91f024af7064545636e926889cd039e44c2714d3",
+        "bytes": 482642
+      },
+      "tools/dosgolem-probe.exe": {
+        "sha256": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+        "bytes": 5490176
+      },
+      "tools/libadplug-2-3-3-0.dll": {
+        "sha256": "1c0d4b7299c982aeee022f3d7b8ee9ca4db2e76ef901080d801b10ab5f0270cb",
+        "bytes": 946147
+      },
+      "tools/libbinio-1.dll": {
+        "sha256": "f6ee4fe7cd717723195a3ab5cb80737b1de957b9debdc49b1fdb0e92e5bae57f",
+        "bytes": 180743
+      },
+      "tools/libvorbisfile-3.dll": {
+        "sha256": "7ca6a294d1bb9449aa91320ba35d0ac26c4a59d3926de4842a298dc3f1638b82",
+        "bytes": 119618
+      },
+      "tools/opl2wav.exe": {
+        "sha256": "6ae83b64f238cf5073ef4e9601bc71ddd9567fd018d894316f037de83217d5e0",
+        "bytes": 276561
+      },
+      "sources/opl2wav.cpp": {
+        "sha256": "2e2b6afba914dd18b023d5c813dfe7e39fa915467bd8ccb8a4b7f0cdab74298e",
+        "bytes": 5747
+      },
+      "metadata/OPL-UNICODE-BUILD.json": {
+        "sha256": "98d16995adca5035f64e0fb0c0265070c82574802121a05d484d52ed1353fd1f",
+        "bytes": 727
+      },
+      "metadata/OPL-UNICODE-WAVE.json": {
+        "sha256": "db4dcfe14ab3bc9150d298740bec549e5b95a25662823bf6977c0d4b843258a1",
+        "bytes": 4922
+      },
+      "licenses/fluidsynth/debian/copyright": {
+        "sha256": "a203c481ca905bd39bff52e5bb357a2f6c819aa251f9ff9024797bfc12145b2e",
+        "bytes": 25087
+      },
+      "licenses/fluidsynth/LICENSE": {
+        "sha256": "9b872a8a070b8ad329c4bd380fb1bf0000f564c75023ec8e1e6803f15364b9e9",
+        "bytes": 26461
+      },
+      "licenses/fluidsynth/AUTHORS": {
+        "sha256": "78139528287e8632dd19bc243a642eed43771b3261b590e930ee55f8b586a4a0",
+        "bytes": 5643
+      },
+      "licenses/zlib/LICENSE": {
+        "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+        "bytes": 1002
+      },
+      "licenses/glib2.0/debian/copyright": {
+        "sha256": "03cbcd6142c92bb14c997af557b8c73b1534710c34fe7f69788f8e8fc5fd941d",
+        "bytes": 51488
+      },
+      "licenses/glib2.0/COPYING": {
+        "sha256": "fa6f36630bb1e0c571d34b2bbdf188d08495c9dbf58f28cac112f303fc1f58fb",
+        "bytes": 25967
+      },
+      "licenses/glib2.0/subprojects/proxy-libintl/COPYING": {
+        "sha256": "d245807f90032872d1438d741ed21e2490e1175dc8aa3afa5ddb6c8e529b58e5",
+        "bytes": 25292
+      },
+      "licenses/libffi/debian/copyright": {
+        "sha256": "f83d2ecba1ea4d99957e81c50bebbd076a128194288a3ec22cc8ccdb77c43087",
+        "bytes": 10165
+      },
+      "licenses/libffi/LICENSE": {
+        "sha256": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388",
+        "bytes": 1132
+      },
+      "licenses/libffi/LICENSE-BUILDTOOLS": {
+        "sha256": "e67978cd18816c0cb7d29aaaacde7b7447402c2fb321a051698890a8eaedda94",
+        "bytes": 18698
+      },
+      "licenses/libsndfile/debian/copyright": {
+        "sha256": "56bc3dae5803b8b2d59adf72fcd526eef2f4ac929d2442562d12248867222335",
+        "bytes": 15415
+      },
+      "licenses/libsndfile/AUTHORS": {
+        "sha256": "373fb9abaa154db5da8ab692853da32ced8977b817a713913953c63e50eb4499",
+        "bytes": 11603
+      },
+      "licenses/libsndfile/COPYING": {
+        "sha256": "ad01ea5cd2755f6048383c8d54c88459cd6fcb17757c5c8892f8c5ea060f6140",
+        "bytes": 26518
+      },
+      "licenses/pcre2/debian/copyright": {
+        "sha256": "030511beb4d9d620ad09914c369c36ec0528dcf301d1923cc643c948ee7c6a38",
+        "bytes": 6626
+      },
+      "licenses/pcre2/AUTHORS": {
+        "sha256": "430c8e1ae1c643cef5b14af882ada140bd8f675198d704cf88aa65addac3ab78",
+        "bytes": 749
+      },
+      "licenses/pcre2/COPYING": {
+        "sha256": "99272c55f3dcfa07a8a7e15a5c1a33096e4727de74241d65fa049fccfdd59507",
+        "bytes": 97
+      },
+      "licenses/ffmpeg/debian/copyright": {
+        "sha256": "7447a836ec8522b699ba022d5de6c9ab39cd1682054facf550ce84589f161e2a",
+        "bytes": 44039
+      },
+      "licenses/ffmpeg/COPYING.GPLv2": {
+        "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+        "bytes": 18092
+      },
+      "licenses/ffmpeg/COPYING.LGPLv3": {
+        "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+        "bytes": 7651
+      },
+      "licenses/ffmpeg/COPYING.LGPLv2.1": {
+        "sha256": "246041b6ecf9bc32d718a62c57877c78b5eb397b6467e74ed7ae2626ab189c30",
+        "bytes": 26517
+      },
+      "licenses/ffmpeg/COPYING.GPLv3": {
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "bytes": 35147
+      },
+      "licenses/ffmpeg/LICENSE.md": {
+        "sha256": "cb48bf09a11f5fb576cddb0431c8f5ed0a60157a9ec942adffc13907cbe083f2",
+        "bytes": 4376
+      },
+      "licenses/libogg/debian/copyright": {
+        "sha256": "36bb02bf6a764f4fac0ca9d38d2563932513df6015d98bd162624b18feaf096c",
+        "bytes": 4213
+      },
+      "licenses/libogg/AUTHORS": {
+        "sha256": "6fcb33d0cdd60b5054e7df820916388b590427514288c2bab01c626bb8ae9506",
+        "bytes": 198
+      },
+      "licenses/libogg/COPYING": {
+        "sha256": "d2ab5758336489da61c12cc5bb757da5339c4ae9001f9bb0562b4370249af814",
+        "bytes": 1466
+      },
+      "licenses/libvorbis/debian/copyright": {
+        "sha256": "47badad9f7f750f92cd12f44db08b6937e5b4d47935ba1cc60de0ea3a2adff9b",
+        "bytes": 2307
+      },
+      "licenses/libvorbis/AUTHORS": {
+        "sha256": "f5cab9f16035f770f50299f85cf2938c06dc3a9a30425961067788102ec896d3",
+        "bytes": 65
+      },
+      "licenses/libvorbis/COPYING": {
+        "sha256": "ec1815db59fcd302846df949d7424876cb2e2dc5ed1606c5fb0b36787b1cf43a",
+        "bytes": 1470
+      },
+      "licenses/soundfont/COPYING": {
+        "sha256": "8ef830b65c97a976b86e34bb5fde08d99dfb1db13c4149b5b20bc837ac6c4568",
+        "bytes": 1086
+      },
+      "licenses/soundfont/README": {
+        "sha256": "2f92d462684629f207e43815115b79d7f1ce130d30ca8792b7d82b398a8306f9",
+        "bytes": 1042
+      },
+      "licenses/gcc-mingw-w64-x86-64-win32-runtime-copyright": {
+        "sha256": "a481f772f7a53335f13b32c6c54eb1c8577ce97704edd3757ab7ed4287a8e96a",
+        "bytes": 75729
+      },
+      "licenses/mingw-w64-x86-64-dev-copyright": {
+        "sha256": "f27a58667538b6913ea23cb9e07e270922761ebf7c22d94bda7f819aaf08ea08",
+        "bytes": 35571
+      },
+      "licenses/common/GFDL-1.3": {
+        "sha256": "110535522396708cea37c72a802c5e7e81391139f5f7985631c93ef242b206a4",
+        "bytes": 22955
+      },
+      "licenses/common/GFDL": {
+        "sha256": "110535522396708cea37c72a802c5e7e81391139f5f7985631c93ef242b206a4",
+        "bytes": 22955
+      },
+      "licenses/common/GPL-3": {
+        "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "bytes": 35149
+      },
+      "licenses/common/GPL-1": {
+        "sha256": "d77d235e41d54594865151f4751e835c5a82322b0e87ace266567c3391a4b912",
+        "bytes": 12632
+      },
+      "licenses/common/MPL-1.1": {
+        "sha256": "f849fc26a7a99981611a3a370e83078deb617d12a45776d6c4cada4d338be469",
+        "bytes": 25755
+      },
+      "licenses/common/LGPL": {
+        "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+        "bytes": 7652
+      },
+      "licenses/common/Artistic": {
+        "sha256": "b7fd9b73ea99602016a326e0b62e6646060d18febdd065ceca8bb482208c3d88",
+        "bytes": 6111
+      },
+      "licenses/common/BSD": {
+        "sha256": "5d588eb3b157d52112afea935c88a7ff9efddc1e2d95a42c25d3b96ad9055008",
+        "bytes": 1499
+      },
+      "licenses/common/GPL": {
+        "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "bytes": 35149
+      },
+      "licenses/common/MPL-2.0": {
+        "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+        "bytes": 16726
+      },
+      "licenses/common/GFDL-1.2": {
+        "sha256": "d8e94ae5fdb5433fcae2961aeb1a8cf17174d6f4a0465d24bf37dd8a038bd439",
+        "bytes": 20432
+      },
+      "licenses/common/GPL-2": {
+        "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+        "bytes": 18092
+      },
+      "licenses/common/Apache-2.0": {
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "bytes": 11358
+      },
+      "licenses/common/LGPL-3": {
+        "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+        "bytes": 7652
+      },
+      "licenses/common/LGPL-2.1": {
+        "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+        "bytes": 26530
+      },
+      "licenses/common/LGPL-2": {
+        "sha256": "681e386e44a19d7d0674b4320272c90e66b6610b741e7e6305f8219c42e85366",
+        "bytes": 25381
+      },
+      "licenses/common/CC0-1.0": {
+        "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+        "bytes": 7048
+      },
+      "licenses/adplug/COPYING": {
+        "sha256": "cde11c7b610bccf99e6d61ae4396b711c9d0377e7e156fa572db552489e29912",
+        "bytes": 26546
+      },
+      "licenses/adplug/AUTHORS": {
+        "sha256": "8cbda0790593d491ac1db07de095bcef4f3f679bb4d5e548d9df5e0a73283e7c",
+        "bytes": 3081
+      },
+      "licenses/adplug/debian/copyright": {
+        "sha256": "ce44f2d33869b89d03359eb9608f27904977262fdb8018e3b2b1ace650a231f7",
+        "bytes": 1740
+      },
+      "licenses/libbinio/COPYING": {
+        "sha256": "ca0061fc1381a3ab242310e4b3f56389f28e3d460eb2fd822ed7a21c6f030532",
+        "bytes": 26536
+      },
+      "licenses/libbinio/AUTHORS": {
+        "sha256": "d79eb6f3a2345196eb6b6ff53ace9f1cc177e9e1299218b59e0a4251978a0320",
+        "bytes": 532
+      },
+      "licenses/libbinio/debian/copyright": {
+        "sha256": "b77f11219df4fbba6dddae5aec4924b06855edb22b379fe887184c73ede20a9e",
+        "bytes": 1718
+      },
+      "README.txt": {
+        "sha256": "a8ed9e6096b02e40e8870068185c188937c57d8b4d97f1c0668769e63a1f0569",
+        "bytes": 867
+      }
+    },
+    "formal_delivery_complete": false
+  },
+  "annex": {
+    "purpose": "完整 Go／解碼套件／dosgolem 授權補充，不變更工具或音源",
+    "stage_bundle_sha256": "e469c8103fa92192ac9f1a5e5c12be95535c3d72e291c7bc07c1a702b64c7992",
+    "builder_sha256": "7c143bb6de56b6d3d64b5e058e683f5afef382b71e2ec97c542b932d82900817",
+    "files": {
+      "licenses/go/Go-LICENSE": {
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+        "bytes": 1453
+      },
+      "licenses/go/Go-PATENTS": {
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+        "bytes": 1303
+      },
+      "licenses/go/dosgolem-LICENSE": {
+        "sha256": "d70e70a35fe613d505ea57b97c986b58e2b16c980e37b985811cdf80cf7f8ede",
+        "bytes": 20223
+      },
+      "licenses/go/oggvorbis-1.0.5-LICENSE": {
+        "sha256": "e833f898bbaf0633803636011c6e5bfc5e22d1d822dc7fb62517c8dcec82f123",
+        "bytes": 1072
+      },
+      "licenses/go/vorbis-1.0.2-LICENSE": {
+        "sha256": "e833f898bbaf0633803636011c6e5bfc5e22d1d822dc7fb62517c8dcec82f123",
+        "bytes": 1072
+      }
+    }
+  },
+  "archive": {
+    "scope": "Windows 合併工具本機 ZIP／中文搬移技術驗證；正式交付未完成",
+    "archive": "combined-utf8-tools-technical.zip",
+    "sha256": "d17cece03aba875f40d343405ec99d85861a60881d3134080e59fb989cf2202b",
+    "bytes": 275685648,
+    "files": {
+      "music-import.exe": {
+        "sha256": "048cc00e40144b5e59cc635c60f8fc994d5814a8a806ba8447c89461f064ba38",
+        "bytes": 4694528
+      },
+      "ANNEX.json": {
+        "sha256": "2f2c3d1b7b8289f88cb35630c41f62cafde2949801426219f66d8baeb44d1df0",
+        "bytes": 1038
+      },
+      "BUNDLE.json": {
+        "sha256": "e469c8103fa92192ac9f1a5e5c12be95535c3d72e291c7bc07c1a702b64c7992",
+        "bytes": 21699
+      },
+      "README.txt": {
+        "sha256": "a8ed9e6096b02e40e8870068185c188937c57d8b4d97f1c0668769e63a1f0569",
+        "bytes": 867
+      },
+      "tools/libbinio-1.dll": {
+        "sha256": "f6ee4fe7cd717723195a3ab5cb80737b1de957b9debdc49b1fdb0e92e5bae57f",
+        "bytes": 180743
+      },
+      "tools/libgcc_s_seh-1.dll": {
+        "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7",
+        "bytes": 681726
+      },
+      "tools/libvorbisenc-2.dll": {
+        "sha256": "92dad65c8c4b5f6aede7e9c1e5452b1b9a74ee386603f5197276d6466ad7da34",
+        "bytes": 750574
+      },
+      "tools/libfluidsynth-3.dll": {
+        "sha256": "24908c123138e890ffa8bbc036f0f9b6d4dfcd10c3ea017c747c02e087e86d3e",
+        "bytes": 562696
+      },
+      "tools/ffmpeg.exe": {
+        "sha256": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+        "bytes": 1751552
+      },
+      "tools/libwinpthread-1.dll": {
+        "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329",
+        "bytes": 319336
+      },
+      "tools/libvorbisfile-3.dll": {
+        "sha256": "7ca6a294d1bb9449aa91320ba35d0ac26c4a59d3926de4842a298dc3f1638b82",
+        "bytes": 119618
+      },
+      "tools/dosgolem-probe.exe": {
+        "sha256": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+        "bytes": 5490176
+      },
+      "tools/libgomp-1.dll": {
+        "sha256": "2b5b74416a061c70b3dc2bfcc19f26bfc2777d8fa1a21a81f8f656c9671cfc97",
+        "bytes": 1615161
+      },
+      "tools/libsndfile-1.dll": {
+        "sha256": "08bad562b55010889bbcf55fbb8b595d22860777ba424daf1e0075fb76ade866",
+        "bytes": 1007840
+      },
+      "tools/fluidsynth.exe": {
+        "sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff",
+        "bytes": 164737
+      },
+      "tools/libglib-2.0-0.dll": {
+        "sha256": "81a9ddc58f0d895f98dee23198c9e4eca63317e3b56206739cb1532bad1f9950",
+        "bytes": 2150059
+      },
+      "tools/libadplug-2-3-3-0.dll": {
+        "sha256": "1c0d4b7299c982aeee022f3d7b8ee9ca4db2e76ef901080d801b10ab5f0270cb",
+        "bytes": 946147
+      },
+      "tools/libvorbis-0.dll": {
+        "sha256": "d07b5ff4e939b538f77ce0806c7ca5c6438f5b08f08a164dcc9bfda031a156b7",
+        "bytes": 306231
+      },
+      "tools/libintl-8.dll": {
+        "sha256": "29220a214565b405a499a7b5500097db5c1edd9357d08a2ed8d15147f8bfcb45",
+        "bytes": 89644
+      },
+      "tools/libogg-0.dll": {
+        "sha256": "d17a6e849530abf809f10f32b3f6b90765a73c7497eda8198ca7afdb599941a7",
+        "bytes": 110050
+      },
+      "tools/libpcre2-8-0.dll": {
+        "sha256": "70c3fe87f27a2ebd74778dba91f024af7064545636e926889cd039e44c2714d3",
+        "bytes": 482642
+      },
+      "tools/libstdc++-6.dll": {
+        "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203",
+        "bytes": 23703447
+      },
+      "tools/opl2wav.exe": {
+        "sha256": "6ae83b64f238cf5073ef4e9601bc71ddd9567fd018d894316f037de83217d5e0",
+        "bytes": 276561
+      },
+      "sources/windows-music-fixed-sources.tar": {
+        "sha256": "e94d2c6fc4f013bb6684bf1f33eaad963ea103daed27baef1d848273f0cdbce4",
+        "bytes": 127129600
+      },
+      "sources/opl2wav.cpp": {
+        "sha256": "2e2b6afba914dd18b023d5c813dfe7e39fa915467bd8ccb8a4b7f0cdab74298e",
+        "bytes": 5747
+      },
+      "soundfont/FluidR3_GM.sf2": {
+        "sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+        "bytes": 148398306
+      },
+      "metadata/OPL-UNICODE-BUILD.json": {
+        "sha256": "98d16995adca5035f64e0fb0c0265070c82574802121a05d484d52ed1353fd1f",
+        "bytes": 727
+      },
+      "metadata/GM-TOOLS.json": {
+        "sha256": "49c07dac366671e95ec5b6589f83efaecf4ff2ac8df88ee0d45023a14cd8dded",
+        "bytes": 105414
+      },
+      "metadata/IMPORTER-BUILDINFO.txt": {
+        "sha256": "9802cfeb027e08a87d717137d2c298586a25bbb9abc8a11730df37cb41e5fabc",
+        "bytes": 616
+      },
+      "metadata/OPL-UNICODE-WAVE.json": {
+        "sha256": "db4dcfe14ab3bc9150d298740bec549e5b95a25662823bf6977c0d4b843258a1",
+        "bytes": 4922
+      },
+      "metadata/FM-TOOLS.json": {
+        "sha256": "4fc93a59c4a9b1f65b9e1a0114bc919126471b0d13fcef9102fdc29df93bac5a",
+        "bytes": 72660
+      },
+      "licenses/mingw-w64-x86-64-dev-copyright": {
+        "sha256": "f27a58667538b6913ea23cb9e07e270922761ebf7c22d94bda7f819aaf08ea08",
+        "bytes": 35571
+      },
+      "licenses/gcc-mingw-w64-x86-64-win32-runtime-copyright": {
+        "sha256": "a481f772f7a53335f13b32c6c54eb1c8577ce97704edd3757ab7ed4287a8e96a",
+        "bytes": 75729
+      },
+      "licenses/fluidsynth/LICENSE": {
+        "sha256": "9b872a8a070b8ad329c4bd380fb1bf0000f564c75023ec8e1e6803f15364b9e9",
+        "bytes": 26461
+      },
+      "licenses/fluidsynth/AUTHORS": {
+        "sha256": "78139528287e8632dd19bc243a642eed43771b3261b590e930ee55f8b586a4a0",
+        "bytes": 5643
+      },
+      "licenses/fluidsynth/debian/copyright": {
+        "sha256": "a203c481ca905bd39bff52e5bb357a2f6c819aa251f9ff9024797bfc12145b2e",
+        "bytes": 25087
+      },
+      "licenses/zlib/LICENSE": {
+        "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+        "bytes": 1002
+      },
+      "licenses/ffmpeg/COPYING.GPLv2": {
+        "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+        "bytes": 18092
+      },
+      "licenses/ffmpeg/COPYING.LGPLv3": {
+        "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+        "bytes": 7651
+      },
+      "licenses/ffmpeg/COPYING.LGPLv2.1": {
+        "sha256": "246041b6ecf9bc32d718a62c57877c78b5eb397b6467e74ed7ae2626ab189c30",
+        "bytes": 26517
+      },
+      "licenses/ffmpeg/COPYING.GPLv3": {
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "bytes": 35147
+      },
+      "licenses/ffmpeg/LICENSE.md": {
+        "sha256": "cb48bf09a11f5fb576cddb0431c8f5ed0a60157a9ec942adffc13907cbe083f2",
+        "bytes": 4376
+      },
+      "licenses/ffmpeg/debian/copyright": {
+        "sha256": "7447a836ec8522b699ba022d5de6c9ab39cd1682054facf550ce84589f161e2a",
+        "bytes": 44039
+      },
+      "licenses/glib2.0/COPYING": {
+        "sha256": "fa6f36630bb1e0c571d34b2bbdf188d08495c9dbf58f28cac112f303fc1f58fb",
+        "bytes": 25967
+      },
+      "licenses/glib2.0/debian/copyright": {
+        "sha256": "03cbcd6142c92bb14c997af557b8c73b1534710c34fe7f69788f8e8fc5fd941d",
+        "bytes": 51488
+      },
+      "licenses/glib2.0/subprojects/proxy-libintl/COPYING": {
+        "sha256": "d245807f90032872d1438d741ed21e2490e1175dc8aa3afa5ddb6c8e529b58e5",
+        "bytes": 25292
+      },
+      "licenses/libffi/LICENSE": {
+        "sha256": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388",
+        "bytes": 1132
+      },
+      "licenses/libffi/LICENSE-BUILDTOOLS": {
+        "sha256": "e67978cd18816c0cb7d29aaaacde7b7447402c2fb321a051698890a8eaedda94",
+        "bytes": 18698
+      },
+      "licenses/libffi/debian/copyright": {
+        "sha256": "f83d2ecba1ea4d99957e81c50bebbd076a128194288a3ec22cc8ccdb77c43087",
+        "bytes": 10165
+      },
+      "licenses/libogg/AUTHORS": {
+        "sha256": "6fcb33d0cdd60b5054e7df820916388b590427514288c2bab01c626bb8ae9506",
+        "bytes": 198
+      },
+      "licenses/libogg/COPYING": {
+        "sha256": "d2ab5758336489da61c12cc5bb757da5339c4ae9001f9bb0562b4370249af814",
+        "bytes": 1466
+      },
+      "licenses/libogg/debian/copyright": {
+        "sha256": "36bb02bf6a764f4fac0ca9d38d2563932513df6015d98bd162624b18feaf096c",
+        "bytes": 4213
+      },
+      "licenses/soundfont/COPYING": {
+        "sha256": "8ef830b65c97a976b86e34bb5fde08d99dfb1db13c4149b5b20bc837ac6c4568",
+        "bytes": 1086
+      },
+      "licenses/soundfont/README": {
+        "sha256": "2f92d462684629f207e43815115b79d7f1ce130d30ca8792b7d82b398a8306f9",
+        "bytes": 1042
+      },
+      "licenses/libvorbis/AUTHORS": {
+        "sha256": "f5cab9f16035f770f50299f85cf2938c06dc3a9a30425961067788102ec896d3",
+        "bytes": 65
+      },
+      "licenses/libvorbis/COPYING": {
+        "sha256": "ec1815db59fcd302846df949d7424876cb2e2dc5ed1606c5fb0b36787b1cf43a",
+        "bytes": 1470
+      },
+      "licenses/libvorbis/debian/copyright": {
+        "sha256": "47badad9f7f750f92cd12f44db08b6937e5b4d47935ba1cc60de0ea3a2adff9b",
+        "bytes": 2307
+      },
+      "licenses/libsndfile/AUTHORS": {
+        "sha256": "373fb9abaa154db5da8ab692853da32ced8977b817a713913953c63e50eb4499",
+        "bytes": 11603
+      },
+      "licenses/libsndfile/COPYING": {
+        "sha256": "ad01ea5cd2755f6048383c8d54c88459cd6fcb17757c5c8892f8c5ea060f6140",
+        "bytes": 26518
+      },
+      "licenses/libsndfile/debian/copyright": {
+        "sha256": "56bc3dae5803b8b2d59adf72fcd526eef2f4ac929d2442562d12248867222335",
+        "bytes": 15415
+      },
+      "licenses/pcre2/AUTHORS": {
+        "sha256": "430c8e1ae1c643cef5b14af882ada140bd8f675198d704cf88aa65addac3ab78",
+        "bytes": 749
+      },
+      "licenses/pcre2/COPYING": {
+        "sha256": "99272c55f3dcfa07a8a7e15a5c1a33096e4727de74241d65fa049fccfdd59507",
+        "bytes": 97
+      },
+      "licenses/pcre2/debian/copyright": {
+        "sha256": "030511beb4d9d620ad09914c369c36ec0528dcf301d1923cc643c948ee7c6a38",
+        "bytes": 6626
+      },
+      "licenses/libbinio/AUTHORS": {
+        "sha256": "d79eb6f3a2345196eb6b6ff53ace9f1cc177e9e1299218b59e0a4251978a0320",
+        "bytes": 532
+      },
+      "licenses/libbinio/COPYING": {
+        "sha256": "ca0061fc1381a3ab242310e4b3f56389f28e3d460eb2fd822ed7a21c6f030532",
+        "bytes": 26536
+      },
+      "licenses/libbinio/debian/copyright": {
+        "sha256": "b77f11219df4fbba6dddae5aec4924b06855edb22b379fe887184c73ede20a9e",
+        "bytes": 1718
+      },
+      "licenses/adplug/AUTHORS": {
+        "sha256": "8cbda0790593d491ac1db07de095bcef4f3f679bb4d5e548d9df5e0a73283e7c",
+        "bytes": 3081
+      },
+      "licenses/adplug/COPYING": {
+        "sha256": "cde11c7b610bccf99e6d61ae4396b711c9d0377e7e156fa572db552489e29912",
+        "bytes": 26546
+      },
+      "licenses/adplug/debian/copyright": {
+        "sha256": "ce44f2d33869b89d03359eb9608f27904977262fdb8018e3b2b1ace650a231f7",
+        "bytes": 1740
+      },
+      "licenses/common/GFDL-1.3": {
+        "sha256": "110535522396708cea37c72a802c5e7e81391139f5f7985631c93ef242b206a4",
+        "bytes": 22955
+      },
+      "licenses/common/GFDL": {
+        "sha256": "110535522396708cea37c72a802c5e7e81391139f5f7985631c93ef242b206a4",
+        "bytes": 22955
+      },
+      "licenses/common/GPL-3": {
+        "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "bytes": 35149
+      },
+      "licenses/common/GPL-1": {
+        "sha256": "d77d235e41d54594865151f4751e835c5a82322b0e87ace266567c3391a4b912",
+        "bytes": 12632
+      },
+      "licenses/common/MPL-1.1": {
+        "sha256": "f849fc26a7a99981611a3a370e83078deb617d12a45776d6c4cada4d338be469",
+        "bytes": 25755
+      },
+      "licenses/common/LGPL": {
+        "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+        "bytes": 7652
+      },
+      "licenses/common/Artistic": {
+        "sha256": "b7fd9b73ea99602016a326e0b62e6646060d18febdd065ceca8bb482208c3d88",
+        "bytes": 6111
+      },
+      "licenses/common/BSD": {
+        "sha256": "5d588eb3b157d52112afea935c88a7ff9efddc1e2d95a42c25d3b96ad9055008",
+        "bytes": 1499
+      },
+      "licenses/common/GPL": {
+        "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "bytes": 35149
+      },
+      "licenses/common/MPL-2.0": {
+        "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+        "bytes": 16726
+      },
+      "licenses/common/GFDL-1.2": {
+        "sha256": "d8e94ae5fdb5433fcae2961aeb1a8cf17174d6f4a0465d24bf37dd8a038bd439",
+        "bytes": 20432
+      },
+      "licenses/common/GPL-2": {
+        "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+        "bytes": 18092
+      },
+      "licenses/common/Apache-2.0": {
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "bytes": 11358
+      },
+      "licenses/common/LGPL-3": {
+        "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+        "bytes": 7652
+      },
+      "licenses/common/LGPL-2.1": {
+        "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+        "bytes": 26530
+      },
+      "licenses/common/LGPL-2": {
+        "sha256": "681e386e44a19d7d0674b4320272c90e66b6610b741e7e6305f8219c42e85366",
+        "bytes": 25381
+      },
+      "licenses/common/CC0-1.0": {
+        "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+        "bytes": 7048
+      },
+      "licenses/go/Go-PATENTS": {
+        "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+        "bytes": 1303
+      },
+      "licenses/go/Go-LICENSE": {
+        "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+        "bytes": 1453
+      },
+      "licenses/go/dosgolem-LICENSE": {
+        "sha256": "d70e70a35fe613d505ea57b97c986b58e2b16c980e37b985811cdf80cf7f8ede",
+        "bytes": 20223
+      },
+      "licenses/go/oggvorbis-1.0.5-LICENSE": {
+        "sha256": "e833f898bbaf0633803636011c6e5bfc5e22d1d822dc7fb62517c8dcec82f123",
+        "bytes": 1072
+      },
+      "licenses/go/vorbis-1.0.2-LICENSE": {
+        "sha256": "e833f898bbaf0633803636011c6e5bfc5e22d1d822dc7fb62517c8dcec82f123",
+        "bytes": 1072
+      }
+    },
+    "utf8_flag_all": true,
+    "readme_bom_crlf": true,
+    "relocated_path": "combined-utf8-relocated/中文 搬移/封裝 測試",
+    "builder_sha256": "7c143bb6de56b6d3d64b5e058e683f5afef382b71e2ec97c542b932d82900817",
+    "formal_delivery_complete": false
+  },
+  "full": {
+    "GM": {
+      "scope": "GM 合成收據；FM 另見 FM-SOURCES.json，平台封包未驗收",
+      "status": "complete-gm-stage",
+      "approximation": "legacy approximation：FA 當 BPM；raw 時間沿用匯出器；FB／FC 不展開反覆；非原版 MPU 音色",
+      "platform": "windows/amd64",
+      "program_sha256": "048cc00e40144b5e59cc635c60f8fc994d5814a8a806ba8447c89461f064ba38",
+      "soundfont_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+      "tools_sha256": {
+        "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+        "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff"
+      },
+      "tool_versions": {
+        "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe": "ffmpeg version 5.1.9 Copyright (c) 2000-2026 the FFmpeg developers\r\nbuilt with gcc 12-win32 (GCC)\r\nconfiguration: --enable-cross-compile --target-os=mingw32 --arch=x86_64 --cross-prefix=x86_64-w64-mingw32- --pkg-config=pkg-config --prefix=/out/prefix --disable-autodetect --disable-everything --disable-network --disable-doc --disable-debug --disable-x86asm --disable-ffplay --disable-ffprobe --enable-ffmpeg --enable-protocol=file --enable-demuxer='wav,ogg' --enable-decoder='pcm_s16le,pcm_f32le,vorbis' --enable-encoder='libvorbis,pcm_f32le' --enable-muxer='ogg,pcm_f32le' --enable-filter='volume,aresample,anull' --enable-libvorbis --enable-static --disable-shared\r\nlibavutil      57. 28.100 / 57. 28.100\r\nlibavcodec     59. 37.100 / 59. 37.100\r\nlibavformat    59. 27.100 / 59. 27.100\r\nlibavdevice    59.  7.100 / 59.  7.100\r\nlibavfilter     8. 44.100 /  8. 44.100\r\nlibswscale      6.  7.100 /  6.  7.100\r\nlibswresample   4.  7.100 /  4.  7.100\r\n",
+        "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe": "FluidSynth runtime version 2.3.1\r\nCopyright (C) 2000-2022 Peter Hanappe and others.\r\nDistributed under the LGPL license.\r\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\r\n\r\nFluidSynth executable version 2.3.1\r\nSample type=float\r\n"
+      },
+      "tracks": [
+        {
+          "track": "BGM_0M",
+          "source": "Z:\\orig\\BGM_0M.MDS",
+          "source_sha256": "f8f977b0a5733d1a22c9febb3be800d7f981976cc7ced84188a44339127c87d9",
+          "midi_sha256": "ad07749f3dfa2ebbc2cfedd792c04e1e6a2306b1693c0a6ebc1e370ffc907b01",
+          "ogg_sha256": "bbec11ad9b06dd98b975a441cfa3c2a74fbf3a05a706acdcd7cebaedf27d3cb9",
+          "seconds": 201.5027664399093,
+          "peak": 1,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_0M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_0M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_0M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_0M.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_1M",
+          "source": "Z:\\orig\\BGM_1M.MDS",
+          "source_sha256": "b5687e2ec5cf1e5f269653015e8ae5ba6c77673ca8b1916899be097e0a48ab0f",
+          "midi_sha256": "ee6e6f4ed93f45fcfc0121ddd06157f14040b33c2277cb770969bc3b904d7687",
+          "ogg_sha256": "69dcb6e7bd8ae80e214156dbbebf4ab50a6aaab145b7b81f96c83da461549e71",
+          "seconds": 213.8093424036281,
+          "peak": 1,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_1M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_1M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_1M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_1M.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_2M",
+          "source": "Z:\\orig\\BGM_2M.MDS",
+          "source_sha256": "46beeb710af3f704c01c61dcda72c94cb9eb13ec0d5d5b7ca94f3a37842d7403",
+          "midi_sha256": "cee571b06d86e04a28e1029a6a4e792eb3174fc19f14cc8585f04f95185f8286",
+          "ogg_sha256": "1d31c516117c61e57e8a2b3a7037f3cb5456ca2aae8b1c79702768eaa78bd36f",
+          "seconds": 333.3340589569161,
+          "peak": 0.8251432776451111,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_2M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_2M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_2M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_2M.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_3M",
+          "source": "Z:\\orig\\BGM_3M.MDS",
+          "source_sha256": "d3c98d5f79b0e061cea55b66b41306fe3bd015913f70d66d3fbf1ab7f9b5502e",
+          "midi_sha256": "d7b10b3b8863c1206516c04b206be150021c0b26d61a8ba54526819d322e3c71",
+          "ogg_sha256": "c1e812033a27dd72c833aac3df40dec5e103ae3bce94acf6d8575b9328a822f2",
+          "seconds": 141.59528344671202,
+          "peak": 1,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_3M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_3M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_3M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_3M.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_4M",
+          "source": "Z:\\orig\\BGM_4M.MDS",
+          "source_sha256": "5df7c68c487910f7659fd2f9438d8973fb911e8ba3293dedccbe35f689e1e99d",
+          "midi_sha256": "791b78c9512866fbec05052420ea15b24f83514f2c836a7e8a9428d77b969f7a",
+          "ogg_sha256": "f107cf9ee7b58cfe804e2e541644c675b3891888cdaed7a10d7af8b9e58e6111",
+          "seconds": 185.5390476190476,
+          "peak": 0.6204141974449158,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_4M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_4M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_4M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_4M.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_5M",
+          "source": "Z:\\orig\\BGM_5M.MDS",
+          "source_sha256": "33b94d4ab3d0bc376ceceda9db593202086d737602a57e4b6a5a2c7dbc7632a0",
+          "midi_sha256": "78e5f858afb0a670fb914241cbc66ee491ae26ab18f74c53365cd3885e7d7d48",
+          "ogg_sha256": "d58d1f7ec5410b13116c51e5f58ba8bf6ea0b327b92584d69577c59a2c3008c5",
+          "seconds": 60.02358276643991,
+          "peak": 0.3428286612033844,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_5M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_5M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_5M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_5M.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_6M",
+          "source": "Z:\\orig\\BGM_6M.MDS",
+          "source_sha256": "5189b57e696a0bdceaf19ee4a25dcffbc3d58906106a014c9c535c1239c8b6cf",
+          "midi_sha256": "540d0a921ae32a4b30ff427ced3cd5699d4b7155641771a302b88f4218912bde",
+          "ogg_sha256": "599cd83f0fa3111a03709625a87200080f9f33fd08a07dfa0059cd8cf1ddd5ec",
+          "seconds": 31.24244897959184,
+          "peak": 1,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_6M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_6M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_6M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_6M.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_7M",
+          "source": "Z:\\orig\\BGM_7M.MDS",
+          "source_sha256": "a86364d5071a1f0d06097dbe310c5caa16ffeb35aba5127b4cc65684f6140832",
+          "midi_sha256": "8b85586e6b9bb5a477e81441a5cc9d480c174d7ffd706fcf741ca04b0e0056cc",
+          "ogg_sha256": "29922b3f083f22674b14d37d9b3885397094ba3b2a0482005eb3cac87a3227e8",
+          "seconds": 37.33768707482993,
+          "peak": 0.942932665348053,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_7M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_7M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_7M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\BGM_7M.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "END_1M",
+          "source": "Z:\\orig\\END_1M.MDS",
+          "source_sha256": "c0154a70b741e60a303e11f9027c212467122a4fa09480d74e128750de18d340",
+          "midi_sha256": "a2abfc2469e1695d9007cf6545e477f654e8e1f1e02ec8986e7dbee2a43e3e59",
+          "ogg_sha256": "82f5cccf836a6fed182829866723d5392e1b324f44c4230ab9183c3938ff3f43",
+          "seconds": 161.5760544217687,
+          "peak": 0.796677827835083,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\END_1M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\END_1M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\END_1M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\END_1M.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "END_2M",
+          "source": "Z:\\orig\\END_2M.MDS",
+          "source_sha256": "706125fdf5038229dc0a3a4b666cf98cbe04fba9580176d65cede9dd1dc94444",
+          "midi_sha256": "3163fa0846ddeae9541ba2e2c4a3a7701f7cbe2b618956571d435f1c0215c4b8",
+          "ogg_sha256": "d2fb7a9588046b72f74593e21561450f9d6f426e9e05d20ff92ed8a2f950c38c",
+          "seconds": 284.57215419501136,
+          "peak": 0.6512147784233093,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\END_2M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\END_2M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\END_2M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\END_2M.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "OPEN_M",
+          "source": "Z:\\orig\\OPEN_M.MDS",
+          "source_sha256": "277504853b9067b3ecb6867ec33b1ec9146912cb14dbfdf09554cf19250553fa",
+          "midi_sha256": "93a27c3ca0ea6a008f2e3ac1bcff9eb6a19fed90a6270d105d083766393b8c39",
+          "ogg_sha256": "b6c8442625c26b48801f71b5f1d0cadcee583a143b9e837eb690e8d0aaa55ada",
+          "seconds": 139.13396825396825,
+          "peak": 1,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\OPEN_M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\OPEN_M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\OPEN_M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.gm-import-1117077504\\OPEN_M.ogg"
+            ]
+          ]
+        }
+      ]
+    },
+    "FM": {
+      "status": "complete-fm-stage",
+      "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+      "program_sha256": "048cc00e40144b5e59cc635c60f8fc994d5814a8a806ba8447c89461f064ba38",
+      "platform": "windows/amd64",
+      "approximation": "hardware-spec approximation；原版 OPL 暫存器串、固定封裝；OPEN_F substituted；未聲稱實機聆聽",
+      "tools_sha256": {
+        "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+        "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+        "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe": "6ae83b64f238cf5073ef4e9601bc71ddd9567fd018d894316f037de83217d5e0"
+      },
+      "source_executable_sha256": {
+        "ENDING.EXE": "afdafb06b5942a9bca833a3c1f1cb634be886bb6e4d8b5930ab42ac6fa592d8a",
+        "GIN3.COM": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+        "GIN3PS.EXE": "1efa4bd95e73415efba440af63c6a480665d60a67d8876b5f230f5c391aa2381",
+        "OPEN.EXE": "dde640cd7e10ff1b756e9fc4f38564a389ecc69a343041c874817afbf375ab69"
+      },
+      "tracks": [
+        {
+          "track": "BGM_0F",
+          "route": "FM",
+          "source_sha256": "f8462fe4fb6c629c4204f90ce8fe7ef35f9abdf6fc92e241260868bce8b7b025",
+          "vgm_sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+          "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+          "pcm_sha256": "6b31f0ed34da50e04b132d6b7569b034b09b46f73d04858413786701de6a093b",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "fa77257c455ad2e050da72327d308907d9c0a637d8fe9651a070b5e66f73a5c3",
+          "ogg_serial": 1091008858,
+          "seconds": 127.13485260770975,
+          "peak": 0.09104543924331665,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "BGM_0F.MDS",
+              "-clicks",
+              "40000000:300:170,95000000:300:170",
+              "-press",
+              "1,3,8,enter",
+              "-press-at",
+              "105000000",
+              "-press-every",
+              "2000000",
+              "-click-hold",
+              "3000000",
+              "-poke",
+              "lin:5DA64@117022200=00",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_0F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_0F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_0F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_0F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_0F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_0F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_0F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_1F",
+          "route": "FM",
+          "source_sha256": "562099eaffa3d3a6f06bb21901b953c237715d2a5d2a4b5732fbaa8040ad9225",
+          "vgm_sha256": "a9b264ff3d9c7243b39a9f557e764ede31d42390f0a3c37000e6982246e252ac",
+          "wav_sha256": "f4585c6b1e1c268394916a62de9c087708ab31324bbc1a0075d2162ca75ef94d",
+          "pcm_sha256": "9e7bd19de898a2050ebd24380812569b4879afdc9c9d98c8ec4067d6678ba01c",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "4927be4458233b830fe300185b76da457f71da5d5489394256e90099cacafc1e",
+          "ogg_serial": 643493807,
+          "seconds": 127.10537414965987,
+          "peak": 0.23356735706329346,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "BGM_1F.MDS",
+              "-clicks",
+              "40000000:300:170,95000000:300:170",
+              "-press",
+              "1,3,8,enter",
+              "-press-at",
+              "105000000",
+              "-press-every",
+              "2000000",
+              "-click-hold",
+              "3000000",
+              "-poke",
+              "lin:5DA64@117022200=01",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_1F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_1F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_1F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_1F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_1F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_1F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_1F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_2F",
+          "route": "FM",
+          "source_sha256": "21c0ff177655ef8e218baaedd24a7e4e889be088b7cb46669363293ec477e017",
+          "vgm_sha256": "43c6eddf5014c0cc5594fb1e81d4ea18c680867d11a8f7deb345b4d49884285f",
+          "wav_sha256": "044cea94a9cd488ad7249afba119a76b619aeb9a1b1eb3725873363b8d88e202",
+          "pcm_sha256": "addac9a50cf8f478c3eb434ae58db4d523f66fd4b3d92dfcd402c3782bba7acb",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "bc44a1abe1f0b3ce4355831c7c7203979565aaa7e23a4ebe67402b2586d92dc6",
+          "ogg_serial": 431260488,
+          "seconds": 127.10680272108844,
+          "peak": 0.24052131175994873,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "BGM_2F.MDS",
+              "-clicks",
+              "40000000:300:170,95000000:300:170",
+              "-press",
+              "1,3,8,enter",
+              "-press-at",
+              "105000000",
+              "-press-every",
+              "2000000",
+              "-click-hold",
+              "3000000",
+              "-poke",
+              "lin:5DA64@117022200=02",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_2F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_2F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_2F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_2F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_2F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_2F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_2F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_3F",
+          "route": "FM",
+          "source_sha256": "2cf8df6675d471a3e8c29061df45ca7779ac79fa473e97b7b358cc6c57408afb",
+          "vgm_sha256": "51d695fe161c5adbcebaebf86b9f1a9702062efde42f215971d23b9d79a358c7",
+          "wav_sha256": "2e6bbc57a666ddc2440c2af0caa1fb12f281d6ee24beaf40a7f6bb958d45a670",
+          "pcm_sha256": "f84ea7b01c322de6cfc94e8b1c4d0643e6dbdd6f3763e553d1a4e25c3702b94a",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "a2c04c9778a62ff7e727a17631c34018d5d6e3cdf24d6542290aa28074a0483d",
+          "ogg_serial": 107062576,
+          "seconds": 127.1112925170068,
+          "peak": 0.27265632152557373,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "BGM_3F.MDS",
+              "-clicks",
+              "40000000:300:170,95000000:300:170",
+              "-press",
+              "1,3,8,enter",
+              "-press-at",
+              "105000000",
+              "-press-every",
+              "2000000",
+              "-click-hold",
+              "3000000",
+              "-poke",
+              "lin:5DA64@117022200=03",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_3F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_3F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_3F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_3F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_3F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_3F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_3F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_4F",
+          "route": "FM",
+          "source_sha256": "3533eeb39e652c737d2e21972335335cc170b86d38134bfa1c90cb715c05cdd3",
+          "vgm_sha256": "c8e7b375db8506ed2422012660e0b8b6c2e582e38d993dfeef273a31d15ab27e",
+          "wav_sha256": "062c1614b422cb6ec1f806f994be07589a9982b3d87a0ea797cdf794bae8c1bc",
+          "pcm_sha256": "27812a295f4fc206dcb0ce811982558624a27177f2e1f947bce79e5f60b541cd",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "44e79b4e7c77b96658f3c44e081d6247eab4a9f857100c3ccf359874765b1f95",
+          "ogg_serial": 1541827399,
+          "seconds": 126.96827664399093,
+          "peak": 0.24277600646018982,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "BGM_4F.MDS",
+              "-clicks",
+              "40000000:300:170,95000000:300:170",
+              "-press",
+              "1,3,8,enter",
+              "-press-at",
+              "105000000",
+              "-press-every",
+              "2000000",
+              "-click-hold",
+              "3000000",
+              "-poke",
+              "lin:5DA64@117022200=04",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_4F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_4F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_4F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_4F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_4F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_4F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_4F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_5F",
+          "route": "FM",
+          "source_sha256": "e92a8a2167aeb99f87341f4497ba3b6606e4be674b79ca27167939772992375f",
+          "vgm_sha256": "7f6c566d4e1f5aa5f90fa3bc6bce05820d6fcc7aae5d244d91306a28ed43c75f",
+          "wav_sha256": "eb0a53e03ed815db070a2298575f95e40b5e6accf89bad504c9a9b2ff0cdfda5",
+          "pcm_sha256": "850c24a9802793d33e2ae2590f20aa2bc6390fbf2a98ebb0ec097f32d779b1c4",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "8e80c128dd6cb48008aa7e3aa49fdfdcd1fcbbd7e290534b5c52d97818a7661e",
+          "ogg_serial": 565907898,
+          "seconds": 127.14877551020408,
+          "peak": 0.21145538985729218,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "BGM_5F.MDS",
+              "-clicks",
+              "40000000:300:170,95000000:300:170",
+              "-press",
+              "1,3,8,enter",
+              "-press-at",
+              "105000000",
+              "-press-every",
+              "2000000",
+              "-click-hold",
+              "3000000",
+              "-poke",
+              "lin:5DA64@117022200=05",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_5F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_5F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_5F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_5F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_5F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_5F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_5F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_6F",
+          "route": "FM",
+          "source_sha256": "b73fa3564e203a4543dd14f6a0e780cce800b3528346df79e017452b95a04f4c",
+          "vgm_sha256": "b96433f1d3e068cfd753d97721225c542e9efb394720c43a21b474ed8aad8926",
+          "wav_sha256": "6f9a835991d8895a1312e46a641d4e6b28551f420ddd2a4716e1538c65cdb6c9",
+          "pcm_sha256": "3acbba994cc7acd2b20a299f5ae0771a72e01d9006f64ed36ecbecae93262748",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "364694f90d502bf048c9de17617652480704f8e392b173d1441797f64af8fa83",
+          "ogg_serial": 3522034865,
+          "seconds": 127.09877551020408,
+          "peak": 0.24301885068416595,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "BGM_6F.MDS",
+              "-clicks",
+              "40000000:300:170,95000000:300:170",
+              "-press",
+              "1,3,8,enter",
+              "-press-at",
+              "105000000",
+              "-press-every",
+              "2000000",
+              "-click-hold",
+              "3000000",
+              "-poke",
+              "lin:5DA64@117022200=06",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_6F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_6F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_6F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_6F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_6F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_6F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_6F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "BGM_7F",
+          "route": "FM",
+          "source_sha256": "d77e8bf70b838e4c7092e9133e51b8422cb039b4012bb827084e3934760cba67",
+          "vgm_sha256": "e0f1f73472b9a9c33eba2f1b0fbeb225ec9b321d8b1ac5e4654fc6f91eb5a8c0",
+          "wav_sha256": "9ebc793db192c1859b018ff8bf4a5140af0cf6005ccdc03d223ba18e59e5d3ec",
+          "pcm_sha256": "7fa93203dc81ee666ec85b57bb09918b902f2cd4278bea9db0bc5e6461bee953",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "550405958e7190402c536e821d2eac07ecebe2a21dc7ee1c9adec0c6efbb8dda",
+          "ogg_serial": 563473986,
+          "seconds": 127.14791383219955,
+          "peak": 0.28475385904312134,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "BGM_7F.MDS",
+              "-clicks",
+              "40000000:300:170,95000000:300:170",
+              "-press",
+              "1,3,8,enter",
+              "-press-at",
+              "105000000",
+              "-press-every",
+              "2000000",
+              "-click-hold",
+              "3000000",
+              "-poke",
+              "lin:5DA64@117022200=07",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_7F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_7F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_7F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_7F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_7F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_7F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\BGM_7F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "END_1F",
+          "route": "FM",
+          "source_sha256": "69fd022e38b063f9e6754899c0a385f97d95699be727f4b5e440202a63af86c0",
+          "vgm_sha256": "b524a90b4e112386382cd1a50afcf8e9e5aa77031c655655426ac1b465375d83",
+          "wav_sha256": "7e44a58017e55489fba5ca4adf672e820bf1fe4f36e149b93f4a8f107247d7da",
+          "pcm_sha256": "c14d651281aea212edc0cf4a00fe76d14718bd6db892106da3843f66e4ae3b50",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "d30a660ce6bccff9f288f25e9173e7e99607c58fe4932fefcc517ab6ab2e5bf6",
+          "ogg_serial": 2102694839,
+          "seconds": 133.8514058956916,
+          "peak": 0.9561888575553894,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\ENDING.EXE",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "END_1F.MDS",
+              "-sound-blaster",
+              "-args",
+              " 9 1",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_1F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_1F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_1F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_1F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_1F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_1F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_1F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "END_2F",
+          "route": "FM",
+          "source_sha256": "ad9607b224fbafbd6539ff82145c9342eb5c7c15bd8f81353d3e8c05f543ba73",
+          "vgm_sha256": "2fc59e74d8eec41933127cf15b37e06f060b0196698acdf116821dc77e85e357",
+          "wav_sha256": "91932b9dafbc5d8bcdc58caff8cfd645140864c3bfcdd32625842b640ad989f6",
+          "pcm_sha256": "9e5fd6c4cdac8ac8b0b8a90e497007cdba8fac9f9098811dd77f60f494b6b6fc",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "125d0b001d6055d7479527a99f24bd050faff5b0759b8357d75f97378073f451",
+          "ogg_serial": 3955497126,
+          "seconds": 136.18201814058958,
+          "peak": 0.9503566026687622,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\ENDING.EXE",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "END_2F.MDS",
+              "-sound-blaster",
+              "-args",
+              " 9 2",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_2F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_2F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_2F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_2F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_2F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_2F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\END_2F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "OPEN_F",
+          "route": "FM(substituted)",
+          "source_sha256": "4520bb37bb66733a4598971df45cc8539def4738bfc3b6aa35b6402dc22f54c3",
+          "vgm_sha256": "b386be533aa1001deb9160ef385cb9b0ae0f672240fe5333632a905aa3287e69",
+          "wav_sha256": "514061a020647fb9ce6666023acea9a8d0521e1f0edc351c9f155d6ba4d2ebf4",
+          "pcm_sha256": "079c0879036be733caf4b865b635a784ea82ee855ee3ff4ffddcc0b8d3691acd",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "c8280ad35763065528d06af849a865e8e63aeb1c89b413b2702f216d52f3fe9e",
+          "ogg_serial": 3046910935,
+          "seconds": 101.27469387755102,
+          "peak": 0.9516538977622986,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1200000000",
+              "-vgm-clear-on-open",
+              "OPEN_M.MDS",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\OPEN_F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\OPEN_F.vgm",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\OPEN_F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\OPEN_F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\OPEN_F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-stage\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\OPEN_F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-full\\生成 曲庫\\.fm-import-510383551\\OPEN_F.ogg"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "comparisons": {
+    "BGM_0M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "e8c843e2a39cae7c9ec509c3c257f69b9dab07b38403c2b57bd5acb814ea08e3"
+    },
+    "BGM_1M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "5ae4ffdbc8634fc2f6473b8706faeef3c1bb158ee937002c7a73012ecd951745"
+    },
+    "BGM_2M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "e26eb39e71e5638d08c2c05e6d40d10d0b063698895c31eeb2f0ae068f415ba7"
+    },
+    "BGM_3M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "f7a426f8aab6abfcb77a500f9063195e19f21f7f1f849edf9918094ef45f22a5"
+    },
+    "BGM_4M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "28e78536ede5ec474f1f5954c3f742db3a61e5a3af69d223ceef1e73cce240e1"
+    },
+    "BGM_5M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "fc25c1937d690079a61f0806bacb0e811b0801fb51d635c80430b7d097bcb721"
+    },
+    "BGM_6M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "1e340bd38bc23a0f5bd265833ebb3faf2872f3be336c26a670f5e67cc1f82da2"
+    },
+    "BGM_7M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "e49a7280bc1d302e10b87446a86ee456edeacb1f47ca24fa32a126d9e7178960"
+    },
+    "END_1M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "df901643e8b5d9936b4976c09bd0496434744d0813b42d50cc7acfa6665894da"
+    },
+    "END_2M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "101f18a95e8878f8c70f8deee291c013d90e4e171df73838756f62047f7843b4"
+    },
+    "OPEN_M": {
+      "midi_equal": true,
+      "vorbis_audio_packets_equal": true,
+      "audio_packets_sha256": "f8802d56bb70dbca531407b60c331b6de1ff9a293d837f900b47a62e538af9fe"
+    },
+    "BGM_0F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    },
+    "BGM_1F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    },
+    "BGM_2F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    },
+    "BGM_3F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    },
+    "BGM_4F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    },
+    "BGM_5F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    },
+    "BGM_6F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    },
+    "BGM_7F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    },
+    "END_1F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    },
+    "END_2F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    },
+    "OPEN_F": {
+      "vgm_wav_pcm_match": true,
+      "same_windows_ogg_equal": true
+    }
+  },
+  "relocated": {
+    "GM": {
+      "scope": "GM 合成收據；FM 另見 FM-SOURCES.json，平台封包未驗收",
+      "status": "complete-gm-stage",
+      "approximation": "legacy approximation：FA 當 BPM；raw 時間沿用匯出器；FB／FC 不展開反覆；非原版 MPU 音色",
+      "platform": "windows/amd64",
+      "program_sha256": "048cc00e40144b5e59cc635c60f8fc994d5814a8a806ba8447c89461f064ba38",
+      "soundfont_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+      "tools_sha256": {
+        "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\ffmpeg.exe": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+        "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\fluidsynth.exe": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff"
+      },
+      "tool_versions": {
+        "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\ffmpeg.exe": "ffmpeg version 5.1.9 Copyright (c) 2000-2026 the FFmpeg developers\r\nbuilt with gcc 12-win32 (GCC)\r\nconfiguration: --enable-cross-compile --target-os=mingw32 --arch=x86_64 --cross-prefix=x86_64-w64-mingw32- --pkg-config=pkg-config --prefix=/out/prefix --disable-autodetect --disable-everything --disable-network --disable-doc --disable-debug --disable-x86asm --disable-ffplay --disable-ffprobe --enable-ffmpeg --enable-protocol=file --enable-demuxer='wav,ogg' --enable-decoder='pcm_s16le,pcm_f32le,vorbis' --enable-encoder='libvorbis,pcm_f32le' --enable-muxer='ogg,pcm_f32le' --enable-filter='volume,aresample,anull' --enable-libvorbis --enable-static --disable-shared\r\nlibavutil      57. 28.100 / 57. 28.100\r\nlibavcodec     59. 37.100 / 59. 37.100\r\nlibavformat    59. 27.100 / 59. 27.100\r\nlibavdevice    59.  7.100 / 59.  7.100\r\nlibavfilter     8. 44.100 /  8. 44.100\r\nlibswscale      6.  7.100 /  6.  7.100\r\nlibswresample   4.  7.100 /  4.  7.100\r\n",
+        "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\fluidsynth.exe": "FluidSynth runtime version 2.3.1\r\nCopyright (C) 2000-2022 Peter Hanappe and others.\r\nDistributed under the LGPL license.\r\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\r\n\r\nFluidSynth executable version 2.3.1\r\nSample type=float\r\n"
+      },
+      "tracks": [
+        {
+          "track": "BGM_0M",
+          "source": "Z:\\orig\\BGM_0M.MDS",
+          "source_sha256": "f8f977b0a5733d1a22c9febb3be800d7f981976cc7ced84188a44339127c87d9",
+          "midi_sha256": "ad07749f3dfa2ebbc2cfedd792c04e1e6a2306b1693c0a6ebc1e370ffc907b01",
+          "ogg_sha256": "7cc288e9ceb3004a0831ebd829d3fe92d4065abf505fec57ba8090493e94e43d",
+          "seconds": 201.5027664399093,
+          "peak": 1,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\fluidsynth.exe",
+              "-ni",
+              "-F",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.gm-import-509767956\\BGM_0M.wav",
+              "-r",
+              "44100",
+              "-g",
+              "0.8",
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\soundfont\\FluidR3_GM.sf2",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.gm-import-509767956\\BGM_0M.mid"
+            ],
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.gm-import-509767956\\BGM_0M.wav",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.gm-import-509767956\\BGM_0M.ogg"
+            ]
+          ]
+        }
+      ]
+    },
+    "FM": {
+      "status": "complete-fm-stage",
+      "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+      "program_sha256": "048cc00e40144b5e59cc635c60f8fc994d5814a8a806ba8447c89461f064ba38",
+      "platform": "windows/amd64",
+      "approximation": "hardware-spec approximation；原版 OPL 暫存器串、固定封裝；OPEN_F substituted；未聲稱實機聆聽",
+      "tools_sha256": {
+        "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\dosgolem-probe.exe": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+        "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\ffmpeg.exe": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+        "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\opl2wav.exe": "6ae83b64f238cf5073ef4e9601bc71ddd9567fd018d894316f037de83217d5e0"
+      },
+      "source_executable_sha256": {
+        "ENDING.EXE": "afdafb06b5942a9bca833a3c1f1cb634be886bb6e4d8b5930ab42ac6fa592d8a",
+        "GIN3.COM": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+        "GIN3PS.EXE": "1efa4bd95e73415efba440af63c6a480665d60a67d8876b5f230f5c391aa2381",
+        "OPEN.EXE": "dde640cd7e10ff1b756e9fc4f38564a389ecc69a343041c874817afbf375ab69"
+      },
+      "tracks": [
+        {
+          "track": "BGM_0F",
+          "route": "FM",
+          "source_sha256": "f8462fe4fb6c629c4204f90ce8fe7ef35f9abdf6fc92e241260868bce8b7b025",
+          "vgm_sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+          "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+          "pcm_sha256": "6b31f0ed34da50e04b132d6b7569b034b09b46f73d04858413786701de6a093b",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "fa77257c455ad2e050da72327d308907d9c0a637d8fe9651a070b5e66f73a5c3",
+          "ogg_serial": 1091008858,
+          "seconds": 127.13485260770975,
+          "peak": 0.09104543924331665,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "BGM_0F.MDS",
+              "-clicks",
+              "40000000:300:170,95000000:300:170",
+              "-press",
+              "1,3,8,enter",
+              "-press-at",
+              "105000000",
+              "-press-every",
+              "2000000",
+              "-click-hold",
+              "3000000",
+              "-poke",
+              "lin:5DA64@117022200=00",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\BGM_0F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\BGM_0F.vgm",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\BGM_0F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\BGM_0F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\BGM_0F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\BGM_0F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\BGM_0F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "END_2F",
+          "route": "FM",
+          "source_sha256": "ad9607b224fbafbd6539ff82145c9342eb5c7c15bd8f81353d3e8c05f543ba73",
+          "vgm_sha256": "2fc59e74d8eec41933127cf15b37e06f060b0196698acdf116821dc77e85e357",
+          "wav_sha256": "91932b9dafbc5d8bcdc58caff8cfd645140864c3bfcdd32625842b640ad989f6",
+          "pcm_sha256": "9e5fd6c4cdac8ac8b0b8a90e497007cdba8fac9f9098811dd77f60f494b6b6fc",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "125d0b001d6055d7479527a99f24bd050faff5b0759b8357d75f97378073f451",
+          "ogg_serial": 3955497126,
+          "seconds": 136.18201814058958,
+          "peak": 0.9503566026687622,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\game\\ENDING.EXE",
+              "-root",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1600000000",
+              "-vgm-clear-on-open",
+              "END_2F.MDS",
+              "-sound-blaster",
+              "-args",
+              " 9 2",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\END_2F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\END_2F.vgm",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\END_2F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\END_2F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\END_2F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\END_2F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\END_2F.ogg"
+            ]
+          ]
+        },
+        {
+          "track": "OPEN_F",
+          "route": "FM(substituted)",
+          "source_sha256": "4520bb37bb66733a4598971df45cc8539def4738bfc3b6aa35b6402dc22f54c3",
+          "vgm_sha256": "b386be533aa1001deb9160ef385cb9b0ae0f672240fe5333632a905aa3287e69",
+          "wav_sha256": "514061a020647fb9ce6666023acea9a8d0521e1f0edc351c9f155d6ba4d2ebf4",
+          "pcm_sha256": "079c0879036be733caf4b865b635a784ea82ee855ee3ff4ffddcc0b8d3691acd",
+          "gain_db": "-1.00",
+          "sample_rate": 44100,
+          "ogg_sha256": "c8280ad35763065528d06af849a865e8e63aeb1c89b413b2702f216d52f3fe9e",
+          "ogg_serial": 3046910935,
+          "seconds": 101.27469387755102,
+          "peak": 0.9516538977622986,
+          "commands": [
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\dosgolem-probe.exe",
+              "-exe",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\game\\GIN3.COM",
+              "-root",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\game",
+              "-empty-env",
+              "-tick",
+              "20000",
+              "-steps",
+              "1200000000",
+              "-vgm-clear-on-open",
+              "OPEN_M.MDS",
+              "-dump-vgm",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\OPEN_F.vgm"
+            ],
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\opl2wav.exe",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\OPEN_F.vgm",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\OPEN_F.wav",
+              "44100"
+            ],
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\OPEN_F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "pcm_f32le",
+              "-f",
+              "f32le",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\OPEN_F.f32"
+            ],
+            [
+              "Z:\\out\\combined-utf8-relocated\\中文 搬移\\封裝 測試\\tools\\ffmpeg.exe",
+              "-v",
+              "error",
+              "-y",
+              "-i",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\OPEN_F.wav",
+              "-af",
+              "volume=-1.00dB",
+              "-ar",
+              "44100",
+              "-c:a",
+              "libvorbis",
+              "-q:a",
+              "5",
+              "Z:\\out\\combined-utf8-relocated-output\\生成 曲庫\\.fm-import-318523006\\OPEN_F.ogg"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "opl_wave": {
+    "scope": "三路固定 VGM 相同 DSP，Unicode 檔名／寬字元輸入輸出探針",
+    "tracks": {
+      "BGM_0F": {
+        "vgm_sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+        "renders": {
+          "legacy": {
+            "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+            "pcm_sha256": "c6378fa69a2ef7390c970ae5470a593f8832ab00f1435e618130ff392d37e4c9",
+            "frames": 5606647,
+            "program_sha256": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2",
+            "path": "wave/BGM_0F-legacy.wav"
+          },
+          "utf8": {
+            "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+            "pcm_sha256": "c6378fa69a2ef7390c970ae5470a593f8832ab00f1435e618130ff392d37e4c9",
+            "frames": 5606647,
+            "program_sha256": "5d477b18b1c863fb8be7b3b9ef79d5ab4e40cd25438f4027c5588c5a2fde3f33",
+            "path": "輸出 波形/BGM_0F-utf8.wav"
+          },
+          "utf8-repeat": {
+            "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+            "pcm_sha256": "c6378fa69a2ef7390c970ae5470a593f8832ab00f1435e618130ff392d37e4c9",
+            "frames": 5606647,
+            "program_sha256": "5d477b18b1c863fb8be7b3b9ef79d5ab4e40cd25438f4027c5588c5a2fde3f33",
+            "path": "輸出 波形/BGM_0F-utf8-repeat.wav"
+          }
+        },
+        "wav_pcm_equal": true
+      },
+      "END_2F": {
+        "vgm_sha256": "2fc59e74d8eec41933127cf15b37e06f060b0196698acdf116821dc77e85e357",
+        "renders": {
+          "legacy": {
+            "wav_sha256": "91932b9dafbc5d8bcdc58caff8cfd645140864c3bfcdd32625842b640ad989f6",
+            "pcm_sha256": "341db296e2bff05365e252e30d3a2338bc0ab63b4bd49aa9e3f43659001c7b11",
+            "frames": 6005627,
+            "program_sha256": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2",
+            "path": "wave/END_2F-legacy.wav"
+          },
+          "utf8": {
+            "wav_sha256": "91932b9dafbc5d8bcdc58caff8cfd645140864c3bfcdd32625842b640ad989f6",
+            "pcm_sha256": "341db296e2bff05365e252e30d3a2338bc0ab63b4bd49aa9e3f43659001c7b11",
+            "frames": 6005627,
+            "program_sha256": "5d477b18b1c863fb8be7b3b9ef79d5ab4e40cd25438f4027c5588c5a2fde3f33",
+            "path": "輸出 波形/END_2F-utf8.wav"
+          }
+        },
+        "wav_pcm_equal": true
+      },
+      "OPEN_F": {
+        "vgm_sha256": "b386be533aa1001deb9160ef385cb9b0ae0f672240fe5333632a905aa3287e69",
+        "renders": {
+          "legacy": {
+            "wav_sha256": "514061a020647fb9ce6666023acea9a8d0521e1f0edc351c9f155d6ba4d2ebf4",
+            "pcm_sha256": "5b74d2c877e3d4b38ed51c173f94330a184476d90e3a3286e4c1e352f2c326f1",
+            "frames": 4466214,
+            "program_sha256": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2",
+            "path": "wave/OPEN_F-legacy.wav"
+          },
+          "utf8": {
+            "wav_sha256": "514061a020647fb9ce6666023acea9a8d0521e1f0edc351c9f155d6ba4d2ebf4",
+            "pcm_sha256": "5b74d2c877e3d4b38ed51c173f94330a184476d90e3a3286e4c1e352f2c326f1",
+            "frames": 4466214,
+            "program_sha256": "5d477b18b1c863fb8be7b3b9ef79d5ab4e40cd25438f4027c5588c5a2fde3f33",
+            "path": "輸出 波形/OPEN_F-utf8.wav"
+          }
+        },
+        "wav_pcm_equal": true
+      }
+    },
+    "commands": [
+      [
+        "wine",
+        "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-probe\\inputs\\BGM_0F.vgm",
+        "Z:\\out\\opl-unicode-probe\\wave\\BGM_0F-legacy.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\opl-unicode-probe\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-probe\\輸入 曲目\\BGM_0F.vgm",
+        "Z:\\out\\opl-unicode-probe\\輸出 波形\\BGM_0F-utf8.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\opl-unicode-probe\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-probe\\輸入 曲目\\BGM_0F.vgm",
+        "Z:\\out\\opl-unicode-probe\\輸出 波形\\BGM_0F-utf8-repeat.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-probe\\inputs\\END_2F.vgm",
+        "Z:\\out\\opl-unicode-probe\\wave\\END_2F-legacy.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\opl-unicode-probe\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-probe\\輸入 曲目\\END_2F.vgm",
+        "Z:\\out\\opl-unicode-probe\\輸出 波形\\END_2F-utf8.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-probe\\inputs\\OPEN_F.vgm",
+        "Z:\\out\\opl-unicode-probe\\wave\\OPEN_F-legacy.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\opl-unicode-probe\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-probe\\輸入 曲目\\OPEN_F.vgm",
+        "Z:\\out\\opl-unicode-probe\\輸出 波形\\OPEN_F-utf8.wav",
+        "44100"
+      ]
+    ]
+  },
+  "replay_wave": {
+    "scope": "三路固定 VGM 相同 DSP，Unicode 檔名／寬字元輸入輸出探針",
+    "tracks": {
+      "BGM_0F": {
+        "vgm_sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+        "renders": {
+          "legacy": {
+            "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+            "pcm_sha256": "c6378fa69a2ef7390c970ae5470a593f8832ab00f1435e618130ff392d37e4c9",
+            "frames": 5606647,
+            "program_sha256": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2",
+            "path": "wave/BGM_0F-legacy.wav"
+          },
+          "utf8": {
+            "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+            "pcm_sha256": "c6378fa69a2ef7390c970ae5470a593f8832ab00f1435e618130ff392d37e4c9",
+            "frames": 5606647,
+            "program_sha256": "eacdf003b7997b9585f494d6819ed4121d27062e57f43eadd2995fed75d497ed",
+            "path": "輸出 波形/BGM_0F-utf8.wav"
+          },
+          "utf8-repeat": {
+            "wav_sha256": "b12de28b606c0266a7a5dc05ebee8c990029844ed02e2205ce17c53b93ec293e",
+            "pcm_sha256": "c6378fa69a2ef7390c970ae5470a593f8832ab00f1435e618130ff392d37e4c9",
+            "frames": 5606647,
+            "program_sha256": "eacdf003b7997b9585f494d6819ed4121d27062e57f43eadd2995fed75d497ed",
+            "path": "輸出 波形/BGM_0F-utf8-repeat.wav"
+          }
+        },
+        "wav_pcm_equal": true
+      },
+      "END_2F": {
+        "vgm_sha256": "2fc59e74d8eec41933127cf15b37e06f060b0196698acdf116821dc77e85e357",
+        "renders": {
+          "legacy": {
+            "wav_sha256": "91932b9dafbc5d8bcdc58caff8cfd645140864c3bfcdd32625842b640ad989f6",
+            "pcm_sha256": "341db296e2bff05365e252e30d3a2338bc0ab63b4bd49aa9e3f43659001c7b11",
+            "frames": 6005627,
+            "program_sha256": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2",
+            "path": "wave/END_2F-legacy.wav"
+          },
+          "utf8": {
+            "wav_sha256": "91932b9dafbc5d8bcdc58caff8cfd645140864c3bfcdd32625842b640ad989f6",
+            "pcm_sha256": "341db296e2bff05365e252e30d3a2338bc0ab63b4bd49aa9e3f43659001c7b11",
+            "frames": 6005627,
+            "program_sha256": "eacdf003b7997b9585f494d6819ed4121d27062e57f43eadd2995fed75d497ed",
+            "path": "輸出 波形/END_2F-utf8.wav"
+          }
+        },
+        "wav_pcm_equal": true
+      },
+      "OPEN_F": {
+        "vgm_sha256": "b386be533aa1001deb9160ef385cb9b0ae0f672240fe5333632a905aa3287e69",
+        "renders": {
+          "legacy": {
+            "wav_sha256": "514061a020647fb9ce6666023acea9a8d0521e1f0edc351c9f155d6ba4d2ebf4",
+            "pcm_sha256": "5b74d2c877e3d4b38ed51c173f94330a184476d90e3a3286e4c1e352f2c326f1",
+            "frames": 4466214,
+            "program_sha256": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2",
+            "path": "wave/OPEN_F-legacy.wav"
+          },
+          "utf8": {
+            "wav_sha256": "514061a020647fb9ce6666023acea9a8d0521e1f0edc351c9f155d6ba4d2ebf4",
+            "pcm_sha256": "5b74d2c877e3d4b38ed51c173f94330a184476d90e3a3286e4c1e352f2c326f1",
+            "frames": 4466214,
+            "program_sha256": "eacdf003b7997b9585f494d6819ed4121d27062e57f43eadd2995fed75d497ed",
+            "path": "輸出 波形/OPEN_F-utf8.wav"
+          }
+        },
+        "wav_pcm_equal": true
+      }
+    },
+    "commands": [
+      [
+        "wine",
+        "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-replay\\inputs\\BGM_0F.vgm",
+        "Z:\\out\\opl-unicode-replay\\wave\\BGM_0F-legacy.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\opl-unicode-replay\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-replay\\輸入 曲目\\BGM_0F.vgm",
+        "Z:\\out\\opl-unicode-replay\\輸出 波形\\BGM_0F-utf8.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\opl-unicode-replay\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-replay\\輸入 曲目\\BGM_0F.vgm",
+        "Z:\\out\\opl-unicode-replay\\輸出 波形\\BGM_0F-utf8-repeat.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-replay\\inputs\\END_2F.vgm",
+        "Z:\\out\\opl-unicode-replay\\wave\\END_2F-legacy.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\opl-unicode-replay\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-replay\\輸入 曲目\\END_2F.vgm",
+        "Z:\\out\\opl-unicode-replay\\輸出 波形\\END_2F-utf8.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\pcm-gate\\封裝 測試\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-replay\\inputs\\OPEN_F.vgm",
+        "Z:\\out\\opl-unicode-replay\\wave\\OPEN_F-legacy.wav",
+        "44100"
+      ],
+      [
+        "wine",
+        "Z:\\out\\opl-unicode-replay\\tools\\opl2wav.exe",
+        "Z:\\out\\opl-unicode-replay\\輸入 曲目\\OPEN_F.vgm",
+        "Z:\\out\\opl-unicode-replay\\輸出 波形\\OPEN_F-utf8.wav",
+        "44100"
+      ]
+    ],
+    "builder_sha256": "17764114f7a290617826d158907073a9e0d6b0e518317ffbbb171ebd7f1ca7dd"
+  },
+  "linux_branch": {
+    "scope": "固定 image 的原生 g++ 預處理證明非 Windows 分支相同；非 Linux 重新建置或新平台實跑",
+    "commands": [
+      [
+        "g++",
+        "-std=c++11",
+        "-E",
+        "-P",
+        "-I/out/prefix/include",
+        "-I/out/prefix/include",
+        "-I/out/prefix/include/libbinio",
+        "/out/opl-linux-preprocess/before.cpp"
+      ],
+      [
+        "g++",
+        "-std=c++11",
+        "-E",
+        "-P",
+        "-I/out/prefix/include",
+        "-I/out/prefix/include",
+        "-I/out/prefix/include/libbinio",
+        "/tools/opl2wav.cpp"
+      ]
+    ],
+    "compiler": "g++ (Debian 12.2.0-14) 12.2.0\nCopyright (C) 2022 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "before_cpp_sha256": "6dad7ab8fbb7004b2356dd83c66618af2e64683f26ebf4ec3530208bd06680c7",
+    "current_cpp_sha256": "2e2b6afba914dd18b023d5c813dfe7e39fa915467bd8ccb8a4b7f0cdab74298e",
+    "non_windows_preprocessed_equal": true,
+    "normalization": "僅移除空行與每行首尾空白，保留字串內容",
+    "preprocessed_sha256": "5526758c8ff74ba89daead8c08e4aa36654b96482d1bb186f1dc3d7c61ecd224"
+  },
+  "first_failed_fm": {
+    "status": "failed",
+    "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "program_sha256": "048cc00e40144b5e59cc635c60f8fc994d5814a8a806ba8447c89461f064ba38",
+    "platform": "windows/amd64",
+    "approximation": "hardware-spec approximation；原版 OPL 暫存器串、固定封裝；OPEN_F substituted；未聲稱實機聆聽",
+    "tools_sha256": {
+      "Z:\\out\\combined-stage\\封裝 測試\\tools\\dosgolem-probe.exe": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+      "Z:\\out\\combined-stage\\封裝 測試\\tools\\ffmpeg.exe": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+      "Z:\\out\\combined-stage\\封裝 測試\\tools\\opl2wav.exe": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2"
+    },
+    "source_executable_sha256": {
+      "ENDING.EXE": "afdafb06b5942a9bca833a3c1f1cb634be886bb6e4d8b5930ab42ac6fa592d8a",
+      "GIN3.COM": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "GIN3PS.EXE": "1efa4bd95e73415efba440af63c6a480665d60a67d8876b5f230f5c391aa2381",
+      "OPEN.EXE": "dde640cd7e10ff1b756e9fc4f38564a389ecc69a343041c874817afbf375ab69"
+    },
+    "tracks": null,
+    "error": "工具 opl2wav.exe 失敗：exit status 3；AdPlug 認不出這個檔：Z:\\out\\combined-full\\?? ??\\.fm-import-830113029\\BGM_0F.vgm\r\n"
+  },
+  "first_bundle": {
+    "schema": "logh3.music-tools.windows.bundle.v1",
+    "status": "staged-for-technical-validation",
+    "program_sha256": "048cc00e40144b5e59cc635c60f8fc994d5814a8a806ba8447c89461f064ba38",
+    "source_head": "9a2ce97df1e222a4928dd782ddf210033213a96e",
+    "source_dirty": false,
+    "builder_sha256": "1844d72d897a7ea373cd472320c319effc41f22924cc741f572a139db477e53e",
+    "tools": {
+      "ffmpeg.exe": {
+        "sha256": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+        "bytes": 1751552,
+        "imports": [
+          "libvorbis-0.dll",
+          "libvorbisenc-2.dll",
+          "bcrypt.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "SHELL32.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/ffmpeg.exe",
+        "filename": "ffmpeg.exe",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libvorbisenc-2.dll": {
+        "sha256": "92dad65c8c4b5f6aede7e9c1e5452b1b9a74ee386603f5197276d6466ad7da34",
+        "bytes": 750574,
+        "imports": [
+          "libvorbis-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libvorbisenc-2.dll",
+        "filename": "libvorbisenc-2.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libvorbis-0.dll": {
+        "sha256": "d07b5ff4e939b538f77ce0806c7ca5c6438f5b08f08a164dcc9bfda031a156b7",
+        "bytes": 306231,
+        "imports": [
+          "libogg-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libvorbis-0.dll",
+        "filename": "libvorbis-0.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libogg-0.dll": {
+        "sha256": "d17a6e849530abf809f10f32b3f6b90765a73c7497eda8198ca7afdb599941a7",
+        "bytes": 110050,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libogg-0.dll",
+        "filename": "libogg-0.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "fluidsynth.exe": {
+        "sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff",
+        "bytes": 164737,
+        "imports": [
+          "libglib-2.0-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libfluidsynth-3.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/fluidsynth.exe",
+        "filename": "fluidsynth.exe",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libfluidsynth-3.dll": {
+        "sha256": "24908c123138e890ffa8bbc036f0f9b6d4dfcd10c3ea017c747c02e087e86d3e",
+        "bytes": 562696,
+        "imports": [
+          "libglib-2.0-0.dll",
+          "libsndfile-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libgcc_s_seh-1.dll",
+          "libgomp-1.dll",
+          "libstdc++-6.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libfluidsynth-3.dll",
+        "filename": "libfluidsynth-3.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libstdc++-6.dll": {
+        "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203",
+        "bytes": 23703447,
+        "imports": [
+          "libgcc_s_seh-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libstdc++-6.dll",
+        "filename": "libstdc++-6.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libgcc_s_seh-1.dll": {
+        "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7",
+        "bytes": 681726,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libgcc_s_seh-1.dll",
+        "filename": "libgcc_s_seh-1.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libgomp-1.dll": {
+        "sha256": "2b5b74416a061c70b3dc2bfcc19f26bfc2777d8fa1a21a81f8f656c9671cfc97",
+        "bytes": 1615161,
+        "imports": [
+          "libgcc_s_seh-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libwinpthread-1.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libgomp-1.dll",
+        "filename": "libgomp-1.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libwinpthread-1.dll": {
+        "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329",
+        "bytes": 319336,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libwinpthread-1.dll",
+        "filename": "libwinpthread-1.dll",
+        "groups": [
+          "gm",
+          "fm"
+        ]
+      },
+      "libsndfile-1.dll": {
+        "sha256": "08bad562b55010889bbcf55fbb8b595d22860777ba424daf1e0075fb76ade866",
+        "bytes": 1007840,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libsndfile-1.dll",
+        "filename": "libsndfile-1.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libglib-2.0-0.dll": {
+        "sha256": "81a9ddc58f0d895f98dee23198c9e4eca63317e3b56206739cb1532bad1f9950",
+        "bytes": 2150059,
+        "imports": [
+          "libpcre2-8-0.dll",
+          "ADVAPI32.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "ole32.dll",
+          "SHELL32.dll",
+          "USER32.dll",
+          "WS2_32.dll",
+          "libintl-8.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libglib-2.0-0.dll",
+        "filename": "libglib-2.0-0.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libintl-8.dll": {
+        "sha256": "29220a214565b405a499a7b5500097db5c1edd9357d08a2ed8d15147f8bfcb45",
+        "bytes": 89644,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libintl-8.dll",
+        "filename": "libintl-8.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "libpcre2-8-0.dll": {
+        "sha256": "70c3fe87f27a2ebd74778dba91f024af7064545636e926889cd039e44c2714d3",
+        "bytes": 482642,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "gm-source-utf8-probe/封裝 測試/tools/libpcre2-8-0.dll",
+        "filename": "libpcre2-8-0.dll",
+        "groups": [
+          "gm"
+        ]
+      },
+      "dosgolem-probe.exe": {
+        "sha256": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+        "bytes": 5490176,
+        "imports": [],
+        "source": "pcm-gate/封裝 測試/tools/dosgolem-probe.exe",
+        "filename": "dosgolem-probe.exe",
+        "groups": [
+          "fm"
+        ]
+      },
+      "libadplug-2-3-3-0.dll": {
+        "sha256": "1c0d4b7299c982aeee022f3d7b8ee9ca4db2e76ef901080d801b10ab5f0270cb",
+        "bytes": 946147,
+        "imports": [
+          "libbinio-1.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libgcc_s_seh-1.dll",
+          "libstdc++-6.dll"
+        ],
+        "source": "pcm-gate/封裝 測試/tools/libadplug-2-3-3-0.dll",
+        "filename": "libadplug-2-3-3-0.dll",
+        "groups": [
+          "fm"
+        ]
+      },
+      "libbinio-1.dll": {
+        "sha256": "f6ee4fe7cd717723195a3ab5cb80737b1de957b9debdc49b1fdb0e92e5bae57f",
+        "bytes": 180743,
+        "imports": [
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libgcc_s_seh-1.dll",
+          "libstdc++-6.dll"
+        ],
+        "source": "pcm-gate/封裝 測試/tools/libbinio-1.dll",
+        "filename": "libbinio-1.dll",
+        "groups": [
+          "fm"
+        ]
+      },
+      "libvorbisfile-3.dll": {
+        "sha256": "7ca6a294d1bb9449aa91320ba35d0ac26c4a59d3926de4842a298dc3f1638b82",
+        "bytes": 119618,
+        "imports": [
+          "libvorbis-0.dll",
+          "libogg-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll"
+        ],
+        "source": "pcm-gate/封裝 測試/tools/libvorbisfile-3.dll",
+        "filename": "libvorbisfile-3.dll",
+        "groups": [
+          "fm"
+        ]
+      },
+      "opl2wav.exe": {
+        "sha256": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2",
+        "bytes": 256412,
+        "imports": [
+          "libadplug-2-3-3-0.dll",
+          "KERNEL32.dll",
+          "msvcrt.dll",
+          "libgcc_s_seh-1.dll",
+          "libstdc++-6.dll"
+        ],
+        "source": "pcm-gate/封裝 測試/tools/opl2wav.exe",
+        "filename": "opl2wav.exe",
+        "groups": [
+          "fm"
+        ]
+      }
+    },
+    "identical_overlaps": [
+      "ffmpeg.exe",
+      "libgcc_s_seh-1.dll",
+      "libogg-0.dll",
+      "libstdc++-6.dll",
+      "libvorbis-0.dll",
+      "libvorbisenc-2.dll",
+      "libwinpthread-1.dll"
+    ],
+    "files": {
+      "music-import.exe": {
+        "sha256": "048cc00e40144b5e59cc635c60f8fc994d5814a8a806ba8447c89461f064ba38",
+        "bytes": 4694528
+      },
+      "soundfont/FluidR3_GM.sf2": {
+        "sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+        "bytes": 148398306
+      },
+      "sources/windows-music-fixed-sources.tar": {
+        "sha256": "e94d2c6fc4f013bb6684bf1f33eaad963ea103daed27baef1d848273f0cdbce4",
+        "bytes": 127129600
+      },
+      "metadata/GM-TOOLS.json": {
+        "sha256": "49c07dac366671e95ec5b6589f83efaecf4ff2ac8df88ee0d45023a14cd8dded",
+        "bytes": 105414
+      },
+      "metadata/FM-TOOLS.json": {
+        "sha256": "4fc93a59c4a9b1f65b9e1a0114bc919126471b0d13fcef9102fdc29df93bac5a",
+        "bytes": 72660
+      },
+      "metadata/IMPORTER-BUILDINFO.txt": {
+        "sha256": "9802cfeb027e08a87d717137d2c298586a25bbb9abc8a11730df37cb41e5fabc",
+        "bytes": 616
+      },
+      "tools/ffmpeg.exe": {
+        "sha256": "d846b59bdce18a099a7c3d5d80c1d72c448c75c6196a8245b78e4e8bb53fb5fc",
+        "bytes": 1751552
+      },
+      "tools/libvorbisenc-2.dll": {
+        "sha256": "92dad65c8c4b5f6aede7e9c1e5452b1b9a74ee386603f5197276d6466ad7da34",
+        "bytes": 750574
+      },
+      "tools/libvorbis-0.dll": {
+        "sha256": "d07b5ff4e939b538f77ce0806c7ca5c6438f5b08f08a164dcc9bfda031a156b7",
+        "bytes": 306231
+      },
+      "tools/libogg-0.dll": {
+        "sha256": "d17a6e849530abf809f10f32b3f6b90765a73c7497eda8198ca7afdb599941a7",
+        "bytes": 110050
+      },
+      "tools/fluidsynth.exe": {
+        "sha256": "0e2125c9ef3c54a06e8676f6eed70740ee4bb10ddeec23a357b2a6ef0d9ac0ff",
+        "bytes": 164737
+      },
+      "tools/libfluidsynth-3.dll": {
+        "sha256": "24908c123138e890ffa8bbc036f0f9b6d4dfcd10c3ea017c747c02e087e86d3e",
+        "bytes": 562696
+      },
+      "tools/libstdc++-6.dll": {
+        "sha256": "38f844a00cb9f8864c5c4967859b4e53f6d9936659a1cdbbbb5f869886150203",
+        "bytes": 23703447
+      },
+      "tools/libgcc_s_seh-1.dll": {
+        "sha256": "273073618002c7c3736535b74619a2a84725f349e3d618926b0434657bf156c7",
+        "bytes": 681726
+      },
+      "tools/libgomp-1.dll": {
+        "sha256": "2b5b74416a061c70b3dc2bfcc19f26bfc2777d8fa1a21a81f8f656c9671cfc97",
+        "bytes": 1615161
+      },
+      "tools/libwinpthread-1.dll": {
+        "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329",
+        "bytes": 319336
+      },
+      "tools/libsndfile-1.dll": {
+        "sha256": "08bad562b55010889bbcf55fbb8b595d22860777ba424daf1e0075fb76ade866",
+        "bytes": 1007840
+      },
+      "tools/libglib-2.0-0.dll": {
+        "sha256": "81a9ddc58f0d895f98dee23198c9e4eca63317e3b56206739cb1532bad1f9950",
+        "bytes": 2150059
+      },
+      "tools/libintl-8.dll": {
+        "sha256": "29220a214565b405a499a7b5500097db5c1edd9357d08a2ed8d15147f8bfcb45",
+        "bytes": 89644
+      },
+      "tools/libpcre2-8-0.dll": {
+        "sha256": "70c3fe87f27a2ebd74778dba91f024af7064545636e926889cd039e44c2714d3",
+        "bytes": 482642
+      },
+      "tools/dosgolem-probe.exe": {
+        "sha256": "d9e2243757e5c78ef70ed890c706abd4f2ab1ae76ce341bd259bf73dc23b9f90",
+        "bytes": 5490176
+      },
+      "tools/libadplug-2-3-3-0.dll": {
+        "sha256": "1c0d4b7299c982aeee022f3d7b8ee9ca4db2e76ef901080d801b10ab5f0270cb",
+        "bytes": 946147
+      },
+      "tools/libbinio-1.dll": {
+        "sha256": "f6ee4fe7cd717723195a3ab5cb80737b1de957b9debdc49b1fdb0e92e5bae57f",
+        "bytes": 180743
+      },
+      "tools/libvorbisfile-3.dll": {
+        "sha256": "7ca6a294d1bb9449aa91320ba35d0ac26c4a59d3926de4842a298dc3f1638b82",
+        "bytes": 119618
+      },
+      "tools/opl2wav.exe": {
+        "sha256": "909ebabe8ec03080e88dc8f9290a40d1e56d7c4f57a8d226e639888eab1197a2",
+        "bytes": 256412
+      },
+      "licenses/fluidsynth/debian/copyright": {
+        "sha256": "a203c481ca905bd39bff52e5bb357a2f6c819aa251f9ff9024797bfc12145b2e",
+        "bytes": 25087
+      },
+      "licenses/fluidsynth/LICENSE": {
+        "sha256": "9b872a8a070b8ad329c4bd380fb1bf0000f564c75023ec8e1e6803f15364b9e9",
+        "bytes": 26461
+      },
+      "licenses/fluidsynth/AUTHORS": {
+        "sha256": "78139528287e8632dd19bc243a642eed43771b3261b590e930ee55f8b586a4a0",
+        "bytes": 5643
+      },
+      "licenses/zlib/LICENSE": {
+        "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+        "bytes": 1002
+      },
+      "licenses/glib2.0/debian/copyright": {
+        "sha256": "03cbcd6142c92bb14c997af557b8c73b1534710c34fe7f69788f8e8fc5fd941d",
+        "bytes": 51488
+      },
+      "licenses/glib2.0/COPYING": {
+        "sha256": "fa6f36630bb1e0c571d34b2bbdf188d08495c9dbf58f28cac112f303fc1f58fb",
+        "bytes": 25967
+      },
+      "licenses/glib2.0/subprojects/proxy-libintl/COPYING": {
+        "sha256": "d245807f90032872d1438d741ed21e2490e1175dc8aa3afa5ddb6c8e529b58e5",
+        "bytes": 25292
+      },
+      "licenses/libffi/debian/copyright": {
+        "sha256": "f83d2ecba1ea4d99957e81c50bebbd076a128194288a3ec22cc8ccdb77c43087",
+        "bytes": 10165
+      },
+      "licenses/libffi/LICENSE": {
+        "sha256": "2c9c2acb9743e6b007b91350475308aee44691d96aa20eacef8e199988c8c388",
+        "bytes": 1132
+      },
+      "licenses/libffi/LICENSE-BUILDTOOLS": {
+        "sha256": "e67978cd18816c0cb7d29aaaacde7b7447402c2fb321a051698890a8eaedda94",
+        "bytes": 18698
+      },
+      "licenses/libsndfile/debian/copyright": {
+        "sha256": "56bc3dae5803b8b2d59adf72fcd526eef2f4ac929d2442562d12248867222335",
+        "bytes": 15415
+      },
+      "licenses/libsndfile/AUTHORS": {
+        "sha256": "373fb9abaa154db5da8ab692853da32ced8977b817a713913953c63e50eb4499",
+        "bytes": 11603
+      },
+      "licenses/libsndfile/COPYING": {
+        "sha256": "ad01ea5cd2755f6048383c8d54c88459cd6fcb17757c5c8892f8c5ea060f6140",
+        "bytes": 26518
+      },
+      "licenses/pcre2/debian/copyright": {
+        "sha256": "030511beb4d9d620ad09914c369c36ec0528dcf301d1923cc643c948ee7c6a38",
+        "bytes": 6626
+      },
+      "licenses/pcre2/AUTHORS": {
+        "sha256": "430c8e1ae1c643cef5b14af882ada140bd8f675198d704cf88aa65addac3ab78",
+        "bytes": 749
+      },
+      "licenses/pcre2/COPYING": {
+        "sha256": "99272c55f3dcfa07a8a7e15a5c1a33096e4727de74241d65fa049fccfdd59507",
+        "bytes": 97
+      },
+      "licenses/ffmpeg/debian/copyright": {
+        "sha256": "7447a836ec8522b699ba022d5de6c9ab39cd1682054facf550ce84589f161e2a",
+        "bytes": 44039
+      },
+      "licenses/ffmpeg/COPYING.GPLv2": {
+        "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+        "bytes": 18092
+      },
+      "licenses/ffmpeg/COPYING.LGPLv3": {
+        "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+        "bytes": 7651
+      },
+      "licenses/ffmpeg/COPYING.LGPLv2.1": {
+        "sha256": "246041b6ecf9bc32d718a62c57877c78b5eb397b6467e74ed7ae2626ab189c30",
+        "bytes": 26517
+      },
+      "licenses/ffmpeg/COPYING.GPLv3": {
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "bytes": 35147
+      },
+      "licenses/ffmpeg/LICENSE.md": {
+        "sha256": "cb48bf09a11f5fb576cddb0431c8f5ed0a60157a9ec942adffc13907cbe083f2",
+        "bytes": 4376
+      },
+      "licenses/libogg/debian/copyright": {
+        "sha256": "36bb02bf6a764f4fac0ca9d38d2563932513df6015d98bd162624b18feaf096c",
+        "bytes": 4213
+      },
+      "licenses/libogg/AUTHORS": {
+        "sha256": "6fcb33d0cdd60b5054e7df820916388b590427514288c2bab01c626bb8ae9506",
+        "bytes": 198
+      },
+      "licenses/libogg/COPYING": {
+        "sha256": "d2ab5758336489da61c12cc5bb757da5339c4ae9001f9bb0562b4370249af814",
+        "bytes": 1466
+      },
+      "licenses/libvorbis/debian/copyright": {
+        "sha256": "47badad9f7f750f92cd12f44db08b6937e5b4d47935ba1cc60de0ea3a2adff9b",
+        "bytes": 2307
+      },
+      "licenses/libvorbis/AUTHORS": {
+        "sha256": "f5cab9f16035f770f50299f85cf2938c06dc3a9a30425961067788102ec896d3",
+        "bytes": 65
+      },
+      "licenses/libvorbis/COPYING": {
+        "sha256": "ec1815db59fcd302846df949d7424876cb2e2dc5ed1606c5fb0b36787b1cf43a",
+        "bytes": 1470
+      },
+      "licenses/soundfont/COPYING": {
+        "sha256": "8ef830b65c97a976b86e34bb5fde08d99dfb1db13c4149b5b20bc837ac6c4568",
+        "bytes": 1086
+      },
+      "licenses/soundfont/README": {
+        "sha256": "2f92d462684629f207e43815115b79d7f1ce130d30ca8792b7d82b398a8306f9",
+        "bytes": 1042
+      },
+      "licenses/gcc-mingw-w64-x86-64-win32-runtime-copyright": {
+        "sha256": "a481f772f7a53335f13b32c6c54eb1c8577ce97704edd3757ab7ed4287a8e96a",
+        "bytes": 75729
+      },
+      "licenses/mingw-w64-x86-64-dev-copyright": {
+        "sha256": "f27a58667538b6913ea23cb9e07e270922761ebf7c22d94bda7f819aaf08ea08",
+        "bytes": 35571
+      },
+      "licenses/common/GFDL-1.3": {
+        "sha256": "110535522396708cea37c72a802c5e7e81391139f5f7985631c93ef242b206a4",
+        "bytes": 22955
+      },
+      "licenses/common/GFDL": {
+        "sha256": "110535522396708cea37c72a802c5e7e81391139f5f7985631c93ef242b206a4",
+        "bytes": 22955
+      },
+      "licenses/common/GPL-3": {
+        "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "bytes": 35149
+      },
+      "licenses/common/GPL-1": {
+        "sha256": "d77d235e41d54594865151f4751e835c5a82322b0e87ace266567c3391a4b912",
+        "bytes": 12632
+      },
+      "licenses/common/MPL-1.1": {
+        "sha256": "f849fc26a7a99981611a3a370e83078deb617d12a45776d6c4cada4d338be469",
+        "bytes": 25755
+      },
+      "licenses/common/LGPL": {
+        "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+        "bytes": 7652
+      },
+      "licenses/common/Artistic": {
+        "sha256": "b7fd9b73ea99602016a326e0b62e6646060d18febdd065ceca8bb482208c3d88",
+        "bytes": 6111
+      },
+      "licenses/common/BSD": {
+        "sha256": "5d588eb3b157d52112afea935c88a7ff9efddc1e2d95a42c25d3b96ad9055008",
+        "bytes": 1499
+      },
+      "licenses/common/GPL": {
+        "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "bytes": 35149
+      },
+      "licenses/common/MPL-2.0": {
+        "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+        "bytes": 16726
+      },
+      "licenses/common/GFDL-1.2": {
+        "sha256": "d8e94ae5fdb5433fcae2961aeb1a8cf17174d6f4a0465d24bf37dd8a038bd439",
+        "bytes": 20432
+      },
+      "licenses/common/GPL-2": {
+        "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+        "bytes": 18092
+      },
+      "licenses/common/Apache-2.0": {
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "bytes": 11358
+      },
+      "licenses/common/LGPL-3": {
+        "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+        "bytes": 7652
+      },
+      "licenses/common/LGPL-2.1": {
+        "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+        "bytes": 26530
+      },
+      "licenses/common/LGPL-2": {
+        "sha256": "681e386e44a19d7d0674b4320272c90e66b6610b741e7e6305f8219c42e85366",
+        "bytes": 25381
+      },
+      "licenses/common/CC0-1.0": {
+        "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+        "bytes": 7048
+      },
+      "licenses/adplug/COPYING": {
+        "sha256": "cde11c7b610bccf99e6d61ae4396b711c9d0377e7e156fa572db552489e29912",
+        "bytes": 26546
+      },
+      "licenses/adplug/AUTHORS": {
+        "sha256": "8cbda0790593d491ac1db07de095bcef4f3f679bb4d5e548d9df5e0a73283e7c",
+        "bytes": 3081
+      },
+      "licenses/adplug/debian/copyright": {
+        "sha256": "ce44f2d33869b89d03359eb9608f27904977262fdb8018e3b2b1ace650a231f7",
+        "bytes": 1740
+      },
+      "licenses/libbinio/COPYING": {
+        "sha256": "ca0061fc1381a3ab242310e4b3f56389f28e3d460eb2fd822ed7a21c6f030532",
+        "bytes": 26536
+      },
+      "licenses/libbinio/AUTHORS": {
+        "sha256": "d79eb6f3a2345196eb6b6ff53ace9f1cc177e9e1299218b59e0a4251978a0320",
+        "bytes": 532
+      },
+      "licenses/libbinio/debian/copyright": {
+        "sha256": "b77f11219df4fbba6dddae5aec4924b06855edb22b379fe887184c73ede20a9e",
+        "bytes": 1718
+      },
+      "README.txt": {
+        "sha256": "ab4df70ebf872faf35c102ddd2febe010a56764ec3fafd189efb2801c5052792",
+        "bytes": 690
+      }
+    },
+    "formal_delivery_complete": false
+  },
+  "first_builder_source": "\"\"\"規格 076：Windows FM／GM 固定工具合併；只建立本機技術驗證包。\n\nbash tools/music_cross.sh python3 /tools/scripts/music_windows_bundle.py。\n預設無網路，拒絕覆蓋；正式版號、完整原始碼與發行驗收另行處理。\n\"\"\"\nimport hashlib\nimport json\nimport os\nfrom pathlib import Path\nimport re\nimport shutil\nimport subprocess\n\nSYSTEM = {'kernel32.dll', 'msvcrt.dll', 'advapi32.dll', 'ole32.dll',\n          'shell32.dll', 'user32.dll', 'ws2_32.dll', 'bcrypt.dll'}\nROOT = Path('/out')\nMETA = Path('/metadata')\n\n\ndef sha(path):\n    if not path.is_file() or path.is_symlink() or (path.stat().st_uid, path.stat().st_gid) != (os.getuid(), os.getgid()):\n        raise ValueError('輸入不是本人擁有的普通檔案：'+str(path))\n    with path.open('rb') as stream:\n        return hashlib.file_digest(stream, 'sha256').hexdigest()\n\n\ndef merge_records(groups):\n    result, overlaps = {}, []\n    for group, records in groups:\n        for name, row in records.items():\n            if not re.fullmatch(r'[A-Za-z0-9_.+\\-]+\\.(exe|dll)', name):\n                raise ValueError('不接受非工具檔名：'+name)\n            key = name.lower()\n            if key in result:\n                previous = result[key]\n                if any(previous[k] != row[k] for k in ['sha256', 'bytes', 'imports']):\n                    raise ValueError('同名工具／DLL 內容或引用不同：'+name)\n                previous['groups'].append(group)\n                overlaps.append(key)\n            else:\n                result[key] = dict(row, filename=name, groups=[group])\n    for name, row in result.items():\n        for dll in row['imports']:\n            if dll.lower() not in result and dll.lower() not in SYSTEM:\n                raise ValueError('未閉合非系統引用：'+name+' → '+dll)\n    for name in ['fluidsynth.exe', 'ffmpeg.exe', 'opl2wav.exe', 'dosgolem-probe.exe']:\n        if name not in result:\n            raise ValueError('缺正式工具：'+name)\n    return result, overlaps\n\n\ndef build():\n    package = ROOT/'combined-stage/封裝 測試'\n    if package.exists() or package.is_symlink():\n        raise ValueError('拒絕覆蓋既有合併工具包')\n    if (ROOT.stat().st_uid, ROOT.stat().st_gid) != (os.getuid(), os.getgid()):\n        raise ValueError('輸出目錄擁有權不符')\n    gm_path, fm_path = META/'windows-gm-source-tools.json', META/'windows-fm-pcm.json'\n    if sha(gm_path) != '49c07dac366671e95ec5b6589f83efaecf4ff2ac8df88ee0d45023a14cd8dded':\n        raise ValueError('GM 技術收據身份改變，先重審規格')\n    if sha(fm_path) != '4fc93a59c4a9b1f65b9e1a0114bc919126471b0d13fcef9102fdc29df93bac5a':\n        raise ValueError('FM 技術收據身份改變，先重審規格')\n    gm, fm = json.loads(gm_path.read_text()), json.loads(fm_path.read_text())\n    gm_package = ROOT/'gm-source-utf8-probe/封裝 測試'\n    groups = []\n    for group, folder, expected in [\n        ('gm', gm_package/'tools', {r['filename']: r for r in gm['package']['files'].values()}),\n        ('fm', ROOT/'pcm-gate/封裝 測試/tools', {n: r for n, r in fm['package_files'].items() if n != 'music-import.exe'}),\n    ]:\n        if {p.name for p in folder.iterdir()} != set(expected):\n            raise ValueError('工具目錄與固定清單不同：'+group)\n        records = {}\n        for name, row in expected.items():\n            p = folder/name\n            if sha(p) != row['sha256'] or p.stat().st_size != row['bytes']:\n                raise ValueError('固定工具大小／雜湊不符：'+name)\n            output = subprocess.check_output(['x86_64-w64-mingw32-objdump', '-p', str(p)], text=True)\n            imports = re.findall(r'DLL Name: (\\S+)', output)\n            if 'file format pei-x86-64' not in output or imports != row['imports']:\n                raise ValueError('工具架構／引用與已驗收據不同：'+name)\n            records[name] = dict(sha256=sha(p), bytes=p.stat().st_size, imports=imports,\n                                 source=str(p.relative_to(ROOT)))\n        groups.append((group, records))\n    tools, overlaps = merge_records(groups)\n    importer = ROOT/'music-import-combined.exe'\n    program_hash = sha(importer)\n    buildinfo_path = ROOT/'importer-combined-buildinfo.txt'\n    buildinfo = buildinfo_path.read_text()\n    for text in ['path\\tgithub.com/wicanr2/logh3/cmd/music-import', 'vcs.modified=false',\n                 'vcs.revision=9a2ce97df1e222a4928dd782ddf210033213a96e', 'GOOS=windows', 'GOARCH=amd64']:\n        if text not in buildinfo:\n            raise ValueError('原生入口須從指定乾淨提交建置')\n    font = gm_package/'soundfont/FluidR3_GM.sf2'\n    if sha(font) != gm['package']['soundfont_sha256']:\n        raise ValueError('固定音色庫不符')\n    source = ROOT/'source-delivery/windows-music-fixed-sources.tar'\n    if sha(source) != gm['source_bundle']['sha256'] or source.stat().st_size != gm['source_bundle']['bytes']:\n        raise ValueError('完整固定來源 tar 不符')\n    inputs = {'music-import.exe': importer, 'soundfont/FluidR3_GM.sf2': font,\n              'sources/windows-music-fixed-sources.tar': source,\n              'metadata/GM-TOOLS.json': gm_path, 'metadata/FM-TOOLS.json': fm_path,\n              'metadata/IMPORTER-BUILDINFO.txt': buildinfo_path}\n    inputs |= {'tools/'+r['filename']: ROOT/r['source'] for r in tools.values()}\n    for name, digest in gm['package']['licenses_sha256'].items():\n        path = gm_package/'licenses'/name\n        if sha(path) != digest:\n            raise ValueError('完整授權與固定清單不符：'+name)\n        inputs['licenses/'+name] = path\n    for name in ['adplug', 'libbinio']:\n        folder = ROOT/'src'/name\n        for p in [folder/'COPYING', folder/'AUTHORS', folder/'debian/copyright']:\n            sha(p)\n            inputs['licenses/'+name+'/'+str(p.relative_to(folder))] = p\n    # 所有來源先核對，再建立新包；失敗包不能被後續呼叫默默覆蓋。\n    hashes = {name: {'sha256': sha(p), 'bytes': p.stat().st_size} for name, p in inputs.items()}\n    for name, p in inputs.items():\n        target = package/name\n        target.parent.mkdir(parents=True, exist_ok=True)\n        shutil.copyfile(p, target)\n        if sha(target) != hashes[name]['sha256']:\n            raise ValueError('複製後雜湊不同：'+name)\n    note = ('銀河英雄傳說III SP — Windows 音樂工具技術驗證包\\n\\n'\n            '請在本目錄開啟終端，使用自備的合法原版遊戲目錄：\\n'\n            '.\\\\music-import.exe -source \"C:\\\\原版遊戲\" -output \"C:\\\\我的曲庫\"\\n'\n            '預設轉換 GM／FM 各十一首，音色庫與工具已包含，無須另外安裝。\\n'\n            '保留 tools、soundfont、sources、licenses 與 metadata 的相對位置。\\n'\n            '第三方工具依各自完整授權，來源與本地補丁在 sources 內；不以 remake 授權取代。\\n'\n            '生成曲庫源自原版，只能留在本機；這個包沒有原版檔案或生成音樂。\\n'\n            '目前僅完成容器技術準備；不是正式發行包，實機、聆聽與循環仍待驗收。\\n')\n    readme = package/'README.txt'\n    readme.write_bytes(b'\\xef\\xbb\\xbf'+note.replace('\\n', '\\r\\n').encode('utf-8'))\n    hashes['README.txt'] = {'sha256': sha(readme), 'bytes': readme.stat().st_size}\n    record = {'schema': 'logh3.music-tools.windows.bundle.v1', 'status': 'staged-for-technical-validation',\n              'program_sha256': program_hash, 'source_head': '9a2ce97df1e222a4928dd782ddf210033213a96e',\n              'source_dirty': False, 'builder_sha256': sha(Path(__file__)), 'tools': tools,\n              'identical_overlaps': overlaps, 'files': hashes, 'formal_delivery_complete': False}\n    (package/'BUNDLE.json').write_text(json.dumps(record, ensure_ascii=False, indent=2)+'\\n')\n    print('Windows 合併驗證包完成', len(tools), '個工具／DLL，入口 SHA-256', program_hash, flush=True)\n\n\nif __name__ == '__main__':\n    build()\n",
+  "first_archive_builder_source": "\"\"\"規格 076：合併技術驗證包補齊 Go notice、ZIP 與中文搬移驗證。\n\nbash tools/music_cross.sh python3 /tools/scripts/music_windows_bundle_archive.py。\n保留原 BUNDLE.json；補充檔案用 ANNEX.json，ZIP 與解壓清單完整逐檔驗證。\n沒有正式版號或 dist-all 交付聲明。\n\"\"\"\nimport hashlib\nimport json\nimport os\nfrom pathlib import Path\nimport shutil\nimport zipfile\n\nROOT = Path('/out')\n\n\ndef sha(p):\n    assert p.is_file() and not p.is_symlink() and (p.stat().st_uid, p.stat().st_gid) == (os.getuid(), os.getgid()), p\n    with p.open('rb') as stream:\n        return hashlib.file_digest(stream, 'sha256').hexdigest()\n\n\npackage = ROOT/'combined-stage/封裝 測試'\noriginal = json.loads((package/'BUNDLE.json').read_text())\nexpected = set(original['files']) | {'BUNDLE.json'}\nassert {str(p.relative_to(package)) for p in package.rglob('*') if p.is_file()} == expected\nfor name, record in original['files'].items():\n    p = package/name\n    assert sha(p) == record['sha256'] and p.stat().st_size == record['bytes'], name\nnotice_cache = ROOT/'go-notices'\nnames = {'Go-LICENSE', 'Go-PATENTS', 'oggvorbis-1.0.5-LICENSE', 'vorbis-1.0.2-LICENSE', 'dosgolem-LICENSE'}\nassert {p.name for p in notice_cache.iterdir()} == names\nassert sha(notice_cache/'dosgolem-LICENSE') == 'd70e70a35fe613d505ea57b97c986b58e2b16c980e37b985811cdf80cf7f8ede'\nannex = {'purpose': '完整 Go／解碼套件／dosgolem 授權補充，不變更工具或音源',\n         'stage_bundle_sha256': sha(package/'BUNDLE.json'), 'builder_sha256': sha(Path(__file__)), 'files': {}}\nfor name in sorted(names):\n    source, target = notice_cache/name, package/'licenses/go'/name\n    assert not target.exists() and not target.is_symlink()\n    source_hash = sha(source)\n    target.parent.mkdir(exist_ok=True)\n    shutil.copyfile(source, target)\n    assert sha(target) == source_hash\n    annex['files'][str(target.relative_to(package))] = {'sha256': source_hash, 'bytes': target.stat().st_size}\n(package/'ANNEX.json').write_text(json.dumps(annex, ensure_ascii=False, indent=2)+'\\n')\nreadme = (package/'README.txt').read_bytes()\nassert readme.startswith(b'\\xef\\xbb\\xbf') and b'\\n' not in readme.replace(b'\\r\\n', b'')\narchive = ROOT/'combined-tools-technical.zip'\ndestination = ROOT/'combined-relocated/中文 搬移'\nassert not archive.exists() and not destination.exists(), '拒絕覆蓋封包或搬移收據'\nfiles = {str(p.relative_to(package)): {'sha256': sha(p), 'bytes': p.stat().st_size}\n         for p in package.rglob('*') if p.is_file()}\nassert set(files) == expected | set(annex['files']) | {'ANNEX.json'}\nwith zipfile.ZipFile(archive, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as z:\n    for name in sorted(files):\n        z.write(package/name, '封裝 測試/'+name)\nwith zipfile.ZipFile(archive) as z:\n    entries = z.infolist()\n    assert len(entries) == len(files) and len({e.filename for e in entries}) == len(files)\n    for entry in entries:\n        assert entry.filename.startswith('封裝 測試/') and entry.flag_bits & 0x800\n        parts = Path(entry.filename).parts\n        assert not Path(entry.filename).is_absolute() and '..' not in parts\n        assert not entry.is_dir() and entry.file_size == files[str(Path(*parts[1:]))]['bytes']\n    assert z.testzip() is None\n    z.extractall(destination)\nrelocated = destination/'封裝 測試'\nassert {str(p.relative_to(relocated)) for p in relocated.rglob('*') if p.is_file()} == set(files)\nfor name, record in files.items():\n    p = relocated/name\n    assert sha(p) == record['sha256'] and p.stat().st_size == record['bytes'], name\nresult = {'scope': 'Windows 合併工具本機 ZIP／中文搬移技術驗證；正式交付未完成',\n          'archive': archive.name, 'sha256': sha(archive), 'bytes': archive.stat().st_size,\n          'files': files, 'utf8_flag_all': True, 'readme_bom_crlf': True,\n          'relocated_path': str(relocated.relative_to(ROOT)), 'builder_sha256': sha(Path(__file__)),\n          'formal_delivery_complete': False}\n(ROOT/'COMBINED-ARCHIVE.json').write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\\n')\nprint('Windows 技術 ZIP 與中文搬移逐檔驗證通過',len(files),'檔，SHA-256',result['sha256'],flush=True)\n",
+  "scripts_sha256": {
+    "music_windows_bundle.py": "d9c4c1334ad74fc2713c6b7a470b03b8f34506f16f0bd79ec3360d7cb2d28678",
+    "music_windows_bundle_archive.py": "7c143bb6de56b6d3d64b5e058e683f5afef382b71e2ec97c542b932d82900817",
+    "music_windows_bundle_test.py": "5f8c9f6f9cde30df520867b93b842a2a4ff29150c0055e9fe3c07db742d2cb19",
+    "music_windows_opl_unicode_build.py": "29697f440eb6a238b3f1845222304bb34bc80c2a0fbb1236b67904f2e950e4d5",
+    "music_windows_opl_unicode_probe.py": "17764114f7a290617826d158907073a9e0d6b0e518317ffbbb171ebd7f1ca7dd",
+    "music_windows_bundle_receipt.py": "b3f0c8ddf705f63275938412590628d8cbbecf9f1e69646c11c25cbca01959e1"
+  },
+  "source_files_sha256": {
+    "tools/opl2wav.cpp": "2e2b6afba914dd18b023d5c813dfe7e39fa915467bd8ccb8a4b7f0cdab74298e",
+    "cmd/gin3/music_integration_test.go": "4ef595b343c539c2da2b1454553140a0b1f518eefce8c1c39c6a2690a84b1196"
+  },
+  "interface_sources_sha256": {
+    "src/adplug/src/adplug.h": "655551bfae2b2fa9798bee07ed428f1b29c8acbfa62fac6628cf199a93af11df",
+    "src/adplug/src/fprovide.h": "240af17aeadd6531c519d0c5d28c8051cd064ca3d7731edfe154cca79601f002",
+    "src/adplug/src/fprovide.cpp": "b3fed8345f69e05f2cb824985c572f0f705ca599e978d22b29312a6673289f45",
+    "src/libbinio/src/binfile.h": "a68499739de1a6cc7c80c1d104e0e520acffbc4a472b5997de071892be039094",
+    "src/libbinio/src/binfile.cpp": "67980f8d84a53ae6a645d5e109c0f5672aa7c847496921c55e80bf900dbf2338"
+  },
+  "logs_sha256": {
+    "combined-full.log": "e00a7951a6f2430518fe9638a9cfc48bd200946dcaa8a8d82935bb7d04faa1ae",
+    "combined-utf8-full.log": "3367e524731839c12a8e69099c85080e946e4e7edfad91dfcdeecef60bceb31f",
+    "combined-utf8-relocated.log": "08f92e305200e0c7b6a574d7ac3cb4bc301fc2e4475ea0a2490559a1908bede8",
+    "combined-utf8-boundary-tests.log": "62cfbeb2911bb226088bfb0918eb4b05008ea70b20bce854ee2ca8a564bd37a5",
+    "combined-player-test.log": "5aa2a6bda9cce95345f813c13b772f9a7e806544f5be87e045e118a2dc0a22a6",
+    "combined-product-tests.log": "420653d7a42d9462bdd85137c9033dd44dda526c3b12649a843e43293daa86ca",
+    "opl-unicode-wave.log": "e245bdeae44529b3c4c55e03f65cceba5f5548befe3962af29fd6735acdeeb89",
+    "opl-unicode-replay-wave.log": "fe964ae8b0bba706e255869639dc6f3bd27683ca364c5686e08736f3f43f7e4b",
+    "opl-linux-regression.log": "a748aea18f13b8334c2304073b2a6856e859493713d48a8b75506c8f6a2f1762",
+    "opl-linux-branch.log": "70232f6da98e5b6f1dcd8d5bead0800c5405e4edd7dde0d0a9e85b89b0662a64",
+    "opl-linux-branch-2.log": "341733df199272203a67cdc7c0ca0765bf319b547890b148c8a49fa423e5123f"
+  },
+  "images": {
+    "cross": "sha256:0745d96e4029b152f468e2fee63c01e20bd859a369efe80de681e95cf17f0541",
+    "wine": "sha256:7d3c7ff554db39300e3e7a92a7b79c2d5fcd647289596d22fa10899baac61201",
+    "gui": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8"
+  },
+  "full_command": [
+    "LOGH3_TIMEOUT=3h",
+    "bash",
+    "tools/music_wine.sh",
+    "wine",
+    "Z:\\out\\combined-utf8-stage\\封裝 測試\\music-import.exe",
+    "-source",
+    "Z:\\orig",
+    "-output",
+    "Z:\\out\\combined-utf8-full\\生成 曲庫"
+  ],
+  "formal_delivery_complete": false,
+  "limits": "限 Wine 原生 CLI／ZIP／中文搬移與 Linux 正式解碼。非 Windows 預處理相同不等於 Linux 新建置實跑。Windows 實機、人耳、循環、macOS、正式版號／dist-all 及本作品授權與原始碼交付仍待完成；GM 峰值 1.0 與原版音源近似保留。"
+}

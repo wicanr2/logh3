@@ -20,6 +20,68 @@
 #include <cstdlib>
 #include <vector>
 
+#include <string>
+#ifdef _WIN32
+#include <windows.h>
+#include <shellapi.h>
+#include <binfile.h>
+
+// Windows 參數與檔名使用 Unicode；AdPlug 的 binistream API 保持不變。
+struct UnicodeArgs {
+    std::vector<std::string> values;
+    std::vector<char *> pointers;
+    bool valid = false;
+    UnicodeArgs() {
+        int count = 0;
+        LPWSTR *wide = CommandLineToArgvW(GetCommandLineW(), &count);
+        if (!wide) return;
+        values.reserve(count);
+        bool ok = true;
+        for (int i = 0; i < count; ++i) {
+            int size = WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, wide[i], -1, nullptr, 0, nullptr, nullptr);
+            if (size <= 0) { ok = false; break; }
+            std::vector<char> bytes(size);
+            if (WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, wide[i], -1, bytes.data(), size, nullptr, nullptr) != size) {
+                ok = false; break;
+            }
+            values.emplace_back(bytes.data());
+        }
+        LocalFree(wide);
+        if (!ok) return;
+        for (auto &value : values) pointers.push_back(&value[0]);
+        valid = true;
+    }
+};
+
+static std::wstring wide_path(const std::string &path) {
+    int size = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, path.c_str(), -1, nullptr, 0);
+    if (size <= 0) return {};
+    std::vector<wchar_t> bytes(size);
+    if (MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, path.c_str(), -1, bytes.data(), size) != size) return {};
+    return std::wstring(bytes.data());
+}
+
+class UnicodeInput : public binifstream {
+public:
+    explicit UnicodeInput(const wchar_t *name) { f = _wfopen(name, L"rb"); }
+    bool opened() const { return f != nullptr; }
+};
+
+class UnicodeProvider : public CFileProvider {
+public:
+    binistream *open(std::string filename) const override {
+        std::wstring wide = wide_path(filename);
+        if (wide.empty()) return nullptr;
+        UnicodeInput *stream = new UnicodeInput(wide.c_str());
+        if (!stream->opened()) { delete stream; return nullptr; }
+        stream->setFlag(binio::BigEndian, false);
+        stream->setFlag(binio::FloatIEEE);
+        return stream;
+    }
+    void close(binistream *stream) const override { delete stream; }
+};
+#endif
+
 static void put32(std::vector<uint8_t> &h, uint32_t v) {
 	for (int i = 0; i < 4; i++) h.push_back((v >> (8 * i)) & 0xFF);
 }
@@ -28,6 +90,15 @@ static void put16(std::vector<uint8_t> &h, uint16_t v) {
 }
 
 int main(int argc, char **argv) {
+#ifdef _WIN32
+    UnicodeArgs arguments;
+    if (!arguments.valid) {
+        fprintf(stderr, "Windows Unicode 命令列無法解析\n");
+        return 2;
+    }
+    argc = static_cast<int>(arguments.pointers.size());
+    argv = arguments.pointers.data();
+#endif
 	if (argc < 3) {
 		fprintf(stderr, "用法: opl2wav <輸入> <輸出.wav> [取樣率] [上限秒]\n");
 		return 2;
@@ -36,7 +107,12 @@ int main(int argc, char **argv) {
 	const double maxsec = argc > 4 ? atof(argv[4]) : 600.0;
 
 	CEmuopl opl(rate, true /*16 位元*/, true /*立體聲*/);
-	CPlayer *p = CAdPlug::factory(argv[1], &opl);
+	#ifdef _WIN32
+    UnicodeProvider provider;
+    CPlayer *p = CAdPlug::factory(argv[1], &opl, CAdPlug::players, provider);
+#else
+    CPlayer *p = CAdPlug::factory(argv[1], &opl);
+#endif
 	if (!p) {
 		// **認不出來要吵。** 悄悄輸出一份無聲的 WAV 會一路通過後面每一步。
 		fprintf(stderr, "AdPlug 認不出這個檔：%s\n", argv[1]);
@@ -78,7 +154,12 @@ int main(int argc, char **argv) {
 	h.insert(h.end(), {'d', 'a', 't', 'a'});
 	put32(h, bytes);
 
-	FILE *f = fopen(argv[2], "wb");
+	#ifdef _WIN32
+    std::wstring output_path = wide_path(argv[2]);
+    FILE *f = output_path.empty() ? nullptr : _wfopen(output_path.c_str(), L"wb");
+#else
+    FILE *f = fopen(argv[2], "wb");
+#endif
 	if (!f) {
 		perror(argv[2]);
 		return 5;

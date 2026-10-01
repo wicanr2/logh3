@@ -25,6 +25,12 @@ func TestWindowsUnicodeGMImportPlayerDecode(t *testing.T) {
 	testWindowsImportPlayerDecodeAt(t, "GM", "M", filepath.Join("..", "..", "workplace", "music69-windows", "gm-utf8-full", "生成 曲庫"))
 }
 
+func TestWindowsCombinedImportPlayerDecode(t *testing.T) {
+	dir := filepath.Join("..", "..", "workplace", "music69-windows", "combined-utf8-full", "生成 曲庫")
+	testWindowsImportPlayerDecodeAt(t, "GM", "M", dir)
+	testWindowsImportPlayerDecodeAt(t, "FM", "F", dir)
+}
+
 func TestWindowsFMImportPlayerDecode(t *testing.T) {
 	testWindowsImportPlayerDecode(t, "FM", "F")
 }
