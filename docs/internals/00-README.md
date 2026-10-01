@@ -24,6 +24,12 @@
 [驗證039](../playtest/039-battle-preparation.md)。
 欄位與分級索引：[battle-preparation.json](data/battle-preparation.json)、
 [battle-preparation-semantics.json](data/battle-preparation-semantics.json)。
+跨艦隊排序接續：[第二十六輪](../goal/2026-10-02-battle-preparation-round-26.md)、
+[研究368](../re/368-battle-preparation-sort.md)。
+原版排序欄位：[battle-preparation-sort.json](data/battle-preparation-sort.json)，
+審查索引：[battle-preparation-sort-semantics.json](data/battle-preparation-sort-semantics.json)；
+重驗入口：`tools/scripts/battle_preparation_sort_receipt.py`，方法與限制見研究368。
+驗證範圍：[040 — 自動候選排序](../playtest/040-battle-preparation-sort.md)。
 
 音色庫來源與完整授權索引：[`player-music-library.json`](data/player-music-library.json)，
 用途與原版素材邊界見 [`17-mds.md`](17-mds.md)。

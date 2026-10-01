@@ -1,0 +1,25 @@
+{
+  "schema": "logh3.battle-preparation-semantics.v1",
+  "source": "研究368逐指令人工審查；不從散文自動匯入",
+  "inputs": {
+    "3C6A": "19baaa058f8bc637f775b900a255a558ea3b3e6c2f767bd63c4ea7b687db62ce",
+    "1930": "9e448baf09b748601da82f9febb5d00f6c3161432e7f0a52bef0643461b385ae",
+    "1AAB": "92f8d0a53dbb26d5c8ed27474e66560f73390a2933b69c526749ab28156252a2",
+    "1261": "1f9ebfbe839bb5e2780c0eaac9599d6b9ae671230060e59dbc263d5dd7f8dad3"
+  },
+  "entries": [
+    {"kind":"function","original_location":"3C6A:000D","semantic":"梳狀排序；間距乘10除13，9／10改11，降到1且無交換才返回。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；雙跑75案SHA-256 370cfe8b8c7ca2efc1d23e8db6f4dab646be29cda33b2b3123b737a3fc49cb99"},
+    {"kind":"instruction","original_location":"3C6A:006B","original_bytes_hex":"b9 0a 00","semantic":"間距縮減乘數10。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；切段3C6A雜湊見inputs"},
+    {"kind":"instruction","original_location":"3C6A:0070","original_bytes_hex":"b9 0d 00","semantic":"間距縮減除數13。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；切段3C6A雜湊見inputs"},
+    {"kind":"instruction","original_location":"3C6A:0094","original_bytes_hex":"c7 46 02 0b 00","semantic":"間距9或10時改用11。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；前置0081／0086比較9／10，切段雜湊見inputs"},
+    {"kind":"instruction","original_location":"3C6A:00DE","original_bytes_hex":"7e 14","semantic":"比較結果小於等於0不交換；正數才呼叫交換常式。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；切段3C6A雜湊見inputs；72個排序案例"},
+    {"kind":"instruction","original_location":"3C6A:010E","original_bytes_hex":"83 7e 02 01","semantic":"無交換時仍須間距降到1才結束。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；0105檢查交換數，切段雜湊見inputs"},
+    {"kind":"function","original_location":"1930:0510","semantic":"同艦隊比較分隊序；不同艦隊優先A42E來源的艦隊，其餘平手。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；原始指令及36個補給排序案例，雙跑雜湊見研究"},
+    {"kind":"function","original_location":"1AAB:04BD","semantic":"同艦隊比較分隊序；不同艦隊優先A440來源的艦隊，其餘平手。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；原始指令及36個修理排序案例，雙跑雜湊見研究"},
+    {"kind":"instruction","original_location":"1930:01D9","original_bytes_hex":"89 0e 30 a4","semantic":"逐筆艦艇更新A42E／A430的來源遠指標；不限定種類5。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；planet-supply-last-unit；完整019D迴圈審查"},
+    {"kind":"instruction","original_location":"1930:01DD","original_bytes_hex":"89 36 2e a4","semantic":"逐筆艦艇更新來源遠指標的位移半部；行星補彈藥沿用最後一筆。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；planet-supply-last-unit；完整019D迴圈審查"},
+    {"kind":"instruction","original_location":"1AAB:00B2","original_bytes_hex":"89 0e 42 a4","semantic":"只有通過00AB種類6比較時更新A440／A442的來源遠指標。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；兩個行星修理來源案例；完整006D迴圈審查"},
+    {"kind":"instruction","original_location":"1AAB:00B6","original_bytes_hex":"89 36 40 a4","semantic":"更新修理來源位移；本次沒有種類6時保留舊指標，行星排序仍讀取它。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；planet-repair-retained-source／last-donor；完整006D迴圈審查"},
+    {"kind":"function","original_location":"1261:000B","semantic":"沿9898戰場艦隊字節表重算士氣，跳過艦隊+04=FF；將收到的旗標傳給0067。","grade":"proven","source":"docs/re/368-battle-preparation-sort.md；原始0022至0051控制流；docs/re/333與339"}
+  ]
+}

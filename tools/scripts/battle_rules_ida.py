@@ -58,7 +58,20 @@ def annotate(record, kind):
         record[key] = entry[key]
     record['warning'] = '' if entry['grade'] == 'proven' else '⚠ 未證實語意'
 for query in (a for a in args if not a.startswith('--index=')):
-    off, length = [int(v,16) for v in query.split(':')]
+    off_text, length_text = query.split(':')
+    off = int(off_text, 16)
+    if length_text == 'auto':
+        # 只作導覽；審查仍須回到原始指令與控制流。
+        ida_bytes.del_items(base+off, ida_bytes.DELIT_SIMPLE, len(raw)-0x100-off)
+        ida_ua.create_insn(base+off)
+        ida_funcs.add_func(base+off)
+        ida_auto.auto_wait()
+        found = ida_funcs.get_func(base+off)
+        if found is None:
+            raise ValueError('IDA 未能建立函式邊界')
+        length = found.end_ea-(base+off)
+    else:
+        length = int(length_text,16)
     start, end = base+off, base+off+length
     ida_bytes.del_items(start, ida_bytes.DELIT_SIMPLE, length)
     cur = start
@@ -75,7 +88,7 @@ for query in (a for a in args if not a.startswith('--index=')):
               'original_name': idc.get_name(start), 'ida_ea_hex': hex(start),
               'runtime_linear_hex': hex(segment*16+off),
               'boundary_ida': [hex(f.start_ea), hex(f.end_ea)] if f else None,
-              'boundary_origin': '明示查詢範圍，僅導覽；須以原始 retf 及控制流審查',
+              'boundary_origin': ('IDA 自動邊界' if length_text == 'auto' else '明示查詢範圍')+'，僅導覽；須以原始 retf 及控制流審查',
               'semantic': '未審查', 'grade': 'unknown', 'warning': '⚠ 未證實語意',
               'source': source_hash, 'instructions': [],
               'xrefs_to': [{'ida_ea_hex': hex(x.frm),'type':x.type} for x in idautils.XrefsTo(start)]}
