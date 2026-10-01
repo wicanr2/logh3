@@ -326,7 +326,7 @@ func BattleStrength(units []BattleUnit, faction int) int {
 // 這裡先用艦隊總戰力除以分隊數，等分隊層的戰鬥結算解出來再換掉。
 func (s *Slot) Deploy(w StrengthWeights, formation *FormationSlots,
 	f Fleet, x, y, facing int) []BattleUnit {
-	ships := s.FleetShips(f.Index)
+	ships := s.FleetGroupShips(f.Index)
 	if len(ships) == 0 {
 		return nil
 	}

@@ -19,7 +19,7 @@ import (
 // 起每組 4 bytes 指過去；remake 直接把解出來的欄位帶在艦隊上。
 //
 // 艦艇池那一筆的其餘欄位（士氣、修理上限、兩格存量、池索引）**讀存檔時會帶進來**，
-// 但 remake 還沒有自己算它們的規則，所以新編的艦隊那幾格是 0（規格 015 已知差異、#55）。
+// 新編組由 InitGroupStock 填已解的修理上限與兩項存量，尚未配置的池索引明示為 -1（規格 067）。
 type FleetGroup struct {
 	Kind  int `json:"kind"`  // 艦種（艦艇 `+0x04`）
 	Ships int `json:"ships"` // 現有艘數（艦艇 `+0x08`）
@@ -31,7 +31,7 @@ type FleetGroup struct {
 	Slot2 int `json:"slot2"`
 	Slot3 int `json:"slot3"` // 編制槽 `[3]`，抄自樣板 ＝ 隊形槽索引
 	// Detail 是這一組艦艇的索敵等級（艦艇 `+0x17`，0–3）——敵方看它看得
-	// 多清楚。打過仗才會不是 0；新編的艦隊沒有艦艇池，永遠 0。
+	// 多清楚。新編初值為 0，後續由索敵與戰損路徑更新。
 	Detail int `json:"detail,omitempty"`
 	// X／Y 是這一組艦艇的位置（艦艇 `+0x34`／`+0x36`）：別的艦隊定位時拿它判佔用（`297B:0C74`）。
 	X int `json:"x,omitempty"`
@@ -272,7 +272,7 @@ func balanceFiveSix(built []FleetGroup) [2]int {
 // `2703:1433`，`docs/re/215`）。
 func (in BuildInput) take(kind, slot2, slot3 int) FleetGroup {
 	f := in.full(kind)
-	g := FleetGroup{Kind: kind, Full: f, Slot2: slot2, Slot3: slot3}
+	g := FleetGroup{Kind: kind, Full: f, Slot2: slot2, Slot3: slot3, Pool: -1}
 	if kind == shipKindStandalone {
 		g.Ships = f // 不扣存量
 		InitGroupStock(in.Kinds, in.Faction, &g)

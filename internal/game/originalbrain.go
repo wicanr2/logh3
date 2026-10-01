@@ -94,9 +94,7 @@ func (g *Game) enemyFleets(r int) int {
 // 原版 `2D76:0611` 當場在艦艇池配好艘數，候選評分讀得到（收據 `turn260mem` 第一個 AI 回合派 52、55 打無主、
 // 47 去補缺口）。這時照 remake 的編制算；原本一律回 0 會讓三支分數都掉到 1、平手取表上第一支（`docs/re/335` §九）。
 func (g *Game) fleetShipTotals(f rules.Fleet) (ships, mainSlots int) {
-	if g.slot != nil {
-		return g.slot.FleetShipTotals(f.Index)
-	}
+	// 編制在移動、整補與戰損後會更新；存檔底稿不能取代目前局面（規格 067）。
 	for _, gp := range f.Composition {
 		ships += gp.Ships
 		if gp.Kind == 0 || gp.Kind == 1 {

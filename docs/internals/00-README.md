@@ -102,6 +102,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [`38-battle-units.md`](38-battle-units.md)：戰場上的單位是「分隊」，不是艦隊。
 - [`39-battle-entry-points.md`](39-battle-entry-points.md)：戰場入口表。
 - [`40-ship-kind-table.md`](40-ship-kind-table.md)：艦種屬性表。
+- [`data/live-fleet-save.json`](data/live-fleet-save.json)：現況艦隊存讀、速度寫入的分級語意與原版／GUI 雜湊；入口為[規格 067](../spec/067-live-fleet-save.md)。
 - [`41-sin-table.md`](41-sin-table.md)：原版的正弦表。
 - [`42-screen-tile-table.md`](42-screen-tile-table.md)：畫面的圖塊表 `ds:D81E`。
 - [`43-battle-terrain-and-rally.md`](43-battle-terrain-and-rally.md)：戰場地形的通行規則與集結點。

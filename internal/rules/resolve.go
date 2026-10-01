@@ -269,7 +269,7 @@ func (s *Slot) admiral(i int) []byte {
 func (s *Slot) ApplyBattleResult(units []BattleUnit) int {
 	changed := 0
 	for _, u := range units {
-		ships := s.FleetShips(u.Fleet)
+		ships := s.FleetGroupShips(u.Fleet)
 		if u.Squadron < 0 || u.Squadron >= len(ships) {
 			continue
 		}

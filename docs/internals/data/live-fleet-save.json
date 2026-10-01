@@ -1,0 +1,213 @@
+{
+  "inputs": {
+    "297B": "9f28a7b740ca064f760dffe6b6fcf941dbd9fd4f3a4ed9d2e37ca771b57bd120"
+  },
+  "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）",
+  "entries": [
+    {
+      "kind": "instruction",
+      "original_location": "297B:0445",
+      "original_bytes_hex": "26 88 45 03",
+      "semantic": "將組序號寫入艦艇 +03",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:0452",
+      "original_bytes_hex": "26 88 45 05",
+      "semantic": "將隊形槽寫入艦艇 +05",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:045F",
+      "original_bytes_hex": "26 88 45 02",
+      "semantic": "將所在星域寫入艦艇 +02",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:048A",
+      "original_bytes_hex": "26 c6 44 03 ff",
+      "semantic": "索敵隊序號 FF",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:0491",
+      "original_bytes_hex": "26 c6 44 06 64",
+      "semantic": "索敵隊士氣 100",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:0498",
+      "original_bytes_hex": "26 c6 44 05 14",
+      "semantic": "索敵隊隊形槽 20",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:0F38",
+      "original_bytes_hex": "26 88 07",
+      "semantic": "能力比例計算後寫回轉速度 +1F",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:0F64",
+      "original_bytes_hex": "26 88 05",
+      "semantic": "能力比例計算後寫巡航速度 +21",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:0F8D",
+      "original_bytes_hex": "26 88 07",
+      "semantic": "能力比例計算後寫戰鬥速度 +22",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:0FD4",
+      "original_bytes_hex": "26 28 07",
+      "semantic": "扣除回轉速度的機動力折減",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:0FE6",
+      "original_bytes_hex": "26 28 05",
+      "semantic": "扣除巡航速度的機動力折減",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:0FFB",
+      "original_bytes_hex": "26 28 07",
+      "semantic": "扣除戰鬥速度的機動力折減",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:10B0",
+      "original_bytes_hex": "26 88 44 1f",
+      "semantic": "索敵隊直接取艦種回轉速度",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:10BC",
+      "original_bytes_hex": "26 88 44 21",
+      "semantic": "索敵隊直接取艦種巡航速度",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:10C8",
+      "original_bytes_hex": "26 88 44 22",
+      "semantic": "索敵隊直接取艦種戰鬥速度",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "function",
+      "original_location": "297B:03EB",
+      "semantic": "同步編制序號、隊形、所在星域與索敵隊欄位；呼叫定位及能力更新",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    },
+    {
+      "kind": "function",
+      "original_location": "297B:0E8B",
+      "semantic": "依能力及機動力重算三項速度；索敵隊另查艦種表（第四個槽仍保留）",
+      "grade": "proven",
+      "source": "docs/re/355-live-fleet-save.md（IDA 原始 bytes／資料流與原版 19 組速度核對）"
+    }
+  ],
+  "tool": {
+    "version": "IDA Pro 9.4",
+    "image": "ida-pro-9.4-idapython:locked-v1",
+    "image_id": "6f6d59af49d0008c4109a5295b5f374bdc007e2d1ab28cb9de08779584de2780",
+    "ida_instruction_base": "0x10200",
+    "runtime_segment": "297B",
+    "runtime_linear_formula": "0x297B0 + IP"
+  },
+  "original": {
+    "binary": "GIN3.COM",
+    "sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+    "memory": "workplace/oracle/runtime85-normal/command.bin",
+    "memory_sha256": "abf7512aef90dd50e5b809026c12008dc9bf2eda775ea30e95f399df72ef7e52",
+    "executor_git_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "original_table_sha256": {
+      "FLEET.DT8": "ebb35977cdcb4eb6f9218fd6b2a28ecb69048fa39fc10b4d7d52231e2dd8f155",
+      "SHIP.DT8": "db3eb0bbdf69411d4e0660c1170bda1676465a367e77ae55bbe3fe957807bdb3",
+      "FLEET.DT9": "f04285246941dc055c92b4af03964d7acb449e4f59e8b424d66919672bc09082",
+      "SHIP.DT9": "9072c4bbc5050773997508eb8c924e254326a6a8a49ec6ed75f3b33fcf8a89c5",
+      "FLEET.DTA": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+      "SHIP.DTA": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb"
+    }
+  },
+  "speed_check": {
+    "formation_groups": 15,
+    "scouts": 4,
+    "speed_fields_each": 3,
+    "different": 0,
+    "test": "TestSyncFleetsSpeedsMatchOriginal",
+    "grade": "proven"
+  },
+  "remake_gui": {
+    "kind": "remake 正常 GUI 存讀回歸；不宣稱兩側整表原版 parity",
+    "git_head": "e1895e3f8fca13e2e9418ba156d7d8b931821b11",
+    "working_tree": " M CONTEXT.md\n M VERIFICATION-MATRIX.md\n M docs/internals/00-README.md\n M docs/internals/30-save-format.md\n M docs/internals/64-ship-pool.md\n M docs/spec/009-save-slot-writing.md\n M internal/game/battle.go\n M internal/game/game.go\n M internal/game/originalbrain.go\n M internal/rules/battle.go\n M internal/rules/fleet.go\n M internal/rules/fleetbuild.go\n M internal/rules/fleetedit.go\n M internal/rules/resolve.go\n M internal/rules/save.go\n M tools/scripts/runtime_fields_ida.py\n?? docs/goal/2026-10-01-live-fleet-save-round-14.md\n?? docs/internals/data/live-fleet-save.json\n?? docs/playtest/028-live-fleet-save.md\n?? docs/re/355-live-fleet-save.md\n?? docs/spec/067-live-fleet-save.md\n?? internal/game/fleetsave.go\n?? internal/game/fleetsave_test.go\n?? internal/rules/fleetsave.go\n?? internal/rules/fleetsave_test.go\n?? tools/live_fleet_save_check.sh",
+    "image": "logh3-ebiten:2",
+    "initial_seed": "0xD3DC167E（正常新遊戲執行前固定）",
+    "input": "script.txt；正常入口，無注入",
+    "fleet_counts": [
+      1,
+      3
+    ],
+    "fleet_bytes": 3904,
+    "ship_bytes": 27456,
+    "fleet_ship_different": 0,
+    "region_fleet_counts_different": 0,
+    "sha256": {
+      "STELLAR.DT0": "165df5763d562d00df5dacd9cc3f40ea7ccbbea9618bce399ed8860c569014ba",
+      "PLANET.DT0": "759db1cf4ef72bc7c510c05b927cdb8549b053f7d7b44cbccfc30c6d74f717a0",
+      "ADMIRAL.DT0": "c3f17ca1d1e56e0c94a013ce844f03df131fcf37465c174dddd6fae460ae0069",
+      "FLEET.DT0": "919c4daf11fcd67dd9a4fa6a600b7a1d6dc4eddba23c106a90aed6b8e70cee0c",
+      "SHIP.DT0": "b7f2d7629e82c9676a79f4e4f6b4a6bbebef78493f42ca2a222fa48c7e7bef29",
+      "WORK.DT0": "7f8d907388875180c33bdd611cb0bd520ef0b282f1ffbde7af64e083cc64c8b2",
+      "STELLAR.DT1": "165df5763d562d00df5dacd9cc3f40ea7ccbbea9618bce399ed8860c569014ba",
+      "PLANET.DT1": "759db1cf4ef72bc7c510c05b927cdb8549b053f7d7b44cbccfc30c6d74f717a0",
+      "ADMIRAL.DT1": "c3f17ca1d1e56e0c94a013ce844f03df131fcf37465c174dddd6fae460ae0069",
+      "FLEET.DT1": "919c4daf11fcd67dd9a4fa6a600b7a1d6dc4eddba23c106a90aed6b8e70cee0c",
+      "SHIP.DT1": "b7f2d7629e82c9676a79f4e4f6b4a6bbebef78493f42ca2a222fa48c7e7bef29",
+      "WORK.DT1": "7f8d907388875180c33bdd611cb0bd520ef0b282f1ffbde7af64e083cc64c8b2"
+    },
+    "gui_sha256": "3e70d0b574484b209c847d0dc55f23c329828b149f0e3a1ab4f908922ac2ddd8",
+    "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -save /src/workplace/playtest/save86 -script <script.txt> -shot /src/workplace/playtest/save86/gui.png -state-out /src/workplace/playtest/save86/state.txt -shot-after 2",
+    "source_sha256": {
+      "internal/rules/fleetsave.go": "caea77bb5919dc30df0e4d37fe79b9c14e70c2c58a1770b2e273b38dfeaec061",
+      "internal/rules/save.go": "d2f77c76d74b9663a21708f0fed943adb374a37fb13dcf065f962214aaf118e6",
+      "internal/game/fleetsave.go": "52496404ebca96386a380cd4901d218e7751a5c965ab9b71697733d71a92a1b2",
+      "internal/game/game.go": "44dafb67615480a54312f99d04ea7a10ba741822b1ee9063a68976979e64d573",
+      "internal/game/originalbrain.go": "582f06859c3c0bc1047cfdd8fa347feaa7babd50790d9413ac27abdf7ac78413",
+      "tools/live_fleet_save_check.sh": "870dd8804fd6c4df651ff9c8393fa5cab9870d5493f70bd56455ea3d7c29c947"
+    }
+  }
+}

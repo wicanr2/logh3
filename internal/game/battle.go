@@ -22,6 +22,10 @@ func battleSprite(u rules.BattleUnit, viewer int) int { return rules.BattleUnitS
 //
 // 視野放在第一支參戰艦隊那裡——原版怎麼選還沒解（`docs/internals/34`）。
 func (g *Game) StartBattle(region int) {
+	if err := g.syncFleetTables(); err != nil {
+		g.saveErr = err
+		return
+	}
 	g.battleRegion = region
 	g.battleTurn = 1
 	g.battleUnits = nil
@@ -345,6 +349,10 @@ func (g *Game) EndBattle() {
 		g.campaignScore[f] += g.battleScore[f]
 	}
 	if g.slot != nil {
+		if err := g.syncFleetTables(); err != nil {
+			g.saveErr = err
+			return
+		}
 		g.slot.ApplyBattleResult(g.battleUnits)
 		g.fleets = g.slot.Fleets(g.res.Weights)
 	}

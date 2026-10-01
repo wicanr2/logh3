@@ -1,4 +1,4 @@
-"""#85 的一次性 IDA 資料庫查詢；入口 docs/re/354。
+"""#85／#86 的一次性 IDA 資料庫查詢；入口 docs/re/354、355。
 
 只在由記憶體切出的新 .COM 上建指令與函式；保留原始名稱／位址／bytes。
 段值及查詢範圍由命令列指定，語意未審查時醒目標示 unknown。
@@ -37,10 +37,10 @@ index = json.loads(index_raw)
 queries = [tuple(int(x, 16) for x in a.split(':')) for a in args if not a.startswith('--index=')]
 for off, length in queries:
     cur, end = base + off, base + off + length
-    # 只針對本腳本新建的 re85 切段資料庫重新定義資料；原始 bytes 保留。
+    # 只針對本腳本新建的 re85／re86 切段資料庫重新定義資料；原始 bytes 保留。
     # 不接受正式資料庫，避免資料陣列擋住 create_insn 卻輸出空結果。
-    if '/re85-' not in ida_nalt.get_input_file_path():
-        raise ValueError('只允許 #85 一次性切段輸入')
+    if not any('/' + prefix in ida_nalt.get_input_file_path() for prefix in ('re85-', 're86-')):
+        raise ValueError('只允許 #85／#86 一次性切段輸入')
     ida_bytes.del_items(cur, ida_bytes.DELIT_SIMPLE, length)
     while cur < end:
         insn = ida_ua.insn_t()

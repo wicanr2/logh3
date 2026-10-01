@@ -4,7 +4,8 @@
 證據等級：檔案對應、槽位編號、`SAVEDATA.IDX` 版面、`PLANET`／`FLEET`
 與記憶體逐位元組相同 **confirmed**（[`docs/re/41`](../re/41-save-files-are-the-runtime-tables.md)）；
 `WORK.DT?` 對上的欄位逐條列在下面那張表（每一條都附 `ds` 位址與出處），
-其餘位元組**未解**——寫回去一律照抄；`SHIP.DT?` **未解**。
+其餘位元組**未解**——寫回去一律照抄；`SHIP.DT?` 的已解欄位與未知邊界見
+[`64-ship-pool.md`](64-ship-pool.md)，現況同步證據見[研究 355](../re/355-live-fleet-save.md)。
 
 ## 一句話
 
@@ -21,7 +22,7 @@
 | `PLANET.DT?` | 6,642 | 行星 81 × 82 | 段 `5313` 的 offset 2 起 |
 | `ADMIRAL.DT?` | 2,296 | 提督 82 × 28 | `ds:B77C`（`docs/internals/08`）|
 | `FLEET.DT?` | 3,904 | 艦隊 32 × 122 | `ds:C074`（`docs/re/40`）|
-| `SHIP.DT?` | 27,456 | 艦艇池 352 × 78 | 未對過（`docs/re/42`）；欄位見 [`data/ship-types.json`](data/ship-types.json)|
+| `SHIP.DT?` | 27,456 | 艦艇池 352 × 78 | 執行期池遠指標；欄位／原版抽驗見 [`64-ship-pool.md`](64-ship-pool.md)，三份保存整表與 19 組速度核對見研究 355 |
 | `WORK.DT?` | 230 | 全域狀態 | `docs/internals/27` |
 
 `PLANET.DT?` 與 `FLEET.DT?` 跟記憶體裡的表**逐位元組相同**；
@@ -197,9 +198,12 @@ AI 沒有對應的指派常式**——`2D10:0038` 只換情報與內政兩個。
 | 類別 | 例子 | 進不進存檔 |
 |---|---|---|
 | **就是那六份**（同一個切片）| `g.res.Stellar`、`g.res.Planets` | 進——`LoadSlot` 直接接過去 |
-| **解析出來的結構** | `g.fleets`（`[]rules.Fleet`）| **不進**，要另外寫回 `s.Fleet`／`s.Ship` |
+| **解析出來的結構** | `g.fleets`（`[]rules.Fleet`）| 保存前由 `Slot.SyncFleets` 同步到 `s.Fleet`／`s.Ship`（規格 067）|
 
 已知要另外寫回的出口：
+
+- **現況保存／戰術部署前** → `Game.syncFleetTables` → `Slot.SyncFleets`，保留未知 bytes 與
+  既有池索引。資料格式不變，正式驗收入口見[對拍 028](../playtest/028-live-fleet-save.md)。
 
 - **艦隊全滅** → `rules.(*Slot).AnnihilateFleet(槽)`（`+0x04`／`+0x05` ← FF、編制與索敵
   那幾筆艦艇 `+0x01` ← FF）。戰場那一條在 `game.annihilateBattleFleet`、戰略那一條在

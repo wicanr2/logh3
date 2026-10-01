@@ -3054,8 +3054,8 @@ func (g *Game) loadSlotFromDisk(n int) {
 
 // SaveSlot 把目前的局面寫回一格存檔（規格 `docs/spec/009`）。
 //
-// **只有從存檔進來的局面存得了**：`WORK.DT?` 那 230 bytes 只解出三個欄位，
-// 新遊戲沒有可以照抄的底稿。`dir` 由呼叫端指定，原版目錄一律唯讀。
+// 保存前同步現況艦隊／艦艇（規格 067）；未知欄位從底稿保留。
+// `dir` 由呼叫端指定，原版目錄一律唯讀。
 func (g *Game) SaveSlot(dir string, index int) error {
 	if g.monthSettlementPending {
 		return fmt.Errorf("月初報告尚未結算，請關閉訂造報告後再存檔")
@@ -3080,6 +3080,9 @@ func (g *Game) SaveSlot(dir string, index int) error {
 		for i := range g.slot.Ship {
 			g.slot.Ship[i] = 0xFF
 		}
+	}
+	if err := g.syncFleetTables(); err != nil {
+		return err
 	}
 	// `WORK` 尚未全部提升成結構欄位；費沙旗標與動態參謀都直接改可寫
 	// 複本，因此存檔前先整段同步，未知位元組仍維持原樣。
@@ -3728,7 +3731,7 @@ func (g *Game) takeProvisional() []rules.FleetGroup {
 	}
 	full := rules.ShipsPerUnit[kind]
 	grp := rules.FleetGroup{
-		Kind: kind, Full: full, Slot2: kind, Slot3: rules.FlagshipSlot3,
+		Kind: kind, Full: full, Slot2: kind, Slot3: rules.FlagshipSlot3, Pool: -1,
 		Ships: rules.TakeRegionShips(rec, g.faction, kind, full),
 	}
 	rules.InitGroupStock(g.res.ShipKinds, g.faction, &grp)

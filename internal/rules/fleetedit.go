@@ -258,7 +258,7 @@ func (e *FleetEditor) Place(slot int) EditResult {
 // take ＝ `BuildInput.take`，但滿編用這裡的退路。
 func (e *FleetEditor) take(kind, slot int) FleetGroup {
 	f := e.full(kind)
-	g := FleetGroup{Kind: kind, Full: f, Slot2: kind, Slot3: slot}
+	g := FleetGroup{Kind: kind, Full: f, Slot2: kind, Slot3: slot, Pool: -1}
 	if kind == shipKindStandalone {
 		g.Ships = f
 		InitGroupStock(e.In.Kinds, e.In.Faction, &g)

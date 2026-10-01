@@ -477,7 +477,7 @@ func (s *Slot) FleetComposition(i int) []FleetGroup {
 	var out []FleetGroup
 	for k := 0; k < n; k++ {
 		o := fleetSlots + k*4
-		if r[o] == 0xFF {
+		if r[o] == 0xFF && r[o+1] == 0xFF {
 			continue
 		}
 		idx := int(r[o]) | int(r[o+1])<<8
@@ -518,7 +518,7 @@ func (s *Slot) FleetShips(i int) []int {
 	var out []int
 	for k := 0; k < fleetSlotN; k++ {
 		o := fleetSlots + k*4
-		if r[o] == 0xFF {
+		if r[o] == 0xFF && r[o+1] == 0xFF {
 			continue
 		}
 		out = append(out, int(r[o])|int(r[o+1])<<8)
@@ -547,7 +547,7 @@ func (s *Slot) FleetGroupShips(i int) []int {
 	var out []int
 	for k := 0; k < n; k++ {
 		o := fleetSlots + k*4
-		if r[o] == 0xFF {
+		if r[o] == 0xFF && r[o+1] == 0xFF {
 			continue
 		}
 		out = append(out, int(r[o])|int(r[o+1])<<8)

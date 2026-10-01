@@ -13,7 +13,7 @@ package rules
 //	+0x07  Target    要去的星域；`NoTarget` ＝ 沒有命令
 //	+0x08  Parked    移動狀態；5 ＝ 這一支不動
 //
-// 其餘 100 多個 byte 還沒解，remake 不假裝知道。
+// 本型別保存玩家路徑使用的欄位；其餘原始 bytes 由 Slot 保留，保存時同步（規格 067）。
 type Fleet struct {
 	Index    int `json:"index"`    // 在艦隊表裡的第幾筆（查艦艇池要用）
 	Number   int `json:"number"`   // 艦隊編號（1 起）

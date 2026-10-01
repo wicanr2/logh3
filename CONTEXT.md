@@ -5,6 +5,13 @@
 
 ## 現況一覽
 
+- **目前接續（2026-10-01）**：#86 現況艦隊存讀閉環已完成指定驗收。正常 GUI 帝國 1／同盟 3 支，
+  FLEET 3904／SHIP 27456 bytes 存讀零差異，池身份、位置、命令、組成與艘數保留；
+  正常下一回合及全產品測試通過，原版三份未操作整表與 19 組速度抽驗通過。
+  入口：[第十四輪](docs/goal/2026-10-01-live-fleet-save-round-14.md)、
+  [研究 355](docs/re/355-live-fleet-save.md)、[規格 067](docs/spec/067-live-fleet-save.md)、
+  [對拍 028](docs/playtest/028-live-fleet-save.md)。不宣稱所有原版 FLEET／SHIP bytes 或中途戰鬥存檔一致。
+
 - **最近接續（2026-10-01）**：#85 的 33 bytes 差異已證實為 AI 距離暫存與
   行星座標寫入；依實際載圖時機接線，正常／低士氣診斷回合完整星域 4032／
   行星 6642 bytes 零差異，沒有排除欄位。兩輪原版重現、正常 GUI 色號／RGB
@@ -13,7 +20,7 @@
   [研究 354](docs/re/354-post-turn-runtime-fields.md)、
   [規格 066](docs/spec/066-post-turn-runtime-fields.md)、
   [對拍 027](docs/playtest/027-post-turn-runtime-fields.md)。全表寫出與新增欄位讀回通過；
-  **現況艦隊／艦艇存檔缺口另開 #86，未完成完整局面存讀閉環**。
+  當時揭露的**現況艦隊／艦艇存檔缺口已由 #86／規格 067 補齊指定閉環**。
   不宣稱所有局面、qsort 完全平手次序或十回合 AI 一致。
 
 - **最近驗證（2026-10-01）**：#80 徵稅箭頭轉色修正完成，移除四顆箭頭的測試排除區。
@@ -513,7 +520,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 13 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 12 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -548,18 +555,6 @@
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
-
-#### save-live-fleet-state — 存進度未同步目前艦隊與艦艇池
-
-*[#86](https://github.com/wicanr2/logh3/issues/86) · wiring*
-
-**卡在**：#85 全表回合對拍已通過，但新增存讀檔測試顯示 `Game.SaveSlot` 在新遊戲建立全 FF 的 FLEET／SHIP 底稿後，沒有把 `g.fleets` 同步到原始記錄。取進度重數艦隊時，星域 +0x28/+0x29 四個位元組與保存前局面不同。既有 #84 只驗完整 STELLAR／PLANET 檔案，未覆蓋艦隊存讀閉環。這是獨立產品缺口，不是原版 oracle 不確定。
-
-**做完的判準**：正常新遊戲編成艦隊、實行含 AI 建隊的回合、存進度、取進度後，雙方艦隊的位置、命令、組成與艘數維持目前局面；六份原版格式存檔來自同一份現況。補齊 READY 序列化規格並以正常玩家路徑回歸，不能只驗 STELLAR／PLANET 寫出。
-
-**證據**：[`internal/game/game.go`：`Game.SaveSlot`／`Game.LoadSlot`。`](internal/game/game.go`：`Game.SaveSlot`／`Game.LoadSlot`。)、[`internal/rules/save.go`：`Slot.Save` 直接寫入 `Slot.Fleet`／`Slot.Ship`。`](internal/rules/save.go`：`Slot.Save` 直接寫入 `Slot.Fleet`／`Slot.Ship`。)、[`internal/game/runtime_fields_test.go` 的新增取進度全表斷言兩組均發現四個 +0x28/+0x29 計數位元組差異；執行前兩側 seed 0xD3DC167E，正常回合原版星域 4032／行星 6642 bytes 全表零差異。`](internal/game/runtime_fields_test.go` 的新增取進度全表斷言兩組均發現四個 +0x28/+0x29 計數位元組差異；執行前兩側 seed 0xD3DC167E，正常回合原版星域 4032／行星 6642 bytes 全表零差異。)
-
-**核實**：要人判——缺現況艦隊與艦艇池序列化；完成後綁正常新遊戲跨回合保存／載入的 go_test，需比較雙方艦隊、艦艇及所有星域計數。
 
 #### battle-turn-eight-steps — 戰場回合結算對齊原版八步（規格 062 的其餘七步與子步 8-2–8-5）
 
