@@ -1,4 +1,4 @@
-"""#53 的一次性 IDA 原始指令證據；只接受 re53- 切段，禁止改名。
+"""#53／#79 的一次性 IDA 原始指令證據；只接受指定切段，禁止改名。
 
 tools/ida.sh raw idat -A -S/idascripts/battle_rules_ida.py... /work/re53-....com
 每個輸出同列保留 CS:IP、IDA 位址、線性位址、bytes、原運算元與證據等級。
@@ -26,8 +26,8 @@ def error(exc_type, exc, tb):
 sys.excepthook = error
 ida_auto.auto_wait()
 path = ida_nalt.get_input_file_path()
-if '/re53-' not in path:
-    raise ValueError('僅接受 #53 一次性切段資料庫')
+if not any('/'+prefix in path for prefix in ('re53-', 're79-')):
+    raise ValueError('僅接受 #53／#79 一次性切段資料庫')
 raw = open(path, 'rb').read()
 source_hash = hashlib.sha256(raw).hexdigest()
 base = ida_segment.getnseg(0).start_ea + 0x100

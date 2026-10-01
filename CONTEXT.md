@@ -5,6 +5,18 @@
 
 ## 現況一覽
 
+- **目前接續（2026-10-02，第二十五輪）**：#79第一階段原版前後狀態雙跑相同，
+  十六個補給／修理／防衛力常式案例完整收據相同。補證自動修理初選180像素、
+  行星補充同步提高修理上限、防衛力乘積先取低16位。
+  正式共用行星補充已補修理上限，戰後回寫保存修理上限及兩格彈藥；
+  舊規則四個案例失敗，修正後限定回歸16個通過事件、零跳過／失敗。
+  正式點選、撤退後回寫與存讀、18個標準產品套件及三份正常GUI抽樣通過。
+  入口：[第二十五輪](docs/goal/2026-10-02-battle-preparation-round-25.md)、
+  [規格079](docs/spec/079-battle-preparation.md)、[研究367](docs/re/367-battle-preparation.md)、
+  [事實65](docs/internals/65-battle-preparation.md)、[驗證039](docs/playtest/039-battle-preparation.md)。
+  完整第一階段的跨艦隊排序／持續指標、士氣報告續接及整步正式回合仍DRAFT，
+  #79保持開啟；不能以此次共用規則與存讀通過宣稱八步完成。
+
 - **目前接續（2026-10-02，第二十四輪）**：#53 戰場三項規則差異已補原版受控證據並修正。
   分攤尾額可以打光最大分隊、種類 5 兩格庫存無條件縮減、戰場與戰略共用原版反正切表。
   兩輪原版常式完整收據相同；舊寫法十個子案例失敗，修正後 19 個子案例通過。
@@ -665,14 +677,16 @@ remake 的 `AdvanceBattleTurn` 是自己排的順序，目前只接了第 ⑤／
 - **子步 8-2–8-5**：星域擁有者每回合重算並發訊息、索敵分遣隊燃料與回收、提督／副官升級、
   原版的結束判定（數「還有幾支能打的艦隊」，不是數艘數）＋ 勝方九回合占領結算。
 
+2026-10-02 第二十五輪：第一階段原版雙跑及十六案常式收據完成。共用行星補充已同步提高修理上限，戰後保存修理上限與兩格彈藥；舊規則四案失敗，修正後限定回歸16個通過事件、零失敗／跳過，正式點選、撤退後回寫／存讀與三份正常GUI通過。規格079只限這個子範圍CONFORMED。完整第一階段的跨艦隊排序／持續指標、士氣報告續接及正式整步對拍仍DRAFT；完整八步未完成，保持open。
+
 **卡在**：- 每一步都要收據才能動 production path（規格 062「收據」一節）。
-- 第 ① 步與提督升級要艦艇池模型（#55）與提督成長算式（`28E0:06C3`／`095C` 沒逐行讀）。
+- 第①步已有艦艇池模型（#55已完成）與受控欄位證據，仍缺跨艦隊競爭排序／donor持續狀態、士氣報告續接及整步正式入口對拍；提督成長算式仍待有限玩家路徑證據。
 - `185C:060D` 提督那一支旗標寫死 2（只印官階、不印能力）是不是原版 bug 未裁決（H）。
 
 **做完的判準**：規格 062 的每一步各有 same-state 收據，remake 的順序與原版相同；打贏之後會自動占領行星、
 士氣全崩但船還在時會結束戰鬥。規格 062 從 DRAFT 升到 CONFORMED。
 
-**證據**：[`docs/spec/062-battle-turn-eight-steps.md`](docs/spec/062-battle-turn-eight-steps.md)、[`docs/re/339-battle-turn-eight-steps.md`](docs/re/339-battle-turn-eight-steps.md)
+**證據**：[`docs/spec/062-battle-turn-eight-steps.md`](docs/spec/062-battle-turn-eight-steps.md)、[`docs/re/339-battle-turn-eight-steps.md`](docs/re/339-battle-turn-eight-steps.md)、[`docs/spec/079-battle-preparation.md`](docs/spec/079-battle-preparation.md)、[`docs/re/367-battle-preparation.md`](docs/re/367-battle-preparation.md)、[`docs/internals/65-battle-preparation.md`](docs/internals/65-battle-preparation.md)、[`docs/internals/data/battle-preparation.json`](docs/internals/data/battle-preparation.json)、[`docs/playtest/039-battle-preparation.md`](docs/playtest/039-battle-preparation.md)
 
 **核實**：`docs/spec/062-battle-turn-eight-steps.md` 標到 `CONFORMED`
 

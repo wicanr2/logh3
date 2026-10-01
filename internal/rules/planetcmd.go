@@ -120,6 +120,7 @@ func PlanetSupply(t *ShipKindTable, s *PlanetStock, to *BattleUnit) (missiles, f
 // PlanetReplenish 用行星的艦種存量補回艘數，回補了幾艘。
 //
 // 上限是**建制滿編 `+0x0A`**，與艦艇的「修理」補到 `+0x0C` 不一樣。
+// 有實際補充時也增加修理上限，再以滿編夾限（規格 079、研究 367）。
 func PlanetReplenish(s *PlanetStock, to *BattleUnit) int {
 	if s == nil || to == nil || to.Kind < 0 || to.Kind >= len(s.Ships) {
 		return 0
@@ -129,6 +130,10 @@ func PlanetReplenish(s *PlanetStock, to *BattleUnit) int {
 		return 0
 	}
 	to.Ships += n
+	to.RepairCap = int(uint16(to.RepairCap + n))
+	if to.RepairCap > to.FullShips {
+		to.RepairCap = to.FullShips
+	}
 	s.Ships[to.Kind] -= n
 	return n
 }

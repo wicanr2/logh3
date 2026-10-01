@@ -1,0 +1,2082 @@
+{
+  "schema": "logh3.battle-preparation.v1",
+  "date": "2026-10-02",
+  "issue": 79,
+  "grade": "proven",
+  "scope": "原版常式受控診斷；戰場艦隊數清零跳過士氣報告；不證明正常玩家路徑或完整八步。",
+  "input_sha256": "f70507aaa771a0b97d425037d06696c90385238c6e294a39a103a836960a6808",
+  "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "golem_dirty": false,
+  "remake_parent": "129c1d9c09295ddc822dcf3bc675dd52bfb5b721",
+  "remake_worktree": "第25輪研究與探針未提交；正式規則尚未修改",
+  "go_image": "golang:1.24-bookworm",
+  "go_image_id": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+  "seed": "0x12345678",
+  "seed_location": "lin:5E00C",
+  "tick": 0,
+  "rng_method": "事前固定種子；十六案執行後 bytes 不變；未以相同 seed 數字宣稱整場骰序相同。",
+  "command": "DOSGOLEM_ORIG=/home/anr2/cht/logh3/org_game/extracted DOSGOLEM_EXTRA_MOUNT=/home/anr2/cht/logh3/workplace:/out bash /home/anr2/cht/dosgolem-logh3/tools/go.sh run /out/battle_preparation_probe.go -output /out/oracle/battle79-routines/run-{c,d}.json",
+  "injection": "完整 1 MiB 記憶體；新 LoadProgram 堆疊；CallNear F000:0000 設 DS=ES=54B3；每案 Restore；完整額外注入逐筆列出。 完整注入表及 bytes 在本機 run-c／run-d；版控只存解出的欄位。",
+  "run_sha256": "e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069",
+  "runs": [
+    "workplace/oracle/battle79-routines/run-c.json",
+    "workplace/oracle/battle79-routines/run-d.json"
+  ],
+  "phase_replays": [
+    {
+      "path": "workplace/oracle/battle79-preparation-b",
+      "sha256": {
+        "mem-in.bin": "f70507aaa771a0b97d425037d06696c90385238c6e294a39a103a836960a6808",
+        "mem-out.bin": "9c4a4c28a1f53056962f613b1b643e5a5ba199d9231df291918d9499111be38d",
+        "screen.bin": "150dad4379ec534e0df952ee721b6e1978dfce1d0bb9ae3b5ea24d6dccbab36e",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "328c5e07e8c6419c41e14e56cf8526d1bcc970f69e6b0ab96a991a3fd212f94f",
+        "meta.txt": "8b12c44540b0a0c3dcceb46e63fad2c8d51ae0b26f2ffef907a6f3c9f741a36c"
+      },
+      "flags": [
+        "-load-state",
+        "/src/workplace/fcmd/eng-t5.state",
+        "-steps",
+        "1213409022",
+        "-clicks",
+        "1140000000:240:200,1195000000:240:200,1210000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-regs-from",
+        "1211800000",
+        "-regs-max",
+        "4",
+        "-regs-at",
+        "181B:003F,1930:019D,1AAB:006D,1AAB:0182,181B:0083,181B:00FA",
+        "-poke",
+        "lin:5E00C@1211893242=78 56 34 12",
+        "-dump-mem-at",
+        "1211893243:lin:0:1048576:/out/oracle/battle79-preparation-b/mem-in.bin;1213409021:lin:0:1048576:/out/oracle/battle79-preparation-b/mem-out.bin"
+      ]
+    },
+    {
+      "path": "workplace/oracle/battle79-preparation-c",
+      "sha256": {
+        "mem-in.bin": "f70507aaa771a0b97d425037d06696c90385238c6e294a39a103a836960a6808",
+        "mem-out.bin": "9c4a4c28a1f53056962f613b1b643e5a5ba199d9231df291918d9499111be38d",
+        "screen.bin": "150dad4379ec534e0df952ee721b6e1978dfce1d0bb9ae3b5ea24d6dccbab36e",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "f739573895dea6a991ce39aacb4e3fb0f5d16d569e2fa48a4f2b933260aa9471",
+        "meta.txt": "e39f80984f2e6334520bbac701be5d5c5b00178f09fce98771375efd4d63a93c"
+      },
+      "flags": [
+        "-load-state",
+        "/src/workplace/fcmd/eng-t5.state",
+        "-steps",
+        "1213409022",
+        "-clicks",
+        "1140000000:240:200,1195000000:240:200,1210000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-regs-from",
+        "1211800000",
+        "-regs-max",
+        "4",
+        "-regs-at",
+        "181B:003F,1930:019D,1AAB:006D,1AAB:0182,181B:0083,181B:00FA",
+        "-poke",
+        "lin:5E00C@1211893242=78 56 34 12",
+        "-dump-mem-at",
+        "1211893243:lin:0:1048576:/out/oracle/battle79-preparation-c/mem-in.bin;1213409021:lin:0:1048576:/out/oracle/battle79-preparation-c/mem-out.bin"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "name": "supply-priority",
+      "entry": "1930:019D",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 450,
+          "fighters": 950,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 5,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 5,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 50,
+          "fighters": 50,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 400,
+          "fighters": 900,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "supply-radius-192",
+      "entry": "1930:019D",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 450,
+          "fighters": 950,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 5,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1192,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 50,
+          "fighters": 50,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 5,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 400,
+          "fighters": 900,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1192,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "supply-radius-193",
+      "entry": "1930:019D",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 450,
+          "fighters": 950,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 5,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1193,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 450,
+          "fighters": 950,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 5,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1193,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "repair-priority",
+      "entry": "1AAB:006D",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 70,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 6,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 6,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 70,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "repair-supply-kind",
+      "entry": "1AAB:006D",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 70,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 6,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 5,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 6,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 70,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 5,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "repair-radius-180",
+      "entry": "1AAB:006D",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 70,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 6,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1180,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 20,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 6,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1180,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "repair-radius-181",
+      "entry": "1AAB:006D",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 70,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 6,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1181,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 70,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 6,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1181,
+          "target_y": 1000
+        },
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "planet-repair-cap",
+      "entry": "1AAB:006D",
+      "before": [
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 75,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          100,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          50,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "planet-repair-partial",
+      "entry": "1AAB:006D",
+      "before": [
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 75,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 70,
+          "full_ships": 100,
+          "repair_cap": 95,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          20,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "planet-repair-empty",
+      "entry": "1AAB:006D",
+      "before": [
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 75,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 75,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "planet-repair-full",
+      "entry": "1AAB:006D",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 75,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 75,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          100,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          100,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "planet-supply-kind",
+      "entry": "1AAB:006D",
+      "before": [
+        {
+          "ships": 50,
+          "full_ships": 100,
+          "repair_cap": 75,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 5,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 70,
+          "full_ships": 100,
+          "repair_cap": 95,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 5,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          20,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 3300,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 1,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "defence-low-product",
+      "entry": "181B:0083",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 1000,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 2,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 1165,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 2,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "defence-product-wrap",
+      "entry": "181B:0083",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 1000,
+        "defence_max": 12800,
+        "recover": 10,
+        "owner": 2,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 1624,
+        "defence_max": 12800,
+        "recover": 10,
+        "owner": 2,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "defence-add-wrap",
+      "entry": "181B:0083",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 65400,
+        "defence_max": 65535,
+        "recover": 1,
+        "owner": 2,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 519,
+        "defence_max": 65535,
+        "recover": 1,
+        "owner": 2,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    },
+    {
+      "name": "defence-already-above",
+      "entry": "181B:0083",
+      "before": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "after": [
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 2,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 1,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        },
+        {
+          "ships": 100,
+          "full_ships": 100,
+          "repair_cap": 100,
+          "missiles": 0,
+          "fighters": 0,
+          "faction": 1,
+          "fleet": 16,
+          "squadron": 0,
+          "kind": 0,
+          "target_x": 1000,
+          "target_y": 1000
+        }
+      ],
+      "planet_before": {
+        "defence": 4000,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 2,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      },
+      "planet_after": {
+        "defence": 4000,
+        "defence_max": 3300,
+        "recover": 5,
+        "owner": 2,
+        "x": 1000,
+        "y": 1000,
+        "ships": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "missiles": 0,
+        "fighters": 0
+      }
+    }
+  ],
+  "source_sha256": {
+    "tools/scripts/battle_preparation_probe.go": "90b0c2496b6c59ec3eb7ebad337a18adce1be86805ce9788a684129b0ac2e8b1",
+    "tools/scripts/battle_preparation_receipt.py": "27d3704330d1ca32f0518647bdc016620c5a7986a3dddf9dd502db5d85a39a58",
+    "tools/scripts/battle_rules_ida.py": "0b6e7da79df584edec7757988c6270384ef3e583c8d1bd260cefc6e7d69d2a25"
+  }
+}

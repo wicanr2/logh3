@@ -1,0 +1,107 @@
+{
+  "inputs": {
+    "1930": "9e448baf09b748601da82f9febb5d00f6c3161432e7f0a52bef0643461b385ae",
+    "1AAB": "92f8d0a53dbb26d5c8ed27474e66560f73390a2933b69c526749ab28156252a2",
+    "181B": "f31f4668283a615b19c550a2ed9f4175bd5dd50d508fa57b8fec714f8481eaa8"
+  },
+  "entries": [
+    {
+      "kind": "instruction",
+      "original_location": "1930:023A",
+      "original_bytes_hex": "9a b4 02 30 19",
+      "semantic": "只有種類 5 呼叫運補艦自動補給；按戰場艦艇表順序遍歷。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1930:029D",
+      "original_bytes_hex": "9a ab 03 30 19",
+      "semantic": "有主行星自動補給飛彈與戰機；在修理入口之前。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1AAB:0296",
+      "original_bytes_hex": "b9 06 00",
+      "semantic": "自動修理初選半徑為修護艦種類列速度乘 6；不是 6.4。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1AAB:033F",
+      "original_bytes_hex": "9a 79 08 ab 1a",
+      "semantic": "依排序清單呼叫共用修理；運補艦可作為修理目標。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1AAB:0428",
+      "original_bytes_hex": "9a 9f 0d ab 1a",
+      "semantic": "自動行星補充不呼叫排除種類 5／6 的手動篩選函式。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1AAB:0E10",
+      "original_bytes_hex": "2b c2",
+      "semantic": "補充前先記下原修理上限減原艘數的差。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1AAB:0E1B",
+      "original_bytes_hex": "26 01 1d",
+      "semantic": "增加目標現有艘數；行星該艦種存量相應減少。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1AAB:0E33",
+      "original_bytes_hex": "03 46 02",
+      "semantic": "新艘數加原修理差，與滿編上限比較後回寫修理上限。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1AAB:0E4A",
+      "original_bytes_hex": "26 89 0c",
+      "semantic": "寫入目標 +0x0C 修理上限；滿補與部分補充皆會更新。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:00BF",
+      "original_bytes_hex": "73 29",
+      "semantic": "目前防衛力無號大於等於上限時，整筆跳過；不強制夾回上限。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:00CD",
+      "original_bytes_hex": "33 d2",
+      "semantic": "清掉乘積高 16 位；先取低 16 位，再除以 100。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:00D4",
+      "original_bytes_hex": "26 01 07",
+      "semantic": "防衛力以 16 位加法回繞後，才與上限比較。",
+      "grade": "proven",
+      "source": "docs/re/367-battle-preparation.md；兩輪常式收據 SHA-256 e922c6b273b6971fc0e746a3f66183d40508758902a70acec6b766e08930f069"
+    }
+  ],
+  "schema": "logh3.battle-preparation-semantics.v1",
+  "source": "研究 367 逐指令人工審查；不從散文自動匯入"
+}

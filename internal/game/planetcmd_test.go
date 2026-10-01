@@ -1,6 +1,7 @@
 package game
 
 import (
+	"encoding/binary"
 	"os"
 	"path/filepath"
 	"testing"
@@ -189,6 +190,9 @@ func TestPlanetCommandPlayerPaths(t *testing.T) {
 				g.battlePlanets[planet].Stock.Ships[g.battleUnits[unit].Kind] >= beforeStock {
 				t.Fatal("行星補充沒有把艦艇從存量補進分隊")
 			}
+			if g.battleUnits[unit].RepairCap != 2 {
+				t.Fatal("行星補充必須同步提高修理上限（規格 079）")
+			}
 		}},
 		{"要塞砲", 3, func(t *testing.T, g *Game, planet, _ int) {
 			if !g.FortressTargetPending() || g.battleGun != planet {
@@ -211,7 +215,7 @@ func TestPlanetCommandPlayerPaths(t *testing.T) {
 			p.Defence, p.DefenceMax = 12800, 12800
 			p.Fortress, p.GunState = tc.row == 3, rules.FortressGunIdle
 			u.Faction, u.Kind, u.Out = g.faction, 0, false
-			u.Ships, u.FullShips, u.Missiles = 1, 2, 0
+			u.Ships, u.FullShips, u.RepairCap, u.Missiles = 1, 2, 1, 0
 			p.Stock.Missiles, p.Stock.Ships[u.Kind] = 1000, 1
 
 			g.openPlanetMenu(planet, 100, 100)
@@ -224,6 +228,73 @@ func TestPlanetCommandPlayerPaths(t *testing.T) {
 			tc.check(t, g, planet, unit)
 		})
 	}
+}
+
+// 原版部分補充欄位（研究367）沿正式點選、撤退回寫、存讀保存。
+// 合成局面縮小問題；正常 GUI 入口另驗，不宣稱完整第一階段 parity。
+func TestPlanetReplenishResourcesPersist(t *testing.T) {
+	g := commandTestGame(t)
+	if g == nil {
+		return
+	}
+	loadKinds(t, g)
+	if len(g.battleUnits) == 0 || len(g.battlePlanets) == 0 {
+		t.Fatal("缺測試用原版戰場")
+	}
+	u := &g.battleUnits[0]
+	index, squadron := u.Fleet, u.Squadron
+	f := g.fleetByIndex(index)
+	if f == nil || squadron < 0 || squadron >= len(f.Composition) {
+		t.Fatal("戰場與正式編制不符")
+	}
+	group := &f.Composition[squadron]
+	group.Ships, group.Full, group.RepairCap = 50, 100, 75
+	u.Ships, u.FullShips, u.RepairCap = 50, 100, 75
+	u.Missiles, u.Fighters = 11, 22
+	u.Kind, u.Faction, u.Out = 0, g.faction, false
+	p := &g.battlePlanets[0]
+	p.Owner, p.X, p.Y = g.faction, u.X, u.Y
+	p.Stock.Ships[0] = 20
+	planetIndex := p.Index
+	g.openPlanetMenu(0, 100, 100)
+	s := g.res.CommandMenus
+	g.Click(g.battleCmdX+s.Layout.HighlightDX+8, g.battleCmdY+s.Layout.HighlightDY+2*s.Layout.RowPitch+8)
+	if !g.SupplyPickPending() || !g.SupplyPickRepair() {
+		t.Fatal("正式點選未進行星補充")
+	}
+	x, y := unitScreenPos(g, 0)
+	g.Click(x+8, y+8)
+	if u.Ships != 70 || u.RepairCap != 95 || p.Stock.Ships[0] != 0 {
+		t.Fatalf("原版部分補充欄位不符：%+v", u)
+	}
+	g.Withdraw()
+	if g.SaveErr() != nil {
+		t.Fatal(g.SaveErr())
+	}
+	pool := g.slot.FleetGroupShips(index)[squadron]
+	check := func(label string) {
+		t.Helper()
+		r := g.slot.ShipAt(pool)
+		if binary.LittleEndian.Uint16(r[8:]) != 70 || binary.LittleEndian.Uint16(r[12:]) != 95 ||
+			binary.LittleEndian.Uint32(r[14:]) != 11 || binary.LittleEndian.Uint32(r[18:]) != 22 {
+			t.Fatalf("%s 丟掉艘數／修理上限／彈藥：%x", label, r[8:22])
+		}
+		stock, ok := rules.ReadPlanetStock(g.res.Planets.Record(planetIndex))
+		if !ok || stock.Ships[0] != 0 {
+			t.Fatalf("%s 行星存量未保存", label)
+		}
+	}
+	check("撤退後")
+	dir := t.TempDir()
+	if err := g.SaveSlot(dir, 0); err != nil {
+		t.Fatal(err)
+	}
+	g.res.SaveDir = dir
+	g.loadSlotFromDisk(0)
+	if g.SaveErr() != nil {
+		t.Fatal(g.SaveErr())
+	}
+	check("正式存讀後")
 }
 
 func clampTestInt(v, lo, hi int) int {

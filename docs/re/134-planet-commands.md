@@ -95,3 +95,12 @@ loop:
 `rules.PlanetSupply`／`rules.PlanetReplenish`／`rules.FortressRange` 與
 `internal/game/planetcmd.go` 的三項行為。**情報那張視窗沒有做**
 （`1373:1CBC` 沒讀），要塞砲只做到指定目標。
+
+
+## 2026-10-02 追加勘誤：補充會同步提高修理上限
+
+本篇補充公式漏記 `1AAB:0D9F` 的 `+0C` 寫入鏈。研究367以IDA指令及兩輪原版
+滿補／部分補／無庫存／已滿案例證實：有給出艘數時，修理上限增加相同艘數，
+以16位加法回繞後再夾到滿編。正式共用 `PlanetReplenish` 及戰後資源回寫已修。
+原有證據保留；完整身份與驗證見[研究367](367-battle-preparation.md)及
+[規格079](../spec/079-battle-preparation.md)。

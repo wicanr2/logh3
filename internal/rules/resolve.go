@@ -281,6 +281,11 @@ func (s *Slot) ApplyBattleResult(units []BattleUnit) int {
 		// 索敵等級跟著留在記錄裡（原版的分隊就是艦艇記錄本身，`+0x17`
 		// 戰後自然還在；右下角「敵艦隊」分頁讀的就是它）。
 		rec[shipDetail] = byte(u.Detail)
+		// 原版直接修改艦艇池；戰場副本的補給、修理與戰損資源也須留存
+		// （規格 079、研究 367），不能只保存艘數。
+		binary.LittleEndian.PutUint16(rec[12:], uint16(u.RepairCap))
+		binary.LittleEndian.PutUint32(rec[14:], uint32(u.Missiles))
+		binary.LittleEndian.PutUint32(rec[18:], uint32(u.Fighters))
 		if int(binary.LittleEndian.Uint16(rec[8:])) == u.Ships {
 			continue
 		}

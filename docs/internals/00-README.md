@@ -18,6 +18,13 @@
 解出的事實：[欄位摘要](data/battle-rule-corrections.json)、
 [IDA 自動合併分級索引](data/battle-rule-semantics.json)。
 
+八步戰鬥的補給／修理階段接續範圍：[第二十五輪](../goal/2026-10-02-battle-preparation-round-25.md)，工作項目 #79。
+本輪原版事實：[65 — 自動補給與修理](65-battle-preparation.md)、
+[研究367](../re/367-battle-preparation.md)、[規格079](../spec/079-battle-preparation.md)、
+[驗證039](../playtest/039-battle-preparation.md)。
+欄位與分級索引：[battle-preparation.json](data/battle-preparation.json)、
+[battle-preparation-semantics.json](data/battle-preparation-semantics.json)。
+
 音色庫來源與完整授權索引：[`player-music-library.json`](data/player-music-library.json)，
 用途與原版素材邊界見 [`17-mds.md`](17-mds.md)。
 原生 GM 移植與真實轉檔驗收索引：[`native-gm-import.json`](data/native-gm-import.json)，
