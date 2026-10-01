@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"io"
 	"os"
 	"path/filepath"
@@ -12,6 +13,46 @@ import (
 	"github.com/wicanr2/logh3/internal/bootstrap"
 	"github.com/wicanr2/logh3/internal/game"
 )
+
+// 完整原生匯入器的真實曲庫經正式播放層；進行中的本機批次不冒稱驗收。
+func TestNativeFullMusicImportPlayerDecode(t *testing.T) {
+	dir := filepath.Join("..", "..", "workplace", "music69-fm", "full")
+	raw, err := os.ReadFile(filepath.Join(dir, "FM-SOURCES.json"))
+	if os.IsNotExist(err) {
+		t.Skip("缺完整原生曲庫驗收批次")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	var receipt struct {
+		Status string `json:"status"`
+	}
+	if err := json.Unmarshal(raw, &receipt); err != nil {
+		t.Fatal(err)
+	}
+	if receipt.Status == "in-progress" {
+		t.Skip("完整原生曲庫批次尚未完成，需完成後再跑正式解碼驗收")
+	}
+	if receipt.Status != "complete-fm-stage" {
+		t.Fatalf("完整原生 FM 批次非成功：%s", receipt.Status)
+	}
+	lib := intaudio.NewLibrary(dir)
+	if lib.Have() != len(intaudio.Tracks) {
+		t.Fatalf("完整曲庫缺曲：%v", lib.Missing())
+	}
+	p := newMusicPlayer(nil, lib)
+	for _, name := range intaudio.Tracks {
+		t.Run(name, func(t *testing.T) {
+			st, ok, err := p.decode(name)
+			if err != nil || !ok || st == nil || st.Length() <= 0 {
+				t.Fatalf("完整曲庫正式解碼失敗：%v", err)
+			}
+			if n, err := io.Copy(io.Discard, st); err != nil || n == 0 {
+				t.Fatalf("正式 PCM 串流錯誤：%d，%v", n, err)
+			}
+		})
+	}
+}
 
 // 原生匯入器的實際產物須經正式播放器解碼；缺本機批次時 skip，不代造 OGG。
 func TestNativeGMImportPlayerDecode(t *testing.T) {

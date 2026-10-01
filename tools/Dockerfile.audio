@@ -5,7 +5,7 @@
 #
 # ⚠ **這個 image 不含任何原版素材**，只有合成器與編碼器。曲子要玩家
 # 自備原版之後自己轉，產物落在 gitignore 的目錄（AGENTS.md 的硬規則：
-# 原版素材與其衍生物都不進版控、不進發行包）。
+# 原始遊戲檔不進版控，公開發行包不含原版素材；私有保存版依 assets/original/ 契約處理）。
 #
 # 音色庫用 Debian 的 `fluid-soundfont-gm`（FluidR3_GM，可自由散布的授權），
 # 所以不必玩家再去找一份；要換成自己的就用 `-sf`。
@@ -13,10 +13,8 @@
 # ⚠ **這是 General MIDI 的音色，不是原版的 FM 音源。** `_M` 那一組
 # （MPU-401／GM）用它合出來接近當年在 MIDI 音源上聽到的；`_F` 那一組
 # 是寫給 OPL 的，用 GM 音色只是「同一首曲子」而不是「同一個聲音」。
-# 要 FM 的原音走另一條路：從執行器錄 OPL 暫存器寫入成 VGM，再用
-# **AdPlug**（`adplay`）合成。AdPlug 認得 DRO 不認得 VGM，中間那一步
-# 由 `tools/scripts/vgm_to_dro.py` 轉（兩邊都是「暫存器寫入 ＋ 延遲」
-# 的序列，轉換不損失音符，只把 1/44100 秒的刻度捨入成毫秒）。
+# FM 走另一條路：dosgolem 錄 OPL 暫存器寫入成 VGM，AdPlug 2.3.3
+# 的 factory 直接合成（docs/re/275、359），不經 DRO 或毫秒捨入。
 # `opl2wav` 自己編：Debian 有 `libadplug-dev`，但**沒有 `adplay`**
 # （`adplug-utils` 只裝 `adplugdb`），也沒有任何 VGM 播放器。
 FROM debian:bookworm-slim AS build

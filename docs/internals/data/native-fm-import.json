@@ -1,0 +1,1424 @@
+{
+  "date": "2026-10-01",
+  "scope": "Linux 原生完整曲庫匯入／正式解碼；平台依賴封裝與聆聽未完成",
+  "original_bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "run": {
+    "git_head": "5f53667b3cdbdb8241d3806ebc6985c8862c41f1",
+    "working_tree": "本輪 READY 071 實作未提交",
+    "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "source_sha256": {
+      "cmd/music-import/main.go": "f262f66d60dfdf2254ac1dc4d27b8210175fe90ca44bb2955ba6baf2b816fa88",
+      "cmd/music-import/fm.go": "c6f9eb68785cc322a01b1f88b48da125cc9196a12d269ff35bdda63ae209fa7c",
+      "cmd/music-import/fmdata.go": "cde52b7616cb2b7b3bca761bf8a6576904b8c0eba39f1bc4c67b147d3252c673",
+      "internal/asset/oggserial.go": "97208fd8a9f47a4be5358bd5115cf3fa073cab00c75c95482748c3c6fa4c5e88"
+    },
+    "program_sha256": "b912584dcd27f8c9c0442636acfe820b56541775da53898e4eff34029fae7e3b",
+    "command": "LOGH3_TIMEOUT=90m bash tools/audio.sh /work/music69-fm/music-import -source /orig -output /work/music69-fm/full -tools /work/music69-fm/tools -soundfont /usr/share/sounds/sf2/FluidR3_GM.sf2",
+    "live_session": 16345,
+    "images": {
+      "audio": "sha256:da8c479c3466feed5cd363ed439b064303d68c9789abc02a37fb09560285b126",
+      "go": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+      "gui": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8"
+    },
+    "execution_status": "全批與三路徑重跑均 exit 0",
+    "repeat_command": "LOGH3_TIMEOUT=20m bash tools/audio.sh /work/music69-fm/music-import -fm-only -tracks BGM_0F,END_2F,OPEN_F -source /orig -output /work/music69-fm/repeat -tools /work/music69-fm/tools -soundfont /usr/share/sounds/sf2/FluidR3_GM.sf2",
+    "standard_tests": "tools/gui.sh test ./internal/... ./cmd/...：全綠；新增完整曲庫解碼測試另跑通過"
+  },
+  "fm": {
+    "status": "complete-fm-stage",
+    "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "program_sha256": "b912584dcd27f8c9c0442636acfe820b56541775da53898e4eff34029fae7e3b",
+    "platform": "linux/amd64",
+    "approximation": "hardware-spec approximation；原版 OPL 暫存器串、固定封裝；OPEN_F substituted；未聲稱實機聆聽",
+    "tools_sha256": {
+      "/work/music69-fm/tools/dosgolem-probe": "5ff49ce225476936e063ea8b1a5629a47705bc4e9516487e9f2dab2db542822b",
+      "/work/music69-fm/tools/ffmpeg": "0dafc1360bb07743f76abeb1e4ae16b0aaa1331e9041a0e8d6a8524111dc0cbb",
+      "/work/music69-fm/tools/opl2wav": "fd7864ccb7cd1eeac5f56bd3ca4bdcf23750f59bb6f03eb66d258a11d15ab8e1"
+    },
+    "source_executable_sha256": {
+      "ENDING.EXE": "afdafb06b5942a9bca833a3c1f1cb634be886bb6e4d8b5930ab42ac6fa592d8a",
+      "GIN3.COM": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "GIN3PS.EXE": "1efa4bd95e73415efba440af63c6a480665d60a67d8876b5f230f5c391aa2381",
+      "OPEN.EXE": "dde640cd7e10ff1b756e9fc4f38564a389ecc69a343041c874817afbf375ab69"
+    },
+    "tracks": [
+      {
+        "track": "BGM_0F",
+        "route": "FM",
+        "source_sha256": "f8462fe4fb6c629c4204f90ce8fe7ef35f9abdf6fc92e241260868bce8b7b025",
+        "vgm_sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+        "ogg_sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+        "ogg_serial": 1091008858,
+        "seconds": 127.13485260770975,
+        "peak": 0.09104543924331665,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_0F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=00",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_0F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_0F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_0F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_0F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_0F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_1F",
+        "route": "FM",
+        "source_sha256": "562099eaffa3d3a6f06bb21901b953c237715d2a5d2a4b5732fbaa8040ad9225",
+        "vgm_sha256": "a9b264ff3d9c7243b39a9f557e764ede31d42390f0a3c37000e6982246e252ac",
+        "ogg_sha256": "f18d1a943769d771e68ee9c2e807b7b899de9bcc567a1a41856778a7dfa227db",
+        "ogg_serial": 643493807,
+        "seconds": 127.10537414965987,
+        "peak": 0.23356735706329346,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_1F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=01",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_1F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_1F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_1F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_1F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_1F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_2F",
+        "route": "FM",
+        "source_sha256": "21c0ff177655ef8e218baaedd24a7e4e889be088b7cb46669363293ec477e017",
+        "vgm_sha256": "43c6eddf5014c0cc5594fb1e81d4ea18c680867d11a8f7deb345b4d49884285f",
+        "ogg_sha256": "fc4b1e9d6e40ddda128b5e6b4e557e8e04069569593307310f754caba7b6246a",
+        "ogg_serial": 431260488,
+        "seconds": 127.10680272108844,
+        "peak": 0.24052131175994873,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_2F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=02",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_2F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_2F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_2F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_2F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_3F",
+        "route": "FM",
+        "source_sha256": "2cf8df6675d471a3e8c29061df45ca7779ac79fa473e97b7b358cc6c57408afb",
+        "vgm_sha256": "51d695fe161c5adbcebaebf86b9f1a9702062efde42f215971d23b9d79a358c7",
+        "ogg_sha256": "ac32e833e38331d96eec8867993f2bc96c0e73e4de83e4d6594894e568b68f5d",
+        "ogg_serial": 107062576,
+        "seconds": 127.1112925170068,
+        "peak": 0.27265632152557373,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_3F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=03",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_3F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_3F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_3F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_3F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_3F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_4F",
+        "route": "FM",
+        "source_sha256": "3533eeb39e652c737d2e21972335335cc170b86d38134bfa1c90cb715c05cdd3",
+        "vgm_sha256": "c8e7b375db8506ed2422012660e0b8b6c2e582e38d993dfeef273a31d15ab27e",
+        "ogg_sha256": "cdfa00129431f624b3bc2a3833dda7cd689c0a9d895b1eefc8cbd3a5e61daab9",
+        "ogg_serial": 1541827399,
+        "seconds": 126.96827664399093,
+        "peak": 0.24277600646018982,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_4F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=04",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_4F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_4F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_4F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_4F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_4F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_5F",
+        "route": "FM",
+        "source_sha256": "e92a8a2167aeb99f87341f4497ba3b6606e4be674b79ca27167939772992375f",
+        "vgm_sha256": "7f6c566d4e1f5aa5f90fa3bc6bce05820d6fcc7aae5d244d91306a28ed43c75f",
+        "ogg_sha256": "f76eebbb7cce15d707dfdda39a86702b705f86521f13a0b06355149298171e61",
+        "ogg_serial": 565907898,
+        "seconds": 127.14877551020408,
+        "peak": 0.21145538985729218,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_5F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=05",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_5F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_5F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_5F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_5F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_5F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_6F",
+        "route": "FM",
+        "source_sha256": "b73fa3564e203a4543dd14f6a0e780cce800b3528346df79e017452b95a04f4c",
+        "vgm_sha256": "b96433f1d3e068cfd753d97721225c542e9efb394720c43a21b474ed8aad8926",
+        "ogg_sha256": "311e04f7cf41dd6ed5481239c6b3c3793cd68389b080b77ba61e16b2cd64ee9f",
+        "ogg_serial": 3522034865,
+        "seconds": 127.09877551020408,
+        "peak": 0.24301885068416595,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_6F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=06",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_6F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_6F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_6F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_6F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_6F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_7F",
+        "route": "FM",
+        "source_sha256": "d77e8bf70b838e4c7092e9133e51b8422cb039b4012bb827084e3934760cba67",
+        "vgm_sha256": "e0f1f73472b9a9c33eba2f1b0fbeb225ec9b321d8b1ac5e4654fc6f91eb5a8c0",
+        "ogg_sha256": "04d81e88c938bb19bd7787e528fd7dc8fd391b315f0f12bd2f6e963de4f9cf18",
+        "ogg_serial": 563473986,
+        "seconds": 127.14791383219955,
+        "peak": 0.28475385904312134,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_7F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=07",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_7F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_7F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_7F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_7F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/BGM_7F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_1F",
+        "route": "FM",
+        "source_sha256": "69fd022e38b063f9e6754899c0a385f97d95699be727f4b5e440202a63af86c0",
+        "vgm_sha256": "b524a90b4e112386382cd1a50afcf8e9e5aa77031c655655426ac1b465375d83",
+        "ogg_sha256": "e6478b9ad56127ba88a8aec1a5edd0dee2496e8b9e8c09371ae7aca89141b2fa",
+        "ogg_serial": 2102694839,
+        "seconds": 133.8514058956916,
+        "peak": 0.9561888575553894,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/ENDING.EXE",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "END_1F.MDS",
+            "-sound-blaster",
+            "-args",
+            " 9 1",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/END_1F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/END_1F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/END_1F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/END_1F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/END_1F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_2F",
+        "route": "FM",
+        "source_sha256": "ad9607b224fbafbd6539ff82145c9342eb5c7c15bd8f81353d3e8c05f543ba73",
+        "vgm_sha256": "2fc59e74d8eec41933127cf15b37e06f060b0196698acdf116821dc77e85e357",
+        "ogg_sha256": "42ccc5f2d5a4316a2d806bdb7a5ecf33aaac8a35e08813e39224cf319ccdff30",
+        "ogg_serial": 3955497126,
+        "seconds": 136.18201814058958,
+        "peak": 0.9503566026687622,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/ENDING.EXE",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "END_2F.MDS",
+            "-sound-blaster",
+            "-args",
+            " 9 2",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/END_2F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/END_2F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/END_2F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/END_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/END_2F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "OPEN_F",
+        "route": "FM(substituted)",
+        "source_sha256": "4520bb37bb66733a4598971df45cc8539def4738bfc3b6aa35b6402dc22f54c3",
+        "vgm_sha256": "b386be533aa1001deb9160ef385cb9b0ae0f672240fe5333632a905aa3287e69",
+        "ogg_sha256": "0e955cf4881511076760b725f25e26ac9158bd8c48edbaba1639a82d48bd04c2",
+        "ogg_serial": 3046910935,
+        "seconds": 101.27469387755102,
+        "peak": 0.9516538977622986,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/full/.fm-import-80581640/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/full/.fm-import-80581640/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1200000000",
+            "-vgm-clear-on-open",
+            "OPEN_M.MDS",
+            "-dump-vgm",
+            "/work/music69-fm/full/.fm-import-80581640/OPEN_F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/full/.fm-import-80581640/OPEN_F.vgm",
+            "/work/music69-fm/full/.fm-import-80581640/OPEN_F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.fm-import-80581640/OPEN_F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.fm-import-80581640/OPEN_F.ogg"
+          ]
+        ]
+      }
+    ]
+  },
+  "gm": {
+    "scope": "GM 合成收據；FM 另見 FM-SOURCES.json，平台封包未驗收",
+    "status": "complete-gm-stage",
+    "approximation": "legacy approximation：FA 當 BPM；raw 時間沿用匯出器；FB／FC 不展開反覆；非原版 MPU 音色",
+    "platform": "linux/amd64",
+    "program_sha256": "b912584dcd27f8c9c0442636acfe820b56541775da53898e4eff34029fae7e3b",
+    "soundfont_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+    "tools_sha256": {
+      "/work/music69-fm/tools/ffmpeg": "0dafc1360bb07743f76abeb1e4ae16b0aaa1331e9041a0e8d6a8524111dc0cbb",
+      "/work/music69-fm/tools/fluidsynth": "dad02f700f54939178a297b1887b177ee9ccc838490e463fd9e16a8fc554eb1b"
+    },
+    "tool_versions": {
+      "/work/music69-fm/tools/ffmpeg": "ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\nbuilt with gcc 12 (Debian 12.2.0-14+deb12u1)\nconfiguration: --prefix=/usr --extra-version=0+deb12u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librist --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --disable-sndio --enable-libjxl --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-libplacebo --enable-librav1e --enable-shared\nlibavutil      57. 28.100 / 57. 28.100\nlibavcodec     59. 37.100 / 59. 37.100\nlibavformat    59. 27.100 / 59. 27.100\nlibavdevice    59.  7.100 / 59.  7.100\nlibavfilter     8. 44.100 /  8. 44.100\nlibswscale      6.  7.100 /  6.  7.100\nlibswresample   4.  7.100 /  4.  7.100\nlibpostproc    56.  6.100 / 56.  6.100\n",
+      "/work/music69-fm/tools/fluidsynth": "FluidSynth runtime version 2.3.1\nCopyright (C) 2000-2022 Peter Hanappe and others.\nDistributed under the LGPL license.\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\n\nFluidSynth executable version 2.3.1\nSample type=double\n"
+    },
+    "tracks": [
+      {
+        "track": "BGM_0M",
+        "source": "/orig/BGM_0M.MDS",
+        "source_sha256": "f8f977b0a5733d1a22c9febb3be800d7f981976cc7ced84188a44339127c87d9",
+        "midi_sha256": "ad07749f3dfa2ebbc2cfedd792c04e1e6a2306b1693c0a6ebc1e370ffc907b01",
+        "ogg_sha256": "6db531b53646dd90a9e4901a11c30873c52a557d79267954b11e3c17df2eb940",
+        "seconds": 201.49696145124716,
+        "peak": 1,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_0M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_0M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_0M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_0M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_1M",
+        "source": "/orig/BGM_1M.MDS",
+        "source_sha256": "b5687e2ec5cf1e5f269653015e8ae5ba6c77673ca8b1916899be097e0a48ab0f",
+        "midi_sha256": "ee6e6f4ed93f45fcfc0121ddd06157f14040b33c2277cb770969bc3b904d7687",
+        "ogg_sha256": "d40674255659b8030823de93aa181b3b935b87758beba16d57618da50ead8cd6",
+        "seconds": 213.7991836734694,
+        "peak": 1,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_1M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_1M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_1M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_1M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_2M",
+        "source": "/orig/BGM_2M.MDS",
+        "source_sha256": "46beeb710af3f704c01c61dcda72c94cb9eb13ec0d5d5b7ca94f3a37842d7403",
+        "midi_sha256": "cee571b06d86e04a28e1029a6a4e792eb3174fc19f14cc8585f04f95185f8286",
+        "ogg_sha256": "8280ab1163f1c3ed156807bdf5e65a5a9fc6b13370ac0e92fc424de9195d7491",
+        "seconds": 333.3209977324263,
+        "peak": 0.8305481672286987,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_2M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_2M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_2M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_2M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_3M",
+        "source": "/orig/BGM_3M.MDS",
+        "source_sha256": "d3c98d5f79b0e061cea55b66b41306fe3bd015913f70d66d3fbf1ab7f9b5502e",
+        "midi_sha256": "d7b10b3b8863c1206516c04b206be150021c0b26d61a8ba54526819d322e3c71",
+        "ogg_sha256": "ce4cb92790dc220a64118069b3b5fd6583166d675f65e5e775473b80f21891a5",
+        "seconds": 141.58077097505668,
+        "peak": 1,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_3M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_3M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_3M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_3M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_4M",
+        "source": "/orig/BGM_4M.MDS",
+        "source_sha256": "5df7c68c487910f7659fd2f9438d8973fb911e8ba3293dedccbe35f689e1e99d",
+        "midi_sha256": "791b78c9512866fbec05052420ea15b24f83514f2c836a7e8a9428d77b969f7a",
+        "ogg_sha256": "ca7738141103556ddabba4f692ff085749a9f0d8a3d9d704b7557876a4b455ce",
+        "seconds": 185.53179138321997,
+        "peak": 0.6162526607513428,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_4M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_4M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_4M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_4M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_5M",
+        "source": "/orig/BGM_5M.MDS",
+        "source_sha256": "33b94d4ab3d0bc376ceceda9db593202086d737602a57e4b6a5a2c7dbc7632a0",
+        "midi_sha256": "78e5f858afb0a670fb914241cbc66ee491ae26ab18f74c53365cd3885e7d7d48",
+        "ogg_sha256": "2ca37d583ba6a6624d2049c1683c082c70679ca0a05e545e87415d8dd3ef6100",
+        "seconds": 60.011972789115646,
+        "peak": 0.3428281545639038,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_5M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_5M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_5M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_5M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_6M",
+        "source": "/orig/BGM_6M.MDS",
+        "source_sha256": "5189b57e696a0bdceaf19ee4a25dcffbc3d58906106a014c9c535c1239c8b6cf",
+        "midi_sha256": "540d0a921ae32a4b30ff427ced3cd5699d4b7155641771a302b88f4218912bde",
+        "ogg_sha256": "4ff9aced573030765cde7b02fe031f02d52523cfa5b0c6279088666c238c142c",
+        "seconds": 31.22793650793651,
+        "peak": 1,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_6M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_6M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_6M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_6M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "BGM_7M",
+        "source": "/orig/BGM_7M.MDS",
+        "source_sha256": "a86364d5071a1f0d06097dbe310c5caa16ffeb35aba5127b4cc65684f6140832",
+        "midi_sha256": "8b85586e6b9bb5a477e81441a5cc9d480c174d7ffd706fcf741ca04b0e0056cc",
+        "ogg_sha256": "4e309a2d2dd42b8f362eff149c45d885eb22c4425a79487394956f7785b45d6d",
+        "seconds": 37.3275283446712,
+        "peak": 0.9444688558578491,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_7M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_7M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_7M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/BGM_7M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_1M",
+        "source": "/orig/END_1M.MDS",
+        "source_sha256": "c0154a70b741e60a303e11f9027c212467122a4fa09480d74e128750de18d340",
+        "midi_sha256": "a2abfc2469e1695d9007cf6545e477f654e8e1f1e02ec8986e7dbee2a43e3e59",
+        "ogg_sha256": "c9b524c9b198ad37a45735061a0e9df913312d60741236dca46db2eb995a224e",
+        "seconds": 161.5629931972789,
+        "peak": 0.8095566034317017,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/END_1M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/END_1M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/END_1M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/END_1M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_2M",
+        "source": "/orig/END_2M.MDS",
+        "source_sha256": "706125fdf5038229dc0a3a4b666cf98cbe04fba9580176d65cede9dd1dc94444",
+        "midi_sha256": "3163fa0846ddeae9541ba2e2c4a3a7701f7cbe2b618956571d435f1c0215c4b8",
+        "ogg_sha256": "c52d4c17a89f4fe8a2e7f8feac243c3704593de562880b4006729be005465bca",
+        "seconds": 284.55909297052153,
+        "peak": 0.6499912738800049,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/END_2M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/END_2M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/END_2M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/END_2M.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "OPEN_M",
+        "source": "/orig/OPEN_M.MDS",
+        "source_sha256": "277504853b9067b3ecb6867ec33b1ec9146912cb14dbfdf09554cf19250553fa",
+        "midi_sha256": "93a27c3ca0ea6a008f2e3ac1bcff9eb6a19fed90a6270d105d083766393b8c39",
+        "ogg_sha256": "cfbc4a7cc6fff2f95da3cd2e5b65c0234e988d20eaac0a12af0252741823e58a",
+        "seconds": 139.1194557823129,
+        "peak": 1,
+        "commands": [
+          [
+            "/work/music69-fm/tools/fluidsynth",
+            "-ni",
+            "-F",
+            "/work/music69-fm/full/.gm-import-3869161895/OPEN_M.wav",
+            "-r",
+            "44100",
+            "-g",
+            "0.8",
+            "/usr/share/sounds/sf2/FluidR3_GM.sf2",
+            "/work/music69-fm/full/.gm-import-3869161895/OPEN_M.mid"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/full/.gm-import-3869161895/OPEN_M.wav",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/full/.gm-import-3869161895/OPEN_M.ogg"
+          ]
+        ]
+      }
+    ]
+  },
+  "repeat": {
+    "status": "complete-fm-stage",
+    "probe_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "program_sha256": "b912584dcd27f8c9c0442636acfe820b56541775da53898e4eff34029fae7e3b",
+    "platform": "linux/amd64",
+    "approximation": "hardware-spec approximation；原版 OPL 暫存器串、固定封裝；OPEN_F substituted；未聲稱實機聆聽",
+    "tools_sha256": {
+      "/work/music69-fm/tools/dosgolem-probe": "5ff49ce225476936e063ea8b1a5629a47705bc4e9516487e9f2dab2db542822b",
+      "/work/music69-fm/tools/ffmpeg": "0dafc1360bb07743f76abeb1e4ae16b0aaa1331e9041a0e8d6a8524111dc0cbb",
+      "/work/music69-fm/tools/opl2wav": "fd7864ccb7cd1eeac5f56bd3ca4bdcf23750f59bb6f03eb66d258a11d15ab8e1"
+    },
+    "source_executable_sha256": {
+      "ENDING.EXE": "afdafb06b5942a9bca833a3c1f1cb634be886bb6e4d8b5930ab42ac6fa592d8a",
+      "GIN3.COM": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "GIN3PS.EXE": "1efa4bd95e73415efba440af63c6a480665d60a67d8876b5f230f5c391aa2381",
+      "OPEN.EXE": "dde640cd7e10ff1b756e9fc4f38564a389ecc69a343041c874817afbf375ab69"
+    },
+    "tracks": [
+      {
+        "track": "BGM_0F",
+        "route": "FM",
+        "source_sha256": "f8462fe4fb6c629c4204f90ce8fe7ef35f9abdf6fc92e241260868bce8b7b025",
+        "vgm_sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+        "ogg_sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+        "ogg_serial": 1091008858,
+        "seconds": 127.13485260770975,
+        "peak": 0.09104543924331665,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/repeat/.fm-import-2699345454/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/repeat/.fm-import-2699345454/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "BGM_0F.MDS",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-poke",
+            "lin:5DA64@117022200=00",
+            "-dump-vgm",
+            "/work/music69-fm/repeat/.fm-import-2699345454/BGM_0F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/repeat/.fm-import-2699345454/BGM_0F.vgm",
+            "/work/music69-fm/repeat/.fm-import-2699345454/BGM_0F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/repeat/.fm-import-2699345454/BGM_0F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/repeat/.fm-import-2699345454/BGM_0F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "END_2F",
+        "route": "FM",
+        "source_sha256": "ad9607b224fbafbd6539ff82145c9342eb5c7c15bd8f81353d3e8c05f543ba73",
+        "vgm_sha256": "2fc59e74d8eec41933127cf15b37e06f060b0196698acdf116821dc77e85e357",
+        "ogg_sha256": "42ccc5f2d5a4316a2d806bdb7a5ecf33aaac8a35e08813e39224cf319ccdff30",
+        "ogg_serial": 3955497126,
+        "seconds": 136.18201814058958,
+        "peak": 0.9503566026687622,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/repeat/.fm-import-2699345454/game/ENDING.EXE",
+            "-root",
+            "/work/music69-fm/repeat/.fm-import-2699345454/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1600000000",
+            "-vgm-clear-on-open",
+            "END_2F.MDS",
+            "-sound-blaster",
+            "-args",
+            " 9 2",
+            "-dump-vgm",
+            "/work/music69-fm/repeat/.fm-import-2699345454/END_2F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/repeat/.fm-import-2699345454/END_2F.vgm",
+            "/work/music69-fm/repeat/.fm-import-2699345454/END_2F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/repeat/.fm-import-2699345454/END_2F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/repeat/.fm-import-2699345454/END_2F.ogg"
+          ]
+        ]
+      },
+      {
+        "track": "OPEN_F",
+        "route": "FM(substituted)",
+        "source_sha256": "4520bb37bb66733a4598971df45cc8539def4738bfc3b6aa35b6402dc22f54c3",
+        "vgm_sha256": "b386be533aa1001deb9160ef385cb9b0ae0f672240fe5333632a905aa3287e69",
+        "ogg_sha256": "0e955cf4881511076760b725f25e26ac9158bd8c48edbaba1639a82d48bd04c2",
+        "ogg_serial": 3046910935,
+        "seconds": 101.27469387755102,
+        "peak": 0.9516538977622986,
+        "commands": [
+          [
+            "/work/music69-fm/tools/dosgolem-probe",
+            "-exe",
+            "/work/music69-fm/repeat/.fm-import-2699345454/game/GIN3.COM",
+            "-root",
+            "/work/music69-fm/repeat/.fm-import-2699345454/game",
+            "-empty-env",
+            "-tick",
+            "20000",
+            "-steps",
+            "1200000000",
+            "-vgm-clear-on-open",
+            "OPEN_M.MDS",
+            "-dump-vgm",
+            "/work/music69-fm/repeat/.fm-import-2699345454/OPEN_F.vgm"
+          ],
+          [
+            "/work/music69-fm/tools/opl2wav",
+            "/work/music69-fm/repeat/.fm-import-2699345454/OPEN_F.vgm",
+            "/work/music69-fm/repeat/.fm-import-2699345454/OPEN_F.wav",
+            "44100"
+          ],
+          [
+            "/work/music69-fm/tools/ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-i",
+            "/work/music69-fm/repeat/.fm-import-2699345454/OPEN_F.wav",
+            "-af",
+            "volume=-1.00dB",
+            "-ar",
+            "44100",
+            "-c:a",
+            "libvorbis",
+            "-q:a",
+            "5",
+            "/work/music69-fm/repeat/.fm-import-2699345454/OPEN_F.ogg"
+          ]
+        ]
+      }
+    ]
+  },
+  "preflight_rejections": {
+    "exclusive": {
+      "log_sha256": "64d22dad7ca2a6b81dd97bdb224e94e24c92b487d24ebc3ef6188d0e6a63551b",
+      "output_created": false
+    },
+    "track": {
+      "log_sha256": "a80d68d25e26e6a8c0f91eaa1da5ab5faf9f7b3053ff14696f1bfac81a61a2fb",
+      "output_created": false
+    },
+    "tools": {
+      "log_sha256": "07fa2bf426f40f593fa9c3562535735394e0c78f03def6b83000211d3b55f556",
+      "output_created": false
+    },
+    "original-output": {
+      "log_sha256": "88afcea1dac5e257cfd4a6d242e4e32f8691219f9fc6c9dde4216924ebb5ed51",
+      "output_created": false
+    },
+    "probe": {
+      "log_sha256": "d4f7b77ab73216717093e18e07a1c5948d775c6047126b2354011eed0254f49c",
+      "output_created": false
+    },
+    "source": {
+      "log_sha256": "e827ef239b3e4de106d29a5733a32899c0cfc50f40ebfefa536e07014744b6ec",
+      "output_created": false
+    }
+  },
+  "audio_environment": {
+    "tool_sha256": {
+      "/work/music69-fm/tools/dosgolem-probe": "5ff49ce225476936e063ea8b1a5629a47705bc4e9516487e9f2dab2db542822b",
+      "/work/music69-fm/tools/opl2wav": "fd7864ccb7cd1eeac5f56bd3ca4bdcf23750f59bb6f03eb66d258a11d15ab8e1",
+      "/work/music69-fm/tools/ffmpeg": "0dafc1360bb07743f76abeb1e4ae16b0aaa1331e9041a0e8d6a8524111dc0cbb",
+      "/work/music69-fm/tools/fluidsynth": "dad02f700f54939178a297b1887b177ee9ccc838490e463fd9e16a8fc554eb1b",
+      "/usr/share/sounds/sf2/FluidR3_GM.sf2": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0"
+    },
+    "package_versions": "ffmpeg\t7:5.1.9-0+deb12u1\nfluid-soundfont-gm\t3.1-5.3\nlibadplug-2.3.3-0\t2.3.3+dfsg-2\nlibfluidsynth3:amd64\t2.3.1-2\n",
+    "hashes_log_sha256": "8ad60a008f7d1677d3b94bde194a260e17487680a5b64e510bdedf7f035ba8be",
+    "versions_log_sha256": "f0d92431b029dfb96af4d9cd327c216dbc83aed9c5b95bf5d002861ed98ba7fc"
+  },
+  "validation": {
+    "fm_lock_sha256": "843e50bd3f5c92ddfb9f36a13eb74ef028e8b5a60c058fe1d03b2342689bcd09",
+    "full_fm_receipt_sha256": "5feaf6f708ac88f9900939b7e01866c759c7f1ab73983d1c53b1b527cb483856",
+    "full_gm_receipt_sha256": "8e5e0b0d0087bffb172d95f3066f316bf9653a1e8301330b4b105f1fef16e450",
+    "repeat_receipt_sha256": "bde949c3d6633e184b18d7c3271cd3edb8ecafc2b989f89a74c7a7a738519514",
+    "reproduction": {
+      "BGM_0F": {
+        "route": "FM",
+        "vgm_sha256": "fcb09b274c7c8e7d1d8cb4e380ae9279b39357093ee54a9663a097ce1b6ee3e2",
+        "ogg_sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+        "result": "獨立原版固定序列重跑，完整 VGM／OGG 逐位元組相同"
+      },
+      "END_2F": {
+        "route": "FM",
+        "vgm_sha256": "2fc59e74d8eec41933127cf15b37e06f060b0196698acdf116821dc77e85e357",
+        "ogg_sha256": "42ccc5f2d5a4316a2d806bdb7a5ecf33aaac8a35e08813e39224cf319ccdff30",
+        "result": "獨立原版固定序列重跑，完整 VGM／OGG 逐位元組相同"
+      },
+      "OPEN_F": {
+        "route": "FM(substituted)",
+        "vgm_sha256": "b386be533aa1001deb9160ef385cb9b0ae0f672240fe5333632a905aa3287e69",
+        "ogg_sha256": "0e955cf4881511076760b725f25e26ac9158bd8c48edbaba1639a82d48bd04c2",
+        "result": "獨立原版固定序列重跑，完整 VGM／OGG 逐位元組相同"
+      }
+    },
+    "programs": {
+      "linux/amd64": {
+        "sha256": "b912584dcd27f8c9c0442636acfe820b56541775da53898e4eff34029fae7e3b",
+        "bytes": 4547466,
+        "scope": "Linux 真實執行；其他平台僅交叉建置與檔頭驗證"
+      },
+      "windows/amd64": {
+        "sha256": "ff28385255da09e71aae54d2b6cddf1ed733b0df8bd512a0e5f4f4e519cd22eb",
+        "bytes": 4688384,
+        "scope": "Linux 真實執行；其他平台僅交叉建置與檔頭驗證"
+      },
+      "darwin/amd64": {
+        "sha256": "fea347b3d039350bf3e9d78cf6d97eb21d9a7dcc154592f1a5a8c7cbb3dcc72e",
+        "bytes": 4475648,
+        "scope": "Linux 真實執行；其他平台僅交叉建置與檔頭驗證"
+      },
+      "darwin/arm64": {
+        "sha256": "5619c47860d65ff210a44252558c58f08456c12e45bc2cc38c3e7c3660965f0f",
+        "bytes": 4311554,
+        "scope": "Linux 真實執行；其他平台僅交叉建置與檔頭驗證"
+      }
+    },
+    "player_test_log_sha256": "343c6097001b9c2031306ff7cd0cb72ad4560b25778f25b3917500ff9d23237a",
+    "source_inputs_unchanged": true,
+    "temporary_game_directories_removed": true,
+    "limits": "原版 OPL 暫存器串已重現；時間與合成為 hardware-spec approximation。GM 沿用 069 近似，部分峰值 1.0，未宣稱無 clipping；Windows／macOS 依賴封裝、實機與人耳／loop 驗收仍待完成。"
+  }
+}

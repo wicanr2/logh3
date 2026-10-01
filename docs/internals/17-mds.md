@@ -6,6 +6,11 @@
 以 `tools/py.sh tools/scripts/mds_export.py` 從自備原版重建；清單與雜湊見 [`assets/original/README.md`](../../assets/original/README.md)）
 音訊工具查詢入口：`bash tools/audio.sh <命令>`，沿用 `logh3-audio:2`；
 原版及儲存庫唯讀，輸出限 `workplace/`，無網路、有資源與逾時限制。
+完整原生匯入已通過指定 Linux 驗收：十一首 FM 的 VGM／固定封裝 OGG 全檔符合
+保存基準，戰略、結局、替換開場三路徑可獨立重現；十一首 GM 沿用既有近似。
+二十二首正式解碼與正常玩家選曲通過，來源／工具身份與參數見
+[`native-fm-import.json`](data/native-fm-import.json) 及[驗證 031](../playtest/031-native-fm-import.md)。
+此為原版 cue／串流重現及 remake 管線驗收，尚未完成三平台工具封包或聆聽。
 證據等級：版面與事件語意 **強證據**（小節長度、曲目節拍與已知樂曲吻合）；
 速度數值的單位 **未確認**。
 
@@ -101,6 +106,10 @@
 
 原生 MDS／GM 移植規格與近似限制見[規格 069](../spec/069-native-gm-import.md)、
 [研究 358](../re/358-native-gm-import.md)。此階段不將 FM 改用 GM。
+完整原生 FM／GM 入口契約見[規格 071](../spec/071-native-fm-import.md)；
+固定 Ogg 封裝見[規格 070](../spec/070-deterministic-ogg-framing.md)。
+完整 VGM／OGG 雜湊與來源固定於 [`fm-import-lock.json`](data/fm-import-lock.json)，
+由 `tools/scripts/music_fm_lock.py` 匯出，程式生成表格須與 JSON 一致。
 
 目前轉檔使用 FluidR3_GM（Debian `fluid-soundfont-gm 3.1-5.3`），音色庫本體採 MIT，
 可隨 remake 封包發行，必須保留完整著作權、授權及貢獻者資訊。

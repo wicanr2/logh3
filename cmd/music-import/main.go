@@ -1,4 +1,4 @@
-// music-import 是玩家自產曲庫管線的原生 GM 階段（規格 069）。
+// music-import 是玩家自產曲庫的原生 FM／GM 入口（規格 069／071）。
 package main
 
 import (
@@ -59,23 +59,39 @@ func main() {
 		fail(err)
 	}
 	base := filepath.Dir(exe)
-	gm := flag.Bool("gm-only", false, "本階段只轉 GM 曲目；完整 FM 管線尚未接齊，必須明示")
+	gm := flag.Bool("gm-only", false, "只轉 GM 曲目；預設完整 FM／GM 曲庫")
+	fm := flag.Bool("fm-only", false, "只轉原版 OPL 的 FM 曲目")
 	source := flag.String("source", "", "玩家自備的原版遊戲目錄（唯讀）")
 	output := flag.String("output", "", "輸出 OGG 曲庫目錄")
 	tools := flag.String("tools", filepath.Join(base, "tools"), "隨包工具目錄；診斷可指定絕對目錄")
 	font := flag.String("soundfont", filepath.Join(base, "soundfont", "FluidR3_GM.sf2"), "隨包的固定音色庫")
-	tracks := flag.String("tracks", "", "只轉指定 GM 曲目，以逗號分隔；預設十一首")
+	tracks := flag.String("tracks", "", "只轉指定曲目，以逗號分隔；預設完整二十二首")
 	flag.Parse()
-	if !*gm || flag.NArg() != 0 {
-		fail(fmt.Errorf("完整 FM 管線尚未接齊；本階段請明示 -gm-only，不會把 FM 改用 GM"))
+	if flag.NArg() != 0 {
+		fail(fmt.Errorf("不接受未具名的參數"))
 	}
 	var names []string
 	if *tracks != "" {
 		names = strings.Split(*tracks, ",")
 	}
-	if err := run(options{*source, *output, *tools, *font, names}); err != nil {
+	gmNames, fmNames, err := selectTracks(names, *gm, *fm)
+	if err != nil {
 		fail(err)
 	}
+	o := options{source: *source, output: *output, tools: *tools, font: *font}
+	if len(gmNames) > 0 {
+		o.tracks = gmNames
+		if err := run(o); err != nil {
+			fail(err)
+		}
+	}
+	if len(fmNames) > 0 {
+		o.tracks = fmNames
+		if err := runFM(o); err != nil {
+			fail(err)
+		}
+	}
+	fmt.Printf("本次匯入完成：GM %d 首、FM %d 首。\n", len(gmNames), len(fmNames))
 }
 
 func fail(err error) {
@@ -238,6 +254,10 @@ func oggStats(path string) (seconds, peak float64, err error) {
 }
 
 func writeReceipt(output string, r *receipt) error {
+	return writeJSONReceipt(output, "GM-SOURCES.json", r)
+}
+
+func writeJSONReceipt(output, name string, r any) error {
 	d, err := json.MarshalIndent(r, "", "  ")
 	if err != nil {
 		return err
@@ -255,7 +275,7 @@ func writeReceipt(output string, r *receipt) error {
 	if closeErr != nil {
 		return closeErr
 	}
-	return os.Rename(f.Name(), filepath.Join(output, "GM-SOURCES.json"))
+	return os.Rename(f.Name(), filepath.Join(output, name))
 }
 
 func run(o options) (result error) {
@@ -274,7 +294,7 @@ func run(o options) (result error) {
 	if err != nil || fh != fontHash {
 		return fmt.Errorf("FluidR3_GM SHA-256 不符，拒絕合成")
 	}
-	r := &receipt{Scope: "GM 階段，FM／完整玩家封包未驗收", Status: "in-progress", Approx: "legacy approximation：FA 當 BPM；raw 時間沿用匯出器；FB／FC 不展開反覆；非原版 MPU 音色", Platform: runtime.GOOS + "/" + runtime.GOARCH, FontHash: fh, Tools: map[string]string{}, Versions: map[string]string{}}
+	r := &receipt{Scope: "GM 合成收據；FM 另見 FM-SOURCES.json，平台封包未驗收", Status: "in-progress", Approx: "legacy approximation：FA 當 BPM；raw 時間沿用匯出器；FB／FC 不展開反覆；非原版 MPU 音色", Platform: runtime.GOOS + "/" + runtime.GOARCH, FontHash: fh, Tools: map[string]string{}, Versions: map[string]string{}}
 	exe, err := os.Executable()
 	if err != nil {
 		return err

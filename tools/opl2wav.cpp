@@ -1,12 +1,12 @@
 // opl2wav —— 把 OPL（AdLib）的暫存器寫入序列算成 WAV。
 //
-// 輸入是 AdPlug 認得的任何一種 OPL 曲檔（這個專案餵的是 DRO v2，
-// 由 `tools/scripts/vgm_to_dro.py` 從 dosgolem 倒出來的 VGM 轉過來）。
+// 輸入是 AdPlug 認得的 OPL 曲檔；本專案直接使用 dosgolem 產生的 VGM
+// （docs/re/275、359 已由 AdPlug 2.3.3 真實實跑確認，不經 DRO 轉換）。
 // 輸出是 16 位元立體聲 WAV，交給 ffmpeg 編成 OGG。
 //
 // **為什麼要自己寫這三十行**：Debian bookworm 有 `libadplug-dev`，
 // 但沒有 `adplay`（`adplug-utils` 只裝 `adplugdb`）。也沒有任何一個
-// VGM 播放器。與其從原始碼建一整套播放器，不如直接用函式庫。
+// VGM 命令列播放器；函式庫的 factory 可以直接開啟 VGM。
 //
 //   用法: opl2wav <輸入> <輸出.wav> [取樣率] [上限秒]
 //

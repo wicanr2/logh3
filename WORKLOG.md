@@ -2,6 +2,49 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-01 — #69 完整原生 FM／GM 匯入與固定 Ogg 封裝
+
+接續原 Goal、既有 Issue／提交／推送授權及固定音色庫下載裁決，沒有重問 Git LFS。
+開工 87 張 worklist Issue、12 張 open，267 條斷言零失效；載入逆向技能、
+dosgolem 入口、OGG 契約、規格閘門與文件職責，第十七輪快照掛入 CONTEXT。
+核對專用執行器 clean HEAD f7523f9，未修改執行器、原版來源或共用主 checkout。
+
+同 VGM 以既有 AdPlug／FFmpeg 重編兩次，完整 PCM 相同，OGG 差異只在 serial／CRC。
+依 Xiph 規格驗原 CRC、頁界與單串流，再固定封裝序號重算 CRC，恢復既有完整 SHA-256；
+沒有複製保存 OGG、改音樂封包、放寬雜湊或重挑種子。證據審查後以 070／071 READY
+接入正式原生程式，預設完整二十二首，保留 GM／FM 階段與子集入口。
+原版唯讀、執行獨立暫存副本，probe 綁 clean HEAD 與二進位身份；各曲先驗原始
+MDS／VGM，固定 OGG 後再驗全檔，解碼成功才提交。每曲命令與雜湊記入收據。
+
+完整批次實跑結束：十一首 FM 全部 VGM／OGG 符合既有 SOURCES.tsv，十一首 GM 真實
+生成；BGM_0F、END_2F、OPEN_F 三種觸發路徑獨立第二次重跑逐位元組一致。
+正式播放器完整讀出二十二首 PCM 約 13.0 秒，正常玩家選曲通過。
+六種 CLI 前置拒絕均未建立輸出；CRC、截斷、頁序、BOS／EOS、串接拒絕及來源表一致性
+測試通過。標準產品套件全綠，game 約 48.1 秒；全批完成後新增的完整曲庫解碼測試
+另以正式 GUI image 乾淨重跑通過。Windows amd64、macOS amd64／arm64 匯入器本體
+交叉建置與檔頭核對通過，未宣稱第三方依賴封裝或實機驗收。
+
+完整來源、工具／程式身份、各曲 flags、重跑與輸出雜湊見
+[研究 359](docs/re/359-native-fm-import.md)、[規格 071](docs/spec/071-native-fm-import.md)、
+[驗證 031](docs/playtest/031-native-fm-import.md)。JSON 收據 SHA-256
+`3283ef4f5305fef7c36a772f7c6b1480b8c00aa1e1b2e6e823c787a817ab2fa1`。
+OPEN_F 保留替換暫存 MDS 的診斷界限；OPL 時間／合成保持 hardware-spec approximation，
+GM 維持既有近似與增益，不聲稱無 clipping、已聆聽或全部正常開場已驗收。
+
+工具失敗分類：受限 Docker socket 以既定主機 Docker 控制權限重跑；音訊 image 無
+Python，改以其既有 sha256sum／dpkg-query 讀身份，分析仍走 Python 包裝器。
+文件 patch 錨點不存在而整批拒絕，修正目標後重做成功；這些均非產品缺陷。
+引用檢查首次掃進歷史 worklist 的非連結文本，縮回本輪入口並加正對照後，113 份引用均可回查。
+舊「AdPlug 不吃 VGM」註解與實物不符，依真實執行訂正註解，未重建合成器或 image。
+
+#69 回填完整原生匯入／正式解碼已驗，保留三平台依賴封裝、聆聽與循環接點門檻，仍 open。
+重抓快照並生成 CONTEXT／矩陣：267 條斷言零失效、3 條人工核對、119 條一致、
+145 條僅文件證據，12 張 open。整體 Goal 保持進行中。
+輸出 UID/GID 1000:1000，原版 bundle／已鎖定來源雜湊未變，無 root-owned 或誤建 `.md` 目錄。
+兩批 --rm 容器均自然 exit 0，暫存遊戲目錄已移除；按 logh3／dosgolem-logh3 掛載核對
+無本專案執行中／已停止容器，其他 21 個容器未動，沒有重建或全域清理 image。
+本輪程式、可重現工具與證據一併提交推送 main；精確提交由 Git 歷史回查。
+
 ## 2026-10-01 — #69 原生 MDS／GM 匯入階段
 
 接續既有 Goal 與 Issue／提交／推送授權。前輪有實質進展，本輪由最新遠端

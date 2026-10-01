@@ -15,6 +15,10 @@
 用途與原版素材邊界見 [`17-mds.md`](17-mds.md)。
 原生 GM 移植與真實轉檔驗收索引：[`native-gm-import.json`](data/native-gm-import.json)，
 方法及限制見[驗證 030](../playtest/030-native-gm-import.md)。
+原生 FM 的固定版本／曲目／封裝索引：[`fm-import-lock.json`](data/fm-import-lock.json)，
+原版觸發與重生限制見[規格 071](../spec/071-native-fm-import.md)、[研究 359](../re/359-native-fm-import.md)。
+完整原生曲庫匯入與三路徑重跑收據：[`native-fm-import.json`](data/native-fm-import.json)，
+正式解碼、重生命令與平台限制見[驗證 031](../playtest/031-native-fm-import.md)。
 remake 增強策略的正式入口驗證索引：[`enhanced-ai-player-path.json`](data/enhanced-ai-player-path.json)，
 範圍及原版差異見[規格 068](../spec/068-enhanced-ai-player-path.md)。
 

@@ -1,6 +1,8 @@
 # 069 — 原生 MDS 匯出與 GM 匯入階段
 
 狀態：**CONFORMED**（2026-10-01，限下列階段）。工作項目：[#69](https://github.com/wicanr2/logh3/issues/69)。
+入口接續：[071](071-native-fm-import.md) 接完整 FM／GM，取消「預設須明示 gm-only」的階段限制；
+本規格其餘 GM 合成近似及驗收保留，歷史階段收據不改寫。
 證據：[研究 358](../re/358-native-gm-import.md)、[MDS 參考](../internals/17-mds.md)、
 [音色庫定案](../re/356-player-music-library.md)。
 
