@@ -1,4 +1,4 @@
-# 徵稅面板四顆箭頭的完整畫面對拍
+# 徵稅／月初預算箭頭與結算的完整畫面對拍
 
 日期：2026-10-01。工作項 [#80](https://github.com/wicanr2/logh3/issues/80)。
 比較等級：`same-state`，S1 帝國 796 年 1 月 1 日，正常玩家路徑編成第一艦隊後開徵稅計劃。
@@ -90,6 +90,44 @@ remake 使用 `cmd/gin3` 正式入口與 renderer，`-script` 注入等價的輸
 探索測試引用過期符號而失敗，屬工具／探索環境問題；未修改無關檔案，改用既有 GUI
 image 對所有正式產品目錄乾淨重跑成功。
 
-月初五份收據只證明原版行為可重現，尚未與 remake 通過完整對拍。
-新發現的收稅時序差異歸 [#82](https://github.com/wicanr2/logh3/issues/82)，
-規格 003 該擴充仍為 DRAFT。按住連發仍是 #60。
+第一階段的月初五份收據當時只有原版重播；其收稅時序缺口由 #82 接續處理，
+後續結果如下。按住連發仍是 #60。
+
+## #82 月初互動與真正結算
+
+同日接續驗收：S1 帝國正常主選單 → 防拷問答 → 會計報告 → 預算；
+四顆箭頭各一次，或不調整；預算結束 → 會計／訂造報告右鍵 → 命令階段。
+比較等級固定 `same-state`，無記憶體注入、裁切、縮放或排除矩形。
+原版工具與輸入雜湊沿用上節；月初完整檢查點 SHA-256
+`ee6138b6abbc29e89de5f04a4d5480b3fcfbcc75c546ab440c8f37b2f69e6e6c`。
+remake GUI 擷取為 HEAD `2a337de` 加本輪修正、`logh3-ebiten:2`；
+每份 `remake-meta.json` 記擷取時工作樹、完整腳本及核心程式 SHA-256，
+受版控索引見 [結算收據 JSON](../internals/data/budget-settlement-receipts.json)。
+
+```sh
+LOGH3_GUI_PREFIX=planarrow-budget bash tools/gui_check.sh
+bash tools/py.sh tools/scripts/plan_arrow_stats.py
+bash tools/go.sh test ./internal/game -run TestBudgetSettlementMatchesOriginal -count=1
+```
+
+十份 GUI 收據是 `planarrow-budget-base`、四份 `planarrow-budget-{tax-up,tax-down,pct-up,pct-down}`，
+以及五份 `planarrow-budget-{unchanged,tax-up,tax-down,pct-up,pct-down}-post`。
+每份色號及 RGB 均 307200 像素全同；面板及四顆箭頭逐區零差異、最大通道差 0、
+差異邊界空；原版／remake／全黑差分圖、統計及輸入保存位置與前節相同。
+
+五份 `-post` 的完整記憶體、畫面及色盤第二輪重播雜湊全部相同；
+數值、七種建造艘數與原版記憶體雜湊見 [研究 351](../re/351-budget-settlement-after-reports.md)。
+remake 逐筆核對軍事費、原定軍事費、實付、下期預估、稅率快照、比例、
+32 個星域的經濟力／成長率／當期及前期稅率，以及 81 顆行星經濟力，全部一致。
+報告期間未扣行星經濟力；訂造報告退場只扣一次；重複右鍵不再次收稅。
+結算後存檔的行星 bytes 保留，從正常「取進度」入口讀回不重開待結算。
+
+兩陣營開局、既有徵稅及原版 `monthwork2` 跨月結算回歸通過；
+全部產品套件由 `tools/gui.sh test ./internal/... ./cmd/...` 通過。
+標準 Go image 的 X11／ALSA 連結與歷史 `workplace/tmp` 失敗仍屬環境／探索輸出，
+本輪再次核對，不歸為本次產品缺陷。
+
+**限制**：整張星域／行星表仍有財政之外的 64／759 bytes 未分類差異，
+五組位置相同，已另列 [#83](https://github.com/wicanr2/logh3/issues/83) 與
+[差異索引](../internals/data/budget-table-differences.json)。本次只宣稱上述財政欄位與畫面一致，
+不宣稱整表或全遊戲完成；對戰跨月、按住連發及其他未取證分支維持原有限制。

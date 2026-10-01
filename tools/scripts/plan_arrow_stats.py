@@ -64,7 +64,11 @@ def stats(a, b, indices):
 regions = {'full': (0, 0, 640, 480), 'panel': (128, 60, 384, 340),
            'tax_up': (464, 280, 16, 20), 'tax_down': (480, 280, 16, 20),
            'pct_up': (464, 320, 16, 20), 'pct_down': (480, 320, 16, 20)}
-for batch in ('tax-up', 'tax-down', 'pct-up', 'pct-down', 'hover', 'moved', 'updown', 'reopen'):
+batches = ['tax-up', 'tax-down', 'pct-up', 'pct-down', 'hover', 'moved', 'updown', 'reopen', 'budget-base']
+for key in ('tax-up', 'tax-down', 'pct-up', 'pct-down'):
+    batches.extend(['budget-' + key, 'budget-' + key + '-post'])
+batches.append('budget-unchanged-post')
+for batch in batches:
     directory = pathlib.Path('workplace/oracle/planarrow-' + batch)
     original, remake = png_rgb(directory / 'screen.png'), png_rgb(directory / 'remake.png')
     a, b = (directory / 'screen.bin').read_bytes(), (directory / 'remake.bin').read_bytes()

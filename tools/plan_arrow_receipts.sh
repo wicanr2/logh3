@@ -25,7 +25,16 @@ if "-load-state" in flags:
     p=flags[flags.index("-load-state")+1]
     local=pathlib.Path("/ref")/p.removeprefix("/src/workplace/")
     parent={"path":p,"sha256":hashlib.sha256(local.read_bytes()).hexdigest()}
-out.joinpath("inputs.json").write_text(json.dumps({"golem_head":sys.argv[2],"golem_working_tree":sys.argv[3],"original_image":"golang:1.24-bookworm","python_image":"python:3.12-slim","parent":parent,"rng":"從完整檢查點還原；箭頭操作不含亂數判定","canvas":[640,480],"mouse_y_to_screen_y":40},ensure_ascii=False,indent=2)+"\n")
+memory=[]
+if "-dump-mem-at" in flags:
+    for dump in flags[flags.index("-dump-mem-at")+1].split(";"):
+        at,rest=dump.split(":",1); prefix,addr,length,path=rest.split(":",3)
+        assert prefix=="lin" and addr=="0" and length=="1048576"
+        raw=(pathlib.Path("/ref")/path.removeprefix("/src/workplace/")).read_bytes()
+        assert len(raw)==1048576
+        out.joinpath("memory.bin").write_bytes(raw)
+        memory.append({"step":int(at),"address_space":"dosgolem 執行期線性位址","start":0,"bytes":len(raw),"sha256":hashlib.sha256(raw).hexdigest()})
+out.joinpath("inputs.json").write_text(json.dumps({"golem_head":sys.argv[2],"golem_working_tree":sys.argv[3],"original_image":"golang:1.24-bookworm","python_image":"python:3.12-slim","parent":parent,"memory":memory,"rng":"從完整檢查點還原；箭頭操作不含亂數判定","canvas":[640,480],"mouse_y_to_screen_y":40},ensure_ascii=False,indent=2)+"\n")
 ' "$name" "$(git -C "$GOLEM" rev-parse HEAD)" "$(git -C "$GOLEM" status --porcelain)"
 }
 tax() { local name=$1; shift; rec "$name" -load-state /src/workplace/fcmd/fcmd-plan-tax.state "$@"; }
@@ -54,5 +63,21 @@ for entry in 'tax-up:471:249' 'tax-down:487:249' 'pct-up:471:289' 'pct-down:487:
     test -f "$GOLEM/workplace/planarrow-budget.state"
     rec "planarrow-budget-$key" -load-state /src/workplace/planarrow-budget.state -steps 210000000 \
       -mouse-x "$x" -mouse-y "$y" -mouse-at 170000000 -clicks "185000000:$x:$y" -click-hold 100000
+  fi
+done
+# #82：關預算後依序關會計／訂造報告，再核對真正收稅及造船。
+# 報告按鈕沿用既有收據的 3M 保持時間；箭頭仍是單次短按 100k。
+for entry in 'unchanged:0:0' 'tax-up:471:249' 'tax-down:487:249' 'pct-up:471:289' 'pct-down:487:289'; do
+  IFS=: read -r key x y <<<"$entry"
+  name="planarrow-budget-$key-post"
+  if [[ -z "$only" || "$only" == "$name" ]]; then
+    test -f "$GOLEM/workplace/planarrow-budget.state"
+    clicks=230000000:463:329:0:100000
+    [[ "$key" == unchanged ]] || clicks="185000000:$x:$y:0:100000,$clicks"
+    rec "$name" -load-state /src/workplace/planarrow-budget.state -steps 350000000 \
+      -mouse-x "$x" -mouse-y "$y" -mouse-at 170000000 -clicks "$clicks" \
+      -rclicks 265000000:300:200::3000000,300000000:300:200::3000000 \
+      -click-hold 3000000 \
+      -dump-mem-at "349999999:lin:0:1048576:/src/workplace/$name-memory.bin"
   fi
 done

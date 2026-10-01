@@ -65,6 +65,7 @@ func TestMonthEndMatchesWorkBlock(t *testing.T) {
 	if g.turn != w.Turn {
 		t.Fatalf("remake 的回合 ＝ %d，原版是 %d", g.turn, w.Turn)
 	}
+	dismissMonthReports(g)
 
 	for _, c := range []struct {
 		name string
@@ -205,6 +206,7 @@ func TestMonthEndTaxesOnlyOwnSeat(t *testing.T) {
 	if y, m, _ := g.Date(); y != 796 || m != 2 {
 		t.Fatalf("日期 %d/%d，應該是 796/2", y, m)
 	}
+	dismissMonthReports(g)
 	skipped := 0
 	var byOwner [3]int
 	for i := 0; i < rules.RegionCount; i++ {

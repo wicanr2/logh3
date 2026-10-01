@@ -217,6 +217,17 @@ func (p *CapitalPanel) DrawOpening(fb *gfx.Framebuffer, fnt *font.Font, region *
 	region.DrawAt(fb, fnt, c.Region, faction, p.Summary.DX, p.Summary.DY)
 }
 
+// DrawOpeningTax 畫月初稅率重算後才寫出的總稅收數字（規格 003、研究 351）。
+func (p *CapitalPanel) DrawOpeningTax(fb *gfx.Framebuffer, fnt *font.Font, tax int) {
+	for _, r := range p.Rows {
+		for _, fld := range []*PanelField{r.Left, r.Right} {
+			if fld != nil && fld.Field == "tax_total" {
+				drawRight(fb, fnt, fld.Right, r.Y, strconv.Itoa(tax), p.Ink)
+			}
+		}
+	}
+}
+
 // hiddenAtOpening 回這一格在月初報告那一刻畫了沒有。
 func (p *CapitalPanel) hiddenAtOpening(field string) bool {
 	for _, f := range p.OpeningHidden {

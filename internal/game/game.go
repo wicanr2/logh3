@@ -621,7 +621,9 @@ type Game struct {
 
 	// planArrowsDim 是目前預算視窗四顆箭頭的呈現狀態（規格 003）。
 	// 各自保留點擊後的色號 9→8；重新開窗歸零，不屬於存檔資料。
-	planArrowsDim [4]bool
+	planArrowsDim      [4]bool
+	budgetCursorMoved  bool
+	budgetTaxRefreshed bool
 
 	// 結局：目前顯示哪一張 CG。
 	ending *asset.Image
@@ -679,6 +681,8 @@ type Game struct {
 	// monthReport 是月初報告那張上的預算。
 	treasury    rules.Treasury
 	monthReport rules.Budget
+	// 單人月報未關閉時只預估；訂造報告關閉後才結算（規格 003、研究 351）。
+	monthSettlementPending bool
 
 	// building 是**上一次結算撥款出去**的那份計劃：買到的船這個月還在造，
 	// 下個月底交付（`docs/re/21`）。生產計劃畫面的「建造中」就是它。
@@ -1419,8 +1423,7 @@ func (g *Game) finishAfterPhezzanReports() {
 	// 一個月十回合；跨過去就結算（`docs/re/26`、`docs/re/33`）
 	// 並跳出船艦接收報告。
 	//
-	// ⚠ **對戰模式的跨月沒有量過**（`docs/spec/016`）：這裡照單人模式
-	// 只結算目前這一方，另一方的錢停在上個月。要往下走得先有收據。
+	// 對戰跨月尚未量測（規格 016），保留既有兩座位處理。
 	month := g.turn%rules.TurnsPerMonth == 0
 	if month {
 		g.deliverShips()
@@ -1890,6 +1893,8 @@ func (g *Game) enterSide(faction int) {
 }
 
 func (g *Game) startNewGame(faction int) {
+	g.monthSettlementPending = false
+	g.budgetTaxRefreshed = false
 	g.restoreWorld()
 	g.work = nil
 	g.pendingRebellionReports = nil
@@ -2012,6 +2017,8 @@ func New(res *Resources) (*Game, error) {
 // 未安定度是唯一一欄載進來還不對的（原版載入時重算，算式未解，
 // `docs/re/24`）。要對畫面的地方得自己 `Slot.SetUnrest` 蓋成量到的值。
 func (g *Game) LoadSlot(sl *rules.Slot) {
+	g.monthSettlementPending = false
+	g.budgetTaxRefreshed = false
 	g.slot = sl
 	g.work = nil
 	g.pendingRebellionReports = nil
@@ -2118,6 +2125,9 @@ func (g *Game) MoveMouse(x, y int) {
 
 // moveMouse 只搬游標，不碰左下角那塊。
 func (g *Game) moveMouse(x, y int) {
+	if g.state == StateBudgetPlan {
+		g.budgetCursorMoved = true
+	}
 	g.mouseX, g.mouseY = x, y
 	if g.state == StateMainMenu {
 		g.highlight = screen.RowAt(g.res.Menu, y)
@@ -2338,6 +2348,8 @@ func (g *Game) click(x, y int) {
 			}
 		case "budget-plan":
 			if g.res.BudgetPlan != nil {
+				g.planArrowsDim = [4]bool{}
+				g.budgetCursorMoved = false
 				g.state = StateBudgetPlan
 			}
 		}
@@ -2759,6 +2771,7 @@ func (g *Game) rightClick(x, y int) {
 		// 會計報告點熱區 → 訂造報告 → 右鍵 → 地圖介面，與報告串那一路
 		// `openreports` 的第二下右鍵落到同一張畫面）。
 		g.reportLayer = 0
+		g.settlePlayerMonth()
 		if g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
 		}
@@ -3020,6 +3033,9 @@ func (g *Game) loadSlotFromDisk(n int) {
 // **只有從存檔進來的局面存得了**：`WORK.DT?` 那 230 bytes 只解出三個欄位，
 // 新遊戲沒有可以照抄的底稿。`dir` 由呼叫端指定，原版目錄一律唯讀。
 func (g *Game) SaveSlot(dir string, index int) error {
+	if g.monthSettlementPending {
+		return fmt.Errorf("月初報告尚未結算，請關閉訂造報告後再存檔")
+	}
 	if g.slot == nil {
 		// 新遊戲：拿量到的開局 `WORK` 當底稿，其餘的表就是目前手上的。
 		// remake 沒有模型的那些欄位會停在 796 年 1 月的初值
@@ -3154,8 +3170,12 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		return fb
 	case StateBudgetPlan:
 		g.applyStaffFaces(g.res.BudgetPlan)
-		fb, _ := screen.MainGameWithBoard(g.res.BudgetPlan, g.res.Font, g.playerStarMap(),
-			g.res.Faces, g.res.Cursor, g.drawBoardPanels)
+		g.applyPlanScreen(g.res.BudgetPlan)
+		if g.budgetCursorMoved {
+			g.liveCursor(g.res.BudgetPlan)
+		}
+		fb, _ := screen.MainGameLayered(g.res.BudgetPlan, g.res.Font, g.playerStarMap(),
+			g.res.Faces, g.res.Cursor, g.drawBoardPanels, g.afterWindow)
 		g.drawSpecStaff(fb, g.res.BudgetPlan)
 		g.drawBudget(fb)
 		return fb
@@ -3221,7 +3241,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 
 // monthEnd 跑月底結算裡**玩家看得到的那一半**：一個月一次的成長與稅率重算
 // （原版 `0654:0007`，跑在逐座位之前），然後依座位順序（帝國 0、同盟 1）
-// 把排在玩家之前的座位與玩家自己的座位各結算一次（`monthEndSeat`）。
+// 把排在玩家之前的座位結算，玩家留到訂造報告關閉（規格 003、研究 351）。
 // 排在玩家之後的座位（單人模式的電腦那一方）在玩家按「實行」之後、電腦
 // 下命令之前才結算（`advanceTurn`）——所以帝國玩家在月初看到的同盟星域
 // 經濟力只有成長、還沒扣稅（收據 `monthwork3`、`fcmd-rinfo-ballat`）。
@@ -3234,15 +3254,40 @@ func (g *Game) monthEnd() {
 	}
 	// 1. 一個月一次：32 格成長、重算成長率與稅率。
 	rules.MonthEndGrow(g.res.Stellar, g.res.Planets, g.res.Growth, g.recomputeAllTaxRates)
-	// 2. 逐座位：玩家之前的座位、玩家自己；對戰模式兩個都做。
+	// 2. 玩家之前的座位先結算；單人玩家留到訂造報告關閉。
+	// 對戰跨月尚未量測，保留既有處理（規格 016）。
 	for f := 0; f < 2; f++ {
-		if f <= g.faction || g.versus {
+		if f < g.faction || g.versus {
 			g.monthEndSeat(f)
 		}
+	}
+	if !g.versus {
+		g.monthSettlementPending = true
+		g.budgetTaxRefreshed = false
 	}
 	// 3. 結算完之後重算下個月的預估徵稅額——徵稅計劃那張印的是這個，
 	//    與剛剛實收的那筆不是同一個數（`docs/spec/003`）。
 	g.refreshTaxEstimate()
+	g.refreshMonthReport()
+}
+
+// refreshMonthReport 使用尚未扣稅的現值，箭頭改動後更新本次預算。
+func (g *Game) refreshMonthReport() {
+	if g.monthSettlementPending {
+		g.monthReport = g.nextBudget()
+	}
+}
+
+// settlePlayerMonth 對應報告之後的收稅與撥款；旗標保證只做一次。
+func (g *Game) settlePlayerMonth() {
+	if !g.monthSettlementPending {
+		return
+	}
+	g.monthSettlementPending = false
+	g.monthEndSeat(g.faction)
+	g.refreshTaxEstimate()
+	g.recomputeUnrest(g.turn)
+	g.refreshCapitalSnap()
 }
 
 // monthEndSeatsAfterPlayer 是排在玩家之後的座位的月底結算（單人模式的電腦
@@ -3346,6 +3391,9 @@ func (g *Game) drawBoardPanels(fb *gfx.Framebuffer) {
 	case StateMainGame, StateShipOrder, StateBuildPlan, StateAdmiralList, StateBudgetPlan:
 		if c, _, ok := g.capitalSummary(); ok {
 			g.res.CapitalPanel.DrawOpening(fb, g.res.Font, g.res.RegionPanel, c, g.faction)
+			if g.budgetTaxRefreshed {
+				g.res.CapitalPanel.DrawOpeningTax(fb, g.res.Font, g.taxTotal[g.faction])
+			}
 		}
 		return
 	}

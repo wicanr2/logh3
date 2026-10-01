@@ -9,9 +9,14 @@
   八份正常玩家入口完整畫面及 RGB 零差異，上界另有明示注入診斷；14 份原版收據兩輪
   全部重現。48 份 GUI 驗收與全部正式產品套件測試通過，詳見
   [對拍 025](docs/playtest/025-plan-arrows.md) 與 [研究 350](docs/re/350-plan-arrows-retain-dim-colour.md)。
-  月初預算尚有 **#82**：remake 已扣稅，原版仍在扣稅前，不能用命令階段 `taxTotal`
-  直接更新報告；[規格 003](docs/spec/003-budget-panel.md) 此擴充為 DRAFT，試作已撤回。
-  本輪範圍快照與下一閘門見 [第十輪](docs/goal/2026-10-01-plan-arrows-round-10.md)。
+  **#82 月初結算修正**：報告期間保留扣稅前狀態，訂造報告退場後只結算一次；
+  四箭頭即時文字／游標、十份正式 GUI 完整色號及 RGB 零差異，五組原版完整記憶體
+  兩輪一致，財政與所有行星經濟力及存讀檔通過。證據見
+  [研究 351](docs/re/351-budget-settlement-after-reports.md)。
+  財政之外的整表 64／759 bytes 差異尚未分類，另由 **#83** 追查，
+  [差異索引](docs/internals/data/budget-table-differences.json) 不冒充整表一致。
+  開工範圍快照見 [第十輪](docs/goal/2026-10-01-plan-arrows-round-10.md)；
+  下一條對拍調查為 #83，剩餘項以遠端 Issue 為準。
 
 - 遊戲：《銀河英雄傳說III SP》（Micronet，1994），PC DOS 版，啟動程式 `GIN3.COM`。
 - 原版 bundle：`org_game/银河英雄传说3SP.zip`，
@@ -371,7 +376,7 @@
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
-| 預算箭頭只是游標附近 17–21 點未知差異；月初預算的 10741 表示已收稅 | `docs/re/343`、`docs/spec/003` 舊版 | `docs/re/350`：移開游標後仍有 26 點色號 9→8，先加後減兩顆各自保留，關窗重開才重設；完整記憶體顯示月初原版星域經濟力 85020、remake 已扣到 82302。原版此時為收稅前預估，未操作時才與後續實收相等。呈現缺口 #80 已修；結算生命週期留 #82，未通過試作已撤回 |
+| 預算箭頭只是游標附近 17–21 點未知差異；月初預算的 10741 表示已收稅 | `docs/re/343`、`docs/spec/003` 舊版 | `docs/re/350`：移開游標後仍有 26 點色號 9→8，先加後減兩顆各自保留，關窗重開才重設；完整記憶體顯示月初原版星域經濟力 85020、remake 已扣到 82302。原版此時為收稅前預估，未操作時才與後續實收相等。呈現缺口 #80 已修；結算生命週期當時留 #82，未通過試作已撤回。後續研究 351 證明訂造報告關閉後才結算，修正後十份 GUI 與五組財政對拍通過，#82 已完成；非財政整表差異另列 #83 |
 | 左下角摘要「從別的畫面回到地圖介面的那一次輸入不重算」（規則四），且內容每幀從星域記錄現算 | `docs/re/284`、`docs/spec/001` 舊版規則 4、`internal/game.refreshHoverRegion` 舊註解 | `docs/re/312` §7.7–7.8：`fcmd-win-rclick`（右鍵回地圖、游標在艾流塞拉）那塊換成艾流塞拉，同一視窗按「結束」回來的 `fcmd-close` 仍是首都——判準是「游標底下那一格變了沒」，`dec1` 只是沒變的情況；`fcmd-hover-home` 對 `dec1`：星域 0 的 `+0x28` 已是 1、面板仍寫 0：0，面板是寫進去那一刻的文字。規格 001 規則 4–7 已改寫 |
 | 右下角清單右邊那個數字「一律 100，是不是機動力還沒驗」 | `docs/re/70`、`fleet-list-panel.json` 舊註、`internal/game.fleetRows` 舊註解 | `docs/re/313` §一：列印常式讀艦隊 `+0x3C`（士氣值），低於 50 變紅；記號欄依 `+0x08` 印 ☆／＊／◎ |
 | 戰略地圖的顏色只由擁有者查 `ds:8BD2` 決定，開局建一張就夠 | `docs/re/17`、`docs/internals/12`、`internal/game.factionStarMap` 舊版 | `docs/re/313` §3.2：`3705:037F` 先看 `+0x28 ＋ 陣營`——有自軍艦隊改查 `ds:8BD6` {0, 2, 15}（收據 `fcmd-exec`、S2 的 2／7／8 三格）；反白格查 `ds:8BDA`。地圖現在每幀照記錄算 |
@@ -519,23 +524,19 @@
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
 
-#### budget-plan-arrow-live-render — 月初預算箭頭未更新畫面，且收稅結算時序與原版不同
+#### opening-runtime-table-differences — 開局執行期星域／行星資料表的非財政差異尚未分類
 
-*[#82](https://github.com/wicanr2/logh3/issues/82) · parity（對拍：要與原版逐位元組相同）*
+*[#83](https://github.com/wicanr2/logh3/issues/83) · parity（對拍：要與原版逐位元組相同）*
 
-月初「次月份預算計劃」的四顆箭頭會改變原版的當月預算，但 remake 使用靜態報告與游標，沒有即時顯示新數字；進一步同狀態記憶體核對證明結算時序也有差異。
+#82 的五條正常月初操作路徑已對上財政與整張畫面；整表檢查另發現每組星域 64 bytes、行星 759 bytes 不同。原因尚未知，不能憑財政通過宣稱整張執行期資料已對拍。
 
-原版顯示這張預算時尚未扣稅，remake 的 `monthEndSeat` 已執行 `CollectTax`。同一帝國星域經濟力為 85020／82302；加稅後兩側稅率同為 47，但總稅額為 16070／15472。因此不能只把 `monthReport.Tax` 換成 `taxTotal`。這項試作已撤回，規格 003 此擴充為 DRAFT。
+**卡在**：目前只有完整記憶體與 remake 表的差異位置；尚未追查初始資料、表更新者與玩家 consumer。
 
-**卡在**：- 原版四顆箭頭收據已取得且兩輪逐位元組重現；真正收稅與造船的後續生命週期尚未核對完整。
-- remake 月初報告使用已結算狀態；需要依證據決定結算何時執行及 UI 使用何種狀態，不能猜補或另造數字。
-- 月初稅率標籤是 `report` 第 9 行，徵稅是 `overlay` 第 8 行；開窗游標映射與後續即時游標也要分別核對。
+**做完的判準**：以相同原版開局、執行器版本及正常入口，逐項分類非財政的整表差異；先核對測試資源與正式 bootstrap 是否一致，再針對影響玩家的差異取得證據、READY 規格、實作及同狀態驗證。與玩家無關的未建模 bytes 明示限制，不猜補。
 
-**做完的判準**：從月初扣稅前的同一局面操作四顆箭頭，完整畫面、游標、稅率標籤與預算數字同狀態對上原版；再關預算、經會計／訂造報告到命令階段，核對實收稅、實際造船、資金、星域／行星經濟力及存檔。確認只收一次稅，且改預算真正影響結算。規格經證據審查到 READY 後才修改正式流程。
+**證據**：[`docs/re/351-budget-settlement-after-reports.md`](docs/re/351-budget-settlement-after-reports.md)、[`docs/internals/data/budget-table-differences.json`](docs/internals/data/budget-table-differences.json)、[`internal/game/planscreens_test.go` 的 `TestBudgetSettlementMatchesOriginal`](internal/game/planscreens_test.go` 的 `TestBudgetSettlementMatchesOriginal)
 
-**證據**：[`docs/re/350-plan-arrows-retain-dim-colour.md`](docs/re/350-plan-arrows-retain-dim-colour.md)、[`docs/spec/003-budget-panel.md`](docs/spec/003-budget-panel.md)、[`tools/plan_arrow_receipts.sh`](tools/plan_arrow_receipts.sh)
-
-**核實**：要人判——規格 003 月初擴充仍為 DRAFT；正式接上後綁 go_test，涵蓋四箭頭整張比與原版實收稅／造船／資金的結算鏈，不能只驗靜態預算或 remake 內部自洽。
+**核實**：要人判——原因未知；財政測試通過不能代表整表一致。分類後綁涵蓋玩家相關原始 bytes 的 go_test，並保留未知欄位清单。
 
 #### battle-turn-eight-steps — 戰場回合結算對齊原版八步（規格 062 的其餘七步與子步 8-2–8-5）
 
@@ -847,7 +848,7 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-75 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+76 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1847,6 +1848,22 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game.TestShipDeliveryMatchesOracle`](internal/game.TestShipDeliveryMatchesOracle)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### budget-plan-arrow-live-render — 月初預算箭頭未更新畫面，且收稅結算時序與原版不同
+
+*[#82](https://github.com/wicanr2/logh3/issues/82) · parity（對拍：要與原版逐位元組相同）*
+
+已修正單人月初預算的即時畫面與結算時序：報告期間保留扣稅前狀態，四顆箭頭更新本次預算；訂造報告關閉後只收一次稅及撥造船款，再刷新下期預估。
+
+**卡在**：本條判準已完成。財政之外的整表差異仍未知，另由 #83 處理；本條不宣稱整張執行期資料表或全遊戲 parity。對戰跨月未知與按住連發 #60 維持既有限制。標準 Go image 缺 X11／ALSA 與既有 `workplace/tmp` 過期探索測試不歸為本次產品缺陷，正式產品用既有 GUI image 驗證通過。
+
+**做完的判準**：已完成：十份正常玩家入口 GUI 完整 640×480 色號及 RGB 零差異，沒有排除區。四箭頭、游標、稅率文字及右側總稅收重寫皆對上原版。五組操作到命令階段的完整原版記憶體、畫面、色盤兩輪雜湊一致；軍事費、原定軍事費、實付、建造艘數、下期預估、全部星域的財政欄位及全部行星經濟力一致。重複右鍵不再扣稅，結算後存檔及正常取進度入口保留結果。
+
+規格經研究 351 審查 READY 才實作，現為 CONFORMED。兩陣營開局、既有跨月 `monthwork2` 與全部正式產品套件測試通過。
+
+**證據**：[`docs/re/351-budget-settlement-after-reports.md`](docs/re/351-budget-settlement-after-reports.md)、[`docs/internals/27-treasury-globals.md`](docs/internals/27-treasury-globals.md)、[`docs/internals/data/budget-settlement-receipts.json`](docs/internals/data/budget-settlement-receipts.json)、[`docs/spec/003-budget-panel.md`](docs/spec/003-budget-panel.md)、[`docs/playtest/025-plan-arrows.md`](docs/playtest/025-plan-arrows.md)、[`tools/plan_arrow_receipts.sh`](tools/plan_arrow_receipts.sh)、[`tools/gui_check.sh`](tools/gui_check.sh)、[`tools/scripts/plan_arrow_stats.py`](tools/scripts/plan_arrow_stats.py)
+
+**核實**：`TestBudgetSettlementMatchesOriginal` 釘在 `internal/game`
 
 #### battle-tests-never-run — 九支戰場測試從來沒跑過（AI 不下命令，一直 skip 在「沒走到戰場」）
 

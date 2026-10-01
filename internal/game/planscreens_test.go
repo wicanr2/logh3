@@ -1,6 +1,13 @@
 package game
 
-import "testing"
+import (
+	"bytes"
+	"os"
+	"path/filepath"
+	"testing"
+
+	"github.com/wicanr2/logh3/internal/rules"
+)
 
 // 徵稅計劃／生產計劃的「結束」與預算計劃的兩組箭頭（#64、`docs/re/343`，
 // 收據 `fcmd-plan-*`）。座標是畫面座標（收據旗標的滑鼠 y ＋ 40）：
@@ -147,4 +154,151 @@ func TestPlanArrowRenderingMatchesOriginal(t *testing.T) {
 		g.Click(471, 289)
 		matches(t, g, "planarrow-clamp")
 	})
+}
+
+// 五條正常玩家路徑：月初預估不能改經濟力，訂造報告退場才收稅（研究 351）。
+func TestBudgetSettlementMatchesOriginal(t *testing.T) {
+	for _, tc := range []struct {
+		name string
+		x, y int
+	}{
+		{"unchanged", 0, 0}, {"tax-up", 471, 289}, {"tax-down", 487, 289},
+		{"pct-up", 471, 329}, {"pct-down", 487, 329},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			batch := "planarrow-budget-" + tc.name
+			mem, err := os.ReadFile(filepath.Join(root, "workplace/oracle", batch+"-post", "memory.bin"))
+			if err != nil {
+				t.Skipf("缺原版完整記憶體：%v", err)
+			}
+			if len(mem) != 1048576 {
+				t.Fatalf("收據長度 %d", len(mem))
+			}
+			g, err := New(loadWithRules(t))
+			if err != nil {
+				t.Fatal(err)
+			}
+			g.Click(300, 210)
+			for _, c := range []byte{'1', '3', '8', '\r'} {
+				g.Key(c)
+			}
+			if !g.monthSettlementPending || g.military[0] != 50000 {
+				t.Fatal("月初報告已提前結算")
+			}
+			pre := append([]byte(nil), g.res.Planets.Data...)
+			g.Click(432, 300)
+			if tc.name == "unchanged" {
+				matches(t, g, "planarrow-budget-base")
+			} else {
+				g.Click(tc.x, tc.y)
+				matches(t, g, batch)
+			}
+			if !bytes.Equal(pre, g.res.Planets.Data) {
+				t.Fatal("預算操作提早扣行星經濟力")
+			}
+			if err := g.SaveSlot(t.TempDir(), 0); err == nil {
+				t.Fatal("待結算狀態不應存成無法恢復的局面")
+			}
+			g.Click(463, 369)
+			g.RightClick(300, 240)
+			if g.State() != StateShipOrder || !bytes.Equal(pre, g.res.Planets.Data) {
+				t.Fatal("會計報告退出已提前扣稅")
+			}
+			g.RightClick(300, 240)
+			if g.State() != StateCommandPhase || g.monthSettlementPending {
+				t.Fatal("訂造報告關閉未完成結算")
+			}
+			matches(t, g, batch+"-post")
+			w, err := rules.ReadWork(mem[0x5DA44 : 0x5DA44+rules.WorkRecord])
+			if err != nil {
+				t.Fatal(err)
+			}
+			next := g.nextBudget()
+			for _, c := range []struct {
+				name      string
+				got, want int
+			}{
+				{"軍事費", g.military[0], w.Military[0]}, {"下期稅額", g.taxTotal[0], w.TaxTotal[0]},
+				{"原定軍事費", g.treasury.Budget, w.BudgetStart[0]}, {"實付", g.treasury.ShipPaid, w.ShipPaid[0]},
+				{"下期造船預算", next.ShipCost(), w.ShipBudget[0]},
+				{"稅率快照", g.rate[0], w.Rate[0]}, {"造船比例", g.shipPct[0], w.ShipPct[0]},
+			} {
+				if c.got != c.want {
+					t.Errorf("%s：%d／原版 %d", c.name, c.got, c.want)
+				}
+			}
+			if g.building[0] != w.Building[0] {
+				t.Errorf("建造艘數 %v／原版 %v", g.building[0], w.Building[0])
+			}
+			for _, c := range []struct {
+				name      string
+				got, want []byte
+			}{
+				{"星域", g.res.Stellar, mem[0x5F2CC : 0x5F2CC+rules.RegionCount*rules.RegionRecord]},
+				{"行星", g.res.Planets.Data[rules.PlanetHeader:], mem[0x53132 : 0x53132+81*rules.PlanetRecord]},
+			} {
+				bad := 0
+				for i, b := range c.got {
+					if b != c.want[i] {
+						if bad < 8 {
+							t.Logf("%s +%X：%02X／原版 %02X", c.name, i, b, c.want[i])
+						}
+						bad++
+					}
+				}
+				if bad != 0 {
+					t.Logf("%s整表差 %d bytes；財政欄位另逐筆核對，其他欄位不宣稱一致", c.name, bad)
+				}
+			}
+			for i := 0; i < rules.RegionCount; i++ {
+				got := g.regionRecord(i)
+				want := mem[0x5F2CC+i*rules.RegionRecord : 0x5F2CC+(i+1)*rules.RegionRecord]
+				for _, r := range [][2]int{{0x1A, 0x20}, {0x26, 0x28}} {
+					if !bytes.Equal(got[r[0]:r[1]], want[r[0]:r[1]]) {
+						t.Errorf("星域 %d 財政 +%X：% X／原版 % X", i, r[0], got[r[0]:r[1]], want[r[0]:r[1]])
+					}
+				}
+			}
+			for i := 0; i < 81; i++ {
+				got := g.res.Planets.Record(i)[0x1A:0x1E]
+				want := mem[0x53132+i*rules.PlanetRecord+0x1A : 0x53132+i*rules.PlanetRecord+0x1E]
+				if !bytes.Equal(got, want) {
+					t.Errorf("行星 %d 經濟力：% X／原版 % X", i, got, want)
+				}
+			}
+			if err := os.WriteFile(filepath.Join(root, "workplace/oracle", batch+"-post", "remake-stellar.bin"), g.res.Stellar, 0644); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(filepath.Join(root, "workplace/oracle", batch+"-post", "remake-planet.bin"), g.res.Planets.Data[rules.PlanetHeader:], 0644); err != nil {
+				t.Fatal(err)
+			}
+			post := append([]byte(nil), g.res.Planets.Data...)
+			money := g.military
+			g.RightClick(300, 240)
+			if money != g.military || !bytes.Equal(post, g.res.Planets.Data) {
+				t.Fatal("重複右鍵又收稅")
+			}
+			dir := t.TempDir()
+			if err := g.SaveSlot(dir, 0); err != nil {
+				t.Fatal(err)
+			}
+			planet, err := os.ReadFile(filepath.Join(dir, "PLANET.DT0"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !bytes.Equal(planet, post[rules.PlanetHeader:]) {
+				t.Fatal("存檔行星不是結算後狀態")
+			}
+			g.res.SaveDir = dir
+			g.Click(544, 125)
+			g.Click(560, 145)
+			if g.State() != StateLoadGame {
+				t.Fatal("正常入口未開存檔清單")
+			}
+			g.Click(300, 122) // 取進度第 0 格。
+			if g.State() != StateCommandPhase || g.monthSettlementPending || money != g.military || !bytes.Equal(post, g.res.Planets.Data) {
+				t.Fatal("載入重開待結算或改變資金")
+			}
+		})
+	}
 }

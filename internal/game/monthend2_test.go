@@ -31,6 +31,7 @@ func TestMonthEndSecondMonthEconomy(t *testing.T) {
 	if y, m, _ := g.Date(); y != 796 || m != 2 {
 		t.Fatalf("十次實行之後是 %d 年 %d 月，預期 796/2", y, m)
 	}
+	dismissMonthReports(g) // 收據是訂造報告關閉後，不能把預估當實收。
 	if got := econ(); got != 83304 {
 		t.Errorf("796/2 星域 0 的經濟力 %d，原版 83304", got)
 	}

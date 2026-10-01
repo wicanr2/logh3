@@ -97,6 +97,14 @@ cases+=(
   "planarrow-updown|$plan_path; click 471 289; click 487 289"
   "planarrow-reopen|$plan_path; click 471 289; click 463 369; click 352 125; click 400 165"
 )
+budget_path="move 300 210; click; type 138; enter; click 432 300"
+cases+=("planarrow-budget-base|$budget_path")
+for entry in 'tax-up:471:289' 'tax-down:487:289' 'pct-up:471:329' 'pct-down:487:329'; do
+  IFS=: read -r key x y <<<"$entry"
+  cases+=("planarrow-budget-$key|$budget_path; click $x $y")
+  cases+=("planarrow-budget-$key-post|$budget_path; click $x $y; click 463 369; rclick 300 240; rclick 300 240")
+done
+cases+=("planarrow-budget-unchanged-post|$budget_path; click 463 369; rclick 300 240; rclick 300 240")
 fail=0
 for c in "${cases[@]}"; do
   IFS='|' read -r batch script except <<<"$c"

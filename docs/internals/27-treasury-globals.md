@@ -4,6 +4,17 @@
 調查過程見 [`docs/re/26`](../re/26-tax-and-treasury.md)、
 [`docs/re/29`](../re/29-month-rollover-data.md)。
 
+月初預算操作後的實際結算：
+[研究 351](../re/351-budget-settlement-after-reports.md)、
+[五組完整收據索引](data/budget-settlement-receipts.json)。
+**proven**：單人月初的預算／會計／訂造報告期間尚未實際扣稅；
+訂造報告關閉後才收稅及扣除實付建造費。稅率及建造比例的箭頭會影響這次結算，
+共同尾巴再重算下期預估。不得把命令階段的扣稅後資料用來重畫月初預算。
+
+整張執行期資料的非財政差異尚未分類，見
+[差異索引](data/budget-table-differences.json) 及
+[Issue #83](https://github.com/wicanr2/logh3/issues/83)。財政一致不等於整表一致。
+
 ## 版面
 
 每一項都是「32 位元 × 2（陣營）」的小陣列，索引是 `陣營 × 4`。

@@ -115,6 +115,10 @@ func (g *Game) stepTaxLevel(d int) bool {
 		return true
 	}
 	g.refreshBlend(g.faction, level)
+	g.refreshMonthReport()
+	if g.monthSettlementPending {
+		g.budgetTaxRefreshed = true
+	}
 	// 改稅率檔位會把整條重算鏈跑一次（`090A:0B93` → `090A:0E6D`），右側面板的
 	// 首都摘要跟著被重寫——所以「艦隊 0：0」那個回合開頭的快照在這一刻變成現值
 	// （收據 `fcmd-plan-tax` 是 0：0、按了箭頭的 `fcmd-plan-tax-up` 是 1：0）。
@@ -134,6 +138,7 @@ func (g *Game) stepShipPct(d int) bool {
 	}
 	g.shipPct[g.faction] = pct
 	g.shipPctSet = true
+	g.refreshMonthReport()
 	return true
 }
 
@@ -165,11 +170,16 @@ func (g *Game) applyPlanScreen(spec *screen.MainGameSpec) {
 		return
 	}
 	w := spec.Windows["overlay"]
+	line := planTaxLevelLine
+	if g.state == StateBudgetPlan {
+		w = spec.Windows["report"]
+		line = 9
+	}
 	if w == nil {
 		return
 	}
 	for i, c := range planTaxLevelCodes[level] {
-		w.SetLineCode(planTaxLevelLine, planTaxLevelCell0+i, c)
+		w.SetLineCode(line, planTaxLevelCell0+i, c)
 	}
 }
 

@@ -1,0 +1,1611 @@
+{
+  "grade": "proven",
+  "scope": "單人 S1 帝國月初，五種預算操作後的命令階段",
+  "original_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "receipts": [
+    {
+      "batch": "planarrow-budget-unchanged-post",
+      "fiscal": {
+        "Military": 45592,
+        "ShipBudget": 13983,
+        "BudgetStart": 60741,
+        "TaxTotal": 10341,
+        "ShipPaid": 15149,
+        "Blend": 2,
+        "ShipPct": 25,
+        "Rate": 2,
+        "MonthFlag": 0,
+        "Economy": 82302,
+        "Building": [
+          3790,
+          1260,
+          6830,
+          630,
+          4550,
+          3250,
+          1030
+        ],
+        "memory_sha256": "33fb6f98dceda5ef90466777960584ac8b2d5199cd894759ecc22a5e8d6932a6",
+        "screen_sha256": "8233320898cdbae7e1137bc9b4ab10ac3429af70ce0dc845668f1cd01c2282ae"
+      },
+      "inputs": {
+        "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+        "golem_working_tree": "",
+        "original_image": "golang:1.24-bookworm",
+        "python_image": "python:3.12-slim",
+        "parent": {
+          "path": "/src/workplace/planarrow-budget.state",
+          "sha256": "ee6138b6abbc29e89de5f04a4d5480b3fcfbcc75c546ab440c8f37b2f69e6e6c"
+        },
+        "memory": [
+          {
+            "step": 349999999,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "33fb6f98dceda5ef90466777960584ac8b2d5199cd894759ecc22a5e8d6932a6"
+          }
+        ],
+        "rng": "從完整檢查點還原；箭頭操作不含亂數判定",
+        "canvas": [
+          640,
+          480
+        ],
+        "mouse_y_to_screen_y": 40
+      },
+      "flags": [
+        "-load-state",
+        "/src/workplace/planarrow-budget.state",
+        "-steps",
+        "350000000",
+        "-mouse-x",
+        "0",
+        "-mouse-y",
+        "0",
+        "-mouse-at",
+        "170000000",
+        "-clicks",
+        "230000000:463:329:0:100000",
+        "-rclicks",
+        "265000000:300:200::3000000,300000000:300:200::3000000",
+        "-click-hold",
+        "3000000",
+        "-dump-mem-at",
+        "349999999:lin:0:1048576:/src/workplace/planarrow-budget-unchanged-post-memory.bin",
+        "-peek",
+        "lin:5DB04:2,lin:5DAC2:2"
+      ]
+    },
+    {
+      "batch": "planarrow-budget-tax-up-post",
+      "fiscal": {
+        "Military": 49611,
+        "ShipBudget": 16196,
+        "BudgetStart": 66070,
+        "TaxTotal": 15173,
+        "ShipPaid": 16459,
+        "Blend": 3,
+        "ShipPct": 25,
+        "Rate": 3,
+        "MonthFlag": 0,
+        "Economy": 81026,
+        "Building": [
+          4120,
+          1370,
+          7430,
+          680,
+          4950,
+          3530,
+          1120
+        ],
+        "memory_sha256": "311b2f5f88c42827925a2468c72d9b67b634d1fad2fc46bce5ef59ee56e57919",
+        "screen_sha256": "459e2595cdd658f09fc56784b3582a7cacee1353bc910f63315d4a7300b07020"
+      },
+      "inputs": {
+        "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+        "golem_working_tree": "",
+        "original_image": "golang:1.24-bookworm",
+        "python_image": "python:3.12-slim",
+        "parent": {
+          "path": "/src/workplace/planarrow-budget.state",
+          "sha256": "ee6138b6abbc29e89de5f04a4d5480b3fcfbcc75c546ab440c8f37b2f69e6e6c"
+        },
+        "memory": [
+          {
+            "step": 349999999,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "311b2f5f88c42827925a2468c72d9b67b634d1fad2fc46bce5ef59ee56e57919"
+          }
+        ],
+        "rng": "從完整檢查點還原；箭頭操作不含亂數判定",
+        "canvas": [
+          640,
+          480
+        ],
+        "mouse_y_to_screen_y": 40
+      },
+      "flags": [
+        "-load-state",
+        "/src/workplace/planarrow-budget.state",
+        "-steps",
+        "350000000",
+        "-mouse-x",
+        "471",
+        "-mouse-y",
+        "249",
+        "-mouse-at",
+        "170000000",
+        "-clicks",
+        "185000000:471:249:0:100000,230000000:463:329:0:100000",
+        "-rclicks",
+        "265000000:300:200::3000000,300000000:300:200::3000000",
+        "-click-hold",
+        "3000000",
+        "-dump-mem-at",
+        "349999999:lin:0:1048576:/src/workplace/planarrow-budget-tax-up-post-memory.bin",
+        "-peek",
+        "lin:5DB04:2,lin:5DAC2:2"
+      ]
+    },
+    {
+      "batch": "planarrow-budget-tax-down-post",
+      "fiscal": {
+        "Military": 43456,
+        "ShipBudget": 12782,
+        "BudgetStart": 57890,
+        "TaxTotal": 7673,
+        "ShipPaid": 14434,
+        "Blend": 1,
+        "ShipPct": 25,
+        "Rate": 1,
+        "MonthFlag": 0,
+        "Economy": 83152,
+        "Building": [
+          3610,
+          1200,
+          6510,
+          600,
+          4340,
+          3100,
+          980
+        ],
+        "memory_sha256": "8c88106fdeb509cd3188e017ae2bea301b205165cc533af0a1625334b7ab8b60",
+        "screen_sha256": "15f1405f095fffefe7a374785462f7276b4a6c80742b0f10d01d617182ba68b7"
+      },
+      "inputs": {
+        "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+        "golem_working_tree": "",
+        "original_image": "golang:1.24-bookworm",
+        "python_image": "python:3.12-slim",
+        "parent": {
+          "path": "/src/workplace/planarrow-budget.state",
+          "sha256": "ee6138b6abbc29e89de5f04a4d5480b3fcfbcc75c546ab440c8f37b2f69e6e6c"
+        },
+        "memory": [
+          {
+            "step": 349999999,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "8c88106fdeb509cd3188e017ae2bea301b205165cc533af0a1625334b7ab8b60"
+          }
+        ],
+        "rng": "從完整檢查點還原；箭頭操作不含亂數判定",
+        "canvas": [
+          640,
+          480
+        ],
+        "mouse_y_to_screen_y": 40
+      },
+      "flags": [
+        "-load-state",
+        "/src/workplace/planarrow-budget.state",
+        "-steps",
+        "350000000",
+        "-mouse-x",
+        "487",
+        "-mouse-y",
+        "249",
+        "-mouse-at",
+        "170000000",
+        "-clicks",
+        "185000000:487:249:0:100000,230000000:463:329:0:100000",
+        "-rclicks",
+        "265000000:300:200::3000000,300000000:300:200::3000000",
+        "-click-hold",
+        "3000000",
+        "-dump-mem-at",
+        "349999999:lin:0:1048576:/src/workplace/planarrow-budget-tax-down-post-memory.bin",
+        "-peek",
+        "lin:5DB04:2,lin:5DAC2:2"
+      ]
+    },
+    {
+      "batch": "planarrow-budget-pct-up-post",
+      "fiscal": {
+        "Military": 45005,
+        "ShipBudget": 14389,
+        "BudgetStart": 60741,
+        "TaxTotal": 10341,
+        "ShipPaid": 15736,
+        "Blend": 2,
+        "ShipPct": 26,
+        "Rate": 2,
+        "MonthFlag": 0,
+        "Economy": 82302,
+        "Building": [
+          3940,
+          1310,
+          7100,
+          650,
+          4730,
+          3380,
+          1070
+        ],
+        "memory_sha256": "64e7fa495eab32f40ff8eab7ab6a3ab418630cfde865ae007dcd6c2910c1efd5",
+        "screen_sha256": "f9e5ee776f819aad6a9e501470201d5659adca8f725a60ce99efa8ae3fb245b9"
+      },
+      "inputs": {
+        "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+        "golem_working_tree": "",
+        "original_image": "golang:1.24-bookworm",
+        "python_image": "python:3.12-slim",
+        "parent": {
+          "path": "/src/workplace/planarrow-budget.state",
+          "sha256": "ee6138b6abbc29e89de5f04a4d5480b3fcfbcc75c546ab440c8f37b2f69e6e6c"
+        },
+        "memory": [
+          {
+            "step": 349999999,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "64e7fa495eab32f40ff8eab7ab6a3ab418630cfde865ae007dcd6c2910c1efd5"
+          }
+        ],
+        "rng": "從完整檢查點還原；箭頭操作不含亂數判定",
+        "canvas": [
+          640,
+          480
+        ],
+        "mouse_y_to_screen_y": 40
+      },
+      "flags": [
+        "-load-state",
+        "/src/workplace/planarrow-budget.state",
+        "-steps",
+        "350000000",
+        "-mouse-x",
+        "471",
+        "-mouse-y",
+        "289",
+        "-mouse-at",
+        "170000000",
+        "-clicks",
+        "185000000:471:289:0:100000,230000000:463:329:0:100000",
+        "-rclicks",
+        "265000000:300:200::3000000,300000000:300:200::3000000",
+        "-click-hold",
+        "3000000",
+        "-dump-mem-at",
+        "349999999:lin:0:1048576:/src/workplace/planarrow-budget-pct-up-post-memory.bin",
+        "-peek",
+        "lin:5DB04:2,lin:5DAC2:2"
+      ]
+    },
+    {
+      "batch": "planarrow-budget-pct-down-post",
+      "fiscal": {
+        "Military": 46207,
+        "ShipBudget": 13571,
+        "BudgetStart": 60741,
+        "TaxTotal": 10341,
+        "ShipPaid": 14534,
+        "Blend": 2,
+        "ShipPct": 24,
+        "Rate": 2,
+        "MonthFlag": 0,
+        "Economy": 82302,
+        "Building": [
+          3640,
+          1210,
+          6550,
+          600,
+          4370,
+          3120,
+          990
+        ],
+        "memory_sha256": "f41889e49164bc2ccc7039fc1dc51ad29a09e6e8094916675d680e495db12eb5",
+        "screen_sha256": "1912096e0c0054b27e3bb9859408c1a7f1b9ecca780c646ce7c0fd44aba1339b"
+      },
+      "inputs": {
+        "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+        "golem_working_tree": "",
+        "original_image": "golang:1.24-bookworm",
+        "python_image": "python:3.12-slim",
+        "parent": {
+          "path": "/src/workplace/planarrow-budget.state",
+          "sha256": "ee6138b6abbc29e89de5f04a4d5480b3fcfbcc75c546ab440c8f37b2f69e6e6c"
+        },
+        "memory": [
+          {
+            "step": 349999999,
+            "address_space": "dosgolem 執行期線性位址",
+            "start": 0,
+            "bytes": 1048576,
+            "sha256": "f41889e49164bc2ccc7039fc1dc51ad29a09e6e8094916675d680e495db12eb5"
+          }
+        ],
+        "rng": "從完整檢查點還原；箭頭操作不含亂數判定",
+        "canvas": [
+          640,
+          480
+        ],
+        "mouse_y_to_screen_y": 40
+      },
+      "flags": [
+        "-load-state",
+        "/src/workplace/planarrow-budget.state",
+        "-steps",
+        "350000000",
+        "-mouse-x",
+        "487",
+        "-mouse-y",
+        "289",
+        "-mouse-at",
+        "170000000",
+        "-clicks",
+        "185000000:487:289:0:100000,230000000:463:329:0:100000",
+        "-rclicks",
+        "265000000:300:200::3000000,300000000:300:200::3000000",
+        "-click-hold",
+        "3000000",
+        "-dump-mem-at",
+        "349999999:lin:0:1048576:/src/workplace/planarrow-budget-pct-down-post-memory.bin",
+        "-peek",
+        "lin:5DB04:2,lin:5DAC2:2"
+      ]
+    }
+  ],
+  "second_replay": [
+    {
+      "batch": "planarrow-budget-unchanged-post",
+      "second_replay": {
+        "memory.bin": "33fb6f98dceda5ef90466777960584ac8b2d5199cd894759ecc22a5e8d6932a6",
+        "screen.bin": "8233320898cdbae7e1137bc9b4ab10ac3429af70ce0dc845668f1cd01c2282ae",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+      },
+      "identical": true
+    },
+    {
+      "batch": "planarrow-budget-tax-up-post",
+      "second_replay": {
+        "memory.bin": "311b2f5f88c42827925a2468c72d9b67b634d1fad2fc46bce5ef59ee56e57919",
+        "screen.bin": "459e2595cdd658f09fc56784b3582a7cacee1353bc910f63315d4a7300b07020",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+      },
+      "identical": true
+    },
+    {
+      "batch": "planarrow-budget-tax-down-post",
+      "second_replay": {
+        "memory.bin": "8c88106fdeb509cd3188e017ae2bea301b205165cc533af0a1625334b7ab8b60",
+        "screen.bin": "15f1405f095fffefe7a374785462f7276b4a6c80742b0f10d01d617182ba68b7",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+      },
+      "identical": true
+    },
+    {
+      "batch": "planarrow-budget-pct-up-post",
+      "second_replay": {
+        "memory.bin": "64e7fa495eab32f40ff8eab7ab6a3ab418630cfde865ae007dcd6c2910c1efd5",
+        "screen.bin": "f9e5ee776f819aad6a9e501470201d5659adca8f725a60ce99efa8ae3fb245b9",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+      },
+      "identical": true
+    },
+    {
+      "batch": "planarrow-budget-pct-down-post",
+      "second_replay": {
+        "memory.bin": "f41889e49164bc2ccc7039fc1dc51ad29a09e6e8094916675d680e495db12eb5",
+        "screen.bin": "1912096e0c0054b27e3bb9859408c1a7f1b9ecca780c646ce7c0fd44aba1339b",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+      },
+      "identical": true
+    }
+  ],
+  "gui_comparisons": [
+    {
+      "batch": "planarrow-budget-base",
+      "comparison": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "cc901d8e3341b08d2d2f77a9f7d8471454cba46a49f2438dcf02d107a030bacd",
+          "screen.png": "fc2d4783d242b6717dddf9b036582252ffc858ed9af102eeb0b393668500c7a6",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "cc901d8e3341b08d2d2f77a9f7d8471454cba46a49f2438dcf02d107a030bacd",
+          "remake.png": "6eac17ec16600b05eb2f0e91170f87286348cfdc9a354f6cb3e06de60b1e41ed",
+          "flags.txt": "16d5793d476a6c00d2c8ae9f1f5e78bcaaebfa476feb40e0b914ed5876381354",
+          "inputs.json": "a8f988d423d083b0460cfd07eaeb50b11f75ef06d9f987d2459b0f1dab2385bd",
+          "remake-script.txt": "562622bcc594425b5fd99f52a9d62cc9bb13e6eeefbf6481463f22e01441599f",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake": {
+        "git_head": "2a337deca9ebf77aea8cf4582daafc7dd7ca795d",
+        "working_tree": " M docs/internals/27-treasury-globals.md\n M docs/spec/003-budget-panel.md\n M internal/game/game.go\n M internal/game/monthend2_test.go\n M internal/game/monthwork_oracle_test.go\n M internal/game/planscreens.go\n M internal/game/planscreens_test.go\n M internal/screen/capitalpanel.go\n M tools/gui_check.sh\n M tools/plan_arrow_receipts.sh\n M tools/scripts/plan_arrow_stats.py\n?? docs/internals/data/budget-settlement-receipts.json\n?? docs/internals/data/budget-table-differences.json\n?? docs/re/351-budget-settlement-after-reports.md",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "252ac5668d476a11cdbe68d80f177c63a1e4254a808ec9cbb2de9e15bca35fe7",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "ca36919268dab89296252b300b18308eb7300d3cc1564680e76ef5593cf23693",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-tax-up",
+      "comparison": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "42b002f5852f1949e068755457b1c5f5525f56899758330a9904bf7a4cc1ab77",
+          "screen.png": "9fb102fb1b7676bc2ec7f6bc728c3169f0866bd6b85b1eeae7921fb7f6b7661c",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "42b002f5852f1949e068755457b1c5f5525f56899758330a9904bf7a4cc1ab77",
+          "remake.png": "e3a8aee64a562920e6acfaa9cb1418bb705337f08eb6eff86fb492d0e57032f1",
+          "flags.txt": "8d4790f1af9e5d88f4ead62f9c1cbefbb4cfdefb2f62a6db4b4e22a90e5b6178",
+          "inputs.json": "20489424d3ffe85f80b931d708c20d24dc792139811239165f271b6905a05b63",
+          "remake-script.txt": "a4992bd363e3ded6e8484e1e5e015a2a2fdfcbec4fb745c2272a3da7ed41fdee",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake": {
+        "git_head": "2a337deca9ebf77aea8cf4582daafc7dd7ca795d",
+        "working_tree": " M docs/internals/27-treasury-globals.md\n M docs/spec/003-budget-panel.md\n M internal/game/game.go\n M internal/game/monthend2_test.go\n M internal/game/monthwork_oracle_test.go\n M internal/game/planscreens.go\n M internal/game/planscreens_test.go\n M internal/screen/capitalpanel.go\n M tools/gui_check.sh\n M tools/plan_arrow_receipts.sh\n M tools/scripts/plan_arrow_stats.py\n?? docs/internals/data/budget-settlement-receipts.json\n?? docs/internals/data/budget-table-differences.json\n?? docs/re/351-budget-settlement-after-reports.md",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "252ac5668d476a11cdbe68d80f177c63a1e4254a808ec9cbb2de9e15bca35fe7",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "ca36919268dab89296252b300b18308eb7300d3cc1564680e76ef5593cf23693",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-tax-up-post",
+      "comparison": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "459e2595cdd658f09fc56784b3582a7cacee1353bc910f63315d4a7300b07020",
+          "screen.png": "367181a85c65d0ccf9d54655477190eaa34f4f7316a700917fbfb22978b53be5",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "459e2595cdd658f09fc56784b3582a7cacee1353bc910f63315d4a7300b07020",
+          "remake.png": "25a9d32eb3e58ee3df4410a4a08842d2845c1458e15d0593ea11853722d4fd2a",
+          "flags.txt": "12ac20eb78d72f786925b32bdb7b5606627d83c9a1041526428abb8381c97b4c",
+          "inputs.json": "1af2b932696330093ae361a91d877de00b9003272a4ee429a97159481df8038c",
+          "remake-script.txt": "7b8164d4136257d7c358518e6676ca97e3996f80a4b6ff72f92929d29bee09e1",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake": {
+        "git_head": "2a337deca9ebf77aea8cf4582daafc7dd7ca795d",
+        "working_tree": " M docs/internals/27-treasury-globals.md\n M docs/spec/003-budget-panel.md\n M internal/game/game.go\n M internal/game/monthend2_test.go\n M internal/game/monthwork_oracle_test.go\n M internal/game/planscreens.go\n M internal/game/planscreens_test.go\n M internal/screen/capitalpanel.go\n M tools/gui_check.sh\n M tools/plan_arrow_receipts.sh\n M tools/scripts/plan_arrow_stats.py\n?? docs/internals/data/budget-settlement-receipts.json\n?? docs/internals/data/budget-table-differences.json\n?? docs/re/351-budget-settlement-after-reports.md",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "252ac5668d476a11cdbe68d80f177c63a1e4254a808ec9cbb2de9e15bca35fe7",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "ca36919268dab89296252b300b18308eb7300d3cc1564680e76ef5593cf23693",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-tax-down",
+      "comparison": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "4451833fbcb61cbacf54c34a9cf3f92903976eff67761cafa0843a95ce5aee30",
+          "screen.png": "d255c36bdbad89fbbd3df2da649817c2d6634577dbd4488a4b6fe46b1596c143",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "4451833fbcb61cbacf54c34a9cf3f92903976eff67761cafa0843a95ce5aee30",
+          "remake.png": "004ce6ba98c0c6e07de5ac8b6cff6f6524e91ff1d740efffab7936e2713afd00",
+          "flags.txt": "472b1ff3965adc057b58dbf4c6febbc35d9dc0da5646108a26a5fe1c464821b0",
+          "inputs.json": "20489424d3ffe85f80b931d708c20d24dc792139811239165f271b6905a05b63",
+          "remake-script.txt": "112a7925eab99fc4e58813d56edb66666593412a412f16d1b8c93bbfcedd3ee3",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake": {
+        "git_head": "2a337deca9ebf77aea8cf4582daafc7dd7ca795d",
+        "working_tree": " M docs/internals/27-treasury-globals.md\n M docs/spec/003-budget-panel.md\n M internal/game/game.go\n M internal/game/monthend2_test.go\n M internal/game/monthwork_oracle_test.go\n M internal/game/planscreens.go\n M internal/game/planscreens_test.go\n M internal/screen/capitalpanel.go\n M tools/gui_check.sh\n M tools/plan_arrow_receipts.sh\n M tools/scripts/plan_arrow_stats.py\n?? docs/internals/data/budget-settlement-receipts.json\n?? docs/internals/data/budget-table-differences.json\n?? docs/re/351-budget-settlement-after-reports.md",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "252ac5668d476a11cdbe68d80f177c63a1e4254a808ec9cbb2de9e15bca35fe7",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "ca36919268dab89296252b300b18308eb7300d3cc1564680e76ef5593cf23693",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-tax-down-post",
+      "comparison": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "15f1405f095fffefe7a374785462f7276b4a6c80742b0f10d01d617182ba68b7",
+          "screen.png": "2108e0fc8fe652231650e1de8726a8faada6687e966b57f278dd4acc58d2f597",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "15f1405f095fffefe7a374785462f7276b4a6c80742b0f10d01d617182ba68b7",
+          "remake.png": "fef939ca040595a45370ec6ea60120aa62eab5b218ca5753a73294c9300dfe7f",
+          "flags.txt": "629b5b00312d120b4e7505b9aa82c51dfcfc3cce00714987997a1cf40017db0e",
+          "inputs.json": "2e6aa8b8135229e9558c37003a60388032ca90e3953d816799ffa0dcce8247fb",
+          "remake-script.txt": "135247c41090d658fba0e8195f02d4baf11c3b8d6be49058a9952d775ef97908",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake": {
+        "git_head": "2a337deca9ebf77aea8cf4582daafc7dd7ca795d",
+        "working_tree": " M docs/internals/27-treasury-globals.md\n M docs/spec/003-budget-panel.md\n M internal/game/game.go\n M internal/game/monthend2_test.go\n M internal/game/monthwork_oracle_test.go\n M internal/game/planscreens.go\n M internal/game/planscreens_test.go\n M internal/screen/capitalpanel.go\n M tools/gui_check.sh\n M tools/plan_arrow_receipts.sh\n M tools/scripts/plan_arrow_stats.py\n?? docs/internals/data/budget-settlement-receipts.json\n?? docs/internals/data/budget-table-differences.json\n?? docs/re/351-budget-settlement-after-reports.md",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "252ac5668d476a11cdbe68d80f177c63a1e4254a808ec9cbb2de9e15bca35fe7",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "ca36919268dab89296252b300b18308eb7300d3cc1564680e76ef5593cf23693",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-pct-up",
+      "comparison": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "07e28842e9f8d05d2d0f4c3ac190c76c4c36767dc74271fc88308871af4e983f",
+          "screen.png": "3b3ca7ca23d4a34f9800b3ee5f304806fecb2207fa1dc5e588a01a52fd45264e",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "07e28842e9f8d05d2d0f4c3ac190c76c4c36767dc74271fc88308871af4e983f",
+          "remake.png": "d1597db69c2fde88d0736656cf769effb749ffebb06dff5ad066e72ec47ebc24",
+          "flags.txt": "685fd95a2b76e4f5d35440d51fc6a5305eed05eeac099cb3af864c54f4a760a3",
+          "inputs.json": "20489424d3ffe85f80b931d708c20d24dc792139811239165f271b6905a05b63",
+          "remake-script.txt": "0d7c06fdb8c37551d2aebf023bb49ca0a6a58c89643e3ca69f6712f259ac2951",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake": {
+        "git_head": "2a337deca9ebf77aea8cf4582daafc7dd7ca795d",
+        "working_tree": " M docs/internals/27-treasury-globals.md\n M docs/spec/003-budget-panel.md\n M internal/game/game.go\n M internal/game/monthend2_test.go\n M internal/game/monthwork_oracle_test.go\n M internal/game/planscreens.go\n M internal/game/planscreens_test.go\n M internal/screen/capitalpanel.go\n M tools/gui_check.sh\n M tools/plan_arrow_receipts.sh\n M tools/scripts/plan_arrow_stats.py\n?? docs/internals/data/budget-settlement-receipts.json\n?? docs/internals/data/budget-table-differences.json\n?? docs/re/351-budget-settlement-after-reports.md",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "252ac5668d476a11cdbe68d80f177c63a1e4254a808ec9cbb2de9e15bca35fe7",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "ca36919268dab89296252b300b18308eb7300d3cc1564680e76ef5593cf23693",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-pct-up-post",
+      "comparison": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "f9e5ee776f819aad6a9e501470201d5659adca8f725a60ce99efa8ae3fb245b9",
+          "screen.png": "1955744c6375f781683fc0cb7ef0f91eb457823418f2280e722942edf1213a82",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "f9e5ee776f819aad6a9e501470201d5659adca8f725a60ce99efa8ae3fb245b9",
+          "remake.png": "d486771168990cebe38d5b2c3c665f4f5658e2dfa0c4c07f75b0a254240c4c3c",
+          "flags.txt": "f73023ef016599c2b4d1329d79f0968288c41e08f6f298c9349c9126d370d96f",
+          "inputs.json": "d4810cf174990208998479caf702c641f6d5a39cc0a789d3299d9f91073c6723",
+          "remake-script.txt": "b23d19ce52772d8fe822918e5497eec4b7a76923ab1250dbbebddcf390aff816",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake": {
+        "git_head": "2a337deca9ebf77aea8cf4582daafc7dd7ca795d",
+        "working_tree": " M docs/internals/27-treasury-globals.md\n M docs/spec/003-budget-panel.md\n M internal/game/game.go\n M internal/game/monthend2_test.go\n M internal/game/monthwork_oracle_test.go\n M internal/game/planscreens.go\n M internal/game/planscreens_test.go\n M internal/screen/capitalpanel.go\n M tools/gui_check.sh\n M tools/plan_arrow_receipts.sh\n M tools/scripts/plan_arrow_stats.py\n?? docs/internals/data/budget-settlement-receipts.json\n?? docs/internals/data/budget-table-differences.json\n?? docs/re/351-budget-settlement-after-reports.md",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "252ac5668d476a11cdbe68d80f177c63a1e4254a808ec9cbb2de9e15bca35fe7",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "ca36919268dab89296252b300b18308eb7300d3cc1564680e76ef5593cf23693",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-pct-down",
+      "comparison": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "fe83c981052fff789ada1024da4d544ef8273a223f686e85e4ae376fdec39177",
+          "screen.png": "03b8b64ec3ae778d69599f2be05fe68611524c7394a6af6fb81649360ce0e18f",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "fe83c981052fff789ada1024da4d544ef8273a223f686e85e4ae376fdec39177",
+          "remake.png": "72533a79fa01afc48f35f718366db2dbbd5a0ad8a4dd9aa11c2f302c71d3d63f",
+          "flags.txt": "e8b344e1d16c11a9f2a05eb388a88293ff40e28a245242c7bf07bb8618e53f03",
+          "inputs.json": "20489424d3ffe85f80b931d708c20d24dc792139811239165f271b6905a05b63",
+          "remake-script.txt": "cd6306d5a5e8fdacc52f91cab44a0907218ecc558b9fb1ab692bb2602d155a8b",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake": {
+        "git_head": "2a337deca9ebf77aea8cf4582daafc7dd7ca795d",
+        "working_tree": " M docs/internals/27-treasury-globals.md\n M docs/spec/003-budget-panel.md\n M internal/game/game.go\n M internal/game/monthend2_test.go\n M internal/game/monthwork_oracle_test.go\n M internal/game/planscreens.go\n M internal/game/planscreens_test.go\n M internal/screen/capitalpanel.go\n M tools/gui_check.sh\n M tools/plan_arrow_receipts.sh\n M tools/scripts/plan_arrow_stats.py\n?? docs/internals/data/budget-settlement-receipts.json\n?? docs/internals/data/budget-table-differences.json\n?? docs/re/351-budget-settlement-after-reports.md",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "252ac5668d476a11cdbe68d80f177c63a1e4254a808ec9cbb2de9e15bca35fe7",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "ca36919268dab89296252b300b18308eb7300d3cc1564680e76ef5593cf23693",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-pct-down-post",
+      "comparison": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "1912096e0c0054b27e3bb9859408c1a7f1b9ecca780c646ce7c0fd44aba1339b",
+          "screen.png": "7f39ec4e830d6f3b44d2fb3e5639227985075489be2d6c8448e115fcd8ab82c5",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "1912096e0c0054b27e3bb9859408c1a7f1b9ecca780c646ce7c0fd44aba1339b",
+          "remake.png": "f17e177aca41971f55cefeef139cf43482b265794eb3f8f8d3c439028074c7e2",
+          "flags.txt": "9e15994dd8f0e7c45dfc2343a4230088b1fdc7f4fe0882be58b9494ece0f6c56",
+          "inputs.json": "5fd4392b632b70ed1c50b4999e4a51995ef18a43e81c71057384bca7777e722b",
+          "remake-script.txt": "069d1e1172cf6a6c6fb72250a057d130010fa6a824491763e4806703965f6e14",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake": {
+        "git_head": "2a337deca9ebf77aea8cf4582daafc7dd7ca795d",
+        "working_tree": " M docs/internals/27-treasury-globals.md\n M docs/spec/003-budget-panel.md\n M internal/game/game.go\n M internal/game/monthend2_test.go\n M internal/game/monthwork_oracle_test.go\n M internal/game/planscreens.go\n M internal/game/planscreens_test.go\n M internal/screen/capitalpanel.go\n M tools/gui_check.sh\n M tools/plan_arrow_receipts.sh\n M tools/scripts/plan_arrow_stats.py\n?? docs/internals/data/budget-settlement-receipts.json\n?? docs/internals/data/budget-table-differences.json\n?? docs/re/351-budget-settlement-after-reports.md",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "252ac5668d476a11cdbe68d80f177c63a1e4254a808ec9cbb2de9e15bca35fe7",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "ca36919268dab89296252b300b18308eb7300d3cc1564680e76ef5593cf23693",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    },
+    {
+      "batch": "planarrow-budget-unchanged-post",
+      "comparison": {
+        "comparison": "same-state",
+        "canvas": [
+          640,
+          480
+        ],
+        "crop": null,
+        "scale": 1,
+        "hashes": {
+          "screen.bin": "8233320898cdbae7e1137bc9b4ab10ac3429af70ce0dc845668f1cd01c2282ae",
+          "screen.png": "773af2bcec4857814ab8b49ce2751955eed63ca8d3c6e8569f293780ca8b37a3",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "remake.bin": "8233320898cdbae7e1137bc9b4ab10ac3429af70ce0dc845668f1cd01c2282ae",
+          "remake.png": "8943859bed3b82205b31bcc3e79c1720b7fbc48aef67591abe32496595a70b58",
+          "flags.txt": "09de421b3cb01621c3f4fa9de3765dc54f22f1c4dc32b7218f6dc7821c97a2de",
+          "inputs.json": "9ac1d126c23dc6dd90fbd62493c4a390df7aa23ba47bd9dbfd4680dd794ccf2c",
+          "remake-script.txt": "43eba86b7eef1a82d129d80c7df4cd1df5ce3b309231cb6e71f9a8290ada3f14",
+          "diff.png": "33806e3d5c67f100a92295c93044bbb67d6cea90060327b69d682ebd283c87d2"
+        },
+        "index_different": 0,
+        "regions": {
+          "full": {
+            "rectangle": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "pixels": 307200,
+            "equal": 307200,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "panel": {
+            "rectangle": [
+              128,
+              60,
+              384,
+              340
+            ],
+            "pixels": 130560,
+            "equal": 130560,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_up": {
+            "rectangle": [
+              464,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "tax_down": {
+            "rectangle": [
+              480,
+              280,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_up": {
+            "rectangle": [
+              464,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          },
+          "pct_down": {
+            "rectangle": [
+              480,
+              320,
+              16,
+              20
+            ],
+            "pixels": 320,
+            "equal": 320,
+            "different": 0,
+            "max_channel_difference": 0,
+            "bounding_box": null
+          }
+        }
+      },
+      "remake": {
+        "git_head": "2a337deca9ebf77aea8cf4582daafc7dd7ca795d",
+        "working_tree": " M docs/internals/27-treasury-globals.md\n M docs/spec/003-budget-panel.md\n M internal/game/game.go\n M internal/game/monthend2_test.go\n M internal/game/monthwork_oracle_test.go\n M internal/game/planscreens.go\n M internal/game/planscreens_test.go\n M internal/screen/capitalpanel.go\n M tools/gui_check.sh\n M tools/plan_arrow_receipts.sh\n M tools/scripts/plan_arrow_stats.py\n?? docs/internals/data/budget-settlement-receipts.json\n?? docs/internals/data/budget-table-differences.json\n?? docs/re/351-budget-settlement-after-reports.md",
+        "image": "logh3-ebiten:2",
+        "command": "tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script <remake-script.txt> -shot-bin /src/workplace/oracle/<批次>/remake.bin -shot /src/workplace/oracle/<批次>/remake.png -shot-after 2",
+        "source_sha256": {
+          "internal/game/game.go": "252ac5668d476a11cdbe68d80f177c63a1e4254a808ec9cbb2de9e15bca35fe7",
+          "internal/game/planscreens.go": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05",
+          "internal/game/planscreens_test.go": "ca36919268dab89296252b300b18308eb7300d3cc1564680e76ef5593cf23693",
+          "tools/gui_check.sh": "079548303eb4da3c6e77a4013fbee37cb02df0248f7dcaf8ae1fd38e91f3268a"
+        },
+        "rng": "正常劇本 1 帝國，箭頭不含亂數判定",
+        "scenario": "S1 帝國 796-01-01",
+        "input": "remake-script.txt 完整正常玩家路徑；未注入"
+      }
+    }
+  ]
+}
