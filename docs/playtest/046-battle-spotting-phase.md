@@ -3,6 +3,9 @@
 日期：2026-10-02；Issue #79，原版來源與位址證據見[379](../re/379-battle-spotting-phase.md)。
 唯一目前狀態為[CONTEXT](../../CONTEXT.md)，完整第三階段驗收由[087](../spec/087-battle-spotting-phase.md)管理。
 
+第44輪正常入口已找到上游差異，接續[#89](https://github.com/wicanr2/logh3/issues/89)與[088 DRAFT](../spec/088-normal-battle-player-entry.md)。
+完整新增紀錄見本檔末尾；151個受控UI幀不升格為正常玩家same-state。
+
 ## 原版重生
 
 ```sh
@@ -293,3 +296,36 @@ standard-tests log SHA-256 03f16dcc39532fe76017ba01a27e39ad90aefa11ebdbbc91d4995
 行星半徑外兩份探索、一位數圖示注入不完整的反例及未凍結的兩份輸出全部保留，原因見381與plan。
 新指令語意與018／062／087回鏈由工具核對。087保持READY，正常玩家原版配對仍缺，#79 OPEN。
 擁有權與Docker清理核對記錄於本輪WORKLOG；沒有發佈或完整八步聲明。
+
+## 第44輪正常玩家入口比較
+
+工作項[#89](https://github.com/wicanr2/logh3/issues/89)，[088 DRAFT](../spec/088-normal-battle-player-entry.md)，
+[研究382](../re/382-normal-battle-player-entry.md)，[本輪goal](../goal/2026-10-03-battle-normal-entry-round-44.md)。
+完整收據[battle-normal-entry.json](../internals/data/battle-normal-entry.json) SHA-256
+`d9e719ca5ffca52447c7476154deec1023c87d057987af9ae68d5f163036181e`。
+
+```sh
+bash tools/battle_normal_entry_oracle.sh battle79-normal-r44-a
+bash tools/battle_normal_entry_oracle.sh battle79-normal-r44-b
+tools/gui.sh xrun python3 tools/scripts/battle_normal_probe_seed.py
+tools/gui.sh xrun go run -overlay workplace/round44-normal-overlay.json tools/scripts/battle_normal_probe.go -out workplace/round44-normal-fixed-a
+tools/gui.sh xrun go run -overlay workplace/round44-normal-overlay.json tools/scripts/battle_normal_probe.go -out workplace/round44-normal-fixed-b
+tools/gui.sh xrun go run -overlay workplace/round44-normal-overlay.json tools/scripts/battle_normal_probe.go -out workplace/round44-normal-nosave -skip-loaded-save
+tools/gui.sh xrun python3 tools/scripts/battle_normal_entry_receipt.py
+tools/gui.sh xrun go test ./internal/game -run '^TestBattleSpotting' -count=1 -v
+```
+
+原版批次、probe輸出與seed覆蓋拒絕覆寫。未改dosgolem f7523f9或原始遊戲；固定前後實讀remake D3DC167E。
+原版5份輸出獨立雙跑相同；snapshot全檔不同，不列為通過。remake17份輸出雙跑相同，
+省略實行前存檔的六表／畫面對照亦同。所有SHA、完整argv、source與工具鏈身份在JSON。
+
+載入後FLEET3904／SHIP27456／STELLAR4032全表零差異；WORK+0C／+0E／+10不同。
+進場原版7支、remake3支艦隊，回合380／381；全圖5863、Field73像素不同。
+整組分類nearby-state，不能進第三階段same-state裁決。原版／remake／並排／差分PNG已目視，不裁切或遮罩。
+影像診斷沿原版PNG有效PLTE色盤，不直接把DAC當色號映射；原版CPU／日期／座位根因仍unknown。
+
+目標索敵回歸25個PASS事件、零skip，151個受控UI幀及正常兩回合／完整SHIP／FLEET存讀保持。
+log `workplace/round44-spotting-tests.log` SHA-256
+`1236704ae68c9ec24a250ec98b12079db46888a3c3d99cc477db3e9f9744e247`。
+正式產品未改，18套件基線沿第43輪；不以此次探測宣稱AI根因、完整索敵或八步完成。
+087保持READY、#79 OPEN；下一步沿#89／088追正常讀檔與首次實行最早分歧。

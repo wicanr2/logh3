@@ -363,3 +363,17 @@ remake 照這個規則畫出來的面板 ＋ 地形 ＋ 格線與收據 `s3ai6`
   移鏡期間無暫時標亮，候選可見後才重算圖示並等待6 ticks。
 - 正式Game每次更新保留下一個重畫狀態，來源與候選分開續接。
   比較為唯一受控入口的same-state；正常玩家原版配對仍缺，087保持READY。
+
+## 第44輪正常首戰入口限制
+
+[研究382](../re/382-normal-battle-player-entry.md)、[完整紀錄](data/battle-normal-entry.json)、
+[088 DRAFT](../spec/088-normal-battle-player-entry.md)及[#89](https://github.com/wicanr2/logh3/issues/89)管理此缺口。
+證據等級proven，只限兩側固定S3／實行前D3DC167E及已重播的正常入口差異。
+
+載入後FLEET3904／SHIP27456／STELLAR4032全表相同；WORK+0C／+0E／+10不同。
+原版7支艦隊槽12／16／17／28／29／30／31，正式bootstrap remake為12／28／31三支。
+戰場清單含未放出索敵隊分別55／27筆，不能當成活動分隊數比較。
+WORK+04回合380／381，正常首戰是nearby-state；完整畫面差5863像素，不遮罩。
+
+007的早期CONFORMED排除讀檔後選陣營小選單。其與AI／日期更新對首戰名單的因果仍unknown。
+未改原版、dosgolem、正式規則或golden；151個受控索敵UI幀與087 READY維持。

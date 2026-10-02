@@ -155,6 +155,7 @@
 | 剩餘軍事費 ＝ 預估軍事費 − 船艦建造費 | **已實作** | 同上 |
 | 艦隊戰力 ＝ Σ 前 `+0x0F` 組的 `權重[艦種] × 現有 × 1000 ÷ 滿編` | **已實作**（`rules.FleetStrength`） | [`docs/re/79`](docs/re/79-per-fleet-decision-pass.md)；上界修正見 [`docs/re/194`](docs/re/194-fleet-record-in-save.md) |
 | 其他（舊矩陣空白占位） | **不適用（已清理占位列）** | [#34](https://github.com/wicanr2/logh3/issues/34)：沒有範圍與驗收條件，不代表待實作功能 |
+| 正常S3載入至首次戰場（#89） | DRAFT；nearby-state，未通過 | [088](docs/spec/088-normal-battle-player-entry.md)、[研究382](docs/re/382-normal-battle-player-entry.md)、[完整收據](docs/internals/data/battle-normal-entry.json)。載入後三表相同；首戰7對3艦隊、回合380對381、WORK控制區不同；全畫面5863像素差。原版／remake雙跑重現，正常索敵同態仍待上游修正。 |
 
 ## 戰略 AI
 

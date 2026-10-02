@@ -2,6 +2,35 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-03 #79正常入口配對與#89上游閘門
+
+第四十四輪接續原Goal及commit／push授權，父提交5751b76bce200b3b229fafcda51fd39a2bbd3907。
+開工88張worklist／11張OPEN、268條核實零不成立；發現上游差異後依Goal開#89，088先DRAFT。
+命中重製／畫面對拍技能與文件職責；正式產品、原始遊戲及dosgolem未改，音樂已裁決範圍保持。
+
+- 正常原版冷啟動／取進度／138／S3／帝國／首次實行，兩次1MiB RAM、PNG／色號／DAC相同。
+  snapshot全檔不同，各自SHA保存，不把它列雙跑通過。
+- 正式bootstrap.Load／Game.New與等價玩家輸入，兩次17份輸出相同。實行前seed實讀及固定D3DC167E；
+  省略實行前診斷存檔時，六張全表及畫面相同，排除該副作用。沒有原版RAM還原、改局面或重擲。
+- 載入後FLEET3904／SHIP27456／STELLAR4032全表零差異；WORK+0C／+0E／+10不同。
+  原版首戰7艦隊／55筆池，remake3艦隊／同口徑27筆，回合380／381；入口已不同。
+  全圖5863像素、Field73像素不同，原圖／並排／差分完整保存，分類nearby-state；原因unknown。
+- #89追讀檔後選陣營控制區、AI／移動與日期最早分歧，未猜補production或golden。
+  007早期CONFORMED明示排除選單，補現行限制；readme_shots.sh「原版要六次才會合」過期註解改正。
+  087 READY、#79 OPEN，151個受控UI幀保持。目標索敵25PASS事件、零skip，完整SHIP／FLEET存讀維持。
+- 驗證工具先誤用Pillow，再沿用既有pngout；seed報告只印地址／長度，改核精確lin及flags值。
+  有效色盤取PNG PLTE，未把DAC直接當色號映射。工具問題與產品缺口分開。
+- 新goal／088／382／完整收據與工具掛唯一索引，現況與046同步。
+  收據SHA-256 d9e719ca5ffca52447c7476154deec1023c87d057987af9ae68d5f163036181e，測試log見046。
+  後續先做#89 READY契約，再補正常索敵同態；其他八步、音樂實機／聆聽／macOS／正式交付與Goal未完成。
+- 遠端#79／#89正文與快照一致且OPEN；89張worklist／12張open、269條核實零不成立。
+  #89掛既有遊戲規則矩陣，088正式狀態行作verify訊號；內文未來CONFORMED不算完成。
+  Issue證據區一行非路徑與初版spec_status全文誤判均依路由／解析契約修正資料，沒有放寬驗證器。
+  新文件／工具／JSON索引正對照、相對連結、所有source／輸出SHA、Python／shell語法與Go格式通過。
+  全工作樹無root-owned檔或.md目錄，抽樣1000:1000；本輪一次性容器已退出，專案與專用dosgolem無殘留容器。
+  dosgolem工作樹乾淨，image未改，沒有停止或清理其他專案資源。原版完整RAM、snapshot及PNG只留本機。
+  本輪提交訊息「保存正常首戰入口差異並建立上游驗收閘門」，精確commit／push身份以Git紀錄為準。
+
 ## 2026-10-03 #79來源標頭與逐格移鏡
 
 第四十三輪接續原Goal、#79與既有commit／push授權，父提交649bef601b3ed46f976e9cfc5627a729ca41310b。

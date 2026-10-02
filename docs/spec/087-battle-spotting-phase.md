@@ -2,6 +2,14 @@
 
 Status: READY
 
+## 第44輪正常入口閘門
+
+正常原版與正式bootstrap入口尚不可比：S3首次實行後參戰7對3艦隊，回合380對381，
+載入後WORK控制區亦不同。原版／remake獨立重現，兩側實行前seedD3DC167E，沒有重擲。
+上游先沿[#89](https://github.com/wicanr2/logh3/issues/89)、[088 DRAFT](088-normal-battle-player-entry.md)、
+[研究382](../re/382-normal-battle-player-entry.md)追最早分歧。
+151個受控UI幀保持限定成果，不把nearby-state首戰圖升格。087保持READY，#79 OPEN。
+
 ## 第43輪逐格置鏡READY審查
 
 固定原版五案62邊界、201份輸出獨立a／b逐位元組相同。

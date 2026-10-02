@@ -6,6 +6,11 @@
 規格相依：[`005`](005-save-slot-loading.md)（讀存檔）、
 [`006`](006-unrest-at-load.md)（載入時重算未安定度）
 
+2026-10-03補證：本規格的CONFORMED仍只限下述早期子範圍，排除的陣營小選單未完成。
+原版正常S3首戰與正式remake已量到參戰名單、日期與WORK控制區差異，
+接續由[#89](https://github.com/wicanr2/logh3/issues/89)、[088](088-normal-battle-player-entry.md)、
+[研究382](../re/382-normal-battle-player-entry.md)管理。不能以本規格狀態代替完整正常入口same-state驗收。
+
 ## 要做什麼
 
 主選單四列是**陣營**不是劇本：前三列開新遊戲，第四列「取進度」進存檔畫面

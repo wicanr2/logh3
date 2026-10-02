@@ -161,3 +161,13 @@ SHIP改22卻保留舊圖造成41像素fixture差異；修正案只改編號，�
 前節「來源標頭／移鏡待補」為第42輪歷史，目前已補。
 087保持READY；下一閘門是正常玩家原版／正式remake同狀態配對，再接其他八步。
 #79與原Goal未完成；詳見046及現行CONTEXT。
+
+## 2026-10-03 第44輪正常入口上游勘誤
+
+正常原版冷啟動S3首次戰略實行就到達希利。兩側事前seedD3DC167E，
+載入後三張完整表相同；首戰參戰7對3支艦隊、回合380對381，WORK控制區亦不同。
+完整收據與推論限制見[研究382](382-normal-battle-player-entry.md)及
+[088 DRAFT](../spec/088-normal-battle-player-entry.md)，工作[#89](https://github.com/wicanr2/logh3/issues/89)。
+
+原版／remake獨立雙跑重現，無實行前診斷存檔的對照仍同；不是151幀受控索敵回歸失效。
+087保持READY，#79保持OPEN。先解正常入口，不能把原版單次實行與remake單側正常圖算成same-state。

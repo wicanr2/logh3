@@ -16,6 +16,15 @@
 
 ## 這裡的東西怎麼寫
 
+- [第四十四輪正常玩家戰場入口配對](../goal/2026-10-03-battle-normal-entry-round-44.md)
+- [正常原版冷啟動擷取器](../../tools/battle_normal_entry_oracle.sh)
+- [正式資源正常玩家探測](../../tools/scripts/battle_normal_probe.go)
+- [僅固定種子的測試期Go覆蓋](../../tools/scripts/battle_normal_probe_seed.py)
+- [正常入口完整資料](data/battle-normal-entry.json)
+- [正常入口雙跑與差異核對](../../tools/scripts/battle_normal_entry_receipt.py)
+- [正常首戰入口研究382](../re/382-normal-battle-player-entry.md)
+- [正常首戰入口草稿088](../spec/088-normal-battle-player-entry.md)
+
 第三階段可見性／快取與正式續接：[第四十一輪](../goal/2026-10-03-battle-spotting-integration-round-41.md)，工作項目 #79。
 - [第四十二輪正式索敵接線](../goal/2026-10-03-battle-spotting-integration-round-42.md)
 - [第四十三輪來源標頭與逐格移鏡](../goal/2026-10-03-battle-discovery-scroll-round-43.md)

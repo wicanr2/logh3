@@ -31,10 +31,9 @@ shots=(
   "11-fleet-org|fleet1e|$CMD; click 352 125; click 400 125; click 400 85; click 488 330"
 )
 
-# 戰術畫面沒有同狀態收據可比——remake 的行軍速度還沒對到原版（原版要按
-# 六次實行才會合，remake 一次就到），所以它不走上面那條「比過才寫出去」
-# 的迴圈，另外拍。畫面組成本身由 TestBattleMatchesOracle 與
-# TestMinimapMatchesOracle 逐位元組驗過。
+# 戰術畫面另拍。第44輪正常原版首次實行已到達希利，舊「要六次才會合」註解不成立。
+# 正常入口的參戰名單／日期／WORK控制區仍不同，見#89、規格088及研究382。
+# 151個受控索敵UI幀不能代替正常入口同狀態對拍。
 BATTLE="$CMD; click 544 125; click 560 145; click 300 322; click 318 208; click 544 125; click 560 125"
 
 out=workplace/readme-shots
@@ -61,10 +60,7 @@ for s in "${shots[@]}"; do
   fi
 done
 
-# 12 戰術畫面：沒有同狀態收據可比（remake 的行軍速度還沒對到原版——原版
-# 要按六次「實行」才會合，remake 一次就到），所以不走上面「比過才寫出去」
-# 的迴圈。畫面組成本身由 `TestBattleMatchesOracle` 與
-# `TestMinimapMatchesOracle` 逐位元組驗過。
+# 12 戰術畫面只作remake正常入口抽樣；#89首戰入口差異尚未解，不宣稱same-state。
 if [[ -z "$only" || "12" == "$only"* ]] && [[ -f workplace/oracle/s3fight/pal.bin ]]; then
   rm -rf "$out/12-battle"; mkdir -p "$out/12-battle"
   tools/go.sh run ./cmd/play -orig /orig -pal workplace/oracle/s3fight/pal.bin \
