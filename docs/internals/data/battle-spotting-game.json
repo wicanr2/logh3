@@ -8536,8 +8536,8 @@
   "source_sha256": {
     "docs/internals/data/battle-spotting-phase.json": "8c66a58204728c8914b0ae22d99b62358e15f8873ff63f60a93a2412d99ac842",
     "docs/internals/data/battle-discovery-evidence.json": "383965f538fdf01ffad4a78b32957ad0372fd5f9a08440fe7d26210ac50507e1",
-    "internal/game/battlespotting.go": "0f4ec61dbc8a079e853610f459bbb723ae0758150a338567dea766917ce0afa4",
-    "internal/game/battlespotting_test.go": "9136765ce4a390d77d78a7223712446c209e851adc0f3b773b229a703f5678db",
+    "internal/game/battlespotting.go": "440feecb24eb2a2030a9415719b15b1054942f217d635f8ce6623e1b6e9c2f57",
+    "internal/game/battlespotting_test.go": "4565d7648b3e4af9216c544cd649fa7512f4b2bb8d42b736f939edd5ff4677ea",
     "internal/game/battle.go": "ac7a643ec21814ca7eb236f970f45aac22853323144d2971736be6ae09aefbb7",
     "internal/game/battlemarker.go": "dfb918fffe72da0b5e125e5cef3ae81fc55bd1b190c9312f7b1e09fca6275e7e",
     "internal/game/game.go": "1b7fefd1f3c9a8f479be326d416f6fd127b2e057e96cd5eaaecb0dfaa81629c2",

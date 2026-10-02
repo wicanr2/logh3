@@ -21,7 +21,7 @@ type spottingObserver struct {
 
 type battleSpottingState struct {
 	active, header bool
-	stage          int // 0查詢、1已發現、2標頭等待、3置鏡、4標亮入口、5逐筆等待
+	stage          int // 0查詢、1已發現、2標頭等待、3來源置鏡、4標亮入口、5逐筆等待、6候選置鏡
 	observers      []spottingObserver
 	next           int
 	source         spottingObserver
@@ -32,9 +32,10 @@ type battleSpottingState struct {
 	ticks          int
 	rem            time.Duration
 	text           []byte
-	sprites        map[int]int       // SHIP池索引→+2F，不由當幀Detail重算
-	directions     map[int]int       // FLEET索引→+6A
-	view           screen.BattleView // 已重畫的鏡頭；RAM注入不會自行重畫原版背景。
+	sprites        map[int]int        // SHIP池索引→+2F，不由當幀Detail重算
+	directions     map[int]int        // FLEET索引→+6A
+	view           screen.BattleView  // 已重畫的鏡頭；RAM注入不會自行重畫原版背景。
+	cameraGoal     *screen.BattleView // flag1開始步進後保留精確目標，不再套起始近距門檻。
 	after          func()
 }
 
@@ -182,6 +183,8 @@ func (g *Game) continueBattleSpotting() {
 		s.highlight = -1
 		s.item++
 		g.spottingNextItem()
+	case 6:
+		g.spottingNextItem()
 	}
 }
 
@@ -194,17 +197,25 @@ func (g *Game) spottingNextItem() {
 	u := s.refs[s.found[s.item]].Unit
 	// 381指定16×16物件的非可見旗標；不能以中心點是否在框內替代。
 	x, y := u.X-g.battleView.Col*16, u.Y-g.battleView.Row*20
-	for x <= -16 || x >= 448 || y <= -16 || y >= 360 {
-		if !g.spottingCamera(u.X, u.Y, false) {
-			return
-		}
-		x, y = u.X-g.battleView.Col*16, u.Y-g.battleView.Row*20
+	if x <= -16 || x >= 448 || y <= -16 || y >= 360 {
+		s.stage = 6
+		g.spottingCamera(u.X, u.Y, false)
+		return // 1588:0437：每次完整重畫先顯示，再判下一步或建立標亮。
 	}
 	s.highlight, s.stage = s.found[s.item], 4
 }
 
 // 1588:01A3，先近距閾值，再遠距直接定位；其他位置沿原版八方位單步。
 func (g *Game) spottingCamera(x, y int, repeat bool) bool {
+	if repeat && g.battleSpotting.cameraGoal != nil {
+		goal := *g.battleSpotting.cameraGoal
+		if g.battleView == goal {
+			g.battleSpotting.cameraGoal = nil
+			return false
+		}
+		g.spottingCameraStep(goal.Col*16, goal.Row*20)
+		return true
+	}
 	px, py := g.battleView.Col*16, g.battleView.Row*20
 	tx, ty := (x-216)/16*16, (y-172)/20*20
 	clipped := tx < 0 || tx >= 1600 || ty < 0 || ty >= 1680
@@ -227,17 +238,18 @@ func (g *Game) spottingCamera(x, y int, repeat bool) bool {
 	if dx == 0 && dy == 0 {
 		return false
 	}
-	for {
-		g.battleView.Col, g.battleView.Row, _ = rules.ViewScrollStep(g.battleView.Col, g.battleView.Row,
-			rules.Direction8(rules.AtanTable256(tx-g.battleView.Col*16, ty-g.battleView.Row*20)))
-		g.battleSpotting.view = g.battleView
-		if !repeat {
-			return true
-		}
-		if g.battleView == (screen.BattleView{Col: tx / 16, Row: ty / 20}) {
-			return false
-		}
+	if repeat {
+		goal := screen.BattleView{Col: tx / 16, Row: ty / 20}
+		g.battleSpotting.cameraGoal = &goal
 	}
+	g.spottingCameraStep(tx, ty)
+	return true
+}
+
+func (g *Game) spottingCameraStep(tx, ty int) {
+	g.battleView.Col, g.battleView.Row, _ = rules.ViewScrollStep(g.battleView.Col, g.battleView.Row,
+		rules.Direction8(rules.AtanTable256(tx-g.battleView.Col*16, ty-g.battleView.Row*20)))
+	g.battleSpotting.view = g.battleView
 }
 
 func (g *Game) saveSpottingUnit(r rules.PreparationUnit) {

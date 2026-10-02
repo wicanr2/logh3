@@ -132,8 +132,21 @@ func spottingFixture(t *testing.T, c spottingCase) (*Game, string) {
 
 // 正式Game第三階段逐觀測者、等待與renderer；只在唯一入口讀原版RAM。
 func TestBattleSpottingWholePhaseMatchesOriginal(t *testing.T) {
+	testBattleSpottingCases(t, []string{"battle-spotting-phase.json", "battle-discovery-evidence.json"}, 9, "round42-spot-")
+}
+
+func TestBattleSpottingSourceAndScrollMatchesOriginal(t *testing.T) {
+	output := os.Getenv("LOGH3_SPOTTING_OUTPUT")
+	if output == "" {
+		output = "round43-spot-"
+	}
+	testBattleSpottingCases(t, []string{"battle-discovery-scroll.json"}, 5, output)
+}
+
+func testBattleSpottingCases(t *testing.T, names []string, count int, output string) {
+	t.Helper()
 	var cases []spottingCase
-	for _, name := range []string{"battle-spotting-phase.json", "battle-discovery-evidence.json"} {
+	for _, name := range names {
 		b, err := os.ReadFile(filepath.Join(root, "docs/internals/data", name))
 		if err != nil {
 			t.Fatal(err)
@@ -144,7 +157,7 @@ func TestBattleSpottingWholePhaseMatchesOriginal(t *testing.T) {
 		}
 		cases = append(cases, data.Cases...)
 	}
-	if len(cases) != 9 {
+	if len(cases) != count {
 		t.Fatal("原版案例數不同")
 	}
 	for _, c := range cases {
@@ -188,7 +201,7 @@ func TestBattleSpottingWholePhaseMatchesOriginal(t *testing.T) {
 						diff++
 					}
 				}
-				prefix := filepath.Join(root, "workplace", "round42-spot-"+c.Scenario+"-"+f.Name)
+				prefix := filepath.Join(root, "workplace", output+c.Scenario+"-"+f.Name)
 				if err = os.WriteFile(prefix+".bin", got, 0644); err != nil {
 					t.Fatal(err)
 				}
@@ -220,6 +233,10 @@ func TestBattleSpottingWholePhaseMatchesOriginal(t *testing.T) {
 					}
 				case f.Name == "camera-start":
 					continue // 呼叫內部邊界，正式完整置鏡另核highlight入口。
+				case len(f.Name) > 7 && f.Name[:7] == "scroll-":
+					// 每次正式更新必須保留下一個原版重畫。不能跳到期望鏡頭，
+					// 也不能迴圈尋找碰巧相同的終態。
+					g.continueBattleSpotting()
 				case f.Name == "highlight-start":
 					for steps := 0; s.stage != 4 && s.active && steps < 200; steps++ {
 						g.continueBattleSpotting()
@@ -257,6 +274,65 @@ func mustSpottingMem(t *testing.T, base string) []byte {
 		t.Fatal(err)
 	}
 	return b
+}
+
+func TestBattleSpottingScrollTicks(t *testing.T) {
+	b, err := os.ReadFile(filepath.Join(root, "docs/internals/data/battle-discovery-scroll.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var data struct{ Cases []spottingCase }
+	if err = json.Unmarshal(b, &data); err != nil {
+		t.Fatal(err)
+	}
+	for _, c := range data.Cases {
+		if c.Scenario != "near-source" && c.Scenario != "scout13" && c.Scenario != "offscreen" {
+			continue
+		}
+		t.Run(c.Scenario, func(t *testing.T) {
+			g, base := spottingFixture(t, c)
+			completed := 0
+			g.beginBattleSpotting(func() { completed++ })
+			for i := 0; !g.battleSpotting.header && i < 100; i++ {
+				g.Tick(time.Second / 60)
+			}
+			if !g.battleSpotting.header {
+				t.Fatal("未到達原版來源標頭")
+			}
+			for _, f := range c.Frames {
+				if len(f.Name) <= 7 || f.Name[:7] != "scroll-" {
+					continue
+				}
+				if f.Name == "scroll-0" {
+					g.Tick(time.Minute) // 只結束目前等待並呈現第一步，不吞掉其他鏡頭幀。
+				} else {
+					view, turn := g.battleView, g.battleTurn
+					g.Click(100, 100)
+					g.RightClick(100, 100)
+					g.AdvanceBattleTurn()
+					if g.battleView != view || g.battleTurn != turn {
+						t.Fatal("移鏡期間輸入越過續接閘門")
+					}
+					g.Tick(time.Second / 60)
+				}
+				want, err := os.ReadFile(filepath.Join(base, f.Name+".bin"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				// 固定收據的游標位置；指令阻擋與滑鼠移動為不同契約。
+				g.MoveMouse(240, 240)
+				if g.battleView != f.view() || !bytes.Equal(g.Frame().Pix, want) || completed != 0 {
+					t.Fatalf("%s正式Tick漏過原版重畫：%v／%v", f.Name, g.battleView, f.view())
+				}
+			}
+			for i := 0; g.battleSpotting.active && i < 10000; i++ {
+				g.Tick(time.Second / 60)
+			}
+			if completed != 1 || g.battleSpotting.active {
+				t.Fatal("移鏡結束沒有僅續接一次")
+			}
+		})
+	}
 }
 
 func TestBattleSpottingNormalWaitAndSave(t *testing.T) {

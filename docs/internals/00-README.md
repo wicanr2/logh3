@@ -18,6 +18,11 @@
 
 第三階段可見性／快取與正式續接：[第四十一輪](../goal/2026-10-03-battle-spotting-integration-round-41.md)，工作項目 #79。
 - [第四十二輪正式索敵接線](../goal/2026-10-03-battle-spotting-integration-round-42.md)
+- [第四十三輪來源標頭與逐格移鏡](../goal/2026-10-03-battle-discovery-scroll-round-43.md)
+- [來源標頭／逐格移鏡固定計畫](data/battle-discovery-scroll-plan.json)
+- [來源標頭／逐格移鏡完整原版及正式Game收據](data/battle-discovery-scroll.json)
+- [原版擷取器](../../tools/battle_discovery_scroll_oracle.sh)
+- [計畫凍結與雙跑／全畫面核對工具](../../tools/scripts/battle_discovery_scroll.py)
 
 第三階段發現報告與正式續接：[第四十輪](../goal/2026-10-02-battle-discovery-round-40.md)，工作項目 #79。
 

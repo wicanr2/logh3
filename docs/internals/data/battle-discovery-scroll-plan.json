@@ -1,0 +1,2316 @@
+{
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "parent": "battle79-move-entry-a/machine.state",
+  "parent_sha256": "39ed892ae729c2b2bd1a0b208439d106e4913867e1b50134396fabd704b39b55",
+  "schema": "logh3.battle-discovery-scroll-plan.v1",
+  "comparison": "same-state diagnostic UI; original ordered redraws; no CPU or wall-clock equality",
+  "regs_at": "181B:0262,181B:028C,2526:00F8,2526:033B,3826:0298,3765:006C,25DB:0E78,25DB:0F93,1588:01A3,1588:0437,2526:01FE,2526:046A,2526:04D5",
+  "cases": [
+    {
+      "name": "fleet13",
+      "injections": [
+        {
+          "linear_hex": "0x68128",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x681c4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68212",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68260",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x682ae",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6834a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x682fc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68398",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68176",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x687dc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68878",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x688c6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68914",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68962",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x689b0",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6882a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6940c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x694a8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x694f6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69544",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6945a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68b36",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a9a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68ae8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68b84",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68bd2",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68c20",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68c6e",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68cbc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a4c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68d0a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68da6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68df4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68e42",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68e90",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68ede",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6919c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68d58",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68f2c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69064",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69100",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68fc8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69016",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x690b2",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6914e",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68f7a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x691ea",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69286",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x692d4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69322",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69370",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x693be",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69592",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69238",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a1c",
+          "step": 1226638000,
+          "hex": "a0017c01",
+          "reason": "候選現在位置；不改目的地"
+        },
+        {
+          "linear_hex": "0x7140c",
+          "step": 1226638000,
+          "hex": "80fd24ff",
+          "reason": "候選舊鏡頭相對位置"
+        },
+        {
+          "linear_hex": "0x71424",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "顯示物件界外bit，按381既有契約"
+        }
+      ],
+      "inputs": [
+        "-poke",
+        "lin:68128@1226638000=01;lin:681c4@1226638000=01;lin:68212@1226638000=01;lin:68260@1226638000=01;lin:682ae@1226638000=01;lin:6834a@1226638000=01;lin:682fc@1226638000=01;lin:68398@1226638000=01;lin:68176@1226638000=01;lin:687dc@1226638000=01;lin:68878@1226638000=01;lin:688c6@1226638000=01;lin:68914@1226638000=01;lin:68962@1226638000=01;lin:689b0@1226638000=01;lin:6882a@1226638000=01;lin:6940c@1226638000=01;lin:694a8@1226638000=01;lin:694f6@1226638000=01;lin:69544@1226638000=01;lin:6945a@1226638000=01;lin:68b36@1226638000=01;lin:68a9a@1226638000=01;lin:68ae8@1226638000=01;lin:68b84@1226638000=01;lin:68bd2@1226638000=01;lin:68c20@1226638000=01;lin:68c6e@1226638000=01;lin:68cbc@1226638000=01;lin:68a4c@1226638000=01;lin:68d0a@1226638000=01;lin:68da6@1226638000=01;lin:68df4@1226638000=01;lin:68e42@1226638000=01;lin:68e90@1226638000=01;lin:68ede@1226638000=01;lin:6919c@1226638000=01;lin:68d58@1226638000=01;lin:68f2c@1226638000=01;lin:69064@1226638000=01;lin:69100@1226638000=01;lin:68fc8@1226638000=01;lin:69016@1226638000=01;lin:690b2@1226638000=01;lin:6914e@1226638000=01;lin:68f7a@1226638000=01;lin:691ea@1226638000=01;lin:69286@1226638000=01;lin:692d4@1226638000=01;lin:69322@1226638000=01;lin:69370@1226638000=01;lin:693be@1226638000=01;lin:69592@1226638000=01;lin:69238@1226638000=01;lin:68a1c@1226638000=a0 01 7c 01;lin:7140c@1226638000=80 fd 24 ff;lin:71424@1226638000=01"
+      ],
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "discovered",
+          "step": 1226803129
+        },
+        {
+          "name": "header",
+          "step": 1226965612
+        },
+        {
+          "name": "highlight-start",
+          "step": 1245263379
+        },
+        {
+          "name": "unit-0",
+          "step": 1245354732
+        },
+        {
+          "name": "end",
+          "step": 1246969846
+        }
+      ],
+      "end": 1246969846,
+      "scope": "same-state at declared diagnostic boundaries; unique entry injection; not normal original player path",
+      "exploration": {
+        "report": "workplace/explore/battle79-scroll-r43-fleet13-explore/report.txt",
+        "sha256": "5bb354e61bbdd2d6907bdbb2556c294e2de6a7b7dd84ac2df9f8068e99a8e826"
+      },
+      "observed_events": {
+        "2526:046A": [
+          1226803143
+        ],
+        "2526:04D5": [],
+        "1588:01A3": [
+          1245083040
+        ],
+        "1588:0437": [],
+        "3765:006C": [
+          1226965610,
+          1245354730
+        ],
+        "25DB:0E78": [
+          1245263379
+        ]
+      }
+    },
+    {
+      "name": "fleet3-cache13",
+      "injections": [
+        {
+          "linear_hex": "0x68128",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x681c4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68212",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68260",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x682ae",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6834a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x682fc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68398",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68176",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x687dc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68878",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x688c6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68914",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68962",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x689b0",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6882a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6940c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x694a8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x694f6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69544",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6945a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68b36",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a9a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68ae8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68b84",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68bd2",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68c20",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68c6e",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68cbc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a4c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68d0a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68da6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68df4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68e42",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68e90",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68ede",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6919c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68d58",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68f2c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69064",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69100",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68fc8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69016",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x690b2",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6914e",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68f7a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x691ea",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69286",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x692d4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69322",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69370",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x693be",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69592",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69238",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a1c",
+          "step": 1226638000,
+          "hex": "a0017c01",
+          "reason": "候選現在位置；不改目的地"
+        },
+        {
+          "linear_hex": "0x7140c",
+          "step": 1226638000,
+          "hex": "80fd24ff",
+          "reason": "候選舊鏡頭相對位置"
+        },
+        {
+          "linear_hex": "0x71424",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "顯示物件界外bit，按381既有契約"
+        },
+        {
+          "linear_hex": "0x6115e",
+          "step": 1226638000,
+          "hex": "03",
+          "reason": "受控一位數艦隊編號"
+        }
+      ],
+      "inputs": [
+        "-poke",
+        "lin:68128@1226638000=01;lin:681c4@1226638000=01;lin:68212@1226638000=01;lin:68260@1226638000=01;lin:682ae@1226638000=01;lin:6834a@1226638000=01;lin:682fc@1226638000=01;lin:68398@1226638000=01;lin:68176@1226638000=01;lin:687dc@1226638000=01;lin:68878@1226638000=01;lin:688c6@1226638000=01;lin:68914@1226638000=01;lin:68962@1226638000=01;lin:689b0@1226638000=01;lin:6882a@1226638000=01;lin:6940c@1226638000=01;lin:694a8@1226638000=01;lin:694f6@1226638000=01;lin:69544@1226638000=01;lin:6945a@1226638000=01;lin:68b36@1226638000=01;lin:68a9a@1226638000=01;lin:68ae8@1226638000=01;lin:68b84@1226638000=01;lin:68bd2@1226638000=01;lin:68c20@1226638000=01;lin:68c6e@1226638000=01;lin:68cbc@1226638000=01;lin:68a4c@1226638000=01;lin:68d0a@1226638000=01;lin:68da6@1226638000=01;lin:68df4@1226638000=01;lin:68e42@1226638000=01;lin:68e90@1226638000=01;lin:68ede@1226638000=01;lin:6919c@1226638000=01;lin:68d58@1226638000=01;lin:68f2c@1226638000=01;lin:69064@1226638000=01;lin:69100@1226638000=01;lin:68fc8@1226638000=01;lin:69016@1226638000=01;lin:690b2@1226638000=01;lin:6914e@1226638000=01;lin:68f7a@1226638000=01;lin:691ea@1226638000=01;lin:69286@1226638000=01;lin:692d4@1226638000=01;lin:69322@1226638000=01;lin:69370@1226638000=01;lin:693be@1226638000=01;lin:69592@1226638000=01;lin:69238@1226638000=01;lin:68a1c@1226638000=a0 01 7c 01;lin:7140c@1226638000=80 fd 24 ff;lin:71424@1226638000=01;lin:6115e@1226638000=03"
+      ],
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "discovered",
+          "step": 1226803129
+        },
+        {
+          "name": "header",
+          "step": 1226964815
+        },
+        {
+          "name": "highlight-start",
+          "step": 1245263395
+        },
+        {
+          "name": "unit-0",
+          "step": 1245354748
+        },
+        {
+          "name": "end",
+          "step": 1246969862
+        }
+      ],
+      "end": 1246969862,
+      "scope": "受控一位數編號3標頭；原有旗艦13號圖示快取完整保留，不混改bitmap。",
+      "exploration": {
+        "report": "workplace/explore/battle79-scroll-r43-fleet3-explore/report.txt",
+        "sha256": "639406865017b994393e07262cc8bc0017e485986a9c7a2cca47dc1872fe679a"
+      },
+      "observed_events": {
+        "2526:046A": [
+          1226803143
+        ],
+        "2526:04D5": [],
+        "1588:01A3": [
+          1245083056
+        ],
+        "1588:0437": [],
+        "3765:006C": [
+          1226964813,
+          1245354746
+        ],
+        "25DB:0E78": [
+          1245263395
+        ]
+      },
+      "rejected_fixture": {
+        "name": "fleet3",
+        "injections": [
+          {
+            "linear_hex": "0x68128",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x681c4",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68212",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68260",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x682ae",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x6834a",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x682fc",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68398",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68176",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x687dc",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68878",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x688c6",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68914",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68962",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x689b0",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x6882a",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x6940c",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x694a8",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x694f6",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x69544",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x6945a",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68b36",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68a9a",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68ae8",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68b84",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68bd2",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68c20",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68c6e",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68cbc",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68a4c",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68d0a",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68da6",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68df4",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68e42",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68e90",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68ede",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x6919c",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68d58",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68f2c",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x69064",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x69100",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68fc8",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x69016",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x690b2",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x6914e",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68f7a",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x691ea",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x69286",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x692d4",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x69322",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x69370",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x693be",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x69592",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x69238",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+          },
+          {
+            "linear_hex": "0x68a1c",
+            "step": 1226638000,
+            "hex": "a0017c01",
+            "reason": "候選現在位置；不改目的地"
+          },
+          {
+            "linear_hex": "0x7140c",
+            "step": 1226638000,
+            "hex": "80fd24ff",
+            "reason": "候選舊鏡頭相對位置"
+          },
+          {
+            "linear_hex": "0x71424",
+            "step": 1226638000,
+            "hex": "01",
+            "reason": "顯示物件界外bit，按381既有契約"
+          },
+          {
+            "linear_hex": "0x6115e",
+            "step": 1226638000,
+            "hex": "03",
+            "reason": "受控一位數艦隊編號"
+          },
+          {
+            "linear_hex": "0x68141",
+            "step": 1226638000,
+            "hex": "16",
+            "reason": "編號3對應旗艦快取"
+          },
+          {
+            "linear_hex": "0x71052",
+            "step": 1226638000,
+            "hex": "16",
+            "reason": "舊顯示物件圖示同步"
+          }
+        ],
+        "inputs": [
+          "-poke",
+          "lin:68128@1226638000=01;lin:681c4@1226638000=01;lin:68212@1226638000=01;lin:68260@1226638000=01;lin:682ae@1226638000=01;lin:6834a@1226638000=01;lin:682fc@1226638000=01;lin:68398@1226638000=01;lin:68176@1226638000=01;lin:687dc@1226638000=01;lin:68878@1226638000=01;lin:688c6@1226638000=01;lin:68914@1226638000=01;lin:68962@1226638000=01;lin:689b0@1226638000=01;lin:6882a@1226638000=01;lin:6940c@1226638000=01;lin:694a8@1226638000=01;lin:694f6@1226638000=01;lin:69544@1226638000=01;lin:6945a@1226638000=01;lin:68b36@1226638000=01;lin:68a9a@1226638000=01;lin:68ae8@1226638000=01;lin:68b84@1226638000=01;lin:68bd2@1226638000=01;lin:68c20@1226638000=01;lin:68c6e@1226638000=01;lin:68cbc@1226638000=01;lin:68a4c@1226638000=01;lin:68d0a@1226638000=01;lin:68da6@1226638000=01;lin:68df4@1226638000=01;lin:68e42@1226638000=01;lin:68e90@1226638000=01;lin:68ede@1226638000=01;lin:6919c@1226638000=01;lin:68d58@1226638000=01;lin:68f2c@1226638000=01;lin:69064@1226638000=01;lin:69100@1226638000=01;lin:68fc8@1226638000=01;lin:69016@1226638000=01;lin:690b2@1226638000=01;lin:6914e@1226638000=01;lin:68f7a@1226638000=01;lin:691ea@1226638000=01;lin:69286@1226638000=01;lin:692d4@1226638000=01;lin:69322@1226638000=01;lin:69370@1226638000=01;lin:693be@1226638000=01;lin:69592@1226638000=01;lin:69238@1226638000=01;lin:68a1c@1226638000=a0 01 7c 01;lin:7140c@1226638000=80 fd 24 ff;lin:71424@1226638000=01;lin:6115e@1226638000=03;lin:68141@1226638000=16;lin:71052@1226638000=16"
+        ],
+        "points": [
+          {
+            "name": "entry",
+            "step": 1226638239
+          },
+          {
+            "name": "label",
+            "step": 1226658563
+          },
+          {
+            "name": "discovered",
+            "step": 1226803129
+          },
+          {
+            "name": "header",
+            "step": 1226964815
+          },
+          {
+            "name": "highlight-start",
+            "step": 1245263395
+          },
+          {
+            "name": "unit-0",
+            "step": 1245354748
+          },
+          {
+            "name": "end",
+            "step": 1246969862
+          }
+        ],
+        "end": 1246969862,
+        "scope": "same-state at declared diagnostic boundaries; unique entry injection; not normal original player path",
+        "exploration": {
+          "report": "workplace/explore/battle79-scroll-r43-fleet3-explore/report.txt",
+          "sha256": "639406865017b994393e07262cc8bc0017e485986a9c7a2cca47dc1872fe679a"
+        },
+        "observed_events": {
+          "2526:046A": [
+            1226803143
+          ],
+          "2526:04D5": [],
+          "1588:01A3": [
+            1245083056
+          ],
+          "1588:0437": [],
+          "3765:006C": [
+            1226964813,
+            1245354746
+          ],
+          "25DB:0E78": [
+            1245263395
+          ]
+        },
+        "reason": "只改物件+0C並未更換bitmap指標；原版3與13置鏡後framebuffer相同，Game按SHIP快取22畫新3號圖示造成41像素fixture差異。受控字寬驗收只改編號，保留完整原有13號圖示快取。"
+      }
+    },
+    {
+      "name": "scout13",
+      "injections": [
+        {
+          "linear_hex": "0x68128",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x681c4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68212",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68260",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x682ae",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6834a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x682fc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68398",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68176",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x687dc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68878",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x688c6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68914",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68962",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x689b0",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6882a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6940c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x694a8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x694f6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69544",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6945a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68b36",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a9a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68ae8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68b84",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68bd2",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68c20",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68c6e",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68cbc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a4c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68d0a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68da6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68df4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68e42",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68e90",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68ede",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6919c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68d58",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68f2c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69064",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69100",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68fc8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69016",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x690b2",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6914e",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68f7a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x691ea",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69286",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x692d4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69322",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69370",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x693be",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69592",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69238",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a1c",
+          "step": 1226638000,
+          "hex": "a0010802",
+          "reason": "候選現在位置；不改目的地"
+        },
+        {
+          "linear_hex": "0x7140c",
+          "step": 1226638000,
+          "hex": "80fdb0ff",
+          "reason": "候選舊鏡頭相對位置"
+        },
+        {
+          "linear_hex": "0x71424",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "顯示物件界外bit，按381既有契約"
+        },
+        {
+          "linear_hex": "0x61196",
+          "step": 1226638000,
+          "hex": "00",
+          "reason": "已放出己方偵察隊"
+        },
+        {
+          "linear_hex": "0x6817e",
+          "step": 1226638000,
+          "hex": "7f",
+          "reason": "清除偵察隊Out bit7"
+        },
+        {
+          "linear_hex": "0x6818f",
+          "step": 1226638000,
+          "hex": "2b",
+          "reason": "己方偵察隊圖示快取"
+        },
+        {
+          "linear_hex": "0x71192",
+          "step": 1226638000,
+          "hex": "2b",
+          "reason": "舊顯示物件圖示同步"
+        }
+      ],
+      "inputs": [
+        "-poke",
+        "lin:68128@1226638000=01;lin:681c4@1226638000=01;lin:68212@1226638000=01;lin:68260@1226638000=01;lin:682ae@1226638000=01;lin:6834a@1226638000=01;lin:682fc@1226638000=01;lin:68398@1226638000=01;lin:68176@1226638000=01;lin:687dc@1226638000=01;lin:68878@1226638000=01;lin:688c6@1226638000=01;lin:68914@1226638000=01;lin:68962@1226638000=01;lin:689b0@1226638000=01;lin:6882a@1226638000=01;lin:6940c@1226638000=01;lin:694a8@1226638000=01;lin:694f6@1226638000=01;lin:69544@1226638000=01;lin:6945a@1226638000=01;lin:68b36@1226638000=01;lin:68a9a@1226638000=01;lin:68ae8@1226638000=01;lin:68b84@1226638000=01;lin:68bd2@1226638000=01;lin:68c20@1226638000=01;lin:68c6e@1226638000=01;lin:68cbc@1226638000=01;lin:68a4c@1226638000=01;lin:68d0a@1226638000=01;lin:68da6@1226638000=01;lin:68df4@1226638000=01;lin:68e42@1226638000=01;lin:68e90@1226638000=01;lin:68ede@1226638000=01;lin:6919c@1226638000=01;lin:68d58@1226638000=01;lin:68f2c@1226638000=01;lin:69064@1226638000=01;lin:69100@1226638000=01;lin:68fc8@1226638000=01;lin:69016@1226638000=01;lin:690b2@1226638000=01;lin:6914e@1226638000=01;lin:68f7a@1226638000=01;lin:691ea@1226638000=01;lin:69286@1226638000=01;lin:692d4@1226638000=01;lin:69322@1226638000=01;lin:69370@1226638000=01;lin:693be@1226638000=01;lin:69592@1226638000=01;lin:69238@1226638000=01;lin:68a1c@1226638000=a0 01 08 02;lin:7140c@1226638000=80 fd b0 ff;lin:71424@1226638000=01;lin:61196@1226638000=00;lin:6817e@1226638000=7f;lin:6818f@1226638000=2b;lin:71192@1226638000=2b"
+      ],
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "discovered",
+          "step": 1226947515
+        },
+        {
+          "name": "header",
+          "step": 1227110076
+        },
+        {
+          "name": "scroll-0",
+          "step": 1245395586
+        },
+        {
+          "name": "scroll-1",
+          "step": 1245541541
+        },
+        {
+          "name": "scroll-2",
+          "step": 1245700006
+        },
+        {
+          "name": "scroll-3",
+          "step": 1245860304
+        },
+        {
+          "name": "highlight-start",
+          "step": 1245860327
+        },
+        {
+          "name": "unit-0",
+          "step": 1245951728
+        },
+        {
+          "name": "end",
+          "step": 1247595536
+        }
+      ],
+      "end": 1247595536,
+      "scope": "same-state at declared diagnostic boundaries; unique entry injection; not normal original player path",
+      "exploration": {
+        "report": "workplace/explore/battle79-scroll-r43-scout13-explore/report.txt",
+        "sha256": "128e00a59f7e4a25ad1bb13a3d256ca5cb78b6744b67b9b35b3c3c727b13d15a"
+      },
+      "observed_events": {
+        "2526:046A": [
+          1226947529
+        ],
+        "2526:04D5": [],
+        "1588:01A3": [
+          1245083083,
+          1245261657,
+          1245395612,
+          1245541567,
+          1245700032
+        ],
+        "1588:0437": [
+          1245395586,
+          1245541541,
+          1245700006,
+          1245860304
+        ],
+        "3765:006C": [
+          1227110074,
+          1245951726
+        ],
+        "25DB:0E78": [
+          1245860327
+        ]
+      }
+    },
+    {
+      "name": "near-source",
+      "injections": [
+        {
+          "linear_hex": "0x5e6d3",
+          "step": 1226638000,
+          "hex": "371a",
+          "reason": "近距來源鏡頭grid；保留舊背景直到原版重畫"
+        },
+        {
+          "linear_hex": "0x5e724",
+          "step": 1226638000,
+          "hex": "70030802",
+          "reason": "鏡頭pixel與grid一致"
+        }
+      ],
+      "inputs": [
+        "-poke",
+        "lin:5e6d3@1226638000=37 1a;lin:5e724@1226638000=70 03 08 02"
+      ],
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "discovered",
+          "step": 1226956596
+        },
+        {
+          "name": "header",
+          "step": 1227120801
+        },
+        {
+          "name": "scroll-0",
+          "step": 1245257982
+        },
+        {
+          "name": "scroll-1",
+          "step": 1245425748
+        },
+        {
+          "name": "scroll-2",
+          "step": 1245624681
+        },
+        {
+          "name": "scroll-3",
+          "step": 1245802815
+        },
+        {
+          "name": "scroll-4",
+          "step": 1245983869
+        },
+        {
+          "name": "scroll-5",
+          "step": 1246211748
+        },
+        {
+          "name": "scroll-6",
+          "step": 1246410328
+        },
+        {
+          "name": "scroll-7",
+          "step": 1246615063
+        },
+        {
+          "name": "scroll-8",
+          "step": 1246868932
+        },
+        {
+          "name": "scroll-9",
+          "step": 1247097489
+        },
+        {
+          "name": "scroll-10",
+          "step": 1247325131
+        },
+        {
+          "name": "scroll-11",
+          "step": 1247600808
+        },
+        {
+          "name": "scroll-12",
+          "step": 1247848241
+        },
+        {
+          "name": "scroll-13",
+          "step": 1248102720
+        },
+        {
+          "name": "highlight-start",
+          "step": 1248104376
+        },
+        {
+          "name": "unit-0",
+          "step": 1248279779
+        },
+        {
+          "name": "unit-1",
+          "step": 1249589886
+        },
+        {
+          "name": "unit-2",
+          "step": 1251009480
+        },
+        {
+          "name": "unit-3",
+          "step": 1252413775
+        },
+        {
+          "name": "unit-4",
+          "step": 1253816267
+        },
+        {
+          "name": "unit-5",
+          "step": 1255205738
+        },
+        {
+          "name": "unit-6",
+          "step": 1256600035
+        },
+        {
+          "name": "unit-7",
+          "step": 1258007915
+        },
+        {
+          "name": "end",
+          "step": 1259470180
+        }
+      ],
+      "end": 1259470180,
+      "scope": "same-state at declared diagnostic boundaries; unique entry injection; not normal original player path",
+      "exploration": {
+        "report": "workplace/explore/battle79-scroll-r43-near-source-explore/report.txt",
+        "sha256": "61c8c5187997123a6e972c80d907066927200c3f0809625b37d4259f3e9a86e4"
+      },
+      "observed_events": {
+        "2526:046A": [],
+        "2526:04D5": [
+          1226956610
+        ],
+        "1588:01A3": [
+          1245086810
+        ],
+        "1588:0437": [
+          1245257982,
+          1245425748,
+          1245624681,
+          1245802815,
+          1245983869,
+          1246211748,
+          1246410328,
+          1246615063,
+          1246868932,
+          1247097489,
+          1247325131,
+          1247600808,
+          1247848241,
+          1248102720
+        ],
+        "3765:006C": [
+          1227120799,
+          1248279777,
+          1249589884,
+          1251009478,
+          1252413773,
+          1253816265,
+          1255205736,
+          1256600033,
+          1258007913
+        ],
+        "25DB:0E78": [
+          1248104376,
+          1249413782,
+          1250813632,
+          1252223607,
+          1253620385,
+          1255023667,
+          1256416804,
+          1257818254
+        ]
+      }
+    },
+    {
+      "name": "offscreen",
+      "injections": [
+        {
+          "linear_hex": "0x68128",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x681c4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68212",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68260",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x682ae",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6834a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x682fc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68398",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68176",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x687dc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68878",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x688c6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68914",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68962",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x689b0",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6882a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6940c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x694a8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x694f6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69544",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6945a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68b36",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a9a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68ae8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68b84",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68bd2",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68c20",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68c6e",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68cbc",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a4c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68d0a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68da6",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68df4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68e42",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68e90",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68ede",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6919c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68d58",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68f2c",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69064",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69100",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68fc8",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69016",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x690b2",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x6914e",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68f7a",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x691ea",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69286",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x692d4",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69322",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69370",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x693be",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69592",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x69238",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "固定Seen，隔離唯一候選109；保留其他bits"
+        },
+        {
+          "linear_hex": "0x68a1c",
+          "step": 1226638000,
+          "hex": "a001e001",
+          "reason": "候選現在位置；不改目的地"
+        },
+        {
+          "linear_hex": "0x7140c",
+          "step": 1226638000,
+          "hex": "80fd88ff",
+          "reason": "候選舊鏡頭相對位置"
+        },
+        {
+          "linear_hex": "0x71424",
+          "step": 1226638000,
+          "hex": "01",
+          "reason": "顯示物件界外bit，按381既有契約"
+        }
+      ],
+      "inputs": [
+        "-poke",
+        "lin:68128@1226638000=01;lin:681c4@1226638000=01;lin:68212@1226638000=01;lin:68260@1226638000=01;lin:682ae@1226638000=01;lin:6834a@1226638000=01;lin:682fc@1226638000=01;lin:68398@1226638000=01;lin:68176@1226638000=01;lin:687dc@1226638000=01;lin:68878@1226638000=01;lin:688c6@1226638000=01;lin:68914@1226638000=01;lin:68962@1226638000=01;lin:689b0@1226638000=01;lin:6882a@1226638000=01;lin:6940c@1226638000=01;lin:694a8@1226638000=01;lin:694f6@1226638000=01;lin:69544@1226638000=01;lin:6945a@1226638000=01;lin:68b36@1226638000=01;lin:68a9a@1226638000=01;lin:68ae8@1226638000=01;lin:68b84@1226638000=01;lin:68bd2@1226638000=01;lin:68c20@1226638000=01;lin:68c6e@1226638000=01;lin:68cbc@1226638000=01;lin:68a4c@1226638000=01;lin:68d0a@1226638000=01;lin:68da6@1226638000=01;lin:68df4@1226638000=01;lin:68e42@1226638000=01;lin:68e90@1226638000=01;lin:68ede@1226638000=01;lin:6919c@1226638000=01;lin:68d58@1226638000=01;lin:68f2c@1226638000=01;lin:69064@1226638000=01;lin:69100@1226638000=01;lin:68fc8@1226638000=01;lin:69016@1226638000=01;lin:690b2@1226638000=01;lin:6914e@1226638000=01;lin:68f7a@1226638000=01;lin:691ea@1226638000=01;lin:69286@1226638000=01;lin:692d4@1226638000=01;lin:69322@1226638000=01;lin:69370@1226638000=01;lin:693be@1226638000=01;lin:69592@1226638000=01;lin:69238@1226638000=01;lin:68a1c@1226638000=a0 01 e0 01;lin:7140c@1226638000=80 fd 88 ff;lin:71424@1226638000=01"
+      ],
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "discovered",
+          "step": 1226803134
+        },
+        {
+          "name": "header",
+          "step": 1226965617
+        },
+        {
+          "name": "scroll-0",
+          "step": 1245395548
+        },
+        {
+          "name": "scroll-1",
+          "step": 1245542840
+        },
+        {
+          "name": "highlight-start",
+          "step": 1245542863
+        },
+        {
+          "name": "unit-0",
+          "step": 1245634276
+        },
+        {
+          "name": "end",
+          "step": 1247169468
+        }
+      ],
+      "end": 1247169468,
+      "scope": "旗艦來源，候選距200邊界；來源置鏡後候選界外。固定注入，不改查詢半徑或seed。",
+      "rejected_exploration": {
+        "report": "workplace/explore/battle79-scroll-r43-offscreen-explore/report.txt",
+        "sha256": "6ba67bc2c035b9cc7cce134f9ffb682fe5ea4872c997e7c5138e89ec9e870fc8",
+        "reason": "y1011距行星199，大於實際3300/25=132。首次誤用除數20的解釋已勘誤；不是產品缺陷。"
+      },
+      "explore_suffix": "explore-v3",
+      "rejected_exploration_v2": {
+        "report": "workplace/explore/battle79-scroll-r43-offscreen-explore-v2/report.txt",
+        "sha256": "edef7857551cfa0fefcc6af00c39e03beeef9bcf0022b5f530e1a7777d39d27b",
+        "reason": "y970距158仍大於132。回查既有PlanetQueryRadius與379，不再猜行星半徑。"
+      },
+      "exploration": {
+        "report": "workplace/explore/battle79-scroll-r43-offscreen-explore-v3/report.txt",
+        "sha256": "f19dff0de0e06cf1c7f79d6f0219d8d1491de45aac91a6ce502ad4e430a6555a"
+      },
+      "observed_events": {
+        "2526:046A": [
+          1226803148
+        ],
+        "2526:04D5": [],
+        "1588:01A3": [
+          1245083045,
+          1245261619,
+          1245395574
+        ],
+        "1588:0437": [
+          1245395548,
+          1245542840
+        ],
+        "3765:006C": [
+          1226965615,
+          1245634274
+        ],
+        "25DB:0E78": [
+          1245542863
+        ]
+      }
+    }
+  ],
+  "status": "FROZEN"
+}

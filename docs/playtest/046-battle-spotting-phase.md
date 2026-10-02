@@ -225,3 +225,71 @@ de820e7a4f963fb484c878ae1cfc31a6a9dc4c044fa655907c9931c44e70e9b9。
 
 087保持READY：艦隊／已放出偵察隊來源獨立原版標頭與近距來源／界外候選移鏡待驗。
 15案可見性常式不代替正式動態畫面，完整八步、#79與Goal未完成。
+
+## 第43輪續證：來源標頭與逐格移鏡
+
+日期2026-10-03，父提交649bef601b3ed46f976e9cfc5627a729ca41310b，工作項目#79。
+執行前定為same-state受控UI比較；正常玩家產品路徑另列，不升格為原版配對。
+原版來源、bundle、兩個image及固定dosgolem f7523f9完整HEAD／clean沿381與JSON。
+父machine.state SHA-256 39ed892ae729c2b2bd1a0b208439d106e4913867e1b50134396fabd704b39b55。
+雙方seed12345678只在入口固定，索敵全程不變，沒有重擲。
+
+| 案例 | 原版停點 | 可比正式UI | 預先固定條件 |
+|---|---:|---:|---|
+| fleet13 | 7 | 6 | 唯一候選109距旗艦100，其他Seen bit0固定 |
+| fleet3-cache13 | 7 | 6 | 只改艦隊編號3，完整保留舊13號圖示快取 |
+| scout13 | 11 | 10 | 池81已放出；候選距240，旗艦200查不到；界外候選4次移鏡 |
+| near-source | 28 | 27 | 來源鏡頭55,26，舊背景66,30；14次重畫到69,32 |
+| offscreen | 9 | 8 | 旗艦200半徑邊界，來源置鏡後候選界外；2次移鏡 |
+
+五組原版a／b的201份PNG、framebuffer、完整1MiB RAM與終態色盤相同。
+五個寫索敵字前入口明示不算正式UI，57幀完整640×480及有效RGB、3135筆SHIP78、399筆FLEET122零差異。
+每幀保存原版／remake／差分及修正前診斷PNG，逐區含full／field／minimap／status、比較數、相同數、
+不同數、最大RGB通道差與bbox。沒有遮罩、裁切、縮放或原版framebuffer當背景。
+唯一入口注入後，原版所有紀錄與鏡頭只作斷言；每個scroll固定只走一次正式更新。
+
+完整固定計畫：[battle-discovery-scroll-plan](../internals/data/battle-discovery-scroll-plan.json)。
+完整第43輪收據SHA-256 a7169b381e06e1532e4ff3887d0c75ea08b9fa751b7a7b6ee72faf9c96d0d53d。
+原版命令、所有lin注入及readback、trace、full records、渲染／正常抽樣與source SHA：
+[battle-discovery-scroll](../internals/data/battle-discovery-scroll.json)。工具由[第43輪](../goal/2026-10-03-battle-discovery-scroll-round-43.md)及internals索引進入。
+原版輸出分workplace/oracle；所有探索分workplace/explore，舊收據不覆寫。
+
+原版重播使用新a-replay1／b-replay1目錄，五案依表中名稱各執行：
+
+```sh
+bash tools/battle_discovery_scroll_oracle.sh battle79-scroll-r43-near-source-a-replay1
+bash tools/battle_discovery_scroll_oracle.sh battle79-scroll-r43-near-source-b-replay1
+```
+
+五案兩側全部完成後，collect a-replay1 b-replay1可核對新批次；
+以下命令使用本輪既有a／b。不刪除舊收據，重播序號不可重用。
+
+```sh
+tools/py.sh /work/tools/scripts/battle_discovery_scroll.py collect
+tools/gui.sh xrun env LOGH3_MOVEMENT_OUTPUT=round43-normal go test ./internal/game -run '^TestBattleSpotting' -count=1 -v
+tools/gui.sh xrun go test ./internal/... ./cmd/... -count=1
+tools/gui.sh xrun python3 tools/scripts/battle_discovery_scroll.py render
+tools/gui.sh xrun python3 tools/scripts/battle_spotting_display_evidence.py phase-render
+```
+
+父提交鏡頭實作以唯讀Go overlay對同一修正後fixture，scout13／near-source／offscreen三案失敗，
+第一個移鏡幀各差4073／10426／3732像素。修正保留來源精確目標與候選續接，每次最多一步。
+修正前後GUI命令與輸入相同；父提交對照是漏幀診斷，不將不一致中間狀態稱同態通過。
+log round43-corrected-fixture-before-tests SHA-256 484ae10305b0b603b98fc665bb7fab078d4d9b636f41b30d5f198a4a095d0382。
+
+正式Tick逐格、移鏡期間左右鍵／實行阻擋、MsgSpeed90與6 ticks、僅續接一次通過。
+正常主選單／防拷138／S3／戰略實行到戰場，再兩回合與SHIP27456／FLEET3904 bytes存讀通過。
+normal-spotting-header／completed原生PNG保存，正常圖不是原版同態收據。
+限定25個通過事件，零跳過；18標準套件通過或無測試，含原有第一／第二階段、AI與音訊產品回歸。
+final-tests log SHA-256 98fc9e202c65cd0655b16031db847f6966b8c821cc0d87cd7e3b699e81af5cf0。
+standard-tests log SHA-256 03f16dcc39532fe76017ba01a27e39ad90aefa11ebdbbc91d4995b30bb27e3af。
+完整路徑、日誌及PNG雜湊均在JSON，不靠檔名單獨定位。
+
+舊九案94幀／5330筆SHIP／680筆FLEET維持，全畫面及有效RGB仍零差異。
+刷新舊收據的目前來源身份SHA-256 5a7f9d65dc8c640c33fd1c68c3e6bf15f045f369298994a56dc3baca6ffd4824；
+第42輪原先2ef393身份保留在歷史，只是工具來源更新，原版期望未改。
+合計151可比UI幀；原有22個內部停點與本輪5個寫字前入口仍不算正式UI。
+
+行星半徑外兩份探索、一位數圖示注入不完整的反例及未凍結的兩份輸出全部保留，原因見381與plan。
+新指令語意與018／062／087回鏈由工具核對。087保持READY，正常玩家原版配對仍缺，#79 OPEN。
+擁有權與Docker清理核對記錄於本輪WORKLOG；沒有發佈或完整八步聲明。

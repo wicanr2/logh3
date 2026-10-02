@@ -12,7 +12,7 @@ GOLEM="${DOSGOLEM_DIR:-$HOME/cht/dosgolem-logh3}"
 name="${1:?用法: tools/oracle.sh <批次名> [額外旗標...]}"; shift
 # 預設跑 GIN3.COM；結局那類獨立執行檔用 LOGH3_EXE 換掉。
 EXE="${LOGH3_EXE:-/orig/GIN3.COM}"
-out="$ROOT/workplace/oracle/$name"
+out="${LOGH3_ORACLE_OUTPUT_ROOT:-$ROOT/workplace/oracle}/$name"
 mkdir -p "$out"
 
 head=$(git -C "$GOLEM" rev-parse --short HEAD)
