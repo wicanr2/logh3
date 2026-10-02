@@ -61,3 +61,42 @@ bash /home/anr2/cht/dosgolem-logh3/tools/go.sh run /out/round39-coordinate-probe
 兩份收據先從專用dosgolem工作目錄唯讀掛載複製到本專案workplace，再跑evidence工具。
 計畫與來源工具身份由[座標資料JSON](../internals/data/battle-spotting-coordinates.json)固定。
 既有計畫或輸出存在時拒絕覆寫，不另選seed。
+
+
+## 第40輪呈現分支續證
+
+來源：[研究380](../re/380-battle-discovery-presentation.md)、[分支計畫](../internals/data/battle-discovery-plan.json)、
+[分級索引](../internals/data/battle-discovery-semantics.json)及[完整資料](../internals/data/battle-discovery-evidence.json)。
+這是原版受控分支重現，不是正式remake第三階段通過。
+
+```sh
+for scenario in detail3 camera cpu twohuman swapped left right; do
+  bash tools/battle_discovery_oracle.sh "battle79-discovery-r40-$scenario-a"
+  bash tools/battle_discovery_oracle.sh "battle79-discovery-r40-$scenario-b"
+done
+bash tools/gui.sh xrun python3 tools/scripts/battle_discovery_evidence.py
+```
+
+包裝器拒絕覆寫，逐次核對固定父狀態、完整dosgolem HEAD及clean，全argv在完整資料。
+camera／swapped正式注入用空格分隔每個byte，錯誤探索不計入。
+
+| 檢查 | 結果 | 範圍 |
+|---|---|---|
+| 七分支原版雙跑 | 315份輸出相同 | 294份邊界輸出及21份終態，原生640×480 |
+| 98邊界資料 | 5390筆SHIP、686筆FLEET、294筆PLANET全紀錄 | 不排除快取+2F／+6A |
+| 種子 | 七分支均12345678，未變 | 事先固定，無重擲 |
+| Detail3／鏡頭／CPU／兩人／交換座位／左右鍵 | 逐分支結果已驗 | 兩人原映射第二席此局面沒有新發現 |
+| 原始指令 | 八份IDA匯出、80項分級定位 | 保留原名／bytes／位址空間，未審查helper仍unknown |
+| 標準產品測試 | 18套件通過或無測試 | 正式產品沒有新增行為，不證明第三階段parity |
+
+原版完整資料SHA-256 383965f538fdf01ffad4a78b32957ad0372fd5f9a08440fe7d26210ac50507e1。
+計畫SHA-256 02d6b05cfd031d14668ef80dea8d3a093462d4a1565a373954d38ecc224163d5，
+指令索引SHA-256 63a4c95a79f538c8e6de4f15ba7efcf1c6a781c8595bcbc017bf0fad544ea15e。
+證據log workplace/round40-evidence.log，SHA-256
+a87b1b917b5e827903fb97db98b711306573c46ca86fc8213dbf8e44683b017c。
+標準產品log workplace/round40-standard-tests.log，SHA-256
+c7be5ae111fd1532de1b0ca0fb15e32f26a01d29af5f2f5d6d686716f19d0804。
+
+標頭與Detail3第一筆PNG已目視；這不是人耳／音訊、正常玩家或正式renderer驗收。
+camera注入後原版保留舊背景至置鏡，不拿它豁免remake差異。
+下一閘門為物件+1E最小可見性契約、03E9快取寫入鏈、整步READY與正式等待續接／保存。

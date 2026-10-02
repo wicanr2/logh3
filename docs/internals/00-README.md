@@ -11,6 +11,8 @@
 
 ## 這裡的東西怎麼寫
 
+第三階段發現報告與正式續接：[第四十輪](../goal/2026-10-02-battle-discovery-round-40.md)，工作項目 #79。
+
 第三階段索敵與戰鬥前續接：[第三十九輪](../goal/2026-10-02-battle-spotting-round-39.md)，工作項目 #79。
 固定原版雙跑入口：[battle_spotting_oracle.sh](../../tools/battle_spotting_oracle.sh)，
 邊界與父狀態身份：[battle_spotting_plan.py](../../tools/scripts/battle_spotting_plan.py)。
@@ -244,3 +246,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [S1第二戰場畫面差分](../../tools/scripts/battle_second_render_receipt.py)：原生全畫面與逐區色彩統計，保留修正前後差分，不遮罩。
 - [第二戰場研究376](../re/376-second-battle-render.md)與[方向圖示規格084](../spec/084-battle-fleet-directions.md)：方向位置、條件及圖塊來源；同順位重疊與203列差分另待補證。
 - [方向圖示分級索引](data/battle-directions.json)由[證據工具](../../tools/scripts/battle_second_render_evidence.py)核原始指令、八向位移及素材bytes。
+
+第40輪索敵呈現收據入口：[固定七分支計畫](data/battle-discovery-plan.json)、[原版收據包裝器](../../tools/battle_discovery_oracle.sh)、[計畫旗標工具](../../tools/scripts/battle_discovery_plan.py)。
+第40輪呈現事實：[分級指令索引](data/battle-discovery-semantics.json)、[完整原版證據](data/battle-discovery-evidence.json)、[證據重生工具](../../tools/scripts/battle_discovery_evidence.py)。
+第40輪研究入口：[380發現標頭／暫時標亮](../re/380-battle-discovery-presentation.md)，目前事實同步於[戰場畫面](34-battle-screen.md)及[戰場分隊](38-battle-units.md)。

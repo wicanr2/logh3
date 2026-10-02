@@ -1,0 +1,507 @@
+{
+  "schema": "logh3.battle-discovery-plan.v1",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "parent": "battle79-move-entry-a/machine.state",
+  "parent_sha256": "39ed892ae729c2b2bd1a0b208439d106e4913867e1b50134396fabd704b39b55",
+  "regs_at": "181B:0262,181B:028C,2526:00F8,2526:033B,3826:0298,3765:006C,25DB:0E78,25DB:0F93,1588:01A3",
+  "comparison": "controlled original execution; cross-run byte reproducibility; not normal player path",
+  "cases": [
+    {
+      "name": "detail3",
+      "inputs": [
+        "-poke",
+        "lin:689ff@1226638000=02"
+      ],
+      "end": 1256470043,
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "discovered-0",
+          "step": 1226956596
+        },
+        {
+          "name": "header",
+          "step": 1227120801
+        },
+        {
+          "name": "highlight-start",
+          "step": 1245088525
+        },
+        {
+          "name": "unit-0",
+          "step": 1245287068
+        },
+        {
+          "name": "unit-1",
+          "step": 1246588795
+        },
+        {
+          "name": "unit-2",
+          "step": 1248008681
+        },
+        {
+          "name": "unit-3",
+          "step": 1249412204
+        },
+        {
+          "name": "unit-4",
+          "step": 1250816755
+        },
+        {
+          "name": "unit-5",
+          "step": 1252204869
+        },
+        {
+          "name": "unit-6",
+          "step": 1253599331
+        },
+        {
+          "name": "unit-7",
+          "step": 1255007661
+        },
+        {
+          "name": "end",
+          "step": 1256470043
+        }
+      ],
+      "exploration": {
+        "report": "workplace/oracle/battle79-discovery-r40-detail3-explore/report.txt",
+        "sha256": "32f60eed6f980ae97eac365fc6918e09dd9c7d6d249639dc8397db7fec11f7a6"
+      },
+      "scope": "original controlled phase only; camera injection leaves cached old background until redraw; no remake parity claim"
+    },
+    {
+      "name": "camera",
+      "inputs": [
+        "-poke",
+        "lin:5e6d3@1226638000=00 00;lin:5e724@1226638000=00 00 00 00"
+      ],
+      "end": 1256670406,
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "discovered-0",
+          "step": 1226956594
+        },
+        {
+          "name": "header",
+          "step": 1227120799
+        },
+        {
+          "name": "camera-start",
+          "step": 1245086810
+        },
+        {
+          "name": "highlight-start",
+          "step": 1245339119
+        },
+        {
+          "name": "unit-0",
+          "step": 1245512948
+        },
+        {
+          "name": "unit-1",
+          "step": 1246789322
+        },
+        {
+          "name": "unit-2",
+          "step": 1248210724
+        },
+        {
+          "name": "unit-3",
+          "step": 1249612729
+        },
+        {
+          "name": "unit-4",
+          "step": 1251015842
+        },
+        {
+          "name": "unit-5",
+          "step": 1252405968
+        },
+        {
+          "name": "unit-6",
+          "step": 1253799412
+        },
+        {
+          "name": "unit-7",
+          "step": 1255207501
+        },
+        {
+          "name": "seat1",
+          "step": 1256420349
+        },
+        {
+          "name": "end",
+          "step": 1256670406
+        }
+      ],
+      "exploration": {
+        "report": "workplace/oracle/battle79-discovery-r40-camera2-explore/report.txt",
+        "sha256": "d665c22d9d22f2753889e9866ee8079f2e4c8fe24546d9a02dcf02701dd95d23"
+      },
+      "scope": "original controlled phase only; camera injection leaves cached old background until redraw; no remake parity claim"
+    },
+    {
+      "name": "cpu",
+      "inputs": [
+        "-poke",
+        "lin:5da51@1226638000=01"
+      ],
+      "end": 1227207802,
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "discovered-0",
+          "step": 1226956594
+        },
+        {
+          "name": "seat1",
+          "step": 1226958018
+        },
+        {
+          "name": "end",
+          "step": 1227207802
+        }
+      ],
+      "exploration": {
+        "report": "workplace/oracle/battle79-discovery-r40-cpu-explore/report.txt",
+        "sha256": "6be54cb4bf3c33c1b6213c1556b9c6c3c3422a62b7a0ed179742546a9c50aeea"
+      },
+      "scope": "original controlled phase only; camera injection leaves cached old background until redraw; no remake parity claim"
+    },
+    {
+      "name": "twohuman",
+      "inputs": [
+        "-poke",
+        "lin:5da52@1226638000=00"
+      ],
+      "end": 1256470038,
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "discovered-0",
+          "step": 1226956594
+        },
+        {
+          "name": "header",
+          "step": 1227120799
+        },
+        {
+          "name": "camera-start",
+          "step": 1245086810
+        },
+        {
+          "name": "highlight-start",
+          "step": 1245088523
+        },
+        {
+          "name": "unit-0",
+          "step": 1245284656
+        },
+        {
+          "name": "unit-1",
+          "step": 1246588790
+        },
+        {
+          "name": "unit-2",
+          "step": 1248008676
+        },
+        {
+          "name": "unit-3",
+          "step": 1249412199
+        },
+        {
+          "name": "unit-4",
+          "step": 1250816750
+        },
+        {
+          "name": "unit-5",
+          "step": 1252204864
+        },
+        {
+          "name": "unit-6",
+          "step": 1253599326
+        },
+        {
+          "name": "unit-7",
+          "step": 1255007656
+        },
+        {
+          "name": "seat1",
+          "step": 1256220182
+        },
+        {
+          "name": "end",
+          "step": 1256470038
+        }
+      ],
+      "exploration": {
+        "report": "workplace/oracle/battle79-discovery-r40-twohuman-explore/report.txt",
+        "sha256": "8dab187aa71d6c169f5120eb0243248c001755045b404c216554a6f14fb50b0c"
+      },
+      "scope": "original controlled phase only; camera injection leaves cached old background until redraw; no remake parity claim"
+    },
+    {
+      "name": "swapped",
+      "inputs": [
+        "-poke",
+        "lin:5da51@1226638000=00 00;lin:5da55@1226638000=01 00"
+      ],
+      "end": 1256620221,
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "seat1",
+          "step": 1226908333
+        },
+        {
+          "name": "discovered-0",
+          "step": 1227206379
+        },
+        {
+          "name": "header",
+          "step": 1227370457
+        },
+        {
+          "name": "camera-start",
+          "step": 1245487024
+        },
+        {
+          "name": "highlight-start",
+          "step": 1245488737
+        },
+        {
+          "name": "unit-0",
+          "step": 1245684930
+        },
+        {
+          "name": "unit-1",
+          "step": 1246988936
+        },
+        {
+          "name": "unit-2",
+          "step": 1248408733
+        },
+        {
+          "name": "unit-3",
+          "step": 1249812950
+        },
+        {
+          "name": "unit-4",
+          "step": 1251215330
+        },
+        {
+          "name": "unit-5",
+          "step": 1252604744
+        },
+        {
+          "name": "unit-6",
+          "step": 1253999095
+        },
+        {
+          "name": "unit-7",
+          "step": 1255406782
+        },
+        {
+          "name": "end",
+          "step": 1256620221
+        }
+      ],
+      "exploration": {
+        "report": "workplace/oracle/battle79-discovery-r40-swapped2-explore/report.txt",
+        "sha256": "731f379484caca09449c4b8f6b573bb9c7cdadcd306dd818d2ba03463b525fdc"
+      },
+      "scope": "original controlled phase only; camera injection leaves cached old background until redraw; no remake parity claim"
+    },
+    {
+      "name": "left",
+      "inputs": [
+        "-clicks",
+        "1230000000:240:200"
+      ],
+      "end": 1241469913,
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "header",
+          "step": 1227120799
+        },
+        {
+          "name": "camera-start",
+          "step": 1230141892
+        },
+        {
+          "name": "highlight-start",
+          "step": 1230143605
+        },
+        {
+          "name": "unit-0",
+          "step": 1230339801
+        },
+        {
+          "name": "unit-1",
+          "step": 1231588955
+        },
+        {
+          "name": "unit-2",
+          "step": 1233008967
+        },
+        {
+          "name": "unit-3",
+          "step": 1234412349
+        },
+        {
+          "name": "unit-4",
+          "step": 1235815501
+        },
+        {
+          "name": "unit-5",
+          "step": 1237204740
+        },
+        {
+          "name": "unit-6",
+          "step": 1238599082
+        },
+        {
+          "name": "unit-7",
+          "step": 1240007674
+        },
+        {
+          "name": "seat1",
+          "step": 1241220221
+        },
+        {
+          "name": "end",
+          "step": 1241469913
+        }
+      ],
+      "exploration": {
+        "report": "workplace/oracle/battle79-discovery-r40-click-explore/report.txt",
+        "sha256": "db33a4a01b3bfa3324ad7ba1c68dde8625ee2fe2618ad499b832a60ae6cc26d8"
+      },
+      "scope": "original controlled phase only; camera injection leaves cached old background until redraw; no remake parity claim"
+    },
+    {
+      "name": "right",
+      "inputs": [
+        "-rclicks",
+        "1230000000:240:200"
+      ],
+      "end": 1241469915,
+      "points": [
+        {
+          "name": "entry",
+          "step": 1226638239
+        },
+        {
+          "name": "label",
+          "step": 1226658563
+        },
+        {
+          "name": "discovered-0",
+          "step": 1226956594
+        },
+        {
+          "name": "header",
+          "step": 1227120799
+        },
+        {
+          "name": "camera-start",
+          "step": 1230141894
+        },
+        {
+          "name": "highlight-start",
+          "step": 1230143607
+        },
+        {
+          "name": "unit-0",
+          "step": 1230339803
+        },
+        {
+          "name": "unit-1",
+          "step": 1231588957
+        },
+        {
+          "name": "unit-2",
+          "step": 1233008969
+        },
+        {
+          "name": "unit-3",
+          "step": 1234412351
+        },
+        {
+          "name": "unit-4",
+          "step": 1235815503
+        },
+        {
+          "name": "unit-5",
+          "step": 1237204742
+        },
+        {
+          "name": "unit-6",
+          "step": 1238599084
+        },
+        {
+          "name": "unit-7",
+          "step": 1240007676
+        },
+        {
+          "name": "seat1",
+          "step": 1241220223
+        },
+        {
+          "name": "end",
+          "step": 1241469915
+        }
+      ],
+      "exploration": {
+        "report": "workplace/oracle/battle79-discovery-r40-right-explore/report.txt",
+        "sha256": "1cba698918f09ab0ade5be401fff681452e970f74fa318134f2ff6fb8a8c0b2a"
+      },
+      "scope": "original controlled phase only; camera injection leaves cached old background until redraw; no remake parity claim"
+    }
+  ]
+}

@@ -1,0 +1,668 @@
+{
+  "schema": "logh3.battle-discovery-semantics.v1",
+  "inputs": {
+    "3826": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+    "25DB": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+    "1588": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+    "3765": "d13b6d619aab14e50c0fc3a8dd49483802857ba24083ba2c47af9022141c90c3"
+  },
+  "exports": [
+    "re79-discovery-r40-3826.json",
+    "re79-discovery-r40-25DB.json",
+    "re79-discovery-r40-1588.json",
+    "re79-discovery-r40-25DB-info.json",
+    "re79-discovery-r40-1588-camera.json",
+    "re79-discovery-r40-1588-clamp.json",
+    "re79-discovery-r40-3765.json",
+    "re79-discovery-r40-3765-events.json"
+  ],
+  "entries": [
+    {
+      "kind": "function",
+      "original_location": "3826:0298",
+      "semantic": "以樣式1／色0x97建立4,7位置20×3內容格的臨時窗，印傳入本文，等待MsgSpeed後關窗；沒有頭像呼叫",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625"
+    },
+    {
+      "kind": "function",
+      "original_location": "25DB:0E78",
+      "semantic": "清除舊選取物件；配置40 bytes，分隊走0EDD、行星走0F63，定位並註冊顯示物件",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90"
+    },
+    {
+      "kind": "function",
+      "original_location": "25DB:0F93",
+      "semantic": "移除並釋放暫時選取物件，重畫後將DS:A78C/A78E清零",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90"
+    },
+    {
+      "kind": "function",
+      "original_location": "25DB:0EDD",
+      "semantic": "分隊暫時選取物件使用16×16圖塊10，優先值FF；世界位置讀SHIP+34/+36；沒有Detail分支或詳細資料文字",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90"
+    },
+    {
+      "kind": "function",
+      "original_location": "25DB:0F6B",
+      "semantic": "物件+6/+8等於選取世界位置減鏡頭DS:9BF4/9BF6",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90"
+    },
+    {
+      "kind": "function",
+      "original_location": "25DB:108E",
+      "semantic": "依序呼叫3870:01AC、35D1:026D、3870:015C、25DB:09C5；只記錄呼叫序列，不推定所有callee內部行為",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90"
+    },
+    {
+      "kind": "function",
+      "original_location": "1588:01A3",
+      "semantic": "自動置鏡：以帶號截斷取整計算目標；小差距返回、大差距走0183，其餘按方位單步，旗標1重複至目標",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def"
+    },
+    {
+      "kind": "function",
+      "original_location": "1588:0183",
+      "semantic": "世界X減224、Y減180，再交02CE直接置鏡",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def"
+    },
+    {
+      "kind": "function",
+      "original_location": "1588:03A9",
+      "semantic": "以方向索引及DS:3C1E格位移單步，04A0回1才同步格／像素鏡頭，並依原序重畫",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def"
+    },
+    {
+      "kind": "function",
+      "original_location": "1588:02CE",
+      "semantic": "帶號X/16、Y/20得到格，04A0限界；有改變才同步格／像素鏡頭並重畫",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def"
+    },
+    {
+      "kind": "function",
+      "original_location": "1588:04A0",
+      "semantic": "限制鏡頭格為列0..100、行0..84，兩軸都超界回0，其他回1",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def"
+    },
+    {
+      "kind": "function",
+      "original_location": "3765:006C",
+      "semantic": "將等待參數寫DS:8EFE，反覆讀事件，倒數為零或事件碼1／2就返回，並清DS:8EFE",
+      "grade": "proven",
+      "source": "d13b6d619aab14e50c0fc3a8dd49483802857ba24083ba2c47af9022141c90c3"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:029E",
+      "semantic": "窗樣式參數1",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "b0 01"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:02A1",
+      "semantic": "內容列數3",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "b0 03"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:02A4",
+      "semantic": "內容欄數20",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "b0 14"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:02A7",
+      "semantic": "窗格Y=7",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "b0 07"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:02AA",
+      "semantic": "窗格X=4",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "b0 04"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:02AD",
+      "semantic": "色彩參數取caller",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "ff 76 2a"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:02B5",
+      "semantic": "呼叫3603:0006建臨時窗",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "9a 06 00 03 36"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:02D8",
+      "semantic": "呼叫3617:000A印傳入本文",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "9a 0a 00 17 36"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:02EB",
+      "semantic": "標頭等待讀DS:8F38 MsgSpeed",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "ff 36 38 8f"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:02EF",
+      "semantic": "呼叫3765:006C等待",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "9a 6c 00 65 37"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3826:02FB",
+      "semantic": "等待後呼叫3603:00B4關窗",
+      "grade": "proven",
+      "source": "7f2aacf2e4e57f3b23116119be663932b802fcec4724473864d9801f09f1c625",
+      "original_bytes_hex": "9a b4 00 03 36"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0E88",
+      "semantic": "已存在選取物件先關閉",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "9a 93 0f db 25"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0E8D",
+      "semantic": "配置長度40 bytes",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "b8 28 00"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0EAA",
+      "semantic": "索引最高bit分流行星／分隊",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "f6 c4 80"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0EBA",
+      "semantic": "分隊呼叫0EDD",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "9a dd 0e db 25"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0EC1",
+      "semantic": "依鏡頭定位選取物件",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "9a 6b 0f db 25"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0ECE",
+      "semantic": "向35D1顯示串列註冊選取物件",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "9a 09 00 d1 35"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0FA4",
+      "semantic": "向35D1移除顯示物件",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "9a 02 01 d1 35"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0FB4",
+      "semantic": "釋放選取物件",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "9a 3b 00 bf 3a"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0FC1",
+      "semantic": "清選取物件offset",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "c7 06 8c a7 00 00"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0FC7",
+      "semantic": "清選取物件segment",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "c7 06 8e a7 00 00"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F03",
+      "semantic": "選取優先值FF",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "26 88 47 01"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F07",
+      "semantic": "選取所屬視窗ID讀DS:9B9E",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "8a 16 9e 9b"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F21",
+      "semantic": "圖塊寬16",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "26 88 47 0a"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F29",
+      "semantic": "圖塊高16",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "26 88 47 0b"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F2D",
+      "semantic": "選取圖塊索引10",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "b0 0a"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F38",
+      "semantic": "取得圖塊10",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "9a 01 00 82 39"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F4E",
+      "semantic": "選取世界X讀SHIP+34",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "26 8b 47 34"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F52",
+      "semantic": "保存選取世界X",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "a3 98 a7"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F55",
+      "semantic": "選取世界Y讀SHIP+36",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "26 8b 47 36"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F59",
+      "semantic": "保存選取世界Y",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "a3 9a a7"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F77",
+      "semantic": "物件X減鏡頭像素X",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "2b 06 f4 9b"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F7F",
+      "semantic": "物件+6保存相對X",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "26 89 47 06"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F86",
+      "semantic": "物件Y減鏡頭像素Y",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "2b 06 f6 9b"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "25DB:0F8E",
+      "semantic": "物件+8保存相對Y",
+      "grade": "proven",
+      "source": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90",
+      "original_bytes_hex": "26 89 47 08"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:01B8",
+      "semantic": "目標X先減216",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "05 28 ff"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:01BF",
+      "semantic": "帶號截斷除16",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "f7 f9"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:01C6",
+      "semantic": "目標Y先減172",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "05 54 ff"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:01CD",
+      "semantic": "帶號截斷除20",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "f7 f9"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:01F6",
+      "semantic": "目標X上限1600",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "b8 40 06"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:0215",
+      "semantic": "目標Y上限1680",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "b8 90 06"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:0239",
+      "semantic": "未限界時X差小於128才可能保持鏡頭",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "3d 80 00"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:024C",
+      "semantic": "未限界且Y差小於60才保持鏡頭",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "83 f8 3c"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:0266",
+      "semantic": "X差至少448走直接置鏡",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "3d c0 01"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:0279",
+      "semantic": "Y差至少360走直接置鏡",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "3d 68 01"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:0280",
+      "semantic": "大差距呼叫0183",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "9a 83 01 88 15"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:02AD",
+      "semantic": "剩餘差向量交原有角度常式",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "9a 1d 01 e1 2b"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:02B8",
+      "semantic": "按角度呼叫03A9單步",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "9a a9 03 88 15"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:02BF",
+      "semantic": "旗標非零繼續到目標，零只走一步",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "83 7e 16 00"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:02E2",
+      "semantic": "直接置鏡X以帶號截斷除16",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "f7 f9"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:02ED",
+      "semantic": "直接置鏡Y以帶號截斷除20",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "f7 f9"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:02FB",
+      "semantic": "呼叫04A0限制鏡頭格",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "9a a0 04 88 15"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:032D",
+      "semantic": "像素X=格列×16",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "a3 f4 9b"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:0338",
+      "semantic": "像素Y=格行×20",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "a3 f6 9b"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:04AF",
+      "semantic": "負列限到0",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "26 89 07"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:04BD",
+      "semantic": "負行限到0",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "26 89 07"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:04C4",
+      "semantic": "鏡頭列上限100",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "b8 64 00"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:04D3",
+      "semantic": "鏡頭行上限84",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "b8 54 00"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:04DF",
+      "semantic": "兩軸都限界才回0",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "83 f9 02"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3765:007D",
+      "semantic": "將caller等待值寫DS:8EFE",
+      "grade": "proven",
+      "source": "d13b6d619aab14e50c0fc3a8dd49483802857ba24083ba2c47af9022141c90c3",
+      "original_bytes_hex": "a3 fe 8e"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3765:008C",
+      "semantic": "等待迴圈呼叫00BF讀事件",
+      "grade": "proven",
+      "source": "d13b6d619aab14e50c0fc3a8dd49483802857ba24083ba2c47af9022141c90c3",
+      "original_bytes_hex": "9a bf 00 65 37"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3765:0093",
+      "semantic": "倒數為零退出",
+      "grade": "proven",
+      "source": "d13b6d619aab14e50c0fc3a8dd49483802857ba24083ba2c47af9022141c90c3",
+      "original_bytes_hex": "83 3e fe 8e 00"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3765:009A",
+      "semantic": "事件碼1退出",
+      "grade": "proven",
+      "source": "d13b6d619aab14e50c0fc3a8dd49483802857ba24083ba2c47af9022141c90c3",
+      "original_bytes_hex": "83 7e 00 01"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3765:00A0",
+      "semantic": "事件碼2退出",
+      "grade": "proven",
+      "source": "d13b6d619aab14e50c0fc3a8dd49483802857ba24083ba2c47af9022141c90c3",
+      "original_bytes_hex": "83 7e 00 02"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3765:00AB",
+      "semantic": "退出時清倒數",
+      "grade": "proven",
+      "source": "d13b6d619aab14e50c0fc3a8dd49483802857ba24083ba2c47af9022141c90c3",
+      "original_bytes_hex": "c7 06 fe 8e 00 00"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:018E",
+      "semantic": "直接置鏡X減224",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "81 c6 20 ff"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:0192",
+      "semantic": "直接置鏡Y減180",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "81 c7 4c ff"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1588:0198",
+      "semantic": "呼叫02CE直接置鏡",
+      "grade": "proven",
+      "source": "4e80fc361ad9cdd7221515f5177309d5e01db32dbcea051c0da566220ab13def",
+      "original_bytes_hex": "9a ce 02 88 15"
+    }
+  ],
+  "review": "manual original-instruction review; unknown helpers remain graded unknown; full phase not READY",
+  "ram_sources": [
+    {
+      "path": "workplace/oracle/battle79-phase-r34-a/entry-mem.bin",
+      "sha256": "9c4a4c28a1f53056962f613b1b643e5a5ba199d9231df291918d9499111be38d",
+      "segments": [
+        "3765"
+      ]
+    },
+    {
+      "path": "workplace/oracle/battle79-second-r36-a/entry-mem.bin",
+      "sha256": "9095dfa08ab36201784e6d4555b5e42312ac76bb20049614cf53bf93bc09e7ec",
+      "segments": [
+        "3826",
+        "25DB",
+        "1588"
+      ]
+    }
+  ]
+}
