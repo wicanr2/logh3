@@ -70,7 +70,7 @@ type BattleView struct{ Col, Row int }
 // 還沒畫的：小地圖、狀態欄的內容、以及戰場上的單位——原版在這個時機
 // 也沒有把單位畫出來（`docs/re/82`）。
 func Battle(s *BattleSpec, panel *asset.Image, tiles []*asset.Image, cells []uint8, v BattleView) *gfx.Framebuffer {
-	fb := gfx.NewFramebuffer(0)
+	fb := gfx.NewFramebuffer(3) // 原版上下外區是色號3，色號0為藍色（規格080／研究373）。
 	if panel != nil {
 		for y := 0; y < panel.H; y++ {
 			for x := 0; x < panel.W; x++ {
@@ -321,8 +321,11 @@ func DrawBattleUnits(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
 	fw, fh := s.Field.Cols*s.Field.TileW, s.Field.Rows*s.Field.TileH
 	ox, oy := v.Col*s.Field.TileW, v.Row*s.Field.TileH
 	for _, u := range units {
+		if u.Out {
+			continue
+		}
 		n := sprite(u)
-		if n < 0 || n >= len(sprites) {
+		if n == rules.BlankSprite || n < 0 || n >= len(sprites) {
 			continue
 		}
 		t := sprites[n]

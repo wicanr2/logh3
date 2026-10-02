@@ -26,6 +26,9 @@ func (g *Game) battleUnitAt(x, y int) int {
 	oy := g.battleView.Row * s.Field.TileH
 	for i := len(g.battleUnits) - 1; i >= 0; i-- {
 		u := g.battleUnits[i]
+		if u.Out {
+			continue // 已回收／離場單位與正式renderer一致，不攔截點選（規格080）。
+		}
 		sx, sy := fx+u.X-ox, fy+u.Y-oy
 		if x >= sx && x < sx+battleUnitTile && y >= sy && y < sy+battleUnitTile {
 			return i

@@ -74,7 +74,8 @@
 證據等級：**proven**；[研究371](../re/371-battle-movement-phase.md)保存IDA Pro9.4
 原始指令、輸入／輸出雜湊、dosgolem版本及可重播命令，
 [分級索引](data/battle-movement-phase.json)供匯出自動合併，不以自訂名稱取代原定位。
-正式完整移動依[規格080](../spec/080-battle-movement-phase.md)的READY契約；畫面收據仍待補。
+正式完整移動依[規格080](../spec/080-battle-movement-phase.md)的READY契約；
+畫面診斷見[驗證045](../playtest/045-battle-movement-render.md)，完整同狀態門檻仍待補。
 
 一般分隊與啟用索敵隊的`+24/+26`是有號32位16.16額度。初始化讀`+21`巡航速度，
 新增量為`speed<<19`；嚴格`0<舊額度<8<<16`才累加，其餘覆蓋。
@@ -103,4 +104,8 @@ SHIP的移動回寫範圍為`+05`槽、`+16`低byte、`+19`標記旗標、`+1A/+
 低byte回寫保留`+17`，DOS圖示指標及其餘未知bytes原樣保存。
 `+19 bit6`設起時標記座標隨移動更新；回收清bit7、設Action bit7並隱藏單位。
 標記契約的原始bytes及寫入端見[研究154](../re/154-minimap-marker-not-a-trail.md)，
-本輪未新增DOS指標語意。完整索敵放出／回收／再放出UI仍待正常路徑抽驗。
+本輪未新增DOS指標語意。第32輪正常索敵放出、歸隊、回收與再放出已通過，
+沿用原池81／單位31，回收後完整SHIP／FLEET正式存讀相同；回收單位不攔截點選。
+驗證範圍及收據見[驗證045](../playtest/045-battle-movement-render.md)。
+原版標記旗標／快照重播可消除兩個端點各35像素差異，限可丟棄診斷；
+正式小地圖的正常初始化／更新鏈尚未核對，不將該模型接入產品或宣稱畫面完成。

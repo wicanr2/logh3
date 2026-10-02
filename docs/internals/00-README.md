@@ -204,3 +204,6 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [完整交錯移動審查](../re/373-battle-interleaved-movement.md)：[第三十一輪](../goal/2026-10-02-battle-movement-round-31.md)依既有三邊界及102案核對完整第二階段。
 - [交錯移動驗證044](../playtest/044-battle-interleaved-movement.md)：完整7艦隊／55分隊資料、正式Game轉接、正常命令中間幀及存讀；整階段畫面仍待對拍。
 - [回合後距離／座標語意索引](data/post-turn-runtime-fields.json)：研究 354 的原始定位與證據分級，由 IDA 匯出自動合併；[全表收據摘要](data/post-turn-runtime-receipts.json) 的驗收入口是[對拍 027](../playtest/027-post-turn-runtime-fields.md)。
+- [第三十二輪：索敵回收與移動畫面](../goal/2026-10-02-battle-movement-round-32.md)：接續正常回收、原池重用與產品畫面收據。
+- [移動畫面收據工具](../../tools/scripts/battle_movement_render_receipt.py)：依371固定收據及正式Game.Frame記錄全畫面差分，不排除未對齊區域。
+- [移動畫面與正常回收驗證045](../playtest/045-battle-movement-render.md)：隱藏圖示、點選及游標修正，原池再放出與原生差分。

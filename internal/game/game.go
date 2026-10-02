@@ -4923,9 +4923,8 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	}
 	// 訊息框畫在最上面（模態）。
 	g.drawMessage(fb)
-	// 游標永遠在最上面（收據 `cam-*`）；捲視野那一圈原版把它藏起來，
-	// remake 一幀一格、沒有那一圈，所以一直畫。
-	if g.res.Cursor != nil {
+	// 正常輸入時游標在最上面；移動階段原版邊界均藏游標（規格080）。
+	if g.res.Cursor != nil && !g.battleMoving {
 		g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)
 	}
 	return fb

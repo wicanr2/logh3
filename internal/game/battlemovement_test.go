@@ -3,9 +3,12 @@ package game
 import (
 	"bytes"
 	"crypto/sha256"
+	"encoding/binary"
 	"encoding/hex"
 	"encoding/json"
+	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
 	"os"
 	"path/filepath"
 	"testing"
@@ -25,6 +28,13 @@ func TestGameMovementPhaseMatchesOriginal(t *testing.T) {
 		t.Fatal("原版RAM雜湊不同")
 	}
 	g := preparationGame(t, mem)
+	// 資料測試的StartBattle重設索敵層級；畫面診斷須還原原版完整顯示狀態。
+	for i := range g.battleUnits {
+		u := &g.battleUnits[i]
+		r := g.slot.ShipAt(g.battleUnitPool(*u))
+		u.Detail, u.Seen, u.DetailHold = int(r[0x17]), r[0x16]&1 != 0, int(r[0x18])
+	}
+	loadMovementTiles(t, g)
 	var d struct {
 		Fleets []struct {
 			Fleet int    `json:"fleet_index"`
@@ -51,6 +61,13 @@ func TestGameMovementPhaseMatchesOriginal(t *testing.T) {
 		}
 		g.battleFleets = append(g.battleFleets, rules.NewBattleFleet(r.Fleet, raw, [rules.FleetAbilityCount]byte{}))
 	}
+	// 已證實鏡頭來源ds:9BF4/9BF6，線性DS=54B30，研究326。
+	// 診斷明示注入原版鏡頭；不從截圖反推位置、不改正式玩家鏡頭。
+	g.battleView = screen.BattleView{Col: int(binary.LittleEndian.Uint16(mem[0x5E724:])) / g.res.Battle.Field.TileW,
+		Row: int(binary.LittleEndian.Uint16(mem[0x5E726:])) / g.res.Battle.Field.TileH}
+	g.MoveMouse(240, 240) // 原版最後點擊240,200，產品畫布加40；游標相位仍分列。
+	g.battleMoving = true // 明示診斷移動邊界；正常玩家測試則由實行自行設定。
+	movementFrame(t, g, "phase-entry")
 	m := g.newBattleMovement()
 	if len(g.battleMovementGroups) != 7 {
 		t.Fatal("正式Game艦隊清單不同")
@@ -70,6 +87,8 @@ func TestGameMovementPhaseMatchesOriginal(t *testing.T) {
 		}
 	}
 	g.saveBattleMovement()
+	movementFrame(t, g, "phase-end")
+	g.battleMoving = false
 	for _, r := range d.Fleets {
 		want, err := hex.DecodeString(r.End)
 		if err != nil {
@@ -293,4 +312,155 @@ func movementFrame(t *testing.T, g *Game, label string) {
 			t.Fatal(err)
 		}
 	}
+}
+
+func loadMovementTiles(t *testing.T, g *Game) {
+	t.Helper()
+	if g.res.BattleTiles != nil {
+		return
+	}
+	b, err := os.ReadFile(filepath.Join(root, "org_game/extracted", g.res.Battle.Field.Tiles))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.res.BattleTiles, err = asset.DecodeTiles(b, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+// 正常索敵命令與實行，驗回收後原池重用及不可點選；不注入回收旗標。
+func TestScoutRecoverAndRelaunchNormal(t *testing.T) {
+	g := commandTestGame(t)
+	if g == nil {
+		return
+	}
+	loadPreparationPresentation(t, g)
+	loadMovementTiles(t, g)
+	var err error
+	g.res.EditorTables, err = rules.LoadEditorTables(filepath.Join(root, "docs/internals/data/fleet-editor.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	flag := findUnit(g, g.faction, true)
+	if flag < 0 {
+		t.Fatal("正常視野缺己方旗艦")
+	}
+	fleet := g.battleUnits[flag].Fleet
+	bf := g.battleFleet(fleet)
+	if bf == nil || bf.Flag0 || bf.ScoutOut {
+		t.Fatal("正常旗艦不能放出索敵隊")
+	}
+	f, ok := g.saveFleet(fleet)
+	if !ok {
+		t.Fatal("缺原始艦隊")
+	}
+	pool := f.Scout
+	base := len(g.battleUnits)
+	clickRow := func(index, row int) {
+		t.Helper()
+		x, y := unitScreenPos(g, index)
+		g.MoveMouse(x+8, y+8)
+		g.Click(x+8, y+8)
+		if !g.CommandMenuOpen() || g.battleCmdUnit != index {
+			t.Fatalf("正常點選%d命中%d，選單%v", index, g.battleCmdUnit, g.CommandMenuOpen())
+		}
+		l := g.res.CommandMenus.Layout
+		g.Click(g.battleCmdX+l.HighlightDX+8, g.battleCmdY+l.HighlightDY+row*l.RowPitch+8)
+	}
+	deploy := func() int {
+		t.Helper()
+		clickRow(flag, 2)
+		if !g.MoveTargetPending() {
+			t.Fatal("索敵未進選點")
+		}
+		index := g.battleMoveUnit
+		if index < 0 || g.battleUnitPool(g.battleUnits[index]) != pool {
+			t.Fatal("索敵原池身份不同")
+		}
+		x, y := unitScreenPos(g, flag)
+		picked := false
+		for _, dx := range []int{64, -64, 96, -96} {
+			if _, _, ok := g.battleWorldAt(x+8+dx, y+8); ok {
+				g.MoveMouse(x+8+dx, y+8)
+				g.Click(x+8+dx, y+8)
+				picked = true
+				break
+			}
+		}
+		if !picked || g.MoveTargetPending() || g.battleUnits[index].Out {
+			t.Fatal("正常放出選點失敗")
+		}
+		return index
+	}
+	// 測試seed在第一次實行前固定一次，不重擲。
+	g.battleRand = rules.NewRand(0x12345678)
+	execute := func() {
+		t.Helper()
+		g.MoveMouse(600, 240)
+		g.Click(600, 240)
+		if !g.battleMenu {
+			t.Fatal("未開戰術選單")
+		}
+		b := g.res.BattleMenu.Layout
+		g.Click(g.battleMenuX+b.Highlight.X-b.Window.X+2, g.battleMenuY+b.Highlight.Y-b.Window.Y+2)
+		settleBattleExecution(t, g)
+		if g.state != StateBattle {
+			t.Fatal("索敵流程意外離開戰場")
+		}
+	}
+	scout := deploy()
+	if len(g.battleUnits) != base+1 {
+		t.Fatal("首次放出數量不同")
+	}
+	movementFrame(t, g, "scout-deployed")
+	execute()
+	if g.battleUnits[scout].Out {
+		t.Fatal("首次正常移動意外已回收")
+	}
+	movementFrame(t, g, "scout-away")
+	clickRow(scout, 1)
+	if g.battleUnits[scout].Action != squadronRejoin {
+		t.Fatal("歸隊命令未設3")
+	}
+	turns := 0
+	for !g.battleUnits[scout].Out && turns < 6 {
+		execute()
+		turns++
+	}
+	u := g.battleUnits[scout]
+	if !u.Out || u.Action != 0xFF || u.Marked || u.MarkerFlags&0x80 != 0 || bf.ScoutOut || bf.ScoutMode != 0xFF || bf.ScoutState != 0 {
+		t.Fatalf("正常回收未完成：%+v／%+v", u, *bf)
+	}
+	x, y := unitScreenPos(g, scout)
+	if g.battleUnitAt(x+8, y+8) == scout {
+		t.Fatal("已回收索敵隊仍攔截正常點選")
+	}
+	movementFrame(t, g, "scout-recovered")
+	dir := t.TempDir()
+	if err := g.SaveSlot(dir, 0); err != nil {
+		t.Fatal(err)
+	}
+	if g.slot.Ship[pool*rules.ShipRecord+0x1E] != 0xFF || g.slot.Ship[pool*rules.ShipRecord+0x19]&0x80 != 0 || g.slot.Fleet[fleet*rules.FleetRecord+0x3A] != 0xFF {
+		t.Fatal("正式存檔遺失回收狀態")
+	}
+	ship, fleets := bytes.Clone(g.slot.Ship), bytes.Clone(g.slot.Fleet)
+	loaded := newTestGame(t)
+	loaded.res.SaveDir = dir
+	loaded.loadSlotFromDisk(0)
+	if loaded.SaveErr() != nil || !bytes.Equal(ship, loaded.slot.Ship) || !bytes.Equal(fleets, loaded.slot.Fleet) {
+		t.Fatal("回收後完整SHIP／FLEET正式存讀不同")
+	}
+	if next := deploy(); next != scout || len(g.battleUnits) != base+1 {
+		t.Fatal("再放出未重用原池與既有單位")
+	}
+	if !bf.ScoutOut || bf.ScoutMode != 0 || bf.ScoutState != 0 || g.battleUnits[scout].Action != 0 || g.battleUnits[scout].MarkerFlags&0x80 == 0 {
+		t.Fatal("再放出命令旗標不符")
+	}
+	movementFrame(t, g, "scout-relaunched")
+	execute()
+	if g.battleUnitPool(g.battleUnits[scout]) != pool {
+		t.Fatal("再放出實行丟失原池")
+	}
+	t.Logf("正常索敵放出／移動／歸隊%d回合／回收／再放出，原池%d、單位%d保持", turns, pool, scout)
 }
