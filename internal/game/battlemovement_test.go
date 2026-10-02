@@ -437,7 +437,34 @@ func TestScoutRecoverAndRelaunchNormal(t *testing.T) {
 		turns++
 	}
 	u := g.battleUnits[scout]
-	if !u.Out || u.Action != 0xFF || u.Marked || u.MarkerFlags&0x80 != 0 || bf.ScoutOut || bf.ScoutMode != 0xFF || bf.ScoutState != 0 {
+	// 原版26E5刷新仍處理已回收隊；Detail1時會重新設C5，不能用Out替代標記（381／082）。
+	oracleRaw, err := os.ReadFile(filepath.Join(root, "docs/internals/data/battle-spotting-display.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var markerOracle struct {
+		RecoveredScout struct {
+			Rows []struct{ Before, After map[string]string }
+		} `json:"recovered_scout"`
+	}
+	if err := json.Unmarshal(oracleRaw, &markerOracle); err != nil {
+		t.Fatal(err)
+	}
+	wantMarker := -1
+	for _, row := range markerOracle.RecoveredScout.Rows {
+		before, err := hex.DecodeString(row.Before["scout"])
+		if err != nil || len(before) != rules.ShipRecord {
+			t.Fatal("原版回收紀錄格式不同")
+		}
+		if int(before[0x17]) == u.Detail {
+			after, err := hex.DecodeString(row.After["scout"])
+			if err != nil || len(after) != rules.ShipRecord {
+				t.Fatal("原版刷新後紀錄格式不同")
+			}
+			wantMarker = int(after[0x19])
+		}
+	}
+	if wantMarker < 0 || !u.Out || u.Action != 0xFF || u.MarkerFlags != wantMarker || u.Marked != (wantMarker&0x80 != 0) || bf.ScoutOut || bf.ScoutMode != 0xFF || bf.ScoutState != 0 {
 		t.Fatalf("正常回收未完成：%+v／%+v", u, *bf)
 	}
 	x, y := unitScreenPos(g, scout)
@@ -449,7 +476,7 @@ func TestScoutRecoverAndRelaunchNormal(t *testing.T) {
 	if err := g.SaveSlot(dir, 0); err != nil {
 		t.Fatal(err)
 	}
-	if g.slot.Ship[pool*rules.ShipRecord+0x1E] != 0xFF || g.slot.Ship[pool*rules.ShipRecord+0x19]&0x80 != 0 || g.slot.Fleet[fleet*rules.FleetRecord+0x3A] != 0xFF {
+	if g.slot.Ship[pool*rules.ShipRecord+0x1E] != 0xFF || int(g.slot.Ship[pool*rules.ShipRecord+0x19]) != wantMarker || g.slot.Fleet[fleet*rules.FleetRecord+0x3A] != 0xFF {
 		t.Fatal("正式存檔遺失回收狀態")
 	}
 	ship, fleets := bytes.Clone(g.slot.Ship), bytes.Clone(g.slot.Fleet)

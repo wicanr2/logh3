@@ -36,38 +36,46 @@ func DecaySpotting(units []BattleUnit) {
 // 已放出的偵察隊是 250 像素的眼睛；有主行星的半徑由防衛力夾限後除 25。
 // 觀測者與候選位置讀 X／Y（SHIP+34/+36，規格087）。正式Game的階段續接尚待補齊。
 func UpdateSpotting(units []BattleUnit, planets []BattlePlanet) {
-	observe := func(faction, x, y, radius int) {
-		for i := range units {
-			u := &units[i]
-			if u.Faction == faction || u.Out || u.Kind == 7 || u.Seen {
-				continue
-			}
-			if Distance16(x, y, u.X, u.Y) > int64(radius*FixOne) {
-				continue
-			}
-			u.Seen = true
-			if u.Detail < SpottingMax {
-				u.Detail++
-				if u.Detail == SpottingMax {
-					u.DetailHold = 2
-				}
-			}
-		}
-	}
 	for i := range units {
 		u := &units[i]
 		switch {
 		case u.Squadron == 0:
-			observe(u.Faction, u.X, u.Y, FlagshipVision)
+			ObserveSpotting(units, u.Faction, u.X, u.Y, FlagshipVision)
 		case u.Kind == 7:
-			observe(u.Faction, u.X, u.Y, ScoutVision)
+			ObserveSpotting(units, u.Faction, u.X, u.Y, ScoutVision)
 		}
 	}
 	for _, p := range planets {
 		if p.Owner == 0 || p.Owner == 1 {
-			observe(p.Owner, p.X, p.Y, PlanetQueryRadius(p.Defence))
+			ObserveSpotting(units, p.Owner, p.X, p.Y, PlanetQueryRadius(p.Defence))
 		}
 	}
+}
+
+// ObserveSpotting只處理一個觀測中心，回傳真正提升情報的候選索引（2526:02D7／087）。
+// 已有Detail3只設Seen，留給完整第三階段以同一規則逐觀測者續接。
+func ObserveSpotting(units []BattleUnit, faction, x, y, radius int) []int {
+	var discovered []int
+	for i := range units {
+		u := &units[i]
+		if u.Faction != 1-faction || u.Out || u.Seen {
+			continue
+		}
+		if Distance16(x, y, u.X, u.Y) > int64(radius*FixOne) {
+			continue
+		}
+		u.Seen = true
+		if u.Detail == SpottingMax {
+			continue
+		}
+		// 原版inc byte包含255→0；Kind7也由Out決定是否為候選。
+		u.Detail = int(byte(u.Detail + 1))
+		if u.Detail == SpottingMax {
+			u.DetailHold = 2
+		}
+		discovered = append(discovered, i)
+	}
+	return discovered
 }
 
 // RevealFleet 顯示一支艦隊的所有一般分隊。打有主行星時 hold=2；AI 的

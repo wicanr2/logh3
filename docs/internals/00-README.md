@@ -9,7 +9,14 @@
 在原始碼與開發資料都不存在的情況下，只剩執行檔本身可以問。所以逆向出來
 的東西一律整理成可讀的 markdown，不停留在對話紀錄或一次性的輸出檔裡。
 
+- [索敵顯示最小契約研究381](../re/381-battle-spotting-display.md)
+- [索敵顯示完整原版資料](data/battle-spotting-display.json)
+- [索敵顯示分級定位與固定61案計畫](data/battle-spotting-display-semantics.json)
+- [索敵顯示收據工具](../../tools/scripts/battle_spotting_display_evidence.py)
+
 ## 這裡的東西怎麼寫
+
+第三階段可見性／快取與正式續接：[第四十一輪](../goal/2026-10-03-battle-spotting-integration-round-41.md)，工作項目 #79。
 
 第三階段發現報告與正式續接：[第四十輪](../goal/2026-10-02-battle-discovery-round-40.md)，工作項目 #79。
 

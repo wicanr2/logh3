@@ -9,8 +9,138 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
+
+// 61案直接原版收據：36案快取全byte、十案情報全78 bytes；可見性留給完整Game接線。
+func TestSpottingDisplayAndByteRulesMatchOriginal(t *testing.T) {
+	base := filepath.Join("..", "..")
+	p := filepath.Join(base, "workplace/explore/battle79-spot-r41-final-a.json")
+	raw, err := os.ReadFile(p)
+	if os.IsNotExist(err) {
+		t.Skip("缺原版顯示收據；重生入口docs/playtest/046-battle-spotting-phase.md")
+	}
+	if err != nil || fmt.Sprintf("%x", sha256.Sum256(raw)) != "f03cc58211076e8bc0aa5a2a2e09414ae84716d68080fa044af62169ada01471" {
+		t.Fatal("原版顯示收據身份不同")
+	}
+	dataRaw, err := os.ReadFile(filepath.Join(base, "docs/internals/data/battle-spotting-display.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var data struct {
+		Receipt struct {
+			Rows []struct {
+				Name          string
+				Before, After map[string]string
+				Returns       []uint32
+			}
+		}
+	}
+	if err := json.Unmarshal(dataRaw, &data); err != nil || len(data.Receipt.Rows) != 61 {
+		t.Fatal("原版案例格式或數量不同")
+	}
+	decode := func(text string, size int) []byte {
+		t.Helper()
+		b, err := hex.DecodeString(text)
+		if err != nil || len(b) != size {
+			t.Fatal("完整紀錄格式不同")
+		}
+		return b
+	}
+	unit := func(b []byte) BattleUnit {
+		w := func(n int) int { return int(binary.LittleEndian.Uint16(b[n:])) }
+		return BattleUnit{Faction: int(b[0]), Fleet: int(b[1]), Squadron: int(b[3]), Kind: int(b[4]),
+			X: w(52), Y: w(54), Out: b[30]&128 != 0, Seen: b[22]&1 != 0,
+			Detail: int(b[23]), DetailHold: int(b[24])}
+	}
+	count := 0
+	for _, row := range data.Receipt.Rows {
+		if !strings.HasPrefix(row.Name, "cache-") && !strings.HasPrefix(row.Name, "intelligence-") {
+			continue
+		}
+		count++
+		t.Run(row.Name, func(t *testing.T) {
+			if strings.HasPrefix(row.Name, "cache-") {
+				got := decode(row.Before["unit"], 78)
+				u := unit(got)
+				u.FleetNumber = int(decode(row.Before["fleet"], 122)[2])
+				force := strings.HasPrefix(row.Name, "cache-f1-")
+				got[47] = byte(BattleCachedSprite(u, force, int(got[47])))
+				if !bytes.Equal(got, decode(row.After["unit"], 78)) {
+					t.Errorf("完整SHIP78的圖示重算與原版不同")
+				}
+				return
+			}
+			records := [][]byte{decode(row.Before["observer"], 78), decode(row.Before["candidate"], 78)}
+			units := []BattleUnit{unit(records[0]), unit(records[1])}
+			// 原版只呼叫observer的01FE，不額外執行候選Kind7對另一席的觀測。
+			observer := units[0]
+			found := ObserveSpotting(units, observer.Faction, observer.X, observer.Y, FlagshipVision)
+			if len(row.Returns) != 1 {
+				t.Fatal("原版診斷呼叫數不同")
+			}
+			wantFound := int(row.Returns[0] & 0xffff)
+			if len(found) != wantFound {
+				t.Errorf("原版單觀測者提升數%d，要%d", len(found), wantFound)
+			}
+			for i, label := range []string{"observer", "candidate"} {
+				got, u := records[i], units[i]
+				got[22] &^= 1
+				if u.Seen {
+					got[22] |= 1
+				}
+				got[23], got[24] = byte(u.Detail), byte(u.DetailHold)
+				if !bytes.Equal(got, decode(row.After[label], 78)) {
+					t.Errorf("%s完整SHIP78情報與原版不同", label)
+				}
+			}
+		})
+	}
+	if count != 46 {
+		t.Fatalf("規則回歸%d案，要46", count)
+	}
+}
+
+// 原版輸入刷新處理已回收偵察隊；Detail1重新出現標記，全78 bytes保持可回查。
+func TestRecoveredScoutMarkerRefreshMatchesOriginal(t *testing.T) {
+	base := filepath.Join("..", "..")
+	raw, err := os.ReadFile(filepath.Join(base, "workplace/explore/battle79-spot-r41-recovered-a.json"))
+	if os.IsNotExist(err) {
+		t.Skip("缺原版回收刷新收據；入口docs/playtest/046-battle-spotting-phase.md")
+	}
+	if err != nil || fmt.Sprintf("%x", sha256.Sum256(raw)) != "d9cb659cc3bffced7dd514d0ba1d3cba507f3d75f4ed4c549657763fa06152f9" {
+		t.Fatal("原版回收收據身份不同")
+	}
+	var data struct {
+		Rows []struct {
+			Name          string
+			Before, After map[string]string
+		}
+	}
+	if err := json.Unmarshal(raw, &data); err != nil || len(data.Rows) != 2 {
+		t.Fatal("原版回收案例不同")
+	}
+	for _, row := range data.Rows {
+		t.Run(row.Name, func(t *testing.T) {
+			before, err := hex.DecodeString(row.Before["scout"])
+			if err != nil || len(before) != ShipRecord {
+				t.Fatal("原版完整SHIP格式不同")
+			}
+			w := func(n int) int { return int(binary.LittleEndian.Uint16(before[n:])) }
+			u := BattleUnit{Faction: int(before[0]), Kind: 7, Squadron: -1, Out: true,
+				X: w(52), Y: w(54), Detail: int(before[23]), MarkerFlags: int(before[25]),
+				MarkerX: w(26), MarkerY: w(28), Marked: before[25]&128 != 0}
+			UpdateBattleMarker(&u, false, true)
+			s := Slot{Ship: bytes.Clone(before)}
+			s.ApplyBattleMarker(0, u)
+			want, err := hex.DecodeString(row.After["scout"])
+			if err != nil || !bytes.Equal(s.Ship, want) {
+				t.Fatal("回收後force0刷新全78 bytes與原版不同")
+			}
+		})
+	}
+}
 
 // 受控原版01FE案例包含現在位置與目的地分離。直接前後全紀錄，不拿自然局面補反例。
 func TestUpdateSpottingControlledCurrentPosition(t *testing.T) {

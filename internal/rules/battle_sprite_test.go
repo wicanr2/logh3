@@ -73,4 +73,13 @@ func TestBattleUnitSpriteVisibility(t *testing.T) {
 	if got := BattleUnitSprite(u, 0); got != BlankSprite {
 		t.Fatalf("偵察隊圖示 %d，要空白 %d", got, BlankSprite)
 	}
+	// 原版03E9完整支線先於Kind7排除；直接收據見381的cache-f0-d3-s255-k7。
+	u.Squadron, u.Detail = -1, 3
+	if got := BattleUnitSprite(u, 0); got != 73 {
+		t.Fatalf("已辨識同盟偵察隊圖示%d，原版73", got)
+	}
+	u.Detail = 0
+	if got := BattleUnitSprite(u, 1); got != 73 {
+		t.Fatalf("已放出己方偵察隊force1圖示%d，原版73", got)
+	}
 }

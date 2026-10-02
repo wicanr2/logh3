@@ -20,13 +20,14 @@ func TestUpdateSpottingObserversAndRadii(t *testing.T) {
 	planets := []BattlePlanet{{Owner: 0, X: 2000, Y: 0, Defence: 1500}}
 	UpdateSpotting(units, planets)
 
-	for _, i := range []int{3, 4, 5} {
+	// 原版候選以Out排除，Kind7本身不排除；直接證據見研究381。
+	for _, i := range []int{3, 4, 5, 6} {
 		if units[i].Detail != 1 || !units[i].Seen {
 			t.Errorf("分隊 %d：Detail=%d Seen=%v，要被旗艦／偵察隊／行星看到一次",
 				i, units[i].Detail, units[i].Seen)
 		}
 	}
-	for _, i := range []int{6, 7} {
+	for _, i := range []int{7} {
 		if units[i].Detail != 0 || units[i].Seen {
 			t.Errorf("分隊 %d 不該被看到：Detail=%d Seen=%v", i, units[i].Detail, units[i].Seen)
 		}

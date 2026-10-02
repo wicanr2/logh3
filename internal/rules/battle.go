@@ -145,20 +145,33 @@ func BattleSprite(faction, detail, kind int) int {
 // Detail 3 時，旗艦畫艦隊編號，其餘畫艦種；敵方 Detail 1／2 才走概略／
 // 詳細圖示（`docs/re/85`）。
 func BattleUnitSprite(u BattleUnit, viewer int) int {
-	if u.Kind == 7 {
-		return BlankSprite
-	}
+	// 正式可見清單只含已放出偵察隊，與一般分隊同用己方force（26E5:0194／087）。
+	return BattleCachedSprite(u, u.Faction == viewer, BlankSprite)
+}
+
+// BattleCachedSprite重算25DB:03E9的SHIP+2F。非完整支線的其他Detail保留舊byte。
+// force由caller決定，不能用診斷force1替代正式偵察隊設定。
+func BattleCachedSprite(u BattleUnit, force bool, previous int) int {
 	base := AllianceSpriteBase
 	if u.Faction == 0 {
 		base = EmpireSpriteBase
 	}
-	if u.Faction == viewer || u.Detail == SpottingMax {
-		if u.Squadron == 0 && u.FleetNumber > 0 {
-			return base + u.FleetNumber - 1
+	if force || u.Detail == SpottingMax {
+		if u.Squadron == 0 {
+			return int(byte(base + u.FleetNumber - 1))
 		}
-		return base + spriteDetailOffset + u.Kind
+		return int(byte(base + spriteDetailOffset + u.Kind))
 	}
-	return BattleSprite(u.Faction, u.Detail, u.Kind)
+	if u.Kind == 7 || u.Detail == 0 {
+		return BlankSprite
+	}
+	switch u.Detail {
+	case 1:
+		return base + spriteRoughOffset
+	case 2:
+		return int(byte(base + spriteDetailOffset + u.Kind))
+	}
+	return int(byte(previous))
 }
 
 // `SPRITE.SPR` 裡單位圖示的位置（`docs/re/85`）。
