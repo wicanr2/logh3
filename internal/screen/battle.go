@@ -159,8 +159,19 @@ func drawBattleGrid(fb *gfx.Framebuffer, s *BattleSpec, cells []uint8, v BattleV
 	}
 }
 
+// BattlePhase只表示083已審查的階段文字，不改八步規則或存檔。
+type BattlePhase uint8
+
+const (
+	BattlePhaseInput BattlePhase = iota
+	BattlePhaseSupply
+	BattlePhaseRepair
+	BattlePhaseMovement
+)
+
 // BattleStatus 是右側狀態欄要顯示的東西。
 type BattleStatus struct {
+	Phase    BattlePhase
 	Faction  int      // 0 帝國、1 同盟：決定第一行的軍名
 	Year     int      // 宇宙曆
 	Month    int      // 月
@@ -211,14 +222,17 @@ type StatusSpec struct {
 		Colour int `json:"colour"`
 	} `json:"frame"`
 	Labels struct {
-		Factions   []label `json:"factions"`
-		Colon      uint16  `json:"colon"`
-		PhaseInput label   `json:"phase_input"`
-		Date       label   `json:"date"`
-		TurnPrefix label   `json:"turn_prefix"`
-		TurnSuffix label   `json:"turn_suffix"`
-		Victory    label   `json:"victory"`
-		FullDigits label   `json:"full_digits"`
+		Factions      []label `json:"factions"`
+		Colon         uint16  `json:"colon"`
+		PhaseInput    label   `json:"phase_input"`
+		PhaseSupply   label   `json:"phase_supply"`
+		PhaseRepair   label   `json:"phase_repair"`
+		PhaseMovement label   `json:"phase_movement"`
+		Date          label   `json:"date"`
+		TurnPrefix    label   `json:"turn_prefix"`
+		TurnSuffix    label   `json:"turn_suffix"`
+		Victory       label   `json:"victory"`
+		FullDigits    label   `json:"full_digits"`
 	} `json:"labels"`
 }
 
@@ -244,6 +258,20 @@ func DrawBattleStatusFrame(s *BattleSpec, fb *gfx.Framebuffer, tiles *ui.FrameTi
 // （`docs/internals/34`）。
 func DrawBattleStatus(s *BattleSpec, fb *gfx.Framebuffer, fnt *font.Font, st BattleStatus) {
 	p := &s.Status
+	// 原版0C先清內容；Game每幀先畫同一視窗框，再只印階段文字。
+	if st.Phase != BattlePhaseInput {
+		var codes []uint16
+		switch st.Phase {
+		case BattlePhaseSupply:
+			codes = p.Labels.PhaseSupply.Codes
+		case BattlePhaseRepair:
+			codes = p.Labels.PhaseRepair.Codes
+		case BattlePhaseMovement:
+			codes = p.Labels.PhaseMovement.Codes
+		}
+		drawFull(fb, fnt, p.LabelX, p.Rows.Phase, codes, p.Ink)
+		return
+	}
 	if len(p.Labels.Factions) < 2 {
 		return
 	}

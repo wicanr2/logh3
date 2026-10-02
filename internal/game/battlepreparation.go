@@ -75,6 +75,7 @@ func (g *Game) preparationUnits() []rules.PreparationUnit {
 }
 
 func (g *Game) beginBattlePreparation(after func()) {
+	g.battlePhase = screen.BattlePhaseSupply
 	g.battlePreparing = true
 	g.battlePreparationAfter = after
 	g.battlePreparation = rules.NewBattlePreparation(g.res.ShipKinds, g.preparationUnits(),
@@ -94,9 +95,13 @@ func (g *Game) continueBattlePreparation() {
 	for {
 		r, ok := g.battlePreparation.Next()
 		if !ok {
+			g.battlePhase = screen.BattlePhaseRepair
 			g.battlePreparation = nil
 			g.battlePreparationMorale(0)
 			return
+		}
+		if r.Repair {
+			g.battlePhase = screen.BattlePhaseRepair
 		}
 		if r.From == nil || !g.humanSeat(r.To.Faction) || g.res.SupplyPanel == nil {
 			continue

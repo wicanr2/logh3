@@ -28,6 +28,7 @@ func (g *Game) StartBattle(region int) {
 	}
 	g.battleRegion = region
 	g.battleTurn = 1
+	g.battlePhase = screen.BattlePhaseInput
 	g.battleUnits = nil
 	g.battleFleets = nil
 	g.battleScore = [2]int{}
@@ -233,6 +234,7 @@ func (g *Game) finishBattleTurn() {
 }
 
 func (g *Game) endBattleTurn() {
+	g.battlePhase = screen.BattlePhaseInput
 	rules.FortressGunTickAll(g.battlePlanets)
 	rules.UpdateSpotting(g.battleUnits, g.battlePlanets)
 	g.refreshBattleMarkers()

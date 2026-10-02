@@ -1,6 +1,66 @@
 # 045：索敵回收與移動畫面
 
-## 目前續證：第三十三輪小地圖標記
+## 目前續證：第三十四輪階段面板與35邊界
+
+2026-10-02，#79保持open。父提交38794ab1f36a5e94be624b587ca2eded66c4fe8c加本輪修改，測試時dirty。
+[研究375](../re/375-battle-phase-panel.md)審查原bytes、字串、清窗及呼叫順序後，
+[083](../spec/083-battle-phase-panel.md)先READY再接正式標籤及Input還原。
+非Input不再印日期、分數或星域，也不讓unit情報覆蓋階段文字。
+
+新收據事前宣告same-state，只限第6回合固定局面、7艦隊／55分隊、鏡頭(66,30)及35個指定邊界。
+原版雙跑105檔相同，來源snapshot、完整父序列／seed注入、新旗標及各圖／RAM／報告雜湊見
+[逐圈全紀錄](../internals/data/battle-phase-frames.json)，SHA-256
+`e1a149fed1eb5767a8011a71ea52f356444cdbfe55da29543774f554f4025941`。
+Game由正常入口後明示只注入一次原版entry及鏡頭，之後正式規則自行逐圈執行。
+原版輸出只供比較，沒有每幀餵入引擎。7×122＋55×78 bytes逐幀相同，
+兩側seed固定0x12345678且35幀不變，鏡頭亦不變。原色號與有效RGB均相同。
+診斷同狀態不代替正常原版玩家路徑，不外推第二戰場或其他回合；舊nearby-state不升格。
+
+| 每一幀區域 | (x,y,w,h) | 比較像素 | 相同 | 不同 | 最大通道差 | 差異bounding box |
+|---|---|---:|---:|---:|---:|---|
+| 全畫面 | (0,0,640,480) | 307200 | 307200 | 0 | 0 | 無 |
+| 戰場視窗 | (16,60,448,360) | 161280 | 161280 | 0 | 0 | 無 |
+| 小地圖 | (480,75,128,128) | 16384 | 16384 | 0 | 0 | 無 |
+| 階段面板 | (464,220,160,200) | 32000 | 32000 | 0 | 0 | 無 |
+
+35幀全畫面合計10752000像素，零差異、零未核准差異。不縮放、裁切或遮罩。
+entry仍顯示修理，loop-00為初始化後移動，loop-01..32為各圈完成後，end為第33圈返回0後。
+只驗圈邊界，不宣稱逐CPU指令、圈內重畫或硬體wall-clock一致。
+
+完整收據workplace/battle79-round34-after-render-receipt.json，SHA-256
+`34c6330dac14d0df1790d7a788dad462e855ca91924bd48c2f44bf793030cf72`。
+它保存35組原版／remake／差分PNG、來源及輸出雜湊、逐區統計、有效RGB，
+12張正常／診斷抽樣PNG各自標明範圍。原版與工具身份沿用下方身份表，執行器沒有改動。
+新增IDA輸入及位址空間見[17筆分級索引](../internals/data/battle-phase-semantics.json)。
+修正前第33輪收據ce3370d8保留，完整雜湊見下節，兩端面板差3971／3951；
+本輪新收據均0，沒有改舊原圖、期望或比較等級。
+
+正常主選單→S3→戰術命令，長程／隊形／索敵／分隊實行均顯示移動標籤，
+完成後回Input，完整SHIP／FLEET正式存讀相同。正常索敵回收再放出維持原池81／單位31。
+正常S3此回合補給／修理結果均0幀，不能宣稱正常資源結果畫面已驗。
+fixture的正式結果面板與階段底圖通過，與正常證據分列。
+080／083保持READY；第二戰場／全部存檔、正常資源結果幀及其餘八步仍待接續。
+
+正式cmd/gin3正常第2回合PNG已目視，workplace/battle79-round34-normal-gui.png，SHA-256
+`eb41879ca7d87b48fd1276365ed7a4b333542e4e596a7a850f548b971385b65b`。
+中間loop-16的正式畫面亦已檢視，右側只留移動階段。
+目標log有13個通過事件、零skip；標準18套件通過或無測試，count=1；正常S3 GUI逐位元組相同。
+三份log的完整檔名與SHA-256均在完整收據logs欄。
+
+```sh
+bash tools/gui.sh xrun sh -c 'LOGH3_MOVEMENT_OUTPUT=battle79-round34-after LOGH3_PREPARATION_OUTPUT=battle79-round34-after go test -count=1 -v -run "TestMovementAllBoundariesMatchOriginal|TestMovementCommandsExecuteAndSave|TestGameMovementPhaseMatchesOriginal|TestBattlePreparationWholePhaseMatchesOriginal|TestBattlePreparationNormalPlayerExecute|TestScoutRecoverAndRelaunchNormal" ./internal/game'
+LOGH3_EXTRA_RO=/home/anr2/cht/logh3 bash tools/py.sh tools/scripts/battle_phase_render_receipt.py 38794ab1f36a5e94be624b587ca2eded66c4fe8c
+bash tools/gui.sh test -count=1 ./internal/... ./cmd/...
+LOGH3_GUI_PREFIX=fcmd-s3-found bash tools/gui_check.sh
+```
+
+正式cmd/gin3輸入沿用第32輪命令，輸出prefix換battle79-round34。
+原版重生入口為研究375及tools/battle_phase_oracle.sh。
+普通資源測試改寫自己的暫存目錄；保存時明設LOGH3_PREPARATION_OUTPUT，避免覆寫第28輪收據。
+首次格式化誤用go run入口，改tools/go.sh gofmt後成功；go fmt碰到兩個無關測試已還原。
+這些屬工具操作，不登記成產品缺陷。
+
+## 第三十三輪歷史收據：小地圖標記
 
 2026-10-02，工作項[#79](https://github.com/wicanr2/logh3/issues/79)，父提交
 `be187b1bff7fa32f8831302886c2ec69362901a8`加本輪修改，測試時dirty。

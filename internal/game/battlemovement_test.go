@@ -67,7 +67,9 @@ func TestGameMovementPhaseMatchesOriginal(t *testing.T) {
 		Row: int(binary.LittleEndian.Uint16(mem[0x5E726:])) / g.res.Battle.Field.TileH}
 	g.MoveMouse(240, 240) // 原版最後點擊240,200，產品畫布加40；游標相位仍分列。
 	g.battleMoving = true // 明示診斷移動邊界；正常玩家測試則由實行自行設定。
+	g.battlePhase = screen.BattlePhaseRepair
 	movementFrame(t, g, "phase-entry")
+	g.battlePhase = screen.BattlePhaseMovement
 	m := g.newBattleMovement()
 	if len(g.battleMovementGroups) != 7 {
 		t.Fatal("正式Game艦隊清單不同")
@@ -234,6 +236,9 @@ func TestMovementCommandsExecuteAndSave(t *testing.T) {
 			frames := 0
 			for i := 0; i < 12000 && (g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement); i++ {
 				if g.battleMoving {
+					if g.battlePhase != screen.BattlePhaseMovement {
+						t.Fatal("正常移動未切換階段文字")
+					}
 					frames++
 					if frames == 2 {
 						movementFrame(t, g, mode+"-moving")
@@ -253,6 +258,9 @@ func TestMovementCommandsExecuteAndSave(t *testing.T) {
 				t.Fatalf("正常實行未完成／無中間幀：%v、回合%d、%d幀", g.state, g.battleTurn, frames)
 			}
 			after := g.battleUnits[selected]
+			if g.battlePhase != screen.BattlePhaseInput {
+				t.Fatal("正常回合結束未還原輸入面板")
+			}
 			if after.X == before.X && after.Y == before.Y {
 				t.Fatal("所選單位未移動")
 			}

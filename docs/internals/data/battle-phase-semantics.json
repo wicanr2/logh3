@@ -1,0 +1,259 @@
+{
+  "schema": "logh3.semantic-index.v1",
+  "tool": "IDA Pro 9.4",
+  "ida_base_hex": "0x10200",
+  "address_space": "COM offset0=IDA 0x10200; original CS:IP and dosgolem linear separate; DS base 0x54B30",
+  "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "exports": {
+    "181B": {
+      "path": "workplace/ida/re79-phase-r34-181B.json",
+      "sha256": "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188",
+      "input_sha256": "87892eec94becbde534474afa69e1fadea6afb27444d5efe8764b1046b35958f"
+    },
+    "3617": {
+      "path": "workplace/ida/re79-phase-r34-3617-short.json",
+      "sha256": "581eded794d1755a5341aa946f5c0655857a883c9a24303e5e4a632d6f03a707",
+      "input_sha256": "0d8149ca4814af6f3de69670b9cec52e46aa973a6a3e86a00ae5c981def4abe5"
+    }
+  },
+  "entries": [
+    {
+      "kind": "function",
+      "original_location": "181B:003F",
+      "semantic": "補給、修理及防衛力恢復入口；003F..0082，保留原名",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ]
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:003F",
+      "semantic": "補給、修理及防衛力恢復入口；003F..0082，保留原名",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "9a b6 01 ad 36"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:0045",
+      "semantic": "載入DS:3CD4補給階段文字",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "bb d4 3c"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:0051",
+      "semantic": "印補給階段到DS:9890/9892狀態窗",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "9a 0a 00 17 36"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:0059",
+      "semantic": "文字後執行1930:019D補給",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "9a 9d 01 30 19"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:005F",
+      "semantic": "載入DS:3CE2修理階段文字",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "bb e2 3c"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:006B",
+      "semantic": "印修理階段到同一狀態窗",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "9a 0a 00 17 36"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:0073",
+      "semantic": "文字後執行1AAB:006D修理",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "9a 6d 00 ab 1a"
+    },
+    {
+      "kind": "function",
+      "original_location": "181B:00FA",
+      "semantic": "移動階段入口；00FA..021B",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ]
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:00FA",
+      "semantic": "移動階段入口；00FA..021B",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "55"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:0112",
+      "semantic": "載入DS:3CF0移動階段文字",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "bb f0 3c"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:011E",
+      "semantic": "初始化額度前印移動階段",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "9a 0a 00 17 36"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "181B:0126",
+      "semantic": "文字後呼叫1C03:0006初始化額度",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "385adc6f81d9d0dcdee5f124d2134b4e66f94e583b5c92bfe47fc8f45a124188"
+      ],
+      "original_bytes_hex": "9a 06 00 03 1c"
+    },
+    {
+      "kind": "function",
+      "original_location": "3617:000A",
+      "semantic": "視窗格式文字入口；000A..0039",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "581eded794d1755a5341aa946f5c0655857a883c9a24303e5e4a632d6f03a707"
+      ]
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3617:000A",
+      "semantic": "視窗格式文字入口；000A..0039",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "581eded794d1755a5341aa946f5c0655857a883c9a24303e5e4a632d6f03a707"
+      ],
+      "original_bytes_hex": "55"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3617:001F",
+      "semantic": "呼叫3617:0059填寫視窗文字緩衝",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "581eded794d1755a5341aa946f5c0655857a883c9a24303e5e4a632d6f03a707"
+      ],
+      "original_bytes_hex": "9a 59 00 17 36"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "3617:002E",
+      "semantic": "呼叫341B:02E5重畫視窗",
+      "grade": "proven",
+      "source": [
+        "docs/re/375-battle-phase-panel.md",
+        "581eded794d1755a5341aa946f5c0655857a883c9a24303e5e4a632d6f03a707"
+      ],
+      "original_bytes_hex": "9a e5 02 1b 34"
+    }
+  ],
+  "strings": [
+    {
+      "phase": "supply",
+      "original_location": "DS:3CD4",
+      "raw_hex": "0cb8c9b5b9b6a5ac712020202000",
+      "text": "補給階段",
+      "codes": [
+        47305,
+        46521,
+        46757,
+        44145
+      ],
+      "grade": "proven",
+      "source_ram_sha256": "4716f2a83e1807d83cc521feb2846d5a495a4e7767fcddfa2334f355c51e16b3"
+    },
+    {
+      "phase": "repair",
+      "original_location": "DS:3CE2",
+      "raw_hex": "0cadd7b27ab6a5ac712020202000",
+      "text": "修理階段",
+      "codes": [
+        44503,
+        45690,
+        46757,
+        44145
+      ],
+      "grade": "proven",
+      "source_ram_sha256": "4716f2a83e1807d83cc521feb2846d5a495a4e7767fcddfa2334f355c51e16b3"
+    },
+    {
+      "phase": "movement",
+      "original_location": "DS:3CF0",
+      "raw_hex": "0cb2beb0cab6a5ac712020202000",
+      "text": "移動階段",
+      "codes": [
+        45758,
+        45258,
+        46757,
+        44145
+      ],
+      "grade": "proven",
+      "source_ram_sha256": "4716f2a83e1807d83cc521feb2846d5a495a4e7767fcddfa2334f355c51e16b3"
+    }
+  ],
+  "resolutions": [
+    {
+      "immutable_key": "PC DOS GIN3.COM 181B:011E/0126",
+      "semantic": "先印移動階段，再初始化額度",
+      "grade": "proven",
+      "evidence": "docs/re/375-battle-phase-panel.md",
+      "older_spec": "docs/spec/080-battle-movement-phase.md",
+      "required_correction": "181B:00FA在011E先印移動文字、0126才初始化"
+    }
+  ]
+}

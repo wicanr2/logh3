@@ -212,3 +212,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [正常標記原版重播](../../tools/battle_marker_oracle.sh)：固定S3檢查點、輸入與seed，確認佈陣及顯示開關的玩家呼叫鏈。
 - [標記生命週期研究374](../re/374-battle-marker-lifecycle.md)、[規格082](../spec/082-battle-minimap-markers.md)：正常佈陣、顯示開關與已畫快照的呈現契約。
 - [標記收據產生器](../../tools/scripts/battle_marker_receipts.py)、[標記資料](data/battle-markers.json)及[語意索引](data/battle-marker-semantics.json)：96案、正常55筆與原始指令分級。
+- [第三十四輪：階段面板與移動中間幀](../goal/2026-10-02-battle-phase-panel-round-34.md)、[階段面板規格083](../spec/083-battle-phase-panel.md)：接續#79固定第6回合逐圈畫面與階段文字。
+- [逐圈原版重播](../../tools/battle_phase_oracle.sh)及[固定計數計畫](../../tools/scripts/battle_phase_plan.py)：唯讀snapshot、35個完整RAM／planar PNG／色號。
+- [階段文字研究375](../re/375-battle-phase-panel.md)、[語意索引](data/battle-phase-semantics.json)、[逐圈全紀錄](data/battle-phase-frames.json)：呼叫順序、三字串與35邊界雙跑；由[證據工具](../../tools/scripts/battle_phase_evidence.py)重生。
+- [階段面板正式畫面收據](../../tools/scripts/battle_phase_render_receipt.py)：35邊界全畫面及逐區有效RGB差分，不裁切或遮罩。

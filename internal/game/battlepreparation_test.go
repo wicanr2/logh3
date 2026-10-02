@@ -233,8 +233,14 @@ func TestBattlePreparationWholePhaseMatchesOriginal(t *testing.T) {
 			if mode == "supply" && g.battlePreparationSupply == nil {
 				t.Fatal("未停在正式補給結果幀")
 			}
+			if mode == "supply" && g.battlePhase != screen.BattlePhaseSupply {
+				t.Fatal("補給結果底圖不是補給階段")
+			}
 			if mode == "repair" && g.battlePreparationRepair == nil {
 				t.Fatal("未停在正式修理結果幀")
+			}
+			if mode == "repair" && g.battlePhase != screen.BattlePhaseRepair {
+				t.Fatal("修理結果底圖不是修理階段")
 			}
 			if mode == "morale" && (g.state != StateTurnReport || !g.battlePreparing) {
 				t.Fatal("士氣報告未保留第一階段續接")
@@ -364,18 +370,47 @@ func TestBattlePreparationNormalPlayerExecute(t *testing.T) {
 	y := g.battleMenuY + l.Highlight.Y - l.Window.Y + 2
 	g.MoveMouse(x, y)
 	g.Click(x, y) // 正式選「實行」，不直接呼叫第一階段。
+	supplyFrames, repairFrames := 0, 0
 	for i := 0; i < 4000 && (g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement); i++ {
+		if g.battlePreparationSupply != nil {
+			if supplyFrames == 0 {
+				movementFrame(t, g, "normal-supply")
+			}
+			supplyFrames++
+		}
+		if g.battlePreparationRepair != nil {
+			if repairFrames == 0 {
+				movementFrame(t, g, "normal-repair")
+			}
+			repairFrames++
+		}
+		if g.battlePreparationSupply != nil && g.battlePhase != screen.BattlePhaseSupply {
+			t.Fatal("正常補給結果底圖不同")
+		}
+		if g.battlePreparationRepair != nil && g.battlePhase != screen.BattlePhaseRepair {
+			t.Fatal("正常修理結果底圖不同")
+		}
 		g.Frame()
 		g.Tick(time.Second / 60)
 	}
 	if !g.battleSources.Supply.Known || g.battlePreparing || g.battleTurn != turn+1 || g.state != StateBattle {
 		t.Fatalf("正常實行未完成第一階段及後續：回合%d 狀態%v 來源%+v", g.battleTurn, g.state, g.battleSources)
 	}
+	if g.battlePhase != screen.BattlePhaseInput {
+		t.Fatal("正常實行後未恢復完整輸入面板")
+	}
 	writePreparationFrame(t, g, "normal-execute")
+	t.Logf("正常資源結果幀：補給%d、修理%d；輸入面板已還原", supplyFrames, repairFrames)
 }
 
 func writePreparationFrame(t *testing.T, g *Game, label string) {
 	t.Helper()
+	// 不覆寫第28輪原收據；新批次明設prefix，普通測試只寫各自暫存目錄。
+	prefix := os.Getenv("LOGH3_PREPARATION_OUTPUT")
+	dir := t.TempDir()
+	if prefix != "" {
+		dir = filepath.Join(root, "workplace")
+	}
 	p := g.Palette()
 	var pal []byte
 	for _, rgb := range p {
@@ -385,7 +420,7 @@ func writePreparationFrame(t *testing.T, g *Game, label string) {
 		ext  string
 		data []byte
 	}{{"bin", g.Frame().Pix}, {"pal", pal}} {
-		if err := os.WriteFile(filepath.Join(root, "workplace/battle79-round28-"+label+"."+file.ext), file.data, 0o644); err != nil {
+		if err := os.WriteFile(filepath.Join(dir, prefix+"-"+label+"."+file.ext), file.data, 0o644); err != nil {
 			t.Fatal(err)
 		}
 	}

@@ -918,6 +918,7 @@ type Game struct {
 	battleSupplyPlanet      int                      // >= 0 ＝ 這一次是行星的「補給」／「補充」
 	battleSources           rules.PreparationSources // 持續池身份；初始化／讀檔／新戰場保留。
 	battlePreparing         bool
+	battlePhase             screen.BattlePhase
 	battleMoving            bool
 	battleMovement          *rules.BattleMovement
 	battleMovementGroups    []rules.MovementFleet
@@ -4860,12 +4861,12 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	screen.DrawBattleGridResidue(g.res.Battle, fb)
 	screen.DrawBattleStatusFrame(g.res.Battle, fb, g.res.FrameTiles)
 	// 點到自己的分隊時右側換成分隊面板（`docs/re/118`）。
-	if v, ok := g.unitPanelView(); ok && g.res.Font != nil {
+	if v, ok := g.unitPanelView(); ok && g.res.Font != nil && g.battlePhase == screen.BattlePhaseInput {
 		screen.DrawUnitPanel(g.res.UnitPanel, fb, g.res.Font, v)
 	} else if g.res.Font != nil {
 		y, mo, d := g.Date()
 		screen.DrawBattleStatus(g.res.Battle, fb, g.res.Font, screen.BattleStatus{
-			Faction: g.faction, Year: y, Month: mo, Day: d,
+			Phase: g.battlePhase, Faction: g.faction, Year: y, Month: mo, Day: d,
 			Turn:     g.battleTurn,
 			Victory:  rules.BattleVictory(g.battleScore),
 			Empire:   g.battleScore[0],

@@ -1,7 +1,19 @@
 # 戰術（戰鬥）畫面
 
 證據等級：**版面 confirmed**（收據 `s3ai6`／`s3bat1`／`s3bat2`，
-`tools/scripts/runs.py`／`window_list.py` 量的）；**內容與規則未解**。
+`tools/scripts/runs.py`／`window_list.py` 量的）。內容與規則依各項現行spec分列，不能外推全戰場。
+
+## 階段狀態文字
+
+2026-10-02第三十四輪續證，proven，見[研究375](../re/375-battle-phase-panel.md)、
+[083](../spec/083-battle-phase-panel.md)、[分級定位](data/battle-phase-semantics.json)。
+補給、修理、移動各先印DS:3CD4／3CE2／3CF0，再執行其規則入口。
+181B:011E印移動，0126才初始化額度；35邊界原版雙跑及完整紀錄見[逐圈資料](data/battle-phase-frames.json)。
+三串各為0C、四個Big5字、四個空白、00。0C清內容並重設文字游標。
+非輸入階段只保留四字，起點為既有(480,242)，色7；正常輸入才畫日期、分數及星域。
+使用同一狀態窗框及8×8內容格，不另訂座標。
+此固定局面35張原生畫面全部相同，對拍見[045](../playtest/045-battle-movement-render.md)。
+後續未知階段標籤不猜補；第二戰場及八步仍未完成。
 
 ## 怎麼走到
 

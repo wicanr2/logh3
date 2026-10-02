@@ -1,6 +1,9 @@
 package game
 
-import "github.com/wicanr2/logh3/internal/rules"
+import (
+	"github.com/wicanr2/logh3/internal/rules"
+	"github.com/wicanr2/logh3/internal/screen"
+)
 
 // newBattleMovement保留一般組及索敵隊順序；未放出的隊只在本階段持有，不進可見名單。
 func (g *Game) newBattleMovement() *rules.BattleMovement {
@@ -37,6 +40,8 @@ func (g *Game) newBattleMovement() *rules.BattleMovement {
 }
 
 func (g *Game) beginBattleMovement() {
+	// 181B:011E先印文字，0126才初始化額度（083）。
+	g.battlePhase = screen.BattlePhaseMovement
 	g.battleMoving = true
 	g.battleMovement = g.newBattleMovement()
 	g.continueBattleMovement()
