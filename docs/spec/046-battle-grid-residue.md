@@ -1,6 +1,7 @@
 # 046：戰場小地圖下方的格表殘留
 
-狀態：**READY**（2026-09-14 證據審查完成）
+目前狀態：**SUPERSEDED**，由[086](086-battle-minimap-bitmap.md)取代。
+下文保留2026-09-14的READY審查與限定S3驗收歷史。
 
 ## 玩家可見契約
 
@@ -41,3 +42,10 @@ CE CE C5 CE C5 CE C5 CE E5 CE E5 CE E5 CE C5 CE
 上述固定遮罩只在所列S3收據證實，不外推所有局面。S1的兩次原版43邊界收據在y203
 與該遮罩不同，見[研究376](../re/376-second-battle-render.md)及[驗證045](../playtest/045-battle-movement-render.md)。
 來源仍unknown，不以星域專用遮罩猜補；既有S3限定驗收維持，S1完整呈現未通過。
+
+## 第38輪來源勘誤
+
+[研究378](../re/378-minimap-bitmap-bottom.md)已證實最後寫入者是2376:0B90的bitmap繪製，
+原版bitmap從y76到203。該列取樣超出地圖，讀鄰接配置標頭及已生成bitmap。
+S1與S3由各自CMP導出的完整2048 bytes都相同，足以否定固定格表殘留解釋。
+先前S3固定遮罩的有限像素結果仍成立，來源解釋與production固定遮罩由086取代。

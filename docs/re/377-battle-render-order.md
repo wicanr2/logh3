@@ -58,3 +58,10 @@ IDA匯出`workplace/ida/re79-render-r37-2376.json`，SHA-256
 
 正式修正後43幀Field均零差異，新增斷言的修正前43次失敗log保留。
 全畫面仍每幀38點，y203未知，不改046遮罩或golden。085只在分隊繪製範圍CONFORMED。
+
+## 第38輪續證及旗標勘誤
+
+[研究378](378-minimap-bitmap-bottom.md)已追到2376:0B90最後覆蓋該列，来源為小地圖bitmap末列。
+原版CMP、鄰接標頭與已生成bitmap可完整重生S1／S3，取代unknown。
+上文「缺-vram-sites」並非無統計的原因：CLI的-vram-at本身就啟用統計。
+過晚父狀態已錯過寫入；早期的0B90才是最後寫入者。其餘分隊排序結論維持。

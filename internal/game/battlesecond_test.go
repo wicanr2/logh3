@@ -146,7 +146,7 @@ func TestMovementSecondBattleRecordsMatchOriginal(t *testing.T) {
 		}
 		movementFrame(t, g, "second-"+f.Name)
 		// 只用每幀原版RAM作斷言，不更新Game。方向位置直接讀原版物件，
-		// 不在測試複製renderer的八向座標公式；其餘呈現仍unknown。
+		// 不在測試複製renderer的八向座標公式。
 		frameMem, err := os.ReadFile(filepath.Join(base, f.Name+"-mem.bin"))
 		if err != nil {
 			t.Fatal(err)
@@ -200,7 +200,10 @@ func TestMovementSecondBattleRecordsMatchOriginal(t *testing.T) {
 		if fieldDiff != 0 {
 			t.Errorf("%s正式Field有%d個差異像素，分隊繪製次序尚未符合085", f.Name, fieldDiff)
 		}
-		t.Logf("%s：18艦隊／135分隊完整紀錄與440個方向像素相同；Field差%d，全畫面尚差%d／307200，未通過全畫面對拍", f.Name, fieldDiff, diff)
+		if diff != 0 {
+			t.Errorf("%s正式全畫面差%d／307200，尚未符合086", f.Name, diff)
+		}
+		t.Logf("%s：18艦隊／135分隊完整紀錄與440個方向像素相同；Field差%d，全畫面差%d／307200", f.Name, fieldDiff, diff)
 	}
 	check(0)
 	g.battlePhase = screen.BattlePhaseMovement

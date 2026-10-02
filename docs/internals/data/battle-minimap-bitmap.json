@@ -1,0 +1,1084 @@
+{
+  "schema": "logh3.battle-minimap-bitmap.v1",
+  "tool": "IDA Pro 9.4",
+  "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "frame_source_sha256": "99c774f82b61e928ac62d1fa10dc4fb986eb6cffa1ba43692d6b8e127ca234b1",
+  "input_sha256": "9095dfa08ab36201784e6d4555b5e42312ac76bb20049614cf53bf93bc09e7ec",
+  "address_space": "原始CS:IP、IDA .COM載入位址、dosgolem線性位址分欄；DS固定定位只適用此RAM",
+  "bitmap_origin": [
+    480,
+    76
+  ],
+  "bitmap_dimensions": [
+    128,
+    128
+  ],
+  "frame_top_y": 75,
+  "lookup_offset_hex": "0x3c8c",
+  "lookup_hex": "00 00 ff ff ff 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 80 40 20 10 08 04 02 01 0c b8 c9 b5 b9 b6 a5 ac 71 20 20 20 20 00 0c ad d7 b2 7a b6 a5 ac 71 20 20 20 20 00 0c b2 be b0 ca b6 a5 ac 71 20 20 20 20 00 b8 d1 b0 a3 a6 db b0 ca bc d2 a6 a1 20 20 00 0c af c1 bc c4 b6 a5 ac 71 20 20 20 20 00 0c be d4 b0 ab b6 a5 ac 71 20 20 20 20 00 0c a5 65 bb e2 b6 a5 ac 71 20 20 20 20 00 0c b3 cc ab e1 b6 a5 ac 71 20 20 20 20 00 00 20 20 0a a4 77 b8 67 a5 fe b7 c0 a1 43 20 20 20 20 00 25 73 ac 50 a8 74 20 20 0a a4 77 b8 67 a5 65 bb e2 a4 55 a8 d3 a1 43 0a 00 25 73 ac 50 a8 74 b3 a1 a4 c0 a6 61 b0 cf 0a a4 77 b2 e6 c2 f7 a7 da a4 e8 b2 ce",
+  "lookup_sha256": "7d8ca2d554b769865a290bd0428955e46d63c1a58613ca18295c9ee10cb3b2ea",
+  "adjacent_header_hex": "02 08",
+  "entries": [
+    {
+      "original_location": "1727:0004",
+      "ida_ea_hex": "0x10204",
+      "runtime_linear_hex": "0x17274",
+      "original_bytes_hex": "b8 00 08",
+      "original_operand": "mov     ax, 800h",
+      "semantic": "配置2048-byte小地圖bitmap",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:000F",
+      "ida_ea_hex": "0x1020f",
+      "runtime_linear_hex": "0x1727f",
+      "original_bytes_hex": "a3 24 a4",
+      "original_operand": "mov     ds:0A424h, ax",
+      "semantic": "保存bitmap指標段值於DS:A424",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0012",
+      "ida_ea_hex": "0x10212",
+      "runtime_linear_hex": "0x17282",
+      "original_bytes_hex": "89 1e 22 a4",
+      "original_operand": "mov     ds:0A422h, bx",
+      "semantic": "保存bitmap指標位移於DS:A422",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0026",
+      "ida_ea_hex": "0x10226",
+      "runtime_linear_hex": "0x17296",
+      "original_bytes_hex": "9a c6 05 27 17",
+      "original_operand": "call    far ptr 1727h:5C6h",
+      "semantic": "以DS:3C1A地圖遠指標呼叫bitmap建立常式",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0044",
+      "ida_ea_hex": "0x10244",
+      "runtime_linear_hex": "0x172b4",
+      "original_bytes_hex": "b9 24 00",
+      "original_operand": "mov     cx, 24h ; '$'",
+      "semantic": "繪製輸入虛擬y=36，實際起列76見暫存器收據",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0048",
+      "ida_ea_hex": "0x10248",
+      "runtime_linear_hex": "0x172b8",
+      "original_bytes_hex": "b9 e0 01",
+      "original_operand": "mov     cx, 1E0h",
+      "semantic": "繪製輸入x=480",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:004C",
+      "ida_ea_hex": "0x1024c",
+      "runtime_linear_hex": "0x172bc",
+      "original_bytes_hex": "9a 44 0b 76 23",
+      "original_operand": "call    far ptr 2376h:0B44h",
+      "semantic": "呼叫2376:0B44繪製128乘128 bitmap",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:05E1",
+      "ida_ea_hex": "0x107e1",
+      "runtime_linear_hex": "0x17851",
+      "original_bytes_hex": "80 7e 03 80",
+      "original_operand": "cmp     byte ptr [bp+3], 80h",
+      "semantic": "迭代128個輸出列",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0600",
+      "ida_ea_hex": "0x10800",
+      "runtime_linear_hex": "0x17870",
+      "original_bytes_hex": "8a 87 cc 3c",
+      "original_operand": "mov     al, [bx+3CCCh]",
+      "semantic": "讀八個高位優先bitmask的其中一個",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0607",
+      "ida_ea_hex": "0x10807",
+      "runtime_linear_hex": "0x17877",
+      "original_bytes_hex": "c4 5e 12",
+      "original_operand": "les     bx, [bp+12h]",
+      "semantic": "讀來源地圖遠指標",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:060A",
+      "ida_ea_hex": "0x1080a",
+      "runtime_linear_hex": "0x1787a",
+      "original_bytes_hex": "ff 46 12",
+      "original_operand": "inc     word ptr [bp+12h]",
+      "semantic": "來源地圖指標每像素增加1",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0612",
+      "ida_ea_hex": "0x10812",
+      "runtime_linear_hex": "0x17882",
+      "original_bytes_hex": "8a 8f 8c 3c",
+      "original_operand": "mov     cl, [bx+3C8Ch]",
+      "semantic": "以地圖byte查DS:3C8C，不限制64-entry合法圖塊範圍",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0616",
+      "ida_ea_hex": "0x10816",
+      "runtime_linear_hex": "0x17886",
+      "original_bytes_hex": "22 c8",
+      "original_operand": "and     cl, al",
+      "semantic": "查表byte與單像素bitmask作AND",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0618",
+      "ida_ea_hex": "0x10818",
+      "runtime_linear_hex": "0x17888",
+      "original_bytes_hex": "08 4e 01",
+      "original_operand": "or      [bp+1], cl",
+      "semantic": "累積目前八像素的輸出byte",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:062B",
+      "ida_ea_hex": "0x1082b",
+      "runtime_linear_hex": "0x1789b",
+      "original_bytes_hex": "26 88 07",
+      "original_operand": "mov     es:[bx], al",
+      "semantic": "每八像素寫一byte到bitmap",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:063C",
+      "ida_ea_hex": "0x1083c",
+      "runtime_linear_hex": "0x178ac",
+      "original_bytes_hex": "83 c0 08",
+      "original_operand": "add     ax, 8",
+      "semantic": "列餘數加8",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0644",
+      "ida_ea_hex": "0x10844",
+      "runtime_linear_hex": "0x178b4",
+      "original_bytes_hex": "f7 f1",
+      "original_operand": "div     cx",
+      "semantic": "列餘數除10",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:064B",
+      "ida_ea_hex": "0x1084b",
+      "runtime_linear_hex": "0x178bb",
+      "original_bytes_hex": "74 06",
+      "original_operand": "jz      short loc_10853",
+      "semantic": "餘數為零時回退128-byte地圖列",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:064D",
+      "ida_ea_hex": "0x1084d",
+      "runtime_linear_hex": "0x178bd",
+      "original_bytes_hex": "80 7e 03 7f",
+      "original_operand": "cmp     byte ptr [bp+3], 7Fh",
+      "semantic": "最後一列亦回退，已讀內容不變",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "1727:0653",
+      "ida_ea_hex": "0x10853",
+      "runtime_linear_hex": "0x178c3",
+      "original_bytes_hex": "83 46 12 80",
+      "original_operand": "add     word ptr [bp+12h], 0FF80h",
+      "semantic": "來源指標回退128 bytes，採16-bit位移",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb"
+      ]
+    },
+    {
+      "original_location": "2376:0B5B",
+      "ida_ea_hex": "0x10d5b",
+      "runtime_linear_hex": "0x242bb",
+      "original_bytes_hex": "8b fb",
+      "original_operand": "mov     di, bx",
+      "semantic": "將座標helper結果BX作實際VRAM起點DI",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "be4b113e5b2a2719f6a5eae29709d414a00800d71d7a448ce2ff5367700bbdb1"
+      ]
+    },
+    {
+      "original_location": "2376:0B6D",
+      "ida_ea_hex": "0x10d6d",
+      "runtime_linear_hex": "0x242cd",
+      "original_bytes_hex": "b9 80 00",
+      "original_operand": "mov     cx, 80h",
+      "semantic": "背景迭代128列",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "be4b113e5b2a2719f6a5eae29709d414a00800d71d7a448ce2ff5367700bbdb1"
+      ]
+    },
+    {
+      "original_location": "2376:0B71",
+      "ida_ea_hex": "0x10d71",
+      "runtime_linear_hex": "0x242d1",
+      "original_bytes_hex": "b9 10 00",
+      "original_operand": "mov     cx, 10h",
+      "semantic": "背景每列16個VRAM bytes",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "be4b113e5b2a2719f6a5eae29709d414a00800d71d7a448ce2ff5367700bbdb1"
+      ]
+    },
+    {
+      "original_location": "2376:0B85",
+      "ida_ea_hex": "0x10d85",
+      "runtime_linear_hex": "0x242e5",
+      "original_bytes_hex": "c5 76 0a",
+      "original_operand": "lds     si, [bp+arg_4]",
+      "semantic": "載入bitmap來源DS:SI",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "be4b113e5b2a2719f6a5eae29709d414a00800d71d7a448ce2ff5367700bbdb1"
+      ]
+    },
+    {
+      "original_location": "2376:0B88",
+      "ida_ea_hex": "0x10d88",
+      "runtime_linear_hex": "0x242e8",
+      "original_bytes_hex": "b9 80 00",
+      "original_operand": "mov     cx, 80h",
+      "semantic": "前景迭代128列",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "be4b113e5b2a2719f6a5eae29709d414a00800d71d7a448ce2ff5367700bbdb1"
+      ]
+    },
+    {
+      "original_location": "2376:0B8F",
+      "ida_ea_hex": "0x10d8f",
+      "runtime_linear_hex": "0x242ef",
+      "original_bytes_hex": "ac",
+      "original_operand": "lodsb",
+      "semantic": "讀一個bitmap byte，SI加1",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "be4b113e5b2a2719f6a5eae29709d414a00800d71d7a448ce2ff5367700bbdb1"
+      ]
+    },
+    {
+      "original_location": "2376:0B90",
+      "ida_ea_hex": "0x10d90",
+      "runtime_linear_hex": "0x242f0",
+      "original_bytes_hex": "26 20 05",
+      "original_operand": "and     es:[di], al",
+      "semantic": "用bitmap byte作前景AND寫入；y203最後写入者",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "be4b113e5b2a2719f6a5eae29709d414a00800d71d7a448ce2ff5367700bbdb1"
+      ]
+    },
+    {
+      "original_location": "2376:0B97",
+      "ida_ea_hex": "0x10d97",
+      "runtime_linear_hex": "0x242f7",
+      "original_bytes_hex": "83 c7 40",
+      "original_operand": "add     di, 40h ; '@'",
+      "semantic": "每列另加64，使總stride為80 VRAM bytes",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/378-minimap-bitmap-bottom.md",
+        "be4b113e5b2a2719f6a5eae29709d414a00800d71d7a448ce2ff5367700bbdb1"
+      ]
+    }
+  ],
+  "exports": {
+    "re79-residue-r38-build.json": {
+      "sha256": "dc2b5829c4e8a199c24005ce670a6322e5145ca5002adbdb98f5068144b83fbb",
+      "input_sha256": "d611cce37054e0a605def01a178c1ec350c5d7d0bf6e30ec9488ba24978d9421",
+      "index_sha256": "9089f428b0acf48009bb6e08f5c44893ef3821e0af90df551461f1a635524899"
+    },
+    "re79-residue-r38-blit-origin.json": {
+      "sha256": "be4b113e5b2a2719f6a5eae29709d414a00800d71d7a448ce2ff5367700bbdb1",
+      "input_sha256": "6f8f3986efe5936572c28a40dd26496d5fca3b8ed2303a69bb5f1e61a2106a3e",
+      "index_sha256": "922c8a04ea983cd876a8e42c721a1cc7ab990a8cfe9b9975e83779ee0708761d"
+    }
+  },
+  "samples": [
+    {
+      "name": "S1-entry",
+      "ram_sha256": "9095dfa08ab36201784e6d4555b5e42312ac76bb20049614cf53bf93bc09e7ec",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-00",
+      "ram_sha256": "6d63eb4411f997f1cd36679b9349933e33444087283b08cb85e3d837b07f2f9a",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-01",
+      "ram_sha256": "a04a2168f65a4519ebfc2671c152d83ff656eef8d4b305c7cb9d4714f0da70e6",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-02",
+      "ram_sha256": "52584adf5291fdae5f18a9c7ad1dc0fa5fc0302f44b4e734b0bcf5c9f59fd8f2",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-03",
+      "ram_sha256": "22383bc3dbba67259fa3bb24c3bad72e3476f07fdbdc02134d9bd55e2a8518ef",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-04",
+      "ram_sha256": "4e50e5e19862955936878cd795962ade70356150c6e5c3455114a349f4bcf910",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-05",
+      "ram_sha256": "ac822fbd3cf5eda550299338f17db9bc961a91e368332fb1123e2a2f09c40c36",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-06",
+      "ram_sha256": "425c1de5ecdeb85de8eca70122f364060fc3fd0022b10b786125469ba1d0f7fd",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-07",
+      "ram_sha256": "0d8a3d77cd034a571e48f5c47f6a2b1c37ad4619b3c48c31271802a9bbd2cb0d",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-08",
+      "ram_sha256": "36442632ec54f32138334e49919ea262cbb846d9fa67c58517f8d85890ea5315",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-09",
+      "ram_sha256": "18afe90e2fdef2dc71cd507e73f2fa5385adf0a117c8e4b5f0ce500177f599d7",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-10",
+      "ram_sha256": "d0f7516df9600b6869de3edcc69c9af270f45ea9ef9c63f1f179526534aff26d",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-11",
+      "ram_sha256": "7574db40a25d4ab6ca07109143dcda39f020e5a1bdf5420c734c9be093634605",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-12",
+      "ram_sha256": "29c7410f66d4e8297b3326ee60aea473d01ece1a1462c80a46b9e26ae481fa48",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-13",
+      "ram_sha256": "4e3b633d397486ce411d1ea99509983924a140f3ae49c9cc5ab57d39d6dcd95e",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-14",
+      "ram_sha256": "2bc9e61ac755bae9ab7ed34db8da89366cb91e2d8fd9211681b3fd21607f8aa7",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-15",
+      "ram_sha256": "ac43cb23d7b8c41638cf14b162f95e2a296516713bdb113ad2c9c97a82741208",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-16",
+      "ram_sha256": "70a8810c49b0a3041109c20339152c1f509998f3d447cd190018d48e1c3d0efc",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-17",
+      "ram_sha256": "1024b580650a0701cced867ae9721bbaad2ca043472a9d622824370936792d52",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-18",
+      "ram_sha256": "5484affbc2e4e4abe616b1700059c1da045979b30ac65f100f3a387ee3b6e9a2",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-19",
+      "ram_sha256": "1a9afe6e4cf1bbff81fa9872608128d043705bb713eb5040b28ea24f3fe23a19",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-20",
+      "ram_sha256": "5174f61615586d3ce4bab43764e19f5bea10167f9ffa33f61cf29e25eb360f5d",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-21",
+      "ram_sha256": "cd0747eca6c7a7cff0588c646915362c1ad863bebd5ea94ab0da373ffd4e9f44",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-22",
+      "ram_sha256": "c22d2866426638cee848773bcfe9c627a210a067feb67c8d11f078ec2097bde1",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-23",
+      "ram_sha256": "9226d3ca0cb546674d939fd6837e9f9839711038d7d756a6aec237a4ae21ab0d",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-24",
+      "ram_sha256": "370009e410f163ea4b042bb1913e93601446b377ef497b5ec7a506a90f8bb876",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-25",
+      "ram_sha256": "5658e4dc26a48f7d7e3c2644857bccc25f974565f2227e5bc05e5ad3ff2ff445",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-26",
+      "ram_sha256": "4a036582f08dfe406ae94c19354d0d10c724df879b94bc4436c4176046e2e77a",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-27",
+      "ram_sha256": "50287119a4949eabaaa1316d75e8307b73da52b31790cb5d801183463fbee4a1",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-28",
+      "ram_sha256": "6e64cc5451c27c8b01c8f7256419613153578e5c09bfedefee4fcd1070d9627c",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-29",
+      "ram_sha256": "833e1e8fe431c38fbb28814baaddfe208333fdb6bd3f2fbdd8f62b4eec11403f",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-30",
+      "ram_sha256": "05b8633c7aad0cf473be26950586103baa078054e8d22bc988a91ecb23178a05",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-31",
+      "ram_sha256": "5f2259035950f804ab5e16e32bc6fe07437bd497bd59c3ae2b8b4e8b8e557933",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-32",
+      "ram_sha256": "1b530feb9bc6131006cdf17f647075840e94e3ec4615ed669f9d845e27c5ea79",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-33",
+      "ram_sha256": "f275cf1322761d0a9be8d4f8abb8a70b37e8de3a0b8d5aa6f2a8e57b104cce3c",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-34",
+      "ram_sha256": "5698767bc417558e27f029b5b85a7106088d51ea424f7d0efb8909b483c97b79",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-35",
+      "ram_sha256": "fc01dec26b24328f6ae0e5a971d41b0b1c05a77d3848152fd0dacda3c0caab04",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-36",
+      "ram_sha256": "9702b40b1d9d5f9491f2cc14bfe525e3b1366eb22fa9a37cd4355c2039e6b02c",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-37",
+      "ram_sha256": "108a29276c1437b78bb4864b67ed4a20f039cc138f8c7b1245bbe76e747e3f1f",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-38",
+      "ram_sha256": "383445d3d92157791b0e5e7a2b3979c6cb760d2eab170f2f0fddcaa955f92268",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-39",
+      "ram_sha256": "c5fbabc52d316ceb21ab6668b5f08a6fb413ff6c56599b0386ec0f93b81f3420",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-loop-40",
+      "ram_sha256": "ccbbf8a8b0efeb6b32cbafb8fecbd308da5af88269df41813f9159ac2e4f5b6a",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S1-end",
+      "ram_sha256": "4d415a8398cf8af855b62276507d8c4f79e7840f9cc4eb08ba5d45c085c3c6aa",
+      "map": "MAP08.CMP",
+      "map_sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "07c7535c4e5521784e01fc3a9e996f7a719b9fc0ef83803a08c8e419fbeae162",
+      "bitmap_sha256": "96cdcf5dccdfb7e1293a4f2f0f6675505364f14cc20b6bb7c334fc040e2bd6e6",
+      "last_row_hex": "ce ce cf 56 cf 56 cf 56 cf 56 cf 56 cf 56 cf 56",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S3-fight",
+      "ram_sha256": "0f8a91acb618d0ec508e857853be1cfe249ec8fe522c8aacac658ec03cbaf060",
+      "map": "MAP26.CMP",
+      "map_sha256": "ecde15e595b40c7367f4a0d0dabc627a6f0b75befb122ad7554cff6a3f18814d",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "225afc116f06eaee2d9eac3ad1d81e8f60c1f7cbcce7214b1f58804ac52f5af1",
+      "bitmap_sha256": "fe5a5b2b2c2c06360272780fea381db9f7ea69d022a5a5248f2a5407992dc664",
+      "last_row_hex": "ce ce c5 ce c5 ce c5 ce e5 ce e5 ce e5 ce c5 ce",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    },
+    {
+      "name": "S3-ai6",
+      "ram_sha256": "427c15414ce8d265551a05ecd2d49e8157ecede82a80154b6319c7ced4a8d3e0",
+      "map": "MAP26.CMP",
+      "map_sha256": "ecde15e595b40c7367f4a0d0dabc627a6f0b75befb122ad7554cff6a3f18814d",
+      "map_linear_hex": "0x6d3f4",
+      "bitmap_linear_hex": "0x706f6",
+      "grid_sha256": "225afc116f06eaee2d9eac3ad1d81e8f60c1f7cbcce7214b1f58804ac52f5af1",
+      "bitmap_sha256": "fe5a5b2b2c2c06360272780fea381db9f7ea69d022a5a5248f2a5407992dc664",
+      "last_row_hex": "ce ce c5 ce c5 ce c5 ce e5 ce e5 ce e5 ce c5 ce",
+      "different_grid_bytes": 0,
+      "different_bitmap_bytes": 0
+    }
+  ],
+  "exploration": [
+    {
+      "path": "workplace/oracle/battle79-round38-strip-write",
+      "classification": "source exploration only",
+      "flags": [
+        "-load-state",
+        "/out/oracle/battle79-round36-s1-path-explore/strategic-750m.state",
+        "-tick",
+        "20000",
+        "-clicks",
+        "761000000:600:200,811000000:600:200,861000000:600:200",
+        "-click-hold",
+        "3000000",
+        "-steps",
+        "900000000",
+        "-vram-at",
+        "3FAE",
+        "-vga-trace-rows",
+        "203-204",
+        "-vga-trace-cols",
+        "62-63",
+        "-row-writes-from",
+        "750000000"
+      ],
+      "hashes": {
+        "flags.txt": "092a376ddc7c8fc5d3f44dbf51c777683bedcf5efdee159f0370f9aaa706503f",
+        "meta.txt": "4d98af1fbbafbf516108678baad8b98d96e5b8f09e459c19017f22316557e6e6",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "report.txt": "9ec6257c456f70c979f1d3f8b49d8bb3997285b166fafeb5353307a9854709b1",
+        "screen.bin": "3d3092e788e7d9a626f3776bd548c2da041d093a0695b87dafd305fbd9703f16",
+        "screen.png": "391aa759d49cbab29f4d8b713517fb32a9b798b76f2a8381eea645cf21f85ac0"
+      }
+    },
+    {
+      "path": "workplace/oracle/battle79-round38-strip-source",
+      "classification": "source exploration only",
+      "flags": [
+        "-load-state",
+        "/out/oracle/battle79-round36-s1-path-explore/strategic-750m.state",
+        "-tick",
+        "20000",
+        "-clicks",
+        "761000000:600:200,811000000:600:200,861000000:600:200",
+        "-click-hold",
+        "3000000",
+        "-steps",
+        "862000000",
+        "-regs-at",
+        "2376:0B90,2376:0B74",
+        "-regs-from",
+        "861600000",
+        "-regs-max",
+        "2000"
+      ],
+      "hashes": {
+        "flags.txt": "772ac49c022a52358b47383b4a407758ec55d528b92a4f87f43883ff1707f6af",
+        "meta.txt": "6a5bef2358d7b67033eb1cd3f2d90876bba1d2dcd863a860918c5e1921af400c",
+        "pal.bin": "ef115a0e0c15cdc41958ca46b5b14b456115f4baec5e3ca68599d2a8f435e3b8",
+        "report.txt": "0f02543c788d7cb586f53009de88c20b42eb6bd0c4cdea15a46c5ba4fe16eb71",
+        "screen.bin": "b2a9e67c6c620e45a02b78fa48a6c041b87cac5dc4e624d5123fd149b1e1e875",
+        "screen.png": "ef79659c007463d47f0d04c6c77e285902ba2c4e496e75f0add5a2fac55ca0cf"
+      }
+    }
+  ],
+  "scope": "S1固定43邊界及兩份既有S3；原版鄰接配置以明示有界資料重現，不宣稱任意heap配置相同",
+  "unknown": [
+    "不同配置次序的heap鄰接是否相同",
+    "完整八步其餘階段"
+  ]
+}

@@ -1,6 +1,68 @@
 # 045：索敵回收與移動畫面
 
-## 目前續證：第三十七輪分隊繪製次序
+## 目前續證：第三十八輪小地圖 bitmap
+
+2026-10-02，父提交`7cac62f6ba7ff2278b2a376948b15c3207cd0fe5`、測試時dirty，#79保持open。
+[本輪計畫](../goal/2026-10-02-battle-residue-source-round-38.md)、[研究378](../re/378-minimap-bitmap-bottom.md)、
+[086](../spec/086-battle-minimap-bitmap.md)及[分級索引](../internals/data/battle-minimap-bitmap.json)保存證據與審查。
+路由已重查，原版執行器未改，dosgolem固定f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c、clean。
+延續第36輪事前定same-state的43邊界雙跑，不升格舊nearby-state。
+
+最後寫入者是2376:0B90，bitmap從y76到203。第127列取樣超出128×102地圖，
+讀到兩byte配置標頭及已生成bitmap前126 bytes。原始CMP、格線轉換與完整查表可重生全部45份
+S1／S3地圖及2048-byte bitmap，取代046的固定格表殘留說法。
+086先DRAFT、審查28筆原始指令與完整資料後READY，再接正式renderer。
+正式程式以有界陣列重現來源，不依星域／seed挑遮罩；原地圖、規則、輸入與存檔格式未改。
+
+新增完整畫面斷言後，舊程式43幀各失敗38點。修正後全部43幀如下，沒有遮罩、裁切或縮放。
+
+| 區域 | 每幀比較像素 | 不同像素 | 最大通道差 | 差異範圍 |
+|---|---:|---:|---:|---|
+| 全畫面 | 307200 | 0 | 0 | 無 |
+| Field | 161280 | 0 | 0 | 無 |
+| 原小地圖矩形 | 16384 | 0 | 0 | 無 |
+| 實際bitmap | 16384 | 0 | 0 | 無 |
+| 最後一列 | 128 | 0 | 0 | 無 |
+| 狀態面板 | 32000 | 0 | 0 | 無 |
+
+18筆122-byte艦隊／135筆78-byte分隊完整紀錄、每幀440方向像素、seed與鏡頭仍相同。
+原版、remake與差分PNG、色盤及完整逐區統計均保留。兩次原版43邊界共258份輸出另核對雜湊。
+
+- 修正前收據`workplace/battle79-round38-before-render-receipt.json`，SHA-256
+  `79a4eb0b2022c4fae0bbb96c4e977c56745ce46db2586b028269f977154c9937`。
+- 修正後收據`workplace/battle79-round38-after-render-receipt.json`，SHA-256
+  `b767c2dbf2c7a16d7650ff1f9f37d4497203a9dcdb498126ff034a3bae84aa83`。
+- 28筆定位／45份完整bitmap索引，SHA-256
+  `38e22502994912c0fad51565846e6593ccdf3e788d27d1125d48d173da2c3387`。
+- 6個目標PASS事件、零skip；既有S3完整35幀及三份正常玩家實行／存讀維持通過。
+  log SHA-256 `f2694165b321566f526c946e064607ca9133cf18ba433e748083a33da3e7f538`。
+- 舊S3整張戰場／小地圖2個PASS事件、零skip，log SHA-256
+  `bfd2ec4647db8d23e4862539ddb2dd656e8a753764cc572f4a3aa94c59eed8b7`。
+- 18標準產品套件通過或無測試，count=1；log SHA-256
+  `7a174625175bf3ccb77b521203f368ea77c5a1372389f94a4f3ce1c3ca21bfb8`。
+- 正式主選單、S1載入、戰略／戰術實行至移動GUI已檢視，無診斷注入。
+  PNG SHA-256 `c1715a97028895f17e1dbf54844f2f74866acc7f2e871eabc0399b65ae2618a0`。
+  與前輪PNG差異限小地圖末列；正常原版18／135與remake16／103的初態差異仍分列，
+  不把正常GUI抽樣冒充整流程同狀態對拍。
+
+收據綁定探索完整旗標、IDA／RAM／資產／來源／log及image雜湊。
+修正前battle.go、game.go及幾何JSON另綁父提交快照。
+
+```sh
+bash tools/py.sh /work/tools/scripts/battle_minimap_evidence.py
+bash tools/gui.sh xrun sh -c 'LOGH3_MOVEMENT_OUTPUT=battle79-round38-after go test -count=1 -v -run "TestMovementSecondBattleRecordsMatchOriginal|TestMovementAllBoundariesMatchOriginal|TestBattleShippedSavesNormalExecuteAndSave" ./internal/game'
+bash tools/gui.sh xrun go test -count=1 -v -run 'TestMinimapMatchesOracle|TestBattleMatchesOracle' ./internal/screen
+bash tools/gui.sh xrun go test -count=1 ./internal/... ./cmd/...
+LOGH3_EXTRA_RO=/home/anr2/cht/logh3 bash tools/py.sh /work/tools/scripts/battle_second_render_receipt.py battle79-round38-after 7cac62f6ba7ff2278b2a376948b15c3207cd0fe5 --require-exact
+bash tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script 'move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 282; click 318 208; click 544 125; click 560 125; tick 2000; move 600 240; click; click; tick 10' -shot-bin /src/workplace/battle79-round38-s1-gui-movement.bin -shot /src/workplace/battle79-round38-s1-gui-movement.png -state-out /src/workplace/battle79-round38-s1-gui-movement.state -shot-after 2
+```
+
+086限定CONFORMED，046來源解釋SUPERSEDED；第二戰場完整畫面缺口已解。
+不同heap配置、其他玩家存檔、正常資源結果及其餘八步未驗，080／083保持READY。
+不重查已驗兩戰場資料／方向／排序／畫面，下一步回到正常補給／修理結果與③索敵／④戰鬥順序。
+第37輪「缺-vram-sites」勘誤見研究378，實際原因是續跑父狀態過晚。
+
+## 第三十七輪分隊繪製次序
 
 2026-10-02，父提交`f673f591460eb0f3065c4876c5e66c16a06ad0c4`、測試時dirty，#79保持open。
 [本輪計畫](../goal/2026-10-02-battle-render-order-round-37.md)、[研究377](../re/377-battle-render-order.md)、

@@ -11,6 +11,11 @@
 
 ## 這裡的東西怎麼寫
 
+第二戰場殘留列來源：[第三十八輪](../goal/2026-10-02-battle-residue-source-round-38.md)，工作項目 #79。
+小地圖bitmap契約：[086](../spec/086-battle-minimap-bitmap.md)，[研究378](../re/378-minimap-bitmap-bottom.md)。
+分級來源及45份核對：[battle-minimap-bitmap.json](data/battle-minimap-bitmap.json)，
+重生入口：[battle_minimap_evidence.py](../../tools/scripts/battle_minimap_evidence.py)。
+
 第二戰場剩餘呈現來源：[第三十七輪](../goal/2026-10-02-battle-render-order-round-37.md)，工作項目 #79。
 分隊繪製次序契約：[085](../spec/085-battle-unit-draw-order.md)。
 調查紀錄：[研究377](../re/377-battle-render-order.md)。

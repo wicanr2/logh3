@@ -77,7 +77,6 @@ func TestBattleMatchesOracle(t *testing.T) {
 	DrawMinimap(s, fb, cells, BattleView{Col: 66, Row: 30})
 	DrawMinimapPlanets(s, fb, rules.PlanetSites(cells, s.Field.TileW, s.Field.TileH))
 	DrawMinimapUnits(s, fb, minimapOriginalUnits(t, "s3ai6.bin"))
-	DrawBattleGridResidue(s, fb)
 	// 收據上的滑鼠游標由 dosgolem 畫、remake 不畫，因此只排除這一處。
 	skip := func(x, y int) bool {
 		return x >= 560 && x <= 571 && y >= 125 && y <= 140

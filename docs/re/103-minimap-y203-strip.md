@@ -67,3 +67,9 @@
 這一列在 `s3ai6` 與 `s3fight` 完全相同，且與局面無關。正式契約移到
 [`docs/spec/046`](../spec/046-battle-grid-residue.md)；remake 以獨立函式保存這個
 原版繪圖瑕疵，不把它併入小地圖尺寸或地形取樣。
+
+## 第38輪來源勘誤
+
+[研究378](378-minimap-bitmap-bottom.md)的最後寫入trace、來源指標與45份完整bitmap重生，
+推翻本篇格表殘留解釋。最後寫入者是2376:0B90，來源是y76..203的bitmap末列。
+S3固定圖樣的像素觀測仍有效；正式呈現改依[086](../spec/086-battle-minimap-bitmap.md)。

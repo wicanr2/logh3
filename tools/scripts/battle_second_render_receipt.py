@@ -7,9 +7,11 @@ import sys
 from pngout import game_palette, write_png
 
 prefix, head = sys.argv[1:3]
-assert prefix in ("battle79-round36-before", "battle79-round36-after", "battle79-round37-before", "battle79-round37-after")
+assert prefix in ("battle79-round36-before", "battle79-round36-after", "battle79-round37-before", "battle79-round37-after", "battle79-round38-before", "battle79-round38-after")
 round_prefix = prefix.rsplit("-", 1)[0]
 round37 = round_prefix.endswith("37")
+round38 = round_prefix.endswith("38")
+modern = round37 or round38
 work, root = Path("workplace"), Path("/ref")
 evidence = Path("docs/internals/data/battle-second-frames.json")
 data = json.loads(evidence.read_text())
@@ -19,6 +21,9 @@ regions = {"full": [0, 0, 640, 480],
            "field": [f["x"], f["y"], f["cols"]*f["tile_w"], f["rows"]*f["tile_h"]],
            "minimap": [m[k] for k in ("x", "y", "w", "h")],
            "status": [s[k] for k in ("x", "y", "w", "h")]}
+if round38:
+    regions["bitmap"] = [m["x"], m["y"]+1, m["w"], m["h"]]
+    regions["bottom_row"] = [m["x"], m["y"]+m["h"], m["w"], 1]
 
 
 def sha(p):
@@ -39,8 +44,10 @@ sources = ["internal/game/battlesecond_test.go", "internal/game/battlemovement.g
            "tools/scripts/battle_second_render_receipt.py", "tools/scripts/battle_second_plan.py",
            "tools/battle_second_oracle.sh", "tools/scripts/battle_second_render_evidence.py",
            "docs/internals/data/battle-directions.json", "docs/internals/data/screen-battle.json"]
-if round37:
+if modern:
     sources += ["tools/scripts/battle_order_evidence.py", "docs/internals/data/battle-draw-order.json"]
+if round38:
+    sources += ["tools/scripts/battle_minimap_evidence.py", "docs/internals/data/battle-minimap-bitmap.json"]
 report = {"schema": "logh3.battle-phase-render.v1", "classification": "same-state",
           "scope": data["scope"], "remake_head": head, "remake_working_tree": "dirty",
           "seed_original_and_remake": data["movement_seed"], "seed_method": data["seed_method"],
@@ -49,15 +56,21 @@ report = {"schema": "logh3.battle-phase-render.v1", "classification": "same-stat
           "source_sha256": {p: sha(root / p) for p in sources},
           "original_assets_sha256": {p: sha(Path("/orig") / p) for p in ("SPRITE.SPR", "BLOCK_1.BLK", "BLOCK_2.BLK", "ANI_PNL0.A98", "GRAPH.IMG", "MAP08.CMP")},
           "regions": regions, "frames": []}
-if round37 and prefix.endswith("before"):
-    snapshot = work / "battle79-round37-before-battle.go"
-    report["source_sha256"]["internal/screen/battle.go"] = sha(snapshot)
-    report["source_snapshot"] = {"internal/screen/battle.go": {"path": str(snapshot), "git_head": head, "sha256": sha(snapshot)}}
+if modern and prefix.endswith("before"):
+    report["source_snapshot"] = {}
+    paths = [("internal/screen/battle.go", "battle.go")]
+    if round38:
+        paths.append(("internal/game/game.go", "game.go"))
+        paths.append(("docs/internals/data/screen-battle.json", "screen-battle.json"))
+    for original, name in paths:
+        snapshot = work / (round_prefix+"-before-"+name)
+        report["source_sha256"][original] = sha(snapshot)
+        report["source_snapshot"][original] = {"path": str(snapshot), "git_head": head, "sha256": sha(snapshot)}
 report["image_ids"] = {"logh3-ebiten:2": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
                        "golang:1.24-bookworm": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
                        "ida-pro-9.4-idapython:locked-v1": "sha256:6f6d59af49d0008c4109a5295b5f374bdc007e2d1ab28cb9de08779584de2780"}
 report["command"] = "bash tools/gui.sh xrun sh -c 'LOGH3_MOVEMENT_OUTPUT="+prefix+" go test -count=1 -v -run \"TestMovementSecondBattleRecordsMatchOriginal|TestMovementAllBoundariesMatchOriginal|TestBattleShippedSavesNormalExecuteAndSave\" ./internal/game'"
-if round37 and prefix.endswith("before"):
+if modern and prefix.endswith("before"):
     report["command"] = "bash tools/gui.sh xrun sh -c 'LOGH3_MOVEMENT_OUTPUT="+prefix+" go test -count=1 -v -run TestMovementSecondBattleRecordsMatchOriginal ./internal/game'"
 bundle = root / "org_game/银河英雄传说3SP.zip"
 assert sha(bundle) == "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673"
@@ -76,12 +89,19 @@ if round37:
                                       "hashes": {q.name: sha(q) for q in p.iterdir() if q.is_file()}})
     report["ida_exports"] = {"re79-render-r37-"+seg+ext: sha(work/"ida"/("re79-render-r37-"+seg+ext))
                              for seg in ("35D1", "2376") for ext in (".com", ".json", ".index.json")}
+if round38:
+    proof = json.loads(Path("docs/internals/data/battle-minimap-bitmap.json").read_text())
+    report["input_chain"] += proof["exploration"]
+    report["ida_exports"] = {"re79-residue-r38-"+name+ext: sha(work/"ida"/("re79-residue-r38-"+name+ext))
+                             for name in ("build", "blit-origin") for ext in (".com", ".json", ".index.json")}
 if prefix.endswith("after"):
-    logs = [round_prefix+("-target.log" if round37 else "-final-target.log"), round_prefix+"-standard.log", round_prefix+"-gui.log", round_prefix+"-before.log"]
-    if not round37:
+    logs = [round_prefix+("-target.log" if modern else "-final-target.log"), round_prefix+"-standard.log", round_prefix+"-gui.log", round_prefix+"-before.log"]
+    if not modern:
         logs += ["battle79-round36-after-unresolved.log"]
-    else:
+    elif round37:
         logs += ["battle79-round37-order-probe.log"]
+    else:
+        logs += [round_prefix+"-minimap.log"]
     report["log_sha256"] = {n: sha(work / n) for n in logs}
     target = (work / logs[0]).read_text()
     assert target.count("--- PASS:") == 6 and "--- SKIP:" not in target and "--- FAIL:" not in target
@@ -117,12 +137,20 @@ for frame in data["frames"]:
 out = work / (prefix + "-render-receipt.json")
 report["full_frame_passed"] = all(f["effective_palette_equal"] and f["region_stats"]["full"]["different"] == 0 for f in report["frames"])
 report["field_passed"] = all(f["effective_palette_equal"] and f["region_stats"]["field"]["different"] == 0 for f in report["frames"])
-report["remaining_differences"] = {"row_203": "unknown; S3 fixed residue mask does not match S1"}
-if not (round37 and prefix.endswith("after")):
+report["remaining_differences"] = {} if round38 and prefix.endswith("after") else {"row_203": "unknown; S3 fixed residue mask does not match S1"}
+if round38 and prefix.endswith("before"):
+    report["remaining_differences"]["row_203"] = "source proven by spec086; renderer still uses old S3 fixed mask"
+if not round38 and not (round37 and prefix.endswith("after")):
     report["remaining_differences"]["field_overlap"] = "unknown; original display object order differs from current unit list order"
-else:
+elif round37:
     assert all(f["region_stats"]["field"]["different"] == 0 for f in report["frames"])
     assert all(f["region_stats"]["full"]["different"] == 38 for f in report["frames"])
+if round38:
+    assert report["field_passed"]
+    if prefix.endswith("after"):
+        assert report["full_frame_passed"]
+    else:
+        assert all(f["region_stats"]["full"]["different"] == 38 for f in report["frames"])
 out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
 print("43邊界全畫面差異", [f["region_stats"]["full"]["different"] for f in report["frames"]], "收據", sha(out))
 if "--require-exact" in sys.argv:
