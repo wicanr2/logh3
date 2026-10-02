@@ -370,6 +370,45 @@ func DrawBattleUnits(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
 	}
 }
 
+// DrawBattleFleetDirections沿084畫完整可見旗艦的八向圖示；色號0透明。
+func DrawBattleFleetDirections(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
+	fleets []rules.BattleFleet, units []rules.BattleUnit, viewer int, v BattleView) {
+	if s == nil || len(sprites) < 8 {
+		return
+	}
+	offsets := [8][2]int{{16, 0}, {8, 8}, {0, 16}, {-8, 8}, {-16, 0}, {-8, -8}, {0, -16}, {8, -8}}
+	fx, fy := s.Field.X, s.Field.Y
+	fw, fh := s.Field.Cols*s.Field.TileW, s.Field.Rows*s.Field.TileH
+	for _, f := range fleets {
+		visible := false
+		for _, u := range units {
+			if u.Fleet == f.Index && u.Squadron == 0 && !u.Out && (u.Faction == viewer || u.Detail == rules.SpottingMax) {
+				visible = true
+				break
+			}
+		}
+		if !visible {
+			continue
+		}
+		d := rules.DirectionIndex(f.Facing)
+		t := sprites[d]
+		if t == nil {
+			continue
+		}
+		sx := fx + f.X - v.Col*s.Field.TileW + offsets[d][0]
+		sy := fy + f.Y - v.Row*s.Field.TileH + offsets[d][1]
+		for y := 0; y < t.H; y++ {
+			for x := 0; x < t.W; x++ {
+				px, py := sx+x, sy+y
+				ink := t.Pix[y*t.W+x]
+				if ink != 0 && px >= fx && py >= fy && px < fx+fw && py < fy+fh {
+					fb.Set(px, py, ink)
+				}
+			}
+		}
+	}
+}
+
 // MinimapSpec 是小地圖的版面（`docs/internals/34`）。
 type MinimapSpec struct {
 	X, Y, W, H    int

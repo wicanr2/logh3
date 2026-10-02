@@ -218,3 +218,9 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [階段面板正式畫面收據](../../tools/scripts/battle_phase_render_receipt.py)：35邊界全畫面及逐區有效RGB差分，不裁切或遮罩。
 - [第三十五輪：第二戰場及正常資源結果](../goal/2026-10-02-battle-second-sample-round-35.md)：接續#79現行READY範圍，抽正式載入路徑及另一戰場。
 - [隨附存檔正常玩家收據](../../tools/scripts/battle_samples_receipt.py)：三份存檔進場、實行、面板還原與完整存讀；[驗證045](../playtest/045-battle-movement-render.md)限定為remake正常路徑，不宣稱原版第二戰場對拍。
+- [第三十六輪：原版第二戰場同狀態](../goal/2026-10-02-battle-second-oracle-round-36.md)：接續#79原版S1正常過場與固定戰場邊界，不重做三份remake玩家抽樣。
+- [S1第二戰場原版重播](../../tools/battle_second_oracle.sh)與[固定計畫／匯出](../../tools/scripts/battle_second_plan.py)：43個邊界、18艦隊／135分隊，入口seed與完整旗標固定。
+- [S1第二戰場正式Game驗證](../../internal/game/battlesecond_test.go)與[逐圈紀錄](data/battle-second-frames.json)：唯一入口注入，後續全部使用正式移動引擎。
+- [S1第二戰場畫面差分](../../tools/scripts/battle_second_render_receipt.py)：原生全畫面與逐區色彩統計，保留修正前後差分，不遮罩。
+- [第二戰場研究376](../re/376-second-battle-render.md)與[方向圖示規格084](../spec/084-battle-fleet-directions.md)：方向位置、條件及圖塊來源；同順位重疊與203列差分另待補證。
+- [方向圖示分級索引](data/battle-directions.json)由[證據工具](../../tools/scripts/battle_second_render_evidence.py)核原始指令、八向位移及素材bytes。

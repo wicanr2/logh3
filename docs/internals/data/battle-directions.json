@@ -1,0 +1,340 @@
+{
+  "schema": "logh3.semantic-index.v1",
+  "tool": "IDA Pro 9.4",
+  "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "ram_sha256": "9095dfa08ab36201784e6d4555b5e42312ac76bb20049614cf53bf93bc09e7ec",
+  "ida_base_hex": "0x10200",
+  "address_space": "cut offset0=IDA 0x10200; original CS:IP and dosgolem linear separate",
+  "exports": [
+    {
+      "path": "workplace/ida/re79-second-r36-25DB.json",
+      "sha256": "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b",
+      "input_sha256": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a"
+    },
+    {
+      "path": "workplace/ida/re79-second-r36-3982.json",
+      "sha256": "664dabfbf010ca713b5ca85d50eb5c70701116ff9c8aece23d5d07e05fed70f0",
+      "input_sha256": "d80d91d9ce32708d3084e52b0c696375cee250f3c5627b737db0c2c2ba18d407"
+    },
+    {
+      "path": "workplace/ida/re79-second-r36-35D1.json",
+      "sha256": "528ab8fc899d71f60874cc46c79eefeb31a18b67d4eb7e31f8a76e6723a1cc43",
+      "input_sha256": "e2745e3e8daa49237d52c4b27f72af45ecfdde67aa18b8c1bf180a9664dc01c1"
+    }
+  ],
+  "entries": [
+    {
+      "original_location": "25DB:0408",
+      "ida_ea_hex": "0x10608",
+      "runtime_linear_hex": "0x261b8",
+      "original_bytes_hex": "09 ff",
+      "original_operand": "or      di, di",
+      "semantic": "完整顯示旗標非0時進完整圖示分支",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "25DB:040C",
+      "ida_ea_hex": "0x1060c",
+      "runtime_linear_hex": "0x261bc",
+      "original_bytes_hex": "26 80 7f 17 03",
+      "original_operand": "cmp     byte ptr es:[bx+17h], 3",
+      "semantic": "否則檢查SHIP+17是否已達3",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "25DB:0413",
+      "ida_ea_hex": "0x10613",
+      "runtime_linear_hex": "0x261c3",
+      "original_bytes_hex": "26 80 7f 03 00",
+      "original_operand": "cmp     byte ptr es:[bx+3], 0",
+      "semantic": "完整顯示分支檢查SHIP+3是否為旗艦序號0",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "25DB:0438",
+      "ida_ea_hex": "0x10638",
+      "runtime_linear_hex": "0x261e8",
+      "original_bytes_hex": "9a e7 04 db 25",
+      "original_operand": "call    far ptr 25DBh:4E7h",
+      "semantic": "旗艦呼叫04E7且旗標1，啟用方向",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "25DB:0487",
+      "ida_ea_hex": "0x10687",
+      "runtime_linear_hex": "0x26237",
+      "original_bytes_hex": "9a e7 04 db 25",
+      "original_operand": "call    far ptr 25DBh:4E7h",
+      "semantic": "非完整顯示旗艦呼叫04E7且旗標0，隱藏方向",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "25DB:04F9",
+      "ida_ea_hex": "0x106f9",
+      "runtime_linear_hex": "0x262a9",
+      "original_bytes_hex": "9a 22 00 82 39",
+      "original_operand": "call    far ptr 3982h:22h",
+      "semantic": "將Fleet+4A送入八向索引",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "25DB:0503",
+      "ida_ea_hex": "0x10703",
+      "runtime_linear_hex": "0x262b3",
+      "original_bytes_hex": "26 88 47 6a",
+      "original_operand": "mov     es:[bx+6Ah], al",
+      "semantic": "方向索引存Fleet+6A",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "25DB:050C",
+      "ida_ea_hex": "0x1070c",
+      "runtime_linear_hex": "0x262bc",
+      "original_bytes_hex": "26 c6 47 6a 09",
+      "original_operand": "mov     byte ptr es:[bx+6Ah], 9",
+      "semantic": "隱藏時Fleet+6A為9",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "25DB:06D4",
+      "ida_ea_hex": "0x108d4",
+      "runtime_linear_hex": "0x26484",
+      "original_bytes_hex": "03 87 3c 4a",
+      "original_operand": "add     ax, [bx+4A3Ch]",
+      "semantic": "世界X減鏡頭X後加DS:4A3C方向X位移",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "25DB:06FF",
+      "ida_ea_hex": "0x108ff",
+      "runtime_linear_hex": "0x264af",
+      "original_bytes_hex": "26 03 45 02",
+      "original_operand": "add     ax, es:[di+2]",
+      "semantic": "世界Y減鏡頭Y後加DS:4A3C方向Y位移",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "25DB:08D3",
+      "ida_ea_hex": "0x10ad3",
+      "runtime_linear_hex": "0x26683",
+      "original_bytes_hex": "9a 01 00 82 39",
+      "original_operand": "call    far ptr 3982h:1",
+      "semantic": "以Fleet+6A取得方向圖塊指標",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b"
+      ]
+    },
+    {
+      "original_location": "3982:000F",
+      "ida_ea_hex": "0x1020f",
+      "runtime_linear_hex": "0x3982f",
+      "original_bytes_hex": "d3 e0",
+      "original_operand": "shl     ax, cl",
+      "semantic": "方向圖塊索引左移7，每塊128 bytes",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "664dabfbf010ca713b5ca85d50eb5c70701116ff9c8aece23d5d07e05fed70f0"
+      ]
+    },
+    {
+      "original_location": "3982:0011",
+      "ida_ea_hex": "0x10211",
+      "runtime_linear_hex": "0x39831",
+      "original_bytes_hex": "8b 0e 2e f1",
+      "original_operand": "mov     cx, ds:0F12Eh",
+      "semantic": "圖塊池段值來自DS:F12E",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "664dabfbf010ca713b5ca85d50eb5c70701116ff9c8aece23d5d07e05fed70f0"
+      ]
+    },
+    {
+      "original_location": "3982:0015",
+      "ida_ea_hex": "0x10215",
+      "runtime_linear_hex": "0x39835",
+      "original_bytes_hex": "8b 36 2c f1",
+      "original_operand": "mov     si, ds:0F12Ch",
+      "semantic": "圖塊池位移來自DS:F12C",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "664dabfbf010ca713b5ca85d50eb5c70701116ff9c8aece23d5d07e05fed70f0"
+      ]
+    },
+    {
+      "original_location": "3982:002F",
+      "ida_ea_hex": "0x1022f",
+      "runtime_linear_hex": "0x3984f",
+      "original_bytes_hex": "d3 e8",
+      "original_operand": "shr     ax, cl",
+      "semantic": "Facing右移4",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "664dabfbf010ca713b5ca85d50eb5c70701116ff9c8aece23d5d07e05fed70f0"
+      ]
+    },
+    {
+      "original_location": "3982:0031",
+      "ida_ea_hex": "0x10231",
+      "runtime_linear_hex": "0x39851",
+      "original_bytes_hex": "40",
+      "original_operand": "inc     ax",
+      "semantic": "方向中點取整先加1",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "664dabfbf010ca713b5ca85d50eb5c70701116ff9c8aece23d5d07e05fed70f0"
+      ]
+    },
+    {
+      "original_location": "3982:0032",
+      "ida_ea_hex": "0x10232",
+      "runtime_linear_hex": "0x39852",
+      "original_bytes_hex": "d1 e8",
+      "original_operand": "shr     ax, 1",
+      "semantic": "再右移1",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "664dabfbf010ca713b5ca85d50eb5c70701116ff9c8aece23d5d07e05fed70f0"
+      ]
+    },
+    {
+      "original_location": "3982:0034",
+      "ida_ea_hex": "0x10234",
+      "runtime_linear_hex": "0x39854",
+      "original_bytes_hex": "24 07",
+      "original_operand": "and     al, 7",
+      "semantic": "八方向索引以7遮罩",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "664dabfbf010ca713b5ca85d50eb5c70701116ff9c8aece23d5d07e05fed70f0"
+      ]
+    },
+    {
+      "original_location": "35D1:0053",
+      "ida_ea_hex": "0x10253",
+      "runtime_linear_hex": "0x35d63",
+      "original_bytes_hex": "9a 8d 02 d1 35",
+      "original_operand": "call    far ptr 35D1h:28Dh",
+      "semantic": "加入物件後呼叫028D，排序語意仍unknown",
+      "grade": "proven",
+      "warning": "",
+      "source": [
+        "docs/re/376-second-battle-render.md",
+        "528ab8fc899d71f60874cc46c79eefeb31a18b67d4eb7e31f8a76e6723a1cc43"
+      ]
+    }
+  ],
+  "direction_offsets": [
+    [
+      16,
+      0
+    ],
+    [
+      8,
+      8
+    ],
+    [
+      0,
+      16
+    ],
+    [
+      -8,
+      8
+    ],
+    [
+      -16,
+      0
+    ],
+    [
+      -8,
+      -8
+    ],
+    [
+      0,
+      -16
+    ],
+    [
+      8,
+      -8
+    ]
+  ],
+  "direction_tiles": {
+    "first": 0,
+    "count": 8,
+    "bytes_per_tile": 128,
+    "raw_sha256": "6e4435fc8256bebfb0f038931a8c38b34b64e922c261bb6fc8db4cb5eb250a33",
+    "source_file": "SPRITE.SPR",
+    "source_sha256": "e39db182df715f1f2f98123dad4409b823e2518ba24d19c5417b89cf1fbc5483",
+    "grade": "proven"
+  },
+  "unknown": [
+    "同順位重疊物件的實際繪製次序",
+    "S1與S3的y203格表殘留差異"
+  ]
+}

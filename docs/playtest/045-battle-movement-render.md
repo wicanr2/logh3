@@ -1,5 +1,67 @@
 # 045：索敵回收與移動畫面
 
+## 目前續證：第三十六輪第二戰場資料與方向圖示
+
+2026-10-02，父提交`61e7687c444c1a68f16188094f54a037f9ace76a`、測試時dirty，#79保持open。
+路由與READY閘門已重查；[研究376](../re/376-second-battle-render.md)、[084](../spec/084-battle-fleet-directions.md)
+及[本輪計畫](../goal/2026-10-02-battle-second-oracle-round-36.md)保存宣告、原始指令與審查。
+
+原版正常S1載入／戰略過場到星域8、第1回合，18艦隊／135分隊，鏡頭58,1。
+與第35輪remake正常首戰16／103不同；此次Game明標唯一入口注入，正常路徑另列。
+新比較在雙跑前宣告same-state，舊nearby-state及第34輪固定35幀維持原範圍。
+首次實行前固定12345678，第一階段後移動入口seedECC6CD87；不重擲、不強求整流程骰序。
+原版專用dosgolem完整HEAD `f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c`、clean。
+
+兩次獨立原版入口／41圈／終態共43邊界、129檔完整相同，
+[原池全紀錄](../internals/data/battle-second-frames.json) SHA-256
+`99c774f82b61e928ac62d1fa10dc4fb986eb6cffa1ba43692d6b8e127ca234b1`。
+正式引擎只在入口還原一次，所有18筆122-byte艦隊／135筆78-byte分隊紀錄零差異。
+第一輪全畫面差874到1104，已保留原始失敗log與差分。
+
+方向圖示依084先DRAFT、審查READY再接正式Game.Frame。
+原版圖塊池前1024 bytes、八筆有號位移與19筆分級指令已核，
+[方向索引](../internals/data/battle-directions.json) SHA-256
+`b1c36483ac7b9d3a58133fe9c42baf4a961670dcede3ef0e1ab8777ac44c9158`。
+43幀各440個方向像素相同，合計18920；位置讀原版物件+6/+8作斷言，
+不在測試複製renderer座標公式、不餵回Game。
+
+**完整畫面未通過**。各幀仍差434到664，沒有遮罩、裁切或允許區域。
+同順位重疊物件與203列仍unknown；既有046固定殘留只能宣稱所驗S3範圍。
+測試明確命名為Records，只對完整資料與方向下通過斷言；全畫面差分逐幀記錄，沒有修改golden。
+
+| 原生區域 | 入口差異／比較數 | 終態差異／比較數 |
+|---|---:|---:|
+| 全畫面 | 664／307200 | 486／307200 |
+| 戰場 | 626／161280 | 448／161280 |
+| 小地圖 | 0／16384 | 0／16384 |
+| 階段狀態欄 | 0／32000 | 0／32000 |
+
+最大通道差243。入口差異框`211,203..604,285`，終態`213,203..604,274`；
+其餘逐幀數字、有效RGB、原版／remake／差分PNG及雜湊在收據。
+未通過收據`workplace/battle79-round36-after-render-receipt.json` SHA-256
+`94a5ccd41bb7dba92a46fe39b72b4e42e68581d2feb7fc11f3c0b87ac01a26cd`。
+修正前收據`d28e0faa86bf1eb3a456be55cfa2ab55b35d98bb3a9d657e2c382fac4e732b13`保留。
+最終收據保存bundle、父快照鏈、原版旗標、來源、image IDs與測試log；探索不升格。
+
+目標6個PASS事件、零skip，涵蓋第二戰場有限驗證、既有S3全畫面35邊界及三份正常存檔實行／完整存讀。
+標準18個產品套件通過或無測試。正式cmd/gin3正常S1實行至移動階段PNG已檢視，
+SHA-256 `ed083fa7c40ee65d33c1491dd020927fc78f7d3553717d40cc092aa82348729b`。
+產品正常路徑使用預設seed，不能當成與原版同狀態的圖。
+
+```sh
+bash tools/battle_second_oracle.sh battle79-second-r36-a
+bash tools/battle_second_oracle.sh battle79-second-r36-b
+bash tools/py.sh /work/tools/scripts/battle_second_plan.py export
+bash tools/gui.sh xrun sh -c 'LOGH3_MOVEMENT_OUTPUT=battle79-round36-after go test -count=1 -v -run "TestMovementSecondBattleRecordsMatchOriginal|TestMovementAllBoundariesMatchOriginal|TestBattleShippedSavesNormalExecuteAndSave" ./internal/game'
+bash tools/gui.sh test -count=1 ./internal/... ./cmd/...
+LOGH3_EXTRA_RO=/home/anr2/cht/logh3 bash tools/py.sh /work/tools/scripts/battle_second_render_receipt.py battle79-round36-after 61e7687c444c1a68f16188094f54a037f9ace76a
+```
+
+原版父menu.state的生成旗標與每個快照雜湊在收據input_chain；
+外部fcmd-base.state維持第35輪身份。所有輸出留本機，不發行原版素材。
+084限方向圖示CONFORMED；080／083 READY，正常資源結果、全部玩家存檔與完整八步仍缺。
+下一步只查重疊次序與203列來源，不重做已驗43邊界資料、方向圖示及三份正常載入。
+
 ## 目前續證：第三十五輪隨附存檔正常路徑
 
 2026-10-02，#79保持open。父提交`1a7c5e5b1aef3eee08baf75aa4d5ca9c9aa71087`加本輪測試，測試時dirty。

@@ -35,3 +35,9 @@ CE CE C5 CE C5 CE C5 CE E5 CE E5 CE E5 CE C5 CE
 滑鼠游標。整個戰場畫面其餘像素必須與 `s3ai6` 收據相同。
 
 狀態：**CONFORMED**（`TestBattleMatchesOracle`）
+
+## 第36輪範圍勘誤
+
+上述固定遮罩只在所列S3收據證實，不外推所有局面。S1的兩次原版43邊界收據在y203
+與該遮罩不同，見[研究376](../re/376-second-battle-render.md)及[驗證045](../playtest/045-battle-movement-render.md)。
+來源仍unknown，不以星域專用遮罩猜補；既有S3限定驗收維持，S1完整呈現未通過。

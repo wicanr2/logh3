@@ -4810,6 +4810,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	if len(g.battleUnits) > 0 && len(g.res.Sprites) > 0 {
 		screen.DrawBattleUnits(g.res.Battle, fb, g.res.Sprites, g.battleUnits,
 			func(u rules.BattleUnit) int { return battleSprite(u, g.faction) }, g.battleView)
+		screen.DrawBattleFleetDirections(g.res.Battle, fb, g.res.Sprites, g.battleFleets, g.battleUnits, g.faction, g.battleView)
 	}
 	// 艦隊選點時畫兩個範圍圖形（`docs/re/120`、`docs/re/135`）。
 	// 兩個都是 XOR 上去的，所以要畫在單位與格線之後。
