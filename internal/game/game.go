@@ -1513,6 +1513,12 @@ func (g *Game) runBrain() {
 	if g.brain == nil || g.versus || g.res.Graph == nil || g.res.Planets == nil {
 		return
 	}
+	// 原版 2D10:0005 的一次性跳過，WORK+32（規格088 READY子契約）。
+	// 消費已載入的非零旗標；下一次仍執行所選的原版或增強AI。
+	if work := g.workRecord(); len(work) > 0x32 && work[0x32] != 0 {
+		g.mutableWork()[0x32] = 0
+		return
+	}
 	foe := 1 - g.faction
 	w := ai.World{
 		Fleets:   g.fleets,

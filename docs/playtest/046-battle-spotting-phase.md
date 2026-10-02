@@ -329,3 +329,29 @@ log `workplace/round44-spotting-tests.log` SHA-256
 `1236704ae68c9ec24a250ec98b12079db46888a3c3d99cc477db3e9f9744e247`。
 正式產品未改，18套件基線沿第43輪；不以此次探測宣稱AI根因、完整索敵或八步完成。
 087保持READY、#79 OPEN；下一步沿#89／088追正常讀檔與首次實行最早分歧。
+
+## 2026-10-03第45輪：正常首戰AI一次性跳過
+
+[研究383](../re/383-normal-ai-once-gate.md)、[固定方法](../goal/2026-10-03-normal-ai-gate-round-45.md)、
+[完整收據](../internals/data/normal-ai-once-gate.json)補正常入口最早分歧。
+原版自然1與受控0各四份完整RAM／畫面／色盤雙跑相同；相同初始RAM只差WORK+32。
+正式修正後17份正常輸出雙跑相同，省略診斷存檔的七份表／畫面相同。
+原版與remake首戰7支次序、55筆池及結尾seed B6E4B78A相同。
+WORK回合380／381、座位控制及全局其他bytes仍不同，未成完整same-state。
+
+完整640×480仍差5863像素，Field161280差73；有效RGB同口徑。
+本機完整並排round45-normal-entry-pair.png、差分及原色盤Game圖已目視，SHA在JSON。
+沒有裁切、縮放、遮罩；第44輪正常冷啟動及第43輪151幀成果保持，兩者不升格或互換。
+
+38個限定PASS、零skip，包含原版／增強第二次AI、非零邊界、消費後正式存讀與正常雙陣營增強AI。
+S1／S2／S3正常戰術實行與完整SHIP27456／FLEET3904 bytes存讀通過，只聲明remake抽樣。
+標準18套件初跑S1／S3舊數量失敗，更新實測抽樣後同命令乾淨重跑通過；沒有放寬原版golden。
+
+| 本機log | SHA-256 |
+|---|---|
+| round45-gate-tests.log | fd4c680d768283077999b9d5cf6b4e0cc2c0cac5276230816ffc92c7a63899bc |
+| round45-shipped-tests.log | ea555bd3e01f849dbd1a177afa4ce0b41705d4d63eab2b9838c8ed9ed08b07a9 |
+| round45-standard-tests.log，初跑失敗 | 8bc7e605492ba117373996988fed513152846baff950b6a9822b9ef7a8d6546a |
+| round45-standard-retest.log | ee29de685f02cd2d3422bf1f244a218c152d187ebad3a715b73bf0089855f57e |
+
+088一次性跳過子契約已驗，整體保持DRAFT。#89與#79 OPEN，正常索敵配對及其他八步未完成。

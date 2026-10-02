@@ -52,3 +52,9 @@ PNG診斷讀原版PNG有效PLTE色盤，不能直接用DAC pal.bin當色號色�
 核對改用精確地址／4 bytes及flags值。這兩項是驗證工具問題，不是遊戲缺陷。
 完整新收據及source SHA由[核對器](../../tools/scripts/battle_normal_entry_receipt.py)重生；
 正式重播與驗收限制見[046](../playtest/046-battle-spotting-phase.md)。
+
+## 2026-10-03第45輪續證
+
+[研究383](383-normal-ai-once-gate.md)已證實WORK+32一次性AI跳過造成7對3名單差異。
+正式修正後7支／55筆與結尾seed相同；日期、座位及完整表／畫面仍不同。
+本篇第44輪證據不改寫，原先根因unknown已由新證據收窄。088整體仍DRAFT。

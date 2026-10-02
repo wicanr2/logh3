@@ -12,10 +12,11 @@ import (
 
 // 正常載入隨附存檔後實行；不注入艦隊、損傷、戰場、座標或資源。
 // 此測試只證明 remake 玩家路徑，原版同狀態收據另驗。
+// 第45輪依088消費WORK+32後更新S1／S3抽樣數量；S1未新增原版對拍聲明。
 func TestBattleShippedSavesNormalExecuteAndSave(t *testing.T) {
 	for _, c := range []struct {
 		slot, region, turn, fleets, units int
-	}{{8, 8, 94, 16, 103}, {9, 13, 347, 6, 45}, {10, 26, 381, 4, 31}} {
+	}{{8, 8, 94, 18, 117}, {9, 13, 347, 6, 45}, {10, 26, 381, 7, 48}} {
 		t.Run(fmt.Sprintf("S%d", c.slot-7), func(t *testing.T) {
 			g := newTestGame(t)
 			g.state = StateMainMenu
@@ -35,6 +36,7 @@ func TestBattleShippedSavesNormalExecuteAndSave(t *testing.T) {
 				t.Fatalf("正常載入失敗：state=%v turn=%d err=%v", g.state, g.turn, g.SaveErr())
 			}
 			g.strategyRand = rules.NewRand(strategyRandSeed) // 實行前固定，與產品預設相同。
+			initialSkip := g.workRecord()[0x32]
 			g.Click(544, 125)
 			g.Click(560, 125)
 			for i := 0; i < 15000 && g.state != StateBattle; i++ {
@@ -56,6 +58,10 @@ func TestBattleShippedSavesNormalExecuteAndSave(t *testing.T) {
 			if g.state != StateBattle || g.battleRegion != c.region || g.turn != c.turn || len(g.battleFleets) != c.fleets || len(g.battleUnits) != c.units {
 				t.Fatalf("進場資料不同：state=%v region=%d turn=%d fleets=%d units=%d", g.state, g.battleRegion, g.turn, len(g.battleFleets), len(g.battleUnits))
 			}
+			if initialSkip != 0 && g.workRecord()[0x32] != 0 {
+				t.Fatal("隨附存檔的AI一次性旗標未消費")
+			}
+			t.Logf("正常S%d載入WORK+32=%d，首次實行後=%d", c.slot-7, initialSkip, g.workRecord()[0x32])
 			loadPreparationPresentation(t, g)
 			loadMovementTiles(t, g)
 			label := fmt.Sprintf("s%d", c.slot-7)

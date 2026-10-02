@@ -24,6 +24,7 @@
 - [正常入口雙跑與差異核對](../../tools/scripts/battle_normal_entry_receipt.py)
 - [正常首戰入口研究382](../re/382-normal-battle-player-entry.md)
 - [正常首戰入口草稿088](../spec/088-normal-battle-player-entry.md)
+- [第四十五輪正常AI一次性閘門](../goal/2026-10-03-normal-ai-gate-round-45.md)
 
 第三階段可見性／快取與正式續接：[第四十一輪](../goal/2026-10-03-battle-spotting-integration-round-41.md)，工作項目 #79。
 - [第四十二輪正式索敵接線](../goal/2026-10-03-battle-spotting-integration-round-42.md)
@@ -276,3 +277,4 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 第42輪正式索敵：[Game](../../internal/game/battlespotting.go)、[087](../spec/087-battle-spotting-phase.md)。
 
 第42輪可比UI邊界收據：[battle-spotting-game.json](data/battle-spotting-game.json)，由[索敵收據工具phase-render](../../tools/scripts/battle_spotting_display_evidence.py)重生。
+- [第45輪AI閘門證據](../re/383-normal-ai-once-gate.md)：[完整收據](data/normal-ai-once-gate.json)，原版雙跑由[工具](../../tools/normal_ai_gate_oracle.sh)重生，[IDA匯出](../../tools/scripts/normal_ai_gate_ida.py)與[收據產生器](../../tools/scripts/normal_ai_gate_receipt.py)保存原始定位。
