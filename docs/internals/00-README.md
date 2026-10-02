@@ -281,3 +281,9 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [第46輪正常讀檔座位／日期](../goal/2026-10-03-load-seat-date-round-46.md)，接續#89與088未完成範圍。
 - [讀檔陣營研究384](../re/384-load-faction-selection.md)、[完整座位收據](data/load-seat-selection.json)：[原版雙跑](../../tools/load_seat_oracle.sh)、[IDA匯出](../../tools/scripts/load_seat_ida.py)、[可丟棄選單](../../tools/scripts/load_seat_probe.go)與[收據重生](../../tools/scripts/load_seat_receipt.py)。正式入口見[Game讀檔選單](../../internal/game/loadfaction.go)及[正常玩家探針](../../tools/scripts/load_seat_player.go)，驗收範圍由088限定。
 - [讀檔陣營正常回歸](../../internal/game/loadfaction_test.go)與[真實X11輸入抽驗](../../tools/load_seat_gui.sh)：依088驗正常主選單、三選擇、右鍵反白與放大命中。
+- [第47輪日期進位](../goal/2026-10-03-turn-counter-round-47.md)：接續#89，核對0374:03D9在所有戰場與模態尾段之後進位；watch03DD為執行後IP，前輪座位子契約保持。
+- [回合計數器原版重播](../../tools/turn_counter_oracle.sh)及[IDA原始指令匯出](../../tools/scripts/turn_counter_ida.py)：固定無戰鬥進位與正常S3戰場保持，輸入、工具版本與限制見第47輪。
+- [回合計數器研究385](../re/385-turn-counter-boundary.md)：主迴圈原始定位、watch執行後IP勘誤及正常首戰日期修正依據。
+- [正常回合與兩AI計數驗證](../../internal/game/turncounter_test.go)：正式玩家完整回合／WORK保存、兩種AI與兩陣營的建隊／命令時點；全戰場與模態尾段抽樣另由既有regionturn／victoryreport測試驗收。
+- [回合修正真實X11輸入](../../tools/turn_counter_gui.sh)：正式cmd/gin3正常主選單至S3首戰，兩種視窗尺寸；不使用script或direct-entry。
+- [計數器收據工具](../../tools/scripts/turn_counter_receipt.py)及[完整收據](data/turn-counter-boundary.json)：原版雙跑／IDA／19份正式資料／全圖差分、GUI與來源SHA，研究385及088限定驗收。

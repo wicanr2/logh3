@@ -1059,8 +1059,7 @@ func (g *Game) execute() {
 func (g *Game) advanceTurn() {
 	g.beginTurn()
 	// 電腦那一方先下命令，再讓所有艦隊走。
-	// `runBrain` 讀的原版回合計數器是 `g.turn - 1`；它跑完之後原版才把
-	// 計數器進位，接著進新回合的月底報告（`docs/re/299` 時間線）。
+	// 全部戰場與回合尾段報告結束後才進位，AI讀目前回合（規格088）。
 	g.runBrain()
 	g.resolveAdmiralFates()
 	if g.startAdmiralFateReports(g.continueAfterAdmiralFateReports) {
@@ -1069,14 +1068,11 @@ func (g *Game) advanceTurn() {
 	g.continueAfterAdmiralFateReports()
 }
 
-// beginTurn 是 `advanceTurn` 在電腦下命令之前的那幾步：回合計數器，
-// 以及月初那個回合玩家按完「實行」之後、排在玩家之後的座位先過的月底
-// （收自己那些星域的稅，`docs/spec/035`；`g.turn` 在開頭就先加了，所以看
-// 的是 `g.turn − 1`）。測試要手動走到 `runBrain` 之前就叫它。
+// beginTurn 清除地圖標記，月初實行後結算玩家之後的座位（規格035）。
+// 回合計數器保持，直到所有戰場與回合尾段完成（規格088）。
 func (g *Game) beginTurn() {
 	g.mapMark = -1 // `04F8:02E7` 的 `3705:0349(1)`
-	g.turn++
-	if (g.turn-1)%rules.TurnsPerMonth == 0 {
+	if g.turn%rules.TurnsPerMonth == 0 {
 		g.monthEndSeatsAfterPlayer()
 	}
 }
@@ -1086,9 +1082,8 @@ func (g *Game) beginTurn() {
 func (g *Game) continueAfterAdmiralFateReports() {
 	// 命令階段那一串的第一支 `056A:09EB` 一進去就先跑 `090A:0E6D`，把 32 格的
 	// 未安定度整份重算（`docs/spec/042`）——叛亂的門檻讀的就是這一次的值。
-	// 回合計數器要到回合尾巴才進位，remake 的 `g.turn` 在開頭就先加了，
-	// 所以這裡的 `ds:8F18` 是 `g.turn − 1`。
-	g.recomputeUnrest(g.turn - 1)
+	// 此時WORK+04仍是目前回合，尚未進位。
+	g.recomputeUnrest(g.turn)
 	// 每個戰略回合逐支扣艦隊維持費（原版 `056A:09EB` 的
 	// `sub [bx+8F52], si`，`docs/re/236`）：**兩邊一起扣**，扣的是那一支
 	// 自己陣營的那一格。順序照原版——在 AI 回合之後、艦隊移動之前。
@@ -1442,6 +1437,8 @@ func (g *Game) finishAfterPhezzanReports() {
 	if g.startVictoryReport() {
 		return
 	}
+	// 原版0374:03D9：所有戰場與尾段返回且未終局後，WORK+04才加1。
+	g.turn++
 	// `0654:0015`，下一回合的星域池回充在月底閘門／交付之前；
 	// 行星保持剛才補充與回合尾巴彙總的值（研究 353／規格 039）。
 	g.refillRegionSupply()
@@ -1584,10 +1581,9 @@ func (g *Game) runBrain() {
 	// 回合的最後一件事是 `2D10:0319(0)`：月底照軍事費再算一次，
 	// 平時把 `Blend` 歸零。兩條都會再重算一次稅率。
 	//
-	// 原版在這一刻的 `ds:8F18` 還沒進位；remake 已在 `advanceTurn` 開頭
-	// 把 `g.turn` 加一，所以原版計數器是 `g.turn - 1`（`docs/re/299`）。
+	// 原版在這一刻的WORK+04還沒進位，直接讀目前g.turn（規格088）。
 	level := 0
-	if (g.turn-1)%rules.TurnsPerMonth == rules.TurnsPerMonth-1 {
+	if g.turn%rules.TurnsPerMonth == rules.TurnsPerMonth-1 {
 		level = rules.BlendForFunds(g.military[foe])
 	}
 	g.refreshBlend(foe, level)
@@ -1712,8 +1708,8 @@ func (g *Game) refreshBlend(faction, level int) {
 	rules.RecomputeTaxRates(g.res.Stellar, faction, pr.Base[level], ruler,
 		func(i int) int { return g.res.Planets.RegionOwner(i) })
 	g.taxTotal[faction] = g.estimateTaxFor(faction)
-	// AI 回合在回合計數器進位之前，`ds:8F18` ＝ `g.turn − 1`（見 advanceTurn）。
-	g.recomputeUnrest(g.turn - 1)
+	// AI在回合計數器進位之前，WORK+04仍是目前g.turn。
+	g.recomputeUnrest(g.turn)
 }
 
 // recomputeUnrest 把 32 格的未安定度 `+0x7D` 照現在的局面整份重算——原版
@@ -1869,7 +1865,7 @@ func (g *Game) buildFleets(list []ai.NewFleet, faction int) {
 		g.recountRegionFleets()
 		// `297B:0546` 每處理完一支就由 `297B:05A6` 重算一次。
 		// AI 回合發生在原版計數器進位之前。
-		g.recomputeUnrest(g.turn - 1)
+		g.recomputeUnrest(g.turn)
 	}
 }
 

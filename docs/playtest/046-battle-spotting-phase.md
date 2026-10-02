@@ -381,3 +381,26 @@ WORK差36減33，FLEET120／SHIP865／STELLAR44不變，日期380／381及5863 p
 | round46-standard-retest.log | dad502f9124555fa8f0e659a5f12681a6656481187ccb9606689140e0743082a |
 
 088兩個READY子契約已驗、整份仍DRAFT，087及151個受控索敵幀保持。#89／#79仍OPEN。
+
+## 第47輪回合進位上游
+
+[研究385](../re/385-turn-counter-boundary.md)、[完整計數器收據](../internals/data/turn-counter-boundary.json)
+SHA-256 `09d28a9e6d2b5c5cc49fd4f1ffa8d7c057170e4eb7f9e022baf6c9593d3a5a7b`。
+固定dosgolem f7523f9、原版S3與D3DC167E，無戰鬥進位及首戰保持各雙跑完整RAM／全圖／色盤相同。
+0374:03D9 `ff06188f`才是進位指令，watch03DD是執行後IP，251追加勘誤。
+
+088子契約READY後修正正式Game：全部戰場及尾段報告完成且未終局後進位，移除turn-1補償。
+正常S3十九份輸出雙跑相同，首戰與正式WORK保存380／799/3/1；7艦隊／55筆池及B6E4B78A保持。
+WORK差33減32，完整640×480差5863減5853，FLEET120／SHIP865／STELLAR44不變。
+原圖、使用有效原版色盤的前後圖、差分與逐區統計全部保存，nearby-state不升格、不遮罩。
+
+48限定PASS零skip，18標準套件通過；包含正常三份隨附存檔、#85全表／全圖、兩AI雙陣營、
+兩個戰場與費沙模態保持、9→10及終局不進位。正式X11兩尺寸全圖與正常Game相同，日期已目視。
+外部resize兩次未通過，改用產品既有-scale及PID選視窗後同容器／命令重跑，不當產品缺陷。
+
+| 本機log | SHA-256 |
+|---|---|
+| round47-counter-limited.log | 0e70196a99ce698b6a23c905e0f14c45db9d86f5e1faa350ba386b1abcdea0be |
+| round47-standard-tests.log | 4a65ff8cdd39d980cd001326b2d02736f6dd4d58d78581bc3ea660ef9ada7657 |
+
+088三個READY子契約已驗，整份仍DRAFT。#89／#79 OPEN，活動座位與剩餘全表差異、正常索敵同態另續。

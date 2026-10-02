@@ -114,7 +114,7 @@ func (g *Game) runPhezzanEvent() {
 	}
 	rules.SetPhezzanOccurred(g.mutableWork())
 	g.phezzanPending = false
-	turn := g.turn - 1 // 原版在這一刻尚未做回合計數器 ++。
+	turn := g.turn // 原版在這一刻尚未做回合計數器 ++。
 	result := rules.RunPhezzanEvent(g.res.Stellar, g.res.Planets, owner,
 		g.versus || owner == g.faction, turn,
 		func(region, faction int) int {

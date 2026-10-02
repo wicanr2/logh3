@@ -107,7 +107,7 @@ func newPhezzanTurnGame(t *testing.T) *Game {
 	g.res.Planets.SetPlanetEconomy(80, 1000)
 	g.res.WorkTemplate = make([]byte, rules.WorkRecord)
 	g.faction = 0
-	g.turn = 1
+	g.turn = 0 // 正在處理原版回合0，尾段尚未進位。
 	return g
 }
 
@@ -163,6 +163,9 @@ func TestPhezzanReportsRunBeforeEventBody(t *testing.T) {
 	if g.state != StatePhezzanReport || rules.PhezzanOccurred(g.workRecord()) {
 		t.Fatalf("第一頁狀態=%v occurred=%v", g.state, rules.PhezzanOccurred(g.workRecord()))
 	}
+	if g.turn != 0 {
+		t.Fatal("費沙報告尚未完成就進位")
+	}
 	if r, ok := g.CurrentPhezzanReport(); !ok || r.Key() != "owner_0" || r.Page != 0 {
 		t.Fatalf("第一頁 %+v,%v", r, ok)
 	}
@@ -170,9 +173,15 @@ func TestPhezzanReportsRunBeforeEventBody(t *testing.T) {
 	if r, ok := g.CurrentPhezzanReport(); !ok || r.Page != 1 || rules.PhezzanOccurred(g.workRecord()) {
 		t.Fatalf("第二頁 %+v,%v occurred=%v", r, ok, rules.PhezzanOccurred(g.workRecord()))
 	}
+	if g.turn != 0 {
+		t.Fatal("費沙第二頁尚未完成就進位")
+	}
 	g.RightClick(300, 220)
 	if !rules.PhezzanOccurred(g.workRecord()) || g.state == StatePhezzanReport {
 		t.Fatalf("兩頁關完 occurred=%v state=%v", rules.PhezzanOccurred(g.workRecord()), g.state)
+	}
+	if g.turn != 1 {
+		t.Fatalf("費沙報告與事件完成後應只進位一次：%d", g.turn)
 	}
 }
 
@@ -459,6 +468,7 @@ func TestFlipMessageSelection(t *testing.T) {
 // （原版 `0374:03E8` 逐格掃，`docs/re/251`）。
 func TestBattleScanContinuesToNextRegion(t *testing.T) {
 	g := newRegionTurnGame(t)
+	g.turn = 9 // 兩場都屬於月末最後回合，必須打完才跨月。
 	regionPass(g)
 	// 星域 5 與 20 各有雙方艦隊。
 	g.fleets = []rules.Fleet{
@@ -486,10 +496,16 @@ func TestBattleScanContinuesToNextRegion(t *testing.T) {
 	if g.state == StateCommandPhase {
 		t.Error("還有一格沒打就回指令畫面了")
 	}
+	if g.turn != 9 {
+		t.Fatalf("第二戰場前已進位：%d", g.turn)
+	}
 	// 再打完 20 就沒有了，這時才走回合結束。
 	g.EndBattle()
 	if g.state == StateBattle {
 		t.Error("都打完了還停在戰場")
+	}
+	if g.turn != 10 {
+		t.Fatalf("全部戰場與尾段完成後未只進位一次：%d", g.turn)
 	}
 }
 
@@ -526,7 +542,7 @@ func TestBattleRecomputesUnrestBeforeLaterRebellionEffect(t *testing.T) {
 		Ruler: [2]int{0, 0}, Blend: [2]int{0, 0}, Rate: [2]int{0, 0},
 		Table: []int{170}, Base: []int{50},
 	}
-	g.turn = 1
+	g.turn = 0 // 戰後重算仍在目前回合0；完成尾段才進位。
 	g.battleRegion = 5
 	g.regionRecord(rebelRegion)[rules.RegionUnrest] = 200
 	g.rebellionRolls[rebelRegion].Rebels = true

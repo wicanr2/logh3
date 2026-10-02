@@ -326,11 +326,11 @@ func (g *Game) refitFleets(faction int) {
 		// `2D76:0A44` 對這兩種直接回：沒有類別鍵、或這一趟跳過它。
 		if f.ClassKey < 0 || f.ClassKey >= 16 || f.Move == 4 {
 			f.Composition = rules.MergeUnderStrength(g.refitInput(rec, f), f.Composition)
-			g.recomputeUnrest(g.turn - 1)
+			g.recomputeUnrest(g.turn)
 			continue
 		}
 		f.Composition = rules.Refit(g.refitInput(rec, f), f.Composition, f.Expected)
-		g.recomputeUnrest(g.turn - 1)
+		g.recomputeUnrest(g.turn)
 	}
 }
 

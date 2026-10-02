@@ -434,9 +434,8 @@ func TestTaxRateRecomputeMatchesReceipt(t *testing.T) {
 // 平時（`回合數 % 10 != 9`）結尾把 `Blend` 歸零，稅率跟著掉到等級 0；
 // 月底那一條照軍事費重算，等級留在 1。同一條序列、同一個時點，
 // 原版只差一個回合計數器：對照組 `Blend[同盟] = 0`／總稅收 6696，
-// 月底 `Blend[同盟] = 1`／總稅收 10213。`advanceTurn` 開頭已先把
-// `g.turn` 加一，所以收據 poke 的原版計數器 9 對應呼叫前的 `g.turn = 9`，
-// 不是舊測試寫的 8（`docs/re/299`）。
+// 月底 `Blend[同盟] = 1`／總稅收 10213。原版計數器9對應呼叫前g.turn=9。
+// AI結尾仍9，全部戰場與回合尾段完成後才10（規格088）；原有數值判準保持。
 func TestMonthEndKeepsBlend(t *testing.T) {
 	run := func(before int) (turn, blend, tax int) {
 		g := reachAITurn(t)

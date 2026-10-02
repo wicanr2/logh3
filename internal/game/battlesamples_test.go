@@ -16,7 +16,7 @@ import (
 func TestBattleShippedSavesNormalExecuteAndSave(t *testing.T) {
 	for _, c := range []struct {
 		slot, region, turn, fleets, units int
-	}{{8, 8, 94, 18, 117}, {9, 13, 347, 6, 45}, {10, 26, 381, 7, 48}} {
+	}{{8, 8, 93, 18, 117}, {9, 13, 346, 6, 45}, {10, 26, 380, 7, 48}} {
 		t.Run(fmt.Sprintf("S%d", c.slot-7), func(t *testing.T) {
 			g := newTestGame(t)
 			g.state = StateMainMenu
@@ -32,7 +32,7 @@ func TestBattleShippedSavesNormalExecuteAndSave(t *testing.T) {
 			for _, p := range [][2]int{{544, 125}, {560, 145}, {300, 122 + c.slot*20}, {318, 208}} {
 				g.Click(p[0], p[1])
 			}
-			if g.state != StateCommandPhase || g.turn != c.turn-1 || g.SaveErr() != nil {
+			if g.state != StateCommandPhase || g.turn != c.turn || g.SaveErr() != nil {
 				t.Fatalf("正常載入失敗：state=%v turn=%d err=%v", g.state, g.turn, g.SaveErr())
 			}
 			g.strategyRand = rules.NewRand(strategyRandSeed) // 實行前固定，與產品預設相同。

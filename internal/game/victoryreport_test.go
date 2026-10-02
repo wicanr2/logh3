@@ -23,6 +23,7 @@ func TestVictoryReportLifecycle(t *testing.T) {
 			g.res.VictoryReport = &screen.VictoryReportPanel{}
 			g.res.Endings[c.winner] = &asset.Image{W: 1, H: 1, Pix: []uint8{7}}
 			g.faction, g.versus = 0, c.versus
+			g.turn = 9
 			g.regionRecord(rules.CapitalRegion(0))[0x12] = 0
 			g.regionRecord(rules.CapitalRegion(1))[0x12] = 1
 			if c.winner == 0 {
@@ -30,7 +31,8 @@ func TestVictoryReportLifecycle(t *testing.T) {
 			} else {
 				g.regionRecord(rules.CapitalRegion(0))[0x12] = 1
 			}
-			if !g.startVictoryReport() || g.state != StateVictoryReport {
+			g.finishAfterPhezzanReports()
+			if g.state != StateVictoryReport || g.turn != 9 {
 				t.Fatalf("沒有進勝負報告：%v", g.state)
 			}
 			r, ok := g.CurrentVictoryReport()
@@ -38,7 +40,7 @@ func TestVictoryReportLifecycle(t *testing.T) {
 				t.Fatalf("報告=%+v,%v", r, ok)
 			}
 			g.Click(300, 300)
-			if g.state != StateEnding || g.ending != g.res.Endings[c.winner] {
+			if g.state != StateEnding || g.ending != g.res.Endings[c.winner] || g.turn != 9 {
 				t.Fatalf("關閉後狀態=%v、結局=%p", g.state, g.ending)
 			}
 		})

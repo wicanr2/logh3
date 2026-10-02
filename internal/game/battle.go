@@ -418,7 +418,7 @@ func (g *Game) EndBattle() {
 	// 原版的戰後艦隊解散／能力重算會先經 `090A:0E6D` 重算全圖未安定度，
 	// 然後 `0374:03E8` 才從下一個星域續掃。後面的叛亂效果必須讀這份戰後值，
 	// 不能在第一場戰鬥前就批次套完（`docs/spec/042`、`docs/re/310`）。
-	g.recomputeUnrest(g.turn - 1)
+	g.recomputeUnrest(g.turn)
 	g.scanRegionsFrom(g.battleRegion + 1)
 }
 

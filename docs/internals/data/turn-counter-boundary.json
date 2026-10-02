@@ -1,0 +1,6780 @@
+{
+  "schema": "logh3.turn-counter-boundary.v1",
+  "grade": "proven counter boundary; complete normal entry parity unknown",
+  "classification": "nearby-state full-screen comparison; no masking or cropping",
+  "parent_head": "3c7d2126562c2a81e2519fe0bab8ac09496647a9",
+  "remake_worktree": "dirty; source hashes below",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_worktree": "clean",
+  "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "images": {
+    "go": {
+      "tag": "golang:1.24-bookworm",
+      "id": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac"
+    },
+    "gui": {
+      "tag": "logh3-ebiten:2",
+      "id": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8"
+    },
+    "ida": {
+      "tag": "ida-pro-9.4-idapython:locked-v1",
+      "id": "sha256:6f6d59af49d0008c4109a5295b5f374bdc007e2d1ab28cb9de08779584de2780"
+    }
+  },
+  "parent_snapshots": {
+    "/home/anr2/cht/dosgolem-logh3/workplace/fcmd/fcmd-base.state": {
+      "bytes": 279725,
+      "sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+      "original_input_read_only": true
+    },
+    "/home/anr2/cht/dosgolem-logh3/workplace/fcmd/fcmd-s3-base.state": {
+      "bytes": 265888,
+      "sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+      "original_input_read_only": true
+    }
+  },
+  "originals": [
+    {
+      "path": "workplace/oracle/normal89-r47-clock-a",
+      "classification": "normal player continuation; fixed source snapshot",
+      "command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-base.state",
+        "-steps",
+        "450000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "421000000:544:85,424000000:560:85",
+        "-click-hold",
+        "3000000",
+        "-watch",
+        "5DA48-5DA49",
+        "-regs-from",
+        "420000000",
+        "-regs-max",
+        "24",
+        "-regs-at",
+        "0374:03E8,056A:078E,0374:03DD",
+        "-dump-mem-at",
+        "420000010:lin:0:1048576:/out/oracle/normal89-r47-clock-a/initial.bin;435711455:lin:0:1048576:/out/oracle/normal89-r47-clock-a/before.bin;435711456:lin:0:1048576:/out/oracle/normal89-r47-clock-a/after.bin;449999999:lin:0:1048576:/out/oracle/normal89-r47-clock-a/command.bin"
+      ],
+      "states": {
+        "initial": {
+          "turn": 0,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "before": {
+          "turn": 0,
+          "strategy_seed_hex": "936A823B"
+        },
+        "after": {
+          "turn": 1,
+          "strategy_seed_hex": "936A823B"
+        },
+        "command": {
+          "turn": 1,
+          "strategy_seed_hex": "936A823B"
+        }
+      },
+      "hashes": {
+        "initial.bin": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea",
+        "before.bin": "c76f369b30b5c7050ab6f1bdf358f9c482c4a687314aabeb583942f72db219a4",
+        "after.bin": "e94da2234a934e4c3b3a17c1b83df977f1e796d934e25bdfe1d730f2cc005bd7",
+        "command.bin": "688ff1c526efee10bc98d0e16332de511516b3f76302c643d5f2ac43f734ddf1",
+        "screen.bin": "2bb4cdfcbb83846bf54d91027025c91ea2dafa2d98b81b56939be66c0635d502",
+        "screen.png": "c5b542faf79e233f1e0330e0704d271012a7986c22b04e8cae01705cb725591f",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "9e2813a95d66be498c8ea77347b774a0b651c8a14abf12558632923ea83e4a97",
+        "flags.txt": "a42aa877ceb5fce7deaa50de32032c5af4d5fdebafc65df899883b4e11476f47",
+        "report.txt": "ae236bf22da2351cf521c7cda18354d11823a12920883bc000a298d7f55695c6"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r47-clock-b",
+      "classification": "normal player continuation; fixed source snapshot",
+      "command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-base.state",
+        "-steps",
+        "450000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "421000000:544:85,424000000:560:85",
+        "-click-hold",
+        "3000000",
+        "-watch",
+        "5DA48-5DA49",
+        "-regs-from",
+        "420000000",
+        "-regs-max",
+        "24",
+        "-regs-at",
+        "0374:03E8,056A:078E,0374:03DD",
+        "-dump-mem-at",
+        "420000010:lin:0:1048576:/out/oracle/normal89-r47-clock-b/initial.bin;435711455:lin:0:1048576:/out/oracle/normal89-r47-clock-b/before.bin;435711456:lin:0:1048576:/out/oracle/normal89-r47-clock-b/after.bin;449999999:lin:0:1048576:/out/oracle/normal89-r47-clock-b/command.bin"
+      ],
+      "states": {
+        "initial": {
+          "turn": 0,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "before": {
+          "turn": 0,
+          "strategy_seed_hex": "936A823B"
+        },
+        "after": {
+          "turn": 1,
+          "strategy_seed_hex": "936A823B"
+        },
+        "command": {
+          "turn": 1,
+          "strategy_seed_hex": "936A823B"
+        }
+      },
+      "hashes": {
+        "initial.bin": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea",
+        "before.bin": "c76f369b30b5c7050ab6f1bdf358f9c482c4a687314aabeb583942f72db219a4",
+        "after.bin": "e94da2234a934e4c3b3a17c1b83df977f1e796d934e25bdfe1d730f2cc005bd7",
+        "command.bin": "688ff1c526efee10bc98d0e16332de511516b3f76302c643d5f2ac43f734ddf1",
+        "screen.bin": "2bb4cdfcbb83846bf54d91027025c91ea2dafa2d98b81b56939be66c0635d502",
+        "screen.png": "c5b542faf79e233f1e0330e0704d271012a7986c22b04e8cae01705cb725591f",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "5123971005a26f383a9a2914292cf6b97a9e146cbe42b136187eb6a88fade9b2",
+        "flags.txt": "a41f41f5441d737025b84e8191756be28f25b0a7f7fdab42dff8af967fb2b536",
+        "report.txt": "4c02ec1639900f12c35549642f253fe3006b5952f950038a67cee5d07e8d8a0e"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r47-battle-a",
+      "classification": "normal player continuation; fixed source snapshot",
+      "command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-s3-base.state",
+        "-steps",
+        "435000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "301000000:544:85,304000000:560:85,405000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-poke",
+        "lin:5E00C@300000000=7E 16 DC D3",
+        "-watch",
+        "5DA48-5DA49",
+        "-regs-from",
+        "300000000",
+        "-regs-max",
+        "24",
+        "-regs-at",
+        "0374:03E8,12AA:000E,0374:03DD",
+        "-dump-mem-at",
+        "300000001:lin:0:1048576:/out/oracle/normal89-r47-battle-a/loaded.bin;434999999:lin:0:1048576:/out/oracle/normal89-r47-battle-a/entry.bin"
+      ],
+      "states": {
+        "loaded": {
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "entry": {
+          "turn": 380,
+          "strategy_seed_hex": "B6E4B78A"
+        }
+      },
+      "hashes": {
+        "loaded.bin": "2a45f1a41adc78bbe9b0bc2dbb447a899907be631e43ca99f5e32cbb0fd4a0eb",
+        "entry.bin": "ef34310fe3e2c133522ed1612f16faeaff8f14e94ae9e0b6ea965e9749424a97",
+        "screen.bin": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+        "screen.png": "c6ddfb988cf15898626fa50b040b1f2423baabae0aa27f57f3fd153abdbc00cb",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "812970fdf3bc5bc3bafac9bae72ce78ba00498cdac03177cd73f78eb1e100e76",
+        "flags.txt": "26fcf997b5ee7b2d9c975236d6d804ba442bb67558747c577ce44cf0b06ecfa7",
+        "report.txt": "9ac98d60201dcdf48358db3dbb2c18015f0ba9337dd09933321efd3c2261606a"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r47-battle-b",
+      "classification": "normal player continuation; fixed source snapshot",
+      "command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-s3-base.state",
+        "-steps",
+        "435000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "301000000:544:85,304000000:560:85,405000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-poke",
+        "lin:5E00C@300000000=7E 16 DC D3",
+        "-watch",
+        "5DA48-5DA49",
+        "-regs-from",
+        "300000000",
+        "-regs-max",
+        "24",
+        "-regs-at",
+        "0374:03E8,12AA:000E,0374:03DD",
+        "-dump-mem-at",
+        "300000001:lin:0:1048576:/out/oracle/normal89-r47-battle-b/loaded.bin;434999999:lin:0:1048576:/out/oracle/normal89-r47-battle-b/entry.bin"
+      ],
+      "states": {
+        "loaded": {
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "entry": {
+          "turn": 380,
+          "strategy_seed_hex": "B6E4B78A"
+        }
+      },
+      "hashes": {
+        "loaded.bin": "2a45f1a41adc78bbe9b0bc2dbb447a899907be631e43ca99f5e32cbb0fd4a0eb",
+        "entry.bin": "ef34310fe3e2c133522ed1612f16faeaff8f14e94ae9e0b6ea965e9749424a97",
+        "screen.bin": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+        "screen.png": "c6ddfb988cf15898626fa50b040b1f2423baabae0aa27f57f3fd153abdbc00cb",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "8afbfa7a952ce0761c136c009ccb2adae4fac18e2183997ec3d133452b2ceb5c",
+        "flags.txt": "0f4472d878f320b36f4bd0b389937974516ddaff40304dd420df3c146a147032",
+        "report.txt": "65e10585d31dcadd4fc16764c52abd1bfa3858b4ce79c23454ac0e15afdd80c8"
+      }
+    }
+  ],
+  "ida_export": {
+    "path": "workplace/ida/normal89-r47-counter.json",
+    "sha256": "8732c9559e4666877ed4a77cfe4538efc36f36f64e22597220822a9219659df4",
+    "data": {
+      "schema": "logh3.turn-counter-ida.v1",
+      "tool_version": 940,
+      "kernel_version": "9.4",
+      "uid": 1000,
+      "input": "/work/normal89-r47-0374.com",
+      "input_sha256": "4d3f044955ce8e52c79b5b0c52060cd1b0474b57bddc2aa76f871f283799d72d",
+      "ida_base_hex": "0x10200",
+      "runtime_segment": "0374",
+      "address_space": "IDA COM位址、原版CS:IP及dosgolem線性分欄",
+      "original_name": "sub_10543",
+      "function_boundary": [
+        "0x10543",
+        "0x105e8"
+      ],
+      "previous_bytes_hex": "89ec5e5dcb",
+      "instructions": [
+        {
+          "original_location": "0374:0343",
+          "ida_ea_hex": "0x10543",
+          "runtime_linear_hex": "0x3a83",
+          "original_bytes_hex": "55",
+          "operand": "push    bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0344",
+          "ida_ea_hex": "0x10544",
+          "runtime_linear_hex": "0x3a84",
+          "original_bytes_hex": "56",
+          "operand": "push    si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0345",
+          "ida_ea_hex": "0x10545",
+          "runtime_linear_hex": "0x3a85",
+          "original_bytes_hex": "57",
+          "operand": "push    di",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0346",
+          "ida_ea_hex": "0x10546",
+          "runtime_linear_hex": "0x3a86",
+          "original_bytes_hex": "83ec06",
+          "operand": "sub     sp, 6",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0349",
+          "ida_ea_hex": "0x10549",
+          "runtime_linear_hex": "0x3a89",
+          "original_bytes_hex": "89e5",
+          "operand": "mov     bp, sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:034B",
+          "ida_ea_hex": "0x1054b",
+          "runtime_linear_hex": "0x3a8b",
+          "original_bytes_hex": "8b7610",
+          "operand": "mov     si, [bp+10h]",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:034E",
+          "ida_ea_hex": "0x1054e",
+          "runtime_linear_hex": "0x3a8e",
+          "original_bytes_hex": "09f6",
+          "operand": "or      si, si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0350",
+          "ida_ea_hex": "0x10550",
+          "runtime_linear_hex": "0x3a90",
+          "original_bytes_hex": "7407",
+          "operand": "jz      short near ptr unk_10559",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0352",
+          "ida_ea_hex": "0x10552",
+          "runtime_linear_hex": "0x3a92",
+          "original_bytes_hex": "803e168f01",
+          "operand": "cmp     byte ptr ds:8F16h, 1",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0357",
+          "ida_ea_hex": "0x10557",
+          "runtime_linear_hex": "0x3a97",
+          "original_bytes_hex": "7404",
+          "operand": "jz      short near ptr unk_1055D",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0359",
+          "ida_ea_hex": "0x10559",
+          "runtime_linear_hex": "0x3a99",
+          "original_bytes_hex": "33c0",
+          "operand": "xor     ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:035B",
+          "ida_ea_hex": "0x1055b",
+          "runtime_linear_hex": "0x3a9b",
+          "original_bytes_hex": "eb03",
+          "operand": "jmp     short near ptr unk_10560",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:035D",
+          "ida_ea_hex": "0x1055d",
+          "runtime_linear_hex": "0x3a9d",
+          "original_bytes_hex": "b80100",
+          "operand": "mov     ax, 1",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0360",
+          "ida_ea_hex": "0x10560",
+          "runtime_linear_hex": "0x3aa0",
+          "original_bytes_hex": "894600",
+          "operand": "mov     [bp+0], ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0363",
+          "ida_ea_hex": "0x10563",
+          "runtime_linear_hex": "0x3aa3",
+          "original_bytes_hex": "eb00",
+          "operand": "jmp     short $+2",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0365",
+          "ida_ea_hex": "0x10565",
+          "runtime_linear_hex": "0x3aa5",
+          "original_bytes_hex": "837e0000",
+          "operand": "cmp     word ptr [bp+0], 0",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0369",
+          "ida_ea_hex": "0x10569",
+          "runtime_linear_hex": "0x3aa9",
+          "original_bytes_hex": "7532",
+          "operand": "jnz     short near ptr unk_1059D",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:036B",
+          "ida_ea_hex": "0x1056b",
+          "runtime_linear_hex": "0x3aab",
+          "original_bytes_hex": "9a0e00f804",
+          "operand": "call    far ptr 4F8h:0Eh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0370",
+          "ida_ea_hex": "0x10570",
+          "runtime_linear_hex": "0x3ab0",
+          "original_bytes_hex": "89c7",
+          "operand": "mov     di, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0372",
+          "ida_ea_hex": "0x10572",
+          "runtime_linear_hex": "0x3ab2",
+          "original_bytes_hex": "09c0",
+          "operand": "or      ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0374",
+          "ida_ea_hex": "0x10574",
+          "runtime_linear_hex": "0x3ab4",
+          "original_bytes_hex": "7407",
+          "operand": "jz      short near ptr unk_1057D",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0376",
+          "ida_ea_hex": "0x10576",
+          "runtime_linear_hex": "0x3ab6",
+          "original_bytes_hex": "83c406",
+          "operand": "add     sp, 6",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0379",
+          "ida_ea_hex": "0x10579",
+          "runtime_linear_hex": "0x3ab9",
+          "original_bytes_hex": "5f",
+          "operand": "pop     di",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:037A",
+          "ida_ea_hex": "0x1057a",
+          "runtime_linear_hex": "0x3aba",
+          "original_bytes_hex": "5e",
+          "operand": "pop     si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:037B",
+          "ida_ea_hex": "0x1057b",
+          "runtime_linear_hex": "0x3abb",
+          "original_bytes_hex": "5d",
+          "operand": "pop     bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:037C",
+          "ida_ea_hex": "0x1057c",
+          "runtime_linear_hex": "0x3abc",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:037D",
+          "ida_ea_hex": "0x1057d",
+          "runtime_linear_hex": "0x3abd",
+          "original_bytes_hex": "c6061d8fff",
+          "operand": "mov     byte ptr ds:8F1Dh, 0FFh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0382",
+          "ida_ea_hex": "0x10582",
+          "runtime_linear_hex": "0x3ac2",
+          "original_bytes_hex": "b80100",
+          "operand": "mov     ax, 1",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0385",
+          "ida_ea_hex": "0x10585",
+          "runtime_linear_hex": "0x3ac5",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0386",
+          "ida_ea_hex": "0x10586",
+          "runtime_linear_hex": "0x3ac6",
+          "original_bytes_hex": "9a49030537",
+          "operand": "call    far ptr 3705h:349h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:038B",
+          "ida_ea_hex": "0x1058b",
+          "runtime_linear_hex": "0x3acb",
+          "original_bytes_hex": "89ec",
+          "operand": "mov     sp, bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:038D",
+          "ida_ea_hex": "0x1058d",
+          "runtime_linear_hex": "0x3acd",
+          "original_bytes_hex": "9a0c006a05",
+          "operand": "call    far ptr 56Ah:0Ch",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0392",
+          "ida_ea_hex": "0x10592",
+          "runtime_linear_hex": "0x3ad2",
+          "original_bytes_hex": "c6460400",
+          "operand": "mov     byte ptr [bp+4], 0",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:0396",
+          "ida_ea_hex": "0x10596",
+          "runtime_linear_hex": "0x3ad6",
+          "original_bytes_hex": "c746020000",
+          "operand": "mov     word ptr [bp+2], 0",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:039B",
+          "ida_ea_hex": "0x1059b",
+          "runtime_linear_hex": "0x3adb",
+          "original_bytes_hex": "eb10",
+          "operand": "jmp     short near ptr unk_105AD",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:039D",
+          "ida_ea_hex": "0x1059d",
+          "runtime_linear_hex": "0x3add",
+          "original_bytes_hex": "c746000000",
+          "operand": "mov     word ptr [bp+0], 0",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03A2",
+          "ida_ea_hex": "0x105a2",
+          "runtime_linear_hex": "0x3ae2",
+          "original_bytes_hex": "a0178f",
+          "operand": "mov     al, ds:8F17h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03A5",
+          "ida_ea_hex": "0x105a5",
+          "runtime_linear_hex": "0x3ae5",
+          "original_bytes_hex": "884604",
+          "operand": "mov     [bp+4], al",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03A8",
+          "ida_ea_hex": "0x105a8",
+          "runtime_linear_hex": "0x3ae8",
+          "original_bytes_hex": "c746020100",
+          "operand": "mov     word ptr [bp+2], 1",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03AD",
+          "ida_ea_hex": "0x105ad",
+          "runtime_linear_hex": "0x3aed",
+          "original_bytes_hex": "ff7602",
+          "operand": "push    word ptr [bp+2]",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03B0",
+          "ida_ea_hex": "0x105b0",
+          "runtime_linear_hex": "0x3af0",
+          "original_bytes_hex": "ff7604",
+          "operand": "push    word ptr [bp+4]",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03B3",
+          "ida_ea_hex": "0x105b3",
+          "runtime_linear_hex": "0x3af3",
+          "original_bytes_hex": "9ae8037403",
+          "operand": "call    far ptr 374h:3E8h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03B8",
+          "ida_ea_hex": "0x105b8",
+          "runtime_linear_hex": "0x3af8",
+          "original_bytes_hex": "89ec",
+          "operand": "mov     sp, bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03BA",
+          "ida_ea_hex": "0x105ba",
+          "runtime_linear_hex": "0x3afa",
+          "original_bytes_hex": "89c7",
+          "operand": "mov     di, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03BC",
+          "ida_ea_hex": "0x105bc",
+          "runtime_linear_hex": "0x3afc",
+          "original_bytes_hex": "09c0",
+          "operand": "or      ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03BE",
+          "ida_ea_hex": "0x105be",
+          "runtime_linear_hex": "0x3afe",
+          "original_bytes_hex": "7407",
+          "operand": "jz      short near ptr unk_105C7",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03C0",
+          "ida_ea_hex": "0x105c0",
+          "runtime_linear_hex": "0x3b00",
+          "original_bytes_hex": "83c406",
+          "operand": "add     sp, 6",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03C3",
+          "ida_ea_hex": "0x105c3",
+          "runtime_linear_hex": "0x3b03",
+          "original_bytes_hex": "5f",
+          "operand": "pop     di",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03C4",
+          "ida_ea_hex": "0x105c4",
+          "runtime_linear_hex": "0x3b04",
+          "original_bytes_hex": "5e",
+          "operand": "pop     si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03C5",
+          "ida_ea_hex": "0x105c5",
+          "runtime_linear_hex": "0x3b05",
+          "original_bytes_hex": "5d",
+          "operand": "pop     bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03C6",
+          "ida_ea_hex": "0x105c6",
+          "runtime_linear_hex": "0x3b06",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03C7",
+          "ida_ea_hex": "0x105c7",
+          "runtime_linear_hex": "0x3b07",
+          "original_bytes_hex": "9a8e076a05",
+          "operand": "call    far ptr 56Ah:78Eh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03CC",
+          "ida_ea_hex": "0x105cc",
+          "runtime_linear_hex": "0x3b0c",
+          "original_bytes_hex": "89c7",
+          "operand": "mov     di, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03CE",
+          "ida_ea_hex": "0x105ce",
+          "runtime_linear_hex": "0x3b0e",
+          "original_bytes_hex": "09c0",
+          "operand": "or      ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03D0",
+          "ida_ea_hex": "0x105d0",
+          "runtime_linear_hex": "0x3b10",
+          "original_bytes_hex": "7407",
+          "operand": "jz      short near ptr unk_105D9",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03D2",
+          "ida_ea_hex": "0x105d2",
+          "runtime_linear_hex": "0x3b12",
+          "original_bytes_hex": "83c406",
+          "operand": "add     sp, 6",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03D5",
+          "ida_ea_hex": "0x105d5",
+          "runtime_linear_hex": "0x3b15",
+          "original_bytes_hex": "5f",
+          "operand": "pop     di",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03D6",
+          "ida_ea_hex": "0x105d6",
+          "runtime_linear_hex": "0x3b16",
+          "original_bytes_hex": "5e",
+          "operand": "pop     si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03D7",
+          "ida_ea_hex": "0x105d7",
+          "runtime_linear_hex": "0x3b17",
+          "original_bytes_hex": "5d",
+          "operand": "pop     bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03D8",
+          "ida_ea_hex": "0x105d8",
+          "runtime_linear_hex": "0x3b18",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03D9",
+          "ida_ea_hex": "0x105d9",
+          "runtime_linear_hex": "0x3b19",
+          "original_bytes_hex": "ff06188f",
+          "operand": "inc     word ptr ds:8F18h",
+          "semantic": "全部戰場與回合尾段返回且未結局後，WORK+04戰略回合加1",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03DD",
+          "ida_ea_hex": "0x105dd",
+          "runtime_linear_hex": "0x3b1d",
+          "original_bytes_hex": "b001",
+          "operand": "mov     al, 1",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03DF",
+          "ida_ea_hex": "0x105df",
+          "runtime_linear_hex": "0x3b1f",
+          "original_bytes_hex": "a2f58f",
+          "operand": "mov     ds:8FF5h, al",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03E2",
+          "ida_ea_hex": "0x105e2",
+          "runtime_linear_hex": "0x3b22",
+          "original_bytes_hex": "a2f48f",
+          "operand": "mov     ds:8FF4h, al",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "0374:03E5",
+          "ida_ea_hex": "0x105e5",
+          "runtime_linear_hex": "0x3b25",
+          "original_bytes_hex": "e97dff",
+          "operand": "jmp     loc_10565",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究251與normal89-r47原版雙跑watch／完整RAM"
+        }
+      ]
+    }
+  },
+  "normal_players": [
+    {
+      "path": "workplace/round47-normal-a",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "go",
+        "run",
+        "-overlay",
+        "workplace/round44-normal-overlay.json",
+        "tools/scripts/battle_normal_probe.go",
+        "-out",
+        "workplace/round47-normal-a"
+      ],
+      "hashes": {
+        "entry/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "entry/FLEET.DT0": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7",
+        "entry/PLANET.DT0": "3fcc532ddb767f9db30a1b9e45c2f1fe589aff8b942aa2826ab369ed77248665",
+        "entry/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "entry/SHIP.DT0": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd",
+        "entry/STELLAR.DT0": "c3fc0ffa80a7afdfa1e7115c3d9b799926a5daf2425855c907b9bd02dd19f49a",
+        "entry/WORK.DT0": "31f361dd1dcbcac52b34af8eca92d208b3a6d0b435dea2ef3fbc592a81f669e4",
+        "entry/screen.bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        "entry/screen.png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        "loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "loaded/screen.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "probe.json": "e52c92f50428196788eee37f51614ec4dcbd4b6316021036ce3bc3edfc35b833"
+      }
+    },
+    {
+      "path": "workplace/round47-normal-b",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "go",
+        "run",
+        "-overlay",
+        "workplace/round44-normal-overlay.json",
+        "tools/scripts/battle_normal_probe.go",
+        "-out",
+        "workplace/round47-normal-b"
+      ],
+      "hashes": {
+        "entry/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "entry/FLEET.DT0": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7",
+        "entry/PLANET.DT0": "3fcc532ddb767f9db30a1b9e45c2f1fe589aff8b942aa2826ab369ed77248665",
+        "entry/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "entry/SHIP.DT0": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd",
+        "entry/STELLAR.DT0": "c3fc0ffa80a7afdfa1e7115c3d9b799926a5daf2425855c907b9bd02dd19f49a",
+        "entry/WORK.DT0": "31f361dd1dcbcac52b34af8eca92d208b3a6d0b435dea2ef3fbc592a81f669e4",
+        "entry/screen.bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        "entry/screen.png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        "loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "loaded/screen.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "probe.json": "e52c92f50428196788eee37f51614ec4dcbd4b6316021036ce3bc3edfc35b833"
+      }
+    }
+  ],
+  "normal_metadata": {
+    "classification": "normal-player-entry-probe; parity not established",
+    "date": [
+      799,
+      3,
+      1
+    ],
+    "inputs": [
+      "click 300 270",
+      "type 138; enter",
+      "click 300 322",
+      "click 318 208",
+      "click 544 125",
+      "click 560 125"
+    ],
+    "palette_note": "screen.png暫用主選單色盤；正式RGB比較必須讀原版有效色盤",
+    "resources": "bootstrap.Load; Game.New",
+    "seed_setup": "測試期Go覆蓋只固定實行前D3DC167E，正式產品不變",
+    "state": 32,
+    "strategy_seed_after": "B6E4B78A",
+    "strategy_seed_before": "D3DC167E",
+    "strategy_seed_observed_before": "D3DC167E",
+    "ticks": 460
+  },
+  "date_before": [
+    799,
+    3,
+    4
+  ],
+  "date_after": [
+    799,
+    3,
+    1
+  ],
+  "before_baseline": {
+    "path": "docs/internals/data/load-seat-selection.json",
+    "sha256": "f8ba6dacc701418f1fe88c0c785fd871af8677916e4a54ed0ad1f9c19debf129",
+    "remake_committed_head": "3c7d2126562c2a81e2519fe0bab8ac09496647a9"
+  },
+  "original_and_remake_turn_after": 380,
+  "table_differences": {
+    "WORK": {
+      "bytes": 230,
+      "different_bytes_before": 33,
+      "different_bytes_after": 32,
+      "offset_counts": {
+        "2": 1,
+        "3": 1,
+        "6": 1,
+        "7": 1,
+        "38": 1,
+        "40": 1,
+        "42": 1,
+        "43": 1,
+        "44": 1,
+        "45": 1,
+        "66": 1,
+        "67": 1,
+        "90": 1,
+        "91": 1,
+        "110": 1,
+        "111": 1,
+        "114": 1,
+        "115": 1,
+        "164": 1,
+        "165": 1,
+        "168": 1,
+        "169": 1,
+        "172": 1,
+        "173": 1,
+        "176": 1,
+        "177": 1,
+        "180": 1,
+        "181": 1,
+        "184": 1,
+        "185": 1,
+        "188": 1,
+        "189": 1
+      },
+      "original_sha256": "4f4d0edec288c0d3f1a6c452275f049f798071e80f86ffb78e717c043317d237",
+      "before_sha256": "83cc288472953d482170a38db00bb47cb9a7c84822dc049f6883c6959f05a87d",
+      "after_sha256": "31f361dd1dcbcac52b34af8eca92d208b3a6d0b435dea2ef3fbc592a81f669e4",
+      "unresolved_byte_differences": [
+        {
+          "offset_hex": "0x2",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x3",
+          "original": 26,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x6",
+          "original": 0,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x7",
+          "original": 0,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x26",
+          "original": 192,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x28",
+          "original": 100,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a",
+          "original": 32,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c",
+          "original": 124,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2d",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x42",
+          "original": 12,
+          "remake": 208
+        },
+        {
+          "offset_hex": "0x43",
+          "original": 109,
+          "remake": 117
+        },
+        {
+          "offset_hex": "0x5a",
+          "original": 20,
+          "remake": 141
+        },
+        {
+          "offset_hex": "0x5b",
+          "original": 38,
+          "remake": 36
+        },
+        {
+          "offset_hex": "0x6e",
+          "original": 0,
+          "remake": 153
+        },
+        {
+          "offset_hex": "0x6f",
+          "original": 0,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x72",
+          "original": 0,
+          "remake": 109
+        },
+        {
+          "offset_hex": "0x73",
+          "original": 0,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0xa4",
+          "original": 0,
+          "remake": 134
+        },
+        {
+          "offset_hex": "0xa5",
+          "original": 0,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0xa8",
+          "original": 0,
+          "remake": 58
+        },
+        {
+          "offset_hex": "0xa9",
+          "original": 0,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0xac",
+          "original": 0,
+          "remake": 150
+        },
+        {
+          "offset_hex": "0xad",
+          "original": 0,
+          "remake": 10
+        },
+        {
+          "offset_hex": "0xb0",
+          "original": 0,
+          "remake": 84
+        },
+        {
+          "offset_hex": "0xb1",
+          "original": 0,
+          "remake": 1
+        },
+        {
+          "offset_hex": "0xb4",
+          "original": 0,
+          "remake": 194
+        },
+        {
+          "offset_hex": "0xb5",
+          "original": 0,
+          "remake": 11
+        },
+        {
+          "offset_hex": "0xb8",
+          "original": 0,
+          "remake": 74
+        },
+        {
+          "offset_hex": "0xb9",
+          "original": 0,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0xbc",
+          "original": 0,
+          "remake": 234
+        },
+        {
+          "offset_hex": "0xbd",
+          "original": 0,
+          "remake": 1
+        }
+      ]
+    },
+    "FLEET": {
+      "bytes": 3904,
+      "different_bytes_before": 120,
+      "different_bytes_after": 120,
+      "offset_counts": {
+        "74": 9,
+        "75": 9,
+        "76": 9,
+        "92": 9,
+        "93": 8,
+        "94": 9,
+        "95": 7,
+        "100": 9,
+        "101": 8,
+        "102": 9,
+        "103": 7,
+        "108": 7,
+        "109": 6,
+        "110": 7,
+        "111": 7
+      },
+      "original_sha256": "53af52561125e497eebac24f6a0f2ce6c44b2109516cecab3a481e27d09980d1",
+      "before_sha256": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7",
+      "after_sha256": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7",
+      "unresolved_byte_differences": [
+        {
+          "offset_hex": "0x41a",
+          "original": 224,
+          "remake": 110
+        },
+        {
+          "offset_hex": "0x41b",
+          "original": 224,
+          "remake": 110
+        },
+        {
+          "offset_hex": "0x41c",
+          "original": 224,
+          "remake": 110
+        },
+        {
+          "offset_hex": "0x42c",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x42d",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x42e",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x42f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x434",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x435",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x436",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x437",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x602",
+          "original": 37,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x603",
+          "original": 37,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x604",
+          "original": 37,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x614",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x616",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x61c",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x61e",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x624",
+          "original": 14,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x626",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x627",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x6f6",
+          "original": 225,
+          "remake": 109
+        },
+        {
+          "offset_hex": "0x6f7",
+          "original": 225,
+          "remake": 109
+        },
+        {
+          "offset_hex": "0x6f8",
+          "original": 225,
+          "remake": 109
+        },
+        {
+          "offset_hex": "0x708",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x709",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x70a",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x70b",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x710",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x711",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x712",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x713",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x7ea",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0x7eb",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0x7ec",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0x7fc",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x7fd",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x7fe",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x7ff",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x804",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x805",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x806",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x807",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x80c",
+          "original": 158,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x80d",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x80e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x80f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x864",
+          "original": 169,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0x865",
+          "original": 169,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0x866",
+          "original": 169,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0x876",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x877",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x878",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x879",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x87e",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x87f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x880",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x881",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x886",
+          "original": 222,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x887",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x888",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x889",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xda2",
+          "original": 168,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0xda3",
+          "original": 168,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0xda4",
+          "original": 168,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0xdb4",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0xdb5",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xdb6",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0xdb7",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0xdbc",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0xdbd",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xdbe",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0xdbf",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0xdc4",
+          "original": 206,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xdc5",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xdc6",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xdc7",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xe1c",
+          "original": 171,
+          "remake": 194
+        },
+        {
+          "offset_hex": "0xe1d",
+          "original": 171,
+          "remake": 194
+        },
+        {
+          "offset_hex": "0xe1e",
+          "original": 171,
+          "remake": 194
+        },
+        {
+          "offset_hex": "0xe2e",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0xe2f",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xe30",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0xe31",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0xe36",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0xe37",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xe38",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0xe39",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0xe3e",
+          "original": 134,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xe3f",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xe40",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xe41",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xe96",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0xe97",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0xe98",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0xea8",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0xea9",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xeaa",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0xeab",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0xeb0",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0xeb1",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xeb2",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0xeb3",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0xeb8",
+          "original": 238,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xeb9",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xeba",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xebb",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xf10",
+          "original": 168,
+          "remake": 201
+        },
+        {
+          "offset_hex": "0xf11",
+          "original": 168,
+          "remake": 201
+        },
+        {
+          "offset_hex": "0xf12",
+          "original": 168,
+          "remake": 201
+        },
+        {
+          "offset_hex": "0xf22",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0xf23",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xf24",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0xf2a",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0xf2b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xf2c",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0xf32",
+          "original": 86,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xf33",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xf34",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xf35",
+          "original": 113,
+          "remake": 0
+        }
+      ]
+    },
+    "SHIP": {
+      "bytes": 27456,
+      "different_bytes_before": 865,
+      "different_bytes_after": 865,
+      "offset_counts": {
+        "2": 70,
+        "40": 70,
+        "41": 65,
+        "42": 70,
+        "43": 56,
+        "47": 7,
+        "48": 55,
+        "52": 70,
+        "53": 65,
+        "54": 70,
+        "55": 53,
+        "56": 55,
+        "57": 49,
+        "58": 55,
+        "59": 55
+      },
+      "original_sha256": "1c74fa060ca3fd8f5276d34fac84fb614522434f684885deb77f0253cccd8b44",
+      "before_sha256": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd",
+      "after_sha256": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd",
+      "unresolved_byte_differences": [
+        {
+          "offset_hex": "0x1028",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x104e",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x104f",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x1050",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x1051",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x105a",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x105b",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x105c",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x105d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1076",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x109c",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x109d",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x109e",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x109f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x10a8",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x10a9",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x10aa",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x10ab",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x10c4",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x10ea",
+          "original": 89,
+          "remake": 253
+        },
+        {
+          "offset_hex": "0x10eb",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x10ec",
+          "original": 104,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x10ed",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x10f6",
+          "original": 89,
+          "remake": 253
+        },
+        {
+          "offset_hex": "0x10f7",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x10f8",
+          "original": 104,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x10f9",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1112",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1138",
+          "original": 112,
+          "remake": 240
+        },
+        {
+          "offset_hex": "0x1139",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x113a",
+          "original": 127,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x113b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1144",
+          "original": 112,
+          "remake": 240
+        },
+        {
+          "offset_hex": "0x1145",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x1146",
+          "original": 127,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1147",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1160",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1186",
+          "original": 67,
+          "remake": 19
+        },
+        {
+          "offset_hex": "0x1187",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1188",
+          "original": 104,
+          "remake": 39
+        },
+        {
+          "offset_hex": "0x1189",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1192",
+          "original": 67,
+          "remake": 19
+        },
+        {
+          "offset_hex": "0x1193",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1194",
+          "original": 104,
+          "remake": 39
+        },
+        {
+          "offset_hex": "0x1195",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x11ae",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x11d4",
+          "original": 112,
+          "remake": 247
+        },
+        {
+          "offset_hex": "0x11d5",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x11d6",
+          "original": 149,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x11d7",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x11e0",
+          "original": 112,
+          "remake": 247
+        },
+        {
+          "offset_hex": "0x11e1",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x11e2",
+          "original": 149,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x11e3",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x11fc",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1222",
+          "original": 44,
+          "remake": 40
+        },
+        {
+          "offset_hex": "0x1223",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1224",
+          "original": 104,
+          "remake": 47
+        },
+        {
+          "offset_hex": "0x1225",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x122e",
+          "original": 44,
+          "remake": 40
+        },
+        {
+          "offset_hex": "0x122f",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1230",
+          "original": 104,
+          "remake": 47
+        },
+        {
+          "offset_hex": "0x1231",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x124a",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1270",
+          "original": 89,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x1271",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1272",
+          "original": 127,
+          "remake": 10
+        },
+        {
+          "offset_hex": "0x1273",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x127c",
+          "original": 89,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x127d",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x127e",
+          "original": 127,
+          "remake": 10
+        },
+        {
+          "offset_hex": "0x127f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1298",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x12be",
+          "original": 112,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x12bf",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x12c0",
+          "original": 172,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x12c1",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x12ca",
+          "original": 112,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x12cb",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x12cc",
+          "original": 172,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x12cd",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1862",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1888",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x188a",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1890",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1894",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1896",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1898",
+          "original": 54,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x189a",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x189b",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18b0",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x18d6",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18d8",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x18dd",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x18de",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x18e2",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18e4",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x18e6",
+          "original": 118,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18e7",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18e8",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18e9",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18fe",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1924",
+          "original": 163,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1926",
+          "original": 2,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x1927",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x192c",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1930",
+          "original": 163,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1932",
+          "original": 2,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x1933",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1934",
+          "original": 94,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1936",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1937",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x194c",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1972",
+          "original": 138,
+          "remake": 233
+        },
+        {
+          "offset_hex": "0x1973",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1974",
+          "original": 21,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x197a",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x197e",
+          "original": 138,
+          "remake": 233
+        },
+        {
+          "offset_hex": "0x197f",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1980",
+          "original": 21,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1982",
+          "original": 134,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1984",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1985",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x199a",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x19c0",
+          "original": 166,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x19c2",
+          "original": 235,
+          "remake": 215
+        },
+        {
+          "offset_hex": "0x19c8",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x19cc",
+          "original": 166,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x19ce",
+          "original": 235,
+          "remake": 215
+        },
+        {
+          "offset_hex": "0x19d0",
+          "original": 174,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x19d2",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x19d3",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x19e8",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1a0e",
+          "original": 115,
+          "remake": 211
+        },
+        {
+          "offset_hex": "0x1a0f",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a10",
+          "original": 18,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1a16",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1a1a",
+          "original": 115,
+          "remake": 211
+        },
+        {
+          "offset_hex": "0x1a1b",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a1c",
+          "original": 18,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1a1e",
+          "original": 214,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a20",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a21",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a36",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1a5c",
+          "original": 168,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a5e",
+          "original": 213,
+          "remake": 192
+        },
+        {
+          "offset_hex": "0x1a64",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1a68",
+          "original": 168,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a6a",
+          "original": 213,
+          "remake": 192
+        },
+        {
+          "offset_hex": "0x1a6c",
+          "original": 38,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a6d",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a6e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a6f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a84",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1aaa",
+          "original": 140,
+          "remake": 233
+        },
+        {
+          "offset_hex": "0x1aab",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1aac",
+          "original": 255,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x1ab2",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1ab6",
+          "original": 140,
+          "remake": 233
+        },
+        {
+          "offset_hex": "0x1ab7",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1ab8",
+          "original": 255,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x1aba",
+          "original": 254,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1abc",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1abd",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1ad2",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1af8",
+          "original": 93,
+          "remake": 188
+        },
+        {
+          "offset_hex": "0x1af9",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1afa",
+          "original": 16,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1b00",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1b04",
+          "original": 93,
+          "remake": 188
+        },
+        {
+          "offset_hex": "0x1b05",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1b06",
+          "original": 16,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1b08",
+          "original": 78,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1b09",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1b0a",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1b0b",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1b20",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1b46",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x1b47",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1b48",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x1b49",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1b52",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x1b53",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1b54",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x1b55",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1b6e",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1b94",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x1b95",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1b96",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x1b97",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1ba0",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x1ba1",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1ba2",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x1ba3",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1bbc",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1be2",
+          "original": 89,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0x1be3",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1be4",
+          "original": 71,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1be5",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1bee",
+          "original": 89,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0x1bef",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1bf0",
+          "original": 71,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1bf1",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1c0a",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1c30",
+          "original": 111,
+          "remake": 15
+        },
+        {
+          "offset_hex": "0x1c31",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c32",
+          "original": 95,
+          "remake": 227
+        },
+        {
+          "offset_hex": "0x1c33",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1c3c",
+          "original": 111,
+          "remake": 15
+        },
+        {
+          "offset_hex": "0x1c3d",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c3e",
+          "original": 87,
+          "remake": 227
+        },
+        {
+          "offset_hex": "0x1c3f",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1c58",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1c7e",
+          "original": 67,
+          "remake": 51
+        },
+        {
+          "offset_hex": "0x1c7f",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c80",
+          "original": 71,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c81",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1c8a",
+          "original": 67,
+          "remake": 51
+        },
+        {
+          "offset_hex": "0x1c8b",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c8c",
+          "original": 71,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c8d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1ca6",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1ccc",
+          "original": 111,
+          "remake": 22
+        },
+        {
+          "offset_hex": "0x1ccd",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1cce",
+          "original": 117,
+          "remake": 205
+        },
+        {
+          "offset_hex": "0x1ccf",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1cd8",
+          "original": 111,
+          "remake": 22
+        },
+        {
+          "offset_hex": "0x1cd9",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1cda",
+          "original": 85,
+          "remake": 205
+        },
+        {
+          "offset_hex": "0x1cdb",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1f16",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1f3c",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x1f3d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1f3e",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x1f3f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1f44",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1f48",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x1f49",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1f4a",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x1f4b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1f4c",
+          "original": 198,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f4d",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f4e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f4f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f64",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1f8a",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x1f8b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1f8c",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x1f8d",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1f91",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1f92",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1f96",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x1f97",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1f98",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x1f99",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1f9a",
+          "original": 182,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f9b",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f9c",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f9d",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1fb2",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1fd8",
+          "original": 229,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x1fd9",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1fda",
+          "original": 64,
+          "remake": 51
+        },
+        {
+          "offset_hex": "0x1fdb",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1fe0",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1fe4",
+          "original": 229,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x1fe5",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1fe6",
+          "original": 64,
+          "remake": 51
+        },
+        {
+          "offset_hex": "0x1fe7",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1fe8",
+          "original": 238,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1fe9",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1fea",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1feb",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2000",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2026",
+          "original": 27,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2027",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2028",
+          "original": 32,
+          "remake": 61
+        },
+        {
+          "offset_hex": "0x2029",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x202e",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2032",
+          "original": 27,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2033",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2034",
+          "original": 32,
+          "remake": 61
+        },
+        {
+          "offset_hex": "0x2035",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2036",
+          "original": 22,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2037",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2038",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2039",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x204e",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2074",
+          "original": 245,
+          "remake": 116
+        },
+        {
+          "offset_hex": "0x2075",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2076",
+          "original": 92,
+          "remake": 83
+        },
+        {
+          "offset_hex": "0x2077",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x207c",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2080",
+          "original": 245,
+          "remake": 116
+        },
+        {
+          "offset_hex": "0x2081",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2082",
+          "original": 92,
+          "remake": 83
+        },
+        {
+          "offset_hex": "0x2083",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2084",
+          "original": 62,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2085",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2086",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2087",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x209c",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x20c2",
+          "original": 44,
+          "remake": 179
+        },
+        {
+          "offset_hex": "0x20c3",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x20c4",
+          "original": 59,
+          "remake": 92
+        },
+        {
+          "offset_hex": "0x20c5",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x20ca",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x20ce",
+          "original": 44,
+          "remake": 179
+        },
+        {
+          "offset_hex": "0x20cf",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x20d0",
+          "original": 59,
+          "remake": 92
+        },
+        {
+          "offset_hex": "0x20d1",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x20d2",
+          "original": 102,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x20d3",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x20d4",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x20d5",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x20ea",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2110",
+          "original": 16,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x2111",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2112",
+          "original": 75,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x2113",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2118",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x211c",
+          "original": 16,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x211d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x211e",
+          "original": 75,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x211f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2120",
+          "original": 142,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2121",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2122",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2123",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2138",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x215e",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x215f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2160",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x2161",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x2166",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x216a",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x216b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x216c",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x216d",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x216e",
+          "original": 246,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x216f",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2170",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2171",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2186",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x21ac",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x21ad",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x21ae",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x21af",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x21b3",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x21b4",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x21b8",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x21b9",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x21ba",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x21bb",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x21bc",
+          "original": 94,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x21bd",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x21be",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x21bf",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x21d4",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x21fa",
+          "original": 5,
+          "remake": 121
+        },
+        {
+          "offset_hex": "0x21fb",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x21fc",
+          "original": 34,
+          "remake": 243
+        },
+        {
+          "offset_hex": "0x21fd",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x2202",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2206",
+          "original": 32,
+          "remake": 121
+        },
+        {
+          "offset_hex": "0x2207",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2208",
+          "original": 16,
+          "remake": 243
+        },
+        {
+          "offset_hex": "0x2209",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x220a",
+          "original": 70,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x220b",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x220c",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x220d",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2222",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2248",
+          "original": 59,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2249",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x224a",
+          "original": 254,
+          "remake": 253
+        },
+        {
+          "offset_hex": "0x224b",
+          "original": 6,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x2250",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2254",
+          "original": 59,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2255",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2256",
+          "original": 254,
+          "remake": 253
+        },
+        {
+          "offset_hex": "0x2257",
+          "original": 6,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x2258",
+          "original": 110,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2259",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x225a",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x225b",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2270",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2296",
+          "original": 235,
+          "remake": 89
+        },
+        {
+          "offset_hex": "0x2297",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2298",
+          "original": 52,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x2299",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x229e",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x22a2",
+          "original": 32,
+          "remake": 89
+        },
+        {
+          "offset_hex": "0x22a3",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x22a4",
+          "original": 16,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x22a5",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x22a6",
+          "original": 30,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22a7",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22a8",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22a9",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22be",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x22e4",
+          "original": 85,
+          "remake": 215
+        },
+        {
+          "offset_hex": "0x22e5",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x22e6",
+          "original": 237,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x22ec",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x22f0",
+          "original": 85,
+          "remake": 215
+        },
+        {
+          "offset_hex": "0x22f1",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x22f2",
+          "original": 237,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x22f4",
+          "original": 150,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22f5",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22f6",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22f7",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x230c",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2332",
+          "original": 41,
+          "remake": 110
+        },
+        {
+          "offset_hex": "0x2333",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2334",
+          "original": 87,
+          "remake": 50
+        },
+        {
+          "offset_hex": "0x2335",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x233a",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x233e",
+          "original": 41,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x233f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2340",
+          "original": 87,
+          "remake": 35
+        },
+        {
+          "offset_hex": "0x2341",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2342",
+          "original": 190,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2343",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2344",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2345",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x235a",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2380",
+          "original": 94,
+          "remake": 173
+        },
+        {
+          "offset_hex": "0x2381",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2382",
+          "original": 51,
+          "remake": 60
+        },
+        {
+          "offset_hex": "0x2383",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2388",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x238c",
+          "original": 94,
+          "remake": 168
+        },
+        {
+          "offset_hex": "0x238d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x238e",
+          "original": 51,
+          "remake": 40
+        },
+        {
+          "offset_hex": "0x238f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2390",
+          "original": 230,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2391",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2392",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2393",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x23a8",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x23ce",
+          "original": 23,
+          "remake": 115
+        },
+        {
+          "offset_hex": "0x23cf",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x23d0",
+          "original": 60,
+          "remake": 18
+        },
+        {
+          "offset_hex": "0x23d1",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x23d6",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x23da",
+          "original": 24,
+          "remake": 139
+        },
+        {
+          "offset_hex": "0x23db",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x23dc",
+          "original": 56,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x23dd",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x23de",
+          "original": 14,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x23df",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x23e0",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x23e1",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x23f6",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x241c",
+          "original": 76,
+          "remake": 178
+        },
+        {
+          "offset_hex": "0x241d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x241e",
+          "original": 25,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0x241f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2424",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2428",
+          "original": 76,
+          "remake": 168
+        },
+        {
+          "offset_hex": "0x2429",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x242a",
+          "original": 25,
+          "remake": 14
+        },
+        {
+          "offset_hex": "0x242b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x242c",
+          "original": 54,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x242d",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x242e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x242f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2444",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x246a",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x246b",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x246c",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x246d",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2472",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2476",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x2477",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2478",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x2479",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x247a",
+          "original": 174,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x247b",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x247c",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x247d",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2492",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x24b8",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x24b9",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x24ba",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x24bb",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x24bf",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x24c0",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x24c4",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x24c5",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x24c6",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x24c7",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x24c8",
+          "original": 198,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x24c9",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x24ca",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x24cb",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x24e0",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2506",
+          "original": 212,
+          "remake": 183
+        },
+        {
+          "offset_hex": "0x2507",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2508",
+          "original": 124,
+          "remake": 86
+        },
+        {
+          "offset_hex": "0x2509",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x250e",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2512",
+          "original": 212,
+          "remake": 201
+        },
+        {
+          "offset_hex": "0x2513",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2514",
+          "original": 124,
+          "remake": 68
+        },
+        {
+          "offset_hex": "0x2515",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2516",
+          "original": 214,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2517",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2518",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2519",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x252e",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2554",
+          "original": 12,
+          "remake": 246
+        },
+        {
+          "offset_hex": "0x2555",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2556",
+          "original": 92,
+          "remake": 90
+        },
+        {
+          "offset_hex": "0x2557",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x255c",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2560",
+          "original": 12,
+          "remake": 246
+        },
+        {
+          "offset_hex": "0x2561",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2562",
+          "original": 92,
+          "remake": 90
+        },
+        {
+          "offset_hex": "0x2563",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2564",
+          "original": 254,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2565",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2566",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2567",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x257c",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x25a2",
+          "original": 196,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x25a3",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x25a4",
+          "original": 96,
+          "remake": 54
+        },
+        {
+          "offset_hex": "0x25a5",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x25aa",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x25ae",
+          "original": 196,
+          "remake": 200
+        },
+        {
+          "offset_hex": "0x25af",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x25b0",
+          "original": 96,
+          "remake": 54
+        },
+        {
+          "offset_hex": "0x25b1",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x25b2",
+          "original": 38,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x25b3",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x25b4",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x25b5",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x25ca",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x25f0",
+          "original": 252,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x25f1",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x25f2",
+          "original": 64,
+          "remake": 58
+        },
+        {
+          "offset_hex": "0x25f3",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x25f8",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x25fc",
+          "original": 252,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x25fd",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x25fe",
+          "original": 64,
+          "remake": 58
+        },
+        {
+          "offset_hex": "0x25ff",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2600",
+          "original": 78,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2601",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2602",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2603",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2618",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x263e",
+          "original": 240,
+          "remake": 214
+        },
+        {
+          "offset_hex": "0x263f",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2640",
+          "original": 108,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x2641",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2646",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x264a",
+          "original": 240,
+          "remake": 214
+        },
+        {
+          "offset_hex": "0x264b",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x264c",
+          "original": 108,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x264d",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x264e",
+          "original": 118,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x264f",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2650",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2651",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2666",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x268c",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x268d",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x268e",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x268f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2694",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2698",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2699",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x269a",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x269b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x269c",
+          "original": 22,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x269d",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x269e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x269f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x26b4",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x26da",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x26db",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x26dc",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x26dd",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x26e1",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x26e2",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x26e6",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x26e7",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x26e8",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x26e9",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x26ea",
+          "original": 46,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x26eb",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x26ec",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x26ed",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2702",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2728",
+          "original": 197,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x2729",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x272a",
+          "original": 32,
+          "remake": 115
+        },
+        {
+          "offset_hex": "0x272b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2730",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2734",
+          "original": 197,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x2735",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2736",
+          "original": 32,
+          "remake": 115
+        },
+        {
+          "offset_hex": "0x2737",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2738",
+          "original": 142,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2739",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x273a",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x273b",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2750",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2776",
+          "original": 251,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2777",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2778",
+          "original": 0,
+          "remake": 125
+        },
+        {
+          "offset_hex": "0x2779",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x277e",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2782",
+          "original": 251,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2783",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2784",
+          "original": 0,
+          "remake": 125
+        },
+        {
+          "offset_hex": "0x2785",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2786",
+          "original": 182,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2787",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2788",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2789",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x279e",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x27c4",
+          "original": 213,
+          "remake": 116
+        },
+        {
+          "offset_hex": "0x27c5",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x27c6",
+          "original": 60,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x27c7",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x27cc",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x27d0",
+          "original": 213,
+          "remake": 116
+        },
+        {
+          "offset_hex": "0x27d1",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x27d2",
+          "original": 60,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x27d3",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x27d4",
+          "original": 62,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x27d5",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x27d6",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x27d7",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x27ec",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2812",
+          "original": 240,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x2813",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2814",
+          "original": 43,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2815",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x281a",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x281e",
+          "original": 224,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x281f",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2820",
+          "original": 16,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2821",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2822",
+          "original": 222,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2823",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2824",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2825",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x283a",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2860",
+          "original": 12,
+          "remake": 179
+        },
+        {
+          "offset_hex": "0x2861",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2862",
+          "original": 27,
+          "remake": 156
+        },
+        {
+          "offset_hex": "0x2863",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2868",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x286c",
+          "original": 228,
+          "remake": 179
+        },
+        {
+          "offset_hex": "0x286d",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x286e",
+          "original": 17,
+          "remake": 156
+        },
+        {
+          "offset_hex": "0x286f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2870",
+          "original": 102,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2871",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2872",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2873",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2888",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x28ae",
+          "original": 1,
+          "remake": 143
+        },
+        {
+          "offset_hex": "0x28af",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x28b0",
+          "original": 71,
+          "remake": 183
+        },
+        {
+          "offset_hex": "0x28b1",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x28b6",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x28ba",
+          "original": 224,
+          "remake": 143
+        },
+        {
+          "offset_hex": "0x28bb",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x28bc",
+          "original": 16,
+          "remake": 183
+        },
+        {
+          "offset_hex": "0x28bd",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x28be",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x28bf",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x28c0",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x28c1",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x28d6",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x28fc",
+          "original": 0,
+          "remake": 213
+        },
+        {
+          "offset_hex": "0x28fd",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x28fe",
+          "original": 136,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x28ff",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2904",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2908",
+          "original": 0,
+          "remake": 213
+        },
+        {
+          "offset_hex": "0x2909",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x290a",
+          "original": 136,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x290b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x290c",
+          "original": 158,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x290d",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x290e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x290f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2924",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x294a",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x294b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x294c",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x2952",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2956",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x2957",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2958",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x295a",
+          "original": 126,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x295b",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x295c",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x295d",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2972",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2998",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x2999",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x299a",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x299f",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x29a0",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x29a4",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x29a5",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x29a6",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x29a8",
+          "original": 150,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29a9",
+          "original": 9,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29aa",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29ab",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29c0",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x29e6",
+          "original": 229,
+          "remake": 57
+        },
+        {
+          "offset_hex": "0x29e7",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x29e8",
+          "original": 2,
+          "remake": 113
+        },
+        {
+          "offset_hex": "0x29e9",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x29ee",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x29f2",
+          "original": 232,
+          "remake": 57
+        },
+        {
+          "offset_hex": "0x29f3",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x29f4",
+          "original": 0,
+          "remake": 113
+        },
+        {
+          "offset_hex": "0x29f5",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x29f6",
+          "original": 166,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29f7",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29f8",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29f9",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a0e",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2a34",
+          "original": 27,
+          "remake": 119
+        },
+        {
+          "offset_hex": "0x2a35",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2a36",
+          "original": 222,
+          "remake": 127
+        },
+        {
+          "offset_hex": "0x2a3c",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2a40",
+          "original": 27,
+          "remake": 103
+        },
+        {
+          "offset_hex": "0x2a41",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2a42",
+          "original": 222,
+          "remake": 123
+        },
+        {
+          "offset_hex": "0x2a44",
+          "original": 206,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a45",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a46",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a47",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a5c",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2a82",
+          "original": 247,
+          "remake": 50
+        },
+        {
+          "offset_hex": "0x2a83",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2a84",
+          "original": 28,
+          "remake": 144
+        },
+        {
+          "offset_hex": "0x2a85",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2a8a",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2a8e",
+          "original": 0,
+          "remake": 50
+        },
+        {
+          "offset_hex": "0x2a8f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2a90",
+          "original": 240,
+          "remake": 144
+        },
+        {
+          "offset_hex": "0x2a92",
+          "original": 246,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a93",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a94",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a95",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2aaa",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2ad0",
+          "original": 18,
+          "remake": 81
+        },
+        {
+          "offset_hex": "0x2ad1",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2ad2",
+          "original": 11,
+          "remake": 151
+        },
+        {
+          "offset_hex": "0x2ad3",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2ad8",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2adc",
+          "original": 0,
+          "remake": 81
+        },
+        {
+          "offset_hex": "0x2add",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2ade",
+          "original": 240,
+          "remake": 151
+        },
+        {
+          "offset_hex": "0x2ae0",
+          "original": 30,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2ae1",
+          "original": 9,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2ae2",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2ae3",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2af8",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2b1e",
+          "original": 44,
+          "remake": 112
+        },
+        {
+          "offset_hex": "0x2b1f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2b20",
+          "original": 249,
+          "remake": 158
+        },
+        {
+          "offset_hex": "0x2b26",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2b2a",
+          "original": 4,
+          "remake": 100
+        },
+        {
+          "offset_hex": "0x2b2b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2b2c",
+          "original": 240,
+          "remake": 140
+        },
+        {
+          "offset_hex": "0x2b2e",
+          "original": 70,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b2f",
+          "original": 9,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b30",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b31",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b46",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2b6c",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2b6d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2b6e",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x2b6f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2b74",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2b78",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2b79",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2b7a",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x2b7b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2b7c",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b7d",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b7e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b7f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b94",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2bba",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2bbb",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2bbc",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x2bbd",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2bc1",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2bc2",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2bc6",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2bc7",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2bc8",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x2bc9",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2bca",
+          "original": 166,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2bcb",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2bcc",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2bcd",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2be2",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2c08",
+          "original": 17,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x2c09",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2c0a",
+          "original": 43,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x2c0b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2c10",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2c14",
+          "original": 9,
+          "remake": 150
+        },
+        {
+          "offset_hex": "0x2c15",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2c16",
+          "original": 31,
+          "remake": 40
+        },
+        {
+          "offset_hex": "0x2c17",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2c18",
+          "original": 46,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c19",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c1a",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c1b",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c30",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2c56",
+          "original": 229,
+          "remake": 121
+        },
+        {
+          "offset_hex": "0x2c57",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2c58",
+          "original": 33,
+          "remake": 19
+        },
+        {
+          "offset_hex": "0x2c59",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2c5e",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2c62",
+          "original": 229,
+          "remake": 121
+        },
+        {
+          "offset_hex": "0x2c63",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2c64",
+          "original": 33,
+          "remake": 19
+        },
+        {
+          "offset_hex": "0x2c65",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2c66",
+          "original": 86,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c67",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c68",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c69",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c7e",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2ca4",
+          "original": 27,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2ca5",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2ca6",
+          "original": 255,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0x2cac",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2cb0",
+          "original": 27,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2cb1",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2cb2",
+          "original": 255,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0x2cb4",
+          "original": 126,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2cb5",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2cb6",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2cb7",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2ccc",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2cf2",
+          "original": 36,
+          "remake": 74
+        },
+        {
+          "offset_hex": "0x2cf3",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2cf4",
+          "original": 37,
+          "remake": 182
+        },
+        {
+          "offset_hex": "0x2cf5",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2cfa",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2cfe",
+          "original": 0,
+          "remake": 74
+        },
+        {
+          "offset_hex": "0x2cff",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2d00",
+          "original": 240,
+          "remake": 182
+        },
+        {
+          "offset_hex": "0x2d02",
+          "original": 110,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2d03",
+          "original": 9,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2d04",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2d05",
+          "original": 113,
+          "remake": 0
+        }
+      ]
+    },
+    "STELLAR": {
+      "bytes": 4032,
+      "different_bytes_before": 44,
+      "different_bytes_after": 44,
+      "offset_counts": {
+        "26": 11,
+        "27": 11,
+        "39": 11,
+        "125": 11
+      },
+      "original_sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "before_sha256": "c3fc0ffa80a7afdfa1e7115c3d9b799926a5daf2425855c907b9bd02dd19f49a",
+      "after_sha256": "c3fc0ffa80a7afdfa1e7115c3d9b799926a5daf2425855c907b9bd02dd19f49a",
+      "unresolved_byte_differences": [
+        {
+          "offset_hex": "0x7fa",
+          "original": 1,
+          "remake": 121
+        },
+        {
+          "offset_hex": "0x7fb",
+          "original": 29,
+          "remake": 27
+        },
+        {
+          "offset_hex": "0x807",
+          "original": 38,
+          "remake": 53
+        },
+        {
+          "offset_hex": "0x85d",
+          "original": 40,
+          "remake": 50
+        },
+        {
+          "offset_hex": "0x878",
+          "original": 76,
+          "remake": 240
+        },
+        {
+          "offset_hex": "0x879",
+          "original": 56,
+          "remake": 53
+        },
+        {
+          "offset_hex": "0x885",
+          "original": 23,
+          "remake": 42
+        },
+        {
+          "offset_hex": "0x8db",
+          "original": 20,
+          "remake": 36
+        },
+        {
+          "offset_hex": "0x8f6",
+          "original": 6,
+          "remake": 139
+        },
+        {
+          "offset_hex": "0x8f7",
+          "original": 115,
+          "remake": 110
+        },
+        {
+          "offset_hex": "0x903",
+          "original": 22,
+          "remake": 39
+        },
+        {
+          "offset_hex": "0x959",
+          "original": 18,
+          "remake": 34
+        },
+        {
+          "offset_hex": "0x974",
+          "original": 146,
+          "remake": 163
+        },
+        {
+          "offset_hex": "0x975",
+          "original": 98,
+          "remake": 94
+        },
+        {
+          "offset_hex": "0x981",
+          "original": 23,
+          "remake": 40
+        },
+        {
+          "offset_hex": "0x9d7",
+          "original": 17,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x9f2",
+          "original": 94,
+          "remake": 164
+        },
+        {
+          "offset_hex": "0x9f3",
+          "original": 121,
+          "remake": 116
+        },
+        {
+          "offset_hex": "0x9ff",
+          "original": 22,
+          "remake": 39
+        },
+        {
+          "offset_hex": "0xa55",
+          "original": 4,
+          "remake": 20
+        },
+        {
+          "offset_hex": "0xa70",
+          "original": 139,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0xa71",
+          "original": 110,
+          "remake": 106
+        },
+        {
+          "offset_hex": "0xa7d",
+          "original": 25,
+          "remake": 41
+        },
+        {
+          "offset_hex": "0xad3",
+          "original": 6,
+          "remake": 17
+        },
+        {
+          "offset_hex": "0xbea",
+          "original": 79,
+          "remake": 168
+        },
+        {
+          "offset_hex": "0xbeb",
+          "original": 12,
+          "remake": 11
+        },
+        {
+          "offset_hex": "0xbf7",
+          "original": 39,
+          "remake": 53
+        },
+        {
+          "offset_hex": "0xc4d",
+          "original": 33,
+          "remake": 42
+        },
+        {
+          "offset_hex": "0xd64",
+          "original": 228,
+          "remake": 247
+        },
+        {
+          "offset_hex": "0xd65",
+          "original": 41,
+          "remake": 39
+        },
+        {
+          "offset_hex": "0xd71",
+          "original": 27,
+          "remake": 46
+        },
+        {
+          "offset_hex": "0xdc7",
+          "original": 22,
+          "remake": 38
+        },
+        {
+          "offset_hex": "0xe60",
+          "original": 198,
+          "remake": 14
+        },
+        {
+          "offset_hex": "0xe61",
+          "original": 69,
+          "remake": 67
+        },
+        {
+          "offset_hex": "0xe6d",
+          "original": 23,
+          "remake": 39
+        },
+        {
+          "offset_hex": "0xec3",
+          "original": 19,
+          "remake": 34
+        },
+        {
+          "offset_hex": "0xede",
+          "original": 41,
+          "remake": 133
+        },
+        {
+          "offset_hex": "0xedf",
+          "original": 31,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0xeeb",
+          "original": 38,
+          "remake": 53
+        },
+        {
+          "offset_hex": "0xf41",
+          "original": 22,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0xf5c",
+          "original": 229,
+          "remake": 90
+        },
+        {
+          "offset_hex": "0xf5d",
+          "original": 24,
+          "remake": 15
+        },
+        {
+          "offset_hex": "0xf69",
+          "original": 20,
+          "remake": 34
+        },
+        {
+          "offset_hex": "0xfbf",
+          "original": 2,
+          "remake": 17
+        }
+      ]
+    }
+  },
+  "screen_comparisons": {
+    "before": {
+      "full": {
+        "rectangle_xywh": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "compared_pixels": 307200,
+        "same_pixels": 301337,
+        "different_index_pixels": 5863,
+        "different_rgb_pixels": 5863,
+        "maximum_channel_difference": 243,
+        "difference_bbox_inclusive": [
+          240,
+          93,
+          607,
+          395
+        ]
+      },
+      "field": {
+        "rectangle_xywh": [
+          0,
+          0,
+          448,
+          360
+        ],
+        "compared_pixels": 161280,
+        "same_pixels": 161207,
+        "different_index_pixels": 73,
+        "different_rgb_pixels": 73,
+        "maximum_channel_difference": 243,
+        "difference_bbox_inclusive": [
+          240,
+          240,
+          255,
+          255
+        ]
+      },
+      "right": {
+        "rectangle_xywh": [
+          448,
+          0,
+          192,
+          480
+        ],
+        "compared_pixels": 92160,
+        "same_pixels": 86370,
+        "different_index_pixels": 5790,
+        "different_rgb_pixels": 5790,
+        "maximum_channel_difference": 243,
+        "difference_bbox_inclusive": [
+          480,
+          93,
+          607,
+          395
+        ]
+      },
+      "bottom": {
+        "rectangle_xywh": [
+          0,
+          360,
+          448,
+          120
+        ],
+        "compared_pixels": 53760,
+        "same_pixels": 53760,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      }
+    },
+    "after": {
+      "full": {
+        "rectangle_xywh": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "compared_pixels": 307200,
+        "same_pixels": 301347,
+        "different_index_pixels": 5853,
+        "different_rgb_pixels": 5853,
+        "maximum_channel_difference": 243,
+        "difference_bbox_inclusive": [
+          240,
+          93,
+          607,
+          395
+        ]
+      },
+      "field": {
+        "rectangle_xywh": [
+          0,
+          0,
+          448,
+          360
+        ],
+        "compared_pixels": 161280,
+        "same_pixels": 161207,
+        "different_index_pixels": 73,
+        "different_rgb_pixels": 73,
+        "maximum_channel_difference": 243,
+        "difference_bbox_inclusive": [
+          240,
+          240,
+          255,
+          255
+        ]
+      },
+      "right": {
+        "rectangle_xywh": [
+          448,
+          0,
+          192,
+          480
+        ],
+        "compared_pixels": 92160,
+        "same_pixels": 86380,
+        "different_index_pixels": 5780,
+        "different_rgb_pixels": 5780,
+        "maximum_channel_difference": 243,
+        "difference_bbox_inclusive": [
+          480,
+          93,
+          607,
+          395
+        ]
+      },
+      "bottom": {
+        "rectangle_xywh": [
+          0,
+          360,
+          448,
+          120
+        ],
+        "compared_pixels": 53760,
+        "same_pixels": 53760,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      }
+    }
+  },
+  "comparison_image_hashes": {
+    "workplace/round47-normal-before.png": "043039702b38e38dc043bba82f8a4ac80a8e5ccf4110561dd32f41566a74ae47",
+    "workplace/round47-normal-before-diff.png": "de54102c1885378388d6279642938ce0a2c3b6a41af2a4dd52b72453d7e1a1d8",
+    "workplace/round47-normal-before-pair.png": "d954d0f59b3e2a8f058428add33fc331f192d49ca77f7b6b874107e9b97e18ea",
+    "workplace/round47-normal-after.png": "8a83b90189bca42b29895416782aa5fc4666c4232638605143cdefe232188562",
+    "workplace/round47-normal-after-diff.png": "5abfeb78ce62119e078140d20ee5a1e5c81b799301d07adfabe8e1a12cfd0883",
+    "workplace/round47-normal-after-pair.png": "c1acb1eb195238eed7a04ff7b7f7fb3798c72400bc7143479e1c1d6ef48d44d9"
+  },
+  "actual_x11_gui": [
+    {
+      "path_prefix": "workplace/round47-gui-pass-1x",
+      "normal_x11_input": true,
+      "full_pixels_different_from_normal_game": 0,
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "bash",
+        "tools/turn_counter_gui.sh"
+      ],
+      "product_arguments": [
+        "-orig",
+        "/orig",
+        "-data",
+        "/src/docs/internals/data",
+        "-intro=false",
+        "-scale",
+        "1",
+        "-save",
+        "/tmp/logh3-turn-counter-save",
+        "-shot-bin",
+        "/src/workplace/round47-gui-pass-1x.bin",
+        "-shot",
+        "/src/workplace/round47-gui-pass-1x.png",
+        "-state-out",
+        "/src/workplace/round47-gui-pass-1x.txt",
+        "-shot-after",
+        "1200"
+      ],
+      "hashes": {
+        "workplace/round47-gui-pass-1x.bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        "workplace/round47-gui-pass-1x.png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        "workplace/round47-gui-pass-1x.txt": "f053d194a0cb86c82378c9c73e35fc959f320e40886cafb3bf59a967cfe5d606",
+        "workplace/round47-gui-pass-1x.log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    },
+    {
+      "path_prefix": "workplace/round47-gui-pass-2x",
+      "normal_x11_input": true,
+      "full_pixels_different_from_normal_game": 0,
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "bash",
+        "tools/turn_counter_gui.sh"
+      ],
+      "product_arguments": [
+        "-orig",
+        "/orig",
+        "-data",
+        "/src/docs/internals/data",
+        "-intro=false",
+        "-scale",
+        "2",
+        "-save",
+        "/tmp/logh3-turn-counter-save",
+        "-shot-bin",
+        "/src/workplace/round47-gui-pass-2x.bin",
+        "-shot",
+        "/src/workplace/round47-gui-pass-2x.png",
+        "-state-out",
+        "/src/workplace/round47-gui-pass-2x.txt",
+        "-shot-after",
+        "1200"
+      ],
+      "hashes": {
+        "workplace/round47-gui-pass-2x.bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        "workplace/round47-gui-pass-2x.png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        "workplace/round47-gui-pass-2x.txt": "9b437af71f16b55dc4db0e6f733f50e11536d3b4799bebd2535f406bfb14e8d3",
+        "workplace/round47-gui-pass-2x.log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    }
+  ],
+  "source_hashes": {
+    "internal/game/game.go": "eb13113ff24c8ce137020155c05065d22322ad4fb07b9b68defaa947ed056c67",
+    "internal/game/originalbrain.go": "1134553d8ae55e337f0da2f3f8744530524de9cbca604870a322952f983b307c",
+    "internal/game/battle.go": "14ee8bff39035578f552f3abc60a4194e959cf8b7c1528f2b4af65232fc21a8c",
+    "internal/game/regionturn.go": "4282a343474ca261621df569ed0491b54177aaaff0547d0886e5d83e0b11b962",
+    "internal/game/phezzan.go": "2b6d917370d5b278f8a7972a8684d252f263957cc8ddc74289f732d804f69b7e",
+    "internal/game/turncounter_test.go": "9cc23953b59ba844486d59088b4fc2be8a4b4ee08c34ce0153960423f644519d",
+    "internal/game/battlesamples_test.go": "1f0cd7b88e2a5d9339757b83783e5b52dca89516a5e0d28a29adba04d1be826d",
+    "internal/game/regionturn_test.go": "e64131dbef0854dd5a68edee10bce15688545b90d34e3870130d77177bd224ef",
+    "internal/game/victoryreport_test.go": "13463f7d21d850cd8d5a6e9d5d168260768fbed360e9931dce46205bf3da855a",
+    "internal/game/builder_test.go": "86839e5cd7fc5e852a5ede87a41bcaedef0f4137957cb47789236ccfa9082599",
+    "tools/turn_counter_oracle.sh": "c096717dc9224b6f76462ad979b5aba40fd59d5fde927ed232f4589964806da3",
+    "tools/turn_counter_gui.sh": "33d7916b0fd8db2ad5fdd697d4cfe29ef734ae05b146ae5f923ae4495c34b0b9",
+    "tools/scripts/turn_counter_ida.py": "3fdf4f1ced1d13a09a9f4dd0cb5a2cb5c5c7cef3cc4000f44c0e84decc496c44",
+    "tools/scripts/turn_counter_receipt.py": "9ec40f89b978088899d261cf91d0823de09edfb1354006659d9219f348abbb86",
+    "tools/scripts/battle_normal_probe.go": "0d66e1e1e8bccb7c6c683e8be4dbb6d3ba0482bc8b21e87db781ff6dfdfa70eb",
+    "workplace/round44-normal-overlay.json": "dcaae558d812917b5bc2e02b049129014428f37dd4243ef624298c596317a905",
+    "workplace/round44-normal-seed.go": "3a5ece8b1a09f427d9d032da7853a2e02a5eae2519eb2aefaf52edb6881ae2a9"
+  },
+  "test_logs": {
+    "workplace/round47-counter-limited.log": "0e70196a99ce698b6a23c905e0f14c45db9d86f5e1faa350ba386b1abcdea0be",
+    "workplace/round47-standard-tests.log": "4a65ff8cdd39d980cd001326b2d02736f6dd4d58d78581bc3ea660ef9ada7657"
+  },
+  "limited_pass_events": 48,
+  "limited_skip_events": 0,
+  "standard_packages": 18,
+  "limits": [
+    "088整份DRAFT，活動座位、runtime欄位及戰場資料仍不同",
+    "全部戰場／9→10／費沙模態／終局及兩AI的邊界是remake接線抽驗，不冒稱這些整段原版同態",
+    "真實X11只驗帝國S3與兩視窗尺寸；未聲稱觸控或macOS",
+    "兩次外部resize未通過；第一回點錯命令、第二回維持640x480。改用既有-scale並以PID選視窗後重跑，不當產品缺陷"
+  ]
+}

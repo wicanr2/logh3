@@ -160,14 +160,13 @@ func (g *Game) refreshRegionPosture() {
 		}
 	}
 	g.aggregateRegionStocks()
-	// `2703:08DE` 逐格的第三支 `2703:0DA1`。回合計數器還沒進位
-	// （remake 的 `g.turn` 在 advanceTurn 開頭就先加了）。
+	// `2703:08DE` 逐格的第三支 `2703:0DA1`，回合計數器還沒進位。
 	//
 	// 原版是逐格「態勢 → 彙總 → 未安定度」交錯跑，所以第 i 格讀到的是
 	// 編號比它大的鄰居**還沒更新**的 `+0x13`；這裡全部更新完才算。兩者只在
 	// 這一圈改了鄰居的 bit2 時才會不同，而下一個座位回合開頭的那一次
 	// （`finishTurn`）會照更新完的旗標再算一次，玩家看得到的是那一次。
-	g.recomputeRegionUnrest(g.turn - 1)
+	g.recomputeRegionUnrest(g.turn)
 }
 
 // runRegionPass 跑整條回合結束的星域重算，並在有易主時**停在報告上**
