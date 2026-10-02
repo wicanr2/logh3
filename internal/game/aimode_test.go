@@ -82,6 +82,8 @@ func TestEnhancedAINormalPlayerPath(t *testing.T) {
 		g.Click(544, 125)
 		g.Click(560, 145)
 		g.Click(300, 122)
+		wantState(t, g, StateLoadFaction, "AI局面選陣營")
+		g.Click(318, 208+20*faction)
 		wantState(t, g, StateCommandPhase, "AI 局面正常載入")
 		b, ok := g.brain.(*enhancedBrain)
 		if !ok || b == before || g.AILevel() != 1 || b.Difficulty != 1 || b.builder == nil {

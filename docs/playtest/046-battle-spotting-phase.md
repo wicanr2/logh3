@@ -355,3 +355,29 @@ S1／S2／S3正常戰術實行與完整SHIP27456／FLEET3904 bytes存讀通過�
 | round45-standard-retest.log | ee29de685f02cd2d3422bf1f244a218c152d187ebad3a715b73bf0089855f57e |
 
 088一次性跳過子契約已驗，整體保持DRAFT。#89與#79 OPEN，正常索敵配對及其他八步未完成。
+
+## 第46輪讀檔陣營上游
+
+[研究384](../re/384-load-faction-selection.md)與[完整座位收據](../internals/data/load-seat-selection.json)
+SHA-256 `f8ba6dacc701418f1fe88c0c785fd871af8677916e4a54ed0ad1f9c19debf129`。
+原版9組完整RAM／色號／PNG／DAC雙跑相同；十個命中邊界另標單次。
+正式bootstrap／Game三選擇55份輸出雙跑相同，九個WORK bytes、兩方財政及完整存讀通過。
+載入雙人這輪帝國／同盟確認直接命令畫面，交接保持全域FLEET／SHIP。
+真實X11五案含右鍵反白、三選擇與兩倍視窗命中通過，未使用script或direct-entry。
+
+四種選單6076 pixels均零差，但各全圖仍16333差。帝國／同盟載入及雙人兩確認後全圖零差；
+雙人未確認仍2841差及STELLAR+7D共22 bytes未知，WORK活動陣營／座位仍差。
+比較預定nearby-state，完整畫面零差的幀不事後升格。原圖、有效色盤、Game圖及完整差分均保留。
+
+正常S3首次實行17份輸出雙跑相同；事前固定D3DC167E，7支次序／55筆池／結尾B6E4B78A保持。
+WORK差36減33，FLEET120／SHIP865／STELLAR44不變，日期380／381及5863 pixels差待續。
+21限定PASS零skip，含正常兩陣營增強AI及第二次AI旗標；標準18套件同命令乾淨重跑通過。
+初跑舊正常讀檔測試少選陣營，補正式步驟；原有玩法及保存判準沒有放寬。
+
+| 本機log | SHA-256 |
+|---|---|
+| round46-load-final.log | 0370dd1662f19e065087e355d283b58863f6981897f959061d15a03f1deb0c52 |
+| round46-standard-tests.log，初跑失敗 | 29e89e7b80bdeac71a1258ad7ed9d2c21889ef4a49c11809626f1c8cb6d60bb7 |
+| round46-standard-retest.log | dad502f9124555fa8f0e659a5f12681a6656481187ccb9606689140e0743082a |
+
+088兩個READY子契約已驗、整份仍DRAFT，087及151個受控索敵幀保持。#89／#79仍OPEN。

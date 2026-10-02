@@ -199,6 +199,8 @@ func TestRegionSupplyNormalTurnMatchesOriginal(t *testing.T) {
 	g.Click(560, 145)
 	wantState(t, g, StateLoadGame, "正常取進度入口")
 	g.Click(300, 122)
+	wantState(t, g, StateLoadFaction, "存檔列後選陣營")
+	g.Click(318, 208)
 	wantState(t, g, StateCommandPhase, "讀回補給後存檔")
 	supplyTimingEqual(t, "讀檔全部行星", g.res.Planets.Data, planets)
 	for r := 0; r < rules.RegionCount; r++ {

@@ -296,6 +296,8 @@ func TestBudgetSettlementMatchesOriginal(t *testing.T) {
 				t.Fatal("正常入口未開存檔清單")
 			}
 			g.Click(300, 122) // 取進度第 0 格。
+			wantState(t, g, StateLoadFaction, "結算存檔選陣營")
+			g.Click(318, 208+20*g.faction)
 			if g.State() != StateCommandPhase || g.monthSettlementPending || money != g.military || !bytes.Equal(post, g.res.Planets.Data) {
 				t.Fatal("載入重開待結算或改變資金")
 			}

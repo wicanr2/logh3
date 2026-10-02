@@ -387,7 +387,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		Stellar: stellar, Planets: planets, Growth: growth,
 		SlotList: slotList, SaveIndex: saveIndex, WorkTemplate: work,
 		Battle: battle, BattlePanel: battlePanel, BattleTiles: battleTiles, BattleMaps: battleMaps,
-		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
+		Entries: entries, Terrain: terrain, BattleMenu: battleMenu, CommandMenus: commandMenus, LoadFactionMenu: commandMenus, UnitPanel: unitPanel, BattleData: battleData,
 		Formation:   formation,
 		FleetDetail: fleetDetail, ShipKinds: shipKinds, AdvanceRoutes: routes,
 		FleetWindow: fleetWindow, FleetActionMenu: fleetActionMenu, FleetStandby: fleetStandby, InfoPanel: infoPanel,

@@ -38,6 +38,8 @@ func TestNormalAIGateConsumesOnceAndPreservesSave(t *testing.T) {
 				g.Click(544, 125)
 				g.Click(560, 145)
 				g.Click(300, 122)
+				wantState(t, g, StateLoadFaction, "存檔列後選陣營")
+				g.Click(318, 208)
 				wantState(t, g, StateCommandPhase, "消費旗標正式存讀")
 				if g.workRecord()[0x32] != 0 || g.AILevel() != level {
 					t.Fatal("載入恢復跳過旗標或丟失AI模式")

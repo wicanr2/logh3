@@ -257,7 +257,11 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
-	return &Resources{Font: fnt, OrigDir: orig, Faces: faces, Cursor: cur, Menu: menu,
+	commandMenus, err := screen.LoadCommandMenuSpec(filepath.Join(root, "docs/internals/data/battle-command-menus.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return &Resources{LoadFactionMenu: commandMenus, Font: fnt, OrigDir: orig, Faces: faces, Cursor: cur, Menu: menu,
 		FrameTiles:    frameTiles,
 		PlanetInfoMap: planetInfoMap,
 		RegionInfo:    regionInfo,
@@ -1044,6 +1048,8 @@ func TestLoadGamePlayerPath(t *testing.T) {
 		t.Fatalf("y=302 落在第 %d 格，要第 9 格", n)
 	}
 	g.Click(300, 302)
+	wantState(t, g, StateLoadFaction, "S2選陣營")
+	g.Click(318, 208)
 	if g.State() != StateCommandPhase {
 		t.Fatalf("點下去之後在 %v，要命令階段", g.State())
 	}
@@ -1097,6 +1103,8 @@ func TestSaveSlotRoundTrip(t *testing.T) {
 	}
 	g.Key('\r')
 	g.Click(300, 302)
+	wantState(t, g, StateLoadFaction, "S2選陣營")
+	g.Click(318, 208)
 	// 設定畫面那三格跟著存檔走：`WORK.DT9` 的 `+0x1F`／`+0x20`／`+0x21`
 	// ＝ 1／1／0 ＝ ＦＭ、英雄交響曲、全艦攻擊（`docs/re/274` §6）。
 	// 載進來要是這一組，存回去才寫得出同一份位元組。
@@ -1122,6 +1130,10 @@ func TestSaveSlotRoundTrip(t *testing.T) {
 		want, err := os.ReadFile(filepath.Join(orig, name))
 		if err != nil {
 			t.Fatal(err)
+		}
+		if name == "WORK.DT9" {
+			// 088選帝國後的九個控制bytes；其餘WORK仍逐byte比原檔。
+			copy(want[0x0C:0x15], []byte{0, 0, 1, 0, 1, 0, 1, 0, 31})
 		}
 		bad := 0
 		for i := range want {

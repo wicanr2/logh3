@@ -278,3 +278,6 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 
 第42輪可比UI邊界收據：[battle-spotting-game.json](data/battle-spotting-game.json)，由[索敵收據工具phase-render](../../tools/scripts/battle_spotting_display_evidence.py)重生。
 - [第45輪AI閘門證據](../re/383-normal-ai-once-gate.md)：[完整收據](data/normal-ai-once-gate.json)，原版雙跑由[工具](../../tools/normal_ai_gate_oracle.sh)重生，[IDA匯出](../../tools/scripts/normal_ai_gate_ida.py)與[收據產生器](../../tools/scripts/normal_ai_gate_receipt.py)保存原始定位。
+- [第46輪正常讀檔座位／日期](../goal/2026-10-03-load-seat-date-round-46.md)，接續#89與088未完成範圍。
+- [讀檔陣營研究384](../re/384-load-faction-selection.md)、[完整座位收據](data/load-seat-selection.json)：[原版雙跑](../../tools/load_seat_oracle.sh)、[IDA匯出](../../tools/scripts/load_seat_ida.py)、[可丟棄選單](../../tools/scripts/load_seat_probe.go)與[收據重生](../../tools/scripts/load_seat_receipt.py)。正式入口見[Game讀檔選單](../../internal/game/loadfaction.go)及[正常玩家探針](../../tools/scripts/load_seat_player.go)，驗收範圍由088限定。
+- [讀檔陣營正常回歸](../../internal/game/loadfaction_test.go)與[真實X11輸入抽驗](../../tools/load_seat_gui.sh)：依088驗正常主選單、三選擇、右鍵反白與放大命中。

@@ -78,6 +78,8 @@ func TestRuntimeFieldsNormalTurnMatchesOriginal(t *testing.T) {
 			g.Click(560, 145)
 			wantState(t, g, StateLoadGame, "正常取進度")
 			g.Click(300, 122)
+			wantState(t, g, StateLoadFaction, "存檔列後選陣營")
+			g.Click(318, 208)
 			wantState(t, g, StateCommandPhase, "取進度完成")
 			// 載入會依檔內艦隊重數計數、重算未安定度（研究 40／規格 006）。
 			// #86 另追現況艦隊未同步；此處只聲明本輪新增距離的讀回保存。

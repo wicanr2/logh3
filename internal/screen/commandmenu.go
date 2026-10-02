@@ -21,8 +21,9 @@ const (
 
 	// 行星那兩張（`docs/re/133`）。有要塞（行星記錄 `+0x12` 非 0）的
 	// 多一項「要塞砲」，內寬也從 2 變 3。
-	CommandMenuPlanet   CommandMenuKind = "planet"   // ds:42EA 情報／補給／補充
-	CommandMenuFortress CommandMenuKind = "fortress" // ds:4318 ＋要塞砲
+	CommandMenuPlanet      CommandMenuKind = "planet"       // ds:42EA 情報／補給／補充
+	CommandMenuFortress    CommandMenuKind = "fortress"     // ds:4318 ＋要塞砲
+	CommandMenuLoadFaction CommandMenuKind = "load-faction" // DS:022E前三項，088
 )
 
 // CommandMenuSpec 是戰場命令選單的版面與五張表

@@ -198,6 +198,8 @@ const (
 	StateTurnReport
 	// StateTurnThinking 是「實行」之後電腦座位的「戰略模式思考中」（`04F8:0355(1)`，規格 059）。
 	StateTurnThinking
+	// 088：點存檔後選帝國／同盟／對戰；追加以保留既有狀態編號。
+	StateLoadFaction
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -224,6 +226,7 @@ func (s State) String() string {
 		"StateFleetOccupyWarn", "StateFleetChangeMenu", "StateFleetChangeAdj", "StateFleetChangeOrg",
 		"StateRegionInfo", "StateOccupyAsk", "StateEngagement", "StateTurnWindow",
 		"StateTurnReport", "StateTurnThinking",
+		"StateLoadFaction",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -247,6 +250,7 @@ var screenSpecName = map[State]string{
 	StateAdmiralListView:   "screen-admiral-list-view",
 	StateEnemyList:         "screen-enemy-list",
 	StateLoadGame:          "screen-load-game",
+	StateLoadFaction:       "screen-load-game",
 	StateSaveGame:          "screen-save-game",
 	StateSettings:          "screen-settings",
 	StateQuitConfirm:       "screen-quit-confirm",
@@ -440,7 +444,8 @@ type Resources struct {
 	BattleMenu *screen.BattleMenuSpec
 
 	// CommandMenus 是戰場上五張命令選單的版面與內容（`docs/spec/023`）。
-	CommandMenus *screen.CommandMenuSpec
+	CommandMenus    *screen.CommandMenuSpec
+	LoadFactionMenu *screen.CommandMenuSpec // 088；與命令選單共用幾何及FRAME.BLK
 
 	// UnitPanel 是點到分隊時右側換上的那塊面板（`docs/re/118`）。
 	UnitPanel *screen.UnitPanelSpec
@@ -858,6 +863,9 @@ type Game struct {
 	// versus ＝ 主選單選了第 2 列「對戰」：兩個人輪流下命令
 	// （`docs/re/76`、`docs/spec/016`）。
 	versus bool
+	// 088：載入的這輪兩個座位都不重新顯示月報。
+	versusLoadedRound bool
+	pendingLoadSlot   int
 
 	// battleRegion 是戰術畫面看的是哪個星域的地形，battleView 是視野
 	// 在整張戰場上的位置（單位是格）。-1 ＝ 還沒進過戰場。
@@ -1009,7 +1017,6 @@ type side struct {
 	pct         [rules.BuildPlanRows]int
 	treasury    rules.Treasury
 	monthReport rules.Budget
-	fleets      []rules.Fleet
 }
 
 // 星圖畫在畫面的 (0,40)，320×300，圖塊 16×20（`docs/internals/12`）。
@@ -1039,6 +1046,7 @@ func (g *Game) execute() {
 		if next != 0 {
 			return
 		}
+		g.versusLoadedRound = false
 		// 換回帝國 ＝ 這一輪兩邊都下完了，日期才推進。
 	}
 	if g.startTurnThinking() {
@@ -1901,7 +1909,7 @@ func (g *Game) startVersus() {
 // side 把目前這一方的狀態收起來。
 func (g *Game) side() side {
 	return side{pct: g.pct,
-		treasury: g.treasury, monthReport: g.monthReport, fleets: g.fleets}
+		treasury: g.treasury, monthReport: g.monthReport}
 }
 
 // enterSide 換到某一方：陣營、地圖顏色與那一方的錢一起換過去。
@@ -1910,8 +1918,8 @@ func (g *Game) enterSide(faction int) {
 	g.mapHighlight = rules.CapitalRegion(faction)
 	s := g.sides[faction]
 	g.pct = s.pct
+	g.foePct = g.sides[1-faction].pct
 	g.treasury, g.monthReport = s.treasury, s.monthReport
-	g.fleets = s.fleets
 	g.refreshCapitalSnap()
 	// 交棒的當下底板是乾淨的：右側面板只剩陣營那一行與按鈕，
 	// 左下角是空的（收據 `vs3`／`vs5`）。
@@ -1922,6 +1930,7 @@ func (g *Game) enterSide(faction int) {
 }
 
 func (g *Game) startNewGame(faction int) {
+	g.versusLoadedRound = false
 	g.monthSettlementPending = false
 	g.budgetTaxRefreshed = false
 	g.restoreWorld()
@@ -2058,6 +2067,7 @@ func New(res *Resources) (*Game, error) {
 // 未安定度是唯一一欄載進來還不對的（原版載入時重算，算式未解，
 // `docs/re/24`）。要對畫面的地方得自己 `Slot.SetUnrest` 蓋成量到的值。
 func (g *Game) LoadSlot(sl *rules.Slot) {
+	g.versusLoadedRound = false
 	g.monthSettlementPending = false
 	g.budgetTaxRefreshed = false
 	g.slot = sl
@@ -2330,9 +2340,13 @@ func (g *Game) click(x, y int) {
 			g.copyProtTickRemainder = 0
 		}
 	case StateLoadGame:
-		if n := SlotAt(y); n >= 0 {
-			g.loadSlotFromDisk(n)
+		if n := SlotAt(y); n >= 0 && n < len(g.res.SaveIndex) && g.res.SaveIndex[n].Used &&
+			g.res.LoadFactionMenu != nil && g.res.LoadFactionMenu.ItemCount(screen.CommandMenuLoadFaction) == 3 {
+			g.pendingLoadSlot = n
+			g.state = StateLoadFaction
 		}
+	case StateLoadFaction:
+		g.chooseLoadFaction(x, y)
 	case StateSaveGame:
 		// 點下去就直接存到那一格，不問名字——原版在唯讀的原版目錄上
 		// 會跳「磁碟片載入時有發生錯誤。」（`docs/spec/010`）。
@@ -2373,7 +2387,9 @@ func (g *Game) click(x, y int) {
 		if spec := g.commandSpec(StateVersusInput); spec != nil {
 			if w := spec.Windows["overlay"]; w != nil && w.BoxAt(x, y) == 0 {
 				g.reportLayer = 0
-				if g.commandSpec(StateVersusAccount) != nil {
+				if g.versusLoadedRound {
+					g.state = StateCommandPhase
+				} else if g.commandSpec(StateVersusAccount) != nil {
 					g.state = StateVersusAccount
 				} else {
 					g.state = StateMainGame
@@ -2926,6 +2942,8 @@ func (g *Game) rightClick(x, y int) {
 		// 問話不吃右鍵（`113A:0899`：只有命中鈕的左鍵會離開迴圈）。
 	case StateEngagement:
 		g.engagementClick()
+	case StateLoadFaction:
+		// 042F:0006只認選單左鍵；右鍵保留選單並移動反白。
 	case StateVersusInput:
 		// 交棒視窗按右鍵會怎樣**沒有量過**，先什麼都不做——
 		// 這一步不能靠猜，猜錯會讓對戰模式跳掉一方的回合。
@@ -3032,9 +3050,9 @@ func SlotAt(y int) int {
 //
 // 未安定度載入時要重算（`docs/spec/006`），所以讀完就跑一次。
 // 缺檔或缺參數就什麼都不做——存檔畫面上那些空的格子點下去也是這樣。
-func (g *Game) loadSlotFromDisk(n int) {
+func (g *Game) loadSlotFromDisk(n int) bool {
 	if g.res.OrigDir == "" || g.res.Graph == nil {
-		return
+		return false
 	}
 	ext := rules.SlotExt(n)
 	// 玩家存過的格子在存檔目錄（`SaveDir`），沒存過的讀原版出貨的那一份。一格的六個檔要從同一處讀。
@@ -3059,7 +3077,7 @@ func (g *Game) loadSlotFromDisk(n int) {
 	}
 	sl, err := rules.LoadSlot(f)
 	if err != nil {
-		return
+		return false
 	}
 	// 載入當下那次未安定度重算讀的也是剛載入的 WORK：回合數、Blend、
 	// Rate 與兩邊的內政專任參謀（統治者）都不能沿用新遊戲固定值
@@ -3076,6 +3094,7 @@ func (g *Game) loadSlotFromDisk(n int) {
 	sl.RecomputeUnrest(g.res.Graph, params)
 	g.res.Admiral = sl.Admiral
 	g.LoadSlot(sl)
+	return true
 }
 
 // SaveSlot 把目前的局面寫回一格存檔（規格 `docs/spec/009`）。
@@ -3275,6 +3294,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawAdmiralDetail(fb)
 			g.drawAdmiralBio(fb)
 			g.drawSpecStaff(fb, spec)
+			g.drawLoadFaction(fb)
 			// 參謀任命的清單與詳細資料疊在**所有**內容之上（#62）——底層那幾條
 			// 分隔線是在 `afterWindow` 之後才畫的，接在那裡會被它們戳穿。
 			// 游標本來由 `MainGameLayered` 畫，被蓋掉了所以自己補一次。
@@ -3908,7 +3928,7 @@ func (g *Game) drawSlotList(fb *gfx.Framebuffer) {
 		return
 	}
 	switch g.state {
-	case StateLoadGame:
+	case StateLoadGame, StateLoadFaction:
 		g.res.SlotList.Draw(fb, g.res.Font, g.res.SaveIndex, rules.Epoch)
 	case StateSaveGame:
 		// 條子把那一列蓋掉，字要重畫在條子上，游標再蓋一次

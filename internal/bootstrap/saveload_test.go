@@ -32,7 +32,11 @@ func TestSaveThenLoadRoundTrip(t *testing.T) {
 	if h.State() != game.StateLoadGame {
 		t.Fatalf("開取進度之後在 %v", h.State())
 	}
-	feed(h, "move 300 162; click 300 162") // 取進度第 2 格（存進度那張的列位置低一列）
+	feed(h, "move 300 162; click 300 162")
+	if h.State() != game.StateLoadFaction {
+		t.Fatal("缺讀檔陣營選單")
+	}
+	feed(h, "click 318 208") // 取進度第 2 格（存進度那張的列位置低一列）
 	if y, m, d := h.Date(); y != y0 || m != m0 || d != d0 {
 		t.Fatalf("讀回來的日期 %d/%d/%d，存的時候 %d/%d/%d", y, m, d, y0, m0, d0)
 	}
