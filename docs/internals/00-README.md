@@ -40,6 +40,9 @@
 [研究370](../re/370-battle-preparation-reset.md)。
 修理目標身分的[分級索引](data/battle-preparation-target-semantics.json)由同一IDA匯出工具合併。
 正式第一階段的資源、面板、等待、正常入口與存讀驗收見[對拍042](../playtest/042-battle-preparation-first-phase.md)。
+第二階段移動接續：[第二十九輪](../goal/2026-10-02-battle-movement-round-29.md)、
+[研究371](../re/371-battle-movement-phase.md)、[草稿080](../spec/080-battle-movement-phase.md)、
+[分級索引與局面摘要](data/battle-movement-phase.json)；原版重播入口與限制由研究371管理。
 
 音色庫來源與完整授權索引：[`player-music-library.json`](data/player-music-library.json)，
 用途與原版素材邊界見 [`17-mds.md`](17-mds.md)。
