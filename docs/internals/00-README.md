@@ -11,6 +11,16 @@
 
 ## 這裡的東西怎麼寫
 
+第三階段索敵與戰鬥前續接：[第三十九輪](../goal/2026-10-02-battle-spotting-round-39.md)，工作項目 #79。
+固定原版雙跑入口：[battle_spotting_oracle.sh](../../tools/battle_spotting_oracle.sh)，
+邊界與父狀態身份：[battle_spotting_plan.py](../../tools/scripts/battle_spotting_plan.py)。
+完整前後紀錄與分級索引：[battle-spotting-phase.json](data/battle-spotting-phase.json)，
+重生工具：[battle_spotting_evidence.py](../../tools/scripts/battle_spotting_evidence.py)。
+有限狀態探測：[battle_spotting_probe.go](../../tools/scripts/battle_spotting_probe.go)，不接正式玩家路徑。
+第三階段規格：[087](../spec/087-battle-spotting-phase.md)，研究：[379](../re/379-battle-spotting-phase.md)。
+原版重現範圍：[046](../playtest/046-battle-spotting-phase.md)。
+六案現在位置／目的地分離與半徑邊界：[battle-spotting-coordinates.json](data/battle-spotting-coordinates.json)。
+
 第二戰場殘留列來源：[第三十八輪](../goal/2026-10-02-battle-residue-source-round-38.md)，工作項目 #79。
 小地圖bitmap契約：[086](../spec/086-battle-minimap-bitmap.md)，[研究378](../re/378-minimap-bitmap-bottom.md)。
 分級來源及45份核對：[battle-minimap-bitmap.json](data/battle-minimap-bitmap.json)，

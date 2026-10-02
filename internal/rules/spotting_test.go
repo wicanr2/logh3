@@ -8,14 +8,14 @@ import (
 
 func TestUpdateSpottingObserversAndRadii(t *testing.T) {
 	units := []BattleUnit{
-		{Fleet: 10, Squadron: 0, Faction: 0, TargetX: 0, TargetY: 0},
-		{Fleet: 10, Squadron: 1, Faction: 0, TargetX: 800, TargetY: 800},
-		{Fleet: 10, Squadron: -1, Faction: 0, Kind: 7, TargetX: 1000, TargetY: 0},
-		{Fleet: 20, Squadron: 1, Faction: 1, TargetX: 200, TargetY: 0},
-		{Fleet: 20, Squadron: 2, Faction: 1, TargetX: 1250, TargetY: 0},
-		{Fleet: 20, Squadron: 3, Faction: 1, TargetX: 2060, TargetY: 0},
-		{Fleet: 20, Squadron: -1, Faction: 1, Kind: 7, TargetX: 10, TargetY: 0},
-		{Fleet: 20, Squadron: 4, Faction: 1, TargetX: 10, TargetY: 0, Out: true},
+		{Fleet: 10, Squadron: 0, Faction: 0, X: 0, Y: 0},
+		{Fleet: 10, Squadron: 1, Faction: 0, X: 800, Y: 800},
+		{Fleet: 10, Squadron: -1, Faction: 0, Kind: 7, X: 1000, Y: 0},
+		{Fleet: 20, Squadron: 1, Faction: 1, X: 200, Y: 0},
+		{Fleet: 20, Squadron: 2, Faction: 1, X: 1250, Y: 0},
+		{Fleet: 20, Squadron: 3, Faction: 1, X: 2060, Y: 0},
+		{Fleet: 20, Squadron: -1, Faction: 1, Kind: 7, X: 10, Y: 0},
+		{Fleet: 20, Squadron: 4, Faction: 1, X: 10, Y: 0, Out: true},
 	}
 	planets := []BattlePlanet{{Owner: 0, X: 2000, Y: 0, Defence: 1500}}
 	UpdateSpotting(units, planets)
@@ -40,8 +40,8 @@ func TestUpdateSpottingObserversAndRadii(t *testing.T) {
 
 func TestSpottingRiseAndDecay(t *testing.T) {
 	units := []BattleUnit{
-		{Fleet: 1, Squadron: 0, Faction: 0, TargetX: 0, TargetY: 0},
-		{Fleet: 2, Squadron: 1, Faction: 1, TargetX: 100, TargetY: 0},
+		{Fleet: 1, Squadron: 0, Faction: 0, X: 0, Y: 0},
+		{Fleet: 2, Squadron: 1, Faction: 1, X: 100, Y: 0},
 	}
 	for want := 1; want <= 3; want++ {
 		UpdateSpotting(units, nil)
@@ -99,7 +99,7 @@ func TestSpottingSpecialReveals(t *testing.T) {
 
 // `s3fltmove.bin`（SHA-256
 // f365c46fa6087590b2da4db001109e457e6d604218a73f946829297aac3e9758）
-// 的 55 筆在場分隊。每列是 fleet squad faction kind targetX targetY out
+// 的 55 筆在場分隊。每列是 fleet squad faction kind currentX currentY out
 // preDetail wantDetail wantSeen；preDetail 由收據的 +0x16 bit0 與最終 +0x17
 // 反推，UpdateSpotting 後逐筆核對收據。
 const s3fltmoveSpotting = `
@@ -174,7 +174,7 @@ func TestSpottingMatchesS3FleetMoveReceipt(t *testing.T) {
 		}
 		units = append(units, BattleUnit{
 			Fleet: fleet, Squadron: squad, Faction: faction, Kind: kind,
-			TargetX: x, TargetY: y, Out: out != 0, Detail: pre,
+			X: x, Y: y, Out: out != 0, Detail: pre,
 		})
 		wantDetail = append(wantDetail, want)
 		wantSeen = append(wantSeen, seen != 0)

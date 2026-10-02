@@ -683,3 +683,13 @@ mem-in／mem-out 的 SHA-256 記在 `workplace/oracle/eng-annihilate-mem/meta.tx
 不能作為戰略高值完全相同的證據。共用補充／戰後資源回寫已修，整個第一階段仍DRAFT。
 完整原始定位、簽章、工具及雜湊見[研究367](367-battle-preparation.md)，
 [規格079](../spec/079-battle-preparation.md)與[驗證039](../playtest/039-battle-preparation.md)。
+
+
+## 2026-10-02 第39輪追加勘誤
+
+[研究379](../re/379-battle-spotting-phase.md)以固定f7523f9原版完整第三階段直接前後收據，
+確認索敵在移動後、戰鬥前，不能再稱回合末。舊有限資料與反推前態的驗證不升格。
+S3的29.6M間隔可定位到行星發現標頭與八筆6-tick展示，不外推其他局面。
+觀測與候選均讀SHIP+34/+36現在位置；六案受控原版座標分離與半徑邊界雙跑相同。
+087 READY僅含座標修正，完整報告／等待／正式續接與保存仍DRAFT。
+首次十四筆差異是探測誤納未放出偵察隊，不是產品缺陷，勘誤與完整雜湊見研究379。
