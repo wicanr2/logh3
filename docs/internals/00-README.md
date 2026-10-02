@@ -201,4 +201,6 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [`62-strategic-attrition.md`](62-strategic-attrition.md)：戰略階段士氣低落停在別人星域的艦隊每回合扣兵、第 0 組 0 艘就全滅（報告、艦艇作廢、提督失蹤、星域與陣營艦隊數減一），沒全滅就移掉 0 艘的組。
 - [`63-info-screen-tabs.md`](63-info-screen-tabs.md)：情報收集的三個分頁（治安／勢力／敵艦）與「確認」。
 - [`64-ship-pool.md`](64-ship-pool.md)：艦艇池一筆 78 bytes 的欄位、配置與作廢（分隊就是它）。
+- [完整交錯移動審查](../re/373-battle-interleaved-movement.md)：[第三十一輪](../goal/2026-10-02-battle-movement-round-31.md)依既有三邊界及102案核對完整第二階段。
+- [交錯移動驗證044](../playtest/044-battle-interleaved-movement.md)：完整7艦隊／55分隊資料、正式Game轉接、正常命令中間幀及存讀；整階段畫面仍待對拍。
 - [回合後距離／座標語意索引](data/post-turn-runtime-fields.json)：研究 354 的原始定位與證據分級，由 IDA 匯出自動合併；[全表收據摘要](data/post-turn-runtime-receipts.json) 的驗收入口是[對拍 027](../playtest/027-post-turn-runtime-fields.md)。

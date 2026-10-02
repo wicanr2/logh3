@@ -192,13 +192,17 @@ func TestOrderedFleetAdvances(t *testing.T) {
 	bf.X, bf.Y = g.battleUnits[flag].X, g.battleUnits[flag].Y
 	bf.DestX, bf.DestY = bf.X, bf.Y-400
 	bf.TargetFacing, bf.Ordered = bf.Facing, true
+	bf.Action, bf.ShortMove = 0, false // 完整原版Action，單有Ordered不是原版命令。
 	bf.TurnSpeed, bf.PerTurn = g.fleetSpeeds(fleet, false)
 	if bf.PerTurn == 0 {
 		t.Skip("這一支算不出速度，跳過")
 	}
 	x0, y0 := bf.X, bf.Y
 
-	g.advanceOrderedFleets()
+	movement := g.newBattleMovement()
+	for movement.Next() {
+	}
+	g.saveBattleMovement()
 
 	if bf.X == x0 && bf.Y == y0 {
 		t.Fatalf("推了一回合艦隊沒動：(%d,%d)", bf.X, bf.Y)

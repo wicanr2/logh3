@@ -358,7 +358,7 @@ func TestBattlePreparationNormalPlayerExecute(t *testing.T) {
 	y := g.battleMenuY + l.Highlight.Y - l.Window.Y + 2
 	g.MoveMouse(x, y)
 	g.Click(x, y) // 正式選「實行」，不直接呼叫第一階段。
-	for i := 0; i < 4000 && (g.battlePreparing || g.state == StateTurnReport || g.state == StateEngagement); i++ {
+	for i := 0; i < 4000 && (g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement); i++ {
 		g.Frame()
 		g.Tick(time.Second / 60)
 	}

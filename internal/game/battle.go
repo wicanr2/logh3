@@ -73,6 +73,7 @@ func (g *Game) StartBattle(region int) {
 	for i := range g.battleFleets {
 		if u := flagshipOf(g.battleUnits, g.battleFleets[i].Index); u != nil {
 			g.battleFleets[i].Facing = rules.BattleFacing(u.X, u.Y)
+			g.battleFleets[i].X, g.battleFleets[i].Y = u.X, u.Y
 		}
 	}
 	if len(g.battleUnits) > 0 {
@@ -115,11 +116,9 @@ func clampRow(r, rows int) int {
 	return r
 }
 
-// AdvanceBattleTurn 推進一個戰鬥回合：兩邊各下一次令，然後所有分隊走一步。
-//
-// 損失怎麼算還沒解（`docs/re/86`），所以這裡只有移動。
+// AdvanceBattleTurn經準備及逐幀交錯移動後續接結算；完整八步對齊仍依規格062。
 func (g *Game) AdvanceBattleTurn() {
-	if g.battlePreparing {
+	if g.battlePreparing || g.battleMoving {
 		return
 	}
 	if g.battleRand == nil {
@@ -148,8 +147,7 @@ func (g *Game) AdvanceBattleTurn() {
 			}
 			for _, m := range g.tactic.Moves(b, faction, g.battleTurn) {
 				if m.Unit >= 0 && m.Unit < len(g.battleUnits) {
-					g.battleUnits[m.Unit].TargetX = m.X
-					g.battleUnits[m.Unit].TargetY = m.Y
+					g.applyTacticalMove(m.Unit, m.X, m.Y)
 				}
 			}
 		}
@@ -157,15 +155,28 @@ func (g *Game) AdvanceBattleTurn() {
 	g.beginBattlePreparation(g.advanceBattleTurnAfterPreparation)
 }
 
-func (g *Game) advanceBattleTurnAfterPreparation() {
-	// 收到過命令的艦隊走艦隊層那一套：艦隊自己動，分隊的目的地跟著
-	// 換成隊形位置（`docs/re/129`、`docs/re/126`）。沒下過命令的
-	// 仍然逐分隊各自走——原版兩層本來就各走各的，這裡只是還沒把
-	// 全部艦隊搬過去（`docs/spec/027`）。
-	g.advanceOrderedFleets()
-	for i := range g.battleUnits {
-		rules.AdvanceBattle(&g.battleUnits[i], g.res.Terrain, g.battleCells(g.battleRegion))
+// 既有remake自動戰術意圖接到與玩家相同的移動引擎；不新增原版AI行為聲明。
+func (g *Game) applyTacticalMove(index, x, y int) {
+	u := &g.battleUnits[index]
+	u.TargetX, u.TargetY, u.Action = x, y, squadronMove
+	if u.Squadron != 0 {
+		return
 	}
+	f := g.battleFleet(u.Fleet)
+	if f == nil {
+		return
+	}
+	f.OriginX, f.OriginY, f.X, f.Y = u.X, u.Y, u.X, u.Y
+	f.DestX, f.DestY, f.TargetFacing, f.Action, f.Ordered = x, y, f.Facing, 0, true
+	f.TurnSpeed, f.PerTurn = g.fleetSpeeds(u.Fleet, false)
+	f.ShortMove = rules.Distance16(u.X, u.Y, x, y) < int64(f.PerTurn/3+4*rules.FixOne)
+}
+
+func (g *Game) advanceBattleTurnAfterPreparation() {
+	g.beginBattleMovement()
+}
+
+func (g *Game) advanceBattleTurnAfterMovement() {
 	g.battleLosses = g.resolveBattleTurn()
 	for _, l := range g.battleLosses {
 		if l.Scorer >= 0 && l.Scorer < 2 {
@@ -246,7 +257,7 @@ func (g *Game) endBattleTurn() {
 //
 // 第二項「資料」開的是什麼還沒逆向，所以只把選單關掉。
 func (g *Game) battleClick(x, y int) {
-	if g.battlePreparing {
+	if g.battlePreparing || g.battleMoving {
 		return
 	}
 	// 訊息框是模態的，開著的時候什麼都不用往下傳（`docs/re/138`）。
@@ -473,66 +484,6 @@ func (g *Game) SetTactic(t ai.Tactic, auto bool) {
 	g.tactic, g.autoBattle = t, auto
 }
 
-// advanceOrderedFleets 把收到過移動／戰鬥命令的艦隊各推進一個回合。
-func (g *Game) advanceOrderedFleets() {
-	if g.res.Formation == nil {
-		return
-	}
-	cells := g.battleCells(g.battleRegion)
-	occupants := make([]rules.MovementOccupant, 0, len(g.battleUnits))
-	for i := range g.battleUnits {
-		occupants = append(occupants, rules.MovementOccupant{Pool: g.battleUnitPool(g.battleUnits[i]), Unit: &g.battleUnits[i]})
-	}
-	for i := range g.battleFleets {
-		f := &g.battleFleets[i]
-		if !f.Ordered {
-			continue
-		}
-		var idx []int
-		var normal []*rules.BattleUnit
-		for k := range g.battleUnits {
-			if g.battleUnits[k].Fleet == f.Index {
-				idx = append(idx, k)
-				if g.battleUnits[k].Squadron >= 0 {
-					normal = append(normal, &g.battleUnits[k])
-				}
-			}
-		}
-		if len(idx) == 0 {
-			continue
-		}
-		m := rules.FleetMover{
-			X: f.X, Y: f.Y, DestX: f.DestX, DestY: f.DestY,
-			Facing: f.Facing, TargetFacing: f.TargetFacing,
-			TurnSpeed: f.TurnSpeed, PerTurn: f.PerTurn, ShortMove: f.ShortMove,
-			Action: f.Action, MoveFlags: f.MoveFlags,
-		}
-		check := func(x, y int) int {
-			return rules.BattleMovementCheck(g.res.Terrain, cells, occupants, f.Faction, x, y)
-		}
-		rules.RefillFleetBudget(&m)
-		for rules.AdvanceFleetStep(&m, normal, check) {
-		}
-		rules.StationSquadrons(&m, g.res.Formation, g.battleUnits, idx)
-		f.X, f.Y, f.Facing = m.X, m.Y, m.Facing
-		f.Budget = m.Budget
-		f.MoveFlags = m.MoveFlags
-		// 存檔SyncFleets會從戰略Fleet再次寫+5C/+5E；兩層須同步（規格081）。
-		for j := range g.fleets {
-			if g.fleets[j].Index == f.Index {
-				g.fleets[j].X, g.fleets[j].Y = f.X, f.Y
-				break
-			}
-		}
-		if g.slot != nil {
-			g.slot.ApplyBattleFleetMovement(*f)
-		}
-		if m.Arrived {
-			f.Ordered = false
-		}
-	}
-}
-
 // battleScroll 是戰場視野的滑鼠捲動（`1588:043F` → `1588:03A9`，`docs/re/326`）：
 // 戰場視窗上沒開任何東西時按住右鍵，每一圈重讀游標、往它相對於滑鼠座標
 // (224,180) 的方位走一格，放開才停；游標停在邊緣不按什麼都不動（收據
@@ -554,7 +505,7 @@ func (g *Game) battleScroll(x, y int) {
 
 // RightHold 是右鍵按著沒放的每一幀：戰場上就再捲一格。
 func (g *Game) RightHold(x, y int) {
-	if g.state != StateBattle || !g.battleScrollHeld {
+	if g.state != StateBattle || !g.battleScrollHeld || g.battleMoving || g.battlePreparing {
 		return
 	}
 	g.moveMouse(x, y)

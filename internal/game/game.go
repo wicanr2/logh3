@@ -918,6 +918,9 @@ type Game struct {
 	battleSupplyPlanet      int                      // >= 0 ＝ 這一次是行星的「補給」／「補充」
 	battleSources           rules.PreparationSources // 持續池身份；初始化／讀檔／新戰場保留。
 	battlePreparing         bool
+	battleMoving            bool
+	battleMovement          *rules.BattleMovement
+	battleMovementGroups    []rules.MovementFleet
 	battlePreparation       *rules.BattlePreparation
 	battlePreparationAfter  func()
 	battlePreparationSupply *screen.SupplyPanel
@@ -2845,7 +2848,7 @@ func (g *Game) rightClick(x, y int) {
 		g.state = StateStandbyAdmirals
 	case StateBattle:
 		// 右鍵關掉最上面那一層：詳細資料 → 「資料」 → 命令選單 → 選單。
-		if g.battlePreparing {
+		if g.battlePreparing || g.battleMoving {
 			return
 		}
 		if g.battleDetail {

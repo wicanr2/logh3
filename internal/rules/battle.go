@@ -69,6 +69,12 @@ type BattleUnit struct {
 	// 戰場命令選單用它決定「移動」可不可選（`docs/spec/023`）。
 	Action int `json:"action"`
 
+	// 規格080：分隊固定扣8.0，不能由整數Speed重建剩餘額度。
+	Budget      int `json:"budget,omitempty"`
+	MarkerFlags int `json:"marker_flags,omitempty"`
+	MarkerX     int `json:"marker_x,omitempty"`
+	MarkerY     int `json:"marker_y,omitempty"`
+
 	// Seen／DetailHold 對應艦艇 `+0x16` bit0 與 `+0x18`。Seen 表示這一輪
 	// 已被敵方觀測；DetailHold 是顯示層級 3 還要維持幾輪（`docs/re/290`）。
 	Seen       bool `json:"seen,omitempty"`
@@ -414,6 +420,12 @@ func (s *Slot) fillFromShip(u *BattleUnit, ship int, w StrengthWeights) {
 	u.Missiles = int(binary.LittleEndian.Uint32(rec[0x0E:]))
 	u.Fighters = int(binary.LittleEndian.Uint32(rec[0x12:]))
 	u.Action = int(rec[0x1E])
+	u.Out = u.Action&0x80 != 0
+	u.Budget = int(int32(binary.LittleEndian.Uint32(rec[0x24:])))
+	u.MarkerFlags = int(rec[0x19])
+	u.Marked = u.MarkerFlags&0x80 != 0
+	u.MarkerX = int(binary.LittleEndian.Uint16(rec[0x1A:]))
+	u.MarkerY = int(binary.LittleEndian.Uint16(rec[0x1C:]))
 	u.TurnSpeed = int(rec[0x1F])
 	u.CruiseSpeed = int(rec[0x21])
 	u.FightSpeed = int(rec[0x22])

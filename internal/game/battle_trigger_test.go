@@ -61,6 +61,7 @@ func TestBattleTurnsDeduct(t *testing.T) {
 	}
 	for i := 0; i < 10; i++ {
 		g.AdvanceBattleTurn()
+		settleBattleExecution(t, g)
 	}
 	after := total()
 	if after >= before {
@@ -85,12 +86,14 @@ func TestBattleEndsAfterNineTurns(t *testing.T) {
 	}
 	for i := 0; i < rules.MaxBattleTurns-1; i++ {
 		g.AdvanceBattleTurn()
+		settleBattleExecution(t, g)
 		if g.battleOver {
 			t.Fatalf("第 %d 回合就說結束了，應該撐到第 %d 回合",
 				g.battleTurn, rules.MaxBattleTurns)
 		}
 	}
 	g.AdvanceBattleTurn()
+	settleBattleExecution(t, g)
 	if !g.battleOver {
 		t.Fatalf("第 %d 回合該結束了", rules.MaxBattleTurns)
 	}
@@ -118,6 +121,7 @@ func TestBattleResultPersists(t *testing.T) {
 	before := total()
 	for i := 0; i < rules.MaxBattleTurns; i++ {
 		g.AdvanceBattleTurn()
+		settleBattleExecution(t, g)
 	}
 	if g.state != StateCommandPhase {
 		t.Fatalf("九回合打完該回戰略地圖，現在是 %v", g.state)

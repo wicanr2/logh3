@@ -22,6 +22,7 @@ func playBattle(t *testing.T, tactic ai.Tactic) ([2]int, int) {
 	left := 0
 	for i := 0; i < rules.MaxBattleTurns; i++ {
 		g.AdvanceBattleTurn()
+		settleBattleExecution(t, g)
 	}
 	for _, u := range g.battleUnits {
 		left += u.Ships
@@ -72,6 +73,7 @@ func TestBattleLossMagnitude(t *testing.T) {
 	sum, n, max := 0, 0, 0
 	for i := 0; i < rules.MaxBattleTurns; i++ {
 		g.AdvanceBattleTurn()
+		settleBattleExecution(t, g)
 		for _, l := range g.battleLosses {
 			sum += l.Total
 			n++

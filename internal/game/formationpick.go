@@ -72,10 +72,11 @@ func (g *Game) formationSlots(unit int) []FormationSlot {
 	return out
 }
 
-// battleFleetPose 回一支艦隊的位置與朝向。原版是艦隊記錄的
-// `+0x5C`／`+0x5E`／`+0x4A`；remake 這一層還沒有艦隊記錄，用旗艦
-// （分隊 0）的位置與朝向代替——`docs/internals/38` 量到兩者同值。
+// battleFleetPose讀目前typed艦隊的+5C/+5E/+4A；缺艦隊時保留旗艦診斷fallback。
 func (g *Game) battleFleetPose(fleet int) (int, int, int, bool) {
+	if f := g.battleFleet(fleet); f != nil {
+		return f.X, f.Y, f.Facing, true
+	}
 	for i := range g.battleUnits {
 		u := &g.battleUnits[i]
 		if u.Fleet == fleet && u.Squadron == 0 {

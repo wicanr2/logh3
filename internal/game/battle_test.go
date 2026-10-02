@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/asset"
@@ -134,15 +135,18 @@ func TestAdvanceBattleTurnMoves(t *testing.T) {
 		t.Skip("沒有入口表")
 	}
 	g.battleUnits = []rules.BattleUnit{
-		{Fleet: 0, Faction: 0, X: 400, Y: 400, TargetX: 400, TargetY: 400, Strength: 1000},
-		{Fleet: 1, Faction: 1, X: 1400, Y: 1400, TargetX: 1400, TargetY: 1400, Strength: 1000},
+		{Fleet: 0, Faction: 0, X: 400, Y: 400, TargetX: 400, TargetY: 400, Strength: 1000, CruiseSpeed: 30, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
+		{Fleet: 1, Faction: 1, X: 1400, Y: 1400, TargetX: 1400, TargetY: 1400, Strength: 1000, CruiseSpeed: 30, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
 	}
+	g.battleFleets = []rules.BattleFleet{{Index: 0, Faction: 0, X: 400, Y: 400, DestX: 400, DestY: 400, Action: 4, ScoutMode: 255}, {Index: 1, Faction: 1, X: 1400, Y: 1400, DestX: 1400, DestY: 1400, Action: 4, ScoutMode: 255}}
+	g.state = StateBattle
 	g.battleTurn = 1
 	g.faction = 0
 	g.SetTactic(ai.OriginalTactic{}, false)
 	g.originalBattleAI = true // 驗的是原版戰術層會讓敵方移動（規格 061 在遊戲層關掉它）
 	before := g.battleUnits[1]
 	g.AdvanceBattleTurn()
+	settleBattleExecution(t, g)
 	after := g.battleUnits[1]
 	if after.X == before.X && after.Y == before.Y {
 		t.Fatal("敵方那一支沒動")
@@ -153,6 +157,17 @@ func TestAdvanceBattleTurnMoves(t *testing.T) {
 	// 玩家那一支沒下令，不該被 AI 動到目標。
 	if g.battleUnits[0].TargetX != 400 || g.battleUnits[0].TargetY != 400 {
 		t.Error("玩家那一支的目標被 AI 改了")
+	}
+}
+
+// 按正式Tick完成已啟動回合；不繞過準備、移動或演出續接。
+func settleBattleExecution(t *testing.T, g *Game) {
+	t.Helper()
+	for i := 0; i < 12000 && (g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement); i++ {
+		g.Tick(time.Second / 60)
+	}
+	if g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement {
+		t.Fatalf("回合續接未停止：%v/%d", g.state, g.battleTurn)
 	}
 }
 

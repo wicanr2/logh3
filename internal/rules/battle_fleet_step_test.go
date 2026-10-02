@@ -17,6 +17,10 @@ type fleetStepReceipt struct {
 			Common []stepInjection `json:"common"`
 			Cases  []struct {
 				Injections []stepInjection `json:"injections"`
+				Calls      []struct {
+					Segment, Offset int
+					Args            []int
+				} `json:"calls"`
 			} `json:"cases"`
 		} `json:"plan"`
 		Rows []struct {
@@ -137,7 +141,7 @@ func TestFleetSingleStepMatchesOriginal(t *testing.T) {
 
 func stepUnit(t *testing.T, raw string) *BattleUnit {
 	b := stepBytes(t, raw)
-	return &BattleUnit{Faction: int(b[0]), Kind: int(b[4]), Attack: stepWord(b, 0x16), Action: int(b[0x1E]), X: stepWord(b, 0x34), Y: stepWord(b, 0x36), TargetX: stepWord(b, 0x28), TargetY: stepWord(b, 0x2A)}
+	return &BattleUnit{Faction: int(b[0]), Kind: int(b[4]), Slot: int(b[5]), Attack: stepWord(b, 0x16), Action: int(b[0x1E]), Out: b[0x1E]&128 != 0, Budget: stepBudget(b, 0x24), CruiseSpeed: int(b[0x21]), MarkerFlags: int(b[0x19]), Marked: b[0x19]&128 != 0, MarkerX: stepWord(b, 0x1A), MarkerY: stepWord(b, 0x1C), X: stepWord(b, 0x34), Y: stepWord(b, 0x36), TargetX: stepWord(b, 0x28), TargetY: stepWord(b, 0x2A)}
 }
 
 func stepMap(t *testing.T, fixture fleetStepReceipt, index int) ([]uint8, int) {

@@ -52,7 +52,9 @@ type BattleFleet struct {
 	Flag0 bool `json:"flag0"`
 	// ScoutOut ＝ `+0x3A` 不是 0xFF 或 `+0x3B` 不是 0：已經放了索敵隊
 	// 出去，「索敵」不能再選。
-	ScoutOut bool `json:"scout_out"`
+	ScoutOut   bool `json:"scout_out"`
+	ScoutMode  int  `json:"scout_mode,omitempty"`  // +3A，FF為未啟用
+	ScoutState int  `json:"scout_state,omitempty"` // +3B
 
 	// 下面五格是艦隊層的「移動／戰鬥」命令寫進去的（`2583:0003`，
 	// `docs/re/120`–`122`）。原版對應 `+0x60`／`+0x62`（下令前的位置
@@ -78,7 +80,7 @@ type BattleFleet struct {
 	PerTurn   int `json:"per_turn,omitempty"`
 	TurnSpeed int `json:"turn_speed,omitempty"`
 
-	// Action 是艦隊記錄 `+0x48` 的低四位。「戰鬥」成功之後寫 1
+	// Action 是艦隊記錄 `+0x48` 的完整byte。「戰鬥」成功之後寫 1
 	// （`1CC5:08BD`）。
 	Action int `json:"action,omitempty"`
 	// MoveFlags保留+49全byte，單步只修改bit0（規格081）。
@@ -97,6 +99,7 @@ func NewBattleFleet(index int, rec []byte, ab [FleetAbilityCount]byte) BattleFle
 	}
 	if len(rec) > 0x3B {
 		f.ScoutOut = rec[0x3A] != 0xFF || rec[0x3B] != 0
+		f.ScoutMode, f.ScoutState = int(rec[0x3A]), int(rec[0x3B])
 	}
 	f.Defence = int(ab[defenceAbilityA]) * int(ab[defenceAbilityB]) / 100
 	f.Ability0 = int(ab[0])
@@ -106,6 +109,15 @@ func NewBattleFleet(index int, rec []byte, ab [FleetAbilityCount]byte) BattleFle
 	}
 	if len(rec) > 0x49 {
 		f.MoveFlags = int(rec[0x49])
+	}
+	if len(rec) >= FleetRecord {
+		f.Action, f.Facing, f.TargetFacing, f.TurnSpeed = int(rec[0x48]), int(rec[0x4A]), int(rec[0x4C]), int(rec[0x4D])
+		f.ShortMove = f.Action&16 != 0
+		f.PerTurn = int(int32(binary.LittleEndian.Uint32(rec[0x52:])))
+		f.Budget = int(int32(binary.LittleEndian.Uint32(rec[0x56:])))
+		f.X, f.Y = int(binary.LittleEndian.Uint16(rec[0x5C:])), int(binary.LittleEndian.Uint16(rec[0x5E:]))
+		f.OriginX, f.OriginY = int(binary.LittleEndian.Uint16(rec[0x60:])), int(binary.LittleEndian.Uint16(rec[0x62:]))
+		f.DestX, f.DestY = int(binary.LittleEndian.Uint16(rec[0x64:])), int(binary.LittleEndian.Uint16(rec[0x66:]))
 	}
 	return f
 }

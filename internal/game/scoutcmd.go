@@ -33,9 +33,24 @@ func (g *Game) beginScout(unit int) {
 		return
 	}
 	u.Action = squadronRejoin // 原版寫 3，等玩家指定目的地才會改
-	u.Marked = true           // 艦艇 `+0x19` bit7：上小地圖
+	u.Out = false
+	u.Marked = true // 艦艇 `+0x19` bit7：上小地圖
+	u.MarkerFlags = 0xC0 | 5
+	if u.Faction == 1 {
+		u.MarkerFlags = 0xC0 | 9
+	}
+	u.MarkerX, u.MarkerY = u.X, u.Y
+	// 已回收的索敵隊仍保留池身份，再次放出不能增加同池副本。
+	for i := range g.battleUnits {
+		if g.battleUnits[i].Fleet == fleet && g.battleUnits[i].Squadron < 0 {
+			g.battleUnits[i] = u
+			bf.ScoutOut, bf.ScoutMode, bf.ScoutState = true, 0, 0
+			g.beginMoveTarget(i)
+			return
+		}
+	}
 	g.battleUnits = append(g.battleUnits, u)
-	bf.ScoutOut = true
+	bf.ScoutOut, bf.ScoutMode, bf.ScoutState = true, 0, 0
 	g.beginMoveTarget(len(g.battleUnits) - 1)
 }
 

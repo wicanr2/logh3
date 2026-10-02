@@ -26,6 +26,7 @@ func runPassiveBattle(t *testing.T, original bool) (playerLost, cpuMoved int, g 
 	for i := 0; i < rules.MaxBattleTurns && g.state == StateBattle; i++ {
 		before := append([]rules.BattleUnit(nil), g.battleUnits...)
 		g.AdvanceBattleTurn()
+		settleBattleExecution(t, g)
 		for k, u := range g.battleUnits {
 			if k >= len(before) {
 				break

@@ -441,6 +441,7 @@ func TestFortressGunFiresOnTurn(t *testing.T) {
 		t.Skip("第一支分隊沒有艘數，跳過")
 	}
 	g.AdvanceBattleTurn()
+	settleBattleExecution(t, g)
 	if g.battlePlanets[idx].GunState != 2 {
 		t.Errorf("開火之後狀態 %d，該是 2（填充中）", g.battlePlanets[idx].GunState)
 	}
@@ -456,6 +457,7 @@ func TestFortressGunFiresOnTurn(t *testing.T) {
 	g.battleGunHits = nil
 	if !g.battleOver {
 		g.AdvanceBattleTurn()
+		settleBattleExecution(t, g)
 		if len(g.battleGunHits) != 0 {
 			t.Error("填充中不該開火")
 		}
