@@ -68,6 +68,7 @@ func (g *Game) planetSupplyCandidates(planet int) []int {
 // 一個都沒有時原版跳「沒有需要補給的船艦。」（`ds:3F14`）／「沒有需要
 // 修理的船艦在附近。」（`ds:403E`）（`docs/re/131`、`138`）。
 func (g *Game) beginSupplyPick(unit int, repair bool) {
+	g.rememberPreparationSource(unit, repair)
 	if len(g.supplyCandidates(unit, repair)) == 0 {
 		if repair {
 			g.showMessage("repair_none")
@@ -328,14 +329,31 @@ func (g *Game) repairPanelTarget() *screen.RepairTarget {
 	if !ok {
 		return nil
 	}
-	t := g.battleUnits[hit]
+	return g.repairTargetView(g.battleUnits[hit])
+}
+
+// repairTargetView 手動候選與自動結果共用原版身分／資源格式。
+func (g *Game) repairTargetView(t rules.BattleUnit) *screen.RepairTarget {
 	name := []byte(nil)
 	if t.Kind >= 0 && t.Kind < len(g.res.ShipKindNames) {
 		name = g.res.ShipKindNames[t.Kind]
 	}
-	return &screen.RepairTarget{
+	v := &screen.RepairTarget{
+		Flagship: t.Squadron == 0,
+		Scout:    t.Kind == shipKindScout,
+		UnitNo:   t.Squadron + 1,
 		KindName: name,
 		Ships:    t.Ships,
 		Damaged:  t.RepairCap - t.Ships,
 	}
+	if t.Faction >= 0 && t.Faction < len(g.res.FactionNames) {
+		v.FactionName = g.res.FactionNames[t.Faction]
+	}
+	if f := g.fleetByIndex(t.Fleet); f != nil {
+		v.Fleet = f.Number
+		if f.Admiral >= 0 && f.Admiral < len(g.res.AdmiralNames) {
+			v.Admiral = codesBig5(g.res.AdmiralNames[f.Admiral])
+		}
+	}
+	return v
 }

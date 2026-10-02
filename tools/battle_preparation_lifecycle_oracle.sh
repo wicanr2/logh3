@@ -30,6 +30,37 @@ args=(-load-state /src/workplace/fcmd/eng-t5.state
   -regs-at 181B:003F,1930:019D,1930:0AA2,1930:0D99,341B:02E5,1AAB:006D,1AAB:08FB,1AAB:0A2A,1261:000B,1261:0138,3826:0405,3765:006C,181B:0083,181B:00FA)
 seed='lin:5E00C@1211893242=78 56 34 12'
 case "$mode" in
+  new-game|load-s3|load-existing|battle-entry)
+    args=(-tick 20000 -regs-max 12 -regs-at 12AA:000E,1930:019D,1AAB:0190,1AAB:006D
+      -watch 5EF5E-5EF73)
+    if [[ "$mode" == load-existing ]]; then
+      test -f "$GOLEM/workplace/fcmd/fcmd-base.state"
+      args+=(-load-state /src/workplace/fcmd/fcmd-base.state
+        -clicks 421000000:544:85,441000000:560:105,471000000:300:282,511000000:318:168
+        -click-hold 3000000)
+      start=420000001; end=550000000
+    else
+      args+=(-press 1,3,8,enter -press-at 105000000 -press-every 2000000 -click-hold 3000000)
+      start=100000000; end=300000000
+      if [[ "$mode" == new-game ]]; then
+        args+=(-clicks 40000000:300:170,95000000:300:170 -rclicks 130000000:300:200,155000000:300:200)
+      else
+        clicks=40000000:300:230,95000000:300:230,190000000:300:282,240000000:318:168
+        if [[ "$mode" == battle-entry ]]; then
+          clicks+=,300000000:544:85,330000000:560:85,405000000:544:85,435000000:560:85,510000000:544:85,540000000:560:85,615000000:544:85,645000000:560:85,720000000:544:85,750000000:560:85,825000000:544:85,855000000:560:85
+          end=900000000
+        fi
+        args+=(-clicks "$clicks")
+      fi
+    fi
+    poke="lin:5E00C@$start=78 56 34 12;lin:5EF5E@$start=EC 00 8B 66;lin:5EF70@$start=3A 01 8B 66"
+    bash "$ROOT/tools/oracle.sh" "$name" "${args[@]}" -steps "$end" -poke "$poke" \
+      -dump-mem-at "$((start+1)):lin:0:1048576:/out/oracle/$name/mem-in.bin;$((end-1)):lin:0:1048576:/out/oracle/$name/mem-out.bin" \
+      -peek lin:5EF5E:4,lin:5EF70:4,lin:61AE4:4,lin:5E00C:4
+    exit
+    ;;
+esac
+case "$mode" in
   supply-panel|supply-end)
     poke="$seed;lin:68386@1211893242=05;lin:6118A@1211893242=05;lin:68390@1211893242=D0 07 00 00 D0 07 00 00;lin:68120@1211893242=00 00 00 00 00 00 00 00"
     end=1212045378

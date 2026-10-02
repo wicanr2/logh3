@@ -36,6 +36,10 @@
 解出欄位：[battle-preparation-lifecycle.json](data/battle-preparation-lifecycle.json)，
 審查索引：[battle-preparation-lifecycle-semantics.json](data/battle-preparation-lifecycle-semantics.json)。
 重播／匯出工具的入口與限制見研究369，完整第一階段仍由規格079管理。
+來源重設及正式接線接續：[第二十八輪](../goal/2026-10-02-battle-preparation-round-28.md)、
+[研究370](../re/370-battle-preparation-reset.md)。
+修理目標身分的[分級索引](data/battle-preparation-target-semantics.json)由同一IDA匯出工具合併。
+正式第一階段的資源、面板、等待、正常入口與存讀驗收見[對拍042](../playtest/042-battle-preparation-first-phase.md)。
 
 音色庫來源與完整授權索引：[`player-music-library.json`](data/player-music-library.json)，
 用途與原版素材邊界見 [`17-mds.md`](17-mds.md)。

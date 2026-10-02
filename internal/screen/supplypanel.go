@@ -46,12 +46,18 @@ type SupplyPanelSpec struct {
 	// 只是字串與欄位不同。
 	Repair struct {
 		Lines struct {
-			Head      hexStr `json:"head"`
-			FleetTail hexStr `json:"fleet_suffix"`
-			Repairer  hexStr `json:"repairer"`
-			Capacity  hexStr `json:"capacity"`
-			Target    hexStr `json:"target"`
-			Damaged   hexStr `json:"damaged"`
+			Head               hexStr `json:"head"`
+			FleetTail          hexStr `json:"fleet_suffix"`
+			Repairer           hexStr `json:"repairer"`
+			Capacity           hexStr `json:"capacity"`
+			Target             hexStr `json:"target"`
+			Damaged            hexStr `json:"damaged"`
+			IdentityHead       hexStr `json:"identity_head"`
+			IdentityFleetTail  hexStr `json:"identity_fleet_suffix"`
+			IdentityAdmiral    hexStr `json:"identity_admiral"`
+			IdentityScout      hexStr `json:"identity_scout"`
+			IdentityUnitPrefix hexStr `json:"identity_unit_prefix"`
+			IdentityUnitSuffix hexStr `json:"identity_unit_suffix"`
 		} `json:"lines"`
 	} `json:"repair"`
 
@@ -206,11 +212,16 @@ type RepairPanel struct {
 	Target *RepairTarget
 }
 
-// RepairTarget 是目標那兩列。
+// RepairTarget 是目標身分兩列及資源兩列（1629:023B／1AAB:08FB）。
 type RepairTarget struct {
-	KindName []byte
-	Ships    int // 目標 `+0x08`
-	Damaged  int // 目標 `+0x0C` − `+0x08`
+	FactionName     []byte
+	Fleet           int
+	Flagship, Scout bool
+	Admiral         []byte // 原版只複製前16 bytes。
+	UnitNo          int
+	KindName        []byte
+	Ships           int // 目標 `+0x08`
+	Damaged         int // 目標 `+0x0C` − `+0x08`
 }
 
 // DrawRepairPanel 把「修理」的面板畫進右側狀態欄。
@@ -231,6 +242,31 @@ func DrawRepairPanel(fb *gfx.Framebuffer, s *SupplyPanelSpec, fnt *font.Font,
 	b.Printf(l.Repairer.Raw(), p.Repairers)
 	b.Printf(l.Capacity.Raw(), p.Capacity)
 	if t := p.Target; t != nil {
+		b.Printf(l.IdentityHead.Raw(), t.FactionName)
+		if t.Fleet < 10 {
+			b.Printf(s.Number.LT10.Raw(), t.Fleet)
+		} else {
+			b.Printf(s.Number.GE10.Raw(), t.Fleet)
+		}
+		b.Write(l.IdentityFleetTail.Raw())
+		switch {
+		case t.Flagship:
+			name := t.Admiral
+			if len(name) > 16 {
+				name = name[:16]
+			}
+			b.Printf(l.IdentityAdmiral.Raw(), name)
+		case t.Scout:
+			b.Write(l.IdentityScout.Raw())
+		default:
+			b.Write(l.IdentityUnitPrefix.Raw())
+			if t.UnitNo < 10 {
+				b.Printf(s.Number.LT10.Raw(), t.UnitNo)
+			} else {
+				b.Printf(s.Number.GE10.Raw(), t.UnitNo)
+			}
+			b.Write(l.IdentityUnitSuffix.Raw())
+		}
 		b.Printf(l.Target.Raw(), t.KindName, t.Ships)
 		b.Printf(l.Damaged.Raw(), t.Damaged)
 	}

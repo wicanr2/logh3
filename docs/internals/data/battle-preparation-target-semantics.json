@@ -1,0 +1,11 @@
+{
+  "inputs": {"1629": "df4953d3fbae71dca0b4d5a79c7b4831c9ae47773747ee76a26b3f85eb983614"},
+  "entries": [
+    {"kind":"function","original_location":"1629:023B","semantic":"修理目標身分兩列：陣營與艦隊，旗艦姓名或索敵／一般部隊。","grade":"proven","source":"docs/re/370-battle-preparation-reset.md；固定修理結果及原指令023B..0362"},
+    {"kind":"instruction","original_location":"1629:0245","original_bytes_hex":"26 8a 47 01","semantic":"讀SHIP艦隊byte；後續乘122索引FLEET。","grade":"proven","source":"docs/re/370-battle-preparation-reset.md；024B..0255"},
+    {"kind":"instruction","original_location":"1629:02B2","original_bytes_hex":"26 80 7f 03 00","semantic":"SHIP分隊0走旗艦提督姓名，其他走部隊分支。","grade":"proven","source":"docs/re/370-battle-preparation-reset.md；02B7..035B"},
+    {"kind":"instruction","original_location":"1629:02B9","original_bytes_hex":"b8 10 00","semantic":"提督姓名複製上限16 bytes；02DD附加零結尾。","grade":"proven","source":"docs/re/370-battle-preparation-reset.md；02D6/02DD"},
+    {"kind":"instruction","original_location":"1629:02FE","original_bytes_hex":"26 80 7f 04 07","semantic":"非旗艦種類7印索敵部隊，其他印第N部隊。","grade":"proven","source":"docs/re/370-battle-preparation-reset.md；0303..035B"},
+    {"kind":"instruction","original_location":"1629:0338","original_bytes_hex":"40","semantic":"分隊byte加1作顯示部隊號。","grade":"proven","source":"docs/re/370-battle-preparation-reset.md；0332..0342"}
+  ]
+}

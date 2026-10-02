@@ -142,6 +142,12 @@
     "bytes": "252d387320202020253475",
     "text": "%-8s    %4u"
    },
+   "identity_head": {"offset":"ds:3C4D","bytes":"25732020b2c4","text":"%s  第"},
+   "identity_fleet_suffix": {"offset":"ds:3C54","bytes":"c4a5b6a4","text":"艦隊"},
+   "identity_admiral": {"offset":"ds:3C59","bytes":"252d313673","text":"%-16s"},
+   "identity_scout": {"offset":"ds:3C5F","bytes":"afc1bcc4b3a1b6a42020202020202020","text":"索敵部隊        "},
+   "identity_unit_prefix": {"offset":"ds:3C70","bytes":"b2c4","text":"第"},
+   "identity_unit_suffix": {"offset":"ds:3C73","bytes":"b3a1b6a42020202020202020","text":"部隊        "},
    "damaged": {
     "offset": "ds:4093",
     "bytes": "b76cc361c4a5bcc620202020253475",

@@ -912,10 +912,16 @@ type Game struct {
 
 	// battleSupply ＝ 選了「補給」或「修理」之後在等玩家點對象
 	// （`docs/re/131`）；battleSupplyRepair 分辨是哪一個。
-	battleSupply       bool
-	battleSupplyUnit   int
-	battleSupplyRepair bool
-	battleSupplyPlanet int // >= 0 ＝ 這一次是行星的「補給」／「補充」
+	battleSupply            bool
+	battleSupplyUnit        int
+	battleSupplyRepair      bool
+	battleSupplyPlanet      int                      // >= 0 ＝ 這一次是行星的「補給」／「補充」
+	battleSources           rules.PreparationSources // 持續池身份；初始化／讀檔／新戰場保留。
+	battlePreparing         bool
+	battlePreparation       *rules.BattlePreparation
+	battlePreparationAfter  func()
+	battlePreparationSupply *screen.SupplyPanel
+	battlePreparationRepair *screen.RepairPanel
 
 	// 艦隊選單的「移動」／「戰鬥」是兩段互動（`docs/re/120`–`122`）：
 	// 先點目的地，再繞著它轉游標選抵達朝向。
@@ -2839,6 +2845,9 @@ func (g *Game) rightClick(x, y int) {
 		g.state = StateStandbyAdmirals
 	case StateBattle:
 		// 右鍵關掉最上面那一層：詳細資料 → 「資料」 → 命令選單 → 選單。
+		if g.battlePreparing {
+			return
+		}
 		if g.battleDetail {
 			g.battleDetail = false
 			return
@@ -4860,6 +4869,13 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 			Alliance: g.battleScore[1],
 			Region:   g.regionName(g.battleRegion),
 		})
+	}
+	// 資源結果在預設狀態文字之後畫，使用正式面板，不加手動選取的結束鈕。
+	if p := g.battlePreparationSupply; p != nil {
+		screen.DrawSupplyPanel(fb, g.res.SupplyPanel, g.res.Font, g.res.FrameTiles, *p)
+	}
+	if p := g.battlePreparationRepair; p != nil {
+		screen.DrawRepairPanel(fb, g.res.SupplyPanel, g.res.Font, g.res.FrameTiles, *p)
 	}
 	if g.battleMenu && g.res.BattleMenu != nil && g.res.Font != nil {
 		screen.DrawBattleMenu(g.res.BattleMenu, fb, g.res.Font, g.res.FrameTiles,

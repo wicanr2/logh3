@@ -187,3 +187,10 @@ remake 目前把它當成版面常數（`screen-battle.json` 的 `faction_ink`�
 
 修理艦的 `+0x0E` 在補給艦身上是飛彈存量，在這裡是**最高修理數**——
 同一個位移，語意跟著艦種走。
+
+## 2026-10-02／研究370續證
+
+本篇已記`1AAB:08FB`呼叫`1629:023B`印目標身分；既有remake漏接此呼叫。
+[研究370](370-battle-preparation-reset.md)核對callee至retf、姓名16bytes限制與分隊分支，
+正式手動／自動修理面板已補兩列身分；固定自動結果的完整八列逐像素驗證見
+[對拍042](../playtest/042-battle-preparation-first-phase.md)。不改寫本篇早期收據。

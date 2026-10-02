@@ -147,3 +147,11 @@ bash tools/py.sh tools/scripts/battle_preparation_lifecycle_receipt.py \
 規格079只把已量測子契約標READY，完整第一階段仍DRAFT。
 下一閘門只追查實際重新開始／載入／戰場入口的來源寫入，證據充分即回正式回合接線；
 不擴張成整個記憶體管理／硬體驅動考古。#79保持開啟。
+
+## 2026-10-02／研究370續證
+
+指定重新開始、正常S3讀檔及達希利戰場入口的持續來源行為已由
+[研究370](370-battle-preparation-reset.md)與三組雙跑補證；
+第一階段正式接線、完整結果面板與指定資源欄位、士氣續接、正常實行及正式存讀
+見[對拍042](../playtest/042-battle-preparation-first-phase.md)。本篇「完整第一階段仍DRAFT」
+保存當時證據閘門；目前狀態以規格079為準，完整八步#79仍開啟。

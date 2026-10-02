@@ -1,0 +1,384 @@
+{
+  "schema": "logh3.battle-preparation-reset.v1",
+  "issue": 79,
+  "date": "2026-10-02",
+  "resolutions": [
+    {
+      "old_document": "docs/re/367-battle-preparation.md",
+      "required_marker": "2026-10-02／研究370續證",
+      "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "original_locations": [
+        "1930:019D",
+        "1AAB:006D",
+        "1629:023B"
+      ],
+      "evidence": "docs/re/370-battle-preparation-reset.md",
+      "scope": "指定來源生命週期與正式第一階段，不宣稱八步一致。"
+    },
+    {
+      "old_document": "docs/re/369-battle-preparation-lifecycle.md",
+      "required_marker": "2026-10-02／研究370續證",
+      "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "original_locations": [
+        "1930:019D",
+        "1AAB:006D",
+        "1629:023B"
+      ],
+      "evidence": "docs/re/370-battle-preparation-reset.md",
+      "scope": "指定來源生命週期與正式第一階段，不宣稱八步一致。"
+    },
+    {
+      "old_document": "docs/re/143-supply-panel.md",
+      "required_marker": "2026-10-02／研究370續證",
+      "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "original_locations": [
+        "1930:019D",
+        "1AAB:006D",
+        "1629:023B"
+      ],
+      "evidence": "docs/re/370-battle-preparation-reset.md",
+      "scope": "指定來源生命週期與正式第一階段，不宣稱八步一致。"
+    },
+    {
+      "old_document": "docs/spec/062-battle-turn-eight-steps.md",
+      "required_marker": "2026-10-02／研究370續證",
+      "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "original_locations": [
+        "1930:019D",
+        "1AAB:006D",
+        "1629:023B"
+      ],
+      "evidence": "docs/re/370-battle-preparation-reset.md",
+      "scope": "指定來源生命週期與正式第一階段，不宣稱八步一致。"
+    },
+    {
+      "old_document": "docs/spec/079-battle-preparation.md",
+      "required_marker": "2026-10-02／研究370續證",
+      "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "original_locations": [
+        "1930:019D",
+        "1AAB:006D",
+        "1629:023B"
+      ],
+      "evidence": "docs/re/370-battle-preparation-reset.md",
+      "scope": "指定來源生命週期與正式第一階段，不宣稱八步一致。"
+    },
+    {
+      "old_document": "docs/internals/65-battle-preparation.md",
+      "required_marker": "2026-10-02／研究370續證",
+      "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "original_locations": [
+        "1930:019D",
+        "1AAB:006D",
+        "1629:023B"
+      ],
+      "evidence": "docs/re/370-battle-preparation-reset.md",
+      "scope": "指定來源生命週期與正式第一階段，不宣稱八步一致。"
+    }
+  ],
+  "golem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "golem_dirty": false,
+  "program": "GIN3.COM",
+  "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "remake_parent": "58e02df905cec946eb7be40f53bfe0ceed54a6cf",
+  "tick": 20000,
+  "seed": "0x12345678",
+  "seed_method": "執行前以lin:5E00C固定；入口流程可能正常消費亂數，不以首尾相同作此項門檻。",
+  "go_image": "golang:1.24-bookworm",
+  "go_image_id": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+  "checkpoint": "dosgolem-logh3/workplace/fcmd/fcmd-base.state",
+  "checkpoint_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "address_space": "dosgolem實體線性位址；原版CS:IP獨立列示。",
+  "scope": "正常入口加明示來源哨兵的診斷；新遊戲初始化、正常S3讀檔、達希利戰場入口。未宣稱所有存檔、第二戰場或所有DOS環境。",
+  "bootstrap_clear": {
+    "grade": "proven",
+    "original_location": "0349:01EA",
+    "step": 58339340,
+    "source": "newgame兩次原版值改變監看；不是以零值猜測初始化。"
+  },
+  "rows": [
+    {
+      "mode": "newgame",
+      "grade": "proven",
+      "runs": [
+        {
+          "path": "workplace/oracle/battle79-life-newgame-a",
+          "sha256": {
+            "mem-in.bin": "5a7ec5e7cb83c1db691ea003e808462de7d2c5fe769a040f6a4d2beccf762d26",
+            "mem-out.bin": "1fb4b0f869952772dfffd8ca3827a0b83912d05587e9c450fba40fe58e454582",
+            "screen.bin": "8233320898cdbae7e1137bc9b4ab10ac3429af70ce0dc845668f1cd01c2282ae",
+            "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+            "flags.txt": "cf3fc506b338516c0f60baefe5cf80cfccddd4cab587bb640bbf0f113ef5140f",
+            "meta.txt": "a91acd3edbdf9a8054b94de32ecc503fb199f72ba3d794f278b1bdf9c7bb5c90",
+            "report.txt": "95eef02b02990204af11b117ad60a30bca4a60eed9d89a690d074da43449ceb4"
+          },
+          "flags": [
+            "-tick",
+            "20000",
+            "-regs-max",
+            "12",
+            "-regs-at",
+            "12AA:000E,1930:019D,1AAB:0190,1AAB:006D",
+            "-watch",
+            "5EF5E-5EF73",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-rclicks",
+            "130000000:300:200,155000000:300:200",
+            "-steps",
+            "300000000",
+            "-poke",
+            "lin:5E00C@100000000=78 56 34 12;lin:5EF5E@100000000=EC 00 8B 66;lin:5EF70@100000000=3A 01 8B 66",
+            "-dump-mem-at",
+            "100000001:lin:0:1048576:/out/oracle/battle79-life-newgame-a/mem-in.bin;299999999:lin:0:1048576:/out/oracle/battle79-life-newgame-a/mem-out.bin",
+            "-peek",
+            "lin:5EF5E:4,lin:5EF70:4,lin:61AE4:4,lin:5E00C:4"
+          ],
+          "seed_before_hex": "78563412",
+          "seed_after_hex": "78563412"
+        },
+        {
+          "path": "workplace/oracle/battle79-life-newgame-b",
+          "sha256": {
+            "mem-in.bin": "5a7ec5e7cb83c1db691ea003e808462de7d2c5fe769a040f6a4d2beccf762d26",
+            "mem-out.bin": "1fb4b0f869952772dfffd8ca3827a0b83912d05587e9c450fba40fe58e454582",
+            "screen.bin": "8233320898cdbae7e1137bc9b4ab10ac3429af70ce0dc845668f1cd01c2282ae",
+            "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+            "flags.txt": "41d8f1f763615a9e8cda16e98112db1d9b6d1ee450b9d007347cd2a623558aff",
+            "meta.txt": "83b5376a3a0a17fd6fd9dc3a5153bd7a3e3eb23af5359b12ea1ad3470afa37d4",
+            "report.txt": "6199ee37e47d7ae6a5033ae75eaebef07422c9b62d730d5d944089fc99ae83c5"
+          },
+          "flags": [
+            "-tick",
+            "20000",
+            "-regs-max",
+            "12",
+            "-regs-at",
+            "12AA:000E,1930:019D,1AAB:0190,1AAB:006D",
+            "-watch",
+            "5EF5E-5EF73",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-clicks",
+            "40000000:300:170,95000000:300:170",
+            "-rclicks",
+            "130000000:300:200,155000000:300:200",
+            "-steps",
+            "300000000",
+            "-poke",
+            "lin:5E00C@100000000=78 56 34 12;lin:5EF5E@100000000=EC 00 8B 66;lin:5EF70@100000000=3A 01 8B 66",
+            "-dump-mem-at",
+            "100000001:lin:0:1048576:/out/oracle/battle79-life-newgame-b/mem-in.bin;299999999:lin:0:1048576:/out/oracle/battle79-life-newgame-b/mem-out.bin",
+            "-peek",
+            "lin:5EF5E:4,lin:5EF70:4,lin:61AE4:4,lin:5E00C:4"
+          ],
+          "seed_before_hex": "78563412",
+          "seed_after_hex": "78563412"
+        }
+      ],
+      "supply_source_hex": "ec008b66",
+      "repair_source_hex": "3a018b66",
+      "pool_base_hex": "02008b66",
+      "changed_writes_after_injection": 0
+    },
+    {
+      "mode": "loadexisting",
+      "grade": "proven",
+      "runs": [
+        {
+          "path": "workplace/oracle/battle79-life-loadexisting-a",
+          "sha256": {
+            "mem-in.bin": "7d4959ae602f1c50b25b068a1f85a59b68c70291f519a1b8ee63ae7b9c1bc529",
+            "mem-out.bin": "670916a6833d5a2f44f2a86c6543a84ff3a88027943ce1464b9f44412e8a07b1",
+            "screen.bin": "eb248e444da7b04d935d7d23b8e5ecf0c5719dc983da19c87998ead207b42507",
+            "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+            "flags.txt": "01b550d35cb24a5e9212896fe1e1d87b6cfa57023762b75a2dfd88d504efea87",
+            "meta.txt": "2dbc962fada5512fd0517956b7beebd49c74a0582e09b51d8edb33a2d67e6c62",
+            "report.txt": "0171fb8505c9bf166e6ebb6e3b74072e16086c0efbb5644c298ccb15ab48d784"
+          },
+          "flags": [
+            "-tick",
+            "20000",
+            "-regs-max",
+            "12",
+            "-regs-at",
+            "12AA:000E,1930:019D,1AAB:0190,1AAB:006D",
+            "-watch",
+            "5EF5E-5EF73",
+            "-load-state",
+            "/src/workplace/fcmd/fcmd-base.state",
+            "-clicks",
+            "421000000:544:85,441000000:560:105,471000000:300:282,511000000:318:168",
+            "-click-hold",
+            "3000000",
+            "-steps",
+            "550000000",
+            "-poke",
+            "lin:5E00C@420000001=78 56 34 12;lin:5EF5E@420000001=EC 00 8B 66;lin:5EF70@420000001=3A 01 8B 66",
+            "-dump-mem-at",
+            "420000002:lin:0:1048576:/out/oracle/battle79-life-loadexisting-a/mem-in.bin;549999999:lin:0:1048576:/out/oracle/battle79-life-loadexisting-a/mem-out.bin",
+            "-peek",
+            "lin:5EF5E:4,lin:5EF70:4,lin:61AE4:4,lin:5E00C:4"
+          ],
+          "seed_before_hex": "78563412",
+          "seed_after_hex": "78563412"
+        },
+        {
+          "path": "workplace/oracle/battle79-life-loadexisting-b",
+          "sha256": {
+            "mem-in.bin": "7d4959ae602f1c50b25b068a1f85a59b68c70291f519a1b8ee63ae7b9c1bc529",
+            "mem-out.bin": "670916a6833d5a2f44f2a86c6543a84ff3a88027943ce1464b9f44412e8a07b1",
+            "screen.bin": "eb248e444da7b04d935d7d23b8e5ecf0c5719dc983da19c87998ead207b42507",
+            "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+            "flags.txt": "ab10235a6aed44a38c7929ffecf7e864ff764f8819bebedf6e8d6993fbaab048",
+            "meta.txt": "9d16c7ea6ae017dcf89dbb3456f9fc507a512aca4a92c856a0abc651c3980e38",
+            "report.txt": "306a0c5cf6601be9dcb0f66bb4e3bb5bc640c999dfcdab8c1b64b69bd83aaecb"
+          },
+          "flags": [
+            "-tick",
+            "20000",
+            "-regs-max",
+            "12",
+            "-regs-at",
+            "12AA:000E,1930:019D,1AAB:0190,1AAB:006D",
+            "-watch",
+            "5EF5E-5EF73",
+            "-load-state",
+            "/src/workplace/fcmd/fcmd-base.state",
+            "-clicks",
+            "421000000:544:85,441000000:560:105,471000000:300:282,511000000:318:168",
+            "-click-hold",
+            "3000000",
+            "-steps",
+            "550000000",
+            "-poke",
+            "lin:5E00C@420000001=78 56 34 12;lin:5EF5E@420000001=EC 00 8B 66;lin:5EF70@420000001=3A 01 8B 66",
+            "-dump-mem-at",
+            "420000002:lin:0:1048576:/out/oracle/battle79-life-loadexisting-b/mem-in.bin;549999999:lin:0:1048576:/out/oracle/battle79-life-loadexisting-b/mem-out.bin",
+            "-peek",
+            "lin:5EF5E:4,lin:5EF70:4,lin:61AE4:4,lin:5E00C:4"
+          ],
+          "seed_before_hex": "78563412",
+          "seed_after_hex": "78563412"
+        }
+      ],
+      "supply_source_hex": "ec008b66",
+      "repair_source_hex": "3a018b66",
+      "pool_base_hex": "02008b66",
+      "changed_writes_after_injection": 0
+    },
+    {
+      "mode": "battleentry",
+      "grade": "proven",
+      "runs": [
+        {
+          "path": "workplace/oracle/battle79-life-battleentry-a",
+          "sha256": {
+            "mem-in.bin": "628bbbe06fa5d6243a0305d2a17a08d73c2c42ed5579287c4f385a17a03456fd",
+            "mem-out.bin": "5bdb59d608236c49d518870d86dd88f6bb93a9fce3dc3818e48544ef03fc1441",
+            "screen.bin": "8c5cdcd52597a0920d0298626deb36919bae369e53a39e4cf11dbd0e72f9f88d",
+            "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+            "flags.txt": "87c805e4557e2847ba6c29950227844dc929edb735439f1398cf167f3770c6cc",
+            "meta.txt": "ecc7291b56f23276aabf9b50f7710db8eced89825f9d91117e383b1d27863578",
+            "report.txt": "4b1cebc97859a96c312da7cbc1468a67b765efb82a5ad502a47604a7dd9fa6be"
+          },
+          "flags": [
+            "-tick",
+            "20000",
+            "-regs-max",
+            "12",
+            "-regs-at",
+            "12AA:000E,1930:019D,1AAB:0190,1AAB:006D",
+            "-watch",
+            "5EF5E-5EF73",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-clicks",
+            "40000000:300:230,95000000:300:230,190000000:300:282,240000000:318:168,300000000:544:85,330000000:560:85,405000000:544:85,435000000:560:85,510000000:544:85,540000000:560:85,615000000:544:85,645000000:560:85,720000000:544:85,750000000:560:85,825000000:544:85,855000000:560:85",
+            "-steps",
+            "900000000",
+            "-poke",
+            "lin:5E00C@100000000=78 56 34 12;lin:5EF5E@100000000=EC 00 8B 66;lin:5EF70@100000000=3A 01 8B 66",
+            "-dump-mem-at",
+            "100000001:lin:0:1048576:/out/oracle/battle79-life-battleentry-a/mem-in.bin;899999999:lin:0:1048576:/out/oracle/battle79-life-battleentry-a/mem-out.bin",
+            "-peek",
+            "lin:5EF5E:4,lin:5EF70:4,lin:61AE4:4,lin:5E00C:4"
+          ],
+          "seed_before_hex": "78563412",
+          "seed_after_hex": "24a5e6fb"
+        },
+        {
+          "path": "workplace/oracle/battle79-life-battleentry-b",
+          "sha256": {
+            "mem-in.bin": "628bbbe06fa5d6243a0305d2a17a08d73c2c42ed5579287c4f385a17a03456fd",
+            "mem-out.bin": "5bdb59d608236c49d518870d86dd88f6bb93a9fce3dc3818e48544ef03fc1441",
+            "screen.bin": "8c5cdcd52597a0920d0298626deb36919bae369e53a39e4cf11dbd0e72f9f88d",
+            "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+            "flags.txt": "76615c761d53b391bc357911c505dee5b1057b3e1161f0b4f456b834626c734d",
+            "meta.txt": "382952af5c7ef88b2393aaa0150a57e4692d260ecaa787122ba096c29a5e176a",
+            "report.txt": "c2f2f292806804209de4f100afebeb0c365d14742031ed3ce714af0f72126e35"
+          },
+          "flags": [
+            "-tick",
+            "20000",
+            "-regs-max",
+            "12",
+            "-regs-at",
+            "12AA:000E,1930:019D,1AAB:0190,1AAB:006D",
+            "-watch",
+            "5EF5E-5EF73",
+            "-press",
+            "1,3,8,enter",
+            "-press-at",
+            "105000000",
+            "-press-every",
+            "2000000",
+            "-click-hold",
+            "3000000",
+            "-clicks",
+            "40000000:300:230,95000000:300:230,190000000:300:282,240000000:318:168,300000000:544:85,330000000:560:85,405000000:544:85,435000000:560:85,510000000:544:85,540000000:560:85,615000000:544:85,645000000:560:85,720000000:544:85,750000000:560:85,825000000:544:85,855000000:560:85",
+            "-steps",
+            "900000000",
+            "-poke",
+            "lin:5E00C@100000000=78 56 34 12;lin:5EF5E@100000000=EC 00 8B 66;lin:5EF70@100000000=3A 01 8B 66",
+            "-dump-mem-at",
+            "100000001:lin:0:1048576:/out/oracle/battle79-life-battleentry-b/mem-in.bin;899999999:lin:0:1048576:/out/oracle/battle79-life-battleentry-b/mem-out.bin",
+            "-peek",
+            "lin:5EF5E:4,lin:5EF70:4,lin:61AE4:4,lin:5E00C:4"
+          ],
+          "seed_before_hex": "78563412",
+          "seed_after_hex": "24a5e6fb"
+        }
+      ],
+      "supply_source_hex": "ec008b66",
+      "repair_source_hex": "3a018b66",
+      "pool_base_hex": "02008b66",
+      "changed_writes_after_injection": 0
+    }
+  ],
+  "source_sha256": {
+    "tools/battle_preparation_lifecycle_oracle.sh": "0fb23244a79f39547a9d3527babdbf5781f8a3ae4c3ee5414664872a7a61caba",
+    "tools/scripts/battle_preparation_reset_receipt.py": "f06f01e92533656741413ef8e974dda07b858deb1939c53c642059bdf55980d0"
+  }
+}

@@ -119,6 +119,9 @@ func clampRow(r, rows int) int {
 //
 // 損失怎麼算還沒解（`docs/re/86`），所以這裡只有移動。
 func (g *Game) AdvanceBattleTurn() {
+	if g.battlePreparing {
+		return
+	}
 	if g.battleRand == nil {
 		g.battleRand = rules.NewRand(uint32(g.battleTurn))
 	}
@@ -151,6 +154,10 @@ func (g *Game) AdvanceBattleTurn() {
 			}
 		}
 	}
+	g.beginBattlePreparation(g.advanceBattleTurnAfterPreparation)
+}
+
+func (g *Game) advanceBattleTurnAfterPreparation() {
 	// 收到過命令的艦隊走艦隊層那一套：艦隊自己動，分隊的目的地跟著
 	// 換成隊形位置（`docs/re/129`、`docs/re/126`）。沒下過命令的
 	// 仍然逐分隊各自走——原版兩層本來就各走各的，這裡只是還沒把
@@ -239,6 +246,9 @@ func (g *Game) endBattleTurn() {
 //
 // 第二項「資料」開的是什麼還沒逆向，所以只把選單關掉。
 func (g *Game) battleClick(x, y int) {
+	if g.battlePreparing {
+		return
+	}
 	// 訊息框是模態的，開著的時候什麼都不用往下傳（`docs/re/138`）。
 	if g.messageClick(x, y) {
 		return

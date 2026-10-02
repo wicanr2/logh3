@@ -53,6 +53,10 @@ func (g *Game) Tick(d time.Duration) {
 	if d <= 0 {
 		return
 	}
+	if g.state == StateBattle && g.battlePreparation != nil {
+		g.continueBattlePreparation()
+		return
+	}
 	if g.state == StateCopyProtection {
 		g.copyProtTickRemainder += d
 		period := time.Duration(screen.CopyProtPITDivisor) * time.Second / screen.CopyProtPITHz
