@@ -371,7 +371,7 @@ func TestBattlePreparationNormalPlayerExecute(t *testing.T) {
 	g.MoveMouse(x, y)
 	g.Click(x, y) // 正式選「實行」，不直接呼叫第一階段。
 	supplyFrames, repairFrames := 0, 0
-	for i := 0; i < 4000 && (g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement); i++ {
+	for i := 0; i < 4000 && (g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.state == StateTurnReport || g.state == StateEngagement); i++ {
 		if g.battlePreparationSupply != nil {
 			if supplyFrames == 0 {
 				movementFrame(t, g, "normal-supply")

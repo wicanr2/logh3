@@ -17,6 +17,7 @@
 ## 這裡的東西怎麼寫
 
 第三階段可見性／快取與正式續接：[第四十一輪](../goal/2026-10-03-battle-spotting-integration-round-41.md)，工作項目 #79。
+- [第四十二輪正式索敵接線](../goal/2026-10-03-battle-spotting-integration-round-42.md)
 
 第三階段發現報告與正式續接：[第四十輪](../goal/2026-10-02-battle-discovery-round-40.md)，工作項目 #79。
 
@@ -257,3 +258,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 第40輪索敵呈現收據入口：[固定七分支計畫](data/battle-discovery-plan.json)、[原版收據包裝器](../../tools/battle_discovery_oracle.sh)、[計畫旗標工具](../../tools/scripts/battle_discovery_plan.py)。
 第40輪呈現事實：[分級指令索引](data/battle-discovery-semantics.json)、[完整原版證據](data/battle-discovery-evidence.json)、[證據重生工具](../../tools/scripts/battle_discovery_evidence.py)。
 第40輪研究入口：[380發現標頭／暫時標亮](../re/380-battle-discovery-presentation.md)，目前事實同步於[戰場畫面](34-battle-screen.md)及[戰場分隊](38-battle-units.md)。
+
+第42輪正式索敵：[Game](../../internal/game/battlespotting.go)、[087](../spec/087-battle-spotting-phase.md)。
+
+第42輪可比UI邊界收據：[battle-spotting-game.json](data/battle-spotting-game.json)，由[索敵收據工具phase-render](../../tools/scripts/battle_spotting_display_evidence.py)重生。

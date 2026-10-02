@@ -175,3 +175,53 @@ ae22eb0ef862e9a0f8846c04e805c554af03bc6cd089ac1cadb5e0d4844c0f0f。
 改驗正式16色色盤足夠涵蓋全部色號後同流程通過。兩者不列產品缺陷。
 下一步為正式逐觀測者報告、增量圖示快取、候選置鏡、等待、戰鬥前續接與情報保存，
 再做第39／40輪18＋98邊界的正式整幀差分。完整八步與Goal保持未完成。
+
+## 第42輪正式Game接線與限定同狀態
+
+來源：[正式收據](../internals/data/battle-spotting-game.json)、[087](../spec/087-battle-spotting-phase.md)。
+GIN3.COM SHA-256 770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918，
+dosgolem f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c、乾淨工作樹；原版與執行器未改，本輪沒有重跑原版。
+第39／40輪各兩份色號、PNG與1 MiB RAM逐檔重核固定雜湊及相同內容。
+
+比較先限為same-state診斷UI邊界：唯一入口轉接SHIP／FLEET／WORK／PLANET、seed，
+正式parser、ObserveSpotting、Game續接與renderer計算其餘邊界，沒有每幀回注期望。
+原版完整命令與注入保存在收據original_commands；continue對應固定UI呼叫邊界，
+實際Tick及左右鍵另驗，不聲稱相同CPU時間或硬體wall-clock。
+
+camera要求鏡頭0,0與最後已畫鏡頭66,30不同。入口顯示物件+6/+8可重建最後鏡頭，
+用正式Frame畫入口後恢復要求鏡頭；正式實作保存兩者到真正置鏡。
+不複製原版framebuffer，也不遮罩。S1游標100,150，其餘240,240。
+
+| 檢查 | 結果 | 限制 |
+|---|---|---|
+| 九案可比UI邊界 | 94幀全307200色號及有效RGB零差異 | 116停點中22個寫字前／內部邊界逐項排除，不稱全部覆蓋 |
+| 完整資料紀錄 | 5330筆SHIP78、680筆FLEET122相同 | 不忽略+2F／+6A；不是整張原池每幀都驗 |
+| 原版／remake／差分PNG | 94組及field／minimap／status逐區數字齊全 | 原生640×480、無縮放／遮罩，bbox=null、最大通道差0 |
+| 正常玩家報告 | 主選單至S3戰場，實行見艦隊13號標頭；兩次實行 | 既有入口fixture，未注入情報／報告；remake-normal-player，非原版同態 |
+| 等待診斷 | MsgSpeed90、逐筆6 ticks；左右鍵僅結束當次等待 | 固定S3診斷入口，不代替正常玩家收據 |
+| 正式存讀 | SHIP27456／FLEET3904 bytes相同；下輪Seen同步 | 不稱中途讀檔可繼續戰鬥 |
+| 標準產品回歸 | 18套件通過或無測試，第一／第二階段保持 | 不外推其他八步 |
+
+重跑正式對拍及正常圖：
+tools/gui.sh xrun env LOGH3_MOVEMENT_OUTPUT=round42-normal go test ./internal/game -run '^TestBattleSpotting' -count=1 -v。
+再用tools/gui.sh xrun python3 tools/scripts/battle_spotting_display_evidence.py phase-render生成PNG／區域統計。
+標準回歸為tools/gui.sh xrun go test ./cmd/... ./internal/... -count=1。
+
+正式收據SHA-256 2ef3932429a368eefc85e723639683b8ba891bc83007198f5afe352cd3165a32。
+限定log workplace/round42-spotting-final-tests.log，SHA-256
+ef6b4ca5ef4317c895d0977767253b4d0d711d4ea71b2521ea27fba323ffc228。
+標準log workplace/round42-standard-confirmed-tests.log，SHA-256
+d09fb4ba0330d988ad2fef43f5e55e74348ca6cda975635b16aeac7bd7748054。
+
+已目視行星標頭、Detail3第一筆標亮、正常艦隊13號標頭。
+編號沿3982:0073與研究338：一位全形、兩位半形；2526:04C2加2是buffer byte偏移。
+正常來源FLEET12已顯示兩位數，但還沒有此來源的獨立原版標頭畫面。
+
+首次游標隱藏及已畫鏡頭誤用已修。轉接鍵名／游標座標、RightHold參數是驗證腳本問題。
+舊雙擊測試未等正式續接，十回合測試越過九回合結束後再實行，
+依正常流程修測試並同容器重跑；沒有改原版期望或遮罩。
+首次標準失敗log workplace/round42-standard-tests.log，SHA-256
+de820e7a4f963fb484c878ae1cfc31a6a9dc4c044fa655907c9931c44e70e9b9。
+
+087保持READY：艦隊／已放出偵察隊來源獨立原版標頭與近距來源／界外候選移鏡待驗。
+15案可見性常式不代替正式動態畫面，完整八步、#79與Goal未完成。

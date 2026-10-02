@@ -861,8 +861,10 @@ type Game struct {
 
 	// battleRegion 是戰術畫面看的是哪個星域的地形，battleView 是視野
 	// 在整張戰場上的位置（單位是格）。-1 ＝ 還沒進過戰場。
-	battleRegion int
-	battleView   screen.BattleView
+	battleRegion        int
+	battleView          screen.BattleView
+	battleDisplayedView screen.BattleView
+	battleDisplayKnown  bool
 	// battleScrollHeld ＝ 右鍵在戰場上按著沒放（每一幀 `RightHold` 再捲一格）。
 	battleScrollHeld bool
 	battleTurn       int
@@ -922,6 +924,7 @@ type Game struct {
 	battleMoving            bool
 	battleMovement          *rules.BattleMovement
 	battleMovementGroups    []rules.MovementFleet
+	battleSpotting          battleSpottingState
 	battlePreparation       *rules.BattlePreparation
 	battlePreparationAfter  func()
 	battlePreparationSupply *screen.SupplyPanel
@@ -2849,6 +2852,12 @@ func (g *Game) rightClick(x, y int) {
 		g.state = StateStandbyAdmirals
 	case StateBattle:
 		// 右鍵關掉最上面那一層：詳細資料 → 「資料」 → 命令選單 → 選單。
+		if g.battleSpotting.active {
+			if g.battleSpotting.stage == 2 || g.battleSpotting.stage == 5 {
+				g.battleSpotting.ticks = 0
+			}
+			return
+		}
 		if g.battlePreparing || g.battleMoving {
 			return
 		}
@@ -4806,11 +4815,20 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	if r := g.battleRegion; r >= 0 && r < len(g.res.BattleMaps) {
 		cells = g.res.BattleMaps[r]
 	}
-	fb := screen.Battle(g.res.Battle, g.res.BattlePanel, g.res.BattleTiles, cells, g.battleView)
+	view := g.battleView
+	if g.battleSpotting.sprites != nil {
+		view = g.battleSpotting.view
+	}
+	g.battleDisplayedView, g.battleDisplayKnown = view, true
+	fb := screen.Battle(g.res.Battle, g.res.BattlePanel, g.res.BattleTiles, cells, view)
 	if len(g.battleUnits) > 0 && len(g.res.Sprites) > 0 {
 		screen.DrawBattleUnits(g.res.Battle, fb, g.res.Sprites, g.battleUnits,
-			func(u rules.BattleUnit) int { return battleSprite(u, g.faction) }, g.battleView)
-		screen.DrawBattleFleetDirections(g.res.Battle, fb, g.res.Sprites, g.battleFleets, g.battleUnits, g.faction, g.battleView)
+			g.cachedBattleSprite, view)
+		screen.DrawBattleFleetDirectionsCached(g.res.Battle, fb, g.res.Sprites, g.battleFleets, g.battleUnits, g.faction, view, g.battleSpotting.directions)
+		if g.battleSpotting.highlight >= 0 && g.battleSpotting.active && g.battleSpotting.stage == 5 {
+			u := g.battleSpotting.refs[g.battleSpotting.highlight].Unit
+			screen.DrawBattleSpottingHighlight(g.res.Battle, fb, g.res.Sprites, [2]int{u.X, u.Y}, view)
+		}
 	}
 	// 艦隊選點時畫兩個範圍圖形（`docs/re/120`、`docs/re/135`）。
 	// 兩個都是 XOR 上去的，所以要畫在單位與格線之後。
@@ -4855,7 +4873,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	if marks := g.formationMarkSlots(); len(marks) > 0 && len(g.res.Sprites) > 0 {
 		screen.DrawFormationMarks(g.res.Battle, fb, g.res.Sprites, marks, g.battleView)
 	}
-	screen.DrawMinimap(g.res.Battle, fb, cells, g.battleView)
+	screen.DrawMinimap(g.res.Battle, fb, cells, view)
 	screen.DrawMinimapPlanets(g.res.Battle, fb,
 		rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH))
 	screen.DrawMinimapUnits(g.res.Battle, fb, g.battleUnits)
@@ -4924,6 +4942,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	}
 	// 訊息框畫在最上面（模態）。
 	g.drawMessage(fb)
+	g.drawSpottingHeader(fb)
 	// 正常輸入時游標在最上面；移動階段原版邊界均藏游標（規格080）。
 	if g.res.Cursor != nil && !g.battleMoving {
 		g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)

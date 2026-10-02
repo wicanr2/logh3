@@ -92,3 +92,27 @@ Detail0沒有任何SHIP變動；Detail1只有+19由05→C5及+1A/+1C現在座標
 
 首次IDA索引切段鍵錯誤及probe掛載路徑錯誤均為驗證環境問題。
 修正後沿用相同image乾淨重跑。最初46案是探索，正式固定61案另存，不覆寫收據。
+
+## 第42輪正式接線續證
+
+日期2026-10-03，父提交c749176730b4c94b6f235650db1c2a98d34acaaf，工作項目#79。
+前節「尚未接線」為第41輪歷史狀態。087完整READY後已接正式Game，指定94個UI邊界通過，整步尚未CONFORMED。
+原始檔、工具及位址空間沿379／380／381，未改原版與dosgolem。
+
+WORK+11／+12、+0D／+0E對應DS:8F25座位與8F21 controller。
+每席依旗艦、已放出偵察隊、行星觀測；CPU更新情報，跳過UI。
+顯示物件+6/+8保存世界位置減最後已畫鏡頭；camera案要求0,0但背景66,30至真正置鏡。
+正式Game保留兩者，沒有把原版framebuffer作輸入。
+
+2526:04B1原始bytes 9a73008239呼叫3982:0073，04C2原始bytes 83c302加caller字串buffer偏移。
+研究338與既有TurnWindow.FleetNumber已證實一位全形、兩位半形。
+初稿兩位全形改正；固定匯出workplace/ida/re79-spot-r39-report.json的SHA-256為
+a2fe19073ffdd4e07bfc010e02cdad5b36f9bca00a49e6e70e3988303e015b0b。
+CS:IP、dosgolem linear及IDA EA仍依379分列，未用自訂名稱作證據。
+
+Seen與舊名Attack低byte共用SHIP+16。下輪Decay後先同步再讓移動寫回，
++17／+18按typed Detail／Hold保存，不改正式存檔格式。
+九案5330筆SHIP78、680筆FLEET122與94組原生圖零差異，proven限記錄的入口與UI邊界。
+22個內部停點不稱已驗。命令、來源、雜湊、排除理由及正常抽樣見
+[正式收據](../internals/data/battle-spotting-game.json)、[046](../playtest/046-battle-spotting-phase.md)。
+艦隊／偵察隊來源原版標頭與近距候選移鏡待補，不用正常remake圖冒充oracle。

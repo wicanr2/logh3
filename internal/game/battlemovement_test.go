@@ -234,7 +234,7 @@ func TestMovementCommandsExecuteAndSave(t *testing.T) {
 			b := g.res.BattleMenu.Layout
 			g.Click(g.battleMenuX+b.Highlight.X-b.Window.X+2, g.battleMenuY+b.Highlight.Y-b.Window.Y+2)
 			frames := 0
-			for i := 0; i < 12000 && (g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement); i++ {
+			for i := 0; i < 12000 && (g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.state == StateTurnReport || g.state == StateEngagement); i++ {
 				if g.battleMoving {
 					if g.battlePhase != screen.BattlePhaseMovement {
 						t.Fatal("正常移動未切換階段文字")
@@ -254,7 +254,7 @@ func TestMovementCommandsExecuteAndSave(t *testing.T) {
 				g.Frame()
 				g.Tick(time.Second / 60)
 			}
-			if g.battleMoving || g.battlePreparing || g.state != StateBattle || g.battleTurn != 2 || frames < 2 {
+			if g.battleMoving || g.battlePreparing || g.battleSpotting.active || g.state != StateBattle || g.battleTurn != 2 || frames < 2 {
 				t.Fatalf("正常實行未完成／無中間幀：%v、回合%d、%d幀", g.state, g.battleTurn, frames)
 			}
 			after := g.battleUnits[selected]

@@ -34,7 +34,8 @@ func DecaySpotting(units []BattleUnit) {
 
 // UpdateSpotting 計算第三階段的兩方索敵。每支艦隊只有旗艦是 200 像素的眼睛；
 // 已放出的偵察隊是 250 像素的眼睛；有主行星的半徑由防衛力夾限後除 25。
-// 觀測者與候選位置讀 X／Y（SHIP+34/+36，規格087）。正式Game的階段續接尚待補齊。
+// 觀測者與候選位置讀 X／Y（SHIP+34/+36，規格087）。
+// 正式Game以ObserveSpotting逐觀測者續接報告；此函式供整批規則驗證。
 func UpdateSpotting(units []BattleUnit, planets []BattlePlanet) {
 	for i := range units {
 		u := &units[i]

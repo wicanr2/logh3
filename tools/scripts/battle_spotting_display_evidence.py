@@ -19,6 +19,116 @@ def digest(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
+def render_game_phase():
+    """唯一入口RAM轉接，正式Game邊界結果；不改第39／40輪原版收據。"""
+    from pngout import game_palette, write_png
+    geometry = json.loads((ROOT / "docs/internals/data/screen-battle.json").read_text())
+    f, m, status = geometry["field"], geometry["minimap"], geometry["status"]
+    regions = {"full": [0, 0, 640, 480],
+               "field": [f["x"], f["y"], f["cols"] * f["tile_w"], f["rows"] * f["tile_h"]],
+               "minimap": [m["x"], m["y"], m["w"], m["h"] + 1],
+               "status": [status["x"], status["y"], status["w"], status["h"]]}
+    frames, excluded = [], []
+    paths = ["docs/internals/data/battle-spotting-phase.json",
+             "docs/internals/data/battle-discovery-evidence.json"]
+    for source in paths:
+        data = json.loads((ROOT / source).read_bytes())
+        for case in data["cases"]:
+            base = ROOT / case["runs"][0]["path"]
+            other = ROOT / case["runs"][1]["path"]
+            for frame in case["frames"]:
+                name = frame["name"]
+                if name in ("entry", "camera-start", "seat1"):
+                    excluded.append({"scenario": case["scenario"], "frame": name,
+                                     "reason": "寫階段字前／常式內部邊界；不是正式renderer停點"})
+                    continue
+                original = base / (name + ".bin")
+                old = original.read_bytes()
+                expected = frame["hashes"].get(".bin", frame["hashes"].get(name + ".bin"))
+                assert digest(old) == expected
+                assert old == (other / (name + ".bin")).read_bytes()
+                original_png = base / (name + ".png")
+                expected_png = frame["hashes"].get(".png", frame["hashes"].get(name + ".png"))
+                expected_mem = frame["hashes"].get("-mem.bin", frame["hashes"].get(name + "-mem.bin"))
+                assert digest(original_png.read_bytes()) == expected_png
+                original_mem = base / (name + "-mem.bin")
+                assert digest(original_mem.read_bytes()) == expected_mem
+                assert original_mem.read_bytes() == (other / (name + "-mem.bin")).read_bytes()
+                assert original_png.read_bytes() == (other / (name + ".png")).read_bytes()
+                remake = ROOT / "workplace" / ("round42-spot-" + case["scenario"] + "-" + name)
+                new = remake.with_suffix(".bin").read_bytes()
+                dac = remake.with_suffix(".pal").read_bytes()
+                assert len(old) == len(new) == 640 * 480 and len(dac) == 48
+                palette = bytes((v << 2) | (v >> 4) for v in dac)
+                assert palette == bytes(game_palette(str(original_png)))
+                assert max(max(old), max(new)) < 16
+                write_png(remake.with_suffix(".png"), 640, 480, new, palette)
+                delta = remake.with_name(remake.name + "-diff").with_suffix(".png")
+                changed = bytes(int(a != b) for a, b in zip(old, new))
+                write_png(delta, 640, 480, changed, bytes([0, 0, 0, 255, 0, 0]))
+                stats = {}
+                for label, (x, y, w, h) in regions.items():
+                    points = [j * 640 + i for j in range(y, y + h) for i in range(x, x + w)]
+                    diff = [p for p in points if changed[p]]
+                    stats[label] = {"rect": [x, y, w, h], "compared": len(points),
+                                    "equal": len(points) - len(diff), "different": len(diff),
+                                    "bbox_inclusive": ([min(p % 640 for p in diff), min(p // 640 for p in diff),
+                                                        max(p % 640 for p in diff), max(p // 640 for p in diff)] if diff else None),
+                                    "max_rgb_channel_difference": max((abs(palette[3 * old[p] + c] - palette[3 * new[p] + c])
+                                                                       for p in diff for c in range(3)), default=0)}
+                files = [original, original_png, base / (name + "-mem.bin"), base / "pal.bin",
+                         remake.with_suffix(".bin"), remake.with_suffix(".pal"), remake.with_suffix(".png"), delta]
+                frames.append({"scenario": case["scenario"], "frame": name, "seed": frame["seed"],
+                               "camera": frame.get("camera_grid", frame.get("camera_pixels")),
+                               "units": len(frame["units"]), "fleets": len(frame["fleets"]),
+                               "stats": stats, "effective_palette_equal": True,
+                               "files": {str(p.relative_to(ROOT)): digest(p.read_bytes()) for p in files}})
+    assert all(frame["stats"]["full"]["different"] == 0 for frame in frames)
+    normal = []
+    for label in ("spotting-header", "spotting-completed"):
+        prefix = ROOT / "workplace" / ("round42-normal-" + label)
+        pixels, dac = prefix.with_suffix(".bin").read_bytes(), prefix.with_suffix(".pal").read_bytes()
+        assert len(pixels) == 640 * 480 and len(dac) == 48
+        write_png(prefix.with_suffix(".png"), 640, 480, pixels, bytes((v << 2) | (v >> 4) for v in dac))
+        normal.append({"frame": label, "files": {str(prefix.with_suffix(ext).relative_to(ROOT)):
+                        digest(prefix.with_suffix(ext).read_bytes()) for ext in (".bin", ".pal", ".png")}})
+    sources = paths + ["internal/game/battlespotting.go", "internal/game/battlespotting_test.go",
+                       "internal/game/battle.go", "internal/game/battlemarker.go", "internal/game/game.go",
+                       "internal/game/intro.go", "internal/rules/battle.go", "internal/rules/spotting.go",
+                       "internal/screen/battle.go", "docs/internals/data/screen-battle.json",
+                       "internal/game/battledata_test.go", "tools/scripts/battle_spotting_display_evidence.py"]
+    result = {"schema": "logh3.battle-spotting-game.v1", "comparison": "same-state",
+              "scope": "唯一原版入口的全SHIP／FLEET／WORK／PLANET、seed、實際及已顯示鏡頭；正式Game逐觀測者UI邊界",
+              "entry_method": "diagnostic RAM adapter; production parser, rule, renderer and phase continuation",
+              "input_mapping": "beginBattleSpotting對應181B:0262；continue對應原版固定命令的UI呼叫邊界，等待tick另驗，不宣稱相同wall-clock",
+              "display_state": "入口物件+6/+8重建最後已畫鏡頭，正式Frame畫背景後恢復RAM鏡頭；其餘幀只讀期望，不回注",
+              "mouse": {"s1": [100, 150], "others": [240, 240]},
+              "parent_git_head": "c749176730b4c94b6f235650db1c2a98d34acaaf", "worktree": "dirty",
+              "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c", "dosgolem_worktree": "clean",
+              "go_image_id": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+              "gui_image_id": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+              "canvas": [640, 480], "scaling": "none", "masking": "none", "frames": frames,
+              "excluded_internal_boundaries": excluded,
+              "normal_player_sample": {"comparison": "remake-normal-player", "original_parity_pass": False,
+                  "path": "battleTestGame正常主選單、防拷138、S3與戰略實行至戰場，再兩次左鍵實行；第一次戰術實行前固定seed12345678一次",
+                  "injection": "既有入口fixture；不注入情報、報告或指定觀測者，不使用索敵direct-entry",
+                  "result": "首回合有發現標頭；完整SHIP/FLEET正式存讀與第二次實行通過",
+                  "frames": normal},
+              "commands": [["tools/gui.sh", "xrun", "go", "test", "./internal/game", "-run", "^TestBattleSpotting", "-count=1", "-v"],
+                           ["tools/gui.sh", "xrun", "env", "LOGH3_MOVEMENT_OUTPUT=round42-normal", "go", "test", "./internal/game",
+                            "-run", "^TestBattleSpottingNormalWaitAndSave$", "-count=1", "-v"],
+                           ["tools/gui.sh", "xrun", "python3", "tools/scripts/battle_spotting_display_evidence.py", "phase-render"]],
+              "original_commands": {case["scenario"]: case["runs"] for source in paths
+                                     for case in json.loads((ROOT / source).read_bytes())["cases"]},
+              "source_sha256": {p: digest((ROOT / p).read_bytes()) for p in sources},
+              "limits": ["正常玩家報告與保存另驗，診斷不取代正常入口", "艦隊／偵察隊來源標頭尚未有本輪獨立原版畫面對拍",
+                         "可比UI邊界不等於原版116個內部停點全覆蓋", "完整八步與發行未完成"]}
+    output = ROOT / "docs/internals/data/battle-spotting-game.json"
+    output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
+    print(len(frames), "可比邊界；SHIP", sum(f["units"] for f in frames), "FLEET", sum(f["fleets"] for f in frames),
+          "全幀及逐區零差異；未比較內部停點", len(excluded), "SHA-256", digest(output.read_bytes()))
+
+
 def render_receipt():
     from pngout import write_png
     geometry = json.loads((ROOT / "docs/internals/data/screen-battle.json").read_text())
@@ -82,6 +192,9 @@ def render_receipt():
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "phase-render":
+        render_game_phase()
+        return
     if len(sys.argv) > 1 and sys.argv[1] == "render":
         render_receipt()
         return

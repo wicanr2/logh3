@@ -22,6 +22,7 @@ func TestBattleDoubleClickAdvances(t *testing.T) {
 		t.Fatalf("第一下就推了回合：%d → %d", start, g.battleTurn)
 	}
 	g.Click(240, 240)
+	settleBattleExecution(t, g)
 	if g.battleTurn != start+1 {
 		t.Fatalf("連點兩下該推一個回合：%d → %d", start, g.battleTurn)
 	}

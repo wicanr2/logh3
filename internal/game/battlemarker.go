@@ -33,6 +33,18 @@ func (g *Game) refreshBattleMarkers() {
 		rules.UpdateBattleMarker(u, forced, true)
 		if g.slot != nil {
 			g.slot.ApplyBattleMarker(g.battleUnitPool(*u), *u)
+			if r := g.slot.ShipAt(g.battleUnitPool(*u)); len(r) == rules.ShipRecord {
+				r[0x2F] = byte(rules.BattleCachedSprite(*u, forced, int(r[0x2F])))
+			}
+			if u.Squadron == 0 && u.Fleet >= 0 && (u.Fleet+1)*rules.FleetRecord <= len(g.slot.Fleet) {
+				d := rules.BlankSprite
+				if forced || u.Detail == rules.SpottingMax {
+					if bf := g.battleFleet(u.Fleet); bf != nil {
+						d = rules.DirectionIndex(bf.Facing)
+					}
+				}
+				g.slot.Fleet[u.Fleet*rules.FleetRecord+0x6A] = byte(d)
+			}
 		}
 	}
 }

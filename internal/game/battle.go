@@ -30,6 +30,8 @@ func (g *Game) StartBattle(region int) {
 	g.battleTurn = 1
 	g.battlePhase = screen.BattlePhaseInput
 	g.battleUnits = nil
+	g.battleSpotting = battleSpottingState{highlight: -1}
+	g.battleDisplayKnown = false
 	g.battleFleets = nil
 	g.battleScore = [2]int{}
 	g.battleOver = false
@@ -120,7 +122,7 @@ func clampRow(r, rows int) int {
 
 // AdvanceBattleTurn經準備及逐幀交錯移動後續接結算；完整八步對齊仍依規格062。
 func (g *Game) AdvanceBattleTurn() {
-	if g.battlePreparing || g.battleMoving {
+	if g.battlePreparing || g.battleMoving || g.battleSpotting.active {
 		return
 	}
 	if g.battleRand == nil {
@@ -132,6 +134,11 @@ func (g *Game) AdvanceBattleTurn() {
 			continue
 		}
 		rules.RevealEnemiesIfBlind(g.battleUnits, faction, g.battleTurn)
+	}
+	// +16 bit0與typed Seen共用同一格。先保存衰減／揭露結果，
+	// 避免移動寫回舊Attack低byte而重新設回上一輪Seen。
+	for _, r := range g.preparationUnits() {
+		g.saveSpottingUnit(r)
 	}
 	if g.tactic != nil {
 		b := ai.Battlefield{
@@ -179,6 +186,10 @@ func (g *Game) advanceBattleTurnAfterPreparation() {
 }
 
 func (g *Game) advanceBattleTurnAfterMovement() {
+	g.beginBattleSpotting(g.advanceBattleTurnAfterSpotting)
+}
+
+func (g *Game) advanceBattleTurnAfterSpotting() {
 	g.battleLosses = g.resolveBattleTurn()
 	for _, l := range g.battleLosses {
 		if l.Scorer >= 0 && l.Scorer < 2 {
@@ -221,7 +232,7 @@ func (g *Game) advanceBattleTurnAfterMovement() {
 	g.finishBattleTurn()
 }
 
-// finishBattleTurn 是一回合最後的幾步：要塞砲倒數、索敵、回合數與結束判定。
+// finishBattleTurn 是一回合最後的幾步：要塞砲倒數、回合數與結束判定。
 //
 // 原版的第 ⑧ 步（`181B:03F0` → `185C:0001`，規格 062）排在這裡的最前面：全滅判定、
 // 報告、清掉空的組、重建戰場表（子步 8-1）。報告會停下來等，所以走 `battleFinalPhase`
@@ -236,7 +247,7 @@ func (g *Game) finishBattleTurn() {
 func (g *Game) endBattleTurn() {
 	g.battlePhase = screen.BattlePhaseInput
 	rules.FortressGunTickAll(g.battlePlanets)
-	rules.UpdateSpotting(g.battleUnits, g.battlePlanets)
+	g.battleSpotting = battleSpottingState{highlight: -1}
 	g.refreshBattleMarkers()
 	g.battleTurn++
 	// 九個回合打完就結束（`docs/re/92`）；中途一方歸零也結束。
@@ -261,6 +272,12 @@ func (g *Game) endBattleTurn() {
 //
 // 第二項「資料」開的是什麼還沒逆向，所以只把選單關掉。
 func (g *Game) battleClick(x, y int) {
+	if g.battleSpotting.active {
+		if g.battleSpotting.stage == 2 || g.battleSpotting.stage == 5 {
+			g.battleSpotting.ticks = 0
+		}
+		return
+	}
 	if g.battlePreparing || g.battleMoving {
 		return
 	}
@@ -509,7 +526,7 @@ func (g *Game) battleScroll(x, y int) {
 
 // RightHold 是右鍵按著沒放的每一幀：戰場上就再捲一格。
 func (g *Game) RightHold(x, y int) {
-	if g.state != StateBattle || !g.battleScrollHeld || g.battleMoving || g.battlePreparing {
+	if g.state != StateBattle || !g.battleScrollHeld || g.battleMoving || g.battlePreparing || g.battleSpotting.active {
 		return
 	}
 	g.moveMouse(x, y)

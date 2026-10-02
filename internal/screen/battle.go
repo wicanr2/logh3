@@ -168,6 +168,7 @@ const (
 	BattlePhaseSupply
 	BattlePhaseRepair
 	BattlePhaseMovement
+	BattlePhaseSpotting
 )
 
 // BattleStatus 是右側狀態欄要顯示的東西。
@@ -229,6 +230,7 @@ type StatusSpec struct {
 		PhaseSupply   label   `json:"phase_supply"`
 		PhaseRepair   label   `json:"phase_repair"`
 		PhaseMovement label   `json:"phase_movement"`
+		PhaseSpotting label   `json:"phase_spotting"`
 		Date          label   `json:"date"`
 		TurnPrefix    label   `json:"turn_prefix"`
 		TurnSuffix    label   `json:"turn_suffix"`
@@ -269,6 +271,8 @@ func DrawBattleStatus(s *BattleSpec, fb *gfx.Framebuffer, fnt *font.Font, st Bat
 			codes = p.Labels.PhaseRepair.Codes
 		case BattlePhaseMovement:
 			codes = p.Labels.PhaseMovement.Codes
+		case BattlePhaseSpotting:
+			codes = p.Labels.PhaseSpotting.Codes
 		}
 		drawFull(fb, fnt, p.LabelX, p.Rows.Phase, codes, p.Ink)
 		return
@@ -381,6 +385,12 @@ func DrawBattleUnits(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
 // DrawBattleFleetDirections沿084畫完整可見旗艦的八向圖示；色號0透明。
 func DrawBattleFleetDirections(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
 	fleets []rules.BattleFleet, units []rules.BattleUnit, viewer int, v BattleView) {
+	DrawBattleFleetDirectionsCached(s, fb, sprites, fleets, units, viewer, v, nil)
+}
+
+// 087情報先升級，方向圖示沿FLEET+6A既有快取，不提前套新Detail。
+func DrawBattleFleetDirectionsCached(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
+	fleets []rules.BattleFleet, units []rules.BattleUnit, viewer int, v BattleView, cached map[int]int) {
 	if s == nil || len(sprites) < 8 {
 		return
 	}
@@ -395,10 +405,13 @@ func DrawBattleFleetDirections(s *BattleSpec, fb *gfx.Framebuffer, sprites []*as
 				break
 			}
 		}
+		d := rules.DirectionIndex(f.Facing)
+		if n, ok := cached[f.Index]; ok {
+			d, visible = n, n >= 0 && n < 8
+		}
 		if !visible {
 			continue
 		}
-		d := rules.DirectionIndex(f.Facing)
 		t := sprites[d]
 		if t == nil {
 			continue
@@ -611,16 +624,26 @@ func DrawMinimapUnits(s *BattleSpec, fb *gfx.Framebuffer, units []rules.BattleUn
 // （原版 `2BE1:0564` 寫死 11，`docs/internals/46`）。
 const FormationMarkTile = 11
 
+// 25DB:0E78的暫時物件用圖塊10，優先FF，畫在分隊之上。
+func DrawBattleSpottingHighlight(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image, at [2]int, v BattleView) {
+	drawBattleMarks(s, fb, sprites, [][2]int{at}, v, 10)
+}
+
 // DrawFormationMarks 把「編隊」的格子標記畫上去。
 //
 // slots 是格子的**世界座標左上角**。色號 0 是透空的——收據 `s3form` 上
 // 那 118 個 0 的位置留著戰場底色，沒有被塗掉。
 func DrawFormationMarks(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
 	slots [][2]int, v BattleView) {
-	if s == nil || FormationMarkTile >= len(sprites) {
+	drawBattleMarks(s, fb, sprites, slots, v, FormationMarkTile)
+}
+
+func drawBattleMarks(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
+	slots [][2]int, v BattleView, tile int) {
+	if s == nil || tile >= len(sprites) {
 		return
 	}
-	t := sprites[FormationMarkTile]
+	t := sprites[tile]
 	fx, fy := s.Field.X, s.Field.Y
 	fw, fh := s.Field.Cols*s.Field.TileW, s.Field.Rows*s.Field.TileH
 	ox, oy := v.Col*s.Field.TileW, v.Row*s.Field.TileH

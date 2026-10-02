@@ -39,7 +39,7 @@ func TestBattleStartsOnContact(t *testing.T) {
 		g.battleRegion, len(g.battleUnits), len(g.battleFleets))
 }
 
-// TestBattleTurnsDeduct 開戰之後推幾個回合，艘數應該往下掉（`docs/spec/018`）。
+// TestBattleTurnsDeduct 開戰之後推九個回合，艘數應該往下掉（`docs/spec/018`）。
 func TestBattleTurnsDeduct(t *testing.T) {
 	g := newTestGame(t)
 	if g.res.Entries == nil {
@@ -59,20 +59,20 @@ func TestBattleTurnsDeduct(t *testing.T) {
 	if before == 0 {
 		t.Fatal("開戰時一艘都沒有")
 	}
-	for i := 0; i < 10; i++ {
+	for i := 0; i < rules.MaxBattleTurns && !g.battleOver; i++ {
 		g.AdvanceBattleTurn()
 		settleBattleExecution(t, g)
 	}
 	after := total()
 	if after >= before {
-		t.Errorf("推十個回合都沒扣到：%d → %d", before, after)
+		t.Errorf("推完戰鬥回合都沒扣到：%d → %d", before, after)
 	}
 	for i, u := range g.battleUnits {
 		if u.Ships < 0 {
 			t.Fatalf("分隊 %d 的艘數變成負的：%d", i, u.Ships)
 		}
 	}
-	t.Logf("十個回合：%d → %d 艘（少了 %d）", before, after, before-after)
+	t.Logf("九個回合：%d → %d 艘（少了 %d）", before, after, before-after)
 }
 
 // TestBattleEndsAfterNineTurns 九個回合打完就結束（`docs/re/92`）。

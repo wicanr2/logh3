@@ -362,3 +362,12 @@ force != 0 或 +0x17 == 3：
 
 正式36圖示、10單觀測者情報及兩案標記全78-byte驗證通過；正常命令／renderer／存讀保持。
 畫面抽樣只有移動後圖示216像素改變，標為remake-before-after；完整第三階段仍未驗收。
+
+## 第42輪正式第三階段資料鏈
+
+parser從+16 bit0、+17、+18載入Seen／Detail／Hold。每觀測者情報先保存，
+逐筆展示才更新SHIP+2F與旗艦FLEET+6A；CPU情報與人類呈現分開。
+下輪清Seen後同步舊名Attack低byte，避免移動寫回舊Seen，不改存檔格式。
+九案94邊界5330筆SHIP78、680筆FLEET122相同；正常兩回合與完整原池存讀通過。
+限定來源與停止線見[087](../spec/087-battle-spotting-phase.md)、[046](../playtest/046-battle-spotting-phase.md)。
+完整第三階段尚未CONFORMED，不由資料測試替代動態畫面與其他八步。

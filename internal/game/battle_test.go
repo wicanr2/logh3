@@ -163,10 +163,10 @@ func TestAdvanceBattleTurnMoves(t *testing.T) {
 // 按正式Tick完成已啟動回合；不繞過準備、移動或演出續接。
 func settleBattleExecution(t *testing.T, g *Game) {
 	t.Helper()
-	for i := 0; i < 12000 && (g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement); i++ {
+	for i := 0; i < 12000 && (g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.state == StateTurnReport || g.state == StateEngagement); i++ {
 		g.Tick(time.Second / 60)
 	}
-	if g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement {
+	if g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.state == StateTurnReport || g.state == StateEngagement {
 		t.Fatalf("回合續接未停止：%v/%d", g.state, g.battleTurn)
 	}
 }

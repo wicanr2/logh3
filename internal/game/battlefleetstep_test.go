@@ -77,7 +77,7 @@ func TestFleetMoveNormalExecuteAndSave(t *testing.T) {
 	}
 	b := g.res.BattleMenu.Layout
 	g.Click(g.battleMenuX+b.Highlight.X-b.Window.X+2, g.battleMenuY+b.Highlight.Y-b.Window.Y+2)
-	for i := 0; i < 4000 && (g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement); i++ {
+	for i := 0; i < 4000 && (g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.state == StateTurnReport || g.state == StateEngagement); i++ {
 		g.Frame()
 		g.Tick(time.Second / 60)
 	}

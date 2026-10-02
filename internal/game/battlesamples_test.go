@@ -84,7 +84,7 @@ func TestBattleShippedSavesNormalExecuteAndSave(t *testing.T) {
 			g.MoveMouse(x, y)
 			g.Click(x, y)
 			supplyFrames, repairFrames, movingFrames := 0, 0, 0
-			for i := 0; i < 12000 && (g.battlePreparing || g.battleMoving || g.state == StateTurnReport || g.state == StateEngagement); i++ {
+			for i := 0; i < 12000 && (g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.state == StateTurnReport || g.state == StateEngagement); i++ {
 				if g.battlePreparationSupply != nil {
 					supplyFrames++
 					if g.battlePhase != screen.BattlePhaseSupply {
@@ -109,7 +109,7 @@ func TestBattleShippedSavesNormalExecuteAndSave(t *testing.T) {
 				g.Frame()
 				g.Tick(time.Second / 60)
 			}
-			if g.battlePreparing || g.battleMoving || g.state != StateBattle || g.battleTurn != 2 || g.battlePhase != screen.BattlePhaseInput {
+			if g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.state != StateBattle || g.battleTurn != 2 || g.battlePhase != screen.BattlePhaseInput {
 				t.Fatalf("實行未回正常輸入：state=%v battleTurn=%d phase=%v", g.state, g.battleTurn, g.battlePhase)
 			}
 			if c.slot == 8 && movingFrames == 0 {

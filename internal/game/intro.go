@@ -53,6 +53,10 @@ func (g *Game) Tick(d time.Duration) {
 	if d <= 0 {
 		return
 	}
+	if g.state == StateBattle && g.battleSpotting.active {
+		g.spottingTick(d)
+		return
+	}
 	if g.state == StateBattle && g.battleMoving {
 		g.continueBattleMovement()
 		return
