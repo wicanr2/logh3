@@ -11,6 +11,11 @@
 
 ## 這裡的東西怎麼寫
 
+第二戰場剩餘呈現來源：[第三十七輪](../goal/2026-10-02-battle-render-order-round-37.md)，工作項目 #79。
+分隊繪製次序契約：[085](../spec/085-battle-unit-draw-order.md)。
+調查紀錄：[研究377](../re/377-battle-render-order.md)。
+分隊鍵分級索引：[battle-draw-order.json](data/battle-draw-order.json)，重生入口[原版核對工具](../../tools/scripts/battle_order_evidence.py)。
+
 戰場傷害與方位規則接續範圍：[第二十四輪](../goal/2026-10-02-battle-rules-round-24.md)，工作項目 #53。
 
 三項戰場規則勘誤：[規格 078](../spec/078-battle-rule-corrections.md)、

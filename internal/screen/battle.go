@@ -3,6 +3,7 @@ package screen
 import (
 	"encoding/json"
 	"os"
+	"sort"
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
@@ -348,7 +349,14 @@ func DrawBattleUnits(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
 	fx, fy := s.Field.X, s.Field.Y
 	fw, fh := s.Field.Cols*s.Field.TileW, s.Field.Rows*s.Field.TileH
 	ox, oy := v.Col*s.Field.TileW, v.Row*s.Field.TileH
-	for _, u := range units {
+	// 原版物件的word +4由艦隊與分隊序號組成，由大到小畫（085）。
+	// 偵察分隊的-1轉成原版0xFF；排序副本，保留規則與選取的次序。
+	order := append([]rules.BattleUnit(nil), units...)
+	key := func(u rules.BattleUnit) uint16 {
+		return uint16(uint8(u.Fleet)) | uint16(uint8(u.Squadron))<<8
+	}
+	sort.SliceStable(order, func(i, j int) bool { return key(order[i]) > key(order[j]) })
+	for _, u := range order {
 		if u.Out {
 			continue
 		}

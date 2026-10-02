@@ -187,12 +187,20 @@ func TestMovementSecondBattleRecordsMatchOriginal(t *testing.T) {
 			t.Fatalf("%s方向樣本%d，不是原版440", f.Name, directionPixels)
 		}
 		diff := 0
+		fieldDiff := 0
 		for j := range want {
 			if got[j] != want[j] {
 				diff++
+				x, y := j%640, j/640
+				if x >= field.X && x < field.X+field.Cols*field.TileW && y >= field.Y && y < field.Y+field.Rows*field.TileH {
+					fieldDiff++
+				}
 			}
 		}
-		t.Logf("%s：18艦隊／135分隊完整紀錄與440個方向像素相同；全畫面尚差%d／307200，未通過全畫面對拍", f.Name, diff)
+		if fieldDiff != 0 {
+			t.Errorf("%s正式Field有%d個差異像素，分隊繪製次序尚未符合085", f.Name, fieldDiff)
+		}
+		t.Logf("%s：18艦隊／135分隊完整紀錄與440個方向像素相同；Field差%d，全畫面尚差%d／307200，未通過全畫面對拍", f.Name, fieldDiff, diff)
 	}
 	check(0)
 	g.battlePhase = screen.BattlePhaseMovement

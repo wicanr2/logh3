@@ -1,6 +1,58 @@
 # 045：索敵回收與移動畫面
 
-## 目前續證：第三十六輪第二戰場資料與方向圖示
+## 目前續證：第三十七輪分隊繪製次序
+
+2026-10-02，父提交`f673f591460eb0f3065c4876c5e66c16a06ad0c4`、測試時dirty，#79保持open。
+[本輪計畫](../goal/2026-10-02-battle-render-order-round-37.md)、[研究377](../re/377-battle-render-order.md)、
+[085](../spec/085-battle-unit-draw-order.md)及[分級索引](../internals/data/battle-draw-order.json)保存證據與審查。
+原版仍使用第36輪同一S1局面、43邊界雙跑及dosgolem f7523f9／clean；比較等級維持same-state，
+正式Game只在入口還原一次。正常玩家入口另列，未外推完整流程同狀態。
+
+原版35D1:02AB的第二鍵是物件word+4，由大到小。43幀153物件清單全部與比較器相符，
+135個分隊鍵各自唯一，優先值均128，低byte為艦隊、上byte為分隊序號，偵察隊為0xFF。
+可丟棄探測讓Field零差異後移除；085先DRAFT、審查READY，再接正式DrawBattleUnits。
+排序只用副本，不改規則、命中測試或存檔；沒有深入通用排序helper。
+
+新增Field斷言使修正前43幀全部失敗。修正後全43幀的數字如下，無遮罩、裁切或縮放。
+
+| 區域 | 每幀比較像素 | 不同像素 | 最大通道差 | 差異bounding box |
+|---|---:|---:|---:|---|
+| 全畫面 | 307200 | 38 | 130 | x500..604、y203 |
+| Field | 161280 | 0 | 0 | 無 |
+| 小地圖 | 16384 | 0 | 0 | 無 |
+| 狀態面板 | 32000 | 0 | 0 | 無 |
+
+18筆艦隊／135筆分隊全紀錄及每幀440個方向像素維持相同。
+原版、remake、差分PNG及逐區統計均保存，完整畫面仍未通過，38點仍unknown。
+沒有豁免203列，不改原golden，046只維持舊S3所驗範圍。
+
+- 修正前收據`workplace/battle79-round37-before-render-receipt.json`，SHA-256
+  `c88607ead53c3dc869f958c9be02606924f43587751bc45a136a8d9c39423a66`。
+- 修正後收據`workplace/battle79-round37-after-render-receipt.json`，SHA-256
+  `92d24ffb5f60eb7238359ad6ba62cbe91e29f78eccfaedeb6c2cb2dd6fa15b06`。
+- [物件鍵索引](../internals/data/battle-draw-order.json)，SHA-256
+  `153af77c85801a66806525aa3d1aef49116ff26631763c5ed39eb77c774e7fa9`。
+- 目標測試6個PASS事件、零skip，既有S3全35幀及三份正常玩家存讀維持。
+  log SHA-256 `0d8a9c22721d43d7cca59c18499afa5f61308d964b76cd26124450120811cac9`。
+- 標準18個套件通過或無測試，count=1；log SHA-256
+  `82eb9b0acc3224658c9ad13f2608d85354a57c149a164de8daaeeae85c247cfc`。
+- 正式主選單、S1載入、戰略／戰術實行至移動GUI已檢視，無狀態注入。
+  PNG SHA-256 `ed083fa7c40ee65d33c1491dd020927fc78f7d3553717d40cc092aa82348729b`，與前輪正常抽樣相同。
+
+收據工具保存前輪固定原版輸入鏈、本輪四次來源探索旗標、原始IDA匯出、工具image身份、
+全部來源與log雜湊。修正前renderer另綁父提交快照，不以修正後程式冒充修正前身份。
+
+```sh
+bash tools/gui.sh xrun sh -c 'LOGH3_MOVEMENT_OUTPUT=battle79-round37-after go test -count=1 -v -run "TestMovementSecondBattleRecordsMatchOriginal|TestMovementAllBoundariesMatchOriginal|TestBattleShippedSavesNormalExecuteAndSave" ./internal/game'
+bash tools/gui.sh test -count=1 ./internal/... ./cmd/...
+LOGH3_EXTRA_RO=/home/anr2/cht/logh3 bash tools/py.sh /work/tools/scripts/battle_second_render_receipt.py battle79-round37-after f673f591460eb0f3065c4876c5e66c16a06ad0c4
+bash tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script 'move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 282; click 318 208; click 544 125; click 560 125; tick 2000; move 600 240; click; click; tick 10' -shot-bin /src/workplace/battle79-round37-s1-gui-movement.bin -shot /src/workplace/battle79-round37-s1-gui-movement.png -state-out /src/workplace/battle79-round37-s1-gui-movement.state -shot-after 2
+```
+
+085只限分隊排序CONFORMED；080／083與完整八步仍未完成。下一步先校正y203實際DI及來源，
+正常資源結果與後續索敵／戰鬥順序另續。不重查已完成的資料、方向、Field及正常存讀鏈。
+
+## 第三十六輪第二戰場資料與方向圖示
 
 2026-10-02，父提交`61e7687c444c1a68f16188094f54a037f9ace76a`、測試時dirty，#79保持open。
 路由與READY閘門已重查；[研究376](../re/376-second-battle-render.md)、[084](../spec/084-battle-fleet-directions.md)

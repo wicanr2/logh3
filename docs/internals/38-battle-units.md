@@ -7,6 +7,15 @@
 
 艦艇池的位置從 `ds:CFB4` 的 far 指標拿，一筆 78 位元組。
 
+## 第37輪分隊繪製次序
+
+35D1:02AB先比較顯示物件+3的unsigned byte，較小先畫；相同時按+4的unsigned word由大到小，proven。
+S1全部43邊界的135個分隊物件優先值均128，word+4低byte為SHIP+1艦隊索引，高byte為SHIP+3序號。
+每幀135鍵全部唯一，偵察分隊序號為0xFF；typed的-1在繪製時轉uint8。
+正式DrawBattleUnits只排序副本，不改規則或選取次序。43幀Field零差異，全畫面仍各差203列38點。
+[研究377](../re/377-battle-render-order.md)、[分級索引](data/battle-draw-order.json)、[085](../spec/085-battle-unit-draw-order.md)
+及[驗證045](../playtest/045-battle-movement-render.md)保存完整範圍。任意非分隊物件的相等鍵置換未驗。
+
 ## 第36輪第二戰場限定續證
 
 S1星域8、第1回合，原版18艦隊／135分隊，41圈移動加入口與終態共43邊界。
@@ -14,7 +23,7 @@ S1星域8、第1回合，原版18艦隊／135分隊，41圈移動加入口與終
 正式引擎唯一入口注入後，所有122-byte艦隊與78-byte分隊紀錄零差異，proven。
 正常S1初態與原版不同，正常玩家證據另列，不宣稱整段流程同狀態。
 [逐圈全紀錄](data/battle-second-frames.json)、[研究376](../re/376-second-battle-render.md)與[驗證045](../playtest/045-battle-movement-render.md)保存範圍。
-方向圖示18920像素已驗，重疊排序與203列仍unknown，完整畫面未通過。
+當輪方向圖示18920像素已驗，重疊排序與203列仍unknown，完整畫面未通過；排序後續已由第37輪解出。
 
 ## 執行期艦艇記錄的欄位
 
