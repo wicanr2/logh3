@@ -76,7 +76,7 @@ func TestBattleMatchesOracle(t *testing.T) {
 	}
 	DrawMinimap(s, fb, cells, BattleView{Col: 66, Row: 30})
 	DrawMinimapPlanets(s, fb, rules.PlanetSites(cells, s.Field.TileW, s.Field.TileH))
-	DrawMinimapUnits(s, fb, battleMinimapUnits)
+	DrawMinimapUnits(s, fb, minimapOriginalUnits(t, "s3ai6.bin"))
 	DrawBattleGridResidue(s, fb)
 	// 收據上的滑鼠游標由 dosgolem 畫、remake 不畫，因此只排除這一處。
 	skip := func(x, y int) bool {
@@ -119,19 +119,6 @@ func TestBattleMatchesOracle(t *testing.T) {
 		t.Fatalf("與收據差 %d 個像素，第一個在 (%d,%d)：收據 %d、remake %d",
 			bad, firstX, firstY, want[firstY*640+firstX], fb.Pix[firstY*640+firstX])
 	}
-}
-
-// battleMinimapUnits 是收據 `s3ai6` 裡會在小地圖上點出來的分隊
-// （艦艇記錄的 `+0x1A`／`+0x1C` 不是 `0xFFFF` 的那些，`docs/re/89`）。
-var battleMinimapUnits = []rules.BattleUnit{
-	{Fleet: 12, Squadron: 0, Faction: 0, X: 416, Y: 280},
-	{Fleet: 12, Squadron: 1, Faction: 0, X: 419, Y: 258},
-	{Fleet: 12, Squadron: 2, Faction: 0, X: 394, Y: 277},
-	{Fleet: 12, Squadron: 3, Faction: 0, X: 422, Y: 235},
-	{Fleet: 12, Squadron: 4, Faction: 0, X: 371, Y: 274},
-	{Fleet: 12, Squadron: 5, Faction: 0, X: 396, Y: 255},
-	{Fleet: 12, Squadron: 6, Faction: 0, X: 424, Y: 213},
-	{Fleet: 12, Squadron: 7, Faction: 0, X: 349, Y: 272},
 }
 
 // statusTiles 讀 `FRAME.BLK`（狀態欄的框是它的圖塊，`docs/re/142`）。

@@ -469,23 +469,23 @@ func DrawMinimapPlanets(s *BattleSpec, fb *gfx.Framebuffer, sites []rules.Planet
 // DrawMinimapUnits 在小地圖上點出分隊（`docs/re/89`）。
 //
 // 每個分隊一個像素，位置是世界座標除以 `UnitScale`（縱向再加一列），
-// 顏色是把底下的值 **XOR** 上陣營的墨色（帝國 5、同盟 9）。原版的來源
-// 欄位是艦艇記錄的 `+0x1A`／`+0x1C`（不是畫在戰場上用的
-// `+0x28`／`+0x2A`），值為 `0xFFFF` 的分隊不點。
+// +19的C0均設才畫，以低4位顏色XOR底色（規格082）。原版的來源
+// 欄位是艦艇記錄的標記快照 `+0x1A`／`+0x1C`，不取現在位置
+// `+0x34`／`+0x36`；值為 `0xFFFF` 的分隊不點。
 func DrawMinimapUnits(s *BattleSpec, fb *gfx.Framebuffer, units []rules.BattleUnit) {
 	m := &s.Minimap
 	if m.W <= 0 || m.H <= 0 || len(m.UnitInk) == 0 {
 		return
 	}
 	for _, u := range units {
-		px, py, ok := m.minimapPixel(u.X, u.Y)
+		if u.MarkerFlags&0xC0 != 0xC0 {
+			continue
+		}
+		px, py, ok := m.minimapPixel(u.MarkerX, u.MarkerY)
 		if !ok {
 			continue
 		}
-		ink := m.UnitInk[0]
-		if u.Faction >= 0 && u.Faction < len(m.UnitInk) {
-			ink = m.UnitInk[u.Faction]
-		}
+		ink := uint8(u.MarkerFlags & 0x0F) // 擦／重畫均沿用已記錄顏色（規格082）。
 		fb.Set(px, py, fb.At(px, py)^ink)
 	}
 }

@@ -154,7 +154,7 @@
 `+0x34`（`docs/internals/34`、`docs/re/85`、`docs/re/119`）。
 
 畫哪一塊由記錄自己帶著：塊號存在 `+0x2F`，繪製時直接取用。填它的是
-`25DB:03E8`（`docs/re/85`）：
+`25DB:03E9`（[研究85勘誤](../re/85-units-are-sprite-tiles.md)、[研究374](../re/374-battle-marker-lifecycle.md)）：
 
 ```
 基底 ＝ 陣營（艦艇記錄 +0x00）為 0 → 20，否則 → 50
@@ -264,3 +264,23 @@
 與原版量到的完全相同（`rules.DistributeLosses`）。
 
 **一輪的總損失怎麼算出來的還沒解。**
+
+## 小地圖標記初始化與更新
+
+來源：[研究374](../re/374-battle-marker-lifecycle.md)、[規格082](../spec/082-battle-minimap-markers.md)，
+證據等級proven，原始CS:IP與bytes由[分級索引](data/battle-marker-semantics.json)保留。
+原版96案完整78-byte前後記錄及正常7艦隊／55分隊雙跑在[資料JSON](data/battle-markers.json)。
+
+| 原版欄位／入口 | 已證實語意 |
+|---|---|
+| 艦艇+19 bit7／bit6／低4位 | 要點／目前點著／已記錄顏色，與戰場Out旗標分開 |
+| 艦艇+1A／+1C | 畫上時保存的現在位置快照，擦除沿用此快照 |
+| 297B:097F／09E1 | 佈陣一般與未放出索敵隊旗標重設3F；不重設未知快照bytes |
+| 26E5:00AC | 逐戰場一般與索敵隊呼叫1727:02E2；一般己方force=1，敵方0，未放出索敵force=0 |
+| 1727:02E2 | 無force且Detail=0則擦再清bit7；其餘設bit7，符合條件才畫 |
+| 1727:0207／0298 | 地圖啟用才點／擦，點上記C0與陣營色5／9／4；已有bit6時不覆蓋快照或顏色 |
+| 1727:0324 | 實體像素(480+x/16,76+y/16)，低4位顏色XOR底色 |
+
+8F1C bit0可額外force，但其他位元及兩席切換未在此次正式接線範圍。
+正常S3初態8筆己方一般分隊C5，其餘47筆3F。renderer只畫C0均設的快照，
+標記五個bytes獨立寫回原池並經正式存讀保留；驗證見[045續證](../playtest/045-battle-movement-render.md)。

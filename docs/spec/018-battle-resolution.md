@@ -50,11 +50,14 @@
 - 在有主星域打行星的攻方整支揭露為 3、hold=2；AI 從畫面第 7 回合起
   完全看不到敵人時，把敵方一般分隊揭露為 3、hold=6。
 
-`Detail` 保存敵方對該分隊的可見層級；己方走 `25DB:03E8` 的完整分支：
+`Detail` 保存敵方對該分隊的可見層級；己方走 `25DB:03E9` 的完整分支：
 旗艦顯示艦隊編號，其餘顯示艦種。敵方升到 Detail 3 時也走同一分支。
 `TestSpottingMatchesS3FleetMoveReceipt` 以 `s3fltmove.bin` 的 55 筆在場分隊
 逐筆核對 `+0x17` 與 `+0x16` bit0，詳見
 `docs/playtest/012-battle-spotting.md`。
+
+2026-10-02定位勘誤：舊03E8是前函式retf，圖示入口為03E9；原bytes與caller見
+[研究374](../re/374-battle-marker-lifecycle.md)，沒有改圖示分支或本節索敵驗收範圍。
 
 ## 射程（`READY`）
 

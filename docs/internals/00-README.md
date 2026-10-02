@@ -207,3 +207,8 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [第三十二輪：索敵回收與移動畫面](../goal/2026-10-02-battle-movement-round-32.md)：接續正常回收、原池重用與產品畫面收據。
 - [移動畫面收據工具](../../tools/scripts/battle_movement_render_receipt.py)：依371固定收據及正式Game.Frame記錄全畫面差分，不排除未對齊區域。
 - [移動畫面與正常回收驗證045](../playtest/045-battle-movement-render.md)：隱藏圖示、點選及游標修正，原池再放出與原生差分。
+- [第三十三輪：小地圖標記生命週期](../goal/2026-10-02-battle-marker-round-33.md)：接續正常初始化、更新及正式呈現。
+- [小地圖標記原版探針](../../tools/scripts/battle_marker_probe.go)：固定原版RAM與seed，驗開關及座標快照；只限受控常式。
+- [正常標記原版重播](../../tools/battle_marker_oracle.sh)：固定S3檢查點、輸入與seed，確認佈陣及顯示開關的玩家呼叫鏈。
+- [標記生命週期研究374](../re/374-battle-marker-lifecycle.md)、[規格082](../spec/082-battle-minimap-markers.md)：正常佈陣、顯示開關與已畫快照的呈現契約。
+- [標記收據產生器](../../tools/scripts/battle_marker_receipts.py)、[標記資料](data/battle-markers.json)及[語意索引](data/battle-marker-semantics.json)：96案、正常55筆與原始指令分級。

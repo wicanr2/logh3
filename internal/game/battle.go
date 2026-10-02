@@ -61,6 +61,7 @@ func (g *Game) StartBattle(region int) {
 		joined = append(joined, f.Index)
 	}
 	g.battleFleets = g.slot.BattleFleetsFor(joined)
+	g.initBattleMarkers()
 	g.battlePlanets = g.battleRegionPlanets(region)
 	g.battleRally = g.battleRegionRally(region)
 	g.battleMenu = false
@@ -234,6 +235,7 @@ func (g *Game) finishBattleTurn() {
 func (g *Game) endBattleTurn() {
 	rules.FortressGunTickAll(g.battlePlanets)
 	rules.UpdateSpotting(g.battleUnits, g.battlePlanets)
+	g.refreshBattleMarkers()
 	g.battleTurn++
 	// 九個回合打完就結束（`docs/re/92`）；中途一方歸零也結束。
 	g.battleOver = g.battleTurn > rules.MaxBattleTurns || battleDecided(g.battleUnits)

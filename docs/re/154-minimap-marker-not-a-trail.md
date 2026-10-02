@@ -129,3 +129,11 @@ bit6 有的：      80 82 83 84 85 86 87 88 109 135 137 138 139 140 141 147
 - 小地圖那一層（`screen.DrawMinimapUnits`）本來就照 `docs/re/89` 畫，
   逐位元組相同，不用改。
 - **沒有航跡線要畫。**
+
+## 2026-10-02續證
+
+上述「缺開關收據、正式畫法不用改」已由[研究374](374-battle-marker-lifecycle.md)續證取代。
+原版1727:02E2的96案完整記錄及正常26E5:00AC呼叫55筆均雙跑相同。
+己方force解釋Detail=0仍點著；正式renderer須讀+19與+1A／+1C，而非現在XY。
+實作及限定驗收見[規格082](../spec/082-battle-minimap-markers.md)與
+[驗證045續證](../playtest/045-battle-movement-render.md)，原始XOR與非航跡結論保持。

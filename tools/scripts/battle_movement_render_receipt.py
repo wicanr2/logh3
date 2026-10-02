@@ -8,6 +8,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import sys
 
 from pngout import game_palette, write_png
@@ -16,8 +17,8 @@ root, work = Path("/ref"), Path("workplace")
 assert work.stat().st_uid == os.getuid()
 prefix = sys.argv[3] if len(sys.argv) > 3 else "battle79-round32-diagnostic"
 normal_prefix = sys.argv[4] if len(sys.argv) > 4 else "battle79-round32-normal-fixed"
-assert prefix.startswith("battle79-round32-") and "/" not in prefix
-assert normal_prefix.startswith("battle79-round32-") and "/" not in normal_prefix
+assert re.fullmatch(r"battle79-round[0-9]+-[a-z0-9-]+", prefix)
+assert re.fullmatch(r"battle79-round[0-9]+-[a-z0-9-]+", normal_prefix)
 
 
 def sha(path):
@@ -38,6 +39,9 @@ regions = {
 sources = ["internal/game/battlemovement_test.go", "internal/game/battlemovement.go",
            "internal/game/battlecmd.go", "internal/game/game.go", "internal/game/battle.go",
            "internal/rules/battlemovement.go", "internal/rules/battle.go",
+           "internal/rules/battlemarker.go", "internal/game/battlemarker.go",
+           "internal/game/battlemarker_test.go", "internal/game/battlepreparation_test.go",
+           "docs/spec/082-battle-minimap-markers.md", "docs/internals/data/battle-markers.json",
            "internal/screen/battle.go", "docs/internals/data/screen-battle.json",
            "tools/scripts/battle_movement_render_receipt.py"]
 report = {

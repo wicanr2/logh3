@@ -132,6 +132,8 @@ func hydratePreparationGame(t *testing.T, g *Game, mem []byte) {
 	copy(g.slot.Planets.Data[rules.PlanetHeader:], mem[0x53132:0x53132+81*82])
 	g.LoadSlot(g.slot)
 	g.StartBattle(26)
+	// 診斷在正常進場後明示還原原版回合初態，包括新進場會重設的標記。
+	copy(g.slot.Ship, mem[0x668B2:0x668B2+352*78])
 	g.battleTurn = 6
 	g.battleRand = rules.NewRand(0x12345678)
 	for i := range g.battleUnits {
@@ -142,6 +144,10 @@ func hydratePreparationGame(t *testing.T, g *Game, mem []byte) {
 		u.TargetX = int(binary.LittleEndian.Uint16(rec[0x28:]))
 		u.TargetY = int(binary.LittleEndian.Uint16(rec[0x2A:]))
 		u.Out = rec[0x1E]&0x80 != 0
+		u.MarkerFlags = int(rec[0x19])
+		u.Marked = u.MarkerFlags&0x80 != 0
+		u.MarkerX = int(binary.LittleEndian.Uint16(rec[0x1A:]))
+		u.MarkerY = int(binary.LittleEndian.Uint16(rec[0x1C:]))
 	}
 	for i := range g.battlePlanets {
 		p := &g.battlePlanets[i]

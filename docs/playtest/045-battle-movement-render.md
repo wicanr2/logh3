@@ -1,5 +1,80 @@
 # 045：索敵回收與移動畫面
 
+## 目前續證：第三十三輪小地圖標記
+
+2026-10-02，工作項[#79](https://github.com/wicanr2/logh3/issues/79)，父提交
+`be187b1bff7fa32f8831302886c2ec69362901a8`加本輪修改，測試時dirty。
+本節是現行結果，下方第32輪數字與失敗保留為歷史。來源見
+[研究374](../re/374-battle-marker-lifecycle.md)、[規格082](../spec/082-battle-minimap-markers.md)。
+原版bundle、dosgolem HEAD、兩個端點局面、seed、鏡頭、畫布、素材及image與下方身份表相同。
+原版既有entry／end雙跑雜湊重新核對相同；另以正常S3輸入新跑兩份標記初始化收據，
+完整命令、計數、seed注入及55筆原池記錄在[標記JSON](../internals/data/battle-markers.json)。
+
+正式renderer改讀+19旗標及低4位顏色、+1A／+1C快照；StartBattle重設3F，
+正常輸入恢復時依viewer刷新。五個bytes獨立寫回原池，不覆蓋其他資源與移動欄位。
+整組比較維持nearby-state，未遮罩、裁切或縮放；零差異只限指定區域與端點。
+
+| 邊界／區域 | (x,y,w,h) | 比較像素 | 相同 | 不同 | 最大通道差 | 差異bounding box |
+|---|---|---:|---:|---:|---:|---|
+| entry全畫面 | (0,0,640,480) | 307200 | 303229 | 3971 | 243 | [480,241,607,395] |
+| end全畫面 | (0,0,640,480) | 307200 | 303249 | 3951 | 243 | [480,241,607,395] |
+| entry／end戰場視窗 | (16,60,448,360) | 各161280 | 各161280 | 0 | 0 | 無 |
+| entry／end小地圖 | (480,75,128,128) | 各16384 | 各16384 | 0 | 0 | 無 |
+| entry階段面板 | (464,220,160,200) | 32000 | 28029 | 3971 | 243 | [480,241,607,395] |
+| end階段面板 | (464,220,160,200) | 32000 | 28049 | 3951 | 243 | [480,241,607,395] |
+
+修正前收據`workplace/battle79-round33-before-render-receipt.json`，SHA-256
+`f163725fcf193aa9d36e1798796676e6e3f01bc65b9df922f50323dfda18c3b5`，小地圖各差35。
+修正後收據`workplace/battle79-round33-after-render-receipt.json`，SHA-256
+`ce3370d8b4717cc58a6b61b64aaf6faaf0652d32a2141db3b466e7fe9dbd3c33`，小地圖各差0。
+兩份保存完整原圖、remake、差分、逐區統計與產品來源雜湊；下列PNG均在本機workplace。
+剩餘全畫面差異全部屬於未對齊的階段面板，未核准豁免。
+
+| 第33輪PNG | SHA-256 |
+|---|---|
+| `battle79-round33-after-entry-original.png` | `53348a02f06d8725dbcbf4bf31539261cab8f4642dc27349e1c6eb5920f45a56` |
+| `battle79-round33-after-entry-remake.png` | `2b5f6e071d67f8b66cd6fd520a2ed13b9f8103ea056e8ef3e450d3596cbe4eea` |
+| `battle79-round33-after-entry-difference.png` | `2abd759ddc5a28a6a750b0d9fe2d10feb8bb0bc4613f70ea4aa5866757b3d1ae` |
+| `battle79-round33-after-end-original.png` | `339606f012b1018966074099d8a04e83d25c1bb7830d42a007f031a091fd4c48` |
+| `battle79-round33-after-end-remake.png` | `b8931ad2237f93b8844a12f63ebd22221bed2a0fb53a343ee61b0865da35fa44` |
+| `battle79-round33-after-end-difference.png` | `6cc92a741c01f39258c5f1d5f3ec6fb8cab9d56896a148b3ba140f724bc23a48` |
+
+原版96案完整78-byte記錄與正式UpdateBattleMarker／ApplyBattleMarker全數相同。
+`TestBattleMarkersNormalEntryAndSave`由主選單到S3正常實行，無單位、旗標或座標注入；
+55筆原池旗標及8筆已畫快照符合原版，首次戰術實行前完整SHIP 27456／FLEET 3904 bytes存讀相同。
+這是標記欄位比較，不外推完整進場狀態或畫面same-state。
+正常索敵放出、移動、歸隊、回收及再放出仍通過，原池81／單位31保持；
+回收後完整SHIP／FLEET正式存讀相同，四張正常階段圖的雜湊保存在修正後收據。
+正常正式cmd/gin3到第2回合的PNG已檢視，
+`battle79-round33-normal-gui.png` SHA-256
+`eb41879ca7d87b48fd1276365ed7a4b333542e4e596a7a850f548b971385b65b`。
+
+```sh
+bash tools/gui.sh xrun sh -c 'go test -count=1 -v -run TestBattleMarkerMatchesOriginal ./internal/rules && go test -count=1 -v -run "TestMinimapMatchesOracle|TestBattleMatchesOracle" ./internal/screen && LOGH3_MOVEMENT_OUTPUT=battle79-round33-after go test -count=1 -v -run "TestGameMovementPhaseMatchesOriginal|TestScoutRecoverAndRelaunchNormal|TestBattleScrollMatchesOracle" ./internal/game'
+bash tools/gui.sh xrun go test -count=1 -v -run TestBattleMarkersNormalEntryAndSave ./internal/game
+LOGH3_EXTRA_RO=/home/anr2/cht/logh3 bash tools/py.sh tools/scripts/battle_movement_render_receipt.py be187b1bff7fa32f8831302886c2ec69362901a8 dirty battle79-round33-after battle79-round33-after
+bash tools/gui.sh test -count=1 ./internal/... ./cmd/...
+LOGH3_GUI_PREFIX=fcmd-s3-found bash tools/gui_check.sh
+```
+
+正常cmd/gin3輸入與下方第32輪命令相同，只將輸出prefix換成battle79-round33。
+
+| 第33輪本機log | 結果／SHA-256 |
+|---|---|
+| `battle79-round33-target-fixed.log` | 96案、兩份舊小地圖、完整移動、正常回收及12組鏡頭通過，零skip；`379d0716355abc2f29cde12edf356e77c5a3b7bfcb512257e2252cbba3ba56df` |
+| `battle79-round33-normal-entry.log` | 正常初始化與首次實行前完整存讀通過；`f0e4c67fc471ab0186239bdd5ee197ff5e8aedf270cfb0d27fc2183bb9f4aa1f` |
+| `battle79-round33-standard.log` | 18個標準產品套件通過或無測試，count=1；`94c8cb1df791c9cfee674f587f5e10b302a970e1d5790075c4f5e921d705c80c` |
+| `battle79-round33-gui.log` | 正常S3 GUI逐位元組相同；`3b9b080e7ecf23ca565e065ed04b3eb6c986bbef1c4c29534c4474dde14faec6` |
+
+初次舊收據測試因誤用艦艇+02篩星域而漏掉全部標記，失敗log
+`battle79-round33-target.log` SHA-256
+`4dc96ff06a64e6e605ee330dd95c87e8e3c3e4989655af2dcb26edab87ad6831`。
+原版該欄為0，改讀DS:9898艦隊名單後同容器同命令通過，沒有改原版期望畫面。
+082只完成正常單人標記範圍；080維持READY，#79及062八步仍未完成。
+後續驗階段面板、中間動畫、第二戰場及其餘八步；不重開已驗標記鏈。
+
+## 第三十二輪歷史收據
+
 工作項：[#79](https://github.com/wicanr2/logh3/issues/79)。父提交32af819。
 正常索敵隊放出、移動、歸隊、回收及再放出，原池81與單位31保持。
 回收後攔截點選已修正；畫面另依原版完整資料與鏡頭做診斷，不宣稱完整第二階段完成。

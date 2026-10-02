@@ -1,0 +1,132 @@
+{
+  "schema": "logh3.semantic-index.v1",
+  "inputs": {
+    "1727": "d004318810ca4cab751271ccac827f548e12c8c39e192c844892cc696d254655",
+    "26E5": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+    "297B": "086cc513ac4ae4f7f50eae224fb183742e5365cc524c0059cc5c980f77990261"
+  },
+  "entries": [
+    {
+      "kind": "function",
+      "original_location": "1727:0207",
+      "semantic": "bit7有／bit6無／地圖啟用才點上，記顏色與現在位置快照",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1727:026C",
+      "original_bytes_hex": "0c c0",
+      "semantic": "點上後記bit7／bit6",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1727:0271",
+      "original_bytes_hex": "26 88 47 19",
+      "semantic": "寫入標記旗標與低4位顏色",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1727:027E",
+      "original_bytes_hex": "26 89 44 1a",
+      "semantic": "寫入現在X快照",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1727:028E",
+      "original_bytes_hex": "26 89 47 1c",
+      "semantic": "寫入現在Y快照",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "function",
+      "original_location": "1727:0298",
+      "semantic": "依C0狀態及啟用條件擦標記，清bit6",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1727:02D8",
+      "original_bytes_hex": "26 80 27 bf",
+      "semantic": "擦除後只清bit6",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "function",
+      "original_location": "1727:02E2",
+      "semantic": "force或Detail決定bit7開關，96案完整記錄互證",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "1727:031C",
+      "original_bytes_hex": "26 80 67 19 7f",
+      "semantic": "force=0且Detail=0清bit7",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "function",
+      "original_location": "1727:0324",
+      "semantic": "世界座標除16加小地圖實體原點，呼叫XOR點",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "function",
+      "original_location": "26E5:00AC",
+      "semantic": "逐戰場一般分隊與索敵隊，依viewer及全域force條件更新圖示和標記",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "26E5:0149",
+      "original_bytes_hex": "f6 06 1c 8f 01",
+      "semantic": "全域8F1C bit0允許force；其他位元未知",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "26E5:0188",
+      "original_bytes_hex": "26 80 7f 3a ff",
+      "semantic": "ScoutMode=FF使索敵force為0",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "function",
+      "original_location": "297B:08D8",
+      "semantic": "佈陣時重設一般及索敵隊Detail與標記旗標；其餘控制流保持原定位",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:097F",
+      "original_bytes_hex": "26 c6 47 19 3f",
+      "semantic": "一般分隊標記旗標重設3F",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    },
+    {
+      "kind": "instruction",
+      "original_location": "297B:09E1",
+      "original_bytes_hex": "26 c6 44 19 3f",
+      "semantic": "未放出索敵隊標記旗標重設3F",
+      "grade": "proven",
+      "source": "docs/re/374-battle-marker-lifecycle.md"
+    }
+  ]
+}

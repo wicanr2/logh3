@@ -1,6 +1,9 @@
 package screen
 
 import (
+	"crypto/sha256"
+	"encoding/binary"
+	"encoding/hex"
 	"os"
 	"path/filepath"
 	"testing"
@@ -40,7 +43,7 @@ func TestMinimapMatchesOracle(t *testing.T) {
 	fb := gfx.NewFramebuffer(0)
 	DrawMinimap(s, fb, cells, BattleView{Col: 66, Row: 30})
 	DrawMinimapPlanets(s, fb, rules.PlanetSites(cells, s.Field.TileW, s.Field.TileH))
-	DrawMinimapUnits(s, fb, minimapUnits)
+	DrawMinimapUnits(s, fb, minimapOriginalUnits(t, "s3fight.bin"))
 	m := &s.Minimap
 	bad, firstX, firstY := 0, -1, -1
 	for y := m.Y; y < m.Y+m.H; y++ {
@@ -63,23 +66,43 @@ func TestMinimapMatchesOracle(t *testing.T) {
 	}
 }
 
-// minimapUnits 是收據 `s3fight` 裡會在小地圖上點出來的十六個分隊
-// （艦艇記錄的 `+0x1A`／`+0x1C` 不是 `0xFFFF` 的那些，`docs/re/89`）。
-var minimapUnits = []rules.BattleUnit{
-	{Fleet: 12, Squadron: 0, Faction: 0, X: 416, Y: 280},
-	{Fleet: 12, Squadron: 1, Faction: 0, X: 419, Y: 258},
-	{Fleet: 12, Squadron: 2, Faction: 0, X: 394, Y: 277},
-	{Fleet: 12, Squadron: 3, Faction: 0, X: 422, Y: 235},
-	{Fleet: 12, Squadron: 4, Faction: 0, X: 371, Y: 274},
-	{Fleet: 12, Squadron: 5, Faction: 0, X: 396, Y: 255},
-	{Fleet: 12, Squadron: 6, Faction: 0, X: 424, Y: 213},
-	{Fleet: 12, Squadron: 7, Faction: 0, X: 349, Y: 272},
-	{Fleet: 28, Squadron: 0, Faction: 1, X: 1330, Y: 941},
-	{Fleet: 31, Squadron: 0, Faction: 1, X: 1320, Y: 812},
-	{Fleet: 31, Squadron: 1, Faction: 1, X: 1293, Y: 830},
-	{Fleet: 31, Squadron: 2, Faction: 1, X: 1347, Y: 794},
-	{Fleet: 31, Squadron: 3, Faction: 1, X: 1311, Y: 856},
-	{Fleet: 31, Squadron: 4, Faction: 1, X: 1338, Y: 839},
-	{Fleet: 31, Squadron: 5, Faction: 1, X: 1364, Y: 821},
-	{Fleet: 31, Squadron: 6, Faction: 1, X: 1356, Y: 865},
+// 直接讀原版+19／+1A／+1C，不把現在位置當標記快照（規格082）。
+func minimapOriginalUnits(t *testing.T, name string) []rules.BattleUnit {
+	t.Helper()
+	b, err := os.ReadFile(filepath.Join("../..", "workplace", name))
+	if os.IsNotExist(err) {
+		t.Skip("缺原版標記RAM，跳過，不用代用品")
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := map[string]string{
+		"s3fight.bin": "0f8a91acb618d0ec508e857853be1cfe249ec8fe522c8aacac658ec03cbaf060",
+		"s3ai6.bin":   "427c15414ce8d265551a05ecd2d49e8157ecede82a80154b6319c7ced4a8d3e0",
+	}[name]
+	h := sha256.Sum256(b)
+	if want == "" || len(b) != 1<<20 || hex.EncodeToString(h[:]) != want {
+		t.Fatal("原版標記RAM身份不同")
+	}
+	const ds = 0x54B30
+	pool := int(binary.LittleEndian.Uint16(b[ds+0xCFB4:])) + 16*int(binary.LittleEndian.Uint16(b[ds+0xCFB6:]))
+	// +02在這兩份原版記錄是0，不能作星域篩選。依DS:9898戰場艦隊名單取單位。
+	count := int(binary.LittleEndian.Uint16(b[ds+0x9894:]))
+	if count > 32 || pool < 0 || pool+352*rules.ShipRecord > len(b) {
+		t.Fatal("原版標記表越界")
+	}
+	fleets := make(map[byte]bool, count)
+	for _, fleet := range b[ds+0x9898 : ds+0x9898+count] {
+		fleets[fleet] = true
+	}
+	var units []rules.BattleUnit
+	for i := 0; i < 352; i++ {
+		r := b[pool+i*rules.ShipRecord : pool+(i+1)*rules.ShipRecord]
+		if !fleets[r[1]] {
+			continue
+		}
+		units = append(units, rules.BattleUnit{Faction: int(r[0]), MarkerFlags: int(r[0x19]),
+			MarkerX: int(binary.LittleEndian.Uint16(r[0x1A:])), MarkerY: int(binary.LittleEndian.Uint16(r[0x1C:]))})
+	}
+	return units
 }
