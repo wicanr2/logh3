@@ -81,6 +81,8 @@ type BattleFleet struct {
 	// Action 是艦隊記錄 `+0x48` 的低四位。「戰鬥」成功之後寫 1
 	// （`1CC5:08BD`）。
 	Action int `json:"action,omitempty"`
+	// MoveFlags保留+49全byte，單步只修改bit0（規格081）。
+	MoveFlags int `json:"move_flags,omitempty"`
 }
 
 // NewBattleFleet 從艦隊記錄與算好的能力做出一支戰鬥用的艦隊。
@@ -102,7 +104,24 @@ func NewBattleFleet(index int, rec []byte, ab [FleetAbilityCount]byte) BattleFle
 	if len(rec) > 0x3C {
 		f.Integrity = int(rec[0x3C])
 	}
+	if len(rec) > 0x49 {
+		f.MoveFlags = int(rec[0x49])
+	}
 	return f
+}
+
+// ApplyBattleFleetMovement 將已驗的單步結果保存到原FLEET，未知byte保留。
+// 命令資料及完整分隊存讀鏈另由規格080接續；不改存檔格式。
+func (s *Slot) ApplyBattleFleetMovement(f BattleFleet) bool {
+	if s == nil || f.Index < 0 || f.Index >= len(s.Fleet)/FleetRecord {
+		return false
+	}
+	rec := s.Fleet[f.Index*FleetRecord : (f.Index+1)*FleetRecord]
+	rec[0x49], rec[0x4A] = byte(f.MoveFlags), byte(f.Facing)
+	binary.LittleEndian.PutUint32(rec[0x56:], uint32(f.Budget))
+	binary.LittleEndian.PutUint16(rec[0x5C:], uint16(f.X))
+	binary.LittleEndian.PutUint16(rec[0x5E:], uint16(f.Y))
+	return true
 }
 
 // 防禦係數的兩項就是艦隊記錄的 `+0x40`／`+0x41`，也就是能力的第 3、4 項。

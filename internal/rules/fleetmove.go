@@ -17,6 +17,8 @@ type FleetMover struct {
 	Budget       int  // +0x56／+0x58 這一回合剩下的行程，16.16
 	PerTurn      int  // +0x52／+0x54 每回合行程，16.16
 	ShortMove    bool // +0x48 bit4：短程平移，途中不轉身
+	Action       int  // +0x48 完整byte；ShortMove另設時合併bit4
+	MoveFlags    int  // +0x49 完整byte；bit0為此次未抵達的回轉
 	Arrived      bool
 }
 
@@ -83,12 +85,44 @@ func turnFleet(f *FleetMover, bearing int) bool {
 // 朝向，以每一步重新計算的目的地方位直線平移。兩支抵達後都逐步轉向
 // TargetFacing，對齊後不再扣額度（`docs/re/294`）。
 //
-// `passable` 回 true 表示那個點站得住（原版 `2583:040C` 回 0）。傳 nil
-// 當成處處可站。回 true 表示這一次還有得做，false 表示額度用完了。
+// 舊bool介面只表達暢通／一般阻擋；正式Game用AdvanceFleetStep區分地形
+// FFFF與敵佔位。返回的是原版AL「本次有處理」，不是座標必有變化。
 func AdvanceFleet(f *FleetMover, passable func(x, y int) bool) bool {
+	var check func(int, int) int
+	if passable != nil {
+		check = func(x, y int) int {
+			if passable(x, y) {
+				return 0
+			}
+			return 1
+		}
+	}
+	return AdvanceFleetStep(f, nil, check)
+}
+
+// AdvanceFleetStep 對應1C03:006A的單次分派（規格081）。normal只包含
+// 該艦隊的一般分隊；check回0／FFFF／敵池索引+1，nil視為暢通。
+func AdvanceFleetStep(f *FleetMover, normal []*BattleUnit, check func(x, y int) int) bool {
 	if f == nil {
 		return false
 	}
+	for _, u := range normal {
+		if u == nil {
+			continue
+		}
+		u.Attack &^= 2
+		if u.Action == 0x7F && u.Moving() {
+			u.Attack |= 2
+		}
+	}
+	action := f.Action
+	if f.ShortMove {
+		action |= 16
+	}
+	if f.Budget < fleetStepCost || (action != 0 && action != 1 && action != 16 && action != 17) {
+		return false
+	}
+	f.MoveFlags &^= 1
 	if f.X == f.DestX && f.Y == f.DestY {
 		if turnFleet(f, f.TargetFacing) {
 			return true
@@ -99,18 +133,22 @@ func AdvanceFleet(f *FleetMover, passable func(x, y int) bool) bool {
 		return false
 	}
 	bearing := atan256(f.DestX-f.X, f.DestY-f.Y)
-	if !f.ShortMove {
+	turned := false
+	if action&16 == 0 {
 		if bearing != f.Facing {
-			turnFleet(f, bearing)
+			turned = turnFleet(f, bearing)
+			if turned {
+				f.MoveFlags |= 1
+			}
 		}
 	}
 	if int64(f.Budget) < fleetStepCost {
-		return false
+		return turned
 	}
 	nx, ny := f.DestX, f.DestY
 	if Distance16(f.X, f.Y, f.DestX, f.DestY) > fleetStepCost {
 		stepFacing := f.Facing
-		if f.ShortMove {
+		if action&16 != 0 {
 			stepFacing = bearing
 		}
 		nx, ny = StepAlong(f.X, f.Y, stepFacing, BattleStep)
@@ -120,10 +158,59 @@ func AdvanceFleet(f *FleetMover, passable func(x, y int) bool) bool {
 		d = 1 // 原版：算出來是 0 就當 1，免得原地不動又不扣額度
 	}
 	f.Budget -= int(d)
-	if passable == nil || passable(nx, ny) {
+	blocked := 0
+	if check != nil {
+		blocked = check(nx, ny)
+	}
+	if blocked == 0 {
 		f.X, f.Y = nx, ny
+	} else if blocked == MovementTerrainBlocked {
+		// 原版傳的是舊座標與同兩格指標，初始差為零；不是欲前進方位。
+		f.X, f.Y = AvoidBattleObstacle(f.X, f.Y, f.X, f.Y, BattleStep, check)
 	}
 	return true
+}
+
+// MovementTerrainBlocked 對應2583:040C的地形FFFF；其他非0為敵佔位。
+const MovementTerrainBlocked = 0xFFFF
+
+// MovementOccupant 保留戰場清單順序、池身份與目前單位位置。
+type MovementOccupant struct {
+	Pool int
+	Unit *BattleUnit
+}
+
+// BattleMovementCheck 對應2583:040C／17A0:06D7的玩家可見通行結果。
+func BattleMovementCheck(terrain *BattleTerrain, cells []uint8, occupants []MovementOccupant,
+	faction, x, y int) int {
+	if terrain != nil && cells != nil && !terrain.Passable(cells, x, y) {
+		return MovementTerrainBlocked
+	}
+	for _, o := range occupants {
+		u := o.Unit
+		if u == nil || o.Pool < 0 || u.Faction == faction || u.Kind == 7 || u.Action&0x80 != 0 {
+			continue
+		}
+		if abs32(x-u.X) < 16 && abs32(y-u.Y) < 16 {
+			return o.Pool + 1
+		}
+	}
+	return 0
+}
+
+// AvoidBattleObstacle 保留2583:0451的完整±16搜尋順序，連0及128的
+// 重複候選也保留（規格081）；全部受阻回舊座標。
+func AvoidBattleObstacle(x, y, candidateX, candidateY, step int, check func(x, y int) int) (int, int) {
+	bearing := atan256(candidateX-x, candidateY-y)
+	for delta := 0; delta <= 128; delta += 16 {
+		for _, angle := range []int{bearing + delta, bearing - delta} {
+			nx, ny := StepAlong(x, y, angle&255, step)
+			if check == nil || check(nx, ny) == 0 {
+				return nx, ny
+			}
+		}
+	}
+	return x, y
 }
 
 // RunFleetTurn 把一回合跑完：補滿額度，然後一直「實行」到額度不足一步。

@@ -479,8 +479,9 @@ func (g *Game) advanceOrderedFleets() {
 		return
 	}
 	cells := g.battleCells(g.battleRegion)
-	passable := func(x, y int) bool {
-		return g.res.Terrain == nil || cells == nil || g.res.Terrain.Passable(cells, x, y)
+	occupants := make([]rules.MovementOccupant, 0, len(g.battleUnits))
+	for i := range g.battleUnits {
+		occupants = append(occupants, rules.MovementOccupant{Pool: g.battleUnitPool(g.battleUnits[i]), Unit: &g.battleUnits[i]})
 	}
 	for i := range g.battleFleets {
 		f := &g.battleFleets[i]
@@ -488,9 +489,13 @@ func (g *Game) advanceOrderedFleets() {
 			continue
 		}
 		var idx []int
+		var normal []*rules.BattleUnit
 		for k := range g.battleUnits {
 			if g.battleUnits[k].Fleet == f.Index {
 				idx = append(idx, k)
+				if g.battleUnits[k].Squadron >= 0 {
+					normal = append(normal, &g.battleUnits[k])
+				}
 			}
 		}
 		if len(idx) == 0 {
@@ -500,10 +505,28 @@ func (g *Game) advanceOrderedFleets() {
 			X: f.X, Y: f.Y, DestX: f.DestX, DestY: f.DestY,
 			Facing: f.Facing, TargetFacing: f.TargetFacing,
 			TurnSpeed: f.TurnSpeed, PerTurn: f.PerTurn, ShortMove: f.ShortMove,
+			Action: f.Action, MoveFlags: f.MoveFlags,
 		}
-		rules.AdvanceFleetTurn(&m, g.res.Formation, g.battleUnits, idx, passable)
+		check := func(x, y int) int {
+			return rules.BattleMovementCheck(g.res.Terrain, cells, occupants, f.Faction, x, y)
+		}
+		rules.RefillFleetBudget(&m)
+		for rules.AdvanceFleetStep(&m, normal, check) {
+		}
+		rules.StationSquadrons(&m, g.res.Formation, g.battleUnits, idx)
 		f.X, f.Y, f.Facing = m.X, m.Y, m.Facing
 		f.Budget = m.Budget
+		f.MoveFlags = m.MoveFlags
+		// 存檔SyncFleets會從戰略Fleet再次寫+5C/+5E；兩層須同步（規格081）。
+		for j := range g.fleets {
+			if g.fleets[j].Index == f.Index {
+				g.fleets[j].X, g.fleets[j].Y = f.X, f.Y
+				break
+			}
+		}
+		if g.slot != nil {
+			g.slot.ApplyBattleFleetMovement(*f)
+		}
 		if m.Arrived {
 			f.Ordered = false
 		}

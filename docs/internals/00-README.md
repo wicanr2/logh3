@@ -43,6 +43,11 @@
 第二階段移動接續：[第二十九輪](../goal/2026-10-02-battle-movement-round-29.md)、
 [研究371](../re/371-battle-movement-phase.md)、[草稿080](../spec/080-battle-movement-phase.md)、
 [分級索引與局面摘要](data/battle-movement-phase.json)；原版重播入口與限制由研究371管理。
+單步／避障接續：[第三十輪](../goal/2026-10-02-battle-movement-round-30.md)、
+[研究372](../re/372-battle-step-and-collision.md)。
+艦隊單步與碰撞的限定正式契約：[規格081](../spec/081-battle-fleet-step.md)、
+[分級原版102案](data/battle-step.json)；重生入口為`tools/scripts/battle_step_receipts.py`。
+限定同狀態資料與正常保存鏈驗收：[驗證043](../playtest/043-battle-fleet-step.md)。
 
 音色庫來源與完整授權索引：[`player-music-library.json`](data/player-music-library.json)，
 用途與原版素材邊界見 [`17-mds.md`](17-mds.md)。
