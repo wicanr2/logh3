@@ -55,6 +55,45 @@ func TestIssueParseToleratesCRLF(t *testing.T) {
 	}
 }
 
+// 原 Issue 可在路徑反引號外附章節定位；附註不能進入生成連結。
+// 不完整證據行須拒絕，不能把 TrimPrefix／TrimSuffix 任一成功當成有效格式。
+func TestIssueEvidencePaths(t *testing.T) {
+	for _, c := range []struct {
+		name, line, want string
+	}{
+		{"standard", "- `docs/re/1.md`", "docs/re/1.md"},
+		{"section", "- `docs/re/1.md` §三", "docs/re/1.md"},
+		{"sections", "- `docs/re/1.md` §六、§七", "docs/re/1.md"},
+		{"spaces", "- `docs/re/有 空白.md`", "docs/re/有 空白.md"},
+		{"missing-prefix", "- docs/re/1.md`", ""},
+		{"missing-closing", "- `docs/re/1.md", ""},
+		{"empty-path", "- ``", ""},
+		{"bare-path", "docs/re/1.md", ""},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			it := Item{ID: "x", Status: StatusOpen, Layer: "feature", Evidence: []string{"docs/re/1.md"}, Verify: Verify{Kind: "manual"}}
+			body, err := IssueBody(&it)
+			if err != nil {
+				t.Fatal(err)
+			}
+			body = strings.Replace(body, "- `docs/re/1.md`", c.line, 1)
+			got, err := ParseIssue(IssueRecord{Number: 88, Body: body, State: "OPEN"})
+			if c.want == "" {
+				if err == nil {
+					t.Fatalf("不完整格式被接受：%q -> %v", c.line, got.Evidence)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !reflect.DeepEqual(got.Evidence, []string{c.want}) {
+				t.Fatalf("路徑含附註或被截斷：%v，應為%q", got.Evidence, c.want)
+			}
+		})
+	}
+}
+
 // 開頭標記與機器區塊的 id 不同時要拒絕——那通常是複製了別張的本文。
 func TestIssueParseRejectsMismatchedID(t *testing.T) {
 	it := Item{ID: "a", Status: StatusOpen, Layer: "re", Title: "t", Verify: Verify{Kind: "manual"}}

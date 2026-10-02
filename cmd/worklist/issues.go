@@ -191,8 +191,10 @@ func ParseIssue(rec IssueRecord) (Item, error) {
 			if line == "" {
 				continue
 			}
-			e := strings.TrimSuffix(strings.TrimPrefix(line, "- `"), "`")
-			if e == line {
+			// 路徑只在第一個反引號區段；章節附註仍保留於原 Issue。
+			// 前綴與結尾都必須存在，避免接受只剩半邊的格式。
+			e, _, closed := strings.Cut(strings.TrimPrefix(line, "- `"), "`")
+			if !strings.HasPrefix(line, "- `") || !closed || strings.TrimSpace(e) == "" {
 				return it, fmt.Errorf("#%d 的證據那一段有一行不是 \"- `路徑`\"：%q", rec.Number, line)
 			}
 			it.Evidence = append(it.Evidence, e)

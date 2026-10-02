@@ -1,5 +1,72 @@
 # 045：索敵回收與移動畫面
 
+## 目前續證：第三十五輪隨附存檔正常路徑
+
+2026-10-02，#79保持open。父提交`1a7c5e5b1aef3eee08baf75aa4d5ca9c9aa71087`加本輪測試，測試時dirty。
+沿079／080／083的既有READY範圍，未改產品規則或原版收據期望。
+本輪是remake正常玩家抽樣，沒有雙方同狀態比較，不設對拍通過等級。
+第34輪固定35邊界的same-state結論與舊nearby-state保持。
+
+[正常測試](../../internal/game/battlesamples_test.go)走主選單、防拷、系統指令載入隨附存檔、
+戰略實行、戰術實行、Input還原及正式SaveSlot／LoadSlot。
+不注入艦隊、損傷、座標、資源或戰場；僅在首次戰略／戰術實行前固定各自seed。
+戰略`D3DC167E`與產品預設相同，戰術`12345678`；不重擲，不宣稱整流程骰序與原版相同。
+正式cmd/gin3的GUI抽樣另走產品預設seed，不當成受控Game同狀態比較。
+
+| 存檔 | 首戰星域／戰略回合 | 艦隊／分隊 | 移動中間幀 | 補給／修理結果幀 | 完整存讀 |
+|---|---|---|---:|---|---|
+| S1，DT8 | 8／94 | 16／103 | 47 | 0／0 | SHIP 27456及FLEET 3904 bytes相同 |
+| S2，DT9 | 13／347 | 6／45 | 0 | 0／0 | 同上 |
+| S3，DTA | 26／381 | 4／31 | 0 | 0／0 | 同上 |
+
+三份均回戰術第2回合與Input。S1有28支受損分隊，全部屬電腦陣營，玩家分隊未受損；
+來源庫存存在也不表示玩家結果窗必須出現。三份首戰都沒有種類5補給艦。
+正常資源結果幀仍未驗。S1固定再實行七回合的探索亦未出現玩家修理結果，不以重擲找局面。
+這只覆蓋三份隨附存檔，不表示全部玩家存檔已驗。
+
+正式S1移動與S2第2回合640×480 PNG已檢視：
+`workplace/battle79-round35-s1-gui-movement.png` SHA-256
+`94decd8af5671ad2d6745c3fda62ad32cc60d80e7442d8a989a06b484c65c148`；
+`workplace/battle79-round35-s2-gui-input-corrected.png` SHA-256
+`1119b99bec78d93388b138665a9b80217e4dbd5d562c13a191ee55f1e8be92a9`。
+首份S2腳本誤把兩次點擊當成戰術實行，實際只關OccupationReport與TurnReport。
+延長等待不能越過模態報告；唯讀逐段觀測確認後，補兩次正常點擊才到第2回合。
+舊第1回合圖與失敗log保留，不分類成產品缺陷。探測誤以Int讀uint8、收據誤認48-byte DAC為768 bytes亦只屬驗證工具失敗；改正後同命令通過。
+
+完整收據`workplace/battle79-round35-normal-receipt.json` SHA-256
+`551a2d2b187a3e67f1bc95a0a49a4597abce690920e6055d83ad259ef54d6960`，
+由[收據工具](../../tools/scripts/battle_samples_receipt.py)重生，保存七張Game原生PNG、兩張正式GUI、
+色號／DAC、18份存檔及5份必要原版素材、來源與14份log的雜湊。目標4個通過事件、零skip；
+18個標準產品套件通過或無測試，count=1。工具鏈沿用第34輪身份，沒有重建image。
+
+```sh
+bash tools/gui.sh xrun sh -c 'LOGH3_MOVEMENT_OUTPUT=battle79-round35-normal go test -count=1 -v -run TestBattleShippedSavesNormalExecuteAndSave ./internal/game'
+bash tools/gui.sh test -count=1 ./internal/... ./cmd/...
+# S1正常移動中；S2需先關兩張報告，再選戰術實行。
+bash tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script 'move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 282; click 318 208; click 544 125; click 560 125; tick 2000; move 600 240; click; click; tick 10' -shot-bin /src/workplace/battle79-round35-s1-gui-movement.bin -shot /src/workplace/battle79-round35-s1-gui-movement.png -shot-after 2
+bash tools/gui.sh run ./cmd/gin3 -orig /orig -data /src/docs/internals/data -script 'move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240; move 600 340; click 544 125; click 560 145; click 300 302; click 318 208; click 544 125; click 560 125; tick 15000; move 600 240; click; click; click; click; tick 4000' -shot-bin /src/workplace/battle79-round35-s2-gui-input-corrected.bin -shot /src/workplace/battle79-round35-s2-gui-input-corrected.png -state-out /src/workplace/battle79-round35-s2-gui-input-corrected.state -shot-after 2
+LOGH3_EXTRA_RO=/home/anr2/cht/logh3 bash tools/py.sh tools/scripts/battle_samples_receipt.py 1a7c5e5b1aef3eee08baf75aa4d5ca9c9aa71087 dirty
+```
+
+原版探索另存`workplace/oracle/battle79-round35-s1-explore/`，dosgolem完整HEAD為
+`f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c`、工作樹clean，旗標與所有輸出雜湊在收據。
+父snapshot為`dosgolem-logh3/workplace/fcmd/fcmd-base.state`，279725 bytes，SHA-256
+`c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26`。
+沒有新增poke；初態seed由固定snapshot而來，收尾仍D3DC167E。
+750000000步仍停戰略艦隊過場，四個戰術入口命中均0；不是第二戰場收據，未與remake比較。
+下一步固定續過原版過場取戰場初態，才做第二戰場同狀態；正常補給／修理結果亦仍缺。
+080／083保持READY，062完整八步未完成，不重做已驗三份remake路徑。
+
+收尾另由[#88](https://github.com/wicanr2/logh3/issues/88)修共用Issue證據解析，
+第一個反引號區段才是路徑，章節附註保留於原Issue；缺前綴、結尾或空路徑均拒絕。
+舊解析八案中五案失敗，修正後八案及21個頂層工具測試通過、零skip。
+完整快照另外抓到#32的原版收據敘述與三條縮寫；將敘述移出路徑段、補實際檔名，
+保留原判準及狀態。#88曾在完整快照驗證前過早關閉，已重開補驗再收尾。
+782條既有及新增相對連結全部有效，沒有手改受控worklist或矩陣。
+工具修正前的正常玩家收據保留為`workplace/battle79-round35-before-worklist-receipt.json`，
+SHA-256 `c5dfd9e98f38efda406a19e89b64a0b432570c244a15101e454af5a6cb284789`；
+最終收據另記工具修正及最終標準測試，不以舊收據宣稱目前工具通過。
+
 ## 目前續證：第三十四輪階段面板與35邊界
 
 2026-10-02，#79保持open。父提交38794ab1f36a5e94be624b587ca2eded66c4fe8c加本輪修改，測試時dirty。

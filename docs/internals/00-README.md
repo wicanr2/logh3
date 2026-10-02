@@ -216,3 +216,5 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [逐圈原版重播](../../tools/battle_phase_oracle.sh)及[固定計數計畫](../../tools/scripts/battle_phase_plan.py)：唯讀snapshot、35個完整RAM／planar PNG／色號。
 - [階段文字研究375](../re/375-battle-phase-panel.md)、[語意索引](data/battle-phase-semantics.json)、[逐圈全紀錄](data/battle-phase-frames.json)：呼叫順序、三字串與35邊界雙跑；由[證據工具](../../tools/scripts/battle_phase_evidence.py)重生。
 - [階段面板正式畫面收據](../../tools/scripts/battle_phase_render_receipt.py)：35邊界全畫面及逐區有效RGB差分，不裁切或遮罩。
+- [第三十五輪：第二戰場及正常資源結果](../goal/2026-10-02-battle-second-sample-round-35.md)：接續#79現行READY範圍，抽正式載入路徑及另一戰場。
+- [隨附存檔正常玩家收據](../../tools/scripts/battle_samples_receipt.py)：三份存檔進場、實行、面板還原與完整存讀；[驗證045](../playtest/045-battle-movement-render.md)限定為remake正常路徑，不宣稱原版第二戰場對拍。
