@@ -404,3 +404,53 @@ WORK差33減32，完整640×480差5863減5853，FLEET120／SHIP865／STELLAR44�
 | round47-standard-tests.log | 4a65ff8cdd39d980cd001326b2d02736f6dd4d58d78581bc3ea660ef9ada7657 |
 
 088三個READY子契約已驗，整份仍DRAFT。#89／#79 OPEN，活動座位與剩餘全表差異、正常索敵同態另續。
+
+## 第48輪活動控制上游
+
+[研究386](../re/386-active-seat-lifecycle.md)、[本輪goal](../goal/2026-10-03-active-seat-round-48.md)、
+[完整收據](../internals/data/active-seat.json) SHA-256 `40ce3fbedda34a073f80f0799a820e27f567b9cb3210cf6c282ef67d66f87bac`。
+
+第48輪活動陣營／座位子契約已驗。原版三組各雙跑，完整RAM／色號／PNG／DAC相同；
+四個IDA原名／邊界、102條原始指令及7項proven語意保存。WORK+09／+0A隨正常控制邊界更新，
+固定玩家視角與AI選擇保持，+0B語意unknown，沒有填入首都。
+正式讀檔／交接55檔及帝國正常首戰19檔各雙跑相同，活動控制及正式WORK保存符合原版。
+44限定PASS零skip，18標準套件及七案真實X11通過；兩AI在兩陣營仍會建隊／下令。
+首戰380／799/3/1、7艦隊／55筆池／B6E4B78A保持。全圖5853 pixels及WORK32／FLEET120／SHIP865／STELLAR44差保持。
+同盟435M仍處理FF／1；650M首戰1／0為單次輔助，不宣稱完整同盟首戰雙跑。
+雙人未確認2841 pixels、STELLAR+7D22 bytes及剩餘首戰資料待續；nearby-state不升格。
+088完整入口仍DRAFT，#89／#79 OPEN；087及151個受控UI幀保持，完整八步未完成。
+
+```sh
+bash tools/active_seat_oracle.sh normal89-r48-clock-a
+bash tools/active_seat_oracle.sh normal89-r48-clock-b
+bash tools/active_seat_oracle.sh normal89-r48-alliance-a
+bash tools/active_seat_oracle.sh normal89-r48-alliance-b
+bash tools/active_seat_oracle.sh normal89-r48-versus-a
+bash tools/active_seat_oracle.sh normal89-r48-versus-b
+tools/gui.sh xrun go run tools/scripts/load_seat_player.go -out workplace/round48-player-final-a
+tools/gui.sh xrun go run tools/scripts/load_seat_player.go -out workplace/round48-player-final-b
+tools/gui.sh xrun go run -overlay workplace/round44-normal-overlay.json tools/scripts/battle_normal_probe.go -out workplace/round48-normal-final-a
+tools/gui.sh xrun go run -overlay workplace/round44-normal-overlay.json tools/scripts/battle_normal_probe.go -out workplace/round48-normal-final-b
+tools/gui.sh xrun env LOGH3_ACTIVE_GUI_PREFIX=round48-seat-checked-gui bash tools/active_seat_gui.sh
+tools/gui.sh xrun env LOGH3_TURN_GUI_PREFIX=round48-final-gui bash tools/turn_counter_gui.sh
+tools/gui.sh xrun go test ./internal/... ./cmd/... -count=1
+tools/gui.sh xrun python3 tools/scripts/active_seat_receipt.py
+```
+
+各批次拒絕覆寫；重跑時必須先用獨立工作目錄保存當輪來源與收據。
+原版battle資料沿第47輪固定版本收據，沒有執行器改動；不重生舊46／47輪JSON來替換歷史來源身份。
+新局模板陣營2已按原版初始命令修正；無移動命令的同步回合不會停在處理畫面。
+舊測試前提的限定／標準失敗log保留，改正常移動抽驗後同容器／命令重跑通過。
+完整畫面與所有表差異照實保存，沒有排除未知+0B或雙人+7D。
+
+| 本機log | SHA-256 |
+|---|---|
+| round48-active-limited.log | 533e607a97f4a264a49877338d33b5e38c5361a0fefe8e596e0d431b5d34c59a |
+| round48-standard-tests.log | 042fa5a848621b2747dcd96f49e03d0ad219564160d59e8b1af19f2ae6605be7 |
+| round48-active-limited-fixture-failed.log | 2e207f1a2f0ad89434df49e3b98de1096ee242558758dc88075ac71fbc3e11fe |
+| round48-standard-fixture-failed.log | c76468a27a305b2c1c88933aa3e295cf6d62aa2d0217e54ba831592d9e72b179 |
+
+最終GUI全圖核對另抓到雙人交接7526 pixels差，PNG仍為帝國命令，StateCommandPhase不足以確認陣營。
+正常Game的55／19檔仍與初次各74檔相同；未改產品以遷就錯圖。
+保留short-hold腳本與失敗圖。按下、放開與移動間隔調為0.2秒，900ticks後擷取，腳本每案加cmp全圖。
+哪一次短按未被處理未定位，保持unknown；不把這次序列未完成當成原版或正式規則差異。

@@ -1,0 +1,2817 @@
+{
+  "schema": "logh3.active-seat.v1",
+  "grade": "proven captured control boundaries; complete normal entry parity unknown",
+  "classification": "nearby-state whole frame comparisons; no masks, cropping or exclusions",
+  "parent_head": "9bbc20cb2690057075052cafd0e7942719da70dc",
+  "remake_worktree": "dirty; source hashes below",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_worktree": "clean",
+  "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "toolchain": {
+    "go": {
+      "tag": "golang:1.24-bookworm",
+      "id": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac"
+    },
+    "gui": {
+      "tag": "logh3-ebiten:2",
+      "id": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8"
+    },
+    "ida": {
+      "tag": "ida-pro-9.4-idapython:locked-v1",
+      "id": "sha256:6f6d59af49d0008c4109a5295b5f374bdc007e2d1ab28cb9de08779584de2780"
+    }
+  },
+  "prior_receipts": {
+    "docs/internals/data/load-seat-selection.json": "f8ba6dacc701418f1fe88c0c785fd871af8677916e4a54ed0ad1f9c19debf129",
+    "docs/internals/data/turn-counter-boundary.json": "09d28a9e6d2b5c5cc49fd4f1ffa8d7c057170e4eb7f9e022baf6c9593d3a5a7b"
+  },
+  "original_runs": [
+    {
+      "path": "workplace/oracle/normal89-r48-clock-a",
+      "command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-base.state",
+        "-steps",
+        "450000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "421000000:544:85,424000000:560:85",
+        "-click-hold",
+        "3000000",
+        "-watch",
+        "5DA4D-5DA4F",
+        "-regs-from",
+        "420000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "04F8:01B9,04F8:030E,2D10:0005",
+        "-dump-mem-at",
+        "420000010:lin:0:1048576:/out/oracle/normal89-r48-clock-a/initial.bin;426100000:lin:0:1048576:/out/oracle/normal89-r48-clock-a/thinking.bin;426215238:lin:0:1048576:/out/oracle/normal89-r48-clock-a/ai-before.bin;427763580:lin:0:1048576:/out/oracle/normal89-r48-clock-a/ai-after.bin;430530800:lin:0:1048576:/out/oracle/normal89-r48-clock-a/processing.bin;449999999:lin:0:1048576:/out/oracle/normal89-r48-clock-a/command.bin"
+      ],
+      "states": {
+        "initial": {
+          "active_faction": 0,
+          "active_seat": 0,
+          "adjacent_unknown_0b": 0,
+          "turn": 0,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "thinking": {
+          "active_faction": 1,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 0,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "ai-before": {
+          "active_faction": 1,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 0,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "ai-after": {
+          "active_faction": 1,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 0,
+          "strategy_seed_hex": "CD1DCF18"
+        },
+        "processing": {
+          "active_faction": 255,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 0,
+          "strategy_seed_hex": "AF5AAD71"
+        },
+        "command": {
+          "active_faction": 0,
+          "active_seat": 0,
+          "adjacent_unknown_0b": 0,
+          "turn": 1,
+          "strategy_seed_hex": "936A823B"
+        }
+      },
+      "classification": "normal player continuation; own source snapshot",
+      "entry_filename_note": null,
+      "hashes": {
+        "initial.bin": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea",
+        "thinking.bin": "9c3115ce2e68d533d292cccbb969948ce1c8186e7357860bf23569a20d2a76d0",
+        "ai-before.bin": "646bac78aa798f2fc11cf25be81093524b67eca808e75686ce87251ecc0ffa9d",
+        "ai-after.bin": "fffffb5676bdc1739135912c5750788b2b72fd7cb046f3b5f3918c054f364b60",
+        "processing.bin": "acf068c0a103bf821ad546de1bbe99de9e0189ff73f0fb3966926311565400e4",
+        "command.bin": "688ff1c526efee10bc98d0e16332de511516b3f76302c643d5f2ac43f734ddf1",
+        "screen.bin": "2bb4cdfcbb83846bf54d91027025c91ea2dafa2d98b81b56939be66c0635d502",
+        "screen.png": "c5b542faf79e233f1e0330e0704d271012a7986c22b04e8cae01705cb725591f",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "51c5e9631151dd05f4582f609f9a9855f33a9c608b1f5cb3c9176068fb8e7654",
+        "flags.txt": "8f849a1e33ea16923ff71f8a6b3012b21114ea15504ec437d142a0ddcba76a0a",
+        "report.txt": "a4a48521a88601f486fbe9139701f8be96619423c92db6dcece6b11648a820b4"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r48-clock-b",
+      "command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-base.state",
+        "-steps",
+        "450000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "421000000:544:85,424000000:560:85",
+        "-click-hold",
+        "3000000",
+        "-watch",
+        "5DA4D-5DA4F",
+        "-regs-from",
+        "420000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "04F8:01B9,04F8:030E,2D10:0005",
+        "-dump-mem-at",
+        "420000010:lin:0:1048576:/out/oracle/normal89-r48-clock-b/initial.bin;426100000:lin:0:1048576:/out/oracle/normal89-r48-clock-b/thinking.bin;426215238:lin:0:1048576:/out/oracle/normal89-r48-clock-b/ai-before.bin;427763580:lin:0:1048576:/out/oracle/normal89-r48-clock-b/ai-after.bin;430530800:lin:0:1048576:/out/oracle/normal89-r48-clock-b/processing.bin;449999999:lin:0:1048576:/out/oracle/normal89-r48-clock-b/command.bin"
+      ],
+      "states": {
+        "initial": {
+          "active_faction": 0,
+          "active_seat": 0,
+          "adjacent_unknown_0b": 0,
+          "turn": 0,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "thinking": {
+          "active_faction": 1,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 0,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "ai-before": {
+          "active_faction": 1,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 0,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "ai-after": {
+          "active_faction": 1,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 0,
+          "strategy_seed_hex": "CD1DCF18"
+        },
+        "processing": {
+          "active_faction": 255,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 0,
+          "strategy_seed_hex": "AF5AAD71"
+        },
+        "command": {
+          "active_faction": 0,
+          "active_seat": 0,
+          "adjacent_unknown_0b": 0,
+          "turn": 1,
+          "strategy_seed_hex": "936A823B"
+        }
+      },
+      "classification": "normal player continuation; own source snapshot",
+      "entry_filename_note": null,
+      "hashes": {
+        "initial.bin": "f8b8efbd9b99f75a1b3d4fa65d40ad4f187b14fafc1adb167fa1c4fa34e93cea",
+        "thinking.bin": "9c3115ce2e68d533d292cccbb969948ce1c8186e7357860bf23569a20d2a76d0",
+        "ai-before.bin": "646bac78aa798f2fc11cf25be81093524b67eca808e75686ce87251ecc0ffa9d",
+        "ai-after.bin": "fffffb5676bdc1739135912c5750788b2b72fd7cb046f3b5f3918c054f364b60",
+        "processing.bin": "acf068c0a103bf821ad546de1bbe99de9e0189ff73f0fb3966926311565400e4",
+        "command.bin": "688ff1c526efee10bc98d0e16332de511516b3f76302c643d5f2ac43f734ddf1",
+        "screen.bin": "2bb4cdfcbb83846bf54d91027025c91ea2dafa2d98b81b56939be66c0635d502",
+        "screen.png": "c5b542faf79e233f1e0330e0704d271012a7986c22b04e8cae01705cb725591f",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "1a55d57500e6d840f536c0221ea36283600032e0e6b56ffb8023fe4b53d2f47f",
+        "flags.txt": "932512167854d5818e5b60e3a9c7f2bbf804146535647f6a7c32a906d0febf34",
+        "report.txt": "a297a9ce4bff148952d28a0ced5cf79965fac7e71fcfa048a1a2860368fe73cc"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r48-alliance-a",
+      "command_argv": [
+        "-load-state",
+        "/out/oracle/normal89-r46-menu-a/menu.state",
+        "-steps",
+        "435000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "240000000:318:188,301000000:544:85,304000000:560:85,405000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-poke",
+        "lin:5E00C@300000000=7E 16 DC D3",
+        "-watch",
+        "5DA4D-5DA4F",
+        "-regs-from",
+        "230000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "04F8:01B9,04F8:030E,12AA:000E",
+        "-dump-mem-at",
+        "299999999:lin:0:1048576:/out/oracle/normal89-r48-alliance-a/loaded.bin;434999999:lin:0:1048576:/out/oracle/normal89-r48-alliance-a/entry.bin"
+      ],
+      "states": {
+        "loaded": {
+          "active_faction": 1,
+          "active_seat": 0,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "entry": {
+          "active_faction": 255,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        }
+      },
+      "classification": "normal player continuation; own source snapshot",
+      "entry_filename_note": "alliance entry.bin is processing, not battle",
+      "hashes": {
+        "loaded.bin": "79b9a91705cd9f74c7fce4463267366db06a3afbddd0bfbd67e1107fa2e4ffd9",
+        "entry.bin": "3b0ee658fe9a143274eb6858f391bf8f39051dece55be8c2aa295c19bf0d76d7",
+        "screen.bin": "8cda1eb8d607935a3ddb60af9cba37e2a754a8dbb72ec2b16adf7ed3aa0b3a6c",
+        "screen.png": "36d242e7d8a967d272008028f337aa98145878974987313f5db461cc1c589306",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "ad9bac8f92a58de5c58490db4a0bb927582002142154c9d33ee5ffb3f14c2e6e",
+        "flags.txt": "15f7d8a9a09aede4544d2e8c82a2a88b245c844a372c6205b1e47f689734383b",
+        "report.txt": "56a441c7596d59894b5f95c9d507c30a681d48d66d6d806f4230de0cab304c71"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r48-alliance-b",
+      "command_argv": [
+        "-load-state",
+        "/out/oracle/normal89-r46-menu-a/menu.state",
+        "-steps",
+        "435000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "240000000:318:188,301000000:544:85,304000000:560:85,405000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-poke",
+        "lin:5E00C@300000000=7E 16 DC D3",
+        "-watch",
+        "5DA4D-5DA4F",
+        "-regs-from",
+        "230000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "04F8:01B9,04F8:030E,12AA:000E",
+        "-dump-mem-at",
+        "299999999:lin:0:1048576:/out/oracle/normal89-r48-alliance-b/loaded.bin;434999999:lin:0:1048576:/out/oracle/normal89-r48-alliance-b/entry.bin"
+      ],
+      "states": {
+        "loaded": {
+          "active_faction": 1,
+          "active_seat": 0,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "entry": {
+          "active_faction": 255,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        }
+      },
+      "classification": "normal player continuation; own source snapshot",
+      "entry_filename_note": "alliance entry.bin is processing, not battle",
+      "hashes": {
+        "loaded.bin": "79b9a91705cd9f74c7fce4463267366db06a3afbddd0bfbd67e1107fa2e4ffd9",
+        "entry.bin": "3b0ee658fe9a143274eb6858f391bf8f39051dece55be8c2aa295c19bf0d76d7",
+        "screen.bin": "8cda1eb8d607935a3ddb60af9cba37e2a754a8dbb72ec2b16adf7ed3aa0b3a6c",
+        "screen.png": "36d242e7d8a967d272008028f337aa98145878974987313f5db461cc1c589306",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "d97927c682c52546d8e7ff89244d7119c3ec801806a1e925c961eab5769d3ba0",
+        "flags.txt": "302104a9f2fd10ac68799c43d97ef670550df8fb685550f65e3ec0ab7ab61e39",
+        "report.txt": "b037d92251f921ab8edf0d4e8b3b3b8afc7427a0fd9a739cc4db7370b71167ca"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r48-versus-a",
+      "command_argv": [
+        "-load-state",
+        "/out/oracle/normal89-r46-menu-a/menu.state",
+        "-steps",
+        "350000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "240000000:318:208,260000000:432:230,310000000:544:85,313000000:560:85,330000000:432:230",
+        "-click-hold",
+        "3000000",
+        "-watch",
+        "5DA4D-5DA4F",
+        "-regs-from",
+        "230000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "04F8:01B9,04F8:030E",
+        "-dump-mem-at",
+        "259999999:lin:0:1048576:/out/oracle/normal89-r48-versus-a/loaded.bin;299999999:lin:0:1048576:/out/oracle/normal89-r48-versus-a/empire.bin;329999999:lin:0:1048576:/out/oracle/normal89-r48-versus-a/handoff.bin;349999999:lin:0:1048576:/out/oracle/normal89-r48-versus-a/alliance.bin"
+      ],
+      "states": {
+        "loaded": {
+          "active_faction": 0,
+          "active_seat": 0,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "empire": {
+          "active_faction": 0,
+          "active_seat": 0,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "handoff": {
+          "active_faction": 1,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "alliance": {
+          "active_faction": 1,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        }
+      },
+      "classification": "normal player continuation; own source snapshot",
+      "entry_filename_note": null,
+      "hashes": {
+        "loaded.bin": "96fced0241ad6af217e5d20fd867368a2ede60c524e8c708a40242469ea002d6",
+        "empire.bin": "9a80cc8af70a83af04bfac8578ade3b08064347851e7c20ddd677fad729a566b",
+        "handoff.bin": "cd7c6ccb8329428e9dba8cd630b60659af0304903a93d8dd357484b85a1d90da",
+        "alliance.bin": "dd7c1d17655805876005522f3622e6ce8c28f8b03b7d25d139a59a609e8bd2e2",
+        "screen.bin": "825baa69d08b1d193ff4d28fe1bcb889248d856f08443bef13d71424277d5565",
+        "screen.png": "6752827da4234383259952ed6072ca09bfb6f02595f39f1bc707d16f30acdaf6",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "9322cf1538e7e8c5397d3b841e8969242ec5227b9ee741069b01691e312978ea",
+        "flags.txt": "4f3bf1ce995de27c7b87dfe0b913ad5c2d515d11ed35d0d2f1f3a3b1d180ce13",
+        "report.txt": "f659dcd052f3f15b1fa591846c05c9767ec392338467d519986acf949ef359f1"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r48-versus-b",
+      "command_argv": [
+        "-load-state",
+        "/out/oracle/normal89-r46-menu-a/menu.state",
+        "-steps",
+        "350000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "240000000:318:208,260000000:432:230,310000000:544:85,313000000:560:85,330000000:432:230",
+        "-click-hold",
+        "3000000",
+        "-watch",
+        "5DA4D-5DA4F",
+        "-regs-from",
+        "230000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "04F8:01B9,04F8:030E",
+        "-dump-mem-at",
+        "259999999:lin:0:1048576:/out/oracle/normal89-r48-versus-b/loaded.bin;299999999:lin:0:1048576:/out/oracle/normal89-r48-versus-b/empire.bin;329999999:lin:0:1048576:/out/oracle/normal89-r48-versus-b/handoff.bin;349999999:lin:0:1048576:/out/oracle/normal89-r48-versus-b/alliance.bin"
+      ],
+      "states": {
+        "loaded": {
+          "active_faction": 0,
+          "active_seat": 0,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "empire": {
+          "active_faction": 0,
+          "active_seat": 0,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "handoff": {
+          "active_faction": 1,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        },
+        "alliance": {
+          "active_faction": 1,
+          "active_seat": 1,
+          "adjacent_unknown_0b": 0,
+          "turn": 380,
+          "strategy_seed_hex": "D3DC167E"
+        }
+      },
+      "classification": "normal player continuation; own source snapshot",
+      "entry_filename_note": null,
+      "hashes": {
+        "loaded.bin": "96fced0241ad6af217e5d20fd867368a2ede60c524e8c708a40242469ea002d6",
+        "empire.bin": "9a80cc8af70a83af04bfac8578ade3b08064347851e7c20ddd677fad729a566b",
+        "handoff.bin": "cd7c6ccb8329428e9dba8cd630b60659af0304903a93d8dd357484b85a1d90da",
+        "alliance.bin": "dd7c1d17655805876005522f3622e6ce8c28f8b03b7d25d139a59a609e8bd2e2",
+        "screen.bin": "825baa69d08b1d193ff4d28fe1bcb889248d856f08443bef13d71424277d5565",
+        "screen.png": "6752827da4234383259952ed6072ca09bfb6f02595f39f1bc707d16f30acdaf6",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "0026afff252971eaaa8d3b704780b0a2948428ea81fc500dff10fb2c9abed2d5",
+        "flags.txt": "519b3da848976b16ec16441a0cd136b8b7af3e3fd6cd08fbbbac5a36e544b53a",
+        "report.txt": "2108a59065cfbbddcd47e488b872e1779a2ecf0b8f0dc016f1a15ffe9ddf5f51"
+      }
+    }
+  ],
+  "alliance_battle_auxiliary": {
+    "path": "workplace/explore/normal89-r48-alliance-long2-explore",
+    "grade": "proven values at single auxiliary checkpoint; prefix not independently repeated",
+    "comparison_level": "auxiliary observation only; no full battle parity claim",
+    "state": {
+      "active_faction": 1,
+      "active_seat": 0,
+      "adjacent_unknown_0b": 0,
+      "turn": 380,
+      "strategy_seed_hex": "B6E4B78A"
+    },
+    "command_argv": [
+      "-load-state",
+      "/out/oracle/normal89-r46-menu-a/menu.state",
+      "-steps",
+      "650000000",
+      "-tick",
+      "20000",
+      "-clicks",
+      "240000000:318:188,301000000:544:85,304000000:560:85,405000000:240:200",
+      "-click-hold",
+      "3000000",
+      "-poke",
+      "lin:5E00C@300000000=7E 16 DC D3",
+      "-watch",
+      "5DA4D-5DA4F",
+      "-regs-at",
+      "12AA:000E",
+      "-regs-from",
+      "300000000",
+      "-regs-max",
+      "8",
+      "-dump-mem-at",
+      "649999999:lin:0:1048576:/out/explore/normal89-r48-alliance-long2-explore/mem.bin",
+      "-save-state",
+      "649999999:/out/explore/normal89-r48-alliance-long2-explore/final.state"
+    ],
+    "hashes": {
+      "mem.bin": "c18dc5284082e1f6f8e689349480c6dca4d046ed424988994526fa0c5fbf2d2f",
+      "screen.bin": "8a4984b9074fe287297470549dac8f8f41d4dfb0e7a96e2527bf6beb22054419",
+      "screen.png": "12e805249faedd80b419421a5b19b0ec7ba9d7a7021ccee0a63bc8b5a48ffd10",
+      "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "final.state": "46ac9911bc883d4056a4d98a0f042b6b013253ddc089f6b563cb8770ce2021e9",
+      "meta.txt": "fe978f69a24e991fbc6b671b62684880e8ce7de174e86d300a8c18f7f546e87e",
+      "flags.txt": "fec4356b1fae08081a008c172ae1c17b2f4cd7d40975212d86e90e2a0eea7477",
+      "report.txt": "f75a63f79e8a9f4b91f6b01cc0e12e959dd92723533e0dd8c9713a800b8ef354"
+    }
+  },
+  "parent_snapshot_hashes": {
+    "menu": "7bc81b42c60dfbed5f09d66a7c0341e1f598ba0275136e99f2c79717102f506c",
+    "fcmd_base": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26"
+  },
+  "ida_export": {
+    "path": "workplace/ida/normal89-r48-active-seat.json",
+    "sha256": "a7311ebbfe317274177c31a1a7df7eaf269d9c63b8ef55ddc7ababeb1c098f28",
+    "data": {
+      "schema": "logh3.active-seat-ida.v1",
+      "tool_version": 940,
+      "kernel_version": "9.4",
+      "uid": 1000,
+      "input": "/work/normal89-r48-04F8.com",
+      "input_sha256": "5f33f305468c959c1df74978846c412921c5011c2f4c5d4aad68fb411b37344e",
+      "ida_base_hex": "0x10200",
+      "runtime_segment": "04F8",
+      "address_space": "IDA COM位址、原版CS:IP及dosgolem線性分欄",
+      "previous_human_loop_bytes_hex": "06960600cb",
+      "functions": [
+        {
+          "original_location": "04F8:0190",
+          "original_name": "sub_10390",
+          "ida_boundary": [
+            "0x10390",
+            "0x103b9"
+          ]
+        },
+        {
+          "original_location": "04F8:01B9",
+          "original_name": "sub_103B9",
+          "ida_boundary": [
+            "0x103b9",
+            "0x10437"
+          ]
+        },
+        {
+          "original_location": "04F8:02E7",
+          "original_name": "sub_104E7",
+          "ida_boundary": [
+            "0x104e7",
+            "0x1050e"
+          ]
+        },
+        {
+          "original_location": "04F8:030E",
+          "original_name": "sub_1050E",
+          "ida_boundary": [
+            "0x1050e",
+            "0x10555"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "original_location": "04F8:0190",
+          "ida_ea_hex": "0x10390",
+          "runtime_linear_hex": "0x5110",
+          "original_bytes_hex": "56",
+          "operand": "push    si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0191",
+          "ida_ea_hex": "0x10391",
+          "runtime_linear_hex": "0x5111",
+          "original_bytes_hex": "c6061e8f00",
+          "operand": "mov     byte ptr ds:8F1Eh, 0",
+          "semantic": "人類座位迴圈設活動座位0",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0196",
+          "ida_ea_hex": "0x10396",
+          "runtime_linear_hex": "0x5116",
+          "original_bytes_hex": "9ab901f804",
+          "operand": "call    far ptr 4F8h:1B9h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:019B",
+          "ida_ea_hex": "0x1039b",
+          "runtime_linear_hex": "0x511b",
+          "original_bytes_hex": "89c6",
+          "operand": "mov     si, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:019D",
+          "ida_ea_hex": "0x1039d",
+          "runtime_linear_hex": "0x511d",
+          "original_bytes_hex": "09c0",
+          "operand": "or      ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:019F",
+          "ida_ea_hex": "0x1039f",
+          "runtime_linear_hex": "0x511f",
+          "original_bytes_hex": "7402",
+          "operand": "jz      short near ptr unk_103A3",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01A1",
+          "ida_ea_hex": "0x103a1",
+          "runtime_linear_hex": "0x5121",
+          "original_bytes_hex": "5e",
+          "operand": "pop     si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01A2",
+          "ida_ea_hex": "0x103a2",
+          "runtime_linear_hex": "0x5122",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01A3",
+          "ida_ea_hex": "0x103a3",
+          "runtime_linear_hex": "0x5123",
+          "original_bytes_hex": "c6061e8f01",
+          "operand": "mov     byte ptr ds:8F1Eh, 1",
+          "semantic": "人類座位迴圈設活動座位1",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01A8",
+          "ida_ea_hex": "0x103a8",
+          "runtime_linear_hex": "0x5128",
+          "original_bytes_hex": "9ab901f804",
+          "operand": "call    far ptr 4F8h:1B9h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01AD",
+          "ida_ea_hex": "0x103ad",
+          "runtime_linear_hex": "0x512d",
+          "original_bytes_hex": "89c6",
+          "operand": "mov     si, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01AF",
+          "ida_ea_hex": "0x103af",
+          "runtime_linear_hex": "0x512f",
+          "original_bytes_hex": "09c0",
+          "operand": "or      ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01B1",
+          "ida_ea_hex": "0x103b1",
+          "runtime_linear_hex": "0x5131",
+          "original_bytes_hex": "7402",
+          "operand": "jz      short near ptr unk_103B5",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01B3",
+          "ida_ea_hex": "0x103b3",
+          "runtime_linear_hex": "0x5133",
+          "original_bytes_hex": "5e",
+          "operand": "pop     si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01B4",
+          "ida_ea_hex": "0x103b4",
+          "runtime_linear_hex": "0x5134",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01B5",
+          "ida_ea_hex": "0x103b5",
+          "runtime_linear_hex": "0x5135",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01B7",
+          "ida_ea_hex": "0x103b7",
+          "runtime_linear_hex": "0x5137",
+          "original_bytes_hex": "5e",
+          "operand": "pop     si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01B8",
+          "ida_ea_hex": "0x103b8",
+          "runtime_linear_hex": "0x5138",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01B9",
+          "ida_ea_hex": "0x103b9",
+          "runtime_linear_hex": "0x5139",
+          "original_bytes_hex": "56",
+          "operand": "push    si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01BA",
+          "ida_ea_hex": "0x103ba",
+          "runtime_linear_hex": "0x513a",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01BC",
+          "ida_ea_hex": "0x103bc",
+          "runtime_linear_hex": "0x513c",
+          "original_bytes_hex": "89c6",
+          "operand": "mov     si, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01BE",
+          "ida_ea_hex": "0x103be",
+          "runtime_linear_hex": "0x513e",
+          "original_bytes_hex": "8a1e1e8f",
+          "operand": "mov     bl, ds:8F1Eh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01C2",
+          "ida_ea_hex": "0x103c2",
+          "runtime_linear_hex": "0x5142",
+          "original_bytes_hex": "30ff",
+          "operand": "xor     bh, bh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01C4",
+          "ida_ea_hex": "0x103c4",
+          "runtime_linear_hex": "0x5144",
+          "original_bytes_hex": "8a8f258f",
+          "operand": "mov     cl, [bx-70DBh]",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01C8",
+          "ida_ea_hex": "0x103c8",
+          "runtime_linear_hex": "0x5148",
+          "original_bytes_hex": "880e1d8f",
+          "operand": "mov     ds:8F1Dh, cl",
+          "semantic": "從活動座位的陣營映射寫入WORK+09",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01CC",
+          "ida_ea_hex": "0x103cc",
+          "runtime_linear_hex": "0x514c",
+          "original_bytes_hex": "8a8f298f",
+          "operand": "mov     cl, [bx-70D7h]",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01D0",
+          "ida_ea_hex": "0x103d0",
+          "runtime_linear_hex": "0x5150",
+          "original_bytes_hex": "880e1f8f",
+          "operand": "mov     ds:8F1Fh, cl",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01D4",
+          "ida_ea_hex": "0x103d4",
+          "runtime_linear_hex": "0x5154",
+          "original_bytes_hex": "31c9",
+          "operand": "xor     cx, cx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01D6",
+          "ida_ea_hex": "0x103d6",
+          "runtime_linear_hex": "0x5156",
+          "original_bytes_hex": "51",
+          "operand": "push    cx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01D7",
+          "ida_ea_hex": "0x103d7",
+          "runtime_linear_hex": "0x5157",
+          "original_bytes_hex": "9a03006537",
+          "operand": "call    far ptr 3765h:3",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01DC",
+          "ida_ea_hex": "0x103dc",
+          "runtime_linear_hex": "0x515c",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01DD",
+          "ida_ea_hex": "0x103dd",
+          "runtime_linear_hex": "0x515d",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01DE",
+          "ida_ea_hex": "0x103de",
+          "runtime_linear_hex": "0x515e",
+          "original_bytes_hex": "8a1e1e8f",
+          "operand": "mov     bl, ds:8F1Eh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01E2",
+          "ida_ea_hex": "0x103e2",
+          "runtime_linear_hex": "0x5162",
+          "original_bytes_hex": "30ff",
+          "operand": "xor     bh, bh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01E4",
+          "ida_ea_hex": "0x103e4",
+          "runtime_linear_hex": "0x5164",
+          "original_bytes_hex": "80bf238f00",
+          "operand": "cmp     byte ptr [bx-70DDh], 0",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01E9",
+          "ida_ea_hex": "0x103e9",
+          "runtime_linear_hex": "0x5169",
+          "original_bytes_hex": "7543",
+          "operand": "jnz     short near ptr unk_1042E",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01EB",
+          "ida_ea_hex": "0x103eb",
+          "runtime_linear_hex": "0x516b",
+          "original_bytes_hex": "9a3702f804",
+          "operand": "call    far ptr 4F8h:237h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01F0",
+          "ida_ea_hex": "0x103f0",
+          "runtime_linear_hex": "0x5170",
+          "original_bytes_hex": "9ac605f804",
+          "operand": "call    far ptr 4F8h:5C6h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01F5",
+          "ida_ea_hex": "0x103f5",
+          "runtime_linear_hex": "0x5175",
+          "original_bytes_hex": "8a1e1e8f",
+          "operand": "mov     bl, ds:8F1Eh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01F9",
+          "ida_ea_hex": "0x103f9",
+          "runtime_linear_hex": "0x5179",
+          "original_bytes_hex": "30ff",
+          "operand": "xor     bh, bh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01FB",
+          "ida_ea_hex": "0x103fb",
+          "runtime_linear_hex": "0x517b",
+          "original_bytes_hex": "ffb7278f",
+          "operand": "push    word ptr [bx-70D9h]",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:01FF",
+          "ida_ea_hex": "0x103ff",
+          "runtime_linear_hex": "0x517f",
+          "original_bytes_hex": "9aee023f07",
+          "operand": "call    far ptr 73Fh:2EEh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0204",
+          "ida_ea_hex": "0x10404",
+          "runtime_linear_hex": "0x5184",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0205",
+          "ida_ea_hex": "0x10405",
+          "runtime_linear_hex": "0x5185",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0206",
+          "ida_ea_hex": "0x10406",
+          "runtime_linear_hex": "0x5186",
+          "original_bytes_hex": "9a34005406",
+          "operand": "call    far ptr 654h:34h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:020B",
+          "ida_ea_hex": "0x1040b",
+          "runtime_linear_hex": "0x518b",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:020D",
+          "ida_ea_hex": "0x1040d",
+          "runtime_linear_hex": "0x518d",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:020E",
+          "ida_ea_hex": "0x1040e",
+          "runtime_linear_hex": "0x518e",
+          "original_bytes_hex": "9a5503f804",
+          "operand": "call    far ptr 4F8h:355h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0213",
+          "ida_ea_hex": "0x10413",
+          "runtime_linear_hex": "0x5193",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0214",
+          "ida_ea_hex": "0x10414",
+          "runtime_linear_hex": "0x5194",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0215",
+          "ida_ea_hex": "0x10415",
+          "runtime_linear_hex": "0x5195",
+          "original_bytes_hex": "9ac704f804",
+          "operand": "call    far ptr 4F8h:4C7h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:021A",
+          "ida_ea_hex": "0x1041a",
+          "runtime_linear_hex": "0x519a",
+          "original_bytes_hex": "b80100",
+          "operand": "mov     ax, 1",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:021D",
+          "ida_ea_hex": "0x1041d",
+          "runtime_linear_hex": "0x519d",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:021E",
+          "ida_ea_hex": "0x1041e",
+          "runtime_linear_hex": "0x519e",
+          "original_bytes_hex": "9a49030537",
+          "operand": "call    far ptr 3705h:349h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0223",
+          "ida_ea_hex": "0x10423",
+          "runtime_linear_hex": "0x51a3",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0224",
+          "ida_ea_hex": "0x10424",
+          "runtime_linear_hex": "0x51a4",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0225",
+          "ida_ea_hex": "0x10425",
+          "runtime_linear_hex": "0x51a5",
+          "original_bytes_hex": "9a0b00e806",
+          "operand": "call    far ptr 6E8h:0Bh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:022A",
+          "ida_ea_hex": "0x1042a",
+          "runtime_linear_hex": "0x51aa",
+          "original_bytes_hex": "89c6",
+          "operand": "mov     si, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:022C",
+          "ida_ea_hex": "0x1042c",
+          "runtime_linear_hex": "0x51ac",
+          "original_bytes_hex": "eb05",
+          "operand": "jmp     short near ptr unk_10433",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:022E",
+          "ida_ea_hex": "0x1042e",
+          "runtime_linear_hex": "0x51ae",
+          "original_bytes_hex": "9a34005406",
+          "operand": "call    far ptr 654h:34h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0233",
+          "ida_ea_hex": "0x10433",
+          "runtime_linear_hex": "0x51b3",
+          "original_bytes_hex": "8bc6",
+          "operand": "mov     ax, si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0235",
+          "ida_ea_hex": "0x10435",
+          "runtime_linear_hex": "0x51b5",
+          "original_bytes_hex": "5e",
+          "operand": "pop     si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0236",
+          "ida_ea_hex": "0x10436",
+          "runtime_linear_hex": "0x51b6",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:02E7",
+          "ida_ea_hex": "0x104e7",
+          "runtime_linear_hex": "0x5267",
+          "original_bytes_hex": "c6061d8fff",
+          "operand": "mov     byte ptr ds:8F1Dh, 0FFh",
+          "semantic": "進電腦座位迴圈前WORK+09設FF",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:02EC",
+          "ida_ea_hex": "0x104ec",
+          "runtime_linear_hex": "0x526c",
+          "original_bytes_hex": "b80100",
+          "operand": "mov     ax, 1",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:02EF",
+          "ida_ea_hex": "0x104ef",
+          "runtime_linear_hex": "0x526f",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:02F0",
+          "ida_ea_hex": "0x104f0",
+          "runtime_linear_hex": "0x5270",
+          "original_bytes_hex": "9a49030537",
+          "operand": "call    far ptr 3705h:349h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:02F5",
+          "ida_ea_hex": "0x104f5",
+          "runtime_linear_hex": "0x5275",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:02F6",
+          "ida_ea_hex": "0x104f6",
+          "runtime_linear_hex": "0x5276",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:02F7",
+          "ida_ea_hex": "0x104f7",
+          "runtime_linear_hex": "0x5277",
+          "original_bytes_hex": "c6061e8f00",
+          "operand": "mov     byte ptr ds:8F1Eh, 0",
+          "semantic": "電腦座位迴圈設活動座位0",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:02FC",
+          "ida_ea_hex": "0x104fc",
+          "runtime_linear_hex": "0x527c",
+          "original_bytes_hex": "9a0e03f804",
+          "operand": "call    far ptr 4F8h:30Eh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0301",
+          "ida_ea_hex": "0x10501",
+          "runtime_linear_hex": "0x5281",
+          "original_bytes_hex": "c6061e8f01",
+          "operand": "mov     byte ptr ds:8F1Eh, 1",
+          "semantic": "電腦座位迴圈設活動座位1",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0306",
+          "ida_ea_hex": "0x10506",
+          "runtime_linear_hex": "0x5286",
+          "original_bytes_hex": "9a0e03f804",
+          "operand": "call    far ptr 4F8h:30Eh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:030B",
+          "ida_ea_hex": "0x1050b",
+          "runtime_linear_hex": "0x528b",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:030D",
+          "ida_ea_hex": "0x1050d",
+          "runtime_linear_hex": "0x528d",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:030E",
+          "ida_ea_hex": "0x1050e",
+          "runtime_linear_hex": "0x528e",
+          "original_bytes_hex": "56",
+          "operand": "push    si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:030F",
+          "ida_ea_hex": "0x1050f",
+          "runtime_linear_hex": "0x528f",
+          "original_bytes_hex": "8a1e1e8f",
+          "operand": "mov     bl, ds:8F1Eh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0313",
+          "ida_ea_hex": "0x10513",
+          "runtime_linear_hex": "0x5293",
+          "original_bytes_hex": "30ff",
+          "operand": "xor     bh, bh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0315",
+          "ida_ea_hex": "0x10515",
+          "runtime_linear_hex": "0x5295",
+          "original_bytes_hex": "8a87258f",
+          "operand": "mov     al, [bx-70DBh]",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0319",
+          "ida_ea_hex": "0x10519",
+          "runtime_linear_hex": "0x5299",
+          "original_bytes_hex": "a21d8f",
+          "operand": "mov     ds:8F1Dh, al",
+          "semantic": "從活動座位的陣營映射寫入WORK+09",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:031C",
+          "ida_ea_hex": "0x1051c",
+          "runtime_linear_hex": "0x529c",
+          "original_bytes_hex": "8a87298f",
+          "operand": "mov     al, [bx-70D7h]",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0320",
+          "ida_ea_hex": "0x10520",
+          "runtime_linear_hex": "0x52a0",
+          "original_bytes_hex": "a21f8f",
+          "operand": "mov     ds:8F1Fh, al",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0323",
+          "ida_ea_hex": "0x10523",
+          "runtime_linear_hex": "0x52a3",
+          "original_bytes_hex": "b80100",
+          "operand": "mov     ax, 1",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0326",
+          "ida_ea_hex": "0x10526",
+          "runtime_linear_hex": "0x52a6",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0327",
+          "ida_ea_hex": "0x10527",
+          "runtime_linear_hex": "0x52a7",
+          "original_bytes_hex": "9a5503f804",
+          "operand": "call    far ptr 4F8h:355h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:032C",
+          "ida_ea_hex": "0x1052c",
+          "runtime_linear_hex": "0x52ac",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:032D",
+          "ida_ea_hex": "0x1052d",
+          "runtime_linear_hex": "0x52ad",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:032E",
+          "ida_ea_hex": "0x1052e",
+          "runtime_linear_hex": "0x52ae",
+          "original_bytes_hex": "9ac704f804",
+          "operand": "call    far ptr 4F8h:4C7h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0333",
+          "ida_ea_hex": "0x10533",
+          "runtime_linear_hex": "0x52b3",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0335",
+          "ida_ea_hex": "0x10535",
+          "runtime_linear_hex": "0x52b5",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0336",
+          "ida_ea_hex": "0x10536",
+          "runtime_linear_hex": "0x52b6",
+          "original_bytes_hex": "9a03006537",
+          "operand": "call    far ptr 3765h:3",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:033B",
+          "ida_ea_hex": "0x1053b",
+          "runtime_linear_hex": "0x52bb",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:033C",
+          "ida_ea_hex": "0x1053c",
+          "runtime_linear_hex": "0x52bc",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:033D",
+          "ida_ea_hex": "0x1053d",
+          "runtime_linear_hex": "0x52bd",
+          "original_bytes_hex": "8a1e1e8f",
+          "operand": "mov     bl, ds:8F1Eh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0341",
+          "ida_ea_hex": "0x10541",
+          "runtime_linear_hex": "0x52c1",
+          "original_bytes_hex": "30ff",
+          "operand": "xor     bh, bh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0343",
+          "ida_ea_hex": "0x10543",
+          "runtime_linear_hex": "0x52c3",
+          "original_bytes_hex": "80bf238f01",
+          "operand": "cmp     byte ptr [bx-70DDh], 1",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0348",
+          "ida_ea_hex": "0x10548",
+          "runtime_linear_hex": "0x52c8",
+          "original_bytes_hex": "7507",
+          "operand": "jnz     short near ptr unk_10551",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:034A",
+          "ida_ea_hex": "0x1054a",
+          "runtime_linear_hex": "0x52ca",
+          "original_bytes_hex": "9a0500102d",
+          "operand": "call    far ptr 2D10h:5",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:034F",
+          "ida_ea_hex": "0x1054f",
+          "runtime_linear_hex": "0x52cf",
+          "original_bytes_hex": "89c6",
+          "operand": "mov     si, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0351",
+          "ida_ea_hex": "0x10551",
+          "runtime_linear_hex": "0x52d1",
+          "original_bytes_hex": "8bc6",
+          "operand": "mov     ax, si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0353",
+          "ida_ea_hex": "0x10553",
+          "runtime_linear_hex": "0x52d3",
+          "original_bytes_hex": "5e",
+          "operand": "pop     si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        },
+        {
+          "original_location": "04F8:0354",
+          "ida_ea_hex": "0x10554",
+          "runtime_linear_hex": "0x52d4",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 未附加已證實語意",
+          "source": "研究186／187及normal89-r48正常原版雙跑watch／完整RAM"
+        }
+      ]
+    }
+  },
+  "normal_player_runs": [
+    {
+      "path": "workplace/round48-player-final-a",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "go",
+        "run",
+        "tools/scripts/load_seat_player.go",
+        "-out",
+        "workplace/round48-player-final-a"
+      ],
+      "normal_input_metadata": {
+        "versus/probe.json": {
+          "classification": "normal player UI; full state parity not established",
+          "inputs": [
+            "click 300 270",
+            "type 138; enter",
+            "click 300 322",
+            "right 318 208",
+            "right 318 228",
+            "right 318 248",
+            "click 318 248",
+            "click 432 270",
+            "click 544 125",
+            "click 560 125",
+            "click 432 270"
+          ],
+          "resources": "bootstrap.Load; Game.New; product renderer; no RAM injection",
+          "stages": [
+            {
+              "faction": 0,
+              "stage": "loaded",
+              "state": "StateVersusInput",
+              "turn": 380
+            },
+            {
+              "faction": 0,
+              "stage": "confirmed",
+              "state": "StateCommandPhase",
+              "turn": 380
+            },
+            {
+              "faction": 1,
+              "stage": "handoff",
+              "state": "StateCommandPhase",
+              "turn": 380
+            }
+          ]
+        },
+        "empire/probe.json": {
+          "classification": "normal player UI; full state parity not established",
+          "inputs": [
+            "click 300 270",
+            "type 138; enter",
+            "click 300 322",
+            "right 318 208",
+            "right 318 228",
+            "right 318 248",
+            "click 318 208"
+          ],
+          "resources": "bootstrap.Load; Game.New; product renderer; no RAM injection",
+          "stages": [
+            {
+              "faction": 0,
+              "stage": "loaded",
+              "state": "StateCommandPhase",
+              "turn": 380
+            }
+          ]
+        },
+        "alliance/probe.json": {
+          "classification": "normal player UI; full state parity not established",
+          "inputs": [
+            "click 300 270",
+            "type 138; enter",
+            "click 300 322",
+            "right 318 208",
+            "right 318 228",
+            "right 318 248",
+            "click 318 228"
+          ],
+          "resources": "bootstrap.Load; Game.New; product renderer; no RAM injection",
+          "stages": [
+            {
+              "faction": 1,
+              "stage": "loaded",
+              "state": "StateCommandPhase",
+              "turn": 380
+            }
+          ]
+        }
+      },
+      "hashes": {
+        "alliance/loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "alliance/loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "alliance/loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "alliance/loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "alliance/loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "alliance/loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "alliance/loaded/WORK.DT0": "1ea7d106d57dfc708a4a1ef917121f3cf9409ec176791e76e385340e038d4d16",
+        "alliance/loaded/screen.bin": "46b348a29bb8a5c9d7ecb61c8ffe95b06dcd7990169bb63e441566d0cb1a10a9",
+        "alliance/menu-1.bin": "873a988176e80ae15c686d8931b0182affc941695273ae7709b4f634588d6fcc",
+        "alliance/menu0.bin": "2a1813e428eb80d7d9014e3e7fc2da104251e10e829e255eb2437711159ff206",
+        "alliance/menu1.bin": "ca62bafeb200062027779418e694b28c0d08fed97de5e79f10fae8a46cdf9f64",
+        "alliance/menu2.bin": "a68d26b0208ea9c106798db3fe53978fb821fa16fc298df9203fa214d6e43c16",
+        "alliance/probe.json": "5bb0e166ebddb8585dee19921d08bff72f04ddae4817770963db022d8be9cddc",
+        "empire/loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "empire/loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "empire/loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "empire/loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "empire/loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "empire/loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "empire/loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "empire/loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "empire/menu-1.bin": "873a988176e80ae15c686d8931b0182affc941695273ae7709b4f634588d6fcc",
+        "empire/menu0.bin": "2a1813e428eb80d7d9014e3e7fc2da104251e10e829e255eb2437711159ff206",
+        "empire/menu1.bin": "ca62bafeb200062027779418e694b28c0d08fed97de5e79f10fae8a46cdf9f64",
+        "empire/menu2.bin": "a68d26b0208ea9c106798db3fe53978fb821fa16fc298df9203fa214d6e43c16",
+        "empire/probe.json": "796bc0db836f4597f9126c1b49bda7f20b9e19a6090de23defac768bd8dd651e",
+        "versus/confirmed/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "versus/confirmed/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "versus/confirmed/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "versus/confirmed/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "versus/confirmed/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "versus/confirmed/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "versus/confirmed/WORK.DT0": "55eac68ea558e5081b54f3f8e96e3288befdd26963a63236c89f5cb0c93092d0",
+        "versus/confirmed/screen.bin": "b4bac446901430d4f12358c9423c15829c746388028c89032f7442df430caf39",
+        "versus/handoff/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "versus/handoff/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "versus/handoff/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "versus/handoff/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "versus/handoff/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "versus/handoff/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "versus/handoff/WORK.DT0": "fd6c28ec16797bb7d909a0b6a88a35c677f3ba6859a90056c2e1b98317732ed0",
+        "versus/handoff/screen.bin": "825baa69d08b1d193ff4d28fe1bcb889248d856f08443bef13d71424277d5565",
+        "versus/loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "versus/loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "versus/loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "versus/loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "versus/loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "versus/loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "versus/loaded/WORK.DT0": "55eac68ea558e5081b54f3f8e96e3288befdd26963a63236c89f5cb0c93092d0",
+        "versus/loaded/screen.bin": "073c7fdb21821fbeb8f2cf24f9d719e60dd8c99854acec77b5f40689f9a81ab8",
+        "versus/menu-1.bin": "873a988176e80ae15c686d8931b0182affc941695273ae7709b4f634588d6fcc",
+        "versus/menu0.bin": "2a1813e428eb80d7d9014e3e7fc2da104251e10e829e255eb2437711159ff206",
+        "versus/menu1.bin": "ca62bafeb200062027779418e694b28c0d08fed97de5e79f10fae8a46cdf9f64",
+        "versus/menu2.bin": "a68d26b0208ea9c106798db3fe53978fb821fa16fc298df9203fa214d6e43c16",
+        "versus/probe.json": "c8cac5fe00f02fd6b991c959ab07b8f3873d8da97d7e1b33d263bdd8dc55a7e6"
+      }
+    },
+    {
+      "path": "workplace/round48-player-final-b",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "go",
+        "run",
+        "tools/scripts/load_seat_player.go",
+        "-out",
+        "workplace/round48-player-final-b"
+      ],
+      "normal_input_metadata": {
+        "versus/probe.json": {
+          "classification": "normal player UI; full state parity not established",
+          "inputs": [
+            "click 300 270",
+            "type 138; enter",
+            "click 300 322",
+            "right 318 208",
+            "right 318 228",
+            "right 318 248",
+            "click 318 248",
+            "click 432 270",
+            "click 544 125",
+            "click 560 125",
+            "click 432 270"
+          ],
+          "resources": "bootstrap.Load; Game.New; product renderer; no RAM injection",
+          "stages": [
+            {
+              "faction": 0,
+              "stage": "loaded",
+              "state": "StateVersusInput",
+              "turn": 380
+            },
+            {
+              "faction": 0,
+              "stage": "confirmed",
+              "state": "StateCommandPhase",
+              "turn": 380
+            },
+            {
+              "faction": 1,
+              "stage": "handoff",
+              "state": "StateCommandPhase",
+              "turn": 380
+            }
+          ]
+        },
+        "empire/probe.json": {
+          "classification": "normal player UI; full state parity not established",
+          "inputs": [
+            "click 300 270",
+            "type 138; enter",
+            "click 300 322",
+            "right 318 208",
+            "right 318 228",
+            "right 318 248",
+            "click 318 208"
+          ],
+          "resources": "bootstrap.Load; Game.New; product renderer; no RAM injection",
+          "stages": [
+            {
+              "faction": 0,
+              "stage": "loaded",
+              "state": "StateCommandPhase",
+              "turn": 380
+            }
+          ]
+        },
+        "alliance/probe.json": {
+          "classification": "normal player UI; full state parity not established",
+          "inputs": [
+            "click 300 270",
+            "type 138; enter",
+            "click 300 322",
+            "right 318 208",
+            "right 318 228",
+            "right 318 248",
+            "click 318 228"
+          ],
+          "resources": "bootstrap.Load; Game.New; product renderer; no RAM injection",
+          "stages": [
+            {
+              "faction": 1,
+              "stage": "loaded",
+              "state": "StateCommandPhase",
+              "turn": 380
+            }
+          ]
+        }
+      },
+      "hashes": {
+        "alliance/loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "alliance/loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "alliance/loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "alliance/loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "alliance/loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "alliance/loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "alliance/loaded/WORK.DT0": "1ea7d106d57dfc708a4a1ef917121f3cf9409ec176791e76e385340e038d4d16",
+        "alliance/loaded/screen.bin": "46b348a29bb8a5c9d7ecb61c8ffe95b06dcd7990169bb63e441566d0cb1a10a9",
+        "alliance/menu-1.bin": "873a988176e80ae15c686d8931b0182affc941695273ae7709b4f634588d6fcc",
+        "alliance/menu0.bin": "2a1813e428eb80d7d9014e3e7fc2da104251e10e829e255eb2437711159ff206",
+        "alliance/menu1.bin": "ca62bafeb200062027779418e694b28c0d08fed97de5e79f10fae8a46cdf9f64",
+        "alliance/menu2.bin": "a68d26b0208ea9c106798db3fe53978fb821fa16fc298df9203fa214d6e43c16",
+        "alliance/probe.json": "5bb0e166ebddb8585dee19921d08bff72f04ddae4817770963db022d8be9cddc",
+        "empire/loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "empire/loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "empire/loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "empire/loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "empire/loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "empire/loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "empire/loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "empire/loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "empire/menu-1.bin": "873a988176e80ae15c686d8931b0182affc941695273ae7709b4f634588d6fcc",
+        "empire/menu0.bin": "2a1813e428eb80d7d9014e3e7fc2da104251e10e829e255eb2437711159ff206",
+        "empire/menu1.bin": "ca62bafeb200062027779418e694b28c0d08fed97de5e79f10fae8a46cdf9f64",
+        "empire/menu2.bin": "a68d26b0208ea9c106798db3fe53978fb821fa16fc298df9203fa214d6e43c16",
+        "empire/probe.json": "796bc0db836f4597f9126c1b49bda7f20b9e19a6090de23defac768bd8dd651e",
+        "versus/confirmed/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "versus/confirmed/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "versus/confirmed/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "versus/confirmed/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "versus/confirmed/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "versus/confirmed/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "versus/confirmed/WORK.DT0": "55eac68ea558e5081b54f3f8e96e3288befdd26963a63236c89f5cb0c93092d0",
+        "versus/confirmed/screen.bin": "b4bac446901430d4f12358c9423c15829c746388028c89032f7442df430caf39",
+        "versus/handoff/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "versus/handoff/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "versus/handoff/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "versus/handoff/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "versus/handoff/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "versus/handoff/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "versus/handoff/WORK.DT0": "fd6c28ec16797bb7d909a0b6a88a35c677f3ba6859a90056c2e1b98317732ed0",
+        "versus/handoff/screen.bin": "825baa69d08b1d193ff4d28fe1bcb889248d856f08443bef13d71424277d5565",
+        "versus/loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "versus/loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "versus/loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "versus/loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "versus/loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "versus/loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "versus/loaded/WORK.DT0": "55eac68ea558e5081b54f3f8e96e3288befdd26963a63236c89f5cb0c93092d0",
+        "versus/loaded/screen.bin": "073c7fdb21821fbeb8f2cf24f9d719e60dd8c99854acec77b5f40689f9a81ab8",
+        "versus/menu-1.bin": "873a988176e80ae15c686d8931b0182affc941695273ae7709b4f634588d6fcc",
+        "versus/menu0.bin": "2a1813e428eb80d7d9014e3e7fc2da104251e10e829e255eb2437711159ff206",
+        "versus/menu1.bin": "ca62bafeb200062027779418e694b28c0d08fed97de5e79f10fae8a46cdf9f64",
+        "versus/menu2.bin": "a68d26b0208ea9c106798db3fe53978fb821fa16fc298df9203fa214d6e43c16",
+        "versus/probe.json": "c8cac5fe00f02fd6b991c959ab07b8f3873d8da97d7e1b33d263bdd8dc55a7e6"
+      }
+    }
+  ],
+  "normal_first_battle_runs": [
+    {
+      "path": "workplace/round48-normal-final-a",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "go",
+        "run",
+        "-overlay",
+        "workplace/round44-normal-overlay.json",
+        "tools/scripts/battle_normal_probe.go",
+        "-out",
+        "workplace/round48-normal-final-a"
+      ],
+      "normal_input_metadata": {
+        "probe.json": {
+          "classification": "normal-player-entry-probe; parity not established",
+          "date": [
+            799,
+            3,
+            1
+          ],
+          "inputs": [
+            "click 300 270",
+            "type 138; enter",
+            "click 300 322",
+            "click 318 208",
+            "click 544 125",
+            "click 560 125"
+          ],
+          "palette_note": "screen.png暫用主選單色盤；正式RGB比較必須讀原版有效色盤",
+          "resources": "bootstrap.Load; Game.New",
+          "seed_setup": "測試期Go覆蓋只固定實行前D3DC167E，正式產品不變",
+          "state": 32,
+          "strategy_seed_after": "B6E4B78A",
+          "strategy_seed_before": "D3DC167E",
+          "strategy_seed_observed_before": "D3DC167E",
+          "ticks": 460
+        }
+      },
+      "hashes": {
+        "entry/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "entry/FLEET.DT0": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7",
+        "entry/PLANET.DT0": "3fcc532ddb767f9db30a1b9e45c2f1fe589aff8b942aa2826ab369ed77248665",
+        "entry/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "entry/SHIP.DT0": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd",
+        "entry/STELLAR.DT0": "c3fc0ffa80a7afdfa1e7115c3d9b799926a5daf2425855c907b9bd02dd19f49a",
+        "entry/WORK.DT0": "31f361dd1dcbcac52b34af8eca92d208b3a6d0b435dea2ef3fbc592a81f669e4",
+        "entry/screen.bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        "entry/screen.png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        "loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "loaded/screen.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "probe.json": "e52c92f50428196788eee37f51614ec4dcbd4b6316021036ce3bc3edfc35b833"
+      }
+    },
+    {
+      "path": "workplace/round48-normal-final-b",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "go",
+        "run",
+        "-overlay",
+        "workplace/round44-normal-overlay.json",
+        "tools/scripts/battle_normal_probe.go",
+        "-out",
+        "workplace/round48-normal-final-b"
+      ],
+      "normal_input_metadata": {
+        "probe.json": {
+          "classification": "normal-player-entry-probe; parity not established",
+          "date": [
+            799,
+            3,
+            1
+          ],
+          "inputs": [
+            "click 300 270",
+            "type 138; enter",
+            "click 300 322",
+            "click 318 208",
+            "click 544 125",
+            "click 560 125"
+          ],
+          "palette_note": "screen.png暫用主選單色盤；正式RGB比較必須讀原版有效色盤",
+          "resources": "bootstrap.Load; Game.New",
+          "seed_setup": "測試期Go覆蓋只固定實行前D3DC167E，正式產品不變",
+          "state": 32,
+          "strategy_seed_after": "B6E4B78A",
+          "strategy_seed_before": "D3DC167E",
+          "strategy_seed_observed_before": "D3DC167E",
+          "ticks": 460
+        }
+      },
+      "hashes": {
+        "entry/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "entry/FLEET.DT0": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7",
+        "entry/PLANET.DT0": "3fcc532ddb767f9db30a1b9e45c2f1fe589aff8b942aa2826ab369ed77248665",
+        "entry/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "entry/SHIP.DT0": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd",
+        "entry/STELLAR.DT0": "c3fc0ffa80a7afdfa1e7115c3d9b799926a5daf2425855c907b9bd02dd19f49a",
+        "entry/WORK.DT0": "31f361dd1dcbcac52b34af8eca92d208b3a6d0b435dea2ef3fbc592a81f669e4",
+        "entry/screen.bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        "entry/screen.png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        "loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "loaded/screen.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "probe.json": "e52c92f50428196788eee37f51614ec4dcbd4b6316021036ce3bc3edfc35b833"
+      }
+    }
+  ],
+  "first_battle_metadata": {
+    "classification": "normal-player-entry-probe; parity not established",
+    "date": [
+      799,
+      3,
+      1
+    ],
+    "inputs": [
+      "click 300 270",
+      "type 138; enter",
+      "click 300 322",
+      "click 318 208",
+      "click 544 125",
+      "click 560 125"
+    ],
+    "palette_note": "screen.png暫用主選單色盤；正式RGB比較必須讀原版有效色盤",
+    "resources": "bootstrap.Load; Game.New",
+    "seed_setup": "測試期Go覆蓋只固定實行前D3DC167E，正式產品不變",
+    "state": 32,
+    "strategy_seed_after": "B6E4B78A",
+    "strategy_seed_before": "D3DC167E",
+    "strategy_seed_observed_before": "D3DC167E",
+    "ticks": 460
+  },
+  "saved_controller_fields": [
+    {
+      "mode": "empire",
+      "stage": "loaded",
+      "before": [
+        0,
+        0
+      ],
+      "after": [
+        0,
+        0
+      ],
+      "original": [
+        0,
+        0
+      ],
+      "unknown_0b": 0,
+      "other_saved_bytes_changed": 0
+    },
+    {
+      "mode": "alliance",
+      "stage": "loaded",
+      "before": [
+        0,
+        0
+      ],
+      "after": [
+        1,
+        0
+      ],
+      "original": [
+        1,
+        0
+      ],
+      "unknown_0b": 0,
+      "other_saved_bytes_changed": 0
+    },
+    {
+      "mode": "versus",
+      "stage": "loaded",
+      "before": [
+        0,
+        0
+      ],
+      "after": [
+        0,
+        0
+      ],
+      "original": [
+        0,
+        0
+      ],
+      "unknown_0b": 0,
+      "other_saved_bytes_changed": 0
+    },
+    {
+      "mode": "versus",
+      "stage": "confirmed",
+      "before": [
+        0,
+        0
+      ],
+      "after": [
+        0,
+        0
+      ],
+      "original": [
+        0,
+        0
+      ],
+      "unknown_0b": 0,
+      "other_saved_bytes_changed": 0
+    },
+    {
+      "mode": "versus",
+      "stage": "handoff",
+      "before": [
+        0,
+        0
+      ],
+      "after": [
+        1,
+        1
+      ],
+      "original": [
+        1,
+        1
+      ],
+      "unknown_0b": 0,
+      "other_saved_bytes_changed": 0
+    }
+  ],
+  "remaining_first_battle_tables": {
+    "WORK": {
+      "bytes": 230,
+      "remaining_different_bytes": 32,
+      "changed_since_round47": 0,
+      "original_sha256": "4f4d0edec288c0d3f1a6c452275f049f798071e80f86ffb78e717c043317d237",
+      "remake_sha256": "31f361dd1dcbcac52b34af8eca92d208b3a6d0b435dea2ef3fbc592a81f669e4"
+    },
+    "FLEET": {
+      "bytes": 3904,
+      "remaining_different_bytes": 120,
+      "changed_since_round47": 0,
+      "original_sha256": "53af52561125e497eebac24f6a0f2ce6c44b2109516cecab3a481e27d09980d1",
+      "remake_sha256": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7"
+    },
+    "SHIP": {
+      "bytes": 27456,
+      "remaining_different_bytes": 865,
+      "changed_since_round47": 0,
+      "original_sha256": "1c74fa060ca3fd8f5276d34fac84fb614522434f684885deb77f0253cccd8b44",
+      "remake_sha256": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd"
+    },
+    "STELLAR": {
+      "bytes": 4032,
+      "remaining_different_bytes": 44,
+      "changed_since_round47": 0,
+      "original_sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "remake_sha256": "c3fc0ffa80a7afdfa1e7115c3d9b799926a5daf2425855c907b9bd02dd19f49a"
+    }
+  },
+  "screen_comparisons": {
+    "empire/loaded": {
+      "full": {
+        "rectangle_xywh": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "compared_pixels": 307200,
+        "same_pixels": 307200,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "field": {
+        "rectangle_xywh": [
+          0,
+          0,
+          448,
+          360
+        ],
+        "compared_pixels": 161280,
+        "same_pixels": 161280,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "right": {
+        "rectangle_xywh": [
+          448,
+          0,
+          192,
+          480
+        ],
+        "compared_pixels": 92160,
+        "same_pixels": 92160,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "bottom": {
+        "rectangle_xywh": [
+          0,
+          360,
+          448,
+          120
+        ],
+        "compared_pixels": 53760,
+        "same_pixels": 53760,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      }
+    },
+    "alliance/loaded": {
+      "full": {
+        "rectangle_xywh": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "compared_pixels": 307200,
+        "same_pixels": 307200,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "field": {
+        "rectangle_xywh": [
+          0,
+          0,
+          448,
+          360
+        ],
+        "compared_pixels": 161280,
+        "same_pixels": 161280,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "right": {
+        "rectangle_xywh": [
+          448,
+          0,
+          192,
+          480
+        ],
+        "compared_pixels": 92160,
+        "same_pixels": 92160,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "bottom": {
+        "rectangle_xywh": [
+          0,
+          360,
+          448,
+          120
+        ],
+        "compared_pixels": 53760,
+        "same_pixels": 53760,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      }
+    },
+    "versus/loaded": {
+      "full": {
+        "rectangle_xywh": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "compared_pixels": 307200,
+        "same_pixels": 304359,
+        "different_index_pixels": 2841,
+        "different_rgb_pixels": 2841,
+        "maximum_channel_difference": 81,
+        "difference_bbox_inclusive": [
+          122,
+          46,
+          294,
+          243
+        ]
+      },
+      "field": {
+        "rectangle_xywh": [
+          0,
+          0,
+          448,
+          360
+        ],
+        "compared_pixels": 161280,
+        "same_pixels": 158439,
+        "different_index_pixels": 2841,
+        "different_rgb_pixels": 2841,
+        "maximum_channel_difference": 81,
+        "difference_bbox_inclusive": [
+          122,
+          46,
+          294,
+          243
+        ]
+      },
+      "right": {
+        "rectangle_xywh": [
+          448,
+          0,
+          192,
+          480
+        ],
+        "compared_pixels": 92160,
+        "same_pixels": 92160,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "bottom": {
+        "rectangle_xywh": [
+          0,
+          360,
+          448,
+          120
+        ],
+        "compared_pixels": 53760,
+        "same_pixels": 53760,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      }
+    },
+    "versus/confirmed": {
+      "full": {
+        "rectangle_xywh": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "compared_pixels": 307200,
+        "same_pixels": 307200,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "field": {
+        "rectangle_xywh": [
+          0,
+          0,
+          448,
+          360
+        ],
+        "compared_pixels": 161280,
+        "same_pixels": 161280,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "right": {
+        "rectangle_xywh": [
+          448,
+          0,
+          192,
+          480
+        ],
+        "compared_pixels": 92160,
+        "same_pixels": 92160,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "bottom": {
+        "rectangle_xywh": [
+          0,
+          360,
+          448,
+          120
+        ],
+        "compared_pixels": 53760,
+        "same_pixels": 53760,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      }
+    },
+    "versus/handoff": {
+      "full": {
+        "rectangle_xywh": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "compared_pixels": 307200,
+        "same_pixels": 307200,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "field": {
+        "rectangle_xywh": [
+          0,
+          0,
+          448,
+          360
+        ],
+        "compared_pixels": 161280,
+        "same_pixels": 161280,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "right": {
+        "rectangle_xywh": [
+          448,
+          0,
+          192,
+          480
+        ],
+        "compared_pixels": 92160,
+        "same_pixels": 92160,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      },
+      "bottom": {
+        "rectangle_xywh": [
+          0,
+          360,
+          448,
+          120
+        ],
+        "compared_pixels": 53760,
+        "same_pixels": 53760,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      }
+    },
+    "empire/first-battle": {
+      "full": {
+        "rectangle_xywh": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "compared_pixels": 307200,
+        "same_pixels": 301347,
+        "different_index_pixels": 5853,
+        "different_rgb_pixels": 5853,
+        "maximum_channel_difference": 243,
+        "difference_bbox_inclusive": [
+          240,
+          93,
+          607,
+          395
+        ]
+      },
+      "field": {
+        "rectangle_xywh": [
+          0,
+          0,
+          448,
+          360
+        ],
+        "compared_pixels": 161280,
+        "same_pixels": 161207,
+        "different_index_pixels": 73,
+        "different_rgb_pixels": 73,
+        "maximum_channel_difference": 243,
+        "difference_bbox_inclusive": [
+          240,
+          240,
+          255,
+          255
+        ]
+      },
+      "right": {
+        "rectangle_xywh": [
+          448,
+          0,
+          192,
+          480
+        ],
+        "compared_pixels": 92160,
+        "same_pixels": 86380,
+        "different_index_pixels": 5780,
+        "different_rgb_pixels": 5780,
+        "maximum_channel_difference": 243,
+        "difference_bbox_inclusive": [
+          480,
+          93,
+          607,
+          395
+        ]
+      },
+      "bottom": {
+        "rectangle_xywh": [
+          0,
+          360,
+          448,
+          120
+        ],
+        "compared_pixels": 53760,
+        "same_pixels": 53760,
+        "different_index_pixels": 0,
+        "different_rgb_pixels": 0,
+        "maximum_channel_difference": 0,
+        "difference_bbox_inclusive": null
+      }
+    }
+  },
+  "comparison_image_hashes": {
+    "workplace/round48-empire-loaded.png": "1ec2d4d9ae7627b546a39b8e4c1f1ee62330ac81b3b3e638169b485e564ac96f",
+    "workplace/round48-empire-loaded-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+    "workplace/round48-alliance-loaded.png": "7ec1c057ed7de71d7f2c186592982e2fdad89d994df7ff9032969a7d22b1b0f9",
+    "workplace/round48-alliance-loaded-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+    "workplace/round48-versus-loaded.png": "7969e7e4f0ed29da5c1d77f53676eb64405285298ac66c727bff3bc65757189b",
+    "workplace/round48-versus-loaded-diff.png": "780a1dc53b72822551828ce2c42818af3fc536fc6c4057e046c84f0880ad1bfb",
+    "workplace/round48-versus-confirmed.png": "3d06b8b07236792fb680d9eace60ca6a95833ce33442f8d8b19c6ad3ad41644f",
+    "workplace/round48-versus-confirmed-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+    "workplace/round48-versus-handoff.png": "57d222bda2b276f2eb07bd1c4b5ac1bd68e30c4d7e004f7549785f7cbedbc855",
+    "workplace/round48-versus-handoff-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+    "workplace/round48-first-battle.png": "8a83b90189bca42b29895416782aa5fc4666c4232638605143cdefe232188562",
+    "workplace/round48-first-battle-diff.png": "5abfeb78ce62119e078140d20ee5a1e5c81b799301d07adfabe8e1a12cfd0883"
+  },
+  "actual_x11_gui": [
+    {
+      "prefix": "workplace/round48-seat-checked-gui-empire",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "env",
+        "LOGH3_ACTIVE_GUI_PREFIX=round48-seat-checked-gui",
+        "bash",
+        "tools/active_seat_gui.sh"
+      ],
+      "normal_keyboard_and_mouse": true,
+      "full_different_pixels_from_normal_Game": 0,
+      "hashes": {
+        "workplace/round48-seat-checked-gui-empire.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "workplace/round48-seat-checked-gui-empire.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "workplace/round48-seat-checked-gui-empire.txt": "e0d00600150e9b0fbcd62eb13b82792ffe29e7616480fba5da0d9bfda929a626",
+        "workplace/round48-seat-checked-gui-empire.log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    },
+    {
+      "prefix": "workplace/round48-seat-checked-gui-alliance",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "env",
+        "LOGH3_ACTIVE_GUI_PREFIX=round48-seat-checked-gui",
+        "bash",
+        "tools/active_seat_gui.sh"
+      ],
+      "normal_keyboard_and_mouse": true,
+      "full_different_pixels_from_normal_Game": 0,
+      "hashes": {
+        "workplace/round48-seat-checked-gui-alliance.bin": "46b348a29bb8a5c9d7ecb61c8ffe95b06dcd7990169bb63e441566d0cb1a10a9",
+        "workplace/round48-seat-checked-gui-alliance.png": "d50851be74e5d1e613c8374930c99ca05fd3d091d45680cdfe0db9f230539fcd",
+        "workplace/round48-seat-checked-gui-alliance.txt": "34264adb984a9ef49692c6f3394e2d2cf9110b41b085ad1364944242dbd1b70e",
+        "workplace/round48-seat-checked-gui-alliance.log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    },
+    {
+      "prefix": "workplace/round48-seat-checked-gui-versus",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "env",
+        "LOGH3_ACTIVE_GUI_PREFIX=round48-seat-checked-gui",
+        "bash",
+        "tools/active_seat_gui.sh"
+      ],
+      "normal_keyboard_and_mouse": true,
+      "full_different_pixels_from_normal_Game": 0,
+      "hashes": {
+        "workplace/round48-seat-checked-gui-versus.bin": "073c7fdb21821fbeb8f2cf24f9d719e60dd8c99854acec77b5f40689f9a81ab8",
+        "workplace/round48-seat-checked-gui-versus.png": "4aade1485ee87781322324421597dcba0b81299b64e633bbcd94fcbf7f7c7b8f",
+        "workplace/round48-seat-checked-gui-versus.txt": "81a78dfd7c58e22b9317b971f111aff4db8f4112eb38786a2d90e651c8438918",
+        "workplace/round48-seat-checked-gui-versus.log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    },
+    {
+      "prefix": "workplace/round48-seat-checked-gui-versus-handoff",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "env",
+        "LOGH3_ACTIVE_GUI_PREFIX=round48-seat-checked-gui",
+        "bash",
+        "tools/active_seat_gui.sh"
+      ],
+      "normal_keyboard_and_mouse": true,
+      "full_different_pixels_from_normal_Game": 0,
+      "hashes": {
+        "workplace/round48-seat-checked-gui-versus-handoff.bin": "825baa69d08b1d193ff4d28fe1bcb889248d856f08443bef13d71424277d5565",
+        "workplace/round48-seat-checked-gui-versus-handoff.png": "f4ba6c2bb88088290de2e86a885cc706f7e1082db369169b0391108dfe6f1027",
+        "workplace/round48-seat-checked-gui-versus-handoff.txt": "78eaeaae6a94b60fc5d090edb0bd465db79d187533193fdf0511d8a61f55ff80",
+        "workplace/round48-seat-checked-gui-versus-handoff.log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    },
+    {
+      "prefix": "workplace/round48-seat-checked-gui-empire2x",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "env",
+        "LOGH3_ACTIVE_GUI_PREFIX=round48-seat-checked-gui",
+        "bash",
+        "tools/active_seat_gui.sh"
+      ],
+      "normal_keyboard_and_mouse": true,
+      "full_different_pixels_from_normal_Game": 0,
+      "hashes": {
+        "workplace/round48-seat-checked-gui-empire2x.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "workplace/round48-seat-checked-gui-empire2x.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "workplace/round48-seat-checked-gui-empire2x.txt": "0b106e3256f4e33f07c13a10bfc6ec93d804e168dc5bb0c26d5ca08cc59820bb",
+        "workplace/round48-seat-checked-gui-empire2x.log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    },
+    {
+      "prefix": "workplace/round48-final-gui-1x",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "env",
+        "LOGH3_TURN_GUI_PREFIX=round48-final-gui",
+        "bash",
+        "tools/turn_counter_gui.sh"
+      ],
+      "normal_keyboard_and_mouse": true,
+      "full_different_pixels_from_normal_Game": 0,
+      "hashes": {
+        "workplace/round48-final-gui-1x.bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        "workplace/round48-final-gui-1x.png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        "workplace/round48-final-gui-1x.txt": "f053d194a0cb86c82378c9c73e35fc959f320e40886cafb3bf59a967cfe5d606",
+        "workplace/round48-final-gui-1x.log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    },
+    {
+      "prefix": "workplace/round48-final-gui-2x",
+      "command_argv": [
+        "tools/gui.sh",
+        "xrun",
+        "env",
+        "LOGH3_TURN_GUI_PREFIX=round48-final-gui",
+        "bash",
+        "tools/turn_counter_gui.sh"
+      ],
+      "normal_keyboard_and_mouse": true,
+      "full_different_pixels_from_normal_Game": 0,
+      "hashes": {
+        "workplace/round48-final-gui-2x.bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        "workplace/round48-final-gui-2x.png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        "workplace/round48-final-gui-2x.txt": "9b437af71f16b55dc4db0e6f733f50e11536d3b4799bebd2535f406bfb14e8d3",
+        "workplace/round48-final-gui-2x.log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    }
+  ],
+  "source_hashes": {
+    "internal/game/activeseat.go": "15f29f10aad8ab4058ac6ec2380d98fc593977173a7fc7e57729d4fce272d96f",
+    "internal/game/activeseat_test.go": "409e2f8696d1cc294faf188e1d33ae7fb63044801f9cbc0f39ced86976c67fc8",
+    "internal/game/game.go": "5a42ff07edc23b9974157df625e246cad4f74fec845577c7b5354ad20eee9952",
+    "internal/game/turnthink.go": "0ba0711da7a059de213d308934374a98f826784d0b6cdd5e283a597af1b37f02",
+    "internal/game/battle.go": "72435ddd0bbc005d078564409fdafaf65dd64f64bd44079e01538d8bf097cbe1",
+    "internal/game/loadfaction_test.go": "17d2ac2b97ad171e53c0e4bb4bfeb9c8691a0213ac3624ad4c075860683d6bb5",
+    "tools/active_seat_oracle.sh": "8eb5dc85c0202e23d160b7de451b5b9d72120aec9a8e67d3a8a9db292034f05e",
+    "tools/active_seat_gui.sh": "1831beb169ccb99c1acc69f189ece7cf068b19f2d1398807dace3fb77f1402d5",
+    "tools/turn_counter_gui.sh": "33d7916b0fd8db2ad5fdd697d4cfe29ef734ae05b146ae5f923ae4495c34b0b9",
+    "tools/scripts/active_seat_ida.py": "04fd9b3995cbc64af43d50c33e7a8514d9f815288634efe8b168654425886da0",
+    "tools/scripts/active_seat_receipt.py": "d2d956943453237a9f21d066bcd99f3bd3c4942a5fff6fb8da4a4009e8114aff",
+    "tools/scripts/load_seat_player.go": "44ca2ad95dc743c4f10507626f8788f0ad50cb12132a684854493b21b7c93acd",
+    "tools/scripts/battle_normal_probe.go": "0d66e1e1e8bccb7c6c683e8be4dbb6d3ba0482bc8b21e87db781ff6dfdfa70eb",
+    "workplace/round44-normal-overlay.json": "dcaae558d812917b5bc2e02b049129014428f37dd4243ef624298c596317a905",
+    "workplace/round44-normal-seed.go": "3a5ece8b1a09f427d9d032da7853a2e02a5eae2519eb2aefaf52edb6881ae2a9"
+  },
+  "test_logs": {
+    "workplace/round48-active-limited.log": "533e607a97f4a264a49877338d33b5e38c5361a0fefe8e596e0d431b5d34c59a",
+    "workplace/round48-standard-tests.log": "042fa5a848621b2747dcd96f49e03d0ad219564160d59e8b1af19f2ae6605be7"
+  },
+  "limited_pass_events": 44,
+  "limited_skip_events": 0,
+  "standard_packages": 18,
+  "failed_gui_input": {
+    "prefix": "workplace/round48-seat-final-gui-versus-handoff",
+    "classification": "StateCommandPhase passed but actual faction remained Empire; 7526 different pixels; validation script failure",
+    "short_hold_script_sha256": "be859ba3b98b4ab3d3d5c4cf0503dc737b47a962d68350b16490e4bb18d407c7",
+    "hashes": {
+      "workplace/round48-seat-final-gui-versus-handoff.bin": "b4bac446901430d4f12358c9423c15829c746388028c89032f7442df430caf39",
+      "workplace/round48-seat-final-gui-versus-handoff.png": "2fb0fbc01c01526c4337f9c0198f92f1d489ac9c942e072f10b988db6770caee",
+      "workplace/round48-seat-final-gui-versus-handoff.txt": "78eaeaae6a94b60fc5d090edb0bd465db79d187533193fdf0511d8a61f55ff80",
+      "workplace/round48-seat-final-gui-versus-handoff.log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    }
+  },
+  "preserved_failed_logs": {
+    "workplace/round48-active-limited-fixture-failed.log": "2e207f1a2f0ad89434df49e3b98de1096ee242558758dc88075ac71fbc3e11fe",
+    "workplace/round48-standard-fixture-failed.log": "c76468a27a305b2c1c88933aa3e295cf6d62aa2d0217e54ba831592d9e72b179"
+  },
+  "limits": [
+    "088完整規格仍DRAFT；雙人首戰／戰術內座位／退場／終局活動值尚未新增原版證據",
+    "同盟435M是處理畫面；650M首戰為單次輔助，不冒稱全流程雙跑",
+    "+0B語意unknown，沒有填入首都；helpers暫時陣營2不逐指令模擬",
+    "雙人未確認2841 pixels與STELLAR+7D22 bytes、首戰全表差異保留",
+    "只驗Linux X11鍵鼠；不宣稱macOS、觸控、人耳或完整發行驗收"
+  ]
+}

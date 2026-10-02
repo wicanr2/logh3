@@ -99,6 +99,9 @@ func TestLoadFactionNormalSelectionAndSave(t *testing.T) {
 			if !bytes.Equal(g.workRecord()[0xC:0x15], m[0x5da50:0x5da59]) {
 				t.Fatal("九個控制bytes不符合原版")
 			}
+			if !bytes.Equal(g.workRecord()[0x09:0x0B], m[0x5DA4D:0x5DA4F]) {
+				t.Fatal("活動陣營／座位不符合原版")
+			}
 			if g.pct != g.slot.BuildPct[f] || g.treasury.Budget != g.slot.BudgetStart[f] || g.treasury.ShipPaid != g.slot.ShipPaid[f] {
 				t.Fatal("財政沿用了另一陣營")
 			}
@@ -115,6 +118,9 @@ func TestLoadFactionNormalSelectionAndSave(t *testing.T) {
 			}
 			if !bytes.Equal(b[0xC:0x15], m[0x5da50:0x5da59]) {
 				t.Fatal("保存遺失座位控制")
+			}
+			if !bytes.Equal(b[0x09:0x0B], m[0x5DA4D:0x5DA4F]) {
+				t.Fatal("保存遺失活動控制")
 			}
 			fleet := bytes.Clone(g.slot.Fleet)
 			ship := bytes.Clone(g.slot.Ship)

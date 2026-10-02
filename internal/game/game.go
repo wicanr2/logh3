@@ -1061,6 +1061,7 @@ func (g *Game) advanceTurn() {
 	// 電腦那一方先下命令，再讓所有艦隊走。
 	// 全部戰場與回合尾段報告結束後才進位，AI讀目前回合（規格088）。
 	g.runBrain()
+	g.setProcessingFaction()
 	g.resolveAdmiralFates()
 	if g.startAdmiralFateReports(g.continueAfterAdmiralFateReports) {
 		return
@@ -1072,6 +1073,7 @@ func (g *Game) advanceTurn() {
 // 回合計數器保持，直到所有戰場與回合尾段完成（規格088）。
 func (g *Game) beginTurn() {
 	g.mapMark = -1 // `04F8:02E7` 的 `3705:0349(1)`
+	g.setActiveSeat(1)
 	if g.turn%rules.TurnsPerMonth == 0 {
 		g.monthEndSeatsAfterPlayer()
 	}
@@ -1458,6 +1460,7 @@ func (g *Game) finishAfterPhezzanReports() {
 		}
 		g.monthEnd()
 	}
+	g.setHumanSeat()
 	// 原版 `0654:0034` 的共同尾巴每個回合都跑：照現在的狀態把預估徵稅額
 	// 刷一次（`docs/spec/035`）。中途打下一個星域之後，右側面板與徵稅
 	// 計劃當回合就要跟著變，不必等到月底。
@@ -1911,6 +1914,7 @@ func (g *Game) side() side {
 // enterSide 換到某一方：陣營、地圖顏色與那一方的錢一起換過去。
 func (g *Game) enterSide(faction int) {
 	g.faction = faction
+	g.setHumanSeat()
 	g.mapHighlight = rules.CapitalRegion(faction)
 	s := g.sides[faction]
 	g.pct = s.pct
@@ -1987,6 +1991,7 @@ func (g *Game) startNewGame(faction int) {
 	if g.aiMode > 0 {
 		g.reconnectAI()
 	}
+	g.setHumanSeat()
 }
 
 // snapshotWorld 記下星域記錄與行星表的開局值。
@@ -2128,6 +2133,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	// 星域記錄與行星表剛剛才換成存檔那一份，戰略 AI 的地基跟著換，
 	// 所以重接一次。
 	g.reconnectAI()
+	g.setHumanSeat()
 }
 
 // pickQuestion 決定防拷問答的題目與答案。

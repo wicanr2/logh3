@@ -95,6 +95,10 @@ func (g *Game) StartBattle(region int) {
 		}
 	}
 	g.state = StateBattle
+	// 088只取得兩個單人入口的活動控制；雙人戰場邊界仍未驗。
+	if !g.versus {
+		g.setHumanSeat()
+	}
 }
 
 // battleFleetGap 是同一個入口進來的艦隊之間錯開多少（`docs/internals/38`）。

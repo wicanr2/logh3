@@ -25,6 +25,7 @@ func (g *Game) startTurnThinking() bool {
 	if g.versus || g.res.TurnWindow == nil || g.res.TurnWindow.ThinkTitle.Ticks <= 0 {
 		return false
 	}
+	g.setActiveSeat(1)
 	g.turnThink = turnThinkState{}
 	g.state = StateTurnThinking
 	return true

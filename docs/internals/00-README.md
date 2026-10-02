@@ -287,3 +287,12 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [正常回合與兩AI計數驗證](../../internal/game/turncounter_test.go)：正式玩家完整回合／WORK保存、兩種AI與兩陣營的建隊／命令時點；全戰場與模態尾段抽樣另由既有regionturn／victoryreport測試驗收。
 - [回合修正真實X11輸入](../../tools/turn_counter_gui.sh)：正式cmd/gin3正常主選單至S3首戰，兩種視窗尺寸；不使用script或direct-entry。
 - [計數器收據工具](../../tools/scripts/turn_counter_receipt.py)及[完整收據](data/turn-counter-boundary.json)：原版雙跑／IDA／19份正式資料／全圖差分、GUI與來源SHA，研究385及088限定驗收。
+- [第48輪活動座位](../goal/2026-10-03-active-seat-round-48.md)：接續#89，查正常讀檔、實行與雙人交接的WORK控制生命週期。
+- [活動座位原版重播](../../tools/active_seat_oracle.sh)：固定正常無戰鬥回合、同盟S3處理與雙人首次交接，全部RAM與watch保留，語意未證實欄位不補值。
+- [活動座位IDA匯出](../../tools/scripts/active_seat_ida.py)：04F8四個座位函式的原始名稱、範圍、bytes與附加分級，不將自動名稱當證據。
+- [活動座位研究386](../re/386-active-seat-lifecycle.md)與[事實27](27-treasury-globals.md)：兩層座位迴圈、思考／處理／命令的原始控制值與同盟435M實際停點，088限定驗收。
+- [正式活動控制更新](../../internal/game/activeseat.go)：依088在載入／交接、思考／AI、處理與首戰更新WORK+09／+0A，不改固定玩家視角。
+- [活動控制正常驗證](../../internal/game/activeseat_test.go)：原版捕獲值、正常回合／雙人交接／正式保存、兩AI實際命令與缺WORK／非法上下文邊界。
+
+- [活動座位正常GUI](../../tools/active_seat_gui.sh)：正式三選擇、雙人同盟交接與兩倍視窗，使用產品scale及PID選視窗。
+- [活動座位收據生成](../../tools/scripts/active_seat_receipt.py)與[結構化收據](data/active-seat.json)：原版控制邊界、正式保存與完整全圖比較。

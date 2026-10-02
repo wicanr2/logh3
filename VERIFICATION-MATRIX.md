@@ -155,7 +155,7 @@
 | 剩餘軍事費 ＝ 預估軍事費 − 船艦建造費 | **已實作** | 同上 |
 | 艦隊戰力 ＝ Σ 前 `+0x0F` 組的 `權重[艦種] × 現有 × 1000 ÷ 滿編` | **已實作**（`rules.FleetStrength`） | [`docs/re/79`](docs/re/79-per-fleet-decision-pass.md)；上界修正見 [`docs/re/194`](docs/re/194-fleet-record-in-save.md) |
 | 其他（舊矩陣空白占位） | **不適用（已清理占位列）** | [#34](https://github.com/wicanr2/logh3/issues/34)：沒有範圍與驗收條件，不代表待實作功能 |
-| 正常S3載入至首次戰場（#89） | DRAFT；AI跳過、讀檔陣營及回合進位三子契約已驗，完整入口待驗 | [088](docs/spec/088-normal-battle-player-entry.md)、[研究385](docs/re/385-turn-counter-boundary.md)、[計數器收據](docs/internals/data/turn-counter-boundary.json)。第47輪原版雙跑及正常S3十九份正式輸出雙跑，380／799/3/1與保存符合；48限定PASS、18套件、兩尺寸真實X11通過。全圖5853 pixels及WORK32／FLEET120／SHIP865／STELLAR44 bytes差仍在，活動座位與完整入口待續。 |
+| 正常S3載入至首次戰場（#89） | DRAFT；AI跳過、讀檔陣營、回合進位及活動控制四子契約已驗，完整入口待驗 | [088](docs/spec/088-normal-battle-player-entry.md)、[研究386](docs/re/386-active-seat-lifecycle.md)、[活動控制](docs/internals/data/active-seat.json)。第48輪三組原版雙跑、正常55／19檔雙跑；44限定PASS、18套件、七案真實X11通過。控制09／0A與保存符合原版，日期380／799/3/1保持；首戰5853 pixels及WORK32／FLEET120／SHIP865／STELLAR44差未變，完整入口待續。 |
 
 ## 戰略 AI
 
