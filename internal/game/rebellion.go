@@ -106,6 +106,7 @@ func (g *Game) runRebellions() []int {
 // 效果只在實際掃到時執行，讓它讀到先前戰鬥之後重算的 `+0x7D`。
 func (g *Game) scanRegionsFrom(from int) {
 	for r := from; r < rules.RegionCount; r++ {
+		g.setScannedRegion(r)
 		occ := g.rebellionOccupation[r]
 		if occ.Contested {
 			// 開戰之前先報告「<星域>星系內／發現敵方艦隊。」（`0374:0489`，規格 059、`docs/re/340`）。
@@ -133,6 +134,7 @@ func (g *Game) scanRegionsFrom(from int) {
 			return
 		}
 	}
+	g.setScannedRegion(rules.RegionCount)
 	g.endOfTurn()
 }
 

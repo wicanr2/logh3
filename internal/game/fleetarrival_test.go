@@ -83,6 +83,19 @@ func TestNormalArrivalCoordinatesAndSave(t *testing.T) {
 			if err := g.SaveSlot(dir, 0); err != nil {
 				t.Fatal(err)
 			}
+			work, err := os.ReadFile(filepath.Join(dir, "WORK.DT0"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !bytes.Equal(work, m[0x5DA44:0x5DA44+rules.WorkRecord]) {
+				var offsets []int
+				for i, b := range work {
+					if b != m[0x5DA44+i] {
+						offsets = append(offsets, i)
+					}
+				}
+				t.Fatalf("正常首戰完整WORK不同，位移：%X", offsets)
+			}
 			fleets, err := os.ReadFile(filepath.Join(dir, "FLEET.DT0"))
 			if err != nil {
 				t.Fatal(err)
@@ -169,6 +182,10 @@ func TestNormalArrivalCoordinatesAndSave(t *testing.T) {
 			loaded.loadSlotFromDisk(0)
 			if loaded.SaveErr() != nil || loaded.slot == nil || !bytes.Equal(loaded.slot.Ship, ships) {
 				t.Fatal("正常首戰完整SHIP正式存讀不同")
+			}
+			if !bytes.Equal(loaded.slot.Work, work) || loaded.slot.MoveCost != [2]int{} ||
+				loaded.slot.Upkeep != [2]int{2342, 951} {
+				t.Fatal("正常首戰完整WORK／typed經費正式重讀不同")
 			}
 			t.Log("55筆快取與七筆未出擊偵察池符合原版，48筆可點選單位及完整SHIP存讀保持")
 			t.Log("正常S3九艦隊／七十筆池、過場前後及正式保存符合原版")

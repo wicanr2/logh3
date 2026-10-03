@@ -155,7 +155,7 @@
 | 剩餘軍事費 ＝ 預估軍事費 − 船艦建造費 | **已實作** | 同上 |
 | 艦隊戰力 ＝ Σ 前 `+0x0F` 組的 `權重[艦種] × 現有 × 1000 ÷ 滿編` | **已實作**（`rules.FleetStrength`） | [`docs/re/79`](docs/re/79-per-fleet-decision-pass.md)；上界修正見 [`docs/re/194`](docs/re/194-fleet-record-in-save.md) |
 | 其他（舊矩陣空白占位） | **不適用（已清理占位列）** | [#34](https://github.com/wicanr2/logh3/issues/34)：沒有範圍與驗收條件，不代表待實作功能 |
-| 正常S3載入至首次戰場（#89） | DRAFT；十個READY子契約限定已驗，完整入口待驗 | [088](docs/spec/088-normal-battle-player-entry.md)、[研究392](docs/re/392-battle-sprite-priority.md)、[收據](docs/internals/data/battle-sprite-priority.json)。第54輪原版55池建立雙跑、IDA873條原指令、55份正常輸出雙跑、148限定PASS、18套件及兩尺寸X11。+30初始化／typed／順位比較器已接；五圖不變，WORK14／FLEET27／SHIP214及初始一像素／FF字鍵待驗，nearby-state不升格。 |
+| 正常S3載入至首次戰場（#89） | DRAFT；十一個READY子契約限定已驗，完整入口待驗 | [088](docs/spec/088-normal-battle-player-entry.md)、[研究393](docs/re/393-battle-work-control.md)、[收據](docs/internals/data/battle-work-control.json)。第55輪原版雙跑及51筆寫入、IDA785條／56項語意、55份正常輸出雙跑、160限定PASS、18套件及兩倍率X11。完整WORK230及保存／重讀零差；FLEET27／SHIP214顯示指標、初始一像素與FF字鍵待驗，nearby-state不升格。 |
 
 ## 戰略 AI
 

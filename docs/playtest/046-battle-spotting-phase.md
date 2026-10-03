@@ -596,3 +596,16 @@ IDA873條原始bytes、三個邊界與19項語意proven。原JSON不改，未重
 148限定PASS零skip、18產品套件與正常cmd/gin3兩倍率GUI通過；變動順位色塊回歸不當成原版像素證據。
 WORK14／FLEET27／STELLAR0／PLANET0及380／799/3/1／7艦隊／55池／B6E4B78A保持。
 完整088 DRAFT，#89／#79 OPEN，nearby-state與151受控幀範圍不升格。重播命令見研究392。
+
+## 第55輪：首戰WORK與經費保存
+
+子契約限定驗收已通過：[研究393](../re/393-battle-work-control.md)、[完整收據](../internals/data/battle-work-control.json)，
+SHA-256 `96660f9c7c8cea715b484d39cfe0a586f81ecc574d963b5bb3ce5c6b9b06578f`。
+八份IDA匯出保存785條原始指令、11個函式邊界與56項proven語意；原版51筆變更寫入雙跑相同。
+正常兩AI首戰完整WORK230與原版及重讀相同；55份正常輸出雙跑相同，只改14個WORK bytes。
+15項WORK回歸、160限定PASS零skip及18標準產品套件通過；一倍／兩倍正常cmd/gin3鍵鼠GUI與entry相同。
+鏡頭座位反轉、移動狀態2／5及signed word溢位屬明示診斷，不新增自然同盟原版收據。
+五張全圖與第54輪保持，初始仍1 pixel，其餘四張0；五張小地圖均0。
+FLEET27／SHIP214皆剩顯示物件指標，STELLAR／PLANET零差；完整088 DRAFT，#89／#79 OPEN。
+
+重播方法與原始位址見研究393。既有第51至54輪JSON不重生，151受控索敵幀範圍不升格。

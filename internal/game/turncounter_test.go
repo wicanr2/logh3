@@ -36,6 +36,10 @@ func TestTurnCounterNormalCommandMatchesOriginal(t *testing.T) {
 	if err != nil || int(binary.LittleEndian.Uint16(raw[4:])) != want {
 		t.Fatalf("正式保存WORK+04不同：%v", err)
 	}
+	if raw[battleWorkActive] != m[0x5DA44+battleWorkActive] ||
+		raw[battleWorkRegion] != m[0x5DA44+battleWorkRegion] {
+		t.Fatal("正常無戰鬥尾段的旗標／掃描星域不同")
+	}
 }
 
 type counterObservedBrain struct {

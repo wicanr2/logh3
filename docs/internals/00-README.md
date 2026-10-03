@@ -327,3 +327,10 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [圖示順位原版重播](../../tools/battle_sprite_priority_oracle.sh)：固定正常S3狀態、輸入及seed，追完整分隊與偵察池的建立／刷新，輸出拒絕覆寫。
 - [圖示順位研究392](../re/392-battle-sprite-priority.md)：55池初始化、原指令及顯示消費端，分開正常收據與未重畫的診斷探針。
 - [圖示順位收據產生器](../../tools/scripts/battle_sprite_priority_receipt.py)與[結構化收據](data/battle-sprite-priority.json)：原版55筆物件、完整指令索引、正常資料／保存／畫面及比較器回歸，前輪JSON保持。
+- [第55輪首戰WORK控制與經費保存](../goal/2026-10-03-battle-work-control-round-55.md)：沿#89追剩餘控制與經費的原版寫入生命週期，既有收據不重生。
+- [首戰WORK原版重播](../../tools/battle_work_control_oracle.sh)：固定S3父狀態與seed，監看控制、兩座位鏡頭與兩方移動經費；完整旗標與原始輸出分批保存。
+- [首戰WORK的IDA匯出](../../tools/scripts/battle_work_control_ida.py)：原始定位、指令與附加語意分欄，未審查的掃描範圍保持unknown。
+- [首戰WORK研究393](../re/393-battle-work-control.md)：控制與經費的寫入生命週期、座位鏡頭及未驗續戰的限制。
+- [正式戰場WORK同步](../../internal/game/battlework.go)：088限定控制、鏡頭及經費更新；原版存檔格式保持。
+- [WORK邊界回歸](../../internal/game/battlework_test.go)：兩座位鏡頭、Input保存邊界、狀態2／5及signed經費；完整正常WORK對拍沿既有fleetarrival_test。
+- [WORK完整收據產生器](../../tools/scripts/battle_work_control_receipt.py)與[結構化收據](data/battle-work-control.json)：原版雙跑／寫入監看、785條IDA原始指令、完整230-byte保存／重讀及未變畫面；前輪JSON保持。

@@ -228,8 +228,8 @@ type WorkFields struct {
 	BudgetStart, ShipPaid, PaidUpkeep, PaidMove [2]int
 
 	// Upkeep／MoveCost 是存檔當下的本回合維持費與移動經費
-	// （`ds:8F72`／`ds:8F82`）。remake 是現算的，這兩格拿來對拍
-	// （`docs/re/263`）。
+	// （`ds:8F72`／`ds:8F82`）。既有公式在經費更新邊界寫回，Save保留
+	// 目前快取；原版以signed 32位元合計（研究393／088）。
 	Upkeep, MoveCost [2]int
 
 	// ShipBudget 是 `ds:8F5A`。**它有兩個寫入者、語意不同**
@@ -296,8 +296,8 @@ func ReadWork(w []byte) (WorkFields, error) {
 		f.ShipPaid[i] = u32(w, workShipPaid+i*4)
 		f.PaidUpkeep[i] = u32(w, workPaidUpkeep+i*4)
 		f.PaidMove[i] = u32(w, workPaidMove+i*4)
-		f.Upkeep[i] = u32(w, workUpkeep+i*4)
-		f.MoveCost[i] = u32(w, workMoveCost+i*4)
+		f.Upkeep[i] = int(int32(u32(w, workUpkeep+i*4)))
+		f.MoveCost[i] = int(int32(u32(w, workMoveCost+i*4)))
 		f.StrategicScore[i] = u32(w, workStrategicScore+i*4)
 		f.MonthFlag[i] = int(w[workMonthFlag+i])
 		for row := 0; row < BuildPlanRows; row++ {
@@ -502,8 +502,8 @@ func (s *Slot) FleetComposition(i int) []FleetGroup {
 			Pool:      idx,
 			Morale:    int(sh[shipMorale]),
 			RepairCap: int(sh[shipRepairCap]) | int(sh[shipRepairCap+1])<<8,
-			Missiles: dwordAt(sh, shipMissiles),
-			Fighters: dwordAt(sh, shipFighters),
+			Missiles:  dwordAt(sh, shipMissiles),
+			Fighters:  dwordAt(sh, shipFighters),
 		})
 	}
 	return out
@@ -606,6 +606,8 @@ func (s *Slot) Save(dir string, index int) error {
 		put32(work, workShipPaid+4*f, s.ShipPaid[f])
 		put32(work, workPaidUpkeep+4*f, s.PaidUpkeep[f])
 		put32(work, workPaidMove+4*f, s.PaidMove[f])
+		put32(work, workUpkeep+4*f, s.Upkeep[f])
+		put32(work, workMoveCost+4*f, s.MoveCost[f])
 		put32(work, workStrategicScore+4*f, s.StrategicScore[f])
 		for row := 0; row < BuildPlanRows; row++ {
 			work[workBuildPct+f*BuildPlanRows+row] = byte(s.BuildPct[f][row])
@@ -624,6 +626,16 @@ func (s *Slot) Save(dir string, index int) error {
 		}
 	}
 	return nil
+}
+
+// WriteWorkFleetExpenses保存原版經費重算結果，不碰已付經費或其餘WORK。
+func WriteWorkFleetExpenses(work []byte, faction, upkeep, moveCost int) bool {
+	if len(work) < WorkRecord || faction < 0 || faction > 1 {
+		return false
+	}
+	put32(work, workUpkeep+4*faction, upkeep)
+	put32(work, workMoveCost+4*faction, moveCost)
+	return true
 }
 
 func put32(b []byte, o, v int) {

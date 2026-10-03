@@ -85,23 +85,16 @@ func (g *Game) startBattle(region int, placed bool) {
 		}
 	}
 	if len(g.battleUnits) > 0 {
-		// 缺規格時用量到的預設值（`docs/internals/36`）。
-		tw, th, cols, rows := asset.BattleTileW, asset.BattleTileH, 28, 18
-		if g.res.Battle != nil {
-			tw, th = g.res.Battle.Field.TileW, g.res.Battle.Field.TileH
-			cols, rows = g.res.Battle.Field.Cols, g.res.Battle.Field.Rows
-		}
 		u := g.battleUnits[0]
-		// 開戰置中到第一支分隊；之後只有按住右鍵會動它（`battleScroll`）。
-		g.battleView = screen.BattleView{
-			Col: clampCol(u.X/tw-cols/2, cols),
-			Row: clampRow(u.Y/th-rows/2, rows),
-		}
+		g.battleView = g.battleViewAt(u.X, u.Y)
 	}
 	g.state = StateBattle
 	// 088只取得兩個單人入口的活動控制；雙人戰場邊界仍未驗。
 	if !g.versus {
 		g.setHumanSeat()
+	}
+	if placed {
+		g.initBattleWork()
 	}
 	g.refreshBattleHover()
 }
@@ -131,6 +124,7 @@ func (g *Game) AdvanceBattleTurn() {
 	if g.battlePreparing || g.battleMoving || g.battleSpotting.active {
 		return
 	}
+	g.saveBattleWorkView()
 	if g.battleRand == nil {
 		g.battleRand = rules.NewRand(uint32(g.battleTurn))
 	}
@@ -257,6 +251,7 @@ func (g *Game) endBattleTurn() {
 	g.battleSpotting = battleSpottingState{highlight: -1}
 	g.refreshBattleMarkers()
 	g.battleTurn++
+	g.updateBattleWorkTurn()
 	// 九個回合打完就結束（`docs/re/92`）；中途一方歸零也結束。
 	g.battleOver = g.battleTurn > rules.MaxBattleTurns || battleDecided(g.battleUnits)
 	if g.battleOver {
@@ -347,6 +342,7 @@ func (g *Game) battleClick(x, y int) {
 	}
 	row := g.res.BattleMenu.BattleMenuRowAt(g.battleMenuX, g.battleMenuY, x, y)
 	g.battleMenu = false
+	g.saveBattleWorkView()
 	switch row {
 	case 0: // 實行
 		g.AdvanceBattleTurn()
@@ -427,6 +423,7 @@ func (g *Game) EndBattle() {
 	// 原版的戰後艦隊解散／能力重算會先經 `090A:0E6D` 重算全圖未安定度，
 	// 然後 `0374:03E8` 才從下一個星域續掃。後面的叛亂效果必須讀這份戰後值，
 	// 不能在第一場戰鬥前就批次套完（`docs/spec/042`、`docs/re/310`）。
+	g.clearBattleWork()
 	g.recomputeUnrest(g.turn)
 	g.scanRegionsFrom(g.battleRegion + 1)
 }

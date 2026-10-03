@@ -1229,7 +1229,7 @@ func (g *Game) stepFleet(i int) fleetStep {
 
 // fleetStepMorale 是 `113A:0350` 的 `+03C5`：命令不是停駐的那一支走完 `047D` 之後叫
 // `1261:0067(艦隊, 1)`——照編制重算士氣（`1261:032B`），接著 `1261:0104` 印士氣報告或
-// 「已全軍覆沒」（`docs/re/333`）。`ds:8F72[陣營] ← 297B:10DE`（維持費總和）remake 在讀者處現算，不在這裡存。
+// 「已全軍覆沒」（`docs/re/333`）。重算士氣後、印報告前保存該方經費（研究393／088）。
 //
 // 編制裡有艘數卻沒有滿編數（remake 的修理拆出來的組）時不重算——那種組原版一定有 `+0x0A`，
 // 照 0 算會把整支當成沒有艘數。
@@ -1248,6 +1248,7 @@ func (g *Game) fleetStepMorale(i int) []turnReport {
 		command = int(adm[0x0B])
 	}
 	rules.RecomputeMorale(f, command)
+	g.refreshFleetExpenses(f.Faction)
 	return g.moraleReports(f)
 }
 
@@ -3145,11 +3146,19 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	if err := g.syncFleetTables(); err != nil {
 		return err
 	}
+	if g.state == StateBattle {
+		g.saveBattleWorkView()
+	}
 	// `WORK` 尚未全部提升成結構欄位；費沙旗標與動態參謀都直接改可寫
 	// 複本，因此存檔前先整段同步，未知位元組仍維持原樣。
 	if work := g.workRecord(); len(work) >= rules.WorkRecord {
 		g.slot.Work = append(g.slot.Work[:0], work[:rules.WorkRecord]...)
 	}
+	fields, err := rules.ReadWork(g.slot.Work)
+	if err != nil {
+		return err
+	}
+	g.slot.Upkeep, g.slot.MoveCost = fields.Upkeep, fields.MoveCost
 	g.slot.Turn = g.turn
 	g.slot.Military = g.military
 	g.slot.TaxTotal = g.taxTotal
@@ -3446,6 +3455,7 @@ func (g *Game) monthEndSeat(f int) {
 func (g *Game) refreshTaxEstimate() {
 	for f := 0; f < 2; f++ {
 		g.taxTotal[f] = g.estimateTaxFor(f)
+		g.refreshFleetExpenses(f)
 	}
 }
 

@@ -252,7 +252,8 @@ func (g *Game) fleetUpkeep(faction int) int {
 		if f.Faction != faction {
 			continue
 		}
-		sum += rules.FleetUpkeep(g.res.ShipKinds, faction, f.Composition, f.Operations)
+		// 297B:12B7保存低word，12EC／12EF以signed word讀回（研究393）。
+		sum += int(int16(rules.FleetUpkeep(g.res.ShipKinds, faction, f.Composition, f.Operations)))
 	}
 	return sum
 }
@@ -262,7 +263,7 @@ func (g *Game) fleetUpkeep(faction int) int {
 // `docs/re/237`、`docs/re/263`）。
 //
 // 與 `fleetUpkeep` 差在集合：維持費算那一方**每一支**，移動經費只算
-// `+0x08 != 5` 的（`Parked` ＝ 這一支不會動，`docs/re/77`）。
+// `+0x08` 非2／5的（駐留／停駐不列入，297B:1305..130B，研究393）。
 // 兩個集合都用 `WORK.DTA` 對過——維持費 2342／951、移動經費 665／1133，
 // 四個數字與存檔逐一相同。
 func (g *Game) fleetMoveCost(faction int) int {
@@ -271,10 +272,11 @@ func (g *Game) fleetMoveCost(faction int) int {
 	}
 	sum := 0
 	for _, f := range g.fleets {
-		if f.Faction != faction || f.Parked {
+		if f.Faction != faction || f.Parked || f.Move == rules.MoveGarrison || f.Move == rules.MoveParked {
 			continue
 		}
-		sum += rules.FleetOtherCost(g.res.ShipKinds, faction, f.Composition, f.Operations)
+		// 297B:12E2保存低word，1315以signed word延伸。
+		sum += int(int16(rules.FleetOtherCost(g.res.ShipKinds, faction, f.Composition, f.Operations)))
 	}
 	return sum
 }
