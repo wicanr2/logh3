@@ -1074,9 +1074,7 @@ func (g *Game) advanceTurn() {
 func (g *Game) beginTurn() {
 	g.mapMark = -1 // `04F8:02E7` 的 `3705:0349(1)`
 	g.setActiveSeat(1)
-	if g.turn%rules.TurnsPerMonth == 0 {
-		g.monthEndSeatsAfterPlayer()
-	}
+	g.monthEndSeatsAfterPlayer()
 }
 
 // continueAfterAdmiralFateReports 接回原版 `056A:0219` 後面的 upkeep、
@@ -1441,6 +1439,7 @@ func (g *Game) finishAfterPhezzanReports() {
 	}
 	// 原版0374:03D9：所有戰場與尾段返回且未終局後，WORK+04才加1。
 	g.turn++
+	g.armMonthSeats()
 	// `0654:0015`，下一回合的星域池回充在月底閘門／交付之前；
 	// 行星保持剛才補充與回合尾巴彙總的值（研究 353／規格 039）。
 	g.refillRegionSupply()
@@ -1459,6 +1458,9 @@ func (g *Game) finishAfterPhezzanReports() {
 			g.reportMonth, g.reportYear = 12, g.reportYear-1
 		}
 		g.monthEnd()
+	}
+	if !month {
+		g.clearMonthSeat(g.faction)
 	}
 	g.setHumanSeat()
 	// 原版 `0654:0034` 的共同尾巴每個回合都跑：照現在的狀態把預估徵稅額
@@ -1968,6 +1970,7 @@ func (g *Game) startNewGame(faction int) {
 	// `docs/re/274` §4）——**音源那一格不清**，它是開機偵測的結果。
 	g.music.BGM, g.music.Battle = 0, 0
 	g.slot = nil
+	g.armMonthSeats()
 	// 開機月底之前重算初始行星比例、態勢，再彙總及回充星域存量。
 	// 此時不分配回行星；情報窗與實行後分配是其他呼叫點（研究 352／規格 065）。
 	// 上限用的經濟力是載入時從行星加總的（`2703:00F8`；瓦爾哈拉 81300 ＋ 防衛力
@@ -3373,9 +3376,9 @@ func (g *Game) monthEndSeatsAfterPlayer() {
 	if g.versus || g.res.Growth == nil || g.res.Planets == nil || len(g.res.Stellar) == 0 {
 		return
 	}
-	for f := g.faction + 1; f < 2; f++ {
-		g.monthEndSeat(f)
-	}
+	// 讀檔單人人類都是座位0，CPU是另一陣營。新局已在玩家之前
+	// 處理的CPU旗標是0，這裡只走共同尾巴，不會再次結算。
+	g.monthEndSeat(1 - g.faction)
 	g.refreshTaxEstimate()
 }
 
@@ -3383,6 +3386,16 @@ func (g *Game) monthEndSeatsAfterPlayer() {
 // `docs/spec/035`）：稅率等級抄過去、收自己那些星域的稅、軍事費 += 總稅收、
 // 切給造船、扣掉實付、累計的維持費與移動經費歸零。
 func (g *Game) monthEndSeat(f int) {
+	if f < 0 || f > 1 || g.res == nil || g.res.Planets == nil || len(g.res.Stellar) == 0 {
+		return
+	}
+	if !g.versus {
+		if !g.monthSeatDue(f) {
+			g.clearMonthSeat(f)
+			return
+		}
+		defer g.clearMonthSeat(f)
+	}
 	before := g.military[f]
 	// 0. `2703:03AF` 的第一件事：`ds:8FF8[陣營] ← ds:8FD4[陣營]`（`docs/re/252`）。
 	g.rate[f] = g.blend[f]

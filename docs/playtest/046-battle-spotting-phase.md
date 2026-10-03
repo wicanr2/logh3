@@ -454,3 +454,36 @@ tools/gui.sh xrun python3 tools/scripts/active_seat_receipt.py
 正常Game的55／19檔仍與初次各74檔相同；未改產品以遷就錯圖。
 保留short-hold腳本與失敗圖。按下、放開與移動間隔調為0.2秒，900ticks後擷取，腳本每案加cmp全圖。
 哪一次短按未被處理未定位，保持unknown；不把這次序列未完成當成原版或正式規則差異。
+
+## 第49輪月底旗標上游
+
+[研究387](../re/387-month-seat-gate.md)、[本輪計畫](../goal/2026-10-03-month-seat-gate-round-49.md)及
+[完整收據](../internals/data/month-seat-gate.json) SHA-256 `1a06468e6cf408a3e4bbae057bf6a7111cc1ba1fca548d7e025b9d21d3939217`。
+原版自然S3旗標0與只改同盟旗標1各雙跑完整RAM／全圖／色盤相同；載入只差線性5DB25。
+原版旗標0不實際收稅／造船，旗標1才執行並清0。IDA84條bytes與主迴圈重設重新核對。
+
+088子契約READY後接正式單人raw旗標閘門、清除／重設與保存。十九份正常S3輸出雙跑相同，
+首戰STELLAR4032／PLANET6642 bytes全同，WORK32減14；軍事費／總稅收／建造符合自然原版。
+FLEET120／SHIP865與全圖5853 pixels差保留，原生全圖及逐區色號／有效RGB完整記錄，nearby-state不升格。
+380／799/3/1、7艦隊／55筆池／B6E4B78A保持。完整088仍DRAFT，#89／#79 OPEN，087受控UI幀不重開。
+
+37限定PASS零skip、18標準產品套件與正式X11一倍／兩倍正常首戰通過，日期／階段已目視。
+兩AI與兩陣營的正常存讀、旗標0／1／FF、非月初、9→10與不重複結算通過。
+首次測試錯把正常讀檔重算未安定度當重複結算，修正比較停點後同命令通過，產品未因這次失敗改動。
+失敗與最終log雜湊在收據；雙人跨月、同盟首戰全圖、任意人類旗標1讀檔月報與實機聆聽未新增通過聲明。
+
+```sh
+bash tools/month_seat_gate_oracle.sh normal89-r49-natural-a
+bash tools/month_seat_gate_oracle.sh normal89-r49-natural-b
+bash tools/month_seat_gate_oracle.sh normal89-r49-due-a
+bash tools/month_seat_gate_oracle.sh normal89-r49-due-b
+tools/gui.sh xrun go run -overlay workplace/round44-normal-overlay.json tools/scripts/battle_normal_probe.go -out workplace/round49-normal-a
+tools/gui.sh xrun go run -overlay workplace/round44-normal-overlay.json tools/scripts/battle_normal_probe.go -out workplace/round49-normal-b
+tools/gui.sh xrun env LOGH3_TURN_GUI_PREFIX=round49-gui LOGH3_TURN_PLAYER_DIR=round49-normal-a bash tools/turn_counter_gui.sh
+tools/gui.sh xrun go test ./internal/... ./cmd/... -count=1
+tools/gui.sh xrun python3 tools/scripts/month_seat_gate_receipt.py --final
+```
+
+原版與玩家輸出拒絕覆寫，重建請用保留同版本來源的乾淨工作副本。
+測試期seed覆蓋由[既有工具](../../tools/scripts/battle_normal_probe_seed.py)產生，只固定實行前D3DC167E。
+完整命令列、父snapshot與工具映像身份、來源SHA、控制注入及未解全紀錄保存在JSON。

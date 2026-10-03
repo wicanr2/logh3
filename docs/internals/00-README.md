@@ -296,3 +296,9 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 
 - [活動座位正常GUI](../../tools/active_seat_gui.sh)：正式三選擇、雙人同盟交接與兩倍視窗，使用產品scale及PID選視窗。
 - [活動座位收據生成](../../tools/scripts/active_seat_receipt.py)與[結構化收據](data/active-seat.json)：原版控制邊界、正式保存與完整全圖比較。
+- [第49輪月底座位閘門](../goal/2026-10-03-month-seat-gate-round-49.md)與[原版重播](../../tools/month_seat_gate_oracle.sh)：接續#89，隔離S3載入的WORK+E0／+E1旗標與錯誤重複結算。
+- [月底閘門IDA匯出](../../tools/scripts/month_seat_gate_ida.py)：0654:0034的原始範圍、兩條閘門及共同清旗標尾巴。
+- [月底閘門完整收據](data/month-seat-gate.json)由[驗證工具](../../tools/scripts/month_seat_gate_receipt.py)重生，保存原版自然與受控雙跑、IDA原始bytes及未解差異。
+- [月底旗標研究387](../re/387-month-seat-gate.md)：重複結算根因、原版受控變因及088子契約的證據審查。
+- [正式月底旗標](../../internal/game/monthseat.go)：單人raw WORK閘門、座位清除與回合進位重設，雙人仍依既有016範圍。
+- [月底旗標正常驗證](../../internal/game/monthseat_test.go)：原版正常旗標、兩AI／兩陣營的正式存讀、旗標非零與跨月一次結算。

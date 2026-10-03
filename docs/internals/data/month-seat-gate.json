@@ -1,0 +1,6826 @@
+{
+  "schema": "logh3.month-seat-gate.v1",
+  "date": "2026-10-03",
+  "parent_commit": "5f94ca9799886800920a6cf5ac464ed4f71ef25c",
+  "status": "limited-production-validation; full parity unresolved",
+  "issue": "https://github.com/wicanr2/logh3/issues/89",
+  "original_bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "original_executable_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "toolchain": {
+    "go_image": "golang:1.24-bookworm",
+    "go_image_id": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+    "gui_image": "logh3-ebiten:2",
+    "gui_image_id": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+    "ida_image": "ida-pro-9.4-idapython:locked-v1",
+    "ida_image_id": "sha256:6f6d59af49d0008c4109a5295b5f374bdc007e2d1ab28cb9de08779584de2780"
+  },
+  "source_snapshot_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "original_runs": [
+    {
+      "path": "workplace/oracle/normal89-r49-natural-a",
+      "grade": "proven",
+      "classification": "normal-player-continuation",
+      "command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-s3-base.state",
+        "-steps",
+        "435000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "301000000:544:85,304000000:560:85,405000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-poke",
+        "lin:5E00C@300000000=7E 16 DC D3",
+        "-watch",
+        "5DB24-5DB25",
+        "-regs-from",
+        "300000000",
+        "-regs-max",
+        "20",
+        "-regs-at",
+        "0654:0034,0654:011E,2703:03AF,2B5F:0103,12AA:000E",
+        "-dump-mem-at",
+        "300000001:lin:0:1048576:/out/oracle/normal89-r49-natural-a/loaded.bin;434999999:lin:0:1048576:/out/oracle/normal89-r49-natural-a/entry.bin"
+      ],
+      "states": {
+        "loaded": {
+          "hex": "390000207c01ffff0000000000000100010001001f0000000000000000000001030001005a000000000000000000ffffffff0103ff0c06064f0d3a103c000071020030750000000000006c1d000000710200307500004b3300001426000026090000b70300000000000000000000990200006d04000000000000000000000014000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000102140a120a0c0f0f140a120a0c0f0f0000000000000000000000000000000000001c030202",
+          "turn": 380,
+          "month_flags": [
+            0,
+            0
+          ],
+          "military": [
+            160000,
+            30000
+          ],
+          "tax": [
+            13131,
+            9748
+          ],
+          "building": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "entry": {
+          "hex": "3900011a7c0100000000000000000100010001001f0000000000000000000001030001005a00c000640020057c06ffffffff0003ff0c06064f0d3a103c00416502000c6d0000000000006c1d000000710200307500004b3300001426000026090000b703000026090000b70300000000000000000000990200006d0400000014000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000102140a120a0c0f0f140a120a0c0f0f0000000000000000000000000000000000001c030202",
+          "turn": 380,
+          "month_flags": [
+            0,
+            0
+          ],
+          "military": [
+            156993,
+            27916
+          ],
+          "tax": [
+            13131,
+            9748
+          ],
+          "building": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "hashes": {
+        "loaded.bin": "2a45f1a41adc78bbe9b0bc2dbb447a899907be631e43ca99f5e32cbb0fd4a0eb",
+        "entry.bin": "ef34310fe3e2c133522ed1612f16faeaff8f14e94ae9e0b6ea965e9749424a97",
+        "screen.bin": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+        "screen.png": "c6ddfb988cf15898626fa50b040b1f2423baabae0aa27f57f3fd153abdbc00cb",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "48d9f0b1013948fbada51976baab0bcf8ad0ef79934d4b19e550b36413983e11",
+        "flags.txt": "4ef3e70de42d99ce38a3094e497dae3a810b353512e7f2f555454d094c6ef451",
+        "report.txt": "0a2a39ec75a362b37e516b27361e0ab40d048579315b7b7908e2b5b8cb354133"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r49-natural-b",
+      "grade": "proven",
+      "classification": "normal-player-continuation",
+      "command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-s3-base.state",
+        "-steps",
+        "435000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "301000000:544:85,304000000:560:85,405000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-poke",
+        "lin:5E00C@300000000=7E 16 DC D3",
+        "-watch",
+        "5DB24-5DB25",
+        "-regs-from",
+        "300000000",
+        "-regs-max",
+        "20",
+        "-regs-at",
+        "0654:0034,0654:011E,2703:03AF,2B5F:0103,12AA:000E",
+        "-dump-mem-at",
+        "300000001:lin:0:1048576:/out/oracle/normal89-r49-natural-b/loaded.bin;434999999:lin:0:1048576:/out/oracle/normal89-r49-natural-b/entry.bin"
+      ],
+      "states": {
+        "loaded": {
+          "hex": "390000207c01ffff0000000000000100010001001f0000000000000000000001030001005a000000000000000000ffffffff0103ff0c06064f0d3a103c000071020030750000000000006c1d000000710200307500004b3300001426000026090000b70300000000000000000000990200006d04000000000000000000000014000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000102140a120a0c0f0f140a120a0c0f0f0000000000000000000000000000000000001c030202",
+          "turn": 380,
+          "month_flags": [
+            0,
+            0
+          ],
+          "military": [
+            160000,
+            30000
+          ],
+          "tax": [
+            13131,
+            9748
+          ],
+          "building": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "entry": {
+          "hex": "3900011a7c0100000000000000000100010001001f0000000000000000000001030001005a00c000640020057c06ffffffff0003ff0c06064f0d3a103c00416502000c6d0000000000006c1d000000710200307500004b3300001426000026090000b703000026090000b70300000000000000000000990200006d0400000014000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000102140a120a0c0f0f140a120a0c0f0f0000000000000000000000000000000000001c030202",
+          "turn": 380,
+          "month_flags": [
+            0,
+            0
+          ],
+          "military": [
+            156993,
+            27916
+          ],
+          "tax": [
+            13131,
+            9748
+          ],
+          "building": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "hashes": {
+        "loaded.bin": "2a45f1a41adc78bbe9b0bc2dbb447a899907be631e43ca99f5e32cbb0fd4a0eb",
+        "entry.bin": "ef34310fe3e2c133522ed1612f16faeaff8f14e94ae9e0b6ea965e9749424a97",
+        "screen.bin": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+        "screen.png": "c6ddfb988cf15898626fa50b040b1f2423baabae0aa27f57f3fd153abdbc00cb",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "9748f2b83df23079749fc89ef6e2fea2d89c3bfe509f2e52137bd0471dd63c21",
+        "flags.txt": "2a01a1881ca0e20968993824ea4417e3cc255afc348801792aa2a6a19f422eec",
+        "report.txt": "416ff1978c138ceb8cf3a7e5f25f6c3fcc1b47cdf8dcfcd4833077d8fe826aca"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r49-due-a",
+      "grade": "proven",
+      "classification": "controlled-counterfactual; only WORK+E1 changed",
+      "command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-s3-base.state",
+        "-steps",
+        "435000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "301000000:544:85,304000000:560:85,405000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-poke",
+        "lin:5E00C@300000000=7E 16 DC D3;lin:5DB25@300000000=01",
+        "-watch",
+        "5DB24-5DB25",
+        "-regs-from",
+        "300000000",
+        "-regs-max",
+        "20",
+        "-regs-at",
+        "0654:0034,0654:011E,2703:03AF,2B5F:0103,12AA:000E",
+        "-dump-mem-at",
+        "300000001:lin:0:1048576:/out/oracle/normal89-r49-due-a/loaded.bin;434999999:lin:0:1048576:/out/oracle/normal89-r49-due-a/entry.bin"
+      ],
+      "states": {
+        "loaded": {
+          "hex": "390000207c01ffff0000000000000100010001001f0000000000000000000001030001005a000000000000000000ffffffff0103ff0c06064f0d3a103c000071020030750000000000006c1d000000710200307500004b3300001426000026090000b70300000000000000000000990200006d04000000000000000000000014000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000102140a120a0c0f0f140a120a0c0f0f0000000000000000000000000000000000011c030202",
+          "turn": 380,
+          "month_flags": [
+            0,
+            1
+          ],
+          "military": [
+            160000,
+            30000
+          ],
+          "tax": [
+            13131,
+            9748
+          ],
+          "building": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "entry": {
+          "hex": "3900011a7c0100000000000000000100010001001f0000000000000000000001030001005a00c000640020057c06ffffffff0003ff0c06064f0d3a103c0041650200d075000000000000df1e000000710200449b00004b3300008d24000026090000b703000026090000b70300000000000000000000990200006d040000001400000000501d000000000000000000000000000000000000000000000000000000000000860600003a020000960a000054010000c20b00004a060000ea0100000102140a120a0c0f0f140a120a0c0f0f0000000000000000000000000000000000001c030202",
+          "turn": 380,
+          "month_flags": [
+            0,
+            0
+          ],
+          "military": [
+            156993,
+            30160
+          ],
+          "tax": [
+            13131,
+            9357
+          ],
+          "building": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1670,
+            570,
+            2710,
+            340,
+            3010,
+            1610,
+            490
+          ]
+        }
+      },
+      "hashes": {
+        "loaded.bin": "4d01653b431c5ad7bf835283cee266174cfde8a7b2925d6959e4179e243997a7",
+        "entry.bin": "e2168b4666711b1668461f954511b0554a12f683082d5867ee2f61718e7b77b4",
+        "screen.bin": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+        "screen.png": "c6ddfb988cf15898626fa50b040b1f2423baabae0aa27f57f3fd153abdbc00cb",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "fff3ea21e5449c28da76a75ba42a58c0fa2fbb82bda64f5a292e83e87baddf00",
+        "flags.txt": "fbc1afed036ecbc1e76dd4fbb8ded871bb3bcbe3d289a986a2601c124efac25d",
+        "report.txt": "fd88903921a171b755c65dc4dab2528ddf19d42b21eb0a2bd0e3b62ca7a7b486"
+      }
+    },
+    {
+      "path": "workplace/oracle/normal89-r49-due-b",
+      "grade": "proven",
+      "classification": "controlled-counterfactual; only WORK+E1 changed",
+      "command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-s3-base.state",
+        "-steps",
+        "435000000",
+        "-tick",
+        "20000",
+        "-clicks",
+        "301000000:544:85,304000000:560:85,405000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-poke",
+        "lin:5E00C@300000000=7E 16 DC D3;lin:5DB25@300000000=01",
+        "-watch",
+        "5DB24-5DB25",
+        "-regs-from",
+        "300000000",
+        "-regs-max",
+        "20",
+        "-regs-at",
+        "0654:0034,0654:011E,2703:03AF,2B5F:0103,12AA:000E",
+        "-dump-mem-at",
+        "300000001:lin:0:1048576:/out/oracle/normal89-r49-due-b/loaded.bin;434999999:lin:0:1048576:/out/oracle/normal89-r49-due-b/entry.bin"
+      ],
+      "states": {
+        "loaded": {
+          "hex": "390000207c01ffff0000000000000100010001001f0000000000000000000001030001005a000000000000000000ffffffff0103ff0c06064f0d3a103c000071020030750000000000006c1d000000710200307500004b3300001426000026090000b70300000000000000000000990200006d04000000000000000000000014000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000102140a120a0c0f0f140a120a0c0f0f0000000000000000000000000000000000011c030202",
+          "turn": 380,
+          "month_flags": [
+            0,
+            1
+          ],
+          "military": [
+            160000,
+            30000
+          ],
+          "tax": [
+            13131,
+            9748
+          ],
+          "building": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "entry": {
+          "hex": "3900011a7c0100000000000000000100010001001f0000000000000000000001030001005a00c000640020057c06ffffffff0003ff0c06064f0d3a103c0041650200d075000000000000df1e000000710200449b00004b3300008d24000026090000b703000026090000b70300000000000000000000990200006d040000001400000000501d000000000000000000000000000000000000000000000000000000000000860600003a020000960a000054010000c20b00004a060000ea0100000102140a120a0c0f0f140a120a0c0f0f0000000000000000000000000000000000001c030202",
+          "turn": 380,
+          "month_flags": [
+            0,
+            0
+          ],
+          "military": [
+            156993,
+            30160
+          ],
+          "tax": [
+            13131,
+            9357
+          ],
+          "building": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1670,
+            570,
+            2710,
+            340,
+            3010,
+            1610,
+            490
+          ]
+        }
+      },
+      "hashes": {
+        "loaded.bin": "4d01653b431c5ad7bf835283cee266174cfde8a7b2925d6959e4179e243997a7",
+        "entry.bin": "e2168b4666711b1668461f954511b0554a12f683082d5867ee2f61718e7b77b4",
+        "screen.bin": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+        "screen.png": "c6ddfb988cf15898626fa50b040b1f2423baabae0aa27f57f3fd153abdbc00cb",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "meta.txt": "3dadf5ad48496438cd128e64cf427a87cba7dc1288e773e705850840dec861a8",
+        "flags.txt": "0660122f6055901c6aff278afd0128365bc5c25e00f99e810e6ec2ba12451262",
+        "report.txt": "6cc65a31acaab9f8a6d1f9eae4c3f9575e89d731917d6c5ebbfa649eecc00370"
+      }
+    }
+  ],
+  "ida": {
+    "schema": "logh3.month-seat-gate-ida.v1",
+    "tool_version": 940,
+    "kernel_version": "9.4",
+    "uid": 1000,
+    "input": "/work/normal89-r49-0654.com",
+    "input_sha256": "da44a50000633784af4d8d8df1b6577335f1249438b6df35a4e195fc5dfb6ec4",
+    "ida_base_hex": "0x10200",
+    "runtime_segment": "0654",
+    "address_space": "IDA COM位址、原版CS:IP及dosgolem線性分欄",
+    "previous_bytes_hex": "5e0b0a09cb",
+    "original_name": "sub_10234",
+    "function_boundary": [
+      "0x10234",
+      "0x10330"
+    ],
+    "instructions": [
+      {
+        "original_location": "0654:0034",
+        "ida_ea_hex": "0x10234",
+        "runtime_linear_hex": "0x6574",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0035",
+        "ida_ea_hex": "0x10235",
+        "runtime_linear_hex": "0x6575",
+        "original_bytes_hex": "8a1e1d8f",
+        "operand": "mov     bl, ds:8F1Dh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0039",
+        "ida_ea_hex": "0x10239",
+        "runtime_linear_hex": "0x6579",
+        "original_bytes_hex": "30ff",
+        "operand": "xor     bh, bh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:003B",
+        "ida_ea_hex": "0x1023b",
+        "runtime_linear_hex": "0x657b",
+        "original_bytes_hex": "80bff48f00",
+        "operand": "cmp     byte ptr [bx-700Ch], 0",
+        "semantic": "比較WORK+E0[活動陣營]是否非零",
+        "grade": "proven",
+        "warning": "",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0040",
+        "ida_ea_hex": "0x10240",
+        "runtime_linear_hex": "0x6580",
+        "original_bytes_hex": "7503",
+        "operand": "jnz     short near ptr unk_10245",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0042",
+        "ida_ea_hex": "0x10242",
+        "runtime_linear_hex": "0x6582",
+        "original_bytes_hex": "e9d900",
+        "operand": "jmp     near ptr unk_1031E",
+        "semantic": "旗標0直接跳共同尾巴",
+        "grade": "proven",
+        "warning": "",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0045",
+        "ida_ea_hex": "0x10245",
+        "runtime_linear_hex": "0x6585",
+        "original_bytes_hex": "a1188f",
+        "operand": "mov     ax, ds:8F18h",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0048",
+        "ida_ea_hex": "0x10248",
+        "runtime_linear_hex": "0x6588",
+        "original_bytes_hex": "b90a00",
+        "operand": "mov     cx, 0Ah",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:004B",
+        "ida_ea_hex": "0x1024b",
+        "runtime_linear_hex": "0x658b",
+        "original_bytes_hex": "33d2",
+        "operand": "xor     dx, dx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:004D",
+        "ida_ea_hex": "0x1024d",
+        "runtime_linear_hex": "0x658d",
+        "original_bytes_hex": "f7f1",
+        "operand": "div     cx",
+        "semantic": "回合除以10，DX為餘數",
+        "grade": "proven",
+        "warning": "",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:004F",
+        "ida_ea_hex": "0x1024f",
+        "runtime_linear_hex": "0x658f",
+        "original_bytes_hex": "09d2",
+        "operand": "or      dx, dx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0051",
+        "ida_ea_hex": "0x10251",
+        "runtime_linear_hex": "0x6591",
+        "original_bytes_hex": "7403",
+        "operand": "jz      short near ptr unk_10256",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0053",
+        "ida_ea_hex": "0x10253",
+        "runtime_linear_hex": "0x6593",
+        "original_bytes_hex": "e9c800",
+        "operand": "jmp     near ptr unk_1031E",
+        "semantic": "餘數非零直接跳共同尾巴",
+        "grade": "proven",
+        "warning": "",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0056",
+        "ida_ea_hex": "0x10256",
+        "runtime_linear_hex": "0x6596",
+        "original_bytes_hex": "833e188f00",
+        "operand": "cmp     word ptr ds:8F18h, 0",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:005B",
+        "ida_ea_hex": "0x1025b",
+        "runtime_linear_hex": "0x659b",
+        "original_bytes_hex": "740a",
+        "operand": "jz      short near ptr unk_10267",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:005D",
+        "ida_ea_hex": "0x1025d",
+        "runtime_linear_hex": "0x659d",
+        "original_bytes_hex": "9a1f005f2b",
+        "operand": "call    far ptr 2B5Fh:1Fh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0062",
+        "ida_ea_hex": "0x10262",
+        "runtime_linear_hex": "0x65a2",
+        "original_bytes_hex": "9a30015406",
+        "operand": "call    far ptr 654h:130h",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0067",
+        "ida_ea_hex": "0x10267",
+        "runtime_linear_hex": "0x65a7",
+        "original_bytes_hex": "9a6d0e0a09",
+        "operand": "call    far ptr 90Ah:0E6Dh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:006C",
+        "ida_ea_hex": "0x1026c",
+        "runtime_linear_hex": "0x65ac",
+        "original_bytes_hex": "9a86045406",
+        "operand": "call    far ptr 654h:486h",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0071",
+        "ida_ea_hex": "0x10271",
+        "runtime_linear_hex": "0x65b1",
+        "original_bytes_hex": "31c0",
+        "operand": "xor     ax, ax",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0073",
+        "ida_ea_hex": "0x10273",
+        "runtime_linear_hex": "0x65b3",
+        "original_bytes_hex": "50",
+        "operand": "push    ax",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0074",
+        "ida_ea_hex": "0x10274",
+        "runtime_linear_hex": "0x65b4",
+        "original_bytes_hex": "9a03015f2b",
+        "operand": "call    far ptr 2B5Fh:103h",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0079",
+        "ida_ea_hex": "0x10279",
+        "runtime_linear_hex": "0x65b9",
+        "original_bytes_hex": "44",
+        "operand": "inc     sp",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:007A",
+        "ida_ea_hex": "0x1027a",
+        "runtime_linear_hex": "0x65ba",
+        "original_bytes_hex": "44",
+        "operand": "inc     sp",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:007B",
+        "ida_ea_hex": "0x1027b",
+        "runtime_linear_hex": "0x65bb",
+        "original_bytes_hex": "9ae0025406",
+        "operand": "call    far ptr 654h:2E0h",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0080",
+        "ida_ea_hex": "0x10280",
+        "runtime_linear_hex": "0x65c0",
+        "original_bytes_hex": "b80100",
+        "operand": "mov     ax, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0083",
+        "ida_ea_hex": "0x10283",
+        "runtime_linear_hex": "0x65c3",
+        "original_bytes_hex": "50",
+        "operand": "push    ax",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0084",
+        "ida_ea_hex": "0x10284",
+        "runtime_linear_hex": "0x65c4",
+        "original_bytes_hex": "9a03015f2b",
+        "operand": "call    far ptr 2B5Fh:103h",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0089",
+        "ida_ea_hex": "0x10289",
+        "runtime_linear_hex": "0x65c9",
+        "original_bytes_hex": "44",
+        "operand": "inc     sp",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:008A",
+        "ida_ea_hex": "0x1028a",
+        "runtime_linear_hex": "0x65ca",
+        "original_bytes_hex": "44",
+        "operand": "inc     sp",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:008B",
+        "ida_ea_hex": "0x1028b",
+        "runtime_linear_hex": "0x65cb",
+        "original_bytes_hex": "8a0e1d8f",
+        "operand": "mov     cl, ds:8F1Dh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:008F",
+        "ida_ea_hex": "0x1028f",
+        "runtime_linear_hex": "0x65cf",
+        "original_bytes_hex": "30ed",
+        "operand": "xor     ch, ch",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0091",
+        "ida_ea_hex": "0x10291",
+        "runtime_linear_hex": "0x65d1",
+        "original_bytes_hex": "89ce",
+        "operand": "mov     si, cx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0093",
+        "ida_ea_hex": "0x10293",
+        "runtime_linear_hex": "0x65d3",
+        "original_bytes_hex": "d1e6",
+        "operand": "shl     si, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0095",
+        "ida_ea_hex": "0x10295",
+        "runtime_linear_hex": "0x65d5",
+        "original_bytes_hex": "d1e6",
+        "operand": "shl     si, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0097",
+        "ida_ea_hex": "0x10297",
+        "runtime_linear_hex": "0x65d7",
+        "original_bytes_hex": "89845c8f",
+        "operand": "mov     [si-70A4h], ax",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:009B",
+        "ida_ea_hex": "0x1029b",
+        "runtime_linear_hex": "0x65db",
+        "original_bytes_hex": "899c5a8f",
+        "operand": "mov     [si-70A6h], bx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:009F",
+        "ida_ea_hex": "0x1029f",
+        "runtime_linear_hex": "0x65df",
+        "original_bytes_hex": "9aaf030327",
+        "operand": "call    far ptr 2703h:3AFh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00A4",
+        "ida_ea_hex": "0x102a4",
+        "runtime_linear_hex": "0x65e4",
+        "original_bytes_hex": "8a1e1d8f",
+        "operand": "mov     bl, ds:8F1Dh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00A8",
+        "ida_ea_hex": "0x102a8",
+        "runtime_linear_hex": "0x65e8",
+        "original_bytes_hex": "30ff",
+        "operand": "xor     bh, bh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00AA",
+        "ida_ea_hex": "0x102aa",
+        "runtime_linear_hex": "0x65ea",
+        "original_bytes_hex": "d1e3",
+        "operand": "shl     bx, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00AC",
+        "ida_ea_hex": "0x102ac",
+        "runtime_linear_hex": "0x65ec",
+        "original_bytes_hex": "d1e3",
+        "operand": "shl     bx, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00AE",
+        "ida_ea_hex": "0x102ae",
+        "runtime_linear_hex": "0x65ee",
+        "original_bytes_hex": "8b8f548f",
+        "operand": "mov     cx, [bx-70ACh]",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00B2",
+        "ida_ea_hex": "0x102b2",
+        "runtime_linear_hex": "0x65f2",
+        "original_bytes_hex": "8bb7528f",
+        "operand": "mov     si, [bx-70AEh]",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00B6",
+        "ida_ea_hex": "0x102b6",
+        "runtime_linear_hex": "0x65f6",
+        "original_bytes_hex": "898f648f",
+        "operand": "mov     [bx-709Ch], cx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00BA",
+        "ida_ea_hex": "0x102ba",
+        "runtime_linear_hex": "0x65fa",
+        "original_bytes_hex": "89b7628f",
+        "operand": "mov     [bx-709Eh], si",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00BE",
+        "ida_ea_hex": "0x102be",
+        "runtime_linear_hex": "0x65fe",
+        "original_bytes_hex": "8a1e1d8f",
+        "operand": "mov     bl, ds:8F1Dh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00C2",
+        "ida_ea_hex": "0x102c2",
+        "runtime_linear_hex": "0x6602",
+        "original_bytes_hex": "30ff",
+        "operand": "xor     bh, bh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00C4",
+        "ida_ea_hex": "0x102c4",
+        "runtime_linear_hex": "0x6604",
+        "original_bytes_hex": "d1e3",
+        "operand": "shl     bx, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00C6",
+        "ida_ea_hex": "0x102c6",
+        "runtime_linear_hex": "0x6606",
+        "original_bytes_hex": "d1e3",
+        "operand": "shl     bx, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00C8",
+        "ida_ea_hex": "0x102c8",
+        "runtime_linear_hex": "0x6608",
+        "original_bytes_hex": "8b8f5c8f",
+        "operand": "mov     cx, [bx-70A4h]",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00CC",
+        "ida_ea_hex": "0x102cc",
+        "runtime_linear_hex": "0x660c",
+        "original_bytes_hex": "8bb75a8f",
+        "operand": "mov     si, [bx-70A6h]",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00D0",
+        "ida_ea_hex": "0x102d0",
+        "runtime_linear_hex": "0x6610",
+        "original_bytes_hex": "29b7528f",
+        "operand": "sub     [bx-70AEh], si",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00D4",
+        "ida_ea_hex": "0x102d4",
+        "runtime_linear_hex": "0x6614",
+        "original_bytes_hex": "198f548f",
+        "operand": "sbb     [bx-70ACh], cx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00D8",
+        "ida_ea_hex": "0x102d8",
+        "runtime_linear_hex": "0x6618",
+        "original_bytes_hex": "8a1e1d8f",
+        "operand": "mov     bl, ds:8F1Dh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00DC",
+        "ida_ea_hex": "0x102dc",
+        "runtime_linear_hex": "0x661c",
+        "original_bytes_hex": "30ff",
+        "operand": "xor     bh, bh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00DE",
+        "ida_ea_hex": "0x102de",
+        "runtime_linear_hex": "0x661e",
+        "original_bytes_hex": "d1e3",
+        "operand": "shl     bx, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00E0",
+        "ida_ea_hex": "0x102e0",
+        "runtime_linear_hex": "0x6620",
+        "original_bytes_hex": "d1e3",
+        "operand": "shl     bx, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00E2",
+        "ida_ea_hex": "0x102e2",
+        "runtime_linear_hex": "0x6622",
+        "original_bytes_hex": "8b8f5c8f",
+        "operand": "mov     cx, [bx-70A4h]",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00E6",
+        "ida_ea_hex": "0x102e6",
+        "runtime_linear_hex": "0x6626",
+        "original_bytes_hex": "8bb75a8f",
+        "operand": "mov     si, [bx-70A6h]",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00EA",
+        "ida_ea_hex": "0x102ea",
+        "runtime_linear_hex": "0x662a",
+        "original_bytes_hex": "898f968f",
+        "operand": "mov     [bx-706Ah], cx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00EE",
+        "ida_ea_hex": "0x102ee",
+        "runtime_linear_hex": "0x662e",
+        "original_bytes_hex": "89b7948f",
+        "operand": "mov     [bx-706Ch], si",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00F2",
+        "ida_ea_hex": "0x102f2",
+        "runtime_linear_hex": "0x6632",
+        "original_bytes_hex": "31c0",
+        "operand": "xor     ax, ax",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00F4",
+        "ida_ea_hex": "0x102f4",
+        "runtime_linear_hex": "0x6634",
+        "original_bytes_hex": "31db",
+        "operand": "xor     bx, bx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00F6",
+        "ida_ea_hex": "0x102f6",
+        "runtime_linear_hex": "0x6636",
+        "original_bytes_hex": "8a0e1d8f",
+        "operand": "mov     cl, ds:8F1Dh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00FA",
+        "ida_ea_hex": "0x102fa",
+        "runtime_linear_hex": "0x663a",
+        "original_bytes_hex": "30ed",
+        "operand": "xor     ch, ch",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00FC",
+        "ida_ea_hex": "0x102fc",
+        "runtime_linear_hex": "0x663c",
+        "original_bytes_hex": "89ce",
+        "operand": "mov     si, cx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:00FE",
+        "ida_ea_hex": "0x102fe",
+        "runtime_linear_hex": "0x663e",
+        "original_bytes_hex": "d1e6",
+        "operand": "shl     si, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0100",
+        "ida_ea_hex": "0x10300",
+        "runtime_linear_hex": "0x6640",
+        "original_bytes_hex": "d1e6",
+        "operand": "shl     si, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0102",
+        "ida_ea_hex": "0x10302",
+        "runtime_linear_hex": "0x6642",
+        "original_bytes_hex": "89847c8f",
+        "operand": "mov     [si-7084h], ax",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0106",
+        "ida_ea_hex": "0x10306",
+        "runtime_linear_hex": "0x6646",
+        "original_bytes_hex": "899c7a8f",
+        "operand": "mov     [si-7086h], bx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:010A",
+        "ida_ea_hex": "0x1030a",
+        "runtime_linear_hex": "0x664a",
+        "original_bytes_hex": "8a0e1d8f",
+        "operand": "mov     cl, ds:8F1Dh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:010E",
+        "ida_ea_hex": "0x1030e",
+        "runtime_linear_hex": "0x664e",
+        "original_bytes_hex": "30ed",
+        "operand": "xor     ch, ch",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0110",
+        "ida_ea_hex": "0x10310",
+        "runtime_linear_hex": "0x6650",
+        "original_bytes_hex": "89ce",
+        "operand": "mov     si, cx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0112",
+        "ida_ea_hex": "0x10312",
+        "runtime_linear_hex": "0x6652",
+        "original_bytes_hex": "d1e6",
+        "operand": "shl     si, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0114",
+        "ida_ea_hex": "0x10314",
+        "runtime_linear_hex": "0x6654",
+        "original_bytes_hex": "d1e6",
+        "operand": "shl     si, 1",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0116",
+        "ida_ea_hex": "0x10316",
+        "runtime_linear_hex": "0x6656",
+        "original_bytes_hex": "89848c8f",
+        "operand": "mov     [si-7074h], ax",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:011A",
+        "ida_ea_hex": "0x1031a",
+        "runtime_linear_hex": "0x665a",
+        "original_bytes_hex": "899c8a8f",
+        "operand": "mov     [si-7076h], bx",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:011E",
+        "ida_ea_hex": "0x1031e",
+        "runtime_linear_hex": "0x665e",
+        "original_bytes_hex": "9a6d0e0a09",
+        "operand": "call    far ptr 90Ah:0E6Dh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0123",
+        "ida_ea_hex": "0x10323",
+        "runtime_linear_hex": "0x6663",
+        "original_bytes_hex": "8a1e1d8f",
+        "operand": "mov     bl, ds:8F1Dh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0127",
+        "ida_ea_hex": "0x10327",
+        "runtime_linear_hex": "0x6667",
+        "original_bytes_hex": "30ff",
+        "operand": "xor     bh, bh",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:0129",
+        "ida_ea_hex": "0x10329",
+        "runtime_linear_hex": "0x6669",
+        "original_bytes_hex": "c687f48f00",
+        "operand": "mov     byte ptr [bx-700Ch], 0",
+        "semantic": "共同尾巴將本陣營WORK+E0旗標清0",
+        "grade": "proven",
+        "warning": "",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:012E",
+        "ida_ea_hex": "0x1032e",
+        "runtime_linear_hex": "0x666e",
+        "original_bytes_hex": "5e",
+        "operand": "pop     si",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      },
+      {
+        "original_location": "0654:012F",
+        "ida_ea_hex": "0x1032f",
+        "runtime_linear_hex": "0x666f",
+        "original_bytes_hex": "cb",
+        "operand": "retf",
+        "semantic": "未附加語意",
+        "grade": "unknown",
+        "warning": "⚠ 未附加已證實語意",
+        "source": "研究255及normal89-r49自然0／受控1原版雙跑"
+      }
+    ]
+  },
+  "ida_export_sha256": "b911a7172d1b755fc431430ece0b3ab72b0e20e3558619c760482860686b4cb2",
+  "main_loop_reset": [
+    {
+      "original_location": "0374:03DD",
+      "ida_ea_hex": "0x105dd",
+      "runtime_linear_hex": "0x3b1d",
+      "original_bytes_hex": "b001",
+      "operand": "mov     al, 1",
+      "semantic": "回合進位後AL設1",
+      "grade": "proven",
+      "warning": "",
+      "source": "第47輪IDA原始匯出、本輪完整RAM bytes核對及第48輪正常0→1回合旗標0／1"
+    },
+    {
+      "original_location": "0374:03DF",
+      "ida_ea_hex": "0x105df",
+      "runtime_linear_hex": "0x3b1f",
+      "original_bytes_hex": "a2f58f",
+      "operand": "mov     ds:8FF5h, al",
+      "semantic": "WORK+E1設1",
+      "grade": "proven",
+      "warning": "",
+      "source": "第47輪IDA原始匯出、本輪完整RAM bytes核對及第48輪正常0→1回合旗標0／1"
+    },
+    {
+      "original_location": "0374:03E2",
+      "ida_ea_hex": "0x105e2",
+      "runtime_linear_hex": "0x3b22",
+      "original_bytes_hex": "a2f48f",
+      "operand": "mov     ds:8FF4h, al",
+      "semantic": "WORK+E0設1",
+      "grade": "proven",
+      "warning": "",
+      "source": "第47輪IDA原始匯出、本輪完整RAM bytes核對及第48輪正常0→1回合旗標0／1"
+    }
+  ],
+  "controlled_loaded_memory_difference": [
+    "lin:5DB25"
+  ],
+  "same_battle_frame_does_not_prove_same_finances": true,
+  "previous_receipt_sha256": "40ce3fbedda34a073f80f0799a820e27f567b9cb3210cf6c282ef67d66f87bac",
+  "comparison_level": "nearby-state; 沿第44輪預定等級，未升格",
+  "limitations": [
+    "完整088保持DRAFT",
+    "WORK／FLEET／SHIP／全圖仍有未分類差異",
+    "雙人跨月處理保持016既有範圍",
+    "受控旗標1分支不當作自然S3",
+    "未新增任意人類旗標1讀檔月報的原版驗收聲明"
+  ],
+  "tables": {
+    "WORK": {
+      "bytes": 230,
+      "different_bytes_before": 32,
+      "different_bytes_after": 14,
+      "offset_counts": {
+        "2": 1,
+        "3": 1,
+        "6": 1,
+        "7": 1,
+        "38": 1,
+        "40": 1,
+        "42": 1,
+        "43": 1,
+        "44": 1,
+        "45": 1,
+        "110": 1,
+        "111": 1,
+        "114": 1,
+        "115": 1
+      },
+      "original_sha256": "4f4d0edec288c0d3f1a6c452275f049f798071e80f86ffb78e717c043317d237",
+      "before_sha256": "31f361dd1dcbcac52b34af8eca92d208b3a6d0b435dea2ef3fbc592a81f669e4",
+      "after_sha256": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+      "unresolved_byte_differences": [
+        {
+          "offset_hex": "0x2",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x3",
+          "original": 26,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x6",
+          "original": 0,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x7",
+          "original": 0,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x26",
+          "original": 192,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x28",
+          "original": 100,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a",
+          "original": 32,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c",
+          "original": 124,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2d",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x6e",
+          "original": 0,
+          "remake": 153
+        },
+        {
+          "offset_hex": "0x6f",
+          "original": 0,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x72",
+          "original": 0,
+          "remake": 109
+        },
+        {
+          "offset_hex": "0x73",
+          "original": 0,
+          "remake": 4
+        }
+      ]
+    },
+    "FLEET": {
+      "bytes": 3904,
+      "different_bytes_before": 120,
+      "different_bytes_after": 120,
+      "offset_counts": {
+        "74": 9,
+        "75": 9,
+        "76": 9,
+        "92": 9,
+        "93": 8,
+        "94": 9,
+        "95": 7,
+        "100": 9,
+        "101": 8,
+        "102": 9,
+        "103": 7,
+        "108": 7,
+        "109": 6,
+        "110": 7,
+        "111": 7
+      },
+      "original_sha256": "53af52561125e497eebac24f6a0f2ce6c44b2109516cecab3a481e27d09980d1",
+      "before_sha256": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7",
+      "after_sha256": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7",
+      "unresolved_byte_differences": [
+        {
+          "offset_hex": "0x41a",
+          "original": 224,
+          "remake": 110
+        },
+        {
+          "offset_hex": "0x41b",
+          "original": 224,
+          "remake": 110
+        },
+        {
+          "offset_hex": "0x41c",
+          "original": 224,
+          "remake": 110
+        },
+        {
+          "offset_hex": "0x42c",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x42d",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x42e",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x42f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x434",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x435",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x436",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x437",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x602",
+          "original": 37,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x603",
+          "original": 37,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x604",
+          "original": 37,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x614",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x616",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x61c",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x61e",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x624",
+          "original": 14,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x626",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x627",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x6f6",
+          "original": 225,
+          "remake": 109
+        },
+        {
+          "offset_hex": "0x6f7",
+          "original": 225,
+          "remake": 109
+        },
+        {
+          "offset_hex": "0x6f8",
+          "original": 225,
+          "remake": 109
+        },
+        {
+          "offset_hex": "0x708",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x709",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x70a",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x70b",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x710",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x711",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x712",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x713",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x7ea",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0x7eb",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0x7ec",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0x7fc",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x7fd",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x7fe",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x7ff",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x804",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x805",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x806",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x807",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x80c",
+          "original": 158,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x80d",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x80e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x80f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x864",
+          "original": 169,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0x865",
+          "original": 169,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0x866",
+          "original": 169,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0x876",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x877",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x878",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x879",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x87e",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x87f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x880",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x881",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x886",
+          "original": 222,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x887",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x888",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x889",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xda2",
+          "original": 168,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0xda3",
+          "original": 168,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0xda4",
+          "original": 168,
+          "remake": 199
+        },
+        {
+          "offset_hex": "0xdb4",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0xdb5",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xdb6",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0xdb7",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0xdbc",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0xdbd",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xdbe",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0xdbf",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0xdc4",
+          "original": 206,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xdc5",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xdc6",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xdc7",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xe1c",
+          "original": 171,
+          "remake": 194
+        },
+        {
+          "offset_hex": "0xe1d",
+          "original": 171,
+          "remake": 194
+        },
+        {
+          "offset_hex": "0xe1e",
+          "original": 171,
+          "remake": 194
+        },
+        {
+          "offset_hex": "0xe2e",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0xe2f",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xe30",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0xe31",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0xe36",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0xe37",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xe38",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0xe39",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0xe3e",
+          "original": 134,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xe3f",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xe40",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xe41",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xe96",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0xe97",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0xe98",
+          "original": 170,
+          "remake": 198
+        },
+        {
+          "offset_hex": "0xea8",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0xea9",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xeaa",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0xeab",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0xeb0",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0xeb1",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xeb2",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0xeb3",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0xeb8",
+          "original": 238,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xeb9",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xeba",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xebb",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xf10",
+          "original": 168,
+          "remake": 201
+        },
+        {
+          "offset_hex": "0xf11",
+          "original": 168,
+          "remake": 201
+        },
+        {
+          "offset_hex": "0xf12",
+          "original": 168,
+          "remake": 201
+        },
+        {
+          "offset_hex": "0xf22",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0xf23",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xf24",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0xf2a",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0xf2b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0xf2c",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0xf32",
+          "original": 86,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xf33",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xf34",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0xf35",
+          "original": 113,
+          "remake": 0
+        }
+      ]
+    },
+    "SHIP": {
+      "bytes": 27456,
+      "different_bytes_before": 865,
+      "different_bytes_after": 865,
+      "offset_counts": {
+        "2": 70,
+        "40": 70,
+        "41": 65,
+        "42": 70,
+        "43": 56,
+        "47": 7,
+        "48": 55,
+        "52": 70,
+        "53": 65,
+        "54": 70,
+        "55": 53,
+        "56": 55,
+        "57": 49,
+        "58": 55,
+        "59": 55
+      },
+      "original_sha256": "1c74fa060ca3fd8f5276d34fac84fb614522434f684885deb77f0253cccd8b44",
+      "before_sha256": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd",
+      "after_sha256": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd",
+      "unresolved_byte_differences": [
+        {
+          "offset_hex": "0x1028",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x104e",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x104f",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x1050",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x1051",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x105a",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x105b",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x105c",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x105d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1076",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x109c",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x109d",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x109e",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x109f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x10a8",
+          "original": 112,
+          "remake": 232
+        },
+        {
+          "offset_hex": "0x10a9",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x10aa",
+          "original": 104,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x10ab",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x10c4",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x10ea",
+          "original": 89,
+          "remake": 253
+        },
+        {
+          "offset_hex": "0x10eb",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x10ec",
+          "original": 104,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x10ed",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x10f6",
+          "original": 89,
+          "remake": 253
+        },
+        {
+          "offset_hex": "0x10f7",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x10f8",
+          "original": 104,
+          "remake": 32
+        },
+        {
+          "offset_hex": "0x10f9",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1112",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1138",
+          "original": 112,
+          "remake": 240
+        },
+        {
+          "offset_hex": "0x1139",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x113a",
+          "original": 127,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x113b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1144",
+          "original": 112,
+          "remake": 240
+        },
+        {
+          "offset_hex": "0x1145",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x1146",
+          "original": 127,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1147",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1160",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1186",
+          "original": 67,
+          "remake": 19
+        },
+        {
+          "offset_hex": "0x1187",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1188",
+          "original": 104,
+          "remake": 39
+        },
+        {
+          "offset_hex": "0x1189",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1192",
+          "original": 67,
+          "remake": 19
+        },
+        {
+          "offset_hex": "0x1193",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1194",
+          "original": 104,
+          "remake": 39
+        },
+        {
+          "offset_hex": "0x1195",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x11ae",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x11d4",
+          "original": 112,
+          "remake": 247
+        },
+        {
+          "offset_hex": "0x11d5",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x11d6",
+          "original": 149,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x11d7",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x11e0",
+          "original": 112,
+          "remake": 247
+        },
+        {
+          "offset_hex": "0x11e1",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x11e2",
+          "original": 149,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x11e3",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x11fc",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1222",
+          "original": 44,
+          "remake": 40
+        },
+        {
+          "offset_hex": "0x1223",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1224",
+          "original": 104,
+          "remake": 47
+        },
+        {
+          "offset_hex": "0x1225",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x122e",
+          "original": 44,
+          "remake": 40
+        },
+        {
+          "offset_hex": "0x122f",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1230",
+          "original": 104,
+          "remake": 47
+        },
+        {
+          "offset_hex": "0x1231",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x124a",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1270",
+          "original": 89,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x1271",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1272",
+          "original": 127,
+          "remake": 10
+        },
+        {
+          "offset_hex": "0x1273",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x127c",
+          "original": 89,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x127d",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x127e",
+          "original": 127,
+          "remake": 10
+        },
+        {
+          "offset_hex": "0x127f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1298",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x12be",
+          "original": 112,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x12bf",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x12c0",
+          "original": 172,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x12c1",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x12ca",
+          "original": 112,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x12cb",
+          "original": 1,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x12cc",
+          "original": 172,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x12cd",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1862",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1888",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x188a",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1890",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1894",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1896",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1898",
+          "original": 54,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x189a",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x189b",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18b0",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x18d6",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18d8",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x18dd",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x18de",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x18e2",
+          "original": 160,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18e4",
+          "original": 24,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x18e6",
+          "original": 118,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18e7",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18e8",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18e9",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x18fe",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1924",
+          "original": 163,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1926",
+          "original": 2,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x1927",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x192c",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1930",
+          "original": 163,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1932",
+          "original": 2,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x1933",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1934",
+          "original": 94,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1936",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1937",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x194c",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1972",
+          "original": 138,
+          "remake": 233
+        },
+        {
+          "offset_hex": "0x1973",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1974",
+          "original": 21,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x197a",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x197e",
+          "original": 138,
+          "remake": 233
+        },
+        {
+          "offset_hex": "0x197f",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1980",
+          "original": 21,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1982",
+          "original": 134,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1984",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1985",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x199a",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x19c0",
+          "original": 166,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x19c2",
+          "original": 235,
+          "remake": 215
+        },
+        {
+          "offset_hex": "0x19c8",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x19cc",
+          "original": 166,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x19ce",
+          "original": 235,
+          "remake": 215
+        },
+        {
+          "offset_hex": "0x19d0",
+          "original": 174,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x19d2",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x19d3",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x19e8",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1a0e",
+          "original": 115,
+          "remake": 211
+        },
+        {
+          "offset_hex": "0x1a0f",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a10",
+          "original": 18,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1a16",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1a1a",
+          "original": 115,
+          "remake": 211
+        },
+        {
+          "offset_hex": "0x1a1b",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a1c",
+          "original": 18,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1a1e",
+          "original": 214,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a20",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a21",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a36",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1a5c",
+          "original": 168,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a5e",
+          "original": 213,
+          "remake": 192
+        },
+        {
+          "offset_hex": "0x1a64",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1a68",
+          "original": 168,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a6a",
+          "original": 213,
+          "remake": 192
+        },
+        {
+          "offset_hex": "0x1a6c",
+          "original": 38,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a6d",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a6e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a6f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1a84",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1aaa",
+          "original": 140,
+          "remake": 233
+        },
+        {
+          "offset_hex": "0x1aab",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1aac",
+          "original": 255,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x1ab2",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1ab6",
+          "original": 140,
+          "remake": 233
+        },
+        {
+          "offset_hex": "0x1ab7",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1ab8",
+          "original": 255,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x1aba",
+          "original": 254,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1abc",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1abd",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1ad2",
+          "original": 0,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1af8",
+          "original": 93,
+          "remake": 188
+        },
+        {
+          "offset_hex": "0x1af9",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1afa",
+          "original": 16,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1b00",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1b04",
+          "original": 93,
+          "remake": 188
+        },
+        {
+          "offset_hex": "0x1b05",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1b06",
+          "original": 16,
+          "remake": 4
+        },
+        {
+          "offset_hex": "0x1b08",
+          "original": 78,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1b09",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1b0a",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1b0b",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1b20",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1b46",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x1b47",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1b48",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x1b49",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1b52",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x1b53",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1b54",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x1b55",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1b6e",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1b94",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x1b95",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1b96",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x1b97",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1ba0",
+          "original": 112,
+          "remake": 8
+        },
+        {
+          "offset_hex": "0x1ba1",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1ba2",
+          "original": 72,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x1ba3",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1bbc",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1be2",
+          "original": 89,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0x1be3",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1be4",
+          "original": 71,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1be5",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1bee",
+          "original": 89,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0x1bef",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1bf0",
+          "original": 71,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1bf1",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1c0a",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1c30",
+          "original": 111,
+          "remake": 15
+        },
+        {
+          "offset_hex": "0x1c31",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c32",
+          "original": 95,
+          "remake": 227
+        },
+        {
+          "offset_hex": "0x1c33",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1c3c",
+          "original": 111,
+          "remake": 15
+        },
+        {
+          "offset_hex": "0x1c3d",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c3e",
+          "original": 87,
+          "remake": 227
+        },
+        {
+          "offset_hex": "0x1c3f",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1c58",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1c7e",
+          "original": 67,
+          "remake": 51
+        },
+        {
+          "offset_hex": "0x1c7f",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c80",
+          "original": 71,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c81",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1c8a",
+          "original": 67,
+          "remake": 51
+        },
+        {
+          "offset_hex": "0x1c8b",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c8c",
+          "original": 71,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1c8d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1ca6",
+          "original": 0,
+          "remake": 25
+        },
+        {
+          "offset_hex": "0x1ccc",
+          "original": 111,
+          "remake": 22
+        },
+        {
+          "offset_hex": "0x1ccd",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1cce",
+          "original": 117,
+          "remake": 205
+        },
+        {
+          "offset_hex": "0x1ccf",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1cd8",
+          "original": 111,
+          "remake": 22
+        },
+        {
+          "offset_hex": "0x1cd9",
+          "original": 1,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1cda",
+          "original": 85,
+          "remake": 205
+        },
+        {
+          "offset_hex": "0x1cdb",
+          "original": 6,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x1f16",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1f3c",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x1f3d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1f3e",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x1f3f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1f44",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1f48",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x1f49",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1f4a",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x1f4b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1f4c",
+          "original": 198,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f4d",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f4e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f4f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f64",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1f8a",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x1f8b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1f8c",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x1f8d",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1f91",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1f92",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1f96",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x1f97",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1f98",
+          "original": 48,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x1f99",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1f9a",
+          "original": 182,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f9b",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f9c",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1f9d",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1fb2",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x1fd8",
+          "original": 229,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x1fd9",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1fda",
+          "original": 64,
+          "remake": 51
+        },
+        {
+          "offset_hex": "0x1fdb",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1fe0",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x1fe4",
+          "original": 229,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x1fe5",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x1fe6",
+          "original": 64,
+          "remake": 51
+        },
+        {
+          "offset_hex": "0x1fe7",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x1fe8",
+          "original": 238,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1fe9",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1fea",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x1feb",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2000",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2026",
+          "original": 27,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2027",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2028",
+          "original": 32,
+          "remake": 61
+        },
+        {
+          "offset_hex": "0x2029",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x202e",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2032",
+          "original": 27,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2033",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2034",
+          "original": 32,
+          "remake": 61
+        },
+        {
+          "offset_hex": "0x2035",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2036",
+          "original": 22,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2037",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2038",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2039",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x204e",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2074",
+          "original": 245,
+          "remake": 116
+        },
+        {
+          "offset_hex": "0x2075",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2076",
+          "original": 92,
+          "remake": 83
+        },
+        {
+          "offset_hex": "0x2077",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x207c",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2080",
+          "original": 245,
+          "remake": 116
+        },
+        {
+          "offset_hex": "0x2081",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2082",
+          "original": 92,
+          "remake": 83
+        },
+        {
+          "offset_hex": "0x2083",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2084",
+          "original": 62,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2085",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2086",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2087",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x209c",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x20c2",
+          "original": 44,
+          "remake": 179
+        },
+        {
+          "offset_hex": "0x20c3",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x20c4",
+          "original": 59,
+          "remake": 92
+        },
+        {
+          "offset_hex": "0x20c5",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x20ca",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x20ce",
+          "original": 44,
+          "remake": 179
+        },
+        {
+          "offset_hex": "0x20cf",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x20d0",
+          "original": 59,
+          "remake": 92
+        },
+        {
+          "offset_hex": "0x20d1",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x20d2",
+          "original": 102,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x20d3",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x20d4",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x20d5",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x20ea",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2110",
+          "original": 16,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x2111",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2112",
+          "original": 75,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x2113",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2118",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x211c",
+          "original": 16,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x211d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x211e",
+          "original": 75,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x211f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2120",
+          "original": 142,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2121",
+          "original": 2,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2122",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2123",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2138",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x215e",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x215f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2160",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x2161",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x2166",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x216a",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x216b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x216c",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x216d",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x216e",
+          "original": 246,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x216f",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2170",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2171",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2186",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x21ac",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x21ad",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x21ae",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x21af",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x21b3",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x21b4",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x21b8",
+          "original": 32,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x21b9",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x21ba",
+          "original": 16,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x21bb",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x21bc",
+          "original": 94,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x21bd",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x21be",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x21bf",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x21d4",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x21fa",
+          "original": 5,
+          "remake": 121
+        },
+        {
+          "offset_hex": "0x21fb",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x21fc",
+          "original": 34,
+          "remake": 243
+        },
+        {
+          "offset_hex": "0x21fd",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x2202",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2206",
+          "original": 32,
+          "remake": 121
+        },
+        {
+          "offset_hex": "0x2207",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2208",
+          "original": 16,
+          "remake": 243
+        },
+        {
+          "offset_hex": "0x2209",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x220a",
+          "original": 70,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x220b",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x220c",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x220d",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2222",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2248",
+          "original": 59,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2249",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x224a",
+          "original": 254,
+          "remake": 253
+        },
+        {
+          "offset_hex": "0x224b",
+          "original": 6,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x2250",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2254",
+          "original": 59,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2255",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2256",
+          "original": 254,
+          "remake": 253
+        },
+        {
+          "offset_hex": "0x2257",
+          "original": 6,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x2258",
+          "original": 110,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2259",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x225a",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x225b",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2270",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2296",
+          "original": 235,
+          "remake": 89
+        },
+        {
+          "offset_hex": "0x2297",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2298",
+          "original": 52,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x2299",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x229e",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x22a2",
+          "original": 32,
+          "remake": 89
+        },
+        {
+          "offset_hex": "0x22a3",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x22a4",
+          "original": 16,
+          "remake": 237
+        },
+        {
+          "offset_hex": "0x22a5",
+          "original": 7,
+          "remake": 5
+        },
+        {
+          "offset_hex": "0x22a6",
+          "original": 30,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22a7",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22a8",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22a9",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22be",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x22e4",
+          "original": 85,
+          "remake": 215
+        },
+        {
+          "offset_hex": "0x22e5",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x22e6",
+          "original": 237,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x22ec",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x22f0",
+          "original": 85,
+          "remake": 215
+        },
+        {
+          "offset_hex": "0x22f1",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x22f2",
+          "original": 237,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x22f4",
+          "original": 150,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22f5",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22f6",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x22f7",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x230c",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2332",
+          "original": 41,
+          "remake": 110
+        },
+        {
+          "offset_hex": "0x2333",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2334",
+          "original": 87,
+          "remake": 50
+        },
+        {
+          "offset_hex": "0x2335",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x233a",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x233e",
+          "original": 41,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x233f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2340",
+          "original": 87,
+          "remake": 35
+        },
+        {
+          "offset_hex": "0x2341",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2342",
+          "original": 190,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2343",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2344",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2345",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x235a",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2380",
+          "original": 94,
+          "remake": 173
+        },
+        {
+          "offset_hex": "0x2381",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2382",
+          "original": 51,
+          "remake": 60
+        },
+        {
+          "offset_hex": "0x2383",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2388",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x238c",
+          "original": 94,
+          "remake": 168
+        },
+        {
+          "offset_hex": "0x238d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x238e",
+          "original": 51,
+          "remake": 40
+        },
+        {
+          "offset_hex": "0x238f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2390",
+          "original": 230,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2391",
+          "original": 4,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2392",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2393",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x23a8",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x23ce",
+          "original": 23,
+          "remake": 115
+        },
+        {
+          "offset_hex": "0x23cf",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x23d0",
+          "original": 60,
+          "remake": 18
+        },
+        {
+          "offset_hex": "0x23d1",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x23d6",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x23da",
+          "original": 24,
+          "remake": 139
+        },
+        {
+          "offset_hex": "0x23db",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x23dc",
+          "original": 56,
+          "remake": 2
+        },
+        {
+          "offset_hex": "0x23dd",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x23de",
+          "original": 14,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x23df",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x23e0",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x23e1",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x23f6",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x241c",
+          "original": 76,
+          "remake": 178
+        },
+        {
+          "offset_hex": "0x241d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x241e",
+          "original": 25,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0x241f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2424",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2428",
+          "original": 76,
+          "remake": 168
+        },
+        {
+          "offset_hex": "0x2429",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x242a",
+          "original": 25,
+          "remake": 14
+        },
+        {
+          "offset_hex": "0x242b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x242c",
+          "original": 54,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x242d",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x242e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x242f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2444",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x246a",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x246b",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x246c",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x246d",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2472",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2476",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x2477",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2478",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x2479",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x247a",
+          "original": 174,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x247b",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x247c",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x247d",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2492",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x24b8",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x24b9",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x24ba",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x24bb",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x24bf",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x24c0",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x24c4",
+          "original": 224,
+          "remake": 216
+        },
+        {
+          "offset_hex": "0x24c5",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x24c6",
+          "original": 80,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x24c7",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x24c8",
+          "original": 198,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x24c9",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x24ca",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x24cb",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x24e0",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2506",
+          "original": 212,
+          "remake": 183
+        },
+        {
+          "offset_hex": "0x2507",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2508",
+          "original": 124,
+          "remake": 86
+        },
+        {
+          "offset_hex": "0x2509",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x250e",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2512",
+          "original": 212,
+          "remake": 201
+        },
+        {
+          "offset_hex": "0x2513",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2514",
+          "original": 124,
+          "remake": 68
+        },
+        {
+          "offset_hex": "0x2515",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2516",
+          "original": 214,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2517",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2518",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2519",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x252e",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2554",
+          "original": 12,
+          "remake": 246
+        },
+        {
+          "offset_hex": "0x2555",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2556",
+          "original": 92,
+          "remake": 90
+        },
+        {
+          "offset_hex": "0x2557",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x255c",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2560",
+          "original": 12,
+          "remake": 246
+        },
+        {
+          "offset_hex": "0x2561",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2562",
+          "original": 92,
+          "remake": 90
+        },
+        {
+          "offset_hex": "0x2563",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2564",
+          "original": 254,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2565",
+          "original": 5,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2566",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2567",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x257c",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x25a2",
+          "original": 196,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x25a3",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x25a4",
+          "original": 96,
+          "remake": 54
+        },
+        {
+          "offset_hex": "0x25a5",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x25aa",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x25ae",
+          "original": 196,
+          "remake": 200
+        },
+        {
+          "offset_hex": "0x25af",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x25b0",
+          "original": 96,
+          "remake": 54
+        },
+        {
+          "offset_hex": "0x25b1",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x25b2",
+          "original": 38,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x25b3",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x25b4",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x25b5",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x25ca",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x25f0",
+          "original": 252,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x25f1",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x25f2",
+          "original": 64,
+          "remake": 58
+        },
+        {
+          "offset_hex": "0x25f3",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x25f8",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x25fc",
+          "original": 252,
+          "remake": 248
+        },
+        {
+          "offset_hex": "0x25fd",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x25fe",
+          "original": 64,
+          "remake": 58
+        },
+        {
+          "offset_hex": "0x25ff",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2600",
+          "original": 78,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2601",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2602",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2603",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2618",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x263e",
+          "original": 240,
+          "remake": 214
+        },
+        {
+          "offset_hex": "0x263f",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2640",
+          "original": 108,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x2641",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2646",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x264a",
+          "original": 240,
+          "remake": 214
+        },
+        {
+          "offset_hex": "0x264b",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x264c",
+          "original": 108,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x264d",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x264e",
+          "original": 118,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x264f",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2650",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2651",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2666",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x268c",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x268d",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x268e",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x268f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2694",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2698",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2699",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x269a",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x269b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x269c",
+          "original": 22,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x269d",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x269e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x269f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x26b4",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x26da",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x26db",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x26dc",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x26dd",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x26e1",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x26e2",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x26e6",
+          "original": 224,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x26e7",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x26e8",
+          "original": 16,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x26e9",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x26ea",
+          "original": 46,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x26eb",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x26ec",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x26ed",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2702",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2728",
+          "original": 197,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x2729",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x272a",
+          "original": 32,
+          "remake": 115
+        },
+        {
+          "offset_hex": "0x272b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2730",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2734",
+          "original": 197,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x2735",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2736",
+          "original": 32,
+          "remake": 115
+        },
+        {
+          "offset_hex": "0x2737",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2738",
+          "original": 142,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2739",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x273a",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x273b",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2750",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2776",
+          "original": 251,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2777",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2778",
+          "original": 0,
+          "remake": 125
+        },
+        {
+          "offset_hex": "0x2779",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x277e",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2782",
+          "original": 251,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2783",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2784",
+          "original": 0,
+          "remake": 125
+        },
+        {
+          "offset_hex": "0x2785",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2786",
+          "original": 182,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2787",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2788",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2789",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x279e",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x27c4",
+          "original": 213,
+          "remake": 116
+        },
+        {
+          "offset_hex": "0x27c5",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x27c6",
+          "original": 60,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x27c7",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x27cc",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x27d0",
+          "original": 213,
+          "remake": 116
+        },
+        {
+          "offset_hex": "0x27d1",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x27d2",
+          "original": 60,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x27d3",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x27d4",
+          "original": 62,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x27d5",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x27d6",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x27d7",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x27ec",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2812",
+          "original": 240,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x2813",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2814",
+          "original": 43,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2815",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x281a",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x281e",
+          "original": 224,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x281f",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2820",
+          "original": 16,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2821",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2822",
+          "original": 222,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2823",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2824",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2825",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x283a",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2860",
+          "original": 12,
+          "remake": 179
+        },
+        {
+          "offset_hex": "0x2861",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2862",
+          "original": 27,
+          "remake": 156
+        },
+        {
+          "offset_hex": "0x2863",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2868",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x286c",
+          "original": 228,
+          "remake": 179
+        },
+        {
+          "offset_hex": "0x286d",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x286e",
+          "original": 17,
+          "remake": 156
+        },
+        {
+          "offset_hex": "0x286f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2870",
+          "original": 102,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2871",
+          "original": 7,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2872",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2873",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2888",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x28ae",
+          "original": 1,
+          "remake": 143
+        },
+        {
+          "offset_hex": "0x28af",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x28b0",
+          "original": 71,
+          "remake": 183
+        },
+        {
+          "offset_hex": "0x28b1",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x28b6",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x28ba",
+          "original": 224,
+          "remake": 143
+        },
+        {
+          "offset_hex": "0x28bb",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x28bc",
+          "original": 16,
+          "remake": 183
+        },
+        {
+          "offset_hex": "0x28bd",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x28be",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x28bf",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x28c0",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x28c1",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x28d6",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x28fc",
+          "original": 0,
+          "remake": 213
+        },
+        {
+          "offset_hex": "0x28fd",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x28fe",
+          "original": 136,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x28ff",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2904",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2908",
+          "original": 0,
+          "remake": 213
+        },
+        {
+          "offset_hex": "0x2909",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x290a",
+          "original": 136,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x290b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x290c",
+          "original": 158,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x290d",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x290e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x290f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2924",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x294a",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x294b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x294c",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x2952",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2956",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x2957",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2958",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x295a",
+          "original": 126,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x295b",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x295c",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x295d",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2972",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2998",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x2999",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x299a",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x299f",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x29a0",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x29a4",
+          "original": 0,
+          "remake": 88
+        },
+        {
+          "offset_hex": "0x29a5",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x29a6",
+          "original": 240,
+          "remake": 120
+        },
+        {
+          "offset_hex": "0x29a8",
+          "original": 150,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29a9",
+          "original": 9,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29aa",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29ab",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29c0",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x29e6",
+          "original": 229,
+          "remake": 57
+        },
+        {
+          "offset_hex": "0x29e7",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x29e8",
+          "original": 2,
+          "remake": 113
+        },
+        {
+          "offset_hex": "0x29e9",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x29ee",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x29f2",
+          "original": 232,
+          "remake": 57
+        },
+        {
+          "offset_hex": "0x29f3",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x29f4",
+          "original": 0,
+          "remake": 113
+        },
+        {
+          "offset_hex": "0x29f5",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x29f6",
+          "original": 166,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29f7",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29f8",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x29f9",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a0e",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2a34",
+          "original": 27,
+          "remake": 119
+        },
+        {
+          "offset_hex": "0x2a35",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2a36",
+          "original": 222,
+          "remake": 127
+        },
+        {
+          "offset_hex": "0x2a3c",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2a40",
+          "original": 27,
+          "remake": 103
+        },
+        {
+          "offset_hex": "0x2a41",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2a42",
+          "original": 222,
+          "remake": 123
+        },
+        {
+          "offset_hex": "0x2a44",
+          "original": 206,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a45",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a46",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a47",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a5c",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2a82",
+          "original": 247,
+          "remake": 50
+        },
+        {
+          "offset_hex": "0x2a83",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2a84",
+          "original": 28,
+          "remake": 144
+        },
+        {
+          "offset_hex": "0x2a85",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2a8a",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2a8e",
+          "original": 0,
+          "remake": 50
+        },
+        {
+          "offset_hex": "0x2a8f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2a90",
+          "original": 240,
+          "remake": 144
+        },
+        {
+          "offset_hex": "0x2a92",
+          "original": 246,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a93",
+          "original": 8,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a94",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2a95",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2aaa",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2ad0",
+          "original": 18,
+          "remake": 81
+        },
+        {
+          "offset_hex": "0x2ad1",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2ad2",
+          "original": 11,
+          "remake": 151
+        },
+        {
+          "offset_hex": "0x2ad3",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2ad8",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2adc",
+          "original": 0,
+          "remake": 81
+        },
+        {
+          "offset_hex": "0x2add",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2ade",
+          "original": 240,
+          "remake": 151
+        },
+        {
+          "offset_hex": "0x2ae0",
+          "original": 30,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2ae1",
+          "original": 9,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2ae2",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2ae3",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2af8",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2b1e",
+          "original": 44,
+          "remake": 112
+        },
+        {
+          "offset_hex": "0x2b1f",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2b20",
+          "original": 249,
+          "remake": 158
+        },
+        {
+          "offset_hex": "0x2b26",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2b2a",
+          "original": 4,
+          "remake": 100
+        },
+        {
+          "offset_hex": "0x2b2b",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2b2c",
+          "original": 240,
+          "remake": 140
+        },
+        {
+          "offset_hex": "0x2b2e",
+          "original": 70,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b2f",
+          "original": 9,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b30",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b31",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b46",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2b6c",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2b6d",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2b6e",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x2b6f",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2b74",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2b78",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2b79",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2b7a",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x2b7b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2b7c",
+          "original": 6,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b7d",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b7e",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b7f",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2b94",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2bba",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2bbb",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2bbc",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x2bbd",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2bc1",
+          "original": 9,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2bc2",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2bc6",
+          "original": 0,
+          "remake": 152
+        },
+        {
+          "offset_hex": "0x2bc7",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2bc8",
+          "original": 16,
+          "remake": 24
+        },
+        {
+          "offset_hex": "0x2bc9",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2bca",
+          "original": 166,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2bcb",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2bcc",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2bcd",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2be2",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2c08",
+          "original": 17,
+          "remake": 147
+        },
+        {
+          "offset_hex": "0x2c09",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2c0a",
+          "original": 43,
+          "remake": 56
+        },
+        {
+          "offset_hex": "0x2c0b",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2c10",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2c14",
+          "original": 9,
+          "remake": 150
+        },
+        {
+          "offset_hex": "0x2c15",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2c16",
+          "original": 31,
+          "remake": 40
+        },
+        {
+          "offset_hex": "0x2c17",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2c18",
+          "original": 46,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c19",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c1a",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c1b",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c30",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2c56",
+          "original": 229,
+          "remake": 121
+        },
+        {
+          "offset_hex": "0x2c57",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2c58",
+          "original": 33,
+          "remake": 19
+        },
+        {
+          "offset_hex": "0x2c59",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2c5e",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2c62",
+          "original": 229,
+          "remake": 121
+        },
+        {
+          "offset_hex": "0x2c63",
+          "original": 5,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2c64",
+          "original": 33,
+          "remake": 19
+        },
+        {
+          "offset_hex": "0x2c65",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2c66",
+          "original": 86,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c67",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c68",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c69",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2c7e",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2ca4",
+          "original": 27,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2ca5",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2ca6",
+          "original": 255,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0x2cac",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2cb0",
+          "original": 27,
+          "remake": 184
+        },
+        {
+          "offset_hex": "0x2cb1",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2cb2",
+          "original": 255,
+          "remake": 29
+        },
+        {
+          "offset_hex": "0x2cb4",
+          "original": 126,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2cb5",
+          "original": 3,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2cb6",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2cb7",
+          "original": 113,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2ccc",
+          "original": 31,
+          "remake": 26
+        },
+        {
+          "offset_hex": "0x2cf2",
+          "original": 36,
+          "remake": 74
+        },
+        {
+          "offset_hex": "0x2cf3",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2cf4",
+          "original": 37,
+          "remake": 182
+        },
+        {
+          "offset_hex": "0x2cf5",
+          "original": 7,
+          "remake": 6
+        },
+        {
+          "offset_hex": "0x2cfa",
+          "original": 128,
+          "remake": 255
+        },
+        {
+          "offset_hex": "0x2cfe",
+          "original": 0,
+          "remake": 74
+        },
+        {
+          "offset_hex": "0x2cff",
+          "original": 6,
+          "remake": 3
+        },
+        {
+          "offset_hex": "0x2d00",
+          "original": 240,
+          "remake": 182
+        },
+        {
+          "offset_hex": "0x2d02",
+          "original": 110,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2d03",
+          "original": 9,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2d04",
+          "original": 1,
+          "remake": 0
+        },
+        {
+          "offset_hex": "0x2d05",
+          "original": 113,
+          "remake": 0
+        }
+      ]
+    },
+    "STELLAR": {
+      "bytes": 4032,
+      "different_bytes_before": 44,
+      "different_bytes_after": 0,
+      "offset_counts": {},
+      "original_sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "before_sha256": "c3fc0ffa80a7afdfa1e7115c3d9b799926a5daf2425855c907b9bd02dd19f49a",
+      "after_sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "unresolved_byte_differences": []
+    },
+    "PLANET": {
+      "bytes": 6642,
+      "different_bytes_before": 55,
+      "different_bytes_after": 0,
+      "offset_counts": {},
+      "original_sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "before_sha256": "3fcc532ddb767f9db30a1b9e45c2f1fe589aff8b942aa2826ab369ed77248665",
+      "after_sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "unresolved_byte_differences": []
+    }
+  },
+  "frames": {
+    "before": {
+      "statistics": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 301347,
+          "different_index_pixels": 5853,
+          "different_rgb_pixels": 5853,
+          "maximum_channel_difference": 243,
+          "difference_bbox_inclusive": [
+            240,
+            93,
+            607,
+            395
+          ]
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161207,
+          "different_index_pixels": 73,
+          "different_rgb_pixels": 73,
+          "maximum_channel_difference": 243,
+          "difference_bbox_inclusive": [
+            240,
+            240,
+            255,
+            255
+          ]
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 86380,
+          "different_index_pixels": 5780,
+          "different_rgb_pixels": 5780,
+          "maximum_channel_difference": 243,
+          "difference_bbox_inclusive": [
+            480,
+            93,
+            607,
+            395
+          ]
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null
+        }
+      },
+      "images_sha256": {
+        ".png": "8a83b90189bca42b29895416782aa5fc4666c4232638605143cdefe232188562",
+        "-diff.png": "5abfeb78ce62119e078140d20ee5a1e5c81b799301d07adfabe8e1a12cfd0883",
+        "-pair.png": "c1acb1eb195238eed7a04ff7b7f7fb3798c72400bc7143479e1c1d6ef48d44d9"
+      }
+    },
+    "after": {
+      "statistics": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 301347,
+          "different_index_pixels": 5853,
+          "different_rgb_pixels": 5853,
+          "maximum_channel_difference": 243,
+          "difference_bbox_inclusive": [
+            240,
+            93,
+            607,
+            395
+          ]
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161207,
+          "different_index_pixels": 73,
+          "different_rgb_pixels": 73,
+          "maximum_channel_difference": 243,
+          "difference_bbox_inclusive": [
+            240,
+            240,
+            255,
+            255
+          ]
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 86380,
+          "different_index_pixels": 5780,
+          "different_rgb_pixels": 5780,
+          "maximum_channel_difference": 243,
+          "difference_bbox_inclusive": [
+            480,
+            93,
+            607,
+            395
+          ]
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null
+        }
+      },
+      "images_sha256": {
+        ".png": "8a83b90189bca42b29895416782aa5fc4666c4232638605143cdefe232188562",
+        "-diff.png": "5abfeb78ce62119e078140d20ee5a1e5c81b799301d07adfabe8e1a12cfd0883",
+        "-pair.png": "c1acb1eb195238eed7a04ff7b7f7fb3798c72400bc7143479e1c1d6ef48d44d9"
+      }
+    }
+  },
+  "normal_player_runs": [
+    {
+      "path": "workplace/round49-normal-a",
+      "hashes": {
+        "entry/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "entry/FLEET.DT0": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7",
+        "entry/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "entry/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "entry/SHIP.DT0": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd",
+        "entry/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "entry/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "entry/screen.bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        "entry/screen.png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        "loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "loaded/screen.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "probe.json": "e52c92f50428196788eee37f51614ec4dcbd4b6316021036ce3bc3edfc35b833"
+      }
+    },
+    {
+      "path": "workplace/round49-normal-b",
+      "hashes": {
+        "entry/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "entry/FLEET.DT0": "116781ae141ba7ccbb385760e99567048c38c4c0db043a68b042bcf2406c71e7",
+        "entry/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "entry/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "entry/SHIP.DT0": "f5465b1f34c78bfb9b0aacec33e131ef7069a200f074660b19a64ab3d39be1cd",
+        "entry/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "entry/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "entry/screen.bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        "entry/screen.png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        "loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "loaded/screen.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "probe.json": "e52c92f50428196788eee37f51614ec4dcbd4b6316021036ce3bc3edfc35b833"
+      }
+    }
+  ],
+  "normal_player_metadata": {
+    "classification": "normal-player-entry-probe; parity not established",
+    "date": [
+      799,
+      3,
+      1
+    ],
+    "inputs": [
+      "click 300 270",
+      "type 138; enter",
+      "click 300 322",
+      "click 318 208",
+      "click 544 125",
+      "click 560 125"
+    ],
+    "palette_note": "screen.png暫用主選單色盤；正式RGB比較必須讀原版有效色盤",
+    "resources": "bootstrap.Load; Game.New",
+    "seed_setup": "測試期Go覆蓋只固定實行前D3DC167E，正式產品不變",
+    "state": 32,
+    "strategy_seed_after": "B6E4B78A",
+    "strategy_seed_before": "D3DC167E",
+    "strategy_seed_observed_before": "D3DC167E",
+    "ticks": 460
+  },
+  "gui": [
+    {
+      "scale": 1,
+      "classification": "normal cmd/gin3; real X11 keyboard and mouse; no direct entry",
+      "visual_inspection": "7990301／第1回合／帝國輸入已目視確認",
+      "hashes": {
+        ".bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        ".png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        ".txt": "f053d194a0cb86c82378c9c73e35fc959f320e40886cafb3bf59a967cfe5d606",
+        ".log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    },
+    {
+      "scale": 2,
+      "classification": "normal cmd/gin3; real X11 keyboard and mouse; no direct entry",
+      "visual_inspection": "7990301／第1回合／帝國輸入已目視確認",
+      "hashes": {
+        ".bin": "a6648bb7489bc5488b60071fc9fff9453d11319d5131ce484c22a1bcf3544553",
+        ".png": "cb44010dc30cb84e8c411a538fbc5de46408b5869590e4a113fde964df21897f",
+        ".txt": "9b437af71f16b55dc4db0e6f733f50e11536d3b4799bebd2535f406bfb14e8d3",
+        ".log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    }
+  ],
+  "verification": {
+    "limited_pass_events": 37,
+    "limited_skip": 0,
+    "standard_packages": 18,
+    "command": "tools/gui.sh xrun go test ./internal/... ./cmd/... -count=1",
+    "logs_sha256": {
+      "round49-limited.log": "13aa5ac1c023e0bfe232c350852b7b799e38993428d5e4d2567b40174255d8b8",
+      "round49-standard.log": "e743c35ae265bc238d7cf69b7a1488829c443ef9e18b22ea5f0b15079fcce01f",
+      "round49-limited-load-baseline-failed.log": "98bf8b0cd99e36a2ff7f339622c24ee441d0cd2b403dc32b4cb8b4105dc35b67"
+    },
+    "failed_test_classification": "讀檔重算未安定度的比較點錯誤；改取正常載入後狀態，產品與旗標判準未改"
+  },
+  "sources_sha256": {
+    "internal/game/game.go": "9f77ceeea58d2ed3d74ddba8792b4a2773db20cfce01e123e374ecf395faf87a",
+    "internal/game/monthseat.go": "6eea8d72fc804c6268d008d61f1b3ce5b30181aef185b7f260b8b5fe32a8c9a0",
+    "internal/game/monthseat_test.go": "67d9fdf64918d65016351350e713e7da42d8a46a49c8206b4b4b2316a53aac60",
+    "internal/rules/save.go": "cc5b251962a5e93cf73ed23eee84dd51434ec28d66815318509b793d17c87c3d",
+    "tools/month_seat_gate_oracle.sh": "f82bad8433fda8b46c7e5dd89d51e04f9747054d62c4c632b0f52d9e9e044a03",
+    "tools/turn_counter_gui.sh": "30057fc8012f71cc9f22e322a9fd11d31b12585b68a35b2cb9040a4a187dc5a4",
+    "tools/scripts/month_seat_gate_ida.py": "089de24b4ca7eaf9f7578a6119eec10fffe93d3d91bc0835ab1b6a4a82265662",
+    "tools/scripts/month_seat_gate_receipt.py": "6231cf4b017a6f17cd2db2795a0c7f04fc357fd41b23deb4560f83db8eef7c3d",
+    "tools/scripts/battle_normal_probe.go": "0d66e1e1e8bccb7c6c683e8be4dbb6d3ba0482bc8b21e87db781ff6dfdfa70eb",
+    "workplace/round44-normal-overlay.json": "dcaae558d812917b5bc2e02b049129014428f37dd4243ef624298c596317a905",
+    "workplace/round44-normal-seed.go": "3a5ece8b1a09f427d9d032da7853a2e02a5eae2519eb2aefaf52edb6881ae2a9"
+  },
+  "remake_source_state": "parent Git HEAD; modified month-seat implementation; exact sources hashed",
+  "capture_parameters": {
+    "original_mode": "640x480 planar VGA",
+    "remake_canvas": [
+      640,
+      480
+    ],
+    "normalization": "未裁切或縮放；原生色號與有效原版PLTE；全畫面及四區域",
+    "seed_overlay": "只固定測試期RNG，未匯入原版RAM或旗標",
+    "gui_command": "tools/gui.sh xrun env LOGH3_TURN_GUI_PREFIX=round49-gui LOGH3_TURN_PLAYER_DIR=round49-normal-a bash tools/turn_counter_gui.sh"
+  }
+}

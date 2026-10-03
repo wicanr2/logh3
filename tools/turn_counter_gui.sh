@@ -6,11 +6,11 @@ trap 'if [[ -n "$game_pid" ]]; then kill "$game_pid" 2>/dev/null || true; wait "
 go build -o /tmp/logh3-turn-counter ./cmd/gin3
 click_at() {
   xdotool mousemove --window "$window_id" "$(( $1 * scale ))" "$(( $2 * scale ))"
-  sleep 0.08
+  sleep 0.2
   xdotool mousedown 1
-  sleep 0.08
+  sleep 0.2
   xdotool mouseup 1
-  sleep 0.08
+  sleep 0.2
 }
 for scale in 1 2; do
   base="/src/workplace/${LOGH3_TURN_GUI_PREFIX:-round47-gui-pass}-${scale}x"
@@ -44,6 +44,6 @@ for scale in 1 2; do
   grep -qx "window=$((640 * scale))x$((480 * scale))" "$base.txt"
   grep -qx 'cursor=240,240' "$base.txt"
   grep -qx 'cursor_mode=1' "$base.txt"
-  cmp "$base.bin" /src/workplace/round47-normal-a/entry/screen.bin
+  cmp "$base.bin" "/src/workplace/${LOGH3_TURN_PLAYER_DIR:-round47-normal-a}/entry/screen.bin"
   echo "正常S3首戰：倍率$scale，整張正式畫面與正常Game收據相同"
 done
