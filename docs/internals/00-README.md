@@ -1,5 +1,15 @@
 # 原版內部構造參考
 
+第69輪沿#48／#79：[艦隊完整場景計畫](../goal/2026-10-04-fleet-scene-round-69.md)，
+追1DD6:05D7的文字／量表／方塊／圖視窗／戰損／等待／返回，再接093到正式Game。
+[場景IDA匯出](../../tools/scripts/fleet_scene_ida.py)保存原始定位、bytes與未審查語意。
+[完整交戰重播](../../tools/fleet_scene_oracle.sh)與[原版觀測器](../../tools/scripts/fleet_scene_native.go)
+由已提交命令的完整state續跑到返回戰場，不新增局面注入或玩家輸入。
+[場景收據凍結器](../../tools/scripts/fleet_scene_receipt.py)核四案雙跑、原始bytes及祖先收據；
+死亡反例另外明列目標1艘注入，不與前三案的無新增注入混稱。
+[研究406](../re/406-fleet-scene.md)、[原版重播058](../playtest/058-fleet-scene.md)與
+[凍結場景收據](data/fleet-scene.json)保存完整呼叫鏈及死亡後停止；事實21／38回填現行用途。
+
 第68輪沿#48／#79：[交戰量表接線計畫](../goal/2026-10-04-engagement-gauges-round-68.md)與
 [量表IDA匯出](../../tools/scripts/engagement_gauges_ida.py)，閉合共用量表後接正式演出。
 [094子規格](../spec/094-engagement-gauges.md)、[研究405](../re/405-engagement-gauges.md)與

@@ -437,6 +437,63 @@ func TestFleetCombatTablesMatchOriginal(t *testing.T) {
 	}
 }
 
+// 已提交的兩命令沿原版呼叫次序作測試輸入；此處只驗死亡後停止，
+// 排序本身由TestFleetCombatSequenceMatchesOracle獨立核原版全部鍵。
+func TestFleetCombatDeathStopsFollowingCommand(t *testing.T) {
+	fcRequireOriginal(t)
+	manifest := fcLoadManifest(t, "fleet-scene.json", "7d7e5b388eebc8348825e91352ff10e9821ce2b0cf7912d6f9b9cf1cafc95379")
+	dir := "workplace/oracle/scene48-r69-v2-death-a"
+	start, end := manifest.ram(t, dir+"/start-mem.bin"), manifest.ram(t, dir+"/end-mem.bin")
+	var report struct {
+		Events []struct {
+			Location string   `json:"original_location"`
+			Seed     uint32   `json:"seed"`
+			Words    []uint16 `json:"stack_words"`
+		} `json:"events"`
+	}
+	if err := json.Unmarshal(manifest.read(t, dir+"/report.json"), &report); err != nil {
+		t.Fatal(err)
+	}
+	target := fcUnit(start, 102)
+	fcEqual(t, "明示注入目標艘數", target.Ships, 1)
+	var r *Rand
+	owners, damages, hits := 0, 0, 0
+	for _, e := range report.Events {
+		if e.Location == "1DD6:0C54" {
+			damages++
+		}
+		if e.Location != "1DD6:05D7" {
+			continue
+		}
+		owners++
+		if r == nil {
+			r = NewRand(e.Seed)
+		}
+		fcEqual(t, "原版逐命令seed", int(r.Seed()), int(e.Seed))
+		pool := int(e.Words[2])
+		own := fcUnit(start, pool)
+		beforeOwn, beforeTarget, beforeSeed := own, target, r.Seed()
+		h, err := ApplyFleetCombatDamage(&own, &target, fcKinds(t), fcCommand(start, own, target, pool), r)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if h.Skipped {
+			if own != beforeOwn || target != beforeTarget || r.Seed() != beforeSeed {
+				t.Fatal("死亡後的命令仍扣庫存、修改目標或消費RND")
+			}
+		} else {
+			hits++
+			fcEqual(t, "首擊實扣", h.Lost, 1)
+		}
+		fcCheckUnit(t, own, fcUnit(end, pool))
+	}
+	fcEqual(t, "原版到達兩命令入口", owners, 2)
+	fcEqual(t, "原版傷害呼叫", damages, 1)
+	fcEqual(t, "remake傷害次數", hits, damages)
+	fcCheckUnit(t, target, fcUnit(end, 102))
+	fcEqual(t, "末端seed", int(r.Seed()), fcLong(end, fcDS+0x94dc))
+}
+
 func TestFleetCombatInvalidInputDoesNotMutate(t *testing.T) {
 	own := BattleUnit{Faction: 0, Kind: 0, Ships: 3000, FullShips: 3000, RepairCap: 3000, Fighters: 36000, X: 20}
 	target := BattleUnit{Faction: 1, Kind: 0, Ships: 3000, FullShips: 3000, RepairCap: 3000}

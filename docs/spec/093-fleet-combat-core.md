@@ -94,3 +94,11 @@ FleetCombatMobility。先驗輸入再變動庫存或亂數；不新增保存欄�
 [純核心收據](../internals/data/fleet-combat-core.json)，由
 [凍結器](../../tools/scripts/fleet_combat_core_receipt.py)重建。
 正式Game尚未呼叫核心，UI、完整演出與保存接線仍缺；093維持READY，092維持DRAFT。
+
+## 第69輪死亡停止續證
+
+[研究406](../re/406-fleet-scene.md)與[058](../playtest/058-fleet-scene.md)的固定同目標1艘反例，
+雙跑完整RAM／畫面相同。原版兩筆命令均到05D7，只有第一筆進0C54；末端目標為零。
+TestFleetCombatDeathStopsFollowingCommand沿既有本規格第1項，直接核原版逐命令seed與末端資料。
+首擊實扣1，第二次Skipped；庫存、艘數、修理上限與RND沒有額外變動。
+只補既有核心停止規則的驗證，不改正式規則或存檔格式，不升格完整092。
