@@ -1,5 +1,15 @@
 # 原版內部構造參考
 
+第63輪沿#79／#48：[目標與武器提交計畫](../goal/2026-10-03-fleet-combat-command-round-63.md)、
+[原版命令操作重播](../../tools/fleet_combat_command_oracle.sh)與
+[固定輸入計畫](../../tools/scripts/fleet_combat_command_plan.py)。
+沿092 DRAFT，先核目標命中與選擇提交；不覆寫第62輪收據或把診斷當正常玩家驗收。
+[人類命令IDA匯出](../../tools/scripts/fleet_combat_command_ida.py)分開原始bytes與待審查語意。
+[研究401](../re/401-fleet-combat-command.md)、[原版重播053](../playtest/053-fleet-combat-command.md)與
+[固定提交／戰損收據](data/fleet-combat-command.json)保存16組雙跑、提交邊界及兩武器交戰末端。
+[收據驗證工具](../../tools/scripts/fleet_combat_command_receipt.py)核固定父快照、303份來源及1506條IDA bytes。
+命令子選單見[事實44](44-battle-command-menus.md)，交戰排序與損失owner見[事實38](38-battle-units.md)。
+
 第62輪沿#79／#48：[艦隊戰鬥入口計畫](../goal/2026-10-03-fleet-combat-entry-round-62.md)與
 [第四階段原始指令匯出](../../tools/scripts/fleet_combat_phase_ida.py)。
 先核參戰門檻與玩家命令，不以行星對艦隊近似代替原版艦隊戰鬥。
