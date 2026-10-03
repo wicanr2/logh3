@@ -1,5 +1,16 @@
 # 原版內部構造參考
 
+第59輪沿#59：[一覽表分頁邊界工作快照](../goal/2026-10-03-list-tab-edges-round-59.md)與
+[固定原版邊界重播](../../tools/list_tab_edge_oracle.sh)，四格顯示與情報寫入生命週期分開驗收。
+[第59輪IDA匯出](../../tools/scripts/list_tab_edge_ida.py)保留原始指令與三種位址空間，語意逐項審查。
+[分頁邊界對拍](../../internal/game/listtabedges_test.go)從正常Game開清單，明示四格／旗標／士氣注入並比較完整畫面。
+[090顯示契約](../spec/090-list-tab-edge-display.md)只核已證實的讀法，不以注入通過宣稱情報更新完成。
+[四格讀取邊界](../../internal/rules/region_list_test.go)驗FF、254、0及無效座位／短記錄，不改原始資料。
+[分頁正常GUI](../../tools/list_tab_edge_gui.sh)用真實鍵鼠從同盟主選單開星系清單，驗一倍／兩倍完整畫面。
+[分頁凍結工具](../../tools/scripts/list_tab_edge_receipt.py)保存原版雙跑、正式全圖、存檔、GUI及原始指令，拒絕覆寫。
+[研究397](../re/397-list-tab-edges.md)、[對拍049](../playtest/049-list-tab-edges.md)及
+[分頁完整收據](data/list-tab-edges.json)保存十張零差及未驗情報寫入的界線。
+
 第58輪沿#60：[左鍵保持工作快照](../goal/2026-10-03-left-hold-round-58.md)、
 [研究396](../re/396-left-button-repeat.md)、[089契約](../spec/089-left-button-repeat.md)與
 [原始指令匯出](../../tools/scripts/left_hold_ida.py)、[固定原版保持探針](../../tools/left_hold_oracle.sh)、

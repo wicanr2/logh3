@@ -72,6 +72,20 @@ func RecountRegionFleets(records []byte, fleets []Fleet) {
 	}
 }
 
+// RegionListFleetCounts 依觀看座位讀取清單左帝國／右同盟兩格。
+// 原版0D05:0568：座位0讀+28/+2B，座位1讀+2A/+29。
+// FF是顯示占位值，保留原byte；情報更新生命週期不由此函式猜補。
+// 證據：規格090及研究397。
+func RegionListFleetCounts(record []byte, viewer int) ([2]byte, bool) {
+	if len(record) < 0x2C || viewer < 0 || viewer > 1 {
+		return [2]byte{}, false
+	}
+	if viewer == 0 {
+		return [2]byte{record[0x28], record[0x2B]}, true
+	}
+	return [2]byte{record[0x2A], record[0x29]}, true
+}
+
 // RegionEconomy 回星域記錄裡的經濟力（32 位元）。
 func RegionEconomy(record []byte) int {
 	if len(record) < regionEconomy+4 {

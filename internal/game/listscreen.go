@@ -21,6 +21,7 @@ import (
 //
 // 分頁鈕（`0D05:02FC`／`0C7F:0339`，`docs/re/327`）：星系資料 艦隊／配屬／稅金、
 // 艦隊資料 士氣／部隊／作戰，兩張的分頁都每座位記住（`ds:8F2D`／`ds:8F31`）。
+// 星域+2A／+2B的情報寫入生命週期仍待原版證據；四格顯示依090已核對。
 
 type listScreen struct {
 	// starScroll 是星系資料的位移，每座位記住（`ds:1DF2[座位]`，關了再開還在）。
@@ -386,6 +387,14 @@ func setTabsOn(spec *screen.MainGameSpec, tab int) {
 // starBerthLetters 是配屬分頁的七個字母（`ds:1EA6`／`ds:1EAE`）：大寫 ＝ 存量
 // 至少一個滿編單位、小寫 ＝ 不到、`-` ＝ 0。
 const starBerthUpper, starBerthLower = "BHCADTE", "bhcadte"
+
+// 原版0D05:05B5／0612：FF印--，其餘以%2d印無符號byte。
+func listFleetCountText(v byte) string {
+	if v == 0xFF {
+		return "--"
+	}
+	return fmt.Sprintf("%2d", v)
+}
 
 // starTabText 回星系資料 配屬（1）／稅金（2）分頁名字後面那十六個半形字：
 //

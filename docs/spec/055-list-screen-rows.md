@@ -67,8 +67,8 @@
 
 | 差異 | 類別 | 到期條件 |
 |---|---|---|
-| 星系資料「艦隊」分頁：原版讀星域 `+0x28`–`+0x2B`（依座位挑兩格、`0xFF` 印 `--`），remake 照艦隊表數，敵方的數原版可能是 `--` | 來源不同（hypothesis） | 同盟座位或敵方艦隊在場時錄一批（`docs/re/327` §四） |
-| 「﹕」戰鬥中換色 2、作戰分頁的「戰鬥」「占領」、士氣低於 50 換色：照反組譯接的，沒有收據 | 待收據 | 有那種局面時各對一次 |
+| 星系資料「艦隊」分頁的四格顯示已按觀看座位接線，兩側FF印`--`；完整情報更新仍未驗 | 第59輪顯示修正已驗，寫入生命週期unknown | #59接續+2A／+2B完整寫入；[090](090-list-tab-edge-display.md)不升格此項 |
+| 「﹕」戰鬥中換色2、作戰戰鬥優先占領、士氣49／50界線 | 第59輪受控全圖已驗 | [對拍049](../playtest/049-list-tab-edges.md)零排除區；不外推未驗局面 |
 | 原版按住連捲速度隨重畫成本變動；remake短按一列、保持350／100ms | 第58輪使用者核准的刻意速度差異 | 保留差異；正式入口與驗收見[089](089-left-button-repeat.md) |
 | 原版把「游標搬到會換反白的列的同一瞬間按下」的那一下丟掉（`docs/re/323` §六）；remake 照收 | 原版的輸入時序 | 不到期——不是規則 |
 
@@ -78,3 +78,5 @@
   `TestListAdmiralRowsMatchOracle`、`TestListEnemyRowsMatchOracle`（三十四批整張、三批排除小圖
   最後一列；另比位移、開的視窗與詳細資料的提督）；`TestListScreenTabsMatchOracle`（分頁五批）。
 - GUI：`tools/gui_check.sh` 的 `fcmd-lst-adm-row`、`fcmd-lst-fleet-row`、`fcmd-lst-star-tab-tax`。
+- 第59輪：`TestListTabEdgesMatchOracle`九個受控全圖、`TestListTabNormalPlayer`正常同盟清單；
+  `tools/list_tab_edge_gui.sh`真實鍵鼠一倍／兩倍。限定完整收據與情報更新界線見090／049。

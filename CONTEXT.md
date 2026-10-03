@@ -5,11 +5,15 @@
 
 ## 現況一覽
 
-**目前接續（2026-10-03，第五十八輪）**：#60左鍵保持接線與限定完整畫面對拍完成。
-父提交2c44b828097d9680e689419089809e6cdde36efc；dosgolem未改，提交及推送身份依Git紀錄。
+**目前接續（2026-10-03，第五十九輪）**：#59一覽表四格顯示修正與邊界全圖對拍完成。
+父提交2d3cac5071a3519135b718bf8a48d0a5e8cf9b9f；dosgolem未改，提交及推送身份依Git紀錄。
 
 | 分類 | 目前真相 | 最近驗證／入口 |
 |---|---|---|
+| 清單顯示已完成 | 依觀看座位讀星域+28/+2B或+2A/+29，FF印--；不再重數艦隊表替代 | 090先READY後限定CONFORMED；舊程式三圖差58／132／71，修正後全圖零差 |
+| 分頁原版已驗 | 帝國／同盟非零及FF、星系戰鬥冒號、士氣49／50、戰鬥優先占領 | 九個明示注入及一個正常同盟入口，十張各0／307200、原版與Game雙跑，無排除區 |
+| 清單正式資料鏈 | 正常Game開清單，四個數值案例SaveSlot／LoadSlot保留情報兩格 | 無效座位／短記錄拒絕讀取；18產品套件、1×／2×真實GUI正常同盟清單通過 |
+| 情報更新仍未知 | +2A／+2B完整寫入生命週期未查明，不發明揭露規則 | 2703:0853只維護+28／+29；其他寫入者仍待查，#59保持OPEN，10項未完成 |
 | remake已完成 | 顯示層左鍵保持／放開，箭頭捕獲，一列步距、界線、模態取消及正式保存接線 | 089限定契約先READY後CONFORMED；月初熱區16像素與游標量測污染修正；整份088仍DRAFT |
 | 原版已驗 | 清單／經濟四組保持、月初保持及右鍵各雙跑完整RAM／全圖相同 | IDA六份788條原指令、18項直接語意proven；DS:1BF2原始bytes及0C0A兩次寫入補證；f7523f9／clean |
 | 正常資料鏈 | 主選單→138→S3同盟→實行808 tick→首戰資料，保持到26及回0 | 正式bootstrap／Game，無局面或RAM注入，兩跑畫面／存檔檔案相同，18產品套件通過 |
@@ -25,7 +29,14 @@
 | 刻意差異待裁決 | 固定次序的可丟棄探針五圖均零差，其他殘留字鍵局面未保證相同 | 使用者忠實度裁決pending；未採用排序prototype，正式一像素仍差 |
 | 原版oracle未知 | 顯示指標比較契約、正常索敵同態配對、戰場讀檔續戰、表列指向置鏡及未覆蓋控制 | 全部仍按原閘門；鏡頭座位反轉與signed溢位屬明示診斷 |
 | 其他入口限制 | 選單背景16333 pixels、雙人未確認2841 pixels及STELLAR+7D22 bytes | 非本輪範圍，不由局部相同升格 |
-| 原Goal待續 | FF殘留鍵取捨及顯示指標比較契約待核定，再回正常索敵與其餘八步 | #60／#67 CLOSED；#79／#89／#69 OPEN；89張worklist／10張open；音樂人耳／macOS／正式交付仍缺 |
+| 原Goal待續 | 情報寫入待續；FF殘留鍵取捨及顯示指標比較契約待核定，再回正常索敵與其餘八步 | #59／#79／#89／#69 OPEN；89張worklist／10張open；音樂人耳／macOS／正式交付仍缺 |
+
+第59輪入口：[工作快照](docs/goal/2026-10-03-list-tab-edges-round-59.md)、
+[研究397](docs/re/397-list-tab-edges.md)、[090](docs/spec/090-list-tab-edge-display.md)、
+[對拍049](docs/playtest/049-list-tab-edges.md)、[完整收據](docs/internals/data/list-tab-edges.json)，
+SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
+九個局面是明示注入的受控same-state靜態結果；正常玩家路徑只限第十張同盟清單。
+兩組初期同盟星域0探針沒有顯示該列，不算四格驗收。情報更新未驗，歷史凍結JSON不重生。
 
 第58輪入口：[工作快照](docs/goal/2026-10-03-left-hold-round-58.md)、[研究396](docs/re/396-left-button-repeat.md)、
 [089](docs/spec/089-left-button-repeat.md)、[對拍048](docs/playtest/048-left-button-repeat.md)、
@@ -1128,30 +1139,20 @@ WORK0／FLEET27／SHIP214／STELLAR0／PLANET0保持，顯示指標raw差仍完�
 
 *[#59](https://github.com/wicanr2/logh3/issues/59) · parity（對拍：要與原版逐位元組相同）*
 
-#51 的五批收據都是帝國座位、沒有戰鬥的局面。以下是照反組譯接的、沒有收據（`docs/re/327`）：
+第59輪已修正星系清單的四格來源，並補齊原版雙跑／完整畫面證據。原版依觀看座位讀星域+28/+2B或+2A/+29；舊remake重數艦隊表，三圖差58／132／71像素。修正後十張完整640×480全圖零差，無排除區。
 
-- 星系「艦隊」分頁原版讀星域 `+0x28`–`+0x2B`（依座位挑兩格、`0xFF` 印 `--`），remake 照艦隊表數：同盟座位與敵方數字可能不同。
-- 「﹕」在 `+0x13` bit2（戰鬥中）用色 2。
-- 艦隊「作戰」分頁：所在星域 bit2「戰鬥」、bit4「占領」。
-- 艦隊「士氣」分頁小於 50 用色 2。
+**卡在**：只剩四格情報更新生命週期。2703:0853只清零並重數+28／+29；另外兩格不能因此推論沒有寫入者。後續追取址端、間接寫入及實際情報更新時點，不發明揭露機制。
 
-**卡在**：- `+0x2A`／`+0x2B` 誰寫、`0xFF` 何時出現沒讀（`docs/internals/22` 仍標「兩者怎麼並存假設待驗」）。
-- **同盟座位那一份收據存在，但對這個差異是盲的**（2026-09-18 核實）：
-  `workplace/oracle/star1eAlly` 是同盟座位的星系資料整張收據、`TestAllianceCommandPhaseScreens/星系資料`
-  逐位元組 PASS，但畫面上十四列**全是「0 ： 0」**——那是開局、雙方都還沒編成艦隊。
-  原版左欄印的是 `+0x2A`（25 份傾印與三個劇本資料檔裡恆為 0），remake 印的是
-  `CountFleets(帝國)`，兩者在「帝國艦隊數 ＝ 0」時同值。這正是判準裡
-  「（或證明既有收據踩不到）」那種情形。
+第59輪三份IDA9.4匯出679條原指令、18項proven語意。九個受控局面與正常同盟清單共十張全圖零差，原版每案雙跑完整RAM／圖／色盤相同。正式Game雙跑存檔與畫面逐byte相同，四個數值案例SaveSlot／LoadSlot保留+2A／+2B；18產品套件及1×／2×真實GUI正常同盟清單通過。
 
-最小下一步：`-poke` 把某格的 `+0x2A`／`+0x2B` 寫成非 0 與 `0xFF` 各一份、同時讓那格有帝國艦隊，
-看原版印 `--` 還是數字——**這一份同時回答 `+0x2A`／`+0x2B` 的語意**，投資報酬率最高。
-其餘三種也都是 `-poke` 造：星域 `+0x13` 的 bit2／bit4、艦隊 `+0x3C` 壓到 50 以下。
+兩組初期同盟星域0探針沒有顯示該列，只留診斷；改可見首都31後補獨立雙跑。不把注入局面當正常玩法，不宣稱原版與remake全RAM相同。
 
-**做完的判準**：四種情形各有同狀態收據（可用 `-poke` 造），整張逐位元組；`+0x28`–`+0x2B` 的寫入者讀完。
+**做完的判準**：- 同盟座位非零與FF、星系戰鬥冒號、艦隊作戰戰鬥／占領、士氣49／50各有固定原版同狀態收據，整張逐位元組。第59輪已達成。
+- +2A／+2B完整寫入生命週期查明，正式資料更新／保存及正常玩家路徑有對應驗證。仍未達成，不以讀取或注入通過替代。
 
-**證據**：[`docs/re/327-list-screen-tabs.md`](docs/re/327-list-screen-tabs.md)、[`docs/spec/055-list-screen-rows.md`](docs/spec/055-list-screen-rows.md)
+**證據**：[`docs/re/397-list-tab-edges.md`](docs/re/397-list-tab-edges.md)、[`docs/spec/090-list-tab-edge-display.md`](docs/spec/090-list-tab-edge-display.md)、[`docs/playtest/049-list-tab-edges.md`](docs/playtest/049-list-tab-edges.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)、[`docs/internals/data/list-tab-edges.json`](docs/internals/data/list-tab-edges.json)、[`tools/list_tab_edge_oracle.sh`](tools/list_tab_edge_oracle.sh)、[`internal/game/listtabedges_test.go`](internal/game/listtabedges_test.go)、[`tools/list_tab_edge_gui.sh`](tools/list_tab_edge_gui.sh)、[`docs/re/327-list-screen-tabs.md`](docs/re/327-list-screen-tabs.md)、[`docs/spec/055-list-screen-rows.md`](docs/spec/055-list-screen-rows.md)
 
-**核實**：`internal/game/game.go` 裡還找得到 `同盟座位看敵方的數原版可能印 --`（自承還在 ＝ 還沒做）
+**核實**：`internal/game/listscreen.go` 裡還找得到 `情報寫入生命週期仍待原版證據`（自承還在 ＝ 還沒做）
 
 #### strategic-assault-edge-cases — 戰略打行星沒有收據的兩種局面（同回合打過仗、擠開壓到擋路格）
 

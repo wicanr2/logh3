@@ -68,3 +68,12 @@
 
 收據：`TestListScreenTabsMatchOracle` 五批整張逐位元組（`fcmd-lst-star-tab-assign`、`-tab-tax`、
 `-tax-rclick`、`-reopen`、`fcmd-lst-fleet-tab-unit`、`-tab-ops`）；GUI `fcmd-lst-star-tab-tax`。
+
+## 2026-10-03追加：顯示來源與未驗邊界已補證
+
+[研究397](397-list-tab-edges.md)以固定原版雙跑與IDA9.4補帝國／同盟非零、FF、戰鬥冒號、
+士氣49／50及戰鬥／占領優先順序。十張完整畫面零差，不排除像素。
+remake已改按座位讀四格，不能再沿用本篇歷史段落的「照艦隊表數」現況描述。
++2A／+2B的完整寫入仍unknown，#59保持OPEN；本篇先前假說保留形成時的證據限制。
+入口：[090](../spec/090-list-tab-edge-display.md)、[對拍049](../playtest/049-list-tab-edges.md)、
+[完整收據](../internals/data/list-tab-edges.json)，SHA-256 `9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8`。
