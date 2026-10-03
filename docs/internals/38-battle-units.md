@@ -7,6 +7,17 @@
 
 艦艇池的位置從 `ds:CFB4` 的 far 指標拿，一筆 78 位元組。
 
+## 第65輪武器候選與合法戰鬥機
+
+proven限[研究403](../re/403-weapon-candidates.md)、[055](../playtest/055-weapon-candidates.md)及
+[固定收據](data/weapon-candidates.json)。敵方目前+34/+36、Out bit7未設、距離不大於300，
+再排除Detail0／艦種7，才依方向橢圓、武器類型與兩word庫存產生候選mask。
+只有光線砲走每第8步的地形／其他分隊遮蔽；飛彈及戰鬥機不走此判定。
+排除目標的早返回不清+3C；後續攻方查詢可覆寫此欄位，不能以最後mask代表首次候選。
+原版UI已合法提交武器2／目標102，3000→2394艘、我方戰鬥機36000→28800符合單擊probe。
+48案候選及五條續接共53組原版雙跑265檔相同；092仍DRAFT，正式Game／演出／保存未接。
+重疊座標候選可用，但傷害曲線distance0前項unknown，不以候選驗收豁免。
+
 ## 第62輪艦隊戰鬥入口限定事實
 
 proven限[研究400](../re/400-fleet-combat-entry.md)與[固定入口收據](data/fleet-combat-entry.json)。
@@ -14,7 +25,7 @@ proven限[研究400](../re/400-fleet-combat-entry.md)與[固定入口收據](dat
 再收FLEET+48低四位為1且+00 bit0未設者，名單非空才呼叫1DD6:0009。
 一般分隊敵方查詢非零，且自身Out byte恰為7F，才進人類命令或電腦選擇分支。
 無可進命令的一般分隊時不開演出／損失；16個入口案例與command均原版雙跑相同。
-靜態人類提交分支寫+2E返回byte及+2C目標池word，但動態目標／武器選擇尚未驗。
+靜態人類提交分支寫+2E返回byte及+2C目標池word；第62輪時動態選擇尚未驗，後續已由第63／65輪補證。
 同陣營編號比較返回不對稱；受控17、16仍保持原順序，不能套一般遞增排序。
 完整[092](../spec/092-fleet-combat-entry.md)維持DRAFT，正式ResolveBattleTurn仍是行星對艦隊近似。
 

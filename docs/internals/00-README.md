@@ -1,5 +1,15 @@
 # 原版內部構造參考
 
+第65輪沿#79／#48：[武器候選計畫](../goal/2026-10-04-weapon-candidates-round-65.md)與
+[候選owner原始指令匯出](../../tools/scripts/weapon_candidates_ida.py)。
+固定第62輪父狀態，先閉合可用戰鬥機及候選條件；092仍DRAFT。
+[候選重播入口](../../tools/weapon_candidates_oracle.sh)與
+[固定注入及選單計畫](../../tools/scripts/weapon_candidates_plan.py)保留完整輸入。
+[可丟棄候選探針](../../tools/scripts/weapon_candidates_probe.go)核候選、射線及合法戰鬥機資料更新，不接正式Game。
+[收據凍結器](../../tools/scripts/weapon_candidates_receipt.py)核原版雙跑、來源雜湊及IDA原始bytes，拒絕覆寫。
+[研究403](../re/403-weapon-candidates.md)、[原版診斷055](../playtest/055-weapon-candidates.md)及
+[候選固定收據](data/weapon-candidates.json)保存48案候選、合法戰鬥機命令及返回戰場。
+
 第64輪沿#79／#48：[交戰傷害計畫](../goal/2026-10-03-fleet-combat-damage-round-64.md)。
 由第63輪固定提交狀態追0C54及203A係數／資料更新，092保持DRAFT直到證據審查。
 [第64輪IDA匯出](../../tools/scripts/fleet_combat_damage_ida.py)保留固定原版bytes與三種位址空間。
