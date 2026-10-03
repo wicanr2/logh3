@@ -566,3 +566,18 @@ tools/gui.sh xrun python3 tools/scripts/battle_hover_marks_receipt.py
 
 各輸出拒絕覆寫；重建需本輪來源及保留第51輪父snapshot，雜湊與完整旗標在JSON。
 原版無注入兩案及正常Game五案與primitive診斷分列，不能將靜態相同升為完整資料或八步完成。
+
+## 第53輪：未出擊偵察隊快取
+
+[研究391](../re/391-battle-scout-cache.md)、[第53輪](../goal/2026-10-03-battle-scout-cache-round-53.md)及
+[結構化收據](../internals/data/battle-scout-cache.json)，SHA-256
+`1203dc687f6f2481ac53acfaa3a2da8866d8d82638ebeda6a9dd452d875bf3d9`。
+
+原版雙跑沿用第51輪固定f7523f9，全部來源及輸出雜湊重核；本輪沒有更動執行器或重新擷取。
+既有IDA209條原指令逐byte符合入口RAM，十項附加語意proven。
+正常Game55檔a／b相同，修正僅七個偵察池+2F bytes，SHIP276→269。
+WORK14／FLEET27／STELLAR0／PLANET0及380／799/3/1／7艦隊／55池／B6E4B78A保持。
+五張完整畫面與第52輪相同，原PNG／差分圖沿用並核雜湊；初始全圖仍1 pixel，其餘四張0。
+137限定PASS零skip、18產品套件及正常cmd/gin3 X11兩倍率通過。
+兩AI全部55筆快取、七筆未出擊池及完整SHIP存讀已驗，可點選單位仍48筆。
+重播命令在研究391；完整088 DRAFT、#89／#79 OPEN，nearby-state與151受控幀範圍保持。

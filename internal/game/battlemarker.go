@@ -47,4 +47,20 @@ func (g *Game) refreshBattleMarkers() {
 			}
 		}
 	}
+	// 26E5:016F..01B6也刷新未出擊偵察池；它不在可點選單位清單。
+	if g.slot != nil {
+		for _, bf := range g.battleFleets {
+			if bf.ScoutMode != 0xFF {
+				continue
+			}
+			f := g.fleetByIndex(bf.Index)
+			if f == nil {
+				continue
+			}
+			if u, ok := g.slot.ScoutUnit(g.res.Weights, *f, bf.X, bf.Y); ok {
+				r := g.slot.ShipAt(f.Scout)
+				r[0x2F] = byte(rules.BattleCachedSprite(u, false, int(r[0x2F])))
+			}
+		}
+	}
 }

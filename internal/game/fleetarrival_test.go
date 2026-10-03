@@ -129,6 +129,39 @@ func TestNormalArrivalCoordinatesAndSave(t *testing.T) {
 					t.Fatal("戰場入口重新覆寫已配置的現在／集結座標")
 				}
 			}
+			// 原版26E5:00AC刷新全部55筆，包含不在battleUnits的七筆偵察池。
+			cached := map[int]bool{}
+			for _, u := range g.battleUnits {
+				cached[g.battleUnitPool(u)] = true
+			}
+			for _, bf := range g.battleFleets {
+				f := g.fleetByIndex(bf.Index)
+				if f == nil || bf.ScoutMode != 0xFF {
+					t.Fatal("正常首戰的未出擊偵察隊身份不同")
+				}
+				cached[f.Scout] = true
+				for _, u := range g.battleUnits {
+					if g.battleUnitPool(u) == f.Scout {
+						t.Fatal("未出擊偵察隊進入可點選單位清單")
+					}
+				}
+			}
+			if len(cached) != 55 || len(g.battleUnits) != 48 {
+				t.Fatal("正常首戰的完整池與可點選單位數不同")
+			}
+			for pool := range cached {
+				want := m[0x668B2+pool*rules.ShipRecord+0x2F]
+				if got := ships[pool*rules.ShipRecord+0x2F]; got != want {
+					t.Fatalf("原池%d正式保存圖示快取%d，原版%d", pool, got, want)
+				}
+			}
+			loaded := newTestGame(t)
+			loaded.res.SaveDir = dir
+			loaded.loadSlotFromDisk(0)
+			if loaded.SaveErr() != nil || loaded.slot == nil || !bytes.Equal(loaded.slot.Ship, ships) {
+				t.Fatal("正常首戰完整SHIP正式存讀不同")
+			}
+			t.Log("55筆快取與七筆未出擊偵察池符合原版，48筆可點選單位及完整SHIP存讀保持")
 			t.Log("正常S3九艦隊／七十筆池、過場前後及正式保存符合原版")
 		})
 	}

@@ -320,3 +320,6 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [摘要小地圖原版重播](../../tools/battle_hover_marks_oracle.sh)：空白Input移回分隊及明示集結點注入，保存新RAM／畫面與完整旗標。
 - [摘要小地圖研究390](../re/390-battle-hover-marks.md)：旗艦航線、一般分隊集結點與剩餘方向物件覆蓋的分級證據。
 - [摘要小地圖收據產生器](../../tools/scripts/battle_hover_marks_receipt.py)與[結構化收據](data/battle-hover-marks.json)：八組原版雙跑、正常入口五個完整畫面與剩餘差異，原JSON保持。
+- [第53輪隱藏偵察隊快取](../goal/2026-10-03-battle-scout-cache-round-53.md)：沿#89核對完整戰場池的圖示刷新與存讀，不重開既有畫面收據。
+- [隱藏偵察隊研究391](../re/391-battle-scout-cache.md)：既有IDA資料庫的209條原始bytes與原版七筆快取；規格088限定接線。
+- [偵察隊快取收據產生器](../../tools/scripts/battle_scout_cache_receipt.py)與[結構化收據](data/battle-scout-cache.json)：核對固定原版雙跑、正常Game雙跑、七個byte與未改畫面，保留原始位址與分級。

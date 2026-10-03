@@ -1,0 +1,5003 @@
+{
+  "date": "2026-10-03",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_dirty": false,
+  "original_bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "original_executable_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "toolchain": {
+    "go_image": "golang:1.24-bookworm",
+    "go_image_id": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+    "gui_image": "logh3-ebiten:2",
+    "gui_image_id": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+    "ida_image": "ida-pro-9.4-idapython:locked-v1",
+    "ida_image_id": "sha256:6f6d59af49d0008c4109a5295b5f374bdc007e2d1ab28cb9de08779584de2780"
+  },
+  "schema": "logh3.battle-scout-cache.v1",
+  "issue": 89,
+  "parent_commit": "517fecc21f8ad0868e26e49448e7edea70e3ee25",
+  "remake_worktree": "dirty; 本輪快取修正及回歸",
+  "status": "限定快取及保存已驗，完整088仍DRAFT",
+  "comparison_level": "nearby-state; 不升格第52輪",
+  "previous_receipts": {
+    "docs/internals/data/battle-hover-marks.json": "91ec1901d3232702c3612d4edd459d72ff60c4633483bc578339b0e3f5c56250",
+    "docs/internals/data/battle-input-display.json": "c1f387c1e3729450f4b7b3f9f8babb21b0b8f49d1b0762b1f6e0cca648cfb5c6"
+  },
+  "original_runs_reused": {
+    "base": [
+      {
+        "path": "workplace/oracle/normal89-r51-base-a",
+        "command_argv": [
+          "-load-state",
+          "/src/workplace/fcmd/fcmd-s3-base.state",
+          "-steps",
+          "435000001",
+          "-tick",
+          "20000",
+          "-clicks",
+          "301000000:544:85,304000000:560:85,405000000:240:200",
+          "-click-hold",
+          "3000000",
+          "-poke",
+          "lin:5E00C@300000000=7E 16 DC D3",
+          "-regs-from",
+          "405000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1CC5:008E,1629:023B,12AA:02D4",
+          "-save-state",
+          "435000000:/out/oracle/normal89-r51-base-a/machine.state",
+          "-dump-mem-at",
+          "434999999:lin:0:1048576:/out/oracle/normal89-r51-base-a/entry.bin"
+        ],
+        "hashes": {
+          "entry.bin": "ef34310fe3e2c133522ed1612f16faeaff8f14e94ae9e0b6ea965e9749424a97",
+          "screen.bin": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+          "screen.png": "c6ddfb988cf15898626fa50b040b1f2423baabae0aa27f57f3fd153abdbc00cb",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "5d8d79df5b180d18146b58995a512c214d9299be5fcb3c21f953bac9a94bed0b",
+          "meta.txt": "4ccec5f35938cb77ff0b8ff1673167d86c0ea96fc3e3ec266035fa629e02bbc7",
+          "flags.txt": "8c99a0e7c1d1c8f3d97cc58c2b8b1458a9c037d8a4f3cbdd56faabece38b96ba",
+          "report.txt": "d01abccf14eeebe255a363c603f79ebfec0371f0ddbf9849188c71735b31943c"
+        }
+      },
+      {
+        "path": "workplace/oracle/normal89-r51-base-b",
+        "command_argv": [
+          "-load-state",
+          "/src/workplace/fcmd/fcmd-s3-base.state",
+          "-steps",
+          "435000001",
+          "-tick",
+          "20000",
+          "-clicks",
+          "301000000:544:85,304000000:560:85,405000000:240:200",
+          "-click-hold",
+          "3000000",
+          "-poke",
+          "lin:5E00C@300000000=7E 16 DC D3",
+          "-regs-from",
+          "405000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1CC5:008E,1629:023B,12AA:02D4",
+          "-save-state",
+          "435000000:/out/oracle/normal89-r51-base-b/machine.state",
+          "-dump-mem-at",
+          "434999999:lin:0:1048576:/out/oracle/normal89-r51-base-b/entry.bin"
+        ],
+        "hashes": {
+          "entry.bin": "ef34310fe3e2c133522ed1612f16faeaff8f14e94ae9e0b6ea965e9749424a97",
+          "screen.bin": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+          "screen.png": "c6ddfb988cf15898626fa50b040b1f2423baabae0aa27f57f3fd153abdbc00cb",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "94d62622d03f34a0a39bce316b9857d4dd8381267fc827a1efcb2d777b8262a7",
+          "meta.txt": "376501e97c1f8c1b17f749c499b2399a40ceeac6b31cb33fa2475035e948bbac",
+          "flags.txt": "ef219f98e030b040b8318d1be267a67382a227ec652825b0882beb9e9b77ba9e",
+          "report.txt": "f2110264c77e5458c41ce40ed79eecc301570777e4b502003cd72e5bf4b726ca"
+        }
+      }
+    ],
+    "flagship": [
+      {
+        "path": "workplace/oracle/normal89-r51-flagship-a",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-base-a/machine.state",
+          "-steps",
+          "455000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "440000000",
+          "-mouse-x",
+          "248",
+          "-mouse-y",
+          "208",
+          "-regs-from",
+          "435000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+          "-save-state",
+          "455000000:/out/oracle/normal89-r51-flagship-a/machine.state",
+          "-dump-mem-at",
+          "454999999:lin:0:1048576:/out/oracle/normal89-r51-flagship-a/end.bin"
+        ],
+        "hashes": {
+          "end.bin": "1170ca8d2a683cd24c085dba950fc43e507ad346755790042461b55f63eff8e6",
+          "screen.bin": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+          "screen.png": "25bc500008b6064d0b7a8288d59b4f07b780df084007d388a259a30a2915725c",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "041e955d0dd5eeb239deae33b49c3da37a2befb752206148130939bc29ff320a",
+          "meta.txt": "ccaddf8ea62206695cf39bd94381d023f666ac62c04d8c2080e5f083922e927b",
+          "flags.txt": "d5560a2e2ef62e3c3946885c1957423ca4fccf8521ea6e305bbd8b756f315a0e",
+          "report.txt": "46657a825df980490bd01bee27cb9824286b16553db6abfb54f05a38273ea404"
+        }
+      },
+      {
+        "path": "workplace/oracle/normal89-r51-flagship-b",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-base-b/machine.state",
+          "-steps",
+          "455000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "440000000",
+          "-mouse-x",
+          "248",
+          "-mouse-y",
+          "208",
+          "-regs-from",
+          "435000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+          "-save-state",
+          "455000000:/out/oracle/normal89-r51-flagship-b/machine.state",
+          "-dump-mem-at",
+          "454999999:lin:0:1048576:/out/oracle/normal89-r51-flagship-b/end.bin"
+        ],
+        "hashes": {
+          "end.bin": "1170ca8d2a683cd24c085dba950fc43e507ad346755790042461b55f63eff8e6",
+          "screen.bin": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+          "screen.png": "25bc500008b6064d0b7a8288d59b4f07b780df084007d388a259a30a2915725c",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "efb0b86cd33cb09a5aa77f26fce0335acce52fd86e7d114a46fdef1c4a4f1fa7",
+          "meta.txt": "71bd84f9cbd6633f5c5cc5f25c916bebaa641d57d98899d4e76a42dd20e3858e",
+          "flags.txt": "94c83c1baadcdfbeb470e20be5e66b9226007f6811966abd9c809f2426a4124e",
+          "report.txt": "31603358c96bafdd95b97cc8b8e22bf5570bdab6b2ab6a4451303bd530739a44"
+        }
+      }
+    ],
+    "squad": [
+      {
+        "path": "workplace/oracle/normal89-r51-squad-a",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-base-a/machine.state",
+          "-steps",
+          "455000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "440000000",
+          "-mouse-x",
+          "249",
+          "-mouse-y",
+          "184",
+          "-regs-from",
+          "435000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+          "-save-state",
+          "455000000:/out/oracle/normal89-r51-squad-a/machine.state",
+          "-dump-mem-at",
+          "454999999:lin:0:1048576:/out/oracle/normal89-r51-squad-a/end.bin"
+        ],
+        "hashes": {
+          "end.bin": "dd557b2f1a0a20062c4e6bea36e28213b394b75e07d270c58e7cd8f59e9c23af",
+          "screen.bin": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+          "screen.png": "c8a8f8fbc506974828158a46d6f30964fc9d869fc12ff621219225d46c23d7ae",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "fbca8941d9a45a7ad83d6693218db69f151f877450b2eeb09d65e7c9159556e4",
+          "meta.txt": "741eeeda24c3b2f5d2cdd7a9ed3ebabb537fb673fbcb7e25caf0fcaacb9688b0",
+          "flags.txt": "8d02dde7dce6d2b50acfab18624226d7080b503b93fa9e43516256354e4b5add",
+          "report.txt": "32be4b0ea8729564e1a624b23f9accbd48a39a25378e9af245654137d85fbcde"
+        }
+      },
+      {
+        "path": "workplace/oracle/normal89-r51-squad-b",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-base-b/machine.state",
+          "-steps",
+          "455000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "440000000",
+          "-mouse-x",
+          "249",
+          "-mouse-y",
+          "184",
+          "-regs-from",
+          "435000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+          "-save-state",
+          "455000000:/out/oracle/normal89-r51-squad-b/machine.state",
+          "-dump-mem-at",
+          "454999999:lin:0:1048576:/out/oracle/normal89-r51-squad-b/end.bin"
+        ],
+        "hashes": {
+          "end.bin": "dd557b2f1a0a20062c4e6bea36e28213b394b75e07d270c58e7cd8f59e9c23af",
+          "screen.bin": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+          "screen.png": "c8a8f8fbc506974828158a46d6f30964fc9d869fc12ff621219225d46c23d7ae",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "489c308768a2dc8e7d463b19d47751a3396c35f0a02cf0ba486f8c4a3154989c",
+          "meta.txt": "04c12c1c0a52ed90d64cd4a7a0471d3c1d09b67640c4c3c1c884a4a7291ea31c",
+          "flags.txt": "94f6f45286fd40c414aa3c62a42bc61a06ea0bbc4776195299b98fa207128e14",
+          "report.txt": "33a7b09fbc37d33c89c600d7847fc0387eedbffe4a18e92ecbf282259e8e07c6"
+        }
+      }
+    ],
+    "empty": [
+      {
+        "path": "workplace/oracle/normal89-r51-empty-a",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-base-a/machine.state",
+          "-steps",
+          "455000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "440000000",
+          "-mouse-x",
+          "100",
+          "-mouse-y",
+          "100",
+          "-regs-from",
+          "435000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+          "-save-state",
+          "455000000:/out/oracle/normal89-r51-empty-a/machine.state",
+          "-dump-mem-at",
+          "454999999:lin:0:1048576:/out/oracle/normal89-r51-empty-a/end.bin"
+        ],
+        "hashes": {
+          "end.bin": "7dcdd9f5c2cfe84ac032f18308b8bb5f048ce9e70371b46751b357a45da1bb8d",
+          "screen.bin": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+          "screen.png": "0ea3b6482c550a4337b88c85600fb7fe771027c36179715d169a37a5231c3a17",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "3a4d8cf259fc72a8e548cb73e6c338bcf16b71293c05ad19c1fd4fa4296105a7",
+          "meta.txt": "c27c14d4f6448eef1ff3e78732412d07e8d8444484f93121e05e39881154fae9",
+          "flags.txt": "6f508f19edf50efbdb538b3ca505f205e78031dc32dc7ae1c150a861f82db610",
+          "report.txt": "89519f42bfad409968a6b9f4954e1482d1c152bbdefaf90bb002a0b61da07dd5"
+        }
+      },
+      {
+        "path": "workplace/oracle/normal89-r51-empty-b",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-base-b/machine.state",
+          "-steps",
+          "455000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "440000000",
+          "-mouse-x",
+          "100",
+          "-mouse-y",
+          "100",
+          "-regs-from",
+          "435000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+          "-save-state",
+          "455000000:/out/oracle/normal89-r51-empty-b/machine.state",
+          "-dump-mem-at",
+          "454999999:lin:0:1048576:/out/oracle/normal89-r51-empty-b/end.bin"
+        ],
+        "hashes": {
+          "end.bin": "7dcdd9f5c2cfe84ac032f18308b8bb5f048ce9e70371b46751b357a45da1bb8d",
+          "screen.bin": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+          "screen.png": "0ea3b6482c550a4337b88c85600fb7fe771027c36179715d169a37a5231c3a17",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "7d50f2c5cf8284a658ba4f23995d9ce749524867bf8fa1c70b67d7ab56c60a14",
+          "meta.txt": "2321cea40d0ab1abddd0305d831d97ef90282a275f9eec07b7daa1860400b1f2",
+          "flags.txt": "67f2f230014f58d01c2041f92154749397e9476a3aa4c8e3999495eceed2844c",
+          "report.txt": "3d16920ac7ba819b90e444a6869f1c172ad9b0f732835fd888df2853981f7fdf"
+        }
+      }
+    ],
+    "panel": [
+      {
+        "path": "workplace/oracle/normal89-r51-panel-a",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-base-a/machine.state",
+          "-steps",
+          "455000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "440000000",
+          "-mouse-x",
+          "500",
+          "-mouse-y",
+          "250",
+          "-regs-from",
+          "435000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+          "-save-state",
+          "455000000:/out/oracle/normal89-r51-panel-a/machine.state",
+          "-dump-mem-at",
+          "454999999:lin:0:1048576:/out/oracle/normal89-r51-panel-a/end.bin"
+        ],
+        "hashes": {
+          "end.bin": "61fd2165ea6581144296f62401710ed9f0cc4e792e5afbccd90f80abfb1f717c",
+          "screen.bin": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+          "screen.png": "f66fa3db97bb0ffad7a3dae13cecbca638e1afedb5f3d5cb8eea9493634cff10",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "9033c8818afc59c30da0073a7858cb86276c58869fd8db0009f4dd87bfe57f3f",
+          "meta.txt": "bbc640ad4798e3ac6e58c29394dadb94ad201f7d675067ea2298ff63e76a2b68",
+          "flags.txt": "935248d1ef8228bc8086cfd7e13162183424bcf13eb73365a874125758233bab",
+          "report.txt": "e3524ab72fe5bef43f1cf2479f9a7c57c87be950b8706c33b39a388d466aa9ce"
+        }
+      },
+      {
+        "path": "workplace/oracle/normal89-r51-panel-b",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-base-b/machine.state",
+          "-steps",
+          "455000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "440000000",
+          "-mouse-x",
+          "500",
+          "-mouse-y",
+          "250",
+          "-regs-from",
+          "435000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+          "-save-state",
+          "455000000:/out/oracle/normal89-r51-panel-b/machine.state",
+          "-dump-mem-at",
+          "454999999:lin:0:1048576:/out/oracle/normal89-r51-panel-b/end.bin"
+        ],
+        "hashes": {
+          "end.bin": "61fd2165ea6581144296f62401710ed9f0cc4e792e5afbccd90f80abfb1f717c",
+          "screen.bin": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+          "screen.png": "f66fa3db97bb0ffad7a3dae13cecbca638e1afedb5f3d5cb8eea9493634cff10",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "eb7cd44a7f441f4ed2f16c72ce47b22932075f2dd2e6cd3db5dc8f414237155a",
+          "meta.txt": "86853e29f90fc608b4a961d5101f5d2084090b2c97aee6b196e3630625ca20c1",
+          "flags.txt": "67a6ca8d3574eda130171212706925c2bff0f92ee6920b8ed54d6f05e4a04f4f",
+          "report.txt": "82a48914c8b9c9629ac9c461d6bb6a5d5cdedd003d8aa54f04c72cc60e068f69"
+        }
+      }
+    ]
+  },
+  "original_ram_sha256": "ef34310fe3e2c133522ed1612f16faeaff8f14e94ae9e0b6ea965e9749424a97",
+  "ida": [
+    {
+      "export_path": "workplace/ida/re79-marker-r33-reviewed-26E5.json",
+      "export_sha256": "67c9e061d877dcbc91d59500450d7f651e0521aa023b1e072e29e0839e29bd2a",
+      "input": "/work/re79-marker-r33-26E5.com",
+      "input_sha256": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+      "tool": "IDA Pro 9.4",
+      "address_space": "IDA .COM 載入位址；CS:IP 與 dosgolem 線性位址另列",
+      "ida_base_hex": "0x10200",
+      "function": {
+        "original_location": "26E5:00AC",
+        "original_name": "sub_102AC",
+        "ida_ea_hex": "0x102ac",
+        "runtime_linear_hex": "0x26efc",
+        "boundary_ida": [
+          "0x102ac",
+          "0x103e0"
+        ],
+        "boundary_origin": "明示查詢範圍，僅導覽；須以原始 retf 及控制流審查",
+        "semantic": "逐戰場一般分隊與索敵隊，依viewer及全域force條件更新圖示和標記",
+        "grade": "proven",
+        "warning": "",
+        "source": "docs/re/374-battle-marker-lifecycle.md",
+        "instructions": [
+          {
+            "original_location": "26E5:00AC",
+            "ida_ea_hex": "0x102ac",
+            "runtime_linear_hex": "0x26efc",
+            "original_bytes_hex": "55",
+            "original_operand": "push    bp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00AD",
+            "ida_ea_hex": "0x102ad",
+            "runtime_linear_hex": "0x26efd",
+            "original_bytes_hex": "56",
+            "original_operand": "push    si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00AE",
+            "ida_ea_hex": "0x102ae",
+            "runtime_linear_hex": "0x26efe",
+            "original_bytes_hex": "57",
+            "original_operand": "push    di",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00AF",
+            "ida_ea_hex": "0x102af",
+            "runtime_linear_hex": "0x26eff",
+            "original_bytes_hex": "83 ec 14",
+            "original_operand": "sub     sp, 14h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00B2",
+            "ida_ea_hex": "0x102b2",
+            "runtime_linear_hex": "0x26f02",
+            "original_bytes_hex": "89 e5",
+            "original_operand": "mov     bp, sp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00B4",
+            "ida_ea_hex": "0x102b4",
+            "runtime_linear_hex": "0x26f04",
+            "original_bytes_hex": "c6 46 00 00",
+            "original_operand": "mov     byte ptr [bp+0], 0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00B8",
+            "ida_ea_hex": "0x102b8",
+            "runtime_linear_hex": "0x26f08",
+            "original_bytes_hex": "c7 46 02 98 98",
+            "original_operand": "mov     word ptr [bp+2], 9898h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00BD",
+            "ida_ea_hex": "0x102bd",
+            "runtime_linear_hex": "0x26f0d",
+            "original_bytes_hex": "8c 5e 04",
+            "original_operand": "mov     word ptr [bp+4], ds",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00C0",
+            "ida_ea_hex": "0x102c0",
+            "runtime_linear_hex": "0x26f10",
+            "original_bytes_hex": "8a 46 00",
+            "original_operand": "mov     al, [bp+0]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00C3",
+            "ida_ea_hex": "0x102c3",
+            "runtime_linear_hex": "0x26f13",
+            "original_bytes_hex": "3a 06 94 98",
+            "original_operand": "cmp     al, ds:9894h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00C7",
+            "ida_ea_hex": "0x102c7",
+            "runtime_linear_hex": "0x26f17",
+            "original_bytes_hex": "72 03",
+            "original_operand": "jb      short loc_102CC",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00C9",
+            "ida_ea_hex": "0x102c9",
+            "runtime_linear_hex": "0x26f19",
+            "original_bytes_hex": "e9 08 01",
+            "original_operand": "jmp     loc_103D4",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00CC",
+            "ida_ea_hex": "0x102cc",
+            "runtime_linear_hex": "0x26f1c",
+            "original_bytes_hex": "c4 5e 02",
+            "original_operand": "les     bx, [bp+2]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00CF",
+            "ida_ea_hex": "0x102cf",
+            "runtime_linear_hex": "0x26f1f",
+            "original_bytes_hex": "26 8a 07",
+            "original_operand": "mov     al, es:[bx]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00D2",
+            "ida_ea_hex": "0x102d2",
+            "runtime_linear_hex": "0x26f22",
+            "original_bytes_hex": "30 e4",
+            "original_operand": "xor     ah, ah",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00D4",
+            "ida_ea_hex": "0x102d4",
+            "runtime_linear_hex": "0x26f24",
+            "original_bytes_hex": "b9 7a 00",
+            "original_operand": "mov     cx, 7Ah ; 'z'",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00D7",
+            "ida_ea_hex": "0x102d7",
+            "runtime_linear_hex": "0x26f27",
+            "original_bytes_hex": "f7 e1",
+            "original_operand": "mul     cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00D9",
+            "ida_ea_hex": "0x102d9",
+            "runtime_linear_hex": "0x26f29",
+            "original_bytes_hex": "8c d9",
+            "original_operand": "mov     cx, ds",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00DB",
+            "ida_ea_hex": "0x102db",
+            "runtime_linear_hex": "0x26f2b",
+            "original_bytes_hex": "be 74 c0",
+            "original_operand": "mov     si, 0C074h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00DE",
+            "ida_ea_hex": "0x102de",
+            "runtime_linear_hex": "0x26f2e",
+            "original_bytes_hex": "03 f0",
+            "original_operand": "add     si, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00E0",
+            "ida_ea_hex": "0x102e0",
+            "runtime_linear_hex": "0x26f30",
+            "original_bytes_hex": "89 4e 0a",
+            "original_operand": "mov     [bp+0Ah], cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00E3",
+            "ida_ea_hex": "0x102e3",
+            "runtime_linear_hex": "0x26f33",
+            "original_bytes_hex": "89 76 08",
+            "original_operand": "mov     [bp+8], si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00E6",
+            "ida_ea_hex": "0x102e6",
+            "runtime_linear_hex": "0x26f36",
+            "original_bytes_hex": "c6 46 06 00",
+            "original_operand": "mov     byte ptr [bp+6], 0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00EA",
+            "ida_ea_hex": "0x102ea",
+            "runtime_linear_hex": "0x26f3a",
+            "original_bytes_hex": "83 c6 10",
+            "original_operand": "add     si, 10h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00ED",
+            "ida_ea_hex": "0x102ed",
+            "runtime_linear_hex": "0x26f3d",
+            "original_bytes_hex": "89 4e 0e",
+            "original_operand": "mov     [bp+0Eh], cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00F0",
+            "ida_ea_hex": "0x102f0",
+            "runtime_linear_hex": "0x26f40",
+            "original_bytes_hex": "89 76 0c",
+            "original_operand": "mov     [bp+0Ch], si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00F3",
+            "ida_ea_hex": "0x102f3",
+            "runtime_linear_hex": "0x26f43",
+            "original_bytes_hex": "8a 46 06",
+            "original_operand": "mov     al, [bp+6]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00F6",
+            "ida_ea_hex": "0x102f6",
+            "runtime_linear_hex": "0x26f46",
+            "original_bytes_hex": "c4 5e 08",
+            "original_operand": "les     bx, [bp+8]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00F9",
+            "ida_ea_hex": "0x102f9",
+            "runtime_linear_hex": "0x26f49",
+            "original_bytes_hex": "26 8a 4f 0f",
+            "original_operand": "mov     cl, es:[bx+0Fh]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00FD",
+            "ida_ea_hex": "0x102fd",
+            "runtime_linear_hex": "0x26f4d",
+            "original_bytes_hex": "3a c1",
+            "original_operand": "cmp     al, cl",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:00FF",
+            "ida_ea_hex": "0x102ff",
+            "runtime_linear_hex": "0x26f4f",
+            "original_bytes_hex": "73 6b",
+            "original_operand": "jnb     short loc_1036C",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0101",
+            "ida_ea_hex": "0x10301",
+            "runtime_linear_hex": "0x26f51",
+            "original_bytes_hex": "c4 5e 0c",
+            "original_operand": "les     bx, [bp+0Ch]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0104",
+            "ida_ea_hex": "0x10304",
+            "runtime_linear_hex": "0x26f54",
+            "original_bytes_hex": "26 8b 07",
+            "original_operand": "mov     ax, es:[bx]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0107",
+            "ida_ea_hex": "0x10307",
+            "runtime_linear_hex": "0x26f57",
+            "original_bytes_hex": "b9 4e 00",
+            "original_operand": "mov     cx, 4Eh ; 'N'",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:010A",
+            "ida_ea_hex": "0x1030a",
+            "runtime_linear_hex": "0x26f5a",
+            "original_bytes_hex": "f7 e1",
+            "original_operand": "mul     cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:010C",
+            "ida_ea_hex": "0x1030c",
+            "runtime_linear_hex": "0x26f5c",
+            "original_bytes_hex": "8b 0e b6 cf",
+            "original_operand": "mov     cx, ds:0CFB6h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0110",
+            "ida_ea_hex": "0x10310",
+            "runtime_linear_hex": "0x26f60",
+            "original_bytes_hex": "8b 36 b4 cf",
+            "original_operand": "mov     si, ds:0CFB4h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0114",
+            "ida_ea_hex": "0x10314",
+            "runtime_linear_hex": "0x26f64",
+            "original_bytes_hex": "03 f0",
+            "original_operand": "add     si, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0116",
+            "ida_ea_hex": "0x10316",
+            "runtime_linear_hex": "0x26f66",
+            "original_bytes_hex": "89 4e 12",
+            "original_operand": "mov     [bp+12h], cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0119",
+            "ida_ea_hex": "0x10319",
+            "runtime_linear_hex": "0x26f69",
+            "original_bytes_hex": "89 76 10",
+            "original_operand": "mov     [bp+10h], si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:011C",
+            "ida_ea_hex": "0x1031c",
+            "runtime_linear_hex": "0x26f6c",
+            "original_bytes_hex": "8e c1",
+            "original_operand": "mov     es, cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:011E",
+            "ida_ea_hex": "0x1031e",
+            "runtime_linear_hex": "0x26f6e",
+            "original_bytes_hex": "26 8a 04",
+            "original_operand": "mov     al, es:[si]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0121",
+            "ida_ea_hex": "0x10321",
+            "runtime_linear_hex": "0x26f71",
+            "original_bytes_hex": "3a 46 1e",
+            "original_operand": "cmp     al, [bp+1Eh]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0124",
+            "ida_ea_hex": "0x10324",
+            "runtime_linear_hex": "0x26f74",
+            "original_bytes_hex": "74 0b",
+            "original_operand": "jz      short loc_10331",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0126",
+            "ida_ea_hex": "0x10326",
+            "runtime_linear_hex": "0x26f76",
+            "original_bytes_hex": "f6 06 1c 8f 01",
+            "original_operand": "test    byte ptr ds:8F1Ch, 1",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:012B",
+            "ida_ea_hex": "0x1032b",
+            "runtime_linear_hex": "0x26f7b",
+            "original_bytes_hex": "75 04",
+            "original_operand": "jnz     short loc_10331",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:012D",
+            "ida_ea_hex": "0x1032d",
+            "runtime_linear_hex": "0x26f7d",
+            "original_bytes_hex": "33 c0",
+            "original_operand": "xor     ax, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:012F",
+            "ida_ea_hex": "0x1032f",
+            "runtime_linear_hex": "0x26f7f",
+            "original_bytes_hex": "eb 03",
+            "original_operand": "jmp     short loc_10334",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0131",
+            "ida_ea_hex": "0x10331",
+            "runtime_linear_hex": "0x26f81",
+            "original_bytes_hex": "b8 01 00",
+            "original_operand": "mov     ax, 1",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0134",
+            "ida_ea_hex": "0x10334",
+            "runtime_linear_hex": "0x26f84",
+            "original_bytes_hex": "50",
+            "original_operand": "push    ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0135",
+            "ida_ea_hex": "0x10335",
+            "runtime_linear_hex": "0x26f85",
+            "original_bytes_hex": "51",
+            "original_operand": "push    cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0136",
+            "ida_ea_hex": "0x10336",
+            "runtime_linear_hex": "0x26f86",
+            "original_bytes_hex": "56",
+            "original_operand": "push    si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0137",
+            "ida_ea_hex": "0x10337",
+            "runtime_linear_hex": "0x26f87",
+            "original_bytes_hex": "9a e9 03 db 25",
+            "original_operand": "call    far ptr 25DBh:3E9h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:013C",
+            "ida_ea_hex": "0x1033c",
+            "runtime_linear_hex": "0x26f8c",
+            "original_bytes_hex": "89 ec",
+            "original_operand": "mov     sp, bp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:013E",
+            "ida_ea_hex": "0x1033e",
+            "runtime_linear_hex": "0x26f8e",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0141",
+            "ida_ea_hex": "0x10341",
+            "runtime_linear_hex": "0x26f91",
+            "original_bytes_hex": "26 8a 07",
+            "original_operand": "mov     al, es:[bx]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0144",
+            "ida_ea_hex": "0x10344",
+            "runtime_linear_hex": "0x26f94",
+            "original_bytes_hex": "3a 46 1e",
+            "original_operand": "cmp     al, [bp+1Eh]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0147",
+            "ida_ea_hex": "0x10347",
+            "runtime_linear_hex": "0x26f97",
+            "original_bytes_hex": "74 0b",
+            "original_operand": "jz      short loc_10354",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0149",
+            "ida_ea_hex": "0x10349",
+            "runtime_linear_hex": "0x26f99",
+            "original_bytes_hex": "f6 06 1c 8f 01",
+            "original_operand": "test    byte ptr ds:8F1Ch, 1",
+            "semantic": "全域8F1C bit0允許force；其他位元未知",
+            "grade": "proven",
+            "warning": "",
+            "source": "docs/re/374-battle-marker-lifecycle.md",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:014E",
+            "ida_ea_hex": "0x1034e",
+            "runtime_linear_hex": "0x26f9e",
+            "original_bytes_hex": "75 04",
+            "original_operand": "jnz     short loc_10354",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0150",
+            "ida_ea_hex": "0x10350",
+            "runtime_linear_hex": "0x26fa0",
+            "original_bytes_hex": "33 c0",
+            "original_operand": "xor     ax, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0152",
+            "ida_ea_hex": "0x10352",
+            "runtime_linear_hex": "0x26fa2",
+            "original_bytes_hex": "eb 03",
+            "original_operand": "jmp     short loc_10357",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0154",
+            "ida_ea_hex": "0x10354",
+            "runtime_linear_hex": "0x26fa4",
+            "original_bytes_hex": "b8 01 00",
+            "original_operand": "mov     ax, 1",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0157",
+            "ida_ea_hex": "0x10357",
+            "runtime_linear_hex": "0x26fa7",
+            "original_bytes_hex": "50",
+            "original_operand": "push    ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0158",
+            "ida_ea_hex": "0x10358",
+            "runtime_linear_hex": "0x26fa8",
+            "original_bytes_hex": "ff 76 12",
+            "original_operand": "push    word ptr [bp+12h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:015B",
+            "ida_ea_hex": "0x1035b",
+            "runtime_linear_hex": "0x26fab",
+            "original_bytes_hex": "53",
+            "original_operand": "push    bx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:015C",
+            "ida_ea_hex": "0x1035c",
+            "runtime_linear_hex": "0x26fac",
+            "original_bytes_hex": "9a e2 02 27 17",
+            "original_operand": "call    far ptr 1727h:2E2h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0161",
+            "ida_ea_hex": "0x10361",
+            "runtime_linear_hex": "0x26fb1",
+            "original_bytes_hex": "89 ec",
+            "original_operand": "mov     sp, bp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0163",
+            "ida_ea_hex": "0x10363",
+            "runtime_linear_hex": "0x26fb3",
+            "original_bytes_hex": "fe 46 06",
+            "original_operand": "inc     byte ptr [bp+6]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0166",
+            "ida_ea_hex": "0x10366",
+            "runtime_linear_hex": "0x26fb6",
+            "original_bytes_hex": "83 46 0c 04",
+            "original_operand": "add     word ptr [bp+0Ch], 4",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:016A",
+            "ida_ea_hex": "0x1036a",
+            "runtime_linear_hex": "0x26fba",
+            "original_bytes_hex": "eb 87",
+            "original_operand": "jmp     short loc_102F3",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:016C",
+            "ida_ea_hex": "0x1036c",
+            "runtime_linear_hex": "0x26fbc",
+            "original_bytes_hex": "c4 5e 08",
+            "original_operand": "les     bx, [bp+8]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:016F",
+            "ida_ea_hex": "0x1036f",
+            "runtime_linear_hex": "0x26fbf",
+            "original_bytes_hex": "26 8b 47 38",
+            "original_operand": "mov     ax, es:[bx+38h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "FLEET+38讀取偵察池",
+              "grade": "proven",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": ""
+            }
+          },
+          {
+            "original_location": "26E5:0173",
+            "ida_ea_hex": "0x10373",
+            "runtime_linear_hex": "0x26fc3",
+            "original_bytes_hex": "b9 4e 00",
+            "original_operand": "mov     cx, 4Eh ; 'N'",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "偵察池乘SHIP stride 78",
+              "grade": "proven",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": ""
+            }
+          },
+          {
+            "original_location": "26E5:0176",
+            "ida_ea_hex": "0x10376",
+            "runtime_linear_hex": "0x26fc6",
+            "original_bytes_hex": "f7 e1",
+            "original_operand": "mul     cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0178",
+            "ida_ea_hex": "0x10378",
+            "runtime_linear_hex": "0x26fc8",
+            "original_bytes_hex": "8b 0e b6 cf",
+            "original_operand": "mov     cx, ds:0CFB6h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:017C",
+            "ida_ea_hex": "0x1037c",
+            "runtime_linear_hex": "0x26fcc",
+            "original_bytes_hex": "8b 36 b4 cf",
+            "original_operand": "mov     si, ds:0CFB4h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0180",
+            "ida_ea_hex": "0x10380",
+            "runtime_linear_hex": "0x26fd0",
+            "original_bytes_hex": "03 f0",
+            "original_operand": "add     si, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0182",
+            "ida_ea_hex": "0x10382",
+            "runtime_linear_hex": "0x26fd2",
+            "original_bytes_hex": "89 4e 12",
+            "original_operand": "mov     [bp+12h], cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0185",
+            "ida_ea_hex": "0x10385",
+            "runtime_linear_hex": "0x26fd5",
+            "original_bytes_hex": "89 76 10",
+            "original_operand": "mov     [bp+10h], si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0188",
+            "ida_ea_hex": "0x10388",
+            "runtime_linear_hex": "0x26fd8",
+            "original_bytes_hex": "26 80 7f 3a ff",
+            "original_operand": "cmp     byte ptr es:[bx+3Ah], 0FFh",
+            "semantic": "ScoutMode=FF使索敵force為0",
+            "grade": "proven",
+            "warning": "",
+            "source": "docs/re/374-battle-marker-lifecycle.md",
+            "additional_semantic": {
+              "text": "FLEET+3A與FF比較",
+              "grade": "proven",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": ""
+            }
+          },
+          {
+            "original_location": "26E5:018D",
+            "ida_ea_hex": "0x1038d",
+            "runtime_linear_hex": "0x26fdd",
+            "original_bytes_hex": "75 05",
+            "original_operand": "jnz     short loc_10394",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:018F",
+            "ida_ea_hex": "0x1038f",
+            "runtime_linear_hex": "0x26fdf",
+            "original_bytes_hex": "bf 00 00",
+            "original_operand": "mov     di, 0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未出擊偵察隊force為0",
+              "grade": "proven",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": ""
+            }
+          },
+          {
+            "original_location": "26E5:0192",
+            "ida_ea_hex": "0x10392",
+            "runtime_linear_hex": "0x26fe2",
+            "original_bytes_hex": "eb 1b",
+            "original_operand": "jmp     short loc_103AF",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0194",
+            "ida_ea_hex": "0x10394",
+            "runtime_linear_hex": "0x26fe4",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:0197",
+            "ida_ea_hex": "0x10397",
+            "runtime_linear_hex": "0x26fe7",
+            "original_bytes_hex": "26 8a 07",
+            "original_operand": "mov     al, es:[bx]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:019A",
+            "ida_ea_hex": "0x1039a",
+            "runtime_linear_hex": "0x26fea",
+            "original_bytes_hex": "3a 46 1e",
+            "original_operand": "cmp     al, [bp+1Eh]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:019D",
+            "ida_ea_hex": "0x1039d",
+            "runtime_linear_hex": "0x26fed",
+            "original_bytes_hex": "74 0b",
+            "original_operand": "jz      short loc_103AA",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:019F",
+            "ida_ea_hex": "0x1039f",
+            "runtime_linear_hex": "0x26fef",
+            "original_bytes_hex": "f6 06 1c 8f 01",
+            "original_operand": "test    byte ptr ds:8F1Ch, 1",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01A4",
+            "ida_ea_hex": "0x103a4",
+            "runtime_linear_hex": "0x26ff4",
+            "original_bytes_hex": "75 04",
+            "original_operand": "jnz     short loc_103AA",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01A6",
+            "ida_ea_hex": "0x103a6",
+            "runtime_linear_hex": "0x26ff6",
+            "original_bytes_hex": "33 c0",
+            "original_operand": "xor     ax, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01A8",
+            "ida_ea_hex": "0x103a8",
+            "runtime_linear_hex": "0x26ff8",
+            "original_bytes_hex": "eb 03",
+            "original_operand": "jmp     short loc_103AD",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01AA",
+            "ida_ea_hex": "0x103aa",
+            "runtime_linear_hex": "0x26ffa",
+            "original_bytes_hex": "b8 01 00",
+            "original_operand": "mov     ax, 1",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01AD",
+            "ida_ea_hex": "0x103ad",
+            "runtime_linear_hex": "0x26ffd",
+            "original_bytes_hex": "89 c7",
+            "original_operand": "mov     di, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01AF",
+            "ida_ea_hex": "0x103af",
+            "runtime_linear_hex": "0x26fff",
+            "original_bytes_hex": "57",
+            "original_operand": "push    di",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01B0",
+            "ida_ea_hex": "0x103b0",
+            "runtime_linear_hex": "0x27000",
+            "original_bytes_hex": "ff 76 12",
+            "original_operand": "push    word ptr [bp+12h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01B3",
+            "ida_ea_hex": "0x103b3",
+            "runtime_linear_hex": "0x27003",
+            "original_bytes_hex": "ff 76 10",
+            "original_operand": "push    word ptr [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01B6",
+            "ida_ea_hex": "0x103b6",
+            "runtime_linear_hex": "0x27006",
+            "original_bytes_hex": "9a e9 03 db 25",
+            "original_operand": "call    far ptr 25DBh:3E9h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未出擊偵察隊仍呼叫25DB:03E9",
+              "grade": "proven",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": ""
+            }
+          },
+          {
+            "original_location": "26E5:01BB",
+            "ida_ea_hex": "0x103bb",
+            "runtime_linear_hex": "0x2700b",
+            "original_bytes_hex": "89 ec",
+            "original_operand": "mov     sp, bp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01BD",
+            "ida_ea_hex": "0x103bd",
+            "runtime_linear_hex": "0x2700d",
+            "original_bytes_hex": "57",
+            "original_operand": "push    di",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01BE",
+            "ida_ea_hex": "0x103be",
+            "runtime_linear_hex": "0x2700e",
+            "original_bytes_hex": "ff 76 12",
+            "original_operand": "push    word ptr [bp+12h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01C1",
+            "ida_ea_hex": "0x103c1",
+            "runtime_linear_hex": "0x27011",
+            "original_bytes_hex": "ff 76 10",
+            "original_operand": "push    word ptr [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01C4",
+            "ida_ea_hex": "0x103c4",
+            "runtime_linear_hex": "0x27014",
+            "original_bytes_hex": "9a e2 02 27 17",
+            "original_operand": "call    far ptr 1727h:2E2h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "同一池呼叫標記刷新1727:02E2",
+              "grade": "proven",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": ""
+            }
+          },
+          {
+            "original_location": "26E5:01C9",
+            "ida_ea_hex": "0x103c9",
+            "runtime_linear_hex": "0x27019",
+            "original_bytes_hex": "89 ec",
+            "original_operand": "mov     sp, bp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01CB",
+            "ida_ea_hex": "0x103cb",
+            "runtime_linear_hex": "0x2701b",
+            "original_bytes_hex": "fe 46 00",
+            "original_operand": "inc     byte ptr [bp+0]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01CE",
+            "ida_ea_hex": "0x103ce",
+            "runtime_linear_hex": "0x2701e",
+            "original_bytes_hex": "ff 46 02",
+            "original_operand": "inc     word ptr [bp+2]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01D1",
+            "ida_ea_hex": "0x103d1",
+            "runtime_linear_hex": "0x27021",
+            "original_bytes_hex": "e9 ec fe",
+            "original_operand": "jmp     loc_102C0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01D4",
+            "ida_ea_hex": "0x103d4",
+            "runtime_linear_hex": "0x27024",
+            "original_bytes_hex": "9a 59 07 db 25",
+            "original_operand": "call    far ptr 25DBh:759h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01D9",
+            "ida_ea_hex": "0x103d9",
+            "runtime_linear_hex": "0x27029",
+            "original_bytes_hex": "83 c4 14",
+            "original_operand": "add     sp, 14h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01DC",
+            "ida_ea_hex": "0x103dc",
+            "runtime_linear_hex": "0x2702c",
+            "original_bytes_hex": "5f",
+            "original_operand": "pop     di",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01DD",
+            "ida_ea_hex": "0x103dd",
+            "runtime_linear_hex": "0x2702d",
+            "original_bytes_hex": "5e",
+            "original_operand": "pop     si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01DE",
+            "ida_ea_hex": "0x103de",
+            "runtime_linear_hex": "0x2702e",
+            "original_bytes_hex": "5d",
+            "original_operand": "pop     bp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "26E5:01DF",
+            "ida_ea_hex": "0x103df",
+            "runtime_linear_hex": "0x2702f",
+            "original_bytes_hex": "cb",
+            "original_operand": "retf",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "8c5364070af105b4c49c5dd539d3f9cfcecaf72a9098ea97534d3be14afdeeb2",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          }
+        ],
+        "xrefs_to": []
+      }
+    },
+    {
+      "export_path": "workplace/ida/re79-second-r36-25DB.json",
+      "export_sha256": "b2abee692687909ff67958d75cc8bf8a7241f363767e439f6293cd57b912153b",
+      "input": "/work/re79-second-r36-25DB.com",
+      "input_sha256": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+      "tool": "IDA Pro 9.4",
+      "address_space": "IDA .COM 載入位址；CS:IP 與 dosgolem 線性位址另列",
+      "ida_base_hex": "0x10200",
+      "function": {
+        "original_location": "25DB:03E9",
+        "original_name": "sub_105E9",
+        "ida_ea_hex": "0x105e9",
+        "runtime_linear_hex": "0x26199",
+        "boundary_ida": [
+          "0x105e9",
+          "0x106e7"
+        ],
+        "boundary_origin": "IDA 自動邊界，僅導覽；須以原始 retf 及控制流審查",
+        "semantic": "未審查",
+        "grade": "unknown",
+        "warning": "⚠ 未證實語意",
+        "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+        "instructions": [
+          {
+            "original_location": "25DB:03E9",
+            "ida_ea_hex": "0x105e9",
+            "runtime_linear_hex": "0x26199",
+            "original_bytes_hex": "55",
+            "original_operand": "push    bp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:03EA",
+            "ida_ea_hex": "0x105ea",
+            "runtime_linear_hex": "0x2619a",
+            "original_bytes_hex": "56",
+            "original_operand": "push    si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:03EB",
+            "ida_ea_hex": "0x105eb",
+            "runtime_linear_hex": "0x2619b",
+            "original_bytes_hex": "57",
+            "original_operand": "push    di",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:03EC",
+            "ida_ea_hex": "0x105ec",
+            "runtime_linear_hex": "0x2619c",
+            "original_bytes_hex": "83 ec 06",
+            "original_operand": "sub     sp, 6",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:03EF",
+            "ida_ea_hex": "0x105ef",
+            "runtime_linear_hex": "0x2619f",
+            "original_bytes_hex": "89 e5",
+            "original_operand": "mov     bp, sp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:03F1",
+            "ida_ea_hex": "0x105f1",
+            "runtime_linear_hex": "0x261a1",
+            "original_bytes_hex": "8b 7e 14",
+            "original_operand": "mov     di, [bp+14h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:03F4",
+            "ida_ea_hex": "0x105f4",
+            "runtime_linear_hex": "0x261a4",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:03F7",
+            "ida_ea_hex": "0x105f7",
+            "runtime_linear_hex": "0x261a7",
+            "original_bytes_hex": "26 80 3f 00",
+            "original_operand": "cmp     byte ptr es:[bx], 0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:03FB",
+            "ida_ea_hex": "0x105fb",
+            "runtime_linear_hex": "0x261ab",
+            "original_bytes_hex": "75 05",
+            "original_operand": "jnz     short loc_10602",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:03FD",
+            "ida_ea_hex": "0x105fd",
+            "runtime_linear_hex": "0x261ad",
+            "original_bytes_hex": "b8 14 00",
+            "original_operand": "mov     ax, 14h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0400",
+            "ida_ea_hex": "0x10600",
+            "runtime_linear_hex": "0x261b0",
+            "original_bytes_hex": "eb 03",
+            "original_operand": "jmp     short loc_10605",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0402",
+            "ida_ea_hex": "0x10602",
+            "runtime_linear_hex": "0x261b2",
+            "original_bytes_hex": "b8 32 00",
+            "original_operand": "mov     ax, 32h ; '2'",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0405",
+            "ida_ea_hex": "0x10605",
+            "runtime_linear_hex": "0x261b5",
+            "original_bytes_hex": "88 46 00",
+            "original_operand": "mov     [bp+0], al",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0408",
+            "ida_ea_hex": "0x10608",
+            "runtime_linear_hex": "0x261b8",
+            "original_bytes_hex": "09 ff",
+            "original_operand": "or      di, di",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "force檢查",
+              "grade": "proven",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": ""
+            }
+          },
+          {
+            "original_location": "25DB:040A",
+            "ida_ea_hex": "0x1060a",
+            "runtime_linear_hex": "0x261ba",
+            "original_bytes_hex": "75 07",
+            "original_operand": "jnz     short loc_10613",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:040C",
+            "ida_ea_hex": "0x1060c",
+            "runtime_linear_hex": "0x261bc",
+            "original_bytes_hex": "26 80 7f 17 03",
+            "original_operand": "cmp     byte ptr es:[bx+17h], 3",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "非強制比較SHIP+17與3",
+              "grade": "proven",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": ""
+            }
+          },
+          {
+            "original_location": "25DB:0411",
+            "ida_ea_hex": "0x10611",
+            "runtime_linear_hex": "0x261c1",
+            "original_bytes_hex": "75 53",
+            "original_operand": "jnz     short loc_10666",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0413",
+            "ida_ea_hex": "0x10613",
+            "runtime_linear_hex": "0x261c3",
+            "original_bytes_hex": "26 80 7f 03 00",
+            "original_operand": "cmp     byte ptr es:[bx+3], 0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0418",
+            "ida_ea_hex": "0x10618",
+            "runtime_linear_hex": "0x261c8",
+            "original_bytes_hex": "75 3a",
+            "original_operand": "jnz     short loc_10654",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:041A",
+            "ida_ea_hex": "0x1061a",
+            "runtime_linear_hex": "0x261ca",
+            "original_bytes_hex": "26 8a 47 01",
+            "original_operand": "mov     al, es:[bx+1]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:041E",
+            "ida_ea_hex": "0x1061e",
+            "runtime_linear_hex": "0x261ce",
+            "original_bytes_hex": "30 e4",
+            "original_operand": "xor     ah, ah",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0420",
+            "ida_ea_hex": "0x10620",
+            "runtime_linear_hex": "0x261d0",
+            "original_bytes_hex": "b9 7a 00",
+            "original_operand": "mov     cx, 7Ah ; 'z'",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0423",
+            "ida_ea_hex": "0x10623",
+            "runtime_linear_hex": "0x261d3",
+            "original_bytes_hex": "f7 e1",
+            "original_operand": "mul     cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0425",
+            "ida_ea_hex": "0x10625",
+            "runtime_linear_hex": "0x261d5",
+            "original_bytes_hex": "8c d9",
+            "original_operand": "mov     cx, ds",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0427",
+            "ida_ea_hex": "0x10627",
+            "runtime_linear_hex": "0x261d7",
+            "original_bytes_hex": "be 74 c0",
+            "original_operand": "mov     si, 0C074h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:042A",
+            "ida_ea_hex": "0x1062a",
+            "runtime_linear_hex": "0x261da",
+            "original_bytes_hex": "03 f0",
+            "original_operand": "add     si, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:042C",
+            "ida_ea_hex": "0x1062c",
+            "runtime_linear_hex": "0x261dc",
+            "original_bytes_hex": "89 4e 04",
+            "original_operand": "mov     [bp+4], cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:042F",
+            "ida_ea_hex": "0x1062f",
+            "runtime_linear_hex": "0x261df",
+            "original_bytes_hex": "89 76 02",
+            "original_operand": "mov     [bp+2], si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0432",
+            "ida_ea_hex": "0x10632",
+            "runtime_linear_hex": "0x261e2",
+            "original_bytes_hex": "b8 01 00",
+            "original_operand": "mov     ax, 1",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0435",
+            "ida_ea_hex": "0x10635",
+            "runtime_linear_hex": "0x261e5",
+            "original_bytes_hex": "50",
+            "original_operand": "push    ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0436",
+            "ida_ea_hex": "0x10636",
+            "runtime_linear_hex": "0x261e6",
+            "original_bytes_hex": "51",
+            "original_operand": "push    cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0437",
+            "ida_ea_hex": "0x10637",
+            "runtime_linear_hex": "0x261e7",
+            "original_bytes_hex": "56",
+            "original_operand": "push    si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0438",
+            "ida_ea_hex": "0x10638",
+            "runtime_linear_hex": "0x261e8",
+            "original_bytes_hex": "9a e7 04 db 25",
+            "original_operand": "call    far ptr 25DBh:4E7h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:043D",
+            "ida_ea_hex": "0x1063d",
+            "runtime_linear_hex": "0x261ed",
+            "original_bytes_hex": "89 ec",
+            "original_operand": "mov     sp, bp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:043F",
+            "ida_ea_hex": "0x1063f",
+            "runtime_linear_hex": "0x261ef",
+            "original_bytes_hex": "c4 5e 02",
+            "original_operand": "les     bx, [bp+2]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0442",
+            "ida_ea_hex": "0x10642",
+            "runtime_linear_hex": "0x261f2",
+            "original_bytes_hex": "26 8a 47 02",
+            "original_operand": "mov     al, es:[bx+2]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0446",
+            "ida_ea_hex": "0x10646",
+            "runtime_linear_hex": "0x261f6",
+            "original_bytes_hex": "02 46 00",
+            "original_operand": "add     al, [bp+0]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0449",
+            "ida_ea_hex": "0x10649",
+            "runtime_linear_hex": "0x261f9",
+            "original_bytes_hex": "48",
+            "original_operand": "dec     ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:044A",
+            "ida_ea_hex": "0x1064a",
+            "runtime_linear_hex": "0x261fa",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:044D",
+            "ida_ea_hex": "0x1064d",
+            "runtime_linear_hex": "0x261fd",
+            "original_bytes_hex": "26 88 47 2f",
+            "original_operand": "mov     es:[bx+2Fh], al",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0451",
+            "ida_ea_hex": "0x10651",
+            "runtime_linear_hex": "0x26201",
+            "original_bytes_hex": "e9 8c 00",
+            "original_operand": "jmp     loc_106E0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0454",
+            "ida_ea_hex": "0x10654",
+            "runtime_linear_hex": "0x26204",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0457",
+            "ida_ea_hex": "0x10657",
+            "runtime_linear_hex": "0x26207",
+            "original_bytes_hex": "26 8a 47 04",
+            "original_operand": "mov     al, es:[bx+4]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:045B",
+            "ida_ea_hex": "0x1065b",
+            "runtime_linear_hex": "0x2620b",
+            "original_bytes_hex": "04 10",
+            "original_operand": "add     al, 10h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:045D",
+            "ida_ea_hex": "0x1065d",
+            "runtime_linear_hex": "0x2620d",
+            "original_bytes_hex": "02 46 00",
+            "original_operand": "add     al, [bp+0]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0460",
+            "ida_ea_hex": "0x10660",
+            "runtime_linear_hex": "0x26210",
+            "original_bytes_hex": "26 88 47 2f",
+            "original_operand": "mov     es:[bx+2Fh], al",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0464",
+            "ida_ea_hex": "0x10664",
+            "runtime_linear_hex": "0x26214",
+            "original_bytes_hex": "eb 7a",
+            "original_operand": "jmp     short loc_106E0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0466",
+            "ida_ea_hex": "0x10666",
+            "runtime_linear_hex": "0x26216",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0469",
+            "ida_ea_hex": "0x10669",
+            "runtime_linear_hex": "0x26219",
+            "original_bytes_hex": "26 80 7f 03 00",
+            "original_operand": "cmp     byte ptr es:[bx+3], 0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:046E",
+            "ida_ea_hex": "0x1066e",
+            "runtime_linear_hex": "0x2621e",
+            "original_bytes_hex": "75 1e",
+            "original_operand": "jnz     short loc_1068E",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0470",
+            "ida_ea_hex": "0x10670",
+            "runtime_linear_hex": "0x26220",
+            "original_bytes_hex": "31 c0",
+            "original_operand": "xor     ax, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0472",
+            "ida_ea_hex": "0x10672",
+            "runtime_linear_hex": "0x26222",
+            "original_bytes_hex": "50",
+            "original_operand": "push    ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0473",
+            "ida_ea_hex": "0x10673",
+            "runtime_linear_hex": "0x26223",
+            "original_bytes_hex": "26 8a 47 01",
+            "original_operand": "mov     al, es:[bx+1]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0477",
+            "ida_ea_hex": "0x10677",
+            "runtime_linear_hex": "0x26227",
+            "original_bytes_hex": "30 e4",
+            "original_operand": "xor     ah, ah",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0479",
+            "ida_ea_hex": "0x10679",
+            "runtime_linear_hex": "0x26229",
+            "original_bytes_hex": "b9 7a 00",
+            "original_operand": "mov     cx, 7Ah ; 'z'",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:047C",
+            "ida_ea_hex": "0x1067c",
+            "runtime_linear_hex": "0x2622c",
+            "original_bytes_hex": "f7 e1",
+            "original_operand": "mul     cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:047E",
+            "ida_ea_hex": "0x1067e",
+            "runtime_linear_hex": "0x2622e",
+            "original_bytes_hex": "8c d9",
+            "original_operand": "mov     cx, ds",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0480",
+            "ida_ea_hex": "0x10680",
+            "runtime_linear_hex": "0x26230",
+            "original_bytes_hex": "be 74 c0",
+            "original_operand": "mov     si, 0C074h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0483",
+            "ida_ea_hex": "0x10683",
+            "runtime_linear_hex": "0x26233",
+            "original_bytes_hex": "03 f0",
+            "original_operand": "add     si, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0485",
+            "ida_ea_hex": "0x10685",
+            "runtime_linear_hex": "0x26235",
+            "original_bytes_hex": "51",
+            "original_operand": "push    cx",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0486",
+            "ida_ea_hex": "0x10686",
+            "runtime_linear_hex": "0x26236",
+            "original_bytes_hex": "56",
+            "original_operand": "push    si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0487",
+            "ida_ea_hex": "0x10687",
+            "runtime_linear_hex": "0x26237",
+            "original_bytes_hex": "9a e7 04 db 25",
+            "original_operand": "call    far ptr 25DBh:4E7h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:048C",
+            "ida_ea_hex": "0x1068c",
+            "runtime_linear_hex": "0x2623c",
+            "original_bytes_hex": "89 ec",
+            "original_operand": "mov     sp, bp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:048E",
+            "ida_ea_hex": "0x1068e",
+            "runtime_linear_hex": "0x2623e",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0491",
+            "ida_ea_hex": "0x10691",
+            "runtime_linear_hex": "0x26241",
+            "original_bytes_hex": "26 80 7f 04 07",
+            "original_operand": "cmp     byte ptr es:[bx+4], 7",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "比較SHIP+04艦種與7",
+              "grade": "proven",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": ""
+            }
+          },
+          {
+            "original_location": "25DB:0496",
+            "ida_ea_hex": "0x10696",
+            "runtime_linear_hex": "0x26246",
+            "original_bytes_hex": "75 07",
+            "original_operand": "jnz     short loc_1069F",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:0498",
+            "ida_ea_hex": "0x10698",
+            "runtime_linear_hex": "0x26248",
+            "original_bytes_hex": "26 c6 47 2f 09",
+            "original_operand": "mov     byte ptr es:[bx+2Fh], 9",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "非強制艦種7寫SHIP+2F為9",
+              "grade": "proven",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": ""
+            }
+          },
+          {
+            "original_location": "25DB:049D",
+            "ida_ea_hex": "0x1069d",
+            "runtime_linear_hex": "0x2624d",
+            "original_bytes_hex": "eb 41",
+            "original_operand": "jmp     short loc_106E0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:049F",
+            "ida_ea_hex": "0x1069f",
+            "runtime_linear_hex": "0x2624f",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04A2",
+            "ida_ea_hex": "0x106a2",
+            "runtime_linear_hex": "0x26252",
+            "original_bytes_hex": "26 8a 47 17",
+            "original_operand": "mov     al, es:[bx+17h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04A6",
+            "ida_ea_hex": "0x106a6",
+            "runtime_linear_hex": "0x26256",
+            "original_bytes_hex": "30 e4",
+            "original_operand": "xor     ah, ah",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04A8",
+            "ida_ea_hex": "0x106a8",
+            "runtime_linear_hex": "0x26258",
+            "original_bytes_hex": "09 c0",
+            "original_operand": "or      ax, ax",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04AA",
+            "ida_ea_hex": "0x106aa",
+            "runtime_linear_hex": "0x2625a",
+            "original_bytes_hex": "74 0c",
+            "original_operand": "jz      short loc_106B8",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04AC",
+            "ida_ea_hex": "0x106ac",
+            "runtime_linear_hex": "0x2625c",
+            "original_bytes_hex": "83 f8 01",
+            "original_operand": "cmp     ax, 1",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04AF",
+            "ida_ea_hex": "0x106af",
+            "runtime_linear_hex": "0x2625f",
+            "original_bytes_hex": "74 11",
+            "original_operand": "jz      short loc_106C2",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04B1",
+            "ida_ea_hex": "0x106b1",
+            "runtime_linear_hex": "0x26261",
+            "original_bytes_hex": "83 f8 02",
+            "original_operand": "cmp     ax, 2",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04B4",
+            "ida_ea_hex": "0x106b4",
+            "runtime_linear_hex": "0x26264",
+            "original_bytes_hex": "74 1a",
+            "original_operand": "jz      short loc_106D0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04B6",
+            "ida_ea_hex": "0x106b6",
+            "runtime_linear_hex": "0x26266",
+            "original_bytes_hex": "eb 28",
+            "original_operand": "jmp     short loc_106E0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04B8",
+            "ida_ea_hex": "0x106b8",
+            "runtime_linear_hex": "0x26268",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04BB",
+            "ida_ea_hex": "0x106bb",
+            "runtime_linear_hex": "0x2626b",
+            "original_bytes_hex": "26 c6 47 2f 09",
+            "original_operand": "mov     byte ptr es:[bx+2Fh], 9",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04C0",
+            "ida_ea_hex": "0x106c0",
+            "runtime_linear_hex": "0x26270",
+            "original_bytes_hex": "eb 1e",
+            "original_operand": "jmp     short loc_106E0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04C2",
+            "ida_ea_hex": "0x106c2",
+            "runtime_linear_hex": "0x26272",
+            "original_bytes_hex": "8a 46 00",
+            "original_operand": "mov     al, [bp+0]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04C5",
+            "ida_ea_hex": "0x106c5",
+            "runtime_linear_hex": "0x26275",
+            "original_bytes_hex": "04 18",
+            "original_operand": "add     al, 18h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04C7",
+            "ida_ea_hex": "0x106c7",
+            "runtime_linear_hex": "0x26277",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04CA",
+            "ida_ea_hex": "0x106ca",
+            "runtime_linear_hex": "0x2627a",
+            "original_bytes_hex": "26 88 47 2f",
+            "original_operand": "mov     es:[bx+2Fh], al",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04CE",
+            "ida_ea_hex": "0x106ce",
+            "runtime_linear_hex": "0x2627e",
+            "original_bytes_hex": "eb 10",
+            "original_operand": "jmp     short loc_106E0",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04D0",
+            "ida_ea_hex": "0x106d0",
+            "runtime_linear_hex": "0x26280",
+            "original_bytes_hex": "c4 5e 10",
+            "original_operand": "les     bx, [bp+10h]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04D3",
+            "ida_ea_hex": "0x106d3",
+            "runtime_linear_hex": "0x26283",
+            "original_bytes_hex": "26 8a 47 04",
+            "original_operand": "mov     al, es:[bx+4]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04D7",
+            "ida_ea_hex": "0x106d7",
+            "runtime_linear_hex": "0x26287",
+            "original_bytes_hex": "04 10",
+            "original_operand": "add     al, 10h",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04D9",
+            "ida_ea_hex": "0x106d9",
+            "runtime_linear_hex": "0x26289",
+            "original_bytes_hex": "02 46 00",
+            "original_operand": "add     al, [bp+0]",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04DC",
+            "ida_ea_hex": "0x106dc",
+            "runtime_linear_hex": "0x2628c",
+            "original_bytes_hex": "26 88 47 2f",
+            "original_operand": "mov     es:[bx+2Fh], al",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04E0",
+            "ida_ea_hex": "0x106e0",
+            "runtime_linear_hex": "0x26290",
+            "original_bytes_hex": "83 c4 06",
+            "original_operand": "add     sp, 6",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04E3",
+            "ida_ea_hex": "0x106e3",
+            "runtime_linear_hex": "0x26293",
+            "original_bytes_hex": "5f",
+            "original_operand": "pop     di",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04E4",
+            "ida_ea_hex": "0x106e4",
+            "runtime_linear_hex": "0x26294",
+            "original_bytes_hex": "5e",
+            "original_operand": "pop     si",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04E5",
+            "ida_ea_hex": "0x106e5",
+            "runtime_linear_hex": "0x26295",
+            "original_bytes_hex": "5d",
+            "original_operand": "pop     bp",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          },
+          {
+            "original_location": "25DB:04E6",
+            "ida_ea_hex": "0x106e6",
+            "runtime_linear_hex": "0x26296",
+            "original_bytes_hex": "cb",
+            "original_operand": "retf",
+            "semantic": "未審查",
+            "grade": "unknown",
+            "warning": "⚠ 未證實語意",
+            "source": "d1004845670387a15986f585658051965a2cb899f1f499d062b7b7ba8bd34b7a",
+            "additional_semantic": {
+              "text": "未審查",
+              "grade": "unknown",
+              "source": "研究391；原指令資料流及固定正常首戰雙跑RAM",
+              "warning": "⚠ 未證實語意"
+            }
+          }
+        ],
+        "xrefs_to": []
+      }
+    }
+  ],
+  "normal_player_metadata": {
+    "classification": "normal-player-entry-probe; parity not established",
+    "date": [
+      799,
+      3,
+      1
+    ],
+    "inputs": [
+      "click 300 270",
+      "type 138; enter",
+      "click 300 322",
+      "click 318 208",
+      "click 544 125",
+      "click 560 125",
+      "move 248 248",
+      "move 249 224",
+      "move 100 140",
+      "move 500 290"
+    ],
+    "palette_note": "screen.png暫用主選單色盤；正式RGB比較必須讀原版有效色盤",
+    "resources": "bootstrap.Load; Game.New",
+    "seed_setup": "測試期Go覆蓋只固定實行前D3DC167E，正式產品不變",
+    "state": 32,
+    "strategy_seed_after": "B6E4B78A",
+    "strategy_seed_before": "D3DC167E",
+    "strategy_seed_observed_before": "D3DC167E",
+    "ticks": 460
+  },
+  "normal_player_runs": [
+    {
+      "path": "workplace/round53-pass-a",
+      "hashes": {
+        "empty/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "empty/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "empty/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "empty/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "empty/SHIP.DT0": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624",
+        "empty/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "empty/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "empty/screen.bin": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+        "empty/screen.png": "52b586bdfc1f107d6999689c92af311bc9732e955da346881323eeceb96801c4",
+        "entry/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "entry/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "entry/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "entry/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "entry/SHIP.DT0": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624",
+        "entry/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "entry/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "entry/screen.bin": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+        "entry/screen.png": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+        "flagship/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "flagship/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "flagship/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "flagship/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "flagship/SHIP.DT0": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624",
+        "flagship/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "flagship/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "flagship/screen.bin": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+        "flagship/screen.png": "74a08cdfb0f5e5bdb4888e25b17d3eb751c25ce3d6f0748896963103bca5d747",
+        "loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "loaded/screen.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "panel/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "panel/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "panel/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "panel/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "panel/SHIP.DT0": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624",
+        "panel/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "panel/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "panel/screen.bin": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+        "panel/screen.png": "f883356e8f83198e03a3701555639fd59feff14f12b1688328b228d4485d2449",
+        "probe.json": "45f3b7a8b5eaf22cd87e3978a8d82e7eb8594f09b0da41560aa1c31dfbd0e754",
+        "squad/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "squad/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "squad/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "squad/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "squad/SHIP.DT0": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624",
+        "squad/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "squad/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "squad/screen.bin": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+        "squad/screen.png": "7ce6e92d696def975e50aa4ecaca8afd4ff21346187c1492126244ae45d362a4"
+      }
+    },
+    {
+      "path": "workplace/round53-pass-b",
+      "hashes": {
+        "empty/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "empty/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "empty/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "empty/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "empty/SHIP.DT0": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624",
+        "empty/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "empty/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "empty/screen.bin": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+        "empty/screen.png": "52b586bdfc1f107d6999689c92af311bc9732e955da346881323eeceb96801c4",
+        "entry/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "entry/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "entry/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "entry/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "entry/SHIP.DT0": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624",
+        "entry/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "entry/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "entry/screen.bin": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+        "entry/screen.png": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+        "flagship/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "flagship/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "flagship/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "flagship/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "flagship/SHIP.DT0": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624",
+        "flagship/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "flagship/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "flagship/screen.bin": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+        "flagship/screen.png": "74a08cdfb0f5e5bdb4888e25b17d3eb751c25ce3d6f0748896963103bca5d747",
+        "loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "loaded/screen.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "panel/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "panel/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "panel/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "panel/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "panel/SHIP.DT0": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624",
+        "panel/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "panel/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "panel/screen.bin": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+        "panel/screen.png": "f883356e8f83198e03a3701555639fd59feff14f12b1688328b228d4485d2449",
+        "probe.json": "45f3b7a8b5eaf22cd87e3978a8d82e7eb8594f09b0da41560aa1c31dfbd0e754",
+        "squad/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "squad/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "squad/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "squad/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "squad/SHIP.DT0": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624",
+        "squad/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "squad/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "squad/screen.bin": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+        "squad/screen.png": "7ce6e92d696def975e50aa4ecaca8afd4ff21346187c1492126244ae45d362a4"
+      }
+    }
+  ],
+  "scouts": [
+    {
+      "fleet": 12,
+      "pool": 81,
+      "original_record_hex": "000c00ff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffffa0011801ffffff0980ffffffa001180176010171ffffffffffffffffffffffffffffffffffff",
+      "before_record_hex": "000c00ff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffffa0011801ffffffffffffffffa001180100000000ffffffffffffffffffffffffffffffffffff",
+      "after_record_hex": "000c00ff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffffa0011801ffffff09ffffffffa001180100000000ffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "fleet": 16,
+      "pool": 103,
+      "original_record_hex": "01101fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff00063007ffffff0980ffffff00063007b6020171ffffffffffffffffffffffffffffffffffff",
+      "before_record_hex": "01101fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff00063007ffffffffffffffff0006300700000000ffffffffffffffffffffffffffffffffffff",
+      "after_record_hex": "01101fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff00063007ffffff09ffffffff0006300700000000ffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "fleet": 17,
+      "pool": 143,
+      "original_record_hex": "01111fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff00061007ffffff0980ffffff00061007a6030171ffffffffffffffffffffffffffffffffffff",
+      "before_record_hex": "01111fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff00061007ffffffffffffffff0006100700000000ffffffffffffffffffffffffffffffffffff",
+      "after_record_hex": "01111fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff00061007ffffff09ffffffff0006100700000000ffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "fleet": 28,
+      "pool": 110,
+      "original_record_hex": "011c1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff20061007ffffff0980ffffff200610075e050171ffffffffffffffffffffffffffffffffffff",
+      "before_record_hex": "011c1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff20061007ffffffffffffffff2006100700000000ffffffffffffffffffffffffffffffffffff",
+      "after_record_hex": "011c1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff20061007ffffff09ffffffff2006100700000000ffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "fleet": 29,
+      "pool": 120,
+      "original_record_hex": "011d1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffffe0055007ffffff0980ffffffe0055007c6060171ffffffffffffffffffffffffffffffffffff",
+      "before_record_hex": "011d1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffffe0055007ffffffffffffffffe005500700000000ffffffffffffffffffffffffffffffffffff",
+      "after_record_hex": "011d1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffffe0055007ffffff09ffffffffe005500700000000ffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "fleet": 30,
+      "pool": 127,
+      "original_record_hex": "011e1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffffe0051007ffffff0980ffffffe00510072e080171ffffffffffffffffffffffffffffffffffff",
+      "before_record_hex": "011e1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffffe0051007ffffffffffffffffe005100700000000ffffffffffffffffffffffffffffffffffff",
+      "after_record_hex": "011e1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffffe0051007ffffff09ffffffffe005100700000000ffffffffffffffffffffffffffffffffffff"
+    },
+    {
+      "fleet": 31,
+      "pool": 136,
+      "original_record_hex": "011f1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff0006f006ffffff0980ffffff0006f00696090171ffffffffffffffffffffffffffffffffffff",
+      "before_record_hex": "011f1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff0006f006ffffffffffffffff0006f00600000000ffffffffffffffffffffffffffffffffffff",
+      "after_record_hex": "011f1fff071464ff01000100010000000000000000000000ff3fffffffffff2dff3219ffffffffff0006f006ffffff09ffffffff0006f00600000000ffffffffffffffffffffffffffffffffffff"
+    }
+  ],
+  "battle_pools": [
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147
+  ],
+  "changed_ship_byte_offsets": [
+    6365,
+    8081,
+    8627,
+    9407,
+    9953,
+    10655,
+    11201
+  ],
+  "tables": {
+    "WORK": {
+      "bytes": 230,
+      "different_bytes": 14,
+      "offset_counts": {
+        "2": 1,
+        "3": 1,
+        "6": 1,
+        "7": 1,
+        "38": 1,
+        "40": 1,
+        "42": 1,
+        "43": 1,
+        "44": 1,
+        "45": 1,
+        "110": 1,
+        "111": 1,
+        "114": 1,
+        "115": 1
+      },
+      "original_sha256": "4f4d0edec288c0d3f1a6c452275f049f798071e80f86ffb78e717c043317d237",
+      "remake_sha256": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8"
+    },
+    "FLEET": {
+      "bytes": 3904,
+      "different_bytes": 27,
+      "offset_counts": {
+        "108": 7,
+        "110": 7,
+        "111": 7,
+        "109": 6
+      },
+      "original_sha256": "53af52561125e497eebac24f6a0f2ce6c44b2109516cecab3a481e27d09980d1",
+      "remake_sha256": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55"
+    },
+    "SHIP": {
+      "bytes": 27456,
+      "different_bytes": 269,
+      "offset_counts": {
+        "48": 55,
+        "56": 55,
+        "58": 55,
+        "59": 55,
+        "57": 49
+      },
+      "original_sha256": "1c74fa060ca3fd8f5276d34fac84fb614522434f684885deb77f0253cccd8b44",
+      "remake_sha256": "72b656797a43c691b03e90d9ed87b81c84f8d5c9f8c31bb10c986875028b1624"
+    },
+    "STELLAR": {
+      "bytes": 4032,
+      "different_bytes": 0,
+      "offset_counts": {},
+      "original_sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "remake_sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "PLANET": {
+      "bytes": 6642,
+      "different_bytes": 0,
+      "offset_counts": {},
+      "original_sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "remake_sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    }
+  },
+  "frames": {
+    "entry": {
+      "original": "workplace/oracle/normal89-r51-base-a",
+      "original_hashes": {
+        "screen.bin": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+        "screen.png": "c6ddfb988cf15898626fa50b040b1f2423baabae0aa27f57f3fd153abdbc00cb",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "8c99a0e7c1d1c8f3d97cc58c2b8b1458a9c037d8a4f3cbdd56faabece38b96ba",
+        "meta.txt": "4ccec5f35938cb77ff0b8ff1673167d86c0ea96fc3e3ec266035fa629e02bbc7"
+      },
+      "after_screen_sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+      "before_screen_sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+      "before_after_different_pixels": 0,
+      "regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307199,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 113,
+          "difference_bbox_inclusive": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                255,
+                255
+              ],
+              "original_index": 12,
+              "remake_index": 5
+            }
+          ]
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161279,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 113,
+          "difference_bbox_inclusive": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                255,
+                255
+              ],
+              "original_index": 12,
+              "remake_index": 5
+            }
+          ]
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "unchanged_images_prefix": "workplace/round52-entry",
+      "unchanged_images_sha256": {
+        ".png": "66edab015a26425200a523db8f2400a17eb97a1e9f296c8caa4c221add79eec8",
+        "-diff.png": "a8d4f2dc3d1856d9864726ea0965ac7a5f5bd60abb6e82e1908b4c3edb6b5f58",
+        "-pair.png": "62f77656bde64384758837650283fbc2af83bae069df113aac8e242a257a4bb4"
+      }
+    },
+    "flagship": {
+      "original": "workplace/oracle/normal89-r51-flagship-a",
+      "original_hashes": {
+        "screen.bin": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+        "screen.png": "25bc500008b6064d0b7a8288d59b4f07b780df084007d388a259a30a2915725c",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "d5560a2e2ef62e3c3946885c1957423ca4fccf8521ea6e305bbd8b756f315a0e",
+        "meta.txt": "ccaddf8ea62206695cf39bd94381d023f666ac62c04d8c2080e5f083922e927b"
+      },
+      "after_screen_sha256": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+      "before_screen_sha256": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+      "before_after_different_pixels": 0,
+      "regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307200,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "unchanged_images_prefix": "workplace/round52-flagship",
+      "unchanged_images_sha256": {
+        ".png": "be28333a23ae58df53d0da10376ab3352f020c8bdae2321b69bc786e959596a9",
+        "-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+        "-pair.png": "1dc7a295d45cb880cd4234590d2cec4796c7d96a6a248f4b41025a5967ba56b9"
+      }
+    },
+    "squad": {
+      "original": "workplace/oracle/normal89-r51-squad-a",
+      "original_hashes": {
+        "screen.bin": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+        "screen.png": "c8a8f8fbc506974828158a46d6f30964fc9d869fc12ff621219225d46c23d7ae",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "8d02dde7dce6d2b50acfab18624226d7080b503b93fa9e43516256354e4b5add",
+        "meta.txt": "741eeeda24c3b2f5d2cdd7a9ed3ebabb537fb673fbcb7e25caf0fcaacb9688b0"
+      },
+      "after_screen_sha256": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+      "before_screen_sha256": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+      "before_after_different_pixels": 0,
+      "regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307200,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "unchanged_images_prefix": "workplace/round52-squad",
+      "unchanged_images_sha256": {
+        ".png": "0d73edc7ec33188e63c22318d6675385a8f91b0c3920d7611cc52846888468ff",
+        "-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+        "-pair.png": "b5c8f2fe77e990b692c4a1b0edc3bc57bfea07456b41390be2ab7ff0a925e141"
+      }
+    },
+    "empty": {
+      "original": "workplace/oracle/normal89-r51-empty-a",
+      "original_hashes": {
+        "screen.bin": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+        "screen.png": "0ea3b6482c550a4337b88c85600fb7fe771027c36179715d169a37a5231c3a17",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "6f508f19edf50efbdb538b3ca505f205e78031dc32dc7ae1c150a861f82db610",
+        "meta.txt": "c27c14d4f6448eef1ff3e78732412d07e8d8444484f93121e05e39881154fae9"
+      },
+      "after_screen_sha256": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+      "before_screen_sha256": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+      "before_after_different_pixels": 0,
+      "regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307200,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "unchanged_images_prefix": "workplace/round52-empty",
+      "unchanged_images_sha256": {
+        ".png": "5358474d8dafe6920a3f1381f432679cfa6e76325aac398471844f15c528695e",
+        "-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+        "-pair.png": "1a673eb97ed8d0160b4a7846b6279da07555516e99d08492c092b6e6858ed52f"
+      }
+    },
+    "panel": {
+      "original": "workplace/oracle/normal89-r51-panel-a",
+      "original_hashes": {
+        "screen.bin": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+        "screen.png": "f66fa3db97bb0ffad7a3dae13cecbca638e1afedb5f3d5cb8eea9493634cff10",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "935248d1ef8228bc8086cfd7e13162183424bcf13eb73365a874125758233bab",
+        "meta.txt": "bbc640ad4798e3ac6e58c29394dadb94ad201f7d675067ea2298ff63e76a2b68"
+      },
+      "after_screen_sha256": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+      "before_screen_sha256": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+      "before_after_different_pixels": 0,
+      "regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307200,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "unchanged_images_prefix": "workplace/round52-panel",
+      "unchanged_images_sha256": {
+        ".png": "f7e29775301b6df8aa6db003b558a9c71e7e2a7448865f0198285fd6ab1cd5ae",
+        "-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+        "-pair.png": "7311ad6033693beec64bc1acd4a88e41a1626df6fcc6819a3ffce3d8f88573f9"
+      }
+    }
+  },
+  "gui": [
+    {
+      "scale": 1,
+      "prefix": "workplace/round53-gui-1x",
+      "hashes": {
+        ".bin": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+        ".png": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+        ".txt": "f053d194a0cb86c82378c9c73e35fc959f320e40886cafb3bf59a967cfe5d606",
+        ".log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      },
+      "classification": "正式cmd/gin3真實X11正常入口，邏輯畫面與Game相同"
+    },
+    {
+      "scale": 2,
+      "prefix": "workplace/round53-gui-2x",
+      "hashes": {
+        ".bin": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+        ".png": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+        ".txt": "9b437af71f16b55dc4db0e6f733f50e11536d3b4799bebd2535f406bfb14e8d3",
+        ".log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      },
+      "classification": "正式cmd/gin3真實X11正常入口，邏輯畫面與Game相同"
+    }
+  ],
+  "verification": {
+    "arrival": {
+      "path": "workplace/round53-arrival.log",
+      "sha256": "02316eaff421ac001976ee4d2f5ddb6fe0a5811305b6263a6ee314b8dc384997",
+      "pass_events": 3,
+      "packages": 1,
+      "tested_packages": 1,
+      "no_test_packages": 0,
+      "skips": 0
+    },
+    "limited": {
+      "path": "workplace/round53-limited.log",
+      "sha256": "c64f4afeab1f42f31e0bd14ed059b1cc2f685e8287adcbfaeeab33cc523ffb43",
+      "pass_events": 137,
+      "packages": 3,
+      "tested_packages": 3,
+      "no_test_packages": 0,
+      "skips": 0
+    },
+    "standard": {
+      "path": "workplace/round53-standard.log",
+      "sha256": "f02b6b64da6bc9b06d44958d8a8cb61d868bd473c478bde423c8a6bfa659a621",
+      "pass_events": 0,
+      "packages": 18,
+      "tested_packages": 13,
+      "no_test_packages": 5,
+      "skips": 0
+    }
+  },
+  "source_hashes": {
+    "internal/game/battlemarker.go": "ef2d58d9e281a297f7cc40e5dcf4d583ae11154510e695a90ecd4806b607282a",
+    "internal/game/fleetarrival_test.go": "e3b35006f16033cd403dddcbca4542fc8c65e23bc0ef9e0a11a9796de8bcb59a",
+    "internal/rules/battle.go": "5a18215105ad4197de71af7c7ca671d55e5b07431862bbdb5e150153db4dd8fc",
+    "internal/rules/battlemarker.go": "f0f0607f3fa372467efc64ab1782f91d7122fcdf0f473efac5b7b1b4b2cad9e7",
+    "tools/scripts/battle_scout_cache_receipt.py": "eba93604811d9ff2467f0a97096dd2194960dca8647df24c53e5d5f93bac2190",
+    "tools/scripts/battle_normal_probe.go": "ba6577950d46cea17f253e9664ebc1746d453be4f83135ee91f77f0ea5ada346",
+    "tools/scripts/battle_normal_probe_seed.py": "cfab11a19a0111052d53189a549287dd09cd1c14ce221b151914d021aff43256",
+    "tools/turn_counter_gui.sh": "30057fc8012f71cc9f22e322a9fd11d31b12585b68a35b2cb9040a4a187dc5a4",
+    "workplace/round53-normal-overlay.json": "a381d2e91f2adfe2b1d507ec416ac396fc696a4d25129a251f07273f56cb3380",
+    "workplace/round53-normal-seed.go": "cb0968d3a3864b28e60f4a6e6a71d6d374564b283a9fa58f4a78bb66ed3bb923"
+  },
+  "limitations": [
+    "SHIP+30、顯示物件far指標及WORK14尚未對齊",
+    "首戰全圖仍一像素差；一般FF物件word+4初始化unknown",
+    "原版雙跑沿用固定f7523f9收據，沒有宣稱本輪重新執行原版",
+    "此輪不修改顯示，五張PNG／差分圖沿用逐byte核對相同的第52輪影像"
+  ]
+}

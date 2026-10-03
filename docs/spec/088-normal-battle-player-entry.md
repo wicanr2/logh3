@@ -7,6 +7,27 @@ Status: DRAFT
 [完整收據](../internals/data/battle-normal-entry.json)、[第四十四輪](../goal/2026-10-03-battle-normal-entry-round-44.md)。
 087保持READY；既有151個受控UI幀、全原池資料及有效RGB成果不重開、不升格。
 
+## READY子契約：未出擊偵察隊的圖示快取
+
+2026-10-03審查：[研究391](../re/391-battle-scout-cache.md)核對26E5:00AC與25DB:03E9共209條原指令，
+逐byte符合固定原版正常入口RAM；獨立a／b原版收據保持。完整088仍DRAFT。
+
+- 正常單人輸入刷新包含每支參戰艦隊FLEET+38的偵察池。
+  FLEET+3A為FF時force為0；仍依既有BattleCachedSprite更新SHIP+2F。
+  藉原池ScoutUnit讀取Detail及艦種，不由未出擊旗標直接猜圖塊。
+- 未出擊偵察隊不加入battleUnits、renderer或命中測試，保持原有標記與資源狀態。
+  已放出的偵察隊仍由既有單位流程更新，不重複覆寫。
+- 僅在有效slot、參戰艦隊、偵察池及既有ScoutUnit可讀時接線。
+  正式SaveSlot及載入保留更新後的原池byte，不改存檔格式或偽造顯示物件指標。
+- 驗收限正常S3兩AI的55筆快取、七筆未出擊池及正式存讀、正常Game雙跑、
+  完整五張畫面及既有索敵／放出回收回歸。完整資料、排序與一個剩餘像素仍待證。
+
+此子契約限定驗收已通過：[研究391](../re/391-battle-scout-cache.md)、[快取收據](../internals/data/battle-scout-cache.json)，
+SHA-256 `1203dc687f6f2481ac53acfaa3a2da8866d8d82638ebeda6a9dd452d875bf3d9`。
+137限定PASS零skip、18產品套件及正常X11兩倍率通過，55檔雙跑相同。
+兩AI55筆快取、七筆未出擊池及完整SHIP存讀符合限定契約；只有七個byte改變，
+五張畫面與第52輪相同，完整SHIP差269、WORK14／FLEET27仍保留。完整088維持DRAFT。
+
 ## 第44輪首次量測
 
 原版GIN3.COM、dosgolem f7523f9、S3及兩側實行前D3DC167E固定。
