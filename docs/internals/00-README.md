@@ -1,5 +1,18 @@
 # 原版內部構造參考
 
+第60輪沿#59：[可見艦隊數工作快照](../goal/2026-10-03-region-visible-fleets-round-60.md)。
+追查四格導出資料的寫入與正式玩家入口，完成聲明依當輪證據。
+[原版可見艦隊數重播](../../tools/region_visible_fleets_oracle.sh)固定正常回合與明示索敵邊界；
+[第60輪IDA匯出](../../tools/scripts/region_visible_fleets_ida.py)保留寫入者及玩家入口原始定位。
+[091更新契約](../spec/091-region-visible-fleets.md)與[正式命令接線](../../internal/game/regionvisible.go)
+限定可見艦隊數導出，不改索敵規則。
+[可見數原版規則對拍](../../internal/rules/region_visible_test.go)與
+[正常回合／保存接線驗證](../../internal/game/regionvisible_test.go)分開記錄受控與正常路徑。
+[可見數正常GUI](../../tools/region_visible_fleets_gui.sh)以真實鍵鼠建隊、實行及開一覽表，驗1×／2×全圖。
+[可見數收據凍結器](../../tools/scripts/region_visible_fleets_receipt.py)保存原版雙跑、來源雜湊與附加分級語意。
+[研究398](../re/398-region-visible-fleets.md)、[對拍050](../playtest/050-region-visible-fleets.md)及
+[可見數完整收據](data/region-visible-fleets.json)保存寫入生命週期與無戰鬥清理證據。
+
 第59輪沿#59：[一覽表分頁邊界工作快照](../goal/2026-10-03-list-tab-edges-round-59.md)與
 [固定原版邊界重播](../../tools/list_tab_edge_oracle.sh)，四格顯示與情報寫入生命週期分開驗收。
 [第59輪IDA匯出](../../tools/scripts/list_tab_edge_ida.py)保留原始指令與三種位址空間，語意逐項審查。

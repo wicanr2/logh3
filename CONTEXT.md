@@ -5,15 +5,17 @@
 
 ## 現況一覽
 
-**目前接續（2026-10-03，第五十九輪）**：#59一覽表四格顯示修正與邊界全圖對拍完成。
-父提交2d3cac5071a3519135b718bf8a48d0a5e8cf9b9f；dosgolem未改，提交及推送身份依Git紀錄。
+**目前接續（2026-10-03，第六十輪）**：#59四格顯示、可見艦隊數更新與無戰鬥清理完成，遠端已CLOSED。
+父提交22af102d8049f19d54699dd24bf88fb35f988eaf；dosgolem未改，提交及推送身份依Git紀錄。
 
 | 分類 | 目前真相 | 最近驗證／入口 |
 |---|---|---|
 | 清單顯示已完成 | 依觀看座位讀星域+28/+2B或+2A/+29，FF印--；不再重數艦隊表替代 | 090先READY後限定CONFORMED；舊程式三圖差58／132／71，修正後全圖零差 |
 | 分頁原版已驗 | 帝國／同盟非零及FF、星系戰鬥冒號、士氣49／50、戰鬥優先占領 | 九個明示注入及一個正常同盟入口，十張各0／307200、原版與Game雙跑，無排除區 |
-| 清單正式資料鏈 | 正常Game開清單，四個數值案例SaveSlot／LoadSlot保留情報兩格 | 無效座位／短記錄拒絕讀取；18產品套件、1×／2×真實GUI正常同盟清單通過 |
-| 情報更新仍未知 | +2A／+2B完整寫入生命週期未查明，不發明揭露規則 | 2703:0853只維護+28／+29；其他寫入者仍待查，#59保持OPEN，10項未完成 |
+| 清單正式資料鏈 | 保存保留快照，LoadSlot依保存索敵值重算；初始化／玩家命令／雙人換邊接線 | 091先READY後CONFORMED；兩個陣營保存／載入與清單不提前更新均已驗 |
+| 可見數更新已完成 | 0214掃有效艦隊、相同星域及編制內任一非零索敵，依陣營寫+2A／+2B；043B掃32格 | 三份IDA327指令／31項proven，late1／late255全部64格與原版相同；FF亦屬非零 |
+| 無戰鬥清理已完成 | 0556→0AF2在打行星／被動效果前把艦隊行動設4、編制索敵清零，typed與Slot同步 | peace前後RAM雙跑相同，正式helper完整艦隊／艦艇表相同；不動偵察隊及其他欄位 |
+| 正常一回合已驗 | 不注入的帝國建隊→實行→一覽表，Game雙跑圖與保存相同，真實GUI 1×／2× | 18產品套件全過，完整307200像素及兩活動區零差；原版五組雙跑七檔相同 |
 | remake已完成 | 顯示層左鍵保持／放開，箭頭捕獲，一列步距、界線、模態取消及正式保存接線 | 089限定契約先READY後CONFORMED；月初熱區16像素與游標量測污染修正；整份088仍DRAFT |
 | 原版已驗 | 清單／經濟四組保持、月初保持及右鍵各雙跑完整RAM／全圖相同 | IDA六份788條原指令、18項直接語意proven；DS:1BF2原始bytes及0C0A兩次寫入補證；f7523f9／clean |
 | 正常資料鏈 | 主選單→138→S3同盟→實行808 tick→首戰資料，保持到26及回0 | 正式bootstrap／Game，無局面或RAM注入，兩跑畫面／存檔檔案相同，18產品套件通過 |
@@ -29,7 +31,14 @@
 | 刻意差異待裁決 | 固定次序的可丟棄探針五圖均零差，其他殘留字鍵局面未保證相同 | 使用者忠實度裁決pending；未採用排序prototype，正式一像素仍差 |
 | 原版oracle未知 | 顯示指標比較契約、正常索敵同態配對、戰場讀檔續戰、表列指向置鏡及未覆蓋控制 | 全部仍按原閘門；鏡頭座位反轉與signed溢位屬明示診斷 |
 | 其他入口限制 | 選單背景16333 pixels、雙人未確認2841 pixels及STELLAR+7D22 bytes | 非本輪範圍，不由局部相同升格 |
-| 原Goal待續 | 情報寫入待續；FF殘留鍵取捨及顯示指標比較契約待核定，再回正常索敵與其餘八步 | #59／#79／#89／#69 OPEN；89張worklist／10張open；音樂人耳／macOS／正式交付仍缺 |
+| 原Goal待續 | #59已關；回正常索敵及戰場控制，其餘畫面、音樂、實機與正式交付依各Issue | 89張worklist／9張open；#79／#89／#69仍OPEN，FF字鍵取捨pending不重問 |
+
+第60輪入口：[工作快照](docs/goal/2026-10-03-region-visible-fleets-round-60.md)、
+[研究398](docs/re/398-region-visible-fleets.md)、[091](docs/spec/091-region-visible-fleets.md)、
+[對拍050](docs/playtest/050-region-visible-fleets.md)、[完整收據](docs/internals/data/region-visible-fleets.json)。
+SHA-256為07b5c05e76c3435d84822308bc17667157c91e062f6d3dc31dded80a84c7b3c0。
+第59輪讀檔保留注入值的假設已勘誤，舊JSON保持原SHA；原版讀檔重算可見數。
+晚注入只驗64格規則，雙人換邊只驗資料接線；#89一像素及索敵整段正常配對不由本項升格。
 
 第59輪入口：[工作快照](docs/goal/2026-10-03-list-tab-edges-round-59.md)、
 [研究397](docs/re/397-list-tab-edges.md)、[090](docs/spec/090-list-tab-edge-display.md)、
@@ -689,7 +698,7 @@ SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 10 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 9 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -1135,25 +1144,6 @@ WORK0／FLEET27／SHIP214／STELLAR0／PLANET0保持，顯示指標raw差仍完�
 
 **核實**：`internal/game/settingsscreen.go` 裡還找得到 `與 `BUG!` 也還沒接`（自承還在 ＝ 還沒做）
 
-#### list-tabs-unverified — 一覽表分頁沒有收據的幾種情形（同盟座位、戰鬥中、占領中、士氣低落）
-
-*[#59](https://github.com/wicanr2/logh3/issues/59) · parity（對拍：要與原版逐位元組相同）*
-
-第59輪已修正星系清單的四格來源，並補齊原版雙跑／完整畫面證據。原版依觀看座位讀星域+28/+2B或+2A/+29；舊remake重數艦隊表，三圖差58／132／71像素。修正後十張完整640×480全圖零差，無排除區。
-
-**卡在**：只剩四格情報更新生命週期。2703:0853只清零並重數+28／+29；另外兩格不能因此推論沒有寫入者。後續追取址端、間接寫入及實際情報更新時點，不發明揭露機制。
-
-第59輪三份IDA9.4匯出679條原指令、18項proven語意。九個受控局面與正常同盟清單共十張全圖零差，原版每案雙跑完整RAM／圖／色盤相同。正式Game雙跑存檔與畫面逐byte相同，四個數值案例SaveSlot／LoadSlot保留+2A／+2B；18產品套件及1×／2×真實GUI正常同盟清單通過。
-
-兩組初期同盟星域0探針沒有顯示該列，只留診斷；改可見首都31後補獨立雙跑。不把注入局面當正常玩法，不宣稱原版與remake全RAM相同。
-
-**做完的判準**：- 同盟座位非零與FF、星系戰鬥冒號、艦隊作戰戰鬥／占領、士氣49／50各有固定原版同狀態收據，整張逐位元組。第59輪已達成。
-- +2A／+2B完整寫入生命週期查明，正式資料更新／保存及正常玩家路徑有對應驗證。仍未達成，不以讀取或注入通過替代。
-
-**證據**：[`docs/re/397-list-tab-edges.md`](docs/re/397-list-tab-edges.md)、[`docs/spec/090-list-tab-edge-display.md`](docs/spec/090-list-tab-edge-display.md)、[`docs/playtest/049-list-tab-edges.md`](docs/playtest/049-list-tab-edges.md)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)、[`docs/internals/data/list-tab-edges.json`](docs/internals/data/list-tab-edges.json)、[`tools/list_tab_edge_oracle.sh`](tools/list_tab_edge_oracle.sh)、[`internal/game/listtabedges_test.go`](internal/game/listtabedges_test.go)、[`tools/list_tab_edge_gui.sh`](tools/list_tab_edge_gui.sh)、[`docs/re/327-list-screen-tabs.md`](docs/re/327-list-screen-tabs.md)、[`docs/spec/055-list-screen-rows.md`](docs/spec/055-list-screen-rows.md)
-
-**核實**：`internal/game/listscreen.go` 裡還找得到 `情報寫入生命週期仍待原版證據`（自承還在 ＝ 還沒做）
-
 #### strategic-assault-edge-cases — 戰略打行星沒有收據的兩種局面（同回合打過仗、擠開壓到擋路格）
 
 *[#56](https://github.com/wicanr2/logh3/issues/56) · parity（對拍：要與原版逐位元組相同）*
@@ -1209,7 +1199,7 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-82 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+83 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -2664,6 +2654,30 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 **證據**：[`docs/spec/089-left-button-repeat.md`](docs/spec/089-left-button-repeat.md)、[`docs/re/396-left-button-repeat.md`](docs/re/396-left-button-repeat.md)、[`docs/playtest/048-left-button-repeat.md`](docs/playtest/048-left-button-repeat.md)、[`docs/internals/data/left-button-repeat.json`](docs/internals/data/left-button-repeat.json)、[`docs/internals/data/left-button-repeat-game.json`](docs/internals/data/left-button-repeat-game.json)、[`internal/game/lefthold.go`](internal/game/lefthold.go)、[`internal/game/lefthold_test.go`](internal/game/lefthold_test.go)、[`internal/game/lefthold_normal_test.go`](internal/game/lefthold_normal_test.go)、[`internal/game/lefthold_oracle_test.go`](internal/game/lefthold_oracle_test.go)、[`tools/left_hold_gui.sh`](tools/left_hold_gui.sh)
 
 **核實**：`TestLeftHoldNormalBattleWholeFrame` 釘在 `internal/game`
+
+#### list-tabs-unverified — 一覽表分頁沒有收據的幾種情形（同盟座位、戰鬥中、占領中、士氣低落）
+
+*[#59](https://github.com/wicanr2/logh3/issues/59) · parity（對拍：要與原版逐位元組相同）*
+
+第59輪四格顯示及邊界十圖完成，第60輪補齊可見艦隊數更新與無戰鬥清理。
+原版2703:0214依編制內任一艦艇+17非零重數帝國／同盟，寫星域+2A／+2B；玩家命令入口、新遊戲及正式讀檔重算。
+0374:0556→0AF2的無戰鬥清理已接回，艦隊行動設待命、編制內索敵清零，獨立偵察隊保持。
+
+**卡在**：指定範圍完成。戰術索敵本身、#89一像素、其他畫面與音樂仍依各自Issue，不由本項升格。
+晚注入案例只驗受控導出規則；雙人換邊只驗資料接線；不宣稱原版與remake全RAM相同。
+第59輪讀檔保留注入值的假設已勘誤，舊JSON保持原SHA。
+第60輪三份IDA9.4匯出327條原指令、31項proven語意。收據SHA-256：
+07b5c05e76c3435d84822308bc17667157c91e062f6d3dc31dded80a84c7b3c0。
+
+**做完的判準**：- 第59輪同盟非零與FF、星系戰鬥冒號、作戰戰鬥／占領及士氣49／50十張全圖零差，保持原凍結收據。
+- 第60輪寫入生命週期已查明，正式初始化／命令入口／載入及保存接線通過。
+- 原版五組雙跑完整RAM／畫面／色盤相同；late1／late255全部64格導出值與原版相同；peace清理兩張整表相同。
+- 正常玩家一回合後一覽表全圖0／307200，無排除區；正式Game雙跑保存相同，真實X11 GUI一倍／兩倍全圖相同。
+- 修正後18產品套件、既有十張分頁邊界及新增資料鏈測試全過。091限定CONFORMED。
+
+**證據**：[`docs/spec/091-region-visible-fleets.md`](docs/spec/091-region-visible-fleets.md)、[`docs/re/398-region-visible-fleets.md`](docs/re/398-region-visible-fleets.md)、[`docs/playtest/050-region-visible-fleets.md`](docs/playtest/050-region-visible-fleets.md)、[`docs/internals/data/region-visible-fleets.json`](docs/internals/data/region-visible-fleets.json)、[`docs/internals/22-stellar-dt.md`](docs/internals/22-stellar-dt.md)、[`docs/internals/38-battle-units.md`](docs/internals/38-battle-units.md)、[`internal/game/regionvisible_test.go`](internal/game/regionvisible_test.go)、[`internal/rules/region_visible_test.go`](internal/rules/region_visible_test.go)、[`tools/region_visible_fleets_oracle.sh`](tools/region_visible_fleets_oracle.sh)、[`tools/region_visible_fleets_gui.sh`](tools/region_visible_fleets_gui.sh)、[`docs/spec/090-list-tab-edge-display.md`](docs/spec/090-list-tab-edge-display.md)、[`docs/playtest/049-list-tab-edges.md`](docs/playtest/049-list-tab-edges.md)
+
+**核實**：`TestRegionVisibleFleetNormalCommand` 釘在 `internal/game`
 
 #### garrison-self-and-step-count — 就地駐留不扣移動費的成因、走一格時星域艦隊數（297B:08D8）
 

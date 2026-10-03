@@ -53,3 +53,9 @@ GIN3.COM SHA-256 `770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd9
 
 入口：[對拍049](../playtest/049-list-tab-edges.md)、[090](../spec/090-list-tab-edge-display.md)、
 [四格事實](../internals/22-stellar-dt.md)、[本輪工作快照](../goal/2026-10-03-list-tab-edges-round-59.md)。
+
+## 第60輪追加勘誤
+
+[研究398](398-region-visible-fleets.md)已解寫入與清理生命週期。
+原版讀檔會重算+2A／+2B；本輪LoadSlot保留注入值只是當時remake行為。
+現行091與測試已修正，這份歷史收據及原SHA保持，不重新產生。

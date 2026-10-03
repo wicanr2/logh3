@@ -72,10 +72,32 @@ func RecountRegionFleets(records []byte, fleets []Fleet) {
 	}
 }
 
+// RecountRegionVisibleFleets 接回2703:043B→0214，重算被敵方看見的艦隊數。
+// 每支只看編制內的艦艇Detail是否非零，不計獨立偵察隊或艘數。
+// 呼叫時點與保存契約見091；不能和RecountRegionFleets合併。
+func RecountRegionVisibleFleets(records []byte, fleets []Fleet) {
+	n := len(records) / RegionRecord
+	for r := 0; r < n; r++ {
+		o := r*RegionRecord + 0x2A
+		records[o], records[o+1] = 0, 0
+	}
+	for _, f := range fleets {
+		if f.Faction < 0 || f.Faction > 1 || f.Region < 0 || f.Region >= n {
+			continue
+		}
+		for _, gp := range f.Composition {
+			if byte(gp.Detail) != 0 {
+				records[f.Region*RegionRecord+0x2A+f.Faction]++
+				break
+			}
+		}
+	}
+}
+
 // RegionListFleetCounts 依觀看座位讀取清單左帝國／右同盟兩格。
 // 原版0D05:0568：座位0讀+28/+2B，座位1讀+2A/+29。
-// FF是顯示占位值，保留原byte；情報更新生命週期不由此函式猜補。
-// 證據：規格090及研究397。
+// FF是顯示占位值，保留原byte；更新由091的獨立入口處理。
+// 證據：規格090／091及研究397／398。
 func RegionListFleetCounts(record []byte, viewer int) ([2]byte, bool) {
 	if len(record) < 0x2C || viewer < 0 || viewer > 1 {
 		return [2]byte{}, false

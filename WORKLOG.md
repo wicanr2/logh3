@@ -2,6 +2,28 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-03 #59可見艦隊數更新與無戰鬥清理
+
+父提交22af102，原版f7523f9／clean。開工89張Issue／10張OPEN、269條核對零失效。
+2703:0214／043B與04F8:003E的原始資料流已核；先READY再接初始化、讀檔及命令入口。
+補驗發現0556→0AF2漏接。先保留失敗，再用peace雙跑隔離清理、擴充READY後實作。
+舊測試資源缺戰術配置，不宣稱正式到達配置失敗；兩個原版清理者分開記錄。
+
+- 原版normal／late1／late255／clear／peace五組雙跑完整RAM／圖／色盤相同；peace另兩份清理RAM相同。
+- 64格導出值及無戰鬥清理的完整艦隊／艦艇表與原版相同；正常Game一回合全圖零差、雙跑九檔相同。
+- 正式保存保留快照、載入重算；兩個陣營、清單不提前刷新與雙人換邊接線通過。
+- 修正後18產品套件通過，focused零FAIL／SKIP；新正式建置真實X11 1×／2×正常路徑全圖相同，已目視。
+- 三份IDA9.4匯出327條原指令、31項proven，保留三種位址空間。舊第59輪JSON保持原SHA。
+- 新凍結JSON SHA-256為07b5c05e76c3435d84822308bc17667157c91e062f6d3dc31dded80a84c7b3c0；工具拒絕覆寫。
+- 最初-poke分隔符及相對輸出路徑為驗證腳本錯誤；修正後同容器重跑，診斷保存於workplace。
+- 已更新#59本文與go_test核對並關閉，重抓遠端後9項OPEN。CONTEXT／矩陣由同一快照產生。
+- 原版與局面輸出留workplace，不進Git。UID/GID1000:1000，根擁有檔／*.md目錄掃描無異常。
+- Docker一次性容器--rm，GUI有trap／wait；本輪容器已清，未重建映像檔。其他專案容器保留。
+- Commit／push身份由本條目所在Git紀錄回查。接續#79／#89的正常索敵與其餘玩家路徑，#69音樂與正式交付仍OPEN。
+
+入口：[第60輪](docs/goal/2026-10-03-region-visible-fleets-round-60.md)、[研究398](docs/re/398-region-visible-fleets.md)、
+[091](docs/spec/091-region-visible-fleets.md)、[050](docs/playtest/050-region-visible-fleets.md)。
+
 ## 2026-10-03 #59一覽表四格顯示與邊界收據
 
 第59輪父提交2d3cac5071a3519135b718bf8a48d0a5e8cf9b9f，開工Git乾淨，89張worklist／10張OPEN，269核對零失效。

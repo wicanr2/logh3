@@ -43,3 +43,8 @@ IDA COM位址、原版CS:IP與執行期線性分欄。三個匯出由`tools/scri
 
 收尾證據：[研究397](../re/397-list-tab-edges.md)、[對拍049](../playtest/049-list-tab-edges.md)、
 [完整收據](../internals/data/list-tab-edges.json)，SHA-256 `9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8`。
+
+## 現行更新契約
+
+第60輪[091](091-region-visible-fleets.md)補齊寫入與清理生命週期，正式讀檔會重算可見數。
+本規格仍只管顯示；前述未驗更新與#59 OPEN是第59輪狀態，現況依CONTEXT及遠端Issue。

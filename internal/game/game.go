@@ -1476,6 +1476,7 @@ func (g *Game) finishAfterPhezzanReports() {
 		g.clearMonthSeat(g.faction)
 	}
 	g.setHumanSeat()
+	g.recountRegionVisibleFleets()
 	// 原版 `0654:0034` 的共同尾巴每個回合都跑：照現在的狀態把預估徵稅額
 	// 刷一次（`docs/spec/035`）。中途打下一個星域之後，右側面板與徵稅
 	// 計劃當回合就要跟著變，不必等到月底。
@@ -1930,6 +1931,7 @@ func (g *Game) side() side {
 func (g *Game) enterSide(faction int) {
 	g.faction = faction
 	g.setHumanSeat()
+	g.recountRegionVisibleFleets()
 	g.mapHighlight = rules.CapitalRegion(faction)
 	s := g.sides[faction]
 	g.pct = s.pct
@@ -2003,6 +2005,7 @@ func (g *Game) startNewGame(faction int) {
 	g.refillRegionSupply()
 	g.monthEnd()
 	g.recountRegionFleets()
+	g.recountRegionVisibleFleets()
 	g.refreshCapitalSnap()
 	if g.aiMode > 0 {
 		g.reconnectAI()
@@ -2142,6 +2145,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	// 原版讀檔之後就重數一次（`docs/re/40` 載入 S2 時看到 `2703:087A` 歸零
 	// 再 `2703:08CE` 遞增）。
 	g.recountRegionFleets()
+	g.recountRegionVisibleFleets()
 	g.refreshCapitalSnap()
 	g.mapHighlight = rules.CapitalRegion(g.faction)
 	g.selectedRegion = -1

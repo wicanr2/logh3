@@ -100,8 +100,9 @@ func TestListTabEdgesMatchOracle(t *testing.T) {
 					t.Fatalf("保存改寫情報兩格：%x，原有%x", got, wantCounts)
 				}
 				g.LoadSlot(g.slot)
-				if !bytes.Equal(g.regionRecord(region)[0x2A:0x2C], wantCounts) {
-					t.Fatal("重讀改寫情報兩格")
+				// 091補證：正式讀檔重算可見數。本輪艦艇Detail都是0。
+				if !bytes.Equal(g.regionRecord(region)[0x2A:0x2C], []byte{0, 0}) {
+					t.Fatal("讀檔沒有重算過期情報兩格")
 				}
 			}
 		})

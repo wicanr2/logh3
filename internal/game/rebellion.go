@@ -160,6 +160,7 @@ func (g *Game) scanRegionsAfterAttrition(r int) {
 // scanRegionTail 是 `0374:0556` 在全滅判定之後的部分：單方面占據的打行星，或被動效果與叛亂。
 // 停在報告上回 true（報告看完自己接下一格）。
 func (g *Game) scanRegionTail(r int) bool {
+	g.clearRegionFleetVisibility(r) // 0374:058F，在bit4判定之前；規格091。
 	if g.rebellionOccupation[r].Occupied {
 		// 單方面占據的格子改跑戰略打行星（`20B4:1497`：三次回復、打第一顆不是
 		// 自己的行星、反擊、換手，最多九回合；規格 058、`docs/re/330`）。

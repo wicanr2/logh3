@@ -60,3 +60,8 @@ GUI是正常0:0清單抽樣，不把它外推為九個注入局面的真實玩�
 
 三份IDA共679條原指令／18項proven附加語意；限定證據見[研究397](../re/397-list-tab-edges.md)。
 輸出UID/GID1000:1000，所有一次性容器由--rm收尾；逐輪擁有權與清理核對見WORKLOG。
+
+## 第60輪追加勘誤
+
+[050](050-region-visible-fleets.md)及[091](../spec/091-region-visible-fleets.md)補證原版讀檔重算可見兩格。
+這份保存／重讀的注入保留只描述第59輪remake；顯示十圖與凍結SHA保持有效，不推廣為讀檔契約。
