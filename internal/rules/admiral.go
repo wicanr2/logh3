@@ -315,10 +315,9 @@ func (p *ListPage) Clamp() {
 	}
 }
 
-// Step 是 ▲（dir −1）／▼（＋1）按一下：原版一次一列、按住連捲；
-// remake 一下捲一頁，再夾回範圍。
+// Step 是 ▲（dir −1）／▼（＋1）的一列更新，再夾回範圍。
 func (p *ListPage) Step(dir int) {
-	p.Scroll += dir * ListPageRows
+	p.Scroll += dir
 	p.Clamp()
 }
 

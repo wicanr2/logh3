@@ -281,6 +281,10 @@ if _wname and _wname in spec['windows']:
         _ls.append(_l)
     spec['windows'][_wname]['lines'] = _ls
 
+if outname == 'screen-admiral-list':
+    from monthly_admiral_cursor import strip_monthly_cursor
+    strip_monthly_cursor(spec)
+
 json.dump(spec, open(f'/work/docs/internals/data/{outname}.json', 'w'),
           ensure_ascii=False, indent=1)
 print(f'→ docs/internals/data/{outname}.json')

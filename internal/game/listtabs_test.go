@@ -80,26 +80,24 @@ func TestListTabAdmiralMatchesOracle(t *testing.T) {
 	}
 	t.Run("scroll", func(t *testing.T) {
 		g := reachListTab(t, listTabAdmiral)
-		g.Click(617, 388)
+		holdListSteps(g, 617, 388, 5)
 		matches(t, g, "fcmd-tab-admiral-down")
 		if p := g.listPage(listTabAdmiral); p.Scroll != 5 {
 			t.Fatalf("▼ 一下之後位移 %d，原版 5", p.Scroll)
 		}
 		t.Run("down2", func(t *testing.T) {
 			g := reachListTab(t, listTabAdmiral)
-			g.Click(617, 388)
-			g.Click(617, 388)
+			holdListSteps(g, 617, 388, 5)
+			holdListSteps(g, 617, 388, 5)
 			matches(t, g, "fcmd-tab-admiral-down2")
 		})
-		g.Click(617, 308)
+		holdListSteps(g, 617, 308, 5)
 		matches(t, g, "fcmd-tab-admiral-up")
 	})
 	t.Run("end", func(t *testing.T) {
-		// 原版按住 3M 步捲到底（位移 30 ＝ 35 − 5）；remake 六下也是到底。
+		// 原版按住3M步到30；089改用固定速度的等價保持，不宣稱同時間。
 		g := reachListTab(t, listTabAdmiral)
-		for i := 0; i < 6; i++ {
-			g.Click(617, 388)
-		}
+		holdListSteps(g, 617, 388, 40)
 		if p := g.listPage(listTabAdmiral); p.Scroll != 30 {
 			t.Fatalf("捲到底位移 %d，原版 30", p.Scroll)
 		}

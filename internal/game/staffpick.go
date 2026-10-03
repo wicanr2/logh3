@@ -45,7 +45,7 @@ type staffPick struct {
 	// list 是候選提督，detail 是詳細視窗正在看的那一位。
 	list   []int
 	detail int
-	first  int // 捲動起點（還沒接，與清單那幾張一樣）
+	first  int // 捲動起點，保持速度依089。
 }
 
 // on 回這條路上有沒有東西開著。
@@ -81,6 +81,10 @@ func (g *Game) staffPickClick(x, y int) bool {
 		}
 		return true
 	case g.staff.listOn:
+		if dir := g.adjListScrollAt(x, y); dir != 0 {
+			g.staff.first = clampListOffset(g.staff.first+dir, len(g.staff.list), g.adjListPage())
+			return true
+		}
 		if i := g.staffListAt(y); i >= 0 {
 			g.staff.detail, g.staff.detailOn = g.staff.list[i], true
 		}

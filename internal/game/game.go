@@ -579,7 +579,9 @@ const occupyOffset = 11
 
 // Game 是一局遊戲的狀態。
 type Game struct {
-	res *Resources
+	res           *Resources
+	leftHeld      leftRepeatHold
+	standbyScroll int
 
 	// pendingFlips 是還沒給玩家看的易主報告，afterFlips 是全部看完之後
 	// 要接回去的那條路（`docs/spec/034`）。
@@ -2082,6 +2084,8 @@ func New(res *Resources) (*Game, error) {
 // 未安定度是唯一一欄載進來還不對的（原版載入時重算，算式未解，
 // `docs/re/24`）。要對畫面的地方得自己 `Slot.SetUnrest` 蓋成量到的值。
 func (g *Game) LoadSlot(sl *rules.Slot) {
+	g.LeftRelease()
+	g.standbyScroll = 0
 	g.versusLoadedRound = false
 	g.monthSettlementPending = false
 	g.budgetTaxRefreshed = false
@@ -2333,8 +2337,17 @@ func (g *Game) forcedLeftRegion(s State) int {
 // **主選單只從事件回呼收按下**（`docs/re/08`）——那是原版的實作細節，
 // 在這裡的意義是：點擊要落在某一列上才算數，不是點到視窗內就好。
 func (g *Game) Click(x, y int) {
+	g.LeftRelease()
 	g.moveBeforePress(x, y)
+	action := g.leftRepeatAt(x, y)
 	g.click(x, y)
+	if action.kind != leftRepeatNone && g.leftRepeatAt(x, y) == action {
+		delay := leftListDelay
+		if action.economic() {
+			delay = leftPlanPeriod
+		}
+		g.leftHeld = leftRepeatHold{action: action, next: delay}
+	}
 	g.refreshHoverRegion()
 	if r := g.forcedLeftRegion(g.state); r >= 0 {
 		g.setHoverRegion(r)
@@ -2452,6 +2465,7 @@ func (g *Game) click(x, y int) {
 			}
 		case act == "admiral-list":
 			if g.res.AdmiralList != nil {
+				g.standbyScroll = 0
 				g.state = StateAdmiralList
 			}
 		}
@@ -2667,10 +2681,18 @@ func (g *Game) click(x, y int) {
 			}
 		}
 	case StateStandbyAdmirals:
+		if dir := g.standbyScrollAt(x, y); dir != 0 {
+			g.standbyStep(dir)
+			return
+		}
 		// 點清單的一列開那位提督的詳細資料（`docs/re/65`）。
 		if i := g.listAdmiralAt(y); i >= 0 && g.commandSpec(StateAdmiralDetail) != nil {
 			g.detailAdmiral = i
 			g.state = StateAdmiralDetail
+		}
+	case StateAdmiralList:
+		if dir := g.standbyScrollAt(x, y); dir != 0 {
+			g.standbyStep(dir)
 		}
 	case StateRegionInfo:
 		// 左鍵只認「結束」（熱區 `0DA2`），其餘不動。
@@ -2754,6 +2776,9 @@ func (g *Game) click(x, y int) {
 						if item == StateTaxPlan {
 							g.planArrowsDim = [4]bool{}
 						}
+						if item == StateStandbyAdmirals {
+							g.standbyScroll = 0
+						}
 						g.state = item
 					}
 				}
@@ -2775,6 +2800,7 @@ func (g *Game) click(x, y int) {
 // **座標目前不影響結果**——實測 (300,240) 那一點在報告視窗上與在地圖上
 // 都關得掉；哪裡按不算數還沒量過。
 func (g *Game) RightClick(x, y int) {
+	g.LeftRelease()
 	g.moveBeforePress(x, y)
 	g.rightClick(x, y)
 	g.refreshHoverRegion()
@@ -3261,6 +3287,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	case StateAdmiralList:
 		g.setListRows(g.res.AdmiralList)
 		g.applyStaffFaces(g.res.AdmiralList)
+		g.liveCursor(g.res.AdmiralList)
 		fb, _ := screen.MainGameWithBoard(g.res.AdmiralList, g.res.Font, g.playerStarMap(),
 			g.res.Faces, g.res.Cursor, g.drawBoardPanels)
 		g.drawSpecStaff(fb, g.res.AdmiralList)
@@ -3643,7 +3670,7 @@ func (g *Game) refreshCapitalSnap() {
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
-		StateStandbyAdmirals,
+		StateStandbyAdmirals, StateAdmiralList,
 		StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick,
 		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,
 		StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg,
@@ -4675,6 +4702,8 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 	skip := 0
 	if g.state == StateAdmiralListView || g.state == StateEnemyList {
 		skip = g.lst.admScroll
+	} else if g.state == StateStandbyAdmirals || g.state == StateAdmiralList {
+		skip = g.standbyScroll
 	}
 	for _, a := range rules.AdmiralList(rules.ParseAdmirals(g.res.Admiral), faction, standby, staff) {
 		g.listScreenAdmiralCount++

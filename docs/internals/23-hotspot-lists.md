@@ -1,5 +1,20 @@
 # 熱區清單與按鈕標籤
 
+## 第58輪左鍵保持補證
+
+沿[#60](https://github.com/wicanr2/logh3/issues/60)，原始定位、bytes與完整SHA見
+[研究396](../re/396-left-button-repeat.md)及[固定補證](data/left-button-repeat.json)。
+f7523f9固定版本、正常新遊戲父路徑，四組保持雙跑全RAM及全圖相同。
+3765:0255掃左鍵按下／放開事件；星系、提督及右下提督清單每次一列，速度受重畫成本影響。
+清單窄幅迴圈未比較游標位置，移出診斷仍連續更新。
+經濟箭頭090A:02AF／0415使用37A9:0470，等待DS:8EFE到0後設8，且檢查熱區。
+游標移出時只暫停更新，仍等待放開；返回熱區尚未動態補驗。
+PIT2048、十IRQ一倒數沿研究331，八倒數約137.3ms為hardware-spec approximation。
+原補證凍結於裁決前；現行350／100ms清單保持、經濟八倒數近似及保存依[089](../spec/089-left-button-repeat.md)。
+月初清單DS:1BF2三筆熱區，箭頭608,80及608,380、16×20；兩跑30萬步位移0→2。
+8像素箭頭圖塊與14像素內框不能當熱區寬度。舊量測混入框線的25個游標像素已由產生器清理。
+七張保持結果全圖、一倍／兩倍正常GUI及18產品套件通過，完整來源與限制見[048](../playtest/048-left-button-repeat.md)。
+
 資料：`docs/internals/data/hotspot-lists.json`
 產生：`tools/py.sh tools/scripts/hotspot_scan.py` → `hotspot_labels.py`
 查證過程：`docs/re/14`

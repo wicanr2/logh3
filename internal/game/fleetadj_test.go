@@ -145,23 +145,23 @@ func TestFleetAdjutantChangeMatchesOracle(t *testing.T) {
 		}
 	})
 	t.Run("scroll", func(t *testing.T) {
-		// ▼ 一次一頁、到底停在最後十六列；▲ 回上一頁；第二頁點第 1 列是瑞文茲（21）。
+		// 089用等價保持到16／上界／0，原版圖與舊保持收據保持原件。
 		g := reachList(t)
-		g.Click(617, 390)
+		holdListSteps(g, 617, 390, 16)
 		if g.adj.first != 16 {
 			t.Fatalf("▼ 之後 first=%d", g.adj.first)
 		}
 		matches(t, g, "fcmd-adj-change-down")
 		g2 := reachList(t)
-		g2.Click(617, 390)
-		g2.Click(617, 390)
+		holdListSteps(g2, 617, 390, 16)
+		holdListSteps(g2, 617, 390, 16)
 		if g2.adj.first != len(g2.adj.list)-16 {
 			t.Fatalf("▼▼ 之後 first=%d（候選 %d）", g2.adj.first, len(g2.adj.list))
 		}
 		matches(t, g2, "fcmd-adj-change-down2")
 		g3 := reachList(t)
-		g3.Click(617, 390)
-		g3.Click(617, 90)
+		holdListSteps(g3, 617, 390, 16)
+		holdListSteps(g3, 617, 90, 16)
 		if g3.adj.first != 0 {
 			t.Fatalf("▼▲ 之後 first=%d", g3.adj.first)
 		}

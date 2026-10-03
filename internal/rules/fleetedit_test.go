@@ -195,22 +195,18 @@ func TestIdleAdmiralsInRegionAndListPage(t *testing.T) {
 	}
 	p.Step(1)
 	p.Step(1)
-	if p.Scroll != 10 {
-		t.Fatalf("▼ 兩下位移 %d，要 10", p.Scroll)
+	if p.Scroll != 2 {
+		t.Fatalf("▼ 兩下位移 %d，要 2", p.Scroll)
 	}
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 40; i++ {
 		p.Step(1)
 	}
 	if p.Scroll != 30 {
 		t.Fatalf("捲到底位移 %d，要 30（35 − 5）", p.Scroll)
 	}
-	p.Step(-1)
-	p.Step(-1)
-	p.Step(-1)
-	p.Step(-1)
-	p.Step(-1)
-	p.Step(-1)
-	p.Step(-1)
+	for i := 0; i < 40; i++ {
+		p.Step(-1)
+	}
 	if p.Scroll != 0 {
 		t.Fatalf("▲ 到頂位移 %d，要 0", p.Scroll)
 	}

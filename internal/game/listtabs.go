@@ -13,8 +13,7 @@ import (
 // `ds:8F29[座位]`）設成 0–3、叫 `04F8:05ED` 換掉列印與點擊兩個函式指標、
 // 重建那一頁的清單（捲動位移歸零）、四顆分頁鈕的核取方塊換色（選中 0x27、
 // 其餘 0x97）、印整頁。每個分頁都是「筆數／捲動位移／五列一頁」同一套；
-// 欄 17 的 ▲▼ 筆數超過五才印，原版按住一次一列（`3765:0255`），remake
-// 一下一頁（與副官清單同一個已知差異）。
+// 欄17的▲▼筆數超過五才印，每次一列（`3765:0255`）；保持速度依089。
 
 // listTabFleet 等是分頁編號（`ds:8F1F`）。
 const (
@@ -124,7 +123,7 @@ func (g *Game) listPage(tab int) rules.ListPage {
 	return *p
 }
 
-// listScroll 是 ▲（−1）／▼（＋1）：一下一頁。
+// listScroll 是 ▲（−1）／▼（＋1）的一列更新。
 func (g *Game) listScroll(dir int) {
 	tab := g.listTab()
 	g.listPage(tab)

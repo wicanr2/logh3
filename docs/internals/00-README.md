@@ -1,5 +1,22 @@
 # 原版內部構造參考
 
+第58輪沿#60：[左鍵保持工作快照](../goal/2026-10-03-left-hold-round-58.md)、
+[研究396](../re/396-left-button-repeat.md)、[089契約](../spec/089-left-button-repeat.md)與
+[原始指令匯出](../../tools/scripts/left_hold_ida.py)、[固定原版保持探針](../../tools/left_hold_oracle.sh)、
+[速度操作探針](../../tools/scripts/left_hold_prototype.html)、[補證凍結工具](../../tools/scripts/left_hold_receipt.py)與
+[完整保持補證](data/left-button-repeat.json)。補證凍結於裁決前；現行契約見089。
+
+第58輪已確認350／100ms清單速度，限定CONFORMED子契約與[正式左鍵保持](../../internal/game/lefthold.go)接線依089。
+[保持回歸](../../internal/game/lefthold_test.go)核時間邊界、列選擇、上下界、模態及保持取消。
+[正常首戰保持全圖](../../internal/game/lefthold_normal_test.go)沿主選單138／S3同盟到資料窗，保持到26及0，不遮罩。
+[真實GUI保持](../../tools/left_hold_gui.sh)用正常鍵盤與滑鼠按住五秒到上界，驗一倍／兩倍與全圖。
+[GUI就緒觀測](../../tools/scripts/left_hold_gui_ready.py)唯讀比對首戰輸入標籤，再送正常滑鼠操作。
+[月初提督清單保持補驗](../../tools/monthly_admiral_hold_oracle.sh)從正常建造計劃取得獨立父狀態與雙跑。
+[月初框線游標清理](../../tools/scripts/monthly_admiral_cursor.py)由雙跑證據剔除25個舊量測混入的游標像素，產生器同時接線。
+[保持成果凍結工具](../../tools/scripts/left_hold_game_receipt.py)、[正式保持收據](data/left-button-repeat-game.json)與
+[對拍048](../playtest/048-left-button-repeat.md)保存明示時間差異、正常GUI、全圖及保存範圍。
+[新原版保持結果比較](../../internal/game/lefthold_oracle_test.go)以明示等價輸入映射核右下清單／一覽表／稅率／百分比全圖。
+
 《銀河英雄傳說III SP》PC DOS 中文版（1994，亨和企業．微波軟體發行）的
 結構化逆向資料。這裡放**目前為止查證出來的事實本身**；查證過程與逐次
 調查紀錄在 `docs/re/`，執行器規格在 dosgolem 的 `docs/spec/`。

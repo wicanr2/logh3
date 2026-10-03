@@ -5,17 +5,19 @@
 
 ## 現況一覽
 
-**目前接續（2026-10-03，第五十七輪）**：#67正常同盟四十列資料視窗完整畫面對拍完成。
-父提交d070f01ee90ff7c4bf914f62edf80b657a8be633；dosgolem未改，本輪呈現修正及提交依Git紀錄。
+**目前接續（2026-10-03，第五十八輪）**：#60左鍵保持接線與限定完整畫面對拍完成。
+父提交2c44b828097d9680e689419089809e6cdde36efc；dosgolem未改，提交及推送身份依Git紀錄。
 
 | 分類 | 目前真相 | 最近驗證／入口 |
 |---|---|---|
-| remake已完成 | 全形單位數艦隊編號、上下箭頭、右陰影、同盟摘要與小地圖視野框修正 | 021／083限定子契約先READY後CONFORMED，整份088仍DRAFT |
-| 原版已驗 | 正常S3同盟40列，偏移0／1／26各兩跑完整RAM／色號／PNG／色盤相同 | IDA六份匯出1836條原指令、16項直接語意proven，其餘unknown；f7523f9／clean |
-| 正常資料鏈 | 主選單→138→S3同盟→實行→首戰→資料，808 tick抵達，兩跑27檔相同 | 正式bootstrap／Game，無測試覆蓋或原版RAM注入，完整畫面回歸及18產品套件通過 |
-| 正常GUI | cmd/gin3真實鍵盤138與滑鼠開表／短按捲動，一倍／兩倍偏移1全圖相同 | 與正常Game及原版收據完整640×480一致，已目視；不外推其他畫面 |
+| remake已完成 | 顯示層左鍵保持／放開，箭頭捕獲，一列步距、界線、模態取消及正式保存接線 | 089限定契約先READY後CONFORMED；月初熱區16像素與游標量測污染修正；整份088仍DRAFT |
+| 原版已驗 | 清單／經濟四組保持、月初保持及右鍵各雙跑完整RAM／全圖相同 | IDA六份788條原指令、18項直接語意proven；DS:1BF2原始bytes及0C0A兩次寫入補證；f7523f9／clean |
+| 正常資料鏈 | 主選單→138→S3同盟→實行808 tick→首戰資料，保持到26及回0 | 正式bootstrap／Game，無局面或RAM注入，兩跑畫面／存檔檔案相同，18產品套件通過 |
+| 正常GUI | cmd/gin3真實鍵鼠、唯讀確認首戰就緒、開資料、保持五秒後放開；一倍／兩倍到26 | 與正常Game及原版完整640×480零差，已目視；其他清單由Game／既有回歸核對，不外推GUI |
+| 核准時間差異 | 清單立即一列，350ms後每100ms一列，取代原版依重畫成本變速 | 使用者已核准；徵稅／預算維持八倒數約137.3ms的hardware-spec approximation，不宣稱逐週期一致 |
+| 保持全圖 | 右下提督／星系／稅率／百分比／月初提督／正常首戰26及0，七張各0／307200 | 原版與Game各雙跑，活動區亦零差，無像素排除；保存稅率4、百分比27及未結算拒絕閘門通過 |
 | 首戰整表 | WORK0／FLEET27／SHIP214／STELLAR0／PLANET0，日期380／799/3/1、7艦隊／55筆池／B6E4B78A保持 | 剩餘FLEET+6C..6F與SHIP+38..3B為顯示物件指標，不填造DOS指標 |
-| 資料視窗 | 偏移0／1／26各0／307200，修正前1189／1094／962；全圖與各區均零差 | same-state僅限三張正常同盟靜態資料畫面，無遮罩／允許差異，原圖及前後差分齊全 |
+| 資料視窗 | 第57輪偏移0／1／26靜態全圖與第58輪保持到26／回0均零差 | same-state限定明示等價輸入後的靜態結果，不宣稱清單保持耗時一致；原圖／差分齊全 |
 | 戰場入口限制 | 第56輪帝國首戰一像素排序取捨仍pending | 資料窗蓋住該像素不能替代忠實度裁決；舊收據不重生，不由本輪升格 |
 | 既有成果保持 | 行軍後兩種XY／航向、偵察隊快取及SHIP+30順位、活動控制、月底旗標與兩AI正常命令 | 第45至54輪既有JSON保持原SHA，不由新來源改寫 |
 | 刻意偏離保持 | 061單人CPU不下令、留原地、不造成傷害；碰撞物件保留 | 原版與雙人不凍結，受控原版fixture明示停用；不宣稱戰術攻擊增強 |
@@ -23,7 +25,13 @@
 | 刻意差異待裁決 | 固定次序的可丟棄探針五圖均零差，其他殘留字鍵局面未保證相同 | 使用者忠實度裁決pending；未採用排序prototype，正式一像素仍差 |
 | 原版oracle未知 | 顯示指標比較契約、正常索敵同態配對、戰場讀檔續戰、表列指向置鏡及未覆蓋控制 | 全部仍按原閘門；鏡頭座位反轉與signed溢位屬明示診斷 |
 | 其他入口限制 | 選單背景16333 pixels、雙人未確認2841 pixels及STELLAR+7D22 bytes | 非本輪範圍，不由局部相同升格 |
-| 原Goal待續 | FF殘留鍵取捨及顯示指標比較契約待核定，再回正常索敵與其餘八步 | #67 CLOSED；#79／#89／#69 OPEN；89張worklist／11張open；音樂人耳／macOS／正式交付仍缺 |
+| 原Goal待續 | FF殘留鍵取捨及顯示指標比較契約待核定，再回正常索敵與其餘八步 | #60／#67 CLOSED；#79／#89／#69 OPEN；89張worklist／10張open；音樂人耳／macOS／正式交付仍缺 |
+
+第58輪入口：[工作快照](docs/goal/2026-10-03-left-hold-round-58.md)、[研究396](docs/re/396-left-button-repeat.md)、
+[089](docs/spec/089-left-button-repeat.md)、[對拍048](docs/playtest/048-left-button-repeat.md)、
+[正式保持收據](docs/internals/data/left-button-repeat-game.json)，SHA-256為8020036870c8441d36371c182703abde7b693487ac7879fbac5451cadbc3b0ae。
+月初其他控制與BuildPlan十四顆造艦比例箭頭不由#60四顆經濟箭頭升格；經濟移出／返回未作原版逐相位聲明。
+月初右鍵探針同時移出熱區，事件是否接受未知，返回契約unknown；正常保存須先結算，保持狀態不進原版格式。歷史凍結JSON不重生。
 
 第57輪入口：[工作快照](docs/goal/2026-10-03-battle-data-scroll-round-57.md)、
 [研究395](docs/re/395-battle-data-scroll.md)、[對拍047](docs/playtest/047-battle-data-scroll.md)、
@@ -550,6 +558,7 @@
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
+| 清單尚無左鍵保持、右下及副官一下一頁；月初箭頭圖塊寬度就是熱區寬度 | 013／052／055舊差異與第58輪首個月初處理端測試 | 研究396：使用者核准350／100ms，089接正式保持；DS:1BF2證實16像素熱區，月初0C0A雙跑位移2。舊量測混入框線的25個游標像素已清理，七張完整畫面零差；其他控制不升格 |
 | 未參戰艦隊座標必為存檔舊值，配置資料在策略層一項都不用；正常S3首回合必有發現報告 | facts38舊正文、研究235、舊正常索敵測試 | 研究388：正常移動至星域25的8／14也更新；九艦隊到達配置與七十筆池已驗。原版首回合兩座位均完成，標頭／展示零次，舊近似佈陣不能作判準；完整088仍DRAFT |
 | 月底只看回合整除10就已符合；載入S3的同盟需要再收稅造船 | 035舊實作宣稱及第48輪尚未分類的首戰STELLAR44／WORK32差 | 研究387：原版旗標0不進實際收稅／造船；只改同盟旗標1才進。088雙閘門接線後STELLAR4032／PLANET6642全同、WORK32減14；完整FLEET／SHIP及全圖仍待驗 |
 | 正常S3首戰原版380、remake381仍未對齊；0374:03DD／線性3B1D為inc | 第46輪當時限制、研究251舊定位 | 研究385：03D9／線性3B19 bytes ff06188f才是寫入端，03DD是執行後IP。088 READY子契約後延至全部戰場／模態尾段完成且未終局才進位，首戰與保存回合380、799/3/1；全圖與其他資料仍有差 |
@@ -669,7 +678,7 @@
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 11 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 10 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -1115,31 +1124,6 @@ WORK0／FLEET27／SHIP214／STELLAR0／PLANET0保持，顯示指標raw差仍完�
 
 **核實**：`internal/game/settingsscreen.go` 裡還找得到 `與 `BUG!` 也還沒接`（自承還在 ＝ 還沒做）
 
-#### hold-to-scroll — ▲▼ 按住連捲（一覽表、右下角清單、提督清單、艦隊組成、徵稅／預算計劃的箭頭）
-
-*[#60](https://github.com/wicanr2/logh3/issues/60) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-原版的 ▲▼ 按住會連續捲動（`3765:0255` 看事件佇列有沒有放開，按住 0.1M 步一列、0.3M 步兩列），remake 一下一列。
-規格 013、052、055 都列成已知差異「做『按住』時一起接」。
-
-**卡在**：- remake 的輸入模型沒有「按住」的時間，要像戰場右鍵捲動（規格 057）那樣補。
-  產品程式碼裡目前**只有一條按住路徑**：`internal/game/battle.go` 的 `RightHold`，
-  由 `cmd/gin3/main.go` 每幀送 `IsMouseButtonPressed(MouseButtonRight)`。**左鍵完全沒有按住分支**。
-
-⚠ **範圍比標題大**：徵稅計劃與預算計劃的兩組箭頭（稅率檔位、建造費％）按住也會連發
-（`internal/game/planscreens.go` 的註解：`-click-hold 3000000` 時稅率一次跳兩階、建造費％也是 2），
-那是同一件事，接的時候一起做。
-
-**做完的判準**：按住的時間與捲動列數與原版收據相同（既有 `fcmd-lst-star-down` 按住 0.1M、第 17 段按住 0.3M），顯示層按著每幀送事件。
-
-⚠ 既有的 11 份 `s3data-scroll-*` 探針（`-held`／`-released`／`-hitprobe`／`-handlerprobe`…）步數綁在
-`logh3-s3data-scroll0.state`，那個檢查點 2026-09-18 重新產生過，取樣點落在不同相位（每份差 224 個像素，`docs/re/337` §三）。
-**拿它們下結論之前先用 `-watch-screen` 重量步數。**
-
-**證據**：[`docs/spec/055-list-screen-rows.md`](docs/spec/055-list-screen-rows.md)、[`docs/spec/052-fleet-list-tabs.md`](docs/spec/052-fleet-list-tabs.md)、[`docs/spec/013-fleet-organisation.md`](docs/spec/013-fleet-organisation.md)、[`docs/spec/057-battle-view-scroll.md`](docs/spec/057-battle-view-scroll.md)
-
-**核實**：`internal/game/listscreen.go` 裡還找得到 `原版按住連捲`（自承還在 ＝ 還沒做）
-
 #### list-tabs-unverified — 一覽表分頁沒有收據的幾種情形（同盟座位、戰鬥中、占領中、士氣低落）
 
 *[#59](https://github.com/wicanr2/logh3/issues/59) · parity（對拍：要與原版逐位元組相同）*
@@ -1224,7 +1208,7 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-81 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+82 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -2647,6 +2631,38 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 **證據**：[`docs/internals/06-font-graph-img.md`](docs/internals/06-font-graph-img.md)
 
 **核實**：`tools/scripts/font_extract.py` 裡出現 `json.dump(meta` 就是做好了
+
+#### hold-to-scroll — ▲▼ 按住連捲（一覽表、右下角清單、提督清單、艦隊組成、徵稅／預算計劃的箭頭）
+
+*[#60](https://github.com/wicanr2/logh3/issues/60) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+原版清單使用3765:0255檢查左鍵事件，每次一列，速度隨重畫成本變動。
+2026-10-03使用者核准清單350／100ms固定速度，接受並記錄此原版差異。
+徵稅／預算四箭頭維持八倒數約137.3ms的硬體規格近似。
+
+**卡在**：指定保持範圍已完成，089限定契約CONFORMED。剩餘限制保留在048，其他八步不由本項升格。
+
+第58輪完成：七張完整640×480畫面各0／307200，各活動區亦零差，無像素排除。
+原版保持四組雙跑及月初兩組雙跑完整RAM／全圖相同；Game輸出亦雙跑相同。
+正常bootstrap／Game主選單138→S3同盟→實行808 tick→首戰資料，保持到26、回0。
+正式cmd/gin3真實X11鍵鼠一倍／兩倍保持五秒到26，與Game及原版全圖相同。
+四張一覽表、右下清單、副官候選、待命／參謀、月初清單與戰場資料保持接線完成。
+艦隊編成涵蓋候選清單，格盤及決定按鈕不連發；BuildPlan十四顆造艦比例箭頭不屬本項四顆經濟箭頭契約。
+徵稅／預算四箭頭、界線、移出／返回、放開與存讀回歸通過；月初未結算仍拒絕保存。
+月初熱區寬16，舊圖塊寬8／內框14造成漏判；游標量測混入框線的25點已由產生器清理。
+月初右鍵探針同時移出熱區，事件接受及返回路徑仍unknown；其餘控制、正常索敵、FF字鍵與音樂仍依其他Issue。
+保持回歸每跑8主測試／6子例，兩跑零失敗／跳過，標準18產品套件通過。
+成果SHA-256：8020036870c8441d36371c182703abde7b693487ac7879fbac5451cadbc3b0ae。
+
+**做完的判準**：清單按下立即一列，350ms後每100ms一列，保存原版步距與界線。
+顯示層每幀送左鍵保持與放開；換畫面、分頁、模態、右鍵或另一按下取消捕獲。
+經濟箭頭每次一級或一點，熱區外暫停，回到原熱區才更新，結果接入正式WORK保存。
+明示等價保持輸入後比較完整畫面；不要求清單相同指令數與列數，也不宣稱原版逐週期時間。
+正常玩家入口及真實鍵鼠至少抽驗資料窗兩種倍率；不以direct-entry代替。
+
+**證據**：[`docs/spec/089-left-button-repeat.md`](docs/spec/089-left-button-repeat.md)、[`docs/re/396-left-button-repeat.md`](docs/re/396-left-button-repeat.md)、[`docs/playtest/048-left-button-repeat.md`](docs/playtest/048-left-button-repeat.md)、[`docs/internals/data/left-button-repeat.json`](docs/internals/data/left-button-repeat.json)、[`docs/internals/data/left-button-repeat-game.json`](docs/internals/data/left-button-repeat-game.json)、[`internal/game/lefthold.go`](internal/game/lefthold.go)、[`internal/game/lefthold_test.go`](internal/game/lefthold_test.go)、[`internal/game/lefthold_normal_test.go`](internal/game/lefthold_normal_test.go)、[`internal/game/lefthold_oracle_test.go`](internal/game/lefthold_oracle_test.go)、[`tools/left_hold_gui.sh`](tools/left_hold_gui.sh)
+
+**核實**：`TestLeftHoldNormalBattleWholeFrame` 釘在 `internal/game`
 
 #### garrison-self-and-step-count — 就地駐留不扣移動費的成因、走一格時星域艦隊數（297B:08D8）
 

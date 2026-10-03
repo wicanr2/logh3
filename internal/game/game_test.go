@@ -770,6 +770,7 @@ func TestAdmiralListFromBuildPlan(t *testing.T) {
 	if g.State() != StateAdmiralList {
 		t.Fatal("點了左按鈕沒有開出待命中提督資料")
 	}
+	g.MoveMouse(464, 370) // 原版mouse(464,330)的畫布位置；089改接動態游標。
 	matches(t, g, "admirals1")
 }
 

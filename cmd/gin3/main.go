@@ -116,6 +116,10 @@ func (a *app) Update() error {
 	a.g.MoveMouse(x, y)
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		a.g.Click(x, y)
+	} else if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
+		a.g.LeftHold(x, y, time.Second/time.Duration(ebiten.TPS()))
+	} else if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
+		a.g.LeftRelease()
 	}
 	switch {
 	case inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight):

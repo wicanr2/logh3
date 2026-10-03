@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>按住速度取捨探針</title>
+<style>body{max-width:850px;margin:32px auto;font:18px sans-serif;background:#14232b;color:#eee}section{display:flex;gap:32px}article{flex:1}button{font:inherit;padding:14px;touch-action:none}pre{background:#08343a;padding:16px;min-height:145px}small{line-height:1.6}select{font:inherit}</style>
+<h1>按住速度取捨探針</h1>
+<p>可丟棄的操作示範，未接入遊戲。兩側都一次移動一列，最多移至第30列。</p>
+<label>原版抽樣畫面 <select id="kind"><option value="5.55">右下提督清單，約5.55毫秒一列</option><option value="14.26">星系一覽表，約14.26毫秒一列</option></select></label>
+<section><article><h2>原版抽樣速度</h2><button id="original">按住向下</button><pre id="originalRows"></pre></article><article><h2>固定較慢速度</h2><button id="modern">按住向下</button><pre id="modernRows"></pre></article></section>
+<button id="reset">重設</button>
+<p id="status"></p>
+<small>左側以dosgolem f7523f9、tick 20000、PIT分頻2048的指令數樣本估算。清單每列重畫成本不同，這個固定平均值不宣稱精確原版時間。右側按下先移一列，350毫秒後開始每100毫秒一列。兩側只比較速度，取消／移出規則另由原版證據決定。資料來源：研究396。</small>
+<script>
+const lanes={original:{offset:0,pressed:false},modern:{offset:0,pressed:false}};
+const el=id=>document.getElementById(id);
+function render(){for(const [id,lane] of Object.entries(lanes)){el(id+'Rows').textContent='目前位移 '+lane.offset+' / 30\n'+Array.from({length:5},(_,i)=>'提督 '+String(lane.offset+i+1).padStart(2,'0')).join('\n')}el('status').textContent='操作測試請按住按鈕，放開即停。'}
+for(const [id,lane] of Object.entries(lanes)){
+ el(id).onpointerdown=e=>{e.preventDefault();el(id).setPointerCapture(e.pointerId);lane.pressed=true;lane.start=performance.now();lane.offset=Math.min(30,lane.offset+1);lane.base=lane.offset;render()};
+ el(id).onpointerup=el(id).onpointercancel=()=>{lane.pressed=false};
+}
+el('reset').onclick=()=>{for(const lane of Object.values(lanes)){lane.pressed=false;lane.offset=0}render()};
+el('kind').onchange=()=>el('reset').click();
+function frame(now){for(const [id,lane] of Object.entries(lanes)){if(!lane.pressed)continue;const elapsed=now-lane.start;const n=id==='original'?Math.floor(elapsed/Number(el('kind').value)):(elapsed<350?0:1+Math.floor((elapsed-350)/100));lane.offset=Math.min(30,lane.base+n)}render();requestAnimationFrame(frame)}
+render();requestAnimationFrame(frame);
+</script></html>

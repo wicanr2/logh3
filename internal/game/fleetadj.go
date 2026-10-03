@@ -26,7 +26,7 @@ type adjPick struct {
 	detailOn bool  // 詳細資料視窗開著
 	detail   int   // 詳細資料顯示這一位
 	list     []int // 候選（提督索引，照提督表的順序）
-	first    int   // 清單捲到第幾筆（`ds:96A1`；▲▼ 一次一頁）
+	first    int   // 清單捲到第幾筆（`ds:96A1`；▲▼每次一列）
 }
 
 // adjAdmiral 回這條路上帶隊的提督：出擊那條路是點進來的那一位，
@@ -101,12 +101,18 @@ func (g *Game) adjListPage() int {
 // （那兩顆是 overlay 的 14 × 20 小框，最上面那顆 ▲、最下面那顆 ▼）。
 func (g *Game) adjListScrollAt(x, y int) int {
 	spec := g.res.Screens["screen-standby-admirals"]
+	return admiralScrollAt(spec, x, y)
+}
+
+func admiralScrollAt(spec *screen.MainGameSpec, x, y int) int {
 	if spec == nil || spec.Windows["overlay"] == nil {
 		return 0
 	}
 	top, bottom := -1, -1
 	for i, b := range spec.Windows["overlay"].Boxes {
-		if b.W != 14 || len(b.Codes) > 0 {
+		// 月初規格存8像素箭頭圖塊，待命規格存14像素內框。
+		// 原版1BF2熱區寬16，兩種圖塊右緣相同（規格089）。
+		if (b.W != 14 && b.W != 8) || len(b.Codes) > 0 {
 			continue
 		}
 		if top < 0 || b.Y < spec.Windows["overlay"].Boxes[top].Y {
@@ -121,22 +127,21 @@ func (g *Game) adjListScrollAt(x, y int) int {
 			continue
 		}
 		b := spec.Windows["overlay"].Boxes[i]
-		if x >= b.X && x < b.X+b.W && y >= b.Y && y < b.Y+b.H {
+		if x >= b.X+b.W-16 && x < b.X+b.W && y >= b.Y && y < b.Y+b.H {
 			return dir
 		}
 	}
 	return 0
 }
 
-// adjListScroll 捲一頁（`0C0A:01D7`／`0235`）：▲ 回到上一頁、▼ 下一頁，
-// 到底就停在最後一頁（收據 `fcmd-adj-change-down`／`-down2`／`-up`）。
+// adjListScroll 每次一列（`0C0A:01D7`／`0235`），保持速度依規格089。
 func (g *Game) adjListScroll(dir int) {
 	page := g.adjListPage()
 	last := len(g.adj.list) - page
 	if last < 0 {
 		last = 0
 	}
-	g.adj.first += dir * page
+	g.adj.first += dir
 	if g.adj.first > last {
 		g.adj.first = last
 	}
@@ -179,7 +184,7 @@ func (g *Game) adjClick(x, y int) bool {
 		}
 		return true
 	case g.adj.listOn:
-		// ▲▼ 捲頁；點一列開那一位的詳細資料，清單同時關掉（`0C0A:0742` 在開詳細
+		// ▲▼每次一列；點一列開那一位的詳細資料，清單同時關掉（`0C0A:0742`在開詳細
 		// 資料之前）；點在別處什麼都不做（右鍵也不關，收據 `fcmd-adj-change-rclick`）。
 		if dir := g.adjListScrollAt(x, y); dir != 0 {
 			g.adjListScroll(dir)
@@ -276,7 +281,7 @@ func (g *Game) drawAdjPick(fb *gfx.Framebuffer) {
 var adjListTitleCodes = []uint16{0xB0C6, 0xA978}
 
 // drawAdjList 畫「待命中副官資料」：`screen-standby-admirals` 的 overlay，
-// 標題「提督」換成「副官」，列是候選（最多十六列；捲動還沒接）。
+// 標題「提督」換成「副官」，列是候選，從first起顯示最多十六列。
 func (g *Game) drawAdjList(fb *gfx.Framebuffer) {
 	spec := g.res.Screens["screen-standby-admirals"]
 	if spec == nil || spec.Windows["overlay"] == nil {

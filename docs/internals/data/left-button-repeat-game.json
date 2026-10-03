@@ -1,0 +1,1746 @@
+{
+  "schema": "logh3.left-hold-game.v1",
+  "date": "2026-10-03",
+  "parent_git_head": "2c44b828097d9680e689419089809e6cdde36efc",
+  "working_tree_dirty": true,
+  "go_version": "go version go1.24.13 linux/amd64",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "gui_image": "logh3-ebiten:2",
+  "gui_image_sha256": "6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+  "approved_list_timing": {
+    "first_update": "按下立即一列",
+    "delay_ms": 350,
+    "period_ms": 100,
+    "classification": "使用者核准的刻意差異"
+  },
+  "economic_period_ns": 137313502,
+  "economic_timing_grade": "hardware-spec approximation；不宣稱原版初始相位或逐週期一致",
+  "frozen_research": [
+    {
+      "path": "docs/internals/data/left-button-repeat.json",
+      "bytes": 427344,
+      "sha256": "4873d0449777bd1ae6be2e558c82493b582c32f38f96d8d1e20d96e4715dfc5a"
+    },
+    {
+      "path": "docs/internals/data/battle-data-scroll.json",
+      "bytes": 824069,
+      "sha256": "0da250722c37fa5c51518f7b932d29e7a800fd60bab54ac2d7bbb8066a279819"
+    }
+  ],
+  "monthly_original_runs": [
+    {
+      "name": "parent",
+      "flags": [
+        "-tick",
+        "20000",
+        "-press",
+        "1,3,8,enter",
+        "-press-at",
+        "105000000",
+        "-press-every",
+        "2000000",
+        "-clicks",
+        "40000000:300:170,95000000:300:170,130000000:448:330,155000000:448:310,168000000:464:330",
+        "-click-hold",
+        "3000000",
+        "-steps",
+        "225000001",
+        "-peek",
+        "lin:5E1D1:1",
+        "-watch",
+        "5E1D1-5E1D1",
+        "-watch-file",
+        "/out/oracle/hold60-r58-month-clean-parent/writes.txt",
+        "-save-state",
+        "225000000:/out/oracle/hold60-r58-month-clean-parent/machine.state",
+        "-dump-mem-at",
+        "224999999:lin:0:1048576:/out/oracle/hold60-r58-month-clean-parent/mem.bin"
+      ],
+      "artifacts": [
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-parent/meta.txt",
+          "bytes": 884,
+          "sha256": "74243e72bd84e08d2832e46158a18e5ecab24d083ca394ea7ef0da2784b2ea87"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-parent/flags.txt",
+          "bytes": 472,
+          "sha256": "4430b8f33f6fa5d319b97521075c4907898609eed1d55a989c37eaa522ae89aa"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-parent/report.txt",
+          "bytes": 204288,
+          "sha256": "167ab29ff428b0e11275f82f4c0a0808e2e5a59b933b96d830eeab56fc767b7a"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-parent/mem.bin",
+          "bytes": 1048576,
+          "sha256": "9a28f8ad6e0e12d7b0a1764f55261cc3bb96a3d4c8566efec5a11be1e5758ab3"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-parent/machine.state",
+          "bytes": 269545,
+          "sha256": "b455ce46db81c5be9258d2833edda53d14a302e276ee77adc2e2a22e34ea6eb1"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-parent/screen.bin",
+          "bytes": 307200,
+          "sha256": "8de14dbd1b5adf31d0dfbc3181cb8cf3264f251980a8721f0fd6a05450168023"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-parent/screen.png",
+          "bytes": 17673,
+          "sha256": "401556363765285c7c262d8c876875f58276461fb979ffcef51149d340017531"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-parent/pal.bin",
+          "bytes": 768,
+          "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-parent/writes.txt",
+          "bytes": 62,
+          "sha256": "02b3b460577fe9a9614d82cdccdc8adf02eb46fc15f7a2a9b12725454c693397"
+        }
+      ]
+    },
+    {
+      "name": "a",
+      "flags": [
+        "-tick",
+        "20000",
+        "-load-state",
+        "/out/oracle/hold60-r58-month-clean-parent/machine.state",
+        "-clicks",
+        "231000000:617:350",
+        "-click-hold",
+        "300000",
+        "-steps",
+        "236300001",
+        "-peek",
+        "lin:5E1D1:1",
+        "-watch",
+        "5E1D1-5E1D1",
+        "-watch-file",
+        "/out/oracle/hold60-r58-month-clean-a/writes.txt",
+        "-save-state",
+        "236300000:/out/oracle/hold60-r58-month-clean-a/machine.state",
+        "-dump-mem-at",
+        "236299999:lin:0:1048576:/out/oracle/hold60-r58-month-clean-a/mem.bin"
+      ],
+      "artifacts": [
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/meta.txt",
+          "bytes": 801,
+          "sha256": "e77717417b0e6757f6c08c42c189e722eec8cd98b8764763301ee514f6bb0ac5"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/flags.txt",
+          "bytes": 394,
+          "sha256": "dbf921fc6ceb1baea6d32e5b2a00cfbb569c39e0c819296c2b12a0a18a759a90"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/report.txt",
+          "bytes": 54341,
+          "sha256": "94e2e208067a6a7f84b914d7f6f1bed405b371fbb4d94eef950ee2039f5047f3"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/mem.bin",
+          "bytes": 1048576,
+          "sha256": "038e056f7d0dfcdfa463a6abef3cde784bd1ad99520df7a18268c5671c4a5422"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/machine.state",
+          "bytes": 269606,
+          "sha256": "16864f3c72af909b0ae648cb56f4f00d674dc076996ad2c4ba913818a8a8a87c"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/screen.bin",
+          "bytes": 307200,
+          "sha256": "45c79a94d9a81231198081a05041c81e3bb22a65dddbd31202729e81882a532f"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/screen.png",
+          "bytes": 17647,
+          "sha256": "2f49320df83fcbb469bdc231f44588d83724c30c4c7284ef6a13cbbbb4cd96bd"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/pal.bin",
+          "bytes": 768,
+          "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/writes.txt",
+          "bytes": 64,
+          "sha256": "ea2e2e613096ce2e23c87d12c4daf449874378647552deda44c36a912e951173"
+        }
+      ]
+    },
+    {
+      "name": "b",
+      "flags": [
+        "-tick",
+        "20000",
+        "-load-state",
+        "/out/oracle/hold60-r58-month-clean-parent/machine.state",
+        "-clicks",
+        "231000000:617:350",
+        "-click-hold",
+        "300000",
+        "-steps",
+        "236300001",
+        "-peek",
+        "lin:5E1D1:1",
+        "-watch",
+        "5E1D1-5E1D1",
+        "-watch-file",
+        "/out/oracle/hold60-r58-month-clean-b/writes.txt",
+        "-save-state",
+        "236300000:/out/oracle/hold60-r58-month-clean-b/machine.state",
+        "-dump-mem-at",
+        "236299999:lin:0:1048576:/out/oracle/hold60-r58-month-clean-b/mem.bin"
+      ],
+      "artifacts": [
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/meta.txt",
+          "bytes": 801,
+          "sha256": "9d9d3e29ac821e22a80eb4ddb194cc5b7e2329dfcf9b5509b25c6fe4a76072bb"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/flags.txt",
+          "bytes": 394,
+          "sha256": "938f9f2eb11a83fc111cdf1164426c7399d01722551050b8c61181c38a5c286b"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/report.txt",
+          "bytes": 54342,
+          "sha256": "cdc7c96bbe14020a439c8ee626bc213628f6d9b8a6cd3d858e5409aa78434664"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/mem.bin",
+          "bytes": 1048576,
+          "sha256": "038e056f7d0dfcdfa463a6abef3cde784bd1ad99520df7a18268c5671c4a5422"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/machine.state",
+          "bytes": 269606,
+          "sha256": "f6fb4d516d9093dda5b9d57d55a09617c630c4eda7f97abfe2f518c33e75fd24"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/screen.bin",
+          "bytes": 307200,
+          "sha256": "45c79a94d9a81231198081a05041c81e3bb22a65dddbd31202729e81882a532f"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/screen.png",
+          "bytes": 17647,
+          "sha256": "2f49320df83fcbb469bdc231f44588d83724c30c4c7284ef6a13cbbbb4cd96bd"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/pal.bin",
+          "bytes": 768,
+          "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/writes.txt",
+          "bytes": 64,
+          "sha256": "ea2e2e613096ce2e23c87d12c4daf449874378647552deda44c36a912e951173"
+        }
+      ]
+    },
+    {
+      "name": "close-a",
+      "flags": [
+        "-tick",
+        "20000",
+        "-load-state",
+        "/out/oracle/hold60-r58-month-clean-a/machine.state",
+        "-rclicks",
+        "237000000:100:100",
+        "-click-hold",
+        "3000000",
+        "-steps",
+        "245000001",
+        "-peek",
+        "lin:5E1D1:1",
+        "-watch",
+        "5E1D1-5E1D1",
+        "-watch-file",
+        "/out/oracle/hold60-r58-month-clean-close-a/writes.txt",
+        "-save-state",
+        "245000000:/out/oracle/hold60-r58-month-clean-close-a/machine.state",
+        "-dump-mem-at",
+        "244999999:lin:0:1048576:/out/oracle/hold60-r58-month-clean-close-a/mem.bin"
+      ],
+      "artifacts": [
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-a/meta.txt",
+          "bytes": 822,
+          "sha256": "4197db35d1912d6f48cbcc23abefbcc9295b0c9653b946e97a0d40d22a3a928e"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-a/flags.txt",
+          "bytes": 409,
+          "sha256": "33e26191dd8e8364d5d6a14d3871f26c833320989c49dd48980b9c2235d7b8aa"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-a/report.txt",
+          "bytes": 3034,
+          "sha256": "109860cbe0a9ac35d22ea98ebd7a338a12ea8750ff73439a351489315a2269ab"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-a/mem.bin",
+          "bytes": 1048576,
+          "sha256": "7e3cf25fbbf1caeb2e8f0a116d4bcc4f434ebea86b961bedd71293d81459975a"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-a/machine.state",
+          "bytes": 268249,
+          "sha256": "edbc002737bb699f48209a952c24f0e83543d6b265dc1c5f06a6a9da2cea0211"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-a/screen.bin",
+          "bytes": 307200,
+          "sha256": "e122b7808f3626cf54f0adef1fd2a5908c84e438d23186dc6734375288fb85a0"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-a/screen.png",
+          "bytes": 17223,
+          "sha256": "a5f1a7f9f3b1628982d57caef263411802003a892e7dd0e1514afae8ee3095c3"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-a/pal.bin",
+          "bytes": 768,
+          "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-a/writes.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "name": "close-b",
+      "flags": [
+        "-tick",
+        "20000",
+        "-load-state",
+        "/out/oracle/hold60-r58-month-clean-b/machine.state",
+        "-rclicks",
+        "237000000:100:100",
+        "-click-hold",
+        "3000000",
+        "-steps",
+        "245000001",
+        "-peek",
+        "lin:5E1D1:1",
+        "-watch",
+        "5E1D1-5E1D1",
+        "-watch-file",
+        "/out/oracle/hold60-r58-month-clean-close-b/writes.txt",
+        "-save-state",
+        "245000000:/out/oracle/hold60-r58-month-clean-close-b/machine.state",
+        "-dump-mem-at",
+        "244999999:lin:0:1048576:/out/oracle/hold60-r58-month-clean-close-b/mem.bin"
+      ],
+      "artifacts": [
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-b/meta.txt",
+          "bytes": 822,
+          "sha256": "796a62108537d9d69de20a7ab91c2cea8c4ae3c4c72d0b427f4c33ea10eaebde"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-b/flags.txt",
+          "bytes": 409,
+          "sha256": "8c15da3d674af86a815866285964d9b5a2068cf4b1d21b857c837c997fad9c56"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-b/report.txt",
+          "bytes": 3034,
+          "sha256": "e87f9b253b6be1608c094651eeeaa0b5ff4ccbe54609743f13327799ee1bb3d1"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-b/mem.bin",
+          "bytes": 1048576,
+          "sha256": "7e3cf25fbbf1caeb2e8f0a116d4bcc4f434ebea86b961bedd71293d81459975a"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-b/machine.state",
+          "bytes": 268249,
+          "sha256": "bdcd831b8cf92d42567e8bfc758e34d777ed965e9eb469061f8ec306bb5bc9a2"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-b/screen.bin",
+          "bytes": 307200,
+          "sha256": "e122b7808f3626cf54f0adef1fd2a5908c84e438d23186dc6734375288fb85a0"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-b/screen.png",
+          "bytes": 17223,
+          "sha256": "a5f1a7f9f3b1628982d57caef263411802003a892e7dd0e1514afae8ee3095c3"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-b/pal.bin",
+          "bytes": 768,
+          "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-close-b/writes.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "name": "tab-300000",
+      "comparison_level": "same-state，限核定等價輸入後的靜態全圖",
+      "resource_scope": "實際原版素材的測試資源，正常新遊戲／戰略命令；未注入局面",
+      "input_mapping": {
+        "original_hold_instructions": 300000,
+        "game_hold_ns": 650000000,
+        "updates": 5
+      },
+      "original_artifacts": [
+        {
+          "path": "workplace/oracle/hold60-r58-tab-300000-a/screen.bin",
+          "bytes": 307200,
+          "sha256": "edbd2bec6acd24323119e2463036fdace17dbf19f87b09e78e5c6c82cc212d44"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-tab-300000-a/screen.png",
+          "bytes": 26057,
+          "sha256": "555e861f5a283462a4106cfdd399af1017a660bc8be286b192e9413a5689dda8"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-tab-300000-b/screen.bin",
+          "bytes": 307200,
+          "sha256": "edbd2bec6acd24323119e2463036fdace17dbf19f87b09e78e5c6c82cc212d44"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-tab-300000-b/screen.png",
+          "bytes": 26057,
+          "sha256": "555e861f5a283462a4106cfdd399af1017a660bc8be286b192e9413a5689dda8"
+        }
+      ],
+      "game_artifacts": [
+        {
+          "path": "workplace/round58-hold-compare-final-a/tab-300000/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "bfd79c4814a758eea777dc426e955888c4b3db51f6abc0798027aac1844b44cb"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tab-300000/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "43ac1c6fade36d7ea31a8478154d6669a15c31233d648a3a39dce7a7b0db0a64"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tab-300000/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tab-300000/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "8b0ccf4f639f0b5c86e102ef1f92d0cd258aab7ed136ccadf044b8231b9b873a"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tab-300000/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "09cbfb7a0fcbe836d8f2396feec981dea5d5c292fa16f70e81cb7c551f7c5b11"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tab-300000/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "16aac06df4ad29be82458d096e4523953a323793b0655bc7e2697e6c43671af1"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tab-300000/WORK.DT0",
+          "bytes": 230,
+          "sha256": "83e9626716f62e35195d4ba6cbc37974a80dc3d6e93f7498ac13503d31e0aee5"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tab-300000/screen.bin",
+          "bytes": 307200,
+          "sha256": "edbd2bec6acd24323119e2463036fdace17dbf19f87b09e78e5c6c82cc212d44"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tab-300000/screen.png",
+          "bytes": 23800,
+          "sha256": "f8eb2b9ae88b523d12fa0553fa14c83cec641458e6ab095b5bb094ae21d63a5c"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tab-300000/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "bfd79c4814a758eea777dc426e955888c4b3db51f6abc0798027aac1844b44cb"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tab-300000/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "43ac1c6fade36d7ea31a8478154d6669a15c31233d648a3a39dce7a7b0db0a64"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tab-300000/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tab-300000/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "8b0ccf4f639f0b5c86e102ef1f92d0cd258aab7ed136ccadf044b8231b9b873a"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tab-300000/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "09cbfb7a0fcbe836d8f2396feec981dea5d5c292fa16f70e81cb7c551f7c5b11"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tab-300000/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "16aac06df4ad29be82458d096e4523953a323793b0655bc7e2697e6c43671af1"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tab-300000/WORK.DT0",
+          "bytes": 230,
+          "sha256": "83e9626716f62e35195d4ba6cbc37974a80dc3d6e93f7498ac13503d31e0aee5"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tab-300000/screen.bin",
+          "bytes": 307200,
+          "sha256": "edbd2bec6acd24323119e2463036fdace17dbf19f87b09e78e5c6c82cc212d44"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tab-300000/screen.png",
+          "bytes": 23800,
+          "sha256": "f8eb2b9ae88b523d12fa0553fa14c83cec641458e6ab095b5bb094ae21d63a5c"
+        }
+      ],
+      "statistics": {
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "pixels": 307200,
+        "equal": 307200,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "active_region_statistics": {
+        "region": [
+          338,
+          300,
+          270,
+          100
+        ],
+        "pixels": 27000,
+        "equal": 27000,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "difference_png": {
+        "path": "workplace/round58-hold-differences/tab-300000.png",
+        "bytes": 438,
+        "sha256": "8b9e5ba1c3baed93e591f4f103d21c51a502e27ed224bc4e3924b467cd5cbdc7"
+      },
+      "allowed_pixel_regions": []
+    },
+    {
+      "name": "star-300000",
+      "comparison_level": "same-state，限核定等價輸入後的靜態全圖",
+      "resource_scope": "實際原版素材的測試資源，正常新遊戲／戰略命令；未注入局面",
+      "input_mapping": {
+        "original_hold_instructions": 300000,
+        "game_hold_ns": 350000000,
+        "updates": 2
+      },
+      "original_artifacts": [
+        {
+          "path": "workplace/oracle/hold60-r58-star-300000-a/screen.bin",
+          "bytes": 307200,
+          "sha256": "dba52021cee100a1ce356723a5c8a4541a61710a0a2184df6c2094b0f427c754"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-star-300000-a/screen.png",
+          "bytes": 24823,
+          "sha256": "171d568193048c910e618f73ddaec0c67065d36ef521c444e7d44360faac6f60"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-star-300000-b/screen.bin",
+          "bytes": 307200,
+          "sha256": "dba52021cee100a1ce356723a5c8a4541a61710a0a2184df6c2094b0f427c754"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-star-300000-b/screen.png",
+          "bytes": 24823,
+          "sha256": "171d568193048c910e618f73ddaec0c67065d36ef521c444e7d44360faac6f60"
+        }
+      ],
+      "game_artifacts": [
+        {
+          "path": "workplace/round58-hold-compare-final-a/star-300000/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "bfd79c4814a758eea777dc426e955888c4b3db51f6abc0798027aac1844b44cb"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/star-300000/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "43ac1c6fade36d7ea31a8478154d6669a15c31233d648a3a39dce7a7b0db0a64"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/star-300000/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/star-300000/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "8b0ccf4f639f0b5c86e102ef1f92d0cd258aab7ed136ccadf044b8231b9b873a"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/star-300000/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "09cbfb7a0fcbe836d8f2396feec981dea5d5c292fa16f70e81cb7c551f7c5b11"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/star-300000/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "16aac06df4ad29be82458d096e4523953a323793b0655bc7e2697e6c43671af1"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/star-300000/WORK.DT0",
+          "bytes": 230,
+          "sha256": "83e9626716f62e35195d4ba6cbc37974a80dc3d6e93f7498ac13503d31e0aee5"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/star-300000/screen.bin",
+          "bytes": 307200,
+          "sha256": "dba52021cee100a1ce356723a5c8a4541a61710a0a2184df6c2094b0f427c754"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/star-300000/screen.png",
+          "bytes": 22836,
+          "sha256": "fc1163ed7e8a657952a8ff0cd0d7900a0a8211950367bb408db31a4256bbbe30"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/star-300000/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "bfd79c4814a758eea777dc426e955888c4b3db51f6abc0798027aac1844b44cb"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/star-300000/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "43ac1c6fade36d7ea31a8478154d6669a15c31233d648a3a39dce7a7b0db0a64"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/star-300000/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/star-300000/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "8b0ccf4f639f0b5c86e102ef1f92d0cd258aab7ed136ccadf044b8231b9b873a"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/star-300000/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "09cbfb7a0fcbe836d8f2396feec981dea5d5c292fa16f70e81cb7c551f7c5b11"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/star-300000/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "16aac06df4ad29be82458d096e4523953a323793b0655bc7e2697e6c43671af1"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/star-300000/WORK.DT0",
+          "bytes": 230,
+          "sha256": "83e9626716f62e35195d4ba6cbc37974a80dc3d6e93f7498ac13503d31e0aee5"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/star-300000/screen.bin",
+          "bytes": 307200,
+          "sha256": "dba52021cee100a1ce356723a5c8a4541a61710a0a2184df6c2094b0f427c754"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/star-300000/screen.png",
+          "bytes": 22836,
+          "sha256": "fc1163ed7e8a657952a8ff0cd0d7900a0a8211950367bb408db31a4256bbbe30"
+        }
+      ],
+      "statistics": {
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "pixels": 307200,
+        "equal": 307200,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "active_region_statistics": {
+        "region": [
+          336,
+          80,
+          272,
+          320
+        ],
+        "pixels": 87040,
+        "equal": 87040,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "difference_png": {
+        "path": "workplace/round58-hold-differences/star-300000.png",
+        "bytes": 438,
+        "sha256": "8b9e5ba1c3baed93e591f4f103d21c51a502e27ed224bc4e3924b467cd5cbdc7"
+      },
+      "allowed_pixel_regions": []
+    },
+    {
+      "name": "tax-3000000",
+      "comparison_level": "same-state，限核定等價輸入後的靜態全圖",
+      "resource_scope": "實際原版素材的測試資源，正常新遊戲／戰略命令；未注入局面",
+      "input_mapping": {
+        "original_hold_instructions": 3000000,
+        "game_hold_ns": 137313502,
+        "updates": 2
+      },
+      "original_artifacts": [
+        {
+          "path": "workplace/oracle/hold60-r58-tax-3000000-a/screen.bin",
+          "bytes": 307200,
+          "sha256": "0680a94e9660236f0ba90961dd30872c6208f1ca66bf0ea6c40fbe04f6e15770"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-tax-3000000-a/screen.png",
+          "bytes": 19771,
+          "sha256": "d8e5fa68148f76d4795f591d55cebf8003c296ef0fbc8c35c9a088ce3bf82f93"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-tax-3000000-b/screen.bin",
+          "bytes": 307200,
+          "sha256": "0680a94e9660236f0ba90961dd30872c6208f1ca66bf0ea6c40fbe04f6e15770"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-tax-3000000-b/screen.png",
+          "bytes": 19771,
+          "sha256": "d8e5fa68148f76d4795f591d55cebf8003c296ef0fbc8c35c9a088ce3bf82f93"
+        }
+      ],
+      "game_artifacts": [
+        {
+          "path": "workplace/round58-hold-compare-final-a/tax-3000000/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "bfd79c4814a758eea777dc426e955888c4b3db51f6abc0798027aac1844b44cb"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tax-3000000/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "43ac1c6fade36d7ea31a8478154d6669a15c31233d648a3a39dce7a7b0db0a64"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tax-3000000/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tax-3000000/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "8b0ccf4f639f0b5c86e102ef1f92d0cd258aab7ed136ccadf044b8231b9b873a"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tax-3000000/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "09cbfb7a0fcbe836d8f2396feec981dea5d5c292fa16f70e81cb7c551f7c5b11"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tax-3000000/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "2eadf34cf6cf7773b61d972c5e27e1724d33a21012274cc78ba572ecbf1b6a19"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tax-3000000/WORK.DT0",
+          "bytes": 230,
+          "sha256": "69a11a5291be7d60c6061efbecc1da956423140d47ea0bd979d8a1858f7fd3cf"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tax-3000000/screen.bin",
+          "bytes": 307200,
+          "sha256": "0680a94e9660236f0ba90961dd30872c6208f1ca66bf0ea6c40fbe04f6e15770"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/tax-3000000/screen.png",
+          "bytes": 17451,
+          "sha256": "f89fc93b8f3f0b54f9e2628203abf345aa00e21da917517a4ef60c49b976a9b8"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tax-3000000/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "bfd79c4814a758eea777dc426e955888c4b3db51f6abc0798027aac1844b44cb"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tax-3000000/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "43ac1c6fade36d7ea31a8478154d6669a15c31233d648a3a39dce7a7b0db0a64"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tax-3000000/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tax-3000000/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "8b0ccf4f639f0b5c86e102ef1f92d0cd258aab7ed136ccadf044b8231b9b873a"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tax-3000000/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "09cbfb7a0fcbe836d8f2396feec981dea5d5c292fa16f70e81cb7c551f7c5b11"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tax-3000000/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "2eadf34cf6cf7773b61d972c5e27e1724d33a21012274cc78ba572ecbf1b6a19"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tax-3000000/WORK.DT0",
+          "bytes": 230,
+          "sha256": "69a11a5291be7d60c6061efbecc1da956423140d47ea0bd979d8a1858f7fd3cf"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tax-3000000/screen.bin",
+          "bytes": 307200,
+          "sha256": "0680a94e9660236f0ba90961dd30872c6208f1ca66bf0ea6c40fbe04f6e15770"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/tax-3000000/screen.png",
+          "bytes": 17451,
+          "sha256": "f89fc93b8f3f0b54f9e2628203abf345aa00e21da917517a4ef60c49b976a9b8"
+        }
+      ],
+      "statistics": {
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "pixels": 307200,
+        "equal": 307200,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "active_region_statistics": {
+        "region": [
+          128,
+          60,
+          384,
+          340
+        ],
+        "pixels": 130560,
+        "equal": 130560,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "difference_png": {
+        "path": "workplace/round58-hold-differences/tax-3000000.png",
+        "bytes": 438,
+        "sha256": "8b9e5ba1c3baed93e591f4f103d21c51a502e27ed224bc4e3924b467cd5cbdc7"
+      },
+      "allowed_pixel_regions": []
+    },
+    {
+      "name": "pct-3000000",
+      "comparison_level": "same-state，限核定等價輸入後的靜態全圖",
+      "resource_scope": "實際原版素材的測試資源，正常新遊戲／戰略命令；未注入局面",
+      "input_mapping": {
+        "original_hold_instructions": 3000000,
+        "game_hold_ns": 137313502,
+        "updates": 2
+      },
+      "original_artifacts": [
+        {
+          "path": "workplace/oracle/hold60-r58-pct-3000000-a/screen.bin",
+          "bytes": 307200,
+          "sha256": "17cca75c0b6c007883cfa944425a2dfb30e0619547c9fd05b0bd4cdff1bce11e"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-pct-3000000-a/screen.png",
+          "bytes": 19822,
+          "sha256": "7e80f7aeaeaca0e5dbe86b755eab8309710cd3eeade218787e871e6229f05dc7"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-pct-3000000-b/screen.bin",
+          "bytes": 307200,
+          "sha256": "17cca75c0b6c007883cfa944425a2dfb30e0619547c9fd05b0bd4cdff1bce11e"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-pct-3000000-b/screen.png",
+          "bytes": 19822,
+          "sha256": "7e80f7aeaeaca0e5dbe86b755eab8309710cd3eeade218787e871e6229f05dc7"
+        }
+      ],
+      "game_artifacts": [
+        {
+          "path": "workplace/round58-hold-compare-final-a/pct-3000000/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "bfd79c4814a758eea777dc426e955888c4b3db51f6abc0798027aac1844b44cb"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/pct-3000000/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "43ac1c6fade36d7ea31a8478154d6669a15c31233d648a3a39dce7a7b0db0a64"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/pct-3000000/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/pct-3000000/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "8b0ccf4f639f0b5c86e102ef1f92d0cd258aab7ed136ccadf044b8231b9b873a"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/pct-3000000/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "09cbfb7a0fcbe836d8f2396feec981dea5d5c292fa16f70e81cb7c551f7c5b11"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/pct-3000000/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "16aac06df4ad29be82458d096e4523953a323793b0655bc7e2697e6c43671af1"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/pct-3000000/WORK.DT0",
+          "bytes": 230,
+          "sha256": "ee959cc310af147a0a6ebd46e98e23425fb76ba173ab497a8198b947b02da552"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/pct-3000000/screen.bin",
+          "bytes": 307200,
+          "sha256": "17cca75c0b6c007883cfa944425a2dfb30e0619547c9fd05b0bd4cdff1bce11e"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-a/pct-3000000/screen.png",
+          "bytes": 17446,
+          "sha256": "ace1728775f509085db618005972cc80fcc59f9b63dce9b06ff54a1b1f8bb5ed"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/pct-3000000/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "bfd79c4814a758eea777dc426e955888c4b3db51f6abc0798027aac1844b44cb"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/pct-3000000/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "43ac1c6fade36d7ea31a8478154d6669a15c31233d648a3a39dce7a7b0db0a64"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/pct-3000000/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "c262494c8df348b3e509bf5d807c75a7b1c56a15ea645bb5bdae2574621a1c8b"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/pct-3000000/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "8b0ccf4f639f0b5c86e102ef1f92d0cd258aab7ed136ccadf044b8231b9b873a"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/pct-3000000/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "09cbfb7a0fcbe836d8f2396feec981dea5d5c292fa16f70e81cb7c551f7c5b11"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/pct-3000000/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "16aac06df4ad29be82458d096e4523953a323793b0655bc7e2697e6c43671af1"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/pct-3000000/WORK.DT0",
+          "bytes": 230,
+          "sha256": "ee959cc310af147a0a6ebd46e98e23425fb76ba173ab497a8198b947b02da552"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/pct-3000000/screen.bin",
+          "bytes": 307200,
+          "sha256": "17cca75c0b6c007883cfa944425a2dfb30e0619547c9fd05b0bd4cdff1bce11e"
+        },
+        {
+          "path": "workplace/round58-hold-compare-final-b/pct-3000000/screen.png",
+          "bytes": 17446,
+          "sha256": "ace1728775f509085db618005972cc80fcc59f9b63dce9b06ff54a1b1f8bb5ed"
+        }
+      ],
+      "statistics": {
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "pixels": 307200,
+        "equal": 307200,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "active_region_statistics": {
+        "region": [
+          128,
+          60,
+          384,
+          340
+        ],
+        "pixels": 130560,
+        "equal": 130560,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "difference_png": {
+        "path": "workplace/round58-hold-differences/pct-3000000.png",
+        "bytes": 438,
+        "sha256": "8b9e5ba1c3baed93e591f4f103d21c51a502e27ed224bc4e3924b467cd5cbdc7"
+      },
+      "allowed_pixel_regions": []
+    },
+    {
+      "name": "month",
+      "comparison_level": "same-state，限核定等價輸入後的靜態全圖",
+      "resource_scope": "實際原版素材的測試資源，正常新遊戲／月初建造計劃；未注入局面",
+      "input_mapping": {
+        "original_hold_instructions": 300000,
+        "game_first_arrow": [
+          608,
+          390
+        ],
+        "game_hold_ns": 350000000,
+        "cursor_canvas": [
+          617,
+          390
+        ],
+        "target_offset": 2
+      },
+      "original_artifacts": [
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/screen.bin",
+          "bytes": 307200,
+          "sha256": "45c79a94d9a81231198081a05041c81e3bb22a65dddbd31202729e81882a532f"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-a/screen.png",
+          "bytes": 17647,
+          "sha256": "2f49320df83fcbb469bdc231f44588d83724c30c4c7284ef6a13cbbbb4cd96bd"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/screen.bin",
+          "bytes": 307200,
+          "sha256": "45c79a94d9a81231198081a05041c81e3bb22a65dddbd31202729e81882a532f"
+        },
+        {
+          "path": "workplace/oracle/hold60-r58-month-clean-b/screen.png",
+          "bytes": 17647,
+          "sha256": "2f49320df83fcbb469bdc231f44588d83724c30c4c7284ef6a13cbbbb4cd96bd"
+        }
+      ],
+      "game_artifacts": [
+        {
+          "path": "workplace/round58-month-player-final-a/screen.bin",
+          "bytes": 307200,
+          "sha256": "45c79a94d9a81231198081a05041c81e3bb22a65dddbd31202729e81882a532f"
+        },
+        {
+          "path": "workplace/round58-month-player-final-a/screen.png",
+          "bytes": 15055,
+          "sha256": "24c20f38aace40830c47f6da5eebe86df90ffdb78758c771b6717855f844e3a7"
+        },
+        {
+          "path": "workplace/round58-month-player-final-b/screen.bin",
+          "bytes": 307200,
+          "sha256": "45c79a94d9a81231198081a05041c81e3bb22a65dddbd31202729e81882a532f"
+        },
+        {
+          "path": "workplace/round58-month-player-final-b/screen.png",
+          "bytes": 15055,
+          "sha256": "24c20f38aace40830c47f6da5eebe86df90ffdb78758c771b6717855f844e3a7"
+        }
+      ],
+      "statistics": {
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "pixels": 307200,
+        "equal": 307200,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "active_region_statistics": {
+        "region": [
+          320,
+          40,
+          320,
+          379
+        ],
+        "pixels": 121280,
+        "equal": 121280,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "difference_png": {
+        "path": "workplace/round58-hold-differences/month.png",
+        "bytes": 438,
+        "sha256": "8b9e5ba1c3baed93e591f4f103d21c51a502e27ed224bc4e3924b467cd5cbdc7"
+      },
+      "allowed_pixel_regions": []
+    },
+    {
+      "name": "last",
+      "comparison_level": "same-state，限核定等價輸入後的靜態全圖",
+      "resource_scope": "正式bootstrap／Game，主選單138→S3同盟→實行808 tick→首戰資料",
+      "input_mapping": {
+        "cursor_canvas": [
+          440,
+          390
+        ],
+        "hold_frames": 300,
+        "tick_ns": 16666666,
+        "arrow": "下",
+        "target_offset": 26
+      },
+      "original_artifacts": [
+        {
+          "path": "workplace/oracle/data67-r57-last-a/screen.bin",
+          "bytes": 307200,
+          "sha256": "ed8e1a575a412db0fc95acffbe124c773bbd7cf3978c32278de4459159db0782"
+        },
+        {
+          "path": "workplace/oracle/data67-r57-last-a/screen.png",
+          "bytes": 12882,
+          "sha256": "8392bc73a25bfc716e76ffafcd05d6e6b05c0b363e6020361428cc1704fcfa55"
+        },
+        {
+          "path": "workplace/oracle/data67-r57-last-b/screen.bin",
+          "bytes": 307200,
+          "sha256": "ed8e1a575a412db0fc95acffbe124c773bbd7cf3978c32278de4459159db0782"
+        },
+        {
+          "path": "workplace/oracle/data67-r57-last-b/screen.png",
+          "bytes": 12882,
+          "sha256": "8392bc73a25bfc716e76ffafcd05d6e6b05c0b363e6020361428cc1704fcfa55"
+        }
+      ],
+      "game_artifacts": [
+        {
+          "path": "workplace/round58-hold-player-final-a/last/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/last/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "95c12570a9cf7b90dc0c4d74ab403e361e7848b51b3d664fc154470984ed15df"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/last/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/last/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/last/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "233b3be8d830ee04f5c05d552c2e27e8c07dbca0af55a6f764e751c98bf3a959"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/last/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/last/WORK.DT0",
+          "bytes": 230,
+          "sha256": "582b49517917c172875e3b237e02438a58b44a0eb24a4903b63ab0453f7a29e4"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/last/screen.bin",
+          "bytes": 307200,
+          "sha256": "ed8e1a575a412db0fc95acffbe124c773bbd7cf3978c32278de4459159db0782"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/last/screen.png",
+          "bytes": 10531,
+          "sha256": "cbe05d04fd66fb4a3e16ceac36331aa3fd136764a8977d77278293e4f386a336"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/last/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/last/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "95c12570a9cf7b90dc0c4d74ab403e361e7848b51b3d664fc154470984ed15df"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/last/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/last/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/last/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "233b3be8d830ee04f5c05d552c2e27e8c07dbca0af55a6f764e751c98bf3a959"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/last/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/last/WORK.DT0",
+          "bytes": 230,
+          "sha256": "582b49517917c172875e3b237e02438a58b44a0eb24a4903b63ab0453f7a29e4"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/last/screen.bin",
+          "bytes": 307200,
+          "sha256": "ed8e1a575a412db0fc95acffbe124c773bbd7cf3978c32278de4459159db0782"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/last/screen.png",
+          "bytes": 10531,
+          "sha256": "cbe05d04fd66fb4a3e16ceac36331aa3fd136764a8977d77278293e4f386a336"
+        }
+      ],
+      "statistics": {
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "pixels": 307200,
+        "equal": 307200,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "active_region_statistics": {
+        "region": [
+          16,
+          60,
+          447,
+          360
+        ],
+        "pixels": 160920,
+        "equal": 160920,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "difference_png": {
+        "path": "workplace/round58-hold-differences/last.png",
+        "bytes": 438,
+        "sha256": "8b9e5ba1c3baed93e591f4f103d21c51a502e27ed224bc4e3924b467cd5cbdc7"
+      },
+      "allowed_pixel_regions": []
+    },
+    {
+      "name": "zero",
+      "comparison_level": "same-state，限核定等價輸入後的靜態全圖",
+      "resource_scope": "正式bootstrap／Game，主選單138→S3同盟→實行808 tick→首戰資料",
+      "input_mapping": {
+        "cursor_canvas": [
+          440,
+          390
+        ],
+        "hold_frames": 300,
+        "tick_ns": 16666666,
+        "arrow": "上",
+        "target_offset": 0
+      },
+      "original_artifacts": [
+        {
+          "path": "workplace/oracle/data67-r57-zero-a/screen.bin",
+          "bytes": 307200,
+          "sha256": "8fdb9d1b89c905dc50ed638aa19dd69a63d3949c5519cc8e35790aa1e154eecb"
+        },
+        {
+          "path": "workplace/oracle/data67-r57-zero-a/screen.png",
+          "bytes": 13363,
+          "sha256": "392ca369c479883e23a321f965e5fe289dca87e753020e90a7966e7c1f29221b"
+        },
+        {
+          "path": "workplace/oracle/data67-r57-zero-b/screen.bin",
+          "bytes": 307200,
+          "sha256": "8fdb9d1b89c905dc50ed638aa19dd69a63d3949c5519cc8e35790aa1e154eecb"
+        },
+        {
+          "path": "workplace/oracle/data67-r57-zero-b/screen.png",
+          "bytes": 13363,
+          "sha256": "392ca369c479883e23a321f965e5fe289dca87e753020e90a7966e7c1f29221b"
+        }
+      ],
+      "game_artifacts": [
+        {
+          "path": "workplace/round58-hold-player-final-a/zero/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/zero/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "95c12570a9cf7b90dc0c4d74ab403e361e7848b51b3d664fc154470984ed15df"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/zero/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/zero/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/zero/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "233b3be8d830ee04f5c05d552c2e27e8c07dbca0af55a6f764e751c98bf3a959"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/zero/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/zero/WORK.DT0",
+          "bytes": 230,
+          "sha256": "582b49517917c172875e3b237e02438a58b44a0eb24a4903b63ab0453f7a29e4"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/zero/screen.bin",
+          "bytes": 307200,
+          "sha256": "8fdb9d1b89c905dc50ed638aa19dd69a63d3949c5519cc8e35790aa1e154eecb"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-a/zero/screen.png",
+          "bytes": 10625,
+          "sha256": "aa5bf4cbcc1ac33f575017afdc4d48c6d94dd22778b82b4b97d3fcddd05bdbfe"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/zero/ADMIRAL.DT0",
+          "bytes": 2296,
+          "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/zero/FLEET.DT0",
+          "bytes": 3904,
+          "sha256": "95c12570a9cf7b90dc0c4d74ab403e361e7848b51b3d664fc154470984ed15df"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/zero/PLANET.DT0",
+          "bytes": 6642,
+          "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/zero/SAVEDATA.IDX",
+          "bytes": 528,
+          "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/zero/SHIP.DT0",
+          "bytes": 27456,
+          "sha256": "233b3be8d830ee04f5c05d552c2e27e8c07dbca0af55a6f764e751c98bf3a959"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/zero/STELLAR.DT0",
+          "bytes": 4032,
+          "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/zero/WORK.DT0",
+          "bytes": 230,
+          "sha256": "582b49517917c172875e3b237e02438a58b44a0eb24a4903b63ab0453f7a29e4"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/zero/screen.bin",
+          "bytes": 307200,
+          "sha256": "8fdb9d1b89c905dc50ed638aa19dd69a63d3949c5519cc8e35790aa1e154eecb"
+        },
+        {
+          "path": "workplace/round58-hold-player-final-b/zero/screen.png",
+          "bytes": 10625,
+          "sha256": "aa5bf4cbcc1ac33f575017afdc4d48c6d94dd22778b82b4b97d3fcddd05bdbfe"
+        }
+      ],
+      "statistics": {
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "pixels": 307200,
+        "equal": 307200,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "active_region_statistics": {
+        "region": [
+          16,
+          60,
+          447,
+          360
+        ],
+        "pixels": 160920,
+        "equal": 160920,
+        "different": 0,
+        "max_channel_difference": 0,
+        "difference_bbox": null
+      },
+      "difference_png": {
+        "path": "workplace/round58-hold-differences/zero.png",
+        "bytes": 438,
+        "sha256": "8b9e5ba1c3baed93e591f4f103d21c51a502e27ed224bc4e3924b467cd5cbdc7"
+      },
+      "allowed_pixel_regions": []
+    }
+  ],
+  "gui": [
+    {
+      "scale": 1,
+      "normal_input": "真實X11鍵盤138、S3同盟、實行、就緒觀測、開資料、左鍵保持5秒、放開",
+      "artifacts": [
+        {
+          "path": "workplace/round58-left-hold-gui-final-1x.bin",
+          "bytes": 307200,
+          "sha256": "ed8e1a575a412db0fc95acffbe124c773bbd7cf3978c32278de4459159db0782"
+        },
+        {
+          "path": "workplace/round58-left-hold-gui-final-1x.png",
+          "bytes": 10531,
+          "sha256": "cbe05d04fd66fb4a3e16ceac36331aa3fd136764a8977d77278293e4f386a336"
+        },
+        {
+          "path": "workplace/round58-left-hold-gui-final-1x.txt",
+          "bytes": 62,
+          "sha256": "1007a603bf5cdb4a902935a85133f539bb7146ad13d2668fb5be3420d6c7bd27"
+        },
+        {
+          "path": "workplace/round58-left-hold-gui-final-1x.log",
+          "bytes": 314,
+          "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+        }
+      ],
+      "different_pixels": 0
+    },
+    {
+      "scale": 2,
+      "normal_input": "真實X11鍵盤138、S3同盟、實行、就緒觀測、開資料、左鍵保持5秒、放開",
+      "artifacts": [
+        {
+          "path": "workplace/round58-left-hold-gui-final-2x.bin",
+          "bytes": 307200,
+          "sha256": "ed8e1a575a412db0fc95acffbe124c773bbd7cf3978c32278de4459159db0782"
+        },
+        {
+          "path": "workplace/round58-left-hold-gui-final-2x.png",
+          "bytes": 10531,
+          "sha256": "cbe05d04fd66fb4a3e16ceac36331aa3fd136764a8977d77278293e4f386a336"
+        },
+        {
+          "path": "workplace/round58-left-hold-gui-final-2x.txt",
+          "bytes": 63,
+          "sha256": "00bcd088019ca051eeb4476e11117971407300882f7bc3ed32bf2e84d45dfb49"
+        },
+        {
+          "path": "workplace/round58-left-hold-gui-final-2x.log",
+          "bytes": 314,
+          "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+        }
+      ],
+      "different_pixels": 0
+    }
+  ],
+  "logs": [
+    {
+      "path": "workplace/round58-hold-standard-final.log",
+      "bytes": 962,
+      "sha256": "00cc8d3a0c92b7adb15e2a6ddd907d6b39213321abdee281886f8a302757bd68"
+    },
+    {
+      "path": "workplace/round58-hold-receipt-final-a.log",
+      "bytes": 1738,
+      "sha256": "c902de5c1db245f96c80c68b28a9f59e60e21820a265639187d332fe805ab7b8"
+    },
+    {
+      "path": "workplace/round58-hold-receipt-final-b.log",
+      "bytes": 1738,
+      "sha256": "e6a09b979084ab54553f911243173157a4fc77d4db55adc2112d880658727f2d"
+    },
+    {
+      "path": "workplace/round58-left-hold-gui-final.log",
+      "bytes": 262,
+      "sha256": "ad6adec8279e203d78a20c85bbfefbf9ade8086e7e18be20242f5f4b9ee3649b"
+    }
+  ],
+  "sources": [
+    {
+      "path": "internal/game/lefthold.go",
+      "bytes": 4886,
+      "sha256": "bbd68b23aa850013e398c264cc829702f2dcc016fcfb8f97340592a7c952a1ba"
+    },
+    {
+      "path": "internal/game/lefthold_test.go",
+      "bytes": 7399,
+      "sha256": "55db2cb5d6511791e46114f47054bbbc695ac43a6f0cf63073c8033972ccb125"
+    },
+    {
+      "path": "internal/game/lefthold_normal_test.go",
+      "bytes": 3865,
+      "sha256": "4d902be670a04b7f89ca4dcc2cabbd663125700e8267c9a525bca7c6bae77351"
+    },
+    {
+      "path": "internal/game/lefthold_oracle_test.go",
+      "bytes": 2408,
+      "sha256": "e5fac1e7c3da1da6986ea7f13e03b23d4fbc6b0cc30e9cad8f905ae264d5c99a"
+    },
+    {
+      "path": "internal/game/game.go",
+      "bytes": 201796,
+      "sha256": "9b5c06c66e764a6f1f4ebff17cc9fe9591ee31ef9a6c6e6b2f180e03d6088676"
+    },
+    {
+      "path": "internal/game/game_test.go",
+      "bytes": 49999,
+      "sha256": "b96b0199c63f7bf51c5e398248e4f2cfb93fd93c558d53109d413d67b26ae841"
+    },
+    {
+      "path": "internal/game/fleetadj.go",
+      "bytes": 10494,
+      "sha256": "7aa5b1a75aacef7c27d7e97084fd3739e79058a9a7ce6ba3b18b34006626bbfa"
+    },
+    {
+      "path": "internal/game/staffpick.go",
+      "bytes": 7397,
+      "sha256": "6799590145352ef22342b0af2601a2d7fc6196a146846a9eb6051ead522a2dde"
+    },
+    {
+      "path": "internal/game/listtabs.go",
+      "bytes": 17714,
+      "sha256": "2c0ecc434c626ffc78e6aff8e1b974b13c944f2b2fc14e5641018f9af4a6a8fe"
+    },
+    {
+      "path": "internal/rules/admiral.go",
+      "bytes": 12372,
+      "sha256": "fe2d15a5bace0547c9b92f9894e7ab644648b4b51d86d564da2c5c052d52f4ee"
+    },
+    {
+      "path": "cmd/gin3/main.go",
+      "bytes": 12512,
+      "sha256": "18fa3a38ecf156ff1e5fa39979b1a968eeea58b05efc1e18ee7f529157e4c5d4"
+    },
+    {
+      "path": "tools/left_hold_gui.sh",
+      "bytes": 2031,
+      "sha256": "40b7a5b42dec638248da54f1472a6ad570d732dc7bc4b35f8d6d67f583485c1e"
+    },
+    {
+      "path": "tools/scripts/left_hold_gui_ready.py",
+      "bytes": 2032,
+      "sha256": "089b5fbd66b47fe161c5c5b949ca0814f796ce61965daea4ae371b9f4e6ab141"
+    },
+    {
+      "path": "tools/monthly_admiral_hold_oracle.sh",
+      "bytes": 1924,
+      "sha256": "c1bd9b64cb2207afbfb64d0a7778317e5aa8d3d841b2da5f63fa557adf268795"
+    },
+    {
+      "path": "tools/scripts/monthly_admiral_cursor.py",
+      "bytes": 2059,
+      "sha256": "034f667204b4df39f692ec971b48ff2cf5f9bfd1daa1471430560cf586f5cf92"
+    },
+    {
+      "path": "tools/scripts/mainscreen_spec.py",
+      "bytes": 15510,
+      "sha256": "2711ce4f37b804ae71d875598a3b65b50d29b4ad7755d4bea2441c4007b59ba7"
+    },
+    {
+      "path": "docs/internals/data/screen-admiral-list.json",
+      "bytes": 421806,
+      "sha256": "28075d8bce9fbfae9b793f43537fb2d7c693f4d55858702a75392b4ea2c9790b"
+    },
+    {
+      "path": "tools/scripts/left_hold_game_receipt.py",
+      "bytes": 10598,
+      "sha256": "a49383731bc6b04fe921f3120904eabffdd6e08a1d7dd7328218da29352ca420"
+    }
+  ],
+  "cursor_cleanup": {
+    "source_before_sha256": "60148aac7bb3f0bea0ffa8a4570337f64728f7c996465f9743af4f234fb28e37",
+    "removed": [
+      {
+        "x": 465,
+        "y": 378,
+        "color": 7
+      },
+      {
+        "x": 466,
+        "y": 378,
+        "color": 7
+      },
+      {
+        "x": 467,
+        "y": 378,
+        "color": 7
+      },
+      {
+        "x": 468,
+        "y": 378,
+        "color": 7
+      },
+      {
+        "x": 469,
+        "y": 378,
+        "color": 7
+      },
+      {
+        "x": 470,
+        "y": 378,
+        "color": 7
+      },
+      {
+        "x": 471,
+        "y": 378,
+        "color": 7
+      },
+      {
+        "x": 465,
+        "y": 379,
+        "color": 7
+      },
+      {
+        "x": 466,
+        "y": 379,
+        "color": 7
+      },
+      {
+        "x": 467,
+        "y": 379,
+        "color": 7
+      },
+      {
+        "x": 469,
+        "y": 379,
+        "color": 7
+      },
+      {
+        "x": 470,
+        "y": 379,
+        "color": 7
+      },
+      {
+        "x": 471,
+        "y": 379,
+        "color": 7
+      },
+      {
+        "x": 464,
+        "y": 380,
+        "color": 3
+      },
+      {
+        "x": 467,
+        "y": 380,
+        "color": 3
+      },
+      {
+        "x": 468,
+        "y": 380,
+        "color": 3
+      },
+      {
+        "x": 469,
+        "y": 380,
+        "color": 3
+      },
+      {
+        "x": 473,
+        "y": 380,
+        "color": 3
+      },
+      {
+        "x": 474,
+        "y": 380,
+        "color": 3
+      },
+      {
+        "x": 464,
+        "y": 381,
+        "color": 3
+      },
+      {
+        "x": 466,
+        "y": 381,
+        "color": 3
+      },
+      {
+        "x": 467,
+        "y": 381,
+        "color": 3
+      },
+      {
+        "x": 469,
+        "y": 381,
+        "color": 3
+      },
+      {
+        "x": 470,
+        "y": 381,
+        "color": 3
+      },
+      {
+        "x": 474,
+        "y": 381,
+        "color": 3
+      }
+    ],
+    "source_after_sha256": "28075d8bce9fbfae9b793f43537fb2d7c693f4d55858702a75392b4ea2c9790b"
+  },
+  "limitations": [
+    "未比較remake與原版整份RAM；保留既有指標差",
+    "經濟移出／返回的remake回歸不等於原版逐相位對拍",
+    "GUI抽樣限定正常首戰資料窗兩種倍率；其餘清單由Game及既有回歸核對",
+    "月初清單其他控制、BuildPlan十四顆造艦比例箭頭及其他八步不由本輪升格",
+    "第56輪FF字鍵裁決仍pending，音樂聆聽／macOS／正式交付仍缺"
+  ]
+}
