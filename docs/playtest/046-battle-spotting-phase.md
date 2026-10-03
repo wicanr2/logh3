@@ -609,3 +609,15 @@ SHA-256 `96660f9c7c8cea715b484d39cfe0a586f81ecc574d963b5bb3ce5c6b9b06578f`。
 FLEET27／SHIP214皆剩顯示物件指標，STELLAR／PLANET零差；完整088 DRAFT，#89／#79 OPEN。
 
 重播方法與原始位址見研究393。既有第51至54輪JSON不重生，151受控索敵幀範圍不升格。
+
+## 第56輪：一像素根因及指標關係
+
+[研究394](../re/394-battle-object-keys.md)與[完整收據](../internals/data/battle-object-keys.json)，
+SHA-256 `a84cbb1963b31b9edfe497e9e0aef730768c9bb5d31bcb3a93dc432e4b5085ad`。
+未注入正常入口與明示方向鍵反例各兩次，RAM／色號／PNG／DAC相同。
+64筆清單、55筆原池及7筆方向關係全部核對；改兩個排序鍵bytes只改(255,255)一像素，
+兩分支的WORK／FLEET／SHIP／STELLAR／PLANET完整表相同。
+
+正式產品五張差異仍1／0／0／0／0；可丟棄固定次序探針才是五張均零差。
+完整差分沒有遮罩，根因已知不等於差異已核准，正式繪製方案與指標比較契約待裁決。
+既有151受控幀、nearby-state及088 DRAFT保持；沒有新增正常索敵同態完成聲明。

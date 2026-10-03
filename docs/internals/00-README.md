@@ -14,6 +14,13 @@
 - [索敵顯示分級定位與固定61案計畫](data/battle-spotting-display-semantics.json)
 - [索敵顯示收據工具](../../tools/scripts/battle_spotting_display_evidence.py)
 
+
+第56輪入口：[工作快照](../goal/2026-10-03-battle-object-keys-round-56.md)、
+[研究394](../re/394-battle-object-keys.md)、
+[IDA匯出](../../tools/scripts/battle_object_keys_ida.py)、[原版鍵反例](../../tools/battle_object_keys_oracle.sh)、
+[收據產生器](../../tools/scripts/battle_object_keys_receipt.py)與[結構化證據](data/battle-object-keys.json)。限定顯示物件指標與排序鍵，不改完整入口門檻。
+
+
 ## 這裡的東西怎麼寫
 
 - [第五十輪移動後戰術座標](../goal/2026-10-03-fleet-arrival-placement-round-50.md)

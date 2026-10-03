@@ -79,3 +79,10 @@ bash tools/gui.sh xrun python3 tools/scripts/battle_sprite_priority_receipt.py
 
 一次性重疊探針另由工具的low-first-explore分支保存，不能替代上列正常init-a／b收據。
 873條中的函式服務及清除helper維持unknown，不擴大逆向深度；目前證據足以接玩家入口。
+
+## 2026-10-03探索旗標勘誤
+
+[研究394](394-battle-object-keys.md)核對probe的-poke是單值旗標。
+本頁多筆-poke探索只會保留最後一筆，不能證明全部位置／順位注入生效。
+上文未重畫探針原本就標unknown，沒有正式通過聲明；正常init-a／b僅有一筆seed注入，範圍保持。
+新反例改為同一參數的分號腳本，report逐筆驗實際寫入位置；不改執行器或重生舊JSON。
