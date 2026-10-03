@@ -25,6 +25,13 @@ import (
 
 func loadEngagement(t *testing.T, res *Resources) {
 	t.Helper()
+	if res.FleetPresentation == nil {
+		spec, err := screen.LoadFleetPresentationSpec(filepath.Join(root, "docs/internals/data/fleet-presentation-spec.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.FleetPresentation = spec
+	}
 	if res.Engagement == nil {
 		spec, err := screen.LoadEngagementSpec(filepath.Join(root, "docs/internals/data/engagement-panel.json"))
 		if err != nil {
@@ -53,6 +60,44 @@ func loadEngagement(t *testing.T, res *Resources) {
 			t.Fatal(err)
 		}
 		res.Comani = bmg
+	}
+}
+
+// 正式Game的交戰色盤對原版actual RGB；此入口仍是交戰診斷fixture。
+func TestEngagementPaletteMatchesNative(t *testing.T) {
+	g := reachEngagementFixture(t)
+	b, err := os.ReadFile(filepath.Join(root, "workplace/oracle/eng-open/pal.bin"))
+	if err != nil {
+		t.Skipf("缺原版色盤收據：%v", err)
+	}
+	if len(b) < 16*3 {
+		t.Fatal("原版色盤形狀錯誤")
+	}
+	for i := 0; i < 16; i++ {
+		r, gc, bl := g.Palette().RGB8(i)
+		if [3]uint8{r, gc, bl} != [3]uint8{b[3*i], b[3*i+1], b[3*i+2]} {
+			t.Fatalf("色號%d的Game RGB不符原版", i)
+		}
+	}
+	fb := g.drawEngagement()
+	for _, p := range fb.Pix {
+		r, gc, bl := g.Palette().RGB8(int(p))
+		if [3]uint8{r, gc, bl} != [3]uint8{b[3*int(p)], b[3*int(p)+1], b[3*int(p)+2]} {
+			t.Fatal("renderer色號未正確映射RGB")
+		}
+	}
+	if out := os.Getenv("LOGH3_PRESENTATION_GAME_OUTPUT"); out != "" {
+		if err = fb.WritePNG(filepath.Join(out, "engagement.png"), g.Palette()); err != nil {
+			t.Fatal(err)
+		}
+	}
+	g.engagementClick()
+	g.engagementTick(1000)
+	if g.state != StateBattle {
+		t.Fatal("未回戰場")
+	}
+	if g.Palette() != g.res.Menu.Palette() {
+		t.Fatal("退出交戰未恢復原色盤")
 	}
 }
 

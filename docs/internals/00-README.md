@@ -1,5 +1,14 @@
 # 原版內部構造參考
 
+第71輪沿#48／#79：[完整交戰呈現計畫](../goal/2026-10-04-fleet-presentation-round-71.md)，
+閉合文字、色盤及等待輸入，往完整scene與Game接線前進。
+[呈現原指令匯出](../../tools/scripts/fleet_presentation_ida.py)保留原名／bytes與三種定位。
+[原版文字重播](../../tools/fleet_presentation_oracle.sh)、[觀測器](../../tools/scripts/fleet_presentation_native.go)及
+[凍結器](../../tools/scripts/fleet_presentation_receipt.py)保存92案雙跑、691條原指令與完整注入。
+[096規格](../spec/096-fleet-presentation.md)、[研究408](../re/408-fleet-presentation.md)、
+[對拍060](../playtest/060-fleet-presentation.md)、[格式資料](data/fleet-presentation-spec.json)與
+[凍結收據](data/fleet-presentation.json)為同一入口。正式文字已實作，Game交戰色盤已接；完整092仍DRAFT。
+
 第70輪沿#48／#79：[交戰下方場景計畫](../goal/2026-10-04-fleet-blocks-round-70.md)，
 從321F:06FC閉合透明堆疊、裁切與背景；0B43無buffer搬移。095已READY，完整092未接。
 [下方場景IDA匯出](../../tools/scripts/fleet_blocks_ida.py)保留原名、定位與bytes，未知不改名。

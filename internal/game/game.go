@@ -500,6 +500,8 @@ type Resources struct {
 	// 規格 056）。
 	Engagement      *screen.EngagementSpec
 	EngagementPanel *asset.Image
+	// FleetPresentation 是096原版格式與交戰色盤；完整艦隊演出待092接線。
+	FleetPresentation *screen.FleetPresentationSpec
 	// Comani 是交戰演出的動畫庫（`COMANI.BMG`，`docs/internals/20`）；缺原版檔就是 nil（不畫圖）。
 	Comani *asset.BMG
 

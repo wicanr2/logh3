@@ -2,6 +2,40 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-04 #48／#79交戰文字與正式色盤
+
+第71輪父提交969d68b8460e983a368aa514aca25e4c912f3a43。原Goal保持active。
+命中GUI還原、規格閘門及文件分工路由，沿用逆向重製與IDA技能及既有Docker工具鏈。
+遠端89張worklist／9張OPEN，開工269核對零失效；未重開歷史完成項或重問已有決定。
+
+096先READY再實作FleetPresentationSpec：兩側分隊文字、情報顯示條件、武器標題及損失數字。
+92案原版276份RAM／色號／色盤雙跑相同，691條原指令及571來源保存；
+凍結SHA-256 2dbff381163ce7d512af633e496bc5349dc2597210c0131f7f0d0874b0943851。
+內容格／游標／字色與28262400個全圖像素、698880個文字區域像素零差；
+最終552份PNG／色號、比較數字與雜湊清單在workplace/presentation48-r71-reviewed-remake/。
+
+Game先前在交戰仍用主選單色盤。本輪由bootstrap載入096小型資料，
+StateEngagement用原版logical→AC→DAC色盤，退出恢復既有色盤。
+Game診斷16色／全renderer RGB映射及正式bootstrap正常開局抽樣通過；
+Game艦隊核心／文字／投影／完整圖序列未接，完整056／092保持DRAFT，不宣稱正常艦隊same-state。
+
+標準18產品套件13PASS／5無測試；標準log SHA-256
+8333561372328eefd281d6e96f1fee6520e875456480877510862e5d6d3bf22c。
+逐區統計補齊後同一screen命令乾淨重跑通過，產品程式未再改。
+審查曾抓出FLEET表近指標誤讀，草稿保留且未提交；編號word只消費低byte另以IDA確認。
+一次IDA範圍末端切到指令，按ret邊界乾淨重跑成功，屬匯出腳本範圍問題。
+一份無攻擊命令的正常首戰探針未到交戰，保留workplace/round71-player-path-probe.go；
+沒有把它寫成產品缺陷或留下失敗驗收測試。
+
+48／79本文已更新並逐字回讀，保持OPEN；重新抓快照、產生矩陣及269核對零失效。
+root-owned與誤建.md目錄為零，輸出及文件UID/GID1000；本輪容器均--rm，其他專案容器不動。
+dosgolem專用副本乾淨且版本未變。提交、推送本輪成果；原版輸入、未授權素材及本機產物不加入交付包。
+下一閘門為typed投影／可達裁切域與等待輸入，再審查完整Game／保存。
+
+入口：[計畫71](docs/goal/2026-10-04-fleet-presentation-round-71.md)、
+[096](docs/spec/096-fleet-presentation.md)、[研究408](docs/re/408-fleet-presentation.md)、
+[對拍060](docs/playtest/060-fleet-presentation.md)。
+
 ## 2026-10-04 #48／#79下方場景合成
 
 第70輪父提交ee5561916311c8445a2434fa6d831bf9d88a73ed。原Goal保持active。

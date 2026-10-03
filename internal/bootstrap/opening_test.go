@@ -29,6 +29,9 @@ func TestOpeningRuntimeTablesMatchesOriginal(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	if r.FleetPresentation == nil {
+		t.Fatal("正式載入器缺096交戰格式及色盤")
+	}
 	g, err := game.New(r)
 	if err != nil {
 		t.Fatal(err)

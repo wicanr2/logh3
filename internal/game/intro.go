@@ -136,5 +136,8 @@ func (g *Game) Palette() gfx.Palette {
 	if g.state == StateIntro {
 		return g.res.IntroPal
 	}
+	if g.state == StateEngagement && g.res.FleetPresentation != nil {
+		return g.res.FleetPresentation.Palette
+	}
 	return g.res.Menu.Palette()
 }

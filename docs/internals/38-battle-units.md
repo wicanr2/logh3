@@ -7,6 +7,18 @@
 
 艦艇池的位置從 `ds:CFB4` 的 far 指標拿，一筆 78 位元組。
 
+## 第71輪交戰文字
+
+proven限[研究408](../re/408-fleet-presentation.md)、[096](../spec/096-fleet-presentation.md)及
+[凍結收據](data/fleet-presentation.json)，SHA-256 2dbff381163ce7d512af633e496bc5349dc2597210c0131f7f0d0874b0943851。
+082F由SHIP+0選側、+1查DS:C074艦隊表本體、+3選提督或分隊標題、+4選艦種，
++8／+0A印分隊艘數。FLEET+2雖傳word，3982:003B／0059只消費低byte編號。
+mode2或3982:022D非0時，只在detail恰為3顯示身分，其他值顯示「第？艦隊  第？部隊」。
+3982比較side與DS8F25，再取DS8F21／8F22；兩格控制值不是直接按陣營索引。
+0B90武器type由SHIP+2E及艦種+0A／+0E／+12選擇，其他或type>11印名稱12。
+0F6D損失數字按攻擊側印色2／13，之後還原4。
+正式文字92案的內容格及全圖零差；bootstrap／Game交戰色盤已接，完整Game艦隊流程尚未接。
+
 ## 第66輪距離曲線與多分隊累積戰損
 
 proven限[研究404](../re/404-combat-sequence.md)、[056](../playtest/056-combat-sequence.md)及
