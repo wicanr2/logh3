@@ -42,6 +42,17 @@ func TestOwnHoverSnapshotAndSave(t *testing.T) {
 	if g.CommandMenuOpen() || g.battleMenu {
 		t.Fatal("純移動開了命令選單")
 	}
+	// Frame只重建疊圖，不累積XOR；同分隊集結點沿事件快照。
+	frame := bytes.Clone(g.Frame().Pix)
+	if !bytes.Equal(frame, g.Frame().Pix) {
+		t.Fatal("重複Frame累積小地圖XOR")
+	}
+	dest := f.DestX
+	f.DestX += 16 // 明示診斷變因，不當原版正常局面。
+	if !bytes.Equal(frame, g.Frame().Pix) {
+		t.Fatal("Frame重讀集結點，未保持摘要事件快照")
+	}
+	f.DestX = dest
 	for _, p := range [][2]int{{100, 140}, {500, 290}} {
 		g.MoveMouse(p[0], p[1])
 		if _, ok := g.unitPanelView(); ok || g.battleHoverOn {

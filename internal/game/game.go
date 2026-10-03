@@ -910,11 +910,13 @@ type Game struct {
 	battleCmdKind          screen.CommandMenuKind
 	battleCmdX, battleCmdY int
 	// 規格088正常Input：摘要與反白在換入另一分隊的移動事件建立。
-	battleHoverUnit    int
-	battleHoverPanel   screen.UnitPanelView
-	battleHoverOn      bool
-	battleHoverCurrent [2]int
-	battleHoverTarget  [2]int
+	battleHoverUnit        int
+	battleHoverPanel       screen.UnitPanelView
+	battleHoverOn          bool
+	battleHoverCurrent     [2]int
+	battleHoverTarget      [2]int
+	battleHoverMinimapFrom [2]int
+	battleHoverMinimapLine bool
 
 	// battleMove ＝ 選了「移動」之後在等玩家點目的地（`docs/spec/024`）；
 	// battleMoveUnit 是要移動的分隊。
@@ -4930,6 +4932,9 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	screen.DrawMinimapPlanets(g.res.Battle, fb,
 		rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH))
 	screen.DrawMinimapUnits(g.res.Battle, fb, g.battleUnits)
+	if g.battleHoverOn && g.battleInputIdle() {
+		screen.DrawMinimapInputHighlight(g.res.Battle, fb, g.battleHoverMinimapFrom, g.battleHoverTarget, g.battleHoverMinimapLine)
+	}
 	screen.DrawBattleStatusFrame(g.res.Battle, fb, g.res.FrameTiles)
 	// 點到自己的分隊時右側換成分隊面板（`docs/re/118`）。
 	if v, ok := g.unitPanelView(); ok && g.res.Font != nil && g.battlePhase == screen.BattlePhaseInput {

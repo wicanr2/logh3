@@ -315,3 +315,8 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [純移動摘要研究389](../re/389-battle-input-display.md)與[IDA匯出](../../tools/scripts/battle_input_display_ida.py)：摘要快取、退出與兩個SPRITE 10物件的原始定位；088限定正常Input範圍。
 - [純移動完整收據產生器](../../tools/scripts/battle_input_display_receipt.py)：保存五組獨立原版雙跑、正常入口全圖及未解像素，不改第50輪收據。
 - [純移動結構化收據](data/battle-input-display.json)：五個IDA函式535條原指令與22項分級定位、55份正常入口雙跑及兩尺寸X11；全圖2／1／1／0／0 pixels差保留。
+- [第52輪正常首戰摘要標記](../goal/2026-10-03-battle-hover-marks-round-52.md)：沿#89追剩餘小地圖與位置反白像素，既有第51輪收據保持。
+- [摘要標記IDA探針](../../tools/scripts/battle_hover_marks_ida.py)：由固定原版RAM切段保存原始指令，未審語意保持unknown。
+- [摘要小地圖原版重播](../../tools/battle_hover_marks_oracle.sh)：空白Input移回分隊及明示集結點注入，保存新RAM／畫面與完整旗標。
+- [摘要小地圖研究390](../re/390-battle-hover-marks.md)：旗艦航線、一般分隊集結點與剩餘方向物件覆蓋的分級證據。
+- [摘要小地圖收據產生器](../../tools/scripts/battle_hover_marks_receipt.py)與[結構化收據](data/battle-hover-marks.json)：八組原版雙跑、正常入口五個完整畫面與剩餘差異，原JSON保持。

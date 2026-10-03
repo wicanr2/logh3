@@ -230,9 +230,12 @@ func (g *Game) refreshBattleHover() {
 	g.battleHoverPanel, g.battleHoverOn = v, true
 	g.battleHoverCurrent = [2]int{u.X, u.Y}
 	g.battleHoverTarget = [2]int{u.TargetX, u.TargetY}
+	g.battleHoverMinimapLine = false
 	if u.Squadron == 0 {
 		if f := g.battleFleet(u.Fleet); f != nil {
 			g.battleHoverTarget = [2]int{f.DestX, f.DestY}
+			g.battleHoverMinimapFrom = [2]int{f.X, f.Y}
+			g.battleHoverMinimapLine = true
 		}
 	}
 }

@@ -535,3 +535,34 @@ SHA-256 `c1f387c1e3729450f4b7b3f9f8babb21b0b8f49d1b0762b1f6e0cca648cfb5c6`。
 初始首戰5853→2 pixels；旗艦／分隊各1、空白／右面板全圖0，五案文字區0／20480。
 全資料仍WORK14／FLEET27／SHIP276差，完整入口nearby-state，不由單側全圖或局部同圖升格。
 151受控索敵幀及087 READY保持；正常玩家完整索敵配對仍待#89，完整八步未完成。
+
+## 第52輪上游摘要小地圖
+
+沿#89與088第八個READY子契約接旗艦集結航線及一般分隊集結點，XOR色號4。
+[研究390](../re/390-battle-hover-marks.md)、[完整收據](../internals/data/battle-hover-marks.json)
+SHA-256 `91ec1901d3232702c3612d4edd459d72ff60c4633483bc578339b0e3f5c56250`。
+四案原版各獨立雙跑，完整RAM／色號／PNG／DAC相同；兩個非零集結點案是明示注入診斷。
+105條原始IDA指令及12項語意保存，所有FF物件的word+4初始化仍unknown，不猜改排序。
+
+正常Game55檔雙跑相同，五張小地圖各0／16384；初始全圖2→1，其他四張全圖0。
+WORK14／FLEET27／SHIP276／STELLAR0／PLANET0與正常799/3/1、回合380、7艦隊／55池保持。
+45限定PASS零skip、18產品套件及一倍／兩倍正常X11通過。重畫不累積XOR，純移動完整保存及seed不變。
+已目視完整並排圖；剩餘(255,255)由方向物件覆蓋，未遮罩或填像素常數。
+完整088 DRAFT、#89／#79 OPEN、nearby-state及151受控幀門檻保持。
+
+```sh
+for kind in flagship squad fleet-target squad-target; do
+  for side in a b; do
+    bash tools/battle_hover_marks_oracle.sh "normal89-r52-$kind-$side"
+  done
+done
+tools/gui.sh xrun python3 tools/scripts/battle_normal_probe_seed.py --prefix round52-normal
+tools/gui.sh xrun go run -overlay workplace/round52-normal-overlay.json tools/scripts/battle_normal_probe.go -input-display -out workplace/round52-pass-a
+tools/gui.sh xrun go run -overlay workplace/round52-normal-overlay.json tools/scripts/battle_normal_probe.go -input-display -out workplace/round52-pass-b
+tools/gui.sh xrun env LOGH3_TURN_GUI_PREFIX=round52-gui-final LOGH3_TURN_PLAYER_DIR=round52-pass-a bash tools/turn_counter_gui.sh
+tools/gui.sh test ./cmd/... ./internal/... -count=1
+tools/gui.sh xrun python3 tools/scripts/battle_hover_marks_receipt.py
+```
+
+各輸出拒絕覆寫；重建需本輪來源及保留第51輪父snapshot，雜湊與完整旗標在JSON。
+原版無注入兩案及正常Game五案與primitive診斷分列，不能將靜態相同升為完整資料或八步完成。

@@ -56,4 +56,17 @@
 
 正常輸入收據見[data/battle-input-display.json](data/battle-input-display.json)。
 標籤「艦隊士氣值」仍讀FLEET+3C；戰術型別名稱是Integrity，語意見[研究153](../re/153-fleet-integrity.md)。
-正常入口不得用戰略停泊命令代替戰術+48行動。完整首戰仍有2 pixels未知差異。
+正常入口不得用戰略停泊命令代替戰術+48行動。最新小地圖及剩餘差異見下節。
+
+## 摘要的小地圖集結點
+
+第52輪[研究390](../re/390-battle-hover-marks.md)補齊摘要建立及退出的XOR疊圖，proven。
+旗艦取FLEET+5C／5E至+64／66畫含端點的實線；其他分隊只點SHIP+28／2A。
+世界座標unsigned除16，沿既有小地圖原點及縱向一列偏移，XOR色號4。
+離開以同參數再XOR擦除；remake每張Frame從底圖重建，只在摘要快照有效時疊一次。
+不改分隊+19／1A／1C標記快照、+30或存檔格式。
+
+原版八組完整雙跑、正常Game五張小地圖均0／16384，正常保存不受純移動影響。
+初始全圖剩1 pixel；其餘四張靜態全圖0。剩餘是方向圖示與反白物件的同優先值覆蓋實例，
+一般FF物件word+4初始化仍unknown，完整首戰入口及八步未通過。
+[收據](data/battle-hover-marks.json)保存完整原圖、逐區數字及原始物件記錄。

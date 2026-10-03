@@ -155,7 +155,7 @@
 | 剩餘軍事費 ＝ 預估軍事費 − 船艦建造費 | **已實作** | 同上 |
 | 艦隊戰力 ＝ Σ 前 `+0x0F` 組的 `權重[艦種] × 現有 × 1000 ÷ 滿編` | **已實作**（`rules.FleetStrength`） | [`docs/re/79`](docs/re/79-per-fleet-decision-pass.md)；上界修正見 [`docs/re/194`](docs/re/194-fleet-record-in-save.md) |
 | 其他（舊矩陣空白占位） | **不適用（已清理占位列）** | [#34](https://github.com/wicanr2/logh3/issues/34)：沒有範圍與驗收條件，不代表待實作功能 |
-| 正常S3載入至首次戰場（#89） | DRAFT；六子契約已驗，第七摘要／保存限定已驗，完整畫面及入口待驗 | [088](docs/spec/088-normal-battle-player-entry.md)、[研究389](docs/re/389-battle-input-display.md)、[純移動收據](docs/internals/data/battle-input-display.json)。第51輪五組原版與55份正常輸出雙跑、61限定PASS、18套件及兩尺寸X11通過。首戰5853→2 pixels，旗艦／分隊各1，空白／右面板全圖0；WORK14／FLEET27／SHIP276差保留，nearby-state不升格。 |
+| 正常S3載入至首次戰場（#89） | DRAFT；六子契約已驗，第七摘要／保存與第八小地圖限定已驗，完整入口待驗 | [088](docs/spec/088-normal-battle-player-entry.md)、[研究390](docs/re/390-battle-hover-marks.md)、[收據](docs/internals/data/battle-hover-marks.json)。第52輪八組原版、55份正常輸出雙跑，45限定PASS、18套件及兩尺寸X11。小地圖五案全同，初始全圖2→1、其餘四張0；FF字鍵與WORK14／FLEET27／SHIP276差保持，nearby-state不升格。 |
 
 ## 戰略 AI
 

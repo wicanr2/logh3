@@ -1,0 +1,3316 @@
+{
+  "schema": "logh3.battle-hover-marks.v1",
+  "date": "2026-10-03",
+  "parent_commit": "8eab9ba896189159d437e974453ed1c02d19cc78",
+  "remake_head": "8eab9ba896189159d437e974453ed1c02d19cc78",
+  "remake_worktree": "dirty; 正式來源身份記在source_hashes",
+  "status": "limited-production-validation; first entry retains one draw-order pixel",
+  "comparison_level": "nearby-state",
+  "issue": "https://github.com/wicanr2/logh3/issues/89",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_dirty": false,
+  "original_bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "original_executable_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+  "toolchain": {
+    "go_image": "golang:1.24-bookworm",
+    "go_image_id": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+    "gui_image": "logh3-ebiten:2",
+    "gui_image_id": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+    "ida_image": "ida-pro-9.4-idapython:locked-v1",
+    "ida_image_id": "sha256:6f6d59af49d0008c4109a5295b5f374bdc007e2d1ab28cb9de08779584de2780"
+  },
+  "previous_receipt_sha256": "c1f387c1e3729450f4b7b3f9f8babb21b0b8f49d1b0762b1f6e0cca648cfb5c6",
+  "original_runs": {
+    "flagship": [
+      {
+        "path": "workplace/oracle/normal89-r52-flagship-a",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-empty-a/machine.state",
+          "-steps",
+          "475000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "460000000",
+          "-mouse-x",
+          "248",
+          "-mouse-y",
+          "208",
+          "-regs-from",
+          "460000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1727:0677,1727:0736,39D7:08F4,39D7:0936",
+          "-save-state",
+          "475000000:/out/oracle/normal89-r52-flagship-a/machine.state",
+          "-dump-mem-at",
+          "474999999:lin:0:1048576:/out/oracle/normal89-r52-flagship-a/end.bin"
+        ],
+        "parent_snapshot": "workplace/oracle/normal89-r51-empty-a/machine.state",
+        "parent_snapshot_sha256": "3a4d8cf259fc72a8e548cb73e6c338bcf16b71293c05ad19c1fd4fa4296105a7",
+        "hashes": {
+          "end.bin": "e87697e47c1558d21d81118b07b1b623a633ed6112a08fc6dd611b0833d82b65",
+          "screen.bin": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+          "screen.png": "25bc500008b6064d0b7a8288d59b4f07b780df084007d388a259a30a2915725c",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "44310a69e335bd440c886120cf4312c37b0a4877d1996c6b3f1cce4248225e7a",
+          "flags.txt": "e9d0a1903d343dabf4545718a84f2c3ad48083b6a45ab9340b62508adca278f1",
+          "meta.txt": "f41bcfa7c4848da23c88ef10971289762ab33899734e35fd5792305dfff928d8",
+          "report.txt": "d542720161c2c2aab8f84095b954d71e10519aced03d626770e0bf493a6cf18e"
+        },
+        "diagnostic_injection": false
+      },
+      {
+        "path": "workplace/oracle/normal89-r52-flagship-b",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-empty-b/machine.state",
+          "-steps",
+          "475000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "460000000",
+          "-mouse-x",
+          "248",
+          "-mouse-y",
+          "208",
+          "-regs-from",
+          "460000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1727:0677,1727:0736,39D7:08F4,39D7:0936",
+          "-save-state",
+          "475000000:/out/oracle/normal89-r52-flagship-b/machine.state",
+          "-dump-mem-at",
+          "474999999:lin:0:1048576:/out/oracle/normal89-r52-flagship-b/end.bin"
+        ],
+        "parent_snapshot": "workplace/oracle/normal89-r51-empty-b/machine.state",
+        "parent_snapshot_sha256": "7d50f2c5cf8284a658ba4f23995d9ce749524867bf8fa1c70b67d7ab56c60a14",
+        "hashes": {
+          "end.bin": "e87697e47c1558d21d81118b07b1b623a633ed6112a08fc6dd611b0833d82b65",
+          "screen.bin": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+          "screen.png": "25bc500008b6064d0b7a8288d59b4f07b780df084007d388a259a30a2915725c",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "aa452bee4e4917f17b89f3e7920b9ebbb937a67b0078485e4e97abfd6e194b65",
+          "flags.txt": "c64ef3f061466f6e286b688e401f6a00fccec8a9b75e4e149fca783519254451",
+          "meta.txt": "2ee76dc983a25046376af72d809e8faa735b6e66707d05904a13410386e86e37",
+          "report.txt": "fac0f716f805a51e34d1c55557ab79ffcc3d4c6c33ed41f82f9fdde0768cd343"
+        },
+        "diagnostic_injection": false
+      }
+    ],
+    "squad": [
+      {
+        "path": "workplace/oracle/normal89-r52-squad-a",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-empty-a/machine.state",
+          "-steps",
+          "475000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "460000000",
+          "-mouse-x",
+          "249",
+          "-mouse-y",
+          "184",
+          "-regs-from",
+          "460000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1727:0677,1727:0736,39D7:08F4,39D7:0936",
+          "-save-state",
+          "475000000:/out/oracle/normal89-r52-squad-a/machine.state",
+          "-dump-mem-at",
+          "474999999:lin:0:1048576:/out/oracle/normal89-r52-squad-a/end.bin"
+        ],
+        "parent_snapshot": "workplace/oracle/normal89-r51-empty-a/machine.state",
+        "parent_snapshot_sha256": "3a4d8cf259fc72a8e548cb73e6c338bcf16b71293c05ad19c1fd4fa4296105a7",
+        "hashes": {
+          "end.bin": "9cb2bcfe0208a1fcbaaa6dece017cd16a23340b66db7c715b4a46c93936fa8a4",
+          "screen.bin": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+          "screen.png": "c8a8f8fbc506974828158a46d6f30964fc9d869fc12ff621219225d46c23d7ae",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "1e3bccb17af5969ea1f8b21b4cbf423fc19b1aa8e032fd251287f04a74572b09",
+          "flags.txt": "11808cb29e5dfd653afe3cbe07a8ff46afaffa1f6ce25a897e6ea32f44b6f750",
+          "meta.txt": "c22ef6f9dec92dcd00be2b958df68b65c68cfae05ab99e27f723be3546fe76c3",
+          "report.txt": "077194f823fca51822dc96989d7dba05ae0412c7187c4a0dee620f6781d1a7f6"
+        },
+        "diagnostic_injection": false
+      },
+      {
+        "path": "workplace/oracle/normal89-r52-squad-b",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-empty-b/machine.state",
+          "-steps",
+          "475000001",
+          "-tick",
+          "20000",
+          "-mouse-at",
+          "460000000",
+          "-mouse-x",
+          "249",
+          "-mouse-y",
+          "184",
+          "-regs-from",
+          "460000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1727:0677,1727:0736,39D7:08F4,39D7:0936",
+          "-save-state",
+          "475000000:/out/oracle/normal89-r52-squad-b/machine.state",
+          "-dump-mem-at",
+          "474999999:lin:0:1048576:/out/oracle/normal89-r52-squad-b/end.bin"
+        ],
+        "parent_snapshot": "workplace/oracle/normal89-r51-empty-b/machine.state",
+        "parent_snapshot_sha256": "7d50f2c5cf8284a658ba4f23995d9ce749524867bf8fa1c70b67d7ab56c60a14",
+        "hashes": {
+          "end.bin": "9cb2bcfe0208a1fcbaaa6dece017cd16a23340b66db7c715b4a46c93936fa8a4",
+          "screen.bin": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+          "screen.png": "c8a8f8fbc506974828158a46d6f30964fc9d869fc12ff621219225d46c23d7ae",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "5ec90da0efcaeb9501399d5275916173ea3d92c240524cf9e0c23127e55a0901",
+          "flags.txt": "e4d8bd2eafa28421087cd160e4d9c7809e8ff9aabb4a83c2726b1f121e0b9e9f",
+          "meta.txt": "cae87a69926b782c92d2322e4a203eef42e5c6517ba71b96ad37df8d96c90db1",
+          "report.txt": "4c05b7ab6d599752577ac75e639bb32cb442304d463b68acc7a091e74158b00d"
+        },
+        "diagnostic_injection": false
+      }
+    ],
+    "fleet-target": [
+      {
+        "path": "workplace/oracle/normal89-r52-fleet-target-a",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-empty-a/machine.state",
+          "-steps",
+          "475000001",
+          "-tick",
+          "20000",
+          "-poke",
+          "lin:611C0@457000000=40 02 90 01",
+          "-mouse-at",
+          "460000000",
+          "-mouse-x",
+          "248",
+          "-mouse-y",
+          "208",
+          "-regs-from",
+          "460000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1727:0677,1727:0736,39D7:08F4,39D7:0936",
+          "-save-state",
+          "475000000:/out/oracle/normal89-r52-fleet-target-a/machine.state",
+          "-dump-mem-at",
+          "474999999:lin:0:1048576:/out/oracle/normal89-r52-fleet-target-a/end.bin"
+        ],
+        "parent_snapshot": "workplace/oracle/normal89-r51-empty-a/machine.state",
+        "parent_snapshot_sha256": "3a4d8cf259fc72a8e548cb73e6c338bcf16b71293c05ad19c1fd4fa4296105a7",
+        "hashes": {
+          "end.bin": "efa72e6c10c6ac92b6899f5d203576904aeda6e2eaf5f86ef06e7f62e5d016d9",
+          "screen.bin": "6b8456d721d39ab5fbe71db9f255f575445bbc6af3e81f2b79a2b1d75415cd2e",
+          "screen.png": "ca882feffdcfb07471b50ff1515b88cc9faf358f1e379353303ecc2470e6b786",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "fa65914d27a28f5e6e544e887e4f8841b0d0748a0a0208f9e5d827d104eef099",
+          "flags.txt": "4d2ede78ad33eedef2badc596f0f0fd4bd33b7d737631d54d79b9b3c5f6e9c6a",
+          "meta.txt": "86b2d12c7d0c38db76de7b1b89cf826e4a5d0ace6c38620f0e974adcfd954be6",
+          "report.txt": "31e4b37da32e914bfa399a4c552aaf91da871286fc275aec388d2703c11d583a"
+        },
+        "diagnostic_injection": true
+      },
+      {
+        "path": "workplace/oracle/normal89-r52-fleet-target-b",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-empty-b/machine.state",
+          "-steps",
+          "475000001",
+          "-tick",
+          "20000",
+          "-poke",
+          "lin:611C0@457000000=40 02 90 01",
+          "-mouse-at",
+          "460000000",
+          "-mouse-x",
+          "248",
+          "-mouse-y",
+          "208",
+          "-regs-from",
+          "460000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1727:0677,1727:0736,39D7:08F4,39D7:0936",
+          "-save-state",
+          "475000000:/out/oracle/normal89-r52-fleet-target-b/machine.state",
+          "-dump-mem-at",
+          "474999999:lin:0:1048576:/out/oracle/normal89-r52-fleet-target-b/end.bin"
+        ],
+        "parent_snapshot": "workplace/oracle/normal89-r51-empty-b/machine.state",
+        "parent_snapshot_sha256": "7d50f2c5cf8284a658ba4f23995d9ce749524867bf8fa1c70b67d7ab56c60a14",
+        "hashes": {
+          "end.bin": "efa72e6c10c6ac92b6899f5d203576904aeda6e2eaf5f86ef06e7f62e5d016d9",
+          "screen.bin": "6b8456d721d39ab5fbe71db9f255f575445bbc6af3e81f2b79a2b1d75415cd2e",
+          "screen.png": "ca882feffdcfb07471b50ff1515b88cc9faf358f1e379353303ecc2470e6b786",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "4159a02aeb3ebaff53200a6f3fd09e074d29267b24389eab14f50657ef059d7c",
+          "flags.txt": "cafce6c453f60fd9e1a97a79ba7aef459c919a5b175034d2d1d0503a4238ee44",
+          "meta.txt": "d2d7b2e2dc7eaa842a20d62b00f70bdceae625f14be629522b9d443a3eed2640",
+          "report.txt": "b1a03359e29ea0087f33ac655fef3aadd8cc679caadade20f189628953fc608a"
+        },
+        "diagnostic_injection": true
+      }
+    ],
+    "squad-target": [
+      {
+        "path": "workplace/oracle/normal89-r52-squad-target-a",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-empty-a/machine.state",
+          "-steps",
+          "475000001",
+          "-tick",
+          "20000",
+          "-poke",
+          "lin:681D6@457000000=40 02 90 01",
+          "-mouse-at",
+          "460000000",
+          "-mouse-x",
+          "249",
+          "-mouse-y",
+          "184",
+          "-regs-from",
+          "460000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1727:0677,1727:0736,39D7:08F4,39D7:0936",
+          "-save-state",
+          "475000000:/out/oracle/normal89-r52-squad-target-a/machine.state",
+          "-dump-mem-at",
+          "474999999:lin:0:1048576:/out/oracle/normal89-r52-squad-target-a/end.bin"
+        ],
+        "parent_snapshot": "workplace/oracle/normal89-r51-empty-a/machine.state",
+        "parent_snapshot_sha256": "3a4d8cf259fc72a8e548cb73e6c338bcf16b71293c05ad19c1fd4fa4296105a7",
+        "hashes": {
+          "end.bin": "f602b9ee4f944364cab7819b4a0296fd2a8165fe827f345eaf0c230bf76c1d42",
+          "screen.bin": "f793a549b1ef1fad12c5da64f828ad1a7129b280a42e6f1397fbee371ebde957",
+          "screen.png": "8a386b2d2680e15d73cff4846d9f8bf31fae56a6d4cb7e65e0c42cb4bf794125",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "12120d747b45ec1ba98c0de0e522cabfa751dfc7bbec80e15472c20ed195f629",
+          "flags.txt": "52777df4281fc458afc0261a7826396094565714dbd73e42fbb9ecf5809aa983",
+          "meta.txt": "887f2297480eb0ba53c4014e7e9fde33b7e28987057a54155c31db10208fc319",
+          "report.txt": "366ef0c24a8b605fe31dbe401d3f93e211524018a4a204738319433e7f260f0c"
+        },
+        "diagnostic_injection": true
+      },
+      {
+        "path": "workplace/oracle/normal89-r52-squad-target-b",
+        "command_argv": [
+          "-load-state",
+          "/out/oracle/normal89-r51-empty-b/machine.state",
+          "-steps",
+          "475000001",
+          "-tick",
+          "20000",
+          "-poke",
+          "lin:681D6@457000000=40 02 90 01",
+          "-mouse-at",
+          "460000000",
+          "-mouse-x",
+          "249",
+          "-mouse-y",
+          "184",
+          "-regs-from",
+          "460000000",
+          "-regs-max",
+          "16",
+          "-regs-at",
+          "1727:0677,1727:0736,39D7:08F4,39D7:0936",
+          "-save-state",
+          "475000000:/out/oracle/normal89-r52-squad-target-b/machine.state",
+          "-dump-mem-at",
+          "474999999:lin:0:1048576:/out/oracle/normal89-r52-squad-target-b/end.bin"
+        ],
+        "parent_snapshot": "workplace/oracle/normal89-r51-empty-b/machine.state",
+        "parent_snapshot_sha256": "7d50f2c5cf8284a658ba4f23995d9ce749524867bf8fa1c70b67d7ab56c60a14",
+        "hashes": {
+          "end.bin": "f602b9ee4f944364cab7819b4a0296fd2a8165fe827f345eaf0c230bf76c1d42",
+          "screen.bin": "f793a549b1ef1fad12c5da64f828ad1a7129b280a42e6f1397fbee371ebde957",
+          "screen.png": "8a386b2d2680e15d73cff4846d9f8bf31fae56a6d4cb7e65e0c42cb4bf794125",
+          "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+          "machine.state": "924ce92c1f12007eee57bd3ba3399913374c502e5325fa1e70d377f569092f90",
+          "flags.txt": "47b3f17c2e4c56fa3907d9d52036cb7c6fa5dd593b16d8489bf4f5cb35c8b210",
+          "meta.txt": "e06c4e0bd0c0e61e5a16d4267be473c47fd6ba22bf2c909f7a99eb50263cabaa",
+          "report.txt": "11812217d1ef746fbbc1b62c70eb1f9ab136f41cc328f2f21d8f276975201b0d"
+        },
+        "diagnostic_injection": true
+      }
+    ]
+  },
+  "normal_player_metadata": {
+    "classification": "normal-player-entry-probe; parity not established",
+    "date": [
+      799,
+      3,
+      1
+    ],
+    "inputs": [
+      "click 300 270",
+      "type 138; enter",
+      "click 300 322",
+      "click 318 208",
+      "click 544 125",
+      "click 560 125",
+      "move 248 248",
+      "move 249 224",
+      "move 100 140",
+      "move 500 290"
+    ],
+    "palette_note": "screen.png暫用主選單色盤；正式RGB比較必須讀原版有效色盤",
+    "resources": "bootstrap.Load; Game.New",
+    "seed_setup": "測試期Go覆蓋只固定實行前D3DC167E，正式產品不變",
+    "state": 32,
+    "strategy_seed_after": "B6E4B78A",
+    "strategy_seed_before": "D3DC167E",
+    "strategy_seed_observed_before": "D3DC167E",
+    "ticks": 460
+  },
+  "normal_player_runs": [
+    {
+      "path": "workplace/round52-pass-a",
+      "hashes": {
+        "empty/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "empty/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "empty/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "empty/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "empty/SHIP.DT0": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2",
+        "empty/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "empty/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "empty/screen.bin": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+        "empty/screen.png": "52b586bdfc1f107d6999689c92af311bc9732e955da346881323eeceb96801c4",
+        "entry/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "entry/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "entry/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "entry/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "entry/SHIP.DT0": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2",
+        "entry/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "entry/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "entry/screen.bin": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+        "entry/screen.png": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+        "flagship/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "flagship/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "flagship/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "flagship/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "flagship/SHIP.DT0": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2",
+        "flagship/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "flagship/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "flagship/screen.bin": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+        "flagship/screen.png": "74a08cdfb0f5e5bdb4888e25b17d3eb751c25ce3d6f0748896963103bca5d747",
+        "loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "loaded/screen.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "panel/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "panel/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "panel/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "panel/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "panel/SHIP.DT0": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2",
+        "panel/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "panel/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "panel/screen.bin": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+        "panel/screen.png": "f883356e8f83198e03a3701555639fd59feff14f12b1688328b228d4485d2449",
+        "probe.json": "45f3b7a8b5eaf22cd87e3978a8d82e7eb8594f09b0da41560aa1c31dfbd0e754",
+        "squad/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "squad/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "squad/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "squad/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "squad/SHIP.DT0": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2",
+        "squad/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "squad/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "squad/screen.bin": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+        "squad/screen.png": "7ce6e92d696def975e50aa4ecaca8afd4ff21346187c1492126244ae45d362a4"
+      }
+    },
+    {
+      "path": "workplace/round52-pass-b",
+      "hashes": {
+        "empty/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "empty/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "empty/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "empty/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "empty/SHIP.DT0": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2",
+        "empty/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "empty/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "empty/screen.bin": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+        "empty/screen.png": "52b586bdfc1f107d6999689c92af311bc9732e955da346881323eeceb96801c4",
+        "entry/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "entry/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "entry/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "entry/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "entry/SHIP.DT0": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2",
+        "entry/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "entry/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "entry/screen.bin": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+        "entry/screen.png": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+        "flagship/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "flagship/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "flagship/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "flagship/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "flagship/SHIP.DT0": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2",
+        "flagship/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "flagship/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "flagship/screen.bin": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+        "flagship/screen.png": "74a08cdfb0f5e5bdb4888e25b17d3eb751c25ce3d6f0748896963103bca5d747",
+        "loaded/ADMIRAL.DT0": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+        "loaded/FLEET.DT0": "3b5f0c44a76aff86bf5b27b688a448dd312d618e18f87db756a89aaa42035eb6",
+        "loaded/PLANET.DT0": "f4115f710efc3d66099ac114765f44ebb94733ec4a5f9fe1cdac5543b0a65597",
+        "loaded/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "loaded/SHIP.DT0": "3363957d681068f8344f7a817c3f0dbfbc0536d39d4cebc5f8f1209e1bee2adb",
+        "loaded/STELLAR.DT0": "89f9ca4e369a24540a332dcd76dc921f4be690ba228be128868a9bed5a8bfea5",
+        "loaded/WORK.DT0": "93de3971278bca31ab848f48767cb1202c4f886ec27fb9d970ad9f41c4664e70",
+        "loaded/screen.bin": "69a5fbf714d616c48a0ba08e10c98fa2bf55d25d083a2e4f24040feb6b1d9bcc",
+        "loaded/screen.png": "e76fabd42bbde2ef8647c1bddaa1df6f8cf244c0eab32df2b66fb9767a3dc034",
+        "panel/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "panel/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "panel/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "panel/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "panel/SHIP.DT0": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2",
+        "panel/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "panel/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "panel/screen.bin": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+        "panel/screen.png": "f883356e8f83198e03a3701555639fd59feff14f12b1688328b228d4485d2449",
+        "probe.json": "45f3b7a8b5eaf22cd87e3978a8d82e7eb8594f09b0da41560aa1c31dfbd0e754",
+        "squad/ADMIRAL.DT0": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+        "squad/FLEET.DT0": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+        "squad/PLANET.DT0": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+        "squad/SAVEDATA.IDX": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+        "squad/SHIP.DT0": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2",
+        "squad/STELLAR.DT0": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "squad/WORK.DT0": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8",
+        "squad/screen.bin": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+        "squad/screen.png": "7ce6e92d696def975e50aa4ecaca8afd4ff21346187c1492126244ae45d362a4"
+      }
+    }
+  ],
+  "ida": {
+    "export_path": "workplace/ida/normal89-r52-1727-graded.json",
+    "export_sha256": "769496ccd354880c39ba4c853335c673bf8077382f243da45d2a8038a3d15515",
+    "evidence": {
+      "schema": "logh3.battle-hover-marks-ida.v1",
+      "kernel_version": "9.4",
+      "uid": 1000,
+      "input": "/work/normal89-r52-1727-graded.com",
+      "input_sha256": "a896c5c048c7c762f8648ff868097f6a974ca60605682ae3bf4abd51ac638681",
+      "ida_base_hex": "0x10200",
+      "runtime_segment": "1727",
+      "scan_start_hex": "0x677",
+      "requested_limit_hex": "0x792",
+      "actual_instruction_end_hex": "0x792",
+      "address_space": "IDA COM位址、原版CS:IP及dosgolem線性分欄",
+      "functions": [
+        {
+          "original_location": "1727:0677",
+          "original_name": "sub_10877",
+          "ida_boundary": [
+            "0x10877",
+            "0x108f0"
+          ],
+          "previous_bytes_hex": "3a83c404cb"
+        },
+        {
+          "original_location": "1727:06F0",
+          "original_name": "sub_108F0",
+          "ida_boundary": [
+            "0x108f0",
+            "0x10936"
+          ],
+          "previous_bytes_hex": "ec5f5e5dcb"
+        },
+        {
+          "original_location": "1727:0736",
+          "original_name": "sub_10936",
+          "ida_boundary": [
+            "0x10936",
+            "0x10967"
+          ],
+          "previous_bytes_hex": "3ca3803ccb"
+        },
+        {
+          "original_location": "1727:0767",
+          "original_name": "sub_10967",
+          "ida_boundary": [
+            "0x10967",
+            "0x10992"
+          ],
+          "previous_bytes_hex": "3989ec5dcb"
+        }
+      ],
+      "instructions": [
+        {
+          "original_location": "1727:0677",
+          "ida_ea_hex": "0x10877",
+          "runtime_linear_hex": "0x178e7",
+          "original_bytes_hex": "55",
+          "operand": "push    bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0678",
+          "ida_ea_hex": "0x10878",
+          "runtime_linear_hex": "0x178e8",
+          "original_bytes_hex": "56",
+          "operand": "push    si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0679",
+          "ida_ea_hex": "0x10879",
+          "runtime_linear_hex": "0x178e9",
+          "original_bytes_hex": "57",
+          "operand": "push    di",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:067A",
+          "ida_ea_hex": "0x1087a",
+          "runtime_linear_hex": "0x178ea",
+          "original_bytes_hex": "89e5",
+          "operand": "mov     bp, sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:067C",
+          "ida_ea_hex": "0x1087c",
+          "runtime_linear_hex": "0x178ec",
+          "original_bytes_hex": "c45e0a",
+          "operand": "les     bx, [bp+0Ah]",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:067F",
+          "ida_ea_hex": "0x1087f",
+          "runtime_linear_hex": "0x178ef",
+          "original_bytes_hex": "268b475c",
+          "operand": "mov     ax, es:[bx+5Ch]",
+          "semantic": "旗艦航線讀FLEET+5C現在X",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0683",
+          "ida_ea_hex": "0x10883",
+          "runtime_linear_hex": "0x178f3",
+          "original_bytes_hex": "b90400",
+          "operand": "mov     cx, 4",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0686",
+          "ida_ea_hex": "0x10886",
+          "runtime_linear_hex": "0x178f6",
+          "original_bytes_hex": "d3e8",
+          "operand": "shr     ax, cl",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0688",
+          "ida_ea_hex": "0x10888",
+          "runtime_linear_hex": "0x178f8",
+          "original_bytes_hex": "05e001",
+          "operand": "add     ax, 1E0h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:068B",
+          "ida_ea_hex": "0x1088b",
+          "runtime_linear_hex": "0x178fb",
+          "original_bytes_hex": "a3803c",
+          "operand": "mov     ds:3C80h, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:068E",
+          "ida_ea_hex": "0x1088e",
+          "runtime_linear_hex": "0x178fe",
+          "original_bytes_hex": "268b575e",
+          "operand": "mov     dx, es:[bx+5Eh]",
+          "semantic": "旗艦航線讀FLEET+5E現在Y",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0692",
+          "ida_ea_hex": "0x10892",
+          "runtime_linear_hex": "0x17902",
+          "original_bytes_hex": "d3ea",
+          "operand": "shr     dx, cl",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0694",
+          "ida_ea_hex": "0x10894",
+          "runtime_linear_hex": "0x17904",
+          "original_bytes_hex": "83c224",
+          "operand": "add     dx, 24h ; '$'",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0697",
+          "ida_ea_hex": "0x10897",
+          "runtime_linear_hex": "0x17907",
+          "original_bytes_hex": "8916823c",
+          "operand": "mov     ds:3C82h, dx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:069B",
+          "ida_ea_hex": "0x1089b",
+          "runtime_linear_hex": "0x1790b",
+          "original_bytes_hex": "268b7764",
+          "operand": "mov     si, es:[bx+64h]",
+          "semantic": "旗艦航線讀FLEET+64集結X",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:069F",
+          "ida_ea_hex": "0x1089f",
+          "runtime_linear_hex": "0x1790f",
+          "original_bytes_hex": "d3ee",
+          "operand": "shr     si, cl",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06A1",
+          "ida_ea_hex": "0x108a1",
+          "runtime_linear_hex": "0x17911",
+          "original_bytes_hex": "81c6e001",
+          "operand": "add     si, 1E0h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06A5",
+          "ida_ea_hex": "0x108a5",
+          "runtime_linear_hex": "0x17915",
+          "original_bytes_hex": "8936843c",
+          "operand": "mov     ds:3C84h, si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06A9",
+          "ida_ea_hex": "0x108a9",
+          "runtime_linear_hex": "0x17919",
+          "original_bytes_hex": "268b5f66",
+          "operand": "mov     bx, es:[bx+66h]",
+          "semantic": "旗艦航線讀FLEET+66集結Y",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06AD",
+          "ida_ea_hex": "0x108ad",
+          "runtime_linear_hex": "0x1791d",
+          "original_bytes_hex": "d3eb",
+          "operand": "shr     bx, cl",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06AF",
+          "ida_ea_hex": "0x108af",
+          "runtime_linear_hex": "0x1791f",
+          "original_bytes_hex": "83c324",
+          "operand": "add     bx, 24h ; '$'",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06B2",
+          "ida_ea_hex": "0x108b2",
+          "runtime_linear_hex": "0x17922",
+          "original_bytes_hex": "891e863c",
+          "operand": "mov     ds:3C86h, bx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06B6",
+          "ida_ea_hex": "0x108b6",
+          "runtime_linear_hex": "0x17926",
+          "original_bytes_hex": "3bc6",
+          "operand": "cmp     ax, si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06B8",
+          "ida_ea_hex": "0x108b8",
+          "runtime_linear_hex": "0x17928",
+          "original_bytes_hex": "7613",
+          "operand": "jbe     short near ptr unk_108CD",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06BA",
+          "ida_ea_hex": "0x108ba",
+          "runtime_linear_hex": "0x1792a",
+          "original_bytes_hex": "89c7",
+          "operand": "mov     di, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06BC",
+          "ida_ea_hex": "0x108bc",
+          "runtime_linear_hex": "0x1792c",
+          "original_bytes_hex": "8936803c",
+          "operand": "mov     ds:3C80h, si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06C0",
+          "ida_ea_hex": "0x108c0",
+          "runtime_linear_hex": "0x17930",
+          "original_bytes_hex": "a3843c",
+          "operand": "mov     ds:3C84h, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06C3",
+          "ida_ea_hex": "0x108c3",
+          "runtime_linear_hex": "0x17933",
+          "original_bytes_hex": "89d7",
+          "operand": "mov     di, dx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06C5",
+          "ida_ea_hex": "0x108c5",
+          "runtime_linear_hex": "0x17935",
+          "original_bytes_hex": "891e823c",
+          "operand": "mov     ds:3C82h, bx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06C9",
+          "ida_ea_hex": "0x108c9",
+          "runtime_linear_hex": "0x17939",
+          "original_bytes_hex": "8916863c",
+          "operand": "mov     ds:3C86h, dx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06CD",
+          "ida_ea_hex": "0x108cd",
+          "runtime_linear_hex": "0x1793d",
+          "original_bytes_hex": "b8ffff",
+          "operand": "mov     ax, 0FFFFh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06D0",
+          "ida_ea_hex": "0x108d0",
+          "runtime_linear_hex": "0x17940",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06D1",
+          "ida_ea_hex": "0x108d1",
+          "runtime_linear_hex": "0x17941",
+          "original_bytes_hex": "b80400",
+          "operand": "mov     ax, 4",
+          "semantic": "旗艦航線XOR色號4",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06D4",
+          "ida_ea_hex": "0x108d4",
+          "runtime_linear_hex": "0x17944",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06D5",
+          "ida_ea_hex": "0x108d5",
+          "runtime_linear_hex": "0x17945",
+          "original_bytes_hex": "ff36863c",
+          "operand": "push    word ptr ds:3C86h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06D9",
+          "ida_ea_hex": "0x108d9",
+          "runtime_linear_hex": "0x17949",
+          "original_bytes_hex": "ff36843c",
+          "operand": "push    word ptr ds:3C84h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06DD",
+          "ida_ea_hex": "0x108dd",
+          "runtime_linear_hex": "0x1794d",
+          "original_bytes_hex": "ff36823c",
+          "operand": "push    word ptr ds:3C82h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06E1",
+          "ida_ea_hex": "0x108e1",
+          "runtime_linear_hex": "0x17951",
+          "original_bytes_hex": "ff36803c",
+          "operand": "push    word ptr ds:3C80h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06E5",
+          "ida_ea_hex": "0x108e5",
+          "runtime_linear_hex": "0x17955",
+          "original_bytes_hex": "9a3609d739",
+          "operand": "call    far ptr 39D7h:936h",
+          "semantic": "呼叫39D7:0936畫實線，前一參數FFFF",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06EA",
+          "ida_ea_hex": "0x108ea",
+          "runtime_linear_hex": "0x1795a",
+          "original_bytes_hex": "89ec",
+          "operand": "mov     sp, bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06EC",
+          "ida_ea_hex": "0x108ec",
+          "runtime_linear_hex": "0x1795c",
+          "original_bytes_hex": "5f",
+          "operand": "pop     di",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06ED",
+          "ida_ea_hex": "0x108ed",
+          "runtime_linear_hex": "0x1795d",
+          "original_bytes_hex": "5e",
+          "operand": "pop     si",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06EE",
+          "ida_ea_hex": "0x108ee",
+          "runtime_linear_hex": "0x1795e",
+          "original_bytes_hex": "5d",
+          "operand": "pop     bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06EF",
+          "ida_ea_hex": "0x108ef",
+          "runtime_linear_hex": "0x1795f",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06F0",
+          "ida_ea_hex": "0x108f0",
+          "runtime_linear_hex": "0x17960",
+          "original_bytes_hex": "a1803c",
+          "operand": "mov     ax, ds:3C80h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06F3",
+          "ida_ea_hex": "0x108f3",
+          "runtime_linear_hex": "0x17963",
+          "original_bytes_hex": "b9ffff",
+          "operand": "mov     cx, 0FFFFh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06F6",
+          "ida_ea_hex": "0x108f6",
+          "runtime_linear_hex": "0x17966",
+          "original_bytes_hex": "3bc1",
+          "operand": "cmp     ax, cx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06F8",
+          "ida_ea_hex": "0x108f8",
+          "runtime_linear_hex": "0x17968",
+          "original_bytes_hex": "7512",
+          "operand": "jnz     short near ptr unk_1090C",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06FA",
+          "ida_ea_hex": "0x108fa",
+          "runtime_linear_hex": "0x1796a",
+          "original_bytes_hex": "390e823c",
+          "operand": "cmp     ds:3C82h, cx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:06FE",
+          "ida_ea_hex": "0x108fe",
+          "runtime_linear_hex": "0x1796e",
+          "original_bytes_hex": "750c",
+          "operand": "jnz     short near ptr unk_1090C",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0700",
+          "ida_ea_hex": "0x10900",
+          "runtime_linear_hex": "0x17970",
+          "original_bytes_hex": "390e843c",
+          "operand": "cmp     ds:3C84h, cx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0704",
+          "ida_ea_hex": "0x10904",
+          "runtime_linear_hex": "0x17974",
+          "original_bytes_hex": "7506",
+          "operand": "jnz     short near ptr unk_1090C",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0706",
+          "ida_ea_hex": "0x10906",
+          "runtime_linear_hex": "0x17976",
+          "original_bytes_hex": "390e863c",
+          "operand": "cmp     ds:3C86h, cx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:070A",
+          "ida_ea_hex": "0x1090a",
+          "runtime_linear_hex": "0x1797a",
+          "original_bytes_hex": "7429",
+          "operand": "jz      short near ptr unk_10935",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:070C",
+          "ida_ea_hex": "0x1090c",
+          "runtime_linear_hex": "0x1797c",
+          "original_bytes_hex": "51",
+          "operand": "push    cx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:070D",
+          "ida_ea_hex": "0x1090d",
+          "runtime_linear_hex": "0x1797d",
+          "original_bytes_hex": "ba0400",
+          "operand": "mov     dx, 4",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0710",
+          "ida_ea_hex": "0x10910",
+          "runtime_linear_hex": "0x17980",
+          "original_bytes_hex": "52",
+          "operand": "push    dx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0711",
+          "ida_ea_hex": "0x10911",
+          "runtime_linear_hex": "0x17981",
+          "original_bytes_hex": "ff36863c",
+          "operand": "push    word ptr ds:3C86h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0715",
+          "ida_ea_hex": "0x10915",
+          "runtime_linear_hex": "0x17985",
+          "original_bytes_hex": "ff36843c",
+          "operand": "push    word ptr ds:3C84h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0719",
+          "ida_ea_hex": "0x10919",
+          "runtime_linear_hex": "0x17989",
+          "original_bytes_hex": "ff36823c",
+          "operand": "push    word ptr ds:3C82h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:071D",
+          "ida_ea_hex": "0x1091d",
+          "runtime_linear_hex": "0x1798d",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:071E",
+          "ida_ea_hex": "0x1091e",
+          "runtime_linear_hex": "0x1798e",
+          "original_bytes_hex": "9a3609d739",
+          "operand": "call    far ptr 39D7h:936h",
+          "semantic": "退出時同參數再XOR擦除旗艦航線",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0723",
+          "ida_ea_hex": "0x10923",
+          "runtime_linear_hex": "0x17993",
+          "original_bytes_hex": "83c40c",
+          "operand": "add     sp, 0Ch",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0726",
+          "ida_ea_hex": "0x10926",
+          "runtime_linear_hex": "0x17996",
+          "original_bytes_hex": "b8ffff",
+          "operand": "mov     ax, 0FFFFh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0729",
+          "ida_ea_hex": "0x10929",
+          "runtime_linear_hex": "0x17999",
+          "original_bytes_hex": "a3863c",
+          "operand": "mov     ds:3C86h, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:072C",
+          "ida_ea_hex": "0x1092c",
+          "runtime_linear_hex": "0x1799c",
+          "original_bytes_hex": "a3843c",
+          "operand": "mov     ds:3C84h, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:072F",
+          "ida_ea_hex": "0x1092f",
+          "runtime_linear_hex": "0x1799f",
+          "original_bytes_hex": "a3823c",
+          "operand": "mov     ds:3C82h, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0732",
+          "ida_ea_hex": "0x10932",
+          "runtime_linear_hex": "0x179a2",
+          "original_bytes_hex": "a3803c",
+          "operand": "mov     ds:3C80h, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0735",
+          "ida_ea_hex": "0x10935",
+          "runtime_linear_hex": "0x179a5",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0736",
+          "ida_ea_hex": "0x10936",
+          "runtime_linear_hex": "0x179a6",
+          "original_bytes_hex": "55",
+          "operand": "push    bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0737",
+          "ida_ea_hex": "0x10937",
+          "runtime_linear_hex": "0x179a7",
+          "original_bytes_hex": "89e5",
+          "operand": "mov     bp, sp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0739",
+          "ida_ea_hex": "0x10939",
+          "runtime_linear_hex": "0x179a9",
+          "original_bytes_hex": "c45e06",
+          "operand": "les     bx, [bp+6]",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:073C",
+          "ida_ea_hex": "0x1093c",
+          "runtime_linear_hex": "0x179ac",
+          "original_bytes_hex": "268b4728",
+          "operand": "mov     ax, es:[bx+28h]",
+          "semantic": "一般分隊讀SHIP+28集結X",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0740",
+          "ida_ea_hex": "0x10940",
+          "runtime_linear_hex": "0x179b0",
+          "original_bytes_hex": "b90400",
+          "operand": "mov     cx, 4",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0743",
+          "ida_ea_hex": "0x10943",
+          "runtime_linear_hex": "0x179b3",
+          "original_bytes_hex": "d3e8",
+          "operand": "shr     ax, cl",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0745",
+          "ida_ea_hex": "0x10945",
+          "runtime_linear_hex": "0x179b5",
+          "original_bytes_hex": "05e001",
+          "operand": "add     ax, 1E0h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0748",
+          "ida_ea_hex": "0x10948",
+          "runtime_linear_hex": "0x179b8",
+          "original_bytes_hex": "a3883c",
+          "operand": "mov     ds:3C88h, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:074B",
+          "ida_ea_hex": "0x1094b",
+          "runtime_linear_hex": "0x179bb",
+          "original_bytes_hex": "268b572a",
+          "operand": "mov     dx, es:[bx+2Ah]",
+          "semantic": "一般分隊讀SHIP+2A集結Y",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:074F",
+          "ida_ea_hex": "0x1094f",
+          "runtime_linear_hex": "0x179bf",
+          "original_bytes_hex": "d3ea",
+          "operand": "shr     dx, cl",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0751",
+          "ida_ea_hex": "0x10951",
+          "runtime_linear_hex": "0x179c1",
+          "original_bytes_hex": "83c224",
+          "operand": "add     dx, 24h ; '$'",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0754",
+          "ida_ea_hex": "0x10954",
+          "runtime_linear_hex": "0x179c4",
+          "original_bytes_hex": "89168a3c",
+          "operand": "mov     ds:3C8Ah, dx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0758",
+          "ida_ea_hex": "0x10958",
+          "runtime_linear_hex": "0x179c8",
+          "original_bytes_hex": "b90400",
+          "operand": "mov     cx, 4",
+          "semantic": "一般分隊集結點XOR色號4",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:075B",
+          "ida_ea_hex": "0x1095b",
+          "runtime_linear_hex": "0x179cb",
+          "original_bytes_hex": "51",
+          "operand": "push    cx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:075C",
+          "ida_ea_hex": "0x1095c",
+          "runtime_linear_hex": "0x179cc",
+          "original_bytes_hex": "52",
+          "operand": "push    dx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:075D",
+          "ida_ea_hex": "0x1095d",
+          "runtime_linear_hex": "0x179cd",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:075E",
+          "ida_ea_hex": "0x1095e",
+          "runtime_linear_hex": "0x179ce",
+          "original_bytes_hex": "9af408d739",
+          "operand": "call    far ptr 39D7h:8F4h",
+          "semantic": "呼叫39D7:08F4點集結點",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0763",
+          "ida_ea_hex": "0x10963",
+          "runtime_linear_hex": "0x179d3",
+          "original_bytes_hex": "89ec",
+          "operand": "mov     sp, bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0765",
+          "ida_ea_hex": "0x10965",
+          "runtime_linear_hex": "0x179d5",
+          "original_bytes_hex": "5d",
+          "operand": "pop     bp",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0766",
+          "ida_ea_hex": "0x10966",
+          "runtime_linear_hex": "0x179d6",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0767",
+          "ida_ea_hex": "0x10967",
+          "runtime_linear_hex": "0x179d7",
+          "original_bytes_hex": "a1883c",
+          "operand": "mov     ax, ds:3C88h",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:076A",
+          "ida_ea_hex": "0x1096a",
+          "runtime_linear_hex": "0x179da",
+          "original_bytes_hex": "b9ffff",
+          "operand": "mov     cx, 0FFFFh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:076D",
+          "ida_ea_hex": "0x1096d",
+          "runtime_linear_hex": "0x179dd",
+          "original_bytes_hex": "3bc1",
+          "operand": "cmp     ax, cx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:076F",
+          "ida_ea_hex": "0x1096f",
+          "runtime_linear_hex": "0x179df",
+          "original_bytes_hex": "7506",
+          "operand": "jnz     short near ptr unk_10977",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0771",
+          "ida_ea_hex": "0x10971",
+          "runtime_linear_hex": "0x179e1",
+          "original_bytes_hex": "390e8a3c",
+          "operand": "cmp     ds:3C8Ah, cx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0775",
+          "ida_ea_hex": "0x10975",
+          "runtime_linear_hex": "0x179e5",
+          "original_bytes_hex": "741a",
+          "operand": "jz      short near ptr unk_10991",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0777",
+          "ida_ea_hex": "0x10977",
+          "runtime_linear_hex": "0x179e7",
+          "original_bytes_hex": "ba0400",
+          "operand": "mov     dx, 4",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:077A",
+          "ida_ea_hex": "0x1097a",
+          "runtime_linear_hex": "0x179ea",
+          "original_bytes_hex": "52",
+          "operand": "push    dx",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:077B",
+          "ida_ea_hex": "0x1097b",
+          "runtime_linear_hex": "0x179eb",
+          "original_bytes_hex": "ff368a3c",
+          "operand": "push    word ptr ds:3C8Ah",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:077F",
+          "ida_ea_hex": "0x1097f",
+          "runtime_linear_hex": "0x179ef",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0780",
+          "ida_ea_hex": "0x10980",
+          "runtime_linear_hex": "0x179f0",
+          "original_bytes_hex": "9af408d739",
+          "operand": "call    far ptr 39D7h:8F4h",
+          "semantic": "退出時同參數再XOR擦除分隊集結點",
+          "grade": "proven",
+          "warning": "",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0785",
+          "ida_ea_hex": "0x10985",
+          "runtime_linear_hex": "0x179f5",
+          "original_bytes_hex": "83c406",
+          "operand": "add     sp, 6",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0788",
+          "ida_ea_hex": "0x10988",
+          "runtime_linear_hex": "0x179f8",
+          "original_bytes_hex": "b8ffff",
+          "operand": "mov     ax, 0FFFFh",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:078B",
+          "ida_ea_hex": "0x1098b",
+          "runtime_linear_hex": "0x179fb",
+          "original_bytes_hex": "a38a3c",
+          "operand": "mov     ds:3C8Ah, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:078E",
+          "ida_ea_hex": "0x1098e",
+          "runtime_linear_hex": "0x179fe",
+          "original_bytes_hex": "a3883c",
+          "operand": "mov     ds:3C88h, ax",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        },
+        {
+          "original_location": "1727:0791",
+          "ida_ea_hex": "0x10991",
+          "runtime_linear_hex": "0x17a01",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "semantic": "未附加語意",
+          "grade": "unknown",
+          "warning": "⚠ 原始指令，語意待審查",
+          "source": "研究390；第52輪原版八組獨立雙跑、原指令資料流"
+        }
+      ]
+    }
+  },
+  "display_order_diagnostic": {
+    "objects": [
+      {
+        "list_index": 55,
+        "runtime_linear_hex": "0x74c4a",
+        "original_far_pointer_offset_segment": [
+          "0xa",
+          "0x74c4"
+        ],
+        "original_bytes_hex": "02ff00febe6ae000b40010100ad59e34223d10001400f000c80001011c12000f0a0101000f0a0101",
+        "priority_byte_plus_3": 254,
+        "unsigned_word_plus_4": 27326,
+        "logical_xy_plus_6_8": [
+          224,
+          180
+        ],
+        "tile_byte_plus_C": 10,
+        "grade": "proven",
+        "source": "研究390；原版完整RAM及35D1:02AB比較器，FF字鍵初始化仍unknown"
+      },
+      {
+        "list_index": 56,
+        "runtime_linear_hex": "0x74c20",
+        "original_far_pointer_offset_segment": [
+          "0x10",
+          "0x74c1"
+        ],
+        "original_bytes_hex": "02ff00ffffdbe000b40010100ab79e34223d10001400f000c80001011c12000f0a0101000f0a0101",
+        "priority_byte_plus_3": 255,
+        "unsigned_word_plus_4": 56319,
+        "logical_xy_plus_6_8": [
+          224,
+          180
+        ],
+        "tile_byte_plus_C": 10,
+        "grade": "proven",
+        "source": "研究390；原版完整RAM及35D1:02AB比較器，FF字鍵初始化仍unknown"
+      },
+      {
+        "list_index": 57,
+        "runtime_linear_hex": "0x713de",
+        "original_far_pointer_offset_segment": [
+          "0x3ce",
+          "0x7101"
+        ],
+        "original_bytes_hex": "020000ff05c75805a406101009f81e34223d100014006805b80601011c120155ec00070155ec0007",
+        "priority_byte_plus_3": 255,
+        "unsigned_word_plus_4": 50949,
+        "logical_xy_plus_6_8": [
+          1368,
+          1700
+        ],
+        "tile_byte_plus_C": 9,
+        "grade": "proven",
+        "source": "研究390；原版完整RAM及35D1:02AB比較器，FF字鍵初始化仍unknown"
+      },
+      {
+        "list_index": 58,
+        "runtime_linear_hex": "0x716fe",
+        "original_far_pointer_offset_segment": [
+          "0x6ee",
+          "0x7101"
+        ],
+        "original_bytes_hex": "020000ff757c1805a406101009bc1e34223d100014002805b80601011c1201afca8f4501afca8f45",
+        "priority_byte_plus_3": 255,
+        "unsigned_word_plus_4": 31861,
+        "logical_xy_plus_6_8": [
+          1304,
+          1700
+        ],
+        "tile_byte_plus_C": 9,
+        "grade": "proven",
+        "source": "研究390；原版完整RAM及35D1:02AB比較器，FF字鍵初始化仍unknown"
+      },
+      {
+        "list_index": 59,
+        "runtime_linear_hex": "0x711ae",
+        "original_far_pointer_offset_segment": [
+          "0x19e",
+          "0x7101"
+        ],
+        "original_bytes_hex": "020000ff00103805c406101009101e34223d100014004805d80601011c1201fbaaab0001fbaaab00",
+        "priority_byte_plus_3": 255,
+        "unsigned_word_plus_4": 4096,
+        "logical_xy_plus_6_8": [
+          1336,
+          1732
+        ],
+        "tile_byte_plus_C": 9,
+        "grade": "proven",
+        "source": "研究390；原版完整RAM及35D1:02AB比較器，FF字鍵初始化仍unknown"
+      },
+      {
+        "list_index": 60,
+        "runtime_linear_hex": "0x71596",
+        "original_far_pointer_offset_segment": [
+          "0x586",
+          "0x7101"
+        ],
+        "original_bytes_hex": "020000ff010a1805e406101009151e34223d100014002805f80601011c1201750175000175017500",
+        "priority_byte_plus_3": 255,
+        "unsigned_word_plus_4": 2561,
+        "logical_xy_plus_6_8": [
+          1304,
+          1764
+        ],
+        "tile_byte_plus_C": 9,
+        "grade": "proven",
+        "source": "研究390；原版完整RAM及35D1:02AB比較器，FF字鍵初始化仍unknown"
+      },
+      {
+        "list_index": 61,
+        "runtime_linear_hex": "0x71866",
+        "original_far_pointer_offset_segment": [
+          "0x856",
+          "0x7101"
+        ],
+        "original_bytes_hex": "020000ffc40038058406101009001e34223d100014004805980601011c12013ff03fc0013ff03fc0",
+        "priority_byte_plus_3": 255,
+        "unsigned_word_plus_4": 196,
+        "logical_xy_plus_6_8": [
+          1336,
+          1668
+        ],
+        "tile_byte_plus_C": 9,
+        "grade": "proven",
+        "source": "研究390；原版完整RAM及35D1:02AB比較器，FF字鍵初始化仍unknown"
+      },
+      {
+        "list_index": 62,
+        "runtime_linear_hex": "0x7101e",
+        "original_far_pointer_offset_segment": [
+          "0xe",
+          "0x7101"
+        ],
+        "original_bytes_hex": "020000ff4000e800bc00101001001e30223d10001400f800d00001011c12000f0a0202000f0a0202",
+        "priority_byte_plus_3": 255,
+        "unsigned_word_plus_4": 64,
+        "logical_xy_plus_6_8": [
+          232,
+          188
+        ],
+        "tile_byte_plus_C": 1,
+        "grade": "proven",
+        "source": "研究390；原版完整RAM及35D1:02AB比較器，FF字鍵初始化仍unknown"
+      },
+      {
+        "list_index": 63,
+        "runtime_linear_hex": "0x712ee",
+        "original_far_pointer_offset_segment": [
+          "0x2de",
+          "0x7101"
+        ],
+        "original_bytes_hex": "020000ff38003805a406101009001e34223d100014004805b80601011c1201ff56aa1001ff56aa10",
+        "priority_byte_plus_3": 255,
+        "unsigned_word_plus_4": 56,
+        "logical_xy_plus_6_8": [
+          1336,
+          1700
+        ],
+        "tile_byte_plus_C": 9,
+        "grade": "proven",
+        "source": "研究390；原版完整RAM及35D1:02AB比較器，FF字鍵初始化仍unknown"
+      }
+    ],
+    "remaining_pixel_xy": [
+      255,
+      255
+    ],
+    "classification": "proven observed direction covers current highlight; general FF key contract unknown"
+  },
+  "frames": {
+    "entry": {
+      "regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307199,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 113,
+          "difference_bbox_inclusive": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                255,
+                255
+              ],
+              "original_index": 12,
+              "remake_index": 5
+            }
+          ]
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161279,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 113,
+          "difference_bbox_inclusive": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                255,
+                255
+              ],
+              "original_index": 12,
+              "remake_index": 5
+            }
+          ]
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "before_regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307198,
+          "different_index_pixels": 2,
+          "different_rgb_pixels": 2,
+          "maximum_channel_difference": 211,
+          "difference_bbox_inclusive": [
+            255,
+            93,
+            506,
+            255
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                506,
+                93
+              ],
+              "original_index": 2,
+              "remake_index": 6
+            },
+            {
+              "xy": [
+                255,
+                255
+              ],
+              "original_index": 12,
+              "remake_index": 5
+            }
+          ]
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161279,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 113,
+          "difference_bbox_inclusive": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                255,
+                255
+              ],
+              "original_index": 12,
+              "remake_index": 5
+            }
+          ]
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92159,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 211,
+          "difference_bbox_inclusive": [
+            506,
+            93,
+            506,
+            93
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                506,
+                93
+              ],
+              "original_index": 2,
+              "remake_index": 6
+            }
+          ]
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16383,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 211,
+          "difference_bbox_inclusive": [
+            506,
+            93,
+            506,
+            93
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                506,
+                93
+              ],
+              "original_index": 2,
+              "remake_index": 6
+            }
+          ]
+        }
+      },
+      "original_path": "workplace/oracle/normal89-r51-base-a",
+      "original_hashes": {
+        "screen.bin": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+        "screen.png": "c6ddfb988cf15898626fa50b040b1f2423baabae0aa27f57f3fd153abdbc00cb",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "8c99a0e7c1d1c8f3d97cc58c2b8b1458a9c037d8a4f3cbdd56faabece38b96ba",
+        "meta.txt": "4ccec5f35938cb77ff0b8ff1673167d86c0ea96fc3e3ec266035fa629e02bbc7"
+      },
+      "original_command_argv": [
+        "-load-state",
+        "/src/workplace/fcmd/fcmd-s3-base.state",
+        "-steps",
+        "435000001",
+        "-tick",
+        "20000",
+        "-clicks",
+        "301000000:544:85,304000000:560:85,405000000:240:200",
+        "-click-hold",
+        "3000000",
+        "-poke",
+        "lin:5E00C@300000000=7E 16 DC D3",
+        "-regs-from",
+        "405000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "1CC5:008E,1629:023B,12AA:02D4",
+        "-save-state",
+        "435000000:/out/oracle/normal89-r51-base-a/machine.state",
+        "-dump-mem-at",
+        "434999999:lin:0:1048576:/out/oracle/normal89-r51-base-a/entry.bin"
+      ],
+      "before_frame_sha256": "7b5d17a415a96e1a388c0517795fca5ffc18221e5b200936fbd010780113c18e",
+      "images_sha256": {
+        ".png": "66edab015a26425200a523db8f2400a17eb97a1e9f296c8caa4c221add79eec8",
+        "-diff.png": "a8d4f2dc3d1856d9864726ea0965ac7a5f5bd60abb6e82e1908b4c3edb6b5f58",
+        "-pair.png": "62f77656bde64384758837650283fbc2af83bae069df113aac8e242a257a4bb4"
+      },
+      "classification": "nearby-state; static frames bounded, complete record parity unresolved"
+    },
+    "flagship": {
+      "regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307200,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "before_regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307199,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 211,
+          "difference_bbox_inclusive": [
+            506,
+            93,
+            506,
+            93
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                506,
+                93
+              ],
+              "original_index": 2,
+              "remake_index": 6
+            }
+          ]
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92159,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 211,
+          "difference_bbox_inclusive": [
+            506,
+            93,
+            506,
+            93
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                506,
+                93
+              ],
+              "original_index": 2,
+              "remake_index": 6
+            }
+          ]
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16383,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 211,
+          "difference_bbox_inclusive": [
+            506,
+            93,
+            506,
+            93
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                506,
+                93
+              ],
+              "original_index": 2,
+              "remake_index": 6
+            }
+          ]
+        }
+      },
+      "original_path": "workplace/oracle/normal89-r51-flagship-a",
+      "original_hashes": {
+        "screen.bin": "141b3d6b6f84da7e58de4975089fe80541bbaa630f70a0e9d05971ad7cc7b350",
+        "screen.png": "25bc500008b6064d0b7a8288d59b4f07b780df084007d388a259a30a2915725c",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "d5560a2e2ef62e3c3946885c1957423ca4fccf8521ea6e305bbd8b756f315a0e",
+        "meta.txt": "ccaddf8ea62206695cf39bd94381d023f666ac62c04d8c2080e5f083922e927b"
+      },
+      "original_command_argv": [
+        "-load-state",
+        "/out/oracle/normal89-r51-base-a/machine.state",
+        "-steps",
+        "455000001",
+        "-tick",
+        "20000",
+        "-mouse-at",
+        "440000000",
+        "-mouse-x",
+        "248",
+        "-mouse-y",
+        "208",
+        "-regs-from",
+        "435000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+        "-save-state",
+        "455000000:/out/oracle/normal89-r51-flagship-a/machine.state",
+        "-dump-mem-at",
+        "454999999:lin:0:1048576:/out/oracle/normal89-r51-flagship-a/end.bin"
+      ],
+      "before_frame_sha256": "49dd084d61f735a00c6ba36dba32fa8bde449f8d2cbc1f70227ca7890ee9d65a",
+      "images_sha256": {
+        ".png": "be28333a23ae58df53d0da10376ab3352f020c8bdae2321b69bc786e959596a9",
+        "-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+        "-pair.png": "1dc7a295d45cb880cd4234590d2cec4796c7d96a6a248f4b41025a5967ba56b9"
+      },
+      "classification": "nearby-state; static frames bounded, complete record parity unresolved"
+    },
+    "squad": {
+      "regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307200,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "before_regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307199,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 211,
+          "difference_bbox_inclusive": [
+            506,
+            92,
+            506,
+            92
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                506,
+                92
+              ],
+              "original_index": 2,
+              "remake_index": 6
+            }
+          ]
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92159,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 211,
+          "difference_bbox_inclusive": [
+            506,
+            92,
+            506,
+            92
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                506,
+                92
+              ],
+              "original_index": 2,
+              "remake_index": 6
+            }
+          ]
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16383,
+          "different_index_pixels": 1,
+          "different_rgb_pixels": 1,
+          "maximum_channel_difference": 211,
+          "difference_bbox_inclusive": [
+            506,
+            92,
+            506,
+            92
+          ],
+          "remaining_pixels": [
+            {
+              "xy": [
+                506,
+                92
+              ],
+              "original_index": 2,
+              "remake_index": 6
+            }
+          ]
+        }
+      },
+      "original_path": "workplace/oracle/normal89-r51-squad-a",
+      "original_hashes": {
+        "screen.bin": "5227012ab121415e0fa6d9b3f368adb6ed55a7316999a4ce1ed1e0f3395aa396",
+        "screen.png": "c8a8f8fbc506974828158a46d6f30964fc9d869fc12ff621219225d46c23d7ae",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "8d02dde7dce6d2b50acfab18624226d7080b503b93fa9e43516256354e4b5add",
+        "meta.txt": "741eeeda24c3b2f5d2cdd7a9ed3ebabb537fb673fbcb7e25caf0fcaacb9688b0"
+      },
+      "original_command_argv": [
+        "-load-state",
+        "/out/oracle/normal89-r51-base-a/machine.state",
+        "-steps",
+        "455000001",
+        "-tick",
+        "20000",
+        "-mouse-at",
+        "440000000",
+        "-mouse-x",
+        "249",
+        "-mouse-y",
+        "184",
+        "-regs-from",
+        "435000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+        "-save-state",
+        "455000000:/out/oracle/normal89-r51-squad-a/machine.state",
+        "-dump-mem-at",
+        "454999999:lin:0:1048576:/out/oracle/normal89-r51-squad-a/end.bin"
+      ],
+      "before_frame_sha256": "6a73bc55ccf5737732acec20eaa11d5b5dc955678d2195d3ae1f945dd9aa1dc1",
+      "images_sha256": {
+        ".png": "0d73edc7ec33188e63c22318d6675385a8f91b0c3920d7611cc52846888468ff",
+        "-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+        "-pair.png": "b5c8f2fe77e990b692c4a1b0edc3bc57bfea07456b41390be2ab7ff0a925e141"
+      },
+      "classification": "nearby-state; static frames bounded, complete record parity unresolved"
+    },
+    "empty": {
+      "regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307200,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "before_regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307200,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "original_path": "workplace/oracle/normal89-r51-empty-a",
+      "original_hashes": {
+        "screen.bin": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+        "screen.png": "0ea3b6482c550a4337b88c85600fb7fe771027c36179715d169a37a5231c3a17",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "6f508f19edf50efbdb538b3ca505f205e78031dc32dc7ae1c150a861f82db610",
+        "meta.txt": "c27c14d4f6448eef1ff3e78732412d07e8d8444484f93121e05e39881154fae9"
+      },
+      "original_command_argv": [
+        "-load-state",
+        "/out/oracle/normal89-r51-base-a/machine.state",
+        "-steps",
+        "455000001",
+        "-tick",
+        "20000",
+        "-mouse-at",
+        "440000000",
+        "-mouse-x",
+        "100",
+        "-mouse-y",
+        "100",
+        "-regs-from",
+        "435000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+        "-save-state",
+        "455000000:/out/oracle/normal89-r51-empty-a/machine.state",
+        "-dump-mem-at",
+        "454999999:lin:0:1048576:/out/oracle/normal89-r51-empty-a/end.bin"
+      ],
+      "before_frame_sha256": "0fde7714458b292a9b54ebc79180b60ca575912a776c961977631150e896d453",
+      "images_sha256": {
+        ".png": "5358474d8dafe6920a3f1381f432679cfa6e76325aac398471844f15c528695e",
+        "-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+        "-pair.png": "1a673eb97ed8d0160b4a7846b6279da07555516e99d08492c092b6e6858ed52f"
+      },
+      "classification": "nearby-state; static frames bounded, complete record parity unresolved"
+    },
+    "panel": {
+      "regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307200,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "before_regions": {
+        "full": {
+          "rectangle_xywh": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "compared_pixels": 307200,
+          "same_pixels": 307200,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "field": {
+          "rectangle_xywh": [
+            0,
+            0,
+            448,
+            360
+          ],
+          "compared_pixels": 161280,
+          "same_pixels": 161280,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "right": {
+          "rectangle_xywh": [
+            448,
+            0,
+            192,
+            480
+          ],
+          "compared_pixels": 92160,
+          "same_pixels": 92160,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "bottom": {
+          "rectangle_xywh": [
+            0,
+            360,
+            448,
+            120
+          ],
+          "compared_pixels": 53760,
+          "same_pixels": 53760,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "unit_panel": {
+          "rectangle_xywh": [
+            480,
+            242,
+            128,
+            160
+          ],
+          "compared_pixels": 20480,
+          "same_pixels": 20480,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        },
+        "minimap": {
+          "rectangle_xywh": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "compared_pixels": 16384,
+          "same_pixels": 16384,
+          "different_index_pixels": 0,
+          "different_rgb_pixels": 0,
+          "maximum_channel_difference": 0,
+          "difference_bbox_inclusive": null,
+          "remaining_pixels": []
+        }
+      },
+      "original_path": "workplace/oracle/normal89-r51-panel-a",
+      "original_hashes": {
+        "screen.bin": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+        "screen.png": "f66fa3db97bb0ffad7a3dae13cecbca638e1afedb5f3d5cb8eea9493634cff10",
+        "pal.bin": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+        "flags.txt": "935248d1ef8228bc8086cfd7e13162183424bcf13eb73365a874125758233bab",
+        "meta.txt": "bbc640ad4798e3ac6e58c29394dadb94ad201f7d675067ea2298ff63e76a2b68"
+      },
+      "original_command_argv": [
+        "-load-state",
+        "/out/oracle/normal89-r51-base-a/machine.state",
+        "-steps",
+        "455000001",
+        "-tick",
+        "20000",
+        "-mouse-at",
+        "440000000",
+        "-mouse-x",
+        "500",
+        "-mouse-y",
+        "250",
+        "-regs-from",
+        "435000000",
+        "-regs-max",
+        "16",
+        "-regs-at",
+        "1CC5:008E,1629:023B,12AA:02D4,12F1:04C3,12F1:0539,25DB:0AF8",
+        "-save-state",
+        "455000000:/out/oracle/normal89-r51-panel-a/machine.state",
+        "-dump-mem-at",
+        "454999999:lin:0:1048576:/out/oracle/normal89-r51-panel-a/end.bin"
+      ],
+      "before_frame_sha256": "bab12bf1d6185b5e13b0f091cea64bf6d061a1130e4f10979dba5911fe5e822c",
+      "images_sha256": {
+        ".png": "f7e29775301b6df8aa6db003b558a9c71e7e2a7448865f0198285fd6ab1cd5ae",
+        "-diff.png": "8edfa75bdb132adb8d3f1cbbff26510aa6c6a9b13572dba0c6171507cd2ff603",
+        "-pair.png": "7311ad6033693beec64bc1acd4a88e41a1626df6fcc6819a3ffce3d8f88573f9"
+      },
+      "classification": "nearby-state; static frames bounded, complete record parity unresolved"
+    }
+  },
+  "tables": {
+    "WORK": {
+      "bytes": 230,
+      "different_bytes": 14,
+      "offset_counts": {
+        "2": 1,
+        "3": 1,
+        "6": 1,
+        "7": 1,
+        "38": 1,
+        "40": 1,
+        "42": 1,
+        "43": 1,
+        "44": 1,
+        "45": 1,
+        "110": 1,
+        "111": 1,
+        "114": 1,
+        "115": 1
+      },
+      "original_sha256": "4f4d0edec288c0d3f1a6c452275f049f798071e80f86ffb78e717c043317d237",
+      "remake_sha256": "d7a74023da86621cec86bac999152f2c79bd3d6f23acb1cb91a792dfb2eb6ac8"
+    },
+    "FLEET": {
+      "bytes": 3904,
+      "different_bytes": 27,
+      "offset_counts": {
+        "108": 7,
+        "110": 7,
+        "111": 7,
+        "109": 6
+      },
+      "original_sha256": "53af52561125e497eebac24f6a0f2ce6c44b2109516cecab3a481e27d09980d1",
+      "remake_sha256": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55"
+    },
+    "SHIP": {
+      "bytes": 27456,
+      "different_bytes": 276,
+      "offset_counts": {
+        "48": 55,
+        "56": 55,
+        "58": 55,
+        "59": 55,
+        "47": 7,
+        "57": 49
+      },
+      "original_sha256": "1c74fa060ca3fd8f5276d34fac84fb614522434f684885deb77f0253cccd8b44",
+      "remake_sha256": "364bf0a36984d087b2bce8ac98c74dc54dbcf6598a82e29c401e4faf5c4caeb2"
+    },
+    "STELLAR": {
+      "bytes": 4032,
+      "different_bytes": 0,
+      "offset_counts": {},
+      "original_sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "remake_sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "PLANET": {
+      "bytes": 6642,
+      "different_bytes": 0,
+      "offset_counts": {},
+      "original_sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "remake_sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    }
+  },
+  "gui": [
+    {
+      "scale": 1,
+      "path": "workplace/round52-gui-final-1x",
+      "normal_player_path": true,
+      "hashes": {
+        ".bin": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+        ".png": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+        ".txt": "f053d194a0cb86c82378c9c73e35fc959f320e40886cafb3bf59a967cfe5d606",
+        ".log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    },
+    {
+      "scale": 2,
+      "path": "workplace/round52-gui-final-2x",
+      "normal_player_path": true,
+      "hashes": {
+        ".bin": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+        ".png": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+        ".txt": "9b437af71f16b55dc4db0e6f733f50e11536d3b4799bebd2535f406bfb14e8d3",
+        ".log": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+      }
+    }
+  ],
+  "verification": {
+    "limited_pass_events": 45,
+    "standard_product_packages": 18,
+    "log_sha256": {
+      "round52-limited-final2.log": "b7b4b2a3732168809ab7ed95cbac3f1023fd6ee0309cfcd8dc1c6fbee8b9ed59",
+      "round52-standard-final2.log": "16b40952abf1f8df47ccebc61f57fc28618d7b7de60c330d1b09366dd3d4d38d"
+    }
+  },
+  "source_hashes": {
+    "internal/game/game.go": "31fc65661676c1a65a8b52235340d34069805d47743ef9db17ce6a36e867f495",
+    "internal/game/battlecmd.go": "72aa6dd3d298d518ed24d383a64099b80dfc316cb399a332dbf5050b7936f63c",
+    "internal/game/battlecmd_test.go": "9120089fcf8d85a9cd574c68e824bec013faa9671434fae8c50db888b3d54ecd",
+    "internal/screen/battle.go": "cdb3ba74308b1917440c55a998fe4ce28e1f3138f679fa016009b2c7cc2ee54c",
+    "internal/screen/minimap_test.go": "4398093bd70bb6c160f7590593c00ec7d98f69a61d88d171022add9f2b9ad303",
+    "tools/battle_hover_marks_oracle.sh": "ec0f7eec8b8c49602302ecf0ddde55a4cdfb258b31b0da6b671179f542b46a6c",
+    "tools/scripts/battle_hover_marks_ida.py": "5f08d64f9131da6ef4d0d65037b5f3dc05c8269b4672e78fdc99c6b85ba9dc1e",
+    "tools/scripts/battle_hover_marks_receipt.py": "e7496821b98f6388a794508618edf15ce39db6c74a91672e2e6803aa088f9881",
+    "tools/scripts/battle_normal_probe.go": "ba6577950d46cea17f253e9664ebc1746d453be4f83135ee91f77f0ea5ada346",
+    "tools/scripts/battle_normal_probe_seed.py": "cfab11a19a0111052d53189a549287dd09cd1c14ce221b151914d021aff43256",
+    "tools/turn_counter_gui.sh": "30057fc8012f71cc9f22e322a9fd11d31b12585b68a35b2cb9040a4a187dc5a4",
+    "workplace/round52-normal-overlay.json": "6069b9b01d7b2be2ceba74bd234dc79b0fc044a231220c6a9c7812fa7c6c4a6f",
+    "workplace/round52-normal-seed.go": "cb0968d3a3864b28e60f4a6e6a71d6d374564b283a9fa58f4a78bb66ed3bb923"
+  },
+  "normalization": "640x480原生色號與原版有效RGB色盤；無裁切、縮放或遮罩",
+  "limitations": [
+    "初始(255,255)方向物件覆蓋差1 pixel，所有FF物件排序契約未審，不改像素常數",
+    "其餘四張靜態全圖零差異不證明完整記錄／正常索敵／八步parity",
+    "四案原版RAM疊圖回歸只驗正式primitive；正常Game五案另列，不混稱",
+    "敵方／行星／特殊艦種、模態退出及非法座標未新增原版驗收",
+    "原版輸入用快照、明示target注入診斷；正常Game只以測試期Go覆蓋固定策略seed"
+  ]
+}

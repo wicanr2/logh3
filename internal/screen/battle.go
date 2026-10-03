@@ -620,6 +620,33 @@ func DrawMinimapUnits(s *BattleSpec, fb *gfx.Framebuffer, units []rules.BattleUn
 	}
 }
 
+// DrawMinimapInputHighlight沿088／1727:0677、0736疊摘要快照的集結點。
+// 旗艦畫現在至集結點的實線，其餘分隊只點集結點；不改SHIP標記快照。
+func DrawMinimapInputHighlight(s *BattleSpec, fb *gfx.Framebuffer, current, target [2]int, fleet bool) {
+	if s == nil || fb == nil || target[0] < 0 || target[1] < 0 {
+		return
+	}
+	m := &s.Minimap
+	x1, y1, ok := m.minimapPixel(target[0], target[1])
+	if !ok {
+		return
+	}
+	const ink uint8 = 4
+	if !fleet {
+		fb.Set(x1, y1, fb.At(x1, y1)^ink)
+		return
+	}
+	if current[0] < 0 || current[1] < 0 {
+		return
+	}
+	x0, y0, ok := m.minimapPixel(current[0], current[1])
+	if !ok {
+		return
+	}
+	r := ClipRect{X0: m.X, Y0: m.Y, X1: m.X + m.W - 1, Y1: m.Y + m.H - 1}
+	r.XorLine(fb, x0, y0, x1, y1, ink)
+}
+
 // FormationMarkTile 是「編隊」畫面上每個空格子畫的那一塊
 // （原版 `2BE1:0564` 寫死 11，`docs/internals/46`）。
 const FormationMarkTile = 11
