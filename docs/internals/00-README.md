@@ -1,5 +1,15 @@
 # 原版內部構造參考
 
+第66輪沿#79／#48：[多目標與多攻擊者計畫](../goal/2026-10-04-combat-sequence-round-66.md)。
+先閉合重疊座標曲線與原版命令序列，避免以單擊probe代替正式交戰鏈；092仍DRAFT。
+[序列重播入口](../../tools/combat_sequence_oracle.sh)與
+[固定命令／係數計畫](../../tools/scripts/combat_sequence_plan.py)保留完整注入與點擊。
+[係數域可丟棄probe](../../tools/scripts/combat_sequence_probe.go)沿第64輪模型；零距離另外保存原版殘留stack，不接production。
+[機動力原始指令匯出](../../tools/scripts/combat_sequence_ida.py)核對既有機動力公式與排序加值。
+[序列收據凍結器](../../tools/scripts/combat_sequence_receipt.py)核原版雙跑、來源指紋、祖先注入與模型，拒絕覆寫。
+[研究404](../re/404-combat-sequence.md)、[原版診斷056](../playtest/056-combat-sequence.md)與
+[完整序列收據](data/combat-sequence.json)保存零距離未初始化指標、已核准差異、多分隊排序及累積戰損。
+
 第65輪沿#79／#48：[武器候選計畫](../goal/2026-10-04-weapon-candidates-round-65.md)與
 [候選owner原始指令匯出](../../tools/scripts/weapon_candidates_ida.py)。
 固定第62輪父狀態，先閉合可用戰鬥機及候選條件；092仍DRAFT。
