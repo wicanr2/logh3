@@ -2,7 +2,8 @@
 
 狀態：**DRAFT**（入口、換曲、面板、三個視窗、**兩個圖視窗的序列與計時、按鍵排隊** CONFORMED——六批 `eng-*`
 與 `eng-skip-mid` 扣掉量表與戰場兩塊逐位元組相同（`docs/re/331`，歷史收據）；
-094已接既有防衛標題分支量表，戰場方塊、另外三種演出及正常同狀態／色盤仍待驗）。
+094已接既有防衛標題分支量表，096正式交戰色盤已接；097 typed下方計畫及098等待predicate已驗。
+Game戰場方塊、另外三種演出及完整正常同狀態仍待驗）。
 證據：[`docs/re/324`](../re/324-engagement-scene.md)；素材 [`docs/internals/20`](../internals/20-comani-bmg.md)
 （`COMANI.BMG`，`docs/re/328`）、[`docs/re/331`](../re/331-engagement-picture-sequence.md)（序列與計時）、[`docs/internals/37`](../internals/37-ani-pnl-a98.md)（`ANI_PNL1.A98`）。
 收據：[`docs/playtest/022`](../playtest/022-engagement-scene.md)。
@@ -37,9 +38,9 @@
 | 差異 | 類別 | 到期條件 |
 |---|---|---|
 | 兩條量表的其他演出分支 | 094已核常式並接既有防衛標題分支；歷史fixture仍排除舊矩形 | 閉合分段生命週期及正常同狀態／色盤；見094與驗證057 |
-| 戰場 (6,207) 627×226 的方塊（`321F:008A`／`0897`／`06FC`，開場之後畫、擊毀時閃一次） | 程式沒讀 | 讀 `321F` 段 |
+| 戰場方塊（`321F:008A`／`0897`／`06FC`） | 095／097艦隊下方合成及typed計畫已驗；Game與行星分支未接 | 閉合正式caller合法域及完整生命週期，沿092接線 |
 | 停頓起點：原版在方塊畫完（約 26 萬步 CPU）之後才開始停頓，收場晚 remake 一個 tick（235 對 234）；動畫效果關掉時原版停頓在 tick 8 才開始（98 對 90） | 時序 | 讀開場到停頓之間花掉的 tick |
-| 音效（`3B74:031A`，記錄 `+6`） | 沒讀 | 讀 `2376:1585`／`1644` |
+| 音效（`3B74:031A`，記錄 `+6`） | 406已核記錄與消費端；正式音效播放仍缺 | 接完整場景音效出口，不深入硬體driver |
 | 登陸艦攻擊（`20B4:0681`：`?LAB`、`P?D0`／`D2`）那一條的圖序列只讀了程式碼 | 沒有收據 | 走到登陸攻擊的收據 |
 | 中間視窗四種標題（防衛攻擊／登陸艦攻擊／占領成功／占領失敗）各在什麼情形印只量到一種 | 假設待驗 | 走到有登陸攻擊或換手的收據 |
 | 艦隊看得清（第Ｎ艦隊 提督）的門檻假設是自軍或索敵等級 3；一顆行星被幾支打時一支一場 | 假設待驗 | 走到那種局面的收據 |
@@ -52,3 +53,4 @@
   `TestEngagementAnimationOffMatchesOracle`、
   `TestEngagementQueuedFromAssault`（打行星有結果就切演出、看完回合數才加）。
 - `internal/audio/tune_test.go`：`TestEveryTuneIsReachable` 從 `StateEngagement` 走到 `BGM_6`／`BGM_7`。
+- [098](098-engagement-wait.md)及`TestEngagementWaitNative`：當前dosgolem11案雙跑，左右滑鼠排隊、空白／ESC及duration0／1／90直接核共用Game等待predicate；不驗整段起始tick。

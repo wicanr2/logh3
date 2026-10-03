@@ -93,12 +93,16 @@ SHIP+42在投影時改為可見性，與先前排序鍵分相位；typed演出�
 第70輪沿[研究407](../re/407-fleet-blocks.md)、[059](../playtest/059-fleet-blocks.md)及
 [095 READY](095-fleet-blocks.md)完成下方完整合成器。40層＋20裁切零差，164＋20原版檔雙跑相同；
 第一亮標平面遮罩8已由56次VGA觀測確認，0B43無背景buffer搬移。
-合成器仍採原版已投影參數；Game／typed投影與等待輸入尚未READY。
+第70輪合成器當時仍採原版已投影參數；第72輪已沿097補typed投影及完整下方計畫，Game仍未接。
 第71輪[096 READY](096-fleet-presentation.md)、[研究408](../re/408-fleet-presentation.md)與
 [060](../playtest/060-fleet-presentation.md)完成艦隊文字合成器。92案內容格與全圖零差，
 正式bootstrap／Game專用交戰色盤已接；艦隊文字仍未接Game，不能因此升格完整092。
 零高度裁切的直接診斷未返回，正式玩家可達性未知；095回error不默默跳過。
-下一窄任務閉合typed投影／裁切域與等待輸入，才審查完整scene契約；不在舊ResolveBattleTurn插入核心猜補。
+第72輪[097 READY](097-fleet-projection.md)、[098 READY](098-engagement-wait.md)、
+[研究409](../re/409-fleet-projection.md)及[061](../playtest/061-fleet-projection.md)完成typed投影與下方計畫。
+30案投影／排序直接符合原版，兩張下方完整操作與614400全圖像素零差。
+11案原版等待44檔雙跑相同，共用Game輸入／倒數predicate亦通過；演出中左右鍵排隊、空白與ESC本批不縮短。
+下一窄任務核正式裁切合法域及完整圖序列的起始tick，才審查完整scene契約；不在舊ResolveBattleTurn插入核心猜補。
 
 第67輪已依[093純核心子規格](093-fleet-combat-core.md)完成單擊、排序與機動力。
 先審查READY再實作，直接比原版RAM及暫存器通過。零距離已在核心取首點，
@@ -114,7 +118,7 @@ SHIP+42在投影時改為可見性，與先前排序鍵分相位；typed演出�
 
 - 死亡後第二命令停止已由第69輪補證；其他取消分支及其他排列仍未覆蓋。
 - 候選／射線沿第65輪，零距離沿已核准首點規則；正式adapter仍須核合法資料邊界與錯誤處理。
-- 0152／026B與05D7完整原版呼叫鏈已記錄；下方合成器／文字及正式色盤已實作，下一步閉合typed投影／裁切域及等待輸入後審查READY。
+- 0152／026B與05D7完整原版呼叫鏈已記錄；下方計畫／投影／文字／色盤及等待predicate已實作或核對，下一步核正式裁切域及圖序列起始tick後審查READY。
 - remake正常玩家入口、兩主要路徑、UI、保存及同狀態比較。
 
 目前ResolveBattleTurn仍走行星對艦隊近似，不能稱為此階段已實作。

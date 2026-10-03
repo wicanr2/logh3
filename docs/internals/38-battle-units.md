@@ -563,3 +563,19 @@ proven：0513可見投影X8..568、Y220..376；Y到原生畫面加40一次。
 0B43只是retf，不是背景呈現。正式解析器與合成器已實作，但仍用原版投影參數驗收。
 X624與Y376／131塊的直接入口未返回。後者零高度下溢為strong inference，
 正式可達性unknown；不以增加步數或默默跳過宣稱parity。Game／文字／色盤／等待仍待092。
+
+## 第72輪typed投影與結果等待
+
+[研究409](../re/409-fleet-projection.md)、[097 READY](../spec/097-fleet-projection.md)、
+[投影收據](data/fleet-projection.json)及[下方來源](data/fleet-scene-plan.json)，proven限原始bytes與固定案例。
+兩側編制首筆的目前XY作參考；flagship距離大於200改固定170／470基底。
+近距離以word中點到各側距離的整數乘3除2分開，Y均298。
+相對位移乘3除2、旋轉後保存+44，再把半Y由X扣除。
+投影+42只驗signed X8..568、Y220..376含邊界。繪製比較器用unsigned +40後+3E，並不讀+44。
+30案420分隊的投影及完整排序直接符合原版；typed來源生成完整下方兩圖零差，Game仍未接。
+
+結果等待依[098 READY](../spec/098-engagement-wait.md)與[11案收據](data/fleet-wait.json)。
+3765:006C把duration寫到計數器，再逐筆取12-byte事件；timer0或事件1／2才返回並清timer。
+演出中左／右按下並放開仍排隊，等待期亦可縮短；空白／ESC本批不縮短。
+既有Game共用predicate11案通過。沒有用dosgolem步數反推實機秒數，沒有深入硬體driver。
+起始tick、正式裁切合法域、正常完整Game／GUI及保存仍由056／092驗收。

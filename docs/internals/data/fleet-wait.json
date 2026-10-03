@@ -1,0 +1,5746 @@
+{
+  "schema": "logh3.fleet-wait.v1",
+  "date": "2026-10-04",
+  "native": {
+    "cases": [
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [],
+        "inputs": [],
+        "mouse_buttons_after": 0,
+        "name": "case-00",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515375239,
+            "timer_word": 90
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515545142,
+            "timer_word": 89
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515745133,
+            "timer_word": 88
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515945110,
+            "timer_word": 87
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516145097,
+            "timer_word": 86
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516345118,
+            "timer_word": 85
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516545088,
+            "timer_word": 84
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516745102,
+            "timer_word": 83
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516945269,
+            "timer_word": 82
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517145142,
+            "timer_word": 81
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517345081,
+            "timer_word": 80
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517545294,
+            "timer_word": 79
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517745098,
+            "timer_word": 78
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517945120,
+            "timer_word": 77
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518145086,
+            "timer_word": 76
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518345130,
+            "timer_word": 75
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518545116,
+            "timer_word": 74
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518745090,
+            "timer_word": 73
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518945133,
+            "timer_word": 72
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519145343,
+            "timer_word": 71
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519345143,
+            "timer_word": 70
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519545110,
+            "timer_word": 69
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519745238,
+            "timer_word": 68
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519945142,
+            "timer_word": 67
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520145100,
+            "timer_word": 66
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520345141,
+            "timer_word": 65
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520545084,
+            "timer_word": 64
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520745128,
+            "timer_word": 63
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520945080,
+            "timer_word": 62
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521145122,
+            "timer_word": 61
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521345064,
+            "timer_word": 60
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521545079,
+            "timer_word": 59
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521745105,
+            "timer_word": 58
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521945263,
+            "timer_word": 57
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522145063,
+            "timer_word": 56
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522345113,
+            "timer_word": 55
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522545233,
+            "timer_word": 54
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522745100,
+            "timer_word": 53
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522945127,
+            "timer_word": 52
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523145085,
+            "timer_word": 51
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523345128,
+            "timer_word": 50
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523545086,
+            "timer_word": 49
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523745075,
+            "timer_word": 48
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523945096,
+            "timer_word": 47
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524145573,
+            "timer_word": 46
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524345097,
+            "timer_word": 45
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524545140,
+            "timer_word": 44
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524745268,
+            "timer_word": 43
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524945069,
+            "timer_word": 42
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525145082,
+            "timer_word": 41
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525345133,
+            "timer_word": 40
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525545111,
+            "timer_word": 39
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525745124,
+            "timer_word": 38
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525945090,
+            "timer_word": 37
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526145081,
+            "timer_word": 36
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526345107,
+            "timer_word": 35
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526545065,
+            "timer_word": 34
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526745138,
+            "timer_word": 33
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526945273,
+            "timer_word": 32
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527145073,
+            "timer_word": 31
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527345068,
+            "timer_word": 30
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527545272,
+            "timer_word": 29
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527745064,
+            "timer_word": 28
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527945144,
+            "timer_word": 27
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528145133,
+            "timer_word": 26
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528345091,
+            "timer_word": 25
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528545072,
+            "timer_word": 24
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528745134,
+            "timer_word": 23
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528945100,
+            "timer_word": 22
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529145071,
+            "timer_word": 21
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529345130,
+            "timer_word": 20
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529545103,
+            "timer_word": 19
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529745339,
+            "timer_word": 18
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529945131,
+            "timer_word": 17
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530145118,
+            "timer_word": 16
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530345216,
+            "timer_word": 15
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530545097,
+            "timer_word": 14
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530745139,
+            "timer_word": 13
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530945069,
+            "timer_word": 12
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531145080,
+            "timer_word": 11
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531345129,
+            "timer_word": 10
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531545099,
+            "timer_word": 9
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531745134,
+            "timer_word": 8
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531945336,
+            "timer_word": 7
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532145114,
+            "timer_word": 6
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532345133,
+            "timer_word": 5
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532545279,
+            "timer_word": 4
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532745094,
+            "timer_word": 3
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532945129,
+            "timer_word": 2
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 533145099,
+            "timer_word": 1
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 533345105,
+            "timer_word": 0
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 533345119,
+        "scenario": {
+          "Name": "timeout",
+          "Input": "",
+          "Phase": "wait",
+          "Delay": 0,
+          "Duration": -1
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375148,
+        "wait_steps": 17969971
+      },
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [
+          {
+            "after": 0,
+            "before": 90,
+            "linear_hex": "lin:65b06"
+          }
+        ],
+        "inputs": [],
+        "mouse_buttons_after": 0,
+        "name": "case-01",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515375239,
+            "timer_word": 0
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 515375253,
+        "scenario": {
+          "Name": "duration-0",
+          "Input": "",
+          "Phase": "wait",
+          "Delay": 0,
+          "Duration": 0
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375148,
+        "wait_steps": 105
+      },
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [
+          {
+            "after": 1,
+            "before": 90,
+            "linear_hex": "lin:65b06"
+          }
+        ],
+        "inputs": [],
+        "mouse_buttons_after": 0,
+        "name": "case-02",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515375239,
+            "timer_word": 1
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515545142,
+            "timer_word": 0
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 515545156,
+        "scenario": {
+          "Name": "duration-1",
+          "Input": "",
+          "Phase": "wait",
+          "Delay": 0,
+          "Duration": 1
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375148,
+        "wait_steps": 170008
+      },
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [],
+        "inputs": [
+          {
+            "action": "press",
+            "kind": "left",
+            "mouse_xy": [
+              350,
+              210
+            ],
+            "relative_parent_step": 50000,
+            "step": 499076949
+          },
+          {
+            "action": "release",
+            "kind": "left",
+            "mouse_xy": [
+              350,
+              210
+            ],
+            "relative_parent_step": 100000,
+            "step": 499126949
+          }
+        ],
+        "mouse_buttons_after": 0,
+        "name": "case-03",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 1,
+            "original_location": "3765:0091",
+            "step": 515375234,
+            "timer_word": 90
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 515375250,
+        "scenario": {
+          "Name": "left-queued",
+          "Input": "left",
+          "Phase": "animation",
+          "Delay": 50000,
+          "Duration": -1
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375149,
+        "wait_steps": 101
+      },
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [],
+        "inputs": [
+          {
+            "action": "press",
+            "kind": "left",
+            "mouse_xy": [
+              350,
+              210
+            ],
+            "relative_parent_step": 16548199,
+            "step": 515575148
+          }
+        ],
+        "mouse_buttons_after": 1,
+        "name": "case-04",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515375239,
+            "timer_word": 90
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515545142,
+            "timer_word": 89
+          },
+          {
+            "event_word": 1,
+            "original_location": "3765:0091",
+            "step": 515575364,
+            "timer_word": 89
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 515575380,
+        "scenario": {
+          "Name": "left-wait",
+          "Input": "left",
+          "Phase": "wait",
+          "Delay": 200000,
+          "Duration": -1
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375148,
+        "wait_steps": 200232
+      },
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [],
+        "inputs": [
+          {
+            "action": "press",
+            "kind": "right",
+            "mouse_xy": [
+              350,
+              210
+            ],
+            "relative_parent_step": 50000,
+            "step": 499076949
+          },
+          {
+            "action": "release",
+            "kind": "right",
+            "mouse_xy": [
+              350,
+              210
+            ],
+            "relative_parent_step": 100000,
+            "step": 499126949
+          }
+        ],
+        "mouse_buttons_after": 0,
+        "name": "case-05",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 2,
+            "original_location": "3765:0091",
+            "step": 515375234,
+            "timer_word": 90
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 515375252,
+        "scenario": {
+          "Name": "right-queued",
+          "Input": "right",
+          "Phase": "animation",
+          "Delay": 50000,
+          "Duration": -1
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375149,
+        "wait_steps": 103
+      },
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [],
+        "inputs": [
+          {
+            "action": "press",
+            "kind": "right",
+            "mouse_xy": [
+              350,
+              210
+            ],
+            "relative_parent_step": 16548199,
+            "step": 515575148
+          }
+        ],
+        "mouse_buttons_after": 2,
+        "name": "case-06",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515375239,
+            "timer_word": 90
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515545142,
+            "timer_word": 89
+          },
+          {
+            "event_word": 2,
+            "original_location": "3765:0091",
+            "step": 515575364,
+            "timer_word": 89
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 515575382,
+        "scenario": {
+          "Name": "right-wait",
+          "Input": "right",
+          "Phase": "wait",
+          "Delay": 200000,
+          "Duration": -1
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375148,
+        "wait_steps": 200234
+      },
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [],
+        "inputs": [
+          {
+            "action": "press",
+            "kind": "space",
+            "mouse_xy": [
+              350,
+              210
+            ],
+            "relative_parent_step": 50000,
+            "step": 499076949
+          }
+        ],
+        "mouse_buttons_after": 0,
+        "name": "case-07",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515375240,
+            "timer_word": 90
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515545143,
+            "timer_word": 89
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515745134,
+            "timer_word": 88
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515945111,
+            "timer_word": 87
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516145098,
+            "timer_word": 86
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516345119,
+            "timer_word": 85
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516545089,
+            "timer_word": 84
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516745103,
+            "timer_word": 83
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516945270,
+            "timer_word": 82
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517145143,
+            "timer_word": 81
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517345082,
+            "timer_word": 80
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517545295,
+            "timer_word": 79
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517745099,
+            "timer_word": 78
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517945121,
+            "timer_word": 77
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518145087,
+            "timer_word": 76
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518345131,
+            "timer_word": 75
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518545117,
+            "timer_word": 74
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518745091,
+            "timer_word": 73
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518945134,
+            "timer_word": 72
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519145344,
+            "timer_word": 71
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519345144,
+            "timer_word": 70
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519545111,
+            "timer_word": 69
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519745239,
+            "timer_word": 68
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519945143,
+            "timer_word": 67
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520145101,
+            "timer_word": 66
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520345142,
+            "timer_word": 65
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520545085,
+            "timer_word": 64
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520745129,
+            "timer_word": 63
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520945081,
+            "timer_word": 62
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521145123,
+            "timer_word": 61
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521345065,
+            "timer_word": 60
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521545080,
+            "timer_word": 59
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521745106,
+            "timer_word": 58
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521945264,
+            "timer_word": 57
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522145064,
+            "timer_word": 56
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522345114,
+            "timer_word": 55
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522545234,
+            "timer_word": 54
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522745101,
+            "timer_word": 53
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522945128,
+            "timer_word": 52
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523145086,
+            "timer_word": 51
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523345129,
+            "timer_word": 50
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523545087,
+            "timer_word": 49
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523745076,
+            "timer_word": 48
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523945097,
+            "timer_word": 47
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524145574,
+            "timer_word": 46
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524345098,
+            "timer_word": 45
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524545141,
+            "timer_word": 44
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524745269,
+            "timer_word": 43
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524945070,
+            "timer_word": 42
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525145083,
+            "timer_word": 41
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525345134,
+            "timer_word": 40
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525545112,
+            "timer_word": 39
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525745125,
+            "timer_word": 38
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525945091,
+            "timer_word": 37
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526145082,
+            "timer_word": 36
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526345108,
+            "timer_word": 35
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526545066,
+            "timer_word": 34
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526745139,
+            "timer_word": 33
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526945274,
+            "timer_word": 32
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527145074,
+            "timer_word": 31
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527345069,
+            "timer_word": 30
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527545273,
+            "timer_word": 29
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527745065,
+            "timer_word": 28
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527945145,
+            "timer_word": 27
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528145134,
+            "timer_word": 26
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528345092,
+            "timer_word": 25
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528545073,
+            "timer_word": 24
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528745135,
+            "timer_word": 23
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528945101,
+            "timer_word": 22
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529145072,
+            "timer_word": 21
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529345131,
+            "timer_word": 20
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529545104,
+            "timer_word": 19
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529745340,
+            "timer_word": 18
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529945132,
+            "timer_word": 17
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530145119,
+            "timer_word": 16
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530345217,
+            "timer_word": 15
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530545098,
+            "timer_word": 14
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530745140,
+            "timer_word": 13
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530945070,
+            "timer_word": 12
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531145081,
+            "timer_word": 11
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531345130,
+            "timer_word": 10
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531545100,
+            "timer_word": 9
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531745135,
+            "timer_word": 8
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531945337,
+            "timer_word": 7
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532145115,
+            "timer_word": 6
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532345134,
+            "timer_word": 5
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532545280,
+            "timer_word": 4
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532745095,
+            "timer_word": 3
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532945130,
+            "timer_word": 2
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 533145100,
+            "timer_word": 1
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 533345106,
+            "timer_word": 0
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 533345120,
+        "scenario": {
+          "Name": "space-queued",
+          "Input": "space",
+          "Phase": "animation",
+          "Delay": 50000,
+          "Duration": -1
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375149,
+        "wait_steps": 17969971
+      },
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [],
+        "inputs": [
+          {
+            "action": "press",
+            "kind": "space",
+            "mouse_xy": [
+              350,
+              210
+            ],
+            "relative_parent_step": 16548199,
+            "step": 515575148
+          }
+        ],
+        "mouse_buttons_after": 0,
+        "name": "case-08",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515375239,
+            "timer_word": 90
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515545142,
+            "timer_word": 89
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515745107,
+            "timer_word": 88
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515945084,
+            "timer_word": 87
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516145071,
+            "timer_word": 86
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516345092,
+            "timer_word": 85
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516545147,
+            "timer_word": 84
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516745076,
+            "timer_word": 83
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516945243,
+            "timer_word": 82
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517145116,
+            "timer_word": 81
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517345140,
+            "timer_word": 80
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517545268,
+            "timer_word": 79
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517745072,
+            "timer_word": 78
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517945094,
+            "timer_word": 77
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518145145,
+            "timer_word": 76
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518345104,
+            "timer_word": 75
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518545090,
+            "timer_word": 74
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518745064,
+            "timer_word": 73
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518945107,
+            "timer_word": 72
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519145317,
+            "timer_word": 71
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519345117,
+            "timer_word": 70
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519545084,
+            "timer_word": 69
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519745297,
+            "timer_word": 68
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519945116,
+            "timer_word": 67
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520145074,
+            "timer_word": 66
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520345115,
+            "timer_word": 65
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520545143,
+            "timer_word": 64
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520745102,
+            "timer_word": 63
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520945139,
+            "timer_word": 62
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521145096,
+            "timer_word": 61
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521345123,
+            "timer_word": 60
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521545138,
+            "timer_word": 59
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521745079,
+            "timer_word": 58
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521945237,
+            "timer_word": 57
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522145122,
+            "timer_word": 56
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522345087,
+            "timer_word": 55
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522545292,
+            "timer_word": 54
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522745074,
+            "timer_word": 53
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522945101,
+            "timer_word": 52
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523145144,
+            "timer_word": 51
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523345102,
+            "timer_word": 50
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523545145,
+            "timer_word": 49
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523745134,
+            "timer_word": 48
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523945070,
+            "timer_word": 47
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524145632,
+            "timer_word": 46
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524345071,
+            "timer_word": 45
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524545114,
+            "timer_word": 44
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524745242,
+            "timer_word": 43
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524945128,
+            "timer_word": 42
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525145141,
+            "timer_word": 41
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525345107,
+            "timer_word": 40
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525545085,
+            "timer_word": 39
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525745098,
+            "timer_word": 38
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525945064,
+            "timer_word": 37
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526145140,
+            "timer_word": 36
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526345081,
+            "timer_word": 35
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526545124,
+            "timer_word": 34
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526745112,
+            "timer_word": 33
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526945247,
+            "timer_word": 32
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527145132,
+            "timer_word": 31
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527345127,
+            "timer_word": 30
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527545246,
+            "timer_word": 29
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527745123,
+            "timer_word": 28
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527945118,
+            "timer_word": 27
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528145107,
+            "timer_word": 26
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528345065,
+            "timer_word": 25
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528545131,
+            "timer_word": 24
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528745108,
+            "timer_word": 23
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528945074,
+            "timer_word": 22
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529145130,
+            "timer_word": 21
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529345104,
+            "timer_word": 20
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529545077,
+            "timer_word": 19
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529745313,
+            "timer_word": 18
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529945105,
+            "timer_word": 17
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530145092,
+            "timer_word": 16
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530345275,
+            "timer_word": 15
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530545071,
+            "timer_word": 14
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530745113,
+            "timer_word": 13
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530945128,
+            "timer_word": 12
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531145139,
+            "timer_word": 11
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531345103,
+            "timer_word": 10
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531545073,
+            "timer_word": 9
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531745108,
+            "timer_word": 8
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531945310,
+            "timer_word": 7
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532145088,
+            "timer_word": 6
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532345107,
+            "timer_word": 5
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532545253,
+            "timer_word": 4
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532745068,
+            "timer_word": 3
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532945103,
+            "timer_word": 2
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 533145073,
+            "timer_word": 1
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 533345079,
+            "timer_word": 0
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 533345093,
+        "scenario": {
+          "Name": "space-wait",
+          "Input": "space",
+          "Phase": "wait",
+          "Delay": 200000,
+          "Duration": -1
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375148,
+        "wait_steps": 17969945
+      },
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [],
+        "inputs": [
+          {
+            "action": "press",
+            "kind": "escape",
+            "mouse_xy": [
+              350,
+              210
+            ],
+            "relative_parent_step": 50000,
+            "step": 499076949
+          }
+        ],
+        "mouse_buttons_after": 0,
+        "name": "case-09",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515375240,
+            "timer_word": 90
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515545143,
+            "timer_word": 89
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515745134,
+            "timer_word": 88
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515945111,
+            "timer_word": 87
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516145098,
+            "timer_word": 86
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516345119,
+            "timer_word": 85
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516545089,
+            "timer_word": 84
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516745103,
+            "timer_word": 83
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516945270,
+            "timer_word": 82
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517145143,
+            "timer_word": 81
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517345082,
+            "timer_word": 80
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517545295,
+            "timer_word": 79
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517745099,
+            "timer_word": 78
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517945121,
+            "timer_word": 77
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518145087,
+            "timer_word": 76
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518345131,
+            "timer_word": 75
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518545117,
+            "timer_word": 74
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518745091,
+            "timer_word": 73
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518945134,
+            "timer_word": 72
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519145344,
+            "timer_word": 71
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519345144,
+            "timer_word": 70
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519545111,
+            "timer_word": 69
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519745239,
+            "timer_word": 68
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519945143,
+            "timer_word": 67
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520145101,
+            "timer_word": 66
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520345142,
+            "timer_word": 65
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520545085,
+            "timer_word": 64
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520745129,
+            "timer_word": 63
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520945081,
+            "timer_word": 62
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521145123,
+            "timer_word": 61
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521345065,
+            "timer_word": 60
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521545080,
+            "timer_word": 59
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521745106,
+            "timer_word": 58
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521945264,
+            "timer_word": 57
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522145064,
+            "timer_word": 56
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522345114,
+            "timer_word": 55
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522545234,
+            "timer_word": 54
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522745101,
+            "timer_word": 53
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522945128,
+            "timer_word": 52
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523145086,
+            "timer_word": 51
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523345129,
+            "timer_word": 50
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523545087,
+            "timer_word": 49
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523745076,
+            "timer_word": 48
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523945097,
+            "timer_word": 47
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524145574,
+            "timer_word": 46
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524345098,
+            "timer_word": 45
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524545141,
+            "timer_word": 44
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524745269,
+            "timer_word": 43
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524945070,
+            "timer_word": 42
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525145083,
+            "timer_word": 41
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525345134,
+            "timer_word": 40
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525545112,
+            "timer_word": 39
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525745125,
+            "timer_word": 38
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525945091,
+            "timer_word": 37
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526145082,
+            "timer_word": 36
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526345108,
+            "timer_word": 35
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526545066,
+            "timer_word": 34
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526745139,
+            "timer_word": 33
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526945274,
+            "timer_word": 32
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527145074,
+            "timer_word": 31
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527345069,
+            "timer_word": 30
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527545273,
+            "timer_word": 29
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527745065,
+            "timer_word": 28
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527945145,
+            "timer_word": 27
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528145134,
+            "timer_word": 26
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528345092,
+            "timer_word": 25
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528545073,
+            "timer_word": 24
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528745135,
+            "timer_word": 23
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528945101,
+            "timer_word": 22
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529145072,
+            "timer_word": 21
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529345131,
+            "timer_word": 20
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529545104,
+            "timer_word": 19
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529745340,
+            "timer_word": 18
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529945132,
+            "timer_word": 17
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530145119,
+            "timer_word": 16
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530345217,
+            "timer_word": 15
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530545098,
+            "timer_word": 14
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530745140,
+            "timer_word": 13
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530945070,
+            "timer_word": 12
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531145081,
+            "timer_word": 11
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531345130,
+            "timer_word": 10
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531545100,
+            "timer_word": 9
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531745135,
+            "timer_word": 8
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531945337,
+            "timer_word": 7
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532145115,
+            "timer_word": 6
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532345134,
+            "timer_word": 5
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532545280,
+            "timer_word": 4
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532745095,
+            "timer_word": 3
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532945130,
+            "timer_word": 2
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 533145100,
+            "timer_word": 1
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 533345106,
+            "timer_word": 0
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 533345120,
+        "scenario": {
+          "Name": "escape-queued",
+          "Input": "escape",
+          "Phase": "animation",
+          "Delay": 50000,
+          "Duration": -1
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375149,
+        "wait_steps": 17969971
+      },
+      {
+        "entry_sp": 7250,
+        "entry_ss": 25579,
+        "entry_stack_words": [
+          2073,
+          7638,
+          90,
+          50732,
+          21683,
+          51220
+        ],
+        "injections": [],
+        "inputs": [
+          {
+            "action": "press",
+            "kind": "escape",
+            "mouse_xy": [
+              350,
+              210
+            ],
+            "relative_parent_step": 16548199,
+            "step": 515575148
+          }
+        ],
+        "mouse_buttons_after": 0,
+        "name": "case-10",
+        "parent_start_step": 499026949,
+        "polls": [
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515375239,
+            "timer_word": 90
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515545142,
+            "timer_word": 89
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515745109,
+            "timer_word": 88
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 515945086,
+            "timer_word": 87
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516145073,
+            "timer_word": 86
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516345094,
+            "timer_word": 85
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516545064,
+            "timer_word": 84
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516745078,
+            "timer_word": 83
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 516945245,
+            "timer_word": 82
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517145118,
+            "timer_word": 81
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517345142,
+            "timer_word": 80
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517545270,
+            "timer_word": 79
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517745074,
+            "timer_word": 78
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 517945096,
+            "timer_word": 77
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518145147,
+            "timer_word": 76
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518345106,
+            "timer_word": 75
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518545092,
+            "timer_word": 74
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518745066,
+            "timer_word": 73
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 518945109,
+            "timer_word": 72
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519145319,
+            "timer_word": 71
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519345119,
+            "timer_word": 70
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519545086,
+            "timer_word": 69
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519745299,
+            "timer_word": 68
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 519945118,
+            "timer_word": 67
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520145076,
+            "timer_word": 66
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520345117,
+            "timer_word": 65
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520545145,
+            "timer_word": 64
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520745104,
+            "timer_word": 63
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 520945141,
+            "timer_word": 62
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521145098,
+            "timer_word": 61
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521345125,
+            "timer_word": 60
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521545140,
+            "timer_word": 59
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521745081,
+            "timer_word": 58
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 521945239,
+            "timer_word": 57
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522145124,
+            "timer_word": 56
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522345089,
+            "timer_word": 55
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522545294,
+            "timer_word": 54
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522745076,
+            "timer_word": 53
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 522945103,
+            "timer_word": 52
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523145146,
+            "timer_word": 51
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523345104,
+            "timer_word": 50
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523545147,
+            "timer_word": 49
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523745136,
+            "timer_word": 48
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 523945072,
+            "timer_word": 47
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524145634,
+            "timer_word": 46
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524345073,
+            "timer_word": 45
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524545116,
+            "timer_word": 44
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524745244,
+            "timer_word": 43
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 524945130,
+            "timer_word": 42
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525145143,
+            "timer_word": 41
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525345109,
+            "timer_word": 40
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525545087,
+            "timer_word": 39
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525745100,
+            "timer_word": 38
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 525945066,
+            "timer_word": 37
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526145142,
+            "timer_word": 36
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526345083,
+            "timer_word": 35
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526545126,
+            "timer_word": 34
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526745114,
+            "timer_word": 33
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 526945249,
+            "timer_word": 32
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527145134,
+            "timer_word": 31
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527345129,
+            "timer_word": 30
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527545248,
+            "timer_word": 29
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527745125,
+            "timer_word": 28
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 527945120,
+            "timer_word": 27
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528145109,
+            "timer_word": 26
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528345067,
+            "timer_word": 25
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528545133,
+            "timer_word": 24
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528745110,
+            "timer_word": 23
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 528945076,
+            "timer_word": 22
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529145132,
+            "timer_word": 21
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529345106,
+            "timer_word": 20
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529545079,
+            "timer_word": 19
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529745315,
+            "timer_word": 18
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 529945107,
+            "timer_word": 17
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530145094,
+            "timer_word": 16
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530345277,
+            "timer_word": 15
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530545073,
+            "timer_word": 14
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530745115,
+            "timer_word": 13
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 530945130,
+            "timer_word": 12
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531145141,
+            "timer_word": 11
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531345105,
+            "timer_word": 10
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531545075,
+            "timer_word": 9
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531745110,
+            "timer_word": 8
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 531945312,
+            "timer_word": 7
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532145090,
+            "timer_word": 6
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532345109,
+            "timer_word": 5
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532545255,
+            "timer_word": 4
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532745070,
+            "timer_word": 3
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 532945105,
+            "timer_word": 2
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 533145075,
+            "timer_word": 1
+          },
+          {
+            "event_word": 0,
+            "original_location": "3765:0091",
+            "step": 533345081,
+            "timer_word": 0
+          }
+        ],
+        "return_ax": 1,
+        "return_step": 533345095,
+        "scenario": {
+          "Name": "escape-wait",
+          "Input": "escape",
+          "Phase": "wait",
+          "Delay": 200000,
+          "Duration": -1
+        },
+        "timer_after": 0,
+        "wait_entry_step": 515375148,
+        "wait_steps": 17969947
+      }
+    ],
+    "classification": "fixed original scene with explicit queued or wait inputs; duration0/1 are direct diagnostics; not normal player path",
+    "cycle_clock": false,
+    "dosgolem_dirty": false,
+    "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "go_version": "go1.24.13",
+    "irq0_every": 20000,
+    "irq0_pinned": true,
+    "parent": "/out/oracle/blocks48-r70-a/scene-01.state",
+    "parent_sha256": "07cebb1872b6b4c2af91158ee932299a34aed59679afab2dfe43784318f7d8ef",
+    "schema": "logh3.fleet-wait-native.v1",
+    "uid": 1000
+  },
+  "sources": [
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/report.json",
+      "bytes": 79065,
+      "sha256": "8d4232ff14520159e1f646ff5ede26956c7975b02be01d1dfa62c9e86b837a46"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/report.json",
+      "bytes": 79065,
+      "sha256": "977f16de4569fe9de69d820d994450d12e1d4cf7afeb68e6a546994f6649c7d3"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-00-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "e22474a713af515a6b7363a541a9c4398b8ae9561f394f1c5061125222bdccb5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-00-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "e22474a713af515a6b7363a541a9c4398b8ae9561f394f1c5061125222bdccb5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-00-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-00-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-00-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "f13c8117af3a0dc3fb10b69760949bb7f94ed797c2180c8800845da75194726e"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-00-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "f13c8117af3a0dc3fb10b69760949bb7f94ed797c2180c8800845da75194726e"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-00-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-00-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-01-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "c4751d7d04d8fe7e3cf8c8a94b0e50cd36ed4d44a8a545261bff63614a8aeb64"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-01-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "c4751d7d04d8fe7e3cf8c8a94b0e50cd36ed4d44a8a545261bff63614a8aeb64"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-01-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-01-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-01-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "84584a05eb1e4e1d8df8e742faf79a83f25c845eb548d2bc6d8f8568dcf25708"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-01-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "84584a05eb1e4e1d8df8e742faf79a83f25c845eb548d2bc6d8f8568dcf25708"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-01-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-01-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-02-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "ff747dbffb023f2e6e3d95cf41e3c327ac6b3b2e3edeaa03ebea0781fe9d0eba"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-02-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "ff747dbffb023f2e6e3d95cf41e3c327ac6b3b2e3edeaa03ebea0781fe9d0eba"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-02-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-02-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-02-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "6429a2ab7ff02bc2db1d91bd781639a184f813252b014fee4857adcb0b334e83"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-02-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "6429a2ab7ff02bc2db1d91bd781639a184f813252b014fee4857adcb0b334e83"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-02-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-02-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-03-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "32086f39b4a22941a144c832c65b717232a968f308020da3af2d84487413d73c"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-03-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "32086f39b4a22941a144c832c65b717232a968f308020da3af2d84487413d73c"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-03-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-03-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-03-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "ca0898cc3f031e86911b4f773c972f4dbd088732c9aa105124f31f9a9b527000"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-03-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "ca0898cc3f031e86911b4f773c972f4dbd088732c9aa105124f31f9a9b527000"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-03-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-03-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-04-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "e22474a713af515a6b7363a541a9c4398b8ae9561f394f1c5061125222bdccb5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-04-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "e22474a713af515a6b7363a541a9c4398b8ae9561f394f1c5061125222bdccb5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-04-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-04-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-04-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "02acb5349a536a8b4c2226f66157a312e010a3854ac9e32c070018ede245b32f"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-04-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "02acb5349a536a8b4c2226f66157a312e010a3854ac9e32c070018ede245b32f"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-04-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-04-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-05-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "92f7e25fe09da2166d8ba207d4924a2cd6d72f8252d03cba69e9bf80210fbd2e"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-05-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "92f7e25fe09da2166d8ba207d4924a2cd6d72f8252d03cba69e9bf80210fbd2e"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-05-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-05-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-05-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "de5fdeaa1187289f0e78eb12a4d0d3c678b4f12996215ace8a3a477faf99092b"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-05-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "de5fdeaa1187289f0e78eb12a4d0d3c678b4f12996215ace8a3a477faf99092b"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-05-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-05-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-06-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "e22474a713af515a6b7363a541a9c4398b8ae9561f394f1c5061125222bdccb5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-06-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "e22474a713af515a6b7363a541a9c4398b8ae9561f394f1c5061125222bdccb5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-06-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-06-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-06-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "7fe2c60ad5ec069fa65f726f15193750779101119bcc082d7891f1a8c84ad5df"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-06-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "7fe2c60ad5ec069fa65f726f15193750779101119bcc082d7891f1a8c84ad5df"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-06-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-06-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-07-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "1b0529a48c9928275c5b6abc1b453caf49d1b59797bac063b010e00bc2df6afb"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-07-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "1b0529a48c9928275c5b6abc1b453caf49d1b59797bac063b010e00bc2df6afb"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-07-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-07-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-07-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "17092a239805df9194c38ba6495e01590ac2df503d987b9ad4d52204aba872b5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-07-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "17092a239805df9194c38ba6495e01590ac2df503d987b9ad4d52204aba872b5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-07-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-07-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-08-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "e22474a713af515a6b7363a541a9c4398b8ae9561f394f1c5061125222bdccb5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-08-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "e22474a713af515a6b7363a541a9c4398b8ae9561f394f1c5061125222bdccb5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-08-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-08-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-08-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "d055f2530f1b0825a17fb11aba71f192cd6ffec559b7857ef3f543e79f0da864"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-08-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "d055f2530f1b0825a17fb11aba71f192cd6ffec559b7857ef3f543e79f0da864"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-08-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-08-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-09-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "9cf3ff74e78037b803f20e40104991706af119708e0663871d321bc999063b9b"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-09-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "9cf3ff74e78037b803f20e40104991706af119708e0663871d321bc999063b9b"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-09-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-09-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-09-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "f2d5464c19bee5dd630e168ddb4521029b6f271b5a45d405c92f7b952d7d48a2"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-09-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "f2d5464c19bee5dd630e168ddb4521029b6f271b5a45d405c92f7b952d7d48a2"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-09-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-09-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-10-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "e22474a713af515a6b7363a541a9c4398b8ae9561f394f1c5061125222bdccb5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-10-entry-mem.bin",
+      "bytes": 1048576,
+      "sha256": "e22474a713af515a6b7363a541a9c4398b8ae9561f394f1c5061125222bdccb5"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-10-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-10-entry-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-10-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "9a82a0afe584ae7e718d6df1e1cf0d39354c562cba7df566a07d17bec63254b0"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-10-return-mem.bin",
+      "bytes": 1048576,
+      "sha256": "9a82a0afe584ae7e718d6df1e1cf0d39354c562cba7df566a07d17bec63254b0"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-a/case-10-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-v2-b/case-10-return-screen.bin",
+      "bytes": 307200,
+      "sha256": "5cd93ff67745195f04e1341d6e65df620dedfba495c6a9ba9f73d65b7ed9f106"
+    },
+    {
+      "path": "workplace/ida/projection48-r72-3765.json",
+      "bytes": 54566,
+      "sha256": "e0a4f04fc23cfa214a112ed6c984e3292efd55b48e1bba8f82a38da9cfe304f4"
+    },
+    {
+      "path": "tools/fleet_wait_oracle.sh",
+      "bytes": 1086,
+      "sha256": "3f9c67abb1ae3537aa31a107dd714098de94d61437278767dfa94b41837a88bf"
+    },
+    {
+      "path": "tools/scripts/fleet_wait_native.go",
+      "bytes": 5912,
+      "sha256": "2037e09f7afa71761f98f018f175367a5a0b06246daf3e44762e4dd7218a4a8e"
+    },
+    {
+      "path": "tools/scripts/fleet_wait_receipt.py",
+      "bytes": 2857,
+      "sha256": "efc282885836e2862daf101c48ee53511f6b21dbd2dda1413a65a76eb67abeac"
+    },
+    {
+      "path": "workplace/oracle/wait48-r72-a/abort.json",
+      "bytes": 348,
+      "sha256": "2f7fa590e969d8132e44bda6e4b95a4db930863fc11ef5e6f7af1283c35a1f9c"
+    }
+  ],
+  "ida": {
+    "schema": "logh3.fleet-projection-ida.v1",
+    "kernel_version": "9.4",
+    "input": "/work/projection48-r72-3765.com",
+    "input_sha256": "5baaedf3b059a400a0c19ce98858c5a0aaa32be11b980330c60ae77adacff6ec",
+    "uid": 1000,
+    "ida_base_hex": "0x10200",
+    "runtime_segment": "3765",
+    "address_space": "原版CS:IP、IDA EA與dosgolem線性位址分欄",
+    "ranges": [
+      "006C:00BF",
+      "00BF:ret"
+    ],
+    "instructions": [
+      {
+        "original_location": "3765:006C",
+        "original_name": "",
+        "ida_ea_hex": "0x1026c",
+        "runtime_linear_hex": "0x376bc",
+        "original_bytes_hex": "55",
+        "operand": "push    bp",
+        "xrefs": [],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:006D",
+        "original_name": "",
+        "ida_ea_hex": "0x1026d",
+        "runtime_linear_hex": "0x376bd",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1026c",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:006E",
+        "original_name": "",
+        "ida_ea_hex": "0x1026e",
+        "runtime_linear_hex": "0x376be",
+        "original_bytes_hex": "83ec0c",
+        "operand": "sub     sp, 0Ch",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1026d",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0071",
+        "original_name": "",
+        "ida_ea_hex": "0x10271",
+        "runtime_linear_hex": "0x376c1",
+        "original_bytes_hex": "89e5",
+        "operand": "mov     bp, sp",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1026e",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0073",
+        "original_name": "",
+        "ida_ea_hex": "0x10273",
+        "runtime_linear_hex": "0x376c3",
+        "original_bytes_hex": "8b7614",
+        "operand": "mov     si, [bp+14h]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10271",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0076",
+        "original_name": "",
+        "ida_ea_hex": "0x10276",
+        "runtime_linear_hex": "0x376c6",
+        "original_bytes_hex": "9aa701af3c",
+        "operand": "call    far ptr 3CAFh:1A7h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10273",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:007B",
+        "original_name": "",
+        "ida_ea_hex": "0x1027b",
+        "runtime_linear_hex": "0x376cb",
+        "original_bytes_hex": "8bc6",
+        "operand": "mov     ax, si",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10276",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:007D",
+        "original_name": "",
+        "ida_ea_hex": "0x1027d",
+        "runtime_linear_hex": "0x376cd",
+        "original_bytes_hex": "a3fe8e",
+        "operand": "mov     ds:8EFEh, ax",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1027b",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0080",
+        "original_name": "",
+        "ida_ea_hex": "0x10280",
+        "runtime_linear_hex": "0x376d0",
+        "original_bytes_hex": "9aa501af3c",
+        "operand": "call    far ptr 3CAFh:1A5h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1027d",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0085",
+        "original_name": "",
+        "ida_ea_hex": "0x10285",
+        "runtime_linear_hex": "0x376d5",
+        "original_bytes_hex": "31c0",
+        "operand": "xor     ax, ax",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10280",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0087",
+        "original_name": "",
+        "ida_ea_hex": "0x10287",
+        "runtime_linear_hex": "0x376d7",
+        "original_bytes_hex": "50",
+        "operand": "push    ax",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10285",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0088",
+        "original_name": "",
+        "ida_ea_hex": "0x10288",
+        "runtime_linear_hex": "0x376d8",
+        "original_bytes_hex": "16",
+        "operand": "push    ss",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10287",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0089",
+        "original_name": "",
+        "ida_ea_hex": "0x10289",
+        "runtime_linear_hex": "0x376d9",
+        "original_bytes_hex": "8bdd",
+        "operand": "mov     bx, bp",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10288",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:008B",
+        "original_name": "",
+        "ida_ea_hex": "0x1028b",
+        "runtime_linear_hex": "0x376db",
+        "original_bytes_hex": "53",
+        "operand": "push    bx",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10289",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:008C",
+        "original_name": "",
+        "ida_ea_hex": "0x1028c",
+        "runtime_linear_hex": "0x376dc",
+        "original_bytes_hex": "9abf006537",
+        "operand": "call    far ptr 3765h:0BFh",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1028b",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0091",
+        "original_name": "",
+        "ida_ea_hex": "0x10291",
+        "runtime_linear_hex": "0x376e1",
+        "original_bytes_hex": "89ec",
+        "operand": "mov     sp, bp",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1028c",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0093",
+        "original_name": "",
+        "ida_ea_hex": "0x10293",
+        "runtime_linear_hex": "0x376e3",
+        "original_bytes_hex": "833efe8e00",
+        "operand": "cmp     word ptr ds:8EFEh, 0",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10291",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0098",
+        "original_name": "",
+        "ida_ea_hex": "0x10298",
+        "runtime_linear_hex": "0x376e8",
+        "original_bytes_hex": "740c",
+        "operand": "jz      short near ptr unk_102A6",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10293",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:009A",
+        "original_name": "",
+        "ida_ea_hex": "0x1029a",
+        "runtime_linear_hex": "0x376ea",
+        "original_bytes_hex": "837e0001",
+        "operand": "cmp     word ptr [bp+0], 1",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10298",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:009E",
+        "original_name": "",
+        "ida_ea_hex": "0x1029e",
+        "runtime_linear_hex": "0x376ee",
+        "original_bytes_hex": "7406",
+        "operand": "jz      short near ptr unk_102A6",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1029a",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00A0",
+        "original_name": "",
+        "ida_ea_hex": "0x102a0",
+        "runtime_linear_hex": "0x376f0",
+        "original_bytes_hex": "837e0002",
+        "operand": "cmp     word ptr [bp+0], 2",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1029e",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00A4",
+        "original_name": "",
+        "ida_ea_hex": "0x102a4",
+        "runtime_linear_hex": "0x376f4",
+        "original_bytes_hex": "75df",
+        "operand": "jnz     short loc_10285",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102a0",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00A6",
+        "original_name": "loc_102A6",
+        "ida_ea_hex": "0x102a6",
+        "runtime_linear_hex": "0x376f6",
+        "original_bytes_hex": "9aa701af3c",
+        "operand": "call    far ptr 3CAFh:1A7h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102a4",
+            "type": 21
+          },
+          {
+            "ida_from_hex": "0x10298",
+            "type": 19
+          },
+          {
+            "ida_from_hex": "0x1029e",
+            "type": 19
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00AB",
+        "original_name": "",
+        "ida_ea_hex": "0x102ab",
+        "runtime_linear_hex": "0x376fb",
+        "original_bytes_hex": "c706fe8e0000",
+        "operand": "mov     word ptr ds:8EFEh, 0",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102a6",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00B1",
+        "original_name": "",
+        "ida_ea_hex": "0x102b1",
+        "runtime_linear_hex": "0x37701",
+        "original_bytes_hex": "9aa501af3c",
+        "operand": "call    far ptr 3CAFh:1A5h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102ab",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00B6",
+        "original_name": "",
+        "ida_ea_hex": "0x102b6",
+        "runtime_linear_hex": "0x37706",
+        "original_bytes_hex": "b80100",
+        "operand": "mov     ax, 1",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102b1",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00B9",
+        "original_name": "",
+        "ida_ea_hex": "0x102b9",
+        "runtime_linear_hex": "0x37709",
+        "original_bytes_hex": "83c40c",
+        "operand": "add     sp, 0Ch",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102b6",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00BC",
+        "original_name": "",
+        "ida_ea_hex": "0x102bc",
+        "runtime_linear_hex": "0x3770c",
+        "original_bytes_hex": "5e",
+        "operand": "pop     si",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102b9",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00BD",
+        "original_name": "",
+        "ida_ea_hex": "0x102bd",
+        "runtime_linear_hex": "0x3770d",
+        "original_bytes_hex": "5d",
+        "operand": "pop     bp",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102bc",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00BE",
+        "original_name": "",
+        "ida_ea_hex": "0x102be",
+        "runtime_linear_hex": "0x3770e",
+        "original_bytes_hex": "cb",
+        "operand": "retf",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102bd",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00BF",
+        "original_name": "",
+        "ida_ea_hex": "0x102bf",
+        "runtime_linear_hex": "0x3770f",
+        "original_bytes_hex": "55",
+        "operand": "push    bp",
+        "xrefs": [],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00C0",
+        "original_name": "",
+        "ida_ea_hex": "0x102c0",
+        "runtime_linear_hex": "0x37710",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102bf",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00C1",
+        "original_name": "",
+        "ida_ea_hex": "0x102c1",
+        "runtime_linear_hex": "0x37711",
+        "original_bytes_hex": "57",
+        "operand": "push    di",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102c0",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00C2",
+        "original_name": "",
+        "ida_ea_hex": "0x102c2",
+        "runtime_linear_hex": "0x37712",
+        "original_bytes_hex": "83ec06",
+        "operand": "sub     sp, 6",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102c1",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00C5",
+        "original_name": "",
+        "ida_ea_hex": "0x102c5",
+        "runtime_linear_hex": "0x37715",
+        "original_bytes_hex": "89e5",
+        "operand": "mov     bp, sp",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102c2",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00C7",
+        "original_name": "",
+        "ida_ea_hex": "0x102c7",
+        "runtime_linear_hex": "0x37717",
+        "original_bytes_hex": "9aa701af3c",
+        "operand": "call    far ptr 3CAFh:1A7h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102c5",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00CC",
+        "original_name": "",
+        "ida_ea_hex": "0x102cc",
+        "runtime_linear_hex": "0x3771c",
+        "original_bytes_hex": "833e4cf200",
+        "operand": "cmp     word ptr ds:0F24Ch, 0",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102c7",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00D1",
+        "original_name": "",
+        "ida_ea_hex": "0x102d1",
+        "runtime_linear_hex": "0x37721",
+        "original_bytes_hex": "7503",
+        "operand": "jnz     short near ptr unk_102D6",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102cc",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00D3",
+        "original_name": "",
+        "ida_ea_hex": "0x102d3",
+        "runtime_linear_hex": "0x37723",
+        "original_bytes_hex": "e98600",
+        "operand": "jmp     near ptr unk_1035C",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102d1",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00D6",
+        "original_name": "loc_102D6",
+        "ida_ea_hex": "0x102d6",
+        "runtime_linear_hex": "0x37726",
+        "original_bytes_hex": "c41e48f2",
+        "operand": "les     bx, ds:0F248h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102d1",
+            "type": 19
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00DA",
+        "original_name": "",
+        "ida_ea_hex": "0x102da",
+        "runtime_linear_hex": "0x3772a",
+        "original_bytes_hex": "268b07",
+        "operand": "mov     ax, es:[bx]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102d6",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00DD",
+        "original_name": "",
+        "ida_ea_hex": "0x102dd",
+        "runtime_linear_hex": "0x3772d",
+        "original_bytes_hex": "c45e10",
+        "operand": "les     bx, [bp+10h]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102da",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00E0",
+        "original_name": "",
+        "ida_ea_hex": "0x102e0",
+        "runtime_linear_hex": "0x37730",
+        "original_bytes_hex": "268907",
+        "operand": "mov     es:[bx], ax",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102dd",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00E3",
+        "original_name": "",
+        "ida_ea_hex": "0x102e3",
+        "runtime_linear_hex": "0x37733",
+        "original_bytes_hex": "c43648f2",
+        "operand": "les     si, ds:0F248h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102e0",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00E7",
+        "original_name": "",
+        "ida_ea_hex": "0x102e7",
+        "runtime_linear_hex": "0x37737",
+        "original_bytes_hex": "268b4c04",
+        "operand": "mov     cx, es:[si+4]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102e3",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00EB",
+        "original_name": "",
+        "ida_ea_hex": "0x102eb",
+        "runtime_linear_hex": "0x3773b",
+        "original_bytes_hex": "268b7402",
+        "operand": "mov     si, es:[si+2]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102e7",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00EF",
+        "original_name": "",
+        "ida_ea_hex": "0x102ef",
+        "runtime_linear_hex": "0x3773f",
+        "original_bytes_hex": "c47e10",
+        "operand": "les     di, [bp+10h]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102eb",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00F2",
+        "original_name": "",
+        "ida_ea_hex": "0x102f2",
+        "runtime_linear_hex": "0x37742",
+        "original_bytes_hex": "26894d04",
+        "operand": "mov     es:[di+4], cx",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102ef",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00F6",
+        "original_name": "",
+        "ida_ea_hex": "0x102f6",
+        "runtime_linear_hex": "0x37746",
+        "original_bytes_hex": "26897502",
+        "operand": "mov     es:[di+2], si",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102f2",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00FA",
+        "original_name": "",
+        "ida_ea_hex": "0x102fa",
+        "runtime_linear_hex": "0x3774a",
+        "original_bytes_hex": "c43648f2",
+        "operand": "les     si, ds:0F248h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102f6",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:00FE",
+        "original_name": "",
+        "ida_ea_hex": "0x102fe",
+        "runtime_linear_hex": "0x3774e",
+        "original_bytes_hex": "268b4406",
+        "operand": "mov     ax, es:[si+6]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102fa",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0102",
+        "original_name": "",
+        "ida_ea_hex": "0x10302",
+        "runtime_linear_hex": "0x37752",
+        "original_bytes_hex": "c47610",
+        "operand": "les     si, [bp+10h]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102fe",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0105",
+        "original_name": "",
+        "ida_ea_hex": "0x10305",
+        "runtime_linear_hex": "0x37755",
+        "original_bytes_hex": "26894406",
+        "operand": "mov     es:[si+6], ax",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10302",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0109",
+        "original_name": "",
+        "ida_ea_hex": "0x10309",
+        "runtime_linear_hex": "0x37759",
+        "original_bytes_hex": "c41e48f2",
+        "operand": "les     bx, ds:0F248h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10305",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:010D",
+        "original_name": "",
+        "ida_ea_hex": "0x1030d",
+        "runtime_linear_hex": "0x3775d",
+        "original_bytes_hex": "268b4708",
+        "operand": "mov     ax, es:[bx+8]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10309",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0111",
+        "original_name": "",
+        "ida_ea_hex": "0x10311",
+        "runtime_linear_hex": "0x37761",
+        "original_bytes_hex": "c45e10",
+        "operand": "les     bx, [bp+10h]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1030d",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0114",
+        "original_name": "",
+        "ida_ea_hex": "0x10314",
+        "runtime_linear_hex": "0x37764",
+        "original_bytes_hex": "26894708",
+        "operand": "mov     es:[bx+8], ax",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10311",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0118",
+        "original_name": "",
+        "ida_ea_hex": "0x10318",
+        "runtime_linear_hex": "0x37768",
+        "original_bytes_hex": "c41e48f2",
+        "operand": "les     bx, ds:0F248h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10314",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:011C",
+        "original_name": "",
+        "ida_ea_hex": "0x1031c",
+        "runtime_linear_hex": "0x3776c",
+        "original_bytes_hex": "268b470a",
+        "operand": "mov     ax, es:[bx+0Ah]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10318",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0120",
+        "original_name": "",
+        "ida_ea_hex": "0x10320",
+        "runtime_linear_hex": "0x37770",
+        "original_bytes_hex": "c45e10",
+        "operand": "les     bx, [bp+10h]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1031c",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0123",
+        "original_name": "",
+        "ida_ea_hex": "0x10323",
+        "runtime_linear_hex": "0x37773",
+        "original_bytes_hex": "2689470a",
+        "operand": "mov     es:[bx+0Ah], ax",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10320",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0127",
+        "original_name": "",
+        "ida_ea_hex": "0x10327",
+        "runtime_linear_hex": "0x37777",
+        "original_bytes_hex": "830648f20c",
+        "operand": "add     word ptr ds:0F248h, 0Ch",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10323",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:012C",
+        "original_name": "",
+        "ida_ea_hex": "0x1032c",
+        "runtime_linear_hex": "0x3777c",
+        "original_bytes_hex": "ff0e4cf2",
+        "operand": "dec     word ptr ds:0F24Ch",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10327",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0130",
+        "original_name": "",
+        "ida_ea_hex": "0x10330",
+        "runtime_linear_hex": "0x37780",
+        "original_bytes_hex": "a14af2",
+        "operand": "mov     ax, ds:0F24Ah",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1032c",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0133",
+        "original_name": "",
+        "ida_ea_hex": "0x10333",
+        "runtime_linear_hex": "0x37783",
+        "original_bytes_hex": "8b1e48f2",
+        "operand": "mov     bx, ds:0F248h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10330",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0137",
+        "original_name": "",
+        "ida_ea_hex": "0x10337",
+        "runtime_linear_hex": "0x37787",
+        "original_bytes_hex": "8cd9",
+        "operand": "mov     cx, ds",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10333",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0139",
+        "original_name": "",
+        "ida_ea_hex": "0x10339",
+        "runtime_linear_hex": "0x37789",
+        "original_bytes_hex": "be84f1",
+        "operand": "mov     si, 0F184h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10337",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:013C",
+        "original_name": "",
+        "ida_ea_hex": "0x1033c",
+        "runtime_linear_hex": "0x3778c",
+        "original_bytes_hex": "2bde",
+        "operand": "sub     bx, si",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10339",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:013E",
+        "original_name": "",
+        "ida_ea_hex": "0x1033e",
+        "runtime_linear_hex": "0x3778e",
+        "original_bytes_hex": "1bc1",
+        "operand": "sbb     ax, cx",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1033c",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0140",
+        "original_name": "",
+        "ida_ea_hex": "0x10340",
+        "runtime_linear_hex": "0x37790",
+        "original_bytes_hex": "31c9",
+        "operand": "xor     cx, cx",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1033e",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0142",
+        "original_name": "",
+        "ida_ea_hex": "0x10342",
+        "runtime_linear_hex": "0x37792",
+        "original_bytes_hex": "bec000",
+        "operand": "mov     si, 0C0h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10340",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0145",
+        "original_name": "",
+        "ida_ea_hex": "0x10345",
+        "runtime_linear_hex": "0x37795",
+        "original_bytes_hex": "87d6",
+        "operand": "xchg    dx, si",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10342",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0147",
+        "original_name": "",
+        "ida_ea_hex": "0x10347",
+        "runtime_linear_hex": "0x37797",
+        "original_bytes_hex": "9ab900c93c",
+        "operand": "call    far ptr 3CC9h:0B9h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10345",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:014C",
+        "original_name": "",
+        "ida_ea_hex": "0x1034c",
+        "runtime_linear_hex": "0x3779c",
+        "original_bytes_hex": "87d6",
+        "operand": "xchg    dx, si",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10347",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:014E",
+        "original_name": "",
+        "ida_ea_hex": "0x1034e",
+        "runtime_linear_hex": "0x3779e",
+        "original_bytes_hex": "7c4b",
+        "operand": "jl      short near ptr unk_1039B",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1034c",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0150",
+        "original_name": "",
+        "ida_ea_hex": "0x10350",
+        "runtime_linear_hex": "0x377a0",
+        "original_bytes_hex": "c70648f284f1",
+        "operand": "mov     word ptr ds:0F248h, 0F184h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1034e",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0156",
+        "original_name": "",
+        "ida_ea_hex": "0x10356",
+        "runtime_linear_hex": "0x377a6",
+        "original_bytes_hex": "8c1e4af2",
+        "operand": "mov     word ptr ds:0F24Ah, ds",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10350",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:015A",
+        "original_name": "",
+        "ida_ea_hex": "0x1035a",
+        "runtime_linear_hex": "0x377aa",
+        "original_bytes_hex": "eb3f",
+        "operand": "jmp     short near ptr unk_1039B",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10356",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:015C",
+        "original_name": "loc_1035C",
+        "ida_ea_hex": "0x1035c",
+        "runtime_linear_hex": "0x377ac",
+        "original_bytes_hex": "16",
+        "operand": "push    ss",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x102d3",
+            "type": 19
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:015D",
+        "original_name": "",
+        "ida_ea_hex": "0x1035d",
+        "runtime_linear_hex": "0x377ad",
+        "original_bytes_hex": "8d5e04",
+        "operand": "lea     bx, [bp+4]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1035c",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0160",
+        "original_name": "",
+        "ida_ea_hex": "0x10360",
+        "runtime_linear_hex": "0x377b0",
+        "original_bytes_hex": "53",
+        "operand": "push    bx",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1035d",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0161",
+        "original_name": "",
+        "ida_ea_hex": "0x10361",
+        "runtime_linear_hex": "0x377b1",
+        "original_bytes_hex": "16",
+        "operand": "push    ss",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10360",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0162",
+        "original_name": "",
+        "ida_ea_hex": "0x10362",
+        "runtime_linear_hex": "0x377b2",
+        "original_bytes_hex": "8d5e02",
+        "operand": "lea     bx, [bp+2]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10361",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0165",
+        "original_name": "",
+        "ida_ea_hex": "0x10365",
+        "runtime_linear_hex": "0x377b5",
+        "original_bytes_hex": "53",
+        "operand": "push    bx",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10362",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0166",
+        "original_name": "",
+        "ida_ea_hex": "0x10366",
+        "runtime_linear_hex": "0x377b6",
+        "original_bytes_hex": "16",
+        "operand": "push    ss",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10365",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0167",
+        "original_name": "",
+        "ida_ea_hex": "0x10367",
+        "runtime_linear_hex": "0x377b7",
+        "original_bytes_hex": "8bdd",
+        "operand": "mov     bx, bp",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10366",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0169",
+        "original_name": "",
+        "ida_ea_hex": "0x10369",
+        "runtime_linear_hex": "0x377b9",
+        "original_bytes_hex": "53",
+        "operand": "push    bx",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10367",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:016A",
+        "original_name": "",
+        "ida_ea_hex": "0x1036a",
+        "runtime_linear_hex": "0x377ba",
+        "original_bytes_hex": "9a7600ad36",
+        "operand": "call    far ptr 36ADh:76h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10369",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:016F",
+        "original_name": "",
+        "ida_ea_hex": "0x1036f",
+        "runtime_linear_hex": "0x377bf",
+        "original_bytes_hex": "89ec",
+        "operand": "mov     sp, bp",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1036a",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0171",
+        "original_name": "",
+        "ida_ea_hex": "0x10371",
+        "runtime_linear_hex": "0x377c1",
+        "original_bytes_hex": "31c0",
+        "operand": "xor     ax, ax",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1036f",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0173",
+        "original_name": "",
+        "ida_ea_hex": "0x10373",
+        "runtime_linear_hex": "0x377c3",
+        "original_bytes_hex": "c45e10",
+        "operand": "les     bx, [bp+10h]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10371",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0176",
+        "original_name": "",
+        "ida_ea_hex": "0x10376",
+        "runtime_linear_hex": "0x377c6",
+        "original_bytes_hex": "268907",
+        "operand": "mov     es:[bx], ax",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10373",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0179",
+        "original_name": "",
+        "ida_ea_hex": "0x10379",
+        "runtime_linear_hex": "0x377c9",
+        "original_bytes_hex": "8b0efa8e",
+        "operand": "mov     cx, ds:8EFAh",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10376",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:017D",
+        "original_name": "",
+        "ida_ea_hex": "0x1037d",
+        "runtime_linear_hex": "0x377cd",
+        "original_bytes_hex": "8b36f88e",
+        "operand": "mov     si, ds:8EF8h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10379",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0181",
+        "original_name": "",
+        "ida_ea_hex": "0x10381",
+        "runtime_linear_hex": "0x377d1",
+        "original_bytes_hex": "26894f04",
+        "operand": "mov     es:[bx+4], cx",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1037d",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0185",
+        "original_name": "",
+        "ida_ea_hex": "0x10385",
+        "runtime_linear_hex": "0x377d5",
+        "original_bytes_hex": "26897702",
+        "operand": "mov     es:[bx+2], si",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10381",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0189",
+        "original_name": "",
+        "ida_ea_hex": "0x10389",
+        "runtime_linear_hex": "0x377d9",
+        "original_bytes_hex": "8b4e00",
+        "operand": "mov     cx, [bp+0]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10385",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:018C",
+        "original_name": "",
+        "ida_ea_hex": "0x1038c",
+        "runtime_linear_hex": "0x377dc",
+        "original_bytes_hex": "26894f06",
+        "operand": "mov     es:[bx+6], cx",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10389",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0190",
+        "original_name": "",
+        "ida_ea_hex": "0x10390",
+        "runtime_linear_hex": "0x377e0",
+        "original_bytes_hex": "8b4e02",
+        "operand": "mov     cx, [bp+2]",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1038c",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0193",
+        "original_name": "",
+        "ida_ea_hex": "0x10393",
+        "runtime_linear_hex": "0x377e3",
+        "original_bytes_hex": "26894f08",
+        "operand": "mov     es:[bx+8], cx",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10390",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:0197",
+        "original_name": "",
+        "ida_ea_hex": "0x10397",
+        "runtime_linear_hex": "0x377e7",
+        "original_bytes_hex": "2689470a",
+        "operand": "mov     es:[bx+0Ah], ax",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10393",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:019B",
+        "original_name": "loc_1039B",
+        "ida_ea_hex": "0x1039b",
+        "runtime_linear_hex": "0x377eb",
+        "original_bytes_hex": "9aa501af3c",
+        "operand": "call    far ptr 3CAFh:1A5h",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x10397",
+            "type": 21
+          },
+          {
+            "ida_from_hex": "0x1034e",
+            "type": 19
+          },
+          {
+            "ida_from_hex": "0x1035a",
+            "type": 19
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:01A0",
+        "original_name": "",
+        "ida_ea_hex": "0x103a0",
+        "runtime_linear_hex": "0x377f0",
+        "original_bytes_hex": "b80100",
+        "operand": "mov     ax, 1",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x1039b",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:01A3",
+        "original_name": "",
+        "ida_ea_hex": "0x103a3",
+        "runtime_linear_hex": "0x377f3",
+        "original_bytes_hex": "83c406",
+        "operand": "add     sp, 6",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x103a0",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:01A6",
+        "original_name": "",
+        "ida_ea_hex": "0x103a6",
+        "runtime_linear_hex": "0x377f6",
+        "original_bytes_hex": "5f",
+        "operand": "pop     di",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x103a3",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:01A7",
+        "original_name": "",
+        "ida_ea_hex": "0x103a7",
+        "runtime_linear_hex": "0x377f7",
+        "original_bytes_hex": "5e",
+        "operand": "pop     si",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x103a6",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:01A8",
+        "original_name": "",
+        "ida_ea_hex": "0x103a8",
+        "runtime_linear_hex": "0x377f8",
+        "original_bytes_hex": "5d",
+        "operand": "pop     bp",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x103a7",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      },
+      {
+        "original_location": "3765:01A9",
+        "original_name": "",
+        "ida_ea_hex": "0x103a9",
+        "runtime_linear_hex": "0x377f9",
+        "original_bytes_hex": "cb",
+        "operand": "retf",
+        "xrefs": [
+          {
+            "ida_from_hex": "0x103a8",
+            "type": 21
+          }
+        ],
+        "grade": "unknown",
+        "semantic": "未審查",
+        "warning": "有界線性匯出，非完整函式邊界聲明",
+        "source": "第72輪固定原版RAM"
+      }
+    ]
+  },
+  "semantic_index": [
+    {
+      "original_location": "3765:0076",
+      "semantic": "呼叫端duration寫到DS:8EFE計數器。",
+      "grade": "proven",
+      "source": "原指令及duration0／1／90固定案例"
+    },
+    {
+      "original_location": "3765:0093",
+      "semantic": "計數器為0、事件碼1或2才結束，並清計數器，AX回1。",
+      "grade": "proven",
+      "source": "原指令及11案双跑"
+    },
+    {
+      "original_location": "3765:00BF",
+      "semantic": "先取DS:F248佇列的一筆12-byte事件；空佇列則event word清0。",
+      "grade": "proven",
+      "source": "原指令及演出中左右鍵按下／放開後仍可縮短等待"
+    }
+  ],
+  "limits": [
+    "步數只作dosgolem重播定位，不換算成實機wall-clock。",
+    "空白與ESC硬體掃描碼不縮短本批等待；不宣稱所有鍵盤輸入組合已驗。",
+    "延後release在返回後未送出，report完整記錄實際送出的輸入。",
+    "返回戰場後的放開事件生命週期仍未知。",
+    "完整Game場景、起始tick及正常GUI與保存仍依056／092。"
+  ]
+}

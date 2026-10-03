@@ -2,6 +2,51 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-04 #48／#79投影、下方計畫及結果等待
+
+第72輪父提交65937900af4559fbf1fcb871fd4694c536dcf8f1。原Goal保持active。
+路由命中原版GUI還原、規格閘門及文件職責，沿用逆向重製／IDA9.4技能與既有Docker工具鏈。
+接手89張worklist／9張OPEN，269核對零失效；音樂、清單、零距離及061既有裁決保持。
+
+097先READY後實作ProjectFleetScene。固定提交父state到321F:000A，30案61份RAM雙跑相同。
+131來源、604原指令及九項proven語意保存；420分隊投影／深度／可見性、鏡頭與完整梳狀排序符合。
+排序讀unsigned投影Y後X，不讀SHIP+44。凍結SHA-256
+cd191199bf5297fd25d41891dc89fe4108709c6426bde78fa44ce95aa8f471f0。
+
+BuildFleetSceneOps從typed編制生成完整下方圖塊、標籤、亮標、連線與朝向箭頭。
+傷害前後兩張各307200全圖、139776下方像素零差，逐操作亦符合；上方明示借原版入口。
+完整來源凍結4988a5b95d2167bc14166a8fb173fb26bc0b6d4b9f6e7f070c86c9bcc3b126f4。
+095未閉合裁切維持拒絕，Y376／65001艘的131塊不回部分計畫，來源保持；正式玩家可達性仍unknown。
+最終六張PNG及區域統計在workplace/projection48-r72-reviewed-remake/，傷害後圖已目視。
+
+沿原版實際05D7場景量測3765:006C。首跑800萬步上限低於既有原版約1797萬步，
+失敗停36AD:0270；入口產物與abort分類保留，依已量範圍改2000萬步後11案返回。
+11案44份RAM／色號雙跑相同，95來源及108原指令保存，凍結
+8ff102acff0607b23524e0b8678fc3eef3817aa171a6ce779d5d58c56392c566。
+演出中左右按下並放開仍排隊，等待期亦可縮短；空白／ESC本批不縮短，duration0／1／90皆核。
+098 READY後直接核既有Game共用等待predicate，11案通過，產品輸入無需修改。
+步數只作重播定位，不反推實機秒數，不深入driver或ISR。
+
+標準18套件13PASS／5無測試，log SHA-256
+8faee270dd1344006ff58ea06ff1f70a4699503391703f4bf447ff3c3cf4f9c6。
+後續新增11案Game等待回歸通過，log ee324a4e0285831e71315c1c470508b5586019cf23c1110889a5b2153d1e65db。
+最終screen回歸08080c433777d19a4161af0af92e524d9a92a0caf89fa5d8c5566ceeb81b2511。
+三個凍結器重生相同，Python／shell語法、指定Go格式、文件連結與408索引正對照通過。
+既有69／70／71凍結收據原SHA保持，未修改dosgolem。
+
+48／79保持OPEN並回讀本文。首次新增證據路徑未包反引號，worklist解析器拒絕；
+修正Issue資料格式後重抓快照，同一核對命令269條零失效、2 manual、122一致、145舊文件。
+CONTEXT與矩陣由最新快照重生；原版等待探針與Issue格式失敗均未分類成產品缺陷。
+工作根無root-owned或誤建.md目錄，新檔及抽樣輸出1000:1000。
+本輪--rm容器全部退出，無本專案殘留；匿名Go容器經掛載確認屬moo2，其他專案資源不動。
+
+提交、推送訊息「接上艦隊投影與下方場景計畫」；精確身份依Git紀錄。
+完整056／092仍DRAFT；Game未接艦隊核心／文字／下方計畫，正常GUI及保存未驗。
+下一閘門為正式裁切合法域與完整圖序列起始tick，再審查完整場景接線。
+入口：[計畫72](docs/goal/2026-10-04-fleet-projection-round-72.md)、
+[097](docs/spec/097-fleet-projection.md)、[098](docs/spec/098-engagement-wait.md)、
+[研究409](docs/re/409-fleet-projection.md)及[061](docs/playtest/061-fleet-projection.md)。
+
 ## 2026-10-04 #48／#79交戰文字與正式色盤
 
 第71輪父提交969d68b8460e983a368aa514aca25e4c912f3a43。原Goal保持active。

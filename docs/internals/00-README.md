@@ -1,5 +1,17 @@
 # 原版內部構造參考
 
+第72輪沿#48／#79：[投影與交戰接線計畫](../goal/2026-10-04-fleet-projection-round-72.md)，
+從321F:000A／0223／0513閉合typed投影、裁切域與等待輸入，往完整Game接線前進。
+[097規格](../spec/097-fleet-projection.md)、[研究409](../re/409-fleet-projection.md)、
+[對拍061](../playtest/061-fleet-projection.md)與[投影收據](data/fleet-projection.json)保存30案及原指令。
+[原版重播](../../tools/fleet_projection_oracle.sh)、[觀測器](../../tools/scripts/fleet_projection_native.go)、
+[IDA匯出](../../tools/scripts/fleet_projection_ida.py)、[凍結器](../../tools/scripts/fleet_projection_receipt.py)為重生入口。
+[場景來源凍結器](../../tools/scripts/fleet_scene_plan_receipt.py)及[完整下方收據](data/fleet-scene-plan.json)
+把typed投影接到095，完整092、等待起點與Game仍待驗。
+[098等待規格](../spec/098-engagement-wait.md)、[等待重播](../../tools/fleet_wait_oracle.sh)、
+[等待觀測器](../../tools/scripts/fleet_wait_native.go)、[等待凍結器](../../tools/scripts/fleet_wait_receipt.py)及
+[11案等待收據](data/fleet-wait.json)補結果等待與左右輸入排隊；起始tick、完整Game仍待驗。
+
 第71輪沿#48／#79：[完整交戰呈現計畫](../goal/2026-10-04-fleet-presentation-round-71.md)，
 閉合文字、色盤及等待輸入，往完整scene與Game接線前進。
 [呈現原指令匯出](../../tools/scripts/fleet_presentation_ida.py)保留原名／bytes與三種定位。
