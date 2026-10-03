@@ -21,7 +21,12 @@ ab77e32f4714064a14477a381eec22c373bc567b5b06134ffeab70261e17851a。
 proven：321F:07B6–07D5以word(剩餘艘數+499)／500作堆疊數，
 傳寬度6 bytes、高16列給2376:07FA；後者每畫一塊把Y減4。
 相同來源及投影前後畫面保存在[本輪JSON](data/fleet-scene.json)。
-完整透明遮罩／裁切／背景buffer尚未閉合，不由此宣稱remake方塊已接線。
+第70輪由[研究407](../re/407-fleet-blocks.md)、[095](../spec/095-fleet-blocks.md)與
+[原版收據](data/fleet-blocks.json)閉合透明遮罩、裁切、網格、連線及箭頭。
+正式解析器／完整合成器40層＋20裁切零差；Game未接，完整092仍DRAFT。
+圖塊零色號透明，每列四個plane分組；背景x8..631／y208..431，圖塊裁切x8..615／y208..429。
+第一條亮標沿用圖塊最後留下的平面遮罩8，畫完才恢復15，不是XOR或四平面覆寫。
+2376:0B43只有CB返回指令，不搬移背景buffer。裁切零高度的直接注入未返回，玩家可達性未知。
 
 ## 怎麼定出尺寸的
 
@@ -60,7 +65,8 @@ proven：321F:07B6–07D5以word(剩餘艘數+499)／500作堆疊數，
 
 第69輪proven：DS:F134載入資料與原檔逐byte相同；321F:0A08實際畫
 ATTACK／武器字樣及DEFENCE，寬8 bytes、高9列，保留BEEM拼字。
-現有asset.DecodeTiles在寬度大於16時按word交錯，不能直接解這兩份整列plane素材；
+asset.DecodeFleetSceneSprites依精確長度解析四塊／五標籤，DecodeFleetSceneSprite供單張解析。
+既有asset.DecodeTiles在寬度大於16時按word交錯，不能直接解這兩份整列plane素材；
 可檢視匯出仍用tools/scripts/spr_sheet.py的row模式，入口見本頁首段。
 
 > `BEEM` 是**原版自帶的錯字**（應為 `BEAM`）。不要「順手修好」——

@@ -1,5 +1,16 @@
 # 原版內部構造參考
 
+第70輪沿#48／#79：[交戰下方場景計畫](../goal/2026-10-04-fleet-blocks-round-70.md)，
+從321F:06FC閉合透明堆疊、裁切與背景；0B43無buffer搬移。095已READY，完整092未接。
+[下方場景IDA匯出](../../tools/scripts/fleet_blocks_ida.py)保留原名、定位與bytes，未知不改名。
+[完整下方重播](../../tools/fleet_blocks_oracle.sh)與[逐層觀測器](../../tools/scripts/fleet_blocks_native.go)
+保存傷害前後的背景、方塊、標籤、呈現、連線與箭頭邊界及可回載完整state。
+[暫存器觀測器](../../tools/scripts/fleet_blocks_registers.go)、
+[裁切診斷](../../tools/scripts/fleet_blocks_edges.go)與[可丟棄合成探針](../../tools/scripts/fleet_blocks_probe.py)
+分開正式原版續接與直接入口注入；[凍結器](../../tools/scripts/fleet_blocks_receipt.py)保存原版期望值。
+[095規格](../spec/095-fleet-blocks.md)、[研究407](../re/407-fleet-blocks.md)、
+[對拍059](../playtest/059-fleet-blocks.md)與[凍結收據](data/fleet-blocks.json)是同一輪的入口。
+
 第69輪沿#48／#79：[艦隊完整場景計畫](../goal/2026-10-04-fleet-scene-round-69.md)，
 追1DD6:05D7的文字／量表／方塊／圖視窗／戰損／等待／返回，再接093到正式Game。
 [場景IDA匯出](../../tools/scripts/fleet_scene_ida.py)保存原始定位、bytes與未審查語意。
