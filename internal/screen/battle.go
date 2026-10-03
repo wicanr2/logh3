@@ -283,7 +283,12 @@ func DrawBattleStatus(s *BattleSpec, fb *gfx.Framebuffer, fnt *font.Font, st Bat
 	ink, r := p.Ink, p.Rows
 
 	// 第一行：軍名（陣營色）＋ 全形冒號 ＋ 階段。
-	drawFull(fb, fnt, p.LabelX, r.Phase, p.Labels.Factions[st.Faction%2].Codes, p.FactionInk)
+	viewer := st.Faction & 1
+	factionInk := uint8(6)
+	if viewer == 1 {
+		factionInk = 5
+	}
+	drawFull(fb, fnt, p.LabelX, r.Phase, p.Labels.Factions[viewer].Codes, factionInk)
 	drawFull(fb, fnt, p.ColonX, r.Phase, []uint16{p.Labels.Colon}, ink)
 	drawFull(fb, fnt, p.PhaseX, r.Phase, p.Labels.PhaseInput.Codes, ink)
 
@@ -300,14 +305,20 @@ func DrawBattleStatus(s *BattleSpec, fb *gfx.Framebuffer, fnt *font.Font, st Bat
 	drawFull(fb, fnt, p.TurnNumberX+font.GlyphW, r.Turn, p.Labels.TurnSuffix.Codes, ink)
 
 	// 三個計數：標籤 ＋ 冒號 ＋ 靠右的半形數字。
+	// 原版依玩家排列兩方分數；勝利點也是玩家減對手（研究395）。
+	scores := [2]int{st.Empire, st.Alliance}
+	victory := st.Victory
+	if viewer == 1 {
+		victory = -victory
+	}
 	for _, row := range []struct {
 		y     int
 		codes []uint16
 		n     int
 	}{
-		{r.Victory, p.Labels.Victory.Codes, st.Victory},
-		{r.Empire, p.Labels.Factions[0].Codes, st.Empire},
-		{r.Alliance, p.Labels.Factions[1].Codes, st.Alliance},
+		{r.Victory, p.Labels.Victory.Codes, victory},
+		{r.Empire, p.Labels.Factions[viewer].Codes, scores[viewer]},
+		{r.Alliance, p.Labels.Factions[1-viewer].Codes, scores[1-viewer]},
 	} {
 		drawFull(fb, fnt, p.LabelX, row.y, row.codes, ink)
 		drawFull(fb, fnt, p.ColonX, row.y, []uint16{p.Labels.Colon}, ink)
@@ -559,10 +570,15 @@ func DrawMinimap(s *BattleSpec, fb *gfx.Framebuffer, cells []uint8, v BattleView
 		}
 	}
 	// 視野框：只畫邊。
-	vx := m.X + v.Col
-	// 上邊向上取整——`s3ai6` 的視野列 30 算出來是 37.35，原版畫在 38。
-	vy := m.Y + (v.Row*m.H+s.Field.MapRows-1)/s.Field.MapRows
-	vw, vh := s.Field.Cols, s.Field.Rows*m.H/s.Field.MapRows
+	// 1727:035E將世界鏡頭右移4，沿標記原點加DOS的40列（研究395）。
+	// bitmap的128／102比例與世界像素縮放不是同一個座標域。
+	scale := m.UnitScale
+	if scale <= 0 {
+		scale = 16
+	}
+	vx := m.X + v.Col*s.Field.TileW/scale
+	vy := m.Y + m.UnitRowBias + v.Row*s.Field.TileH/scale
+	vw, vh := s.Field.Cols*s.Field.TileW/scale, s.Field.Rows*s.Field.TileH/scale
 	mark := func(x, y int) { fb.Set(x, y, fb.At(x, y)|m.ViewOr) }
 	for i := 0; i < vw; i++ {
 		mark(vx+i, vy)

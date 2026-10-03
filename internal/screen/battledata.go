@@ -187,6 +187,8 @@ func DrawBattleData(s *BattleDataSpec, fb *gfx.Framebuffer, fnt *font.Font,
 	}
 	var missing []uint16
 	s.Window.Frame.frame().Draw(fb, s.Window.X, s.Window.Y, s.Window.W, s.Window.H)
+	// 字元窗右側陰影另占一列；舊樣本的底圖恰好也是3（研究395）。
+	fb.FillRect(s.Window.X+s.Window.W, s.Window.Y, 1, s.Window.H, 3)
 
 	tf, mf := s.Tab.Frame.frame(), s.Tab.Mark.Frame.frame()
 	for i, tx := range s.Tab.Xs {
@@ -241,6 +243,15 @@ func DrawBattleData(s *BattleDataSpec, fb *gfx.Framebuffer, fnt *font.Font,
 		}
 	}
 	return missing
+}
+
+// DrawBattleDataScrollArrows依原版FF11／FF15字碼畫圖塊，判斷完整清單長度。
+func DrawBattleDataScrollArrows(s *BattleDataSpec, fb *gfx.Framebuffer, tiles *ui.FrameTiles, total int) {
+	if s == nil || fb == nil || tiles == nil || total <= s.Row.Count || len(s.Scroll.Boxes) < 2 {
+		return
+	}
+	tiles.DrawTile(fb, s.Scroll.X-2, s.Scroll.Boxes[0].Y, 16, 9)
+	tiles.DrawTile(fb, s.Scroll.X-2, s.Scroll.Boxes[len(s.Scroll.Boxes)-1].Y, 20, 9)
 }
 
 // layoutCells 把一串字碼攤成格。

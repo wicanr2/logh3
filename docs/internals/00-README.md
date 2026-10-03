@@ -15,6 +15,14 @@
 - [索敵顯示收據工具](../../tools/scripts/battle_spotting_display_evidence.py)
 
 
+第57輪入口：[資料視窗捲動工作快照](../goal/2026-10-03-battle-data-scroll-round-57.md)。沿#67，以自然S3同盟局面補超過十四列的完整畫面收據。
+
+[資料視窗依賴原指令匯出](../../tools/scripts/battle_data_scroll_ida.py)保留原始定位及bytes，未審查項保持unknown。
+[資料視窗四十列原版重播](../../tools/battle_data_scroll_oracle.sh)固定正常同盟路徑與seed，不注入局面。
+[四十列及摘要／視野框研究395](../re/395-battle-data-scroll.md)保存本輪呈現根因與原始定位。
+[正常入口全畫面回歸](../../internal/game/battledata_wholeframe_test.go)與[正式GUI鍵鼠驗證](../../tools/battle_data_scroll_gui.sh)覆蓋三個偏移及兩種倍率。
+[收據產生器](../../tools/scripts/battle_data_scroll_receipt.py)、[完整收據](data/battle-data-scroll.json)與[對拍047](../playtest/047-battle-data-scroll.md)保存原圖、差分、逐區統計及驗證限制。
+
 第56輪入口：[工作快照](../goal/2026-10-03-battle-object-keys-round-56.md)、
 [研究394](../re/394-battle-object-keys.md)、
 [IDA匯出](../../tools/scripts/battle_object_keys_ida.py)、[原版鍵反例](../../tools/battle_object_keys_oracle.sh)、

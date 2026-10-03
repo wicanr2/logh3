@@ -45,7 +45,7 @@
 一列的內容也是字串接出來的：
 
 ```
-艦隊  第<兩個半形數字>艦隊  <18 個半形寬的名字>  <艦種>  %4u／%4u   %3u
+艦隊  第<全形單位數／兩個半形數字>艦隊  <18 個半形寬的名字>  <艦種>  %4u／%4u   %3u
 行星  <16 個半形寬的名字>  %6u  %6u  Mo:Fo <七個旗標>
 ```
 
@@ -88,6 +88,18 @@
 畫面列時，以 `偏移 + 畫面列` 開啟正確的艦隊明細。原版資料流與初始化
 位元組見 [`docs/re/303`](../re/303-battle-data-scroll-rules.md)，自動驗證是
 `TestBattleDataScrollMatchesOriginal` 與 `TestBattleDataScrollHitboxesMatchOriginal`。
+
+### 第57輪限定呈現子契約
+
+狀態：**CONFORMED**，先經READY審查，來源為[研究395](../re/395-battle-data-scroll.md)。
+艦隊編號1..9用全形數字，兩位數用兩個半形；格式只修fleetLabel。
+總列數超過Row.Count時，用FRAME.BLK第16／20張畫上下箭頭，
+圖塊起點Scroll.X-2及第一／最後Scroll.Boxes.Y，色號0以9填。
+原版窗口右側另有一列陰影：Window.X+Window.W起，寬1、高Window.H、色3。
+陰影在標籤、列與游標之前畫；總列數由完整清單判定，不從可見十四列推定。
+偏移0／1／26需比完整畫面，不新增允許差異。表列指向改鏡頭另待實作，不併入此子契約。
+正常S3同盟40列，三個偏移各307200像素零差，原版／remake均獨立雙跑。
+正式鍵鼠一倍／兩倍及標準18套件通過，完整收據見[對拍047](../playtest/047-battle-data-scroll.md)。
 
 ### 允許差異
 

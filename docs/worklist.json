@@ -13,7 +13,7 @@
       "# 驗證矩陣",
       "",
       "<!-- 這份檔案由 `tools/go.sh run ./cmd/worklist render-matrix -w` 產生，不要手改。",
-      "     權威是 `docs/worklist.json`；改完跑 `verify` 確認斷言與現況對得上。 -->",
+      "     條目合併JSON歷史與Issue快照；未完成項以 https://github.com/wicanr2/logh3/issues?q=label%3Aworklist 為準，核對入口見AGENTS.md。 -->",
       "",
       "完成度的**唯一數字來源**。只有拿得出對拍收據的項目才能標通過；",
       "「remake 單元測試全綠」「目視相似」「離線素材渲染成功」都不算。",
@@ -1363,8 +1363,8 @@
       "section": "s2",
       "cells": {
         "#": "4w",
-        "備註": "三張分頁的視窗 (16,60) 447×360 全部**逐位元組一致**（各 0／160,920，含原版自己畫的游標）：`TestBattleDataMatchesOracle`（艦隊）、`TestBattleDataTabsMatchOracle`（行星、敵艦隊）。文字照原版的字串引擎排——一格 16 像素、半形兩個併一格，立體邊與加粗整格一起做。已接進玩家路徑（`TestBattleDataOpensFromMenu`）。**內容也對拍過**：`TestBattleDataContentMatchesOracle` 用遊戲自己從原版資料檔算出來的列去比收據，0／160,920。士氣是艦艇記錄 `+0x06`（`-poke` 驗過，收據 `s3morale`）。行星分頁的內容也對上（名字 `+0x00`、經濟力 `+0x1A`、防衛力 `+0x14`、陣營色 `+0x11`）。補給欄的判準反組譯出來了（`0x140A5`：不是玩家陣營整段遮蔽，否則 M 看 `+0x3C`、F 看 `+0x40`、七格看 `+0x20 + 艦種 × 4`，一律「32 位元非不非零」）——**沒有允許差異**",
-        "收據": "收據 `s3data`／`s3data0`／`s3data_planet`／`s3data_enemy`；[`docs/re/111`](docs/re/111-battle-data-screen-layout.md)、[`docs/spec/021`](docs/spec/021-battle-data-screen.md)",
+        "備註": "三張分頁的視窗 (16,60) 447×360 全部**逐位元組一致**（各 0／160,920，含原版自己畫的游標）：`TestBattleDataMatchesOracle`（艦隊）、`TestBattleDataTabsMatchOracle`（行星、敵艦隊）。文字照原版的字串引擎排——一格 16 像素、半形兩個併一格，立體邊與加粗整格一起做。已接進玩家路徑（`TestBattleDataOpensFromMenu`）。**內容也對拍過**：`TestBattleDataContentMatchesOracle` 用遊戲自己從原版資料檔算出來的列去比收據，0／160,920。士氣是艦艇記錄 `+0x06`（`-poke` 驗過，收據 `s3morale`）。行星分頁的內容也對上（名字 `+0x00`、經濟力 `+0x1A`、防衛力 `+0x14`、陣營色 `+0x11`）。補給欄的判準反組譯出來了（`0x140A5`：不是玩家陣營整段遮蔽，否則 M 看 `+0x3C`、F 看 `+0x40`、七格看 `+0x20 + 艦種 × 4`，一律「32 位元非不非零」）——**沒有允許差異**。第57輪補正常S3同盟40列捲動：偏移0／1／26各完整640×480零差，原版及正常Game獨立雙跑，正式鍵鼠1倍／2倍與18產品套件通過；TestBattleDataScrollWholeFrameMatchesOracle釘住全圖，不由本輪升格其他頁籤或完整戰場入口。",
+        "收據": "收據 `s3data`／`s3data0`／`s3data_planet`／`s3data_enemy`；[`docs/re/111`](docs/re/111-battle-data-screen-layout.md)、[`docs/spec/021`](docs/spec/021-battle-data-screen.md)；[對拍047](docs/playtest/047-battle-data-scroll.md)、[完整收據](docs/internals/data/battle-data-scroll.json)",
         "未核准差異": "0",
         "畫面": "**戰術選單「資料」（三個分頁）**",
         "等級": "`same-state`"

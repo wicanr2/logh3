@@ -182,11 +182,10 @@ func (g *Game) squadronName(u rules.BattleUnit) []uint16 {
 	return unitLabel(b5Bu, u.Squadron+1)
 }
 
-// fleetLabel 回「第<兩個半形數字>艦隊」。
+// fleetLabel 回「第Ｎ艦隊」；數字佔一個全形字寬。
 func fleetLabel(n int) []uint16 {
-	out := []uint16{b5Di}
-	out = append(out, rightDigits(n, 2)...)
-	return append(out, b5Jian, b5Dui)
+	// 原版單位數使用全形數字，兩位數併成一格（研究395）。
+	return unitLabel(b5Jian, n)
 }
 
 // unitLabel 回「第Ｎ部隊」。原版的樣板是「第？部隊」——？ 佔一格，

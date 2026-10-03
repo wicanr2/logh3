@@ -5002,6 +5002,8 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		} else {
 			screen.DrawBattleData(g.res.BattleData, fb, g.res.Font,
 				g.battleDataTab, g.battleDataVisibleRows())
+			screen.DrawBattleDataScrollArrows(g.res.BattleData, fb, g.res.FrameTiles,
+				len(g.battleDataRows(g.battleDataTab)))
 		}
 	}
 	// 行星情報視窗（`docs/re/144`）。
