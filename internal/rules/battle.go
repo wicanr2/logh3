@@ -79,6 +79,9 @@ type BattleUnit struct {
 	// 已被敵方觀測；DetailHold 是顯示層級 3 還要維持幾輪（`docs/re/290`）。
 	Seen       bool `json:"seen,omitempty"`
 	DetailHold int  `json:"detail_hold,omitempty"`
+
+	// DisplayPriority是SHIP+30的顯示快取；原存檔byte保存，既有JSON格式不新增欄位。
+	DisplayPriority int `json:"-"`
 }
 
 // EngagementRange 回一個分隊的射程（`docs/spec/018`）。
@@ -442,6 +445,7 @@ func (s *Slot) fillFromShip(u *BattleUnit, ship int, w StrengthWeights) {
 	u.RepairCap = int(binary.LittleEndian.Uint16(rec[12:]))
 	u.Attack = int(binary.LittleEndian.Uint16(rec[0x16:]))
 	u.Seen, u.Detail, u.DetailHold = rec[0x16]&1 != 0, int(rec[0x17]), int(rec[0x18])
+	u.DisplayPriority = int(rec[0x30])
 	// 士氣是**一個位元組**：`+0x07` 固定 0xFF，整個 word 讀出來
 	// 會是 0xFF64。用 -poke 把 0x682EC 寫成 77 驗過，畫面上只有
 	// 那一列的士氣跟著變（收據 `s3morale`，`docs/re/111`）。

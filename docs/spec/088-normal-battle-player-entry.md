@@ -2,6 +2,26 @@
 
 Status: DRAFT
 
+## READY子契約：戰場圖示順位初始化
+
+2026-10-03審查：[研究392](../re/392-battle-sprite-priority.md)正常原版獨立雙跑、55筆建立trace，
+IDA873條原始bytes與19項附加語意。完整088仍DRAFT，原085限定128排序成果保持。
+
+- 每次建立參戰分隊圖示時，SHIP+30設80；含FLEET+38未出擊偵察池。
+  正常入場只初始化本戰場池，不重設未參戰者。SaveSlot保存同一byte。
+- typed BattleUnit讀同一SHIP+30；正常輸入刷新按原池同步順位。
+  renderer排序副本，先按無號byte順位升序，再沿085按分隊鍵降序，不改規則／點選次序。
+- 只接原資料及既有比較器，不推測補給選單之外的順位重設或通用相等鍵置換。
+  分隊排序鍵在已驗參戰清單唯一；一般FF物件與方向圖示的相等鍵不在此子契約。
+- 驗正常S3兩AI55池／48可點選單位／完整存讀、五張正常Game雙跑、標準產品回歸與兩倍率GUI。
+  非128順位的remake比較器回歸不能替代原版變動順位畫面對拍，限制見研究392。
+
+此子契約限定驗收已通過：[完整收據](../internals/data/battle-sprite-priority.json)SHA-256
+`4540cb1002bf37cf7f927cd91349d3910cf59b66b4d06ee24c893a84768b5e29`。
+原版55筆建立trace與物件、873條指令已核；148限定PASS零skip、18產品套件及正常X11兩倍率通過。
+正式55檔雙跑相同，兩AI原池／typed順位／完整存讀已驗；只有55個+30 byte改變，五張畫面保持。
+SHIP剩214個指標bytes、WORK14／FLEET27與初始一像素仍待驗，完整088維持DRAFT。
+
 工作項 [#89](https://github.com/wicanr2/logh3/issues/89)；它是[#79](https://github.com/wicanr2/logh3/issues/79)
 正常玩家第三階段同態配對的上游閘門。證據：[研究382](../re/382-normal-battle-player-entry.md)、
 [完整收據](../internals/data/battle-normal-entry.json)、[第四十四輪](../goal/2026-10-03-battle-normal-entry-round-44.md)。

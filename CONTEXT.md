@@ -5,30 +5,31 @@
 
 ## 現況一覽
 
-**目前接續（2026-10-03，第五十三輪）**：#89未出擊偵察隊的圖示快取已接線。
-父提交517fecc21f8ad0868e26e49448e7edea70e3ee25；dosgolem未改，本輪提交依Git紀錄。
+**目前接續（2026-10-03，第五十四輪）**：#89戰場圖示順位初始化及typed來源已接線。
+父提交1ce5c23ef2bab576eb21971fa81e1896dbe49d6a；dosgolem未改，本輪提交依Git紀錄。
 
 | 分類 | 目前真相 | 最近驗證／入口 |
 |---|---|---|
-| 已解且實作 | 正常刷新補七筆未出擊偵察池SHIP+2F，原FF改原版圖塊9 | 088第九個READY子契約限定快取／保存已驗，整份仍DRAFT |
-| 原版輸入已驗 | 沿用第51輪固定f7523f9獨立雙跑，原RAM及五組輸入／畫面雜湊重核 | 既有IDA兩函式209條原始bytes與入口RAM全同，十項附加語意proven；沒有聲稱本輪重跑原版 |
-| 正式正常入口 | 主選單→138→S3帝國→實行→首戰與四個純移動，55份輸出雙跑相同 | 137限定PASS零skip、18產品套件；兩AI55筆快取、48可點選單位、完整SHIP存讀保持 |
+| 已解且實作 | 圖示建立時本戰場55筆SHIP+30設80，typed讀同一byte；renderer先順位升序再分隊鍵降序 | 088第十個READY子契約限定已驗，整份仍DRAFT；既有JSON及存檔格式不新增欄位 |
+| 原版輸入已驗 | 新原版獨立雙跑RAM／色號／PNG／DAC相同，55筆建立trace及物件各自對回原池 | IDA三個邊界／873條原始bytes與RAM全同，19項附加語意proven；0915僅捕獲前80次 |
+| 正式正常入口 | 主選單→138→S3帝國→實行→首戰與四個純移動，55份輸出雙跑相同 | 148限定PASS零skip、18產品套件；兩AI55筆快取／順位、48可點選單位、完整SHIP存讀保持 |
 | 正常GUI已驗 | cmd/gin3真實鍵鼠一倍／兩倍正常S3首戰 | 整張與正常Game相同，分隊摘要已目視；不宣稱原版全圖一致 |
-| 靜態Input差異 | 五張與第52輪逐byte相同，初始全圖仍1 pixel，其餘四張0；五案小地圖各0／16384 | 沿用已核雜湊的原圖／差分圖；一般FF物件word+4初始化仍unknown，不改像素常數 |
+| 靜態Input差異 | 五張與第52／53輪逐byte相同，初始全圖仍1 pixel，其餘四張0；五案小地圖各0／16384 | 沿用已核雜湊的原圖／差分圖；非128順位的原版重疊探針未重畫，不算像素對拍 |
 | 到達配置保持 | 九移動艦隊／七十筆池、兩種XY／航向／SHIP+02及正式保存已驗 | 第50輪原版到達與首回合無報告雙跑，原JSON不重生 |
-| 正常首戰資料 | 日期380／799/3/1、7艦隊／55筆池／B6E4B78A；WORK14／FLEET27／SHIP269／STELLAR0／PLANET0 | 此輪只改七個+2F bytes，far指標、SHIP+30等差異完整保留，不捏造DOS指標 |
+| 正常首戰資料 | 日期380／799/3/1、7艦隊／55筆池／B6E4B78A；WORK14／FLEET27／SHIP214／STELLAR0／PLANET0 | 此輪只改55個+30 bytes，SHIP剩餘皆+38..3B顯示物件指標，不捏造DOS指標 |
 | 既有成果保持 | 讀檔陣營、日期進位、活動控制、月底旗標及兩AI正常命令 | 第46至50輪收據保持；同盟650M仍限單次輔助 |
 | 刻意偏離保持 | 061單人CPU不下令、留原地、不造成傷害；碰撞物件保留 | 原版與雙人不凍結，受控原版逐圈fixture明示停用此政策 |
 | 其他入口仍不同 | 選單背景16333 pixels、雙人未確認2841 pixels及STELLAR+7D22 bytes | 非本輪範圍，不由局部相同升格 |
 | 指定索敵保持 | 151幀／8465筆SHIP78／1079筆FLEET122已驗 | 087 READY；正常玩家同態待#89上游 |
-| 原Goal待續 | 下一步核FF物件排序與全資料契約，再回正常索敵配對及其他八步 | #79／#89／#69 OPEN；音樂人耳／macOS／正式交付未完成，89張worklist／12張open |
+| 原Goal待續 | 下一步核WORK14、顯示指標比較契約與FF字鍵，再回正常索敵配對及其他八步 | #79／#89／#69 OPEN；音樂人耳／macOS／正式交付未完成，89張worklist／12張open |
 
-入口：[第53輪](docs/goal/2026-10-03-battle-scout-cache-round-53.md)、[研究391](docs/re/391-battle-scout-cache.md)、
-[偵察隊快取收據](docs/internals/data/battle-scout-cache.json)、[088](docs/spec/088-normal-battle-player-entry.md)、
+入口：[第54輪](docs/goal/2026-10-03-battle-sprite-priority-round-54.md)、[研究392](docs/re/392-battle-sprite-priority.md)、
+[圖示順位收據](docs/internals/data/battle-sprite-priority.json)、[088](docs/spec/088-normal-battle-player-entry.md)、
 [046](docs/playtest/046-battle-spotting-phase.md)。完整入口維持nearby-state，不將靜態零差圖升為全部same-state。
 第50輪[研究388](docs/re/388-fleet-arrival-placement.md)與[到達配置收據](docs/internals/data/fleet-arrival-placement.json)保持。
 第51輪[研究389](docs/re/389-battle-input-display.md)與[純移動收據](docs/internals/data/battle-input-display.json)保持原SHA。
 第52輪[研究390](docs/re/390-battle-hover-marks.md)與[集結點收據](docs/internals/data/battle-hover-marks.json)保持原SHA。
+第53輪[研究391](docs/re/391-battle-scout-cache.md)與[偵察隊快取收據](docs/internals/data/battle-scout-cache.json)保持原SHA。
 第45至49輪的[AI閘門](docs/internals/data/normal-ai-once-gate.json)、[讀檔座位](docs/internals/data/load-seat-selection.json)、
 [計數器](docs/internals/data/turn-counter-boundary.json)、[活動控制](docs/internals/data/active-seat.json)與
 [月底旗標](docs/internals/data/month-seat-gate.json)不由新來源改寫。
@@ -766,6 +767,9 @@ WORK14／FLEET27／SHIP276差及799/3/1、380、7艦隊／55池／B6E4B78A保持
 第53輪沿088第九個READY子契約補未出擊偵察池的SHIP+2F刷新。既有原版雙跑及IDA兩函式209條原始指令逐byte重核，十項附加語意proven。正常Game55檔雙跑相同，相較第52輪只改七個快取byte，兩AI55筆快取／48可點選單位及完整SHIP存讀已驗；五張畫面全同，初始仍一個像素差。137限定PASS零skip、18產品套件及正常X11兩倍率通過。WORK14／FLEET27／SHIP269／STELLAR0／PLANET0，完整088仍DRAFT；SHIP+30、far指標與FF字鍵待續，nearby-state及151受控幀不升格。第51／52輪JSON保持。
 收據SHA-256 1203dc687f6f2481ac53acfaa3a2da8866d8d82638ebeda6a9dd452d875bf3d9；入口：docs/re/391-battle-scout-cache.md、docs/internals/data/battle-scout-cache.json。
 
+第54輪沿088第十個READY子契約補圖示順位初始化及typed來源。正常原版獨立雙跑完整RAM／色號／PNG／DAC相同，55筆建立trace與物件皆80；IDA873條原始指令、三個邊界／19項分級已核。正常Game55檔雙跑相同，相較第53輪只改55個SHIP+30 bytes，兩AI原池／typed順位／完整存讀及48可點選單位保持，五張畫面不變。148限定PASS零skip、18產品套件及正常X11兩倍率通過。SHIP269→214，剩餘皆顯示物件指標；WORK14／FLEET27及初始一像素／FF字鍵待續。非128順位色塊回歸只驗remake比較器，未重畫的原版重疊探針不算像素對拍。第51至53輪JSON保持，完整088 DRAFT、nearby-state與151受控幀不升格。
+收據SHA-256 4540cb1002bf37cf7f927cd91349d3910cf59b66b4d06ee24c893a84768b5e29；入口：docs/re/392-battle-sprite-priority.md、docs/internals/data/battle-sprite-priority.json。
+
 **卡在**：六個READY子契約已驗，第七摘要／保存、第八小地圖集結點限定已驗。完整088仍DRAFT。
 下一步核初始首戰剩餘方向覆蓋像素的FF字鍵契約，以及WORK14、FLEET+6C..6F、SHIP+30／+38..3B與偵察隊+2F。
 保留執行期指標及玩法狀態的區別，不捏造far指標。正常索敵原版同態配對仍缺，
@@ -906,6 +910,9 @@ WORK14／FLEET27／SHIP276差及799/3/1、380、7艦隊／55池／B6E4B78A保持
 
 第53輪沿088第九個READY子契約補未出擊偵察池的SHIP+2F刷新。既有原版雙跑及IDA兩函式209條原始指令逐byte重核，十項附加語意proven。正常Game55檔雙跑相同，相較第52輪只改七個快取byte，兩AI55筆快取／48可點選單位及完整SHIP存讀已驗；五張畫面全同，初始仍一個像素差。137限定PASS零skip、18產品套件及正常X11兩倍率通過。WORK14／FLEET27／SHIP269／STELLAR0／PLANET0，完整088仍DRAFT；SHIP+30、far指標與FF字鍵待續，nearby-state及151受控幀不升格。第51／52輪JSON保持。
 收據SHA-256 1203dc687f6f2481ac53acfaa3a2da8866d8d82638ebeda6a9dd452d875bf3d9；入口：docs/re/391-battle-scout-cache.md、docs/internals/data/battle-scout-cache.json。
+
+第54輪沿088第十個READY子契約補圖示順位初始化及typed來源。正常原版獨立雙跑完整RAM／色號／PNG／DAC相同，55筆建立trace與物件皆80；IDA873條原始指令、三個邊界／19項分級已核。正常Game55檔雙跑相同，相較第53輪只改55個SHIP+30 bytes，兩AI原池／typed順位／完整存讀及48可點選單位保持，五張畫面不變。148限定PASS零skip、18產品套件及正常X11兩倍率通過。SHIP269→214，剩餘皆顯示物件指標；WORK14／FLEET27及初始一像素／FF字鍵待續。非128順位色塊回歸只驗remake比較器，未重畫的原版重疊探針不算像素對拍。第51至53輪JSON保持，完整088 DRAFT、nearby-state與151受控幀不升格。
+收據SHA-256 4540cb1002bf37cf7f927cd91349d3910cf59b66b4d06ee24c893a84768b5e29；入口：docs/re/392-battle-sprite-priority.md、docs/internals/data/battle-sprite-priority.json。
 
 **卡在**：- 第③步正式Game已在戰鬥前逐觀測者索敵；來源標頭、逐筆快取、標亮、近距／界外鏡頭、等待、正常兩回合與保存已驗。受控151個可比UI幀及完整原池／有效RGB零差異，原有22內部停點與新5個寫字前入口不當成UI。087保持READY，下一閘門沿#89／088 DRAFT核對剩餘正常S3首戰全表及1個方向覆蓋像素的FF字鍵契約；7艦隊／55筆池、日期380與已捕獲活動控制已齊，再補正常玩家原版／正式remake同狀態配對；不能由受控收據或單側正常GUI替代。不重查已驗來源標頭／逐格鏡頭或第二階段。
 

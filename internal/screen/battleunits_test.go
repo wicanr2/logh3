@@ -3,12 +3,52 @@ package screen
 import (
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 )
+
+// 35D1:02AB比較器的remake分支回歸；色塊只用於辨認覆蓋，不是原版素材代用品。
+func TestBattleUnitPriorityPrecedesOrdinal(t *testing.T) {
+	s, err := LoadBattleSpec("../../docs/internals/data/screen-battle.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var sprites []*asset.Image
+	for _, ink := range []byte{1, 2} {
+		p := make([]byte, 256)
+		for i := range p {
+			p[i] = ink
+		}
+		sprites = append(sprites, &asset.Image{W: 16, H: 16, Pix: p})
+	}
+	for _, c := range []struct {
+		name      string
+		a, b      int
+		wantColor byte
+	}{{"priority", 0x70, 0x80, 2}, {"reverse", 0x80, 0x70, 1},
+		{"ordinal-tie", 0x80, 0x80, 1}, {"unsigned", 0xFF, 0x80, 1}} {
+		t.Run(c.name, func(t *testing.T) {
+			units := []rules.BattleUnit{
+				{Fleet: 12, Squadron: 1, Faction: 0, X: 208, Y: 160, DisplayPriority: c.a},
+				{Fleet: 16, Squadron: 1, Faction: 1, X: 208, Y: 160, DisplayPriority: c.b},
+			}
+			before := append([]rules.BattleUnit(nil), units...)
+			fb := gfx.NewFramebuffer(0)
+			DrawBattleUnits(s, fb, sprites, units, func(u rules.BattleUnit) int { return u.Faction }, BattleView{})
+			x, y := s.Field.X+208, s.Field.Y+160
+			if got := fb.Pix[y*640+x]; got != c.wantColor {
+				t.Fatalf("重疊像素%d，依比較器應為%d", got, c.wantColor)
+			}
+			if !reflect.DeepEqual(units, before) {
+				t.Fatal("繪製排序更動規則及點選單位的次序")
+			}
+		})
+	}
+}
 
 // s3fight 那一場視野內、畫面上比得出圖塊的分隊（`docs/re/85`）。
 var origUnits = []struct {

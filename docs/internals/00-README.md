@@ -323,3 +323,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [第53輪隱藏偵察隊快取](../goal/2026-10-03-battle-scout-cache-round-53.md)：沿#89核對完整戰場池的圖示刷新與存讀，不重開既有畫面收據。
 - [隱藏偵察隊研究391](../re/391-battle-scout-cache.md)：既有IDA資料庫的209條原始bytes與原版七筆快取；規格088限定接線。
 - [偵察隊快取收據產生器](../../tools/scripts/battle_scout_cache_receipt.py)與[結構化收據](data/battle-scout-cache.json)：核對固定原版雙跑、正常Game雙跑、七個byte與未改畫面，保留原始位址與分級。
+- [第54輪戰場圖示順位](../goal/2026-10-03-battle-sprite-priority-round-54.md)與[IDA探針](../../tools/scripts/battle_sprite_priority_ida.py)：沿#89核+30初始化及顯示消費端，未審查語意保持unknown。
+- [圖示順位原版重播](../../tools/battle_sprite_priority_oracle.sh)：固定正常S3狀態、輸入及seed，追完整分隊與偵察池的建立／刷新，輸出拒絕覆寫。
+- [圖示順位研究392](../re/392-battle-sprite-priority.md)：55池初始化、原指令及顯示消費端，分開正常收據與未重畫的診斷探針。
+- [圖示順位收據產生器](../../tools/scripts/battle_sprite_priority_receipt.py)與[結構化收據](data/battle-sprite-priority.json)：原版55筆物件、完整指令索引、正常資料／保存／畫面及比較器回歸，前輪JSON保持。

@@ -2,6 +2,26 @@ package game
 
 import "github.com/wicanr2/logh3/internal/rules"
 
+// 25DB:0007／0170在建立本戰場圖示時初始化全部原池，包含未出擊偵察隊。
+func (g *Game) initBattleSpritePriorities() {
+	if g.slot == nil {
+		return
+	}
+	for i := range g.battleUnits {
+		u := &g.battleUnits[i]
+		if r := g.slot.ShipAt(g.battleUnitPool(*u)); len(r) == rules.ShipRecord {
+			r[0x30], u.DisplayPriority = 0x80, 0x80
+		}
+	}
+	for _, bf := range g.battleFleets {
+		if f := g.fleetByIndex(bf.Index); f != nil {
+			if r := g.slot.ShipAt(f.Scout); len(r) == rules.ShipRecord {
+				r[0x30] = 0x80
+			}
+		}
+	}
+}
+
 // initBattleMarkers依297B:08D8的佈陣重設標記旗標，快照待實際點上才更新。
 func (g *Game) initBattleMarkers() {
 	for i := range g.battleUnits {
@@ -35,6 +55,7 @@ func (g *Game) refreshBattleMarkers() {
 			g.slot.ApplyBattleMarker(g.battleUnitPool(*u), *u)
 			if r := g.slot.ShipAt(g.battleUnitPool(*u)); len(r) == rules.ShipRecord {
 				r[0x2F] = byte(rules.BattleCachedSprite(*u, forced, int(r[0x2F])))
+				u.DisplayPriority = int(r[0x30]) // 25DB:0915的原池順位刷新。
 			}
 			if u.Squadron == 0 && u.Fleet >= 0 && (u.Fleet+1)*rules.FleetRecord <= len(g.slot.Fleet) {
 				d := rules.BlankSprite

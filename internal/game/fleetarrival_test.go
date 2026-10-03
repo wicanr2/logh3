@@ -154,6 +154,15 @@ func TestNormalArrivalCoordinatesAndSave(t *testing.T) {
 				if got := ships[pool*rules.ShipRecord+0x2F]; got != want {
 					t.Fatalf("原池%d正式保存圖示快取%d，原版%d", pool, got, want)
 				}
+				if got, want := ships[pool*rules.ShipRecord+0x30], m[0x668B2+pool*rules.ShipRecord+0x30]; got != want {
+					t.Fatalf("原池%d正式保存顯示順位%d，原版%d", pool, got, want)
+				}
+			}
+			for _, u := range g.battleUnits {
+				pool := g.battleUnitPool(u)
+				if u.DisplayPriority != int(m[0x668B2+pool*rules.ShipRecord+0x30]) {
+					t.Fatalf("原池%d的typed順位未同步", pool)
+				}
 			}
 			loaded := newTestGame(t)
 			loaded.res.SaveDir = dir

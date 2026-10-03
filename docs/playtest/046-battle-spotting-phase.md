@@ -581,3 +581,18 @@ WORK14／FLEET27／STELLAR0／PLANET0及380／799/3/1／7艦隊／55池／B6E4B7
 137限定PASS零skip、18產品套件及正常cmd/gin3 X11兩倍率通過。
 兩AI全部55筆快取、七筆未出擊池及完整SHIP存讀已驗，可點選單位仍48筆。
 重播命令在研究391；完整088 DRAFT、#89／#79 OPEN，nearby-state與151受控幀範圍保持。
+
+## 第54輪：圖示順位初始化
+
+[研究392](../re/392-battle-sprite-priority.md)、[第54輪](../goal/2026-10-03-battle-sprite-priority-round-54.md)及
+[完整收據](../internals/data/battle-sprite-priority.json)，SHA-256
+`4540cb1002bf37cf7f927cd91349d3910cf59b66b4d06ee24c893a84768b5e29`。
+
+正常原版新a／b完整RAM／色號／PNG／DAC相同，55筆建立trace與原池物件順位均80。
+IDA873條原始bytes、三個邊界與19項語意proven。原JSON不改，未重畫的重疊探針分列unknown。
+正式正常Game55檔雙跑相同，只改55個SHIP+30 bytes，269減214；剩餘皆顯示物件指標。
+兩AI55筆快取／順位、48可點選單位及完整SHIP存讀通過。
+五張畫面與前輪逐byte相同，初始仍1 pixel、其餘四張0，原PNG／差分圖重核後沿用。
+148限定PASS零skip、18產品套件與正常cmd/gin3兩倍率GUI通過；變動順位色塊回歸不當成原版像素證據。
+WORK14／FLEET27／STELLAR0／PLANET0及380／799/3/1／7艦隊／55池／B6E4B78A保持。
+完整088 DRAFT，#89／#79 OPEN，nearby-state與151受控幀範圍不升格。重播命令見研究392。

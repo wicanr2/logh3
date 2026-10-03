@@ -359,7 +359,13 @@ func DrawBattleUnits(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
 	key := func(u rules.BattleUnit) uint16 {
 		return uint16(uint8(u.Fleet)) | uint16(uint8(u.Squadron))<<8
 	}
-	sort.SliceStable(order, func(i, j int) bool { return key(order[i]) > key(order[j]) })
+	sort.SliceStable(order, func(i, j int) bool {
+		a, b := uint8(order[i].DisplayPriority), uint8(order[j].DisplayPriority)
+		if a != b {
+			return a < b
+		}
+		return key(order[i]) > key(order[j])
+	})
 	for _, u := range order {
 		if u.Out {
 			continue

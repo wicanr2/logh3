@@ -65,6 +65,7 @@ func (g *Game) startBattle(region int, placed bool) {
 		joined = append(joined, f.Index)
 	}
 	g.battleFleets = g.slot.BattleFleetsFor(joined)
+	g.initBattleSpritePriorities()
 	g.initBattleMarkers()
 	g.battlePlanets = g.battleRegionPlanets(region)
 	g.battleRally = g.battleRegionRally(region)
