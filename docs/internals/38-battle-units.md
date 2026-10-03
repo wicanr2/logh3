@@ -7,6 +7,16 @@
 
 艦艇池的位置從 `ds:CFB4` 的 far 指標拿，一筆 78 位元組。
 
+## 第61輪正常首次索敵限定事實
+
+proven限固定S3帝國首次戰術實行：兩席索敵均完成，無發現報告，
+第三階段前後五張完整資料表未變，seed AFCFD1BC保持。
+SHIP+16只有bit0是Seen；bit1為移動旗標，不能以整byte代替情報比較。
+remake正常bootstrap的352筆Seen／Detail／Hold符合原版，五表自身增量亦零，完整保存及重讀已驗。
+兩圖色號及有效RGB均零差，但完整狀態仍nearby-state：上游位置、seed及raw指標有差。
+[研究399](../re/399-normal-spotting.md)、[對拍051](../playtest/051-normal-spotting.md)與
+[固定收據](data/normal-spotting.json)保留所有差異；087仍READY，不宣稱八步完成。
+
 ## 第37輪分隊繪製次序
 
 35D1:02AB先比較顯示物件+3的unsigned byte，較小先畫；相同時按+4的unsigned word由大到小，proven。

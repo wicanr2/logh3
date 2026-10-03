@@ -2,6 +2,15 @@
 
 Status: READY
 
+## 第61輪正常無報告分支
+
+[研究399](../re/399-normal-spotting.md)、[對拍051](../playtest/051-normal-spotting.md)及
+[固定收據](../internals/data/normal-spotting.json)補正常S3首次實行的限定資料鏈。
+352筆Seen／Detail／Hold在兩邊界與原版相同，兩側各自的五表增量零；
+無報告且只續接一次，完整SHIP／FLEET正式存讀與正常雙跑通過，18產品套件通過。
+兩張完整色號及有效RGB零差，但上游位置、seed與raw指標不相同；整組仍nearby-state。
+完整087保持READY；正常發現報告與完整同態配對仍待驗，不由無報告分支升格。
+
 ## 第44輪正常入口閘門
 
 正常原版與正式bootstrap入口尚不可比：S3首次實行後參戰7對3艦隊，回合380對381，

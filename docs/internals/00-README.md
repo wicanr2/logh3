@@ -1,5 +1,14 @@
 # 原版內部構造參考
 
+第61輪沿#79：[正常首次索敵計畫](../goal/2026-10-03-normal-spotting-round-61.md)與
+[正常原版索敵邊界重播](../../tools/normal_spotting_oracle.sh)。
+保持完整資料與畫面差異，不以無報告或局部情報一致升格完整087。
+[正常bootstrap驗證](../../internal/game/normalspotting_player_test.go)與
+[只讀續接觀測](../../internal/game/normalspotting_test.go)補情報與完整保存路徑。
+[正常索敵收據凍結器](../../tools/scripts/normal_spotting_receipt.py)核雙跑、完整差異、標準回歸及來源身份。
+[研究399](../re/399-normal-spotting.md)、[對拍051](../playtest/051-normal-spotting.md)與
+[正常索敵固定收據](data/normal-spotting.json)保存限定情報、無報告續接及未同態的完整差異。
+
 第60輪沿#59：[可見艦隊數工作快照](../goal/2026-10-03-region-visible-fleets-round-60.md)。
 追查四格導出資料的寫入與正式玩家入口，完成聲明依當輪證據。
 [原版可見艦隊數重播](../../tools/region_visible_fleets_oracle.sh)固定正常回合與明示索敵邊界；

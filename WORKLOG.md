@@ -2,6 +2,26 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-03 #79正常首次索敵限定資料鏈
+
+第61輪父提交eb6814a，dosgolem f7523f9／clean。開工89張Issue／9張OPEN、269條核對零失效。
+路由命中原版GUI還原，沿用087 READY與已批准061，不重新詢問音樂或清單速度。
+
+- 原版正常S3首次實行的索敵入口、標籤、第二席及第四階段前各完整RAM／圖，a／b各16份相同。
+- 正式bootstrap／主選單／138／S3帝國／首戰實行，a／b各24檔相同；352筆Seen／Detail／Hold符合原版。
+- 兩側各自的索敵階段五表零變動，無報告且只續接一次，完整SHIP／FLEET正式存讀相同。
+- 標籤與結束兩圖各307200色號及有效RGB零差，差分／並排已目視；整組保持nearby-state。
+- Slot raw WORK32／FLEET147／SHIP699差異全存JSON，STELLAR／PLANET零差。raw WORK未經正式保存導出。
+- 索敵前原版AFCFD1BC、remake12345678；最早消費者未知。本輪不修改正式規則，不放寬同態門檻。
+- 初跑+16 bit1誤當Seen、清單計數、色盤DAC／RGB單位及入口seed假設屬驗證腳本錯誤，失敗log留workplace。
+- 兩次新限定測試PASS零SKIP；18標準產品套件通過。固定JSON SHA-256為4f15269fcedd71292a16a68c5bb6ec76c4303f4b0edc8d1b768a2d82909209a4。
+- #79更新限定證據並保持OPEN，087 READY／088 DRAFT。其餘原版收據、151受控幀及#89一像素裁決不變。
+- 產物UID/GID1000:1000，原版素材留本機；一次性Docker容器清理，未重建映像檔。提交／推送身份由Git紀錄回查。
+
+入口：[第61輪](docs/goal/2026-10-03-normal-spotting-round-61.md)、[研究399](docs/re/399-normal-spotting.md)、
+[對拍051](docs/playtest/051-normal-spotting.md)。seed保留限制，不追整段精確骰序；接第④步艦隊戰鬥觸發／演出。
+正常發現報告與完整同態門檻仍保留，完整Goal未完成。
+
 ## 2026-10-03 #59可見艦隊數更新與無戰鬥清理
 
 父提交22af102，原版f7523f9／clean。開工89張Issue／10張OPEN、269條核對零失效。
