@@ -22,8 +22,9 @@ import (
 // 左／右鍵排進佇列，到停頓時才讀、讀到就提早收場。動畫效果關掉時四次畫圖都跳過、
 // 直接到「擊毀」與停頓。
 //
-// 量表（`321F:0D11`／`0DF7`）與戰場方塊動畫沒畫（`321F:008A`／`0897`），事先列在版面的
-// `known_diff`；艦隊對艦隊、要塞砲、登陸艦攻擊（`20B4:0681`）那幾種的圖沒接。
+// 既有防衛標題分支的量表已依規格094接入；戰場方塊動畫沒畫（`321F:008A`／`0897`）。
+// 舊演出收據仍排除量表與方塊，新的量表測試獨立逐像素核對。
+// 艦隊對艦隊、要塞砲、登陸艦攻擊（`20B4:0681`）那幾種的圖沒接。
 
 // engagement 是一場演出要印的數。
 type engagement struct {
@@ -38,6 +39,7 @@ type engagement struct {
 	planetSide, fleetSide int
 	planetKind            byte
 	fleetName             [2]byte
+	gauges                *rules.PlanetDefenceGauges
 }
 
 // queueEngagements 把這一回合打行星的結果排成演出（一顆行星一場：原版
@@ -69,6 +71,10 @@ func (g *Game) queueEngagements(hits []rules.PlanetAssaultHit) bool {
 			e.label = screen.EngagementLanding
 		default:
 			e.label = screen.EngagementDefence
+		}
+		if e.label == screen.EngagementDefence && h.DefenceGauges != nil {
+			copy := *h.DefenceGauges
+			e.gauges = &copy
 		}
 		g.engQueue = append(g.engQueue, e)
 	}
@@ -267,6 +273,15 @@ func (g *Game) engagementView() *screen.EngagementView {
 	if _, result := g.engagementTimeline(e); g.engTick >= result {
 		v.ShowResult = true
 		v.Ships = e.ships - e.destroyed
+	}
+	if e.gauges != nil {
+		v.Gauges = &screen.EngagementGaugePair{
+			FleetFaction: e.fleetSide, Defence: e.defence,
+			Integrity: e.gauges.BeforeIntegrity, Attack: e.gauges.BeforeAttack,
+		}
+		if v.ShowResult {
+			v.Gauges.Integrity, v.Gauges.Attack = e.gauges.AfterIntegrity, e.gauges.AfterAttack
+		}
 	}
 	// 艦隊那格：自軍或索敵等級 3 的才印編號與提督（`ds:4801` 那句「第？艦隊
 	// ？？？？？？？？？」是給看不清的），門檻照右下角敵艦隊分頁的規則

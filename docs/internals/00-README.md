@@ -1,5 +1,13 @@
 # 原版內部構造參考
 
+第68輪沿#48／#79：[交戰量表接線計畫](../goal/2026-10-04-engagement-gauges-round-68.md)與
+[量表IDA匯出](../../tools/scripts/engagement_gauges_ida.py)，閉合共用量表後接正式演出。
+[094子規格](../spec/094-engagement-gauges.md)、[研究405](../re/405-engagement-gauges.md)與
+[驗證057](../playtest/057-engagement-gauges.md)保存範圍、原版證據及正式renderer抽樣。
+[原版入口](../../tools/engagement_gauges_oracle.sh)沿用專用dosgolem；
+[原版探針](../../tools/scripts/engagement_gauges_native.go)、
+[凍結器](../../tools/scripts/engagement_gauges_receipt.py)與[結構化收據](data/engagement-gauges.json)
+保留兩側量表32案的原始像素。量表事實回填[37](37-ani-pnl-a98.md)。
 第67輪沿#79／#48：[正式交戰核心計畫](../goal/2026-10-04-fleet-combat-core-round-67.md)與
 [093子規格](../spec/093-fleet-combat-core.md)。單擊與排序先READY再實作；
 [純核心收據](data/fleet-combat-core.json)及[凍結器](../../tools/scripts/fleet_combat_core_receipt.py)

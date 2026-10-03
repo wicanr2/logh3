@@ -1,6 +1,7 @@
 package game
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -219,5 +220,74 @@ func TestEngagementAnimationOffMatchesOracle(t *testing.T) {
 	g.engagementTick(40)
 	if g.state != StateBattle {
 		t.Fatalf("tick 90 之後在 %v，原版停頓滿 90 tick 收場", g.state)
+	}
+}
+
+// 094接線診斷：從typed Hit進正式佇列及renderer；不宣稱正常玩家路徑。
+func TestEngagementGaugesQueuedAndDrawn(t *testing.T) {
+	for _, faction := range []int{0, 1} {
+		g := reachDashiliBattle(t)
+		fleet := -1
+		for _, f := range g.battleFleets {
+			if f.Faction == faction {
+				fleet = f.Index
+				break
+			}
+		}
+		if fleet < 0 {
+			t.Fatal("缺艦隊")
+		}
+		g.battlePlanets[0].Defence = 1000
+		snap := rules.PlanetDefenceGauges{BeforeIntegrity: 50, AfterIntegrity: 15, BeforeAttack: 1000, AfterAttack: 250}
+		if !g.queueEngagements([]rules.PlanetAssaultHit{{Fleet: fleet, Planet: 0, Counter: 50, DefenceGauges: &snap}}) {
+			t.Fatal("未排演出")
+		}
+		// 佇列擁有獨立快照，之後規則報告的變更不能污染當前演出。
+		snap.BeforeIntegrity = 1
+		for _, after := range []bool{false, true} {
+			if after {
+				_, g.engTick = g.engagementTimeline(g.engQueue[0])
+			}
+			v := g.engagementView()
+			wantIntegrity, wantAttack := 50, 1000
+			if after {
+				wantIntegrity, wantAttack = 15, 250
+			}
+			if v.Gauges == nil || v.Gauges.Integrity != wantIntegrity || v.Gauges.Attack != wantAttack || v.Gauges.FleetFaction != faction {
+				t.Fatalf("快照錯誤 %+v", v.Gauges)
+			}
+			fb := g.drawEngagement()
+			fg := screen.EngagementGauge{FleetFaction: faction, Value: wantIntegrity}
+			r, _ := fg.Rect()
+			h, _ := fg.Height()
+			fill := uint8(14)
+			if faction == 1 {
+				fill = 12
+			}
+			if fb.At(r.X+1, r.Y+r.H-h) != fill || fb.At(r.X+1, r.Y+r.H-h-1) != 0 {
+				t.Fatal("正式renderer未畫當前完整度")
+			}
+			pg := screen.EngagementGauge{Planet: true, FleetFaction: faction, Value: 1000, Divisor: wantAttack}
+			pr, _ := pg.Rect()
+			ph, _ := pg.Height()
+			pfill := uint8(12)
+			if faction == 1 {
+				pfill = 14
+			}
+			if fb.At(pr.X+1, pr.Y+pr.H-ph) != pfill {
+				t.Fatal("正式renderer未畫行星量表")
+			}
+			if out := os.Getenv("LOGH3_GAUGE_GAME_OUTPUT"); out != "" {
+				name := fmt.Sprintf("faction%d-after%t.png", faction, after)
+				if err := fb.WritePNG(filepath.Join(out, name), g.Palette()); err != nil {
+					t.Fatal(err)
+				}
+			}
+		}
+		g.engTick = 0
+		g.display.Anim = 0
+		if v := g.engagementView(); !v.ShowResult || v.Gauges.Integrity != 15 || v.Gauges.Attack != 250 {
+			t.Fatal("動畫關閉未立即切到反擊後量表")
+		}
 	}
 }

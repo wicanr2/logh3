@@ -112,6 +112,7 @@ type EngagementView struct {
 	Label      EngagementLabel
 	Destroyed  int // 「擊毀」的數；ShowResult 才印
 	ShowResult bool
+	Gauges     *EngagementGaugePair // 094；未閉合的演出分支不提供
 }
 
 func fmtBytes(h string) []byte {
@@ -182,4 +183,7 @@ func (s *EngagementSpec) Draw(fb *gfx.Framebuffer, fnt *font.Font, tiles *ui.Fra
 	ui.DrawTextBuffer(fb, fnt, tiles, p, s.Windows.Planet.X, s.Windows.Planet.Y)
 	ui.DrawTextBuffer(fb, fnt, tiles, m, s.Windows.Middle.X, s.Windows.Middle.Y)
 	ui.DrawTextBuffer(fb, fnt, tiles, fl, s.Windows.Fleet.X, s.Windows.Fleet.Y)
+	if v.Gauges != nil {
+		v.Gauges.Draw(fb)
+	}
 }

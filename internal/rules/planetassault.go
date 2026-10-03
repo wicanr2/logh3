@@ -23,13 +23,21 @@ func Direction8(a int) int { return (((a & 0xFF) >> 4) + 1) >> 1 & 7 }
 
 // PlanetAssaultHit 是一支艦隊對一顆行星的一輪。
 type PlanetAssaultHit struct {
-	Fleet    int  `json:"fleet"`    // 艦隊表索引
-	Planet   int  `json:"planet"`   // planets 的索引
-	Damage   int  `json:"damage"`   // 打掉的防衛力
-	Counter  int  `json:"counter"`  // 挨的反擊，總艘數
-	Captured bool `json:"captured"` // 這一下把行星打下來了
-	Scorer   int  `json:"scorer"`   // 分數記給誰
-	Score    int  `json:"score"`    // 加了多少分
+	Fleet         int                  `json:"fleet"`    // 艦隊表索引
+	Planet        int                  `json:"planet"`   // planets 的索引
+	Damage        int                  `json:"damage"`   // 打掉的防衛力
+	Counter       int                  `json:"counter"`  // 挨的反擊，總艘數
+	Captured      bool                 `json:"captured"` // 這一下把行星打下來了
+	Scorer        int                  `json:"scorer"`   // 分數記給誰
+	Score         int                  `json:"score"`    // 加了多少分
+	DefenceGauges *PlanetDefenceGauges `json:"defence_gauges,omitempty"`
+}
+
+// PlanetDefenceGauges 保存防衛演出的反擊前後值（規格094）。
+// 瞬時演出資料不寫入存檔；合併登陸／反擊的Hit尚不能表達中間幀。
+type PlanetDefenceGauges struct {
+	BeforeIntegrity, AfterIntegrity int
+	BeforeAttack, AfterAttack       int
 }
 
 // PlanetAssaultTargets 回每一支艦隊這一回合鎖上的行星（−1 ＝ 沒有）與
@@ -135,6 +143,17 @@ func assaultOne(p *BattlePlanet, pi int, f *BattleFleet, bits int,
 		return h, false // 已經是自己的了（前面有人打下來）
 	}
 	// 門檻 ＝ 防衛力還剩幾成。不低於它就先開火，低於就先挨反擊。
+	counter := func() int {
+		beforeIntegrity, beforeAttack := f.Integrity, FleetAttack(f, units)
+		amount := assaultCounter(p, f, bits, units, kinds, r)
+		if bits&2 != 0 {
+			h.DefenceGauges = &PlanetDefenceGauges{
+				BeforeIntegrity: beforeIntegrity, AfterIntegrity: FleetIntegrity(f, units),
+				BeforeAttack: beforeAttack, AfterAttack: FleetAttack(f, units),
+			}
+		}
+		return amount
+	}
 	thr := 0
 	if p.DefenceMax > 0 {
 		thr = p.Defence * 100 / p.DefenceMax
@@ -142,10 +161,10 @@ func assaultOne(p *BattlePlanet, pi int, f *BattleFleet, bits int,
 	if f.Integrity >= thr {
 		h.Damage, h.Captured = assaultFire(p, f, bits, units, r)
 		if !h.Captured {
-			h.Counter = assaultCounter(p, f, bits, units, kinds, r)
+			h.Counter = counter()
 		}
 	} else {
-		h.Counter = assaultCounter(p, f, bits, units, kinds, r)
+		h.Counter = counter()
 		h.Damage, h.Captured = assaultFire(p, f, bits, units, r)
 	}
 	h.Score = h.Damage / ScoreDivisor
@@ -342,8 +361,8 @@ func FleetIntegrity(f *BattleFleet, units []BattleUnit) int {
 }
 
 // RefreshFleetIntegrity 把每一支的 Integrity 重算一次。原版在每次扣完
-// 艘數之後就重算（`1261:*`），這裡在打行星之前走一次就夠——那正是唯一
-// 讀它的地方。
+// 艘數之後就重算（`1261:*`）。正式回合目前在打行星前更新；演出另保存
+// 反擊後完整度快照，供量表使用（規格094），不以艘數比例替代。
 func RefreshFleetIntegrity(fleets []BattleFleet, units []BattleUnit) {
 	for i := range fleets {
 		fleets[i].Integrity = FleetIntegrity(&fleets[i], units)

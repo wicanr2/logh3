@@ -5,12 +5,15 @@
 
 ## 現況一覽
 
-**目前接續（2026-10-04，第六十七輪）**：#79單擊、排序與機動力純核心已實作並直接核原版資料。
-父提交627c73bae07c29b4d3d8662cf31d75147a43110e；093先READY再實作，Game尚未呼叫，092 DRAFT、#79保持OPEN。
-零距離已在核心取曲線首點，記錄為使用者核准的原版差異；dosgolem未改，正式命令／演出／保存待接。
+**目前接續（2026-10-04，第六十八輪）**：#48量表原版證據閉合，既有防衛標題分支已接正式renderer。
+父提交14e9a6a5199e26c5d151bdaf47c72552ef7687d2；094 READY，完整056／092仍DRAFT，#48／#79保持OPEN。
+零距離已在093核心取核准首點；Game尚未呼叫交戰核心。dosgolem未改，其他演出／方塊／正式命令／保存待接。
 
 | 分類 | 目前真相 | 最近驗證／入口 |
 |---|---|---|
+| 交戰量表已實作 | 321F:0D11讀完整度、0DF7以caller攻擊力作分母；單一座標與取整保留word溢位 | 當前dosgolem雙跑32案68檔相同，32×726色號零差；094 READY，資料e1ed3aad |
+| 量表正式接線已抽驗 | 規則保存反擊前後完整度／攻擊力，Game防衛標題分支在結果tick切換；動畫關閉立即用後值 | 雙側Game診斷及既有演出回歸通過，18套件13PASS／5無測試，驗證057 |
+| 演出剩餘限制 | 登陸／占領合併Hit無分段資料，下方方塊缺；正常同狀態與色盤未驗 | Game固定主選單色盤與原版base不同，局部原版色盤圖不證正式RGB；056／092 DRAFT |
 | 第④步原版入口已驗 | 有效提督才清編制一般分隊+2E；S3共48個一般分隊及7個獨立偵察池，偵察池不動 | 16個固定入口案例及command雙跑，行動低四位／士氣bit0已核；89組檔案相同，空命令無演出／損失／RND |
 | 第④步排序限制 | 陣營比較可重排；同陣營編號比較返回不對稱，17、16仍保持反向 | 原始0135／0139／013B bytes與動態呼叫順序已核，其他排列未知；未套一般遞增排序 |
 | 原版目標／武器提交已驗 | 目標102；光線砲0／飛彈1提交，灰色戰鬥機與右鍵FF不提交，防禦3 | 提交前seed12345678、庫存與艘數不變；虛擬400與PNG480縱座標差40已核 |
@@ -587,7 +590,7 @@ SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
   `audio.TuneFor(StateEngagement)` ＝ 戰鬥曲。`COMANI.BMG` 解出來了（`docs/re/328`，目錄位移從 +2 算、
   覆寫／XOR 兩種格），圖的序列與計時也接上了（`docs/re/331`）：演出照計時器 tick 走（每格 8／4／0 tick、
   擊毀之後停頓訊息速度），段名由行星與提督推（`ds:8E34`），播放中按鍵排隊、停頓時才讀。六批 `eng-*` 與
-  `eng-skip-mid` 扣掉量表與戰場兩塊逐位元組（直接進入的診斷比對）。量表、戰場方塊、音效沒做；
+  `eng-skip-mid` 扣掉量表與戰場兩塊逐位元組（歷史直接進入診斷）。094已接防衛標題分支量表，戰場方塊、音效沒做；
   登陸艦攻擊、艦隊對艦隊與要塞砲那幾種演出的圖沒接。**右下角
   「敵艦隊」分頁有列的時候（#49，`docs/re/325`）**：索敵等級進了戰略層（`rules.FleetGroup.Detail`
   讀艦艇 `+0x17`、戰後寫回），等級 3 的列印第Ｎ艦隊／提督／士氣、其餘「第？艦隊」＋
@@ -611,7 +614,7 @@ SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
   **戰略地圖逐格照記錄著色**（有自軍艦隊的星域用另一張色表，`docs/re/313`）。
 - **玩家還碰不到的功能**（2026-09-15 讀 `internal/game/game.go` 的 `click` 盤點、2026-09-17 對照
   第五輪之後全部登記成 issue；清單的權威是 issue，這裡只是索引）：
-  - 整套不存在：參謀任命（`090A:0248`，#62）、交戰演出的量表與戰場方塊與另外三種演出（#48）。
+  - 整套不存在：參謀任命（`090A:0248`，#62）、交戰演出的戰場方塊與另外三種演出（#48，防衛標題量表已接）。
   - 開得起來但只能右鍵關：設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與
     `BUG!`（#66）；情報與徵稅那兩顆「參謀」是參謀任命的入口（#62）。
   - 輸入：▲▼ 按住連捲（#60）。
@@ -651,6 +654,11 @@ SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
 - 一次完整跑到主選單約 9 秒（6000 萬道指令），回饋迴圈很快。
 
 ## 已被推翻的斷言
+
+2026-10-04第68輪勘誤：#48量表不再是座標strong inference或全面未實作。
+目前dosgolem雙跑32案證實完整度及caller攻擊力分母、座標與色號，094已接防衛標題分支。
+舊較大排除區與歷史演出收據保留；其他分支、下方方塊、正常同狀態與色盤仍未完成。
+來源：[405](docs/re/405-engagement-gauges.md)、[057](docs/playtest/057-engagement-gauges.md)。
 
 | 斷言 | 出處 | 推翻依據 |
 |---|---|---|
@@ -1296,13 +1304,16 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 **戰鬥曲唯一的出口**（開場 `play_music(1)`、收場換回）。讀出來並接上的（`docs/re/324`、
 規格 056）：入口與三種呼叫者、開場常式的三個樣式 0 文字視窗（格 (1,6)／(17,6)／(24,6)，
 底圖 `ANI_PNL1.A98`）、格式字串（`ds:4801`–`48C1`、陣營名 `ds:60F4`）、時間線（S3 第五回合
-#1140.09M–#1169.07M）、按鍵只跳動畫不縮短、動畫效果關掉照開只是短九百萬步；remake
+#1140.09M–#1169.07M）、播放中按鍵排隊，結果停頓才讀並可縮短；動畫效果關掉跳過圖視窗，結果停頓保持；remake
 `StateEngagement`（打行星那一種：開場幀 → 結果幀 → 回戰場）、`audio.TuneFor(StateEngagement)`
 ＝ 戰鬥曲。`eng-open`／`eng-end` 扣掉四塊排除區逐位元組相同（直接進入的診斷比對）。
 
+2026-10-04第68輪：321F:0D11讀FLEET+3C完整度，0DF7以caller攻擊力作分母。當前dosgolem f7523f9兩跑32案68檔相同，23,232色號像素零差；094 READY後接反擊前後快照、正式雙側renderer及動畫關閉。凍結JSON SHA-256 e1ed3aad4d7577f82df4449c097cee0461144ef0f5e555b669fac5c9a2914d86，18套件13PASS／5無測試。Game固定主選單色盤與原版不同，局部同色盤圖不證正式RGB；其他演出／方塊／正常同狀態仍缺，保持OPEN。
+
 **卡在**：- **打行星（行星防衛攻擊）那一種的圖已接**：`COMANI.BMG` 解碼（`docs/re/328`）、`3958:0041` 的記錄與段名、
   計時器 tick、按鍵排隊（`docs/re/331`）；六批 `eng-*` 與 `eng-skip-mid` 扣掉量表與戰場逐位元組。
-- 兩條量表（`321F:0D11`／`0DF7`，算式已讀、座標 strong inference）與戰場方塊（`321F:008A`／`0897`／`06FC`，沒讀）沒畫。
+- 兩條量表已依094 READY接既有防衛標題分支。32例原版雙跑與色號逐像素核對通過；其他標題缺分段資料，正常同狀態及色盤仍未驗。
+- 戰場方塊（`321F:008A`／`0897`／`06FC`）尚未接。
 - 登陸艦攻擊（`20B4:0681`）、艦隊對艦隊（`1DD6:05D7`）、要塞砲（`2264`）三種的圖序列只讀了程式碼，沒有收據、沒接。
 - 停頓起點差一個 tick（原版方塊畫完才開始停頓）；動畫效果關掉時原版在 tick 8 才開始停頓；音效 `3B74:031A` 沒讀。
 - 演出中點過滑鼠的那一趟，回戰場之後的畫面（`317d97d8…`）與沒點的（`1e9a68f0…`）不同，原因沒查（佇列裡剩下的放開事件，`docs/re/331` §三）。
@@ -1312,7 +1323,7 @@ remake 與原版逐欄相同或差異列入規格 058 並說明。
 收據；remake 在同一時點播同一段、換同一首，`Settings.BattleTune` 有出口；
 `TestEveryTuneIsReachable` 覆蓋到 `BGM_6`／`BGM_7`。
 
-**證據**：[`docs/re/324-engagement-scene.md`](docs/re/324-engagement-scene.md)、[`docs/spec/056-engagement-scene.md`](docs/spec/056-engagement-scene.md)、[`docs/playtest/022-engagement-scene.md`](docs/playtest/022-engagement-scene.md)、[`docs/internals/20-comani-bmg.md`](docs/internals/20-comani-bmg.md)、[`docs/re/328-comani-bmg-codec.md`](docs/re/328-comani-bmg-codec.md)、[`docs/re/331-engagement-picture-sequence.md`](docs/re/331-engagement-picture-sequence.md)
+**證據**：[`docs/spec/094-engagement-gauges.md`](docs/spec/094-engagement-gauges.md)、[`docs/re/405-engagement-gauges.md`](docs/re/405-engagement-gauges.md)、[`docs/playtest/057-engagement-gauges.md`](docs/playtest/057-engagement-gauges.md)、[`docs/internals/data/engagement-gauges.json`](docs/internals/data/engagement-gauges.json)、[`docs/re/324-engagement-scene.md`](docs/re/324-engagement-scene.md)、[`docs/spec/056-engagement-scene.md`](docs/spec/056-engagement-scene.md)、[`docs/playtest/022-engagement-scene.md`](docs/playtest/022-engagement-scene.md)、[`docs/internals/20-comani-bmg.md`](docs/internals/20-comani-bmg.md)、[`docs/re/328-comani-bmg-codec.md`](docs/re/328-comani-bmg-codec.md)、[`docs/re/331-engagement-picture-sequence.md`](docs/re/331-engagement-picture-sequence.md)
 
 **核實**：`internal/game/engagement.go` 裡還找得到 `方塊動畫沒畫`（自承還在 ＝ 還沒做）
 
