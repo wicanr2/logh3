@@ -1,0 +1,1666 @@
+{
+  "schema": "logh3.fleet-combat-core.v1",
+  "date": "2026-10-04",
+  "remake_parent": "627c73bae07c29b4d3d8662cf31d75147a43110e",
+  "remake_worktree_dirty": true,
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_dirty": false,
+  "status": "093 READY; pure core implemented and verified; 092 DRAFT",
+  "images": [
+    "[golang:1.24-bookworm] sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+    "[logh3-ebiten:2] sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+    "[python:3.12-slim] sha256:229a2c5bfa27522db7815ea81f9bed70af17ccb9de9fc7ad142b1877b5830d36"
+  ],
+  "coverage": {
+    "damage_cases": 31,
+    "near_types": 11,
+    "legal_fighter": 1,
+    "multi_sequences": 2,
+    "approved_zero_distance_cases": 12,
+    "core_test_groups": [
+      "TestFleetCombatDamageMatchesOracle",
+      "TestFleetCombatCurvesAndApprovedZeroDistance",
+      "TestFleetCombatLegalFighterMatchesOracle",
+      "TestFleetCombatSequenceMatchesOracle",
+      "TestFleetCombatTablesMatchOriginal",
+      "TestFleetCombatInvalidInputDoesNotMutate"
+    ],
+    "product_passed": [
+      "github.com/wicanr2/logh3/cmd/gin3",
+      "github.com/wicanr2/logh3/cmd/music-import",
+      "github.com/wicanr2/logh3/cmd/music-tool",
+      "github.com/wicanr2/logh3/cmd/worklist",
+      "github.com/wicanr2/logh3/internal/ai",
+      "github.com/wicanr2/logh3/internal/asset",
+      "github.com/wicanr2/logh3/internal/audio",
+      "github.com/wicanr2/logh3/internal/bootstrap",
+      "github.com/wicanr2/logh3/internal/font",
+      "github.com/wicanr2/logh3/internal/game",
+      "github.com/wicanr2/logh3/internal/rules",
+      "github.com/wicanr2/logh3/internal/screen",
+      "github.com/wicanr2/logh3/internal/ui"
+    ],
+    "product_no_tests": [
+      "github.com/wicanr2/logh3/cmd/logh3",
+      "github.com/wicanr2/logh3/cmd/mapcolours",
+      "github.com/wicanr2/logh3/cmd/oradiff",
+      "github.com/wicanr2/logh3/cmd/play",
+      "github.com/wicanr2/logh3/internal/gfx"
+    ]
+  },
+  "weapon_profiles": [
+    {
+      "type": 0,
+      "power": 180,
+      "major": 100,
+      "minor": 40,
+      "curve": [
+        [
+          0,
+          10
+        ],
+        [
+          16384,
+          30
+        ],
+        [
+          32768,
+          60
+        ],
+        [
+          49152,
+          100
+        ],
+        [
+          65536,
+          90
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 1,
+      "power": 140,
+      "major": 100,
+      "minor": 40,
+      "curve": [
+        [
+          0,
+          20
+        ],
+        [
+          16384,
+          40
+        ],
+        [
+          32768,
+          60
+        ],
+        [
+          49152,
+          100
+        ],
+        [
+          65536,
+          90
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 2,
+      "power": 70,
+      "major": 80,
+      "minor": 36,
+      "curve": [
+        [
+          0,
+          25
+        ],
+        [
+          16384,
+          50
+        ],
+        [
+          32768,
+          75
+        ],
+        [
+          49152,
+          100
+        ],
+        [
+          65536,
+          100
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 3,
+      "power": 45,
+      "major": 90,
+      "minor": 28,
+      "curve": [
+        [
+          0,
+          60
+        ],
+        [
+          16384,
+          80
+        ],
+        [
+          32768,
+          95
+        ],
+        [
+          49152,
+          100
+        ],
+        [
+          65536,
+          105
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 4,
+      "power": 20,
+      "major": 60,
+      "minor": 20,
+      "curve": [
+        [
+          0,
+          40
+        ],
+        [
+          16384,
+          80
+        ],
+        [
+          32768,
+          100
+        ],
+        [
+          49152,
+          80
+        ],
+        [
+          65536,
+          40
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 5,
+      "power": 300,
+      "major": 80,
+      "minor": 60,
+      "curve": [
+        [
+          0,
+          30
+        ],
+        [
+          16384,
+          60
+        ],
+        [
+          32768,
+          80
+        ],
+        [
+          49152,
+          100
+        ],
+        [
+          65536,
+          90
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 6,
+      "power": 280,
+      "major": 120,
+      "minor": 55,
+      "curve": [
+        [
+          0,
+          30
+        ],
+        [
+          16384,
+          60
+        ],
+        [
+          32768,
+          90
+        ],
+        [
+          49152,
+          110
+        ],
+        [
+          65536,
+          100
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 7,
+      "power": 50,
+      "major": 70,
+      "minor": 64,
+      "curve": [
+        [
+          0,
+          40
+        ],
+        [
+          16384,
+          80
+        ],
+        [
+          32768,
+          100
+        ],
+        [
+          49152,
+          100
+        ],
+        [
+          65536,
+          95
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 8,
+      "power": 220,
+      "major": 66,
+      "minor": 55,
+      "curve": [
+        [
+          0,
+          30
+        ],
+        [
+          16384,
+          50
+        ],
+        [
+          32768,
+          90
+        ],
+        [
+          49152,
+          100
+        ],
+        [
+          65536,
+          100
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 9,
+      "power": 160,
+      "major": 80,
+      "minor": 74,
+      "curve": [
+        [
+          0,
+          40
+        ],
+        [
+          16384,
+          60
+        ],
+        [
+          32768,
+          100
+        ],
+        [
+          49152,
+          100
+        ],
+        [
+          65536,
+          95
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 10,
+      "power": 45,
+      "major": 60,
+      "minor": 60,
+      "curve": [
+        [
+          0,
+          100
+        ],
+        [
+          16384,
+          100
+        ],
+        [
+          32768,
+          100
+        ],
+        [
+          49152,
+          90
+        ],
+        [
+          65536,
+          80
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    },
+    {
+      "type": 11,
+      "power": 60,
+      "major": 60,
+      "minor": 60,
+      "curve": [
+        [
+          0,
+          100
+        ],
+        [
+          16384,
+          100
+        ],
+        [
+          32768,
+          100
+        ],
+        [
+          49152,
+          90
+        ],
+        [
+          65536,
+          80
+        ],
+        [
+          2147483647,
+          0
+        ]
+      ]
+    }
+  ],
+  "order_bases": [
+    50,
+    36,
+    23,
+    10,
+    12
+  ],
+  "mobility_coefficients": [
+    0,
+    0,
+    7,
+    14,
+    21,
+    28,
+    35,
+    42,
+    49,
+    56,
+    63
+  ],
+  "sources": {
+    "docs/internals/data/fleet-combat-damage.json": {
+      "sha256": "360277c8dcbf6214da429baead75d4a7bf20b09b03f1ca2af3c0313df4171b30",
+      "bytes": 2982143
+    },
+    "docs/internals/data/weapon-candidates.json": {
+      "sha256": "59a5ad2bd68a54c888179be3d85a6b99c15f16a1892b7d2b05c4de0667ad601f",
+      "bytes": 3065486
+    },
+    "docs/internals/data/combat-sequence.json": {
+      "sha256": "199f328b4463d49a817e54c2ade49dd148a24d45e94e94d135488d699c3205a8",
+      "bytes": 1175457
+    },
+    "org_game/extracted/GIN3.COM": {
+      "sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "bytes": 622
+    },
+    "workplace/oracle/damage79-r64-angle-back-a/input-mem.bin": {
+      "sha256": "acd84ab2b078fcab833650d6ceff3588a4f140371912c139626757e5e60a2a2c",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-angle-back-a/end-mem.bin": {
+      "sha256": "1578045cebe427530c8cb48f4e170d6331edd4129106b4697490496b9e6baa18",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-angle-back-a/report.txt": {
+      "sha256": "cacdf5432c2cf03ac6edda2c925ba6e045b0c5114f03837c24c20cb33c0defcb",
+      "bytes": 29530
+    },
+    "workplace/oracle/damage79-r64-angle-back-a/flags.txt": {
+      "sha256": "66d50b7e2110a9aa3e391f65e137252f001d0d3a162e5eca7668ddb6ed0422c2",
+      "bytes": 696
+    },
+    "workplace/oracle/damage79-r64-angle-back-a/meta.txt": {
+      "sha256": "3ef73d465d76aceec308200d90c8ebeb382744e4e4c74067634ba467f72a1316",
+      "bytes": 1104
+    },
+    "workplace/damage79-r64-angle-back-a-plan.json": {
+      "sha256": "2204da3cc4a4753694d629a328ba608a950e3ad673792d2aea496bb2bf70fd76",
+      "bytes": 869
+    },
+    "workplace/oracle/damage79-r64-angle-front-a/input-mem.bin": {
+      "sha256": "95c4918ff037b187419ad1ba78ae1442a6bbe14b5fe633eb653567778e111371",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-angle-front-a/end-mem.bin": {
+      "sha256": "f5f9be83b9a517268f78c82b21fcd399efbe02a66679294e0e812069717711a9",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-angle-front-a/report.txt": {
+      "sha256": "1bf5b9b462406c25493c0b9e1a68b71d89476e48d7ddcc624326fcba707e776b",
+      "bytes": 29536
+    },
+    "workplace/oracle/damage79-r64-angle-front-a/flags.txt": {
+      "sha256": "053d682ae517278422c3db229933a67690b5beba6fa0d4340d602b7e97f4d512",
+      "bytes": 699
+    },
+    "workplace/oracle/damage79-r64-angle-front-a/meta.txt": {
+      "sha256": "6f538c7b1209b839e9b5d177999299f5d03f2d533a349601e1cf5194ec6bfe67",
+      "bytes": 1108
+    },
+    "workplace/damage79-r64-angle-front-a-plan.json": {
+      "sha256": "ec6427e5b071a8c6ec83c45b96ec9bf7437a0ec45f126acedd8ced6ee098fb62",
+      "bytes": 873
+    },
+    "workplace/oracle/damage79-r64-curve-down-a/input-mem.bin": {
+      "sha256": "58c74d5694e200e823500e2424f1209c7229e158ef4158bfc9e0c8356e6db284",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-curve-down-a/end-mem.bin": {
+      "sha256": "3726ceb3094d0772a7a69d59993d1e7824b3ad90a79ee63dceff2fd77fa72342",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-curve-down-a/report.txt": {
+      "sha256": "4d1f2aeb4bae7abd34f8f5a89672bd401481852f0db3858fa77484094e7eeced",
+      "bytes": 29530
+    },
+    "workplace/oracle/damage79-r64-curve-down-a/flags.txt": {
+      "sha256": "46190308e41353bd781a65de4709d62c5ce4aff0dd443a23dda649e633657b85",
+      "bytes": 699
+    },
+    "workplace/oracle/damage79-r64-curve-down-a/meta.txt": {
+      "sha256": "60988bbc339fa73e5636d20c1af002ff263000d4972eb2c85f1b782b21acbd22",
+      "bytes": 1107
+    },
+    "workplace/damage79-r64-curve-down-a-plan.json": {
+      "sha256": "0a81dae202c1f653bb907e9eb57484727eaa318cfa17a9151e194affc1723955",
+      "bytes": 899
+    },
+    "workplace/oracle/damage79-r64-curve-far-a/input-mem.bin": {
+      "sha256": "cfa71ccd65e2e2a0b1ef225260aa16756643affe9728cc3c06e848d9220cf264",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-curve-far-a/end-mem.bin": {
+      "sha256": "05e3de4cb3e9bbf84782c982490174e7df48b2bcb2f542f89e30a3b80d903ecf",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-curve-far-a/report.txt": {
+      "sha256": "18f8bfb73fd3451574574d42558d59c05a06649c00672ada285392bc8027156a",
+      "bytes": 29524
+    },
+    "workplace/oracle/damage79-r64-curve-far-a/flags.txt": {
+      "sha256": "5ed869d8044119d23bf10d1197f62db489895ffc3b162ddfdf7966288a6e3476",
+      "bytes": 696
+    },
+    "workplace/oracle/damage79-r64-curve-far-a/meta.txt": {
+      "sha256": "77d6e978b1c650c3bf02f03c1b565c0c72031fe56054c7b1c2074b3368c3e24f",
+      "bytes": 1103
+    },
+    "workplace/damage79-r64-curve-far-a-plan.json": {
+      "sha256": "a1c27bb4f3b7ab9fb8523419a204b38d2b1346e27585fdd34265dbaf5d4854d6",
+      "bytes": 882
+    },
+    "workplace/oracle/damage79-r64-curve-near-a/input-mem.bin": {
+      "sha256": "712146318346172bd1ed9dbffe9a126a0390bab0fba999a013dcf4f42f00bc88",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-curve-near-a/end-mem.bin": {
+      "sha256": "c21a8473180fbb72d307800c74b294cc03989e43ac04f35699ec4d4295ee6eaa",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-curve-near-a/report.txt": {
+      "sha256": "81322628509e9891432b1017acd912c97d342b46c2301472523733b710a39f52",
+      "bytes": 29530
+    },
+    "workplace/oracle/damage79-r64-curve-near-a/flags.txt": {
+      "sha256": "513cb4e5a95aefcefd84d0f43f48edb617e5835b8d61ccff61387309a7067cd1",
+      "bytes": 699
+    },
+    "workplace/oracle/damage79-r64-curve-near-a/meta.txt": {
+      "sha256": "faf62dbb8808d4d0a4f4f39e4b9399e89c09caca68686ef5446517d47b54d8cc",
+      "bytes": 1107
+    },
+    "workplace/damage79-r64-curve-near-a-plan.json": {
+      "sha256": "f5e06c930fa0e8f5daf717d619636173f28406774dda271a7d974c2fd05d8643",
+      "bytes": 883
+    },
+    "workplace/oracle/damage79-r64-defence-a/input-mem.bin": {
+      "sha256": "ea5e0810f752b22f7ed1011bdc07b74e7de99de327bde464a7b5942078df988d",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-defence-a/end-mem.bin": {
+      "sha256": "5dbcc5fcf917f347de4d3ecb9c1def53749d44279c5e7d80000fe08162b44122",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-defence-a/report.txt": {
+      "sha256": "6099dbc5dd7d90ded426faef2c10fbed3a2a0ddc9f2eb08c71685329e6348e43",
+      "bytes": 29512
+    },
+    "workplace/oracle/damage79-r64-defence-a/flags.txt": {
+      "sha256": "01d4e5a1df830bddedbc303aafde6abe93f085fd63137147023aeabae039b4c1",
+      "bytes": 687
+    },
+    "workplace/oracle/damage79-r64-defence-a/meta.txt": {
+      "sha256": "3b393bd6590b501103e4a4128098b84bfb3c416475989915f99d1a8b1c5b234c",
+      "bytes": 1092
+    },
+    "workplace/damage79-r64-defence-a-plan.json": {
+      "sha256": "91a1a1dd158a6f3de4ccb884b090a7e5dd5c943633375a78c923629e98fbadc8",
+      "bytes": 872
+    },
+    "workplace/oracle/damage79-r64-fallback-fixed-a/input-mem.bin": {
+      "sha256": "eed268f20e3b17fc4e91322c9ec98360a9633c5f29bbac72c872ddca322ea50c",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-fallback-fixed-a/end-mem.bin": {
+      "sha256": "6c20cd943c0c333d700b442c8fcf05e68c4daf72ef0d87b3732edfd9416fb32e",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-fallback-fixed-a/report.txt": {
+      "sha256": "bb3647b5ab1cf87bc93b6a38ab1890cc014fe6d70c33b92b5d1496ac929c832f",
+      "bytes": 29867
+    },
+    "workplace/oracle/damage79-r64-fallback-fixed-a/flags.txt": {
+      "sha256": "a748018bb9bfffe6241bc70e33ab68c16e99d4caa5da1badc82c3200856ae034",
+      "bytes": 763
+    },
+    "workplace/oracle/damage79-r64-fallback-fixed-a/meta.txt": {
+      "sha256": "767c0cdbca69f5a1875c489bbb97c4116361d7f228228917a09d14e1af690c66",
+      "bytes": 1175
+    },
+    "workplace/damage79-r64-fallback-fixed-a-plan.json": {
+      "sha256": "5fcb0b0cca76e4a1daa20eb1ffec129c6f3e41a004b8fef1b99638a5a56ec155",
+      "bytes": 1182
+    },
+    "workplace/oracle/damage79-r64-fighter-fixed-a/input-mem.bin": {
+      "sha256": "9f7534a650a94f26b6de9a5ca4729d01a61828d043fc2b3e9e09520837c197db",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-fighter-fixed-a/end-mem.bin": {
+      "sha256": "459d06db4d4efd6ca0a89b126ba7e9750b9a1f264c81b6030d729e871c42d58f",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-fighter-fixed-a/report.txt": {
+      "sha256": "3284071f5b50c3a73996d4d8fd198e01a75254252c7df362b901a5184147ae53",
+      "bytes": 29548
+    },
+    "workplace/oracle/damage79-r64-fighter-fixed-a/flags.txt": {
+      "sha256": "69ac36ba7e84011d0c47563eaeb976979c5bd39dc9b81d5e7a0e79b212069d36",
+      "bytes": 705
+    },
+    "workplace/oracle/damage79-r64-fighter-fixed-a/meta.txt": {
+      "sha256": "1cca13754fba62ee84d2b335f0b80781dd6d804a128e34f5e6ddde796ab95d81",
+      "bytes": 1116
+    },
+    "workplace/damage79-r64-fighter-fixed-a-plan.json": {
+      "sha256": "1d006caf465aab1bad6454ae52e79cc4b57b6f3fed48408b95b593f17be33b1e",
+      "bytes": 878
+    },
+    "workplace/oracle/damage79-r64-fighter-kind3-a/input-mem.bin": {
+      "sha256": "39d55943290e96d9bf68a63ed040d2077a04eaf1a6e7f9e0d3b7db8b1a6112a2",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-fighter-kind3-a/end-mem.bin": {
+      "sha256": "247465f6f35044ca4e395e9a842d4b7fe95438cffb18dc1123891637a4895294",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-fighter-kind3-a/report.txt": {
+      "sha256": "b9bc77ab661761637e8f1efa8b46dc13f76b06f22bdaeee72254119420026839",
+      "bytes": 29600
+    },
+    "workplace/oracle/damage79-r64-fighter-kind3-a/flags.txt": {
+      "sha256": "16d78c66eb3013dbc8df5377cac4c916db15c178de070c314f9079e3b6703a4d",
+      "bytes": 728
+    },
+    "workplace/oracle/damage79-r64-fighter-kind3-a/meta.txt": {
+      "sha256": "b5c54dcb6115f44f3ca705ca98946dad1a778086c9fdaaf604f53cf27699ad6b",
+      "bytes": 1139
+    },
+    "workplace/damage79-r64-fighter-kind3-a-plan.json": {
+      "sha256": "ca3074e5f96065a9a65e254df8dc2d1bf0eef47eb3323dea15475410b481ef4f",
+      "bytes": 1003
+    },
+    "workplace/oracle/damage79-r64-fighter-low-a/input-mem.bin": {
+      "sha256": "e8f11a3341b08f04697b23e80449bb6cbce283b8fa99c0b9bd227345023565cd",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-fighter-low-a/end-mem.bin": {
+      "sha256": "3f5183f6ed408e18127fab9618e66993ca4f7c5fe6fb197c1e19902fde5f9861",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-fighter-low-a/report.txt": {
+      "sha256": "ed91540fb244a60b06b51a5d9179e35cb5ac33f088ffb230291fafe53e1b9412",
+      "bytes": 29588
+    },
+    "workplace/oracle/damage79-r64-fighter-low-a/flags.txt": {
+      "sha256": "65781402cb410be4cf4a38f4f12ce5257e74feb6f71ac00b83938479cc54a7bb",
+      "bytes": 731
+    },
+    "workplace/oracle/damage79-r64-fighter-low-a/meta.txt": {
+      "sha256": "81c4117f68fc7ca5f64ed88b8df96f85af7e91a7d69d89c8b909e1161702489b",
+      "bytes": 1140
+    },
+    "workplace/damage79-r64-fighter-low-a-plan.json": {
+      "sha256": "d2f7090d5583d2b27dc6953cbdf47c04eda93968009fa2a87a0dd583009f37c7",
+      "bytes": 1007
+    },
+    "workplace/oracle/damage79-r64-fighter-zero-a/input-mem.bin": {
+      "sha256": "0bf5ba8918fc3f56046d31f61bca46bc3c48520354aacb5f03407981406ae04f",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-fighter-zero-a/end-mem.bin": {
+      "sha256": "fce29b3601b225d4e08a108c96428973fe8d570080316a546072c7b0085a76e7",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-fighter-zero-a/report.txt": {
+      "sha256": "68381835e6da9e3ef0deea3fdd961ff79f6784ef4e33d59320d4a5feb7bfcdac",
+      "bytes": 29594
+    },
+    "workplace/oracle/damage79-r64-fighter-zero-a/flags.txt": {
+      "sha256": "dfce8e0ffa93c85b889e1bda717c11c61280217d6f3b9dfd51ccde2685d13ccc",
+      "bytes": 734
+    },
+    "workplace/oracle/damage79-r64-fighter-zero-a/meta.txt": {
+      "sha256": "ce20c6f241684cceda7f3bde426f59bb73e13ae1c1552419790feda79701a69a",
+      "bytes": 1144
+    },
+    "workplace/damage79-r64-fighter-zero-a-plan.json": {
+      "sha256": "e7868a138f2e33962db7e45e9832cdcf9f972893a34751d9627f4718e87c57ee",
+      "bytes": 1007
+    },
+    "workplace/oracle/damage79-r64-flag-high-cpu-a/input-mem.bin": {
+      "sha256": "fde1791f92730ef43322addadd7d19557fa41c0392b2bcc7add26bc57e486f32",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-flag-high-cpu-a/end-mem.bin": {
+      "sha256": "155585f5bf24cce99f44761c7e93446c0ef64693040c9549ebb891a0752f74ee",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-flag-high-cpu-a/report.txt": {
+      "sha256": "03b4b6ccf794321142245a2e86c8c171addc96300c94767210239dfa847c9549",
+      "bytes": 29652
+    },
+    "workplace/oracle/damage79-r64-flag-high-cpu-a/flags.txt": {
+      "sha256": "553b62ae3462cdca0c9eccd90f5b0659f2313212ec5205c834ceb53e0fea06b4",
+      "bytes": 751
+    },
+    "workplace/oracle/damage79-r64-flag-high-cpu-a/meta.txt": {
+      "sha256": "925593f2c22512deae3583a236c617e7d5d63dd91f7922986e8d5e1fe314f8f8",
+      "bytes": 1162
+    },
+    "workplace/damage79-r64-flag-high-cpu-a-plan.json": {
+      "sha256": "6fb491b33a013ecd4106619672bb147946473cb30b4d1bd26d7f258f7c3f78ed",
+      "bytes": 1140
+    },
+    "workplace/oracle/damage79-r64-flag-high-human-a/input-mem.bin": {
+      "sha256": "4896ced4302f254cb0d79c226a75ffa46ec4a0243454481a4dd5f06c02cf3771",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-flag-high-human-a/end-mem.bin": {
+      "sha256": "d58980c2c9833e184c55e808f4295e82a1bdc3a5a34b86e31eb8dfef412dd0fa",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-flag-high-human-a/report.txt": {
+      "sha256": "ceb8da0e3e72bddecec02cdeadf0b0a5448be1420c3013cbeb80f9d7dd567e25",
+      "bytes": 29664
+    },
+    "workplace/oracle/damage79-r64-flag-high-human-a/flags.txt": {
+      "sha256": "8724ae434a90b14c78c2ffb8f0726bc42c20bce76638f070eb9b09886489bfe3",
+      "bytes": 757
+    },
+    "workplace/oracle/damage79-r64-flag-high-human-a/meta.txt": {
+      "sha256": "0f38a8ce2ad3ff05882e44aca9bbb76f4240a2c55ecde01e6ed50c71777fa85a",
+      "bytes": 1170
+    },
+    "workplace/damage79-r64-flag-high-human-a-plan.json": {
+      "sha256": "5ac59db6ecc44799ed23deebfc63d59ab049f71e9a82f115fb29a455983e32ba",
+      "bytes": 1144
+    },
+    "workplace/oracle/damage79-r64-flag-high104-a/input-mem.bin": {
+      "sha256": "f37f871d3cf448f0e3ff90fe421b9fd6a715d3976bdb874a22c1d43ea5135bbe",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-flag-high104-a/end-mem.bin": {
+      "sha256": "0e8bbd1603b050ec933d8089d5d7f7097014f581a0223948c315a719c3601bfd",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-flag-high104-a/report.txt": {
+      "sha256": "60952c539db2648d99abcfeca8a24485bc070ab4c00a8e89caa102dd40fe872d",
+      "bytes": 29541
+    },
+    "workplace/oracle/damage79-r64-flag-high104-a/flags.txt": {
+      "sha256": "f6746b88f982edfc3496d1233d53b733f626b8e4c20b07c8249f21b13369d665",
+      "bytes": 702
+    },
+    "workplace/oracle/damage79-r64-flag-high104-a/meta.txt": {
+      "sha256": "f518afab096a6cb4838439a24873da6cd915f5debab91a9dedcd9c860ca9b290",
+      "bytes": 1112
+    },
+    "workplace/damage79-r64-flag-high104-a-plan.json": {
+      "sha256": "ee545702b71819eae874ce96270af4a3d9d8f605ebdce1d3c25fb6c35c577fdd",
+      "bytes": 904
+    },
+    "workplace/oracle/damage79-r64-laser-fixed-a/input-mem.bin": {
+      "sha256": "b1a37f0a141ec54f6baf4a5e16ab1eb396be6876365df74d2c23f0c8a094964f",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-laser-fixed-a/end-mem.bin": {
+      "sha256": "89baa7967583289e2c1a4298afc6c4cd36ab2f3aef2757168060925781c34bce",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-laser-fixed-a/report.txt": {
+      "sha256": "767f62dcb60ef4c69b779d0729d46da6bac27149b3488b46b4e3f7f83a5e7dad",
+      "bytes": 29484
+    },
+    "workplace/oracle/damage79-r64-laser-fixed-a/flags.txt": {
+      "sha256": "855c191ca9c926e5b43149a59c50366407a1114d06f14dac275a508916e3f2db",
+      "bytes": 676
+    },
+    "workplace/oracle/damage79-r64-laser-fixed-a/meta.txt": {
+      "sha256": "49e4cbe5a42d8dc49336d4998fcdc60b282a6825f2b28249dd7330a28caee63d",
+      "bytes": 1085
+    },
+    "workplace/damage79-r64-laser-fixed-a-plan.json": {
+      "sha256": "d38c7fba78479a2961d60bef52462a697043ecb172565fe8f78a8e77945bad71",
+      "bytes": 746
+    },
+    "workplace/oracle/damage79-r64-laser-interpolate-a/input-mem.bin": {
+      "sha256": "6035014bc11f1ef180dd44ec5eea3212afac92e592a0b95f42f7b6956f0d71e5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-laser-interpolate-a/end-mem.bin": {
+      "sha256": "58b7c2632bc467b553077a5597ee47d4b5638d051e25f3d5a6bb0eb4910b054b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-laser-interpolate-a/report.txt": {
+      "sha256": "45b95a524025aaf0a531eb4fd74808618d86c34242c5b5e289e0c125ef461de9",
+      "bytes": 29468
+    },
+    "workplace/oracle/damage79-r64-laser-interpolate-a/flags.txt": {
+      "sha256": "1748fcd2520349d0f0f1072fbf168ceeb73284ff3960402d6de2ff23e529a286",
+      "bytes": 656
+    },
+    "workplace/oracle/damage79-r64-laser-interpolate-a/meta.txt": {
+      "sha256": "b50a711d8e6f656d9ab62064bcc7f7a3ac5e5135bf69daecebfaeddd78fc8252",
+      "bytes": 1071
+    },
+    "workplace/damage79-r64-laser-interpolate-a-plan.json": {
+      "sha256": "7b08f521b66452847a744c352e08fc08614d69b9b3841c3cd29802b54cbcf457",
+      "bytes": 368
+    },
+    "workplace/oracle/damage79-r64-laser-observe-a/input-mem.bin": {
+      "sha256": "6035014bc11f1ef180dd44ec5eea3212afac92e592a0b95f42f7b6956f0d71e5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-laser-observe-a/end-mem.bin": {
+      "sha256": "58b7c2632bc467b553077a5597ee47d4b5638d051e25f3d5a6bb0eb4910b054b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-laser-observe-a/report.txt": {
+      "sha256": "0f71559acbf662413727c60c161ff4f718ef2806f7b236e66403fe446f0eb12e",
+      "bytes": 27883
+    },
+    "workplace/oracle/damage79-r64-laser-observe-a/flags.txt": {
+      "sha256": "5e35a1361f76af9e5fa81740c6e4d5a0dd2e9f94c2039c351fa04e87d37f0899",
+      "bytes": 584
+    },
+    "workplace/oracle/damage79-r64-laser-observe-a/meta.txt": {
+      "sha256": "88d86fe7fe310c9811eecc0201b1a78a7e7bafc37090113f0df8d4afcf542a63",
+      "bytes": 995
+    },
+    "workplace/damage79-r64-laser-observe-a-plan.json": {
+      "sha256": "cc8cc80fffaf8c21a3903153d37c6efb94bafb3ff5a121b275bdff6b747013b2",
+      "bytes": 364
+    },
+    "workplace/oracle/damage79-r64-low-negative-even-a/input-mem.bin": {
+      "sha256": "d4936cc2df753fe4784209f63206feb5f873d0361f9939d238baea4cdcb9a272",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-low-negative-even-a/end-mem.bin": {
+      "sha256": "6b80ee53994096390f9f723ba5abe2a4373ab894e1a38dcdb67cc06a65c36f32",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-low-negative-even-a/report.txt": {
+      "sha256": "2968d9814dc2642e0d9a38a089e3eb3e7afaa258cfd9f9e8cc831d18dea8b41d",
+      "bytes": 29624
+    },
+    "workplace/oracle/damage79-r64-low-negative-even-a/flags.txt": {
+      "sha256": "d74d41e8317c2c296b5d875a8651c8b2063297f928c92affd94123f79f241f39",
+      "bytes": 743
+    },
+    "workplace/oracle/damage79-r64-low-negative-even-a/meta.txt": {
+      "sha256": "42054fcc075e8ca478c2b8198be9cd1c506f1af7a982eb56b50ce31001359118",
+      "bytes": 1158
+    },
+    "workplace/damage79-r64-low-negative-even-a-plan.json": {
+      "sha256": "a6523810c26cdb7f5df65baadab0e8cdd5b541b2f2a60bf459d892fcf4f3dc29",
+      "bytes": 1023
+    },
+    "workplace/oracle/damage79-r64-low-negative-odd-a/input-mem.bin": {
+      "sha256": "8f0acb5934fa36b423d7d8e1acc87d7e4e165fc0ed9f8c5e8443c74898352d47",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-low-negative-odd-a/end-mem.bin": {
+      "sha256": "dfc0232a52f9c0c987d22ee92f2cd48c79152cfc5cd81a021808028f1ba485d5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-low-negative-odd-a/report.txt": {
+      "sha256": "fb911d29d8a51479b56a25847d49ae898fe7c07ad0e280cc11b6188cf02c54b7",
+      "bytes": 29618
+    },
+    "workplace/oracle/damage79-r64-low-negative-odd-a/flags.txt": {
+      "sha256": "55c23725f83183e79d9322342175438d09432ccd7ff5520fc371a92329521465",
+      "bytes": 740
+    },
+    "workplace/oracle/damage79-r64-low-negative-odd-a/meta.txt": {
+      "sha256": "9311526531cb325622bfdd1a60154afa718863afa6c0ea70c20353ca613cbe4b",
+      "bytes": 1154
+    },
+    "workplace/damage79-r64-low-negative-odd-a-plan.json": {
+      "sha256": "c7ba29c36101fa1e3221b6efc9521c0128130e8b5d541b2f89813a30b6ac5d68",
+      "bytes": 1021
+    },
+    "workplace/oracle/damage79-r64-missile-fixed-a/input-mem.bin": {
+      "sha256": "9b81f95796b1e72a928f90257834e6087452c3fc0bc52970adba831af4fb35bc",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-missile-fixed-a/end-mem.bin": {
+      "sha256": "33bbfea02dfdead3afdd17ce97b2eb83f346d97ce0acf3e91b5c08ba0c8f9b24",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-missile-fixed-a/report.txt": {
+      "sha256": "ea59b2ee108d730ceccb1b83b0b3899a5283b13a8a74ccbc7ed52cd44487c53a",
+      "bytes": 29548
+    },
+    "workplace/oracle/damage79-r64-missile-fixed-a/flags.txt": {
+      "sha256": "52e4db0471f871f522f5714c16cfa8ee89e3827ffc3f9a4e949398f6e35f59bd",
+      "bytes": 705
+    },
+    "workplace/oracle/damage79-r64-missile-fixed-a/meta.txt": {
+      "sha256": "5b78335644632fb086926e7dbdfd175199bd69c2943dff62d1292d904e0ec2a2",
+      "bytes": 1116
+    },
+    "workplace/damage79-r64-missile-fixed-a-plan.json": {
+      "sha256": "550c2c1b0a54c8a141b013f3494d74b6fc8b32c37134e5632cb8526c41dd739e",
+      "bytes": 878
+    },
+    "workplace/oracle/damage79-r64-missile-interpolate-a/input-mem.bin": {
+      "sha256": "6da7dae7ace4b631430a3ef6dd8eb2d08f89564fc5a849756b9b2cd8b9c5e428",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-missile-interpolate-a/end-mem.bin": {
+      "sha256": "3c5e68a385ab7a058de17f12b73d6b78fd827b0fe4299a2c9fed0377d68c9ce1",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-missile-interpolate-a/report.txt": {
+      "sha256": "f281b79a7e89067517dcc6ebbcbbba4a71430daf2d8e1a6f0cc214423f28457a",
+      "bytes": 29481
+    },
+    "workplace/oracle/damage79-r64-missile-interpolate-a/flags.txt": {
+      "sha256": "1276f2ecc769ae519a798c153a8e15b767733efe230256060d1bc42475d396f8",
+      "bytes": 664
+    },
+    "workplace/oracle/damage79-r64-missile-interpolate-a/meta.txt": {
+      "sha256": "4511870a8f17feca292b9b2800b96cc6abd7f6d068a5a2f0dd8a63b3c009e989",
+      "bytes": 1081
+    },
+    "workplace/damage79-r64-missile-interpolate-a-plan.json": {
+      "sha256": "61522edbb1f6c8be05d5abacb6b0d1f0477cfc114a58e4fad76e68e863a4e92e",
+      "bytes": 594
+    },
+    "workplace/oracle/damage79-r64-missile-low-a/input-mem.bin": {
+      "sha256": "3062897cb9d39657e6ddf724d0e4891363e66acd4df1868f1598b5b87d3d272d",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-missile-low-a/end-mem.bin": {
+      "sha256": "0c4d439644dc2a4043069ffecbb141226fb34d137a89fe45736669e2bddc68ec",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-missile-low-a/report.txt": {
+      "sha256": "8a19827ababbedd2d9213a0892d8790f688a8eab1417931a480f02660ac71c53",
+      "bytes": 29588
+    },
+    "workplace/oracle/damage79-r64-missile-low-a/flags.txt": {
+      "sha256": "7131488538d1e38e64f94ce2d0bd315babe1255d15444935d34645014cdb7e49",
+      "bytes": 731
+    },
+    "workplace/oracle/damage79-r64-missile-low-a/meta.txt": {
+      "sha256": "b392f391e3ee8c4994839105666c61a7176eaf9127cb4d291105f1e9b95036e6",
+      "bytes": 1140
+    },
+    "workplace/damage79-r64-missile-low-a-plan.json": {
+      "sha256": "720f5655e8f23efaab5275901c3842f09fc596767500055d84e8232f43ead96c",
+      "bytes": 1004
+    },
+    "workplace/oracle/damage79-r64-missile-observe-a/input-mem.bin": {
+      "sha256": "6da7dae7ace4b631430a3ef6dd8eb2d08f89564fc5a849756b9b2cd8b9c5e428",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-missile-observe-a/end-mem.bin": {
+      "sha256": "3c5e68a385ab7a058de17f12b73d6b78fd827b0fe4299a2c9fed0377d68c9ce1",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-missile-observe-a/report.txt": {
+      "sha256": "216f050754f2b165b26905d51a65ff209d21bfe99c88e29ac785530c0c766054",
+      "bytes": 27898
+    },
+    "workplace/oracle/damage79-r64-missile-observe-a/flags.txt": {
+      "sha256": "afaaa1357fe5ba55001023eb74747eb9be3064e593f67ba412a9a72596f7cfc8",
+      "bytes": 592
+    },
+    "workplace/oracle/damage79-r64-missile-observe-a/meta.txt": {
+      "sha256": "3662f0dd4cb6e9bb5af37cbbe440e0f58f539faee1da65424f430323e3608954",
+      "bytes": 1005
+    },
+    "workplace/damage79-r64-missile-observe-a-plan.json": {
+      "sha256": "57f82704d7ef37182e2f131fc41d779bf99a2359022539a1d5f67514ae64bfbc",
+      "bytes": 370
+    },
+    "workplace/oracle/damage79-r64-missile-zero-a/input-mem.bin": {
+      "sha256": "530800cb7921f19105552e5d7c9056c124474498ee65e2e201dbdf3cd14cb01d",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-missile-zero-a/end-mem.bin": {
+      "sha256": "0c4d439644dc2a4043069ffecbb141226fb34d137a89fe45736669e2bddc68ec",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-missile-zero-a/report.txt": {
+      "sha256": "0070c9fb9b2b7b065c905c655a4690b6a911f92926745c47c109326b31375150",
+      "bytes": 29594
+    },
+    "workplace/oracle/damage79-r64-missile-zero-a/flags.txt": {
+      "sha256": "22a7a01ad157fbb3793eb1ec1a8c71b56d6a55257e763972dc7863b9521f9218",
+      "bytes": 734
+    },
+    "workplace/oracle/damage79-r64-missile-zero-a/meta.txt": {
+      "sha256": "b5e10b64b294b545c032bc1e3e68d18b566a76a844da28803f1da6101a791c9a",
+      "bytes": 1144
+    },
+    "workplace/damage79-r64-missile-zero-a-plan.json": {
+      "sha256": "e0f5737fb0d41deefce7e4573fc47b2001a02137463b6b15ed30f374a2b0ecfe",
+      "bytes": 1004
+    },
+    "workplace/oracle/damage79-r64-nonflagship-a/input-mem.bin": {
+      "sha256": "5f1b9ce406ada26547d622ed56f5b27a876a6833b551abbf496eac65424f4793",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-nonflagship-a/end-mem.bin": {
+      "sha256": "189181a3559425ded59a07326b89bf0933264c49815f163d5653480bb2c97734",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-nonflagship-a/report.txt": {
+      "sha256": "bf755a2b236bccf5d0cc835e29a0811e8f161dbb59cb57296bd2ba57bb75960f",
+      "bytes": 29535
+    },
+    "workplace/oracle/damage79-r64-nonflagship-a/flags.txt": {
+      "sha256": "8886ffd9a85ba1bc97d370fc52efd0d9f37ff482901a276babfe34ab863ae4b9",
+      "bytes": 699
+    },
+    "workplace/oracle/damage79-r64-nonflagship-a/meta.txt": {
+      "sha256": "776f52b3fe841089bea07903f54236686383161c13ffda0c1704dc5d94aee469",
+      "bytes": 1108
+    },
+    "workplace/damage79-r64-nonflagship-a-plan.json": {
+      "sha256": "1c262ef91c95f7e0be5d4dcff7409f8b6f8af98ec053cbe7f01f670beb7c4268",
+      "bytes": 874
+    },
+    "workplace/oracle/damage79-r64-target1-a/input-mem.bin": {
+      "sha256": "c4c1f561d033fd3dd119e3fda3372552b444d045d517ee8b0e395eafda9c9920",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-target1-a/end-mem.bin": {
+      "sha256": "d2dba0eb91065213bd362ab41d1c03a8eeaaee693d23211764241ce6228adad9",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-target1-a/report.txt": {
+      "sha256": "918f1b607e81d8effff300ee36165b26472ae421d666490ce20d7f684bbb3f6c",
+      "bytes": 29512
+    },
+    "workplace/oracle/damage79-r64-target1-a/flags.txt": {
+      "sha256": "a0d0caa8bdc80b6d758653847bb3833e6aa0d65193635cc5de8168887f5345e5",
+      "bytes": 690
+    },
+    "workplace/oracle/damage79-r64-target1-a/meta.txt": {
+      "sha256": "01aac644b6ad18dee639aaaa2df1923ad7090e7975594956e0a87fdf483c967d",
+      "bytes": 1095
+    },
+    "workplace/damage79-r64-target1-a-plan.json": {
+      "sha256": "926b08a30190dfe53e01e17821609f6795a3986a44e7c2a05264cd3f0bbfc78b",
+      "bytes": 863
+    },
+    "workplace/oracle/damage79-r64-target100-a/input-mem.bin": {
+      "sha256": "19f4e3ce91b9c15343c79062bb718f82f544caca99696b2f7a095df9ec236941",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-target100-a/end-mem.bin": {
+      "sha256": "a4c37fe05df016ab56b66d7d9b9d23fcace953fab5268db69ad52d53ebcb7d6d",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-target100-a/report.txt": {
+      "sha256": "16dbf62e066a3a9ee3b4c0f02aecd340485516ac67343eda0ce83c291a200648",
+      "bytes": 29524
+    },
+    "workplace/oracle/damage79-r64-target100-a/flags.txt": {
+      "sha256": "7b4e708f8521fa2ae67df3734b6f7b0364e11351c329e623ba6a34b021362ef8",
+      "bytes": 696
+    },
+    "workplace/oracle/damage79-r64-target100-a/meta.txt": {
+      "sha256": "7d48f6e1b1a666bff7de2a3a2d8e7f8c03feee151ebd0c30093100a58e884293",
+      "bytes": 1103
+    },
+    "workplace/damage79-r64-target100-a-plan.json": {
+      "sha256": "3bf98e74ba6e29c867b5503e1ff11c1004f9b7b3682e7b145e310e171022aabc",
+      "bytes": 869
+    },
+    "workplace/oracle/damage79-r64-target99-a/input-mem.bin": {
+      "sha256": "9ca804c85d3696683c9c61c60b1a257e2b3723a0820530203008857d4e6019a3",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-target99-a/end-mem.bin": {
+      "sha256": "ef969303d791c91ff4d540d33c7faa33cb98ad210157b3881b977852e56f298f",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-target99-a/report.txt": {
+      "sha256": "18077bbc5be5b088116505383872d2ae3e85bd48ef79b0a4a5c8dcd48b201bc2",
+      "bytes": 29518
+    },
+    "workplace/oracle/damage79-r64-target99-a/flags.txt": {
+      "sha256": "d8cc61c6115c30edb5883849be0a6a470710dd5de23dbad95f9a4c66676820ff",
+      "bytes": 693
+    },
+    "workplace/oracle/damage79-r64-target99-a/meta.txt": {
+      "sha256": "8dce260aca80f0fd5418f9debb9b417222015f8586564fa2856897ea7441a9cc",
+      "bytes": 1099
+    },
+    "workplace/damage79-r64-target99-a-plan.json": {
+      "sha256": "b34632915b6c47684d68733e50d08e4c8e18e21f2a7aa9b370b996613a68b38f",
+      "bytes": 866
+    },
+    "workplace/oracle/damage79-r64-zero-fallback-a/input-mem.bin": {
+      "sha256": "8a415b5a0c2b2fc3840c524b79776c7431562f5336895ba2de893227bffa48c3",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-zero-fallback-a/end-mem.bin": {
+      "sha256": "66484b30adcdca9dc5b7d07fca97d8f92b83a209ad2a2bfa1a2ff41dd4d83807",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-zero-fallback-a/report.txt": {
+      "sha256": "8f12594d32a8bcbf0cbf9aa67f2bb57f07834f48c2b20efeebe2d8ad600b8d3c",
+      "bytes": 29861
+    },
+    "workplace/oracle/damage79-r64-zero-fallback-a/flags.txt": {
+      "sha256": "c0264656ac7d96c6b8340e10d1a62f8de867b54a4454c415958e5ac39e768fa9",
+      "bytes": 760
+    },
+    "workplace/oracle/damage79-r64-zero-fallback-a/meta.txt": {
+      "sha256": "3fe7752920bfab8dd7e50df85bddcdee7875edce0d1bee0aa9c8b7b2e3ce63a7",
+      "bytes": 1171
+    },
+    "workplace/damage79-r64-zero-fallback-a-plan.json": {
+      "sha256": "78281d74487a84ea2bb7646940d5c2b3ea2d6bcfd6b9c6f7bef05f49f882c788",
+      "bytes": 1155
+    },
+    "workplace/oracle/damage79-r64-zero-own-a/input-mem.bin": {
+      "sha256": "0352c41fa414c867ab21234a9d686bc8633f551a7a1f1056c15f79ea9278d2a9",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-zero-own-a/end-mem.bin": {
+      "sha256": "9609fba9d97187807334476d877e6ce8866f7fae01f18c91045c60e758a19a87",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-zero-own-a/report.txt": {
+      "sha256": "8dd6f939309f801a6c49ac8290f43d404efbcf73f939888486eee28306af251e",
+      "bytes": 37325
+    },
+    "workplace/oracle/damage79-r64-zero-own-a/flags.txt": {
+      "sha256": "37d92d594282da8aed4a8f768d1aa82379aa589bcc40771583ac9c8003f98dde",
+      "bytes": 693
+    },
+    "workplace/oracle/damage79-r64-zero-own-a/meta.txt": {
+      "sha256": "bc117338681d3ae57da9383d2fb47f9ce2cfa47f8a58b0457330ebeef020cd16",
+      "bytes": 1099
+    },
+    "workplace/damage79-r64-zero-own-a-plan.json": {
+      "sha256": "b60369864f63f73dae4a4ade1812f91f54403e6098ab71448288addee8b35f15",
+      "bytes": 887
+    },
+    "workplace/oracle/damage79-r64-zero-target-a/input-mem.bin": {
+      "sha256": "fff26a60f743d60cf7a98ec68b19b9c6a9659f0b499b6b7da97e9076b51d74f5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-zero-target-a/end-mem.bin": {
+      "sha256": "e3bcfc3e7988977a991b0ab01cc57ae82b171c371d91c008ff19a94e49deb7a4",
+      "bytes": 1048576
+    },
+    "workplace/oracle/damage79-r64-zero-target-a/report.txt": {
+      "sha256": "6646f84179ede4e8538143b8a9b50ce4f2ffe293fb9fb05d753291c74d25593d",
+      "bytes": 37719
+    },
+    "workplace/oracle/damage79-r64-zero-target-a/flags.txt": {
+      "sha256": "5e18f7b1a5fc88407521eed69a2e4d258f36245cd2149a57d90d03eeab91f7ee",
+      "bytes": 702
+    },
+    "workplace/oracle/damage79-r64-zero-target-a/meta.txt": {
+      "sha256": "2689ad38064e7df8b3ed584ee690c86f7be0ba723f054ec033aff33731a53b26",
+      "bytes": 1111
+    },
+    "workplace/damage79-r64-zero-target-a-plan.json": {
+      "sha256": "0649b5b90f1edd30602896e2ed50266d40d945452f4f66bf4a48a0276e05394e",
+      "bytes": 893
+    },
+    "workplace/oracle/sequence79-r66-curve0-near-a/input-mem.bin": {
+      "sha256": "f6d686548bba5e5d4f2cade358a1e77dc6b58ebefcdd3e6f1748be7cbc8d4ef3",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve0-near-a/end-mem.bin": {
+      "sha256": "1464ee5471bcdbe5cb82632ee2da9472ad05c63fc38d6af286b520689d1dedce",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve0-near-a/report.txt": {
+      "sha256": "5684a2ec4e567f1e2a4cc77c92b5237d493414a8a2d985a9d64e16ce1d146017",
+      "bytes": 29181
+    },
+    "workplace/oracle/sequence79-r66-curve0-near-a/flags.txt": {
+      "sha256": "04765c764f86ae3a4fc30278439c9338c6a7e13752e576476a119b8f8d604821",
+      "bytes": 866
+    },
+    "workplace/oracle/sequence79-r66-curve0-near-a/meta.txt": {
+      "sha256": "41da0bbdf4413d3f28ce96d1d03c1ae11e7b2b60ba052d820198ee8009e42c99",
+      "bytes": 1277
+    },
+    "workplace/sequence79-r66-curve0-near-a-plan.json": {
+      "sha256": "add3bb28e255bd0d06ee806799083cd2070cec43bca21fffae219fdfbe845ac3",
+      "bytes": 1950
+    },
+    "workplace/oracle/sequence79-r66-curve1-near-a/input-mem.bin": {
+      "sha256": "1a55e94831cb08a9306b06c873e6a033b03cf9986040b05c83ce630090dd67eb",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve1-near-a/end-mem.bin": {
+      "sha256": "3243d1b47703555db2211a4143a3292043e36265a9ad5ee71fa5475ee9ee58ef",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve1-near-a/report.txt": {
+      "sha256": "0a7823228109fa0af489bc3f9e2073fb59d55978945690b46e60b252042478e4",
+      "bytes": 29181
+    },
+    "workplace/oracle/sequence79-r66-curve1-near-a/flags.txt": {
+      "sha256": "0dd312777450c999835279be9b296ea042f343876125ce729921259d73b9b833",
+      "bytes": 866
+    },
+    "workplace/oracle/sequence79-r66-curve1-near-a/meta.txt": {
+      "sha256": "8d2b7a985c90271cba983d180b9d0f764b83f7e66bd02477afc2e82f75c67ff3",
+      "bytes": 1277
+    },
+    "workplace/sequence79-r66-curve1-near-a-plan.json": {
+      "sha256": "8b62ac03bf0d270a85d04f241982f20ccf42ea5afad2f3f4cee03b5d42628dfb",
+      "bytes": 1950
+    },
+    "workplace/oracle/sequence79-r66-curve10-near-a/input-mem.bin": {
+      "sha256": "5053a123124165201352e7173f28399284c3e09f47df23c97f6545f1f36f8d42",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve10-near-a/end-mem.bin": {
+      "sha256": "a9b89bd2c93ff8938c0302b6730763a9989eb2411b71a45f15087ef1cf034367",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve10-near-a/report.txt": {
+      "sha256": "8d6da9a6b67587cf3c86f34c6c24529ba0a2bad9a2817023a4888bd8f5b79447",
+      "bytes": 29187
+    },
+    "workplace/oracle/sequence79-r66-curve10-near-a/flags.txt": {
+      "sha256": "40529bf055ca4d0944bc7393f029b807ed95447f9dd901b605325dba31dfaeb1",
+      "bytes": 869
+    },
+    "workplace/oracle/sequence79-r66-curve10-near-a/meta.txt": {
+      "sha256": "c44c3e9d89d28cb98bb91093243597f4e59b65f78aa9f03bcff1f7a3854449ea",
+      "bytes": 1281
+    },
+    "workplace/sequence79-r66-curve10-near-a-plan.json": {
+      "sha256": "1892017bdd0003de56285cd4271de28187893a17206d2a643f66b00f8057014e",
+      "bytes": 1952
+    },
+    "workplace/oracle/sequence79-r66-curve11-near-a/input-mem.bin": {
+      "sha256": "0446e6c16974d1c9ef848c4a323cc3d8f66397ee5cce76fc8c9683829302699f",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve11-near-a/end-mem.bin": {
+      "sha256": "e3ba4deff1a3fe874c66fca1c1a23ca89d17d348b7baecd3166effd7a38245cb",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve11-near-a/report.txt": {
+      "sha256": "e9ad15891fe5a8ddf75e2f4b99a1f9ce82c3e03f5dada43d8bba95df9110d50b",
+      "bytes": 29187
+    },
+    "workplace/oracle/sequence79-r66-curve11-near-a/flags.txt": {
+      "sha256": "3c8126e54b89ea866c35293f7fce148b7d989a270e76db252b5063d80149ef3b",
+      "bytes": 869
+    },
+    "workplace/oracle/sequence79-r66-curve11-near-a/meta.txt": {
+      "sha256": "8e57787588eaaf08ac9d2c9afcd0c827a03a0d18b5d75c42dde9aa4219659412",
+      "bytes": 1281
+    },
+    "workplace/sequence79-r66-curve11-near-a-plan.json": {
+      "sha256": "750608e0fcffe6092167bf81404af24aee64776e5eab18af04a415ce637a4eaa",
+      "bytes": 1952
+    },
+    "workplace/oracle/sequence79-r66-curve2-near-a/input-mem.bin": {
+      "sha256": "e9711b138d250690e08f2779821a9355036870bbd52779fa0ed106a28ea15e66",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve2-near-a/end-mem.bin": {
+      "sha256": "fdfd6d8421286f96bbc2f34945d51db5e202456a26c79528704075895a7ffb48",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve2-near-a/report.txt": {
+      "sha256": "6d37721a96e5251b661b1c193ed0e1847c3234ba114856ac5c11690e2cf84315",
+      "bytes": 29180
+    },
+    "workplace/oracle/sequence79-r66-curve2-near-a/flags.txt": {
+      "sha256": "9d7238552146a619a44920ac704c8cfd64eb19512e6f4481bb5fd08085c0a05c",
+      "bytes": 866
+    },
+    "workplace/oracle/sequence79-r66-curve2-near-a/meta.txt": {
+      "sha256": "23ef1b073267794b2f958dd9c7e4f1efadab167e2596b4250787702379f8a95d",
+      "bytes": 1277
+    },
+    "workplace/sequence79-r66-curve2-near-a-plan.json": {
+      "sha256": "1b60ba1af22cb2746a1303b22c3f29c07cb6b1b20bc8d793026e3e02544c18cf",
+      "bytes": 1950
+    },
+    "workplace/oracle/sequence79-r66-curve3-near-a/input-mem.bin": {
+      "sha256": "b70445d2646a424a0c66f5b13dd1ec3c674bc21fb4f76d91749c2ac25ceaf1ab",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve3-near-a/end-mem.bin": {
+      "sha256": "64040f68d6ebf0153cdcbb2f04f1f25b70fd4da707f1d7aa6449849301a1096e",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve3-near-a/report.txt": {
+      "sha256": "8d6260a88b08ea13e9342a27a0ef56ecbb48a06930724fc046edc91e86da643b",
+      "bytes": 29181
+    },
+    "workplace/oracle/sequence79-r66-curve3-near-a/flags.txt": {
+      "sha256": "8c02c029cd432de3ddd4c39bb6da7b718117dbd6d077616e48b0a1f22e8aebab",
+      "bytes": 866
+    },
+    "workplace/oracle/sequence79-r66-curve3-near-a/meta.txt": {
+      "sha256": "65175bc00802d808caa0ed2e1fcbe62ebe8b8b3e7e7dee92d020fba43ef1116a",
+      "bytes": 1277
+    },
+    "workplace/sequence79-r66-curve3-near-a-plan.json": {
+      "sha256": "39ef52787cb141c1bc1654b87f90e57e497ccd4f46aef14157df8d12136bfa09",
+      "bytes": 1950
+    },
+    "workplace/oracle/sequence79-r66-curve5-near-a/input-mem.bin": {
+      "sha256": "29abeff709f34988145f218f85702c10526f2ef3abd8365d1c499c1e7b12d300",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve5-near-a/end-mem.bin": {
+      "sha256": "7221e488349a848d1a9fc1f06b4ec7965952a778d3f68b0b2a5078c86f74e8b4",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve5-near-a/report.txt": {
+      "sha256": "14c6457c2af855c44c296cb3c74dd8841d84988f83ac24f401bf963a535b7e28",
+      "bytes": 29181
+    },
+    "workplace/oracle/sequence79-r66-curve5-near-a/flags.txt": {
+      "sha256": "a1b60532ee43c564c36bec0bfa9dadc1db82224130f0b31cd90774b524a61c36",
+      "bytes": 866
+    },
+    "workplace/oracle/sequence79-r66-curve5-near-a/meta.txt": {
+      "sha256": "ae90f717da118e9a5ab504fe7332c89f2590a37c50c8fb015f92b6791d231022",
+      "bytes": 1277
+    },
+    "workplace/sequence79-r66-curve5-near-a-plan.json": {
+      "sha256": "9feb99ebf3fd8d2c3487bf4faaa99e17fd28ea78c887c912e45959104157c09f",
+      "bytes": 1950
+    },
+    "workplace/oracle/sequence79-r66-curve6-near-a/input-mem.bin": {
+      "sha256": "0c2870d69333d305ee7ed954c3fc5f2deb6a71946df6609acc773f4531816011",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve6-near-a/end-mem.bin": {
+      "sha256": "230f2cd0f8d66548d903c2b6ab468b0af4af7f375d32796e11eb88942a78f428",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve6-near-a/report.txt": {
+      "sha256": "c755f744aef7ac3fa6bb5a5f845c363c0777eb32ce2f2661e74f316de815b244",
+      "bytes": 29181
+    },
+    "workplace/oracle/sequence79-r66-curve6-near-a/flags.txt": {
+      "sha256": "8a12e4dd8df1860b55b971338d890fec1d70b64319039cefe1e426a215377b80",
+      "bytes": 866
+    },
+    "workplace/oracle/sequence79-r66-curve6-near-a/meta.txt": {
+      "sha256": "b9c0ca06ab785626a9490b77bd83598bb20f6ce0ebda07c4a9ac59141ea66b2e",
+      "bytes": 1277
+    },
+    "workplace/sequence79-r66-curve6-near-a-plan.json": {
+      "sha256": "65a59846fee1594a65fa8edeaff223ad3743f499ca4d4e6ef55b1161f1645d1e",
+      "bytes": 1950
+    },
+    "workplace/oracle/sequence79-r66-curve7-near-a/input-mem.bin": {
+      "sha256": "fe3cfb2c016816b3d704467ed8acd42095b8ce754a3d8bf2bace1a51257cafac",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve7-near-a/end-mem.bin": {
+      "sha256": "fe5be5879b14c0e66575bcb3b4f215c574510e6a8cc2b69a69a685917876b68b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve7-near-a/report.txt": {
+      "sha256": "7a8282eb30f4ab9a00c96634b53dfa7c41f2c78ee03bf68361540d292b7af3a8",
+      "bytes": 29181
+    },
+    "workplace/oracle/sequence79-r66-curve7-near-a/flags.txt": {
+      "sha256": "6f7d31cde38d5fab273880e2407e6d821d780b7257774b8621086894e75840e1",
+      "bytes": 866
+    },
+    "workplace/oracle/sequence79-r66-curve7-near-a/meta.txt": {
+      "sha256": "c4c8488b64b102c132f79dcde362d69d44903b45a2fea22573776c5c4b640507",
+      "bytes": 1277
+    },
+    "workplace/sequence79-r66-curve7-near-a-plan.json": {
+      "sha256": "d41fb33e2153432b196cddb25789659660fbb0fec17bd09b9d4ab11721fca0d5",
+      "bytes": 1950
+    },
+    "workplace/oracle/sequence79-r66-curve8-near-a/input-mem.bin": {
+      "sha256": "be32866bf188cc5de76d05e02e2b368ba79555f5d6c936cf34d3fc0145aa5209",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve8-near-a/end-mem.bin": {
+      "sha256": "2838e60e6439e5997456948148293c167cbbe0da6b1a66608dede8a2cdae9163",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve8-near-a/report.txt": {
+      "sha256": "ceaa58491002074a9c036cddb569d9f77808183c5efb77dacfd9745ccdc9d21f",
+      "bytes": 29180
+    },
+    "workplace/oracle/sequence79-r66-curve8-near-a/flags.txt": {
+      "sha256": "c15370fde8c0852562ad0cec0eb5ff9ca488a66fdaab23c239ec0e1c46b6076b",
+      "bytes": 866
+    },
+    "workplace/oracle/sequence79-r66-curve8-near-a/meta.txt": {
+      "sha256": "5351141c77599d4147c1d0b83855951c00ba535ee343a48d41cae98ea05b81b3",
+      "bytes": 1277
+    },
+    "workplace/sequence79-r66-curve8-near-a-plan.json": {
+      "sha256": "e8b50a6bb2474e5bcf3b0cd0be856c8a38f62c09de1cf0546a76d4b954a8fa83",
+      "bytes": 1950
+    },
+    "workplace/oracle/sequence79-r66-curve9-near-a/input-mem.bin": {
+      "sha256": "146133cdcdcb7cd594091b24e957f0ec35da2e26dce95792f5806bacd8801651",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve9-near-a/end-mem.bin": {
+      "sha256": "a88cf8b5f89d52d8457ef9aea168c26f12c9f0cfa986db65f7bfb0de1fecfa5b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve9-near-a/report.txt": {
+      "sha256": "ca7469ecbb628acd61c4fae1b6d41bc78648d5686ac9e5223746447fd4a36b10",
+      "bytes": 29181
+    },
+    "workplace/oracle/sequence79-r66-curve9-near-a/flags.txt": {
+      "sha256": "4c8075c5f6459098f96739013d3335febc0ac5b9f2b2b138f93ede5d56dbc632",
+      "bytes": 866
+    },
+    "workplace/oracle/sequence79-r66-curve9-near-a/meta.txt": {
+      "sha256": "53c8114ffeeab9e9a28891ce42e65272969c7e4a92e4bf5719dca3768e164cc6",
+      "bytes": 1277
+    },
+    "workplace/sequence79-r66-curve9-near-a-plan.json": {
+      "sha256": "6c6aba3d25d8af2e6de3295af39f2eab9254f9537ec8e0fc73c43335bd719240",
+      "bytes": 1950
+    },
+    "workplace/oracle/weapon79-r65-fighter-end-a/input-mem.bin": {
+      "sha256": "3d3206da268def1830d6632f5528347044f864987ecd73ec8889425aaa97dd29",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-fighter-end-a/end-mem.bin": {
+      "sha256": "ee209491ed92e8c5fb4c7e207c8cea34c8fc85ffd1f5f486b5bf8338c4a7a6be",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-fighter-end-a/report.txt": {
+      "sha256": "d38eb9616f5f9a37d3176dca7c56b749829b9f8ce1feda342623ba071711179c",
+      "bytes": 66825
+    },
+    "workplace/oracle/weapon79-r65-fighter-end-a/flags.txt": {
+      "sha256": "3eb77e99c441a164612647e49a46cb2db5e9f847922fd2615fc3904f0c2c85a2",
+      "bytes": 539
+    },
+    "workplace/oracle/weapon79-r65-fighter-end-a/meta.txt": {
+      "sha256": "8b69623a76f5ff2b4f645780b404032c37ca751dfadcbe4e8f2211d113f1eeec",
+      "bytes": 948
+    },
+    "workplace/weapon79-r65-fighter-end-a-plan.json": {
+      "sha256": "63fd960b0d84328ceefbe714d7ef7e6963395021c758faaa0737a4862e4708a1",
+      "bytes": 491
+    },
+    "workplace/oracle/sequence79-r66-curve0-stack-first-a/input-mem.bin": {
+      "sha256": "9e76a4783d59518b999deacb484c3f9efe6ef852d4ae479864244fe46a263575",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve0-zero-a/input-mem.bin": {
+      "sha256": "658dcca688d0091136780f07c035f8669e8cb823c881845fa905ed88d35e878d",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve1-zero-a/input-mem.bin": {
+      "sha256": "72cfe831c9736965737a9b283f3d9217a5cec494401ae367a2f9ffaeba6ba840",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve10-zero-a/input-mem.bin": {
+      "sha256": "f9602280e4a08774ac36916d4ce933235cc3ac7bca3d843c8b23d4b542e20161",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve11-zero-a/input-mem.bin": {
+      "sha256": "60b7655ed16d144da86b5f310999a5a8afd7817688e74ae979276ad35b52299c",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve2-zero-a/input-mem.bin": {
+      "sha256": "220e41b9cc6fa967869bd2c64cbef0b498a00fa943b8ffb68789aa13b0a02684",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve3-zero-a/input-mem.bin": {
+      "sha256": "6f74b921bb21bc884c7bd2417f9c1324d038d9f8f5b4aa810746cfcb5ec7f710",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve5-zero-a/input-mem.bin": {
+      "sha256": "736c630d50d1565be26546d28fc6b66d96aa1e224a1930f4748a0122d8b9d58b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve6-zero-a/input-mem.bin": {
+      "sha256": "da907b4e2eeae3759c40096b153e5c88a7c8e35e072d525e9357dbdac1991709",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve7-zero-a/input-mem.bin": {
+      "sha256": "c5b2fecd0ee1a4c219af1618f3f8058788f15011f2342462bd00a15e22a9e871",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve8-zero-a/input-mem.bin": {
+      "sha256": "64f369bfaf95bf420943a0b7fd5c31e511eac92b33bc44341bb6bc458a8dc512",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-curve9-zero-a/input-mem.bin": {
+      "sha256": "4c9abdce040d814832ad4b865f9f0b1f8eda775e4da71310ce809271df077ab2",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-multi-ranked-a/input-mem.bin": {
+      "sha256": "33f1bfa5a5c3f1df47e4036812daed097f65977174a359e97b5ec1d5f22095fc",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-multi-ranked-a/end-mem.bin": {
+      "sha256": "8172eb842614f3d5badbfa089a43287088baff7ec13fb60c4b8bac1319ef7ed5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-multi-ranked-a/keys-mem.bin": {
+      "sha256": "bedffe6b44232ceed826a0a2317d55084c112a6fa8ee741622913b65d3518001",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-multi-ranked-a/sorted-mem.bin": {
+      "sha256": "d7c5e148a1280f467fe71c43a620a0bd1eee5f1449af8c9ee413a0c8901ddf05",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-multi-ranked-a/damage1-mem.bin": {
+      "sha256": "6262a058d62cc021f3db3394d169c84be4361bb2712a8c7c145e9738ff381e71",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-multi-ranked-a/damage2-mem.bin": {
+      "sha256": "effccb470ae49110757e478cb975343655c3960f392d3e50ca82bc7c54e43685",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-multi-ranked-a/report.txt": {
+      "sha256": "c5e087ce025d03aa80c1d981c0c31ed70b3ec4370b774cbfc3271573491b569c",
+      "bytes": 65163
+    },
+    "workplace/oracle/sequence79-r66-multi-ranked-a/flags.txt": {
+      "sha256": "e793ca963f63f2ea3991a70682409b0362c4c2859544751186725936eb481aca",
+      "bytes": 972
+    },
+    "workplace/oracle/sequence79-r66-multi-ranked-a/meta.txt": {
+      "sha256": "92d0dcbed3ac798cc15a0f3802a08a283599fcd8921688663bedb80ecfb53745",
+      "bytes": 1384
+    },
+    "workplace/oracle/sequence79-r66-same-target-measured-a/input-mem.bin": {
+      "sha256": "371ffec6118e3f3fa48e0676d3dc1751043d18c8db387531105824bb3e7c0a45",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-same-target-measured-a/end-mem.bin": {
+      "sha256": "6431f70ce7f516ff4f0e46220f8b1c4884db171a4ca886cd3ea835ed9e2529fe",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-same-target-measured-a/keys-mem.bin": {
+      "sha256": "000deb4170b77ca9b6d7544f57bc238060d5b22bcf601a4f22ee2957fac81f45",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-same-target-measured-a/sorted-mem.bin": {
+      "sha256": "63d21912d31e6cdaf9d5fe45343bfe6b750c9e83dacceaec0a61762e2a13801c",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-same-target-measured-a/damage1-mem.bin": {
+      "sha256": "e319a9a1130d8e1abcb2f4a9009648344386ecfa70017e75bc11888b6dca47c1",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-same-target-measured-a/damage2-mem.bin": {
+      "sha256": "41d0ed4d58997b0f6851aad302bd3a9b4d23d172aa7207b61cbea8a54f4591b3",
+      "bytes": 1048576
+    },
+    "workplace/oracle/sequence79-r66-same-target-measured-a/report.txt": {
+      "sha256": "b7dbcd7709382cd141514722d1d70f1ae65f7cd5a44cbb829df8cb544a2681ef",
+      "bytes": 75530
+    },
+    "workplace/oracle/sequence79-r66-same-target-measured-a/flags.txt": {
+      "sha256": "c51abadda5329ade06a1e69b8892e90dc85aa1d852f1012d3c1da91c3956e33b",
+      "bytes": 1034
+    },
+    "workplace/oracle/sequence79-r66-same-target-measured-a/meta.txt": {
+      "sha256": "e724414ed8902c3a1fb5c4498440dfcc2da17429e1c722e654d1ba10087f566b",
+      "bytes": 1454
+    },
+    "workplace/oracle/normal79-r61-a/end-mem.bin": {
+      "sha256": "6800de725851633cf2b817afad0cfda3be4a0d6b8bb7d1ebdacd57a92ce1d5b4",
+      "bytes": 1048576
+    },
+    "workplace/round67-fleet-core-tests.log": {
+      "sha256": "7d3a04f6cd8c7550b06200d4793bb80fd55e0c20e0150970dc7548e0f423cc87",
+      "bytes": 9341
+    },
+    "workplace/round67-standard-tests.log": {
+      "sha256": "cb5238e992cc9e55b1fa32a9adfd9fe37eb9bd140134a4ce845991b6e122fd71",
+      "bytes": 962
+    },
+    "internal/rules/fleetcombat.go": {
+      "sha256": "6b7208a70fd896dda31852ec45d7061b8f5623b6f40c89142ee27ed93fb284cd",
+      "bytes": 8847
+    },
+    "internal/rules/fleetcombat_test.go": {
+      "sha256": "8926084997097bd585ab721341d0495d4c3d6629b467d71a853ccd2363b09b0f",
+      "bytes": 17348
+    },
+    "docs/spec/093-fleet-combat-core.md": {
+      "sha256": "bda2e47c3fe3fafc0c4333fa0161d6ca50e19be2b0a12dc53f1ac973c278edda",
+      "bytes": 6661
+    },
+    "tools/scripts/fleet_combat_core_receipt.py": {
+      "sha256": "97404a2df2d77c935e3847e4fd3b101eb2c56432bdf4f127d2a36921bac18899",
+      "bytes": 5674
+    },
+    "workplace/round67-images.txt": {
+      "sha256": "accc675b2d30763b2fecb000fab772a96566773b499fd53dfbfcba3132e53d3e",
+      "bytes": 275
+    }
+  },
+  "limits": [
+    "純核心原版資料對拍，不替代正常Game/UI/保存或畫面same-state",
+    "零距離取首點為已核准差異，不比原版殘留stack戰損",
+    "合法戰鬥機收據只核呼叫與末端資料，不虛稱其中途係數已直接觀測",
+    "原版序列化state／死亡／其他取消及完整演出仍由092驗收",
+    "061單人CPU被動政策保持；本核心不選命令或啟用CPU攻擊"
+  ]
+}

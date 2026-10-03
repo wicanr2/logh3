@@ -104,3 +104,22 @@ cancel-outer在選目標等待時按右鍵，觀測到沒有提交、演出、�
 18產品套件正常結束，13有測試套件通過、5無測試檔。返回戰場兩圖已目視。
 沒有新的remake same-state結果。死亡、其他取消分支、完整演出owner、正式Game／UI／保存仍缺。
 092保持DRAFT，#79／#48保持OPEN；061單人CPU被動政策不變。
+
+## 2026-10-04第67輪實作續記
+
+本節追加實作現況，不改寫第66輪原版收據或stack模型。沿
+[093子規格](../spec/093-fleet-combat-core.md)先審查READY後實作
+[純規則核心](../../internal/rules/fleetcombat.go)。零距離已取曲線首點；
+凍結第66輪JSON的production_implemented=false仍是當輪事實。
+
+[正式測試](../../internal/rules/fleetcombat_test.go)直接讀原版AX／BP及RAM作期望，
+覆蓋31戰損、11近距離、合法戰鬥機與兩組連打。另12個零距離／stack反例只驗核准首點，
+不稱原版未初始化stack戰損parity。12組完整六點及排序／機動表由既有RAM再讀確認。
+
+首輪測試要求合法戰鬥機收據不存在的0C6D等係數觀測，因而失敗。
+這是驗證腳本問題。該收據改核實際保存的呼叫數與末端資料，其他案例仍逐係數核原版。
+同一容器、同一命令乾淨重跑通過，沒有更改原版、正式算式或golden資料。
+
+索引與來源雜湊保存於[第67輪純核心收據](../internals/data/fleet-combat-core.json)，
+可重建方法見[056追加驗證](../playtest/056-combat-sequence.md)。
+正式Game／UI／保存及完整演出待接，093 READY、092 DRAFT；#79／#48保持OPEN。

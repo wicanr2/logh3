@@ -47,3 +47,32 @@ same-target-ranked的排序RAM錯相位，保留為擷取反例；正式模型�
 序列化state只作固定父快照，不宣稱兩次state檔逐byte相同。
 零距離已核准取曲線首點，但本輪未改production；原版stack模型不當正式規則。
 死亡、其他取消、完整演出、正式保存及兩主要路徑仍待驗，092 DRAFT。
+
+## 第67輪純核心驗證
+
+remake父提交627c73bae07c29b4d3d8662cf31d75147a43110e／本輪dirty；dosgolem版本保持。
+原版輸入、完整flags與祖先注入沿第64至66輪已凍結索引，本輪不重生或改寫原版收據。
+先審查[093](../spec/093-fleet-combat-core.md)至READY，再實作
+[核心](../../internal/rules/fleetcombat.go)與[測試](../../internal/rules/fleetcombat_test.go)。
+
+```sh
+tools/go.sh test ./internal/rules -run '^TestFleetCombat' -count=1 -v > workplace/round67-fleet-core-tests.log 2>&1
+tools/gui.sh test ./cmd/... ./internal/... -count=1 > workplace/round67-standard-tests.log 2>&1
+LOGH3_EXTRA_RO="$PWD" tools/py.sh /work/tools/scripts/fleet_combat_core_receipt.py /work/docs/internals/data/fleet-combat-core.json
+```
+
+| 核對 | 結果 |
+|---|---|
+| 單擊直接原版係數及末端 | 31個第64輪案例、11個近距離符合 |
+| 合法戰鬥機 | 一擊呼叫、分隊／庫存、分數／功績及seed符合；沒有中途係數觀測聲明 |
+| 八筆排序與兩組連打 | 全部鍵、完整排列、攻守指標、中間狀態、逐擊係數及末端符合 |
+| 已核准零距離 | 11種type及一個stack反例取原版表首點；這是刻意差異驗證 |
+| 原版數值表 | 12武器各六點、五排序基值、11機動係數與兩陣營艦種符合 |
+| 錯誤原子性 | 無效命令／資料及零防禦不扣庫存、不取RND；排序先驗全部條目 |
+| 核心回歸 | 六組測試無skip通過 |
+| 標準回歸 | 18產品套件正常結束，13通過、5無測試檔 |
+
+[純核心收據](../internals/data/fleet-combat-core.json)保存程式、工具image、test log與原版來源雜湊。
+SHA-256為2afa559c97106a4e702307b0ceeef8889073d170a37cca9009f3811bb60b21b7，共300份來源。
+凍結器拒絕覆寫；可另寫workplace內的新檔，與凍結JSON逐byte核對。
+正式Game尚未呼叫核心，沒有新的畫面或正常玩家路徑收據。093 READY、092 DRAFT。

@@ -1,5 +1,10 @@
 # 原版內部構造參考
 
+第67輪沿#79／#48：[正式交戰核心計畫](../goal/2026-10-04-fleet-combat-core-round-67.md)與
+[093子規格](../spec/093-fleet-combat-core.md)。單擊與排序先READY再實作；
+[純核心收據](data/fleet-combat-core.json)及[凍結器](../../tools/scripts/fleet_combat_core_receipt.py)
+保存原版直接資料對拍，正式Game／UI／保存未接，093 READY、完整092仍DRAFT。
+
 第66輪沿#79／#48：[多目標與多攻擊者計畫](../goal/2026-10-04-combat-sequence-round-66.md)。
 先閉合重疊座標曲線與原版命令序列，避免以單擊probe代替正式交戰鏈；092仍DRAFT。
 [序列重播入口](../../tools/combat_sequence_oracle.sh)與

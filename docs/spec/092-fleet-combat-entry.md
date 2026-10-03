@@ -82,6 +82,10 @@ IDA位址與線性位址另存收據，不互換使用。
 
 ## 正式接線前仍缺
 
+第67輪已依[093純核心子規格](093-fleet-combat-core.md)完成單擊、排序與機動力。
+先審查READY再實作，直接比原版RAM及暫存器通過。零距離已在核心取首點，
+屬使用者核准差異；正式Game尚未呼叫，本規格不因核心測試通過而升格。
+
 第65輪沿[研究403](../re/403-weapon-candidates.md)、[055](../playtest/055-weapon-candidates.md)與
 [候選收據](../internals/data/weapon-candidates.json)補48案候選及合法戰鬥機命令。
 敵方目前座標、Out bit7、Detail／艦種7、300搜尋上限、方向橢圓、FF武器與兩word庫存已核。
