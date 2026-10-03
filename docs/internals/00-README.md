@@ -1,5 +1,16 @@
 # 原版內部構造參考
 
+第64輪沿#79／#48：[交戰傷害計畫](../goal/2026-10-03-fleet-combat-damage-round-64.md)。
+由第63輪固定提交狀態追0C54及203A係數／資料更新，092保持DRAFT直到證據審查。
+[第64輪IDA匯出](../../tools/scripts/fleet_combat_damage_ida.py)保留固定原版bytes與三種位址空間。
+[傷害owner原版重播](../../tools/fleet_combat_damage_oracle.sh)及
+[固定重播計畫](../../tools/scripts/fleet_combat_damage_plan.py)隔離提交、係數、扣艘數與計分。
+[可丟棄戰損計算探針](../../tools/scripts/fleet_combat_damage_probe.go)沿既有定點及扣艘數規則，
+核單擊係數、庫存、戰損、分數與功績；092仍DRAFT。
+[傷害收據凍結器](../../tools/scripts/fleet_combat_damage_receipt.py)保存所有注入、原始定位與來源雜湊，拒絕覆寫。
+[研究402](../re/402-fleet-combat-damage.md)、[原版診斷054](../playtest/054-fleet-combat-damage.md)及
+[傷害固定收據](data/fleet-combat-damage.json)分開原版雙跑與未接線的正式流程。
+
 第63輪沿#79／#48：[目標與武器提交計畫](../goal/2026-10-03-fleet-combat-command-round-63.md)、
 [原版命令操作重播](../../tools/fleet_combat_command_oracle.sh)與
 [固定輸入計畫](../../tools/scripts/fleet_combat_command_plan.py)。
