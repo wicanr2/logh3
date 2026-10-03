@@ -16,6 +16,13 @@
 
 ## 這裡的東西怎麼寫
 
+- [第五十輪移動後戰術座標](../goal/2026-10-03-fleet-arrival-placement-round-50.md)
+- [移動後座標原版擷取器](../../tools/fleet_arrival_oracle.sh)
+- [移動後配置IDA定位工具](../../tools/scripts/fleet_arrival_ida.py)
+- [移動後原池配置規則](../../internal/rules/fleetarrival.go)
+- [移動過場後的正式配置接線](../../internal/game/fleetarrival.go)
+- [正常S3配置與保存驗證](../../internal/game/fleetarrival_test.go)
+
 - [第四十四輪正常玩家戰場入口配對](../goal/2026-10-03-battle-normal-entry-round-44.md)
 - [正常原版冷啟動擷取器](../../tools/battle_normal_entry_oracle.sh)
 - [正式資源正常玩家探測](../../tools/scripts/battle_normal_probe.go)
@@ -302,3 +309,4 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [月底旗標研究387](../re/387-month-seat-gate.md)：重複結算根因、原版受控變因及088子契約的證據審查。
 - [正式月底旗標](../../internal/game/monthseat.go)：單人raw WORK閘門、座位清除與回合進位重設，雙人仍依既有016範圍。
 - [月底旗標正常驗證](../../internal/game/monthseat_test.go)：原版正常旗標、兩AI／兩陣營的正式存讀、旗標非零與跨月一次結算。
+- [到達配置研究388](../re/388-fleet-arrival-placement.md)、[完整收據](data/fleet-arrival-placement.json)及[產生器](../../tools/scripts/fleet_arrival_receipt.py)：九艦隊／七十筆池的到達配置、完整表差分與正常首回合無報告的原版雙跑。

@@ -1213,8 +1213,8 @@ func (g *Game) stepFleet(i int) fleetStep {
 			g.openDepartWindow(i, plan)
 			return fleetStepWindow
 		}
-		g.moveFleetTo(i, plan.Next, plan.Cost)
-		g.arriveFleet(i)
+		from := g.moveFleetTo(i, plan.Next, plan.Cost)
+		g.arriveFleet(i, from)
 	}
 	return fleetStepWalked
 }
@@ -1250,13 +1250,13 @@ func (g *Game) fleetStepMorale(i int) []turnReport {
 func (g *Game) openDepartWindow(i int, plan rules.StepPlan) {
 	from := g.fleets[i].Region
 	g.moveFleetTo(i, plan.Next, plan.Cost)
-	g.openTurnWindow(i, screen.TurnWindowDepart, from, plan, func() bool { return g.arriveFleet(i) })
+	g.openTurnWindow(i, screen.TurnWindowDepart, from, plan, func() bool { return g.arriveFleet(i, from) })
 }
 
 // moveFleetTo 把第 i 支走到 next（`113A:047D` 的 `+0585`–`+060F`）：扣移動經費、
 // 錢流進行星、改所在星域。到了目的地的收尾是 `arriveFleet`，人類座位的艦隊
 // 在過場視窗之後才跑（`openDepartWindow`）。
-func (g *Game) moveFleetTo(i, next, cost int) {
+func (g *Game) moveFleetTo(i, next, cost int) int {
 	f := &g.fleets[i]
 	from := f.Region
 	// 走一格要錢：艦隊記錄的 `+0x0C`，原版 `113A:0729` 逐支從
@@ -1284,11 +1284,13 @@ func (g *Game) moveFleetTo(i, next, cost int) {
 	// （`+0x3A`／`+0x3B`／`+0x48`／`+0x5A`／`+0x5B` 與每組艦艇那幾格），
 	// **完全不碰 `+0x28`**（`docs/re/230`、`docs/re/235`）。
 	// 所以 remake 的 `recountRegionFleets` 放在 32 支走完之後，就是原版的做法。
+	return from
 }
 
 // arriveFleet 是 `113A:047D` 的 `+065B` 起：到了目的地就照命令收尾。人類座位的
 // 艦隊在過場視窗（`+060F` → `0B46`）等完之後才跑這一段。回 true ＝ 這一支解散了。
-func (g *Game) arriveFleet(i int) bool {
+func (g *Game) arriveFleet(i, from int) bool {
+	g.placeArrivedFleet(i, from)
 	if rules.Arrive(&g.fleets[i]) {
 		// 駐留到了目的地：整支解散（`113A:06A6` → `297B:025D`，`docs/re/329`）。
 		g.disbandFleet(i)
@@ -1336,8 +1338,8 @@ func (g *Game) answerOccupyAsk(occupy bool) {
 				g.openDepartWindow(i, plan)
 				return
 			}
-			g.moveFleetTo(i, plan.Next, plan.Cost)
-			if g.arriveFleet(i) {
+			from := g.moveFleetTo(i, plan.Next, plan.Cost)
+			if g.arriveFleet(i, from) {
 				g.moveFleetsFrom(i)
 				return
 			}

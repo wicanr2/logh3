@@ -102,7 +102,6 @@ func (s *Slot) SyncFleets(fleets []Fleet, kinds *ShipKindTable, mobility []int) 
 		fresh := r[fleetUnused] == 0xFF
 		changed := fresh || int(r[fleetGroups]) != len(f.Composition) || int(r[fleetUnused]) != f.Admiral || int(r[fleetAdjutant]) != int(byte(f.Adjutant))
 		costChanged := changed || int(r[fleetOps]) != f.Operations
-		moved := fresh || int(r[fleetRegion]) != f.Region
 		for k, gp := range f.Composition {
 			o := fleetSlots + 4*k
 			if int(binary.LittleEndian.Uint16(r[o:])) != gp.Pool || int(r[o+2]) != gp.Slot2 || int(r[o+3]) != gp.Slot3 {
@@ -173,9 +172,6 @@ func (s *Slot) SyncFleets(fleets []Fleet, kinds *ShipKindTable, mobility []int) 
 			if changed {
 				sh[3], sh[5] = byte(k), byte(gp.Slot3)
 			}
-			if moved {
-				sh[2] = byte(f.Region)
-			}
 			for _, v := range []struct{ off, value int }{{shipAlive, gp.Ships}, {shipFull, gp.Full}, {shipRepairCap, gp.RepairCap}, {shipPosX, gp.X}, {shipPosX + 2, gp.Y}} {
 				binary.LittleEndian.PutUint16(sh[v.off:], uint16(v.value))
 			}
@@ -215,9 +211,8 @@ func (s *Slot) SyncFleets(fleets []Fleet, kinds *ShipKindTable, mobility []int) 
 			}
 			clear(sh[shipMissiles : shipFighters+4])
 		}
-		if moved && f.Scout >= 0 && f.Scout < ShipCount {
-			sb[f.Scout*ShipRecord+2] = byte(f.Region)
-		}
+		// 088：原版行軍只更新FLEET星域，既有SHIP+02保留。
+		// 新池的+02仍由allocate初始化，不能把同步當成改編。
 	}
 	s.Fleet, s.Ship = fb, sb
 	return out, nil

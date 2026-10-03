@@ -13,15 +13,17 @@ import (
 // battleSprite 回一個分隊要畫哪一塊 `SPRITE.SPR`（`rules.BattleSprite`）。
 func battleSprite(u rules.BattleUnit, viewer int) int { return rules.BattleUnitSprite(u, viewer) }
 
-// StartBattle 在某個星域開一場戰鬥。
-//
-// 參戰的是所在星域等於 region 的艦隊（`docs/internals/38`）。每一支照
-// 入口表放到它的入口格上，再把分隊散開（`docs/internals/39`）；同一個
-// 入口進來的第二支以後會相撞，原版會錯開 32 像素，錯開的順序還沒解，
-// 所以這裡照順序往下堆。
-//
-// 視野放在第一支參戰艦隊那裡——原版怎麼選還沒解（`docs/internals/34`）。
+// StartBattle保留直接入場診斷的近似佈陣；不能代替正常行軍入口驗收。
 func (g *Game) StartBattle(region int) {
+	g.startBattle(region, false)
+}
+
+// startPlacedBattle由正常星域掃描呼叫，讀移動後的原池配置（規格088）。
+func (g *Game) startPlacedBattle(region int) {
+	g.startBattle(region, true)
+}
+
+func (g *Game) startBattle(region int, placed bool) {
 	if err := g.syncFleetTables(); err != nil {
 		g.saveErr = err
 		return
@@ -44,22 +46,20 @@ func (g *Game) StartBattle(region int) {
 		if f.Region != region {
 			continue
 		}
-		e, ok := g.res.Entries.EntryFor(region, f.Region)
-		if !ok {
-			// 從別處打進來的：原版查的是「來源星域」，remake 還沒有
-			// 行軍來源，先用該星域的第一個入口。
-			if len(g.res.Entries.Regions[region].Entries) == 0 {
-				continue
+		if placed {
+			g.battleUnits = append(g.battleUnits, g.slot.BattleUnitsFor(g.res.Weights, f)...)
+		} else {
+			// 既有直接入場診斷未經行軍；保留近似入口及向下堆疊。
+			e, ok := g.res.Entries.EntryFor(region, f.Region)
+			if !ok {
+				if len(g.res.Entries.Regions[region].Entries) == 0 {
+					continue
+				}
+				e = g.res.Entries.Regions[region].Entries[0]
 			}
-			e = g.res.Entries.Regions[region].Entries[0]
-		}
-		n := seen[e.From]
-		seen[e.From]++
-		x, y := e.X, e.Y-n*battleFleetGap
-		facing := rules.BattleFacing(x, y)
-		for _, u := range g.slot.Deploy(
-			g.res.Weights, g.res.Formation, f, x, y, facing) {
-			g.battleUnits = append(g.battleUnits, u)
+			x, y := e.X, e.Y-seen[e.From]*32
+			seen[e.From]++
+			g.battleUnits = append(g.battleUnits, g.slot.Deploy(g.res.Weights, g.res.Formation, f, x, y, rules.BattleFacing(x, y))...)
 		}
 		joined = append(joined, f.Index)
 	}
@@ -74,10 +74,12 @@ func (g *Game) StartBattle(region int) {
 	g.cancelSupplyPick()
 	g.cancelFleetOrder()
 	g.battleGunOn = false
-	for i := range g.battleFleets {
-		if u := flagshipOf(g.battleUnits, g.battleFleets[i].Index); u != nil {
-			g.battleFleets[i].Facing = rules.BattleFacing(u.X, u.Y)
-			g.battleFleets[i].X, g.battleFleets[i].Y = u.X, u.Y
+	if !placed {
+		for i := range g.battleFleets {
+			if u := flagshipOf(g.battleUnits, g.battleFleets[i].Index); u != nil {
+				g.battleFleets[i].Facing = rules.BattleFacing(u.X, u.Y)
+				g.battleFleets[i].X, g.battleFleets[i].Y = u.X, u.Y
+			}
 		}
 	}
 	if len(g.battleUnits) > 0 {
@@ -100,9 +102,6 @@ func (g *Game) StartBattle(region int) {
 		g.setHumanSeat()
 	}
 }
-
-// battleFleetGap 是同一個入口進來的艦隊之間錯開多少（`docs/internals/38`）。
-const battleFleetGap = 32
 
 func clampCol(c, cols int) int {
 	if c < 0 {

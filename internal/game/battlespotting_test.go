@@ -369,8 +369,11 @@ func TestBattleSpottingNormalWaitAndSave(t *testing.T) {
 		t.Fatalf("正常實行未完成第三階段：%v／%d", saw, g.battleTurn)
 	}
 	t.Logf("正常實行：索敵=%v、發現標頭=%v、完成回合=%d", saw, header, g.battleTurn)
-	if !header {
-		t.Fatal("正常玩家未到達發現報告")
+	// 第50輪原版正常S3：到達配置後，首回合兩座位索敵均完成，
+	// 2526:033B／04B1、3826:0298、3765:006C及25DB:0E78零次。
+	// 舊近似佈陣造成的發現報告不再是正常入口判準；等待另由固定入口驗。
+	if header {
+		t.Fatal("正常S3首回合出現原版沒有的發現報告；研究388")
 	}
 	movementFrame(t, g, "spotting-completed")
 	dir := t.TempDir()

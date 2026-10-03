@@ -53,6 +53,7 @@ func TestMovementSecondBattleRecordsMatchOriginal(t *testing.T) {
 		t.Fatal("S1邊界數不同")
 	}
 	g := newTestGame(t)
+	g.originalBattleAI = true // S1原版收據不套061的單人停留政策。
 	g.loadSlotFromDisk(8)
 	if g.turn != 93 {
 		t.Fatal("未載入S1")

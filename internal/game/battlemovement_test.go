@@ -28,6 +28,7 @@ func TestGameMovementPhaseMatchesOriginal(t *testing.T) {
 		t.Fatal("原版RAM雜湊不同")
 	}
 	g := preparationGame(t, mem)
+	g.originalBattleAI = true // 原版對拍不套061的電腦停留裁決。
 	// 資料測試的StartBattle重設索敵層級；畫面診斷須還原原版完整顯示狀態。
 	for i := range g.battleUnits {
 		u := &g.battleUnits[i]

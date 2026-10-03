@@ -53,6 +53,7 @@ func TestMovementAllBoundariesMatchOriginal(t *testing.T) {
 		t.Fatal("邊界數不同")
 	}
 	g := preparationGame(t, mem)
+	g.originalBattleAI = true // 原版逐圈收據必須啟用兩方步進。
 	loadMovementTiles(t, g)
 	for i := range g.battleUnits {
 		u := &g.battleUnits[i]

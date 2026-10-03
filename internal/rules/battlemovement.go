@@ -6,6 +6,8 @@ import "encoding/binary"
 type MovementFleet struct {
 	Fleet *BattleFleet
 	Units []MovementOccupant
+	// Frozen只停用本組步進；仍列入碰撞物件。遊戲層用於規格061。
+	Frozen bool
 }
 
 // BattleMovement每次Next處理完整一圈，讓正常renderer可畫中間位置。
@@ -23,13 +25,18 @@ func NewBattleMovement(groups []MovementFleet, formation *FormationSlots, terrai
 		if group.Fleet == nil {
 			continue
 		}
-		group.Fleet.Budget = group.Fleet.PerTurn
+		if !group.Frozen {
+			group.Fleet.Budget = group.Fleet.PerTurn
+		}
 		for _, entry := range group.Units {
 			u := entry.Unit
 			if u == nil {
 				continue
 			}
 			m.occupants = append(m.occupants, entry)
+			if group.Frozen {
+				continue
+			}
 			if u.Squadron < 0 && group.Fleet.ScoutMode == 0xFF {
 				continue
 			}
@@ -50,7 +57,7 @@ func (m *BattleMovement) Next() bool {
 	active := false
 	for _, group := range m.groups {
 		f := group.Fleet
-		if f == nil {
+		if f == nil || group.Frozen {
 			continue
 		}
 		check := func(x, y int) int { return BattleMovementCheck(m.terrain, m.cells, m.occupants, f.Faction, x, y) }

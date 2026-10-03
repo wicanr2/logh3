@@ -11,6 +11,9 @@ func (g *Game) newBattleMovement() *rules.BattleMovement {
 	for i := range g.battleFleets {
 		bf := &g.battleFleets[i]
 		group := rules.MovementFleet{Fleet: bf}
+		if cpu, passive := g.passiveComputer(); passive && bf.Faction == cpu {
+			group.Frozen = true
+		}
 		for squad := 0; squad < 10; squad++ {
 			for j := range g.battleUnits {
 				u := &g.battleUnits[j]

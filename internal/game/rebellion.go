@@ -112,10 +112,10 @@ func (g *Game) scanRegionsFrom(from int) {
 			// `0374:04DA` 先 `3705:0349(0)` 整片還原，再 `3705:03FD(星域, 5)` 把要開戰的那一格塗起來。
 			g.mapMark = r
 			region := r
-			if g.startTurnReports(g.enemyFleetFoundReports(r), func() { g.StartBattle(region) }) {
+			if g.startTurnReports(g.enemyFleetFoundReports(r), func() { g.startPlacedBattle(region) }) {
 				return
 			}
-			g.StartBattle(r)
+			g.startPlacedBattle(r)
 			return
 		}
 		// 自家星域的艦艇補充（`1AAB:0FAF`，規格 063、`docs/re/346`）：擁有者停在這一格的艦隊

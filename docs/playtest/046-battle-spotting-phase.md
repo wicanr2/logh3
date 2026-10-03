@@ -487,3 +487,41 @@ tools/gui.sh xrun python3 tools/scripts/month_seat_gate_receipt.py --final
 原版與玩家輸出拒絕覆寫，重建請用保留同版本來源的乾淨工作副本。
 測試期seed覆蓋由[既有工具](../../tools/scripts/battle_normal_probe_seed.py)產生，只固定實行前D3DC167E。
 完整命令列、父snapshot與工具映像身份、來源SHA、控制注入及未解全紀錄保存在JSON。
+
+## 第50輪到達配置及正常首回合無報告
+
+[研究388](../re/388-fleet-arrival-placement.md)、[計畫](../goal/2026-10-03-fleet-arrival-placement-round-50.md)、
+[完整收據](../internals/data/fleet-arrival-placement.json) SHA-256
+`58fd315475e4756f671078e71044d319078689a53b2c6f7d25ce2f24a8516a2a`。
+
+原版到達六份及正常第一戰術實行五份輸出各雙跑相同，固定dosgolem f7523f9／clean。
+九艦隊含兩支未參戰者、七十筆池現在／集結座標及航向驗證後接088 READY子契約。
+正常首回合兩座位查詢都完成，標頭及展示常式零次；舊近似入場的發現報告不再作玩家路徑判準。
+受控151幀／來源／等待／保存保持原局面，未換名成正常S3。
+
+十九份正常bootstrap／Game輸出雙跑相同；380／799/3/1、7艦隊／55戰場池／B6E4B78A保持。
+FLEET全3904 bytes差120減27，SHIP全27456差865減276；WORK14、STELLAR4032／PLANET6642全同。
+全圖5853、Field73、右側5780 pixels仍差，有效RGB相同口徑；底部區零差。
+原圖／前後圖／並排與差分已目視，不裁切、縮放或遮罩。剩餘指標、選取與sprite差異保留。
+真實cmd/gin3一倍／兩倍正常首戰，全圖與Game相同且日期／輸入階段已目視。
+
+110限定PASS零skip、18標準套件通過。原版逐圈fixture補originalBattleAI，停用061刻意偏離；
+普通單人CPU留原地／不傷害與原版正對照都通過，規則公式未因政策改動。
+初跑直接入口、缺資源、CPU歸隊及原版fixture未關政策的失敗log在JSON，原golden不放寬。
+完整088仍DRAFT，#89／#79 OPEN；同盟／雙人全流程、其他八步與平台音樂驗收未新增通過聲明。
+
+```sh
+bash tools/fleet_arrival_oracle.sh normal89-r50-arrival-a
+bash tools/fleet_arrival_oracle.sh normal89-r50-arrival-b
+bash tools/fleet_arrival_oracle.sh normal89-r50-arrival-spot-a
+bash tools/fleet_arrival_oracle.sh normal89-r50-arrival-spot-b
+tools/gui.sh xrun python3 tools/scripts/battle_normal_probe_seed.py --prefix round50-normal
+tools/gui.sh xrun go run -overlay workplace/round50-normal-overlay.json tools/scripts/battle_normal_probe.go -out workplace/round50-final-a
+tools/gui.sh xrun go run -overlay workplace/round50-normal-overlay.json tools/scripts/battle_normal_probe.go -out workplace/round50-final-b
+tools/gui.sh xrun env LOGH3_TURN_GUI_PREFIX=round50-gui-final LOGH3_TURN_PLAYER_DIR=round50-final-a bash tools/turn_counter_gui.sh
+tools/gui.sh xrun go test ./internal/... ./cmd/... -count=1
+tools/gui.sh xrun python3 tools/scripts/fleet_arrival_receipt.py
+```
+
+各批次拒絕覆寫；在保留本輪來源的乾淨工作副本重建。測試期seed覆蓋讀本輪產品的rebellion.go，
+不能沿用第44輪舊覆蓋，否則會把正常入口接回舊StartBattle。完整來源SHA與argv在JSON。

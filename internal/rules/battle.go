@@ -345,6 +345,20 @@ func BattleStrength(units []BattleUnit, faction int) int {
 // 這裡先用艦隊總戰力除以分隊數，等分隊層的戰鬥結算解出來再換掉。
 func (s *Slot) Deploy(w StrengthWeights, formation *FormationSlots,
 	f Fleet, x, y, facing int) []BattleUnit {
+	out := s.BattleUnitsFor(w, f)
+	for i := range out {
+		u := &out[i]
+		u.X, u.Y = formation.Station(x, y, facing, u.Slot)
+		u.TargetX, u.TargetY = u.X, u.Y
+	}
+	return out
+}
+
+// BattleUnitsFor從活艦艇池取得已配置的兩種座標；正常入口不重新佈陣（088）。
+func (s *Slot) BattleUnitsFor(w StrengthWeights, f Fleet) []BattleUnit {
+	if s == nil {
+		return nil
+	}
 	ships := s.FleetGroupShips(f.Index)
 	if len(ships) == 0 {
 		return nil
@@ -364,8 +378,9 @@ func (s *Slot) Deploy(w StrengthWeights, formation *FormationSlots,
 			Detail:      DefaultDetail,
 		}
 		s.fillFromShip(&u, ship, w)
-		u.X, u.Y = formation.Station(x, y, facing, u.Slot)
-		u.TargetX, u.TargetY = u.X, u.Y
+		rec := s.Ship[ship*ShipRecord : (ship+1)*ShipRecord]
+		u.X, u.Y = int(binary.LittleEndian.Uint16(rec[0x34:])), int(binary.LittleEndian.Uint16(rec[0x36:]))
+		u.TargetX, u.TargetY = int(binary.LittleEndian.Uint16(rec[0x28:])), int(binary.LittleEndian.Uint16(rec[0x2A:]))
 		out = append(out, u)
 	}
 	return out
