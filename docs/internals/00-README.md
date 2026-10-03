@@ -1,5 +1,15 @@
 # 原版內部構造參考
 
+第62輪沿#79／#48：[艦隊戰鬥入口計畫](../goal/2026-10-03-fleet-combat-entry-round-62.md)與
+[第四階段原始指令匯出](../../tools/scripts/fleet_combat_phase_ida.py)。
+先核參戰門檻與玩家命令，不以行星對艦隊近似代替原版艦隊戰鬥。
+[第四階段自然入口重播](../../tools/fleet_combat_entry_oracle.sh)保存可回載入口及完整原版資料。
+[第四階段受控門檻計畫](../../tools/scripts/fleet_combat_entry_plan.py)明列唯一入口、所有注入與待驗排序。
+[研究400](../re/400-fleet-combat-entry.md)、[092草稿](../spec/092-fleet-combat-entry.md)與
+[對拍052](../playtest/052-fleet-combat-entry.md)分開入口雙跑及完整階段閘門。
+[入口收據凍結器](../../tools/scripts/fleet_combat_entry_receipt.py)保存完整注入、原指令及未知項，拒絕覆寫。
+[艦隊戰鬥入口完整收據](data/fleet-combat-entry.json)只驗原版重播，未作remake same-state聲明。
+
 第61輪沿#79：[正常首次索敵計畫](../goal/2026-10-03-normal-spotting-round-61.md)與
 [正常原版索敵邊界重播](../../tools/normal_spotting_oracle.sh)。
 保持完整資料與畫面差異，不以無報告或局部情報一致升格完整087。
