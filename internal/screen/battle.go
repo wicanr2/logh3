@@ -629,6 +629,11 @@ func DrawBattleSpottingHighlight(s *BattleSpec, fb *gfx.Framebuffer, sprites []*
 	drawBattleMarks(s, fb, sprites, [][2]int{at}, v, 10)
 }
 
+// 規格088／25DB:0BD2：集結點優先FE，現在位置FF，兩者使用圖塊10。
+func DrawBattleInputHighlight(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image, current, target [2]int, v BattleView) {
+	drawBattleMarks(s, fb, sprites, [][2]int{target, current}, v, 10)
+}
+
 // DrawFormationMarks 把「編隊」的格子標記畫上去。
 //
 // slots 是格子的**世界座標左上角**。色號 0 是透空的——收據 `s3form` 上

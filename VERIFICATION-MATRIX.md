@@ -155,7 +155,7 @@
 | 剩餘軍事費 ＝ 預估軍事費 − 船艦建造費 | **已實作** | 同上 |
 | 艦隊戰力 ＝ Σ 前 `+0x0F` 組的 `權重[艦種] × 現有 × 1000 ÷ 滿編` | **已實作**（`rules.FleetStrength`） | [`docs/re/79`](docs/re/79-per-fleet-decision-pass.md)；上界修正見 [`docs/re/194`](docs/re/194-fleet-record-in-save.md) |
 | 其他（舊矩陣空白占位） | **不適用（已清理占位列）** | [#34](https://github.com/wicanr2/logh3/issues/34)：沒有範圍與驗收條件，不代表待實作功能 |
-| 正常S3載入至首次戰場（#89） | DRAFT；AI跳過、讀檔陣營、進位、活動控制、月底旗標與到達配置六子契約已驗，完整入口待驗 | [088](docs/spec/088-normal-battle-player-entry.md)、[研究388](docs/re/388-fleet-arrival-placement.md)、[到達配置](docs/internals/data/fleet-arrival-placement.json)。第50輪九艦隊／七十筆池與正常首回合無報告原版雙跑；110限定PASS、18套件、十九檔正常入口雙跑及兩尺寸X11通過。FLEET120減27、SHIP865減276；WORK14／STELLAR0／PLANET0，全圖仍5853 pixels差，完整入口待續。 |
+| 正常S3載入至首次戰場（#89） | DRAFT；六子契約已驗，第七摘要／保存限定已驗，完整畫面及入口待驗 | [088](docs/spec/088-normal-battle-player-entry.md)、[研究389](docs/re/389-battle-input-display.md)、[純移動收據](docs/internals/data/battle-input-display.json)。第51輪五組原版與55份正常輸出雙跑、61限定PASS、18套件及兩尺寸X11通過。首戰5853→2 pixels，旗艦／分隊各1，空白／右面板全圖0；WORK14／FLEET27／SHIP276差保留，nearby-state不升格。 |
 
 ## 戰略 AI
 

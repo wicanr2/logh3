@@ -31,6 +31,7 @@ func (g *Game) startBattle(region int, placed bool) {
 	g.battleRegion = region
 	g.battleTurn = 1
 	g.battlePhase = screen.BattlePhaseInput
+	g.battleHoverUnit, g.battleHoverOn = -1, false
 	g.battleUnits = nil
 	g.battleSpotting = battleSpottingState{highlight: -1}
 	g.battleDisplayKnown = false
@@ -101,6 +102,7 @@ func (g *Game) startBattle(region int, placed bool) {
 	if !g.versus {
 		g.setHumanSeat()
 	}
+	g.refreshBattleHover()
 }
 
 func clampCol(c, cols int) int {
@@ -249,6 +251,7 @@ func (g *Game) finishBattleTurn() {
 
 func (g *Game) endBattleTurn() {
 	g.battlePhase = screen.BattlePhaseInput
+	g.battleHoverUnit, g.battleHoverOn = -1, false
 	rules.FortressGunTickAll(g.battlePlanets)
 	g.battleSpotting = battleSpottingState{highlight: -1}
 	g.refreshBattleMarkers()
@@ -257,6 +260,8 @@ func (g *Game) endBattleTurn() {
 	g.battleOver = g.battleTurn > rules.MaxBattleTurns || battleDecided(g.battleUnits)
 	if g.battleOver {
 		g.EndBattle()
+	} else {
+		g.refreshBattleHover()
 	}
 }
 

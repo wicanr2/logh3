@@ -909,6 +909,12 @@ type Game struct {
 	battleCmdPlanet        int // -1 ＝ 這一張不是行星的選單
 	battleCmdKind          screen.CommandMenuKind
 	battleCmdX, battleCmdY int
+	// 規格088正常Input：摘要與反白在換入另一分隊的移動事件建立。
+	battleHoverUnit    int
+	battleHoverPanel   screen.UnitPanelView
+	battleHoverOn      bool
+	battleHoverCurrent [2]int
+	battleHoverTarget  [2]int
 
 	// battleMove ＝ 選了「移動」之後在等玩家點目的地（`docs/spec/024`）；
 	// battleMoveUnit 是要移動的分隊。
@@ -1280,9 +1286,9 @@ func (g *Game) moveFleetTo(i, next, cost int) int {
 	g.res.Planets.PayIntoRegion(payTo, cost)
 	// 星域艦隊數（`+0x28`／`+0x29`）不是走一格的時候改的：原版在 32 支全部走完之後
 	// 由 `2703:0853` 整批重數（呼叫點 `056A:000C +0x0052`，`docs/re/297` §一），
-	// 它先把 32 格清 0 再逐支加一，沒有提早返回。`297B:08D8` 只清戰鬥暫存
-	// （`+0x3A`／`+0x3B`／`+0x48`／`+0x5A`／`+0x5B` 與每組艦艇那幾格），
-	// **完全不碰 `+0x28`**（`docs/re/230`、`docs/re/235`）。
+	// 它先把 32 格清 0 再逐支加一，沒有提早返回。`297B:08D8` 清戰鬥暫存
+	// 並重配分隊位置（研究388），不碰星域的+0x28／29。艦艇+0x28是另一張表
+	// 的集結點，不能與星域艦隊數混用（研究235勘誤）。
 	// 所以 remake 的 `recountRegionFleets` 放在 32 支走完之後，就是原版的做法。
 	return from
 }
@@ -2179,6 +2185,7 @@ const mouseDY = ui.MouseDY
 func (g *Game) MoveMouse(x, y int) {
 	g.moveMouse(x, y)
 	g.refreshHoverRegion()
+	g.refreshBattleHover()
 }
 
 // moveMouse 只搬游標，不碰左下角那塊。
@@ -4871,6 +4878,9 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		if g.battleSpotting.highlight >= 0 && g.battleSpotting.active && g.battleSpotting.stage == 5 {
 			u := g.battleSpotting.refs[g.battleSpotting.highlight].Unit
 			screen.DrawBattleSpottingHighlight(g.res.Battle, fb, g.res.Sprites, [2]int{u.X, u.Y}, view)
+		}
+		if g.battleHoverOn && g.battleInputIdle() {
+			screen.DrawBattleInputHighlight(g.res.Battle, fb, g.res.Sprites, g.battleHoverCurrent, g.battleHoverTarget, view)
 		}
 	}
 	// 艦隊選點時畫兩個範圍圖形（`docs/re/120`、`docs/re/135`）。

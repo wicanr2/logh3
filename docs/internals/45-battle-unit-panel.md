@@ -4,15 +4,15 @@
 （[`docs/re/118`](../re/118-battle-unit-panel-layout.md)）。
 運補艦／修護艦／索敵分遣隊那三行的畫面還沒取到收據。
 
-點自己陣營的分隊時（`docs/internals/44`），右側的狀態欄換成這塊面板。
+正常Input只要游標移入己方分隊，就換成分隊摘要，不必按下。
+同分隊內移動保持快照，離開至空白或右面板恢復戰場摘要。
+這項觸發為proven，原版五組獨立雙跑及IDA原始指令見[研究389](../re/389-battle-input-display.md)。
+舊研究282的純移動推論已補正常反例；dosgolem點擊前移仍依`-click-move-lead`，
+本輪純移動使用`-mouse-x/-mouse-y/-mouse-at`，完整命令見[重播工具](../../tools/battle_input_display_oracle.sh)。
 
-> **面板要的是先有一次純移動事件**（`strong inference`，
-> [`docs/re/282`](../re/282-the-translation-dropped-the-click-pre-move.md)）：
-> 移動與按下落在同一道指令時，艦隊選單照樣開出來（框與內容逐位元組
-> 相同），右側卻留在預設戰況欄。所以取這塊面板的收據，旗標要讓游標
-> 先到位再按下（`-mouse-x/-mouse-y/-mouse-at`，或 `-click-premove`）。
-> 面板讀的是不是「游標底下那一格」還沒量（要一張「移到別的分隊上、
-> 不按下」的收據），與左下角星域摘要（`docs/re/277`）是同一個形狀。
+己方現在位置與集結點各用圖塊10反白；分隊集結點讀+28／2A，旗艦讀艦隊+64／66。
+快取編號與兩個顯示物件不在SHIP+30中；正常純移動的完整SHIP／FLEET／WORK保持。
+敵方、行星、特殊艦種文字、重疊命中與模態退出仍未新增對拍聲明。
 與狀態欄同一個框、同一組字元格：**格原點 (480,242)、欄距 16、列距 20、
 八列**。每一段的位置用「第幾個半形格」表示，x ＝ 480 ＋ 半形格 × 8。
 
@@ -53,3 +53,7 @@
 | 7 索敵分遣隊 | `剩餘燃料  %3d 回`，值 ＝ 4 − 艦隊 `+0x3B` |
 
 機器可讀版本在 [`data/unit-panel.json`](data/unit-panel.json)。
+
+正常輸入收據見[data/battle-input-display.json](data/battle-input-display.json)。
+標籤「艦隊士氣值」仍讀FLEET+3C；戰術型別名稱是Integrity，語意見[研究153](../re/153-fleet-integrity.md)。
+正常入口不得用戰略停泊命令代替戰術+48行動。完整首戰仍有2 pixels未知差異。

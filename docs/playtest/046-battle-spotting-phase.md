@@ -525,3 +525,13 @@ tools/gui.sh xrun python3 tools/scripts/fleet_arrival_receipt.py
 
 各批次拒絕覆寫；在保留本輪來源的乾淨工作副本重建。測試期seed覆蓋讀本輪產品的rebellion.go，
 不能沿用第44輪舊覆蓋，否則會把正常入口接回舊StartBattle。完整來源SHA與argv在JSON。
+
+## 第51輪上游正常Input摘要
+
+沿#89及088 READY補純移動摘要與兩個SPRITE 10反白物件；
+[研究389](../re/389-battle-input-display.md)及[完整收據](../internals/data/battle-input-display.json)
+SHA-256 `c1f387c1e3729450f4b7b3f9f8babb21b0b8f49d1b0762b1f6e0cca648cfb5c6`。
+原版五組RAM／畫面／色盤雙跑相同；正常Game55檔雙跑與兩尺寸X11通過，61限定PASS、18套件。
+初始首戰5853→2 pixels；旗艦／分隊各1、空白／右面板全圖0，五案文字區0／20480。
+全資料仍WORK14／FLEET27／SHIP276差，完整入口nearby-state，不由單側全圖或局部同圖升格。
+151受控索敵幀及087 READY保持；正常玩家完整索敵配對仍待#89，完整八步未完成。

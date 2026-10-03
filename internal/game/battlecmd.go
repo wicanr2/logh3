@@ -197,10 +197,45 @@ func (g *Game) commandMenuClick(x, y int) bool {
 	return true
 }
 
-// 分隊面板（`docs/re/118`）：點自己陣營的分隊時，右側的狀態欄換成它。
-//
-// **只在命令選單開著的時候換**——收據上兩者一起出現，選單關掉之後會不會
-// 留著沒有量過（`docs/spec/023`）。
+// 正常Input的純移動摘要依規格088及研究389；命令選單沿023既有範圍。
+
+func (g *Game) battleInputIdle() bool {
+	return g.state == StateBattle && g.battlePhase == screen.BattlePhaseInput &&
+		!g.battlePreparing && !g.battleMoving && !g.battleSpotting.active &&
+		!g.battleMenu && !g.battleCmd && !g.battleMove && !g.battleForm &&
+		!g.battleSupply && g.fleetOrder == FleetOrderNone && !g.battleGunOn &&
+		!g.planetInfoOn && !g.battleData && !g.battleDetail && !g.msgOn && !g.battleScrollHeld
+}
+
+func (g *Game) refreshBattleHover() {
+	if !g.battleInputIdle() {
+		return
+	}
+	i := g.battleUnitAt(g.mouseX, g.mouseY)
+	if i >= 0 && g.battleUnits[i].Faction != g.faction {
+		i = -1 // 敵方摘要仍待原版取證，不使用己方完整摘要洩漏資料。
+	}
+	if i == g.battleHoverUnit {
+		return
+	}
+	g.battleHoverUnit, g.battleHoverOn = i, false
+	if i < 0 {
+		return
+	}
+	v, ok := g.unitPanelFor(i)
+	if !ok {
+		return
+	}
+	u := g.battleUnits[i]
+	g.battleHoverPanel, g.battleHoverOn = v, true
+	g.battleHoverCurrent = [2]int{u.X, u.Y}
+	g.battleHoverTarget = [2]int{u.TargetX, u.TargetY}
+	if u.Squadron == 0 {
+		if f := g.battleFleet(u.Fleet); f != nil {
+			g.battleHoverTarget = [2]int{f.DestX, f.DestY}
+		}
+	}
+}
 
 // 艦種列上這一層讀的四個「每艘幾件」（`docs/internals/40`）。
 const (
@@ -213,10 +248,20 @@ const (
 
 // unitPanelView 組出分隊面板要顯示的內容。
 func (g *Game) unitPanelView() (screen.UnitPanelView, bool) {
+	if g.battleInputIdle() && g.battleHoverOn {
+		return g.battleHoverPanel, true
+	}
+	sel, ok := g.selectedUnit()
+	if !ok {
+		return screen.UnitPanelView{}, false
+	}
+	return g.unitPanelFor(sel)
+}
+
+func (g *Game) unitPanelFor(sel int) (screen.UnitPanelView, bool) {
 	var v screen.UnitPanelView
 	s := g.res.UnitPanel
-	sel, ok := g.selectedUnit()
-	if s == nil || !ok {
+	if s == nil || sel < 0 || sel >= len(g.battleUnits) {
 		return v, false
 	}
 	u := g.battleUnits[sel]
@@ -236,16 +281,19 @@ func (g *Game) unitPanelView() (screen.UnitPanelView, bool) {
 		v.KindName = fd.ShipKinds[u.Kind].Codes
 	}
 	v.Ships = u.Ships
+	bf := g.battleFleet(u.Fleet)
 
 	// 士氣：旗艦印艦隊的（建立艦隊時寫死 100），其餘印自己那筆。
 	if v.Flagship {
 		v.FleetMorale, v.Morale = true, f.Morale
+		if bf != nil {
+			v.Morale = bf.Integrity // 原版標籤為士氣，實際欄位仍是FLEET+3C。
+		}
 	} else {
 		v.Morale = u.Morale
 	}
 
 	// 行動：分隊沒有自己的命令（`+0x1E ＝ 0x7F`）就印艦隊的。
-	bf := g.battleFleet(u.Fleet)
 	switch {
 	case u.Action != squadronNone && u.Action < len(s.SquadronActions):
 		v.UnitAction = true
@@ -255,6 +303,9 @@ func (g *Game) unitPanelView() (screen.UnitPanelView, bool) {
 		v.CannotFight = true
 	default:
 		a := f.Action
+		if bf != nil {
+			a = bf.Action & 0x0F
+		}
 		if a >= 0 && a < len(s.FleetActions) {
 			v.ActionName = s.FleetActions[a].Codes
 			v.ActionInk = s.FleetActionInkOf(a)

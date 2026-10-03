@@ -1,12 +1,90 @@
 package game
 
 import (
+	"bytes"
+	"os"
 	"path/filepath"
+	"slices"
 	"testing"
 
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
 )
+
+// 診斷入口只驗事件快照與正式保存；正常原版全圖另由第51輪收據驗。
+func TestOwnHoverSnapshotAndSave(t *testing.T) {
+	g := commandTestGame(t)
+	if g == nil {
+		return
+	}
+	unit := findUnit(g, g.faction, true)
+	if unit < 0 {
+		t.Fatal("缺可見己方旗艦")
+	}
+	g.battleHoverUnit, g.battleHoverOn = -1, false
+	f := g.battleFleet(g.battleUnits[unit].Fleet)
+	if f == nil {
+		t.Fatal("缺活戰術艦隊")
+	}
+	f.Integrity, f.Action = 71, 4
+	g.battleUnits[unit].Action = squadronNone
+	x, y := unitScreenPos(g, unit)
+	before, after := t.TempDir(), t.TempDir()
+	seed := g.rand94DC().Seed()
+	if err := g.SaveSlot(before, 0); err != nil {
+		t.Fatal(err)
+	}
+	g.MoveMouse(x+8, y+8)
+	v, ok := g.unitPanelView()
+	if !ok || !v.Flagship || v.Morale != 71 || !slices.Equal(v.ActionName, g.res.UnitPanel.FleetActions[4].Codes) {
+		t.Fatal("純移動未顯示活FLEET+3C／+48摘要")
+	}
+	if g.CommandMenuOpen() || g.battleMenu {
+		t.Fatal("純移動開了命令選單")
+	}
+	for _, p := range [][2]int{{100, 140}, {500, 290}} {
+		g.MoveMouse(p[0], p[1])
+		if _, ok := g.unitPanelView(); ok || g.battleHoverOn {
+			t.Fatal("離開分隊未恢復戰場摘要")
+		}
+	}
+	if err := g.SaveSlot(after, 0); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"FLEET.DT0", "SHIP.DT0", "WORK.DT0"} {
+		a, err := os.ReadFile(filepath.Join(before, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		b, err := os.ReadFile(filepath.Join(after, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !bytes.Equal(a, b) {
+			t.Fatalf("純移動改變正式保存%s", name)
+		}
+	}
+	if g.rand94DC().Seed() != seed {
+		t.Fatal("純移動消費亂數")
+	}
+	g.MoveMouse(x+4, y+4)
+	v, ok = g.unitPanelView()
+	if !ok {
+		t.Fatal("未恢復旗艦摘要")
+	}
+	f.Integrity = 72
+	g.MoveMouse(x+5, y+5)
+	kept, _ := g.unitPanelView()
+	if kept.Morale != v.Morale {
+		t.Fatal("同分隊移動重算摘要")
+	}
+	g.MoveMouse(500, 290)
+	g.MoveMouse(x+4, y+4)
+	updated, _ := g.unitPanelView()
+	if updated.Morale != 72 {
+		t.Fatal("再次進分隊沒有建立新快照")
+	}
+}
 
 // unitScreenPos 回第 i 個分隊在畫面上的左上角。
 func unitScreenPos(g *Game, i int) (int, int) {

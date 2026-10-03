@@ -19,6 +19,7 @@ import (
 func main() {
 	out := flag.String("out", "workplace/round44-normal", "新的探測輸出目錄")
 	skipLoaded := flag.Bool("skip-loaded-save", false, "省略實行前診斷存檔，以排除存檔副作用")
+	inputDisplay := flag.Bool("input-display", false, "首戰正常Input的四個純移動收據")
 	flag.Parse()
 	if _, err := os.Stat(*out); !os.IsNotExist(err) {
 		panic("輸出已存在或無法核對")
@@ -99,6 +100,16 @@ func main() {
 	}
 	g.MoveMouse(240, 240)
 	save("entry")
+	if *inputDisplay {
+		for _, c := range []struct {
+			name string
+			x, y int
+		}{{"flagship", 248, 248}, {"squad", 249, 224}, {"empty", 100, 140}, {"panel", 500, 290}} {
+			g.MoveMouse(c.x, c.y)
+			inputs = append(inputs, fmt.Sprintf("move %d %d", c.x, c.y))
+			save(c.name)
+		}
+	}
 	y, m, d := g.Date()
 	meta := map[string]any{"classification": "normal-player-entry-probe; parity not established", "strategy_seed_observed_before": fmt.Sprintf("%08X", seedBefore), "strategy_seed_before": fmt.Sprintf("%08X", seedFixed), "strategy_seed_after": fmt.Sprintf("%08X", g.NormalProbeStrategySeed()), "seed_setup": "測試期Go覆蓋只固定實行前D3DC167E，正式產品不變", "inputs": inputs, "ticks": ticks, "date": []int{y, m, d}, "state": g.State(), "resources": "bootstrap.Load; Game.New", "palette_note": "screen.png暫用主選單色盤；正式RGB比較必須讀原版有效色盤"}
 	b, err := json.MarshalIndent(meta, "", "  ")

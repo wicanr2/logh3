@@ -310,3 +310,8 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [正式月底旗標](../../internal/game/monthseat.go)：單人raw WORK閘門、座位清除與回合進位重設，雙人仍依既有016範圍。
 - [月底旗標正常驗證](../../internal/game/monthseat_test.go)：原版正常旗標、兩AI／兩陣營的正式存讀、旗標非零與跨月一次結算。
 - [到達配置研究388](../re/388-fleet-arrival-placement.md)、[完整收據](data/fleet-arrival-placement.json)及[產生器](../../tools/scripts/fleet_arrival_receipt.py)：九艦隊／七十筆池的到達配置、完整表差分與正常首回合無報告的原版雙跑。
+- [第51輪正常首戰輸入顯示](../goal/2026-10-03-battle-input-display-round-51.md)：接續#89，核對游標／右側摘要與選取、sprite快取，完整088仍DRAFT。
+- [正常首戰純移動原版重播](../../tools/battle_input_display_oracle.sh)：固定435M輸入邊界，分隊、空白及面板位置的單次純移動與完整RAM／畫面。
+- [純移動摘要研究389](../re/389-battle-input-display.md)與[IDA匯出](../../tools/scripts/battle_input_display_ida.py)：摘要快取、退出與兩個SPRITE 10物件的原始定位；088限定正常Input範圍。
+- [純移動完整收據產生器](../../tools/scripts/battle_input_display_receipt.py)：保存五組獨立原版雙跑、正常入口全圖及未解像素，不改第50輪收據。
+- [純移動結構化收據](data/battle-input-display.json)：五個IDA函式535條原指令與22項分級定位、55份正常入口雙跑及兩尺寸X11；全圖2／1／1／0／0 pixels差保留。
