@@ -1,5 +1,8 @@
 # 419：戰場升級後的能力、速度、完整度與費用
 
+2026-10-05第86輪勘誤：[研究420](420-battle-promotion-global.md)證實下文STELLAR觀測起點A7BC偏32 bytes，正確為A79C。
+舊STELLAR完整性聲明撤回，已由新雙跑取代；三表與費用結果保持。下文保留第85輪歷史。
+
 沿[Issue #79](https://github.com/wicanr2/logh3/issues/79)與[108草稿](../spec/108-battle-promotion.md)。
 [研究418](418-battle-promotion.md)已核成長與通知，本輪補重算資料鏈。
 所有結論限於原版診斷；正式8-4尚未接線。

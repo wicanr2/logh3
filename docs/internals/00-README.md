@@ -1,5 +1,13 @@
 # 原版內部構造參考
 
+第86輪沿#79：[戰場升級全局回寫計畫](../goal/2026-10-04-battle-promotion-global-round-86.md)。
+108保持DRAFT，全局完整表已核；剩typed窄回寫契約與正式玩家接線。
+[全局組合探針](../../tools/scripts/battle_promotion_global_probe.go)以第85輪已核的提督／艦隊資料與明示父RAM輸入驗算。
+[修正觀測器產生器](../../tools/scripts/battle_promotion_global_prepare.py)、
+[雙跑入口](../../tools/battle_promotion_global_oracle.sh)與[容器內入口](../../tools/battle_promotion_global_native_run.sh)修正STELLAR基底並補完整行星及路徑輸入。
+[全局來源凍結器](../../tools/scripts/battle_promotion_global_receipt.py)產生[完整全局收據](data/battle-promotion-global.json)。
+[研究420](../re/420-battle-promotion-global.md)及[驗證075](../playtest/075-battle-promotion-global.md)保存53次全局回寫與STELLAR基底勘誤。
+
 第85輪沿#79：[戰場升級重算與接線計畫](../goal/2026-10-04-battle-promotion-wiring-round-85.md)。
 沿108草稿補297B:05B2／0E8B原版完整資料鏈，達READY後才接正式升級。
 [原版重算觀測器產生器](../../tools/scripts/battle_promotion_recalc_prepare.py)、

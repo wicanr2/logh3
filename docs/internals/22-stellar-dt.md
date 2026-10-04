@@ -1,5 +1,15 @@
 # `STELLAR.DT[89AX]` — 星域資料
 
+## 戰場升級的全局重算
+
+[研究420](../re/420-battle-promotion-global.md)與[完整來源](data/battle-promotion-global.json)
+核對66案固定8-4入口雙跑及53次090A:0E6D返回。證據等級proven。
+經濟力取重算前行星加總，預估稅依星域歸屬累加，未安定度依042重算。
+完整STELLAR及WORK逐byte相同，637個星域改變bytes只落在記錄+1A、+1B、+7D。
+四路徑矩陣由重算前歸屬獨立建立，與返回後EMS相同；入口的EMS圖像映射不能當路徑。
+第85輪收據的DS:A7BC觀測偏32 bytes，正確基底為DS:A79C，已保留勘誤並重跑。
+本結果不代表正式Game升級或正常玩家驗收完成，108保持DRAFT。
+
 資料：`docs/internals/data/stellar.json`（四個版本全欄位）
 可讀版本：`docs/lore/star-regions.md`
 產生：`tools/py.sh tools/scripts/stellar_export.py`

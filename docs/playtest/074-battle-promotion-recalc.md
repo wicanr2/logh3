@@ -1,5 +1,8 @@
 # 074：戰場升級重算原版診斷
 
+第86輪勘誤：[075](075-battle-promotion-global.md)以正確DS:A79C重跑。
+本頁第85輪STELLAR從A7BC讀取，偏32 bytes，完整性聲明撤回；三表、亂數與費用證據保持。
+
 工作：[Issue #79](https://github.com/wicanr2/logh3/issues/79)，[108仍DRAFT](../spec/108-battle-promotion.md)。
 這份收據比較固定原版雙跑與獨立模型，沒有remake畫面、正常玩家或完整回合同態聲明。
 來源、原始定位、公式與雜湊見[研究419](../re/419-battle-promotion-recalc.md)。
