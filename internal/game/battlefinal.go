@@ -31,8 +31,10 @@ func (g *Game) battleFinalPhase(i int, next func()) bool {
 			continue
 		}
 		if !g.battleFlagshipGone(index) {
-			rules.RemoveEmptyGroups(f)
-			g.removeEmptyBattleUnits(index)
+			if err := g.cleanupBattleFleet(index); err != nil {
+				g.saveErr = err
+				return true
+			}
 			resume := i + 1
 			if g.startBattleReports(g.moraleReports(f), func() {
 				if !g.battleFinalPhase(resume, next) {
@@ -67,19 +69,6 @@ func (g *Game) battleFlagshipGone(index int) bool {
 		}
 	}
 	return true
-}
-
-// removeEmptyBattleUnits 是 `185C:0177`：艘數 0 的分隊從戰場上拿掉（旗艦那一組留著，
-// 走到這裡就表示它還有船）。
-func (g *Game) removeEmptyBattleUnits(index int) {
-	out := g.battleUnits[:0]
-	for _, u := range g.battleUnits {
-		if u.Fleet == index && u.Squadron != 0 && u.Ships == 0 {
-			continue
-		}
-		out = append(out, u)
-	}
-	g.battleUnits = out
 }
 
 // battleAnnihilationReport 是 `185C:028E`：`3982:011D` 的「<陣營>第Ｎ艦隊<提督名>」
@@ -129,6 +118,6 @@ func (g *Game) annihilateBattleFleet(i int) {
 	}
 	// `12AA:03BC(星域)` 重建戰場的兩張表。remake 的表是切片，拿掉那幾筆就等於
 	// 重建，所以這裡只把編制完整度重算（打行星讀 `+0x3C`）。原版在整個子步跑完
-	// 才重建一次，remake 逐支拿掉時做——**拿掉艦隊是唯一會讓表過期的事**，結果相同。
+	// 才重建一次，remake逐支拿掉時做。空組另由109同步原池及分隊索引。
 	rules.RefreshFleetIntegrity(g.battleFleets, g.battleUnits)
 }

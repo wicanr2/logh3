@@ -1,0 +1,5058 @@
+{
+  "schema": "logh3.battle-cleanup-review.v1",
+  "issue": 79,
+  "scope": "35案固定8-1入口明示死亡；純獨立模型，非正常玩家全流程",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_dirty": false,
+  "cases": [
+    {
+      "name": "fleet12-count8-mask0",
+      "fleet": 12,
+      "count_before": 8,
+      "count_after": 8,
+      "removed_pools": [],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "b842f2db8acef7217a6024721dd4355b33aa5e42f5ca420d4b1bbe1020fdc630",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "503e2520cdeb866c404b7e93ef3a5ff213eca15e8cece0ad15c331a5a99774e7",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet12-count8-mask2",
+      "fleet": 12,
+      "count_before": 8,
+      "count_after": 7,
+      "removed_pools": [
+        82
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "9a646531b33c3e87164e7452cde4835fe1fdf8be1cabe3435914d9996e462dc9",
+        "lists": "847f87adde5e582f6dd3d0a61842d72fdfa4f2f7d52b7be5407e199b460787f7",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "cde3c7f039dc34f6672996fdcac0f67968fa5fa99a2c5c698dfbed80875d351a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet12-count8-mask80",
+      "fleet": 12,
+      "count_before": 8,
+      "count_after": 7,
+      "removed_pools": [
+        88
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "fe4f0de917347cbe008fe34a88e81727ddc52c06c1e827516f155415a7659b47",
+        "lists": "c162860baf13c8bbaff9dc04ac4a99c690800245ac1168ca792f365129fde48e",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "2b1f5b0ff399f4f1dbcd6afe3651c8b1e8f8532b2959944199e83b0b9069fb7a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet12-count8-maskFE",
+      "fleet": 12,
+      "count_before": 8,
+      "count_after": 1,
+      "removed_pools": [
+        82,
+        83,
+        84,
+        85,
+        87,
+        86,
+        88
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "6e39e6a0702a433d5643df0d87be60e728cf4bed2de3b3d59baf0fac8285c971",
+        "lists": "1330d040acf16f71d910ce2a1b2e24b52b642eed10bc898016f4aaea4f476a83",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "98f9ae268e4f59ae15c1105ed4c35b5ad2d6a42f4a9e5a23cc9c30842bc39706",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet12-count8-maskAA",
+      "fleet": 12,
+      "count_before": 8,
+      "count_after": 4,
+      "removed_pools": [
+        82,
+        84,
+        87,
+        88
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "e59329de6ddde809e40a5977fbd0a19e1ba56161c275e293fdec12ab0ffe2a26",
+        "lists": "ab2f57827ae1eeec9b33ee2d4ad5972bb10f887b06a45371bc4d43dd9f774efc",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "22ca0a548a2765fe47f78354a9935ae04fd57ad7efeee1916a358c22caf5f38b",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet16-count6-mask0",
+      "fleet": 16,
+      "count_before": 6,
+      "count_after": 6,
+      "removed_pools": [],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "b842f2db8acef7217a6024721dd4355b33aa5e42f5ca420d4b1bbe1020fdc630",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "503e2520cdeb866c404b7e93ef3a5ff213eca15e8cece0ad15c331a5a99774e7",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet16-count6-mask2",
+      "fleet": 16,
+      "count_before": 6,
+      "count_after": 5,
+      "removed_pools": [
+        104
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "1bf93ab9ccd25071073a361503f75c35badd8d8488bccad7450c9094ece8b799",
+        "lists": "37b8d225dff216668b6e5faeeb0256946cc666c1f741ddd183d863328658ce47",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "13c97d3dc07e45736a660e8bbb282d60143ed2ac6214ea320a2d7b59973e468d",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet16-count6-mask20",
+      "fleet": 16,
+      "count_before": 6,
+      "count_after": 5,
+      "removed_pools": [
+        108
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "a30fa6d56d2c36db8c07cd264ad0773c7e0b6a590a961c96bd3a2669466a9c61",
+        "lists": "f61ec06aa89ee7883addc1f7ceec60c5f1a5ae71246ec4d872fc1968e9911439",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "ba062cfe1331a7938b7a5c29cdef55fbd7e588f768f40bf4e5c2b481274ab26f",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet16-count6-mask3E",
+      "fleet": 16,
+      "count_before": 6,
+      "count_after": 1,
+      "removed_pools": [
+        104,
+        105,
+        106,
+        107,
+        108
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "5b0f06a9a151e841fc6645269942e067d9af195e1878d30da9a661fbbfdf5432",
+        "lists": "5a953794761ef83fba74fab4d6e3768dbd1a9bacb8432b879b4b10e7c6ad7692",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "51c3dca3174cb302e0578a056e4d56e0f1d4c033871e03e6a8e6a5771d5386c5",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet16-count6-mask2A",
+      "fleet": 16,
+      "count_before": 6,
+      "count_after": 3,
+      "removed_pools": [
+        104,
+        106,
+        108
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "c535aa3b493f62cbbe994e66669b753d42c517ba8c5ee290cddb08b410a74dd9",
+        "lists": "5bf6b613ebc9ef1edefbebf5eaa4875301c3c8cb63354419ed61fd308079125d",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "7bdc3c1fa975fa235b1f2eefe321bf7a917edcf3a564c81c192b05fecb384a9a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet17-count4-mask0",
+      "fleet": 17,
+      "count_before": 4,
+      "count_after": 4,
+      "removed_pools": [],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "b842f2db8acef7217a6024721dd4355b33aa5e42f5ca420d4b1bbe1020fdc630",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "503e2520cdeb866c404b7e93ef3a5ff213eca15e8cece0ad15c331a5a99774e7",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet17-count4-mask2",
+      "fleet": 17,
+      "count_before": 4,
+      "count_after": 3,
+      "removed_pools": [
+        144
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "ab802f8fff5a9201246e45c8d3eea60ad9fdec8520a916cb30904d1772bcfeed",
+        "lists": "1700688d543c9b87585fa2f9630f1d6fe9d2524a9bd81e39e3a093820a05cf0d",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "b2e3f074e9766813a0042178f53a6f869038361ceb5b89a018c166d51c60996d",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet17-count4-mask8",
+      "fleet": 17,
+      "count_before": 4,
+      "count_after": 3,
+      "removed_pools": [
+        146
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "fc73f954c0f70fef7343ca0c37568fd72f428c57ef865105114210cb71ff475b",
+        "lists": "a02930ddeeefeaa5b4b14b139adf48dbf56442584158334d8d2ba6b145cc89f9",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "9a5333f986aeba8e1f38e9ba3f54afe552e517981e3d3be54fcc405ed955f370",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet17-count4-maskE",
+      "fleet": 17,
+      "count_before": 4,
+      "count_after": 1,
+      "removed_pools": [
+        144,
+        145,
+        146
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "723500e25e8d20fb9dafd0bd19775082f38f35fc3edfb5ef46e319ddddb71016",
+        "lists": "580da924aed910b5e1b3fa38605d8197ace9f70018c62e260ebf8396a94a1b48",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "1b642b24a7f09cb17244146bd6587c207b1834d70aa82f3ef14d06e7f48c22cf",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet17-count4-maskA",
+      "fleet": 17,
+      "count_before": 4,
+      "count_after": 2,
+      "removed_pools": [
+        144,
+        146
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "89a69eccbeceff337bbe426253ef81f8738e4c856794f3976b636229dad354d8",
+        "lists": "3a06b60d70542047198eb57630774e6e859d84b6d0eb33433872421c33c1ed64",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "331d897e6442cbc1278aa3232a12526355ceb561a599ac1db097dff8a00b5920",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet28-count9-mask0",
+      "fleet": 28,
+      "count_before": 9,
+      "count_after": 9,
+      "removed_pools": [],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "b842f2db8acef7217a6024721dd4355b33aa5e42f5ca420d4b1bbe1020fdc630",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "503e2520cdeb866c404b7e93ef3a5ff213eca15e8cece0ad15c331a5a99774e7",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet28-count9-mask2",
+      "fleet": 28,
+      "count_before": 9,
+      "count_after": 8,
+      "removed_pools": [
+        113
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "ff9005a3bf81ecabeee393a718ac08371b8aced42f85119ecb759e58a7d9791e",
+        "lists": "59eaf1910cd9eb240e9a3d0c68fec6f9be468529a970158fd2a64fee437dadf7",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "6cf54ecb70e791ee8c02a20a614a145c2d42a5f0421f891825b19932914aacf0",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet28-count9-mask100",
+      "fleet": 28,
+      "count_before": 9,
+      "count_after": 8,
+      "removed_pools": [
+        118
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "1e7826b41e7a26b9b31c42c1d36003f8c8b685a90d767d6fcc903d36c23cdb1b",
+        "lists": "e6e552699a7407154650b679b64e5e6584c32fa08614e5d626066eec7e3881bf",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "dede10b3a59d02674045dc17eabf540739f77234a78e8c4d8fa444b1cd151c74",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet28-count9-mask1FE",
+      "fleet": 28,
+      "count_before": 9,
+      "count_after": 1,
+      "removed_pools": [
+        113,
+        111,
+        112,
+        114,
+        115,
+        116,
+        117,
+        118
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "2f033598754d306cf7fd5791d2ffb8acee254b554f9a34930d4f71dc69255775",
+        "lists": "83141cef6644788f4476010295e13e5e3c4149767e548ef508628ce6f1966c55",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "e9164afa089a6896590f2f506154c01b3a4d1656ffa6f00ca2cdfccb1d2c3f70",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet28-count9-maskAA",
+      "fleet": 28,
+      "count_before": 9,
+      "count_after": 5,
+      "removed_pools": [
+        113,
+        112,
+        115,
+        117
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "dc804a2fe709dacde95c1544d665e3b65840bc4072fff142314ec6deb1a0ab30",
+        "lists": "851a77620af2267833973264fd1cb6024c69a7d2e02022a8b2a1715cce672c8a",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "56bc86e66d3b88895b4736be857545128dcd6e63c56bf371351f7f6d57aa833f",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet29-count7-mask0",
+      "fleet": 29,
+      "count_before": 7,
+      "count_after": 7,
+      "removed_pools": [],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "b842f2db8acef7217a6024721dd4355b33aa5e42f5ca420d4b1bbe1020fdc630",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "503e2520cdeb866c404b7e93ef3a5ff213eca15e8cece0ad15c331a5a99774e7",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet29-count7-mask2",
+      "fleet": 29,
+      "count_before": 7,
+      "count_after": 6,
+      "removed_pools": [
+        121
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "8b0ae7a1f374d7f1573d4751ffe2cad189534cd1c32d8f0a8de80d46c75c842f",
+        "lists": "3f4c91bd9b5a0e2e00c137ac37b53dc4910214e3ffd2380e98225822399d42aa",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "4f32c52d452dd2f05c599c64e24916e82763e5eaf0f85ae1f5dffcaaf10cfa6e",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet29-count7-mask40",
+      "fleet": 29,
+      "count_before": 7,
+      "count_after": 6,
+      "removed_pools": [
+        134
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "7dce292f6401c43720b5119a273daf2d03100bebb8e45febe3b611f7bb5cb00b",
+        "lists": "7772ded229b55d88e8024666865e99747ab5ba7a87a449b95163c2da3ee02c5e",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "9ad959047a5ecde5b54d7de4a22b5e022b17d90d0ebf307c56cf751c63bf9bba",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet29-count7-mask7E",
+      "fleet": 29,
+      "count_before": 7,
+      "count_after": 1,
+      "removed_pools": [
+        121,
+        122,
+        123,
+        124,
+        125,
+        134
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "2502d5b983a7bd55bfab29fe1329221951ef1dcc7c068ed5a4ee9d3329845dc5",
+        "lists": "a8fdd71eede253cbbff6a6309b993c03bb608b7a01ad1e2b25c45369dad2bffa",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "6549415af81cd26f5780023a25d5b327883a81bd4e2c665ba5270ab21210fc28",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet29-count7-mask2A",
+      "fleet": 29,
+      "count_before": 7,
+      "count_after": 4,
+      "removed_pools": [
+        121,
+        123,
+        125
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "3e3a3d37743ec3df940d88045213f4db8e71613392b81acae761de23a466dbe9",
+        "lists": "0fb3cc3ea5ab3a9ad040897f4de2ce2dd3304c30526b5a5e04e884d9f2392899",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "0d5472a8aa24ba861b7ff0831e5a07acada571d8a022abc1443bb64e2768e503",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet30-count7-mask0",
+      "fleet": 30,
+      "count_before": 7,
+      "count_after": 7,
+      "removed_pools": [],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "b842f2db8acef7217a6024721dd4355b33aa5e42f5ca420d4b1bbe1020fdc630",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "503e2520cdeb866c404b7e93ef3a5ff213eca15e8cece0ad15c331a5a99774e7",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet30-count7-mask2",
+      "fleet": 30,
+      "count_before": 7,
+      "count_after": 6,
+      "removed_pools": [
+        130
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "30e9176591626743bb692a8480c24aaefe21556140dbda588666b4bdeef4ea13",
+        "lists": "23889f8d61167aafa49ed7a4041cc50a042f81116d3dd3a6d3174e37865534c7",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "5b0c6fac4ce77ac2bdcbbfb4851c37839fc99988cb017e509d3381b6cf045da4",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet30-count7-mask40",
+      "fleet": 30,
+      "count_before": 7,
+      "count_after": 6,
+      "removed_pools": [
+        133
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "a189c96a1081030f93291d4d7d9e80495a9b1638710002b1655d0304c9c575f6",
+        "lists": "6288b9171f1139814caa4de821378b8400cc17978acf01c6424298d21a605d5c",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "5fdddebf6d23228b5b2b55aa7e54201784eca337dd19129da36c8e605af89fc4",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet30-count7-mask7E",
+      "fleet": 30,
+      "count_before": 7,
+      "count_after": 1,
+      "removed_pools": [
+        130,
+        132,
+        128,
+        129,
+        131,
+        133
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "fa531b92032efbff8632379d1f1b4bffd4f91fdc7c274557dff6a35b32a67de1",
+        "lists": "49d448142770f5c20ef8e5e769e5fa66e25a7ad1decd570c6e670bfdea85bbb1",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "833e669323faf22e50e15c060482bfd619c09c838e528d045038496382e0eec3",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet30-count7-mask2A",
+      "fleet": 30,
+      "count_before": 7,
+      "count_after": 4,
+      "removed_pools": [
+        130,
+        128,
+        131
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "5a62eba5c78b832a8967de51824908f928cb59d4516d99a1055f184829ae25c3",
+        "lists": "e7a28bd9cb0cd7a5bee997cd3204e93d0b2bd74cd4f5fecc095d5aeac66382c7",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "f7a1efad76d506fb14027d7ebfbd5e65fbf517233ec6d716907d5834f986d52d",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet31-count7-mask0",
+      "fleet": 31,
+      "count_before": 7,
+      "count_after": 7,
+      "removed_pools": [],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "b842f2db8acef7217a6024721dd4355b33aa5e42f5ca420d4b1bbe1020fdc630",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "503e2520cdeb866c404b7e93ef3a5ff213eca15e8cece0ad15c331a5a99774e7",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet31-count7-mask2",
+      "fleet": 31,
+      "count_before": 7,
+      "count_after": 6,
+      "removed_pools": [
+        137
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "243471b9bc93afdbcb3f2c955748f752efae903c13295778b7ee96563865e8e5",
+        "lists": "5eb72f38619d4d2471ddf5e3c245696011908a158dcbead3639d3f34baea0c4c",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "820ab958818762b619bc417b4168a765371817b92543bbb638caf794b67b968e",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet31-count7-mask40",
+      "fleet": 31,
+      "count_before": 7,
+      "count_after": 6,
+      "removed_pools": [
+        147
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "596ef3f628971b97b7bd8a81a2b4670940309eb3607bf73c98c3590ce7a9486b",
+        "lists": "3cee2b92edd5ad000d0100ac91efc4de65ba884ce938847ae4ce0676fa98376b",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "5e42b60e0b6c134b3127f78412a2d49c34dcab55ec4824e85799a889222db272",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet31-count7-mask7E",
+      "fleet": 31,
+      "count_before": 7,
+      "count_after": 1,
+      "removed_pools": [
+        137,
+        138,
+        139,
+        140,
+        141,
+        147
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "b425df137d54a7c1142ac5d508d6f1bd7088fa93e2ed832fbdb7c3f96aaff272",
+        "lists": "f64611779eca9ad133ed2e12fb6378121be42303fe7cd79b31ca2b7dc251cd49",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "aaf45ff98cfd61843571d63a9045d977ad83a7c0c4c6a4caf5813be7a714cbe3",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    },
+    {
+      "name": "fleet31-count7-mask2A",
+      "fleet": 31,
+      "count_before": 7,
+      "count_after": 4,
+      "removed_pools": [
+        137,
+        139,
+        141
+      ],
+      "tables_after_sha256": {
+        "admiral": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b",
+        "fleet": "5e93d4d4e127400ba2056497422faca623bba83140b0165a421634066cfd7959",
+        "lists": "8d2718f79423053c710f6c5b28c61dbf5e9cc26a5ead77981966440fbf83eadf",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "7a4591be3e27ff8a94e383d942131b67d8eb17bd9a119e526e091418cada0999",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "result": "six tables and active lists exact; seed unchanged"
+    }
+  ],
+  "removed_count": 77,
+  "ida": {
+    "schema": "logh3.battle-cleanup-ida.v1",
+    "kernel_version": "9.4",
+    "uid": 1000,
+    "input": "/tmp/cleanup79-r88-ida/cleanup79-r88-185C.com",
+    "input_sha256": "1b6b4aae3a0b652f48e8d3c24f863c39fde0b4c386ddf9afe7ab8c425d206bd7",
+    "ida_base_hex": "0x10200",
+    "runtime_segment": "185C",
+    "address_space": "IDA COM位址／dosgolem CS:IP／dosgolem線性位址分欄",
+    "ranges": [
+      "001D:ret",
+      "00B2:ret",
+      "0177:ret",
+      "01ED:ret",
+      "020C:ret"
+    ],
+    "functions": [
+      {
+        "requested_entry": "185C:001D",
+        "original_name": "sub_1021D",
+        "preceding_bytes_hex": "189abf095c185ecb",
+        "ida_start_hex": "0x1021d",
+        "ida_end_hex": "0x102b2",
+        "grade": "unknown",
+        "warning": "自動函式名與邊界只作導覽，需由caller及bytes核對"
+      },
+      {
+        "requested_entry": "185C:00B2",
+        "original_name": "sub_102B2",
+        "preceding_bytes_hex": "444483c40e5e5dcb",
+        "ida_start_hex": "0x102b2",
+        "ida_end_hex": "0x102f0",
+        "grade": "unknown",
+        "warning": "自動函式名與邊界只作導覽，需由caller及bytes核對"
+      },
+      {
+        "requested_entry": "185C:0177",
+        "original_name": "sub_10377",
+        "preceding_bytes_hex": "89ec83c40a5e5dcb",
+        "ida_start_hex": "0x10377",
+        "ida_end_hex": "0x103ed",
+        "grade": "unknown",
+        "warning": "自動函式名與邊界只作導覽，需由caller及bytes核對"
+      },
+      {
+        "requested_entry": "185C:01ED",
+        "original_name": "sub_103ED",
+        "preceding_bytes_hex": "ebaa83c40a5e5dcb",
+        "ida_start_hex": "0x103ed",
+        "ida_end_hex": "0x1040c",
+        "grade": "unknown",
+        "warning": "自動函式名與邊界只作導覽，需由caller及bytes核對"
+      },
+      {
+        "requested_entry": "185C:020C",
+        "original_name": "sub_1040C",
+        "preceding_bytes_hex": "ef01d22a89ec5dcb",
+        "ida_start_hex": "0x1040c",
+        "ida_end_hex": "0x1048e",
+        "grade": "unknown",
+        "warning": "自動函式名與邊界只作導覽，需由caller及bytes核對"
+      }
+    ],
+    "instructions": [
+      {
+        "original_location": "185C:001D",
+        "ida_ea_hex": "0x1021d",
+        "runtime_linear_hex": "0x185dd",
+        "original_bytes_hex": "55",
+        "operand": "push    bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1021e",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:001E",
+        "ida_ea_hex": "0x1021e",
+        "runtime_linear_hex": "0x185de",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1021d",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1021f",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:001F",
+        "ida_ea_hex": "0x1021f",
+        "runtime_linear_hex": "0x185df",
+        "original_bytes_hex": "83ec0e",
+        "operand": "sub     sp, 0Eh",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1021e",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10222",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0022",
+        "ida_ea_hex": "0x10222",
+        "runtime_linear_hex": "0x185e2",
+        "original_bytes_hex": "89e5",
+        "operand": "mov     bp, sp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1021f",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10224",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0024",
+        "ida_ea_hex": "0x10224",
+        "runtime_linear_hex": "0x185e4",
+        "original_bytes_hex": "c6460000",
+        "operand": "mov     byte ptr [bp+0], 0",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10222",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10228",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0028",
+        "ida_ea_hex": "0x10228",
+        "runtime_linear_hex": "0x185e8",
+        "original_bytes_hex": "c746029898",
+        "operand": "mov     word ptr [bp+2], 9898h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10224",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1022d",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:002D",
+        "ida_ea_hex": "0x1022d",
+        "runtime_linear_hex": "0x185ed",
+        "original_bytes_hex": "8c5e04",
+        "operand": "mov     word ptr [bp+4], ds",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10228",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10230",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0030",
+        "ida_ea_hex": "0x10230",
+        "runtime_linear_hex": "0x185f0",
+        "original_bytes_hex": "8a4600",
+        "operand": "mov     al, [bp+0]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1022d",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10233",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0033",
+        "ida_ea_hex": "0x10233",
+        "runtime_linear_hex": "0x185f3",
+        "original_bytes_hex": "3a069498",
+        "operand": "cmp     al, ds:9894h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10230",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10237",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x19894",
+            "type": 3
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0037",
+        "ida_ea_hex": "0x10237",
+        "runtime_linear_hex": "0x185f7",
+        "original_bytes_hex": "7366",
+        "operand": "jnb     short near ptr unk_1029F",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10233",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10239",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x1029f",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0039",
+        "ida_ea_hex": "0x10239",
+        "runtime_linear_hex": "0x185f9",
+        "original_bytes_hex": "c45e02",
+        "operand": "les     bx, [bp+2]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10237",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1023c",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:003C",
+        "ida_ea_hex": "0x1023c",
+        "runtime_linear_hex": "0x185fc",
+        "original_bytes_hex": "268a07",
+        "operand": "mov     al, es:[bx]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10239",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1023f",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:003F",
+        "ida_ea_hex": "0x1023f",
+        "runtime_linear_hex": "0x185ff",
+        "original_bytes_hex": "30e4",
+        "operand": "xor     ah, ah",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1023c",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10241",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0041",
+        "ida_ea_hex": "0x10241",
+        "runtime_linear_hex": "0x18601",
+        "original_bytes_hex": "b97a00",
+        "operand": "mov     cx, 7Ah ; 'z'",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1023f",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10244",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0044",
+        "ida_ea_hex": "0x10244",
+        "runtime_linear_hex": "0x18604",
+        "original_bytes_hex": "f7e1",
+        "operand": "mul     cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10241",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10246",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0046",
+        "ida_ea_hex": "0x10246",
+        "runtime_linear_hex": "0x18606",
+        "original_bytes_hex": "8cd9",
+        "operand": "mov     cx, ds",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10244",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10248",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0048",
+        "ida_ea_hex": "0x10248",
+        "runtime_linear_hex": "0x18608",
+        "original_bytes_hex": "be74c0",
+        "operand": "mov     si, 0C074h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10246",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1024b",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:004B",
+        "ida_ea_hex": "0x1024b",
+        "runtime_linear_hex": "0x1860b",
+        "original_bytes_hex": "03f0",
+        "operand": "add     si, ax",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10248",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1024d",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:004D",
+        "ida_ea_hex": "0x1024d",
+        "runtime_linear_hex": "0x1860d",
+        "original_bytes_hex": "894e08",
+        "operand": "mov     [bp+8], cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1024b",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10250",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0050",
+        "ida_ea_hex": "0x10250",
+        "runtime_linear_hex": "0x18610",
+        "original_bytes_hex": "897606",
+        "operand": "mov     [bp+6], si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1024d",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10253",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0053",
+        "ida_ea_hex": "0x10253",
+        "runtime_linear_hex": "0x18613",
+        "original_bytes_hex": "51",
+        "operand": "push    cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10250",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10254",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0054",
+        "ida_ea_hex": "0x10254",
+        "runtime_linear_hex": "0x18614",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10253",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10255",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0055",
+        "ida_ea_hex": "0x10255",
+        "runtime_linear_hex": "0x18615",
+        "original_bytes_hex": "9ab2005c18",
+        "operand": "call    far ptr 185Ch:0B2h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10254",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1025a",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:005A",
+        "ida_ea_hex": "0x1025a",
+        "runtime_linear_hex": "0x1861a",
+        "original_bytes_hex": "83c404",
+        "operand": "add     sp, 4",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10255",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1025d",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:005D",
+        "ida_ea_hex": "0x1025d",
+        "runtime_linear_hex": "0x1861d",
+        "original_bytes_hex": "09c0",
+        "operand": "or      ax, ax",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1025a",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1025f",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:005F",
+        "ida_ea_hex": "0x1025f",
+        "runtime_linear_hex": "0x1861f",
+        "original_bytes_hex": "741a",
+        "operand": "jz      short near ptr unk_1027B",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1025d",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10261",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x1027b",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0061",
+        "ida_ea_hex": "0x10261",
+        "runtime_linear_hex": "0x18621",
+        "original_bytes_hex": "ff7608",
+        "operand": "push    word ptr [bp+8]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1025f",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10264",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0064",
+        "ida_ea_hex": "0x10264",
+        "runtime_linear_hex": "0x18624",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10261",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10265",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0065",
+        "ida_ea_hex": "0x10265",
+        "runtime_linear_hex": "0x18625",
+        "original_bytes_hex": "9a8e025c18",
+        "operand": "call    far ptr 185Ch:28Eh",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10264",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1026a",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:006A",
+        "ida_ea_hex": "0x1026a",
+        "runtime_linear_hex": "0x1862a",
+        "original_bytes_hex": "83c404",
+        "operand": "add     sp, 4",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10265",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1026d",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:006D",
+        "ida_ea_hex": "0x1026d",
+        "runtime_linear_hex": "0x1862d",
+        "original_bytes_hex": "ff7608",
+        "operand": "push    word ptr [bp+8]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1026a",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10270",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0070",
+        "ida_ea_hex": "0x10270",
+        "runtime_linear_hex": "0x18630",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1026d",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10271",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0071",
+        "ida_ea_hex": "0x10271",
+        "runtime_linear_hex": "0x18631",
+        "original_bytes_hex": "9af0005c18",
+        "operand": "call    far ptr 185Ch:0F0h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10270",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10276",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0076",
+        "ida_ea_hex": "0x10276",
+        "runtime_linear_hex": "0x18636",
+        "original_bytes_hex": "83c404",
+        "operand": "add     sp, 4",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10271",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10279",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0079",
+        "ida_ea_hex": "0x10279",
+        "runtime_linear_hex": "0x18639",
+        "original_bytes_hex": "eb1c",
+        "operand": "jmp     short near ptr unk_10297",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10276",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10297",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:007B",
+        "ida_ea_hex": "0x1027b",
+        "runtime_linear_hex": "0x1863b",
+        "original_bytes_hex": "ff7608",
+        "operand": "push    word ptr [bp+8]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1025f",
+            "type": 19
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1027e",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:007E",
+        "ida_ea_hex": "0x1027e",
+        "runtime_linear_hex": "0x1863e",
+        "original_bytes_hex": "ff7606",
+        "operand": "push    word ptr [bp+6]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1027b",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10281",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0081",
+        "ida_ea_hex": "0x10281",
+        "runtime_linear_hex": "0x18641",
+        "original_bytes_hex": "9a77015c18",
+        "operand": "call    far ptr 185Ch:177h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1027e",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10286",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0086",
+        "ida_ea_hex": "0x10286",
+        "runtime_linear_hex": "0x18646",
+        "original_bytes_hex": "83c404",
+        "operand": "add     sp, 4",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10281",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10289",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0089",
+        "ida_ea_hex": "0x10289",
+        "runtime_linear_hex": "0x18649",
+        "original_bytes_hex": "ff7608",
+        "operand": "push    word ptr [bp+8]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10286",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1028c",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:008C",
+        "ida_ea_hex": "0x1028c",
+        "runtime_linear_hex": "0x1864c",
+        "original_bytes_hex": "ff7606",
+        "operand": "push    word ptr [bp+6]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10289",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1028f",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:008F",
+        "ida_ea_hex": "0x1028f",
+        "runtime_linear_hex": "0x1864f",
+        "original_bytes_hex": "9a04016112",
+        "operand": "call    far ptr 1261h:104h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1028c",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10294",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0094",
+        "ida_ea_hex": "0x10294",
+        "runtime_linear_hex": "0x18654",
+        "original_bytes_hex": "83c404",
+        "operand": "add     sp, 4",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1028f",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10297",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0097",
+        "ida_ea_hex": "0x10297",
+        "runtime_linear_hex": "0x18657",
+        "original_bytes_hex": "fe4600",
+        "operand": "inc     byte ptr [bp+0]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10294",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x10279",
+            "type": 19
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1029a",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:009A",
+        "ida_ea_hex": "0x1029a",
+        "runtime_linear_hex": "0x1865a",
+        "original_bytes_hex": "ff4602",
+        "operand": "inc     word ptr [bp+2]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10297",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1029d",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:009D",
+        "ida_ea_hex": "0x1029d",
+        "runtime_linear_hex": "0x1865d",
+        "original_bytes_hex": "eb91",
+        "operand": "jmp     short loc_10230",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1029a",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10230",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:009F",
+        "ida_ea_hex": "0x1029f",
+        "runtime_linear_hex": "0x1865f",
+        "original_bytes_hex": "a0178f",
+        "operand": "mov     al, ds:8F17h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10237",
+            "type": 19
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102a2",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x18f17",
+            "type": 3
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00A2",
+        "ida_ea_hex": "0x102a2",
+        "runtime_linear_hex": "0x18662",
+        "original_bytes_hex": "30e4",
+        "operand": "xor     ah, ah",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1029f",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102a4",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00A4",
+        "ida_ea_hex": "0x102a4",
+        "runtime_linear_hex": "0x18664",
+        "original_bytes_hex": "50",
+        "operand": "push    ax",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102a2",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102a5",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00A5",
+        "ida_ea_hex": "0x102a5",
+        "runtime_linear_hex": "0x18665",
+        "original_bytes_hex": "9abc03aa12",
+        "operand": "call    far ptr 12AAh:3BCh",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102a4",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102aa",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00AA",
+        "ida_ea_hex": "0x102aa",
+        "runtime_linear_hex": "0x1866a",
+        "original_bytes_hex": "44",
+        "operand": "inc     sp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102a5",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102ab",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00AB",
+        "ida_ea_hex": "0x102ab",
+        "runtime_linear_hex": "0x1866b",
+        "original_bytes_hex": "44",
+        "operand": "inc     sp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102aa",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102ac",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00AC",
+        "ida_ea_hex": "0x102ac",
+        "runtime_linear_hex": "0x1866c",
+        "original_bytes_hex": "83c40e",
+        "operand": "add     sp, 0Eh",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102ab",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102af",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00AF",
+        "ida_ea_hex": "0x102af",
+        "runtime_linear_hex": "0x1866f",
+        "original_bytes_hex": "5e",
+        "operand": "pop     si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102ac",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102b0",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00B0",
+        "ida_ea_hex": "0x102b0",
+        "runtime_linear_hex": "0x18670",
+        "original_bytes_hex": "5d",
+        "operand": "pop     bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102af",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102b1",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00B1",
+        "ida_ea_hex": "0x102b1",
+        "runtime_linear_hex": "0x18671",
+        "original_bytes_hex": "cb",
+        "operand": "retf",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102b0",
+            "type": 21
+          }
+        ],
+        "xrefs_from": []
+      },
+      {
+        "original_location": "185C:00B2",
+        "ida_ea_hex": "0x102b2",
+        "runtime_linear_hex": "0x18672",
+        "original_bytes_hex": "55",
+        "operand": "push    bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102b3",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00B3",
+        "ida_ea_hex": "0x102b3",
+        "runtime_linear_hex": "0x18673",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102b2",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102b4",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00B4",
+        "ida_ea_hex": "0x102b4",
+        "runtime_linear_hex": "0x18674",
+        "original_bytes_hex": "57",
+        "operand": "push    di",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102b3",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102b5",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00B5",
+        "ida_ea_hex": "0x102b5",
+        "runtime_linear_hex": "0x18675",
+        "original_bytes_hex": "83ec04",
+        "operand": "sub     sp, 4",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102b4",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102b8",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00B8",
+        "ida_ea_hex": "0x102b8",
+        "runtime_linear_hex": "0x18678",
+        "original_bytes_hex": "89e5",
+        "operand": "mov     bp, sp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102b5",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102ba",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00BA",
+        "ida_ea_hex": "0x102ba",
+        "runtime_linear_hex": "0x1867a",
+        "original_bytes_hex": "bf0100",
+        "operand": "mov     di, 1",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102b8",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102bd",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00BD",
+        "ida_ea_hex": "0x102bd",
+        "runtime_linear_hex": "0x1867d",
+        "original_bytes_hex": "c45e0e",
+        "operand": "les     bx, [bp+0Eh]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102ba",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102c0",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00C0",
+        "ida_ea_hex": "0x102c0",
+        "runtime_linear_hex": "0x18680",
+        "original_bytes_hex": "268b4710",
+        "operand": "mov     ax, es:[bx+10h]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102bd",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102c4",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00C4",
+        "ida_ea_hex": "0x102c4",
+        "runtime_linear_hex": "0x18684",
+        "original_bytes_hex": "b94e00",
+        "operand": "mov     cx, 4Eh ; 'N'",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102c0",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102c7",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00C7",
+        "ida_ea_hex": "0x102c7",
+        "runtime_linear_hex": "0x18687",
+        "original_bytes_hex": "f7e1",
+        "operand": "mul     cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102c4",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102c9",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00C9",
+        "ida_ea_hex": "0x102c9",
+        "runtime_linear_hex": "0x18689",
+        "original_bytes_hex": "8b0eb6cf",
+        "operand": "mov     cx, ds:0CFB6h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102c7",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102cd",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x1cfb6",
+            "type": 3
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00CD",
+        "ida_ea_hex": "0x102cd",
+        "runtime_linear_hex": "0x1868d",
+        "original_bytes_hex": "8b36b4cf",
+        "operand": "mov     si, ds:0CFB4h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102c9",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102d1",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x1cfb4",
+            "type": 3
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00D1",
+        "ida_ea_hex": "0x102d1",
+        "runtime_linear_hex": "0x18691",
+        "original_bytes_hex": "03f0",
+        "operand": "add     si, ax",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102cd",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102d3",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00D3",
+        "ida_ea_hex": "0x102d3",
+        "runtime_linear_hex": "0x18693",
+        "original_bytes_hex": "894e02",
+        "operand": "mov     [bp+2], cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102d1",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102d6",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00D6",
+        "ida_ea_hex": "0x102d6",
+        "runtime_linear_hex": "0x18696",
+        "original_bytes_hex": "897600",
+        "operand": "mov     [bp+0], si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102d3",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102d9",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00D9",
+        "ida_ea_hex": "0x102d9",
+        "runtime_linear_hex": "0x18699",
+        "original_bytes_hex": "8ec1",
+        "operand": "mov     es, cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102d6",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102db",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00DB",
+        "ida_ea_hex": "0x102db",
+        "runtime_linear_hex": "0x1869b",
+        "original_bytes_hex": "26837c0800",
+        "operand": "cmp     word ptr es:[si+8], 0",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102d9",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102e0",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00E0",
+        "ida_ea_hex": "0x102e0",
+        "runtime_linear_hex": "0x186a0",
+        "original_bytes_hex": "7404",
+        "operand": "jz      short near ptr unk_102E6",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102db",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102e2",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x102e6",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00E2",
+        "ida_ea_hex": "0x102e2",
+        "runtime_linear_hex": "0x186a2",
+        "original_bytes_hex": "31c0",
+        "operand": "xor     ax, ax",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102e0",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102e4",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00E4",
+        "ida_ea_hex": "0x102e4",
+        "runtime_linear_hex": "0x186a4",
+        "original_bytes_hex": "eb03",
+        "operand": "jmp     short near ptr unk_102E9",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102e2",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102e9",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00E6",
+        "ida_ea_hex": "0x102e6",
+        "runtime_linear_hex": "0x186a6",
+        "original_bytes_hex": "b80100",
+        "operand": "mov     ax, 1",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102e0",
+            "type": 19
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102e9",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00E9",
+        "ida_ea_hex": "0x102e9",
+        "runtime_linear_hex": "0x186a9",
+        "original_bytes_hex": "83c404",
+        "operand": "add     sp, 4",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102e6",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x102e4",
+            "type": 19
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102ec",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00EC",
+        "ida_ea_hex": "0x102ec",
+        "runtime_linear_hex": "0x186ac",
+        "original_bytes_hex": "5f",
+        "operand": "pop     di",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102e9",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102ed",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00ED",
+        "ida_ea_hex": "0x102ed",
+        "runtime_linear_hex": "0x186ad",
+        "original_bytes_hex": "5e",
+        "operand": "pop     si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102ec",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102ee",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00EE",
+        "ida_ea_hex": "0x102ee",
+        "runtime_linear_hex": "0x186ae",
+        "original_bytes_hex": "5d",
+        "operand": "pop     bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102ed",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x102ef",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:00EF",
+        "ida_ea_hex": "0x102ef",
+        "runtime_linear_hex": "0x186af",
+        "original_bytes_hex": "cb",
+        "operand": "retf",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x102ee",
+            "type": 21
+          }
+        ],
+        "xrefs_from": []
+      },
+      {
+        "original_location": "185C:0177",
+        "ida_ea_hex": "0x10377",
+        "runtime_linear_hex": "0x18737",
+        "original_bytes_hex": "55",
+        "operand": "push    bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10378",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0178",
+        "ida_ea_hex": "0x10378",
+        "runtime_linear_hex": "0x18738",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10377",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10379",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0179",
+        "ida_ea_hex": "0x10379",
+        "runtime_linear_hex": "0x18739",
+        "original_bytes_hex": "83ec0a",
+        "operand": "sub     sp, 0Ah",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10378",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1037c",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:017C",
+        "ida_ea_hex": "0x1037c",
+        "runtime_linear_hex": "0x1873c",
+        "original_bytes_hex": "89e5",
+        "operand": "mov     bp, sp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10379",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1037e",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:017E",
+        "ida_ea_hex": "0x1037e",
+        "runtime_linear_hex": "0x1873e",
+        "original_bytes_hex": "c6460000",
+        "operand": "mov     byte ptr [bp+0], 0",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1037c",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10382",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0182",
+        "ida_ea_hex": "0x10382",
+        "runtime_linear_hex": "0x18742",
+        "original_bytes_hex": "8b4614",
+        "operand": "mov     ax, [bp+14h]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1037e",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10385",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0185",
+        "ida_ea_hex": "0x10385",
+        "runtime_linear_hex": "0x18745",
+        "original_bytes_hex": "8b5e12",
+        "operand": "mov     bx, [bp+12h]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10382",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10388",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0188",
+        "ida_ea_hex": "0x10388",
+        "runtime_linear_hex": "0x18748",
+        "original_bytes_hex": "83c310",
+        "operand": "add     bx, 10h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10385",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1038b",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:018B",
+        "ida_ea_hex": "0x1038b",
+        "runtime_linear_hex": "0x1874b",
+        "original_bytes_hex": "894604",
+        "operand": "mov     [bp+4], ax",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10388",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1038e",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:018E",
+        "ida_ea_hex": "0x1038e",
+        "runtime_linear_hex": "0x1874e",
+        "original_bytes_hex": "895e02",
+        "operand": "mov     [bp+2], bx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1038b",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10391",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0191",
+        "ida_ea_hex": "0x10391",
+        "runtime_linear_hex": "0x18751",
+        "original_bytes_hex": "8a4600",
+        "operand": "mov     al, [bp+0]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1038e",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10394",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0194",
+        "ida_ea_hex": "0x10394",
+        "runtime_linear_hex": "0x18754",
+        "original_bytes_hex": "c45e12",
+        "operand": "les     bx, [bp+12h]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10391",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10397",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0197",
+        "ida_ea_hex": "0x10397",
+        "runtime_linear_hex": "0x18757",
+        "original_bytes_hex": "268a4f0f",
+        "operand": "mov     cl, es:[bx+0Fh]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10394",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1039b",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:019B",
+        "ida_ea_hex": "0x1039b",
+        "runtime_linear_hex": "0x1875b",
+        "original_bytes_hex": "3ac1",
+        "operand": "cmp     al, cl",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10397",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1039d",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:019D",
+        "ida_ea_hex": "0x1039d",
+        "runtime_linear_hex": "0x1875d",
+        "original_bytes_hex": "7348",
+        "operand": "jnb     short near ptr unk_103E7",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1039b",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1039f",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x103e7",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:019F",
+        "ida_ea_hex": "0x1039f",
+        "runtime_linear_hex": "0x1875f",
+        "original_bytes_hex": "c47602",
+        "operand": "les     si, [bp+2]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1039d",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103a2",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01A2",
+        "ida_ea_hex": "0x103a2",
+        "runtime_linear_hex": "0x18762",
+        "original_bytes_hex": "268b04",
+        "operand": "mov     ax, es:[si]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1039f",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103a5",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01A5",
+        "ida_ea_hex": "0x103a5",
+        "runtime_linear_hex": "0x18765",
+        "original_bytes_hex": "b94e00",
+        "operand": "mov     cx, 4Eh ; 'N'",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103a2",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103a8",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01A8",
+        "ida_ea_hex": "0x103a8",
+        "runtime_linear_hex": "0x18768",
+        "original_bytes_hex": "f7e1",
+        "operand": "mul     cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103a5",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103aa",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01AA",
+        "ida_ea_hex": "0x103aa",
+        "runtime_linear_hex": "0x1876a",
+        "original_bytes_hex": "8b0eb6cf",
+        "operand": "mov     cx, ds:0CFB6h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103a8",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103ae",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x1cfb6",
+            "type": 3
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01AE",
+        "ida_ea_hex": "0x103ae",
+        "runtime_linear_hex": "0x1876e",
+        "original_bytes_hex": "8b36b4cf",
+        "operand": "mov     si, ds:0CFB4h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103aa",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103b2",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x1cfb4",
+            "type": 3
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01B2",
+        "ida_ea_hex": "0x103b2",
+        "runtime_linear_hex": "0x18772",
+        "original_bytes_hex": "03f0",
+        "operand": "add     si, ax",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103ae",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103b4",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01B4",
+        "ida_ea_hex": "0x103b4",
+        "runtime_linear_hex": "0x18774",
+        "original_bytes_hex": "894e08",
+        "operand": "mov     [bp+8], cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103b2",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103b7",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01B7",
+        "ida_ea_hex": "0x103b7",
+        "runtime_linear_hex": "0x18777",
+        "original_bytes_hex": "897606",
+        "operand": "mov     [bp+6], si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103b4",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103ba",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01BA",
+        "ida_ea_hex": "0x103ba",
+        "runtime_linear_hex": "0x1877a",
+        "original_bytes_hex": "8ec1",
+        "operand": "mov     es, cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103b7",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103bc",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01BC",
+        "ida_ea_hex": "0x103bc",
+        "runtime_linear_hex": "0x1877c",
+        "original_bytes_hex": "26837c0800",
+        "operand": "cmp     word ptr es:[si+8], 0",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103ba",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103c1",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01C1",
+        "ida_ea_hex": "0x103c1",
+        "runtime_linear_hex": "0x18781",
+        "original_bytes_hex": "751b",
+        "operand": "jnz     short near ptr unk_103DE",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103bc",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103c3",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x103de",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01C3",
+        "ida_ea_hex": "0x103c3",
+        "runtime_linear_hex": "0x18783",
+        "original_bytes_hex": "51",
+        "operand": "push    cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103c1",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103c4",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01C4",
+        "ida_ea_hex": "0x103c4",
+        "runtime_linear_hex": "0x18784",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103c3",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103c5",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01C5",
+        "ida_ea_hex": "0x103c5",
+        "runtime_linear_hex": "0x18785",
+        "original_bytes_hex": "9aed015c18",
+        "operand": "call    far ptr 185Ch:1EDh",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103c4",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103ca",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01CA",
+        "ida_ea_hex": "0x103ca",
+        "runtime_linear_hex": "0x1878a",
+        "original_bytes_hex": "89ec",
+        "operand": "mov     sp, bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103c5",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103cc",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01CC",
+        "ida_ea_hex": "0x103cc",
+        "runtime_linear_hex": "0x1878c",
+        "original_bytes_hex": "ff7600",
+        "operand": "push    word ptr [bp+0]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103ca",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103cf",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01CF",
+        "ida_ea_hex": "0x103cf",
+        "runtime_linear_hex": "0x1878f",
+        "original_bytes_hex": "ff7614",
+        "operand": "push    word ptr [bp+14h]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103cc",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103d2",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01D2",
+        "ida_ea_hex": "0x103d2",
+        "runtime_linear_hex": "0x18792",
+        "original_bytes_hex": "ff7612",
+        "operand": "push    word ptr [bp+12h]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103cf",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103d5",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01D5",
+        "ida_ea_hex": "0x103d5",
+        "runtime_linear_hex": "0x18795",
+        "original_bytes_hex": "9a0c025c18",
+        "operand": "call    far ptr 185Ch:20Ch",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103d2",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103da",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01DA",
+        "ida_ea_hex": "0x103da",
+        "runtime_linear_hex": "0x1879a",
+        "original_bytes_hex": "89ec",
+        "operand": "mov     sp, bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103d5",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103dc",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01DC",
+        "ida_ea_hex": "0x103dc",
+        "runtime_linear_hex": "0x1879c",
+        "original_bytes_hex": "ebb3",
+        "operand": "jmp     short loc_10391",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103da",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10391",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01DE",
+        "ida_ea_hex": "0x103de",
+        "runtime_linear_hex": "0x1879e",
+        "original_bytes_hex": "fe4600",
+        "operand": "inc     byte ptr [bp+0]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103c1",
+            "type": 19
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103e1",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01E1",
+        "ida_ea_hex": "0x103e1",
+        "runtime_linear_hex": "0x187a1",
+        "original_bytes_hex": "83460204",
+        "operand": "add     word ptr [bp+2], 4",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103de",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103e5",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01E5",
+        "ida_ea_hex": "0x103e5",
+        "runtime_linear_hex": "0x187a5",
+        "original_bytes_hex": "ebaa",
+        "operand": "jmp     short loc_10391",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103e1",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10391",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01E7",
+        "ida_ea_hex": "0x103e7",
+        "runtime_linear_hex": "0x187a7",
+        "original_bytes_hex": "83c40a",
+        "operand": "add     sp, 0Ah",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1039d",
+            "type": 19
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103ea",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01EA",
+        "ida_ea_hex": "0x103ea",
+        "runtime_linear_hex": "0x187aa",
+        "original_bytes_hex": "5e",
+        "operand": "pop     si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103e7",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103eb",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01EB",
+        "ida_ea_hex": "0x103eb",
+        "runtime_linear_hex": "0x187ab",
+        "original_bytes_hex": "5d",
+        "operand": "pop     bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103ea",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103ec",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01EC",
+        "ida_ea_hex": "0x103ec",
+        "runtime_linear_hex": "0x187ac",
+        "original_bytes_hex": "cb",
+        "operand": "retf",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103eb",
+            "type": 21
+          }
+        ],
+        "xrefs_from": []
+      },
+      {
+        "original_location": "185C:01ED",
+        "ida_ea_hex": "0x103ed",
+        "runtime_linear_hex": "0x187ad",
+        "original_bytes_hex": "55",
+        "operand": "push    bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103ee",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01EE",
+        "ida_ea_hex": "0x103ee",
+        "runtime_linear_hex": "0x187ae",
+        "original_bytes_hex": "89e5",
+        "operand": "mov     bp, sp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103ed",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103f0",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01F0",
+        "ida_ea_hex": "0x103f0",
+        "runtime_linear_hex": "0x187b0",
+        "original_bytes_hex": "ff7608",
+        "operand": "push    word ptr [bp+8]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103ee",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103f3",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01F3",
+        "ida_ea_hex": "0x103f3",
+        "runtime_linear_hex": "0x187b3",
+        "original_bytes_hex": "ff7606",
+        "operand": "push    word ptr [bp+6]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103f0",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103f6",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01F6",
+        "ida_ea_hex": "0x103f6",
+        "runtime_linear_hex": "0x187b6",
+        "original_bytes_hex": "9a98022717",
+        "operand": "call    far ptr 1727h:298h",
+        "grade": "proven",
+        "semantic": "清理呼叫1727:0298擦小地圖點；不以函式自動名判義",
+        "warning": "",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103f3",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103fb",
+            "type": 21
+          }
+        ],
+        "evidence": [
+          "workplace/ida/cleanup79-r88-ida.json",
+          "workplace/cleanup79-r88-a.json"
+        ]
+      },
+      {
+        "original_location": "185C:01FB",
+        "ida_ea_hex": "0x103fb",
+        "runtime_linear_hex": "0x187bb",
+        "original_bytes_hex": "89ec",
+        "operand": "mov     sp, bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103f6",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x103fd",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:01FD",
+        "ida_ea_hex": "0x103fd",
+        "runtime_linear_hex": "0x187bd",
+        "original_bytes_hex": "ff7608",
+        "operand": "push    word ptr [bp+8]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103fb",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10400",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0200",
+        "ida_ea_hex": "0x10400",
+        "runtime_linear_hex": "0x187c0",
+        "original_bytes_hex": "ff7606",
+        "operand": "push    word ptr [bp+6]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x103fd",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10403",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0203",
+        "ida_ea_hex": "0x10403",
+        "runtime_linear_hex": "0x187c3",
+        "original_bytes_hex": "9aef01d22a",
+        "operand": "call    far ptr 2AD2h:1EFh",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10400",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10408",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0208",
+        "ida_ea_hex": "0x10408",
+        "runtime_linear_hex": "0x187c8",
+        "original_bytes_hex": "89ec",
+        "operand": "mov     sp, bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10403",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1040a",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:020A",
+        "ida_ea_hex": "0x1040a",
+        "runtime_linear_hex": "0x187ca",
+        "original_bytes_hex": "5d",
+        "operand": "pop     bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10408",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1040b",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:020B",
+        "ida_ea_hex": "0x1040b",
+        "runtime_linear_hex": "0x187cb",
+        "original_bytes_hex": "cb",
+        "operand": "retf",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1040a",
+            "type": 21
+          }
+        ],
+        "xrefs_from": []
+      },
+      {
+        "original_location": "185C:020C",
+        "ida_ea_hex": "0x1040c",
+        "runtime_linear_hex": "0x187cc",
+        "original_bytes_hex": "55",
+        "operand": "push    bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1040d",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:020D",
+        "ida_ea_hex": "0x1040d",
+        "runtime_linear_hex": "0x187cd",
+        "original_bytes_hex": "56",
+        "operand": "push    si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1040c",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1040e",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:020E",
+        "ida_ea_hex": "0x1040e",
+        "runtime_linear_hex": "0x187ce",
+        "original_bytes_hex": "57",
+        "operand": "push    di",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1040d",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1040f",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:020F",
+        "ida_ea_hex": "0x1040f",
+        "runtime_linear_hex": "0x187cf",
+        "original_bytes_hex": "83ec0a",
+        "operand": "sub     sp, 0Ah",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1040e",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10412",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0212",
+        "ida_ea_hex": "0x10412",
+        "runtime_linear_hex": "0x187d2",
+        "original_bytes_hex": "89e5",
+        "operand": "mov     bp, sp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1040f",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10414",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0214",
+        "ida_ea_hex": "0x10414",
+        "runtime_linear_hex": "0x187d4",
+        "original_bytes_hex": "8a5618",
+        "operand": "mov     dl, [bp+18h]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10412",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10417",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0217",
+        "ida_ea_hex": "0x10417",
+        "runtime_linear_hex": "0x187d7",
+        "original_bytes_hex": "c45e14",
+        "operand": "les     bx, [bp+14h]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10414",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1041a",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:021A",
+        "ida_ea_hex": "0x1041a",
+        "runtime_linear_hex": "0x187da",
+        "original_bytes_hex": "26fe4f0f",
+        "operand": "dec     byte ptr es:[bx+0Fh]",
+        "grade": "proven",
+        "semantic": "搬移之前減FLEET+0F的byte組數",
+        "warning": "",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10417",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1041e",
+            "type": 21
+          }
+        ],
+        "evidence": [
+          "workplace/ida/cleanup79-r88-ida.json",
+          "workplace/cleanup79-r88-a.json"
+        ]
+      },
+      {
+        "original_location": "185C:021E",
+        "ida_ea_hex": "0x1041e",
+        "runtime_linear_hex": "0x187de",
+        "original_bytes_hex": "8ac2",
+        "operand": "mov     al, dl",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1041a",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10420",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0220",
+        "ida_ea_hex": "0x10420",
+        "runtime_linear_hex": "0x187e0",
+        "original_bytes_hex": "30e4",
+        "operand": "xor     ah, ah",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1041e",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10422",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0222",
+        "ida_ea_hex": "0x10422",
+        "runtime_linear_hex": "0x187e2",
+        "original_bytes_hex": "d1e0",
+        "operand": "shl     ax, 1",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10420",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10424",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0224",
+        "ida_ea_hex": "0x10424",
+        "runtime_linear_hex": "0x187e4",
+        "original_bytes_hex": "d1e0",
+        "operand": "shl     ax, 1",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10422",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10426",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0226",
+        "ida_ea_hex": "0x10426",
+        "runtime_linear_hex": "0x187e6",
+        "original_bytes_hex": "8cc1",
+        "operand": "mov     cx, es",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10424",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10428",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0228",
+        "ida_ea_hex": "0x10428",
+        "runtime_linear_hex": "0x187e8",
+        "original_bytes_hex": "89de",
+        "operand": "mov     si, bx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10426",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1042a",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:022A",
+        "ida_ea_hex": "0x1042a",
+        "runtime_linear_hex": "0x187ea",
+        "original_bytes_hex": "83c610",
+        "operand": "add     si, 10h",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10428",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1042d",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:022D",
+        "ida_ea_hex": "0x1042d",
+        "runtime_linear_hex": "0x187ed",
+        "original_bytes_hex": "03f0",
+        "operand": "add     si, ax",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1042a",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1042f",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:022F",
+        "ida_ea_hex": "0x1042f",
+        "runtime_linear_hex": "0x187ef",
+        "original_bytes_hex": "894e02",
+        "operand": "mov     [bp+2], cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1042d",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10432",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0232",
+        "ida_ea_hex": "0x10432",
+        "runtime_linear_hex": "0x187f2",
+        "original_bytes_hex": "897600",
+        "operand": "mov     [bp+0], si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1042f",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10435",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0235",
+        "ida_ea_hex": "0x10435",
+        "runtime_linear_hex": "0x187f5",
+        "original_bytes_hex": "83c604",
+        "operand": "add     si, 4",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10432",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10438",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0238",
+        "ida_ea_hex": "0x10438",
+        "runtime_linear_hex": "0x187f8",
+        "original_bytes_hex": "894e06",
+        "operand": "mov     [bp+6], cx",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10435",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1043b",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:023B",
+        "ida_ea_hex": "0x1043b",
+        "runtime_linear_hex": "0x187fb",
+        "original_bytes_hex": "897604",
+        "operand": "mov     [bp+4], si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10438",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1043e",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:023E",
+        "ida_ea_hex": "0x1043e",
+        "runtime_linear_hex": "0x187fe",
+        "original_bytes_hex": "8ac2",
+        "operand": "mov     al, dl",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1043b",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10440",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0240",
+        "ida_ea_hex": "0x10440",
+        "runtime_linear_hex": "0x18800",
+        "original_bytes_hex": "884608",
+        "operand": "mov     [bp+8], al",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1043e",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10443",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0243",
+        "ida_ea_hex": "0x10443",
+        "runtime_linear_hex": "0x18803",
+        "original_bytes_hex": "8a4608",
+        "operand": "mov     al, [bp+8]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10440",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10446",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0246",
+        "ida_ea_hex": "0x10446",
+        "runtime_linear_hex": "0x18806",
+        "original_bytes_hex": "c45e14",
+        "operand": "les     bx, [bp+14h]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10443",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10449",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0249",
+        "ida_ea_hex": "0x10449",
+        "runtime_linear_hex": "0x18809",
+        "original_bytes_hex": "268a4f0f",
+        "operand": "mov     cl, es:[bx+0Fh]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10446",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1044d",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:024D",
+        "ida_ea_hex": "0x1044d",
+        "runtime_linear_hex": "0x1880d",
+        "original_bytes_hex": "3ac1",
+        "operand": "cmp     al, cl",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10449",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1044f",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:024F",
+        "ida_ea_hex": "0x1044f",
+        "runtime_linear_hex": "0x1880f",
+        "original_bytes_hex": "7336",
+        "operand": "jnb     short near ptr unk_10487",
+        "grade": "proven",
+        "semantic": "以新組數停止搬移；不清尾槽",
+        "warning": "",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1044d",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10451",
+            "type": 21
+          },
+          {
+            "ida_ea_hex": "0x10487",
+            "type": 19
+          }
+        ],
+        "evidence": [
+          "workplace/ida/cleanup79-r88-ida.json",
+          "workplace/cleanup79-r88-a.json"
+        ]
+      },
+      {
+        "original_location": "185C:0251",
+        "ida_ea_hex": "0x10451",
+        "runtime_linear_hex": "0x18811",
+        "original_bytes_hex": "c45e04",
+        "operand": "les     bx, [bp+4]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1044f",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10454",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0254",
+        "ida_ea_hex": "0x10454",
+        "runtime_linear_hex": "0x18814",
+        "original_bytes_hex": "268b07",
+        "operand": "mov     ax, es:[bx]",
+        "grade": "proven",
+        "semantic": "讀後組引用的完整池word",
+        "warning": "",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10451",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10457",
+            "type": 21
+          }
+        ],
+        "evidence": [
+          "workplace/ida/cleanup79-r88-ida.json",
+          "workplace/cleanup79-r88-a.json"
+        ]
+      },
+      {
+        "original_location": "185C:0257",
+        "ida_ea_hex": "0x10457",
+        "runtime_linear_hex": "0x18817",
+        "original_bytes_hex": "c47600",
+        "operand": "les     si, [bp+0]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10454",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1045a",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:025A",
+        "ida_ea_hex": "0x1045a",
+        "runtime_linear_hex": "0x1881a",
+        "original_bytes_hex": "268904",
+        "operand": "mov     es:[si], ax",
+        "grade": "proven",
+        "semantic": "寫前組引用的完整池word",
+        "warning": "",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10457",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1045d",
+            "type": 21
+          }
+        ],
+        "evidence": [
+          "workplace/ida/cleanup79-r88-ida.json",
+          "workplace/cleanup79-r88-a.json"
+        ]
+      },
+      {
+        "original_location": "185C:025D",
+        "ida_ea_hex": "0x1045d",
+        "runtime_linear_hex": "0x1881d",
+        "original_bytes_hex": "c47e04",
+        "operand": "les     di, [bp+4]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1045a",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10460",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0260",
+        "ida_ea_hex": "0x10460",
+        "runtime_linear_hex": "0x18820",
+        "original_bytes_hex": "268a4502",
+        "operand": "mov     al, es:[di+2]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1045d",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10464",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0264",
+        "ida_ea_hex": "0x10464",
+        "runtime_linear_hex": "0x18824",
+        "original_bytes_hex": "c45e00",
+        "operand": "les     bx, [bp+0]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10460",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10467",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0267",
+        "ida_ea_hex": "0x10467",
+        "runtime_linear_hex": "0x18827",
+        "original_bytes_hex": "26884702",
+        "operand": "mov     es:[bx+2], al",
+        "grade": "proven",
+        "semantic": "搬引用的第三個byte",
+        "warning": "",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10464",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1046b",
+            "type": 21
+          }
+        ],
+        "evidence": [
+          "workplace/ida/cleanup79-r88-ida.json",
+          "workplace/cleanup79-r88-a.json"
+        ]
+      },
+      {
+        "original_location": "185C:026B",
+        "ida_ea_hex": "0x1046b",
+        "runtime_linear_hex": "0x1882b",
+        "original_bytes_hex": "c45e04",
+        "operand": "les     bx, [bp+4]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10467",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1046e",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:026E",
+        "ida_ea_hex": "0x1046e",
+        "runtime_linear_hex": "0x1882e",
+        "original_bytes_hex": "268a4703",
+        "operand": "mov     al, es:[bx+3]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1046b",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10472",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0272",
+        "ida_ea_hex": "0x10472",
+        "runtime_linear_hex": "0x18832",
+        "original_bytes_hex": "c45e00",
+        "operand": "les     bx, [bp+0]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1046e",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10475",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0275",
+        "ida_ea_hex": "0x10475",
+        "runtime_linear_hex": "0x18835",
+        "original_bytes_hex": "26884703",
+        "operand": "mov     es:[bx+3], al",
+        "grade": "proven",
+        "semantic": "搬引用的第四個byte",
+        "warning": "",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10472",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10479",
+            "type": 21
+          }
+        ],
+        "evidence": [
+          "workplace/ida/cleanup79-r88-ida.json",
+          "workplace/cleanup79-r88-a.json"
+        ]
+      },
+      {
+        "original_location": "185C:0279",
+        "ida_ea_hex": "0x10479",
+        "runtime_linear_hex": "0x18839",
+        "original_bytes_hex": "b80400",
+        "operand": "mov     ax, 4",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10475",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1047c",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:027C",
+        "ida_ea_hex": "0x1047c",
+        "runtime_linear_hex": "0x1883c",
+        "original_bytes_hex": "014600",
+        "operand": "add     [bp+0], ax",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10479",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1047f",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:027F",
+        "ida_ea_hex": "0x1047f",
+        "runtime_linear_hex": "0x1883f",
+        "original_bytes_hex": "014604",
+        "operand": "add     [bp+4], ax",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1047c",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10482",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0282",
+        "ida_ea_hex": "0x10482",
+        "runtime_linear_hex": "0x18842",
+        "original_bytes_hex": "fe4608",
+        "operand": "inc     byte ptr [bp+8]",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1047f",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10485",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0285",
+        "ida_ea_hex": "0x10485",
+        "runtime_linear_hex": "0x18845",
+        "original_bytes_hex": "ebbc",
+        "operand": "jmp     short loc_10443",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10482",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x10443",
+            "type": 19
+          }
+        ]
+      },
+      {
+        "original_location": "185C:0287",
+        "ida_ea_hex": "0x10487",
+        "runtime_linear_hex": "0x18847",
+        "original_bytes_hex": "83c40a",
+        "operand": "add     sp, 0Ah",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1044f",
+            "type": 19
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1048a",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:028A",
+        "ida_ea_hex": "0x1048a",
+        "runtime_linear_hex": "0x1884a",
+        "original_bytes_hex": "5f",
+        "operand": "pop     di",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x10487",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1048b",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:028B",
+        "ida_ea_hex": "0x1048b",
+        "runtime_linear_hex": "0x1884b",
+        "original_bytes_hex": "5e",
+        "operand": "pop     si",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1048a",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1048c",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:028C",
+        "ida_ea_hex": "0x1048c",
+        "runtime_linear_hex": "0x1884c",
+        "original_bytes_hex": "5d",
+        "operand": "pop     bp",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1048b",
+            "type": 21
+          }
+        ],
+        "xrefs_from": [
+          {
+            "ida_ea_hex": "0x1048d",
+            "type": 21
+          }
+        ]
+      },
+      {
+        "original_location": "185C:028D",
+        "ida_ea_hex": "0x1048d",
+        "runtime_linear_hex": "0x1884d",
+        "original_bytes_hex": "cb",
+        "operand": "retf",
+        "grade": "unknown",
+        "semantic": "尚未審查",
+        "warning": "原始定位已核；附加語意尚未審查",
+        "xrefs_to": [
+          {
+            "ida_ea_hex": "0x1048c",
+            "type": 21
+          }
+        ],
+        "xrefs_from": []
+      }
+    ]
+  },
+  "sources": [
+    {
+      "path": "org_game/extracted/GIN3.COM",
+      "size": 622,
+      "sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918"
+    },
+    {
+      "path": "tools/battle_cleanup_entry_oracle.sh",
+      "size": 1142,
+      "sha256": "39f9f8be4bec78d44196371f4c47d55e6b395eb32ed444ad1a6e45a27749bad2"
+    },
+    {
+      "path": "tools/scripts/battle_cleanup_prepare.py",
+      "size": 5641,
+      "sha256": "0a3de829a9575fe103fe994ecf0fe019c3c310f00fada0b8e4187e9f5ed8c3c4"
+    },
+    {
+      "path": "tools/battle_cleanup_native_run.sh",
+      "size": 511,
+      "sha256": "07ae6f191e69f7111ab725a2ea6f2df83df940a39381c765daadd1eb907e0cc5"
+    },
+    {
+      "path": "tools/battle_cleanup_oracle.sh",
+      "size": 817,
+      "sha256": "bc08f877ac26855a02c9a59ee28f7831128db5b67fd448aa7c2bcc935ca0eebb"
+    },
+    {
+      "path": "tools/scripts/battle_cleanup_review.py",
+      "size": 5151,
+      "sha256": "b28ac75de99f09f77ec5498f79d3f18a33c862d2556af39c80b5ebe129140b3c"
+    },
+    {
+      "path": "workplace/promotion79-r86-global.go",
+      "size": 11738,
+      "sha256": "895f92e7ac5f3431569f2b84cf5bf342114e249f87051f6d07345fafd6573b8b"
+    },
+    {
+      "path": "workplace/cleanup79-r88-native.go",
+      "size": 8746,
+      "sha256": "673cb53134aa548b85a19ac1942bf54add25fcdc782d802f73663e0e49d5ad39"
+    },
+    {
+      "path": "workplace/cleanup79-r88-a.json",
+      "size": 6534142,
+      "sha256": "80f108f6db41137c245dd52040616234779cf93349fbd7c0fae87d1aa2ef9949"
+    },
+    {
+      "path": "workplace/cleanup79-r88-b.json",
+      "size": 6534142,
+      "sha256": "80f108f6db41137c245dd52040616234779cf93349fbd7c0fae87d1aa2ef9949"
+    },
+    {
+      "path": "workplace/ida/cleanup79-r88-185C.com",
+      "size": 4352,
+      "sha256": "1b6b4aae3a0b652f48e8d3c24f863c39fde0b4c386ddf9afe7ab8c425d206bd7"
+    },
+    {
+      "path": "workplace/ida/cleanup79-r88-ida.py",
+      "size": 3263,
+      "sha256": "780cd6ed9cbeeb4a02d0eef810aa2ea42113a0e63b7cdb902490f293f3d770a1"
+    },
+    {
+      "path": "workplace/ida/cleanup79-r88-ida.json",
+      "size": 103041,
+      "sha256": "5d9580602f7d82833fb9ac0137a1d4ba8297472871cefe9d400c0b03f4926165"
+    },
+    {
+      "path": "workplace/ida/cleanup79-r88-ida.log",
+      "size": 2313,
+      "sha256": "69a8dc6dd7de2d2601045eb046aa063101ca57213520fa034ec22792295f6b7a"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-a/entry.state",
+      "size": 260244,
+      "sha256": "a62af47fb7d15a136e2e2ed51760ef0e9dd82538f68d5f7e0be4db5f2b0011b8"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-a/mem-in.bin",
+      "size": 1048576,
+      "sha256": "1575a57e438f8803a0fd0200268bc0e883a64d7210b4bcc42faab1e35f035ecf"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-a/meta.txt",
+      "size": 791,
+      "sha256": "3565dd4123cad4a5bb52449ccf6f224dc0a5b7b0108448e3bde9b3a82f6892fb"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-a/report.txt",
+      "size": 29270,
+      "sha256": "d565bb73d2e2a3702d29dcde5cb74ecdc721eb05fd8b2e064fa59c2f2862c3c9"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-b/entry.state",
+      "size": 260244,
+      "sha256": "e6e1320a55e5f57da2faafa8dad5aec046f722a6174791a80fbc57b9c98b8d5d"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-b/mem-in.bin",
+      "size": 1048576,
+      "sha256": "1575a57e438f8803a0fd0200268bc0e883a64d7210b4bcc42faab1e35f035ecf"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-b/meta.txt",
+      "size": 791,
+      "sha256": "3eecbfcc605ce855a6b4bd9b25734d660eff59059ff39293c0443ae57cd21321"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-b/report.txt",
+      "size": 29270,
+      "sha256": "685dcc093b4903e17bd0c6f36c5a78e4e5b974b23b71a37f1f6c31728b4a5256"
+    }
+  ]
+}

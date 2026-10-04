@@ -671,3 +671,14 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [108正式升級資料生成](../../tools/scripts/battle_promotion_spec.py)、[唯一軍階與門檻表](data/admiral-promotion-spec.json)、[原池升級規則](../../internal/rules/promotion.go)與[Game接線](../../internal/game/promotion.go)：固定證據輸入、原子回寫五表、跨換手路徑快取及逐則等待。
 - [升級規則對拍](../../internal/rules/promotion_test.go)、[Game報告與保存對拍](../../internal/game/promotion_test.go)及[正常玩家重播](../../tools/scripts/battle_promotion_player.go)：固定原版逐次五表與亂數；正常公開入口另驗續接與存進度。
 - [升級正式來源凍結器](../../tools/scripts/battle_promotion_game_receipt.py)、[完整產品來源](data/battle-promotion-game.json)與[驗證076](../playtest/076-battle-promotion-game.md)：控制案原版對拍、正常玩家續接、首戰GUI及尚未驗收的輸入鏈分開記錄。
+- [第88輪清空分隊輸入鏈](../goal/2026-10-05-battle-cleanup-round-88.md)與[8-1前原版保存重生](../../tools/battle_cleanup_entry_oracle.sh)：固定第五回合自然到185C:001D，獨立保存，不覆寫既有8-2父狀態。
+- [清空分隊觀測器生成](../../tools/scripts/battle_cleanup_prepare.py)、[原版雙跑](../../tools/battle_cleanup_oracle.sh)與[原版模組執行器](../../tools/battle_cleanup_native_run.sh)：七艦隊、五種死亡位置，完整原池及原始呼叫順序，不改正式程式。
+## 第88輪清空分隊證據
+
+- [109清理契約](../spec/109-battle-empty-groups.md)、[研究422](../re/422-battle-empty-groups.md)、[077驗證](../playtest/077-battle-empty-groups.md)。
+- [完整原版來源與指令分級](data/battle-cleanup.json)、[獨立核對腳本](../../tools/scripts/battle_cleanup_review.py)。
+- [正式Game清理回歸](../../internal/game/battlecleanup_test.go)。
+- [原池清理規則](../../internal/rules/battlecleanup.go)與[Game同步](../../internal/game/battlecleanup.go)。
+- [純規則原版回歸](../../internal/rules/battlecleanup_test.go)。
+- [清理至升級鏈產生器](../../tools/scripts/battle_cleanup_chain_prepare.py)與[固定原版雙跑](../../tools/battle_cleanup_chain_oracle.sh)。
+- [產品來源凍結器](../../tools/scripts/battle_cleanup_game_receipt.py)與[完整產品收據](data/battle-cleanup-game.json)。

@@ -150,6 +150,13 @@ func TestAdvanceBattleTurnMoves(t *testing.T) {
 	if own < 0 || foe < 0 {
 		t.Fatal("S3缺兩側艦隊")
 	}
+	// 明示的一組移動診斷：原池上界也縮成一組，保持109要求的活資料完整性。
+	// 不把只有兩個BattleUnit的局部案例當成完整S3原版局面。
+	for _, index := range []int{own, foe} {
+		f := g.fleetByIndex(index)
+		f.Composition, f.Groups = f.Composition[:1], 1
+		g.slot.Fleet[index*rules.FleetRecord+0x0f] = 1
+	}
 	g.battleUnits = []rules.BattleUnit{
 		{Fleet: own, Faction: 0, X: 400, Y: 400, TargetX: 400, TargetY: 400, Strength: 1000, CruiseSpeed: 30, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
 		{Fleet: foe, Faction: 1, X: 1400, Y: 1400, TargetX: 1400, TargetY: 1400, Strength: 1000, CruiseSpeed: 30, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},

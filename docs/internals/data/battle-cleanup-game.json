@@ -1,0 +1,843 @@
+{
+  "schema": "logh3.battle-cleanup-game.v1",
+  "issue": 79,
+  "parent_commit": "1d15aaafc6f0d24b6742d907575540d4cb7e4305",
+  "worktree_dirty": true,
+  "build_images": [
+    "golang:1.24-bookworm",
+    "logh3-ebiten:2"
+  ],
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_dirty": false,
+  "summary": {
+    "original_cases": 35,
+    "removed_groups": 77,
+    "save_cases": 7,
+    "chain_cases": 4,
+    "invalid_game_cases": 5,
+    "invalid_rule_cases": 4,
+    "standard_pass": 13,
+    "standard_without_tests": 5
+  },
+  "chains": [
+    {
+      "name": "fleet12-count8-mask2",
+      "promoted_admiral": 12,
+      "seed_after_hex": "907cc76a",
+      "promotion_before_sha256": {
+        "admiral": "b70e4a667fe2d37664ddf3e2c92e88a41010583d2c66e06f97d887c113944fc9",
+        "fleet": "9a646531b33c3e87164e7452cde4835fe1fdf8be1cabe3435914d9996e462dc9",
+        "lists": "847f87adde5e582f6dd3d0a61842d72fdfa4f2f7d52b7be5407e199b460787f7",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "cde3c7f039dc34f6672996fdcac0f67968fa5fa99a2c5c698dfbed80875d351a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "after_sha256": {
+        "admiral": "dd2dd4876d22a61d09c59fad4e560c9442725a6c606b8c2811acb23e01a6e49a",
+        "fleet": "c7b9bb8fbb25f82ee0a24b876861f0152d22a03d3219f06eeef5c0c2908aa0b0",
+        "lists": "847f87adde5e582f6dd3d0a61842d72fdfa4f2f7d52b7be5407e199b460787f7",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "a59abbfeab27bc13ae50553949af84f314f195d228d517b2daf7c5387e405f99",
+        "stellar": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c",
+        "work": "2f78b85a23b374eca1ca698f530a76fbf21924f410c7603ce465cf6f9df78795"
+      }
+    },
+    {
+      "name": "fleet12-count8-maskFE",
+      "promoted_admiral": 12,
+      "seed_after_hex": "907cc76a",
+      "promotion_before_sha256": {
+        "admiral": "b70e4a667fe2d37664ddf3e2c92e88a41010583d2c66e06f97d887c113944fc9",
+        "fleet": "6e39e6a0702a433d5643df0d87be60e728cf4bed2de3b3d59baf0fac8285c971",
+        "lists": "1330d040acf16f71d910ce2a1b2e24b52b642eed10bc898016f4aaea4f476a83",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "98f9ae268e4f59ae15c1105ed4c35b5ad2d6a42f4a9e5a23cc9c30842bc39706",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "after_sha256": {
+        "admiral": "dd2dd4876d22a61d09c59fad4e560c9442725a6c606b8c2811acb23e01a6e49a",
+        "fleet": "5ff00115e9c2a7d3059a72311ca53a836330e756df2395f2006a20dd98705be6",
+        "lists": "1330d040acf16f71d910ce2a1b2e24b52b642eed10bc898016f4aaea4f476a83",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "c06a46bbdc707a29848e6d6e2c446c375e9456a9b5b02765de48981ed48a52b4",
+        "stellar": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c",
+        "work": "35582696fb9394ca0db0cac163bcbece5866bcc91bbed56824aeec13e098722c"
+      }
+    },
+    {
+      "name": "fleet29-count7-mask2",
+      "promoted_admiral": 53,
+      "seed_after_hex": "9a343c25",
+      "promotion_before_sha256": {
+        "admiral": "20bd9ccb3c9dcfcc55b9f52c96e94fe8a32104ea863068dee4b5fb4567f46143",
+        "fleet": "8b0ae7a1f374d7f1573d4751ffe2cad189534cd1c32d8f0a8de80d46c75c842f",
+        "lists": "3f4c91bd9b5a0e2e00c137ac37b53dc4910214e3ffd2380e98225822399d42aa",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "4f32c52d452dd2f05c599c64e24916e82763e5eaf0f85ae1f5dffcaaf10cfa6e",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "after_sha256": {
+        "admiral": "7fd8826cf926e835d6231364c0986eecedd23daf4ddf4945ab4e1db2d5d9d059",
+        "fleet": "c80ed0344994a975ae9e6da092efd5c2f4951038016bf538d0aacff22d5e9c88",
+        "lists": "3f4c91bd9b5a0e2e00c137ac37b53dc4910214e3ffd2380e98225822399d42aa",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "4983fd1c06186227f223731661731dc69e10ad1657bba8d685b138cd32bab00e",
+        "stellar": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c",
+        "work": "5daeb322637e45473d94243b5772d5324d2ac8e401dd0fa2e6580f9ce85a0fbb"
+      }
+    },
+    {
+      "name": "fleet29-count7-mask7E",
+      "promoted_admiral": 53,
+      "seed_after_hex": "9a343c25",
+      "promotion_before_sha256": {
+        "admiral": "20bd9ccb3c9dcfcc55b9f52c96e94fe8a32104ea863068dee4b5fb4567f46143",
+        "fleet": "2502d5b983a7bd55bfab29fe1329221951ef1dcc7c068ed5a4ee9d3329845dc5",
+        "lists": "a8fdd71eede253cbbff6a6309b993c03bb608b7a01ad1e2b25c45369dad2bffa",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "6549415af81cd26f5780023a25d5b327883a81bd4e2c665ba5270ab21210fc28",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+      },
+      "after_sha256": {
+        "admiral": "7fd8826cf926e835d6231364c0986eecedd23daf4ddf4945ab4e1db2d5d9d059",
+        "fleet": "b4eddd23c6d146434ed4fdae7ec413595f8dee221ab609dc3387bb7f8151b6b1",
+        "lists": "a8fdd71eede253cbbff6a6309b993c03bb608b7a01ad1e2b25c45369dad2bffa",
+        "planet": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "ship": "99c5edf3be7d7979aa52ab12063912b68320076c3d384bd582bdb7bbae489c7e",
+        "stellar": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c",
+        "work": "e593988574e9a0b62fe09ec69bcba5177c5721d17499aff398bb5fe9466fff10"
+      }
+    }
+  ],
+  "normal_replay": {
+    "battle_work_turn": 1,
+    "classification": "normal bootstrap/public input; no original full-path parity claim",
+    "no_state_injection": true,
+    "promotion_scope": "first normal turn continuation; no natural promotion claim",
+    "rng_setup": "product default; no seed injection",
+    "state": "StateSaveGame",
+    "strategic_turn": 380
+  },
+  "limitations": "109與108 READY；死亡／足額功績明示注入。正常首回合續接與保存雙跑、X11首戰資料窗兩倍率另驗；不代表自然死亡／自然升級GUI或完整062同態。",
+  "sources": [
+    {
+      "path": "docs/internals/data/battle-cleanup.json",
+      "size": 147287,
+      "sha256": "adc816af7e25a0eba94aed714721f3cb13a330592043581535521e9e969192af"
+    },
+    {
+      "path": "go.mod",
+      "size": 543,
+      "sha256": "004db62f790d7f65470065deaab9c94668d1c29278d8dce0597ca2c5d1ff7dcd"
+    },
+    {
+      "path": "go.sum",
+      "size": 1770,
+      "sha256": "a70d74071b28ff11f401f2813c2d511ead23dd468ad32731c49fe7a63ec7b7ab"
+    },
+    {
+      "path": "internal/game/battle_test.go",
+      "size": 9034,
+      "sha256": "2a3b00a42f1c57b8393fb6431a5fd86ab7001f63f5b979942a371ff7e6217669"
+    },
+    {
+      "path": "internal/game/battlecleanup.go",
+      "size": 2063,
+      "sha256": "24eeb34fe2fda576c00604db6f93e9d91602b1bcb4d08a2754b90c5e7cfdda36"
+    },
+    {
+      "path": "internal/game/battlecleanup_test.go",
+      "size": 9705,
+      "sha256": "a92a1c0e87f803c1c838128b23fedad7bbf8a002a5e713101a6bda33842fe6d5"
+    },
+    {
+      "path": "internal/game/battlefinal.go",
+      "size": 4560,
+      "sha256": "d5a0f8d9477738549a205ec8f03899bf0fb309824510a8d177493c26c1497267"
+    },
+    {
+      "path": "internal/game/battleownership.go",
+      "size": 2163,
+      "sha256": "2349dd93aa187392d89d2c240d9e1ef8e0897ba0a093d16f3d43a35a5e9fb73d"
+    },
+    {
+      "path": "internal/game/battlepreparation.go",
+      "size": 5292,
+      "sha256": "8110ff19d375b152a32851175807270dfb71671791494f7970c11dce383c7013"
+    },
+    {
+      "path": "internal/game/promotion.go",
+      "size": 5083,
+      "sha256": "cb82766da5eca468638b03bc28bc723a6ff040872921875ee3758ece7c218684"
+    },
+    {
+      "path": "internal/game/scoutfuel.go",
+      "size": 2885,
+      "sha256": "3f0a6a0d6a4bb41fe421cccf7eac937bb195b073f461709970680167a2a7f424"
+    },
+    {
+      "path": "internal/rules/battlecleanup.go",
+      "size": 1663,
+      "sha256": "1f9bddd9ff0bfee0b73ec94cac39d25026573d1f3944c9a6db26435bf6e9dc91"
+    },
+    {
+      "path": "internal/rules/battlecleanup_test.go",
+      "size": 2249,
+      "sha256": "6f755a6bbc634d3376c01d2171447494d4d6cdf34b79b03014821ebf3d4cf2f4"
+    },
+    {
+      "path": "internal/rules/fleetsave.go",
+      "size": 8052,
+      "sha256": "386d240b3d3cd3cebd1ffeae0795be3c54f7ac35a26520d94fd44b54812ac40e"
+    },
+    {
+      "path": "internal/rules/resolve.go",
+      "size": 13167,
+      "sha256": "9e85cca4d4749cff9e5ed99c193f51aa316a23915b03d3e00de7c3bfcd329589"
+    },
+    {
+      "path": "internal/rules/save.go",
+      "size": 26521,
+      "sha256": "6d137e30006306b71c18d16dcd02c7530a174beb9cd03944e82a869813429adc"
+    },
+    {
+      "path": "org_game/extracted/GIN3.COM",
+      "size": 622,
+      "sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918"
+    },
+    {
+      "path": "tools/battle_cleanup_chain_oracle.sh",
+      "size": 890,
+      "sha256": "9873d42513a60df839af2e78a3a052758afbfa10d590c8fa4b405a301622166b"
+    },
+    {
+      "path": "tools/battle_cleanup_entry_oracle.sh",
+      "size": 1142,
+      "sha256": "39f9f8be4bec78d44196371f4c47d55e6b395eb32ed444ad1a6e45a27749bad2"
+    },
+    {
+      "path": "tools/battle_cleanup_native_run.sh",
+      "size": 511,
+      "sha256": "07ae6f191e69f7111ab725a2ea6f2df83df940a39381c765daadd1eb907e0cc5"
+    },
+    {
+      "path": "tools/battle_cleanup_oracle.sh",
+      "size": 817,
+      "sha256": "bc08f877ac26855a02c9a59ee28f7831128db5b67fd448aa7c2bcc935ca0eebb"
+    },
+    {
+      "path": "tools/go.sh",
+      "size": 1763,
+      "sha256": "f591df5c0db18d0adcaecb1bfd969f9d3ffbc6e9e5a1ed2c3e5913c72dd371b6"
+    },
+    {
+      "path": "tools/gui.sh",
+      "size": 1551,
+      "sha256": "3f0cd67388775829a3dbec810570558a1bacd1cd0fc89c22babd8c70bf0542b5"
+    },
+    {
+      "path": "tools/left_hold_gui.sh",
+      "size": 2031,
+      "sha256": "40b7a5b42dec638248da54f1472a6ad570d732dc7bc4b35f8d6d67f583485c1e"
+    },
+    {
+      "path": "tools/scripts/battle_cleanup_chain_prepare.py",
+      "size": 1809,
+      "sha256": "20152af3118319ecb5f2629da7f2968aa72f3e8edf9c8653fd14f0b7f492030f"
+    },
+    {
+      "path": "tools/scripts/battle_cleanup_game_receipt.py",
+      "size": 5771,
+      "sha256": "627e672364a9db1dab769cc5ca9d9c052a31b5a4d92679f2052652a7e3a0b438"
+    },
+    {
+      "path": "tools/scripts/battle_cleanup_prepare.py",
+      "size": 5641,
+      "sha256": "0a3de829a9575fe103fe994ecf0fe019c3c310f00fada0b8e4187e9f5ed8c3c4"
+    },
+    {
+      "path": "tools/scripts/battle_cleanup_review.py",
+      "size": 5151,
+      "sha256": "b28ac75de99f09f77ec5498f79d3f18a33c862d2556af39c80b5ebe129140b3c"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_player.go",
+      "size": 3071,
+      "sha256": "a9d0aef6d6edc9c844533210f44c897766257a51c973e423cffa29479af60efb"
+    },
+    {
+      "path": "workplace/cleanup-chain79-r88-a.json",
+      "size": 1113851,
+      "sha256": "0e45c28c9cfe015a6db29aa8d6a37a9e51a2dc559a981cf0f3b9a317e822b3db"
+    },
+    {
+      "path": "workplace/cleanup-chain79-r88-b.json",
+      "size": 1113851,
+      "sha256": "0e45c28c9cfe015a6db29aa8d6a37a9e51a2dc559a981cf0f3b9a317e822b3db"
+    },
+    {
+      "path": "workplace/cleanup-chain79-r88-native.go",
+      "size": 8937,
+      "sha256": "32cf996fb4b16a61b63cc08d57cf0501b9b09ec336c520bb3c2dd9a091bf415c"
+    },
+    {
+      "path": "workplace/cleanup-chain79-r88-run.sh",
+      "size": 529,
+      "sha256": "06165707a1a3a467531ae31a016c33717c1d142838f35f9c81a05b53752d8c0f"
+    },
+    {
+      "path": "workplace/cleanup79-r88-a.json",
+      "size": 6534142,
+      "sha256": "80f108f6db41137c245dd52040616234779cf93349fbd7c0fae87d1aa2ef9949"
+    },
+    {
+      "path": "workplace/cleanup79-r88-after-test.log",
+      "size": 4874,
+      "sha256": "0559dd4191b379dee4896f5a279c29f66108e4bfc29c772009a6ecc730f8e457"
+    },
+    {
+      "path": "workplace/cleanup79-r88-b.json",
+      "size": 6534142,
+      "sha256": "80f108f6db41137c245dd52040616234779cf93349fbd7c0fae87d1aa2ef9949"
+    },
+    {
+      "path": "workplace/cleanup79-r88-before-test.log",
+      "size": 4783,
+      "sha256": "334c5709fa2b80aab822647b020e6e11ccec1e406faed40b98bba50b00c0f521"
+    },
+    {
+      "path": "workplace/cleanup79-r88-final-test.log",
+      "size": 7696,
+      "sha256": "c36a8bc37ff534b14f6be0ac7f86fcd9eb164e8445c63d60b0249684d47ae47d"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game-test.log",
+      "size": 7696,
+      "sha256": "7953a878897fed598ceb4d540f33d56d646327b1f043b6d36f51ea12ce827614"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet12-count8-maskFE-save/ADMIRAL.DT0",
+      "size": 2296,
+      "sha256": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet12-count8-maskFE-save/FLEET.DT0",
+      "size": 3904,
+      "sha256": "6e39e6a0702a433d5643df0d87be60e728cf4bed2de3b3d59baf0fac8285c971"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet12-count8-maskFE-save/PLANET.DT0",
+      "size": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet12-count8-maskFE-save/SAVEDATA.IDX",
+      "size": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet12-count8-maskFE-save/SHIP.DT0",
+      "size": 27456,
+      "sha256": "98f9ae268e4f59ae15c1105ed4c35b5ad2d6a42f4a9e5a23cc9c30842bc39706"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet12-count8-maskFE-save/STELLAR.DT0",
+      "size": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet12-count8-maskFE-save/WORK.DT0",
+      "size": 230,
+      "sha256": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet16-count6-mask3E-save/ADMIRAL.DT0",
+      "size": 2296,
+      "sha256": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet16-count6-mask3E-save/FLEET.DT0",
+      "size": 3904,
+      "sha256": "5b0f06a9a151e841fc6645269942e067d9af195e1878d30da9a661fbbfdf5432"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet16-count6-mask3E-save/PLANET.DT0",
+      "size": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet16-count6-mask3E-save/SAVEDATA.IDX",
+      "size": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet16-count6-mask3E-save/SHIP.DT0",
+      "size": 27456,
+      "sha256": "51c3dca3174cb302e0578a056e4d56e0f1d4c033871e03e6a8e6a5771d5386c5"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet16-count6-mask3E-save/STELLAR.DT0",
+      "size": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet16-count6-mask3E-save/WORK.DT0",
+      "size": 230,
+      "sha256": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet17-count4-maskE-save/ADMIRAL.DT0",
+      "size": 2296,
+      "sha256": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet17-count4-maskE-save/FLEET.DT0",
+      "size": 3904,
+      "sha256": "723500e25e8d20fb9dafd0bd19775082f38f35fc3edfb5ef46e319ddddb71016"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet17-count4-maskE-save/PLANET.DT0",
+      "size": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet17-count4-maskE-save/SAVEDATA.IDX",
+      "size": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet17-count4-maskE-save/SHIP.DT0",
+      "size": 27456,
+      "sha256": "1b642b24a7f09cb17244146bd6587c207b1834d70aa82f3ef14d06e7f48c22cf"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet17-count4-maskE-save/STELLAR.DT0",
+      "size": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet17-count4-maskE-save/WORK.DT0",
+      "size": 230,
+      "sha256": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet28-count9-mask1FE-save/ADMIRAL.DT0",
+      "size": 2296,
+      "sha256": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet28-count9-mask1FE-save/FLEET.DT0",
+      "size": 3904,
+      "sha256": "2f033598754d306cf7fd5791d2ffb8acee254b554f9a34930d4f71dc69255775"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet28-count9-mask1FE-save/PLANET.DT0",
+      "size": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet28-count9-mask1FE-save/SAVEDATA.IDX",
+      "size": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet28-count9-mask1FE-save/SHIP.DT0",
+      "size": 27456,
+      "sha256": "e9164afa089a6896590f2f506154c01b3a4d1656ffa6f00ca2cdfccb1d2c3f70"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet28-count9-mask1FE-save/STELLAR.DT0",
+      "size": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet28-count9-mask1FE-save/WORK.DT0",
+      "size": 230,
+      "sha256": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet29-count7-mask7E-save/ADMIRAL.DT0",
+      "size": 2296,
+      "sha256": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet29-count7-mask7E-save/FLEET.DT0",
+      "size": 3904,
+      "sha256": "2502d5b983a7bd55bfab29fe1329221951ef1dcc7c068ed5a4ee9d3329845dc5"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet29-count7-mask7E-save/PLANET.DT0",
+      "size": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet29-count7-mask7E-save/SAVEDATA.IDX",
+      "size": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet29-count7-mask7E-save/SHIP.DT0",
+      "size": 27456,
+      "sha256": "6549415af81cd26f5780023a25d5b327883a81bd4e2c665ba5270ab21210fc28"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet29-count7-mask7E-save/STELLAR.DT0",
+      "size": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet29-count7-mask7E-save/WORK.DT0",
+      "size": 230,
+      "sha256": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet30-count7-mask7E-save/ADMIRAL.DT0",
+      "size": 2296,
+      "sha256": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet30-count7-mask7E-save/FLEET.DT0",
+      "size": 3904,
+      "sha256": "fa531b92032efbff8632379d1f1b4bffd4f91fdc7c274557dff6a35b32a67de1"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet30-count7-mask7E-save/PLANET.DT0",
+      "size": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet30-count7-mask7E-save/SAVEDATA.IDX",
+      "size": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet30-count7-mask7E-save/SHIP.DT0",
+      "size": 27456,
+      "sha256": "833e669323faf22e50e15c060482bfd619c09c838e528d045038496382e0eec3"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet30-count7-mask7E-save/STELLAR.DT0",
+      "size": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet30-count7-mask7E-save/WORK.DT0",
+      "size": 230,
+      "sha256": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet31-count7-mask7E-save/ADMIRAL.DT0",
+      "size": 2296,
+      "sha256": "ee1d952607a941fcac0d809f24524fac8b0afe80d5db9a63eb1a97d0c71e775b"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet31-count7-mask7E-save/FLEET.DT0",
+      "size": 3904,
+      "sha256": "b425df137d54a7c1142ac5d508d6f1bd7088fa93e2ed832fbdb7c3f96aaff272"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet31-count7-mask7E-save/PLANET.DT0",
+      "size": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet31-count7-mask7E-save/SAVEDATA.IDX",
+      "size": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet31-count7-mask7E-save/SHIP.DT0",
+      "size": 27456,
+      "sha256": "aaf45ff98cfd61843571d63a9045d977ad83a7c0c4c6a4caf5813be7a714cbe3"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet31-count7-mask7E-save/STELLAR.DT0",
+      "size": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/cleanup79-r88-game/fleet31-count7-mask7E-save/WORK.DT0",
+      "size": 230,
+      "sha256": "c5f51ccd0164e0f9fa2a74c744b4c2c526701c23734df94014d3ce9731565bdf"
+    },
+    {
+      "path": "workplace/cleanup79-r88-native.go",
+      "size": 8746,
+      "sha256": "673cb53134aa548b85a19ac1942bf54add25fcdc782d802f73663e0e49d5ad39"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/ADMIRAL.DT0",
+      "size": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/FLEET.DT0",
+      "size": 3904,
+      "sha256": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/PLANET.DT0",
+      "size": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/SAVEDATA.IDX",
+      "size": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/SHIP.DT0",
+      "size": 27456,
+      "sha256": "ba0cc2c2e23848186f45ff50e2c49be760da92df71b20af3a857ade4bdb20201"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/STELLAR.DT0",
+      "size": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/WORK.DT0",
+      "size": 230,
+      "sha256": "e502518035fcb65895f0e10b22e4ee92b882595b4011e6905a5b8cab060ce3dd"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/after-turn.bin",
+      "size": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/after-turn.png",
+      "size": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/entry.bin",
+      "size": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/entry.png",
+      "size": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/replay.json",
+      "size": 35345,
+      "sha256": "8f5c7acffe37cc83beb350de14a995ee6bc0f67457b0f64fd673d3f9579101dd"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/save-menu.bin",
+      "size": 307200,
+      "sha256": "73e97538f1258cf46f16692acfd22520b089742dd900c635ab8550aec2c674e2"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-a/save-menu.png",
+      "size": 10003,
+      "sha256": "bddd8d6012c95ca3be08c2dbcf4fd03cf96ac88d19570f29a6985fb3d95a2135"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/ADMIRAL.DT0",
+      "size": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/FLEET.DT0",
+      "size": 3904,
+      "sha256": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/PLANET.DT0",
+      "size": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/SAVEDATA.IDX",
+      "size": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/SHIP.DT0",
+      "size": 27456,
+      "sha256": "ba0cc2c2e23848186f45ff50e2c49be760da92df71b20af3a857ade4bdb20201"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/STELLAR.DT0",
+      "size": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/WORK.DT0",
+      "size": 230,
+      "sha256": "e502518035fcb65895f0e10b22e4ee92b882595b4011e6905a5b8cab060ce3dd"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/after-turn.bin",
+      "size": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/after-turn.png",
+      "size": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/entry.bin",
+      "size": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/entry.png",
+      "size": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/replay.json",
+      "size": 35345,
+      "sha256": "8f5c7acffe37cc83beb350de14a995ee6bc0f67457b0f64fd673d3f9579101dd"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/save-menu.bin",
+      "size": 307200,
+      "sha256": "73e97538f1258cf46f16692acfd22520b089742dd900c635ab8550aec2c674e2"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-b/save-menu.png",
+      "size": 10003,
+      "sha256": "bddd8d6012c95ca3be08c2dbcf4fd03cf96ac88d19570f29a6985fb3d95a2135"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-gui-1x.bin",
+      "size": 307200,
+      "sha256": "ed8e1a575a412db0fc95acffbe124c773bbd7cf3978c32278de4459159db0782"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-gui-1x.log",
+      "size": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-gui-1x.png",
+      "size": 10531,
+      "sha256": "cbe05d04fd66fb4a3e16ceac36331aa3fd136764a8977d77278293e4f386a336"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-gui-1x.txt",
+      "size": 62,
+      "sha256": "1007a603bf5cdb4a902935a85133f539bb7146ad13d2668fb5be3420d6c7bd27"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-gui-2x.bin",
+      "size": 307200,
+      "sha256": "ed8e1a575a412db0fc95acffbe124c773bbd7cf3978c32278de4459159db0782"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-gui-2x.log",
+      "size": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-gui-2x.png",
+      "size": 10531,
+      "sha256": "cbe05d04fd66fb4a3e16ceac36331aa3fd136764a8977d77278293e4f386a336"
+    },
+    {
+      "path": "workplace/cleanup79-r88-normal-gui-2x.txt",
+      "size": 63,
+      "sha256": "00bcd088019ca051eeb4476e11117971407300882f7bc3ed32bf2e84d45dfb49"
+    },
+    {
+      "path": "workplace/cleanup79-r88-product-standard-final.log",
+      "size": 961,
+      "sha256": "db70db6662f524f31b27c1b125849df41fd4f77ed4d1474db7f29b1fb955b033"
+    },
+    {
+      "path": "workplace/cleanup79-r88-product-standard.log",
+      "size": 1105,
+      "sha256": "13880db22f7f3b8b3c120e1fcd7d5287cd733f8b42c0425739438aa7d621f184"
+    },
+    {
+      "path": "workplace/cleanup79-r88-save-test.log",
+      "size": 1320,
+      "sha256": "ee6c6a47f8ba047e61d7198c50afc12528b5ce593f610351a4a3bc089889acb0"
+    },
+    {
+      "path": "workplace/cleanup79-r88-standard.log",
+      "size": 22629,
+      "sha256": "ceafa7fb92e20226e375c675cb2a2a7a02b3bcaadfc37304680aa51a7e7ddc9b"
+    },
+    {
+      "path": "workplace/ida/cleanup79-r88-185C.com",
+      "size": 4352,
+      "sha256": "1b6b4aae3a0b652f48e8d3c24f863c39fde0b4c386ddf9afe7ab8c425d206bd7"
+    },
+    {
+      "path": "workplace/ida/cleanup79-r88-ida.json",
+      "size": 103041,
+      "sha256": "5d9580602f7d82833fb9ac0137a1d4ba8297472871cefe9d400c0b03f4926165"
+    },
+    {
+      "path": "workplace/ida/cleanup79-r88-ida.log",
+      "size": 2313,
+      "sha256": "69a8dc6dd7de2d2601045eb046aa063101ca57213520fa034ec22792295f6b7a"
+    },
+    {
+      "path": "workplace/ida/cleanup79-r88-ida.py",
+      "size": 3263,
+      "sha256": "780cd6ed9cbeeb4a02d0eef810aa2ea42113a0e63b7cdb902490f293f3d770a1"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-a/entry.state",
+      "size": 260244,
+      "sha256": "a62af47fb7d15a136e2e2ed51760ef0e9dd82538f68d5f7e0be4db5f2b0011b8"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-a/mem-in.bin",
+      "size": 1048576,
+      "sha256": "1575a57e438f8803a0fd0200268bc0e883a64d7210b4bcc42faab1e35f035ecf"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-a/meta.txt",
+      "size": 791,
+      "sha256": "3565dd4123cad4a5bb52449ccf6f224dc0a5b7b0108448e3bde9b3a82f6892fb"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-a/report.txt",
+      "size": 29270,
+      "sha256": "d565bb73d2e2a3702d29dcde5cb74ecdc721eb05fd8b2e064fa59c2f2862c3c9"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-b/entry.state",
+      "size": 260244,
+      "sha256": "e6e1320a55e5f57da2faafa8dad5aec046f722a6174791a80fbc57b9c98b8d5d"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-b/mem-in.bin",
+      "size": 1048576,
+      "sha256": "1575a57e438f8803a0fd0200268bc0e883a64d7210b4bcc42faab1e35f035ecf"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-b/meta.txt",
+      "size": 791,
+      "sha256": "3eecbfcc605ce855a6b4bd9b25734d660eff59059ff39293c0443ae57cd21321"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-b/report.txt",
+      "size": 29270,
+      "sha256": "685dcc093b4903e17bd0c6f36c5a78e4e5b974b23b71a37f1f6c31728b4a5256"
+    },
+    {
+      "path": "workplace/promotion79-r86-global.go",
+      "size": 11738,
+      "sha256": "895f92e7ac5f3431569f2b84cf5bf342114e249f87051f6d07345fafd6573b8b"
+    },
+    {
+      "path": "workplace/round58-hold-player-b/last/screen.bin",
+      "size": 307200,
+      "sha256": "ed8e1a575a412db0fc95acffbe124c773bbd7cf3978c32278de4459159db0782"
+    }
+  ]
+}

@@ -2,7 +2,9 @@
 
 狀態：**READY**。2026-10-05，原版成長、三表、全局及路徑快取證據審查通過。
 遠端#79，完整062仍DRAFT。第87輪已接正式8-4，66案原版五表、11報告、九案六檔存讀、兩案快取及正常首回合續接通過。
-正常自然功績升級、正常升級GUI與8-1清空分隊的輸入鏈仍待驗，保持READY；見[076](../playtest/076-battle-promotion-game.md)。
+正常自然功績升級與正常升級GUI仍待驗，保持READY；見[076](../playtest/076-battle-promotion-game.md)。
+第88輪依[109](109-battle-empty-groups.md)補清理原池；四案明示死亡及一次足額功績，
+8-1→8-2→8-3→8-4的入口、末端完整表與seed符合原版，見[077](../playtest/077-battle-empty-groups.md)。
 
 玩家在第8步索敵回收後取得提督／副官升級通知。
 第85輪已補原版66案雙跑、53次完整ADMIRAL／FLEET／SHIP重算與473個LCG輸出。
