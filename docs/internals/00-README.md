@@ -1,5 +1,22 @@
 # 原版內部構造參考
 
+第91輪沿#79：[原池回寫計畫](../goal/2026-10-05-battle-finish-raw-round-91.md)、
+[逐指令寫入觀察器產生器](../../tools/scripts/battle_finish_raw_prepare.py)、
+[固定原版雙跑](../../tools/battle_finish_raw_oracle.sh)與
+[隔離容器入口](../../tools/battle_finish_raw_native_run.sh)。
+沿110 DRAFT核定位目標與戰損副作用，不改正式程式或既有凍結收據。
+[完整原池暫存模型](../../tools/scripts/battle_finish_raw_model.go)、
+[固定比較器產生器](../../tools/scripts/battle_finish_raw_model_prepare.py)與
+[容器模型入口](../../tools/battle_finish_raw_probe.sh)比較完整六表及清單。
+[原池來源核對器](../../tools/scripts/battle_finish_raw_review.py)生成
+[完整原池來源](data/battle-finish-raw.json)，證據入口為
+[研究425](../re/425-battle-finish-raw.md)與[驗證080](../playtest/080-battle-finish-raw.md)。
+[占領報告暫停點產生器](../../tools/scripts/battle_finish_cursor_prepare.py)、
+[固定callback雙跑](../../tools/battle_finish_cursor_oracle.sh)與
+[callback容器入口](../../tools/battle_finish_cursor_native_run.sh)核對報告前後的資料提交順序。
+[callback核對器](../../tools/scripts/battle_finish_cursor_review.py)產生
+[續接來源與原指令](data/battle-finish-cursor.json)，由110規格及研究425回查。
+
 第90輪沿#79：[占領傷害與守軍計畫](../goal/2026-10-05-battle-finish-attack-round-90.md)，
 [IDA輸入產生器](../../tools/scripts/battle_finish_attack_ida_prepare.py)、
 [容器暫存模型](../../tools/battle_finish_attack_probe.sh)與

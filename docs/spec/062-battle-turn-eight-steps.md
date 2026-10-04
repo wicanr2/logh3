@@ -2,13 +2,16 @@
 
 狀態：**第一階段已接線並通過規格079的限定驗收；子步 8-1（全滅與士氣報告）READY**；
 子步8-2已依[106 READY](106-battle-region-ownership.md)接線，
-8-3已依[107 READY](107-scout-fuel.md)接線，8-4已依[108 READY](108-battle-promotion.md)接線，8-5仍缺，完整八步DRAFT。
+8-3已依[107 READY](107-scout-fuel.md)接線，8-4已依[108 READY](108-battle-promotion.md)接線，8-5依110 READY待實作，完整八步DRAFT。
+2026-10-05第91輪：19案完整六表與清單、同19案正式地形模型皆符合原版。
+FLEET+5A未知斷言撤回，行星索引在+07，定位目標清FF；六表與清單及seed在攻占報告期間不變，返回後才加占領功績。
+[110 READY](110-battle-finish.md)已補完整原池與可暫停續接契約，正式規則／Game待實作，見[080](../playtest/080-battle-finish-raw.md)。
 2026-10-05第90輪：19案有開火核心由暫存規則模型核對，完整行星、艘數／位置、旗標／士氣、計分／功績與seed相同。
 七案原版守軍雙跑相同，16次查詢及飽和量符合獨立模型；敗方bit0不排除近距守軍。
-完整原池回寫、軍事費與定位後FLEET+5A來源仍缺，110與完整062保持DRAFT，見[079](../playtest/079-battle-finish-attack.md)。
+當輪完整原池回寫、維持費快取與定位後FLEET+5A來源仍缺，後由第91輪補證，見[079](../playtest/079-battle-finish-attack.md)。
 2026-10-05第89輪：8-5已有60案固定原版雙跑、獨立計數／報告路由、48案無開火完整六表及清單。
 勝方占領以目前回合為起點，並非重新九回合；當輪12案占領傷害與原池／RND尚未獨立驗算，核心由第90輪補核。
-[110 DRAFT](110-battle-finish.md)未接production，見[078](../playtest/078-battle-finish.md)。
+當輪110 DRAFT，尚未接正式程式，見[078](../playtest/078-battle-finish.md)。
 2026-10-05第88輪：8-1空組清理依[109 READY](109-battle-empty-groups.md)同步原池、編制數與分隊索引。
 35案77組完整六表與下回合補給池序符合原版，七案六檔保存及重讀通過。
 四案明示死亡／足額功績的8-1至8-4原池輸入鏈亦通過；正常自然死亡與升級GUI仍缺，見[077](../playtest/077-battle-empty-groups.md)。

@@ -1,0 +1,1724 @@
+{
+  "schema": "logh3.battle-finish-raw-review.v1",
+  "issue": 79,
+  "parent_head": "49c6236dd6f8fd1cb57cebddb72c2036ebeab61d",
+  "scope": "19案完整原池與同19案實際地形模型；兩案逐指令目標欄位診斷，production未接",
+  "corrections": [
+    "第90輪FLEET+5A末端為行星索引的判讀錯誤；索引在+07，+5A/+5B定位清FF",
+    "SHIP+28/+2A隊形目標保留避障前Station；+34/+36現在位置才經避障調整"
+  ],
+  "limits": [
+    "19案地形判定均可通行，未驗地形拒絕的新組合；既有terrain契約仍適用",
+    "65535艘是敗方守軍格式邊界，攻方使用原版正常編制",
+    "正式Game、報告續接、六檔保存與正常玩家勝負仍待驗"
+  ],
+  "sources": [
+    {
+      "path": "docs/internals/data/battle-finish.json",
+      "size": 582656,
+      "sha256": "31e4aa66008895c8ca13417f837001cf8f96f3d4ce901640c38187fef8122f7e"
+    },
+    {
+      "path": "docs/internals/data/battle-finish-attack.json",
+      "size": 973277,
+      "sha256": "f86addff014a16d11b8ef08add360f0910bf082414260c43675774b0bad8b358"
+    },
+    {
+      "path": "docs/internals/data/battle-formation-slots.json",
+      "size": 2285,
+      "sha256": "dbe90507aaa5a2638666cd41cfeeca9824000b70c88193e695c12f527aa74196"
+    },
+    {
+      "path": "docs/internals/data/ship-kind-table.json",
+      "size": 6309,
+      "sha256": "1d67b16a9617d6a0eb09391e69d8853c7c53f232f26c89bf74fef4fca3d42895"
+    },
+    {
+      "path": "docs/internals/data/battle-terrain.json",
+      "size": 9563,
+      "sha256": "ca77ebb8db3db1f50ddeaf3561ce9f61bf19f943f46cb244ab21922a986a5a4b"
+    },
+    {
+      "path": "internal/asset/cmp.go",
+      "size": 1247,
+      "sha256": "e52cdfedfbcdac614e5e59ff7a06f606ad0090d688726769dd4659f81eac3360"
+    },
+    {
+      "path": "org_game/extracted/MAP26.CMP",
+      "size": 6831,
+      "sha256": "ecde15e595b40c7367f4a0d0dabc627a6f0b75befb122ad7554cff6a3f18814d"
+    },
+    {
+      "path": "org_game/extracted/GIN3.COM",
+      "size": 622,
+      "sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-a/entry.state",
+      "size": 260244,
+      "sha256": "a62af47fb7d15a136e2e2ed51760ef0e9dd82538f68d5f7e0be4db5f2b0011b8"
+    },
+    {
+      "path": "workplace/oracle/cleanup79-r88-entry-a/mem-in.bin",
+      "size": 1048576,
+      "sha256": "1575a57e438f8803a0fd0200268bc0e883a64d7210b4bcc42faab1e35f035ecf"
+    },
+    {
+      "path": "workplace/finish79-r89-native.go",
+      "size": 10436,
+      "sha256": "cbe370d25969cd96e78effc7bc50940c133f9fbab180b53eab4cf20d58ad5580"
+    },
+    {
+      "path": "workplace/finish79-r89-a.json",
+      "size": 34520936,
+      "sha256": "d26f893d7a617ed566f6ef7852abfcd1cf8476e746f123f3bad7551d3cc6e477"
+    },
+    {
+      "path": "workplace/finish79-r89-b.json",
+      "size": 34520936,
+      "sha256": "d26f893d7a617ed566f6ef7852abfcd1cf8476e746f123f3bad7551d3cc6e477"
+    },
+    {
+      "path": "workplace/finish79-r90-guard-a.json",
+      "size": 5099107,
+      "sha256": "85fbd698622c307051183167d2315e9977abe5cac8fc8068611b31f4287ee335"
+    },
+    {
+      "path": "workplace/finish79-r90-guard-b.json",
+      "size": 5099107,
+      "sha256": "85fbd698622c307051183167d2315e9977abe5cac8fc8068611b31f4287ee335"
+    },
+    {
+      "path": "workplace/finish79-r91-native.go",
+      "size": 10741,
+      "sha256": "7f41a1a106485b14cb23eec105cd9df0ecd2b0b1abdefe37e45b522703243519"
+    },
+    {
+      "path": "workplace/finish79-r91-a.json",
+      "size": 1156596,
+      "sha256": "190a1aa4a1c633be6fc4bee035dd696bbb80ddea021355ffa534df4fe5bc8c52"
+    },
+    {
+      "path": "workplace/finish79-r91-b.json",
+      "size": 1156596,
+      "sha256": "190a1aa4a1c633be6fc4bee035dd696bbb80ddea021355ffa534df4fe5bc8c52"
+    },
+    {
+      "path": "tools/scripts/battle_finish_raw_prepare.py",
+      "size": 2104,
+      "sha256": "2b6fca5ce79c22d2c4987f461bf4816b451d00aeeaa37ca4f541d73529470798"
+    },
+    {
+      "path": "tools/battle_finish_raw_oracle.sh",
+      "size": 817,
+      "sha256": "90ae2de0d9220064c93f1c6ae08601addb169500286a7c83ee3f31402e073e1f"
+    },
+    {
+      "path": "tools/battle_finish_raw_native_run.sh",
+      "size": 417,
+      "sha256": "89fbb86a9a226a24da65be970733ebb8c194b35378de043762d0616d390c4866"
+    },
+    {
+      "path": "tools/scripts/battle_finish_raw_model.go",
+      "size": 3549,
+      "sha256": "ab13bb6154bd8d30911bdc5d292a85e5dc1f10fcca6c401b8a4b326368aaec06"
+    },
+    {
+      "path": "tools/scripts/battle_finish_raw_model_prepare.py",
+      "size": 3048,
+      "sha256": "2a0373cc474acca39a8fb1ab808a0f5b7f465a5a0cbdc7853af261033a3ef20d"
+    },
+    {
+      "path": "tools/battle_finish_raw_probe.sh",
+      "size": 2133,
+      "sha256": "3f4dfc43c32e955b6c0c1e4e1f068e8398ac7329c7b6deb96a3a680137bb6471"
+    },
+    {
+      "path": "tools/scripts/battle_finish_raw_review.py",
+      "size": 6097,
+      "sha256": "32c7aeb082afce45b176273744438cb439012048edc0c48e486c36f831167f4e"
+    },
+    {
+      "path": "tools/scripts/battle_finish_attack_probe_test.go",
+      "size": 6342,
+      "sha256": "fe602860ee58c2aceb5d6aa1f6dbe1d427fbb4b592591db860912ef4283cc85b"
+    },
+    {
+      "path": "workplace/finish79-r91-model-test-v1.go",
+      "size": 7334,
+      "sha256": "3608edea0f2980bdf9ec1f8f75fec9b6b7b1eb1c17e708e7e12cffc3f4bd7b06"
+    },
+    {
+      "path": "workplace/finish79-r91-model-test-v2.go",
+      "size": 7338,
+      "sha256": "0f0ead26ff3e3dc9142c40fbadd051df108828f6735db38606fabe99cec60306"
+    },
+    {
+      "path": "workplace/finish79-r91-model-test-v3.go",
+      "size": 7345,
+      "sha256": "cf72585151623a3a0cb0e146cd5e6286fb525397016ad0fc09f6ce8b72048c75"
+    },
+    {
+      "path": "workplace/finish79-r91-model-test.go",
+      "size": 8383,
+      "sha256": "7f3340735952df640bf1b8f1f6ef36e1d523368ee9fb51645a28f218921feec3"
+    },
+    {
+      "path": "workplace/finish79-r91-raw-model-v1.go",
+      "size": 3383,
+      "sha256": "47b1d02b477771007fc7ba9d0640e0ebc96edd477513e717370607cf150a61a0"
+    },
+    {
+      "path": "workplace/finish79-r91-raw-base-v1.json",
+      "size": 1874963,
+      "sha256": "faecc8dad05ca51195f04b9bcdde18567db578efd49725395fc6c5b77e718c62"
+    },
+    {
+      "path": "workplace/finish79-r91-raw-guard-v1.json",
+      "size": 1095738,
+      "sha256": "18323f97f7b020d2f078e173c62d3e6e3ea3596721491e6c3de5d899b5b6f0ca"
+    },
+    {
+      "path": "go.mod",
+      "size": 543,
+      "sha256": "004db62f790d7f65470065deaab9c94668d1c29278d8dce0597ca2c5d1ff7dcd"
+    },
+    {
+      "path": "go.sum",
+      "size": 1770,
+      "sha256": "a70d74071b28ff11f401f2813c2d511ead23dd468ad32731c49fe7a63ec7b7ab"
+    },
+    {
+      "path": "workplace/finish79-r91-raw-base.json",
+      "size": 1872029,
+      "sha256": "0ac79cb181c552a53cf1ac2739ee3ccfb22e355c8ec716c16da251cc2e33edce"
+    },
+    {
+      "path": "workplace/finish79-r91-raw-base-terrain.json",
+      "size": 1873963,
+      "sha256": "86ab3a4d80810f1f415ce75fed82d34e1348d24ca328eb25c6eed568f8dea3c9"
+    },
+    {
+      "path": "workplace/finish79-r91-raw-guard.json",
+      "size": 1091763,
+      "sha256": "c18b88c20bb6a047db5b3bf02a9fe5f9b040f5afbd84722d38f6db5a650ab0fa"
+    },
+    {
+      "path": "workplace/finish79-r91-raw-guard-terrain.json",
+      "size": 1092896,
+      "sha256": "9b429e08d083a22d0045395da76c398fa59a4e12b9fa0e00130af7221ded1076"
+    },
+    {
+      "path": "internal/rules/ability.go",
+      "size": 1541,
+      "sha256": "7845a74a05301cc9309e776e73d50bc230d0c676c8399fb1e2e7b749cc56cb1e"
+    },
+    {
+      "path": "internal/rules/ability_test.go",
+      "size": 1618,
+      "sha256": "b722eea1a682564e2d0b415ba86ede122fd178a29d8d17c21bc5d32ba78c041b"
+    },
+    {
+      "path": "internal/rules/admiral.go",
+      "size": 12290,
+      "sha256": "fb208164bb00aea3c0c2ad8b4a1ed6231272657a9ad9acb875995385a3681d1d"
+    },
+    {
+      "path": "internal/rules/admiral_fate.go",
+      "size": 1710,
+      "sha256": "e9332f830ca68761ca355f58fb73e4f32d75acbd86815d4460d010c7c3ee0e9c"
+    },
+    {
+      "path": "internal/rules/admiral_fate_test.go",
+      "size": 1773,
+      "sha256": "681c1187c62c9dcb48218d263fdcb8e5704808c9a8d698922660d4d8ae65b37c"
+    },
+    {
+      "path": "internal/rules/admiral_test.go",
+      "size": 6586,
+      "sha256": "72ddb10c9b7d423dd40edd7f99fbc489a2c02ba007d5b719fe25d0658d2e8f41"
+    },
+    {
+      "path": "internal/rules/admiralsort.go",
+      "size": 2680,
+      "sha256": "c55ee72ee43889dda53926c7098eb488e75c4cb11b285ab54b0065d62ef8b409"
+    },
+    {
+      "path": "internal/rules/admiralsort_test.go",
+      "size": 2247,
+      "sha256": "75cb80173bcc97e228bc52f21bb6462f9cd7d07c0df46e497229dab0f9c2257d"
+    },
+    {
+      "path": "internal/rules/annihilation.go",
+      "size": 3470,
+      "sha256": "b7ed6cc4b4931518c9d849152e2d60a7faa2023d1cfe1048ca8c97a995e8a0cf"
+    },
+    {
+      "path": "internal/rules/attackcoef.go",
+      "size": 2060,
+      "sha256": "9d8717b7d1fa6bef5bb14019ff3769f435a0ca3fe867baceb9c83e36c0e36d33"
+    },
+    {
+      "path": "internal/rules/attackcoef_test.go",
+      "size": 2978,
+      "sha256": "c6e3db880217e5e773a27c192c511ab5e07d7c8fa26409c03476650fe7b994c1"
+    },
+    {
+      "path": "internal/rules/battle.go",
+      "size": 18891,
+      "sha256": "eacde8475683afb84626a1e024c4b61af8a9b64939379c2eeb939a83d3844d41"
+    },
+    {
+      "path": "internal/rules/battle_deploy_oracle_test.go",
+      "size": 2247,
+      "sha256": "99b3cefb0cd966612282eaccf34513288e367067dd0249b8726bd3ef4a612e0f"
+    },
+    {
+      "path": "internal/rules/battle_fleet_step_test.go",
+      "size": 6434,
+      "sha256": "6781ec352c6a88490f2609a9862a439ad2d71425d16fdf6bf9d56866a79257a0"
+    },
+    {
+      "path": "internal/rules/battle_formation_test.go",
+      "size": 1054,
+      "sha256": "30cba0746b1027f586542f2bdd94d793923d19207504f068c2431b0a85bb83b0"
+    },
+    {
+      "path": "internal/rules/battle_move_test.go",
+      "size": 2039,
+      "sha256": "2df5df8f887fa638ac50e826c083c358a2771852ed14445a5fda905769f6734a"
+    },
+    {
+      "path": "internal/rules/battle_movement_test.go",
+      "size": 6995,
+      "sha256": "9c036107ca0277c54f12701a6092b4c23997b6d1efc1acb666c1d9f09a2464a7"
+    },
+    {
+      "path": "internal/rules/battle_preparation_oracle_test.go",
+      "size": 3257,
+      "sha256": "89c7476812bff8ca68e27cc5f8546ec47ee78a7e92bdabd6115087017409e54e"
+    },
+    {
+      "path": "internal/rules/battle_range_test.go",
+      "size": 1457,
+      "sha256": "70efb64a7f505a11e0db0afc482a4eaca287711d043659e5d8bb7e9bbfa438b0"
+    },
+    {
+      "path": "internal/rules/battle_rules_oracle_test.go",
+      "size": 4823,
+      "sha256": "e703d6ad5038bcf92cdcee78468190e316a81dedeb162b6a8764c3aa92ff9460"
+    },
+    {
+      "path": "internal/rules/battle_sprite_test.go",
+      "size": 2682,
+      "sha256": "0ae42139f808b41fca055f9bcf2bfdba472f6a4cf3f0f61ff97ba0431f6580f9"
+    },
+    {
+      "path": "internal/rules/battlecleanup.go",
+      "size": 1663,
+      "sha256": "1f9bddd9ff0bfee0b73ec94cac39d25026573d1f3944c9a6db26435bf6e9dc91"
+    },
+    {
+      "path": "internal/rules/battlecleanup_test.go",
+      "size": 2249,
+      "sha256": "6f755a6bbc634d3376c01d2171447494d4d6cdf34b79b03014821ebf3d4cf2f4"
+    },
+    {
+      "path": "internal/rules/battlemarker.go",
+      "size": 983,
+      "sha256": "f0f0607f3fa372467efc64ab1782f91d7122fcdf0f473efac5b7b1b4b2cad9e7"
+    },
+    {
+      "path": "internal/rules/battlemarker_test.go",
+      "size": 1639,
+      "sha256": "e6ac7910abb29861dd700dceab6ef9c9ea00cb005808b6cbfb505f0a5bd9d906"
+    },
+    {
+      "path": "internal/rules/battlemovement.go",
+      "size": 6475,
+      "sha256": "cdc39c24442d6ecc691de86d7656acd6ae02241422168b740eb2319d5e34895e"
+    },
+    {
+      "path": "internal/rules/battleplanet.go",
+      "size": 5176,
+      "sha256": "486c61d3c39283c9b822dc0c864c11a84fceb0e9bc627d7faf14d41fe661dcc8"
+    },
+    {
+      "path": "internal/rules/battleplanetwrite_test.go",
+      "size": 2600,
+      "sha256": "aa2220e2d2d7074b89a185efeef605d483ea81f32fbc6feeaa006eb6d83aa46a"
+    },
+    {
+      "path": "internal/rules/battlepreparation.go",
+      "size": 5696,
+      "sha256": "8c09be1cea2de9e9ff5fca632946695d3b9b4f5380f4c0596b40d12c824fdc70"
+    },
+    {
+      "path": "internal/rules/battlepreparation_test.go",
+      "size": 4237,
+      "sha256": "5953657f98777ced901066628e462fdcf3d212deb1db64c141c653366eae9d42"
+    },
+    {
+      "path": "internal/rules/battleview.go",
+      "size": 1991,
+      "sha256": "c640659d7b916a499a7520c39238f6a3cb492ad4301d16a6b62ef3b1801132f1"
+    },
+    {
+      "path": "internal/rules/battleview_test.go",
+      "size": 1204,
+      "sha256": "113940bebd94be37417df4fdb80c4b7ffe6868fac793a178a3425145973a4be7"
+    },
+    {
+      "path": "internal/rules/budget.go",
+      "size": 2712,
+      "sha256": "b1873794131f80d5e8a103fb50bb44620f252d17ab6ab341fb1942d7baa3706d"
+    },
+    {
+      "path": "internal/rules/budget_test.go",
+      "size": 4565,
+      "sha256": "5ba9809768c1b4eb71f3c529f33f0d78246fba952d7922e400e60845b592930d"
+    },
+    {
+      "path": "internal/rules/buildplan.go",
+      "size": 8162,
+      "sha256": "d7978118efa86e7410f3d07aaf63d20caed8f8ea558f21d8c5819a2913324017"
+    },
+    {
+      "path": "internal/rules/buildplan_test.go",
+      "size": 6763,
+      "sha256": "b03f124846d87f57578ed85e59cc7f703f6a4eb59a9010cba45f6fb615ddd720"
+    },
+    {
+      "path": "internal/rules/calendar.go",
+      "size": 946,
+      "sha256": "c038a8de6b677b1784e02bce04ccfacc451fe6d173c79e802df512d5ff3c0ce1"
+    },
+    {
+      "path": "internal/rules/calendar_test.go",
+      "size": 1032,
+      "sha256": "8679c03acea4704e0c59c415bc669738d0328d5a7101772880f76b643f8347b7"
+    },
+    {
+      "path": "internal/rules/entry.go",
+      "size": 1679,
+      "sha256": "c0ec31b4c41f0f85a9bc3176dd4b1aee73e352a5278ffa1dd7e5a45c9d931f8d"
+    },
+    {
+      "path": "internal/rules/entry_test.go",
+      "size": 2260,
+      "sha256": "2a74caa79f1d05e70b6a969cebfb61ca85fa3ecf396ff546b7415f4dec91f101"
+    },
+    {
+      "path": "internal/rules/facing_test.go",
+      "size": 1950,
+      "sha256": "88c5e94cfa78b83626b976fb3246a6bb2158af1c3b167d0bdfe1555b8b5c9104"
+    },
+    {
+      "path": "internal/rules/fixed.go",
+      "size": 2271,
+      "sha256": "e3540ee14e9c350b37df14b094ef7b178e4b457c70a0eb944c1d4bd890161df8"
+    },
+    {
+      "path": "internal/rules/fleet.go",
+      "size": 8797,
+      "sha256": "3dafbcb06dc6da7a54ec8e34cbaa78fd437338ec28c5cae9662011abe3ea7af3"
+    },
+    {
+      "path": "internal/rules/fleet_test.go",
+      "size": 3548,
+      "sha256": "409cd3af9525a806b487e599b59e38eebeea1d2c3611bf471ad3213a6c891726"
+    },
+    {
+      "path": "internal/rules/fleetarrival.go",
+      "size": 2013,
+      "sha256": "6d9c42038847bd0cbbd34f77026ce5804802ddf912f80b256ea295503eb9eab4"
+    },
+    {
+      "path": "internal/rules/fleetauto.go",
+      "size": 6246,
+      "sha256": "7672e7e8ceaffca0f33ead80e1676946db2b9bf4f01f182d65fd58ed21e787b1"
+    },
+    {
+      "path": "internal/rules/fleetauto_test.go",
+      "size": 5907,
+      "sha256": "1fcc8324fee92af84181b120a20c6de9697ac30cbbecb4b6f001318189bf24d5"
+    },
+    {
+      "path": "internal/rules/fleetbuild.go",
+      "size": 13909,
+      "sha256": "dc060d48d097e8a59d0487915b2892150a71b6e349c3799df8db388b36eb43b6"
+    },
+    {
+      "path": "internal/rules/fleetbuild_test.go",
+      "size": 5612,
+      "sha256": "ef48cfe1703baee8e455d0cfb96a6b70c70c5b30d734e3a899c5d70e85ac99a9"
+    },
+    {
+      "path": "internal/rules/fleetcandidates.go",
+      "size": 4577,
+      "sha256": "eaefa607e37297e0340fc735a1d422467953547e6e1ab8b2c639a226929dfff3"
+    },
+    {
+      "path": "internal/rules/fleetcandidates_test.go",
+      "size": 6299,
+      "sha256": "312389fd316c684d33fbfa6bf5a608e51aa3089940a72fe357affa387e37875f"
+    },
+    {
+      "path": "internal/rules/fleetcombat.go",
+      "size": 8847,
+      "sha256": "6b7208a70fd896dda31852ec45d7061b8f5623b6f40c89142ee27ed93fb284cd"
+    },
+    {
+      "path": "internal/rules/fleetcombat_test.go",
+      "size": 19349,
+      "sha256": "ffaa2619a620b7da803fb0c02a562698fdcbf3748edab487d2d8a6cbd438e782"
+    },
+    {
+      "path": "internal/rules/fleetcommandrange.go",
+      "size": 748,
+      "sha256": "8d93c882929383dd3022682325f12b6d8979756e048cd01a8d870b962ef7477f"
+    },
+    {
+      "path": "internal/rules/fleetedit.go",
+      "size": 10458,
+      "sha256": "3f70f628904c7a36b26513b40e37279d8c2833f76ad13949fa05bb4e0d5ec9f5"
+    },
+    {
+      "path": "internal/rules/fleetedit_test.go",
+      "size": 7343,
+      "sha256": "4c293c409f3a6b77772b5b8171a0ef2df6fae05b2a66192be97a6dc650021fa1"
+    },
+    {
+      "path": "internal/rules/fleetmove.go",
+      "size": 10896,
+      "sha256": "ca4bcc2e22bc2f7b7672481dca4b0462f507f08997f5badfcdbd301d132b71a6"
+    },
+    {
+      "path": "internal/rules/fleetmove_test.go",
+      "size": 8140,
+      "sha256": "1fff2a38c26b65e2146d77d32a358aa63ef304a8ec912808402c8a3f8c70f796"
+    },
+    {
+      "path": "internal/rules/fleetprojection.go",
+      "size": 3046,
+      "sha256": "e03e8b3a9d38350233bb8c957471cbf7767a6bd5b1cae5b0cb3c8de0b711f71a"
+    },
+    {
+      "path": "internal/rules/fleetprojection_test.go",
+      "size": 3732,
+      "sha256": "9ef12fb1ce0e04764e1ea5dfd34d51d42c3572ce5ea3d3b20bedbdfc2162fe09"
+    },
+    {
+      "path": "internal/rules/fleetrefit.go",
+      "size": 4604,
+      "sha256": "54f7ed72570291f58ff0f117e83abebdfd700680d6ad7fb63bc0f962333e1a93"
+    },
+    {
+      "path": "internal/rules/fleetrefit_test.go",
+      "size": 9156,
+      "sha256": "b4f0d3bee7400a355e3804413ecc3fb3263a760a328c43eb35039a6a5282ef6a"
+    },
+    {
+      "path": "internal/rules/fleetsave.go",
+      "size": 8052,
+      "sha256": "386d240b3d3cd3cebd1ffeae0795be3c54f7ac35a26520d94fd44b54812ac40e"
+    },
+    {
+      "path": "internal/rules/fleetsave_test.go",
+      "size": 6152,
+      "sha256": "ef576470031313b0f82cbd2afd22b46bed1b53b0fa2bade5105b238aaf4f39f4"
+    },
+    {
+      "path": "internal/rules/fleetslots.go",
+      "size": 1088,
+      "sha256": "a42429a1138bfd4985e869238671bfddb57726120ec33c928962fa2b4c67a0a4"
+    },
+    {
+      "path": "internal/rules/fleetslots_test.go",
+      "size": 1156,
+      "sha256": "3fb1a2cace57983fccd9f809f60620d352433c8c8baae56a7fb6fd22ee465ca5"
+    },
+    {
+      "path": "internal/rules/fleetstep.go",
+      "size": 6908,
+      "sha256": "e2b3a25906d851992e49b35fa1be8684a210612331fad7592f37324f6d0b9aa3"
+    },
+    {
+      "path": "internal/rules/formation.go",
+      "size": 2153,
+      "sha256": "bdee271f5c79cfefceaa8d1658fd675cc8f87c03a028705d20f329b2da4f744f"
+    },
+    {
+      "path": "internal/rules/formation_test.go",
+      "size": 2004,
+      "sha256": "1b78c749a83086bdc912221dbef88fadcf5510706c8a7383e8a0a2256e82dda3"
+    },
+    {
+      "path": "internal/rules/formationtable_test.go",
+      "size": 2003,
+      "sha256": "29228eb7a25534c81648371eea8e508c756bb1b213b961c8a23144b90bd61605"
+    },
+    {
+      "path": "internal/rules/fortressgun.go",
+      "size": 8858,
+      "sha256": "40660ecca5ca33b623524ca2047eb09e61ddd134816f5bbeb8bb281f7675c6f4"
+    },
+    {
+      "path": "internal/rules/fortressgun_oracle_test.go",
+      "size": 10914,
+      "sha256": "e28cb03beca4f7fc9bb7b4428afd30c85ed74b235f8c72def655298a0f7d60dc"
+    },
+    {
+      "path": "internal/rules/growth.go",
+      "size": 10459,
+      "sha256": "a60c5bc522d534f5c3d5da500b73b810111ca38de2709962127a456f2745dd25"
+    },
+    {
+      "path": "internal/rules/growth_check_test.go",
+      "size": 2193,
+      "sha256": "7deffba0a233b7d183a33147db22fd2494b08e24222bc05e8bf64eb16da8b7e8"
+    },
+    {
+      "path": "internal/rules/growth_test.go",
+      "size": 4114,
+      "sha256": "21fdb7740784b494fd8cf855b480ee087abc45daa17d4f448b7c98f10569ff8f"
+    },
+    {
+      "path": "internal/rules/losses.go",
+      "size": 7442,
+      "sha256": "4f8af6588107e7da8b4e8b325dc1c32f79e3fce8064b6673fd528dc9ebb222d8"
+    },
+    {
+      "path": "internal/rules/losses_test.go",
+      "size": 7400,
+      "sha256": "efae11d736296929c78050d388b935c995f2bc5ddf84ba61d4eeae9660d38364"
+    },
+    {
+      "path": "internal/rules/manoeuvre_test.go",
+      "size": 2522,
+      "sha256": "e02ba5d8aa168ba1129209fd358a9a7ee5fcdd0f415765719e47847d419a399c"
+    },
+    {
+      "path": "internal/rules/monthwork_oracle_test.go",
+      "size": 5426,
+      "sha256": "ef7a941228b887d7141167f7fa31e8f769075ba15f5db603d3ac499dff718cec"
+    },
+    {
+      "path": "internal/rules/morale.go",
+      "size": 1874,
+      "sha256": "aaa645907902d2017b93dd958f6999f2acd4ba92ed7a3e3a87a6eb359234011b"
+    },
+    {
+      "path": "internal/rules/morale_test.go",
+      "size": 2923,
+      "sha256": "8ddac438c58e12c0d6b774ebbde7e38696e1a30401bcb2e4fdafcfe466957576"
+    },
+    {
+      "path": "internal/rules/newgame.go",
+      "size": 3313,
+      "sha256": "b712ed988aab93dfa8b38d12dd3397e6a38feeda85d897d306587f4bde1df21b"
+    },
+    {
+      "path": "internal/rules/newgame_test.go",
+      "size": 2509,
+      "sha256": "4ab972f237b8423720c7465800540201c9f773c7de43a4beebab35ed32cd45b0"
+    },
+    {
+      "path": "internal/rules/phezzan.go",
+      "size": 3590,
+      "sha256": "04823f2b3f5bb4fe3d0e780646dea3e03b631d77861e9648c3cba433a3d255ec"
+    },
+    {
+      "path": "internal/rules/phezzan_oracle_test.go",
+      "size": 2023,
+      "sha256": "63e04d3aff6af368f6ca80df1210f2605db2f63125177aa5ed31d02a2be77702"
+    },
+    {
+      "path": "internal/rules/phezzan_test.go",
+      "size": 3279,
+      "sha256": "1cb8eab6fde47b85c2ba339056434a308c34254c98ad144b50579f44c35b34a1"
+    },
+    {
+      "path": "internal/rules/planetassault.go",
+      "size": 12016,
+      "sha256": "ff8e6f75eb164937dfe86b7f7f1bcccac2ebdbf4401927b06f7db330c45d31fd"
+    },
+    {
+      "path": "internal/rules/planetassault_gauges_test.go",
+      "size": 2266,
+      "sha256": "929dd21c6d948c8568be021ba89096f1881ee7c5f2c5f1c9d028ee60e991ff99"
+    },
+    {
+      "path": "internal/rules/planetassault_oracle_test.go",
+      "size": 5162,
+      "sha256": "8581f77c6a54c537a229bad9a8191de71e53cfa16a6e63841c9f317f8639c349"
+    },
+    {
+      "path": "internal/rules/planetcmd.go",
+      "size": 4997,
+      "sha256": "a3d300491e1bc3a3f5e21df16fdbcce75779b3fb207781b40c34944268404be6"
+    },
+    {
+      "path": "internal/rules/planetcmd_test.go",
+      "size": 3463,
+      "sha256": "975b1d858f71400f1cde42cc4912f28d98dbbf6d2e43ac17c95e54de36e596de"
+    },
+    {
+      "path": "internal/rules/promotion.go",
+      "size": 11344,
+      "sha256": "2d9aac12b9caa2374033bafee364c2e29500952ec7f4cf59888b94b1aee90536"
+    },
+    {
+      "path": "internal/rules/promotion_test.go",
+      "size": 6644,
+      "sha256": "96a1d87aeb42cca632c282c0f84c289fc94d888e99e8b79c99c43c263ff74773"
+    },
+    {
+      "path": "internal/rules/rand.go",
+      "size": 1238,
+      "sha256": "0457b7259bd820cc13b2f2f009226283cf501ff561a9feeaf35afb4432468d99"
+    },
+    {
+      "path": "internal/rules/rand_test.go",
+      "size": 1437,
+      "sha256": "1d5a647101961c59def3e0f29add312029f8bf11870e15900d0fa0309c671b7f"
+    },
+    {
+      "path": "internal/rules/rebellion.go",
+      "size": 9327,
+      "sha256": "c45a44ab90e91e7908cafcfc0b30073e078a16767d59180aa1358f269c696d39"
+    },
+    {
+      "path": "internal/rules/rebellion_test.go",
+      "size": 14515,
+      "sha256": "cb80b5db808996d452c018442fddba564ce8c8aab570246c02b558c2f2e5ea1f"
+    },
+    {
+      "path": "internal/rules/region.go",
+      "size": 24246,
+      "sha256": "cba006daa23304121e4136523efd41b0f523164e0212abc0ec045456266b82a2"
+    },
+    {
+      "path": "internal/rules/region_list_test.go",
+      "size": 783,
+      "sha256": "85bd5d8f33fdb23d97c4bee16b3753e2e52a398a46c2c9a55d03611b0ea43d5e"
+    },
+    {
+      "path": "internal/rules/region_supply.go",
+      "size": 4299,
+      "sha256": "693c2245ac2f3fb0a437ad7b517e6b3116b69a0e00684fe8b9f0c797e291d907"
+    },
+    {
+      "path": "internal/rules/region_supply_test.go",
+      "size": 2197,
+      "sha256": "6b9d152dcb18bc6bafd8ccfa1af6c3d4d1601e11c4c0467547bc1191541f4ee7"
+    },
+    {
+      "path": "internal/rules/region_test.go",
+      "size": 11790,
+      "sha256": "39c684e9fa9426f4dad88e892845706d73b95d61d74b4ea610b09f1caa26984f"
+    },
+    {
+      "path": "internal/rules/region_visible_test.go",
+      "size": 3260,
+      "sha256": "70ca5f7eab679ae4ea2e34ed3e95f5eada97f2be41b6e916a561af3f7f24852b"
+    },
+    {
+      "path": "internal/rules/regionfleets_test.go",
+      "size": 1820,
+      "sha256": "d8b069cdef3267e7c86feb45e14c1510649140fc69b67b0ddf16340d135778db"
+    },
+    {
+      "path": "internal/rules/regionplanets.go",
+      "size": 2373,
+      "sha256": "5732bf0860e2a992f572b95db6e2a357941bf6fb2cb1d2487e4006cf2dec9a63"
+    },
+    {
+      "path": "internal/rules/regionposture.go",
+      "size": 5826,
+      "sha256": "fca1c2c21d44e4ae47acce912a041c9ae1554e19b80e279c7a4fae7c86bdbaa0"
+    },
+    {
+      "path": "internal/rules/regionposture_test.go",
+      "size": 4864,
+      "sha256": "e8b81075bd6f301ebefa0da0a9689001692205575626fd0eb3efbd2f1dd04bb0"
+    },
+    {
+      "path": "internal/rules/regionresupply.go",
+      "size": 8069,
+      "sha256": "ade290a94ae97bcb33d2d5af58e7d50f6b6b55ee1a3b29386f443f4444fc90d1"
+    },
+    {
+      "path": "internal/rules/regionresupply_oracle_test.go",
+      "size": 5760,
+      "sha256": "2ebf0bc3f4a419d3031dc9c880d3d0953a06303dba1d1be90fb62c8dfb887dba"
+    },
+    {
+      "path": "internal/rules/regionsummary.go",
+      "size": 4537,
+      "sha256": "937c0c4baf53069a5451c36c7f36cd220088f29d205bb3ec20011fe1d40e8039"
+    },
+    {
+      "path": "internal/rules/regionupkeep.go",
+      "size": 2369,
+      "sha256": "5aeff0940817da9ef5c1896dc0795fc5f6a8c972a337b1c9a834392bc02c343a"
+    },
+    {
+      "path": "internal/rules/regionupkeep_test.go",
+      "size": 5393,
+      "sha256": "bb9e1f1d780d566a61b6145a5987db302c1fbfce38f1827d4eefe212265afcc3"
+    },
+    {
+      "path": "internal/rules/resolve.go",
+      "size": 13167,
+      "sha256": "9e85cca4d4749cff9e5ed99c193f51aa316a23915b03d3e00de7c3bfcd329589"
+    },
+    {
+      "path": "internal/rules/resolve_test.go",
+      "size": 3342,
+      "sha256": "9df5cec83fa07f1e946be7877af07a40f1263171e86b1f364d872f2bb91d9b01"
+    },
+    {
+      "path": "internal/rules/save.go",
+      "size": 26521,
+      "sha256": "6d137e30006306b71c18d16dcd02c7530a174beb9cd03944e82a869813429adc"
+    },
+    {
+      "path": "internal/rules/save_test.go",
+      "size": 20500,
+      "sha256": "c63439311cde66fccd10907356cdfcf43a12ddbf33ba466cd65f04e96e50601d"
+    },
+    {
+      "path": "internal/rules/shipkind.go",
+      "size": 4453,
+      "sha256": "c8d97e95112b49ddede237b0fea0d9e8beeba96fbfc6d400f5df926355e83f6c"
+    },
+    {
+      "path": "internal/rules/shipkind_test.go",
+      "size": 1559,
+      "sha256": "558536710a6a33c8d364931b1e9ed5812cf17ebab76f7285a5f0496330d4fe6f"
+    },
+    {
+      "path": "internal/rules/shippool_oracle_test.go",
+      "size": 4748,
+      "sha256": "bc109c205d8bc6e1a22c88ceae30b9a567773a9b31eab6b11db7cc8fc99d5b6e"
+    },
+    {
+      "path": "internal/rules/spotting.go",
+      "size": 3166,
+      "sha256": "5195c9d6348538585a2d0738cb49c1af699ae579df6feb7865016b4813f12fce"
+    },
+    {
+      "path": "internal/rules/spotting_oracle_test.go",
+      "size": 10427,
+      "sha256": "46dccd1e284241cb86681a6d96ae82fd9a6caa7c8fd4108b7ebdb352b4ca386e"
+    },
+    {
+      "path": "internal/rules/spotting_test.go",
+      "size": 6387,
+      "sha256": "06f16f3c3b5b8be5dc862001a7c3184400c696d3640d70f0c6b37f05e603fa5b"
+    },
+    {
+      "path": "internal/rules/staffpick.go",
+      "size": 5721,
+      "sha256": "2cb46c5361f92ebffce527670866f0d7a0a2b0527020d82107a0f9a4f21dbd9e"
+    },
+    {
+      "path": "internal/rules/staffpick_test.go",
+      "size": 4454,
+      "sha256": "40cbc6f0386ce8b91a271dbefc7ae6e7ad05815001cb10916361bc7ce3cdd71c"
+    },
+    {
+      "path": "internal/rules/stardistance.go",
+      "size": 2434,
+      "sha256": "f56fb8221e5c58043f908b9c3bc48c21a8539d2cc6d35f67f2b06ca5b5791071"
+    },
+    {
+      "path": "internal/rules/stardistance_test.go",
+      "size": 4209,
+      "sha256": "73806a5aa16fadf60818b9f3104f5409afdd6e22ef0428e28792d7bb5705674f"
+    },
+    {
+      "path": "internal/rules/stargraph.go",
+      "size": 4920,
+      "sha256": "e6c3ddfdd1a1a105104f3b41a619b7ab4cbe3c77f83ad5075618aa39d1e7803e"
+    },
+    {
+      "path": "internal/rules/stargraph_test.go",
+      "size": 4027,
+      "sha256": "e967d13b5fe034f9cb178b6e1149f4c532baa8aa1de603391d713e6d6ecb5341"
+    },
+    {
+      "path": "internal/rules/strategicassault.go",
+      "size": 15879,
+      "sha256": "1d264d86e5b285c7e2187f9ba0fdaaf98f2e291189726a8e8e87444b7d074b4e"
+    },
+    {
+      "path": "internal/rules/strategicassault_oracle_test.go",
+      "size": 7305,
+      "sha256": "3031c9e0e02f61199059339943ea0bfe64a2651171de14bd7f5cd6715ec20b40"
+    },
+    {
+      "path": "internal/rules/strength.go",
+      "size": 4895,
+      "sha256": "947431d0b47d54b720e1bbf21244f7fc3d5e26a7a5b83b05026a67bc07d4539f"
+    },
+    {
+      "path": "internal/rules/supplyrepair.go",
+      "size": 4139,
+      "sha256": "f9aebab6b5f2ec10e3ad82d762f5d37878d6ceb7d0d6d339cc7d962b9b75093c"
+    },
+    {
+      "path": "internal/rules/supplyrepair_test.go",
+      "size": 6036,
+      "sha256": "72280cb431c888e09e98c5f75d7f23c3122221c17b9c328851ccb278135e367c"
+    },
+    {
+      "path": "internal/rules/takeships_test.go",
+      "size": 1852,
+      "sha256": "e404fdbc0e43a9afdd448fa42eb4330b6a2dbd5357344f4992fa410d6e965548"
+    },
+    {
+      "path": "internal/rules/taxrate.go",
+      "size": 3489,
+      "sha256": "4b07dcb7e22f7bd20e13c126a2017983feb3245041bbf9afa5c2fe38171aeb4b"
+    },
+    {
+      "path": "internal/rules/taxrate_test.go",
+      "size": 743,
+      "sha256": "e20b88a651b4a4016c42fc9fe609d2302ab69e5013aefdf741baa96d3da6e9fa"
+    },
+    {
+      "path": "internal/rules/terrain.go",
+      "size": 5948,
+      "sha256": "bf7191b53683b2a1e9c70dfafea4dc562a843bed138a2fdac724f4e505037d2a"
+    },
+    {
+      "path": "internal/rules/terrain_test.go",
+      "size": 1235,
+      "sha256": "70ba4c2ffd54625790544e7be1f089e2c85c7b7a24123e737e1db1448039999b"
+    },
+    {
+      "path": "internal/rules/trig.go",
+      "size": 2534,
+      "sha256": "6a7cffeb674321bd6e09ed4e272571d139993a3c518a7ec83179abb060d2f1e9"
+    },
+    {
+      "path": "internal/rules/trig_test.go",
+      "size": 1472,
+      "sha256": "813a9b49a5afae358fa6bb1439ffa2728c0907afb545fd0e8ff4e0823a406380"
+    },
+    {
+      "path": "internal/rules/unrest.go",
+      "size": 10024,
+      "sha256": "b3a97c54b88d2c49d04a2ca91936c2f5c6c735380415e4b9822084e0f8b88fee"
+    },
+    {
+      "path": "internal/rules/unrest_recompute_test.go",
+      "size": 9598,
+      "sha256": "d26c6a95e575f1aa3fca6860919489b309b31cda3522ff121cb3248f12822a7f"
+    },
+    {
+      "path": "internal/rules/unrest_test.go",
+      "size": 3162,
+      "sha256": "40082a77589144af619138f7f89ff36f600cf4482e02176a9f3d8b0cded1683a"
+    }
+  ],
+  "writes": [
+    {
+      "after_word": 65535,
+      "before_word": 255,
+      "fleet": 16,
+      "instruction": "297B:0919",
+      "instruction_bytes_hex": "2688475bff7616539a0000e1",
+      "linear": "lin:6139E",
+      "step": 1187965923
+    },
+    {
+      "after_word": 65535,
+      "before_word": 255,
+      "fleet": 17,
+      "instruction": "297B:0919",
+      "instruction_bytes_hex": "2688475bff7616539a0000e1",
+      "linear": "lin:61418",
+      "step": 1187988680
+    },
+    {
+      "after_word": 65535,
+      "before_word": 255,
+      "fleet": 28,
+      "instruction": "297B:0919",
+      "instruction_bytes_hex": "2688475bff7616539a0000e1",
+      "linear": "lin:61956",
+      "step": 1188023440
+    },
+    {
+      "after_word": 65535,
+      "before_word": 255,
+      "fleet": 29,
+      "instruction": "297B:0919",
+      "instruction_bytes_hex": "2688475bff7616539a0000e1",
+      "linear": "lin:619D0",
+      "step": 1188093482
+    },
+    {
+      "after_word": 65535,
+      "before_word": 255,
+      "fleet": 30,
+      "instruction": "297B:0919",
+      "instruction_bytes_hex": "2688475bff7616539a0000e1",
+      "linear": "lin:61A4A",
+      "step": 1188232822
+    },
+    {
+      "after_word": 255,
+      "before_word": 0,
+      "fleet": 31,
+      "instruction": "297B:0915",
+      "instruction_bytes_hex": "2688475a2688475bff761653",
+      "linear": "lin:61AC4",
+      "step": 1188282203
+    },
+    {
+      "after_word": 65535,
+      "before_word": 255,
+      "fleet": 31,
+      "instruction": "297B:0919",
+      "instruction_bytes_hex": "2688475bff7616539a0000e1",
+      "linear": "lin:61AC4",
+      "step": 1188282204
+    }
+  ],
+  "cases": [
+    {
+      "name": "mask01-human0-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1aeb240ca487c9eb8a66481fcbc0c784ab61084694a2644e8a619e3934f7b0f2",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "48d9c6a97ffb18792faa96a0514e214638c066e60b2c29a704071793b2ffa14d"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human1-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1aeb240ca487c9eb8a66481fcbc0c784ab61084694a2644e8a619e3934f7b0f2",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "770124e298bcf703a7b2ef9e941642fdab693999fa090ff3d1b5d887f79c7efe"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human2-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1aeb240ca487c9eb8a66481fcbc0c784ab61084694a2644e8a619e3934f7b0f2",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "570ceffcfcb49a980404b9583f4bfe70ff441c24afe77882f56e291e38b6694d"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human3-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1aeb240ca487c9eb8a66481fcbc0c784ab61084694a2644e8a619e3934f7b0f2",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "a6df41d79014369701ae5e0a82b4c280f22bbc82f23f23546258e33ee4367466"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human0-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 1866972598,
+      "after_sha256": {
+        "admiral": "af5cdf01cf9870d445339b27ca823f2503184e92438c1d97ee2459ef83ef514f",
+        "fleet": "efe15f9b5685d5ec74b9196628a8a38e7f1379fb63f16e1a926050f7b7d28238",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "50c5fd4db4cdc58db5f40268e520bf7b541588cc725ba25ba51282bd04c370c8",
+        "ship": "e55a5c74758adb3f80ef3d32d176541eebced808c9b31ac7aa1c8b20f4077048",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "3bc992ed76da84cd43be58822607360afe889b076f58b9fd0b0c02752df8be3d"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human1-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 1866972598,
+      "after_sha256": {
+        "admiral": "af5cdf01cf9870d445339b27ca823f2503184e92438c1d97ee2459ef83ef514f",
+        "fleet": "efe15f9b5685d5ec74b9196628a8a38e7f1379fb63f16e1a926050f7b7d28238",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "50c5fd4db4cdc58db5f40268e520bf7b541588cc725ba25ba51282bd04c370c8",
+        "ship": "e55a5c74758adb3f80ef3d32d176541eebced808c9b31ac7aa1c8b20f4077048",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "9d5d63fe947f44bcd06e12b901cc4217c8a1c20d59c68beedf0344549f089468"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human2-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 1866972598,
+      "after_sha256": {
+        "admiral": "af5cdf01cf9870d445339b27ca823f2503184e92438c1d97ee2459ef83ef514f",
+        "fleet": "efe15f9b5685d5ec74b9196628a8a38e7f1379fb63f16e1a926050f7b7d28238",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "50c5fd4db4cdc58db5f40268e520bf7b541588cc725ba25ba51282bd04c370c8",
+        "ship": "e55a5c74758adb3f80ef3d32d176541eebced808c9b31ac7aa1c8b20f4077048",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "0f5719a87773ee390bb35b9ca3b4657cb0042bbcd08c9bad4e02b0de6f6df58e"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human3-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 1866972598,
+      "after_sha256": {
+        "admiral": "af5cdf01cf9870d445339b27ca823f2503184e92438c1d97ee2459ef83ef514f",
+        "fleet": "efe15f9b5685d5ec74b9196628a8a38e7f1379fb63f16e1a926050f7b7d28238",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "50c5fd4db4cdc58db5f40268e520bf7b541588cc725ba25ba51282bd04c370c8",
+        "ship": "e55a5c74758adb3f80ef3d32d176541eebced808c9b31ac7aa1c8b20f4077048",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "5050205f58db7071ac55920f7e1a1177ea3026327c33b4543c55cc10c7bf988f"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round0-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "37215004163d9ecd46d440908ddd3a0579abf7d29623322e0a183729fa081334",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "29190e48a938a1caa103e9684ff8b2f66d364fba37e88560365a69c3cd183d37"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human0-round0-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 641997193,
+      "after_sha256": {
+        "admiral": "4b6b259505a68c1f1d51db5b6ada197e6aad201885af455828f206f27d6dabe4",
+        "fleet": "8ca953770bdf5e6b5b99b0d769aa06fe4571be9ab725728e945ff1c6887ec554",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "5bd6be70fc87212e5f41b15a3ecef70a8fdbe2b48f61746db74a1ad08c308609",
+        "ship": "5c973ffbbcb16e7820893878a0b00cd01fe4a0534f6374b2690827ce9d5b5e5d",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "5c87cebe51cf37c66661fa544be25bd09f13c0db8573f78bff45c573cb57b817"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round1-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "37215004163d9ecd46d440908ddd3a0579abf7d29623322e0a183729fa081334",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "1c65ea65e61f8d40473d8a2ace4fdc15a88f72786790bcfc9b86a6c6794eb49c"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human0-round1-recovery0",
+      "model": "workplace/finish79-r91-raw-base.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 641997193,
+      "after_sha256": {
+        "admiral": "4b6b259505a68c1f1d51db5b6ada197e6aad201885af455828f206f27d6dabe4",
+        "fleet": "8ca953770bdf5e6b5b99b0d769aa06fe4571be9ab725728e945ff1c6887ec554",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1e009fef6ee83c84992bfc5372fb44324e7708b113e5e439306c7c54af9fff66",
+        "ship": "5c973ffbbcb16e7820893878a0b00cd01fe4a0534f6374b2690827ce9d5b5e5d",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "4d9b4bde7ff9f304059b0c0aaf6a09da2f7b26def7ffdb8a6a5b6662206a6475"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1aeb240ca487c9eb8a66481fcbc0c784ab61084694a2644e8a619e3934f7b0f2",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "48d9c6a97ffb18792faa96a0514e214638c066e60b2c29a704071793b2ffa14d"
+      },
+      "terrain_calls": 162,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human1-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1aeb240ca487c9eb8a66481fcbc0c784ab61084694a2644e8a619e3934f7b0f2",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "770124e298bcf703a7b2ef9e941642fdab693999fa090ff3d1b5d887f79c7efe"
+      },
+      "terrain_calls": 162,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human2-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1aeb240ca487c9eb8a66481fcbc0c784ab61084694a2644e8a619e3934f7b0f2",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "570ceffcfcb49a980404b9583f4bfe70ff441c24afe77882f56e291e38b6694d"
+      },
+      "terrain_calls": 162,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human3-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1aeb240ca487c9eb8a66481fcbc0c784ab61084694a2644e8a619e3934f7b0f2",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "a6df41d79014369701ae5e0a82b4c280f22bbc82f23f23546258e33ee4367466"
+      },
+      "terrain_calls": 162,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human0-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 1866972598,
+      "after_sha256": {
+        "admiral": "af5cdf01cf9870d445339b27ca823f2503184e92438c1d97ee2459ef83ef514f",
+        "fleet": "efe15f9b5685d5ec74b9196628a8a38e7f1379fb63f16e1a926050f7b7d28238",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "50c5fd4db4cdc58db5f40268e520bf7b541588cc725ba25ba51282bd04c370c8",
+        "ship": "e55a5c74758adb3f80ef3d32d176541eebced808c9b31ac7aa1c8b20f4077048",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "3bc992ed76da84cd43be58822607360afe889b076f58b9fd0b0c02752df8be3d"
+      },
+      "terrain_calls": 9,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human1-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 1866972598,
+      "after_sha256": {
+        "admiral": "af5cdf01cf9870d445339b27ca823f2503184e92438c1d97ee2459ef83ef514f",
+        "fleet": "efe15f9b5685d5ec74b9196628a8a38e7f1379fb63f16e1a926050f7b7d28238",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "50c5fd4db4cdc58db5f40268e520bf7b541588cc725ba25ba51282bd04c370c8",
+        "ship": "e55a5c74758adb3f80ef3d32d176541eebced808c9b31ac7aa1c8b20f4077048",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "9d5d63fe947f44bcd06e12b901cc4217c8a1c20d59c68beedf0344549f089468"
+      },
+      "terrain_calls": 9,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human2-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 1866972598,
+      "after_sha256": {
+        "admiral": "af5cdf01cf9870d445339b27ca823f2503184e92438c1d97ee2459ef83ef514f",
+        "fleet": "efe15f9b5685d5ec74b9196628a8a38e7f1379fb63f16e1a926050f7b7d28238",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "50c5fd4db4cdc58db5f40268e520bf7b541588cc725ba25ba51282bd04c370c8",
+        "ship": "e55a5c74758adb3f80ef3d32d176541eebced808c9b31ac7aa1c8b20f4077048",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "0f5719a87773ee390bb35b9ca3b4657cb0042bbcd08c9bad4e02b0de6f6df58e"
+      },
+      "terrain_calls": 9,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human3-round5-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 1866972598,
+      "after_sha256": {
+        "admiral": "af5cdf01cf9870d445339b27ca823f2503184e92438c1d97ee2459ef83ef514f",
+        "fleet": "efe15f9b5685d5ec74b9196628a8a38e7f1379fb63f16e1a926050f7b7d28238",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "50c5fd4db4cdc58db5f40268e520bf7b541588cc725ba25ba51282bd04c370c8",
+        "ship": "e55a5c74758adb3f80ef3d32d176541eebced808c9b31ac7aa1c8b20f4077048",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "5050205f58db7071ac55920f7e1a1177ea3026327c33b4543c55cc10c7bf988f"
+      },
+      "terrain_calls": 9,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round0-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "37215004163d9ecd46d440908ddd3a0579abf7d29623322e0a183729fa081334",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "29190e48a938a1caa103e9684ff8b2f66d364fba37e88560365a69c3cd183d37"
+      },
+      "terrain_calls": 162,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human0-round0-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 641997193,
+      "after_sha256": {
+        "admiral": "4b6b259505a68c1f1d51db5b6ada197e6aad201885af455828f206f27d6dabe4",
+        "fleet": "8ca953770bdf5e6b5b99b0d769aa06fe4571be9ab725728e945ff1c6887ec554",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "5bd6be70fc87212e5f41b15a3ecef70a8fdbe2b48f61746db74a1ad08c308609",
+        "ship": "5c973ffbbcb16e7820893878a0b00cd01fe4a0534f6374b2690827ce9d5b5e5d",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "5c87cebe51cf37c66661fa544be25bd09f13c0db8573f78bff45c573cb57b817"
+      },
+      "terrain_calls": 45,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round1-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "37215004163d9ecd46d440908ddd3a0579abf7d29623322e0a183729fa081334",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "1c65ea65e61f8d40473d8a2ace4fdc15a88f72786790bcfc9b86a6c6794eb49c"
+      },
+      "terrain_calls": 162,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human0-round1-recovery0",
+      "model": "workplace/finish79-r91-raw-base-terrain.json",
+      "original": "workplace/finish79-r89-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 641997193,
+      "after_sha256": {
+        "admiral": "4b6b259505a68c1f1d51db5b6ada197e6aad201885af455828f206f27d6dabe4",
+        "fleet": "8ca953770bdf5e6b5b99b0d769aa06fe4571be9ab725728e945ff1c6887ec554",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1e009fef6ee83c84992bfc5372fb44324e7708b113e5e439306c7c54af9fff66",
+        "ship": "5c973ffbbcb16e7820893878a0b00cd01fe4a0534f6374b2690827ce9d5b5e5d",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "4d9b4bde7ff9f304059b0c0aaf6a09da2f7b26def7ffdb8a6a5b6662206a6475"
+      },
+      "terrain_calls": 45,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-guard1",
+      "model": "workplace/finish79-r91-raw-guard.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2783768973,
+      "after_sha256": {
+        "admiral": "47eabac8e4d170dcbb93d1c303efe5efcc499cbf0f799d02a796fa3fecb8ed3a",
+        "fleet": "51c3208cd44ee606bbb02f1cda535ba15d0b1d1df151913b011888d4e3c70ff6",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "6a978dbe61b18a03715b813b92fbf7fab7d3b5dd174d74b836175c1c62d2056b",
+        "ship": "2d67ec6cc1cb9954f734ee12af9cd5b26e37c5113df8a40f7451196a50172cc6",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "77623ec577d01aba0f9ecff775fac47bb2ac60e9fbc8af07f85bcd4ba14f2bcf"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-guard2",
+      "model": "workplace/finish79-r91-raw-guard.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2783768973,
+      "after_sha256": {
+        "admiral": "47eabac8e4d170dcbb93d1c303efe5efcc499cbf0f799d02a796fa3fecb8ed3a",
+        "fleet": "51c3208cd44ee606bbb02f1cda535ba15d0b1d1df151913b011888d4e3c70ff6",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "6a978dbe61b18a03715b813b92fbf7fab7d3b5dd174d74b836175c1c62d2056b",
+        "ship": "aafff577c2db24efd546ca8098ea5f96c30e30178ae9d15554ccc5b8cfabc6ef",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "63166fdf17c88bc29246432cf83638dd0015dc26b11c9f19c7decc614e840f1f"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-guard3",
+      "model": "workplace/finish79-r91-raw-guard.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1aeb240ca487c9eb8a66481fcbc0c784ab61084694a2644e8a619e3934f7b0f2",
+        "ship": "7f0931855836bde6f0afac1e5a0609b99a850cc152d8b2f81f513122ca805cec",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "48d9c6a97ffb18792faa96a0514e214638c066e60b2c29a704071793b2ffa14d"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-guard4",
+      "model": "workplace/finish79-r91-raw-guard.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2783768973,
+      "after_sha256": {
+        "admiral": "47eabac8e4d170dcbb93d1c303efe5efcc499cbf0f799d02a796fa3fecb8ed3a",
+        "fleet": "51c3208cd44ee606bbb02f1cda535ba15d0b1d1df151913b011888d4e3c70ff6",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "6a978dbe61b18a03715b813b92fbf7fab7d3b5dd174d74b836175c1c62d2056b",
+        "ship": "3a7711b298ec814b5eee09595aa634b1a8edc551200f53307a4b6713af7c7561",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "77623ec577d01aba0f9ecff775fac47bb2ac60e9fbc8af07f85bcd4ba14f2bcf"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-guard5",
+      "model": "workplace/finish79-r91-raw-guard.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2783768973,
+      "after_sha256": {
+        "admiral": "47eabac8e4d170dcbb93d1c303efe5efcc499cbf0f799d02a796fa3fecb8ed3a",
+        "fleet": "638ddcdede0eeb576e6cc51a2354a26b09f0790d011e61fdbb171d518dcb1f83",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "6a978dbe61b18a03715b813b92fbf7fab7d3b5dd174d74b836175c1c62d2056b",
+        "ship": "f1a8d4da75b550901c74982dbcf4847c2f90bd078312340aaf0b1725fa331b37",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "99ad914ed9f4fecdd82f2b0c8da8173096eabc31b0098272919404ffc6b14529"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round0-guard1",
+      "model": "workplace/finish79-r91-raw-guard.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2783768973,
+      "after_sha256": {
+        "admiral": "47eabac8e4d170dcbb93d1c303efe5efcc499cbf0f799d02a796fa3fecb8ed3a",
+        "fleet": "51c3208cd44ee606bbb02f1cda535ba15d0b1d1df151913b011888d4e3c70ff6",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "75f96280bd7c3d7b605f12f70fbb7a2644d98fef798f8f37affd1059f771733b",
+        "ship": "2d67ec6cc1cb9954f734ee12af9cd5b26e37c5113df8a40f7451196a50172cc6",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "058bbf891a7873a1fd835dbddb238a00846fc67a486f307ce922aed78d5d9dca"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human0-round5-guard1",
+      "model": "workplace/finish79-r91-raw-guard.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 1866972598,
+      "after_sha256": {
+        "admiral": "9418bc5f35ee2dd7f109e4656fb8dec49e26cbed388e2bd9ad8e10750a9cb26b",
+        "fleet": "cec368f7725a413bcc1108f2e63e0969fec412ea9420c7e140ed22d506adcd88",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "7836d7977b708391a43beb3059a341edf5fb41b43118ebdd2bde10f83f01f59a",
+        "ship": "23c53515c03313f2937c32f78b0566d096b689478fc2c59fd1fa5f58b6ab445b",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "ad06d8064fefa7b38fe26022ecd1d08d047fd2c909d57b34c9bfd2f909d834ee"
+      },
+      "terrain_calls": 0,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-guard1",
+      "model": "workplace/finish79-r91-raw-guard-terrain.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2783768973,
+      "after_sha256": {
+        "admiral": "47eabac8e4d170dcbb93d1c303efe5efcc499cbf0f799d02a796fa3fecb8ed3a",
+        "fleet": "51c3208cd44ee606bbb02f1cda535ba15d0b1d1df151913b011888d4e3c70ff6",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "6a978dbe61b18a03715b813b92fbf7fab7d3b5dd174d74b836175c1c62d2056b",
+        "ship": "2d67ec6cc1cb9954f734ee12af9cd5b26e37c5113df8a40f7451196a50172cc6",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "77623ec577d01aba0f9ecff775fac47bb2ac60e9fbc8af07f85bcd4ba14f2bcf"
+      },
+      "terrain_calls": 190,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-guard2",
+      "model": "workplace/finish79-r91-raw-guard-terrain.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2783768973,
+      "after_sha256": {
+        "admiral": "47eabac8e4d170dcbb93d1c303efe5efcc499cbf0f799d02a796fa3fecb8ed3a",
+        "fleet": "51c3208cd44ee606bbb02f1cda535ba15d0b1d1df151913b011888d4e3c70ff6",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "6a978dbe61b18a03715b813b92fbf7fab7d3b5dd174d74b836175c1c62d2056b",
+        "ship": "aafff577c2db24efd546ca8098ea5f96c30e30178ae9d15554ccc5b8cfabc6ef",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "63166fdf17c88bc29246432cf83638dd0015dc26b11c9f19c7decc614e840f1f"
+      },
+      "terrain_calls": 190,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-guard3",
+      "model": "workplace/finish79-r91-raw-guard-terrain.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2010708399,
+      "after_sha256": {
+        "admiral": "ca62ba0be9bacdcab5125f36ef0ad7871c553e97c4b24aa177bdb0e79ecf578b",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "1aeb240ca487c9eb8a66481fcbc0c784ab61084694a2644e8a619e3934f7b0f2",
+        "ship": "7f0931855836bde6f0afac1e5a0609b99a850cc152d8b2f81f513122ca805cec",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "48d9c6a97ffb18792faa96a0514e214638c066e60b2c29a704071793b2ffa14d"
+      },
+      "terrain_calls": 162,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-guard4",
+      "model": "workplace/finish79-r91-raw-guard-terrain.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2783768973,
+      "after_sha256": {
+        "admiral": "47eabac8e4d170dcbb93d1c303efe5efcc499cbf0f799d02a796fa3fecb8ed3a",
+        "fleet": "51c3208cd44ee606bbb02f1cda535ba15d0b1d1df151913b011888d4e3c70ff6",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "6a978dbe61b18a03715b813b92fbf7fab7d3b5dd174d74b836175c1c62d2056b",
+        "ship": "3a7711b298ec814b5eee09595aa634b1a8edc551200f53307a4b6713af7c7561",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "77623ec577d01aba0f9ecff775fac47bb2ac60e9fbc8af07f85bcd4ba14f2bcf"
+      },
+      "terrain_calls": 190,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round5-guard5",
+      "model": "workplace/finish79-r91-raw-guard-terrain.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2783768973,
+      "after_sha256": {
+        "admiral": "47eabac8e4d170dcbb93d1c303efe5efcc499cbf0f799d02a796fa3fecb8ed3a",
+        "fleet": "638ddcdede0eeb576e6cc51a2354a26b09f0790d011e61fdbb171d518dcb1f83",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "6a978dbe61b18a03715b813b92fbf7fab7d3b5dd174d74b836175c1c62d2056b",
+        "ship": "f1a8d4da75b550901c74982dbcf4847c2f90bd078312340aaf0b1725fa331b37",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "99ad914ed9f4fecdd82f2b0c8da8173096eabc31b0098272919404ffc6b14529"
+      },
+      "terrain_calls": 190,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask01-human0-round0-guard1",
+      "model": "workplace/finish79-r91-raw-guard-terrain.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 2783768973,
+      "after_sha256": {
+        "admiral": "47eabac8e4d170dcbb93d1c303efe5efcc499cbf0f799d02a796fa3fecb8ed3a",
+        "fleet": "51c3208cd44ee606bbb02f1cda535ba15d0b1d1df151913b011888d4e3c70ff6",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "75f96280bd7c3d7b605f12f70fbb7a2644d98fef798f8f37affd1059f771733b",
+        "ship": "2d67ec6cc1cb9954f734ee12af9cd5b26e37c5113df8a40f7451196a50172cc6",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "058bbf891a7873a1fd835dbddb238a00846fc67a486f307ce922aed78d5d9dca"
+      },
+      "terrain_calls": 190,
+      "blocked_calls": 0
+    },
+    {
+      "name": "mask7E-human0-round5-guard1",
+      "model": "workplace/finish79-r91-raw-guard-terrain.json",
+      "original": "workplace/finish79-r90-guard-a.json",
+      "comparison": "固定入口完整六表及清單的診斷；非正常玩家收據",
+      "compared_bytes": 44788,
+      "seed": 1866972598,
+      "after_sha256": {
+        "admiral": "9418bc5f35ee2dd7f109e4656fb8dec49e26cbed388e2bd9ad8e10750a9cb26b",
+        "fleet": "cec368f7725a413bcc1108f2e63e0969fec412ea9420c7e140ed22d506adcd88",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "7836d7977b708391a43beb3059a341edf5fb41b43118ebdd2bde10f83f01f59a",
+        "ship": "23c53515c03313f2937c32f78b0566d096b689478fc2c59fd1fa5f58b6ab445b",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "ad06d8064fefa7b38fe26022ecd1d08d047fd2c909d57b34c9bfd2f909d834ee"
+      },
+      "terrain_calls": 16,
+      "blocked_calls": 0
+    }
+  ],
+  "totals": {
+    "unique_cases": 19,
+    "model_runs": 38,
+    "compared_bytes": 1701944,
+    "native_write_cases": 2,
+    "write_changes": 7,
+    "terrain_queries": 2226
+  }
+}

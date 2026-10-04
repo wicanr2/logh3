@@ -1,0 +1,183 @@
+{
+  "schema": "logh3.battle-finish-cursor-review.v1",
+  "issue": 79,
+  "parent_head": "49c6236dd6f8fd1cb57cebddb72c2036ebeab61d",
+  "scope": "固定兩案原版雙跑；一個真正占領callback前後七張表與seed不變，返回後功績已核",
+  "limits": [
+    "尚未實作正式cursor／Game，不稱正常玩家或renderer通過"
+  ],
+  "sources": [
+    {
+      "path": "docs/internals/data/battle-finish-raw.json",
+      "size": 70932,
+      "sha256": "a95cb147d535cd33d7d6f47348dd82600d18b0428b3001fcda435aa614ce4824"
+    },
+    {
+      "path": "workplace/finish79-r91-native.go",
+      "size": 10741,
+      "sha256": "7f41a1a106485b14cb23eec105cd9df0ecd2b0b1abdefe37e45b522703243519"
+    },
+    {
+      "path": "workplace/finish79-r91-cursor-native.go",
+      "size": 11121,
+      "sha256": "739ed94e8f4bd1d2149e06474ba35fe1864378ec196f517718eaa0ac5c10e26f"
+    },
+    {
+      "path": "workplace/finish79-r91-cursor-a.json",
+      "size": 1336302,
+      "sha256": "7ae71c1bea82bf045d5083b9326e41c1defdde899355164d1df2d699a82978f8"
+    },
+    {
+      "path": "workplace/finish79-r91-cursor-b.json",
+      "size": 1336302,
+      "sha256": "7ae71c1bea82bf045d5083b9326e41c1defdde899355164d1df2d699a82978f8"
+    },
+    {
+      "path": "workplace/finish79-r89-a.json",
+      "size": 34520936,
+      "sha256": "d26f893d7a617ed566f6ef7852abfcd1cf8476e746f123f3bad7551d3cc6e477"
+    },
+    {
+      "path": "workplace/ida/finish79-r90-20B4.json",
+      "size": 367119,
+      "sha256": "046cc7bb0481da560e1687c8b14c36a0e02a012e37f66499d4dcd886d07b159e"
+    },
+    {
+      "path": "tools/scripts/battle_finish_cursor_prepare.py",
+      "size": 1192,
+      "sha256": "9862fa423aba587ac12e22fa6c238cf71d40144d3ca53a517e564d4d9d295ea5"
+    },
+    {
+      "path": "tools/battle_finish_cursor_oracle.sh",
+      "size": 834,
+      "sha256": "511179b3c1a2f4d66079fe1ac31afa6426b8a2f38d538a1580a65a522e39d165"
+    },
+    {
+      "path": "tools/battle_finish_cursor_native_run.sh",
+      "size": 437,
+      "sha256": "458edba9e1a1053b99ec87a59a7198a6c6ac1c85b8e32cab695f94b337932cbc"
+    },
+    {
+      "path": "tools/scripts/battle_finish_cursor_review.py",
+      "size": 3946,
+      "sha256": "99529d1a07f7806b9787110961e77b818b79248f9d6cf99cb90893363e702951"
+    },
+    {
+      "path": "workplace/finish79-r91-standard.log",
+      "size": 962,
+      "sha256": "5aacdc01a6079e8d09e96bf3ec05a52e5d52278ccf25c816375f12853b122c30"
+    }
+  ],
+  "cases": [
+    {
+      "name": "mask01-human0-round5-recovery0",
+      "fleet": 31,
+      "args": [
+        53050,
+        21683,
+        46184,
+        21683,
+        5168,
+        21267,
+        5,
+        1
+      ],
+      "entry_step": 1189172791,
+      "return_location": "20B4:187B",
+      "seed_hex": "aff9d877",
+      "post_callback_merit": {
+        "55": 3300,
+        "71": 1650
+      },
+      "entry_sha256": {
+        "admiral": "2a4524ba70dcd8945584515ad726b06ac34f8b1bda88584a62b1336ab619606e",
+        "fleet": "6731345be0136f427e20d508e4fd97da2f5b70a01fdd8bc20c6622b57ed35a19",
+        "lists": "b2911523371644e084e81373e25dbc4f2f7fb4e3fda271541f969b859352d268",
+        "planet": "dd1751860ac858798d272cb9588bd8fcec9f4632c5ff02fd1dec23f8427e056d",
+        "ship": "c0f8fe653119f65b50ab610f0522975297ef3b83bade92481163440d3afde64a",
+        "stellar": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+        "work": "48d9c6a97ffb18792faa96a0514e214638c066e60b2c29a704071793b2ffa14d"
+      }
+    }
+  ],
+  "instructions": [
+    {
+      "original_location": "20B4:17A4",
+      "ida_ea_hex": "0x119a4",
+      "runtime_linear_hex": "0x222e4",
+      "original_bytes_hex": "9a43073a20",
+      "operand": "call    far ptr 203Ah:743h",
+      "grade": "proven",
+      "semantic": "攻擊量功績在攻占判斷前提交",
+      "warning": "",
+      "xrefs_to": [
+        {
+          "ida_ea_hex": "0x119a1",
+          "type": 21
+        }
+      ],
+      "xrefs_from": [
+        {
+          "ida_ea_hex": "0x119a9",
+          "type": 21
+        }
+      ],
+      "evidence": [
+        "workplace/ida/finish79-r90-20B4.json",
+        "workplace/finish79-r91-cursor-a.json"
+      ]
+    },
+    {
+      "original_location": "20B4:1878",
+      "ida_ea_hex": "0x11a78",
+      "runtime_linear_hex": "0x223b8",
+      "original_bytes_hex": "ff5e38",
+      "operand": "call    dword ptr [bp+38h]",
+      "grade": "proven",
+      "semantic": "行星換手與占領計分後呼叫報告callback；此處須可暫停",
+      "warning": "",
+      "xrefs_to": [
+        {
+          "ida_ea_hex": "0x11a75",
+          "type": 21
+        }
+      ],
+      "xrefs_from": [
+        {
+          "ida_ea_hex": "0x11a7b",
+          "type": 21
+        }
+      ],
+      "evidence": [
+        "workplace/ida/finish79-r90-20B4.json",
+        "workplace/finish79-r91-cursor-a.json"
+      ]
+    },
+    {
+      "original_location": "20B4:188C",
+      "ida_ea_hex": "0x11a8c",
+      "runtime_linear_hex": "0x223cc",
+      "original_bytes_hex": "9a43073a20",
+      "operand": "call    far ptr 203Ah:743h",
+      "grade": "proven",
+      "semantic": "callback返回後才加行星上限功績，副官加半量",
+      "warning": "",
+      "xrefs_to": [
+        {
+          "ida_ea_hex": "0x11a89",
+          "type": 21
+        }
+      ],
+      "xrefs_from": [
+        {
+          "ida_ea_hex": "0x11a91",
+          "type": 21
+        }
+      ],
+      "evidence": [
+        "workplace/ida/finish79-r90-20B4.json",
+        "workplace/finish79-r91-cursor-a.json"
+      ]
+    }
+  ]
+}
