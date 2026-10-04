@@ -1,0 +1,2350 @@
+{
+  "schema": "logh3.fleet-auto-game.v1",
+  "status": "101 CONFORMED, limited auto-command data; 092 DRAFT",
+  "remake_base_commit": "529b61a5deb64e7affbb8b66f43b70b069d1e7a2",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "native_receipt_sha256": "23627c23a9d2ef93991c842e00fbf43df75f00d2043c78788454e868d3a19401",
+  "images": "[golang:1.24-bookworm] sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac\n[logh3-ebiten:2] sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8\n[python:3.12-slim] sha256:229a2c5bfa27522db7815ea81f9bed70af17ccb9de9fc7ad142b1877b5830d36\n",
+  "original_go_image_tag": "golang:1.24-bookworm",
+  "ida_image_id": "6f6d59af49d0008c4109a5295b5f374bdc007e2d1ab28cb9de08779584de2780",
+  "rules_cases": 31,
+  "native_forecasts": 115,
+  "game_save_cases": 21,
+  "rules_rejection_cases": 12,
+  "game_rejection_cases": 6,
+  "product_packages_passed": 13,
+  "product_packages_without_tests": 5,
+  "limitations": [
+    "資料介面未由正常UI／第④步呼叫",
+    "十案非正式池／編制身分只驗局部原版規則；另八案補真正一般池",
+    "原版無beam的武器殘留及word回繞保持；不擴大手動候選",
+    "061被動CPU、核准零距離及存檔格式保持",
+    "完整092／056、正常玩家／GUI／音效仍未完成"
+  ],
+  "sources": {
+    "docs/internals/data/fleet-auto-command.json": {
+      "sha256": "23627c23a9d2ef93991c842e00fbf43df75f00d2043c78788454e868d3a19401",
+      "size": 1380365
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-a/input-mem.bin": {
+      "sha256": "bbdf15220fa2fefddbb0be249a025282426217608ae0744f251e191e3d4cdb3f",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-b/input-mem.bin": {
+      "sha256": "bbdf15220fa2fefddbb0be249a025282426217608ae0744f251e191e3d4cdb3f",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-a/end-mem.bin": {
+      "sha256": "05a1ee4e4d5a3cc4f16dee2ee43ffece451db8ab04ba7a99260da9ed7336c905",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-b/end-mem.bin": {
+      "sha256": "05a1ee4e4d5a3cc4f16dee2ee43ffece451db8ab04ba7a99260da9ed7336c905",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-a/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-b/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-a/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-b/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/command79-r75-anticipated-zero-a-plan.json": {
+      "sha256": "f99f1ec5eeb1f0b858abcb81834ad12a336194f2e9a814364753f2460fdb4538",
+      "size": 1054
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-a/meta.txt": {
+      "sha256": "62c5f01fb12d42e519f997f120ec4dc7715d8ba86d409edf6c2b7c978d56ba10",
+      "size": 1131
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-a/flags.txt": {
+      "sha256": "5785ab3358b3d378990cfeb58b821a3a3f6a06b93b6f7e7700f28b80bc9af8c5",
+      "size": 716
+    },
+    "workplace/oracle/combat79-r63-target-a/selected.state": {
+      "sha256": "db488d25851ef2af76f599b7057cb34df3931aa34e06fdb2283682f816727e13",
+      "size": 264593
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-a/report.txt": {
+      "sha256": "cdaa3635ca51a8668049d829af6a6b9627f4cfa43d75de30e6c95aae124b8d48",
+      "size": 7200
+    },
+    "workplace/command79-r75-anticipated-zero-b-plan.json": {
+      "sha256": "32bd92805fd453ffacbc28ecb4d6265c18244d967f535b0ad2676ab0a404efb8",
+      "size": 1054
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-b/meta.txt": {
+      "sha256": "cc71a0b514282e880918ad36dc09b78fc8a0db713ad79a7bb3c74ed7f203a79c",
+      "size": 1131
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-b/flags.txt": {
+      "sha256": "29149633a4a9afd897bd37d3d81771d5d759a1bff3d6075b66c9ba5cd2c8b249",
+      "size": 716
+    },
+    "workplace/oracle/command79-r75-anticipated-zero-b/report.txt": {
+      "sha256": "c55257e898f53953b7fc46ee6115881fe25ff8d93223043c6217c1e5c33c3db4",
+      "size": 7200
+    },
+    "workplace/oracle/command79-r75-base-a/input-mem.bin": {
+      "sha256": "d3df9d403cf1ed6ee38a5068cae28babab2ad5f11a64457749205ca1a923dbd3",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-base-b/input-mem.bin": {
+      "sha256": "d3df9d403cf1ed6ee38a5068cae28babab2ad5f11a64457749205ca1a923dbd3",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-base-a/end-mem.bin": {
+      "sha256": "07a2b7e17ab91abd21a6ac6312de61ec8814580792307b84170c0303c4ad4373",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-base-b/end-mem.bin": {
+      "sha256": "07a2b7e17ab91abd21a6ac6312de61ec8814580792307b84170c0303c4ad4373",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-base-a/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-base-b/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-base-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-base-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-base-a/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/oracle/command79-r75-base-b/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/command79-r75-base-a-plan.json": {
+      "sha256": "72c7d763f2d5a58c527f63e0aab4281338c89c3182e2ec31d21b36f04335e676",
+      "size": 1030
+    },
+    "workplace/oracle/command79-r75-base-a/meta.txt": {
+      "sha256": "a5be0940eb9cdc5662fc263540e533d88ead9268d97e24aeee4bb2a6223b3e22",
+      "size": 1083
+    },
+    "workplace/oracle/command79-r75-base-a/flags.txt": {
+      "sha256": "e4f9a6d1cb287d51288cc1da7ca6aeeafe71732cfcc71894df823b9377677c2c",
+      "size": 680
+    },
+    "workplace/oracle/command79-r75-base-a/report.txt": {
+      "sha256": "7eebe609fb8dd78c311de4e48ab51c66108111cbd21bfff8ef107f95b2d7385d",
+      "size": 7127
+    },
+    "workplace/command79-r75-base-b-plan.json": {
+      "sha256": "a3bd72169bd5f7056497cd48823fec9fb7bddae9aceb4508036bdda5534790f1",
+      "size": 1030
+    },
+    "workplace/oracle/command79-r75-base-b/meta.txt": {
+      "sha256": "872403a400140e5b1bdae14d369bdbf3f9067b12cc84b7444acae987f7957d64",
+      "size": 1083
+    },
+    "workplace/oracle/command79-r75-base-b/flags.txt": {
+      "sha256": "1f480d1f22a05983d947c50db02fdd1e4703187c353c2249dd95282c8ed094a5",
+      "size": 680
+    },
+    "workplace/oracle/command79-r75-base-b/report.txt": {
+      "sha256": "3d776ae3a97705887649d61c339388f3cd2bbda3fc749e44c7b0466918644754",
+      "size": 7127
+    },
+    "workplace/oracle/command79-r75-beam-absent-a/input-mem.bin": {
+      "sha256": "795753b4104a6cbaea724e8c88946c8bfaf387fd6910732e1868f093fbceff89",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-beam-absent-b/input-mem.bin": {
+      "sha256": "795753b4104a6cbaea724e8c88946c8bfaf387fd6910732e1868f093fbceff89",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-beam-absent-a/end-mem.bin": {
+      "sha256": "22c121caf6d97429ebad529b803c9059e6ec1ec4b7759855b6f32fc486d59395",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-beam-absent-b/end-mem.bin": {
+      "sha256": "22c121caf6d97429ebad529b803c9059e6ec1ec4b7759855b6f32fc486d59395",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-beam-absent-a/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-beam-absent-b/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-beam-absent-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-beam-absent-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-beam-absent-a/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/oracle/command79-r75-beam-absent-b/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/command79-r75-beam-absent-a-plan.json": {
+      "sha256": "4af9a138832b3c2866e46a4e482a49886b7a5d4266d18dd7f453dbc6ac26ea82",
+      "size": 1183
+    },
+    "workplace/oracle/command79-r75-beam-absent-a/meta.txt": {
+      "sha256": "4492eba0e46bbdfe5a3653de49fdeb52bebcb80e49da79bb2a1cfaec9df34689",
+      "size": 1134
+    },
+    "workplace/oracle/command79-r75-beam-absent-a/flags.txt": {
+      "sha256": "23b60971daeb7aa288c78e7661901ed6509422d87255ba14cd6ff1731363544b",
+      "size": 724
+    },
+    "workplace/oracle/command79-r75-beam-absent-a/report.txt": {
+      "sha256": "2dca1f5e858e21542bd96264fb4185436daa72745167311690aea4f603341eb6",
+      "size": 6177
+    },
+    "workplace/command79-r75-beam-absent-b-plan.json": {
+      "sha256": "239efaf07fb25b9407c2b8c0f4652ee61718df7e969de808f913a740798c884b",
+      "size": 1183
+    },
+    "workplace/oracle/command79-r75-beam-absent-b/meta.txt": {
+      "sha256": "e23fd6fe27c4cf515d88c69fa437e13a633c16cafb7cf3a1388bf93fe41c160e",
+      "size": 1134
+    },
+    "workplace/oracle/command79-r75-beam-absent-b/flags.txt": {
+      "sha256": "61c55983004a86621426e3b1bd4b7b4c775d1a70e3c175861223529be4ef29c7",
+      "size": 724
+    },
+    "workplace/oracle/command79-r75-beam-absent-b/report.txt": {
+      "sha256": "813de3a61f293037aad09ccc3304847ad751389eba987bb310a5a43f8a2d840a",
+      "size": 6177
+    },
+    "workplace/oracle/command79-r75-computer-flagship-a/input-mem.bin": {
+      "sha256": "d017e0e60e982c134c39b29e6d567e9411969f3076259dacde2a6f8af7629184",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-flagship-b/input-mem.bin": {
+      "sha256": "d017e0e60e982c134c39b29e6d567e9411969f3076259dacde2a6f8af7629184",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-flagship-a/end-mem.bin": {
+      "sha256": "d8465f3fa9806db0ea6691100dda04b9bc92196a053e013863efeade049bbd3c",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-flagship-b/end-mem.bin": {
+      "sha256": "d8465f3fa9806db0ea6691100dda04b9bc92196a053e013863efeade049bbd3c",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-flagship-a/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-flagship-b/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-flagship-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-flagship-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-flagship-a/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/oracle/command79-r75-computer-flagship-b/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/command79-r75-computer-flagship-a-plan.json": {
+      "sha256": "8bfa2ecbbc9b773a6f2b8d8187b720e6e4fe7cdb6bc38491fbbcae99132f330b",
+      "size": 1233
+    },
+    "workplace/oracle/command79-r75-computer-flagship-a/meta.txt": {
+      "sha256": "6edd97084a0a7506970fdc9974310bdeb923d8c239a7f7ec1bcd9725acf21913",
+      "size": 1158
+    },
+    "workplace/oracle/command79-r75-computer-flagship-a/flags.txt": {
+      "sha256": "7d0f7c0cf8f871cee94b35286def708c2ffbeedcb68098c7e1e15673a46b46ea",
+      "size": 742
+    },
+    "workplace/oracle/command79-r75-computer-flagship-a/report.txt": {
+      "sha256": "dbab2d42ec7bdea0308d98ad21464fba753f3c103c013e5ddb8171c1f37ea61e",
+      "size": 7258
+    },
+    "workplace/command79-r75-computer-flagship-b-plan.json": {
+      "sha256": "d2ed1661563604988cd0acbca3d4c044b091799fcfe579cd39e6cad7cd6984b5",
+      "size": 1233
+    },
+    "workplace/oracle/command79-r75-computer-flagship-b/meta.txt": {
+      "sha256": "689f22c80b0293ecdd88d93b44cee41b068a7434778d302778c43c3948b09cc6",
+      "size": 1158
+    },
+    "workplace/oracle/command79-r75-computer-flagship-b/flags.txt": {
+      "sha256": "f019bd279ef73d4fa36d2a75ef47bcd9124f2732d9e2578ce33d4690c0edb1d4",
+      "size": 742
+    },
+    "workplace/oracle/command79-r75-computer-flagship-b/report.txt": {
+      "sha256": "8fd0d322ee0f08f1cbf067069f1d3f2d227daaa3f99bc364fca9fcf9a2f90a5e",
+      "size": 7258
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-a/input-mem.bin": {
+      "sha256": "2238cd313318241a506da08a4cc24b87701a126c4f20ac32319fb8691bf43c8e",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-b/input-mem.bin": {
+      "sha256": "2238cd313318241a506da08a4cc24b87701a126c4f20ac32319fb8691bf43c8e",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-a/end-mem.bin": {
+      "sha256": "374434043bada3d14d688473db82f8f5b8975b71f00f9976da08e06960411538",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-b/end-mem.bin": {
+      "sha256": "374434043bada3d14d688473db82f8f5b8975b71f00f9976da08e06960411538",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-a/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-b/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-a/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-b/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/command79-r75-computer-general-kind0-a-plan.json": {
+      "sha256": "e080d67980049b75aa940e8f322ed47521f3d1916746080bd8200b367fd769b5",
+      "size": 1933
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-a/meta.txt": {
+      "sha256": "cc976273894f51d1ea1b28466c7475f81510297cd088ab90c47ce31db3a4f820",
+      "size": 1478
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-a/flags.txt": {
+      "sha256": "2ee0ce58d65be1188aa0610bd2dcee504db6b3393a071e226248fabea3369640",
+      "size": 1057
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-a/report.txt": {
+      "sha256": "3ac9910f36bd269c17b235d798aece4397bf71b430ce576bca2b68461f56efa2",
+      "size": 6399
+    },
+    "workplace/command79-r75-computer-general-kind0-b-plan.json": {
+      "sha256": "fa8e28e4a8644bb55bc0aa38441d8184a75907951310b059a2c6f1a71931e9ee",
+      "size": 1933
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-b/meta.txt": {
+      "sha256": "44417755fac262fc94e6f49d52e00152aa7a6061affe25a96db49976103c702d",
+      "size": 1478
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-b/flags.txt": {
+      "sha256": "30ec2609e77ea0883a5129a6a1694eef0b4c17864e186da1795646ee18199415",
+      "size": 1057
+    },
+    "workplace/oracle/command79-r75-computer-general-kind0-b/report.txt": {
+      "sha256": "c1fde065b11c1ee064e56c9048c9c37b2c2bce786a8c44105f9832a093ccca33",
+      "size": 6399
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-a/input-mem.bin": {
+      "sha256": "55033ab6530506c472cd16756b27cf700917acc4e049799aaee9fb250c8b020d",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-b/input-mem.bin": {
+      "sha256": "55033ab6530506c472cd16756b27cf700917acc4e049799aaee9fb250c8b020d",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-a/end-mem.bin": {
+      "sha256": "496864eb28f7accacd1a2ed2f6a999c1c63e6ab543c6b8c1101950017e44698a",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-b/end-mem.bin": {
+      "sha256": "496864eb28f7accacd1a2ed2f6a999c1c63e6ab543c6b8c1101950017e44698a",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-a/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-b/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-a/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-b/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/command79-r75-computer-general-kind5-a-plan.json": {
+      "sha256": "6ebec43f84b1c8a715de27902fcda295682727856749addb9709400fe7697cf4",
+      "size": 1933
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-a/meta.txt": {
+      "sha256": "1667abb9ed41ee03c4bf74d204ff35ce698778f8bfeea15f861b09a98243d3a7",
+      "size": 1478
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-a/flags.txt": {
+      "sha256": "625d4a31dd5dadddd0249e63372c72bc271fb953708b183ab269e1237c44118b",
+      "size": 1057
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-a/report.txt": {
+      "sha256": "4e03176c1f4a4460757a06ca7a9e09c1dc503090a5f56665f4a4c81971984c4b",
+      "size": 6400
+    },
+    "workplace/command79-r75-computer-general-kind5-b-plan.json": {
+      "sha256": "f5ec87f70683d73a18aefafd13be410cd0772481dbfbc5fab473bc38aff2086a",
+      "size": 1933
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-b/meta.txt": {
+      "sha256": "4a2123fa85b0a6ab53e02faad689c24ddbcffda76c001de1fb094ddd499958da",
+      "size": 1478
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-b/flags.txt": {
+      "sha256": "a53cf20b4d090a71ab8a38a16636fcc3fa0f87264a9bbf7395767cfc153ae4cd",
+      "size": 1057
+    },
+    "workplace/oracle/command79-r75-computer-general-kind5-b/report.txt": {
+      "sha256": "b1f9eefd429c68eed14720d3459f1078e5e3f2a9da7cc202deef794d2196205c",
+      "size": 6400
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-a/input-mem.bin": {
+      "sha256": "83768ad767d9ed7a53e32c65eef89d36168d814bfd293f330cc4bed319d439ca",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-b/input-mem.bin": {
+      "sha256": "83768ad767d9ed7a53e32c65eef89d36168d814bfd293f330cc4bed319d439ca",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-a/end-mem.bin": {
+      "sha256": "9a179750cba6f6a31497ce4ca8b2e97a1ef3c465fb0f3f6bb91203899402f206",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-b/end-mem.bin": {
+      "sha256": "9a179750cba6f6a31497ce4ca8b2e97a1ef3c465fb0f3f6bb91203899402f206",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-a/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-b/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-a/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-b/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/command79-r75-computer-general-kind6-a-plan.json": {
+      "sha256": "417b5db8f6f812e3d0060db571fb5dd67747c44ad128b390a221c3ed0521585b",
+      "size": 1933
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-a/meta.txt": {
+      "sha256": "440d32fab984b568b6742b230a747b48a1c0205020c22decb7ce724150fb86a6",
+      "size": 1478
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-a/flags.txt": {
+      "sha256": "0a8ff3585021741397a2fe6933bacb9a3e37a02a895019f570bb4c2089add64c",
+      "size": 1057
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-a/report.txt": {
+      "sha256": "60e6d51b096269e17ebefd5d1b631ad6afe1ab808201d0e7c3396f3cad2eab0a",
+      "size": 6400
+    },
+    "workplace/command79-r75-computer-general-kind6-b-plan.json": {
+      "sha256": "1e4917259acd9ec794fa396371025796bb9ff94010c3cdcd5bd6ba3125ca63a7",
+      "size": 1933
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-b/meta.txt": {
+      "sha256": "5482eeea314f0d4973663b39e5687d22aaab44bcaf3d58bc7e4c01ea20b86a3a",
+      "size": 1478
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-b/flags.txt": {
+      "sha256": "a62db3000b1467931dd3f5f87e15f7918738ef096371573d5911d41da5039c2f",
+      "size": 1057
+    },
+    "workplace/oracle/command79-r75-computer-general-kind6-b/report.txt": {
+      "sha256": "f6c5f467e209bf3e138a4c0d44a10e8b29e2b36b3e7129587d52341404ccd93f",
+      "size": 6400
+    },
+    "workplace/oracle/command79-r75-computer-kind0-a/input-mem.bin": {
+      "sha256": "c6163c4bdd3cd6cd029dfaf7764e3748cee9587ede9519e30baa5e4ca6bbd87d",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind0-b/input-mem.bin": {
+      "sha256": "c6163c4bdd3cd6cd029dfaf7764e3748cee9587ede9519e30baa5e4ca6bbd87d",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind0-a/end-mem.bin": {
+      "sha256": "9907019d6cf88ba2b31a3d464592205ebac21d564151d10065e0570cb6daae68",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind0-b/end-mem.bin": {
+      "sha256": "9907019d6cf88ba2b31a3d464592205ebac21d564151d10065e0570cb6daae68",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind0-a/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-kind0-b/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-kind0-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-kind0-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-kind0-a/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/oracle/command79-r75-computer-kind0-b/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/command79-r75-computer-kind0-a-plan.json": {
+      "sha256": "4290bb9be911dcc41e80744995a3afdbe685543679f675ae5ae043e81f840b42",
+      "size": 1368
+    },
+    "workplace/oracle/command79-r75-computer-kind0-a/meta.txt": {
+      "sha256": "b67a9df71e56ed5b3583f935ec41b08b80fcb5284d03f3ffe89f50ab031dcca8",
+      "size": 1169
+    },
+    "workplace/oracle/command79-r75-computer-kind0-a/flags.txt": {
+      "sha256": "4e47c1496c326a2ac1bd02d89c4425a9afd2a0bcbd455525f8411e81af5ca0a5",
+      "size": 756
+    },
+    "workplace/oracle/command79-r75-computer-kind0-a/report.txt": {
+      "sha256": "80f8c7209913ebb04c36bf909cc94e3b5e05c46428801971e386d1ad33811f06",
+      "size": 7292
+    },
+    "workplace/command79-r75-computer-kind0-b-plan.json": {
+      "sha256": "83cc3a3df9d40faa7982912b70aaceb735d67ae9c78e3150623f5f33fa8ec1bf",
+      "size": 1368
+    },
+    "workplace/oracle/command79-r75-computer-kind0-b/meta.txt": {
+      "sha256": "e21aecec21a46c5a84bbb39f8559d4d5092c3d4f225e19a245beec56155f3ffa",
+      "size": 1169
+    },
+    "workplace/oracle/command79-r75-computer-kind0-b/flags.txt": {
+      "sha256": "6cfdb7d3e82b8af52b906852ed550bada413955cf7ecbd460015ad58ca2d0965",
+      "size": 756
+    },
+    "workplace/oracle/command79-r75-computer-kind0-b/report.txt": {
+      "sha256": "b57c444c280aed5de6101bd2b9ee3dc9302e0922b902b959daa1c63d935f4588",
+      "size": 7292
+    },
+    "workplace/oracle/command79-r75-computer-kind5-a/input-mem.bin": {
+      "sha256": "74819aa9cf835a0cf9c97ae95c6290d38cd8872d0190cebe2b527216abef2fcc",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind5-b/input-mem.bin": {
+      "sha256": "74819aa9cf835a0cf9c97ae95c6290d38cd8872d0190cebe2b527216abef2fcc",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind5-a/end-mem.bin": {
+      "sha256": "ffa6acc2077dd771a43c25764693f00d8db12c6fae1924b957e57953961cc070",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind5-b/end-mem.bin": {
+      "sha256": "ffa6acc2077dd771a43c25764693f00d8db12c6fae1924b957e57953961cc070",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind5-a/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-kind5-b/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-kind5-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-kind5-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-kind5-a/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/oracle/command79-r75-computer-kind5-b/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/command79-r75-computer-kind5-a-plan.json": {
+      "sha256": "8c2182cd98803d3ef48fc0b51d33cb17e18d1027a51285b7e5291a7131a494c7",
+      "size": 1505
+    },
+    "workplace/oracle/command79-r75-computer-kind5-a/meta.txt": {
+      "sha256": "b9a312f86a12311ade13c702ae306c2e8666194c79cf4f3c18d34a6162d8dd8b",
+      "size": 1192
+    },
+    "workplace/oracle/command79-r75-computer-kind5-a/flags.txt": {
+      "sha256": "623397b01d140a832e13990a1a1850436da7a8a9446ac2b509a9688f4a59b5a8",
+      "size": 779
+    },
+    "workplace/oracle/command79-r75-computer-kind5-a/report.txt": {
+      "sha256": "cd356d8c2969cc158e4607762b389e852b3367b51f2705ccd85ebb84914be7c3",
+      "size": 7344
+    },
+    "workplace/command79-r75-computer-kind5-b-plan.json": {
+      "sha256": "beb90f0829fa7482a78d1a013b22dc9c50f0ee6d5ea2f7dc9516611421294749",
+      "size": 1505
+    },
+    "workplace/oracle/command79-r75-computer-kind5-b/meta.txt": {
+      "sha256": "b1a4df7e54714ca14a3a6a635c9e158d004bb469bbba3485750e1602f69426cb",
+      "size": 1192
+    },
+    "workplace/oracle/command79-r75-computer-kind5-b/flags.txt": {
+      "sha256": "f5b3613a81fca4c72bce5f32df367acf06260298c8b87e629012a0e2b166f3e7",
+      "size": 779
+    },
+    "workplace/oracle/command79-r75-computer-kind5-b/report.txt": {
+      "sha256": "ef9333c589719c7a848bb6ffdbba9bf45b13311d9c24fadd214da480373b4a7a",
+      "size": 7344
+    },
+    "workplace/oracle/command79-r75-computer-kind6-a/input-mem.bin": {
+      "sha256": "97b99ec6eb7376faafc51abfb195a8e98abdd970ba374d5383e78ec9b5dcad1e",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind6-b/input-mem.bin": {
+      "sha256": "97b99ec6eb7376faafc51abfb195a8e98abdd970ba374d5383e78ec9b5dcad1e",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind6-a/end-mem.bin": {
+      "sha256": "0073929cffe5d5b7d1c58d21219ab060e5155bb3b805b553c126ebc4644497b7",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind6-b/end-mem.bin": {
+      "sha256": "0073929cffe5d5b7d1c58d21219ab060e5155bb3b805b553c126ebc4644497b7",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-kind6-a/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-kind6-b/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-kind6-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-kind6-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-kind6-a/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/oracle/command79-r75-computer-kind6-b/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/command79-r75-computer-kind6-a-plan.json": {
+      "sha256": "df743562367ddbd09a9571af512ad84635a950ee0a84b22329082878294bd669",
+      "size": 1505
+    },
+    "workplace/oracle/command79-r75-computer-kind6-a/meta.txt": {
+      "sha256": "43508ce9b88ebd26c482fda85fafbe1ab00870dcf10023af603e0fe4ef42a0e5",
+      "size": 1192
+    },
+    "workplace/oracle/command79-r75-computer-kind6-a/flags.txt": {
+      "sha256": "9be43969fdbe476a56665f46500ff9c4ec6642e374ac2a994e64d6a1fd1a1889",
+      "size": 779
+    },
+    "workplace/oracle/command79-r75-computer-kind6-a/report.txt": {
+      "sha256": "96a59d0375217df959ca1cccc0da07801b41a20b7f092cfb49acc17ce17b482d",
+      "size": 7344
+    },
+    "workplace/command79-r75-computer-kind6-b-plan.json": {
+      "sha256": "3a3a41f35240f7df0afc51f79602119a86920539b36a374253be5a790d70e03b",
+      "size": 1505
+    },
+    "workplace/oracle/command79-r75-computer-kind6-b/meta.txt": {
+      "sha256": "73ab63a682711c2ee899e4c6fc08996b267f64084f8657ddc8201891d1d39771",
+      "size": 1192
+    },
+    "workplace/oracle/command79-r75-computer-kind6-b/flags.txt": {
+      "sha256": "bc9a15c62ce3f0938cd927da00041357f4e462e96319477046d970cc296887b0",
+      "size": 779
+    },
+    "workplace/oracle/command79-r75-computer-kind6-b/report.txt": {
+      "sha256": "fdfd4c53184a47fae14dc9c455c64614b85233a1409c04bdd427963bcfaf85c3",
+      "size": 7344
+    },
+    "workplace/oracle/command79-r75-computer-word-a/input-mem.bin": {
+      "sha256": "15324359cf23d129084f9f184cdd36fd98bd6532e6df0dd4d39febe9b36e0f1e",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-word-b/input-mem.bin": {
+      "sha256": "15324359cf23d129084f9f184cdd36fd98bd6532e6df0dd4d39febe9b36e0f1e",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-word-a/end-mem.bin": {
+      "sha256": "6bbf4a2f172479cc98ad1de1af39cd7348b4ce150d0fdef0e228b373ddece084",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-word-b/end-mem.bin": {
+      "sha256": "6bbf4a2f172479cc98ad1de1af39cd7348b4ce150d0fdef0e228b373ddece084",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-computer-word-a/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-word-b/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-computer-word-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-word-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-computer-word-a/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/oracle/command79-r75-computer-word-b/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/command79-r75-computer-word-a-plan.json": {
+      "sha256": "ee82027b641b65415bd1c6c357b177fd0603e642fe2e95762523d09ca360b78e",
+      "size": 1225
+    },
+    "workplace/oracle/command79-r75-computer-word-a/meta.txt": {
+      "sha256": "17952605a7d4ac8b92f81c0ad4de02db2eec3a13c97099035ded9d8df4aca0ba",
+      "size": 1142
+    },
+    "workplace/oracle/command79-r75-computer-word-a/flags.txt": {
+      "sha256": "508c43367f55fd14de2d104cda109564a00b65b6e5d283e2b220955365b7c851",
+      "size": 730
+    },
+    "workplace/oracle/command79-r75-computer-word-a/report.txt": {
+      "sha256": "da30cf659e970d02d43998ac9c9612d8437171e23b37409cdf6e1ee0272cbc3c",
+      "size": 7234
+    },
+    "workplace/command79-r75-computer-word-b-plan.json": {
+      "sha256": "6ede0c33803e32c95cc56997ce76d8d6c4db6a36ef5dfd0695d4fb8f841a622b",
+      "size": 1225
+    },
+    "workplace/oracle/command79-r75-computer-word-b/meta.txt": {
+      "sha256": "ac8a0024ec164f2ae893b28eb89e5eecf209b62c5196ea46a36a85ec1100470d",
+      "size": 1142
+    },
+    "workplace/oracle/command79-r75-computer-word-b/flags.txt": {
+      "sha256": "a35ddfab8caa1da4c20e8628d2feb984506057865e5c4f24ccea72e90126bdea",
+      "size": 730
+    },
+    "workplace/oracle/command79-r75-computer-word-b/report.txt": {
+      "sha256": "18762ef216a4ba8cffc5c2e362ac3819b693715b7add27faefeb1fd72d68cd20",
+      "size": 7234
+    },
+    "workplace/oracle/command79-r75-defence-a/input-mem.bin": {
+      "sha256": "e13e2598f3c3e922cfbdff98cf512116d3af86e47d80d6f13648f6cbea1c1d51",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-defence-b/input-mem.bin": {
+      "sha256": "e13e2598f3c3e922cfbdff98cf512116d3af86e47d80d6f13648f6cbea1c1d51",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-defence-a/end-mem.bin": {
+      "sha256": "62feb15caadbe564aa27eb7ef59fff3ca97ca5a94f0feb27196e730a7059e470",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-defence-b/end-mem.bin": {
+      "sha256": "62feb15caadbe564aa27eb7ef59fff3ca97ca5a94f0feb27196e730a7059e470",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-defence-a/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-defence-b/screen.bin": {
+      "sha256": "8a5c527c72ffe28293216551ae90322af391077c98ae4d3362d112de2851fb23",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-defence-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-defence-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-defence-a/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/oracle/command79-r75-defence-b/screen.png": {
+      "sha256": "0ec313c3a2d5927eea9a431dde3abee1bcbdb58053e86a95ee918f2c061e57a1",
+      "size": 9080
+    },
+    "workplace/command79-r75-defence-a-plan.json": {
+      "sha256": "da2f2d030ea55d1082d2cc1bb4769a2574393f903bf6938211ac6ae8542d0115",
+      "size": 1172
+    },
+    "workplace/oracle/command79-r75-defence-a/meta.txt": {
+      "sha256": "d4f9338c9f66a12fe1f66723506bb61eb4c7f914c79039db9b3fc6c15714b0aa",
+      "size": 1118
+    },
+    "workplace/oracle/command79-r75-defence-a/flags.txt": {
+      "sha256": "d797eae0d5f27e5c1702f45aa8e2974724c4e9289da6448c329198807fb729ba",
+      "size": 712
+    },
+    "workplace/oracle/command79-r75-defence-a/report.txt": {
+      "sha256": "4de7b3d4cab91f138fdeac2f1257d33c4c775485ce136ec1713f9e47f9faf748",
+      "size": 7197
+    },
+    "workplace/command79-r75-defence-b-plan.json": {
+      "sha256": "76224cdaef1025c304c7a430b828f6b8e087f028e6c9e764bcbe68dc37b2d14f",
+      "size": 1172
+    },
+    "workplace/oracle/command79-r75-defence-b/meta.txt": {
+      "sha256": "a9c08e6b872cd71986de3edfa34ecdc8bc8791d753bf5883896e0308eac64214",
+      "size": 1118
+    },
+    "workplace/oracle/command79-r75-defence-b/flags.txt": {
+      "sha256": "ba128dfaea7f2e8f9fee2be4c5f0d8c83a8cf58b27610b55fc9e17317742f27b",
+      "size": 712
+    },
+    "workplace/oracle/command79-r75-defence-b/report.txt": {
+      "sha256": "65dbbafef114309a0f04fb8256c7b5701fae147190fd635adf1afa5c12b92808",
+      "size": 7197
+    },
+    "workplace/oracle/command79-r75-fighter-half-a/input-mem.bin": {
+      "sha256": "b404f73eaa08e4a30bc21b1cb913ecabdd2afa5532ec80b1946fafe235b44d1d",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-half-b/input-mem.bin": {
+      "sha256": "b404f73eaa08e4a30bc21b1cb913ecabdd2afa5532ec80b1946fafe235b44d1d",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-half-a/end-mem.bin": {
+      "sha256": "c0de5d7950f161cf4958b001a75fa25b9b2b4bc0ca70dd8a0e43086e5b6085d4",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-half-b/end-mem.bin": {
+      "sha256": "c0de5d7950f161cf4958b001a75fa25b9b2b4bc0ca70dd8a0e43086e5b6085d4",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-half-a/screen.bin": {
+      "sha256": "fb2e64bdfc7784eec15bee57161ab02e384303fb129cd897f7777011e6427d13",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-fighter-half-b/screen.bin": {
+      "sha256": "fb2e64bdfc7784eec15bee57161ab02e384303fb129cd897f7777011e6427d13",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-fighter-half-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-fighter-half-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-fighter-half-a/screen.png": {
+      "sha256": "a1a8a761040993fe69288eaeb7af41590dc2f0ad42dcb5ba9e098f6a88ff0497",
+      "size": 9001
+    },
+    "workplace/oracle/command79-r75-fighter-half-b/screen.png": {
+      "sha256": "a1a8a761040993fe69288eaeb7af41590dc2f0ad42dcb5ba9e098f6a88ff0497",
+      "size": 9001
+    },
+    "workplace/command79-r75-fighter-half-a-plan.json": {
+      "sha256": "be48bfd7da0a27c04b2ca3f56f77d404cf074bb6e667b8249e05ab07b1937ad6",
+      "size": 1331
+    },
+    "workplace/oracle/command79-r75-fighter-half-a/meta.txt": {
+      "sha256": "eef2a71764e68ae3fe564c014844ed2f458eeee565cd8832330c196d4053813d",
+      "size": 1170
+    },
+    "workplace/oracle/command79-r75-fighter-half-a/flags.txt": {
+      "sha256": "4c9c533fba7315a24fae7e2c9b7615679df92f8dc73993d4ffcf85a1e243c721",
+      "size": 759
+    },
+    "workplace/oracle/command79-r75-fighter-half-a/report.txt": {
+      "sha256": "82159a583e19c86038185648081860e8f56178a9f31d1160750d6c3a741bf2e9",
+      "size": 8325
+    },
+    "workplace/command79-r75-fighter-half-b-plan.json": {
+      "sha256": "eeb12c709168ddc092d28a4a917d12429152c2d936cfa2db8baa20bb64f4dd23",
+      "size": 1331
+    },
+    "workplace/oracle/command79-r75-fighter-half-b/meta.txt": {
+      "sha256": "d9b46337b92a89508844b50d2f95e50ddd8118e618477c6c8b9f7b2cd644c551",
+      "size": 1170
+    },
+    "workplace/oracle/command79-r75-fighter-half-b/flags.txt": {
+      "sha256": "ad1d4afd8ec8f9f404712a397fc3638366b1ad328d5f57eae3041b4e7f878f70",
+      "size": 759
+    },
+    "workplace/oracle/command79-r75-fighter-half-b/report.txt": {
+      "sha256": "d9f04d850e326f492af863dfbf571a8e96796d464795dc76eda7de29148bfb79",
+      "size": 8325
+    },
+    "workplace/oracle/command79-r75-fighter-only-a/input-mem.bin": {
+      "sha256": "48686c9342bdd228b972e80fed015170f92497d6ca6132f32f362ccc3d4e5bc3",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-only-b/input-mem.bin": {
+      "sha256": "48686c9342bdd228b972e80fed015170f92497d6ca6132f32f362ccc3d4e5bc3",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-only-a/end-mem.bin": {
+      "sha256": "fa2504bd70ebee758f33cce9b6d9168a16f454ed44b8e5efb72d5f71b3c8a3ea",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-only-b/end-mem.bin": {
+      "sha256": "fa2504bd70ebee758f33cce9b6d9168a16f454ed44b8e5efb72d5f71b3c8a3ea",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-only-a/screen.bin": {
+      "sha256": "35f652d810f6dc2243e31938aa6bd4f01e064a0937203c2e2c2a652b9a3e25c8",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-fighter-only-b/screen.bin": {
+      "sha256": "35f652d810f6dc2243e31938aa6bd4f01e064a0937203c2e2c2a652b9a3e25c8",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-fighter-only-a/pal.bin": {
+      "sha256": "ef115a0e0c15cdc41958ca46b5b14b456115f4baec5e3ca68599d2a8f435e3b8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-fighter-only-b/pal.bin": {
+      "sha256": "ef115a0e0c15cdc41958ca46b5b14b456115f4baec5e3ca68599d2a8f435e3b8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-fighter-only-a/screen.png": {
+      "sha256": "f3db6a8b0ffc772586082973548ff05434114bfe5e6c0e88b03dbd2317ed19f9",
+      "size": 2410
+    },
+    "workplace/oracle/command79-r75-fighter-only-b/screen.png": {
+      "sha256": "f3db6a8b0ffc772586082973548ff05434114bfe5e6c0e88b03dbd2317ed19f9",
+      "size": 2410
+    },
+    "workplace/command79-r75-fighter-only-a-plan.json": {
+      "sha256": "2e07e75d83d6235eade5ac427dd3cb7a7b93a98bc9d3db6209a821509edc504a",
+      "size": 1324
+    },
+    "workplace/oracle/command79-r75-fighter-only-a/meta.txt": {
+      "sha256": "b29892b236ceccfbc7e30952dcc913e6f208e5919b762bf00cdd0c0e5eb9cae0",
+      "size": 1161
+    },
+    "workplace/oracle/command79-r75-fighter-only-a/flags.txt": {
+      "sha256": "08d6f2f7b868418d85a0894873db4caeff56b299a9ec0fac8a915710a5b14067",
+      "size": 750
+    },
+    "workplace/oracle/command79-r75-fighter-only-a/report.txt": {
+      "sha256": "090a26e4796ab94275816f4e93ac968ae5bed971c5bef4e31c59ddbc68dd095b",
+      "size": 6578
+    },
+    "workplace/command79-r75-fighter-only-b-plan.json": {
+      "sha256": "3ccb3f2bd5c5681c916eb82c249a417bc444fd27bd451148a753d502b2d74390",
+      "size": 1324
+    },
+    "workplace/oracle/command79-r75-fighter-only-b/meta.txt": {
+      "sha256": "033fb4dbe0408729346433510928b93d53779e9be56fdd56daf7fe8bc2931573",
+      "size": 1161
+    },
+    "workplace/oracle/command79-r75-fighter-only-b/flags.txt": {
+      "sha256": "a48d682135781f0e89f1c961c9e1b84917adad547d33345323b62b83a853de80",
+      "size": 750
+    },
+    "workplace/oracle/command79-r75-fighter-only-b/report.txt": {
+      "sha256": "dd4e509691a7992973b9e3014c6d9b5063b488aebb481732dd40ac95d2bf6d42",
+      "size": 6578
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-a/input-mem.bin": {
+      "sha256": "2babb21312fb370378f26517893e6e772204f1cfdbf3e9d8555d23b65103c542",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-b/input-mem.bin": {
+      "sha256": "2babb21312fb370378f26517893e6e772204f1cfdbf3e9d8555d23b65103c542",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-a/end-mem.bin": {
+      "sha256": "464084562659217998223d247847625a370521f4a70e8d316150394ab962dd16",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-b/end-mem.bin": {
+      "sha256": "464084562659217998223d247847625a370521f4a70e8d316150394ab962dd16",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-a/screen.bin": {
+      "sha256": "fb2e64bdfc7784eec15bee57161ab02e384303fb129cd897f7777011e6427d13",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-b/screen.bin": {
+      "sha256": "fb2e64bdfc7784eec15bee57161ab02e384303fb129cd897f7777011e6427d13",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-a/screen.png": {
+      "sha256": "a1a8a761040993fe69288eaeb7af41590dc2f0ad42dcb5ba9e098f6a88ff0497",
+      "size": 9001
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-b/screen.png": {
+      "sha256": "a1a8a761040993fe69288eaeb7af41590dc2f0ad42dcb5ba9e098f6a88ff0497",
+      "size": 9001
+    },
+    "workplace/command79-r75-fighter-stock1-a-plan.json": {
+      "sha256": "d405e67058b07b066bcd383236b022309f98e2656a611fd3fd0b10b876eacbd1",
+      "size": 1483
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-a/meta.txt": {
+      "sha256": "067bc1f075f32e95da98cf785cbcbe4e18f8ffd78027d8be85e64595f21dc6b5",
+      "size": 1210
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-a/flags.txt": {
+      "sha256": "aa3c3f71b2ef9664cc0777a9b50bf1c897a248ffd63f4347f079b579a28c7453",
+      "size": 797
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-a/report.txt": {
+      "sha256": "f97ec27674a91df24d3aefd6183226346df27aad893027d241b510db0c9b6602",
+      "size": 8389
+    },
+    "workplace/command79-r75-fighter-stock1-b-plan.json": {
+      "sha256": "6a7680e73d21d928db787043f8decd17298dd29b5e0b54b4d17c7d42b7b256ac",
+      "size": 1483
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-b/meta.txt": {
+      "sha256": "7bf1d17f8810f555556c230d3423d7061ea316af84fc2d8526a0c12b55882a30",
+      "size": 1210
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-b/flags.txt": {
+      "sha256": "c2c4453c57c4243633ef79e4508be7620556719a0fe8ce1c8d01a54a9450e6f4",
+      "size": 797
+    },
+    "workplace/oracle/command79-r75-fighter-stock1-b/report.txt": {
+      "sha256": "5b7519c00e339c0810ff0c19e6056a90e352e66d420e614dd7d2255370808712",
+      "size": 8389
+    },
+    "workplace/oracle/command79-r75-general-three-high-a/input-mem.bin": {
+      "sha256": "3aa84324c2fb18dc695c5913a0561a67242b2e19fabd1f15aacefaf3a3e9172a",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-high-b/input-mem.bin": {
+      "sha256": "3aa84324c2fb18dc695c5913a0561a67242b2e19fabd1f15aacefaf3a3e9172a",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-high-a/end-mem.bin": {
+      "sha256": "1e47b2fc297ad365fed044f4980704e0e1ea3347df36ece7ea5c6c18f6dd7374",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-high-b/end-mem.bin": {
+      "sha256": "1e47b2fc297ad365fed044f4980704e0e1ea3347df36ece7ea5c6c18f6dd7374",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-high-a/screen.bin": {
+      "sha256": "66e88027781e0fded3a5f351e3c8de8bd18a0a5fc77fefa3de7338cf7301b126",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-general-three-high-b/screen.bin": {
+      "sha256": "66e88027781e0fded3a5f351e3c8de8bd18a0a5fc77fefa3de7338cf7301b126",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-general-three-high-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-general-three-high-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-general-three-high-a/screen.png": {
+      "sha256": "ea688a005f78e1ef9366db1a18d82baf344b8c45426113934aaee68657f994c4",
+      "size": 8462
+    },
+    "workplace/oracle/command79-r75-general-three-high-b/screen.png": {
+      "sha256": "ea688a005f78e1ef9366db1a18d82baf344b8c45426113934aaee68657f994c4",
+      "size": 8462
+    },
+    "workplace/command79-r75-general-three-high-a-plan.json": {
+      "sha256": "f4061dcfdf0b0a82143f2144be4e8880f600b8d5905c983277ecb050dd738f35",
+      "size": 2037
+    },
+    "workplace/oracle/command79-r75-general-three-high-a/meta.txt": {
+      "sha256": "0e7b6f8f4210b7cd86742f118b4e1398e3048db0058a9e4355f6babd82577e35",
+      "size": 1670
+    },
+    "workplace/oracle/command79-r75-general-three-high-a/flags.txt": {
+      "sha256": "e0dfd37479be0bc207932885ce5d3e22996f7806092d47b462263b4b7633300b",
+      "size": 1253
+    },
+    "workplace/oracle/command79-r75-general-three-high-a/report.txt": {
+      "sha256": "7e0c85a4bc7a471c7a638e05b66c05e00323c9f50c8a7940000f8c4315844b80",
+      "size": 14057
+    },
+    "workplace/command79-r75-general-three-high-b-plan.json": {
+      "sha256": "f95a41f59a89f282b72e56e82d9d612b89106a19962bd1fb7d94b3d4952c7630",
+      "size": 2037
+    },
+    "workplace/oracle/command79-r75-general-three-high-b/meta.txt": {
+      "sha256": "2b3b16f0d91e72fa6bd2906601e6017b25d97f7c4d47173b7d8d958e1d037c6b",
+      "size": 1670
+    },
+    "workplace/oracle/command79-r75-general-three-high-b/flags.txt": {
+      "sha256": "0a8ce58bc389e50edaf6d3551c659c69772e0eb8da0e871314ed68cc93c6b2ce",
+      "size": 1253
+    },
+    "workplace/oracle/command79-r75-general-three-high-b/report.txt": {
+      "sha256": "69e1f4464c1a0ec5cf09b912a9cad8ad21989057d204bc945d5a57f2b1252846",
+      "size": 14057
+    },
+    "workplace/oracle/command79-r75-general-three-low-a/input-mem.bin": {
+      "sha256": "06120f015edf464b9f4b4b93ecadffc3c577b8660da8f7a9db1c9c24bdd1ee3f",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-low-b/input-mem.bin": {
+      "sha256": "06120f015edf464b9f4b4b93ecadffc3c577b8660da8f7a9db1c9c24bdd1ee3f",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-low-a/end-mem.bin": {
+      "sha256": "84ff816735e59b818b6a267b61a866f325626512fa6723de10eb685e6c412eb2",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-low-b/end-mem.bin": {
+      "sha256": "84ff816735e59b818b6a267b61a866f325626512fa6723de10eb685e6c412eb2",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-low-a/screen.bin": {
+      "sha256": "64cb392458ba92df70a100492b23356c63ce97c1180dfd5e64f694c5d8c05a67",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-general-three-low-b/screen.bin": {
+      "sha256": "64cb392458ba92df70a100492b23356c63ce97c1180dfd5e64f694c5d8c05a67",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-general-three-low-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-general-three-low-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-general-three-low-a/screen.png": {
+      "sha256": "12b52b3386d5ba10160e8a6555363b7021aa17afd25124a0df60154f6afefb64",
+      "size": 8649
+    },
+    "workplace/oracle/command79-r75-general-three-low-b/screen.png": {
+      "sha256": "12b52b3386d5ba10160e8a6555363b7021aa17afd25124a0df60154f6afefb64",
+      "size": 8649
+    },
+    "workplace/command79-r75-general-three-low-a-plan.json": {
+      "sha256": "346bfa132fe77fb3cfc10f5f0ded7289fcecdf768a0bdd2e8c5f42a0f8005bf1",
+      "size": 2034
+    },
+    "workplace/oracle/command79-r75-general-three-low-a/meta.txt": {
+      "sha256": "32fab1345cd4a19391bd5ce7f815ff389dc8b7397b745ea75b7c341e7fe94cc9",
+      "size": 1666
+    },
+    "workplace/oracle/command79-r75-general-three-low-a/flags.txt": {
+      "sha256": "6b5b3af20b50c9ac516d9801400cd8719f518da43e1597e24996e44eae1c4e92",
+      "size": 1250
+    },
+    "workplace/oracle/command79-r75-general-three-low-a/report.txt": {
+      "sha256": "7c1e2b589011b7a1d4c46648fe8b23ee10c981f066ac0d1ccd6fc879e172d7f9",
+      "size": 14051
+    },
+    "workplace/command79-r75-general-three-low-b-plan.json": {
+      "sha256": "8aa1390d3376e22629281128177300658d9a0c41f7e9dc9390de7605319e14cf",
+      "size": 2034
+    },
+    "workplace/oracle/command79-r75-general-three-low-b/meta.txt": {
+      "sha256": "177c3be3a2e6425b724b94d006c7247170c4171da3e13c044bf6062bb2b2b755",
+      "size": 1666
+    },
+    "workplace/oracle/command79-r75-general-three-low-b/flags.txt": {
+      "sha256": "9dba2a2fc15a75be946ae2fea6e8438536ec1e64191d472b4b573b3525831d67",
+      "size": 1250
+    },
+    "workplace/oracle/command79-r75-general-three-low-b/report.txt": {
+      "sha256": "4143403f69e93ac358116549fa0716256715d53ec71c89204a7f2463e7fb4db7",
+      "size": 14051
+    },
+    "workplace/oracle/command79-r75-general-three-middle-a/input-mem.bin": {
+      "sha256": "8bef3df20a09bcafdf17bd762a9b623eaf4e59a4a45d63dfa386ab844feb80a1",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-middle-b/input-mem.bin": {
+      "sha256": "8bef3df20a09bcafdf17bd762a9b623eaf4e59a4a45d63dfa386ab844feb80a1",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-middle-a/end-mem.bin": {
+      "sha256": "e9d184454700c303f70af88e95c06c8580b8482b5999c687db0b1ed8e6db25ea",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-middle-b/end-mem.bin": {
+      "sha256": "e9d184454700c303f70af88e95c06c8580b8482b5999c687db0b1ed8e6db25ea",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-middle-a/screen.bin": {
+      "sha256": "9d7882fa86085153a53792cd467e6fbf0b7c2fa3d3c6ff8358a999a4d421767c",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-general-three-middle-b/screen.bin": {
+      "sha256": "9d7882fa86085153a53792cd467e6fbf0b7c2fa3d3c6ff8358a999a4d421767c",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-general-three-middle-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-general-three-middle-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-general-three-middle-a/screen.png": {
+      "sha256": "17248cd3d6d47f4c869c0145438e6973ee9f5fef3c84835d1ec4541d9a34485b",
+      "size": 8577
+    },
+    "workplace/oracle/command79-r75-general-three-middle-b/screen.png": {
+      "sha256": "17248cd3d6d47f4c869c0145438e6973ee9f5fef3c84835d1ec4541d9a34485b",
+      "size": 8577
+    },
+    "workplace/command79-r75-general-three-middle-a-plan.json": {
+      "sha256": "c80a07d8a53994efbf23ad8ebd86475590a75f063c52b7fdc6b097031bad9e24",
+      "size": 2040
+    },
+    "workplace/oracle/command79-r75-general-three-middle-a/meta.txt": {
+      "sha256": "8ab885afa97ffb163fd358fd2d19532c3724457c1796464f1c1985fb61f7427a",
+      "size": 1678
+    },
+    "workplace/oracle/command79-r75-general-three-middle-a/flags.txt": {
+      "sha256": "4cea7e8c11cfca44cd229ced0010cf6d6087ed96eac8ffc6cc03237d25c65288",
+      "size": 1259
+    },
+    "workplace/oracle/command79-r75-general-three-middle-a/report.txt": {
+      "sha256": "264bcc97a43af2f1728bc2860cd29819581194c99ac5e8c5fa97ac3331ff6719",
+      "size": 14069
+    },
+    "workplace/command79-r75-general-three-middle-b-plan.json": {
+      "sha256": "bb5f3c9a18fc248ef8db66551102bfb836e65224600b1195e72380abcb806fdb",
+      "size": 2040
+    },
+    "workplace/oracle/command79-r75-general-three-middle-b/meta.txt": {
+      "sha256": "5d5d6ba54d4ee50d1278fb83be9b1459e7c07bf747376d175ed398ccaf1632e9",
+      "size": 1678
+    },
+    "workplace/oracle/command79-r75-general-three-middle-b/flags.txt": {
+      "sha256": "f19a6038829a4b726aecf98f45c770dd83d7789372780ea1cce640f6f58dcc83",
+      "size": 1259
+    },
+    "workplace/oracle/command79-r75-general-three-middle-b/report.txt": {
+      "sha256": "c2a1209851db13a422402a5d66053e39a4357f9fb5797969c6442c4ff13bb0eb",
+      "size": 14069
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-a/input-mem.bin": {
+      "sha256": "685144125d8171d28723718a04ef217a49986137b414635eb3b028891c7d4d05",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-b/input-mem.bin": {
+      "sha256": "685144125d8171d28723718a04ef217a49986137b414635eb3b028891c7d4d05",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-a/end-mem.bin": {
+      "sha256": "85e68326a7e96516580df74e0125c6c2e6873d8247480eb76695e65076b1f6d7",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-b/end-mem.bin": {
+      "sha256": "85e68326a7e96516580df74e0125c6c2e6873d8247480eb76695e65076b1f6d7",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-a/screen.bin": {
+      "sha256": "5d771a0714a754de7d34af57e63e20333da2639d25df81dd4c4b340f834d77a5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-b/screen.bin": {
+      "sha256": "5d771a0714a754de7d34af57e63e20333da2639d25df81dd4c4b340f834d77a5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-a/screen.png": {
+      "sha256": "191645f02a0febfb59a827b26aef3e2f899f546cc8211b030455bb3b743b58a0",
+      "size": 9242
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-b/screen.png": {
+      "sha256": "191645f02a0febfb59a827b26aef3e2f899f546cc8211b030455bb3b743b58a0",
+      "size": 9242
+    },
+    "workplace/command79-r75-general-three-no-beam-a-plan.json": {
+      "sha256": "f9e46cf4351d730307f6c9450e53074bfee8f30ed2fff755ec302868c5d377a7",
+      "size": 2182
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-a/meta.txt": {
+      "sha256": "343f47c4208d67b1a5a62372987f675b4eca28dcef848dfd727c55e7e5d46b19",
+      "size": 1705
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-a/flags.txt": {
+      "sha256": "c5a51b7d57c68ffc779c46c74817fb6c743e44b01f90b900e320862abca8b50a",
+      "size": 1285
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-a/report.txt": {
+      "sha256": "0b76f7ebc235d136102f939a19029932c15c553b335cb4e4b83872fc8b506cb2",
+      "size": 10993
+    },
+    "workplace/command79-r75-general-three-no-beam-b-plan.json": {
+      "sha256": "fbf8d4b43fd762ccfef9f1d85172c26584c7ed8759cc9a97a5a60f9d8fa3d01e",
+      "size": 2182
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-b/meta.txt": {
+      "sha256": "da4b8398814ba8e40f1630b81dec223fe839e305c4087b11c7930d355dcaf9a5",
+      "size": 1705
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-b/flags.txt": {
+      "sha256": "86bf8e77b49fce9c73d58a215721050e1081ca6c10c396c0980fadb2e55529be",
+      "size": 1285
+    },
+    "workplace/oracle/command79-r75-general-three-no-beam-b/report.txt": {
+      "sha256": "6eb30114e012fa7f1ae678486f363efa2b411e499a22473a08a23f1472f4db21",
+      "size": 10993
+    },
+    "workplace/oracle/command79-r75-general-two-a/input-mem.bin": {
+      "sha256": "44838035dbeaf9ced73f5aeae0f015eed9c0acb821d0fa45ccf1d3e8d78f7bac",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-two-b/input-mem.bin": {
+      "sha256": "44838035dbeaf9ced73f5aeae0f015eed9c0acb821d0fa45ccf1d3e8d78f7bac",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-two-a/end-mem.bin": {
+      "sha256": "609d7b09c961a43bbfaa9e719d31610ff90aa338edc08703672b7107ce7bda93",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-two-b/end-mem.bin": {
+      "sha256": "609d7b09c961a43bbfaa9e719d31610ff90aa338edc08703672b7107ce7bda93",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-general-two-a/screen.bin": {
+      "sha256": "b8c1259811cb7c4c12f893fc2a3edd6835740efdab50613b7521bca9eb86216a",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-general-two-b/screen.bin": {
+      "sha256": "b8c1259811cb7c4c12f893fc2a3edd6835740efdab50613b7521bca9eb86216a",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-general-two-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-general-two-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-general-two-a/screen.png": {
+      "sha256": "75393bc324674c32306c023f0dee11664fff5e5865aa672c8d60c019217d57f5",
+      "size": 9241
+    },
+    "workplace/oracle/command79-r75-general-two-b/screen.png": {
+      "sha256": "75393bc324674c32306c023f0dee11664fff5e5865aa672c8d60c019217d57f5",
+      "size": 9241
+    },
+    "workplace/command79-r75-general-two-a-plan.json": {
+      "sha256": "a48ee7f3547d3671f7743785076b19a94d11dcc60799753c5c2a1cf07b1ccc27",
+      "size": 1610
+    },
+    "workplace/oracle/command79-r75-general-two-a/meta.txt": {
+      "sha256": "afb4c2d327c3ae956db4349c926228933dcd59b110339b7ffcc8916ed8b1a388",
+      "size": 1388
+    },
+    "workplace/oracle/command79-r75-general-two-a/flags.txt": {
+      "sha256": "ac7df6095a6601db3a5339a001918e5b14baf784cbf35653f84e777ea3261786",
+      "size": 978
+    },
+    "workplace/oracle/command79-r75-general-two-a/report.txt": {
+      "sha256": "f54fd678692340283cf2ff3536b63f56adda4396318d6c6465905a30eef94811",
+      "size": 10619
+    },
+    "workplace/command79-r75-general-two-b-plan.json": {
+      "sha256": "3bff0b7e2f60d9646f73dc92b6b04f01c47501ba7f2cd0aaf1e5f3fe9882c4de",
+      "size": 1610
+    },
+    "workplace/oracle/command79-r75-general-two-b/meta.txt": {
+      "sha256": "e8502c15ec4f3f9fed30ce1b66ed89cbffa08c9d0acff4fab685051dbdc82b0b",
+      "size": 1388
+    },
+    "workplace/oracle/command79-r75-general-two-b/flags.txt": {
+      "sha256": "3c3cd9e89da03d2d0e36bc0c49184f64e2e04c918ad57ea8628049ea01f1e2b2",
+      "size": 978
+    },
+    "workplace/oracle/command79-r75-general-two-b/report.txt": {
+      "sha256": "2d048475399936f421627214fdbf8ee35d3732154bd0fdf8a156d3a9ef1d7863",
+      "size": 10619
+    },
+    "workplace/oracle/command79-r75-missile-only-a/input-mem.bin": {
+      "sha256": "9e65b758b37ad6fd915b8b8ef4a0852e53eefcfadddd5b3b67e51517bb22418a",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-missile-only-b/input-mem.bin": {
+      "sha256": "9e65b758b37ad6fd915b8b8ef4a0852e53eefcfadddd5b3b67e51517bb22418a",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-missile-only-a/end-mem.bin": {
+      "sha256": "01bce09a2b44ffa3f215eaf4de3c7b3231dc803b3578496da0d2afd960c7648f",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-missile-only-b/end-mem.bin": {
+      "sha256": "01bce09a2b44ffa3f215eaf4de3c7b3231dc803b3578496da0d2afd960c7648f",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-missile-only-a/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-missile-only-b/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-missile-only-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-missile-only-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-missile-only-a/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/oracle/command79-r75-missile-only-b/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/command79-r75-missile-only-a-plan.json": {
+      "sha256": "d87ad66a9b5e9eb7be39828aaffd4037a13d1f1eb6abb111a1ade30d9985f8a9",
+      "size": 1324
+    },
+    "workplace/oracle/command79-r75-missile-only-a/meta.txt": {
+      "sha256": "ae9662a59946bddc8276268d6bed9ca645ca4240095808e920db62eb3e4b1c00",
+      "size": 1161
+    },
+    "workplace/oracle/command79-r75-missile-only-a/flags.txt": {
+      "sha256": "ca954517a210d9e5c85aed71187db6b1ad613141d1521da23257783f99743d1a",
+      "size": 750
+    },
+    "workplace/oracle/command79-r75-missile-only-a/report.txt": {
+      "sha256": "e36d9624db37b21ec47972a9c734577887c7f31ba29eea05add629765cd7455d",
+      "size": 6234
+    },
+    "workplace/command79-r75-missile-only-b-plan.json": {
+      "sha256": "69dcf8aa1add30666255822d0d66efe69ace784981e63ff9a8bc87b279b85a98",
+      "size": 1324
+    },
+    "workplace/oracle/command79-r75-missile-only-b/meta.txt": {
+      "sha256": "11dad83b49a4c321a9c851af6402c7d50adbbd3a8b8f61d339fb20bec356962f",
+      "size": 1161
+    },
+    "workplace/oracle/command79-r75-missile-only-b/flags.txt": {
+      "sha256": "888c121c25d1253e37999773c090a63cee0add1c670b0721432c5818369053fe",
+      "size": 750
+    },
+    "workplace/oracle/command79-r75-missile-only-b/report.txt": {
+      "sha256": "f374a455b8904292c314b27eff50b91b5d76a64a95de0175429afdf3f1830ca0",
+      "size": 6234
+    },
+    "workplace/oracle/command79-r75-missile-stock1-a/input-mem.bin": {
+      "sha256": "5e5a8d9198b8caa729fa05422abb123ca416555d44a6766fe6db6d3169a18d57",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-missile-stock1-b/input-mem.bin": {
+      "sha256": "5e5a8d9198b8caa729fa05422abb123ca416555d44a6766fe6db6d3169a18d57",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-missile-stock1-a/end-mem.bin": {
+      "sha256": "facd924edf3a249d5a5cfb06b852caade37d505d79e6f2f47186f96e0d21d69c",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-missile-stock1-b/end-mem.bin": {
+      "sha256": "facd924edf3a249d5a5cfb06b852caade37d505d79e6f2f47186f96e0d21d69c",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-missile-stock1-a/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-missile-stock1-b/screen.bin": {
+      "sha256": "1a1210c47247a5b3687fa7b604dec6ac0462d5c9683806883eaea1fbff232fb5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-missile-stock1-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-missile-stock1-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-missile-stock1-a/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/oracle/command79-r75-missile-stock1-b/screen.png": {
+      "sha256": "17cb05f7927e95362e523fcd4bfc2e6ccc94dec24037e37dcedf572c585b9d06",
+      "size": 9290
+    },
+    "workplace/command79-r75-missile-stock1-a-plan.json": {
+      "sha256": "ea79b76ceac608296c79d926eaf220abc8ddf010626ca045a4d1e65ba27ccbc1",
+      "size": 1476
+    },
+    "workplace/oracle/command79-r75-missile-stock1-a/meta.txt": {
+      "sha256": "dfb311596701b551cce36a424abfe0ae6fc871316f4bce1f010cccda5b558d4b",
+      "size": 1201
+    },
+    "workplace/oracle/command79-r75-missile-stock1-a/flags.txt": {
+      "sha256": "6d64acac90c2497f8a96b800f8012c6290a144d9954d029ade1d5c50b671bd5e",
+      "size": 788
+    },
+    "workplace/oracle/command79-r75-missile-stock1-a/report.txt": {
+      "sha256": "5f8a48fa8e61a215d1d19942466f00c11256f8aea5486dae07cc59458591320d",
+      "size": 6299
+    },
+    "workplace/command79-r75-missile-stock1-b-plan.json": {
+      "sha256": "3e93d80b4704905b8023e2551eba4cf5edf4c3b4fcc507cfa6237ff12ddb5948",
+      "size": 1476
+    },
+    "workplace/oracle/command79-r75-missile-stock1-b/meta.txt": {
+      "sha256": "5395f182581fe389f4a9cdafb8438bab021bfb7fecdb72fe6961d8789f6f29d9",
+      "size": 1201
+    },
+    "workplace/oracle/command79-r75-missile-stock1-b/flags.txt": {
+      "sha256": "b13aab7dae8131643e695c4fd15908dce88e930089b881308ca6a2bf17d95c77",
+      "size": 788
+    },
+    "workplace/oracle/command79-r75-missile-stock1-b/report.txt": {
+      "sha256": "a7d8488be981bd19bba9a7dee01711c42de5895c4a2426b2af42b2e2eb3c47f5",
+      "size": 6299
+    },
+    "workplace/oracle/command79-r75-near-a/input-mem.bin": {
+      "sha256": "dfa8e4c408f34a93ec74a1471b718e0e857ba5bbd53a09909253c00f85bc2b5e",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-near-b/input-mem.bin": {
+      "sha256": "dfa8e4c408f34a93ec74a1471b718e0e857ba5bbd53a09909253c00f85bc2b5e",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-near-a/end-mem.bin": {
+      "sha256": "2cdffab615140273dcd69c0503232fac7c87d820660779032e3646ea286f11d6",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-near-b/end-mem.bin": {
+      "sha256": "2cdffab615140273dcd69c0503232fac7c87d820660779032e3646ea286f11d6",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-near-a/screen.bin": {
+      "sha256": "994a86e2a17922a44f25458ebbf18a00acdd9acc5f3364603977fcf08c549e88",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-near-b/screen.bin": {
+      "sha256": "994a86e2a17922a44f25458ebbf18a00acdd9acc5f3364603977fcf08c549e88",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-near-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-near-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-near-a/screen.png": {
+      "sha256": "0e19dffb0c1567d473ccfe5de8c8dac3202c1337d75ce0ec6bba8f44fefc466b",
+      "size": 9246
+    },
+    "workplace/oracle/command79-r75-near-b/screen.png": {
+      "sha256": "0e19dffb0c1567d473ccfe5de8c8dac3202c1337d75ce0ec6bba8f44fefc466b",
+      "size": 9246
+    },
+    "workplace/command79-r75-near-a-plan.json": {
+      "sha256": "ea865755bfc5aeed3eccbfffaa5829c9003f95df8fee6044eb72300edb023bd6",
+      "size": 1172
+    },
+    "workplace/oracle/command79-r75-near-a/meta.txt": {
+      "sha256": "57475687dd8a1e9cecdb76b4f417f7c1ba694e9efab79f70e618007d98fd03fe",
+      "size": 1115
+    },
+    "workplace/oracle/command79-r75-near-a/flags.txt": {
+      "sha256": "29f3fe474462c6b9c96c1839ea62614127ed0f76d827256040b0d975f095eaaf",
+      "size": 712
+    },
+    "workplace/oracle/command79-r75-near-a/report.txt": {
+      "sha256": "ae03f823651fb3b2ddf63094c3d48310459837ba23ec6e4a153d1b923b3c747e",
+      "size": 8225
+    },
+    "workplace/command79-r75-near-b-plan.json": {
+      "sha256": "e0426609ddd53867e889c7c66e0962145b39f5b2cef61d168d0b63038b5a34d9",
+      "size": 1172
+    },
+    "workplace/oracle/command79-r75-near-b/meta.txt": {
+      "sha256": "f95dba5b2214f8465660a354f615b2e870a928f0590e10b8264fc65d525b6e29",
+      "size": 1115
+    },
+    "workplace/oracle/command79-r75-near-b/flags.txt": {
+      "sha256": "3d506f22212d0590d7fe793005bd449a71d043fa5cd3d56a511df418f1368236",
+      "size": 712
+    },
+    "workplace/oracle/command79-r75-near-b/report.txt": {
+      "sha256": "ce9b9e2730a96db98f2f6be6f1c74a2add9f2734634c733e216a23e37d91f626",
+      "size": 8225
+    },
+    "workplace/oracle/command79-r75-none-a/input-mem.bin": {
+      "sha256": "5809abda9e1bbfcfab733698ba0f377056555aa5edc5b381f3858478857ffbb9",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-none-b/input-mem.bin": {
+      "sha256": "5809abda9e1bbfcfab733698ba0f377056555aa5edc5b381f3858478857ffbb9",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-none-a/end-mem.bin": {
+      "sha256": "dd6d7151941f636720a9b12855c90ad7dfec3250c8feeea89bbc6790fa9e0198",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-none-b/end-mem.bin": {
+      "sha256": "dd6d7151941f636720a9b12855c90ad7dfec3250c8feeea89bbc6790fa9e0198",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-none-a/screen.bin": {
+      "sha256": "544133af45f2d6413f890d6bb61fa62ab41354fa85ed5b98a5128b37d268dd0e",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-none-b/screen.bin": {
+      "sha256": "544133af45f2d6413f890d6bb61fa62ab41354fa85ed5b98a5128b37d268dd0e",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-none-a/pal.bin": {
+      "sha256": "ef115a0e0c15cdc41958ca46b5b14b456115f4baec5e3ca68599d2a8f435e3b8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-none-b/pal.bin": {
+      "sha256": "ef115a0e0c15cdc41958ca46b5b14b456115f4baec5e3ca68599d2a8f435e3b8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-none-a/screen.png": {
+      "sha256": "04112bf16795f42b55b8191e80ef20e426894f3291324fc555fd6bbb650abd40",
+      "size": 3742
+    },
+    "workplace/oracle/command79-r75-none-b/screen.png": {
+      "sha256": "04112bf16795f42b55b8191e80ef20e426894f3291324fc555fd6bbb650abd40",
+      "size": 3742
+    },
+    "workplace/command79-r75-none-a-plan.json": {
+      "sha256": "f63a2974697af0db7e273ecc9feb6683b542eff265a7e01fe269d2b73573317d",
+      "size": 1178
+    },
+    "workplace/oracle/command79-r75-none-a/meta.txt": {
+      "sha256": "c2b1ebcb9a2b5f35ee68df2137200df57144d856905579f2821919adca1ad8d8",
+      "size": 1106
+    },
+    "workplace/oracle/command79-r75-none-a/flags.txt": {
+      "sha256": "2967dab904ccfa3b2b130d4f148abd478e87389614154336647e56507294362c",
+      "size": 703
+    },
+    "workplace/oracle/command79-r75-none-a/report.txt": {
+      "sha256": "f8ad2c3e12901fe885116e025db41b6d026916277e43f951abfcddacb10a2116",
+      "size": 6479
+    },
+    "workplace/command79-r75-none-b-plan.json": {
+      "sha256": "0107737a37078b98f7928231c1089cf5cf9903597835a2664b42e225b7b14101",
+      "size": 1178
+    },
+    "workplace/oracle/command79-r75-none-b/meta.txt": {
+      "sha256": "ec6a440f63888b97b5faf3a4433c3cfddacc0cc03dab2b8ee319f59267b3ce5c",
+      "size": 1106
+    },
+    "workplace/oracle/command79-r75-none-b/flags.txt": {
+      "sha256": "afda1bc029353b0577e16befad92a741d7ee60aece85f8b07f521822107d8142",
+      "size": 703
+    },
+    "workplace/oracle/command79-r75-none-b/report.txt": {
+      "sha256": "17f7bce8afd83f06acac9fed51ce4dac8cb2f477adea45410d378fbd34e7d6dd",
+      "size": 6479
+    },
+    "workplace/oracle/command79-r75-three-high-a/input-mem.bin": {
+      "sha256": "bd205d835733ccce061f87981e378804606ce96f8faf7740f9ec2f85da84b20e",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-high-b/input-mem.bin": {
+      "sha256": "bd205d835733ccce061f87981e378804606ce96f8faf7740f9ec2f85da84b20e",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-high-a/end-mem.bin": {
+      "sha256": "55c343fc3131128283fbc6cf57b6e4ebd281c534504eaa10e4e8834d6c40a14b",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-high-b/end-mem.bin": {
+      "sha256": "55c343fc3131128283fbc6cf57b6e4ebd281c534504eaa10e4e8834d6c40a14b",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-high-a/screen.bin": {
+      "sha256": "66e88027781e0fded3a5f351e3c8de8bd18a0a5fc77fefa3de7338cf7301b126",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-high-b/screen.bin": {
+      "sha256": "66e88027781e0fded3a5f351e3c8de8bd18a0a5fc77fefa3de7338cf7301b126",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-high-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-high-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-high-a/screen.png": {
+      "sha256": "ea688a005f78e1ef9366db1a18d82baf344b8c45426113934aaee68657f994c4",
+      "size": 8462
+    },
+    "workplace/oracle/command79-r75-three-high-b/screen.png": {
+      "sha256": "ea688a005f78e1ef9366db1a18d82baf344b8c45426113934aaee68657f994c4",
+      "size": 8462
+    },
+    "workplace/command79-r75-three-high-a-plan.json": {
+      "sha256": "21fe8ad6a2d4428bf9bcefbbb485752bd719073281063249f555424319d825a8",
+      "size": 2021
+    },
+    "workplace/oracle/command79-r75-three-high-a/meta.txt": {
+      "sha256": "f4be71cc127a6d6ffe4051288b607c79bf5f415471f206966ce833705db7a52f",
+      "size": 1638
+    },
+    "workplace/oracle/command79-r75-three-high-a/flags.txt": {
+      "sha256": "747aa498892869712823504e28a3e595bd78810fe1a667a8d7f263e6a61196bc",
+      "size": 1229
+    },
+    "workplace/oracle/command79-r75-three-high-a/report.txt": {
+      "sha256": "7194eca9e99da3cc9e94269dd211334320355ef3b180bf77cda2298b87986817",
+      "size": 14009
+    },
+    "workplace/command79-r75-three-high-b-plan.json": {
+      "sha256": "0062895ae5973fc168c23b894441b7492316006c910141b86c1e99d404a7539f",
+      "size": 2021
+    },
+    "workplace/oracle/command79-r75-three-high-b/meta.txt": {
+      "sha256": "92d64b7f9d9c5adf29a86bd8ba2528fd714ee4b103777628a48b7821261e9480",
+      "size": 1638
+    },
+    "workplace/oracle/command79-r75-three-high-b/flags.txt": {
+      "sha256": "0beabf6a77bfe337c6026e93c9e8c9b063032e9cca39cc944990ad78d084b377",
+      "size": 1229
+    },
+    "workplace/oracle/command79-r75-three-high-b/report.txt": {
+      "sha256": "1f0b9a0a8341cb20ab8d139d245c657ef113f981bfe6fc3a2d110bb428e6f85a",
+      "size": 14009
+    },
+    "workplace/oracle/command79-r75-three-low-a/input-mem.bin": {
+      "sha256": "cba9ddbed0ecf39802a7d40d95abf7078c8207d8daa5c96a49835d0d06086522",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-low-b/input-mem.bin": {
+      "sha256": "cba9ddbed0ecf39802a7d40d95abf7078c8207d8daa5c96a49835d0d06086522",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-low-a/end-mem.bin": {
+      "sha256": "8ac9616705d921a2f55b523707a39331961d1c23483e516d978088da6d775a90",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-low-b/end-mem.bin": {
+      "sha256": "8ac9616705d921a2f55b523707a39331961d1c23483e516d978088da6d775a90",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-low-a/screen.bin": {
+      "sha256": "70424dbe64b7980a510a31812a2c40ebe498ba3c3bd74dc31ebb318f8fedf0ac",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-low-b/screen.bin": {
+      "sha256": "70424dbe64b7980a510a31812a2c40ebe498ba3c3bd74dc31ebb318f8fedf0ac",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-low-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-low-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-low-a/screen.png": {
+      "sha256": "8b842c5d7013a0c10a3c16f505a11d8f604c4481c9134d92ffea25dc9f965a2d",
+      "size": 8656
+    },
+    "workplace/oracle/command79-r75-three-low-b/screen.png": {
+      "sha256": "8b842c5d7013a0c10a3c16f505a11d8f604c4481c9134d92ffea25dc9f965a2d",
+      "size": 8656
+    },
+    "workplace/command79-r75-three-low-a-plan.json": {
+      "sha256": "225810e455e96f526a182c8da9d0a843b970eba75cb4ffb4d7c250b69b32326e",
+      "size": 2018
+    },
+    "workplace/oracle/command79-r75-three-low-a/meta.txt": {
+      "sha256": "894445582a2b395944c393500b9bc980d8c6cafc1db99c2d8183323d4a75b091",
+      "size": 1634
+    },
+    "workplace/oracle/command79-r75-three-low-a/flags.txt": {
+      "sha256": "0dcea2252c747488135f075132d8a23127566dabd55722be5980b6436b6f229c",
+      "size": 1226
+    },
+    "workplace/oracle/command79-r75-three-low-a/report.txt": {
+      "sha256": "97accbf378b5949884e6d9ecf6222bf73454231b46617f05d1766357876a8e12",
+      "size": 14003
+    },
+    "workplace/command79-r75-three-low-b-plan.json": {
+      "sha256": "16785722a443ef35962eeab1aabdbb1d82fb32fdec079771eb8d06e7ef6921bd",
+      "size": 2018
+    },
+    "workplace/oracle/command79-r75-three-low-b/meta.txt": {
+      "sha256": "5a60b0fc2c0c684958f881a5e4a523c7035e448ccc7b2d795c39c2986853a410",
+      "size": 1634
+    },
+    "workplace/oracle/command79-r75-three-low-b/flags.txt": {
+      "sha256": "bb85b7e57a471355bcaca730b653f20bdd0263923130350e84feedc8714a82ed",
+      "size": 1226
+    },
+    "workplace/oracle/command79-r75-three-low-b/report.txt": {
+      "sha256": "7a8308bfb7ca979131f730959307c9cf1f85723782a7c1c46190d91c5d19486a",
+      "size": 14003
+    },
+    "workplace/oracle/command79-r75-three-middle-a/input-mem.bin": {
+      "sha256": "a52a5b2deb0ebe9391c56712b1920a58f77274f0dfe27ffd3c08b46d16f4ddb7",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-middle-b/input-mem.bin": {
+      "sha256": "a52a5b2deb0ebe9391c56712b1920a58f77274f0dfe27ffd3c08b46d16f4ddb7",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-middle-a/end-mem.bin": {
+      "sha256": "b8ae38df6fd0861337dbb13676da286c7bd3f751ee9ef4d9cb61e0bdc0fc8d2c",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-middle-b/end-mem.bin": {
+      "sha256": "b8ae38df6fd0861337dbb13676da286c7bd3f751ee9ef4d9cb61e0bdc0fc8d2c",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-middle-a/screen.bin": {
+      "sha256": "ab1e3ab0f245c9a5414a47e31ae93c0f5be0960f85c672348e6553b29a255319",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-middle-b/screen.bin": {
+      "sha256": "ab1e3ab0f245c9a5414a47e31ae93c0f5be0960f85c672348e6553b29a255319",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-middle-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-middle-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-middle-a/screen.png": {
+      "sha256": "fe6b0e7535e56bd6ece69b4a9259bfda65cd93bf07928398e7ac723ea2fef69b",
+      "size": 8577
+    },
+    "workplace/oracle/command79-r75-three-middle-b/screen.png": {
+      "sha256": "fe6b0e7535e56bd6ece69b4a9259bfda65cd93bf07928398e7ac723ea2fef69b",
+      "size": 8577
+    },
+    "workplace/command79-r75-three-middle-a-plan.json": {
+      "sha256": "efa9e08a3db0d0e3e3c882fae937291e8ad8dce13f14636d8ed3881f942b82d5",
+      "size": 2024
+    },
+    "workplace/oracle/command79-r75-three-middle-a/meta.txt": {
+      "sha256": "64948db0aa8c292b3ba96ad60d346e98b3983b22c5fe8d81e9c5c81201eb09fd",
+      "size": 1646
+    },
+    "workplace/oracle/command79-r75-three-middle-a/flags.txt": {
+      "sha256": "321f3a539accbf2b0d3a39a9bf9ccc1211eee3e0672fdf2f4bf8fbb6328a1d47",
+      "size": 1235
+    },
+    "workplace/oracle/command79-r75-three-middle-a/report.txt": {
+      "sha256": "9df21990ee2c15f93e426ebc5a8bded7345a796737e53764768619d73c3bd3f4",
+      "size": 14021
+    },
+    "workplace/command79-r75-three-middle-b-plan.json": {
+      "sha256": "d3086afcc32f16870cc43c560640df20d0c6cc3e48c05610f5dd74616e766354",
+      "size": 2024
+    },
+    "workplace/oracle/command79-r75-three-middle-b/meta.txt": {
+      "sha256": "ccc66a27faca530cd6123de99d59473e6a062fd910fe8407c34f40d8ade10ae0",
+      "size": 1646
+    },
+    "workplace/oracle/command79-r75-three-middle-b/flags.txt": {
+      "sha256": "cc107e02adca8db7028379282e16cee8b1f3ebad9290d47c449b9bd28ed0d3a2",
+      "size": 1235
+    },
+    "workplace/oracle/command79-r75-three-middle-b/report.txt": {
+      "sha256": "eda946b5e3a6925a8c739f306fbd66bbc00f967de2a9426bfa25ccf547f2168b",
+      "size": 14021
+    },
+    "workplace/oracle/command79-r75-three-middle-end-a/input-mem.bin": {
+      "sha256": "814e321e9a821ad24cc96701d15cbb7bf838397ff142f41eaa56a1e8f4a7ad23",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-middle-end-b/input-mem.bin": {
+      "sha256": "814e321e9a821ad24cc96701d15cbb7bf838397ff142f41eaa56a1e8f4a7ad23",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-middle-end-a/end-mem.bin": {
+      "sha256": "725c97cd640ff9e90875f4627edac8d1b1b2fae8c1215fe3d4212cae0b340848",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-middle-end-b/end-mem.bin": {
+      "sha256": "725c97cd640ff9e90875f4627edac8d1b1b2fae8c1215fe3d4212cae0b340848",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-middle-end-a/screen.bin": {
+      "sha256": "ab1e3ab0f245c9a5414a47e31ae93c0f5be0960f85c672348e6553b29a255319",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-middle-end-b/screen.bin": {
+      "sha256": "ab1e3ab0f245c9a5414a47e31ae93c0f5be0960f85c672348e6553b29a255319",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-middle-end-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-middle-end-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-middle-end-a/screen.png": {
+      "sha256": "fe6b0e7535e56bd6ece69b4a9259bfda65cd93bf07928398e7ac723ea2fef69b",
+      "size": 8577
+    },
+    "workplace/oracle/command79-r75-three-middle-end-b/screen.png": {
+      "sha256": "fe6b0e7535e56bd6ece69b4a9259bfda65cd93bf07928398e7ac723ea2fef69b",
+      "size": 8577
+    },
+    "workplace/command79-r75-three-middle-end-a-plan.json": {
+      "sha256": "3d273f42d077741799633ce7ae0dc1dd88b5aa9d6fd24c8833bbe33bb52c59de",
+      "size": 2033
+    },
+    "workplace/oracle/command79-r75-three-middle-end-a/meta.txt": {
+      "sha256": "918bb1b27d01e593db79db1335ea083d4aedbd5076a0d619774ca99c9ec8dc77",
+      "size": 1662
+    },
+    "workplace/oracle/command79-r75-three-middle-end-a/flags.txt": {
+      "sha256": "071a0f280540172dba5c0b08ba9cc6f0de27639b411928ee7090efa806a0c8f7",
+      "size": 1247
+    },
+    "workplace/oracle/command79-r75-three-middle-end-a/report.txt": {
+      "sha256": "d8f0c4ab67fa012f39b9b55fbd0cb825e6fe90a7477adfcf018cfd5c4c5dfbff",
+      "size": 14045
+    },
+    "workplace/command79-r75-three-middle-end-b-plan.json": {
+      "sha256": "7123f8de82e20e418e9cc57f5bc9baf01ab81ebf8339a67edfca164f09dffe7f",
+      "size": 2033
+    },
+    "workplace/oracle/command79-r75-three-middle-end-b/meta.txt": {
+      "sha256": "9275226ead97b8dd181f3bd51fe683765fc140814a64e6e878c796062e0952ca",
+      "size": 1662
+    },
+    "workplace/oracle/command79-r75-three-middle-end-b/flags.txt": {
+      "sha256": "dc3c63ffae026bcfc3f0e72a1463f92eb3dd55259098da40fab4362cc6c7a25f",
+      "size": 1247
+    },
+    "workplace/oracle/command79-r75-three-middle-end-b/report.txt": {
+      "sha256": "990edfae0341b8810b22273f480ccc47f56e34065378ab7cff2384acffa11d89",
+      "size": 14045
+    },
+    "workplace/oracle/command79-r75-three-no-beam-a/input-mem.bin": {
+      "sha256": "d35f3e9c78aca2fafcf9d0d198fe5fc0191867a828e351a8fc9b48afae8befff",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-no-beam-b/input-mem.bin": {
+      "sha256": "d35f3e9c78aca2fafcf9d0d198fe5fc0191867a828e351a8fc9b48afae8befff",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-no-beam-a/end-mem.bin": {
+      "sha256": "e26548236c817d1c40d3bf319707ee17d595a1087b04922d8506589182711580",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-no-beam-b/end-mem.bin": {
+      "sha256": "e26548236c817d1c40d3bf319707ee17d595a1087b04922d8506589182711580",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-no-beam-a/screen.bin": {
+      "sha256": "5d771a0714a754de7d34af57e63e20333da2639d25df81dd4c4b340f834d77a5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-no-beam-b/screen.bin": {
+      "sha256": "5d771a0714a754de7d34af57e63e20333da2639d25df81dd4c4b340f834d77a5",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-no-beam-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-no-beam-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-no-beam-a/screen.png": {
+      "sha256": "191645f02a0febfb59a827b26aef3e2f899f546cc8211b030455bb3b743b58a0",
+      "size": 9242
+    },
+    "workplace/oracle/command79-r75-three-no-beam-b/screen.png": {
+      "sha256": "191645f02a0febfb59a827b26aef3e2f899f546cc8211b030455bb3b743b58a0",
+      "size": 9242
+    },
+    "workplace/command79-r75-three-no-beam-a-plan.json": {
+      "sha256": "2bb99bb64a09df384040605f53290ab9e26a1c6e5c88420082513bcac7bc3589",
+      "size": 2166
+    },
+    "workplace/oracle/command79-r75-three-no-beam-a/meta.txt": {
+      "sha256": "011d3efe2229fcfc5e426b72d6c970675da053af6ec09eae9174fd1eb450c6e8",
+      "size": 1673
+    },
+    "workplace/oracle/command79-r75-three-no-beam-a/flags.txt": {
+      "sha256": "66b2159080afc973a3fa241b2683af6547fb9c52ec89e961fb7d1b39076e2f6a",
+      "size": 1261
+    },
+    "workplace/oracle/command79-r75-three-no-beam-a/report.txt": {
+      "sha256": "57b8ddaf470ce66c702e3ca7ff8889ab52c69b88659b23f371a5a9da0da50a7a",
+      "size": 10945
+    },
+    "workplace/command79-r75-three-no-beam-b-plan.json": {
+      "sha256": "9a5e7a817c7b6aa8d167c58d121ef2667c145dcb7a177a21831e7ed5fdba8094",
+      "size": 2166
+    },
+    "workplace/oracle/command79-r75-three-no-beam-b/meta.txt": {
+      "sha256": "3433fdae11dc456dee31c3a11275964bf113644bf10996548438bca298577bc7",
+      "size": 1673
+    },
+    "workplace/oracle/command79-r75-three-no-beam-b/flags.txt": {
+      "sha256": "114c10102769bba2a566d7c7bc24c853d39737aeef616f30fc18ea58285680da",
+      "size": 1261
+    },
+    "workplace/oracle/command79-r75-three-no-beam-b/report.txt": {
+      "sha256": "898a1e62ca607c4b66c5c9833743516e7296d0e7bf01f18eb42eecf298274c2a",
+      "size": 10945
+    },
+    "workplace/oracle/command79-r75-three-overflow-a/input-mem.bin": {
+      "sha256": "5dd5d0f0afdc2e4bbf1c228dfb2edeb33afff556f21602a2a8cd827f20e0151f",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-overflow-b/input-mem.bin": {
+      "sha256": "5dd5d0f0afdc2e4bbf1c228dfb2edeb33afff556f21602a2a8cd827f20e0151f",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-overflow-a/end-mem.bin": {
+      "sha256": "9e58a975fee999b7b12a8140ca9c7e25cc86c9961146fdbcaed8e436417449a4",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-overflow-b/end-mem.bin": {
+      "sha256": "9e58a975fee999b7b12a8140ca9c7e25cc86c9961146fdbcaed8e436417449a4",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-three-overflow-a/screen.bin": {
+      "sha256": "66e88027781e0fded3a5f351e3c8de8bd18a0a5fc77fefa3de7338cf7301b126",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-overflow-b/screen.bin": {
+      "sha256": "66e88027781e0fded3a5f351e3c8de8bd18a0a5fc77fefa3de7338cf7301b126",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-three-overflow-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-overflow-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-three-overflow-a/screen.png": {
+      "sha256": "ea688a005f78e1ef9366db1a18d82baf344b8c45426113934aaee68657f994c4",
+      "size": 8462
+    },
+    "workplace/oracle/command79-r75-three-overflow-b/screen.png": {
+      "sha256": "ea688a005f78e1ef9366db1a18d82baf344b8c45426113934aaee68657f994c4",
+      "size": 8462
+    },
+    "workplace/command79-r75-three-overflow-a-plan.json": {
+      "sha256": "21cbf422ca93596683d3e7e45e6ef43c9aeb5748dd5e88723450c048f8c1e748",
+      "size": 2029
+    },
+    "workplace/oracle/command79-r75-three-overflow-a/meta.txt": {
+      "sha256": "be7ad20f99a1944b05799e0374b5ac68a0e2a2a08fdd2fef3ab9f731d1649014",
+      "size": 1654
+    },
+    "workplace/oracle/command79-r75-three-overflow-a/flags.txt": {
+      "sha256": "fd84f98b7d9a1dc1d96fd8be138a2c40cc0136d475a421bab06ee29947ce9f1d",
+      "size": 1241
+    },
+    "workplace/oracle/command79-r75-three-overflow-a/report.txt": {
+      "sha256": "5ec305c1ef45d67c6317f311bee5204715f29020908f147f29bbdf09f109a3bc",
+      "size": 14033
+    },
+    "workplace/command79-r75-three-overflow-b-plan.json": {
+      "sha256": "afb5fa0595f8485c3bc3d8f46cf2692e933690752699f4f76b72be8bcfef63a0",
+      "size": 2029
+    },
+    "workplace/oracle/command79-r75-three-overflow-b/meta.txt": {
+      "sha256": "105423003e1577a37cdc38e5a63b1936a36aa8c610bfffb9cfda21bd3797fa9c",
+      "size": 1654
+    },
+    "workplace/oracle/command79-r75-three-overflow-b/flags.txt": {
+      "sha256": "040972207ec5c525f8f46c6bd8bb046794a1443a9ddeb9d4ebf5b693166d5e5c",
+      "size": 1241
+    },
+    "workplace/oracle/command79-r75-three-overflow-b/report.txt": {
+      "sha256": "8e018e22a2353072405da2ee52b82e75b883962294aa5ed672153af9e3a73b53",
+      "size": 14033
+    },
+    "workplace/oracle/command79-r75-two-low-a/input-mem.bin": {
+      "sha256": "64e102e12b9eaf52de545d0955c449b1c8d8e55460597517c18545c1808413cc",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-two-low-b/input-mem.bin": {
+      "sha256": "64e102e12b9eaf52de545d0955c449b1c8d8e55460597517c18545c1808413cc",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-two-low-a/end-mem.bin": {
+      "sha256": "2fd461cc5999461b08632ab27c6f360a8652e0e9ca1ccbb675d53b2945624b01",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-two-low-b/end-mem.bin": {
+      "sha256": "2fd461cc5999461b08632ab27c6f360a8652e0e9ca1ccbb675d53b2945624b01",
+      "size": 1048576
+    },
+    "workplace/oracle/command79-r75-two-low-a/screen.bin": {
+      "sha256": "b8c1259811cb7c4c12f893fc2a3edd6835740efdab50613b7521bca9eb86216a",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-two-low-b/screen.bin": {
+      "sha256": "b8c1259811cb7c4c12f893fc2a3edd6835740efdab50613b7521bca9eb86216a",
+      "size": 307200
+    },
+    "workplace/oracle/command79-r75-two-low-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-two-low-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/command79-r75-two-low-a/screen.png": {
+      "sha256": "75393bc324674c32306c023f0dee11664fff5e5865aa672c8d60c019217d57f5",
+      "size": 9241
+    },
+    "workplace/oracle/command79-r75-two-low-b/screen.png": {
+      "sha256": "75393bc324674c32306c023f0dee11664fff5e5865aa672c8d60c019217d57f5",
+      "size": 9241
+    },
+    "workplace/command79-r75-two-low-a-plan.json": {
+      "sha256": "4c4a169d6330aac33f7935dd81285d387568a079b451cf751cb469689a44ab27",
+      "size": 1602
+    },
+    "workplace/oracle/command79-r75-two-low-a/meta.txt": {
+      "sha256": "d05711818c065c5672cacf556e65e0e39cf9401b4bc0265ebee4c3f55d4aa0f5",
+      "size": 1372
+    },
+    "workplace/oracle/command79-r75-two-low-a/flags.txt": {
+      "sha256": "90757a4d3920b5090d722c9ec97b300fcc54ac5cdcbc6bda4aca5ffad4caafe6",
+      "size": 966
+    },
+    "workplace/oracle/command79-r75-two-low-a/report.txt": {
+      "sha256": "97363a0d758d9882047552ec435a42bde35ad6f314345a334bebe0df85ccbe33",
+      "size": 10595
+    },
+    "workplace/command79-r75-two-low-b-plan.json": {
+      "sha256": "fe2ed33976cfda1f64188e2077e6f0c3902a8450461ef59e002989379e35669c",
+      "size": 1602
+    },
+    "workplace/oracle/command79-r75-two-low-b/meta.txt": {
+      "sha256": "f8d96f94179ff3b334fb279e5e6fc30d161dde068a5f4d55e0803935a4f60e42",
+      "size": 1372
+    },
+    "workplace/oracle/command79-r75-two-low-b/flags.txt": {
+      "sha256": "12b0a2074c2554f167dc205257bbafd1f7f20fe12606e0ecbbfa0c850227d73c",
+      "size": 966
+    },
+    "workplace/oracle/command79-r75-two-low-b/report.txt": {
+      "sha256": "25136cc219a9f3b128d377372c64ff2c2be2ecbf65afed8ffeb10c26413f10a0",
+      "size": 10595
+    },
+    "workplace/oracle/normal79-r61-a/end-mem.bin": {
+      "sha256": "6800de725851633cf2b817afad0cfda3be4a0d6b8bb7d1ebdacd57a92ce1d5b4",
+      "size": 1048576
+    },
+    "workplace/ida/command79-r75-auto.json": {
+      "sha256": "2d61433aea7176fbfc771c4ccd75b508ee2f2c55969e4fe6394acd03ff179698",
+      "size": 134515
+    },
+    "workplace/ida/command79-r75-auto.com": {
+      "sha256": "87048b5c45487c188cb8b52aea56b43c922f0503b87a7c1268080949d41597f0",
+      "size": 978
+    },
+    "workplace/ida/command79-r75-evaluate.json": {
+      "sha256": "119ccd032ba1149ddb866ac74b4e031b055d5984cde948e09255727bb29660ce",
+      "size": 143154
+    },
+    "workplace/ida/command79-r75-evaluate.com": {
+      "sha256": "bcf908af90c0a91183e223f3f38e486b6d108bfe5a422e913ea60f443aa1d1bd",
+      "size": 2588
+    },
+    "workplace/combat79-r62-gate-near-human-a-plan.json": {
+      "sha256": "681cf123dd27c9c7a8f8654ca61377be5232bf188c773843ee911982bfb898cf",
+      "size": 20625
+    },
+    "workplace/combat79-r62-command-a-plan.json": {
+      "sha256": "617c6db5ec3a57bc32a9fcc045d09e14f95af0e6bac3beb4865a601dfa043589",
+      "size": 431
+    },
+    "workplace/combat79-r63-target-a-plan.json": {
+      "sha256": "98513af404083a2e702bff1f0e518020e7b511fb4eb178eeea8fc7dd83c27186",
+      "size": 482
+    },
+    "internal/rules/fleetauto.go": {
+      "sha256": "7672e7e8ceaffca0f33ead80e1676946db2b9bf4f01f182d65fd58ed21e787b1",
+      "size": 6246
+    },
+    "internal/rules/fleetauto_test.go": {
+      "sha256": "1fcc8324fee92af84181b120a20c6de9697ac30cbbecb4b6f001318189bf24d5",
+      "size": 5907
+    },
+    "internal/game/fleetcombatcommand.go": {
+      "sha256": "9e908182d2529c6d5eb72aa246a0b95b4d2b2a5e6909ebf34eeb3015d52d3669",
+      "size": 5675
+    },
+    "internal/game/fleetauto_test.go": {
+      "sha256": "baf85e8707412524fadb8cccd87a7578f5a73c33c95e59db23c58afb0458629a",
+      "size": 7155
+    },
+    "tools/combat_player_command_oracle.sh": {
+      "sha256": "47ad6bd1cc05513acd1e54aee93e49d16f232a55082ee9e65248943a84a2bb32",
+      "size": 886
+    },
+    "tools/scripts/combat_player_command_plan.py": {
+      "sha256": "f7e8ad34a18711234a1e95302edca73a8e0807d712a683b9d400160f2042e313",
+      "size": 6784
+    },
+    "tools/scripts/combat_player_command_ida.py": {
+      "sha256": "1616589fe1827c68ac446c7a3dac7e49166cb87ba0c0e4f00941e3fbf220e8c4",
+      "size": 2393
+    },
+    "tools/scripts/combat_auto_receipt.py": {
+      "sha256": "440ccccc138087ec5f84eb3e39d74620fd2912f382ffaba2ea2367dc47570e3b",
+      "size": 8601
+    },
+    "tools/scripts/fleet_auto_game_receipt.py": {
+      "sha256": "26a6f75f1e602fa01ff08f36b2e41265de1750c23060f9727094ba3329b8cd00",
+      "size": 3813
+    },
+    "docs/spec/101-fleet-auto-command.md": {
+      "sha256": "787d423a182fc833a921945d7100fbd323d2b4efbfd42d5ab44c074728a74e83",
+      "size": 4716
+    },
+    "workplace/round75-auto-final.log": {
+      "sha256": "bfc3792a2c1a18815c19eb11fad9fbf728ecbf5a70447e6030e3ecebf4559bd1",
+      "size": 9761
+    },
+    "workplace/round75-standard.log": {
+      "sha256": "56a25203e1a7f40993fb9f25a984771f7bb4e5fc05ff3d0d042a168a615ed379",
+      "size": 962
+    },
+    "workplace/round75-images.txt": {
+      "sha256": "accc675b2d30763b2fecb000fab772a96566773b499fd53dfbfcba3132e53d3e",
+      "size": 275
+    }
+  }
+}

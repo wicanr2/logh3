@@ -517,3 +517,9 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [第74輪交戰命令資料鏈](../goal/2026-10-04-combat-command-data-round-74.md)與[100候選／原池命令規格](../spec/100-fleet-combat-candidates.md)：沿研究401／403，逐次候選與原存檔欄位；完整092仍DRAFT。
 - [候選與命令驗證索引](data/fleet-command-data.json)由[第74輪凍結器](../../tools/scripts/fleet_command_data_receipt.py)重建；直接核原版逐查詢，不讀舊probe期望。
 - [候選與命令接線研究411](../re/411-fleet-command-data.md)及[限定驗證063](../playtest/063-fleet-command-data.md)：111次原版查詢、命令原池存讀、正常bootstrap唯讀域；100不取代完整092。
+
+- [第75輪正式交戰命令](../goal/2026-10-04-combat-player-command-round-75.md)：接續100的候選與原池資料，補原版自動／防禦與逐分隊續接，完整092仍DRAFT。
+- [第75輪自動命令IDA匯出](../../tools/scripts/combat_player_command_ida.py)：保留原始bytes與分欄位址，未審語意unknown；一次性資料庫留workplace/ida。
+- [第75輪固定自動分支重播](../../tools/combat_player_command_oracle.sh)與[完整注入計畫](../../tools/scripts/combat_player_command_plan.py)：固定父state，按預設RND條件驗門檻，不試種子或覆寫收據。
+- [101自動命令規格](../spec/101-fleet-auto-command.md)、[完整來源](data/fleet-auto-command.json)與[凍結器](../../tools/scripts/combat_auto_receipt.py)：31組雙跑及原版預估／選擇暫存，缺beam的原版錯誤明列。
+- [自動命令研究412](../re/412-fleet-auto-command.md)、[驗證064](../playtest/064-fleet-auto-command.md)、[Game索引](data/fleet-auto-game.json)與[凍結器](../../tools/scripts/fleet_auto_game_receipt.py)：31案115筆原版預估、21案有效原池存讀及診斷身分限制；完整092仍DRAFT。

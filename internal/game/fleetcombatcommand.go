@@ -85,3 +85,80 @@ func (g *Game) commitFleetCombatCommand(own, target, weapon int) error {
 	}
 	return nil
 }
+
+// selectFleetAutoCombatCommand沿101提交自動預估及命令資料。
+// 原版沒有beam時可能沿最後候選的武器，不使用手動100的mask拒絕。
+// 完整092仍未呼叫本介面；此處不啟用061被動CPU或結算戰損。
+func (g *Game) selectFleetAutoCombatCommand(own int) (rules.FleetAutoSelection, error) {
+	var empty rules.FleetAutoSelection
+	rec, err := g.fleetCombatRecord(own)
+	if err != nil {
+		return empty, err
+	}
+	u := g.battleUnits[own]
+	cpu, passive := g.passiveComputer()
+	if u.Action != 0x7f || u.Out || passive && u.Faction == cpu {
+		return empty, fmt.Errorf("自動交戰分隊目前不能下令")
+	}
+	rawFleet := func(index int) ([]byte, error) {
+		if index < 0 || index >= len(g.slot.Fleet)/rules.FleetRecord {
+			return nil, fmt.Errorf("自動交戰艦隊原表缺失")
+		}
+		return g.slot.Fleet[index*rules.FleetRecord : (index+1)*rules.FleetRecord], nil
+	}
+	fleet, err := rawFleet(u.Fleet)
+	if err != nil {
+		return empty, err
+	}
+	candidates, err := g.fleetCombatCandidates(own)
+	if err != nil {
+		return empty, err
+	}
+	var input []rules.FleetAutoCandidate
+	var records [][]byte
+	pools := map[int]bool{}
+	for _, c := range candidates {
+		target, err := g.fleetCombatRecord(c.Target)
+		if err != nil {
+			return empty, err
+		}
+		tf, err := rawFleet(g.battleUnits[c.Target].Fleet)
+		if err != nil {
+			return empty, err
+		}
+		pool := g.battleUnitPool(g.battleUnits[c.Target])
+		if pool > 65535 || pools[pool] {
+			return empty, fmt.Errorf("自動交戰目標原池重複或超出word")
+		}
+		pools[pool] = true
+		command := rules.FleetCombatCommand{TargetWeapon: int(target[0x2e]), TargetFacing: int(tf[0x4a])}
+		for i := range command.AttackAbilities {
+			command.AttackAbilities[i], command.DefendAbilities[i] = int(fleet[0x3d+i]), int(tf[0x3d+i])
+		}
+		input = append(input, rules.FleetAutoCandidate{Target: c.Target, Unit: g.battleUnits[c.Target],
+			Mask: c.Mask, Anticipated: binary.LittleEndian.Uint16(target[0x3e:]), Command: command})
+		records = append(records, target)
+	}
+	// originalBattleAI與對戰保留原版電腦權重；單人CPU已在上方拒絕。
+	computer := !g.versus && u.Faction != g.faction
+	selected, err := rules.SelectFleetAutoCommand(u, binary.LittleEndian.Uint16(rec[0x3e:]), input,
+		g.res.ShipKinds, computer, int(fleet[0x45]), g.battleRand)
+	if err != nil {
+		return empty, err
+	}
+	rec[0x2e] = selected.Weapon
+	if selected.Target < 0 {
+		return selected, nil
+	}
+	binary.LittleEndian.PutUint16(rec[0x2c:], uint16(g.battleUnitPool(g.battleUnits[selected.Target])))
+	binary.LittleEndian.PutUint16(rec[0x3e:], selected.Anticipated)
+	for i, e := range selected.Evaluations {
+		target := records[i]
+		target[0x3c] = e.Mask
+		binary.LittleEndian.PutUint16(target[0x46:], e.Score)
+		for w, v := range e.WeaponScores {
+			binary.LittleEndian.PutUint16(target[0x48+w*2:], v)
+		}
+	}
+	return selected, nil
+}

@@ -2,6 +2,51 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-04 #48／#79自動命令與原池預估
+
+第75輪父提交529b61a5deb64e7affbb8b66f43b70b069d1e7a2，原Goal保持active。
+路由命中復古remake、規格閘門及文件職責，沿用逆向與IDA9.4技能及既有工具鏈。
+接手與收尾皆89張worklist／9張OPEN，269條核對零失效、2 manual、122一致、145舊文件。
+既有音樂、清單、零距離與061被動CPU裁決保持。
+
+自動命令1F6F:005F／061F／0714仍缺必要規則。先沿固定第63輪父state重播，
+31案各雙跑RAM、色號、色盤與PNG相同；567來源、538原指令與30項proven語意保存。
+原版凍結SHA-256 23627c23a9d2ef93991c842e00fbf43df75f00d2043c78788454e868d3a19401。
+預估不扣庫存或取傷害亂數，使用unsigned32除法，不走旗艦／噪音修正。
+按word排名及一次RND×FLEET+45/100選候選，8191／8192／16383／16384邊界已驗。
+固定seed由LCG反解預設回值，沒有試種子、重擲或改正式亂數。
+缺beam時最佳量FFFF，武器沿最後候選預估值；018B扣自身+3E而令3000變3001。
+原版真正一般池三候選中，選中mask2的102仍提交2；資料介面保持已證實錯誤，手動100拒絕保持。
+
+101先READY再實作SelectFleetAutoCommand及Game自動資料adapter，最後只限資料域CONFORMED。
+31案115筆係數／射擊量／百分比／預估／排名／排列／選擇／seed直接符合原版。
+21案真正一般池的Game提交與SaveSlot重讀通過，十二純規則拒絕、六Game拒絕不變資料或seed。
+雙人另一陣營仍用人類權重，061單人CPU拒絕，零距離沿093首點，存檔格式保持。
+完整來源581份，Game驗證索引SHA-256 9d01ad768cad907b68707882d372ccce97525c4c6e927585e1cb8bddb375ee2a。
+
+失敗與勘誤保留：包裝器首次誤放GUI容器內，HOME導向/tmp的dosgolem路徑，分類為工具路由。
+第一版凍結器把無候選的0152開場當成不可能，改以RND及庫存限定取樣相位，同輸出重核。
+純規則fixture誤拿FFFF未提交目標作原池，panic log c38a041d9ea9eb9d595f1de9c31e0a6e0c57cd7ccd288ffe79144512c11c0eac保留。
+第一版Game測試另有十案池身分不一致，log c85e862aa1c3a1d525dc2121747cc930675aa5550f252fdebd64a6546523b484保留。
+FLEET16一般池102／104／105，偵察池103；舊局部注入改103或旗艦+03，不能聲稱正式編制。
+另八案用真正一般池補證，不改Game池映射遷就診斷；原有局部證據與23案中間索引保持。
+
+最終targeted log bfc3792a2c1a18815c19eb11fad9fbf728ecbf5a70447e6030e3ecebf4559bd1。
+標準18產品套件13PASS／5無測試，Game276.697秒、gin3 194.712秒。
+標準log SHA-256 56a25203e1a7f40993fb9f25a984771f7bb4e5fc05ff3d0d042a168a615ed379。
+Issue48／79本文已更新並逐字回讀相同，保持OPEN；CONTEXT及矩陣由最新遠端快照重生。
+收尾verify log 39fe4b6c3fc20f53833822dff61ffab2ff07638b7251b13460b10bd915831f8f。
+指定Go格式、新Python語法、文件連結及411索引正對照通過。
+來源／輸出UID/GID1000，工作根無root-owned或誤建.md目錄，logh3容器清單空；未重建image。
+dosgolem專用副本版本與乾淨狀態保持，歷史收據不重生；其他專案資源不動。
+
+完整玩家命令鏈仍未達本輪計畫，092／056保持DRAFT。正式目標UI、跨艦隊命令順位、
+相位續接與093核心／099動畫尚未由Game呼叫，不能用本輪資料helper宣稱正常交戰。
+下一閘門沿玩家操作一次接完整手動命令／續接；已解自動規則不再另開RE。
+本輪提交／推送訊息為「補齊艦隊自動命令與預估資料」，精確身份依Git紀錄。
+入口：[計畫75](docs/goal/2026-10-04-combat-player-command-round-75.md)、
+[101](docs/spec/101-fleet-auto-command.md)、[研究412](docs/re/412-fleet-auto-command.md)與[064](docs/playtest/064-fleet-auto-command.md)。
+
 ## 2026-10-04 #48／#79候選與原池命令資料介面
 
 第74輪父提交dfccda34441a6271b18fd3594bfa340f177fa6ea，原Goal保持active。
