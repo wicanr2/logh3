@@ -37,3 +37,20 @@ Game提供一次性音效事件，正式app於更新後取出並播放。未開�
 Game核音效順序、首格前等待、最快速度、動畫關閉、零傷害、死亡跳過、Frame不重播與原池／seed保持。
 正常兩陣營公開輸入抽音效事件並核戰損及保存；app錄製器與真正解碼共用正式播放邊界。
 標準測試通過不代表音效人耳、正常原版整段同態、完整GUI或完整056／092完成。
+
+## 第80輪：Linux 裝置判定
+
+狀態維持READY。既有「裝置可用才啟用」涵蓋ALSA軟體播放端。
+固定PulseAudio 16.1虛擬輸出及ALSA default PCM在沒有`/dev/snd`時仍能開啟。
+未修改正式程式錯誤停用配樂及全28段音效；monitor錄2.18秒，全樣本為零。
+探針及修正前來源由[第80輪播放入口](../../tools/playback.sh)保存，
+裝置探針在`workplace/round80-device-probe/alsa-probe.json`，
+修正前monitor SHA-256為`248b04189fb4cd869b610b948ef66c2a71e21b43eb1bd7edab091c597e7a3a2a`。
+此為已證實的前端裝置誤判，沒有新增原版規則或硬體時序契約。
+
+Linux先沿用實體`/dev/snd`判定。沒有實體目錄，但已設定PulseAudio端點
+或存在標準使用者PulseAudio socket時，以非阻塞模式開啟及關閉ALSA default。
+僅成功時啟用。只有環境變數或socket存在不足以通過。
+其他平台沿用原本後端；真正無裝置或已失效端點停用並留下訊息。
+實際播放器仍由Ebitengine唯一Context建立，不用探針播放代替產品播放。
+啟動判定只做一次。虛擬輸出技術驗證不代表實體音效卡或人耳聆聽。

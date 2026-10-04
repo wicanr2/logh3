@@ -279,7 +279,8 @@ func main() {
 		lib := audio.NewLibrary(*musicDir)
 		sounds := audio.NewSoundLibrary(*musicDir)
 		var audioContext *eaudio.Context
-		if hasAudioDevice() && (lib.Have() > 0 || sounds.Have() == 28) {
+		deviceAvailable := hasAudioDevice()
+		if deviceAvailable && (lib.Have() > 0 || sounds.Have() == 28) {
 			audioContext = eaudio.NewContext(audio.SampleRate)
 		}
 		if audioContext != nil && sounds.Have() == 28 {
@@ -296,8 +297,8 @@ func main() {
 			fmt.Fprintf(os.Stderr, "音效：%d/28段或裝置不可用，未啟用；來源轉檔見規格104\n", sounds.Have())
 		}
 		switch {
-		case !hasAudioDevice():
-			fmt.Fprintln(os.Stderr, "配樂：這台機器沒有音效裝置（/dev/snd 不在），"+
+		case !deviceAvailable:
+			fmt.Fprintln(os.Stderr, "配樂：這台機器沒有可用的音效裝置，"+
 				"這一趟沒有音樂")
 		case lib.Have() == 0:
 			fmt.Fprintf(os.Stderr, "配樂：%s 裡一首都沒有，這一趟沒有音樂。"+

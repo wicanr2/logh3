@@ -558,3 +558,10 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [正常GUI交戰入口](../../tools/fleet_player_gui.sh)及[容器內Xvfb生命週期](../../tools/fleet_player_gui_xrun.sh)：沿既有映像，二倍視窗另開1600×1200顯示並有界清理，不裁掉960高度的下方。
 - [實際原生全圖核對](../../tools/scripts/fleet_player_gui_native_check.go)：逐點核所有X11像素，一倍307200、二倍1228800；不只抽每個放大區塊的首點。
 - [GUI驗證068](../playtest/068-fleet-player-gui.md)、[GUI凍結器](../../tools/scripts/fleet_player_gui_receipt.py)與[完整GUI索引](data/fleet-player-gui.json)：兩陣營、一倍／兩倍正常X11、Game計畫及六份診斷保存，與原版及人耳門檻分開。
+- [第80輪正式播放](../goal/2026-10-04-fleet-playback-round-80.md)與[GUI播放映像來源](../../tools/Dockerfile.gui-playback)：固定PulseAudio虛擬輸出，補正式後端PCM與正常GUI音效；真機／人耳另驗。
+- [正式播放驗證入口](../../tools/playback.sh)、[虛擬輸出與擷取](../../tools/scripts/playback_sink.py)及[ALSA裝置探針](../../tools/scripts/alsa_device_probe.go)：無/dev/snd時核真正default PCM能否開啟，不生成合成代用品，子程序有界清理。
+- [真實播放曲庫組合](../../tools/scripts/playback_library.py)及[monitor完整樣本核對](../../tools/scripts/playback_stats.py)：保持22首／28段來源雜湊，非靜音、峰值及NaN全樣本核對；人耳另驗。
+- [Linux實際裝置判定](../../cmd/gin3/audio_device_linux.go)及[實際ALSA測試](../../cmd/gin3/audio_device_linux_test.go)：依104補PulseAudio可用端點，其他平台沿[原本判定](../../cmd/gin3/audio_device_other.go)。
+- [正常GUI播放觀測](../../tools/scripts/fleet_playback_prepare.py)：沿第79輪真實X11，開正式音效等待，只記實際播放器生命週期及輸出連線，舊工具不改。
+- [播放來源凍結器](../../tools/scripts/fleet_playback_receipt.py)與[完整播放索引](data/fleet-playback.json)：綁固定映像、正式PCM、正常兩陣營及未解音效收尾，實體音效卡與人耳仍待驗。
+- [正式播放驗證069](../playtest/069-fleet-playback.md)：Linux裝置誤判修正、正常X11混音輸出與四次音效收尾觀測；不升格真機、聆聽或完整原版同態。

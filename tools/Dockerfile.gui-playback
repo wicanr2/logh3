@@ -1,0 +1,11 @@
+# 第80輪正式ALSA／PulseAudio播放驗證，明確延伸logh3-ebiten:2。
+# 先核父映像Id為6ccf04cf...；舊GUI2與舊收據保留。
+FROM logh3-ebiten:2
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      pulseaudio=16.1+dfsg1-2+b1 pulseaudio-utils=16.1+dfsg1-2+b1 \
+      libasound2-plugins=1.2.7.1-1 \
+ && rm -rf /var/lib/apt/lists/*
+# PulseAudio查UID，為專案1000:1000建立容器內帳號；runtime仍由包裝器指定-u。
+RUN groupadd --gid 1000 logh3sound \
+ && useradd --uid 1000 --gid 1000 --home-dir /tmp --no-create-home --shell /usr/sbin/nologin logh3sound
+ENV HOME=/tmp

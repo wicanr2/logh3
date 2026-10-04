@@ -13,7 +13,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"runtime"
 
 	eaudio "github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
@@ -24,23 +23,6 @@ import (
 // SampleRate 是輸出的取樣率。轉檔工具照這個值產 OGG，執行期就不必重取樣
 // ——重取樣要在每一個 buffer 上做，而它會把 CPU 花在聽不出差別的地方。
 const sampleRate = audio.SampleRate
-
-// hasAudioDevice 粗略回答「這台機器有沒有音效裝置」。
-//
-// ⚠ **不是潔癖，是為了不讓遊戲死掉。** Ebitengine 的音訊在初始化失敗時
-// 會把錯誤丟回 `RunGame`，整個遊戲跟著結束——而容器、CI、無頭對拍
-// 全都沒有 `/dev/snd`。訊息是 `oto: ALSA error at snd_pcm_open`，
-// 對玩家來說完全看不出「原來是沒有音效卡」。
-//
-// 它只擋得住「根本沒有裝置」這一種；裝置在但被佔用還是會走到
-// `RunGame` 的錯誤那條路，所以那邊也要有話講。
-func hasAudioDevice() bool {
-	if _, err := os.Stat("/dev/snd"); err == nil {
-		return true
-	}
-	// 非 Linux（或用別的音訊後端）就不擋——猜錯的代價是回到原本的行為。
-	return runtime.GOOS != "linux"
-}
 
 // Player 播一首、循環，換曲就把上一首停掉。
 //
