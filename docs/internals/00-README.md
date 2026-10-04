@@ -745,3 +745,8 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [計畫94](../goal/2026-10-05-battle-finish-natural-round-94.md)與[公開玩家勝負探針](../../tools/scripts/battle_finish_victory_probe.py)。
 - [正常勝負重播與收據工具](../../tools/scripts/battle_finish_victory_receipt.py)。
 - [正常勝負研究428](../re/428-battle-finish-natural.md)、[玩家驗證083](../playtest/083-battle-finish-natural.md)與[完整來源](data/battle-finish-natural.json)。
+
+## 第95輪正常結算
+
+- [計畫95](../goal/2026-10-05-battle-lifecycle-player-round-95.md)與[正常結算追蹤工具](../../tools/scripts/battle_lifecycle_player_receipt.py)。
+- [全滅與公開存讀研究429](../re/429-battle-lifecycle-player.md)、[玩家驗證084](../playtest/084-battle-lifecycle-player.md)與[完整來源](data/battle-lifecycle-player.json)。
