@@ -91,7 +91,8 @@ func (p *effectRecorder) PlayEffect(id int) error {
 	p.events = append(p.events, map[string]any{"id": id, "at_ns": p.elapsed})
 	return nil
 }
-func (p *effectRecorder) Stop() {}
+func (p *effectRecorder) Stop()      {}
+func (p *effectRecorder) Busy() bool { return false }
 
 // 正常bootstrap、公開輸入與正式app播放邊界。overlay僅提供固定seed。
 func TestNormalSoundApp(t *testing.T) {

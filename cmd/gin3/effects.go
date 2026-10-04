@@ -11,6 +11,7 @@ import (
 
 type effectPlayback interface {
 	PlayEffect(int) error
+	Busy() bool
 	Stop()
 }
 
@@ -60,6 +61,10 @@ func (p *effectPlayer) PlayEffect(id int) error {
 }
 
 func (p *effectPlayer) Stop() { p.decoder.Stop() }
+
+func (p *effectPlayer) Busy() bool {
+	return p.decoder.cur != nil && p.decoder.cur.IsPlaying()
+}
 
 func (p *effectPlayer) releaseFinished() {
 	if p.decoder.cur != nil && !p.decoder.cur.IsPlaying() {

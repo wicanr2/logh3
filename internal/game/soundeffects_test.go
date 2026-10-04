@@ -106,6 +106,61 @@ func TestFleetSoundZeroLoss(t *testing.T) {
 	}
 }
 
+func TestFleetSoundBackendCompletionWait(t *testing.T) {
+	m := fleetSceneReceipt(t)
+	g := fleetChainRAM(t, m, m.read(t, "workplace/oracle/scene48-r69-v2-laser-a/start-mem.bin"))
+	fleetSoundAssets(t, g)
+	g.display.AnimSpeed = 2
+	// 名義時長已經到，但實際後端仍有未送出的取樣。
+	g.SetSoundEffectPlaying(true)
+	g.fleetCombat = fleetCombatState{active: true, fleets: []int{12}, current: -1}
+	g.beginFleetCombatScenes()
+	s := g.fleetCombat.scene
+	if s == nil {
+		t.Fatal("缺交戰")
+	}
+	seed, ships := g.battleRand.Seed(), g.battleUnits[s.target].Ships
+	for i := 0; i < 12; i++ {
+		if len(g.DrainSoundEffects()) != 0 || s.damaged || g.battleUnits[s.target].Ships != ships || g.battleRand.Seed() != seed {
+			t.Fatal("後端未完成就開始後一音效或戰損")
+		}
+		v, err := g.fleetFrameView(s, false)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, p := range v.Pictures {
+			if len(p.Segment) > 2 && p.Segment[2] == 'A' {
+				t.Fatal("後端未完成就畫攻擊首格")
+			}
+		}
+		g.Frame()
+		g.Frame()
+		g.Tick(g.TimerTick())
+	}
+	if g.soundEffects.remaining != 0 {
+		t.Fatal("未驗到名義時間歸零")
+	}
+	g.SetSoundEffectPlaying(false)
+	if seed != g.battleRand.Seed() || ships != g.battleUnits[s.target].Ships {
+		t.Fatal("完成回報本身改變亂數或戰損")
+	}
+	var ids []int
+	for i := 0; i < 4 && len(ids) == 0; i++ {
+		g.Tick(g.TimerTick())
+		ids = g.DrainSoundEffects()
+	}
+	if len(ids) != 1 || ids[0] != 8 {
+		t.Fatal("後端完成未續接原音效", ids)
+	}
+	if err := g.EnableSoundEffects(false); err != nil {
+		t.Fatal(err)
+	}
+	g.SetSoundEffectPlaying(true)
+	if g.soundEffects.playing {
+		t.Fatal("停用後仍保留等待")
+	}
+}
+
 func TestFleetSoundNative(t *testing.T) {
 	m := fleetSceneReceipt(t)
 	var native struct {

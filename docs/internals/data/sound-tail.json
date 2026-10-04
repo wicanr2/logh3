@@ -1,0 +1,4522 @@
+{
+  "date": "2026-10-04",
+  "parent_git_head": "1993f1a04b43dab7e9b5372dc6175d88d62dbab6",
+  "worktree_modified": true,
+  "original_executor_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "original_executor_modified": false,
+  "original_bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "classification": "正常remake真實X11／正式ALSA音效；非新增原版same-state",
+  "images": [
+    {
+      "Id": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+      "RepoTags": [
+        "logh3-ebiten:2"
+      ],
+      "RepoDigests": [
+        "logh3-ebiten@sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8"
+      ],
+      "Comment": "buildkit.dockerfile.v0",
+      "Created": "2026-09-13T22:15:31.763084734+08:00",
+      "Config": {
+        "Env": [
+          "PATH=/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "GOLANG_VERSION=1.24.13",
+          "GOTOOLCHAIN=local",
+          "GOPATH=/go",
+          "HOME=/tmp",
+          "LIBGL_ALWAYS_SOFTWARE=1"
+        ],
+        "Cmd": [
+          "bash"
+        ],
+        "WorkingDir": "/go"
+      },
+      "Architecture": "amd64",
+      "Os": "linux",
+      "Size": 399998588,
+      "RootFS": {
+        "Type": "layers",
+        "Layers": [
+          "sha256:51e78f04fd47b324ef2558bbed0cb5bc0d6d8e5ca3c56d5b98b91866a88f37bb",
+          "sha256:68aa828f1d1bc6059efee0183d54423407cdfa1ab54711b2f8e26065a05de50d",
+          "sha256:ccd5d83d9cc85a5f455c153fee7689dc40cea2bb43a6629a2ebf352b7784e414",
+          "sha256:71e438eee5b3e157dd13e0cacdc08ca37e34a7fa16303e82387374222457c83c",
+          "sha256:8eef831b6911e7f0dda82d139d3236c05c39a3f3675b2254a2a837d0bcaf8b68",
+          "sha256:5a27ad1a3c8b7a9a0510306a248b0fdd66b88ca298bf7b7f840d343af2b7405b",
+          "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+          "sha256:7880fc4393087595eec04ca47f70ac659eaf34ff53f43d2179f7f74881b67d93",
+          "sha256:7c71b7653510a7f0f79fbcbda9644a19421f122f2b9bc9e88f8c961a6acff952",
+          "sha256:dc8318e65a2643c06ad16b08a935e1f245d22a80ba89e2640c69bbd1c1474bbe",
+          "sha256:fd16ed625e380b21588ba01f81d53d83139b549a9d5d9d3145db4538b2572aaf"
+        ]
+      },
+      "Metadata": {
+        "LastTagTime": "2026-09-13T14:15:46.384601209Z"
+      },
+      "Descriptor": {
+        "mediaType": "application/vnd.oci.image.index.v1+json",
+        "digest": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+        "size": 856
+      }
+    },
+    {
+      "Id": "sha256:ecb3612ac7c18d0cd225fd55b7b186052a8bf0029e82aa786a23f4b88f196fa8",
+      "RepoTags": [
+        "logh3-ebiten:3"
+      ],
+      "RepoDigests": [
+        "logh3-ebiten@sha256:ecb3612ac7c18d0cd225fd55b7b186052a8bf0029e82aa786a23f4b88f196fa8"
+      ],
+      "Comment": "buildkit.dockerfile.v0",
+      "Created": "2026-10-04T16:37:38.015031279+08:00",
+      "Config": {
+        "Env": [
+          "PATH=/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "GOLANG_VERSION=1.24.13",
+          "GOTOOLCHAIN=local",
+          "GOPATH=/go",
+          "HOME=/tmp",
+          "LIBGL_ALWAYS_SOFTWARE=1"
+        ],
+        "Cmd": [
+          "bash"
+        ],
+        "WorkingDir": "/go"
+      },
+      "Architecture": "amd64",
+      "Os": "linux",
+      "Size": 476491727,
+      "RootFS": {
+        "Type": "layers",
+        "Layers": [
+          "sha256:51e78f04fd47b324ef2558bbed0cb5bc0d6d8e5ca3c56d5b98b91866a88f37bb",
+          "sha256:68aa828f1d1bc6059efee0183d54423407cdfa1ab54711b2f8e26065a05de50d",
+          "sha256:ccd5d83d9cc85a5f455c153fee7689dc40cea2bb43a6629a2ebf352b7784e414",
+          "sha256:71e438eee5b3e157dd13e0cacdc08ca37e34a7fa16303e82387374222457c83c",
+          "sha256:8eef831b6911e7f0dda82d139d3236c05c39a3f3675b2254a2a837d0bcaf8b68",
+          "sha256:5a27ad1a3c8b7a9a0510306a248b0fdd66b88ca298bf7b7f840d343af2b7405b",
+          "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+          "sha256:7880fc4393087595eec04ca47f70ac659eaf34ff53f43d2179f7f74881b67d93",
+          "sha256:7c71b7653510a7f0f79fbcbda9644a19421f122f2b9bc9e88f8c961a6acff952",
+          "sha256:dc8318e65a2643c06ad16b08a935e1f245d22a80ba89e2640c69bbd1c1474bbe",
+          "sha256:fd16ed625e380b21588ba01f81d53d83139b549a9d5d9d3145db4538b2572aaf",
+          "sha256:1b0f1351d253751eba2bb815bf385f55922338ec09b39f947d9e75b8d926441c",
+          "sha256:ffe09d0acd9758c40267b807be85e54a1b95faa1de764fa507e8471009674762"
+        ]
+      },
+      "Metadata": {
+        "LastTagTime": "2026-10-04T08:37:48.890211489Z"
+      },
+      "Descriptor": {
+        "mediaType": "application/vnd.oci.image.index.v1+json",
+        "digest": "sha256:ecb3612ac7c18d0cd225fd55b7b186052a8bf0029e82aa786a23f4b88f196fa8",
+        "size": 856
+      }
+    }
+  ],
+  "full28": {
+    "monitor_sha256": "35a4872555ea741b73ef7af93791ea995f8c8805c312df4314ae2e7da4e53121",
+    "classification": "全段逐位元組門檻不放寬；插入靜音另列，成因待驗",
+    "complete_exact": 26,
+    "complete_source_retained": 28,
+    "calls": 28,
+    "cases": [
+      {
+        "id": 0,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 1,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 2,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 3,
+        "complete_exact": false,
+        "complete_source_retained": true,
+        "inserted_silent_frames": 204,
+        "retained_tail_frames": 11150,
+        "source_change_applied": false
+      },
+      {
+        "id": 4,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 5,
+        "complete_exact": false,
+        "complete_source_retained": true,
+        "inserted_silent_frames": 326,
+        "retained_tail_frames": 36147,
+        "source_change_applied": false
+      },
+      {
+        "id": 6,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 7,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 8,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 9,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 10,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 11,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 12,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 13,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 14,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 15,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 16,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 17,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 18,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 19,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 20,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 21,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 22,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 23,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 24,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 25,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 26,
+        "complete_exact": true,
+        "complete_source_retained": true
+      },
+      {
+        "id": 27,
+        "complete_exact": true,
+        "complete_source_retained": true
+      }
+    ]
+  },
+  "fixed_replacement_probe": {
+    "classification": "正式解碼signed16→精確float32／ALSA monitor全段逐位元組；非原版硬體波形或人耳",
+    "monitor_sha256": "60afdc20486f65cdd1d26883fe85fee205825d109aa500f72eb954c2fd6ba861",
+    "sample_rate": 44100,
+    "channels": 2,
+    "calls": 2,
+    "complete_exact": 2,
+    "cases": [
+      {
+        "id": 19,
+        "source": "workplace/round81-pcm-complete-v1/source-19.s16le",
+        "source_s16le_sha256": "26993997191644111b25913e8ee590826884254e2ad32a8fa7b462bb5e7007bd",
+        "marker_found": true,
+        "source_marker_offset_bytes": 108544,
+        "monitor_begin_frame": 283122,
+        "expected_frames": 41961,
+        "exact_prefix_frames": 41961,
+        "complete_exact": true,
+        "first_different_frame": null,
+        "remaining_source_frames": 0,
+        "nonzero_bytes_in_remaining_source": 0,
+        "source_duration_seconds": 0.9514965986394558
+      },
+      {
+        "id": 4,
+        "source": "workplace/round81-pcm-complete-v1/source-04.s16le",
+        "source_s16le_sha256": "92617173cc1c28208574e5f3c4b8796eea5af30e115daa5cdc03bbb177454fb5",
+        "marker_found": true,
+        "source_marker_offset_bytes": 47104,
+        "monitor_begin_frame": 330862,
+        "expected_frames": 49971,
+        "exact_prefix_frames": 49971,
+        "complete_exact": true,
+        "first_different_frame": null,
+        "remaining_source_frames": 0,
+        "nonzero_bytes_in_remaining_source": 0,
+        "source_duration_seconds": 1.1331292517006804
+      }
+    ]
+  },
+  "cases": [
+    {
+      "phase": "before",
+      "faction": 0,
+      "batch": "workplace/round81-before-gui-greedy-0",
+      "sink": {
+        "classification": "PulseAudio clocked virtual sink，正式ALSA輸出；非實體音效卡／人耳",
+        "command": [
+          "python3",
+          "workplace/round80-driver-t81b4.py",
+          "--plan",
+          "workplace/round81-before-plan-0/plan.json",
+          "--out",
+          "/src/workplace/round81-before-gui-greedy-0/gui",
+          "--scale",
+          "1"
+        ],
+        "exit_code": 0,
+        "server": "unix:/tmp/logh3-playback-pulse/native",
+        "alsa_config": "</usr/share/alsa/alsa.conf>\npcm.!default { type pulse server \"unix:/tmp/logh3-playback-pulse/native\" }\n",
+        "sample_rate": 44100,
+        "channels": 2,
+        "format": "float32le",
+        "physical_dev_snd_present": false,
+        "elapsed_seconds": 68.95959352189675,
+        "pulse_version": "pulseaudio 16.1"
+      },
+      "actions": 95,
+      "additional_camera_gestures": 133,
+      "sound_ids": [
+        19,
+        4,
+        8,
+        3,
+        21,
+        6,
+        21,
+        6,
+        8,
+        3,
+        21,
+        6,
+        8,
+        6
+      ],
+      "pcm": {
+        "classification": "正式解碼signed16→精確float32／ALSA monitor全段逐位元組；非原版硬體波形或人耳",
+        "monitor_sha256": "877333279429134975cadf711f755ecc2f1c66f208e5a16baddb7212efd367f3",
+        "sample_rate": 44100,
+        "channels": 2,
+        "calls": 14,
+        "complete_exact": 12,
+        "cases": [
+          {
+            "id": 19,
+            "source": "workplace/round81-pcm-complete-v1/source-19.s16le",
+            "source_s16le_sha256": "26993997191644111b25913e8ee590826884254e2ad32a8fa7b462bb5e7007bd",
+            "marker_found": true,
+            "source_marker_offset_bytes": 108544,
+            "monitor_begin_frame": 1916830,
+            "expected_frames": 41961,
+            "exact_prefix_frames": 41961,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9514965986394558
+          },
+          {
+            "id": 4,
+            "source": "workplace/round81-pcm-complete-v1/source-04.s16le",
+            "source_s16le_sha256": "92617173cc1c28208574e5f3c4b8796eea5af30e115daa5cdc03bbb177454fb5",
+            "marker_found": true,
+            "source_marker_offset_bytes": 47104,
+            "monitor_begin_frame": 1960478,
+            "expected_frames": 49971,
+            "exact_prefix_frames": 49971,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.1331292517006804
+          },
+          {
+            "id": 8,
+            "source": "workplace/round81-pcm-complete-v1/source-08.s16le",
+            "source_s16le_sha256": "d992e150ead9190ea84a935e1fbf7d008a67cb2dbde1480102c0ba429681c997",
+            "marker_found": true,
+            "source_marker_offset_bytes": 55296,
+            "monitor_begin_frame": 2075736,
+            "expected_frames": 42576,
+            "exact_prefix_frames": 42576,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9654421768707483
+          },
+          {
+            "id": 3,
+            "source": "workplace/round81-pcm-complete-v1/source-03.s16le",
+            "source_s16le_sha256": "38545fde60242bae1a598c5ab975b629a4c72383207ac0b54663d64fa0af64ad",
+            "marker_found": true,
+            "source_marker_offset_bytes": 8192,
+            "monitor_begin_frame": 2120066,
+            "expected_frames": 47296,
+            "exact_prefix_frames": 47296,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.0724716553287983
+          },
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 2229868,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37510,
+            "complete_exact": false,
+            "first_different_frame": 37510,
+            "remaining_source_frames": 81,
+            "nonzero_bytes_in_remaining_source": 324,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 6,
+            "source": "workplace/round81-pcm-complete-v1/source-06.s16le",
+            "source_s16le_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+            "marker_found": true,
+            "source_marker_offset_bytes": 18432,
+            "monitor_begin_frame": 2268060,
+            "expected_frames": 54059,
+            "exact_prefix_frames": 54059,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.225827664399093
+          },
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 2381272,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37591,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 6,
+            "source": "workplace/round81-pcm-complete-v1/source-06.s16le",
+            "source_s16le_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+            "marker_found": true,
+            "source_marker_offset_bytes": 18432,
+            "monitor_begin_frame": 2420146,
+            "expected_frames": 54059,
+            "exact_prefix_frames": 54059,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.225827664399093
+          },
+          {
+            "id": 8,
+            "source": "workplace/round81-pcm-complete-v1/source-08.s16le",
+            "source_s16le_sha256": "d992e150ead9190ea84a935e1fbf7d008a67cb2dbde1480102c0ba429681c997",
+            "marker_found": true,
+            "source_marker_offset_bytes": 55296,
+            "monitor_begin_frame": 2532676,
+            "expected_frames": 42576,
+            "exact_prefix_frames": 42576,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9654421768707483
+          },
+          {
+            "id": 3,
+            "source": "workplace/round81-pcm-complete-v1/source-03.s16le",
+            "source_s16le_sha256": "38545fde60242bae1a598c5ab975b629a4c72383207ac0b54663d64fa0af64ad",
+            "marker_found": true,
+            "source_marker_offset_bytes": 8192,
+            "monitor_begin_frame": 2577006,
+            "expected_frames": 47296,
+            "exact_prefix_frames": 47296,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.0724716553287983
+          },
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 2690218,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37591,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 6,
+            "source": "workplace/round81-pcm-complete-v1/source-06.s16le",
+            "source_s16le_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+            "marker_found": true,
+            "source_marker_offset_bytes": 18432,
+            "monitor_begin_frame": 2736594,
+            "expected_frames": 54059,
+            "exact_prefix_frames": 54059,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.225827664399093
+          },
+          {
+            "id": 8,
+            "source": "workplace/round81-pcm-complete-v1/source-08.s16le",
+            "source_s16le_sha256": "d992e150ead9190ea84a935e1fbf7d008a67cb2dbde1480102c0ba429681c997",
+            "marker_found": true,
+            "source_marker_offset_bytes": 55296,
+            "monitor_begin_frame": 2857990,
+            "expected_frames": 42576,
+            "exact_prefix_frames": 41602,
+            "complete_exact": false,
+            "first_different_frame": 41602,
+            "remaining_source_frames": 974,
+            "nonzero_bytes_in_remaining_source": 3896,
+            "source_duration_seconds": 0.9654421768707483
+          },
+          {
+            "id": 6,
+            "source": "workplace/round81-pcm-complete-v1/source-06.s16le",
+            "source_s16le_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+            "marker_found": true,
+            "source_marker_offset_bytes": 18432,
+            "monitor_begin_frame": 2900274,
+            "expected_frames": 54059,
+            "exact_prefix_frames": 54059,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.225827664399093
+          }
+        ]
+      },
+      "gaps": {
+        "monitor_sha256": "877333279429134975cadf711f755ecc2f1c66f208e5a16baddb7212efd367f3",
+        "classification": "全段逐位元組門檻不放寬；插入靜音另列，成因待驗",
+        "complete_exact": 12,
+        "complete_source_retained": 12,
+        "calls": 14,
+        "cases": [
+          {
+            "id": 19,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 4,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 8,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 3,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 21,
+            "complete_exact": false,
+            "complete_source_retained": false,
+            "inserted_silent_frames": null,
+            "retained_tail_frames": null,
+            "source_change_applied": false
+          },
+          {
+            "id": 6,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 21,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 6,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 8,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 3,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 21,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 6,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 8,
+            "complete_exact": false,
+            "complete_source_retained": false,
+            "inserted_silent_frames": null,
+            "retained_tail_frames": null,
+            "source_change_applied": false
+          },
+          {
+            "id": 6,
+            "complete_exact": true,
+            "complete_source_retained": true
+          }
+        ]
+      },
+      "stops": [
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 335688
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 951496598,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108002103527570
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 399768
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1133129251,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108003252952071
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 340608
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 965442176,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108005714547111
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 378368
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1072471655,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108006823546076
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 648,
+            "playing": true,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": true,
+          "position_ns": 851126135,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108009069452365
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 432472
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1225827664,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108010338781511
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108012511371636
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 432472
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1225827664,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108013760685619
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 340608
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 965442176,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108016074002678
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 378368
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1072471655,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108017194387356
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108019544017266
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 432472
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1225827664,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108021005096996
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 7792,
+            "playing": true,
+            "sample_bytes": 8,
+            "stream_bytes": 340608
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": true,
+          "position_ns": 944468144,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108023407799802
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 432472
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1225827664,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108024680046673
+        }
+      ],
+      "monitor": {
+        "classification": "正式ALSA經PulseAudio虛擬輸出的技術樣本，非真人聆聽",
+        "bytes": 24295408,
+        "sha256": "877333279429134975cadf711f755ecc2f1c66f208e5a16baddb7212efd367f3",
+        "samples": 6073852,
+        "sample_rate": 44100,
+        "channels": 2,
+        "duration_seconds": 68.86453514739229,
+        "nonzero_samples": 1311183,
+        "peak": 0.299346923828125,
+        "rms": 0.021708590828221602,
+        "samples_at_or_above_one": 0,
+        "first_nonzero_seconds": 1.011859410430839,
+        "last_nonzero_seconds": 66.99166666666666
+      },
+      "native_zero_difference_images": 3,
+      "six_saves_equal": true
+    },
+    {
+      "phase": "before",
+      "faction": 1,
+      "batch": "workplace/round81-before-gui-greedy-1",
+      "sink": {
+        "classification": "PulseAudio clocked virtual sink，正式ALSA輸出；非實體音效卡／人耳",
+        "command": [
+          "python3",
+          "workplace/round80-driver-t81b4.py",
+          "--plan",
+          "workplace/round81-before-plan-1/plan.json",
+          "--out",
+          "/src/workplace/round81-before-gui-greedy-1/gui",
+          "--scale",
+          "1"
+        ],
+        "exit_code": 0,
+        "server": "unix:/tmp/logh3-playback-pulse/native",
+        "alsa_config": "</usr/share/alsa/alsa.conf>\npcm.!default { type pulse server \"unix:/tmp/logh3-playback-pulse/native\" }\n",
+        "sample_rate": 44100,
+        "channels": 2,
+        "format": "float32le",
+        "physical_dev_snd_present": false,
+        "elapsed_seconds": 80.87289742799476,
+        "pulse_version": "pulseaudio 16.1"
+      },
+      "actions": 73,
+      "additional_camera_gestures": 90,
+      "sound_ids": [
+        21,
+        6,
+        21,
+        2,
+        19,
+        5,
+        21,
+        2,
+        23,
+        3
+      ],
+      "pcm": {
+        "classification": "正式解碼signed16→精確float32／ALSA monitor全段逐位元組；非原版硬體波形或人耳",
+        "monitor_sha256": "6bea8951eb814dc487b15db0f3e65a839c8772bc437010a55d09651468221747",
+        "sample_rate": 44100,
+        "channels": 2,
+        "calls": 10,
+        "complete_exact": 9,
+        "cases": [
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 2571033,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37591,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 6,
+            "source": "workplace/round81-pcm-complete-v1/source-06.s16le",
+            "source_s16le_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+            "marker_found": true,
+            "source_marker_offset_bytes": 18432,
+            "monitor_begin_frame": 2618773,
+            "expected_frames": 54059,
+            "exact_prefix_frames": 54059,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.225827664399093
+          },
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 2746989,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 9548,
+            "complete_exact": false,
+            "first_different_frame": 9548,
+            "remaining_source_frames": 28043,
+            "nonzero_bytes_in_remaining_source": 138370,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 2,
+            "source": "workplace/round81-pcm-complete-v1/source-02.s16le",
+            "source_s16le_sha256": "bdd71e43f5da94b7ec8b06ce8ba196c978cd8a5b2d066518463c25ca1b4cbdc2",
+            "marker_found": true,
+            "source_marker_offset_bytes": 14336,
+            "monitor_begin_frame": 2801853,
+            "expected_frames": 50812,
+            "exact_prefix_frames": 50812,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.1521995464852608
+          },
+          {
+            "id": 19,
+            "source": "workplace/round81-pcm-complete-v1/source-19.s16le",
+            "source_s16le_sha256": "26993997191644111b25913e8ee590826884254e2ad32a8fa7b462bb5e7007bd",
+            "marker_found": true,
+            "source_marker_offset_bytes": 108544,
+            "monitor_begin_frame": 3012763,
+            "expected_frames": 41961,
+            "exact_prefix_frames": 41961,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9514965986394558
+          },
+          {
+            "id": 5,
+            "source": "workplace/round81-pcm-complete-v1/source-05.s16le",
+            "source_s16le_sha256": "85554a4081050dde09f31bf79b4d1a17926c6f6e7b1eb6edeea17737575e00ba",
+            "marker_found": true,
+            "source_marker_offset_bytes": 24576,
+            "monitor_begin_frame": 3076189,
+            "expected_frames": 48423,
+            "exact_prefix_frames": 48423,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.0980272108843538
+          },
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 3208497,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37591,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 2,
+            "source": "workplace/round81-pcm-complete-v1/source-02.s16le",
+            "source_s16le_sha256": "bdd71e43f5da94b7ec8b06ce8ba196c978cd8a5b2d066518463c25ca1b4cbdc2",
+            "marker_found": true,
+            "source_marker_offset_bytes": 14336,
+            "monitor_begin_frame": 3250781,
+            "expected_frames": 50812,
+            "exact_prefix_frames": 50812,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.1521995464852608
+          },
+          {
+            "id": 23,
+            "source": "workplace/round81-pcm-complete-v1/source-23.s16le",
+            "source_s16le_sha256": "566b547bcfd7090ebe923b87da35349cc00bfbb1da7dc78e3df8e59f78a63de3",
+            "marker_found": true,
+            "source_marker_offset_bytes": 75776,
+            "monitor_begin_frame": 3369449,
+            "expected_frames": 42473,
+            "exact_prefix_frames": 42473,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9631065759637188
+          },
+          {
+            "id": 3,
+            "source": "workplace/round81-pcm-complete-v1/source-03.s16le",
+            "source_s16le_sha256": "38545fde60242bae1a598c5ab975b629a4c72383207ac0b54663d64fa0af64ad",
+            "marker_found": true,
+            "source_marker_offset_bytes": 8192,
+            "monitor_begin_frame": 3417189,
+            "expected_frames": 47296,
+            "exact_prefix_frames": 47296,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.0724716553287983
+          }
+        ]
+      },
+      "gaps": {
+        "monitor_sha256": "6bea8951eb814dc487b15db0f3e65a839c8772bc437010a55d09651468221747",
+        "classification": "全段逐位元組門檻不放寬；插入靜音另列，成因待驗",
+        "complete_exact": 9,
+        "complete_source_retained": 10,
+        "calls": 10,
+        "cases": [
+          {
+            "id": 21,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 6,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 21,
+            "complete_exact": false,
+            "complete_source_retained": true,
+            "inserted_silent_frames": 304,
+            "retained_tail_frames": 28043,
+            "source_change_applied": false
+          },
+          {
+            "id": 2,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 19,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 5,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 21,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 2,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 23,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 3,
+            "complete_exact": true,
+            "complete_source_retained": true
+          }
+        ]
+      },
+      "stops": [
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108127658986693
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 432472
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1225827664,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108129101462027
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108131671185336
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 406496
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1152199546,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108133209993072
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 335688
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 951496598,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108137772568640
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 387384
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1098027210,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108139373571958
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108142114175539
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 406496
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1152199546,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108143355682505
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 339784
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 963106575,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108145894800000
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 378368
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1072471655,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791108147069572471
+        }
+      ],
+      "monitor": {
+        "classification": "正式ALSA經PulseAudio虛擬輸出的技術樣本，非真人聆聽",
+        "bytes": 28499672,
+        "sha256": "6bea8951eb814dc487b15db0f3e65a839c8772bc437010a55d09651468221747",
+        "samples": 7124918,
+        "sample_rate": 44100,
+        "channels": 2,
+        "duration_seconds": 80.78138321995465,
+        "nonzero_samples": 991638,
+        "peak": 0.314666748046875,
+        "rms": 0.019654609774217017,
+        "samples_at_or_above_one": 0,
+        "first_nonzero_seconds": 2.1973242630385488,
+        "last_nonzero_seconds": 78.55973922902494
+      },
+      "native_zero_difference_images": 3,
+      "six_saves_equal": true
+    },
+    {
+      "phase": "after",
+      "faction": 0,
+      "batch": "workplace/round81-after-gui-greedy-0",
+      "sink": {
+        "classification": "PulseAudio clocked virtual sink，正式ALSA輸出；非實體音效卡／人耳",
+        "command": [
+          "python3",
+          "workplace/round80-driver-t81after.py",
+          "--plan",
+          "workplace/round81-before-plan-0/plan.json",
+          "--out",
+          "/src/workplace/round81-after-gui-greedy-0/gui",
+          "--scale",
+          "1"
+        ],
+        "exit_code": 0,
+        "server": "unix:/tmp/logh3-playback-pulse/native",
+        "alsa_config": "</usr/share/alsa/alsa.conf>\npcm.!default { type pulse server \"unix:/tmp/logh3-playback-pulse/native\" }\n",
+        "sample_rate": 44100,
+        "channels": 2,
+        "format": "float32le",
+        "physical_dev_snd_present": false,
+        "elapsed_seconds": 69.59555975208059,
+        "pulse_version": "pulseaudio 16.1"
+      },
+      "actions": 95,
+      "additional_camera_gestures": 85,
+      "sound_ids": [
+        19,
+        4,
+        8,
+        3,
+        21,
+        6,
+        21,
+        6,
+        8,
+        3,
+        21,
+        6,
+        8,
+        6
+      ],
+      "pcm": {
+        "classification": "正式解碼signed16→精確float32／ALSA monitor全段逐位元組；非原版硬體波形或人耳",
+        "monitor_sha256": "ff6034a2587aad387b2d01c0229ab97dd40e7972a0a6f98a160bf3ca26e104f6",
+        "sample_rate": 44100,
+        "channels": 2,
+        "calls": 14,
+        "complete_exact": 14,
+        "cases": [
+          {
+            "id": 19,
+            "source": "workplace/round81-pcm-complete-v1/source-19.s16le",
+            "source_s16le_sha256": "26993997191644111b25913e8ee590826884254e2ad32a8fa7b462bb5e7007bd",
+            "marker_found": true,
+            "source_marker_offset_bytes": 108544,
+            "monitor_begin_frame": 1981919,
+            "expected_frames": 41961,
+            "exact_prefix_frames": 41961,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9514965986394558
+          },
+          {
+            "id": 4,
+            "source": "workplace/round81-pcm-complete-v1/source-04.s16le",
+            "source_s16le_sha256": "92617173cc1c28208574e5f3c4b8796eea5af30e115daa5cdc03bbb177454fb5",
+            "marker_found": true,
+            "source_marker_offset_bytes": 47104,
+            "monitor_begin_frame": 2024885,
+            "expected_frames": 49971,
+            "exact_prefix_frames": 49971,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.1331292517006804
+          },
+          {
+            "id": 8,
+            "source": "workplace/round81-pcm-complete-v1/source-08.s16le",
+            "source_s16le_sha256": "d992e150ead9190ea84a935e1fbf7d008a67cb2dbde1480102c0ba429681c997",
+            "marker_found": true,
+            "source_marker_offset_bytes": 55296,
+            "monitor_begin_frame": 2140143,
+            "expected_frames": 42576,
+            "exact_prefix_frames": 42576,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9654421768707483
+          },
+          {
+            "id": 3,
+            "source": "workplace/round81-pcm-complete-v1/source-03.s16le",
+            "source_s16le_sha256": "38545fde60242bae1a598c5ab975b629a4c72383207ac0b54663d64fa0af64ad",
+            "marker_found": true,
+            "source_marker_offset_bytes": 8192,
+            "monitor_begin_frame": 2183791,
+            "expected_frames": 47296,
+            "exact_prefix_frames": 47296,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.0724716553287983
+          },
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 2294275,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37591,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 6,
+            "source": "workplace/round81-pcm-complete-v1/source-06.s16le",
+            "source_s16le_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+            "marker_found": true,
+            "source_marker_offset_bytes": 18432,
+            "monitor_begin_frame": 2333149,
+            "expected_frames": 54059,
+            "exact_prefix_frames": 54059,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.225827664399093
+          },
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 2442951,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37591,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 6,
+            "source": "workplace/round81-pcm-complete-v1/source-06.s16le",
+            "source_s16le_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+            "marker_found": true,
+            "source_marker_offset_bytes": 18432,
+            "monitor_begin_frame": 2481143,
+            "expected_frames": 54059,
+            "exact_prefix_frames": 54059,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.225827664399093
+          },
+          {
+            "id": 8,
+            "source": "workplace/round81-pcm-complete-v1/source-08.s16le",
+            "source_s16le_sha256": "d992e150ead9190ea84a935e1fbf7d008a67cb2dbde1480102c0ba429681c997",
+            "marker_found": true,
+            "source_marker_offset_bytes": 55296,
+            "monitor_begin_frame": 2592309,
+            "expected_frames": 42576,
+            "exact_prefix_frames": 42576,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9654421768707483
+          },
+          {
+            "id": 3,
+            "source": "workplace/round81-pcm-complete-v1/source-03.s16le",
+            "source_s16le_sha256": "38545fde60242bae1a598c5ab975b629a4c72383207ac0b54663d64fa0af64ad",
+            "marker_found": true,
+            "source_marker_offset_bytes": 8192,
+            "monitor_begin_frame": 2635957,
+            "expected_frames": 47296,
+            "exact_prefix_frames": 47296,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.0724716553287983
+          },
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 2746441,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37591,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 6,
+            "source": "workplace/round81-pcm-complete-v1/source-06.s16le",
+            "source_s16le_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+            "marker_found": true,
+            "source_marker_offset_bytes": 18432,
+            "monitor_begin_frame": 2785315,
+            "expected_frames": 54059,
+            "exact_prefix_frames": 54059,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.225827664399093
+          },
+          {
+            "id": 8,
+            "source": "workplace/round81-pcm-complete-v1/source-08.s16le",
+            "source_s16le_sha256": "d992e150ead9190ea84a935e1fbf7d008a67cb2dbde1480102c0ba429681c997",
+            "marker_found": true,
+            "source_marker_offset_bytes": 55296,
+            "monitor_begin_frame": 2895799,
+            "expected_frames": 42576,
+            "exact_prefix_frames": 42576,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9654421768707483
+          },
+          {
+            "id": 6,
+            "source": "workplace/round81-pcm-complete-v1/source-06.s16le",
+            "source_s16le_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+            "marker_found": true,
+            "source_marker_offset_bytes": 18432,
+            "monitor_begin_frame": 2939447,
+            "expected_frames": 54059,
+            "exact_prefix_frames": 54059,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.225827664399093
+          }
+        ]
+      },
+      "gaps": {
+        "monitor_sha256": "ff6034a2587aad387b2d01c0229ab97dd40e7972a0a6f98a160bf3ca26e104f6",
+        "classification": "全段逐位元組門檻不放寬；插入靜音另列，成因待驗",
+        "complete_exact": 14,
+        "complete_source_retained": 14,
+        "calls": 14,
+        "cases": [
+          {
+            "id": 19,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 4,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 8,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 3,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 21,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 6,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 21,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 6,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 8,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 3,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 21,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 6,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 8,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 6,
+            "complete_exact": true,
+            "complete_source_retained": true
+          }
+        ]
+      },
+      "stops": [
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 335688
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 951496598,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109056521740371
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 399768
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1133129251,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109057681350074
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 340608
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 965442176,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109060126734618
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 378368
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1072471655,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109061219350761
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109063511004113
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 432472
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1225827664,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109064755240074
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109066873260661
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 432472
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1225827664,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109068110064948
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 340608
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 965442176,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109070375923993
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 378368
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1072471655,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109071468574326
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109073765430633
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 432472
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1225827664,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109075003678378
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 340608
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 965442176,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109077257101919
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 432472
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1225827664,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109078514571689
+        }
+      ],
+      "monitor": {
+        "classification": "正式ALSA經PulseAudio虛擬輸出的技術樣本，非真人聆聽",
+        "bytes": 24506680,
+        "sha256": "ff6034a2587aad387b2d01c0229ab97dd40e7972a0a6f98a160bf3ca26e104f6",
+        "samples": 6126670,
+        "sample_rate": 44100,
+        "channels": 2,
+        "duration_seconds": 69.46337868480725,
+        "nonzero_samples": 1344340,
+        "peak": 0.299346923828125,
+        "rms": 0.022242875365014635,
+        "samples_at_or_above_one": 0,
+        "first_nonzero_seconds": 1.731859410430839,
+        "last_nonzero_seconds": 67.8799433106576
+      },
+      "native_zero_difference_images": 3,
+      "six_saves_equal": true
+    },
+    {
+      "phase": "after",
+      "faction": 1,
+      "batch": "workplace/round81-after-gui-greedy-1",
+      "sink": {
+        "classification": "PulseAudio clocked virtual sink，正式ALSA輸出；非實體音效卡／人耳",
+        "command": [
+          "python3",
+          "workplace/round80-driver-t81after.py",
+          "--plan",
+          "workplace/round81-before-plan-1/plan.json",
+          "--out",
+          "/src/workplace/round81-after-gui-greedy-1/gui",
+          "--scale",
+          "1"
+        ],
+        "exit_code": 0,
+        "server": "unix:/tmp/logh3-playback-pulse/native",
+        "alsa_config": "</usr/share/alsa/alsa.conf>\npcm.!default { type pulse server \"unix:/tmp/logh3-playback-pulse/native\" }\n",
+        "sample_rate": 44100,
+        "channels": 2,
+        "format": "float32le",
+        "physical_dev_snd_present": false,
+        "elapsed_seconds": 51.028570528840646,
+        "pulse_version": "pulseaudio 16.1"
+      },
+      "actions": 73,
+      "additional_camera_gestures": 77,
+      "sound_ids": [
+        21,
+        6,
+        21,
+        2,
+        19,
+        5,
+        21,
+        2,
+        23,
+        3
+      ],
+      "pcm": {
+        "classification": "正式解碼signed16→精確float32／ALSA monitor全段逐位元組；非原版硬體波形或人耳",
+        "monitor_sha256": "77f936096d1eeb2aa7003746daf26614c7c44977cb2ae3bfd29b55d5f6d8488c",
+        "sample_rate": 44100,
+        "channels": 2,
+        "calls": 10,
+        "complete_exact": 10,
+        "cases": [
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 1477633,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37591,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 6,
+            "source": "workplace/round81-pcm-complete-v1/source-06.s16le",
+            "source_s16le_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+            "marker_found": true,
+            "source_marker_offset_bytes": 18432,
+            "monitor_begin_frame": 1516507,
+            "expected_frames": 54059,
+            "exact_prefix_frames": 54059,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.225827664399093
+          },
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 1626309,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37591,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 2,
+            "source": "workplace/round81-pcm-complete-v1/source-02.s16le",
+            "source_s16le_sha256": "bdd71e43f5da94b7ec8b06ce8ba196c978cd8a5b2d066518463c25ca1b4cbdc2",
+            "marker_found": true,
+            "source_marker_offset_bytes": 14336,
+            "monitor_begin_frame": 1665183,
+            "expected_frames": 50812,
+            "exact_prefix_frames": 50812,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.1521995464852608
+          },
+          {
+            "id": 19,
+            "source": "workplace/round81-pcm-complete-v1/source-19.s16le",
+            "source_s16le_sha256": "26993997191644111b25913e8ee590826884254e2ad32a8fa7b462bb5e7007bd",
+            "marker_found": true,
+            "source_marker_offset_bytes": 108544,
+            "monitor_begin_frame": 1774985,
+            "expected_frames": 41961,
+            "exact_prefix_frames": 41961,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9514965986394558
+          },
+          {
+            "id": 5,
+            "source": "workplace/round81-pcm-complete-v1/source-05.s16le",
+            "source_s16le_sha256": "85554a4081050dde09f31bf79b4d1a17926c6f6e7b1eb6edeea17737575e00ba",
+            "marker_found": true,
+            "source_marker_offset_bytes": 24576,
+            "monitor_begin_frame": 1817951,
+            "expected_frames": 48423,
+            "exact_prefix_frames": 48423,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.0980272108843538
+          },
+          {
+            "id": 21,
+            "source": "workplace/round81-pcm-complete-v1/source-21.s16le",
+            "source_s16le_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+            "marker_found": true,
+            "source_marker_offset_bytes": 69632,
+            "monitor_begin_frame": 1927753,
+            "expected_frames": 37591,
+            "exact_prefix_frames": 37591,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.8524036281179138
+          },
+          {
+            "id": 2,
+            "source": "workplace/round81-pcm-complete-v1/source-02.s16le",
+            "source_s16le_sha256": "bdd71e43f5da94b7ec8b06ce8ba196c978cd8a5b2d066518463c25ca1b4cbdc2",
+            "marker_found": true,
+            "source_marker_offset_bytes": 14336,
+            "monitor_begin_frame": 1966627,
+            "expected_frames": 50812,
+            "exact_prefix_frames": 50812,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.1521995464852608
+          },
+          {
+            "id": 23,
+            "source": "workplace/round81-pcm-complete-v1/source-23.s16le",
+            "source_s16le_sha256": "566b547bcfd7090ebe923b87da35349cc00bfbb1da7dc78e3df8e59f78a63de3",
+            "marker_found": true,
+            "source_marker_offset_bytes": 75776,
+            "monitor_begin_frame": 2077111,
+            "expected_frames": 42473,
+            "exact_prefix_frames": 42473,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 0.9631065759637188
+          },
+          {
+            "id": 3,
+            "source": "workplace/round81-pcm-complete-v1/source-03.s16le",
+            "source_s16le_sha256": "38545fde60242bae1a598c5ab975b629a4c72383207ac0b54663d64fa0af64ad",
+            "marker_found": true,
+            "source_marker_offset_bytes": 8192,
+            "monitor_begin_frame": 2120077,
+            "expected_frames": 47296,
+            "exact_prefix_frames": 47296,
+            "complete_exact": true,
+            "first_different_frame": null,
+            "remaining_source_frames": 0,
+            "nonzero_bytes_in_remaining_source": 0,
+            "source_duration_seconds": 1.0724716553287983
+          }
+        ]
+      },
+      "gaps": {
+        "monitor_sha256": "77f936096d1eeb2aa7003746daf26614c7c44977cb2ae3bfd29b55d5f6d8488c",
+        "classification": "全段逐位元組門檻不放寬；插入靜音另列，成因待驗",
+        "complete_exact": 10,
+        "complete_source_retained": 10,
+        "calls": 10,
+        "cases": [
+          {
+            "id": 21,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 6,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 21,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 2,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 19,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 5,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 21,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 2,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 23,
+            "complete_exact": true,
+            "complete_source_retained": true
+          },
+          {
+            "id": 3,
+            "complete_exact": true,
+            "complete_source_retained": true
+          }
+        ]
+      },
+      "stops": [
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109214861975786
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 432472
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1225827664,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109216118823480
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109218227512525
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 406496
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1152199546,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109219405624563
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 335688
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 951496598,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109221696137384
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 387384
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1098027210,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109222821074399
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 300728
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 852403628,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109225067484075
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 406496
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1152199546,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109226232811385
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 339784
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 963106575,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109228561321909
+        },
+        {
+          "buffer": {
+            "available": true,
+            "buffer_bytes": 0,
+            "playing": false,
+            "sample_bytes": 8,
+            "stream_bytes": 378368
+          },
+          "id": -1,
+          "kind": "effect_stop",
+          "playing": false,
+          "position_ns": 1072471655,
+          "stream_bytes": 0,
+          "track": "",
+          "unix_ns": 1791109229645386921
+        }
+      ],
+      "monitor": {
+        "classification": "正式ALSA經PulseAudio虛擬輸出的技術樣本，非真人聆聽",
+        "bytes": 17970016,
+        "sha256": "77f936096d1eeb2aa7003746daf26614c7c44977cb2ae3bfd29b55d5f6d8488c",
+        "samples": 4492504,
+        "sample_rate": 44100,
+        "channels": 2,
+        "duration_seconds": 50.93541950113379,
+        "nonzero_samples": 919457,
+        "peak": 0.314666748046875,
+        "rms": 0.023527705391348335,
+        "samples_at_or_above_one": 0,
+        "first_nonzero_seconds": 0.751859410430839,
+        "last_nonzero_seconds": 49.14676870748299
+      },
+      "native_zero_difference_images": 3,
+      "six_saves_equal": true
+    }
+  ],
+  "mixed": {
+    "summary": {
+      "effect_ids": [
+        19,
+        4,
+        8,
+        3,
+        21,
+        6,
+        21,
+        6,
+        8,
+        3,
+        21,
+        6,
+        8,
+        6
+      ],
+      "effect_stops": 14,
+      "effect_stops_while_playing": 0,
+      "music_starts": [
+        "OPEN_M",
+        "BGM_0F",
+        "BGM_3F",
+        "BGM_6F",
+        "BGM_3F"
+      ],
+      "physical_device_tested": false,
+      "human_listening": false
+    },
+    "monitor": {
+      "classification": "正式ALSA經PulseAudio虛擬輸出的技術樣本，非真人聆聽",
+      "bytes": 20070720,
+      "sha256": "abf183935fd456815fbf97f98f8e5ade24894a3ec9f1e7d628f2e8e416e81022",
+      "samples": 5017680,
+      "sample_rate": 44100,
+      "channels": 2,
+      "duration_seconds": 56.88979591836735,
+      "nonzero_samples": 3003525,
+      "peak": 0.43878173828125,
+      "rms": 0.04680972080974775,
+      "samples_at_or_above_one": 0,
+      "first_nonzero_seconds": 0.861859410430839,
+      "last_nonzero_seconds": 56.669773242630384
+    },
+    "six_saves_equal": true,
+    "native_zero_difference_images": 3
+  },
+  "spec105": "CONFORMED：限定正式完成回報",
+  "spec104": "READY",
+  "full092": "DRAFT",
+  "physical_sound_card": false,
+  "human_listening": false,
+  "native_one_pixel_decision": "#89 pending",
+  "standard_tests": {
+    "pass": 13,
+    "no_test_files": 5
+  },
+  "files": {
+    "docs/internals/data/fleet-playback.json": {
+      "sha256": "f3a37d50fc86d2485113a2e20f84e6c2c2c07e6b12e6697d30d5a2c3341fb209",
+      "bytes": 57723
+    },
+    "workplace/round81-pcm-complete-v1/pcm-gap-classification.json": {
+      "sha256": "d650e154fcf2ba95f487902eb95cab9edc09eb19e76c2c1b46ab313548666ec3",
+      "bytes": 3234
+    },
+    "workplace/round81-pcm-replace-v1/pcm-comparison.json": {
+      "sha256": "f6b24f8cac79019a9ce7ab0dc60b174ca5cee85c8c5329aba53c0a6f41807482",
+      "bytes": 1456
+    },
+    "workplace/round81-before-plan-0/plan.json": {
+      "sha256": "d35ce436cf6daff5fd8d047461cbe122f7e5c1b482bad8afa3dc5d869a64d961",
+      "bytes": 186876
+    },
+    "workplace/round81-before-gui-greedy-0/gui/receipt.json": {
+      "sha256": "e6b5ff6338c89f35dcdf66d88d882b2969950b1973ff9a40e4b3a6d429188939",
+      "bytes": 309380
+    },
+    "workplace/round81-before-gui-greedy-0/gui/playback-summary.json": {
+      "sha256": "23abe6ad908c26624c91cfc7963dbfa789c536813e34cecf11954cc8e77dfb30",
+      "bytes": 313
+    },
+    "workplace/round81-before-gui-greedy-0/pcm-comparison.json": {
+      "sha256": "22bc7a26f0349746833c99bcec53e747711be0cf13aec9d6472892f5738cadf2",
+      "bytes": 8333
+    },
+    "workplace/round81-before-gui-greedy-0/pcm-gap-classification.json": {
+      "sha256": "489df15a1248581f2e56722a627891d28f7534e8dba6c32ad3f3a1e7a5fca991",
+      "bytes": 1864
+    },
+    "workplace/round78-chain-a/normal-0/sounds.json": {
+      "sha256": "b119d46e075f95f80bb78f2cff4ff80a353ce0d7133fb18903b26db8077b1705",
+      "bytes": 665
+    },
+    "workplace/round81-before-gui-greedy-0/monitor-stats.json": {
+      "sha256": "8d1b96157e79685c3f7886bfcd1b7dd5cbd48f2e0467e49028da03cde84618cf",
+      "bytes": 513
+    },
+    "workplace/round81-before-gui-greedy-0/gui/playback-events.jsonl": {
+      "sha256": "d693a77468775feca7221a750058ec7c9f48992cd7d3ab2fc67e10a44889f148",
+      "bytes": 7761
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-1-00184.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round81-before-plan-0/command-1-00184.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-1-00184-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-2-00185.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round81-before-plan-0/command-2-00185.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-2-00185-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-before-gui-greedy-0/gui/final.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round81-before-plan-0/final.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round81-before-gui-greedy-0/gui/final-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-before-gui-greedy-0/gui/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round81-before-plan-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round77-chain-c/normal-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round81-before-gui-greedy-0/gui/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round81-before-plan-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round77-chain-c/normal-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round81-before-gui-greedy-0/gui/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round81-before-plan-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round77-chain-c/normal-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round81-before-gui-greedy-0/gui/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round81-before-plan-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round77-chain-c/normal-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round81-before-gui-greedy-0/gui/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round81-before-plan-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round77-chain-c/normal-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round81-before-gui-greedy-0/gui/WORK.DT0": {
+      "sha256": "a1d51f22a8cec0e674f2ca55b5ca297d872ddacbecfdb1619552eabbbfca932e",
+      "bytes": 230
+    },
+    "workplace/round81-before-plan-0/WORK.DT0": {
+      "sha256": "a1d51f22a8cec0e674f2ca55b5ca297d872ddacbecfdb1619552eabbbfca932e",
+      "bytes": 230
+    },
+    "workplace/round77-chain-c/normal-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round81-before-gui-greedy-0/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-before-gui-greedy-0/gui/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round81-before-gui-greedy-0/gui/actual-sink-inputs.json": {
+      "sha256": "2766a8d5c99d48ba2ce6657bd77875d68a8af80d26c39f5834d0a17fa4ef9a26",
+      "bytes": 1044
+    },
+    "workplace/round81-before-gui-greedy-0/gui/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-1-00184-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-1-00184-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-1-00184-x11.png": {
+      "sha256": "bafb523dc6af67ef75cdc44a995f6dbbe9b8ba7187a550f3cf54dc1779cb836e",
+      "bytes": 31181
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-1-00184.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-2-00185-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-2-00185-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-2-00185-x11.png": {
+      "sha256": "b23f877fde4db36ca979144d47acdb14fbf3e89a758116b7450c302cfc39e6b5",
+      "bytes": 27773
+    },
+    "workplace/round81-before-gui-greedy-0/gui/command-2-00185.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round81-before-gui-greedy-0/gui/final-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-before-gui-greedy-0/gui/final-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-before-gui-greedy-0/gui/final-x11.png": {
+      "sha256": "a2223c7db32786cf315cae805deab943f24ddacba78b5c3dd51e9e461a007bb3",
+      "bytes": 29034
+    },
+    "workplace/round81-before-gui-greedy-0/gui/final.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round81-before-gui-greedy-0/gui/input-trace.jsonl": {
+      "sha256": "d1b88fea80675e9b0be499f769d336eb6686abb3f8f1aa21608d217dc35a2b4c",
+      "bytes": 142333
+    },
+    "workplace/round81-before-gui-greedy-0/gui/status.json": {
+      "sha256": "8f6e81baecd16c80c5aa3995941d3583fe73331c15ead09dc82625e1c728c382",
+      "bytes": 391
+    },
+    "workplace/round81-before-gui-greedy-0/gui/updates.jsonl": {
+      "sha256": "4f13aaa52cab492881e66796ebac1305ec5a48673d2b3bb506fe99c49838112e",
+      "bytes": 1561443
+    },
+    "workplace/round81-before-gui-greedy-0/monitor.f32le": {
+      "sha256": "877333279429134975cadf711f755ecc2f1c66f208e5a16baddb7212efd367f3",
+      "bytes": 24295408
+    },
+    "workplace/round81-before-gui-greedy-0/pulse-info.txt": {
+      "sha256": "45490e8f30385bf610b02adf44fbc608a5e28b873f68e9708cf8b2f9c2d0480e",
+      "bytes": 408
+    },
+    "workplace/round81-before-gui-greedy-0/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-before-gui-greedy-0/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-before-gui-greedy-0/sink-receipt.json": {
+      "sha256": "6ab64eac791929d9f7803bda59c334c4ffde8e7a69e625b9083887bf0752825f",
+      "bytes": 716
+    },
+    "workplace/round81-before-gui-greedy-0/sinks.json": {
+      "sha256": "f6ad953a1bff1efe8a2d2325540e5ff0d2fe4f3bc18dc2f74c68b084b61239f6",
+      "bytes": 736
+    },
+    "workplace/round81-before-plan-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round81-before-plan-0/command-1-00184.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round81-before-plan-0/command-2-00185.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round81-before-plan-0/final.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round81-before-plan-1/plan.json": {
+      "sha256": "1200fbf7f0ba35791e92f392bc29e1a924c25daa874e1384132cbe38294f3437",
+      "bytes": 162813
+    },
+    "workplace/round81-before-gui-greedy-1/gui/receipt.json": {
+      "sha256": "9884de79e730de1681ae960dc26c0cb78fad1dc3f25e10b7ae11bb1a4d451dae",
+      "bytes": 225575
+    },
+    "workplace/round81-before-gui-greedy-1/gui/playback-summary.json": {
+      "sha256": "b82963f31313f6244bfd9a13e2dd13edc8e50f43fa0f4a7b24d310fe58b34325",
+      "bytes": 286
+    },
+    "workplace/round81-before-gui-greedy-1/pcm-comparison.json": {
+      "sha256": "f67c547c830c476a0f1b96fd32bc6e7c746d9616168205edf8829f7f09c0004a",
+      "bytes": 6046
+    },
+    "workplace/round81-before-gui-greedy-1/pcm-gap-classification.json": {
+      "sha256": "2fac50d07614f85f3f5731a63db93bf41ebfc965dabe8ef5f3a49ba83bacaf45",
+      "bytes": 1361
+    },
+    "workplace/round78-chain-a/normal-1/sounds.json": {
+      "sha256": "7966e4fe6eae43f4820efa91b99b2894e3c7895d2d3e0fa34d60297fdceeb0aa",
+      "bytes": 478
+    },
+    "workplace/round81-before-gui-greedy-1/monitor-stats.json": {
+      "sha256": "4cda0cbdc5b08e1736e1c806261ec9339423f824d08dee4e9b60a1f7d8e35011",
+      "bytes": 513
+    },
+    "workplace/round81-before-gui-greedy-1/gui/playback-events.jsonl": {
+      "sha256": "19b03bea15a6c375f517b0fad1d0c637fd715de07a2b6c5ad8783ba76a63417c",
+      "bytes": 5948
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-1-00160.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round81-before-plan-1/command-1-00160.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-1-00160-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-2-00161.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round81-before-plan-1/command-2-00161.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-2-00161-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-before-gui-greedy-1/gui/final.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round81-before-plan-1/final.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round81-before-gui-greedy-1/gui/final-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-before-gui-greedy-1/gui/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round81-before-plan-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round77-chain-c/normal-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round81-before-gui-greedy-1/gui/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round81-before-plan-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round77-chain-c/normal-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round81-before-gui-greedy-1/gui/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round81-before-plan-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round77-chain-c/normal-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round81-before-gui-greedy-1/gui/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round81-before-plan-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round77-chain-c/normal-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round81-before-gui-greedy-1/gui/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round81-before-plan-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round77-chain-c/normal-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round81-before-gui-greedy-1/gui/WORK.DT0": {
+      "sha256": "3c694425ba8aafd138ec3417a6dbee39f6da0c7f4e975e13cbee2f02be787944",
+      "bytes": 230
+    },
+    "workplace/round81-before-plan-1/WORK.DT0": {
+      "sha256": "3c694425ba8aafd138ec3417a6dbee39f6da0c7f4e975e13cbee2f02be787944",
+      "bytes": 230
+    },
+    "workplace/round77-chain-c/normal-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round81-before-gui-greedy-1/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-before-gui-greedy-1/gui/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round81-before-gui-greedy-1/gui/actual-sink-inputs.json": {
+      "sha256": "659bd6cdddf371314bdbc9a6cd56858f4cf2a160a303c3592c8f3418e076d7ce",
+      "bytes": 1045
+    },
+    "workplace/round81-before-gui-greedy-1/gui/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-1-00160-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-1-00160-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-1-00160-x11.png": {
+      "sha256": "a0a54bad300a90801cd8391b0713e0c7cdf30725494ec1688689ce3406b0e4fa",
+      "bytes": 16674
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-1-00160.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-2-00161-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-2-00161-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-2-00161-x11.png": {
+      "sha256": "de3cd7345018450ac36b79ea8115f30a83bc300b3cafebfbd70562ee94d458ad",
+      "bytes": 14244
+    },
+    "workplace/round81-before-gui-greedy-1/gui/command-2-00161.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round81-before-gui-greedy-1/gui/final-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-before-gui-greedy-1/gui/final-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-before-gui-greedy-1/gui/final-x11.png": {
+      "sha256": "0b3f4749d420b31708a639caae9d579ec3d58f451474c4a3bf1192593ad6859e",
+      "bytes": 15789
+    },
+    "workplace/round81-before-gui-greedy-1/gui/final.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round81-before-gui-greedy-1/gui/input-trace.jsonl": {
+      "sha256": "823e7af5e21cf66a3d82daee3fd5abd838757af0785ff1819d48d39fdccddb9c",
+      "bytes": 110103
+    },
+    "workplace/round81-before-gui-greedy-1/gui/status.json": {
+      "sha256": "165c694ff37f7d37053e1e04207f18abc7a05165b07ef603bea5d576a92cb462",
+      "bytes": 389
+    },
+    "workplace/round81-before-gui-greedy-1/gui/updates.jsonl": {
+      "sha256": "697c181c181adda8a682fde9de66aa12b4a845bb7ababca852b20206d2af17d5",
+      "bytes": 1552478
+    },
+    "workplace/round81-before-gui-greedy-1/monitor.f32le": {
+      "sha256": "6bea8951eb814dc487b15db0f3e65a839c8772bc437010a55d09651468221747",
+      "bytes": 28499672
+    },
+    "workplace/round81-before-gui-greedy-1/pulse-info.txt": {
+      "sha256": "e94cccb285f004033236a2378a14dfca66458203b03fed8d2c84288605f54f91",
+      "bytes": 408
+    },
+    "workplace/round81-before-gui-greedy-1/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-before-gui-greedy-1/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-before-gui-greedy-1/sink-receipt.json": {
+      "sha256": "b2ad6d3010b5f8ad7ab718a42d5bf2338114a2a3a1dfaa3d8a5670ec8caef045",
+      "bytes": 716
+    },
+    "workplace/round81-before-gui-greedy-1/sinks.json": {
+      "sha256": "5ab061e85064458712989b11dd44f2be25d52b0e7c7b593fed3118217fcbfab7",
+      "bytes": 738
+    },
+    "workplace/round81-before-plan-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round81-before-plan-1/command-1-00160.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round81-before-plan-1/command-2-00161.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round81-before-plan-1/final.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round81-after-gui-greedy-0/gui/receipt.json": {
+      "sha256": "29709338f601c16a17a3aa73ce1c23c93136f877ee868d41f45087408a299dd2",
+      "bytes": 260263
+    },
+    "workplace/round81-after-gui-greedy-0/gui/playback-summary.json": {
+      "sha256": "42c0571a4937f4a2dff562bdb493fbbf5e2aa6ae3dcfa9ac4c9b2fad7876874d",
+      "bytes": 313
+    },
+    "workplace/round81-after-gui-greedy-0/pcm-comparison.json": {
+      "sha256": "c5290b08d86d64584337b7f3ba3ac03493222678720b470e6b5cbfa32d42e006",
+      "bytes": 8321
+    },
+    "workplace/round81-after-gui-greedy-0/pcm-gap-classification.json": {
+      "sha256": "56c556f7bc35745051ed28db3eea3255b518fbe39fa172fe989aefb9da04b4ca",
+      "bytes": 1636
+    },
+    "workplace/round81-after-gui-greedy-0/monitor-stats.json": {
+      "sha256": "2b77f410f8fbd96753784fa9e0697500811251efa75a05d67c940cb0e63c9842",
+      "bytes": 512
+    },
+    "workplace/round81-after-gui-greedy-0/gui/playback-events.jsonl": {
+      "sha256": "865aa3132890772e8e46309aa5f08330f4be33292117afe816ed3df668e3a91c",
+      "bytes": 7760
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-1-00184.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-1-00184-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-2-00185.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-2-00185-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-after-gui-greedy-0/gui/final.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round81-after-gui-greedy-0/gui/final-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-after-gui-greedy-0/gui/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round81-after-gui-greedy-0/gui/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round81-after-gui-greedy-0/gui/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round81-after-gui-greedy-0/gui/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round81-after-gui-greedy-0/gui/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round81-after-gui-greedy-0/gui/WORK.DT0": {
+      "sha256": "a1d51f22a8cec0e674f2ca55b5ca297d872ddacbecfdb1619552eabbbfca932e",
+      "bytes": 230
+    },
+    "workplace/round81-after-gui-greedy-0/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-after-gui-greedy-0/gui/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round81-after-gui-greedy-0/gui/actual-sink-inputs.json": {
+      "sha256": "52321585c8393eebb9e9c3c15cf1b13ae31a811e67b898c166ff4d6a7a008b85",
+      "bytes": 1050
+    },
+    "workplace/round81-after-gui-greedy-0/gui/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-1-00184-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-1-00184-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-1-00184-x11.png": {
+      "sha256": "bafb523dc6af67ef75cdc44a995f6dbbe9b8ba7187a550f3cf54dc1779cb836e",
+      "bytes": 31181
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-1-00184.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-2-00185-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-2-00185-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-2-00185-x11.png": {
+      "sha256": "b23f877fde4db36ca979144d47acdb14fbf3e89a758116b7450c302cfc39e6b5",
+      "bytes": 27773
+    },
+    "workplace/round81-after-gui-greedy-0/gui/command-2-00185.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round81-after-gui-greedy-0/gui/final-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-after-gui-greedy-0/gui/final-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-after-gui-greedy-0/gui/final-x11.png": {
+      "sha256": "a2223c7db32786cf315cae805deab943f24ddacba78b5c3dd51e9e461a007bb3",
+      "bytes": 29034
+    },
+    "workplace/round81-after-gui-greedy-0/gui/final.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round81-after-gui-greedy-0/gui/input-trace.jsonl": {
+      "sha256": "701552af6a4c7445e9fcfe59e6bb2b9ee19a90829baff3c462715156a8834c97",
+      "bytes": 142286
+    },
+    "workplace/round81-after-gui-greedy-0/gui/status.json": {
+      "sha256": "d63298cde193cc01d43acfd6731fb21ac64fc83e5be2492555cc8416f8c7376f",
+      "bytes": 390
+    },
+    "workplace/round81-after-gui-greedy-0/gui/updates.jsonl": {
+      "sha256": "7aa06a0e1b38678182edd7afc8d81d416e97ecacc0ffbd744e403cdfea8989f5",
+      "bytes": 1531266
+    },
+    "workplace/round81-after-gui-greedy-0/monitor.f32le": {
+      "sha256": "ff6034a2587aad387b2d01c0229ab97dd40e7972a0a6f98a160bf3ca26e104f6",
+      "bytes": 24506680
+    },
+    "workplace/round81-after-gui-greedy-0/pulse-info.txt": {
+      "sha256": "f757fa7f818c384185222dbc73a005471a31c472021601de0266f752e8e9462f",
+      "bytes": 408
+    },
+    "workplace/round81-after-gui-greedy-0/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-after-gui-greedy-0/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-after-gui-greedy-0/sink-receipt.json": {
+      "sha256": "19a120a217dbd6b633b6316b0074b34cc73af54ae881b13d9ecbc59f9aa353a5",
+      "bytes": 718
+    },
+    "workplace/round81-after-gui-greedy-0/sinks.json": {
+      "sha256": "900bfc0b15881abaff7c7794f3f42fd8e91f2bb8afaaaf806f7318a12c8bdb60",
+      "bytes": 738
+    },
+    "workplace/round81-after-gui-greedy-1/gui/receipt.json": {
+      "sha256": "98b841f2c7b5a75548edd8b060b6713c38e462e3d98d12a9516d3e65de090138",
+      "bytes": 212186
+    },
+    "workplace/round81-after-gui-greedy-1/gui/playback-summary.json": {
+      "sha256": "b82963f31313f6244bfd9a13e2dd13edc8e50f43fa0f4a7b24d310fe58b34325",
+      "bytes": 286
+    },
+    "workplace/round81-after-gui-greedy-1/pcm-comparison.json": {
+      "sha256": "4a337d9e748839ce47028f32a1d6cc81cf0d049cc489a7e8fdb153ec009f2abc",
+      "bytes": 6038
+    },
+    "workplace/round81-after-gui-greedy-1/pcm-gap-classification.json": {
+      "sha256": "dff0789a5faafed958095bc3c870e3ec26597697dc2f5691a4a4b93c2e8b2aae",
+      "bytes": 1249
+    },
+    "workplace/round81-after-gui-greedy-1/monitor-stats.json": {
+      "sha256": "1b4fb0b0b98993145270a4067d838a9800edad7bcaf82dc13288086cc474fc83",
+      "bytes": 512
+    },
+    "workplace/round81-after-gui-greedy-1/gui/playback-events.jsonl": {
+      "sha256": "cd538251a10d03dfc12a02aebc6d373cd61d6dcf209a8b6347c00931ab1715eb",
+      "bytes": 5947
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-1-00160.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-1-00160-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-2-00161.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-2-00161-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-after-gui-greedy-1/gui/final.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round81-after-gui-greedy-1/gui/final-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-after-gui-greedy-1/gui/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round81-after-gui-greedy-1/gui/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round81-after-gui-greedy-1/gui/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round81-after-gui-greedy-1/gui/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round81-after-gui-greedy-1/gui/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round81-after-gui-greedy-1/gui/WORK.DT0": {
+      "sha256": "3c694425ba8aafd138ec3417a6dbee39f6da0c7f4e975e13cbee2f02be787944",
+      "bytes": 230
+    },
+    "workplace/round81-after-gui-greedy-1/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-after-gui-greedy-1/gui/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round81-after-gui-greedy-1/gui/actual-sink-inputs.json": {
+      "sha256": "203ecc6af1fef6cdddfc16ae6872bb5bff47457cfd98d23fb6b6ea2849322d4b",
+      "bytes": 1050
+    },
+    "workplace/round81-after-gui-greedy-1/gui/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-1-00160-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-1-00160-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-1-00160-x11.png": {
+      "sha256": "a0a54bad300a90801cd8391b0713e0c7cdf30725494ec1688689ce3406b0e4fa",
+      "bytes": 16674
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-1-00160.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-2-00161-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-2-00161-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-2-00161-x11.png": {
+      "sha256": "de3cd7345018450ac36b79ea8115f30a83bc300b3cafebfbd70562ee94d458ad",
+      "bytes": 14244
+    },
+    "workplace/round81-after-gui-greedy-1/gui/command-2-00161.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round81-after-gui-greedy-1/gui/final-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-after-gui-greedy-1/gui/final-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-after-gui-greedy-1/gui/final-x11.png": {
+      "sha256": "0b3f4749d420b31708a639caae9d579ec3d58f451474c4a3bf1192593ad6859e",
+      "bytes": 15789
+    },
+    "workplace/round81-after-gui-greedy-1/gui/final.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round81-after-gui-greedy-1/gui/input-trace.jsonl": {
+      "sha256": "cd8618c13fd86ccf1d708efd3de1f85b4ee108beeab2dbc113f53fe553853ecb",
+      "bytes": 110105
+    },
+    "workplace/round81-after-gui-greedy-1/gui/status.json": {
+      "sha256": "46e8d0253f893759ad83d5a9bb7a9ef73f77ae817cb0b0acc204a592b178f80a",
+      "bytes": 389
+    },
+    "workplace/round81-after-gui-greedy-1/gui/updates.jsonl": {
+      "sha256": "50c6b0356e4e297b9d7136e0fd65e8b3c6ba3088c7431f5937c801a50a194a48",
+      "bytes": 1169359
+    },
+    "workplace/round81-after-gui-greedy-1/monitor.f32le": {
+      "sha256": "77f936096d1eeb2aa7003746daf26614c7c44977cb2ae3bfd29b55d5f6d8488c",
+      "bytes": 17970016
+    },
+    "workplace/round81-after-gui-greedy-1/pulse-info.txt": {
+      "sha256": "803205ee4d8cd0f48807eb6b5d13a984ee390f957903a281f1b7f6a8e6bf4c46",
+      "bytes": 408
+    },
+    "workplace/round81-after-gui-greedy-1/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-after-gui-greedy-1/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-after-gui-greedy-1/sink-receipt.json": {
+      "sha256": "4dfa9e188380a0304f3dbc5f360306fdcb62682d22976e8ca0f700159aeabba6",
+      "bytes": 719
+    },
+    "workplace/round81-after-gui-greedy-1/sinks.json": {
+      "sha256": "403169287292fe305a28f8cb42250ca68daccffdce89d2c684d10c4f7d3df155",
+      "bytes": 738
+    },
+    "workplace/round81-after-gui-mixed-0/gui/receipt.json": {
+      "sha256": "7fb8c1f42deb995e7f3926b054944a422c83e6f7b628dbedb3f067cc6ad38e4c",
+      "bytes": 252169
+    },
+    "workplace/round81-after-gui-mixed-0/gui/playback-summary.json": {
+      "sha256": "ed419e88c9c910d60787320c7d2fb2b78e85038e58788738a9be5335ebf10ef9",
+      "bytes": 341
+    },
+    "workplace/round81-after-gui-mixed-0/gui/playback-events.jsonl": {
+      "sha256": "21dfd937311eb53b912e052f3e55752a45ea7e225f58285dbb8675c476e99a91",
+      "bytes": 8468
+    },
+    "workplace/round81-after-gui-mixed-0/monitor-stats.json": {
+      "sha256": "368f2201360e73bebe3a24a34211474dcc79e6586766a003342f7fac5d17adcd",
+      "bytes": 512
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-1-00180-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-2-00181-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-after-gui-mixed-0/gui/final-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round81-after-gui-mixed-0/gui/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round81-after-gui-mixed-0/gui/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round81-after-gui-mixed-0/gui/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round81-after-gui-mixed-0/gui/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round81-after-gui-mixed-0/gui/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round81-after-gui-mixed-0/gui/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round81-after-gui-mixed-0/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-after-gui-mixed-0/gui/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round81-after-gui-mixed-0/gui/actual-sink-inputs.json": {
+      "sha256": "d9e3d67650baa2959f2868337d099ad33c0466cb2a5dfab6e02e2333292e5569",
+      "bytes": 1050
+    },
+    "workplace/round81-after-gui-mixed-0/gui/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-1-00180-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-1-00180-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-1-00180-x11.png": {
+      "sha256": "bafb523dc6af67ef75cdc44a995f6dbbe9b8ba7187a550f3cf54dc1779cb836e",
+      "bytes": 31181
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-1-00180.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-1-00180.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-2-00181-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-2-00181-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-2-00181-x11.png": {
+      "sha256": "b23f877fde4db36ca979144d47acdb14fbf3e89a758116b7450c302cfc39e6b5",
+      "bytes": 27773
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-2-00181.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round81-after-gui-mixed-0/gui/command-2-00181.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round81-after-gui-mixed-0/gui/final-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round81-after-gui-mixed-0/gui/final-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round81-after-gui-mixed-0/gui/final-x11.png": {
+      "sha256": "a2223c7db32786cf315cae805deab943f24ddacba78b5c3dd51e9e461a007bb3",
+      "bytes": 29034
+    },
+    "workplace/round81-after-gui-mixed-0/gui/final.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round81-after-gui-mixed-0/gui/final.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round81-after-gui-mixed-0/gui/input-trace.jsonl": {
+      "sha256": "fb863257962f7e1f17c142c6dc96d7fc5ab2098c38c83bb6e3e171f357a9ed57",
+      "bytes": 137216
+    },
+    "workplace/round81-after-gui-mixed-0/gui/status.json": {
+      "sha256": "506f8286eba792ec3fe1de9529b765f01c967ab953cf12d98137540b9d054295",
+      "bytes": 395
+    },
+    "workplace/round81-after-gui-mixed-0/gui/updates.jsonl": {
+      "sha256": "e1b033a5cadee1cda6de7f360eb8aab56353ff6c052666e467ca82f4a4b33e67",
+      "bytes": 1323807
+    },
+    "workplace/round81-after-gui-mixed-0/listen.wav": {
+      "sha256": "d6cba0c24b0679af587b507ecdfe0cc8948c6b4ab558a1c035d0e34e77f5e252",
+      "bytes": 10035438
+    },
+    "workplace/round81-after-gui-mixed-0/monitor.f32le": {
+      "sha256": "abf183935fd456815fbf97f98f8e5ade24894a3ec9f1e7d628f2e8e416e81022",
+      "bytes": 20070720
+    },
+    "workplace/round81-after-gui-mixed-0/pulse-info.txt": {
+      "sha256": "f6945eb99790950d1be1957a5ae8a2191c3f648dce2cc9924d7c64e64a4fd1e4",
+      "bytes": 408
+    },
+    "workplace/round81-after-gui-mixed-0/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-after-gui-mixed-0/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-after-gui-mixed-0/sink-receipt.json": {
+      "sha256": "2ce92cbfd375ee8ff8e26d828640f910fe4977e871ebbc4cab4afc7847bdef56",
+      "bytes": 710
+    },
+    "workplace/round81-after-gui-mixed-0/sinks.json": {
+      "sha256": "f80cdd5375dd3c5834b52dac8de0472ee7e027991282b2703110f1cca85d19bf",
+      "bytes": 738
+    },
+    "workplace/round80-plan-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round80-plan-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round80-plan-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round80-plan-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round80-plan-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round80-plan-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round80-plan-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round80-plan-0/command-1-00180.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round80-plan-0/command-1-00180.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round80-plan-0/command-2-00181.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round80-plan-0/command-2-00181.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round80-plan-0/final.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round80-plan-0/final.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round80-plan-0/plan.json": {
+      "sha256": "09ad0bb14ba62dc6b3a79ed24e2f1d6cabb1bb8530f904964d6fdb17fa773ea3",
+      "bytes": 182850
+    },
+    "workplace/round80-library/BGM_0F.ogg": {
+      "sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+      "bytes": 1857348
+    },
+    "workplace/round80-library/BGM_0M.ogg": {
+      "sha256": "6db531b53646dd90a9e4901a11c30873c52a557d79267954b11e3c17df2eb940",
+      "bytes": 3626187
+    },
+    "workplace/round80-library/BGM_1F.ogg": {
+      "sha256": "f18d1a943769d771e68ee9c2e807b7b899de9bcc567a1a41856778a7dfa227db",
+      "bytes": 2314180
+    },
+    "workplace/round80-library/BGM_1M.ogg": {
+      "sha256": "d40674255659b8030823de93aa181b3b935b87758beba16d57618da50ead8cd6",
+      "bytes": 4577065
+    },
+    "workplace/round80-library/BGM_2F.ogg": {
+      "sha256": "fc4b1e9d6e40ddda128b5e6b4e557e8e04069569593307310f754caba7b6246a",
+      "bytes": 2174361
+    },
+    "workplace/round80-library/BGM_2M.ogg": {
+      "sha256": "8280ab1163f1c3ed156807bdf5e65a5a9fc6b13370ac0e92fc424de9195d7491",
+      "bytes": 5876391
+    },
+    "workplace/round80-library/BGM_3F.ogg": {
+      "sha256": "ac32e833e38331d96eec8867993f2bc96c0e73e4de83e4d6594894e568b68f5d",
+      "bytes": 2301236
+    },
+    "workplace/round80-library/BGM_3M.ogg": {
+      "sha256": "ce4cb92790dc220a64118069b3b5fd6583166d675f65e5e775473b80f21891a5",
+      "bytes": 2879599
+    },
+    "workplace/round80-library/BGM_4F.ogg": {
+      "sha256": "cdfa00129431f624b3bc2a3833dda7cd689c0a9d895b1eefc8cbd3a5e61daab9",
+      "bytes": 1969220
+    },
+    "workplace/round80-library/BGM_4M.ogg": {
+      "sha256": "ca7738141103556ddabba4f692ff085749a9f0d8a3d9d704b7557876a4b455ce",
+      "bytes": 2749660
+    },
+    "workplace/round80-library/BGM_5F.ogg": {
+      "sha256": "f76eebbb7cce15d707dfdda39a86702b705f86521f13a0b06355149298171e61",
+      "bytes": 2063549
+    },
+    "workplace/round80-library/BGM_5M.ogg": {
+      "sha256": "2ca37d583ba6a6624d2049c1683c082c70679ca0a05e545e87415d8dd3ef6100",
+      "bytes": 1011150
+    },
+    "workplace/round80-library/BGM_6F.ogg": {
+      "sha256": "311e04f7cf41dd6ed5481239c6b3c3793cd68389b080b77ba61e16b2cd64ee9f",
+      "bytes": 2097323
+    },
+    "workplace/round80-library/BGM_6M.ogg": {
+      "sha256": "4ff9aced573030765cde7b02fe031f02d52523cfa5b0c6279088666c238c142c",
+      "bytes": 587044
+    },
+    "workplace/round80-library/BGM_7F.ogg": {
+      "sha256": "04d81e88c938bb19bd7787e528fd7dc8fd391b315f0f12bd2f6e963de4f9cf18",
+      "bytes": 2166667
+    },
+    "workplace/round80-library/BGM_7M.ogg": {
+      "sha256": "4e309a2d2dd42b8f362eff149c45d885eb22c4425a79487394956f7785b45d6d",
+      "bytes": 568025
+    },
+    "workplace/round80-library/END_1F.ogg": {
+      "sha256": "e6478b9ad56127ba88a8aec1a5edd0dee2496e8b9e8c09371ae7aca89141b2fa",
+      "bytes": 2356943
+    },
+    "workplace/round80-library/END_1M.ogg": {
+      "sha256": "c9b524c9b198ad37a45735061a0e9df913312d60741236dca46db2eb995a224e",
+      "bytes": 3089070
+    },
+    "workplace/round80-library/END_2F.ogg": {
+      "sha256": "42ccc5f2d5a4316a2d806bdb7a5ecf33aaac8a35e08813e39224cf319ccdff30",
+      "bytes": 2781971
+    },
+    "workplace/round80-library/END_2M.ogg": {
+      "sha256": "c52d4c17a89f4fe8a2e7f8feac243c3704593de562880b4006729be005465bca",
+      "bytes": 4410288
+    },
+    "workplace/round80-library/LIBRARY-SOURCES.json": {
+      "sha256": "6028ffdd1c226f38d49c4adb07716a340b886c7296249ef86915a8a14494e654",
+      "bytes": 10379
+    },
+    "workplace/round80-library/OPEN_F.ogg": {
+      "sha256": "0e955cf4881511076760b725f25e26ac9158bd8c48edbaba1639a82d48bd04c2",
+      "bytes": 1701961
+    },
+    "workplace/round80-library/OPEN_M.ogg": {
+      "sha256": "cfbc4a7cc6fff2f95da3cd2e5b65c0234e988d20eaac0a12af0252741823e58a",
+      "bytes": 2396032
+    },
+    "workplace/round80-library/SFX_00.ogg": {
+      "sha256": "18153e66dfdc31bad21b121021edaa2be048ddb6980241f63709b25bd23a9456",
+      "bytes": 14971
+    },
+    "workplace/round80-library/SFX_01.ogg": {
+      "sha256": "4b39b7b0935121af2163f4deb05b20976274ab9e87062963cc5a0fbf9d5550ed",
+      "bytes": 12216
+    },
+    "workplace/round80-library/SFX_02.ogg": {
+      "sha256": "43c50808c56b5e899e9ac2f333e0435287bc58a0849bdbf0d0e331714364f50d",
+      "bytes": 13564
+    },
+    "workplace/round80-library/SFX_03.ogg": {
+      "sha256": "2b83ea331a4e420bf5ece7b01eaa69a097bc55798c7f3326f4270c689a58c4ed",
+      "bytes": 13056
+    },
+    "workplace/round80-library/SFX_04.ogg": {
+      "sha256": "3ae1d827eda2eca77a54fb504dc458b8c1815f7c45d2d6c4881ab13309578bd6",
+      "bytes": 13551
+    },
+    "workplace/round80-library/SFX_05.ogg": {
+      "sha256": "f2ba990a3a3edd7fe97f589bf42f6bf3234290c3b09c594448be3616c0f6ef67",
+      "bytes": 13209
+    },
+    "workplace/round80-library/SFX_06.ogg": {
+      "sha256": "2502e136c7363352ce943898cbf380207c173226df56140daaef6f24ebc76622",
+      "bytes": 14626
+    },
+    "workplace/round80-library/SFX_07.ogg": {
+      "sha256": "8817065d0da5a7176ce694c4bd57f296bfdef35dff9eaf0103d68289833da2c9",
+      "bytes": 13338
+    },
+    "workplace/round80-library/SFX_08.ogg": {
+      "sha256": "856415d790c8e1990f0162dff90e215f923ec1d93f814a23a0ad1dd5cbef37a8",
+      "bytes": 11886
+    },
+    "workplace/round80-library/SFX_09.ogg": {
+      "sha256": "063fb56e36fea3f58d1e7a765f5688af4577a2b5860f5e82f35dbbe64b4f85f9",
+      "bytes": 10108
+    },
+    "workplace/round80-library/SFX_10.ogg": {
+      "sha256": "156bf873f66aad49e5dd76a48221a7bc5b84a19c9ac5714c9175819c3e82de02",
+      "bytes": 12074
+    },
+    "workplace/round80-library/SFX_11.ogg": {
+      "sha256": "ce0f8dad250b5543afd7f0bee2cd8c009bb4246537c9ee33d5622dc7083648a1",
+      "bytes": 11614
+    },
+    "workplace/round80-library/SFX_12.ogg": {
+      "sha256": "d638280a7f654bd1097dc7fc1a5e120a79eeb1906ec1adee7e9e3de54518be86",
+      "bytes": 11865
+    },
+    "workplace/round80-library/SFX_13.ogg": {
+      "sha256": "4c1f76df120ef679353b4e29e4152065a46de880b1ee3131a38245b54ab9f802",
+      "bytes": 11525
+    },
+    "workplace/round80-library/SFX_14.ogg": {
+      "sha256": "2c6917b649ff4346559967cbdb3f5a4ae3d5f8c2f5b2f27913ff15010df07ae9",
+      "bytes": 12950
+    },
+    "workplace/round80-library/SFX_15.ogg": {
+      "sha256": "7d9f3a08110650c706a25e8207b8f638261fc92bf9b3af922a19ceedb02a94d5",
+      "bytes": 13189
+    },
+    "workplace/round80-library/SFX_16.ogg": {
+      "sha256": "02a5ff4ebbedb44618104295239835f101da9dcc56e87e509a3608dd447cdf74",
+      "bytes": 12158
+    },
+    "workplace/round80-library/SFX_17.ogg": {
+      "sha256": "d66795991390618bb2dcc0b87bec43e5068fb4a70bef56f951b154971472af08",
+      "bytes": 13320
+    },
+    "workplace/round80-library/SFX_18.ogg": {
+      "sha256": "8d730c988ed0285d924500e9db51320d8dfb749363338e3e9963630739217837",
+      "bytes": 12787
+    },
+    "workplace/round80-library/SFX_19.ogg": {
+      "sha256": "e32c56e11b449b102213fc8e85e2ff7db83d869d4e27146c29e51b2b2d59e8f0",
+      "bytes": 11433
+    },
+    "workplace/round80-library/SFX_20.ogg": {
+      "sha256": "5fb9ef43e3526a9fee4eb038930691a1d5982ae81b982e1bfa62c25b856685ba",
+      "bytes": 11217
+    },
+    "workplace/round80-library/SFX_21.ogg": {
+      "sha256": "be0a2b6f5119e17ca86cca3359cb3aae6898d1d302102013afc789b5392018ba",
+      "bytes": 11146
+    },
+    "workplace/round80-library/SFX_22.ogg": {
+      "sha256": "32febe14856a9f65ac2367b916815ecc08ee24c46ce1b588bcc8c94dadd691e2",
+      "bytes": 12384
+    },
+    "workplace/round80-library/SFX_23.ogg": {
+      "sha256": "528338a7714cf10bf817369f3fc1495cec21a2812dc719c58d3ee360f1e59717",
+      "bytes": 11353
+    },
+    "workplace/round80-library/SFX_24.ogg": {
+      "sha256": "a84e403efc58a4848da3a5ac6b44c90a83c92da39856b611dfa0afc86426e2a1",
+      "bytes": 13338
+    },
+    "workplace/round80-library/SFX_25.ogg": {
+      "sha256": "612f3a022a6660aaee0d7de6590c967840dab7b961a477370a0e7805dca99b75",
+      "bytes": 13735
+    },
+    "workplace/round80-library/SFX_26.ogg": {
+      "sha256": "84478ed706ee813e6b64debcdaabbbc43ce097bc384d1f32e38442e4bfefabf7",
+      "bytes": 12086
+    },
+    "workplace/round80-library/SFX_27.ogg": {
+      "sha256": "c4af7febbae92b56cc05b18290782524810d22091676579df4debe9c82ef544a",
+      "bytes": 13624
+    },
+    "workplace/round81-standard.log": {
+      "sha256": "ebc8a0e09642ba201c95005a94eea8c31dbe804c21b65297e989dca3f761011d",
+      "bytes": 961
+    },
+    "workplace/round81-target-final.log": {
+      "sha256": "bbe74ec81804688028cf3e1b53d8cf25f272e437dbc931d675088c1b21441258",
+      "bytes": 3410
+    },
+    "workplace/round81-audio-observe-baseline.go": {
+      "sha256": "e7b72509144afbaa4f041604f1b30e273070eb55067b6f6ede0028fd8fe33acf",
+      "bytes": 16508
+    },
+    "workplace/round81-before-prepare.log": {
+      "sha256": "cfc53815359407f80f3668dd1858330d43a8eb656233cbdfe48094ec0173c9d2",
+      "bytes": 1846
+    },
+    "workplace/round81-before-gui-0/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-before-gui-0/gui/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round81-before-gui-0/gui/failed-trace.json": {
+      "sha256": "933cdd6d513e8e1a88238988d4fb919b3530e5a189947f26fdee10716c41267e",
+      "bytes": 91717
+    },
+    "workplace/round81-before-gui-0/gui/input-trace.jsonl": {
+      "sha256": "9229a22b21d04a6c588d0c84e2a8eb5eae497ca8d2356f77828e6d5591e79e37",
+      "bytes": 88833
+    },
+    "workplace/round81-before-gui-0/gui/playback-events.jsonl": {
+      "sha256": "3a3700349c474acd192ab7fc4a7328aef7d178f3f9d40c62aecadba5ecb1df7d",
+      "bytes": 1407
+    },
+    "workplace/round81-before-gui-0/gui/status.json": {
+      "sha256": "29148b423f1bf563e634cf94c5adaa240f773cf63a216f247c8a1be11cd2c750",
+      "bytes": 389
+    },
+    "workplace/round81-before-gui-0/gui/updates.jsonl": {
+      "sha256": "f7614d8af1892dc1c1b1590e9554adc1d702f4894055895a73aceba3e2d4dd30",
+      "bytes": 1384352
+    },
+    "workplace/round81-before-gui-0/monitor.f32le": {
+      "sha256": "1acb7963e4ee9a16012cbe7103700edf1ec959bc99b0fb06f3b80cd292a07e48",
+      "bytes": 31429816
+    },
+    "workplace/round81-before-gui-0/pulse-info.txt": {
+      "sha256": "47934c6e23390c61d8101117b0a688af44c6c4a623ba9ec82028d719845f136c",
+      "bytes": 408
+    },
+    "workplace/round81-before-gui-0/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-before-gui-0/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-before-gui-0/sink-receipt.json": {
+      "sha256": "2c0609121470b323566540822f21ef8263c9f982a2719d8f67ce8cec8a1cee51",
+      "bytes": 713
+    },
+    "workplace/round81-before-gui-0/sinks.json": {
+      "sha256": "0f590adc9135b59b77fd776206889b12964df5827846cc4c806e82534a514863",
+      "bytes": 738
+    },
+    "workplace/round81-before-gui-0.log": {
+      "sha256": "7fe8e503c18e63a6cf37f88fcaaae2426334b84a9bf0e6507461ec80a784315c",
+      "bytes": 1061
+    },
+    "workplace/round81-gui-images.json": {
+      "sha256": "5268aaa1db99d62c710df5421650775ff8e5382f01781251cd59dda7e0a8e304",
+      "bytes": 4883
+    },
+    "workplace/round81-listen-toolchain.txt": {
+      "sha256": "b6e71b8343c5f344c67dd9420ccec50bec64a7f67373dff001ec55c9679de96c",
+      "bytes": 1802
+    },
+    "workplace/round81-prepare-probe.log": {
+      "sha256": "0a3a3b7424a4f0041bdcba916f6d86bb81b5f2d97ef70f37eb91dc432f6a68f2",
+      "bytes": 87
+    },
+    "workplace/round81-before-gui-1.log": {
+      "sha256": "b1480f781d59276c5159e195cecd03566ec8437e75a123f1e7eb84b0e55b0eb2",
+      "bytes": 1061
+    },
+    "workplace/round81-input": {
+      "sha256": "ef8758242be924efa37ce99ba13b0a00bb227a3e4898277ec2dfd5f4bc3cd526",
+      "bytes": 4299024
+    },
+    "workplace/round81-pcm-replace-v1/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-pcm-replace-v1/monitor-stats.json": {
+      "sha256": "858eecbd532d454321825b0b404cc479ee3fca6756b1a0a5fbf5846539d95bf8",
+      "bytes": 496
+    },
+    "workplace/round81-pcm-replace-v1/monitor.f32le": {
+      "sha256": "60afdc20486f65cdd1d26883fe85fee205825d109aa500f72eb954c2fd6ba861",
+      "bytes": 3217296
+    },
+    "workplace/round81-pcm-replace-v1/probe.json": {
+      "sha256": "e2978766fa219e6639049f372965600704168465cb74fc37dd4a548f4316367f",
+      "bytes": 1288
+    },
+    "workplace/round81-pcm-replace-v1/pulse-info.txt": {
+      "sha256": "2a56ffaf52f3b86adde973f8e21714ea0e024729981303431baff767862ce842",
+      "bytes": 408
+    },
+    "workplace/round81-pcm-replace-v1/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-pcm-replace-v1/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-pcm-replace-v1/sink-receipt.json": {
+      "sha256": "e85faf3323100ac6f5acd8032cfb830ca7322aeb5769aaeabea6dc30bb8b5e16",
+      "bytes": 734
+    },
+    "workplace/round81-pcm-replace-v1/sinks.json": {
+      "sha256": "e8113c5842ec2b52a74d43217c2482faa4f748ab26cfd310b0bdbfceb687da05",
+      "bytes": 737
+    },
+    "workplace/round81-pcm-replace-v1/source-04.s16le": {
+      "sha256": "92617173cc1c28208574e5f3c4b8796eea5af30e115daa5cdc03bbb177454fb5",
+      "bytes": 199884
+    },
+    "workplace/round81-pcm-replace-v1/source-19.s16le": {
+      "sha256": "26993997191644111b25913e8ee590826884254e2ad32a8fa7b462bb5e7007bd",
+      "bytes": 167844
+    },
+    "workplace/round81-output-checks.log": {
+      "sha256": "a672443597276742390cc5d6ace03cc237241f5579ed41b167e37173271ce2f1",
+      "bytes": 2032
+    },
+    "workplace/round81-tail-test-baseline.go": {
+      "sha256": "c0970617d387f143d54665e61835f999e758192f0de2a19956bccde68b820ee9",
+      "bytes": 8492
+    },
+    "workplace/round81-before-gui-1/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-before-gui-1/gui/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round81-before-gui-1/gui/failed-trace.json": {
+      "sha256": "b4a2b68b9485a7648ce162ada4228341b42572e58a11aca01671978e487e61d4",
+      "bytes": 74210
+    },
+    "workplace/round81-before-gui-1/gui/input-trace.jsonl": {
+      "sha256": "09565ab64b823cbb29020de8ea6c7fa46309ab8f7b6e827c142d451de3feec90",
+      "bytes": 71867
+    },
+    "workplace/round81-before-gui-1/gui/playback-events.jsonl": {
+      "sha256": "8af0016e233909d99fc987ff95235d9b8e441fbda0adef2e595ad9b45c0ab679",
+      "bytes": 1407
+    },
+    "workplace/round81-before-gui-1/gui/status.json": {
+      "sha256": "73316eab3621b14833e570c5b76a5606fa564e7a0058bc75d8ab05ed7a7c09d0",
+      "bytes": 389
+    },
+    "workplace/round81-before-gui-1/gui/updates.jsonl": {
+      "sha256": "dc96e319ae98c3d59b482b8c1d2df7d63176810e3571d4896da91cae7783c540",
+      "bytes": 1494422
+    },
+    "workplace/round81-before-gui-1/monitor.f32le": {
+      "sha256": "c1a4f96d9ccc6aec38443c0b4ea064c169a20b152f09ff76f03d0e0e8ea634e4",
+      "bytes": 33105240
+    },
+    "workplace/round81-before-gui-1/pulse-info.txt": {
+      "sha256": "9c33c80d896cadd45d43bd02aa369f3fbe18e80ef1e5f1219192ab809c756074",
+      "bytes": 408
+    },
+    "workplace/round81-before-gui-1/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-before-gui-1/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-before-gui-1/sink-receipt.json": {
+      "sha256": "a59ed71e0eebfd41e66cd2cf0e079b18970e46c564097ff52159698f2d9bc446",
+      "bytes": 713
+    },
+    "workplace/round81-before-gui-1/sinks.json": {
+      "sha256": "8344f9f333cb16e594b6989688d1f62b911bc98152c8c2b051a4339cdf09f92a",
+      "bytes": 738
+    },
+    "workplace/round81-pcm-complete-v1/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-pcm-complete-v1/monitor-stats.json": {
+      "sha256": "e87dffa1fd1ef24578960713806ac2b074880cd00a3d907a1bfdec40e3e4c76d",
+      "bytes": 512
+    },
+    "workplace/round81-pcm-complete-v1/monitor.f32le": {
+      "sha256": "35a4872555ea741b73ef7af93791ea995f8c8805c312df4314ae2e7da4e53121",
+      "bytes": 13445752
+    },
+    "workplace/round81-pcm-complete-v1/pcm-comparison.json": {
+      "sha256": "e9367ec3eccafbcbfb8f061436d40aebc27cdd87116ed2870af2193dba89d9db",
+      "bytes": 16347
+    },
+    "workplace/round81-pcm-complete-v1/probe.json": {
+      "sha256": "0c8e38c2e0e3b822c2b4d806b6f9bf5aeac5dd33df0a97abee50bf551fc20ceb",
+      "bytes": 15947
+    },
+    "workplace/round81-pcm-complete-v1/pulse-info.txt": {
+      "sha256": "656b7700ad29a43a541b7377fe3cb1847619043660f73b5d70d308aadc3ac3e2",
+      "bytes": 408
+    },
+    "workplace/round81-pcm-complete-v1/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-pcm-complete-v1/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-pcm-complete-v1/sink-receipt.json": {
+      "sha256": "bd400101a9edd53d9cd42a1d4ca154b0ef232978d47b3c7afcca0e019fa23fdf",
+      "bytes": 735
+    },
+    "workplace/round81-pcm-complete-v1/sinks.json": {
+      "sha256": "632f3d5e80d621ac7086f415bf4c3aecfca765a5342a8673c2de831d04e046fe",
+      "bytes": 737
+    },
+    "workplace/round81-pcm-complete-v1/source-00.s16le": {
+      "sha256": "7cb37f67697b1da00e9bfb0e5fafc5bc56dd5b72ad199dd0a18362da83c11559",
+      "bytes": 215472
+    },
+    "workplace/round81-pcm-complete-v1/source-01.s16le": {
+      "sha256": "fb3deb57a48164909e44012882f041d99746be84d198c683d5dc5d12a51e98ad",
+      "bytes": 185928
+    },
+    "workplace/round81-pcm-complete-v1/source-02.s16le": {
+      "sha256": "bdd71e43f5da94b7ec8b06ce8ba196c978cd8a5b2d066518463c25ca1b4cbdc2",
+      "bytes": 203248
+    },
+    "workplace/round81-pcm-complete-v1/source-03.s16le": {
+      "sha256": "38545fde60242bae1a598c5ab975b629a4c72383207ac0b54663d64fa0af64ad",
+      "bytes": 189184
+    },
+    "workplace/round81-pcm-complete-v1/source-04.s16le": {
+      "sha256": "92617173cc1c28208574e5f3c4b8796eea5af30e115daa5cdc03bbb177454fb5",
+      "bytes": 199884
+    },
+    "workplace/round81-pcm-complete-v1/source-05.s16le": {
+      "sha256": "85554a4081050dde09f31bf79b4d1a17926c6f6e7b1eb6edeea17737575e00ba",
+      "bytes": 193692
+    },
+    "workplace/round81-pcm-complete-v1/source-06.s16le": {
+      "sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768",
+      "bytes": 216236
+    },
+    "workplace/round81-pcm-complete-v1/source-07.s16le": {
+      "sha256": "cbb2c6df2db1b44676166ac0bb7e78d7ce5ea1520f0b9bd4b359378d2cea9945",
+      "bytes": 159016
+    },
+    "workplace/round81-pcm-complete-v1/source-08.s16le": {
+      "sha256": "d992e150ead9190ea84a935e1fbf7d008a67cb2dbde1480102c0ba429681c997",
+      "bytes": 170304
+    },
+    "workplace/round81-pcm-complete-v1/source-09.s16le": {
+      "sha256": "d632a66965aa9ff54febe2ac27c015678f0f0272e2dcc86da0ad8da7c5000633",
+      "bytes": 129044
+    },
+    "workplace/round81-pcm-complete-v1/source-10.s16le": {
+      "sha256": "2023a30996c60b04c68ea0a8d32ec205a5acd094e915e4c86bae47789bec4e67",
+      "bytes": 154828
+    },
+    "workplace/round81-pcm-complete-v1/source-11.s16le": {
+      "sha256": "b4984400d67f06b624f93003b12621554a4b332134a35164540ac296ef4573cd",
+      "bytes": 156984
+    },
+    "workplace/round81-pcm-complete-v1/source-12.s16le": {
+      "sha256": "cf7ba0627eb1878ea5909225cbde17ba7f5f0b3ca853a0bd841faef14fc6935d",
+      "bytes": 162240
+    },
+    "workplace/round81-pcm-complete-v1/source-13.s16le": {
+      "sha256": "d112cc7398d581a25ef8c9cd1fd17fe30055278ddb68f01c104a8e299258454a",
+      "bytes": 158716
+    },
+    "workplace/round81-pcm-complete-v1/source-14.s16le": {
+      "sha256": "05124c1bbbfb2c0ea22b4a71b8fc2766e02cdc850871e571ba76c2a04200c725",
+      "bytes": 193820
+    },
+    "workplace/round81-pcm-complete-v1/source-15.s16le": {
+      "sha256": "9261d7f58139df6ca9eedc83bcea803ecd925c6234f9d2555667cd9c6a71500a",
+      "bytes": 181624
+    },
+    "workplace/round81-pcm-complete-v1/source-16.s16le": {
+      "sha256": "e498147d874936a287cdff41e6a62dbef9288922daa212a04c2b2e30e7f22602",
+      "bytes": 177624
+    },
+    "workplace/round81-pcm-complete-v1/source-17.s16le": {
+      "sha256": "91ad34c8372d3b239ca52a44fa130acee4f99a35bdf3f0c0c8d151ad6750bec8",
+      "bytes": 205012
+    },
+    "workplace/round81-pcm-complete-v1/source-18.s16le": {
+      "sha256": "892515e6253b235e9e8601ea73e19a3f1da34ebc4ba7f111b405580342eae1a9",
+      "bytes": 188768
+    },
+    "workplace/round81-pcm-complete-v1/source-19.s16le": {
+      "sha256": "26993997191644111b25913e8ee590826884254e2ad32a8fa7b462bb5e7007bd",
+      "bytes": 167844
+    },
+    "workplace/round81-pcm-complete-v1/source-20.s16le": {
+      "sha256": "b918a00f4ab0cbb37e757fb6e60067eb73100ca66b5585515769b47c4226a304",
+      "bytes": 153812
+    },
+    "workplace/round81-pcm-complete-v1/source-21.s16le": {
+      "sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870",
+      "bytes": 150364
+    },
+    "workplace/round81-pcm-complete-v1/source-22.s16le": {
+      "sha256": "71a374dfda6b05eeef087e5e15ea86f44f7af0523cab3841e8cc786c74644f3e",
+      "bytes": 188644
+    },
+    "workplace/round81-pcm-complete-v1/source-23.s16le": {
+      "sha256": "566b547bcfd7090ebe923b87da35349cc00bfbb1da7dc78e3df8e59f78a63de3",
+      "bytes": 169892
+    },
+    "workplace/round81-pcm-complete-v1/source-24.s16le": {
+      "sha256": "ce315ee110262b331a2e650e620b6429ea239ae5872733378ebe61cfe7f36b9c",
+      "bytes": 219348
+    },
+    "workplace/round81-pcm-complete-v1/source-25.s16le": {
+      "sha256": "3f2cd7530244241cfe96eca5040c96b4239eed2bff0e9ccbcf0aeda4dda6a025",
+      "bytes": 221092
+    },
+    "workplace/round81-pcm-complete-v1/source-26.s16le": {
+      "sha256": "2b4f45f880c152e3dd4bfab709ba290c2c384767f5e8aec80a1e751ebcbf96fa",
+      "bytes": 182800
+    },
+    "workplace/round81-pcm-complete-v1/source-27.s16le": {
+      "sha256": "6218c9f6450b1efe2e757cc9d38418efae442445b2d49e2734c07d06da289a40",
+      "bytes": 208424
+    },
+    "workplace/round81-pcm-replace-v1.log": {
+      "sha256": "30e9cc9981a1498309e3b1828b7bd4701e9e3ccc979d6ba66e892bdd68ce8f11",
+      "bytes": 443
+    },
+    "workplace/round81-tail-overlay-baseline.json": {
+      "sha256": "1656ef60fbeded27b4aa01e51dfa7f6b20932f2d0c22a862765b72dab7dfce35",
+      "bytes": 233
+    },
+    "workplace/round81-before-gui-fast-0/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-before-gui-fast-0/gui/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round81-before-gui-fast-0/gui/failed-trace.json": {
+      "sha256": "a4aaeeefbd894393311b08e7553e62b3d957b952b06109a7dc9b1b7a756a17db",
+      "bytes": 208713
+    },
+    "workplace/round81-before-gui-fast-0/gui/input-trace.jsonl": {
+      "sha256": "2da000f3a64996bff2f23e4e423e3d70c2f12bc79eb73af24438ec6b62a77e25",
+      "bytes": 202132
+    },
+    "workplace/round81-before-gui-fast-0/gui/playback-events.jsonl": {
+      "sha256": "2c5ce5a25be18dfc5d58a1de3c960f4e5178dc71ab5510f07ff9dfb04c274363",
+      "bytes": 1407
+    },
+    "workplace/round81-before-gui-fast-0/gui/status.json": {
+      "sha256": "c763684c87acd1f11bc493ffa22b7c8c24c137e0a9bc9738eb4308a51cc40c70",
+      "bytes": 391
+    },
+    "workplace/round81-before-gui-fast-0/gui/updates.jsonl": {
+      "sha256": "74ac31eb17ea87cff32f34f4c81de7bc44f6970becc5ef365b39b0425d61a6c8",
+      "bytes": 912830
+    },
+    "workplace/round81-before-gui-fast-0/monitor.f32le": {
+      "sha256": "73efa771f1c4fe17a46186c356c938a88b2fbd3220a3830a1adbe85542040ea5",
+      "bytes": 14879936
+    },
+    "workplace/round81-before-gui-fast-0/pulse-info.txt": {
+      "sha256": "ebc7efe2a748469dc95f8cd7cc1935f0f2d8305c9e208e53386a53c855912d59",
+      "bytes": 408
+    },
+    "workplace/round81-before-gui-fast-0/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-before-gui-fast-0/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-before-gui-fast-0/sink-receipt.json": {
+      "sha256": "793939639fefd5cfa5ff2ccba6b862fb21e2b744f1aacacefb3971af9514aaad",
+      "bytes": 714
+    },
+    "workplace/round81-before-gui-fast-0/sinks.json": {
+      "sha256": "f38d34a1ffbf8e600f3431337c08734e4c29638c315e61217f1b1727ab6144c1",
+      "bytes": 738
+    },
+    "workplace/round81-pcm-complete-v1.log": {
+      "sha256": "f9a888c88b19b3ad4e4fa1b4b79ac33a8baa2f54346bb8a3ba45e5f6b3ce93a0",
+      "bytes": 445
+    },
+    "workplace/round81-worklist-start.log": {
+      "sha256": "5c7f653ebd3841b56090121411b57f565b70f9ff2e4f8192e964342958096e78",
+      "bytes": 848
+    },
+    "workplace/round81-before-gui-group-0/capture.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "workplace/round81-before-gui-group-0/gui/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round81-before-gui-group-0/gui/failed-trace.json": {
+      "sha256": "4ed1eec1d18b0684dc4c0784d3609cbba206374f06066fb54fe1e76ce7c2f38e",
+      "bytes": 30755
+    },
+    "workplace/round81-before-gui-group-0/gui/input-trace.jsonl": {
+      "sha256": "d93583e7e96421289d61e34db4ec052881bd86686348e29e9fe830770565657d",
+      "bytes": 29084
+    },
+    "workplace/round81-before-gui-group-0/gui/playback-events.jsonl": {
+      "sha256": "874db744f1df7b0f24d68f74a99b82582b640a34a841d31dc361844769654ca9",
+      "bytes": 1407
+    },
+    "workplace/round81-before-gui-group-0/gui/status.json": {
+      "sha256": "8874e88231a872450e7e8f0f416c53dd027d3d362025b8da77d45aa0488c0a2d",
+      "bytes": 387
+    },
+    "workplace/round81-before-gui-group-0/gui/updates.jsonl": {
+      "sha256": "3b5bfcbd59fc6ae6dc74bc831d82ec917025c732b221ef5b748812f9c0507ec1",
+      "bytes": 331275
+    },
+    "workplace/round81-before-gui-group-0/monitor.f32le": {
+      "sha256": "8ee4d930788cbbf4a7792c08ecbf70403de4ee42f1349eb7d7efad89110e8544",
+      "bytes": 5650240
+    },
+    "workplace/round81-before-gui-group-0/pulse-info.txt": {
+      "sha256": "6adcbfa6cfac1b9bc11aacf0d4fdbd443512f81f2399f910fad2a4aac0492914",
+      "bytes": 408
+    },
+    "workplace/round81-before-gui-group-0/pulse.log": {
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9",
+      "bytes": 1105
+    },
+    "workplace/round81-before-gui-group-0/sink-inputs-end.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "workplace/round81-before-gui-group-0/sink-receipt.json": {
+      "sha256": "a5790401148e7680b139f640412bab0c71f971b715d07a9463d398d5c9e1e497",
+      "bytes": 716
+    },
+    "workplace/round81-before-gui-group-0/sinks.json": {
+      "sha256": "7a005a7b0d8e963aa92e32577c0b2af72f692c8f6ff219f056bd001d73b72d74",
+      "bytes": 738
+    },
+    "workplace/round79-fleet-gui-game-t81before.go": {
+      "sha256": "f60e3a810f47da17eba39dccae8c8a44deb7872f978beba3d2fea16a59fda7a1",
+      "bytes": 13385
+    },
+    "workplace/round79-fleet-gui-main-t81before.go": {
+      "sha256": "2d2def589e6e255226992ef44a0e5c2d4a22c882e7a39a946d4e598de2f91268",
+      "bytes": 15886
+    },
+    "workplace/round79-fleet-gui-overlay-t81before.json": {
+      "sha256": "91d8dbefea1701f5b8518470da2529dad130162827d0d9e6a49e6e6ac772f269",
+      "bytes": 496
+    },
+    "workplace/round80-music-observe-t81before.go": {
+      "sha256": "feec45e9f609b19637eae2a630b37ba7dfeb70676d2712197f5aeb2925944698",
+      "bytes": 4715
+    },
+    "workplace/round80-effects-observe-t81before.go": {
+      "sha256": "367e91f05d97ce23a7f3fc707fc44603708161c64b0887a509c84b6b553f78b9",
+      "bytes": 2064
+    },
+    "workplace/round80-driver-t81before.py": {
+      "sha256": "d2b7a0d502c9c7d968f28d4f80efb073c7508e3aeb404ace9c2f23d96d33d2cd",
+      "bytes": 11270
+    },
+    "workplace/round80-plan-source-t81before.go": {
+      "sha256": "9dbec5f267ff2e3644eee3ee230f4ff1debdef933282a206367f8f485c6e6c2c",
+      "bytes": 5215
+    },
+    "workplace/round80-gin3-t81before": {
+      "sha256": "8090335adad5aaa136d87123499c15228e343ea4cb111065d24d206757e0aefc",
+      "bytes": 13820360
+    },
+    "workplace/round79-fleet-gui-game-t81b2.go": {
+      "sha256": "f60e3a810f47da17eba39dccae8c8a44deb7872f978beba3d2fea16a59fda7a1",
+      "bytes": 13385
+    },
+    "workplace/round79-fleet-gui-main-t81b2.go": {
+      "sha256": "2d2def589e6e255226992ef44a0e5c2d4a22c882e7a39a946d4e598de2f91268",
+      "bytes": 15886
+    },
+    "workplace/round79-fleet-gui-overlay-t81b2.json": {
+      "sha256": "ebee37bce91d7792624b3aec2f8f0a612d6d5195f13a3e2de1759d84175adbf2",
+      "bytes": 480
+    },
+    "workplace/round80-music-observe-t81b2.go": {
+      "sha256": "feec45e9f609b19637eae2a630b37ba7dfeb70676d2712197f5aeb2925944698",
+      "bytes": 4715
+    },
+    "workplace/round80-effects-observe-t81b2.go": {
+      "sha256": "367e91f05d97ce23a7f3fc707fc44603708161c64b0887a509c84b6b553f78b9",
+      "bytes": 2064
+    },
+    "workplace/round80-driver-t81b2.py": {
+      "sha256": "26e964fd931d8f5ed7cb641324ec065d84c8ea3d079ca907bbe3b965efd7b690",
+      "bytes": 11360
+    },
+    "workplace/round80-plan-source-t81b2.go": {
+      "sha256": "9dbec5f267ff2e3644eee3ee230f4ff1debdef933282a206367f8f485c6e6c2c",
+      "bytes": 5215
+    },
+    "workplace/round80-gin3-t81b2": {
+      "sha256": "8090335adad5aaa136d87123499c15228e343ea4cb111065d24d206757e0aefc",
+      "bytes": 13820360
+    },
+    "workplace/round79-fleet-gui-game-t81b3.go": {
+      "sha256": "f60e3a810f47da17eba39dccae8c8a44deb7872f978beba3d2fea16a59fda7a1",
+      "bytes": 13385
+    },
+    "workplace/round79-fleet-gui-main-t81b3.go": {
+      "sha256": "2d2def589e6e255226992ef44a0e5c2d4a22c882e7a39a946d4e598de2f91268",
+      "bytes": 15886
+    },
+    "workplace/round79-fleet-gui-overlay-t81b3.json": {
+      "sha256": "d7ee75ecc32625dfc5b5f16ea586350776ae6b6feccf2eb16c2a8afa2e9f547b",
+      "bytes": 480
+    },
+    "workplace/round80-music-observe-t81b3.go": {
+      "sha256": "feec45e9f609b19637eae2a630b37ba7dfeb70676d2712197f5aeb2925944698",
+      "bytes": 4715
+    },
+    "workplace/round80-effects-observe-t81b3.go": {
+      "sha256": "367e91f05d97ce23a7f3fc707fc44603708161c64b0887a509c84b6b553f78b9",
+      "bytes": 2064
+    },
+    "workplace/round80-driver-t81b3.py": {
+      "sha256": "527d91777f5594868b7196609ee48f37d73e63688c1090e8c9546b79aaf23dce",
+      "bytes": 12392
+    },
+    "workplace/round80-plan-source-t81b3.go": {
+      "sha256": "9dbec5f267ff2e3644eee3ee230f4ff1debdef933282a206367f8f485c6e6c2c",
+      "bytes": 5215
+    },
+    "workplace/round80-gin3-t81b3": {
+      "sha256": "8090335adad5aaa136d87123499c15228e343ea4cb111065d24d206757e0aefc",
+      "bytes": 13820360
+    },
+    "workplace/round79-fleet-gui-game-t81b4.go": {
+      "sha256": "f60e3a810f47da17eba39dccae8c8a44deb7872f978beba3d2fea16a59fda7a1",
+      "bytes": 13385
+    },
+    "workplace/round79-fleet-gui-main-t81b4.go": {
+      "sha256": "2d2def589e6e255226992ef44a0e5c2d4a22c882e7a39a946d4e598de2f91268",
+      "bytes": 15886
+    },
+    "workplace/round79-fleet-gui-overlay-t81b4.json": {
+      "sha256": "31dfa9a8ca8242dfe33b77a472ba7d2c1d7c6cd35ffd51f24ff59ac131575831",
+      "bytes": 480
+    },
+    "workplace/round80-music-observe-t81b4.go": {
+      "sha256": "feec45e9f609b19637eae2a630b37ba7dfeb70676d2712197f5aeb2925944698",
+      "bytes": 4715
+    },
+    "workplace/round80-effects-observe-t81b4.go": {
+      "sha256": "367e91f05d97ce23a7f3fc707fc44603708161c64b0887a509c84b6b553f78b9",
+      "bytes": 2064
+    },
+    "workplace/round80-driver-t81b4.py": {
+      "sha256": "c9535d5e98f75c1250412a2078c4ba8f27dfc7974b338f5c72deb597a79709ca",
+      "bytes": 12745
+    },
+    "workplace/round80-plan-source-t81b4.go": {
+      "sha256": "9dbec5f267ff2e3644eee3ee230f4ff1debdef933282a206367f8f485c6e6c2c",
+      "bytes": 5215
+    },
+    "workplace/round80-gin3-t81b4": {
+      "sha256": "8090335adad5aaa136d87123499c15228e343ea4cb111065d24d206757e0aefc",
+      "bytes": 13820360
+    },
+    "workplace/round79-fleet-gui-game-t81after.go": {
+      "sha256": "f60e3a810f47da17eba39dccae8c8a44deb7872f978beba3d2fea16a59fda7a1",
+      "bytes": 13385
+    },
+    "workplace/round79-fleet-gui-main-t81after.go": {
+      "sha256": "4e910d8a138020e7eab1b0940cb8441d270021c2c9772ad87c24bc2d849f965e",
+      "bytes": 16108
+    },
+    "workplace/round79-fleet-gui-overlay-t81after.json": {
+      "sha256": "64658ddeb5c8709e4d8fad512fa3a2ab2ce9540b386fce7402aeba52a4e584d2",
+      "bytes": 492
+    },
+    "workplace/round80-music-observe-t81after.go": {
+      "sha256": "feec45e9f609b19637eae2a630b37ba7dfeb70676d2712197f5aeb2925944698",
+      "bytes": 4715
+    },
+    "workplace/round80-effects-observe-t81after.go": {
+      "sha256": "8a0c3cabdd8a49f7dab7d651b12143f6e11882eb009d1965bd9109459c529ae8",
+      "bytes": 2175
+    },
+    "workplace/round80-driver-t81after.py": {
+      "sha256": "4d7513658263edcc2e97f82887fc03a32ac067361252a87353c18eb198c0ccf0",
+      "bytes": 12748
+    },
+    "workplace/round80-plan-source-t81after.go": {
+      "sha256": "9dbec5f267ff2e3644eee3ee230f4ff1debdef933282a206367f8f485c6e6c2c",
+      "bytes": 5215
+    },
+    "workplace/round80-gin3-t81after": {
+      "sha256": "873c4486272ee2b489955158d7d78ea8e27dc194e638266666e73c05c25cdb0e",
+      "bytes": 13820856
+    },
+    "workplace/round79-fleet-gui-game-t81mixed.go": {
+      "sha256": "f60e3a810f47da17eba39dccae8c8a44deb7872f978beba3d2fea16a59fda7a1",
+      "bytes": 13385
+    },
+    "workplace/round79-fleet-gui-main-t81mixed.go": {
+      "sha256": "4e910d8a138020e7eab1b0940cb8441d270021c2c9772ad87c24bc2d849f965e",
+      "bytes": 16108
+    },
+    "workplace/round79-fleet-gui-overlay-t81mixed.json": {
+      "sha256": "3e953697aceda748008e75dd0786f6ad45b5c2ec5770b79148984bbb1f3a697f",
+      "bytes": 492
+    },
+    "workplace/round80-music-observe-t81mixed.go": {
+      "sha256": "feec45e9f609b19637eae2a630b37ba7dfeb70676d2712197f5aeb2925944698",
+      "bytes": 4715
+    },
+    "workplace/round80-effects-observe-t81mixed.go": {
+      "sha256": "8a0c3cabdd8a49f7dab7d651b12143f6e11882eb009d1965bd9109459c529ae8",
+      "bytes": 2175
+    },
+    "workplace/round80-driver-t81mixed.py": {
+      "sha256": "e7efdd153c47e43487ce451366effdb28288fd3e1e9e5687f5863954806b7d1f",
+      "bytes": 12748
+    },
+    "workplace/round80-plan-source-t81mixed.go": {
+      "sha256": "c5ee874257cf5ba0f229b4eaf7bb707792c2a52524e08ad747801e2783102f10",
+      "bytes": 4651
+    },
+    "workplace/round80-gin3-t81mixed": {
+      "sha256": "873c4486272ee2b489955158d7d78ea8e27dc194e638266666e73c05c25cdb0e",
+      "bytes": 13820856
+    },
+    "go.mod": {
+      "sha256": "004db62f790d7f65470065deaab9c94668d1c29278d8dce0597ca2c5d1ff7dcd",
+      "bytes": 543
+    },
+    "go.sum": {
+      "sha256": "a70d74071b28ff11f401f2813c2d511ead23dd468ad32731c49fe7a63ec7b7ab",
+      "bytes": 1770
+    },
+    "cmd/gin3/main.go": {
+      "sha256": "feadd9213b22cea653dc863fd7a3586700723fb7ac6784ac860cf13352461662",
+      "bytes": 13361
+    },
+    "cmd/gin3/music.go": {
+      "sha256": "3f957b372d3221627cb0c2d672a5e9f7038edf27d5814d0b6c5ac46cc9e9fb27",
+      "bytes": 3742
+    },
+    "cmd/gin3/effects.go": {
+      "sha256": "bb4dbc11fec42f971ad346dd2020ce116ff3e7829d22260a15e7c5d6f7259ac9",
+      "bytes": 2021
+    },
+    "cmd/gin3/effects_test.go": {
+      "sha256": "c0ce0035a74779433df954431683a5139c804c6664437815cedc18a07def4344",
+      "bytes": 5740
+    },
+    "internal/game/soundeffects.go": {
+      "sha256": "277ad627636dff777649b4706c61528a964dcdac3727f412bdae36d902f56758",
+      "bytes": 2491
+    },
+    "internal/game/soundeffects_test.go": {
+      "sha256": "087f058737f97d1b71b85b94824ffd3b31ea732052b4674979dbb0a5daa78dae",
+      "bytes": 7335
+    },
+    "docs/spec/105-sound-completion.md": {
+      "sha256": "1bb5b8eb11e4f23957a2da5d38ea3ae3e65981a05ecab7258c32ecc0dcdaf492",
+      "bytes": 3989
+    },
+    "docs/spec/104-fleet-sound.md": {
+      "sha256": "e5cf7d144358432433b9995d503d18e1fbd279d70465d18625f4b5619a6be861",
+      "bytes": 4081
+    },
+    "docs/goal/2026-10-04-sound-tail-round-81.md": {
+      "sha256": "7f9a2c514230a9883cc9399aaf4f5fbc93de00982630a262892370b7c9bca922",
+      "bytes": 1223
+    },
+    "tools/playback.sh": {
+      "sha256": "60fceb85c53e06e1b34502e7da9e30260e802902fd9b30769c66188a5ed735a7",
+      "bytes": 553
+    },
+    "tools/gui.sh": {
+      "sha256": "3f0cd67388775829a3dbec810570558a1bacd1cd0fc89c22babd8c70bf0542b5",
+      "bytes": 1551
+    },
+    "tools/audio.sh": {
+      "sha256": "b424af3b58ca73ec855f03a6a81187dfc35351211c162b2f2b0e147847141bf5",
+      "bytes": 1020
+    },
+    "tools/scripts/playback_sink.py": {
+      "sha256": "60d4ffc786979bbf03ca4b8f077cd8a38ea45404020743a2a87342ba88862e36",
+      "bytes": 3467
+    },
+    "tools/scripts/playback_stats.py": {
+      "sha256": "d4c5409973979cdb2491512ebb134f180474004e6a6b37b76f6e4a30a1a531a7",
+      "bytes": 1529
+    },
+    "tools/scripts/fleet_playback_prepare.py": {
+      "sha256": "b956f0df9c8d2701a06a9a7422f931e8f128bebe179db464cab9ae4d2c2d39d9",
+      "bytes": 5511
+    },
+    "tools/scripts/fleet_player_gui_prepare.py": {
+      "sha256": "8e555699af55c8362df11d01d75d19752c6459b45e1dcf8896bd46d44d491514",
+      "bytes": 4207
+    },
+    "tools/scripts/fleet_player_gui_driver.py": {
+      "sha256": "57023fdf104048be29896c5145d9ade927c3683ea09ce12e61ac952ad2892c55",
+      "bytes": 10005
+    },
+    "tools/scripts/fleet_player_gui_plan.go": {
+      "sha256": "5bde691b580dcf6903e4b2437f2a176b484a953a4adab2acc079e6adf0d7059e",
+      "bytes": 4378
+    },
+    "workplace/round79-input-v2": {
+      "sha256": "e96277183c9f98d36a35cc07ae5f2c38eef1c33994a9b3e4b450a0afedde89cb",
+      "bytes": 4286199
+    },
+    "workplace/round79-capture": {
+      "sha256": "23fd5436619dc7b68f27922f4c14b5501e6639f51ece630b84dbb4200e2b582a",
+      "bytes": 4474819
+    },
+    "workplace/round79-native-check": {
+      "sha256": "d1b0254754c1975393f6f7826ce9afa2b57f54c5db404a1f43ca9e21d546e9ce",
+      "bytes": 3327907
+    },
+    "tools/scripts/sound_tail_gui_prepare.py": {
+      "sha256": "c1dd4648ea2453cb920b3f8757fbb3968a06b678c8b9443f00c9a34f77ca6b6d",
+      "bytes": 5806
+    },
+    "tools/scripts/sound_tail_receipt.py": {
+      "sha256": "d83f856c50e67be687ea1dea3c5deddb55a6f033b6657bdecb3d24a4dcaf3e95",
+      "bytes": 8904
+    },
+    "tools/scripts/sound_tail_gaps.py": {
+      "sha256": "db4f73515ee4543c4a660acddb132c8bf7e2020bd61270b5c0a6f29a9a06dbe9",
+      "bytes": 2156
+    },
+    "tools/scripts/sound_tail_input.go": {
+      "sha256": "c552f7e9ee7b956904ed9f0c1db509171523d64888a7687fae4dbdf22c81ad76",
+      "bytes": 2439
+    },
+    "tools/scripts/sound_tail_compare.py": {
+      "sha256": "be0c53c3f00bfc02ff29e843eed12e57214cf8c7eabd06c1403211ccc7d3ec15",
+      "bytes": 3033
+    },
+    "tools/scripts/sound_tail_probe_prepare.py": {
+      "sha256": "7132fb311c3d8fefa994f894af74d7d25b41734907539d71684e3c55c4ba43e4",
+      "bytes": 4118
+    },
+    "workplace/gomodcache/github.com/ebitengine/oto/v3@v3.3.3/internal/mux/mux.go": {
+      "sha256": "53d85d7d80c6accceebe12a774d771a1507d5a4d82d5eb2fd685069e3b1b8753",
+      "bytes": 11308,
+      "ownership": "唯讀鎖版模組"
+    },
+    "workplace/gomodcache/github.com/hajimehoshi/ebiten/v2@v2.8.8/audio/player.go": {
+      "sha256": "f0b331285f85f668d507c90a8093a516ae6469c4a0e11bfb1bc40058da2534c8",
+      "bytes": 10112,
+      "ownership": "唯讀鎖版模組"
+    },
+    "workplace/gomodcache/github.com/hajimehoshi/ebiten/v2@v2.8.8/audio/audio.go": {
+      "sha256": "aaa58318365dc89435df6e8142f6ad0c7a9fb4cd430971e111b10be81d5f05e0",
+      "bytes": 16068,
+      "ownership": "唯讀鎖版模組"
+    }
+  }
+}

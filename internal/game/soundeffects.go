@@ -7,6 +7,7 @@ import (
 
 type soundEffectsState struct {
 	enabled   bool
+	playing   bool
 	remaining time.Duration
 	events    []int
 }
@@ -30,6 +31,12 @@ func (g *Game) DrainSoundEffects() []int {
 	ids := g.soundEffects.events
 	g.soundEffects.events = nil
 	return ids
+}
+
+// SetSoundEffectPlaying由正式app在Tick前回報實際播放端（規格105）。
+// 名義時長只是下限；後端尚有樣本時，下一段及其首格繼續等待。
+func (g *Game) SetSoundEffectPlaying(playing bool) {
+	g.soundEffects.playing = g.soundEffects.enabled && playing
 }
 
 func (g *Game) advanceSoundEffects(d time.Duration) {
@@ -60,9 +67,9 @@ func (g *Game) processFleetSceneSounds(s *fleetCombatSceneState) {
 		if cue.played || cue.tick > s.tick {
 			continue
 		}
-		if g.soundEffects.remaining > 0 {
+		if g.soundEffects.remaining > 0 || g.soundEffects.playing {
 			d := g.engagementTickDuration()
-			delay := int((g.soundEffects.remaining + d - 1) / d)
+			delay := max(1, int((g.soundEffects.remaining+d-1)/d))
 			for p := cue.pictureAt; p < len(s.pictures); p++ {
 				s.pictures[p].tick += delay
 			}

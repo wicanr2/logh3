@@ -565,3 +565,10 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [正常GUI播放觀測](../../tools/scripts/fleet_playback_prepare.py)：沿第79輪真實X11，開正式音效等待，只記實際播放器生命週期及輸出連線，舊工具不改。
 - [播放來源凍結器](../../tools/scripts/fleet_playback_receipt.py)與[完整播放索引](data/fleet-playback.json)：綁固定映像、正式PCM、正常兩陣營及未解音效收尾，實體音效卡與人耳仍待驗。
 - [正式播放驗證069](../playtest/069-fleet-playback.md)：Linux裝置誤判修正、正常X11混音輸出與四次音效收尾觀測；不升格真機、聆聽或完整原版同態。
+- [第81輪音效尾端](../goal/2026-10-04-sound-tail-round-81.md)與[正式PCM局部探針](../../tools/scripts/sound_tail_probe_prepare.py)：由真正ALSA輸出核28段與舊替換方式，只讀Oto buffer，不合成測試音源。
+- [音效全PCM核對](../../tools/scripts/sound_tail_compare.py)及[正常關配樂GUI](../../tools/scripts/sound_tail_gui_prepare.py)：由正式熱區送公開輸入，沿真正monitor比完整音效，不用Position估計尾端。
+- [插入靜音分類](../../tools/scripts/sound_tail_gaps.py)保留全檔失敗，再核整段尾端；[常駐XTEST放開](../../tools/scripts/sound_tail_input.go)由正式輸入邊緣觸發，不改遊戲時鐘。
+- [105正式音效完成回報](../spec/105-sound-completion.md)：104的完成等待接到實際後端，PCM與buffer共同核截短。
+- [第81輪播放索引生成](../../tools/scripts/sound_tail_receipt.py)：固定修正前後完整PCM、buffer、正常GUI與保存來源。
+- [驗證070正式音效完整尾端](../playtest/070-sound-tail.md)：正常兩陣營關配樂，核完整來源與真正後端完成。
+- [正式音效尾端索引](data/sound-tail.json)：521份來源、修正前後PCM及正常玩家完整輸入，綁父提交1993f1a。

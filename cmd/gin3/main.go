@@ -87,6 +87,9 @@ func (a *app) syncMusic() error {
 }
 
 func (a *app) Update() error {
+	// 正式播放器完成才允許下一音效及圖段首格（規格105）。
+	// 只看名義時長會在更新追趕時關掉仍有樣本的播放器。
+	a.g.SetSoundEffectPlaying(a.effects != nil && a.effects.Busy())
 	// 時間往前走一格。目前只有開頭動畫在用（一格 125.3 ms，
 	// `docs/spec/020`）；其他畫面都是事件驅動的。
 	a.g.Tick(time.Second / time.Duration(ebiten.TPS()))
