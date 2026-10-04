@@ -66,7 +66,7 @@ func (g *Game) annihilationReport(f *rules.Fleet) turnReport {
 	b = append(b, p.FleetNumber(f.Number)...)
 	b = append(b, ui.Sprintf(p.ReportFormat("annihilated_body"),
 		codesBig5(g.admiralNameCodes(f.Admiral)),
-		codesBig5(g.rankCodes(rules.RankOf(byteAt(adm, admiralMeritOff)))))...)
+		codesBig5(g.admiralRankCodes(adm)))...)
 	b = append(b, p.ReportFormat("annihilated_tail")...)
 	return turnReport{text: b, face: f.Admiral}
 }

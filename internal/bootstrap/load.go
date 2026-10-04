@@ -307,6 +307,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	promotion, err := rules.LoadPromotionSpec(filepath.Join(data, "admiral-promotion-spec.json"))
+	if err != nil {
+		return nil, err
+	}
 	shipKinds, err := rules.LoadShipKindTable(filepath.Join(data, "ship-kind-table.json"))
 	if err != nil {
 		return nil, err
@@ -434,6 +438,7 @@ func Load(orig, data string) (*game.Resources, error) {
 		RegionInfo:          regionInfo,
 		OccupyAsk:           occupyAsk,
 		TurnWindow:          turnWindow,
+		Promotion:           promotion,
 		ListScreen:          listScreen,
 		Engagement:          engagement,
 		FleetPresentation:   fleetPresentation,

@@ -464,7 +464,7 @@ func (g *Game) fleetWindowView() (*screen.FleetWindowView, *asset.Image) {
 	v := &screen.FleetWindowView{
 		Faction: f.Faction, Number: f.Number,
 		CmdName:  codesBig5(g.admiralNameCodes(f.Admiral)),
-		CmdRank:  codesBig5(g.rankCodes(rules.RankOf(byteAt(adm, admiralMeritOff)))),
+		CmdRank:  codesBig5(g.admiralRankCodes(adm)),
 		CmdLevel: byteAt(adm, admiralMeritOff), CmdExp: u32At(adm, admiralExpOff),
 		Move: f.Move, Target: f.Target,
 		RegionName: codesBig5(g.regionName(f.Region)), RegionOwner: g.res.Planets.RegionOwner(f.Region),
@@ -493,7 +493,7 @@ func (g *Game) fleetWindowView() (*screen.FleetWindowView, *asset.Image) {
 	if adj != nil {
 		v.AdjPresent = true
 		v.AdjName = codesBig5(g.admiralNameCodes(f.Adjutant))
-		v.AdjRank = codesBig5(g.rankCodes(rules.RankOf(byteAt(adj, admiralMeritOff))))
+		v.AdjRank = codesBig5(g.admiralRankCodes(adj))
 		v.AdjLevel, v.AdjExp = byteAt(adj, admiralMeritOff), u32At(adj, admiralExpOff)
 	}
 	// 編制、飛彈／戰鬥機存量、速度：有艦艇池就讀艦艇記錄，沒有（新遊戲

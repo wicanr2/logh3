@@ -351,8 +351,9 @@ type Resources struct {
 	// StarMaps 是「照某一組星域色重建的地圖」，key 是規格的 `map.colours`
 	// 欄位名。空字串那一份就是 StarMap（勢力色）。情報報告用治安色、
 	// 星系資料又是另一組，所以不能共用同一張。
-	StarMaps map[string]*asset.Image
-	Admiral  []byte // ADMIRAL.DT*，防拷問答的答案在裡面
+	StarMaps  map[string]*asset.Image
+	Admiral   []byte               // ADMIRAL.DT*，防拷問答的答案在裡面
+	Promotion *rules.PromotionSpec // 108：40個功績門檻及兩陣營12級軍階
 
 	// RegionPanel 是左下角星域摘要那塊的版面（規格 `docs/spec/001`），
 	// CapitalPanel 是右側那塊（`docs/spec/002`）。
@@ -997,14 +998,15 @@ type Game struct {
 	// 游標的方位算，按下左鍵才寫進行星記錄的 `+0x50`。
 	battleGunAim int
 
-	battleRally      []rules.RallySite
-	battlePlanets    []rules.BattlePlanet
-	battleRand       *rules.Rand
-	battleLosses     []rules.BattleLoss
-	battleScore      [2]int
-	battleFleetScore [2]int // 102已立即入campaignScore，EndBattle不重複計入。
-	campaignScore    [2]int
-	battleOver       bool
+	battleRally          []rules.RallySite
+	battlePlanets        []rules.BattlePlanet
+	battleRand           *rules.Rand
+	battlePromotionPaths *rules.UnrestPaths // 本次戰略處理開始的路徑快取，跨8-2保留
+	battleLosses         []rules.BattleLoss
+	battleScore          [2]int
+	battleFleetScore     [2]int // 102已立即入campaignScore，EndBattle不重複計入。
+	campaignScore        [2]int
+	battleOver           bool
 
 	// work／admirals 是這一局**可寫**的 `WORK` 區塊與提督表。
 	//
@@ -1092,6 +1094,7 @@ func (g *Game) advanceTurn() {
 // beginTurn 清除地圖標記，月初實行後結算玩家之後的座位（規格035）。
 // 回合計數器保持，直到所有戰場與回合尾段完成（規格088）。
 func (g *Game) beginTurn() {
+	g.cacheBattlePromotionPaths()
 	g.mapMark = -1 // `04F8:02E7` 的 `3705:0349(1)`
 	g.setActiveSeat(1)
 	g.monthEndSeatsAfterPlayer()
@@ -2097,12 +2100,15 @@ func New(res *Resources) (*Game, error) {
 // 未安定度是唯一一欄載進來還不對的（原版載入時重算，算式未解，
 // `docs/re/24`）。要對畫面的地方得自己 `Slot.SetUnrest` 蓋成量到的值。
 func (g *Game) LoadSlot(sl *rules.Slot) {
+	g.battlePromotionPaths = nil
 	g.LeftRelease()
 	g.standbyScroll = 0
 	g.versusLoadedRound = false
 	g.monthSettlementPending = false
 	g.budgetTaxRefreshed = false
 	g.slot = sl
+	g.res.Admiral = sl.Admiral
+	g.admirals = nil
 	g.work = nil
 	g.pendingRebellionReports = nil
 	g.rebellionReports = nil
@@ -4263,7 +4269,7 @@ func (g *Game) admiralView(i int) (screen.AdmiralView, bool) {
 	if i < len(g.res.AdmiralNames) {
 		v.Name = g.res.AdmiralNames[i]
 	}
-	v.Rank = g.rankCodes(rules.RankOf(rules.AdmiralLevel(rec)))
+	v.Rank = g.admiralRankCodes(rec)
 	// 現在位置是提督記錄的 `+0x0A`（`0D92:00B7`）；待命中的提督站在自己
 	// 陣營的首都。
 	if r := rules.AdmiralRegion(rec); r >= 0 {
@@ -4352,8 +4358,8 @@ func (g *Game) drawFleetOrgFor(fb *gfx.Framebuffer, i, adj, number int) {
 	if adj >= 0 && adj < len(g.res.AdmiralNames) {
 		v.AdjutantName = g.res.AdmiralNames[adj]
 	}
-	v.AdmiralRank = g.rankCodes(rules.RankOf(v.AdmiralLevel))
-	v.AdjutantRank = g.rankCodes(rules.RankOf(v.AdjutantLevel))
+	v.AdmiralRank = g.admiralRankCodes(rec)
+	v.AdjutantRank = g.admiralRankCodes(arec)
 	// 旗艦名照提督在自己陣營裡的序號查（`07F9:063F` 走 `ds:6428` 那張每人一筆的
 	// 表），**不看 `+0x07`**：卸任之後副官是 0xFF，伯倫希爾仍然印著
 	// （收據 `fcmd-adj-dismiss`）。詳細資料那張的「沒副官就不印旗艦」是另一支。
@@ -4751,10 +4757,11 @@ func (g *Game) setListRows(spec *screen.MainGameSpec) {
 			name = g.res.AdmiralNames[a.Index]
 		}
 		spec.ListRows = append(spec.ListRows, screen.ListRow{
-			Staff:  isStaff[a.Index],
-			Sortie: rules.AdmiralDutyOf(a.Record) == rules.DutySortie,
-			Name:   name,
-			Rank:   rules.RankOf(a.Merit),
+			Staff:     isStaff[a.Index],
+			Sortie:    rules.AdmiralDutyOf(a.Record) == rules.DutySortie,
+			Name:      name,
+			Rank:      rules.RankOf(a.Merit),
+			RankCodes: g.admiralRankCodes(a.Record),
 		})
 		g.listIndex = append(g.listIndex, a.Index)
 	}
@@ -4813,17 +4820,20 @@ func (g *Game) staffAdmiral(post int) (name, rank []uint16) {
 	name = g.res.AdmiralNames[i]
 	all := rules.ParseAdmirals(g.res.Admiral)
 	if i < len(all) {
-		rank = g.rankCodes(rules.RankOf(all[i].Merit))
+		rank = g.admiralRankCodes(all[i].Record)
 	}
 	return name, rank
 }
 
-// rankCodes 回某一階的字碼。
-//
-// 十個軍階的字碼**只量過一份**，在提督資料那張畫面的規格裡
-// （`screen-admiral-list-view.json` 的 `list.ranks`）。再抄一份到別的
-// 資料檔就會有兩個真相，所以這裡直接跟那一份要。
-func (g *Game) rankCodes(rank int) []uint16 {
+// rankCodes 共用108的兩陣營軍階。舊畫面表只供缺升級資源的局部診斷。
+func (g *Game) rankCodes(rank int, faction ...int) []uint16 {
+	if g.res.Promotion != nil {
+		f := 0
+		if len(faction) > 0 {
+			f = faction[0]
+		}
+		return g.res.Promotion.RankCodes(f, rank)
+	}
 	s := g.res.Screens["screen-admiral-list-view"]
 	if s == nil || rank < 0 {
 		return nil

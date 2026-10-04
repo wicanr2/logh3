@@ -26,7 +26,7 @@ type ListSpec struct {
 	// （★；`+0x09` 低七位是艦隊槽，`docs/re/323`）。
 	StaffMark  uint16 `json:"staff_mark"`
 	SortieMark uint16 `json:"sortie_mark"`
-	// Ranks 是十個軍階的字碼，由低到高，對上 rules.RankNames。
+	// Ranks 是舊畫面資料的十級軍階；正式Game沿108以ListRow.RankCodes提供兩側12級。
 	Ranks [][]uint16 `json:"ranks"`
 
 	// 星系清單那張的欄位：兩個艦隊數是半形數字，中間夾一個全形的「﹕」。
@@ -51,11 +51,12 @@ type ListCell struct {
 // 提督清單用 Staff／Name／Rank 三段固定欄位；星系清單那種欄位不一樣的，
 // 由呼叫端算好座標放進 Cells。
 type ListRow struct {
-	Staff  bool
-	Sortie bool
-	Name   []uint16
-	Rank   int
-	Cells  []ListCell
+	Staff     bool
+	Sortie    bool
+	Name      []uint16
+	Rank      int
+	RankCodes []uint16 // 108：呼叫端提供記錄自身陣營的12級軍階
+	Cells     []ListCell
 }
 
 // Draw 畫清單的列。超過 Rows 的部分不畫——原版一頁就十六列。
@@ -101,8 +102,12 @@ func (l *ListSpec) drawIn(fb *gfx.Framebuffer, fnt *font.Font, rows []ListRow,
 		for j, c := range r.Name {
 			draw(l.NameX+j*font.GlyphW, c)
 		}
-		if len(r.Name) > 0 && r.Rank >= 0 && r.Rank < len(l.Ranks) {
-			for j, c := range l.Ranks[r.Rank] {
+		rank := r.RankCodes
+		if rank == nil && r.Rank >= 0 && r.Rank < len(l.Ranks) {
+			rank = l.Ranks[r.Rank]
+		}
+		if len(r.Name) > 0 {
+			for j, c := range rank {
 				draw(l.RankX+j*font.GlyphW, c)
 			}
 		}

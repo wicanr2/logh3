@@ -1,0 +1,310 @@
+{
+  "schema": "logh3.battle-promotion-cache.v1",
+  "grade": "proven",
+  "scope": "兩個固定8-4入口診斷，一個星域歸屬變更、一個同值控制對照；非正常占領流程",
+  "oracle_identity": {
+    "command": "bash tools/battle_promotion_cache_oracle.sh <a|b>",
+    "dosgolem_dirty": false,
+    "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "go_version": "go1.24.13",
+    "observer_parent_sha256": "a61e1b4d5d9b5e4a55ba63bcd08713b0823ad1d168ea5c2796c233f78dcebb34",
+    "parent_state_sha256": "598e10e5f9457842275fa5639219636f322d8bb2e0f8393fe25b93bfbdef0cfe",
+    "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+    "schema": "logh3.battle-promotion-cache-native.v1",
+    "scope": "完整保存自然到8-4，入口明示注入；停8-5，非正常玩家GUI、非完整回合同態。",
+    "seed": "0x12345678",
+    "tick": 20000,
+    "uid": 1000
+  },
+  "original_json_sha256": "c724ea9bf26aaf922eda7bc322627cd00383139894fb343b379a2ff7d136f861",
+  "model": {
+    "cases": [
+      {
+        "admiral_input_sha256": "f01493c16b021b1990f6098aae90c0e8bd0a1e1f9f28811a50221d8cf4f4cc21",
+        "fleet_input_sha256": "58a63825d2969fe7397bb050ade8e6089eb8e0770d5876ffb0d40f8bedf337fd",
+        "location": "185C:066E",
+        "move": [
+          0,
+          0
+        ],
+        "name": "fleet12-level26-exp20000-human0-adj-1-pattern8",
+        "path_sha256": "5e8673114685ca801dc9a55ce8bcf7a9e23af9d91a7c23f22f1c036bb30d70fd",
+        "planet_sha256": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "premature_rebuilt_different_entries": 684,
+        "ship_input_sha256": "8c5802a28bbeccff9b7a06e84c6b2663c589b04cc52716b91de7b23e39533ee2",
+        "stellar_differences": [],
+        "stellar_sha256": "41fa37127be241ca74935bb847c6feefd98b83cd2bdeb0d1d2f5488ff5a87838",
+        "step": 1188235836,
+        "tax": [
+          12988,
+          10035
+        ],
+        "upkeep": [
+          2342,
+          949
+        ],
+        "work_differences": [],
+        "work_sha256": "bd7c7ec70344bd66a9afcf3bf4ea3c4939659f0840d60fd54c95ef76aae5e708"
+      },
+      {
+        "admiral_input_sha256": "f9666dbd13b58fd1cbd374a1254afd3f1154a3a41a2bcd977e0a32d2425a94d8",
+        "fleet_input_sha256": "62b7d2af29797f541729036b05b6a0f581ccbe09e760cf734da2b8dc100e89da",
+        "location": "185C:066E",
+        "move": [
+          0,
+          0
+        ],
+        "name": "fleet16-level26-exp20000-human0-adj-1-pattern9",
+        "path_sha256": "5e8673114685ca801dc9a55ce8bcf7a9e23af9d91a7c23f22f1c036bb30d70fd",
+        "planet_sha256": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "premature_rebuilt_different_entries": 0,
+        "ship_input_sha256": "8183af09275b5d651a77061cf2eda5bdf82ef97079c911c013f3a4e10277800b",
+        "stellar_differences": [],
+        "stellar_sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c",
+        "step": 1188234474,
+        "tax": [
+          13201,
+          9822
+        ],
+        "upkeep": [
+          2342,
+          978
+        ],
+        "work_differences": [],
+        "work_sha256": "e75b2ee05ca9f19dd6af655c1848ff96455953a74a15eb37090fb39708c2afc7"
+      }
+    ],
+    "checkpoints": 2,
+    "different_bytes": 0,
+    "finals": [
+      {
+        "name": "fleet12-level26-exp20000-human0-adj-1-pattern8",
+        "planet_sha256": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "stellar_sha256": "41fa37127be241ca74935bb847c6feefd98b83cd2bdeb0d1d2f5488ff5a87838",
+        "work_sha256": "bd7c7ec70344bd66a9afcf3bf4ea3c4939659f0840d60fd54c95ef76aae5e708"
+      },
+      {
+        "name": "fleet16-level26-exp20000-human0-adj-1-pattern9",
+        "planet_sha256": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+        "stellar_sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c",
+        "work_sha256": "e75b2ee05ca9f19dd6af655c1848ff96455953a74a15eb37090fb39708c2afc7"
+      }
+    ],
+    "params_constants": {
+      "Turn": 380,
+      "Ruler": [
+        16,
+        60
+      ],
+      "Blend": [
+        1,
+        2
+      ],
+      "Rate": [
+        2,
+        2
+      ],
+      "Table": [
+        170,
+        150,
+        130,
+        90,
+        60
+      ],
+      "Base": [
+        50,
+        75,
+        100,
+        150,
+        200
+      ]
+    },
+    "parent_planet_sha256": "f9b7187616cbff443305f9747c4dd80f3ba117f218815d49bb4a12c1b9736789",
+    "schema": "logh3.battle-promotion-cache-model.v2",
+    "scope": "DRAFT診斷組合；已由第85輪核過的admiral/fleet作輸入，行星固定；路徑從重算前歸屬獨立建立並核返回後EMS，不把映射圖像的frame當路徑"
+  },
+  "injections": [
+    {
+      "name": "fleet12-level26-exp20000-human0-adj-1-pattern8",
+      "case": [
+        12,
+        26,
+        20000,
+        0,
+        -1,
+        8
+      ],
+      "injections": [
+        {
+          "hex": "78563412",
+          "linear": "lin:5E00C"
+        },
+        {
+          "hex": "01",
+          "linear": "lin:5E3C4"
+        },
+        {
+          "hex": "0c",
+          "linear": "lin:5E3C8"
+        },
+        {
+          "hex": "00",
+          "linear": "lin:5DA55"
+        },
+        {
+          "hex": "0000",
+          "linear": "lin:5DA68"
+        },
+        {
+          "hex": "0101",
+          "linear": "lin:5DA51"
+        },
+        {
+          "hex": "ff",
+          "linear": "lin:61161"
+        },
+        {
+          "hex": "204e0000",
+          "linear": "lin:603FE"
+        },
+        {
+          "hex": "1a",
+          "linear": "lin:60402"
+        },
+        {
+          "hex": "01",
+          "linear": "lin:5F944"
+        }
+      ],
+      "seed_after_hex": "907cc76a",
+      "steps": 278661
+    },
+    {
+      "name": "fleet16-level26-exp20000-human0-adj-1-pattern9",
+      "case": [
+        16,
+        26,
+        20000,
+        0,
+        -1,
+        9
+      ],
+      "injections": [
+        {
+          "hex": "78563412",
+          "linear": "lin:5E00C"
+        },
+        {
+          "hex": "01",
+          "linear": "lin:5E3C4"
+        },
+        {
+          "hex": "10",
+          "linear": "lin:5E3C8"
+        },
+        {
+          "hex": "00",
+          "linear": "lin:5DA55"
+        },
+        {
+          "hex": "0000",
+          "linear": "lin:5DA68"
+        },
+        {
+          "hex": "0101",
+          "linear": "lin:5DA51"
+        },
+        {
+          "hex": "ff",
+          "linear": "lin:61349"
+        },
+        {
+          "hex": "204e0000",
+          "linear": "lin:6070E"
+        },
+        {
+          "hex": "1a",
+          "linear": "lin:60712"
+        },
+        {
+          "hex": "00",
+          "linear": "lin:600A6"
+        }
+      ],
+      "seed_after_hex": "9a343c25",
+      "steps": 277298
+    }
+  ],
+  "sources": [
+    {
+      "path": "workplace/promotion79-r87-cache-a.json",
+      "bytes": 668026,
+      "sha256": "c724ea9bf26aaf922eda7bc322627cd00383139894fb343b379a2ff7d136f861"
+    },
+    {
+      "path": "workplace/promotion79-r87-cache-b.json",
+      "bytes": 668026,
+      "sha256": "c724ea9bf26aaf922eda7bc322627cd00383139894fb343b379a2ff7d136f861"
+    },
+    {
+      "path": "workplace/promotion79-r87-cache.go",
+      "bytes": 11972,
+      "sha256": "2466759770435934a9e9d4f87d4110e783d23f7343a046cd42febc17f9bfd361"
+    },
+    {
+      "path": "workplace/promotion79-r87-cache-model-v2.go",
+      "bytes": 7349,
+      "sha256": "603f45b9e46b8dfb0948237ffabd7371d0f8e962a0e900b095f748053b5c5963"
+    },
+    {
+      "path": "workplace/promotion79-r87-cache-model-v2.json",
+      "bytes": 3518,
+      "sha256": "4235ac634f6b89c847d724adc308abf854f5f741873cdb17a8b69f4e0ddaa479"
+    },
+    {
+      "path": "workplace/promotion79-r86-global-a.json",
+      "bytes": 24871318,
+      "sha256": "2bc8fa7bf8dc4081fad414d23e7bfeabb76cd8df510d53f3442136283cb1a435"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_global_probe.go",
+      "bytes": 6738,
+      "sha256": "0af869de9fa1f669d5c498e3f15450f91d00e72a4550ff3f64bd70ecdc05e129"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_cache_prepare.py",
+      "bytes": 2838,
+      "sha256": "0a839a24395563258f22b45459fd3663ed08530223b7b79737f932fda2873e31"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_cache_receipt.py",
+      "bytes": 3185,
+      "sha256": "9fd41fe72263ad19777011a52e9270dceb8366f50849455bd722a197b8c6ade6"
+    },
+    {
+      "path": "tools/battle_promotion_cache_oracle.sh",
+      "bytes": 844,
+      "sha256": "d1420ebd1a00c97107119267b09ddc1cd98ac2860272221dec5942ab960b8e9d"
+    },
+    {
+      "path": "tools/battle_promotion_cache_native_run.sh",
+      "bytes": 520,
+      "sha256": "96cb017e3d96236d9e7f755c3aeffd0755e76f56aa4de5976f64361077868ab2"
+    },
+    {
+      "path": "docs/internals/data/star-graph.json",
+      "bytes": 24694,
+      "sha256": "9b4e5fa5a707d2f90f86401c84f4bf9e569f248112d7b486fdd55cc030baf4f3"
+    },
+    {
+      "path": "workplace/oracle/ownership79-r82-entry-a/mem-in.bin",
+      "bytes": 1048576,
+      "sha256": "b905eda112fd3a78292bc0d1cdc10068703e0291968640cbaa0d150404404900"
+    },
+    {
+      "path": "workplace/oracle/ownership79-r82-entry-a/entry.state",
+      "bytes": 260250,
+      "sha256": "598e10e5f9457842275fa5639219636f322d8bb2e0f8393fe25b93bfbdef0cfe"
+    }
+  ]
+}

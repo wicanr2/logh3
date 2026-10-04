@@ -1,5 +1,11 @@
 # 原版內部構造參考
 
+第87輪沿#79：[升級資料與保存計畫](../goal/2026-10-05-battle-promotion-save-round-87.md)。
+[路徑快取診斷產生器](../../tools/scripts/battle_promotion_cache_prepare.py)、
+[原版雙跑](../../tools/battle_promotion_cache_oracle.sh)及[容器入口](../../tools/battle_promotion_cache_native_run.sh)區分星域換手與路徑重建時點。
+[快取凍結器](../../tools/scripts/battle_promotion_cache_receipt.py)產生[快取來源](data/battle-promotion-cache.json)，
+[研究421](../re/421-battle-promotion-save.md)記錄快取時點與現行保存覆寫邊界。
+
 第86輪沿#79：[戰場升級全局回寫計畫](../goal/2026-10-04-battle-promotion-global-round-86.md)。
 108保持DRAFT，全局完整表已核；剩typed窄回寫契約與正式玩家接線。
 [全局組合探針](../../tools/scripts/battle_promotion_global_probe.go)以第85輪已核的提督／艦隊資料與明示父RAM輸入驗算。
@@ -661,3 +667,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [戰術星域歸屬研究416](../re/416-battle-ownership.md)與[106子規格](../spec/106-battle-region-ownership.md)：三方行星數、通知等待、歸屬寫入及費沙登記時點。
 - [正式8-2規則及原版回歸](../../internal/game/battleownership_test.go)：156案完整記錄及無遮罩報告矩形；完整062仍DRAFT。
 - [正常首戰Game基準](../../tools/scripts/battle_ownership_player_entry.go)：同版本bootstrap及公開輸入，供既有turn_counter_gui.sh一倍／兩倍回歸；不宣稱正常占領報告。
+
+- [108正式升級資料生成](../../tools/scripts/battle_promotion_spec.py)、[唯一軍階與門檻表](data/admiral-promotion-spec.json)、[原池升級規則](../../internal/rules/promotion.go)與[Game接線](../../internal/game/promotion.go)：固定證據輸入、原子回寫五表、跨換手路徑快取及逐則等待。
+- [升級規則對拍](../../internal/rules/promotion_test.go)、[Game報告與保存對拍](../../internal/game/promotion_test.go)及[正常玩家重播](../../tools/scripts/battle_promotion_player.go)：固定原版逐次五表與亂數；正常公開入口另驗續接與存進度。
+- [升級正式來源凍結器](../../tools/scripts/battle_promotion_game_receipt.py)、[完整產品來源](data/battle-promotion-game.json)與[驗證076](../playtest/076-battle-promotion-game.md)：控制案原版對拍、正常玩家續接、首戰GUI及尚未驗收的輸入鏈分開記錄。

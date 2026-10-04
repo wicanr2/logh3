@@ -51,15 +51,13 @@ func StaffAdmiral(work []byte, post, faction int) int {
 
 // RankNames 是軍階由低到高。`RankOf` 回的是這個陣列的索引。
 var RankNames = []string{
-	"少尉", "中尉", "上尉", "少校", "中校", "上校", "准將", "少將", "中將", "上將",
+	"少尉", "中尉", "上尉", "少校", "中校", "上校", "准將", "少將", "中將", "上將", "一級上將", "元帥",
 }
 
 // rankSteps 是每一階的下限（`+0x06`）。
 //
-// 量到的對應（27 個資料點，收據 `lst2e`／`sortie1e`／`s3sortie`）：
-// 4→上尉、6→少校、12→上校、15→上校、16→准將、20→少將、24→中將、29→上將。
-// 15 與 12 同階、29 以上都是上將，所以是**分段**不是查表。
-var rankSteps = []int{0, 2, 4, 6, 8, 12, 16, 20, 24, 28}
+// 原版28E0:004F的12級下限，已核原始指令與兩陣營字串（規格108）。
+var rankSteps = []int{0, 2, 4, 6, 8, 12, 16, 20, 24, 29, 34, 39}
 
 // Admiral 是提督表一筆解出來的樣子。
 type Admiral struct {
@@ -97,7 +95,13 @@ func RankOf(merit int) int {
 }
 
 // Rank 回這名提督的軍階名稱。
-func (a Admiral) Rank() string { return RankNames[RankOf(a.Merit)] }
+func (a Admiral) Rank() string {
+	rank := RankOf(a.Merit)
+	if a.Faction == 1 && rank == 10 {
+		return RankNames[9]
+	}
+	return RankNames[rank]
+}
 
 // AdmiralList 回某個陣營的提督，照提督表的順序。
 //

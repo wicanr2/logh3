@@ -7,9 +7,9 @@ import (
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
-// 185C:0491，規格107。8-2全部返回後才開始，8-4／8-5另續。
+// 185C:0491，規格107。8-2全部返回後才開始，再接108的8-4。
 func (g *Game) finishBattleScoutFuel() {
-	g.battleScoutFuelPhase(0, g.endBattleTurn)
+	g.battleScoutFuelPhase(0, g.finishBattlePromotions)
 }
 
 func (g *Game) battleScoutFuelPhase(i int, next func()) {

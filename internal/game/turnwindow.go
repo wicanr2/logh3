@@ -68,7 +68,7 @@ func (g *Game) openTurnWindow(i int, kind screen.TurnWindowKind, from int, plan 
 	}
 	adm := g.admiralRec(f.Admiral)
 	v.AdmiralName = codesBig5(g.admiralNameCodes(f.Admiral))
-	v.Rank = codesBig5(g.rankCodes(rules.RankOf(byteAt(adm, admiralMeritOff))))
+	v.Rank = codesBig5(g.admiralRankCodes(adm))
 	w := turnWindowState{fleet: i, face: f.Admiral, from: -1, next: -1, resume: g.state, apply: apply}
 	if kind == screen.TurnWindowDepart {
 		w.from, w.next = from, plan.Next

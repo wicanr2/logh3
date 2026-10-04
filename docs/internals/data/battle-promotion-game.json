@@ -1,0 +1,1522 @@
+{
+  "schema": "logh3.battle-promotion-game.v1",
+  "parent_commit": "b501420f46eb55314b1d9430fc931ce700ae1a79",
+  "oracle_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "build_images": [
+    "golang:1.24-bookworm",
+    "logh3-ebiten:2"
+  ],
+  "scope": "66控制案／121嘗試／53次五表／473RND；11則報告矩形與有效16色；9案六檔診斷存讀；2快取控制；正常S3公開實行及保存雙跑、首戰X11兩倍率。",
+  "limitations": "108 READY；自然累積功績升級、正常升級GUI、8-1清空分隊到8-4輸入鏈、8-5及完整062原版同態仍未驗。診斷空白底圖全圖差異不豁免。",
+  "summary": {
+    "cases": 66,
+    "attempts": 121,
+    "upgrades": 53,
+    "rnd": 473,
+    "reports": 11,
+    "save_cases": 9,
+    "cache_cases": 2,
+    "standard_pass": 13,
+    "standard_without_tests": 5
+  },
+  "comparisons": [
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-frame0-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-frame0-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame0-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame1-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame2-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-frame0-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-frame1-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-frame0-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-frame1-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-frame0-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-frame0-comparison.json",
+      "background": "blank diagnostic; full-frame differences retained",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "scope": "same-state controlled report window only",
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    }
+  ],
+  "normal_replay": {
+    "battle_work_turn": 1,
+    "classification": "normal bootstrap/public input; no original full-path parity claim",
+    "no_state_injection": true,
+    "promotion_scope": "first normal turn continuation; no natural promotion claim",
+    "rng_setup": "product default; no seed injection",
+    "state": "StateSaveGame",
+    "strategic_turn": 380
+  },
+  "sources": [
+    {
+      "path": "docs/internals/data/admiral-promotion-spec.json",
+      "bytes": 3153,
+      "sha256": "4d5680191e4fe51ebbf81b477287c1d03eac0f5394ada511c2505203df66af80"
+    },
+    {
+      "path": "docs/internals/data/battle-menu.json",
+      "bytes": 3059,
+      "sha256": "719fa4890cba8a08127f673b3a7d454e9a6bef9d6c29bd9cc87accf829584996"
+    },
+    {
+      "path": "docs/internals/data/battle-promotion-cache.json",
+      "bytes": 9380,
+      "sha256": "ec3f909258f5c1c5746e8046733c4bd0eaea886a31c3df05ba05feebf07ed59f"
+    },
+    {
+      "path": "docs/internals/data/battle-promotion-global.json",
+      "bytes": 475742,
+      "sha256": "38db9c02ae4f4883f13d4cb5fc5316620b23b4e179eb5ecbfb4332cbb13d81b6"
+    },
+    {
+      "path": "docs/internals/data/battle-promotion-recalc-v2.json",
+      "bytes": 893901,
+      "sha256": "cda14b5b122e4e875a825948c61194c96b534a07c7a563c770b26570b35291e6"
+    },
+    {
+      "path": "docs/internals/data/fleet-editor.json",
+      "bytes": 10096,
+      "sha256": "63a56709b266a26229f2620f248ea90f191b7491fb250e4652457e55e3b162d0"
+    },
+    {
+      "path": "docs/internals/data/fleet-window.json",
+      "bytes": 4136,
+      "sha256": "fbc320e188fc3388c5b7b7f08b9f7a0202b160d21a3cd4b06c3c141a9cc4842b"
+    },
+    {
+      "path": "docs/internals/data/ship-kind-table.json",
+      "bytes": 6309,
+      "sha256": "1d67b16a9617d6a0eb09391e69d8853c7c53f232f26c89bf74fef4fca3d42895"
+    },
+    {
+      "path": "docs/internals/data/star-graph.json",
+      "bytes": 24694,
+      "sha256": "9b4e5fa5a707d2f90f86401c84f4bf9e569f248112d7b486fdd55cc030baf4f3"
+    },
+    {
+      "path": "docs/internals/data/turn-window-panel.json",
+      "bytes": 6875,
+      "sha256": "5c7fe4f647032121bc3d0b2b1401f47451b4e414a68cf38eb17c99e641e20cf6"
+    },
+    {
+      "path": "internal/bootstrap/load.go",
+      "bytes": 20586,
+      "sha256": "9bb70372b9868d5518194019ad49397112c7a153f9021cbea0c1b5061d10dd42"
+    },
+    {
+      "path": "internal/game/annihilation.go",
+      "bytes": 3527,
+      "sha256": "936ec77bd73f261bb23823cb69dd19922d2f9e9a67f71f5b21816bd560a220c0"
+    },
+    {
+      "path": "internal/game/battle.go",
+      "bytes": 18179,
+      "sha256": "cecaa90b024d25deb99cedbad0e41abbc332fe2e3b21387ff7786a59e6d853fc"
+    },
+    {
+      "path": "internal/game/battle_test.go",
+      "bytes": 8682,
+      "sha256": "db9c5e61efee745e7b3c3f1a68a994f4b3dbf7fe716bfdcccd328e0fe9cbce0e"
+    },
+    {
+      "path": "internal/game/battlefinal.go",
+      "bytes": 4940,
+      "sha256": "b5c3e4aa6106bcadaa7465f70db42583b25f85c5147a99189d1eeb4489645ef0"
+    },
+    {
+      "path": "internal/game/fleetadj.go",
+      "bytes": 10530,
+      "sha256": "d385fc50576346d107867cf5ba567a01301dd18c5b4e209ff2c7858b8386eba2"
+    },
+    {
+      "path": "internal/game/fleetcmd.go",
+      "bytes": 26602,
+      "sha256": "2f50c6bb3e17d031b88f0c1f97ab747fef8a3fdf4ab3efab63f46ed781ac38e5"
+    },
+    {
+      "path": "internal/game/fleetdetail.go",
+      "bytes": 6033,
+      "sha256": "5734e89a009afd530236e81214f687dc6251ed67017bf2157e9f496a6c0ed00b"
+    },
+    {
+      "path": "internal/game/game.go",
+      "bytes": 203190,
+      "sha256": "3d4742929187f5e22c5dc41c2c1eabdd02fc965e43fce3bfaf46730d519a6d3f"
+    },
+    {
+      "path": "internal/game/game_test.go",
+      "bytes": 50177,
+      "sha256": "3d1bc3e9019fd44060b3093ee1202de43b42be40e4cc7227fb24562e8454211e"
+    },
+    {
+      "path": "internal/game/listtabs.go",
+      "bytes": 17658,
+      "sha256": "ecb5598246ce38bc41f4f9e00e63d4496e49f442616718e9412da58e681f8dd4"
+    },
+    {
+      "path": "internal/game/promotion.go",
+      "bytes": 5083,
+      "sha256": "cb82766da5eca468638b03bc28bc723a6ff040872921875ee3758ece7c218684"
+    },
+    {
+      "path": "internal/game/promotion_test.go",
+      "bytes": 12965,
+      "sha256": "5a1811fde878e2342f634668905cb647e27bc4b2d346b9fc68432cf072114dbb"
+    },
+    {
+      "path": "internal/game/regioninfo.go",
+      "bytes": 5497,
+      "sha256": "8071e85f30d2f4e24513c98208afc8f0acb502bcea87f600431f56e4570ce328"
+    },
+    {
+      "path": "internal/game/scoutfuel.go",
+      "bytes": 2885,
+      "sha256": "3f0a6a0d6a4bb41fe421cccf7eac937bb195b073f461709970680167a2a7f424"
+    },
+    {
+      "path": "internal/game/staffpick.go",
+      "bytes": 7433,
+      "sha256": "9694ef2700659d75aacf2d23f59aea49a76a75beda06da96feb3e5936c373995"
+    },
+    {
+      "path": "internal/game/turnreport.go",
+      "bytes": 7846,
+      "sha256": "6dc033a90192a10cfe1a786f70fbd47cd8de4302ffcd9bdd4cb0fbc9c80a8732"
+    },
+    {
+      "path": "internal/game/turnwindow.go",
+      "bytes": 6952,
+      "sha256": "cc572baaf4c7e8d460f44da5477cf875927e9485e2da5153467e7c1ac9ad6fa0"
+    },
+    {
+      "path": "internal/rules/admiral.go",
+      "bytes": 12290,
+      "sha256": "fb208164bb00aea3c0c2ad8b4a1ed6231272657a9ad9acb875995385a3681d1d"
+    },
+    {
+      "path": "internal/rules/admiral_test.go",
+      "bytes": 6586,
+      "sha256": "72ddb10c9b7d423dd40edd7f99fbc489a2c02ba007d5b719fe25d0658d2e8f41"
+    },
+    {
+      "path": "internal/rules/growth.go",
+      "bytes": 10459,
+      "sha256": "a60c5bc522d534f5c3d5da500b73b810111ca38de2709962127a456f2745dd25"
+    },
+    {
+      "path": "internal/rules/promotion.go",
+      "bytes": 11344,
+      "sha256": "2d9aac12b9caa2374033bafee364c2e29500952ec7f4cf59888b94b1aee90536"
+    },
+    {
+      "path": "internal/rules/promotion_test.go",
+      "bytes": 6644,
+      "sha256": "96a1d87aeb42cca632c282c0f84c289fc94d888e99e8b79c99c43c263ff74773"
+    },
+    {
+      "path": "internal/rules/region.go",
+      "bytes": 24246,
+      "sha256": "cba006daa23304121e4136523efd41b0f523164e0212abc0ec045456266b82a2"
+    },
+    {
+      "path": "internal/rules/save.go",
+      "bytes": 26521,
+      "sha256": "6d137e30006306b71c18d16dcd02c7530a174beb9cd03944e82a869813429adc"
+    },
+    {
+      "path": "internal/rules/stardistance.go",
+      "bytes": 2434,
+      "sha256": "f56fb8221e5c58043f908b9c3bc48c21a8539d2cc6d35f67f2b06ca5b5791071"
+    },
+    {
+      "path": "internal/rules/stargraph.go",
+      "bytes": 4920,
+      "sha256": "e6c3ddfdd1a1a105104f3b41a619b7ab4cbe3c77f83ad5075618aa39d1e7803e"
+    },
+    {
+      "path": "internal/rules/unrest.go",
+      "bytes": 10024,
+      "sha256": "b3a97c54b88d2c49d04a2ca91936c2f5c6c735380415e4b9822084e0f8b88fee"
+    },
+    {
+      "path": "internal/screen/list.go",
+      "bytes": 4259,
+      "sha256": "7ce2f221e1cb63aab55034d4d4c91265c072837fbf6cf792e035a086a55eaab2"
+    },
+    {
+      "path": "tools/battle_promotion_cache_native_run.sh",
+      "bytes": 520,
+      "sha256": "96cb017e3d96236d9e7f755c3aeffd0755e76f56aa4de5976f64361077868ab2"
+    },
+    {
+      "path": "tools/battle_promotion_cache_oracle.sh",
+      "bytes": 844,
+      "sha256": "d1420ebd1a00c97107119267b09ddc1cd98ac2860272221dec5942ab960b8e9d"
+    },
+    {
+      "path": "tools/battle_promotion_global_native_run.sh",
+      "bytes": 522,
+      "sha256": "f3e97a4da37c3654923e33a5fa7f93aded5b264b6d33b784ea91c52a931a2cd9"
+    },
+    {
+      "path": "tools/battle_promotion_global_oracle.sh",
+      "bytes": 848,
+      "sha256": "2c97135687252021b127ce68e47092152acefe1bbe40dbe7d24c82e20f359ca0"
+    },
+    {
+      "path": "tools/go.sh",
+      "bytes": 1763,
+      "sha256": "f591df5c0db18d0adcaecb1bfd969f9d3ffbc6e9e5a1ed2c3e5913c72dd371b6"
+    },
+    {
+      "path": "tools/gui.sh",
+      "bytes": 1551,
+      "sha256": "3f0cd67388775829a3dbec810570558a1bacd1cd0fc89c22babd8c70bf0542b5"
+    },
+    {
+      "path": "tools/scripts/battle_ownership_player_entry.go",
+      "bytes": 1389,
+      "sha256": "6c53a77fc1b6837f1b30b575ce41cba57474d73fc747db0797bc41caced84452"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_cache_prepare.py",
+      "bytes": 2838,
+      "sha256": "0a839a24395563258f22b45459fd3663ed08530223b7b79737f932fda2873e31"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_cache_receipt.py",
+      "bytes": 3185,
+      "sha256": "9fd41fe72263ad19777011a52e9270dceb8366f50849455bd722a197b8c6ade6"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_game_receipt.py",
+      "bytes": 5522,
+      "sha256": "e784b31a8715fb38665fdd25b11dabac4453e9b33a8e75d117a093a6091ac453"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_global_prepare.py",
+      "bytes": 1071,
+      "sha256": "5b5be86f771e410e5f5097a8207a112781c73805db8c2315fffc712285acaba3"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_global_probe.go",
+      "bytes": 6738,
+      "sha256": "0af869de9fa1f669d5c498e3f15450f91d00e72a4550ff3f64bd70ecdc05e129"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_global_receipt.py",
+      "bytes": 6072,
+      "sha256": "ed63e38d9b0f002cb7164567049a969424bd9a6066faa2b029251fd7fc7374e5"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_player.go",
+      "bytes": 3071,
+      "sha256": "a9d0aef6d6edc9c844533210f44c897766257a51c973e423cffa29479af60efb"
+    },
+    {
+      "path": "tools/scripts/battle_promotion_spec.py",
+      "bytes": 1167,
+      "sha256": "5e9da058a59acd9d0a2b5ce2418dd9823cf0c4339e3624e725ab53abe677a305"
+    },
+    {
+      "path": "tools/turn_counter_gui.sh",
+      "bytes": 1935,
+      "sha256": "30057fc8012f71cc9f22e322a9fd11d31b12585b68a35b2cb9040a4a187dc5a4"
+    },
+    {
+      "path": "workplace/oracle/ownership79-r82-entry-a/entry.state",
+      "bytes": 260250,
+      "sha256": "598e10e5f9457842275fa5639219636f322d8bb2e0f8393fe25b93bfbdef0cfe"
+    },
+    {
+      "path": "workplace/oracle/ownership79-r82-entry-a/mem-in.bin",
+      "bytes": 1048576,
+      "sha256": "b905eda112fd3a78292bc0d1cdc10068703e0291968640cbaa0d150404404900"
+    },
+    {
+      "path": "workplace/promotion79-r85-recalc-a.json",
+      "bytes": 20108439,
+      "sha256": "5049465c845318759894b9b1d957c3a2fbc807998608eae1eb0776fb84988c97"
+    },
+    {
+      "path": "workplace/promotion79-r85-recalc.go",
+      "bytes": 11486,
+      "sha256": "5054248450c84bc7b10d4f6467e538c02323d7ac83f6c77c26d8665c44d2bd72"
+    },
+    {
+      "path": "workplace/promotion79-r86-global-a.json",
+      "bytes": 24871318,
+      "sha256": "2bc8fa7bf8dc4081fad414d23e7bfeabb76cd8df510d53f3442136283cb1a435"
+    },
+    {
+      "path": "workplace/promotion79-r86-global-b.json",
+      "bytes": 24871318,
+      "sha256": "2bc8fa7bf8dc4081fad414d23e7bfeabb76cd8df510d53f3442136283cb1a435"
+    },
+    {
+      "path": "workplace/promotion79-r86-global-probe-v3.json",
+      "bytes": 76521,
+      "sha256": "a18d643f57080ec63e8581f7469b03f7566e06a94b2a1d60513fc0406b466292"
+    },
+    {
+      "path": "workplace/promotion79-r86-global.go",
+      "bytes": 11738,
+      "sha256": "895f92e7ac5f3431569f2b84cf5bf342114e249f87051f6d07345fafd6573b8b"
+    },
+    {
+      "path": "workplace/promotion79-r87-cache-a.json",
+      "bytes": 668026,
+      "sha256": "c724ea9bf26aaf922eda7bc322627cd00383139894fb343b379a2ff7d136f861"
+    },
+    {
+      "path": "workplace/promotion79-r87-cache-b.json",
+      "bytes": 668026,
+      "sha256": "c724ea9bf26aaf922eda7bc322627cd00383139894fb343b379a2ff7d136f861"
+    },
+    {
+      "path": "workplace/promotion79-r87-cache-model-v2.go",
+      "bytes": 7349,
+      "sha256": "603f45b9e46b8dfb0948237ffabd7371d0f8e962a0e900b095f748053b5c5963"
+    },
+    {
+      "path": "workplace/promotion79-r87-cache-model-v2.json",
+      "bytes": 3518,
+      "sha256": "4235ac634f6b89c847d724adc308abf854f5f741873cdb17a8b69f4e0ddaa479"
+    },
+    {
+      "path": "workplace/promotion79-r87-cache.go",
+      "bytes": 11972,
+      "sha256": "2466759770435934a9e9d4f87d4110e783d23f7343a046cd42febc17f9bfd361"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-frame0-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-frame0-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-frame0-original.png",
+      "bytes": 7849,
+      "sha256": "d046cb49462f665a3e7476d6df102bcef7070c808c9c9cbfb82df5c653e352fa"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-frame0-remake.png",
+      "bytes": 3011,
+      "sha256": "b68e6672960b475beba5de4c6652e3a65eb85f0a89045dc0d846730bea62a83b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-save/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "f01493c16b021b1990f6098aae90c0e8bd0a1e1f9f28811a50221d8cf4f4cc21"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-save/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "58a63825d2969fe7397bb050ade8e6089eb8e0770d5876ffb0d40f8bedf337fd"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-save/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-save/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-save/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "8c5802a28bbeccff9b7a06e84c6b2663c589b04cc52716b91de7b23e39533ee2"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-save/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human1-adj-1-pattern0-save/WORK.DT0",
+      "bytes": 230,
+      "sha256": "5114e568385d3d5c77ed720354670698f3b5fff47eb704c3f2a65aed333e4271"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human2-adj-1-pattern0-save/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "f01493c16b021b1990f6098aae90c0e8bd0a1e1f9f28811a50221d8cf4f4cc21"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human2-adj-1-pattern0-save/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "58a63825d2969fe7397bb050ade8e6089eb8e0770d5876ffb0d40f8bedf337fd"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human2-adj-1-pattern0-save/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human2-adj-1-pattern0-save/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human2-adj-1-pattern0-save/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "8c5802a28bbeccff9b7a06e84c6b2663c589b04cc52716b91de7b23e39533ee2"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human2-adj-1-pattern0-save/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human2-adj-1-pattern0-save/WORK.DT0",
+      "bytes": 230,
+      "sha256": "5eebbe04a1ff2acc85bf587e9a28df104e99613d693b94f9f722d89478953eee"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-frame0-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-frame0-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-frame0-original.png",
+      "bytes": 7849,
+      "sha256": "d046cb49462f665a3e7476d6df102bcef7070c808c9c9cbfb82df5c653e352fa"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-frame0-remake.png",
+      "bytes": 3011,
+      "sha256": "b68e6672960b475beba5de4c6652e3a65eb85f0a89045dc0d846730bea62a83b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-save/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "f01493c16b021b1990f6098aae90c0e8bd0a1e1f9f28811a50221d8cf4f4cc21"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-save/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "58a63825d2969fe7397bb050ade8e6089eb8e0770d5876ffb0d40f8bedf337fd"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-save/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-save/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-save/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "8c5802a28bbeccff9b7a06e84c6b2663c589b04cc52716b91de7b23e39533ee2"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-save/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp20000-human3-adj-1-pattern0-save/WORK.DT0",
+      "bytes": 230,
+      "sha256": "a1784c9e9e545d7cc11f17c5eb6c8017f23f002fca6f5a97a70c18733680b7e7"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame0-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame0-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame0-original.png",
+      "bytes": 7849,
+      "sha256": "d046cb49462f665a3e7476d6df102bcef7070c808c9c9cbfb82df5c653e352fa"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame0-remake.png",
+      "bytes": 3011,
+      "sha256": "b68e6672960b475beba5de4c6652e3a65eb85f0a89045dc0d846730bea62a83b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame1-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame1-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame1-original.png",
+      "bytes": 7849,
+      "sha256": "d046cb49462f665a3e7476d6df102bcef7070c808c9c9cbfb82df5c653e352fa"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame1-remake.png",
+      "bytes": 3011,
+      "sha256": "b68e6672960b475beba5de4c6652e3a65eb85f0a89045dc0d846730bea62a83b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame2-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame2-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame2-original.png",
+      "bytes": 7847,
+      "sha256": "60998e91640a57a07eca3ae24ad45ea66c907e49a5ede838fb6f98eee7ccea44"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-frame2-remake.png",
+      "bytes": 3011,
+      "sha256": "c08f1ea9be8ad13935484c96f61d7b2f22113be729f2304e6d19e69f4c3815a0"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-save/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "6386671c67dec159cf7faaf94e387d291b253d2b487c468abdeffd2b13072bde"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-save/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "61d482318d6ccc2cb7340787fd80dea628307239fa0dd2fc6f7629973880d4e0"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-save/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-save/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-save/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "503e2520cdeb866c404b7e93ef3a5ff213eca15e8cece0ad15c331a5a99774e7"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-save/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level26-exp70000-human3-adj-1-pattern0-save/WORK.DT0",
+      "bytes": 230,
+      "sha256": "a1784c9e9e545d7cc11f17c5eb6c8017f23f002fca6f5a97a70c18733680b7e7"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-frame0-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-frame0-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-frame0-original.png",
+      "bytes": 7849,
+      "sha256": "d046cb49462f665a3e7476d6df102bcef7070c808c9c9cbfb82df5c653e352fa"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-frame0-remake.png",
+      "bytes": 3011,
+      "sha256": "b68e6672960b475beba5de4c6652e3a65eb85f0a89045dc0d846730bea62a83b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-frame1-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-frame1-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-frame1-original.png",
+      "bytes": 8534,
+      "sha256": "81a3c140404a78f6bc191781e19e18054fe0946ec696fd2736f577ee43cdd448"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-frame1-remake.png",
+      "bytes": 3688,
+      "sha256": "1c1c6d203dfdf6be7e6758e5274a72731398baffb48a6d46e93d48830ab4c4e1"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-save/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "8e817b4bfdd6b54e13c0e50f7373d45a0da4aad5c0fc7fb6d59f56a2be98d01b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-save/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "559f6e425af621b731d8d5b5d0763a6a0f9c0a1fdf99b9845f6c5944449932fd"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-save/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-save/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-save/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "503e2520cdeb866c404b7e93ef3a5ff213eca15e8cece0ad15c331a5a99774e7"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-save/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level27-exp20000-human3-adj28-pattern0-save/WORK.DT0",
+      "bytes": 230,
+      "sha256": "a1784c9e9e545d7cc11f17c5eb6c8017f23f002fca6f5a97a70c18733680b7e7"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-frame0-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-frame0-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-frame0-original.png",
+      "bytes": 7847,
+      "sha256": "60998e91640a57a07eca3ae24ad45ea66c907e49a5ede838fb6f98eee7ccea44"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-frame0-remake.png",
+      "bytes": 3011,
+      "sha256": "c08f1ea9be8ad13935484c96f61d7b2f22113be729f2304e6d19e69f4c3815a0"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-frame1-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-frame1-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-frame1-original.png",
+      "bytes": 8534,
+      "sha256": "81a3c140404a78f6bc191781e19e18054fe0946ec696fd2736f577ee43cdd448"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-frame1-remake.png",
+      "bytes": 3688,
+      "sha256": "1c1c6d203dfdf6be7e6758e5274a72731398baffb48a6d46e93d48830ab4c4e1"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-save/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "864e2932d4d1e928569eea97d9de3a19759d67ad573da7fc1aa9d62a12215d0c"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-save/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "b0d21efde5b8ee24f06e76ed3c70c03fb2459151bcbbdc6341938e6de1cb3781"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-save/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-save/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-save/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "503e2520cdeb866c404b7e93ef3a5ff213eca15e8cece0ad15c331a5a99774e7"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-save/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet12-level28-exp20000-human3-adj28-pattern0-save/WORK.DT0",
+      "bytes": 230,
+      "sha256": "a1784c9e9e545d7cc11f17c5eb6c8017f23f002fca6f5a97a70c18733680b7e7"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human1-adj-1-pattern0-save/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "f9666dbd13b58fd1cbd374a1254afd3f1154a3a41a2bcd977e0a32d2425a94d8"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human1-adj-1-pattern0-save/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "62b7d2af29797f541729036b05b6a0f581ccbe09e760cf734da2b8dc100e89da"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human1-adj-1-pattern0-save/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human1-adj-1-pattern0-save/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human1-adj-1-pattern0-save/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "8183af09275b5d651a77061cf2eda5bdf82ef97079c911c013f3a4e10277800b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human1-adj-1-pattern0-save/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human1-adj-1-pattern0-save/WORK.DT0",
+      "bytes": 230,
+      "sha256": "7e18e8275052f93da41d78ba9b536d39f7245163bfce85231f35edeb827e0b08"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-frame0-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-frame0-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-frame0-original.png",
+      "bytes": 8147,
+      "sha256": "68012dea8de39960b688e613258413a866f36e685abe14a3673c8dab80f8b34b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-frame0-remake.png",
+      "bytes": 3306,
+      "sha256": "d2cd979d7e1762b630a1fa74f119fd4299ebd52bb235b664c2bb68d4c3fbd7f5"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-save/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "f9666dbd13b58fd1cbd374a1254afd3f1154a3a41a2bcd977e0a32d2425a94d8"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-save/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "62b7d2af29797f541729036b05b6a0f581ccbe09e760cf734da2b8dc100e89da"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-save/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-save/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-save/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "8183af09275b5d651a77061cf2eda5bdf82ef97079c911c013f3a4e10277800b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-save/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human2-adj-1-pattern0-save/WORK.DT0",
+      "bytes": 230,
+      "sha256": "58bdac8aacbd00aaebc5a4661828f9666e305ed41cf4ec2de5dd35158686a709"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-frame0-comparison.json",
+      "bytes": 580,
+      "sha256": "dcbd0c67cf79aa4c34847a8d814df1717151807f8f98ab7b4c20b86251142372"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-frame0-diff.png",
+      "bytes": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-frame0-original.png",
+      "bytes": 8147,
+      "sha256": "68012dea8de39960b688e613258413a866f36e685abe14a3673c8dab80f8b34b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-frame0-remake.png",
+      "bytes": 3306,
+      "sha256": "d2cd979d7e1762b630a1fa74f119fd4299ebd52bb235b664c2bb68d4c3fbd7f5"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-save/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "f9666dbd13b58fd1cbd374a1254afd3f1154a3a41a2bcd977e0a32d2425a94d8"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-save/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "62b7d2af29797f541729036b05b6a0f581ccbe09e760cf734da2b8dc100e89da"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-save/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "4064be60b2e4bd4be393949cc5382a9b2b2e35b375790eea516c987768e16e9a"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-save/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-save/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "8183af09275b5d651a77061cf2eda5bdf82ef97079c911c013f3a4e10277800b"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-save/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "4646c8bf6fc1bf3be7faff41871ab07851756bd6888f3e1ff7699a2069c5339c"
+    },
+    {
+      "path": "workplace/promotion79-r87-game-final/fleet16-level26-exp20000-human3-adj-1-pattern0-save/WORK.DT0",
+      "bytes": 230,
+      "sha256": "4b27e3cbdda7ffe58c5d6832f50d726da305841a080e850b246e6653bc5a6e94"
+    },
+    {
+      "path": "workplace/promotion79-r87-gui-1x.bin",
+      "bytes": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/promotion79-r87-gui-1x.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "workplace/promotion79-r87-gui-1x.png",
+      "bytes": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/promotion79-r87-gui-1x.txt",
+      "bytes": 62,
+      "sha256": "f053d194a0cb86c82378c9c73e35fc959f320e40886cafb3bf59a967cfe5d606"
+    },
+    {
+      "path": "workplace/promotion79-r87-gui-2x.bin",
+      "bytes": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/promotion79-r87-gui-2x.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "workplace/promotion79-r87-gui-2x.png",
+      "bytes": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/promotion79-r87-gui-2x.txt",
+      "bytes": 63,
+      "sha256": "9b437af71f16b55dc4db0e6f733f50e11536d3b4799bebd2535f406bfb14e8d3"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "ba0cc2c2e23848186f45ff50e2c49be760da92df71b20af3a857ade4bdb20201"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/WORK.DT0",
+      "bytes": 230,
+      "sha256": "e502518035fcb65895f0e10b22e4ee92b882595b4011e6905a5b8cab060ce3dd"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/after-turn.bin",
+      "bytes": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/after-turn.png",
+      "bytes": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/entry.bin",
+      "bytes": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/entry.png",
+      "bytes": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/replay.json",
+      "bytes": 35345,
+      "sha256": "8f5c7acffe37cc83beb350de14a995ee6bc0f67457b0f64fd673d3f9579101dd"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/save-menu.bin",
+      "bytes": 307200,
+      "sha256": "73e97538f1258cf46f16692acfd22520b089742dd900c635ab8550aec2c674e2"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-b/save-menu.png",
+      "bytes": 10003,
+      "sha256": "bddd8d6012c95ca3be08c2dbcf4fd03cf96ac88d19570f29a6985fb3d95a2135"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/ADMIRAL.DT0",
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/FLEET.DT0",
+      "bytes": 3904,
+      "sha256": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/PLANET.DT0",
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/SAVEDATA.IDX",
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/SHIP.DT0",
+      "bytes": 27456,
+      "sha256": "ba0cc2c2e23848186f45ff50e2c49be760da92df71b20af3a857ade4bdb20201"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/STELLAR.DT0",
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/WORK.DT0",
+      "bytes": 230,
+      "sha256": "e502518035fcb65895f0e10b22e4ee92b882595b4011e6905a5b8cab060ce3dd"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/after-turn.bin",
+      "bytes": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/after-turn.png",
+      "bytes": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/entry.bin",
+      "bytes": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/entry.png",
+      "bytes": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/replay.json",
+      "bytes": 35345,
+      "sha256": "8f5c7acffe37cc83beb350de14a995ee6bc0f67457b0f64fd673d3f9579101dd"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/save-menu.bin",
+      "bytes": 307200,
+      "sha256": "73e97538f1258cf46f16692acfd22520b089742dd900c635ab8550aec2c674e2"
+    },
+    {
+      "path": "workplace/promotion79-r87-normal-c/save-menu.png",
+      "bytes": 10003,
+      "sha256": "bddd8d6012c95ca3be08c2dbcf4fd03cf96ac88d19570f29a6985fb3d95a2135"
+    },
+    {
+      "path": "workplace/promotion79-r87-player-a/entry/screen.bin",
+      "bytes": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    {
+      "path": "workplace/promotion79-r87-player-a/entry/screen.png",
+      "bytes": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    {
+      "path": "workplace/round87-promotion-game.log",
+      "bytes": 15247,
+      "sha256": "0e9496b3f80f815a64e30076eef555737d166b73827df14105764353a7a1abe5"
+    },
+    {
+      "path": "workplace/round87-promotion-rules.log",
+      "bytes": 14017,
+      "sha256": "a0f6ca06ec6a2cceb2e607472f945b5f9ae2b6438eccb16958544acbf86d6a99"
+    },
+    {
+      "path": "workplace/round87-standard.log",
+      "bytes": 960,
+      "sha256": "a39180c6dba20b4793a7987ca825fb7a996357704e8119e35cb44d580b83d959"
+    }
+  ]
+}

@@ -15,8 +15,10 @@ import (
 
 // turnReport 是一則報告：已經組好的文字（`3617:000A` 的 buf）與頭像的提督編號。
 type turnReport struct {
-	text []byte
-	face int
+	text       []byte
+	face       int
+	wait       int
+	customWait bool // 108：零值等待滑鼠，不改其他報告的計時契約
 }
 
 // turnReportState 是排隊中的報告與全部看完之後接回哪裡。
@@ -54,7 +56,14 @@ func (g *Game) startReports(reports []turnReport, battle bool, after func()) boo
 func (g *Game) turnReportTick(n int) {
 	for ; n > 0 && g.state == StateTurnReport; n-- {
 		g.turnRep.ticks++
-		if g.turnRep.ticks >= g.display.MsgSpeed {
+		wait := g.display.MsgSpeed
+		if len(g.turnRep.pending) > 0 && g.turnRep.pending[0].customWait {
+			wait = g.turnRep.pending[0].wait
+			if wait == 0 {
+				continue
+			}
+		}
+		if g.turnRep.ticks >= wait {
 			g.dismissTurnReport()
 		}
 	}

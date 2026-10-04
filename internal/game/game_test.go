@@ -249,6 +249,10 @@ func load(t *testing.T) *Resources {
 	if err != nil {
 		t.Fatal(err)
 	}
+	promotion, err := rules.LoadPromotionSpec(filepath.Join(root, "docs/internals/data/admiral-promotion-spec.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	listScreen, err := screen.LoadListScreenSpec(filepath.Join("../..", "docs/internals/data/list-screen-panel.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -267,6 +271,7 @@ func load(t *testing.T) *Resources {
 		RegionInfo:    regionInfo,
 		OccupyAsk:     occupyAsk,
 		TurnWindow:    turnWindow,
+		Promotion:     promotion,
 		ListScreen:    listScreen,
 		AdmiralNames:  names, StarListOrder: starOrder,
 		CopyProt: cp, MainGame: mg, StarMap: star, Admiral: admiral, ShipOrder: so,

@@ -16,7 +16,7 @@ import (
 // newTestGame 用測試那份資源開一局，另外把戰場入口表接上。
 func newTestGame(t *testing.T) *Game {
 	t.Helper()
-	res := load(t)
+	res := loadWithRules(t)
 	e, err := rules.LoadBattleEntries(filepath.Join(root, "docs/internals/data/battle-entry-points.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -78,6 +78,9 @@ func newTestGame(t *testing.T) *Game {
 		t.Fatal(err)
 	}
 	g.LoadSlot(sl)
+	// 本 helper 是直接入場診斷。108要求明示入口歸屬快取與受控亂數。
+	g.cacheBattlePromotionPaths()
+	g.battleRand = rules.NewRand(1)
 	return g
 }
 
@@ -134,11 +137,24 @@ func TestAdvanceBattleTurnMoves(t *testing.T) {
 	if g.res.Entries == nil {
 		t.Skip("沒有入口表")
 	}
-	g.battleUnits = []rules.BattleUnit{
-		{Fleet: 0, Faction: 0, X: 400, Y: 400, TargetX: 400, TargetY: 400, Strength: 1000, CruiseSpeed: 30, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
-		{Fleet: 1, Faction: 1, X: 1400, Y: 1400, TargetX: 1400, TargetY: 1400, Strength: 1000, CruiseSpeed: 30, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
+	// 沿真實S3艦隊身份；原先硬寫#1，但該槽在S3未使用，108會正確拒絕。
+	own, foe := -1, -1
+	for _, f := range g.fleets {
+		if f.Faction == 0 && own < 0 {
+			own = f.Index
+		}
+		if f.Faction == 1 && foe < 0 {
+			foe = f.Index
+		}
 	}
-	g.battleFleets = []rules.BattleFleet{{Index: 0, Faction: 0, X: 400, Y: 400, DestX: 400, DestY: 400, Action: 4, ScoutMode: 255}, {Index: 1, Faction: 1, X: 1400, Y: 1400, DestX: 1400, DestY: 1400, Action: 4, ScoutMode: 255}}
+	if own < 0 || foe < 0 {
+		t.Fatal("S3缺兩側艦隊")
+	}
+	g.battleUnits = []rules.BattleUnit{
+		{Fleet: own, Faction: 0, X: 400, Y: 400, TargetX: 400, TargetY: 400, Strength: 1000, CruiseSpeed: 30, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
+		{Fleet: foe, Faction: 1, X: 1400, Y: 1400, TargetX: 1400, TargetY: 1400, Strength: 1000, CruiseSpeed: 30, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
+	}
+	g.battleFleets = []rules.BattleFleet{{Index: own, Faction: 0, X: 400, Y: 400, DestX: 400, DestY: 400, Action: 4, ScoutMode: 255}, {Index: foe, Faction: 1, X: 1400, Y: 1400, DestX: 1400, DestY: 1400, Action: 4, ScoutMode: 255}}
 	g.state = StateBattle
 	g.battleTurn = 1
 	g.faction = 0
@@ -152,7 +168,7 @@ func TestAdvanceBattleTurnMoves(t *testing.T) {
 		t.Fatal("敵方那一支沒動")
 	}
 	if g.battleTurn != 2 {
-		t.Fatalf("回合是 %d，應該是 2", g.battleTurn)
+		t.Fatalf("回合是 %d，應該是 2；錯誤：%v", g.battleTurn, g.saveErr)
 	}
 	// 玩家那一支沒下令，不該被 AI 動到目標。
 	if g.battleUnits[0].TargetX != 400 || g.battleUnits[0].TargetY != 400 {

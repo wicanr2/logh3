@@ -28,6 +28,9 @@ func (g *Game) startBattle(region int, placed bool) {
 		g.saveErr = err
 		return
 	}
+	if g.battlePromotionPaths == nil {
+		g.cacheBattlePromotionPaths()
+	}
 	g.battleRegion = region
 	g.battleTurn = 1
 	g.battlePhase = screen.BattlePhaseInput

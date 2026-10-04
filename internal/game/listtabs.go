@@ -195,7 +195,7 @@ func (g *Game) enemyWindowView() (*screen.EnemyWindowView, *asset.Image) {
 		v.Name = codesBig5(g.res.AdmiralNames[f.Admiral])
 	}
 	if adm := g.admiralRecord(f.Admiral); adm != nil {
-		v.Rank = codesBig5(g.rankCodes(rules.RankOf(int(adm[admiralMeritOff]))))
+		v.Rank = codesBig5(g.admiralRankCodes(adm))
 	}
 	for _, gp := range f.Composition {
 		v.Groups = append(v.Groups, screen.EnemyGroup{Kind: gp.Kind, Detail: gp.Detail})
@@ -412,7 +412,7 @@ func (g *Game) drawListRows(fb *gfx.Framebuffer) {
 				name = g.res.AdmiralNames[a]
 			}
 			rows = append(rows, screen.AdmiralRow{Name: name,
-				Rank: g.rankCodes(rules.RankOf(rules.AdmiralLevel(g.admiralRecord(a))))})
+				Rank: g.admiralRankCodes(g.admiralRecord(a))})
 		}
 		l.DrawAdmirals(fb, g.res.Font, rows, g.tabs.pressed)
 	case listTabEnemy:

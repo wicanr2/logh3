@@ -144,7 +144,7 @@ func (g *Game) occupyAskView() (*screen.OccupyAskView, *asset.Image) {
 		FactionName: decodeHexBytes(g.res.FleetWindow.FactionNamesColoured[f.Faction]),
 		Number:      f.Number,
 		AdmiralName: codesBig5(g.admiralNameCodes(f.Admiral)),
-		Rank:        codesBig5(g.rankCodes(rules.RankOf(byteAt(adm, admiralMeritOff)))),
+		Rank:        codesBig5(g.admiralRankCodes(adm)),
 		TargetName:  codesBig5(g.regionName(f.Target)),
 		NextName:    codesBig5(g.regionName(g.occupyAsk.next)),
 	}

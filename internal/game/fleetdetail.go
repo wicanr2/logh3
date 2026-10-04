@@ -58,7 +58,7 @@ func (g *Game) admiralLine(i int) []uint16 {
 		return nil
 	}
 	out := append([]uint16(nil), g.res.AdmiralNames[i]...)
-	return append(out, g.rankCodes(rules.RankOf(int(rec[admiralMeritOff])))...)
+	return append(out, g.admiralRankCodes(rec)...)
 }
 
 // 提督記錄上這一層讀的兩個欄位（`docs/re/112`）。

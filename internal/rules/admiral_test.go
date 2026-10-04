@@ -10,7 +10,7 @@ import (
 // TestRankOfMatchesOracle 把軍階換算釘在收據上量到的對應。
 //
 // 27 個資料點來自三張清單畫面（`lst2e`／`sortie1e`／`s3sortie`）。
-// 12 與 15 同階、29 以上都是上將，所以是分段不是查表。
+// 後續原版28E0:004F的12級證據見108；34與39之後不再夾成上將。
 func TestRankOfMatchesOracle(t *testing.T) {
 	for _, c := range []struct {
 		merit int
@@ -18,7 +18,8 @@ func TestRankOfMatchesOracle(t *testing.T) {
 	}{
 		{4, "上尉"}, {6, "少校"}, {12, "上校"}, {15, "上校"},
 		{16, "准將"}, {20, "少將"}, {24, "中將"}, {29, "上將"},
-		{0, "少尉"}, {2, "中尉"}, {8, "中校"}, {41, "上將"},
+		{0, "少尉"}, {2, "中尉"}, {8, "中校"}, {28, "中將"},
+		{33, "上將"}, {34, "一級上將"}, {38, "一級上將"}, {39, "元帥"}, {41, "元帥"},
 	} {
 		if got := RankNames[RankOf(c.merit)]; got != c.want {
 			t.Errorf("+0x06 ＝ %d 換出 %s，預期 %s", c.merit, got, c.want)

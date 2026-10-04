@@ -199,7 +199,7 @@ func (g *Game) drawStaffList(fb *gfx.Framebuffer) {
 		if i < len(g.res.AdmiralNames) {
 			name = g.res.AdmiralNames[i]
 		}
-		rows = append(rows, screen.ListRow{Name: name, Rank: rules.RankOf(rules.AdmiralLevel(rec))})
+		rows = append(rows, screen.ListRow{Name: name, Rank: rules.RankOf(rules.AdmiralLevel(rec)), RankCodes: g.admiralRankCodes(rec)})
 	}
 	w.List.Draw(fb, g.res.Font, rows)
 }
