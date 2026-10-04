@@ -1,0 +1,5333 @@
+{
+  "schema": "logh3.fleet-frame.v1",
+  "date": "2026-10-04",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "sources": {
+    "docs/internals/data/fleet-scene-plan.json": "4988a5b95d2167bc14166a8fb173fb26bc0b6d4b9f6e7f070c86c9bcc3b126f4",
+    "docs/internals/data/fleet-scene.json": "7d7e5b388eebc8348825e91352ff10e9821ce2b0cf7912d6f9b9cf1cafc95379",
+    "docs/internals/data/fleet-presentation.json": "2dbff381163ce7d512af633e496bc5349dc2597210c0131f7f0d0874b0943851",
+    "workplace/oracle/blocks48-r70-a/scene-01-20-complete-mem.bin": "9f48468179e6bbe68479e1543084ede35e0a707bfa2e5573ab7050d6863cda7c",
+    "workplace/oracle/blocks48-r70-b/scene-01-20-complete-mem.bin": "9f48468179e6bbe68479e1543084ede35e0a707bfa2e5573ab7050d6863cda7c",
+    "workplace/oracle/blocks48-r70-a/scene-02-40-complete-mem.bin": "287fbe5b088da5dbe688f22afd05279567b794819d0412f63832228ef5c76d41",
+    "workplace/oracle/blocks48-r70-b/scene-02-40-complete-mem.bin": "287fbe5b088da5dbe688f22afd05279567b794819d0412f63832228ef5c76d41",
+    "workplace/oracle/projection48-r72-a/case-00-before-mem.bin": "9dfbb2cbec5d93849e0f100511cad65b342b41f68198378cd9cdc103ebeb9279",
+    "workplace/ida/opening48-r73-1DD6.json": "61977d9fd5c09343738b1f4e1655b563097c61a5bc911cbe5cfa85bdaeb4d752",
+    "workplace/ida/opening48-r73-1DD6.com": "e25424cf1df47e696e20ec25cb50c9d8915b4e161814b1dfdf921b906a0acf1a",
+    "workplace/ida/opening48-r73-3958.json": "75b7500d430a5db48e04c474d6aad78b0d8df8c455fba2de158aad4ce71b467b",
+    "workplace/ida/opening48-r73-3958.com": "17f9c3d75a31f99566c449ac56d82df7276eb5c5143eb1dd45ef1e54000c06cb",
+    "workplace/ida/opening48-r73-348A.json": "e7e56ab773cdb9e31ef4fe70a639fdfd1e1d2464b6b7a35bb04a43bf294c9136",
+    "workplace/ida/opening48-r73-348A.com": "7d983bcebdb89e76db0cb1298e5ba84419ecdda2a1b70bf3defa7b21f5e7cebe",
+    "docs/internals/data/ship-kind-table.json": "1d67b16a9617d6a0eb09391e69d8853c7c53f232f26c89bf74fef4fca3d42895",
+    "tools/scripts/fleet_frame_receipt.py": "e8823dc78306503ac8804ed0e57026281b9511c627046f9b125bd7b7df059322",
+    "tools/scripts/engagement_opening_ida.py": "20cb9ac71ffd650cefcb200a963e57884520af8a988de28c40d46681f532c633"
+  },
+  "classification": "same-state complete presentation from typed sources; fixed original diagnostic; not Game player path",
+  "assets": {
+    "GRAPH.IMG": "0006671aca0e216da01d817be7f6a9e2fe8f18d5d058674bacf7f32c19ec833d",
+    "ANI_PNL1.A98": "40635a97c578874db12f1ca1538f6b0bb187a0791512fe23a790b4eea1585e57",
+    "COMANI.BMG": "08954a638bfb115b356cb07c66f1d58b8b796d6b0b7cd4aed7441c741db89435"
+  },
+  "sprites": {
+    "3D22:569E:6:16": {
+      "width_bytes": 6,
+      "height": 16,
+      "raw_hex": "000ffffff000000ffffff000000000000000000000000000000000001000001ffffff000000000000000000000000000000000003000003ffffff000000000000000000000000000000000007000007ffffff00000000000000000000000000000000000f00000fffffff00000000000000000000000000000000001e00001ffffffe00000000000000000000000000000000003c00003ffffffc00000000000000000000000000000000007800007ffffff80000000000000000000000000000000000f00000fffffff00000000000000000000000000000000001e00001ffffffe00000000000000000000000000000000003c00003ffffffc00000000000000000000000000000000007800007ffffff80000000000000000000000000000fffffff00000000000f00000000000000000000000000000ffffffe00000000000e00000000000000000000000000000ffffffc00000000000c00000000000000000000000000000ffffff800000000000800000000000000000000000000000"
+    },
+    "3D22:551E:6:16": {
+      "width_bytes": 6,
+      "height": 16,
+      "raw_hex": "000000000000000000000000000000000000000ffffff000000000000000001fffffe000000000000000001ffffff000000000000000003fffffc000000000000000003ffffff000000000000000007fffff8000000000000000007ffffff00000000000000000ffffff000000000000000000fffffff00000000000000001fffffe000000000000000001ffffffe00000000000000003fffffc000000000000000003ffffffc00000000000000007fffff8000000000000000007ffffff80000000000000000ffffff000000000000000000fffffff00000000000000001fffffe000000000000000001ffffffe00000000000000003fffffc000000000000000003ffffffc00000000000000007fffff8000000000000000007ffffff80000ffffff000000000000000000000000000000fffffff00000ffffff000000000000000000000000000000ffffffe00000ffffff000000000000000000000000000000ffffffc00000ffffff000000000000000000000000000000ffffff800000"
+    },
+    "3D22:599E:6:16": {
+      "width_bytes": 6,
+      "height": 16,
+      "raw_hex": "000ffffff000000ffffff000000000000000000ffffff000000000001000000000001000001fffffe000001ffffff000000000003000000000003000003fffffc000003ffffff000000000007000000000007000007fffff8000007ffffff00000000000f00000000000f00000ffffff000000fffffff00000000001e00000000001e00001fffffe000001ffffffe00000000003c00000000003c00003fffffc000003ffffffc00000000007800000000007800007fffff8000007ffffff80000000000f00000000000f00000ffffff000000fffffff00000000001e00000000001e00001fffffe000001ffffffe00000000003c00000000003c00003fffffc000003ffffffc00000000007800000000007800007fffff8000007ffffff80000fffffff00000fffffff00000fffffe000000000001f00000ffffffe00000ffffffe00000ffffff000000000000e00000ffffffc00000ffffffc00000fffffe000000000001c00000ffffff800000ffffff800000ffffff000000000000800000"
+    },
+    "3D22:5E7E:8:9": {
+      "width_bytes": 8,
+      "height": 9,
+      "raw_hex": "11f7c41c4400000011f7c41c44000000000000000000000011f7c41c4400000028082a22aa00000028082a22aa00000011f7c41c4400000028082a22aa00000055b6d55db400000055b6d55db400000028410a224800000055b6d55db4000000aaa2aad1a8000000aaa2aad1a80000004441112050000000aaa2aad1a8000000baa2aed190000000baa2aed1900000004441112060000000baa2aed19000000082a2a0d1a800000082a2a0d1a80000007c411f205000000082a2a0d1a8000000baa2aeddb4000000baa2aeddb40000004441112248000000baa2aeddb4000000aaa2aaa2aa000000aaa2aaa2aa0000004441111c44000000aaa2aaa2aa0000004441111cc40000004441111cc400000000000000000000004441111cc4000000"
+    },
+    "3D22:5B1E:8:9": {
+      "width_bytes": 8,
+      "height": 9,
+      "raw_hex": "78f9f2200000000078f9f22000000000000000000000000078f9f2200000000085060d500000000085060d500000000078f9f2200000000085060d5000000000bb7af49000000000bb7af490000000004481036000000000bb7af49000000000bb72e55000000000bb72e55000000000448102a000000000bb72e55000000000850a15d000000000850a15d00000000078f1e22000000000850a15d000000000bb72e55000000000bb72e550000000004481022000000000bb72e55000000000bb7af55000000000bb7af550000000004481022000000000bb7af5500000000085060d400000000085060d400000000078f9f2200000000085060d400000000078f9f2200000000078f9f22000000000000000000000000078f9f22000000000"
+    },
+    "3D22:5F9E:8:9": {
+      "width_bytes": 8,
+      "height": 9,
+      "raw_hex": "78f9f3e4471f000078f9f3e4471f0000000000000000000078f9f3e4471f000085060c1aa8a0800085060c1aa8a0800078f9f3e4471f000085060c1aa8a08000bb7af5eab76f0000bb7af5eab76f00004481020448900000bb7af5eab76f0000ab72f5c9b4ae0000ab72f5c9b4ae00004481020648100000ab72f5c9b4ae0000ab0a0c2ab4210000ab0a0c2ab421000044f1f3c5481e0000ab0a0c2ab4210000ab72f5cb34ae0000ab72f5cb34ae000044810204c8100000ab72f5cb34ae0000bb7a85eab76f0000bb7a85eab76f00004481020448900000bb7a85eab76f00008506841aa8a080008506841aa8a0800078f903e4471f00008506841aa8a0800078f903e4471f000078f903e4471f0000000000000000000078f903e4471f0000"
+    }
+  },
+  "cases": [
+    {
+      "name": "scene-1",
+      "view": {
+        "Scene": {
+          "Sides": [
+            [
+              {
+                "id": 80,
+                "side": 0,
+                "x": 416,
+                "y": 280,
+                "squadron": 0,
+                "detail": 0,
+                "weapon": 0,
+                "ships": 3000,
+                "raw_hex": "000c0000001464ffb80bb80bb80be02e0000a08c00000000ff85a00118017f0bff1a10ff0000d000a00118016600002080ffffffa001180136000171fffff5002a0101000000ffffffffffffffff"
+              },
+              {
+                "id": 82,
+                "side": 0,
+                "x": 419,
+                "y": 258,
+                "squadron": 1,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "000c0001001864ffb80bb80bb80be02e0000a08c00000000ff85a3010201ff0bff1a10ff0000d000a3010201ffffff2480ffffffa30102015e000171ffff09011a010100dfffffffffffffffffff"
+              },
+              {
+                "id": 83,
+                "side": 0,
+                "x": 394,
+                "y": 277,
+                "squadron": 2,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "000c0002001964ffb80bb80bb80be02e0000a08c00000000ff858a011501ff0bff1a10ff0000d0008a011501ffffff2480ffffff8a01150186000171ffffd60028010100fcffffffffffffffffff"
+              },
+              {
+                "id": 84,
+                "side": 0,
+                "x": 422,
+                "y": 235,
+                "squadron": 3,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "000c0003001c64ffb80bb80bb80be02e0000a08c00000000ff85a601eb00ff0bff1a10ff0000d000a601eb00ffffff2480ffffffa601eb00ae000171ffff1f0109010100bdffffffffffffffffff"
+              },
+              {
+                "id": 85,
+                "side": 0,
+                "x": 371,
+                "y": 274,
+                "squadron": 4,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "000c0004001e64ffb80bb80bb80be02e0000a08c00000000ff8573011201ff0bff1a10ff0000d00073011201ffffff2480ffffff73011201d6000171ffffb60026010100f7ffffffffffffffffff"
+              },
+              {
+                "id": 87,
+                "side": 0,
+                "x": 396,
+                "y": 255,
+                "squadron": 5,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 4000,
+                "raw_hex": "000c0005021d64ffa00fa00fa00f80bb0000204e00000000ff858c01ff00ff10ff2315ff000018018c01ff00ffffff2680ffffff8c01ff00fe000171ffffe90018010100dbffffffffffffffffff"
+              },
+              {
+                "id": 86,
+                "side": 0,
+                "x": 424,
+                "y": 213,
+                "squadron": 6,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 4000,
+                "raw_hex": "000c0006022064ffa00fa00fa00f80bb0000204e00000000ff85a801d500ff10ff2315ff00001801a801d500ffffff2680ffffffa801d50026010171ffff3301f80001009cffffffffffffffffff"
+              },
+              {
+                "id": 88,
+                "side": 0,
+                "x": 349,
+                "y": 272,
+                "squadron": 7,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 4000,
+                "raw_hex": "000c0007022364ffa00fa00fa00f80bb0000204e00000000ff855d011001ff10ff2315ff000018015d011001ffffff2680ffffff5d0110014e010171ffff970024010100f4ffffffffffffffffff"
+              }
+            ],
+            [
+              {
+                "id": 102,
+                "side": 1,
+                "x": 516,
+                "y": 280,
+                "squadron": 0,
+                "detail": 2,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "01101f00001464ffb80bb80bb80be02e0000786900000002ff3fffffffff7f0eff2215ff00001001c8055006ffffff0980ffffff04021801c601017102ff8b012a0101000000ffffffffffffffff"
+              },
+              {
+                "id": 104,
+                "side": 1,
+                "x": 1449,
+                "y": 1622,
+                "squadron": 1,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "01101f01001364ffb80bb80bb80be02e0000786900000000ff3fffffffffff0eff2215ff00003000a9055606ffffff0980ffffffa9055606ee010171ffff140318050000dd07ffffffffffffffff"
+              },
+              {
+                "id": 105,
+                "side": 1,
+                "x": 1520,
+                "y": 1620,
+                "squadron": 2,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "01101f02001564ffb80bb80bb80be02e0000786900000200ff3fffffffffff0eff2215ff00000000e7054a06ffffff0980fffffff005540616020171ffff800317050000da07ffffffffffffffff"
+              },
+              {
+                "id": 106,
+                "side": 1,
+                "x": 1455,
+                "y": 1654,
+                "squadron": 3,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 4000,
+                "raw_hex": "01101f03021c64ffa00fa00fa00f80bb0000e02e00000000ff3fffffffffff13ff2e1cff00009000af057606ffffff0980ffffffaf0576063e020171ffff0503300500000d08ffffffffffffffff"
+              },
+              {
+                "id": 107,
+                "side": 1,
+                "x": 1518,
+                "y": 1641,
+                "squadron": 4,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 4000,
+                "raw_hex": "01101f04021e64ffa00fa00fa00f80bb0000e02e00000000ff3fffffffffff13ff2e1cff00009000ee056906ffffff0980ffffffee05690666020171ffff6e0326050000f907ffffffffffffffff"
+              },
+              {
+                "id": 108,
+                "side": 1,
+                "x": 1486,
+                "y": 1647,
+                "squadron": 5,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 2000,
+                "raw_hex": "01101f05031d64ffd007d007d00750460000400d03000000ff3fffffffffff0dff1e14ff00001000ce056f06ffffff0980ffffffce056f068e020171ffff39032b0500000208ffffffffffffffff"
+              }
+            ]
+          ],
+          "AttackerID": 80,
+          "TargetID": 102,
+          "Visibility": {
+            "Mode": 0,
+            "PlayerSide": 0,
+            "SideControl": [
+              0,
+              1
+            ]
+          },
+          "Facing": [
+            0,
+            184
+          ]
+        },
+        "Units": [
+          {
+            "Side": 0,
+            "Squadron": 0,
+            "Detail": 0,
+            "FleetNumber": 3085,
+            "Ships": 3000,
+            "ShipsMax": 3000,
+            "AdmiralName": "tc6pWrH2r/c=",
+            "KindName": "vtTEpQ==",
+            "Visibility": {
+              "Mode": 0,
+              "PlayerSide": 0,
+              "SideControl": [
+                0,
+                1
+              ]
+            }
+          },
+          {
+            "Side": 1,
+            "Squadron": 0,
+            "Detail": 2,
+            "FleetNumber": 4097,
+            "Ships": 3000,
+            "ShipsMax": 3000,
+            "AdmiralName": "qMio5appw7k=",
+            "KindName": "vtTEpQ==",
+            "Visibility": {
+              "Mode": 0,
+              "PlayerSide": 0,
+              "SideControl": [
+                0,
+                1
+              ]
+            }
+          }
+        ],
+        "Integrity": [
+          100,
+          100
+        ],
+        "Weapon": {
+          "Side": 0,
+          "Weapon": 0,
+          "WeaponTypes": [
+            0,
+            5,
+            10
+          ],
+          "ShowResult": false,
+          "Destroyed": 0
+        }
+      },
+      "pictures": [
+        {
+          "Side": 0,
+          "SegmentHex": "45bb4430",
+          "AllFrames": false
+        },
+        {
+          "Side": 1,
+          "SegmentHex": "46b14430",
+          "AllFrames": false
+        }
+      ],
+      "native_zlib_base64": "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"
+    },
+    {
+      "name": "scene-2",
+      "view": {
+        "Scene": {
+          "Sides": [
+            [
+              {
+                "id": 80,
+                "side": 0,
+                "x": 416,
+                "y": 280,
+                "squadron": 0,
+                "detail": 0,
+                "weapon": 0,
+                "ships": 3000,
+                "raw_hex": "000c0000001464ffb80bb80bb80be02e0000a08c00000000ff85a00118017f0bff1a10ff0000d000a00118016600002080ffffffa001180136000171fffff5002a0101000000ffffffffffffffff"
+              },
+              {
+                "id": 82,
+                "side": 0,
+                "x": 419,
+                "y": 258,
+                "squadron": 1,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "000c0001001864ffb80bb80bb80be02e0000a08c00000000ff85a3010201ff0bff1a10ff0000d000a3010201ffffff2480ffffffa30102015e000171ffff09011a010100dfffffffffffffffffff"
+              },
+              {
+                "id": 83,
+                "side": 0,
+                "x": 394,
+                "y": 277,
+                "squadron": 2,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "000c0002001964ffb80bb80bb80be02e0000a08c00000000ff858a011501ff0bff1a10ff0000d0008a011501ffffff2480ffffff8a01150186000171ffffd60028010100fcffffffffffffffffff"
+              },
+              {
+                "id": 84,
+                "side": 0,
+                "x": 422,
+                "y": 235,
+                "squadron": 3,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "000c0003001c64ffb80bb80bb80be02e0000a08c00000000ff85a601eb00ff0bff1a10ff0000d000a601eb00ffffff2480ffffffa601eb00ae000171ffff1f0109010100bdffffffffffffffffff"
+              },
+              {
+                "id": 85,
+                "side": 0,
+                "x": 371,
+                "y": 274,
+                "squadron": 4,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "000c0004001e64ffb80bb80bb80be02e0000a08c00000000ff8573011201ff0bff1a10ff0000d00073011201ffffff2480ffffff73011201d6000171ffffb60026010100f7ffffffffffffffffff"
+              },
+              {
+                "id": 87,
+                "side": 0,
+                "x": 396,
+                "y": 255,
+                "squadron": 5,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 4000,
+                "raw_hex": "000c0005021d64ffa00fa00fa00f80bb0000204e00000000ff858c01ff00ff10ff2315ff000018018c01ff00ffffff2680ffffff8c01ff00fe000171ffffe90018010100dbffffffffffffffffff"
+              },
+              {
+                "id": 86,
+                "side": 0,
+                "x": 424,
+                "y": 213,
+                "squadron": 6,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 4000,
+                "raw_hex": "000c0006022064ffa00fa00fa00f80bb0000204e00000000ff85a801d500ff10ff2315ff00001801a801d500ffffff2680ffffffa801d50026010171ffff3301f80001009cffffffffffffffffff"
+              },
+              {
+                "id": 88,
+                "side": 0,
+                "x": 349,
+                "y": 272,
+                "squadron": 7,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 4000,
+                "raw_hex": "000c0007022364ffa00fa00fa00f80bb0000204e00000000ff855d011001ff10ff2315ff000018015d011001ffffff2680ffffff5d0110014e010171ffff970024010100f4ffffffffffffffffff"
+              }
+            ],
+            [
+              {
+                "id": 102,
+                "side": 1,
+                "x": 516,
+                "y": 280,
+                "squadron": 0,
+                "detail": 2,
+                "weapon": 255,
+                "ships": 2274,
+                "raw_hex": "01101f0000144effe208b80b090b88230000f24f00000002ff3fffffffff7f0eff2215ff00001001c8055006ffffff0980ffffff04021801c601017102ff8b012a0101000000ffffffffffffffff"
+              },
+              {
+                "id": 104,
+                "side": 1,
+                "x": 1449,
+                "y": 1622,
+                "squadron": 1,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "01101f01001364ffb80bb80bb80be02e0000786900000000ff3fffffffffff0eff2215ff00003000a9055606ffffff0980ffffffa9055606ee010171ffff140318050000dd07ffffffffffffffff"
+              },
+              {
+                "id": 105,
+                "side": 1,
+                "x": 1520,
+                "y": 1620,
+                "squadron": 2,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 3000,
+                "raw_hex": "01101f02001564ffb80bb80bb80be02e0000786900000200ff3fffffffffff0eff2215ff00000000e7054a06ffffff0980fffffff005540616020171ffff800317050000da07ffffffffffffffff"
+              },
+              {
+                "id": 106,
+                "side": 1,
+                "x": 1455,
+                "y": 1654,
+                "squadron": 3,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 4000,
+                "raw_hex": "01101f03021c64ffa00fa00fa00f80bb0000e02e00000000ff3fffffffffff13ff2e1cff00009000af057606ffffff0980ffffffaf0576063e020171ffff0503300500000d08ffffffffffffffff"
+              },
+              {
+                "id": 107,
+                "side": 1,
+                "x": 1518,
+                "y": 1641,
+                "squadron": 4,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 4000,
+                "raw_hex": "01101f04021e64ffa00fa00fa00f80bb0000e02e00000000ff3fffffffffff13ff2e1cff00009000ee056906ffffff0980ffffffee05690666020171ffff6e0326050000f907ffffffffffffffff"
+              },
+              {
+                "id": 108,
+                "side": 1,
+                "x": 1486,
+                "y": 1647,
+                "squadron": 5,
+                "detail": 0,
+                "weapon": 255,
+                "ships": 2000,
+                "raw_hex": "01101f05031d64ffd007d007d00750460000400d03000000ff3fffffffffff0dff1e14ff00001000ce056f06ffffff0980ffffffce056f068e020171ffff39032b0500000208ffffffffffffffff"
+              }
+            ]
+          ],
+          "AttackerID": 80,
+          "TargetID": 102,
+          "Visibility": {
+            "Mode": 0,
+            "PlayerSide": 0,
+            "SideControl": [
+              0,
+              1
+            ]
+          },
+          "Facing": [
+            0,
+            184
+          ]
+        },
+        "Units": [
+          {
+            "Side": 0,
+            "Squadron": 0,
+            "Detail": 0,
+            "FleetNumber": 3085,
+            "Ships": 3000,
+            "ShipsMax": 3000,
+            "AdmiralName": "tc6pWrH2r/c=",
+            "KindName": "vtTEpQ==",
+            "Visibility": {
+              "Mode": 0,
+              "PlayerSide": 0,
+              "SideControl": [
+                0,
+                1
+              ]
+            }
+          },
+          {
+            "Side": 1,
+            "Squadron": 0,
+            "Detail": 2,
+            "FleetNumber": 4097,
+            "Ships": 2274,
+            "ShipsMax": 3000,
+            "AdmiralName": "qMio5appw7k=",
+            "KindName": "vtTEpQ==",
+            "Visibility": {
+              "Mode": 0,
+              "PlayerSide": 0,
+              "SideControl": [
+                0,
+                1
+              ]
+            }
+          }
+        ],
+        "Integrity": [
+          100,
+          96
+        ],
+        "Weapon": {
+          "Side": 0,
+          "Weapon": 0,
+          "WeaponTypes": [
+            0,
+            5,
+            10
+          ],
+          "ShowResult": true,
+          "Destroyed": 726
+        }
+      },
+      "pictures": [
+        {
+          "Side": 0,
+          "SegmentHex": "45bb4430",
+          "AllFrames": false
+        },
+        {
+          "Side": 1,
+          "SegmentHex": "46b14430",
+          "AllFrames": false
+        },
+        {
+          "Side": 0,
+          "SegmentHex": "45bb4142",
+          "AllFrames": true
+        },
+        {
+          "Side": 1,
+          "SegmentHex": "46b14431",
+          "AllFrames": true
+        }
+      ],
+      "native_zlib_base64": "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"
+    }
+  ],
+  "full_ships": [
+    [
+      3000,
+      3000,
+      4000,
+      2000,
+      3000,
+      3000,
+      1000,
+      1
+    ],
+    [
+      3000,
+      3000,
+      4000,
+      2000,
+      3000,
+      3000,
+      1000,
+      1
+    ]
+  ],
+  "ida_exports": [
+    {
+      "schema": "logh3.engagement-opening-ida.v1",
+      "kernel_version": "9.4",
+      "input": "/work/opening48-r73-1DD6.com",
+      "input_sha256": "e25424cf1df47e696e20ec25cb50c9d8915b4e161814b1dfdf921b906a0acf1a",
+      "uid": 1000,
+      "ida_base_hex": "0x10200",
+      "runtime_segment": "1DD6",
+      "address_space": "原版CS:IP、IDA EA與dosgolem線性位址分欄",
+      "ranges": [
+        "0152:030F"
+      ],
+      "instructions": [
+        {
+          "original_location": "1DD6:0152",
+          "original_name": "",
+          "ida_ea_hex": "0x10352",
+          "runtime_linear_hex": "0x1deb2",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0154",
+          "original_name": "",
+          "ida_ea_hex": "0x10354",
+          "runtime_linear_hex": "0x1deb4",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10352",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0155",
+          "original_name": "",
+          "ida_ea_hex": "0x10355",
+          "runtime_linear_hex": "0x1deb5",
+          "original_bytes_hex": "9a74013139",
+          "operand": "call    far ptr 3931h:174h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10354",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:015A",
+          "original_name": "",
+          "ida_ea_hex": "0x1035a",
+          "runtime_linear_hex": "0x1deba",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10355",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:015B",
+          "original_name": "",
+          "ida_ea_hex": "0x1035b",
+          "runtime_linear_hex": "0x1debb",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1035a",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:015C",
+          "original_name": "",
+          "ida_ea_hex": "0x1035c",
+          "runtime_linear_hex": "0x1debc",
+          "original_bytes_hex": "9ab601ad36",
+          "operand": "call    far ptr 36ADh:1B6h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1035b",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0161",
+          "original_name": "",
+          "ida_ea_hex": "0x10361",
+          "runtime_linear_hex": "0x1dec1",
+          "original_bytes_hex": "1e",
+          "operand": "push    ds",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1035c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0162",
+          "original_name": "",
+          "ida_ea_hex": "0x10362",
+          "runtime_linear_hex": "0x1dec2",
+          "original_bytes_hex": "bb9a9b",
+          "operand": "mov     bx, 9B9Ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10361",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0165",
+          "original_name": "",
+          "ida_ea_hex": "0x10365",
+          "runtime_linear_hex": "0x1dec5",
+          "original_bytes_hex": "53",
+          "operand": "push    bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10362",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0166",
+          "original_name": "",
+          "ida_ea_hex": "0x10366",
+          "runtime_linear_hex": "0x1dec6",
+          "original_bytes_hex": "9acf011b34",
+          "operand": "call    far ptr 341Bh:1CFh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10365",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:016B",
+          "original_name": "",
+          "ida_ea_hex": "0x1036b",
+          "runtime_linear_hex": "0x1decb",
+          "original_bytes_hex": "83c404",
+          "operand": "add     sp, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10366",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:016E",
+          "original_name": "",
+          "ida_ea_hex": "0x1036e",
+          "runtime_linear_hex": "0x1dece",
+          "original_bytes_hex": "ff369298",
+          "operand": "push    word ptr ds:9892h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1036b",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0172",
+          "original_name": "",
+          "ida_ea_hex": "0x10372",
+          "runtime_linear_hex": "0x1ded2",
+          "original_bytes_hex": "ff369098",
+          "operand": "push    word ptr ds:9890h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1036e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0176",
+          "original_name": "",
+          "ida_ea_hex": "0x10376",
+          "runtime_linear_hex": "0x1ded6",
+          "original_bytes_hex": "9acf011b34",
+          "operand": "call    far ptr 341Bh:1CFh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10372",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:017B",
+          "original_name": "",
+          "ida_ea_hex": "0x1037b",
+          "runtime_linear_hex": "0x1dedb",
+          "original_bytes_hex": "83c404",
+          "operand": "add     sp, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10376",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:017E",
+          "original_name": "",
+          "ida_ea_hex": "0x1037e",
+          "runtime_linear_hex": "0x1dede",
+          "original_bytes_hex": "9a6a002717",
+          "operand": "call    far ptr 1727h:6Ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1037b",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0183",
+          "original_name": "",
+          "ida_ea_hex": "0x10383",
+          "runtime_linear_hex": "0x1dee3",
+          "original_bytes_hex": "b80100",
+          "operand": "mov     ax, 1",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1037e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0186",
+          "original_name": "",
+          "ida_ea_hex": "0x10386",
+          "runtime_linear_hex": "0x1dee6",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10383",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0187",
+          "original_name": "",
+          "ida_ea_hex": "0x10387",
+          "runtime_linear_hex": "0x1dee7",
+          "original_bytes_hex": "9a43003139",
+          "operand": "call    far ptr 3931h:43h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10386",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:018C",
+          "original_name": "",
+          "ida_ea_hex": "0x1038c",
+          "runtime_linear_hex": "0x1deec",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10387",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:018D",
+          "original_name": "",
+          "ida_ea_hex": "0x1038d",
+          "runtime_linear_hex": "0x1deed",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1038c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:018E",
+          "original_name": "",
+          "ida_ea_hex": "0x1038e",
+          "runtime_linear_hex": "0x1deee",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1038d",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0190",
+          "original_name": "",
+          "ida_ea_hex": "0x10390",
+          "runtime_linear_hex": "0x1def0",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1038e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0191",
+          "original_name": "",
+          "ida_ea_hex": "0x10391",
+          "runtime_linear_hex": "0x1def1",
+          "original_bytes_hex": "9a0b008d3a",
+          "operand": "call    far ptr 3A8Dh:0Bh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10390",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0196",
+          "original_name": "",
+          "ida_ea_hex": "0x10396",
+          "runtime_linear_hex": "0x1def6",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10391",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0197",
+          "original_name": "",
+          "ida_ea_hex": "0x10397",
+          "runtime_linear_hex": "0x1def7",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10396",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0198",
+          "original_name": "",
+          "ida_ea_hex": "0x10398",
+          "runtime_linear_hex": "0x1def8",
+          "original_bytes_hex": "b001",
+          "operand": "mov     al, 1",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10397",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:019A",
+          "original_name": "",
+          "ida_ea_hex": "0x1039a",
+          "runtime_linear_hex": "0x1defa",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10398",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:019B",
+          "original_name": "",
+          "ida_ea_hex": "0x1039b",
+          "runtime_linear_hex": "0x1defb",
+          "original_bytes_hex": "9a05005839",
+          "operand": "call    far ptr 3958h:5",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1039a",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01A0",
+          "original_name": "",
+          "ida_ea_hex": "0x103a0",
+          "runtime_linear_hex": "0x1df00",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1039b",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01A1",
+          "original_name": "",
+          "ida_ea_hex": "0x103a1",
+          "runtime_linear_hex": "0x1df01",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103a0",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01A2",
+          "original_name": "",
+          "ida_ea_hex": "0x103a2",
+          "runtime_linear_hex": "0x1df02",
+          "original_bytes_hex": "b001",
+          "operand": "mov     al, 1",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103a1",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01A4",
+          "original_name": "",
+          "ida_ea_hex": "0x103a4",
+          "runtime_linear_hex": "0x1df04",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103a2",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01A5",
+          "original_name": "",
+          "ida_ea_hex": "0x103a5",
+          "runtime_linear_hex": "0x1df05",
+          "original_bytes_hex": "9a9d087038",
+          "operand": "call    far ptr 3870h:89Dh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103a4",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01AA",
+          "original_name": "",
+          "ida_ea_hex": "0x103aa",
+          "runtime_linear_hex": "0x1df0a",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103a5",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01AB",
+          "original_name": "",
+          "ida_ea_hex": "0x103ab",
+          "runtime_linear_hex": "0x1df0b",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103aa",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01AC",
+          "original_name": "",
+          "ida_ea_hex": "0x103ac",
+          "runtime_linear_hex": "0x1df0c",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103ab",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01AE",
+          "original_name": "",
+          "ida_ea_hex": "0x103ae",
+          "runtime_linear_hex": "0x1df0e",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103ac",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01AF",
+          "original_name": "",
+          "ida_ea_hex": "0x103af",
+          "runtime_linear_hex": "0x1df0f",
+          "original_bytes_hex": "b102",
+          "operand": "mov     cl, 2",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103ae",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01B1",
+          "original_name": "",
+          "ida_ea_hex": "0x103b1",
+          "runtime_linear_hex": "0x1df11",
+          "original_bytes_hex": "51",
+          "operand": "push    cx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103af",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01B2",
+          "original_name": "",
+          "ida_ea_hex": "0x103b2",
+          "runtime_linear_hex": "0x1df12",
+          "original_bytes_hex": "b20f",
+          "operand": "mov     dl, 0Fh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103b1",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01B4",
+          "original_name": "",
+          "ida_ea_hex": "0x103b4",
+          "runtime_linear_hex": "0x1df14",
+          "original_bytes_hex": "52",
+          "operand": "push    dx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103b2",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01B5",
+          "original_name": "",
+          "ida_ea_hex": "0x103b5",
+          "runtime_linear_hex": "0x1df15",
+          "original_bytes_hex": "b306",
+          "operand": "mov     bl, 6",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103b4",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01B7",
+          "original_name": "",
+          "ida_ea_hex": "0x103b7",
+          "runtime_linear_hex": "0x1df17",
+          "original_bytes_hex": "53",
+          "operand": "push    bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103b5",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01B8",
+          "original_name": "",
+          "ida_ea_hex": "0x103b8",
+          "runtime_linear_hex": "0x1df18",
+          "original_bytes_hex": "b001",
+          "operand": "mov     al, 1",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103b7",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01BA",
+          "original_name": "",
+          "ida_ea_hex": "0x103ba",
+          "runtime_linear_hex": "0x1df1a",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103b8",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01BB",
+          "original_name": "",
+          "ida_ea_hex": "0x103bb",
+          "runtime_linear_hex": "0x1df1b",
+          "original_bytes_hex": "b0e4",
+          "operand": "mov     al, 0E4h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103ba",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01BD",
+          "original_name": "",
+          "ida_ea_hex": "0x103bd",
+          "runtime_linear_hex": "0x1df1d",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103bb",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01BE",
+          "original_name": "",
+          "ida_ea_hex": "0x103be",
+          "runtime_linear_hex": "0x1df1e",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103bd",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01C0",
+          "original_name": "",
+          "ida_ea_hex": "0x103c0",
+          "runtime_linear_hex": "0x1df20",
+          "original_bytes_hex": "31db",
+          "operand": "xor     bx, bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103be",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01C2",
+          "original_name": "",
+          "ida_ea_hex": "0x103c2",
+          "runtime_linear_hex": "0x1df22",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103c0",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01C3",
+          "original_name": "",
+          "ida_ea_hex": "0x103c3",
+          "runtime_linear_hex": "0x1df23",
+          "original_bytes_hex": "53",
+          "operand": "push    bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103c2",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01C4",
+          "original_name": "",
+          "ida_ea_hex": "0x103c4",
+          "runtime_linear_hex": "0x1df24",
+          "original_bytes_hex": "9a06000336",
+          "operand": "call    far ptr 3603h:6",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103c3",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01C9",
+          "original_name": "",
+          "ida_ea_hex": "0x103c9",
+          "runtime_linear_hex": "0x1df29",
+          "original_bytes_hex": "83c410",
+          "operand": "add     sp, 10h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103c4",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01CC",
+          "original_name": "",
+          "ida_ea_hex": "0x103cc",
+          "runtime_linear_hex": "0x1df2c",
+          "original_bytes_hex": "a34ca4",
+          "operand": "mov     ds:0A44Ch, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103c9",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01CF",
+          "original_name": "",
+          "ida_ea_hex": "0x103cf",
+          "runtime_linear_hex": "0x1df2f",
+          "original_bytes_hex": "891e4aa4",
+          "operand": "mov     ds:0A44Ah, bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103cc",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01D3",
+          "original_name": "",
+          "ida_ea_hex": "0x103d3",
+          "runtime_linear_hex": "0x1df33",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103cf",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01D5",
+          "original_name": "",
+          "ida_ea_hex": "0x103d5",
+          "runtime_linear_hex": "0x1df35",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103d3",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01D6",
+          "original_name": "",
+          "ida_ea_hex": "0x103d6",
+          "runtime_linear_hex": "0x1df36",
+          "original_bytes_hex": "b102",
+          "operand": "mov     cl, 2",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103d5",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01D8",
+          "original_name": "",
+          "ida_ea_hex": "0x103d8",
+          "runtime_linear_hex": "0x1df38",
+          "original_bytes_hex": "51",
+          "operand": "push    cx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103d6",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01D9",
+          "original_name": "",
+          "ida_ea_hex": "0x103d9",
+          "runtime_linear_hex": "0x1df39",
+          "original_bytes_hex": "b20f",
+          "operand": "mov     dl, 0Fh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103d8",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01DB",
+          "original_name": "",
+          "ida_ea_hex": "0x103db",
+          "runtime_linear_hex": "0x1df3b",
+          "original_bytes_hex": "52",
+          "operand": "push    dx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103d9",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01DC",
+          "original_name": "",
+          "ida_ea_hex": "0x103dc",
+          "runtime_linear_hex": "0x1df3c",
+          "original_bytes_hex": "b206",
+          "operand": "mov     dl, 6",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103db",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01DE",
+          "original_name": "",
+          "ida_ea_hex": "0x103de",
+          "runtime_linear_hex": "0x1df3e",
+          "original_bytes_hex": "52",
+          "operand": "push    dx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103dc",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01DF",
+          "original_name": "",
+          "ida_ea_hex": "0x103df",
+          "runtime_linear_hex": "0x1df3f",
+          "original_bytes_hex": "b318",
+          "operand": "mov     bl, 18h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103de",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01E1",
+          "original_name": "",
+          "ida_ea_hex": "0x103e1",
+          "runtime_linear_hex": "0x1df41",
+          "original_bytes_hex": "53",
+          "operand": "push    bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103df",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01E2",
+          "original_name": "",
+          "ida_ea_hex": "0x103e2",
+          "runtime_linear_hex": "0x1df42",
+          "original_bytes_hex": "b3c4",
+          "operand": "mov     bl, 0C4h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e1",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01E4",
+          "original_name": "",
+          "ida_ea_hex": "0x103e4",
+          "runtime_linear_hex": "0x1df44",
+          "original_bytes_hex": "53",
+          "operand": "push    bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e2",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01E5",
+          "original_name": "",
+          "ida_ea_hex": "0x103e5",
+          "runtime_linear_hex": "0x1df45",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e4",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01E7",
+          "original_name": "",
+          "ida_ea_hex": "0x103e7",
+          "runtime_linear_hex": "0x1df47",
+          "original_bytes_hex": "31db",
+          "operand": "xor     bx, bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e5",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01E9",
+          "original_name": "",
+          "ida_ea_hex": "0x103e9",
+          "runtime_linear_hex": "0x1df49",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e7",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01EA",
+          "original_name": "",
+          "ida_ea_hex": "0x103ea",
+          "runtime_linear_hex": "0x1df4a",
+          "original_bytes_hex": "53",
+          "operand": "push    bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e9",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01EB",
+          "original_name": "",
+          "ida_ea_hex": "0x103eb",
+          "runtime_linear_hex": "0x1df4b",
+          "original_bytes_hex": "9a06000336",
+          "operand": "call    far ptr 3603h:6",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103ea",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01F0",
+          "original_name": "",
+          "ida_ea_hex": "0x103f0",
+          "runtime_linear_hex": "0x1df50",
+          "original_bytes_hex": "83c410",
+          "operand": "add     sp, 10h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103eb",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01F3",
+          "original_name": "",
+          "ida_ea_hex": "0x103f3",
+          "runtime_linear_hex": "0x1df53",
+          "original_bytes_hex": "a350a4",
+          "operand": "mov     ds:0A450h, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103f0",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01F6",
+          "original_name": "",
+          "ida_ea_hex": "0x103f6",
+          "runtime_linear_hex": "0x1df56",
+          "original_bytes_hex": "891e4ea4",
+          "operand": "mov     ds:0A44Eh, bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103f3",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01FA",
+          "original_name": "",
+          "ida_ea_hex": "0x103fa",
+          "runtime_linear_hex": "0x1df5a",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103f6",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01FC",
+          "original_name": "",
+          "ida_ea_hex": "0x103fc",
+          "runtime_linear_hex": "0x1df5c",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103fa",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01FD",
+          "original_name": "",
+          "ida_ea_hex": "0x103fd",
+          "runtime_linear_hex": "0x1df5d",
+          "original_bytes_hex": "b002",
+          "operand": "mov     al, 2",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103fc",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:01FF",
+          "original_name": "",
+          "ida_ea_hex": "0x103ff",
+          "runtime_linear_hex": "0x1df5f",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103fd",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0200",
+          "original_name": "",
+          "ida_ea_hex": "0x10400",
+          "runtime_linear_hex": "0x1df60",
+          "original_bytes_hex": "b006",
+          "operand": "mov     al, 6",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103ff",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0202",
+          "original_name": "",
+          "ida_ea_hex": "0x10402",
+          "runtime_linear_hex": "0x1df62",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10400",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0203",
+          "original_name": "",
+          "ida_ea_hex": "0x10403",
+          "runtime_linear_hex": "0x1df63",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10402",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0204",
+          "original_name": "",
+          "ida_ea_hex": "0x10404",
+          "runtime_linear_hex": "0x1df64",
+          "original_bytes_hex": "b011",
+          "operand": "mov     al, 11h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10403",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0206",
+          "original_name": "",
+          "ida_ea_hex": "0x10406",
+          "runtime_linear_hex": "0x1df66",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10404",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0207",
+          "original_name": "",
+          "ida_ea_hex": "0x10407",
+          "runtime_linear_hex": "0x1df67",
+          "original_bytes_hex": "b004",
+          "operand": "mov     al, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10406",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0209",
+          "original_name": "",
+          "ida_ea_hex": "0x10409",
+          "runtime_linear_hex": "0x1df69",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10407",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:020A",
+          "original_name": "",
+          "ida_ea_hex": "0x1040a",
+          "runtime_linear_hex": "0x1df6a",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10409",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:020C",
+          "original_name": "",
+          "ida_ea_hex": "0x1040c",
+          "runtime_linear_hex": "0x1df6c",
+          "original_bytes_hex": "31db",
+          "operand": "xor     bx, bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1040a",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:020E",
+          "original_name": "",
+          "ida_ea_hex": "0x1040e",
+          "runtime_linear_hex": "0x1df6e",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1040c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:020F",
+          "original_name": "",
+          "ida_ea_hex": "0x1040f",
+          "runtime_linear_hex": "0x1df6f",
+          "original_bytes_hex": "53",
+          "operand": "push    bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1040e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0210",
+          "original_name": "",
+          "ida_ea_hex": "0x10410",
+          "runtime_linear_hex": "0x1df70",
+          "original_bytes_hex": "9a06000336",
+          "operand": "call    far ptr 3603h:6",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1040f",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0215",
+          "original_name": "",
+          "ida_ea_hex": "0x10415",
+          "runtime_linear_hex": "0x1df75",
+          "original_bytes_hex": "83c410",
+          "operand": "add     sp, 10h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10410",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0218",
+          "original_name": "",
+          "ida_ea_hex": "0x10418",
+          "runtime_linear_hex": "0x1df78",
+          "original_bytes_hex": "a354a4",
+          "operand": "mov     ds:0A454h, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10415",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:021B",
+          "original_name": "",
+          "ida_ea_hex": "0x1041b",
+          "runtime_linear_hex": "0x1df7b",
+          "original_bytes_hex": "891e52a4",
+          "operand": "mov     ds:0A452h, bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10418",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:021F",
+          "original_name": "",
+          "ida_ea_hex": "0x1041f",
+          "runtime_linear_hex": "0x1df7f",
+          "original_bytes_hex": "ff364ca4",
+          "operand": "push    word ptr ds:0A44Ch",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1041b",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0223",
+          "original_name": "",
+          "ida_ea_hex": "0x10423",
+          "runtime_linear_hex": "0x1df83",
+          "original_bytes_hex": "ff364aa4",
+          "operand": "push    word ptr ds:0A44Ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1041f",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0227",
+          "original_name": "",
+          "ida_ea_hex": "0x10427",
+          "runtime_linear_hex": "0x1df87",
+          "original_bytes_hex": "9a45011b34",
+          "operand": "call    far ptr 341Bh:145h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10423",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:022C",
+          "original_name": "",
+          "ida_ea_hex": "0x1042c",
+          "runtime_linear_hex": "0x1df8c",
+          "original_bytes_hex": "83c404",
+          "operand": "add     sp, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10427",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:022F",
+          "original_name": "",
+          "ida_ea_hex": "0x1042f",
+          "runtime_linear_hex": "0x1df8f",
+          "original_bytes_hex": "ff3650a4",
+          "operand": "push    word ptr ds:0A450h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1042c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0233",
+          "original_name": "",
+          "ida_ea_hex": "0x10433",
+          "runtime_linear_hex": "0x1df93",
+          "original_bytes_hex": "ff364ea4",
+          "operand": "push    word ptr ds:0A44Eh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1042f",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0237",
+          "original_name": "",
+          "ida_ea_hex": "0x10437",
+          "runtime_linear_hex": "0x1df97",
+          "original_bytes_hex": "9a45011b34",
+          "operand": "call    far ptr 341Bh:145h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10433",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:023C",
+          "original_name": "",
+          "ida_ea_hex": "0x1043c",
+          "runtime_linear_hex": "0x1df9c",
+          "original_bytes_hex": "83c404",
+          "operand": "add     sp, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10437",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:023F",
+          "original_name": "",
+          "ida_ea_hex": "0x1043f",
+          "runtime_linear_hex": "0x1df9f",
+          "original_bytes_hex": "ff3654a4",
+          "operand": "push    word ptr ds:0A454h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1043c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0243",
+          "original_name": "",
+          "ida_ea_hex": "0x10443",
+          "runtime_linear_hex": "0x1dfa3",
+          "original_bytes_hex": "ff3652a4",
+          "operand": "push    word ptr ds:0A452h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1043f",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0247",
+          "original_name": "",
+          "ida_ea_hex": "0x10447",
+          "runtime_linear_hex": "0x1dfa7",
+          "original_bytes_hex": "9a45011b34",
+          "operand": "call    far ptr 341Bh:145h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10443",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:024C",
+          "original_name": "",
+          "ida_ea_hex": "0x1044c",
+          "runtime_linear_hex": "0x1dfac",
+          "original_bytes_hex": "83c404",
+          "operand": "add     sp, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10447",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:024F",
+          "original_name": "",
+          "ida_ea_hex": "0x1044f",
+          "runtime_linear_hex": "0x1dfaf",
+          "original_bytes_hex": "9a0e03743b",
+          "operand": "call    far ptr 3B74h:30Eh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1044c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0254",
+          "original_name": "",
+          "ida_ea_hex": "0x10454",
+          "runtime_linear_hex": "0x1dfb4",
+          "original_bytes_hex": "b80100",
+          "operand": "mov     ax, 1",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1044f",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0257",
+          "original_name": "",
+          "ida_ea_hex": "0x10457",
+          "runtime_linear_hex": "0x1dfb7",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10454",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0258",
+          "original_name": "",
+          "ida_ea_hex": "0x10458",
+          "runtime_linear_hex": "0x1dfb8",
+          "original_bytes_hex": "9a6b082f04",
+          "operand": "call    far ptr 42Fh:86Bh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10457",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:025D",
+          "original_name": "",
+          "ida_ea_hex": "0x1045d",
+          "runtime_linear_hex": "0x1dfbd",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10458",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:025E",
+          "original_name": "",
+          "ida_ea_hex": "0x1045e",
+          "runtime_linear_hex": "0x1dfbe",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1045d",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:025F",
+          "original_name": "",
+          "ida_ea_hex": "0x1045f",
+          "runtime_linear_hex": "0x1dfbf",
+          "original_bytes_hex": "b80100",
+          "operand": "mov     ax, 1",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1045e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0262",
+          "original_name": "",
+          "ida_ea_hex": "0x10462",
+          "runtime_linear_hex": "0x1dfc2",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1045f",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0263",
+          "original_name": "",
+          "ida_ea_hex": "0x10463",
+          "runtime_linear_hex": "0x1dfc3",
+          "original_bytes_hex": "9a74013139",
+          "operand": "call    far ptr 3931h:174h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10462",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0268",
+          "original_name": "",
+          "ida_ea_hex": "0x10468",
+          "runtime_linear_hex": "0x1dfc8",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10463",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0269",
+          "original_name": "",
+          "ida_ea_hex": "0x10469",
+          "runtime_linear_hex": "0x1dfc9",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10468",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:026A",
+          "original_name": "",
+          "ida_ea_hex": "0x1046a",
+          "runtime_linear_hex": "0x1dfca",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10469",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:026B",
+          "original_name": "",
+          "ida_ea_hex": "0x1046b",
+          "runtime_linear_hex": "0x1dfcb",
+          "original_bytes_hex": "9a1403743b",
+          "operand": "call    far ptr 3B74h:314h",
+          "xrefs": [],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0270",
+          "original_name": "",
+          "ida_ea_hex": "0x10470",
+          "runtime_linear_hex": "0x1dfd0",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1046b",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0272",
+          "original_name": "",
+          "ida_ea_hex": "0x10472",
+          "runtime_linear_hex": "0x1dfd2",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10470",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0273",
+          "original_name": "",
+          "ida_ea_hex": "0x10473",
+          "runtime_linear_hex": "0x1dfd3",
+          "original_bytes_hex": "9a74013139",
+          "operand": "call    far ptr 3931h:174h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10472",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0278",
+          "original_name": "",
+          "ida_ea_hex": "0x10478",
+          "runtime_linear_hex": "0x1dfd8",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10473",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0279",
+          "original_name": "",
+          "ida_ea_hex": "0x10479",
+          "runtime_linear_hex": "0x1dfd9",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10478",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:027A",
+          "original_name": "",
+          "ida_ea_hex": "0x1047a",
+          "runtime_linear_hex": "0x1dfda",
+          "original_bytes_hex": "ff364ca4",
+          "operand": "push    word ptr ds:0A44Ch",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10479",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:027E",
+          "original_name": "",
+          "ida_ea_hex": "0x1047e",
+          "runtime_linear_hex": "0x1dfde",
+          "original_bytes_hex": "ff364aa4",
+          "operand": "push    word ptr ds:0A44Ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1047a",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0282",
+          "original_name": "",
+          "ida_ea_hex": "0x10482",
+          "runtime_linear_hex": "0x1dfe2",
+          "original_bytes_hex": "9ab4000336",
+          "operand": "call    far ptr 3603h:0B4h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1047e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0287",
+          "original_name": "",
+          "ida_ea_hex": "0x10487",
+          "runtime_linear_hex": "0x1dfe7",
+          "original_bytes_hex": "83c404",
+          "operand": "add     sp, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10482",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:028A",
+          "original_name": "",
+          "ida_ea_hex": "0x1048a",
+          "runtime_linear_hex": "0x1dfea",
+          "original_bytes_hex": "ff3650a4",
+          "operand": "push    word ptr ds:0A450h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10487",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:028E",
+          "original_name": "",
+          "ida_ea_hex": "0x1048e",
+          "runtime_linear_hex": "0x1dfee",
+          "original_bytes_hex": "ff364ea4",
+          "operand": "push    word ptr ds:0A44Eh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1048a",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0292",
+          "original_name": "",
+          "ida_ea_hex": "0x10492",
+          "runtime_linear_hex": "0x1dff2",
+          "original_bytes_hex": "9ab4000336",
+          "operand": "call    far ptr 3603h:0B4h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1048e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0297",
+          "original_name": "",
+          "ida_ea_hex": "0x10497",
+          "runtime_linear_hex": "0x1dff7",
+          "original_bytes_hex": "83c404",
+          "operand": "add     sp, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10492",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:029A",
+          "original_name": "",
+          "ida_ea_hex": "0x1049a",
+          "runtime_linear_hex": "0x1dffa",
+          "original_bytes_hex": "ff3654a4",
+          "operand": "push    word ptr ds:0A454h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10497",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:029E",
+          "original_name": "",
+          "ida_ea_hex": "0x1049e",
+          "runtime_linear_hex": "0x1dffe",
+          "original_bytes_hex": "ff3652a4",
+          "operand": "push    word ptr ds:0A452h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1049a",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02A2",
+          "original_name": "",
+          "ida_ea_hex": "0x104a2",
+          "runtime_linear_hex": "0x1e002",
+          "original_bytes_hex": "9ab4000336",
+          "operand": "call    far ptr 3603h:0B4h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1049e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02A7",
+          "original_name": "",
+          "ida_ea_hex": "0x104a7",
+          "runtime_linear_hex": "0x1e007",
+          "original_bytes_hex": "83c404",
+          "operand": "add     sp, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104a2",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02AA",
+          "original_name": "",
+          "ida_ea_hex": "0x104aa",
+          "runtime_linear_hex": "0x1e00a",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104a7",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02AC",
+          "original_name": "",
+          "ida_ea_hex": "0x104ac",
+          "runtime_linear_hex": "0x1e00c",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104aa",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02AD",
+          "original_name": "",
+          "ida_ea_hex": "0x104ad",
+          "runtime_linear_hex": "0x1e00d",
+          "original_bytes_hex": "9a9d087038",
+          "operand": "call    far ptr 3870h:89Dh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104ac",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02B2",
+          "original_name": "",
+          "ida_ea_hex": "0x104b2",
+          "runtime_linear_hex": "0x1e012",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104ad",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02B3",
+          "original_name": "",
+          "ida_ea_hex": "0x104b3",
+          "runtime_linear_hex": "0x1e013",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104b2",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02B4",
+          "original_name": "",
+          "ida_ea_hex": "0x104b4",
+          "runtime_linear_hex": "0x1e014",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104b3",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02B6",
+          "original_name": "",
+          "ida_ea_hex": "0x104b6",
+          "runtime_linear_hex": "0x1e016",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104b4",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02B7",
+          "original_name": "",
+          "ida_ea_hex": "0x104b7",
+          "runtime_linear_hex": "0x1e017",
+          "original_bytes_hex": "9a43003139",
+          "operand": "call    far ptr 3931h:43h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104b6",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02BC",
+          "original_name": "",
+          "ida_ea_hex": "0x104bc",
+          "runtime_linear_hex": "0x1e01c",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104b7",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02BD",
+          "original_name": "",
+          "ida_ea_hex": "0x104bd",
+          "runtime_linear_hex": "0x1e01d",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104bc",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02BE",
+          "original_name": "",
+          "ida_ea_hex": "0x104be",
+          "runtime_linear_hex": "0x1e01e",
+          "original_bytes_hex": "b003",
+          "operand": "mov     al, 3",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104bd",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02C0",
+          "original_name": "",
+          "ida_ea_hex": "0x104c0",
+          "runtime_linear_hex": "0x1e020",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104be",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02C1",
+          "original_name": "",
+          "ida_ea_hex": "0x104c1",
+          "runtime_linear_hex": "0x1e021",
+          "original_bytes_hex": "9a0b008d3a",
+          "operand": "call    far ptr 3A8Dh:0Bh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104c0",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02C6",
+          "original_name": "",
+          "ida_ea_hex": "0x104c6",
+          "runtime_linear_hex": "0x1e026",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104c1",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02C7",
+          "original_name": "",
+          "ida_ea_hex": "0x104c7",
+          "runtime_linear_hex": "0x1e027",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104c6",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02C8",
+          "original_name": "",
+          "ida_ea_hex": "0x104c8",
+          "runtime_linear_hex": "0x1e028",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104c7",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02CA",
+          "original_name": "",
+          "ida_ea_hex": "0x104ca",
+          "runtime_linear_hex": "0x1e02a",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104c8",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02CB",
+          "original_name": "",
+          "ida_ea_hex": "0x104cb",
+          "runtime_linear_hex": "0x1e02b",
+          "original_bytes_hex": "9a05005839",
+          "operand": "call    far ptr 3958h:5",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104ca",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02D0",
+          "original_name": "",
+          "ida_ea_hex": "0x104d0",
+          "runtime_linear_hex": "0x1e030",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104cb",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02D1",
+          "original_name": "",
+          "ida_ea_hex": "0x104d1",
+          "runtime_linear_hex": "0x1e031",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104d0",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02D2",
+          "original_name": "",
+          "ida_ea_hex": "0x104d2",
+          "runtime_linear_hex": "0x1e032",
+          "original_bytes_hex": "9a2f002717",
+          "operand": "call    far ptr 1727h:2Fh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104d1",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02D7",
+          "original_name": "",
+          "ida_ea_hex": "0x104d7",
+          "runtime_linear_hex": "0x1e037",
+          "original_bytes_hex": "1e",
+          "operand": "push    ds",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104d2",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02D8",
+          "original_name": "",
+          "ida_ea_hex": "0x104d8",
+          "runtime_linear_hex": "0x1e038",
+          "original_bytes_hex": "bb9a9b",
+          "operand": "mov     bx, 9B9Ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104d7",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02DB",
+          "original_name": "",
+          "ida_ea_hex": "0x104db",
+          "runtime_linear_hex": "0x1e03b",
+          "original_bytes_hex": "53",
+          "operand": "push    bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104d8",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02DC",
+          "original_name": "",
+          "ida_ea_hex": "0x104dc",
+          "runtime_linear_hex": "0x1e03c",
+          "original_bytes_hex": "9a45011b34",
+          "operand": "call    far ptr 341Bh:145h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104db",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02E1",
+          "original_name": "",
+          "ida_ea_hex": "0x104e1",
+          "runtime_linear_hex": "0x1e041",
+          "original_bytes_hex": "83c404",
+          "operand": "add     sp, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104dc",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02E4",
+          "original_name": "",
+          "ida_ea_hex": "0x104e4",
+          "runtime_linear_hex": "0x1e044",
+          "original_bytes_hex": "ff369298",
+          "operand": "push    word ptr ds:9892h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104e1",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02E8",
+          "original_name": "",
+          "ida_ea_hex": "0x104e8",
+          "runtime_linear_hex": "0x1e048",
+          "original_bytes_hex": "ff369098",
+          "operand": "push    word ptr ds:9890h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104e4",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02EC",
+          "original_name": "",
+          "ida_ea_hex": "0x104ec",
+          "runtime_linear_hex": "0x1e04c",
+          "original_bytes_hex": "9a45011b34",
+          "operand": "call    far ptr 341Bh:145h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104e8",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02F1",
+          "original_name": "",
+          "ida_ea_hex": "0x104f1",
+          "runtime_linear_hex": "0x1e051",
+          "original_bytes_hex": "83c404",
+          "operand": "add     sp, 4",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104ec",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02F4",
+          "original_name": "",
+          "ida_ea_hex": "0x104f4",
+          "runtime_linear_hex": "0x1e054",
+          "original_bytes_hex": "9ac801ad36",
+          "operand": "call    far ptr 36ADh:1C8h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104f1",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02F9",
+          "original_name": "",
+          "ida_ea_hex": "0x104f9",
+          "runtime_linear_hex": "0x1e059",
+          "original_bytes_hex": "b80100",
+          "operand": "mov     ax, 1",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104f4",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02FC",
+          "original_name": "",
+          "ida_ea_hex": "0x104fc",
+          "runtime_linear_hex": "0x1e05c",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104f9",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:02FD",
+          "original_name": "",
+          "ida_ea_hex": "0x104fd",
+          "runtime_linear_hex": "0x1e05d",
+          "original_bytes_hex": "9a74013139",
+          "operand": "call    far ptr 3931h:174h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104fc",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0302",
+          "original_name": "",
+          "ida_ea_hex": "0x10502",
+          "runtime_linear_hex": "0x1e062",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104fd",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0303",
+          "original_name": "",
+          "ida_ea_hex": "0x10503",
+          "runtime_linear_hex": "0x1e063",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10502",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0304",
+          "original_name": "",
+          "ida_ea_hex": "0x10504",
+          "runtime_linear_hex": "0x1e064",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10503",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0306",
+          "original_name": "",
+          "ida_ea_hex": "0x10506",
+          "runtime_linear_hex": "0x1e066",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10504",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:0307",
+          "original_name": "",
+          "ida_ea_hex": "0x10507",
+          "runtime_linear_hex": "0x1e067",
+          "original_bytes_hex": "9a03006537",
+          "operand": "call    far ptr 3765h:3",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10506",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:030C",
+          "original_name": "",
+          "ida_ea_hex": "0x1050c",
+          "runtime_linear_hex": "0x1e06c",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10507",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:030D",
+          "original_name": "",
+          "ida_ea_hex": "0x1050d",
+          "runtime_linear_hex": "0x1e06d",
+          "original_bytes_hex": "44",
+          "operand": "inc     sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1050c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "1DD6:030E",
+          "original_name": "",
+          "ida_ea_hex": "0x1050e",
+          "runtime_linear_hex": "0x1e06e",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1050d",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        }
+      ]
+    },
+    {
+      "schema": "logh3.engagement-opening-ida.v1",
+      "kernel_version": "9.4",
+      "input": "/work/opening48-r73-3958.com",
+      "input_sha256": "17f9c3d75a31f99566c449ac56d82df7276eb5c5143eb1dd45ef1e54000c06cb",
+      "uid": 1000,
+      "ida_base_hex": "0x10200",
+      "runtime_segment": "3958",
+      "address_space": "原版CS:IP、IDA EA與dosgolem線性位址分欄",
+      "ranges": [
+        "0005:0041"
+      ],
+      "instructions": [
+        {
+          "original_location": "3958:0005",
+          "original_name": "",
+          "ida_ea_hex": "0x10205",
+          "runtime_linear_hex": "0x39585",
+          "original_bytes_hex": "55",
+          "operand": "push    bp",
+          "xrefs": [],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0006",
+          "original_name": "",
+          "ida_ea_hex": "0x10206",
+          "runtime_linear_hex": "0x39586",
+          "original_bytes_hex": "89e5",
+          "operand": "mov     bp, sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10205",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0008",
+          "original_name": "",
+          "ida_ea_hex": "0x10208",
+          "runtime_linear_hex": "0x39588",
+          "original_bytes_hex": "8a4606",
+          "operand": "mov     al, [bp+6]",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10206",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:000B",
+          "original_name": "",
+          "ida_ea_hex": "0x1020b",
+          "runtime_linear_hex": "0x3958b",
+          "original_bytes_hex": "30e4",
+          "operand": "xor     ah, ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10208",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:000D",
+          "original_name": "",
+          "ida_ea_hex": "0x1020d",
+          "runtime_linear_hex": "0x3958d",
+          "original_bytes_hex": "83c030",
+          "operand": "add     ax, 30h ; '0'",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1020b",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0010",
+          "original_name": "",
+          "ida_ea_hex": "0x10210",
+          "runtime_linear_hex": "0x39590",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1020d",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0011",
+          "original_name": "",
+          "ida_ea_hex": "0x10211",
+          "runtime_linear_hex": "0x39591",
+          "original_bytes_hex": "b84c00",
+          "operand": "mov     ax, 4Ch ; 'L'",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10210",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0014",
+          "original_name": "",
+          "ida_ea_hex": "0x10214",
+          "runtime_linear_hex": "0x39594",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10211",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0015",
+          "original_name": "",
+          "ida_ea_hex": "0x10215",
+          "runtime_linear_hex": "0x39595",
+          "original_bytes_hex": "b84e00",
+          "operand": "mov     ax, 4Eh ; 'N'",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10214",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0018",
+          "original_name": "",
+          "ida_ea_hex": "0x10218",
+          "runtime_linear_hex": "0x39598",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10215",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0019",
+          "original_name": "",
+          "ida_ea_hex": "0x10219",
+          "runtime_linear_hex": "0x39599",
+          "original_bytes_hex": "b85000",
+          "operand": "mov     ax, 50h ; 'P'",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10218",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:001C",
+          "original_name": "",
+          "ida_ea_hex": "0x1021c",
+          "runtime_linear_hex": "0x3959c",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10219",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:001D",
+          "original_name": "",
+          "ida_ea_hex": "0x1021d",
+          "runtime_linear_hex": "0x3959d",
+          "original_bytes_hex": "ff363af1",
+          "operand": "push    word ptr ds:0F13Ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1021c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0021",
+          "original_name": "",
+          "ida_ea_hex": "0x10221",
+          "runtime_linear_hex": "0x395a1",
+          "original_bytes_hex": "ff3638f1",
+          "operand": "push    word ptr ds:0F138h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1021d",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0025",
+          "original_name": "",
+          "ida_ea_hex": "0x10225",
+          "runtime_linear_hex": "0x395a5",
+          "original_bytes_hex": "9aaf032e33",
+          "operand": "call    far ptr 332Eh:3AFh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10221",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:002A",
+          "original_name": "",
+          "ida_ea_hex": "0x1022a",
+          "runtime_linear_hex": "0x395aa",
+          "original_bytes_hex": "89ec",
+          "operand": "mov     sp, bp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10225",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:002C",
+          "original_name": "",
+          "ida_ea_hex": "0x1022c",
+          "runtime_linear_hex": "0x395ac",
+          "original_bytes_hex": "ff363af1",
+          "operand": "push    word ptr ds:0F13Ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1022a",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0030",
+          "original_name": "",
+          "ida_ea_hex": "0x10230",
+          "runtime_linear_hex": "0x395b0",
+          "original_bytes_hex": "ff3638f1",
+          "operand": "push    word ptr ds:0F138h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1022c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0034",
+          "original_name": "",
+          "ida_ea_hex": "0x10234",
+          "runtime_linear_hex": "0x395b4",
+          "original_bytes_hex": "31c0",
+          "operand": "xor     ax, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10230",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0036",
+          "original_name": "",
+          "ida_ea_hex": "0x10236",
+          "runtime_linear_hex": "0x395b6",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10234",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0037",
+          "original_name": "",
+          "ida_ea_hex": "0x10237",
+          "runtime_linear_hex": "0x395b7",
+          "original_bytes_hex": "50",
+          "operand": "push    ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10236",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0038",
+          "original_name": "",
+          "ida_ea_hex": "0x10238",
+          "runtime_linear_hex": "0x395b8",
+          "original_bytes_hex": "9adc018a34",
+          "operand": "call    far ptr 348Ah:1DCh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10237",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:003D",
+          "original_name": "",
+          "ida_ea_hex": "0x1023d",
+          "runtime_linear_hex": "0x395bd",
+          "original_bytes_hex": "89ec",
+          "operand": "mov     sp, bp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10238",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:003F",
+          "original_name": "",
+          "ida_ea_hex": "0x1023f",
+          "runtime_linear_hex": "0x395bf",
+          "original_bytes_hex": "5d",
+          "operand": "pop     bp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1023d",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "3958:0040",
+          "original_name": "",
+          "ida_ea_hex": "0x10240",
+          "runtime_linear_hex": "0x395c0",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1023f",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        }
+      ]
+    },
+    {
+      "schema": "logh3.engagement-opening-ida.v1",
+      "kernel_version": "9.4",
+      "input": "/work/opening48-r73-348A.com",
+      "input_sha256": "7d983bcebdb89e76db0cb1298e5ba84419ecdda2a1b70bf3defa7b21f5e7cebe",
+      "uid": 1000,
+      "ida_base_hex": "0x10200",
+      "runtime_segment": "348A",
+      "address_space": "原版CS:IP、IDA EA與dosgolem線性位址分欄",
+      "ranges": [
+        "01DC:0228",
+        "0281:ret"
+      ],
+      "instructions": [
+        {
+          "original_location": "348A:01DC",
+          "original_name": "",
+          "ida_ea_hex": "0x103dc",
+          "runtime_linear_hex": "0x34a7c",
+          "original_bytes_hex": "55",
+          "operand": "push    bp",
+          "xrefs": [],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01DD",
+          "original_name": "",
+          "ida_ea_hex": "0x103dd",
+          "runtime_linear_hex": "0x34a7d",
+          "original_bytes_hex": "8bec",
+          "operand": "mov     bp, sp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103dc",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01DF",
+          "original_name": "",
+          "ida_ea_hex": "0x103df",
+          "runtime_linear_hex": "0x34a7f",
+          "original_bytes_hex": "56",
+          "operand": "push    si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103dd",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01E0",
+          "original_name": "",
+          "ida_ea_hex": "0x103e0",
+          "runtime_linear_hex": "0x34a80",
+          "original_bytes_hex": "57",
+          "operand": "push    di",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103df",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01E1",
+          "original_name": "",
+          "ida_ea_hex": "0x103e1",
+          "runtime_linear_hex": "0x34a81",
+          "original_bytes_hex": "06",
+          "operand": "push    es",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e0",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01E2",
+          "original_name": "",
+          "ida_ea_hex": "0x103e2",
+          "runtime_linear_hex": "0x34a82",
+          "original_bytes_hex": "9a3d01ad36",
+          "operand": "call    far ptr 36ADh:13Dh",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e1",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01E7",
+          "original_name": "",
+          "ida_ea_hex": "0x103e7",
+          "runtime_linear_hex": "0x34a87",
+          "original_bytes_hex": "1e",
+          "operand": "push    ds",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e2",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01E8",
+          "original_name": "",
+          "ida_ea_hex": "0x103e8",
+          "runtime_linear_hex": "0x34a88",
+          "original_bytes_hex": "8a6e06",
+          "operand": "mov     ch, [bp+6]",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e7",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01EB",
+          "original_name": "",
+          "ida_ea_hex": "0x103eb",
+          "runtime_linear_hex": "0x34a8b",
+          "original_bytes_hex": "8a4e08",
+          "operand": "mov     cl, [bp+8]",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103e8",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01EE",
+          "original_name": "",
+          "ida_ea_hex": "0x103ee",
+          "runtime_linear_hex": "0x34a8e",
+          "original_bytes_hex": "9a3a008d3a",
+          "operand": "call    far ptr 3A8Dh:3Ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103eb",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01F3",
+          "original_name": "",
+          "ida_ea_hex": "0x103f3",
+          "runtime_linear_hex": "0x34a93",
+          "original_bytes_hex": "2e891eda01",
+          "operand": "mov     cs:word_101DA, bx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103ee",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01F8",
+          "original_name": "",
+          "ida_ea_hex": "0x103f8",
+          "runtime_linear_hex": "0x34a98",
+          "original_bytes_hex": "c5760a",
+          "operand": "lds     si, [bp+0Ah]",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103f3",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01FB",
+          "original_name": "",
+          "ida_ea_hex": "0x103fb",
+          "runtime_linear_hex": "0x34a9b",
+          "original_bytes_hex": "46",
+          "operand": "inc     si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103f8",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01FC",
+          "original_name": "",
+          "ida_ea_hex": "0x103fc",
+          "runtime_linear_hex": "0x34a9c",
+          "original_bytes_hex": "46",
+          "operand": "inc     si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103fb",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:01FD",
+          "original_name": "",
+          "ida_ea_hex": "0x103fd",
+          "runtime_linear_hex": "0x34a9d",
+          "original_bytes_hex": "2e8936d801",
+          "operand": "mov     cs:word_101D8, si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103fc",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0202",
+          "original_name": "",
+          "ida_ea_hex": "0x10402",
+          "runtime_linear_hex": "0x34aa2",
+          "original_bytes_hex": "b90100",
+          "operand": "mov     cx, 1",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x103fd",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0205",
+          "original_name": "",
+          "ida_ea_hex": "0x10405",
+          "runtime_linear_hex": "0x34aa5",
+          "original_bytes_hex": "51",
+          "operand": "push    cx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10402",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0206",
+          "original_name": "",
+          "ida_ea_hex": "0x10406",
+          "runtime_linear_hex": "0x34aa6",
+          "original_bytes_hex": "2e8b36d801",
+          "operand": "mov     si, cs:word_101D8",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10405",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:020B",
+          "original_name": "",
+          "ida_ea_hex": "0x1040b",
+          "runtime_linear_hex": "0x34aab",
+          "original_bytes_hex": "8a24",
+          "operand": "mov     ah, [si]",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10406",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:020D",
+          "original_name": "",
+          "ida_ea_hex": "0x1040d",
+          "runtime_linear_hex": "0x34aad",
+          "original_bytes_hex": "46",
+          "operand": "inc     si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1040b",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:020E",
+          "original_name": "",
+          "ida_ea_hex": "0x1040e",
+          "runtime_linear_hex": "0x34aae",
+          "original_bytes_hex": "22e4",
+          "operand": "and     ah, ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1040d",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0210",
+          "original_name": "",
+          "ida_ea_hex": "0x10410",
+          "runtime_linear_hex": "0x34ab0",
+          "original_bytes_hex": "7505",
+          "operand": "jnz     short near ptr unk_10417",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1040e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0212",
+          "original_name": "",
+          "ida_ea_hex": "0x10412",
+          "runtime_linear_hex": "0x34ab2",
+          "original_bytes_hex": "e85e00",
+          "operand": "call    sub_10473",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10410",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0215",
+          "original_name": "",
+          "ida_ea_hex": "0x10415",
+          "runtime_linear_hex": "0x34ab5",
+          "original_bytes_hex": "eb03",
+          "operand": "jmp     short near ptr unk_1041A",
+          "xrefs": [],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0217",
+          "original_name": "loc_10417",
+          "ida_ea_hex": "0x10417",
+          "runtime_linear_hex": "0x34ab7",
+          "original_bytes_hex": "e86000",
+          "operand": "call    sub_1047A",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10410",
+              "type": 19
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:021A",
+          "original_name": "loc_1041A",
+          "ida_ea_hex": "0x1041a",
+          "runtime_linear_hex": "0x34aba",
+          "original_bytes_hex": "59",
+          "operand": "pop     cx",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10415",
+              "type": 19
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:021B",
+          "original_name": "",
+          "ida_ea_hex": "0x1041b",
+          "runtime_linear_hex": "0x34abb",
+          "original_bytes_hex": "e2e8",
+          "operand": "loop    loc_10405",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1041a",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:021D",
+          "original_name": "",
+          "ida_ea_hex": "0x1041d",
+          "runtime_linear_hex": "0x34abd",
+          "original_bytes_hex": "1f",
+          "operand": "pop     ds",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1041b",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:021E",
+          "original_name": "",
+          "ida_ea_hex": "0x1041e",
+          "runtime_linear_hex": "0x34abe",
+          "original_bytes_hex": "9a1701ad36",
+          "operand": "call    far ptr 36ADh:117h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1041d",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0223",
+          "original_name": "",
+          "ida_ea_hex": "0x10423",
+          "runtime_linear_hex": "0x34ac3",
+          "original_bytes_hex": "07",
+          "operand": "pop     es",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1041e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0224",
+          "original_name": "",
+          "ida_ea_hex": "0x10424",
+          "runtime_linear_hex": "0x34ac4",
+          "original_bytes_hex": "5f",
+          "operand": "pop     di",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10423",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0225",
+          "original_name": "",
+          "ida_ea_hex": "0x10425",
+          "runtime_linear_hex": "0x34ac5",
+          "original_bytes_hex": "5e",
+          "operand": "pop     si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10424",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0226",
+          "original_name": "",
+          "ida_ea_hex": "0x10426",
+          "runtime_linear_hex": "0x34ac6",
+          "original_bytes_hex": "5d",
+          "operand": "pop     bp",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10425",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0227",
+          "original_name": "",
+          "ida_ea_hex": "0x10427",
+          "runtime_linear_hex": "0x34ac7",
+          "original_bytes_hex": "cb",
+          "operand": "retf",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10426",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0281",
+          "original_name": "loc_10481",
+          "ida_ea_hex": "0x10481",
+          "runtime_linear_hex": "0x34b21",
+          "original_bytes_hex": "1e",
+          "operand": "push    ds",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10473",
+              "type": 17
+            },
+            {
+              "ida_from_hex": "0x1047a",
+              "type": 17
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0282",
+          "original_name": "",
+          "ida_ea_hex": "0x10482",
+          "runtime_linear_hex": "0x34b22",
+          "original_bytes_hex": "b8b354",
+          "operand": "mov     ax, 54B3h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10481",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0285",
+          "original_name": "",
+          "ida_ea_hex": "0x10485",
+          "runtime_linear_hex": "0x34b25",
+          "original_bytes_hex": "8ed8",
+          "operand": "mov     ds, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10482",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0287",
+          "original_name": "",
+          "ida_ea_hex": "0x10487",
+          "runtime_linear_hex": "0x34b27",
+          "original_bytes_hex": "833efe8e00",
+          "operand": "cmp     word ptr ds:8EFEh, 0",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10485",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:028C",
+          "original_name": "",
+          "ida_ea_hex": "0x1048c",
+          "runtime_linear_hex": "0x34b2c",
+          "original_bytes_hex": "75f9",
+          "operand": "jnz     short loc_10487",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10487",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:028E",
+          "original_name": "",
+          "ida_ea_hex": "0x1048e",
+          "runtime_linear_hex": "0x34b2e",
+          "original_bytes_hex": "bb108f",
+          "operand": "mov     bx, 8F10h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1048c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0291",
+          "original_name": "",
+          "ida_ea_hex": "0x10491",
+          "runtime_linear_hex": "0x34b31",
+          "original_bytes_hex": "a0378f",
+          "operand": "mov     al, ds:8F37h",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1048e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0294",
+          "original_name": "",
+          "ida_ea_hex": "0x10494",
+          "runtime_linear_hex": "0x34b34",
+          "original_bytes_hex": "d7",
+          "operand": "xlat",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10491",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0295",
+          "original_name": "",
+          "ida_ea_hex": "0x10495",
+          "runtime_linear_hex": "0x34b35",
+          "original_bytes_hex": "32e4",
+          "operand": "xor     ah, ah",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10494",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:0297",
+          "original_name": "",
+          "ida_ea_hex": "0x10497",
+          "runtime_linear_hex": "0x34b37",
+          "original_bytes_hex": "a3fe8e",
+          "operand": "mov     ds:8EFEh, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10495",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:029A",
+          "original_name": "",
+          "ida_ea_hex": "0x1049a",
+          "runtime_linear_hex": "0x34b3a",
+          "original_bytes_hex": "1f",
+          "operand": "pop     ds",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x10497",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:029B",
+          "original_name": "",
+          "ida_ea_hex": "0x1049b",
+          "runtime_linear_hex": "0x34b3b",
+          "original_bytes_hex": "46",
+          "operand": "inc     si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1049a",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:029C",
+          "original_name": "",
+          "ida_ea_hex": "0x1049c",
+          "runtime_linear_hex": "0x34b3c",
+          "original_bytes_hex": "8b04",
+          "operand": "mov     ax, [si]",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1049b",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:029E",
+          "original_name": "",
+          "ida_ea_hex": "0x1049e",
+          "runtime_linear_hex": "0x34b3e",
+          "original_bytes_hex": "46",
+          "operand": "inc     si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1049c",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:029F",
+          "original_name": "",
+          "ida_ea_hex": "0x1049f",
+          "runtime_linear_hex": "0x34b3f",
+          "original_bytes_hex": "46",
+          "operand": "inc     si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1049e",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:02A0",
+          "original_name": "",
+          "ida_ea_hex": "0x104a0",
+          "runtime_linear_hex": "0x34b40",
+          "original_bytes_hex": "03c6",
+          "operand": "add     ax, si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x1049f",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:02A2",
+          "original_name": "",
+          "ida_ea_hex": "0x104a2",
+          "runtime_linear_hex": "0x34b42",
+          "original_bytes_hex": "2ea3d801",
+          "operand": "mov     cs:word_101D8, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104a0",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:02A6",
+          "original_name": "",
+          "ida_ea_hex": "0x104a6",
+          "runtime_linear_hex": "0x34b46",
+          "original_bytes_hex": "2e8b3eda01",
+          "operand": "mov     di, cs:word_101DA",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104a2",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:02AB",
+          "original_name": "",
+          "ida_ea_hex": "0x104ab",
+          "runtime_linear_hex": "0x34b4b",
+          "original_bytes_hex": "8b04",
+          "operand": "mov     ax, [si]",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104a6",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:02AD",
+          "original_name": "",
+          "ida_ea_hex": "0x104ad",
+          "runtime_linear_hex": "0x34b4d",
+          "original_bytes_hex": "46",
+          "operand": "inc     si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104ab",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:02AE",
+          "original_name": "",
+          "ida_ea_hex": "0x104ae",
+          "runtime_linear_hex": "0x34b4e",
+          "original_bytes_hex": "46",
+          "operand": "inc     si",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104ad",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:02AF",
+          "original_name": "",
+          "ida_ea_hex": "0x104af",
+          "runtime_linear_hex": "0x34b4f",
+          "original_bytes_hex": "99",
+          "operand": "cwd",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104ae",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:02B0",
+          "original_name": "",
+          "ida_ea_hex": "0x104b0",
+          "runtime_linear_hex": "0x34b50",
+          "original_bytes_hex": "03f8",
+          "operand": "add     di, ax",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104af",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        },
+        {
+          "original_location": "348A:02B2",
+          "original_name": "",
+          "ida_ea_hex": "0x104b2",
+          "runtime_linear_hex": "0x34b52",
+          "original_bytes_hex": "c3",
+          "operand": "retn",
+          "xrefs": [
+            {
+              "ida_from_hex": "0x104b0",
+              "type": 21
+            }
+          ],
+          "grade": "unknown",
+          "semantic": "未審查",
+          "warning": "有界線性匯出，非完整函式邊界聲明",
+          "source": "第73輪固定原版RAM"
+        }
+      ]
+    }
+  ]
+}

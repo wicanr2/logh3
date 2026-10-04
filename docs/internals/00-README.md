@@ -1,5 +1,13 @@
 # 原版內部構造參考
 
+第73輪沿#48／#79：[交戰開場與裁切計畫](../goal/2026-10-04-engagement-opening-round-73.md)。
+從固定原版RAM核對開場計時與合法編成容量，不由模擬CPU步數猜補固定延遲。
+[開場IDA匯出器](../../tools/scripts/engagement_opening_ida.py)保留原始bytes與位址空間。
+[完整畫面來源凍結器](../../tools/scripts/fleet_frame_receipt.py)及[typed來源](data/fleet-frame.json)
+保存傷害前後兩幀的文字、量表、圖段、投影與完整原生畫面。
+[099規格](../spec/099-fleet-frame.md)、[研究410](../re/410-fleet-frame.md)與
+[對拍062](../playtest/062-fleet-frame.md)限定無時間的完整單幀合成。
+
 第72輪沿#48／#79：[投影與交戰接線計畫](../goal/2026-10-04-fleet-projection-round-72.md)，
 從321F:000A／0223／0513閉合typed投影、裁切域與等待輸入，往完整Game接線前進。
 [097規格](../spec/097-fleet-projection.md)、[研究409](../re/409-fleet-projection.md)、

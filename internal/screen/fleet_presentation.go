@@ -94,6 +94,26 @@ type FleetWeaponView struct {
 	Destroyed    uint16
 }
 
+// FleetResultView對應0F6D的loss及目標陣營，與0B90的攻方分開。
+type FleetResultView struct {
+	Side      uint8
+	Destroyed uint16
+}
+
+func (s *FleetPresentationSpec) AppendResult(b *ui.TextBuffer, v FleetResultView) error {
+	if s == nil || b == nil || v.Side > 1 {
+		return fmt.Errorf("未支援的交戰結果狀態")
+	}
+	b.Printf(fmtBytes(s.Formats["goto"]), 0, 1)
+	b.Colour = 2
+	if v.Side == 1 {
+		b.Colour = 13
+	}
+	b.Printf(fmtBytes(s.Formats["destroyed"]), int(v.Destroyed))
+	b.Colour = 4
+	return nil
+}
+
 func (s *FleetPresentationSpec) UnitBuffer(v FleetUnitView) (*ui.TextBuffer, error) {
 	if s == nil || v.Side > 1 || v.Visibility.PlayerSide > 1 || v.Visibility.Mode > 2 {
 		return nil, fmt.Errorf("未支援的交戰文字狀態")
@@ -144,10 +164,9 @@ func (s *FleetPresentationSpec) MiddleBuffer(v FleetWeaponView) (*ui.TextBuffer,
 	}
 	b.Printf(fmtBytes(s.Formats["weapon"]), colour, fmtBytes(s.WeaponNames[kind]), 4)
 	if v.ShowResult {
-		b.Printf(fmtBytes(s.Formats["goto"]), 0, 1)
-		b.Colour = uint8(colour)
-		b.Printf(fmtBytes(s.Formats["destroyed"]), int(v.Destroyed))
-		b.Colour = 4
+		if err := s.AppendResult(b, FleetResultView{Side: v.Side, Destroyed: v.Destroyed}); err != nil {
+			return nil, err
+		}
 	}
 	return b, nil
 }
