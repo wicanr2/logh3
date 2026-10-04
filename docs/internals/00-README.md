@@ -1,5 +1,17 @@
 # 原版內部構造參考
 
+第90輪沿#79：[占領傷害與守軍計畫](../goal/2026-10-05-battle-finish-attack-round-90.md)，
+[IDA輸入產生器](../../tools/scripts/battle_finish_attack_ida_prepare.py)、
+[容器暫存模型](../../tools/battle_finish_attack_probe.sh)與
+[獨立比較探針](../../tools/scripts/battle_finish_attack_probe_test.go)。
+這些是110 DRAFT診斷，沒有修改正式rules或Game。
+[敗方守軍探針](../../tools/scripts/battle_finish_guard_prepare.py)、
+[原版雙跑](../../tools/battle_finish_guard_oracle.sh)與
+[容器入口](../../tools/battle_finish_guard_native_run.sh)核對查詢筆數及守軍艘數。
+[核心證據核對器](../../tools/scripts/battle_finish_attack_review.py)產生
+[占領核心與守軍來源](data/battle-finish-attack.json)；入口為
+[研究424](../re/424-battle-finish-attack.md)及[驗證079](../playtest/079-battle-finish-attack.md)。
+
 第89輪沿#79：[結束判定與勝方占領計畫](../goal/2026-10-05-battle-finish-round-89.md)，
 [固定IDA輸入產生器](../../tools/scripts/battle_finish_ida_prepare.py)。
 [原版觀測器產生器](../../tools/scripts/battle_finish_native_prepare.py)、

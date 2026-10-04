@@ -2,6 +2,44 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-05 第90輪：#79勝方占領核心與非零守軍
+
+父提交55815840a6d5342d41d595df61c7450030c693ea，原Goal保持active。
+路由命中逆向、規格閘門與文件職責，沿既有Docker與IDA9.4工具鏈。
+主機gh auth有效；既有音色庫、跨平台FM、清單速度與零距離決定保持。
+
+暫存rules副本只補已證實起始回合與守軍，沒有修改正式rules或Game。
+既有12案完整行星、艘數／位置、旗標／士氣、計分／功績及seed符合原版。
+七案固定原版守軍雙跑逐byte相同，JSON SHA-256
+85fbd698622c307051183167d2315e9977abe5cac8fc8068611b31f4287ee335。
+16次查詢與守軍量符合獨立模型；近距、Out、移遠、兩組、飽和、回合0及反向勝方皆核。
+65535艘明示外部格式邊界，不冒稱正常編成。敗方bit0不排除守軍；近距與Out案SHIP差20 bytes、WORK差2 bytes。
+第二版模型既有12案保持逐byte相同，另七案亦零核心差異；核對器明查19案差異列表為空。
+
+補讀203A:0593早退後主體，確認修理上限、存量、士氣、維持費及軍事費回寫。
+六個RAM切段COM以容器/tmp副本分析，1426筆含重疊指令、20個不同語意定位已證實。
+完整FLEET／SHIP與六表尚未模型對拍；FLEET+5A定位時清FF後的末端來源仍unknown。
+地形Passable為nil，本批位置相符不外推所有擋路局面。110與完整062保持DRAFT，#79 OPEN。
+183來源凍結索引SHA-256 f86addff014a16d11b8ef08add360f0910bf082414260c43675774b0bad8b358。
+研究424、驗證079與工具已掛回00-README，110／062／53與CONTEXT同步現況。
+
+標準go test ./internal/... ./cmd/... -count=1：18套件13 PASS／5無測試。
+Game188.957秒、gin3 92.512秒；日誌workplace/finish79-r90-standard.log列入凍結來源。
+標準日誌SHA-256 a512645d08dfa74470b99d8f69608d90c0e9114aa2c90816d985f6da39650cff。
+接續讀取曾假設事實53檔名，改用實際53-strategic-planet-assault.md；屬文件路由問題。
+草稿父保存雜湊誤植已按固定來源更正，未修改任何原版收據。
+Issue已更新且逐字回讀相同，快照89張／9 OPEN／80 CLOSED，269條核對零失效。
+CONTEXT清單與驗證矩陣依同一快照重生。183來源、語法／Go格式與2149文件連結通過。
+連結核對器補既有函式後綴解析，擁有權核對改lstat避開舊來源失效連結；屬驗證腳本問題。
+全工作根無root-owned或誤建.md目錄，抽樣UID/GID1000；logh3掛載容器清單空。
+專用dosgolem保持f7523f9且乾淨，沒有重建image或清理其他專案資源。
+提交主旨為「保存勝方占領核心與非零守軍證據」，推送main；精確身份依Git紀錄。
+完整原池、正式接線、正常玩家勝負／報告GUI及保存仍待驗，下一輪沿同一#79補齊。
+
+入口：[計畫90](docs/goal/2026-10-05-battle-finish-attack-round-90.md)、
+[研究424](docs/re/424-battle-finish-attack.md)、[驗證079](docs/playtest/079-battle-finish-attack.md)
+與[完整來源](docs/internals/data/battle-finish-attack.json)。
+
 ## 2026-10-05 第89輪：#79結束判定與勝方占領邊界
 
 父提交a97ccd7c97b3ca2597e41318c3c38d4ab352b945，原Goal保持active。
