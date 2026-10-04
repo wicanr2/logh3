@@ -1,0 +1,11 @@
+{
+  "schema": "logh3.fleet-command-display-spec.v1",
+  "source_ram_sha256": "6800de725851633cf2b817afad0cfda3be4a0d6b8bb7d1ebdacd57a92ce1d5b4",
+  "formats_hex": {
+    "enemy_unknown_fleet": "25732020b2c4a148c4a5b6a4",
+    "enemy_unknown_name": "a148a148a148a148a148a148a148a148",
+    "enemy_known_ships": "252d387320202020253464",
+    "enemy_unknown_ships": "a148a148a148a14820202020a148a148",
+    "enemy_distance": "b65ac2f7202025366c7530303030"
+  }
+}

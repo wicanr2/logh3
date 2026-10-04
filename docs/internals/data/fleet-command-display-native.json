@@ -1,0 +1,1084 @@
+{
+  "schema": "logh3.fleet-command-display-native.v1",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "remake_parent": "e30f3869b58db2d484f6109931e5181e784026b7",
+  "classification": "controlled original reproducibility; not normal player path",
+  "cases": [
+    {
+      "case": "wait",
+      "plan": {
+        "name": "combat79-r77-wait-a",
+        "case": "wait",
+        "parent_state": "workplace/oracle/combat79-r62-command-a/command.state",
+        "parent_sha256": "108d2cac6ab7cb278c932f97542a9476ef6a9da683eb87976be694fceae6af95",
+        "parent_plan": "combat79-r62-command-a-plan.json",
+        "inherited_injections": "combat79-r62-gate-near-human-a-plan.json",
+        "comparison_level": "same-state controlled diagnostic; not normal player path",
+        "mouse_coordinate_space": "original virtual640x400; framebuffer Y=mouse Y+40",
+        "seed_before": "12345678",
+        "injections": [],
+        "flags": [
+          "-load-state",
+          "/out/oracle/combat79-r62-command-a/command.state",
+          "-steps",
+          "495000000",
+          "-tick",
+          "20000",
+          "-regs-from",
+          "489999999",
+          "-regs-max",
+          "64",
+          "-regs-at",
+          "1ED2:06E1,1ED2:0717,1ED2:0781,1ED2:07DF,1ED2:0847,1ED2:0912,1ED2:0960,1ED2:03E9",
+          "-save-state",
+          "494999999:/out/oracle/combat79-r77-wait-a/end.state",
+          "-dump-mem-at",
+          "490050001:lin:0:1048576:/out/oracle/combat79-r77-wait-a/input-mem.bin;494999999:lin:0:1048576:/out/oracle/combat79-r77-wait-a/end-mem.bin"
+        ]
+      },
+      "two_runs_equal": true,
+      "detail": 2,
+      "seed_after": "12345678"
+    },
+    {
+      "case": "hover1",
+      "plan": {
+        "name": "combat79-r77-hover1-a",
+        "case": "hover1",
+        "parent_state": "workplace/oracle/combat79-r62-command-a/command.state",
+        "parent_sha256": "108d2cac6ab7cb278c932f97542a9476ef6a9da683eb87976be694fceae6af95",
+        "parent_plan": "combat79-r62-command-a-plan.json",
+        "inherited_injections": "combat79-r62-gate-near-human-a-plan.json",
+        "comparison_level": "same-state controlled diagnostic; not normal player path",
+        "mouse_coordinate_space": "original virtual640x400; framebuffer Y=mouse Y+40",
+        "seed_before": "12345678",
+        "injections": [
+          {
+            "address": "lin:687dd",
+            "step": 490050000,
+            "bytes_hex": "01",
+            "reason": "控制同一敵方池102的情報等級；不改候選、位置或seed"
+          }
+        ],
+        "flags": [
+          "-load-state",
+          "/out/oracle/combat79-r62-command-a/command.state",
+          "-steps",
+          "495000000",
+          "-tick",
+          "20000",
+          "-regs-from",
+          "489999999",
+          "-regs-max",
+          "64",
+          "-regs-at",
+          "1ED2:06E1,1ED2:0717,1ED2:0781,1ED2:07DF,1ED2:0847,1ED2:0912,1ED2:0960,1ED2:03E9",
+          "-save-state",
+          "494999999:/out/oracle/combat79-r77-hover1-a/end.state",
+          "-dump-mem-at",
+          "490050001:lin:0:1048576:/out/oracle/combat79-r77-hover1-a/input-mem.bin;494999999:lin:0:1048576:/out/oracle/combat79-r77-hover1-a/end-mem.bin",
+          "-mouse-at",
+          "490100000",
+          "-mouse-x",
+          "348",
+          "-mouse-y",
+          "208",
+          "-poke",
+          "lin:687dd@490050000=01"
+        ]
+      },
+      "two_runs_equal": true,
+      "detail": 1,
+      "seed_after": "12345678"
+    },
+    {
+      "case": "hover2",
+      "plan": {
+        "name": "combat79-r77-hover2-a",
+        "case": "hover2",
+        "parent_state": "workplace/oracle/combat79-r62-command-a/command.state",
+        "parent_sha256": "108d2cac6ab7cb278c932f97542a9476ef6a9da683eb87976be694fceae6af95",
+        "parent_plan": "combat79-r62-command-a-plan.json",
+        "inherited_injections": "combat79-r62-gate-near-human-a-plan.json",
+        "comparison_level": "same-state controlled diagnostic; not normal player path",
+        "mouse_coordinate_space": "original virtual640x400; framebuffer Y=mouse Y+40",
+        "seed_before": "12345678",
+        "injections": [
+          {
+            "address": "lin:687dd",
+            "step": 490050000,
+            "bytes_hex": "02",
+            "reason": "控制同一敵方池102的情報等級；不改候選、位置或seed"
+          }
+        ],
+        "flags": [
+          "-load-state",
+          "/out/oracle/combat79-r62-command-a/command.state",
+          "-steps",
+          "495000000",
+          "-tick",
+          "20000",
+          "-regs-from",
+          "489999999",
+          "-regs-max",
+          "64",
+          "-regs-at",
+          "1ED2:06E1,1ED2:0717,1ED2:0781,1ED2:07DF,1ED2:0847,1ED2:0912,1ED2:0960,1ED2:03E9",
+          "-save-state",
+          "494999999:/out/oracle/combat79-r77-hover2-a/end.state",
+          "-dump-mem-at",
+          "490050001:lin:0:1048576:/out/oracle/combat79-r77-hover2-a/input-mem.bin;494999999:lin:0:1048576:/out/oracle/combat79-r77-hover2-a/end-mem.bin",
+          "-mouse-at",
+          "490100000",
+          "-mouse-x",
+          "348",
+          "-mouse-y",
+          "208",
+          "-poke",
+          "lin:687dd@490050000=02"
+        ]
+      },
+      "two_runs_equal": true,
+      "detail": 2,
+      "seed_after": "12345678"
+    },
+    {
+      "case": "hover3",
+      "plan": {
+        "name": "combat79-r77-hover3-a",
+        "case": "hover3",
+        "parent_state": "workplace/oracle/combat79-r62-command-a/command.state",
+        "parent_sha256": "108d2cac6ab7cb278c932f97542a9476ef6a9da683eb87976be694fceae6af95",
+        "parent_plan": "combat79-r62-command-a-plan.json",
+        "inherited_injections": "combat79-r62-gate-near-human-a-plan.json",
+        "comparison_level": "same-state controlled diagnostic; not normal player path",
+        "mouse_coordinate_space": "original virtual640x400; framebuffer Y=mouse Y+40",
+        "seed_before": "12345678",
+        "injections": [
+          {
+            "address": "lin:687dd",
+            "step": 490050000,
+            "bytes_hex": "03",
+            "reason": "控制同一敵方池102的情報等級；不改候選、位置或seed"
+          }
+        ],
+        "flags": [
+          "-load-state",
+          "/out/oracle/combat79-r62-command-a/command.state",
+          "-steps",
+          "495000000",
+          "-tick",
+          "20000",
+          "-regs-from",
+          "489999999",
+          "-regs-max",
+          "64",
+          "-regs-at",
+          "1ED2:06E1,1ED2:0717,1ED2:0781,1ED2:07DF,1ED2:0847,1ED2:0912,1ED2:0960,1ED2:03E9",
+          "-save-state",
+          "494999999:/out/oracle/combat79-r77-hover3-a/end.state",
+          "-dump-mem-at",
+          "490050001:lin:0:1048576:/out/oracle/combat79-r77-hover3-a/input-mem.bin;494999999:lin:0:1048576:/out/oracle/combat79-r77-hover3-a/end-mem.bin",
+          "-mouse-at",
+          "490100000",
+          "-mouse-x",
+          "348",
+          "-mouse-y",
+          "208",
+          "-poke",
+          "lin:687dd@490050000=03"
+        ]
+      },
+      "two_runs_equal": true,
+      "detail": 3,
+      "seed_after": "12345678"
+    },
+    {
+      "case": "popup1",
+      "plan": {
+        "name": "combat79-r77-popup1-a",
+        "case": "popup1",
+        "parent_state": "workplace/oracle/combat79-r62-command-a/command.state",
+        "parent_sha256": "108d2cac6ab7cb278c932f97542a9476ef6a9da683eb87976be694fceae6af95",
+        "parent_plan": "combat79-r62-command-a-plan.json",
+        "inherited_injections": "combat79-r62-gate-near-human-a-plan.json",
+        "comparison_level": "same-state controlled diagnostic; not normal player path",
+        "mouse_coordinate_space": "original virtual640x400; framebuffer Y=mouse Y+40",
+        "seed_before": "12345678",
+        "injections": [
+          {
+            "address": "lin:687dd",
+            "step": 490050000,
+            "bytes_hex": "01",
+            "reason": "控制同一敵方池102的情報等級；不改候選、位置或seed"
+          }
+        ],
+        "flags": [
+          "-load-state",
+          "/out/oracle/combat79-r62-command-a/command.state",
+          "-steps",
+          "495000000",
+          "-tick",
+          "20000",
+          "-regs-from",
+          "489999999",
+          "-regs-max",
+          "64",
+          "-regs-at",
+          "1ED2:06E1,1ED2:0717,1ED2:0781,1ED2:07DF,1ED2:0847,1ED2:0912,1ED2:0960,1ED2:03E9",
+          "-save-state",
+          "494999999:/out/oracle/combat79-r77-popup1-a/end.state",
+          "-dump-mem-at",
+          "490050001:lin:0:1048576:/out/oracle/combat79-r77-popup1-a/input-mem.bin;494999999:lin:0:1048576:/out/oracle/combat79-r77-popup1-a/end-mem.bin",
+          "-clicks",
+          "490300000:348:208",
+          "-click-hold",
+          "100000",
+          "-click-move-lead",
+          "200000",
+          "-poke",
+          "lin:687dd@490050000=01"
+        ]
+      },
+      "two_runs_equal": true,
+      "detail": 1,
+      "seed_after": "12345678"
+    },
+    {
+      "case": "popup2",
+      "plan": {
+        "name": "combat79-r77-popup2-a",
+        "case": "popup2",
+        "parent_state": "workplace/oracle/combat79-r62-command-a/command.state",
+        "parent_sha256": "108d2cac6ab7cb278c932f97542a9476ef6a9da683eb87976be694fceae6af95",
+        "parent_plan": "combat79-r62-command-a-plan.json",
+        "inherited_injections": "combat79-r62-gate-near-human-a-plan.json",
+        "comparison_level": "same-state controlled diagnostic; not normal player path",
+        "mouse_coordinate_space": "original virtual640x400; framebuffer Y=mouse Y+40",
+        "seed_before": "12345678",
+        "injections": [
+          {
+            "address": "lin:687dd",
+            "step": 490050000,
+            "bytes_hex": "02",
+            "reason": "控制同一敵方池102的情報等級；不改候選、位置或seed"
+          }
+        ],
+        "flags": [
+          "-load-state",
+          "/out/oracle/combat79-r62-command-a/command.state",
+          "-steps",
+          "495000000",
+          "-tick",
+          "20000",
+          "-regs-from",
+          "489999999",
+          "-regs-max",
+          "64",
+          "-regs-at",
+          "1ED2:06E1,1ED2:0717,1ED2:0781,1ED2:07DF,1ED2:0847,1ED2:0912,1ED2:0960,1ED2:03E9",
+          "-save-state",
+          "494999999:/out/oracle/combat79-r77-popup2-a/end.state",
+          "-dump-mem-at",
+          "490050001:lin:0:1048576:/out/oracle/combat79-r77-popup2-a/input-mem.bin;494999999:lin:0:1048576:/out/oracle/combat79-r77-popup2-a/end-mem.bin",
+          "-clicks",
+          "490300000:348:208",
+          "-click-hold",
+          "100000",
+          "-click-move-lead",
+          "200000",
+          "-poke",
+          "lin:687dd@490050000=02"
+        ]
+      },
+      "two_runs_equal": true,
+      "detail": 2,
+      "seed_after": "12345678"
+    },
+    {
+      "case": "popup3",
+      "plan": {
+        "name": "combat79-r77-popup3-a",
+        "case": "popup3",
+        "parent_state": "workplace/oracle/combat79-r62-command-a/command.state",
+        "parent_sha256": "108d2cac6ab7cb278c932f97542a9476ef6a9da683eb87976be694fceae6af95",
+        "parent_plan": "combat79-r62-command-a-plan.json",
+        "inherited_injections": "combat79-r62-gate-near-human-a-plan.json",
+        "comparison_level": "same-state controlled diagnostic; not normal player path",
+        "mouse_coordinate_space": "original virtual640x400; framebuffer Y=mouse Y+40",
+        "seed_before": "12345678",
+        "injections": [
+          {
+            "address": "lin:687dd",
+            "step": 490050000,
+            "bytes_hex": "03",
+            "reason": "控制同一敵方池102的情報等級；不改候選、位置或seed"
+          }
+        ],
+        "flags": [
+          "-load-state",
+          "/out/oracle/combat79-r62-command-a/command.state",
+          "-steps",
+          "495000000",
+          "-tick",
+          "20000",
+          "-regs-from",
+          "489999999",
+          "-regs-max",
+          "64",
+          "-regs-at",
+          "1ED2:06E1,1ED2:0717,1ED2:0781,1ED2:07DF,1ED2:0847,1ED2:0912,1ED2:0960,1ED2:03E9",
+          "-save-state",
+          "494999999:/out/oracle/combat79-r77-popup3-a/end.state",
+          "-dump-mem-at",
+          "490050001:lin:0:1048576:/out/oracle/combat79-r77-popup3-a/input-mem.bin;494999999:lin:0:1048576:/out/oracle/combat79-r77-popup3-a/end-mem.bin",
+          "-clicks",
+          "490300000:348:208",
+          "-click-hold",
+          "100000",
+          "-click-move-lead",
+          "200000",
+          "-poke",
+          "lin:687dd@490050000=03"
+        ]
+      },
+      "two_runs_equal": true,
+      "detail": 3,
+      "seed_after": "12345678"
+    }
+  ],
+  "state_comparison": [
+    {
+      "all_machine_fields_equal": true,
+      "canonical_machine_sha256": "ba12435c4fa08b2a9a7223b6e2261b9e63b719999a8dfeb281b097f88129d1e9",
+      "case": "wait",
+      "dos_section_bytes_equal": true,
+      "dos_section_sha256": "a6f861f5772872f9708be8dac52b31d4f45bc8ad4388fb60e6bc067c0045d191",
+      "machine_fields": 46
+    },
+    {
+      "all_machine_fields_equal": true,
+      "canonical_machine_sha256": "8904ab798d3da54ac5deda6af437664c077dc5260dd45bd57bcbea5c19532333",
+      "case": "hover1",
+      "dos_section_bytes_equal": true,
+      "dos_section_sha256": "871d8aa2f175b4ae811d0dcefeb1e3c724d6133bd39bac265b761f6858e8f8c6",
+      "machine_fields": 46
+    },
+    {
+      "all_machine_fields_equal": true,
+      "canonical_machine_sha256": "6d491e2bedacb3609ffff2bc397cf5edffc8c2ebbf158101c1fbced0415603e5",
+      "case": "hover2",
+      "dos_section_bytes_equal": true,
+      "dos_section_sha256": "871d8aa2f175b4ae811d0dcefeb1e3c724d6133bd39bac265b761f6858e8f8c6",
+      "machine_fields": 46
+    },
+    {
+      "all_machine_fields_equal": true,
+      "canonical_machine_sha256": "691f4692dbc6543e4b8a6ffbd94f6d456f6a15b18f36397c7dd5ee306eee6a06",
+      "case": "hover3",
+      "dos_section_bytes_equal": true,
+      "dos_section_sha256": "871d8aa2f175b4ae811d0dcefeb1e3c724d6133bd39bac265b761f6858e8f8c6",
+      "machine_fields": 46
+    },
+    {
+      "all_machine_fields_equal": true,
+      "canonical_machine_sha256": "d68848daa237b9f3ca81b357b69c681dca399cfaa16d504859b7f7b2488a4760",
+      "case": "popup1",
+      "dos_section_bytes_equal": true,
+      "dos_section_sha256": "8ab13399c791c41e6c2958dfb0b07be8ab1e92b6a82c6cd01905b7dc8da91645",
+      "machine_fields": 46
+    },
+    {
+      "all_machine_fields_equal": true,
+      "canonical_machine_sha256": "893e422cf85b8b29e5d01c46a9b85df0e0b8926c80e186a2f3ffda6df10f7de7",
+      "case": "popup2",
+      "dos_section_bytes_equal": true,
+      "dos_section_sha256": "8ab13399c791c41e6c2958dfb0b07be8ab1e92b6a82c6cd01905b7dc8da91645",
+      "machine_fields": 46
+    },
+    {
+      "all_machine_fields_equal": true,
+      "canonical_machine_sha256": "d6066a7ebd7f47e19d434fd0d849e628dda06a581ea6ee290051feba656b44b6",
+      "case": "popup3",
+      "dos_section_bytes_equal": true,
+      "dos_section_sha256": "8ab13399c791c41e6c2958dfb0b07be8ab1e92b6a82c6cd01905b7dc8da91645",
+      "machine_fields": 46
+    }
+  ],
+  "state_encoding_limit": "gzip/gob map順序不同；完整機器欄位相同，DOS段逐byte相同",
+  "ida_exports": [
+    {
+      "path": "workplace/ida/combat79-r77-165F.json",
+      "input": "workplace/ida/combat79-r77-165F.com",
+      "instructions": 161,
+      "address_space": "原版CS:IP、IDA EA、dosgolem線性分欄"
+    },
+    {
+      "path": "workplace/ida/combat79-r77-165F-shapes.json",
+      "input": "workplace/ida/combat79-r77-165F-shapes.com",
+      "instructions": 407,
+      "address_space": "原版CS:IP、IDA EA、dosgolem線性分欄"
+    },
+    {
+      "path": "workplace/ida/combat79-r77-1ED2.json",
+      "input": "workplace/ida/combat79-r77-1ED2.com",
+      "instructions": 197,
+      "address_space": "原版CS:IP、IDA EA、dosgolem線性分欄"
+    },
+    {
+      "path": "workplace/ida/combat79-r77-1629.json",
+      "input": "workplace/ida/combat79-r77-1629.com",
+      "instructions": 121,
+      "address_space": "原版CS:IP、IDA EA、dosgolem線性分欄"
+    }
+  ],
+  "formats_hex": {
+    "enemy_unknown_fleet": "25732020b2c4a148c4a5b6a4",
+    "enemy_unknown_name": "a148a148a148a148a148a148a148a148",
+    "enemy_known_ships": "252d387320202020253464",
+    "enemy_unknown_ships": "a148a148a148a14820202020a148a148",
+    "enemy_distance": "b65ac2f7202025366c7530303030"
+  },
+  "files": {
+    "workplace/oracle/normal79-r61-a/end-mem.bin": {
+      "sha256": "6800de725851633cf2b817afad0cfda3be4a0d6b8bb7d1ebdacd57a92ce1d5b4",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-wait-a/input-mem.bin": {
+      "sha256": "c365040e6153f3d1566d32f75d9714a9c9309a91b5aac8aff6eeb4a29e1f8456",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-wait-b/input-mem.bin": {
+      "sha256": "c365040e6153f3d1566d32f75d9714a9c9309a91b5aac8aff6eeb4a29e1f8456",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-wait-a/end-mem.bin": {
+      "sha256": "982053ef18658a9a4a7315ca1cbe254357ed40bcddb491aa742de07e9473e24c",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-wait-b/end-mem.bin": {
+      "sha256": "982053ef18658a9a4a7315ca1cbe254357ed40bcddb491aa742de07e9473e24c",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-wait-a/screen.bin": {
+      "sha256": "3a41efbe792f2b9b707d2f197129205bba79abae6e650584e2025f62450af297",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-wait-b/screen.bin": {
+      "sha256": "3a41efbe792f2b9b707d2f197129205bba79abae6e650584e2025f62450af297",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-wait-a/screen.png": {
+      "sha256": "2f87e2e1082031ec31f45eefca58293eb9ef89883a1c93bccb292db276ee5d27",
+      "size": 10002
+    },
+    "workplace/oracle/combat79-r77-wait-b/screen.png": {
+      "sha256": "2f87e2e1082031ec31f45eefca58293eb9ef89883a1c93bccb292db276ee5d27",
+      "size": 10002
+    },
+    "workplace/oracle/combat79-r77-wait-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-wait-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-wait-a/meta.txt": {
+      "sha256": "288135436f87e59c0368201adf80cbc1328cb5e914ad8db8fbdcee9e9eb80163",
+      "size": 830
+    },
+    "workplace/oracle/combat79-r77-wait-a/flags.txt": {
+      "sha256": "e7805fbfc5a96edfbc4fd9e05c76279182cbb0bec64e58588e319d495eff8982",
+      "size": 428
+    },
+    "workplace/oracle/combat79-r77-wait-a/report.txt": {
+      "sha256": "7ca30167795abc82ade1e6eb150cc154b10e223bbbf74cca24231fe2e5b1ab31",
+      "size": 56068
+    },
+    "workplace/oracle/combat79-r77-wait-a/end.state": {
+      "sha256": "64d0ff6adc2617c7ea437af9207a00d817c995683e8dfe86efcbd1d39e637e7b",
+      "size": 265481
+    },
+    "workplace/combat79-r77-wait-a-plan.json": {
+      "sha256": "6e8129da8e244c20a2f10de3ca9492705b721e3223b02267e73632f213d3a524",
+      "size": 1108
+    },
+    "workplace/oracle/combat79-r77-wait-b/meta.txt": {
+      "sha256": "3713e7d4bf7dd64c5ac048592f221d88690d601b09655fcda042c29491edc76b",
+      "size": 830
+    },
+    "workplace/oracle/combat79-r77-wait-b/flags.txt": {
+      "sha256": "4d7b1c757031fdfe9cce4ffd6e6d8aac8aecba32c97f9463d595bb5a07cc6abe",
+      "size": 428
+    },
+    "workplace/oracle/combat79-r77-wait-b/report.txt": {
+      "sha256": "c7567989fca031dbfb72b67f4aec93318c9d9d0b3dcfcdd86c34785793fb0865",
+      "size": 56069
+    },
+    "workplace/oracle/combat79-r77-wait-b/end.state": {
+      "sha256": "a08805462c22b79bc1eb64bba2d1aa9b862436823d4e536fc4b9ec2d91bd9c63",
+      "size": 265481
+    },
+    "workplace/combat79-r77-wait-b-plan.json": {
+      "sha256": "b220ef4a546928b3c96d1157db3d1a2963725b55af403dc58a2830ed74e1d188",
+      "size": 1108
+    },
+    "workplace/oracle/combat79-r77-hover1-a/input-mem.bin": {
+      "sha256": "87e55753dfc7aa4431731b9dc840bd7ccb8041c125cd772c7ebee201120bb5da",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover1-b/input-mem.bin": {
+      "sha256": "87e55753dfc7aa4431731b9dc840bd7ccb8041c125cd772c7ebee201120bb5da",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover1-a/end-mem.bin": {
+      "sha256": "8b83f287847dbe9fa150ddd7b7d65b8d058e91511e68a0422e82c9c302b649ef",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover1-b/end-mem.bin": {
+      "sha256": "8b83f287847dbe9fa150ddd7b7d65b8d058e91511e68a0422e82c9c302b649ef",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover1-a/screen.bin": {
+      "sha256": "5ac9f975d722a2af96ed3384ecb544e47c54fd749592cd18c89ca8ccb66658ec",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-hover1-b/screen.bin": {
+      "sha256": "5ac9f975d722a2af96ed3384ecb544e47c54fd749592cd18c89ca8ccb66658ec",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-hover1-a/screen.png": {
+      "sha256": "49585c574a6696cb25daaf47ebff685114c900df31b1216c08bbd12e446c683b",
+      "size": 10895
+    },
+    "workplace/oracle/combat79-r77-hover1-b/screen.png": {
+      "sha256": "49585c574a6696cb25daaf47ebff685114c900df31b1216c08bbd12e446c683b",
+      "size": 10895
+    },
+    "workplace/oracle/combat79-r77-hover1-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-hover1-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-hover1-a/meta.txt": {
+      "sha256": "a513d711038802067a085d083d15c820aa7644d47ff3bae4611dd7171de5649c",
+      "size": 913
+    },
+    "workplace/oracle/combat79-r77-hover1-a/flags.txt": {
+      "sha256": "8bf6537082bd80e67d343ca034f21df42492e4a6f809063eba7ad8f0255a4619",
+      "size": 509
+    },
+    "workplace/oracle/combat79-r77-hover1-a/report.txt": {
+      "sha256": "4468ab588b2d10c6243f8540d690c204f711badc4358c1e3a573d0f137fe43a5",
+      "size": 81347
+    },
+    "workplace/oracle/combat79-r77-hover1-a/end.state": {
+      "sha256": "8a1c9ebcaf3da8a8cc34402972d5b6e84cd3483fb5334e5a4ac053dfbc8704a1",
+      "size": 267045
+    },
+    "workplace/combat79-r77-hover1-a-plan.json": {
+      "sha256": "27ef8f6b47ee0342e220ae04ae8027b4494f3a089143e2ceca5309fae3ca5c8e",
+      "size": 1433
+    },
+    "workplace/oracle/combat79-r77-hover1-b/meta.txt": {
+      "sha256": "87b5f795e0439a44592e2e19105e9be270b34ad646e9a6a8fa639826ddfb2eb3",
+      "size": 913
+    },
+    "workplace/oracle/combat79-r77-hover1-b/flags.txt": {
+      "sha256": "2cd6c5b8403f9e5f5b605521417a60c75f9282c2c6ab2454f147abf3e7b47859",
+      "size": 509
+    },
+    "workplace/oracle/combat79-r77-hover1-b/report.txt": {
+      "sha256": "7d208d8617215d9841bfb795b4df7c3c7dd61ef78a5499aadb54ac070c0e4c1f",
+      "size": 81347
+    },
+    "workplace/oracle/combat79-r77-hover1-b/end.state": {
+      "sha256": "a15466834cc6fefbb408e05e6ce3c5a0520458277fb7a93d2a57b6187bc6baea",
+      "size": 267045
+    },
+    "workplace/combat79-r77-hover1-b-plan.json": {
+      "sha256": "c1f3d1189de9b8685e339903818c0d3a5b0f6d592d70997511b9e9b223373a09",
+      "size": 1433
+    },
+    "workplace/oracle/combat79-r77-hover2-a/input-mem.bin": {
+      "sha256": "c365040e6153f3d1566d32f75d9714a9c9309a91b5aac8aff6eeb4a29e1f8456",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover2-b/input-mem.bin": {
+      "sha256": "c365040e6153f3d1566d32f75d9714a9c9309a91b5aac8aff6eeb4a29e1f8456",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover2-a/end-mem.bin": {
+      "sha256": "a38d25f07c441efc32ba74e035bae2b9a404cbce7b71075ca3f7104fae6bda21",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover2-b/end-mem.bin": {
+      "sha256": "a38d25f07c441efc32ba74e035bae2b9a404cbce7b71075ca3f7104fae6bda21",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover2-a/screen.bin": {
+      "sha256": "6c137393260f0c757a22830ef3da1c0e21afdf0b85b6c9295fb12ff63bb43b78",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-hover2-b/screen.bin": {
+      "sha256": "6c137393260f0c757a22830ef3da1c0e21afdf0b85b6c9295fb12ff63bb43b78",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-hover2-a/screen.png": {
+      "sha256": "8041e8d679e4c4e85fe533ef192fcee5d849e17f4110f74a58102d9fd3501d8c",
+      "size": 11020
+    },
+    "workplace/oracle/combat79-r77-hover2-b/screen.png": {
+      "sha256": "8041e8d679e4c4e85fe533ef192fcee5d849e17f4110f74a58102d9fd3501d8c",
+      "size": 11020
+    },
+    "workplace/oracle/combat79-r77-hover2-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-hover2-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-hover2-a/meta.txt": {
+      "sha256": "4c2d9b2c7aa3e80ed1e63b1749fde476d8182483ed54072d5ec525b5e660242a",
+      "size": 913
+    },
+    "workplace/oracle/combat79-r77-hover2-a/flags.txt": {
+      "sha256": "e4c0129e4bb6abdca28de7141f0aa4e20ac1c0ef7a6e11af060a36554963c7dd",
+      "size": 509
+    },
+    "workplace/oracle/combat79-r77-hover2-a/report.txt": {
+      "sha256": "70b4fb02221645de1f550e319c4a3e66acd5018a13d4f1497abda27c1886c6b4",
+      "size": 79536
+    },
+    "workplace/oracle/combat79-r77-hover2-a/end.state": {
+      "sha256": "771c6a52591268021acec43ca27800eccb5ab7adc7b3ea349fa8506379b2c6ae",
+      "size": 266930
+    },
+    "workplace/combat79-r77-hover2-a-plan.json": {
+      "sha256": "0639b2570927afa206bd00dc087c8e9c46602f9b5e420f74795eccfcd642de5d",
+      "size": 1433
+    },
+    "workplace/oracle/combat79-r77-hover2-b/meta.txt": {
+      "sha256": "a4cc27f2feaafeddb56bccdea09ef49178160a794b7773fab6825a21bff365e6",
+      "size": 913
+    },
+    "workplace/oracle/combat79-r77-hover2-b/flags.txt": {
+      "sha256": "ebcee19a9c9ab26103513ead4ecebaf75f06d92af296e036cf554b5296430f31",
+      "size": 509
+    },
+    "workplace/oracle/combat79-r77-hover2-b/report.txt": {
+      "sha256": "aff100f60017969b0699289fab9ce30682558b2102d6d2d5eb538260faa66ecd",
+      "size": 79536
+    },
+    "workplace/oracle/combat79-r77-hover2-b/end.state": {
+      "sha256": "b24b5663272dbd8398d209c500a7c707a7740357cad9fcdb3244093d4caeb078",
+      "size": 266930
+    },
+    "workplace/combat79-r77-hover2-b-plan.json": {
+      "sha256": "06c966645be9797154aaf1909c1095e953ae0c8b15ce9609841ec44899802316",
+      "size": 1433
+    },
+    "workplace/oracle/combat79-r77-hover3-a/input-mem.bin": {
+      "sha256": "be0e5ce4eb9ab8ea09ed6f132a44bcfb922e02c7fb22d9f6664f5ac9e2eec25c",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover3-b/input-mem.bin": {
+      "sha256": "be0e5ce4eb9ab8ea09ed6f132a44bcfb922e02c7fb22d9f6664f5ac9e2eec25c",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover3-a/end-mem.bin": {
+      "sha256": "af86debbca020974ede9a07d7df397558dac3bc47080a27bed38c9104c1ef34c",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover3-b/end-mem.bin": {
+      "sha256": "af86debbca020974ede9a07d7df397558dac3bc47080a27bed38c9104c1ef34c",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-hover3-a/screen.bin": {
+      "sha256": "0146b3e59495d5a28e6010d6b9dc83d613935f32bf132a952df928506dedc3b4",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-hover3-b/screen.bin": {
+      "sha256": "0146b3e59495d5a28e6010d6b9dc83d613935f32bf132a952df928506dedc3b4",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-hover3-a/screen.png": {
+      "sha256": "07d075d195e5de20f0bd11ba42f269c6f01222a13c8c5a10a1e5f3a09cb76be4",
+      "size": 11151
+    },
+    "workplace/oracle/combat79-r77-hover3-b/screen.png": {
+      "sha256": "07d075d195e5de20f0bd11ba42f269c6f01222a13c8c5a10a1e5f3a09cb76be4",
+      "size": 11151
+    },
+    "workplace/oracle/combat79-r77-hover3-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-hover3-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-hover3-a/meta.txt": {
+      "sha256": "8252bd8f3fac7a1431a0bcf90df534fb3a8cdf978de8e75f16988f83a3c1a437",
+      "size": 913
+    },
+    "workplace/oracle/combat79-r77-hover3-a/flags.txt": {
+      "sha256": "559c00f6714539e48cdcdc8180b11a478f3d76867c04185ae11f31e4a7656cb5",
+      "size": 509
+    },
+    "workplace/oracle/combat79-r77-hover3-a/report.txt": {
+      "sha256": "00e5df7b7e14bc40b440d61ff81b97a402bafe6dfc3a92c0f0d7c200c1536a0c",
+      "size": 77735
+    },
+    "workplace/oracle/combat79-r77-hover3-a/end.state": {
+      "sha256": "6b0d8d509e6a293e8950038e0bd674328d105b9916720f6e4e7bd54960b026c2",
+      "size": 267207
+    },
+    "workplace/combat79-r77-hover3-a-plan.json": {
+      "sha256": "1873b0923eb272d8367b800263b5dc14d4ac4f1daf3facf99094eb0103ab290a",
+      "size": 1433
+    },
+    "workplace/oracle/combat79-r77-hover3-b/meta.txt": {
+      "sha256": "91aceef64c138bd70e94cc868e99691fdb7fce0b2a630c3d85635f3dc478e2d9",
+      "size": 913
+    },
+    "workplace/oracle/combat79-r77-hover3-b/flags.txt": {
+      "sha256": "603c551b4b088993287c90b12a08413992d19d027cc25853b3a7edb11ce7ee0d",
+      "size": 509
+    },
+    "workplace/oracle/combat79-r77-hover3-b/report.txt": {
+      "sha256": "c50d478e54b76c1d7ebef697dbbe043efa593baa1f2c611533816a5eae853bb7",
+      "size": 77734
+    },
+    "workplace/oracle/combat79-r77-hover3-b/end.state": {
+      "sha256": "0e35e5de9b4a97395c3f825690054ba9d1ce921b86bb9a9cdc9b31db6780e643",
+      "size": 267207
+    },
+    "workplace/combat79-r77-hover3-b-plan.json": {
+      "sha256": "d8c893f49481f1c89029547a603b2f30c5c6a008375b6e02d1496da52c73a3bc",
+      "size": 1433
+    },
+    "workplace/oracle/combat79-r77-popup1-a/input-mem.bin": {
+      "sha256": "87e55753dfc7aa4431731b9dc840bd7ccb8041c125cd772c7ebee201120bb5da",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup1-b/input-mem.bin": {
+      "sha256": "87e55753dfc7aa4431731b9dc840bd7ccb8041c125cd772c7ebee201120bb5da",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup1-a/end-mem.bin": {
+      "sha256": "01ac5b997c9f87eaca0645538de60b1540214265e920a000d8c7d66cf492b185",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup1-b/end-mem.bin": {
+      "sha256": "01ac5b997c9f87eaca0645538de60b1540214265e920a000d8c7d66cf492b185",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup1-a/screen.bin": {
+      "sha256": "250622cb4fa240a3a58eecf7ead1536106444275492b0a9b59526e6cc0464ccc",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-popup1-b/screen.bin": {
+      "sha256": "250622cb4fa240a3a58eecf7ead1536106444275492b0a9b59526e6cc0464ccc",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-popup1-a/screen.png": {
+      "sha256": "af850520fb45e5969292a0f066f20a89d25f9637406b8d9b0dde01d16c3ac0e0",
+      "size": 10155
+    },
+    "workplace/oracle/combat79-r77-popup1-b/screen.png": {
+      "sha256": "af850520fb45e5969292a0f066f20a89d25f9637406b8d9b0dde01d16c3ac0e0",
+      "size": 10155
+    },
+    "workplace/oracle/combat79-r77-popup1-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-popup1-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-popup1-a/meta.txt": {
+      "sha256": "9708dee37aa8eb6db133c39ca2e440ad12c8bc83430919685c462a265c415b5a",
+      "size": 936
+    },
+    "workplace/oracle/combat79-r77-popup1-a/flags.txt": {
+      "sha256": "f1e2bb62fcc9f00dfb20e3b189ed1b57f02be0ab73968b344b3e58b5c509da3f",
+      "size": 532
+    },
+    "workplace/oracle/combat79-r77-popup1-a/report.txt": {
+      "sha256": "d6a42b7245896bcd272119061c53c4939d191a11176498d8e53f5ac89e6a697c",
+      "size": 86492
+    },
+    "workplace/oracle/combat79-r77-popup1-a/end.state": {
+      "sha256": "3c1d14fefd090f33b545262e854f7ab7b8896e7e5bb83f6656660998c0397aeb",
+      "size": 266731
+    },
+    "workplace/combat79-r77-popup1-a-plan.json": {
+      "sha256": "3479a72533a57ea927de12701a4cf4951da75010c443df7ea2aa5f731384a5d3",
+      "size": 1456
+    },
+    "workplace/oracle/combat79-r77-popup1-b/meta.txt": {
+      "sha256": "5449cfe5dafd033f7f932587bc80dbf11a134b5b51259707a140def512f4ec5a",
+      "size": 936
+    },
+    "workplace/oracle/combat79-r77-popup1-b/flags.txt": {
+      "sha256": "bd3ddf7522bfb23f40412b3aeff9158b3edbf01e658a48f9aa1783a3127e8898",
+      "size": 532
+    },
+    "workplace/oracle/combat79-r77-popup1-b/report.txt": {
+      "sha256": "abe6536806c220d66ec738d85608c8c29787bf74e89e1b5c8f6dba1e05fffb7b",
+      "size": 86493
+    },
+    "workplace/oracle/combat79-r77-popup1-b/end.state": {
+      "sha256": "3b45361bd786951dd717e8f3b904ca13cd6c98538d6db9a623bf3dfd720b5827",
+      "size": 266731
+    },
+    "workplace/combat79-r77-popup1-b-plan.json": {
+      "sha256": "3c42d769d85195267ad077980d727e5b80ced8763d5e936ba3981c2861028442",
+      "size": 1456
+    },
+    "workplace/oracle/combat79-r77-popup2-a/input-mem.bin": {
+      "sha256": "c365040e6153f3d1566d32f75d9714a9c9309a91b5aac8aff6eeb4a29e1f8456",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup2-b/input-mem.bin": {
+      "sha256": "c365040e6153f3d1566d32f75d9714a9c9309a91b5aac8aff6eeb4a29e1f8456",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup2-a/end-mem.bin": {
+      "sha256": "a1eec6cce76011067830162a404efb536d9ae5de1c126799658950b1ba00e246",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup2-b/end-mem.bin": {
+      "sha256": "a1eec6cce76011067830162a404efb536d9ae5de1c126799658950b1ba00e246",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup2-a/screen.bin": {
+      "sha256": "3e14698fced8fe85854d6a27501e774564f7f07f6bc820675f95e02f59ebef7b",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-popup2-b/screen.bin": {
+      "sha256": "3e14698fced8fe85854d6a27501e774564f7f07f6bc820675f95e02f59ebef7b",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-popup2-a/screen.png": {
+      "sha256": "f0c48eaf89f1117a03ba4716d098024260defae645114f0f86110a7358ff654e",
+      "size": 10286
+    },
+    "workplace/oracle/combat79-r77-popup2-b/screen.png": {
+      "sha256": "f0c48eaf89f1117a03ba4716d098024260defae645114f0f86110a7358ff654e",
+      "size": 10286
+    },
+    "workplace/oracle/combat79-r77-popup2-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-popup2-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-popup2-a/meta.txt": {
+      "sha256": "617c92ba6e4487c96344b40b396d5867908767f88773d3359e428dcc0f8a5be3",
+      "size": 936
+    },
+    "workplace/oracle/combat79-r77-popup2-a/flags.txt": {
+      "sha256": "179f7b23bb2f68829d3dedb935b26e7042d0d67884b1a857d6fe602c1a7c1a0a",
+      "size": 532
+    },
+    "workplace/oracle/combat79-r77-popup2-a/report.txt": {
+      "sha256": "d53788434a80abe5ca21540beb89353b7b6598703671dd18c12a6291f0a6dd56",
+      "size": 85028
+    },
+    "workplace/oracle/combat79-r77-popup2-a/end.state": {
+      "sha256": "e4157cb85cca687d2fa0a70850a81c5c7beae06993550ab3a1bf89fe368ef276",
+      "size": 266616
+    },
+    "workplace/combat79-r77-popup2-a-plan.json": {
+      "sha256": "38dca6d8e6fca542a180ce5e2b75661d914b1a6af2efaf386e3626113c7985c5",
+      "size": 1456
+    },
+    "workplace/oracle/combat79-r77-popup2-b/meta.txt": {
+      "sha256": "0e20650d7606367220e089200d552cad77b868893b8abedfae9ee35577ed2f97",
+      "size": 936
+    },
+    "workplace/oracle/combat79-r77-popup2-b/flags.txt": {
+      "sha256": "ef95ad241dec8ef5f3ffcb05ba0b74425e42e34590585dcb5ee3c44bcab90b61",
+      "size": 532
+    },
+    "workplace/oracle/combat79-r77-popup2-b/report.txt": {
+      "sha256": "a52df731b0cdb9d085970cb8510c9ff5df5dbe286c75a9580875c18902d92c80",
+      "size": 85027
+    },
+    "workplace/oracle/combat79-r77-popup2-b/end.state": {
+      "sha256": "3a3141ceb119814bdb4d37acd7e50bddf7f2d6bc43d39c638b18a30768520764",
+      "size": 266616
+    },
+    "workplace/combat79-r77-popup2-b-plan.json": {
+      "sha256": "6bd258a07b76a89a1cbaca9e2092de8acd4bbe9ca58b836c0d6e4d805cbf89f3",
+      "size": 1456
+    },
+    "workplace/oracle/combat79-r77-popup3-a/input-mem.bin": {
+      "sha256": "be0e5ce4eb9ab8ea09ed6f132a44bcfb922e02c7fb22d9f6664f5ac9e2eec25c",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup3-b/input-mem.bin": {
+      "sha256": "be0e5ce4eb9ab8ea09ed6f132a44bcfb922e02c7fb22d9f6664f5ac9e2eec25c",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup3-a/end-mem.bin": {
+      "sha256": "daf73358903a517508393c1ccecafe43900d2098098e6098b9415953da9232c0",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup3-b/end-mem.bin": {
+      "sha256": "daf73358903a517508393c1ccecafe43900d2098098e6098b9415953da9232c0",
+      "size": 1048576
+    },
+    "workplace/oracle/combat79-r77-popup3-a/screen.bin": {
+      "sha256": "fcf82ddb25098607aaf5dced096b0f67841cc2d505616720426e33760087452e",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-popup3-b/screen.bin": {
+      "sha256": "fcf82ddb25098607aaf5dced096b0f67841cc2d505616720426e33760087452e",
+      "size": 307200
+    },
+    "workplace/oracle/combat79-r77-popup3-a/screen.png": {
+      "sha256": "4825491f17f6fa112f4d2db45087d9fb5117e5f0ff9e127ebe342f8554442bd1",
+      "size": 10410
+    },
+    "workplace/oracle/combat79-r77-popup3-b/screen.png": {
+      "sha256": "4825491f17f6fa112f4d2db45087d9fb5117e5f0ff9e127ebe342f8554442bd1",
+      "size": 10410
+    },
+    "workplace/oracle/combat79-r77-popup3-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-popup3-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/combat79-r77-popup3-a/meta.txt": {
+      "sha256": "62e033af4fb5d92e37c5dcf372bebed8eafa34e109da747bc169c86476aae922",
+      "size": 936
+    },
+    "workplace/oracle/combat79-r77-popup3-a/flags.txt": {
+      "sha256": "4c529a5d7f84485ab1505006df6782bd6040346e663ef79e1a63f6d273750d58",
+      "size": 532
+    },
+    "workplace/oracle/combat79-r77-popup3-a/report.txt": {
+      "sha256": "9697ba874612c67ee930632d7b3eae2f36b207e807fa507c47b99ac543c238f3",
+      "size": 83226
+    },
+    "workplace/oracle/combat79-r77-popup3-a/end.state": {
+      "sha256": "26b65b4e919ff2cfc0c30013de7bac8b91d350c85bdcb3079cbe3c6aa7eb53f4",
+      "size": 266819
+    },
+    "workplace/combat79-r77-popup3-a-plan.json": {
+      "sha256": "85458affd533a9057277b758b583cef2e71baa8934bbf6e05d5c598c7706fa92",
+      "size": 1456
+    },
+    "workplace/oracle/combat79-r77-popup3-b/meta.txt": {
+      "sha256": "d38357111a4fc845bf3f69a0ea6047e368e159bf7e165df03adcc3e274b0301e",
+      "size": 936
+    },
+    "workplace/oracle/combat79-r77-popup3-b/flags.txt": {
+      "sha256": "753a4b8e577851b25f0563ac3f88089c1f42dc910ecbe5fba4f343ef9357a383",
+      "size": 532
+    },
+    "workplace/oracle/combat79-r77-popup3-b/report.txt": {
+      "sha256": "8b12464b970169b85b369bfa52fb251bb890aaec106826e7d4a78ebb6d4d5218",
+      "size": 83226
+    },
+    "workplace/oracle/combat79-r77-popup3-b/end.state": {
+      "sha256": "3d8ed7b25f8e39e34cfcc1b2837b948e42824ed6ddc522da4a0e10f4a52089cb",
+      "size": 266819
+    },
+    "workplace/combat79-r77-popup3-b-plan.json": {
+      "sha256": "dce2c0417b8f4bdad9c9f8148c5032e7c1614a592ea428d857cbeee01ae09484",
+      "size": 1456
+    },
+    "workplace/ida/combat79-r77-165F.json": {
+      "sha256": "3d752294f51da2667ce761d3aab71bc1563067c47bc32bb8c99e8207577dd8f9",
+      "size": 62275
+    },
+    "workplace/ida/combat79-r77-165F.com": {
+      "sha256": "7e6fa7c2e5610bb55ac43092365c385fd99d03b290429243c291035a75837bfd",
+      "size": 4864
+    },
+    "workplace/ida/combat79-r77-165F-shapes.json": {
+      "sha256": "0834373dcccf923764a245cca8a146329e51b0ff9ab8be4878af3ca57f9f7c89",
+      "size": 155140
+    },
+    "workplace/ida/combat79-r77-165F-shapes.com": {
+      "sha256": "7e6fa7c2e5610bb55ac43092365c385fd99d03b290429243c291035a75837bfd",
+      "size": 4864
+    },
+    "workplace/ida/combat79-r77-1ED2.json": {
+      "sha256": "b6b198c7f2108f621dff0d18a0be244f1552e1ac68b2a6dbe1eba6bfb6d49077",
+      "size": 75639
+    },
+    "workplace/ida/combat79-r77-1ED2.com": {
+      "sha256": "849339788d4449f326e57b2d40784299be4dd075526ae6262c69bb7043d1484d",
+      "size": 4864
+    },
+    "workplace/ida/combat79-r77-1629.json": {
+      "sha256": "9391afef6a0f34678f60ab58301f683b052877fc2035e043287347fa956b6e69",
+      "size": 46518
+    },
+    "workplace/ida/combat79-r77-1629.com": {
+      "sha256": "df4953d3fbae71dca0b4d5a79c7b4831c9ae47773747ee76a26b3f85eb983614",
+      "size": 4352
+    },
+    "docs/internals/data/fleet-command-display-spec.json": {
+      "sha256": "5bf0789c6c62484b49ac18f757d4ee246647f75b860017897d4c227885637fb4",
+      "size": 453
+    },
+    "workplace/round77-state-comparison.json": {
+      "sha256": "70f8c38ee366a081a2c2295f3c981640cfbf2517efa4b2ef38b0314819f588b0",
+      "size": 2276
+    },
+    "tools/scripts/fleet_command_state_check.go": {
+      "sha256": "c2c34858a369b4f678ac6119e2efdaccf06193104d2f4ad871dccf97033bd0f4",
+      "size": 4053
+    },
+    "tools/fleet_command_display_oracle.sh": {
+      "sha256": "c339661f6976e8bf466b260200a73c54cd024892a718b8fa379cc788b8a2dc70",
+      "size": 921
+    },
+    "tools/scripts/fleet_command_display_plan.py": {
+      "sha256": "21c24b5a2d25133053854a932118e6e296eb50f044109c42aa9c0cb8bd2d8593",
+      "size": 2381
+    },
+    "tools/scripts/fleet_command_display_ida.py": {
+      "sha256": "400d74685296c2ee93df9080912206df434d51a6fe74c74ec4279ef81e6d5562",
+      "size": 2554
+    },
+    "tools/scripts/fleet_command_display_receipt.py": {
+      "sha256": "9bfe298eeaf309feaab2e974cad5811987ee89fd4a4a3d752b4b8659550fffd9",
+      "size": 4933
+    },
+    "docs/internals/data/fleet-combat-command.json": {
+      "sha256": "e3b39582bfda07105d27837747d46bca19eaf2f1fb5d6ff383500870e4a6870d",
+      "size": 1819960
+    },
+    "workplace/combat79-r62-command-a-plan.json": {
+      "sha256": "617c6db5ec3a57bc32a9fcc045d09e14f95af0e6bac3beb4865a601dfa043589",
+      "size": 431
+    },
+    "workplace/combat79-r62-gate-near-human-a-plan.json": {
+      "sha256": "681cf123dd27c9c7a8f8654ca61377be5232bf188c773843ee911982bfb898cf",
+      "size": 20625
+    },
+    "workplace/oracle/combat79-r62-command-a/command.state": {
+      "sha256": "108d2cac6ab7cb278c932f97542a9476ef6a9da683eb87976be694fceae6af95",
+      "size": 265478
+    }
+  }
+}

@@ -359,6 +359,10 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	fleetCommandDisplay, err := screen.LoadFleetCommandDisplaySpec(filepath.Join(data, "fleet-command-display-spec.json"))
+	if err != nil {
+		return nil, err
+	}
 	var fleetSceneSprites *asset.FleetSceneSprites
 	blocks, blockErr := os.ReadFile(filepath.Join(orig, "3DBLOCK.SPR"))
 	flags, flagErr := os.ReadFile(filepath.Join(orig, "COM_FLAG.SPR"))
@@ -412,19 +416,20 @@ func Load(orig, data string) (*game.Resources, error) {
 		Composition: compTables, EditorTables: editorTables, DefaultAdjutants: adjutants,
 		MessageBox: msgBox, FrameTiles: frameTiles,
 		SupplyPanel: supplyPanel, FactionNames: factionNames, ShipKindNames: kindNames,
-		PlanetInfo:        planetInfo,
-		PlanetInfoMap:     planetInfoMap,
-		RegionInfo:        regionInfo,
-		OccupyAsk:         occupyAsk,
-		TurnWindow:        turnWindow,
-		ListScreen:        listScreen,
-		Engagement:        engagement,
-		FleetPresentation: fleetPresentation,
-		FleetCommand:      fleetCommand,
-		FleetSceneSprites: fleetSceneSprites,
-		EngagementPanel:   engagementPanel,
-		Comani:            comani,
-		StartMilitary:     50000, ShipPct: 25}, nil
+		PlanetInfo:          planetInfo,
+		PlanetInfoMap:       planetInfoMap,
+		RegionInfo:          regionInfo,
+		OccupyAsk:           occupyAsk,
+		TurnWindow:          turnWindow,
+		ListScreen:          listScreen,
+		Engagement:          engagement,
+		FleetPresentation:   fleetPresentation,
+		FleetCommand:        fleetCommand,
+		FleetCommandDisplay: fleetCommandDisplay,
+		FleetSceneSprites:   fleetSceneSprites,
+		EngagementPanel:     engagementPanel,
+		Comani:              comani,
+		StartMilitary:       50000, ShipPct: 25}, nil
 }
 
 // loadBattle 讀戰場畫面要的東西：版面、面板背景、圖塊庫與 32 張地圖

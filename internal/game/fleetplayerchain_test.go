@@ -33,6 +33,18 @@ func fleetChainAssets(t *testing.T, g *Game) {
 	}
 	var err error
 	data := filepath.Join(root, "docs/internals/data")
+	if g.res.BattlePanel == nil {
+		g.res.BattlePanel, err = asset.DecodeAMGImage(read("ANI_PNL0.A98"))
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	if g.res.BattleTiles == nil {
+		g.res.BattleTiles, err = asset.DecodeTiles(read(g.res.Battle.Field.Tiles), g.res.Battle.Field.TileW, g.res.Battle.Field.TileH)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
 	if g.res.BattleMenu == nil {
 		g.res.BattleMenu, err = screen.LoadBattleMenuSpec(filepath.Join(data, "battle-menu.json"))
 		if err != nil {
@@ -80,6 +92,28 @@ func fleetChainAssets(t *testing.T, g *Game) {
 	g.res.FleetCommand, err = screen.LoadFleetCommandSpec(filepath.Join(data, "fleet-command-ui.json"))
 	if err != nil {
 		t.Fatal(err)
+	}
+	g.res.FleetCommandDisplay, err = screen.LoadFleetCommandDisplaySpec(filepath.Join(data, "fleet-command-display-spec.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if g.res.UnitPanel == nil {
+		g.res.UnitPanel, err = screen.LoadUnitPanelSpec(filepath.Join(data, "unit-panel.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	if g.res.FleetDetail == nil {
+		g.res.FleetDetail, err = screen.LoadFleetDetailSpec(filepath.Join(data, "fleet-detail.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	if g.res.FleetWindow == nil {
+		g.res.FleetWindow, err = screen.LoadFleetWindowSpec(filepath.Join(data, "fleet-window.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
 	}
 	g.res.CommandMenus, err = screen.LoadCommandMenuSpec(filepath.Join(data, "battle-command-menus.json"))
 	if err != nil {
@@ -564,6 +598,19 @@ func TestNormalFleetPlayerChain(t *testing.T) {
 				g.MoveMouse(x, y)
 				g.Click(x, y)
 				g.Frame()
+				if out := os.Getenv("LOGH3_FLEET_CHAIN_OUTPUT"); out != "" && g.fleetCombat.active && (g.fleetCombat.stage == fleetCommandTarget || g.fleetCombat.stage == fleetCommandMenu) {
+					folder := filepath.Join(out, fmt.Sprintf("normal-%d", faction))
+					if err := os.MkdirAll(folder, 0755); err != nil {
+						t.Fatal(err)
+					}
+					name := fmt.Sprintf("command-%d-%05d", g.fleetCombat.stage, len(inputs))
+					if err := g.Frame().WritePNG(filepath.Join(folder, name+".png"), g.Palette()); err != nil {
+						t.Fatal(err)
+					}
+					if err := g.Frame().WriteIndex(filepath.Join(folder, name+".bin")); err != nil {
+						t.Fatal(err)
+					}
+				}
 			}
 			right := func(x, y int) {
 				inputs = append(inputs, map[string]any{"kind": "right", "x": x, "y": y, "at_ns": elapsed})
@@ -821,7 +868,7 @@ func TestNormalFleetPlayerChain(t *testing.T) {
 			saveDir := t.TempDir()
 			if out := os.Getenv("LOGH3_FLEET_CHAIN_OUTPUT"); out != "" {
 				saveDir = filepath.Join(out, fmt.Sprintf("normal-%d", faction))
-				if err := os.Mkdir(saveDir, 0755); err != nil {
+				if err := os.MkdirAll(saveDir, 0755); err != nil {
 					t.Fatal(err)
 				}
 				if err := g.Frame().WritePNG(filepath.Join(saveDir, "screen.png"), g.Palette()); err != nil {

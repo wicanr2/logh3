@@ -204,6 +204,7 @@ func (g *Game) continueFleetCommands() {
 			return
 		}
 		c.stage = fleetCommandTarget
+		g.fleetCombatMouse(g.mouseX, g.mouseY)
 		return
 	}
 }
@@ -247,6 +248,23 @@ func (g *Game) fleetCommandHit(x, y int) []int {
 	return found
 }
 
+func (g *Game) fleetCombatMouse(x, y int) {
+	c := &g.fleetCombat
+	if !c.active || c.stage != fleetCommandTarget {
+		return
+	}
+	hits := g.fleetCommandHit(x, y)
+	for _, i := range hits {
+		if i == c.target {
+			return
+		}
+	}
+	c.target = -1
+	if len(hits) > 0 {
+		c.target = hits[0]
+	}
+}
+
 func (g *Game) fleetCombatClick(x, y int, right bool) {
 	c := &g.fleetCombat
 	if c.err != nil {
@@ -288,6 +306,7 @@ func (g *Game) fleetCombatClick(x, y int, right bool) {
 		}
 		c.stage = fleetCommandTarget
 		c.target = -1
+		g.fleetCombatMouse(g.mouseX, g.mouseY)
 	case fleetCommandTarget:
 		hits := g.fleetCommandHit(x, y)
 		if right {
@@ -365,7 +384,27 @@ func (g *Game) drawFleetCombatCommand(fb *gfx.Framebuffer) {
 	}
 	if c.current >= 0 && g.res.UnitPanel != nil {
 		if v, ok := g.unitPanelFor(c.current); ok {
-			screen.DrawUnitPanel(g.res.UnitPanel, fb, g.res.Font, v)
+			if g.res.FleetCommandDisplay != nil {
+				var enemy *screen.UnitPanelView
+				detail, distance := 0, 0
+				var faction, kind []byte
+				if c.target >= 0 {
+					if e, ok := g.unitPanelFor(c.target); ok {
+						enemy = &e
+						u := g.battleUnits[c.target]
+						a := g.battleUnits[c.current]
+						detail = u.Detail
+						distance = int(rules.FixedDist(a.X, a.Y, u.X, u.Y) >> 16)
+						faction = g.factionNameColoured(u.Faction)
+						if u.Kind >= 0 && u.Kind < len(g.res.ShipKindNames) {
+							kind = g.res.ShipKindNames[u.Kind]
+						}
+					}
+				}
+				g.res.FleetCommandDisplay.DrawPanel(g.res.UnitPanel, fb, g.res.Font, g.res.FrameTiles, v, enemy, detail, distance, faction, kind)
+			} else {
+				screen.DrawUnitPanelSummary(g.res.UnitPanel, fb, g.res.Font, v)
+			}
 		}
 	}
 	if c.stage != fleetCommandMenu {
@@ -388,6 +427,28 @@ func (g *Game) drawFleetCombatCommand(fb *gfx.Framebuffer) {
 	labels := g.res.FleetCommand.Labels(shots, c.menu == screen.CommandMenuCombatChoice)
 	row := g.res.CommandMenus.CommandMenuRowAt(c.menu, c.menuX, c.menuY, g.mouseX, g.mouseY, len(labels))
 	screen.DrawCommandMenuLabels(g.res.CommandMenus, fb, g.res.Font, g.res.FrameTiles, c.menu, labels, on, c.menuX, c.menuY, row)
+}
+
+func (g *Game) drawFleetCombatRange(fb *gfx.Framebuffer, view screen.BattleView) {
+	c := &g.fleetCombat
+	if !c.active || c.current < 0 || c.stage == fleetCommandHeader {
+		return
+	}
+	u := g.battleUnits[c.current]
+	screen.DrawBattleSpottingHighlight(g.res.Battle, fb, g.res.Sprites, [2]int{u.X, u.Y}, view)
+	if c.stage != fleetCommandTarget {
+		return
+	}
+	f := g.battleFleet(u.Fleet)
+	if f == nil {
+		return
+	}
+	r, err := rules.FleetCombatWeaponRanges(g.res.ShipKinds, u)
+	if err != nil {
+		g.fleetCombatFail(err)
+		return
+	}
+	screen.DrawFleetCombatRange(g.res.Battle, fb, u.X, u.Y, f.Facing, r, view)
 }
 
 func (g *Game) finishFleetCombat() {

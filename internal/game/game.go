@@ -501,9 +501,10 @@ type Resources struct {
 	Engagement      *screen.EngagementSpec
 	EngagementPanel *asset.Image
 	// FleetPresentation 是096原版格式與交戰色盤；完整艦隊演出待092接線。
-	FleetPresentation *screen.FleetPresentationSpec
-	FleetCommand      *screen.FleetCommandSpec
-	FleetSceneSprites *asset.FleetSceneSprites
+	FleetPresentation   *screen.FleetPresentationSpec
+	FleetCommand        *screen.FleetCommandSpec
+	FleetCommandDisplay *screen.FleetCommandDisplaySpec
+	FleetSceneSprites   *asset.FleetSceneSprites
 	// Comani 是交戰演出的動畫庫（`COMANI.BMG`，`docs/internals/20`）；缺原版檔就是 nil（不畫圖）。
 	Comani *asset.BMG
 
@@ -2201,6 +2202,7 @@ const mouseDY = ui.MouseDY
 // 點擊帶著的那次移動**不算**，所以 `Click`／`RightClick` 走 `moveMouse`。
 func (g *Game) MoveMouse(x, y int) {
 	g.moveMouse(x, y)
+	g.fleetCombatMouse(x, y)
 	g.refreshHoverRegion()
 	g.refreshBattleHover()
 }
@@ -4950,6 +4952,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 			screen.DrawBattleInputHighlight(g.res.Battle, fb, g.res.Sprites, g.battleHoverCurrent, g.battleHoverTarget, view)
 		}
 	}
+	g.drawFleetCombatRange(fb, view)
 	// 艦隊選點時畫兩個範圍圖形（`docs/re/120`、`docs/re/135`）。
 	// 兩個都是 XOR 上去的，所以要畫在單位與格線之後。
 	if g.fleetOrder != FleetOrderNone {

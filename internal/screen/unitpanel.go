@@ -88,6 +88,15 @@ func (s *UnitPanelSpec) FleetActionInkOf(action int) uint8 {
 // 每一段的位置是「第幾個半形格」，走原版的格式字串算出來的：全形一個字
 // 兩格、半形一格，x ＝ 格原點 ＋ 半形格 × 8（`docs/re/118`）。
 func DrawUnitPanel(s *UnitPanelSpec, fb *gfx.Framebuffer, fnt *font.Font, v UnitPanelView) {
+	drawUnitPanel(s, fb, fnt, v, false)
+}
+
+// DrawUnitPanelSummary是交戰命令的前四列（規格103）。
+func DrawUnitPanelSummary(s *UnitPanelSpec, fb *gfx.Framebuffer, fnt *font.Font, v UnitPanelView) {
+	drawUnitPanel(s, fb, fnt, v, true)
+}
+
+func drawUnitPanel(s *UnitPanelSpec, fb *gfx.Framebuffer, fnt *font.Font, v UnitPanelView, summary bool) {
 	x := func(half int) int { return s.Cell.X + half*s.Cell.Half }
 	y := func(row int) int { return s.Cell.Y + row*s.Cell.Row }
 	h := func(k string) int { return s.Halves[k] }
@@ -99,7 +108,11 @@ func DrawUnitPanel(s *UnitPanelSpec, fb *gfx.Framebuffer, fnt *font.Font, v Unit
 			s.Factions[v.Faction].Codes, s.FactionColour(v.Faction))
 	}
 	drawFull(fb, fnt, x(h("di")), y(0), lab("di"), s.Ink)
-	drawRightHalves(fb, fnt, x(h("fleet_no")), y(0), itoa(v.FleetNo), 2, s.Ink)
+	if summary && v.FleetNo >= 0 && v.FleetNo < 10 {
+		drawFullNumber(fb, fnt, x(h("fleet_no")), y(0), v.FleetNo, fullDigitCodes, s.Ink)
+	} else {
+		drawRightHalves(fb, fnt, x(h("fleet_no")), y(0), itoa(v.FleetNo), 2, s.Ink)
+	}
 	drawFull(fb, fnt, x(h("fleet_word")), y(0), lab("fleet"), s.Ink)
 
 	// 第 1 列：旗艦印提督名，索敵分遣隊印「索敵部隊」，其餘印「第Ｎ部隊」。
@@ -136,6 +149,9 @@ func DrawUnitPanel(s *UnitPanelSpec, fb *gfx.Framebuffer, fnt *font.Font, v Unit
 	}
 	drawRightHalves(fb, fnt, x(h("morale_value")), y(3), itoa(v.Morale),
 		h("morale_width"), ink)
+	if summary {
+		return
+	}
 
 	// 第 4 列：行動。艦隊 `+0x00` bit0 有設的話整列換成「無法戰鬥」。
 	if v.CannotFight {

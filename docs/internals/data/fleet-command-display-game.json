@@ -1,0 +1,2914 @@
+{
+  "schema": "logh3.fleet-command-display-game.v1",
+  "date": "2026-10-04",
+  "parent_commit": "e30f3869b58db2d484f6109931e5181e784026b7",
+  "worktree": "本輪修改；來源逐檔雜湊如下",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_worktree": "clean; unchanged",
+  "image": "logh3-ebiten:2",
+  "seed": 305419896,
+  "comparison_level": "same-state限定受控顯示，正常全流程不外推",
+  "whole_frame_gate_passed": false,
+  "unapproved_differences_each": 1,
+  "comparisons": [
+    {
+      "bbox": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "case": "hover1",
+      "comparison_level": "same-state controlled command display",
+      "different": 1,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 113,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "different": 1,
+          "maximum_channel_difference": 113,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 161279
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 32000
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 307199,
+      "unapproved_differences": 1,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "case": "hover2",
+      "comparison_level": "same-state controlled command display",
+      "different": 1,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 113,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "different": 1,
+          "maximum_channel_difference": 113,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 161279
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 32000
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 307199,
+      "unapproved_differences": 1,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "case": "hover3",
+      "comparison_level": "same-state controlled command display",
+      "different": 1,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 113,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "different": 1,
+          "maximum_channel_difference": 113,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 161279
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 32000
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 307199,
+      "unapproved_differences": 1,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "case": "popup1",
+      "comparison_level": "same-state controlled command display",
+      "different": 1,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 113,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "different": 1,
+          "maximum_channel_difference": 113,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 161279
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 32000
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 307199,
+      "unapproved_differences": 1,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "case": "popup2",
+      "comparison_level": "same-state controlled command display",
+      "different": 1,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 113,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "different": 1,
+          "maximum_channel_difference": 113,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 161279
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 32000
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 307199,
+      "unapproved_differences": 1,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "case": "popup3",
+      "comparison_level": "same-state controlled command display",
+      "different": 1,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 113,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "different": 1,
+          "maximum_channel_difference": 113,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 161279
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 32000
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 307199,
+      "unapproved_differences": 1,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "case": "wait",
+      "comparison_level": "same-state controlled command display",
+      "different": 1,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 113,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "different": 1,
+          "maximum_channel_difference": 113,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 161279
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 32000
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 307199,
+      "unapproved_differences": 1,
+      "whole_frame_gate_passed": false
+    }
+  ],
+  "before_comparisons": [
+    {
+      "bbox": [
+        16,
+        60,
+        607,
+        419
+      ],
+      "before_rendering_source": "第76輪drawFleetCombatCommand與無射程亮標；其餘用已修正診斷fixture",
+      "case": "hover1",
+      "comparison_level": "same-state controlled command display",
+      "different": 6658,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 243,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            16,
+            60,
+            463,
+            419
+          ],
+          "different": 2099,
+          "maximum_channel_difference": 243,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 159181
+        },
+        {
+          "bbox": [
+            480,
+            241,
+            607,
+            395
+          ],
+          "different": 4559,
+          "maximum_channel_difference": 243,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 27441
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 300542,
+      "unapproved_differences": 6658,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        16,
+        60,
+        607,
+        419
+      ],
+      "before_rendering_source": "第76輪drawFleetCombatCommand與無射程亮標；其餘用已修正診斷fixture",
+      "case": "hover2",
+      "comparison_level": "same-state controlled command display",
+      "different": 6237,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 243,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            16,
+            60,
+            463,
+            419
+          ],
+          "different": 2099,
+          "maximum_channel_difference": 243,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 159181
+        },
+        {
+          "bbox": [
+            480,
+            241,
+            607,
+            395
+          ],
+          "different": 4138,
+          "maximum_channel_difference": 243,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 27862
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 300963,
+      "unapproved_differences": 6237,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        16,
+        60,
+        607,
+        419
+      ],
+      "before_rendering_source": "第76輪drawFleetCombatCommand與無射程亮標；其餘用已修正診斷fixture",
+      "case": "hover3",
+      "comparison_level": "same-state controlled command display",
+      "different": 6057,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 243,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            16,
+            60,
+            463,
+            419
+          ],
+          "different": 2099,
+          "maximum_channel_difference": 243,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 159181
+        },
+        {
+          "bbox": [
+            480,
+            241,
+            607,
+            395
+          ],
+          "different": 3958,
+          "maximum_channel_difference": 243,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 28042
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 301143,
+      "unapproved_differences": 6057,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        240,
+        240,
+        607,
+        395
+      ],
+      "before_rendering_source": "第76輪drawFleetCombatCommand與無射程亮標；其餘用已修正診斷fixture",
+      "case": "popup1",
+      "comparison_level": "same-state controlled command display",
+      "different": 4670,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 243,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            240,
+            240,
+            255,
+            255
+          ],
+          "different": 111,
+          "maximum_channel_difference": 243,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 161169
+        },
+        {
+          "bbox": [
+            480,
+            241,
+            607,
+            395
+          ],
+          "different": 4559,
+          "maximum_channel_difference": 243,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 27441
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 302530,
+      "unapproved_differences": 4670,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        240,
+        240,
+        607,
+        395
+      ],
+      "before_rendering_source": "第76輪drawFleetCombatCommand與無射程亮標；其餘用已修正診斷fixture",
+      "case": "popup2",
+      "comparison_level": "same-state controlled command display",
+      "different": 4249,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 243,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            240,
+            240,
+            255,
+            255
+          ],
+          "different": 111,
+          "maximum_channel_difference": 243,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 161169
+        },
+        {
+          "bbox": [
+            480,
+            241,
+            607,
+            395
+          ],
+          "different": 4138,
+          "maximum_channel_difference": 243,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 27862
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 302951,
+      "unapproved_differences": 4249,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        240,
+        240,
+        607,
+        395
+      ],
+      "before_rendering_source": "第76輪drawFleetCombatCommand與無射程亮標；其餘用已修正診斷fixture",
+      "case": "popup3",
+      "comparison_level": "same-state controlled command display",
+      "different": 4069,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 243,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            240,
+            240,
+            255,
+            255
+          ],
+          "different": 111,
+          "maximum_channel_difference": 243,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 161169
+        },
+        {
+          "bbox": [
+            480,
+            241,
+            607,
+            395
+          ],
+          "different": 3958,
+          "maximum_channel_difference": 243,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 28042
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 303131,
+      "unapproved_differences": 4069,
+      "whole_frame_gate_passed": false
+    },
+    {
+      "bbox": [
+        16,
+        60,
+        607,
+        419
+      ],
+      "before_rendering_source": "第76輪drawFleetCombatCommand與無射程亮標；其餘用已修正診斷fixture",
+      "case": "wait",
+      "comparison_level": "same-state controlled command display",
+      "different": 6404,
+      "effective_palette_equal": true,
+      "maximum_channel_difference": 243,
+      "pixels": 307200,
+      "rect": [
+        0,
+        0,
+        640,
+        480
+      ],
+      "regions": [
+        {
+          "bbox": [
+            16,
+            60,
+            463,
+            419
+          ],
+          "different": 2089,
+          "maximum_channel_difference": 243,
+          "pixels": 161280,
+          "rect": [
+            16,
+            60,
+            448,
+            360
+          ],
+          "same": 159191
+        },
+        {
+          "bbox": [
+            480,
+            241,
+            607,
+            395
+          ],
+          "different": 4315,
+          "maximum_channel_difference": 243,
+          "pixels": 32000,
+          "rect": [
+            464,
+            220,
+            160,
+            200
+          ],
+          "same": 27685
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 16384,
+          "rect": [
+            480,
+            75,
+            128,
+            128
+          ],
+          "same": 16384
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            0,
+            640,
+            40
+          ],
+          "same": 25600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 25600,
+          "rect": [
+            0,
+            440,
+            640,
+            40
+          ],
+          "same": 25600
+        }
+      ],
+      "remaining_classification": "原版亮標word+4未初始化；#89既有忠實度裁決pending，完整對拍未通過",
+      "same": 300796,
+      "unapproved_differences": 6404,
+      "whole_frame_gate_passed": false
+    }
+  ],
+  "normal_cases": [
+    {
+      "faction": 0,
+      "commands_compared": 2,
+      "orders": 10,
+      "hits": 7,
+      "inputs": 2648,
+      "six_save_files_equal": true,
+      "cpu_position_unchanged": true,
+      "bootstrap_commands_equal": true,
+      "double_replay_equal": true,
+      "classification": "正常Game與正式bootstrap；原版整段same-state仍未知"
+    },
+    {
+      "faction": 1,
+      "commands_compared": 2,
+      "orders": 7,
+      "hits": 5,
+      "inputs": 2538,
+      "six_save_files_equal": true,
+      "cpu_position_unchanged": true,
+      "bootstrap_commands_equal": true,
+      "double_replay_equal": true,
+      "classification": "正常Game與正式bootstrap；原版整段same-state仍未知"
+    }
+  ],
+  "supplementary_ida": [
+    {
+      "path": "workplace/ida/combat79-r77-39D7.json",
+      "instructions": 258,
+      "input_sha256": "aafa8ad3778b64bf3982d7387f4ada180c92f3cb6667a9a522ec813fa3a0ff61",
+      "grade": "unknown逐指令；審查過的語意另列研究414",
+      "ranges": [
+        "008C:035E"
+      ]
+    },
+    {
+      "path": "workplace/ida/combat79-r77-3982.json",
+      "instructions": 32,
+      "input_sha256": "33e9e3db9f5ac7afb7e1f2fc336a01a8c588362313443479916e95dcd8c0bdc8",
+      "grade": "unknown逐指令；審查過的語意另列研究414",
+      "ranges": [
+        "0038:007B"
+      ]
+    },
+    {
+      "path": "workplace/ida/combat79-r77-25DB.json",
+      "instructions": 105,
+      "input_sha256": "4c0eedf1bedf537441c67c22f4f4b3675717d68270401c4c15f4c6075cc90a33",
+      "grade": "unknown逐指令；審查過的語意另列研究414",
+      "ranges": [
+        "0E78:0FA0"
+      ]
+    }
+  ],
+  "semantic_index": [
+    {
+      "original_location": "39D7:0098",
+      "ida_ea_hex": "0x10298",
+      "runtime_linear_hex": "0x39e08",
+      "original_bytes_hex": "8b460a",
+      "operand": "mov     ax, [bp+0Ah]",
+      "semantic": "讀半徑作誤差與x初值；y初值0",
+      "grade": "proven",
+      "warning": null,
+      "source": "docs/re/414-fleet-command-display.md；固定原始bytes與第77輪原版雙跑"
+    },
+    {
+      "original_location": "39D7:0136",
+      "ida_ea_hex": "0x10336",
+      "runtime_linear_hex": "0x39ea6",
+      "original_bytes_hex": "8b46fc",
+      "operand": "mov     ax, [bp-4]",
+      "semantic": "取舊y；先計算2*y-1再遞增y",
+      "grade": "proven",
+      "warning": null,
+      "source": "docs/re/414-fleet-command-display.md；固定原始bytes與第77輪原版雙跑"
+    },
+    {
+      "original_location": "39D7:0147",
+      "ida_ea_hex": "0x10347",
+      "runtime_linear_hex": "0x39eb7",
+      "original_bytes_hex": "790e",
+      "operand": "jns     short near ptr unk_10357",
+      "semantic": "誤差非負保持x；負值時減x並補2*(舊x-1)",
+      "grade": "proven",
+      "warning": null,
+      "source": "docs/re/414-fleet-command-display.md；固定原始bytes與第77輪原版雙跑"
+    },
+    {
+      "original_location": "3982:003E",
+      "ida_ea_hex": "0x1023e",
+      "runtime_linear_hex": "0x3985e",
+      "original_bytes_hex": "3c0a",
+      "operand": "cmp     al, 0Ah",
+      "semantic": "unsigned編號小於10使用全形格式，其他用两半形",
+      "grade": "proven",
+      "warning": null,
+      "source": "docs/re/414-fleet-command-display.md；固定原始bytes與第77輪原版雙跑"
+    },
+    {
+      "original_location": "3982:0046",
+      "ida_ea_hex": "0x10246",
+      "runtime_linear_hex": "0x39866",
+      "original_bytes_hex": "bb868e",
+      "operand": "mov     bx, 8E86h",
+      "semantic": "DS8E86全形格式，沿研究143／338",
+      "grade": "proven",
+      "warning": null,
+      "source": "docs/re/414-fleet-command-display.md；固定原始bytes與第77輪原版雙跑"
+    },
+    {
+      "original_location": "3982:0060",
+      "ida_ea_hex": "0x10260",
+      "runtime_linear_hex": "0x39880",
+      "original_bytes_hex": "bb8b8e",
+      "operand": "mov     bx, 8E8Bh",
+      "semantic": "DS8E8B的兩半形格式",
+      "grade": "proven",
+      "warning": null,
+      "source": "docs/re/414-fleet-command-display.md；固定原始bytes與第77輪原版雙跑"
+    },
+    {
+      "original_location": "25DB:0E8D",
+      "ida_ea_hex": "0x1108d",
+      "runtime_linear_hex": "0x26c3d",
+      "original_bytes_hex": "b82800",
+      "operand": "mov     ax, 28h ; '('",
+      "semantic": "配40-byte亮標物件，沿研究394",
+      "grade": "proven",
+      "warning": null,
+      "source": "docs/re/414-fleet-command-display.md；固定原始bytes與第77輪原版雙跑"
+    },
+    {
+      "original_location": "25DB:0F17",
+      "ida_ea_hex": "0x11117",
+      "runtime_linear_hex": "0x26cc7",
+      "original_bytes_hex": "26884703",
+      "operand": "mov     es:[bx+3], al",
+      "semantic": "亮標priority byte+3寫FF；本函式沒有word+4寫入",
+      "grade": "proven",
+      "warning": null,
+      "source": "docs/re/414-fleet-command-display.md；固定原始bytes與第77輪原版雙跑"
+    },
+    {
+      "original_location": "25DB:0F33",
+      "ida_ea_hex": "0x11133",
+      "runtime_linear_hex": "0x26ce3",
+      "original_bytes_hex": "2688470c",
+      "operand": "mov     es:[bx+0Ch], al",
+      "semantic": "亮標tile+0C寫10",
+      "grade": "proven",
+      "warning": null,
+      "source": "docs/re/414-fleet-command-display.md；固定原始bytes與第77輪原版雙跑"
+    },
+    {
+      "original_location": "25DB:0F4E",
+      "ida_ea_hex": "0x1114e",
+      "runtime_linear_hex": "0x26cfe",
+      "original_bytes_hex": "268b4734",
+      "operand": "mov     ax, es:[bx+34h]",
+      "semantic": "由SHIP+34讀目前X；後續+36讀目前Y",
+      "grade": "proven",
+      "warning": null,
+      "source": "docs/re/414-fleet-command-display.md；固定原始bytes與第77輪原版雙跑"
+    }
+  ],
+  "cached_display_objects": [
+    {
+      "list_index": 55,
+      "runtime_linear_hex": "0x713de",
+      "bytes_hex": "020000ff05c7bc04f005101009f81e34223d10001400cc04040601011c120155ec00070155ec0007",
+      "priority": 255,
+      "word_plus_4": 50949,
+      "grade": "proven本次物件；初始化未知"
+    },
+    {
+      "list_index": 56,
+      "runtime_linear_hex": "0x716fe",
+      "bytes_hex": "020000ff757cb604f505101009bc1e34223d10001400c604090601011c1201afca8f4501afca8f45",
+      "priority": 255,
+      "word_plus_4": 31861,
+      "grade": "proven本次物件；初始化未知"
+    },
+    {
+      "list_index": 57,
+      "runtime_linear_hex": "0x74c20",
+      "bytes_hex": "02ff00ff2020e000b40010100a209e34223d10001400f000c80001011c12000f0a0101000f0a0101",
+      "priority": 255,
+      "word_plus_4": 8224,
+      "grade": "proven本次物件；初始化未知"
+    },
+    {
+      "list_index": 58,
+      "runtime_linear_hex": "0x711ae",
+      "bytes_hex": "020000ff00100805dc05101009101e34223d100014001805f00501011c1201fbaaab0001fbaaab00",
+      "priority": 255,
+      "word_plus_4": 4096,
+      "grade": "proven本次物件；初始化未知"
+    },
+    {
+      "list_index": 59,
+      "runtime_linear_hex": "0x71596",
+      "bytes_hex": "020000ff010a0305fc05101009151e34223d100014001305100601011c1201750175000175017500",
+      "priority": 255,
+      "word_plus_4": 2561,
+      "grade": "proven本次物件；初始化未知"
+    },
+    {
+      "list_index": 60,
+      "runtime_linear_hex": "0x71866",
+      "bytes_hex": "020000ffc40098046c05101009001e34223d10001400a804800501011c12013ff03fc0013ff03fc0",
+      "priority": 255,
+      "word_plus_4": 196,
+      "grade": "proven本次物件；初始化未知"
+    },
+    {
+      "list_index": 61,
+      "runtime_linear_hex": "0x7101e",
+      "bytes_hex": "020000ff4000e800bc00101001001e30223d10001400f800d00001011c12000f0a0202000f0a0202",
+      "priority": 255,
+      "word_plus_4": 64,
+      "grade": "proven本次物件；初始化未知"
+    },
+    {
+      "list_index": 62,
+      "runtime_linear_hex": "0x712ee",
+      "bytes_hex": "020000ff3800b804c405101009001e34223d10001400c804d80501011c1201ff56aa1001ff56aa10",
+      "priority": 255,
+      "word_plus_4": 56,
+      "grade": "proven本次物件；初始化未知"
+    }
+  ],
+  "files": {
+    "docs/internals/data/fleet-command-display-native.json": {
+      "sha256": "d56ab5516e494b43987aab0d72210b71d2ff93f1b56c9c3576dfba08c255b1db",
+      "bytes": 43317
+    },
+    "docs/internals/data/fleet-command-display-spec.json": {
+      "sha256": "5bf0789c6c62484b49ac18f757d4ee246647f75b860017897d4c227885637fb4",
+      "bytes": 453
+    },
+    "workplace/round77-final-d/hover1-comparison.json": {
+      "sha256": "4217aece57740923ca9c2ae5de301df33ac8887f1b898e976f3a8751c3294ccf",
+      "bytes": 1852
+    },
+    "workplace/round77-final-e/hover1-comparison.json": {
+      "sha256": "4217aece57740923ca9c2ae5de301df33ac8887f1b898e976f3a8751c3294ccf",
+      "bytes": 1852
+    },
+    "workplace/round77-final-d/hover1-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-e/hover1-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-d/hover1-original.png": {
+      "sha256": "7680ec93af74fb28fc8409ce31de5d54c5962a193217efb67ab3e2b634ecce81",
+      "bytes": 8755
+    },
+    "workplace/round77-final-e/hover1-original.png": {
+      "sha256": "7680ec93af74fb28fc8409ce31de5d54c5962a193217efb67ab3e2b634ecce81",
+      "bytes": 8755
+    },
+    "workplace/round77-final-d/hover1-remake.bin": {
+      "sha256": "86629c13cdf7ec9bb9b54c476a176d7c6223381164a1483a997b2acddde4cb0c",
+      "bytes": 307200
+    },
+    "workplace/round77-final-e/hover1-remake.bin": {
+      "sha256": "86629c13cdf7ec9bb9b54c476a176d7c6223381164a1483a997b2acddde4cb0c",
+      "bytes": 307200
+    },
+    "workplace/round77-final-d/hover1-remake.png": {
+      "sha256": "d6f23e1c1c55a1ceed49a2d3d65133e5526a2c17e9d7055e5b713fce700c0ab0",
+      "bytes": 8752
+    },
+    "workplace/round77-final-e/hover1-remake.png": {
+      "sha256": "d6f23e1c1c55a1ceed49a2d3d65133e5526a2c17e9d7055e5b713fce700c0ab0",
+      "bytes": 8752
+    },
+    "workplace/round77-final-d/hover2-comparison.json": {
+      "sha256": "c47eceda2a190486d344a1d3bb05582d8526d82b932ef0670ec12189525e3682",
+      "bytes": 1852
+    },
+    "workplace/round77-final-e/hover2-comparison.json": {
+      "sha256": "c47eceda2a190486d344a1d3bb05582d8526d82b932ef0670ec12189525e3682",
+      "bytes": 1852
+    },
+    "workplace/round77-final-d/hover2-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-e/hover2-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-d/hover2-original.png": {
+      "sha256": "0fbcc2bfeb03ffa90d7a97f793688469d06dc283b322ceb2e8627915ae7b2b8d",
+      "bytes": 8699
+    },
+    "workplace/round77-final-e/hover2-original.png": {
+      "sha256": "0fbcc2bfeb03ffa90d7a97f793688469d06dc283b322ceb2e8627915ae7b2b8d",
+      "bytes": 8699
+    },
+    "workplace/round77-final-d/hover2-remake.bin": {
+      "sha256": "c134f959fde0c41d894d6cdcbb490b18bfd83bf77b567f04829d869d31b1fadf",
+      "bytes": 307200
+    },
+    "workplace/round77-final-e/hover2-remake.bin": {
+      "sha256": "c134f959fde0c41d894d6cdcbb490b18bfd83bf77b567f04829d869d31b1fadf",
+      "bytes": 307200
+    },
+    "workplace/round77-final-d/hover2-remake.png": {
+      "sha256": "4ae163fb926597e7365d6cd0ae245ca7c4e9d749dc65b33c94ddd08915447379",
+      "bytes": 8695
+    },
+    "workplace/round77-final-e/hover2-remake.png": {
+      "sha256": "4ae163fb926597e7365d6cd0ae245ca7c4e9d749dc65b33c94ddd08915447379",
+      "bytes": 8695
+    },
+    "workplace/round77-final-d/hover3-comparison.json": {
+      "sha256": "a50859aeaab85a4b62ab4810ba269ad50842ca0f7213b49e4dfc0103e26edd61",
+      "bytes": 1852
+    },
+    "workplace/round77-final-e/hover3-comparison.json": {
+      "sha256": "a50859aeaab85a4b62ab4810ba269ad50842ca0f7213b49e4dfc0103e26edd61",
+      "bytes": 1852
+    },
+    "workplace/round77-final-d/hover3-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-e/hover3-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-d/hover3-original.png": {
+      "sha256": "0ae35b2da46277316b5b2c8b43f5a0009af0a4c03da372ee05da32b5021e60ec",
+      "bytes": 8852
+    },
+    "workplace/round77-final-e/hover3-original.png": {
+      "sha256": "0ae35b2da46277316b5b2c8b43f5a0009af0a4c03da372ee05da32b5021e60ec",
+      "bytes": 8852
+    },
+    "workplace/round77-final-d/hover3-remake.bin": {
+      "sha256": "4c8e4501274dd00ba50e3564dddb27dadfddef860be0324afea7d84b48bb3930",
+      "bytes": 307200
+    },
+    "workplace/round77-final-e/hover3-remake.bin": {
+      "sha256": "4c8e4501274dd00ba50e3564dddb27dadfddef860be0324afea7d84b48bb3930",
+      "bytes": 307200
+    },
+    "workplace/round77-final-d/hover3-remake.png": {
+      "sha256": "d698b15b4b56ec248fadc44a38aa77b1d50175b1c647ded97eb6a400971b7ca2",
+      "bytes": 8849
+    },
+    "workplace/round77-final-e/hover3-remake.png": {
+      "sha256": "d698b15b4b56ec248fadc44a38aa77b1d50175b1c647ded97eb6a400971b7ca2",
+      "bytes": 8849
+    },
+    "workplace/round77-final-d/popup1-comparison.json": {
+      "sha256": "2501a5bdfcfb295fcd48f276409a82049c72c1fbf0d541173fb55ed877659715",
+      "bytes": 1852
+    },
+    "workplace/round77-final-e/popup1-comparison.json": {
+      "sha256": "2501a5bdfcfb295fcd48f276409a82049c72c1fbf0d541173fb55ed877659715",
+      "bytes": 1852
+    },
+    "workplace/round77-final-d/popup1-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-e/popup1-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-d/popup1-original.png": {
+      "sha256": "00b4c37c4d1e91136f2894c3f43ac414b0d2895f900c3e851f89357be2a78e61",
+      "bytes": 8112
+    },
+    "workplace/round77-final-e/popup1-original.png": {
+      "sha256": "00b4c37c4d1e91136f2894c3f43ac414b0d2895f900c3e851f89357be2a78e61",
+      "bytes": 8112
+    },
+    "workplace/round77-final-d/popup1-remake.bin": {
+      "sha256": "10bfb91b2986c2b96756d3ba8bdab25c3213ee79a3f7ba2d61e196527dd3b0b4",
+      "bytes": 307200
+    },
+    "workplace/round77-final-e/popup1-remake.bin": {
+      "sha256": "10bfb91b2986c2b96756d3ba8bdab25c3213ee79a3f7ba2d61e196527dd3b0b4",
+      "bytes": 307200
+    },
+    "workplace/round77-final-d/popup1-remake.png": {
+      "sha256": "2aa03c4dffddd84ccf35008f9b4c5545c1bb70acf304dea959798d56f876d377",
+      "bytes": 8107
+    },
+    "workplace/round77-final-e/popup1-remake.png": {
+      "sha256": "2aa03c4dffddd84ccf35008f9b4c5545c1bb70acf304dea959798d56f876d377",
+      "bytes": 8107
+    },
+    "workplace/round77-final-d/popup2-comparison.json": {
+      "sha256": "1dca2301828ea5d75c35f385e315955dbbc790eb97cb628ed163876a259ca664",
+      "bytes": 1852
+    },
+    "workplace/round77-final-e/popup2-comparison.json": {
+      "sha256": "1dca2301828ea5d75c35f385e315955dbbc790eb97cb628ed163876a259ca664",
+      "bytes": 1852
+    },
+    "workplace/round77-final-d/popup2-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-e/popup2-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-d/popup2-original.png": {
+      "sha256": "9b5a1067800e25db05655e107ae01558a53da06051021d7170a4681a774f0758",
+      "bytes": 8053
+    },
+    "workplace/round77-final-e/popup2-original.png": {
+      "sha256": "9b5a1067800e25db05655e107ae01558a53da06051021d7170a4681a774f0758",
+      "bytes": 8053
+    },
+    "workplace/round77-final-d/popup2-remake.bin": {
+      "sha256": "7120e78fc4a3a4dcb2b958f59f45dae0a48d00cad1b5f1a4c2abd7ddfe9e3dac",
+      "bytes": 307200
+    },
+    "workplace/round77-final-e/popup2-remake.bin": {
+      "sha256": "7120e78fc4a3a4dcb2b958f59f45dae0a48d00cad1b5f1a4c2abd7ddfe9e3dac",
+      "bytes": 307200
+    },
+    "workplace/round77-final-d/popup2-remake.png": {
+      "sha256": "6c1cdbc632cf8e9448cb962f8c11a0d5b2d4e57e7673187336ef18993a1750a1",
+      "bytes": 8047
+    },
+    "workplace/round77-final-e/popup2-remake.png": {
+      "sha256": "6c1cdbc632cf8e9448cb962f8c11a0d5b2d4e57e7673187336ef18993a1750a1",
+      "bytes": 8047
+    },
+    "workplace/round77-final-d/popup3-comparison.json": {
+      "sha256": "8ba88144b8feab5b54b53fd524786d877c8f9394e12423d526ec1aa1da2d7950",
+      "bytes": 1852
+    },
+    "workplace/round77-final-e/popup3-comparison.json": {
+      "sha256": "8ba88144b8feab5b54b53fd524786d877c8f9394e12423d526ec1aa1da2d7950",
+      "bytes": 1852
+    },
+    "workplace/round77-final-d/popup3-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-e/popup3-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-d/popup3-original.png": {
+      "sha256": "3ae06932d63095fa86175493bcf873e1cc0c2725079abc6264ca3414766765a3",
+      "bytes": 8201
+    },
+    "workplace/round77-final-e/popup3-original.png": {
+      "sha256": "3ae06932d63095fa86175493bcf873e1cc0c2725079abc6264ca3414766765a3",
+      "bytes": 8201
+    },
+    "workplace/round77-final-d/popup3-remake.bin": {
+      "sha256": "82139d87de810f60b61708645a53e0f69e59ab7805d4076808cd93a099a9bb25",
+      "bytes": 307200
+    },
+    "workplace/round77-final-e/popup3-remake.bin": {
+      "sha256": "82139d87de810f60b61708645a53e0f69e59ab7805d4076808cd93a099a9bb25",
+      "bytes": 307200
+    },
+    "workplace/round77-final-d/popup3-remake.png": {
+      "sha256": "88b8114a9e55d5403b155af8a5f08833f57cd4c51f77f486a2667529eaa9d9da",
+      "bytes": 8195
+    },
+    "workplace/round77-final-e/popup3-remake.png": {
+      "sha256": "88b8114a9e55d5403b155af8a5f08833f57cd4c51f77f486a2667529eaa9d9da",
+      "bytes": 8195
+    },
+    "workplace/round77-final-d/wait-comparison.json": {
+      "sha256": "aabc12e94b9f663583dea680591013372b9478e6f8c4f71ad6cb080c0202e743",
+      "bytes": 1850
+    },
+    "workplace/round77-final-e/wait-comparison.json": {
+      "sha256": "aabc12e94b9f663583dea680591013372b9478e6f8c4f71ad6cb080c0202e743",
+      "bytes": 1850
+    },
+    "workplace/round77-final-d/wait-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-e/wait-diff.png": {
+      "sha256": "2047507b0ef274733291f5577fcb1c66af825ffa1bf91549ebd058436cd90b87",
+      "bytes": 1116
+    },
+    "workplace/round77-final-d/wait-original.png": {
+      "sha256": "c8edcd694c5fb616bd3772284f67f0e97f1a26cb5a9eadfc60edc53c86e8e1af",
+      "bytes": 8021
+    },
+    "workplace/round77-final-e/wait-original.png": {
+      "sha256": "c8edcd694c5fb616bd3772284f67f0e97f1a26cb5a9eadfc60edc53c86e8e1af",
+      "bytes": 8021
+    },
+    "workplace/round77-final-d/wait-remake.bin": {
+      "sha256": "3ed6cea3bba68abd476ff7eeff6ba5b5f24aa0e5d0937c313869e5dc101a176c",
+      "bytes": 307200
+    },
+    "workplace/round77-final-e/wait-remake.bin": {
+      "sha256": "3ed6cea3bba68abd476ff7eeff6ba5b5f24aa0e5d0937c313869e5dc101a176c",
+      "bytes": 307200
+    },
+    "workplace/round77-final-d/wait-remake.png": {
+      "sha256": "c68240304e5e283dc8ddc831e155584c10a3f26b1242ba086923d492ba307360",
+      "bytes": 8017
+    },
+    "workplace/round77-final-e/wait-remake.png": {
+      "sha256": "c68240304e5e283dc8ddc831e155584c10a3f26b1242ba086923d492ba307360",
+      "bytes": 8017
+    },
+    "workplace/round77-before-corrected/hover1-comparison.json": {
+      "sha256": "f8f475b3ba383e1644c92381dee511c2376934d24b669a945551c50443df206d",
+      "bytes": 1979
+    },
+    "workplace/round77-before-corrected/hover1-diff.png": {
+      "sha256": "e4c29a28b4588730931b5e790786d83f678f27f7b3cf03f8bd6c12aaaf37dab1",
+      "bytes": 3816
+    },
+    "workplace/round77-before-corrected/hover1-original.png": {
+      "sha256": "7680ec93af74fb28fc8409ce31de5d54c5962a193217efb67ab3e2b634ecce81",
+      "bytes": 8755
+    },
+    "workplace/round77-before-corrected/hover1-remake.bin": {
+      "sha256": "6cb625ecbc4efd663cef5f26627edf66a11ba0630878e0692273ce322613e71e",
+      "bytes": 307200
+    },
+    "workplace/round77-before-corrected/hover1-remake.png": {
+      "sha256": "55aafe0268be104efcf877d2377cd476a18ddfa3b40ff2fdf0ada5153bd9a513",
+      "bytes": 8016
+    },
+    "workplace/round77-before-corrected/hover2-comparison.json": {
+      "sha256": "0d281f9727dc778dae887e01d4d64605a9e5ce98b7d1739c45e68526108985f6",
+      "bytes": 1979
+    },
+    "workplace/round77-before-corrected/hover2-diff.png": {
+      "sha256": "4345b3259dd2c7fee9dbfd1f09e372f7dd2fcaac44e36ac0da98be5197c8d5e5",
+      "bytes": 3784
+    },
+    "workplace/round77-before-corrected/hover2-original.png": {
+      "sha256": "0fbcc2bfeb03ffa90d7a97f793688469d06dc283b322ceb2e8627915ae7b2b8d",
+      "bytes": 8699
+    },
+    "workplace/round77-before-corrected/hover2-remake.bin": {
+      "sha256": "6cb625ecbc4efd663cef5f26627edf66a11ba0630878e0692273ce322613e71e",
+      "bytes": 307200
+    },
+    "workplace/round77-before-corrected/hover2-remake.png": {
+      "sha256": "55aafe0268be104efcf877d2377cd476a18ddfa3b40ff2fdf0ada5153bd9a513",
+      "bytes": 8016
+    },
+    "workplace/round77-before-corrected/hover3-comparison.json": {
+      "sha256": "f7044ddd9ab28f65195983934c8a076ebca806c224fb0f7d68c1537e18c30b90",
+      "bytes": 1979
+    },
+    "workplace/round77-before-corrected/hover3-diff.png": {
+      "sha256": "72aab375595c17b8437e5670b96990a7335b87584a589a6c9c0c7820ed7f33e3",
+      "bytes": 3763
+    },
+    "workplace/round77-before-corrected/hover3-original.png": {
+      "sha256": "0ae35b2da46277316b5b2c8b43f5a0009af0a4c03da372ee05da32b5021e60ec",
+      "bytes": 8852
+    },
+    "workplace/round77-before-corrected/hover3-remake.bin": {
+      "sha256": "6cb625ecbc4efd663cef5f26627edf66a11ba0630878e0692273ce322613e71e",
+      "bytes": 307200
+    },
+    "workplace/round77-before-corrected/hover3-remake.png": {
+      "sha256": "55aafe0268be104efcf877d2377cd476a18ddfa3b40ff2fdf0ada5153bd9a513",
+      "bytes": 8016
+    },
+    "workplace/round77-before-corrected/popup1-comparison.json": {
+      "sha256": "099d1301d7bc2641bf9cbb0cb35f3c3791d4f91f8bc3b9be97f3fb4e51d3117b",
+      "bytes": 1982
+    },
+    "workplace/round77-before-corrected/popup1-diff.png": {
+      "sha256": "cc1e4ad9f5477a8318906b2861e95b60c72d6397f525601a9c4c9120ccc71a57",
+      "bytes": 2907
+    },
+    "workplace/round77-before-corrected/popup1-original.png": {
+      "sha256": "00b4c37c4d1e91136f2894c3f43ac414b0d2895f900c3e851f89357be2a78e61",
+      "bytes": 8112
+    },
+    "workplace/round77-before-corrected/popup1-remake.bin": {
+      "sha256": "db57028af9b106ea63e9af34d748f90ef346581ce8575759007eb2eb667c5a7e",
+      "bytes": 307200
+    },
+    "workplace/round77-before-corrected/popup1-remake.png": {
+      "sha256": "0b18184fe67618c245874f82c0a9ab128fcf13ec83f62e10c77bec058bd6f2e5",
+      "bytes": 8748
+    },
+    "workplace/round77-before-corrected/popup2-comparison.json": {
+      "sha256": "b79759b056fee2863ffe67e6ed5ae731113ccdc00e93b8c8e5694078b6da3d3f",
+      "bytes": 1982
+    },
+    "workplace/round77-before-corrected/popup2-diff.png": {
+      "sha256": "a29b4302fe79577dd82b2a36b61d7ccf9d9b8843c044b0ed912b15b7f2985dab",
+      "bytes": 2875
+    },
+    "workplace/round77-before-corrected/popup2-original.png": {
+      "sha256": "9b5a1067800e25db05655e107ae01558a53da06051021d7170a4681a774f0758",
+      "bytes": 8053
+    },
+    "workplace/round77-before-corrected/popup2-remake.bin": {
+      "sha256": "db57028af9b106ea63e9af34d748f90ef346581ce8575759007eb2eb667c5a7e",
+      "bytes": 307200
+    },
+    "workplace/round77-before-corrected/popup2-remake.png": {
+      "sha256": "0b18184fe67618c245874f82c0a9ab128fcf13ec83f62e10c77bec058bd6f2e5",
+      "bytes": 8748
+    },
+    "workplace/round77-before-corrected/popup3-comparison.json": {
+      "sha256": "7bf6cc47ca34e276490fd15fffc92b806ff2920660296a78138efacba44d66eb",
+      "bytes": 1982
+    },
+    "workplace/round77-before-corrected/popup3-diff.png": {
+      "sha256": "bcb647af8c8b88e7653eb4163912d8f40bd157c8cdf5a2b044e4ca128e5da5ff",
+      "bytes": 2845
+    },
+    "workplace/round77-before-corrected/popup3-original.png": {
+      "sha256": "3ae06932d63095fa86175493bcf873e1cc0c2725079abc6264ca3414766765a3",
+      "bytes": 8201
+    },
+    "workplace/round77-before-corrected/popup3-remake.bin": {
+      "sha256": "db57028af9b106ea63e9af34d748f90ef346581ce8575759007eb2eb667c5a7e",
+      "bytes": 307200
+    },
+    "workplace/round77-before-corrected/popup3-remake.png": {
+      "sha256": "0b18184fe67618c245874f82c0a9ab128fcf13ec83f62e10c77bec058bd6f2e5",
+      "bytes": 8748
+    },
+    "workplace/round77-before-corrected/wait-comparison.json": {
+      "sha256": "c953bd164f222afe27623dd8a8c13c55903fd2d2c5efe8a46a59f9e7dc1670a2",
+      "bytes": 1977
+    },
+    "workplace/round77-before-corrected/wait-diff.png": {
+      "sha256": "19198334b92b1c6c2407e0db74c6d73aa45167ad0f7d945f30539e27a2722c1b",
+      "bytes": 3518
+    },
+    "workplace/round77-before-corrected/wait-original.png": {
+      "sha256": "c8edcd694c5fb616bd3772284f67f0e97f1a26cb5a9eadfc60edc53c86e8e1af",
+      "bytes": 8021
+    },
+    "workplace/round77-before-corrected/wait-remake.bin": {
+      "sha256": "060dd7b0d89950cbca6a54af2727f66a978bf8c84b3f415f6a5cba254e91fb21",
+      "bytes": 307200
+    },
+    "workplace/round77-before-corrected/wait-remake.png": {
+      "sha256": "b6e08a00538d7ba28f3a4fd6c6d5e4bc5848f3b5d4b43e2c099991c1f730e155",
+      "bytes": 8048
+    },
+    "workplace/round77-chain-c/normal-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round77-chain-d/normal-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round77-chain-c/normal-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round77-chain-d/normal-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round77-chain-c/normal-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round77-chain-d/normal-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round77-chain-c/normal-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round77-chain-d/normal-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round77-chain-c/normal-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round77-chain-d/normal-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round77-chain-c/normal-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round77-chain-d/normal-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round77-chain-c/normal-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round77-chain-d/normal-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round77-chain-c/normal-0/command-1-01316.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-d/normal-0/command-1-01316.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-c/normal-0/command-1-01316.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round77-chain-d/normal-0/command-1-01316.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round77-chain-c/normal-0/command-2-01318.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-d/normal-0/command-2-01318.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-c/normal-0/command-2-01318.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round77-chain-d/normal-0/command-2-01318.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round77-chain-c/normal-0/inputs.json": {
+      "sha256": "8af0f58f88bdbf111f9d66cf4214955faf5fc6398fa276463b56e9a573dc7fa0",
+      "bytes": 223697
+    },
+    "workplace/round77-chain-d/normal-0/inputs.json": {
+      "sha256": "8af0f58f88bdbf111f9d66cf4214955faf5fc6398fa276463b56e9a573dc7fa0",
+      "bytes": 223697
+    },
+    "workplace/round77-chain-c/normal-0/screen.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-d/normal-0/screen.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-c/normal-0/screen.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round77-chain-d/normal-0/screen.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round77-bootstrap-final-a-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round77-bootstrap-final-b-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round77-bootstrap-final-a-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round77-bootstrap-final-b-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round77-bootstrap-final-a-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round77-bootstrap-final-b-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round77-bootstrap-final-a-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round77-bootstrap-final-b-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round77-bootstrap-final-a-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round77-bootstrap-final-b-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round77-bootstrap-final-a-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round77-bootstrap-final-b-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round77-bootstrap-final-a-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round77-bootstrap-final-b-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round77-bootstrap-final-a-0/command-1-01316.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-b-0/command-1-01316.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-a-0/command-1-01316.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round77-bootstrap-final-b-0/command-1-01316.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round77-bootstrap-final-a-0/command-2-01318.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-b-0/command-2-01318.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-a-0/command-2-01318.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round77-bootstrap-final-b-0/command-2-01318.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round77-bootstrap-final-a-0/replay.json": {
+      "sha256": "2bad08e14c62fb149c052f5da730b8918ba4886015e0b6b48eeb566883489bdf",
+      "bytes": 306
+    },
+    "workplace/round77-bootstrap-final-b-0/replay.json": {
+      "sha256": "2bad08e14c62fb149c052f5da730b8918ba4886015e0b6b48eeb566883489bdf",
+      "bytes": 306
+    },
+    "workplace/round77-bootstrap-final-a-0/scene-1.png": {
+      "sha256": "49c6279e276d4941bac2af3b952b76ddb8a1febaf071e3fcc141173362d39e67",
+      "bytes": 7653
+    },
+    "workplace/round77-bootstrap-final-b-0/scene-1.png": {
+      "sha256": "49c6279e276d4941bac2af3b952b76ddb8a1febaf071e3fcc141173362d39e67",
+      "bytes": 7653
+    },
+    "workplace/round77-bootstrap-final-a-0/screen.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-b-0/screen.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-a-0/screen.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round77-bootstrap-final-b-0/screen.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round77-chain-c/normal-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round77-chain-d/normal-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round77-chain-c/normal-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round77-chain-d/normal-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round77-chain-c/normal-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round77-chain-d/normal-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round77-chain-c/normal-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round77-chain-d/normal-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round77-chain-c/normal-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round77-chain-d/normal-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round77-chain-c/normal-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round77-chain-d/normal-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round77-chain-c/normal-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round77-chain-d/normal-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round77-chain-c/normal-1/command-1-01550.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-d/normal-1/command-1-01550.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-c/normal-1/command-1-01550.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round77-chain-d/normal-1/command-1-01550.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round77-chain-c/normal-1/command-2-01552.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-d/normal-1/command-2-01552.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-c/normal-1/command-2-01552.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round77-chain-d/normal-1/command-2-01552.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round77-chain-c/normal-1/inputs.json": {
+      "sha256": "707c7bdad074a648c3e8d99a5bdc5f26dccf04745b71a0ad9268e96baa3aef2d",
+      "bytes": 214161
+    },
+    "workplace/round77-chain-d/normal-1/inputs.json": {
+      "sha256": "707c7bdad074a648c3e8d99a5bdc5f26dccf04745b71a0ad9268e96baa3aef2d",
+      "bytes": 214161
+    },
+    "workplace/round77-chain-c/normal-1/screen.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-d/normal-1/screen.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round77-chain-c/normal-1/screen.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round77-chain-d/normal-1/screen.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round77-bootstrap-final-a-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round77-bootstrap-final-b-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round77-bootstrap-final-a-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round77-bootstrap-final-b-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round77-bootstrap-final-a-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round77-bootstrap-final-b-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round77-bootstrap-final-a-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round77-bootstrap-final-b-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round77-bootstrap-final-a-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round77-bootstrap-final-b-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round77-bootstrap-final-a-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round77-bootstrap-final-b-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round77-bootstrap-final-a-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round77-bootstrap-final-b-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round77-bootstrap-final-a-1/command-1-01550.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-b-1/command-1-01550.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-a-1/command-1-01550.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round77-bootstrap-final-b-1/command-1-01550.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round77-bootstrap-final-a-1/command-2-01552.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-b-1/command-2-01552.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-a-1/command-2-01552.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round77-bootstrap-final-b-1/command-2-01552.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round77-bootstrap-final-a-1/replay.json": {
+      "sha256": "7cf89d3b7a911a7f401915772b52479e7fd30cfa8d7604cdcd3b823d7ee039fb",
+      "bytes": 306
+    },
+    "workplace/round77-bootstrap-final-b-1/replay.json": {
+      "sha256": "7cf89d3b7a911a7f401915772b52479e7fd30cfa8d7604cdcd3b823d7ee039fb",
+      "bytes": 306
+    },
+    "workplace/round77-bootstrap-final-a-1/scene-1.png": {
+      "sha256": "719fbc109212d0c0d32eac91d0f324ea3e22a8394680f264d5aab1906b303389",
+      "bytes": 7775
+    },
+    "workplace/round77-bootstrap-final-b-1/scene-1.png": {
+      "sha256": "719fbc109212d0c0d32eac91d0f324ea3e22a8394680f264d5aab1906b303389",
+      "bytes": 7775
+    },
+    "workplace/round77-bootstrap-final-a-1/screen.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-b-1/screen.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round77-bootstrap-final-a-1/screen.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round77-bootstrap-final-b-1/screen.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/oracle/normal79-r61-a/end-mem.bin": {
+      "sha256": "6800de725851633cf2b817afad0cfda3be4a0d6b8bb7d1ebdacd57a92ce1d5b4",
+      "bytes": 1048576
+    },
+    "workplace/ida/combat79-r77-39D7.json": {
+      "sha256": "5177c87662108a2fcd62df68034187cf0ad5804b08fd2046d3cbf903415fc3b0",
+      "bytes": 98486
+    },
+    "workplace/ida/combat79-r77-39D7.com": {
+      "sha256": "aafa8ad3778b64bf3982d7387f4ada180c92f3cb6667a9a522ec813fa3a0ff61",
+      "bytes": 4864
+    },
+    "workplace/ida/combat79-r77-3982.json": {
+      "sha256": "65bdf5f5c1e7def43339933585a405b0a008af58408ea629c596dbe72b17298b",
+      "bytes": 12752
+    },
+    "workplace/ida/combat79-r77-3982.com": {
+      "sha256": "33e9e3db9f5ac7afb7e1f2fc336a01a8c588362313443479916e95dcd8c0bdc8",
+      "bytes": 1280
+    },
+    "workplace/ida/combat79-r77-25DB.json": {
+      "sha256": "8316c398a1285151db54f811f8b0ef204d67f7527635b590c719f876423642a7",
+      "bytes": 40506
+    },
+    "workplace/ida/combat79-r77-25DB.com": {
+      "sha256": "4c0eedf1bedf537441c67c22f4f4b3675717d68270401c4c15f4c6075cc90a33",
+      "bytes": 4864
+    },
+    "workplace/oracle/combat79-r77-wait-a/end-mem.bin": {
+      "sha256": "982053ef18658a9a4a7315ca1cbe254357ed40bcddb491aa742de07e9473e24c",
+      "bytes": 1048576
+    },
+    "workplace/round77-limited-c.log": {
+      "sha256": "52fda65d85c97f73e516574e1141f28f051a19484500f8fd9cedee55d2153db0",
+      "bytes": 8283
+    },
+    "workplace/round77-limited-d.log": {
+      "sha256": "925abb8e443500e283509e60846c274b41074b13e8c1ad2ff79bef5c3678cd3c",
+      "bytes": 8283
+    },
+    "workplace/round77-standard.log": {
+      "sha256": "cee1be18377ef6979a750c888684f0d204e1dd92b6ca29f4e38e3ca28ab1c123",
+      "bytes": 960
+    },
+    "workplace/round77-before-corrected.log": {
+      "sha256": "2d011c0c3eb8038b9811e5b64d9370f1328932dc7a052a9ccedfbf6ac5868cf9",
+      "bytes": 6617
+    },
+    "workplace/round77-bootstrap-final-a-0.log": {
+      "sha256": "6a64d98f128229e1462e15b0a918adf28bed52188f24fbcb5e6da3ffc0222ccd",
+      "bytes": 70
+    },
+    "workplace/round77-bootstrap-final-a-1.log": {
+      "sha256": "bf210ab59f2f2b60e1d9d20114d3fbdb947b9e0b7febe5ef72b7403df185dfda",
+      "bytes": 70
+    },
+    "workplace/round77-bootstrap-final-b-0.log": {
+      "sha256": "6a64d98f128229e1462e15b0a918adf28bed52188f24fbcb5e6da3ffc0222ccd",
+      "bytes": 70
+    },
+    "workplace/round77-bootstrap-final-b-1.log": {
+      "sha256": "bf210ab59f2f2b60e1d9d20114d3fbdb947b9e0b7febe5ef72b7403df185dfda",
+      "bytes": 70
+    },
+    "internal/game/fleetcombat.go": {
+      "sha256": "80cb72d0bf3a72076698898e28fa270b1fb419410d2430ed4a30554a6604c444",
+      "bytes": 11680
+    },
+    "internal/game/game.go": {
+      "sha256": "52d90b4cec1d134931a04aa6dcbdbb562c014c2f827b9124414ac22199f02e34",
+      "bytes": 202526
+    },
+    "internal/game/fleetcommanddisplay_test.go": {
+      "sha256": "f387cc952821392b97fc8efae31b66254a22e32e711482b287e77b4bc8ab276f",
+      "bytes": 9842
+    },
+    "internal/game/fleetplayerchain_test.go": {
+      "sha256": "161d6cc1b9df012ef6812f8e57e8799dc2ade38adc5bc92cdedce1cd63fdd0cd",
+      "bytes": 29391
+    },
+    "internal/bootstrap/load.go": {
+      "sha256": "131ef2b906bb0867422d2076b8d7aa2c85af841b76b2c02d7f7e3fe01eee21cf",
+      "bytes": 19978
+    },
+    "internal/rules/fleetcommandrange.go": {
+      "sha256": "8d93c882929383dd3022682325f12b6d8979756e048cd01a8d870b962ef7477f",
+      "bytes": 748
+    },
+    "internal/screen/fleet_command_display.go": {
+      "sha256": "7f38f5df0d656898a902d41558574729a0245af25c7d74f68b1cc2681014c74c",
+      "bytes": 3775
+    },
+    "internal/screen/unitpanel.go": {
+      "sha256": "396d2bdd3f322b7e1e20a54cba68b6ac29335ed7d09d51097b4b03e27db40550",
+      "bytes": 7145
+    },
+    "tools/scripts/fleet_command_display_replay.go": {
+      "sha256": "7624dbabb7c67beb011da6db98d602f8fe5dad0ea43dbee31fb14d93af9c3257",
+      "bytes": 4192
+    },
+    "tools/scripts/fleet_command_display_game_receipt.py": {
+      "sha256": "047a9550d76993a50dc27fffa194f5223ec36a36c3e952b4fc88d82f7f5ed509",
+      "bytes": 10052
+    },
+    "workplace/round77-display-replay-final.go": {
+      "sha256": "810eab2b1d086f346c73271fae7dfe8f4d88a5155d2b94fb8ab14a0ff3a5587b",
+      "bytes": 11962
+    },
+    "workplace/round77-display-replay-final.json": {
+      "sha256": "678d62b3c225d400194f4bbba1c263021f5e3b89cd353d6104530f240e7b5523",
+      "bytes": 113
+    },
+    "workplace/round77-v76-fleetcombat.go": {
+      "sha256": "891bf2fb174e42a0c70d60ea7e7e48a9c6801b57b01cac84845cb038c66bf0ac",
+      "bytes": 9996
+    },
+    "workplace/round77-before-production.go": {
+      "sha256": "924591f269a9f61be82f1d1857b535831d4a5d81f953b805f67b3541828dcaf0",
+      "bytes": 10448
+    },
+    "workplace/round77-before-test.go": {
+      "sha256": "9372f0199c6a4df065c36473a3af9bc9b11ac9eba720398229cc7ab6c1beb403",
+      "bytes": 9956
+    },
+    "workplace/round77-before-production-overlay.json": {
+      "sha256": "25cdbd9d86800a9c9529d86af8f75c65c3e25f320836031d2889aac6eecb10d2",
+      "bytes": 205
+    }
+  },
+  "standard_tests": {
+    "pass_packages": 13,
+    "no_test_packages": 5
+  },
+  "limits": [
+    "七張完整圖各一像素未核准；#89既有排序鍵裁決pending",
+    "103保持READY；#48／#79保持OPEN",
+    "原版注入後既有顯示物件仍在；fixture明示还原快取，不宣稱全部typed欄位same-state",
+    "補給／修理／偵察範圍、實際X11命令與音效未新增驗收",
+    "舊76輪及更早收據未覆寫"
+  ]
+}

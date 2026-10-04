@@ -528,3 +528,15 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [正式生命週期102](../spec/102-fleet-player-chain.md)、[研究413](../re/413-fleet-player-chain.md)、[原版來源](data/fleet-player-chain-native.json)與[凍結器](../../tools/scripts/fleet_player_chain_receipt.py)：名冊順位、UI來源及命令／核心／演出續接的最小充分契約。
 - [交戰UI格式](data/fleet-command-ui.json)、[動態選單與標頭](../../internal/screen/fleet_command.go)：從凍結原版格式產生，沿既有命令框幾何與文字緩衝區。
 - [正式玩家鏈驗證065](../playtest/065-fleet-player-chain.md)、[完整Game索引](data/fleet-player-chain-game.json)與[正常bootstrap重播](../../tools/scripts/fleet_player_chain_replay.go)：四種原版戰損、四圖零差、兩陣營正常公開輸入及保存；GUI鍵鼠、命令亮標與音效仍缺，102保持READY。
+
+- [第77輪交戰命令顯示](../goal/2026-10-04-fleet-command-display-round-77.md)：沿#48／#79核對等待目標的射程、亮標、敵方資訊與游標，不覆寫既有收據。
+- [交戰命令顯示IDA匯出](../../tools/scripts/fleet_command_display_ida.py)：第77輪固定RAM的原始bytes及分欄位址，附加語意預設unknown。
+- [命令顯示原版重播](../../tools/fleet_command_display_oracle.sh)與[注入計畫](../../tools/scripts/fleet_command_display_plan.py)：固定池102情報1／2／3與滑鼠輸入，等待／摘要／彈窗的新收據分開保存。
+- [命令顯示研究414](../re/414-fleet-command-display.md)與[顯示契約103](../spec/103-fleet-command-display.md)：射程與情報等級的資料流及受控驗收範圍。
+- [命令顯示凍結器](../../tools/scripts/fleet_command_display_receipt.py)：固定原版雙跑、IDA bytes及格式的來源雜湊，拒絕覆寫。
+- [敵方摘要原格式](data/fleet-command-display-spec.json)：固定DS4534／4541／4528／455E／456F，包含情報遮蔽及距離的四個字面零。
+- [原版快照核對](../../tools/scripts/fleet_command_state_check.go)：第77輪逐項比較完整機器欄位與DOS段，辨別gob map序列化順序的差異。
+- [命令顯示原版收據](data/fleet-command-display-native.json)：七組新原版雙跑及完整快照、固定旗標、情報注入、IDA來源的索引。
+- [命令顯示對拍](../../internal/game/fleetcommanddisplay_test.go)：原池還原、完整renderer、公開滑鼠輸入及無遮罩的全圖／區域差分。
+- [命令顯示驗證066](../playtest/066-fleet-command-display.md)、[正式顯示索引](data/fleet-command-display-game.json)與[Game凍結器](../../tools/scripts/fleet_command_display_game_receipt.py)：七圖各保留一個未核准像素、兩陣營正常命令畫面與六檔保存；103仍READY。
+- [命令顯示正常重播](../../tools/scripts/fleet_command_display_replay.go)：正式bootstrap與公開輸入，逐張核對等待／彈窗與存檔，不注入位置或命令。
