@@ -1,0 +1,332 @@
+{
+  "schema": "logh3.scout-fuel-game.v1",
+  "parent_commit": "e57f18293421d99797f0ef0f743ab7ff8dc0f4d9",
+  "original_receipt_sha256": "9934ca4f7832739eaea663e851c82c4684d7d53b20432267ff2f76f329d35ef0",
+  "scope": "281原版控制案×兩種typed形態、48報告、兩矩形；正常公開派出及一次實行；後續第8步回收／冷卻／再派出與保存為診斷；首戰GUI兩倍率僅邏輯畫面回歸。",
+  "standard": {
+    "passed_packages": 13,
+    "without_tests": 5
+  },
+  "comparisons": [
+    {
+      "background": "blank remake diagnostic; full-frame differences retained",
+      "comparison_level": "same-state controlled report window only",
+      "fleet": 12,
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "background": "blank remake diagnostic; full-frame differences retained",
+      "comparison_level": "same-state controlled report window only",
+      "fleet": 16,
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    }
+  ],
+  "sources": {
+    "docs/internals/data/scout-fuel.json": {
+      "size": 1228418,
+      "sha256": "9934ca4f7832739eaea663e851c82c4684d7d53b20432267ff2f76f329d35ef0"
+    },
+    "workplace/scout79-r83-native-v7-a.json": {
+      "size": 21275129,
+      "sha256": "5d43c4af2566e7fbd44715b8fe1e51ec95c2a50eb9f9e7b8e6edc627cc771b59"
+    },
+    "workplace/scout79-r83-native-v7-b.json": {
+      "size": 21275129,
+      "sha256": "5d43c4af2566e7fbd44715b8fe1e51ec95c2a50eb9f9e7b8e6edc627cc771b59"
+    },
+    "workplace/oracle/ownership79-r82-entry-a/entry.state": {
+      "size": 260250,
+      "sha256": "598e10e5f9457842275fa5639219636f322d8bb2e0f8393fe25b93bfbdef0cfe"
+    },
+    "workplace/oracle/ownership79-r82-entry-a/mem-in.bin": {
+      "size": 1048576,
+      "sha256": "b905eda112fd3a78292bc0d1cdc10068703e0291968640cbaa0d150404404900"
+    },
+    "workplace/oracle/ownership79-r82-entry-a/flags.txt": {
+      "size": 431,
+      "sha256": "a1dc65da9b85509ef4029ce40fbd203ee3491a333d5e5ecf7ebb3eb3a9f7c7e8"
+    },
+    "workplace/oracle/ownership79-r82-entry-a/meta.txt": {
+      "size": 837,
+      "sha256": "7893b8da7a37ebe8d8971fef725eed5019444a8e703df2197f859b7b3216ad6a"
+    },
+    "workplace/oracle/ownership79-r82-entry-a/report.txt": {
+      "size": 29483,
+      "sha256": "3e428802130cb5be3b6c8a68011e05f3cf05a1522bf3c4cf182d3729fd6ae83a"
+    },
+    "workplace/scout79-r83-fleet12-original.screen.bin": {
+      "size": 307200,
+      "sha256": "01f0c69f8120a44857ba71dbe482c2d9c6a541e9857d20df59bb1001e25cab45"
+    },
+    "workplace/scout79-r83-fleet12-original.palette.bin": {
+      "size": 48,
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    "workplace/scout79-r83-fleet12-original.png": {
+      "size": 8239,
+      "sha256": "ecde17208f1d6c3c988002c8414ff6881a315e0616c45dbc18ecbbd6fc34dde0"
+    },
+    "workplace/scout79-r83-fleet16-original.screen.bin": {
+      "size": 307200,
+      "sha256": "b618dfbc4108aea3fe590d46e2e81325f43e678ac273540731f058c537334a61"
+    },
+    "workplace/scout79-r83-fleet16-original.palette.bin": {
+      "size": 48,
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    "workplace/scout79-r83-fleet16-original.png": {
+      "size": 8527,
+      "sha256": "9796393ac6554396d52d5b01a55cb0170607d2f13debf1e0b82b07899f740fb0"
+    },
+    "workplace/ida/scout79-r83-185C-ida.json": {
+      "size": 76871,
+      "sha256": "e27427b3741880a18d40187588e72f371e0d42d8b57d53152f26c532ed494763"
+    },
+    "workplace/ida/scout79-r83-185C.com": {
+      "size": 4352,
+      "sha256": "1b6b4aae3a0b652f48e8d3c24f863c39fde0b4c386ddf9afe7ab8c425d206bd7"
+    },
+    "workplace/ida/scout79-r83-3982-ida-v2.json": {
+      "size": 28347,
+      "sha256": "777e13169a60fb4d548981a5f54cda952446ed27624f310294293d61af49c991"
+    },
+    "workplace/ida/scout79-r83-3982.com": {
+      "size": 4352,
+      "sha256": "e9eee2f384dd3c900d8002d4d2d9661b0ee5ee4dc0b96e10b4cbf44b7bebbc26"
+    },
+    "workplace/ida/scout79-r83-3765-ida-v2.json": {
+      "size": 17307,
+      "sha256": "42fbf79391bd613aa63ec5438f68c1ae98e9f37a85c2e4f0b50d5dd1ea49a83d"
+    },
+    "workplace/ida/scout79-r83-3765.com": {
+      "size": 4352,
+      "sha256": "5baaedf3b059a400a0c19ce98858c5a0aaa32be11b980330c60ae77adacff6ec"
+    },
+    "tools/scripts/scout_fuel_probe.go": {
+      "size": 5578,
+      "sha256": "f78ce2fc65daa1e3ebd62d291ff3a6682eab31b5102fb5e262cc865570b16c8c"
+    },
+    "tools/scripts/scout_fuel_native_prepare.py": {
+      "size": 7068,
+      "sha256": "9e3056fe9673c66d12e2ea3deca8af906261612400fef67f6ca4b9f9db6caf9f"
+    },
+    "tools/scripts/scout_fuel_ida.py": {
+      "size": 3053,
+      "sha256": "ca08ca326ddad7882bcb79e1aa1ca21735a94918abb705fe877d819b8703866e"
+    },
+    "tools/scout_fuel_native_run.sh": {
+      "size": 607,
+      "sha256": "e965212c451ccd66a1235592f6fd04cbe4e2161597d5109668911568b0f9fd3d"
+    },
+    "tools/scout_fuel_oracle.sh": {
+      "size": 935,
+      "sha256": "ddaacb09484ad7cb090003a5fa2ebbdbaaa80979cf64d47f932cb29cae802ef7"
+    },
+    "tools/scripts/scout_fuel_receipt.py": {
+      "size": 7750,
+      "sha256": "2bf58c33565e437de732be8f1e08d385ee45d5414efb22cefbc040915fc5389e"
+    },
+    "workplace/scout79-r83-native-v7.go": {
+      "size": 10331,
+      "sha256": "26949ff5236c79f34ab51f3b4aed003e0c933abfb2c551f1a7d22aa8d644f500"
+    },
+    "docs/internals/data/battle-ownership-v2.json": {
+      "size": 591084,
+      "sha256": "306f7612cb536cdb441bba2e245baecb9786fbc84a9210b066b06a09934ac262"
+    },
+    "workplace/round83-target-final.log": {
+      "size": 1180,
+      "sha256": "c5134294fd2a0e55acb79d78429296f8b71fa0dbdd11839a28cba4949653d2d5"
+    },
+    "workplace/round83-standard.log": {
+      "size": 960,
+      "sha256": "f0bb929ac8c324896d6890d3e825e65aacf43415a0a24b3951b7f249b1113961"
+    },
+    "workplace/round83-gui-v2.log": {
+      "size": 142,
+      "sha256": "d21c757aee050542a6050feac4f38b78590bb09a1f15f6abc06da6c4aa41a6af"
+    },
+    "workplace/scout79-r83-normal-entry/entry/screen.bin": {
+      "size": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    "workplace/scout79-r83-gui-v2-1x.bin": {
+      "size": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    "workplace/scout79-r83-gui-v2-1x.txt": {
+      "size": 62,
+      "sha256": "f053d194a0cb86c82378c9c73e35fc959f320e40886cafb3bf59a967cfe5d606"
+    },
+    "workplace/scout79-r83-gui-v2-1x.png": {
+      "size": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    "workplace/scout79-r83-gui-v2-1x.log": {
+      "size": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    "workplace/scout79-r83-gui-v2-2x.bin": {
+      "size": 307200,
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3"
+    },
+    "workplace/scout79-r83-gui-v2-2x.txt": {
+      "size": 63,
+      "sha256": "9b437af71f16b55dc4db0e6f733f50e11536d3b4799bebd2535f406bfb14e8d3"
+    },
+    "workplace/scout79-r83-gui-v2-2x.png": {
+      "size": 7458,
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544"
+    },
+    "workplace/scout79-r83-gui-v2-2x.log": {
+      "size": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    "workplace/scout79-r83-game-final/fleet12-comparison.json": {
+      "size": 613,
+      "sha256": "0901afc091494eba0c4317667b5d80d93b79442145b4c050ece1351f28eeeb2c"
+    },
+    "workplace/scout79-r83-game-final/fleet12-remake.png": {
+      "size": 3370,
+      "sha256": "9358ca05534d770e72fd4ddbb4dc66ef7510c6f04e1f873f5f65558b42b5dc6d"
+    },
+    "workplace/scout79-r83-game-final/fleet12-diff.png": {
+      "size": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    "workplace/scout79-r83-game-final/fleet16-comparison.json": {
+      "size": 613,
+      "sha256": "282f7f070824385769a22466a28b8f4233edc41e9a26e62d2b8a81088c2eb69f"
+    },
+    "workplace/scout79-r83-game-final/fleet16-remake.png": {
+      "size": 3650,
+      "sha256": "efbb08e54219dac9a5da9a4889468d2ad47b02bd4bef8728890540c5aa797499"
+    },
+    "workplace/scout79-r83-game-final/fleet16-diff.png": {
+      "size": 1249,
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875"
+    },
+    "workplace/scout79-r83-game-final/normal-save/ADMIRAL.DT0": {
+      "size": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r83-game-final/normal-save/SHIP.DT0": {
+      "size": 27456,
+      "sha256": "5278752c362cac32536e95dbf49b72778ab9470072b93575d7e7f6108271702f"
+    },
+    "workplace/scout79-r83-game-final/normal-save/WORK.DT0": {
+      "size": 230,
+      "sha256": "b8fd9ae20b53d232b4094e00ca45163f631987d2f14fd33b0ecb6927fa578979"
+    },
+    "workplace/scout79-r83-game-final/normal-save/FLEET.DT0": {
+      "size": 3904,
+      "sha256": "ac152084c8ed13e21cc5108a10da98c246bec813f2db04722fbe93d99ac6baff"
+    },
+    "workplace/scout79-r83-game-final/normal-save/PLANET.DT0": {
+      "size": 6642,
+      "sha256": "0885b4b7f2a2b17b0fe6abcfbedd95f24c8a7175fdf1240b23d1d95f1f219a89"
+    },
+    "workplace/scout79-r83-game-final/normal-save/STELLAR.DT0": {
+      "size": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r83-game-final/normal-save/SAVEDATA.IDX": {
+      "size": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "internal/game/scoutfuel.go": {
+      "size": 2876,
+      "sha256": "daa200ee7baeaea561e5014d225d3bc12b9702b7d77fb78066c12b85d72ea58a"
+    },
+    "internal/game/scoutfuel_test.go": {
+      "size": 15841,
+      "sha256": "42bae5a6ebbb5bfd53bbf9a16c42603aa7b3304d6fbf18b5402d827f3e5da125"
+    },
+    "internal/game/battleownership.go": {
+      "size": 2163,
+      "sha256": "2349dd93aa187392d89d2c240d9e1ef8e0897ba0a093d16f3d43a35a5e9fb73d"
+    },
+    "internal/game/battlefinal.go": {
+      "size": 4922,
+      "sha256": "2256fc2636f973a47146edc2c060a940996a0a60d0fcf94a433083d57aaad489"
+    },
+    "docs/internals/data/turn-window-panel.json": {
+      "size": 6875,
+      "sha256": "5c7fe4f647032121bc3d0b2b1401f47451b4e414a68cf38eb17c99e641e20cf6"
+    },
+    "tools/scripts/scout_fuel_game_receipt.py": {
+      "size": 3401,
+      "sha256": "718fbed7c9a5b34535baa1166a35cf78419578ba4b98351b174726879b58cd22"
+    },
+    "tools/scripts/battle_ownership_player_entry.go": {
+      "size": 1389,
+      "sha256": "6c53a77fc1b6837f1b30b575ce41cba57474d73fc747db0797bc41caced84452"
+    },
+    "tools/turn_counter_gui.sh": {
+      "size": 1935,
+      "sha256": "30057fc8012f71cc9f22e322a9fd11d31b12585b68a35b2cb9040a4a187dc5a4"
+    }
+  }
+}

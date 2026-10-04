@@ -1,5 +1,20 @@
 # 原版內部構造參考
 
+第83輪沿#79：[索敵燃料與回收計畫](../goal/2026-10-04-scout-fuel-round-83.md)。
+限定062子步8-3，先核固定原版的派出／冷卻邊界、報告等待與原池回寫，再接正式回合。
+[原指令匯出器](../../tools/scripts/scout_fuel_ida.py)保留0491／05A9與艦隊名格式的定位及交叉參照。
+[常式觀測器](../../tools/scripts/scout_fuel_probe.go)保存派出／冷卻邊界、完整艦隊／索敵記錄與報告當下狀態。
+該冷狀態探針遇到報告繪圖未返回，正式補證改用
+[完整保存觀測器產生器](../../tools/scripts/scout_fuel_native_prepare.py)與
+[隔離模組執行器](../../tools/scout_fuel_native_run.sh)沿固定machine／DOS保存自然續行。
+[固定版本雙跑入口](../../tools/scout_fuel_oracle.sh)拒絕髒執行器及覆寫收據。
+[來源凍結器](../../tools/scripts/scout_fuel_receipt.py)、[原版來源](data/scout-fuel.json)、
+[107](../spec/107-scout-fuel.md)與[研究417](../re/417-scout-fuel.md)保存完整燃料及報告證據。
+[正式索敵燃料](../../internal/game/scoutfuel.go)在8-2返回後續接，報告後才回收並保留原池。
+[原版與玩家回歸](../../internal/game/scoutfuel_test.go)分開控制案例、報告矩形與正常操作鏈。
+[對拍072](../playtest/072-scout-fuel.md)、[產品來源凍結器](../../tools/scripts/scout_fuel_game_receipt.py)
+及[產品來源](data/scout-fuel-game.json)保存兩報告矩形、正常一次實行與診斷存讀的各自範圍。
+
 第82輪沿#79：[戰術星域歸屬計畫](../goal/2026-10-04-battle-ownership-round-82.md)，
 限定子步8-2，先核原版重算、座位報告及費沙登記，再接正式回合。
 [IDA匯出器](../../tools/scripts/battle_ownership_ida.py)保留函式、原始bytes及交叉參照。

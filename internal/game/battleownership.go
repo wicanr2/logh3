@@ -5,9 +5,9 @@ import (
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
-// finishBattleOwnership 接在8-1之後；8-3–8-5另由規格062追蹤。
+// finishBattleOwnership 接在8-1之後，再續107的索敵燃料。
 func (g *Game) finishBattleOwnership() {
-	g.battleOwnershipPhase(g.endBattleTurn)
+	g.battleOwnershipPhase(g.finishBattleScoutFuel)
 }
 
 // battleOwnershipPhase 是185C:02DA，契約與完整原版證據見規格106。
