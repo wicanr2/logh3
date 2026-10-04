@@ -238,10 +238,10 @@ func (g *Game) advanceBattleTurnAfterFleetCombat() {
 // 報告、清掉空的組、重建戰場表（子步 8-1）。報告會停下來等，所以走 `battleFinalPhase`
 // 的續接寫法——停住時這一回合剩下的幾步由報告看完之後接回來。
 func (g *Game) finishBattleTurn() {
-	if g.battleFinalPhase(0, g.endBattleTurn) {
+	if g.battleFinalPhase(0, g.finishBattleOwnership) {
 		return
 	}
-	g.endBattleTurn()
+	g.finishBattleOwnership()
 }
 
 func (g *Game) endBattleTurn() {
@@ -356,6 +356,11 @@ func (g *Game) battleClick(x, y int) {
 		g.Withdraw()
 	case 3, 4, 5, 6: // 取進度／存進度／設定／結束
 		if to := battleMenuScreen[row]; g.commandSpec(to) != nil {
+			if row == 4 && g.res.Planets != nil {
+				// 保存選單會離開StateBattle；先同步當前戰場的typed副本。
+				// 原版直接改行星記錄，保存必須保留相同歸屬（規格106）。
+				g.res.Planets.ApplyBattlePlanets(g.battlePlanets)
+			}
 			g.state = to
 		}
 	}
@@ -384,10 +389,9 @@ func (g *Game) Withdraw() {
 // EndBattle 收掉戰場：把剩下的艘數寫回艦艇池、把行星狀態寫回行星表，
 // 重算戰力，回戰略地圖。
 //
-// **星域不會易主**：兩份收據量過了（`docs/re/105`），連把一方整個抹掉
-// 讓戰鬥提早結束，星域記錄的 `+0x12` 都沒有被寫。所以這裡不動星域歸屬
-// 不是偷懶，是照原版——原版是**回合結束**依行星重算的（`2703:159B`、
-// `docs/re/244`）。
+// 星域歸屬已由戰術回合8-2依行星重算，兩座位報告返回後寫入
+// （185C:02DA、規格106、研究416）。EndBattle本身不重算星域歸屬。
+// 研究105的舊收據只證明該局面未換手，不能推成戰術回合不會易主。
 //
 // **行星那一半要寫回來**：原版整場都直接改行星記錄，佔領、防衛力損失、
 // 要塞砲狀態與被打掉的存量打完就留在那裡（`docs/re/150`）。remake 為了

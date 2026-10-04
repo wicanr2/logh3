@@ -3203,6 +3203,11 @@ func (g *Game) SaveSlot(dir string, index int) error {
 		return err
 	}
 	if g.state == StateBattle {
+		// 戰術8-2已更新星域歸屬；原版直接改行星記錄，保存也會帶出。
+		// remake使用typed副本，必須同步，避免星域與行星擁有者分家（106）。
+		if g.res.Planets != nil {
+			g.res.Planets.ApplyBattlePlanets(g.battlePlanets)
+		}
 		g.saveBattleWorkView()
 	}
 	// `WORK` 尚未全部提升成結構欄位；費沙旗標與動態參謀都直接改可寫

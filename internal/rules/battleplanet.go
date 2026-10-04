@@ -116,9 +116,8 @@ func planetStockOf(rec []byte) PlanetStock {
 // 量到 `+0x11` 從 0 變 1）。remake 為了讓戰場層是純函式而先複製一份，
 // 那份不寫回來就等於每場戰鬥都從原始狀態重開。
 //
-// 星域的 `+0x12` **不在這裡寫**：原版是回合結束依行星重算的
-// （`2703:159B`、`docs/re/17`、`docs/re/244`），戰鬥結束當下不動
-// （`docs/re/105` 兩份收據）。
+// 星域的+0x12由Game戰術回合8-2及戰略回合尾巴分別重算
+// （185C:02DA、規格106；2703:159B、研究244），此方法只同步行星。
 func (p *Planets) ApplyBattlePlanets(bp []BattlePlanet) {
 	for _, b := range bp {
 		o := PlanetHeader + b.Index*PlanetRecord

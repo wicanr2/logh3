@@ -1,0 +1,1494 @@
+{
+  "schema": "logh3.battle-ownership-game.v1",
+  "parent_commit": "58291ecad91f4efbfdfce26a3988707200044e51",
+  "working_tree_dirty": true,
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "gui_image": "logh3-ebiten:2",
+  "gui_image_id": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+  "scope": "156 controlled original cases; six report windows only; injected ownership with public save-menu; normal S3 entry GUI regression",
+  "seed": "0x12345678 for controlled ownership and save tests; normal GUI does not fix or compare RNG",
+  "windows": [
+    {
+      "background": "blank remake diagnostic; full-frame differences retained, not parity",
+      "case": "capture0",
+      "comparison_level": "same-state controlled report window only",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "background": "blank remake diagnostic; full-frame differences retained, not parity",
+      "case": "capture0-second",
+      "comparison_level": "same-state controlled report window only",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "background": "blank remake diagnostic; full-frame differences retained, not parity",
+      "case": "capture1",
+      "comparison_level": "same-state controlled report window only",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "background": "blank remake diagnostic; full-frame differences retained, not parity",
+      "case": "capture1-second",
+      "comparison_level": "same-state controlled report window only",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "background": "blank remake diagnostic; full-frame differences retained, not parity",
+      "case": "partial0",
+      "comparison_level": "same-state controlled report window only",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    },
+    {
+      "background": "blank remake diagnostic; full-frame differences retained, not parity",
+      "case": "partial1",
+      "comparison_level": "same-state controlled report window only",
+      "full": {
+        "bbox": [
+          0,
+          0,
+          639,
+          479
+        ],
+        "different": 248681,
+        "maximum_channel_difference": 211,
+        "pixels": 307200,
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "same": 58519
+      },
+      "mask": null,
+      "window": {
+        "bbox": null,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "pixels": 58240,
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "same": 58240
+      }
+    }
+  ],
+  "normal_gui": {
+    "scales": [
+      1,
+      2
+    ],
+    "logical_pixels_each": 307200,
+    "same_state_original": false,
+    "intro": false,
+    "inputs": [
+      "click 300,270",
+      "keys 138 Return",
+      "click 300,322",
+      "click 318,208",
+      "click 544,125",
+      "click 560,125",
+      "move 240,240"
+    ],
+    "source": "tools/turn_counter_gui.sh; actual X11 input; independent Game entry above"
+  },
+  "standard": {
+    "passed_packages": 13,
+    "no_test_packages": 5
+  },
+  "limits": [
+    "full original/remake battle not compared",
+    "normal GUI ownership change not verified",
+    "save-menu tested through public Game clicks, not X11",
+    "LoadSlot returns command phase; battle resume unknown",
+    "062 remains DRAFT; 106 READY; 8-3 through 8-5 absent"
+  ],
+  "sources": {
+    "docs/internals/data/battle-ownership-v2.json": {
+      "sha256": "306f7612cb536cdb441bba2e245baecb9786fbc84a9210b066b06a09934ac262",
+      "size": 591084
+    },
+    "workplace/ownership79-r82-probe-v2-a.json": {
+      "sha256": "57d7ee092bee49073f053e3ab19dc510d29f8ae95c14e60cb14ad951189280fd",
+      "size": 463070
+    },
+    "workplace/ownership79-r82-probe-v2-b.json": {
+      "sha256": "57d7ee092bee49073f053e3ab19dc510d29f8ae95c14e60cb14ad951189280fd",
+      "size": 463070
+    },
+    "workplace/oracle/battle79-move-entry-a/mem-in.bin": {
+      "sha256": "9c4a4c28a1f53056962f613b1b643e5a5ba199d9231df291918d9499111be38d",
+      "size": 1048576
+    },
+    "workplace/ownership79-r82-state-compare-v4.json": {
+      "sha256": "a5454287d2af4c97ea1367a315d9285217e353c507e8e7d46dbf1a76fa8a9806",
+      "size": 6540
+    },
+    "workplace/ownership79-r82-state-compare-v4.go": {
+      "sha256": "330caf3b053f6cb46ad09f860171382cf5a34e1e8210a1235d95f23ebbd0f55a",
+      "size": 5607
+    },
+    "workplace/ownership79-r82-state-schema-v4.txt": {
+      "sha256": "894bdac312fcc27ba6262da505886fc8448f4ac64bbab17b787033dcb9641301",
+      "size": 1154
+    },
+    "workplace/oracle/ownership79-r82-entry-a/mem-in.bin": {
+      "sha256": "b905eda112fd3a78292bc0d1cdc10068703e0291968640cbaa0d150404404900",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-entry-b/mem-in.bin": {
+      "sha256": "b905eda112fd3a78292bc0d1cdc10068703e0291968640cbaa0d150404404900",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-entry-a/entry.state": {
+      "sha256": "598e10e5f9457842275fa5639219636f322d8bb2e0f8393fe25b93bfbdef0cfe",
+      "size": 260250
+    },
+    "workplace/oracle/ownership79-r82-entry-b/entry.state": {
+      "sha256": "f53181883636f60811cf6ae9b873960eca1f1b67b65f174a6c4f14dc51de276c",
+      "size": 260250
+    },
+    "workplace/oracle/ownership79-r82-entry-a/screen.bin": {
+      "sha256": "eb920f760448b03f388f844f229d0f0ee3f179aa0daa4fdb3a20754216b9b4a2",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-entry-b/screen.bin": {
+      "sha256": "eb920f760448b03f388f844f229d0f0ee3f179aa0daa4fdb3a20754216b9b4a2",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-entry-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-entry-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-entry-a/screen.png": {
+      "sha256": "99a15522ebcd011856eebc0b1fbd59c0d4c52e544f6f9dc3d1d16380442c6f19",
+      "size": 7745
+    },
+    "workplace/oracle/ownership79-r82-entry-b/screen.png": {
+      "sha256": "99a15522ebcd011856eebc0b1fbd59c0d4c52e544f6f9dc3d1d16380442c6f19",
+      "size": 7745
+    },
+    "workplace/oracle/ownership79-r82-entry-a/meta.txt": {
+      "sha256": "7893b8da7a37ebe8d8971fef725eed5019444a8e703df2197f859b7b3216ad6a",
+      "size": 837
+    },
+    "workplace/oracle/ownership79-r82-entry-a/report.txt": {
+      "sha256": "3e428802130cb5be3b6c8a68011e05f3cf05a1522bf3c4cf182d3729fd6ae83a",
+      "size": 29483
+    },
+    "workplace/oracle/ownership79-r82-entry-a/flags.txt": {
+      "sha256": "a1dc65da9b85509ef4029ce40fbd203ee3491a333d5e5ecf7ebb3eb3a9f7c7e8",
+      "size": 431
+    },
+    "workplace/oracle/ownership79-r82-entry-b/meta.txt": {
+      "sha256": "ef1546ab13851d2c636d7f7f2e297a0e161f900925ed4802a91b15957a1ef914",
+      "size": 837
+    },
+    "workplace/oracle/ownership79-r82-entry-b/report.txt": {
+      "sha256": "1ddfcbc77fea0c9980cc26372c50e43f5ca6dd993a433bdabe19e3a95bc8da94",
+      "size": 29484
+    },
+    "workplace/oracle/ownership79-r82-entry-b/flags.txt": {
+      "sha256": "956b316310437653a74089841f793f5d65675c779d278d7ed68d547aa84dda58",
+      "size": 431
+    },
+    "workplace/oracle/ownership79-r82-control-a/mem-out.bin": {
+      "sha256": "292dcf0c0d802c34a8591c182f51163ec028b4e552c0b2447a204d5dd7990730",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-control-b/mem-out.bin": {
+      "sha256": "292dcf0c0d802c34a8591c182f51163ec028b4e552c0b2447a204d5dd7990730",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-control-a/end.state": {
+      "sha256": "a9828ad4499dd5fc6c64c0199fbd421f16b69aec4fb2a0cb6751783766ef1973",
+      "size": 263101
+    },
+    "workplace/oracle/ownership79-r82-control-b/end.state": {
+      "sha256": "8746aa29357fb5269066cd7916a595039049d631c43a50b369b1197c353f6682",
+      "size": 263102
+    },
+    "workplace/oracle/ownership79-r82-control-a/screen.bin": {
+      "sha256": "1e9a68f0a514234bd45efc638c38f0b3f1326efd1716a2b6216c47467b8bb080",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-control-b/screen.bin": {
+      "sha256": "1e9a68f0a514234bd45efc638c38f0b3f1326efd1716a2b6216c47467b8bb080",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-control-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-control-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-control-a/screen.png": {
+      "sha256": "d6bd168abd5a6983c9cfae47c4bb6d98690a3b581a5d17003e02993d960b058b",
+      "size": 9362
+    },
+    "workplace/oracle/ownership79-r82-control-b/screen.png": {
+      "sha256": "d6bd168abd5a6983c9cfae47c4bb6d98690a3b581a5d17003e02993d960b058b",
+      "size": 9362
+    },
+    "workplace/oracle/ownership79-r82-control-a/meta.txt": {
+      "sha256": "ef94d5a34c1f285f99bef233d7a7da96c9399a73a5dda1e553b09fbd733338f0",
+      "size": 824
+    },
+    "workplace/oracle/ownership79-r82-control-a/report.txt": {
+      "sha256": "7ceb34e5b2c4c3437f7b201f06b97fc928496f62b583f931e0c8bb1bb80755fa",
+      "size": 18733
+    },
+    "workplace/oracle/ownership79-r82-control-a/flags.txt": {
+      "sha256": "ea7a5f43c92d2f49e14444ae119c557c2aeffbb0771d9d62dc0992bde0369309",
+      "size": 416
+    },
+    "workplace/oracle/ownership79-r82-control-b/meta.txt": {
+      "sha256": "ffa2fcff287023609a4909fa503301e7ed68ede901c42987a6850248c2da0203",
+      "size": 824
+    },
+    "workplace/oracle/ownership79-r82-control-b/report.txt": {
+      "sha256": "902ee34c8c57b004a54ccabdcbf3f57b40ca85ac9968dc37fd7d35698bca3c4d",
+      "size": 18733
+    },
+    "workplace/oracle/ownership79-r82-control-b/flags.txt": {
+      "sha256": "8cf997dc0669c3c2c232992b1bd387665e9c079302ed3764cc28d30f62439a1a",
+      "size": 416
+    },
+    "workplace/oracle/ownership79-r82-capture0-a/mem-out.bin": {
+      "sha256": "70d591236b13fbc8e084303c981499fedef0e72610b6ec3d197aaadc4f12e64b",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture0-b/mem-out.bin": {
+      "sha256": "70d591236b13fbc8e084303c981499fedef0e72610b6ec3d197aaadc4f12e64b",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture0-a/end.state": {
+      "sha256": "012a73614a0f5ba0aa74c4765939086bc45742c8b828548000d42cd554b203bb",
+      "size": 261740
+    },
+    "workplace/oracle/ownership79-r82-capture0-b/end.state": {
+      "sha256": "b4220869eb8dce3796d31f1be335387ce9b1a6e43b7f4e459ea373fd36eb4226",
+      "size": 261740
+    },
+    "workplace/oracle/ownership79-r82-capture0-a/screen.bin": {
+      "sha256": "ffbf148bedd841892a0a4a960e1359c404fe33545db6f63c973f390009db4b45",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture0-b/screen.bin": {
+      "sha256": "ffbf148bedd841892a0a4a960e1359c404fe33545db6f63c973f390009db4b45",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture0-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture0-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture0-a/screen.png": {
+      "sha256": "ce5cb00dda1ee9bc53c6c6da7cf9675c40b6dda8c9f18cd99e572f8873e164de",
+      "size": 7793
+    },
+    "workplace/oracle/ownership79-r82-capture0-b/screen.png": {
+      "sha256": "ce5cb00dda1ee9bc53c6c6da7cf9675c40b6dda8c9f18cd99e572f8873e164de",
+      "size": 7793
+    },
+    "workplace/oracle/ownership79-r82-capture0-a/meta.txt": {
+      "sha256": "b0f18055a6ce729193ceb7fc1305754911aa14ac75918a98cf03042a49c77049",
+      "size": 899
+    },
+    "workplace/oracle/ownership79-r82-capture0-a/report.txt": {
+      "sha256": "a11ee22831cf007136f15e6e1f9e010ef6dbc4836b2cf7554e49bc35597c41a3",
+      "size": 11559
+    },
+    "workplace/oracle/ownership79-r82-capture0-a/flags.txt": {
+      "sha256": "685b9d8b45d1885ff90a696c1730a24232598bfdfe1449b02864ebf066b305a6",
+      "size": 490
+    },
+    "workplace/oracle/ownership79-r82-capture0-b/meta.txt": {
+      "sha256": "84912b09e9368f6e6b04aa0332016bd50f64901224a7ca7764e7a462595ce07d",
+      "size": 899
+    },
+    "workplace/oracle/ownership79-r82-capture0-b/report.txt": {
+      "sha256": "ec5e0ef228360153a6b8a7ab5d1eddb8ce36dd91ce4dbca7c4e5f0861f1f4532",
+      "size": 11558
+    },
+    "workplace/oracle/ownership79-r82-capture0-b/flags.txt": {
+      "sha256": "3b213fd82f650b4c80401df32b9a45d4877759fdde92c85fb3c80e1fc8038121",
+      "size": 490
+    },
+    "workplace/oracle/ownership79-r82-capture1-a/mem-out.bin": {
+      "sha256": "dc66561b27c4c42e5c802504e0bcc78b850f32d98db46b464ee4b7bd83f12d56",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture1-b/mem-out.bin": {
+      "sha256": "dc66561b27c4c42e5c802504e0bcc78b850f32d98db46b464ee4b7bd83f12d56",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture1-a/end.state": {
+      "sha256": "85af405730efa619c31c44b45c302afd4d9a774d4bd61ec18e12c28c740a79bc",
+      "size": 261845
+    },
+    "workplace/oracle/ownership79-r82-capture1-b/end.state": {
+      "sha256": "8e1536d2b0d3208a0e454ca8a9e512226f7763003832db0abed2eefaf1ab776a",
+      "size": 261843
+    },
+    "workplace/oracle/ownership79-r82-capture1-a/screen.bin": {
+      "sha256": "5bdf62035f5a2994e95fe7682ae1465bf758a59fea2f299c49d90c07bf157c13",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture1-b/screen.bin": {
+      "sha256": "5bdf62035f5a2994e95fe7682ae1465bf758a59fea2f299c49d90c07bf157c13",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture1-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture1-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture1-a/screen.png": {
+      "sha256": "1e4bf4202a2762368c57878d48b6649f450951de12680763ff9eea7424bc8182",
+      "size": 7884
+    },
+    "workplace/oracle/ownership79-r82-capture1-b/screen.png": {
+      "sha256": "1e4bf4202a2762368c57878d48b6649f450951de12680763ff9eea7424bc8182",
+      "size": 7884
+    },
+    "workplace/oracle/ownership79-r82-capture1-a/meta.txt": {
+      "sha256": "994dba4b2b78a114edd237701012d77d43cbb831505826637f350636b6d132d1",
+      "size": 899
+    },
+    "workplace/oracle/ownership79-r82-capture1-a/report.txt": {
+      "sha256": "137a021a8716df813aa74820800095692f5ad84fcb2f1a09136fd4cb96766e92",
+      "size": 11832
+    },
+    "workplace/oracle/ownership79-r82-capture1-a/flags.txt": {
+      "sha256": "4dfa5aba9cc13f241966d415db2f9024fe8ee219ef56d7b19e5b727efbe66b62",
+      "size": 490
+    },
+    "workplace/oracle/ownership79-r82-capture1-b/meta.txt": {
+      "sha256": "3ea720bef40afdbc72b1852b9fbdd806784963f06aa455114271a0964a6bcae7",
+      "size": 899
+    },
+    "workplace/oracle/ownership79-r82-capture1-b/report.txt": {
+      "sha256": "1d2b64309d18949a5cbd893bb6a0b9138a865f57a523192fedd7a3c8a138ca9c",
+      "size": 11832
+    },
+    "workplace/oracle/ownership79-r82-capture1-b/flags.txt": {
+      "sha256": "6a8680f23c6530412a09694cf4fb725ebd8504972603b22de853b955f97a77ce",
+      "size": 490
+    },
+    "workplace/oracle/ownership79-r82-partial0-a/mem-out.bin": {
+      "sha256": "d5f34908c0afbc765b1af136210083c2c525bf12cefadcb57e7de65c2b6bbcde",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-partial0-b/mem-out.bin": {
+      "sha256": "d5f34908c0afbc765b1af136210083c2c525bf12cefadcb57e7de65c2b6bbcde",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-partial0-a/end.state": {
+      "sha256": "95ceab9d3fd9a6c60d63c091183b2cefcbc948f82b6a501804b4f6d99d62c3c9",
+      "size": 262290
+    },
+    "workplace/oracle/ownership79-r82-partial0-b/end.state": {
+      "sha256": "bcdaa0ef7e41f55fa0c560367c17c10a10350740ac996698fe64580d23d1660f",
+      "size": 262290
+    },
+    "workplace/oracle/ownership79-r82-partial0-a/screen.bin": {
+      "sha256": "8f97baf96125b84c0d538457ac77e61f68f982e960f41f5950f652666487a514",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-partial0-b/screen.bin": {
+      "sha256": "8f97baf96125b84c0d538457ac77e61f68f982e960f41f5950f652666487a514",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-partial0-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-partial0-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-partial0-a/screen.png": {
+      "sha256": "cce8850119d358433a0b37a64b8d7581c999f1f647139b734625e8106ce0f6d2",
+      "size": 8129
+    },
+    "workplace/oracle/ownership79-r82-partial0-b/screen.png": {
+      "sha256": "cce8850119d358433a0b37a64b8d7581c999f1f647139b734625e8106ce0f6d2",
+      "size": 8129
+    },
+    "workplace/oracle/ownership79-r82-partial0-a/meta.txt": {
+      "sha256": "042ba411a8a33c63e51bc0669bf9805c6d0e72f2f1e6f28a1239c5f1d582aee2",
+      "size": 851
+    },
+    "workplace/oracle/ownership79-r82-partial0-a/report.txt": {
+      "sha256": "41f518ed52275e81fb955ff85bbe5257fdc633eb48ed4c6d8a3e21062ff055fb",
+      "size": 13608
+    },
+    "workplace/oracle/ownership79-r82-partial0-a/flags.txt": {
+      "sha256": "7a42c198752863c87c2dafec37827c8c8cc3776c99d1638f0e267d248612dd17",
+      "size": 442
+    },
+    "workplace/oracle/ownership79-r82-partial0-b/meta.txt": {
+      "sha256": "881d7490edfc86f753081d5b31842b1fb8654f9f83aed6d436d6d891ff15e98c",
+      "size": 851
+    },
+    "workplace/oracle/ownership79-r82-partial0-b/report.txt": {
+      "sha256": "f9837bdaec4a5ac774ef28f7dffd874d3d23160dd28fbeea7c342e4376ee79f2",
+      "size": 13608
+    },
+    "workplace/oracle/ownership79-r82-partial0-b/flags.txt": {
+      "sha256": "13b5e35671b627dd95a8cbf1e33b50f0e333f3f11981ae37fb10d1e58e1fb54c",
+      "size": 442
+    },
+    "workplace/oracle/ownership79-r82-partial1-a/mem-out.bin": {
+      "sha256": "a5a1474bfc9a077987be54caf49c720498f6d80307fccba808b0e3755b478500",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-partial1-b/mem-out.bin": {
+      "sha256": "a5a1474bfc9a077987be54caf49c720498f6d80307fccba808b0e3755b478500",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-partial1-a/end.state": {
+      "sha256": "b47d57854abd12e0d7e71d2025527e4805758897c12360ee1a22fa1deaee6a46",
+      "size": 262032
+    },
+    "workplace/oracle/ownership79-r82-partial1-b/end.state": {
+      "sha256": "61afe3a145730546f08d5a4e9d8952e4af4452d0fccfb8f1971b847cfbe987e4",
+      "size": 262032
+    },
+    "workplace/oracle/ownership79-r82-partial1-a/screen.bin": {
+      "sha256": "e62362ce7b245c4d66d155aab67a02d08b9d2b85d9f7554fc78268fb115f2322",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-partial1-b/screen.bin": {
+      "sha256": "e62362ce7b245c4d66d155aab67a02d08b9d2b85d9f7554fc78268fb115f2322",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-partial1-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-partial1-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-partial1-a/screen.png": {
+      "sha256": "d35452f794db3b019c37aa03efee3f7b2ca8899e012b78ed04433fa3a7148a9e",
+      "size": 7945
+    },
+    "workplace/oracle/ownership79-r82-partial1-b/screen.png": {
+      "sha256": "d35452f794db3b019c37aa03efee3f7b2ca8899e012b78ed04433fa3a7148a9e",
+      "size": 7945
+    },
+    "workplace/oracle/ownership79-r82-partial1-a/meta.txt": {
+      "sha256": "6733196e855bcfefa2a52a9ded78386b58905357923fcfdb4598cf7dc5a8abbb",
+      "size": 851
+    },
+    "workplace/oracle/ownership79-r82-partial1-a/report.txt": {
+      "sha256": "be89c8caf6388239b440325db50c46d3f75b6e9a03b310894b01355dc141702a",
+      "size": 12664
+    },
+    "workplace/oracle/ownership79-r82-partial1-a/flags.txt": {
+      "sha256": "e57d1665cbbcb0ea239fd1c6a22461ef737674812baba07a30a932338815340d",
+      "size": 442
+    },
+    "workplace/oracle/ownership79-r82-partial1-b/meta.txt": {
+      "sha256": "a212b5eee4bbb201e642401d02dc0e26c5f4de450fccc97d63f34d82ad905fff",
+      "size": 851
+    },
+    "workplace/oracle/ownership79-r82-partial1-b/report.txt": {
+      "sha256": "76320b168288b2f6858202052d6054906585c5d37a539def469a2921910dfc30",
+      "size": 12664
+    },
+    "workplace/oracle/ownership79-r82-partial1-b/flags.txt": {
+      "sha256": "61debfc8214a7f8b4942136a6ed1a2d14d8ee666f959a34dd6cc346028a924fc",
+      "size": 442
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-a/mem-out.bin": {
+      "sha256": "b2f6d424507bdb34cf546b2d640216faf34255a90ceba911e264fd75d2f2de71",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-b/mem-out.bin": {
+      "sha256": "b2f6d424507bdb34cf546b2d640216faf34255a90ceba911e264fd75d2f2de71",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-a/end.state": {
+      "sha256": "b6156d5a6d3680aa9459e19b3a06e92a621f0d5e1976f5555ef98cfae16a6c38",
+      "size": 264049
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-b/end.state": {
+      "sha256": "4ac77ae0121506be1fded6d8a310c845081211ea81e8a5b82308e1ed598f870f",
+      "size": 264049
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-a/screen.bin": {
+      "sha256": "4c34c0e73679292aa7d1bc6c7fa6c2820760308f0b91b8537629cf3283cb2a4f",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-b/screen.bin": {
+      "sha256": "4c34c0e73679292aa7d1bc6c7fa6c2820760308f0b91b8537629cf3283cb2a4f",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-a/screen.png": {
+      "sha256": "221c1b5e866387daacd2aa95f6474be05b863ec7e5e387c3efad5e01dd3bcb38",
+      "size": 9046
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-b/screen.png": {
+      "sha256": "221c1b5e866387daacd2aa95f6474be05b863ec7e5e387c3efad5e01dd3bcb38",
+      "size": 9046
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-a/meta.txt": {
+      "sha256": "e20eb86be22bd2c5c8ed805f8927362a4f9896c138e29c64ee9508af9f97f7c4",
+      "size": 966
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-a/report.txt": {
+      "sha256": "1ab74cde085f9d3c15bef83981db19ebb11e9f56a88c951668c1cad133e0cc9b",
+      "size": 19751
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-a/flags.txt": {
+      "sha256": "52c6a8d2ac71c085bb4f1fd5ec508a4059f3e8b2ff3035b6a9815a9d6abc3b7c",
+      "size": 550
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-b/meta.txt": {
+      "sha256": "7b0aa829913b8c550bb72c78f8f81a0ea5b2614dc2b942a5589ed8c0fe5cb647",
+      "size": 966
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-b/report.txt": {
+      "sha256": "8dbffed1ff6bd565e3a7e2292d37374ea41902e9b23a3962c5cb9a3291b283ef",
+      "size": 19751
+    },
+    "workplace/oracle/ownership79-r82-capture0-second-b/flags.txt": {
+      "sha256": "319c54d60509dd921ae351f53bdcbc67c21010f3316b5ddffa37977c195a16ff",
+      "size": 550
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-a/mem-out.bin": {
+      "sha256": "d57656297995db0d5a46e1dec1dda8588a5d71673de338c414d34303c8675346",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-b/mem-out.bin": {
+      "sha256": "d57656297995db0d5a46e1dec1dda8588a5d71673de338c414d34303c8675346",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-a/end.state": {
+      "sha256": "4e4c8f7d80fae673d7adcc0611c09b42ca4e28f17fbc1121ba695e628ec79947",
+      "size": 263945
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-b/end.state": {
+      "sha256": "3f2197d1b44d82e1d581fcb0e02c5ea06d618b0c5ddc6473bf2fbf2bbb2b0644",
+      "size": 263945
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-a/screen.bin": {
+      "sha256": "8304a0a6377ed3ecee0bd5ae720f12b6e5ce1b082b9e442b9b5d6bd8fd73eafd",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-b/screen.bin": {
+      "sha256": "8304a0a6377ed3ecee0bd5ae720f12b6e5ce1b082b9e442b9b5d6bd8fd73eafd",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-a/screen.png": {
+      "sha256": "9941c304bcef18a8c7715cee65f939a3b7b3ec56e0f50be468477d2f523ef251",
+      "size": 8952
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-b/screen.png": {
+      "sha256": "9941c304bcef18a8c7715cee65f939a3b7b3ec56e0f50be468477d2f523ef251",
+      "size": 8952
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-a/meta.txt": {
+      "sha256": "ad36304256ede1384ae9ad806fbd7caf7db618b369e995257d1f23304eb96a1b",
+      "size": 966
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-a/report.txt": {
+      "sha256": "af6eb80f8d7c323af22f742315b0f09f8f4b883ac126c85201414e7cf5166bda",
+      "size": 19751
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-a/flags.txt": {
+      "sha256": "30bb57b7ef7065c404d20ffa5cbc7fac73e934c0068c0d65342f6501832f04ad",
+      "size": 550
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-b/meta.txt": {
+      "sha256": "efe08f6d6594738ea005b4e78cc3c4981a4848a3c6fcf83fd86d7e1922c3098b",
+      "size": 966
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-b/report.txt": {
+      "sha256": "ecc27c1a41b42b30e964db4ee525c6fe5058861e1b177f1c5a4a8fec7f19dc5c",
+      "size": 19751
+    },
+    "workplace/oracle/ownership79-r82-capture1-second-b/flags.txt": {
+      "sha256": "44e983e649487109daf598c3c19822746aeebbd518231ae9ea862033d9bbbfc5",
+      "size": 550
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-a/mem-out.bin": {
+      "sha256": "33e872623c3681283970438f8dbbc902f58c1d6a07f7ce78831cd22eaa505743",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-b/mem-out.bin": {
+      "sha256": "33e872623c3681283970438f8dbbc902f58c1d6a07f7ce78831cd22eaa505743",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-a/end.state": {
+      "sha256": "2c28e93d7ff51754f081b0fdfbf63627e760cdb9ab85977573c885ac60e50836",
+      "size": 263158
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-b/end.state": {
+      "sha256": "66e027bb81cf147bdd92dc18305b87e6239d525d17090b9d7af898a0ac5dbeb2",
+      "size": 263156
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-a/screen.bin": {
+      "sha256": "0118d2ff48e582606f69959c4a693f7fbe495aa25f15818ef4e03ac17253a2b7",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-b/screen.bin": {
+      "sha256": "0118d2ff48e582606f69959c4a693f7fbe495aa25f15818ef4e03ac17253a2b7",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-a/screen.png": {
+      "sha256": "daa9ec804dfdf16be9b9bdc584705796ec1b7ab4c787f9ed7388f1f6e63de207",
+      "size": 9352
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-b/screen.png": {
+      "sha256": "daa9ec804dfdf16be9b9bdc584705796ec1b7ab4c787f9ed7388f1f6e63de207",
+      "size": 9352
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-a/meta.txt": {
+      "sha256": "367240931bbad6c4c561ec9775a7e152da4c5736d5c391efa26d52dab623fc21",
+      "size": 985
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-a/report.txt": {
+      "sha256": "34a62d2767ba486a74d53cf8ef21da639757c5495f0a5b6b615a3bdc0a11c76c",
+      "size": 32029
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-a/flags.txt": {
+      "sha256": "175b994d88fdcaccf1b7996a2aba89701def55d9affd89b3237278e67e92d5c0",
+      "size": 569
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-b/meta.txt": {
+      "sha256": "5c689f04e67de7bfe6132acb7d7c4609eeac93d478eaf48a940b8a49c92700b6",
+      "size": 985
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-b/report.txt": {
+      "sha256": "adcc648588b6999122ae8c98dac88daaef63bb041a930a4029e6186edfa8d20b",
+      "size": 32029
+    },
+    "workplace/oracle/ownership79-r82-capture0-finish-b/flags.txt": {
+      "sha256": "3a92e2b639328943f1244fcea8cde88440fd8acb20479c8db45821962dc53332",
+      "size": 569
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-a/mem-out.bin": {
+      "sha256": "0d6189ab45ed9b79df0d9cae8e3cbd5e44535ffe43fee762124dd1d8c82910f5",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-b/mem-out.bin": {
+      "sha256": "0d6189ab45ed9b79df0d9cae8e3cbd5e44535ffe43fee762124dd1d8c82910f5",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-a/end.state": {
+      "sha256": "501b2ba2a4d5df0bfad47b466d6273d0eb49724f9dd949be922421e7fd97e23d",
+      "size": 263040
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-b/end.state": {
+      "sha256": "650ce04b36f25f935ba9643e37fb99ba822cbedf1df9cc0dd8703c9240af5e5e",
+      "size": 263040
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-a/screen.bin": {
+      "sha256": "cbff173a58e7610c635b76a7fb93dfd1804488a2c99b716e52e78b851ceaedcc",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-b/screen.bin": {
+      "sha256": "cbff173a58e7610c635b76a7fb93dfd1804488a2c99b716e52e78b851ceaedcc",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-a/screen.png": {
+      "sha256": "4bc59e6147aaf2ff1a84a3eb39806a736e339c6d497aa1b057a1e848c04dd6e3",
+      "size": 9358
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-b/screen.png": {
+      "sha256": "4bc59e6147aaf2ff1a84a3eb39806a736e339c6d497aa1b057a1e848c04dd6e3",
+      "size": 9358
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-a/meta.txt": {
+      "sha256": "934c4ac6cbc783370fb3e12c1c5a6b0bf0e423e89420f093706b3098e400b3d5",
+      "size": 985
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-a/report.txt": {
+      "sha256": "a32667d355daf99a052de7ab55f9e63aa637d123b5964f1d111ccb7f3e8f851c",
+      "size": 32030
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-a/flags.txt": {
+      "sha256": "b989c511680e26042af86808256c68df0dee544a497d8ad2f3f5e94cb067455c",
+      "size": 569
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-b/meta.txt": {
+      "sha256": "fe38fd476abeb199074509de1ff943e1a725dcbe11a383bb71a8f947705d3a3e",
+      "size": 985
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-b/report.txt": {
+      "sha256": "c02d3a827252102773c02cf1d800fd98aa88be5c6796109d47588830a3f5a078",
+      "size": 32030
+    },
+    "workplace/oracle/ownership79-r82-capture1-finish-b/flags.txt": {
+      "sha256": "b64ae75abd09d0d597485edef62fa592e9f4d6b9f525e600e410dafd3895b0f5",
+      "size": 569
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-a/mem-out.bin": {
+      "sha256": "80eeeee65d2acd53cf29ad35af7e4570866031a41c2cefc43222e32aff961024",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-b/mem-out.bin": {
+      "sha256": "80eeeee65d2acd53cf29ad35af7e4570866031a41c2cefc43222e32aff961024",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-a/end.state": {
+      "sha256": "92d57bce148ee766e9e68ab0836d07f2dc290d4051f080e703d51cd64d41ea00",
+      "size": 264473
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-b/end.state": {
+      "sha256": "b6ef5a15a9794953d51e483764a258f3b7430d424ad6fb1627a73f7709030a5d",
+      "size": 264471
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-a/screen.bin": {
+      "sha256": "f59ca78c1ab20d25b21302d69ce73b40da093708f8ebb6f5e3feefffa657f341",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-b/screen.bin": {
+      "sha256": "f59ca78c1ab20d25b21302d69ce73b40da093708f8ebb6f5e3feefffa657f341",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-a/screen.png": {
+      "sha256": "6e027f0afced5b8286be758c5a4128ecf4696e1d49e00de959713ee31a440c56",
+      "size": 9129
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-b/screen.png": {
+      "sha256": "6e027f0afced5b8286be758c5a4128ecf4696e1d49e00de959713ee31a440c56",
+      "size": 9129
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-a/meta.txt": {
+      "sha256": "14df305e362d03fd404adfd12e3a445d8a24311072a906a2841448770a6c6f57",
+      "size": 946
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-a/report.txt": {
+      "sha256": "20a4b7f7e933f17eede020d3747e8612b1122e417165ba4cc6f0dbf042b06f87",
+      "size": 12376
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-a/flags.txt": {
+      "sha256": "90f9e380ed5682a525a00faafb24a7991af19d845d9d5c13a18a5cbbd531ab8f",
+      "size": 528
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-b/meta.txt": {
+      "sha256": "5a401ca1287cfd4155a45a6614db42aae2eb16ec629d95709917a14206226e6a",
+      "size": 946
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-b/report.txt": {
+      "sha256": "1836c51e0253d9384f3412818d751032e4d1ca8caf6d68a75b11de2f3c6d51dc",
+      "size": 12376
+    },
+    "workplace/oracle/ownership79-r82-capture0-complete-b/flags.txt": {
+      "sha256": "67605d01a4b5b880cfd11aeb38c63ba1882c380d9b553f5f4a179f1c940167b2",
+      "size": 528
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-a/mem-out.bin": {
+      "sha256": "beeeeb2e31f0c2b50679652dd86ea972ef4ff223896f752369ff2c92a5242652",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-b/mem-out.bin": {
+      "sha256": "beeeeb2e31f0c2b50679652dd86ea972ef4ff223896f752369ff2c92a5242652",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-a/end.state": {
+      "sha256": "3c38394d3855d6c0bd9b6b3a06431991f730c001b7b192dc9e74544d54adf99a",
+      "size": 264573
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-b/end.state": {
+      "sha256": "3e3c7430688b0d9bcbb0dbbe3df3f6e269c33c0c83cde4f867be77637f495553",
+      "size": 264573
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-a/screen.bin": {
+      "sha256": "c3e6ffc59aabaaaad9b717c08e8c6abd8cd2a38021a49bbd92aef33572a5bfd6",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-b/screen.bin": {
+      "sha256": "c3e6ffc59aabaaaad9b717c08e8c6abd8cd2a38021a49bbd92aef33572a5bfd6",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-a/screen.png": {
+      "sha256": "0614503af30189139bf2b33c08b15e9abf9852d8097ec0f05f0db65420fb03d0",
+      "size": 9226
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-b/screen.png": {
+      "sha256": "0614503af30189139bf2b33c08b15e9abf9852d8097ec0f05f0db65420fb03d0",
+      "size": 9226
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-a/meta.txt": {
+      "sha256": "a7569199f2dac23545da36aa8f681877092a81a381aad2ab60027fd6bbaa9352",
+      "size": 946
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-a/report.txt": {
+      "sha256": "b4e85bb2b3d7c8282bebbae46a414b57a6c249a88680d811f8a4b3b3971f8828",
+      "size": 12650
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-a/flags.txt": {
+      "sha256": "a269c634a3a6ffd1e90468eacc7deb1a80cf40404db93fe6afce2cd4a455e30a",
+      "size": 528
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-b/meta.txt": {
+      "sha256": "86643914b032473f21b198bfcded4b5e6f782797000f76c7dc57dd1c39a5d12e",
+      "size": 946
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-b/report.txt": {
+      "sha256": "c6ced9a2ac690b849b7eeee0b6e7e6b8c8745ec72aca04c721c249ca3ef57724",
+      "size": 12650
+    },
+    "workplace/oracle/ownership79-r82-capture1-complete-b/flags.txt": {
+      "sha256": "26756f2397f5d2742c8016235c42e5645ddf214a0d1946093ba52263abe692ff",
+      "size": 528
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-a/mem-out.bin": {
+      "sha256": "07e5d4efc87daafad5bf03e87cdedf812d8becbf962c15b414db1e606e9a7d3c",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-b/mem-out.bin": {
+      "sha256": "07e5d4efc87daafad5bf03e87cdedf812d8becbf962c15b414db1e606e9a7d3c",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-a/end.state": {
+      "sha256": "d440c26f1a51d9be1f3609878e6a35e7c96ce4f81edb0bda96f16c462b781425",
+      "size": 264989
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-b/end.state": {
+      "sha256": "570cfb5237f1ea9601d7d8e1560f01fe96205a3d6c60717816267dd90a15284a",
+      "size": 264989
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-a/screen.bin": {
+      "sha256": "f37bcf3b272e04763c5d23e79890e1f008d65fdf6c6165ad63c69555583e4004",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-b/screen.bin": {
+      "sha256": "f37bcf3b272e04763c5d23e79890e1f008d65fdf6c6165ad63c69555583e4004",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-a/screen.png": {
+      "sha256": "2beb0ff971553522f84318e0ecb6bdc1bdfb1b8746398a24094aad6ced16ea2f",
+      "size": 9459
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-b/screen.png": {
+      "sha256": "2beb0ff971553522f84318e0ecb6bdc1bdfb1b8746398a24094aad6ced16ea2f",
+      "size": 9459
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-a/meta.txt": {
+      "sha256": "8550748e0b26fbdb9a417ceddb7cbd793ac676ce4dbf623c7065d77e34413a38",
+      "size": 898
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-a/report.txt": {
+      "sha256": "df760474dfd13fc51c02b336c5bc31421e6230decd2d91c8262bf3fd3ade8ffc",
+      "size": 14426
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-a/flags.txt": {
+      "sha256": "8581de77e918eb414cff1ebba2bd089d60bfa9d77a1896ae62a046124be1bbc4",
+      "size": 480
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-b/meta.txt": {
+      "sha256": "e8528c895e39024aa602b496855d3859160ae47fd802309538908696c35258c4",
+      "size": 898
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-b/report.txt": {
+      "sha256": "76513aa6abc685cd6ed10c9d18e967a2670c8058fe7356c3d75794c6df8f0a5c",
+      "size": 14426
+    },
+    "workplace/oracle/ownership79-r82-partial0-complete-b/flags.txt": {
+      "sha256": "e709285e9a2b03633ee73c21760c1fbf350fd79b791a712b9b0cb2bf338ea575",
+      "size": 480
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-a/mem-out.bin": {
+      "sha256": "6370a25ee06b4fe8c7d131e51e7ee870263492e669801808fe6bd75755cd3ac2",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-b/mem-out.bin": {
+      "sha256": "6370a25ee06b4fe8c7d131e51e7ee870263492e669801808fe6bd75755cd3ac2",
+      "size": 1048576
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-a/end.state": {
+      "sha256": "1aa93db4c25b1a83649b0d40906d2cdf7de1148c68dcb7c15271f58d2f5dbe9f",
+      "size": 264735
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-b/end.state": {
+      "sha256": "a65936341356d54b1354cd0e6d587168a7d1348674a1b066bb4e0a8a343a82a8",
+      "size": 264735
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-a/screen.bin": {
+      "sha256": "239b8b29e1f9c95eb9df909ff6c64a7061dbb523f5441e3ff381fb146c54ca5e",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-b/screen.bin": {
+      "sha256": "239b8b29e1f9c95eb9df909ff6c64a7061dbb523f5441e3ff381fb146c54ca5e",
+      "size": 307200
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-a/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-b/pal.bin": {
+      "sha256": "28b933fe81e79a380123b932302ba2dd8983bd3ac85a8f922e9e3b6ac1bd02e8",
+      "size": 768
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-a/screen.png": {
+      "sha256": "62eece9030dd994e9c44705a2b37d5ca9da26a8adc1f9110f6216b45980477c6",
+      "size": 9262
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-b/screen.png": {
+      "sha256": "62eece9030dd994e9c44705a2b37d5ca9da26a8adc1f9110f6216b45980477c6",
+      "size": 9262
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-a/meta.txt": {
+      "sha256": "2bfd554633ad7e4a9090ead3e891d759c73742fef6563064fb4161ea2465cca4",
+      "size": 898
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-a/report.txt": {
+      "sha256": "60fca8a50a6d5bcb1bff517766b75c4422a38cf831d0b01a1493a0045fbe3b1d",
+      "size": 13482
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-a/flags.txt": {
+      "sha256": "ec4a149df5203fa1cd9fdf6f68e1f444f7193e2aea3dc745d115ca99fd56248e",
+      "size": 480
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-b/meta.txt": {
+      "sha256": "c5ae1d180fbf17aa58cb32fd84b4f4436f469df0a29d16dd1f831064ced0361b",
+      "size": 898
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-b/report.txt": {
+      "sha256": "30fd3376ced9294bb41e9971eb191a0cc3acbd0321c2cf75f1715a679608b000",
+      "size": 13482
+    },
+    "workplace/oracle/ownership79-r82-partial1-complete-b/flags.txt": {
+      "sha256": "15cc9d7e4f678d72e00c87ad9ba22d36fc92ec705d64fdc13121573ca336d79c",
+      "size": 480
+    },
+    "workplace/ida/ownership79-r82-185C-v2.json": {
+      "sha256": "e5b749691f162bde8966c6e4c6423981b2c2f4e1cb6c78db0faa6981aff8018d",
+      "size": 96497
+    },
+    "workplace/ida/ownership79-r82-185C.com": {
+      "sha256": "1b6b4aae3a0b652f48e8d3c24f863c39fde0b4c386ddf9afe7ab8c425d206bd7",
+      "size": 4352
+    },
+    "workplace/ida/ownership79-r82-1213.json": {
+      "sha256": "4a3a1fa1593927692d472aa129d3461e44a671e94f51c4a81399a54f4010e467",
+      "size": 6403
+    },
+    "workplace/ida/ownership79-r82-1213.com": {
+      "sha256": "185b13e49a43df742326dd25866d46b8f17cd2d127b11677e8651c1f29edd86b",
+      "size": 4352
+    },
+    "workplace/ida/ownership79-r82-3982.json": {
+      "sha256": "54f80be4b59250bafdfd7d265ddfbb5a19296bf6594abc8092adba0c60808bc0",
+      "size": 9834
+    },
+    "workplace/ida/ownership79-r82-3982.com": {
+      "sha256": "e9eee2f384dd3c900d8002d4d2d9661b0ee5ee4dc0b96e10b4cbf44b7bebbc26",
+      "size": 4352
+    },
+    "workplace/ida/ownership79-r82-3826.json": {
+      "sha256": "cfb1671c41cfc0ee40b52485ea325fce812b83bd42c7a3addabb0b2522b5e06f",
+      "size": 39181
+    },
+    "workplace/ida/ownership79-r82-3826.com": {
+      "sha256": "bec30e4885bdbd42ac0fdf512cc0e1c271fdab0bc159d09bbcf835bb73d2d2ad",
+      "size": 4352
+    },
+    "tools/scripts/battle_ownership_probe.go": {
+      "sha256": "fd81f2c7589bd23950bb8a3dc8669f09ba1a9caa0434ff79ebc4e22ba7cbd227",
+      "size": 5560
+    },
+    "tools/scripts/battle_ownership_ida.py": {
+      "sha256": "acf44c877926b68227d01f5347a1a6cdd883f79ca7f5a0d191936fca480ce3d7",
+      "size": 3063
+    },
+    "tools/battle_ownership_oracle.sh": {
+      "sha256": "98ffdc4e8ed1428038da2e701daaba2929f92d36dc13501818a4df67c925b729",
+      "size": 2752
+    },
+    "tools/scripts/battle_ownership_receipt.py": {
+      "sha256": "a3c8d96013a4124a18dce8784f0793c2de912f61e9d31b99123c09de62e12889",
+      "size": 10976
+    },
+    "tools/scripts/battle_ownership_state_prepare.py": {
+      "sha256": "81565d09de61bf2b92da5d1911f0640a96e3753cb4de5fa4a94c0ef683a5e2f2",
+      "size": 5088
+    },
+    "docs/internals/data/battle-ownership.json": {
+      "sha256": "c4b36a1280a713f818716ce67b69b25a7c5e65ba4abdfe79667e3aa46e081ec1",
+      "size": 525858
+    },
+    "workplace/round82-ownership-target-v8.log": {
+      "sha256": "a9d3ab9f6283843320244a88c8919a973256862794e4def064441e8efb15547e",
+      "size": 2381
+    },
+    "workplace/round82-standard-v2.log": {
+      "sha256": "70942ba5f085e1f3dcd151f5f1f4fdb28ceecaa4542d7816ed340d13d3acf1ac",
+      "size": 960
+    },
+    "workplace/round82-normal-gui-v3.log": {
+      "sha256": "d21c757aee050542a6050feac4f38b78590bb09a1f15f6abc06da6c4aa41a6af",
+      "size": 142
+    },
+    "workplace/ownership79-r82-ui-v8/capture0-comparison.json": {
+      "sha256": "eac470d311228001caccd1c2ccadbba7fb6f443188e3e354f764ea3a843308c7",
+      "size": 632
+    },
+    "workplace/ownership79-r82-ui-v8/capture0-second-comparison.json": {
+      "sha256": "dea3adde687eb7569db40e9c658d23f2c3c4cba5095306fb4026b7b01ef62a5d",
+      "size": 639
+    },
+    "workplace/ownership79-r82-ui-v8/capture1-comparison.json": {
+      "sha256": "32836e45d0dbad0bed5ff26350f95989a0b3e9b005ae326506b432ddb4d06bc1",
+      "size": 632
+    },
+    "workplace/ownership79-r82-ui-v8/capture1-second-comparison.json": {
+      "sha256": "a48753d89e4ca68601c050a7b4a867030b54e78e39178665b286f8c48676fd0f",
+      "size": 639
+    },
+    "workplace/ownership79-r82-ui-v8/partial0-comparison.json": {
+      "sha256": "761ad95b4726f66afb508980457df86a9d70ab37f9e605c51718457b9806d67c",
+      "size": 632
+    },
+    "workplace/ownership79-r82-ui-v8/partial1-comparison.json": {
+      "sha256": "a52ebd053974fd3ec433c9892d72237e4f485fe6f619b7fa819c17806e10ded5",
+      "size": 632
+    },
+    "workplace/ownership79-r82-ui-v8/capture0-diff.png": {
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875",
+      "size": 1249
+    },
+    "workplace/ownership79-r82-ui-v8/capture0-remake.png": {
+      "sha256": "61c2a15aa68d43d869d0a141f8376349d0e3e60a019d79ff3fa3c4227de2c4d5",
+      "size": 2807
+    },
+    "workplace/ownership79-r82-ui-v8/capture0-second-diff.png": {
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875",
+      "size": 1249
+    },
+    "workplace/ownership79-r82-ui-v8/capture0-second-remake.png": {
+      "sha256": "9bc134035ea2a779c447dab0ac80376d01f86139eaa16239751e677e60e1e321",
+      "size": 2725
+    },
+    "workplace/ownership79-r82-ui-v8/capture1-diff.png": {
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875",
+      "size": 1249
+    },
+    "workplace/ownership79-r82-ui-v8/capture1-remake.png": {
+      "sha256": "a27cc4854c1baa9ed4c16439533401647a5dc01ee0bb4f769edd3463f5241505",
+      "size": 2896
+    },
+    "workplace/ownership79-r82-ui-v8/capture1-second-diff.png": {
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875",
+      "size": 1249
+    },
+    "workplace/ownership79-r82-ui-v8/capture1-second-remake.png": {
+      "sha256": "b42a8b91737bebc018403c3b530fcf8f33fcaf0048a820d91319a9bc26af5100",
+      "size": 2631
+    },
+    "workplace/ownership79-r82-ui-v8/partial0-diff.png": {
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875",
+      "size": 1249
+    },
+    "workplace/ownership79-r82-ui-v8/partial0-remake.png": {
+      "sha256": "a08831b8bc0ed00ad1d28bef7b51d4ee5f06920c12dbc8ce945a2aa75f6a4b2f",
+      "size": 3138
+    },
+    "workplace/ownership79-r82-ui-v8/partial1-diff.png": {
+      "sha256": "0f4235571962e117f2495400ee884e9005db847acddf34d7b2e93732dd773875",
+      "size": 1249
+    },
+    "workplace/ownership79-r82-ui-v8/partial1-remake.png": {
+      "sha256": "20c88cde8fdcff670b1bf5d61ba58d610b545f8d057541c97f1e3ca177ff206d",
+      "size": 2944
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner0/ADMIRAL.DT0": {
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+      "size": 2296
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner0/FLEET.DT0": {
+      "sha256": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+      "size": 3904
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner0/PLANET.DT0": {
+      "sha256": "0e06748ad160f1e43a9f095f3546819c83856066b1acde63dd3ac6e268f4ad99",
+      "size": 6642
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner0/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "size": 528
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner0/SHIP.DT0": {
+      "sha256": "bcdd636cf15f58f3214680564cc16faca1e5951c5fd29a8710d0204472127bef",
+      "size": 27456
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner0/STELLAR.DT0": {
+      "sha256": "93de0affa5ca030e0cee0a3dba44d5d1b760f1ce367d7c4802ee017859357a7e",
+      "size": 4032
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner0/WORK.DT0": {
+      "sha256": "0a74020893b0accb32b6dee2d11ed1e9f9f620c9dcd25ad532e8fa98cb1c0bd8",
+      "size": 230
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner0/screen.png": {
+      "sha256": "53aee42745dcd5ac0d3201a0982bc0a96541765b76fc9ea05fe44e12c0b3391f",
+      "size": 293
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner1/ADMIRAL.DT0": {
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+      "size": 2296
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner1/FLEET.DT0": {
+      "sha256": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+      "size": 3904
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner1/PLANET.DT0": {
+      "sha256": "37d296556d496747f157c23eee3f5f3d1f0e743fdad96d16aa4242d31c2ff30a",
+      "size": 6642
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "size": 528
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner1/SHIP.DT0": {
+      "sha256": "bcdd636cf15f58f3214680564cc16faca1e5951c5fd29a8710d0204472127bef",
+      "size": 27456
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner1/STELLAR.DT0": {
+      "sha256": "ce3edd54aac86c00c5db7f8a7853bf2287acd05e103127ad56177de8767cd85f",
+      "size": 4032
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner1/WORK.DT0": {
+      "sha256": "0a74020893b0accb32b6dee2d11ed1e9f9f620c9dcd25ad532e8fa98cb1c0bd8",
+      "size": 230
+    },
+    "workplace/ownership79-r82-ui-v8/save-owner1/screen.png": {
+      "sha256": "53aee42745dcd5ac0d3201a0982bc0a96541765b76fc9ea05fe44e12c0b3391f",
+      "size": 293
+    },
+    "workplace/ownership79-r82-player-entry-v2/entry/screen.bin": {
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+      "size": 307200
+    },
+    "workplace/ownership79-r82-player-entry-v2/entry/screen.png": {
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+      "size": 7458
+    },
+    "workplace/round82-normal-gui-v3-1x.bin": {
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+      "size": 307200
+    },
+    "workplace/round82-normal-gui-v3-1x.txt": {
+      "sha256": "f053d194a0cb86c82378c9c73e35fc959f320e40886cafb3bf59a967cfe5d606",
+      "size": 62
+    },
+    "workplace/round82-normal-gui-v3-1x.png": {
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+      "size": 7458
+    },
+    "workplace/round82-normal-gui-v3-1x.log": {
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a",
+      "size": 314
+    },
+    "workplace/round82-normal-gui-v3-2x.bin": {
+      "sha256": "b684194010a2859fa7651bcfa9ee037f72130025cb4aeb5e8c302a3c10d5fbc3",
+      "size": 307200
+    },
+    "workplace/round82-normal-gui-v3-2x.txt": {
+      "sha256": "9b437af71f16b55dc4db0e6f733f50e11536d3b4799bebd2535f406bfb14e8d3",
+      "size": 63
+    },
+    "workplace/round82-normal-gui-v3-2x.png": {
+      "sha256": "8b886f27fc42bb718f48dcb223cd533698260f7f6892f727cdb2572fc26d9544",
+      "size": 7458
+    },
+    "workplace/round82-normal-gui-v3-2x.log": {
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a",
+      "size": 314
+    },
+    "internal/game/battle.go": {
+      "sha256": "3b38bf4521e2f13f84401e9ae74f3f703f88d1286d09a8e5801eef817534b188",
+      "size": 18108
+    },
+    "internal/game/battlefinal.go": {
+      "sha256": "c873d433b4fe7b9bc008d17318e344875d99534c80896ec8499118ab21991a34",
+      "size": 4928
+    },
+    "internal/game/game.go": {
+      "sha256": "bf2d6846c9b1d506269685afd30dbfddd896da4635683f683fc3fc3928324692",
+      "size": 202907
+    },
+    "internal/game/battleownership.go": {
+      "sha256": "fcf7443e1edd2ec4189ce8bd03ac160f7138672bd70f0538b1719c822f3a19de",
+      "size": 2161
+    },
+    "internal/game/battleownership_test.go": {
+      "sha256": "892f813d24e4c667d94ad4ac3a80ef07071f94016bdc0641a4706e0dbede83fe",
+      "size": 13068
+    },
+    "internal/rules/battleplanet.go": {
+      "sha256": "486c61d3c39283c9b822dc0c864c11a84fceb0e9bc627d7faf14d41fe661dcc8",
+      "size": 5176
+    },
+    "docs/internals/data/turn-window-panel.json": {
+      "sha256": "f65212495fdb9291380f54e91bcfb599b4426445d084b1bfac3c240b3e1a63b5",
+      "size": 6472
+    },
+    "tools/scripts/battle_ownership_player_entry.go": {
+      "sha256": "6c53a77fc1b6837f1b30b575ce41cba57474d73fc747db0797bc41caced84452",
+      "size": 1389
+    },
+    "tools/turn_counter_gui.sh": {
+      "sha256": "30057fc8012f71cc9f22e322a9fd11d31b12585b68a35b2cb9040a4a187dc5a4",
+      "size": 1935
+    },
+    "tools/go.sh": {
+      "sha256": "f591df5c0db18d0adcaecb1bfd969f9d3ffbc6e9e5a1ed2c3e5913c72dd371b6",
+      "size": 1763
+    },
+    "tools/gui.sh": {
+      "sha256": "3f0cd67388775829a3dbec810570558a1bacd1cd0fc89c22babd8c70bf0542b5",
+      "size": 1551
+    },
+    "tools/scripts/battle_ownership_game_receipt.py": {
+      "sha256": "3f81473d3ccf98d2f0220bac05e857c3f0af7e52292ecc8b5aaf9b8e5a4c874c",
+      "size": 4771
+    },
+    "workplace/round82-save-menu-before.log": {
+      "sha256": "c0c50aac873f0e2f8fa8a14c51baac4cd5c8e91327e4b5c0143564ccb9f71a53",
+      "size": 475
+    },
+    "workplace/round82-player-entry-v2.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "org_game/extracted/PLADAT.DAT": {
+      "sha256": "20cf8a62d01d27c13569ed54a8ab2d34985717a762965e8bf1ed69a08d559cc0",
+      "size": 6706
+    }
+  }
+}

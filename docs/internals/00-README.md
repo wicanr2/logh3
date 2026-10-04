@@ -1,5 +1,21 @@
 # 原版內部構造參考
 
+第82輪沿#79：[戰術星域歸屬計畫](../goal/2026-10-04-battle-ownership-round-82.md)，
+限定子步8-2，先核原版重算、座位報告及費沙登記，再接正式回合。
+[IDA匯出器](../../tools/scripts/battle_ownership_ida.py)保留函式、原始bytes及交叉參照。
+[常式觀測器](../../tools/scripts/battle_ownership_probe.go)保留明示注入、完整星域記錄與報告呼叫。
+[自然入口重播](../../tools/battle_ownership_oracle.sh)沿既有第五回合收據續行，與常式診斷分開。
+[原版凍結器](../../tools/scripts/battle_ownership_receipt.py)、[規格106](../spec/106-battle-region-ownership.md)
+及[原版來源v2](data/battle-ownership-v2.json)保存156案、14組完整收據與分級原指令。
+[原版來源v1](data/battle-ownership.json)保留被推翻的無頭像推論；更正見研究416。
+[保存解碼器產生器](../../tools/scripts/battle_ownership_state_prepare.py)逐字抽固定dosgolem型別，
+比較所有保存欄位，保留gob map列舉順序造成的原檔雜湊差異。
+[對拍071](../playtest/071-battle-ownership.md)、
+[產品凍結器](../../tools/scripts/battle_ownership_game_receipt.py)及
+[產品來源](data/battle-ownership-game.json)保存156案規則、六張報告矩形、
+兩陣營公開保存選單與正常首戰GUI兩倍率的各自驗證範圍。
+[正式8-2實作](../../internal/game/battleownership.go)依106串接座位報告與費沙登記。
+
 第73輪沿#48／#79：[交戰開場與裁切計畫](../goal/2026-10-04-engagement-opening-round-73.md)。
 從固定原版RAM核對開場計時與合法編成容量，不由模擬CPU步數猜補固定延遲。
 [開場IDA匯出器](../../tools/scripts/engagement_opening_ida.py)保留原始bytes與位址空間。
@@ -572,3 +588,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [第81輪播放索引生成](../../tools/scripts/sound_tail_receipt.py)：固定修正前後完整PCM、buffer、正常GUI與保存來源。
 - [驗證070正式音效完整尾端](../playtest/070-sound-tail.md)：正常兩陣營關配樂，核完整來源與真正後端完成。
 - [正式音效尾端索引](data/sound-tail.json)：521份來源、修正前後PCM及正常玩家完整輸入，綁父提交1993f1a。
+
+- [戰術星域歸屬研究416](../re/416-battle-ownership.md)與[106子規格](../spec/106-battle-region-ownership.md)：三方行星數、通知等待、歸屬寫入及費沙登記時點。
+- [正式8-2規則及原版回歸](../../internal/game/battleownership_test.go)：156案完整記錄及無遮罩報告矩形；完整062仍DRAFT。
+- [正常首戰Game基準](../../tools/scripts/battle_ownership_player_entry.go)：同版本bootstrap及公開輸入，供既有turn_counter_gui.sh一倍／兩倍回歸；不宣稱正常占領報告。

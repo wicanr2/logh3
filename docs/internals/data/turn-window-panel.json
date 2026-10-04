@@ -47,6 +47,11 @@
   "battle_annihilated_prefix": "2573b2c4",
   "battle_annihilated_body": "c4a5b6a4257320200aa477b867a5feb7c0a14320202020",
   "battle_annihilated_note": "185C:028E（戰場那一條）：3982:011D ＝ ds:8EA6「%s第」＋3982:0073 編號＋ds:8EAB「艦隊%s」（提督名，**沒有軍階**），再接 ds:3D46「  \\n已經全滅。    」；視窗是 3826:0405 的臨時視窗，不是 3826:0307。位元組取自 eng-annihilate-mem/mem-in.bin（docs/re/339 §3.1、§九）",
+  "battle_region_taken": "2573ac50a87420200aa477b867a565bbe2a455a8d3a1430a",
+  "battle_region_grip_lost": "2573ac50a874b3a1a4c0a661b0cf0aa477b2e6c2f7a7daa4e8b2ceaa76a1430a",
+  "battle_region_partly_landed": "a7daad78a477b669be6e0a2573ac50a874b3a1a4c0a6e6ac50a1430a",
+  "battle_region_lost": "2573ac50a8740aa477b867b351bcc4ad78b9dca8faa1430a",
+  "battle_region_note": "185C:03C6：ds:3D58／3D71／3D92／3DAF，原始Big5星域名、頭像取該陣營情報參謀，兩人類座位依陣營0／1各等一次；先更新三方數，全部通知返回才寫+12。費沙自己取得方在其報告顯示前登記。研究416、規格106、battle-ownership-v2.json",
   "found_region_suffix": "ac50a874a4ba0a",
   "found_body": "b56fb27bbcc4a4e8c4a5b6a4a1430a",
   "found_note": "0374:04B8（逐格開戰之前）：ds:01A9「\\x03[%d,%s\\x03[%d,星系內\\n」＋ds:01BD「發現敵方艦隊。\\n」。前半與 name_plain 逐位元組相同（擁有者色 ＋ 星域名 ＋ 還原 0x97），所以只收後面那一段與第二行。頭像是 ds:8F4D[陣營]（收到報告那個人類座位自己的情報參謀），視窗是 3826:0307 持久視窗、等 ds:8F38。docs/re/340"
