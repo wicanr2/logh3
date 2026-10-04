@@ -502,6 +502,8 @@ type Resources struct {
 	EngagementPanel *asset.Image
 	// FleetPresentation 是096原版格式與交戰色盤；完整艦隊演出待092接線。
 	FleetPresentation *screen.FleetPresentationSpec
+	FleetCommand      *screen.FleetCommandSpec
+	FleetSceneSprites *asset.FleetSceneSprites
 	// Comani 是交戰演出的動畫庫（`COMANI.BMG`，`docs/internals/20`）；缺原版檔就是 nil（不畫圖）。
 	Comani *asset.BMG
 
@@ -986,17 +988,19 @@ type Game struct {
 	engTick          int
 	engTickRemainder time.Duration
 	engClick         bool
+	fleetCombat      fleetCombatState
 	// battleGunAim 是射程橢圓現在的傾角（一整圈 256）；瞄準當下由
 	// 游標的方位算，按下左鍵才寫進行星記錄的 `+0x50`。
 	battleGunAim int
 
-	battleRally   []rules.RallySite
-	battlePlanets []rules.BattlePlanet
-	battleRand    *rules.Rand
-	battleLosses  []rules.BattleLoss
-	battleScore   [2]int
-	campaignScore [2]int
-	battleOver    bool
+	battleRally      []rules.RallySite
+	battlePlanets    []rules.BattlePlanet
+	battleRand       *rules.Rand
+	battleLosses     []rules.BattleLoss
+	battleScore      [2]int
+	battleFleetScore [2]int // 102已立即入campaignScore，EndBattle不重複計入。
+	campaignScore    [2]int
+	battleOver       bool
 
 	// work／admirals 是這一局**可寫**的 `WORK` 區塊與提督表。
 	//
@@ -2706,7 +2710,11 @@ func (g *Game) click(x, y int) {
 			g.closeRegionInfo()
 		}
 	case StateEngagement:
-		g.engagementClick()
+		if g.fleetCombat.active {
+			g.fleetCombatClick(x, y, false)
+		} else {
+			g.engagementClick()
+		}
 	case StateTurnWindow:
 		// `3765:006C` 讀到左鍵按下就結束這一段，座標不參與（規格 059）。
 		g.endTurnWindowStage()
@@ -2923,6 +2931,10 @@ func (g *Game) rightClick(x, y int) {
 		g.state = StateStandbyAdmirals
 	case StateBattle:
 		// 右鍵關掉最上面那一層：詳細資料 → 「資料」 → 命令選單 → 選單。
+		if g.fleetCombat.active {
+			g.fleetCombatClick(x, y, true)
+			return
+		}
 		if g.battleSpotting.active {
 			if g.battleSpotting.stage == 2 || g.battleSpotting.stage == 5 {
 				g.battleSpotting.ticks = 0
@@ -2990,7 +3002,11 @@ func (g *Game) rightClick(x, y int) {
 	case StateOccupyAsk:
 		// 問話不吃右鍵（`113A:0899`：只有命中鈕的左鍵會離開迴圈）。
 	case StateEngagement:
-		g.engagementClick()
+		if g.fleetCombat.active {
+			g.fleetCombatClick(x, y, true)
+		} else {
+			g.engagementClick()
+		}
 	case StateLoadFaction:
 		// 042F:0006只認選單左鍵；右鍵保留選單並移動反白。
 	case StateVersusInput:
@@ -3151,6 +3167,9 @@ func (g *Game) loadSlotFromDisk(n int) bool {
 // 保存前同步現況艦隊／艦艇（規格 067）；未知欄位從底稿保留。
 // `dir` 由呼叫端指定，原版目錄一律唯讀。
 func (g *Game) SaveSlot(dir string, index int) error {
+	if g.fleetCombat.active {
+		return fmt.Errorf("艦隊交戰命令或演出尚未完成")
+	}
 	if g.monthSettlementPending {
 		return fmt.Errorf("月初報告尚未結算，請關閉訂造報告後再存檔")
 	}
@@ -5050,6 +5069,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	g.drawMessage(fb)
 	g.drawSpottingHeader(fb)
 	// 正常輸入時游標在最上面；移動階段原版邊界均藏游標（規格080）。
+	g.drawFleetCombatCommand(fb)
 	if g.res.Cursor != nil && !g.battleMoving {
 		g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)
 	}

@@ -353,6 +353,9 @@ func (g *Game) finishEngagement() {
 
 // drawEngagement 畫演出：底圖與三個視窗（沒有游標）。
 func (g *Game) drawEngagement() *gfx.Framebuffer {
+	if g.fleetCombat.active {
+		return g.drawFleetCombatScene()
+	}
 	fb := gfx.NewFramebuffer(0)
 	if g.res.Engagement == nil {
 		return fb

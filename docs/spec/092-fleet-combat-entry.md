@@ -1,5 +1,13 @@
 # 092：第④步艦隊戰鬥入口
 
+## 第76輪目前狀態
+
+[102 READY](102-fleet-player-chain.md)、[研究413](../re/413-fleet-player-chain.md)與[065](../playtest/065-fleet-player-chain.md)已接正式第③→④→⑤：命令、順位、093戰損、099演出及原池保存。
+四種戰損與四張完整圖直接符合固定原版；兩陣營正常Game／bootstrap交戰與保存雙跑相同。
+正常原版整段同態、命令亮標／游標全圖、GUI鍵鼠與音效仍未驗；本父規格維持DRAFT，#48／#79 OPEN。
+下文較早各輪的「Game未接」是當時限制，以本節的最新接線範圍為準。
+
+
 狀態：DRAFT。工作依據為[#79](https://github.com/wicanr2/logh3/issues/79)與
 [#48](https://github.com/wicanr2/logh3/issues/48)。本規格尚不能接正式流程。
 來源：[研究400](../re/400-fleet-combat-entry.md)、[對拍052](../playtest/052-fleet-combat-entry.md)、

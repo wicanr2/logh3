@@ -1,0 +1,1259 @@
+{
+  "schema": "logh3.fleet-player-chain-game.v1",
+  "parent_commit": "02328c82b8fb27e21ac4a9e89b1aa87205c560b6",
+  "worktree": "round76 modified; exact source hashes below",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_worktree": "clean; unchanged",
+  "image": "logh3-ebiten:2",
+  "seed": 305419896,
+  "seed_setup": "test-only before each remake battle; original controlled scene has its own recorded seed",
+  "commands": [
+    "tools/gui.sh xrun env LOGH3_FLEET_CHAIN_OUTPUT=/src/workplace/round76-chain-final-d go test ./internal/game ./internal/rules -run \"^(TestFleetCommandRosterNative|TestFleetSceneGameNative|TestFleetPlayerCommandUI|TestNormalFleetPlayerChain|TestRefreshIntegrityKeepsAnnihilatedFleetWithScout)$\" -count=1 -v",
+    "repeat with round76-chain-final-e",
+    "tools/gui.sh xrun python3 tools/scripts/fleet_player_chain_receipt.py --replay-overlay",
+    "tools/gui.sh xrun go run -overlay workplace/round76-fleet-replay-overlay.json tools/scripts/fleet_player_chain_replay.go -input workplace/round76-chain-final-d/normal-0/inputs.json -out workplace/round76-bootstrap-third-0",
+    "repeat faction 1; repeat final-e as bootstrap-fourth-0/1",
+    "tools/gui.sh test ./cmd/... ./internal/... -count=1"
+  ],
+  "files": {
+    "workplace/round76-chain-final-d/laser-before-comparison.json": {
+      "sha256": "9a0605a2c937dfc0784526ce5212d201759dfa6e65775b6ee477d2f21244e843",
+      "bytes": 2378
+    },
+    "workplace/round76-chain-final-e/laser-before-comparison.json": {
+      "sha256": "9a0605a2c937dfc0784526ce5212d201759dfa6e65775b6ee477d2f21244e843",
+      "bytes": 2378
+    },
+    "workplace/round76-chain-final-d/laser-before-diff.png": {
+      "sha256": "b63c42743ea731077221620de1aa9508a3dc1b90c401f179ce6e49df12442769",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-e/laser-before-diff.png": {
+      "sha256": "b63c42743ea731077221620de1aa9508a3dc1b90c401f179ce6e49df12442769",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-d/laser-before-original.png": {
+      "sha256": "aa033dfdaa1875fdcc3d248bb15736f7ab9362f24f21cf81e7ef9e1286480d5f",
+      "bytes": 11373
+    },
+    "workplace/round76-chain-final-e/laser-before-original.png": {
+      "sha256": "aa033dfdaa1875fdcc3d248bb15736f7ab9362f24f21cf81e7ef9e1286480d5f",
+      "bytes": 11373
+    },
+    "workplace/round76-chain-final-d/laser-before-remake.png": {
+      "sha256": "aa033dfdaa1875fdcc3d248bb15736f7ab9362f24f21cf81e7ef9e1286480d5f",
+      "bytes": 11373
+    },
+    "workplace/round76-chain-final-e/laser-before-remake.png": {
+      "sha256": "aa033dfdaa1875fdcc3d248bb15736f7ab9362f24f21cf81e7ef9e1286480d5f",
+      "bytes": 11373
+    },
+    "workplace/round76-chain-final-d/laser-result-comparison.json": {
+      "sha256": "05a249172474ed596d10ce89f61317a9ab594b2b1659d0589c62c6011dc6dcd6",
+      "bytes": 2378
+    },
+    "workplace/round76-chain-final-e/laser-result-comparison.json": {
+      "sha256": "05a249172474ed596d10ce89f61317a9ab594b2b1659d0589c62c6011dc6dcd6",
+      "bytes": 2378
+    },
+    "workplace/round76-chain-final-d/laser-result-diff.png": {
+      "sha256": "b63c42743ea731077221620de1aa9508a3dc1b90c401f179ce6e49df12442769",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-e/laser-result-diff.png": {
+      "sha256": "b63c42743ea731077221620de1aa9508a3dc1b90c401f179ce6e49df12442769",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-d/laser-result-original.png": {
+      "sha256": "296ecd6d7767bf42e898e34f9f479485df4ce3a7b0510b340ed48aecf2dce058",
+      "bytes": 11816
+    },
+    "workplace/round76-chain-final-e/laser-result-original.png": {
+      "sha256": "296ecd6d7767bf42e898e34f9f479485df4ce3a7b0510b340ed48aecf2dce058",
+      "bytes": 11816
+    },
+    "workplace/round76-chain-final-d/laser-result-remake.png": {
+      "sha256": "296ecd6d7767bf42e898e34f9f479485df4ce3a7b0510b340ed48aecf2dce058",
+      "bytes": 11816
+    },
+    "workplace/round76-chain-final-e/laser-result-remake.png": {
+      "sha256": "296ecd6d7767bf42e898e34f9f479485df4ce3a7b0510b340ed48aecf2dce058",
+      "bytes": 11816
+    },
+    "workplace/round76-chain-final-d/missile-before-comparison.json": {
+      "sha256": "3f0c961948894950cf52a09b35154e298bfa5dd7cfa5373ccc53b89c1f2fcad8",
+      "bytes": 2380
+    },
+    "workplace/round76-chain-final-e/missile-before-comparison.json": {
+      "sha256": "3f0c961948894950cf52a09b35154e298bfa5dd7cfa5373ccc53b89c1f2fcad8",
+      "bytes": 2380
+    },
+    "workplace/round76-chain-final-d/missile-before-diff.png": {
+      "sha256": "b63c42743ea731077221620de1aa9508a3dc1b90c401f179ce6e49df12442769",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-e/missile-before-diff.png": {
+      "sha256": "b63c42743ea731077221620de1aa9508a3dc1b90c401f179ce6e49df12442769",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-d/missile-before-original.png": {
+      "sha256": "d2d1613b7cb841b16af3c6ac5a8221c8a9cc74d2274c4b54e30a9786f1e9911f",
+      "bytes": 11366
+    },
+    "workplace/round76-chain-final-e/missile-before-original.png": {
+      "sha256": "d2d1613b7cb841b16af3c6ac5a8221c8a9cc74d2274c4b54e30a9786f1e9911f",
+      "bytes": 11366
+    },
+    "workplace/round76-chain-final-d/missile-before-remake.png": {
+      "sha256": "d2d1613b7cb841b16af3c6ac5a8221c8a9cc74d2274c4b54e30a9786f1e9911f",
+      "bytes": 11366
+    },
+    "workplace/round76-chain-final-e/missile-before-remake.png": {
+      "sha256": "d2d1613b7cb841b16af3c6ac5a8221c8a9cc74d2274c4b54e30a9786f1e9911f",
+      "bytes": 11366
+    },
+    "workplace/round76-chain-final-d/missile-result-comparison.json": {
+      "sha256": "84a95468b42e4fa2af58c207e2a820be1061681dbe84f742d5cf026ed9a4bc4b",
+      "bytes": 2380
+    },
+    "workplace/round76-chain-final-e/missile-result-comparison.json": {
+      "sha256": "84a95468b42e4fa2af58c207e2a820be1061681dbe84f742d5cf026ed9a4bc4b",
+      "bytes": 2380
+    },
+    "workplace/round76-chain-final-d/missile-result-diff.png": {
+      "sha256": "b63c42743ea731077221620de1aa9508a3dc1b90c401f179ce6e49df12442769",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-e/missile-result-diff.png": {
+      "sha256": "b63c42743ea731077221620de1aa9508a3dc1b90c401f179ce6e49df12442769",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-d/missile-result-original.png": {
+      "sha256": "ef5ed9b9f266000cf75053518980324958bb813cfaa2e4675e06d3e5bc242222",
+      "bytes": 11749
+    },
+    "workplace/round76-chain-final-e/missile-result-original.png": {
+      "sha256": "ef5ed9b9f266000cf75053518980324958bb813cfaa2e4675e06d3e5bc242222",
+      "bytes": 11749
+    },
+    "workplace/round76-chain-final-d/missile-result-remake.png": {
+      "sha256": "ef5ed9b9f266000cf75053518980324958bb813cfaa2e4675e06d3e5bc242222",
+      "bytes": 11749
+    },
+    "workplace/round76-chain-final-e/missile-result-remake.png": {
+      "sha256": "ef5ed9b9f266000cf75053518980324958bb813cfaa2e4675e06d3e5bc242222",
+      "bytes": 11749
+    },
+    "workplace/round76-chain-final-d/normal-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round76-chain-final-e/normal-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round76-chain-final-d/normal-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round76-chain-final-e/normal-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round76-chain-final-d/normal-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round76-chain-final-e/normal-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round76-chain-final-d/normal-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round76-chain-final-e/normal-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round76-chain-final-d/normal-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round76-chain-final-e/normal-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round76-chain-final-d/normal-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round76-chain-final-e/normal-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round76-chain-final-d/normal-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round76-chain-final-e/normal-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round76-chain-final-d/normal-0/inputs.json": {
+      "sha256": "8af0f58f88bdbf111f9d66cf4214955faf5fc6398fa276463b56e9a573dc7fa0",
+      "bytes": 223697
+    },
+    "workplace/round76-chain-final-e/normal-0/inputs.json": {
+      "sha256": "8af0f58f88bdbf111f9d66cf4214955faf5fc6398fa276463b56e9a573dc7fa0",
+      "bytes": 223697
+    },
+    "workplace/round76-chain-final-d/normal-0/screen.bin": {
+      "sha256": "7818f5542a0404157573be6cffc0e0c8e68ce3c0f5d17d07ccdd9313fb700baf",
+      "bytes": 307200
+    },
+    "workplace/round76-chain-final-e/normal-0/screen.bin": {
+      "sha256": "7818f5542a0404157573be6cffc0e0c8e68ce3c0f5d17d07ccdd9313fb700baf",
+      "bytes": 307200
+    },
+    "workplace/round76-chain-final-d/normal-0/screen.png": {
+      "sha256": "53aee42745dcd5ac0d3201a0982bc0a96541765b76fc9ea05fe44e12c0b3391f",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-e/normal-0/screen.png": {
+      "sha256": "53aee42745dcd5ac0d3201a0982bc0a96541765b76fc9ea05fe44e12c0b3391f",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-d/normal-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round76-chain-final-e/normal-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round76-chain-final-d/normal-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round76-chain-final-e/normal-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round76-chain-final-d/normal-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round76-chain-final-e/normal-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round76-chain-final-d/normal-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round76-chain-final-e/normal-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round76-chain-final-d/normal-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round76-chain-final-e/normal-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round76-chain-final-d/normal-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round76-chain-final-e/normal-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round76-chain-final-d/normal-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round76-chain-final-e/normal-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round76-chain-final-d/normal-1/inputs.json": {
+      "sha256": "707c7bdad074a648c3e8d99a5bdc5f26dccf04745b71a0ad9268e96baa3aef2d",
+      "bytes": 214161
+    },
+    "workplace/round76-chain-final-e/normal-1/inputs.json": {
+      "sha256": "707c7bdad074a648c3e8d99a5bdc5f26dccf04745b71a0ad9268e96baa3aef2d",
+      "bytes": 214161
+    },
+    "workplace/round76-chain-final-d/normal-1/screen.bin": {
+      "sha256": "7818f5542a0404157573be6cffc0e0c8e68ce3c0f5d17d07ccdd9313fb700baf",
+      "bytes": 307200
+    },
+    "workplace/round76-chain-final-e/normal-1/screen.bin": {
+      "sha256": "7818f5542a0404157573be6cffc0e0c8e68ce3c0f5d17d07ccdd9313fb700baf",
+      "bytes": 307200
+    },
+    "workplace/round76-chain-final-d/normal-1/screen.png": {
+      "sha256": "53aee42745dcd5ac0d3201a0982bc0a96541765b76fc9ea05fe44e12c0b3391f",
+      "bytes": 293
+    },
+    "workplace/round76-chain-final-e/normal-1/screen.png": {
+      "sha256": "53aee42745dcd5ac0d3201a0982bc0a96541765b76fc9ea05fe44e12c0b3391f",
+      "bytes": 293
+    },
+    "workplace/round76-bootstrap-third-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round76-bootstrap-fourth-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round76-bootstrap-third-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round76-bootstrap-fourth-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round76-bootstrap-third-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round76-bootstrap-fourth-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round76-bootstrap-third-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round76-bootstrap-fourth-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round76-bootstrap-third-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round76-bootstrap-fourth-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round76-bootstrap-third-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round76-bootstrap-fourth-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round76-bootstrap-third-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round76-bootstrap-fourth-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round76-bootstrap-third-0/replay.json": {
+      "sha256": "2bad08e14c62fb149c052f5da730b8918ba4886015e0b6b48eeb566883489bdf",
+      "bytes": 306
+    },
+    "workplace/round76-bootstrap-fourth-0/replay.json": {
+      "sha256": "2bad08e14c62fb149c052f5da730b8918ba4886015e0b6b48eeb566883489bdf",
+      "bytes": 306
+    },
+    "workplace/round76-bootstrap-third-0/scene-1.png": {
+      "sha256": "49c6279e276d4941bac2af3b952b76ddb8a1febaf071e3fcc141173362d39e67",
+      "bytes": 7653
+    },
+    "workplace/round76-bootstrap-fourth-0/scene-1.png": {
+      "sha256": "49c6279e276d4941bac2af3b952b76ddb8a1febaf071e3fcc141173362d39e67",
+      "bytes": 7653
+    },
+    "workplace/round76-bootstrap-third-0/screen.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round76-bootstrap-fourth-0/screen.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round76-bootstrap-third-0/screen.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round76-bootstrap-fourth-0/screen.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round76-bootstrap-third-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round76-bootstrap-fourth-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round76-bootstrap-third-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round76-bootstrap-fourth-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round76-bootstrap-third-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round76-bootstrap-fourth-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round76-bootstrap-third-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round76-bootstrap-fourth-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round76-bootstrap-third-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round76-bootstrap-fourth-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round76-bootstrap-third-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round76-bootstrap-fourth-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round76-bootstrap-third-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round76-bootstrap-fourth-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round76-bootstrap-third-1/replay.json": {
+      "sha256": "7cf89d3b7a911a7f401915772b52479e7fd30cfa8d7604cdcd3b823d7ee039fb",
+      "bytes": 306
+    },
+    "workplace/round76-bootstrap-fourth-1/replay.json": {
+      "sha256": "7cf89d3b7a911a7f401915772b52479e7fd30cfa8d7604cdcd3b823d7ee039fb",
+      "bytes": 306
+    },
+    "workplace/round76-bootstrap-third-1/scene-1.png": {
+      "sha256": "719fbc109212d0c0d32eac91d0f324ea3e22a8394680f264d5aab1906b303389",
+      "bytes": 7775
+    },
+    "workplace/round76-bootstrap-fourth-1/scene-1.png": {
+      "sha256": "719fbc109212d0c0d32eac91d0f324ea3e22a8394680f264d5aab1906b303389",
+      "bytes": 7775
+    },
+    "workplace/round76-bootstrap-third-1/screen.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round76-bootstrap-fourth-1/screen.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round76-bootstrap-third-1/screen.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round76-bootstrap-fourth-1/screen.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round76-chain-final-d.log": {
+      "sha256": "ccfd93db4396ef1ac3d9fd15f272082ca3ccc6a0ba3cd0ded5dab727c28e977b",
+      "bytes": 7628
+    },
+    "workplace/round76-chain-final-e.log": {
+      "sha256": "8ce5eb8e0345fadbf5bb5d20040d01fabb7d522f86f9f9a5b594491349072439",
+      "bytes": 7628
+    },
+    "workplace/round76-standard-after-refresh.log": {
+      "sha256": "215b084596acb65aa4d0690540bf62d9b99f6cccf5d0d3525d86fc349e1f5c07",
+      "bytes": 959
+    },
+    "workplace/ida/re79-r76-integrity-1261.com": {
+      "sha256": "6ba50c66faeada1edecfd3c39da14953c9a94d53bc3354200c490cd9913edf7b",
+      "bytes": 8448
+    },
+    "workplace/ida/re79-r76-integrity.json": {
+      "sha256": "278edda8da527aff9eab692f20282b8933e302adaa498190a56050b540593465",
+      "bytes": 61808
+    },
+    "workplace/ida/re79-r76-menu-3982.com": {
+      "sha256": "d80d91d9ce32708d3084e52b0c696375cee250f3c5627b737db0c2c2ba18d407",
+      "bytes": 4352
+    },
+    "workplace/ida/re79-r76-menu.json": {
+      "sha256": "9ed53052c09c5d5dc4b74d175dc6f536893c26aed8920cc9ea00883344dadf35",
+      "bytes": 23149
+    },
+    "internal/game/fleetcombat.go": {
+      "sha256": "891bf2fb174e42a0c70d60ea7e7e48a9c6801b57b01cac84845cb038c66bf0ac",
+      "bytes": 9996
+    },
+    "internal/game/fleetcombatscene.go": {
+      "sha256": "fc9043e0cb0087b0101421ccbb904d4d86088acc475dd0ffb7c3aff1aa9c769f",
+      "bytes": 13374
+    },
+    "internal/game/fleetplayerchain_test.go": {
+      "sha256": "89d4a421055ebe1282c485f82a7d37c4372e17ef8a965acfc793696e730cd4ef",
+      "bytes": 27741
+    },
+    "internal/game/battle.go": {
+      "sha256": "970a2eeb0f55c16b6946263d7b84f21fdfc7376933a5d119ecd77786b106a71f",
+      "bytes": 17877
+    },
+    "internal/game/game.go": {
+      "sha256": "e8165dd0962ea32c55f38c822e3774a643b384274a088ab93328fa4c0b91b976",
+      "bytes": 202407
+    },
+    "internal/game/intro.go": {
+      "sha256": "f6711b7f92298087ee95dde7e829eb4072d3c54220883a1674e9f0a3fd640135",
+      "bytes": 4166
+    },
+    "internal/game/battlecmd.go": {
+      "sha256": "dd6e2721a6f5d5cfe5f736cb6e882f60433e79c30781daac9dc768bae88a7e11",
+      "bytes": 14157
+    },
+    "internal/game/engagement.go": {
+      "sha256": "ea1acef99b4659285e4a87efe5cba65ff6f2bfcfecbd5f4d4ace3c1263244811",
+      "bytes": 12837
+    },
+    "internal/rules/planetassault.go": {
+      "sha256": "ff8e6f75eb164937dfe86b7f7f1bcccac2ebdbf4401927b06f7db330c45d31fd",
+      "bytes": 12016
+    },
+    "internal/rules/planetassault_gauges_test.go": {
+      "sha256": "929dd21c6d948c8568be021ba89096f1881ee7c5f2c5f1c9d028ee60e991ff99",
+      "bytes": 2266
+    },
+    "internal/bootstrap/load.go": {
+      "sha256": "834495098133c40dd3113bb74eecd37005ee2e9d285dd29453bd2dd60aad4507",
+      "bytes": 19750
+    },
+    "internal/screen/fleet_command.go": {
+      "sha256": "3bad9884eaaa19480e33669626693846605724d4e10ff0642a4e60f76cb067a6",
+      "bytes": 3236
+    },
+    "internal/screen/commandmenu.go": {
+      "sha256": "2c5bed266766265fd6525a186f7a7fa7a367b21743095636189d4d5ba1bea22e",
+      "bytes": 7132
+    },
+    "tools/scripts/fleet_player_chain_replay.go": {
+      "sha256": "fb36776d049687c890bdc5ea389f1bf250a721dbcd2c558d34ac080831df5847",
+      "bytes": 3499
+    },
+    "tools/scripts/fleet_player_chain_receipt.py": {
+      "sha256": "d385d23c241f19d34b0fb104a0ed31ddc0ee3b11b0581e9d307f12094d4d3370",
+      "bytes": 10546
+    },
+    "docs/internals/data/fleet-player-chain-native.json": {
+      "sha256": "f569a16f863f9e54d3cda5fe0a8fe2c39566ec74864469d05b374fa29017c7eb",
+      "bytes": 20512
+    },
+    "docs/internals/data/fleet-command-ui.json": {
+      "sha256": "e6e945740651390037e66800a36cb3d4caa0211c3b263544bb47a19cc886246f",
+      "bytes": 793
+    },
+    "docs/internals/data/fleet-scene.json": {
+      "sha256": "7d7e5b388eebc8348825e91352ff10e9821ce2b0cf7912d6f9b9cf1cafc95379",
+      "bytes": 1148592
+    }
+  },
+  "comparisons": [
+    {
+      "bbox": [
+        640,
+        480,
+        -1,
+        -1
+      ],
+      "case": "laser-before",
+      "classification": "same-state Game scene adapter; restored command diagnostic",
+      "different": 0,
+      "maximum_channel_difference": 0,
+      "pixels": 307200,
+      "regions": [
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 26112,
+          "rect": [
+            8,
+            56,
+            256,
+            102
+          ],
+          "same": 26112
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 26112,
+          "rect": [
+            376,
+            56,
+            256,
+            102
+          ],
+          "same": 26112
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 9600,
+          "rect": [
+            16,
+            160,
+            240,
+            40
+          ],
+          "same": 9600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 9600,
+          "rect": [
+            384,
+            160,
+            240,
+            40
+          ],
+          "same": 9600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 3840,
+          "rect": [
+            272,
+            160,
+            96,
+            40
+          ],
+          "same": 3840
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 726,
+          "rect": [
+            298,
+            63,
+            11,
+            66
+          ],
+          "same": 726
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 726,
+          "rect": [
+            333,
+            63,
+            11,
+            66
+          ],
+          "same": 726
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 139776,
+          "rect": [
+            8,
+            208,
+            624,
+            224
+          ],
+          "same": 139776
+        }
+      ],
+      "same": 307200
+    },
+    {
+      "bbox": [
+        640,
+        480,
+        -1,
+        -1
+      ],
+      "case": "laser-result",
+      "classification": "same-state Game scene adapter; restored command diagnostic",
+      "different": 0,
+      "maximum_channel_difference": 0,
+      "pixels": 307200,
+      "regions": [
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 26112,
+          "rect": [
+            8,
+            56,
+            256,
+            102
+          ],
+          "same": 26112
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 26112,
+          "rect": [
+            376,
+            56,
+            256,
+            102
+          ],
+          "same": 26112
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 9600,
+          "rect": [
+            16,
+            160,
+            240,
+            40
+          ],
+          "same": 9600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 9600,
+          "rect": [
+            384,
+            160,
+            240,
+            40
+          ],
+          "same": 9600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 3840,
+          "rect": [
+            272,
+            160,
+            96,
+            40
+          ],
+          "same": 3840
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 726,
+          "rect": [
+            298,
+            63,
+            11,
+            66
+          ],
+          "same": 726
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 726,
+          "rect": [
+            333,
+            63,
+            11,
+            66
+          ],
+          "same": 726
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 139776,
+          "rect": [
+            8,
+            208,
+            624,
+            224
+          ],
+          "same": 139776
+        }
+      ],
+      "same": 307200
+    },
+    {
+      "bbox": [
+        640,
+        480,
+        -1,
+        -1
+      ],
+      "case": "missile-before",
+      "classification": "same-state Game scene adapter; restored command diagnostic",
+      "different": 0,
+      "maximum_channel_difference": 0,
+      "pixels": 307200,
+      "regions": [
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 26112,
+          "rect": [
+            8,
+            56,
+            256,
+            102
+          ],
+          "same": 26112
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 26112,
+          "rect": [
+            376,
+            56,
+            256,
+            102
+          ],
+          "same": 26112
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 9600,
+          "rect": [
+            16,
+            160,
+            240,
+            40
+          ],
+          "same": 9600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 9600,
+          "rect": [
+            384,
+            160,
+            240,
+            40
+          ],
+          "same": 9600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 3840,
+          "rect": [
+            272,
+            160,
+            96,
+            40
+          ],
+          "same": 3840
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 726,
+          "rect": [
+            298,
+            63,
+            11,
+            66
+          ],
+          "same": 726
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 726,
+          "rect": [
+            333,
+            63,
+            11,
+            66
+          ],
+          "same": 726
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 139776,
+          "rect": [
+            8,
+            208,
+            624,
+            224
+          ],
+          "same": 139776
+        }
+      ],
+      "same": 307200
+    },
+    {
+      "bbox": [
+        640,
+        480,
+        -1,
+        -1
+      ],
+      "case": "missile-result",
+      "classification": "same-state Game scene adapter; restored command diagnostic",
+      "different": 0,
+      "maximum_channel_difference": 0,
+      "pixels": 307200,
+      "regions": [
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 26112,
+          "rect": [
+            8,
+            56,
+            256,
+            102
+          ],
+          "same": 26112
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 26112,
+          "rect": [
+            376,
+            56,
+            256,
+            102
+          ],
+          "same": 26112
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 9600,
+          "rect": [
+            16,
+            160,
+            240,
+            40
+          ],
+          "same": 9600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 9600,
+          "rect": [
+            384,
+            160,
+            240,
+            40
+          ],
+          "same": 9600
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 3840,
+          "rect": [
+            272,
+            160,
+            96,
+            40
+          ],
+          "same": 3840
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 726,
+          "rect": [
+            298,
+            63,
+            11,
+            66
+          ],
+          "same": 726
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 726,
+          "rect": [
+            333,
+            63,
+            11,
+            66
+          ],
+          "same": 726
+        },
+        {
+          "bbox": [
+            640,
+            480,
+            -1,
+            -1
+          ],
+          "different": 0,
+          "maximum_channel_difference": 0,
+          "pixels": 139776,
+          "rect": [
+            8,
+            208,
+            624,
+            224
+          ],
+          "same": 139776
+        }
+      ],
+      "same": 307200
+    }
+  ],
+  "normal_cases": [
+    {
+      "faction": 0,
+      "orders": 10,
+      "hits": 7,
+      "input_count": 2648,
+      "bootstrap_double_replay": true,
+      "cpu_position_unchanged": true,
+      "six_save_files_equal": true,
+      "classification": "normal player input replay; original full-path parity unknown"
+    },
+    {
+      "faction": 1,
+      "orders": 7,
+      "hits": 5,
+      "input_count": 2538,
+      "bootstrap_double_replay": true,
+      "cpu_position_unchanged": true,
+      "six_save_files_equal": true,
+      "classification": "normal player input replay; original full-path parity unknown"
+    }
+  ],
+  "standard_tests": {
+    "pass_packages": 13,
+    "no_test_packages": 5
+  },
+  "limits": [
+    "normal original full-path parity unknown",
+    "real GUI mouse timing not sampled",
+    "fleet command marker visuals not compared",
+    "SFX playback not implemented or listened",
+    "056/092/062 remain DRAFT; issues 48/79 OPEN"
+  ]
+}

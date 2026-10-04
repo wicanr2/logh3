@@ -1,97 +1,62 @@
 package game
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/wicanr2/logh3/internal/ai"
 	"github.com/wicanr2/logh3/internal/rules"
 )
 
-// playBattle 走到戰場、用指定的戰術把九個回合打完，回兩邊的分數。
-func playBattle(t *testing.T, tactic ai.Tactic) ([2]int, int) {
+type tacticalBattleOutcome struct {
+	Score     [2]int
+	Ships     int
+	Positions [][4]int
+}
+
+// playBattle 經正式回合續接，保存分數、艘數與實際位置／目的地。
+func playBattle(t *testing.T, tactic ai.Tactic) tacticalBattleOutcome {
 	t.Helper()
 	g := newTestGame(t)
 	if g.res.Entries == nil {
 		t.Skip("沒有入口表")
 	}
-	g.SetTactic(tactic, true) // 兩邊都交給戰術層，比較才公平
+	g.SetTactic(tactic, true) // 只控制玩家側；061 的被動 CPU 保持。
 	g.state = StateCommandPhase
 	if !advanceUntilBattle(t, g, 40) {
 		t.Fatal("四十回合都沒開戰——S3 那份存檔第一回合就該在達希利開戰（#81）")
 	}
-	left := 0
+	out := tacticalBattleOutcome{}
 	for i := 0; i < rules.MaxBattleTurns; i++ {
 		g.AdvanceBattleTurn()
 		settleBattleExecution(t, g)
 	}
 	for _, u := range g.battleUnits {
-		left += u.Ships
+		out.Ships += u.Ships
+		out.Positions = append(out.Positions, [4]int{u.X, u.Y, u.TargetX, u.TargetY})
 	}
-	return g.battleScore, left
+	out.Score = g.battleScore
+	return out
 }
 
 // TestBattleIsDeterministic 同一套戰術跑兩次要一模一樣——亂數是從回合
 // 數起種的（`docs/re/87`），不是靠時間。
 func TestBattleIsDeterministic(t *testing.T) {
-	a, la := playBattle(t, ai.OriginalTactic{})
-	b, lb := playBattle(t, ai.OriginalTactic{})
-	if a != b || la != lb {
-		t.Fatalf("同一套戰術跑兩次不一樣：%v/%d vs %v/%d", a, la, b, lb)
+	a := playBattle(t, ai.OriginalTactic{})
+	b := playBattle(t, ai.OriginalTactic{})
+	if !reflect.DeepEqual(a, b) {
+		t.Fatalf("同一套戰術跑兩次不一樣：%+v vs %+v", a, b)
 	}
 }
 
 // TestEncircleChangesOutcome 強化版戰術要真的改變結果——不然那個選項
 // 等於沒有。**不斷言它一定比較好**：包圍打得贏是設計目標，不是保證。
 func TestEncircleChangesOutcome(t *testing.T) {
-	orig, lo := playBattle(t, ai.OriginalTactic{})
-	enc, le := playBattle(t, &ai.Encircle{})
-	t.Logf("原版戰術：分數 %v，剩 %d 艘", orig, lo)
-	t.Logf("強化戰術：分數 %v，剩 %d 艘", enc, le)
-	if orig == enc && lo == le {
+	orig := playBattle(t, ai.OriginalTactic{})
+	enc := playBattle(t, &ai.Encircle{})
+	t.Logf("原版戰術：分數 %v，剩 %d 艘", orig.Score, orig.Ships)
+	t.Logf("強化戰術：分數 %v，剩 %d 艘", enc.Score, enc.Ships)
+	if reflect.DeepEqual(orig, enc) {
 		t.Error("換了戰術之後結果完全一樣，強化版沒有起作用")
-	}
-}
-
-// TestBattleLossMagnitude 把 remake 每一輪每一支艦隊的總損失印出來，
-// 好跟原版收據對量級。
-//
-// 原版量到的是**一支艦隊一回合 290**（`docs/re/97`：`-regs-at 20B4:1110`
-// 的 `[bp+06h]` 從 290 開始往下扣）。
-func TestBattleLossMagnitude(t *testing.T) {
-	g := newTestGame(t)
-	if g.res.Entries == nil {
-		t.Skip("沒有入口表")
-	}
-	// 沒有戰術層就沒有人會動，距離項會把基本量吃光——量級要在兩邊
-	// 真的靠過去之後才有意義。
-	g.SetTactic(ai.OriginalTactic{}, true)
-	g.originalBattleAI = true // 量的是原版交火量級（規格 061 之前的規則）
-	g.state = StateCommandPhase
-	if !advanceUntilBattle(t, g, 40) {
-		t.Fatal("四十回合都沒開戰——S3 那份存檔第一回合就該在達希利開戰（#81）")
-	}
-	sum, n, max := 0, 0, 0
-	for i := 0; i < rules.MaxBattleTurns; i++ {
-		g.AdvanceBattleTurn()
-		settleBattleExecution(t, g)
-		for _, l := range g.battleLosses {
-			sum += l.Total
-			n++
-			if l.Total > max {
-				max = l.Total
-			}
-		}
-	}
-	if n == 0 {
-		t.Fatal("九個回合一次交火都沒有")
-	}
-	avg := sum / n
-	t.Logf("remake：%d 次交火，總損失平均 %d、最大 %d（原版在行星上量到 290）",
-		n, avg, max)
-	// 量級只有在**幾何可比**的時候才有意義：原版那 290 是雙方壓在行星上
-	// 打出來的（艦隊 31 的旗艦就站在雷奧米爾的座標上）。這裡的界很寬，
-	// 只擋「差一個量級」那種回歸——不是逐位元組的對拍。
-	if avg < 100 || avg > 600 {
-		t.Errorf("平均 %d 離原版量到的 290 差一個量級", avg)
 	}
 }

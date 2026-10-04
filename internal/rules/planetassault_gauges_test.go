@@ -5,6 +5,16 @@ import (
 	"testing"
 )
 
+// 1261:03A5全滅只設bit3；後續行星階段不能把原+3C清零。
+func TestRefreshIntegrityKeepsAnnihilatedFleetWithScout(t *testing.T) {
+	fleets := []BattleFleet{{Index: 7, Integrity: 42, Flag0: true, AdmiralLossFactor: 100}, {Index: 8, Integrity: 100, AdmiralLossFactor: 100}}
+	units := []BattleUnit{{Fleet: 7, Kind: 0, Squadron: 0, Ships: 0, FullShips: 3000}, {Fleet: 7, Kind: 7, Squadron: -1, Ships: 10, FullShips: 10}, {Fleet: 8, Kind: 0, Squadron: 0, Ships: 600, FullShips: 1000}}
+	RefreshFleetIntegrity(fleets, units)
+	if fleets[0].Integrity != 42 || !fleets[0].Flag0 || fleets[1].Integrity != 60 {
+		t.Fatalf("全滅／獨立斥候／存活刷新不符：%+v", fleets)
+	}
+}
+
 func TestPlanetDefenceGaugesFollowCounterSnapshots(t *testing.T) {
 	kinds, err := LoadShipKindTable(filepath.Join("../..", "docs/internals/data/ship-kind-table.json"))
 	if err != nil {

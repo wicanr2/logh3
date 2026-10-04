@@ -344,7 +344,8 @@ func FleetIntegrity(f *BattleFleet, units []BattleUnit) int {
 	sum, n := 0, 0
 	for i := range units {
 		u := &units[i]
-		if u.Fleet != f.Index || u.Ships == 0 || u.FullShips == 0 {
+		// 1261:0353 以 FLEET+0F 為上限；獨立索敵池 +38 不在編制內。
+		if u.Fleet != f.Index || u.Squadron < 0 || u.Kind == kindScout || u.Ships == 0 || u.FullShips == 0 {
 			continue
 		}
 		v := (u.FullShips - u.Ships) * fac / 100
@@ -365,7 +366,13 @@ func FleetIntegrity(f *BattleFleet, units []BattleUnit) int {
 // 反擊後完整度快照，供量表使用（規格094），不以艘數比例替代。
 func RefreshFleetIntegrity(fleets []BattleFleet, units []BattleUnit) {
 	for i := range fleets {
-		fleets[i].Integrity = FleetIntegrity(&fleets[i], units)
+		// 1261:03A5 的全滅分支不寫 +3C；獨立斥候不能使編制恢復存活。
+		for _, u := range units {
+			if u.Fleet == fleets[i].Index && u.Squadron >= 0 && u.Kind != kindScout && u.Ships > 0 {
+				fleets[i].Integrity = FleetIntegrity(&fleets[i], units)
+				break
+			}
+		}
 	}
 }
 

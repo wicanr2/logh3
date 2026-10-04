@@ -37,6 +37,8 @@ func (g *Game) startBattle(region int, placed bool) {
 	g.battleDisplayKnown = false
 	g.battleFleets = nil
 	g.battleScore = [2]int{}
+	g.battleFleetScore = [2]int{}
+	g.fleetCombat = fleetCombatState{}
 	g.battleOver = false
 	var joined []int
 	if g.res.Entries == nil {
@@ -121,7 +123,7 @@ func clampRow(r, rows int) int {
 
 // AdvanceBattleTurn經準備及逐幀交錯移動後續接結算；完整八步對齊仍依規格062。
 func (g *Game) AdvanceBattleTurn() {
-	if g.battlePreparing || g.battleMoving || g.battleSpotting.active {
+	if g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.fleetCombat.active {
 		return
 	}
 	g.saveBattleWorkView()
@@ -190,12 +192,10 @@ func (g *Game) advanceBattleTurnAfterMovement() {
 }
 
 func (g *Game) advanceBattleTurnAfterSpotting() {
-	g.battleLosses = g.resolveBattleTurn()
-	for _, l := range g.battleLosses {
-		if l.Scorer >= 0 && l.Scorer < 2 {
-			g.battleScore[l.Scorer] += l.Score
-		}
-	}
+	g.beginFleetCombat()
+}
+
+func (g *Game) advanceBattleTurnAfterFleetCombat() {
 	// 原版一回合八步，第五步是要塞砲開火（`181B:0385`，規格
 	// `docs/spec/028`）、第六步是打行星（`181B:03D0`，規格
 	// `docs/spec/019`）。**順序有意義**：瞄好的要塞砲會讓敵方那一回合
@@ -276,6 +276,10 @@ func (g *Game) endBattleTurn() {
 //
 // 第二項「資料」開的是什麼還沒逆向，所以只把選單關掉。
 func (g *Game) battleClick(x, y int) {
+	if g.fleetCombat.active {
+		g.fleetCombatClick(x, y, false)
+		return
+	}
 	if g.battleSpotting.active {
 		if g.battleSpotting.stage == 2 || g.battleSpotting.stage == 5 {
 			g.battleSpotting.ticks = 0
@@ -393,7 +397,7 @@ func (g *Game) Withdraw() {
 // （`ds:8FEC`／`ds:8FF0`，`docs/re/309`）。戰後撤退仍未解。
 func (g *Game) EndBattle() {
 	for f := 0; f < 2; f++ {
-		g.campaignScore[f] += g.battleScore[f]
+		g.campaignScore[f] += g.battleScore[f] - g.battleFleetScore[f]
 	}
 	if g.slot != nil {
 		if err := g.syncFleetTables(); err != nil {
@@ -532,7 +536,7 @@ func (g *Game) battleScroll(x, y int) {
 
 // RightHold 是右鍵按著沒放的每一幀：戰場上就再捲一格。
 func (g *Game) RightHold(x, y int) {
-	if g.state != StateBattle || !g.battleScrollHeld || g.battleMoving || g.battlePreparing || g.battleSpotting.active {
+	if g.state != StateBattle || !g.battleScrollHeld || g.battleMoving || g.battlePreparing || g.battleSpotting.active || g.fleetCombat.active {
 		return
 	}
 	g.moveMouse(x, y)

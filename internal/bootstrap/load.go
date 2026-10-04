@@ -355,6 +355,19 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	fleetCommand, err := screen.LoadFleetCommandSpec(filepath.Join(data, "fleet-command-ui.json"))
+	if err != nil {
+		return nil, err
+	}
+	var fleetSceneSprites *asset.FleetSceneSprites
+	blocks, blockErr := os.ReadFile(filepath.Join(orig, "3DBLOCK.SPR"))
+	flags, flagErr := os.ReadFile(filepath.Join(orig, "COM_FLAG.SPR"))
+	if blockErr == nil && flagErr == nil {
+		fleetSceneSprites, err = asset.DecodeFleetSceneSprites(blocks, flags)
+		if err != nil {
+			return nil, err
+		}
+	}
 	regionInfo, err := screen.LoadRegionInfoSpec(filepath.Join(data, "region-info-panel.json"))
 	if err != nil {
 		return nil, err
@@ -407,6 +420,8 @@ func Load(orig, data string) (*game.Resources, error) {
 		ListScreen:        listScreen,
 		Engagement:        engagement,
 		FleetPresentation: fleetPresentation,
+		FleetCommand:      fleetCommand,
+		FleetSceneSprites: fleetSceneSprites,
 		EngagementPanel:   engagementPanel,
 		Comani:            comani,
 		StartMilitary:     50000, ShipPct: 25}, nil

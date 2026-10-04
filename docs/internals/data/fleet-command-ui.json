@@ -1,0 +1,28 @@
+{
+  "header_prefix_hex": "015b342c312c2573b2c4",
+  "header_suffix_hex": "c4a5b6a4aababed4b0aba952a54f",
+  "weapon_formats_hex": [
+    "a5fabd75afa5202025386c75",
+    "adb8bc752020202025386c75",
+    "bed4b0abbef7202025386c75"
+  ],
+  "auto_defence_hex": [
+    "a6dbb0ca",
+    "a8bebf6d"
+  ],
+  "tables": [
+    {
+      "ds_offset_hex": "0x44b6",
+      "bytes_hex": "010064a4b354010076a4b354010088a4b354"
+    },
+    {
+      "ds_offset_hex": "0x44d2",
+      "bytes_hex": "0100c844b3540100cd44b354"
+    }
+  ],
+  "source": "fleet-player-chain-native.json",
+  "kind_codes_hex": "42484341445445504c50465a",
+  "weapon_codes_hex": "424d46",
+  "source_ram_sha256": "6800de725851633cf2b817afad0cfda3be4a0d6b8bb7d1ebdacd57a92ce1d5b4",
+  "source_address_space": "dosgolem DS:8E1A/8E2F; IDA 3958:00A0/0114"
+}

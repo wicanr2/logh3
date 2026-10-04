@@ -523,3 +523,8 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [第75輪固定自動分支重播](../../tools/combat_player_command_oracle.sh)與[完整注入計畫](../../tools/scripts/combat_player_command_plan.py)：固定父state，按預設RND條件驗門檻，不試種子或覆寫收據。
 - [101自動命令規格](../spec/101-fleet-auto-command.md)、[完整來源](data/fleet-auto-command.json)與[凍結器](../../tools/scripts/combat_auto_receipt.py)：31組雙跑及原版預估／選擇暫存，缺beam的原版錯誤明列。
 - [自動命令研究412](../re/412-fleet-auto-command.md)、[驗證064](../playtest/064-fleet-auto-command.md)、[Game索引](data/fleet-auto-game.json)與[凍結器](../../tools/scripts/fleet_auto_game_receipt.py)：31案115筆原版預估、21案有效原池存讀及診斷身分限制；完整092仍DRAFT。
+
+- [第76輪正式玩家鏈](../goal/2026-10-04-fleet-player-chain-round-76.md)與[名冊原版重播](../../tools/fleet_player_chain_oracle.sh)、[完整注入計畫](../../tools/scripts/fleet_player_chain_plan.py)：接既有命令、核心與畫面；固定名冊有限排列補順位，拒絕覆寫歷史收據。
+- [正式生命週期102](../spec/102-fleet-player-chain.md)、[研究413](../re/413-fleet-player-chain.md)、[原版來源](data/fleet-player-chain-native.json)與[凍結器](../../tools/scripts/fleet_player_chain_receipt.py)：名冊順位、UI來源及命令／核心／演出續接的最小充分契約。
+- [交戰UI格式](data/fleet-command-ui.json)、[動態選單與標頭](../../internal/screen/fleet_command.go)：從凍結原版格式產生，沿既有命令框幾何與文字緩衝區。
+- [正式玩家鏈驗證065](../playtest/065-fleet-player-chain.md)、[完整Game索引](data/fleet-player-chain-game.json)與[正常bootstrap重播](../../tools/scripts/fleet_player_chain_replay.go)：四種原版戰損、四圖零差、兩陣營正常公開輸入及保存；GUI鍵鼠、命令亮標與音效仍缺，102保持READY。

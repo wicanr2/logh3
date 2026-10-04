@@ -201,6 +201,7 @@ func (g *Game) commandMenuClick(x, y int) bool {
 
 func (g *Game) battleInputIdle() bool {
 	return g.state == StateBattle && g.battlePhase == screen.BattlePhaseInput &&
+		!g.fleetCombat.active &&
 		!g.battlePreparing && !g.battleMoving && !g.battleSpotting.active &&
 		!g.battleMenu && !g.battleCmd && !g.battleMove && !g.battleForm &&
 		!g.battleSupply && g.fleetOrder == FleetOrderNone && !g.battleGunOn &&

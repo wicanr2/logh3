@@ -39,8 +39,8 @@ func TestBattleStartsOnContact(t *testing.T) {
 		g.battleRegion, len(g.battleUnits), len(g.battleFleets))
 }
 
-// TestBattleTurnsDeduct 開戰之後推九個回合，艘數應該往下掉（`docs/spec/018`）。
-func TestBattleTurnsDeduct(t *testing.T) {
+// 沒有戰鬥命令時不自動交火；實際下令戰損由102的玩家鏈及原版收據驗。
+func TestBattleWithoutFightOrdersKeepsShips(t *testing.T) {
 	g := newTestGame(t)
 	if g.res.Entries == nil {
 		t.Skip("沒有入口表")
@@ -64,8 +64,8 @@ func TestBattleTurnsDeduct(t *testing.T) {
 		settleBattleExecution(t, g)
 	}
 	after := total()
-	if after >= before {
-		t.Errorf("推完戰鬥回合都沒扣到：%d → %d", before, after)
+	if after != before {
+		t.Errorf("未下令卻改變艘數：%d → %d", before, after)
 	}
 	for i, u := range g.battleUnits {
 		if u.Ships < 0 {
@@ -99,9 +99,8 @@ func TestBattleEndsAfterNineTurns(t *testing.T) {
 	}
 }
 
-// TestBattleResultPersists 戰鬥結束會把剩下的艘數寫回艦艇池，
-// 而且回到戰略地圖之後艦隊戰力跟著變小。
-func TestBattleResultPersists(t *testing.T) {
+// 未下令的完整九回合保留艦艇池；有戰損的保存另由102原池存讀鏈驗。
+func TestBattleWithoutFightOrdersPreservesShipPool(t *testing.T) {
 	g := newTestGame(t)
 	if g.res.Entries == nil {
 		t.Skip("沒有入口表")
@@ -127,8 +126,8 @@ func TestBattleResultPersists(t *testing.T) {
 		t.Fatalf("九回合打完該回戰略地圖，現在是 %v", g.state)
 	}
 	after := total()
-	if after >= before {
-		t.Errorf("打完一場艦艇池沒變少：%d → %d", before, after)
+	if after != before {
+		t.Errorf("未下令卻改變艦艇池：%d → %d", before, after)
 	}
 	t.Logf("九個回合打完：艦艇池 %d → %d 艘", before, after)
 }

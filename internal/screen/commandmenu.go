@@ -21,9 +21,11 @@ const (
 
 	// 行星那兩張（`docs/re/133`）。有要塞（行星記錄 `+0x12` 非 0）的
 	// 多一項「要塞砲」，內寬也從 2 變 3。
-	CommandMenuPlanet      CommandMenuKind = "planet"       // ds:42EA 情報／補給／補充
-	CommandMenuFortress    CommandMenuKind = "fortress"     // ds:4318 ＋要塞砲
-	CommandMenuLoadFaction CommandMenuKind = "load-faction" // DS:022E前三項，088
+	CommandMenuPlanet       CommandMenuKind = "planet"        // ds:42EA 情報／補給／補充
+	CommandMenuFortress     CommandMenuKind = "fortress"      // ds:4318 ＋要塞砲
+	CommandMenuLoadFaction  CommandMenuKind = "load-faction"  // DS:022E前三項，088
+	CommandMenuCombatWeapon CommandMenuKind = "combat-weapon" // 1ED2:03E9，內寬8
+	CommandMenuCombatChoice CommandMenuKind = "combat-choice" // 1ED2:0616，內寬2
 )
 
 // CommandMenuSpec 是戰場命令選單的版面與五張表
@@ -144,6 +146,21 @@ func (s *CommandMenuSpec) CommandMenuRowAt(kind CommandMenuKind, left, top, x, y
 func DrawCommandMenu(s *CommandMenuSpec, fb *gfx.Framebuffer, fnt *font.Font,
 	tiles *ui.FrameTiles, kind CommandMenuKind, enabled []bool, x, y, sel int) []uint16 {
 	items := s.Menus[kind].Items
+	return drawCommandMenuItems(s, fb, fnt, tiles, kind, items, enabled, x, y, sel)
+}
+
+// DrawCommandMenuLabels沿同一份幾何畫動態武器數量；不改共享規格。
+func DrawCommandMenuLabels(s *CommandMenuSpec, fb *gfx.Framebuffer, fnt *font.Font,
+	tiles *ui.FrameTiles, kind CommandMenuKind, codes [][]uint16, enabled []bool, x, y, sel int) []uint16 {
+	items := make([]label, len(codes))
+	for i := range codes {
+		items[i].Codes = codes[i]
+	}
+	return drawCommandMenuItems(s, fb, fnt, tiles, kind, items, enabled, x, y, sel)
+}
+
+func drawCommandMenuItems(s *CommandMenuSpec, fb *gfx.Framebuffer, fnt *font.Font,
+	tiles *ui.FrameTiles, kind CommandMenuKind, items []label, enabled []bool, x, y, sel int) []uint16 {
 	if len(items) == 0 {
 		return nil
 	}
@@ -163,6 +180,11 @@ func DrawCommandMenu(s *CommandMenuSpec, fb *gfx.Framebuffer, fnt *font.Font,
 			ink = l.DisabledInk
 		}
 		for c, code := range item.Codes {
+			if code < 0x8000 && kind == CommandMenuCombatWeapon {
+				ui.DrawHalfGlyph(fb, fnt, hx+c*l.ColPitch, hy+l.TextDY+r*l.RowPitch, uint8(code>>8), ink, l.Shadow, -1, false)
+				ui.DrawHalfGlyph(fb, fnt, hx+c*l.ColPitch+8, hy+l.TextDY+r*l.RowPitch, uint8(code), ink, l.Shadow, -1, false)
+				continue
+			}
 			if !ui.DrawGlyph(fb, fnt, hx+c*l.ColPitch, hy+l.TextDY+r*l.RowPitch,
 				code, ink, l.Shadow, -1, false) {
 				missing = append(missing, code)
