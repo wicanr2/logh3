@@ -551,3 +551,10 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [正式音效解碼驗證](../../cmd/gin3/effects_test.go)：28段OGG雜湊、有效結束位置與完整PCM串流，不能替代裝置或人耳驗收。
 - [音效驗證067](../playtest/067-fleet-sound.md)、[Game完整索引](data/fleet-sound-game.json)及[Game凍結器](../../tools/scripts/fleet_sound_game_receipt.py)：正常兩陣營、正式app事件及六份保存，分開硬體近似與未驗GUI／聆聽。
 - [音效轉檔入口](../../tools/sound_to_ogg.sh)：沿既有GUI／音訊Docker映像，產生本機28段OGG並拒絕覆寫。
+- [第79輪真實GUI交戰](../goal/2026-10-04-fleet-player-gui-round-79.md)、[只讀GUI overlay](../../tools/scripts/fleet_player_gui_prepare.py)及[公開輸入計畫](../../tools/scripts/fleet_player_gui_plan.go)：固定RND、觀測正常階段，不以Game呼叫代替真實鍵鼠。
+- [真實GUI驅動器](../../tools/scripts/fleet_player_gui_driver.py)：以X11鍵鼠與狀態等待，核實際視窗、色號與診斷保存；不偽造原版或聲音裝置證據。
+- [實際X11擷取](../../tools/scripts/fleet_player_gui_capture.go)：查核window及visual，保留色彩遮罩及像素排列，整數最近鄰正規化後保存完整差分。
+- [常駐XTEST輸入](../../tools/scripts/fleet_player_gui_input.go)：使用既有X11相依套件送實際按下／放開，觀測器核送達；不呼叫Game輸入API，完整保持動作另記。
+- [正常GUI交戰入口](../../tools/fleet_player_gui.sh)及[容器內Xvfb生命週期](../../tools/fleet_player_gui_xrun.sh)：沿既有映像，二倍視窗另開1600×1200顯示並有界清理，不裁掉960高度的下方。
+- [實際原生全圖核對](../../tools/scripts/fleet_player_gui_native_check.go)：逐點核所有X11像素，一倍307200、二倍1228800；不只抽每個放大區塊的首點。
+- [GUI驗證068](../playtest/068-fleet-player-gui.md)、[GUI凍結器](../../tools/scripts/fleet_player_gui_receipt.py)與[完整GUI索引](data/fleet-player-gui.json)：兩陣營、一倍／兩倍正常X11、Game計畫及六份診斷保存，與原版及人耳門檻分開。

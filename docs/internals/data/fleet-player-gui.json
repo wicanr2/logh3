@@ -1,0 +1,1374 @@
+{
+  "schema": "logh3-fleet-player-gui-v1",
+  "date": "2026-10-04",
+  "production_parent_commit": "838e9a125be40c411eca78d1635e52324fd1a5e4",
+  "production_sources_modified": false,
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_unchanged": true,
+  "image": {
+    "tag": "logh3-ebiten:2",
+    "id": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8"
+  },
+  "classification": "正常remake主選單／138／S3／實行／戰術命令／交戰返回的真實X11；比較公開Game計畫，沒有新增原版same-state",
+  "seed": {
+    "value_hex": "12345678",
+    "when": "各戰場執行前",
+    "method": "test-only RND overlay，沒有位置、命令或RAM注入"
+  },
+  "cases": [
+    {
+      "faction": 0,
+      "scale": 1,
+      "batch": "workplace/round79-gui-complete-0-1",
+      "command": "bash tools/fleet_player_gui.sh round79-gui-complete-0-1 0 1",
+      "canonical_actions": 183,
+      "additional_camera_gestures": 114,
+      "input_mapping": "右鍵保持以實際鏡頭回授定位；額外手勢完整記錄，非相同實體時序",
+      "comparisons": [
+        {
+          "name": "command-1-00180",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 480,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 640,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 307200,
+            "scale": 1
+          },
+          "game_index_equal": true
+        },
+        {
+          "name": "command-2-00181",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 480,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 640,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 307200,
+            "scale": 1
+          },
+          "game_index_equal": true
+        },
+        {
+          "name": "final",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 480,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 640,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 307200,
+            "scale": 1
+          },
+          "game_index_equal": true
+        }
+      ],
+      "six_diagnostic_saves_equal_plan_and_round77": true,
+      "final": {
+        "app_ticks": 3582,
+        "battle_cmd": false,
+        "battle_menu": false,
+        "battle_turn": 2,
+        "buttons": [
+          false,
+          false,
+          false
+        ],
+        "command_at": -1,
+        "current": -1,
+        "cursor": [
+          241,
+          321
+        ],
+        "edges": [
+          73,
+          218,
+          4
+        ],
+        "idle": true,
+        "msg": false,
+        "order": 0,
+        "phase": 0,
+        "region": 26,
+        "report_layer": 0,
+        "requests": 6,
+        "stage": -1,
+        "state": "StateBattle",
+        "turn": 381,
+        "typed": "138",
+        "view": [
+          79,
+          75
+        ]
+      }
+    },
+    {
+      "faction": 0,
+      "scale": 2,
+      "batch": "workplace/round79-gui-complete-0-2",
+      "command": "bash tools/fleet_player_gui.sh round79-gui-complete-0-2 0 2",
+      "canonical_actions": 183,
+      "additional_camera_gestures": 90,
+      "input_mapping": "右鍵保持以實際鏡頭回授定位；額外手勢完整記錄，非相同實體時序",
+      "comparisons": [
+        {
+          "name": "command-1-00180",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 960,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 1280,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 1228800,
+            "scale": 2
+          },
+          "game_index_equal": true
+        },
+        {
+          "name": "command-2-00181",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 960,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 1280,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 1228800,
+            "scale": 2
+          },
+          "game_index_equal": true
+        },
+        {
+          "name": "final",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 960,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 1280,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 1228800,
+            "scale": 2
+          },
+          "game_index_equal": true
+        }
+      ],
+      "six_diagnostic_saves_equal_plan_and_round77": true,
+      "final": {
+        "app_ticks": 3515,
+        "battle_cmd": false,
+        "battle_menu": false,
+        "battle_turn": 2,
+        "buttons": [
+          false,
+          false,
+          false
+        ],
+        "command_at": -1,
+        "current": -1,
+        "cursor": [
+          241,
+          321
+        ],
+        "edges": [
+          73,
+          194,
+          4
+        ],
+        "idle": true,
+        "msg": false,
+        "order": 0,
+        "phase": 0,
+        "region": 26,
+        "report_layer": 0,
+        "requests": 6,
+        "stage": -1,
+        "state": "StateBattle",
+        "turn": 381,
+        "typed": "138",
+        "view": [
+          79,
+          75
+        ]
+      }
+    },
+    {
+      "faction": 1,
+      "scale": 1,
+      "batch": "workplace/round79-gui-complete-1-1",
+      "command": "bash tools/fleet_player_gui.sh round79-gui-complete-1-1 1 1",
+      "canonical_actions": 159,
+      "additional_camera_gestures": 6,
+      "input_mapping": "右鍵保持以實際鏡頭回授定位；額外手勢完整記錄，非相同實體時序",
+      "comparisons": [
+        {
+          "name": "command-1-00156",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 480,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 640,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 307200,
+            "scale": 1
+          },
+          "game_index_equal": true
+        },
+        {
+          "name": "command-2-00157",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 480,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 640,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 307200,
+            "scale": 1
+          },
+          "game_index_equal": true
+        },
+        {
+          "name": "final",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 480,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 640,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 307200,
+            "scale": 1
+          },
+          "game_index_equal": true
+        }
+      ],
+      "six_diagnostic_saves_equal_plan_and_round77": true,
+      "final": {
+        "app_ticks": 2907,
+        "battle_cmd": false,
+        "battle_menu": false,
+        "battle_turn": 9,
+        "buttons": [
+          false,
+          false,
+          false
+        ],
+        "command_at": -1,
+        "current": -1,
+        "cursor": [
+          241,
+          321
+        ],
+        "edges": [
+          55,
+          105,
+          4
+        ],
+        "idle": true,
+        "msg": false,
+        "order": 0,
+        "phase": 0,
+        "region": 26,
+        "report_layer": 0,
+        "requests": 5,
+        "stage": -1,
+        "state": "StateBattle",
+        "turn": 380,
+        "typed": "138",
+        "view": [
+          12,
+          6
+        ]
+      }
+    },
+    {
+      "faction": 1,
+      "scale": 2,
+      "batch": "workplace/round79-gui-complete-1-2",
+      "command": "bash tools/fleet_player_gui.sh round79-gui-complete-1-2 1 2",
+      "canonical_actions": 159,
+      "additional_camera_gestures": 445,
+      "input_mapping": "右鍵保持以實際鏡頭回授定位；額外手勢完整記錄，非相同實體時序",
+      "comparisons": [
+        {
+          "name": "command-1-00156",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 960,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 1280,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 1228800,
+            "scale": 2
+          },
+          "game_index_equal": true
+        },
+        {
+          "name": "command-2-00157",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 960,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 1280,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 1228800,
+            "scale": 2
+          },
+          "game_index_equal": true
+        },
+        {
+          "name": "final",
+          "logical": {
+            "bbox": null,
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "depth": 24,
+            "different": 0,
+            "height": 960,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "max_channel_difference": 0,
+            "normalization": "整數最近鄰；完整邏輯畫面無排除",
+            "pixels": 307200,
+            "width": 1280,
+            "window_id": "6291470"
+          },
+          "native": {
+            "max_channel_difference": 0,
+            "method": "實際原生畫面全部像素，逐點比較邏輯PNG整數最近鄰放大，無排除",
+            "native_bbox": null,
+            "native_different": 0,
+            "native_pixels": 1228800,
+            "scale": 2
+          },
+          "game_index_equal": true
+        }
+      ],
+      "six_diagnostic_saves_equal_plan_and_round77": true,
+      "final": {
+        "app_ticks": 5222,
+        "battle_cmd": false,
+        "battle_menu": false,
+        "battle_turn": 9,
+        "buttons": [
+          false,
+          false,
+          false
+        ],
+        "command_at": -1,
+        "current": -1,
+        "cursor": [
+          241,
+          321
+        ],
+        "edges": [
+          55,
+          544,
+          4
+        ],
+        "idle": true,
+        "msg": false,
+        "order": 0,
+        "phase": 0,
+        "region": 26,
+        "report_layer": 0,
+        "requests": 5,
+        "stage": -1,
+        "state": "StateBattle",
+        "turn": 380,
+        "typed": "138",
+        "view": [
+          12,
+          6
+        ]
+      }
+    }
+  ],
+  "standard_tests": {
+    "pass": 13,
+    "no_test_files": 5
+  },
+  "limits": [
+    "原版七張命令完整圖各一像素未核准，沿066與#89，沒有遮罩或升格",
+    "右鍵以實際鏡頭回授使用額外X11手勢，完整記錄每個Update與相對時間，非同一實體時序",
+    "短暫自動階段以逐Update原始紀錄核曾實際抵達，不要求低頻主機輪詢看見",
+    "六份保存使用診斷SaveSlot API，不是玩家存檔選單的驗收",
+    "本輪未指定音樂目錄，沒有聲音裝置或人耳驗收",
+    "Linux Xvfb建置，沒有macOS真機或正式發行包驗收"
+  ],
+  "files": {
+    "docs/internals/data/fleet-command-display-game.json": {
+      "sha256": "830e5c5615be977c5e18cff23fe990c18cc6ee0ad01802b17562a8338ee33405",
+      "bytes": 85342
+    },
+    "docs/internals/data/fleet-sound-game.json": {
+      "sha256": "4388203c2d6d9c69f69c38f1107b871b92c1397923f38a9eb2b7fe72ed39b9e3",
+      "bytes": 66514
+    },
+    "workplace/round79-gui-image.json": {
+      "sha256": "bfa603c4260672f75fdc34af6bbfe5be6da6843fcb3bcd0e1517f1c2fb6fad2b",
+      "bytes": 1668
+    },
+    "workplace/round79-plan-final-0/plan.json": {
+      "sha256": "820da936a8603406b4a089e60b08b46f76bcf724e143c8e2b6ed12dd5a4a5da5",
+      "bytes": 182702
+    },
+    "workplace/round79-plan-final-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round79-plan-final-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round79-plan-final-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round79-plan-final-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round79-plan-final-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round79-plan-final-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round79-plan-final-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round79-plan-final-0/command-1-00180.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round79-plan-final-0/command-1-00180.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round79-plan-final-0/command-2-00181.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round79-plan-final-0/command-2-00181.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round79-plan-final-0/final.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round79-plan-final-0/final.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round77-chain-c/normal-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round77-chain-c/normal-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round77-chain-c/normal-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round77-chain-c/normal-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round77-chain-c/normal-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round77-chain-c/normal-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round77-chain-c/normal-0/inputs.json": {
+      "sha256": "8af0f58f88bdbf111f9d66cf4214955faf5fc6398fa276463b56e9a573dc7fa0",
+      "bytes": 223697
+    },
+    "workplace/round79-gui-complete-0-1/receipt.json": {
+      "sha256": "ca015adca00df136b8f4c234b50a422bc0e6d14309383de42d30069416face5e",
+      "bytes": 394973
+    },
+    "workplace/round79-gui-complete-0-1/command-1-00180-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round79-gui-complete-0-1/command-1-00180-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round79-gui-complete-0-1/command-1-00180.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-0-1/command-2-00181-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round79-gui-complete-0-1/command-2-00181-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round79-gui-complete-0-1/command-2-00181.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-0-1/final-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round79-gui-complete-0-1/final-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round79-gui-complete-0-1/final.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-0-1/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round79-gui-complete-0-1/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round79-gui-complete-0-1/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round79-gui-complete-0-1/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round79-gui-complete-0-1/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round79-gui-complete-0-1/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round79-gui-complete-0-1/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round79-gui-complete-0-1/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round79-gui-complete-0-1/command-1-00180-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-0-1/command-1-00180-x11.png": {
+      "sha256": "bafb523dc6af67ef75cdc44a995f6dbbe9b8ba7187a550f3cf54dc1779cb836e",
+      "bytes": 31181
+    },
+    "workplace/round79-gui-complete-0-1/command-1-00180.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round79-gui-complete-0-1/command-2-00181-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-0-1/command-2-00181-x11.png": {
+      "sha256": "b23f877fde4db36ca979144d47acdb14fbf3e89a758116b7450c302cfc39e6b5",
+      "bytes": 27773
+    },
+    "workplace/round79-gui-complete-0-1/command-2-00181.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round79-gui-complete-0-1/final-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-0-1/final-x11.png": {
+      "sha256": "a2223c7db32786cf315cae805deab943f24ddacba78b5c3dd51e9e461a007bb3",
+      "bytes": 29034
+    },
+    "workplace/round79-gui-complete-0-1/final.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round79-gui-complete-0-1/input-trace.jsonl": {
+      "sha256": "52649246e3fbe7b04710b74a215c42badcdefd168f3b87c7492cdd0348641bfe",
+      "bytes": 240068
+    },
+    "workplace/round79-gui-complete-0-1/status.json": {
+      "sha256": "1fabacc572d349b26950229c4534d621e18bcc70ff4432882687b65922f16316",
+      "bytes": 329
+    },
+    "workplace/round79-gui-complete-0-1/updates.jsonl": {
+      "sha256": "a2653151a3607bc6ec4bddeda16a15ee1ba6f199cd7dcadbf8ef3a16c5812bb4",
+      "bytes": 1184843
+    },
+    "workplace/round79-gui-complete-0-1.log": {
+      "sha256": "a7603cbe62d570fb3a123f2471b9f62f232a73899e80c51008ff51ac022d1fab",
+      "bytes": 259
+    },
+    "workplace/round79-gui-complete-0-2/receipt.json": {
+      "sha256": "6e087897713194e88323349978ffdb2d6e925595600e6097f96d96be011c4610",
+      "bytes": 372645
+    },
+    "workplace/round79-gui-complete-0-2/command-1-00180-x11-comparison.json": {
+      "sha256": "abaac8bf52f971124df88f2495577392c38498a53c888c7548fb9c36861e9b6c",
+      "bytes": 325
+    },
+    "workplace/round79-gui-complete-0-2/command-1-00180-native-comparison.json": {
+      "sha256": "d4c14755999df9f115fbdc8f7ce2c7a9a26c63784231981c0af40ce2d60d55ec",
+      "bytes": 227
+    },
+    "workplace/round79-gui-complete-0-2/command-1-00180.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-0-2/command-2-00181-x11-comparison.json": {
+      "sha256": "abaac8bf52f971124df88f2495577392c38498a53c888c7548fb9c36861e9b6c",
+      "bytes": 325
+    },
+    "workplace/round79-gui-complete-0-2/command-2-00181-native-comparison.json": {
+      "sha256": "d4c14755999df9f115fbdc8f7ce2c7a9a26c63784231981c0af40ce2d60d55ec",
+      "bytes": 227
+    },
+    "workplace/round79-gui-complete-0-2/command-2-00181.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-0-2/final-x11-comparison.json": {
+      "sha256": "abaac8bf52f971124df88f2495577392c38498a53c888c7548fb9c36861e9b6c",
+      "bytes": 325
+    },
+    "workplace/round79-gui-complete-0-2/final-native-comparison.json": {
+      "sha256": "d4c14755999df9f115fbdc8f7ce2c7a9a26c63784231981c0af40ce2d60d55ec",
+      "bytes": 227
+    },
+    "workplace/round79-gui-complete-0-2/final.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-0-2/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round79-gui-complete-0-2/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round79-gui-complete-0-2/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round79-gui-complete-0-2/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round79-gui-complete-0-2/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round79-gui-complete-0-2/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round79-gui-complete-0-2/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round79-gui-complete-0-2/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round79-gui-complete-0-2/command-1-00180-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-0-2/command-1-00180-x11.png": {
+      "sha256": "9185515989f1b3d9f5afd77408c04a90f8f33a2fc4ce60c5c0082a8ade70ddc1",
+      "bytes": 42741
+    },
+    "workplace/round79-gui-complete-0-2/command-1-00180.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round79-gui-complete-0-2/command-2-00181-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-0-2/command-2-00181-x11.png": {
+      "sha256": "eb32432b5985bd958c1d48a04e047ae9bbae2757a1386870fba33017baa061a0",
+      "bytes": 38368
+    },
+    "workplace/round79-gui-complete-0-2/command-2-00181.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round79-gui-complete-0-2/final-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-0-2/final-x11.png": {
+      "sha256": "185265f56bfd984991d584c8aaed835fe820b982f6c960a63be84b99d535aea3",
+      "bytes": 40714
+    },
+    "workplace/round79-gui-complete-0-2/final.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round79-gui-complete-0-2/input-trace.jsonl": {
+      "sha256": "fa153862415e256b04e108298f4abd6ca28457a61f4f8ccf7fb60cd26ef8bfb5",
+      "bytes": 240053
+    },
+    "workplace/round79-gui-complete-0-2/status.json": {
+      "sha256": "fe6a178a290410d6255f6b04da6b66deb14ea8875991131655cef0f67cf08875",
+      "bytes": 329
+    },
+    "workplace/round79-gui-complete-0-2/updates.jsonl": {
+      "sha256": "2dcc2a4f9fd3e4742ffe93aeec0d3df0bc18ec46da1cfe752d81d988e81f395e",
+      "bytes": 1162715
+    },
+    "workplace/round79-gui-complete-0-2.log": {
+      "sha256": "fe67c31e389eb5bd76747f89d1a018389a26ad92460bc58310a69bcffa51a45c",
+      "bytes": 262
+    },
+    "workplace/round79-plan-final-1/plan.json": {
+      "sha256": "becbdb88b0d79cfdddaeba5275738ef1447829eea4170995abeecb61a4829cff",
+      "bytes": 158666
+    },
+    "workplace/round79-plan-final-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round79-plan-final-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round79-plan-final-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round79-plan-final-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round79-plan-final-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round79-plan-final-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round79-plan-final-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round79-plan-final-1/command-1-00156.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round79-plan-final-1/command-1-00156.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round79-plan-final-1/command-2-00157.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round79-plan-final-1/command-2-00157.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round79-plan-final-1/final.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round79-plan-final-1/final.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round77-chain-c/normal-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round77-chain-c/normal-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round77-chain-c/normal-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round77-chain-c/normal-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round77-chain-c/normal-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round77-chain-c/normal-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round77-chain-c/normal-1/inputs.json": {
+      "sha256": "707c7bdad074a648c3e8d99a5bdc5f26dccf04745b71a0ad9268e96baa3aef2d",
+      "bytes": 214161
+    },
+    "workplace/round79-gui-complete-1-1/receipt.json": {
+      "sha256": "0e30dfcee497e33a5c2d566e5287282ff0b8666a7b746a3cd1e8b966048aa100",
+      "bytes": 256312
+    },
+    "workplace/round79-gui-complete-1-1/command-1-00156-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round79-gui-complete-1-1/command-1-00156-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round79-gui-complete-1-1/command-1-00156.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-1-1/command-2-00157-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round79-gui-complete-1-1/command-2-00157-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round79-gui-complete-1-1/command-2-00157.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-1-1/final-x11-comparison.json": {
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861",
+      "bytes": 324
+    },
+    "workplace/round79-gui-complete-1-1/final-native-comparison.json": {
+      "sha256": "e461ae3969f24b38feb6f04219bcf7ff83a2f1f6deb130b9150e0b14599e41d1",
+      "bytes": 226
+    },
+    "workplace/round79-gui-complete-1-1/final.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-1-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round79-gui-complete-1-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round79-gui-complete-1-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round79-gui-complete-1-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round79-gui-complete-1-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round79-gui-complete-1-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round79-gui-complete-1-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round79-gui-complete-1-1/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round79-gui-complete-1-1/command-1-00156-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-1-1/command-1-00156-x11.png": {
+      "sha256": "a0a54bad300a90801cd8391b0713e0c7cdf30725494ec1688689ce3406b0e4fa",
+      "bytes": 16674
+    },
+    "workplace/round79-gui-complete-1-1/command-1-00156.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round79-gui-complete-1-1/command-2-00157-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-1-1/command-2-00157-x11.png": {
+      "sha256": "de3cd7345018450ac36b79ea8115f30a83bc300b3cafebfbd70562ee94d458ad",
+      "bytes": 14244
+    },
+    "workplace/round79-gui-complete-1-1/command-2-00157.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round79-gui-complete-1-1/final-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-1-1/final-x11.png": {
+      "sha256": "0b3f4749d420b31708a639caae9d579ec3d58f451474c4a3bf1192593ad6859e",
+      "bytes": 15789
+    },
+    "workplace/round79-gui-complete-1-1/final.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round79-gui-complete-1-1/input-trace.jsonl": {
+      "sha256": "b446e34f03873aa00c4f995f96391401e09cf2d906fdc12b47c0f723de0da914",
+      "bytes": 208926
+    },
+    "workplace/round79-gui-complete-1-1/status.json": {
+      "sha256": "5fe0ec0412bff8b1d3d49b29e372f9f6c94dcc551e34e75cc26aede41cbaee44",
+      "bytes": 328
+    },
+    "workplace/round79-gui-complete-1-1/updates.jsonl": {
+      "sha256": "d9f70dda10c0a03230ce133b70a5f5cd2b0ba47f7de1f7fa60349a0be48b0a09",
+      "bytes": 959003
+    },
+    "workplace/round79-gui-complete-1-1.log": {
+      "sha256": "f816322a00a16b29ddb01892ca7ce662c324db951b4ed34871c9d9309a8d5873",
+      "bytes": 259
+    },
+    "workplace/round79-gui-complete-1-2/receipt.json": {
+      "sha256": "4846ce4fd5c3f996a1412564bd0884e456fa573a66803683a7ac764442d85542",
+      "bytes": 664327
+    },
+    "workplace/round79-gui-complete-1-2/command-1-00156-x11-comparison.json": {
+      "sha256": "abaac8bf52f971124df88f2495577392c38498a53c888c7548fb9c36861e9b6c",
+      "bytes": 325
+    },
+    "workplace/round79-gui-complete-1-2/command-1-00156-native-comparison.json": {
+      "sha256": "d4c14755999df9f115fbdc8f7ce2c7a9a26c63784231981c0af40ce2d60d55ec",
+      "bytes": 227
+    },
+    "workplace/round79-gui-complete-1-2/command-1-00156.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-1-2/command-2-00157-x11-comparison.json": {
+      "sha256": "abaac8bf52f971124df88f2495577392c38498a53c888c7548fb9c36861e9b6c",
+      "bytes": 325
+    },
+    "workplace/round79-gui-complete-1-2/command-2-00157-native-comparison.json": {
+      "sha256": "d4c14755999df9f115fbdc8f7ce2c7a9a26c63784231981c0af40ce2d60d55ec",
+      "bytes": 227
+    },
+    "workplace/round79-gui-complete-1-2/command-2-00157.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-1-2/final-x11-comparison.json": {
+      "sha256": "abaac8bf52f971124df88f2495577392c38498a53c888c7548fb9c36861e9b6c",
+      "bytes": 325
+    },
+    "workplace/round79-gui-complete-1-2/final-native-comparison.json": {
+      "sha256": "d4c14755999df9f115fbdc8f7ce2c7a9a26c63784231981c0af40ce2d60d55ec",
+      "bytes": 227
+    },
+    "workplace/round79-gui-complete-1-2/final.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round79-gui-complete-1-2/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round79-gui-complete-1-2/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round79-gui-complete-1-2/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round79-gui-complete-1-2/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round79-gui-complete-1-2/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round79-gui-complete-1-2/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round79-gui-complete-1-2/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round79-gui-complete-1-2/app.log": {
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa",
+      "bytes": 471
+    },
+    "workplace/round79-gui-complete-1-2/command-1-00156-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-1-2/command-1-00156-x11.png": {
+      "sha256": "4508889e4d14cd8dd0487c09d8f1e6958d404cfba7c4ba5f1fe803579d53b9f9",
+      "bytes": 23074
+    },
+    "workplace/round79-gui-complete-1-2/command-1-00156.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round79-gui-complete-1-2/command-2-00157-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-1-2/command-2-00157-x11.png": {
+      "sha256": "f41c224bd790d89e1601361e98600a0affdb41b80f6109b82d5606cc722015a6",
+      "bytes": 20185
+    },
+    "workplace/round79-gui-complete-1-2/command-2-00157.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round79-gui-complete-1-2/final-x11-diff.png": {
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622",
+      "bytes": 1885
+    },
+    "workplace/round79-gui-complete-1-2/final-x11.png": {
+      "sha256": "d446427e541225a86716e25c83a4cc181da8efbc21aae9b0394a64260f09766d",
+      "bytes": 21894
+    },
+    "workplace/round79-gui-complete-1-2/final.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round79-gui-complete-1-2/input-trace.jsonl": {
+      "sha256": "f1f0ff599a0b9ef8d4db8ec1e8fed62b08755f55c427942b010ba24d5ca1c86c",
+      "bytes": 209287
+    },
+    "workplace/round79-gui-complete-1-2/status.json": {
+      "sha256": "4865ac01851011b81c0cd6e1647c5d2ec3753ae151c91c25fbfe8b35b56749b1",
+      "bytes": 328
+    },
+    "workplace/round79-gui-complete-1-2/updates.jsonl": {
+      "sha256": "e0cb841c913bd8dd17a6a81bd264e14caad9e2e63d43020d97d76ce5ff358d78",
+      "bytes": 1720453
+    },
+    "workplace/round79-gui-complete-1-2.log": {
+      "sha256": "adda1c72e929d0db03014a09943809318e36b57056d23f22189bf885dade191f",
+      "bytes": 262
+    },
+    "workplace/round79-standard.log": {
+      "sha256": "b3db36f151de6da338ddd797656ecb3c9b2c6944380836aa4d75f7a0d9070a43",
+      "bytes": 962
+    },
+    "go.mod": {
+      "sha256": "004db62f790d7f65470065deaab9c94668d1c29278d8dce0597ca2c5d1ff7dcd",
+      "bytes": 543
+    },
+    "go.sum": {
+      "sha256": "a70d74071b28ff11f401f2813c2d511ead23dd468ad32731c49fe7a63ec7b7ab",
+      "bytes": 1770
+    },
+    "cmd/gin3/main.go": {
+      "sha256": "263534793f10c3c780b2cf742a5f65f715816e3dc047d3bc35870fd4acb410b4",
+      "bytes": 13115
+    },
+    "cmd/gin3/effects.go": {
+      "sha256": "d2874bdabbe5b9b4d9c0646c28f54537a90f0513dc3c03fbdc75d8c852137034",
+      "bytes": 1910
+    },
+    "internal/game/fleetcombat.go": {
+      "sha256": "217c6590d76335ba29175713b8f3cf7aff48fa00231184224211e79a88f1a8e0",
+      "bytes": 11733
+    },
+    "internal/game/battle.go": {
+      "sha256": "970a2eeb0f55c16b6946263d7b84f21fdfc7376933a5d119ecd77786b106a71f",
+      "bytes": 17877
+    },
+    "internal/game/fleetcombatcommand.go": {
+      "sha256": "9e908182d2529c6d5eb72aa246a0b95b4d2b2a5e6909ebf34eeb3015d52d3669",
+      "bytes": 5675
+    },
+    "internal/game/fleetcombatscene.go": {
+      "sha256": "a5121e138e9acb42bc35f8f05c07c3ce41fc67542c10105468aa87e723d9e143",
+      "bytes": 13722
+    },
+    "internal/game/soundeffects.go": {
+      "sha256": "7c80e9d663746afbbf55a5a98879157c0e383ab579d9e13908f41af6b4e52872",
+      "bytes": 2154
+    },
+    "tools/gui.sh": {
+      "sha256": "3f0cd67388775829a3dbec810570558a1bacd1cd0fc89c22babd8c70bf0542b5",
+      "bytes": 1551
+    },
+    "tools/fleet_player_gui.sh": {
+      "sha256": "099da88752a9bbc1d79fd415c940c6a58fabc9dd20e660bf6247fbdc3d9b9e1a",
+      "bytes": 795
+    },
+    "tools/fleet_player_gui_xrun.sh": {
+      "sha256": "78d2890b0d4f91fd2c911a7bea20e607f6235394336daf6f06b1c1bec427fbad",
+      "bytes": 811
+    },
+    "tools/scripts/fleet_player_gui_prepare.py": {
+      "sha256": "8e555699af55c8362df11d01d75d19752c6459b45e1dcf8896bd46d44d491514",
+      "bytes": 4207
+    },
+    "tools/scripts/fleet_player_gui_plan.go": {
+      "sha256": "5bde691b580dcf6903e4b2437f2a176b484a953a4adab2acc079e6adf0d7059e",
+      "bytes": 4378
+    },
+    "tools/scripts/fleet_player_gui_driver.py": {
+      "sha256": "57023fdf104048be29896c5145d9ade927c3683ea09ce12e61ac952ad2892c55",
+      "bytes": 10005
+    },
+    "tools/scripts/fleet_player_gui_capture.go": {
+      "sha256": "ad97ca30088abdab819335679082ad109109a322357be0b4aa1e21745b887172",
+      "bytes": 4497
+    },
+    "tools/scripts/fleet_player_gui_native_check.go": {
+      "sha256": "7f7b55eb806e0625a0d0ddf115d1e7e60e9a2d86c33a9f1e8d1ec7db56de6330",
+      "bytes": 2756
+    },
+    "tools/scripts/fleet_player_gui_input.go": {
+      "sha256": "c798820717fc84a379da82a39e31d75a04591930c0a7c41099bd4ad2d57e04cd",
+      "bytes": 1587
+    },
+    "tools/scripts/fleet_player_gui_receipt.py": {
+      "sha256": "fc8212a5700bb98a22b41bf8ec0126f03195ba57f935e5fd75290e8e997afae9",
+      "bytes": 6542
+    },
+    "workplace/round79-fleet-gui-game-v3.go": {
+      "sha256": "386054ffc65017b84c3f5ae5438cd5e3e092d8df86ba74c2abcef61a8f112629",
+      "bytes": 12584
+    },
+    "workplace/round79-fleet-gui-main-v3.go": {
+      "sha256": "923da9a97f9e5560da6119004e0dc3ab9a77fe677a62b57274f1adf6a7b6cca5",
+      "bytes": 15601
+    },
+    "workplace/round79-fleet-gui-overlay-v3.json": {
+      "sha256": "08127ec101db2f8108c0230dabe2e101a92882a987f5d3b8c0f0891eff917a5c",
+      "bytes": 186
+    },
+    "workplace/round79-gin3-v3": {
+      "sha256": "757e39dc28139afe5286801ba0af3d86757276dfacb2cd17eaadf84864c21c7d",
+      "bytes": 13808104
+    },
+    "workplace/round79-input-v2": {
+      "sha256": "e96277183c9f98d36a35cc07ae5f2c38eef1c33994a9b3e4b450a0afedde89cb",
+      "bytes": 4286199
+    },
+    "workplace/round79-capture": {
+      "sha256": "23fd5436619dc7b68f27922f4c14b5501e6639f51ece630b84dbb4200e2b582a",
+      "bytes": 4474819
+    },
+    "workplace/round79-native-check": {
+      "sha256": "d1b0254754c1975393f6f7826ce9afa2b57f54c5db404a1f43ca9e21d546e9ce",
+      "bytes": 3327907
+    }
+  }
+}
