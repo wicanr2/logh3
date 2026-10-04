@@ -1,0 +1,1422 @@
+{
+  "schema": "logh3.fleet-order-action.v1",
+  "date": "2026-10-05",
+  "issue": 79,
+  "parent_commit": "0f33179705a67b5e987247dfbc39e1ac9a2eaa42",
+  "classification": "原版局部診斷與正常remake玩家回歸；原版完整玩家對拍未驗",
+  "native": {
+    "rows": 8,
+    "repeat_equal": true,
+    "ship_bytes_per_run": 219648,
+    "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+    "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+    "selection_substitute": "2583:013D，原位置與傳入朝向；完整注入見原版JSON"
+  },
+  "instructions": [
+    {
+      "original_location": "1CC5:0849",
+      "ida_ea_hex": "0x10a49",
+      "runtime_linear_hex": "0x1d499",
+      "original_bytes_hex": "26884748",
+      "operand": "mov     es:[bx+48h], al",
+      "grade": "proven",
+      "semantic": "移動成功重寫FLEET+48為0",
+      "warning": "",
+      "xrefs_to": [
+        {
+          "ida_ea_hex": "0x10a46",
+          "type": 21
+        }
+      ],
+      "xrefs_from": [
+        {
+          "ida_ea_hex": "0x10a4d",
+          "type": 21
+        }
+      ],
+      "source": "研究427；八案原版雙跑及原bytes資料流"
+    },
+    {
+      "original_location": "1CC5:08A2",
+      "ida_ea_hex": "0x10aa2",
+      "runtime_linear_hex": "0x1d4f2",
+      "original_bytes_hex": "9a780edb25",
+      "operand": "call    far ptr 25DBh:0E78h",
+      "grade": "proven",
+      "semantic": "逐分隊建立命令顯示物件",
+      "warning": "",
+      "xrefs_to": [
+        {
+          "ida_ea_hex": "0x10a9f",
+          "type": 21
+        }
+      ],
+      "xrefs_from": [
+        {
+          "ida_ea_hex": "0x10aa7",
+          "type": 21
+        }
+      ],
+      "source": "研究427；八案原版雙跑及原bytes資料流"
+    },
+    {
+      "original_location": "1CC5:08A9",
+      "ida_ea_hex": "0x10aa9",
+      "runtime_linear_hex": "0x1d4f9",
+      "original_bytes_hex": "9a930fdb25",
+      "operand": "call    far ptr 25DBh:0F93h",
+      "grade": "proven",
+      "semantic": "移除暫時顯示物件",
+      "warning": "",
+      "xrefs_to": [
+        {
+          "ida_ea_hex": "0x10aa7",
+          "type": 21
+        }
+      ],
+      "xrefs_from": [
+        {
+          "ida_ea_hex": "0x10aae",
+          "type": 21
+        }
+      ],
+      "source": "研究427；八案原版雙跑及原bytes資料流"
+    },
+    {
+      "original_location": "1CC5:08F1",
+      "ida_ea_hex": "0x10af1",
+      "runtime_linear_hex": "0x1d541",
+      "original_bytes_hex": "26c6474801",
+      "operand": "mov     byte ptr es:[bx+48h], 1",
+      "grade": "proven",
+      "semantic": "戰鬥成功重寫FLEET+48為1",
+      "warning": "",
+      "xrefs_to": [
+        {
+          "ida_ea_hex": "0x10aee",
+          "type": 21
+        }
+      ],
+      "xrefs_from": [
+        {
+          "ida_ea_hex": "0x10af6",
+          "type": 21
+        }
+      ],
+      "source": "研究427；八案原版雙跑及原bytes資料流"
+    },
+    {
+      "original_location": "1CC5:094B",
+      "ida_ea_hex": "0x10b4b",
+      "runtime_linear_hex": "0x1d59b",
+      "original_bytes_hex": "9a780edb25",
+      "operand": "call    far ptr 25DBh:0E78h",
+      "grade": "proven",
+      "semantic": "逐分隊建立命令顯示物件",
+      "warning": "",
+      "xrefs_to": [
+        {
+          "ida_ea_hex": "0x10b48",
+          "type": 21
+        }
+      ],
+      "xrefs_from": [
+        {
+          "ida_ea_hex": "0x10b50",
+          "type": 21
+        }
+      ],
+      "source": "研究427；八案原版雙跑及原bytes資料流"
+    },
+    {
+      "original_location": "1CC5:0952",
+      "ida_ea_hex": "0x10b52",
+      "runtime_linear_hex": "0x1d5a2",
+      "original_bytes_hex": "9a930fdb25",
+      "operand": "call    far ptr 25DBh:0F93h",
+      "grade": "proven",
+      "semantic": "移除暫時顯示物件",
+      "warning": "",
+      "xrefs_to": [
+        {
+          "ida_ea_hex": "0x10b50",
+          "type": 21
+        }
+      ],
+      "xrefs_from": [
+        {
+          "ida_ea_hex": "0x10b57",
+          "type": 21
+        }
+      ],
+      "source": "研究427；八案原版雙跑及原bytes資料流"
+    },
+    {
+      "original_location": "2583:00BC",
+      "ida_ea_hex": "0x102bc",
+      "runtime_linear_hex": "0x258ec",
+      "original_bytes_hex": "2688474c",
+      "operand": "mov     es:[bx+4Ch], al",
+      "grade": "proven",
+      "semantic": "成功選點寫FLEET+4C抵達朝向",
+      "warning": "",
+      "xrefs_to": [
+        {
+          "ida_ea_hex": "0x102b7",
+          "type": 21
+        }
+      ],
+      "xrefs_from": [
+        {
+          "ida_ea_hex": "0x102c0",
+          "type": 21
+        }
+      ],
+      "source": "研究427；八案原版雙跑及原bytes資料流"
+    }
+  ],
+  "sources": {
+    "workplace/order79-r93-a.json": {
+      "bytes": 1015267,
+      "sha256": "53a05898ec2cdae480910c3dc204b1b59754e72a07f0a0c44abb7b99589d18e0"
+    },
+    "workplace/order79-r93-b.json": {
+      "bytes": 1015267,
+      "sha256": "53a05898ec2cdae480910c3dc204b1b59754e72a07f0a0c44abb7b99589d18e0"
+    },
+    "workplace/oracle/cleanup79-r88-entry-a/mem-in.bin": {
+      "bytes": 1048576,
+      "sha256": "1575a57e438f8803a0fd0200268bc0e883a64d7210b4bcc42faab1e35f035ecf"
+    },
+    "workplace/ida/order79-r93-1CC5.json": {
+      "bytes": 69531,
+      "sha256": "d6fa7b12468e75894fddd1f31898b5a50d98a96231d8213b391f1da5f5647458"
+    },
+    "workplace/ida/order79-r93-1CC5.com": {
+      "bytes": 8448,
+      "sha256": "5a408528dfe7afd1fc78f9f888d93a09e57a9e87457452e911820daa263e4e40"
+    },
+    "workplace/ida/order79-r93-2583.json": {
+      "bytes": 47274,
+      "sha256": "948191fc1cb799c780c082ff5ddf40ccb46e6ebad8e4030c5b6b4a3e27e759c2"
+    },
+    "workplace/ida/order79-r93-2583.com": {
+      "bytes": 8448,
+      "sha256": "d4e32dae4f5826772ec62ab25030d3e375f6e458b7cee90f78eeeb4cbbdf480d"
+    },
+    "workplace/ida/order79-r93-25DB.json": {
+      "bytes": 34742,
+      "sha256": "1f1d4e4d70c171235418fb8d65eab91df86a120fd3002c7faa0cb89224604974"
+    },
+    "workplace/ida/order79-r93-25DB.com": {
+      "bytes": 8448,
+      "sha256": "fd166b781caa0766fa439317a52937948c5c31779329583b7314b4a07fbc5c90"
+    },
+    "workplace/order79-r93-after.log": {
+      "bytes": 230,
+      "sha256": "645d1f87f232b09ec1a95a0da97cc2423fc4f020f276b9faae3486860bb0312d"
+    },
+    "workplace/order79-r93-before.log": {
+      "bytes": 384,
+      "sha256": "31835f200c68478e409aea20071f1230feedfa33c4cb703fa95e1f2e404edeab"
+    },
+    "workplace/order79-r93-bootstrap-0/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "5f2c20ed9a4292cbeeabb210aa001e3496b0d9fe3ba6ad8bbda4622e3cffaed1"
+    },
+    "workplace/order79-r93-bootstrap-0/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6"
+    },
+    "workplace/order79-r93-bootstrap-0/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e"
+    },
+    "workplace/order79-r93-bootstrap-0/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1"
+    },
+    "workplace/order79-r93-bootstrap-0/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "cf82a6920ee7956aaccf215f0050bc5b4d75a2303681191d2dc1402a2a7f89e6"
+    },
+    "workplace/order79-r93-bootstrap-0/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af"
+    },
+    "workplace/order79-r93-bootstrap-0/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "563419b99baf374819c40f09b11d1be211e4f2aead0d5325a90ec52fc93e8bc1"
+    },
+    "workplace/order79-r93-bootstrap-0/replay.json": {
+      "bytes": 306,
+      "sha256": "d41202cdba4bebdc2589acafab9ae86e6df0e546acf4a18da870933e80cd293d"
+    },
+    "workplace/order79-r93-bootstrap-0/scene-1.png": {
+      "bytes": 8032,
+      "sha256": "9818d07dff6b1f842aea0e5ec2ffe8e3f6c37ae54e43e2f366e328486aadd772"
+    },
+    "workplace/order79-r93-bootstrap-0/screen.bin": {
+      "bytes": 307200,
+      "sha256": "88ba6d7fe653b915f0400ade3ea86d2ad2e00642d192230ed3fc97b7d0f8b580"
+    },
+    "workplace/order79-r93-bootstrap-0/screen.png": {
+      "bytes": 12311,
+      "sha256": "0aaec05f8b5473b5efce55032f3c5dac3792984f2acdf610a787bf80ac3c3048"
+    },
+    "workplace/order79-r93-bootstrap-0.log": {
+      "bytes": 70,
+      "sha256": "60245b0a5c29e508329876357a4221e2f554716567f1a8c555e798d4c1535e81"
+    },
+    "workplace/order79-r93-bootstrap-1/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "8efabffca08575b9cba271d342c33738cf900e4bdf2511874137d614ca584457"
+    },
+    "workplace/order79-r93-bootstrap-1/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c"
+    },
+    "workplace/order79-r93-bootstrap-1/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/order79-r93-bootstrap-1/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/order79-r93-bootstrap-1/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "2f4c7c1c25cd5974ce859d6158c6f759575c52588d6a8e85058d6600f7d0f101"
+    },
+    "workplace/order79-r93-bootstrap-1/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/order79-r93-bootstrap-1/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "e9e6af73db3f7cc1518ee41b4ed5bf90a2eeb716193b8d9ad0b0b9d5dbe4c227"
+    },
+    "workplace/order79-r93-bootstrap-1/replay.json": {
+      "bytes": 306,
+      "sha256": "efbf5ab049c19d5fd7ebafd4449445cfd4be90c40a9bae35d510ab47a6a66dd7"
+    },
+    "workplace/order79-r93-bootstrap-1/scene-1.png": {
+      "bytes": 8012,
+      "sha256": "84d5c2d84402a533c3aa2d706385c1dd0170e038fb631a97fbd5d154b06b7aec"
+    },
+    "workplace/order79-r93-bootstrap-1/screen.bin": {
+      "bytes": 307200,
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374"
+    },
+    "workplace/order79-r93-bootstrap-1/screen.png": {
+      "bytes": 8129,
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df"
+    },
+    "workplace/order79-r93-bootstrap-1.log": {
+      "bytes": 70,
+      "sha256": "6b4cf528048947b44007a828de6805839fbafe990df5a339b6a8ddbc0a732b49"
+    },
+    "workplace/order79-r93-command-gin3": {
+      "bytes": 13958656,
+      "sha256": "3b5baf6c53c310a7daf072819d6a8ecd920529c9cebb3dce04bbd270b4bbfc77"
+    },
+    "workplace/order79-r93-command-gui/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/order79-r93-command-gui/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "95c12570a9cf7b90dc0c4d74ab403e361e7848b51b3d664fc154470984ed15df"
+    },
+    "workplace/order79-r93-command-gui/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/order79-r93-command-gui/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/order79-r93-command-gui/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "233b3be8d830ee04f5c05d552c2e27e8c07dbca0af55a6f764e751c98bf3a959"
+    },
+    "workplace/order79-r93-command-gui/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/order79-r93-command-gui/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "582b49517917c172875e3b237e02438a58b44a0eb24a4903b63ab0453f7a29e4"
+    },
+    "workplace/order79-r93-command-gui/app.log": {
+      "bytes": 471,
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa"
+    },
+    "workplace/order79-r93-command-gui/battle-order-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/order79-r93-command-gui/battle-order-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/order79-r93-command-gui/battle-order-x11.png": {
+      "bytes": 19106,
+      "sha256": "40812e77f5e620a99c748d67d1d34cffe54c58a7c378c06358de40bd6f534f43"
+    },
+    "workplace/order79-r93-command-gui/battle-order.bin": {
+      "bytes": 307200,
+      "sha256": "3aa18f24956c248608ed03142fdad4c1d093854d508f6ce72b111c5f87cbb39e"
+    },
+    "workplace/order79-r93-command-gui/battle-order.png": {
+      "bytes": 9724,
+      "sha256": "04687af01d1134f986f889a0056439b744d7afd25aebbcb4802d34215f0edf7e"
+    },
+    "workplace/order79-r93-command-gui/before-order-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/order79-r93-command-gui/before-order-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/order79-r93-command-gui/before-order-x11.png": {
+      "bytes": 17708,
+      "sha256": "d493912c9ad1ebeb8e64707afdede8a0db89e25494f79050525a6a46fbee64cc"
+    },
+    "workplace/order79-r93-command-gui/before-order.bin": {
+      "bytes": 307200,
+      "sha256": "8a1bb6fc459b0ff55623cb8f754d1ab772fc00161070019dcc9f4a1145a3050f"
+    },
+    "workplace/order79-r93-command-gui/before-order.png": {
+      "bytes": 9132,
+      "sha256": "545adeb3c3a60cc1a3992898ce555b094d57f3447f35a5d5a71133d10c795d0d"
+    },
+    "workplace/order79-r93-command-gui/move-order-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/order79-r93-command-gui/move-order-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/order79-r93-command-gui/move-order-x11.png": {
+      "bytes": 19106,
+      "sha256": "40812e77f5e620a99c748d67d1d34cffe54c58a7c378c06358de40bd6f534f43"
+    },
+    "workplace/order79-r93-command-gui/move-order.bin": {
+      "bytes": 307200,
+      "sha256": "3aa18f24956c248608ed03142fdad4c1d093854d508f6ce72b111c5f87cbb39e"
+    },
+    "workplace/order79-r93-command-gui/move-order.png": {
+      "bytes": 9724,
+      "sha256": "04687af01d1134f986f889a0056439b744d7afd25aebbcb4802d34215f0edf7e"
+    },
+    "workplace/order79-r93-command-gui/receipt.json": {
+      "bytes": 72800,
+      "sha256": "9410168ca4ae3e25ff0eebf052682d552b35b48faa8dd39837dc23e297d99949"
+    },
+    "workplace/order79-r93-command-gui/status.json": {
+      "bytes": 1075,
+      "sha256": "e4d415bd18db54f20ef89897c75405f1df10b465b5772b2d0fe85d64983a7516"
+    },
+    "workplace/order79-r93-command-gui/updates.jsonl": {
+      "bytes": 401626,
+      "sha256": "e95b4de952829d8fe47f803f62402e1074ecd6c5c7afd5bce5e3e86168f9a272"
+    },
+    "workplace/order79-r93-command-gui.log": {
+      "bytes": 651,
+      "sha256": "a0a44b1c2bd2545765ac61d28f1d8855034fd691bede045207b53e4dcfd403e3"
+    },
+    "workplace/order79-r93-gin3": {
+      "bytes": 13954056,
+      "sha256": "3af65758905e61f08495c5a3171a3cd5e30b911e4676b1452ba78fed41a94871"
+    },
+    "workplace/order79-r93-gui-1/app.log": {
+      "bytes": 471,
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa"
+    },
+    "workplace/order79-r93-gui-1/failed-trace.json": {
+      "bytes": 116677,
+      "sha256": "1f04b2546863f1e0faf365eb51595e6f0788958a0387764022466a971a9f200e"
+    },
+    "workplace/order79-r93-gui-1/input-trace.jsonl": {
+      "bytes": 109850,
+      "sha256": "864db21a6db162236d7cad40730f7934e95aa3ade8f4cea6fbac5dea4957865d"
+    },
+    "workplace/order79-r93-gui-1/status.json": {
+      "bytes": 329,
+      "sha256": "7deb36d87150f5972f45fe27dc27b9f73077cf7e5bb427e4dd5ef7cd8ef9afba"
+    },
+    "workplace/order79-r93-gui-1/updates.jsonl": {
+      "bytes": 1216220,
+      "sha256": "2d22bc52e11d844c7a0eedfd8de3bb32091b994156834ad89b900a66417c2ccf"
+    },
+    "workplace/order79-r93-gui-1.log": {
+      "bytes": 744,
+      "sha256": "19da1ea54d147abd70d3d56e0599ae03b303982fe6d57adce2d2c1ca2bbe1603"
+    },
+    "workplace/order79-r93-gui-2/app.log": {
+      "bytes": 471,
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa"
+    },
+    "workplace/order79-r93-gui-2/failed-trace.json": {
+      "bytes": 22434,
+      "sha256": "5c41c6cfbea019b9f55c3e2f53fa2c086ba9960840aadbfe8caa3758a54fd665"
+    },
+    "workplace/order79-r93-gui-2/input-trace.jsonl": {
+      "bytes": 21091,
+      "sha256": "36d37041e3ae0c6b7100eec15b38890d7260ab659baef6bd2a89ebcab423c1f5"
+    },
+    "workplace/order79-r93-gui-2/status.json": {
+      "bytes": 326,
+      "sha256": "51b91cb3b09a09394b46f604165012e2f4cf23aa89665d3ad5f2521f750c7760"
+    },
+    "workplace/order79-r93-gui-2/updates.jsonl": {
+      "bytes": 399754,
+      "sha256": "515d2b46afd3bc6ec5402da02525abc31c3307c92f69d0cca73484e69a5123aa"
+    },
+    "workplace/order79-r93-gui-2.log": {
+      "bytes": 737,
+      "sha256": "55295f7b2ff519679bf893b81868b58c63892702481ce1afdb8ee1e6015a417f"
+    },
+    "workplace/order79-r93-gui-3/app.log": {
+      "bytes": 471,
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa"
+    },
+    "workplace/order79-r93-gui-3/failed-camera.json": {
+      "bytes": 40463,
+      "sha256": "2dfe34db6faf0f9cd6cc920ed2376d9f75d500aa05e0923c6f6e9f79c4180eb7"
+    },
+    "workplace/order79-r93-gui-3/failed-trace.json": {
+      "bytes": 23827,
+      "sha256": "17e55e8e4467e5851a9ab4dd87f086e6a1b6c00f471ffb2fa1c941d6defc6631"
+    },
+    "workplace/order79-r93-gui-3/input-trace.jsonl": {
+      "bytes": 22392,
+      "sha256": "daf098b94aeed0c46cb8737c8f70fd21b2ef4d2243dfb2c1d4cd6ca667fa1f61"
+    },
+    "workplace/order79-r93-gui-3/status.json": {
+      "bytes": 326,
+      "sha256": "c930a8adc3e9d47a47a4d90b34620c819a79cd9b326fe39233279bedf76934db"
+    },
+    "workplace/order79-r93-gui-3/updates.jsonl": {
+      "bytes": 440280,
+      "sha256": "5befb8a17cbb65f8e561bc3fcda3a2160b3a5a79b8756268baa91e3a38009835"
+    },
+    "workplace/order79-r93-gui-3.log": {
+      "bytes": 737,
+      "sha256": "79975a498ae561bf061828615f5327c32d77907c55347ef290aeaf5be6bf2f3d"
+    },
+    "workplace/order79-r93-gui-driver-v2.py": {
+      "bytes": 10208,
+      "sha256": "bdce69d5af469eb9a6d4a9899ece8c63c51ce949e5ef16c7c23aa702a9726e77"
+    },
+    "workplace/order79-r93-gui-driver-v3.py": {
+      "bytes": 10283,
+      "sha256": "52dd9ff75109edc057e140d807f5c375199bd658fe0f72c53071b7f8059119d3"
+    },
+    "workplace/order79-r93-gui-save-check.json": {
+      "bytes": 274,
+      "sha256": "0692a6a6ec4e291d8de5103ad65333c60c41233fe6b5bbf6049a49fc8da502e6"
+    },
+    "workplace/order79-r93-images.txt": {
+      "bytes": 290,
+      "sha256": "a4c79f51bcb765957028156b6d210f415d0462a3aa39455aeaa6cb9ba74a717c"
+    },
+    "workplace/order79-r93-input": {
+      "bytes": 4299024,
+      "sha256": "ef8758242be924efa37ce99ba13b0a00bb227a3e4898277ec2dfd5f4bc3cd526"
+    },
+    "workplace/order79-r93-issue-current.json": {
+      "bytes": 83480,
+      "sha256": "9d9e80f12314bbd37ed97ed778bec01bdb9d3f13dc11ad4bdb82a3df7c40966c"
+    },
+    "workplace/order79-r93-native-run.sh": {
+      "bytes": 504,
+      "sha256": "0e23fef014c5074fc151fa3966970908e72431d51a7fe65cde11c33b14678d6c"
+    },
+    "workplace/order79-r93-native.go": {
+      "bytes": 8835,
+      "sha256": "92efbd14b11d16a6466c6e62677cea783242a86a20c6b89d8c75308590574303"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "5f2c20ed9a4292cbeeabb210aa001e3496b0d9fe3ba6ad8bbda4622e3cffaed1"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "cf82a6920ee7956aaccf215f0050bc5b4d75a2303681191d2dc1402a2a7f89e6"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "563419b99baf374819c40f09b11d1be211e4f2aead0d5325a90ec52fc93e8bc1"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/command-1-01316.bin": {
+      "bytes": 307200,
+      "sha256": "c0852802eb43c34d6a0005b7e7abc83783841b7786dcefc7fb809d338bc28bdd"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/command-1-01316.png": {
+      "bytes": 14287,
+      "sha256": "cbd6085452c3932b11a6ff138b8d947f26ef3139bfa67e5acb137975e7a225e2"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/command-2-01318.bin": {
+      "bytes": 307200,
+      "sha256": "d75bbe803f0fed57dd8dc8d527e9c856f47afe3941e33b8f90f58e59db1ff9b6"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/command-2-01318.png": {
+      "bytes": 11714,
+      "sha256": "b2786550fc8efcb0bce94c312ab6dfcb651a4204006a9f7fe5aaa821a60946a8"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/inputs.json": {
+      "bytes": 238481,
+      "sha256": "e8d1fc4ab0e82f2164b1065aef4d54178858d83f0b1b2639d0f9c663da5a18f1"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/screen.bin": {
+      "bytes": 307200,
+      "sha256": "88ba6d7fe653b915f0400ade3ea86d2ad2e00642d192230ed3fc97b7d0f8b580"
+    },
+    "workplace/order79-r93-normal-s3/normal-0/screen.png": {
+      "bytes": 12311,
+      "sha256": "0aaec05f8b5473b5efce55032f3c5dac3792984f2acdf610a787bf80ac3c3048"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "8efabffca08575b9cba271d342c33738cf900e4bdf2511874137d614ca584457"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "2f4c7c1c25cd5974ce859d6158c6f759575c52588d6a8e85058d6600f7d0f101"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "e9e6af73db3f7cc1518ee41b4ed5bf90a2eeb716193b8d9ad0b0b9d5dbe4c227"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/command-1-01550.bin": {
+      "bytes": 307200,
+      "sha256": "efec44bbef3535898c3cd72e6a95b42ecf4f314c2183f03efb029979dd85c35d"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/command-1-01550.png": {
+      "bytes": 9319,
+      "sha256": "cdeac06a27d2f74a3102646e3b9e9e58695b83b34091698cd70be3f017784cbf"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/command-2-01552.bin": {
+      "bytes": 307200,
+      "sha256": "73bed780118bd4cc000d56c9e87db2d2bac1cdd27419da10f84cc4a0b08d88dd"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/command-2-01552.png": {
+      "bytes": 7388,
+      "sha256": "f7878b7cf51c15addd1fb97686aecede455ba6a74b2db5aebf1a1feef730d7f1"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/inputs.json": {
+      "bytes": 230289,
+      "sha256": "4d95b3f8bcdd4e1383d1f64f81fc53f0c09c192349582540cfb5520938520e57"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/screen.bin": {
+      "bytes": 307200,
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374"
+    },
+    "workplace/order79-r93-normal-s3/normal-1/screen.png": {
+      "bytes": 8129,
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df"
+    },
+    "workplace/order79-r93-normal-s3.log": {
+      "bytes": 6377,
+      "sha256": "d0ce498e566253d5fde66b429cf68b27d6603f48c32a0038319e746ad28cf358"
+    },
+    "workplace/order79-r93-plan-0/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "5f2c20ed9a4292cbeeabb210aa001e3496b0d9fe3ba6ad8bbda4622e3cffaed1"
+    },
+    "workplace/order79-r93-plan-0/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6"
+    },
+    "workplace/order79-r93-plan-0/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e"
+    },
+    "workplace/order79-r93-plan-0/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1"
+    },
+    "workplace/order79-r93-plan-0/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "cf82a6920ee7956aaccf215f0050bc5b4d75a2303681191d2dc1402a2a7f89e6"
+    },
+    "workplace/order79-r93-plan-0/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af"
+    },
+    "workplace/order79-r93-plan-0/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "563419b99baf374819c40f09b11d1be211e4f2aead0d5325a90ec52fc93e8bc1"
+    },
+    "workplace/order79-r93-plan-0/command-1-00180.bin": {
+      "bytes": 307200,
+      "sha256": "c0852802eb43c34d6a0005b7e7abc83783841b7786dcefc7fb809d338bc28bdd"
+    },
+    "workplace/order79-r93-plan-0/command-1-00180.png": {
+      "bytes": 14287,
+      "sha256": "cbd6085452c3932b11a6ff138b8d947f26ef3139bfa67e5acb137975e7a225e2"
+    },
+    "workplace/order79-r93-plan-0/command-2-00181.bin": {
+      "bytes": 307200,
+      "sha256": "d75bbe803f0fed57dd8dc8d527e9c856f47afe3941e33b8f90f58e59db1ff9b6"
+    },
+    "workplace/order79-r93-plan-0/command-2-00181.png": {
+      "bytes": 11714,
+      "sha256": "b2786550fc8efcb0bce94c312ab6dfcb651a4204006a9f7fe5aaa821a60946a8"
+    },
+    "workplace/order79-r93-plan-0/final.bin": {
+      "bytes": 307200,
+      "sha256": "88ba6d7fe653b915f0400ade3ea86d2ad2e00642d192230ed3fc97b7d0f8b580"
+    },
+    "workplace/order79-r93-plan-0/final.png": {
+      "bytes": 12311,
+      "sha256": "0aaec05f8b5473b5efce55032f3c5dac3792984f2acdf610a787bf80ac3c3048"
+    },
+    "workplace/order79-r93-plan-0/plan.json": {
+      "bytes": 182702,
+      "sha256": "f3675833435ad9ab38ae4729aa35dd3725e53dac456b1d6c155beb5487705ee7"
+    },
+    "workplace/order79-r93-plan-0.log": {
+      "bytes": 51,
+      "sha256": "09e1daffbd81918787ed1d74dbb36f688ee79b30e3f2b3d8c6fdf43482101c99"
+    },
+    "workplace/order79-r93-plan-1/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "8efabffca08575b9cba271d342c33738cf900e4bdf2511874137d614ca584457"
+    },
+    "workplace/order79-r93-plan-1/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c"
+    },
+    "workplace/order79-r93-plan-1/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/order79-r93-plan-1/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/order79-r93-plan-1/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "2f4c7c1c25cd5974ce859d6158c6f759575c52588d6a8e85058d6600f7d0f101"
+    },
+    "workplace/order79-r93-plan-1/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/order79-r93-plan-1/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "e9e6af73db3f7cc1518ee41b4ed5bf90a2eeb716193b8d9ad0b0b9d5dbe4c227"
+    },
+    "workplace/order79-r93-plan-1/command-1-00156.bin": {
+      "bytes": 307200,
+      "sha256": "efec44bbef3535898c3cd72e6a95b42ecf4f314c2183f03efb029979dd85c35d"
+    },
+    "workplace/order79-r93-plan-1/command-1-00156.png": {
+      "bytes": 9319,
+      "sha256": "cdeac06a27d2f74a3102646e3b9e9e58695b83b34091698cd70be3f017784cbf"
+    },
+    "workplace/order79-r93-plan-1/command-2-00157.bin": {
+      "bytes": 307200,
+      "sha256": "73bed780118bd4cc000d56c9e87db2d2bac1cdd27419da10f84cc4a0b08d88dd"
+    },
+    "workplace/order79-r93-plan-1/command-2-00157.png": {
+      "bytes": 7388,
+      "sha256": "f7878b7cf51c15addd1fb97686aecede455ba6a74b2db5aebf1a1feef730d7f1"
+    },
+    "workplace/order79-r93-plan-1/final.bin": {
+      "bytes": 307200,
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374"
+    },
+    "workplace/order79-r93-plan-1/final.png": {
+      "bytes": 8129,
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df"
+    },
+    "workplace/order79-r93-plan-1/plan.json": {
+      "bytes": 158666,
+      "sha256": "014d9f3b5b1f9c1a0890aae601149ed61c3118672a90d8a4b6b8a21ecff21a87"
+    },
+    "workplace/order79-r93-plan-1.log": {
+      "bytes": 51,
+      "sha256": "6278108b50f18fee1f4eac9da7cedcbab040f4fa5c8b4c52e82f1dcd53e39e36"
+    },
+    "workplace/order79-r93-replay-game.go": {
+      "bytes": 11821,
+      "sha256": "4dd13cb577652f54032a3cd445252660cba071bfe63e6341527f179b0416f984"
+    },
+    "workplace/order79-r93-replay-overlay.json": {
+      "bytes": 108,
+      "sha256": "9d2d7bbf7eadb895a4821476cafcef6339444c7bd0ae5805db51b871b53df32a"
+    },
+    "workplace/order79-r93-save.log": {
+      "bytes": 230,
+      "sha256": "54c6680e45c678189c703e3a8a42bc6caf5bb82d22974701e2fd4118454bc1d2"
+    },
+    "workplace/order79-r93-standard.log": {
+      "bytes": 961,
+      "sha256": "e44b0dd452b9b863d990c0f5cda8e59eb73b5ac27509603b041c689d156e3b13"
+    },
+    "workplace/finish79-r93-b-overlay.json": {
+      "bytes": 123,
+      "sha256": "fc5fdb7cea2a31edf6e03cbfbaae175dbc1a9e84f5f5c2d45f16473df1de54a5"
+    },
+    "workplace/finish79-r93-b-probe_test.go": {
+      "bytes": 13881,
+      "sha256": "51f6079ba47f6f71f3965c0bc40b43eb3b89566cd7a909ff590366f16094e21a"
+    },
+    "workplace/finish79-r93-c-overlay.json": {
+      "bytes": 123,
+      "sha256": "d3e9a15667582821f95d9695c0b5ac29b8810d25efae78b81ed42a272049221f"
+    },
+    "workplace/finish79-r93-c-probe_test.go": {
+      "bytes": 14833,
+      "sha256": "3a708d8d5faa46095e756620527fa5a3ba58b23c7900da648a7afb62c746fc07"
+    },
+    "workplace/finish79-r93-d-overlay.json": {
+      "bytes": 123,
+      "sha256": "510870579fd00af2b6f6d324d7529f9d0d738af931bf0455d74f0491cbd9b828"
+    },
+    "workplace/finish79-r93-d-probe_test.go": {
+      "bytes": 14920,
+      "sha256": "aec26e2171261d9c5ba45ee047919e45a11d4ae1253870c2acac6b8755f69b17"
+    },
+    "workplace/finish79-r93-e-overlay.json": {
+      "bytes": 123,
+      "sha256": "6770aa4510cde2ad1555d2fce70e77e79482e46cfbdecfffc31a2ab1ddd0467a"
+    },
+    "workplace/finish79-r93-e-probe_test.go": {
+      "bytes": 14885,
+      "sha256": "fdb5c05495cf6a4303ed65745d4159c751b2c47294f0853d550a47fa471edb5f"
+    },
+    "workplace/finish79-r93-f-overlay.json": {
+      "bytes": 123,
+      "sha256": "a8f5698fa2f55056ab69a8c898ff3f49e3457dee65c5a32d0cb1c7445303b167"
+    },
+    "workplace/finish79-r93-f-probe_test.go": {
+      "bytes": 15220,
+      "sha256": "4b5bbc5d74ceb873395e3dca6b9e46a04ce1a68b89cb1e8b371e78ba24cf5f97"
+    },
+    "workplace/finish79-r93-g-overlay.json": {
+      "bytes": 123,
+      "sha256": "7df3af1fe8495f8b4bb43b63d4be232bf0ba1bc667784139ac7a3359260505b1"
+    },
+    "workplace/finish79-r93-g-probe_test.go": {
+      "bytes": 15927,
+      "sha256": "18027d6f08a1e71224128fa6195ce1b62da50cd0b521dae838d3423f118a06a9"
+    },
+    "workplace/finish79-r93-h-overlay.json": {
+      "bytes": 123,
+      "sha256": "9489e51c4d4ececdb7f33a8a4cdfce2ad8cf7749ee05fb5b9e24a77a46a10385"
+    },
+    "workplace/finish79-r93-h-probe_test.go": {
+      "bytes": 17161,
+      "sha256": "a0bf7b9a5bcda7e5943922fa66fcc1a371b5b1fde1d6f34d61202f15fd4fdba7"
+    },
+    "workplace/finish79-r93-i-overlay.json": {
+      "bytes": 123,
+      "sha256": "3c827fee489e55ca2acb5949533f3ccc867533d4b62a2e2020165015e2d85481"
+    },
+    "workplace/finish79-r93-i-probe_test.go": {
+      "bytes": 17185,
+      "sha256": "a7e23da9ae27bb54bd8fe76a9f3dc63ca7940f450413b3d098c36a733d6ca5f7"
+    },
+    "workplace/finish79-r93-j-overlay.json": {
+      "bytes": 123,
+      "sha256": "9b3d58b2982304f03115dc4b032b89d487e7feee4e713e7531661d19864f6a55"
+    },
+    "workplace/finish79-r93-j-probe_test.go": {
+      "bytes": 17589,
+      "sha256": "ec2535db44a0652908431d787589bab4855fce40f5a6f8acfa0dd97942d27e4c"
+    },
+    "workplace/finish79-r93-k-overlay.json": {
+      "bytes": 123,
+      "sha256": "5988c7ffbeb021b867e124db77506cab21079652697b058734ec3fe4261088a7"
+    },
+    "workplace/finish79-r93-k-probe_test.go": {
+      "bytes": 18681,
+      "sha256": "f69dc69a7fd68f0b38e7f12e714715dcf0bd3bff6a2e6560a728ddd4f3403cba"
+    },
+    "workplace/finish79-r93-l-overlay.json": {
+      "bytes": 123,
+      "sha256": "5f4e4fcb8a34f5b663d0aa1c2259c2c26904537a64b47912130cf971c9640842"
+    },
+    "workplace/finish79-r93-l-probe_test.go": {
+      "bytes": 19045,
+      "sha256": "2378824c0ad417057e87a6e30a9f4e7d723675abaa675d795f3644ad15b36138"
+    },
+    "workplace/finish79-r93-m-overlay.json": {
+      "bytes": 123,
+      "sha256": "226c31b968ecddc7d9bc2e4d99674506e2ee2dd3b08032166b28dc1af8364dac"
+    },
+    "workplace/finish79-r93-m-probe_test.go": {
+      "bytes": 19045,
+      "sha256": "2378824c0ad417057e87a6e30a9f4e7d723675abaa675d795f3644ad15b36138"
+    },
+    "workplace/finish79-r93-normal-a/normal-1/command-1-01550.bin": {
+      "bytes": 307200,
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8"
+    },
+    "workplace/finish79-r93-normal-a/normal-1/command-1-01550.png": {
+      "bytes": 9459,
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc"
+    },
+    "workplace/finish79-r93-normal-a/normal-1/command-1-02741.bin": {
+      "bytes": 307200,
+      "sha256": "2b3d1f9370ec19098eb18dfd08827df12a14e8dfc825f72dc286a03179d0c4b1"
+    },
+    "workplace/finish79-r93-normal-a/normal-1/command-1-02741.png": {
+      "bytes": 9520,
+      "sha256": "311be3aa65683bba76ed0e688660b7f1924c644d75457e75902db2e50a2236c5"
+    },
+    "workplace/finish79-r93-normal-a/normal-1/command-2-01552.bin": {
+      "bytes": 307200,
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4"
+    },
+    "workplace/finish79-r93-normal-a/normal-1/command-2-01552.png": {
+      "bytes": 7505,
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9"
+    },
+    "workplace/finish79-r93-normal-a/normal-1/command-2-02743.bin": {
+      "bytes": 307200,
+      "sha256": "85da160508b04ad2bd0737d391074c7573245f62843ae0e444a76181422cdbf9"
+    },
+    "workplace/finish79-r93-normal-a/normal-1/command-2-02743.png": {
+      "bytes": 7586,
+      "sha256": "7be93db0953a9f55a07ced9000247a170a61ed6b2288f2cb944d4134e559fd93"
+    },
+    "workplace/finish79-r93-normal-a/normal-1/observations.json": {
+      "bytes": 324587,
+      "sha256": "ad03d82af67731adb323fe2840d59005a018beaec05c917773e1fee3f7eaefe3"
+    },
+    "workplace/finish79-r93-normal-a.log": {
+      "bytes": 5910,
+      "sha256": "210852a6c60117bcf3fbaa4b60333e66f421bf3202ef6fbecb1417c6a104b5e7"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-1-01512.bin": {
+      "bytes": 307200,
+      "sha256": "920c5ccdcff1da9717f8a45ca8acf4e42ad9d1a552e0c6d0c663788013ff9789"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-1-01512.png": {
+      "bytes": 10439,
+      "sha256": "5eae82cfc0e789af05a20567fdff41bf57e3786f67b35b696fc2660d70a3b48f"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-1-02113.bin": {
+      "bytes": 307200,
+      "sha256": "e617d489779726eee4a642e6ba505db32572723b1f88ac535c7a299b93813440"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-1-02113.png": {
+      "bytes": 9407,
+      "sha256": "6ffe5d8eefca03120f1d29cfcc0a1bb599ded3d9470bbec5e140ceb68d952c25"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-1-02148.bin": {
+      "bytes": 307200,
+      "sha256": "bd2073bfa57c3f27ef8bec26f32a445905a290e95a2f23ab81ba74669aba20ab"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-1-02148.png": {
+      "bytes": 9935,
+      "sha256": "4b841e20516a9c760a6f33820e87c06c3e0467c3b7d6360c713401d3cd2cf906"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-2-01514.bin": {
+      "bytes": 307200,
+      "sha256": "f2cacce5ea4e2f4ead06b57d7cf39f380e110dfc210db7a83b9957bfbb65484c"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-2-01514.png": {
+      "bytes": 8049,
+      "sha256": "699233d0f2fb8281d7f462ef82775dc5d713683062cb30bdf611846b0f8d8702"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-2-02115.bin": {
+      "bytes": 307200,
+      "sha256": "bf44fffb10388abc9eb2c11c8ca0184350ec2dab5f49e2288511338d7e19d797"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-2-02115.png": {
+      "bytes": 7649,
+      "sha256": "8b05181820151a5d6ed45cc4be75fa43a999dc1e846de528ec3148a1462f3227"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-2-02150.bin": {
+      "bytes": 307200,
+      "sha256": "06c2b6a1af7e8fd9e87c421a56e1c2d5c16c901634cda8cad1f956e5a57bfbfb"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/command-2-02150.png": {
+      "bytes": 7708,
+      "sha256": "d05b682bd7a11e11e4840676e5dfe0b8e3d6208e2d31e3efb1a206373578b0b7"
+    },
+    "workplace/finish79-r93-normal-b/normal-1/observations.json": {
+      "bytes": 320329,
+      "sha256": "7c682ba0aa8fa945eb0aa904d1c304efcb2e3548775afef1c9a326c9d01f3586"
+    },
+    "workplace/finish79-r93-normal-b.log": {
+      "bytes": 5949,
+      "sha256": "c0dddff5f77123275cd9f00ea964b306d6ef601e880c2c7bcd081bf6469bf728"
+    },
+    "workplace/finish79-r93-normal-c/normal-1/observations.json": {
+      "bytes": 9701,
+      "sha256": "1a3a1e2d2db8f15b4f60b885e3b5c6233ec4e4957ec292411ed960f8cd24b406"
+    },
+    "workplace/finish79-r93-normal-c.log": {
+      "bytes": 1289,
+      "sha256": "554f7f915aa3dfde49c9c91a98442c394a386e68c2d67d26dc9325aeb16f345d"
+    },
+    "workplace/finish79-r93-normal-d/normal-1/observations.json": {
+      "bytes": 333542,
+      "sha256": "a8774f3036d2014a93f5ebf34ccd48ce9114e202fa40b20c6afea857f2f053ff"
+    },
+    "workplace/finish79-r93-normal-d.log": {
+      "bytes": 19627,
+      "sha256": "fb4aa8bd1d8eeafe9316930f89039267bc5db2e99d787c72b9842bc0b3a6cfcf"
+    },
+    "workplace/finish79-r93-normal-e/normal-1/observations.json": {
+      "bytes": 333542,
+      "sha256": "a8774f3036d2014a93f5ebf34ccd48ce9114e202fa40b20c6afea857f2f053ff"
+    },
+    "workplace/finish79-r93-normal-e.log": {
+      "bytes": 19627,
+      "sha256": "fdb3f81eb287eb6d0541bdea6c1dc0b6711e9e0368c874e88edbcdb5128fda5b"
+    },
+    "workplace/finish79-r93-normal-f/normal-1/observations.json": {
+      "bytes": 317820,
+      "sha256": "6fa181d695634e8a68814e79e67badd1a80fa29365c76144f784a711ad82fbe0"
+    },
+    "workplace/finish79-r93-normal-f.log": {
+      "bytes": 18508,
+      "sha256": "1cb4e2ae9b00bd8989f2db4ddb9dfc93e65c6d30592ae09b919912035585d3f1"
+    },
+    "workplace/finish79-r93-normal-g/normal-1/observations.json": {
+      "bytes": 317820,
+      "sha256": "6fa181d695634e8a68814e79e67badd1a80fa29365c76144f784a711ad82fbe0"
+    },
+    "workplace/finish79-r93-normal-g.log": {
+      "bytes": 18508,
+      "sha256": "25bcd36d6b205887a02908634a5769e4a396235cc6307a9902f7f371bcdf0bfa"
+    },
+    "workplace/finish79-r93-normal-h/normal-1/observations.json": {
+      "bytes": 317840,
+      "sha256": "8f0ceea1ca732f901c0c1c759ad46bba3ddad8fa13725abb43a0f12cd364a53a"
+    },
+    "workplace/finish79-r93-normal-h.log": {
+      "bytes": 18508,
+      "sha256": "57655f3a5ff2788848a1db4ba5e8aed3b92990a4fbf72077460830c05aef4edf"
+    },
+    "workplace/finish79-r93-normal-i/normal-1/observations.json": {
+      "bytes": 317840,
+      "sha256": "8f0ceea1ca732f901c0c1c759ad46bba3ddad8fa13725abb43a0f12cd364a53a"
+    },
+    "workplace/finish79-r93-normal-i.log": {
+      "bytes": 18508,
+      "sha256": "fe54cfe5d2d6ded11004aa45194ea255583f38ff969ebf13db855fc2237389e3"
+    },
+    "workplace/finish79-r93-normal-j/normal-1/observations.json": {
+      "bytes": 317840,
+      "sha256": "8f0ceea1ca732f901c0c1c759ad46bba3ddad8fa13725abb43a0f12cd364a53a"
+    },
+    "workplace/finish79-r93-normal-j.log": {
+      "bytes": 22542,
+      "sha256": "1c780515d4ded83bc9434063b0ed2a636b5dd3cff7f2010526a67068ecce5132"
+    },
+    "workplace/finish79-r93-normal-k/normal-1/observations.json": {
+      "bytes": 1294954,
+      "sha256": "6ca17f94e17fed7953142ad7ef49f6321c42547605bf745069c4ea753be0e3a7"
+    },
+    "workplace/finish79-r93-normal-k.log": {
+      "bytes": 22542,
+      "sha256": "0bb4154ff4f282eb1444fc76374952a3383491764f555ac8d28d94005d91d88a"
+    },
+    "workplace/finish79-r93-normal-l/normal-1/observations.json": {
+      "bytes": 1457620,
+      "sha256": "2a490217592a64fc1c197b1e8d6c22a8071baaf0d078b42ec568a6f68570c7dd"
+    },
+    "workplace/finish79-r93-normal-l.log": {
+      "bytes": 22542,
+      "sha256": "9fd4d00dff2e93e9b60df19500bb2fe0438e533661de9fe1b593512aaf3ce3c8"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-00694.bin": {
+      "bytes": 307200,
+      "sha256": "241befc5e00c043d45dcd81e2c93c31dbf774675b7d244ea545d88c9910a0ba5"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-00694.png": {
+      "bytes": 11883,
+      "sha256": "779b3c0f526926f055b83c4002e4d63395f8f2a7bc72e6d295255ba16bbf7aae"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-01056.bin": {
+      "bytes": 307200,
+      "sha256": "0255fd53039980ecf02fe50a1e0457eb0fda1c80dadcd65b81c5585e99f75a6f"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-01056.png": {
+      "bytes": 10597,
+      "sha256": "5d3f07fa0cf2dd9cbff23f8e358e7fee95116f3dc6bc955a11b4752666a4b974"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-01431.bin": {
+      "bytes": 307200,
+      "sha256": "bf5ea0227e8422db56ac07b5d0f0bcf939dcc4f27e8ca628e97cff45890ce1c7"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-01431.png": {
+      "bytes": 10637,
+      "sha256": "74a4d79e74f083b9ee385b3665c68136a86b52d712774ab53c0f88246f09388f"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-01658.bin": {
+      "bytes": 307200,
+      "sha256": "f2f6a1d9bc2e9651db31f624de3a3c42002bd58211ed88d8e260bb5d18f38ddb"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-01658.png": {
+      "bytes": 11795,
+      "sha256": "45c4decd1f1e8a9cf2573e501cf9668ba3ec291b58e24f990f6bbd3af703d3d1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-02159.bin": {
+      "bytes": 307200,
+      "sha256": "f2f6a1d9bc2e9651db31f624de3a3c42002bd58211ed88d8e260bb5d18f38ddb"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-02159.png": {
+      "bytes": 11795,
+      "sha256": "45c4decd1f1e8a9cf2573e501cf9668ba3ec291b58e24f990f6bbd3af703d3d1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-02386.bin": {
+      "bytes": 307200,
+      "sha256": "f2f6a1d9bc2e9651db31f624de3a3c42002bd58211ed88d8e260bb5d18f38ddb"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-02386.png": {
+      "bytes": 11795,
+      "sha256": "45c4decd1f1e8a9cf2573e501cf9668ba3ec291b58e24f990f6bbd3af703d3d1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-02613.bin": {
+      "bytes": 307200,
+      "sha256": "f2f6a1d9bc2e9651db31f624de3a3c42002bd58211ed88d8e260bb5d18f38ddb"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-02613.png": {
+      "bytes": 11795,
+      "sha256": "45c4decd1f1e8a9cf2573e501cf9668ba3ec291b58e24f990f6bbd3af703d3d1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-02840.bin": {
+      "bytes": 307200,
+      "sha256": "f2f6a1d9bc2e9651db31f624de3a3c42002bd58211ed88d8e260bb5d18f38ddb"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-02840.png": {
+      "bytes": 11795,
+      "sha256": "45c4decd1f1e8a9cf2573e501cf9668ba3ec291b58e24f990f6bbd3af703d3d1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-03067.bin": {
+      "bytes": 307200,
+      "sha256": "f2f6a1d9bc2e9651db31f624de3a3c42002bd58211ed88d8e260bb5d18f38ddb"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-03067.png": {
+      "bytes": 11795,
+      "sha256": "45c4decd1f1e8a9cf2573e501cf9668ba3ec291b58e24f990f6bbd3af703d3d1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-03294.bin": {
+      "bytes": 307200,
+      "sha256": "f2f6a1d9bc2e9651db31f624de3a3c42002bd58211ed88d8e260bb5d18f38ddb"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-03294.png": {
+      "bytes": 11795,
+      "sha256": "45c4decd1f1e8a9cf2573e501cf9668ba3ec291b58e24f990f6bbd3af703d3d1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-03521.bin": {
+      "bytes": 307200,
+      "sha256": "f2f6a1d9bc2e9651db31f624de3a3c42002bd58211ed88d8e260bb5d18f38ddb"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-03521.png": {
+      "bytes": 11795,
+      "sha256": "45c4decd1f1e8a9cf2573e501cf9668ba3ec291b58e24f990f6bbd3af703d3d1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-03748.bin": {
+      "bytes": 307200,
+      "sha256": "f2f6a1d9bc2e9651db31f624de3a3c42002bd58211ed88d8e260bb5d18f38ddb"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-03748.png": {
+      "bytes": 11795,
+      "sha256": "45c4decd1f1e8a9cf2573e501cf9668ba3ec291b58e24f990f6bbd3af703d3d1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-03975.bin": {
+      "bytes": 307200,
+      "sha256": "f2f6a1d9bc2e9651db31f624de3a3c42002bd58211ed88d8e260bb5d18f38ddb"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-1-03975.png": {
+      "bytes": 11795,
+      "sha256": "45c4decd1f1e8a9cf2573e501cf9668ba3ec291b58e24f990f6bbd3af703d3d1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-00696.bin": {
+      "bytes": 307200,
+      "sha256": "052eba4c2bdac22d221b2f29c2fe34316c3f7cde4fd25d03dd842b1cf37872fc"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-00696.png": {
+      "bytes": 10253,
+      "sha256": "0f40dac1898818d97b9c82857ab58368ed7383e803bd457d7989874370373c47"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-01058.bin": {
+      "bytes": 307200,
+      "sha256": "36b1612cf57122f5784054ffaabb566bca3ad36f0d02297b1218e8f935c4f5a9"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-01058.png": {
+      "bytes": 8148,
+      "sha256": "a87e3bdf66c338322475fc19d3f7cc99323dd1b628704d3ddb5a52d5fa8befaa"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-01433.bin": {
+      "bytes": 307200,
+      "sha256": "385079b0b7b0d7c2818116936a86247caf9ccb54d8b98f8b798f5cc6249d4646"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-01433.png": {
+      "bytes": 8329,
+      "sha256": "94b657a23fa7ee69584087ead3e93623d9d82fb8301b988e204663321218d67a"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-01660.bin": {
+      "bytes": 307200,
+      "sha256": "15bfbd16d6aedbcbd7fef685b5383be6e769b6e7e5c4b2f964643a2ccfb8eb4e"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-01660.png": {
+      "bytes": 10825,
+      "sha256": "3c5f40e477f6a8d320520ae9d8dc892531fa92f33a8f810c21d45a8f49e9a10b"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-02161.bin": {
+      "bytes": 307200,
+      "sha256": "a9265c6c2cf90917cf2cbf41b837e9a107060fc362fad51a00cea6187356f918"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-02161.png": {
+      "bytes": 10824,
+      "sha256": "0d7c91e49e2ca1c13f54e465a3b84f84c31d8bc9a31a2787be8ae32e235900a1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-02388.bin": {
+      "bytes": 307200,
+      "sha256": "5cf8a15c95c228bb4ed1222b6428570d09a80c59398c65487c20e32df48e16d9"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-02388.png": {
+      "bytes": 10819,
+      "sha256": "3db9dee87e8329dfa2420da3600dcc926a7daceb71afb75bf45bec5a32948bad"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-02615.bin": {
+      "bytes": 307200,
+      "sha256": "45e6772a9dc425c75702c91d8d885f302dfec8bc78dcce7f28e71b6e987bb7f1"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-02615.png": {
+      "bytes": 10833,
+      "sha256": "fda6afc6a7bb24d8e26ff8ad8bd6b3f1e1df131c283320621d256c8b94eabc50"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-02842.bin": {
+      "bytes": 307200,
+      "sha256": "d62a070913fdc855ddf5b14630722cd34cf5fe2dcf6caf6f9602d578676e13e3"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-02842.png": {
+      "bytes": 10834,
+      "sha256": "8def1a58773b4ea666bf0835f7ebe105ff37bb3c8b5e28e248a99c522b2d023a"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-03069.bin": {
+      "bytes": 307200,
+      "sha256": "36d7037dcaa2164c173e42d6525484b596afd01022f105046d792c144999115a"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-03069.png": {
+      "bytes": 10831,
+      "sha256": "39c9068ea11f8678457301e92b30cc7a17a33fed78ecc00c338ece1c3b3d4983"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-03296.bin": {
+      "bytes": 307200,
+      "sha256": "27638c72b33256429b4e0a08793ef89a73f7a736aa43624b2bb3fea6907a3a69"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-03296.png": {
+      "bytes": 10829,
+      "sha256": "560a947c24e56aa59e944e511b06d0cea964b11790ed3cf7aed4be079e0e3f9a"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-03523.bin": {
+      "bytes": 307200,
+      "sha256": "f99c4dbfccfc67ca9ab2ab9a02933773fc5a4600e3e088a3b393492e4c8ef8f8"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-03523.png": {
+      "bytes": 10830,
+      "sha256": "a026533b77ea8a648505839cade5931bbb926ca9974150dced528e2eccdcacbc"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-03750.bin": {
+      "bytes": 307200,
+      "sha256": "143ac364d896f8b4e9de20053e1cfaab545ed5b7c4f00532c779786d8e5bd133"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-03750.png": {
+      "bytes": 10829,
+      "sha256": "842a1bce52594357fd62946b2cdfec6a9066a54a6966084ef29871c8e9614515"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-03977.bin": {
+      "bytes": 307200,
+      "sha256": "ff02831d305e4ba6701d9fc52584ced9eb6b7125f44d3c547a2663c92abb3904"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/command-2-03977.png": {
+      "bytes": 10828,
+      "sha256": "4b0c4861f502be1c61692adc68e10a0257396569610a555c9a70a2ca35be54f4"
+    },
+    "workplace/finish79-r93-normal-m/normal-1/observations.json": {
+      "bytes": 1809334,
+      "sha256": "37a11db44862b3813380a6e7593eb5ae24a4c3277ac807ec99e81c2ca3211aa4"
+    },
+    "workplace/finish79-r93-normal-m.log": {
+      "bytes": 22543,
+      "sha256": "f2ae8f561a0ee44da2f0d8c6eec94d1fd8e9f00724f089a763d0462ded8494f7"
+    },
+    "workplace/finish79-r93-overlay.json": {
+      "bytes": 121,
+      "sha256": "ad010b6857613c7b2230123ad12c401b66618c34fed233e38d1d4aeae232f656"
+    },
+    "workplace/finish79-r93-player-generator-a.py": {
+      "bytes": 4793,
+      "sha256": "27a34226779c8a6c2fc6031f69554a152121b935afbde7143ea8aab8b2776122"
+    },
+    "workplace/finish79-r93-player-generator-b.py": {
+      "bytes": 5062,
+      "sha256": "9abf7e9c55ac6af3f7d39eb973f626deff3242eed1baf140da1a998d0c14609c"
+    },
+    "workplace/finish79-r93-player-generator-c.py": {
+      "bytes": 6118,
+      "sha256": "fec0334fb8031bf98b6f774ba47a7cefec372bdc543143bc1a762313d4e73a4a"
+    },
+    "workplace/finish79-r93-player-generator-d.py": {
+      "bytes": 6214,
+      "sha256": "47951ef118136c302aa34c7e1a327b270933b4db5d028684b424e9e11c165027"
+    },
+    "workplace/finish79-r93-player-generator-e.py": {
+      "bytes": 6440,
+      "sha256": "7bdf6e9310443197ea72a36044ce4548650d9d588b48ffe3d159678fa92b0a33"
+    },
+    "workplace/finish79-r93-player-generator-f.py": {
+      "bytes": 7001,
+      "sha256": "a9ed65c09120d2757756f3cf230e39dfa2700810c359594e2298fd11f0552a7b"
+    },
+    "workplace/finish79-r93-player-generator-g.py": {
+      "bytes": 8248,
+      "sha256": "53b0f541ef680be82290883c5610e67cd5a75971df281b8c7eee5822cd68a8c3"
+    },
+    "workplace/finish79-r93-player-generator-h.py": {
+      "bytes": 9539,
+      "sha256": "46925d6de58ee0b4b40eebd97e4eb2449bd99ebbea3fe2f5feb9ab7aca0acd9a"
+    },
+    "workplace/finish79-r93-player-generator-i.py": {
+      "bytes": 9645,
+      "sha256": "ac0942ae4df2c7a891e92c3956cc55d7ddf054ead1ef521969df2d73a40d060e"
+    },
+    "workplace/finish79-r93-player-generator-j.py": {
+      "bytes": 10199,
+      "sha256": "ae74d65cee7f9ded68530f4f071b823ec3d00ef1736255f8cdd1e748f946f41a"
+    },
+    "workplace/finish79-r93-player-generator-k.py": {
+      "bytes": 11388,
+      "sha256": "3f9879b3091474af7b431de61c3333eb567b7ea2191b7c0740c372b9d8b0240f"
+    },
+    "workplace/finish79-r93-probe_test.go": {
+      "bytes": 13893,
+      "sha256": "5f66515b3fcc7942e28e58fef1b52a8463e0e0d2d915a1e0fae538417121a156"
+    },
+    "workplace/round79-fleet-gui-game-order93.go": {
+      "bytes": 12584,
+      "sha256": "386054ffc65017b84c3f5ae5438cd5e3e092d8df86ba74c2abcef61a8f112629"
+    },
+    "workplace/round79-fleet-gui-main-order93.go": {
+      "bytes": 15847,
+      "sha256": "0e76f656887a54440812398448e5d321757a0757f108ec3be592904c9d272d1c"
+    },
+    "workplace/round79-fleet-gui-overlay-order93.json": {
+      "bytes": 196,
+      "sha256": "e5b7bd615351ad5701222991780571409f9726a67f60f1f83116ff893ad6244d"
+    },
+    "workplace/round79-fleet-gui-game-order93cmd.go": {
+      "bytes": 13422,
+      "sha256": "164537789c0007b7bb5886daf5cfca9dca3d84a48cf0c46eb2370044b3f3b166"
+    },
+    "workplace/round79-fleet-gui-main-order93cmd.go": {
+      "bytes": 15847,
+      "sha256": "0e76f656887a54440812398448e5d321757a0757f108ec3be592904c9d272d1c"
+    },
+    "workplace/round79-fleet-gui-overlay-order93cmd.json": {
+      "bytes": 202,
+      "sha256": "6f62d0867a94835dc11bef8112a7d5a03afe5280f7d72bcd6c599918f198cfc5"
+    },
+    "internal/game/fleetorder.go": {
+      "bytes": 6338,
+      "sha256": "f5e113e64e6952267f8d0abd9d2e0150bfff74cbe6fee1971b0a265f2f901aac"
+    },
+    "internal/game/fleetorder_test.go": {
+      "bytes": 8497,
+      "sha256": "9732beedd526730b4d4f57c30c40fe4adcf35c61e585d03d7ebc4cdb8eec7300"
+    },
+    "tools/fleet_order_action_oracle.sh": {
+      "bytes": 866,
+      "sha256": "d28c776c9a64d3e7ca172e6833971fc2181964fd9909c176796479cbabc9dc4b"
+    },
+    "tools/scripts/fleet_order_action_prepare.py": {
+      "bytes": 5242,
+      "sha256": "e922df000d09a0855e7e8a0421f17c50aa4eec53a13632bf5d9523b9ab879689"
+    },
+    "tools/scripts/fleet_order_action_receipt.py": {
+      "bytes": 8651,
+      "sha256": "a61e5ba5ca416f2ab19def6d81afc88cbe936240863ef0cb5a42bcf94a93e1b0"
+    },
+    "tools/scripts/battle_finish_player_probe.py": {
+      "bytes": 11852,
+      "sha256": "8722b6d8aa5cfe7bf0e3f7e765cf7fb03697d153dd40c54338094a81cdec5c73"
+    },
+    "tools/scripts/fleet_player_gui_prepare.py": {
+      "bytes": 4207,
+      "sha256": "8e555699af55c8362df11d01d75d19752c6459b45e1dcf8896bd46d44d491514"
+    },
+    "tools/scripts/fleet_player_gui_plan.go": {
+      "bytes": 4378,
+      "sha256": "5bde691b580dcf6903e4b2437f2a176b484a953a4adab2acc079e6adf0d7059e"
+    },
+    "tools/scripts/fleet_player_gui_driver.py": {
+      "bytes": 10005,
+      "sha256": "57023fdf104048be29896c5145d9ade927c3683ea09ce12e61ac952ad2892c55"
+    },
+    "tools/scripts/fleet_player_chain_replay.go": {
+      "bytes": 3499,
+      "sha256": "fb36776d049687c890bdc5ea389f1bf250a721dbcd2c558d34ac080831df5847"
+    },
+    "tools/scripts/sound_tail_input.go": {
+      "bytes": 2439,
+      "sha256": "c552f7e9ee7b956904ed9f0c1db509171523d64888a7687fae4dbdf22c81ad76"
+    },
+    "workplace/round79-input-v2": {
+      "bytes": 4286199,
+      "sha256": "e96277183c9f98d36a35cc07ae5f2c38eef1c33994a9b3e4b450a0afedde89cb"
+    },
+    "tools/scripts/fleet_order_action_gui.py": {
+      "bytes": 6070,
+      "sha256": "c941539d610f3bc3fdeb92e14f889d053d24c9a77e4fd07cf31c6e02a1acf220"
+    },
+    "workplace/round79-capture": {
+      "bytes": 4474819,
+      "sha256": "23fd5436619dc7b68f27922f4c14b5501e6639f51ece630b84dbb4200e2b582a"
+    }
+  },
+  "limitations": [
+    "自然勝利／占領GUI未驗",
+    "原版選點UI未重錄",
+    "原版整回合同態未驗",
+    "110 READY；062 DRAFT；Issue79 OPEN"
+  ]
+}

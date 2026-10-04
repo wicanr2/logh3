@@ -1,6 +1,8 @@
 package game
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/wicanr2/logh3/internal/rules"
@@ -35,6 +37,7 @@ func TestFleetMoveOrderTwoStages(t *testing.T) {
 	// 移動命令必須把上一個戰鬥行動整個覆寫成 0，再另算 bit4。
 	bf.Action = fleetActionBattle
 	fx, fy := g.battleUnits[flag].X, g.battleUnits[flag].Y
+	checkActions := fleetOrderActionsUnchanged(t, g)
 
 	ux, uy := unitScreenPos(g, flag)
 	g.MoveMouse(ux+8, uy+8)
@@ -86,6 +89,7 @@ func TestFleetMoveOrderTwoStages(t *testing.T) {
 	}
 
 	g.Click(tx+40, ty)
+	checkActions()
 	if g.FleetOrderStage() != FleetOrderNone {
 		t.Error("確定之後不該還停在選朝向")
 	}
@@ -126,6 +130,7 @@ func TestFleetBattleOrderSetsAction(t *testing.T) {
 		t.Skip("找不到艦隊記錄，跳過")
 	}
 	bf.Flag0, bf.Action = false, 0
+	checkActions := fleetOrderActionsUnchanged(t, g)
 
 	ux, uy := unitScreenPos(g, flag)
 	g.MoveMouse(ux+8, uy+8)
@@ -153,6 +158,7 @@ func TestFleetBattleOrderSetsAction(t *testing.T) {
 	g.Click(tx, ty)
 	g.MoveMouse(tx+40, ty)
 	g.Click(tx+40, ty)
+	checkActions()
 	if bf.Action != fleetActionBattle {
 		t.Errorf("「戰鬥」下完之後艦隊行動 %d，該是 %d", bf.Action, fleetActionBattle)
 	}
@@ -166,6 +172,49 @@ func TestFleetBattleOrderSetsAction(t *testing.T) {
 	g.RightClick(tx, ty)
 	if g.FleetOrderStage() != FleetOrderNone {
 		t.Error("右鍵該把艦隊命令整個取消")
+	}
+}
+
+// 原版艦隊命令八案保留完整SHIP池；不能把旗艦的+1E改成分隊移動。
+// 定位與明示選點替身的限制見研究427及驗證082。
+func fleetOrderActionsUnchanged(t *testing.T, g *Game) func() {
+	t.Helper()
+	actions := make([]int, len(g.battleUnits))
+	for i, u := range g.battleUnits {
+		actions[i] = u.Action
+	}
+	return func() {
+		t.Helper()
+		for i, u := range g.battleUnits {
+			if u.Action != actions[i] {
+				t.Errorf("艦隊命令改寫分隊%d行動碼：%02X → %02X", i, actions[i], u.Action)
+			}
+		}
+		dir := t.TempDir()
+		if err := g.SaveSlot(dir, 0); err != nil {
+			t.Fatal(err)
+		}
+		read := func(name string) []byte {
+			b, err := os.ReadFile(filepath.Join(dir, name+".DT0"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			return b
+		}
+		loaded, err := rules.LoadSlot(rules.SlotFiles{
+			Stellar: read("STELLAR"), Planet: read("PLANET"), Admiral: read("ADMIRAL"),
+			Fleet: read("FLEET"), Ship: read("SHIP"), Work: read("WORK"),
+			PlanetHeader: g.slot.Planets.Data[:rules.PlanetHeader],
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		for i, u := range g.battleUnits {
+			pool := g.battleUnitPool(u)
+			if got := int(loaded.Ship[pool*rules.ShipRecord+0x1e]); got != actions[i] {
+				t.Errorf("艦隊命令保存改寫池%d行動碼：%02X → %02X", pool, actions[i], got)
+			}
+		}
 	}
 }
 

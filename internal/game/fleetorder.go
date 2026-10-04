@@ -128,7 +128,8 @@ func (g *Game) commitFleetOrder() {
 	}
 	f.ShortMove = rules.Distance16(f.X, f.Y, f.DestX, f.DestY) <
 		int64(f.PerTurn/3+4*rules.FixOne)
-	g.battleUnits[unit].Action = squadronMove
+	// 原版艦隊命令保留SHIP+1E；旗艦仍可參與射擊。
+	// 原版八案完整SHIP池不變，見docs/re/427及spec/027補充契約。
 }
 
 // fleetSpeeds 回一支艦隊的回轉速度與這一次的每回合行程（16.16）。

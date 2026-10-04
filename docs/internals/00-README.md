@@ -731,3 +731,11 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [Game報告與保存回歸](../../internal/game/battlefinish_test.go)
 - [報告讀取端研究426](../re/426-battle-finish-game.md)與[正式驗證081](../playtest/081-battle-finish-game.md)
 - [正式收據凍結器](../../tools/scripts/battle_finish_game_receipt.py)與[完整來源](data/battle-finish-game.json)
+
+## 第93輪正常玩家探索
+
+- [計畫93](../goal/2026-10-05-battle-finish-player-round-93.md)與[自然勝負探針生成器](../../tools/scripts/battle_finish_player_probe.py)。
+- [旗艦行動碼研究427](../re/427-fleet-order-flagship-action.md)、[原版準備器](../../tools/scripts/fleet_order_action_prepare.py)與[原版雙跑](../../tools/fleet_order_action_oracle.sh)。
+- [行動碼來源收據](data/fleet-order-action.json)與[重播／凍結器](../../tools/scripts/fleet_order_action_receipt.py)。
+- [公開命令與保存驗證082](../playtest/082-fleet-order-flagship-action.md)。
+- [正常首戰旗艦GUI驗證器](../../tools/scripts/fleet_order_action_gui.py)。
