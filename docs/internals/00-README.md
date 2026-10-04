@@ -739,3 +739,9 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [行動碼來源收據](data/fleet-order-action.json)與[重播／凍結器](../../tools/scripts/fleet_order_action_receipt.py)。
 - [公開命令與保存驗證082](../playtest/082-fleet-order-flagship-action.md)。
 - [正常首戰旗艦GUI驗證器](../../tools/scripts/fleet_order_action_gui.py)。
+
+## 第94輪正常勝負
+
+- [計畫94](../goal/2026-10-05-battle-finish-natural-round-94.md)與[公開玩家勝負探針](../../tools/scripts/battle_finish_victory_probe.py)。
+- [正常勝負重播與收據工具](../../tools/scripts/battle_finish_victory_receipt.py)。
+- [正常勝負研究428](../re/428-battle-finish-natural.md)、[玩家驗證083](../playtest/083-battle-finish-natural.md)與[完整來源](data/battle-finish-natural.json)。
