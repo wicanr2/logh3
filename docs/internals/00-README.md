@@ -1,5 +1,32 @@
 # 原版內部構造參考
 
+第85輪沿#79：[戰場升級重算與接線計畫](../goal/2026-10-04-battle-promotion-wiring-round-85.md)。
+沿108草稿補297B:05B2／0E8B原版完整資料鏈，達READY後才接正式升級。
+[原版重算觀測器產生器](../../tools/scripts/battle_promotion_recalc_prepare.py)、
+[容器內入口](../../tools/battle_promotion_recalc_native_run.sh)與
+[雙跑入口](../../tools/battle_promotion_recalc_oracle.sh)保存66案及逐次五表快照。
+[RAM切段](../../tools/scripts/battle_promotion_recalc_ida_prepare.py)與
+[原始IDA查詢](../../tools/battle_promotion_recalc_ida.sh)固定六支helper邊界。
+[獨立重算模型](../../tools/scripts/battle_promotion_recalc_receipt.py)與
+[第一版來源收據](data/battle-promotion-recalc.json)保留三表、亂數及費用核對；全局費用以第二版取代。
+[分級索引產生器](../../tools/scripts/battle_promotion_recalc_annotations.py)、
+[定位索引](data/battle-promotion-recalc-annotations.json)、
+[自動合併匯出器](../../tools/scripts/battle_promotion_recalc_review_ida.py)與
+[分級查詢入口](../../tools/battle_promotion_recalc_review_ida.sh)保留原始bytes及unknown警示。
+[分級來源核對器](../../tools/scripts/battle_promotion_recalc_review_receipt.py)、
+[分級收據](data/battle-promotion-recalc-review.json)、
+[研究419](../re/419-battle-promotion-recalc.md)與
+[對拍074](../playtest/074-battle-promotion-recalc.md)回查53次完整重算。
+全局稅收／星域及typed回寫、正式UI／保存仍缺，108 DRAFT。
+[第二版獨立模型](../../tools/scripts/battle_promotion_recalc_receipt_v2.py)與
+[第二版來源](data/battle-promotion-recalc-v2.json)補核全局移動費及其67條既有原指令。
+[第二版語意產生器](../../tools/scripts/battle_promotion_recalc_annotations_v2.py)、
+[第二版定位索引](data/battle-promotion-recalc-annotations-v2.json)、
+[第二版IDA匯出器](../../tools/scripts/battle_promotion_recalc_review_ida_v2.py)與
+[第二版查詢入口](../../tools/battle_promotion_recalc_review_ida_v2.sh)取代第一版漏追callee的語意。
+[第二版審查凍結器](../../tools/scripts/battle_promotion_recalc_review_receipt_v2.py)及
+[第二版分級收據](data/battle-promotion-recalc-review-v2.json)保留808條原指令與42項proven。
+
 第84輪沿#79：[戰場升級計畫](../goal/2026-10-04-battle-promotion-round-84.md)、
 [108草稿](../spec/108-battle-promotion.md)與
 [IDA輸入產生器](../../tools/scripts/battle_promotion_prepare.py)。
