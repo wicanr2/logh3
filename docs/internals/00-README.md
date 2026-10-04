@@ -1,5 +1,14 @@
 # 原版內部構造參考
 
+第89輪沿#79：[結束判定與勝方占領計畫](../goal/2026-10-05-battle-finish-round-89.md)，
+[固定IDA輸入產生器](../../tools/scripts/battle_finish_ida_prepare.py)。
+[原版觀測器產生器](../../tools/scripts/battle_finish_native_prepare.py)、
+[雙跑入口](../../tools/battle_finish_oracle.sh)與[容器內入口](../../tools/battle_finish_native_run.sh)
+固定8-5注入與完整返回，診斷收據不代替正常玩家勝負。
+[獨立核對器](../../tools/scripts/battle_finish_review.py)保存
+[結束判定事實與來源](data/battle-finish.json)，入口為
+[研究423](../re/423-battle-finish.md)、[草稿110](../spec/110-battle-finish.md)及[驗證078](../playtest/078-battle-finish.md)。
+
 第87輪沿#79：[升級資料與保存計畫](../goal/2026-10-05-battle-promotion-save-round-87.md)。
 [路徑快取診斷產生器](../../tools/scripts/battle_promotion_cache_prepare.py)、
 [原版雙跑](../../tools/battle_promotion_cache_oracle.sh)及[容器入口](../../tools/battle_promotion_cache_native_run.sh)區分星域換手與路徑重建時點。
