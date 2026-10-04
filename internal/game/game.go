@@ -504,6 +504,8 @@ type Resources struct {
 	FleetPresentation   *screen.FleetPresentationSpec
 	FleetCommand        *screen.FleetCommandSpec
 	FleetCommandDisplay *screen.FleetCommandDisplaySpec
+	FleetSound          *asset.FleetSoundSpec
+	SoundSamples        *asset.SVF
 	FleetSceneSprites   *asset.FleetSceneSprites
 	// Comani 是交戰演出的動畫庫（`COMANI.BMG`，`docs/internals/20`）；缺原版檔就是 nil（不畫圖）。
 	Comani *asset.BMG
@@ -990,6 +992,7 @@ type Game struct {
 	engTickRemainder time.Duration
 	engClick         bool
 	fleetCombat      fleetCombatState
+	soundEffects     soundEffectsState
 	// battleGunAim 是射程橢圓現在的傾角（一整圈 256）；瞄準當下由
 	// 游標的方位算，按下左鍵才寫進行星記錄的 `+0x50`。
 	battleGunAim int

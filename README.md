@@ -196,6 +196,7 @@ DOS 執行器）產生，它是本專案唯一的 oracle。
 | [`docs/playtest/`](docs/playtest/) | 對拍收據 |
 | [`docs/playtest/007-gui-x11-input-and-resize.md`](docs/playtest/007-gui-x11-input-and-resize.md) | 真實 X11 滑鼠、第二層選單與視窗縮放黑箱收據 |
 | [`docs/playtest/008-music-player-path-integration.md`](docs/playtest/008-music-player-path-integration.md) | 正常玩家路徑的曲目切換、曲庫與錯誤處理收據 |
+| [`docs/playtest/067-fleet-sound.md`](docs/playtest/067-fleet-sound.md) | 玩家自備原版的音效轉檔入口、播放方式及驗證範圍 |
 | [`docs/playtest/009-fleet-composition-multiple-groups.md`](docs/playtest/009-fleet-composition-multiple-groups.md) | 艦隊組成 B／C／D 多編組的記憶體與逐格對拍收據 |
 | [`WORKLOG.md`](WORKLOG.md) | 流水帳 |
 

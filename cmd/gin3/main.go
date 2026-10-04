@@ -30,11 +30,12 @@ import (
 )
 
 type app struct {
-	g      *game.Game
-	pal    [gfx.Colors]color.RGBA
-	screen *ebiten.Image
-	music  musicPlayback
-	buf    []byte
+	g       *game.Game
+	pal     [gfx.Colors]color.RGBA
+	screen  *ebiten.Image
+	music   musicPlayback
+	effects effectPlayback
+	buf     []byte
 
 	shot      string
 	shotBin   string
@@ -105,6 +106,7 @@ func (a *app) Update() error {
 	}
 	if a.script != "" {
 		// 走腳本的時候不吃真的滑鼠鍵盤——不然 Xvfb 的游標會混進來。
+		a.updateEffects()
 		a.ticks++
 		if (a.shot != "" || a.shotBin != "") && a.ticks >= a.shotAfter {
 			return a.dump()
@@ -147,6 +149,7 @@ func (a *app) Update() error {
 	if inpututil.IsKeyJustPressed(ebiten.KeyBackspace) {
 		a.g.Key(8)
 	}
+	a.updateEffects()
 	a.ticks++
 	if (a.shot != "" || a.shotBin != "") && a.ticks >= a.shotAfter {
 		return a.dump()
@@ -230,11 +233,10 @@ func main() {
 	aiLevel := flag.Int("ai", -1, "電腦 AI：-1 ＝ 原版；0–3 ＝ 強化版，"+
 		"數字越大越兇（會挑目標、集結、包圍）")
 	musicDir := flag.String("music", "",
-		"配樂目錄（OGG）；空的 ＝ 不放音樂。發行包不帶曲子——它是從原版\n"+
-			"    素材轉出來的，玩家自備原版之後用 tools/music_to_ogg.sh 自己轉\n"+
-			"    （repo 內保存的一份在 assets/original/music/ogg/）。\n"+
-			"    預設關著是刻意的：沒有音效裝置的機器（容器、CI、無頭對拍）\n"+
-			"    一開音訊就整個跑不起來，而對拍流程不該因為配樂多一種死法")
+		"配樂與音效OGG目錄；空值停用音訊。\n"+
+			"    玩家自備原版，配樂用 tools/music_to_ogg.sh 匯入；\n"+
+			"    音效用 bash tools/sound_to_ogg.sh <新批次名稱> 匯入。\n"+
+			"    曲庫及完整28段SFX_00.ogg至SFX_27.ogg放同一目錄；發行包不內嵌原版素材。")
 	flag.Parse()
 
 	res, err := bootstrap.Load(*orig, *data)
@@ -275,6 +277,24 @@ func main() {
 	// （AGENTS.md：缺檔就 skip，不用代用品）。
 	if *musicDir != "" {
 		lib := audio.NewLibrary(*musicDir)
+		sounds := audio.NewSoundLibrary(*musicDir)
+		var audioContext *eaudio.Context
+		if hasAudioDevice() && (lib.Have() > 0 || sounds.Have() == 28) {
+			audioContext = eaudio.NewContext(audio.SampleRate)
+		}
+		if audioContext != nil && sounds.Have() == 28 {
+			player := newEffectPlayer(audioContext, sounds)
+			if err := player.validate(); err != nil {
+				fmt.Fprintln(os.Stderr, "音效：", err)
+			} else if err := g.EnableSoundEffects(true); err != nil {
+				fmt.Fprintln(os.Stderr, "音效：", err)
+			} else {
+				a.effects = player
+				defer a.effects.Stop()
+			}
+		} else {
+			fmt.Fprintf(os.Stderr, "音效：%d/28段或裝置不可用，未啟用；來源轉檔見規格104\n", sounds.Have())
+		}
 		switch {
 		case !hasAudioDevice():
 			fmt.Fprintln(os.Stderr, "配樂：這台機器沒有音效裝置（/dev/snd 不在），"+
@@ -287,7 +307,7 @@ func main() {
 				fmt.Fprintf(os.Stderr, "配樂：%d/%d 首，缺 %v\n",
 					lib.Have(), len(audio.Tracks), miss)
 			}
-			a.music = newMusicPlayer(eaudio.NewContext(audio.SampleRate), lib)
+			a.music = newMusicPlayer(audioContext, lib)
 		}
 	}
 

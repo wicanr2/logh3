@@ -1,0 +1,2171 @@
+{
+  "schema": "logh3.fleet-sound-game.v1",
+  "date": "2026-10-04",
+  "parent_commit": "e927750a782af344d77e6a3dd866e18af753ad28",
+  "image": "logh3-ebiten:2; logh3-audio:2",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_unchanged": true,
+  "seed": 305419896,
+  "tracks": [
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/00.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_00.ogg"
+      ],
+      "decoded_frames": 53868,
+      "decoded_pcm_sha256": "d6ac268fca29c2c0555cb538b6e8661ce1ce5684375dc54910272f348398ddcf",
+      "duration_seconds": 1.2214965986394557,
+      "file": "SFX_00.ogg",
+      "gain_db": -1,
+      "id": 0,
+      "ogg_sha256": "18153e66dfdc31bad21b121021edaa2be048ddb6980241f63709b25bd23a9456",
+      "peak": 0.3063337802886963,
+      "rate": 44100,
+      "rms": 0.05955235949792271,
+      "serial": 1397118976,
+      "source_duration_ns": 1221480000,
+      "source_pcm_sha256": "bb2553df09c1265596330edc9ed6cd12dbbaa30ef37cd83c9d050b8e0d914529",
+      "source_samples": 13572
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/01.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_01.ogg"
+      ],
+      "decoded_frames": 46482,
+      "decoded_pcm_sha256": "edf0c72fa0155e7080d1e9fd3fe45baa10e00c2c211fa8a693e49fc7635c36ee",
+      "duration_seconds": 1.054013605442177,
+      "file": "SFX_01.ogg",
+      "gain_db": -1,
+      "id": 1,
+      "ogg_sha256": "4b39b7b0935121af2163f4deb05b20976274ab9e87062963cc5a0fbf9d5550ed",
+      "peak": 0.2657236158847809,
+      "rate": 44100,
+      "rms": 0.03706783108647918,
+      "serial": 1397118977,
+      "source_duration_ns": 1053990000,
+      "source_pcm_sha256": "c64d80228373c9ccab6bd2af973cb0e3416cc7ff2706aaf395468bd3eece085e",
+      "source_samples": 11711
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/02.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_02.ogg"
+      ],
+      "decoded_frames": 50812,
+      "decoded_pcm_sha256": "3c004cb048ea60efbf6eb75c5e8ad98eaadf102c84cf1df17de41592c2ac13c6",
+      "duration_seconds": 1.1521995464852608,
+      "file": "SFX_02.ogg",
+      "gain_db": -1,
+      "id": 2,
+      "ogg_sha256": "43c50808c56b5e899e9ac2f333e0435287bc58a0849bdbf0d0e331714364f50d",
+      "peak": 0.2791793644428253,
+      "rate": 44100,
+      "rms": 0.051215559088331704,
+      "serial": 1397118978,
+      "source_duration_ns": 1152180000,
+      "source_pcm_sha256": "07046d047236f77a04688c08b31de247ce2f634e43527c0121dba38248b0b7be",
+      "source_samples": 12802
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/03.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_03.ogg"
+      ],
+      "decoded_frames": 47296,
+      "decoded_pcm_sha256": "f269fba55b873ee18148afb68f80cdf57d26cc7eb484e0a07f8f42b84e0f621d",
+      "duration_seconds": 1.0724716553287983,
+      "file": "SFX_03.ogg",
+      "gain_db": -1,
+      "id": 3,
+      "ogg_sha256": "2b83ea331a4e420bf5ece7b01eaa69a097bc55798c7f3326f4270c689a58c4ed",
+      "peak": 0.2993794083595276,
+      "rate": 44100,
+      "rms": 0.040837538032097644,
+      "serial": 1397118979,
+      "source_duration_ns": 1072440000,
+      "source_pcm_sha256": "c811386c4bc4d9640998ab315074202d5f5d7d11047c0b3f81afd5eaaba2dcc3",
+      "source_samples": 11916
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/04.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_04.ogg"
+      ],
+      "decoded_frames": 49971,
+      "decoded_pcm_sha256": "e59a29c2ec632ec92f71341568026f657b473a0b8495b1c1cdf5206d9908eef1",
+      "duration_seconds": 1.1331292517006804,
+      "file": "SFX_04.ogg",
+      "gain_db": -1,
+      "id": 4,
+      "ogg_sha256": "3ae1d827eda2eca77a54fb504dc458b8c1815f7c45d2d6c4881ab13309578bd6",
+      "peak": 0.2705211937427521,
+      "rate": 44100,
+      "rms": 0.03254372775213484,
+      "serial": 1397118980,
+      "source_duration_ns": 1133100000,
+      "source_pcm_sha256": "6b9a1ababe5ea5dc35d1a0bd55c424507d325c5a4fdd5ff5cdb3dacbac3624f9",
+      "source_samples": 12590
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/05.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_05.ogg"
+      ],
+      "decoded_frames": 48423,
+      "decoded_pcm_sha256": "4dc53b915aa00d91c05cc229341aab0c2de7b0af4f128361b278907f6cae2c7c",
+      "duration_seconds": 1.0980272108843538,
+      "file": "SFX_05.ogg",
+      "gain_db": -1,
+      "id": 5,
+      "ogg_sha256": "f2ba990a3a3edd7fe97f589bf42f6bf3234290c3b09c594448be3616c0f6ef67",
+      "peak": 0.31469565629959106,
+      "rate": 44100,
+      "rms": 0.04147739616109553,
+      "serial": 1397118981,
+      "source_duration_ns": 1098000000,
+      "source_pcm_sha256": "8d406f0277446490ae1189a5c58acadd48cd13aa2483571fed50258a4a401d9c",
+      "source_samples": 12200
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/06.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_06.ogg"
+      ],
+      "decoded_frames": 54059,
+      "decoded_pcm_sha256": "c64ca4186d77b5456c37a78c74a55e6a9929db194657bf6c8ade0f4b67668461",
+      "duration_seconds": 1.225827664399093,
+      "file": "SFX_06.ogg",
+      "gain_db": -1,
+      "id": 6,
+      "ogg_sha256": "2502e136c7363352ce943898cbf380207c173226df56140daaef6f24ebc76622",
+      "peak": 0.2880239188671112,
+      "rate": 44100,
+      "rms": 0.048422804541212235,
+      "serial": 1397118982,
+      "source_duration_ns": 1225800000,
+      "source_pcm_sha256": "441d75724d45c8c12261672781d5e1cace569f6309b500332d78e716896ca1fc",
+      "source_samples": 13620
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/07.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_07.ogg"
+      ],
+      "decoded_frames": 39626,
+      "decoded_pcm_sha256": "45801fd38e1e5d192910adfc3cc34a2f132f445b0319542af81f9efce44d0efd",
+      "duration_seconds": 0.9014512471655329,
+      "file": "SFX_07.ogg",
+      "gain_db": -1,
+      "id": 7,
+      "ogg_sha256": "8817065d0da5a7176ce694c4bd57f296bfdef35dff9eaf0103d68289833da2c9",
+      "peak": 0.3262470066547394,
+      "rate": 44100,
+      "rms": 0.052725437612208464,
+      "serial": 1397118983,
+      "source_duration_ns": 901440000,
+      "source_pcm_sha256": "91777dab77ce40fe6fea29bc278a760424ba1c72d37b960533a56a1a62c36555",
+      "source_samples": 10016
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/08.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_08.ogg"
+      ],
+      "decoded_frames": 42448,
+      "decoded_pcm_sha256": "49ab88b069719d47599a90bc23a7b11f71322f054a48d2e9dce96177bd3f16af",
+      "duration_seconds": 0.9654421768707483,
+      "file": "SFX_08.ogg",
+      "gain_db": -1,
+      "id": 8,
+      "ogg_sha256": "856415d790c8e1990f0162dff90e215f923ec1d93f814a23a0ad1dd5cbef37a8",
+      "peak": 0.26106151938438416,
+      "rate": 44100,
+      "rms": 0.035823950588227245,
+      "serial": 1397118984,
+      "source_duration_ns": 965430000,
+      "source_pcm_sha256": "87954dfdc36b16a5f031cfa60672e5924b72c6e9c50291235c60b68b167249c5",
+      "source_samples": 10727
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/09.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_09.ogg"
+      ],
+      "decoded_frames": 32133,
+      "decoded_pcm_sha256": "40e9c3df182da70efaac5130cf1e5af684d626e7b0c40b79f5c8541a2dd251ae",
+      "duration_seconds": 0.7315419501133786,
+      "file": "SFX_09.ogg",
+      "gain_db": -1,
+      "id": 9,
+      "ogg_sha256": "063fb56e36fea3f58d1e7a765f5688af4577a2b5860f5e82f35dbbe64b4f85f9",
+      "peak": 0.21518898010253906,
+      "rate": 44100,
+      "rms": 0.04332166768427107,
+      "serial": 1397118985,
+      "source_duration_ns": 731520000,
+      "source_pcm_sha256": "13dcd310e1db7f509dbfa32bd13f89b4fbee287611ed4a75f78344c8395a2a73",
+      "source_samples": 8128
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/10.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_10.ogg"
+      ],
+      "decoded_frames": 38579,
+      "decoded_pcm_sha256": "307959db56142ad9afddd21ffb93b2a158a3a84da89101800dc661dc76666031",
+      "duration_seconds": 0.8777097505668934,
+      "file": "SFX_10.ogg",
+      "gain_db": -1,
+      "id": 10,
+      "ogg_sha256": "156bf873f66aad49e5dd76a48221a7bc5b84a19c9ac5714c9175819c3e82de02",
+      "peak": 0.22768014669418335,
+      "rate": 44100,
+      "rms": 0.027365526538382704,
+      "serial": 1397118986,
+      "source_duration_ns": 877680000,
+      "source_pcm_sha256": "d27c29e6812b31f7fd2dba9da3e52fcc51f91a494e1f3fd4ab46c6349a6e7ebf",
+      "source_samples": 9752
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/11.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_11.ogg"
+      ],
+      "decoded_frames": 39118,
+      "decoded_pcm_sha256": "8fe93f86fcfde3563b3f2d3e42815fc5e02c0420790c8f9f24243f49abdf4369",
+      "duration_seconds": 0.8899319727891156,
+      "file": "SFX_11.ogg",
+      "gain_db": -1,
+      "id": 11,
+      "ogg_sha256": "ce0f8dad250b5543afd7f0bee2cd8c009bb4246537c9ee33d5622dc7083648a1",
+      "peak": 0.25700023770332336,
+      "rate": 44100,
+      "rms": 0.055410771173943586,
+      "serial": 1397118987,
+      "source_duration_ns": 889920000,
+      "source_pcm_sha256": "291201f3fa5732146e9431185d1aa2543d3e076c4de2dbc1f10f01804d74c8d2",
+      "source_samples": 9888
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/12.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_12.ogg"
+      ],
+      "decoded_frames": 40432,
+      "decoded_pcm_sha256": "84fcce0950a04b6763c4089f454bbee96072f8dc77b0f1607e6912faee8884b4",
+      "duration_seconds": 0.9197278911564626,
+      "file": "SFX_12.ogg",
+      "gain_db": -1,
+      "id": 12,
+      "ogg_sha256": "d638280a7f654bd1097dc7fc1a5e120a79eeb1906ec1adee7e9e3de54518be86",
+      "peak": 0.2303154021501541,
+      "rate": 44100,
+      "rms": 0.03786873993199486,
+      "serial": 1397118988,
+      "source_duration_ns": 919710000,
+      "source_pcm_sha256": "57309af04cfb20baf3bdde6b4946860708902c323584595669be327f348d0d6d",
+      "source_samples": 10219
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/13.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_13.ogg"
+      ],
+      "decoded_frames": 39679,
+      "decoded_pcm_sha256": "7b764ae63773cf089ba8d09bc77c27735ffb3e91e9c819b339b146ecfeb278ae",
+      "duration_seconds": 0.899750566893424,
+      "file": "SFX_13.ogg",
+      "gain_db": -1,
+      "id": 13,
+      "ogg_sha256": "4c1f76df120ef679353b4e29e4152065a46de880b1ee3131a38245b54ab9f802",
+      "peak": 0.22715583443641663,
+      "rate": 44100,
+      "rms": 0.0333416855299439,
+      "serial": 1397118989,
+      "source_duration_ns": 899730000,
+      "source_pcm_sha256": "d901a99cb66df67b2e4fc7cee41ffc7b3ca666006a30400aafc5cbc0874e2029",
+      "source_samples": 9997
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/14.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_14.ogg"
+      ],
+      "decoded_frames": 48455,
+      "decoded_pcm_sha256": "cb63a706d7517d1d1b209384907a9ea2e4fb1968fd7e05b9b3d097794f71ab6d",
+      "duration_seconds": 1.0987528344671202,
+      "file": "SFX_14.ogg",
+      "gain_db": -1,
+      "id": 14,
+      "ogg_sha256": "2c6917b649ff4346559967cbdb3f5a4ae3d5f8c2f5b2f27913ff15010df07ae9",
+      "peak": 0.24158506095409393,
+      "rate": 44100,
+      "rms": 0.03877662876967188,
+      "serial": 1397118990,
+      "source_duration_ns": 1098720000,
+      "source_pcm_sha256": "6b2fb60bc305bd73cbb4455a9ddba30239f4d25e793db399f842413a069a842e",
+      "source_samples": 12208
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/15.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_15.ogg"
+      ],
+      "decoded_frames": 45406,
+      "decoded_pcm_sha256": "91a14564f10a169e7c38bec7c126979e877c9da02fd9f874ea9225b0b5d1b6bf",
+      "duration_seconds": 1.0296145124716554,
+      "file": "SFX_15.ogg",
+      "gain_db": -1,
+      "id": 15,
+      "ogg_sha256": "7d9f3a08110650c706a25e8207b8f638261fc92bf9b3af922a19ceedb02a94d5",
+      "peak": 0.13426324725151062,
+      "rate": 44100,
+      "rms": 0.016898323159083586,
+      "serial": 1397118991,
+      "source_duration_ns": 1029600000,
+      "source_pcm_sha256": "5e521aa6bb92cb9b3a8068111fc94883b64567832b5a8cb3cb76856fc877b263",
+      "source_samples": 11440
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/16.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_16.ogg"
+      ],
+      "decoded_frames": 44278,
+      "decoded_pcm_sha256": "ac5b0ae03e4b22cde72ff31b55744073bcfed306f62d00095206494a27ddcd70",
+      "duration_seconds": 1.0069387755102042,
+      "file": "SFX_16.ogg",
+      "gain_db": -1,
+      "id": 16,
+      "ogg_sha256": "02a5ff4ebbedb44618104295239835f101da9dcc56e87e509a3608dd447cdf74",
+      "peak": 0.19834572076797485,
+      "rate": 44100,
+      "rms": 0.02326032323006257,
+      "serial": 1397118992,
+      "source_duration_ns": 1006920000,
+      "source_pcm_sha256": "620a162a78e21e872aaf350841646d62e8b4a571fb107311596df2e27a7a2e9c",
+      "source_samples": 11188
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/17.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_17.ogg"
+      ],
+      "decoded_frames": 51253,
+      "decoded_pcm_sha256": "8ae8d11ec8f4e5b58401461b09498e02b8dffcc4f7fe5e77d1954f7e7f4a7e1e",
+      "duration_seconds": 1.1621995464852608,
+      "file": "SFX_17.ogg",
+      "gain_db": -1,
+      "id": 17,
+      "ogg_sha256": "d66795991390618bb2dcc0b87bec43e5068fb4a70bef56f951b154971472af08",
+      "peak": 0.2704443037509918,
+      "rate": 44100,
+      "rms": 0.048843158009740754,
+      "serial": 1397118993,
+      "source_duration_ns": 1162170000,
+      "source_pcm_sha256": "44fb2926542f9467298a8bac6968b7ad1449014114425cad73d9cad580e1e3ec",
+      "source_samples": 12913
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/18.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_18.ogg"
+      ],
+      "decoded_frames": 47192,
+      "decoded_pcm_sha256": "4ecb3c8a2bfc234d54241681ed61712b42a5d73715d6c7f918c2cd30a9cdbcb4",
+      "duration_seconds": 1.0701133786848072,
+      "file": "SFX_18.ogg",
+      "gain_db": -1,
+      "id": 18,
+      "ogg_sha256": "8d730c988ed0285d924500e9db51320d8dfb749363338e3e9963630739217837",
+      "peak": 0.2194979190826416,
+      "rate": 44100,
+      "rms": 0.033748556633166574,
+      "serial": 1397118994,
+      "source_duration_ns": 1070100000,
+      "source_pcm_sha256": "7a50383df5a2a24f768aa650acca8c18a007537de27335d8609c224fc374c2ae",
+      "source_samples": 11890
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/19.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_19.ogg"
+      ],
+      "decoded_frames": 41833,
+      "decoded_pcm_sha256": "20aa133a99a24b48ff840d4a49234e490de2c80cac59a0d89d31c0820e4f1fd6",
+      "duration_seconds": 0.9514965986394558,
+      "file": "SFX_19.ogg",
+      "gain_db": -1,
+      "id": 19,
+      "ogg_sha256": "e32c56e11b449b102213fc8e85e2ff7db83d869d4e27146c29e51b2b2d59e8f0",
+      "peak": 0.28950944542884827,
+      "rate": 44100,
+      "rms": 0.0495106443315974,
+      "serial": 1397118995,
+      "source_duration_ns": 951480000,
+      "source_pcm_sha256": "ec23d54dda281e110ddb26b6f350a410b94a41bded709d0cba8de4be0689a1ae",
+      "source_samples": 10572
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/20.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_20.ogg"
+      ],
+      "decoded_frames": 38453,
+      "decoded_pcm_sha256": "ff92c4f0eb86770203746376a359f519c5076f26cacdf1f36881376efac23327",
+      "duration_seconds": 0.8719501133786848,
+      "file": "SFX_20.ogg",
+      "gain_db": -1,
+      "id": 20,
+      "ogg_sha256": "5fb9ef43e3526a9fee4eb038930691a1d5982ae81b982e1bfa62c25b856685ba",
+      "peak": 0.3119243085384369,
+      "rate": 44100,
+      "rms": 0.06349572673726697,
+      "serial": 1397118996,
+      "source_duration_ns": 871920000,
+      "source_pcm_sha256": "14209c464afc3e6cb1593a7be4b2d933399aa15cef4df5c9d796df22e3aca9d5",
+      "source_samples": 9688
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/21.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_21.ogg"
+      ],
+      "decoded_frames": 37463,
+      "decoded_pcm_sha256": "4aa4d0a2912684dc76bf9dba35ecc590ea7fd2d5323150bddad700e3dc32f2e3",
+      "duration_seconds": 0.8524036281179138,
+      "file": "SFX_21.ogg",
+      "gain_db": -1,
+      "id": 21,
+      "ogg_sha256": "be0a2b6f5119e17ca86cca3359cb3aae6898d1d302102013afc789b5392018ba",
+      "peak": 0.28244778513908386,
+      "rate": 44100,
+      "rms": 0.06049999547264051,
+      "serial": 1397118997,
+      "source_duration_ns": 852390000,
+      "source_pcm_sha256": "afd53d62f5c22fd257d5d4c7889c51a652b82898df4700edb6decef5927678a3",
+      "source_samples": 9471
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/22.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_22.ogg"
+      ],
+      "decoded_frames": 47161,
+      "decoded_pcm_sha256": "ca8c6f077a785ebf721933af57934c32fe53c58f5cb6767f0af66703b9ba5135",
+      "duration_seconds": 1.0694104308390022,
+      "file": "SFX_22.ogg",
+      "gain_db": -1,
+      "id": 22,
+      "ogg_sha256": "32febe14856a9f65ac2367b916815ecc08ee24c46ce1b588bcc8c94dadd691e2",
+      "peak": 0.2851179242134094,
+      "rate": 44100,
+      "rms": 0.05507265740643383,
+      "serial": 1397118998,
+      "source_duration_ns": 1069380000,
+      "source_pcm_sha256": "588506f1755f6714408bc3e31906f05b73d365ed1bcf478e5f8332160bfe0e2b",
+      "source_samples": 11882
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/23.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_23.ogg"
+      ],
+      "decoded_frames": 42345,
+      "decoded_pcm_sha256": "fda7d8de0d9eae9808e47ddff61d5df730f55b84675a66eae5e31ca9b3a9e897",
+      "duration_seconds": 0.9631065759637188,
+      "file": "SFX_23.ogg",
+      "gain_db": -1,
+      "id": 23,
+      "ogg_sha256": "528338a7714cf10bf817369f3fc1495cec21a2812dc719c58d3ee360f1e59717",
+      "peak": 0.30665144324302673,
+      "rate": 44100,
+      "rms": 0.058990098409775524,
+      "serial": 1397118999,
+      "source_duration_ns": 963090000,
+      "source_pcm_sha256": "c9b13afbde141007133a083a19574196a76dacc1a51169914bf94826ab07ac6e",
+      "source_samples": 10701
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/24.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_24.ogg"
+      ],
+      "decoded_frames": 54837,
+      "decoded_pcm_sha256": "72798f1c4b80957c19020fcbb0b0c38493259699a458cfa537234ec482b47db6",
+      "duration_seconds": 1.243469387755102,
+      "file": "SFX_24.ogg",
+      "gain_db": -1,
+      "id": 24,
+      "ogg_sha256": "a84e403efc58a4848da3a5ac6b44c90a83c92da39856b611dfa0afc86426e2a1",
+      "peak": 0.29097694158554077,
+      "rate": 44100,
+      "rms": 0.05132838383823896,
+      "serial": 1397119000,
+      "source_duration_ns": 1243440000,
+      "source_pcm_sha256": "0865f71b59a0ee17ef0fc1f64c3cecc2746a09668794c69c748cf4546d35396a",
+      "source_samples": 13816
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/25.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_25.ogg"
+      ],
+      "decoded_frames": 55273,
+      "decoded_pcm_sha256": "de009036129b8c68c01a05725d3b03e28b65a13b791e8cdaec687a1685d06e1c",
+      "duration_seconds": 1.2533560090702949,
+      "file": "SFX_25.ogg",
+      "gain_db": -1,
+      "id": 25,
+      "ogg_sha256": "612f3a022a6660aaee0d7de6590c967840dab7b961a477370a0e7805dca99b75",
+      "peak": 0.3076491951942444,
+      "rate": 44100,
+      "rms": 0.044949753491352974,
+      "serial": 1397119001,
+      "source_duration_ns": 1253340000,
+      "source_pcm_sha256": "55c56cc87cbfa9278f6f4a2f04cd0ef46e6fceb4345fbb34220c8af1c8fefc63",
+      "source_samples": 13926
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/26.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_26.ogg"
+      ],
+      "decoded_frames": 45700,
+      "decoded_pcm_sha256": "ed5d17155bfbd61c2096fae623ca3d82e86ddba1b2e763fa47519578e4539fc3",
+      "duration_seconds": 1.036281179138322,
+      "file": "SFX_26.ogg",
+      "gain_db": -1,
+      "id": 26,
+      "ogg_sha256": "84478ed706ee813e6b64debcdaabbbc43ce097bc384d1f32e38442e4bfefabf7",
+      "peak": 0.2770054042339325,
+      "rate": 44100,
+      "rms": 0.06396125884281327,
+      "serial": 1397119002,
+      "source_duration_ns": 1036260000,
+      "source_pcm_sha256": "cc3fd2ee04e1eb3748062aa8031159b78953a6e3c79f85d399a06fb83ca9ae73",
+      "source_samples": 11514
+    },
+    {
+      "channels": 2,
+      "command": [
+        "ffmpeg",
+        "-v",
+        "error",
+        "-f",
+        "u8",
+        "-ar",
+        "11111",
+        "-ac",
+        "1",
+        "-i",
+        "/work/round78-sfx-final-a/.source-3299658976/27.u8",
+        "-af",
+        "volume=-1dB",
+        "-ar",
+        "44100",
+        "-ac",
+        "2",
+        "-c:a",
+        "libvorbis",
+        "-q:a",
+        "5",
+        "-map_metadata",
+        "-1",
+        "/work/round78-sfx-final-a/SFX_27.ogg"
+      ],
+      "decoded_frames": 52106,
+      "decoded_pcm_sha256": "ee8ac9bfd08c694f0991af2d4e99fe7841e8cd7c286172816240953100b6b22b",
+      "duration_seconds": 1.1815419501133786,
+      "file": "SFX_27.ogg",
+      "gain_db": -1,
+      "id": 27,
+      "ogg_sha256": "c4af7febbae92b56cc05b18290782524810d22091676579df4debe9c82ef544a",
+      "peak": 0.25341325998306274,
+      "rate": 44100,
+      "rms": 0.04606656928714236,
+      "serial": 1397119003,
+      "source_duration_ns": 1181520000,
+      "source_pcm_sha256": "eac6f082af195ad6d2f83834544df4bb0dc8604a95b0b8d7fae018758d79e05c",
+      "source_samples": 13128
+    }
+  ],
+  "formal_decoder": [
+    {
+      "bytes": 215472,
+      "duration_seconds": 1.2214965986394557,
+      "id": 0,
+      "pcm_sha256": "7cb37f67697b1da00e9bfb0e5fafc5bc56dd5b72ad199dd0a18362da83c11559"
+    },
+    {
+      "bytes": 185928,
+      "duration_seconds": 1.054013605442177,
+      "id": 1,
+      "pcm_sha256": "fb3deb57a48164909e44012882f041d99746be84d198c683d5dc5d12a51e98ad"
+    },
+    {
+      "bytes": 203248,
+      "duration_seconds": 1.1521995464852608,
+      "id": 2,
+      "pcm_sha256": "bdd71e43f5da94b7ec8b06ce8ba196c978cd8a5b2d066518463c25ca1b4cbdc2"
+    },
+    {
+      "bytes": 189184,
+      "duration_seconds": 1.0724716553287983,
+      "id": 3,
+      "pcm_sha256": "38545fde60242bae1a598c5ab975b629a4c72383207ac0b54663d64fa0af64ad"
+    },
+    {
+      "bytes": 199884,
+      "duration_seconds": 1.1331292517006804,
+      "id": 4,
+      "pcm_sha256": "92617173cc1c28208574e5f3c4b8796eea5af30e115daa5cdc03bbb177454fb5"
+    },
+    {
+      "bytes": 193692,
+      "duration_seconds": 1.0980272108843538,
+      "id": 5,
+      "pcm_sha256": "85554a4081050dde09f31bf79b4d1a17926c6f6e7b1eb6edeea17737575e00ba"
+    },
+    {
+      "bytes": 216236,
+      "duration_seconds": 1.225827664399093,
+      "id": 6,
+      "pcm_sha256": "e660b477488ff7f3a077ab8c4a9b0908a0aab67661ae7ba2ab13ab5885266768"
+    },
+    {
+      "bytes": 159016,
+      "duration_seconds": 0.9014512471655329,
+      "id": 7,
+      "pcm_sha256": "cbb2c6df2db1b44676166ac0bb7e78d7ce5ea1520f0b9bd4b359378d2cea9945"
+    },
+    {
+      "bytes": 170304,
+      "duration_seconds": 0.9654421768707483,
+      "id": 8,
+      "pcm_sha256": "d992e150ead9190ea84a935e1fbf7d008a67cb2dbde1480102c0ba429681c997"
+    },
+    {
+      "bytes": 129044,
+      "duration_seconds": 0.7315419501133786,
+      "id": 9,
+      "pcm_sha256": "d632a66965aa9ff54febe2ac27c015678f0f0272e2dcc86da0ad8da7c5000633"
+    },
+    {
+      "bytes": 154828,
+      "duration_seconds": 0.8777097505668934,
+      "id": 10,
+      "pcm_sha256": "2023a30996c60b04c68ea0a8d32ec205a5acd094e915e4c86bae47789bec4e67"
+    },
+    {
+      "bytes": 156984,
+      "duration_seconds": 0.8899319727891156,
+      "id": 11,
+      "pcm_sha256": "b4984400d67f06b624f93003b12621554a4b332134a35164540ac296ef4573cd"
+    },
+    {
+      "bytes": 162240,
+      "duration_seconds": 0.9197278911564626,
+      "id": 12,
+      "pcm_sha256": "cf7ba0627eb1878ea5909225cbde17ba7f5f0b3ca853a0bd841faef14fc6935d"
+    },
+    {
+      "bytes": 158716,
+      "duration_seconds": 0.899750566893424,
+      "id": 13,
+      "pcm_sha256": "d112cc7398d581a25ef8c9cd1fd17fe30055278ddb68f01c104a8e299258454a"
+    },
+    {
+      "bytes": 193820,
+      "duration_seconds": 1.0987528344671202,
+      "id": 14,
+      "pcm_sha256": "05124c1bbbfb2c0ea22b4a71b8fc2766e02cdc850871e571ba76c2a04200c725"
+    },
+    {
+      "bytes": 181624,
+      "duration_seconds": 1.0296145124716554,
+      "id": 15,
+      "pcm_sha256": "9261d7f58139df6ca9eedc83bcea803ecd925c6234f9d2555667cd9c6a71500a"
+    },
+    {
+      "bytes": 177624,
+      "duration_seconds": 1.0069387755102042,
+      "id": 16,
+      "pcm_sha256": "e498147d874936a287cdff41e6a62dbef9288922daa212a04c2b2e30e7f22602"
+    },
+    {
+      "bytes": 205012,
+      "duration_seconds": 1.1621995464852608,
+      "id": 17,
+      "pcm_sha256": "91ad34c8372d3b239ca52a44fa130acee4f99a35bdf3f0c0c8d151ad6750bec8"
+    },
+    {
+      "bytes": 188768,
+      "duration_seconds": 1.0701133786848072,
+      "id": 18,
+      "pcm_sha256": "892515e6253b235e9e8601ea73e19a3f1da34ebc4ba7f111b405580342eae1a9"
+    },
+    {
+      "bytes": 167844,
+      "duration_seconds": 0.9514965986394558,
+      "id": 19,
+      "pcm_sha256": "26993997191644111b25913e8ee590826884254e2ad32a8fa7b462bb5e7007bd"
+    },
+    {
+      "bytes": 153812,
+      "duration_seconds": 0.8719501133786848,
+      "id": 20,
+      "pcm_sha256": "b918a00f4ab0cbb37e757fb6e60067eb73100ca66b5585515769b47c4226a304"
+    },
+    {
+      "bytes": 150364,
+      "duration_seconds": 0.8524036281179138,
+      "id": 21,
+      "pcm_sha256": "01fbf554b0c789da21584fa5085e3ee00e3e23a098b95f1eafe75c92edef7870"
+    },
+    {
+      "bytes": 188644,
+      "duration_seconds": 1.0694104308390022,
+      "id": 22,
+      "pcm_sha256": "71a374dfda6b05eeef087e5e15ea86f44f7af0523cab3841e8cc786c74644f3e"
+    },
+    {
+      "bytes": 169892,
+      "duration_seconds": 0.9631065759637188,
+      "id": 23,
+      "pcm_sha256": "566b547bcfd7090ebe923b87da35349cc00bfbb1da7dc78e3df8e59f78a63de3"
+    },
+    {
+      "bytes": 219348,
+      "duration_seconds": 1.243469387755102,
+      "id": 24,
+      "pcm_sha256": "ce315ee110262b331a2e650e620b6429ea239ae5872733378ebe61cfe7f36b9c"
+    },
+    {
+      "bytes": 221092,
+      "duration_seconds": 1.2533560090702949,
+      "id": 25,
+      "pcm_sha256": "3f2cd7530244241cfe96eca5040c96b4239eed2bff0e9ccbcf0aeda4dda6a025"
+    },
+    {
+      "bytes": 182800,
+      "duration_seconds": 1.036281179138322,
+      "id": 26,
+      "pcm_sha256": "2b4f45f880c152e3dd4bfab709ba290c2c384767f5e8aec80a1e751ebcbf96fa"
+    },
+    {
+      "bytes": 208424,
+      "duration_seconds": 1.1815419501133786,
+      "id": 27,
+      "pcm_sha256": "6218c9f6450b1efe2e757cc9d38418efae442445b2d49e2734c07d06da289a40"
+    }
+  ],
+  "normal": [
+    {
+      "faction": 0,
+      "events": [
+        {
+          "at_ns": 20648292000,
+          "id": 19
+        },
+        {
+          "at_ns": 21609476000,
+          "id": 4
+        },
+        {
+          "at_ns": 24252732000,
+          "id": 8
+        },
+        {
+          "at_ns": 25231080000,
+          "id": 3
+        },
+        {
+          "at_ns": 27737024000,
+          "id": 21
+        },
+        {
+          "at_ns": 28595224000,
+          "id": 6
+        },
+        {
+          "at_ns": 31101168000,
+          "id": 21
+        },
+        {
+          "at_ns": 31959368000,
+          "id": 6
+        },
+        {
+          "at_ns": 34465312000,
+          "id": 8
+        },
+        {
+          "at_ns": 35443660000,
+          "id": 3
+        },
+        {
+          "at_ns": 37949604000,
+          "id": 21
+        },
+        {
+          "at_ns": 38807804000,
+          "id": 6
+        },
+        {
+          "at_ns": 41313748000,
+          "id": 8
+        },
+        {
+          "at_ns": 42292096000,
+          "id": 6
+        }
+      ],
+      "orders": 10,
+      "hits": 7,
+      "six_saves_unchanged": true,
+      "double_run_equal": true,
+      "formal_bootstrap_app_events_equal": true,
+      "cpu_position_unchanged": true
+    },
+    {
+      "faction": 1,
+      "events": [
+        {
+          "at_ns": 24870636000,
+          "id": 21
+        },
+        {
+          "at_ns": 25728836000,
+          "id": 6
+        },
+        {
+          "at_ns": 28234780000,
+          "id": 21
+        },
+        {
+          "at_ns": 29092980000,
+          "id": 2
+        },
+        {
+          "at_ns": 31598924000,
+          "id": 19
+        },
+        {
+          "at_ns": 32560108000,
+          "id": 5
+        },
+        {
+          "at_ns": 35066052000,
+          "id": 21
+        },
+        {
+          "at_ns": 35924252000,
+          "id": 2
+        },
+        {
+          "at_ns": 38430196000,
+          "id": 23
+        },
+        {
+          "at_ns": 39408544000,
+          "id": 3
+        }
+      ],
+      "orders": 7,
+      "hits": 5,
+      "six_saves_unchanged": true,
+      "double_run_equal": true,
+      "formal_bootstrap_app_events_equal": true,
+      "cpu_position_unchanged": true
+    }
+  ],
+  "files": {
+    "docs/internals/data/fleet-sound-source.json": {
+      "sha256": "5d3b31b8d16c4fc34b655b52a9caadfa40cdbecbf2d87f21bf1942ec75db2d66",
+      "bytes": 135022
+    },
+    "docs/internals/data/fleet-sound-spec.json": {
+      "sha256": "e4c40427f3edbb6b245b1cf4150fe5faf66476feb981eaa806b7150319fb5a50",
+      "bytes": 349
+    },
+    "workplace/round78-sfx-final-a/SFX-RECEIPT.json": {
+      "sha256": "4d3b13b4770756dcca3abb5d9f941516111d18e4af446e6eb84d5801680388bd",
+      "bytes": 33857
+    },
+    "workplace/round78-sfx-final-b/SFX-RECEIPT.json": {
+      "sha256": "4220416014735b9528e150af7e5f74b07377ee264e4e8ca8911fc36eea065e44",
+      "bytes": 33857
+    },
+    "workplace/round78-sfx-final-a/SFX_00.ogg": {
+      "sha256": "18153e66dfdc31bad21b121021edaa2be048ddb6980241f63709b25bd23a9456",
+      "bytes": 14971
+    },
+    "workplace/round78-sfx-final-b/SFX_00.ogg": {
+      "sha256": "18153e66dfdc31bad21b121021edaa2be048ddb6980241f63709b25bd23a9456",
+      "bytes": 14971
+    },
+    "workplace/round78-sfx-final-a/SFX_01.ogg": {
+      "sha256": "4b39b7b0935121af2163f4deb05b20976274ab9e87062963cc5a0fbf9d5550ed",
+      "bytes": 12216
+    },
+    "workplace/round78-sfx-final-b/SFX_01.ogg": {
+      "sha256": "4b39b7b0935121af2163f4deb05b20976274ab9e87062963cc5a0fbf9d5550ed",
+      "bytes": 12216
+    },
+    "workplace/round78-sfx-final-a/SFX_02.ogg": {
+      "sha256": "43c50808c56b5e899e9ac2f333e0435287bc58a0849bdbf0d0e331714364f50d",
+      "bytes": 13564
+    },
+    "workplace/round78-sfx-final-b/SFX_02.ogg": {
+      "sha256": "43c50808c56b5e899e9ac2f333e0435287bc58a0849bdbf0d0e331714364f50d",
+      "bytes": 13564
+    },
+    "workplace/round78-sfx-final-a/SFX_03.ogg": {
+      "sha256": "2b83ea331a4e420bf5ece7b01eaa69a097bc55798c7f3326f4270c689a58c4ed",
+      "bytes": 13056
+    },
+    "workplace/round78-sfx-final-b/SFX_03.ogg": {
+      "sha256": "2b83ea331a4e420bf5ece7b01eaa69a097bc55798c7f3326f4270c689a58c4ed",
+      "bytes": 13056
+    },
+    "workplace/round78-sfx-final-a/SFX_04.ogg": {
+      "sha256": "3ae1d827eda2eca77a54fb504dc458b8c1815f7c45d2d6c4881ab13309578bd6",
+      "bytes": 13551
+    },
+    "workplace/round78-sfx-final-b/SFX_04.ogg": {
+      "sha256": "3ae1d827eda2eca77a54fb504dc458b8c1815f7c45d2d6c4881ab13309578bd6",
+      "bytes": 13551
+    },
+    "workplace/round78-sfx-final-a/SFX_05.ogg": {
+      "sha256": "f2ba990a3a3edd7fe97f589bf42f6bf3234290c3b09c594448be3616c0f6ef67",
+      "bytes": 13209
+    },
+    "workplace/round78-sfx-final-b/SFX_05.ogg": {
+      "sha256": "f2ba990a3a3edd7fe97f589bf42f6bf3234290c3b09c594448be3616c0f6ef67",
+      "bytes": 13209
+    },
+    "workplace/round78-sfx-final-a/SFX_06.ogg": {
+      "sha256": "2502e136c7363352ce943898cbf380207c173226df56140daaef6f24ebc76622",
+      "bytes": 14626
+    },
+    "workplace/round78-sfx-final-b/SFX_06.ogg": {
+      "sha256": "2502e136c7363352ce943898cbf380207c173226df56140daaef6f24ebc76622",
+      "bytes": 14626
+    },
+    "workplace/round78-sfx-final-a/SFX_07.ogg": {
+      "sha256": "8817065d0da5a7176ce694c4bd57f296bfdef35dff9eaf0103d68289833da2c9",
+      "bytes": 13338
+    },
+    "workplace/round78-sfx-final-b/SFX_07.ogg": {
+      "sha256": "8817065d0da5a7176ce694c4bd57f296bfdef35dff9eaf0103d68289833da2c9",
+      "bytes": 13338
+    },
+    "workplace/round78-sfx-final-a/SFX_08.ogg": {
+      "sha256": "856415d790c8e1990f0162dff90e215f923ec1d93f814a23a0ad1dd5cbef37a8",
+      "bytes": 11886
+    },
+    "workplace/round78-sfx-final-b/SFX_08.ogg": {
+      "sha256": "856415d790c8e1990f0162dff90e215f923ec1d93f814a23a0ad1dd5cbef37a8",
+      "bytes": 11886
+    },
+    "workplace/round78-sfx-final-a/SFX_09.ogg": {
+      "sha256": "063fb56e36fea3f58d1e7a765f5688af4577a2b5860f5e82f35dbbe64b4f85f9",
+      "bytes": 10108
+    },
+    "workplace/round78-sfx-final-b/SFX_09.ogg": {
+      "sha256": "063fb56e36fea3f58d1e7a765f5688af4577a2b5860f5e82f35dbbe64b4f85f9",
+      "bytes": 10108
+    },
+    "workplace/round78-sfx-final-a/SFX_10.ogg": {
+      "sha256": "156bf873f66aad49e5dd76a48221a7bc5b84a19c9ac5714c9175819c3e82de02",
+      "bytes": 12074
+    },
+    "workplace/round78-sfx-final-b/SFX_10.ogg": {
+      "sha256": "156bf873f66aad49e5dd76a48221a7bc5b84a19c9ac5714c9175819c3e82de02",
+      "bytes": 12074
+    },
+    "workplace/round78-sfx-final-a/SFX_11.ogg": {
+      "sha256": "ce0f8dad250b5543afd7f0bee2cd8c009bb4246537c9ee33d5622dc7083648a1",
+      "bytes": 11614
+    },
+    "workplace/round78-sfx-final-b/SFX_11.ogg": {
+      "sha256": "ce0f8dad250b5543afd7f0bee2cd8c009bb4246537c9ee33d5622dc7083648a1",
+      "bytes": 11614
+    },
+    "workplace/round78-sfx-final-a/SFX_12.ogg": {
+      "sha256": "d638280a7f654bd1097dc7fc1a5e120a79eeb1906ec1adee7e9e3de54518be86",
+      "bytes": 11865
+    },
+    "workplace/round78-sfx-final-b/SFX_12.ogg": {
+      "sha256": "d638280a7f654bd1097dc7fc1a5e120a79eeb1906ec1adee7e9e3de54518be86",
+      "bytes": 11865
+    },
+    "workplace/round78-sfx-final-a/SFX_13.ogg": {
+      "sha256": "4c1f76df120ef679353b4e29e4152065a46de880b1ee3131a38245b54ab9f802",
+      "bytes": 11525
+    },
+    "workplace/round78-sfx-final-b/SFX_13.ogg": {
+      "sha256": "4c1f76df120ef679353b4e29e4152065a46de880b1ee3131a38245b54ab9f802",
+      "bytes": 11525
+    },
+    "workplace/round78-sfx-final-a/SFX_14.ogg": {
+      "sha256": "2c6917b649ff4346559967cbdb3f5a4ae3d5f8c2f5b2f27913ff15010df07ae9",
+      "bytes": 12950
+    },
+    "workplace/round78-sfx-final-b/SFX_14.ogg": {
+      "sha256": "2c6917b649ff4346559967cbdb3f5a4ae3d5f8c2f5b2f27913ff15010df07ae9",
+      "bytes": 12950
+    },
+    "workplace/round78-sfx-final-a/SFX_15.ogg": {
+      "sha256": "7d9f3a08110650c706a25e8207b8f638261fc92bf9b3af922a19ceedb02a94d5",
+      "bytes": 13189
+    },
+    "workplace/round78-sfx-final-b/SFX_15.ogg": {
+      "sha256": "7d9f3a08110650c706a25e8207b8f638261fc92bf9b3af922a19ceedb02a94d5",
+      "bytes": 13189
+    },
+    "workplace/round78-sfx-final-a/SFX_16.ogg": {
+      "sha256": "02a5ff4ebbedb44618104295239835f101da9dcc56e87e509a3608dd447cdf74",
+      "bytes": 12158
+    },
+    "workplace/round78-sfx-final-b/SFX_16.ogg": {
+      "sha256": "02a5ff4ebbedb44618104295239835f101da9dcc56e87e509a3608dd447cdf74",
+      "bytes": 12158
+    },
+    "workplace/round78-sfx-final-a/SFX_17.ogg": {
+      "sha256": "d66795991390618bb2dcc0b87bec43e5068fb4a70bef56f951b154971472af08",
+      "bytes": 13320
+    },
+    "workplace/round78-sfx-final-b/SFX_17.ogg": {
+      "sha256": "d66795991390618bb2dcc0b87bec43e5068fb4a70bef56f951b154971472af08",
+      "bytes": 13320
+    },
+    "workplace/round78-sfx-final-a/SFX_18.ogg": {
+      "sha256": "8d730c988ed0285d924500e9db51320d8dfb749363338e3e9963630739217837",
+      "bytes": 12787
+    },
+    "workplace/round78-sfx-final-b/SFX_18.ogg": {
+      "sha256": "8d730c988ed0285d924500e9db51320d8dfb749363338e3e9963630739217837",
+      "bytes": 12787
+    },
+    "workplace/round78-sfx-final-a/SFX_19.ogg": {
+      "sha256": "e32c56e11b449b102213fc8e85e2ff7db83d869d4e27146c29e51b2b2d59e8f0",
+      "bytes": 11433
+    },
+    "workplace/round78-sfx-final-b/SFX_19.ogg": {
+      "sha256": "e32c56e11b449b102213fc8e85e2ff7db83d869d4e27146c29e51b2b2d59e8f0",
+      "bytes": 11433
+    },
+    "workplace/round78-sfx-final-a/SFX_20.ogg": {
+      "sha256": "5fb9ef43e3526a9fee4eb038930691a1d5982ae81b982e1bfa62c25b856685ba",
+      "bytes": 11217
+    },
+    "workplace/round78-sfx-final-b/SFX_20.ogg": {
+      "sha256": "5fb9ef43e3526a9fee4eb038930691a1d5982ae81b982e1bfa62c25b856685ba",
+      "bytes": 11217
+    },
+    "workplace/round78-sfx-final-a/SFX_21.ogg": {
+      "sha256": "be0a2b6f5119e17ca86cca3359cb3aae6898d1d302102013afc789b5392018ba",
+      "bytes": 11146
+    },
+    "workplace/round78-sfx-final-b/SFX_21.ogg": {
+      "sha256": "be0a2b6f5119e17ca86cca3359cb3aae6898d1d302102013afc789b5392018ba",
+      "bytes": 11146
+    },
+    "workplace/round78-sfx-final-a/SFX_22.ogg": {
+      "sha256": "32febe14856a9f65ac2367b916815ecc08ee24c46ce1b588bcc8c94dadd691e2",
+      "bytes": 12384
+    },
+    "workplace/round78-sfx-final-b/SFX_22.ogg": {
+      "sha256": "32febe14856a9f65ac2367b916815ecc08ee24c46ce1b588bcc8c94dadd691e2",
+      "bytes": 12384
+    },
+    "workplace/round78-sfx-final-a/SFX_23.ogg": {
+      "sha256": "528338a7714cf10bf817369f3fc1495cec21a2812dc719c58d3ee360f1e59717",
+      "bytes": 11353
+    },
+    "workplace/round78-sfx-final-b/SFX_23.ogg": {
+      "sha256": "528338a7714cf10bf817369f3fc1495cec21a2812dc719c58d3ee360f1e59717",
+      "bytes": 11353
+    },
+    "workplace/round78-sfx-final-a/SFX_24.ogg": {
+      "sha256": "a84e403efc58a4848da3a5ac6b44c90a83c92da39856b611dfa0afc86426e2a1",
+      "bytes": 13338
+    },
+    "workplace/round78-sfx-final-b/SFX_24.ogg": {
+      "sha256": "a84e403efc58a4848da3a5ac6b44c90a83c92da39856b611dfa0afc86426e2a1",
+      "bytes": 13338
+    },
+    "workplace/round78-sfx-final-a/SFX_25.ogg": {
+      "sha256": "612f3a022a6660aaee0d7de6590c967840dab7b961a477370a0e7805dca99b75",
+      "bytes": 13735
+    },
+    "workplace/round78-sfx-final-b/SFX_25.ogg": {
+      "sha256": "612f3a022a6660aaee0d7de6590c967840dab7b961a477370a0e7805dca99b75",
+      "bytes": 13735
+    },
+    "workplace/round78-sfx-final-a/SFX_26.ogg": {
+      "sha256": "84478ed706ee813e6b64debcdaabbbc43ce097bc384d1f32e38442e4bfefabf7",
+      "bytes": 12086
+    },
+    "workplace/round78-sfx-final-b/SFX_26.ogg": {
+      "sha256": "84478ed706ee813e6b64debcdaabbbc43ce097bc384d1f32e38442e4bfefabf7",
+      "bytes": 12086
+    },
+    "workplace/round78-sfx-final-a/SFX_27.ogg": {
+      "sha256": "c4af7febbae92b56cc05b18290782524810d22091676579df4debe9c82ef544a",
+      "bytes": 13624
+    },
+    "workplace/round78-sfx-final-b/SFX_27.ogg": {
+      "sha256": "c4af7febbae92b56cc05b18290782524810d22091676579df4debe9c82ef544a",
+      "bytes": 13624
+    },
+    "workplace/round78-sfx-decoded.json": {
+      "sha256": "38b6bd745ff13cb9f00b4d692e121a0137479485ec111755b9875b901dc9d5ce",
+      "bytes": 4832
+    },
+    "workplace/round78-chain-a/normal-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round78-chain-b/normal-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round78-chain-a/normal-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round78-chain-b/normal-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round78-chain-a/normal-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round78-chain-b/normal-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round78-chain-a/normal-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round78-chain-b/normal-0/SAVEDATA.IDX": {
+      "sha256": "02ec7e3d49aead3588a0050673695f9548475e5f41b5725a3e8ca2a685af3eb1",
+      "bytes": 528
+    },
+    "workplace/round78-chain-a/normal-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round78-chain-b/normal-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round78-chain-a/normal-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round78-chain-b/normal-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round78-chain-a/normal-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round78-chain-b/normal-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round78-chain-a/normal-0/command-1-01316.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-b/normal-0/command-1-01316.bin": {
+      "sha256": "a9f109c5c293cbd458bbbfca2e5f2cf7b729d4e470ffa3280fa3fef04908392a",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-a/normal-0/command-1-01316.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round78-chain-b/normal-0/command-1-01316.png": {
+      "sha256": "e81a5f156142677df81a7495965ba1cd2b4f9fbf87a049e74225086505d2cc3b",
+      "bytes": 14177
+    },
+    "workplace/round78-chain-a/normal-0/command-2-01318.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-b/normal-0/command-2-01318.bin": {
+      "sha256": "9a8728f176447042f85373359260b9a01b26947548006123573e151c024c0d89",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-a/normal-0/command-2-01318.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round78-chain-b/normal-0/command-2-01318.png": {
+      "sha256": "2994ea72669b0d03b963e9aeea1ef763d5b8113aad73a2c18fb726ed1e677e80",
+      "bytes": 11668
+    },
+    "workplace/round78-chain-a/normal-0/inputs.json": {
+      "sha256": "f8a56eaa7800474c259d3cde95a08b8278cd8b7536c5791263557553114bac49",
+      "bytes": 233861
+    },
+    "workplace/round78-chain-b/normal-0/inputs.json": {
+      "sha256": "f8a56eaa7800474c259d3cde95a08b8278cd8b7536c5791263557553114bac49",
+      "bytes": 233861
+    },
+    "workplace/round78-chain-a/normal-0/screen.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-b/normal-0/screen.bin": {
+      "sha256": "578cd05e019906143c83a88807c5de695f8763a13f48074eebfc3ecc601dd5d2",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-a/normal-0/screen.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round78-chain-b/normal-0/screen.png": {
+      "sha256": "3b35181a86eda99906fe9651a15d69b69cff2a38b7f9f266523e009d4efe3ca0",
+      "bytes": 12326
+    },
+    "workplace/round78-chain-a/normal-0/sounds.json": {
+      "sha256": "b119d46e075f95f80bb78f2cff4ff80a353ce0d7133fb18903b26db8077b1705",
+      "bytes": 665
+    },
+    "workplace/round78-chain-b/normal-0/sounds.json": {
+      "sha256": "b119d46e075f95f80bb78f2cff4ff80a353ce0d7133fb18903b26db8077b1705",
+      "bytes": 665
+    },
+    "workplace/round77-chain-c/normal-0/ADMIRAL.DT0": {
+      "sha256": "bc45bbf1c4cb0c80247c90f11a2badccb80d3e975ad9d7123e1aa3e2cf0b0866",
+      "bytes": 2296
+    },
+    "workplace/round77-chain-c/normal-0/FLEET.DT0": {
+      "sha256": "6608c6437f39278177cfbc067ac1b8da8855e69a37fa565620330c4eec8543f6",
+      "bytes": 3904
+    },
+    "workplace/round77-chain-c/normal-0/PLANET.DT0": {
+      "sha256": "699032044f8e01bf55abffd8ed4191d507c4f5236491d3355aa8962f6af4129e",
+      "bytes": 6642
+    },
+    "workplace/round77-chain-c/normal-0/SHIP.DT0": {
+      "sha256": "0001076f8edaf14d2362ae58dd64ac86846c40c6e4c12b7e8e3fa87bff91fb7f",
+      "bytes": 27456
+    },
+    "workplace/round77-chain-c/normal-0/STELLAR.DT0": {
+      "sha256": "d2db116ed7f9a1eb574a5591fc9892612b0404152dec01ca568b39e73c9a26af",
+      "bytes": 4032
+    },
+    "workplace/round77-chain-c/normal-0/WORK.DT0": {
+      "sha256": "4e39edc86d1d70e7fbe72398d2dc3663fa8372b7f0c67e3c937aedb2bc498f46",
+      "bytes": 230
+    },
+    "workplace/round78-app-0.json": {
+      "sha256": "8ab1b43dcac813be713a2d1f391eae8c37ee6200c399fc032e240728b20c7c69",
+      "bytes": 412
+    },
+    "workplace/round78-chain-a/normal-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round78-chain-b/normal-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round78-chain-a/normal-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round78-chain-b/normal-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round78-chain-a/normal-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round78-chain-b/normal-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round78-chain-a/normal-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round78-chain-b/normal-1/SAVEDATA.IDX": {
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d",
+      "bytes": 528
+    },
+    "workplace/round78-chain-a/normal-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round78-chain-b/normal-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round78-chain-a/normal-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round78-chain-b/normal-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round78-chain-a/normal-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round78-chain-b/normal-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round78-chain-a/normal-1/command-1-01550.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-b/normal-1/command-1-01550.bin": {
+      "sha256": "25794bce66cd22b967bc0611238b661b49d8bea2f1e9ab4b710748205eb324a8",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-a/normal-1/command-1-01550.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round78-chain-b/normal-1/command-1-01550.png": {
+      "sha256": "69e23c090fea80b8698891e16b99dc62797162f97d4e77aab29fdaa5eb041bdc",
+      "bytes": 9459
+    },
+    "workplace/round78-chain-a/normal-1/command-2-01552.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-b/normal-1/command-2-01552.bin": {
+      "sha256": "08c988a4b3dcb5eafb5a8bc07c51c0aad966f31f16239e707b3929d966d201f4",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-a/normal-1/command-2-01552.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round78-chain-b/normal-1/command-2-01552.png": {
+      "sha256": "9a6772018bb1ecca660afc3c1676b00f49f1c4ecc35d8c3dd266628d6a7244d9",
+      "bytes": 7505
+    },
+    "workplace/round78-chain-a/normal-1/inputs.json": {
+      "sha256": "0fe3e97f56844df660b7de76d3898785f011a775f12ced693167970c8cb71d44",
+      "bytes": 218109
+    },
+    "workplace/round78-chain-b/normal-1/inputs.json": {
+      "sha256": "0fe3e97f56844df660b7de76d3898785f011a775f12ced693167970c8cb71d44",
+      "bytes": 218109
+    },
+    "workplace/round78-chain-a/normal-1/screen.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-b/normal-1/screen.bin": {
+      "sha256": "0f8a057d480baf545879e5c5a2963bd05cba802d326fb2d2e3c7e869c8d12374",
+      "bytes": 307200
+    },
+    "workplace/round78-chain-a/normal-1/screen.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round78-chain-b/normal-1/screen.png": {
+      "sha256": "3367a4b64ea7bb81db260c3d65c99327e924b6cc21c6e941329b0704ee7649df",
+      "bytes": 8129
+    },
+    "workplace/round78-chain-a/normal-1/sounds.json": {
+      "sha256": "7966e4fe6eae43f4820efa91b99b2894e3c7895d2d3e0fa34d60297fdceeb0aa",
+      "bytes": 478
+    },
+    "workplace/round78-chain-b/normal-1/sounds.json": {
+      "sha256": "7966e4fe6eae43f4820efa91b99b2894e3c7895d2d3e0fa34d60297fdceeb0aa",
+      "bytes": 478
+    },
+    "workplace/round77-chain-c/normal-1/ADMIRAL.DT0": {
+      "sha256": "35d364af49d10b3ed1132a158aa487ef167ea072733f068dab955e07c2c19b48",
+      "bytes": 2296
+    },
+    "workplace/round77-chain-c/normal-1/FLEET.DT0": {
+      "sha256": "9e791d7619b4d47ef2986f5b7f1ac1e73f6a7b3ce7db1ac816cebc5fd2c81e5c",
+      "bytes": 3904
+    },
+    "workplace/round77-chain-c/normal-1/PLANET.DT0": {
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+      "bytes": 6642
+    },
+    "workplace/round77-chain-c/normal-1/SHIP.DT0": {
+      "sha256": "a677c1eabc14a087ee745a40e3eee37b3a491d99afe1b7b72e5c0e01dc17c165",
+      "bytes": 27456
+    },
+    "workplace/round77-chain-c/normal-1/STELLAR.DT0": {
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+      "bytes": 4032
+    },
+    "workplace/round77-chain-c/normal-1/WORK.DT0": {
+      "sha256": "1eca11ba041e74e6422c67f9b37d1aabd3f64337775fc06b4e4a60cd9a9d2df1",
+      "bytes": 230
+    },
+    "workplace/round78-app-1.json": {
+      "sha256": "e391aca84a0733081b3239e10f8b3356224c488b9aa5c1385ce210466f85a76c",
+      "bytes": 297
+    },
+    "workplace/round78-sound-native-fixed.log": {
+      "sha256": "0c747d1bd742c9b4cec088206ac5ff873a11fd99771248597cffbd300ab0302d",
+      "bytes": 3150
+    },
+    "workplace/round78-sound-gates.log": {
+      "sha256": "3bf15b9dc637bfa5a6c4069ebfc3c5a032399f094ec43704e91c1736c20fca30",
+      "bytes": 216
+    },
+    "workplace/round78-standard.log": {
+      "sha256": "c2fd37fca8d5be59c2543397cfbbb897498c645d5c8a8796a985e404ffc282c5",
+      "bytes": 961
+    },
+    "workplace/round78-sfx-decode.log": {
+      "sha256": "4b2dc74d11741a9c019abcce78800c7c26dadd1a6683c940cb72d8f22d902427",
+      "bytes": 542
+    },
+    "workplace/round78-sfx-final-a.log": {
+      "sha256": "ed086bd2a3a4aed4e81c1a1b6de5e3a944f01be05fe87871a8bba53b702865d5",
+      "bytes": 77
+    },
+    "workplace/round78-sfx-final-b.log": {
+      "sha256": "e9d44536fbebb43fd4f37127ad545cc35026db033753ff400ca31fe2f664b6cc",
+      "bytes": 77
+    },
+    "workplace/round78-chain-a.log": {
+      "sha256": "01aec1d9049d22fbe321be0d5d38d1b270ddab51d62e0bf38e139d7fa57493e0",
+      "bytes": 6377
+    },
+    "workplace/round78-chain-b.log": {
+      "sha256": "4a2dad95d05e1f59627e8cfcf20535037a32c8b57ab1d74b70be16c3ce70e461",
+      "bytes": 6377
+    },
+    "workplace/round78-app.log": {
+      "sha256": "ce9e23fd570c34eba347206968b722cfb58bd89f51d4d44fcad381f619bd19b1",
+      "bytes": 747
+    },
+    "cmd/gin3/main.go": {
+      "sha256": "263534793f10c3c780b2cf742a5f65f715816e3dc047d3bc35870fd4acb410b4",
+      "bytes": 13115
+    },
+    "cmd/gin3/effects.go": {
+      "sha256": "d2874bdabbe5b9b4d9c0646c28f54537a90f0513dc3c03fbdc75d8c852137034",
+      "bytes": 1910
+    },
+    "cmd/gin3/effects_test.go": {
+      "sha256": "66a9d52aee4c71b44d51f8b754c9b1e493dcfe8750a811f18bdc6c5f5a72f071",
+      "bytes": 5681
+    },
+    "internal/asset/svf.go": {
+      "sha256": "fd7f04011e16d034b7da1cdd754ad9e2ea2e1c928f890f984ebacec45bdf71dd",
+      "bytes": 2693
+    },
+    "internal/asset/svf_test.go": {
+      "sha256": "82fab06ec99cd31ff0ee928f781492128184f2aa5503c124508661ebd0a22780",
+      "bytes": 2411
+    },
+    "internal/audio/library.go": {
+      "sha256": "f7c32ee72cfadd36038275e822d6056e47f7735fbc97f924e623c5c7e297a12e",
+      "bytes": 3918
+    },
+    "internal/audio/effects.go": {
+      "sha256": "4773bffece1d20cebd0dc8ca1af4dbc09df479f19e1b50087880899b26a8ab90",
+      "bytes": 260
+    },
+    "internal/bootstrap/load.go": {
+      "sha256": "5d7d749df7ac70b56b73c55ec652cf031b84ceef881c3a827f30e39f63fe0a20",
+      "bytes": 20419
+    },
+    "internal/game/game.go": {
+      "sha256": "872de6c2732f9b4e6ae75310de96121c673a1eeb5dede6f7919ee4341a800428",
+      "bytes": 202637
+    },
+    "internal/game/intro.go": {
+      "sha256": "b883393fff32e423b523cca17c50f5fe2935c0cb54c35703b48ca6622701dcc5",
+      "bytes": 4267
+    },
+    "internal/game/fleetcombat.go": {
+      "sha256": "217c6590d76335ba29175713b8f3cf7aff48fa00231184224211e79a88f1a8e0",
+      "bytes": 11733
+    },
+    "internal/game/fleetcombatscene.go": {
+      "sha256": "a5121e138e9acb42bc35f8f05c07c3ce41fc67542c10105468aa87e723d9e143",
+      "bytes": 13722
+    },
+    "internal/game/soundeffects.go": {
+      "sha256": "7c80e9d663746afbbf55a5a98879157c0e383ab579d9e13908f41af6b4e52872",
+      "bytes": 2154
+    },
+    "internal/game/soundeffects_test.go": {
+      "sha256": "415d48905ba6b0db78553b1cf3161bfa71c293e52a34a73ac63b9c31e7692b54",
+      "bytes": 5658
+    },
+    "internal/game/fleetplayerchain_test.go": {
+      "sha256": "20b286d7c9889b495bfd8146bcc82804f95bcdf345736f64d128f2a64eae42b6",
+      "bytes": 30085
+    },
+    "tools/scripts/fleet_sound_convert.go": {
+      "sha256": "7ad8a4dbfbc348ce76e34c7e3be80e54d229c02cde7ba30414fe38502cc427c3",
+      "bytes": 4988
+    },
+    "tools/scripts/fleet_sound_game_receipt.py": {
+      "sha256": "174d82d396c1bda7163c9489c4a4617e26e3ce20147c09a2b5d811ca27664075",
+      "bytes": 5243
+    },
+    "tools/sound_to_ogg.sh": {
+      "sha256": "46d019e81d82d645fee35e78aac6f52aa91df785b652015247158d641ece7efb",
+      "bytes": 766
+    },
+    "workplace/round78-sound-replay.go": {
+      "sha256": "6d1301c6ac8c689e54dc32aef5ccf7e32348bda830c12e35ed33d415efcdbed0",
+      "bytes": 11891
+    },
+    "workplace/round78-sound-replay.json": {
+      "sha256": "dc1260260cb314b912411bbd2730baf58acfdec61f5b50196c75abeead8719e8",
+      "bytes": 105
+    }
+  },
+  "classification": "原版受控COMANI序列／原池／seed；正常remake公開輸入與正式app事件；硬體時序近似",
+  "limits": [
+    "無真實音效裝置或人耳驗收",
+    "完整GUI與正常原版整段same-state仍缺",
+    "104保持READY，#48／#79保持OPEN",
+    "#89未核准像素保持，歷史收據未覆寫",
+    "原版音效與衍生OGG不可放公開發行包"
+  ]
+}

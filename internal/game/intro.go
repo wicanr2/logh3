@@ -53,6 +53,9 @@ func (g *Game) Tick(d time.Duration) {
 	if d <= 0 {
 		return
 	}
+	if !g.fleetCombat.active || g.fleetCombat.stage != fleetCombatScene {
+		g.advanceSoundEffects(d)
+	}
 	if g.fleetCombat.active {
 		g.fleetCombatTick(d)
 		return

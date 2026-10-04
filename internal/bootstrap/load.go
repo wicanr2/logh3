@@ -363,6 +363,19 @@ func Load(orig, data string) (*game.Resources, error) {
 	if err != nil {
 		return nil, err
 	}
+	fleetSound, err := asset.LoadFleetSoundSpec(filepath.Join(data, "fleet-sound-spec.json"))
+	if err != nil {
+		return nil, err
+	}
+	var soundSamples *asset.SVF
+	if b, err := os.ReadFile(filepath.Join(orig, "GIN3SP.VOC")); err == nil {
+		soundSamples, err = asset.DecodeSVF(b)
+		if err != nil {
+			return nil, err
+		}
+	} else if !os.IsNotExist(err) {
+		return nil, err
+	}
 	var fleetSceneSprites *asset.FleetSceneSprites
 	blocks, blockErr := os.ReadFile(filepath.Join(orig, "3DBLOCK.SPR"))
 	flags, flagErr := os.ReadFile(filepath.Join(orig, "COM_FLAG.SPR"))
@@ -426,6 +439,8 @@ func Load(orig, data string) (*game.Resources, error) {
 		FleetPresentation:   fleetPresentation,
 		FleetCommand:        fleetCommand,
 		FleetCommandDisplay: fleetCommandDisplay,
+		FleetSound:          fleetSound,
+		SoundSamples:        soundSamples,
 		FleetSceneSprites:   fleetSceneSprites,
 		EngagementPanel:     engagementPanel,
 		Comani:              comani,

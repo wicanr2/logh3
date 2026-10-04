@@ -362,6 +362,7 @@ func (g *Game) fleetCombatTick(d time.Duration) {
 				g.finishFleetUnitCommand()
 			}
 		case fleetCombatScene:
+			g.advanceSoundEffects(g.engagementTickDuration())
 			g.fleetSceneTick()
 		default:
 			c.rem = 0

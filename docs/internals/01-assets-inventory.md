@@ -345,7 +345,9 @@
 
 ## `.VOC`（1 個）
 
-**confirmed**：Creative Voice 音訊（`GIN3SP.VOC` 在開機路徑上會被開啟）
+**proven**：`GIN3SP.VOC` 在開機路徑上會被開啟。標頭是`MicroWaveSVFv1.0`；
+舊Creative Voice判斷已由[研究415](../re/415-fleet-sound.md)的原始bytes推翻。
+樣本索引與取樣率待消費端確認，不按副檔名套用Creative VOC解析器。
 
 | 檔名 | bytes | SHA-256（前 16） | 開機到主選單會開 |
 |---|---:|---|:--:|

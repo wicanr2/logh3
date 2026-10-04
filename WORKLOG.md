@@ -9885,3 +9885,19 @@ CONTEXT與矩陣，87張、11張open，267條核實零不成立、3條人工、1
 - #48／#79更新目前限制並精確回讀相同，兩張保持OPEN。最新89張／9張open；269條核實零不成立、2人工、122一致、145文件。CONTEXT唯一現況表及機器worklist／VERIFICATION-MATRIX已刷新；完整056／092／062維持DRAFT，正常原版整段同態、真實GUI交戰及音效接線／聆聽仍缺。
 - 工作樹掃描196175項，無root-owned及*.md目錄，新增輸出1000:1000。專用dosgolem仍f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c且乾淨。一次性容器全部退出，本專案及GUI image沒有執行中或停止殘留，未重建映像或清理其他專案。原版遊戲、RAM、PNG及IDA資料庫留本機，既有收據不覆寫。
 - 提交／推送訊息「修正交戰射程與敵方資訊顯示」，精確身份依Git紀錄。原Goal持續，未宣稱完整remake、音樂人耳、macOS或發行驗收完成。
+
+## 2026-10-04 第78輪：交戰音效
+
+- 接續既有Goal及open #48／#79，父提交e927750a782af344d77e6a3dd866e18af753ad28。路由命中remake對拍、正式音訊、硬體規格及文件職責，沿逆向重製與IDA9.4技能；沒有另開硬體driver考古或重建Docker映像。
+- GIN3SP.VOC是MicroWaveSVF，原檔321633 bytes，28段word長度／時間常數166／DSP命令14／unsigned8 PCM。事實01按副檔名判Creative Voice的斷言已訂正，來源與消費端補入事實17及研究415。310條IDA原始指令、9項proven定位、完整payload及兩側66-byte音效表凍結；其餘語意保持unknown。
+- 原版讀完整N bytes，交DSP長度N-2。依Creative公開契約播放前N-1樣本，每樣本90微秒；正式11111 Hz輸入、44100 Hz立體聲OGG為hardware-spec approximation，不稱原版逐波形或實機wall-clock。104先READY，再接SVF解析、一次性Game事件、首格前等待及正式app播放器。音效與配樂共用唯一Context且獨立控制，缺28段、裝置或有效串流明示停用。
+- 四案×三速度／動畫關閉共16項通過，音效編號直接取原版COMANI記錄，原池艘數／庫存／修理上限及seed相同。首格等待不提前畫攻擊、扣戰損或取RND；Frame不重播。零損失守方不播另作明示目標0艘的局部診斷，不冒稱正常原版局面。
+- 28段OGG獨立雙跑，OGG及有效PCM雜湊相同，時長／非靜音／峰值通過；正式一次性播放端全28段完整解碼，長度與OGG有效結束位置相符。音效13初次FFmpeg解碼多約22毫秒補樣本，改按有效結束位置裁切後重驗，原5毫秒門檻保持。原始失敗批次及log保留，沒有調寬時長門檻。
+- 正常帝國10次下令／7擊／14音效，同盟7次下令／5擊／10音效；兩側Game雙跑相同。正式bootstrap與app無裝置錄製器收到相同事件及相對時間，六份保存與正常Game及第77輪無音效保存逐位元組相同。固定remake測試seed12345678，不注入位置、命令或原版RAM；061 CPU位置保持。這不證明正常原版整段same-state或實際GUI鍵鼠。
+- 原版來源索引5d3b31b8d16c4fc34b655b52a9caadfa40cdbecbf2d87f21bf1942ec75db2d66，12份來源；音效表e4c40427f3edbb6b245b1cf4150fe5faf66476feb981eaa806b7150319fb5a50。Game索引4388203c2d6d9c69f69c38f1107b871b92c1397923f38a9eb2b7fe72ed39b9e3，164份來源逐檔重核。研究415／104／067、新工具及資料均掛既有internals索引；README只加穩定音效入口。
+- 新入口bash tools/sound_to_ogg.sh round78-sfx-wrapper實際完成28段，雜湊與正式批次相同。入口log SHA-256為2af7d135257ce8c6e06c8d3a46108be2fac0daf1aac596c99521c7dba2e4c8b4。兩個既有GUI／音訊工具映像沿用，原檔唯讀，輸出拒絕覆寫，原版OGG只留本機。
+- 標準go test ./cmd/... ./internal/... -count=1由tools/gui.sh xrun執行：13套件通過、5套件無測試。序列、等待、正常路徑及正式解碼目標測試無skip。最後僅更新-music說明字串，再跑正式解碼目標以核編譯。首版索引5fa3569928d4aae893dc32bc45a00bfbc16aac71424855b383a1aa75a7e92383及對應主程式保持workplace/round78-sound-game-first.json／round78-main-first.go；最後索引重新綁完整來源，不覆寫首版收據。
+- 初始序列測試誤將父JSON當作其自身來源項，改明示讀取已驗雜湊的JSON後同命令重跑。音訊包裝器原本mode644，改用既定bash入口。兩次臨時Python命令的換行逸出錯誤改成檔案後執行，未改產品。收尾第一次Issue快照漏labels，核對工具找不到佔位；按既有快照契約補齊labels後乾淨重跑，不列為產品缺陷。
+- #48／#79更新並精確回讀相同，兩張保持OPEN。最新89張／9張open；269條核實零不成立、2人工、122一致、145文件。CONTEXT唯一現況表及機器worklist／VERIFICATION-MATRIX刷新；102／103／104保持READY，完整056／092／062保持DRAFT。#89一像素及排序裁決仍pending，裝置、人耳、真實GUI交戰與正常原版整段同態仍缺。
+- 收尾工作樹檢查196747項無root-owned或*.md目錄，主要程式／文件／OGG輸出1000:1000。專用dosgolem仍f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c且乾淨。一次性容器全部退出，本專案及GUI／音訊映像沒有殘留容器，未清理其他專案資源。
+- 提交／推送訊息「接上艦隊交戰音效與原版樣本驗證」，精確身份依Git紀錄。原Goal持續，未宣稱完整remake、音效人耳、macOS或正式發行完成。

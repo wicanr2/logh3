@@ -29,7 +29,6 @@ import (
 // **轉檔與播放共用這一個常數**，對不上時播放端要出聲抗議，不要默默重取樣。
 const SampleRate = 44100
 
-
 // Library 是配樂目錄的檢視：哪一首找得到、哪幾首缺。
 //
 // **它不解碼、也不需要音效裝置**，所以「曲目對應」這件事可以單獨測。
@@ -56,7 +55,11 @@ var Tracks = []string{
 // NewLibrary 掃一次 dir，記下找得到哪幾首。dir 不存在不是錯誤——
 // 那只是「玩家還沒轉檔」，Missing 會把整份清單交出來。
 func NewLibrary(dir string) *Library {
-	l := &Library{dir: dir, tracks: map[string]string{}, want: Tracks}
+	return newLibrary(dir, Tracks)
+}
+
+func newLibrary(dir string, names []string) *Library {
+	l := &Library{dir: dir, tracks: map[string]string{}, want: names}
 	for _, name := range l.want {
 		p := filepath.Join(dir, name+".ogg")
 		if st, err := os.Stat(p); err == nil && !st.IsDir() && st.Size() > 0 {

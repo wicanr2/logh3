@@ -540,3 +540,14 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [命令顯示對拍](../../internal/game/fleetcommanddisplay_test.go)：原池還原、完整renderer、公開滑鼠輸入及無遮罩的全圖／區域差分。
 - [命令顯示驗證066](../playtest/066-fleet-command-display.md)、[正式顯示索引](data/fleet-command-display-game.json)與[Game凍結器](../../tools/scripts/fleet_command_display_game_receipt.py)：七圖各保留一個未核准像素、兩陣營正常命令畫面與六檔保存；103仍READY。
 - [命令顯示正常重播](../../tools/scripts/fleet_command_display_replay.go)：正式bootstrap與公開輸入，逐張核對等待／彈窗與存檔，不注入位置或命令。
+
+- [第78輪交戰音效](../goal/2026-10-04-fleet-sound-round-78.md)與[研究415](../re/415-fleet-sound.md)：自訂SVF標頭、音效編號及最小樣本消費鏈，硬體時序採規格停止線。
+- [音效來源IDA匯出](../../tools/scripts/fleet_sound_ida.py)：固定原版RAM的原始bytes、三種位址基準及unknown語意，不修改正式資料庫。
+- [SVF來源凍結器](../../tools/scripts/fleet_sound_source.py)、[完整來源](data/fleet-sound-source.json)及[兩側音效表](data/fleet-sound-spec.json)：28段payload、播放長度與硬體規格近似時長，附原始定位及雜湊。
+- [音效契約104](../spec/104-fleet-sound.md)與[SVF解析器](../../internal/asset/svf.go)：原版樣本到OGG與一次性COMANI音效事件，正常播放與驗收各保留範圍限制。
+- [一次性Game音效](../../internal/game/soundeffects.go)及[音效曲庫](../../internal/audio/effects.go)：與配樂共用素材目錄，保留首格前的近似播放完成閘門。
+- [音效OGG轉檔器](../../tools/scripts/fleet_sound_convert.go)與[正式一次性播放器](../../cmd/gin3/effects.go)：沿既有音訊Docker工具與唯一Context，分開控制配樂與音效。
+- [音效原版序列回歸](../../internal/game/soundeffects_test.go)：四案音效、三速度／動畫關閉、等待不重播與原版戰損／seed；正常玩家音效沿既有fleetplayerchain_test補驗。
+- [正式音效解碼驗證](../../cmd/gin3/effects_test.go)：28段OGG雜湊、有效結束位置與完整PCM串流，不能替代裝置或人耳驗收。
+- [音效驗證067](../playtest/067-fleet-sound.md)、[Game完整索引](data/fleet-sound-game.json)及[Game凍結器](../../tools/scripts/fleet_sound_game_receipt.py)：正常兩陣營、正式app事件及六份保存，分開硬體近似與未驗GUI／聆聽。
+- [音效轉檔入口](../../tools/sound_to_ogg.sh)：沿既有GUI／音訊Docker映像，產生本機28段OGG並拒絕覆寫。

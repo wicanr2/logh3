@@ -221,3 +221,32 @@ ds:8F33 預設     ：  有 MIDI → 0（`_M`）；只有 OPL → 1（`_F`）；
 「ＭＩＤＩ Ｉ／Ｆ」選單（無／Roland 300H・320H・330H・332H・334H・336H，
 埠表在 `ds:0564`），選完寫回 `MUSIC.INI`。玩家在設定畫面改的音源則
 只進存檔，不回寫 `MUSIC.INI`。
+
+## GIN3SP.VOC：MicroWaveSVF音效
+
+已證實。原檔321633 bytes，SHA-256
+`b36a1b43f3199e776f70302671a6bc37698dd5255113995e7a7f55f78f699a9f`。
+副檔名不能判格式。本版前16 bytes為`MicroWaveSVFv1.0`，不是Creative Voice。
+第16位移的little-endian word是28段，18起逐段解析，恰到EOF。
+
+| 段內位移 | 寬度 | 意義 |
+|---|---:|---|
+| 0 | 2 | payload長度N |
+| 2 | 1 | DSP時間常數，本版均166 |
+| 3 | 1 | DSP命令，本版均14 |
+| 4 | N | 單聲道unsigned8 PCM |
+
+原版讀完整N bytes，播放端將N-2交DSP。依Creative命令14的樣本數減1契約，
+播放前N-1 bytes；時間常數166導出每樣本90微秒，時長(N-1)×90微秒。
+這是hardware-spec approximation，沒有證實逐波形或原版硬體wall-clock一致。
+
+已證實。兩側攻擊／中彈表各66 bytes，每陣營11列，每列3欄。
+SHIP+03為0取列7，其他取SHIP+04；攻擊欄取武器0／1／2，
+中彈欄取損失百分比小於20／40／其他。FF不播，其餘低byte mod28。
+靜圖、關閉動畫與零損失守方不播；播放請求先等待前樣本完成。
+
+原始CS:IP、IDA EA、線性RAM位址及310條原指令分欄保留在
+[完整來源](data/fleet-sound-source.json)。9項審查語意標proven，其餘unknown。
+原始bytes、樣本與表的SHA-256及Creative規格出處見[研究415](../re/415-fleet-sound.md)。
+[104](../spec/104-fleet-sound.md)定正式解析／OGG／一次性音效契約；
+[驗證067](../playtest/067-fleet-sound.md)記正常兩陣營、正式播放器解碼及未驗裝置／聆聽。

@@ -591,13 +591,24 @@ func TestNormalFleetPlayerChain(t *testing.T) {
 		t.Run(fmt.Sprint(faction), func(t *testing.T) {
 			g := reachConfiguredAI(t, -1, faction)
 			fleetChainAssets(t, g)
+			withSound := os.Getenv("LOGH3_FLEET_SOUND") == "1"
+			var soundEvents []map[string]any
+			if withSound {
+				fleetSoundAssets(t, g)
+			}
 			var inputs []map[string]any
 			elapsed := int64(0)
+			collectSound := func() {
+				for _, id := range g.DrainSoundEffects() {
+					soundEvents = append(soundEvents, map[string]any{"id": id, "at_ns": elapsed})
+				}
+			}
 			click := func(x, y int) {
 				inputs = append(inputs, map[string]any{"kind": "click", "x": x, "y": y, "at_ns": elapsed})
 				g.MoveMouse(x, y)
 				g.Click(x, y)
 				g.Frame()
+				collectSound()
 				if out := os.Getenv("LOGH3_FLEET_CHAIN_OUTPUT"); out != "" && g.fleetCombat.active && (g.fleetCombat.stage == fleetCommandTarget || g.fleetCombat.stage == fleetCommandMenu) {
 					folder := filepath.Join(out, fmt.Sprintf("normal-%d", faction))
 					if err := os.MkdirAll(folder, 0755); err != nil {
@@ -622,6 +633,7 @@ func TestNormalFleetPlayerChain(t *testing.T) {
 				inputs = append(inputs, map[string]any{"kind": "tick", "ns": int64(d), "at_ns": elapsed})
 				g.Tick(d)
 				elapsed += int64(d)
+				collectSound()
 			}
 			seed := func() {
 				inputs = append(inputs, map[string]any{"kind": "seed", "seed": uint32(0x12345678), "at_ns": elapsed})
@@ -860,6 +872,9 @@ func TestNormalFleetPlayerChain(t *testing.T) {
 			if scenes == 0 || orders == 0 {
 				t.Fatal("正常UI未進入交戰", orders, scenes)
 			}
+			if withSound && len(soundEvents) == 0 {
+				t.Fatal("正常交戰沒有音效")
+			}
 			for i, u := range g.battleUnits {
 				if before, ok := cpu[i]; ok && (u.X != before.X || u.Y != before.Y) {
 					t.Fatal("被動CPU被移動")
@@ -883,6 +898,15 @@ func TestNormalFleetPlayerChain(t *testing.T) {
 				}
 				if err := os.WriteFile(filepath.Join(saveDir, "inputs.json"), append(b, '\n'), 0644); err != nil {
 					t.Fatal(err)
+				}
+				if withSound {
+					b, err := json.MarshalIndent(soundEvents, "", "  ")
+					if err != nil {
+						t.Fatal(err)
+					}
+					if err := os.WriteFile(filepath.Join(saveDir, "sounds.json"), append(b, '\n'), 0644); err != nil {
+						t.Fatal(err)
+					}
 				}
 			}
 			if err := g.SaveSlot(saveDir, 0); err != nil {

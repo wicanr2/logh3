@@ -17,6 +17,7 @@ type fleetCombatSceneState struct {
 	before                      []rules.BattleUnit
 	integrity                   [2]int
 	pictures                    []engagementPicture
+	sounds                      []fleetSceneSound
 	attackEnd, resultTick, tick int
 	damaged, click              bool
 	hit                         rules.FleetCombatHit
@@ -234,6 +235,9 @@ func (g *Game) startFleetScenePictures(s *fleetCombatSceneState) error {
 			return err
 		}
 	}
+	if err := g.addFleetSceneSound(s, s.own, int(s.weapon), tick, len(s.pictures), false); err != nil {
+		return err
+	}
 	if err := g.fleetSceneAdd(s, s.own, 'A', g.res.FleetCommand.AnimationWeapon(int(s.weapon)), true, &tick); err != nil {
 		return err
 	}
@@ -345,6 +349,9 @@ func (g *Game) applyFleetSceneDamage(s *fleetCombatSceneState) error {
 		} else if pct < 40 {
 			suffix = '1'
 		}
+		if err := g.addFleetSceneSound(s, s.target, int(suffix-'0'), tick, len(s.pictures), true); err != nil {
+			return err
+		}
 		if err := g.fleetSceneAdd(s, s.target, 'D', suffix, true, &tick); err != nil {
 			return err
 		}
@@ -358,12 +365,14 @@ func (g *Game) updateFleetScene() {
 	if s == nil {
 		return
 	}
+	g.processFleetSceneSounds(s)
 	if !s.damaged && s.tick >= s.attackEnd {
 		if err := g.applyFleetSceneDamage(s); err != nil {
 			g.fleetCombatFail(err)
 			return
 		}
 	}
+	g.processFleetSceneSounds(s)
 	if s.damaged && s.tick >= s.resultTick && (s.click || s.tick >= s.resultTick+g.display.MsgSpeed) {
 		g.nextFleetCombatScene()
 	}
