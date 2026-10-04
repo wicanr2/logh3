@@ -513,3 +513,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [正式戰場WORK同步](../../internal/game/battlework.go)：088限定控制、鏡頭及經費更新；原版存檔格式保持。
 - [WORK邊界回歸](../../internal/game/battlework_test.go)：兩座位鏡頭、Input保存邊界、狀態2／5及signed經費；完整正常WORK對拍沿既有fleetarrival_test。
 - [WORK完整收據產生器](../../tools/scripts/battle_work_control_receipt.py)與[結構化收據](data/battle-work-control.json)：原版雙跑／寫入監看、785條IDA原始指令、完整230-byte保存／重讀及未變畫面；前輪JSON保持。
+
+- [第74輪交戰命令資料鏈](../goal/2026-10-04-combat-command-data-round-74.md)與[100候選／原池命令規格](../spec/100-fleet-combat-candidates.md)：沿研究401／403，逐次候選與原存檔欄位；完整092仍DRAFT。
+- [候選與命令驗證索引](data/fleet-command-data.json)由[第74輪凍結器](../../tools/scripts/fleet_command_data_receipt.py)重建；直接核原版逐查詢，不讀舊probe期望。
+- [候選與命令接線研究411](../re/411-fleet-command-data.md)及[限定驗證063](../playtest/063-fleet-command-data.md)：111次原版查詢、命令原池存讀、正常bootstrap唯讀域；100不取代完整092。

@@ -67,6 +67,25 @@ func RunNormalSpottingForTest(t *testing.T, g *Game) {
 	if g.state != StateBattle || g.turn != 380 || g.battleRegion != 26 || len(g.battleFleets) != 7 || len(g.preparationUnits()) != 55 || g.rand94DC().Seed() != 0xB6E4B78A {
 		t.Fatal("正常首戰身份不同")
 	}
+	// 規格100的正常資料域抽樣：正式bootstrap／主選單／S3到首戰，
+	// 每個一般分隊可查候選且不改寫原池、RND或畫面。尚無武器UI完成聲明。
+	shipBefore, fleetBefore := bytes.Clone(g.slot.Ship), bytes.Clone(g.slot.Fleet)
+	frameBefore := bytes.Clone(g.Frame().Pix)
+	queryCount := 0
+	for i, u := range g.battleUnits {
+		if u.Squadron < 0 {
+			continue
+		}
+		if _, err := g.fleetCombatCandidates(i); err != nil {
+			t.Fatalf("正常首戰分隊%d候選資料域錯誤：%v", i, err)
+		}
+		queryCount++
+	}
+	if queryCount != 48 || !bytes.Equal(shipBefore, g.slot.Ship) || !bytes.Equal(fleetBefore, g.slot.Fleet) ||
+		!bytes.Equal(frameBefore, g.Frame().Pix) || g.rand94DC().Seed() != 0xB6E4B78A {
+		t.Fatal("正常首戰候選查詢改寫資料、畫面或RND")
+	}
+	t.Log("100限定正常資料域：48個一般分隊候選查詢不改寫原池、畫面及RND")
 	g.battleRand = rules.NewRand(0x12345678)
 	states := map[string]any{}
 	capture := func(name string) {

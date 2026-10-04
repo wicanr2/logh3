@@ -596,3 +596,11 @@ X624與Y376／131塊的直接入口未返回。後者零高度下溢為strong in
 開場0152原bytes與每格等待0281已重核；沒有額外固定八tick等待。
 動畫關閉的八tick樣本包含原版CPU繪圖耗時，不用它猜補Game固定延遲。
 262條IDA原指令及原始定位分欄保存；Game完整交戰、時間線、音效及保存仍未接。
+
+## 第74輪候選與原池命令資料介面
+
+[100限定CONFORMED](../spec/100-fleet-combat-candidates.md)、[研究411](../re/411-fleet-command-data.md)及[完整索引](data/fleet-command-data.json)沿研究401／403已證實契約實作。
+候選按攻方逐次計算，不把SHIP+3C上一輪值當永久資料。48案111次返回與61次mask寫入符合原版。
+SHIP+2C保留目標池word、+2E保留武器byte。036D先寫武器，非FF才到037C寫目標；03D9防禦只寫3。
+正式Game介面重新查候選後才提交，取消／防禦保持目標word；SaveSlot及Slot重讀保留，不增加格式。
+正常bootstrap首戰48個一般分隊查詢不變畫面／原池／RND。這只驗資料域；完整武器UI、自動分支、第④步傷害與演出仍未接。

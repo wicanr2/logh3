@@ -2,6 +2,41 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-04 #48／#79候選與原池命令資料介面
+
+第74輪父提交dfccda34441a6271b18fd3594bfa340f177fa6ea，原Goal保持active。
+路由命中復古remake、規格閘門與文件職責，載入相應入口並沿用逆向技能。
+遠端89張worklist／9張OPEN，269核對零失效；既有零距離、061被動CPU及音樂裁決保持。
+
+正式Game在索敵後仍走行星結算。這輪補前端候選／命令資料依賴，沒有把純核心塞進舊結算。
+沿研究401／403充分證據，不新增硬體或完整演出RE切片；原版入口bytes亦直接回查。
+100先DRAFT、來源與036D／037C／03D9審查後READY，再實作FleetCombatCandidates與Game原池資料介面。
+候選使用目前XY、300上限、方向橢圓、情報／Out、兩word庫存及光線砲每第8步遮蔽。
+從48組原版逐次AX與mask取期望，111查詢與61寫入全符，不讀舊probe模型。
+受控修改半軸表以獨立表驗共用演算法，正式入口沿093凍結表，不修改全域或資產。
+
+Game提交前重新查候選，SHIP+2C／+2E直接保存在原池，不新增存檔格式。
+0／1／2／FF／3五案SaveSlot及正式Slot重讀通過；取消／防禦保留既有目標word。
+十種非法提交拒絕，原池、分隊與RND不變，包含061單人CPU。
+正常bootstrap／主選單／防拷138／S3／首戰的48分隊查詢不變畫面、原池或末端B6E4B78A。
+初次編譯誤用了battleCells與passiveComputer介面；依目前方法簽章修正，乾淨重跑通過。
+規格100只限資料介面CONFORMED，完整UI、自動選擇、命令排序、第④步、093／099及音效仍未呼叫。
+完整056／092仍DRAFT，兩Issue保持OPEN，不稱正常交戰完成。
+
+標準18套件13PASS／5無測試；Game85.420秒、gin3 67.513秒。
+限定log SHA-256 d54a404c3e1aaae192e699b4b088c205138608988c4f68bee9e86a7225a9a0e3；
+標準log b8739f75b5f67600380412c3827f3b41944212fd2574b2dc4177bb2abd9fac4b。
+201來源凍結索引4b42447bfe2bbe899bc1c51987501b9b2c21cd95a1323452c38383f490acea80，重建逐byte相同。
+48／79最新本文寫入後逐字回讀，快照89張／9張OPEN；CONTEXT與矩陣由新快照重生。
+269核對零失效、2 manual、122一致、145舊文件，log SHA
+462b0b88f9cf92c207bc5cba6b088764e2b247884dcb11d27fafdef253aaff7b。
+
+Go格式、Python AST、文件連結及既有410索引正對照通過，新增檔及抽樣輸出1000:1000。
+工作根root-owned與誤建.md目錄為零；logh3容器清單空，未建image或清理其他專案。
+dosgolem專用副本保持乾淨且未改動。提交與推送訊息「接上交戰候選與原池命令保存」，精確身份依Git紀錄。
+入口：[計畫74](docs/goal/2026-10-04-combat-command-data-round-74.md)、
+[100](docs/spec/100-fleet-combat-candidates.md)、[研究411](docs/re/411-fleet-command-data.md)與[063](docs/playtest/063-fleet-command-data.md)。
+
 ## 2026-10-04 #48／#79完整單幀與結果陣營
 
 第73輪父提交3b4c54c5219c93f2779ad141e965351c45556f7d，Goal保持active。

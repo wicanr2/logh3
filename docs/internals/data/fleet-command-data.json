@@ -1,0 +1,1269 @@
+{
+  "schema": "logh3.fleet-command-data.v1",
+  "date": "2026-10-04",
+  "remake_parent": "dfccda34441a6271b18fd3594bfa340f177fa6ea",
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "images": [
+    "[\"golang:1.24-bookworm\"] sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+    "[\"logh3-ebiten:2\"] sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+    "[\"python:3.12-slim\"] sha256:229a2c5bfa27522db7815ea81f9bed70af17ccb9de9fc7ad142b1877b5830d36",
+    "[\"ida-pro-9.4-idapython:locked-v1\"] sha256:6f6d59af49d0008c4109a5295b5f374bdc007e2d1ab28cb9de08779584de2780"
+  ],
+  "sources": {
+    "docs/internals/data/weapon-candidates.json": {
+      "sha256": "59a5ad2bd68a54c888179be3d85a6b99c15f16a1892b7d2b05c4de0667ad601f",
+      "bytes": 3065486
+    },
+    "docs/internals/data/fleet-combat-command.json": {
+      "sha256": "e3b39582bfda07105d27837747d46bca19eaf2f1fb5d6ff383500870e4a6870d",
+      "bytes": 1819960
+    },
+    "workplace/oracle/weapon79-r65-beam-absent-a/input-mem.bin": {
+      "sha256": "63f022eb06c399e42381e8e9aae3d8cb6a0cf53e2a92c94e6194e3024dbe3be2",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-beam-absent-a/report.txt": {
+      "sha256": "a8ad6055e5de0e8e1165e63e6bcd59cf0f5564f9425a069c896cc4a668a4a73f",
+      "bytes": 18632
+    },
+    "workplace/oracle/weapon79-r65-beam-absent-b/input-mem.bin": {
+      "sha256": "63f022eb06c399e42381e8e9aae3d8cb6a0cf53e2a92c94e6194e3024dbe3be2",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-beam-absent-b/report.txt": {
+      "sha256": "e24dbf85593970a71e364d24625ccb9bfb91642220f56aea47a90043ecfaf4ae",
+      "bytes": 18632
+    },
+    "workplace/oracle/weapon79-r65-beam191-a/input-mem.bin": {
+      "sha256": "a1c8e6f6c484cbe9b84a8376c5fc9a8212b7d488f116df7134b9d9649d2f4125",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-beam191-a/report.txt": {
+      "sha256": "944b11a8db6894a7f925394ad41d7421cd9b4ea42625144c290a7cf73ef51b26",
+      "bytes": 18973
+    },
+    "workplace/oracle/weapon79-r65-beam191-b/input-mem.bin": {
+      "sha256": "a1c8e6f6c484cbe9b84a8376c5fc9a8212b7d488f116df7134b9d9649d2f4125",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-beam191-b/report.txt": {
+      "sha256": "c1a922d11f93f79d8a3e7780415c11dcec2873926fa0536a1003bfc008bf97f2",
+      "bytes": 18973
+    },
+    "workplace/oracle/weapon79-r65-beam192-a/input-mem.bin": {
+      "sha256": "0a1e56febffd64bc9c0b86cc03089fc398a63e4ef9c886ca9d47143b93d374af",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-beam192-a/report.txt": {
+      "sha256": "d6245a0789a8c853b41b45b11e0d3e5c2b89f68686d1b18b1fd0b3587a561f06",
+      "bytes": 39893
+    },
+    "workplace/oracle/weapon79-r65-beam192-b/input-mem.bin": {
+      "sha256": "0a1e56febffd64bc9c0b86cc03089fc398a63e4ef9c886ca9d47143b93d374af",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-beam192-b/report.txt": {
+      "sha256": "db23609f092eb6adf895f9180f428bcc8e1f090389cb57200de01fe34e33f5ea",
+      "bytes": 39894
+    },
+    "workplace/oracle/weapon79-r65-block-hidden-a/input-mem.bin": {
+      "sha256": "8a83dcb848dffb7dc17ce4cb2475172e8478103ca3d0512b8e8482eff459689b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-block-hidden-a/report.txt": {
+      "sha256": "b30799c9ffa585d4162d6734941b7ca80a9dbc46ce74ee7ba17eeb34f20cd27b",
+      "bytes": 19108
+    },
+    "workplace/oracle/weapon79-r65-block-hidden-b/input-mem.bin": {
+      "sha256": "8a83dcb848dffb7dc17ce4cb2475172e8478103ca3d0512b8e8482eff459689b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-block-hidden-b/report.txt": {
+      "sha256": "aa23b9e15c266376cebbdee0a71b8617e60254c55158e6736724918ec1d75fc1",
+      "bytes": 19107
+    },
+    "workplace/oracle/weapon79-r65-block-offset-a/input-mem.bin": {
+      "sha256": "c14e0dc50f03a06bd195707a82df9f4a436da1bd0913c3cc6772c505c650b164",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-block-offset-a/report.txt": {
+      "sha256": "abfa93e74dd98d0878a822bd0640bc2da41e3792b0c456f24041edac0e97fe7f",
+      "bytes": 19107
+    },
+    "workplace/oracle/weapon79-r65-block-offset-b/input-mem.bin": {
+      "sha256": "c14e0dc50f03a06bd195707a82df9f4a436da1bd0913c3cc6772c505c650b164",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-block-offset-b/report.txt": {
+      "sha256": "913773ff030504619a4f20c09385a4cc1abfc0e0f1d8e03709486653521485cb",
+      "bytes": 19107
+    },
+    "workplace/oracle/weapon79-r65-block-visible-a/input-mem.bin": {
+      "sha256": "f69c25795cc00d6548404edc9057319935a4743562a048b24b2c17bd2909c594",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-block-visible-a/report.txt": {
+      "sha256": "2f415dc67cbadd41addb072822f2edfde0fdce0e406c7e002d056e6818c6c20e",
+      "bytes": 19115
+    },
+    "workplace/oracle/weapon79-r65-block-visible-b/input-mem.bin": {
+      "sha256": "f69c25795cc00d6548404edc9057319935a4743562a048b24b2c17bd2909c594",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-block-visible-b/report.txt": {
+      "sha256": "17598177e63bee64ad57f2712140228efa7c52005455c202f2fe086cf943c806",
+      "bytes": 19114
+    },
+    "workplace/oracle/weapon79-r65-coincident-a/input-mem.bin": {
+      "sha256": "19b669534b0b6790f845e4cb1800a0437084e09a3288e54c25b29ed5545f76ec",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-coincident-a/report.txt": {
+      "sha256": "a6786d75d4be7337780d6f7985ea34ae514f27715f9226eeb1da404d2ef835cc",
+      "bytes": 18992
+    },
+    "workplace/oracle/weapon79-r65-coincident-b/input-mem.bin": {
+      "sha256": "19b669534b0b6790f845e4cb1800a0437084e09a3288e54c25b29ed5545f76ec",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-coincident-b/report.txt": {
+      "sha256": "ac2ca1cc40815ba8ed10ea0c02a26144081fd00016022e967b414a49f54b6ece",
+      "bytes": 18992
+    },
+    "workplace/oracle/weapon79-r65-detail-zero-a/input-mem.bin": {
+      "sha256": "556bec20ca3d82e3e587c685f20842bbf7b4d56cbead2c7ab227a47a2b36938b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-detail-zero-a/report.txt": {
+      "sha256": "4a4356b7b3fa7bc4aac82c7c5d9a59904189bc3908ab77ae355153e00fb8d7cd",
+      "bytes": 31556
+    },
+    "workplace/oracle/weapon79-r65-detail-zero-b/input-mem.bin": {
+      "sha256": "556bec20ca3d82e3e587c685f20842bbf7b4d56cbead2c7ab227a47a2b36938b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-detail-zero-b/report.txt": {
+      "sha256": "4f00e0d9c8f4fb0ef4aeb69f761425fd0d519ef2598daf793b91e7f1f2d4be8d",
+      "bytes": 31556
+    },
+    "workplace/oracle/weapon79-r65-diagonal20-a/input-mem.bin": {
+      "sha256": "c787fd5a2056de6771a0bd20b539c58863392f803d9f6284fcfa4d3391683785",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-diagonal20-a/report.txt": {
+      "sha256": "7f0fb34284169264f7a97f8111dbd8a6d112c3099cd981ecd72b6a2fe0ba222c",
+      "bytes": 18992
+    },
+    "workplace/oracle/weapon79-r65-diagonal20-b/input-mem.bin": {
+      "sha256": "c787fd5a2056de6771a0bd20b539c58863392f803d9f6284fcfa4d3391683785",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-diagonal20-b/report.txt": {
+      "sha256": "8cb1ae0d5f957f70e0f773fe665694d94c961ab7a02090be1588a03f4cf16f00",
+      "bytes": 18993
+    },
+    "workplace/oracle/weapon79-r65-down20-a/input-mem.bin": {
+      "sha256": "697b7b1f93d05915fdf097c6302db54d8ad4eea1f64c6714f28655431c1e508e",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-down20-a/report.txt": {
+      "sha256": "903c2899457878203378ada67eafc197e3cd723993b648410c10814d4a1843b0",
+      "bytes": 18967
+    },
+    "workplace/oracle/weapon79-r65-down20-b/input-mem.bin": {
+      "sha256": "697b7b1f93d05915fdf097c6302db54d8ad4eea1f64c6714f28655431c1e508e",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-down20-b/report.txt": {
+      "sha256": "30b241ad471b98179843b18dad7944efe98db93bbbdeae3bcaf111a04b03a9ac",
+      "bytes": 18967
+    },
+    "workplace/oracle/weapon79-r65-fighter-absent-a/input-mem.bin": {
+      "sha256": "bef59eb07f9ad9ee82beb42245bc4ff872d145be0279fb2052249610945135fe",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-fighter-absent-a/report.txt": {
+      "sha256": "a23fd7ea300cf07c7b65d2ee01622aaea24c74c7902ac553b8106a952da872bb",
+      "bytes": 18860
+    },
+    "workplace/oracle/weapon79-r65-fighter-absent-b/input-mem.bin": {
+      "sha256": "bef59eb07f9ad9ee82beb42245bc4ff872d145be0279fb2052249610945135fe",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-fighter-absent-b/report.txt": {
+      "sha256": "2608cae74979333f189f8c8c7a805459edaef16f90e3fad705c0a5c57cf90dd7",
+      "bytes": 18859
+    },
+    "workplace/oracle/weapon79-r65-fighter-zero-a/input-mem.bin": {
+      "sha256": "dfa60088913b9593beb578051da3e3eaf626a115b1a2e035d4ac0d52ce6510a5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-fighter-zero-a/report.txt": {
+      "sha256": "e9c93df9a26648ff1f5556ab2635ca638f476fb0f7fdf2caae55c33d46aabcf3",
+      "bytes": 18847
+    },
+    "workplace/oracle/weapon79-r65-fighter-zero-b/input-mem.bin": {
+      "sha256": "dfa60088913b9593beb578051da3e3eaf626a115b1a2e035d4ac0d52ce6510a5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-fighter-zero-b/report.txt": {
+      "sha256": "086eecbb2d53f677e8d0d683e58f627efa64e0ebbaef6031229582489d394175",
+      "bytes": 18847
+    },
+    "workplace/oracle/weapon79-r65-fighter60-a/input-mem.bin": {
+      "sha256": "717418d1c05db75ed821aeed7442c831e97cfa9674d7c7d3080e6fa5cef32df1",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-fighter60-a/report.txt": {
+      "sha256": "b5f6fa92c7c1ea01f2128c21e7e9a7c3787e836085ecbe0f78818ed9f01628be",
+      "bytes": 18986
+    },
+    "workplace/oracle/weapon79-r65-fighter60-b/input-mem.bin": {
+      "sha256": "717418d1c05db75ed821aeed7442c831e97cfa9674d7c7d3080e6fa5cef32df1",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-fighter60-b/report.txt": {
+      "sha256": "eb9a52a8a3879e0c6602b1b4a7f2d76acd30dd0603afaf6c4591466ae964b550",
+      "bytes": 18986
+    },
+    "workplace/oracle/weapon79-r65-fighter61-a/input-mem.bin": {
+      "sha256": "c55385f4161e1d5dac4b8a045ace109bc513c691241ffd28d2932f4603aa98ed",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-fighter61-a/report.txt": {
+      "sha256": "9c77f2ab84344603fd2c5ee950d0f1f220b2d4263cdb3b4a422cf90d385e5b9f",
+      "bytes": 18986
+    },
+    "workplace/oracle/weapon79-r65-fighter61-b/input-mem.bin": {
+      "sha256": "c55385f4161e1d5dac4b8a045ace109bc513c691241ffd28d2932f4603aa98ed",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-fighter61-b/report.txt": {
+      "sha256": "17b5a81fb26d32552a39a0a360f85128b5a4f2f8f54fa2a28508244a3703523b",
+      "bytes": 18986
+    },
+    "workplace/oracle/weapon79-r65-left20-a/input-mem.bin": {
+      "sha256": "660596408122bad24396d5e4d29aca39dfc07beef715b17fae3b957a8df6c36b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-left20-a/report.txt": {
+      "sha256": "3fa968969e09dbbf2fd4115d5de0c446236959de4f11570c3481e395deac6611",
+      "bytes": 18967
+    },
+    "workplace/oracle/weapon79-r65-left20-b/input-mem.bin": {
+      "sha256": "660596408122bad24396d5e4d29aca39dfc07beef715b17fae3b957a8df6c36b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-left20-b/report.txt": {
+      "sha256": "a4335b2a470b0fa91b0cc9c7167778a7cbd003d07ea3a0931f54fc59a6491f6d",
+      "bytes": 18967
+    },
+    "workplace/oracle/weapon79-r65-missile-absent-a/input-mem.bin": {
+      "sha256": "ffb7026777624fe580fd880ce46726c96b2ee75fbe58e71ea464933ce043a913",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-missile-absent-a/report.txt": {
+      "sha256": "0996a2d2dbf0966a5e043c996789860609ad7fcaca99375284c5a571da4eb028",
+      "bytes": 18859
+    },
+    "workplace/oracle/weapon79-r65-missile-absent-b/input-mem.bin": {
+      "sha256": "ffb7026777624fe580fd880ce46726c96b2ee75fbe58e71ea464933ce043a913",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-missile-absent-b/report.txt": {
+      "sha256": "9b7966e9e78902de29ab0d416f86d8238c69fe88ecadf9885f93879441cdc654",
+      "bytes": 18858
+    },
+    "workplace/oracle/weapon79-r65-missile-zero-a/input-mem.bin": {
+      "sha256": "c46f9472f4a84889b9345b1da50b45a7d069cd5d8dd1172d6048dbb0fb70cd2a",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-missile-zero-a/report.txt": {
+      "sha256": "538784659f8da9fb2474803e35614804b026330f925be035dc64a93965b76040",
+      "bytes": 18846
+    },
+    "workplace/oracle/weapon79-r65-missile-zero-b/input-mem.bin": {
+      "sha256": "c46f9472f4a84889b9345b1da50b45a7d069cd5d8dd1172d6048dbb0fb70cd2a",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-missile-zero-b/report.txt": {
+      "sha256": "9994a70db5afc50e213f2abe184063910d3b58a20e0c45b77550c9a9db94968b",
+      "bytes": 18846
+    },
+    "workplace/oracle/weapon79-r65-missile132-a/input-mem.bin": {
+      "sha256": "7e04a02ea8abd849d5e292496c719a46bbff2cf2f91c7d666129d120bad148f5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-missile132-a/report.txt": {
+      "sha256": "3f5d1432689eeb7b75e03ef2e7f342eba35535620fbddf54fafb65d70f604637",
+      "bytes": 18992
+    },
+    "workplace/oracle/weapon79-r65-missile132-b/input-mem.bin": {
+      "sha256": "7e04a02ea8abd849d5e292496c719a46bbff2cf2f91c7d666129d120bad148f5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-missile132-b/report.txt": {
+      "sha256": "7c248bb9abfea20ffbabec6bdb1de42982088d1a2583828ca3f7179d828f53d5",
+      "bytes": 18992
+    },
+    "workplace/oracle/weapon79-r65-missile133-a/input-mem.bin": {
+      "sha256": "e8c332b0cb5056b640c4082fc9dc35f464bd87a0fb5b3509b02dd9b4884f91f9",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-missile133-a/report.txt": {
+      "sha256": "934f1df7c40225656f5e5e13d94f11cadd2f3ce8b69f337c4399629661e3654b",
+      "bytes": 18992
+    },
+    "workplace/oracle/weapon79-r65-missile133-b/input-mem.bin": {
+      "sha256": "e8c332b0cb5056b640c4082fc9dc35f464bd87a0fb5b3509b02dd9b4884f91f9",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-missile133-b/report.txt": {
+      "sha256": "a5f76338381b4e011da9cccf527500ef8a156b8f27e686f2dcc7119529866a01",
+      "bytes": 18992
+    },
+    "workplace/oracle/weapon79-r65-near-a/input-mem.bin": {
+      "sha256": "b0b72e8a6d92a31b6dec3dae6b0016f3aad976fc216fb9b5ebf5187b94d16be1",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-near-a/report.txt": {
+      "sha256": "b39c6fe43aebe02921ab01d02a6a166bd96bb4dcada6adc77f7e02928a0a014d",
+      "bytes": 18956
+    },
+    "workplace/oracle/weapon79-r65-near-b/input-mem.bin": {
+      "sha256": "b0b72e8a6d92a31b6dec3dae6b0016f3aad976fc216fb9b5ebf5187b94d16be1",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-near-b/report.txt": {
+      "sha256": "12cbe5cc9458a9debf8ebf47d902286fce1c22ebe148be070006e55d042156a4",
+      "bytes": 18955
+    },
+    "workplace/oracle/weapon79-r65-rear20-a/input-mem.bin": {
+      "sha256": "e7d4ceda498e55d61a9a4dc639f85df73c7c7c7c9c5cbb635726d9f72cd77a68",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear20-a/report.txt": {
+      "sha256": "f4502c781f0858f06f963c1438b684b49c45d327154379b27d33011ebfdc3ebc",
+      "bytes": 18760
+    },
+    "workplace/oracle/weapon79-r65-rear20-b/input-mem.bin": {
+      "sha256": "e7d4ceda498e55d61a9a4dc639f85df73c7c7c7c9c5cbb635726d9f72cd77a68",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear20-b/report.txt": {
+      "sha256": "9da9ce0d6a2de213fb609548a81c26684c8485a196248daef35f74d1a3727ad8",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-rear21-a/input-mem.bin": {
+      "sha256": "da3547ca16c55960fca7b43d9a3ca2df7bcde5460d1f3fbc6f0c034427d0f803",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear21-a/report.txt": {
+      "sha256": "bb6f168df2452e10aaaa8a0c120e9440c0bb6e0170e2e42727d030f70914eeb9",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-rear21-b/input-mem.bin": {
+      "sha256": "da3547ca16c55960fca7b43d9a3ca2df7bcde5460d1f3fbc6f0c034427d0f803",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear21-b/report.txt": {
+      "sha256": "8f86bc9d9fe77db87900a8d9aed7b30871d18bbec8769600cb69bf1a488a20f1",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-rear27-a/input-mem.bin": {
+      "sha256": "3d0e7d104441284f836745f1bae8adff21962649f774108f704eba2cebb0f506",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear27-a/report.txt": {
+      "sha256": "f9ed9ce7b261231ae32c14483efedc95f3763bb9726a4cd266bfda243d228039",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-rear27-b/input-mem.bin": {
+      "sha256": "3d0e7d104441284f836745f1bae8adff21962649f774108f704eba2cebb0f506",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear27-b/report.txt": {
+      "sha256": "345b77d6e5853b238009282cb210cdd08c6185559394148dc7971d35bcf9ed6b",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-rear28-a/input-mem.bin": {
+      "sha256": "a95eadca6c64cb88633ae8de0896c45fd6aee0d0dda52ac5b0f952f213ad1262",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear28-a/report.txt": {
+      "sha256": "572d3508bcf52c11043a18eb672781e269a29bd8531d620217743a9071b82497",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-rear28-b/input-mem.bin": {
+      "sha256": "a95eadca6c64cb88633ae8de0896c45fd6aee0d0dda52ac5b0f952f213ad1262",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear28-b/report.txt": {
+      "sha256": "643ea2b0ddc1c8fdb155e48764e894b56b230a309397fc4837d98beec3809f4b",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-rear8-a/input-mem.bin": {
+      "sha256": "5d1353ec57594de3c2d0b240b59c3af43c77fbc110e77a82d14f672abd998b5b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear8-a/report.txt": {
+      "sha256": "b4f39c009f7762f4c05cd4d2d235d224b79485b4c4068bb8bcf9877b48a6d8fb",
+      "bytes": 18962
+    },
+    "workplace/oracle/weapon79-r65-rear8-b/input-mem.bin": {
+      "sha256": "5d1353ec57594de3c2d0b240b59c3af43c77fbc110e77a82d14f672abd998b5b",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear8-b/report.txt": {
+      "sha256": "104d11d26833ea26ab24e9f77565555fbeb92afdc8cee6a731076fac5e081181",
+      "bytes": 18962
+    },
+    "workplace/oracle/weapon79-r65-rear9-a/input-mem.bin": {
+      "sha256": "f4f591190b6701788f17516d6332fc04c92f293aaeee90c772ddfc04206b248a",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear9-a/report.txt": {
+      "sha256": "3f2009144b05eb6dc0e83ab2e982abb773a03508531f816601ecb8fd1cf77364",
+      "bytes": 18753
+    },
+    "workplace/oracle/weapon79-r65-rear9-b/input-mem.bin": {
+      "sha256": "f4f591190b6701788f17516d6332fc04c92f293aaeee90c772ddfc04206b248a",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-rear9-b/report.txt": {
+      "sha256": "c01a5b3977269efd33e81aee9876cec12d6dbfb48cda445eb7386cea3daf3770",
+      "bytes": 18753
+    },
+    "workplace/oracle/weapon79-r65-scout-kind-a/input-mem.bin": {
+      "sha256": "cd5f3a0562d88c0c71d5a08c1924987239167293bf0e08370743e1c2030f74af",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-scout-kind-a/report.txt": {
+      "sha256": "ae9dbfd2f496db31df05907309445c89e9dc48e4710bfa50acf33332a37b02e9",
+      "bytes": 31602
+    },
+    "workplace/oracle/weapon79-r65-scout-kind-b/input-mem.bin": {
+      "sha256": "cd5f3a0562d88c0c71d5a08c1924987239167293bf0e08370743e1c2030f74af",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-scout-kind-b/report.txt": {
+      "sha256": "830706eae08ab5d0dca3943403dcebdca991b90d39ca7cc29eebc1625501612a",
+      "bytes": 31602
+    },
+    "workplace/oracle/weapon79-r65-search-open300-a/input-mem.bin": {
+      "sha256": "b1a7489c106992d37d0d8be7d39ec7e2321977dafffd6f794353ae5f8053956c",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search-open300-a/report.txt": {
+      "sha256": "9e52228a407fff4e02e502d293f3f0044725268ff962e34def20755f00f52c62",
+      "bytes": 19067
+    },
+    "workplace/oracle/weapon79-r65-search-open300-b/input-mem.bin": {
+      "sha256": "b1a7489c106992d37d0d8be7d39ec7e2321977dafffd6f794353ae5f8053956c",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search-open300-b/report.txt": {
+      "sha256": "9f4d9e8ad5e7d8c8f23097e0d9044c155b57d424a3ee3c12b764698909f3e07e",
+      "bytes": 19067
+    },
+    "workplace/oracle/weapon79-r65-search-open301-a/input-mem.bin": {
+      "sha256": "f20e97c6a77ec1c45b1ad5358cb0976d484e1253169c2abc45ae639cd3406044",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search-open301-a/report.txt": {
+      "sha256": "8bd2a6b63d16f40290ed7cc8c069fc1111db61b0f86556dbc3df90c83721e917",
+      "bytes": 32880
+    },
+    "workplace/oracle/weapon79-r65-search-open301-b/input-mem.bin": {
+      "sha256": "f20e97c6a77ec1c45b1ad5358cb0976d484e1253169c2abc45ae639cd3406044",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search-open301-b/report.txt": {
+      "sha256": "f9afc673b01480b1d81f8d461f92d6401490a032d10277b1378a9ade928accf4",
+      "bytes": 32880
+    },
+    "workplace/oracle/weapon79-r65-search-wide300-a/input-mem.bin": {
+      "sha256": "41006ca84020d9d7c8428b60811264f28363fdc23510778715be8a260515a041",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search-wide300-a/report.txt": {
+      "sha256": "95a2981bca6f5f84ba6af73b6a29eca94e3a7a63d967cf05b259db9ccc3ad915",
+      "bytes": 34972
+    },
+    "workplace/oracle/weapon79-r65-search-wide300-b/input-mem.bin": {
+      "sha256": "41006ca84020d9d7c8428b60811264f28363fdc23510778715be8a260515a041",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search-wide300-b/report.txt": {
+      "sha256": "229f8260618ca5030d61d1b57b13b6557bbc1e7e7875010db61491cee87f7068",
+      "bytes": 34972
+    },
+    "workplace/oracle/weapon79-r65-search-wide301-a/input-mem.bin": {
+      "sha256": "364656eabc0d68a504768ea655ac57f9e34b4434be5b9af17ae07ab22d630e2d",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search-wide301-a/report.txt": {
+      "sha256": "7c9d748fd5faab6d67a4d12e362749e6a280862f5c7027e1ae5c9a595d46602d",
+      "bytes": 32463
+    },
+    "workplace/oracle/weapon79-r65-search-wide301-b/input-mem.bin": {
+      "sha256": "364656eabc0d68a504768ea655ac57f9e34b4434be5b9af17ae07ab22d630e2d",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search-wide301-b/report.txt": {
+      "sha256": "d78dd5f65d36fb1f1a4a29b2db63e4d5cc0a7ee06185c728038b7a567ac86153",
+      "bytes": 32463
+    },
+    "workplace/oracle/weapon79-r65-search300-a/input-mem.bin": {
+      "sha256": "242b65086db1522e632229b2b630fa869f99721bb9b89d455522c8b929020990",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search300-a/report.txt": {
+      "sha256": "765a3c95dfd52fb267038675b6a3f4b8952a9896c3fa2542c21d11deed376e37",
+      "bytes": 34890
+    },
+    "workplace/oracle/weapon79-r65-search300-b/input-mem.bin": {
+      "sha256": "242b65086db1522e632229b2b630fa869f99721bb9b89d455522c8b929020990",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search300-b/report.txt": {
+      "sha256": "e560d9cc0a11c2763f026db00453d85e24f09b2a6a9b7f9326f366090c9581e9",
+      "bytes": 34890
+    },
+    "workplace/oracle/weapon79-r65-search301-a/input-mem.bin": {
+      "sha256": "09250d24527169482a465cede490e9201f505b6a01ce994315c16d50af88ccab",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search301-a/report.txt": {
+      "sha256": "7add3a9ab01d119fd93b84258bb95207d7ba657a032ed8a51fb1d700fa1902d4",
+      "bytes": 32381
+    },
+    "workplace/oracle/weapon79-r65-search301-b/input-mem.bin": {
+      "sha256": "09250d24527169482a465cede490e9201f505b6a01ce994315c16d50af88ccab",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-search301-b/report.txt": {
+      "sha256": "3c71c5f24a0eae4fdea27d33183131428b9316358a883056dc90dda3e45438a3",
+      "bytes": 32380
+    },
+    "workplace/oracle/weapon79-r65-shallow20-a/input-mem.bin": {
+      "sha256": "76a280c79f940af87b1efd0d836cedab4e6eed4198ebb2675a2db434df97514c",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-shallow20-a/report.txt": {
+      "sha256": "b0bbc5473ae31833d0551b5104866219e2cdb8223cd3c7de643cfdb10686affe",
+      "bytes": 18986
+    },
+    "workplace/oracle/weapon79-r65-shallow20-b/input-mem.bin": {
+      "sha256": "76a280c79f940af87b1efd0d836cedab4e6eed4198ebb2675a2db434df97514c",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-shallow20-b/report.txt": {
+      "sha256": "956074d3f61a56682688f08bcf546963a2340b7b364197ef8fa6371a98a5730b",
+      "bytes": 18986
+    },
+    "workplace/oracle/weapon79-r65-side16-a/input-mem.bin": {
+      "sha256": "4423552e1b122ec82021c3007f71ab11a2a5978d4a9ed2860dbaa34ce0ff8c79",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side16-a/report.txt": {
+      "sha256": "90d91c53a835b147c781a0785bee1e9238dad9267b35931a5047a1a152e94822",
+      "bytes": 18967
+    },
+    "workplace/oracle/weapon79-r65-side16-b/input-mem.bin": {
+      "sha256": "4423552e1b122ec82021c3007f71ab11a2a5978d4a9ed2860dbaa34ce0ff8c79",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side16-b/report.txt": {
+      "sha256": "9db970526ce56d607d6251e558d6b174c0afb0fecae7655e12bc948b7ea42595",
+      "bytes": 18967
+    },
+    "workplace/oracle/weapon79-r65-side17-a/input-mem.bin": {
+      "sha256": "ac6de83c319b0a963d2db31fe2fe4a257d9dd1255f0a666da008ca3dee577d60",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side17-a/report.txt": {
+      "sha256": "23dfbe422d6d2e591d2a62c193e89c151ced8dd9942f12835ef4fc808bdc5b9d",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-side17-b/input-mem.bin": {
+      "sha256": "ac6de83c319b0a963d2db31fe2fe4a257d9dd1255f0a666da008ca3dee577d60",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side17-b/report.txt": {
+      "sha256": "25794773789a67994a8ae34be7ecb1679958e07a25bc2a7b1a256c2573346dd1",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-side40-a/input-mem.bin": {
+      "sha256": "d35d209d67ea9f01439993c84cc1ed40d9948bd82413baeb8cb5e6eb1aec22f0",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side40-a/report.txt": {
+      "sha256": "7aa6b97ac4f56939310d63a09ab6746c462dee80a166d43c78780d3611e2f71e",
+      "bytes": 18760
+    },
+    "workplace/oracle/weapon79-r65-side40-b/input-mem.bin": {
+      "sha256": "d35d209d67ea9f01439993c84cc1ed40d9948bd82413baeb8cb5e6eb1aec22f0",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side40-b/report.txt": {
+      "sha256": "71572ee1e85687453e85425ed1a50fa76191982812f4cdf4e4de54167dd0d30e",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-side41-a/input-mem.bin": {
+      "sha256": "ad56517109804f14f7dbe4f9bb8aaa927ad987ec24fbad8954a46be6f8e18d21",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side41-a/report.txt": {
+      "sha256": "8eb299971820928059e19663625ccd7f5d44e32f2bcc622ef7b34c6cb5f43d55",
+      "bytes": 18760
+    },
+    "workplace/oracle/weapon79-r65-side41-b/input-mem.bin": {
+      "sha256": "ad56517109804f14f7dbe4f9bb8aaa927ad987ec24fbad8954a46be6f8e18d21",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side41-b/report.txt": {
+      "sha256": "259de958c3e30a09bebe70d8f8a4cca2447fdbfcffa6826bcf359830e648cf52",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-side45-a/input-mem.bin": {
+      "sha256": "b6ed2fd128d7f94994270492817af5b092d7a675698a70580c429ef5e9c37cb0",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side45-a/report.txt": {
+      "sha256": "1f00d367425556ee1454182c10d4d478df89e3bfbf49a42d43e6663094860268",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-side45-b/input-mem.bin": {
+      "sha256": "b6ed2fd128d7f94994270492817af5b092d7a675698a70580c429ef5e9c37cb0",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side45-b/report.txt": {
+      "sha256": "c3e0b9af7e5e80b78adcf3411c6a141e23af01bc12f556072003d4635e30958b",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-side46-a/input-mem.bin": {
+      "sha256": "ea190afcf9f5011861da27f8fc37893dfd7ff3a2229bcef54c41b534d9345eda",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side46-a/report.txt": {
+      "sha256": "eabbfe77a88d8626f328c81e696370b608a14e17773f5d9efb7d9cf8261aff05",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-side46-b/input-mem.bin": {
+      "sha256": "ea190afcf9f5011861da27f8fc37893dfd7ff3a2229bcef54c41b534d9345eda",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-side46-b/report.txt": {
+      "sha256": "06b20970b45bc77c5718d9d4060c8466b71be5a29fdd1ef3d9ad4c317710ea74",
+      "bytes": 18759
+    },
+    "workplace/oracle/weapon79-r65-steep20-a/input-mem.bin": {
+      "sha256": "2b4f067edd09aa42885daed5eedcd13016e4d4a3118afe795bab4a9d2341f78f",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-steep20-a/report.txt": {
+      "sha256": "ec9cae136c0ddcc3cbee0195e60c5266942255d4c36002bce2c6488c1d26faae",
+      "bytes": 18974
+    },
+    "workplace/oracle/weapon79-r65-steep20-b/input-mem.bin": {
+      "sha256": "2b4f067edd09aa42885daed5eedcd13016e4d4a3118afe795bab4a9d2341f78f",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-steep20-b/report.txt": {
+      "sha256": "530b2b7105c65a5f7ac4a04db56836e1c4331068a021789db1a820ed378632c5",
+      "bytes": 18975
+    },
+    "workplace/oracle/weapon79-r65-stock-highword-a/input-mem.bin": {
+      "sha256": "0afbfceb7521a877663139b4e6b6151b37c9a0474af93e3eccd209f7e3bc76b5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-stock-highword-a/report.txt": {
+      "sha256": "90da777b211fd87fed2eea2008972301c3aa2fcff8f6ae753a1f831cae269e48",
+      "bytes": 19119
+    },
+    "workplace/oracle/weapon79-r65-stock-highword-b/input-mem.bin": {
+      "sha256": "0afbfceb7521a877663139b4e6b6151b37c9a0474af93e3eccd209f7e3bc76b5",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-stock-highword-b/report.txt": {
+      "sha256": "1195b90c79cb3601f93ec914dbba2496edebc5e7607b1e48dbf14f071a9d71fc",
+      "bytes": 19119
+    },
+    "workplace/oracle/weapon79-r65-stock-one-a/input-mem.bin": {
+      "sha256": "8bcf5fb14d6c13747e2190e2b5f612d96e5bf6d227a3438770e64bfc64407612",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-stock-one-a/report.txt": {
+      "sha256": "adaed8843fd4c1838bdbf898a518601ed33fa281d0a5e27e3c74fc3ba209a312",
+      "bytes": 19089
+    },
+    "workplace/oracle/weapon79-r65-stock-one-b/input-mem.bin": {
+      "sha256": "8bcf5fb14d6c13747e2190e2b5f612d96e5bf6d227a3438770e64bfc64407612",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-stock-one-b/report.txt": {
+      "sha256": "bdc0be4e3e1c9af7fca7aecc60727f64ea0590c726003c4256d9d7b49c30b2a1",
+      "bytes": 19089
+    },
+    "workplace/oracle/weapon79-r65-target-hidden-a/input-mem.bin": {
+      "sha256": "d576b085d5bc6a815e02d5469c6fe2258f8f205167e73beda2578d8877c823a2",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-target-hidden-a/report.txt": {
+      "sha256": "3671fe89c270af4677b81562b2b2be5dae5f7d32749fcb5cd279013e92cb350e",
+      "bytes": 29896
+    },
+    "workplace/oracle/weapon79-r65-target-hidden-b/input-mem.bin": {
+      "sha256": "d576b085d5bc6a815e02d5469c6fe2258f8f205167e73beda2578d8877c823a2",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-target-hidden-b/report.txt": {
+      "sha256": "e8656c03f17213618cdc4827cbaa0e10ea77e919fd21ec648e8b90c7055c8453",
+      "bytes": 29896
+    },
+    "workplace/oracle/weapon79-r65-target-zero-a/input-mem.bin": {
+      "sha256": "adbd1a7c9d3bda1047585cdfb14c545bbd2a4eed15f2e10fb473cdf1fc96f868",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-target-zero-a/report.txt": {
+      "sha256": "7b4a192948f88ca6fbbd776ae486f27cd08c81879cc80ba9f3fd3ec8d1c21d23",
+      "bytes": 19049
+    },
+    "workplace/oracle/weapon79-r65-target-zero-b/input-mem.bin": {
+      "sha256": "adbd1a7c9d3bda1047585cdfb14c545bbd2a4eed15f2e10fb473cdf1fc96f868",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-target-zero-b/report.txt": {
+      "sha256": "2a0f7e166165f88cde3b0a1b4e3020636abbce568f59d4124c0e31968e387e80",
+      "bytes": 19049
+    },
+    "workplace/oracle/weapon79-r65-terrain-block-a/input-mem.bin": {
+      "sha256": "7325320da52b3ff443f78d166de4228940dcc315e4b459acb010595dae9f1d76",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-terrain-block-a/report.txt": {
+      "sha256": "4abfefae4c3019e10c8821721665ee203a1c04b7712362cce4cb51ddb2f8d04f",
+      "bytes": 19115
+    },
+    "workplace/oracle/weapon79-r65-terrain-block-b/input-mem.bin": {
+      "sha256": "7325320da52b3ff443f78d166de4228940dcc315e4b459acb010595dae9f1d76",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-terrain-block-b/report.txt": {
+      "sha256": "05d68c5a3fd2f0f38616f791c336623e9cd1badec8f1ac761cf97272964011d9",
+      "bytes": 19115
+    },
+    "workplace/oracle/weapon79-r65-terrain-clear-a/input-mem.bin": {
+      "sha256": "2e81b3c537fcb09ef1a75b52134e7968474a5e0678af1fa4b2de8d8923a49841",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-terrain-clear-a/report.txt": {
+      "sha256": "1fb097ddf17e6fc2d384c79d1fe0d94f24c1dcc7f7bdd041ff895c209bb52a5a",
+      "bytes": 19113
+    },
+    "workplace/oracle/weapon79-r65-terrain-clear-b/input-mem.bin": {
+      "sha256": "2e81b3c537fcb09ef1a75b52134e7968474a5e0678af1fa4b2de8d8923a49841",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-terrain-clear-b/report.txt": {
+      "sha256": "48425e50feb5cbd4c95a87f385649944760d6651552030f82bdffc3fca6bfc3e",
+      "bytes": 19114
+    },
+    "workplace/oracle/weapon79-r65-up20-a/input-mem.bin": {
+      "sha256": "17fcf5f0d7543cd5eaa4fa1d4f48ece69b6876e26d61c00a358f7234af259879",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-up20-a/report.txt": {
+      "sha256": "d1ea3a12949551c38fea17563f5aad1b0644b95a5b9a929e23d56aa4b7670401",
+      "bytes": 18955
+    },
+    "workplace/oracle/weapon79-r65-up20-b/input-mem.bin": {
+      "sha256": "17fcf5f0d7543cd5eaa4fa1d4f48ece69b6876e26d61c00a358f7234af259879",
+      "bytes": 1048576
+    },
+    "workplace/oracle/weapon79-r65-up20-b/report.txt": {
+      "sha256": "3cdff0f362a35c79f91e51bd88fed380483b356e5e61c2aef683615b7cdb0f56",
+      "bytes": 18955
+    },
+    "workplace/round74-command-final.log": {
+      "sha256": "d54a404c3e1aaae192e699b4b088c205138608988c4f68bee9e86a7225a9a0e3",
+      "bytes": 17265
+    },
+    "workplace/round74-standard.log": {
+      "sha256": "b8739f75b5f67600380412c3827f3b41944212fd2574b2dc4177bb2abd9fac4b",
+      "bytes": 959
+    },
+    "internal/rules/fleetcandidates.go": {
+      "sha256": "eaefa607e37297e0340fc735a1d422467953547e6e1ab8b2c639a226929dfff3",
+      "bytes": 4577
+    },
+    "internal/rules/fleetcandidates_test.go": {
+      "sha256": "312389fd316c684d33fbfa6bf5a608e51aa3089940a72fe357affa387e37875f",
+      "bytes": 6299
+    },
+    "internal/game/fleetcombatcommand.go": {
+      "sha256": "622992d977985df8f28db35d7c5fa27cd5503493ba34ed7de5077268076015bd",
+      "bytes": 2796
+    },
+    "internal/game/fleetcombatcommand_test.go": {
+      "sha256": "a15bfffc917ffd07f37b889028d21b7ec2c7c229a0f8817490a240f6f48ef0eb",
+      "bytes": 5952
+    },
+    "internal/game/normalspotting_test.go": {
+      "sha256": "95c44519c3b94b279e1957cf4a7b9e6906cceca5739e32ad701a12bd83116fe7",
+      "bytes": 7122
+    }
+  },
+  "cases": [
+    {
+      "case": "beam-absent",
+      "sources": [
+        "workplace/oracle/weapon79-r65-beam-absent-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-beam-absent-a/report.txt",
+        "workplace/oracle/weapon79-r65-beam-absent-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-beam-absent-b/report.txt"
+      ]
+    },
+    {
+      "case": "beam191",
+      "sources": [
+        "workplace/oracle/weapon79-r65-beam191-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-beam191-a/report.txt",
+        "workplace/oracle/weapon79-r65-beam191-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-beam191-b/report.txt"
+      ]
+    },
+    {
+      "case": "beam192",
+      "sources": [
+        "workplace/oracle/weapon79-r65-beam192-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-beam192-a/report.txt",
+        "workplace/oracle/weapon79-r65-beam192-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-beam192-b/report.txt"
+      ]
+    },
+    {
+      "case": "block-hidden",
+      "sources": [
+        "workplace/oracle/weapon79-r65-block-hidden-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-block-hidden-a/report.txt",
+        "workplace/oracle/weapon79-r65-block-hidden-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-block-hidden-b/report.txt"
+      ]
+    },
+    {
+      "case": "block-offset",
+      "sources": [
+        "workplace/oracle/weapon79-r65-block-offset-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-block-offset-a/report.txt",
+        "workplace/oracle/weapon79-r65-block-offset-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-block-offset-b/report.txt"
+      ]
+    },
+    {
+      "case": "block-visible",
+      "sources": [
+        "workplace/oracle/weapon79-r65-block-visible-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-block-visible-a/report.txt",
+        "workplace/oracle/weapon79-r65-block-visible-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-block-visible-b/report.txt"
+      ]
+    },
+    {
+      "case": "coincident",
+      "sources": [
+        "workplace/oracle/weapon79-r65-coincident-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-coincident-a/report.txt",
+        "workplace/oracle/weapon79-r65-coincident-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-coincident-b/report.txt"
+      ]
+    },
+    {
+      "case": "detail-zero",
+      "sources": [
+        "workplace/oracle/weapon79-r65-detail-zero-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-detail-zero-a/report.txt",
+        "workplace/oracle/weapon79-r65-detail-zero-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-detail-zero-b/report.txt"
+      ]
+    },
+    {
+      "case": "diagonal20",
+      "sources": [
+        "workplace/oracle/weapon79-r65-diagonal20-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-diagonal20-a/report.txt",
+        "workplace/oracle/weapon79-r65-diagonal20-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-diagonal20-b/report.txt"
+      ]
+    },
+    {
+      "case": "down20",
+      "sources": [
+        "workplace/oracle/weapon79-r65-down20-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-down20-a/report.txt",
+        "workplace/oracle/weapon79-r65-down20-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-down20-b/report.txt"
+      ]
+    },
+    {
+      "case": "fighter-absent",
+      "sources": [
+        "workplace/oracle/weapon79-r65-fighter-absent-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-fighter-absent-a/report.txt",
+        "workplace/oracle/weapon79-r65-fighter-absent-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-fighter-absent-b/report.txt"
+      ]
+    },
+    {
+      "case": "fighter-zero",
+      "sources": [
+        "workplace/oracle/weapon79-r65-fighter-zero-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-fighter-zero-a/report.txt",
+        "workplace/oracle/weapon79-r65-fighter-zero-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-fighter-zero-b/report.txt"
+      ]
+    },
+    {
+      "case": "fighter60",
+      "sources": [
+        "workplace/oracle/weapon79-r65-fighter60-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-fighter60-a/report.txt",
+        "workplace/oracle/weapon79-r65-fighter60-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-fighter60-b/report.txt"
+      ]
+    },
+    {
+      "case": "fighter61",
+      "sources": [
+        "workplace/oracle/weapon79-r65-fighter61-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-fighter61-a/report.txt",
+        "workplace/oracle/weapon79-r65-fighter61-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-fighter61-b/report.txt"
+      ]
+    },
+    {
+      "case": "left20",
+      "sources": [
+        "workplace/oracle/weapon79-r65-left20-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-left20-a/report.txt",
+        "workplace/oracle/weapon79-r65-left20-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-left20-b/report.txt"
+      ]
+    },
+    {
+      "case": "missile-absent",
+      "sources": [
+        "workplace/oracle/weapon79-r65-missile-absent-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-missile-absent-a/report.txt",
+        "workplace/oracle/weapon79-r65-missile-absent-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-missile-absent-b/report.txt"
+      ]
+    },
+    {
+      "case": "missile-zero",
+      "sources": [
+        "workplace/oracle/weapon79-r65-missile-zero-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-missile-zero-a/report.txt",
+        "workplace/oracle/weapon79-r65-missile-zero-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-missile-zero-b/report.txt"
+      ]
+    },
+    {
+      "case": "missile132",
+      "sources": [
+        "workplace/oracle/weapon79-r65-missile132-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-missile132-a/report.txt",
+        "workplace/oracle/weapon79-r65-missile132-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-missile132-b/report.txt"
+      ]
+    },
+    {
+      "case": "missile133",
+      "sources": [
+        "workplace/oracle/weapon79-r65-missile133-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-missile133-a/report.txt",
+        "workplace/oracle/weapon79-r65-missile133-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-missile133-b/report.txt"
+      ]
+    },
+    {
+      "case": "near",
+      "sources": [
+        "workplace/oracle/weapon79-r65-near-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-near-a/report.txt",
+        "workplace/oracle/weapon79-r65-near-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-near-b/report.txt"
+      ]
+    },
+    {
+      "case": "rear20",
+      "sources": [
+        "workplace/oracle/weapon79-r65-rear20-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear20-a/report.txt",
+        "workplace/oracle/weapon79-r65-rear20-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear20-b/report.txt"
+      ]
+    },
+    {
+      "case": "rear21",
+      "sources": [
+        "workplace/oracle/weapon79-r65-rear21-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear21-a/report.txt",
+        "workplace/oracle/weapon79-r65-rear21-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear21-b/report.txt"
+      ]
+    },
+    {
+      "case": "rear27",
+      "sources": [
+        "workplace/oracle/weapon79-r65-rear27-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear27-a/report.txt",
+        "workplace/oracle/weapon79-r65-rear27-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear27-b/report.txt"
+      ]
+    },
+    {
+      "case": "rear28",
+      "sources": [
+        "workplace/oracle/weapon79-r65-rear28-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear28-a/report.txt",
+        "workplace/oracle/weapon79-r65-rear28-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear28-b/report.txt"
+      ]
+    },
+    {
+      "case": "rear8",
+      "sources": [
+        "workplace/oracle/weapon79-r65-rear8-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear8-a/report.txt",
+        "workplace/oracle/weapon79-r65-rear8-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear8-b/report.txt"
+      ]
+    },
+    {
+      "case": "rear9",
+      "sources": [
+        "workplace/oracle/weapon79-r65-rear9-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear9-a/report.txt",
+        "workplace/oracle/weapon79-r65-rear9-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-rear9-b/report.txt"
+      ]
+    },
+    {
+      "case": "scout-kind",
+      "sources": [
+        "workplace/oracle/weapon79-r65-scout-kind-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-scout-kind-a/report.txt",
+        "workplace/oracle/weapon79-r65-scout-kind-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-scout-kind-b/report.txt"
+      ]
+    },
+    {
+      "case": "search-open300",
+      "sources": [
+        "workplace/oracle/weapon79-r65-search-open300-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search-open300-a/report.txt",
+        "workplace/oracle/weapon79-r65-search-open300-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search-open300-b/report.txt"
+      ]
+    },
+    {
+      "case": "search-open301",
+      "sources": [
+        "workplace/oracle/weapon79-r65-search-open301-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search-open301-a/report.txt",
+        "workplace/oracle/weapon79-r65-search-open301-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search-open301-b/report.txt"
+      ]
+    },
+    {
+      "case": "search-wide300",
+      "sources": [
+        "workplace/oracle/weapon79-r65-search-wide300-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search-wide300-a/report.txt",
+        "workplace/oracle/weapon79-r65-search-wide300-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search-wide300-b/report.txt"
+      ]
+    },
+    {
+      "case": "search-wide301",
+      "sources": [
+        "workplace/oracle/weapon79-r65-search-wide301-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search-wide301-a/report.txt",
+        "workplace/oracle/weapon79-r65-search-wide301-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search-wide301-b/report.txt"
+      ]
+    },
+    {
+      "case": "search300",
+      "sources": [
+        "workplace/oracle/weapon79-r65-search300-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search300-a/report.txt",
+        "workplace/oracle/weapon79-r65-search300-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search300-b/report.txt"
+      ]
+    },
+    {
+      "case": "search301",
+      "sources": [
+        "workplace/oracle/weapon79-r65-search301-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search301-a/report.txt",
+        "workplace/oracle/weapon79-r65-search301-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-search301-b/report.txt"
+      ]
+    },
+    {
+      "case": "shallow20",
+      "sources": [
+        "workplace/oracle/weapon79-r65-shallow20-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-shallow20-a/report.txt",
+        "workplace/oracle/weapon79-r65-shallow20-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-shallow20-b/report.txt"
+      ]
+    },
+    {
+      "case": "side16",
+      "sources": [
+        "workplace/oracle/weapon79-r65-side16-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side16-a/report.txt",
+        "workplace/oracle/weapon79-r65-side16-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side16-b/report.txt"
+      ]
+    },
+    {
+      "case": "side17",
+      "sources": [
+        "workplace/oracle/weapon79-r65-side17-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side17-a/report.txt",
+        "workplace/oracle/weapon79-r65-side17-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side17-b/report.txt"
+      ]
+    },
+    {
+      "case": "side40",
+      "sources": [
+        "workplace/oracle/weapon79-r65-side40-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side40-a/report.txt",
+        "workplace/oracle/weapon79-r65-side40-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side40-b/report.txt"
+      ]
+    },
+    {
+      "case": "side41",
+      "sources": [
+        "workplace/oracle/weapon79-r65-side41-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side41-a/report.txt",
+        "workplace/oracle/weapon79-r65-side41-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side41-b/report.txt"
+      ]
+    },
+    {
+      "case": "side45",
+      "sources": [
+        "workplace/oracle/weapon79-r65-side45-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side45-a/report.txt",
+        "workplace/oracle/weapon79-r65-side45-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side45-b/report.txt"
+      ]
+    },
+    {
+      "case": "side46",
+      "sources": [
+        "workplace/oracle/weapon79-r65-side46-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side46-a/report.txt",
+        "workplace/oracle/weapon79-r65-side46-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-side46-b/report.txt"
+      ]
+    },
+    {
+      "case": "steep20",
+      "sources": [
+        "workplace/oracle/weapon79-r65-steep20-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-steep20-a/report.txt",
+        "workplace/oracle/weapon79-r65-steep20-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-steep20-b/report.txt"
+      ]
+    },
+    {
+      "case": "stock-highword",
+      "sources": [
+        "workplace/oracle/weapon79-r65-stock-highword-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-stock-highword-a/report.txt",
+        "workplace/oracle/weapon79-r65-stock-highword-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-stock-highword-b/report.txt"
+      ]
+    },
+    {
+      "case": "stock-one",
+      "sources": [
+        "workplace/oracle/weapon79-r65-stock-one-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-stock-one-a/report.txt",
+        "workplace/oracle/weapon79-r65-stock-one-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-stock-one-b/report.txt"
+      ]
+    },
+    {
+      "case": "target-hidden",
+      "sources": [
+        "workplace/oracle/weapon79-r65-target-hidden-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-target-hidden-a/report.txt",
+        "workplace/oracle/weapon79-r65-target-hidden-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-target-hidden-b/report.txt"
+      ]
+    },
+    {
+      "case": "target-zero",
+      "sources": [
+        "workplace/oracle/weapon79-r65-target-zero-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-target-zero-a/report.txt",
+        "workplace/oracle/weapon79-r65-target-zero-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-target-zero-b/report.txt"
+      ]
+    },
+    {
+      "case": "terrain-block",
+      "sources": [
+        "workplace/oracle/weapon79-r65-terrain-block-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-terrain-block-a/report.txt",
+        "workplace/oracle/weapon79-r65-terrain-block-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-terrain-block-b/report.txt"
+      ]
+    },
+    {
+      "case": "terrain-clear",
+      "sources": [
+        "workplace/oracle/weapon79-r65-terrain-clear-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-terrain-clear-a/report.txt",
+        "workplace/oracle/weapon79-r65-terrain-clear-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-terrain-clear-b/report.txt"
+      ]
+    },
+    {
+      "case": "up20",
+      "sources": [
+        "workplace/oracle/weapon79-r65-up20-a/input-mem.bin",
+        "workplace/oracle/weapon79-r65-up20-a/report.txt",
+        "workplace/oracle/weapon79-r65-up20-b/input-mem.bin",
+        "workplace/oracle/weapon79-r65-up20-b/report.txt"
+      ]
+    }
+  ],
+  "comparison": {
+    "native_cases": 48,
+    "native_queries": 111,
+    "native_mask_writes": 61,
+    "game_submission_and_save_cases": 5,
+    "game_rejected_cases": 10,
+    "normal_bootstrap_read_only_units": 48,
+    "standard_packages": 18,
+    "standard_pass": 13,
+    "standard_no_tests": 5
+  },
+  "limits": [
+    "Game資料介面已實作，玩家武器UI及第④步尚未呼叫",
+    "正常首戰只驗資料域／唯讀性，不稱完整交戰same-state",
+    "沿原版候選收據雙跑與版本，未修改dosgolem或歷史索引",
+    "100限定資料鏈，不升格092／056，不啟用單人CPU攻擊"
+  ]
+}
