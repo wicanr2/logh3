@@ -2,6 +2,65 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-04 第84輪：#79戰場升級原版補證
+
+父提交4065d46f38b70fabc00783b91ed430d3902cbeba，原Goal保持active。
+上一輪屬進展：已提交索敵燃料、回收與原版／玩家證據。本輪接續8-4，未另縮小原Goal。
+開工主機gh auth status確認wicanr2有效；抓遠端89張worklist／9張OPEN，
+269條verify零失效、2 manual、122一致、145舊文件。工作樹乾淨，專用dosgolem f7523f9亦乾淨。
+路由命中復古remake、IDA9.4、規格閘門及文件職責，實讀逆向技能、官方IDA技能與工具契約。
+外部知識唯讀掛載；所有分析、生成、原版續行與品質核對均走Docker。
+
+原版60案從第82輪完整machine／DOS保存自然到185C:060D後明示注入，停於09BF。
+每案固定seed12345678、IRQ0Every20000，所有注入與實際按下／放開步數保存。
+兩份13489258-byte JSON完全相同，SHA-256 3d11f8b68703a5eefe18270821d4ac19dd94bf92a4274c3e86632dd412290d80。
+涵蓋15個等級的經驗門檻前／等於／後、99停止、100／255診斷、能力0／199／200／255、
+兩陣營四種控制、人類報告、副官及70000功績連升三級。
+模型使用原版407個實際RND輸出，109次嘗試／47次成功的旗標與完整2296-byte提督表均符合。
+沒有remake RNG或正常玩家同態聲明。
+
+新證據推翻兩個舊斷言：原版功績高word非0仍升級，研究339的「必須0」不成立；
+軍階下限為29／34／39，原版12級，帝國索引10一級上將、同盟仍上將，兩側索引11元帥。
+現有RankOf的28門檻與10級上限不符，CONTEXT／事實08／062已回填，339追加勘誤。
+提督固定報告旗標2已動態補證：未換軍階亦印晉昇；副官依成長旗標列能力。
+11張原版完整色號／16色／PNG已保存，副官能力報告一張已目視。
+沒有remake圖、差分或GUI收據，不能稱畫面對拍完成。
+
+升級重算另改FLEET與SHIP，初次模型假定SHIP不變遭原版反例推翻。
+完整FLEET差分290 bytes、SHIP差分200 bytes，速度涉及+1F/+21/+22；全部前後SHA與差分保存。
+297B:05B2／0E8B、typed窄寫入與正常UI／保存仍須補，108 DRAFT。
+未改正式程式、既有原版資料、第83輪來源或原始遊戲檔。8-5與完整062仍待驗。
+
+原版53來源索引battle-promotion.json SHA-256 ab96e1d8d0213da5dfc8b34acc1f46bf1b83440eb3d552ed7f37efd8c2b0c661。
+分級6來源索引battle-promotion-review.json SHA-256 3d52c61e0e93433297f6240078614c11da38cf27e24347a4cfe926cfc4f451b6。
+IDA兩份分級匯出836原指令、21項proven直接語意，其餘unknown與警示。
+分級工具自動讀版控定位索引的工作副本並逐條比原始bytes，不改自動函式名或運算元。
+新計畫84、108、418、073與工具／三JSON同輪掛既有internals索引。
+
+一次性IDA最終命令使用tools/ida.sh raw，外層timeout90s，
+容器內set -e、mkdir /tmp/promotion79-r84-<段>-reviewed、唯讀來源COM複製到該暫存目錄：
+
+```sh
+idat -A -L/work/promotion79-r84-185C-reviewed.log "-S/idascripts/battle_promotion_review_ida.py /work/promotion79-r84-185C-reviewed.json 185C 060D:06E8 06E8:09BF" /tmp/promotion79-r84-185C-reviewed/input-promotion79-r84-185C.com
+idat -A -L/work/promotion79-r84-28E0-reviewed.log "-S/idascripts/battle_promotion_review_ida.py /work/promotion79-r84-28E0-reviewed.json 28E0 004F:0096 0096:0103 05F9:06C3 06C3:095C 095C:09BD" /tmp/promotion79-r84-28E0-reviewed/input-promotion79-r84-28E0.com
+```
+
+工具失敗保留並分類：首次用了不存在的GUI image名，改用已確認image ID，未重建image；
+Go wrapper不支援sh子命令，改用GUI wrapper的xrun；Docker未加-i所以heredoc未傳入，
+改成受控檔案腳本。第一次IDA因此缺COM輸入，兩程序終止，v2新路徑成功。
+原版生成器v1的置換誤改入口判斷，未產出正式收據；保留ignored v1生成來源，改v2新名稱。
+095C初次匯出停於提前retf，補0979尾段後最終指定09BD完整邊界。
+首次#79證據段寫入散文，被資料解析器拒絕；立即改成五項既定「- `路徑`」格式。
+舊失敗不是產品bug，未調參數或加特例強迫通過。
+
+收尾遠端#79仍OPEN、本文與準備稿完全相同；重新抓89／9、verify269零失效，render與render-matrix通過。
+59項來源雜湊／大小、六個Python AST、兩個shell語法、正對照072、新文件入口／連結及UID通過。
+品質輸出workplace/round84-quality.log、round84-owner-shell.log；無root-owned檔案或*.md目錄。
+本輪無產品程式改動，不重跑第83輪已通過的標準18套件；不升格其驗證範圍。
+本輪Go／GUI／IDA一次性容器均已退出；未留背景程序、未清理其他專案資源。
+提交訊息「保存戰場升級原版對拍與軍階勘誤」，精確提交身分依Git。
+下一步沿#79補艦隊能力／SHIP速度重算，再閉合108 READY與正式8-4接線。
+
 ## 2026-10-04 #48／#79自動命令與原池預估
 
 第75輪父提交529b61a5deb64e7affbb8b66f43b70b069d1e7a2，原Goal保持active。

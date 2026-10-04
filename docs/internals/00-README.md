@@ -1,5 +1,24 @@
 # 原版內部構造參考
 
+第84輪沿#79：[戰場升級計畫](../goal/2026-10-04-battle-promotion-round-84.md)、
+[108草稿](../spec/108-battle-promotion.md)與
+[IDA輸入產生器](../../tools/scripts/battle_promotion_prepare.py)。
+本輪先核8-4成長、艦隊重算及通知順序；證據未足前不改正式路徑。
+[原指令匯出](../../tools/scripts/battle_promotion_ida.py)、
+[完整保存觀測器產生器](../../tools/scripts/battle_promotion_native_prepare.py)、
+[隔離模組](../../tools/battle_promotion_native_run.sh)與
+[固定版本雙跑](../../tools/battle_promotion_oracle.sh)為重生入口。
+[成長獨立驗算與凍結器](../../tools/scripts/battle_promotion_receipt.py)
+核完整提督表，保留原版完整FLEET／SHIP差分。
+[原版來源與成長模型](data/battle-promotion.json)、
+[分級定位索引](data/battle-promotion-annotations.json)及
+[自動合併定位索引的IDA匯出器](../../tools/scripts/battle_promotion_review_ida.py)
+保留原始bytes與未知警示，不取代原始名稱。
+[分級來源核對器](../../tools/scripts/battle_promotion_review_receipt.py)及
+[分級原指令與軍階文字](data/battle-promotion-review.json)回查兩陣營12級文字。
+[研究418](../re/418-battle-promotion.md)與[原版診斷073](../playtest/073-battle-promotion-oracle.md)
+保存60案原版雙跑及成長模型；艦隊／SHIP速度重算仍待補，108 DRAFT。
+
 第83輪沿#79：[索敵燃料與回收計畫](../goal/2026-10-04-scout-fuel-round-83.md)。
 限定062子步8-3，先核固定原版的派出／冷卻邊界、報告等待與原池回寫，再接正式回合。
 [原指令匯出器](../../tools/scripts/scout_fuel_ida.py)保留0491／05A9與艦隊名格式的定位及交叉參照。

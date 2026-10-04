@@ -1,0 +1,154 @@
+{
+  "schema": "logh3.battle-promotion-annotations.v1",
+  "source": "研究418；battle-promotion.json完整60案、407次受控亂數與原指令",
+  "source_sha256": "ab96e1d8d0213da5dfc8b34acc1f46bf1b83440eb3d552ed7f37efd8c2b0c661",
+  "rows": [
+    {
+      "original_location": "185C:0671",
+      "original_bytes_hex": "b80200",
+      "semantic": "提督升級報告旗標固定2，未換軍階亦印官階通知",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "185C:06C0",
+      "original_bytes_hex": "0c01",
+      "semantic": "副官報告使用成長旗標OR1",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "185C:0688",
+      "original_bytes_hex": "75bd",
+      "semantic": "提督成功後再試同一人，直至回0",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "185C:06D6",
+      "original_bytes_hex": "75bc",
+      "semantic": "副官成功後再試同一人，直至回0",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "185C:079D",
+      "original_bytes_hex": "eb22",
+      "semantic": "官階訊息與能力訊息互斥，bit1優先",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "185C:0999",
+      "original_bytes_hex": "d126388f",
+      "semantic": "報告期間訊息速度word左移一位",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "185C:09B4",
+      "original_bytes_hex": "a3388f",
+      "semantic": "等待報告返回後恢復訊息速度",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:00ED",
+      "original_bytes_hex": "80f922",
+      "semantic": "29以下軍階索引8，29起再測34",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:00F6",
+      "original_bytes_hex": "80f927",
+      "semantic": "34起測39，39起軍階索引11",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:061F",
+      "original_bytes_hex": "26807c0663",
+      "semantic": "僅等級99直接拒絕升級",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:0669",
+      "original_bytes_hex": "7502",
+      "semantic": "功績高word非0仍以unsigned比較進升級分支",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:0673",
+      "original_bytes_hex": "26291c",
+      "semantic": "功績低word扣經驗門檻",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:0676",
+      "original_bytes_hex": "26194402",
+      "semantic": "功績高word承接borrow",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:06A7",
+      "original_bytes_hex": "26fe4706",
+      "semantic": "等級byte加1",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:0844",
+      "original_bytes_hex": "807e0103",
+      "semantic": "前三候選三項成長後略過後兩組",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:08CF",
+      "original_bytes_hex": "807e0103",
+      "semantic": "移動或回轉後若共三項成長，略過營運或運用",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:096A",
+      "original_bytes_hex": "807e12c8",
+      "semantic": "能力byte>=200直接回0，不取亂數",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:0979",
+      "original_bytes_hex": "807e1264",
+      "semantic": "能力100以下用第一跨度，其餘用第二跨度",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:0993",
+      "original_bytes_hex": "f7f1",
+      "semantic": "第一個RND以跨度加1取餘數",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:09A5",
+      "original_bytes_hex": "f7f1",
+      "semantic": "第二個RND以同跨度加1取餘數",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    },
+    {
+      "original_location": "28E0:09B4",
+      "original_bytes_hex": "f7f1",
+      "semantic": "兩次餘數相加除100得到成長量",
+      "grade": "proven",
+      "source": "docs/re/418-battle-promotion.md；docs/internals/data/battle-promotion.json"
+    }
+  ]
+}
