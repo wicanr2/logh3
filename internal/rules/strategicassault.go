@@ -311,6 +311,13 @@ func strategicCounter(p []byte, facing, ang int, d Fixed, sf StrategicFleet, att
 // 了區域變數卻沒拿來用（`11C9` 寫 `[bp+2]`、`11D2` push `[bp+6]`），只受
 // `203A:0593` 的 `min(艘數)` 限制。
 func strategicSpread(sf StrategicFleet, amount, attacker int, res *StrategicAssaultResult) {
+	strategicSpreadWithLoss(sf, amount, func(i, n int) int {
+		return strategicShipLoss(sf, i, n, attacker, res)
+	})
+}
+
+// 分攤共用原算式，各入口提供自己的完整戰損提交。
+func strategicSpreadWithLoss(sf StrategicFleet, amount int, loss func(int, int) int) {
 	groups := sf.Fleet.Composition
 	total, big, bigShips := 0, -1, 0
 	for i, g := range groups {
@@ -335,10 +342,10 @@ func strategicSpread(sf StrategicFleet, amount, attacker int, res *StrategicAssa
 		if this >= c {
 			this = c - 1
 		}
-		left -= strategicShipLoss(sf, i, this, attacker, res)
+		left -= loss(i, this)
 	}
 	if left != 0 && big >= 0 && groups[big].Ships != 0 {
-		strategicShipLoss(sf, big, left, attacker, res)
+		loss(big, left)
 	}
 }
 

@@ -998,15 +998,19 @@ type Game struct {
 	// 游標的方位算，按下左鍵才寫進行星記錄的 `+0x50`。
 	battleGunAim int
 
-	battleRally          []rules.RallySite
-	battlePlanets        []rules.BattlePlanet
-	battleRand           *rules.Rand
-	battlePromotionPaths *rules.UnrestPaths // 本次戰略處理開始的路徑快取，跨8-2保留
-	battleLosses         []rules.BattleLoss
-	battleScore          [2]int
-	battleFleetScore     [2]int // 102已立即入campaignScore，EndBattle不重複計入。
-	campaignScore        [2]int
-	battleOver           bool
+	battleRally           []rules.RallySite
+	battlePlanets         []rules.BattlePlanet
+	battleRand            *rules.Rand
+	battlePromotionPaths  *rules.UnrestPaths // 本次戰略處理開始的路徑快取，跨8-2保留
+	battleFinishing       bool
+	battleFinishEnded     bool
+	battleOccupation      *rules.WinnerOccupation
+	battleOccupationScore [2]int
+	battleLosses          []rules.BattleLoss
+	battleScore           [2]int
+	battleFleetScore      [2]int // 102已立即入campaignScore，EndBattle不重複計入。
+	campaignScore         [2]int
+	battleOver            bool
 
 	// work／admirals 是這一局**可寫**的 `WORK` 區塊與提督表。
 	//
@@ -2100,6 +2104,8 @@ func New(res *Resources) (*Game, error) {
 // 未安定度是唯一一欄載進來還不對的（原版載入時重算，算式未解，
 // `docs/re/24`）。要對畫面的地方得自己 `Slot.SetUnrest` 蓋成量到的值。
 func (g *Game) LoadSlot(sl *rules.Slot) {
+	g.battleFinishing, g.battleFinishEnded = false, false
+	g.battleOccupation = nil
 	g.battlePromotionPaths = nil
 	g.LeftRelease()
 	g.standbyScroll = 0
@@ -3178,6 +3184,9 @@ func (g *Game) loadSlotFromDisk(n int) bool {
 // 保存前同步現況艦隊／艦艇（規格 067）；未知欄位從底稿保留。
 // `dir` 由呼叫端指定，原版目錄一律唯讀。
 func (g *Game) SaveSlot(dir string, index int) error {
+	if g.battleFinishing {
+		return fmt.Errorf("戰場結束或占領報告尚未完成")
+	}
 	if g.fleetCombat.active {
 		return fmt.Errorf("艦隊交戰命令或演出尚未完成")
 	}

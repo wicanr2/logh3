@@ -2,7 +2,10 @@
 
 狀態：**READY**。第91輪完成規則、完整原池與占領callback續接的證據審查。
 沿 GitHub #79，實作前父提交為`49c6236dd6f8fd1cb57cebddb72c2036ebeab61d`。
-正式程式尚未接線，尚未CONFORMED。
+第92輪正式規則與Game已接線，尚未CONFORMED。
+目前實作父提交為`8b8b2d73a9e634537ad0c4b67daab53b8d024866`。
+67案完整六表／清單／seed、50報告矩形及六案保存重讀通過，見[081](../playtest/081-battle-finish-game.md)。
+正常自然勝利／占領GUI及完整062整回合同態仍待驗。
 證據見[研究423](../re/423-battle-finish.md)、[驗證078](../playtest/078-battle-finish.md)
 與[分級事實及來源](../internals/data/battle-finish.json)。完整[062](062-battle-turn-eight-steps.md)保持DRAFT。
 
@@ -35,6 +38,7 @@ callback索引SHA-256 `cace12d24815f63cb338c4b95e52794add4a1bd0f63ffe008ac9f6423
 | 邊界 | 回合8、9進入仍先回復一次；回合6先回復三次，不開火 | 六種回合及六案防衛力注入 |
 | 回復算式 | 防衛力增加上限×回復率÷100的低word，加法回繞後夾上限 | 48案完整表獨立核對；沿058回復契約 |
 | 攻占報告 | callback會呼叫3826:0405，包括雙CPU；自己的操控類型選FFFF或對方座位，頭像參數取完整FLEET+04 word | 185C:0B18..0C5C與八次callback |
+| 實際頭像 | 非FFFF座位取DS:8F4D[座位]；FFFF座位只讀caller頭像低byte | 3826:045C..0480；研究426及50報告矩形 |
 
 陣營、回合與清單數的consumer只讀低byte。堆疊參數word的高byte保留在原始收據，
 不得把未初始化高byte當有效陣營。計數沒有另讀艘數、提督索引或偵察池；
@@ -124,5 +128,7 @@ Game須用既有報告佇列作續接；不能先一次跑完所有占領，再�
 RND及callback暫停／返回資料；不能只比19案模型的差異列表。
 Game補8-4後接線、兩側敗方及占領報告等待、typed同步、六檔保存及正常玩家路徑。
 報告以原生畫布與原版固定報告比較，按已定比較等級保存圖、差分、區域數字及metadata。
-正常玩家勝負與占領GUI尚未驗，原版診斷44張畫面不能代替正式renderer。
+第92輪正式規則與Game各67案、真正callback、六案保存重讀及50張正式renderer報告已通過。
+報告頭像補核consumer，caller完整word仍保留，見[研究426](../re/426-battle-finish-game.md)。
+正常兩陣營入口與交戰回歸通過；正常自然勝負與占領GUI尚未驗。
 完整062還需要其餘階段及整回合同態，不因本子步完成自動升格。

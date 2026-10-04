@@ -20,7 +20,7 @@ func (g *Game) cacheBattlePromotionPaths() {
 }
 
 // 185C:060D，108。每次重算／等待後再試同一人，提督完畢才換副官。
-func (g *Game) finishBattlePromotions() { g.battlePromotionPhase(0, false, g.endBattleTurn) }
+func (g *Game) finishBattlePromotions() { g.battlePromotionPhase(0, false, g.finishBattleDecision) }
 
 func (g *Game) battlePromotionPhase(i int, deputy bool, next func()) {
 	for i < len(g.battleFleets) {

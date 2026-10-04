@@ -720,3 +720,14 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [純規則原版回歸](../../internal/rules/battlecleanup_test.go)。
 - [清理至升級鏈產生器](../../tools/scripts/battle_cleanup_chain_prepare.py)與[固定原版雙跑](../../tools/battle_cleanup_chain_oracle.sh)。
 - [產品來源凍結器](../../tools/scripts/battle_cleanup_game_receipt.py)與[完整產品收據](data/battle-cleanup-game.json)。
+
+## 第92輪入口
+
+- [正式戰場結束實作](../goal/2026-10-05-battle-finish-implementation-round-92.md)
+- [正式勝負與占領規則](../../internal/rules/battlefinish.go)
+- [固定原版回歸](../../internal/rules/battlefinish_test.go)
+- [戰場結束 Game 接線](../../internal/game/battlefinish.go)
+- [報告原始格式擷取](../../tools/scripts/battle_finish_formats.py)
+- [Game報告與保存回歸](../../internal/game/battlefinish_test.go)
+- [報告讀取端研究426](../re/426-battle-finish-game.md)與[正式驗證081](../playtest/081-battle-finish-game.md)
+- [正式收據凍結器](../../tools/scripts/battle_finish_game_receipt.py)與[完整來源](data/battle-finish-game.json)

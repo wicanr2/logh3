@@ -24,6 +24,8 @@ func (g *Game) startPlacedBattle(region int) {
 }
 
 func (g *Game) startBattle(region int, placed bool) {
+	g.battleFinishing, g.battleFinishEnded = false, false
+	g.battleOccupation = nil
 	if err := g.syncFleetTables(); err != nil {
 		g.saveErr = err
 		return
@@ -126,7 +128,7 @@ func clampRow(r, rows int) int {
 
 // AdvanceBattleTurn經準備及逐幀交錯移動後續接結算；完整八步對齊仍依規格062。
 func (g *Game) AdvanceBattleTurn() {
-	if g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.fleetCombat.active {
+	if g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.fleetCombat.active || g.battleFinishing {
 		return
 	}
 	g.saveBattleWorkView()
@@ -256,7 +258,7 @@ func (g *Game) endBattleTurn() {
 	g.battleTurn++
 	g.updateBattleWorkTurn()
 	// 九個回合打完就結束（`docs/re/92`）；中途一方歸零也結束。
-	g.battleOver = g.battleTurn > rules.MaxBattleTurns || battleDecided(g.battleUnits)
+	g.battleOver = g.battleTurn > rules.MaxBattleTurns || g.battleFinishEnded
 	if g.battleOver {
 		g.EndBattle()
 	} else {
@@ -403,6 +405,9 @@ func (g *Game) Withdraw() {
 // 每場戰術得分在這裡累加進整局分數，供最終勝負報告顯示
 // （`ds:8FEC`／`ds:8FF0`，`docs/re/309`）。戰後撤退仍未解。
 func (g *Game) EndBattle() {
+	if g.battleFinishing {
+		return
+	}
 	for f := 0; f < 2; f++ {
 		g.campaignScore[f] += g.battleScore[f] - g.battleFleetScore[f]
 	}
@@ -504,17 +509,6 @@ func flagshipOf(units []rules.BattleUnit, fleet int) *rules.BattleUnit {
 		}
 	}
 	return nil
-}
-
-// battleDecided 回「有一方的艦艇全沒了」。
-func battleDecided(units []rules.BattleUnit) bool {
-	var left [2]int
-	for _, u := range units {
-		if u.Faction >= 0 && u.Faction < 2 {
-			left[u.Faction] += u.Ships
-		}
-	}
-	return left[0] == 0 || left[1] == 0
 }
 
 // SetTactic 換戰術層的 AI（`-ai` 旗標會設它）。
