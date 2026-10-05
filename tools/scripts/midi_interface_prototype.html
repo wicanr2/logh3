@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>MIDI I/F 取捨探針</title>
+<style>
+body{margin:32px;background:#151a20;color:#eee;font:18px system-ui}main{display:flex;gap:48px;flex-wrap:wrap}section{width:350px}h2{font-size:20px}.menu{background:#005563;border:5px ridge #aab8c4;padding:12px;width:220px;font:18px monospace}button{display:block;background:transparent;color:white;border:0;text-align:left;padding:5px 10px;width:100%;font:inherit;cursor:pointer}button:hover,button:focus{background:#df1717}output{display:block;min-height:55px;margin-top:20px;font:16px system-ui}p{max-width:800px;line-height:1.6}
+</style>
+<h1>MIDI I/F 操作探針</h1>
+<p>可丟棄示範，不是正式畫面。兩邊假設 MIDI 曲目齊全，點選後顯示音源結果。正式選單仍等待使用者裁決。</p>
+<main>
+<section><h2>保留七項</h2><div class="menu" data-mode="seven">
+<button>無</button><button>Roland : 300H</button><button>Roland : 320H</button><button>Roland : 330H</button><button>Roland : 332H</button><button>Roland : 334H</button><button>Roland : 336H</button>
+</div><output>尚未選擇</output><p>保留原版標籤與項目。六個埠都對應軟體 MIDI，須記錄這項原版差異。</p></section>
+<section><h2>軟體音源兩項</h2><div class="menu" data-mode="two">
+<button>軟體 MIDI</button><button>無</button>
+</div><output>尚未選擇</output><p>選項較直觀，選單內容與高度會偏離原版。</p></section>
+</main>
+<script>
+for(const menu of document.querySelectorAll('.menu')){
+ for(const b of menu.querySelectorAll('button'))b.onclick=()=>{
+  menu.parentElement.querySelector('output').textContent=b.textContent==='無'?'返回設定，音源：FM':'返回設定，音源：軟體 MIDI';
+ };
+}
+</script></html>

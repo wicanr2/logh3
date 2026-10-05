@@ -1,5 +1,16 @@
 # 原版內部構造參考
 
+第98輪沿[#66](https://github.com/wicanr2/logh3/issues/66)：[設定子選單計畫](../goal/2026-10-05-settings-interface-round-98.md)。
+[IDA選單匯出器](../../tools/scripts/settings_interface_ida.py)讀取當輪唯讀原生記憶體複本，保留CS:IP、檔案位移、IDA EA與原始指令；未審查語意標unknown。
+[MIDI介面操作探針](../../tools/scripts/midi_interface_prototype.html)僅供取捨，未進正式路徑。
+[研究432](../re/432-settings-interface.md)核MIDI控制流並勘誤BUG!出貨可達性；[規格113](../spec/113-settings-bug-unavailable.md)限定正常不可選熱區。
+[正常設定回歸](../../internal/bootstrap/settings_interface_test.go)使用正式bootstrap及公開輸入，並核全圖及保存不變。
+[正常設定GUI](../../tools/scripts/settings_interface_gui.py)以正式cmd/gin3及X11真實鍵鼠核對兩張全圖。
+[設定全圖比較器](../../tools/scripts/settings_interface_compare.go)從同一規格取得矩形，保存原圖、remake、差分及逐區統計。
+[驗證087](../playtest/087-settings-interface.md)限定出貨BUG!正常路徑；[MIDI草稿114](../spec/114-midi-interface.md)保持決策閘門。
+[設定收據核對器](../../tools/scripts/settings_interface_review.py)生成並核對[完整來源](data/settings-interface.json)，不改寫舊凍結索引。
+
+
 第91輪沿#79：[原池回寫計畫](../goal/2026-10-05-battle-finish-raw-round-91.md)、
 [逐指令寫入觀察器產生器](../../tools/scripts/battle_finish_raw_prepare.py)、
 [固定原版雙跑](../../tools/battle_finish_raw_oracle.sh)與

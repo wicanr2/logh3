@@ -199,6 +199,8 @@ play_music(戰鬥嗎):
 
 ### `_F` 還是 `_M`：`MUSIC.INI` 只說「有沒有 MIDI 介面」
 
+第98輪補證：[研究432](../re/432-settings-interface.md)。MIDI選單右鍵取消不開檔、不命中INI寫端；DS:F138的指標不代表任意時點都有有效INI內容。七項查表及無／330H的实际寫端已核，軟體MIDI映射仍待使用者決定。
+
 `MUSIC.INI` 六個位元組，與 `MUSIC.ORG` 相同（`RESSOUND.COM` 用
 `COPY music.org *.ini` 還原出廠值）：
 

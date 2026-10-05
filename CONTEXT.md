@@ -5,7 +5,17 @@
 
 ## 現況一覽
 
-**目前接續（2026-10-05，第九十七輪）**：#68標題玩家流程完成並關閉；worklist目前7 OPEN／82 CLOSED。
+**目前接續（2026-10-05，第98輪）**：#66的BUG!出貨熱區已核實並修正；worklist目前7 OPEN／82 CLOSED。
+原版正常啟動時DS:0210及BUG!可選旗標DS:04CC皆為0，點擊不開除錯選單，完整WORK230 bytes不變。
+typed熱區補disabled，113限定CONFORMED；正常bootstrap兩跑7檔相同，點擊前後公開保存逐檔相同。
+設定基準及BUG!點擊後各307200色號／RGB符合固定原版，兩張正式60 Hz真實X11共614400像素與Game全圖零差。
+MIDI七項硬體埠、選擇／取消與重初始化已核實；開窗、無、330H與取消各雙跑相同，INI指標生命週期限制保留。
+軟體MIDI映射仍待已提出的使用者裁決，114保持DRAFT，#66保持OPEN。原版BUG!特殊啟用來源unknown，不加入正常玩家路徑。
+標準18套件13通過／5無測試，第97輪510來源核對通過，第95／96輪凍結索引身份保持。
+628項來源SHA-256 `cba8f1a7a15018e02d75cb62b9feb2f567900c694cdcf1ea7817de16b71f0f0b`，入口[087](docs/playtest/087-settings-interface.md)及[完整來源](docs/internals/data/settings-interface.json)。
+既有四項使用者裁決、061被動戰術CPU及增強戰略AI保持；原Goal持續，完整平台交付／人耳與其他玩法閘門未完成。
+
+**第97輪成果保持**：#68標題玩家流程完成並關閉。
 正式Game自然播完動畫後顯示標題，左鍵返回主選單，右鍵／鍵盤保持，無輸入逾時清累加重播。
 末格1150／2000、標題9000與倒數不大於3由固定原版及IDA9.4核實；秒數5.396／15.443採硬體規格近似。
 補上TITSPT尾段色盤與SPTIT標題色盤，動畫到標題保持OPEN_M，逾時重播從頭要求同曲，主選單停止。
@@ -14,7 +24,7 @@
 無輸入5480次Update重播第2格，完整307200色號符合獨立60 Hz計畫；該動態格沒有額外X11快照，不宣稱逐幀原版同步。
 112限定CONFORMED，標準18套件13PASS／5無測試；既有第95輪1889與第96輪1701來源保持。
 510項來源SHA-256 `9671b654144186c891d39ff587decb4d54b6ef7ab5a684375134e6e855842ba5`，入口[086](docs/playtest/086-title-player.md)及[完整來源](docs/internals/data/title-player.json)。
-下一步沿#66核MIDI I/F既有BUG；#69實體音訊／人耳／完整平台交付及其他玩法閘門保持，原Goal持續。
+第98輪已沿#66補設定子選單證據；#69實體音訊／人耳／完整平台交付及其他玩法閘門保持。
 
 **第96輪素材保存成果保持**：#70五類原版素材保存完成並關閉。
 794張PNG包括三面板、三套各128圖塊、32地圖、374來源動畫格與一張標題圖，共5853987 bytes。
@@ -66,6 +76,8 @@ FLEET+5A未知斷言撤回，行星索引在+07，+5A／+5B定位清FF。分隊+
 
 | 分類 | 目前真相 | 最近驗證／入口 |
 |---|---|---|
+| 設定BUG!正常反應已核 | 出貨不可選，typed熱區disabled；點擊不進除錯，WORK及公開保存不變 | 113限定CONFORMED、087；7檔雙跑、兩張原版／Game全圖及兩張正常60 Hz X11零差 |
+| MIDI I/F原版已核 | 七項埠、INI+4、取消與重初始化已核；軟體音源映射待使用者決定 | 432及628來源；114 DRAFT、#66 OPEN，不把建議接入正式路徑 |
 | 標題玩家流程已完成 | 自然動畫→標題、左鍵主選單、逾時清累加重播；尾段與標題色盤已接 | 112限定CONFORMED、#68 CLOSED；29檔雙跑、原版兩頁各224000色號／RGB及五張正常60 Hz X11全圖零差，086 |
 | 結束判定已接線 | 8-4後依原池可戰計數固定勝負，敗方報告逐則返回後才占領 | 正式規則及Game各67案完整六表／清單／seed符合；426／081，110 READY |
 | 勝方占領已接線 | 當前回合、守軍、定位、資源與維持費同步；報告返回後才加上限功績 | 真正callback前後、50報告矩形共2912000像素與16色零差；全戰場背景差異保存 |
@@ -820,6 +832,8 @@ SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
 
 ## 已被推翻的斷言
 
+- 第98輪：285／286的「BUG!出貨旗標為1、知道熱區即可點入」已撤回。正常DS:0210及DS:04CC為0，原版雙跑不呼叫除錯callee；113與087限定正常不可選。MIDI取消沒有重新讀INI，DS:F138不能在所有時點當成有效INI內容；來源與原始定位見[432](docs/re/432-settings-interface.md)。
+
 - 第97輪：正式Game沒有標題、自然動畫播完直接主選單及尾段一直用BU16IBM的斷言已失效。112與431證實末端等待／標題／逾時重播與TITSPT色盤，086正常60 Hz GUI已通過；020舊文由112取代，保留歷史收據。
 
 2026-10-05第96輪範圍更新：#68／#70的SPTIT編碼未知已解；與IBM16使用相同XOR-RLE token，但每plane高度350。
@@ -1534,29 +1548,19 @@ WORK0／FLEET27／SHIP214／STELLAR0／PLANET0保持，顯示指標raw差仍完�
 
 *[#66](https://github.com/wicanr2/logh3/issues/66) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
-設定畫面的「ＭＩＤＩ Ｉ／Ｆ」（動作碼 22）與 `BUG!`（動作碼 20）兩個點下去什麼都不會發生
-（`docs/re/286`、`internal/game/settingsscreen.go`）。
+設定畫面的「ＭＩＤＩ Ｉ／Ｆ」（動作22）仍未接正式路徑。BUG!出貨入口原本不可選，第98輪已修正typed熱區並核正常反應。
 
-**卡在**：`BUG!` 那張除錯選單的 RE 已經完整，**remake 側可以直接實作**（七個動作碼都只是改兩三個
-`WORK` 欄位）。真正還沒讀的只有 `midi-if`（22）。
+**卡在**：已向使用者提出一個決定：保留原版七項介面，任一Roland埠在MIDI曲目齊全時啟用軟體MIDI、無退回FM，或改成軟體MIDI／無兩項。尚未收到回答，不能將建議寫進正式程式。操作探針為tools/scripts/midi_interface_prototype.html。
 
-**做完的判準**：四項裡**兩項已經達成**（2026-09-18 核實）：
+BUG!的特殊啟用來源仍unknown，不把除錯模式加入正常玩家路徑。061被動戰術CPU及既有增強戰略AI不改。
 
-- ~~`BUG!` 的反組譯~~ **已達成**：`docs/re/286` §六——動作碼 20 呼叫 `3A9C:0000`，
-  跳躍表 `ds:908C` 七筆逐一對上（自動１／手動１／自動２／手動２／顯示／不顯示／結束
-  → `3A9C:00E3`…`0133`），寫 `ds:8F23`／`8F24`／`8F1C`。順帶解掉 `docs/internals/23`
-  那個「`ds:902C` 屬於哪張畫面未知」。
-- ~~`MUSIC.INI` 的格式寫進 `docs/internals/`~~ **已達成**：`docs/internals/17-mds.md`
-  §「`_F` 還是 `_M`：`MUSIC.INI` 只說『有沒有 MIDI 介面』」（六個位元組、與 `MUSIC.ORG`
-  相同、`RESSOUND.COM` 偵測 MPU-401 後回寫、玩家在設定畫面改的音源只進存檔不回寫）。
+**做完的判準**：- BUG!除錯callee的七項寫端已由286保存。第98輪432補核可達性：042F:01B1／01B4將DS:0210寫DS:04CC，正常兩者為0。撤回「知道位置即可點入除錯」及「直接補七個按鈕即可完成」的舊斷言。
+- MUSIC.INI六位元組、INI+4七項埠表及一般音源只存WORK已寫入internals/17；RESSOUND.COM是複製MUSIC.ORG還原出貨值，硬體偵測由音樂初始化處理。
+- MIDI I/F反組譯已達成：042F:08F8→3667七項選單→列號／FF取消→INI+4→重初始化→重畫。開窗、無／330H、右鍵取消各雙跑原圖／palette相同；選擇／取消整份RAM亦相同，保存INI指標生命週期限制。
+- BUG!正常路徑已達成：113限定CONFORMED，原版WORK230 bytes不變，正式bootstrap7檔雙跑與保存不變。兩張原版／Game各307200色號／RGB零差，两張正常60 Hz真實X11共614400像素零差。標準18套件13通過／5無測試。
+- MIDI I/F正式子選單、軟體音源映射、安全偏好寫入、選擇／取消／重開及配樂要求仍待實作與同態驗收。114 DRAFT，整項保持OPEN。
 
-剩下的兩項：
-
-- 「ＭＩＤＩ Ｉ／Ｆ」（22）的反組譯——`docs/re/286` 只到分派那一行
-  （`cmp byte es:[bx+05],16`），沒有往下追目標。
-- 兩者的同狀態收據，remake 照原版反應。
-
-**證據**：[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/internals/23-hotspot-lists.md`](docs/internals/23-hotspot-lists.md)
+**證據**：[`docs/re/432-settings-interface.md`](docs/re/432-settings-interface.md)、[`docs/spec/113-settings-bug-unavailable.md`](docs/spec/113-settings-bug-unavailable.md)、[`docs/spec/114-midi-interface.md`](docs/spec/114-midi-interface.md)、[`docs/playtest/087-settings-interface.md`](docs/playtest/087-settings-interface.md)、[`docs/internals/data/settings-interface.json`](docs/internals/data/settings-interface.json)、[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/internals/23-hotspot-lists.md`](docs/internals/23-hotspot-lists.md)
 
 **核實**：`internal/game/settingsscreen.go` 裡還找得到 `與 `BUG!` 也還沒接`（自承還在 ＝ 還沒做）
 
