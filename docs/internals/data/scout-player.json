@@ -1,0 +1,3261 @@
+{
+  "schema": "logh3.scout-player.v1",
+  "date": "2026-10-05",
+  "issue": 79,
+  "parent_commit": "e2a1d01890bc608de8e987277d31925d3a2847ec",
+  "classification": "remake正常玩家及60Hz真實GUI；原版完整正常回合同態未驗",
+  "scenario": "S3",
+  "faction": 0,
+  "seed": 305419896,
+  "seed_method": "首次戰場實行前設定一次",
+  "normal": {
+    "inputs": 757,
+    "repeats": 2,
+    "milestones": 14,
+    "fleet": 12,
+    "scout_pool": 81,
+    "deployed_units": 49,
+    "scout_reports": 1,
+    "cooldown_turns": 3,
+    "same_pool_redeployed": true,
+    "public_save_load": true,
+    "load_differences": {
+      "STELLAR": [
+        [
+          3318,
+          0,
+          1
+        ],
+        [
+          3527,
+          22,
+          25
+        ],
+        [
+          3653,
+          37,
+          39
+        ]
+      ],
+      "PLANET": [],
+      "ADMIRAL": [],
+      "FLEET": [],
+      "SHIP": [],
+      "WORK": []
+    }
+  },
+  "gui": {
+    "test_tps": 60,
+    "actions": 128,
+    "frames": 14,
+    "pixels": 4300800,
+    "different": 0,
+    "camera_gestures": 3
+  },
+  "report_comparison": {
+    "before": {
+      "full": {
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "pixels": 307200,
+        "same": 300229,
+        "different": 6971,
+        "maximum_channel_difference": 243,
+        "bbox": [
+          16,
+          60,
+          573,
+          419
+        ]
+      },
+      "report": {
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "pixels": 58240,
+        "same": 58103,
+        "different": 137,
+        "maximum_channel_difference": 243,
+        "bbox": [
+          240,
+          240,
+          252,
+          255
+        ]
+      }
+    },
+    "after": {
+      "full": {
+        "rect": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "pixels": 307200,
+        "same": 300366,
+        "different": 6834,
+        "maximum_channel_difference": 243,
+        "bbox": [
+          16,
+          60,
+          573,
+          419
+        ]
+      },
+      "report": {
+        "rect": [
+          32,
+          180,
+          416,
+          140
+        ],
+        "pixels": 58240,
+        "same": 58240,
+        "different": 0,
+        "maximum_channel_difference": 0,
+        "bbox": null
+      }
+    },
+    "classification": "nearby-state；原版為第83輪控制報告，正常玩家背景不同，不宣稱完整同態",
+    "original_source": "workplace/scout79-r83-fleet12-original",
+    "cursor_screen": [
+      240,
+      240
+    ],
+    "mask": null
+  },
+  "limitations": [
+    "正常原版整回合同態未新增",
+    "原版報告為控制狀態，完整背景差異保持",
+    "只抽帝國S3索敵路徑，其他自然分支未完成",
+    "載入回命令階段，不稱戰場續戰",
+    "061被動戰術CPU保持",
+    "MIDI與一像素裁決仍待答"
+  ],
+  "sources": {
+    "cmd/gin3/main.go": {
+      "bytes": 13600,
+      "sha256": "507d7ef54a7d0a2971075660c722697013aa877c9eb0dd8e6fc16e8555452055"
+    },
+    "docs/goal/2026-10-05-scout-player-round-101.md": {
+      "bytes": 843,
+      "sha256": "cd7f6c732b73b4c343f3c59d3d83bbd941a3b4aa94348cf58d41f3031de1f489"
+    },
+    "docs/internals/data/scout-fuel.json": {
+      "bytes": 1228418,
+      "sha256": "9934ca4f7832739eaea663e851c82c4684d7d53b20432267ff2f76f329d35ef0"
+    },
+    "docs/internals/data/turn-window-panel.json": {
+      "bytes": 7542,
+      "sha256": "e5bb8ce33b22786b31626d99ab42a061f165bb2a11cf869aefffe6c1a2449149"
+    },
+    "docs/playtest/089-scout-player.md": {
+      "bytes": 3671,
+      "sha256": "4accee07c9d380f192f1865cc3dee97028a26e16db44045e2ea3b3df0573c6eb"
+    },
+    "docs/re/435-scout-player-report-cursor.md": {
+      "bytes": 3386,
+      "sha256": "816022983f909aa62307d208a9689d3ca0d1bccc1392b81a0c9aad9a56d3af90"
+    },
+    "docs/spec/006-unrest-at-load.md": {
+      "bytes": 8644,
+      "sha256": "df0903cc5ecf56c1b79e6848175b73bf5fbc8df558e5442be301bdbff5e3c6df"
+    },
+    "docs/spec/107-scout-fuel.md": {
+      "bytes": 3220,
+      "sha256": "40eda4174117a13b4158ec145091c53cfffbd98509bba3f23317ac94ea47a401"
+    },
+    "internal/game/battlemovement.go": {
+      "bytes": 2595,
+      "sha256": "dea797ce0af38f183a5d9bf761ffdb70bb3e685200d32a77f2c6675bbfdd3b51"
+    },
+    "internal/game/fleetcombat.go": {
+      "bytes": 11733,
+      "sha256": "217c6590d76335ba29175713b8f3cf7aff48fa00231184224211e79a88f1a8e0"
+    },
+    "internal/game/game.go": {
+      "bytes": 204161,
+      "sha256": "5ca76da187606f0f00d76d91ef03d50caecf1cfc0740a36b84a57c6e595b2252"
+    },
+    "internal/game/scoutcmd.go": {
+      "bytes": 2001,
+      "sha256": "0b940be3b9c7e832a741fe22461f7597a2fffe1fc1d426058ccff91bc6ea5680"
+    },
+    "internal/game/scoutfuel.go": {
+      "bytes": 2885,
+      "sha256": "3f0a6a0d6a4bb41fe421cccf7eac937bb195b073f461709970680167a2a7f424"
+    },
+    "internal/game/scoutfuel_test.go": {
+      "bytes": 16877,
+      "sha256": "412a80b1f33048613b61637033b8db3a4b46200adbfd4fcaaaae52e869c9b417"
+    },
+    "tools/gui.sh": {
+      "bytes": 1551,
+      "sha256": "3f0cd67388775829a3dbec810570558a1bacd1cd0fc89c22babd8c70bf0542b5"
+    },
+    "tools/scripts/fleet_player_gui_capture.go": {
+      "bytes": 4497,
+      "sha256": "ad97ca30088abdab819335679082ad109109a322357be0b4aa1e21745b887172"
+    },
+    "tools/scripts/fleet_player_gui_driver.py": {
+      "bytes": 10005,
+      "sha256": "57023fdf104048be29896c5145d9ade927c3683ea09ce12e61ac952ad2892c55"
+    },
+    "tools/scripts/fleet_player_gui_prepare.py": {
+      "bytes": 4207,
+      "sha256": "8e555699af55c8362df11d01d75d19752c6459b45e1dcf8896bd46d44d491514"
+    },
+    "tools/scripts/scout_player_gui.py": {
+      "bytes": 2593,
+      "sha256": "ac34f3959686ba415390de5a90080950ab60eefd6f0bff0d0becb9684bffaea5"
+    },
+    "tools/scripts/scout_player_prepare.py": {
+      "bytes": 3930,
+      "sha256": "ee723bc38bd2d2a21695e1f5492957060d20f2a88dc502853475f2a720275dfd"
+    },
+    "tools/scripts/scout_player_probe.go": {
+      "bytes": 13078,
+      "sha256": "db6cc97f60ae88a43fed8374559c0eecb2d7c1a55f7344cdd4c9cfc91a18ab1a"
+    },
+    "tools/scripts/scout_player_receipt.py": {
+      "bytes": 10181,
+      "sha256": "41cb3f22e0132b2d18f56ad88d27783471bd1274ee335756fc91173754e1cde6"
+    },
+    "tools/scripts/sound_tail_input.go": {
+      "bytes": 2439,
+      "sha256": "c552f7e9ee7b956904ed9f0c1db509171523d64888a7687fae4dbdf22c81ad76"
+    },
+    "workplace/order79-r93-input": {
+      "bytes": 4299024,
+      "sha256": "ef8758242be924efa37ce99ba13b0a00bb227a3e4898277ec2dfd5f4bc3cd526"
+    },
+    "workplace/round101-report-after.log": {
+      "bytes": 51,
+      "sha256": "52e38c3603f6aaf6af52d1d6a67c2e5c3d7d96805f2628c773b18321c58c06ab"
+    },
+    "workplace/round101-report-before.log": {
+      "bytes": 217,
+      "sha256": "fb57844a8a9f141be5ba04d1ffe46050ab8053aaa4f897fbde71bc412a4ad8f9"
+    },
+    "workplace/round101-standard-fixed-gui.log": {
+      "bytes": 961,
+      "sha256": "3bf56f6f7f6be063983ce2da4b6f4fbf58b6c6738cf9a97cf8301db8afd196d2"
+    },
+    "workplace/round101-standard-gui.log": {
+      "bytes": 261,
+      "sha256": "51cf913f2a3003823458ac915898357ee462ea70a750ef6028e6ecefe2b79474"
+    },
+    "workplace/round79-capture": {
+      "bytes": 4474819,
+      "sha256": "23fd5436619dc7b68f27922f4c14b5501e6639f51ece630b84dbb4200e2b582a"
+    },
+    "workplace/round79-fleet-gui-game-scout101c.go": {
+      "bytes": 12584,
+      "sha256": "386054ffc65017b84c3f5ae5438cd5e3e092d8df86ba74c2abcef61a8f112629"
+    },
+    "workplace/round79-fleet-gui-main-scout101c.go": {
+      "bytes": 16124,
+      "sha256": "9bfa672ed67e035ae44e69cf3515f86015d102c150f9d076f1c4e52131b1c93b"
+    },
+    "workplace/round79-fleet-gui-overlay-scout101c.json": {
+      "bytes": 200,
+      "sha256": "5778af25926e44ffcd31a7f8db280d930d258747fa75ee4ccc9fa708f1e57ae0"
+    },
+    "workplace/scout79-r101-a-game.go": {
+      "bytes": 5178,
+      "sha256": "d8973a3127b86bb77fe7c63f1455759428ff11c4e0db8e99aecf2d3f3ef35def"
+    },
+    "workplace/scout79-r101-a-overlay.json": {
+      "bytes": 102,
+      "sha256": "b6a7a9e958c5035bd23b15e11464f096b6dc8234de46a9dfd4149ee938df3a25"
+    },
+    "workplace/scout79-r101-c-game.go": {
+      "bytes": 5755,
+      "sha256": "901aceaceea6f4ed253e1349caf92acdfe7a4ca11bbcacf95a09b5cb6055bfae"
+    },
+    "workplace/scout79-r101-c-overlay.json": {
+      "bytes": 280,
+      "sha256": "9615981ab97bbc4ddb32ee970aad58fd26a8509c186dcc3a6920a7c8a601381a"
+    },
+    "workplace/scout79-r101-driver-a.py": {
+      "bytes": 10608,
+      "sha256": "d1837c6b6286f1508b14386c8f3c32d6b4d9f450c6397dc2880c0a5000a59b9a"
+    },
+    "workplace/scout79-r101-driver-b.py": {
+      "bytes": 10991,
+      "sha256": "62d15536d18efba82a7a0fd041bdd7c8b561d12ebc81fdccf6fc3b0d967e8f98"
+    },
+    "workplace/scout79-r101-driver-c.py": {
+      "bytes": 11053,
+      "sha256": "726b0c2967afc3bfd3a2904ad0ee20f59ccc7cd7919edd280a60bda83c65c1f3"
+    },
+    "workplace/scout79-r101-driver-d.py": {
+      "bytes": 11053,
+      "sha256": "726b0c2967afc3bfd3a2904ad0ee20f59ccc7cd7919edd280a60bda83c65c1f3"
+    },
+    "workplace/scout79-r101-first-index.json": {
+      "bytes": 132425,
+      "sha256": "daa2e17efc0d106b727e4c98b4ab52f32f27caecfde8f111d2902f7105caef8a"
+    },
+    "workplace/scout79-r101-gin3": {
+      "bytes": 13981816,
+      "sha256": "edf81074ef0117501a1bf7ea63ad270fb940a078cc36dca59591c8ae1053d6a0"
+    },
+    "workplace/scout79-r101-gin3-fixed": {
+      "bytes": 13986136,
+      "sha256": "19f1a552cd735d68e89e12b66df2122df3c92ec02dd39fe559e1d1af5d558bf8"
+    },
+    "workplace/scout79-r101-gui-a/app.log": {
+      "bytes": 471,
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa"
+    },
+    "workplace/scout79-r101-gui-a/failed-trace.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "workplace/scout79-r101-gui-a/status.json": {
+      "bytes": 488,
+      "sha256": "ef4de3eed0663f445bd96d3050c5587c04f1bdac68c83d0d82d14c9bd4893d9a"
+    },
+    "workplace/scout79-r101-gui-a/updates.jsonl": {
+      "bytes": 2630691,
+      "sha256": "58f59605979f0eba4f268c5dc1ba74a19596bcac2e284db162901a780ad5fff4"
+    },
+    "workplace/scout79-r101-gui-b/app.log": {
+      "bytes": 471,
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa"
+    },
+    "workplace/scout79-r101-gui-b/deployed-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/deployed-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/deployed-x11.png": {
+      "bytes": 27435,
+      "sha256": "04e4c846702fc1587601f54c4e7b1ef0424f37bb4ff467ff40d6f37ea0b6e36e"
+    },
+    "workplace/scout79-r101-gui-b/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-gui-b/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-gui-b/entry-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/entry-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/entry-x11.png": {
+      "bytes": 13533,
+      "sha256": "021800834338b64626146e87d6e450a37aae022a5aa91973fd6070c90a47d43e"
+    },
+    "workplace/scout79-r101-gui-b/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-gui-b/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-gui-b/failed-trace.json": {
+      "bytes": 408794,
+      "sha256": "dce8f6019c2de6aefe4ed929270e205cef93f9d956ddea044062d581488ec91f"
+    },
+    "workplace/scout79-r101-gui-b/final-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/final-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/final-x11.png": {
+      "bytes": 45509,
+      "sha256": "e4ac7c83cc8af2c75c021451a2f7e8bd267e122c764df893c363c375887df102"
+    },
+    "workplace/scout79-r101-gui-b/final.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-gui-b/final.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-gui-b/input-trace.jsonl": {
+      "bytes": 345797,
+      "sha256": "c559a75529a252271443498c301cf23e8aafdceb6b9a80633d060cbcbd5b1838"
+    },
+    "workplace/scout79-r101-gui-b/loaded-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/loaded-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/loaded-x11.png": {
+      "bytes": 45509,
+      "sha256": "e4ac7c83cc8af2c75c021451a2f7e8bd267e122c764df893c363c375887df102"
+    },
+    "workplace/scout79-r101-gui-b/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-gui-b/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-gui-b/mother-moving-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/mother-moving-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/mother-moving-x11.png": {
+      "bytes": 19575,
+      "sha256": "af83f0e4bef84c357723f01a3a8454f1f2eafd9fe1d8c1f36f3a46033f08265b"
+    },
+    "workplace/scout79-r101-gui-b/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-gui-b/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-gui-b/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-gui-b/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-gui-b/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-gui-b/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-gui-b/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-gui-b/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-gui-b/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-gui-b/redeployed-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/redeployed-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/redeployed-x11.png": {
+      "bytes": 22118,
+      "sha256": "b8483a30b05155a049106024fb0c1bda0a43617f6910235be42d54dd07a1eb9e"
+    },
+    "workplace/scout79-r101-gui-b/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-gui-b/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-gui-b/report-4-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/report-4-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/report-4-x11.png": {
+      "bytes": 21032,
+      "sha256": "51f3582ac93b92b9395aa4690cb7a9de52a6576c1e713d02425601b49c3181ab"
+    },
+    "workplace/scout79-r101-gui-b/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "c0c48bca790e2d0461dd952ce4ee33985b616c7b8bf2250ec8e5fb4562896d53"
+    },
+    "workplace/scout79-r101-gui-b/report-4.png": {
+      "bytes": 9972,
+      "sha256": "89e2ebc09c2b12fc60d581829374e4bb37dae8dc4e99cbb2bb88f83956795520"
+    },
+    "workplace/scout79-r101-gui-b/saved-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/saved-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/saved-x11.png": {
+      "bytes": 22481,
+      "sha256": "301e80ff4eb3c8d4a4e14a13f59858d64e842e515122c9d1f034f2bd37055062"
+    },
+    "workplace/scout79-r101-gui-b/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-gui-b/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-gui-b/status.json": {
+      "bytes": 960,
+      "sha256": "b93c9f38520ec7ebb31fbbd6474039b29d0cf488317901a1fed66d48b9cc5fa2"
+    },
+    "workplace/scout79-r101-gui-b/turn-1-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/turn-1-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/turn-1-x11.png": {
+      "bytes": 27592,
+      "sha256": "c424db5ba244075bce2a7da28e34a35ccae261e302549c5236d1285b5de0af31"
+    },
+    "workplace/scout79-r101-gui-b/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-gui-b/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-gui-b/turn-2-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/turn-2-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/turn-2-x11.png": {
+      "bytes": 20361,
+      "sha256": "baa1e81b4d47fea898d664baca793c02bad28f5262692d68951e3aa284431f5b"
+    },
+    "workplace/scout79-r101-gui-b/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-gui-b/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-gui-b/turn-3-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/turn-3-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/turn-3-x11.png": {
+      "bytes": 20364,
+      "sha256": "04bbf01c4120e722f2eab4027c94b0a3c2bc47a9fcd5245a6eb9a1b7caa50587"
+    },
+    "workplace/scout79-r101-gui-b/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-gui-b/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-gui-b/turn-4-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/turn-4-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/turn-4-x11.png": {
+      "bytes": 19923,
+      "sha256": "479996934f7ac8a4eacd4bd66ba1f0df03e6158ad69eaba2f2ddd93db7beb955"
+    },
+    "workplace/scout79-r101-gui-b/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-gui-b/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-gui-b/turn-5-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/turn-5-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/turn-5-x11.png": {
+      "bytes": 19933,
+      "sha256": "f7be9972469c4c84326ae87af5276221997284a58c63e217a72b39b4d40ca7bb"
+    },
+    "workplace/scout79-r101-gui-b/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-gui-b/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-gui-b/turn-6-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/turn-6-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/turn-6-x11.png": {
+      "bytes": 19908,
+      "sha256": "dc305a691d3a01a9f7031edaa9956ae102a8ce4579af248b60ab19b688c0cc70"
+    },
+    "workplace/scout79-r101-gui-b/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-gui-b/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-gui-b/turn-7-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-b/turn-7-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-b/turn-7-x11.png": {
+      "bytes": 19956,
+      "sha256": "1809114e9108343e88987c82e6f5fff4ab0f92f51aea5c8acf54a25cf620cc23"
+    },
+    "workplace/scout79-r101-gui-b/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-gui-b/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-gui-b/updates.jsonl": {
+      "bytes": 722374,
+      "sha256": "d5c05a1b938924a7172bf5d2fb78f7ee6a1e2424cb340c310c60ce85b90086bb"
+    },
+    "workplace/scout79-r101-gui-c/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-gui-c/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-gui-c/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-gui-c/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-gui-c/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-gui-c/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "c949a6392da4fbe3b32ef14dc3d38751897fd832b8614d43b543a726e33bcf70"
+    },
+    "workplace/scout79-r101-gui-c/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-gui-c/app.log": {
+      "bytes": 471,
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa"
+    },
+    "workplace/scout79-r101-gui-c/deployed-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/deployed-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/deployed-x11.png": {
+      "bytes": 27435,
+      "sha256": "04e4c846702fc1587601f54c4e7b1ef0424f37bb4ff467ff40d6f37ea0b6e36e"
+    },
+    "workplace/scout79-r101-gui-c/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-gui-c/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-gui-c/entry-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/entry-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/entry-x11.png": {
+      "bytes": 13533,
+      "sha256": "021800834338b64626146e87d6e450a37aae022a5aa91973fd6070c90a47d43e"
+    },
+    "workplace/scout79-r101-gui-c/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-gui-c/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-gui-c/input-trace.jsonl": {
+      "bytes": 345814,
+      "sha256": "62022e10c7958c997786507fcf3f61557efe8be2fe03a171512ec4ed1f044fa4"
+    },
+    "workplace/scout79-r101-gui-c/loaded-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/loaded-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/loaded-x11.png": {
+      "bytes": 45509,
+      "sha256": "e4ac7c83cc8af2c75c021451a2f7e8bd267e122c764df893c363c375887df102"
+    },
+    "workplace/scout79-r101-gui-c/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-gui-c/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-gui-c/mother-moving-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/mother-moving-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/mother-moving-x11.png": {
+      "bytes": 19575,
+      "sha256": "af83f0e4bef84c357723f01a3a8454f1f2eafd9fe1d8c1f36f3a46033f08265b"
+    },
+    "workplace/scout79-r101-gui-c/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-gui-c/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-gui-c/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-gui-c/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-gui-c/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-gui-c/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-gui-c/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-gui-c/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-gui-c/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-gui-c/receipt.json": {
+      "bytes": 463343,
+      "sha256": "342fafbfdd5f87ccd1e6213a6e50eaccbf085420860d5af9419953ef29c0b084"
+    },
+    "workplace/scout79-r101-gui-c/redeployed-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/redeployed-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/redeployed-x11.png": {
+      "bytes": 22118,
+      "sha256": "b8483a30b05155a049106024fb0c1bda0a43617f6910235be42d54dd07a1eb9e"
+    },
+    "workplace/scout79-r101-gui-c/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-gui-c/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-gui-c/report-4-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/report-4-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/report-4-x11.png": {
+      "bytes": 21032,
+      "sha256": "51f3582ac93b92b9395aa4690cb7a9de52a6576c1e713d02425601b49c3181ab"
+    },
+    "workplace/scout79-r101-gui-c/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "c0c48bca790e2d0461dd952ce4ee33985b616c7b8bf2250ec8e5fb4562896d53"
+    },
+    "workplace/scout79-r101-gui-c/report-4.png": {
+      "bytes": 9972,
+      "sha256": "89e2ebc09c2b12fc60d581829374e4bb37dae8dc4e99cbb2bb88f83956795520"
+    },
+    "workplace/scout79-r101-gui-c/saved-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/saved-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/saved-x11.png": {
+      "bytes": 22481,
+      "sha256": "301e80ff4eb3c8d4a4e14a13f59858d64e842e515122c9d1f034f2bd37055062"
+    },
+    "workplace/scout79-r101-gui-c/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-gui-c/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-gui-c/status.json": {
+      "bytes": 960,
+      "sha256": "b1381f7ee13436b41901abbf53c3bf7f615e321e3aee2021e5c172121a2a4830"
+    },
+    "workplace/scout79-r101-gui-c/turn-1-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/turn-1-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/turn-1-x11.png": {
+      "bytes": 27592,
+      "sha256": "c424db5ba244075bce2a7da28e34a35ccae261e302549c5236d1285b5de0af31"
+    },
+    "workplace/scout79-r101-gui-c/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-gui-c/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-gui-c/turn-2-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/turn-2-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/turn-2-x11.png": {
+      "bytes": 20361,
+      "sha256": "baa1e81b4d47fea898d664baca793c02bad28f5262692d68951e3aa284431f5b"
+    },
+    "workplace/scout79-r101-gui-c/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-gui-c/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-gui-c/turn-3-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/turn-3-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/turn-3-x11.png": {
+      "bytes": 20364,
+      "sha256": "04bbf01c4120e722f2eab4027c94b0a3c2bc47a9fcd5245a6eb9a1b7caa50587"
+    },
+    "workplace/scout79-r101-gui-c/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-gui-c/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-gui-c/turn-4-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/turn-4-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/turn-4-x11.png": {
+      "bytes": 19923,
+      "sha256": "479996934f7ac8a4eacd4bd66ba1f0df03e6158ad69eaba2f2ddd93db7beb955"
+    },
+    "workplace/scout79-r101-gui-c/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-gui-c/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-gui-c/turn-5-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/turn-5-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/turn-5-x11.png": {
+      "bytes": 19933,
+      "sha256": "f7be9972469c4c84326ae87af5276221997284a58c63e217a72b39b4d40ca7bb"
+    },
+    "workplace/scout79-r101-gui-c/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-gui-c/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-gui-c/turn-6-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/turn-6-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/turn-6-x11.png": {
+      "bytes": 19908,
+      "sha256": "dc305a691d3a01a9f7031edaa9956ae102a8ce4579af248b60ab19b688c0cc70"
+    },
+    "workplace/scout79-r101-gui-c/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-gui-c/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-gui-c/turn-7-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-c/turn-7-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-c/turn-7-x11.png": {
+      "bytes": 19956,
+      "sha256": "1809114e9108343e88987c82e6f5fff4ab0f92f51aea5c8acf54a25cf620cc23"
+    },
+    "workplace/scout79-r101-gui-c/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-gui-c/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-gui-c/updates.jsonl": {
+      "bytes": 736464,
+      "sha256": "3f097eb8067bc80235ce91262570c9abce2375473ee2c43d389d431bc40075a9"
+    },
+    "workplace/scout79-r101-gui-d/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-gui-d/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-gui-d/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-gui-d/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-gui-d/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-gui-d/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "c949a6392da4fbe3b32ef14dc3d38751897fd832b8614d43b543a726e33bcf70"
+    },
+    "workplace/scout79-r101-gui-d/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-gui-d/app.log": {
+      "bytes": 471,
+      "sha256": "73155f45f2ed152d39ba7ff5eb4f3f7ac1713392d69216521df266bf6f7fe8fa"
+    },
+    "workplace/scout79-r101-gui-d/deployed-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/deployed-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/deployed-x11.png": {
+      "bytes": 27435,
+      "sha256": "04e4c846702fc1587601f54c4e7b1ef0424f37bb4ff467ff40d6f37ea0b6e36e"
+    },
+    "workplace/scout79-r101-gui-d/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-gui-d/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-gui-d/entry-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/entry-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/entry-x11.png": {
+      "bytes": 13533,
+      "sha256": "021800834338b64626146e87d6e450a37aae022a5aa91973fd6070c90a47d43e"
+    },
+    "workplace/scout79-r101-gui-d/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-gui-d/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-gui-d/input-trace.jsonl": {
+      "bytes": 345799,
+      "sha256": "04e83a4054672bbd3aaab877aa61c8f7c82c3ce238272fadd93fba151e37f787"
+    },
+    "workplace/scout79-r101-gui-d/loaded-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/loaded-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/loaded-x11.png": {
+      "bytes": 45509,
+      "sha256": "e4ac7c83cc8af2c75c021451a2f7e8bd267e122c764df893c363c375887df102"
+    },
+    "workplace/scout79-r101-gui-d/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-gui-d/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-gui-d/mother-moving-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/mother-moving-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/mother-moving-x11.png": {
+      "bytes": 19575,
+      "sha256": "af83f0e4bef84c357723f01a3a8454f1f2eafd9fe1d8c1f36f3a46033f08265b"
+    },
+    "workplace/scout79-r101-gui-d/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-gui-d/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-gui-d/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-gui-d/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-gui-d/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-gui-d/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-gui-d/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-gui-d/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-gui-d/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-gui-d/receipt.json": {
+      "bytes": 458878,
+      "sha256": "615fbf343436fc82e97ed58fc9ee323dd5b2ee7be9850c73a2b30042eb3f3d1b"
+    },
+    "workplace/scout79-r101-gui-d/redeployed-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/redeployed-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/redeployed-x11.png": {
+      "bytes": 22118,
+      "sha256": "b8483a30b05155a049106024fb0c1bda0a43617f6910235be42d54dd07a1eb9e"
+    },
+    "workplace/scout79-r101-gui-d/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-gui-d/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-gui-d/report-4-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/report-4-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/report-4-x11.png": {
+      "bytes": 21124,
+      "sha256": "88555fa14c4cff7af6a02ad74737856c3a661d100c08b5418f6a178e1a48046f"
+    },
+    "workplace/scout79-r101-gui-d/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "5c12b31ea9955c1558c93d299007a94e4cceb61027f0fe3c24cd9e28d6272618"
+    },
+    "workplace/scout79-r101-gui-d/report-4.png": {
+      "bytes": 10052,
+      "sha256": "29319116aa02478e62162c7cc545eddb05265c9abf8a33b0992692d925864df5"
+    },
+    "workplace/scout79-r101-gui-d/saved-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/saved-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/saved-x11.png": {
+      "bytes": 22481,
+      "sha256": "301e80ff4eb3c8d4a4e14a13f59858d64e842e515122c9d1f034f2bd37055062"
+    },
+    "workplace/scout79-r101-gui-d/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-gui-d/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-gui-d/status.json": {
+      "bytes": 960,
+      "sha256": "cf283a81b12d1e839cc95fedcaa7fb1326d8c3753143de53b10c2f6cb93a160f"
+    },
+    "workplace/scout79-r101-gui-d/turn-1-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/turn-1-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/turn-1-x11.png": {
+      "bytes": 27592,
+      "sha256": "c424db5ba244075bce2a7da28e34a35ccae261e302549c5236d1285b5de0af31"
+    },
+    "workplace/scout79-r101-gui-d/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-gui-d/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-gui-d/turn-2-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/turn-2-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/turn-2-x11.png": {
+      "bytes": 20361,
+      "sha256": "baa1e81b4d47fea898d664baca793c02bad28f5262692d68951e3aa284431f5b"
+    },
+    "workplace/scout79-r101-gui-d/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-gui-d/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-gui-d/turn-3-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/turn-3-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/turn-3-x11.png": {
+      "bytes": 20364,
+      "sha256": "04bbf01c4120e722f2eab4027c94b0a3c2bc47a9fcd5245a6eb9a1b7caa50587"
+    },
+    "workplace/scout79-r101-gui-d/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-gui-d/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-gui-d/turn-4-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/turn-4-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/turn-4-x11.png": {
+      "bytes": 19923,
+      "sha256": "479996934f7ac8a4eacd4bd66ba1f0df03e6158ad69eaba2f2ddd93db7beb955"
+    },
+    "workplace/scout79-r101-gui-d/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-gui-d/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-gui-d/turn-5-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/turn-5-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/turn-5-x11.png": {
+      "bytes": 19933,
+      "sha256": "f7be9972469c4c84326ae87af5276221997284a58c63e217a72b39b4d40ca7bb"
+    },
+    "workplace/scout79-r101-gui-d/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-gui-d/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-gui-d/turn-6-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/turn-6-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/turn-6-x11.png": {
+      "bytes": 19908,
+      "sha256": "dc305a691d3a01a9f7031edaa9956ae102a8ce4579af248b60ab19b688c0cc70"
+    },
+    "workplace/scout79-r101-gui-d/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-gui-d/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-gui-d/turn-7-x11-comparison.json": {
+      "bytes": 324,
+      "sha256": "4521930206f33b33c79bece2a30a7898714a1213424d82cd1ef8b3e640d36861"
+    },
+    "workplace/scout79-r101-gui-d/turn-7-x11-diff.png": {
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    "workplace/scout79-r101-gui-d/turn-7-x11.png": {
+      "bytes": 19956,
+      "sha256": "1809114e9108343e88987c82e6f5fff4ab0f92f51aea5c8acf54a25cf620cc23"
+    },
+    "workplace/scout79-r101-gui-d/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-gui-d/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-gui-d/updates.jsonl": {
+      "bytes": 724293,
+      "sha256": "4b519fb9892e7bca89e26ba4f58e4ba5a7e30d02ded2427829338fab08b09bc1"
+    },
+    "workplace/scout79-r101-normal-a/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-a/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-a/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-a/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-a/receipt.json": {
+      "bytes": 1435121,
+      "sha256": "c4f6b9085eed48bbea0c112768f26a73b432e62ba9611863a9471332b3209c04"
+    },
+    "workplace/scout79-r101-normal-a/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-a/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-a/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "2d1304376610153498b0ed305de6bedfa8a060a1e9e11102d8b13e90cb5dd786"
+    },
+    "workplace/scout79-r101-normal-a/turn-2.png": {
+      "bytes": 11253,
+      "sha256": "e7a0158be3da38d00b3348c5a8408a6502855fbeaa8869650f4c07dd2c57a2ff"
+    },
+    "workplace/scout79-r101-normal-a/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "3181ea68e9ee2a79588de8b733773f0f4d6d12c82020227d35a1bc537281c124"
+    },
+    "workplace/scout79-r101-normal-a/turn-3.png": {
+      "bytes": 10839,
+      "sha256": "0dd99d85b0f1f785227b5a96b1e0568a7bd361d3f1f21d830d4eb064ad3d390e"
+    },
+    "workplace/scout79-r101-normal-a/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "b447c9389c20dc5d4c93f6d0d1c5197287c9b6e8e8af1e8a309c009322a3564b"
+    },
+    "workplace/scout79-r101-normal-a/turn-4.png": {
+      "bytes": 10723,
+      "sha256": "970cb2cffb5ee374c74d8d767fa9b49dfb838d2a108c5cbab5917519f7c48e79"
+    },
+    "workplace/scout79-r101-normal-a/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "153097376eda711def6a58ce83a0de0149fd9bef4da43f530b608ffd50aed34a"
+    },
+    "workplace/scout79-r101-normal-a/turn-5.png": {
+      "bytes": 10725,
+      "sha256": "0daa0cc519b246cea279e3f5c1e435d5daecebfbf37fa26f0265b7007900bfbb"
+    },
+    "workplace/scout79-r101-normal-a/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "d06667a451c4abea6b6595c6e0f21f26cbe45ada19f28c0631a7260e47b5597c"
+    },
+    "workplace/scout79-r101-normal-a/turn-6.png": {
+      "bytes": 10706,
+      "sha256": "0e7a6844abacaf33cf44414900c6c1919a89f41221731348f7321f27a1cdfb79"
+    },
+    "workplace/scout79-r101-normal-a/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "41186c322b9e9a29f1c29ddde50858c2d645f691b334c617406fa822fb793b4f"
+    },
+    "workplace/scout79-r101-normal-a/turn-7.png": {
+      "bytes": 10724,
+      "sha256": "62df3e13c5fbbea73739432f46f035bb9e55118c943419c5efef946f94e9f22d"
+    },
+    "workplace/scout79-r101-normal-b/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-b/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-b/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-b/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-b/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-normal-b/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-normal-b/receipt.json": {
+      "bytes": 1720796,
+      "sha256": "d4ac8a67fd635bd86fe164044d42ffa139dbfdc748ead345defa300554deb9d1"
+    },
+    "workplace/scout79-r101-normal-b/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "ea37c7662ed3f2880307703b65bcd2e54c147989258911f232bf719cacbf1663"
+    },
+    "workplace/scout79-r101-normal-b/report-4.png": {
+      "bytes": 10016,
+      "sha256": "15632f7e460935e32c3f9befd29985047ef8fb93dd382d8263d21cef4e7255e4"
+    },
+    "workplace/scout79-r101-normal-b/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-b/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-b/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-normal-b/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-normal-b/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-normal-b/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-normal-b/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-normal-b/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-normal-b/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-normal-b/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-normal-b/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-normal-b/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-normal-b/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-normal-b/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-normal-c/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-c/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-c/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-c/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-c/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-c/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "c949a6392da4fbe3b32ef14dc3d38751897fd832b8614d43b543a726e33bcf70"
+    },
+    "workplace/scout79-r101-normal-c/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-c/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-c/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-c/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-c/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-c/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-normal-c/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-normal-c/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-normal-c/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-normal-c/plan.json": {
+      "bytes": 129876,
+      "sha256": "64ad5556d71511fb01fbb84cdcdc36a7fe806c7ea3f25d405dabd9bc4a4e5e07"
+    },
+    "workplace/scout79-r101-normal-c/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-c/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-c/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-c/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-c/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-c/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-c/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-c/receipt.json": {
+      "bytes": 2142461,
+      "sha256": "9fd63a754abdbfd89d66920fb8e15bb50c9bcce8e13996723a5cfb28b3baaae0"
+    },
+    "workplace/scout79-r101-normal-c/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-normal-c/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-normal-c/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "ea37c7662ed3f2880307703b65bcd2e54c147989258911f232bf719cacbf1663"
+    },
+    "workplace/scout79-r101-normal-c/report-4.png": {
+      "bytes": 10016,
+      "sha256": "15632f7e460935e32c3f9befd29985047ef8fb93dd382d8263d21cef4e7255e4"
+    },
+    "workplace/scout79-r101-normal-c/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-normal-c/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-normal-c/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-c/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-c/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-normal-c/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-normal-c/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-normal-c/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-normal-c/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-normal-c/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-normal-c/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-normal-c/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-normal-c/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-normal-c/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-normal-c/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-normal-c/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-normal-d/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-d/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-d/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-d/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-d/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-normal-d/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-normal-d/plan.json": {
+      "bytes": 78617,
+      "sha256": "f6f551192ed84a8c9ec3a4269b8638662add3b1fd1a7db8370f6cecbd030fb40"
+    },
+    "workplace/scout79-r101-normal-d/receipt.json": {
+      "bytes": 1301636,
+      "sha256": "d14a4c00f0466988b2624fb96a96d610cc3bbed2edcf0071f5ecb1862a7f0622"
+    },
+    "workplace/scout79-r101-normal-d/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "ea37c7662ed3f2880307703b65bcd2e54c147989258911f232bf719cacbf1663"
+    },
+    "workplace/scout79-r101-normal-d/report-4.png": {
+      "bytes": 10016,
+      "sha256": "15632f7e460935e32c3f9befd29985047ef8fb93dd382d8263d21cef4e7255e4"
+    },
+    "workplace/scout79-r101-normal-d/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-d/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-d/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-normal-d/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-normal-d/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-normal-d/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-normal-d/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-normal-d/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-normal-e/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-e/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-e/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-e/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-e/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-e/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "c949a6392da4fbe3b32ef14dc3d38751897fd832b8614d43b543a726e33bcf70"
+    },
+    "workplace/scout79-r101-normal-e/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-e/cooldown-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-e/cooldown-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "ff32771946a6a3f2c0935c06c1e48ac347fbac7bf5c9ac4f945b1a43c68c3b27"
+    },
+    "workplace/scout79-r101-normal-e/cooldown-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-e/cooldown-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-e/cooldown-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "1daa45dc680064cdf6792cefeeb403dad985746440bc6ece5c1c2b824ba8bfc6"
+    },
+    "workplace/scout79-r101-normal-e/cooldown-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-e/cooldown-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "a97f59b99943d1048d258ed2c3e159b7f809474aac76e366aacc0e1ec5fa30a3"
+    },
+    "workplace/scout79-r101-normal-e/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-e/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-e/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-e/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-e/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-normal-e/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-normal-e/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-normal-e/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-normal-e/plan.json": {
+      "bytes": 129876,
+      "sha256": "64ad5556d71511fb01fbb84cdcdc36a7fe806c7ea3f25d405dabd9bc4a4e5e07"
+    },
+    "workplace/scout79-r101-normal-e/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-e/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-e/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-e/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-e/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-e/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-e/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-e/receipt.json": {
+      "bytes": 2142461,
+      "sha256": "9fd63a754abdbfd89d66920fb8e15bb50c9bcce8e13996723a5cfb28b3baaae0"
+    },
+    "workplace/scout79-r101-normal-e/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-normal-e/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-normal-e/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "ea37c7662ed3f2880307703b65bcd2e54c147989258911f232bf719cacbf1663"
+    },
+    "workplace/scout79-r101-normal-e/report-4.png": {
+      "bytes": 10016,
+      "sha256": "15632f7e460935e32c3f9befd29985047ef8fb93dd382d8263d21cef4e7255e4"
+    },
+    "workplace/scout79-r101-normal-e/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-normal-e/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-normal-e/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-e/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-e/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-normal-e/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-normal-e/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-normal-e/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-normal-e/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-normal-e/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-normal-e/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-normal-e/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-normal-e/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-normal-e/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-normal-e/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-normal-e/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-normal-f/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-f/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-f/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-f/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-f/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-f/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "c949a6392da4fbe3b32ef14dc3d38751897fd832b8614d43b543a726e33bcf70"
+    },
+    "workplace/scout79-r101-normal-f/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-f/cooldown-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-f/cooldown-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "ff32771946a6a3f2c0935c06c1e48ac347fbac7bf5c9ac4f945b1a43c68c3b27"
+    },
+    "workplace/scout79-r101-normal-f/cooldown-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-f/cooldown-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-f/cooldown-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "1daa45dc680064cdf6792cefeeb403dad985746440bc6ece5c1c2b824ba8bfc6"
+    },
+    "workplace/scout79-r101-normal-f/cooldown-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-f/cooldown-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "a97f59b99943d1048d258ed2c3e159b7f809474aac76e366aacc0e1ec5fa30a3"
+    },
+    "workplace/scout79-r101-normal-f/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-f/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-f/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-f/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-f/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-normal-f/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-normal-f/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-normal-f/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-normal-f/plan.json": {
+      "bytes": 129876,
+      "sha256": "64ad5556d71511fb01fbb84cdcdc36a7fe806c7ea3f25d405dabd9bc4a4e5e07"
+    },
+    "workplace/scout79-r101-normal-f/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-f/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-f/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-f/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-f/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-f/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-f/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-f/receipt.json": {
+      "bytes": 2142461,
+      "sha256": "9fd63a754abdbfd89d66920fb8e15bb50c9bcce8e13996723a5cfb28b3baaae0"
+    },
+    "workplace/scout79-r101-normal-f/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-normal-f/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-normal-f/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "ea37c7662ed3f2880307703b65bcd2e54c147989258911f232bf719cacbf1663"
+    },
+    "workplace/scout79-r101-normal-f/report-4.png": {
+      "bytes": 10016,
+      "sha256": "15632f7e460935e32c3f9befd29985047ef8fb93dd382d8263d21cef4e7255e4"
+    },
+    "workplace/scout79-r101-normal-f/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-normal-f/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-normal-f/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-f/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-f/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-normal-f/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-normal-f/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-normal-f/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-normal-f/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-normal-f/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-normal-f/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-normal-f/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-normal-f/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-normal-f/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-normal-f/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-normal-f/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-normal-g/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-g/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-g/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-g/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-g/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-g/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "c949a6392da4fbe3b32ef14dc3d38751897fd832b8614d43b543a726e33bcf70"
+    },
+    "workplace/scout79-r101-normal-g/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-g/cooldown-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-g/cooldown-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "ff32771946a6a3f2c0935c06c1e48ac347fbac7bf5c9ac4f945b1a43c68c3b27"
+    },
+    "workplace/scout79-r101-normal-g/cooldown-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-g/cooldown-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-g/cooldown-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "1daa45dc680064cdf6792cefeeb403dad985746440bc6ece5c1c2b824ba8bfc6"
+    },
+    "workplace/scout79-r101-normal-g/cooldown-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-g/cooldown-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "a97f59b99943d1048d258ed2c3e159b7f809474aac76e366aacc0e1ec5fa30a3"
+    },
+    "workplace/scout79-r101-normal-g/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-g/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-g/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-g/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-g/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-normal-g/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-normal-g/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-normal-g/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-normal-g/plan.json": {
+      "bytes": 130863,
+      "sha256": "47118351881ec787994f9ac2962d63bccf91d6977ccf6d56658c343d05f95f59"
+    },
+    "workplace/scout79-r101-normal-g/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-g/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-g/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-g/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-g/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-g/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-g/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-g/receipt.json": {
+      "bytes": 2142543,
+      "sha256": "f6bb103185b2c25f447c4417aaa49b419914cb4adecb10f0c335dc76b18f1547"
+    },
+    "workplace/scout79-r101-normal-g/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-normal-g/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-normal-g/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "c0c48bca790e2d0461dd952ce4ee33985b616c7b8bf2250ec8e5fb4562896d53"
+    },
+    "workplace/scout79-r101-normal-g/report-4.png": {
+      "bytes": 9972,
+      "sha256": "89e2ebc09c2b12fc60d581829374e4bb37dae8dc4e99cbb2bb88f83956795520"
+    },
+    "workplace/scout79-r101-normal-g/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-normal-g/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-normal-g/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-g/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-g/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-normal-g/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-normal-g/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-normal-g/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-normal-g/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-normal-g/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-normal-g/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-normal-g/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-normal-g/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-normal-g/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-normal-g/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-normal-g/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-normal-h/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-h/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-h/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-h/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-h/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-h/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "c949a6392da4fbe3b32ef14dc3d38751897fd832b8614d43b543a726e33bcf70"
+    },
+    "workplace/scout79-r101-normal-h/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-h/cooldown-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-h/cooldown-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "ff32771946a6a3f2c0935c06c1e48ac347fbac7bf5c9ac4f945b1a43c68c3b27"
+    },
+    "workplace/scout79-r101-normal-h/cooldown-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-h/cooldown-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-h/cooldown-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "1daa45dc680064cdf6792cefeeb403dad985746440bc6ece5c1c2b824ba8bfc6"
+    },
+    "workplace/scout79-r101-normal-h/cooldown-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-h/cooldown-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "a97f59b99943d1048d258ed2c3e159b7f809474aac76e366aacc0e1ec5fa30a3"
+    },
+    "workplace/scout79-r101-normal-h/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-h/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-h/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-h/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-h/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-normal-h/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-normal-h/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-normal-h/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-normal-h/plan.json": {
+      "bytes": 130863,
+      "sha256": "47118351881ec787994f9ac2962d63bccf91d6977ccf6d56658c343d05f95f59"
+    },
+    "workplace/scout79-r101-normal-h/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-h/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-h/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-h/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-h/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-h/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-h/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-h/receipt.json": {
+      "bytes": 2142543,
+      "sha256": "f6bb103185b2c25f447c4417aaa49b419914cb4adecb10f0c335dc76b18f1547"
+    },
+    "workplace/scout79-r101-normal-h/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-normal-h/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-normal-h/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "c0c48bca790e2d0461dd952ce4ee33985b616c7b8bf2250ec8e5fb4562896d53"
+    },
+    "workplace/scout79-r101-normal-h/report-4.png": {
+      "bytes": 9972,
+      "sha256": "89e2ebc09c2b12fc60d581829374e4bb37dae8dc4e99cbb2bb88f83956795520"
+    },
+    "workplace/scout79-r101-normal-h/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-normal-h/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-normal-h/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-h/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-h/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-normal-h/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-normal-h/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-normal-h/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-normal-h/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-normal-h/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-normal-h/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-normal-h/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-normal-h/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-normal-h/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-normal-h/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-normal-h/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-normal-i/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-i/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-i/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-i/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-i/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-i/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "c949a6392da4fbe3b32ef14dc3d38751897fd832b8614d43b543a726e33bcf70"
+    },
+    "workplace/scout79-r101-normal-i/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-i/cooldown-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-i/cooldown-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "ff32771946a6a3f2c0935c06c1e48ac347fbac7bf5c9ac4f945b1a43c68c3b27"
+    },
+    "workplace/scout79-r101-normal-i/cooldown-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-i/cooldown-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-i/cooldown-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "1daa45dc680064cdf6792cefeeb403dad985746440bc6ece5c1c2b824ba8bfc6"
+    },
+    "workplace/scout79-r101-normal-i/cooldown-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-i/cooldown-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "a97f59b99943d1048d258ed2c3e159b7f809474aac76e366aacc0e1ec5fa30a3"
+    },
+    "workplace/scout79-r101-normal-i/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-i/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-i/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-i/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-i/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-normal-i/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-normal-i/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-normal-i/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-normal-i/plan.json": {
+      "bytes": 130863,
+      "sha256": "f395342fad972e62668c1ec9d71f673d630b24f540ca0946c3d288979cb38a3c"
+    },
+    "workplace/scout79-r101-normal-i/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-i/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-i/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-i/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-i/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-i/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-i/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-i/receipt.json": {
+      "bytes": 2142543,
+      "sha256": "9ead18bb3cefccac0d97c90c95644dc3e4cecf91d17c64aa46dce125159b9b38"
+    },
+    "workplace/scout79-r101-normal-i/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-normal-i/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-normal-i/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "c0c48bca790e2d0461dd952ce4ee33985b616c7b8bf2250ec8e5fb4562896d53"
+    },
+    "workplace/scout79-r101-normal-i/report-4.png": {
+      "bytes": 9972,
+      "sha256": "89e2ebc09c2b12fc60d581829374e4bb37dae8dc4e99cbb2bb88f83956795520"
+    },
+    "workplace/scout79-r101-normal-i/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-normal-i/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-normal-i/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-i/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-i/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-normal-i/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-normal-i/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-normal-i/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-normal-i/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-normal-i/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-normal-i/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-normal-i/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-normal-i/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-normal-i/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-normal-i/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-normal-i/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-normal-j/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-j/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-j/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-j/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-j/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-j/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "c949a6392da4fbe3b32ef14dc3d38751897fd832b8614d43b543a726e33bcf70"
+    },
+    "workplace/scout79-r101-normal-j/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-j/cooldown-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-j/cooldown-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "ff32771946a6a3f2c0935c06c1e48ac347fbac7bf5c9ac4f945b1a43c68c3b27"
+    },
+    "workplace/scout79-r101-normal-j/cooldown-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-j/cooldown-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-j/cooldown-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "1daa45dc680064cdf6792cefeeb403dad985746440bc6ece5c1c2b824ba8bfc6"
+    },
+    "workplace/scout79-r101-normal-j/cooldown-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-j/cooldown-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "a97f59b99943d1048d258ed2c3e159b7f809474aac76e366aacc0e1ec5fa30a3"
+    },
+    "workplace/scout79-r101-normal-j/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-j/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-j/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-j/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-j/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-normal-j/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-normal-j/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-normal-j/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-normal-j/plan.json": {
+      "bytes": 130863,
+      "sha256": "f395342fad972e62668c1ec9d71f673d630b24f540ca0946c3d288979cb38a3c"
+    },
+    "workplace/scout79-r101-normal-j/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-j/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-j/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-j/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-j/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-j/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-j/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-j/receipt.json": {
+      "bytes": 2142543,
+      "sha256": "9ead18bb3cefccac0d97c90c95644dc3e4cecf91d17c64aa46dce125159b9b38"
+    },
+    "workplace/scout79-r101-normal-j/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-normal-j/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-normal-j/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "5c12b31ea9955c1558c93d299007a94e4cceb61027f0fe3c24cd9e28d6272618"
+    },
+    "workplace/scout79-r101-normal-j/report-4.png": {
+      "bytes": 10052,
+      "sha256": "29319116aa02478e62162c7cc545eddb05265c9abf8a33b0992692d925864df5"
+    },
+    "workplace/scout79-r101-normal-j/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-normal-j/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-normal-j/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-j/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-j/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-normal-j/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-normal-j/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-normal-j/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-normal-j/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-normal-j/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-normal-j/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-normal-j/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-normal-j/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-normal-j/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-normal-j/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-normal-j/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-normal-k/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-k/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-k/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-k/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-k/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-k/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "c949a6392da4fbe3b32ef14dc3d38751897fd832b8614d43b543a726e33bcf70"
+    },
+    "workplace/scout79-r101-normal-k/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-k/cooldown-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-k/cooldown-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "ff32771946a6a3f2c0935c06c1e48ac347fbac7bf5c9ac4f945b1a43c68c3b27"
+    },
+    "workplace/scout79-r101-normal-k/cooldown-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-k/cooldown-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-k/cooldown-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "1daa45dc680064cdf6792cefeeb403dad985746440bc6ece5c1c2b824ba8bfc6"
+    },
+    "workplace/scout79-r101-normal-k/cooldown-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-k/cooldown-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "a97f59b99943d1048d258ed2c3e159b7f809474aac76e366aacc0e1ec5fa30a3"
+    },
+    "workplace/scout79-r101-normal-k/deployed.bin": {
+      "bytes": 307200,
+      "sha256": "934e4ee34fb6cf53f4889fec0403c6eb80c17ae12104f05f4ef3f725879199fd"
+    },
+    "workplace/scout79-r101-normal-k/deployed.png": {
+      "bytes": 10693,
+      "sha256": "59f35f4f79be83b69804ad1b0f50954afea628559b833c35dd95707413624ad0"
+    },
+    "workplace/scout79-r101-normal-k/entry.bin": {
+      "bytes": 307200,
+      "sha256": "814b7458829c45842053169cb8c485cb55298152eafafe74fcb0cb9571e3e8b0"
+    },
+    "workplace/scout79-r101-normal-k/entry.png": {
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    "workplace/scout79-r101-normal-k/loaded.bin": {
+      "bytes": 307200,
+      "sha256": "5f2ec86815c23f24aa86242a19601b6d5dcde5a1178b98e4c516934798b2ef24"
+    },
+    "workplace/scout79-r101-normal-k/loaded.png": {
+      "bytes": 22043,
+      "sha256": "3d07560e5f1c6b5b7eb40e5d9f7914880faedbd765a9a8e6df9e34a3c8b28f0d"
+    },
+    "workplace/scout79-r101-normal-k/mother-moving.bin": {
+      "bytes": 307200,
+      "sha256": "3090623135f7f8e648bf6c2b764173dfd111e33f587f13a463be41d78bafc95d"
+    },
+    "workplace/scout79-r101-normal-k/mother-moving.png": {
+      "bytes": 8719,
+      "sha256": "a6c83daaf95d72795f0d2b3aca72f6ba139eba97bbd933ebb6870ed99de5d35f"
+    },
+    "workplace/scout79-r101-normal-k/plan.json": {
+      "bytes": 130863,
+      "sha256": "f395342fad972e62668c1ec9d71f673d630b24f540ca0946c3d288979cb38a3c"
+    },
+    "workplace/scout79-r101-normal-k/player-save/ADMIRAL.DT0": {
+      "bytes": 2296,
+      "sha256": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad"
+    },
+    "workplace/scout79-r101-normal-k/player-save/FLEET.DT0": {
+      "bytes": 3904,
+      "sha256": "0774fe29c064bb08dc803ea35d4d24b7f69cfd7342ab9070e06bac2fee631008"
+    },
+    "workplace/scout79-r101-normal-k/player-save/PLANET.DT0": {
+      "bytes": 6642,
+      "sha256": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb"
+    },
+    "workplace/scout79-r101-normal-k/player-save/SAVEDATA.IDX": {
+      "bytes": 528,
+      "sha256": "7ecd33750a375d36e80d74996f1785bf2e6a69b5f00b72a5857edc53ff24132d"
+    },
+    "workplace/scout79-r101-normal-k/player-save/SHIP.DT0": {
+      "bytes": 27456,
+      "sha256": "fb40cd665171251124986a715cf6b7de4cc292df91da52fff675aa926b87c2a8"
+    },
+    "workplace/scout79-r101-normal-k/player-save/STELLAR.DT0": {
+      "bytes": 4032,
+      "sha256": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99"
+    },
+    "workplace/scout79-r101-normal-k/player-save/WORK.DT0": {
+      "bytes": 230,
+      "sha256": "8d3fe7b5b10b00cbab6187044cb22d3284209de93d6c3efdd1e4f80d9bc69dff"
+    },
+    "workplace/scout79-r101-normal-k/receipt.json": {
+      "bytes": 2142543,
+      "sha256": "9ead18bb3cefccac0d97c90c95644dc3e4cecf91d17c64aa46dce125159b9b38"
+    },
+    "workplace/scout79-r101-normal-k/redeployed.bin": {
+      "bytes": 307200,
+      "sha256": "0e4ba450483fba03c0a03bec5aee511bc94e2b1322d90fe4bd7ea0ffd0d3325e"
+    },
+    "workplace/scout79-r101-normal-k/redeployed.png": {
+      "bytes": 9282,
+      "sha256": "6e4ed08a97c62ad2125111a6b940c999e67a709a3f3da1467043c1703976f066"
+    },
+    "workplace/scout79-r101-normal-k/report-4.bin": {
+      "bytes": 307200,
+      "sha256": "5c12b31ea9955c1558c93d299007a94e4cceb61027f0fe3c24cd9e28d6272618"
+    },
+    "workplace/scout79-r101-normal-k/report-4.png": {
+      "bytes": 10052,
+      "sha256": "29319116aa02478e62162c7cc545eddb05265c9abf8a33b0992692d925864df5"
+    },
+    "workplace/scout79-r101-normal-k/saved.bin": {
+      "bytes": 307200,
+      "sha256": "851cf2c5b05b6ef5d7b80f87a1c222698a5a7ea6f04150384a05a2c1258b349f"
+    },
+    "workplace/scout79-r101-normal-k/saved.png": {
+      "bytes": 9953,
+      "sha256": "27e855326cdef62067e493fd89ed8d7b12e946f6e1d8b060d5a02777fcdbdcb5"
+    },
+    "workplace/scout79-r101-normal-k/turn-1.bin": {
+      "bytes": 307200,
+      "sha256": "d22f8d35909476672ef8f16e5ce0983374039ae11d1a1229b1b2a7afc77bd71d"
+    },
+    "workplace/scout79-r101-normal-k/turn-1.png": {
+      "bytes": 10857,
+      "sha256": "03602d53907df35e8524ab08c9307a36d7a3c2651675caadce4d57f3ba5cdc99"
+    },
+    "workplace/scout79-r101-normal-k/turn-2.bin": {
+      "bytes": 307200,
+      "sha256": "52291def559d8ded55d2a5ebbf439eda8449d0f647ece4d61477be080dfdbd8c"
+    },
+    "workplace/scout79-r101-normal-k/turn-2.png": {
+      "bytes": 9299,
+      "sha256": "42c167f822e7c91d64422aeb98ffbc319ad58c46d2e8904bbd4d303e5cc66a61"
+    },
+    "workplace/scout79-r101-normal-k/turn-3.bin": {
+      "bytes": 307200,
+      "sha256": "7a0397ec06035574d51e212a5b2a6b3ddf58e740b6da7405dcfbc80e6e8f104d"
+    },
+    "workplace/scout79-r101-normal-k/turn-3.png": {
+      "bytes": 9266,
+      "sha256": "8c2df27bd172eb8a2fa0f63cf3e30a0ee1101214d0e7426ed9f074d6db0a741c"
+    },
+    "workplace/scout79-r101-normal-k/turn-4.bin": {
+      "bytes": 307200,
+      "sha256": "4a560d59ef5e0e044c7f9f1277d70886371730272c5e97aad59285416328504c"
+    },
+    "workplace/scout79-r101-normal-k/turn-4.png": {
+      "bytes": 8963,
+      "sha256": "59b1477524c7c8fd05e2086c7bb375d52d0070824df0d5133e78f2ca5731aee9"
+    },
+    "workplace/scout79-r101-normal-k/turn-5.bin": {
+      "bytes": 307200,
+      "sha256": "eedc79aa964f9035e919c94dafe506a5658bcf4babb700af4d94b94105a779a2"
+    },
+    "workplace/scout79-r101-normal-k/turn-5.png": {
+      "bytes": 8925,
+      "sha256": "bcf01ab0664c6d0c3917159851e2fed86d296301c5861fa8402200c84538388e"
+    },
+    "workplace/scout79-r101-normal-k/turn-6.bin": {
+      "bytes": 307200,
+      "sha256": "df39e53046147ff10e570793e62c008ec84ee7a9f939573d22de76247f37577c"
+    },
+    "workplace/scout79-r101-normal-k/turn-6.png": {
+      "bytes": 8904,
+      "sha256": "f8ddfbd94c0227bea517e1a1ce17b9a05eff3fef2435e9842b99fff5659e422a"
+    },
+    "workplace/scout79-r101-normal-k/turn-7.bin": {
+      "bytes": 307200,
+      "sha256": "a342eea86b38dac18f2409a847aeb35c65a2a44f4ce5a62aceb7b240fb3e3223"
+    },
+    "workplace/scout79-r101-normal-k/turn-7.png": {
+      "bytes": 8923,
+      "sha256": "35fe5df584ec9d9b47c204251801d257ce133ded394d6963c1a085f4e19f860c"
+    },
+    "workplace/scout79-r101-report-after-diff.png": {
+      "bytes": 4367,
+      "sha256": "33ddb438fd47df94462f4edc6d86c5feab57fbbfbe6361733d1336a58c1b68ce"
+    },
+    "workplace/scout79-r101-report-before-diff.png": {
+      "bytes": 4420,
+      "sha256": "7c52a23173354f9f694354c058c19e360344581ab958463175ee459a26422be4"
+    },
+    "workplace/scout79-r101-report-comparison.json": {
+      "bytes": 1339,
+      "sha256": "6f791135cd51d46ec66a71e9fc9cd212470b29aa17f27ddce63ea932761875c7"
+    },
+    "workplace/scout79-r83-fleet12-original.palette.bin": {
+      "bytes": 48,
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    "workplace/scout79-r83-fleet12-original.png": {
+      "bytes": 8239,
+      "sha256": "ecde17208f1d6c3c988002c8414ff6881a315e0616c45dbc18ecbbd6fc34dde0"
+    },
+    "workplace/scout79-r83-fleet12-original.screen.bin": {
+      "bytes": 307200,
+      "sha256": "01f0c69f8120a44857ba71dbe482c2d9c6a541e9857d20df59bb1001e25cab45"
+    }
+  }
+}

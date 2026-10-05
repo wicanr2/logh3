@@ -3312,6 +3312,11 @@ func (g *Game) Frame() *gfx.Framebuffer {
 	if g.state == StateTurnReport && g.turnRep.battle {
 		fb := g.drawBattle()
 		g.drawTurnReport(fb)
+		// 3826:0405的游標在報告框上；背景游標會被不透明視窗蓋掉。
+		// 規格107的正式報告接線，保持Game對外畫面座標。
+		if g.res.Cursor != nil {
+			g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)
+		}
 		return fb
 	}
 	switch g.state {

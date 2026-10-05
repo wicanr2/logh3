@@ -255,6 +255,40 @@ func TestScoutFuelWindowOriginal(t *testing.T) {
 	}
 }
 
+// 正式Frame包含背景、報告及游標；孤立renderer不能證明游標繪製順序。
+func TestScoutFuelGameFrameOriginal(t *testing.T) {
+	m := scoutFuelSource(t)
+	base := newTestGame(t)
+	var c scoutFuelCase
+	for _, row := range m.Cases {
+		if row.Fleet == 12 && row.Mode == 0 && row.Fuel == 3 && row.Humans == 1 {
+			c = row
+			break
+		}
+	}
+	if c.Name == "" {
+		t.Fatal("缺固定原版報告案例")
+	}
+	g := scoutFuelFixture(t, base, c, true)
+	g.battleScoutFuelPhase(0, func() {})
+	g.MoveMouse(240, 240)
+	got := g.Frame().Pix
+	want := m.read(t, "workplace/scout79-r83-fleet12-original.screen.bin")
+	r := g.res.TurnWindow.BattleReport
+	x, y, w, h := r.CellX*ui.FrameTileW, ui.FrameCellOriginY+r.CellY*ui.FrameTileH, (r.Cols+2)*ui.FrameTileW, (r.Rows+2)*ui.FrameTileH
+	bad := 0
+	for yy := y; yy < y+h; yy++ {
+		for xx := x; xx < x+w; xx++ {
+			if got[yy*640+xx] != want[yy*640+xx] {
+				bad++
+			}
+		}
+	}
+	if bad != 0 {
+		t.Fatalf("正式Game完整報告矩形%d/%d像素不同，游標必須在報告之上", bad, w*h)
+	}
+}
+
 // 靜態原caller順序另已由IDA核；驗產品兩支報告不提前回收或跳過。
 func TestScoutFuelSequentialReports(t *testing.T) {
 	m := scoutFuelSource(t)

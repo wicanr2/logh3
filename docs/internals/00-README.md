@@ -795,3 +795,11 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [原版全圖與區域比較器](../../tools/scripts/title_player_compare.go)保存未縮放頁面、補邊及差分。
 - [分級定位索引](data/title-player-annotations.json)合併進原始IDA匯出，保留原始bytes與未知警示。
 - [完整來源核對器](../../tools/scripts/title_player_receipt.py)與[完整玩家來源](data/title-player.json)。
+
+## 第101輪正常索敵流程
+
+- [計畫101](../goal/2026-10-05-scout-player-round-101.md)：沿#79補公開索敵、完整回合、失聯、冷卻及同池再派出。
+- [只讀觀測器生成](../../tools/scripts/scout_player_prepare.py)與[公開輸入探針](../../tools/scripts/scout_player_probe.go)。
+- [正常60 Hz真實GUI驗證](../../tools/scripts/scout_player_gui.py)沿用正式視窗、X11事件與完整畫面擷取。
+- [報告游標研究435](../re/435-scout-player-report-cursor.md)、[玩家驗證089](../playtest/089-scout-player.md)及[完整來源](data/scout-player.json)。
+- [差分與來源核對器](../../tools/scripts/scout_player_receipt.py)保存修正前後全圖與報告矩形，不隱藏背景差異。
