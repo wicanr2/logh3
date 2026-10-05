@@ -880,3 +880,9 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [原版矩陣及只受反擊回歸](../../internal/rules/planet_eligibility_test.go)核對目標、位元、分隊、行星及最終亂數。
 - [研究439](../re/439-planet-eligibility.md)及[驗證099](../playtest/099-planet-eligibility.md)記錄本輪分級與回歸範圍。
 - [Game政策與動畫模式回歸](../../internal/game/planet_eligibility_test.go)驗雙陣營被動CPU正對照及普通／快速／最快消費。
+
+## 第112輪正常勝後占領
+
+- [計畫112](../goal/2026-10-06-winner-occupation-player-round-112.md)與[正常輸入探針](../../tools/scripts/battle_winner_player_probe.py)沿#79及110 READY補勝方占領的玩家流程。
+- 第112輪正常勝利的獨立bootstrap及60 Hz公開存讀入口：[重播工具](../../tools/scripts/battle_winner_player_replay.py)。占領驗收仍未完成。
+- [驗證100](../playtest/100-battle-winner-player-search.md)、[完整來源與探索分類](data/battle-winner-player-search.json)及[來源核對器](../../tools/scripts/battle_winner_player_receipt.py)保留晚回合零占領與正式視窗回歸。
