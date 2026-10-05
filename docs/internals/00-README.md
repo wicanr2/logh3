@@ -824,3 +824,15 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [玩家抽驗工具](../../tools/scripts/windows_player_check.py)保存預設片頭、真實 X11 輸入及同來源 Linux 完整畫面對照。
 - [Windows玩家驗證092](../playtest/092-windows-player.md)分開原生畫布、一倍視窗及1.5倍量化差異。
 - [完整像素核對](../../tools/scripts/windows_player_pixels.py)、[來源凍結器](../../tools/scripts/windows_player_receipt.py)與[唯一來源收據](data/windows-player.json)保存通過範圍及完整反例。
+
+## 第105輪 Windows 正常播放
+
+- [計畫105](../goal/2026-10-05-windows-playback-round-105.md)，沿 #69 驗正式Windows播放器輸出。
+- [Wine音訊包裝器](../../tools/player_wine_audio.sh)及[虛擬輸出擷取](../../tools/scripts/wine_playback_sink.py)沿既有image連接隔離Unix socket。
+- [Windows正常配樂玩家路徑](../../tools/scripts/windows_music_player.py)驗預設片頭、主選單停止、平時曲切換及關閉。
+- [正式Vorbis解碼對照](../../tools/scripts/windows_music_decode.go)保存signed16來源及相同的float轉換。
+- [原首段核對](../../tools/scripts/windows_music_compare.py)保持3秒連續相同及停止門檻；[完整固定曲段觀測](../../tools/scripts/windows_music_analysis.py)另記缺口，不取代首段FAIL。
+- [直接PCM對照](../../tools/scripts/windows_music_pulse_control.py)、[Windows Oto探針](../../tools/scripts/windows_music_oto_probe.go)、[Oto容器控制器](../../tools/scripts/windows_music_oto_control.py)與[全來源核對](../../tools/scripts/windows_music_control_compare.py)只作環境診斷。
+- [音訊映像來源](../../tools/Dockerfile.windows-audio)、[50套件固定鎖](../../tools/windows-audio-packages.lock)及[建置入口](../../tools/build_windows_audio.sh)延伸既有Wine父映像；[隔離driver設定](../../tools/scripts/wine_audio_driver.py)不改遊戲MIDI I/F。
+- [093觀測](../playtest/093-windows-music-playback.md)、[來源核對器](../../tools/scripts/windows_music_playback_receipt.py)及[本輪來源](data/windows-music-playback.json)保存e首段失敗、f限定內段與正常換曲／停止。
+- 093的WASAPI名稱屬鎖版Oto優先分支強推論，實際API選擇未直接追蹤；勘誤及現行範圍見[CONTEXT](../../CONTEXT.md)。Windows PCM／Wine ALSA／Pulse端點及波形有實測。

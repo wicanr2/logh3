@@ -1,0 +1,10 @@
+# 第105輪：既有Wine9映像缺ALSA的Pulse plugin，只補此缺件。
+# 父映像保留供第104輪與WinePulse反例重現；不修改其他專案來源。
+# parent id: sha256:7d3c7ff554db39300e3e7a92a7b79c2d5fcd647289596d22fa10899baac61201
+FROM colonization-windows-verification:20261001-r1
+USER root
+COPY windows-audio-packages.lock /tmp/windows-audio-packages.lock
+RUN apt-get update \
+ && xargs -r apt-get install -y --no-install-recommends < /tmp/windows-audio-packages.lock \
+ && rm -rf /var/lib/apt/lists/* /tmp/windows-audio-packages.lock
+USER 1000:1000

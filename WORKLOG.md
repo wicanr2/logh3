@@ -2,6 +2,19 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-05 第105輪：Windows 正常配樂輸出
+
+- 父提交62e925a8ee081623144a17317f85fca62579b25b，沿既有#69。89張worklist、6 OPEN／83 CLOSED，269條開工核對零失效。命中Wine／正常玩家、OGG、平台契約及文件職責路由；沒有重問既有音色／PCM／按住速度／零距離裁決。
+- 使用第103輪來源Windows玩家6af940c7及已核22首Windows OGG。原版、畫面資料、曲庫及玩家程式唯讀；真實X11跳片頭、138、關報告、設定BGM1及關配樂。e／f各33項命令、3600更新、StateSettings，12張3686400像素全視窗零差，無-script、direct-entry或局面注入。
+- Linux與Windows正式Vorbis完整解碼四首PCM逐位元組相同；signed16轉float為int16/32768。首個一秒特徵接近靜音，按固定RMS條件修識別，不修改合成或OGG。a–d的錄音、固定特徵及失敗保留。
+- CPU配額2→4仍失敗，c有13.183927秒限流累積。d限制Mesa執行緒後沒有CPU限流，片頭仍只連續0.675873秒，推翻配額不足的充分解釋。直接paplay的8秒完整PCM在同一monitor全同；沒有GUI的Windows Oto／Wine Pulse仍只連續0.775986秒，定位Wine音訊路徑，精確成因unknown。
+- 原Wine映像缺ALSA Pulse plugin，新增revision延伸相同Wine9父映像。50個新增套件全部鎖版，未升級既有套件；獨立prefix只選ALSA adapter，遊戲MIDI I/F不變。Windows Oto／ALSA的相同8秒完整PCM全同。初次probe及父映像保留供診斷來源重現，正式工具ID28adb713，完整ID見093。
+- e首段OPEN_M2.486757秒仍FAIL，後段另有3.153175秒相同；20／10／10.317毫秒純靜音及0.405896秒混合區間保留。f獨立重跑通過相同首段門檻：OPEN_M8.793084秒、BGM_0F7.970000秒、BGM_1F6.358413秒連續逐位元組相同。兩批主選單及關配樂各至少3秒全零。沒有將e失敗改成PASS，也不外推整首或循環。
+- 保存實際monitor、端點PID／音量／取樣率、源曲雜湊、全部固定1–8秒特徵及中間區間；兩批各三份5秒WAV沒有去掉缺口。三段f聽感已向使用者詢問，未回覆時維持人耳未知。標準18套件13PASS／5無測試，Game177.805s、gin3 104.550s；原103輪20469及104輪1096來源／164原版輸入重核保持。
+- 093與812來源／164原版輸入凍結，SHA-256 2656f562ca578e86cd2c5dde44c708743e04ba8bd606205b5a40bb31df7bd937。#69本文與manual note更新，原判準、歷史及解析錨點保持，仍OPEN；重抓快照並重生CONTEXT清單／矩陣。原Goal ACTIVE，產品Go、AI、112／116及#66／#89裁決不改。
+- Windows公開存讀、完整播放／循環、實機、人耳、macOS及正式版號／dist-all仍缺。收尾812來源逐檔核對、所有輸出1000:1000、find無root-owned檔或*.md目錄；本輪Wine／Pulse／Xvfb容器皆已退出，保留重現所需映像，不全域清理其他專案。提交／推送主旨「驗Windows正常配樂輸出並保存Wine音訊缺口」，精確身份依Git。
+- 註記勘誤：093的WASAPI名稱來自鎖版Oto的優先分支，屬強推論；成功輸出不能單獨排除WinMM後備。未直接追蹤本輪API選擇，現行CONTEXT限定為已觀測的Windows PCM／Wine ALSA／Pulse路徑。凍結093及812來源身份保持，沒有重新包裝成已證實API呼叫。
+
 ## 2026-10-05 第104輪：Windows 正常玩家GUI
 
 - 父提交54c643262765bb9ff2b2c64c6032e28416fe347f，上一輪來源重建及推送屬進度，沿既有#69。最新worklist89張、6 OPEN／83 CLOSED，269條零失效。命中Wine／正常玩家路徑及文件職責，載入重製技能與驗證reference；沒有重新提問既有裁決。
