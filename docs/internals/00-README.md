@@ -908,3 +908,12 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [驗證103](../playtest/103-battle-natural-promotion.md)保存實際選單門檻、未形成戰場與自然升級接續的證據限制。
 - [正式入口與GUI重播](../../tools/scripts/battle_natural_promotion_replay.py)核對自然升級報告、軍階視窗及公開存讀。
 - [來源核對器](../../tools/scripts/battle_natural_promotion_receipt.py)凍結本輪輸入、全圖及六檔存讀，保存於[唯一來源索引](data/battle-natural-promotion.json)。
+
+## 第116輪自然空分隊清理
+
+- [計畫116](../goal/2026-10-06-battle-natural-cleanup-round-116.md)沿#79及109 READY補正常一般分隊死亡、引用搬移與存讀。
+- [公開選敵探針](../../tools/scripts/battle_natural_cleanup_probe.py)只改測試玩家的公開選敵，唯讀觀測清理前後，不注入死亡。
+- [驗證104](../playtest/104-battle-natural-cleanup.md)保存自然清理、正常GUI與原版整回合同態的範圍區分。
+- [正式重播](../../tools/scripts/battle_natural_cleanup_replay.py)及[唯讀觀測片段](../../tools/scripts/battle_natural_cleanup_observer.go)驗正式bootstrap與60 Hz視窗的清理前後完整表。
+- [來源核對器](../../tools/scripts/battle_natural_cleanup_receipt.py)沿109已證實byte契約核對中間槽搬移、下一回合及完整六檔，保存於[唯一來源](data/battle-natural-cleanup.json)。
+- [109限定CONFORMED](../spec/109-battle-empty-groups.md)沿原版35案與本輪正常Game／GUI／存讀鏈；助手取圖時點另由公開右鍵後完整圖核實，062保持DRAFT。
