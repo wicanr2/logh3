@@ -886,3 +886,9 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [計畫112](../goal/2026-10-06-winner-occupation-player-round-112.md)與[正常輸入探針](../../tools/scripts/battle_winner_player_probe.py)沿#79及110 READY補勝方占領的玩家流程。
 - 第112輪正常勝利的獨立bootstrap及60 Hz公開存讀入口：[重播工具](../../tools/scripts/battle_winner_player_replay.py)。占領驗收仍未完成。
 - [驗證100](../playtest/100-battle-winner-player-search.md)、[完整來源與探索分類](data/battle-winner-player-search.json)及[來源核對器](../../tools/scripts/battle_winner_player_receipt.py)保留晚回合零占領與正式視窗回歸。
+
+## 第113輪旗艦接近
+
+- [計畫113](../goal/2026-10-06-flagship-approach-round-113.md)及[正常輸入探針](../../tools/scripts/battle_flagship_approach_probe.py)核對公開行進目標與旗艦優先策略，不更改產品規則。
+- [公開編組重播](../../tools/scripts/battle_flagship_composition_replay.py)補獨立bootstrap、正式60 Hz視窗與公開存讀。
+- [驗證101](../playtest/101-battle-flagship-approach.md)、[來源索引](data/battle-flagship-approach.json)及[核對器](../../tools/scripts/battle_flagship_approach_receipt.py)保存早期勝利仍零占領的核心結果、完整失敗與編組證據。
