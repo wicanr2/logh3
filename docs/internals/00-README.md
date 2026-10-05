@@ -1,5 +1,11 @@
 # 原版內部構造參考
 
+第108輪沿 [#48](https://github.com/wicanr2/logh3/issues/48)：[登陸攻擊計畫](../goal/2026-10-05-landing-scene-round-108.md)。
+[原版入口](../../tools/landing_scene_oracle.sh)、[容器內入口](../../tools/landing_scene_native_run.sh)與[完整流程觀察器](../../tools/scripts/landing_scene_native.go)使用專用dosgolem，明示注入，拒絕覆寫舊收據。
+[IDA 有界匯出器](../../tools/scripts/landing_scene_ida.py)只開新暫存資料庫，保留原始位址與指令，語意另審。
+[研究436](../re/436-landing-scene.md)與[118草稿](../spec/118-landing-scene.md)區分登陸、反擊、占領結果，不把注入診斷當正常玩家驗收。
+[驗證096](../playtest/096-landing-scene.md)及[核對器](../../tools/scripts/landing_scene_receipt.py)核五案原版雙跑、每格畫面與[完整來源](data/landing-scene.json)。
+
 第107輪沿 [#79](https://github.com/wicanr2/logh3/issues/79)：[正常占領玩家計畫](../goal/2026-10-05-battle-occupation-player-round-107.md)。
 [出貨劇本操作探針](../../tools/scripts/battle_occupation_player_probe.py)只產生測試overlay，固定首戰種子一次，不注入局面或改正式規則。
 [獨立重播與正常GUI入口](../../tools/scripts/battle_occupation_player_replay.py)沿正式bootstrap、60 Hz與公開存讀，觀測層不改局面。
