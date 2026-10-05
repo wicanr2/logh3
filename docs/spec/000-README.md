@@ -1,5 +1,7 @@
 # 規格
 
+[117：正常玩家公開退出](117-player-public-quit.md)，沿 #90 補正式 GUI 接線。
+
 `AGENTS.md` 的流程：
 
 ```

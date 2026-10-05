@@ -94,6 +94,10 @@ func (a *app) syncMusic() error {
 }
 
 func (a *app) Update() error {
+	// 117：公開確認退出後，由 Ebitengine 正常收尾。
+	if a.g.Quit() {
+		return ebiten.Termination
+	}
 	// 正式播放器完成才允許下一音效及圖段首格（規格105）。
 	// 只看名義時長會在更新追趕時關掉仍有樣本的播放器。
 	a.g.SetSoundEffectPlaying(a.effects != nil && a.effects.Busy())

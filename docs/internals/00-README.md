@@ -1,5 +1,10 @@
 # 原版內部構造參考
 
+第106輪沿 [#69](https://github.com/wicanr2/logh3/issues/69)：[Windows 正常存讀計畫](../goal/2026-10-05-windows-save-load-round-106.md)。
+[唯讀 Windows 入口](../../tools/windows_save_load.sh)及[正常輸入／Linux 對照器](../../tools/scripts/windows_save_load.py)驗公開保存、退出及新程序讀回，不注入局面。
+[117退出接線規格](../spec/117-player-public-quit.md)沿研究341原版契約；[正式 app 回歸](../../cmd/gin3/quit_test.go)覆蓋取消及確認。
+[正常保存核對器](../../tools/scripts/windows_save_load_receipt.py)凍結完整來源與歷史身份，產生[存讀來源索引](data/windows-save-load.json)；[驗證094](../playtest/094-windows-save-load.md)記錄本輪範圍。
+
 第100輪沿[#56](https://github.com/wicanr2/logh3/issues/56)：[戰後清單與接線計畫](../goal/2026-10-05-strategic-guard-lifecycle-round-100.md)。
 [研究434](../re/434-strategic-guard-lifecycle.md)核正常戰後續行與下一星域載圖的清單保留；[115限定CONFORMED](../spec/115-strategic-assault-guard.md)定義正式原池查詢與錯誤停止。
 [原池探針](../../tools/strategic_guard_raw_probe.sh)與[比較器](../../tools/scripts/strategic_guard_raw_probe.go)在容器副本核共用1512寫回；不直接改正式Game。
