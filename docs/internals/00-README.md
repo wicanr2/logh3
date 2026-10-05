@@ -861,3 +861,13 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [音訊映像來源](../../tools/Dockerfile.windows-audio)、[50套件固定鎖](../../tools/windows-audio-packages.lock)及[建置入口](../../tools/build_windows_audio.sh)延伸既有Wine父映像；[隔離driver設定](../../tools/scripts/wine_audio_driver.py)不改遊戲MIDI I/F。
 - [093觀測](../playtest/093-windows-music-playback.md)、[來源核對器](../../tools/scripts/windows_music_playback_receipt.py)及[本輪來源](data/windows-music-playback.json)保存e首段失敗、f限定內段與正常換曲／停止。
 - 093的WASAPI名稱屬鎖版Oto優先分支強推論，實際API選擇未直接追蹤；勘誤及現行範圍見[CONTEXT](../../CONTEXT.md)。Windows PCM／Wine ALSA／Pulse端點及波形有實測。
+
+## 第110輪登陸分段接線
+
+- [計畫110](../goal/2026-10-06-landing-caller-round-110.md)：沿#48補齊反擊及跨攻方獨立快照，依118閘門接正式演出。
+- [各層快照準備器](../../tools/scripts/landing_caller_prepare.py)與[完整幀探針](../../tools/scripts/landing_caller_probe.go)依原版寫入者及逐格返回建立獨立文字、量表、圖段與下方場景。
+- [計時與格提交IDA匯出](../../tools/scripts/landing_caller_ida.py)、[研究438](../re/438-landing-caller.md)及[驗證098](../playtest/098-landing-caller.md)保留首批差分與原指令勘誤。
+- [原版文字規格生成](../../tools/scripts/landing_caller_formats.py)與[正式完整幀renderer](../../internal/screen/planet_frame.go)使用各層獨立typed快照。
+- [候選renderer驗證](../../tools/scripts/landing_caller_candidate.go)直接載入獨立候選規格，尚未接Game。
+- [本輪唯一來源](data/landing-caller.json)與[來源核對器](../../tools/scripts/landing_caller_receipt.py)記錄候選、原始RAM、首批差分及父提交歷史驗證。
+- [#91鎖定向量診斷](../../tools/scripts/planet_eligibility_probe.go)只比較固定原版父RAM與目前Targets，未重跑0091或修改規則。

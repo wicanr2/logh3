@@ -42,8 +42,9 @@ type EngagementSpec struct {
 		LabelFailed      string   `json:"label_failed"`
 		Destroyed        string   `json:"destroyed"`
 	} `json:"formats"`
-	KnownDiff []EngagementRect    `json:"known_diff"`
-	Animation EngagementAnimation `json:"animation"`
+	KnownDiff   []EngagementRect    `json:"known_diff"`
+	Animation   EngagementAnimation `json:"animation"`
+	PlanetFrame *PlanetFrameFormats `json:"planet_frame"`
 }
 
 // EngagementAnimation 是演出的圖要用的常數（`COMANI.BMG`，`docs/re/331`）。
