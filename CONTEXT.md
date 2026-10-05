@@ -5,15 +5,16 @@
 
 ## 現況一覽
 
-**目前接續（2026-10-05，第99輪）**：#56原版兩類邊界收據已補；worklist目前7 OPEN／82 CLOSED。
-明示20B4:1497戰略入口五案完整JSON雙跑相同，近距3000艘守軍返回30，Out／遠距／空清單返回0。
-近距與Out終態提督表2／FLEET2／PLANET1／SHIP26／WORK3 bytes不同，正式StrategicAssault近距仍14項typed差異。
-未修改MAP26.CMP的擠開案六次拒絕(936,1452)；555次原版通行返回符合正式Passable，帶實際地形的typed結果零差。
-忽略地形反例仍36項差異；容器/tmp加入守軍的副本五案帶地形零差，不當作正式修正完成。
-115 DRAFT，#56 OPEN；下一步核正常戰後返回至下一星域載圖的清單生命週期及raw池來源，再接Game及保存。
-131項來源SHA-256 `07d60572fb700512f99f560366398dfcbdad59daa107f5714d8e92276f1de7d5`，入口[433](docs/re/433-strategic-assault-edges.md)及[完整來源](docs/internals/data/strategic-assault-edges.json)。
-正式程式未改，第98輪標準18套件結果保持；新探針原版／正式反例／修法各雙跑，來源與格式收尾核對。
-MIDI映射與#89一像素既有裁決待答，其他玩法與完整交付閘門保持，原Goal持續。
+**目前接續（2026-10-05，第100輪）**：#56正式戰略殘留守軍與原池接線完成並關閉；worklist目前6 OPEN／83 CLOSED。
+原版完整8-1保存自然續行，重建後55筆池清單跨8-5返回、下一星域27載圖及1497返回逐byte保留，兩跑相同。
+正式typed守軍修正消除近距14項差異；地形反例仍36項不同，六次實際拒絕保持。
+Game全表檢查另驗出FLEET7／SHIP88 bytes漏寫，沿既有共用1512原池常式補齊，固定回合0。
+正式規則與Game五案完整六表44624 bytes、清單164 bytes及seed全同；保存前比較共223940 bytes。
+五案六檔保存讀回、活原池、飽和、壞索引停止、跨星域池與EndBattle保留身份通過；勝方入口原有保護保持。
+正常選單占領五回合、既有勝方67案與保存／報告等待回歸通過；標準18套件13PASS／5無測試。
+115限定CONFORMED，入口[434](docs/re/434-strategic-guard-lifecycle.md)、[088](docs/playtest/088-strategic-guard.md)及[378項現行來源](docs/internals/data/strategic-guard.json)。
+索引SHA-256 `7b78a0b4f93de477e9b280fc4bdccb7884f23175f834045ab854595ba497b322`；第99輪131項索引不改寫，變更來源按1ff96c1歷史提交核實。
+原Goal持續；MIDI與#89既有裁決待答，其他玩法、完整平台交付及人耳閘門未完成。五個注入局面不外推自然原版整回合或新增GUI。
 
 **第98輪成果保持**：#66的BUG!出貨熱區已核實並修正。
 原版正常啟動時DS:0210及BUG!可選旗標DS:04CC皆為0，點擊不開除錯選單，完整WORK230 bytes不變。
@@ -86,8 +87,8 @@ FLEET+5A未知斷言撤回，行星索引在+07，+5A／+5B定位清FF。分隊+
 
 | 分類 | 目前真相 | 最近驗證／入口 |
 |---|---|---|
-| 戰略殘留守軍已證實 | 戰略入口仍查殘留清單，近距返回30並改變戰損；正式固定0仍有14項typed差異 | 五案原版雙跑、433及131來源；115 DRAFT、#56 OPEN，待清單來源及正式接線 |
-| 戰略擠開地形已抽驗 | 未修改地圖六次拒絕候選；帶正式Passable的typed結果零差，忽略地形有36項差異 | 555次原版通行返回相同；限定明示局面，不宣稱完整原池／正常玩家通過 |
+| 戰略殘留守軍已接 | 戰後池清單跨下一星域保留；正式規則及Game五案完整六表／池序／seed相同，保存重讀通過 | 115限定CONFORMED、088及378來源；#56 CLOSED，正常占領／勝方回歸通過 |
+| 戰略擠開地形已抽驗 | 未修改地圖六次拒絕；帶地形正式原池全同，忽略地形仍36項差異 | 五個明示局面，不外推自然原版整回合／新增GUI |
 | 設定BUG!正常反應已核 | 出貨不可選，typed熱區disabled；點擊不進除錯，WORK及公開保存不變 | 113限定CONFORMED、087；7檔雙跑、兩張原版／Game全圖及兩張正常60 Hz X11零差 |
 | MIDI I/F原版已核 | 七項埠、INI+4、取消與重初始化已核；軟體音源映射待使用者決定 | 432及628來源；114 DRAFT、#66 OPEN，不把建議接入正式路徑 |
 | 標題玩家流程已完成 | 自然動畫→標題、左鍵主選單、逾時清累加重播；尾段與標題色盤已接 | 112限定CONFORMED、#68 CLOSED；29檔雙跑、原版兩頁各224000色號／RGB及五張正常60 Hz X11全圖零差，086 |
@@ -844,6 +845,8 @@ SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
 
 ## 已被推翻的斷言
 
+- 第100輪：第99輪正式近距14項差異及清單來源未知已消除。原版自然續行至下一星域27證實保留55筆池；正式規則／Game五案完整六表／池序／seed全同，保存重讀通過。058舊表的地形、原池及殘留限制同步收窄為未覆蓋局面，不改舊收據，見[434](docs/re/434-strategic-guard-lifecycle.md)及[088](docs/playtest/088-strategic-guard.md)。
+
 - 第99輪：戰略反擊的「守軍取0，戰略單位表必空」不能外推同回合戰後。20B4:1497五案固定原版及21次守軍查詢證實殘留非零會改戰損。058既有空守軍CONFORMED範圍保持，正式近距仍有差；地形「只有全可通行樣本」限制由六次實際拒絕及typed同態補一案，見[433](docs/re/433-strategic-assault-edges.md)。
 
 - 第98輪：285／286的「BUG!出貨旗標為1、知道熱區即可點入」已撤回。正常DS:0210及DS:04CC為0，原版雙跑不呼叫除錯callee；113與087限定正常不可選。MIDI取消沒有重新讀INI，DS:F138不能在所有時點當成有效INI內容；來源與原始定位見[432](docs/re/432-settings-interface.md)。
@@ -1004,7 +1007,7 @@ v1保留為失效推論，現行證據為[原版v2](docs/internals/data/battle-o
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 7 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 6 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -1578,26 +1581,6 @@ BUG!的特殊啟用來源仍unknown，不把除錯模式加入正常玩家路徑
 
 **核實**：`internal/game/settingsscreen.go` 裡還找得到 `與 `BUG!` 也還沒接`（自承還在 ＝ 還沒做）
 
-#### strategic-assault-edge-cases — 戰略打行星沒有收據的兩種局面（同回合打過仗、擠開壓到擋路格）
-
-*[#56](https://github.com/wicanr2/logh3/issues/56) · parity（對拍：要與原版逐位元組相同）*
-
-#56兩類局面的原版窄幅收據已取得，正式戰略反擊的非零守軍仍未接。第99輪沒有改production。
-
-**卡在**：第99輪：從固定完整原版保存，以明示20B4:1497戰略入口及1512前seed12345678／清單注入跑五案，v3兩個批次完整JSON逐byte相同。近距3000艘守軍四次返回30，空清單／Out／遠距四次0；近距與Out終態提督表2／FLEET2／PLANET1／SHIP26／WORK3 bytes不同。原版戰略入口沒有固定0守軍特例。
-
-地形案以未修改MAP26.CMP及34個實際敵方編制占據中心與前33個候選，(936,1452)六次被拒；555次原版通行返回均符合正式Passable。正式StrategicAssault帶實際地形的擠開typed結果零差，忽略地形仍36項差異。近距正式規則有14項typed差異。
-
-容器/tmp副本加入原版清單守軍查詢，五案帶地形均零差，獨立原版批次重建亦相同；未進正式路徑。115 DRAFT，下一步核原版正常戰後返回到下一星域載圖的清單保留／重建／清除與raw池來源，再接Game，補保存／重讀及完整原池副作用。目前診斷不能宣稱正常玩家或六表全同。
-
-既有多支攻方fcmd-assault-ai24及電腦座位攻占報告保持完成。#56保持OPEN；061及四項使用者裁決不改。
-
-**做完的判準**：同回合戰後守軍與擠開後地形各有同狀態收據，可明示-poke造局面；remake逐欄相同或差異列入058並說明。正式規則、Game來源與保存鏈需核實後才關閉本項。
-
-**證據**：[`docs/re/433-strategic-assault-edges.md`](docs/re/433-strategic-assault-edges.md)、[`docs/spec/115-strategic-assault-guard.md`](docs/spec/115-strategic-assault-guard.md)、[`docs/internals/data/strategic-assault-edges.json`](docs/internals/data/strategic-assault-edges.json)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/internals/53-strategic-planet-assault.md`](docs/internals/53-strategic-planet-assault.md)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`tools/scripts/strategic_assault_edge_review.py`](tools/scripts/strategic_assault_edge_review.py)
-
-**核實**：`internal/rules/strategicassault.go` 裡還找得到 `同一回合先打過仗時守軍殘留沒驗`（自承還在 ＝ 還沒做）
-
 #### engagement-animation — 交戰演出（ANI_PNL1 ＋ COMANI.BMG）與戰鬥曲的出口
 
 *[#48](https://github.com/wicanr2/logh3/issues/48) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -1742,7 +1725,7 @@ Game索引SHA-256 830e5c5615be977c5e18cff23fe990c18cc6ee0ad01802b17562a8338ee334
 
 ### 做完的（不在矩陣裡的那幾條）
 
-85 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+86 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -3331,6 +3314,28 @@ AI 挑專任參謀的規則已讀（`docs/re/268`、`rules.StaffAdmirals`），�
 **證據**：[`docs/re/336-executor-rom-tail-rerun.md`](docs/re/336-executor-rom-tail-rerun.md)、[`docs/spec/060-strategic-attrition-annihilation.md`](docs/spec/060-strategic-attrition-annihilation.md)、[`docs/re/329-fleet-disband-is-garrison.md`](docs/re/329-fleet-disband-is-garrison.md)、[`docs/re/334-annihilation-crash-is-executor.md`](docs/re/334-annihilation-crash-is-executor.md)
 
 **核實**：`TestBattleAnnihilationRemovesFleet` 釘在 `internal/game`
+
+#### strategic-assault-edge-cases — 戰略打行星沒有收據的兩種局面（同回合打過仗、擠開壓到擋路格）
+
+*[#56](https://github.com/wicanr2/logh3/issues/56) · parity（對拍：要與原版逐位元組相同）*
+
+第100輪完成正式戰略殘留守軍與原池寫回；本項五案與來源契約通過，115限定CONFORMED。
+
+**卡在**：本項完成。原版從固定完整8-1保存自然續行，沒有CS/IP注入或人工返回。兩案a／b完整JSON相同；清單重建55→0→55後，8-5返回、下一星域27的1497／1512、載圖至返回都逐byte保留同一份55筆池清單。
+
+正式typed反擊補入明示清單的活原池守軍，五案帶實際地形零差；忽略地形仍36項反例差異。初次Game全表檢查另發現FLEET7／SHIP88 bytes漏寫，沿既有共用1512原池常式修正，沒有改原版輸入或對拍門檻。
+
+正式NewStrategicOccupation固定起始回合0；戰略入口不按新星域重篩殘留池。勝方入口的同星域與編制檢查保持。正式規則及Game空、近距、Out、遠距、地形五案完整六表44624 bytes、清單164 bytes與seed全同。Game只用typed單位身份，刻意污染艘數／座標／Out仍讀正確原池。
+
+五案六檔保存重讀、活原池／飽和／越界停止、跨星域池與EndBattle保留池身份通過。正常選單占領亞斯提並實行五回合、既有勝方67案與保存／報告等待回歸通過。正式改動後標準18套件13通過、5無測試；沒有失敗或skip。
+
+聲明限定上述固定局面與正常玩家抽樣，不宣稱所有星域、自然原版整回合或新增GUI全圖對拍。新遊戲尚無Slot的既有typed分支保持，不外推完整原池。第99輪凍結索引保留，改動來源按當輪提交1ff96c1核實；原Goal的其他玩法、MIDI裁決、平台交付及人耳閘門仍未完成。
+
+**做完的判準**：同回合戰後守軍與擠開地形各有同狀態收據，可明示-poke造局面；remake逐欄相同或差異列入058並說明。正式規則、Game來源與保存鏈已核實。
+
+**證據**：[`docs/re/434-strategic-guard-lifecycle.md`](docs/re/434-strategic-guard-lifecycle.md)、[`docs/spec/115-strategic-assault-guard.md`](docs/spec/115-strategic-assault-guard.md)、[`docs/playtest/088-strategic-guard.md`](docs/playtest/088-strategic-guard.md)、[`docs/internals/data/strategic-guard.json`](docs/internals/data/strategic-guard.json)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/internals/53-strategic-planet-assault.md`](docs/internals/53-strategic-planet-assault.md)、[`docs/internals/data/strategic-assault-edges.json`](docs/internals/data/strategic-assault-edges.json)、[`internal/rules/strategicguard_raw_oracle_test.go`](internal/rules/strategicguard_raw_oracle_test.go)、[`internal/game/strategicguard_test.go`](internal/game/strategicguard_test.go)、[`tools/scripts/strategic_guard_review.py`](tools/scripts/strategic_guard_review.py)
+
+**核實**：`TestStrategicGuardGameOriginal` 釘在 `internal/game`
 
 #### new-game-ship-pool — 新遊戲的艦艇池模型（分隊士氣、戰力、兩格存量、池索引）
 

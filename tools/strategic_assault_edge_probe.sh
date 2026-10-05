@@ -3,8 +3,8 @@
 set -euo pipefail
 task_dir="$(mktemp -d /tmp/assault56-r99-model.XXXXXX)"
 trap 'rm -rf "$task_dir"' EXIT
-cp /src/go.mod /src/go.sum "$task_dir/"
-cp -a /src/internal "$task_dir/"
+# 固定第99輪DRAFT輸入；正式接線後仍能重生歷史反例。
+git -C /src archive 1ff96c1e292b766a93af5c18f28083404407e7a7 go.mod go.sum internal | tar -x -C "$task_dir"
 ln -s /src/docs "$task_dir/docs"
 cp /src/tools/scripts/strategic_assault_edge_model.go "$task_dir/model.go"
 python3 - "$task_dir" <<'PY'

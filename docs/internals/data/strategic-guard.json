@@ -1,0 +1,1676 @@
+{
+  "schema": "logh3.strategic-guard.v1",
+  "issue": 56,
+  "date": "2026-10-05",
+  "parent_commit": "1ff96c1e292b766a93af5c18f28083404407e7a7",
+  "remake_dirty": true,
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_dirty": false,
+  "gui_image": "logh3-ebiten:2",
+  "go_image": "golang:1.24-bookworm",
+  "spec115": "CONFORMED-limited",
+  "production_changed": true,
+  "original_lifecycle_cases": 2,
+  "full_raw_cases": 5,
+  "full_bytes_per_side": 223940,
+  "standard_pass_packages": 13,
+  "standard_no_test_packages": 5,
+  "historical_source_commit": "1ff96c1e292b766a93af5c18f28083404407e7a7",
+  "historical_changed_bindings": [
+    "docs/internals/53-strategic-planet-assault.md",
+    "docs/spec/058-strategic-planet-assault.md",
+    "docs/spec/115-strategic-assault-guard.md",
+    "internal/rules/battlefinish.go",
+    "internal/rules/strategicassault.go",
+    "tools/strategic_assault_edge_probe.sh"
+  ],
+  "scope": "明示局面五案正式規則／Game六表清單seed、保存及清單契約；正常占領回歸，不含正常原版整回合或新增GUI對拍",
+  "sources": {
+    "docs/goal/2026-10-05-strategic-guard-lifecycle-round-100.md": {
+      "bytes": 630,
+      "sha256": "8bdd33bb478c13d88851cb1b79c617e6442098809866e866ef87b4b8b089ad3c"
+    },
+    "docs/internals/53-strategic-planet-assault.md": {
+      "bytes": 9260,
+      "sha256": "e819f8406c7e9b9919f52bd23fd9cc2b52fbef7d6fb1b10dde6108be8412d1d3"
+    },
+    "docs/internals/data/battle-formation-slots.json": {
+      "bytes": 2285,
+      "sha256": "dbe90507aaa5a2638666cd41cfeeca9824000b70c88193e695c12f527aa74196"
+    },
+    "docs/internals/data/battle-terrain.json": {
+      "bytes": 9563,
+      "sha256": "ca77ebb8db3db1f50ddeaf3561ce9f61bf19f943f46cb244ab21922a986a5a4b"
+    },
+    "docs/internals/data/ship-kind-table.json": {
+      "bytes": 6309,
+      "sha256": "1d67b16a9617d6a0eb09391e69d8853c7c53f232f26c89bf74fef4fca3d42895"
+    },
+    "docs/internals/data/strategic-assault-edges.json": {
+      "bytes": 28149,
+      "sha256": "07d60572fb700512f99f560366398dfcbdad59daa107f5714d8e92276f1de7d5"
+    },
+    "docs/playtest/088-strategic-guard.md": {
+      "bytes": 2485,
+      "sha256": "096f8716f720a4d38e35b059ccd46505d87088bcb431fc9dc1c0924ba1bc9052"
+    },
+    "docs/re/434-strategic-guard-lifecycle.md": {
+      "bytes": 4472,
+      "sha256": "abef37a9292a6aa69c26450cb6be139aeb3364e88fe241f19027ff1331a184ae"
+    },
+    "docs/spec/058-strategic-planet-assault.md": {
+      "bytes": 4771,
+      "sha256": "e7ae3224811a65add879d7e96e4f1660f8f53669dffe8ffaae64c726e1d2a3cb"
+    },
+    "docs/spec/110-battle-finish.md": {
+      "bytes": 10033,
+      "sha256": "3a31360c1628e08110609e55280a09ad55b37f236e3eacdcf179c328a5d08086"
+    },
+    "docs/spec/115-strategic-assault-guard.md": {
+      "bytes": 4284,
+      "sha256": "0bf7b79166347d3b438d0ae5dc3d67afd15f68949722999f905df65bc990c3cc"
+    },
+    "go.mod": {
+      "bytes": 543,
+      "sha256": "004db62f790d7f65470065deaab9c94668d1c29278d8dce0597ca2c5d1ff7dcd"
+    },
+    "go.sum": {
+      "bytes": 1770,
+      "sha256": "a70d74071b28ff11f401f2813c2d511ead23dd468ad32731c49fe7a63ec7b7ab"
+    },
+    "internal/asset/a98_test.go": {
+      "bytes": 2121,
+      "sha256": "27f4d7dac3b2f77a722cebc4dd5bf7f2dc182e4e05518f1229bde98299e4d624"
+    },
+    "internal/asset/a98more_test.go": {
+      "bytes": 2213,
+      "sha256": "fe12885299ef9762a9e7171b08406a9e0b8a2c3ef2adb08b227f0701ada71cf9"
+    },
+    "internal/asset/amg.go": {
+      "bytes": 4456,
+      "sha256": "e0e316b7f56864a63b417986ecf782512937a0716224d584cdce64ca744f2f5c"
+    },
+    "internal/asset/amg_test.go": {
+      "bytes": 5574,
+      "sha256": "2294cc9c7ceffc8dbccd411a08860322392a9e7d0a24f4caa73cab0ea8f46496"
+    },
+    "internal/asset/bmg.go": {
+      "bytes": 6485,
+      "sha256": "e1b5cb4c5eb310bc2a4200f32a3534f42bc008452ba51e0a85c644ffaa9d9e14"
+    },
+    "internal/asset/bmg_test.go": {
+      "bytes": 3488,
+      "sha256": "b233d5f8d7407afd46ee483b2a31e8316b7bd196442bfaef1a57c2335cf8eec4"
+    },
+    "internal/asset/cmp.go": {
+      "bytes": 1247,
+      "sha256": "e52cdfedfbcdac614e5e59ff7a06f606ad0090d688726769dd4659f81eac3360"
+    },
+    "internal/asset/cmp_test.go": {
+      "bytes": 958,
+      "sha256": "72cf80c3c6969bbce91a94f5e7998319e90a70a3b5349e5af57383a4eeac9acb"
+    },
+    "internal/asset/export_catalog_test.go": {
+      "bytes": 2187,
+      "sha256": "453d9f327f929bd936416b8d4ebdd59642e01bf8c184a4756871e58180564df6"
+    },
+    "internal/asset/fleet_scene.go": {
+      "bytes": 1551,
+      "sha256": "b6b12c7ef6ee2b22e3a0d53c57d37df107dd2dcda43888f5eae09958eb7e692f"
+    },
+    "internal/asset/intro.go": {
+      "bytes": 8901,
+      "sha256": "5a30b2604316105fa808823e462f3eeec609971c3372419f074e534fdbcddf92"
+    },
+    "internal/asset/intro_playback_test.go": {
+      "bytes": 4929,
+      "sha256": "1dba2e8138c63bd4359c027342654c3608414823c02605411e2fb91ac112c400"
+    },
+    "internal/asset/intro_test.go": {
+      "bytes": 3330,
+      "sha256": "750e3703f902b52795c6782f24abb7df4bd4928bf54284e775d243a58bd4d3a7"
+    },
+    "internal/asset/mds.go": {
+      "bytes": 4498,
+      "sha256": "9b366d9c0114dcfaf3f35ce5cfe0a24231646163f4f02a382320ab35cccc525b"
+    },
+    "internal/asset/mds_test.go": {
+      "bytes": 1327,
+      "sha256": "91b445f5a0c32d980c4207ae25651351f434f2257f24e98483ee8243eb91aa2f"
+    },
+    "internal/asset/oggserial.go": {
+      "bytes": 1920,
+      "sha256": "97208fd8a9f47a4be5358bd5115cf3fa073cab00c75c95482748c3c6fa4c5e88"
+    },
+    "internal/asset/oggserial_test.go": {
+      "bytes": 1488,
+      "sha256": "e4e8b21149c4da6e17b320e48848d9073929a23ff499f7232dcd03795ac3e090"
+    },
+    "internal/asset/rgn.go": {
+      "bytes": 3813,
+      "sha256": "90cbd4e2e049d1a1ec0b6b6dc32b1d22d34cf96d750ad8e7cfab87d1be06e3f7"
+    },
+    "internal/asset/rgn_at_test.go": {
+      "bytes": 1206,
+      "sha256": "66564bf27cfe4d7faaf5beaf3fd1029c75622fb5bc448320d429c8a854e08768"
+    },
+    "internal/asset/rgn_test.go": {
+      "bytes": 2350,
+      "sha256": "37f82c97322c1a4d128b51033d89ac23984a2233bd477e2fd8ed5374dab5f499"
+    },
+    "internal/asset/spr.go": {
+      "bytes": 2942,
+      "sha256": "cdbe34e90e915b8db4e7e875ad84b371135d07f38d9d31277d384517fa8dfd7d"
+    },
+    "internal/asset/svf.go": {
+      "bytes": 2693,
+      "sha256": "fd7f04011e16d034b7da1cdd754ad9e2ea2e1c928f890f984ebacec45bdf71dd"
+    },
+    "internal/asset/svf_test.go": {
+      "bytes": 2411,
+      "sha256": "82fab06ec99cd31ff0ee928f781492128184f2aa5503c124508661ebd0a22780"
+    },
+    "internal/asset/title.go": {
+      "bytes": 1828,
+      "sha256": "eb414a77f7b9c16da1f7bb360eeaa567addc94b3d43028f3eeb8bbbd72e58455"
+    },
+    "internal/asset/title_test.go": {
+      "bytes": 1664,
+      "sha256": "c184cc5c56e5e137e47ce1f51b0b9abc77494f3e5f48a68376afa71ee5bfaec3"
+    },
+    "internal/asset/vo5.go": {
+      "bytes": 3017,
+      "sha256": "112e44409c5ca347e1a5d6e35fc913dba82f9b4f441a204fb48f76a5a83e104f"
+    },
+    "internal/asset/vo5_test.go": {
+      "bytes": 2112,
+      "sha256": "305f1bb186e1fd599bb79ecdd7217ad9d8efb8fbbca8ffacc54039d3e51b6ab8"
+    },
+    "internal/game/activeseat.go": {
+      "bytes": 911,
+      "sha256": "15f29f10aad8ab4058ac6ec2380d98fc593977173a7fc7e57729d4fce272d96f"
+    },
+    "internal/game/activeseat_test.go": {
+      "bytes": 4508,
+      "sha256": "409e2f8696d1cc294faf188e1d33ae7fb63044801f9cbc0f39ced86976c67fc8"
+    },
+    "internal/game/admiral_detail_test.go": {
+      "bytes": 2004,
+      "sha256": "17d0fa68caf09ed2bf4d5f7b595dbbcb23618d90f1e3b956b67510959a331f70"
+    },
+    "internal/game/admiralfatereport.go": {
+      "bytes": 2816,
+      "sha256": "f7d32d3ae10343858194501a43805fae999ffe28c6ccc400927f786d333a50be"
+    },
+    "internal/game/admiralfatereport_test.go": {
+      "bytes": 1688,
+      "sha256": "f57845fc003f63ea8b6365c0baa24aff8a056caafb93c049065f1c52c863df0c"
+    },
+    "internal/game/aimode.go": {
+      "bytes": 1944,
+      "sha256": "4110ef4da0b2f9b9a52e20bc41a65072314067e470fa89c8fc8f8cb426f580bc"
+    },
+    "internal/game/aimode_test.go": {
+      "bytes": 4216,
+      "sha256": "1206625a49635fe7c8d65d88a8160743140671e0c1b42bd34a6fffed9ebdf609"
+    },
+    "internal/game/annihilation.go": {
+      "bytes": 3527,
+      "sha256": "936ec77bd73f261bb23823cb69dd19922d2f9e9a67f71f5b21816bd560a220c0"
+    },
+    "internal/game/annihilation_slot_test.go": {
+      "bytes": 3191,
+      "sha256": "8d4e6ade999d4d2476c11ec948266623fe4d6616fe2d7611ec214b9418102f95"
+    },
+    "internal/game/battle.go": {
+      "bytes": 18039,
+      "sha256": "300cbf12721f2c4671bf14fdad13fd719df2c2110ef9838a64b8f74226528bfd"
+    },
+    "internal/game/battle_ai_test.go": {
+      "bytes": 2009,
+      "sha256": "496af116a26011c0d6e33389dfd21f1ba767ff5e8c88d95b8facca4cc1a5b8ed"
+    },
+    "internal/game/battle_input_test.go": {
+      "bytes": 1450,
+      "sha256": "60e32ee8b628672368da43aa8362b5776d7ea050965832ee19fa02bb26318b54"
+    },
+    "internal/game/battle_rally_test.go": {
+      "bytes": 4000,
+      "sha256": "36346c90f1ed5889af184263bdad38354b7ffa3cdd0debefddd486e97cc41702"
+    },
+    "internal/game/battle_test.go": {
+      "bytes": 9034,
+      "sha256": "2a3b00a42f1c57b8393fb6431a5fd86ab7001f63f5b979942a371ff7e6217669"
+    },
+    "internal/game/battle_trigger_test.go": {
+      "bytes": 4199,
+      "sha256": "d906bd063538085b5fb34c1e7f245550f1480b35a3333d2bee8a73ac5c9d8c1d"
+    },
+    "internal/game/battlecleanup.go": {
+      "bytes": 2063,
+      "sha256": "24eeb34fe2fda576c00604db6f93e9d91602b1bcb4d08a2754b90c5e7cfdda36"
+    },
+    "internal/game/battlecleanup_test.go": {
+      "bytes": 9705,
+      "sha256": "a92a1c0e87f803c1c838128b23fedad7bbf8a002a5e713101a6bda33842fe6d5"
+    },
+    "internal/game/battlecmd.go": {
+      "bytes": 14157,
+      "sha256": "dd6e2721a6f5d5cfe5f736cb6e882f60433e79c30781daac9dc768bae88a7e11"
+    },
+    "internal/game/battlecmd_test.go": {
+      "bytes": 10695,
+      "sha256": "9120089fcf8d85a9cd574c68e824bec013faa9671434fae8c50db888b3d54ecd"
+    },
+    "internal/game/battledata.go": {
+      "bytes": 9122,
+      "sha256": "60db439947b5c5d0dad91e227f11469b8782bd34bd00fac0f19a5ba05c5d9402"
+    },
+    "internal/game/battledata_test.go": {
+      "bytes": 8085,
+      "sha256": "81c1c927e037e14f4fdbba3145e134d6fbc1f4bc31e41d896062248dd3263d6b"
+    },
+    "internal/game/battledata_wholeframe_test.go": {
+      "bytes": 4612,
+      "sha256": "d6e1762cdcf4353f173a57ddbc13063597675f55fc3ec7b5766572e106c9a176"
+    },
+    "internal/game/battlefinal.go": {
+      "bytes": 4563,
+      "sha256": "2145fa9eb903ed19c3942466e9a94ad93adba55c47970654de26d922b66da137"
+    },
+    "internal/game/battlefinal_test.go": {
+      "bytes": 2270,
+      "sha256": "6473492e7f8e12bc22a27914d4c071a222393a97d36dbdae55a783ba1bdd7665"
+    },
+    "internal/game/battlefinish.go": {
+      "bytes": 6561,
+      "sha256": "133a08b808292bd9e45eb05c2c9d60a14a36fd421742682a274af9a7ef3b06b3"
+    },
+    "internal/game/battlefinish_test.go": {
+      "bytes": 10347,
+      "sha256": "b759f30360d25f26af94d240fcd11cdbb0b1b8f91563af5e032a6efe2e442fd2"
+    },
+    "internal/game/battlefleetstep_test.go": {
+      "bytes": 3945,
+      "sha256": "15c45b41b97cd7773e1380f13746d683e48517b8a05fc7aa70a4dbd280b5cf72"
+    },
+    "internal/game/battlemarker.go": {
+      "bytes": 2619,
+      "sha256": "3133dd820b464996b5d79aafe104014b7083aaf9e9e39c491ee75c3c0bbc1791"
+    },
+    "internal/game/battlemarker_test.go": {
+      "bytes": 2843,
+      "sha256": "6fd9f51939b07b6e72c1b0bcdbae77f24dbe8e3d7e6fbf06d421b5802eaf1e4f"
+    },
+    "internal/game/battlemovement.go": {
+      "bytes": 2595,
+      "sha256": "dea797ce0af38f183a5d9bf761ffdb70bb3e685200d32a77f2c6675bbfdd3b51"
+    },
+    "internal/game/battlemovement_test.go": {
+      "bytes": 15780,
+      "sha256": "2196d5275eb8aeb077a454e79398d57b9e3a06c4588347d2bc1ded623a330b25"
+    },
+    "internal/game/battleownership.go": {
+      "bytes": 2163,
+      "sha256": "2349dd93aa187392d89d2c240d9e1ef8e0897ba0a093d16f3d43a35a5e9fb73d"
+    },
+    "internal/game/battleownership_test.go": {
+      "bytes": 13068,
+      "sha256": "892f813d24e4c667d94ad4ac3a80ef07071f94016bdc0641a4706e0dbede83fe"
+    },
+    "internal/game/battlephase_test.go": {
+      "bytes": 4230,
+      "sha256": "731c11c0c7ee5368dcbc73f099764a1bc2efd47bdc223bdcac34987394c5a613"
+    },
+    "internal/game/battlepreparation.go": {
+      "bytes": 5292,
+      "sha256": "8110ff19d375b152a32851175807270dfb71671791494f7970c11dce383c7013"
+    },
+    "internal/game/battlepreparation_test.go": {
+      "bytes": 14560,
+      "sha256": "08170cbf5ed4dfdf02bd0f23f332bae061a4c90e89122a397800860298a26e78"
+    },
+    "internal/game/battlesamples_test.go": {
+      "bytes": 5383,
+      "sha256": "1f0cd7b88e2a5d9339757b83783e5b52dca89516a5e0d28a29adba04d1be826d"
+    },
+    "internal/game/battlescroll_test.go": {
+      "bytes": 5601,
+      "sha256": "06037b776082161ba26c66d2a088b981100ed03a390af4a168dccfda4b241d83"
+    },
+    "internal/game/battlesecond_test.go": {
+      "bytes": 7532,
+      "sha256": "99b4b7e6e90bb72ce3a92070a327563b305cdceea1d521ecc4a3fe47ff5fa1c1"
+    },
+    "internal/game/battlespotting.go": {
+      "bytes": 9507,
+      "sha256": "440feecb24eb2a2030a9415719b15b1054942f217d635f8ce6623e1b6e9c2f57"
+    },
+    "internal/game/battlespotting_test.go": {
+      "bytes": 16290,
+      "sha256": "eaa08659665354863478bff525d8a0608e6c9b26f66168f5e28295ca9489350e"
+    },
+    "internal/game/battlework.go": {
+      "bytes": 3019,
+      "sha256": "f91c493fb6f0661e0dc54c5c8ef22d79eabbafc6a370ed273ce558bdac96ef06"
+    },
+    "internal/game/battlework_test.go": {
+      "bytes": 6572,
+      "sha256": "f3f557ed547195349bb11cddb17062674e9893118d125a8779061d2d1243e2af"
+    },
+    "internal/game/builder_test.go": {
+      "bytes": 19322,
+      "sha256": "86839e5cd7fc5e852a5ede87a41bcaedef0f4137957cb47789236ccfa9082599"
+    },
+    "internal/game/buildplan_states_test.go": {
+      "bytes": 2846,
+      "sha256": "be69209f5af3669c3f178dad6cf0e4805ab3afeb3b03e7134ce0db8b571ab505"
+    },
+    "internal/game/commandphase.go": {
+      "bytes": 5917,
+      "sha256": "5438f35156c99ca4b550fb12e1ed573a74c22d3e350127700a418d79628a207a"
+    },
+    "internal/game/composition_test.go": {
+      "bytes": 3501,
+      "sha256": "9ef7f7f89faf391f6a30da7c40cb207b725ad35bcb73abbbd6993e3846f2c71a"
+    },
+    "internal/game/diff_test.go": {
+      "bytes": 3008,
+      "sha256": "b5758777cc5d9fcc09021c63196e55e944c08cd3eb4801015affe7bb415e8a73"
+    },
+    "internal/game/enemytab_test.go": {
+      "bytes": 5732,
+      "sha256": "cf310820168026ab18183303507a063930a826868a9ac1ba7bcc4aa9f174e13c"
+    },
+    "internal/game/engagement.go": {
+      "bytes": 12837,
+      "sha256": "ea1acef99b4659285e4a87efe5cba65ff6f2bfcfecbd5f4d4ace3c1263244811"
+    },
+    "internal/game/engagement_test.go": {
+      "bytes": 11773,
+      "sha256": "9721606ed45040a8007d023b2fd14fbe684bd2c4aaedc275ddcfb064fc002ae5"
+    },
+    "internal/game/engagement_wait_test.go": {
+      "bytes": 2367,
+      "sha256": "09a676b5bce8b1a5ad6df2870bdfc99165fb422dd4b92127df4f994ce29cec60"
+    },
+    "internal/game/faction_test.go": {
+      "bytes": 5467,
+      "sha256": "981a25cf8b95c22505e6f299b89c5cb5cf70205835e86a47574b2c50c5897baa"
+    },
+    "internal/game/fleet_org_test.go": {
+      "bytes": 12309,
+      "sha256": "802cc77b5d98e97c4ece0052e4312d9a13fa37f4c599ad42db5f2953e1117c33"
+    },
+    "internal/game/fleetadj.go": {
+      "bytes": 10530,
+      "sha256": "d385fc50576346d107867cf5ba567a01301dd18c5b4e209ff2c7858b8386eba2"
+    },
+    "internal/game/fleetadj_test.go": {
+      "bytes": 9942,
+      "sha256": "8abccb5f7b959beea104d9e186c667a28c7fcaa46bb467574358a7c634c8304b"
+    },
+    "internal/game/fleetarrival.go": {
+      "bytes": 741,
+      "sha256": "479fc09c5704716adf2b8dada96de93dc93c8cc7230869dab456091177f4c544"
+    },
+    "internal/game/fleetarrival_test.go": {
+      "bytes": 6906,
+      "sha256": "497578eb1af77f2a21edb3f7bf18942f4ef9660925160c2cdb45a79e70698a78"
+    },
+    "internal/game/fleetauto_test.go": {
+      "bytes": 7155,
+      "sha256": "baf85e8707412524fadb8cccd87a7578f5a73c33c95e59db23c58afb0458629a"
+    },
+    "internal/game/fleetchange.go": {
+      "bytes": 8665,
+      "sha256": "e00a75e7ef47f350a4ac626b95e10185ca7e063d73f4c794c75c3a0c78ff1a88"
+    },
+    "internal/game/fleetcmd.go": {
+      "bytes": 26602,
+      "sha256": "2f50c6bb3e17d031b88f0c1f97ab747fef8a3fdf4ab3efab63f46ed781ac38e5"
+    },
+    "internal/game/fleetcmd_test.go": {
+      "bytes": 27842,
+      "sha256": "9ece24ace1ed3569f1133464223ee2fcba4a7eb72d1673e435c4d536bc66e6bd"
+    },
+    "internal/game/fleetcombat.go": {
+      "bytes": 11733,
+      "sha256": "217c6590d76335ba29175713b8f3cf7aff48fa00231184224211e79a88f1a8e0"
+    },
+    "internal/game/fleetcombatcommand.go": {
+      "bytes": 5675,
+      "sha256": "9e908182d2529c6d5eb72aa246a0b95b4d2b2a5e6909ebf34eeb3015d52d3669"
+    },
+    "internal/game/fleetcombatcommand_test.go": {
+      "bytes": 5952,
+      "sha256": "a15bfffc917ffd07f37b889028d21b7ec2c7c229a0f8817490a240f6f48ef0eb"
+    },
+    "internal/game/fleetcombatscene.go": {
+      "bytes": 13722,
+      "sha256": "a5121e138e9acb42bc35f8f05c07c3ce41fc67542c10105468aa87e723d9e143"
+    },
+    "internal/game/fleetcommanddisplay_test.go": {
+      "bytes": 9842,
+      "sha256": "f387cc952821392b97fc8efae31b66254a22e32e711482b287e77b4bc8ab276f"
+    },
+    "internal/game/fleetdetail.go": {
+      "bytes": 6033,
+      "sha256": "5734e89a009afd530236e81214f687dc6251ed67017bf2157e9f496a6c0ed00b"
+    },
+    "internal/game/fleetedit.go": {
+      "bytes": 5794,
+      "sha256": "13e4d48d57d46c978f9ef2f22cf690817270fc8aba0a0a3a5628e1198315a35d"
+    },
+    "internal/game/fleetedit_test.go": {
+      "bytes": 11156,
+      "sha256": "d7ccd3b07f2b5921ced512f5f5c8f316296ceb0bd896858110cc7ff5605b6679"
+    },
+    "internal/game/fleetnumber_test.go": {
+      "bytes": 5582,
+      "sha256": "3786cf88b3f0fc896e2291f042ec4ffafd6198c17f519f42466284faf2bd2862"
+    },
+    "internal/game/fleetnumberlist.go": {
+      "bytes": 4007,
+      "sha256": "9da9055b55ebd5e27ed0df1fcf341903c9a75b6cb2aafcad9fccc262678056ca"
+    },
+    "internal/game/fleetnumberlist_test.go": {
+      "bytes": 5065,
+      "sha256": "5438b3941e721ea0da30d2f2094c1d192973d0bee6b0b373597c4eb64ddbed4d"
+    },
+    "internal/game/fleetorder.go": {
+      "bytes": 6338,
+      "sha256": "f5e113e64e6952267f8d0abd9d2e0150bfff74cbe6fee1971b0a265f2f901aac"
+    },
+    "internal/game/fleetorder_test.go": {
+      "bytes": 8497,
+      "sha256": "9732beedd526730b4d4f57c30c40fe4adcf35c61e585d03d7ebc4cdb8eec7300"
+    },
+    "internal/game/fleetplayerchain_test.go": {
+      "bytes": 30085,
+      "sha256": "20b286d7c9889b495bfd8146bcc82804f95bcdf345736f64d128f2a64eae42b6"
+    },
+    "internal/game/fleetsave.go": {
+      "bytes": 523,
+      "sha256": "52496404ebca96386a380cd4901d218e7751a5c965ab9b71697733d71a92a1b2"
+    },
+    "internal/game/fleetsave_test.go": {
+      "bytes": 3911,
+      "sha256": "842c9571410434a78be7beb45d23cfbf9e285ae2618d0294fd0817e381011c8e"
+    },
+    "internal/game/fleetstandby.go": {
+      "bytes": 5056,
+      "sha256": "7c1417774fe5211af35d1c07dccb7bf2b0127a0b45e9d5debfac8ab2667979f7"
+    },
+    "internal/game/formationpick.go": {
+      "bytes": 4736,
+      "sha256": "93f0754c29adc904baeae5fba61db1baa57b5617770ca649cded4fa0b13b4927"
+    },
+    "internal/game/game.go": {
+      "bytes": 203923,
+      "sha256": "56b2b5a65dfd81975f4ff12efd49345a835415fb6cf56379529339eb95aa82b1"
+    },
+    "internal/game/game_test.go": {
+      "bytes": 50177,
+      "sha256": "3d1bc3e9019fd44060b3093ee1202de43b42be40e4cc7227fb24562e8454211e"
+    },
+    "internal/game/garrison_test.go": {
+      "bytes": 3873,
+      "sha256": "6f94f661837582baa76edb96356becce2ef1ae8f1afbbdab387ee02094604ddb"
+    },
+    "internal/game/infoscreen.go": {
+      "bytes": 7909,
+      "sha256": "9337fb41bd119cecf52047e80fdfa084398f534ac7dbc16713f86375c6fd6cba"
+    },
+    "internal/game/infoscreen_test.go": {
+      "bytes": 2713,
+      "sha256": "542f843f7bc6e6b8b91e4f72bc9c8a29f230ea23034f067860cb3ec6092cf3e3"
+    },
+    "internal/game/intro.go": {
+      "bytes": 4715,
+      "sha256": "dc5e6164d9ae19b64589779b3b809c5e2827514645f421f8a7948c90299245f5"
+    },
+    "internal/game/intro_test.go": {
+      "bytes": 3967,
+      "sha256": "0218750c3e0f7299c00d667c29d5d4efe16089c3906ed6715fcbb29d94b69e61"
+    },
+    "internal/game/lefthold.go": {
+      "bytes": 4886,
+      "sha256": "bbd68b23aa850013e398c264cc829702f2dcc016fcfb8f97340592a7c952a1ba"
+    },
+    "internal/game/lefthold_normal_test.go": {
+      "bytes": 3865,
+      "sha256": "4d902be670a04b7f89ca4dcc2cabbd663125700e8267c9a525bca7c6bae77351"
+    },
+    "internal/game/lefthold_oracle_test.go": {
+      "bytes": 2408,
+      "sha256": "e5fac1e7c3da1da6986ea7f13e03b23d4fbc6b0cc30e9cad8f905ae264d5c99a"
+    },
+    "internal/game/lefthold_test.go": {
+      "bytes": 7399,
+      "sha256": "55db2cb5d6511791e46114f47054bbbc695ac43a6f0cf63073c8033972ccb125"
+    },
+    "internal/game/listscreen.go": {
+      "bytes": 20892,
+      "sha256": "8360a89b07a262498d2c650f75626100a9441ece4683983db1953b6f8bc355af"
+    },
+    "internal/game/listscreen_test.go": {
+      "bytes": 9575,
+      "sha256": "d7f3652972655843cb1e2c8b55ffc5617789a4dcef212baa058fab67a5473d0c"
+    },
+    "internal/game/listtabedges_test.go": {
+      "bytes": 4924,
+      "sha256": "5d3e7dfeaebddbf490a3c5da3cef0f67d086f56d1d68726fa6ac90e7215fc4fe"
+    },
+    "internal/game/listtabs.go": {
+      "bytes": 17658,
+      "sha256": "ecb5598246ce38bc41f4f9e00e63d4496e49f442616718e9412da58e681f8dd4"
+    },
+    "internal/game/listtabs_test.go": {
+      "bytes": 8717,
+      "sha256": "f0251fc1b1982789372add78edd80b7c252d064d002b39eb262eb369d0d4d443"
+    },
+    "internal/game/loadfaction.go": {
+      "bytes": 2113,
+      "sha256": "9073a15f8aaa6b18311d65210e2b6c3c1e6b5edd14cd2e3e68e0dd35251f2fb6"
+    },
+    "internal/game/loadfaction_test.go": {
+      "bytes": 6318,
+      "sha256": "17d2ac2b97ad171e53c0e4bb4bfeb9c8691a0213ac3624ad4c075860683d6bb5"
+    },
+    "internal/game/loadunrest_test.go": {
+      "bytes": 1756,
+      "sha256": "2a5f6a0bde6620d0022bebcd5cb651c51a933721ea860c729e6ee4f9bdd7cf55"
+    },
+    "internal/game/messagebox.go": {
+      "bytes": 1545,
+      "sha256": "a95b2fd09184a6444cfafa4553bf812a8f8433480f627dcd846ceb60690557b6"
+    },
+    "internal/game/messagebox_test.go": {
+      "bytes": 3404,
+      "sha256": "385f3511ddc80f1fc43f23258ffc220f3430cd8e22b30f1f4fd2f90068ad9178"
+    },
+    "internal/game/monthend2_test.go": {
+      "bytes": 1613,
+      "sha256": "008cc8f346d30838187bef640b198f61646b183eb74d088899542e46ef7761a2"
+    },
+    "internal/game/monthseat.go": {
+      "bytes": 868,
+      "sha256": "6eea8d72fc804c6268d008d61f1b3ce5b30181aef185b7f260b8b5fe32a8c9a0"
+    },
+    "internal/game/monthseat_test.go": {
+      "bytes": 6374,
+      "sha256": "67d9fdf64918d65016351350e713e7da42d8a46a49c8206b4b4b2316a53aac60"
+    },
+    "internal/game/monthwork_oracle_test.go": {
+      "bytes": 15239,
+      "sha256": "d580a111c6a6aaa8d690a7c976a67211c82288f68a6c46ef932af8bd591b959e"
+    },
+    "internal/game/normal_ai_gate_test.go": {
+      "bytes": 2334,
+      "sha256": "6a2132c28dd067d962d679b72b6f40fa99539807f4ebbe11f36d367c6a96fd92"
+    },
+    "internal/game/normalspotting_player_test.go": {
+      "bytes": 615,
+      "sha256": "523f239710d698e501a9ef460482e5e2f9d7b2b6818100016ead57d708d49af7"
+    },
+    "internal/game/normalspotting_test.go": {
+      "bytes": 7122,
+      "sha256": "95c44519c3b94b279e1957cf4a7b9e6906cceca5739e32ad701a12bd83116fe7"
+    },
+    "internal/game/occupation_test.go": {
+      "bytes": 8170,
+      "sha256": "8f075be324ec8c7972e172f9d6a2d6f665b1a8d6c687e5a9512ff5f4aea0e32e"
+    },
+    "internal/game/occupationreport.go": {
+      "bytes": 3623,
+      "sha256": "8f05bf5ae553eca051ae82a314bc7cacd49616067c8a4be899ac1d83d7cff69c"
+    },
+    "internal/game/occupationreport_test.go": {
+      "bytes": 2529,
+      "sha256": "73831e3d981e3d2e749447cc7da518c8550bf9c750450139097efc914d054369"
+    },
+    "internal/game/originalbrain.go": {
+      "bytes": 13115,
+      "sha256": "32b1e8e31c1a7e968d23d06190916fa77af6036b1253233d842fe420c474a305"
+    },
+    "internal/game/passivebattle.go": {
+      "bytes": 3637,
+      "sha256": "baa855bc0d5d4f64cd4ab58912aa6f6bf96c0ada89a831dc710da9e5c5fcfcaf"
+    },
+    "internal/game/passivebattle_test.go": {
+      "bytes": 2131,
+      "sha256": "c820f4a4eabe53ced845bc280058799e25b66b51ba266fb58e5b59b776b025e3"
+    },
+    "internal/game/phezzan.go": {
+      "bytes": 3822,
+      "sha256": "2b6d917370d5b278f8a7972a8684d252f263957cc8ddc74289f732d804f69b7e"
+    },
+    "internal/game/planetcmd.go": {
+      "bytes": 9318,
+      "sha256": "3c8dce3d04dda61e18586a5da7f803760c9544088fc046b94eafbd07695bb99a"
+    },
+    "internal/game/planetcmd_test.go": {
+      "bytes": 15388,
+      "sha256": "d09dae91bd18bc97c0181ef34082782a42036d0080efdd6b88259e9dfd80670e"
+    },
+    "internal/game/planscreens.go": {
+      "bytes": 7038,
+      "sha256": "286ad7e7e2829fb875e3e6b60a3badf187a1a9cf084faf81a4eae8b62c722e05"
+    },
+    "internal/game/planscreens_test.go": {
+      "bytes": 9809,
+      "sha256": "8d4137c992fab0abca2eb0c113ff9404fb2c6153888d2a701858ed83ed4ef4ed"
+    },
+    "internal/game/promotion.go": {
+      "bytes": 5090,
+      "sha256": "4f33b2322c4fee706678774fccd87f131ea3723360515f7857109108e49485be"
+    },
+    "internal/game/promotion_test.go": {
+      "bytes": 12965,
+      "sha256": "5a1811fde878e2342f634668905cb647e27bc4b2d346b9fc68432cf072114dbb"
+    },
+    "internal/game/rebellion.go": {
+      "bytes": 13696,
+      "sha256": "b6820e505e68cfc0689a65e7ef48eea898ac6dfc10233be1c377efdea5352999"
+    },
+    "internal/game/rebellion_test.go": {
+      "bytes": 14226,
+      "sha256": "5e5a2222ef764733b06d6cea849de5826b83c7706ab9948ed253e0980cc7e6cc"
+    },
+    "internal/game/region_supply_timing_test.go": {
+      "bytes": 8130,
+      "sha256": "2d87973c3ed92f2e18dc4644b1b38269b75ec5c0aa5f358f94735924fb7d210b"
+    },
+    "internal/game/regioninfo.go": {
+      "bytes": 5497,
+      "sha256": "8071e85f30d2f4e24513c98208afc8f0acb502bcea87f600431f56e4570ce328"
+    },
+    "internal/game/regioninfo_test.go": {
+      "bytes": 4368,
+      "sha256": "4d09fe2149ad764a2ecf0989133452bbd9c6d3d3ac3e024627addb7edc10f9a6"
+    },
+    "internal/game/regionreport.go": {
+      "bytes": 5055,
+      "sha256": "4e590b5e79c96813f7f831bec38b8b31e11f2447fec7658dc59b752301025582"
+    },
+    "internal/game/regionresupply.go": {
+      "bytes": 1676,
+      "sha256": "18bb7ec0fe4585e85fd9296d694dd7926bc3d5b0d8ad7135293c513f292536e9"
+    },
+    "internal/game/regionresupply_test.go": {
+      "bytes": 1141,
+      "sha256": "eada70bbb222ce1c5da2b439554838edb991a5ce964ba87f561766ebec6f14df"
+    },
+    "internal/game/regionturn.go": {
+      "bytes": 6985,
+      "sha256": "4282a343474ca261621df569ed0491b54177aaaff0547d0886e5d83e0b11b962"
+    },
+    "internal/game/regionturn_test.go": {
+      "bytes": 22712,
+      "sha256": "e64131dbef0854dd5a68edee10bce15688545b90d34e3870130d77177bd224ef"
+    },
+    "internal/game/regionvisible.go": {
+      "bytes": 1246,
+      "sha256": "050e5d320220295d581d19dcd42dca30cc9c76fb1d711d4157d3aa958918d338"
+    },
+    "internal/game/regionvisible_test.go": {
+      "bytes": 5259,
+      "sha256": "dd7ffff10c07699ca3dbca84f9b75e0f23d1370562ebb5e526fd1891532842c3"
+    },
+    "internal/game/runtime_fields_test.go": {
+      "bytes": 4234,
+      "sha256": "d2f0c5dd76cdc2d3d15b688fd62355b4fca3e8f5cc56bcdad38016627de4a287"
+    },
+    "internal/game/scoutcmd.go": {
+      "bytes": 2001,
+      "sha256": "0b940be3b9c7e832a741fe22461f7597a2fffe1fc1d426058ccff91bc6ea5680"
+    },
+    "internal/game/scoutcmd_test.go": {
+      "bytes": 5015,
+      "sha256": "48444bb451f82c4ad2d4a1166cd967be469806f653122e777d1401a500e68863"
+    },
+    "internal/game/scoutfuel.go": {
+      "bytes": 2885,
+      "sha256": "3f0a6a0d6a4bb41fe421cccf7eac937bb195b073f461709970680167a2a7f424"
+    },
+    "internal/game/scoutfuel_test.go": {
+      "bytes": 15841,
+      "sha256": "42bae5a6ebbb5bfd53bbf9a16c42603aa7b3304d6fbf18b5402d827f3e5da125"
+    },
+    "internal/game/settingsscreen.go": {
+      "bytes": 7946,
+      "sha256": "e4f5aa61f24c4a677f4794a711804874d4d3ffe2b1610e714569cbabf4c16f2a"
+    },
+    "internal/game/settingsscreen_test.go": {
+      "bytes": 7741,
+      "sha256": "d8055207bd979abd70d3d1f723b32d2b23521108b52ff472809ff9857f88856a"
+    },
+    "internal/game/shipdelivery_test.go": {
+      "bytes": 5153,
+      "sha256": "3dab4fe5239c1a33b9907adac368afbef2ff6a9043c968ca0d7b233d27630915"
+    },
+    "internal/game/soundeffects.go": {
+      "bytes": 2491,
+      "sha256": "277ad627636dff777649b4706c61528a964dcdac3727f412bdae36d902f56758"
+    },
+    "internal/game/soundeffects_test.go": {
+      "bytes": 7335,
+      "sha256": "087f058737f97d1b71b85b94824ffd3b31ea732052b4674979dbb0a5daa78dae"
+    },
+    "internal/game/staffpick.go": {
+      "bytes": 7433,
+      "sha256": "9694ef2700659d75aacf2d23f59aea49a76a75beda06da96feb3e5936c373995"
+    },
+    "internal/game/staffpick_test.go": {
+      "bytes": 3213,
+      "sha256": "b50faac77968bd5d2cffa5242c1b87abcb27e9988a08c911cd07f764d712da67"
+    },
+    "internal/game/state_test.go": {
+      "bytes": 292,
+      "sha256": "6ce51c8af4155031f0fdd5f80dcc0d3684ac3f7792be72311efa386bccfb5451"
+    },
+    "internal/game/strategicguard_test.go": {
+      "bytes": 7582,
+      "sha256": "7704d32ef3dd393eeac815c749068eecf4cf388dd7292a49b8309e2db4a03358"
+    },
+    "internal/game/strategy_reports_test.go": {
+      "bytes": 1039,
+      "sha256": "37645c6a03c624e47eec394f35bf66d0e96cee379164f100932eba0e98a5a6a1"
+    },
+    "internal/game/supplypick.go": {
+      "bytes": 10582,
+      "sha256": "1c9773d28d1c2208bc4c50fd364a99ede980ee064584c86d2c23c1fe80e80049"
+    },
+    "internal/game/supplypick_test.go": {
+      "bytes": 4790,
+      "sha256": "e277255d4a3ce231172b32b44fe7b237f205a327c137d57b69761fe756702d27"
+    },
+    "internal/game/title.go": {
+      "bytes": 928,
+      "sha256": "84afe3d00d5d9dc756c86383a2de2662409387b3d890d81fc165d776a5b3ca78"
+    },
+    "internal/game/turncounter_test.go": {
+      "bytes": 2854,
+      "sha256": "02a55876c28ddd779c6f442c418b60f60cc745769386c77a83096d5e44782a56"
+    },
+    "internal/game/turnreport.go": {
+      "bytes": 7846,
+      "sha256": "6dc033a90192a10cfe1a786f70fbd47cd8de4302ffcd9bdd4cb0fbc9c80a8732"
+    },
+    "internal/game/turnreport_test.go": {
+      "bytes": 12196,
+      "sha256": "757194c82b36420db9adf117df462723ca06514bf0091dffa4565c24cfccc4ae"
+    },
+    "internal/game/turnthink.go": {
+      "bytes": 1964,
+      "sha256": "0ba0711da7a059de213d308934374a98f826784d0b6cdd5e283a597af1b37f02"
+    },
+    "internal/game/turnwindow.go": {
+      "bytes": 6952,
+      "sha256": "cc572baaf4c7e8d460f44da5477cf875927e9485e2da5153467e7c1ac9ad6fa0"
+    },
+    "internal/game/turnwindow_test.go": {
+      "bytes": 8629,
+      "sha256": "d21093fc598a921999be759dc42ab73cf591765c99f7716241cae3b1f70b4a74"
+    },
+    "internal/game/unrest_recompute_test.go": {
+      "bytes": 6551,
+      "sha256": "e1c0e4974cc0eacf7ab00bcf0d4b3620a2fcb4a91bb6915ab5053e7bf1410328"
+    },
+    "internal/game/victoryreport.go": {
+      "bytes": 1881,
+      "sha256": "c353e259f115af10d8b382164883578acd6bbd28a757a6cdb8306aff7998b8cf"
+    },
+    "internal/game/victoryreport_test.go": {
+      "bytes": 1833,
+      "sha256": "13463f7d21d850cd8d5a6e9d5d168260768fbed360e9931dce46205bf3da855a"
+    },
+    "internal/gfx/framebuffer.go": {
+      "bytes": 2342,
+      "sha256": "c67c364b7cffe72704629c27f85a1c6798072378676e40842edd247f40ad32c0"
+    },
+    "internal/gfx/png.go": {
+      "bytes": 1129,
+      "sha256": "c85d575cc0fe0da383b7734db46f8a92a5f0c819ad4ea722e2e4f527030df1e5"
+    },
+    "internal/rules/ability.go": {
+      "bytes": 1541,
+      "sha256": "7845a74a05301cc9309e776e73d50bc230d0c676c8399fb1e2e7b749cc56cb1e"
+    },
+    "internal/rules/ability_test.go": {
+      "bytes": 1618,
+      "sha256": "b722eea1a682564e2d0b415ba86ede122fd178a29d8d17c21bc5d32ba78c041b"
+    },
+    "internal/rules/admiral.go": {
+      "bytes": 12290,
+      "sha256": "fb208164bb00aea3c0c2ad8b4a1ed6231272657a9ad9acb875995385a3681d1d"
+    },
+    "internal/rules/admiral_fate.go": {
+      "bytes": 1710,
+      "sha256": "e9332f830ca68761ca355f58fb73e4f32d75acbd86815d4460d010c7c3ee0e9c"
+    },
+    "internal/rules/admiral_fate_test.go": {
+      "bytes": 1773,
+      "sha256": "681c1187c62c9dcb48218d263fdcb8e5704808c9a8d698922660d4d8ae65b37c"
+    },
+    "internal/rules/admiral_test.go": {
+      "bytes": 6586,
+      "sha256": "72ddb10c9b7d423dd40edd7f99fbc489a2c02ba007d5b719fe25d0658d2e8f41"
+    },
+    "internal/rules/admiralsort.go": {
+      "bytes": 2680,
+      "sha256": "c55ee72ee43889dda53926c7098eb488e75c4cb11b285ab54b0065d62ef8b409"
+    },
+    "internal/rules/admiralsort_test.go": {
+      "bytes": 2247,
+      "sha256": "75cb80173bcc97e228bc52f21bb6462f9cd7d07c0df46e497229dab0f9c2257d"
+    },
+    "internal/rules/annihilation.go": {
+      "bytes": 3470,
+      "sha256": "b7ed6cc4b4931518c9d849152e2d60a7faa2023d1cfe1048ca8c97a995e8a0cf"
+    },
+    "internal/rules/attackcoef.go": {
+      "bytes": 2060,
+      "sha256": "9d8717b7d1fa6bef5bb14019ff3769f435a0ca3fe867baceb9c83e36c0e36d33"
+    },
+    "internal/rules/attackcoef_test.go": {
+      "bytes": 2978,
+      "sha256": "c6e3db880217e5e773a27c192c511ab5e07d7c8fa26409c03476650fe7b994c1"
+    },
+    "internal/rules/battle.go": {
+      "bytes": 18891,
+      "sha256": "eacde8475683afb84626a1e024c4b61af8a9b64939379c2eeb939a83d3844d41"
+    },
+    "internal/rules/battle_deploy_oracle_test.go": {
+      "bytes": 2247,
+      "sha256": "99b3cefb0cd966612282eaccf34513288e367067dd0249b8726bd3ef4a612e0f"
+    },
+    "internal/rules/battle_fleet_step_test.go": {
+      "bytes": 6434,
+      "sha256": "6781ec352c6a88490f2609a9862a439ad2d71425d16fdf6bf9d56866a79257a0"
+    },
+    "internal/rules/battle_formation_test.go": {
+      "bytes": 1054,
+      "sha256": "30cba0746b1027f586542f2bdd94d793923d19207504f068c2431b0a85bb83b0"
+    },
+    "internal/rules/battle_move_test.go": {
+      "bytes": 2039,
+      "sha256": "2df5df8f887fa638ac50e826c083c358a2771852ed14445a5fda905769f6734a"
+    },
+    "internal/rules/battle_movement_test.go": {
+      "bytes": 6995,
+      "sha256": "9c036107ca0277c54f12701a6092b4c23997b6d1efc1acb666c1d9f09a2464a7"
+    },
+    "internal/rules/battle_preparation_oracle_test.go": {
+      "bytes": 3257,
+      "sha256": "89c7476812bff8ca68e27cc5f8546ec47ee78a7e92bdabd6115087017409e54e"
+    },
+    "internal/rules/battle_range_test.go": {
+      "bytes": 1457,
+      "sha256": "70efb64a7f505a11e0db0afc482a4eaca287711d043659e5d8bb7e9bbfa438b0"
+    },
+    "internal/rules/battle_rules_oracle_test.go": {
+      "bytes": 4823,
+      "sha256": "e703d6ad5038bcf92cdcee78468190e316a81dedeb162b6a8764c3aa92ff9460"
+    },
+    "internal/rules/battle_sprite_test.go": {
+      "bytes": 2682,
+      "sha256": "0ae42139f808b41fca055f9bcf2bfdba472f6a4cf3f0f61ff97ba0431f6580f9"
+    },
+    "internal/rules/battlecleanup.go": {
+      "bytes": 1663,
+      "sha256": "1f9bddd9ff0bfee0b73ec94cac39d25026573d1f3944c9a6db26435bf6e9dc91"
+    },
+    "internal/rules/battlecleanup_test.go": {
+      "bytes": 2249,
+      "sha256": "6f755a6bbc634d3376c01d2171447494d4d6cdf34b79b03014821ebf3d4cf2f4"
+    },
+    "internal/rules/battlefinish.go": {
+      "bytes": 14716,
+      "sha256": "9ea900a5d055c010b3694e3b4a4c2d8118d6ca801faa70e7c960734ce87d9e8a"
+    },
+    "internal/rules/battlefinish_test.go": {
+      "bytes": 7518,
+      "sha256": "55dab3c9b551cf5591cd04b3af96f1427633db629b591ed5d91571311c8d115f"
+    },
+    "internal/rules/battlemarker.go": {
+      "bytes": 983,
+      "sha256": "f0f0607f3fa372467efc64ab1782f91d7122fcdf0f473efac5b7b1b4b2cad9e7"
+    },
+    "internal/rules/battlemarker_test.go": {
+      "bytes": 1639,
+      "sha256": "e6ac7910abb29861dd700dceab6ef9c9ea00cb005808b6cbfb505f0a5bd9d906"
+    },
+    "internal/rules/battlemovement.go": {
+      "bytes": 6475,
+      "sha256": "cdc39c24442d6ecc691de86d7656acd6ae02241422168b740eb2319d5e34895e"
+    },
+    "internal/rules/battleplanet.go": {
+      "bytes": 5176,
+      "sha256": "486c61d3c39283c9b822dc0c864c11a84fceb0e9bc627d7faf14d41fe661dcc8"
+    },
+    "internal/rules/battleplanetwrite_test.go": {
+      "bytes": 2600,
+      "sha256": "aa2220e2d2d7074b89a185efeef605d483ea81f32fbc6feeaa006eb6d83aa46a"
+    },
+    "internal/rules/battlepreparation.go": {
+      "bytes": 5696,
+      "sha256": "8c09be1cea2de9e9ff5fca632946695d3b9b4f5380f4c0596b40d12c824fdc70"
+    },
+    "internal/rules/battlepreparation_test.go": {
+      "bytes": 4237,
+      "sha256": "5953657f98777ced901066628e462fdcf3d212deb1db64c141c653366eae9d42"
+    },
+    "internal/rules/battleview.go": {
+      "bytes": 1991,
+      "sha256": "c640659d7b916a499a7520c39238f6a3cb492ad4301d16a6b62ef3b1801132f1"
+    },
+    "internal/rules/battleview_test.go": {
+      "bytes": 1204,
+      "sha256": "113940bebd94be37417df4fdb80c4b7ffe6868fac793a178a3425145973a4be7"
+    },
+    "internal/rules/budget.go": {
+      "bytes": 2712,
+      "sha256": "b1873794131f80d5e8a103fb50bb44620f252d17ab6ab341fb1942d7baa3706d"
+    },
+    "internal/rules/budget_test.go": {
+      "bytes": 4565,
+      "sha256": "5ba9809768c1b4eb71f3c529f33f0d78246fba952d7922e400e60845b592930d"
+    },
+    "internal/rules/buildplan.go": {
+      "bytes": 8162,
+      "sha256": "d7978118efa86e7410f3d07aaf63d20caed8f8ea558f21d8c5819a2913324017"
+    },
+    "internal/rules/buildplan_test.go": {
+      "bytes": 6763,
+      "sha256": "b03f124846d87f57578ed85e59cc7f703f6a4eb59a9010cba45f6fb615ddd720"
+    },
+    "internal/rules/calendar.go": {
+      "bytes": 946,
+      "sha256": "c038a8de6b677b1784e02bce04ccfacc451fe6d173c79e802df512d5ff3c0ce1"
+    },
+    "internal/rules/calendar_test.go": {
+      "bytes": 1032,
+      "sha256": "8679c03acea4704e0c59c415bc669738d0328d5a7101772880f76b643f8347b7"
+    },
+    "internal/rules/entry.go": {
+      "bytes": 1679,
+      "sha256": "c0ec31b4c41f0f85a9bc3176dd4b1aee73e352a5278ffa1dd7e5a45c9d931f8d"
+    },
+    "internal/rules/entry_test.go": {
+      "bytes": 2260,
+      "sha256": "2a74caa79f1d05e70b6a969cebfb61ca85fa3ecf396ff546b7415f4dec91f101"
+    },
+    "internal/rules/facing_test.go": {
+      "bytes": 1950,
+      "sha256": "88c5e94cfa78b83626b976fb3246a6bb2158af1c3b167d0bdfe1555b8b5c9104"
+    },
+    "internal/rules/fixed.go": {
+      "bytes": 2271,
+      "sha256": "e3540ee14e9c350b37df14b094ef7b178e4b457c70a0eb944c1d4bd890161df8"
+    },
+    "internal/rules/fleet.go": {
+      "bytes": 8797,
+      "sha256": "3dafbcb06dc6da7a54ec8e34cbaa78fd437338ec28c5cae9662011abe3ea7af3"
+    },
+    "internal/rules/fleet_test.go": {
+      "bytes": 3548,
+      "sha256": "409cd3af9525a806b487e599b59e38eebeea1d2c3611bf471ad3213a6c891726"
+    },
+    "internal/rules/fleetarrival.go": {
+      "bytes": 2013,
+      "sha256": "6d9c42038847bd0cbbd34f77026ce5804802ddf912f80b256ea295503eb9eab4"
+    },
+    "internal/rules/fleetauto.go": {
+      "bytes": 6246,
+      "sha256": "7672e7e8ceaffca0f33ead80e1676946db2b9bf4f01f182d65fd58ed21e787b1"
+    },
+    "internal/rules/fleetauto_test.go": {
+      "bytes": 5907,
+      "sha256": "1fcc8324fee92af84181b120a20c6de9697ac30cbbecb4b6f001318189bf24d5"
+    },
+    "internal/rules/fleetbuild.go": {
+      "bytes": 13909,
+      "sha256": "dc060d48d097e8a59d0487915b2892150a71b6e349c3799df8db388b36eb43b6"
+    },
+    "internal/rules/fleetbuild_test.go": {
+      "bytes": 5612,
+      "sha256": "ef48cfe1703baee8e455d0cfb96a6b70c70c5b30d734e3a899c5d70e85ac99a9"
+    },
+    "internal/rules/fleetcandidates.go": {
+      "bytes": 4577,
+      "sha256": "eaefa607e37297e0340fc735a1d422467953547e6e1ab8b2c639a226929dfff3"
+    },
+    "internal/rules/fleetcandidates_test.go": {
+      "bytes": 6299,
+      "sha256": "312389fd316c684d33fbfa6bf5a608e51aa3089940a72fe357affa387e37875f"
+    },
+    "internal/rules/fleetcombat.go": {
+      "bytes": 8847,
+      "sha256": "6b7208a70fd896dda31852ec45d7061b8f5623b6f40c89142ee27ed93fb284cd"
+    },
+    "internal/rules/fleetcombat_test.go": {
+      "bytes": 19349,
+      "sha256": "ffaa2619a620b7da803fb0c02a562698fdcbf3748edab487d2d8a6cbd438e782"
+    },
+    "internal/rules/fleetcommandrange.go": {
+      "bytes": 748,
+      "sha256": "8d93c882929383dd3022682325f12b6d8979756e048cd01a8d870b962ef7477f"
+    },
+    "internal/rules/fleetedit.go": {
+      "bytes": 10458,
+      "sha256": "3f70f628904c7a36b26513b40e37279d8c2833f76ad13949fa05bb4e0d5ec9f5"
+    },
+    "internal/rules/fleetedit_test.go": {
+      "bytes": 7343,
+      "sha256": "4c293c409f3a6b77772b5b8171a0ef2df6fae05b2a66192be97a6dc650021fa1"
+    },
+    "internal/rules/fleetmove.go": {
+      "bytes": 10896,
+      "sha256": "ca4bcc2e22bc2f7b7672481dca4b0462f507f08997f5badfcdbd301d132b71a6"
+    },
+    "internal/rules/fleetmove_test.go": {
+      "bytes": 8140,
+      "sha256": "1fff2a38c26b65e2146d77d32a358aa63ef304a8ec912808402c8a3f8c70f796"
+    },
+    "internal/rules/fleetprojection.go": {
+      "bytes": 3046,
+      "sha256": "e03e8b3a9d38350233bb8c957471cbf7767a6bd5b1cae5b0cb3c8de0b711f71a"
+    },
+    "internal/rules/fleetprojection_test.go": {
+      "bytes": 3732,
+      "sha256": "9ef12fb1ce0e04764e1ea5dfd34d51d42c3572ce5ea3d3b20bedbdfc2162fe09"
+    },
+    "internal/rules/fleetrefit.go": {
+      "bytes": 4604,
+      "sha256": "54f7ed72570291f58ff0f117e83abebdfd700680d6ad7fb63bc0f962333e1a93"
+    },
+    "internal/rules/fleetrefit_test.go": {
+      "bytes": 9156,
+      "sha256": "b4f0d3bee7400a355e3804413ecc3fb3263a760a328c43eb35039a6a5282ef6a"
+    },
+    "internal/rules/fleetsave.go": {
+      "bytes": 8052,
+      "sha256": "386d240b3d3cd3cebd1ffeae0795be3c54f7ac35a26520d94fd44b54812ac40e"
+    },
+    "internal/rules/fleetsave_test.go": {
+      "bytes": 6152,
+      "sha256": "ef576470031313b0f82cbd2afd22b46bed1b53b0fa2bade5105b238aaf4f39f4"
+    },
+    "internal/rules/fleetslots.go": {
+      "bytes": 1088,
+      "sha256": "a42429a1138bfd4985e869238671bfddb57726120ec33c928962fa2b4c67a0a4"
+    },
+    "internal/rules/fleetslots_test.go": {
+      "bytes": 1156,
+      "sha256": "3fb1a2cace57983fccd9f809f60620d352433c8c8baae56a7fb6fd22ee465ca5"
+    },
+    "internal/rules/fleetstep.go": {
+      "bytes": 6908,
+      "sha256": "e2b3a25906d851992e49b35fa1be8684a210612331fad7592f37324f6d0b9aa3"
+    },
+    "internal/rules/formation.go": {
+      "bytes": 2153,
+      "sha256": "bdee271f5c79cfefceaa8d1658fd675cc8f87c03a028705d20f329b2da4f744f"
+    },
+    "internal/rules/formation_test.go": {
+      "bytes": 2004,
+      "sha256": "1b78c749a83086bdc912221dbef88fadcf5510706c8a7383e8a0a2256e82dda3"
+    },
+    "internal/rules/formationtable_test.go": {
+      "bytes": 2003,
+      "sha256": "29228eb7a25534c81648371eea8e508c756bb1b213b961c8a23144b90bd61605"
+    },
+    "internal/rules/fortressgun.go": {
+      "bytes": 8858,
+      "sha256": "40660ecca5ca33b623524ca2047eb09e61ddd134816f5bbeb8bb281f7675c6f4"
+    },
+    "internal/rules/fortressgun_oracle_test.go": {
+      "bytes": 10914,
+      "sha256": "e28cb03beca4f7fc9bb7b4428afd30c85ed74b235f8c72def655298a0f7d60dc"
+    },
+    "internal/rules/growth.go": {
+      "bytes": 10459,
+      "sha256": "a60c5bc522d534f5c3d5da500b73b810111ca38de2709962127a456f2745dd25"
+    },
+    "internal/rules/growth_check_test.go": {
+      "bytes": 2193,
+      "sha256": "7deffba0a233b7d183a33147db22fd2494b08e24222bc05e8bf64eb16da8b7e8"
+    },
+    "internal/rules/growth_test.go": {
+      "bytes": 4114,
+      "sha256": "21fdb7740784b494fd8cf855b480ee087abc45daa17d4f448b7c98f10569ff8f"
+    },
+    "internal/rules/losses.go": {
+      "bytes": 7442,
+      "sha256": "4f8af6588107e7da8b4e8b325dc1c32f79e3fce8064b6673fd528dc9ebb222d8"
+    },
+    "internal/rules/losses_test.go": {
+      "bytes": 7400,
+      "sha256": "efae11d736296929c78050d388b935c995f2bc5ddf84ba61d4eeae9660d38364"
+    },
+    "internal/rules/manoeuvre_test.go": {
+      "bytes": 2522,
+      "sha256": "e02ba5d8aa168ba1129209fd358a9a7ee5fcdd0f415765719e47847d419a399c"
+    },
+    "internal/rules/monthwork_oracle_test.go": {
+      "bytes": 5426,
+      "sha256": "ef7a941228b887d7141167f7fa31e8f769075ba15f5db603d3ac499dff718cec"
+    },
+    "internal/rules/morale.go": {
+      "bytes": 1874,
+      "sha256": "aaa645907902d2017b93dd958f6999f2acd4ba92ed7a3e3a87a6eb359234011b"
+    },
+    "internal/rules/morale_test.go": {
+      "bytes": 2923,
+      "sha256": "8ddac438c58e12c0d6b774ebbde7e38696e1a30401bcb2e4fdafcfe466957576"
+    },
+    "internal/rules/newgame.go": {
+      "bytes": 3313,
+      "sha256": "b712ed988aab93dfa8b38d12dd3397e6a38feeda85d897d306587f4bde1df21b"
+    },
+    "internal/rules/newgame_test.go": {
+      "bytes": 2509,
+      "sha256": "4ab972f237b8423720c7465800540201c9f773c7de43a4beebab35ed32cd45b0"
+    },
+    "internal/rules/phezzan.go": {
+      "bytes": 3590,
+      "sha256": "04823f2b3f5bb4fe3d0e780646dea3e03b631d77861e9648c3cba433a3d255ec"
+    },
+    "internal/rules/phezzan_oracle_test.go": {
+      "bytes": 2023,
+      "sha256": "63e04d3aff6af368f6ca80df1210f2605db2f63125177aa5ed31d02a2be77702"
+    },
+    "internal/rules/phezzan_test.go": {
+      "bytes": 3279,
+      "sha256": "1cb8eab6fde47b85c2ba339056434a308c34254c98ad144b50579f44c35b34a1"
+    },
+    "internal/rules/planetassault.go": {
+      "bytes": 12016,
+      "sha256": "ff8e6f75eb164937dfe86b7f7f1bcccac2ebdbf4401927b06f7db330c45d31fd"
+    },
+    "internal/rules/planetassault_gauges_test.go": {
+      "bytes": 2266,
+      "sha256": "929dd21c6d948c8568be021ba89096f1881ee7c5f2c5f1c9d028ee60e991ff99"
+    },
+    "internal/rules/planetassault_oracle_test.go": {
+      "bytes": 5162,
+      "sha256": "8581f77c6a54c537a229bad9a8191de71e53cfa16a6e63841c9f317f8639c349"
+    },
+    "internal/rules/planetcmd.go": {
+      "bytes": 4997,
+      "sha256": "a3d300491e1bc3a3f5e21df16fdbcce75779b3fb207781b40c34944268404be6"
+    },
+    "internal/rules/planetcmd_test.go": {
+      "bytes": 3463,
+      "sha256": "975b1d858f71400f1cde42cc4912f28d98dbbf6d2e43ac17c95e54de36e596de"
+    },
+    "internal/rules/promotion.go": {
+      "bytes": 11344,
+      "sha256": "2d9aac12b9caa2374033bafee364c2e29500952ec7f4cf59888b94b1aee90536"
+    },
+    "internal/rules/promotion_test.go": {
+      "bytes": 6644,
+      "sha256": "96a1d87aeb42cca632c282c0f84c289fc94d888e99e8b79c99c43c263ff74773"
+    },
+    "internal/rules/rand.go": {
+      "bytes": 1238,
+      "sha256": "0457b7259bd820cc13b2f2f009226283cf501ff561a9feeaf35afb4432468d99"
+    },
+    "internal/rules/rand_test.go": {
+      "bytes": 1437,
+      "sha256": "1d5a647101961c59def3e0f29add312029f8bf11870e15900d0fa0309c671b7f"
+    },
+    "internal/rules/rebellion.go": {
+      "bytes": 9327,
+      "sha256": "c45a44ab90e91e7908cafcfc0b30073e078a16767d59180aa1358f269c696d39"
+    },
+    "internal/rules/rebellion_test.go": {
+      "bytes": 14515,
+      "sha256": "cb80b5db808996d452c018442fddba564ce8c8aab570246c02b558c2f2e5ea1f"
+    },
+    "internal/rules/region.go": {
+      "bytes": 24246,
+      "sha256": "cba006daa23304121e4136523efd41b0f523164e0212abc0ec045456266b82a2"
+    },
+    "internal/rules/region_list_test.go": {
+      "bytes": 783,
+      "sha256": "85bd5d8f33fdb23d97c4bee16b3753e2e52a398a46c2c9a55d03611b0ea43d5e"
+    },
+    "internal/rules/region_supply.go": {
+      "bytes": 4299,
+      "sha256": "693c2245ac2f3fb0a437ad7b517e6b3116b69a0e00684fe8b9f0c797e291d907"
+    },
+    "internal/rules/region_supply_test.go": {
+      "bytes": 2197,
+      "sha256": "6b9d152dcb18bc6bafd8ccfa1af6c3d4d1601e11c4c0467547bc1191541f4ee7"
+    },
+    "internal/rules/region_test.go": {
+      "bytes": 11790,
+      "sha256": "39c684e9fa9426f4dad88e892845706d73b95d61d74b4ea610b09f1caa26984f"
+    },
+    "internal/rules/region_visible_test.go": {
+      "bytes": 3260,
+      "sha256": "70ca5f7eab679ae4ea2e34ed3e95f5eada97f2be41b6e916a561af3f7f24852b"
+    },
+    "internal/rules/regionfleets_test.go": {
+      "bytes": 1820,
+      "sha256": "d8b069cdef3267e7c86feb45e14c1510649140fc69b67b0ddf16340d135778db"
+    },
+    "internal/rules/regionplanets.go": {
+      "bytes": 2373,
+      "sha256": "5732bf0860e2a992f572b95db6e2a357941bf6fb2cb1d2487e4006cf2dec9a63"
+    },
+    "internal/rules/regionposture.go": {
+      "bytes": 5826,
+      "sha256": "fca1c2c21d44e4ae47acce912a041c9ae1554e19b80e279c7a4fae7c86bdbaa0"
+    },
+    "internal/rules/regionposture_test.go": {
+      "bytes": 4864,
+      "sha256": "e8b81075bd6f301ebefa0da0a9689001692205575626fd0eb3efbd2f1dd04bb0"
+    },
+    "internal/rules/regionresupply.go": {
+      "bytes": 8069,
+      "sha256": "ade290a94ae97bcb33d2d5af58e7d50f6b6b55ee1a3b29386f443f4444fc90d1"
+    },
+    "internal/rules/regionresupply_oracle_test.go": {
+      "bytes": 5760,
+      "sha256": "2ebf0bc3f4a419d3031dc9c880d3d0953a06303dba1d1be90fb62c8dfb887dba"
+    },
+    "internal/rules/regionsummary.go": {
+      "bytes": 4537,
+      "sha256": "937c0c4baf53069a5451c36c7f36cd220088f29d205bb3ec20011fe1d40e8039"
+    },
+    "internal/rules/regionupkeep.go": {
+      "bytes": 2369,
+      "sha256": "5aeff0940817da9ef5c1896dc0795fc5f6a8c972a337b1c9a834392bc02c343a"
+    },
+    "internal/rules/regionupkeep_test.go": {
+      "bytes": 5393,
+      "sha256": "bb9e1f1d780d566a61b6145a5987db302c1fbfce38f1827d4eefe212265afcc3"
+    },
+    "internal/rules/resolve.go": {
+      "bytes": 13167,
+      "sha256": "9e85cca4d4749cff9e5ed99c193f51aa316a23915b03d3e00de7c3bfcd329589"
+    },
+    "internal/rules/resolve_test.go": {
+      "bytes": 3342,
+      "sha256": "9df5cec83fa07f1e946be7877af07a40f1263171e86b1f364d872f2bb91d9b01"
+    },
+    "internal/rules/save.go": {
+      "bytes": 26521,
+      "sha256": "6d137e30006306b71c18d16dcd02c7530a174beb9cd03944e82a869813429adc"
+    },
+    "internal/rules/save_test.go": {
+      "bytes": 20500,
+      "sha256": "c63439311cde66fccd10907356cdfcf43a12ddbf33ba466cd65f04e96e50601d"
+    },
+    "internal/rules/shipkind.go": {
+      "bytes": 4453,
+      "sha256": "c8d97e95112b49ddede237b0fea0d9e8beeba96fbfc6d400f5df926355e83f6c"
+    },
+    "internal/rules/shipkind_test.go": {
+      "bytes": 1559,
+      "sha256": "558536710a6a33c8d364931b1e9ed5812cf17ebab76f7285a5f0496330d4fe6f"
+    },
+    "internal/rules/shippool_oracle_test.go": {
+      "bytes": 4748,
+      "sha256": "bc109c205d8bc6e1a22c88ceae30b9a567773a9b31eab6b11db7cc8fc99d5b6e"
+    },
+    "internal/rules/spotting.go": {
+      "bytes": 3166,
+      "sha256": "5195c9d6348538585a2d0738cb49c1af699ae579df6feb7865016b4813f12fce"
+    },
+    "internal/rules/spotting_oracle_test.go": {
+      "bytes": 10427,
+      "sha256": "46dccd1e284241cb86681a6d96ae82fd9a6caa7c8fd4108b7ebdb352b4ca386e"
+    },
+    "internal/rules/spotting_test.go": {
+      "bytes": 6387,
+      "sha256": "06f16f3c3b5b8be5dc862001a7c3184400c696d3640d70f0c6b37f05e603fa5b"
+    },
+    "internal/rules/staffpick.go": {
+      "bytes": 5721,
+      "sha256": "2cb46c5361f92ebffce527670866f0d7a0a2b0527020d82107a0f9a4f21dbd9e"
+    },
+    "internal/rules/staffpick_test.go": {
+      "bytes": 4454,
+      "sha256": "40cbc6f0386ce8b91a271dbefc7ae6e7ad05815001cb10916361bc7ce3cdd71c"
+    },
+    "internal/rules/stardistance.go": {
+      "bytes": 2434,
+      "sha256": "f56fb8221e5c58043f908b9c3bc48c21a8539d2cc6d35f67f2b06ca5b5791071"
+    },
+    "internal/rules/stardistance_test.go": {
+      "bytes": 4209,
+      "sha256": "73806a5aa16fadf60818b9f3104f5409afdd6e22ef0428e28792d7bb5705674f"
+    },
+    "internal/rules/stargraph.go": {
+      "bytes": 4920,
+      "sha256": "e6c3ddfdd1a1a105104f3b41a619b7ab4cbe3c77f83ad5075618aa39d1e7803e"
+    },
+    "internal/rules/stargraph_test.go": {
+      "bytes": 4027,
+      "sha256": "e967d13b5fe034f9cb178b6e1149f4c532baa8aa1de603391d713e6d6ecb5341"
+    },
+    "internal/rules/strategicassault.go": {
+      "bytes": 17604,
+      "sha256": "3f0cfdd6fdce71d1d7bb798fa52ca8d2090b454514c291191fac1f144ab510ec"
+    },
+    "internal/rules/strategicassault_oracle_test.go": {
+      "bytes": 7305,
+      "sha256": "3031c9e0e02f61199059339943ea0bfe64a2651171de14bd7f5cd6715ec20b40"
+    },
+    "internal/rules/strategicguard_oracle_test.go": {
+      "bytes": 6979,
+      "sha256": "5106801d71133eed58cb1dc95d6caef7ae35d87919d8c10da0bbe628fb3e2fd8"
+    },
+    "internal/rules/strategicguard_raw_oracle_test.go": {
+      "bytes": 3912,
+      "sha256": "79fc6f67bc198dedc57d0ace72f63f484e8696c02f7bdb35d9166f5dc1a6c5b7"
+    },
+    "internal/rules/strategicguard_test.go": {
+      "bytes": 1411,
+      "sha256": "bd3deae3ce8f8ada8ac76f17f961fb284d30f690bdc44961aeb425384be4c7cc"
+    },
+    "internal/rules/strength.go": {
+      "bytes": 4895,
+      "sha256": "947431d0b47d54b720e1bbf21244f7fc3d5e26a7a5b83b05026a67bc07d4539f"
+    },
+    "internal/rules/supplyrepair.go": {
+      "bytes": 4139,
+      "sha256": "f9aebab6b5f2ec10e3ad82d762f5d37878d6ceb7d0d6d339cc7d962b9b75093c"
+    },
+    "internal/rules/supplyrepair_test.go": {
+      "bytes": 6036,
+      "sha256": "72280cb431c888e09e98c5f75d7f23c3122221c17b9c328851ccb278135e367c"
+    },
+    "internal/rules/takeships_test.go": {
+      "bytes": 1852,
+      "sha256": "e404fdbc0e43a9afdd448fa42eb4330b6a2dbd5357344f4992fa410d6e965548"
+    },
+    "internal/rules/taxrate.go": {
+      "bytes": 3489,
+      "sha256": "4b07dcb7e22f7bd20e13c126a2017983feb3245041bbf9afa5c2fe38171aeb4b"
+    },
+    "internal/rules/taxrate_test.go": {
+      "bytes": 743,
+      "sha256": "e20b88a651b4a4016c42fc9fe609d2302ab69e5013aefdf741baa96d3da6e9fa"
+    },
+    "internal/rules/terrain.go": {
+      "bytes": 5948,
+      "sha256": "bf7191b53683b2a1e9c70dfafea4dc562a843bed138a2fdac724f4e505037d2a"
+    },
+    "internal/rules/terrain_test.go": {
+      "bytes": 1235,
+      "sha256": "70ba4c2ffd54625790544e7be1f089e2c85c7b7a24123e737e1db1448039999b"
+    },
+    "internal/rules/trig.go": {
+      "bytes": 2534,
+      "sha256": "6a7cffeb674321bd6e09ed4e272571d139993a3c518a7ec83179abb060d2f1e9"
+    },
+    "internal/rules/trig_test.go": {
+      "bytes": 1472,
+      "sha256": "813a9b49a5afae358fa6bb1439ffa2728c0907afb545fd0e8ff4e0823a406380"
+    },
+    "internal/rules/unrest.go": {
+      "bytes": 10024,
+      "sha256": "b3a97c54b88d2c49d04a2ca91936c2f5c6c735380415e4b9822084e0f8b88fee"
+    },
+    "internal/rules/unrest_recompute_test.go": {
+      "bytes": 9598,
+      "sha256": "d26c6a95e575f1aa3fca6860919489b309b31cda3522ff121cb3248f12822a7f"
+    },
+    "internal/rules/unrest_test.go": {
+      "bytes": 3162,
+      "sha256": "40082a77589144af619138f7f89ff36f600cf4482e02176a9f3d8b0cded1683a"
+    },
+    "tools/go.sh": {
+      "bytes": 1763,
+      "sha256": "f591df5c0db18d0adcaecb1bfd969f9d3ffbc6e9e5a1ed2c3e5913c72dd371b6"
+    },
+    "tools/gui.sh": {
+      "bytes": 1551,
+      "sha256": "3f0cd67388775829a3dbec810570558a1bacd1cd0fc89c22babd8c70bf0542b5"
+    },
+    "tools/scripts/strategic_guard_lifecycle_prepare.py": {
+      "bytes": 4670,
+      "sha256": "a32c2cfdec2db22e9f05a52c0540ed1b1bbf9bfa3f6553301b7c74612d096f06"
+    },
+    "tools/scripts/strategic_guard_raw_probe.go": {
+      "bytes": 3207,
+      "sha256": "a78b7a6772977b0882e23493e192fe90101ce0a732f93a162bcc2cced5199103"
+    },
+    "tools/scripts/strategic_guard_review.py": {
+      "bytes": 6915,
+      "sha256": "d415327efc51c67deee55cf6bc119212cb6b6f83190dcfe7d77041e81c284791"
+    },
+    "tools/strategic_assault_edge_probe.sh": {
+      "bytes": 2945,
+      "sha256": "5a264594e9c28cc6be0966ecf9399eb6408b2295a28cc671261502b9d2119068"
+    },
+    "tools/strategic_guard_lifecycle_native_run.sh": {
+      "bytes": 429,
+      "sha256": "6e49c1010504027cc38e5f7b95c358be5f32b1b138151f4be878395b21fe1345"
+    },
+    "tools/strategic_guard_lifecycle_oracle.sh": {
+      "bytes": 863,
+      "sha256": "1df82ada3bcdc9e852d336867d7e9dea6324ee03ff137b22051f5d389aef47af"
+    },
+    "tools/strategic_guard_raw_probe.sh": {
+      "bytes": 847,
+      "sha256": "24cb642403a7b59490f60fa5369edc753953373453836e4f72bcfb4f9bf2be2c"
+    },
+    "workplace/assault56-r100-guard-first-index.json": {
+      "bytes": 63043,
+      "sha256": "7b8445120660c45fcd0b59678fba23a2e799c88cd7a67e3227d74d04d67dcb88"
+    },
+    "workplace/assault56-r100-lifecycle-a.json": {
+      "bytes": 2162655,
+      "sha256": "42df4e226db494f3d5fae318229aa484e87db3bc464d3b768282f52a7e4ea16c"
+    },
+    "workplace/assault56-r100-lifecycle-v2.go": {
+      "bytes": 8490,
+      "sha256": "b92556ab8073392c347fb0063b681e19b5c3aefe6084d756405f33e9d4ef0476"
+    },
+    "workplace/assault56-r100-lifecycle-v3.go": {
+      "bytes": 8539,
+      "sha256": "12024d28be259d624446a7358bdeddda8c0667d8935a447db6a002882577585c"
+    },
+    "workplace/assault56-r100-lifecycle-v4-a.json": {
+      "bytes": 2167648,
+      "sha256": "4cf5fcbca68c27819f7a8850301912d93bd747a745e5e1069650f92f036e0b60"
+    },
+    "workplace/assault56-r100-lifecycle-v4.go": {
+      "bytes": 8630,
+      "sha256": "95a0f6a1b5f06705cc312bb4ad55fef5ee7d12a669252ffbc44dd53d1d01a301"
+    },
+    "workplace/assault56-r100-lifecycle-v5-a.json": {
+      "bytes": 3025158,
+      "sha256": "008918e485c04b24ad7e7b98985e3502b257aeeb15923fe61a102247ba68f885"
+    },
+    "workplace/assault56-r100-lifecycle-v5.go": {
+      "bytes": 8649,
+      "sha256": "ff964ca11487553fd43f181c1ae355f18deb84338b58a7ece20048edc335663d"
+    },
+    "workplace/assault56-r100-lifecycle-v6-a.json": {
+      "bytes": 7979454,
+      "sha256": "d5689d017f511288e74080ca91f25e22d20112a54d47d048b1c88f38d9e1afd0"
+    },
+    "workplace/assault56-r100-lifecycle-v6-b.json": {
+      "bytes": 7979454,
+      "sha256": "d5689d017f511288e74080ca91f25e22d20112a54d47d048b1c88f38d9e1afd0"
+    },
+    "workplace/assault56-r100-lifecycle-v6.go": {
+      "bytes": 8814,
+      "sha256": "c4930096819aefe76b7039d2fca9b0d255ccdad6a3c3786cbb0018d65fe3771b"
+    },
+    "workplace/assault56-r100-lifecycle.go": {
+      "bytes": 8509,
+      "sha256": "0e1db587d4f7a65cdf764806bc1e66c41cb49bacae3a9200b2caa4db4fee7d90"
+    },
+    "workplace/assault56-r100-raw-probe-a.json": {
+      "bytes": 1646,
+      "sha256": "cebc4dfd0ac7e09708f25aced9fa1866bbf5cb63d82f7a1ef99116e90aefe856"
+    },
+    "workplace/assault56-r100-raw-probe-b.json": {
+      "bytes": 1646,
+      "sha256": "cebc4dfd0ac7e09708f25aced9fa1866bbf5cb63d82f7a1ef99116e90aefe856"
+    },
+    "workplace/assault56-r99-v3-a.json": {
+      "bytes": 3242551,
+      "sha256": "d22b0e4b93c7283c23c0c26c0e8dca859c487fabb9ffec5e6b5f6ef3ff373653"
+    },
+    "workplace/assault56-r99-v3-b.json": {
+      "bytes": 3242551,
+      "sha256": "d22b0e4b93c7283c23c0c26c0e8dca859c487fabb9ffec5e6b5f6ef3ff373653"
+    },
+    "workplace/oracle/cleanup79-r88-entry-a/entry.state": {
+      "bytes": 260244,
+      "sha256": "a62af47fb7d15a136e2e2ed51760ef0e9dd82538f68d5f7e0be4db5f2b0011b8"
+    },
+    "workplace/round100-standard-raw-gui.log": {
+      "bytes": 961,
+      "sha256": "db5084187eb596688a5525d2791d92d16edc28e5701154ea794915bd83f282cd"
+    },
+    "workplace/round100-strategic-guard-verified.log": {
+      "bytes": 26304,
+      "sha256": "7c018bb5715493e4d053527aa34e02b6beb8ca518573ee7c1505502721f78f3c"
+    }
+  },
+  "original_inputs": {
+    "GIN3.COM": {
+      "bytes": 622,
+      "sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918"
+    },
+    "MAP00.CMP": {
+      "bytes": 3645,
+      "sha256": "33af45339476fed95a3d3b444d7fedd39d14f6018d6eafaa900d901426956a0f"
+    },
+    "MAP01.CMP": {
+      "bytes": 5099,
+      "sha256": "1d867eee9c32d6edb534e39bdc5f449f8f2d6ed0c2c4e0cb28f88ec178f20860"
+    },
+    "MAP02.CMP": {
+      "bytes": 5440,
+      "sha256": "dccd3a151b76948cff286237f0c4adfdd2d7db09ba5403c2bd3b65518a412726"
+    },
+    "MAP03.CMP": {
+      "bytes": 4978,
+      "sha256": "9377e80186547119927bb37e3ef54d7f4bf257e70ef76b6d43453f8012d12d69"
+    },
+    "MAP04.CMP": {
+      "bytes": 5242,
+      "sha256": "9cd967b055a8d4744326cb24c7d45c9d1f6712f6ff245fdcb6571f587fe3d121"
+    },
+    "MAP05.CMP": {
+      "bytes": 3634,
+      "sha256": "621965dc4fdbcf4134a6a49e11da4750f0139d4f1ea1235845a85a855efd55a3"
+    },
+    "MAP06.CMP": {
+      "bytes": 3869,
+      "sha256": "67fb7c52abd6c6a86969a1cba416330c3fdadfff4e3e6b30bdc2fe9d9f3ae84f"
+    },
+    "MAP07.CMP": {
+      "bytes": 3382,
+      "sha256": "d0b44d193409fb88362af4924a1b4ce5128f476f2bb4cf36fa41c41062037755"
+    },
+    "MAP08.CMP": {
+      "bytes": 3515,
+      "sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f"
+    },
+    "MAP09.CMP": {
+      "bytes": 4481,
+      "sha256": "94ac77ee7dfbcda11e39ecf600c9b647274873977d3bbab21bbc9864675cdde3"
+    },
+    "MAP10.CMP": {
+      "bytes": 3845,
+      "sha256": "727f21539484337edb052a68344745fe317b415465ea288ec761ec98a00d41e6"
+    },
+    "MAP11.CMP": {
+      "bytes": 2893,
+      "sha256": "e8c02726fff65c7e09baffc44a0d9c5bcb8b610ff42496d1d79eef8e41219460"
+    },
+    "MAP12.CMP": {
+      "bytes": 3575,
+      "sha256": "fbf499075e19f34c8a2cc30315baa6e5378ea92109c4da694206ed892b3bf3f2"
+    },
+    "MAP13.CMP": {
+      "bytes": 9118,
+      "sha256": "8ba697a8ac63a9486d4175cc9608b7504cc39ff9d6818099f0acfae1fa5d3450"
+    },
+    "MAP14.CMP": {
+      "bytes": 8799,
+      "sha256": "8198667d42a9bfa3b179366f29cbf09920604639dcd0025d401e1d8f1d899c4f"
+    },
+    "MAP15.CMP": {
+      "bytes": 3814,
+      "sha256": "24e28dcbc39617ab27316a9ea4fa5f7e71f81330f793f3930d2bd95e028ccb0c"
+    },
+    "MAP16.CMP": {
+      "bytes": 3094,
+      "sha256": "c4e6d80e6c04e01664f5845933f77a273e84a4d9e94164734dcdda563cefede3"
+    },
+    "MAP17.CMP": {
+      "bytes": 4207,
+      "sha256": "bcef22376a820c09ab343b70bf7c4c64c93e387e0a8f230053061c8739490e8b"
+    },
+    "MAP18.CMP": {
+      "bytes": 4059,
+      "sha256": "f7dd39a8d0dc23ad96c73955fcd0ccfdc3dae0880dc70d628735a9e989bc567f"
+    },
+    "MAP19.CMP": {
+      "bytes": 4973,
+      "sha256": "1b45618259c57df39374fc4ff9f0252a3eeb0165e29a35c487acd1c0d519d9ee"
+    },
+    "MAP20.CMP": {
+      "bytes": 5943,
+      "sha256": "d387bd1aee1dd717f03f541b25b66420a488f2a99c7534788edd4314b21d5953"
+    },
+    "MAP21.CMP": {
+      "bytes": 4393,
+      "sha256": "c91aa8b7f7d25cc2bfbe00e62591c3d441ee4305db66304157251fcde09def92"
+    },
+    "MAP22.CMP": {
+      "bytes": 1477,
+      "sha256": "d6e94fa55d832b2f2120cdd1fe45d114f251b3a04f6edea14448d5fb87310161"
+    },
+    "MAP23.CMP": {
+      "bytes": 5496,
+      "sha256": "f6e948f3bbecc9351c9c647df3c588f9aba4989fe997186bacbc62751a3df597"
+    },
+    "MAP24.CMP": {
+      "bytes": 4553,
+      "sha256": "c82ae7f3efa8ef13a17dc3d49c78851444f2e595ff039e7a6fa7e773913acec9"
+    },
+    "MAP25.CMP": {
+      "bytes": 4638,
+      "sha256": "36126bbbc1d81f54dc7228da0763550f38f8f6d67d20798e1cce77f8230f89cf"
+    },
+    "MAP26.CMP": {
+      "bytes": 6831,
+      "sha256": "ecde15e595b40c7367f4a0d0dabc627a6f0b75befb122ad7554cff6a3f18814d"
+    },
+    "MAP27.CMP": {
+      "bytes": 4708,
+      "sha256": "03eedf374918c88d70c22538e0fa5ef936a28132a015debaade66214f983d79f"
+    },
+    "MAP28.CMP": {
+      "bytes": 3559,
+      "sha256": "e242d4aa141ce6fa820645d912b65ab27086f9ff2110e7158f18032181cfeac4"
+    },
+    "MAP29.CMP": {
+      "bytes": 5710,
+      "sha256": "e1d84db4500fd02edfdc869e770e2c2d5d2b013f177e5cb85e0f8f51f6c4cce9"
+    },
+    "MAP30.CMP": {
+      "bytes": 5631,
+      "sha256": "293f1c08c005bd3b7bbe51cac6f81f38b0d0d167935271b034b212669d5f6181"
+    },
+    "MAP31.CMP": {
+      "bytes": 3364,
+      "sha256": "42e0cda3c384432d2da4135750acb108ffa08b35a560bb1941381eadbc878a36"
+    }
+  }
+}

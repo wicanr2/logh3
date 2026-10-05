@@ -67,6 +67,18 @@ type WinnerOccupation struct {
 // NewWinnerOccupation 先驗證全部輸入。錯誤不改原池、不消費亂數。
 func NewWinnerOccupation(s *Slot, region, winner, round int, poolIDs []int,
 	kinds *ShipKindTable, slots *FormationSlots, passable func(int, int) bool, rnd *Rand) (*WinnerOccupation, error) {
+	return newOccupation(s, region, winner, round, poolIDs, kinds, slots, passable, rnd, false)
+}
+
+// NewStrategicOccupation是20B4:1497進共用1512，固定回合0。
+// 保留前一戰場池清單，不要求池屬目前星域（規格115、研究434）。
+func NewStrategicOccupation(s *Slot, region, attacker int, poolIDs []int,
+	kinds *ShipKindTable, slots *FormationSlots, passable func(int, int) bool, rnd *Rand) (*WinnerOccupation, error) {
+	return newOccupation(s, region, attacker, 0, poolIDs, kinds, slots, passable, rnd, true)
+}
+
+func newOccupation(s *Slot, region, winner, round int, poolIDs []int,
+	kinds *ShipKindTable, slots *FormationSlots, passable func(int, int) bool, rnd *Rand, retainedPools bool) (*WinnerOccupation, error) {
 	if s == nil || len(s.Fleet) != FleetCount*FleetRecord || len(s.Ship) != ShipCount*ShipRecord ||
 		len(s.Admiral) != 82*AdmiralRecord || len(s.Stellar) != 32*RegionRecord || len(s.Work) != WorkRecord ||
 		s.Planets == nil || len(s.Planets.PerRegion) != 32 || winner < 0 || winner > 1 || region < 0 || region >= 32 ||
@@ -99,6 +111,12 @@ func NewWinnerOccupation(s *Slot, region, winner, round int, poolIDs []int,
 	}
 	var seen [ShipCount]bool
 	for _, pool := range poolIDs {
+		if retainedPools {
+			if pool < 0 || pool >= ShipCount {
+				return nil, fmt.Errorf("戰略保留池索引越界")
+			}
+			continue
+		}
 		if pool < 0 || pool >= ShipCount || seen[pool] || s.Ship[pool*ShipRecord] > 1 || s.Ship[pool*ShipRecord+4] > 7 {
 			return nil, fmt.Errorf("戰場有效池身分無效")
 		}

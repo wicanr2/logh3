@@ -167,7 +167,12 @@ func (g *Game) scanRegionTail(r int) bool {
 		// 拿下行星的訊息框（`20B4:1922`）不改狀態、不耗亂數，停在打完之後印。
 		// bit4 是 `056A:0469` 先算好的，全滅拿掉攻方之後照樣進來（攻方空了就不打）。
 		next := r + 1
-		return g.startTurnReports(g.strategicAssault(r), func() { g.scanRegionsFrom(next) })
+		reports, err := g.strategicAssault(r)
+		if err != nil {
+			g.saveErr = err
+			return true
+		}
+		return g.startTurnReports(reports, func() { g.scanRegionsFrom(next) })
 	}
 	rules.DepartNeutralPlanet(g.regionRecord(r), g.res.Planets, r, g.rand94DC())
 	rules.RecoverRegionDefences(g.res.Planets, r)
@@ -247,9 +252,9 @@ func (g *Game) drawRebellionReport(fb *gfx.Framebuffer) {
 // 行星記錄就地改、艦隊的艘數與士氣改在結構上、功績寫提督 `+0x02`、兩個計分器照加。
 //
 // 回傳拿下行星的訊息框（`20B4:1922`，每拿下一顆一則，依拿下的順序）。
-func (g *Game) strategicAssault(region int) []turnReport {
+func (g *Game) strategicAssault(region int) ([]turnReport, error) {
 	if g.res.Planets == nil {
-		return nil
+		return nil, nil
 	}
 	attacker := 1
 	for _, f := range g.fleets {
@@ -259,7 +264,16 @@ func (g *Game) strategicAssault(region int) []turnReport {
 	}
 	start, n := g.res.Planets.Range(region)
 	if n == 0 {
-		return nil
+		return nil, nil
+	}
+	// 只用保留清單的身份取池索引，艘數／位置／Out由查詢重讀原SHIP池。
+	var pools []int
+	for _, u := range g.battleUnits {
+		pools = append(pools, g.battleUnitPool(u))
+	}
+	guard, err := rules.NewStrategicGuard(g.slot, pools)
+	if err != nil {
+		return nil, err
 	}
 	lo := rules.PlanetHeader + start*rules.PlanetRecord
 	planets := g.res.Planets.Data[lo : lo+n*rules.PlanetRecord]
@@ -269,7 +283,7 @@ func (g *Game) strategicAssault(region int) []turnReport {
 		sites = g.loadRegionPlanetSites(region)
 	}
 	// 每一圈的定位（`0DEA:1759`）：同一格兩支以上時後面的被擠開，距離不是 0（`docs/re/335` §六）。
-	place := &rules.StrategicPlacement{Slots: g.res.Formation}
+	place := &rules.StrategicPlacement{Slots: g.res.Formation, Guard: guard}
 	if g.res.Terrain != nil && len(cells) > 0 {
 		place.Passable = func(x, y int) bool { return g.res.Terrain.Passable(cells, x, y) }
 	}
@@ -288,7 +302,10 @@ func (g *Game) strategicAssault(region int) []turnReport {
 		sfs = append(sfs, rules.StrategicFleet{Fleet: f, Ability40: int(ab[3]), Ability41: int(ab[4]), Command: command})
 	}
 	if len(sfs) == 0 {
-		return nil
+		return nil, nil
+	}
+	if g.slot != nil {
+		return g.strategicAssaultRaw(region, attacker, pools, place.Passable)
 	}
 	for i := range g.fleets {
 		if f := &g.fleets[i]; f.Region == region && f.Faction != attacker {
@@ -312,5 +329,35 @@ func (g *Game) strategicAssault(region int) []turnReport {
 			reports = append(reports, g.captureReport(res.CapturedBy[k], region, pi))
 		}
 	}
-	return reports
+	return reports, nil
+}
+
+// 115 READY：沿共用1512原池常式，保留戰略報告與回合亂數入口。
+func (g *Game) strategicAssaultRaw(region, attacker int, pools []int, passable func(int, int) bool) ([]turnReport, error) {
+	if err := g.syncFleetTables(); err != nil {
+		return nil, err
+	}
+	g.slot.Admiral, g.slot.Work = g.mutableAdmirals(), g.mutableWork()
+	for f := 0; f < 2; f++ {
+		binary.LittleEndian.PutUint32(g.slot.Work[0xd0+4*f:], uint32(g.battleScore[f]))
+		binary.LittleEndian.PutUint32(g.slot.Work[0xd8+4*f:], uint32(g.campaignScore[f]))
+	}
+	c, err := rules.NewStrategicOccupation(g.slot, region, attacker, pools, g.res.ShipKinds, g.res.Formation, passable, g.rand94DC())
+	if err != nil {
+		return nil, err
+	}
+	var reports []turnReport
+	for event := c.Step(); event != nil; event = c.Step() {
+		if g.res.TurnWindow != nil {
+			f := g.fleetByIndex(event.Fleet)
+			reports = append(reports, g.captureReport(f, region, event.Planet))
+		}
+	}
+	res := c.Result()
+	for f := 0; f < 2; f++ {
+		g.battleScore[f] += res.Score[f]
+		g.campaignScore[f] += res.Score[f]
+	}
+	g.fleets = g.slot.Fleets(g.res.Weights)
+	return reports, nil
 }

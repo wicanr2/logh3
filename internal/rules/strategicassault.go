@@ -1,6 +1,9 @@
 package rules
 
-import "encoding/binary"
+import (
+	"encoding/binary"
+	"fmt"
+)
 
 // 戰略打行星（`20B4:1497`，規格 `docs/spec/058`、調查 `docs/re/330`）。
 //
@@ -11,8 +14,9 @@ import "encoding/binary"
 // 每一回合先依序定位攻方（`StrategicPlacement`：同一格兩支以上時後面的被擠開、距離不再是 0，`docs/re/335` §六）。
 //
 // 與戰場上的打行星（`planetassault.go`，`20B4:0681`）是**不同的算式**：
-// 沒有「減守軍 ÷ 6」「＋ rand % 100」、守軍取 0（`17A0:00AC` 掃的是戰場單位表，戰略階段是空的）。
-// 同一回合先打過仗時守軍殘留沒驗（戰場單位表 `ds:9896` 可能不是 0）。
+// 沒有「減守軍 ÷ 6」「＋ rand % 100」。守軍讀戰後保留的池清單，空清單才為0
+// （規格115、研究433／434），不可按新星域重篩或讀過期戰場數值。
+// 原池寫回沿NewStrategicOccupation；五個固定局面完整六表、清單與seed已核。
 
 // 行星記錄裡這一支用到的欄位（`docs/internals/29`、`docs/re/330` §7）。
 const (
@@ -105,12 +109,43 @@ func recoverPlanetsOneStep(planets []byte) {
 // StrategicPlacement 是每一圈定位艦隊要的戰場資訊（`0DEA:1759` → `297B:08D8` → `297B:0BD6`、`2BE1:0000`、`297B:0D99`；
 // `docs/re/335` §六）。nil ＝ 不定位：每一支都在行星座標上（距離 0、同朝向），一支攻方時與原版相同。
 type StrategicPlacement struct {
+	// Guard從明示池清單查詢當下原池；p是已扣除此次攻擊的行星記錄。nil表示空清單。
+	Guard func(p []byte) int
 	// Passable ＝ `1588:04EA(x, y)`：戰場地圖那一點站不站得住。nil ＝ 一律站得住。
 	Passable func(x, y int) bool
 	// Slots 是隊形槽位表（`ds:59BA`）：分隊的集結點 ＝ 艦隊位置 ＋ 槽位偏移依朝向旋轉（`2BE1:0000`）。
 	Slots *FormationSlots
 	// Others 是同一格裡不是攻方的艦隊：定位時一樣會擋路（`297B:0C74` 掃同星域全部艦隊）。
 	Others []*Fleet
+}
+
+// NewStrategicGuard核對原版DS:98BA池索引，查詢時重讀原SHIP記錄。
+// 不使用艦隊士氣或星域篩選；半徑含邊界（17A0:00AC、203A:04D1，規格115）。
+func NewStrategicGuard(slot *Slot, pools []int) (func([]byte) int, error) {
+	if len(pools) > 0 && (slot == nil || len(slot.Ship)%ShipRecord != 0) {
+		return nil, fmt.Errorf("戰略守軍缺完整SHIP池")
+	}
+	for _, pool := range pools {
+		if pool < 0 || pool >= len(slot.Ship)/ShipRecord {
+			return nil, fmt.Errorf("戰略守軍池索引越界：%d", pool)
+		}
+	}
+	ids := append([]int(nil), pools...)
+	return func(p []byte) int {
+		total := 0
+		radius := FixedFromInt(PlanetQueryRadius(int(binary.LittleEndian.Uint16(p[planetDefence:]))))
+		for _, pool := range ids {
+			sh := slot.ShipAt(pool)
+			if sh[0] != p[planetOwner] || sh[0x1e]&0x80 != 0 || sh[4] > 1 {
+				continue
+			}
+			if FixedDist(int(binary.LittleEndian.Uint16(p[0x46:])), int(binary.LittleEndian.Uint16(p[0x48:])), int(binary.LittleEndian.Uint16(sh[0x34:])), int(binary.LittleEndian.Uint16(sh[0x36:]))) > radius {
+				continue
+			}
+			total = min(65535, total+int(binary.LittleEndian.Uint16(sh[8:])))
+		}
+		return total / 100
+	}, nil
 }
 
 // strategicRingOffsets 是 `ds:4E0E`：位置被佔時環狀搜尋的八個方向（× 第幾圈）。
@@ -241,7 +276,11 @@ func strategicAttackRound(planets []byte, pi int, sites []PlanetSite, attacker i
 			return true
 		}
 		ang := AtanTable256(site.X-f.X, site.Y-f.Y) // 從艦隊看向行星
-		strategicCounter(p, facings[i], ang, d, sf, attacker, r, res)
+		guard := 0
+		if place != nil && place.Guard != nil {
+			guard = place.Guard(p)
+		}
+		strategicCounter(p, facings[i], ang, d, sf, attacker, guard, r, res)
 	}
 	return false
 }
@@ -288,13 +327,13 @@ func addMerit(res *StrategicAssaultResult, f *Fleet, n int) {
 
 // strategicCounter ＝ `20B4:0E7E(艦隊, 行星, 0)` ＋ `20B4:103D`：行星反擊。ang 是從艦隊看向行星的方位
 // （距離 0 時 `atan(0, 0)` ＝ 0x40），d 是兩點距離（衰減同 `0D96`）。
-func strategicCounter(p []byte, facing, ang int, d Fixed, sf StrategicFleet, attacker int, r *Rand,
+func strategicCounter(p []byte, facing, ang int, d Fixed, sf StrategicFleet, attacker, guard int, r *Rand,
 	res *StrategicAssaultResult) {
 	div := 10
 	if p[planetFortress] != 0 {
 		div = 20
 	}
-	base := int(binary.LittleEndian.Uint16(p[planetDefence:])) / div // 守軍 0
+	base := ((int(binary.LittleEndian.Uint16(p[planetDefence:])) + guard) & 0xFFFF) / div
 	base = assaultBase(base, d)
 	dir := Direction8(absInt(ang - facing)) // `2BE1:024A`：|a − b|，byte，不折回
 	base = base * assaultDirTable[dir] / 100

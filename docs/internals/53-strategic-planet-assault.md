@@ -1,5 +1,14 @@
 # 53：戰略回合裡的打行星
 
+## 第100輪：正式清單與原池寫回
+
+[研究434](../re/434-strategic-guard-lifecycle.md)從完整8-1保存自然續行，雙跑證實重建後55筆清單跨8-5返回、下一星域27載圖及1497返回逐byte保留。
+Game只由保留單位身份取得池索引，查詢讀當下原SHIP池；不按新星域或士氣篩選。
+正式typed接線先消除五案差異，再沿共用1512原池常式補朝向、目的地與工作欄位寫回。
+正式規則及Game五案完整六表／池序／seed零差；六檔保存重讀、錯誤停止、戰後清單與正常占領回歸通過。
+[115限定CONFORMED](../spec/115-strategic-assault-guard.md)，完整來源與範圍見[088](../playtest/088-strategic-guard.md)。
+下節第99輪的14項差異及DRAFT是歷史狀態，已由本輪正式接線消除；第99輪凍結索引不改寫。
+
 ## 第99輪：戰略入口殘留守軍與地形
 
 [研究433](../re/433-strategic-assault-edges.md)及[來源索引](data/strategic-assault-edges.json)補#56五案固定原版雙跑。

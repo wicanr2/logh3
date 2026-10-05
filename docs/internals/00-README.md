@@ -1,5 +1,12 @@
 # 原版內部構造參考
 
+第100輪沿[#56](https://github.com/wicanr2/logh3/issues/56)：[戰後清單與接線計畫](../goal/2026-10-05-strategic-guard-lifecycle-round-100.md)。
+[研究434](../re/434-strategic-guard-lifecycle.md)核正常戰後續行與下一星域載圖的清單保留；[115限定CONFORMED](../spec/115-strategic-assault-guard.md)定義正式原池查詢與錯誤停止。
+[原池探針](../../tools/strategic_guard_raw_probe.sh)與[比較器](../../tools/scripts/strategic_guard_raw_probe.go)在容器副本核共用1512寫回；不直接改正式Game。
+[驗證088](../playtest/088-strategic-guard.md)限定正式規則／Game五案原池與保存；[完整現行來源](data/strategic-guard.json)由[核對器](../../tools/scripts/strategic_guard_review.py)保存，舊索引按歷史提交核實。
+[清單觀察器產生器](../../tools/scripts/strategic_guard_lifecycle_prepare.py)續跑固定8-1保存，記錄退場、下一星域載圖與筆數寫端；不注入CS/IP。
+[原版雙跑入口](../../tools/strategic_guard_lifecycle_oracle.sh)與[容器內入口](../../tools/strategic_guard_lifecycle_native_run.sh)保留全部局面注入與工具版本。
+
 第99輪沿[#56](https://github.com/wicanr2/logh3/issues/56)：[戰略攻擊邊界計畫](../goal/2026-10-05-strategic-assault-edges-round-99.md)。
 [戰略入口探針產生器](../../tools/scripts/strategic_assault_edge_prepare.py)沿固定完整原版保存，記錄明示注入及查詢結果。
 [原版雙跑入口](../../tools/strategic_assault_edge_oracle.sh)與[容器內入口](../../tools/strategic_assault_edge_native_run.sh)只作#56窄幅診斷，不替代正常玩家路徑。

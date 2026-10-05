@@ -1,8 +1,8 @@
 # 058 — 戰略打行星（占據那一格的打行星、反擊、士氣、換手）
 
-第99輪範圍更新：[433](../re/433-strategic-assault-edges.md)已補#56兩類局面原版雙跑。
-實際地形的擠開typed結果符合；殘留近距守軍使正式規則14項typed欄位不同，容器/tmp修法可消除差異。
-以下CONFORMED只限既有空守軍收據，不能外推戰後殘留；正式清單來源及接線依[115 DRAFT](115-strategic-assault-guard.md)。
+第100輪範圍更新：[434](../re/434-strategic-guard-lifecycle.md)補戰後清單跨下一星域載圖的原版雙跑。
+殘留守軍及共用1512原池寫回已接正式規則／Game，五案完整六表／清單／seed零差，保存重讀及正常占領回歸通過。
+[115限定CONFORMED](115-strategic-assault-guard.md)，詳見[088](../playtest/088-strategic-guard.md)；不外推所有局面與正常原版整回合。
 
 狀態：**規則層 CONFORMED**：兩份收據（`fcmd-assault-ast` 亞斯提打巴溫、`fcmd-assault-phz` 費沙）以原版進入
 `20B4:1497` 那一刻的記憶體驅動 `rules.StrategicAssault`，與離開時的記憶體逐欄相同（亂數種子、行星擁有者／
@@ -35,13 +35,14 @@
 |---|---|---|
 | ~~拿下行星時的訊息框與士氣低落報告~~：已接，見規格 [`059`](059-turn-transition-windows.md)「報告框」（2026-09-17） | — | — |
 | ~~同一格兩支以上攻方~~：已接（規則 3），收據 `fcmd-assault-ai24` 逐欄相同（2026-09-17，`docs/re/335` §六） | — | — |
-| 規則層測試不帶戰場地形（地圖站不站得住）：三批收據的落點都沒壓到擋路格；遊戲層傳 `BattleTerrain.Passable` | 測試範圍 | 錄一份擠開後壓到擋路格的收據 |
-| 分隊的 `+0x06`（組士氣）、`+0x0C`（戰力）、`+0x0E`／`+0x12`（兩格存量）與 `20B4:18C2` 的索敵揭露：remake 的編制沒有這幾格 | 資料模型 | 艦艇池模型化時一起 |
-| 同一回合先打過仗時戰場單位表可能殘留，守軍不一定是 0 | 沒驗 | 錄一份「同回合有戰鬥又有戰略打行星」的收據 |
+| 擠開後不可通行候選 | 五案範圍已驗 | MAP26六次拒絕，正式規則／Game帶地形全表相同；不外推所有地圖 |
+| 分隊士氣、戰力、庫存與索敵揭露 | 五案原池已驗 | 共用1512原池常式寫回，完整SHIP相同；新遊戲無Slot的typed分支不外推原池 |
+| 戰後殘留守軍 | 五案及清單生命週期已驗 | 原版跨下一星域保留清單，正式查活原池；不宣稱自然原版完整回合 |
 | ~~電腦座位的攻占訊息框會不會顯示、會不會等~~：會（`docs/re/333` §二，收據 `fcmd-turn-ai-capture`） | — | — |
 
 ## 驗證
 
+- `internal/rules/strategicguard_raw_oracle_test.go`與`internal/game/strategicguard_test.go`：五案完整六表／清單／seed、六檔保存、異星域池與錯誤停止，見115及088。
 - `internal/rules/strategicassault_oracle_test.go`：`TestStrategicAssaultMatchesOracle`（三批逐欄，含艦隊與分隊位置）。
 - `internal/game/occupation_test.go`：`TestOccupyAstarteRunsStrategicAssault`（行星座標、回合流程）、
   `TestOccupyPhezzanArrivalMatchesOracle`（打完之後 bit4 仍在）。
