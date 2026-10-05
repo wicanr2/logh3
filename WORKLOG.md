@@ -2,6 +2,17 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-05 第103輪：目前引擎與音樂工具的來源重建
+
+- 父提交9e1d31830f3d5555cfc313e06f83b0d159186ff1，前輪為實際進度，沿既有#69。開工遠端89張worklist／6 OPEN／83 CLOSED、269條零失效；命中封包位置、版號、音訊格式、Windows ZIP及文件職責路由。不建立正式交付目錄或替使用者定版號。
+- 116先READY，沿077已核來源格式、授權及vendor契約補玩家程式。從乾淨Git archive取得目前cmd／internal／tools、模組與FM鎖，當輪封裝／重建器附件另記SHA；dosgolem及Go授權取037固定來源，全tar身份先核。原版媒體／生成曲庫不入包。
+- a的root vendor掃入研究Go探針而拒絕，後續缺MANIFEST即退出。改在正式cmd／internal獨立模組處理依賴圖，未新增Go依賴或改玩家程式。b／c成功；d／e補齊077既有manifest必填欄位後各2810項全tar相同，35461120 bytes，SHA89be259435d35d22f3db7e27ffe2658bdafb67183abd592c4bc8b13e2af5f954。舊037及當輪初版均保留。
+- b及最終d在無網路、空GOMODCACHE、同Go1.24.13／trimpath／vendor條件下建置。五種目前玩家／音樂程式及兩個真正f752 probe全檔符合對照；兩包的7種二進位SHA一致。Git根、fsck、唯一提交、clean及buildinfo均成立；原生CLI六項通過、零skip。
+- 初次8更新片頭及60秒372格只是來源啟動。舊截圖計畫誤認374來源格為完整時程；依正式421格、分段停留及112末格等待選4998更新標題中點。來源與對照自然標題全307200像素及PNG相同，完整標題已目視，沒有腳本／局面／時鐘注入。
+- 來源重建程式在中文／空白目錄、PATH=/none、無系統ffmpeg，正式匯入BGM_0F；VGM／WAV／增益後PCM與Linux OGG全檔符合既有鎖。Windows來源玩家程式在Wine只驗help成功，不稱完整Windows GUI或實機通過。
+- 標準18套件13通過／5無測試，Game199.225s、gin3 110.727s；兩組既有輸出／錯誤HEAD拒絕有收據。116限定CONFORMED、091及唯一現況表更新。20469來源索引033ec921cd4a67b135cb34ad157fc7271c355ecd8bb7245aaa64cd346e3f71f1。
+- #69正文／manual note更新，保持OPEN；重抓快照、重生worklist及矩陣後verify。正式版號／dist-all、macOS、實機、人耳／循環及原Goal其餘項保持未完成。提交／推送主旨「補目前玩家與音樂工具的離線來源重建」，精確提交身份依Git；收尾檢查來源、語法、連結、UID/GID與Docker清理，不重建image。
+
 ## 2026-10-05 第102輪：正常結束與公開存讀的正式60 Hz長流程
 
 - 父提交b5ac935d2e77d45d82e1173d340e26fb116f03d8，沿既有#79；遠端89張worklist／6 OPEN／83 CLOSED、269條零失效。命中remake技能、規格閘門、正常GUI及文件職責路由，既有使用者裁決保持。

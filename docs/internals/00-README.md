@@ -809,3 +809,10 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [計畫102](../goal/2026-10-05-battle-lifecycle-60hz-round-102.md)與[目前程式重播工具](../../tools/scripts/battle_lifecycle_60hz.py)，沿#79補正常全滅、敗退及公開存讀的正式更新頻率。
 - [完整收據核對器](../../tools/scripts/battle_lifecycle_60hz_receipt.py)核對獨立雙跑、實際每更新TPS、原生畫面及六檔公開存讀。
 - [玩家驗證090](../playtest/090-battle-lifecycle-60hz.md)及[完整來源](data/battle-lifecycle-60hz.json)保存範圍與限制。
+
+## 第103輪目前來源交付準備
+
+- [計畫103](../goal/2026-10-05-current-source-round-103.md)、[來源規格116](../spec/116-current-source.md)及[乾淨來源封裝器](../../tools/scripts/remake_source_kit.py)，沿#69補目前玩家及音樂Go入口的離線重建。
+- [離線重建器](../../tools/scripts/remake_source_rebuild.py)核對完整二進位、真正dosgolem身份及正常片頭。
+- [來源執行抽驗](../../tools/scripts/remake_source_runtime.py)補正常動畫至標題及重建程式的正式FM匯入。
+- [玩家及音樂來源驗證091](../playtest/091-current-source.md)、[完整來源](data/current-source.json)及[來源核對器](../../tools/scripts/remake_source_receipt.py)。
