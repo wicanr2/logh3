@@ -892,3 +892,11 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [計畫113](../goal/2026-10-06-flagship-approach-round-113.md)及[正常輸入探針](../../tools/scripts/battle_flagship_approach_probe.py)核對公開行進目標與旗艦優先策略，不更改產品規則。
 - [公開編組重播](../../tools/scripts/battle_flagship_composition_replay.py)補獨立bootstrap、正式60 Hz視窗與公開存讀。
 - [驗證101](../playtest/101-battle-flagship-approach.md)、[來源索引](data/battle-flagship-approach.json)及[核對器](../../tools/scripts/battle_flagship_approach_receipt.py)保存早期勝利仍零占領的核心結果、完整失敗與編組證據。
+
+## 第114輪正常增援
+
+- [計畫114](../goal/2026-10-06-battle-reinforcement-round-114.md)及[公開增援探針](../../tools/scripts/battle_reinforcement_probe.py)沿#79驗正常移動、占領命令與勝後占領事件。
+- [獨立重播](../../tools/scripts/battle_reinforcement_replay.py)驗正式入口、60 Hz視窗與公開保存讀回。
+- [來源核對器](../../tools/scripts/battle_reinforcement_receipt.py)核對原始收據、占領等待及存讀狀態。
+- [唯一來源索引](data/battle-reinforcement.json)凍結正常雙人增援、勝後占領及公開存讀的輸入與輸出，保留未完成GUI批次及原始標籤勘誤。
+- [驗證102](../playtest/102-battle-reinforcement.md)保存正式資源缺項、失敗分類及實際勝後占領範圍。
