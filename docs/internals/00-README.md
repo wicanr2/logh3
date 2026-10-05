@@ -816,3 +816,11 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [離線重建器](../../tools/scripts/remake_source_rebuild.py)核對完整二進位、真正dosgolem身份及正常片頭。
 - [來源執行抽驗](../../tools/scripts/remake_source_runtime.py)補正常動畫至標題及重建程式的正式FM匯入。
 - [玩家及音樂來源驗證091](../playtest/091-current-source.md)、[完整來源](data/current-source.json)及[來源核對器](../../tools/scripts/remake_source_receipt.py)。
+
+## 第104輪 Windows 玩家入口
+
+- [計畫104](../goal/2026-10-05-windows-player-round-104.md)，沿 #69 抽測來源重建的 Windows 正常 GUI。
+- [Wine 玩家包裝器](../../tools/player_wine.sh)沿用既有 Wine image、唯讀原版與資料及有界 Xvfb。
+- [玩家抽驗工具](../../tools/scripts/windows_player_check.py)保存預設片頭、真實 X11 輸入及同來源 Linux 完整畫面對照。
+- [Windows玩家驗證092](../playtest/092-windows-player.md)分開原生畫布、一倍視窗及1.5倍量化差異。
+- [完整像素核對](../../tools/scripts/windows_player_pixels.py)、[來源凍結器](../../tools/scripts/windows_player_receipt.py)與[唯一來源收據](data/windows-player.json)保存通過範圍及完整反例。
