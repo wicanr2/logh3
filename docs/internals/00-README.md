@@ -758,3 +758,13 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [五類素材匯出器](../../tools/scripts/remaining_assets_export.go)，共用正式解碼器並核對PNG重讀的尺寸、色號及palette。
 - [保存素材驗證085](../playtest/085-original-asset-exports.md)與[PNG完整性回歸](../../internal/asset/export_catalog_test.go)。
 - [標題與匯出收據核對器](../../tools/scripts/title_asset_receipt.py)與[完整驗證來源](data/title-asset-receipts.json)。
+
+## 第97輪標題玩家流程
+
+- [計畫97](../goal/2026-10-05-title-player-round-97.md)與[原始載入器IDA匯出](../../tools/scripts/title_loader_ida.py)，沿#68量末端等待再接正式玩家路徑。
+- [等待與重播研究431](../re/431-title-player.md)、[玩家規格112](../spec/112-title-player.md)與[玩家驗收086](../playtest/086-title-player.md)。
+- [正式標題流程](../../internal/game/title.go)、[正常bootstrap驗收](../../internal/bootstrap/title_player_test.go)與[app配樂續接回歸](../../cmd/gin3/title_player_test.go)。
+- [正常60 Hz GUI流程](../../tools/scripts/title_player_gui.py)，沿用[完整X11擷取器](../../tools/scripts/fleet_player_gui_capture.go)核圖。
+- [原版全圖與區域比較器](../../tools/scripts/title_player_compare.go)保存未縮放頁面、補邊及差分。
+- [分級定位索引](data/title-player-annotations.json)合併進原始IDA匯出，保留原始bytes與未知警示。
+- [完整來源核對器](../../tools/scripts/title_player_receipt.py)與[完整玩家來源](data/title-player.json)。

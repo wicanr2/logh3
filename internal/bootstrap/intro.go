@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -39,5 +40,41 @@ func LoadIntro(res *game.Resources, orig string) error {
 		return err
 	}
 	res.Intro, res.IntroPal = dec, pal
+	if tailRGB, err := os.ReadFile(filepath.Join(orig, "TITSPT.RGB")); err == nil {
+		tailPal, err := screen.IntroPalette(tailRGB)
+		if err != nil {
+			return fmt.Errorf("TITSPT.RGB: %w", err)
+		}
+		res.IntroTailPal = &tailPal
+	} else if !os.IsNotExist(err) {
+		return err
+	}
+	res.IntroRestart = func() (asset.IntroPlayer, error) {
+		return asset.NewIntroPlaybackDecoder(data, lengths)
+	}
+	// 112：標題缺檔仍沿020進主選單；完整但損壞不能當作缺檔。
+	titleData, err := os.ReadFile(filepath.Join(orig, "SPTIT.350"))
+	if os.IsNotExist(err) {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	titleRGB, err := os.ReadFile(filepath.Join(orig, "SPTIT.RGB"))
+	if os.IsNotExist(err) {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	title, err := asset.DecodeTitle350(titleData)
+	if err != nil {
+		return err
+	}
+	titlePal, err := screen.IntroPalette(titleRGB)
+	if err != nil {
+		return fmt.Errorf("SPTIT.RGB: %w", err)
+	}
+	res.Title, res.TitlePal = title, titlePal
 	return nil
 }

@@ -73,7 +73,7 @@ func TuneFor(st game.State, faction int, s Settings) string {
 		return ""
 	}
 	switch st {
-	case game.StateIntro:
+	case game.StateIntro, game.StateTitle:
 		return "OPEN_M"
 	case game.StateMainMenu, game.StateCopyProtection:
 		return ""

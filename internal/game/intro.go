@@ -9,10 +9,10 @@ import (
 
 // 開頭動畫（`docs/spec/020`）。
 //
-// 原版的路徑是 `GIN3.COM` → `OPEN.EXE` → 主選單，動畫那一段在
+// 原版的路徑是 `GIN3.COM` → `OPEN.EXE`動畫與標題 → 主選單，動畫那一段在
 // `OPEN.EXE` 裡跑：mode 10h（640×350）、來源 374 格（一格四個 plane），
 // 原版玩家可見序列是 421 格。
-// remake 這一側把它接在主選單前面，素材缺一個就整段跳過。
+// remake 接在主選單前面；自然播完依112顯示標題，輸入跳過直接進主選單。
 //
 // **播的是原版的分塊順序。** dosgolem 收據證明原版顯示 0–348、略過
 // 349，再把 350–373 播三趟；`asset.IntroPlaybackDecoder` 封裝這個
@@ -30,7 +30,7 @@ func (g *Game) startIntro() error {
 	g.introPage = screen.IntroPage(g.res.Intro)
 	g.introFrame = 0
 	// 第 0 格已經畫出；下一次等待是切到第 1 格之前的時程。
-	g.introLeft = screen.IntroFrameIntervalAt(1)
+	g.introLeft = g.introNextInterval()
 	g.state = StateIntro
 	return nil
 }
@@ -116,32 +116,56 @@ func (g *Game) Tick(d time.Duration) {
 		g.engagementTick(n)
 		return
 	}
-	if g.state != StateIntro {
+	if g.state != StateIntro && g.state != StateTitle {
 		return
 	}
 	g.introLeft -= d
 	for g.introLeft <= 0 {
+		if g.state == StateTitle {
+			remainder := -g.introLeft
+			if !g.replayIntro() {
+				g.SkipIntro()
+				return
+			}
+			g.introLeft -= remainder
+			continue
+		}
 		ok, err := g.res.Intro.Next()
-		if err != nil || !ok {
-			// 播完（或解不下去）就進主選單。
+		if err != nil {
 			g.SkipIntro()
 			return
+		}
+		if !ok {
+			if g.res.Title == nil {
+				g.SkipIntro()
+				return
+			}
+			g.introPage = g.res.Title
+			g.state = StateTitle
+			g.introLeft += TitleWaitDuration
+			continue
 		}
 		g.introFrame++
 		g.introPage = screen.IntroPage(g.res.Intro)
 		// IntroTicksToFrame 的量測定義是「切到該格之前」；目前已切到
 		// introFrame，所以累加下一格的等待。
-		g.introLeft += screen.IntroFrameIntervalAt(g.introFrame + 1)
+		g.introLeft += g.introNextInterval()
 	}
 }
 
 // Palette 回目前畫面用的調色盤。
 //
-// 開頭動畫是自己的一組灰階（`BU16IBM.RGB`），與遊戲本體那組不同，
+// 開頭動畫先用BU16IBM、尾段用TITSPT、標題用SPTIT，與遊戲本體不同，
 // 所以顯示層要每格問一次，不能開機時抓一份用到底。
 func (g *Game) Palette() gfx.Palette {
 	if g.state == StateIntro {
+		if g.introFrame >= 349 && g.res.IntroTailPal != nil {
+			return *g.res.IntroTailPal
+		}
 		return g.res.IntroPal
+	}
+	if g.state == StateTitle {
+		return g.res.TitlePal
 	}
 	if g.state == StateEngagement && g.res.FleetPresentation != nil {
 		return g.res.FleetPresentation.Palette

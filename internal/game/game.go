@@ -200,6 +200,8 @@ const (
 	StateTurnThinking
 	// 088：點存檔後選帝國／同盟／對戰；追加以保留既有狀態編號。
 	StateLoadFaction
+	// StateTitle 是動畫自然播完後的標題頁（規格112）。
+	StateTitle
 )
 
 // String 回穩定的狀態名稱，供日誌與 GUI 黑箱收據使用。狀態值仍保留給程式
@@ -226,7 +228,7 @@ func (s State) String() string {
 		"StateFleetOccupyWarn", "StateFleetChangeMenu", "StateFleetChangeAdj", "StateFleetChangeOrg",
 		"StateRegionInfo", "StateOccupyAsk", "StateEngagement", "StateTurnWindow",
 		"StateTurnReport", "StateTurnThinking",
-		"StateLoadFaction",
+		"StateLoadFaction", "StateTitle",
 	}
 	if int(s) >= 0 && int(s) < len(names) {
 		return names[s]
@@ -543,8 +545,13 @@ type Resources struct {
 	// Intro 是開頭動畫的解碼器（`IBM16.350` ＋ `IBMFLS16.350`），
 	// IntroPal 是它的調色盤（`BU16IBM.RGB`）。**nil ＝ 直接從主選單開始**
 	// ——測試與對拍腳本都不帶開頭動畫，帶了整條輸入序列就會位移。
-	Intro    asset.IntroPlayer
-	IntroPal gfx.Palette
+	Intro        asset.IntroPlayer
+	IntroPal     gfx.Palette
+	IntroTailPal *gfx.Palette
+	// 112：標題逾時由唯讀來源建立全新的動畫，避免重用XOR累加。
+	IntroRestart func() (asset.IntroPlayer, error)
+	Title        *asset.Image
+	TitlePal     gfx.Palette
 
 	// Weights 是戰力權重表（原版的 `ds:6032`，`docs/re/79`）。
 	// nil ＝ 算不出戰力，AI 退回「每支艦隊算 1」。
@@ -2329,7 +2336,7 @@ func (g *Game) setHoverRegion(r int) {
 // ——它曾經在改寫命令列時掉過，42 份收據因此重跑出另一個畫面
 // （`docs/re/282`）。
 func (g *Game) moveBeforePress(x, y int) {
-	if g.state == StateIntro {
+	if g.state == StateIntro || g.state == StateTitle {
 		return // 動畫期間任何輸入都是「跳過」，沒有游標語意
 	}
 	g.MoveMouse(x, y)
@@ -2382,7 +2389,7 @@ func (g *Game) Click(x, y int) {
 }
 
 func (g *Game) click(x, y int) {
-	if g.state == StateIntro {
+	if g.state == StateIntro || g.state == StateTitle {
 		g.SkipIntro()
 		return
 	}
@@ -2841,6 +2848,9 @@ func (g *Game) RightClick(x, y int) {
 }
 
 func (g *Game) rightClick(x, y int) {
+	if g.state == StateTitle {
+		return
+	}
 	if g.state == StateIntro {
 		g.SkipIntro()
 		return
@@ -3328,7 +3338,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		g.drawSpecStaff(fb, g.res.ShipOrder)
 		g.drawShipOrder(fb)
 		return fb
-	case StateIntro:
+	case StateIntro, StateTitle:
 		return screen.IntroScreen(g.introPage)
 	case StateEnding:
 		return screen.Ending(g.ending)

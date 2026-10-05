@@ -30,12 +30,13 @@ import (
 )
 
 type app struct {
-	g       *game.Game
-	pal     [gfx.Colors]color.RGBA
-	screen  *ebiten.Image
-	music   musicPlayback
-	effects effectPlayback
-	buf     []byte
+	g          *game.Game
+	pal        [gfx.Colors]color.RGBA
+	screen     *ebiten.Image
+	music      musicPlayback
+	musicState game.State
+	effects    effectPlayback
+	buf        []byte
 
 	shot      string
 	shotBin   string
@@ -78,6 +79,12 @@ func (a *app) musicSettings() audio.Settings {
 // syncMusic 把目前遊戲狀態同步到播放器。獨立成一支是為了讓沒有音效裝置的
 // 容器仍能驗正式 app 與 Game 的接線，不用拿合成音訊冒充人耳驗收。
 func (a *app) syncMusic() error {
+	st := a.g.State()
+	// 112：原版標題逾時會重新讀OPEN_M；同曲也必須從頭播放。
+	if a.musicState == game.StateTitle && st == game.StateIntro {
+		a.music.Stop()
+	}
+	a.musicState = st
 	tune := a.tuneFor()
 	if tune == "" {
 		a.music.Stop()
@@ -90,8 +97,7 @@ func (a *app) Update() error {
 	// 正式播放器完成才允許下一音效及圖段首格（規格105）。
 	// 只看名義時長會在更新追趕時關掉仍有樣本的播放器。
 	a.g.SetSoundEffectPlaying(a.effects != nil && a.effects.Busy())
-	// 時間往前走一格。目前只有開頭動畫在用（一格 125.3 ms，
-	// `docs/spec/020`）；其他畫面都是事件驅動的。
+	// 時間往前走一格；Game統一推進動畫、標題等待及回合演出。
 	a.g.Tick(time.Second / time.Duration(ebiten.TPS()))
 	if a.music != nil {
 		if err := a.syncMusic(); err != nil {
@@ -178,8 +184,8 @@ func (a *app) dump() error {
 	if a.stateOut != "" {
 		windowW, windowH := ebiten.WindowSize()
 		x, y := ebiten.CursorPosition()
-		receipt := fmt.Sprintf("state=%s\nwindow=%dx%d\ncursor=%d,%d\ncursor_mode=%d\n",
-			a.g.State(), windowW, windowH, x, y, ebiten.CursorMode())
+		receipt := fmt.Sprintf("state=%s\nwindow=%dx%d\ncursor=%d,%d\ncursor_mode=%d\nupdates=%d\nintro_frame=%d\n",
+			a.g.State(), windowW, windowH, x, y, ebiten.CursorMode(), a.ticks, a.g.IntroFrame())
 		if err := os.WriteFile(a.stateOut, []byte(receipt), 0o644); err != nil {
 			return err
 		}

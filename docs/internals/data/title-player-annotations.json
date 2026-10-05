@@ -1,0 +1,17 @@
+{
+  "schema": "logh3.title-player-annotations.v1",
+  "input_sha256": "0138b89c7e5dbd9bcf708630921835806d01e712d5c8ad7c1d9bbb1b78fb3674",
+  "address_space": "4096-byte runtime loader dump file offset; IDA EA and runtime CS:IP remain separate export fields",
+  "source": "docs/re/431-title-player.md; native waits-b/c and timeout-a/b at dosgolem f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "annotations": [
+    {"file_offset": "0538", "bytes": "b87e04", "semantic": "尾段趟末等待參數1150", "level": "proven"},
+    {"file_offset": "05EE", "bytes": "b8d007", "semantic": "三趟尾段完成後等待參數2000", "level": "proven"},
+    {"file_offset": "06F9", "bytes": "b90000", "semantic": "CRTC顯示頁起始位址0", "level": "proven"},
+    {"file_offset": "0706", "bytes": "b82823", "semantic": "標題等待參數9000", "level": "proven"},
+    {"file_offset": "0713", "bytes": "7477", "semantic": "左鍵返回0後跳清理離場", "level": "proven"},
+    {"file_offset": "0776", "bytes": "e9daf9", "semantic": "無左鍵逾時後重入動畫迴圈", "level": "proven"},
+    {"file_offset": "091E", "bytes": "bb0000", "semantic": "INT33功能5只查左鍵按下次數", "level": "proven"},
+    {"file_offset": "0B3E", "bytes": "741a", "semantic": "無左鍵繼續檢查倒數", "level": "proven"},
+    {"file_offset": "0B5E", "bytes": "26833e060103", "semantic": "倒數不大於3時返回逾時", "level": "proven"}
+  ]
+}
