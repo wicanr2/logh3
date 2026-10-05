@@ -900,3 +900,11 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [來源核對器](../../tools/scripts/battle_reinforcement_receipt.py)核對原始收據、占領等待及存讀狀態。
 - [唯一來源索引](data/battle-reinforcement.json)凍結正常雙人增援、勝後占領及公開存讀的輸入與輸出，保留未完成GUI批次及原始標籤勘誤。
 - [驗證102](../playtest/102-battle-reinforcement.md)保存正式資源缺項、失敗分類及實際勝後占領範圍。
+
+## 第115輪自然功績接續
+
+- [計畫115](../goal/2026-10-06-battle-natural-promotion-round-115.md)沿#79補正常升級、軍階UI與存讀，108限定CONFORMED。
+- [正常接續探針](../../tools/scripts/battle_natural_promotion_probe.py)從第114輪公開存檔走正式載入、艦隊命令及戰術實行，不注入功績。
+- [驗證103](../playtest/103-battle-natural-promotion.md)保存實際選單門檻、未形成戰場與自然升級接續的證據限制。
+- [正式入口與GUI重播](../../tools/scripts/battle_natural_promotion_replay.py)核對自然升級報告、軍階視窗及公開存讀。
+- [來源核對器](../../tools/scripts/battle_natural_promotion_receipt.py)凍結本輪輸入、全圖及六檔存讀，保存於[唯一來源索引](data/battle-natural-promotion.json)。
