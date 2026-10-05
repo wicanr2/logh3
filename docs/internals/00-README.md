@@ -1,5 +1,13 @@
 # 原版內部構造參考
 
+第109輪沿 [#48](https://github.com/wicanr2/logh3/issues/48)：[登陸完整單幀計畫](../goal/2026-10-06-landing-frame-round-109.md)。
+[IDA caller匯出器](../../tools/scripts/landing_frame_ida.py)只開新暫存資料庫，核文字與行星下方的原始位址及指令。
+[typed輸入探針](../../tools/scripts/landing_frame_prepare.py)與[單幀合成探針](../../tools/scripts/landing_frame_probe.go)沿118 DRAFT核全圖，不接正式Game。
+[分支產生器](../../tools/scripts/landing_frame_branch_prepare.py)、[觀察器](../../tools/scripts/landing_frame_native.go)、[原版雙跑](../../tools/landing_frame_branch_oracle.sh)與[容器入口](../../tools/landing_frame_branch_native_run.sh)補先反擊、帝國及雙名冊的明示診斷。
+[r2觀察器](../../tools/scripts/landing_frame_native_r2.go)補第二攻方的行星目標；r1只消費第一支的收據保留。
+[研究437](../re/437-landing-frame.md)、[驗證097](../playtest/097-landing-frame.md)與[完整來源](data/landing-frame.json)保存十八張全圖及新分支；118保持DRAFT。
+[凍結核對器](../../tools/scripts/landing_frame_receipt.py)重核原版雙跑、十八張完整圖、色盤、原始指令及歷史118身份。
+
 第108輪沿 [#48](https://github.com/wicanr2/logh3/issues/48)：[登陸攻擊計畫](../goal/2026-10-05-landing-scene-round-108.md)。
 [原版入口](../../tools/landing_scene_oracle.sh)、[容器內入口](../../tools/landing_scene_native_run.sh)與[完整流程觀察器](../../tools/scripts/landing_scene_native.go)使用專用dosgolem，明示注入，拒絕覆寫舊收據。
 [IDA 有界匯出器](../../tools/scripts/landing_scene_ida.py)只開新暫存資料庫，保留原始位址與指令，語意另審。
