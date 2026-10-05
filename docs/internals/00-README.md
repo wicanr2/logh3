@@ -803,3 +803,9 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [正常60 Hz真實GUI驗證](../../tools/scripts/scout_player_gui.py)沿用正式視窗、X11事件與完整畫面擷取。
 - [報告游標研究435](../re/435-scout-player-report-cursor.md)、[玩家驗證089](../playtest/089-scout-player.md)及[完整來源](data/scout-player.json)。
 - [差分與來源核對器](../../tools/scripts/scout_player_receipt.py)保存修正前後全圖與報告矩形，不隱藏背景差異。
+
+## 第102輪正式60 Hz戰鬥長流程
+
+- [計畫102](../goal/2026-10-05-battle-lifecycle-60hz-round-102.md)與[目前程式重播工具](../../tools/scripts/battle_lifecycle_60hz.py)，沿#79補正常全滅、敗退及公開存讀的正式更新頻率。
+- [完整收據核對器](../../tools/scripts/battle_lifecycle_60hz_receipt.py)核對獨立雙跑、實際每更新TPS、原生畫面及六檔公開存讀。
+- [玩家驗證090](../playtest/090-battle-lifecycle-60hz.md)及[完整來源](data/battle-lifecycle-60hz.json)保存範圍與限制。

@@ -5,7 +5,8 @@
 第92輪正式規則與Game已接線，尚未CONFORMED。
 目前實作父提交為`8b8b2d73a9e634537ad0c4b67daab53b8d024866`。
 67案完整六表／清單／seed、50報告矩形及六案保存重讀通過，見[081](../playtest/081-battle-finish-game.md)。
-正常自然勝利／占領GUI及完整062整回合同態仍待驗。
+目前正常自然勝利／全滅及公開存讀已有[第102輪正式60 Hz驗證](../playtest/090-battle-lifecycle-60hz.md)。
+正常占領GUI及完整062原版整回合同態仍待驗，本規格保持READY。
 證據見[研究423](../re/423-battle-finish.md)、[驗證078](../playtest/078-battle-finish.md)
 與[分級事實及來源](../internals/data/battle-finish.json)。完整[062](062-battle-turn-eight-steps.md)保持DRAFT。
 
