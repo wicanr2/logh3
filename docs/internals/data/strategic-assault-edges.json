@@ -1,0 +1,780 @@
+{
+  "schema": "logh3.strategic-assault-edges.v1",
+  "issue": 56,
+  "date": "2026-10-05",
+  "parent_commit": "46dabcb9aa5e7a38225c1281a8c12425a55de6c4",
+  "remake_dirty": true,
+  "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+  "dosgolem_dirty": false,
+  "go_image": "golang:1.24-bookworm",
+  "gui_image": "logh3-ebiten:2",
+  "spec115": "DRAFT",
+  "production_changed": false,
+  "guard_queries": 21,
+  "terrain_queries": 555,
+  "blocked_queries": 6,
+  "effect_bytes_near_vs_out": {
+    "admiral": 2,
+    "fleet": 2,
+    "lists": 0,
+    "planet": 1,
+    "ship": 26,
+    "stellar": 0,
+    "work": 3
+  },
+  "model_rows": 10,
+  "probe_with_terrain_zero_difference_rows": 5,
+  "scope": "原版明示戰略診斷；正式typed反例及/tmp守軍修法，不含完整原池／正式Game／正常戰後清單生命週期",
+  "frames": [
+    {
+      "name": "empty",
+      "kind": "png",
+      "path": "workplace/assault56-r99-frames/empty.png",
+      "sha256": "cf2854a129b6a0f33dbe20c42bdd5a4325a0e37d07cd02f050083a849fa4f85c"
+    },
+    {
+      "name": "empty",
+      "kind": "screen",
+      "path": "workplace/assault56-r99-frames/empty.bin",
+      "sha256": "044d146671b3712b482f7d5eee88430608352a176a1e189d90992bce3463430f"
+    },
+    {
+      "name": "empty",
+      "kind": "palette_rgb",
+      "path": "workplace/assault56-r99-frames/empty-rgb16.bin",
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    {
+      "name": "near",
+      "kind": "png",
+      "path": "workplace/assault56-r99-frames/near.png",
+      "sha256": "cf2854a129b6a0f33dbe20c42bdd5a4325a0e37d07cd02f050083a849fa4f85c"
+    },
+    {
+      "name": "near",
+      "kind": "screen",
+      "path": "workplace/assault56-r99-frames/near.bin",
+      "sha256": "044d146671b3712b482f7d5eee88430608352a176a1e189d90992bce3463430f"
+    },
+    {
+      "name": "near",
+      "kind": "palette_rgb",
+      "path": "workplace/assault56-r99-frames/near-rgb16.bin",
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    {
+      "name": "out",
+      "kind": "png",
+      "path": "workplace/assault56-r99-frames/out.png",
+      "sha256": "cf2854a129b6a0f33dbe20c42bdd5a4325a0e37d07cd02f050083a849fa4f85c"
+    },
+    {
+      "name": "out",
+      "kind": "screen",
+      "path": "workplace/assault56-r99-frames/out.bin",
+      "sha256": "044d146671b3712b482f7d5eee88430608352a176a1e189d90992bce3463430f"
+    },
+    {
+      "name": "out",
+      "kind": "palette_rgb",
+      "path": "workplace/assault56-r99-frames/out-rgb16.bin",
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    {
+      "name": "far",
+      "kind": "png",
+      "path": "workplace/assault56-r99-frames/far.png",
+      "sha256": "cf2854a129b6a0f33dbe20c42bdd5a4325a0e37d07cd02f050083a849fa4f85c"
+    },
+    {
+      "name": "far",
+      "kind": "screen",
+      "path": "workplace/assault56-r99-frames/far.bin",
+      "sha256": "044d146671b3712b482f7d5eee88430608352a176a1e189d90992bce3463430f"
+    },
+    {
+      "name": "far",
+      "kind": "palette_rgb",
+      "path": "workplace/assault56-r99-frames/far-rgb16.bin",
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    {
+      "name": "terrain",
+      "kind": "png",
+      "path": "workplace/assault56-r99-frames/terrain.png",
+      "sha256": "cf2854a129b6a0f33dbe20c42bdd5a4325a0e37d07cd02f050083a849fa4f85c"
+    },
+    {
+      "name": "terrain",
+      "kind": "screen",
+      "path": "workplace/assault56-r99-frames/terrain.bin",
+      "sha256": "044d146671b3712b482f7d5eee88430608352a176a1e189d90992bce3463430f"
+    },
+    {
+      "name": "terrain",
+      "kind": "palette_rgb",
+      "path": "workplace/assault56-r99-frames/terrain-rgb16.bin",
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    }
+  ],
+  "original_inputs": {
+    "GIN3.COM": {
+      "bytes": 622,
+      "sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918"
+    },
+    "MAP00.CMP": {
+      "bytes": 3645,
+      "sha256": "33af45339476fed95a3d3b444d7fedd39d14f6018d6eafaa900d901426956a0f"
+    },
+    "MAP01.CMP": {
+      "bytes": 5099,
+      "sha256": "1d867eee9c32d6edb534e39bdc5f449f8f2d6ed0c2c4e0cb28f88ec178f20860"
+    },
+    "MAP02.CMP": {
+      "bytes": 5440,
+      "sha256": "dccd3a151b76948cff286237f0c4adfdd2d7db09ba5403c2bd3b65518a412726"
+    },
+    "MAP03.CMP": {
+      "bytes": 4978,
+      "sha256": "9377e80186547119927bb37e3ef54d7f4bf257e70ef76b6d43453f8012d12d69"
+    },
+    "MAP04.CMP": {
+      "bytes": 5242,
+      "sha256": "9cd967b055a8d4744326cb24c7d45c9d1f6712f6ff245fdcb6571f587fe3d121"
+    },
+    "MAP05.CMP": {
+      "bytes": 3634,
+      "sha256": "621965dc4fdbcf4134a6a49e11da4750f0139d4f1ea1235845a85a855efd55a3"
+    },
+    "MAP06.CMP": {
+      "bytes": 3869,
+      "sha256": "67fb7c52abd6c6a86969a1cba416330c3fdadfff4e3e6b30bdc2fe9d9f3ae84f"
+    },
+    "MAP07.CMP": {
+      "bytes": 3382,
+      "sha256": "d0b44d193409fb88362af4924a1b4ce5128f476f2bb4cf36fa41c41062037755"
+    },
+    "MAP08.CMP": {
+      "bytes": 3515,
+      "sha256": "7552c9b42bc4219f8ede5931682d9b2dee4893919eec12bc6c99e8077a8e8f4f"
+    },
+    "MAP09.CMP": {
+      "bytes": 4481,
+      "sha256": "94ac77ee7dfbcda11e39ecf600c9b647274873977d3bbab21bbc9864675cdde3"
+    },
+    "MAP10.CMP": {
+      "bytes": 3845,
+      "sha256": "727f21539484337edb052a68344745fe317b415465ea288ec761ec98a00d41e6"
+    },
+    "MAP11.CMP": {
+      "bytes": 2893,
+      "sha256": "e8c02726fff65c7e09baffc44a0d9c5bcb8b610ff42496d1d79eef8e41219460"
+    },
+    "MAP12.CMP": {
+      "bytes": 3575,
+      "sha256": "fbf499075e19f34c8a2cc30315baa6e5378ea92109c4da694206ed892b3bf3f2"
+    },
+    "MAP13.CMP": {
+      "bytes": 9118,
+      "sha256": "8ba697a8ac63a9486d4175cc9608b7504cc39ff9d6818099f0acfae1fa5d3450"
+    },
+    "MAP14.CMP": {
+      "bytes": 8799,
+      "sha256": "8198667d42a9bfa3b179366f29cbf09920604639dcd0025d401e1d8f1d899c4f"
+    },
+    "MAP15.CMP": {
+      "bytes": 3814,
+      "sha256": "24e28dcbc39617ab27316a9ea4fa5f7e71f81330f793f3930d2bd95e028ccb0c"
+    },
+    "MAP16.CMP": {
+      "bytes": 3094,
+      "sha256": "c4e6d80e6c04e01664f5845933f77a273e84a4d9e94164734dcdda563cefede3"
+    },
+    "MAP17.CMP": {
+      "bytes": 4207,
+      "sha256": "bcef22376a820c09ab343b70bf7c4c64c93e387e0a8f230053061c8739490e8b"
+    },
+    "MAP18.CMP": {
+      "bytes": 4059,
+      "sha256": "f7dd39a8d0dc23ad96c73955fcd0ccfdc3dae0880dc70d628735a9e989bc567f"
+    },
+    "MAP19.CMP": {
+      "bytes": 4973,
+      "sha256": "1b45618259c57df39374fc4ff9f0252a3eeb0165e29a35c487acd1c0d519d9ee"
+    },
+    "MAP20.CMP": {
+      "bytes": 5943,
+      "sha256": "d387bd1aee1dd717f03f541b25b66420a488f2a99c7534788edd4314b21d5953"
+    },
+    "MAP21.CMP": {
+      "bytes": 4393,
+      "sha256": "c91aa8b7f7d25cc2bfbe00e62591c3d441ee4305db66304157251fcde09def92"
+    },
+    "MAP22.CMP": {
+      "bytes": 1477,
+      "sha256": "d6e94fa55d832b2f2120cdd1fe45d114f251b3a04f6edea14448d5fb87310161"
+    },
+    "MAP23.CMP": {
+      "bytes": 5496,
+      "sha256": "f6e948f3bbecc9351c9c647df3c588f9aba4989fe997186bacbc62751a3df597"
+    },
+    "MAP24.CMP": {
+      "bytes": 4553,
+      "sha256": "c82ae7f3efa8ef13a17dc3d49c78851444f2e595ff039e7a6fa7e773913acec9"
+    },
+    "MAP25.CMP": {
+      "bytes": 4638,
+      "sha256": "36126bbbc1d81f54dc7228da0763550f38f8f6d67d20798e1cce77f8230f89cf"
+    },
+    "MAP26.CMP": {
+      "bytes": 6831,
+      "sha256": "ecde15e595b40c7367f4a0d0dabc627a6f0b75befb122ad7554cff6a3f18814d"
+    },
+    "MAP27.CMP": {
+      "bytes": 4708,
+      "sha256": "03eedf374918c88d70c22538e0fa5ef936a28132a015debaade66214f983d79f"
+    },
+    "MAP28.CMP": {
+      "bytes": 3559,
+      "sha256": "e242d4aa141ce6fa820645d912b65ab27086f9ff2110e7158f18032181cfeac4"
+    },
+    "MAP29.CMP": {
+      "bytes": 5710,
+      "sha256": "e1d84db4500fd02edfdc869e770e2c2d5d2b013f177e5cb85e0f8f51f6c4cce9"
+    },
+    "MAP30.CMP": {
+      "bytes": 5631,
+      "sha256": "293f1c08c005bd3b7bbe51cac6f81f38b0d0d167935271b034b212669d5f6181"
+    },
+    "MAP31.CMP": {
+      "bytes": 3364,
+      "sha256": "42e0cda3c384432d2da4135750acb108ffa08b35a560bb1941381eadbc878a36"
+    }
+  },
+  "sources": {
+    "docs/goal/2026-10-05-strategic-assault-edges-round-99.md": {
+      "bytes": 803,
+      "sha256": "d2d47c0ad268172f22c25039b92d237ec9003367ab67c83402bca23ec4b43114"
+    },
+    "docs/internals/53-strategic-planet-assault.md": {
+      "bytes": 8418,
+      "sha256": "f0ab356b1d7c432b6ade234ef3d00aa9d9bdd9cc01c5d6deb566ccb861552d1f"
+    },
+    "docs/internals/data/battle-finish-attack.json": {
+      "bytes": 973277,
+      "sha256": "f86addff014a16d11b8ef08add360f0910bf082414260c43675774b0bad8b358"
+    },
+    "docs/internals/data/battle-formation-slots.json": {
+      "bytes": 2285,
+      "sha256": "dbe90507aaa5a2638666cd41cfeeca9824000b70c88193e695c12f527aa74196"
+    },
+    "docs/internals/data/battle-terrain.json": {
+      "bytes": 9563,
+      "sha256": "ca77ebb8db3db1f50ddeaf3561ce9f61bf19f943f46cb244ab21922a986a5a4b"
+    },
+    "docs/internals/data/settings-interface.json": {
+      "bytes": 182293,
+      "sha256": "cba8f1a7a15018e02d75cb62b9feb2f567900c694cdcf1ea7817de16b71f0f0b"
+    },
+    "docs/re/433-strategic-assault-edges.md": {
+      "bytes": 3738,
+      "sha256": "af259aef5a40da7b0f805a28028e637d2acfc7a774035c10514b5632b3392cbb"
+    },
+    "docs/spec/058-strategic-planet-assault.md": {
+      "bytes": 4647,
+      "sha256": "d0d6ac7b650c9ff5370338ccba9871932115027817649dc2c349e6c494583a2f"
+    },
+    "docs/spec/115-strategic-assault-guard.md": {
+      "bytes": 1325,
+      "sha256": "6ba4557dba64d803fd9bc5befdb4d0299468f510d5d6cbd33fc269c03bcf10eb"
+    },
+    "go.mod": {
+      "bytes": 543,
+      "sha256": "004db62f790d7f65470065deaab9c94668d1c29278d8dce0597ca2c5d1ff7dcd"
+    },
+    "go.sum": {
+      "bytes": 1770,
+      "sha256": "a70d74071b28ff11f401f2813c2d511ead23dd468ad32731c49fe7a63ec7b7ab"
+    },
+    "internal/asset/amg.go": {
+      "bytes": 4456,
+      "sha256": "e0e316b7f56864a63b417986ecf782512937a0716224d584cdce64ca744f2f5c"
+    },
+    "internal/asset/bmg.go": {
+      "bytes": 6485,
+      "sha256": "e1b5cb4c5eb310bc2a4200f32a3534f42bc008452ba51e0a85c644ffaa9d9e14"
+    },
+    "internal/asset/cmp.go": {
+      "bytes": 1247,
+      "sha256": "e52cdfedfbcdac614e5e59ff7a06f606ad0090d688726769dd4659f81eac3360"
+    },
+    "internal/asset/fleet_scene.go": {
+      "bytes": 1551,
+      "sha256": "b6b12c7ef6ee2b22e3a0d53c57d37df107dd2dcda43888f5eae09958eb7e692f"
+    },
+    "internal/asset/intro.go": {
+      "bytes": 8901,
+      "sha256": "5a30b2604316105fa808823e462f3eeec609971c3372419f074e534fdbcddf92"
+    },
+    "internal/asset/mds.go": {
+      "bytes": 4498,
+      "sha256": "9b366d9c0114dcfaf3f35ce5cfe0a24231646163f4f02a382320ab35cccc525b"
+    },
+    "internal/asset/oggserial.go": {
+      "bytes": 1920,
+      "sha256": "97208fd8a9f47a4be5358bd5115cf3fa073cab00c75c95482748c3c6fa4c5e88"
+    },
+    "internal/asset/rgn.go": {
+      "bytes": 3813,
+      "sha256": "90cbd4e2e049d1a1ec0b6b6dc32b1d22d34cf96d750ad8e7cfab87d1be06e3f7"
+    },
+    "internal/asset/spr.go": {
+      "bytes": 2942,
+      "sha256": "cdbe34e90e915b8db4e7e875ad84b371135d07f38d9d31277d384517fa8dfd7d"
+    },
+    "internal/asset/svf.go": {
+      "bytes": 2693,
+      "sha256": "fd7f04011e16d034b7da1cdd754ad9e2ea2e1c928f890f984ebacec45bdf71dd"
+    },
+    "internal/asset/title.go": {
+      "bytes": 1828,
+      "sha256": "eb414a77f7b9c16da1f7bb360eeaa567addc94b3d43028f3eeb8bbbd72e58455"
+    },
+    "internal/asset/vo5.go": {
+      "bytes": 3017,
+      "sha256": "112e44409c5ca347e1a5d6e35fc913dba82f9b4f441a204fb48f76a5a83e104f"
+    },
+    "internal/gfx/framebuffer.go": {
+      "bytes": 2342,
+      "sha256": "c67c364b7cffe72704629c27f85a1c6798072378676e40842edd247f40ad32c0"
+    },
+    "internal/gfx/png.go": {
+      "bytes": 1129,
+      "sha256": "c85d575cc0fe0da383b7734db46f8a92a5f0c819ad4ea722e2e4f527030df1e5"
+    },
+    "internal/rules/ability.go": {
+      "bytes": 1541,
+      "sha256": "7845a74a05301cc9309e776e73d50bc230d0c676c8399fb1e2e7b749cc56cb1e"
+    },
+    "internal/rules/admiral.go": {
+      "bytes": 12290,
+      "sha256": "fb208164bb00aea3c0c2ad8b4a1ed6231272657a9ad9acb875995385a3681d1d"
+    },
+    "internal/rules/admiral_fate.go": {
+      "bytes": 1710,
+      "sha256": "e9332f830ca68761ca355f58fb73e4f32d75acbd86815d4460d010c7c3ee0e9c"
+    },
+    "internal/rules/admiralsort.go": {
+      "bytes": 2680,
+      "sha256": "c55ee72ee43889dda53926c7098eb488e75c4cb11b285ab54b0065d62ef8b409"
+    },
+    "internal/rules/annihilation.go": {
+      "bytes": 3470,
+      "sha256": "b7ed6cc4b4931518c9d849152e2d60a7faa2023d1cfe1048ca8c97a995e8a0cf"
+    },
+    "internal/rules/attackcoef.go": {
+      "bytes": 2060,
+      "sha256": "9d8717b7d1fa6bef5bb14019ff3769f435a0ca3fe867baceb9c83e36c0e36d33"
+    },
+    "internal/rules/battle.go": {
+      "bytes": 18891,
+      "sha256": "eacde8475683afb84626a1e024c4b61af8a9b64939379c2eeb939a83d3844d41"
+    },
+    "internal/rules/battlecleanup.go": {
+      "bytes": 1663,
+      "sha256": "1f9bddd9ff0bfee0b73ec94cac39d25026573d1f3944c9a6db26435bf6e9dc91"
+    },
+    "internal/rules/battlefinish.go": {
+      "bytes": 13832,
+      "sha256": "b437ec7a86449b831ffd8ec4c7ecca79424ddc089fc993bdb75fc46c1f1b4897"
+    },
+    "internal/rules/battlemarker.go": {
+      "bytes": 983,
+      "sha256": "f0f0607f3fa372467efc64ab1782f91d7122fcdf0f473efac5b7b1b4b2cad9e7"
+    },
+    "internal/rules/battlemovement.go": {
+      "bytes": 6475,
+      "sha256": "cdc39c24442d6ecc691de86d7656acd6ae02241422168b740eb2319d5e34895e"
+    },
+    "internal/rules/battleplanet.go": {
+      "bytes": 5176,
+      "sha256": "486c61d3c39283c9b822dc0c864c11a84fceb0e9bc627d7faf14d41fe661dcc8"
+    },
+    "internal/rules/battlepreparation.go": {
+      "bytes": 5696,
+      "sha256": "8c09be1cea2de9e9ff5fca632946695d3b9b4f5380f4c0596b40d12c824fdc70"
+    },
+    "internal/rules/battleview.go": {
+      "bytes": 1991,
+      "sha256": "c640659d7b916a499a7520c39238f6a3cb492ad4301d16a6b62ef3b1801132f1"
+    },
+    "internal/rules/budget.go": {
+      "bytes": 2712,
+      "sha256": "b1873794131f80d5e8a103fb50bb44620f252d17ab6ab341fb1942d7baa3706d"
+    },
+    "internal/rules/buildplan.go": {
+      "bytes": 8162,
+      "sha256": "d7978118efa86e7410f3d07aaf63d20caed8f8ea558f21d8c5819a2913324017"
+    },
+    "internal/rules/calendar.go": {
+      "bytes": 946,
+      "sha256": "c038a8de6b677b1784e02bce04ccfacc451fe6d173c79e802df512d5ff3c0ce1"
+    },
+    "internal/rules/entry.go": {
+      "bytes": 1679,
+      "sha256": "c0ec31b4c41f0f85a9bc3176dd4b1aee73e352a5278ffa1dd7e5a45c9d931f8d"
+    },
+    "internal/rules/fixed.go": {
+      "bytes": 2271,
+      "sha256": "e3540ee14e9c350b37df14b094ef7b178e4b457c70a0eb944c1d4bd890161df8"
+    },
+    "internal/rules/fleet.go": {
+      "bytes": 8797,
+      "sha256": "3dafbcb06dc6da7a54ec8e34cbaa78fd437338ec28c5cae9662011abe3ea7af3"
+    },
+    "internal/rules/fleetarrival.go": {
+      "bytes": 2013,
+      "sha256": "6d9c42038847bd0cbbd34f77026ce5804802ddf912f80b256ea295503eb9eab4"
+    },
+    "internal/rules/fleetauto.go": {
+      "bytes": 6246,
+      "sha256": "7672e7e8ceaffca0f33ead80e1676946db2b9bf4f01f182d65fd58ed21e787b1"
+    },
+    "internal/rules/fleetbuild.go": {
+      "bytes": 13909,
+      "sha256": "dc060d48d097e8a59d0487915b2892150a71b6e349c3799df8db388b36eb43b6"
+    },
+    "internal/rules/fleetcandidates.go": {
+      "bytes": 4577,
+      "sha256": "eaefa607e37297e0340fc735a1d422467953547e6e1ab8b2c639a226929dfff3"
+    },
+    "internal/rules/fleetcombat.go": {
+      "bytes": 8847,
+      "sha256": "6b7208a70fd896dda31852ec45d7061b8f5623b6f40c89142ee27ed93fb284cd"
+    },
+    "internal/rules/fleetcommandrange.go": {
+      "bytes": 748,
+      "sha256": "8d93c882929383dd3022682325f12b6d8979756e048cd01a8d870b962ef7477f"
+    },
+    "internal/rules/fleetedit.go": {
+      "bytes": 10458,
+      "sha256": "3f70f628904c7a36b26513b40e37279d8c2833f76ad13949fa05bb4e0d5ec9f5"
+    },
+    "internal/rules/fleetmove.go": {
+      "bytes": 10896,
+      "sha256": "ca4bcc2e22bc2f7b7672481dca4b0462f507f08997f5badfcdbd301d132b71a6"
+    },
+    "internal/rules/fleetprojection.go": {
+      "bytes": 3046,
+      "sha256": "e03e8b3a9d38350233bb8c957471cbf7767a6bd5b1cae5b0cb3c8de0b711f71a"
+    },
+    "internal/rules/fleetrefit.go": {
+      "bytes": 4604,
+      "sha256": "54f7ed72570291f58ff0f117e83abebdfd700680d6ad7fb63bc0f962333e1a93"
+    },
+    "internal/rules/fleetsave.go": {
+      "bytes": 8052,
+      "sha256": "386d240b3d3cd3cebd1ffeae0795be3c54f7ac35a26520d94fd44b54812ac40e"
+    },
+    "internal/rules/fleetslots.go": {
+      "bytes": 1088,
+      "sha256": "a42429a1138bfd4985e869238671bfddb57726120ec33c928962fa2b4c67a0a4"
+    },
+    "internal/rules/fleetstep.go": {
+      "bytes": 6908,
+      "sha256": "e2b3a25906d851992e49b35fa1be8684a210612331fad7592f37324f6d0b9aa3"
+    },
+    "internal/rules/formation.go": {
+      "bytes": 2153,
+      "sha256": "bdee271f5c79cfefceaa8d1658fd675cc8f87c03a028705d20f329b2da4f744f"
+    },
+    "internal/rules/fortressgun.go": {
+      "bytes": 8858,
+      "sha256": "40660ecca5ca33b623524ca2047eb09e61ddd134816f5bbeb8bb281f7675c6f4"
+    },
+    "internal/rules/growth.go": {
+      "bytes": 10459,
+      "sha256": "a60c5bc522d534f5c3d5da500b73b810111ca38de2709962127a456f2745dd25"
+    },
+    "internal/rules/losses.go": {
+      "bytes": 7442,
+      "sha256": "4f8af6588107e7da8b4e8b325dc1c32f79e3fce8064b6673fd528dc9ebb222d8"
+    },
+    "internal/rules/morale.go": {
+      "bytes": 1874,
+      "sha256": "aaa645907902d2017b93dd958f6999f2acd4ba92ed7a3e3a87a6eb359234011b"
+    },
+    "internal/rules/newgame.go": {
+      "bytes": 3313,
+      "sha256": "b712ed988aab93dfa8b38d12dd3397e6a38feeda85d897d306587f4bde1df21b"
+    },
+    "internal/rules/phezzan.go": {
+      "bytes": 3590,
+      "sha256": "04823f2b3f5bb4fe3d0e780646dea3e03b631d77861e9648c3cba433a3d255ec"
+    },
+    "internal/rules/planetassault.go": {
+      "bytes": 12016,
+      "sha256": "ff8e6f75eb164937dfe86b7f7f1bcccac2ebdbf4401927b06f7db330c45d31fd"
+    },
+    "internal/rules/planetcmd.go": {
+      "bytes": 4997,
+      "sha256": "a3d300491e1bc3a3f5e21df16fdbcce75779b3fb207781b40c34944268404be6"
+    },
+    "internal/rules/promotion.go": {
+      "bytes": 11344,
+      "sha256": "2d9aac12b9caa2374033bafee364c2e29500952ec7f4cf59888b94b1aee90536"
+    },
+    "internal/rules/rand.go": {
+      "bytes": 1238,
+      "sha256": "0457b7259bd820cc13b2f2f009226283cf501ff561a9feeaf35afb4432468d99"
+    },
+    "internal/rules/rebellion.go": {
+      "bytes": 9327,
+      "sha256": "c45a44ab90e91e7908cafcfc0b30073e078a16767d59180aa1358f269c696d39"
+    },
+    "internal/rules/region.go": {
+      "bytes": 24246,
+      "sha256": "cba006daa23304121e4136523efd41b0f523164e0212abc0ec045456266b82a2"
+    },
+    "internal/rules/region_supply.go": {
+      "bytes": 4299,
+      "sha256": "693c2245ac2f3fb0a437ad7b517e6b3116b69a0e00684fe8b9f0c797e291d907"
+    },
+    "internal/rules/regionplanets.go": {
+      "bytes": 2373,
+      "sha256": "5732bf0860e2a992f572b95db6e2a357941bf6fb2cb1d2487e4006cf2dec9a63"
+    },
+    "internal/rules/regionposture.go": {
+      "bytes": 5826,
+      "sha256": "fca1c2c21d44e4ae47acce912a041c9ae1554e19b80e279c7a4fae7c86bdbaa0"
+    },
+    "internal/rules/regionresupply.go": {
+      "bytes": 8069,
+      "sha256": "ade290a94ae97bcb33d2d5af58e7d50f6b6b55ee1a3b29386f443f4444fc90d1"
+    },
+    "internal/rules/regionsummary.go": {
+      "bytes": 4537,
+      "sha256": "937c0c4baf53069a5451c36c7f36cd220088f29d205bb3ec20011fe1d40e8039"
+    },
+    "internal/rules/regionupkeep.go": {
+      "bytes": 2369,
+      "sha256": "5aeff0940817da9ef5c1896dc0795fc5f6a8c972a337b1c9a834392bc02c343a"
+    },
+    "internal/rules/resolve.go": {
+      "bytes": 13167,
+      "sha256": "9e85cca4d4749cff9e5ed99c193f51aa316a23915b03d3e00de7c3bfcd329589"
+    },
+    "internal/rules/save.go": {
+      "bytes": 26521,
+      "sha256": "6d137e30006306b71c18d16dcd02c7530a174beb9cd03944e82a869813429adc"
+    },
+    "internal/rules/shipkind.go": {
+      "bytes": 4453,
+      "sha256": "c8d97e95112b49ddede237b0fea0d9e8beeba96fbfc6d400f5df926355e83f6c"
+    },
+    "internal/rules/spotting.go": {
+      "bytes": 3166,
+      "sha256": "5195c9d6348538585a2d0738cb49c1af699ae579df6feb7865016b4813f12fce"
+    },
+    "internal/rules/staffpick.go": {
+      "bytes": 5721,
+      "sha256": "2cb46c5361f92ebffce527670866f0d7a0a2b0527020d82107a0f9a4f21dbd9e"
+    },
+    "internal/rules/stardistance.go": {
+      "bytes": 2434,
+      "sha256": "f56fb8221e5c58043f908b9c3bc48c21a8539d2cc6d35f67f2b06ca5b5791071"
+    },
+    "internal/rules/stargraph.go": {
+      "bytes": 4920,
+      "sha256": "e6c3ddfdd1a1a105104f3b41a619b7ab4cbe3c77f83ad5075618aa39d1e7803e"
+    },
+    "internal/rules/strategicassault.go": {
+      "bytes": 16092,
+      "sha256": "27817fb9c616d27a942fab9f350373ba51365d89e13c1c196001f0ca249668a9"
+    },
+    "internal/rules/strength.go": {
+      "bytes": 4895,
+      "sha256": "947431d0b47d54b720e1bbf21244f7fc3d5e26a7a5b83b05026a67bc07d4539f"
+    },
+    "internal/rules/supplyrepair.go": {
+      "bytes": 4139,
+      "sha256": "f9aebab6b5f2ec10e3ad82d762f5d37878d6ceb7d0d6d339cc7d962b9b75093c"
+    },
+    "internal/rules/taxrate.go": {
+      "bytes": 3489,
+      "sha256": "4b07dcb7e22f7bd20e13c126a2017983feb3245041bbf9afa5c2fe38171aeb4b"
+    },
+    "internal/rules/terrain.go": {
+      "bytes": 5948,
+      "sha256": "bf7191b53683b2a1e9c70dfafea4dc562a843bed138a2fdac724f4e505037d2a"
+    },
+    "internal/rules/trig.go": {
+      "bytes": 2534,
+      "sha256": "6a7cffeb674321bd6e09ed4e272571d139993a3c518a7ec83179abb060d2f1e9"
+    },
+    "internal/rules/unrest.go": {
+      "bytes": 10024,
+      "sha256": "b3a97c54b88d2c49d04a2ca91936c2f5c6c735380415e4b9822084e0f8b88fee"
+    },
+    "tools/go.sh": {
+      "bytes": 1763,
+      "sha256": "f591df5c0db18d0adcaecb1bfd969f9d3ffbc6e9e5a1ed2c3e5913c72dd371b6"
+    },
+    "tools/gui.sh": {
+      "bytes": 1551,
+      "sha256": "3f0cd67388775829a3dbec810570558a1bacd1cd0fc89c22babd8c70bf0542b5"
+    },
+    "tools/py.sh": {
+      "bytes": 1477,
+      "sha256": "76c64fffb4c88ee35b5a7ca1524510603d58e156e969552f2a0b4b47405c25f7"
+    },
+    "tools/scripts/strategic_assault_edge_model.go": {
+      "bytes": 6360,
+      "sha256": "04b9900352fbbfcbefe94b98e3fe137c4d521706caee9fdbf56a7c5446b2b258"
+    },
+    "tools/scripts/strategic_assault_edge_prepare.py": {
+      "bytes": 6332,
+      "sha256": "b74243cf4931828c3ffafd086135667b43325601e60b92f4fd1fa5df9c30b989"
+    },
+    "tools/scripts/strategic_assault_edge_review.py": {
+      "bytes": 7364,
+      "sha256": "b8968304fe6e03caf46b160b7fb9836bef1e1d43947005f3fed02026aa601799"
+    },
+    "tools/scripts/strategic_assault_terrain_scan.go": {
+      "bytes": 1025,
+      "sha256": "fa3d78dae296cce8d46fd65799bf5da804bb846a693c3a9161b5038f5372c4d8"
+    },
+    "tools/strategic_assault_edge_native_run.sh": {
+      "bytes": 423,
+      "sha256": "e83e2d31b38360030a835a555ef57aed191de01964d2be26f423569e5b5bddf8"
+    },
+    "tools/strategic_assault_edge_oracle.sh": {
+      "bytes": 834,
+      "sha256": "9b0842c94d96fe37e8553201092304f9ecf002c73f39351e5e870b41c753e512"
+    },
+    "tools/strategic_assault_edge_probe.sh": {
+      "bytes": 2837,
+      "sha256": "8113b21080afe347de0e31cbc554a6bd3fb78f24a07450cb634f7217506454d3"
+    },
+    "workplace/assault56-r99-a.json": {
+      "bytes": 2529300,
+      "sha256": "3a87cb3533324e1a55d1a5b38ef7d9cb3a337f035d959791d8d147c12c76a771"
+    },
+    "workplace/assault56-r99-b.json": {
+      "bytes": 2529300,
+      "sha256": "3a87cb3533324e1a55d1a5b38ef7d9cb3a337f035d959791d8d147c12c76a771"
+    },
+    "workplace/assault56-r99-frames/empty-rgb16.bin": {
+      "bytes": 48,
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    "workplace/assault56-r99-frames/empty.bin": {
+      "bytes": 307200,
+      "sha256": "044d146671b3712b482f7d5eee88430608352a176a1e189d90992bce3463430f"
+    },
+    "workplace/assault56-r99-frames/empty.png": {
+      "bytes": 8907,
+      "sha256": "cf2854a129b6a0f33dbe20c42bdd5a4325a0e37d07cd02f050083a849fa4f85c"
+    },
+    "workplace/assault56-r99-frames/far-rgb16.bin": {
+      "bytes": 48,
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    "workplace/assault56-r99-frames/far.bin": {
+      "bytes": 307200,
+      "sha256": "044d146671b3712b482f7d5eee88430608352a176a1e189d90992bce3463430f"
+    },
+    "workplace/assault56-r99-frames/far.png": {
+      "bytes": 8907,
+      "sha256": "cf2854a129b6a0f33dbe20c42bdd5a4325a0e37d07cd02f050083a849fa4f85c"
+    },
+    "workplace/assault56-r99-frames/near-rgb16.bin": {
+      "bytes": 48,
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    "workplace/assault56-r99-frames/near.bin": {
+      "bytes": 307200,
+      "sha256": "044d146671b3712b482f7d5eee88430608352a176a1e189d90992bce3463430f"
+    },
+    "workplace/assault56-r99-frames/near.png": {
+      "bytes": 8907,
+      "sha256": "cf2854a129b6a0f33dbe20c42bdd5a4325a0e37d07cd02f050083a849fa4f85c"
+    },
+    "workplace/assault56-r99-frames/out-rgb16.bin": {
+      "bytes": 48,
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    "workplace/assault56-r99-frames/out.bin": {
+      "bytes": 307200,
+      "sha256": "044d146671b3712b482f7d5eee88430608352a176a1e189d90992bce3463430f"
+    },
+    "workplace/assault56-r99-frames/out.png": {
+      "bytes": 8907,
+      "sha256": "cf2854a129b6a0f33dbe20c42bdd5a4325a0e37d07cd02f050083a849fa4f85c"
+    },
+    "workplace/assault56-r99-frames/terrain-rgb16.bin": {
+      "bytes": 48,
+      "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+    },
+    "workplace/assault56-r99-frames/terrain.bin": {
+      "bytes": 307200,
+      "sha256": "044d146671b3712b482f7d5eee88430608352a176a1e189d90992bce3463430f"
+    },
+    "workplace/assault56-r99-frames/terrain.png": {
+      "bytes": 8907,
+      "sha256": "cf2854a129b6a0f33dbe20c42bdd5a4325a0e37d07cd02f050083a849fa4f85c"
+    },
+    "workplace/assault56-r99-model-a.json": {
+      "bytes": 8212,
+      "sha256": "81e4ef9d118cd066fa5ebae65b83a4e014215c388c126d20fe67ec3051ec479d"
+    },
+    "workplace/assault56-r99-model-v2-a.json": {
+      "bytes": 3929,
+      "sha256": "b947bbe29dd4a64898e5f5e065926e2c98d62422bf8c4639b5a1de7ccdce0cad"
+    },
+    "workplace/assault56-r99-model-v2-b.json": {
+      "bytes": 3929,
+      "sha256": "b947bbe29dd4a64898e5f5e065926e2c98d62422bf8c4639b5a1de7ccdce0cad"
+    },
+    "workplace/assault56-r99-native-v2.go": {
+      "bytes": 9875,
+      "sha256": "b9ef9e235ab43b64648a88e0c0f4f1efca79a8a04bcd4324951d068140faa339"
+    },
+    "workplace/assault56-r99-native-v3.go": {
+      "bytes": 10667,
+      "sha256": "b26f3d93834576385378f758f56a9620fa301bb9772da1c8c1c5cd01bf076c12"
+    },
+    "workplace/assault56-r99-native.go": {
+      "bytes": 9696,
+      "sha256": "35670b9b231e924b2fc46e87363e76cd3b18b4cf6d584742b99cac41bc3b4a69"
+    },
+    "workplace/assault56-r99-probe-a.json": {
+      "bytes": 2883,
+      "sha256": "897469cdf55daa8974541176f53b83d9942a37795d5c598a9bc9faf68dd8bb33"
+    },
+    "workplace/assault56-r99-probe-b.json": {
+      "bytes": 2883,
+      "sha256": "897469cdf55daa8974541176f53b83d9942a37795d5c598a9bc9faf68dd8bb33"
+    },
+    "workplace/assault56-r99-v3-a.json": {
+      "bytes": 3242551,
+      "sha256": "d22b0e4b93c7283c23c0c26c0e8dca859c487fabb9ffec5e6b5f6ef3ff373653"
+    },
+    "workplace/assault56-r99-v3-b.json": {
+      "bytes": 3242551,
+      "sha256": "d22b0e4b93c7283c23c0c26c0e8dca859c487fabb9ffec5e6b5f6ef3ff373653"
+    },
+    "workplace/finish79-r89-native.go": {
+      "bytes": 10436,
+      "sha256": "cbe370d25969cd96e78effc7bc50940c133f9fbab180b53eab4cf20d58ad5580"
+    },
+    "workplace/oracle/cleanup79-r88-entry-a/entry.state": {
+      "bytes": 260244,
+      "sha256": "a62af47fb7d15a136e2e2ed51760ef0e9dd82538f68d5f7e0be4db5f2b0011b8"
+    },
+    "workplace/oracle/cleanup79-r88-entry-a/mem-in.bin": {
+      "bytes": 1048576,
+      "sha256": "1575a57e438f8803a0fd0200268bc0e883a64d7210b4bcc42faab1e35f035ecf"
+    }
+  }
+}

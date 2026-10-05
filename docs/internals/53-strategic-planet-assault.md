@@ -1,5 +1,13 @@
 # 53：戰略回合裡的打行星
 
+## 第99輪：戰略入口殘留守軍與地形
+
+[研究433](../re/433-strategic-assault-edges.md)及[來源索引](data/strategic-assault-edges.json)補#56五案固定原版雙跑。
+20B4:1497戰略入口仍讀DS:9896／98BA；近距3000艘守軍返回30，Out或移遠返回0，確實改變戰損。
+本文「守軍在戰略層是0」只適用空清單，不能外推戰後殘留。現行StrategicAssault近距有14項typed差異。
+擠開案在未修改MAP26.CMP六次拒絕(936,1452)，所有原版通行返回與正式Passable一致；帶地形的typed終態零差。
+容器/tmp守軍修法五案通過，正式規則／Game未改。原版正常戰後清單生命週期及原池完整副作用仍待補；[115](../spec/115-strategic-assault-guard.md)DRAFT。
+
 證據等級：迴圈、每一擊的算式、亂數順序、士氣與功績、換手寫入 **confirmed**（反組譯 ＋ 兩份收據逐擊對帳 ＋
 remake 逐欄對拍，[`docs/re/330`](../re/330-strategic-planet-assault.md)）；呼叫鏈的早期紀錄在 `docs/re/161`、
 `docs/re/322` §五。多支攻方、電腦座位的訊息框、士氣報告的呼叫者 **沒有收據**（見文末）。

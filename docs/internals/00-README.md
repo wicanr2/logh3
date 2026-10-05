@@ -1,5 +1,14 @@
 # 原版內部構造參考
 
+第99輪沿[#56](https://github.com/wicanr2/logh3/issues/56)：[戰略攻擊邊界計畫](../goal/2026-10-05-strategic-assault-edges-round-99.md)。
+[戰略入口探針產生器](../../tools/scripts/strategic_assault_edge_prepare.py)沿固定完整原版保存，記錄明示注入及查詢結果。
+[原版雙跑入口](../../tools/strategic_assault_edge_oracle.sh)與[容器內入口](../../tools/strategic_assault_edge_native_run.sh)只作#56窄幅診斷，不替代正常玩家路徑。
+[實際地圖掃描器](../../tools/scripts/strategic_assault_terrain_scan.go)列出行星周圍的不可通行候選；結果是remake地形線索，另須原版返回值確認。
+[正式規則比較器](../../tools/scripts/strategic_assault_edge_model.go)直接呼叫StrategicAssault，照實保存有／無地形的typed差異；執行成功不代表差異為零。
+[守軍修法探針](../../tools/strategic_assault_edge_probe.sh)在容器/tmp副本加入已證實查詢，原版曲線與正式/src/internal保持；只用來審查DRAFT。
+[研究433](../re/433-strategic-assault-edges.md)及[115草稿](../spec/115-strategic-assault-guard.md)記錄戰略漏算守軍與正式來源缺口，凍結資料在[完整來源](data/strategic-assault-edges.json)。
+[來源核對器](../../tools/scripts/strategic_assault_edge_review.py)分別核正式反例及副本零差，不將探針成功混作正式修正完成。
+
 第98輪沿[#66](https://github.com/wicanr2/logh3/issues/66)：[設定子選單計畫](../goal/2026-10-05-settings-interface-round-98.md)。
 [IDA選單匯出器](../../tools/scripts/settings_interface_ida.py)讀取當輪唯讀原生記憶體複本，保留CS:IP、檔案位移、IDA EA與原始指令；未審查語意標unknown。
 [MIDI介面操作探針](../../tools/scripts/midi_interface_prototype.html)僅供取捨，未進正式路徑。

@@ -5,7 +5,17 @@
 
 ## 現況一覽
 
-**目前接續（2026-10-05，第98輪）**：#66的BUG!出貨熱區已核實並修正；worklist目前7 OPEN／82 CLOSED。
+**目前接續（2026-10-05，第99輪）**：#56原版兩類邊界收據已補；worklist目前7 OPEN／82 CLOSED。
+明示20B4:1497戰略入口五案完整JSON雙跑相同，近距3000艘守軍返回30，Out／遠距／空清單返回0。
+近距與Out終態提督表2／FLEET2／PLANET1／SHIP26／WORK3 bytes不同，正式StrategicAssault近距仍14項typed差異。
+未修改MAP26.CMP的擠開案六次拒絕(936,1452)；555次原版通行返回符合正式Passable，帶實際地形的typed結果零差。
+忽略地形反例仍36項差異；容器/tmp加入守軍的副本五案帶地形零差，不當作正式修正完成。
+115 DRAFT，#56 OPEN；下一步核正常戰後返回至下一星域載圖的清單生命週期及raw池來源，再接Game及保存。
+131項來源SHA-256 `07d60572fb700512f99f560366398dfcbdad59daa107f5714d8e92276f1de7d5`，入口[433](docs/re/433-strategic-assault-edges.md)及[完整來源](docs/internals/data/strategic-assault-edges.json)。
+正式程式未改，第98輪標準18套件結果保持；新探針原版／正式反例／修法各雙跑，來源與格式收尾核對。
+MIDI映射與#89一像素既有裁決待答，其他玩法與完整交付閘門保持，原Goal持續。
+
+**第98輪成果保持**：#66的BUG!出貨熱區已核實並修正。
 原版正常啟動時DS:0210及BUG!可選旗標DS:04CC皆為0，點擊不開除錯選單，完整WORK230 bytes不變。
 typed熱區補disabled，113限定CONFORMED；正常bootstrap兩跑7檔相同，點擊前後公開保存逐檔相同。
 設定基準及BUG!點擊後各307200色號／RGB符合固定原版，兩張正式60 Hz真實X11共614400像素與Game全圖零差。
@@ -76,6 +86,8 @@ FLEET+5A未知斷言撤回，行星索引在+07，+5A／+5B定位清FF。分隊+
 
 | 分類 | 目前真相 | 最近驗證／入口 |
 |---|---|---|
+| 戰略殘留守軍已證實 | 戰略入口仍查殘留清單，近距返回30並改變戰損；正式固定0仍有14項typed差異 | 五案原版雙跑、433及131來源；115 DRAFT、#56 OPEN，待清單來源及正式接線 |
+| 戰略擠開地形已抽驗 | 未修改地圖六次拒絕候選；帶正式Passable的typed結果零差，忽略地形有36項差異 | 555次原版通行返回相同；限定明示局面，不宣稱完整原池／正常玩家通過 |
 | 設定BUG!正常反應已核 | 出貨不可選，typed熱區disabled；點擊不進除錯，WORK及公開保存不變 | 113限定CONFORMED、087；7檔雙跑、兩張原版／Game全圖及兩張正常60 Hz X11零差 |
 | MIDI I/F原版已核 | 七項埠、INI+4、取消與重初始化已核；軟體音源映射待使用者決定 | 432及628來源；114 DRAFT、#66 OPEN，不把建議接入正式路徑 |
 | 標題玩家流程已完成 | 自然動畫→標題、左鍵主選單、逾時清累加重播；尾段與標題色盤已接 | 112限定CONFORMED、#68 CLOSED；29檔雙跑、原版兩頁各224000色號／RGB及五張正常60 Hz X11全圖零差，086 |
@@ -832,6 +844,8 @@ SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
 
 ## 已被推翻的斷言
 
+- 第99輪：戰略反擊的「守軍取0，戰略單位表必空」不能外推同回合戰後。20B4:1497五案固定原版及21次守軍查詢證實殘留非零會改戰損。058既有空守軍CONFORMED範圍保持，正式近距仍有差；地形「只有全可通行樣本」限制由六次實際拒絕及typed同態補一案，見[433](docs/re/433-strategic-assault-edges.md)。
+
 - 第98輪：285／286的「BUG!出貨旗標為1、知道熱區即可點入」已撤回。正常DS:0210及DS:04CC為0，原版雙跑不呼叫除錯callee；113與087限定正常不可選。MIDI取消沒有重新讀INI，DS:F138不能在所有時點當成有效INI內容；來源與原始定位見[432](docs/re/432-settings-interface.md)。
 
 - 第97輪：正式Game沒有標題、自然動畫播完直接主選單及尾段一直用BU16IBM的斷言已失效。112與431證實末端等待／標題／逾時重播與TITSPT色盤，086正常60 Hz GUI已通過；020舊文由112取代，保留歷史收據。
@@ -1568,23 +1582,19 @@ BUG!的特殊啟用來源仍unknown，不把除錯模式加入正常玩家路徑
 
 *[#56](https://github.com/wicanr2/logh3/issues/56) · parity（對拍：要與原版逐位元組相同）*
 
-規格 058 的規則層是兩份收據（一支攻方、帝國人類座位）逐欄對上的。以下三種只讀了位元組、沒有收據，remake 照最簡單的情形做：
+#56兩類局面的原版窄幅收據已取得，正式戰略反擊的非零守軍仍未接。第99輪沒有改production。
 
-- ~~同一格兩支以上攻方~~：已接（2026-09-17）：收據 `fcmd-assault-ai24`（費沙那條第三回合，同盟兩支攻方拿下威爾勃恩）逐欄相同，
-  含艦隊與分隊位置（`docs/re/335` §六、規格 058 規則 3）。
-- 同一回合先打過仗：守軍 `203A:04D1` 掃的是戰場單位表 `ds:98BA`／`ds:9896`，可能殘留 → 守軍不是 0。
-- ~~電腦座位拿下行星~~：會顯示、會等（`docs/re/333` §二，收據 `fcmd-turn-ai-capture` 正常路徑整張相同）。
-- 擠開之後壓到戰場地圖擋路格：規則層測試不帶地形，還沒有收據。
+**卡在**：第99輪：從固定完整原版保存，以明示20B4:1497戰略入口及1512前seed12345678／清單注入跑五案，v3兩個批次完整JSON逐byte相同。近距3000艘守軍四次返回30，空清單／Out／遠距四次0；近距與Out終態提督表2／FLEET2／PLANET1／SHIP26／WORK3 bytes不同。原版戰略入口沒有固定0守軍特例。
 
-**卡在**：- 同回合打過仗的局面要造（`-poke` 或走一場戰鬥之後占據），守軍 `203A:04D1` 讀戰場單位表。
+地形案以未修改MAP26.CMP及34個實際敵方編制占據中心與前33個候選，(936,1452)六次被拒；555次原版通行返回均符合正式Passable。正式StrategicAssault帶實際地形的擠開typed結果零差，忽略地形仍36項差異。近距正式規則有14項typed差異。
 
-**做完的判準**：**剩下的兩種**（上面四項裡沒有畫掉的那兩項）各有同狀態收據（可用 `-poke` 造），
-remake 與原版逐欄相同或差異列入規格 058 並說明。
+容器/tmp副本加入原版清單守軍查詢，五案帶地形均零差，獨立原版批次重建亦相同；未進正式路徑。115 DRAFT，下一步核原版正常戰後返回到下一星域載圖的清單保留／重建／清除與raw池來源，再接Game，補保存／重讀及完整原池副作用。目前診斷不能宣稱正常玩家或六表全同。
 
-> 標題與本文原本寫「三種」，其實列了四項、其中兩項（多支攻方、電腦座位）2026-09-17
-> 就做完並畫掉了。剩「同回合打過仗守軍殘留」與「擠開壓到擋路格」。
+既有多支攻方fcmd-assault-ai24及電腦座位攻占報告保持完成。#56保持OPEN；061及四項使用者裁決不改。
 
-**證據**：[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/internals/53-strategic-planet-assault.md`](docs/internals/53-strategic-planet-assault.md)
+**做完的判準**：同回合戰後守軍與擠開後地形各有同狀態收據，可明示-poke造局面；remake逐欄相同或差異列入058並說明。正式規則、Game來源與保存鏈需核實後才關閉本項。
+
+**證據**：[`docs/re/433-strategic-assault-edges.md`](docs/re/433-strategic-assault-edges.md)、[`docs/spec/115-strategic-assault-guard.md`](docs/spec/115-strategic-assault-guard.md)、[`docs/internals/data/strategic-assault-edges.json`](docs/internals/data/strategic-assault-edges.json)、[`docs/spec/058-strategic-planet-assault.md`](docs/spec/058-strategic-planet-assault.md)、[`docs/internals/53-strategic-planet-assault.md`](docs/internals/53-strategic-planet-assault.md)、[`docs/re/330-strategic-planet-assault.md`](docs/re/330-strategic-planet-assault.md)、[`tools/scripts/strategic_assault_edge_review.py`](tools/scripts/strategic_assault_edge_review.py)
 
 **核實**：`internal/rules/strategicassault.go` 裡還找得到 `同一回合先打過仗時守軍殘留沒驗`（自承還在 ＝ 還沒做）
 
