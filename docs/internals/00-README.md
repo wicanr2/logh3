@@ -1,5 +1,11 @@
 # 原版內部構造參考
 
+第107輪沿 [#79](https://github.com/wicanr2/logh3/issues/79)：[正常占領玩家計畫](../goal/2026-10-05-battle-occupation-player-round-107.md)。
+[出貨劇本操作探針](../../tools/scripts/battle_occupation_player_probe.py)只產生測試overlay，固定首戰種子一次，不注入局面或改正式規則。
+[獨立重播與正常GUI入口](../../tools/scripts/battle_occupation_player_replay.py)沿正式bootstrap、60 Hz與公開存讀，觀測層不改局面。
+[驗證095](../playtest/095-battle-occupation-player.md)限定第⑥步攻打行星與8-2星域換手，不補110勝後占領。
+[本輪核對器](../../tools/scripts/battle_occupation_player_receipt.py)驗正常公開存讀、全圖與完整身份，產生[來源索引](data/battle-occupation-player.json)。
+
 第106輪沿 [#69](https://github.com/wicanr2/logh3/issues/69)：[Windows 正常存讀計畫](../goal/2026-10-05-windows-save-load-round-106.md)。
 [唯讀 Windows 入口](../../tools/windows_save_load.sh)及[正常輸入／Linux 對照器](../../tools/scripts/windows_save_load.py)驗公開保存、退出及新程序讀回，不注入局面。
 [117退出接線規格](../spec/117-player-public-quit.md)沿研究341原版契約；[正式 app 回歸](../../cmd/gin3/quit_test.go)覆蓋取消及確認。
