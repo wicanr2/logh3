@@ -750,3 +750,11 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 
 - [計畫95](../goal/2026-10-05-battle-lifecycle-player-round-95.md)與[正常結算追蹤工具](../../tools/scripts/battle_lifecycle_player_receipt.py)。
 - [全滅與公開存讀研究429](../re/429-battle-lifecycle-player.md)、[玩家驗證084](../playtest/084-battle-lifecycle-player.md)與[完整來源](data/battle-lifecycle-player.json)。
+
+## 第96輪動畫後標題
+
+- [計畫96](../goal/2026-10-05-title-player-round-96.md)，沿GitHub #68／#70收斂標題解碼及正常入口。
+- [標題圖規格111](../spec/111-title-image.md)、[研究430](../re/430-title-image.md)及[保存素材收據](data/remaining-assets.json)。
+- [五類素材匯出器](../../tools/scripts/remaining_assets_export.go)，共用正式解碼器並核對PNG重讀的尺寸、色號及palette。
+- [保存素材驗證085](../playtest/085-original-asset-exports.md)與[PNG完整性回歸](../../internal/asset/export_catalog_test.go)。
+- [標題與匯出收據核對器](../../tools/scripts/title_asset_receipt.py)與[完整驗證來源](data/title-asset-receipts.json)。

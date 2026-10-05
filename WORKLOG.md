@@ -2,6 +2,19 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-05 第96輪：標題圖解碼與五類素材保存
+
+- 上一輪有提交及新驗證，分類為進展。沿原Goal與既有#68／#70，父提交51d3d7ea7b985f4dc15b1b5cd317daca7bb703f0。開工89張worklist／9 OPEN，269條核對零失效；路由命中remake技能、規格閘門及文件職責，既有取捨保持。
+- SPTIT.350四個plane各80×350，XOR-RLE與動畫同語法，33346 bytes完整消耗。原版正常950M雙跑224000色號與16色零差，目視完整標題；227列候選超界，不用長度猜格式。111先READY再接DecodeTitle350，所有33346種截斷長度、四分隔、零／超長run及尾端多資料通過。
+- 正常949M全機快照，在951M左鍵、按住200000指令，到1050M主選單雙跑相同。右鍵、普通A與BIOS A仍停標題。另保存850M末端快照及13時點；860M至910M末格／palette保持，915M至920M標題／palette保持。本批未見palette淡入淡出，精確等待與頁面切換仍依#68待續，不改正式玩家流程。
+- #70使用正式解碼器匯出794張PNG：3面板、BLOCK_0–2各128、32地圖、374來源動畫格、1標題，共5853987 bytes；來源44原檔及一正式palette JSON。兩個乾淨批次PNG及catalog逐byte相同；每張重讀尺寸／色號／palette相同。地圖驗實際圖塊數、面板Used完整、動畫逐格長度相符，保留玩家略過的349來源格。
+- PNG存到既有private assets/original，七個分類加入KINDS，README及2678項MANIFEST重生。TestRemainingAssetExports另驗全部794項數量、PNG長度／SHA／尺寸／色號SHA通過。GitHub儲存庫實查仍private，不含原版輸入檔或一般發行包。
+- 首批標準誤用Go基礎image，cmd/gin3缺ALSA，停止本輪該容器後以既有logh3-ebiten:2與Xvfb同命令乾淨重跑。標準18套件13PASS／5無測試，Game494.343秒、gin3 217.813秒；新catalog回歸於標準啟動後加入，另跑10.908秒通過。標準日誌SHA 1b1ddfb9f6ca9cea3cb9a4680b4c32472992d99e2ecb84b8aa97a41e2b91af6e。
+- 111限定圖形解碼及保存升CONFORMED，正常標題玩家接線仍未做。研究430／驗證085、生成器、型別與PNG回歸掛internals入口，1701來源索引SHA 587f49203510cf2dc09698ea8a8ad12bcf441e691dc0a1b8b095f21de4a11e13。第95輪1889來源身份保持，正式Game、輸入、音樂與存檔格式無改動。
+- #70本文與證據更新，verify改綁TestRemainingAssetExports，完成後關閉；#68更新現行卡點並保留歷史線索，保持OPEN。剩餘權威仍為遠端worklist，原Goal持續。
+- 兩張Issue本文逐字回讀與狀態符合，最新89張／8 OPEN／81 CLOSED。269條核對零失效、2人工、122一致、145歷史文件；CONTEXT清單與矩陣重生。新文件連結、internals入口正對照、Python AST、Go格式及git diff --check通過。
+- 794項PNG與1701來源、前輪1889來源完整性符合。輸出UID/GID1000，工作根無root-owned檔案或誤建.md目錄；本專案及專用dosgolem掛載容器清單空，dosgolem工作樹乾淨，未重建image。提交主旨「解碼標題圖並保存剩餘原版素材」，精確提交及推送身份依Git紀錄。
+
 ## 2026-10-05 第95輪：自然旗艦全滅與公開存讀
 
 - 沿原Goal及#79，父提交1bd9dfc1dfd26ee4e2b5d575a67f2f63f0149ec4。路由命中remake規格閘門、正常玩家驗收與文件職責，既有取捨保持。開工89張worklist／9 OPEN，269條核對零失效。正式程式未改。

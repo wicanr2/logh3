@@ -11,6 +11,13 @@ KINDS = [
     ('sprite', 'SPRITE.SPR', 'spr_export.py 16 SPRITE.SPR', '圖塊 75 張 16×16（艦隊組成格盤）', 'docs/internals/10-sprite-spr.md'),
     ('frame', 'FRAME.BLK', 'spr_export.py 20 FRAME.BLK', '視窗外框圖塊 33 張 16×20', 'docs/internals/47-window-frame-tiles.md'),
     ('block_3', 'BLOCK_3.BLK', 'spr_export.py 20 BLOCK_3.BLK', '戰場圖塊 128 張 16×20', 'docs/internals/35-block3-blk.md'),
+    ('block_0', 'BLOCK_0.BLK', 'remaining_assets_export.go', '圖塊 128 張16×20', 'docs/internals/35-block3-blk.md'),
+    ('block_1', 'BLOCK_1.BLK', 'remaining_assets_export.go', '圖塊 128 張16×20', 'docs/internals/35-block3-blk.md'),
+    ('block_2', 'BLOCK_2.BLK', 'remaining_assets_export.go', '圖塊 128 張16×20', 'docs/internals/35-block3-blk.md'),
+    ('ani_pnl', 'ANI_PNL0–2.A98', 'remaining_assets_export.go', '面板三張640×400', 'docs/internals/37-ani-pnl-a98.md'),
+    ('map', 'MAP00–31.CMP ＋ BLOCK_3.BLK', 'remaining_assets_export.go', '戰場地圖32張2048×2040，驗圖塊索引範圍', 'docs/internals/36-map-cmp.md'),
+    ('intro', 'IBM16.350 ＋ IBMFLS16.350 ＋ BU16IBM.RGB', 'remaining_assets_export.go', '來源374格640×227；含玩家播放略過的349格', 'docs/internals/19-ibm16-350.md'),
+    ('title', 'SPTIT.350 ＋ SPTIT.RGB', 'remaining_assets_export.go', '標題一張640×350；色號與固定原版雙跑相同', 'docs/spec/111-title-image.md'),
     ('3dblock', '3DBLOCK.SPR', 'spr_sheet.py 3DBLOCK.SPR 48 64 4 4 row', '等距方塊 48×64（放大 4 倍的單張）', 'docs/internals/21-3dblock-spr.md'),
     ('comflag', 'COM_FLAG.SPR', 'comflag_export.py', '指揮旗標籤五張 ＋ 總表', 'docs/internals/01-assets-inventory.md'),
     ('strmap', 'STRMAP.BIT', 'strmap_export.py', '戰略星圖底圖', 'docs/internals/12-strmap-bit.md'),
@@ -55,10 +62,13 @@ md = ['# 原版素材（保存用）', '',
       '重做：自備原版放 `org_game/extracted/`，`tools/py.sh tools/scripts/<命令>` 多半寫到',
       '`workplace/assets/`，再複製過來（`bmg_export.py` 直接寫這裡）；然後 `tools/py.sh tools/scripts/assets_manifest.py`',
       '重產這份說明與 `MANIFEST.tsv`（逐檔 SHA-256）。音樂那兩支是 shell 包裝器，要 dosgolem。', '',
+      '五類補完素材使用正式 Go 解碼器：`bash tools/go.sh run tools/scripts/remaining_assets_export.go`',
+      '`-orig /orig -out workplace/assets-remaining-<新批次> -manifest workplace/assets-remaining-<新批次>.json`。',
+      '輸出拒絕覆寫，逐張驗 PNG 重讀尺寸、色號與 palette；驗證後將各分類目錄複製到本目錄。',
+      '來源及輸出雜湊見 [保存素材收據](../../docs/internals/data/remaining-assets.json)。', '',
       '| 目錄 | 檔數 | 原版檔 | 產生命令 | 內容 | 格式文件 |', '|---|---:|---|---|---|---|']
 for d, src, cmd, what, doc in KINDS:
     md.append(f'| `{d}/` | {counts.get(d, 0)} | `{src}` | `{cmd}` | {what} | [`{os.path.basename(doc)}`](../../{doc}) |')
-md += ['', '還沒匯出成圖的（解碼在 `internal/asset` 或只有格式文件）：`ANI_PNL0`–`2.A98`、',
-       '`BLOCK_0`–`2.BLK`、`MAP*.CMP`、`IBM16.350`（開頭動畫）、`SPTIT.350`。', '']
+md += ['', '上述PNG是解碼素材保存；不代表每張圖都已接入正式玩家路徑。', '']
 open(f'{ROOT}/README.md', 'w').write('\n'.join(md))
 print('寫出 README.md 與 MANIFEST.tsv：%d 個檔' % len(rows))

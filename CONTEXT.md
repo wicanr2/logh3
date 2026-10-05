@@ -5,7 +5,17 @@
 
 ## 現況一覽
 
-**目前接續（2026-10-05，第九十五輪）**：正常旗艦全滅、敗退與戰後公開存讀通過，見[084](docs/playtest/084-battle-lifecycle-player.md)。
+**目前接續（2026-10-05，第九十六輪）**：#70五類原版素材保存完成並關閉，#68圖形已解、正常玩家轉場仍待續。
+794張PNG包括三面板、三套各128圖塊、32地圖、374來源動畫格與一張標題圖，共5853987 bytes。
+正式解碼器兩個乾淨批次逐檔相同，全部PNG重讀尺寸、色號及palette相同；保存回歸核794項實際身份／尺寸／色號SHA通過。
+SPTIT.350完整224000色號與16色符合固定原版雙跑，全部截斷長度及錯誤資料通過；[111](docs/spec/111-title-image.md)限定圖形子範圍CONFORMED。
+原版標題正常快照，左鍵到主選單雙跑相同；右鍵、普通A與BIOS A均仍停標題。
+850M原生尾段快照及時間線已保存，下一步量動畫末格到標題的精確等待／頁面切換，再接正式Game。不能沿任意鍵／任意滑鼠鍵的假設實作。
+標準18套件13PASS／5無測試以既有GUI image及Xvfb通過；原Go基礎image缺ALSA的環境失敗另保留。
+1701來源索引SHA-256 `587f49203510cf2dc09698ea8a8ad12bcf441e691dc0a1b8b095f21de4a11e13`，見[085](docs/playtest/085-original-asset-exports.md)及[完整來源](docs/internals/data/title-asset-receipts.json)。
+儲存庫仍private；原版PNG只作保存，不進一般發行包。正式Game、輸入、音樂與存檔無改動，第95輪1889來源保持。
+
+**第95輪成果保持**：正常旗艦全滅、敗退與戰後公開存讀通過，見[084](docs/playtest/084-battle-lifecycle-player.md)。
 S3同盟6745項公開輸入、50次艦隊命令／19次交戰，星域26第九戰術回合旗艦6→0。
 先全滅後敗退，提督12／28失蹤；沒有驗到提督死亡判定。seed12345678首次實行前只設定一次，沒有局面注入。
 正式bootstrap雙跑38筆逐擊及2筆報告，完整六表每筆44624 bytes、每次1784960 bytes與typed分隊／seed相同。
@@ -798,6 +808,10 @@ SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
 
 ## 已被推翻的斷言
 
+2026-10-05第96輪範圍更新：#68／#70的SPTIT編碼未知已解；與IBM16使用相同XOR-RLE token，但每plane高度350。
+圖及palette與固定原版雙跑零差；原版標題目前只證實左鍵可退出，右鍵與兩種A鍵輸入不能退出。
+圖形及保存完成不取代正常玩家轉場驗收；來源與限制見[430](docs/re/430-title-image.md)。
+
 2026-10-05第95輪範圍更新：第94輪只驗診斷保存的限制，由正常選單保存／載入及實際GUI六檔比對補齊。
 新增自然旗艦全滅與提督失蹤，不把它當成提督死亡或一般分隊空組搬移GUI。
 原版整回合同態與正式60 Hz限制保持；方法與凍結來源見[084](docs/playtest/084-battle-lifecycle-player.md)。
@@ -948,7 +962,7 @@ v1保留為失效推論，現行證據為[原版v2](docs/internals/data/battle-o
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 9 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 8 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -1458,32 +1472,6 @@ WORK0／FLEET27／SHIP214／STELLAR0／PLANET0保持，顯示指標raw差仍完�
 
 **核實**：`docs/spec/062-battle-turn-eight-steps.md` 標到 `CONFORMED`
 
-#### export-remaining-assets — 其餘原版素材匯出進 assets/original/（ANI_PNL、BLOCK_0–2、MAP*.CMP、IBM16.350、SPTIT.350）
-
-*[#70](https://github.com/wicanr2/logh3/issues/70) · asset*
-
-`assets/original/` 已有頭像、圖塊、外框、戰場圖塊、星圖、結局圖、字型、樂曲、交戰動畫（`assets/original/README.md`）。
-還沒匯出成可檢視格式的：`ANI_PNL0`–`2.A98`（解碼在 `internal/asset`）、`BLOCK_0`–`2.BLK`、`MAP*.CMP`、`IBM16.350` 開頭動畫的各格、
-`SPTIT.350`（編碼未確認）。規則見 `AGENTS.md`：由 `tools/scripts/` 的匯出腳本產生、雜湊進清單。
-
-**卡在**：**五項的難度差很多**（2026-09-18 核實）：
-
-| 項目 | 狀態 | 最小下一步 |
-|---|---|---|
-| `BLOCK_0`–`2.BLK` | **工具現成** | `BLOCK_3` 就是 `tools/scripts/spr_export.py 20 BLOCK_3.BLK` 出來的，同格式直接跑三次 ＋ 補三列 KINDS ＋ 重跑 manifest。零新工具 |
-| `IBM16.350` 各格 | 腳本有、產物不進版控 | `tools/scripts/intro_frames.py` 能出 PNG，但它的 docstring 自己寫「輸出是一次性產物，不進 Git」——改成進版控的產物即可 |
-| `ANI_PNL0`–`2.A98` | 解碼只在 Go 端 | `internal/asset/amg.go` 有解碼器，python 端沒有；要搬一份或加一支 `cmd/` 匯出器 |
-| `MAP*.CMP` | 同上 | 解碼在 `internal/asset/cmp.go` 的 `DecodeCMP`，由 `internal/bootstrap/load.go` 讀 `MAP%02d.CMP` |
-| `SPTIT.350` | **硬卡點** | 編碼未確認（`docs/internals/01` 仍寫「`.350` 不是單一格式」）。與 #68 共用同一個前提 |
-
-建議先做 `BLOCK_0`–`2`（一次就少一項），`SPTIT.350` 留到 #68 解掉編碼再說。
-
-**做完的判準**：上列素材各有匯出腳本、PNG 進 `assets/original/`、`assets_manifest.py` 的 KINDS 有對應列。
-
-**證據**：[`docs/internals/37-ani-pnl-a98.md`](docs/internals/37-ani-pnl-a98.md)、[`docs/internals/35-block3-blk.md`](docs/internals/35-block3-blk.md)、[`docs/internals/36-map-cmp.md`](docs/internals/36-map-cmp.md)
-
-**核實**：`tools/scripts/assets_manifest.py` 裡還找得到 `還沒匯出成圖的`（自承還在 ＝ 還沒做）
-
 #### music-library-pipeline — 玩家自產曲庫的管線與 MIDI 音色（MPU-401）
 
 *[#69](https://github.com/wicanr2/logh3/issues/69) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -1532,9 +1520,15 @@ WORK0／FLEET27／SHIP214／STELLAR0／PLANET0保持，顯示指標raw差仍完�
 
 *[#68](https://github.com/wicanr2/logh3/issues/68) · feature（功能：玩家會撞到、但 remake 還沒有）*
 
-原版開頭動畫播完之後還有 `SPTIT.350` 標題畫面（`docs/re/283` 看到開檔，調色盤 `SPTIT.RGB`），怎麼走到主選單沒量；remake 動畫播完直接進主選單。
+第96輪解開SPTIT.350：同動畫XOR-RLE語法、四plane各80×350 bytes，33346 bytes完整消耗；標題224000色號及16色與dosgolem固定HEAD f7523f9正常啟動雙跑相同。111只限圖形解碼與保存，DecodeTitle350已接asset，全部截斷長度及錯誤資料測試通過，PNG已匯出並核對。正常949M快照在951M送左鍵，到1050M主選單雙跑相同；右鍵、普通A與BIOS A仍留標題。860M至910M維持動畫末格／palette，915M至920M維持完整標題；本批未見palette淡入淡出。
 
-**卡在**：- `SPTIT.350` 是不是與 `IBM16.350` 同一套編碼沒確認。
+完整標準18套件13PASS／5無測試通過，111限定圖形子範圍CONFORMED。1701項來源索引SHA-256 587f49203510cf2dc09698ea8a8ad12bcf441e691dc0a1b8b095f21de4a11e13。
+
+**卡在**：目前缺：動畫末格結束至標題的精確等待／頁面切換時點，以及正式Game動畫→標題→主選單接線與正常GUI驗證。已保存850M原生尾段快照，可從此窄幅量測；不用重開已解圖形格式。不把圖形完成當整項完成。
+
+<details><summary>2026-09-18歷史線索，圖形卡點已於第96輪解開</summary>
+
+- `SPTIT.350` 是不是與 `IBM16.350` 同一套編碼沒確認。
 
 手上已經有的線索（2026-09-18 核實，**都只是線索、還沒驗**）：
 
@@ -1552,11 +1546,13 @@ WORK0／FLEET27／SHIP214／STELLAR0／PLANET0保持，顯示指標raw差仍完�
 
 **解掉這個編碼同時解掉 #70 的最後一項卡點**（那五項素材裡只剩 `SPTIT.350`）。
 
+</details>
+
 **做完的判準**：`SPTIT.350` 解碼、標題畫面的時序與按鍵有收據，remake 從動畫 → 標題 → 主選單整條逐位元組。
 
-**證據**：[`docs/re/283-intro-plays-in-file-order.md`](docs/re/283-intro-plays-in-file-order.md)、[`docs/spec/020-intro-animation.md`](docs/spec/020-intro-animation.md)
+**證據**：[`docs/re/430-title-image.md`](docs/re/430-title-image.md)、[`docs/spec/111-title-image.md`](docs/spec/111-title-image.md)、[`docs/playtest/085-original-asset-exports.md`](docs/playtest/085-original-asset-exports.md)、[`docs/internals/data/remaining-assets.json`](docs/internals/data/remaining-assets.json)、[`docs/internals/data/title-asset-receipts.json`](docs/internals/data/title-asset-receipts.json)、[`tools/scripts/remaining_assets_export.go`](tools/scripts/remaining_assets_export.go)、[`tools/scripts/title_asset_receipt.py`](tools/scripts/title_asset_receipt.py)、[`internal/asset/title.go`](internal/asset/title.go)、[`internal/asset/title_test.go`](internal/asset/title_test.go)、[`internal/asset/export_catalog_test.go`](internal/asset/export_catalog_test.go)、[`assets/original/README.md`](assets/original/README.md)、[`assets/original/MANIFEST.tsv`](assets/original/MANIFEST.tsv)、[`docs/re/283-intro-plays-in-file-order.md`](docs/re/283-intro-plays-in-file-order.md)、[`docs/spec/020-intro-animation.md`](docs/spec/020-intro-animation.md)
 
-**核實**：要人判——remake 沒有標題畫面的程式碼可綁；接上時綁 go_test（標題畫面的收據）。
+**核實**：要人判——第96輪圖形解碼與保存已通過。正式Game仍沒有標題狀態，末端精確等待待原生尾段快照量測；接線後改綁正常標題玩家路徑go_test，不能以DecodeTitle350測試代替。
 
 #### settings-midi-if-and-bug — 設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與 BUG!
 
@@ -1756,7 +1752,7 @@ Game索引SHA-256 830e5c5615be977c5e18cff23fe990c18cc6ee0ad01802b17562a8338ee334
 
 ### 做完的（不在矩陣裡的那幾條）
 
-83 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+84 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -3067,6 +3063,38 @@ dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且�
 **證據**：[`docs/re/333-turn-reports.md`](docs/re/333-turn-reports.md)、[`docs/spec/059-turn-transition-windows.md`](docs/spec/059-turn-transition-windows.md)
 
 **核實**：`TestRegionResupplyRecoveredMatchesOracle` 釘在 `internal/game`
+
+#### export-remaining-assets — 其餘原版素材匯出進 assets/original/（ANI_PNL、BLOCK_0–2、MAP*.CMP、IBM16.350、SPTIT.350）
+
+*[#70](https://github.com/wicanr2/logh3/issues/70) · asset*
+
+第96輪完成五類保存：3張ANI_PNL、BLOCK_0–2各128張、32張MAP、374個IBM16來源格及1張SPTIT，共794張PNG／5853987 bytes。正式解碼器獨立匯出兩批逐檔相同，全部PNG重讀尺寸、色號及palette相同；來源44個原版檔及一份正式palette JSON，來源／PNG／色號SHA與尺寸記remaining-assets.json。PNG已保存到private repo的assets/original，KINDS、README與MANIFEST重生。TestRemainingAssetExports實際核794項數量、PNG身份／尺寸／色號SHA通過；SPTIT完整色號與16色原版雙跑零差。#68玩家轉場仍待續，本項不宣稱玩家路徑完成或允許一般發行包內嵌。
+
+完整標準18套件13PASS／5無測試通過，111限定圖形子範圍CONFORMED。1701項來源索引SHA-256 587f49203510cf2dc09698ea8a8ad12bcf441e691dc0a1b8b095f21de4a11e13。
+
+**卡在**：目前五類素材均已保存，沒有本項剩餘卡點。原版標題正常玩家轉場另由#68接續。
+
+<details><summary>2026-09-18歷史卡點，第96輪已補齊</summary>
+
+**五項的難度差很多**（2026-09-18 核實）：
+
+| 項目 | 狀態 | 最小下一步 |
+|---|---|---|
+| `BLOCK_0`–`2.BLK` | **工具現成** | `BLOCK_3` 就是 `tools/scripts/spr_export.py 20 BLOCK_3.BLK` 出來的，同格式直接跑三次 ＋ 補三列 KINDS ＋ 重跑 manifest。零新工具 |
+| `IBM16.350` 各格 | 腳本有、產物不進版控 | `tools/scripts/intro_frames.py` 能出 PNG，但它的 docstring 自己寫「輸出是一次性產物，不進 Git」——改成進版控的產物即可 |
+| `ANI_PNL0`–`2.A98` | 解碼只在 Go 端 | `internal/asset/amg.go` 有解碼器，python 端沒有；要搬一份或加一支 `cmd/` 匯出器 |
+| `MAP*.CMP` | 同上 | 解碼在 `internal/asset/cmp.go` 的 `DecodeCMP`，由 `internal/bootstrap/load.go` 讀 `MAP%02d.CMP` |
+| `SPTIT.350` | **硬卡點** | 編碼未確認（`docs/internals/01` 仍寫「`.350` 不是單一格式」）。與 #68 共用同一個前提 |
+
+建議先做 `BLOCK_0`–`2`（一次就少一項），`SPTIT.350` 留到 #68 解掉編碼再說。
+
+</details>
+
+**做完的判準**：上列素材各有匯出腳本、PNG 進 `assets/original/`、`assets_manifest.py` 的 KINDS 有對應列。
+
+**證據**：[`docs/re/430-title-image.md`](docs/re/430-title-image.md)、[`docs/spec/111-title-image.md`](docs/spec/111-title-image.md)、[`docs/playtest/085-original-asset-exports.md`](docs/playtest/085-original-asset-exports.md)、[`docs/internals/data/remaining-assets.json`](docs/internals/data/remaining-assets.json)、[`docs/internals/data/title-asset-receipts.json`](docs/internals/data/title-asset-receipts.json)、[`tools/scripts/remaining_assets_export.go`](tools/scripts/remaining_assets_export.go)、[`tools/scripts/title_asset_receipt.py`](tools/scripts/title_asset_receipt.py)、[`internal/asset/title.go`](internal/asset/title.go)、[`internal/asset/title_test.go`](internal/asset/title_test.go)、[`internal/asset/export_catalog_test.go`](internal/asset/export_catalog_test.go)、[`assets/original/README.md`](assets/original/README.md)、[`assets/original/MANIFEST.tsv`](assets/original/MANIFEST.tsv)、[`docs/internals/37-ani-pnl-a98.md`](docs/internals/37-ani-pnl-a98.md)、[`docs/internals/35-block3-blk.md`](docs/internals/35-block3-blk.md)、[`docs/internals/36-map-cmp.md`](docs/internals/36-map-cmp.md)
+
+**核實**：`TestRemainingAssetExports` 釘在 `internal/asset`
 
 #### battle-data-scroll-receipt — 戰場「資料」視窗捲動的同狀態收據（現有 11 份踩不到捲動）
 
