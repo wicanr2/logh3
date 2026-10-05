@@ -203,8 +203,8 @@ func (g *Game) advanceBattleTurnAfterSpotting() {
 func (g *Game) advanceBattleTurnAfterFleetCombat() {
 	// 原版一回合八步，第五步是要塞砲開火（`181B:0385`，規格
 	// `docs/spec/028`）、第六步是打行星（`181B:03D0`，規格
-	// `docs/spec/019`）。**順序有意義**：瞄好的要塞砲會讓敵方那一回合
-	// 打不到這顆行星，所以倒數要排在打行星之後（`docs/re/149`）。
+	// `docs/spec/019`、`docs/spec/119`）。瞄好的要塞砲只阻止行星反擊bit1，
+	// 登陸bit0獨立判定，倒數仍排在打行星之後。
 	g.battleGunHits = g.fortressGunFire()
 	for _, h := range g.battleGunHits {
 		if h.Scorer >= 0 && h.Scorer < 2 {

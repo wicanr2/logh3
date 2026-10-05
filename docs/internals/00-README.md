@@ -871,3 +871,12 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [候選renderer驗證](../../tools/scripts/landing_caller_candidate.go)直接載入獨立候選規格，尚未接Game。
 - [本輪唯一來源](data/landing-caller.json)與[來源核對器](../../tools/scripts/landing_caller_receipt.py)記錄候選、原始RAM、首批差分及父提交歷史驗證。
 - [#91鎖定向量診斷](../../tools/scripts/planet_eligibility_probe.go)只比較固定原版父RAM與目前Targets，未重跑0091或修改規則。
+
+## 第111輪行星鎖定
+
+- [計畫111](../goal/2026-10-06-planet-eligibility-round-111.md)與[規格119](../spec/119-planet-assault-eligibility.md)，沿#91重跑原版獨立鎖定條件。
+- [原版矩陣入口](../../tools/planet_eligibility_oracle.sh)、[隔離模組入口](../../tools/planet_eligibility_native_run.sh)及[原版CPU注入探針](../../tools/scripts/planet_eligibility_native.go)保存完整注入，不修改dosgolem或原始遊戲檔。
+- [原版向量與結算生成器](../../tools/scripts/planet_eligibility_receipt.py)及[結構化原版事實](data/planet-eligibility.json)從新執行的原版RAM生成預期值。
+- [原版矩陣及只受反擊回歸](../../internal/rules/planet_eligibility_test.go)核對目標、位元、分隊、行星及最終亂數。
+- [研究439](../re/439-planet-eligibility.md)及[驗證099](../playtest/099-planet-eligibility.md)記錄本輪分級與回歸範圍。
+- [Game政策與動畫模式回歸](../../internal/game/planet_eligibility_test.go)驗雙陣營被動CPU正對照及普通／快速／最快消費。

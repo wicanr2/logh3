@@ -1,5 +1,9 @@
 # 019 — 攻打行星
 
+2026-10-06 現行勘誤：登陸與反擊為獨立分支，只受反擊也進入結算。
+鎖定及開場以[規格119](119-planet-assault-eligibility.md)為準，證據見[439](../re/439-planet-eligibility.md)。
+本檔早期星域歸屬與八步時機的敘述已由[規格106](106-battle-region-ownership.md)及062接續，不作目前真相。
+
 2026-10-02 現行勘誤：分攤尾額不夾至留一艘、種類 5 庫存無條件縮減、方位共用
 原版反正切表，見[規格 078](078-battle-rule-corrections.md)及[對拍 038](../playtest/038-battle-rule-corrections.md)。
 原收據的完成聲明限於指定規則階段，不代表完整八步時機已驗收。
@@ -141,11 +145,11 @@ C ＝ 203A:04D1(行星) ÷ 6
 
 ```
 bit 0：離行星 ≤ 150 像素、且 (艦隊[+0x48] & 0x0F) == 1、且 艦隊[+0x00] bit0 為 0
-bit 1：再加「≤ rules.PlanetQueryRadius(防衛力)」且那顆不是「要塞砲已瞄準」的要塞
+bit 1：獨立判「≤ rules.PlanetQueryRadius(防衛力)」且那顆不是「要塞砲已瞄準」的要塞
 ```
 
-`20B4:08B1`（實際打）要的是 **bit 1**——所以**瞄好的要塞砲會讓敵方那一
-回合打不到這顆行星**。開場由 `20B4:000C` 把 `+0x70` 清 0、`+0x5A` 設
+`20B4:08B1`反擊要的是bit 1；瞄好的要塞砲只阻止本反擊分支，登陸仍由bit 0判定。
+開場由 `20B4:000C` 把 `+0x70` 清 0、`+0x5A` 設
 0xFF；`20B4:01C1` 把 `+0x5A != 0xFF` 的艦隊排序（比較函式 `20B4:02A4`）
 再逐一結算。在場艦隊的清單在 `ds:9898`、筆數在 `ds:9894`。
 
@@ -222,16 +226,16 @@ bit 1：再加「≤ rules.PlanetQueryRadius(防衛力)」且那顆不是「要�
 全部接上了：`internal/rules/planetassault.go`
 （`PlanetAssaultTargets`／`PlanetAssault`／`FleetAttack`／`PlanetGuard`／
 `Direction8`），扣艘數與副作用共用 `ApplyShipLoss`（`203A:0593`）。
-`internal/game.AdvanceBattleTurn` 在要塞砲**之後**跑它，再走要塞砲的倒數
-——順序有意義，瞄好的要塞砲會嚇阻攻擊。
+`internal/game.AdvanceBattleTurn` 在要塞砲之後跑它，再走要塞砲的倒數。
+本反擊與登陸閘門依119分開，瞄好的要塞砲只阻止反擊bit 1。
 
 對拍：`rules.TestPlanetAssaultMatchesOracle` 拿收據 `s3assault` 的狀態
 走一次 production path，**行星的擁有者、防衛力（2852 → 428）、飛彈與
 艦載機，以及五支艦隊 33 個分隊的艘數與 `+0x0C` 全部逐一相同**
 （打掉防衛力 2424、挨反擊 642 艘）。
 
-## remake 現況
+## 2026-10-06 追加勘誤
 
-`internal/rules.RegionOwner` 已經照「行星全屬同一方才算那一方」實作
-（`docs/re/17`，有測試）。**行星換手還沒實作**，因為觸發條件缺第 1 項；
-在補齊之前不接進 production path。
+文末原有第二份「remake現況」寫行星換手未實作，與目前程式及本檔上一節衝突，已移除該失效摘要。
+早期149的「再加」被本輪原始分支與40案實際執行否定，149研究歷史保持。
+本檔規則狀態不代表#48分段畫面或完整八步對拍已完成。

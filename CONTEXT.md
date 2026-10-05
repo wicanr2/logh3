@@ -5,7 +5,16 @@
 
 ## 現況一覽
 
-**目前接續（2026-10-06，第110輪）**：#48已補完整反擊、各層刷新及跨攻方快照，118完成證據審查READY；候選未接Game。新開#91追行星反擊鎖定差異，worklist為7 OPEN／84 CLOSED。
+**目前接續（2026-10-06，第111輪）**：#91的行星鎖定與只受反擊已修正並關閉，worklist為6 OPEN／85 CLOSED。
+原版000C／0091共40案雙跑，120份完整RAM逐byte相同；位元跨行星累積、target最後符合者覆寫，反擊不受Action／Flag0／150像素的登陸閘門限制。
+新算完整目標後恢復父CPU續行，counter-only扣253艘、行星／庫存不變、無占領結果，完整分隊／重算完整度及seed0B719151相同。分類限於明示direct-entry規則與第六步續行，不宣稱正常整回合同態。
+119先審READY，再修正式Targets的兩個分支、Action低四位及逐行星開場門檻；限定範圍CONFORMED。既有換手原池對拍、061雙陣營及六組動畫模式全過，不改AI政策或存檔格式。
+正常S1／S2／S3公開載入、實行與SHIP27456／FLEET3904 bytes保存讀回相同；標準18套件13PASS／5無測試。正常九回合被動CPU零損失／零移動，額外253艘反擊原版正對照避免零值假通過。
+485條原始IDA指令與新父RAM逐byte核對；342份原版收據、520份目前來源及5599份父來源／164份原始輸入已核。兩個正式Go檔的舊身份按父提交726f479回查，不改寫歷史收據。
+來源索引510040 bytes，SHA-256 `9657e567a66e6ea99678f3f0ad759d42687b0957437aea82d60cfb2bab60a9fa`；入口[439](docs/re/439-planet-eligibility.md)、[099](docs/playtest/099-planet-eligibility.md)及[原版事實與目前來源](docs/internals/data/planet-eligibility.json)。
+#48候選正式資料的確認題仍待答，未繞過兩次自動審核拒絕；Game完整分段尚未接線。#79正常升級／非旗艦死亡／勝後占領GUI仍缺，MIDI／#89裁決、人耳、平台與交付限制保持。原Goal ACTIVE。
+
+**第110輪成果保持（2026-10-06）**：#48已補完整反擊、各層刷新及跨攻方快照，118完成證據審查READY；候選未接Game。當輪新開#91，worklist為7 OPEN／84 CLOSED。
 六案297張原生640×480完整幀、91238400色號像素、八區及16色RGB零差。候選PlanetFrameView／ProjectPlanetScene／RenderPlanetFrame另驗同一組297幀全同，不借原版像素。
 首批185張差異已核實是收據時點：348A:0281等待返回後，0276／027D才開始格寫入；原版、dosgolem及首批差分保持。74條IDA9.4原指令逐byte相同。
 候選JSON只新增planet_frame，完整5007 bytes，SHA-256 `1b647169e5a010eabb8f3cdefdac8c3ae8899798ba263476eb3426d0ddbd6580`；正式JSON及Game規則／AI未改。
@@ -931,6 +940,8 @@ SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
 
 ## 已被推翻的斷言
 
+- 第111輪：019／149的反擊「再加」登陸條件及至少一支bit0才開場被40案新執行原版與counter-only續行否定。原始0153／015C／0169均跳向獨立017A，038F依相符target開場。019現行正文已勘誤，149歷史保持；證據及限定完成範圍見[439](docs/re/439-planet-eligibility.md)與[099](docs/playtest/099-planet-eligibility.md)。
+
 - 第101輪：孤立報告renderer通過不能證明正式Frame游標在報告上方。正式Frame先畫背景游標再畫不透明報告，137像素游標被蓋；按既有107契約修正後58240像素零差。第83輪正常到期只跑第8步的限制，由七次公開完整實行及60 Hz GUI補一條；原版正常整回合同態限制保持。讀檔六檔須原封不動亦不適用STELLAR既有載入派生重算，見[435](docs/re/435-scout-player-report-cursor.md)及[089](docs/playtest/089-scout-player.md)。
 
 - 第100輪：第99輪正式近距14項差異及清單來源未知已消除。原版自然續行至下一星域27證實保留55筆池；正式規則／Game五案完整六表／池序／seed全同，保存重讀通過。058舊表的地形、原池及殘留限制同步收窄為未覆蓋局面，不改舊收據，見[434](docs/re/434-strategic-guard-lifecycle.md)及[088](docs/playtest/088-strategic-guard.md)。
@@ -1095,7 +1106,7 @@ v1保留為失效推論，現行證據為[原版v2](docs/internals/data/battle-o
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 7 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 6 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -1130,28 +1141,6 @@ v1保留為失效推論，現行證據為[原版v2](docs/internals/data/battle-o
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
-
-#### planet-assault-eligibility — 行星反擊 eligibility 與 counter-only 結算門檻
-
-*[#91](https://github.com/wicanr2/logh3/issues/91) · parity（對拍：要與原版逐位元組相同）*
-
-**行星攻擊與反擊 eligibility**：目前PlanetAssaultTargets把反擊bit1也限制在Action=1、Flag0=false及150像素內，PlanetAssault還要求至少一支登陸bit0才處理行星。
-
-2026-10-06第110輪核原始20B4:0091及038F，這兩項限制不符合原版。原版017A是獨立第二距離判斷，038F的[bp+44h]只判斷有人鎖定；bit0只決定提示字串，並不阻止counter-only。
-固定原版phase6-input中艦隊31 Action=0、bits=2、target=0；完整續行有反擊、扣艘數及結果等待。原版兩跑保持。
-
-七支完整鎖定向量a／b相同，只有31與現行不同。父RAM SHA-256 54a8750dd56d3aab85ae5da90642b4c59a24fe37987b5b11fd2f932b1006e7de；原版target0／bits2，現行target-1／bits0。此為已過eligibility的父RAM診斷，未重新執行0091。
-
-**卡在**：已確認原指令及既有counter-only原版收據，正式規則尚未修正。此項獨立於#48候選畫面資料的套用確認，不改AI政策或存檔格式。
-
-**做完的判準**：- 先補窄規格並審READY，再修Targets及逐行星開場門檻。
-- 固定原版eligibility同狀態向量核對，含非戰鬥命令、Flag0、150外與查詢半徑、要塞GunState=3。
-- counter-only仍有反擊而沒有占領結果，seed與最終原池符合原版。
-- 061被動CPU仍完全不傷玩家，正常戰術／快速路徑、公開保存回歸保持。
-
-**證據**：[`docs/re/438-landing-caller.md`](docs/re/438-landing-caller.md)、[`docs/internals/data/landing-scene.json`](docs/internals/data/landing-scene.json)、[`workplace/ida/landing48-r108-driver.json`](workplace/ida/landing48-r108-driver.json)、[`workplace/oracle/landing48-r108-r5-baseline-{a,b}/report.json`](workplace/oracle/landing48-r108-r5-baseline-{a,b}/report.json)、[`internal/rules/planetassault.go`](internal/rules/planetassault.go)、[`tools/scripts/planet_eligibility_probe.go`](tools/scripts/planet_eligibility_probe.go)、[`docs/internals/data/landing-caller.json`](docs/internals/data/landing-caller.json)
-
-**核實**：`internal/rules/planetassault.go` 裡還找得到 `f.Flag0 || f.Action != 1`（自承還在 ＝ 還沒做）
 
 #### normal-battle-player-entry — 正常S3首次戰場入口對齊原版：參戰名單、回合與座位控制
 
@@ -1896,7 +1885,7 @@ Game索引SHA-256 830e5c5615be977c5e18cff23fe990c18cc6ee0ad01802b17562a8338ee334
 
 ### 做完的（不在矩陣裡的那幾條）
 
-87 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+88 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -2898,6 +2887,31 @@ CONFORMED。
 **證據**：[`docs/re/55-ship-delivery-report.md`](docs/re/55-ship-delivery-report.md)、[`docs/spec/045-ship-delivery-screen-details.md`](docs/spec/045-ship-delivery-screen-details.md)、[`internal/game/game_test.go`](internal/game/game_test.go)
 
 **核實**：`TestShipDeliveryMatchesOracle` 釘在 `internal/game`
+
+#### planet-assault-eligibility — 行星反擊 eligibility 與 counter-only 結算門檻
+
+*[#91](https://github.com/wicanr2/logh3/issues/91) · parity（對拍：要與原版逐位元組相同）*
+
+**行星攻擊與反擊 eligibility**：已修正反擊bit1誤受Action、Flag0及150像素限制，以及逐行星開場誤要求登陸bit0的問題。
+
+2026-10-06第111輪先重跑原版000C／0091的40案雙跑與counter-only續行，119審READY後修正式規則，限定範圍CONFORMED。
+兩個分支獨立，Action讀完整byte的低四位；位元跨行星累積，target最後符合者覆寫。
+40案目標及bits全符，反擊253艘、所有分隊、行星、庫存、重算完整度及最後seed0B719151逐一相同。
+原版未呼叫121F占領結果；Game維持#48既有演出限制，不由本Issue宣稱完整分段畫面完成。
+
+**卡在**：本Issue限定規則與回歸已完成。061雙陣營正對照通過，預設玩家零傷害；普通／快速／最快與關動畫共六案消費防衛Hit通過。
+正常S1／S2／S3公開載入、實行、保存與讀回的SHIP27456／FLEET3904 bytes保持；標準18套件13PASS／5無測試。
+沒有獨立快速戰鬥規則分支，快速為動畫速度。原版direct-entry診斷及正常玩家抽樣分開，不升格完整八步same-state。
+#48候選正式資料套用確認與分段畫面仍OPEN，不改AI政策或存檔格式。
+
+**做完的判準**：- 先補窄規格並審READY，再修Targets及逐行星開場門檻。
+- 固定原版eligibility同狀態向量核對，含非戰鬥命令、Flag0、150外與查詢半徑、要塞GunState=3。
+- counter-only仍有反擊而沒有占領結果，seed與最終原池符合原版。
+- 061被動CPU仍完全不傷玩家，正常戰術／快速路徑、公開保存回歸保持。
+
+**證據**：[`docs/spec/119-planet-assault-eligibility.md`](docs/spec/119-planet-assault-eligibility.md)、[`docs/re/439-planet-eligibility.md`](docs/re/439-planet-eligibility.md)、[`docs/internals/data/planet-eligibility.json`](docs/internals/data/planet-eligibility.json)、[`tools/planet_eligibility_oracle.sh`](tools/planet_eligibility_oracle.sh)、[`internal/rules/planet_eligibility_test.go`](internal/rules/planet_eligibility_test.go)、[`workplace/round111-standard-tests.log`](workplace/round111-standard-tests.log)、[`tools/planet_eligibility_oracle.sh`](tools/planet_eligibility_oracle.sh)
+
+**核實**：`TestPlanetAssaultCounterOnlyMatchesOriginal` 釘在 `internal/rules`
 
 #### player-public-quit — 正常玩家 GUI 未處理公開確認退出旗標
 

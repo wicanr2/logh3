@@ -2,7 +2,7 @@ package rules
 
 import "sort"
 
-// 打行星（規格 `docs/spec/019`；算式 `docs/re/146`、閘門 `docs/re/149`、
+// 打行星（規格 `docs/spec/019`、`docs/spec/119`；算式 `docs/re/146`、閘門 `docs/re/439`、
 // 換手條件與反擊 `docs/re/151`）。
 //
 // 一回合八步裡的第六步：先把每一支在場艦隊的「鎖上哪一顆行星」重算
@@ -42,7 +42,7 @@ type PlanetDefenceGauges struct {
 
 // PlanetAssaultTargets 回每一支艦隊這一回合鎖上的行星（−1 ＝ 沒有）與
 // 兩個位元：bit 0 ＝ 進了 150 像素而且處於「戰鬥」狀態，
-// bit 1 ＝ 還在行星的查詢半徑內、而且那顆不是「要塞砲已瞄準」的要塞。
+// bit 1 ＝ 獨立判行星查詢半徑、而且那顆不是「要塞砲已瞄準」的要塞。
 func PlanetAssaultTargets(planets []BattlePlanet, fleets []BattleFleet,
 	units []BattleUnit) (target, bits []int) {
 	target = make([]int, len(fleets))
@@ -55,18 +55,17 @@ func PlanetAssaultTargets(planets []BattlePlanet, fleets []BattleFleet,
 		r := PlanetQueryRadius(p.Defence)
 		for fi := range fleets {
 			f := &fleets[fi]
-			if f.Faction == p.Owner || f.Flag0 || f.Action != 1 {
+			if f.Faction == p.Owner {
 				continue
 			}
 			if flagshipShips(f.Index, units) == 0 {
 				continue
 			}
 			d := FixedDist(p.X, p.Y, f.X, f.Y)
-			if d > FixedFromInt(assaultNearRange) {
-				continue
+			if d <= FixedFromInt(assaultNearRange) && !f.Flag0 && f.Action&0x0F == 1 {
+				bits[fi] |= 1
+				target[fi] = pi
 			}
-			bits[fi] |= 1
-			target[fi] = pi
 			if d > FixedFromInt(r) {
 				continue
 			}
@@ -114,7 +113,7 @@ func PlanetAssault(planets []BattlePlanet, fleets []BattleFleet,
 	for pi := range planets {
 		any := false
 		for _, fi := range order {
-			if target[fi] == pi && bits[fi]&1 != 0 {
+			if target[fi] == pi {
 				any = true
 				break
 			}
