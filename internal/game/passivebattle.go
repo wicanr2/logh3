@@ -2,7 +2,7 @@ package game
 
 import "github.com/wicanr2/logh3/internal/rules"
 
-// 戰場上的電腦方不造成任何傷害（使用者裁決 2026-09-17：「強制改變 remake AI 進入戰場後都不攻擊」，
+// 明示的歷史被動模式不造成任何傷害（使用者裁決 2026-09-17：「強制改變 remake AI 進入戰場後都不攻擊」，
 // 範圍「完全不造成傷害」）。**這是刻意偏離原版**：原版規則層（`rules.ResolveBattleTurn`、
 // `FortressGunFire`、`PlanetAssault`）一行不改，差異全在這一層包起來，對拍原版戰場的測試用
 // `originalBattleAI` 關掉它。
@@ -13,10 +13,14 @@ import "github.com/wicanr2/logh3/internal/rules"
 //   - 打行星：電腦艦隊不算「戰鬥」命令；玩家打電腦行星時挨的反擊，同樣把玩家分隊還原。
 //
 // 對戰模式兩邊都是人，照原版。
+// 2026-10-06使用者改為啟用兩種戰術AI；正常預設不套此模式（規格120）。
+
+// SetPassiveBattleComputer只改執行期政策，不改六表存檔或AI模式。
+func (g *Game) SetPassiveBattleComputer(passive bool) { g.passiveBattleComputer = passive }
 
 // passiveComputer 回這一場要不要套「電腦不造成傷害」，以及電腦是哪一方。
 func (g *Game) passiveComputer() (int, bool) {
-	if g.originalBattleAI || g.versus || g.faction < 0 || g.faction > 1 {
+	if !g.passiveBattleComputer || g.originalBattleAI || g.versus || g.faction < 0 || g.faction > 1 {
 		return 0, false
 	}
 	return 1 - g.faction, true

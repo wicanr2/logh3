@@ -174,8 +174,8 @@ func (g *Game) AdvanceBattleTurn() {
 // 既有remake自動戰術意圖接到與玩家相同的移動引擎；不新增原版AI行為聲明。
 func (g *Game) applyTacticalMove(index, x, y int) {
 	u := &g.battleUnits[index]
-	u.TargetX, u.TargetY, u.Action = x, y, squadronMove
 	if u.Squadron != 0 {
+		u.TargetX, u.TargetY, u.Action = x, y, squadronMove
 		return
 	}
 	f := g.battleFleet(u.Fleet)
@@ -183,8 +183,9 @@ func (g *Game) applyTacticalMove(index, x, y int) {
 		return
 	}
 	f.OriginX, f.OriginY, f.X, f.Y = u.X, u.Y, u.X, u.Y
-	f.DestX, f.DestY, f.TargetFacing, f.Action, f.Ordered = x, y, f.Facing, 0, true
-	f.TurnSpeed, f.PerTurn = g.fleetSpeeds(u.Fleet, false)
+	// 120：沿玩家戰鬥命令接線，保持旗艦SHIP+1E，才能參與自動交戰。
+	f.DestX, f.DestY, f.TargetFacing, f.Action, f.Ordered = x, y, f.Facing, fleetActionBattle, true
+	f.TurnSpeed, f.PerTurn = g.fleetSpeeds(u.Fleet, true)
 	f.ShortMove = rules.Distance16(u.X, u.Y, x, y) < int64(f.PerTurn/3+4*rules.FixOne)
 }
 

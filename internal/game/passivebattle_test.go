@@ -13,6 +13,7 @@ import (
 func runPassiveBattle(t *testing.T, original bool) (playerLost, cpuMoved int, g *Game) {
 	t.Helper()
 	g = newTestGame(t)
+	g.SetPassiveBattleComputer(true) // 061歷史政策須明示；正常預設依120活動。
 	if g.res.Entries == nil {
 		t.Skip("沒有入口表")
 	}

@@ -1,5 +1,18 @@
 # 原版內部構造參考
 
+第118輪沿 [#92](https://github.com/wicanr2/logh3/issues/92)：[本機完整版計畫](../goal/2026-10-06-local-test-package-round-118.md)。
+[封包建置器](../../tools/scripts/local_test_package.py)使用既有GUI Docker，產生完整Windows／Linux測試包、授權、來源與逐檔雜湊。
+[封包抽驗](../../tools/scripts/local_test_smoke.py)沿公開CLI輸入核實實際封包、兩種戰略AI、存讀並保存推廣片來源畫面。
+[120](../spec/120-active-tactical-ai.md)依使用者明示裁決啟用既有戰術AI，取代正常單人被動政策；歷史診斷仍可明示選用。
+[正常戰術抽驗](../../tools/scripts/active_tactical_player.go)由公開S3一路實行，保存兩模式CPU下令、位移、傷害與六表，不注入局面或乱數。
+[活動政策回歸](../../internal/game/activebattle_test.go)核對253艘反擊保持與旗艦戰鬥命令接線。
+[影片合成器](../../tools/scripts/local_test_promo.sh)沿既有FFmpeg／中文字型映像，合成60秒實際遊戲畫面靜態展示及真實遊戲配樂，保存抽樣幀與音畫檢查。
+[Windows封包抽驗](../../tools/scripts/local_test_windows_smoke.py)解壓實際ZIP，核對版本、全部檔案與Wine正常入口；不冒稱實機。
+[交付核對器](../../tools/scripts/local_test_finalize.py)補完整Go授權、核目前來源與實際ZIP，集中影片、抽驗及最終SHA-256。
+[440](../re/440-normal-first-turn-and-active-ai.md)、[105](../playtest/105-local-full-test-package.md)及[唯一來源索引](data/local-test-package.json)保存既有117原版首回合及118交付。
+[身份保存器](../../tools/scripts/local_test_receipt.py)核最終交付SHA-256與既有原版49檔，保存實作、限制與工具來源，不重跑原版。
+交付入口限本機 `dist-all/v.0.1.1-20261006/`；雙玩家命令與戰場差異停止新增驗證，既有證據保持。
+
 第109輪沿 [#48](https://github.com/wicanr2/logh3/issues/48)：[登陸完整單幀計畫](../goal/2026-10-06-landing-frame-round-109.md)。
 [IDA caller匯出器](../../tools/scripts/landing_frame_ida.py)只開新暫存資料庫，核文字與行星下方的原始位址及指令。
 [typed輸入探針](../../tools/scripts/landing_frame_prepare.py)與[單幀合成探針](../../tools/scripts/landing_frame_probe.go)沿118 DRAFT核全圖，不接正式Game。
@@ -917,3 +930,10 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [正式重播](../../tools/scripts/battle_natural_cleanup_replay.py)及[唯讀觀測片段](../../tools/scripts/battle_natural_cleanup_observer.go)驗正式bootstrap與60 Hz視窗的清理前後完整表。
 - [來源核對器](../../tools/scripts/battle_natural_cleanup_receipt.py)沿109已證實byte契約核對中間槽搬移、下一回合及完整六檔，保存於[唯一來源](data/battle-natural-cleanup.json)。
 - [109限定CONFORMED](../spec/109-battle-empty-groups.md)沿原版35案與本輪正常Game／GUI／存讀鏈；助手取圖時點另由公開右鍵後完整圖核實，062保持DRAFT。
+
+## 第117輪正常首戰整回合
+
+- [計畫117](../goal/2026-10-06-battle-normal-turn-round-117.md)沿#79，由第55輪正常原版完整保存自然續跑，不改CPU入口。
+- 現行入口與原版保存身份見[研究393](../re/393-battle-work-control.md)；完整088與062保持DRAFT。
+- [正常原版續行入口](../../tools/battle_normal_turn_oracle.sh)、[容器內入口](../../tools/battle_normal_turn_native_run.sh)與[只讀步驟觀測器](../../tools/scripts/battle_normal_turn_native.go)固定父保存與首戰seed，僅以公開滑鼠續跑。
+- [正常Game觀測覆蓋](../../tools/scripts/battle_normal_turn_prepare.py)與[公開玩家探針](../../tools/scripts/battle_normal_turn_probe.go)從bootstrap、主選單及S3實際輸入續跑，完整保留每步原表與分隊。

@@ -229,7 +229,10 @@ func (a *app) Draw(screen *ebiten.Image) {
 
 func (a *app) Layout(int, int) (int, int) { return gfx.Width, gfx.Height }
 
+var buildVersion = "development"
+
 func main() {
+	showVersion := flag.Bool("version", false, "顯示封包版本後結束")
 	orig := flag.String("orig", "org_game/extracted", "原版檔案目錄（玩家自備）")
 	data := flag.String("data", "docs/internals/data", "畫面規格與資料目錄")
 	scale := flag.Float64("scale", 1, "視窗放大倍率")
@@ -251,6 +254,10 @@ func main() {
 			"    音效用 bash tools/sound_to_ogg.sh <新批次名稱> 匯入。\n"+
 			"    曲庫及完整28段SFX_00.ogg至SFX_27.ogg放同一目錄；發行包不內嵌原版素材。")
 	flag.Parse()
+	if *showVersion {
+		fmt.Println(buildVersion)
+		return
+	}
 
 	res, err := bootstrap.Load(*orig, *data)
 	if err != nil {

@@ -1,6 +1,7 @@
 # 061 — 戰場上的電腦方不造成傷害（刻意偏離原版）
 
-狀態：**CONFORMED**（remake 規則；不對原版收據）
+狀態：**CONFORMED**（歷史明示診斷；正常預設已由[120](120-active-tactical-ai.md)取代）
+2026-10-06使用者選擇啟用原版與強化戰術AI；下列原始證據保持，執行期須明示`SetPassiveBattleComputer(true)`才套用。
 來源：使用者裁決（2026-09-17）：「強制改變 dos remake ai 進入戰場後都不攻擊」，範圍「完全不造成傷害」。
 程式：`internal/game/passivebattle.go`；測試 `internal/game/passivebattle_test.go`。
 

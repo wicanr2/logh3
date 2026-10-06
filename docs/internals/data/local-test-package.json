@@ -1,0 +1,1052 @@
+{
+  "schema": "logh3.local-test-package.v1",
+  "version": "v.0.1.1-20261006",
+  "date": "2026-10-06",
+  "user_decisions": [
+    "停止新增雙玩家命令與原版戰場差異驗證；完成門檻改為機制與兩種AI實作",
+    "啟用原版及強化戰術AI，取代061正常被動設定",
+    "先交付本機完整版與推廣影片供試玩"
+  ],
+  "delivery_files": [
+    {
+      "path": "BUILD.json",
+      "bytes": 260589,
+      "sha256": "39f1a6ae22f94513dc7768c24ae9d8857508caa5f3279017e0b811a69008cfd4"
+    },
+    {
+      "path": "FINALIZE.json",
+      "bytes": 1140,
+      "sha256": "48b268f7e81eaf9518eb0e45e09ba915320ade62188204243e9397018dfcdd1f"
+    },
+    {
+      "path": "full-local/LOGH3-v.0.1.1-20261006-engine-source.tar.gz",
+      "bytes": 3378441,
+      "sha256": "411935f250ce6f412dd675a46d08fc529082c259298d5fba856c5c6e8f68493e"
+    },
+    {
+      "path": "full-local/LOGH3-v.0.1.1-20261006-linux-amd64.zip",
+      "bytes": 196016706,
+      "sha256": "db2a21e840a012ab0c34ddb7fe6e11f67de8a86e60a2162b3510b5848f224b57"
+    },
+    {
+      "path": "full-local/LOGH3-v.0.1.1-20261006-windows-amd64.zip",
+      "bytes": 195847249,
+      "sha256": "ef3e1e4f189f31f3dcc1a0825d20e236da29a8a4ccaac9dec24d420df26b6acc"
+    },
+    {
+      "path": "promo/BLACK.txt",
+      "bytes": 3286,
+      "sha256": "064f851e060514c349a5b65709c521355cc15647142431d698f83a313686e9b7"
+    },
+    {
+      "path": "promo/FFPROBE.json",
+      "bytes": 4186,
+      "sha256": "0846e7ac10d58220b1eb11903a8b7d48affc44f872929d6f4de3f64d81af13b8"
+    },
+    {
+      "path": "promo/LOGH3-v.0.1.1-20261006-promo.mp4",
+      "bytes": 6337859,
+      "sha256": "932b1301852a83559da30fea1035f8034cf0f58ee4919839ae764a0653e54562"
+    },
+    {
+      "path": "promo/RIGHTS.txt",
+      "bytes": 328,
+      "sha256": "4c175de6cd4ca286ecfe73f118ec14bea7298eb3bbb60ac6714ede85e05a50bb"
+    },
+    {
+      "path": "promo/SHA256SUMS.txt",
+      "bytes": 130,
+      "sha256": "aa1cc43fd1f4d9c70027603b38df3a22254e81200a1d3d47722af618d0b31c67"
+    },
+    {
+      "path": "promo/SOURCES.tsv",
+      "bytes": 488,
+      "sha256": "ca33534a346c546bf62bf9b5a3c38d3afcb39b84e0ce6f7afbe6b8833d744d82"
+    },
+    {
+      "path": "promo/VOLUME.txt",
+      "bytes": 1909,
+      "sha256": "75829291bab4950b00621f9725db726b8978a6c36c054c47294a7c5262c01877"
+    },
+    {
+      "path": "promo/contact-sheet.png",
+      "bytes": 552433,
+      "sha256": "62eee0c7233a7c56059502e4bc59c15befdb6a5186f0edb3bb73010922c7c05a"
+    },
+    {
+      "path": "promo/sample-15.png",
+      "bytes": 865276,
+      "sha256": "4705d24bb05fb107b8875aab2652dcea61e849142b813ae6c9fefeb2631c46a6"
+    },
+    {
+      "path": "promo/sample-27.png",
+      "bytes": 734807,
+      "sha256": "848deb1a024343718cdf39804ba057efa9ae9cc55827ab2a02a1ae9078f79d72"
+    },
+    {
+      "path": "promo/sample-3.png",
+      "bytes": 131561,
+      "sha256": "8fea108cb190f701ba6468ac559480a0365e11ab8953d98ec1156df09925f021"
+    },
+    {
+      "path": "promo/sample-39.png",
+      "bytes": 303672,
+      "sha256": "d02322ed640dc483b7196b6deb00d949d820a0bf19908eb57d0736ef94e8c036"
+    },
+    {
+      "path": "promo/sample-45.png",
+      "bytes": 260105,
+      "sha256": "cb3fd1e6d276dde16dd4e056758e38a8bed97b1a79d1758d3dfa0b800e22173b"
+    },
+    {
+      "path": "promo/sample-57.png",
+      "bytes": 148349,
+      "sha256": "aaf941366d2ced5f011b7f9c160458b35ab44e453fb8dd3f32246ddf0f206559"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "dist-all/v.0.1.1-20261006/BUILD.json",
+      "bytes": 260589,
+      "sha256": "39f1a6ae22f94513dc7768c24ae9d8857508caa5f3279017e0b811a69008cfd4"
+    },
+    {
+      "path": "dist-all/v.0.1.1-20261006/FINALIZE.json",
+      "bytes": 1140,
+      "sha256": "48b268f7e81eaf9518eb0e45e09ba915320ade62188204243e9397018dfcdd1f"
+    },
+    {
+      "path": "dist-all/v.0.1.1-20261006/SHA256SUMS.json",
+      "bytes": 3100,
+      "sha256": "bd83e68fe2b3d853f4bea0f9a2e8458746fab0e723e99bcf364a6e3d633e0fa4"
+    },
+    {
+      "path": "workplace/round118-delivery-standard.log",
+      "bytes": 980,
+      "sha256": "6d692add6a781e6c975ffd81dabe0fd1fd51f96aa901d06d9ac2b036c12fe352"
+    },
+    {
+      "path": "workplace/round118-regression-complete.log",
+      "bytes": 51,
+      "sha256": "d6e2df2c56557c1f9a8ebe2ebee15faff3c7f0e03374b25a0042824242ca4136"
+    },
+    {
+      "path": "workplace/active-ai93-r118-b/AI.json",
+      "bytes": 14724,
+      "sha256": "937bf0f9ce2e2e39e0ddaa5699d3a63f6e3da0db0aa8e2ae583ff8a5f81ca8eb"
+    },
+    {
+      "path": "workplace/package92-smoke-v.0.1.1-20261006/SMOKE.json",
+      "bytes": 16513,
+      "sha256": "fa2c82a97af61195a666b6c4682b281b26146fd24c413ba4c18c2729ae7d1688"
+    },
+    {
+      "path": "workplace/music69-windows/package92-smoke-v.0.1.1-20261006/SMOKE.json",
+      "bytes": 4711,
+      "sha256": "aa9b8e4ad2d1f4d76b5d2e9f53aa0737547b556440e3fadc9959393601e0c174"
+    },
+    {
+      "path": "workplace/package92-r118-b/AUDIO.json",
+      "bytes": 294,
+      "sha256": "e1f984e5e1218f3577bb4a70580016c51cc29a6f88850e01a3358629876f3397"
+    },
+    {
+      "path": "workplace/normal79-r117-probec/observations.json",
+      "bytes": 1884947,
+      "sha256": "9b220eb4842690cbc11cda0dc0054f62994215ae10f6325fcf74559aa2eb8d88"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "cmd/gin3/main.go",
+      "bytes": 13881,
+      "sha256": "0c86c6ed5ab3ec1f107ac9e3137ae9b6e4a753a927365c777641b877d28782dc"
+    },
+    {
+      "path": "internal/game/game.go",
+      "bytes": 204316,
+      "sha256": "9d5c6c8211756796373500551f65a3ca424ca940e467a262ba1ae49d764957de"
+    },
+    {
+      "path": "internal/game/battle.go",
+      "bytes": 18121,
+      "sha256": "5aa5fa57cb84ed4420652195434585acb9a1e07f102a65b10ce569234d42ea3d"
+    },
+    {
+      "path": "internal/game/passivebattle.go",
+      "bytes": 3945,
+      "sha256": "d778be6db8fdfc4d785c51c9d4fd975c94de0269f9fc8662a65361be632dedac"
+    },
+    {
+      "path": "internal/game/aimode.go",
+      "bytes": 1944,
+      "sha256": "4110ef4da0b2f9b9a52e20bc41a65072314067e470fa89c8fc8f8cb426f580bc"
+    },
+    {
+      "path": "internal/ai/tactical.go",
+      "bytes": 8438,
+      "sha256": "674a1bbbc17898188505e013311472efd2c7bd7f9f5d8de459b8b9bdf2dfb9ba"
+    },
+    {
+      "path": "internal/ai/focused.go",
+      "bytes": 6893,
+      "sha256": "88c6d4a5a7933732d4ae7ec6677d72dd76d01fb44eca847b4888949359cb25ea"
+    },
+    {
+      "path": "internal/game/activebattle_test.go",
+      "bytes": 1555,
+      "sha256": "fcc0c92e6cc4e147333f6a3cdbc923e5dd4806750303bacca5d1594c2e1bf09a"
+    },
+    {
+      "path": "tools/scripts/local_test_package.py",
+      "bytes": 11140,
+      "sha256": "7c93776b869274e8a67ed326ae25895cb74e56fa710eed76c1c783e46bc70f5f"
+    },
+    {
+      "path": "tools/scripts/local_test_finalize.py",
+      "bytes": 6693,
+      "sha256": "54864d947a0d989cf6a560d465d36e5849cdaacabced2e33ac7af159788d46f2"
+    },
+    {
+      "path": "tools/scripts/local_test_promo.sh",
+      "bytes": 4527,
+      "sha256": "6299d0eee05853791e0e80b4956667502d7415e3e1493fb4182fed0f4d0538bf"
+    },
+    {
+      "path": "tools/scripts/local_test_smoke.py",
+      "bytes": 4537,
+      "sha256": "a32fe894201a7a9f50498718639286a844540fd67ccc03c960d3109e2283a507"
+    },
+    {
+      "path": "tools/scripts/local_test_windows_smoke.py",
+      "bytes": 3397,
+      "sha256": "a72a443009ea18c86ac7415f76c3d92d6eeb573ec5617afad6d8895b3aa961e0"
+    },
+    {
+      "path": "tools/scripts/active_tactical_player.go",
+      "bytes": 5264,
+      "sha256": "d150445b52344d4f37a3b8cd98e199a3aa0a00cd4fec9aaa702994d2a5f9b78d"
+    },
+    {
+      "path": "tools/scripts/local_test_receipt.py",
+      "bytes": 4530,
+      "sha256": "61cb73ffe16abb2fc0388e295733b223408bb9b1ec46bf7470e0627711f047ac"
+    },
+    {
+      "path": "tools/battle_normal_turn_oracle.sh",
+      "bytes": 1615,
+      "sha256": "ae6c5b08cbc1fd5daf9f81e53315a6d046517a251ea9259aff914670d0257517"
+    },
+    {
+      "path": "tools/battle_normal_turn_native_run.sh",
+      "bytes": 540,
+      "sha256": "60709230e15022effdd93cec818bbfd4023755186119b5bd3afbd4395620c94d"
+    },
+    {
+      "path": "tools/scripts/battle_normal_turn_native.go",
+      "bytes": 5517,
+      "sha256": "5cf48998bba5c06e1935cf3480e64e3dc84c3404c8fb3e189aedda48db399b34"
+    },
+    {
+      "path": "tools/scripts/battle_normal_turn_prepare.py",
+      "bytes": 3643,
+      "sha256": "4be8831c45e9dc93d0a643926b25e1779017be8647c1adc8361ecf9eb6198907"
+    },
+    {
+      "path": "tools/scripts/battle_normal_turn_probe.go",
+      "bytes": 2926,
+      "sha256": "f8ab77594473850d8a63f0ded0db228d610dddacc469f0a1399daaa474b69c67"
+    }
+  ],
+  "ai": {
+    "results": {
+      "enhanced": {
+        "commands": [
+          {
+            "action": 1,
+            "fleet": 16,
+            "x": 515,
+            "y": 374
+          },
+          {
+            "action": 1,
+            "fleet": 17,
+            "x": 396,
+            "y": 85
+          },
+          {
+            "action": 1,
+            "fleet": 28,
+            "x": 396,
+            "y": 425
+          },
+          {
+            "action": 1,
+            "fleet": 29,
+            "x": 277,
+            "y": 374
+          },
+          {
+            "action": 1,
+            "fleet": 30,
+            "x": 396,
+            "y": 425
+          },
+          {
+            "action": 1,
+            "fleet": 31,
+            "x": 566,
+            "y": 255
+          }
+        ],
+        "cpu_moved_units": 46,
+        "player_lost": 0,
+        "rows": [
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "bcdd636cf15f58f3214680564cc16faca1e5951c5fd29a8710d0204472127bef",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "4f4d0edec288c0d3f1a6c452275f049f798071e80f86ffb78e717c043317d237"
+            },
+            "name": "entry",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "c6031542c039433b3ae7126ad1e34312be66f23aa9a893daee113b520df88947",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "0095187f6919ec16e06610acf334bebfbf5a39e4ccc87f016ab97f8101b94d0a",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "e502518035fcb65895f0e10b22e4ee92b882595b4011e6905a5b8cab060ce3dd"
+            },
+            "name": "turn1",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "33c50f35876720e6fe681bc59e0b365aedc722d3aeb5d597724caa310e9f8ec6",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "686a3373352f6fae0b7ebae3bd64f8ad5b81c0ff42fd9ba7744bb641046f6fe8",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "c7905c5bb650df2152694000b52cbca79ed9b8a50e08fb0357c17e660f874e8c"
+            },
+            "name": "turn2",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "2be6bed1762a9970ff9924c8c97befdd0742c72d87195db67c54732bb78b7bbf",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "d7523bb30191a9d5b25a89919548d2b750f181bc4212e258c87a0fdba762d0f2",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "81078a8cae5c77ad140b5eba52689930c54e510086c11f6c50d7c94505113f29"
+            },
+            "name": "turn3",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "1129a2026f90d2e61568682728f8cc1560ab22b5115a0b3c51750bbea369afaa",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "0d4a24ee643d8282208ed19f8280b08378575fb2f2ae7dd1396e312eca9e4c03",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "6893ea747950bc3dd938438465f4b437129b3bf30e3f7d802162670d54ccaf80"
+            },
+            "name": "turn4",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "05c047d7061ed18f80083ec995e870479bb02de843b43d2ef739d9e8d7f7fc60",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "56b5b7ed4e84cf775488fa9b2de29c47d163cf7551a9f7a4fca83a188ebd95a8",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "b294c46ea3256d0d62828255465ec48258552b1c0a8744c8016bdc592d6d9b09"
+            },
+            "name": "turn5",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "2ce4376b3412a1f393060648f43a0dc536d62eb98b84f67c4d1ab62ed45ea212",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "5a30e9b3caadad3a7af0842d3926d34bc2c9aea407ec8cfdf1d9e318bdb5be58",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "03336a3c98ced11179622bc358022e3ad8a8603f09287ace83baf2b6e0a63f04"
+            },
+            "name": "turn6",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "1589ab4c164311ab42f23a1c9700eed1fc1e91d38b9bb1195461f59207c37bd1",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "3f668842b9690197bfad7fa7d39f2c6beb39713833480fc873f0bc1fd1611a11",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "56950afa11c78b00d4dad940b98a4477a564b69ebe2fa35e2289f6e48c42423b"
+            },
+            "name": "turn7",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "61bca40d880ddbabbb3e9d5eeb7fda0a049032fe28cb3e27bd5d0912b25575fb",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "135ef861e9d64e4623f16195e8fd99319d645a6be3fc717f76aff3d40b45c627",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "eb5ce9e161cd8f1cee394363228d50aa860e946cd9d558c679ac7b3b43913d07"
+            },
+            "name": "turn8",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "1c78080269b968ccee56aa0ced49a7faac87603d4dbfdf89ffbbb5554502dc5b",
+              "PLANET": "b3d25e3367243ca16e7a05b16f85a489de4096a655c7f4e6fa819bb538b01561",
+              "SHIP": "e39195dda7881381829f6f83c8e540a9d048348b9e3febd872b2e21a5af661b9",
+              "STELLAR": "9f129a1d937359ff2b4494c0dae97083f72c3b93c4c949fa102e849a9b988a9b",
+              "WORK": "5ef24cf570421846d37af7625277a15fef4f16e6a4b0e4d85de1e4acc1f520bd"
+            },
+            "name": "turn9",
+            "state": "StateCommandPhase"
+          }
+        ]
+      },
+      "original": {
+        "commands": [
+          {
+            "action": 1,
+            "fleet": 16,
+            "x": 416,
+            "y": 280
+          },
+          {
+            "action": 1,
+            "fleet": 17,
+            "x": 816,
+            "y": 660
+          },
+          {
+            "action": 1,
+            "fleet": 28,
+            "x": 816,
+            "y": 660
+          },
+          {
+            "action": 1,
+            "fleet": 29,
+            "x": 416,
+            "y": 280
+          },
+          {
+            "action": 1,
+            "fleet": 30,
+            "x": 416,
+            "y": 280
+          },
+          {
+            "action": 1,
+            "fleet": 31,
+            "x": 816,
+            "y": 660
+          }
+        ],
+        "cpu_moved_units": 46,
+        "player_lost": 0,
+        "rows": [
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "f09700c57146cfaeca7cf7dfe0a1538cc64546f4a37caf3a642ef698f48f2e55",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "bcdd636cf15f58f3214680564cc16faca1e5951c5fd29a8710d0204472127bef",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "4f4d0edec288c0d3f1a6c452275f049f798071e80f86ffb78e717c043317d237"
+            },
+            "name": "entry",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "037077b9c3aa8bacac5411c1f7b51b57d9b6e15a5032a5ace5e0103202f57fef",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "94ef0bf289867e099cd40639feed413d14dc1449aed1e643f9a8c57d7c496945",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "e502518035fcb65895f0e10b22e4ee92b882595b4011e6905a5b8cab060ce3dd"
+            },
+            "name": "turn1",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "07e01f6949c9db919e207119cf31ddc77cae3bf51c7b0cdb18bc4551a82cc3cf",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "8aee02ebff7eececa02659b497f6e8c736304848d3643a6ffc18b73cb39dd10d",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "c7905c5bb650df2152694000b52cbca79ed9b8a50e08fb0357c17e660f874e8c"
+            },
+            "name": "turn2",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "8e23696e87590eb4279e0d9e252592dbc7f631bfc63bdc7a7db66e70f9ca7e10",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "fd8b8d7a37440c5ae9b48f2f489787cf2b2fc78d29beac5d81692f9c7f051e5f",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "c72ee5ae641b7017a7b13112be780e40641004fd73cba097c39a0ab795e81bd2"
+            },
+            "name": "turn3",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "07deb1c4bc2a6cb9f90066b1b17bd1cbcd6a2ac562eae13346b3c0d4f896ec6a",
+              "PLANET": "17e9634b2c497c94059bcf515bc3c7b19d26c3e2af15cd77f5b93d1292e615bb",
+              "SHIP": "f6d5ef2f0f2efffb258059f3dbb4355762eae51732b94d3ad52fb707a417f58e",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "0f8a0c2c9225731f65f1cc27eb1459c4d6e3de8c65c92e485b750fa8d710d95a"
+            },
+            "name": "turn4",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "4fd22a5be5ca66b97c944d1b24c8a29b152ff81ce28d89415c0bbb063e6d3902",
+              "PLANET": "d91d2cc0892710a425b52ed28dce907005c583d09c1abc90f14e2cd0627431f1",
+              "SHIP": "d316219a3e17d3b67e7cac5fa55b7fdfeabad5b980cb42a70b119f38d29652e0",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "de0af81ea0ae397753192078a2020fc234eedf91376ced1402b5b900944996bc"
+            },
+            "name": "turn5",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "b1e3afd222c609bcfa9ded6d2a2f6c2b590b6d1d8f443791e71e3ac45386266c",
+              "PLANET": "be28c10ec0a2ce5297989a09984f81f319d7ddd53074fee59f03055763383217",
+              "SHIP": "5c979c5e021827f3e8592165c85072d873b25142056802b26e8f2ee4d0d31091",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "3dacc4d03f2adb83f6f9c8c8625725620716b0b193b1fb11b976019c1e0a1599"
+            },
+            "name": "turn6",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "e93abb788eabbcbb88aefe9b7e363b29feb2ef110c7ad99262ec4391dd428c59",
+              "PLANET": "fe429e720fbeaf48ac8177fdc38f87a84552c72e8e3d0eb9942f914fe05547dc",
+              "SHIP": "91d83fe7614c29677170613ac653eb0f44e2d2d9b444d644c1684f2b81b1d851",
+              "STELLAR": "3a3521fd45a586f2f7df79f223af8015f414ad0e9fbc0d63f69cb9b00c803d99",
+              "WORK": "378ab854824cbc35afb4e036430c03e467a7bee4931f50b7d8beee687fb2d2fe"
+            },
+            "name": "turn7",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "6028d17ef06c6c24c3d227a1271ac4f78d02a04a6f2c8b08ee263ac4fdf8a94b",
+              "PLANET": "933751909d94e6ce90fca275b64b4405aa4d27dbd1b5cd585cfe3e99cd23810c",
+              "SHIP": "838dce9da686cb577b61961e67e177132546d8b9b482db07cc9c35717fd99703",
+              "STELLAR": "ce3edd54aac86c00c5db7f8a7853bf2287acd05e103127ad56177de8767cd85f",
+              "WORK": "86599ea6b740669957adc3bc4b2af57af0853ecce9d7194b28c53bb92bbd2b62"
+            },
+            "name": "turn8",
+            "state": "StateBattle"
+          },
+          {
+            "files": {
+              "ADMIRAL": "ff8cbf163afca8b90f223eb36004b8b42ca96d7a35286ff53f5178bc5f02e0ad",
+              "FLEET": "aee69922febb8d0640c84f814416e44151ae366eccd7e66b45776e651e8d667c",
+              "PLANET": "63f7f74207b46db3e8b438da51852fa5a9badcb5e16d6e5a5529ac12754348cb",
+              "SHIP": "cc64ed07a73beec1cd9368c3ccc39ca3ec5bc0c45d22225896d3a2f6bd8f4cf6",
+              "STELLAR": "1c0393803f48d7fa0a993cffd0d6ba962a6e7a72312991d556da93f5c1b84458",
+              "WORK": "cac77f988228a92507de2e803254ab41625445e5051e3812f191fe021f786468"
+            },
+            "name": "turn9",
+            "state": "StateCommandPhase"
+          }
+        ]
+      }
+    },
+    "scope": "正常公開S3的兩種戰術AI作用；不宣稱原版戰場對拍",
+    "seed": "無注入，正式初始種子與正常續骰"
+  },
+  "audio": {
+    "scope": "Linux完整包正式ALSA經虛擬PulseAudio输出，非實體卡／人耳",
+    "frames": 771550,
+    "seconds": 17.49546485260771,
+    "peak": 0.042449951171875,
+    "rms": 0.0045423439886003,
+    "rms_dbfs": -46.854399600942514,
+    "sink": "workplace/package92-r118-b/sink-receipt.json"
+  },
+  "original_round117": {
+    "scope": "原版正常S3單人首回合；與當時061被動版remake無完整同態裁決，後續新增比較已依使用者停止",
+    "metadata": {
+      "complete": true,
+      "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+      "go_version": "go1.24.13",
+      "inputs": [
+        {
+          "after_hex": "78563412",
+          "before_hex": "8ab7e4b6",
+          "kind": "seed",
+          "linear": "lin:5E00C",
+          "step": 435000000
+        },
+        {
+          "kind": "click",
+          "step": 450000000,
+          "x": 100,
+          "y": 60
+        },
+        {
+          "kind": "release",
+          "step": 453000000
+        },
+        {
+          "kind": "click",
+          "step": 455000000,
+          "x": 100,
+          "y": 70
+        },
+        {
+          "kind": "release",
+          "step": 458000000
+        }
+      ],
+      "parent_sha256": "e34be1a1256712a7476a2e0aefdf55d4aee721cac2e97de0a0d0374cccf5c920",
+      "program_sha256": "770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918",
+      "schema": "logh3.normal-turn-native.v1",
+      "scope": "normal S3 saved-state continuation; seed only; no CPU entry injection",
+      "tick": 20000,
+      "uid": 1000
+    },
+    "rows": [
+      {
+        "cs_ip": "17A0:01E8",
+        "name": "00-entry",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8",
+        "seed_hex": "78563412",
+        "step": 435000000
+      },
+      {
+        "cs_ip": "181B:000A",
+        "name": "01-turn-entry",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "5c42dd78f33065caaaa022a817413336611a382ab6e6cfcae3378d610af28e6b",
+        "seed_hex": "bcd1cfaf",
+        "step": 467182872
+      },
+      {
+        "cs_ip": "181B:003F",
+        "name": "02-maintenance",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "5c42dd78f33065caaaa022a817413336611a382ab6e6cfcae3378d610af28e6b",
+        "seed_hex": "bcd1cfaf",
+        "step": 467182875
+      },
+      {
+        "cs_ip": "181B:00FA",
+        "name": "03-movement",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "8ffd824e20f9d9f2a3e7b7ec87f277a421ec0c8d3b4c65c61e7004e8453331ab",
+        "seed_hex": "bcd1cfaf",
+        "step": 468859842
+      },
+      {
+        "cs_ip": "181B:0262",
+        "name": "04-spotting",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "93f969ef80f7b71a5eec032d42982208edce856cfe4783c3a2b5bac570bfac73",
+        "seed_hex": "bcd1cfaf",
+        "step": 483779605
+      },
+      {
+        "cs_ip": "181B:028C",
+        "name": "05-fleet-combat",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "6aeeb440939a928aff75348c5d7613e3a1539ea5be0d277e07903110772b4e96",
+        "seed_hex": "bcd1cfaf",
+        "step": 484359227
+      },
+      {
+        "cs_ip": "181B:0385",
+        "name": "06-fortress",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "590e40ab6b05e18f1f7d8c1d30c07052a67ae3ef88d30d987cc71644cdc522ec",
+        "seed_hex": "bcd1cfaf",
+        "step": 484381155
+      },
+      {
+        "cs_ip": "181B:03D0",
+        "name": "07-planet",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "590e40ab6b05e18f1f7d8c1d30c07052a67ae3ef88d30d987cc71644cdc522ec",
+        "seed_hex": "bcd1cfaf",
+        "step": 484381197
+      },
+      {
+        "cs_ip": "181B:03F0",
+        "name": "08-final",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "8a1e6a44d64871c72966e7307f5d0a59605d88c2e502b6043948c04515cca2a7",
+        "seed_hex": "bcd1cfaf",
+        "step": 484433323
+      },
+      {
+        "cs_ip": "185C:001D",
+        "name": "09-final-1",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561",
+        "seed_hex": "bcd1cfaf",
+        "step": 484454024
+      },
+      {
+        "cs_ip": "185C:02DA",
+        "name": "10-final-2",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561",
+        "seed_hex": "bcd1cfaf",
+        "step": 484456839
+      },
+      {
+        "cs_ip": "185C:0491",
+        "name": "11-final-3",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561",
+        "seed_hex": "bcd1cfaf",
+        "step": 484456931
+      },
+      {
+        "cs_ip": "185C:060D",
+        "name": "12-final-4",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561",
+        "seed_hex": "bcd1cfaf",
+        "step": 484457138
+      },
+      {
+        "cs_ip": "185C:09BF",
+        "name": "13-final-5",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561",
+        "seed_hex": "bcd1cfaf",
+        "step": 484457960
+      },
+      {
+        "cs_ip": "12AA:00E2",
+        "name": "14-turn-return",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561",
+        "seed_hex": "bcd1cfaf",
+        "step": 484458167
+      },
+      {
+        "cs_ip": "12AA:02D4",
+        "name": "15-next-input",
+        "palette_sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535",
+        "screen_sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561",
+        "seed_hex": "bcd1cfaf",
+        "step": 484496043
+      }
+    ],
+    "replayed_files": [
+      {
+        "file": "00-entry.bin",
+        "bytes": 307200,
+        "sha256": "a26be89bd8de293e5832ec1a1208e0a5f9c53567121dedfc5f4188f69fd966e8"
+      },
+      {
+        "file": "00-entry.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "00-entry.png",
+        "bytes": 7461,
+        "sha256": "c0ef70fb73dc732604709a5018dc95b972d17dd63d8598cdd9db7e1b603a6dc0"
+      },
+      {
+        "file": "01-turn-entry.bin",
+        "bytes": 307200,
+        "sha256": "5c42dd78f33065caaaa022a817413336611a382ab6e6cfcae3378d610af28e6b"
+      },
+      {
+        "file": "01-turn-entry.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "01-turn-entry.png",
+        "bytes": 6229,
+        "sha256": "f5c482c33fae244436f280c1ff3e92b3f186f17bc3f5975e7542a25213653b64"
+      },
+      {
+        "file": "02-maintenance.bin",
+        "bytes": 307200,
+        "sha256": "5c42dd78f33065caaaa022a817413336611a382ab6e6cfcae3378d610af28e6b"
+      },
+      {
+        "file": "02-maintenance.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "02-maintenance.png",
+        "bytes": 6229,
+        "sha256": "f5c482c33fae244436f280c1ff3e92b3f186f17bc3f5975e7542a25213653b64"
+      },
+      {
+        "file": "03-movement.bin",
+        "bytes": 307200,
+        "sha256": "8ffd824e20f9d9f2a3e7b7ec87f277a421ec0c8d3b4c65c61e7004e8453331ab"
+      },
+      {
+        "file": "03-movement.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "03-movement.png",
+        "bytes": 5437,
+        "sha256": "a91f1ba50f9d6b36d8f6a648d279802fc5b6edb512cacefac5eb48bce7c82e51"
+      },
+      {
+        "file": "04-spotting.bin",
+        "bytes": 307200,
+        "sha256": "93f969ef80f7b71a5eec032d42982208edce856cfe4783c3a2b5bac570bfac73"
+      },
+      {
+        "file": "04-spotting.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "04-spotting.png",
+        "bytes": 5441,
+        "sha256": "c47f474f274aa91dad9a38b93ce1b715be1ba981c061aac4bf413b8cf98483c9"
+      },
+      {
+        "file": "05-fleet-combat.bin",
+        "bytes": 307200,
+        "sha256": "6aeeb440939a928aff75348c5d7613e3a1539ea5be0d277e07903110772b4e96"
+      },
+      {
+        "file": "05-fleet-combat.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "05-fleet-combat.png",
+        "bytes": 5535,
+        "sha256": "9ef2e6fcb7025dae689a1a9a9e5bd6b28a7b2d42498a1498b936da11f53b9bfd"
+      },
+      {
+        "file": "06-fortress.bin",
+        "bytes": 307200,
+        "sha256": "590e40ab6b05e18f1f7d8c1d30c07052a67ae3ef88d30d987cc71644cdc522ec"
+      },
+      {
+        "file": "06-fortress.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "06-fortress.png",
+        "bytes": 5506,
+        "sha256": "48b2a5bd38aabe4093f62323b79f5e41f57b04b99ea97694cf666ee2c6967705"
+      },
+      {
+        "file": "07-planet.bin",
+        "bytes": 307200,
+        "sha256": "590e40ab6b05e18f1f7d8c1d30c07052a67ae3ef88d30d987cc71644cdc522ec"
+      },
+      {
+        "file": "07-planet.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "07-planet.png",
+        "bytes": 5506,
+        "sha256": "48b2a5bd38aabe4093f62323b79f5e41f57b04b99ea97694cf666ee2c6967705"
+      },
+      {
+        "file": "08-final.bin",
+        "bytes": 307200,
+        "sha256": "8a1e6a44d64871c72966e7307f5d0a59605d88c2e502b6043948c04515cca2a7"
+      },
+      {
+        "file": "08-final.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "08-final.png",
+        "bytes": 5504,
+        "sha256": "f892ec6d0e10de8d7297f3192594641388a2a41866880ed26f472081fc17dd6d"
+      },
+      {
+        "file": "09-final-1.bin",
+        "bytes": 307200,
+        "sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561"
+      },
+      {
+        "file": "09-final-1.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "09-final-1.png",
+        "bytes": 5538,
+        "sha256": "101fdea39ee297feb0ca71f9c173270232b7cdf65469605694cd396f418949cb"
+      },
+      {
+        "file": "10-final-2.bin",
+        "bytes": 307200,
+        "sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561"
+      },
+      {
+        "file": "10-final-2.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "10-final-2.png",
+        "bytes": 5538,
+        "sha256": "101fdea39ee297feb0ca71f9c173270232b7cdf65469605694cd396f418949cb"
+      },
+      {
+        "file": "11-final-3.bin",
+        "bytes": 307200,
+        "sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561"
+      },
+      {
+        "file": "11-final-3.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "11-final-3.png",
+        "bytes": 5538,
+        "sha256": "101fdea39ee297feb0ca71f9c173270232b7cdf65469605694cd396f418949cb"
+      },
+      {
+        "file": "12-final-4.bin",
+        "bytes": 307200,
+        "sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561"
+      },
+      {
+        "file": "12-final-4.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "12-final-4.png",
+        "bytes": 5538,
+        "sha256": "101fdea39ee297feb0ca71f9c173270232b7cdf65469605694cd396f418949cb"
+      },
+      {
+        "file": "13-final-5.bin",
+        "bytes": 307200,
+        "sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561"
+      },
+      {
+        "file": "13-final-5.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "13-final-5.png",
+        "bytes": 5538,
+        "sha256": "101fdea39ee297feb0ca71f9c173270232b7cdf65469605694cd396f418949cb"
+      },
+      {
+        "file": "14-turn-return.bin",
+        "bytes": 307200,
+        "sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561"
+      },
+      {
+        "file": "14-turn-return.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "14-turn-return.png",
+        "bytes": 5538,
+        "sha256": "101fdea39ee297feb0ca71f9c173270232b7cdf65469605694cd396f418949cb"
+      },
+      {
+        "file": "15-next-input.bin",
+        "bytes": 307200,
+        "sha256": "e14201cf783e57d648c9d6faffda8191a15055c2b7e7f26869ce25ac7628e561"
+      },
+      {
+        "file": "15-next-input.pal",
+        "bytes": 48,
+        "sha256": "0478f4b24f3f8cd84696be353593c0b2dd023164b71d049cb777ddfd5ee92535"
+      },
+      {
+        "file": "15-next-input.png",
+        "bytes": 5538,
+        "sha256": "101fdea39ee297feb0ca71f9c173270232b7cdf65469605694cd396f418949cb"
+      },
+      {
+        "file": "observations.json",
+        "bytes": 1441885,
+        "sha256": "b11fb3b75428af27e6b196948212ad835c9cf9c5068009407a0820712377a711"
+      }
+    ]
+  },
+  "limitations": [
+    "Windows僅Wine，未實機",
+    "Linux虛擬音效卡，未人耳",
+    "macOS未打包",
+    "完整登陸分段演出尚未接完",
+    "原版戰術參考點強推論保持",
+    "未宣稱完整原版戰場同態"
+  ],
+  "promo": {
+    "seconds": 60,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "kind": "實際遊戲畫面靜態剪輯",
+    "music": "BGM_0F.ogg",
+    "gain_db": 16,
+    "mean_db": -21.7,
+    "max_db": -6.3,
+    "visual_review": "六張抽樣幀已目視，字幕未裁切"
+  },
+  "toolchain_images": {
+    "logh3-ebiten:2": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+    "logh3-ebiten:3": "sha256:ecb3612ac7c18d0cd225fd55b7b186052a8bf0029e82aa786a23f4b88f196fa8",
+    "colonization-windows-verification:20261001-r1": "sha256:7d3c7ff554db39300e3e7a92a7b79c2d5fcd647289596d22fa10899baac61201",
+    "psychicwar-video:latest": "sha256:78e0c88b07ee659bec32611ad16a49b01f5a6d75c67ba524b8258de1339d2ab3",
+    "golang:1.24-bookworm": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac"
+  },
+  "toolchain_image_verification": "收尾由主機 docker image inspect 核對完整映像ID；來源程式及交付檔雜湊保持。"
+}

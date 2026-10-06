@@ -81,6 +81,8 @@ func newTestGame(t *testing.T) *Game {
 	// 本 helper 是直接入場診斷。108要求明示入口歸屬快取與受控亂數。
 	g.cacheBattlePromotionPaths()
 	g.battleRand = rules.NewRand(1)
+	// 既有直接入場收據沿061歷史政策；正常bootstrap／CLI依120活動。
+	g.SetPassiveBattleComputer(true)
 	return g
 }
 
@@ -158,12 +160,13 @@ func TestAdvanceBattleTurnMoves(t *testing.T) {
 		g.slot.Fleet[index*rules.FleetRecord+0x0f] = 1
 	}
 	g.battleUnits = []rules.BattleUnit{
-		{Fleet: own, Faction: 0, X: 400, Y: 400, TargetX: 400, TargetY: 400, Strength: 1000, CruiseSpeed: 30, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
-		{Fleet: foe, Faction: 1, X: 1400, Y: 1400, TargetX: 1400, TargetY: 1400, Strength: 1000, CruiseSpeed: 30, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
+		{Fleet: own, Faction: 0, X: 400, Y: 400, TargetX: 400, TargetY: 400, Strength: 1000, CruiseSpeed: 30, FightSpeed: 30, Action: 0x7f, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
+		{Fleet: foe, Faction: 1, X: 1400, Y: 1400, TargetX: 1400, TargetY: 1400, Strength: 1000, CruiseSpeed: 30, FightSpeed: 30, Action: 0x7f, TurnSpeed: 4, Ships: 1000, FullShips: 1000, RepairCap: 1000, Morale: 100},
 	}
 	g.battleFleets = []rules.BattleFleet{{Index: own, Faction: 0, X: 400, Y: 400, DestX: 400, DestY: 400, Action: 4, ScoutMode: 255}, {Index: foe, Faction: 1, X: 1400, Y: 1400, DestX: 1400, DestY: 1400, Action: 4, ScoutMode: 255}}
 	g.state = StateBattle
 	g.battleTurn = 1
+	g.battleRegion = 26 // S3地圖；活動戰鬥命令的候選查詢需要真實地形。
 	g.faction = 0
 	g.SetTactic(ai.OriginalTactic{}, false)
 	g.originalBattleAI = true // 驗的是原版戰術層會讓敵方移動（規格 061 在遊戲層關掉它）

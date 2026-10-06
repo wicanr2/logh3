@@ -898,6 +898,8 @@ type Game struct {
 	autoBattle       bool
 	// originalBattleAI 關掉「戰場上電腦不造成傷害」（`passivebattle.go`，使用者裁決）；只有對拍原版戰場的測試會設。
 	originalBattleAI bool
+	// passiveBattleComputer只供明示的061歷史診斷；正常預設活動（規格120）。
+	passiveBattleComputer bool
 
 	// 結算用的（`docs/spec/018`）：參戰艦隊、亂數、上一回合的交火紀錄，
 	// 以及「有一方全沒了」。
@@ -2091,7 +2093,9 @@ func New(res *Resources) (*Game, error) {
 	g.startNewGame(res.Faction)
 	// 電腦那一方走原版的戰略 AI（`docs/spec/029` READY，使用者裁決
 	// 2026-09-10）。資源不齊時 `OriginalBrain` 自己回 nil ＝ 不下命令。
-	g.SetBrain(g.OriginalBrain())
+	if err := g.SetAILevel(-1); err != nil {
+		return nil, err
+	}
 	if err := g.pickQuestion(); err != nil {
 		return nil, err
 	}

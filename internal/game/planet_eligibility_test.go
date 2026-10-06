@@ -44,6 +44,7 @@ func TestPlanetCounterOnlyPassivePolicy(t *testing.T) {
 		for _, original := range []bool{false, true} {
 			t.Run(fmt.Sprintf("faction%d-original%t", faction, original), func(t *testing.T) {
 				g, expected := planetCounterOnlyGame(t)
+				g.SetPassiveBattleComputer(true) // 抽驗061歷史政策，不代表正常預設。
 				g.faction, g.originalBattleAI = faction, original
 				before := append([]rules.BattleUnit(nil), g.battleUnits...)
 				actions := append([]rules.BattleFleet(nil), g.battleFleets...)

@@ -130,6 +130,7 @@
 |---|---|---|
 | 資料段裡的熱區清單 | **25 份全部掃出**（含每個按鈕的中文標籤） | [`docs/internals/23`](docs/internals/23-hotspot-lists.md) |
 | 清單 ↔ 畫面的對應 | **27 處命中測試呼叫端全部掃出**，其中 14 處讀得出按鈕標籤（[`data/hittest-sites.json`](docs/internals/data/hittest-sites.json)）；清單位移寫死在呼叫端，兩者由呼叫點綁死（[`docs/re/16`](docs/re/16-window-list-right-button.md)、[`docs/re/156`](docs/re/156-hotspot-lists-from-call-sites.md)） | 同上 |
+| 本機完整版測試包與推廣影片 | Windows／Linux完整版及60秒影片已交付 | [105](docs/playtest/105-local-full-test-package.md)、[來源索引](docs/internals/data/local-test-package.json)。逐檔雜湊、正式入口、公開存讀與Linux音訊通過；Windows僅Wine，人耳／macOS／完整登陸演出仍未完成。 |
 
 ## 執行期的資料表
 
@@ -155,7 +156,7 @@
 | 剩餘軍事費 ＝ 預估軍事費 − 船艦建造費 | **已實作** | 同上 |
 | 艦隊戰力 ＝ Σ 前 `+0x0F` 組的 `權重[艦種] × 現有 × 1000 ÷ 滿編` | **已實作**（`rules.FleetStrength`） | [`docs/re/79`](docs/re/79-per-fleet-decision-pass.md)；上界修正見 [`docs/re/194`](docs/re/194-fleet-record-in-save.md) |
 | 其他（舊矩陣空白占位） | **不適用（已清理占位列）** | [#34](https://github.com/wicanr2/logh3/issues/34)：沒有範圍與驗收條件，不代表待實作功能 |
-| 正常S3載入至首次戰場（#89） | DRAFT；十一個READY子契約限定已驗，完整入口待驗 | [088](docs/spec/088-normal-battle-player-entry.md)、[研究394](docs/re/394-battle-object-keys.md)、[收據](docs/internals/data/battle-object-keys.json)。第56輪正常及方向鍵反例各雙跑，64物件／55原池／7方向關係，IDA592條／33項語意。改兩鍵bytes只改一像素且五表保持；固定次序prototype五圖零差，忠實度裁決pending。正式WORK0／FLEET27／SHIP214及初始一像素保持，不升格完整入口。第55輪160限定PASS、18套件及兩倍率GUI收據保持。 |
+| 正常S3載入至首次戰場（#89） | 實作已接線；原版完整同態仍DRAFT，使用者取消交付門檻 | [交付105](docs/playtest/105-local-full-test-package.md)、[來源索引](docs/internals/data/local-test-package.json)。正常入口、兩種活動AI及公開存讀已抽驗；原版未知保留。 |
 
 ## 戰略 AI
 
@@ -186,6 +187,7 @@
 | `Brain` 包裝（`ai.OriginalStrategy`） | **已實作，未啟用** | 接得上 `Brain`；`Original` 仍回 `nil`，換掉只要改建構的那一行 |
 | **建艦隊（階段一，`2D76:0002`／`2E54:0513`）** | **已實作並接線**（`ai.BuildPass`／`OriginalStrategy.Build`，見下一列的長條目） | 當初擋在戰略 AI 前面的理由：新遊戲兩邊都是零艦隊（新遊戲樣板只有 `ADMIRAL.DTX`／`STELLAR.DTX`，沒有 `FLEET.DTX`，[`docs/re/200`](docs/re/200-new-game-has-no-fleets.md)），電腦那一方的艦隊是 AI 自己建的。`ai.Turn` 只涵蓋階段二／三／五——建艦隊產生的是新艦隊不是命令，`[]Order` 裝不下 |
 | **接到 `advanceTurn`** | **已接**（2026-09-10 使用者裁決） | `New` 與 `LoadSlot` 都把 `Brain` 設成 `OriginalBrain()`，資源不齊時它自己回 nil。**既有的畫面收據一份都沒破**（`go test ./...` 全綠）。同時補上兩件原版行為：建艦隊時把帶隊提督的 `+0x09` 寫成艦隊槽（`2D76:0611`），以及 AI 回合尾巴重新指派情報與內政專任參謀（`2D10:0038`，[`docs/re/268`](docs/re/268-ai-reassigns-staff-officers.md)）——`TestAllianceStaffSwitchesToReceipt` 釘住同盟那格從 60 換到 63、帝國那格不動。**剩一個順序差異**：原版是逐座位跑的（帝國座位的月底結算 → 同盟座位的 AI → 同盟的結算），remake 的 `advanceTurn` 把 AI 放在最前面，所以回合 10 的同盟 `Blend` 兩邊不同（原版 2、remake 0）；`monthwork3` 倒在同盟座位跑完之前，逐格比稅率要另做一份收據 |
+| 目前原版與強化戰略／戰術AI正式接線 | 已實作並啟用；歷史061被動預設已由120取代 | [120](docs/spec/120-active-tactical-ai.md)、[105](docs/playtest/105-local-full-test-package.md)。正常S3各九回合CPU下令及移動，兩模式命令不同；253艘反擊回歸及13套件通過。原版參考點仍強推論，完整戰場同態未宣稱。 |
 
 > 既有的 25 份記憶體傾印裡，**只有被 `-poke` 過座位表的 `s3aicomp` 跑過 AI**
 > （`ds:D60E = 5`），其餘 24 份的 `ds:D60E` 與整張 `ds:D50E` 都是 0

@@ -2,6 +2,8 @@
 
 狀態：**DRAFT**。完整八步仍待原版正常整回合同態。
 
+實作狀態：**已接線**。2026-10-06使用者取消新增戰場差異與雙玩家命令驗證，改以機制及兩種AI實作為交付門檻。八步及正常玩家結算、存讀已有實作；活動AI依[120](120-active-tactical-ai.md)啟用，交付見[105](../playtest/105-local-full-test-package.md)。原版完整同態仍未知，DRAFT不升格；下文歷史缺項不再阻塞本機測試包。
+
 第一階段已接線並通過規格079的限定驗收；子步8-1的全滅與士氣報告READY；
 子步8-2已依[106 READY](106-battle-region-ownership.md)接線，
 8-3已依[107 READY](107-scout-fuel.md)接線，8-4已依[108限定CONFORMED](108-battle-promotion.md)接線，8-5已依110 READY接線，完整八步DRAFT。

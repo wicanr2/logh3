@@ -2,6 +2,11 @@
 
 唯一流水帳。新條目加在最上面。
 
+## 2026-10-06 第117輪：正常原版首戰整回合
+
+- 前輪分類為實際進展。父提交5f2150bbebe731d81fc4fccd50912947a60f3b36，開工乾淨。主機gh憑證有效，遠端91張worklist、6 OPEN／85 CLOSED，271條verify零失效。命中dosgolem入口、重製驗證及文件職責，沿已開啟#79。
+- 第55輪正常原版完整保存264510 bytes，SHA-256 e34be1a1256712a7476a2e0aefdf55d4aee721cac2e97de0a0d0374cccf5c920。原版首戰seed為B6E4B78A，未假定只沿戰略固定seed即可配對戰術RNG。下一步在首次公開戰術實行前固定一次seed，自然續行觀測，不改CPU入口。
+
 ## 2026-10-06 第116輪：一般分隊自然死亡與原池清理
 
 - 父提交e0db0df50673b1972d238573604fa41ab3c14a7b，開工乾淨。主機gh憑證與遠端91張worklist有效，6 OPEN／85 CLOSED，271條verify零失效。上一輪分類為實際進展；命中重製技能、正常玩家試玩與文件職責，沿已開啟#79及109 READY進行。
@@ -10689,3 +10694,17 @@ CONTEXT與矩陣，87張、11張open，267條核實零不成立、3條人工、1
 - 重新命中正常玩家／Xvfb路由並讀試玩入口。GUI第二批固定短按及第三批同步XTEST仍未收斂，保留原始Update、失敗trace，不再調參數。最小正常首戰GUI不操作鏡頭，不注入局面或seed，兩項艦隊命令保留typed／raw Action7F；實際SHIP.DT0確認7F，六檔非空。三張原生X11共921600像素與正式Game繪圖零差，完整PNG／差分保留並目視。長流程與自然勝負GUI未驗；右側FLEET文字待命未裁決，不擴大SHIP欄位聲明。
 - 309來源SHA-256 76e8626f969071ca2efdbc9bb6a2466cbae34cad89f1481dc0a18955c541d98b，逐檔大小與雜湊核對相同。遠端#79本文與準備稿逐字一致且OPEN；最新89張／9 OPEN／80 CLOSED，269條零失效、2人工、122一致、145文件。CONTEXT清單與矩陣重生；判準與核對種類不改。
 - 新文件正對照入口與相對連結、Python AST、shell語法、git diff --check通過。find無root-owned檔案或*.md目錄；程式、來源索引、實際保存抽樣1000:1000。專案Docker容器已清空，專用dosgolem仍f7523f9且clean，沒有重建映像或清理其他專案資源。本輪提交訊息「修正艦隊命令誤改旗艦行動碼」；精確提交與推送身份依Git紀錄。
+
+## 2026-10-06 第118輪：活動戰術AI與本機試玩交付
+
+- 接手父提交5f2150bbebe731d81fc4fccd50912947a60f3b36，保留第117輪工作樹。路由命中逆向重製、文件職責、版號、dist-all及推廣片；沿既有入口及專用Docker映像。主機gh憑證正常，開工271條核對零失效。先開#92交付、#93活動戰術AI，再實作；未使用subagent。
+- 使用者明示停止新增雙玩家命令與原版戰場差異驗證，改確認機制及兩種AI實作；另選擇啟用原版及強化戰術AI，取代061正常被動政策。120經既有程式、017／068及裁決審查READY後接線。正常New接OriginalTactic，強化仍接Encircle；活動模式不還原電腦傷害、不凍結電腦。修復既有AI目的地到正式交戰的缺口：旗艦保留SHIP+1E，艦隊寫戰鬥Action1及戰鬥速度；六表格式、AI算法與傷害公式保持。歷史061診斷明示SetPassiveBattleComputer(true)。原版戰術參考點強推論不升格。
+- 第117輪原版正常S3首回合16點、a／b各49檔逐byte相同；方法、父保存、一次RNG及公開滑鼠、CPU自然決策與全部身份保存在研究440及local-test-package.json。與當時被動remake不同，未宣稱完整同態；依使用者停止後不再做雙人後續比較。dosgolem f7523f9未改。
+- 正常公開S3兩模式各九回合、46個CPU分隊位移，命令不同；未注入局面或RNG。活動政策253艘反擊回歸通過。第一次觀測器讀錯SHIP陣營位移、誤把演出暫態當結束，保留a；修正b通過。舊測試欠戰鬥速度、Action與地圖，或假定歷史被動，補齊診斷資料並明示歷史政策，未放寬原版golden。最終標準18套件13PASS／5無測試，Game168.683秒，紀錄round118-delivery-standard.log。
+- 從離線vendor及目前來源重建v.0.1.1-20261006到dist-all。Windows／Linux ZIP含165個原版資料項、22首OGG、28段音效、固定FluidR3_GM及MIT、Go／第三方／引擎授權、兩種AI啟動器、繁中README與逐檔MANIFEST；另附完整vendor引擎來源。版本CLI及BUILD記錄父HEAD、dirty實際來源與逐檔雜湊，不冒稱乾淨HEAD。初始v.0.1.0及早期v.0.1.1未交付批次移回workplace明示undelivered目錄，不覆寫公開tag或Release。
+- Linux正式封包11條GUI公開CLI路徑、兩AI作用與保存讀回通過；Windows相同二進位Wine9.0正式main／input／load／battle四入口通過。Linux實際ALSA／虛擬PulseAudio輸出17.495465秒非靜音；最後補Go授權及MANIFEST後重讀全部ZIP成員，原二進位／資料／音樂保持。不是Windows實機或人耳驗收。存檔路徑及操作見105。
+- 推廣片為真實遊戲畫面的靜態剪輯，十段各6秒，1080p／30fps H.264／AAC。包內BGM_0F混音加16dB與淡入淡出，包內音樂未改。FFprobe核60秒，平均−21.7dB、峰值−6.3dB，無超過0.25秒黑段；六張幀及接觸表已目視無字幕裁切。ImageMagick接觸表兩次abort，保留工具失敗，改既有FFmpeg拼合，不列產品缺陷。重用psychicwar-video:latest，完整image ID由docker image inspect核對並保存索引。
+- 最終Windows ZIP SHA-256 ef3e1e4f189f31f3dcc1a0825d20e236da29a8a4ccaac9dec24d420df26b6acc；Linux db2a21e840a012ab0c34ddb7fe6e11f67de8a86e60a2162b3510b5848f224b57；來源411935f250ce6f412dd675a46d08fc529082c259298d5fba856c5c6e8f68493e；影片932b1301852a83559da30fea1035f8034cf0f58ee4919839ae764a0653e54562。19項交付、20份來源及10份收據的大小／雜湊凍結於local-test-package.json，索引SHA-256 2b6240536e024dca369cef572f1c7bac8ce4c29d23f83754d67b02079c9cd9df。完整版與影片含原版衍生素材，只留本機，不加入Git或公開Release。
+- #92／#93完成，120限定CONFORMED；#79／#89按使用者調整後的實作門檻完成，062／088完整原版同態仍DRAFT。舊判準及阻塞完整保留Issue歷史摺疊快照。Issue證據反引號、機器標題兩次格式核對失敗，重讀文件職責及現行ParseIssue精確契約後修正；不改解析器，不以本機快照代替遠端。最終93項、4 OPEN／89 CLOSED，273條核對零失效、1人工、127一致／145歷史文件證據；CONTEXT清單及完整矩陣由同一快照重生。
+- #48完整登陸分段仍未完成；#69保留人耳、實體Windows、macOS及完整曲目／循環，#66 MIDI I/F與#16原版欄位證據保持。原Goal工具仍顯示blocked，本輪依目前使用者指示完成試玩交付，不把整體remake標完成。README只新增穩定交付入口；新工具、規格、研究、交付及索引都掛既有internals入口。
+- 收尾49項凍結檔大小／雜湊相同，Python AST、shell語法、5個新文件相對連結及git diff --check通過。297236個項目無root-owned或*.md目錄，交付與索引皆1000:1000；logh3容器無殘留，未重建映像或清理其他專案。本輪提交／推送訊息「啟用兩種戰術AI並交付本機完整版試玩包」，精確身份依Git紀錄。

@@ -590,6 +590,7 @@ func TestNormalFleetPlayerChain(t *testing.T) {
 	for _, faction := range []int{0, 1} {
 		t.Run(fmt.Sprint(faction), func(t *testing.T) {
 			g := reachConfiguredAI(t, -1, faction)
+			g.SetPassiveBattleComputer(true) // 保存102的061歷史玩家收據；正常政策依120另驗。
 			fleetChainAssets(t, g)
 			withSound := os.Getenv("LOGH3_FLEET_SOUND") == "1"
 			var soundEvents []map[string]any

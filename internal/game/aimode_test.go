@@ -97,8 +97,8 @@ func TestEnhancedAINormalPlayerPath(t *testing.T) {
 		if g.brain == b || g.AILevel() != 1 {
 			t.Fatal("新局未重建強化策略暫態")
 		}
-		if _, passive := g.passiveComputer(); !passive {
-			t.Fatal("AI 接線修復意外取消被動戰場裁決")
+		if _, passive := g.passiveComputer(); passive {
+			t.Fatal("新局仍套用已被120取代的被動戰場裁決")
 		}
 	}
 }

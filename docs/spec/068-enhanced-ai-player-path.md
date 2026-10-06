@@ -1,6 +1,7 @@
 # 068 — 增強 AI 的正常入口與模式生命週期
 
 狀態：**CONFORMED**（2026-10-01，限下列策略接線與模式生命週期範圍）。
+2026-10-06勘誤：使用者選擇啟用兩種戰術AI，正常戰場不再被動；第5項及停止線的被動政策由[120](120-active-tactical-ai.md)取代。戰略證據與模式生命週期保持。
 工作項目：[Issue #87](https://github.com/wicanr2/logh3/issues/87)。
 證據：[研究 357](../re/357-enhanced-ai-player-path.md)，基礎規則與設計來自
 [017](017-computer-ai.md)、[029](029-strategic-ai-turn.md)、[031](031-fleet-refit.md)。
