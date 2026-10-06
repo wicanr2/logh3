@@ -130,6 +130,7 @@
 |---|---|---|
 | 資料段裡的熱區清單 | **25 份全部掃出**（含每個按鈕的中文標籤） | [`docs/internals/23`](docs/internals/23-hotspot-lists.md) |
 | 清單 ↔ 畫面的對應 | **27 處命中測試呼叫端全部掃出**，其中 14 處讀得出按鈕標籤（[`data/hittest-sites.json`](docs/internals/data/hittest-sites.json)）；清單位移寫死在呼叫端，兩者由呼叫點綁死（[`docs/re/16`](docs/re/16-window-list-right-button.md)、[`docs/re/156`](docs/re/156-hotspot-lists-from-call-sites.md)） | 同上 |
+| 月初可見按鈕與下拉選單游標 | 已修正並交付v.0.1.3本機完整版 | [107](docs/playtest/107-player-input-hotspots.md)、[121](docs/spec/121-player-input-hotspots.md)及[凍結來源](docs/internals/data/player-input-hotspots.json)；新Linux包兩陣營48張正常X11全圖零差。 |
 | 故事首頁與復古重製推廣片 | 故事首頁與72秒新版影片完成 | [106](docs/playtest/106-macos-and-retro-promo.md)及[本輪來源](docs/internals/data/macos-retro-promo.json)，v.0.1.2-20261006實際交付。 |
 | macOS本機完整版測試包 | 封包完成；macOS真機待試玩 | [106](docs/playtest/106-macos-and-retro-promo.md)及[本輪來源](docs/internals/data/macos-retro-promo.json)，v.0.1.2-20261006實際交付。 |
 | 第118輪Windows／Linux完整版與60秒影片 | Windows／Linux完整版及60秒影片已交付 | [105](docs/playtest/105-local-full-test-package.md)及[前版來源](docs/internals/data/local-test-package.json)，v.0.1.1-20261006保持。新版三平台與72秒影片見106；真機、人耳與完整登陸演出仍待驗收。 |
