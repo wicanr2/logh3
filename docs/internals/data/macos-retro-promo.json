@@ -1,0 +1,1022 @@
+{
+  "schema": "logh3.macos-retro-promo.v1",
+  "version": "v.0.1.2-20261006",
+  "date": "2026-10-06",
+  "source_revision": "e2743120116a48ffc933aa7cadd8fac52d9ae6da",
+  "sources": [
+    {
+      "path": "README.md",
+      "bytes": 13559,
+      "sha256": "e83d215eae9404deafb2fb9d4d39ec5ec438c1411ccd105ad092bd0a807833e5"
+    },
+    {
+      "path": "docs/playtest/106-macos-and-retro-promo.md",
+      "bytes": 9126,
+      "sha256": "f85988cef97d89fc42b81f8765e45288d2af70a710e18b36f3661b1bc0281c38"
+    },
+    {
+      "path": "docs/goal/2026-10-06-macos-retro-promo-round-119.md",
+      "bytes": 1153,
+      "sha256": "8d241fbc09b24481992d59ffb81cc9a73c6f9995ba095db0b79adbd626d31b44"
+    },
+    {
+      "path": "tools/macos.sh",
+      "bytes": 1018,
+      "sha256": "12cec54b615100fcf097ea547300a31b5c39aa08c9f1b523a6aafa60a4784c41"
+    },
+    {
+      "path": "tools/scripts/local_test_macos_build.sh",
+      "bytes": 1531,
+      "sha256": "d1255fdb339cf9add627f2362337cdd57d767ac40b88cef14cf28b5d72c6d654"
+    },
+    {
+      "path": "tools/scripts/local_test_macos_package.py",
+      "bytes": 11111,
+      "sha256": "7ae0b81baa34fd895a6fd878397442d573aa5755b5154d441b51e872f9d65c7a"
+    },
+    {
+      "path": "tools/scripts/retro_promo_prepare.py",
+      "bytes": 5094,
+      "sha256": "74102e45611a722b1b9a86df9c37bc7d514978171c3e6b69d51f2525a301f330"
+    },
+    {
+      "path": "tools/scripts/retro_promo_theme.sh",
+      "bytes": 506,
+      "sha256": "2761c485aeb239aec42ee580dbf30a43ba6660d20e18b4f56cf368b3337447b9"
+    },
+    {
+      "path": "tools/scripts/retro_promo_render.sh",
+      "bytes": 13281,
+      "sha256": "c7b00a066594cf1aee7e810d07ea4cfd329be0896272d4a9e864e9b7ac0f820c"
+    },
+    {
+      "path": "tools/scripts/macos_promo_finalize.py",
+      "bytes": 11891,
+      "sha256": "cd911f594cfcd68e152d031ba97c9d920d8d9b358aeffb4e9e4c6462a185427d"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/audio/AUDIO.json",
+      "bytes": 359,
+      "sha256": "77eee514b353a81cd5d83c7a19b69a27aaace247344e2df2572914a1ef9bbac7"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/audio/capture.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/audio/pulse-info.txt",
+      "bytes": 408,
+      "sha256": "d64535e9535c50b759305268d795b41fbaf29676f73bfbaa21c3873fa004c70f"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/audio/pulse.log",
+      "bytes": 1105,
+      "sha256": "4d8dd07a554a350fd539684473f7c016292c9b4517fedcdd131785df3bfbfca9"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/audio/sink-inputs-end.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/audio/sink-receipt.json",
+      "bytes": 604,
+      "sha256": "c045f698a2db018002e5308a57949c2880418b095f4cda379f83701708ee90ec"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/audio/sinks.json",
+      "bytes": 737,
+      "sha256": "b4bff649b644aab493ac710e7f2b586fc891ed2b84aec5dd73d970e9e0085ad9"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/SMOKE.json",
+      "bytes": 16513,
+      "sha256": "89f92319b40d6a5b485650681f592a4d53cc8c73ad5b4dee58573aee34e87604"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/ai-enhanced.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/ai-enhanced.png",
+      "bytes": 9629,
+      "sha256": "1cc4560276b90a1e714165edae9f8133318ebd7242bb9e57e300aa6ae9c826e1"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/ai-enhanced.txt",
+      "bytes": 88,
+      "sha256": "32ee157b00deb24e701bf59c1d3e124933c2381f8273af344cccc43199b50a0d"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/ai-original.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/ai-original.png",
+      "bytes": 9629,
+      "sha256": "1cc4560276b90a1e714165edae9f8133318ebd7242bb9e57e300aa6ae9c826e1"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/ai-original.txt",
+      "bytes": 88,
+      "sha256": "32ee157b00deb24e701bf59c1d3e124933c2381f8273af344cccc43199b50a0d"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/battle.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/battle.png",
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/battle.txt",
+      "bytes": 86,
+      "sha256": "06671646a70acd82a4364c86af89055b0e83e3c61577113c716509c8565587da"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/copy.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/copy.png",
+      "bytes": 4594,
+      "sha256": "5831b4f97b2f8d021c92934fd3654a35e0a04b69c13c9517c0ddd0927be20513"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/copy.txt",
+      "bytes": 94,
+      "sha256": "cbd8ac1140081198a053fae9edf98be920c6df8bc73536bd2a880608b17ff27c"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/fleet.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/fleet.png",
+      "bytes": 18715,
+      "sha256": "d803e17bf6abb2207dccf7f34a6ce5c793a8aceb604fab4a856370c58df6d226"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/fleet.txt",
+      "bytes": 91,
+      "sha256": "131e61bef04dca878cb45d2a7d37a87389bc7afb9ddb1d5f1a8dfca85c93b9c1"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/input.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/input.png",
+      "bytes": 22458,
+      "sha256": "8943859bed3b82205b31bcc3e79c1720b7fbc48aef67591abe32496595a70b58"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/input.txt",
+      "bytes": 92,
+      "sha256": "22bb4241cc3ace3e8826236fbb494ede1bc9f1ac00ce72992c2c09c12109bc36"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/load.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/load.png",
+      "bytes": 9396,
+      "sha256": "3d319dd0f1f9f57ab870a28c25874ed5d808903666ba5db98d9bd1768e5f23f1"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/load.txt",
+      "bytes": 88,
+      "sha256": "d20fec82632812955020587e62e0e9616d7a5a8674a596add19c8654657f98b7"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/main.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/main.png",
+      "bytes": 2003,
+      "sha256": "15397c4e236741f766b0d1d7c26bf865ac30a294f7ed91b531c5d4d9cf530035"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/main.txt",
+      "bytes": 88,
+      "sha256": "2ea183eda20e78b26200b50f6d4b7fcd9e77298fbed34cb57d2717af03a4bce5"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/month.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/month.png",
+      "bytes": 15046,
+      "sha256": "d54aaa412d44238b870bce216192f127c2516356e12dd96f3ebd92da6ce66641"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/month.txt",
+      "bytes": 88,
+      "sha256": "f555f69f48e6e023da05b33b169eafaddee1e9fbf8a10107469777b930268613"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/music.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/music.png",
+      "bytes": 22458,
+      "sha256": "8943859bed3b82205b31bcc3e79c1720b7fbc48aef67591abe32496595a70b58"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/music.txt",
+      "bytes": 94,
+      "sha256": "f395ef2780942ce1ad8277ba25d109044331549284cbfa7716cb535fa252f528"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/ship.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/ship.png",
+      "bytes": 15232,
+      "sha256": "20876cb77093354ceb17dcb721a71108f1bd39c46dc8e12d8c35e3bba8359efe"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/linux/ship.txt",
+      "bytes": 89,
+      "sha256": "3857235da0bb54877bcf94cab263d2202c319b88e2d00cb63c6ba3110ff82460"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/macos/ARCHITECTURES.txt",
+      "bytes": 70,
+      "sha256": "32e976f5b6439f804c61ef2ff6246d84054cafc829e4ff682d71060121aa2729"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/macos/BUILDINFO-amd64.txt",
+      "bytes": 541,
+      "sha256": "1ad0d16fabcda1fddddebb2a7aa1e31c74074bfe25fa95ffe843a6e79cec0f1d"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/macos/BUILDINFO-arm64.txt",
+      "bytes": 543,
+      "sha256": "ebb919c05baf35b259267d6bd3a6fc4bd26de9dbd2829ebc95e04b74dbdd96d8"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/macos/DEPENDENCIES-amd64.txt",
+      "bytes": 1270,
+      "sha256": "43a771308b3a771bd7141ee008e88bed24a2b99603eec9f1ee5827bf5e505e90"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/macos/DEPENDENCIES-arm64.txt",
+      "bytes": 1270,
+      "sha256": "d5e3c5c808a87846edd0859633c30981b5167c9397b161bae6328a40e521add7"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/macos/FILENAME-CORRECTION.json",
+      "bytes": 257,
+      "sha256": "7fb0cc1b8bd080d1d20aa9fa6f2df48e3b8b3c3fd913c7a9b7b176d9736fbc44"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/macos/LOADCOMMANDS-amd64.txt",
+      "bytes": 16202,
+      "sha256": "185021a674a62b6b5df6f913a2db013a9d9d5aaa2ca2ddf4e50bb574f1760c4b"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/macos/LOADCOMMANDS-arm64.txt",
+      "bytes": 16739,
+      "sha256": "476c868a9b6327720c9b469e8ef121e29bc6e20304271f48a46c4a06d527cc3b"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/macos/MACOS.json",
+      "bytes": 3013,
+      "sha256": "faa616a7323a2c50f9b3160ecc3cc51fe101b833be0b035064dcc3528dd585e4"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/macos/TOOLCHAIN.txt",
+      "bytes": 260,
+      "sha256": "008fdadbc952043fc87bcf7b53d5cf9005baa307ddd166a718415b2e69608c66"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/standard.log",
+      "bytes": 980,
+      "sha256": "20669a3ce2b94abdde6826104fb08b14e471c691da0006efee31502c8cb06581"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/SMOKE.json",
+      "bytes": 4711,
+      "sha256": "874058cf8d49dbc89831e9ca215d52ae8eba05ec87b065ffc0c6eef86f14749d"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/battle.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/battle.png",
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/battle.txt",
+      "bytes": 86,
+      "sha256": "9aebe6ee4c0477497ed1d509830f8d29abd366aad48228867c18413250f1b40c"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/input.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/input.png",
+      "bytes": 22458,
+      "sha256": "8943859bed3b82205b31bcc3e79c1720b7fbc48aef67591abe32496595a70b58"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/input.txt",
+      "bytes": 92,
+      "sha256": "b471fc827859a0a407c91bcbde61ac0dabbd2336c4dc0e9b228194f8f83abbe7"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/load.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/load.png",
+      "bytes": 9396,
+      "sha256": "3d319dd0f1f9f57ab870a28c25874ed5d808903666ba5db98d9bd1768e5f23f1"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/load.txt",
+      "bytes": 88,
+      "sha256": "a8766f27fa2cfce09030b8e26d2a21e81e044a07d0b53142c45696f9e9697b8e"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/main.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/main.png",
+      "bytes": 2003,
+      "sha256": "15397c4e236741f766b0d1d7c26bf865ac30a294f7ed91b531c5d4d9cf530035"
+    },
+    {
+      "path": "dist-all/v.0.1.2-20261006/smoke/windows/main.txt",
+      "bytes": 88,
+      "sha256": "b100be2f5104540755e8163a4adfe58a6067c9f28da90ee5270db7be305b9e0f"
+    },
+    {
+      "path": "workplace/macos94-r119a/ARCHITECTURES.txt",
+      "bytes": 70,
+      "sha256": "32e976f5b6439f804c61ef2ff6246d84054cafc829e4ff682d71060121aa2729"
+    },
+    {
+      "path": "workplace/macos94-r119a/BUILDINFO-amd64.txt",
+      "bytes": 541,
+      "sha256": "1ad0d16fabcda1fddddebb2a7aa1e31c74074bfe25fa95ffe843a6e79cec0f1d"
+    },
+    {
+      "path": "workplace/macos94-r119a/BUILDINFO-arm64.txt",
+      "bytes": 543,
+      "sha256": "ebb919c05baf35b259267d6bd3a6fc4bd26de9dbd2829ebc95e04b74dbdd96d8"
+    },
+    {
+      "path": "workplace/macos94-r119a/DEPENDENCIES-amd64.txt",
+      "bytes": 1270,
+      "sha256": "43a771308b3a771bd7141ee008e88bed24a2b99603eec9f1ee5827bf5e505e90"
+    },
+    {
+      "path": "workplace/macos94-r119a/DEPENDENCIES-arm64.txt",
+      "bytes": 1270,
+      "sha256": "d5e3c5c808a87846edd0859633c30981b5167c9397b161bae6328a40e521add7"
+    },
+    {
+      "path": "workplace/macos94-r119a/LOADCOMMANDS-amd64.txt",
+      "bytes": 16202,
+      "sha256": "185021a674a62b6b5df6f913a2db013a9d9d5aaa2ca2ddf4e50bb574f1760c4b"
+    },
+    {
+      "path": "workplace/macos94-r119a/LOADCOMMANDS-arm64.txt",
+      "bytes": 16739,
+      "sha256": "476c868a9b6327720c9b469e8ef121e29bc6e20304271f48a46c4a06d527cc3b"
+    },
+    {
+      "path": "workplace/macos94-r119a/TOOLCHAIN.txt",
+      "bytes": 260,
+      "sha256": "008fdadbc952043fc87bcf7b53d5cf9005baa307ddd166a718415b2e69608c66"
+    },
+    {
+      "path": "workplace/round119-base-build.log",
+      "bytes": 137,
+      "sha256": "82d284607024b74c0cddfb226c507fddf09bd04c50d670682c769feddf0b72d4"
+    },
+    {
+      "path": "workplace/round119-finalize-final.log",
+      "bytes": 104,
+      "sha256": "93e02854de7c075598723e34e374298c2797433581f2192f45b5ee8fabce0c51"
+    },
+    {
+      "path": "workplace/round119-linux-smoke.log",
+      "bytes": 861,
+      "sha256": "ae4b89db74d490be70fcd07a8525c285889e2abd9fb0756619462b74223c8efb"
+    },
+    {
+      "path": "workplace/round119-macos-build.log",
+      "bytes": 43,
+      "sha256": "05fb0fcb54d22ecd541cfac5c142f12f80305b0795f2ff00b22c921da6403200"
+    },
+    {
+      "path": "workplace/round119-macos-package-final.log",
+      "bytes": 223,
+      "sha256": "e68742b40d4d89c3dca472f7dacc386845a0eebee9a20450c57691a7ba4ad63e"
+    },
+    {
+      "path": "workplace/round119-promo-audit-final.log",
+      "bytes": 78,
+      "sha256": "382bb5255bcd4471064a335585c7f4d265df5898a320c678dd63c636e027c533"
+    },
+    {
+      "path": "workplace/round119-promo-cards-final.log",
+      "bytes": 66,
+      "sha256": "449ac14e7236f97fac79ccbd30d10c5bc30b4ce04b10871f338db5998c8c0d40"
+    },
+    {
+      "path": "workplace/round119-promo-encode-final.log",
+      "bytes": 78,
+      "sha256": "382bb5255bcd4471064a335585c7f4d265df5898a320c678dd63c636e027c533"
+    },
+    {
+      "path": "workplace/round119-standard.log",
+      "bytes": 980,
+      "sha256": "20669a3ce2b94abdde6826104fb08b14e471c691da0006efee31502c8cb06581"
+    },
+    {
+      "path": "workplace/round119-windows-smoke-final.log",
+      "bytes": 251,
+      "sha256": "8177d89878708fe7de38ad6ec2bd153f0986c15784635c4f4f10fd326cdb8ee2"
+    }
+  ],
+  "delivery_files": [
+    {
+      "path": "BUILD.json",
+      "bytes": 262552,
+      "sha256": "6aa7078215a73251eb913b45ff2cf1a6b8f7606fbc3eb2e34cce8d3a2852c761"
+    },
+    {
+      "path": "FINALIZE.json",
+      "bytes": 1905,
+      "sha256": "47cdf917bdf88ea6d4866ca32da4afbe8b805d14b650de063fd6038a40226e94"
+    },
+    {
+      "path": "full-local/LOGH3-v.0.1.2-20261006-engine-source.tar.gz",
+      "bytes": 3379193,
+      "sha256": "6c006bc31ea34fd72bf8a0e45b8636dffc13b08d6d57d38bdbb026860ad8d8b5"
+    },
+    {
+      "path": "full-local/LOGH3-v.0.1.2-20261006-linux-amd64.zip",
+      "bytes": 196016701,
+      "sha256": "65ce9244d87770892d55a98e693d8b9894603c98b3f2646ff1323b62d446d0f7"
+    },
+    {
+      "path": "full-local/LOGH3-v.0.1.2-20261006-macos-universal.zip",
+      "bytes": 202206334,
+      "sha256": "ff53bf5c61058cd2db25fe96da4fe60b8fb5de5e62d344a500d7631d1bcb0e95"
+    },
+    {
+      "path": "full-local/LOGH3-v.0.1.2-20261006-windows-amd64.zip",
+      "bytes": 195847244,
+      "sha256": "abd619e2074477da02d29878d749ba518268bfdb4d271f72ed4266d1c2639985"
+    },
+    {
+      "path": "promo/AUDIO.txt",
+      "bytes": 1915,
+      "sha256": "706a8ac843bf286d59db8eaca958edbccfc279885bb75e0a2fec8ac6f95c1d46"
+    },
+    {
+      "path": "promo/CACHE.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "promo/FFPROBE.json",
+      "bytes": 4196,
+      "sha256": "cc51f2d10f5fb9eb61985908ba3ff2374c1fe472e6a92ef83ec1ea42e87c5b6c"
+    },
+    {
+      "path": "promo/LOGH3-v.0.1.2-20261006-promo.mp4",
+      "bytes": 4731668,
+      "sha256": "3973f08f03b9b760577e3c07b90339703b32d7b5969f2591652646a5629d1e42"
+    },
+    {
+      "path": "promo/MOTION.txt",
+      "bytes": 1225,
+      "sha256": "b631cb0a28ac957cfae5d75e177b5140f78b9ca90873877c1acc56b27b462a86"
+    },
+    {
+      "path": "promo/PLAN.json",
+      "bytes": 6494,
+      "sha256": "1070a95c20bcbadd6317f7e1f93629b19ac4a84308ebde85e6594d7d623f8bba"
+    },
+    {
+      "path": "promo/REVIEW.json",
+      "bytes": 1070,
+      "sha256": "a7d79de1d5491715e1f1d53d5ed625c3fcc5afdd8e79ade496f9fc54a51a87ee"
+    },
+    {
+      "path": "promo/RIGHTS.txt",
+      "bytes": 374,
+      "sha256": "39464607f4e57e554eacdeece14266a38311a00a114d923de51f1f59dc34bef4"
+    },
+    {
+      "path": "promo/VIDEO.txt",
+      "bytes": 4430,
+      "sha256": "c0816e1ade6e01a034534a23b73516dcbcfa15c6373ff7454018f58aeec3fe2b"
+    },
+    {
+      "path": "promo/cards-contact.png",
+      "bytes": 763040,
+      "sha256": "086c7150c4759ac1996fae5e51eb03a95a46c189442f8263fd80adee4417ec69"
+    },
+    {
+      "path": "promo/previous-current.png",
+      "bytes": 457610,
+      "sha256": "1d494e03a16f540234bb7df4dfa160e27fdf6c8af9d8954c901db9ada1d00bb5"
+    },
+    {
+      "path": "promo/sample-11.png",
+      "bytes": 497025,
+      "sha256": "6b2e5c86ee07d92e32c7f983f3dce018afc698398d0063138dc3b7da344bd01e"
+    },
+    {
+      "path": "promo/sample-18.png",
+      "bytes": 790840,
+      "sha256": "64491b3abffcbe0cfd71ce1f2f2d91484d829137ea1548252a20713208b054bf"
+    },
+    {
+      "path": "promo/sample-25.png",
+      "bytes": 377113,
+      "sha256": "7248b9cb9ce0a4d7b6034cb81816d79a2c1a0dceea08ed74a0e127db10a2651a"
+    },
+    {
+      "path": "promo/sample-3.png",
+      "bytes": 392304,
+      "sha256": "1acfc6b00d831bae85bc055c028d3e8e2d92a1a6ec1b327a21f5cc9be52ddf26"
+    },
+    {
+      "path": "promo/sample-32.png",
+      "bytes": 589110,
+      "sha256": "f78b77b67f993d708a71ec594a2c5d062d9f13e0be4689bc1dea11364ce86843"
+    },
+    {
+      "path": "promo/sample-38.png",
+      "bytes": 308052,
+      "sha256": "342a763189471e6d002973e24208caa00d3c4e6ff0a1748e90ca2a087e659479"
+    },
+    {
+      "path": "promo/sample-45.png",
+      "bytes": 384308,
+      "sha256": "0daff91ba54ca5a33419da28e011c08889d034c5c15af081c236586947a7be2f"
+    },
+    {
+      "path": "promo/sample-52.png",
+      "bytes": 426175,
+      "sha256": "f3a1d5bcd3e2e3a0804031d858fb7f2e2688652b44a311137a9525acf14bdf10"
+    },
+    {
+      "path": "promo/sample-57.png",
+      "bytes": 253683,
+      "sha256": "a8e0a6771d0785c9acec00a8113b45b927247a1006517f900e6d8e6c23815cbd"
+    },
+    {
+      "path": "promo/sample-62.png",
+      "bytes": 277153,
+      "sha256": "04c07f91cba4482920634f0a693654e2f58ecc74b9d446605c7292edda1bf5e8"
+    },
+    {
+      "path": "promo/sample-68.png",
+      "bytes": 263936,
+      "sha256": "5661ad57f7f3d4439a7538ca82619da6522b63db0f77baa16fc0c789b0b4c8c6"
+    },
+    {
+      "path": "promo/samples-contact.png",
+      "bytes": 558654,
+      "sha256": "2751a9f3954b720045e7efc118388a4850a7367f399234646a132b3d021a07e4"
+    },
+    {
+      "path": "promo/theme.sh",
+      "bytes": 506,
+      "sha256": "2761c485aeb239aec42ee580dbf30a43ba6660d20e18b4f56cf368b3337447b9"
+    }
+  ],
+  "result": {
+    "version": "v.0.1.2-20261006",
+    "packages": [
+      {
+        "path": "full-local/LOGH3-v.0.1.2-20261006-windows-amd64.zip",
+        "bytes": 195847244,
+        "sha256": "abd619e2074477da02d29878d749ba518268bfdb4d271f72ed4266d1c2639985"
+      },
+      {
+        "path": "full-local/LOGH3-v.0.1.2-20261006-linux-amd64.zip",
+        "bytes": 196016701,
+        "sha256": "65ce9244d87770892d55a98e693d8b9894603c98b3f2646ff1323b62d446d0f7"
+      },
+      {
+        "path": "full-local/LOGH3-v.0.1.2-20261006-engine-source.tar.gz",
+        "bytes": 3379193,
+        "sha256": "6c006bc31ea34fd72bf8a0e45b8636dffc13b08d6d57d38bdbb026860ad8d8b5"
+      },
+      {
+        "path": "full-local/LOGH3-v.0.1.2-20261006-macos-universal.zip",
+        "bytes": 202206334,
+        "sha256": "ff53bf5c61058cd2db25fe96da4fe60b8fb5de5e62d344a500d7631d1bcb0e95"
+      }
+    ],
+    "standard_pass": 13,
+    "standard_no_test_files": 5,
+    "linux_runs": 11,
+    "wine_runs": 4,
+    "macos": "雙架構、系統依賴、ARM全2994頁簽章、ZIP及資產通過；未真機執行",
+    "audio": {
+      "input": {
+        "path": "workplace/package92-r119-smoke/monitor.f32le",
+        "bytes": 5656480,
+        "sha256": "1a6a44f16840ccf4b827941929e4aabd36ca1232022f76f15d3a5c1cbcdd5e3f"
+      },
+      "seconds": 16.033106575963718,
+      "peak": 0.042449951171875,
+      "rms": 0.004755901369903777,
+      "classification": "正式Linux封包虛擬音效卡，非人耳／macOS真機"
+    },
+    "promo": {
+      "seconds": 72,
+      "frames": 2160,
+      "layouts": 11,
+      "mean_db": -21.7,
+      "max_db": -6.3,
+      "black_segments": 0,
+      "static_segments": 9,
+      "dynamic_segments": 2,
+      "subtitle_crop": 0,
+      "comparison": "nearby-state"
+    },
+    "rights": "含原版音畫，只留本機；未建立tag或Release",
+    "limits": [
+      "macOS與Windows實機、人耳、完整音樂循環仍待驗收",
+      "完整登陸分段演出未接完",
+      "未新增雙玩家或戰場差異驗證"
+    ]
+  },
+  "toolchain_images": {
+    "logh3-ebiten:2": "sha256:6ccf04cfd896019d83b92641b9c072f65e1403cc4ef41e0afdb09b5ee1bab8f8",
+    "logh3-ebiten:3": "sha256:ecb3612ac7c18d0cd225fd55b7b186052a8bf0029e82aa786a23f4b88f196fa8",
+    "colonization-windows-verification:20261001-r1": "sha256:7d3c7ff554db39300e3e7a92a7b79c2d5fcd647289596d22fa10899baac61201",
+    "psychicwar-video:latest": "sha256:78e0c88b07ee659bec32611ad16a49b01f5a6d75c67ba524b8258de1339d2ab3",
+    "golang:1.24-bookworm": "sha256:1a6d4452c65dea36aac2e2d606b01b4a029ec90cc1ae53890540ce6173ea77ac",
+    "psychicwar-osxcross:latest": "sha256:0f50c77c732087b104b3aadc3aecb352054aa37dee8e1d293523a66dfa02ba61"
+  },
+  "macos": {
+    "version": "v.0.1.2-20261006",
+    "slices": [
+      {
+        "architecture": "amd64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 4096,
+        "bytes": 12956104,
+        "sha256": "f263bce29e1d135f073f22402fac6d01093f7d027574954edd4af35ab93c26ad"
+      },
+      {
+        "architecture": "arm64",
+        "dependencies": [
+          "/usr/lib/libresolv.9.dylib",
+          "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
+          "/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit",
+          "/System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo",
+          "/usr/lib/libobjc.A.dylib",
+          "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+          "/usr/lib/libSystem.B.dylib",
+          "/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit",
+          "/System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics",
+          "/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices",
+          "/System/Library/Frameworks/Foundation.framework/Versions/C/Foundation"
+        ],
+        "deployment": [
+          {
+            "macos": "11.0.0",
+            "sdk": "15.5.0"
+          }
+        ],
+        "code_directory": [
+          {
+            "ad_hoc": true,
+            "flags": 131074,
+            "algorithm": "sha256",
+            "code_pages": 2994,
+            "code_limit": 12260912,
+            "all_page_hashes_match": true
+          }
+        ],
+        "notarized": false,
+        "developer_id": false,
+        "offset": 12976128,
+        "bytes": 12356834,
+        "sha256": "fcf41e5280a69f9f883c19c0823ece54b5d4656cf05c23ad302f45a33ee428d7"
+      }
+    ],
+    "zip_members": 339,
+    "zip_integrity": true,
+    "executable_permissions_preserved": true,
+    "runtime_test": "未在macOS真機執行",
+    "signature_scope": "Apple Silicon CodeDirectory全頁雜湊；Intel原生未簽章；非Developer ID，app外層未公證",
+    "archive": {
+      "path": "full-local/LOGH3-v.0.1.2-20261006-macos-universal.zip",
+      "bytes": 202206334,
+      "sha256": "ff53bf5c61058cd2db25fe96da4fe60b8fb5de5e62d344a500d7631d1bcb0e95"
+    }
+  },
+  "promo": {
+    "version": "v.0.1.2-20261006",
+    "source_frames": [
+      {
+        "name": "command",
+        "source": "workplace/package92-smoke-v.0.1.1-20261006/input.png",
+        "bytes": 22458,
+        "sha256": "8943859bed3b82205b31bcc3e79c1720b7fbc48aef67591abe32496595a70b58",
+        "canvas": [
+          640,
+          480
+        ],
+        "type": "正式remake renderer"
+      },
+      {
+        "name": "battle",
+        "source": "workplace/package92-smoke-v.0.1.1-20261006/battle.png",
+        "bytes": 6930,
+        "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4",
+        "canvas": [
+          640,
+          480
+        ],
+        "type": "正式remake renderer"
+      },
+      {
+        "name": "load",
+        "source": "workplace/package92-smoke-v.0.1.1-20261006/load.png",
+        "bytes": 9396,
+        "sha256": "3d319dd0f1f9f57ab870a28c25874ed5d808903666ba5db98d9bd1768e5f23f1",
+        "canvas": [
+          640,
+          480
+        ],
+        "type": "正式remake renderer"
+      },
+      {
+        "name": "ship",
+        "source": "workplace/package92-smoke-v.0.1.1-20261006/ship.png",
+        "bytes": 15232,
+        "sha256": "20876cb77093354ceb17dcb721a71108f1bd39c46dc8e12d8c35e3bba8359efe",
+        "canvas": [
+          640,
+          480
+        ],
+        "type": "正式remake renderer"
+      },
+      {
+        "name": "fleet",
+        "source": "workplace/package92-smoke-v.0.1.1-20261006/fleet.png",
+        "bytes": 18715,
+        "sha256": "d803e17bf6abb2207dccf7f34a6ce5c793a8aceb604fab4a856370c58df6d226",
+        "canvas": [
+          640,
+          480
+        ],
+        "type": "正式remake renderer"
+      },
+      {
+        "name": "admiral",
+        "source": "docs/images/09-admiral-detail.png",
+        "bytes": 16694,
+        "sha256": "2f2f22dc2afaeae2b827f61dd72693ea8df9fc8e02538c0715ae40886ef8cc2b",
+        "canvas": [
+          640,
+          480
+        ],
+        "type": "正式remake renderer"
+      },
+      {
+        "name": "original",
+        "source": "workplace/oracle/normal79-r117-a/01-turn-entry.png",
+        "bytes": 6229,
+        "sha256": "f5c482c33fae244436f280c1ff3e92b3f186f17bc3f5975e7542a25213653b64",
+        "canvas": [
+          640,
+          480
+        ],
+        "type": "dosgolem原版"
+      },
+      {
+        "name": "ai-original",
+        "source": "workplace/active-ai93-r118-b/original/turn3/frame.png",
+        "bytes": 8775,
+        "sha256": "2751673837f9d978b0a02a9f93e1c6b92f9b6d54f11a3489ffdacd864ac9e0d7",
+        "canvas": [
+          640,
+          480
+        ],
+        "type": "正式remake renderer"
+      },
+      {
+        "name": "ai-enhanced",
+        "source": "workplace/active-ai93-r118-b/enhanced/turn3/frame.png",
+        "bytes": 7006,
+        "sha256": "c18d556efb3a6dec45c7ce1522ce448b2e8f02e745930a94d7013d446a37f886",
+        "canvas": [
+          640,
+          480
+        ],
+        "type": "正式remake renderer"
+      }
+    ],
+    "music": {
+      "source": "dist-all/v.0.1.2-20261006/full-local/LOGH3-v.0.1.2-20261006-linux-amd64/music/BGM_0F.ogg",
+      "bytes": 1857348,
+      "sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+      "provenance": "原版MDS與已驗固定音源工具轉出的正式遊戲BGM_0F；非新造配樂"
+    },
+    "storyboard": [
+      {
+        "id": "00",
+        "layout": "title",
+        "seconds": 7,
+        "motion": true,
+        "title": "銀河英雄傳說 III SP",
+        "subtitle": "銀河的命運，回到你的指揮席"
+      },
+      {
+        "id": "01",
+        "layout": "world",
+        "seconds": 8,
+        "motion": true,
+        "title": "兩個國家，一場漫長的戰爭",
+        "subtitle": "銀河帝國與自由惑星同盟，交戰一百五十年"
+      },
+      {
+        "id": "02",
+        "layout": "briefing",
+        "seconds": 6,
+        "title": "先看星圖，再下命令",
+        "subtitle": "財政、情報、造艦與星域部署"
+      },
+      {
+        "id": "03",
+        "layout": "split",
+        "seconds": 8,
+        "title": "從 DOS 畫面，走到新的平台",
+        "subtitle": "原版／重製：不同回合的版面展示"
+      },
+      {
+        "id": "04",
+        "layout": "dossier",
+        "seconds": 6,
+        "title": "你的提督，你的艦隊",
+        "subtitle": "任命將領、配置副官、編組作戰部隊"
+      },
+      {
+        "id": "05",
+        "layout": "wide",
+        "seconds": 6,
+        "title": "把部署帶進戰術戰場",
+        "subtitle": "下令、移動、交戰，推進下一個回合"
+      },
+      {
+        "id": "06",
+        "layout": "ai",
+        "seconds": 8,
+        "title": "選擇你的對手",
+        "subtitle": "原版與強化：戰略、戰術均已啟用"
+      },
+      {
+        "id": "07",
+        "layout": "save",
+        "seconds": 5,
+        "title": "每一次決定，都能留下",
+        "subtitle": "保存進度，繼續自己的戰役"
+      },
+      {
+        "id": "08",
+        "layout": "music",
+        "seconds": 6,
+        "title": "熟悉的聲音，隨艦隊啟航",
+        "subtitle": "22 首配樂與 28 段音效已包含"
+      },
+      {
+        "id": "09",
+        "layout": "platform",
+        "seconds": 5,
+        "title": "三種平台，同一套遊戲機制",
+        "subtitle": "Windows · Linux · macOS 通用完整版"
+      },
+      {
+        "id": "10",
+        "layout": "ending",
+        "seconds": 7,
+        "title": "下一場戰役，交給你",
+        "subtitle": "完整版測試包，現在開始試玩"
+      }
+    ],
+    "layouts": [
+      "ai",
+      "briefing",
+      "dossier",
+      "ending",
+      "music",
+      "platform",
+      "save",
+      "split",
+      "title",
+      "wide",
+      "world"
+    ],
+    "comparisons": [
+      {
+        "segment": "03",
+        "level": "nearby-state",
+        "reason": "dosgolem原版首回合與remake入口不同；完整640×480版面展示，不宣稱戰場同態"
+      },
+      {
+        "segment": "06",
+        "level": "模式展示",
+        "reason": "既有正常S3兩模式第3回合收據；不新增原版差異驗證"
+      }
+    ],
+    "original_metadata": {
+      "dosgolem_head": "f7523f9ac7ed6f17bc4e37686b10748c5e9bf89c",
+      "receipt": "docs/internals/data/local-test-package.json"
+    },
+    "differences_from_previous": [
+      "功能巡覽改為世界觀及原版／重製對照",
+      "11種版面與星圖母題",
+      "片段5至8秒、72秒總長",
+      "兩段安全單幀動態"
+    ],
+    "story_sources": [
+      "https://www.production-ig.co.jp/works/ginei/story.html",
+      "https://youngjump.jp/manga/gineiden/"
+    ],
+    "limits": [
+      "macOS畫面未實機擷取，平台卡只展示封包支援",
+      "完整登陸分段、人耳與macOS真機仍待驗收"
+    ],
+    "rights": "含原版衍生音畫，只留本機，不加入Git或公開上傳"
+  },
+  "frozen_previous_delivery_preserved": true,
+  "previous_receipt": {
+    "path": "docs/internals/data/local-test-package.json",
+    "bytes": 39904,
+    "sha256": "2b6240536e024dca369cef572f1c7bac8ce4c29d23f83754d67b02079c9cd9df"
+  },
+  "technical_sources": [
+    "https://go.dev/doc/go1.24",
+    "https://go.dev/wiki/Darwin",
+    "https://help.apple.com/pdf/security/en_GB/apple-platform-security-guide-b.pdf",
+    "https://support.apple.com/102445"
+  ],
+  "user_scope": "macOS本機完整版、依復古重製技巧重做影片及README故事開頭；無新玩法、戰場差異或公開發行"
+}

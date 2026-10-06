@@ -1,5 +1,10 @@
 # 原版內部構造參考
 
+第119輪：[macOS封包器](../../tools/scripts/local_test_macos_package.py)核對通用Mach-O、Apple Silicon程式頁簽章、資產及ZIP權限。
+[交付核對與身份保存器](../../tools/scripts/macos_promo_finalize.py)集中三平台、72秒影片與抽驗，保存[本輪來源](data/macos-retro-promo.json)，前版凍結來源保持。
+[影片素材與分鏡](../../tools/scripts/retro_promo_prepare.py)沿既有真實收據，不新增戰場差異驗證。
+[本作影片主題](../../tools/scripts/retro_promo_theme.sh)保存來源色彩；[素材與合成](../../tools/scripts/retro_promo_render.sh)分開產生版面及72秒影片。
+
 第118輪沿 [#92](https://github.com/wicanr2/logh3/issues/92)：[本機完整版計畫](../goal/2026-10-06-local-test-package-round-118.md)。
 [封包建置器](../../tools/scripts/local_test_package.py)使用既有GUI Docker，產生完整Windows／Linux測試包、授權、來源與逐檔雜湊。
 [封包抽驗](../../tools/scripts/local_test_smoke.py)沿公開CLI輸入核實實際封包、兩種戰略AI、存讀並保存推廣片來源畫面。
@@ -937,3 +942,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - 現行入口與原版保存身份見[研究393](../re/393-battle-work-control.md)；完整088與062保持DRAFT。
 - [正常原版續行入口](../../tools/battle_normal_turn_oracle.sh)、[容器內入口](../../tools/battle_normal_turn_native_run.sh)與[只讀步驟觀測器](../../tools/scripts/battle_normal_turn_native.go)固定父保存與首戰seed，僅以公開滑鼠續跑。
 - [正常Game觀測覆蓋](../../tools/scripts/battle_normal_turn_prepare.py)與[公開玩家探針](../../tools/scripts/battle_normal_turn_probe.go)從bootstrap、主選單及S3實際輸入續跑，完整保留每步原表與分隊。
+# 第119輪交付入口
+
+- [計畫119](../goal/2026-10-06-macos-retro-promo-round-119.md)及[macOS與新版推廣片106](../playtest/106-macos-and-retro-promo.md)。
+- [macOS隔離入口](../../tools/macos.sh)與[兩架構建置器](../../tools/scripts/local_test_macos_build.sh)沿既有Go1.24.13映像。
