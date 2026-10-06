@@ -120,13 +120,14 @@ def package(version, batch):
     shutil.copyfile(binary, contents/'MacOS/gin3')
     (contents/'MacOS/gin3').chmod(0o755)
     launcher=contents/'MacOS/launch'
+    graphics = '-graphics hd -art "$LOGH3_RES_DIR/art" ' if (resources/'art').is_dir() else ''
     launcher.write_text('#!/bin/sh\nset -eu\n'
         'LOGH3_APP_DIR=$(CDPATH= cd "$(dirname "$0")" && pwd)\n'
         'LOGH3_RES_DIR="$LOGH3_APP_DIR/../Resources"\n'
         'mkdir -p "$HOME/Library/Logs/logh3"\n'
         'exec "$LOGH3_APP_DIR/gin3" -orig "$LOGH3_RES_DIR/original" '
         '-data "$LOGH3_RES_DIR/data" -music "$LOGH3_RES_DIR/music" '
-        '-ai -1 -scale 1.5 "$@" 2>>"$HOME/Library/Logs/logh3/game.log"\n')
+        + graphics + '-ai -1 -scale 1.5 "$@" 2>>"$HOME/Library/Logs/logh3/game.log"\n')
     launcher.chmod(0o755)
     short=version.split('-')[0][2:]
     info={'CFBundleName':'銀河英雄傳說III', 'CFBundleDisplayName':'銀河英雄傳說III',
@@ -162,6 +163,11 @@ def package(version, batch):
         '請測新局／S3、兩種AI、艦隊命令、存檔退出再讀回、FM／GM及音效。\n'
         '回報版本、macOS版本、Intel或Apple Silicon、AI模式、存檔、步驟與畫面。\n'
         '完整版含原版及衍生素材，只限合法持有人本機測試，不公開散布。\n').encode())
+    if graphics:
+        with (folder/'README.txt').open('ab') as f:
+            count = len(list((resources/'art/face').glob('face-*.png')))
+            f.write(('\n本版預設HD顯示1920×1440，包含'+str(count)+'張原畫風HD人物。\n'
+                '其餘圖片與字型沿用原圖，整套HD美術仍在進行。規則、AI與存檔保持。\n').encode())
     record(folder/'VERSION.json',{'version':version,'platform':'macos','architecture':'universal-amd64-arm64',
                                  'source_head':build['head'],'source_files':build['source_files']})
     files={str(p.relative_to(folder)):{'bytes':p.stat().st_size,'sha256':sha(p),

@@ -1,5 +1,15 @@
 # 原版內部構造參考
 
+HD 美術沿使用者核准的原畫風試樣：[規格122](../spec/122-hd-artwork.md)定義可選高解析度圖片、原索引、遮擋及輸入契約。定版圖保存在 `assets/hd/face/face-00.png`；完整提示詞及來源見 WORKLOG 的 HD 試樣記錄。這是美術修復方向，不宣稱原版像素對拍。
+
+[HD素材入口](../../assets/hd/README.md)、[來源與雜湊](../../assets/hd/MANIFEST.json)及[正常操作與試玩108](../playtest/108-hd-artwork.md)保存實際覆蓋與交付。HD驗收沿[正式操作模型](../../tools/scripts/hd_art_model.go)、[真實X11輸入](../../tools/scripts/hd_art_gui.py)與[全視窗擷取](../../tools/scripts/hd_art_capture.go)；歷史原畫面收據保持。
+
+[HD交付核對器](../../tools/scripts/hd_art_finalize.py)集中封包、56張真實視窗、來源與前版保持；[HD來源索引](data/hd-artwork.json)保存首批限定完成與整套美術未完成的區別。
+
+[第121輪HD計畫](../goal/2026-10-06-hd-artwork-round-121.md)沿#97記錄第一批與下一批界線。
+
+[HD合成器](../../internal/presentation/artwork.go)沿[原圖繪製](../../internal/asset/draw.go)與[可見區域](../../internal/gfx/artwork.go)保留原索引及遮擋；[合成回歸](../../internal/presentation/artwork_test.go)和[滑鼠映射回歸](../../cmd/gin3/artwork_test.go)釘裁切、同色覆蓋與邏輯座標。
+
 第120輪：[規格121](../spec/121-player-input-hotspots.md)修正會計／訂造／建造畫面熱區與可見按鈕相差40像素、三種下拉選單游標停住。[研究441](../re/441-player-input-hotspot-space.md)保留歷史勘誤，[正常操作107](../playtest/107-player-input-hotspots.md)與[來源索引](data/player-input-hotspots.json)集中驗收與新封包。
 [本輪計畫](../goal/2026-10-06-player-input-round-120.md)沿使用者實際阻塞點，不重新開啟已完成的戰場對拍。
 [正式Game預期畫面](../../tools/scripts/player_input_model.go)、[真實X11輸入](../../tools/scripts/player_input_gui.py)、[視窗擷取與差分](../../tools/scripts/player_input_capture.go)沿正常入口核全圖；[大視窗容器入口](../../tools/player_input_display.sh)讓2倍畫面完整留在虛擬螢幕內。

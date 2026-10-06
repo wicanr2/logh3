@@ -27,6 +27,7 @@ import (
 	"github.com/wicanr2/logh3/internal/bootstrap"
 	"github.com/wicanr2/logh3/internal/game"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"github.com/wicanr2/logh3/internal/presentation"
 )
 
 type app struct {
@@ -37,6 +38,7 @@ type app struct {
 	musicState game.State
 	effects    effectPlayback
 	buf        []byte
+	hd         *presentation.Renderer
 
 	shot      string
 	shotBin   string
@@ -128,6 +130,7 @@ func (a *app) Update() error {
 	}
 	// 視窗就是 640×480 的邏輯畫布，Game 也吃畫面座標，所以直接傳。
 	x, y := ebiten.CursorPosition()
+	x, y = a.gamePosition(x, y)
 	a.g.MoveMouse(x, y)
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		a.g.Click(x, y)
@@ -176,7 +179,13 @@ func (a *app) dump() error {
 	a.setPalette(a.g.Palette())
 	fb := a.g.Frame()
 	if a.shot != "" {
-		if err := fb.WritePNG(a.shot, a.paletteSpec()); err != nil {
+		var err error
+		if a.hd != nil {
+			err = a.hd.WritePNG(a.shot, fb, a.g.Palette())
+		} else {
+			err = fb.WritePNG(a.shot, a.paletteSpec())
+		}
+		if err != nil {
 			return err
 		}
 	}
@@ -216,6 +225,11 @@ func (a *app) paletteSpec() gfx.Palette {
 }
 
 func (a *app) Draw(screen *ebiten.Image) {
+	if a.hd != nil {
+		a.screen.WritePixels(a.hd.Render(a.g.Frame(), a.g.Palette()).Pix)
+		screen.DrawImage(a.screen, nil)
+		return
+	}
 	// 調色盤每格問一次：開頭動畫那一段是自己的一組灰階。
 	a.setPalette(a.g.Palette())
 	fb := a.g.Frame()
@@ -227,7 +241,25 @@ func (a *app) Draw(screen *ebiten.Image) {
 	screen.DrawImage(a.screen, nil)
 }
 
-func (a *app) Layout(int, int) (int, int) { return gfx.Width, gfx.Height }
+func (a *app) Layout(int, int) (int, int) {
+	if a.hd != nil {
+		return gfx.Width * presentation.Scale, gfx.Height * presentation.Scale
+	}
+	return gfx.Width, gfx.Height
+}
+
+func (a *app) gamePosition(x, y int) (int, int) {
+	if a.hd == nil {
+		return x, y
+	}
+	divide := func(v int) int {
+		if v < 0 {
+			return (v - presentation.Scale + 1) / presentation.Scale
+		}
+		return v / presentation.Scale
+	}
+	return divide(x), divide(y)
+}
 
 var buildVersion = "development"
 
@@ -236,6 +268,8 @@ func main() {
 	orig := flag.String("orig", "org_game/extracted", "原版檔案目錄（玩家自備）")
 	data := flag.String("data", "docs/internals/data", "畫面規格與資料目錄")
 	scale := flag.Float64("scale", 1, "視窗放大倍率")
+	graphics := flag.String("graphics", "original", "圖片顯示：original 或 hd")
+	artDir := flag.String("art", "assets/hd", "HD 圖片目錄")
 	shot := flag.String("shot", "", "跑幾格之後把畫面倒成 PNG 就結束（無頭驗收用）")
 	script := flag.String("script", "", "開場先送進去的輸入，分號分隔："+
 		"move X Y／click [X Y]／rclick [X Y]／type 數字／enter／back")
@@ -291,6 +325,23 @@ func main() {
 		stateOut:  *stateOut,
 		shotAfter: *shotAfter,
 		script:    *script,
+	}
+	switch *graphics {
+	case "original":
+	case "hd":
+		a.hd, err = presentation.Load(*artDir, res.Faces)
+		if err != nil {
+			die(err)
+		}
+		res.Faces.ArtworkPrefix = "face"
+		// 固定 Ebitengine 2.8.8 的最終縮放契約：HD 內部已完成圖片取樣，
+		// 縮小視窗不再對細字與框線套第二次線性濾波。
+		ebiten.SetScreenFilterEnabled(false)
+		a.screen.Dispose()
+		a.screen = ebiten.NewImage(gfx.Width*presentation.Scale, gfx.Height*presentation.Scale)
+		fmt.Fprintf(os.Stderr, "HD：%d/%d 張人物已載入，其餘使用原圖\n", a.hd.Count(), len(res.Faces.Entries))
+	default:
+		die(fmt.Errorf("圖片顯示模式無效：%s", *graphics))
 	}
 	// 配樂：**要求了才開音訊**。缺檔就不播，但要說出來——安靜與
 	// 「沒接播放層」長得一樣，不講的話沒有人分得出是哪一種

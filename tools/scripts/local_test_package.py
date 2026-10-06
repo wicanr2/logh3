@@ -38,7 +38,7 @@ def record(path, data):
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
 
 
-def build(version, revision):
+def build(version, revision, art_dir=None):
     assert Path.cwd() == ROOT and os.getuid() == 1000
     assert re.fullmatch(r'v\.[0-9]+\.[0-9]+\.[0-9]+-[0-9]{8}', version)
     owned(ROOT)
@@ -74,6 +74,18 @@ def build(version, revision):
                 'not_claimed': ['原版戰場同態', '人耳驗收', 'Windows實機', 'macOS', '完整登陸分段演出']}
     common = stage/'common'
     common.mkdir()
+    graphics_args = ''
+    hd_count = 0
+    if art_dir is not None:
+        art = Path(art_dir)
+        assert art.is_dir() and (art/'face').is_dir()
+        hd_count = len(list((art/'face').glob('face-*.png')))
+        assert hd_count > 0
+        for p in sorted(art.rglob('*')):
+            if p.is_file():
+                copy(p, common/'art'/p.relative_to(art))
+        graphics_args = ' -graphics hd -art "art"'
+        metadata.update(graphics='hd', hd_portraits=hd_count)
     # 原始資料只讀；本機完整版明確納入合法持有的資料，不作公開包。
     for p in sorted(Path('/orig').rglob('*')):
         if p.is_file():
@@ -123,12 +135,12 @@ def build(version, revision):
             if platform == 'windows':
                 launcher = folder/('start-'+name+'.cmd')
                 launcher.write_bytes(('@echo off\r\ncd /d "%~dp0"\r\n'
-                    'gin3.exe -orig "original" -data "data" -music "music" -ai '+str(level)+' -scale 1.5\r\n'
+                    'gin3.exe -orig "original" -data "data" -music "music" -ai '+str(level)+' -scale 1.5'+graphics_args+'\r\n'
                     'if errorlevel 1 pause\r\n').encode('ascii'))
             else:
                 launcher = folder/('start-'+name+'.sh')
                 launcher.write_text('#!/bin/sh\nset -eu\ncd "$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"\n'
-                    'exec ./gin3 -orig original -data data -music music -ai '+str(level)+' -scale 1.5 "$@"\n')
+                    'exec ./gin3 -orig original -data data -music music -ai '+str(level)+' -scale 1.5'+graphics_args+' "$@"\n')
                 launcher.chmod(0o755)
         launch = 'start-original.cmd／start-enhanced.cmd' if platform == 'windows' else './start-original.sh／./start-enhanced.sh'
         readme = ('銀河英雄傳說III SP remake '+version+' 本機測試版\n\n'
@@ -145,6 +157,11 @@ def build(version, revision):
                   '戰術AI政策：原版與強化模式均已啟用，電腦會下令、移動及造成傷害。\n'
                   '原版戰術的目標參考點仍有強推論，不宣稱完整原版AI逐步相同。\n'
                   '含原版素材與衍生音訊，僅限本機合法持有人測試，不上傳或公開散布。\n')
+        if hd_count:
+            readme = readme.replace('遊戲為640×480，啟動視窗960×720，可拖曳改大小。',
+                'HD顯示為1920×1440，啟動視窗960×720，可拖曳改大小。\n'
+                '本版包含'+str(hd_count)+'張原畫風HD人物；其他圖片與字型沿用原圖，尚未完成整套HD美術。\n'
+                '原版與強化AI啟動器都使用HD圖片；遊戲規則與存檔保持。')
         if platform == 'windows':
             readme = readme.replace('\n', '\r\n')
         (folder/'README.txt').write_bytes(b'\xef\xbb\xbf'+readme.encode())
@@ -182,5 +199,6 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--version', required=True)
     p.add_argument('--revision', default='a')
+    p.add_argument('--art', help='可選HD圖片目錄，只加入本機完整版')
     args = p.parse_args()
-    build(args.version, args.revision)
+    build(args.version, args.revision, args.art)

@@ -4200,11 +4200,7 @@ func (g *Game) drawReport(fb *gfx.Framebuffer) {
 	if err != nil {
 		return
 	}
-	for y := 0; y < img.H; y++ {
-		for x := 0; x < img.W; x++ {
-			fb.Set(p.Face.X+x, p.Face.Y+y, img.Pix[y*img.W+x])
-		}
-	}
+	img.Draw(fb, p.Face.X, p.Face.Y, img.W, img.H)
 }
 
 // applyStaffFaces 把規格宣告 `staff_post` 的頭像換成那位幕僚本人。
@@ -4332,11 +4328,7 @@ func (g *Game) drawAdmiralView(fb *gfx.Framebuffer, v screen.AdmiralView, i int,
 		return
 	}
 	if img, err := g.res.Faces.Decode(i); err == nil {
-		for y := 0; y < img.H; y++ {
-			for x := 0; x < img.W; x++ {
-				fb.Set(p.Face.X+x, p.Face.Y+y, img.Pix[y*img.W+x])
-			}
-		}
+		img.Draw(fb, p.Face.X, p.Face.Y, img.W, img.H)
 	}
 }
 
@@ -4425,11 +4417,7 @@ func (g *Game) drawFleetOrgFor(fb *gfx.Framebuffer, i, adj, number int) {
 		if err != nil {
 			continue
 		}
-		for y := 0; y < img.H; y++ {
-			for x := 0; x < img.W; x++ {
-				fb.Set(f.x+x, f.y+y, img.Pix[y*img.W+x])
-			}
-		}
+		img.Draw(fb, f.x, f.y, img.W, img.H)
 	}
 }
 

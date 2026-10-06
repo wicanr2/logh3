@@ -138,11 +138,7 @@ func CopyProtectionAt(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed 
 	fb := gfx.NewFramebuffer(s.Background)
 	s.Frame().Draw(fb, s.Window.X, s.Window.Y, s.Window.W, s.Window.H)
 	if face != nil {
-		for y := 0; y < face.H; y++ {
-			for x := 0; x < face.W; x++ {
-				fb.Set(s.Face.X+x, s.Face.Y+y, face.Pix[y*face.W+x])
-			}
-		}
+		face.Draw(fb, s.Face.X, s.Face.Y, face.W, face.H)
 	}
 	if b := s.InputBox; b != nil {
 		f := ui.Frame{Fill: b.Fill, Order: b.Order}

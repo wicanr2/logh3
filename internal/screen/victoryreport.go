@@ -75,11 +75,7 @@ func (p *VictoryReportPanel) Draw(fb *gfx.Framebuffer, fnt *font.Font,
 	p.putButton(b)
 	missing := ui.DrawTextBuffer(fb, fnt, tiles, b, p.CellX+1, p.CellY+1)
 	if face != nil {
-		for y := 0; y < p.Face.H && y < face.H; y++ {
-			for x := 0; x < p.Face.W && x < face.W; x++ {
-				fb.Set(p.Face.X+x, p.Face.Y+y, face.Pix[y*face.W+x])
-			}
-		}
+		face.Draw(fb, p.Face.X, p.Face.Y, p.Face.W, p.Face.H)
 	}
 	return missing
 }

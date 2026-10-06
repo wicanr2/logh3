@@ -74,7 +74,7 @@ func (s *SlotList) DrawSaveBar(fb *gfx.Framebuffer, row int) {
 	y0 := s.Save.BarTop + row*s.Save.Height
 	for y := y0; y < y0+s.Save.Bar.H; y++ {
 		for x := s.Save.Bar.X; x < s.Save.Bar.X+s.Save.Bar.W; x++ {
-			fb.Pix[y*gfx.Width+x] = s.Save.Bar.Colour
+			fb.Set(x, y, s.Save.Bar.Colour)
 		}
 	}
 }

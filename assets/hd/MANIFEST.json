@@ -1,0 +1,68 @@
+{
+  "status": "first batch; remaining portraits and other graphics pending",
+  "total_original_portraits": 83,
+  "completed_portraits": 5,
+  "classification": "derived original artwork; private preservation and full-local test packages only",
+  "files": [
+    {
+      "index": 0,
+      "name": "萊因哈特",
+      "file": "face/face-00.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1749160,
+      "sha256": "411468e4d80cacc10edd2c82d5b4c0a35955a0580842cd8187835d37d87fe285",
+      "original_sha256": "d9aa3f11db0c8ca8bc104fb6b308abe6b3836bee2218f50a59c2fd2581130083",
+      "tool": "built-in image_gen",
+      "prompt": "face/face-00.prompt.txt"
+    },
+    {
+      "index": 1,
+      "name": "吉爾菲艾斯",
+      "file": "face/face-01.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1414942,
+      "sha256": "eb41df36ba011fc96a40ca7b026ec487a7bfcab0a7dac3fd32ab97d20e7d6ddd",
+      "original_sha256": "d934d04281f1f9c31cbb2065423457b0b08d62ce83af3655a68ce0fc8eafe58c",
+      "tool": "built-in image_gen",
+      "prompt": "face/face-01.prompt.txt"
+    },
+    {
+      "index": 16,
+      "name": "奧貝斯坦",
+      "file": "face/face-16.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1334982,
+      "sha256": "a53b6e8cb03c96d238362adf1e81905e99007b6e3bc982f9122c79f486de15bb",
+      "original_sha256": "ebfb5866ad9279eda55eb64c563f5d4e7ad63d6d13c3de2c67a8a5f15867a719",
+      "tool": "built-in image_gen",
+      "prompt": "face/face-16.prompt.txt"
+    },
+    {
+      "index": 52,
+      "name": "楊威利",
+      "file": "face/face-52.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1254709,
+      "sha256": "a6595941db15c2204fa5d04fb378b72d362ccb48a2e19db5c22f0d8329e16074",
+      "original_sha256": "760671e80f947ff89aaa5575e5a27661eede1b57a76587e7616268ff60a8a5e3",
+      "tool": "built-in image_gen",
+      "prompt": "face/face-52.prompt.txt"
+    },
+    {
+      "index": 75,
+      "name": "卡介倫",
+      "file": "face/face-75.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1250186,
+      "sha256": "7c7b09d9f1a74b836554055e701656fac62f548acc714403196a4104ec1b8d79",
+      "original_sha256": "f92f90fbdc9d2a1d8292624d96adcac0579205d81063e925af38ed7408d37a49",
+      "tool": "built-in image_gen",
+      "prompt": "face/face-75.prompt.txt"
+    }
+  ]
+}

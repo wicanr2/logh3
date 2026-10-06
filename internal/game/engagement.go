@@ -395,7 +395,7 @@ func (g *Game) drawEngagementPictures(fb *gfx.Framebuffer) {
 	for _, w := range win {
 		x0, y0 := w[0]*8, 40+w[1]*4
 		for y := y0; y < y0+102 && y < gfx.Height; y++ {
-			copy(fb.Pix[y*gfx.Width+x0:y*gfx.Width+x0+256], pix[y*gfx.Width+x0:y*gfx.Width+x0+256])
+			fb.WriteRow(x0, y, pix[y*gfx.Width+x0:y*gfx.Width+x0+256])
 		}
 	}
 }

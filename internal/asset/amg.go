@@ -11,6 +11,8 @@ import (
 type AMG struct {
 	Entries []AMGEntry
 	data    []byte
+	// ArtworkPrefix 只在 HD 顯示模式指定；原版解碼保持。
+	ArtworkPrefix string
 }
 
 // AMGEntry 是索引表的一筆：影像的位元組長度與檔內位移。
@@ -21,8 +23,9 @@ type AMGEntry struct {
 
 // Image 是解碼後的一張圖：4 位元色號，一像素一 byte。
 type Image struct {
-	W, H int
-	Pix  []uint8
+	W, H       int
+	Pix        []uint8
+	ArtworkKey string
 
 	// Used 是解碼實際吃掉的位元組數。**應該剛好等於索引表寫的長度**——
 	// 對不上就是解碼走偏了，而畫面多半還是看得出人形，不會報錯。
@@ -71,6 +74,9 @@ func (a *AMG) Decode(i int) (*Image, error) {
 	img, err := DecodeAMGImage(a.data[e.Offset : e.Offset+e.Size])
 	if err != nil {
 		return nil, fmt.Errorf("第 %d 張：%w", i, err)
+	}
+	if a.ArtworkPrefix != "" {
+		img.ArtworkKey = fmt.Sprintf("%s/%02d", a.ArtworkPrefix, i)
 	}
 	return img, nil
 }

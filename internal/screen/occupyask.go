@@ -95,11 +95,7 @@ func (s *OccupyAskSpec) Draw(fb *gfx.Framebuffer, fnt *font.Font, tiles *ui.Fram
 	}
 	missing := ui.DrawTextBuffer(fb, fnt, tiles, s.Buffer(v), s.CellX+1, s.CellY+1)
 	if face != nil {
-		for y := 0; y < s.Face.H && y < face.H; y++ {
-			for x := 0; x < s.Face.W && x < face.W; x++ {
-				fb.Set(s.Face.X+x, s.Face.Y+y, face.Pix[y*face.W+x])
-			}
-		}
+		face.Draw(fb, s.Face.X, s.Face.Y, s.Face.W, s.Face.H)
 	}
 	return missing
 }

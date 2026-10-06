@@ -17,7 +17,8 @@ const (
 // Framebuffer 是一張色號陣列。**不存 RGB**——顏色由 Palette 決定，
 // 兩者分開才對得上原版「改調色盤就整片變色」的行為。
 type Framebuffer struct {
-	Pix []uint8 // 長度 Width*Height，值 0–15
+	Pix     []uint8   // 長度 Width*Height，值 0–15
+	Artwork []Artwork // 可選圖片顯示層；不改變色號或遊戲資料。
 }
 
 // NewFramebuffer 造一張全部填 c 的畫布。
@@ -29,6 +30,7 @@ func NewFramebuffer(c uint8) *Framebuffer {
 
 // Clear 整片填色。
 func (f *Framebuffer) Clear(c uint8) {
+	f.Artwork = nil
 	for i := range f.Pix {
 		f.Pix[i] = c
 	}
@@ -41,6 +43,12 @@ func (f *Framebuffer) Set(x, y int, c uint8) {
 		return
 	}
 	f.Pix[y*Width+x] = c
+	for i := range f.Artwork {
+		a := &f.Artwork[i]
+		if x >= a.X && y >= a.Y && x < a.X+a.W && y < a.Y+a.H {
+			a.Visible[(y-a.Y)*a.W+x-a.X] = 0
+		}
+	}
 }
 
 // At 讀一個像素；界外回 0。

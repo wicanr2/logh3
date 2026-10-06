@@ -5,6 +5,18 @@
 
 ## 現況一覽
 
+**目前狀態（2026-10-06，第121輪）**：使用者看過原畫風HD人物試樣後回答「ok」。首批5/83張已接入可選1920×1440顯示：萊因哈特、吉爾菲艾斯、奧貝斯坦、楊威利、卡介倫。缺少單張HD圖時沿原圖；字型、地圖、艦艇與其餘78張人物尚未HD修復。[#97](https://github.com/wicanr2/logh3/issues/97)保持OPEN，機器訊號釘實際人物張數，不把首批顯示完成當成整套美術完成。
+
+| 項目 | 目前結果 |
+|---|---|
+| remake顯示 | 首批5張與人物繪製／裁切／遮擋接線完成；1920×1440、4:3，輸入沿640×480 |
+| 正常玩家操作 | 實際Linux新包帝國1.5倍、同盟2倍各28張完整真實視窗，共53760000像素零差；月初按鈕、三選單與人像游標保持 |
+| 測試與交付 | 19套件14PASS／5無測試；v.0.1.4-20261006三平台本機完整版，Windows Wine六入口、macOS通用架構與ARM簽章核對通過 |
+| 原版oracle與限制 | HD為使用者核准的刻意美術差異，不宣稱原版像素parity；規則、AI、音訊與存檔格式保持；Windows／macOS真機、人耳及原有未完成項保持 |
+| 後續美術 | 78張人物及艦艇、地圖等尚待修復；原版精確行為對拍與可選polish不重新開啟 |
+
+入口：[試玩108](docs/playtest/108-hd-artwork.md)、[122限定CONFORMED](docs/spec/122-hd-artwork.md)、[HD來源](docs/internals/data/hd-artwork.json)與[素材／提示詞](assets/hd/README.md)。交付只在`dist-all/v.0.1.4-20261006/`；前三版及72秒影片保持，未建立tag、Release或新影片。遠端97項、5 OPEN／92 CLOSED；277條核對零失效、131條一致、1人工及145歷史文件證據。#96保持完成。
+
 **目前交付（2026-10-06，第120輪）**：`v.0.1.3-20261006` 三平台本機完整版已修復月初報告按鈕與下拉選單游標。會計／訂造／建造的舊熱區座標在公開輸入轉換40像素；訂造確認、建造結束及右鍵返回接線，三種選單及訂造／建造游標動態更新。兩陣營七列箭頭與百分比正式存讀回歸通過。
 
 新Linux完整版從片頭、主選單、防拷正常進入，實際X11操作帝國1.5倍及同盟2倍，各24張完整視窗與14745600原生邏輯像素零差。Windows新ZIP的Wine四入口、macOS雙架構／簽章頁／依賴／ZIP核對通過，兩平台仍未真機驗收。標準18套件13PASS／5無測試；遠端目前96項、4 OPEN／92 CLOSED。#96本文格式已修正，276條核對零失效、130條一致；現況清單與驗證矩陣已由同一遠端快照同步。原版規則、AI、音訊與存檔格式保持，未新增雙玩家命令或戰場差異驗證。
@@ -1170,7 +1182,7 @@ v1保留為失效推論，現行證據為[原版v2](docs/internals/data/battle-o
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 4 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 5 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -1205,6 +1217,20 @@ v1保留為失效推論，現行證據為[原版v2](docs/internals/data/battle-o
 **證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
 
 **核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
+
+#### hd-artwork — 原畫風 HD 圖片修復與高解析度顯示
+
+*[#97](https://github.com/wicanr2/logh3/issues/97) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+使用者要求「進行hd化（希望把原來的遊戲圖優化)」，看過原畫風修復試樣後回覆「ok」。
+
+**卡在**：首批 5/83 張已保存：萊因哈特、吉爾菲艾斯、奧貝斯坦、楊威利、卡介倫。1920×1440 可選 HD 顯示已接入；缺少替換圖時沿原圖。v.0.1.4-20261006 三平台本機完整版已打包；實際Linux包兩陣營各28張完整X11視窗，共53760000像素零差。19套件14PASS／5無測試，Windows Wine六入口、macOS通用架構與ARM簽章核對通過，未真機验收。其餘 78 張與艦艇、地圖尚待修復，保持 OPEN，不宣稱整套HD完成。
+
+**做完的判準**：沿使用者已核准的原畫風 HD 修復，完成 83 張原人物圖並按原索引接到正常 UI。高解析度顯示、圖片遮擋、滑鼠操作及存讀保持；三平台本機完整版記錄實際素材覆蓋，不宣稱原版逐像素一致。艦艇、地圖與其他畫面列為後續 HD 範圍，未完成前不稱整套美術完成。
+
+**證據**：[`docs/spec/122-hd-artwork.md`](docs/spec/122-hd-artwork.md)、[`docs/playtest/108-hd-artwork.md`](docs/playtest/108-hd-artwork.md)、[`docs/internals/data/hd-artwork.json`](docs/internals/data/hd-artwork.json)、[`assets/hd/MANIFEST.json`](assets/hd/MANIFEST.json)、[`internal/presentation/artwork.go`](internal/presentation/artwork.go)、[`internal/presentation/artwork_test.go`](internal/presentation/artwork_test.go)、[`cmd/gin3/artwork_test.go`](cmd/gin3/artwork_test.go)
+
+**核實**：`assets/hd/MANIFEST.json` 的 `files` 超過 82 項
 
 #### music-library-pipeline — 玩家自產曲庫的管線與 MIDI 音色（MPU-401）
 

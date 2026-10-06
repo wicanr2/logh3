@@ -654,7 +654,7 @@ func (g *Game) drawFleetCommand(fb *gfx.Framebuffer) {
 		}
 	case StateFleetTargetPick, StateFleetMessage, StateFleetConfirm, StateFleetOccupyWarn:
 		for y := 0; y < gfx.Height; y++ {
-			copy(fb.Pix[y*gfx.Width:y*gfx.Width+mapX+mapW], left[y*gfx.Width:y*gfx.Width+mapX+mapW])
+			fb.WriteRow(0, y, left[y*gfx.Width:y*gfx.Width+mapX+mapW])
 		}
 		if m := g.pickStarMap(); m != nil {
 			screen.DrawStarMap(fb, m, mapX, mapY)

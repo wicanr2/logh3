@@ -167,11 +167,7 @@ func (s *TurnWindowSpec) Draw(fb *gfx.Framebuffer, fnt *font.Font, tiles *ui.Fra
 	}
 	missing := ui.DrawTextBuffer(fb, fnt, tiles, s.Buffer(v), s.CellX+1, s.CellY+1)
 	if face != nil {
-		for y := 0; y < s.Face.H && y < face.H; y++ {
-			for x := 0; x < s.Face.W && x < face.W; x++ {
-				fb.Set(s.Face.X+x, s.Face.Y+y, face.Pix[y*face.W+x])
-			}
-		}
+		face.Draw(fb, s.Face.X, s.Face.Y, s.Face.W, s.Face.H)
 	}
 	return missing
 }
@@ -252,11 +248,7 @@ func (s *TurnWindowSpec) drawReportIn(fb *gfx.Framebuffer, fnt *font.Font, tiles
 	b.Write(text)
 	missing := ui.DrawTextBuffer(fb, fnt, tiles, b, cx+1, cy+1)
 	if face != nil {
-		for y := 0; y < s.Face.H && y < face.H; y++ {
-			for x := 0; x < s.Face.W && x < face.W; x++ {
-				fb.Set(faceX+x, faceY+y, face.Pix[y*face.W+x])
-			}
-		}
+		face.Draw(fb, faceX, faceY, s.Face.W, s.Face.H)
 	}
 	return missing
 }

@@ -137,11 +137,7 @@ func DrawFleetDetail(s *FleetDetailSpec, fb *gfx.Framebuffer, fnt *font.Font,
 	var missing []uint16
 	s.Panel.Frame.frame().Draw(fb, s.Panel.X, s.Panel.Y, s.Panel.W, s.Panel.H)
 	if v.Face != nil {
-		for y := 0; y < v.Face.H; y++ {
-			for x := 0; x < v.Face.W; x++ {
-				fb.Set(s.Face.X+x, s.Face.Y+y, v.Face.Pix[y*v.Face.W+x])
-			}
-		}
+		v.Face.Draw(fb, s.Face.X, s.Face.Y, v.Face.W, v.Face.H)
 	}
 	for _, r := range s.Rules {
 		fb.FillRect(r.X, r.Y, r.W, r.H, r.Colour)

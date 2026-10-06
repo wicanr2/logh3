@@ -274,7 +274,7 @@ func (s *EngagementSpec) RenderPlanetFrame(v PlanetFrameView, panel *asset.Image
 				}
 			}
 		}
-		copy(fb.Pix, planes.Pixels())
+		fb.CopyPixels(planes.Pixels())
 	}
 	if v.Scene != nil {
 		ops, err := PlanPlanetBlocks(*v.Scene, sprites)

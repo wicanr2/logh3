@@ -91,7 +91,7 @@ func (s *FleetPresentationSpec) RenderFleetFrame(v FleetFrameView, panel *asset.
 	}
 	fb := gfx.NewFramebuffer(0)
 	for y := 0; y < panel.H; y++ {
-		copy(fb.Pix[(y+40)*gfx.Width:(y+41)*gfx.Width], panel.Pix[y*panel.W:(y+1)*panel.W])
+		fb.WriteRow(0, y+40, panel.Pix[y*panel.W:(y+1)*panel.W])
 	}
 	for side, b := range buffers {
 		w := s.Windows[side]
@@ -113,7 +113,7 @@ func (s *FleetPresentationSpec) RenderFleetFrame(v FleetFrameView, panel *asset.
 				}
 			}
 		}
-		copy(fb.Pix, planes.Pixels())
+		fb.CopyPixels(planes.Pixels())
 	}
 	if err := DrawFleetBlocks(fb, ops); err != nil {
 		return nil, err

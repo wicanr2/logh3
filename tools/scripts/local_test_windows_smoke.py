@@ -16,7 +16,7 @@ def win(path):
     return 'Z:'+str(path.resolve()).replace('/', '\\')
 
 
-def main(version):
+def main(version, hd=False):
     assert Path.cwd() == Path('/out') and os.getuid() == 1000
     archive = Path('package92-'+version+'-windows-amd64.zip')
     out = Path('package92-smoke-'+version)
@@ -41,14 +41,23 @@ def main(version):
     scripts = {'main': 'move 300 240', 'input': base,
                'load': base+';click 544 125;click 560 145',
                'battle': 'click 300 270;type 138;enter;click 300 322;click 318 208;click 544 125;click 560 125;tick 1000'}
+    if hd:
+        scripts['month'] = 'click 300 210;type 138;enter'
+        scripts['portrait'] = 'click 300 210;type 138;enter;click 448 370;click 448 370;click 448 125;click 464 165;click 400 90'
     rows = []
     for name, script in scripts.items():
         command = ['wine', str(binary.resolve()), '-orig', win(package/'original'), '-data', win(package/'data'),
                    '-music', '', '-save', win(out/('save-'+name)), '-ai', '-1', '-scale', '1.5',
                    '-script', script, '-shot', win(out/(name+'.png')), '-state-out', win(out/(name+'.txt')), '-shot-after', '4']
+        if hd:
+            command += ['-graphics', 'hd', '-art', win(package/'art')]
         with (out/(name+'.log')).open('x') as log:
             subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=60)
         state = (out/(name+'.txt')).read_text()
+        if hd:
+            import struct
+            assert struct.unpack('>II', (out/(name+'.png')).read_bytes()[16:24]) == (1920, 1440)
+            assert 'HD：5/83' in (out/(name+'.log')).read_text()
         rows.append({'name': name, 'command': command, 'state': state, 'png_sha256': sha(out/(name+'.png'))})
         print('Windows封包Wine', name, state.splitlines()[0], flush=True)
     assert 'state=StateBattle' in (out/'battle.txt').read_text()
@@ -62,4 +71,6 @@ def main(version):
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--version', required=True)
-    main(p.parse_args().version)
+    p.add_argument('--hd', action='store_true')
+    args = p.parse_args()
+    main(args.version, args.hd)

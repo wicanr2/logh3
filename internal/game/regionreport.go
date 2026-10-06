@@ -136,11 +136,7 @@ func (g *Game) drawReportFace(fb *gfx.Framebuffer, owner int) {
 	if err != nil {
 		return
 	}
-	for y := 0; y < p.Face.H && y < img.H; y++ {
-		for x := 0; x < p.Face.W && x < img.W; x++ {
-			fb.Set(p.Face.X+x, p.Face.Y+y, img.Pix[y*img.W+x])
-		}
-	}
+	img.Draw(fb, p.Face.X, p.Face.Y, p.Face.W, p.Face.H)
 }
 
 // flipMessageKey 把四句對應到版面 JSON 裡的鍵。

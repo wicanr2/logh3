@@ -638,11 +638,7 @@ func (w *GameWindow) drawContent(fb *gfx.Framebuffer, fnt *font.Font, shadow uin
 	faces *asset.AMG) []uint16 {
 	if w.Face != nil && faces != nil {
 		if img, err := faces.Decode(w.Face.Index); err == nil {
-			for y := 0; y < img.H; y++ {
-				for x := 0; x < img.W; x++ {
-					fb.Set(w.Face.X+x, w.Face.Y+y, img.Pix[y*img.W+x])
-				}
-			}
+			img.Draw(fb, w.Face.X, w.Face.Y, img.W, img.H)
 		}
 	}
 	var missing []uint16
@@ -920,9 +916,5 @@ func DrawStarMap(fb *gfx.Framebuffer, img *asset.Image, x, y int) {
 	if fb == nil || img == nil {
 		return
 	}
-	for j := 0; j < img.H; j++ {
-		for i := 0; i < img.W; i++ {
-			fb.Set(x+i, y+j, img.Pix[j*img.W+i])
-		}
-	}
+	img.Draw(fb, x, y, img.W, img.H)
 }
