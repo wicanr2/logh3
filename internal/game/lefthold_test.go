@@ -209,9 +209,9 @@ func TestLeftHoldMonthlyAdmiralList(t *testing.T) {
 	for _, key := range []byte("138\r") {
 		g.Key(key)
 	}
-	g.Click(448, 330)
-	g.Click(448, 310)
-	g.Click(464, 330)
+	g.Click(448, 370)
+	g.Click(448, 350)
+	g.Click(464, 370)
 	if g.State() != StateAdmiralList {
 		t.Fatal("正常月初建造計劃未開待命提督清單")
 	}

@@ -633,14 +633,14 @@ func TestPlayerPathReachesGame(t *testing.T) {
 	matches(t, g, "key1")
 
 	// 主畫面的熱區：點下去開出船艦訂造報告。
-	g.Click(448, 330)
+	g.Click(448, 370)
 	if g.State() != StateShipOrder {
 		t.Fatal("點了主畫面的熱區沒有開出船艦訂造報告")
 	}
 	matches(t, g, "ship1")
 
 	// 訂造報告上的熱區：點下去開出次月份船艦建造計劃。
-	g.Click(448, 310)
+	g.Click(448, 350)
 	if g.State() != StateBuildPlan {
 		t.Fatal("點了訂造報告的熱區沒有開出建造計劃")
 	}
@@ -697,8 +697,8 @@ func TestBuildPlanArrowsChangePlan(t *testing.T) {
 		g.Key(c)
 	}
 	g.Key('\r')
-	g.Click(448, 330)
-	g.Click(448, 310)
+	g.Click(448, 370)
+	g.Click(448, 350)
 	if g.State() != StateBuildPlan {
 		t.Skip("走不到建造計劃（缺資源），跳過")
 	}
@@ -710,23 +710,23 @@ func TestBuildPlanArrowsChangePlan(t *testing.T) {
 		t.Fatalf("開局第 0 列是 %d%%，原版是 20%%", p.Pct[0])
 	}
 	// 左欄：餘額 0% 時按不動。
-	g.Click(216, 170)
+	g.Click(216, 210)
 	if p.Pct[0] != 20 {
 		t.Fatalf("餘額 0%% 還加得上去：%d%%", p.Pct[0])
 	}
 	// 右欄：一次減 1%。
-	g.Click(232, 170)
+	g.Click(232, 210)
 	if p.Pct[0] != 19 || p.RestPct() != 1 || p.RestAmount() != 188 {
 		t.Fatalf("減一次後 %d%% / 餘 %d%% %d，原版是 19%% / 餘 1%% 188",
 			p.Pct[0], p.RestPct(), p.RestAmount())
 	}
 	// 有餘額之後左欄就按得動了。
-	g.Click(216, 170)
+	g.Click(216, 210)
 	if p.Pct[0] != 20 || p.RestPct() != 0 {
 		t.Fatalf("加回來變成 %d%% / 餘 %d%%", p.Pct[0], p.RestPct())
 	}
 	// 第 6 列的箭頭在最後一格。
-	g.Click(232, 280)
+	g.Click(232, 320)
 	if p.Pct[6] != 14 {
 		t.Fatalf("點第 6 列的減，變成 %d%%，應該是 14%%", p.Pct[6])
 	}
@@ -747,9 +747,9 @@ func TestBudgetPlanFromMainScreen(t *testing.T) {
 	if g.State() != StateMainGame {
 		t.Fatal("答對了卻沒進遊戲本體")
 	}
-	g.Click(432, 300)
+	g.Click(432, 340)
 	if g.State() != StateBudgetPlan {
-		t.Fatal("點了 (432,300) 沒有開出預算計劃")
+		t.Fatal("點了 (432,340) 沒有開出預算計劃")
 	}
 	matches(t, g, "budget1")
 }
@@ -766,12 +766,12 @@ func TestAdmiralListFromBuildPlan(t *testing.T) {
 		g.Key(c)
 	}
 	g.Key('\r')
-	g.Click(448, 330)
-	g.Click(448, 310)
+	g.Click(448, 370)
+	g.Click(448, 350)
 	if g.State() != StateBuildPlan {
 		t.Fatal("走不到建造計劃")
 	}
-	g.Click(464, 330)
+	g.Click(464, 370)
 	if g.State() != StateAdmiralList {
 		t.Fatal("點了左按鈕沒有開出待命中提督資料")
 	}
@@ -950,15 +950,15 @@ func TestBuildPlanPctReachesProduction(t *testing.T) {
 	for _, c := range []byte{'1', '3', '8', '\r'} {
 		g.Key(c)
 	}
-	g.Click(448, 330) // 船艦訂造報告
-	g.Click(448, 310) // 建造計劃
+	g.Click(448, 370) // 船艦訂造報告
+	g.Click(448, 350) // 建造計劃
 	if g.State() != StateBuildPlan {
 		t.Fatalf("沒進建造計劃，在 %v", g.State())
 	}
 	before := g.NextPlan()
 	// 第 0 列的右箭頭按兩下：開局各列加起來剛好 100%，只減得動。
-	g.Click(232, 170)
-	g.Click(232, 170)
+	g.Click(232, 210)
+	g.Click(232, 210)
 	after := g.NextPlan()
 	if after.Pct[0] == before.Pct[0] {
 		t.Fatalf("按了箭頭之後第 0 列還是 %d%%", after.Pct[0])
@@ -1481,7 +1481,7 @@ func TestShipOrderRightClickGoesToMap(t *testing.T) {
 	for _, c := range []byte{'1', '3', '8', '\r'} {
 		g.Key(c)
 	}
-	g.Click(448, 330) // 會計報告上的熱區
+	g.Click(448, 370) // 會計報告上的熱區
 	if g.State() != StateShipOrder {
 		t.Fatalf("點了熱區之後在 %v，不是船艦訂造報告", g.State())
 	}

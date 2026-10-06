@@ -60,6 +60,8 @@ type MainGameSpec struct {
 
 	// Hotspots 是可點的區域。原版存的是**相對視窗原點的格子**
 	// （`docs/re/09`）；這裡放換算好的像素矩形，另外附上原始格子座標。
+	// 會計／訂造／建造三份歷史JSON仍為原版滑鼠座標，Game僅對三者減
+	// ui.MouseDY 後命中。其他spec沿既有畫面座標（規格121、研究441）。
 	Hotspots []struct {
 		X, Y, W, H int
 		Grid       []int  `json:"grid"`

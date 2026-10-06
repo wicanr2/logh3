@@ -1,0 +1,2362 @@
+{
+  "schema": "logh3.player-input-hotspots.v1",
+  "version": "v.0.1.3-20261006",
+  "date": "2026-10-06",
+  "source_revision": "66d7ad72894d2768eef3975df0b68b59d2f6f016",
+  "working_tree": " M CONTEXT.md\n M README.md\n M docs/internals/00-README.md\n M internal/game/buildplan_states_test.go\n M internal/game/faction_test.go\n M internal/game/game.go\n M internal/game/game_test.go\n M internal/game/lefthold_test.go\n M internal/game/planscreens_test.go\n M internal/screen/maingame.go\n M tools/gui_check.sh\n?? docs/goal/2026-10-06-player-input-round-120.md\n?? docs/playtest/107-player-input-hotspots.md\n?? docs/re/441-player-input-hotspot-space.md\n?? docs/spec/121-player-input-hotspots.md\n?? internal/game/playerinput.go\n?? internal/game/playerinput_test.go\n?? tools/player_input_display.sh\n?? tools/scripts/player_input_capture.go\n?? tools/scripts/player_input_gui.py\n?? tools/scripts/player_input_model.go\n?? tools/scripts/player_input_receipt.py\n",
+  "scope": "remake可見按鈕、正常X11與renderer一致性；無新增原版對拍",
+  "gui": [
+    {
+      "name": "empire",
+      "scale": 1.5,
+      "comparisons": 24,
+      "native_pixels": 7372800,
+      "different": 0,
+      "files": [
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/01-account-x11-comparison.json",
+          "bytes": 582,
+          "sha256": "eb52f2ae328b299ae4b6ca6124f87fd6dbbeeaf2f2b2865338be1914d1db995c"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/01-account-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/01-account-x11.png",
+          "bytes": 84621,
+          "sha256": "e125fdc0a3297f33d47b9341022d263fc66f0e0f9c2dd8535ab46dca577d507d"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/01-account.png",
+          "bytes": 15046,
+          "sha256": "d54aaa412d44238b870bce216192f127c2516356e12dd96f3ebd92da6ce66641"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/02-budget-x11-comparison.json",
+          "bytes": 581,
+          "sha256": "a667832c97ad7bfeb9e9c8392a324f7487c0344993670c7e24a911a681cc8aff"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/02-budget-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/02-budget-x11.png",
+          "bytes": 90576,
+          "sha256": "65b854d0fdd1bfb231e103afa29c96a4d6fa8bb3dcba070f051ec8035a0df270"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/02-budget.png",
+          "bytes": 15413,
+          "sha256": "ffd46c403ac227106908987523a7da7fd7f7eabcc5371d1329f3d79216996ca3"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/03-budget-changed-x11-comparison.json",
+          "bytes": 589,
+          "sha256": "8195da0a2c3d781e329c13cc4581bccf2f04d25f1a4a6aa897f327d611da167d"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/03-budget-changed-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/03-budget-changed-x11.png",
+          "bytes": 90793,
+          "sha256": "f25a54789d64117fe6a4fa7537670b92876a91cc50410a03a7c454f6c7d42ec7"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/03-budget-changed.png",
+          "bytes": 15451,
+          "sha256": "72533a79fa01afc48f35f718366db2dbbd5a0ad8a4dd9aa11c2f302c71d3d63f"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/04-account-return-x11-comparison.json",
+          "bytes": 589,
+          "sha256": "7486cb0f5c792d30419c903b66f0dfba3fe16f39fdc7810a396bf43540595d9a"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/04-account-return-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/04-account-return-x11.png",
+          "bytes": 84912,
+          "sha256": "35996a47af861012bc7864f7a1dcc18d61b596f88cbdf5e34c05458b8b37b65f"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/04-account-return.png",
+          "bytes": 15069,
+          "sha256": "bbbe81f481eecb894931b4f0459806234b1ddb7a4b340748c89cd8f07f23178b"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/05-order-x11-comparison.json",
+          "bytes": 580,
+          "sha256": "0df346c1fcab1666390e57bedff1c103652d27dc59dac0d75469a12104f944ee"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/05-order-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/05-order-x11.png",
+          "bytes": 88154,
+          "sha256": "f648b5928db91dec3616009f92b06476c6f5ebf242e163e3c832b68993251af1"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/05-order.png",
+          "bytes": 15271,
+          "sha256": "718a3b6ba64c51f3143b3b7db3c0f88b4e28fe9383ac25fc2af3b2d4b2c0c2c2"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/06-order-cursor-x11-comparison.json",
+          "bytes": 587,
+          "sha256": "6e0437e4ffd6524ff1d4f45969f7b7d0ab36d5b672de344671b80fb4f0a20e7c"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/06-order-cursor-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/06-order-cursor-x11.png",
+          "bytes": 88140,
+          "sha256": "1b964e8081a90302dd36e65e6f2b8b2c15c96a5b6e30707e6a7a15f512f3180c"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/06-order-cursor.png",
+          "bytes": 15273,
+          "sha256": "490fa82de71985595eb1e82f4e352b4e82a920f5001118081573ce2a53e99df1"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/07-build-x11-comparison.json",
+          "bytes": 580,
+          "sha256": "cda26772e27a14da8821aa036871b7c54d1316c6a905c004ab076309353d3e74"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/07-build-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/07-build-x11.png",
+          "bytes": 75901,
+          "sha256": "4bce089e76e841972ae315fcfb6f4295864d200a41527308b6299dcabe44fe3b"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/07-build.png",
+          "bytes": 13096,
+          "sha256": "8945b8e42a2e184eaa32c03c77a9df36843c8de1b672cbd729ddbbdff14a3e5d"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/08-build-row0-x11-comparison.json",
+          "bytes": 585,
+          "sha256": "1e94a6d8d2f73e969f37dfd278cd2b9bef27eefe114843cf2efca486fbece1a6"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/08-build-row0-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/08-build-row0-x11.png",
+          "bytes": 75944,
+          "sha256": "01884fc500a6e6c27f35a737870ff79b8a72ff828b508931a6b6200fed9da047"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/08-build-row0.png",
+          "bytes": 13148,
+          "sha256": "224bef80878df454a7f6c4875d1b7cee45ec599c98993776a2446cf3a21b331d"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/09-build-row1-x11-comparison.json",
+          "bytes": 585,
+          "sha256": "595b32ff649b556195cd3953b4dd23bce3120d183871aab7e765a69245beb47b"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/09-build-row1-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/09-build-row1-x11.png",
+          "bytes": 75891,
+          "sha256": "29234c53768ea03faed7d8656ef4acc894a040b3e2d0144d46399a829049a37a"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/09-build-row1.png",
+          "bytes": 13183,
+          "sha256": "20e32c5bfd1f89d56640737befc9a3a090165133cba8d2e0b8748a83d21cd465"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/10-build-cursor-x11-comparison.json",
+          "bytes": 587,
+          "sha256": "b39219b49511b97b3e6c7afff167c85eb34a4d843094879c4553ec70e55ba784"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/10-build-cursor-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/10-build-cursor-x11.png",
+          "bytes": 75870,
+          "sha256": "978d3bfbda765c6177ba92e3d5bd3bee533018de14e77b5a30f7419df7780382"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/10-build-cursor.png",
+          "bytes": 13137,
+          "sha256": "b130991d54f93841132688f8fe299a7b4c30df40693408bd219aec2a174fa589"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/11-order-return-x11-comparison.json",
+          "bytes": 587,
+          "sha256": "7ba88725bb2d7d80ca152d187d9879219a3540beafad28ef6a14aa5b5ac21d5d"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/11-order-return-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/11-order-return-x11.png",
+          "bytes": 88083,
+          "sha256": "5cd4aa31a55361ab155619b4d2d9d4482bda7adb1093da249866dc4d77cdd06b"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/11-order-return.png",
+          "bytes": 15303,
+          "sha256": "a4ca6a740f0debf8c51d276e1f373d6e75f036bc3d8cea01d9e98864cf7ece9f"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/12-command-x11-comparison.json",
+          "bytes": 582,
+          "sha256": "3ffd49004a5dc9634a68e682032fd93febd94450c2fa03027ef20e9729ec6f3e"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/12-command-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/12-command-x11.png",
+          "bytes": 125111,
+          "sha256": "2828fce16ba724824db4e35d43b644c8889837df5709c5e16710b817784968dc"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/12-command.png",
+          "bytes": 21436,
+          "sha256": "61c0f9a0a19c2cdd3af3f05c3eaad9123fc1aa66ae834be513c40568cedb6f83"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/TRACE.json",
+          "bytes": 7185,
+          "sha256": "c0e59cc562deef5b24218221b6c0ccecdd15ff055220c4a6474b8b34b1aa8e1b"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/game.log",
+          "bytes": 314,
+          "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-closed-x11-comparison.json",
+          "bytes": 584,
+          "sha256": "09e2f3ea48176c35bee759cece3ee6b984d36546b0bc394000c9dc8ad856ec46"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-closed-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-closed-x11.png",
+          "bytes": 125246,
+          "sha256": "b0f92f52413c794b28ac762acfbaec6cb189728874fe3646190a6d590de5953b"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-closed.png",
+          "bytes": 21440,
+          "sha256": "8c637759961cebf9a0cf4c58703e68b7a99d718274ca7f6401696edb64f8d887"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-moved-x11-comparison.json",
+          "bytes": 583,
+          "sha256": "3ffbb53682604d95e0e4874d2fb79e5ac5800d7b2da6a909f9daeeaa4936047d"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-moved-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-moved-x11.png",
+          "bytes": 126519,
+          "sha256": "1adcfaa421c48ad8cfb1efb6e6ac1f64562de4bf86a6f2954ca91ab7a81bb75f"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-moved.png",
+          "bytes": 21776,
+          "sha256": "28f6b666545e11fbce2bd012b44a2e7a0f4cabdcd2109981b768a43d5a253ccd"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-open-x11-comparison.json",
+          "bytes": 582,
+          "sha256": "e1fd8b675887bea446bdc8c73462c6a7460293e543558bc9ac669b3ec9f7caac"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-open-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-open-x11.png",
+          "bytes": 126299,
+          "sha256": "628f3a400b44a3370f8e99e11200da1c06c6781b6b3f19388cef61f41eb429e7"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-open.png",
+          "bytes": 21778,
+          "sha256": "2f72782c867f331ac7d2ffdc52328403acfe853e5dad9a091448bde34bded498"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-selected-x11-comparison.json",
+          "bytes": 586,
+          "sha256": "f4732c8cfb1f37a1aaa62758ad07460ee4f9da6df8ea2319a073c9771d3a1eb7"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-selected-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-selected-x11.png",
+          "bytes": 134895,
+          "sha256": "b99e5609c2b455b83b25655dbab43d5a8b01ff7b0c9fa0fa341d01903e8f106c"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-selected.png",
+          "bytes": 22326,
+          "sha256": "3c6474e7ef34c991fdbcf1d6005d1410c3bd6a824ef66b7f3d2a236e7925738c"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-closed-x11-comparison.json",
+          "bytes": 587,
+          "sha256": "97787ea0a56bba907ffd3ec0ae216a15e11cf09720a64f809ad28aa3ab99671d"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-closed-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-closed-x11.png",
+          "bytes": 125246,
+          "sha256": "b0f92f52413c794b28ac762acfbaec6cb189728874fe3646190a6d590de5953b"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-closed.png",
+          "bytes": 21440,
+          "sha256": "8c637759961cebf9a0cf4c58703e68b7a99d718274ca7f6401696edb64f8d887"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-moved-x11-comparison.json",
+          "bytes": 586,
+          "sha256": "5ce5c7ce262a21e0094fbc2dcead8ed51741e4220636687576947c9db068e834"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-moved-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-moved-x11.png",
+          "bytes": 124564,
+          "sha256": "f8e293f5f561e6d89ddfb1fd2eec30f0d88bef1d567fce49cedf40bece487e07"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-moved.png",
+          "bytes": 21616,
+          "sha256": "07418c13adab9903abee55bcc0472d207a8a1f0030e892c75af3119c2617682e"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-open-x11-comparison.json",
+          "bytes": 585,
+          "sha256": "0244e6f44e5cf25feb4b523251a4d416000a07675786f890ed2f29c664950e95"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-open-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-open-x11.png",
+          "bytes": 124485,
+          "sha256": "419b1bedfd30c1ede91636322742194f029467ed0daf6256f7fd31fb6e037939"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-open.png",
+          "bytes": 21553,
+          "sha256": "427c6fe53ae13deb1d8f6389bc9f3dca7cc7201a0bc3ca724f0dbb05900427e7"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-selected-x11-comparison.json",
+          "bytes": 589,
+          "sha256": "667c4cacf0fdd9d24b82c4cd33116e345bec3daa9fa97d243b904afa5173fc11"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-selected-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-selected-x11.png",
+          "bytes": 94610,
+          "sha256": "ee07497a988c52a503f1ebbceb30ca1ae50c8d08997447e55c75fe83dd2a4667"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-selected.png",
+          "bytes": 16660,
+          "sha256": "cab3a62c73bd99896956d4d0860b384ad166c95bb442ff76eb44663cbecf1827"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-closed-x11-comparison.json",
+          "bytes": 585,
+          "sha256": "1076cce6085a6873bcdae1cdf923f14b248710a4ec4ae3310ea1fd7b61297703"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-closed-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-closed-x11.png",
+          "bytes": 125246,
+          "sha256": "b0f92f52413c794b28ac762acfbaec6cb189728874fe3646190a6d590de5953b"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-closed.png",
+          "bytes": 21440,
+          "sha256": "8c637759961cebf9a0cf4c58703e68b7a99d718274ca7f6401696edb64f8d887"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-moved-x11-comparison.json",
+          "bytes": 584,
+          "sha256": "344e8bfb23f761028f231aa65974491b0fb7bfb0a5dcba86f831fe9ef352ad2c"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-moved-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-moved-x11.png",
+          "bytes": 126128,
+          "sha256": "bdf88e91edebdc76a97e69df0827a03fe70960b46fcbd7b5032a7f3751a548a4"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-moved.png",
+          "bytes": 21845,
+          "sha256": "db17a6fc6c30f75610b9f29812900109ed28803c541d50beaabce720ddca830d"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-open-x11-comparison.json",
+          "bytes": 583,
+          "sha256": "92c157260cd346cfa1d114a26d351b6a5c54b9b9c5ea98d389887d156237416c"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-open-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-open-x11.png",
+          "bytes": 125992,
+          "sha256": "ccdbb31b460b0d7aad6b847cf1642df754c5c396e96c5553968391ae9362e6e3"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-open.png",
+          "bytes": 21823,
+          "sha256": "f7336813f265d51ade3a21a0572d8b2293b7e62490ea811258ef7085db979091"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-selected-x11-comparison.json",
+          "bytes": 587,
+          "sha256": "40928e708b75bbb7a6e6a679636f7f27aca92610d8637bf6c14456c38d2138c6"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-selected-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-selected-x11.png",
+          "bytes": 94296,
+          "sha256": "02784d8c0dec50565758b4aba48fb14608c440feb58296d5e224595757ebcf7f"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-selected.png",
+          "bytes": 17102,
+          "sha256": "2fab4d6379af8e33e294fe5246324f42c273a2a0461e7c189619bae93815200e"
+        }
+      ]
+    },
+    {
+      "name": "alliance",
+      "scale": 2.0,
+      "comparisons": 24,
+      "native_pixels": 7372800,
+      "different": 0,
+      "files": [
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/01-account-x11-comparison.json",
+          "bytes": 585,
+          "sha256": "d154a623b9e82868340dbf8c7301cbfe84e276b19cb8a59a77764c9a9f3f84ca"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/01-account-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/01-account-x11.png",
+          "bytes": 38455,
+          "sha256": "b08194d73c00bece6c6d554cd8012f24b95e9d792a7983ac71c1e51e432c9c18"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/01-account.png",
+          "bytes": 14683,
+          "sha256": "23582a8e39d16f25eeebfc3297612cc279c4823c0d08dfb496f06d48f103106f"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/02-budget-x11-comparison.json",
+          "bytes": 584,
+          "sha256": "7040c5c7c124c59f1b58640eed6bf90101a97470eb186000e980ee2db8660006"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/02-budget-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/02-budget-x11.png",
+          "bytes": 41281,
+          "sha256": "08675fcb27bccf131791f03058265d8df444d9f7f7526b1c298d2a236d425f58"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/02-budget.png",
+          "bytes": 15053,
+          "sha256": "0efa384be322e032b95bb25284e2cdbf4c4564e6370f2001c02c3d517f3496ee"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/03-budget-changed-x11-comparison.json",
+          "bytes": 592,
+          "sha256": "bb3b8559a1dde9699c0824b9f03b1545831b64bc163a880b2bf79fef74978f2c"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/03-budget-changed-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/03-budget-changed-x11.png",
+          "bytes": 41249,
+          "sha256": "10043d2deb274356f29c32a45c55e7bb13187fa81876d4a499dce30c0be77a5e"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/03-budget-changed.png",
+          "bytes": 15046,
+          "sha256": "85c432287b8d6f4200c812562d58d5673d90dd854957a85c34c68e11fd03b501"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/04-account-return-x11-comparison.json",
+          "bytes": 592,
+          "sha256": "48e687d3935e3ef30be5fffd1040366483b13c29d48da6c6e00dad249594b45e"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/04-account-return-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/04-account-return-x11.png",
+          "bytes": 38454,
+          "sha256": "f8cd02c76676006e1640e96ff715c377dd5e736683e2371ef1e9f9dbb860a237"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/04-account-return.png",
+          "bytes": 14659,
+          "sha256": "ca706642ab4b83f9a76c4d69c2db9d014014b3f79899b193361dc16e897d68ea"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/05-order-x11-comparison.json",
+          "bytes": 583,
+          "sha256": "8bbca5394fd2d789a4287ecdfc0c009ac779d56d53d279230971315619cf25a3"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/05-order-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/05-order-x11.png",
+          "bytes": 40961,
+          "sha256": "1cb611ff2ae3647f16b851b916a83dd2d4504bd8d75ee02b945db1abf19f0155"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/05-order.png",
+          "bytes": 15444,
+          "sha256": "5148961eb95b0a94733bc95d0965f77a57cb3fb3bce1533e47ae15984cd3a734"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/06-order-cursor-x11-comparison.json",
+          "bytes": 590,
+          "sha256": "dd9adea237f7eef1b1542f6d9bf64db9f8b25024fbc0bb6c424f0078f305fe50"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/06-order-cursor-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/06-order-cursor-x11.png",
+          "bytes": 40970,
+          "sha256": "810d1c7abcec762f80ed85fca145d69fde3d8adf18537a218ccbbbc63ef0cf31"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/06-order-cursor.png",
+          "bytes": 15452,
+          "sha256": "9e7422c075085719c8eb300fca128cec2f145516f81a44809eef1719938aa566"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/07-build-x11-comparison.json",
+          "bytes": 583,
+          "sha256": "e334cf188a90b90d7df9b10d28bf2d340b9bdfff55416f1f931d6d98b64eb652"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/07-build-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/07-build-x11.png",
+          "bytes": 37033,
+          "sha256": "1b9e1f5c446e66da941a7104434abb28bb870747576389ac03e27b04ecee0a31"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/07-build.png",
+          "bytes": 13253,
+          "sha256": "f24d8dac24f04bf1f683efe09c04b2887639ce2e5fd4628453c061538feddd5a"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/08-build-row0-x11-comparison.json",
+          "bytes": 588,
+          "sha256": "9925b1211832b856b2c51468846bc3b636190a1ed36e3f14d9082c7d4a41d71a"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/08-build-row0-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/08-build-row0-x11.png",
+          "bytes": 37040,
+          "sha256": "9d61ebecfb88d96c07578c733df54f6ed7bd935e6b1c7bf947f0c2db2db3cb2a"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/08-build-row0.png",
+          "bytes": 13289,
+          "sha256": "f58a1ebc808b4594920828294a8ccfcf1a4b097119637ff3f7c3e50a8238fa7e"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/09-build-row1-x11-comparison.json",
+          "bytes": 588,
+          "sha256": "d21c6d65d9c3c35a854c8936f0e7c93f168b8f1e3eadf94cb18621ec491844c1"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/09-build-row1-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/09-build-row1-x11.png",
+          "bytes": 37037,
+          "sha256": "b5886edc1c96c0a91666ebdca65593122fe6fe3e37c36f98092e979557771c89"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/09-build-row1.png",
+          "bytes": 13357,
+          "sha256": "6c63d6504be80abe16fa0c91ce04ff94c1c663f22141579deaeebd4ad8ad794c"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/10-build-cursor-x11-comparison.json",
+          "bytes": 590,
+          "sha256": "3660b1ebcfe5af953036ebc8a301cf399803a5659011b6d7e47c2d827c8ba3b4"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/10-build-cursor-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/10-build-cursor-x11.png",
+          "bytes": 37025,
+          "sha256": "2ca7e4193821236293401e789be481751700e4b051d8f2b3110b0a770746cd34"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/10-build-cursor.png",
+          "bytes": 13310,
+          "sha256": "4a8691496f39e73cb55a59e366dca7130fcda5714e09fc8852d11c6b8cd8cbe7"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/11-order-return-x11-comparison.json",
+          "bytes": 590,
+          "sha256": "504e87a625296e446ed5363bf800ab391d493e44dd95c5bcb43a1a5c49e43474"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/11-order-return-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/11-order-return-x11.png",
+          "bytes": 40945,
+          "sha256": "fc3700c86f567d17a5dfc53d94220485fdea83811539276972588ff6f73633b9"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/11-order-return.png",
+          "bytes": 15484,
+          "sha256": "58438305231dd671bf0a1d5115d0181f8a7e55d6a6e193df7c92cbd13e58c7f9"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/12-command-x11-comparison.json",
+          "bytes": 585,
+          "sha256": "367b475fa73af45c3440cabf5c47ec9b325506dd6c7d204a3b894707e2383883"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/12-command-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/12-command-x11.png",
+          "bytes": 55253,
+          "sha256": "f54a90ae8594f2ad3d5106553694124764aed126a9d8f9c68ba46da9909f3093"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/12-command.png",
+          "bytes": 21336,
+          "sha256": "4a76c0b98e2565d0ecb0d052344240aa3fea186a63efda2f65a1e4b164cd7eeb"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/TRACE.json",
+          "bytes": 7182,
+          "sha256": "d5ec57d1410b6841135ff99b3ef1d720a10784947e59b153960991955ff7f599"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/game.log",
+          "bytes": 314,
+          "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-closed-x11-comparison.json",
+          "bytes": 587,
+          "sha256": "b3c959a7a4359d52833c391f02f3476eb3feea778881c3ecd99fcb1fa1ca8fec"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-closed-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-closed-x11.png",
+          "bytes": 55262,
+          "sha256": "264b21361a216c288936cb0c0ca86799507346082184f113bd43f0132013a489"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-closed.png",
+          "bytes": 21340,
+          "sha256": "44ac67546eed271314a8664008ec3ed498f93e04e0770c585ce1229aefd27303"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-moved-x11-comparison.json",
+          "bytes": 586,
+          "sha256": "b1ff18d049b004dd29743416ed0df9d7a65a74311ce582327cbe376e0d1f86a0"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-moved-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-moved-x11.png",
+          "bytes": 56384,
+          "sha256": "9604cd0f4b478aa4d58256c38562b3a601d3215e36508946d08c6359472b1379"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-moved.png",
+          "bytes": 21708,
+          "sha256": "e20edf7ab4e96b6d121a8a6c57722109937fa227597141373dcb4dcecb974706"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-open-x11-comparison.json",
+          "bytes": 585,
+          "sha256": "b16a5a5c43cf99b3f8b1da932caa1c85e5bb14b6398b2ea4ede5f5e0b7e9fae2"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-open-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-open-x11.png",
+          "bytes": 56347,
+          "sha256": "6b15ae8c79d6a928dde821bb4bc1dc54dba25441700cf6fdd702d2e5644cb3ac"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-open.png",
+          "bytes": 21704,
+          "sha256": "07d8af57faf4bf8c3c9c68d8e5b59435b682b05407b41f87a1e8b46d3a7f3b43"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-selected-x11-comparison.json",
+          "bytes": 589,
+          "sha256": "4cf3fd1837962b2c925b7b33e9e17a33d7368987be4e92b83a631ce290d09efb"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-selected-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-selected-x11.png",
+          "bytes": 57925,
+          "sha256": "41643d87b1308039657dbbf2f239f41c1a5d1baf740779f05f454039de535d54"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-selected.png",
+          "bytes": 21732,
+          "sha256": "66255607e27e845a1f1f363e1654319dca19d2638477530c415b6ab20f137a2b"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-closed-x11-comparison.json",
+          "bytes": 590,
+          "sha256": "fc118efc18384bea7299ff6535e8dbbf8a105314ecf18090114e50ca276ea4a9"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-closed-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-closed-x11.png",
+          "bytes": 55262,
+          "sha256": "264b21361a216c288936cb0c0ca86799507346082184f113bd43f0132013a489"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-closed.png",
+          "bytes": 21340,
+          "sha256": "44ac67546eed271314a8664008ec3ed498f93e04e0770c585ce1229aefd27303"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-moved-x11-comparison.json",
+          "bytes": 589,
+          "sha256": "fb9fa4737cf3d8f063f2a6900bb32915cb847b9e6b927a0887d4ff40e4b46899"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-moved-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-moved-x11.png",
+          "bytes": 55576,
+          "sha256": "3ed649643be2381c12f33d30ddd2e398f1bfb6e594e7ec6111500ee7fbf0a5be"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-moved.png",
+          "bytes": 21558,
+          "sha256": "15586a8aff031f69bd00fb7edd84b81dfaa878f6edfef65040f3538deeb33677"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-open-x11-comparison.json",
+          "bytes": 588,
+          "sha256": "ffd084e205a5ff0d29535805a0d412f918b7e34087ab61ad2f866d5f434c6295"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-open-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-open-x11.png",
+          "bytes": 55565,
+          "sha256": "e87bd0ae6b0a4672a417e50d29bda3999153111f09fa8c975c35f6694664b5c8"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-open.png",
+          "bytes": 21491,
+          "sha256": "ca618bf2bdcfb76640df55d090d08a6d7780e251622e19daf14d84207fc6e220"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-selected-x11-comparison.json",
+          "bytes": 592,
+          "sha256": "ecf90eb9bc39139eb26b55abdc67ee1bcb0e135aab9249c303bd79cf61b8829f"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-selected-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-selected-x11.png",
+          "bytes": 43222,
+          "sha256": "b847e5dc99c947c1b73c21c04fd80984a0d106fdb12ee1da775ae96db20b8463"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-selected.png",
+          "bytes": 16125,
+          "sha256": "652131e757701d06ad1ee0f6a7fb758f0c05acd94cda7ec582e2e60d8c187fe9"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-closed-x11-comparison.json",
+          "bytes": 588,
+          "sha256": "9cbf7db271e9d850b68cb7249f60cf47e6ee1cb1e087311c73dcf67b9d6f6e9c"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-closed-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-closed-x11.png",
+          "bytes": 55262,
+          "sha256": "264b21361a216c288936cb0c0ca86799507346082184f113bd43f0132013a489"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-closed.png",
+          "bytes": 21340,
+          "sha256": "44ac67546eed271314a8664008ec3ed498f93e04e0770c585ce1229aefd27303"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-moved-x11-comparison.json",
+          "bytes": 587,
+          "sha256": "9063ec44e8205d6253062d3b58ec4cafa39ebdc9b97553b0557d3d008e2e1f73"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-moved-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-moved-x11.png",
+          "bytes": 56052,
+          "sha256": "8473773f6bba407ade5396994deb31a8cb68a840ca124901532b691cdb4d852e"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-moved.png",
+          "bytes": 21753,
+          "sha256": "3714f7f82d6f144a6cd8c3375309cd76c979d4ff62167dbc5128ce104d9fcf43"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-open-x11-comparison.json",
+          "bytes": 586,
+          "sha256": "1562f1fa30c1741bdf65c0466b838bd67448c622a5b91c60e60537d5518e9f87"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-open-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-open-x11.png",
+          "bytes": 56046,
+          "sha256": "32da569733b61704141a08aedc4edd419cf1829b36ff0e16dda9fa7086973022"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-open.png",
+          "bytes": 21723,
+          "sha256": "d02d47b33e8e2a770a1679be7314be69e3ab5dcd5345b43016626312020a95c6"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-selected-x11-comparison.json",
+          "bytes": 590,
+          "sha256": "b1b25964298279e7c302cc09109ae1395d6e0647a1510983b8bee906f4eb10f0"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-selected-x11-diff.png",
+          "bytes": 1885,
+          "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-selected-x11.png",
+          "bytes": 42698,
+          "sha256": "b144563b7be15b76ff5dd748045aeb5b7234ef5628b20cb7339ad26c6873537e"
+        },
+        {
+          "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-selected.png",
+          "bytes": 16971,
+          "sha256": "268cf5e22cd1737c915dcd3592dfad687a2432ed2c31dbcebb01961a0972fdd2"
+        }
+      ]
+    }
+  ],
+  "delivery_files": [
+    {
+      "path": "full-local/LOGH3-v.0.1.3-20261006-windows-amd64.zip",
+      "bytes": 195848848,
+      "sha256": "b3f75af3e24a2cc76c85e8483459e64b037fc3a3075aeee4d96520cca8e19e39"
+    },
+    {
+      "path": "full-local/LOGH3-v.0.1.3-20261006-linux-amd64.zip",
+      "bytes": 196017702,
+      "sha256": "42f7000dadad7cf736cda1abc39ea6dc65ca79a8a8e8c53871435d45e2ebc333"
+    },
+    {
+      "path": "full-local/LOGH3-v.0.1.3-20261006-engine-source.tar.gz",
+      "bytes": 3379534,
+      "sha256": "7823b2a5e43c3518f708b4d79cf697229c9b6b0326198d4836b7b173dc30b884"
+    },
+    {
+      "path": "full-local/LOGH3-v.0.1.3-20261006-macos-universal.zip",
+      "bytes": 202207390,
+      "sha256": "e92a998bbc9d56c4ccd3b1ad0ef1c657bad555d78d069a13ffe84124b7ff256b"
+    }
+  ],
+  "frozen_previous": [
+    {
+      "receipt": {
+        "path": "docs/internals/data/macos-retro-promo.json",
+        "bytes": 35249,
+        "sha256": "1f1328d74883cc634e762e658d80bb014e4cae260654cd480ed9950b6ae2ca5b"
+      },
+      "historical_revision": "66d7ad7",
+      "sources": 10,
+      "artifacts_unchanged": true
+    },
+    {
+      "receipt": {
+        "path": "docs/internals/data/local-test-package.json",
+        "bytes": 39904,
+        "sha256": "2b6240536e024dca369cef572f1c7bac8ce4c29d23f83754d67b02079c9cd9df"
+      },
+      "historical_revision": "66d7ad7",
+      "sources": 20,
+      "artifacts_unchanged": true
+    }
+  ],
+  "sources": [
+    {
+      "path": "cmd/gin3/main.go",
+      "bytes": 13881,
+      "sha256": "0c86c6ed5ab3ec1f107ac9e3137ae9b6e4a753a927365c777641b877d28782dc"
+    },
+    {
+      "path": "internal/game/game.go",
+      "bytes": 204812,
+      "sha256": "f88c8f3377a28d0bb2b05d0bb57b30ebc35e45d9ea17f331f1cc3508d5497da4"
+    },
+    {
+      "path": "internal/game/playerinput.go",
+      "bytes": 309,
+      "sha256": "1dc157c04aebd358ec3f99e014ec2b573a29a2a88318494b1cc744182d51e4ea"
+    },
+    {
+      "path": "internal/game/playerinput_test.go",
+      "bytes": 3379,
+      "sha256": "f986cbc1ee146c9e9920bebe251dfb1b7fc5167f39bf12a5700aa754ea13a09c"
+    },
+    {
+      "path": "internal/game/planscreens_test.go",
+      "bytes": 9869,
+      "sha256": "fde86888b1d3673e78d4905b88a2f947975a17c77a11f8c1ea5dc22537e5b9ae"
+    },
+    {
+      "path": "internal/game/game_test.go",
+      "bytes": 50177,
+      "sha256": "873ea52f40f698fafc53526b7c2c1d2c2db63db5062f9ef6b0cf8c054800971a"
+    },
+    {
+      "path": "internal/game/faction_test.go",
+      "bytes": 5467,
+      "sha256": "3828b4b53e4401d8d555d7b4c5afb6902eec4b282b0c76c78ababfa58dd9819f"
+    },
+    {
+      "path": "internal/game/buildplan_states_test.go",
+      "bytes": 2846,
+      "sha256": "d7673770262f4fd600b3c737bb53baccd14838da4eeccc18af1141ae2d7cad5c"
+    },
+    {
+      "path": "internal/game/lefthold_test.go",
+      "bytes": 7399,
+      "sha256": "1f01211dcfd0b769a467cc1b23535dd9b9b689557db98b952da6f92f95bd34d7"
+    },
+    {
+      "path": "internal/screen/maingame.go",
+      "bytes": 30700,
+      "sha256": "ee87656b940cfb01596fb35fc1c5f14b357ca9af97944425441abc4aff0b7eb7"
+    },
+    {
+      "path": "tools/gui_check.sh",
+      "bytes": 18788,
+      "sha256": "088ab3da041da45271026a7277417727a11154411d070c7596451097d0a15b93"
+    },
+    {
+      "path": "tools/scripts/player_input_model.go",
+      "bytes": 3673,
+      "sha256": "2b80986d033b7645bdc6f2d98a61fa3846a564aac60d8ef25d3cedb7aa637924"
+    },
+    {
+      "path": "tools/scripts/player_input_gui.py",
+      "bytes": 2921,
+      "sha256": "2a6662696a5db99a06b7440a670293239cdb08e4173188065ae4e710408cdcba"
+    },
+    {
+      "path": "tools/scripts/player_input_capture.go",
+      "bytes": 4627,
+      "sha256": "3669b203072858934e516e70e42dcd00d4d3758c51eda6b9d9e03ed758be13cf"
+    },
+    {
+      "path": "tools/player_input_display.sh",
+      "bytes": 469,
+      "sha256": "a443b0a795811d8b294b709b177617af615ebc74fcfd0efae297018d58ee9eb5"
+    },
+    {
+      "path": "tools/scripts/player_input_receipt.py",
+      "bytes": 8173,
+      "sha256": "b4155a5e743d3889d1081777e3be2cffd55836007d9bc0809b0ba31bac37a4c7"
+    },
+    {
+      "path": "docs/spec/121-player-input-hotspots.md",
+      "bytes": 2602,
+      "sha256": "240536aaaaf235530569f822e6cb872ce174cb99fa71481c9db14c797c69a4b0"
+    },
+    {
+      "path": "docs/re/441-player-input-hotspot-space.md",
+      "bytes": 2279,
+      "sha256": "90c1d71dabb1e06042be7d12e302b6e1a4dad81912820be1294189faf373ca0a"
+    },
+    {
+      "path": "docs/playtest/107-player-input-hotspots.md",
+      "bytes": 4778,
+      "sha256": "d211f616deeb041cf521c8c3d133f037a8f84cf85b8f8ef5d46b5992761c245a"
+    },
+    {
+      "path": "docs/goal/2026-10-06-player-input-round-120.md",
+      "bytes": 814,
+      "sha256": "83295ffbb296a64084b8336def669536d5d275ad9971ab8c9f5e681bc9ff933b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 13695,
+      "sha256": "8cb2ab7a984f04266d47eeac9021bef64fcc7cb17d7e0715f955df2ea34fd786"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/01-account-x11-comparison.json",
+      "bytes": 585,
+      "sha256": "d154a623b9e82868340dbf8c7301cbfe84e276b19cb8a59a77764c9a9f3f84ca"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/01-account-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/01-account-x11.png",
+      "bytes": 38455,
+      "sha256": "b08194d73c00bece6c6d554cd8012f24b95e9d792a7983ac71c1e51e432c9c18"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/01-account.png",
+      "bytes": 14683,
+      "sha256": "23582a8e39d16f25eeebfc3297612cc279c4823c0d08dfb496f06d48f103106f"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/02-budget-x11-comparison.json",
+      "bytes": 584,
+      "sha256": "7040c5c7c124c59f1b58640eed6bf90101a97470eb186000e980ee2db8660006"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/02-budget-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/02-budget-x11.png",
+      "bytes": 41281,
+      "sha256": "08675fcb27bccf131791f03058265d8df444d9f7f7526b1c298d2a236d425f58"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/02-budget.png",
+      "bytes": 15053,
+      "sha256": "0efa384be322e032b95bb25284e2cdbf4c4564e6370f2001c02c3d517f3496ee"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/03-budget-changed-x11-comparison.json",
+      "bytes": 592,
+      "sha256": "bb3b8559a1dde9699c0824b9f03b1545831b64bc163a880b2bf79fef74978f2c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/03-budget-changed-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/03-budget-changed-x11.png",
+      "bytes": 41249,
+      "sha256": "10043d2deb274356f29c32a45c55e7bb13187fa81876d4a499dce30c0be77a5e"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/03-budget-changed.png",
+      "bytes": 15046,
+      "sha256": "85c432287b8d6f4200c812562d58d5673d90dd854957a85c34c68e11fd03b501"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/04-account-return-x11-comparison.json",
+      "bytes": 592,
+      "sha256": "48e687d3935e3ef30be5fffd1040366483b13c29d48da6c6e00dad249594b45e"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/04-account-return-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/04-account-return-x11.png",
+      "bytes": 38454,
+      "sha256": "f8cd02c76676006e1640e96ff715c377dd5e736683e2371ef1e9f9dbb860a237"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/04-account-return.png",
+      "bytes": 14659,
+      "sha256": "ca706642ab4b83f9a76c4d69c2db9d014014b3f79899b193361dc16e897d68ea"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/05-order-x11-comparison.json",
+      "bytes": 583,
+      "sha256": "8bbca5394fd2d789a4287ecdfc0c009ac779d56d53d279230971315619cf25a3"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/05-order-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/05-order-x11.png",
+      "bytes": 40961,
+      "sha256": "1cb611ff2ae3647f16b851b916a83dd2d4504bd8d75ee02b945db1abf19f0155"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/05-order.png",
+      "bytes": 15444,
+      "sha256": "5148961eb95b0a94733bc95d0965f77a57cb3fb3bce1533e47ae15984cd3a734"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/06-order-cursor-x11-comparison.json",
+      "bytes": 590,
+      "sha256": "dd9adea237f7eef1b1542f6d9bf64db9f8b25024fbc0bb6c424f0078f305fe50"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/06-order-cursor-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/06-order-cursor-x11.png",
+      "bytes": 40970,
+      "sha256": "810d1c7abcec762f80ed85fca145d69fde3d8adf18537a218ccbbbc63ef0cf31"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/06-order-cursor.png",
+      "bytes": 15452,
+      "sha256": "9e7422c075085719c8eb300fca128cec2f145516f81a44809eef1719938aa566"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/07-build-x11-comparison.json",
+      "bytes": 583,
+      "sha256": "e334cf188a90b90d7df9b10d28bf2d340b9bdfff55416f1f931d6d98b64eb652"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/07-build-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/07-build-x11.png",
+      "bytes": 37033,
+      "sha256": "1b9e1f5c446e66da941a7104434abb28bb870747576389ac03e27b04ecee0a31"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/07-build.png",
+      "bytes": 13253,
+      "sha256": "f24d8dac24f04bf1f683efe09c04b2887639ce2e5fd4628453c061538feddd5a"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/08-build-row0-x11-comparison.json",
+      "bytes": 588,
+      "sha256": "9925b1211832b856b2c51468846bc3b636190a1ed36e3f14d9082c7d4a41d71a"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/08-build-row0-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/08-build-row0-x11.png",
+      "bytes": 37040,
+      "sha256": "9d61ebecfb88d96c07578c733df54f6ed7bd935e6b1c7bf947f0c2db2db3cb2a"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/08-build-row0.png",
+      "bytes": 13289,
+      "sha256": "f58a1ebc808b4594920828294a8ccfcf1a4b097119637ff3f7c3e50a8238fa7e"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/09-build-row1-x11-comparison.json",
+      "bytes": 588,
+      "sha256": "d21c6d65d9c3c35a854c8936f0e7c93f168b8f1e3eadf94cb18621ec491844c1"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/09-build-row1-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/09-build-row1-x11.png",
+      "bytes": 37037,
+      "sha256": "b5886edc1c96c0a91666ebdca65593122fe6fe3e37c36f98092e979557771c89"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/09-build-row1.png",
+      "bytes": 13357,
+      "sha256": "6c63d6504be80abe16fa0c91ce04ff94c1c663f22141579deaeebd4ad8ad794c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/10-build-cursor-x11-comparison.json",
+      "bytes": 590,
+      "sha256": "3660b1ebcfe5af953036ebc8a301cf399803a5659011b6d7e47c2d827c8ba3b4"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/10-build-cursor-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/10-build-cursor-x11.png",
+      "bytes": 37025,
+      "sha256": "2ca7e4193821236293401e789be481751700e4b051d8f2b3110b0a770746cd34"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/10-build-cursor.png",
+      "bytes": 13310,
+      "sha256": "4a8691496f39e73cb55a59e366dca7130fcda5714e09fc8852d11c6b8cd8cbe7"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/11-order-return-x11-comparison.json",
+      "bytes": 590,
+      "sha256": "504e87a625296e446ed5363bf800ab391d493e44dd95c5bcb43a1a5c49e43474"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/11-order-return-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/11-order-return-x11.png",
+      "bytes": 40945,
+      "sha256": "fc3700c86f567d17a5dfc53d94220485fdea83811539276972588ff6f73633b9"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/11-order-return.png",
+      "bytes": 15484,
+      "sha256": "58438305231dd671bf0a1d5115d0181f8a7e55d6a6e193df7c92cbd13e58c7f9"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/12-command-x11-comparison.json",
+      "bytes": 585,
+      "sha256": "367b475fa73af45c3440cabf5c47ec9b325506dd6c7d204a3b894707e2383883"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/12-command-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/12-command-x11.png",
+      "bytes": 55253,
+      "sha256": "f54a90ae8594f2ad3d5106553694124764aed126a9d8f9c68ba46da9909f3093"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/12-command.png",
+      "bytes": 21336,
+      "sha256": "4a76c0b98e2565d0ecb0d052344240aa3fea186a63efda2f65a1e4b164cd7eeb"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/TRACE.json",
+      "bytes": 7182,
+      "sha256": "d5ec57d1410b6841135ff99b3ef1d720a10784947e59b153960991955ff7f599"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/game.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-closed-x11-comparison.json",
+      "bytes": 587,
+      "sha256": "b3c959a7a4359d52833c391f02f3476eb3feea778881c3ecd99fcb1fa1ca8fec"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-closed-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-closed-x11.png",
+      "bytes": 55262,
+      "sha256": "264b21361a216c288936cb0c0ca86799507346082184f113bd43f0132013a489"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-closed.png",
+      "bytes": 21340,
+      "sha256": "44ac67546eed271314a8664008ec3ed498f93e04e0770c585ce1229aefd27303"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-moved-x11-comparison.json",
+      "bytes": 586,
+      "sha256": "b1ff18d049b004dd29743416ed0df9d7a65a74311ce582327cbe376e0d1f86a0"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-moved-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-moved-x11.png",
+      "bytes": 56384,
+      "sha256": "9604cd0f4b478aa4d58256c38562b3a601d3215e36508946d08c6359472b1379"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-moved.png",
+      "bytes": 21708,
+      "sha256": "e20edf7ab4e96b6d121a8a6c57722109937fa227597141373dcb4dcecb974706"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-open-x11-comparison.json",
+      "bytes": 585,
+      "sha256": "b16a5a5c43cf99b3f8b1da932caa1c85e5bb14b6398b2ea4ede5f5e0b7e9fae2"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-open-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-open-x11.png",
+      "bytes": 56347,
+      "sha256": "6b15ae8c79d6a928dde821bb4bc1dc54dba25441700cf6fdd702d2e5644cb3ac"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-open.png",
+      "bytes": 21704,
+      "sha256": "07d8af57faf4bf8c3c9c68d8e5b59435b682b05407b41f87a1e8b46d3a7f3b43"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-selected-x11-comparison.json",
+      "bytes": 589,
+      "sha256": "4cf3fd1837962b2c925b7b33e9e17a33d7368987be4e92b83a631ce290d09efb"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-selected-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-selected-x11.png",
+      "bytes": 57925,
+      "sha256": "41643d87b1308039657dbbf2f239f41c1a5d1baf740779f05f454039de535d54"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/lists-selected.png",
+      "bytes": 21732,
+      "sha256": "66255607e27e845a1f1f363e1654319dca19d2638477530c415b6ab20f137a2b"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-closed-x11-comparison.json",
+      "bytes": 590,
+      "sha256": "fc118efc18384bea7299ff6535e8dbbf8a105314ecf18090114e50ca276ea4a9"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-closed-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-closed-x11.png",
+      "bytes": 55262,
+      "sha256": "264b21361a216c288936cb0c0ca86799507346082184f113bd43f0132013a489"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-closed.png",
+      "bytes": 21340,
+      "sha256": "44ac67546eed271314a8664008ec3ed498f93e04e0770c585ce1229aefd27303"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-moved-x11-comparison.json",
+      "bytes": 589,
+      "sha256": "fb9fa4737cf3d8f063f2a6900bb32915cb847b9e6b927a0887d4ff40e4b46899"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-moved-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-moved-x11.png",
+      "bytes": 55576,
+      "sha256": "3ed649643be2381c12f33d30ddd2e398f1bfb6e594e7ec6111500ee7fbf0a5be"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-moved.png",
+      "bytes": 21558,
+      "sha256": "15586a8aff031f69bd00fb7edd84b81dfaa878f6edfef65040f3538deeb33677"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-open-x11-comparison.json",
+      "bytes": 588,
+      "sha256": "ffd084e205a5ff0d29535805a0d412f918b7e34087ab61ad2f866d5f434c6295"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-open-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-open-x11.png",
+      "bytes": 55565,
+      "sha256": "e87bd0ae6b0a4672a417e50d29bda3999153111f09fa8c975c35f6694664b5c8"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-open.png",
+      "bytes": 21491,
+      "sha256": "ca618bf2bdcfb76640df55d090d08a6d7780e251622e19daf14d84207fc6e220"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-selected-x11-comparison.json",
+      "bytes": 592,
+      "sha256": "ecf90eb9bc39139eb26b55abdc67ee1bcb0e135aab9249c303bd79cf61b8829f"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-selected-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-selected-x11.png",
+      "bytes": 43222,
+      "sha256": "b847e5dc99c947c1b73c21c04fd80984a0d106fdb12ee1da775ae96db20b8463"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/strategy-selected.png",
+      "bytes": 16125,
+      "sha256": "652131e757701d06ad1ee0f6a7fb758f0c05acd94cda7ec582e2e60d8c187fe9"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-closed-x11-comparison.json",
+      "bytes": 588,
+      "sha256": "9cbf7db271e9d850b68cb7249f60cf47e6ee1cb1e087311c73dcf67b9d6f6e9c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-closed-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-closed-x11.png",
+      "bytes": 55262,
+      "sha256": "264b21361a216c288936cb0c0ca86799507346082184f113bd43f0132013a489"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-closed.png",
+      "bytes": 21340,
+      "sha256": "44ac67546eed271314a8664008ec3ed498f93e04e0770c585ce1229aefd27303"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-moved-x11-comparison.json",
+      "bytes": 587,
+      "sha256": "9063ec44e8205d6253062d3b58ec4cafa39ebdc9b97553b0557d3d008e2e1f73"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-moved-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-moved-x11.png",
+      "bytes": 56052,
+      "sha256": "8473773f6bba407ade5396994deb31a8cb68a840ca124901532b691cdb4d852e"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-moved.png",
+      "bytes": 21753,
+      "sha256": "3714f7f82d6f144a6cd8c3375309cd76c979d4ff62167dbc5128ce104d9fcf43"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-open-x11-comparison.json",
+      "bytes": 586,
+      "sha256": "1562f1fa30c1741bdf65c0466b838bd67448c622a5b91c60e60537d5518e9f87"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-open-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-open-x11.png",
+      "bytes": 56046,
+      "sha256": "32da569733b61704141a08aedc4edd419cf1829b36ff0e16dda9fa7086973022"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-open.png",
+      "bytes": 21723,
+      "sha256": "d02d47b33e8e2a770a1679be7314be69e3ab5dcd5345b43016626312020a95c6"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-selected-x11-comparison.json",
+      "bytes": 590,
+      "sha256": "b1b25964298279e7c302cc09109ae1395d6e0647a1510983b8bee906f4eb10f0"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-selected-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-selected-x11.png",
+      "bytes": 42698,
+      "sha256": "b144563b7be15b76ff5dd748045aeb5b7234ef5628b20cb7339ad26c6873537e"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-alliance/system-selected.png",
+      "bytes": 16971,
+      "sha256": "268cf5e22cd1737c915dcd3592dfad687a2432ed2c31dbcebb01961a0972fdd2"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/01-account-x11-comparison.json",
+      "bytes": 582,
+      "sha256": "eb52f2ae328b299ae4b6ca6124f87fd6dbbeeaf2f2b2865338be1914d1db995c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/01-account-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/01-account-x11.png",
+      "bytes": 84621,
+      "sha256": "e125fdc0a3297f33d47b9341022d263fc66f0e0f9c2dd8535ab46dca577d507d"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/01-account.png",
+      "bytes": 15046,
+      "sha256": "d54aaa412d44238b870bce216192f127c2516356e12dd96f3ebd92da6ce66641"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/02-budget-x11-comparison.json",
+      "bytes": 581,
+      "sha256": "a667832c97ad7bfeb9e9c8392a324f7487c0344993670c7e24a911a681cc8aff"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/02-budget-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/02-budget-x11.png",
+      "bytes": 90576,
+      "sha256": "65b854d0fdd1bfb231e103afa29c96a4d6fa8bb3dcba070f051ec8035a0df270"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/02-budget.png",
+      "bytes": 15413,
+      "sha256": "ffd46c403ac227106908987523a7da7fd7f7eabcc5371d1329f3d79216996ca3"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/03-budget-changed-x11-comparison.json",
+      "bytes": 589,
+      "sha256": "8195da0a2c3d781e329c13cc4581bccf2f04d25f1a4a6aa897f327d611da167d"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/03-budget-changed-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/03-budget-changed-x11.png",
+      "bytes": 90793,
+      "sha256": "f25a54789d64117fe6a4fa7537670b92876a91cc50410a03a7c454f6c7d42ec7"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/03-budget-changed.png",
+      "bytes": 15451,
+      "sha256": "72533a79fa01afc48f35f718366db2dbbd5a0ad8a4dd9aa11c2f302c71d3d63f"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/04-account-return-x11-comparison.json",
+      "bytes": 589,
+      "sha256": "7486cb0f5c792d30419c903b66f0dfba3fe16f39fdc7810a396bf43540595d9a"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/04-account-return-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/04-account-return-x11.png",
+      "bytes": 84912,
+      "sha256": "35996a47af861012bc7864f7a1dcc18d61b596f88cbdf5e34c05458b8b37b65f"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/04-account-return.png",
+      "bytes": 15069,
+      "sha256": "bbbe81f481eecb894931b4f0459806234b1ddb7a4b340748c89cd8f07f23178b"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/05-order-x11-comparison.json",
+      "bytes": 580,
+      "sha256": "0df346c1fcab1666390e57bedff1c103652d27dc59dac0d75469a12104f944ee"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/05-order-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/05-order-x11.png",
+      "bytes": 88154,
+      "sha256": "f648b5928db91dec3616009f92b06476c6f5ebf242e163e3c832b68993251af1"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/05-order.png",
+      "bytes": 15271,
+      "sha256": "718a3b6ba64c51f3143b3b7db3c0f88b4e28fe9383ac25fc2af3b2d4b2c0c2c2"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/06-order-cursor-x11-comparison.json",
+      "bytes": 587,
+      "sha256": "6e0437e4ffd6524ff1d4f45969f7b7d0ab36d5b672de344671b80fb4f0a20e7c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/06-order-cursor-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/06-order-cursor-x11.png",
+      "bytes": 88140,
+      "sha256": "1b964e8081a90302dd36e65e6f2b8b2c15c96a5b6e30707e6a7a15f512f3180c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/06-order-cursor.png",
+      "bytes": 15273,
+      "sha256": "490fa82de71985595eb1e82f4e352b4e82a920f5001118081573ce2a53e99df1"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/07-build-x11-comparison.json",
+      "bytes": 580,
+      "sha256": "cda26772e27a14da8821aa036871b7c54d1316c6a905c004ab076309353d3e74"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/07-build-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/07-build-x11.png",
+      "bytes": 75901,
+      "sha256": "4bce089e76e841972ae315fcfb6f4295864d200a41527308b6299dcabe44fe3b"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/07-build.png",
+      "bytes": 13096,
+      "sha256": "8945b8e42a2e184eaa32c03c77a9df36843c8de1b672cbd729ddbbdff14a3e5d"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/08-build-row0-x11-comparison.json",
+      "bytes": 585,
+      "sha256": "1e94a6d8d2f73e969f37dfd278cd2b9bef27eefe114843cf2efca486fbece1a6"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/08-build-row0-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/08-build-row0-x11.png",
+      "bytes": 75944,
+      "sha256": "01884fc500a6e6c27f35a737870ff79b8a72ff828b508931a6b6200fed9da047"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/08-build-row0.png",
+      "bytes": 13148,
+      "sha256": "224bef80878df454a7f6c4875d1b7cee45ec599c98993776a2446cf3a21b331d"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/09-build-row1-x11-comparison.json",
+      "bytes": 585,
+      "sha256": "595b32ff649b556195cd3953b4dd23bce3120d183871aab7e765a69245beb47b"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/09-build-row1-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/09-build-row1-x11.png",
+      "bytes": 75891,
+      "sha256": "29234c53768ea03faed7d8656ef4acc894a040b3e2d0144d46399a829049a37a"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/09-build-row1.png",
+      "bytes": 13183,
+      "sha256": "20e32c5bfd1f89d56640737befc9a3a090165133cba8d2e0b8748a83d21cd465"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/10-build-cursor-x11-comparison.json",
+      "bytes": 587,
+      "sha256": "b39219b49511b97b3e6c7afff167c85eb34a4d843094879c4553ec70e55ba784"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/10-build-cursor-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/10-build-cursor-x11.png",
+      "bytes": 75870,
+      "sha256": "978d3bfbda765c6177ba92e3d5bd3bee533018de14e77b5a30f7419df7780382"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/10-build-cursor.png",
+      "bytes": 13137,
+      "sha256": "b130991d54f93841132688f8fe299a7b4c30df40693408bd219aec2a174fa589"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/11-order-return-x11-comparison.json",
+      "bytes": 587,
+      "sha256": "7ba88725bb2d7d80ca152d187d9879219a3540beafad28ef6a14aa5b5ac21d5d"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/11-order-return-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/11-order-return-x11.png",
+      "bytes": 88083,
+      "sha256": "5cd4aa31a55361ab155619b4d2d9d4482bda7adb1093da249866dc4d77cdd06b"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/11-order-return.png",
+      "bytes": 15303,
+      "sha256": "a4ca6a740f0debf8c51d276e1f373d6e75f036bc3d8cea01d9e98864cf7ece9f"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/12-command-x11-comparison.json",
+      "bytes": 582,
+      "sha256": "3ffd49004a5dc9634a68e682032fd93febd94450c2fa03027ef20e9729ec6f3e"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/12-command-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/12-command-x11.png",
+      "bytes": 125111,
+      "sha256": "2828fce16ba724824db4e35d43b644c8889837df5709c5e16710b817784968dc"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/12-command.png",
+      "bytes": 21436,
+      "sha256": "61c0f9a0a19c2cdd3af3f05c3eaad9123fc1aa66ae834be513c40568cedb6f83"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/TRACE.json",
+      "bytes": 7185,
+      "sha256": "c0e59cc562deef5b24218221b6c0ccecdd15ff055220c4a6474b8b34b1aa8e1b"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/game.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-closed-x11-comparison.json",
+      "bytes": 584,
+      "sha256": "09e2f3ea48176c35bee759cece3ee6b984d36546b0bc394000c9dc8ad856ec46"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-closed-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-closed-x11.png",
+      "bytes": 125246,
+      "sha256": "b0f92f52413c794b28ac762acfbaec6cb189728874fe3646190a6d590de5953b"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-closed.png",
+      "bytes": 21440,
+      "sha256": "8c637759961cebf9a0cf4c58703e68b7a99d718274ca7f6401696edb64f8d887"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-moved-x11-comparison.json",
+      "bytes": 583,
+      "sha256": "3ffbb53682604d95e0e4874d2fb79e5ac5800d7b2da6a909f9daeeaa4936047d"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-moved-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-moved-x11.png",
+      "bytes": 126519,
+      "sha256": "1adcfaa421c48ad8cfb1efb6e6ac1f64562de4bf86a6f2954ca91ab7a81bb75f"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-moved.png",
+      "bytes": 21776,
+      "sha256": "28f6b666545e11fbce2bd012b44a2e7a0f4cabdcd2109981b768a43d5a253ccd"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-open-x11-comparison.json",
+      "bytes": 582,
+      "sha256": "e1fd8b675887bea446bdc8c73462c6a7460293e543558bc9ac669b3ec9f7caac"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-open-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-open-x11.png",
+      "bytes": 126299,
+      "sha256": "628f3a400b44a3370f8e99e11200da1c06c6781b6b3f19388cef61f41eb429e7"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-open.png",
+      "bytes": 21778,
+      "sha256": "2f72782c867f331ac7d2ffdc52328403acfe853e5dad9a091448bde34bded498"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-selected-x11-comparison.json",
+      "bytes": 586,
+      "sha256": "f4732c8cfb1f37a1aaa62758ad07460ee4f9da6df8ea2319a073c9771d3a1eb7"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-selected-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-selected-x11.png",
+      "bytes": 134895,
+      "sha256": "b99e5609c2b455b83b25655dbab43d5a8b01ff7b0c9fa0fa341d01903e8f106c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/lists-selected.png",
+      "bytes": 22326,
+      "sha256": "3c6474e7ef34c991fdbcf1d6005d1410c3bd6a824ef66b7f3d2a236e7925738c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-closed-x11-comparison.json",
+      "bytes": 587,
+      "sha256": "97787ea0a56bba907ffd3ec0ae216a15e11cf09720a64f809ad28aa3ab99671d"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-closed-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-closed-x11.png",
+      "bytes": 125246,
+      "sha256": "b0f92f52413c794b28ac762acfbaec6cb189728874fe3646190a6d590de5953b"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-closed.png",
+      "bytes": 21440,
+      "sha256": "8c637759961cebf9a0cf4c58703e68b7a99d718274ca7f6401696edb64f8d887"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-moved-x11-comparison.json",
+      "bytes": 586,
+      "sha256": "5ce5c7ce262a21e0094fbc2dcead8ed51741e4220636687576947c9db068e834"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-moved-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-moved-x11.png",
+      "bytes": 124564,
+      "sha256": "f8e293f5f561e6d89ddfb1fd2eec30f0d88bef1d567fce49cedf40bece487e07"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-moved.png",
+      "bytes": 21616,
+      "sha256": "07418c13adab9903abee55bcc0472d207a8a1f0030e892c75af3119c2617682e"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-open-x11-comparison.json",
+      "bytes": 585,
+      "sha256": "0244e6f44e5cf25feb4b523251a4d416000a07675786f890ed2f29c664950e95"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-open-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-open-x11.png",
+      "bytes": 124485,
+      "sha256": "419b1bedfd30c1ede91636322742194f029467ed0daf6256f7fd31fb6e037939"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-open.png",
+      "bytes": 21553,
+      "sha256": "427c6fe53ae13deb1d8f6389bc9f3dca7cc7201a0bc3ca724f0dbb05900427e7"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-selected-x11-comparison.json",
+      "bytes": 589,
+      "sha256": "667c4cacf0fdd9d24b82c4cd33116e345bec3daa9fa97d243b904afa5173fc11"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-selected-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-selected-x11.png",
+      "bytes": 94610,
+      "sha256": "ee07497a988c52a503f1ebbceb30ca1ae50c8d08997447e55c75fe83dd2a4667"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/strategy-selected.png",
+      "bytes": 16660,
+      "sha256": "cab3a62c73bd99896956d4d0860b384ad166c95bb442ff76eb44663cbecf1827"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-closed-x11-comparison.json",
+      "bytes": 585,
+      "sha256": "1076cce6085a6873bcdae1cdf923f14b248710a4ec4ae3310ea1fd7b61297703"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-closed-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-closed-x11.png",
+      "bytes": 125246,
+      "sha256": "b0f92f52413c794b28ac762acfbaec6cb189728874fe3646190a6d590de5953b"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-closed.png",
+      "bytes": 21440,
+      "sha256": "8c637759961cebf9a0cf4c58703e68b7a99d718274ca7f6401696edb64f8d887"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-moved-x11-comparison.json",
+      "bytes": 584,
+      "sha256": "344e8bfb23f761028f231aa65974491b0fb7bfb0a5dcba86f831fe9ef352ad2c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-moved-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-moved-x11.png",
+      "bytes": 126128,
+      "sha256": "bdf88e91edebdc76a97e69df0827a03fe70960b46fcbd7b5032a7f3751a548a4"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-moved.png",
+      "bytes": 21845,
+      "sha256": "db17a6fc6c30f75610b9f29812900109ed28803c541d50beaabce720ddca830d"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-open-x11-comparison.json",
+      "bytes": 583,
+      "sha256": "92c157260cd346cfa1d114a26d351b6a5c54b9b9c5ea98d389887d156237416c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-open-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-open-x11.png",
+      "bytes": 125992,
+      "sha256": "ccdbb31b460b0d7aad6b847cf1642df754c5c396e96c5553968391ae9362e6e3"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-open.png",
+      "bytes": 21823,
+      "sha256": "f7336813f265d51ade3a21a0572d8b2293b7e62490ea811258ef7085db979091"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-selected-x11-comparison.json",
+      "bytes": 587,
+      "sha256": "40928e708b75bbb7a6e6a679636f7f27aca92610d8637bf6c14456c38d2138c6"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-selected-x11-diff.png",
+      "bytes": 1885,
+      "sha256": "1610444d26adb3135e7e933dd44912044bb636728af59c70e614945278d3c622"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-selected-x11.png",
+      "bytes": 94296,
+      "sha256": "02784d8c0dec50565758b4aba48fb14608c440feb58296d5e224595757ebcf7f"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/gui-empire/system-selected.png",
+      "bytes": 17102,
+      "sha256": "2fab4d6379af8e33e294fe5246324f42c273a2a0461e7c189619bae93815200e"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/macos/ARCHITECTURES.txt",
+      "bytes": 70,
+      "sha256": "32e976f5b6439f804c61ef2ff6246d84054cafc829e4ff682d71060121aa2729"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/macos/BUILDINFO-amd64.txt",
+      "bytes": 541,
+      "sha256": "1ad0d16fabcda1fddddebb2a7aa1e31c74074bfe25fa95ffe843a6e79cec0f1d"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/macos/BUILDINFO-arm64.txt",
+      "bytes": 543,
+      "sha256": "ebb919c05baf35b259267d6bd3a6fc4bd26de9dbd2829ebc95e04b74dbdd96d8"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/macos/DEPENDENCIES-amd64.txt",
+      "bytes": 1270,
+      "sha256": "43a771308b3a771bd7141ee008e88bed24a2b99603eec9f1ee5827bf5e505e90"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/macos/DEPENDENCIES-arm64.txt",
+      "bytes": 1270,
+      "sha256": "d5e3c5c808a87846edd0859633c30981b5167c9397b161bae6328a40e521add7"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/macos/LOADCOMMANDS-amd64.txt",
+      "bytes": 16202,
+      "sha256": "d7612611d1469f1bea908b38068cc8e3dbcd31ece3677a808af9b3e4e02dec1f"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/macos/LOADCOMMANDS-arm64.txt",
+      "bytes": 16739,
+      "sha256": "294241fbb68c4826712a16c7ffc9a5726dce1dbd9e15149742e516367beb57e2"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/macos/MACOS.json",
+      "bytes": 3013,
+      "sha256": "6d8208054a342f2cc8212f09802ebc7ddec81753a257f439249bef634cb5e9ad"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/macos/TOOLCHAIN.txt",
+      "bytes": 260,
+      "sha256": "008fdadbc952043fc87bcf7b53d5cf9005baa307ddd166a718415b2e69608c66"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/SMOKE.json",
+      "bytes": 4711,
+      "sha256": "acc5cf062188c64729a19b01035a9da2c4ff45e88363db9f86a9c42b3543729c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/battle.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/battle.png",
+      "bytes": 6930,
+      "sha256": "bab57f2319e027682d421e8d93d9f135445dd0b68a66c9cb8d16dbaf0b8e33f4"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/battle.txt",
+      "bytes": 86,
+      "sha256": "9aebe6ee4c0477497ed1d509830f8d29abd366aad48228867c18413250f1b40c"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/input.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/input.png",
+      "bytes": 22458,
+      "sha256": "8943859bed3b82205b31bcc3e79c1720b7fbc48aef67591abe32496595a70b58"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/input.txt",
+      "bytes": 92,
+      "sha256": "b471fc827859a0a407c91bcbde61ac0dabbd2336c4dc0e9b228194f8f83abbe7"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/load.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/load.png",
+      "bytes": 9396,
+      "sha256": "3d319dd0f1f9f57ab870a28c25874ed5d808903666ba5db98d9bd1768e5f23f1"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/load.txt",
+      "bytes": 88,
+      "sha256": "a8766f27fa2cfce09030b8e26d2a21e81e044a07d0b53142c45696f9e9697b8e"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/main.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/main.png",
+      "bytes": 2003,
+      "sha256": "15397c4e236741f766b0d1d7c26bf865ac30a294f7ed91b531c5d4d9cf530035"
+    },
+    {
+      "path": "dist-all/v.0.1.3-20261006/smoke/windows/main.txt",
+      "bytes": 88,
+      "sha256": "b100be2f5104540755e8163a4adfe58a6067c9f28da90ee5270db7be305b9e0f"
+    }
+  ],
+  "tests": [
+    {
+      "path": "workplace/round120-before-tests.log",
+      "bytes": 328,
+      "sha256": "8a79b349eb2d4930892710100374db9fce6488a09f0347b3d86fb15ec5bded3a"
+    },
+    {
+      "path": "workplace/round120-target-tests.log",
+      "bytes": 51,
+      "sha256": "b4c239ac45392a20074ffac483208b25e34794e7d771477aa16a41686d9ee7c1"
+    },
+    {
+      "path": "workplace/round120-save-reload-tests.log",
+      "bytes": 51,
+      "sha256": "3216516e2bcc7f6f47f2dcd1b36519b69373a84fc49d4b77a4c7b42cc51654b8"
+    },
+    {
+      "path": "workplace/round120-settlement-tests.log",
+      "bytes": 51,
+      "sha256": "94197dc3b4312a86bd2bae59f2d4d0415cfa3cb6e9858e5bf9be99ed66dc09f4"
+    },
+    {
+      "path": "workplace/round120-standard-tests-final.log",
+      "bytes": 961,
+      "sha256": "5e0b9cad03436a088eb03719b422f75d07a647099b8e71d3cfaaa08350c213af"
+    },
+    {
+      "path": "workplace/round120-final-verify.log",
+      "bytes": 541,
+      "sha256": "1908df89645154094466c56671c97acf1a176de1131e4863fa18303460dba8de"
+    }
+  ],
+  "limitations": [
+    "Windows僅Wine入口抽驗，未真機",
+    "macOS雙架構封包核對，未真機",
+    "未新增人耳與戰場對拍",
+    "引擎來源tar為建置時快照；後補的保存讀回測試與註解另在本索引保存"
+  ],
+  "issue": "建立Issue被自動審核拒絕，未寫GitHub；使用者缺陷修正已完成，不影響封包",
+  "reproduction": [
+    {
+      "path": "workplace/input96-r120-old/00-main-x11.png",
+      "bytes": 8033,
+      "sha256": "2151c974f9227076ad185e0af5d99698dcc5879d6626c881562a7e8ae6796392"
+    },
+    {
+      "path": "workplace/input96-r120-old/01-account-x11.png",
+      "bytes": 84621,
+      "sha256": "e125fdc0a3297f33d47b9341022d263fc66f0e0f9c2dd8535ab46dca577d507d"
+    },
+    {
+      "path": "workplace/input96-r120-old/02-change-visible-x11.png",
+      "bytes": 84563,
+      "sha256": "c1290d6e58b341440cc695bf95b2935efffd69b07834ff21d599c233935a6c5c"
+    },
+    {
+      "path": "workplace/input96-r120-old/03-confirm-visible-x11.png",
+      "bytes": 84576,
+      "sha256": "a91321ec09ddaa0fa93530481b5b25eccf8dc2b248dbe09a846cf3d7e34972fd"
+    },
+    {
+      "path": "workplace/input96-r120-old/04-order-right-x11.png",
+      "bytes": 88272,
+      "sha256": "a664d1b0542470db9ef1d312f56be14e27c84fa01ed6b42b14b53c69386db947"
+    },
+    {
+      "path": "workplace/input96-r120-old/05-command-x11.png",
+      "bytes": 125260,
+      "sha256": "596d47655629d03a4abe690ba12e6b3e12a4aa291000b127323ff8fb3a69b052"
+    },
+    {
+      "path": "workplace/input96-r120-old/06-lists-open-x11.png",
+      "bytes": 126368,
+      "sha256": "9c40624eb9adee5d097086088448fe2c8958057e6a1b6bc704882230a6125a8d"
+    },
+    {
+      "path": "workplace/input96-r120-old/06-strategy-open-x11.png",
+      "bytes": 124521,
+      "sha256": "8193621524ef56e0124cba275732cf48405be2afcc0daa5ad7ceb90b3fa1d8a5"
+    },
+    {
+      "path": "workplace/input96-r120-old/06-system-open-x11.png",
+      "bytes": 126063,
+      "sha256": "b397897ef9055c82cbe7b4834eeec90991aa78ecdc661e8382e4f40080164508"
+    },
+    {
+      "path": "workplace/input96-r120-old/07-lists-moved-x11.png",
+      "bytes": 126368,
+      "sha256": "9c40624eb9adee5d097086088448fe2c8958057e6a1b6bc704882230a6125a8d"
+    },
+    {
+      "path": "workplace/input96-r120-old/07-strategy-moved-x11.png",
+      "bytes": 124521,
+      "sha256": "8193621524ef56e0124cba275732cf48405be2afcc0daa5ad7ceb90b3fa1d8a5"
+    },
+    {
+      "path": "workplace/input96-r120-old/07-system-moved-x11.png",
+      "bytes": 126063,
+      "sha256": "b397897ef9055c82cbe7b4834eeec90991aa78ecdc661e8382e4f40080164508"
+    },
+    {
+      "path": "workplace/input96-r120-old/TRACE.json",
+      "bytes": 5051,
+      "sha256": "7f6b9abda4b3f4ce34c5503a8facfc4ea1cb66c4fe5ca02199c75de5d6e5b530"
+    },
+    {
+      "path": "workplace/input96-r120-old/game.log",
+      "bytes": 314,
+      "sha256": "81c8ac73c52a5ea1b29b9b8a8844f77b02056c521f39fd4e6c12d1c063790d1a"
+    }
+  ]
+}

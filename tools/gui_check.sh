@@ -98,7 +98,7 @@ cases+=(
   "planarrow-updown|$plan_path; click 471 289; click 487 289"
   "planarrow-reopen|$plan_path; click 471 289; click 463 369; click 352 125; click 400 165"
 )
-budget_path="move 300 210; click; type 138; enter; click 432 300"
+budget_path="move 300 210; click; type 138; enter; click 432 340"
 cases+=("planarrow-budget-base|$budget_path")
 for entry in 'tax-up:471:289' 'tax-down:487:289' 'pct-up:471:329' 'pct-down:487:329'; do
   IFS=: read -r key x y <<<"$entry"

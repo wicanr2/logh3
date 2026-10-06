@@ -53,12 +53,12 @@ func TestAllianceBuildPlanMatchesOracle(t *testing.T) {
 	for _, c := range []byte{'1', '3', '8', '\r'} {
 		g.Key(c)
 	}
-	g.Click(448, 330)
+	g.Click(448, 370)
 	if g.State() != StateShipOrder {
 		t.Fatalf("點了主畫面的熱區之後在 %v", g.State())
 	}
 	matches(t, g, "shipAlly")
-	g.Click(448, 310)
+	g.Click(448, 350)
 	if g.State() != StateBuildPlan {
 		t.Fatalf("點了訂造報告的熱區之後在 %v", g.State())
 	}

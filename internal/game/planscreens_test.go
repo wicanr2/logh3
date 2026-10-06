@@ -186,7 +186,7 @@ func TestBudgetSettlementMatchesOriginal(t *testing.T) {
 				t.Fatal("月初報告已提前結算")
 			}
 			pre := append([]byte(nil), g.res.Planets.Data...)
-			g.Click(432, 300)
+			g.Click(432, 340) // 公開畫面座標；舊熱區使用原版mouse y=300。
 			if tc.name == "unchanged" {
 				matches(t, g, "planarrow-budget-base")
 			} else {

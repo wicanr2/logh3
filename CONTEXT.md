@@ -5,6 +5,14 @@
 
 ## 現況一覽
 
+**目前交付（2026-10-06，第120輪）**：`v.0.1.3-20261006` 三平台本機完整版已修復月初報告按鈕與下拉選單游標。會計／訂造／建造的舊熱區座標在公開輸入轉換40像素；訂造確認、建造結束及右鍵返回接線，三種選單及訂造／建造游標動態更新。兩陣營七列箭頭與百分比正式存讀回歸通過。
+
+新Linux完整版從片頭、主選單、防拷正常進入，實際X11操作帝國1.5倍及同盟2倍，各24張完整視窗與14745600原生邏輯像素零差。Windows新ZIP的Wine四入口、macOS雙架構／簽章頁／依賴／ZIP核對通過，兩平台仍未真機驗收。標準18套件13PASS／5無測試，275條核對零失效；遠端95項仍4 OPEN／91 CLOSED。原版規則、AI、音訊與存檔格式保持，未新增雙玩家命令或戰場差異驗證。
+
+入口[修正版交付107](docs/playtest/107-player-input-hotspots.md)、[121限定CONFORMED](docs/spec/121-player-input-hotspots.md)、[目前來源](docs/internals/data/player-input-hotspots.json)。前兩版交付與72秒影片保持；舊凍結來源按66d7ad7回查。本包含原版素材，只留本機，未建立tag或Release。GitHub Issue 建立被自動審核拒絕，完成草稿留workplace，尚未對外寫入。
+
+**第119輪勘誤**：下方v.0.1.2封包檢查與影片數值仍是當輪結果，但CLI抽驗沒有覆蓋玩家眼前的月初左鍵按鈕，不能當作正常操作通過。原封包已以正常X11重現40像素熱區錯位及固定選單游標，原因見[441](docs/re/441-player-input-hotspot-space.md)。請使用v.0.1.3試玩。
+
 **目前交付（2026-10-06，第119輪）**：`v.0.1.2-20261006` 三平台本機完整版與72秒新版推廣片已完成。macOS為Intel／Apple Silicon通用 `.app`，最低部署11.0，含完整資料、22首配樂、28段音效及固定音色庫；兩種AI啟動器齊備。Windows／Linux以同一版號重建。唯一交付根 `dist-all/v.0.1.2-20261006/`，入口[試玩106](docs/playtest/106-macos-and-retro-promo.md)及[本輪來源索引](docs/internals/data/macos-retro-promo.json)。README最前面已補有官方來源的作品故事。
 
 三平台ZIP與來源tar逐檔核對。macOS雙架構、最低版本、11個系統依賴、ARM ad-hoc全2994頁簽章與ZIP權限通過；沒有Developer ID或Apple公證，未在macOS真機執行。Linux11條公開CLI抽驗、Wine四條入口及標準18套件13PASS／5無測試通過。新Linux虛擬音效卡輸出16.033107秒，峰值0.042450、RMS0.004756；人耳及實體裝置仍待驗收。

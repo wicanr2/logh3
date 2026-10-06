@@ -85,8 +85,8 @@ func reachBuildPlan(t *testing.T) *Game {
 	for _, c := range []byte{'1', '3', '8', '\r'} {
 		g.Key(c)
 	}
-	g.Click(448, 330)
-	g.Click(448, 310)
+	g.Click(448, 370)
+	g.Click(448, 350)
 	if g.State() != StateBuildPlan || g.plan == nil {
 		t.Fatalf("走不到建造計劃，停在 %v", g.State())
 	}

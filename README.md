@@ -17,7 +17,7 @@
 
 ## 現在做到哪裡
 
-Windows、Linux與macOS完整版測試包及推廣影片見[試玩交付](docs/playtest/106-macos-and-retro-promo.md)。原版與強化戰略／戰術AI均已啟用；完整登陸分段演出、實機與人耳驗收仍待完成，不宣稱全遊戲原版一致。含原版素材的測試包只留本機。
+Windows、Linux與macOS最新版完整版見[滑鼠操作修正版交付](docs/playtest/107-player-input-hotspots.md)，推廣影片見[影片與平台說明](docs/playtest/106-macos-and-retro-promo.md)。月初報告按鈕與下拉選單游標已修正。原版與強化戰略／戰術AI均已啟用；完整登陸分段演出、實機與人耳驗收仍待完成，不宣稱全遊戲原版一致。含原版素材的測試包只留本機。
 
 下面八張都是 **remake 自己畫的**——Go 寫的繪製器 ＋ 玩家自備的原版素材
 （字型、星域圖、頭像），走正常玩家路徑，不是直接開畫面。每一張都與原版在

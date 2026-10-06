@@ -2466,7 +2466,7 @@ func (g *Game) click(x, y int) {
 		}
 	case StateMainGame:
 		// 可點區域是熱區清單，不是「視窗內就好」（`docs/re/09`）。
-		switch g.res.MainGame.HitTest(x, y) {
+		switch g.res.MainGame.HitTest(x, y-mouseDY) {
 		case "ship-order":
 			if g.res.ShipOrder != nil {
 				g.state = StateShipOrder
@@ -2479,16 +2479,21 @@ func (g *Game) click(x, y int) {
 			}
 		}
 	case StateShipOrder:
-		if g.res.ShipOrder.HitTest(x, y) == "build-plan" && g.res.BuildPlan != nil {
-			g.state = StateBuildPlan
-			p := g.thisPlan()
-			g.plan = &p
+		switch g.res.ShipOrder.HitTest(x, y-mouseDY) {
+		case "build-plan":
+			if g.res.BuildPlan != nil {
+				g.state = StateBuildPlan
+				p := g.thisPlan()
+				g.plan = &p
+			}
+		case "?": // 舊熱區索引1是畫面上的「確認」（規格121）。
+			g.rightClick(x, y)
 		}
 	case StateBuildPlan:
 		if g.plan == nil {
 			return
 		}
-		act := g.res.BuildPlan.HitTest(x, y)
+		act := g.res.BuildPlan.HitTest(x, y-mouseDY)
 		var row int
 		switch {
 		case strings.HasPrefix(act, "inc-"):
@@ -2506,6 +2511,8 @@ func (g *Game) click(x, y int) {
 				g.standbyScroll = 0
 				g.state = StateAdmiralList
 			}
+		case act == "commit":
+			g.state = StateShipOrder
 		}
 	case StateAdmiralDetail:
 		// 下緣三顆按鈕：經歷／中止／出擊（`docs/re/65`）。
@@ -2920,6 +2927,9 @@ func (g *Game) rightClick(x, y int) {
 		if g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
 		}
+	case StateBuildPlan:
+		// 箭頭已同步 g.pct；結束與右鍵都保留分配並返回訂造報告。
+		g.state = StateShipOrder
 	case StateVersusAccount:
 		// 對戰模式那張（`vs4`）也是兩下右鍵（收據 `vs5`），而**中間那張
 		// 就是船艦訂造報告**——收據 `vs7` 的畫面與 `vsreports` 在兩下
@@ -3341,11 +3351,13 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		g.drawReport(fb)
 		return fb
 	case StateShipOrder:
+		g.liveCursor(g.res.ShipOrder)
 		g.applyStaffFaces(g.res.ShipOrder)
 		fb, _ := screen.MainGameWithBoard(g.res.ShipOrder, g.res.Font, g.playerStarMap(),
 			g.res.Faces, g.res.Cursor, g.drawBoardPanels)
 		g.drawSpecStaff(fb, g.res.ShipOrder)
 		g.drawShipOrder(fb)
+		g.drawMonthlyCursor(fb)
 		return fb
 	case StateIntro, StateTitle:
 		return screen.IntroScreen(g.introPage)
@@ -3373,6 +3385,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		g.drawBudget(fb)
 		return fb
 	case StateBuildPlan:
+		g.liveCursor(g.res.BuildPlan)
 		g.applyStaffFaces(g.res.BuildPlan)
 		fb, _ := screen.MainGameWithBoard(g.res.BuildPlan, g.res.Font, g.playerStarMap(),
 			g.res.Faces, g.res.Cursor, g.drawBoardPanels)
@@ -3383,6 +3396,7 @@ func (g *Game) Frame() *gfx.Framebuffer {
 		if g.plan != nil {
 			screen.DrawBuildPlan(g.res.BuildPlan, fb, g.res.Font, g.plan)
 		}
+		g.drawMonthlyCursor(fb)
 		return fb
 	default:
 		if spec := g.commandSpec(g.state); spec != nil {
@@ -3734,11 +3748,12 @@ func (g *Game) refreshCapitalSnap() {
 // 點第 1 列開同盟的局，原版的游標低一列。提督詳細資料同理——
 // 規格量自點第 0 列那一次，點別列游標就在別處。
 //
-// 只對這兩張這樣做：疊上去那些畫面的規格還帶著游標的裁切範圍與
-// 「游標之後再畫一次」的補丁，那幾件事綁著當初那個位置，還沒模型化。
+// 只更新下列已接線畫面。121另核三種下拉選單、訂造與建造畫面沒有
+// 位置特定裁切或补丁，五者可直接採用目前滑鼠位置。
 func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 	switch g.state {
 	case StateCommandPhase, StateMainGame, StateAdmiralDetail, StateAdmiralBio,
+		StateCmdMenu, StateListMenu, StateSysMenu, StateShipOrder, StateBuildPlan,
 		StateStandbyAdmirals, StateAdmiralList,
 		StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick,
 		StateFleetMessage, StateFleetConfirm, StateFleetStandby, StateFleetOccupyWarn,

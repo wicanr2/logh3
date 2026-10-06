@@ -1,5 +1,10 @@
 # 原版內部構造參考
 
+第120輪：[規格121](../spec/121-player-input-hotspots.md)修正會計／訂造／建造畫面熱區與可見按鈕相差40像素、三種下拉選單游標停住。[研究441](../re/441-player-input-hotspot-space.md)保留歷史勘誤，[正常操作107](../playtest/107-player-input-hotspots.md)與[來源索引](data/player-input-hotspots.json)集中驗收與新封包。
+[本輪計畫](../goal/2026-10-06-player-input-round-120.md)沿使用者實際阻塞點，不重新開啟已完成的戰場對拍。
+[正式Game預期畫面](../../tools/scripts/player_input_model.go)、[真實X11輸入](../../tools/scripts/player_input_gui.py)、[視窗擷取與差分](../../tools/scripts/player_input_capture.go)沿正常入口核全圖；[大視窗容器入口](../../tools/player_input_display.sh)讓2倍畫面完整留在虛擬螢幕內。
+[交付身份核對器](../../tools/scripts/player_input_receipt.py)核三平台新包、48張正式包全圖及歷史提交中的凍結來源，不覆寫前兩版。
+
 第119輪：[macOS封包器](../../tools/scripts/local_test_macos_package.py)核對通用Mach-O、Apple Silicon程式頁簽章、資產及ZIP權限。
 [交付核對與身份保存器](../../tools/scripts/macos_promo_finalize.py)集中三平台、72秒影片與抽驗，保存[本輪來源](data/macos-retro-promo.json)，前版凍結來源保持。
 [影片素材與分鏡](../../tools/scripts/retro_promo_prepare.py)沿既有真實收據，不新增戰場差異驗證。
