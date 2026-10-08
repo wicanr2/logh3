@@ -1,0 +1,5 @@
+[
+  {"name": "除以零不回全1", "find": "gin3_uldivmod(((uint32_t)ax << 16) | bx, ((uint32_t)cx << 16) | dx, &q, &r);", "replace": "if (cx == 0 && dx == 0) { q = 0; r = 0; } else gin3_uldivmod(((uint32_t)ax << 16) | bx, ((uint32_t)cx << 16) | dx, &q, &r);"},
+  {"name": "餘數改回被除數", "find": "return ((uint64_t)q << 32) | r; /* AX:BX:CX:DX */", "replace": "return ((uint64_t)q << 32) | (r & 0xFFFFu);"},
+  {"name": "商少1", "find": "return ((uint64_t)q << 32) | r; /* AX:BX:CX:DX */", "replace": "return ((uint64_t)(q - (r != 0 && (q & 1))) << 32) | r;"}
+]

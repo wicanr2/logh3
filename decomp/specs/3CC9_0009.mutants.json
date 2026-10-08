@@ -1,0 +1,5 @@
+[
+  {"name": "漏掉高低交叉項", "find": "return gin3_lmul(a, b); /* AX<<16 | BX */", "replace": "return gin3_lmul(a & 0xFFFFu, b & 0xFFFFu);"},
+  {"name": "改成有號高位", "find": "return gin3_lmul(a, b); /* AX<<16 | BX */", "replace": "return gin3_lmul(a, b) + (ax == 0x8000u);"},
+  {"name": "交換運算元高低字", "find": "uint32_t b = ((uint32_t)cx << 16) | dx;", "replace": "uint32_t b = ((uint32_t)dx << 16) | cx;"}
+]

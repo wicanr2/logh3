@@ -1,0 +1,4 @@
+[
+  {"name": "商不依符號補回", "find": "return ((uint64_t)q << 32) | r; /* AX:BX:CX:DX */", "replace": "return ((uint64_t)(((ax ^ cx) & 0x8000u) ? (0u - q) : q) << 32) | r;"},
+  {"name": "改用無號除法", "find": "gin3_ldivmod(", "replace": "gin3_uldivmod("}
+]

@@ -1,0 +1,2 @@
+golem_linear	level	source	evidence
+3cc99	diff-tested	decomp/src/f_3CC9_0009.c	decomp/specs/3CC9_0009.json

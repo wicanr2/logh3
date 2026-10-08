@@ -1,0 +1,5 @@
+[
+  {"name": "遮罩改0xFFFF", "find": "return (uint16_t)((seed >> 16) & 0x7FFFu);", "replace": "return (uint16_t)((seed >> 16) & 0xFFFFu);"},
+  {"name": "加數改3038", "find": "+ 0x3039u;", "replace": "+ 0x3038u;"},
+  {"name": "不寫回種子", "find": "wr32(m, DS(0x94DC), seed);", "replace": ""}
+]

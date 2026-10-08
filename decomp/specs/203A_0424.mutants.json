@@ -1,0 +1,7 @@
+[
+  {"name": "商不截成16位元", "find": "uint16_t low = (uint16_t)gin3_uldiv(product, 100);", "replace": "uint32_t low = gin3_uldiv(product, 100);"},
+  {"name": "艘數合計不回繞", "find": "main_ships = (uint16_t)(main_ships + rd16(m, LIN(pool_seg, ship + 8)));", "replace": "main_ships = main_ships + rd16(m, LIN(pool_seg, ship + 8)) + (main_ships > 60000);"},
+  {"name": "加250改251", "find": "return (uint16_t)(low / 15u + 250u);", "replace": "return (uint16_t)(low / 15u + 251u);"},
+  {"name": "只算艦種0", "find": "if (kind == 0 || kind == 1) {", "replace": "if (kind == 0) {"},
+  {"name": "池索引乘77", "find": "(uint16_t)(index * 0x4Eu)", "replace": "(uint16_t)(index * 0x4Du)"}
+]

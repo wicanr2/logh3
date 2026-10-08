@@ -1,0 +1,2 @@
+golem_linear	level	source	evidence
+3cd5c	diff-tested	decomp/src/f_3CD5_000C.c	decomp/specs/3CD5_000C.json

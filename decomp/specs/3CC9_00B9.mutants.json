@@ -1,0 +1,5 @@
+[
+  {"name": "低位字比較改有號", "find": "if (bx > dx)\n        return 0;", "replace": "if ((int16_t)bx > (int16_t)dx)\n        return 0;"},
+  {"name": "高位字不同也當成比低位字", "find": "if (ax != cx) {", "replace": "if (ax != cx && ax != 0) {"},
+  {"name": "溢位旗標漏掉", "find": "if (((ax ^ cx) & (ax ^ r)) & 0x8000u)\n            f |= F_OF;", "replace": ""}
+]
