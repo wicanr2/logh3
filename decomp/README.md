@@ -23,8 +23,8 @@
 
 | 路徑 | 內容 |
 |---|---|
-| `src/f_<SEG>_<OFF>.c` | C 參考實作。一個函式一個檔，用 `GIN3_REGISTER` 自我登記。`gin3ps_*.c` 是試點的平坦記憶體版本 |
-| `include/` | `gin3_mem.h`（1 MB 記憶體模型）、`gin3_reg.h`（登記）、`gin3_rt.h`（runtime 數學語意）、`gin3_model.h`（試點用） |
+| `src/f_<SEG>_<OFF>.c` | C 參考實作。一個函式一個檔，用 `GIN3_REGISTER` 自我登記。 |
+| `include/` | `gin3_mem.h`（1 MB 記憶體模型）、`gin3_reg.h`（登記）、`gin3_rt.h`（runtime 數學語意） |
 | `specs/<SEG_OFF>.json` | 差異測試描述檔；`<SEG_OFF>.mutants.json` 是該函式的突變清單 |
 | `harness/` | 在 dosgolem module 內執行的 Go 探針。獨立 `go.mod`，主 module 不會編譯它 |
 | `test/` | 讀向量檔、用 C 版重算並比對的程式 |

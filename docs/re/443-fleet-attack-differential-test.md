@@ -73,3 +73,12 @@ decomp/tools/fleet_attack_run.sh <新批次名> 5000
 LOGH3_DECOMP_FLEET_ATTACK_VECTORS=/src/workplace/decomp/fleet_attack/<批次名>/vectors.txt \
   tools/go.sh test ./internal/rules -run TestStrategicAttackAgainstOriginalVectors -v -count=1
 ```
+
+## 後續（2026-10-09）
+
+上面的探針與比對程式是這支函式專用的版本。通用框架（描述檔、讀取集導向的突變、覆蓋率回饋、全部副作用比對、突變對照）見
+[`445`](445-differential-test-framework.md)，專用版本的檔案（`fleet_attack_probe.go`、`check_fleet_attack.c`、`fleet_attack_run.sh`、
+`check_vectors.sh`、平坦記憶體版 C 檔）已從工作樹刪除，內容保存在 git 歷史（commit `41f9b91` 與 `c6aa066`）。
+新框架下 `203A:0424` 的結果：556 案、指令覆蓋 64/64、5 個突變全被抓到。remake 的重放測試改用新向量：
+`LOGH3_DECOMP_FLEET_ATTACK=<向量檔> tools/go.sh test ./internal/rules -run TestStrategicAttackAgainstOriginalVectors`，
+結果相同：溢位區以外一律相符，溢位區內全部不同。

@@ -1,8 +1,7 @@
 /*
  * GIN3PS.EXE 203A:0424  戰略艦隊攻擊力（記憶體模型版）
  *
- * 語意與 gin3ps_203A_0424_fleet_attack.c 相同（docs/re/146、docs/internals/66），
- * 這一版直接讀寫 1 MB 記憶體，指標以 (off, seg) 傳入，供通用差異測試使用。
+ * 語意見 docs/re/146、docs/internals/66。直接讀寫 1 MB 記憶體，指標以 (off, seg) 傳入，供通用差異測試使用。
  *
  * 原版：far 呼叫，一個參數＝艦隊記錄的 far 指標，回 AX。
  * 艦艇池基底在 ds:CFB4（位移）與 ds:CFB6（段）；每次迴圈都重讀，因為原版就是這樣寫。

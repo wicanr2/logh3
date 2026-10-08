@@ -1,0 +1,13 @@
+[
+  {"name": "門檻比較改嚴格大於", "find": "if (next >= econ) {", "replace": "if (next > econ) {"},
+  {"name": "防衛3000改3001", "find": "< 0x0BB8u)", "replace": "< 0x0BB9u)"},
+  {"name": "防衛3000改2999", "find": "< 0x0BB8u)", "replace": "< 0x0BB7u)"},
+  {"name": "乘3改乘2", "find": "(uint16_t)(rate * 3u)", "replace": "(uint16_t)(rate * 2u)"},
+  {"name": "右移改2位", "find": ">> 1);", "replace": ">> 2);"},
+  {"name": "乘積不截成16位元", "find": "rate = (uint16_t)((uint16_t)(rate * 3u) >> 1);", "replace": "rate = (uint16_t)((rate * 3u) >> 1);"},
+  {"name": "只比低字", "find": "uint32_t next = (next_hi << 16) | next_lo;", "replace": "uint32_t next = next_lo;"},
+  {"name": "經濟力只用低字", "find": "uint32_t econ = (econ_hi << 16) | econ_lo;", "replace": "uint32_t econ = econ_lo;"},
+  {"name": "改讀本列門檻", "find": "DS((uint16_t)(row + 6))", "replace": "DS((uint16_t)(row + 0))"},
+  {"name": "成長率位移改+6", "find": "rate = rd16(m, DS((uint16_t)(row + 4)));", "replace": "rate = rd16(m, DS((uint16_t)(row + 6)));"},
+  {"name": "改讀+0x14", "find": "planet_off + 0x16", "replace": "planet_off + 0x14"}
+]

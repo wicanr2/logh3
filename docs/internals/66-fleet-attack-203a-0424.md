@@ -1,7 +1,7 @@
 # 66：戰略艦隊攻擊力 `203A:0424` 的精確語意
 
 證據等級：confirmed。反組譯逐行讀出，並經 5006 案差異測試（[`docs/re/443`](../re/443-fleet-attack-differential-test.md)）。
-C 參考實作在 `decomp/src/gin3ps_203A_0424_fleet_attack.c`。
+C 參考實作在 `decomp/src/f_203A_0424.c`。
 
 ## 呼叫
 
