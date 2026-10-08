@@ -1,0 +1,10 @@
+[
+  {"name": "x與y對調", "find": "uint16_t si = (uint16_t)(off + x + (uint16_t)(y << 7));", "replace": "uint16_t si = (uint16_t)(off + y + (uint16_t)(x << 7));"},
+  {"name": "列位移6", "find": "(uint16_t)(y << 7)", "replace": "(uint16_t)(y << 6)"},
+  {"name": "列位移8", "find": "(uint16_t)(y << 7)", "replace": "(uint16_t)(y << 8)"},
+  {"name": "x只取低位元組", "find": "uint16_t si = (uint16_t)(off + x + (uint16_t)(y << 7));", "replace": "uint16_t si = (uint16_t)(off + (uint8_t)x + (uint16_t)(y << 7));"},
+  {"name": "位移不回繞（線性位址）", "find": "return rd8(m, LIN(seg, si));", "replace": "return rd8(m, ((uint32_t)seg << 4) + (uint32_t)off + (uint32_t)x + ((uint32_t)y << 7));"},
+  {"name": "段取DS", "find": "return rd8(m, LIN(seg, si));", "replace": "return rd8(m, LIN(GIN3_DS, si));"},
+  {"name": "忽略地圖位移變數", "find": "uint16_t off = rd16(m, DS(0x3C1A));", "replace": "uint16_t off = 0;"},
+  {"name": "讀下一格", "find": "return rd8(m, LIN(seg, si));", "replace": "return (uint8_t)rd16(m, LIN(seg, si + 1u));"}
+]

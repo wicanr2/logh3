@@ -1,0 +1,15 @@
+[
+  {"name": "提督表步距27", "find": "* 0x1Cu)", "replace": "* 0x1Bu)"},
+  {"name": "能力讀+0x0A", "find": "DS(adm + 0x0Bu)", "replace": "DS(adm + 0x0Au)"},
+  {"name": "乘數基準199", "find": "0xC8u - rd8", "replace": "0xC7u - rd8"},
+  {"name": "乘數零延伸", "find": "(uint32_t)(int32_t)(int16_t)factor", "replace": "(uint32_t)factor"},
+  {"name": "損失有號延伸", "find": "gin3_lmul(lost, ", "replace": "gin3_lmul((uint32_t)(int32_t)(int16_t)lost, "},
+  {"name": "除數99", "find": "gin3_uldiv(t, 100u)", "replace": "gin3_uldiv(t, 99u)"},
+  {"name": "商不截成16位元", "find": "uint16_t q = (uint16_t)gin3_uldiv(t, 100u);", "replace": "uint32_t q = gin3_uldiv(t, 100u);"},
+  {"name": "不夾上限", "find": "if (q > full)", "replace": "if (0)"},
+  {"name": "夾上限改有號比較", "find": "if (q > full)", "replace": "if ((int16_t)q > (int16_t)full)"},
+  {"name": "損失反向", "find": "full - rd16(m, LIN(ship_seg, ship_off + 8u))", "replace": "rd16(m, LIN(ship_seg, ship_off + 8u)) - full"},
+  {"name": "百分比乘101", "find": "100u), full2)", "replace": "101u), full2)"},
+  {"name": "寫word", "find": "wr8(m, LIN(ship_seg, ship_off + 6u), (uint8_t)v);", "replace": "wr16(m, LIN(ship_seg, ship_off + 6u), (uint16_t)v);"},
+  {"name": "回傳只取低位元組", "find": "return (uint16_t)v;", "replace": "return (uint8_t)v;"}
+]

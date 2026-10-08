@@ -1,0 +1,13 @@
+[
+  {"name": "單格封包不遮bit7", "find": "val = (uint8_t)(rd8(m, LIN(src_seg, src_off)) & 0x7Fu);", "replace": "val = (uint8_t)(rd8(m, LIN(src_seg, src_off)) & 0xFFu);"},
+  {"name": "旗標位元改bit6", "find": "if (rd8(m, LIN(src_seg, src_off)) & 0x80u) {", "replace": "if (rd8(m, LIN(src_seg, src_off)) & 0x40u) {"},
+  {"name": "單格封包次數2", "find": "cnt = 1;", "replace": "cnt = 2;"},
+  {"name": "重複次數多1", "find": "cnt = rd8(m, LIN(src_seg, src_off));", "replace": "cnt = (uint8_t)(rd8(m, LIN(src_seg, src_off)) + 1u);"},
+  {"name": "次數0不回繞成256", "find": "cnt = (uint8_t)(cnt - 1u);", "replace": "cnt = cnt ? (uint8_t)(cnt - 1u) : 0;"},
+  {"name": "列數0x65", "find": "row < 0x66u", "replace": "row < 0x65u"},
+  {"name": "次數跨列重置", "find": "for (row = 0; row < 0x66u; row++) {", "replace": "for (row = 0; row < 0x66u; row++, cnt = 0) {"},
+  {"name": "目的地位移不回繞", "find": "dst_off = (uint16_t)(dst_off + 1u);", "replace": "dst_seg = (uint16_t)(dst_seg + (dst_off == 0xFFFFu ? 0x1000u : 0u)); dst_off = (uint16_t)(dst_off + 1u);"},
+  {"name": "來源位移不回繞（單格封包）", "find": "val = (uint8_t)(rd8(m, LIN(src_seg, src_off)) & 0x7Fu);\n                    src_off = (uint16_t)(src_off + 1u);", "replace": "val = (uint8_t)(rd8(m, LIN(src_seg, src_off)) & 0x7Fu);\n                    src_seg = (uint16_t)(src_seg + (src_off == 0xFFFFu ? 0x1000u : 0u)); src_off = (uint16_t)(src_off + 1u);"},
+  {"name": "來源位移不回繞（重複封包的值）", "find": "val = rd8(m, LIN(src_seg, src_off));\n                    src_off = (uint16_t)(src_off + 1u);", "replace": "val = rd8(m, LIN(src_seg, src_off));\n                    src_seg = (uint16_t)(src_seg + (src_off == 0xFFFFu ? 0x1000u : 0u)); src_off = (uint16_t)(src_off + 1u);"},
+  {"name": "來源位移不回繞（重複封包的次數）", "find": "cnt = rd8(m, LIN(src_seg, src_off));\n                    src_off = (uint16_t)(src_off + 1u);", "replace": "cnt = rd8(m, LIN(src_seg, src_off));\n                    src_seg = (uint16_t)(src_seg + (src_off == 0xFFFFu ? 0x1000u : 0u)); src_off = (uint16_t)(src_off + 1u);"}
+]

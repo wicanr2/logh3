@@ -1,0 +1,13 @@
+[
+  {"name": "比較反向", "find": "if (cell == (uint8_t)tile) {", "replace": "if (cell != (uint8_t)tile) {"},
+  {"name": "比較整個word", "find": "if (cell == (uint8_t)tile) {", "replace": "if (cell == tile) {"},
+  {"name": "欄位移3", "find": "(uint16_t)(col << 4)", "replace": "(uint16_t)(col << 3)"},
+  {"name": "列乘21", "find": "(uint16_t)(row * 20u)", "replace": "(uint16_t)(row * 21u)"},
+  {"name": "列上界0x65", "find": "row < 0x66u", "replace": "row < 0x65u"},
+  {"name": "欄上界0x7F", "find": "col < 0x80u", "replace": "col < 0x7Fu"},
+  {"name": "來源位移不回繞", "find": "src_off = (uint16_t)(src_off + 1u);", "replace": "src_seg = (uint16_t)(src_seg + (src_off == 0xFFFFu ? 0x1000u : 0u)); src_off = (uint16_t)(src_off + 1u);"},
+  {"name": "x與y欄位對調", "find": "                wr16(m, LIN(dst_seg, dst_off), (uint16_t)(col << 4));\n                dst_off = (uint16_t)(dst_off + 2u);\n                wr16(m, LIN(dst_seg, dst_off), (uint16_t)(row * 20u));\n", "replace": "                wr16(m, LIN(dst_seg, dst_off), (uint16_t)(row * 20u));\n                dst_off = (uint16_t)(dst_off + 2u);\n                wr16(m, LIN(dst_seg, dst_off), (uint16_t)(col << 4));\n"},
+  {"name": "遵守第三個參數的上限", "find": "if (cell == (uint8_t)tile) {", "replace": "if (cell == (uint8_t)tile && count < max_unused) {"},
+  {"name": "回傳只取低位元組", "find": "return count;", "replace": "return (uint8_t)count;"},
+  {"name": "輸出指標每格只進1", "find": "dst_off = (uint16_t)(dst_off + 2u);\n                wr16", "replace": "dst_off = (uint16_t)(dst_off + 1u);\n                wr16"}
+]

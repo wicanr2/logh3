@@ -1,0 +1,16 @@
+[
+  {"name": "星域比較改成小於", "find": "if (rd8(m, DS(fleet + 6u)) != side)", "replace": "if (rd8(m, DS(fleet + 6u)) < side)"},
+  {"name": "空槽判斷改成>=0xFE", "find": "if (rd8(m, DS(fleet + 4u)) == 0xFFu)", "replace": "if (rd8(m, DS(fleet + 4u)) >= 0xFEu)"},
+  {"name": "艦隊只掃31筆", "find": "idx < 0x20u", "replace": "idx < 0x1Fu"},
+  {"name": "艦艇池索引步距2", "find": "slot = (uint16_t)(slot + 4u);", "replace": "slot = (uint16_t)(slot + 2u);"},
+  {"name": "艦艇池索引起點+0x12", "find": "slot = (uint16_t)(fleet + 0x10u);", "replace": "slot = (uint16_t)(fleet + 0x12u);"},
+  {"name": "尾巴讀+0x3A", "find": "wr16(m, DS(words_ptr), rd16(m, DS(fleet + 0x38u)));", "replace": "wr16(m, DS(words_ptr), rd16(m, DS(fleet + 0x3Au)));"},
+  {"name": "組數迴圈多一圈", "find": "j < rd8(m, DS(fleet + 0x0Fu))", "replace": "j <= rd8(m, DS(fleet + 0x0Fu))"},
+  {"name": "艦隊清單寫idx加1", "find": "wr8(m, DS(bytes_ptr), (uint8_t)idx);", "replace": "wr8(m, DS(bytes_ptr), (uint8_t)(idx + 1u));"},
+  {"name": "尾巴不計數", "find": "        wr16(m, DS(0x9896), (uint16_t)(rd16(m, DS(0x9896)) + 1u));\n    }\n}", "replace": "    }\n}"},
+  {"name": "艦隊清單起點9899", "find": "uint16_t bytes_ptr = 0x9898u;", "replace": "uint16_t bytes_ptr = 0x9899u;"},
+  {"name": "艦艇池清單起點98BC", "find": "uint16_t words_ptr = 0x98BAu;", "replace": "uint16_t words_ptr = 0x98BCu;"},
+  {"name": "星域取整個word", "find": "uint8_t side = (uint8_t)side_word;", "replace": "uint16_t side = side_word;"},
+  {"name": "不清計數9894", "find": "    wr16(m, DS(0x9894), 0);\n", "replace": ""},
+  {"name": "不清計數9896", "find": "    wr16(m, DS(0x9896), 0);\n", "replace": ""}
+]

@@ -1,0 +1,50 @@
+{
+  "id": "1261_03FB",
+  "entry": "1261:03FB",
+  "conv": "far",
+  "ret": "ax",
+  "size": 163,
+  "code_sha256_16": "2909f030fb8a9744",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "分隊士氣百分比。基底：fcmd-base.state（戰略層）；艦隊 far 指標取艦隊表，艦艇 far 指標取艦艇池（ds:CFB4 所指，352 筆 x 78 bytes）。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32},
+    "ship": {"base": "ptr:CFB4:CFB6", "stride": 78, "count": 352}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "ship", "kind": "farptr", "gen": {"table": "ship"}}
+  ],
+  "seeds": [
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "8A"}, {"addr": "668B:000A", "hex": "8F05"}, {"addr": "668B:000C", "hex": "B80B"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "8A"}, {"addr": "668B:000A", "hex": "B80B"}, {"addr": "668B:000C", "hex": "B80B"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "8A"}, {"addr": "668B:000A", "hex": "0000"}, {"addr": "668B:000C", "hex": "B80B"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "00"}, {"addr": "668B:000A", "hex": "0000"}, {"addr": "668B:000C", "hex": "0000"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "64"}, {"addr": "668B:000A", "hex": "0500"}, {"addr": "668B:000C", "hex": "0000"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "3E"}, {"addr": "668B:000A", "hex": "2C01"}, {"addr": "668B:000C", "hex": "6400"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "FF"}, {"addr": "668B:000A", "hex": "E803"}, {"addr": "668B:000C", "hex": "B80B"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "C9"}, {"addr": "668B:000A", "hex": "E803"}, {"addr": "668B:000C", "hex": "B80B"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "C8"}, {"addr": "668B:000A", "hex": "E803"}, {"addr": "668B:000C", "hex": "B80B"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "C7"}, {"addr": "668B:000A", "hex": "E803"}, {"addr": "668B:000C", "hex": "B80B"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "00"}, {"addr": "668B:000A", "hex": "0000"}, {"addr": "668B:000C", "hex": "6400"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "00"}, {"addr": "668B:000A", "hex": "3200"}, {"addr": "668B:000C", "hex": "6400"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "00"}, {"addr": "668B:000A", "hex": "3300"}, {"addr": "668B:000C", "hex": "6400"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "64"}, {"addr": "668B:000A", "hex": "0100"}, {"addr": "668B:000C", "hex": "6400"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "00"}, {"addr": "668B:000A", "hex": "FA7F"}, {"addr": "668B:000C", "hex": "FFFF"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "00"}, {"addr": "668B:000A", "hex": "0000"}, {"addr": "668B:000C", "hex": "FFFF"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "00"}, {"addr": "668B:000A", "hex": "0100"}, {"addr": "668B:000C", "hex": "FFFF"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "01"}, {"addr": "668B:000A", "hex": "0000"}, {"addr": "668B:000C", "hex": "0100"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "3E"}, {"addr": "668B:000A", "hex": "6400"}, {"addr": "668B:000C", "hex": "FF00"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 392, 26251], "pokes": [{"addr": "ds:C078", "hex": "03"}, {"addr": "ds:B7DB", "hex": "4D"}, {"addr": "668B:0190", "hex": "DC05"}, {"addr": "668B:0192", "hex": "B80B"}, {"addr": "668B:018E", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "FF"}, {"addr": "ds:D36B", "hex": "28"}, {"addr": "668B:000A", "hex": "6400"}, {"addr": "668B:000C", "hex": "0903"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "96"}, {"addr": "668B:000A", "hex": "0040"}, {"addr": "668B:000C", "hex": "0080"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "96"}, {"addr": "668B:000A", "hex": "0000"}, {"addr": "668B:000C", "hex": "0180"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "64"}, {"addr": "668B:000A", "hex": "0000"}, {"addr": "668B:000C", "hex": "FA00"}, {"addr": "668B:0008", "hex": "AA"}]},
+    {"args": [49268, 21683, 2, 26251], "pokes": [{"addr": "ds:C078", "hex": "00"}, {"addr": "ds:B787", "hex": "00"}, {"addr": "668B:000A", "hex": "0200"}, {"addr": "668B:000C", "hex": "0300"}, {"addr": "668B:0008", "hex": "AA"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

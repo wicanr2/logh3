@@ -1,0 +1,2 @@
+golem_linear	level	source	evidence
+1600c	diff-tested	decomp/src/f_1588_078C.c	decomp/specs/1588_078C.json

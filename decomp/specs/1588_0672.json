@@ -1,0 +1,28 @@
+{
+  "id": "1588_0672",
+  "entry": "1588:0672",
+  "conv": "far",
+  "ret": "pack:al",
+  "size": 33,
+  "code_sha256_16": "59a74cd91cd42c68",
+  "base_state": "/src/workplace/fcmd/fcmd-standby.state",
+  "base_state_sha256": "2f07118746ba249290a5f5e3de71020090a10c58b8072f84b110e1c1c95f2394",
+  "note": "讀戰場地圖一格。基底：fcmd-standby.state（ds:3C1A／3C1C 指向已載入的 128x102 地圖）。",
+  "args": [
+    {"name": "x", "kind": "word", "gen": {"choices": [0, 1, 2, 63, 64, 126, 127, 128, 129, 255, 256, 32640, 65535], "also_random": true}},
+    {"name": "y", "kind": "word", "gen": {"choices": [0, 1, 2, 50, 100, 101, 102, 103, 255, 256, 511, 512, 32767, 32768, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0, 0]},
+    {"args": [127, 101]},
+    {"args": [3, 7]},
+    {"args": [127, 1], "pokes": [{"addr": "ds:3C1A", "hex": "80FF"}, {"addr": "79B0:007F", "hex": "A5"}, {"addr": "89B0:007F", "hex": "5A"}]},
+    {"args": [3, 512], "pokes": [{"addr": "79B0:0013", "hex": "C3"}, {"addr": "89B0:0013", "hex": "3C"}]},
+    {"args": [65520, 0], "pokes": [{"addr": "79B0:0000", "hex": "11"}, {"addr": "89B0:0000", "hex": "22"}]},
+    {"args": [1, 1], "pokes": [{"addr": "ds:3C1C", "hex": "0080"}, {"addr": "8000:0091", "hex": "77"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

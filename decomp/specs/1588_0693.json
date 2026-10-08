@@ -1,0 +1,18 @@
+{
+  "id": "1588_0693",
+  "entry": "1588:0693",
+  "conv": "far",
+  "ret": "pack:al",
+  "size": 16,
+  "code_sha256_16": "9982c4349828a497",
+  "base_state": "/src/workplace/fcmd/fcmd-standby.state",
+  "base_state_sha256": "2f07118746ba249290a5f5e3de71020090a10c58b8072f84b110e1c1c95f2394",
+  "note": "ATTR.DAT 圖塊遮罩查表。基底：fcmd-standby.state（戰場地圖已載入的局面）；只讀 ds:9BB4 起的表。",
+  "args": [
+    {"name": "idx", "kind": "word", "gen": {"choices": [0, 1, 7, 8, 13, 14, 15, 16, 21, 22, 23, 24, 29, 30, 31, 32, 63, 64, 127, 128, 129, 200, 254, 255, 256, 511], "also_random": true}}
+  ],
+  "iters": 30000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

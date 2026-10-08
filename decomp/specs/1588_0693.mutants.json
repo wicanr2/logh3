@@ -1,0 +1,7 @@
+[
+  {"name": "索引高位元組也算", "find": "uint16_t bx = (uint16_t)(idx & 0xFFu);", "replace": "uint16_t bx = idx;"},
+  {"name": "索引有號延伸", "find": "uint16_t bx = (uint16_t)(idx & 0xFFu);", "replace": "uint16_t bx = (uint16_t)(int16_t)(int8_t)(idx & 0xFFu);"},
+  {"name": "表基底差一", "find": "(uint16_t)(bx + 0x9BB4u)", "replace": "(uint16_t)(bx + 0x9BB5u)"},
+  {"name": "表基底錯成9BB0", "find": "(uint16_t)(bx + 0x9BB4u)", "replace": "(uint16_t)(bx + 0x9BB0u)"},
+  {"name": "索引超過127夾到127", "find": "uint16_t bx = (uint16_t)(idx & 0xFFu);", "replace": "uint16_t bx = (uint16_t)((idx & 0xFFu) > 127u ? 127u : (idx & 0xFFu));"}
+]

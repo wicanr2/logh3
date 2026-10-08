@@ -1,0 +1,31 @@
+{
+  "id": "165F_0003",
+  "entry": "165F:0003",
+  "conv": "far",
+  "ret": "ax",
+  "size": 74,
+  "code_sha256_16": "a0aa5751570ef2fe",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "建內圈的圖形描述結構。基底：fcmd-base.state（戰略層，艦隊表在 ds:C074）。AX 殘值 ＝ w ＋ 8。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "dst", "kind": "farptr", "gen": {"scratch": 16}},
+    {"name": "src", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "w", "kind": "word", "gen": {"choices": [0, 1, 7, 8, 80, 100, 32759, 32760, 65527, 65528, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0, 40192, 49268, 21683, 80]},
+    {"args": [0, 40192, 49268, 21683, 65528], "pokes": [{"addr": "ds:C0D0", "hex": "F8FFFFFF"}]},
+    {"args": [0, 40192, 49268, 21683, 65535], "pokes": [{"addr": "ds:C0D0", "hex": "22019901"}]},
+    {"args": [0, 40192, 49878, 21683, 0], "pokes": [{"addr": "ds:C332", "hex": "F87FFF7F"}]},
+    {"args": [49362, 21683, 49268, 21683, 80], "pokes": [{"addr": "ds:C0D0", "hex": "00010002"}]},
+    {"args": [49360, 21683, 49268, 21683, 80], "pokes": [{"addr": "ds:C0D0", "hex": "00010002"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

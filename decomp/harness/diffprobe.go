@@ -42,7 +42,7 @@ const (
 	stackBand    = 0x400
 	memSize      = 1 << 20
 	scratchBase  = 0x9D000
-	stepBudget   = 200000
+	defaultStepBudget = 200000
 )
 
 type TableSpec struct {
@@ -89,6 +89,8 @@ type Spec struct {
 	DSSeg       string               `json:"ds_seg"` // 呼叫時的 DS（hex 段值）；預設 DGROUP 54B3。表基底 "ds:" 與 gen.ds 都跟著它
 	Seeds       []SeedSpec           `json:"seeds"`  // 手工邊界案例，一律記錄並放進語料庫
 	Stubs       []StubSpec           `json:"stubs"`  // 硬體葉函式替身：不執行原函式，記錄呼叫並回傳記錄下來的值
+	StepBudget  int                  `json:"step_budget"` // 每案步數上限；0 ＝ 預設 200000。輸出很大的函式（例如解壓縮）才需要調高
+	Note        string               `json:"note"`        // 說明文字，探針不使用
 }
 
 // StubSpec 描述一個被替身取代的函式（通常是碰硬體的葉函式）。
@@ -113,6 +115,7 @@ type traceEntry struct {
 type PokeSpec struct {
 	Addr string `json:"addr"`
 	Hex  string `json:"hex"`
+	Repeat int `json:"repeat"` // hex 重複幾次（0 或 1 ＝ 一次），避免大段填充要逐格寫
 }
 
 // SeedSpec 是一組手工輸入：Args 依參數展開順序（省略則隨機產生），Pokes 是記憶體修改。
@@ -414,7 +417,7 @@ func (p *probe) run(in *input) result {
 		if done {
 			break
 		}
-		if m.Steps-start+uint64(stubCalls) > stepBudget {
+		if m.Steps-start+uint64(stubCalls) > uint64(p.stepLimit()) {
 			res.ok, res.reason = false, "步數超過上限"
 			break
 		}
@@ -726,6 +729,7 @@ func main() {
 			lin := p.pokeAddr(pk.Addr)
 			b, err := hex.DecodeString(strings.ReplaceAll(pk.Hex, " ", ""))
 			must(err)
+			b = repeatBytes(b, pk.Repeat)
 			for j, v := range b {
 				addr := lin + uint32(j)
 				if p.base[addr] == v {
@@ -1019,4 +1023,24 @@ func wpairs(w []mut) string {
 		parts[i] = fmt.Sprintf("%x:%x", x.addr, x.val)
 	}
 	return strings.Join(parts, ",")
+}
+
+// stepLimit 是每案的步數上限：描述檔的 step_budget，沒給就用預設。
+func (p *probe) stepLimit() int {
+	if p.spec.StepBudget > 0 {
+		return p.spec.StepBudget
+	}
+	return defaultStepBudget
+}
+
+// repeatBytes 把 b 重複 n 次（n <= 1 回原樣）。
+func repeatBytes(b []byte, n int) []byte {
+	if n <= 1 {
+		return b
+	}
+	out := make([]byte, 0, len(b)*n)
+	for i := 0; i < n; i++ {
+		out = append(out, b...)
+	}
+	return out
 }

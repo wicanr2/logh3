@@ -1,0 +1,12 @@
+[
+  {"name": "p上限改成>=100", "find": "(int16_t)rd16(m, LIN(p_seg, p_off)) > 100", "replace": "(int16_t)rd16(m, LIN(p_seg, p_off)) >= 100"},
+  {"name": "q上限改成>=84", "find": "(int16_t)rd16(m, LIN(q_seg, q_off)) > 84", "replace": "(int16_t)rd16(m, LIN(q_seg, q_off)) >= 84"},
+  {"name": "p下限改成<=0", "find": "if ((int16_t)rd16(m, LIN(p_seg, p_off)) < 0) {", "replace": "if ((int16_t)rd16(m, LIN(p_seg, p_off)) <= 0) {"},
+  {"name": "q下限改成<=0", "find": "if ((int16_t)rd16(m, LIN(q_seg, q_off)) < 0) {", "replace": "if ((int16_t)rd16(m, LIN(q_seg, q_off)) <= 0) {"},
+  {"name": "p下限改無號", "find": "if ((int16_t)rd16(m, LIN(p_seg, p_off)) < 0) {", "replace": "if (rd16(m, LIN(p_seg, p_off)) < 0u) {"},
+  {"name": "p夾成99", "find": "wr16(m, LIN(p_seg, p_off), 100);", "replace": "wr16(m, LIN(p_seg, p_off), 99);"},
+  {"name": "q夾成85", "find": "wr16(m, LIN(q_seg, q_off), 84);", "replace": "wr16(m, LIN(q_seg, q_off), 85);"},
+  {"name": "回傳條件n<=2", "find": "return (int16_t)n < 2 ? 1 : 0;", "replace": "return (int16_t)n <= 2 ? 1 : 0;"},
+  {"name": "回傳條件n<1", "find": "return (int16_t)n < 2 ? 1 : 0;", "replace": "return (int16_t)n < 1 ? 1 : 0;"},
+  {"name": "先查q上限再查p上限（兩指標重疊時次序有別）", "find": "    if ((int16_t)rd16(m, LIN(p_seg, p_off)) > 100) {\n        wr16(m, LIN(p_seg, p_off), 100);\n        n++;\n    }\n    if ((int16_t)rd16(m, LIN(q_seg, q_off)) > 84) {\n        wr16(m, LIN(q_seg, q_off), 84);\n        n++;\n    }\n", "replace": "    if ((int16_t)rd16(m, LIN(q_seg, q_off)) > 84) {\n        wr16(m, LIN(q_seg, q_off), 84);\n        n++;\n    }\n    if ((int16_t)rd16(m, LIN(p_seg, p_off)) > 100) {\n        wr16(m, LIN(p_seg, p_off), 100);\n        n++;\n    }\n"}
+]

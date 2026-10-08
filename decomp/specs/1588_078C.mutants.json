@@ -1,0 +1,12 @@
+[
+  {"name": "欄位移步距16", "find": "off = (uint16_t)(off + 0x0Fu);", "replace": "off = (uint16_t)(off + 0x10u);"},
+  {"name": "欄計數步距14", "find": "col = (uint8_t)(col + 0x0Fu);", "replace": "col = (uint8_t)(col + 0x0Eu);"},
+  {"name": "0填5", "find": "wr8(m, LIN(seg, off), 4);", "replace": "wr8(m, LIN(seg, off), 5);"},
+  {"name": "3填1", "find": "wr8(m, LIN(seg, off), 2);", "replace": "wr8(m, LIN(seg, off), 1);"},
+  {"name": "條件改成等於2", "find": "else if (rd8(m, LIN(seg, off)) == 3)", "replace": "else if (rd8(m, LIN(seg, off)) == 2)"},
+  {"name": "條件改成非0", "find": "if (rd8(m, LIN(seg, off)) == 0)\n", "replace": "if (rd8(m, LIN(seg, off)) != 0)\n"},
+  {"name": "欄上界0x78（欄120不處理）", "find": "col < 0x80u", "replace": "col < 0x78u"},
+  {"name": "列上界0x65", "find": "row < 0x66u", "replace": "row < 0x65u"},
+  {"name": "位移不回繞", "find": "off = (uint16_t)(off + 0x0Fu);", "replace": "seg = (uint16_t)(seg + (off > 0xFFF0u ? 0x1000u : 0u)); off = (uint16_t)(off + 0x0Fu);"},
+  {"name": "列位移8", "find": "(uint16_t)((uint16_t)row << 7)", "replace": "(uint16_t)((uint16_t)row << 8)"}
+]

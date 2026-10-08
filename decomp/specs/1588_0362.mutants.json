@@ -1,0 +1,11 @@
+[
+  {"name": "x下界改成<=0x10", "find": "x < 0x10u", "replace": "x <= 0x10u"},
+  {"name": "y下界改成<=0x14", "find": "y < 0x14u", "replace": "y <= 0x14u"},
+  {"name": "y下界0x13", "find": "y < 0x14u", "replace": "y < 0x13u"},
+  {"name": "x上界改成>0x1D0", "find": "x >= 0x1D0u", "replace": "x > 0x1D0u"},
+  {"name": "y上界改成>0x17C", "find": "y >= 0x17Cu", "replace": "y > 0x17Cu"},
+  {"name": "x上界改有號比較", "find": "x >= 0x1D0u", "replace": "(int16_t)x >= 0x1D0"},
+  {"name": "x偏移0x11", "find": "x + 0xFFF0u", "replace": "x + 0xFFEFu"},
+  {"name": "y偏移用9BF4", "find": "rd16(m, DS(0x9BF6))", "replace": "rd16(m, DS(0x9BF4))"},
+  {"name": "先寫y再寫x（兩輸出指標重疊時次序有別）", "find": "    wr16(m, LIN(ox_seg, ox_off), (uint16_t)(x + 0xFFF0u + rd16(m, DS(0x9BF4))));\n    wr16(m, LIN(oy_seg, oy_off), (uint16_t)(y + 0xFFECu + rd16(m, DS(0x9BF6))));\n", "replace": "    wr16(m, LIN(oy_seg, oy_off), (uint16_t)(y + 0xFFECu + rd16(m, DS(0x9BF6))));\n    wr16(m, LIN(ox_seg, ox_off), (uint16_t)(x + 0xFFF0u + rd16(m, DS(0x9BF4))));\n"}
+]

@@ -1,0 +1,12 @@
+[
+  {"name": "列步距11", "find": "row = (uint8_t)(row + 0x0Cu);", "replace": "row = (uint8_t)(row + 0x0Bu);"},
+  {"name": "列步距13", "find": "row = (uint8_t)(row + 0x0Cu);", "replace": "row = (uint8_t)(row + 0x0Du);"},
+  {"name": "填4", "find": "wr8(m, LIN(seg, off), 3);", "replace": "wr8(m, LIN(seg, off), 4);"},
+  {"name": "條件改成非0", "find": "if (rd8(m, LIN(seg, off)) == 0)", "replace": "if (rd8(m, LIN(seg, off)) != 0)"},
+  {"name": "條件改成<=1", "find": "if (rd8(m, LIN(seg, off)) == 0)", "replace": "if (rd8(m, LIN(seg, off)) <= 1)"},
+  {"name": "欄數0x7F", "find": "col < 0x80u", "replace": "col < 0x7Fu"},
+  {"name": "列上界0x60（列96不處理）", "find": "row < 0x66u", "replace": "row < 0x60u"},
+  {"name": "列上界0x6D（多處理列108）", "find": "row < 0x66u", "replace": "row < 0x6Du"},
+  {"name": "位移不回繞", "find": "off = (uint16_t)(off + 1u);", "replace": "seg = (uint16_t)(seg + (off == 0xFFFFu ? 0x1000u : 0u)); off = (uint16_t)(off + 1u);"},
+  {"name": "列位移6", "find": "(uint16_t)((uint16_t)row << 7)", "replace": "(uint16_t)((uint16_t)row << 6)"}
+]

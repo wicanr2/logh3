@@ -1,0 +1,13 @@
+[
+  {"name": "圓心x讀+0x5A", "find": "src_off + 0x5Cu", "replace": "src_off + 0x5Au"},
+  {"name": "圓心y讀+0x5C", "find": "src_off + 0x5Eu", "replace": "src_off + 0x5Cu"},
+  {"name": "圓心x加7", "find": "rd16(m, LIN(src_seg, src_off + 0x5Cu)) + 8u", "replace": "rd16(m, LIN(src_seg, src_off + 0x5Cu)) + 7u"},
+  {"name": "圓心y加9", "find": "rd16(m, LIN(src_seg, src_off + 0x5Eu)) + 8u", "replace": "rd16(m, LIN(src_seg, src_off + 0x5Eu)) + 9u"},
+  {"name": "半徑加9", "find": "uint16_t r = (uint16_t)(w + 8u);", "replace": "uint16_t r = (uint16_t)(w + 9u);"},
+  {"name": "dst4寫1", "find": "wr8(m, LIN(dst_seg, dst_off + 4u), 0);", "replace": "wr8(m, LIN(dst_seg, dst_off + 4u), 1);"},
+  {"name": "dst5寫4", "find": "wr8(m, LIN(dst_seg, dst_off + 5u), 5);", "replace": "wr8(m, LIN(dst_seg, dst_off + 5u), 4);"},
+  {"name": "dst6寫0", "find": "wr8(m, LIN(dst_seg, dst_off + 6u), 1);", "replace": "wr8(m, LIN(dst_seg, dst_off + 6u), 0);"},
+  {"name": "dst7寫0", "find": "wr8(m, LIN(dst_seg, dst_off + 7u), 1);", "replace": "wr8(m, LIN(dst_seg, dst_off + 7u), 0);"},
+  {"name": "先讀兩個來源再寫（dst與src重疊時次序有別）", "find": "    wr16(m, LIN(dst_seg, dst_off), (uint16_t)(rd16(m, LIN(src_seg, src_off + 0x5Cu)) + 8u));\n    wr16(m, LIN(dst_seg, dst_off + 2u), (uint16_t)(rd16(m, LIN(src_seg, src_off + 0x5Eu)) + 8u));\n", "replace": "    {\n        uint16_t vx = (uint16_t)(rd16(m, LIN(src_seg, src_off + 0x5Cu)) + 8u);\n        uint16_t vy = (uint16_t)(rd16(m, LIN(src_seg, src_off + 0x5Eu)) + 8u);\n        wr16(m, LIN(dst_seg, dst_off), vx);\n        wr16(m, LIN(dst_seg, dst_off + 2u), vy);\n    }\n"},
+  {"name": "回傳w", "find": "return r;", "replace": "return w;"}
+]
