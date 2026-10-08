@@ -14,7 +14,8 @@ fid, vdir, vname = sys.argv[1:4]
 muts = json.load(open(f"{d}/specs/{fid}.mutants.json"))
 src_name = f"f_{fid}.c"
 orig = open(f"{d}/src/{src_name}").read()
-others = [f"{d}/src/{n}" for n in sorted(os.listdir(f"{d}/src")) if n.startswith("f_") and n != src_name]
+done_ids = sorted(n[:-4] for n in os.listdir(f"{d}/ledger/status.d") if n.endswith(".tsv")) if os.path.isdir(f"{d}/ledger/status.d") else []
+others = [f"{d}/src/f_{i}.c" for i in done_ids if f"f_{i}.c" != src_name and os.path.exists(f"{d}/src/f_{i}.c")]
 survivors = []
 os.makedirs("/build/m", exist_ok=True)
 for i, m in enumerate(muts):
