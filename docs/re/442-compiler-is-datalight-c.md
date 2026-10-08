@@ -102,3 +102,23 @@ byte-matching 需要同版編譯器。已查到的來源（2026-10-08 查詢；Z
 推論（強推論）：Datalight C 3.10 產生的 long 運算呼叫慣例是 `AX:BX` 與 `CX:DX`，Zortech 2.06 已不同。因此任何含 long 運算的函式，用 2.06 或 3.1 編譯都不會得到相同 bytes。無 long 運算的葉函式能否相同，尚未試編譯，因為 prologue、暫存器配置與最佳化也可能已改。
 
 byte-matching 的現況：沒有可用的同版編譯器。重新開啟條件不變。目前採「功能等價」路徑：寫 C，對原版函式做隨機輸入差異測試，另記錄 bytes 不同。
+
+## 序言風格鑑別（2026-10-09）
+
+GIN3PS 的函式序言是 `push bp; push si; push di; sub sp,N; mov bp,sp`：先配框架再設 `bp`，區域變數在 `[bp+0..]`，
+參數在 `[bp+N+…]`。以下用 `grep -c -P` 對 8 byte 簽章計數：
+
+| 對象 | `55 56 57 83 EC xx 89 E5` | `55 56 57 81 EC xx xx 89 E5` | `55 8B EC` | `55 89 E5` |
+|---|---:|---:|---:|---:|
+| GIN3PS 傾印（371,594 bytes，以行計） | 374 | 24 | 52 | 未計 |
+| Zortech C++ 2.06 的 `LIB/*.LIB` 與 `*.OBJ`（以命中次數計） | 0 | 0 | 755 | 2103 |
+
+兩邊的計數單位不同（行對命中次數），只能用來看「有無」。2.06 的函式庫完全沒有 GIN3PS 這種序言，使用標準框架。
+所以代碼產生器在 Datalight C 3.x 與 Zortech 2.x 之間已經改寫，Zortech 2.06 與 3.1 都不可能編出 GIN3PS 的遊戲碼，
+不只是 long 運算輔助函式的差異。
+
+IA 其餘候選的檢視結果：`msdos_shareware_fb_ZORTECH/ZORTECH.ZIP` 是 ARC 自解壓的 Zortech 圖形示範（`FGDEMO.EXE`、`RDEMO2.EXE`、`DEMO.DBD`），沒有編譯器。
+IA、WinWorld、Vetusware 的檢索都沒有 Datalight C 或 Optimum-C 本體。WinWorld 論壇與 Vetusware 列有 Zortech C++ 1.06、2.0、3.04，
+尚未下載（授權範圍只含 Internet Archive）。Zortech 1.06 是 1988 年的版本，與 Datalight 3.x 同期，序言風格是否相同未知。
+
+byte-matching 的條件：取得 Datalight C 3.x（含 `L` 模型函式庫、啟動碼與連結器設定），或證明某個 Zortech 1.x 版本的代碼產生器與它相同。

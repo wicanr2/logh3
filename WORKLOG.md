@@ -10811,3 +10811,12 @@ CONTEXT與矩陣，87張、11張open，267條核實零不成立、3條人工、1
 - 候選工作項（沒有開 GitHub issue，開 issue 屬先回報再確認）：decomp 下一支函式；`203A:0424` 溢位區可達性查證；`FleetAttack`（戰場版）對向量；啟動器選項畫面接 `-repair-ship-repairable`；持續追查 Datalight C 3.10 來源。`docs/goal/` 當輪檔與 `render-matrix` 等 issue 開了再補。
 - 推送：`git push origin main` 把 `66d7ad7..7d2650d` 共 8 個 commit 送出，其中 4 個是使用者先前的本地 commit（HD 首批與 Issue96 記錄），4 個是本輪。使用者未提交的 HD 修改（`assets/hd/`、`presentation/`、`tools/scripts/hd_*`、`cmd/gin3/main.go` 的 HD 訊息一行、`00-README.md` 頂端 HD 段、`spec/123`）維持未提交。
 - 清理狀態：工作樹與 `workplace/decomp/` 無 root 擁有的檔案；本輪的一次性容器皆 `--rm`，無殘留；沒有 prune 或刪映像；新建的只有 `logh3-ebiten:2`（重建），候選編譯器留在 `workplace/toolchains/`（gitignore）。
+
+## 2026-10-09：目標「完成 gin3 matching decompilation」，映像、IDA 與台帳
+
+- 使用者設定目標：完成 GIN3 matching decompilation。關鍵路徑是同版編譯器 Datalight C 3.x，目前沒有。Internet Archive 全文檢索（含 mediatype software、title、description、subject）沒有 Datalight C 或 Optimum-C；`msdos_shareware_fb_ZORTECH` 是 Zortech 圖形示範（ARC 自解壓，`FGDEMO.EXE` 等），不是編譯器。WinWorld 與 Vetusware 的檢索也沒有，列有 Zortech C++ 1.06、2.0、3.04，授權範圍只含 Internet Archive，沒有下載。
+- 序言風格鑑別（`docs/re/442` 追加）：GIN3PS 有 374 個先配框架再設 `bp` 的序言，Zortech 2.06 函式庫為 0，代碼產生器已改寫。Zortech 2.06 與 3.1 不可能編出 GIN3PS 的遊戲碼。
+- 重做解包映像（`docs/re/444`）：第 58,313,900 步為解壓完成、重定位尚未開始，第 58,339,129 步為最終入口，差異恰為 5,991 筆重定位，最終映像雜湊與 `docs/re/336` 記錄的舊映像相同。`decomp/tools/gin3ps_image.sh` 約 5 秒重做。
+- IDA：用現存 `ida-pro-9.4-idapython:py312-v1`（`locked-v1` 已不在本機，沒有重建）分析重組的 MZ 檔，1,440 個函式、218,606 bytes。座標換算以 `203A:0424`、`3CC9:0009`、`3CC9:0020` 驗證。
+- 台帳 `decomp/ledger/`：1,440 個函式，`diff-tested` 1 個（0.1%），`byte-matching` 0 個。映像的 95 KB 零填充緩衝區與 38,890 bytes 的 DGROUP 資料不在函式台帳內，整檔 matching 仍需涵蓋。
+- 這輪手滑在主機上跑了一次空的 `python3 -`（stdin 為空，沒有讀寫任何檔），違反 Docker-only，記在這裡。其餘分析都在容器內。
