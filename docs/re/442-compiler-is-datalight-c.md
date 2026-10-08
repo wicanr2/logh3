@@ -122,3 +122,18 @@ IA、WinWorld、Vetusware 的檢索都沒有 Datalight C 或 Optimum-C 本體。
 尚未下載（授權範圍只含 Internet Archive）。Zortech 1.06 是 1988 年的版本，與 Datalight 3.x 同期，序言風格是否相同未知。
 
 byte-matching 的條件：取得 Datalight C 3.x（含 `L` 模型函式庫、啟動碼與連結器設定），或證明某個 Zortech 1.x 版本的代碼產生器與它相同。
+
+## 擴大來源後的檢索結果（2026-10-09，使用者授權 Vetusware 與 WinWorld）
+
+| 來源 | 結果 |
+|---|---|
+| Vetusware 的 Zortech 廠商頁（`/manufacturer/Zortech/?author=25`） | 只有兩筆 Zortech C++ 3.0r4。WinWorld 論壇貼文說 Vetusware 有 1.06，沒有在廠商頁找到 |
+| Vetusware 的 Datalight 廠商頁 | 只有 ROM-DOS 7.10 |
+| WinWorld 的 Zortech C++ 產品頁 | 2.x 只有 `Zortech CPP 2.06 (1989) (5.25-360k)`；3.x 沒有下載項；沒有 1.x、Zortech C、Zorland C、Datalight C |
+| Walter Bright 個人網站 | 只在履歷列出 Datalight C，沒有下載 |
+| Digital Mars 新聞組貼文（`c++.announce`，2002-01） | Walter Bright 公開收購 Datalight C 等舊版原件，回覆者只提供 Zortech 與 Symantec C++，沒有人有 Datalight C |
+
+Zortech C++ 版本日期（EDM2）：1.05 為 1988-10、1.06 為 1988-11、1.07 為 1989-06、2.0 為 1990-03、2.06 為 1990-04。EDM2 說首版 DOS 產品基於更早的 Zortech C。
+1.0x 與 Datalight 3.x 同期，代碼產生器可能相同，但目前找不到可下載的 1.x。沒有下載任何新檔案。
+
+結論：Datalight C 3.x 與 Zortech 1.x 都無法從授權範圍內的來源取得。重新開啟條件不變。
