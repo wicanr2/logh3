@@ -1,0 +1,8 @@
+[
+  {"name": "符號延伸改零延伸", "find": "return (uint32_t)(int32_t)(int16_t)cost;", "replace": "return (uint32_t)cost;"},
+  {"name": "狀態5不歸零", "find": "if (state != 2 && state != 5)", "replace": "if (state != 2)"},
+  {"name": "狀態2不歸零", "find": "if (state != 2 && state != 5)", "replace": "if (state != 5)"},
+  {"name": "改讀+0x0A", "find": "fleet_off + 0x0C", "replace": "fleet_off + 0x0A"},
+  {"name": "改讀+0x09判斷", "find": "fleet_off + 0x08", "replace": "fleet_off + 0x09"},
+  {"name": "只取低字節", "find": "cost = rd16(m, LIN(fleet_seg, fleet_off + 0x0C));", "replace": "cost = rd8(m, LIN(fleet_seg, fleet_off + 0x0C));"}
+]

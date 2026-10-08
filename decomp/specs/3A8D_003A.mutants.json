@@ -1,0 +1,10 @@
+[
+  {"name": "列寬321", "find": "uint16_t offset = (uint16_t)(row + row_x64);", "replace": "uint16_t offset = (uint16_t)(row + row_x64 + y);"},
+  {"name": "起點位移0C81", "find": "return (uint16_t)(offset + 0x0C80u);", "replace": "return (uint16_t)(offset + 0x0C81u);"},
+  {"name": "x與y對調", "find": "return f_3A8D_003A((uint8_t)(a[0] >> 8), (uint8_t)(a[0] & 0xFF));", "replace": "return f_3A8D_003A((uint8_t)(a[0] & 0xFF), (uint8_t)(a[0] >> 8));"},
+  {"name": "右移改算術右移", "find": "uint16_t row_x64 = (uint16_t)(row >> 2);", "replace": "uint16_t row_x64 = (uint16_t)((int16_t)row >> 2);"},
+  {"name": "少加x", "find": "offset = (uint16_t)(offset + x);", "replace": "offset = (uint16_t)(offset + 0);"},
+  {"name": "x帶號擴展", "find": "offset = (uint16_t)(offset + x);", "replace": "offset = (uint16_t)(offset + (int16_t)(int8_t)x);"},
+  {"name": "列寬改成y乘512", "find": "uint16_t row_x64 = (uint16_t)(row >> 2);", "replace": "uint16_t row_x64 = (uint16_t)(row >> 1);"},
+  {"name": "回繞改成飽和", "find": "uint16_t offset = (uint16_t)(row + row_x64);", "replace": "uint16_t offset = (uint16_t)((uint32_t)row + row_x64 > 0xFFFFu ? 0xFFFFu : row + row_x64);"}
+]

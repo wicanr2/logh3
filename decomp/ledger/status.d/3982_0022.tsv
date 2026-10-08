@@ -1,0 +1,2 @@
+golem_linear	level	source	evidence
+39842	diff-tested	decomp/src/f_3982_0022.c	decomp/specs/3982_0022.json

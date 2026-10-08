@@ -1,0 +1,9 @@
+[
+  {"name": "陣營2回FE", "find": "return 0xFF;", "replace": "return 0xFE;"},
+  {"name": "座位對調", "find": "seat = rd8(m, DS(0x8F25)) == faction ? 0 : 1;", "replace": "seat = rd8(m, DS(0x8F25)) == faction ? 1 : 0;"},
+  {"name": "座位1改讀8F23", "find": "return rd8(m, DS(0x8F21 + seat));", "replace": "return rd8(m, DS(0x8F21 + seat * 2));"},
+  {"name": "中立陣營改成3", "find": "if (faction == 2)", "replace": "if (faction == 3)"},
+  {"name": "AH清成0", "find": "return (uint16_t)((ax_in & 0xFF00u) | f_3982_022D(m, (uint8_t)a[0]));", "replace": "return (uint16_t)f_3982_022D(m, (uint8_t)a[0]);"},
+  {"name": "高位元組併入參數", "find": "f_3982_022D(m, (uint8_t)a[0])", "replace": "f_3982_022D(m, (uint8_t)(a[0] ? a[0] | (a[0] >> 8) : 0))"},
+  {"name": "陣營2也讀記憶體取AL", "find": "return 0xFF;", "replace": "return rd8(m, DS(0x8F21));"}
+]

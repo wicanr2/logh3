@@ -1,0 +1,8 @@
+[
+  {"name": "157改156", "find": "hi * 157u", "replace": "hi * 156u"},
+  {"name": "每字30改31", "find": "30u * (uint32_t)b", "replace": "31u * (uint32_t)b"},
+  {"name": "中間和不截成16位元", "find": "uint16_t b = (uint16_t)(hi * 157u + dx + lo);", "replace": "uint32_t b = hi * 157u + dx + lo;"},
+  {"name": "漏加DX", "find": "hi * 157u + dx + lo", "replace": "hi * 157u + (dx & 0xFFu) + lo"},
+  {"name": "AL當有號數", "find": "uint16_t lo = (uint16_t)(ax & 0xFFu);", "replace": "uint16_t lo = (uint16_t)(int16_t)(int8_t)ax;"},
+  {"name": "乘積截成16位元", "find": "return 30u * (uint32_t)b; /* DX:AX */", "replace": "return (uint16_t)(30u * (uint32_t)b);"}
+]

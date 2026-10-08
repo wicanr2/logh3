@@ -1,0 +1,20 @@
+{
+  "id": "2703_0FD7",
+  "entry": "2703:0FD7",
+  "conv": "far",
+  "ret": "ax",
+  "size": 51,
+  "code_sha256_16": "21f99f0ae704fb5b",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "region": {"base": "ds:A79C", "stride": 126, "count": 32}
+  },
+  "args": [
+    {"name": "region", "kind": "farptr", "gen": {"table": "region"}}
+  ],
+  "iters": 20000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

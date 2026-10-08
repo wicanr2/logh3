@@ -1,0 +1,6 @@
+[
+  {"name": "配置大小少乘4", "find": "size = (uint16_t)(w * h * 4u);", "replace": "size = (uint16_t)(w * h * 2u);"},
+  {"name": "旗標位元不為0時不減2", "find": "w = (uint8_t)(rd8(m, LIN(seg, off + 7)) + 0xFE);", "replace": "w = rd8(m, LIN(seg, off + 7));"},
+  {"name": "結果指標的段與位移對調", "find": "wr16(m, LIN(seg, off + 0x10), (uint16_t)(r >> 16));", "replace": "wr16(m, LIN(seg, off + 0x10), (uint16_t)r);"},
+  {"name": "少呼叫配置器的參數", "find": "gin3_stub(m, \"3ABF_0000\", 1, a)", "replace": "gin3_stub(m, \"3ABF_0000\", 1, (uint16_t[]){(uint16_t)(size + 1)})"}
+]

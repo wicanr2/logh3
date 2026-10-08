@@ -1,0 +1,7 @@
+[
+  {"name": "相等與不等對調", "find": "return rd8(m, DS(0x8F25)) == faction ? 0 : 1;", "replace": "return rd8(m, DS(0x8F25)) == faction ? 1 : 0;"},
+  {"name": "改讀ds:8F26", "find": "rd8(m, DS(0x8F25))", "replace": "rd8(m, DS(0x8F26))"},
+  {"name": "不等時回2", "find": "return rd8(m, DS(0x8F25)) == faction ? 0 : 1;", "replace": "return rd8(m, DS(0x8F25)) == faction ? 0 : 1 + (faction == 2);"},
+  {"name": "比較只看低7位元", "find": "return rd8(m, DS(0x8F25)) == faction ? 0 : 1;", "replace": "return (rd8(m, DS(0x8F25)) & 0x7F) == (faction & 0x7F) ? 0 : 1;"},
+  {"name": "高位元組也參與比較", "find": "return f_3982_0217(m, (uint8_t)a[0]);", "replace": "return rd8(m, DS(0x8F25)) == a[0] ? 0 : 1;"}
+]

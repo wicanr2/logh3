@@ -38,7 +38,7 @@ decomp/tools/asm.sh 203A:0424           # IDA 反組譯，呼叫目標附 seg:of
 | 序言 | 典型是 `push bp; push si; push di; sub sp,N; mov bp,sp`：區域變數在 `[bp+0 .. bp+N-1]`，向上是 saved bp／si／di（6 bytes），再向上是返回位址 |
 | 參數位置 | far 函式：第一個參數在 `[bp+N+10]`，near 函式：`[bp+N+8]`。往上依序是後面的參數。序言不同（沒有 push si／di、或沒有 `sub sp`）時自己推算 |
 | 參數寬度 | 每個參數佔 1 個字（byte 也推成 1 個字）；far 指標佔 2 個字（位移在低位址、段在高位址）；long 佔 2 個字（低字在低位址） |
-| 回傳 | 16 位元回 `AX`；32 位元與 far 指標回 `DX:AX`（要看 asm 確認）；long 運算輔助函式（`3CC9`）用 `AX:BX`、`CX:DX` 暫存器傳參 |
+| 回傳 | 16 位元回 `AX`；32 位元與 far 指標多半回 `DX:AX`，但也有 `AX:BX`（配置器 `3982:0001`、`3ABF:0000` 是 AX＝段、BX＝位移）。**一律看 asm 確認**。long 運算輔助函式（`3CC9`）用 `AX:BX`、`CX:DX` 暫存器傳參，輸出也可能是旗標（`3CC9:00B9`） |
 | 資料段 | `DS` 固定是 `0x54B3`。全域變數用 `DS(位移)` 取線性位址 |
 | 位移運算 | 段內位址是 16 位元，超過 `0xFFFF` 回繞。C 端用 `uint16_t` 做位移運算，再交給 `LIN(seg, off)` |
 | 有號與無號 | 看是 `cbw`／`movsx` 還是 `xor ah,ah`；看是 `jl`／`jg` 還是 `jb`／`ja`。C 端的型別要完全對應 |
@@ -69,8 +69,8 @@ GIN3_REGISTER("203A_0424", 2, run)
 `decomp/specs/<SEG_OFF>.json`，範本是 `203A_0424.json`（堆疊參數）與 `3CC9_0009.json`（暫存器參數）。
 
 - `size` 與 `code_sha256_16` 從台帳取：`ledger.sh show` 的 `size`，`functions.tsv` 的 `sha256_final_16` 欄。
-- `ret`：`ax`、`dxax`、`none`，或 `pack:ax,bx,…`（含 `flags`）。
-- 參數 `kind`：`word`、`byte`、`dword`、`farptr`（`table`、`ds`、`scratch`、`null`）、`nearptr`、`reg`。
+- `ret`：`ax`、`dxax`、`none`，或 `pack:` 加暫存器清單（由高位到低位串成一個值，最多 4 個）。清單項目可用 `ax bx cx dx si di bp`、`al ah`、`flags`（OF SF ZF CF 四個旗標），以及單一旗標 `cf zf sf of`。例：`pack:ax,bx`、`pack:al`、`pack:flags`。
+- 參數 `kind`：`word`、`byte`、`dword`、`farptr`（`table`、`ds`、`scratch`、`null`）、`nearptr`、`reg`。`reg` 的 `reg` 欄位可以是 `ax cx dx bx si di bp` 或段暫存器 `es`、`ds`（`ss`、`cs` 不開放，堆疊與程式段維持基底狀態）。`kind: byte` 只會推入高位元組為 0 的字；要驗證「原版只讀低位元組」就改用 `word`，`choices` 放 0..255 並加 `also_random`。
   `gen` 可以給 `min`／`max`、`choices`（加 `also_random` 混入均勻隨機）。
 - 指向記錄的指標用 `tables` 定義基底、stride、筆數，基底來自 `docs/internals`。
 - `base_state` 預設是 `fcmd-base.state`（戰略層）。函式需要戰場狀態時換成戰場狀態並填它的 SHA-256。
@@ -102,3 +102,41 @@ decomp/tools/ledger.sh mark <SEG:OFF> diff-tested decomp/src/f_<SEG>_<OFF>.c dec
 
 每個函式一列：`seg:off`、案數、覆蓋、突變存活、是否通過；有發現舊文件錯誤或需要框架支援的，另列。
 沒做完的函式寫明卡在哪裡與已嘗試的方法。
+
+## 9. 進階描述檔功能
+
+### `ds_seg`：呼叫時的 DS
+
+預設 `54B3`（DGROUP）。函式的呼叫者先把 DS 設成別的資料段時（例如 `2376:097D` 的呼叫者先載入 seg129 的 `3D22`），
+用 `"ds_seg": "3D22"`。`tables` 的 `ds:` 基底與 `farptr` 的 `gen.ds` 都跟著這個值。C 版要把 `ds` 當參數，不能用 `DS()` 巨集。
+
+### `seeds`：手工邊界案例
+
+隨機突變很難剛好打到「某個欄位等於特定值」的邊界，例如 `Y + H == 0xA8`。對這種邊界手工給輸入：
+
+```json
+"seeds": [
+  {"args": [], "pokes": [{"addr": "ds:786", "hex": "7002 8700"}, {"addr": "1234:0010", "hex": "ff"}]}
+]
+```
+
+`args` 省略就隨機產生；`pokes` 的位址可寫 `ds:OFF`、`SEG:OFF`（hex）或 `lin:ADDR`。種子一律執行並記錄，也會進語料庫讓後續突變從它出發。
+種子無法執行（丟棄）會直接中止。
+
+### `stubs`：硬體葉函式替身與呼叫軌跡
+
+函式的呼叫閉包碰到硬體（int、I/O、視訊記憶體）時，把那些葉函式當替身，其餘函式照常用 C 實作並先通過 diff-tested。
+
+```json
+"stubs": [
+  {"entry": "3ABF:0000", "conv": "far", "nargs": 1, "ret": "pack:ax,bx",
+   "gen": {"choices": [0, 1, 4660, 65535], "also_random": true}}
+]
+```
+
+- 原版執行到替身入口時，探針不執行它，而是讀出 `nargs` 個堆疊參數（加上 `argregs` 指定的暫存器），記錄一筆呼叫，設定回傳值後直接返回。
+- `ret`：`ax`、`dxax`、`none`，或 `pack:` 加最多 2 個暫存器。`gen` 決定回傳值，記錄後重放，不是每次不同。
+- 參數數量要看替身函式的 asm（它用 `[bp+N]` 存取到哪裡），或看呼叫端呼叫後清除了多少 `add sp,N`。
+- C 版以 `gin3_stub(m, "SEG_OFF", nargs, args)` 取代該呼叫，回傳值是記錄的 `AX<<16|BX`（依 `pack:` 順序）。
+- 檢查程式比對呼叫的**順序、數量與參數**。替身沒有記憶體副作用，所以只適合不透過指標回傳資料的函式。
+- 替身內部真正的行為（例如配置器失敗就停機）不在驗證範圍，要在 C 版檔頭註明。

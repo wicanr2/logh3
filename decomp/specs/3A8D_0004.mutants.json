@@ -1,0 +1,9 @@
+[
+  {"name": "寫ds:8F25", "find": "(void)m; /* retn */", "replace": "wr8(m, DS(0x8F25), (uint8_t)(rd8(m, DS(0x8F25)) + 1));"},
+  {"name": "寫ds:0000", "find": "(void)m; /* retn */", "replace": "wr8(m, DS(0x0000), (uint8_t)(rd8(m, DS(0x0000)) + 1));"},
+  {"name": "寫ds:94DC一個word", "find": "(void)m; /* retn */", "replace": "wr16(m, DS(0x94DC), (uint16_t)(rd16(m, DS(0x94DC)) + 1));"},
+  {"name": "AX被清成0", "find": "((uint64_t)a[0] << 48)", "replace": "((uint64_t)0 << 48)"},
+  {"name": "BX被改", "find": "((uint64_t)a[1] << 32)", "replace": "((uint64_t)(uint16_t)(a[1] + 1) << 32)"},
+  {"name": "CX被清成0", "find": "((uint64_t)a[2] << 16)", "replace": "((uint64_t)0 << 16)"},
+  {"name": "DX被改", "find": "(uint64_t)a[3];", "replace": "(uint64_t)(uint16_t)(a[3] ^ 0x8000);"}
+]

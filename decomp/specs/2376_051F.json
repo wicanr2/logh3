@@ -1,0 +1,17 @@
+{
+  "id": "2376_051F",
+  "entry": "2376:051F",
+  "conv": "near",
+  "ret": "pack:si",
+  "size": 25,
+  "code_sha256_16": "b5a008133c29d7ff",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "ax", "kind": "reg", "reg": "ax", "gen": {"choices": [0, 1, 2, 127, 128, 254, 255, 256, 257, 4095, 65280, 65535], "also_random": true}}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

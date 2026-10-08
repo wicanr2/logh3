@@ -1,0 +1,6 @@
+[
+  {"name": "0與非0對調", "find": "return faction == 0 ? 0 : 0x1F;", "replace": "return faction == 0 ? 0x1F : 0;"},
+  {"name": "非0回32", "find": "return faction == 0 ? 0 : 0x1F;", "replace": "return faction == 0 ? 0 : 0x20;"},
+  {"name": "只有陣營1回31", "find": "return faction == 0 ? 0 : 0x1F;", "replace": "return faction == 1 ? 0x1F : 0;"},
+  {"name": "高位元組也參與判斷", "find": "return f_3982_0329((uint8_t)a[0]);", "replace": "return f_3982_0329(a[0] ? (uint8_t)(a[0] | (a[0] >> 8)) : 0);"}
+]

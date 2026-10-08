@@ -1,0 +1,7 @@
+[
+  {"name": "AX被改", "find": "((uint64_t)ax << 48)", "replace": "((uint64_t)(ax ^ 1u) << 48)"},
+  {"name": "BX被改", "find": "((uint64_t)bx << 32)", "replace": "((uint64_t)(bx ^ 0x8000u) << 32)"},
+  {"name": "CX被改", "find": "((uint64_t)cx << 16)", "replace": "((uint64_t)(cx ^ 0x100u) << 16)"},
+  {"name": "DX被清", "find": "| dx;", "replace": "| 0;"},
+  {"name": "寫了記憶體", "find": "    (void)m;", "replace": "    wr8(m, DS(0x100), (uint8_t)~rd8(m, DS(0x100)));"}
+]

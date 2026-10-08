@@ -1,0 +1,14 @@
+[
+  {"name": "2改<=2", "find": "if (level < 2)", "replace": "if (level <= 2)"},
+  {"name": "6改7", "find": "else if (level < 6)", "replace": "else if (level < 7)"},
+  {"name": "16改15", "find": "else if (level < 16)", "replace": "else if (level < 15)"},
+  {"name": "20改21", "find": "else if (level < 20)", "replace": "else if (level < 21)"},
+  {"name": "24改23", "find": "else if (level < 24)", "replace": "else if (level < 23)"},
+  {"name": "29改30", "find": "else if (level < 29)", "replace": "else if (level < 30)"},
+  {"name": "34改33", "find": "else if (level < 34)", "replace": "else if (level < 33)"},
+  {"name": "39改40", "find": "else if (level < 39)", "replace": "else if (level < 40)"},
+  {"name": "第五級補5", "find": "slots = 6;", "replace": "slots = 5;"},
+  {"name": "最後一級改11", "find": "slots = 10;", "replace": "slots = 11;"},
+  {"name": "AH清零", "find": "return (uint16_t)((ax_in & 0xFF00u) | slots);", "replace": "return (uint16_t)slots;"},
+  {"name": "含高位元組", "find": "uint8_t level = (uint8_t)level_word;", "replace": "uint16_t level = level_word;"}
+]

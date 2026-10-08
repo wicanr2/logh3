@@ -1,0 +1,6 @@
+[
+  {"name": "讀相鄰的9209", "find": "DS(0x9208)", "replace": "DS(0x9209)"},
+  {"name": "零延伸改帶號延伸", "find": "return rd8(m, DS(0x9208));", "replace": "return (uint16_t)(int16_t)(int8_t)rd8(m, DS(0x9208));"},
+  {"name": "只回低4位元", "find": "return rd8(m, DS(0x9208));", "replace": "return rd8(m, DS(0x9208)) & 0x0Fu;"},
+  {"name": "多寫一個byte", "find": "    return rd8(m, DS(0x9208));", "replace": "    wr8(m, DS(0x9208), (uint8_t)~rd8(m, DS(0x9208)));\n    return rd8(m, DS(0x9208));"}
+]

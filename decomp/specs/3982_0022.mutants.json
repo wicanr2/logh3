@@ -1,0 +1,9 @@
+[
+  {"name": "不加半格", "find": "step = (uint16_t)(step + 1);", "replace": "step = (uint16_t)(step + 0);"},
+  {"name": "加2", "find": "step = (uint16_t)(step + 1);", "replace": "step = (uint16_t)(step + 2);"},
+  {"name": "每32刻改每16刻", "find": "uint16_t step = (uint16_t)(angle >> 4);", "replace": "uint16_t step = (uint16_t)(angle >> 3);"},
+  {"name": "不繞回", "find": "return (uint16_t)(step & 7);", "replace": "return (uint16_t)(step & 15);"},
+  {"name": "遮3位元改2位元", "find": "return (uint16_t)(step & 7);", "replace": "return (uint16_t)(step & 3);"},
+  {"name": "少一次右移", "find": "step = (uint16_t)(step >> 1);", "replace": "step = (uint16_t)(step >> 0);"},
+  {"name": "高位元組併入參數", "find": "return f_3982_0022((uint8_t)a[0]);", "replace": "return f_3982_0022((uint8_t)(a[0] ? a[0] | (a[0] >> 8) : 0));"}
+]

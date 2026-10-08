@@ -1,0 +1,8 @@
+[
+  {"name": "除法改無號", "find": "return (uint16_t)(int16_t)(base / 10);", "replace": "return (uint16_t)((uint16_t)base / 10u);"},
+  {"name": "200改199", "find": "base = (int16_t)(0xC8 - value);", "replace": "base = (int16_t)(0xC7 - value);"},
+  {"name": "只看帝國分支", "find": "if (owner == 0)\n        base = (int16_t)value;\n    else\n        base = (int16_t)(0xC8 - value);", "replace": "base = (int16_t)value;"},
+  {"name": "擁有者2當帝國", "find": "if (owner == 0)", "replace": "if (owner == 0 || owner == 2)"},
+  {"name": "除數改9", "find": "base / 10", "replace": "base / 9"},
+  {"name": "改讀+0x7D", "find": "region_off + 0x7C", "replace": "region_off + 0x7D"}
+]

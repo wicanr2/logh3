@@ -1,0 +1,9 @@
+[
+  {"name": "改左移6", "find": "uint16_t block = (uint16_t)((uint16_t)index << 7);", "replace": "uint16_t block = (uint16_t)((uint16_t)index << 6);"},
+  {"name": "索引帶號擴展", "find": "uint16_t block = (uint16_t)((uint16_t)index << 7);", "replace": "uint16_t block = (uint16_t)((uint16_t)(int16_t)(int8_t)index << 7);"},
+  {"name": "段位移對調", "find": "return ((uint32_t)pool_seg << 16) | off;", "replace": "return ((uint32_t)off << 16) | pool_seg;"},
+  {"name": "位移進位到段", "find": "return ((uint32_t)pool_seg << 16) | off;", "replace": "return (((uint32_t)pool_seg << 16) + pool_off + block);"},
+  {"name": "段改讀ds:F12A", "find": "uint16_t pool_seg = rd16(m, DS(0xF12E));", "replace": "uint16_t pool_seg = rd16(m, DS(0xF12A));"},
+  {"name": "位移不加池基底", "find": "uint16_t off = (uint16_t)(pool_off + block);", "replace": "uint16_t off = block;"},
+  {"name": "索引只取7位元", "find": "return f_3982_0001(m, (uint8_t)a[0]);", "replace": "return f_3982_0001(m, (uint8_t)(a[0] & 0x7F));"}
+]

@@ -95,6 +95,78 @@ static const char *field(const char *line, const char *key, char *buf, size_t n)
     return buf;
 }
 
+/* ---- 硬體替身的呼叫軌跡 ------------------------------------------------ */
+typedef struct {
+    char id[32];
+    int nargs;
+    uint16_t args[16];
+    uint32_t ret;
+} TraceEnt;
+
+static TraceEnt g_trace[512];
+static int g_ntrace, g_tcur;
+static int g_trace_flag; /* 本案軌跡不符的旗標：1 多呼叫或參數／順序不同 */
+static char g_trace_why[160];
+
+uint32_t gin3_stub(Mem *m, const char *id, int nargs, const uint16_t *args)
+{
+    TraceEnt *e;
+    (void)m;
+    if (g_tcur >= g_ntrace) {
+        if (!g_trace_flag)
+            snprintf(g_trace_why, sizeof g_trace_why, "C 版多呼叫了 %s（原版只有 %d 次呼叫）", id, g_ntrace);
+        g_trace_flag = 1;
+        return 0;
+    }
+    e = &g_trace[g_tcur++];
+    if (strcmp(e->id, id) != 0 || e->nargs != nargs) {
+        if (!g_trace_flag)
+            snprintf(g_trace_why, sizeof g_trace_why, "第 %d 次呼叫：C=%s/%d 原版=%s/%d", g_tcur, id, nargs, e->id, e->nargs);
+        g_trace_flag = 1;
+    } else {
+        for (int i = 0; i < nargs; i++) {
+            if (e->args[i] != args[i]) {
+                if (!g_trace_flag)
+                    snprintf(g_trace_why, sizeof g_trace_why, "第 %d 次呼叫 %s 的參數 %d：C=%04X 原版=%04X", g_tcur, id, i, args[i], e->args[i]);
+                g_trace_flag = 1;
+            }
+        }
+    }
+    return e->ret;
+}
+
+/* 解析 "ID:a,b=ret;ID:-=ret"；"-" 是空。成功回 0。 */
+static int parse_trace(char *s)
+{
+    char *save = NULL;
+    g_ntrace = g_tcur = 0;
+    g_trace_flag = 0;
+    g_trace_why[0] = '\0';
+    if (!s || strcmp(s, "-") == 0)
+        return 0;
+    for (char *ent = strtok_r(s, ";", &save); ent && g_ntrace < 512; ent = strtok_r(NULL, ";", &save)) {
+        char *colon = strchr(ent, ':'), *eq = strrchr(ent, '=');
+        TraceEnt *e;
+        if (!colon || !eq || eq < colon)
+            return -1;
+        *colon = '\0';
+        *eq = '\0';
+        e = &g_trace[g_ntrace++];
+        snprintf(e->id, sizeof e->id, "%s", ent);
+        e->nargs = 0;
+        e->ret = (uint32_t)strtoul(eq + 1, NULL, 16);
+        if (strcmp(colon + 1, "-") != 0) {
+            char *p = colon + 1;
+            while (*p && e->nargs < 16) {
+                e->args[e->nargs++] = (uint16_t)strtoul(p, &p, 16);
+                if (*p == ',')
+                    p++;
+            }
+        }
+    }
+    return 0;
+}
+
 int main(int argc, char **argv)
 {
     char *line = NULL;
@@ -102,7 +174,7 @@ int main(int argc, char **argv)
     Entry *fn = NULL;
     char ret[16] = "ax", func[64] = "", basefile[256] = "", tmp[64];
     uint32_t stack_lo = 0, stack_hi = 0;
-    long total = 0, bad_ret = 0, bad_writes = 0, bad_fmt = 0;
+    long total = 0, bad_ret = 0, bad_writes = 0, bad_fmt = 0, bad_trace = 0;
     FILE *f;
 
     if (argc != 2) {
@@ -153,6 +225,11 @@ int main(int argc, char **argv)
         char *retstr = strtok_r(NULL, " \n", &save);
         long nwr = atol(strtok_r(NULL, " \n", &save));
         char *wrstr = strtok_r(NULL, " \n", &save);
+        char *stepstr = strtok_r(NULL, " \n", &save);
+        char *ntstr = strtok_r(NULL, " \n", &save);
+        char *trstr = strtok_r(NULL, " \n", &save);
+        (void)stepstr;
+        (void)ntstr;
         (void)tok;
         if (!argstr || !mutstr || !retstr || !wrstr) {
             bad_fmt++;
@@ -179,7 +256,22 @@ int main(int argc, char **argv)
             g_work.b[muts[i].addr & 0xFFFFF] = muts[i].val;
         memcpy(g_pre.b, g_work.b, GIN3_MEM_SIZE);
 
+        if (parse_trace(trstr) != 0) {
+            bad_fmt++;
+            free(muts);
+            free(want);
+            continue;
+        }
         uint64_t got = fn->run(&g_work, args);
+        if (g_tcur != g_ntrace && !g_trace_flag) {
+            snprintf(g_trace_why, sizeof g_trace_why, "C 版少呼叫：只呼叫 %d 次，原版 %d 次", g_tcur, g_ntrace);
+            g_trace_flag = 1;
+        }
+        if (g_trace_flag) {
+            if (bad_trace < 10)
+                printf("呼叫軌跡不符 case %ld: %s\n", id, g_trace_why);
+            bad_trace++;
+        }
         uint64_t wantret = strtoull(retstr, NULL, 16);
         uint64_t mask = 0;
         if (strcmp(ret, "dxax") == 0)
@@ -230,10 +322,10 @@ int main(int argc, char **argv)
     free(line);
     fclose(f);
 
-    printf("函式 %s：案數 %ld，回傳值不符 %ld，寫入集合不符 %ld，格式錯誤 %ld\n", func, total, bad_ret, bad_writes, bad_fmt);
+    printf("函式 %s：案數 %ld，回傳值不符 %ld，寫入集合不符 %ld，軌跡不符 %ld，格式錯誤 %ld\n", func, total, bad_ret, bad_writes, bad_trace, bad_fmt);
     if (total == 0) {
         printf("沒有任何案，不能當通過\n");
         return 1;
     }
-    return (bad_ret == 0 && bad_writes == 0 && bad_fmt == 0) ? 0 : 1;
+    return (bad_ret == 0 && bad_writes == 0 && bad_trace == 0 && bad_fmt == 0) ? 0 : 1;
 }

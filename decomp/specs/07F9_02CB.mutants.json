@@ -1,0 +1,16 @@
+[
+  {"name": "高字非0不算成立", "find": "    if (stock_hi != 0)\n        return 1;\n", "replace": ""},
+  {"name": "只比存量低字且高字當0", "find": "uint16_t stock_hi = rd16(m, LIN(region_seg, (uint16_t)(slot + 2u)));", "replace": "uint16_t stock_hi = 0;"},
+  {"name": "大於等於改大於", "find": "return stock_lo >= thr ? 1 : 0;", "replace": "return stock_lo > thr ? 1 : 0;"},
+  {"name": "門檻改有號比較", "find": "return stock_lo >= thr ? 1 : 0;", "replace": "return (int16_t)stock_lo >= (int16_t)thr ? 1 : 0;"},
+  {"name": "存量艦種步幅4改2", "find": "type * 4u", "replace": "type * 2u"},
+  {"name": "存量陣營步幅28改27", "find": "faction * 28u", "replace": "faction * 27u"},
+  {"name": "存量起點0x30改0x2C", "find": "region_off + 0x30u", "replace": "region_off + 0x2Cu"},
+  {"name": "門檻艦種步幅26改25", "find": "type * 26u", "replace": "type * 25u"},
+  {"name": "門檻陣營步幅208改207", "find": "faction * 208u", "replace": "faction * 207u"},
+  {"name": "門檻表基底4E3A改4E3C", "find": "0x4E3Au", "replace": "0x4E3Cu"},
+  {"name": "faction不遮高位元組", "find": "uint16_t faction = (uint16_t)(faction_w & 0xFFu);", "replace": "uint16_t faction = faction_w;"},
+  {"name": "type不遮高位元組", "find": "uint16_t type = (uint16_t)(type_w & 0xFFu);", "replace": "uint16_t type = type_w;"},
+  {"name": "高字位移不回繞", "find": "LIN(region_seg, (uint16_t)(slot + 2u))", "replace": "LIN(region_seg, slot) + 2u"},
+  {"name": "星域段忽略改用DS", "find": "rd16(m, LIN(region_seg, slot))", "replace": "rd16(m, LIN(GIN3_DS, slot))"}
+]

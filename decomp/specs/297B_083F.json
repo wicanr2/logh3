@@ -1,0 +1,21 @@
+{
+  "id": "297B_083F",
+  "entry": "297B:083F",
+  "conv": "far",
+  "ret": "ax",
+  "size": 153,
+  "code_sha256_16": "51c20b6698157690",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "slots", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 31, 32, 255]}}
+  ],
+  "iters": 100000,
+  "max_cases": 4000,
+  "seed": 20261009,
+  "min_coverage": 100
+}

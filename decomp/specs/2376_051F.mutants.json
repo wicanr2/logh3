@@ -1,0 +1,6 @@
+[
+  {"name": "沒丟掉AH", "find": "uint16_t idx = (uint16_t)(ax & 0xFFu);", "replace": "uint16_t idx = ax;"},
+  {"name": "每筆改159bytes", "find": "idx * 160u", "replace": "idx * 159u"},
+  {"name": "表起點改79F", "find": "0x79Eu", "replace": "0x79Fu"},
+  {"name": "AL當有號數", "find": "uint16_t idx = (uint16_t)(ax & 0xFFu);", "replace": "uint16_t idx = (uint16_t)(int16_t)(int8_t)ax;"}
+]

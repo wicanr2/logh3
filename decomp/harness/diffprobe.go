@@ -86,6 +86,39 @@ type Spec struct {
 	MaxCases    int                  `json:"max_cases"`
 	Seed        int64                `json:"seed"`
 	MinCoverage float64              `json:"min_coverage"`
+	DSSeg       string               `json:"ds_seg"` // 呼叫時的 DS（hex 段值）；預設 DGROUP 54B3。表基底 "ds:" 與 gen.ds 都跟著它
+	Seeds       []SeedSpec           `json:"seeds"`  // 手工邊界案例，一律記錄並放進語料庫
+	Stubs       []StubSpec           `json:"stubs"`  // 硬體葉函式替身：不執行原函式，記錄呼叫並回傳記錄下來的值
+}
+
+// StubSpec 描述一個被替身取代的函式（通常是碰硬體的葉函式）。
+// 原版執行到它的入口時，探針讀出參數、記錄一筆呼叫軌跡、設定回傳值，然後直接返回，不執行它的程式碼。
+// C 版必須以 gin3_stub() 做出相同順序、相同參數的呼叫，並使用記錄下來的回傳值。
+type StubSpec struct {
+	Entry   string   `json:"entry"`   // "3ABF:0000"
+	Conv    string   `json:"conv"`    // far（預設）| near
+	Nargs   int      `json:"nargs"`   // 堆疊上的字數
+	ArgRegs []string `json:"argregs"` // 另外記錄的暫存器（呼叫當下的值）
+	Ret     string   `json:"ret"`     // ax | dxax | none
+	Gen     GenSpec  `json:"gen"`     // 回傳值的取法
+}
+
+type traceEntry struct {
+	id   string
+	args []uint16
+	ret  uint32
+}
+
+// PokeSpec 把一段 hex bytes 寫到指定位址：ds:OFF、SEG:OFF（hex）或 lin:ADDR。
+type PokeSpec struct {
+	Addr string `json:"addr"`
+	Hex  string `json:"hex"`
+}
+
+// SeedSpec 是一組手工輸入：Args 依參數展開順序（省略則隨機產生），Pokes 是記憶體修改。
+type SeedSpec struct {
+	Args  []int      `json:"args"`
+	Pokes []PokeSpec `json:"pokes"`
 }
 
 func must(err error) {
@@ -107,10 +140,11 @@ type mut struct {
 type input struct {
 	args []uint16
 	muts map[uint32]uint8 // 相對於基底傾印的差異
+	rets []uint32         // 替身依序回傳的值（探針執行後補齊，重放時固定）
 }
 
 func (in *input) clone() *input {
-	c := &input{args: append([]uint16(nil), in.args...), muts: map[uint32]uint8{}}
+	c := &input{args: append([]uint16(nil), in.args...), muts: map[uint32]uint8{}, rets: append([]uint32(nil), in.rets...)}
 	for k, v := range in.muts {
 		c.muts[k] = v
 	}
@@ -125,6 +159,8 @@ type result struct {
 	reads  []uint32
 	writes []mut
 	cover  map[uint32]struct{}
+	trace  []traceEntry
+	rets   []uint32
 }
 
 type probe struct {
@@ -135,6 +171,9 @@ type probe struct {
 	base      []byte
 	baseCPU   cpu.CPU
 	seg, off  uint16
+	dsSeg     uint16
+	stubs     map[uint32]*StubSpec
+	stubID    map[uint32]string
 	funcLin   uint32
 	insns     map[uint32]struct{}
 	tables    map[string]resolvedTable
@@ -177,15 +216,15 @@ func (p *probe) resolveTables() {
 		case strings.HasPrefix(t.Base, "ds:"):
 			off, err := strconv.ParseUint(t.Base[3:], 16, 16)
 			must(err)
-			rt.seg, rt.off = dgroupSeg, uint16(off)
+			rt.seg, rt.off = p.dsSeg, uint16(off)
 		case strings.HasPrefix(t.Base, "ptr:"):
 			f := strings.Split(t.Base, ":")
 			o, err := strconv.ParseUint(f[1], 16, 16)
 			must(err)
 			s, err := strconv.ParseUint(f[2], 16, 16)
 			must(err)
-			rt.off = p.rd16(dgroupSeg, uint16(o))
-			rt.seg = p.rd16(dgroupSeg, uint16(s))
+			rt.off = p.rd16(p.dsSeg, uint16(o))
+			rt.seg = p.rd16(p.dsSeg, uint16(s))
 		default:
 			panic("不支援的表基底：" + t.Base)
 		}
@@ -264,7 +303,7 @@ func (p *probe) genArgs() *input {
 			case a.Gen.DS != "":
 				v, err := strconv.ParseUint(a.Gen.DS, 16, 16)
 				must(err)
-				in.args = append(in.args, uint16(v), dgroupSeg)
+				in.args = append(in.args, uint16(v), p.dsSeg)
 			case a.Gen.Scratch > 0:
 				base := next
 				next += uint32((a.Gen.Scratch + 15) &^ 15)
@@ -313,7 +352,8 @@ func (p *probe) run(in *input) result {
 	// 展開參數：堆疊上的字由右向左推入；kind=reg 的值放進暫存器
 	var stackWords []uint16
 	type regVal struct {
-		idx int
+		idx int // 一般暫存器索引；段暫存器時為 -1
+		seg int // 段暫存器索引；一般暫存器時為 -1
 		v   uint16
 	}
 	var regVals []regVal
@@ -321,7 +361,11 @@ func (p *probe) run(in *input) result {
 	for _, a := range p.spec.Args {
 		n := argSize(a)
 		if a.Kind == "reg" {
-			regVals = append(regVals, regVal{regIndex(a.Reg), in.args[k]})
+			if si := segIndex(a.Reg); si >= 0 {
+				regVals = append(regVals, regVal{-1, si, in.args[k]})
+			} else {
+				regVals = append(regVals, regVal{regIndex(a.Reg), -1, in.args[k]})
+			}
 		} else {
 			stackWords = append(stackWords, in.args[k:k+n]...)
 		}
@@ -338,10 +382,14 @@ func (p *probe) run(in *input) result {
 	}
 	c.R[cpu.SP] = sp
 	c.Seg[cpu.CS], c.IP = p.seg, p.off
-	c.Seg[cpu.DS] = dgroupSeg
+	c.Seg[cpu.DS] = p.dsSeg
 	c.Flags &^= 0x200
 	for _, r := range regVals {
-		c.R[r.idx] = r.v
+		if r.seg >= 0 {
+			c.Seg[r.seg] = r.v
+		} else {
+			c.R[r.idx] = r.v
+		}
 	}
 
 	p.intCount = 0
@@ -353,6 +401,9 @@ func (p *probe) run(in *input) result {
 	cover := map[uint32]struct{}{}
 	start := m.Steps
 	res := result{ok: true}
+	var trace []traceEntry
+	var usedRets []uint32
+	stubCalls := 0
 	for {
 		var done bool
 		if p.spec.Conv == "far" {
@@ -363,9 +414,57 @@ func (p *probe) run(in *input) result {
 		if done {
 			break
 		}
-		if m.Steps-start > stepBudget {
+		if m.Steps-start+uint64(stubCalls) > stepBudget {
 			res.ok, res.reason = false, "步數超過上限"
 			break
+		}
+		if st, ok := p.stubs[cpu.Addr(c.Seg[cpu.CS], c.IP)]; ok {
+			// 替身：不執行原函式，記錄呼叫、設定回傳值，然後直接返回（呼叫端自己清除參數）
+			ss, sp := c.Seg[cpu.SS], c.R[cpu.SP]
+			retIP := m.Read16(cpu.Addr(ss, sp))
+			argBase := sp + 2
+			var retCS uint16
+			if st.Conv != "near" {
+				retCS = m.Read16(cpu.Addr(ss, sp+2))
+				argBase = sp + 4
+			}
+			args := make([]uint16, 0, st.Nargs+len(st.ArgRegs))
+			for i := 0; i < st.Nargs; i++ {
+				args = append(args, m.Read16(cpu.Addr(ss, argBase+uint16(2*i))))
+			}
+			for _, rn := range st.ArgRegs {
+				args = append(args, c.R[regIndex(rn)])
+			}
+			var rv uint32
+			if len(usedRets) < len(in.rets) {
+				rv = in.rets[len(usedRets)]
+			} else {
+				rv = p.stubValue(st)
+			}
+			usedRets = append(usedRets, rv)
+			trace = append(trace, traceEntry{p.stubID[cpu.Addr(c.Seg[cpu.CS], c.IP)], args, rv})
+			switch st.Ret {
+			case "ax":
+				c.R[cpu.AX] = uint16(rv)
+			case "dxax":
+				c.R[cpu.AX], c.R[cpu.DX] = uint16(rv), uint16(rv>>16)
+			default:
+				if strings.HasPrefix(st.Ret, "pack:") {
+					toks := strings.Split(st.Ret[5:], ",")
+					for i, t := range toks {
+						c.R[regIndex(t)] = uint16(rv >> (16 * (len(toks) - 1 - i)))
+					}
+				}
+			}
+			c.IP = retIP
+			if st.Conv != "near" {
+				c.Seg[cpu.CS] = retCS
+				c.R[cpu.SP] = sp + 4
+			} else {
+				c.R[cpu.SP] = sp + 2
+			}
+			stubCalls++
+			continue
 		}
 		cover[cpu.Addr(c.Seg[cpu.CS], c.IP)] = struct{}{}
 		if err := m.Step(); err != nil {
@@ -374,8 +473,10 @@ func (p *probe) run(in *input) result {
 		}
 	}
 	p.recording = false
-	res.steps = m.Steps - start
+	res.steps = m.Steps - start + uint64(stubCalls)
 	res.cover = cover
+	res.trace = trace
+	res.rets = usedRets
 	if res.ok {
 		switch {
 		case p.intCount > 0:
@@ -432,6 +533,15 @@ func (p *probe) mutate(in *input) *input {
 	out := in.clone()
 	if p.rng.Intn(5) == 0 {
 		out.args = p.genArgs().args
+	}
+	if len(out.rets) > 0 && p.rng.Intn(4) == 0 {
+		// 改一個替身回傳值，或截斷讓後面的值重新產生
+		i := p.rng.Intn(len(out.rets))
+		if p.rng.Intn(3) == 0 {
+			out.rets = out.rets[:i]
+		} else {
+			out.rets[i] = []uint32{0, 1, 2, 0xFF, 0x7FFF, 0x8000, 0xFFFF, uint32(p.rng.Intn(65536))}[p.rng.Intn(8)]
+		}
 	}
 	if len(p.readPool) == 0 {
 		return out
@@ -516,6 +626,21 @@ func main() {
 	}
 
 	p := &probe{spec: spec, rng: rand.New(rand.NewSource(spec.Seed)), readSeen: map[uint32]struct{}{}, covered: map[uint32]struct{}{}}
+	p.dsSeg = dgroupSeg
+	if spec.DSSeg != "" {
+		v, err := strconv.ParseUint(spec.DSSeg, 16, 16)
+		must(err)
+		p.dsSeg = uint16(v)
+	}
+	p.stubs = map[uint32]*StubSpec{}
+	p.stubID = map[uint32]string{}
+	for i := range spec.Stubs {
+		st := &spec.Stubs[i]
+		seg, off := parseAddr(st.Entry)
+		lin := cpu.Addr(seg, off)
+		p.stubs[lin] = st
+		p.stubID[lin] = strings.ReplaceAll(strings.ToUpper(st.Entry), ":", "_")
+	}
 	p.m = machine.New()
 	p.d = dos.New(p.m, "/orig")
 	p.d.Install()
@@ -585,6 +710,47 @@ func main() {
 		return n
 	}
 
+	// 種子：手工邊界案例。一律執行並記錄，進語料庫讓後續突變從它出發。
+	for i, sd := range spec.Seeds {
+		in := p.genArgs()
+		if len(sd.Args) > 0 {
+			in.args = in.args[:0]
+			for _, a := range sd.Args {
+				in.args = append(in.args, uint16(a))
+			}
+		}
+		if len(in.args) != argWords(spec) {
+			panic(fmt.Sprintf("seed %d 的參數數量 %d 與描述檔不符（應為 %d）", i, len(in.args), argWords(spec)))
+		}
+		for _, pk := range sd.Pokes {
+			lin := p.pokeAddr(pk.Addr)
+			b, err := hex.DecodeString(strings.ReplaceAll(pk.Hex, " ", ""))
+			must(err)
+			for j, v := range b {
+				addr := lin + uint32(j)
+				if p.base[addr] == v {
+					delete(in.muts, addr)
+				} else {
+					in.muts[addr] = v
+				}
+			}
+		}
+		res := p.run(in)
+		if !res.ok {
+			panic(fmt.Sprintf("seed %d 無法執行：%s", i, res.reason))
+		}
+		p.learn(res)
+		for a := range res.cover {
+			if a >= p.funcLin && a < p.funcLin+uint32(spec.Size) {
+				p.covered[a] = struct{}{}
+			}
+		}
+		seenSig[sigOf(res)] = struct{}{}
+		in.rets = res.rets
+		recorded = append(recorded, in)
+		results = append(results, res)
+		corpus = append(corpus, in)
+	}
 	plain := 0 // 不新穎（沒有新覆蓋、輸出簽章重複）但仍記錄的案數，保留對突變的鑑別力
 	for it := 0; it < spec.Iters && len(recorded) < 2*spec.MaxCases && plain < spec.MaxCases; it++ {
 		var in *input
@@ -615,11 +781,13 @@ func main() {
 		_, seen := seenSig[sig]
 		if newCover || !seen {
 			seenSig[sig] = struct{}{}
+			in.rets = res.rets
 			recorded = append(recorded, in)
 			results = append(results, res)
 			corpus = append(corpus, in)
 		} else if plain < spec.MaxCases {
 			plain++
+			in.rets = res.rets
 			recorded = append(recorded, in)
 			results = append(results, res)
 		}
@@ -667,13 +835,59 @@ func main() {
 		if argStr == "" {
 			argStr = "-"
 		}
-		fmt.Fprintf(w, "C %d %s %d %s %016x %d %s %d\n", i, argStr, len(in.muts), pairs(in.muts), res.ret,
+		fmt.Fprintf(w, "C %d %s %d %s %016x %d %s %d", i, argStr, len(in.muts), pairs(in.muts), res.ret,
 			len(res.writes), wpairs(res.writes), res.steps)
+		if len(p.spec.Stubs) > 0 {
+			fmt.Fprintf(w, " %d %s", len(res.trace), traceString(res.trace))
+		}
+		fmt.Fprintln(w)
 	}
 	must(w.Flush())
 	must(vec.Close())
 	fmt.Printf("%s：記錄 %d 案（迭代上限 %d），指令覆蓋 %d/%d (%.1f%%)，丟棄 %s\n",
 		spec.ID, len(recorded), spec.Iters, cov, total, pct, strings.Join(reasons, " "))
+}
+
+// pokeAddr 解析 PokeSpec 的位址：ds:OFF、SEG:OFF（hex）、lin:ADDR（hex）。
+func (p *probe) pokeAddr(s string) uint32 {
+	parts := strings.Split(s, ":")
+	switch {
+	case parts[0] == "lin" && len(parts) == 2:
+		v, err := strconv.ParseUint(parts[1], 16, 32)
+		must(err)
+		return uint32(v)
+	case parts[0] == "ds" && len(parts) == 2:
+		v, err := strconv.ParseUint(parts[1], 16, 16)
+		must(err)
+		return cpu.Addr(p.dsSeg, uint16(v))
+	case len(parts) == 2:
+		seg, err := strconv.ParseUint(parts[0], 16, 16)
+		must(err)
+		off, err := strconv.ParseUint(parts[1], 16, 16)
+		must(err)
+		return cpu.Addr(uint16(seg), uint16(off))
+	}
+	panic("不支援的位址格式：" + s)
+}
+
+// traceString 把呼叫軌跡寫成 ID:參數,參數=回傳值;… （全部 hex），空軌跡寫 -。
+func traceString(t []traceEntry) string {
+	if len(t) == 0 {
+		return "-"
+	}
+	parts := make([]string, len(t))
+	for i, e := range t {
+		args := make([]string, len(e.args))
+		for k, a := range e.args {
+			args[k] = fmt.Sprintf("%x", a)
+		}
+		as := strings.Join(args, ",")
+		if as == "" {
+			as = "-"
+		}
+		parts[i] = fmt.Sprintf("%s:%s=%x", e.id, as, e.ret)
+	}
+	return strings.Join(parts, ";")
 }
 
 func argSize(a ArgSpec) int {
@@ -690,6 +904,40 @@ func argWords(s Spec) int {
 		n += argSize(a)
 	}
 	return n
+}
+
+// segIndex 回段暫存器索引，不是段暫存器回 -1。SS 與 CS 不開放：堆疊與程式段要維持基底狀態。
+// stubValue 依替身描述檔取一個回傳值。
+func (p *probe) stubValue(st *StubSpec) uint32 {
+	switch {
+	case st.Ret == "dxax":
+		return uint32(p.genValue(st.Gen, 16))<<16 | uint32(p.genValue(st.Gen, 16))
+	case st.Ret == "none":
+		return 0
+	case strings.HasPrefix(st.Ret, "pack:"):
+		n := len(strings.Split(st.Ret[5:], ","))
+		if n > 2 {
+			panic("替身的 pack: 最多 2 個暫存器")
+		}
+		var v uint32
+		for i := 0; i < n; i++ {
+			v = v<<16 | uint32(p.genValue(st.Gen, 16))
+		}
+		return v
+	}
+	return uint32(p.genValue(st.Gen, 16))
+}
+
+func segIndex(name string) int {
+	switch name {
+	case "es":
+		return cpu.ES
+	case "ds":
+		return cpu.DS
+	case "ss", "cs":
+		panic("不支援把 " + name + " 當參數：堆疊與程式段要維持基底狀態")
+	}
+	return -1
 }
 
 func regIndex(name string) int {
@@ -722,12 +970,24 @@ func (p *probe) packRet(c *cpu.CPU) uint64 {
 	case strings.HasPrefix(p.spec.Ret, "pack:"):
 		var v uint64
 		for _, n := range strings.Split(p.spec.Ret[5:], ",") {
-			if n == "flags" {
-				// 只取跳躍條件用得到的四個旗標：OF SF ZF CF
+			switch n {
+			case "flags": // 只取跳躍條件用得到的四個旗標：OF SF ZF CF
 				v = v<<16 | uint64(c.Flags&0x08C1)
-				continue
+			case "al":
+				v = v<<16 | uint64(c.R[cpu.AX]&0xFF)
+			case "ah":
+				v = v<<16 | uint64(c.R[cpu.AX]>>8)
+			case "cf":
+				v = v<<16 | uint64(c.Flags&1)
+			case "zf":
+				v = v<<16 | uint64((c.Flags>>6)&1)
+			case "sf":
+				v = v<<16 | uint64((c.Flags>>7)&1)
+			case "of":
+				v = v<<16 | uint64((c.Flags>>11)&1)
+			default:
+				v = v<<16 | uint64(c.R[regIndex(n)])
 			}
-			v = v<<16 | uint64(c.R[regIndex(n)])
 		}
 		return v
 	}

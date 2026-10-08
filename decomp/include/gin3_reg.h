@@ -18,4 +18,13 @@ void gin3_register(const char *id, int nargs, Gin3Run run);
 #define GIN3_REGISTER(id, nargs, runfn) \
     static void __attribute__((constructor)) gin3_reg_##runfn(void) { gin3_register(id, nargs, runfn); }
 
+
+/*
+ * 硬體葉函式的替身（描述檔 stubs）。C 版呼叫它來取代「原版呼叫該硬體函式」：
+ * id 是 SEG_OFF（大寫 hex），args 依序是堆疊參數字與 argregs 暫存器值。
+ * 檢查程式依記錄下來的軌跡比對呼叫序列與參數，並回傳記錄下來的回傳值；
+ * 呼叫序列或參數與原版不同就計為軌跡不符。替身沒有記憶體副作用。
+ */
+uint32_t gin3_stub(Mem *m, const char *id, int nargs, const uint16_t *args);
+
 #endif

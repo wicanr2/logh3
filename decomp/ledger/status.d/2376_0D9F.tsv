@@ -1,0 +1,2 @@
+golem_linear	level	source	evidence
+244ff	diff-tested	decomp/src/f_2376_0D9F.c	decomp/specs/2376_0D9F.json

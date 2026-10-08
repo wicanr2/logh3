@@ -1,0 +1,18 @@
+{
+  "id": "297B_0209",
+  "entry": "297B:0209",
+  "conv": "far",
+  "ret": "ax",
+  "size": 84,
+  "code_sha256_16": "8259fd385c6b8625",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "ax_in", "kind": "reg", "reg": "ax", "gen": {"min": 0, "max": 65535}},
+    {"name": "level", "kind": "word", "gen": {"choices": [0, 1, 2, 5, 6, 15, 16, 19, 20, 23, 24, 28, 29, 33, 34, 38, 39, 40, 255], "also_random": true}}
+  ],
+  "iters": 60000,
+  "max_cases": 3000,
+  "seed": 20261009,
+  "min_coverage": 100
+}

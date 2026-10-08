@@ -1,0 +1,18 @@
+{
+  "id": "2376_02B0",
+  "entry": "2376:02B0",
+  "conv": "near",
+  "ret": "ax",
+  "size": 46,
+  "code_sha256_16": "b799b8cfcbc0183a",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "si", "kind": "reg", "reg": "si", "gen": {"choices": [4096, 8192, 65509]}},
+    {"name": "bp", "kind": "reg", "reg": "bp", "gen": {"choices": [4, 4096, 8192]}}
+  ],
+  "iters": 30000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 100
+}

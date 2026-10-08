@@ -1,0 +1,20 @@
+{
+  "id": "297B_12FB",
+  "entry": "297B:12FB",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 33,
+  "code_sha256_16": "11e92134324cc3d2",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}}
+  ],
+  "iters": 60000,
+  "max_cases": 2500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

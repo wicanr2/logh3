@@ -1,0 +1,9 @@
+[
+  {"name": "列步距改0xEF", "find": "0xF0u * row", "replace": "0xEFu * row"},
+  {"name": "欄步距改7", "find": "6u * col", "replace": "7u * col"},
+  {"name": "基底改D81F", "find": "0xD81Eu", "replace": "0xD81Fu"},
+  {"name": "CL與CH對調", "find": "0xF0u * row + 6u * col", "replace": "0xF0u * col + 6u * row"},
+  {"name": "不保留AX", "find": "((uint64_t)ax << 32)", "replace": "((uint64_t)(ax ^ 1u) << 32)"},
+  {"name": "DX只留低位元組", "find": "((uint64_t)dx << 16)", "replace": "((uint64_t)(dx & 0xFFu) << 16)"},
+  {"name": "位移不截成16位元", "find": "uint16_t di = (uint16_t)(0xF0u * row + 6u * col + 0xD81Eu);", "replace": "uint32_t di = (0xF0u * row + 6u * col + 0xD81Eu);"}
+]

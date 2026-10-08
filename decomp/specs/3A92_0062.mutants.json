@@ -1,0 +1,19 @@
+[
+  {"name": "湊整常數0x1FF", "find": "sum = sum + 0x200u;", "replace": "sum = sum + 0x1FFu;"},
+  {"name": "湊整常數0x400", "find": "sum = sum + 0x200u;", "replace": "sum = sum + 0x400u;"},
+  {"name": "湊整進位到高字丟失", "find": "sum = sum + 0x200u;", "replace": "sum = (sum & 0xFFFF0000u) | ((sum + 0x200u) & 0xFFFFu);"},
+  {"name": "差改成和", "find": "uint32_t sum = (uint32_t)p_di - (uint32_t)p_si;", "replace": "uint32_t sum = (uint32_t)p_di + (uint32_t)p_si;"},
+  {"name": "被減數與減數對調", "find": "uint32_t sum = (uint32_t)p_di - (uint32_t)p_si;", "replace": "uint32_t sum = (uint32_t)p_si - (uint32_t)p_di;"},
+  {"name": "si乘積改用bx", "find": "rd16w(m, si) * (int32_t)(int16_t)cx", "replace": "rd16w(m, si) * (int32_t)(int16_t)bx"},
+  {"name": "di乘積改用cx", "find": "rd16w(m, di) * (int32_t)(int16_t)bx", "replace": "rd16w(m, di) * (int32_t)(int16_t)cx"},
+  {"name": "si記憶體運算元當無號", "find": "(int32_t)(int16_t)rd16w(m, si)", "replace": "(int32_t)(uint16_t)rd16w(m, si)"},
+  {"name": "di記憶體運算元當無號", "find": "(int32_t)(int16_t)rd16w(m, di)", "replace": "(int32_t)(uint16_t)rd16w(m, di)"},
+  {"name": "cx當無號", "find": "(int32_t)(int16_t)cx;", "replace": "(int32_t)(uint16_t)cx;"},
+  {"name": "bx當無號", "find": "(int32_t)(int16_t)bx;", "replace": "(int32_t)(uint16_t)bx;"},
+  {"name": "邏輯右移", "find": "return (uint16_t)((mid >> 2) | ((mid & 0x8000u) ? 0xC000u : 0u));", "replace": "return (uint16_t)(mid >> 2);"},
+  {"name": "不截斷的32位元右移10", "find": "return (uint16_t)((mid >> 2) | ((mid & 0x8000u) ? 0xC000u : 0u));", "replace": "return (uint16_t)((int32_t)sum >> 10);"},
+  {"name": "取第9位元起", "find": "mid = (uint16_t)(sum >> 8);", "replace": "mid = (uint16_t)(sum >> 9);"},
+  {"name": "只右移1次", "find": "return (uint16_t)((mid >> 2) | ((mid & 0x8000u) ? 0xC000u : 0u));", "replace": "return (uint16_t)((mid >> 1) | ((mid & 0x8000u) ? 0x8000u : 0u));"},
+  {"name": "兩個運算元都讀si", "find": "(int32_t)(int16_t)rd16w(m, di)", "replace": "(int32_t)(int16_t)rd16w(m, si)"},
+  {"name": "word讀取跨段不回繞", "find": "uint16_t hi = rd8(m, DS((uint16_t)(off + 1)));", "replace": "uint16_t hi = rd8(m, DS(off) + 1);"}
+]

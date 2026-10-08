@@ -1,0 +1,6 @@
+[
+  {"name": "0與非0對調", "find": "return faction == 0 ? 1 : 0;", "replace": "return faction == 0 ? 0 : 1;"},
+  {"name": "只認陣營1為非0", "find": "return faction == 0 ? 1 : 0;", "replace": "return faction == 0 ? 1 : (faction == 1 ? 0 : 1);"},
+  {"name": "非0回2", "find": "return faction == 0 ? 1 : 0;", "replace": "return faction == 0 ? 1 : (faction == 1 ? 0 : 2);"},
+  {"name": "高位元組也參與判斷", "find": "return f_3982_0250((uint8_t)a[0]);", "replace": "return f_3982_0250(a[0] ? (uint8_t)(a[0] | (a[0] >> 8)) : 0);"}
+]

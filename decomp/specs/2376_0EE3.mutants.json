@@ -1,0 +1,7 @@
+[
+  {"name": "沒清DH", "find": "uint16_t idx = (uint16_t)(dx & 0xFFu);", "replace": "uint16_t idx = dx;"},
+  {"name": "每筆改16bytes", "find": "idx * 15u", "replace": "idx * 16u"},
+  {"name": "表起點改82D4", "find": "0x82D3u", "replace": "0x82D4u"},
+  {"name": "AX不等於DS", "find": "((uint64_t)ds << 32)", "replace": "((uint64_t)(ds ^ 0x100u) << 32)"},
+  {"name": "DX保留原值", "find": "((uint64_t)idx << 16)", "replace": "((uint64_t)dx << 16)"}
+]

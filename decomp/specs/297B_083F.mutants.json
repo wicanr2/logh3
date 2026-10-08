@@ -1,0 +1,16 @@
+[
+  {"name": "取較小者", "find": "if (ability < other)", "replace": "if (ability > other)"},
+  {"name": "能力值改有號比較", "find": "if (ability < other)", "replace": "if ((int8_t)ability < (int8_t)other)"},
+  {"name": "副官永遠不看", "find": "if (adm2_index != 0xFF) {", "replace": "if (0) {"},
+  {"name": "副官0xFE也當無", "find": "if (adm2_index != 0xFF) {", "replace": "if (adm2_index < 0xFE) {"},
+  {"name": "270改271", "find": "(uint16_t)(270u - 2u * ability)", "replace": "(uint16_t)(271u - 2u * ability)"},
+  {"name": "乘積不截成16位元", "find": "quotient = (int16_t)((int16_t)scaled / 100);", "replace": "quotient = (int16_t)((int32_t)product / 100); (void)scaled;"},
+  {"name": "商改無號除", "find": "quotient = (int16_t)((int16_t)scaled / 100);", "replace": "quotient = (int16_t)(scaled / 100u);"},
+  {"name": "AH清零", "find": "return (uint16_t)(((uint16_t)quotient & 0xFF00u) | low);", "replace": "return (uint16_t)low;"},
+  {"name": "100改99", "find": "low = (uint8_t)(100u - (uint8_t)quotient);", "replace": "low = (uint8_t)(99u - (uint8_t)quotient);"},
+  {"name": "表位址改4E2F", "find": "0x4E2Eu + slots", "replace": "0x4E2Fu + slots"},
+  {"name": "提督步幅改27", "find": "(uint16_t)(adm1_index * 0x1Cu)", "replace": "(uint16_t)(adm1_index * 0x1Bu)"},
+  {"name": "副官步幅改27", "find": "(uint16_t)(adm2_index * 0x1Cu)", "replace": "(uint16_t)(adm2_index * 0x1Bu)"},
+  {"name": "能力位移改+0x16", "find": "DS((uint16_t)(adm1 + 0x17))", "replace": "DS((uint16_t)(adm1 + 0x16))"},
+  {"name": "副官能力位移改+0x16", "find": "DS((uint16_t)(adm2 + 0x17))", "replace": "DS((uint16_t)(adm2 + 0x16))"}
+]

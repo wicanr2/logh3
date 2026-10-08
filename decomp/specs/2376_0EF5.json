@@ -1,0 +1,18 @@
+{
+  "id": "2376_0EF5",
+  "entry": "2376:0EF5",
+  "conv": "near",
+  "ret": "dxax",
+  "size": 58,
+  "code_sha256_16": "9e36f5829dba5477",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "ax", "kind": "reg", "reg": "ax", "gen": {"choices": [0, 1, 255, 256, 257, 32767, 32768, 65280, 65535], "also_random": true}},
+    {"name": "dx", "kind": "reg", "reg": "dx", "gen": {"choices": [0, 1, 255, 256, 5401, 12444, 32767, 32768, 65535], "also_random": true}}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}
