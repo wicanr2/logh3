@@ -10773,3 +10773,39 @@ CONTEXT與矩陣，87張、11張open，267條核實零不成立、3條人工、1
 - 建立並更新#97保持OPEN；首批5張與83張全覆蓋、其他圖尚缺分開記錄。Issue證據段一行敘述被解析器拒絕，重讀worklist入口後按精確契約移至正文，最新遠端97項／5 OPEN／92 CLOSED，277條零失效、131一致、1人工、145歷史文件證據。CONTEXT清單及矩陣由遠端快照產生；#96保持完成。
 - 新規格、試玩108、HD素材README、來源索引、計畫121與工具全部掛既有internals入口；正對照121、相對連結、Python AST及git diff --check核對。唯一HD來源索引60493 bytes，SHA-256 b11545049f1fc83cb84120e6da7d82dd64b7fc1f36d80f3dd42878c3ce5ad71b；來源指向目前文件與實際交付，舊v.0.1.3全部產物雜湊保持，舊凍結來源回查e216da2等原提交。前三版與72秒推廣片保持，未建立tag、Release或新影片。
 - 整個工作樹無root-owned檔案或*.md目錄，輸出UID/GID1000:1000。一次性Go／GUI／Wine／osxcross容器結束，未重建映像或清理其他專案；最終容器狀態另核。本輪本機提交「接入原畫風HD首批人物與三平台測試包」，未推送。其餘78張人物與艦艇、地圖待續，不宣稱整套HD完成；原規則、AI、音訊與存檔格式保持，未新增雙玩家或戰場差異對拍。
+
+## 2026-10-08：評估 matching decompilation，編譯器歸屬改正
+
+- 使用者要用 matching decompilation 重建原版邏輯當 remake 驗證依據，重寫的程式碼放本 repo 新目錄並維持 private。裁決：起手範圍選已解出的純邏輯函式試點；oracle 定位選「盡量全面取代 dosgolem 對拍」，專案 `CLAUDE.md` 的對拍契約尚未修改，等第一支函式兩次獨立重建得到相同 bytes 之後再提修訂草案。
+- 本機工具鏈在 `~/cht/borland/toolchains/`（Borland C++ 2.0、Turbo C 2.0、MSVC 1.0／1.52、MASM 6.11），沒有 Datalight／Zortech。`~/cht/pto2-matching/docs/MATCHING-CONTRACT.md` 與 DOSBox-X 跑原廠編譯器的作法可沿用。
+- 開工儀式：git 身分 `wicanr2@gmail.com`，歷史作者只有這一個；`tools/issues_snapshot.sh` 抓到 97 張（open 5）；`worklist verify` 277 條中 1 條斷言不成立（`hd-artwork`，83 項對門檻 82，來自使用者未提交的 HD 素材工作，未處理）。
+- 找解包映像時發現 `docs/re/336` 提到的 `workplace/r7glue/` 與解包映像已不在磁碟上；改用 `~/cht/dosgolem-logh3/workplace/` 的 1 MB 執行期傾印。
+- 在 Docker（`golang:1.24-bookworm`，`--network none`，傾印唯讀）內對傾印跑 `strings`：`ds:0000`（線性 `0x54B30`）是 `Datalight C 3.10 L, written by Walter Bright`，四份傾印一致，無 Borland 或 MS runtime 字樣。啟動碼 `0349:0079` 設 `DS=54B3`。證據與影響見 [`docs/re/442`](docs/re/442-compiler-is-datalight-c.md)；`internals/51`、`02`、`CONTEXT.md` 已勘誤，`re/146`、`334` 加指標。
+- Internet Archive 全文檢索沒有 Datalight C 本體；有 Zortech C++ 3.1、Digital Mars C++ 8.57，GitHub `davidly/dos_compilers` 有 Zortech C++ 2.06。皆為後代版本，尚未下載。byte-matching 能否成立待使用者裁決編譯器來源。
+- 這輪只讀取與寫文件：新增 `docs/re/442-...md`，修改 `internals/51`、`internals/02`、`CONTEXT.md`、`WORKLOG.md`、`re/146`、`re/334`。未 commit、未 push、未建立 issue 或新目錄 `decomp/`。一次性容器皆 `--rm`，無殘留。
+
+## 2026-10-08：decomp 試點 `203A:0424` 與修護艦規則需求
+
+- 使用者選「兩條一起做」：探測候選編譯器，同時走功能等價路徑。候選只放 `workplace/toolchains/`（gitignore）：IA 的 Zortech C++ 3.1 十張磁片與 `ZORTECH.ZIP`（md5 與 IA 中繼資料一致）、GitHub `davidly/dos_compilers` 的 Zortech C++ 2.06。2.06 的 runtime 訊息字串與 GIN3PS 同源，但 long 輔助函式位元組不同，`3CC9` 的 `AX:BX × CX:DX` 慣例在 2.06 不存在。byte-matching 目前沒有可用編譯器，細節追加在 `docs/re/442`。
+- 新增 `decomp/`（C 參考實作、dosgolem 探針、比對程式、執行腳本）。探針用已核對雜湊的保存狀態，直接呼叫原版 `203A:0424`，驗證只動堆疊。5006 案與 C 版零不符，三個變異全被抓到，三次產生的向量檔逐位元組相同。證據 `docs/re/443`，精確語意 `docs/internals/66`，契約草案 `docs/spec/124`（DRAFT）。
+- remake 的 `strategicAttack` 對同一份向量：溢位區以外 3297 案零不符，溢位區 1709 案中 1624 案不符。原版在艘數合計與第一次除法的商上縮成 16 位元，remake 用 `int`。溢位區是否可達未查證。新測試 `internal/rules/decomp_fleet_attack_test.go` 缺環境變數時 skip。
+- 專案 `CLAUDE.md` 的對拍契約未改。待使用者確認修訂方向後再寫入。
+- `docs/internals/00-README.md` 有使用者未提交的修改，這輪沒有在索引補 `66`、`re/442`、`re/443`、`spec/124` 的連結。
+- 使用者新提出一條規則修改：修護艦（艦種 6，代號Ｅ）可以被「修理」指令修理，原版排除它（`1AAB:043D` 篩選函式排除艦種 6、7，`docs/re/131`）。remake 的對應位置是 `battlepreparation.go` 的 `collect` 與 `internal/game/supplypick.go`。範圍與預設值待使用者確認，尚未寫規格或改程式。
+- 這輪沒有 commit、沒有 push、沒有建立 GitHub issue。一次性容器皆 `--rm`，工作樹無 root 擁有的檔案。
+
+## 2026-10-09：修護艦可被其他修護艦修理（可選規則，規格125）
+
+- 使用者裁決：只能被其他修護艦修理（發令的來源不能修自己），做成可選規則、預設原版。艦種 7 偵察隊、補給、行星路徑不變。
+- 規格 [`docs/spec/125`](docs/spec/125-repair-ship-repairable.md)（READY，類別刻意不照做）。實作兩個落點：`rules/battlepreparation.go` 的 `collect`（戰前整補第二階段，新增來源索引參數與 `SetRepairShipsRepairable`）、`game/supplypick.go` 的 `supplyCandidates`（戰場「修理」指令）。偏好在 `game/repairrule.go`，執行期設定、不進存檔；旗標 `-repair-ship-repairable`。
+- 新測試 `rules/repairship_test.go`（3 項）、`game/repairrule_test.go`（2 項）。偏好關閉時既有的 `TestPreparationResourcesMatchesOriginal`、`TestSupplyCandidatesExcludeKinds`、`TestPlanetReplenishMatchesPreparationOracle` 原樣通過。`go test ./internal/...` 全過。
+- `cmd/gin3` 與 `cmd/music-import` 在這台機器的 `--network none` 容器內建置失敗：缺 ebiten v2.8.8 與 oggvorbis 的 module cache，GUI 映像 `logh3-ebiten:2` 也不在本機。`cmd/gin3/main.go` 的兩行修改只通過 `gofmt -e` 語法檢查，沒有編譯。`main.go` 同檔有使用者未提交的 HD 修改，兩者在同一個工作樹差異裡。
+- 沒有更新啟動器選項畫面，打包腳本有使用者未提交的修改，沒有動。偏好開啟的行為沒有原版 oracle，不計入原版 parity。沒有 commit、push、建立 issue。
+
+## 2026-10-09：對拍契約修訂、GUI 映像重建與推送
+
+- 使用者核准契約修訂並授權 commit 與 push。專案 `AGENTS.md`（`CLAUDE.md` 是它的符號連結）新增 §3c：規則層純函式可用通過差異測試的 C 參考實作做 oracle，畫面、計時、輸入與整合流程仍只用 dosgolem；`docs/spec/124` 改 READY。權利邊界改為「不含原版執行檔或可重組成原版的片段」，進入點短簽章用來核對位置。
+- 使用者說先前的 GUI 映像被刪。照 `tools/Dockerfile.gui` 與小 build context 重建同一個 tag：`docker build --memory 4g -f tools/Dockerfile.gui -t logh3-ebiten:2 tools/`。新映像 ID `sha256:d7f4d3e04c75fc9e9b2b3606d9f015d8f1bcde806c25d6780780450ad40827ab`，舊收據記的 `6ccf04cf…` 是刪除前的映像，apt 套件版本不同，歷史收據不改寫。
+- 相依套件用 `LOGH3_NET=1 tools/gui.sh mod download` 抓進 `workplace/gomodcache`（ebiten v2.8.8、oggvorbis v1.0.5）。`tools/gui.sh build -o /dev/null ./cmd/gin3 ./cmd/music-import` 與 `vet` 通過。
+- `LOGH3_TIMEOUT=40m tools/gui.sh test ./cmd/... ./internal/... -count=1` 全過（含 `cmd/gin3` 55 秒、`cmd/music-import`、`internal/game` 70 秒）。記錄在 `workplace/decomp/gui-test-20261009.log`（gitignore）。這輪沒有跑 `gui_check.sh`：沒有改畫面，且工作樹有使用者未提交的 `presentation/` HD 修改，新映像的 mesa 版本也可能不同，差異不能直接歸因於本輪程式。
+- 候選工作項（沒有開 GitHub issue，開 issue 屬先回報再確認）：decomp 下一支函式；`203A:0424` 溢位區可達性查證；`FleetAttack`（戰場版）對向量；啟動器選項畫面接 `-repair-ship-repairable`；持續追查 Datalight C 3.10 來源。`docs/goal/` 當輪檔與 `render-matrix` 等 issue 開了再補。

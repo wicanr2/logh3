@@ -3,7 +3,8 @@
 本檔是此儲存庫的 agent 入口。所有工作先遵守共用主機規則，再遵守本檔；專案事實以
 `CONTEXT.md` 的目前狀態、目前程式、最近一次可重現測試及原始證據為準。本檔改寫自
 `~/cht/sangokushi/AGENTS.md` 的協作經驗，對拍方法論改用 dosgolem（無頭
-決定性 DOS 執行器）為首選 oracle；平台為 PC DOS。尚未建立的工具
+決定性 DOS 執行器）為首選 oracle；規則層的純函式另有通過差異測試的 C 參考實作
+（§3c）；平台為 PC DOS。尚未建立的工具
 與目錄在第一次使用時補建，不得把本檔的流程描述當成「已存在」的證據。
 
 dosgolem 的工作副本固定用 `~/cht/dosgolem-logh3/`（branch `logh3-oracle`，
@@ -154,8 +155,9 @@ MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分�
 
 ### 3. 擷取原版
 
-**dosgolem 是唯一 oracle。** 原版畫面、記憶體狀態與行為一律從 dosgolem 取得；
-不另外跑模擬器擷取，也不拿模擬器截圖當證據。
+**原版畫面、記憶體狀態與行為的來源只有 dosgolem。** 一律從 dosgolem 取得；
+不另外跑模擬器擷取，也不拿模擬器截圖當證據。規則層純函式的對拍可改用 §3c 的 C 參考實作，
+該實作的證據同樣來自 dosgolem 的差異測試。
 
 #### 3a. dosgolem 無頭對拍
 
@@ -218,6 +220,45 @@ dosgolem 缺功能或行為存疑時，去讀 DOSBox 對應的實作，弄清楚
 - bundle 的 `.jsdos/dosbox.conf` 仍然是原版機器規格的來源（`machine=svga_s3`、
   `memsize=16`、SB16），dosgolem 的機器設定以它為準。
 
+#### 3c. 規則層的 C 參考實作（decomp）
+
+`decomp/` 放 `GIN3PS.EXE` 函式的 C 參考實作。通過差異測試的函式，可以在 Docker 內原生編譯，
+當作 remake 規則層的 oracle，不必每一案都起 dosgolem。契約全文在
+`docs/spec/124-decomp-reference-oracle.md`，第一支函式的收據在 `docs/re/443`。
+
+**驗證等級**
+
+| 等級 | 條件 | 可以宣稱 | 不可以宣稱 |
+|---|---|---|---|
+| `byte-matching` | 同版編譯器與旗標編出的 bytes 與原版相同，relocation 另記 | C 版與原版機器碼一致 | 作者當年的原始碼 |
+| `diff-tested` | 同一份記憶體輸入下，原版函式（dosgolem 直接呼叫）與 C 版輸出逐筆相同，並有負向對照 | 在聲明的輸入域內功能等價 | 域外行為、呼叫時機 |
+| `reasoned` | 只由反組譯推導，沒有差異測試 | 研究線索 | 等價 |
+
+`GIN3PS.EXE` 的 C runtime 是 Datalight C 3.10 Large（`docs/re/442`），目前沒有同版編譯器，只能到
+`diff-tested`。取得同版編譯器後可升到 `byte-matching`，等級不倒退。
+
+**diff-tested 的最低條件**：原版函式以 `Call` 直接呼叫；函式位元組與保存狀態的 SHA-256、
+dosgolem Git HEAD 與完整旗標記入收據（收據綁執行器版本，規則同 §2）；清除 IF、設定 DS，
+並驗證只動到堆疊或明列寫入範圍；輸入含邊界與溢位案，函式不讀的位元組填隨機值；
+兩次產生的向量檔逐位元組相同；至少三個故意改壞的 C 版被全部抓到；輸入域寫進文件。
+
+**可以改用 C 參考實作的對拍**：輸入是記憶體資料、輸出是回傳值或資料變更、不涉及 I/O、計時與
+硬體的規則運算。這類函式在 diff-tested 之後，remake 與 C 版在原生環境窮舉比對，結果可作為
+規則層的對拍證據。含亂數的規則，先證明亂數序列等價（沿用 RNG 固定種子鐵則），再比對。
+
+**仍然只能用 dosgolem 的對拍**：畫面、調色盤、文字、動畫；計時、輸入、DOS 與硬體服務；
+呼叫時機與流程順序（`oracle.Call` 只驗常式實作）；整合路徑與正常玩家路徑。這些依 §1 到 §6
+的同狀態對拍。
+
+**完成宣稱的限定**：C 版通過只能宣稱「在聲明的輸入域內與原版函式功能等價」。remake 通過 C 版的
+比對只能宣稱該函式的規則層 parity，不得升格為畫面或流程 parity。輸入域外記為 `unknown`。
+remake 刻意不照做的規則（例如規格 125）只在偏好關閉時與 C 版比對。
+
+**權利邊界**：`decomp/` 只放重寫的 C 與測試程式，不含原版執行檔或可重組成原版的片段，
+不含 Datalight runtime 的原始碼或由它改寫的內容。進入點的短簽章只用來核對位置，比照
+`docs/internals` 的位元組簽章慣例。向量檔、保存狀態與候選編譯器留在 `workplace/`，不進 Git。
+本 repo 為 private，轉公開前 `decomp/` 與 `assets/original/` 一併請使用者裁決。
+
 ### 4. 擷取 remake
 
 - 使用與產品相同的正常入口與 renderer。direct-entry、狀態注入或 fixture 可用來做
@@ -272,10 +313,14 @@ dosgolem 缺功能或行為存疑時，去讀 DOSBox 對應的實作，弄清楚
 只有一張目視相似圖、remake 單元測試全綠、離線素材渲染成功、不同狀態的並排圖，或
 direct-entry 能開畫面，都不能單獨標為同狀態對拍完成。
 
+上面的清單只適用於畫面。規則層函式的完成定義見 §3c 與 `docs/spec/124`。
+
 ## 測試與文件分工
 
 - 程式改動至少跑專案標準測試命令；畫面改動再跑目標 screenshot／oracle 流程。
   綠色單元測試只證明 remake 內部自洽，不證明原版 parity。
+- `decomp/` 放 C 參考實作、dosgolem 探針與比對程式；每支函式的收據寫在 `docs/re/`，精確語意寫在
+  `docs/internals/`，驗收契約在 `docs/spec/124`。
 - `README.md` 只放用途、穩定入口、現況摘要與正式連結，不加入逐輪命令或 checkpoint。
 - **`docs/internals/` 是逆向出來的事實本身**（結構化、會持續更新的參考）；
   `docs/re/` 是逐次調查的紀錄（不改寫，被推翻時只加指標）。解出新東西時

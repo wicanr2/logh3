@@ -633,7 +633,7 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [`48-message-inventory.md`](48-message-inventory.md)：訊息框說了什麼。
 - [`49-text-engine.md`](49-text-engine.md)：印字進視窗。
 - [`50-fortress-gun.md`](50-fortress-gun.md)：要塞砲的射程、瞄準與開火。
-- [`51-borland-long-helpers.md`](51-borland-long-helpers.md)：Borland 的 32 位元輔助函式（`3CC9` 那一段）。
+- [`51-borland-long-helpers.md`](51-borland-long-helpers.md)：Datalight C 的 32 位元輔助函式（`3CC9` 那一段，檔名沿用舊名）。
 - [`52-plot-primitives-and-canvas.md`](52-plot-primitives-and-canvas.md)：畫點的三支常式與那 40 列的畫布偏移。
 - [`53-strategic-planet-assault.md`](53-strategic-planet-assault.md)：戰略回合裡的打行星（`20B4:1512` → `20B4:1662`）。
 - [`54-strategic-ai-decision.md`](54-strategic-ai-decision.md)：戰略 AI 決定一支艦隊要不要動。
@@ -961,3 +961,11 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 
 - [計畫119](../goal/2026-10-06-macos-retro-promo-round-119.md)及[macOS與新版推廣片106](../playtest/106-macos-and-retro-promo.md)。
 - [macOS隔離入口](../../tools/macos.sh)與[兩架構建置器](../../tools/scripts/local_test_macos_build.sh)沿既有Go1.24.13映像。
+
+## decomp 與編譯器歸屬
+
+- [`66-fleet-attack-203a-0424.md`](66-fleet-attack-203a-0424.md)：戰略艦隊攻擊力 `203A:0424` 的精確語意與 16 位元溢位區。
+- [研究442](../re/442-compiler-is-datalight-c.md)：`GIN3PS.EXE` 的 C runtime 是 Datalight C 3.10 Large，不是 Borland。
+- [研究443](../re/443-fleet-attack-differential-test.md)：`203A:0424` 的差異測試收據。
+- [規格124](../spec/124-decomp-reference-oracle.md)：C 參考實作作為規則 oracle 的驗收契約，C 程式在 [`decomp/`](../../decomp/README.md)。
+- [規格125](../spec/125-repair-ship-repairable.md)：修護艦可被其他修護艦修理（可選規則，預設關閉）。
