@@ -17,6 +17,7 @@ orig = open(f"{d}/src/{src_name}").read()
 done_ids = sorted(n[:-4] for n in os.listdir(f"{d}/ledger/status.d") if n.endswith(".tsv")) if os.path.isdir(f"{d}/ledger/status.d") else []
 others = [f"{d}/src/f_{i}.c" for i in done_ids if f"f_{i}.c" != src_name and os.path.exists(f"{d}/src/f_{i}.c")]
 survivors = []
+timeouts = []
 os.makedirs("/build/m", exist_ok=True)
 for i, m in enumerate(muts):
     if orig.count(m["find"]) != 1:
@@ -35,10 +36,13 @@ for i, m in enumerate(muts):
         caught = run.returncode != 0
         last = run.stdout.strip().splitlines()[-1] if run.stdout.strip() else ""
     except subprocess.TimeoutExpired:
-        caught = True      # 突變造成無窮迴圈或極慢，視為被抓到
-        last = "（逾時 180 秒，視為被抓到）"
+        caught = True      # 突變造成無窮迴圈或極慢，視為被抓到；但只是弱證據，另外計數
+        timeouts.append(m["name"])
+        last = "（逾時 180 秒，視為被抓到，弱證據）"
     print(f"  {'抓到' if caught else '存活'}  {m['name']}  {last}")
     if not caught:
         survivors.append(m["name"])
 print(f"突變 {len(muts)} 個，存活 {len(survivors)} 個" + (f"：{', '.join(survivors)}" if survivors else ""))
+if timeouts:
+    print(f"其中 {len(timeouts)} 個是逾時才算抓到（沒有實際比出差異）：{', '.join(timeouts)}")
 sys.exit(1 if survivors else 0)

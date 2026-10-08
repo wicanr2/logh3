@@ -23,6 +23,9 @@ lin 30532  mov  es:[bx+50],ax     ; 303F:0142，電腦
 所以走的確實是行星表（`ds:CFF8`／`ds:CFFA` 是表的 far ptr、`ds:CFFC`
 是筆數 81）。
 
+> 2026-10-09 補記：`ds:CFFC` 是目前星域切片的筆數（基底狀態 `fcmd-base.state` 實測為 4，星域 0），不是整張表的 81。
+> 迴圈只掃切片，見 [`docs/internals/29`](../internals/29-planets-and-economy.md) 與差異測試 `decomp/src/f_2264_000A.c`、`f_20B4_15E1.c`。
+
 ## `+0x50` 是角度
 
 `2264:0049` 是玩家那條路：
