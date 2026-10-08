@@ -1,0 +1,15 @@
+[
+  {"name": "上限含等號改不含", "find": "if (cur >= 0x80000 || cur <= 0) {", "replace": "if (cur > 0x80000 || cur <= 0) {"},
+  {"name": "上限少一", "find": "if (cur >= 0x80000 || cur <= 0) {", "replace": "if (cur >= 0x7FFFF || cur <= 0) {"},
+  {"name": "負數不覆蓋", "find": "if (cur >= 0x80000 || cur <= 0) {", "replace": "if (cur >= 0x80000 || cur == 0) {"},
+  {"name": "負數與零都累加", "find": "if (cur >= 0x80000 || cur <= 0) {", "replace": "if (cur >= 0x80000) {"},
+  {"name": "永遠覆蓋", "find": "if (cur >= 0x80000 || cur <= 0) {", "replace": "if (1) {"},
+  {"name": "位移18", "find": "<< 19;", "replace": "<< 18;"},
+  {"name": "速度讀+22", "find": "rd8(m, LIN(seg, ship + 0x21))", "replace": "rd8(m, LIN(seg, ship + 0x22))"},
+  {"name": "累加不加高字", "find": "(uint16_t)(rd16(m, LIN(seg, ship + 0x26)) + (uint16_t)(add >> 16) + (lo >> 16)));", "replace": "(uint16_t)(rd16(m, LIN(seg, ship + 0x26)) + (lo >> 16)));"},
+  {"name": "覆蓋只寫高字", "find": "wr16(m, LIN(seg, ship + 0x24), (uint16_t)add);", "replace": ";"},
+  {"name": "索敵隊判斷改FE", "find": "!= 0xFF)\n        init_move_budget", "replace": "!= 0xFE)\n        init_move_budget"},
+  {"name": "索敵隊索引讀+3A", "find": "fleet_off + 0x38)));", "replace": "fleet_off + 0x3A)));"},
+  {"name": "槽步距2", "find": "slot = (uint16_t)(slot + 4);", "replace": "slot = (uint16_t)(slot + 2);"},
+  {"name": "組數讀+0E", "find": "while (i < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {", "replace": "while (i < rd8(m, LIN(fleet_seg, fleet_off + 0x0E))) {"}
+]

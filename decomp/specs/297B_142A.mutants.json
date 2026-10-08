@@ -1,0 +1,15 @@
+[
+  {"name": "比較方向反轉", "find": "rd8(m, DS((uint16_t)(rec + 1))) == (uint8_t)value_word", "replace": "rd8(m, DS((uint16_t)(rec + 1))) != (uint8_t)value_word"},
+  {"name": "欄位位移改+2", "find": "rec + 1", "replace": "rec + 2"},
+  {"name": "艦隊步幅0x7A改0x79", "find": "idx * 0x7Au", "replace": "idx * 0x79u"},
+  {"name": "項數n只取低7位元", "find": "while (i < (uint8_t)n_word) {", "replace": "while (i < ((uint8_t)n_word & 0x7F)) {"},
+  {"name": "項數少跑最後一個", "find": "while (i < (uint8_t)n_word) {", "replace": "while (i + 1 < (uint8_t)n_word) {"},
+  {"name": "項數多跑一個", "find": "while (i < (uint8_t)n_word) {", "replace": "while (i < (uint8_t)n_word || (i == (uint8_t)n_word && i != 0xFF && i != 0)) {"},
+  {"name": "比較值取整個word", "find": "(uint8_t)value_word) {", "replace": "value_word) {"},
+  {"name": "AH殘值改清零", "find": "ah = (uint8_t)(GIN3_DS >> 8);", "replace": "ah = 0;"},
+  {"name": "AH起點改清零", "find": "uint8_t ah = (uint8_t)(buf_seg >> 8);", "replace": "uint8_t ah = 0;"},
+  {"name": "保留項不寫回", "find": "wr8(m, LIN(buf_seg, dst), idx);", "replace": ""},
+  {"name": "寫入位置不前進", "find": "dst++;", "replace": ""},
+  {"name": "個數不累加", "find": "count++;", "replace": ""},
+  {"name": "緩衝區位移不回繞", "find": "uint8_t idx = rd8(m, LIN(buf_seg, src));", "replace": "uint8_t idx = rd8(m, (((uint32_t)buf_seg << 4) + (uint32_t)buf_off + i) & 0xFFFFFu);"}
+]

@@ -1,0 +1,37 @@
+{
+  "id": "1F6F_0B0A",
+  "entry": "1F6F:0B0A",
+  "conv": "far",
+  "ret": "ax",
+  "size": 263,
+  "code_sha256_16": "f1206de5d2453638",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "戰場在場分隊清單 ds:9896／98BA 在 fcmd-base、fcmd-standby、fcmd-s3-base 三個狀態裡都是 0（diff_run.sh 只掛載 dosgolem-logh3，看不到主 repo workplace 的 battle79 戰場狀態），清單用 seeds 的 pokes 造；艦艇池取 S3 開局（fcmd-s3-base）的真實內容（池 #0 在位移 2，每筆 78 bytes；池 #n 的位移 ＝ 2+78n；26251 ＝ 0x668B；40192 ＝ 0x9D00 是輸出暫存緩衝）。艦艇座標：#0 (1480,752)、#2 (1502,758)、#3 (1486,730)、#4 (1524,764)、#5 (1492,708)、#6 (1545,770)。",
+  "tables": {
+    "ship": {"base": "ptr:CFB4:CFB6", "stride": 78, "count": 352}
+  },
+  "args": [
+    {"name": "a", "kind": "farptr", "gen": {"table": "ship"}},
+    {"name": "b", "kind": "farptr", "gen": {"table": "ship"}},
+    {"name": "out", "kind": "farptr", "gen": {"scratch": 16}}
+  ],
+  "seeds": [
+    {"args": [2, 26251, 314, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0600"}, {"addr": "ds:98BA", "hex": "000002000300040005000600"}, {"addr": "668B:0122", "hex": "F002"}, {"addr": "668B:01BC", "hex": "F405"}, {"addr": "668B:01BE", "hex": "FC02"}]},
+    {"args": [314, 26251, 2, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0600"}, {"addr": "ds:98BA", "hex": "000002000300040005000600"}, {"addr": "668B:0122", "hex": "F002"}, {"addr": "668B:01BC", "hex": "F405"}, {"addr": "668B:01BE", "hex": "FC02"}]},
+    {"args": [158, 26251, 158, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0300"}, {"addr": "ds:98BA", "hex": "020003000400"}, {"addr": "668B:0120", "hex": "DE05"}, {"addr": "668B:0122", "hex": "F602"}]},
+    {"args": [2, 26251, 314, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0100"}]},
+    {"args": [2, 26251, 314, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0100"}, {"addr": "668B:0070", "hex": "00"}]},
+    {"args": [2, 26251, 314, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0300"}, {"addr": "ds:98BA", "hex": "020000000400"}, {"addr": "668B:0036", "hex": "0070"}, {"addr": "668B:016E", "hex": "0090"}, {"addr": "668B:00D2", "hex": "0088"}]},
+    {"args": [2, 26251, 314, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0200"}, {"addr": "ds:98BA", "hex": "02000300"}, {"addr": "ds:CFB6", "hex": "8C66"}]},
+    {"args": [2, 26251, 314, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0000"}]},
+    {"args": [2, 26251, 314, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0500"}, {"addr": "ds:98BA", "hex": "00000000000000000000"}]},
+    {"args": [158, 26252, 314, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0200"}, {"addr": "lin:66992", "hex": "0000"}, {"addr": "lin:66994", "hex": "0000"}, {"addr": "668B:016E", "hex": "FFFF"}, {"addr": "668B:0170", "hex": "FFFF"}]},
+    {"args": [314, 26251, 158, 26252, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0200"}, {"addr": "lin:66992", "hex": "FFFF"}, {"addr": "lin:66994", "hex": "FFFF"}, {"addr": "668B:016E", "hex": "0000"}, {"addr": "668B:0170", "hex": "0000"}]},
+    {"args": [314, 26252, 158, 26251, 0, 40192], "pokes": [{"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0200"}, {"addr": "lin:66A2E", "hex": "0000"}, {"addr": "lin:66A30", "hex": "0000"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

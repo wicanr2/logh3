@@ -1,0 +1,19 @@
+{
+  "id": "2B5F_02B2",
+  "entry": "2B5F:02B2",
+  "conv": "far",
+  "ret": "none",
+  "size": 241,
+  "code_sha256_16": "28db17184407f91a",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [],
+  "seeds": [
+    {"pokes": []},
+    {"pokes": [{"addr": "ds:A7AE", "hex": "0000"}, {"addr": "ds:A7B6", "hex": "A0860100"}, {"addr": "ds:A7BC", "hex": "0900"}, {"addr": "ds:A804", "hex": "995F0100"}, {"addr": "ds:A80C", "hex": "9A5F0100"}, {"addr": "ds:A82C", "hex": "0100"}, {"addr": "ds:A834", "hex": "A0860100"}, {"addr": "ds:A83A", "hex": "0900"}, {"addr": "ds:A886", "hex": "985F0100"}, {"addr": "ds:A88E", "hex": "9B5F0100"}, {"addr": "ds:A8AA", "hex": "0000"}, {"addr": "ds:A8B2", "hex": "F0FFFFFF"}, {"addr": "ds:A8B8", "hex": "2000"}, {"addr": "ds:A900", "hex": "FFFFFFFF"}, {"addr": "ds:A908", "hex": "00000000"}, {"addr": "ds:A928", "hex": "0100"}, {"addr": "ds:A930", "hex": "05000000"}, {"addr": "ds:A936", "hex": "0000"}, {"addr": "ds:A982", "hex": "05000000"}, {"addr": "ds:A98A", "hex": "06000000"}, {"addr": "ds:A9A6", "hex": "0000"}, {"addr": "ds:A9AE", "hex": "FFFF0000"}, {"addr": "ds:A9B4", "hex": "FFFF"}, {"addr": "ds:A9FC", "hex": "FBFF0100"}, {"addr": "ds:AA04", "hex": "FFFF0000"}, {"addr": "ds:AA24", "hex": "0100"}, {"addr": "ds:AA2C", "hex": "FFFF0100"}, {"addr": "ds:AA32", "hex": "0100"}, {"addr": "ds:AA7E", "hex": "00000200"}, {"addr": "ds:AA86", "hex": "00200000"}, {"addr": "ds:AAA2", "hex": "0001"}, {"addr": "ds:AAAA", "hex": "A0860100"}, {"addr": "ds:AAB0", "hex": "0900"}, {"addr": "ds:AAF8", "hex": "00000000"}, {"addr": "ds:AB00", "hex": "00000000"}, {"addr": "ds:AB20", "hex": "0103"}, {"addr": "ds:AB28", "hex": "A0860100"}, {"addr": "ds:AB2E", "hex": "0900"}, {"addr": "ds:AB7A", "hex": "00000000"}, {"addr": "ds:AB82", "hex": "00000000"}, {"addr": "ds:AB9E", "hex": "0200"}, {"addr": "ds:ABA6", "hex": "A0860100"}, {"addr": "ds:ABAC", "hex": "0900"}, {"addr": "ds:ABFC", "hex": "00000000"}, {"addr": "ds:AC04", "hex": "00000000"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

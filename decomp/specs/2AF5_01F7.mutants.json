@@ -1,0 +1,11 @@
+[
+  {"name": "下限門檻1500改1499", "find": "defense < 1500u", "replace": "defense < 1499u"},
+  {"name": "下限夾值1500改1475", "find": "defense = 1500u;", "replace": "defense = 1475u;"},
+  {"name": "上限門檻6000改6025", "find": "defense > 6000u", "replace": "defense > 6025u"},
+  {"name": "上限夾值6000改6025", "find": "defense = 6000u;", "replace": "defense = 6025u;"},
+  {"name": "除數25改24", "find": "defense / 25u", "replace": "defense / 24u"},
+  {"name": "改讀+0x16", "find": "planet_off + 0x14", "replace": "planet_off + 0x16"},
+  {"name": "下限改有號比較", "find": "if (defense < 1500u)", "replace": "if ((int16_t)defense < 1500)"},
+  {"name": "上限改有號比較", "find": "if (defense > 6000u)", "replace": "if ((int16_t)defense > 6000)"},
+  {"name": "只讀低位元組", "find": "rd16(m, LIN(planet_seg, planet_off + 0x14))", "replace": "rd8(m, LIN(planet_seg, planet_off + 0x14))"}
+]

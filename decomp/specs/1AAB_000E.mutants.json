@@ -1,0 +1,9 @@
+[
+  {"name": "艦種判斷改5", "find": "if (rd8(m, LIN(seg, ship + 0x04)) == 6) {", "replace": "if (rd8(m, LIN(seg, ship + 0x04)) == 5) {"},
+  {"name": "高字不清", "find": "wr16(m, LIN(seg, ship + 0x10), 0);", "replace": ";"},
+  {"name": "高字寫到12", "find": "wr16(m, LIN(seg, ship + 0x10), 0);", "replace": "wr16(m, LIN(seg, ship + 0x12), 0);"},
+  {"name": "低字寫到0C", "find": "wr16(m, LIN(seg, ship + 0x0E), count);", "replace": "wr16(m, LIN(seg, ship + 0x0C), count);"},
+  {"name": "艘數讀+0A", "find": "uint16_t count = rd16(m, LIN(seg, ship + 0x08));", "replace": "uint16_t count = rd16(m, LIN(seg, ship + 0x0A));"},
+  {"name": "迴圈多跑一筆", "find": "while (i < rd16(m, DS(0x9896))) {", "replace": "while (i <= rd16(m, DS(0x9896))) {"},
+  {"name": "池步距4D", "find": "(uint16_t)(idx * 0x4Eu)", "replace": "(uint16_t)(idx * 0x4Du)"}
+]

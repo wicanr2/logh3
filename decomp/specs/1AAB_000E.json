@@ -1,0 +1,26 @@
+{
+  "id": "1AAB_000E",
+  "entry": "1AAB:000E",
+  "conv": "far",
+  "ret": "none",
+  "size": 95,
+  "code_sha256_16": "76146e261771a285",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "戰場在場分隊清單 ds:9896／98BA 在 fcmd-base、fcmd-standby、fcmd-s3-base 三個狀態裡都是 0（diff_run.sh 只掛載 dosgolem-logh3，看不到主 repo workplace 的 battle79 戰場狀態），清單用 seeds 的 pokes 造；池與艦隊取 S3 開局（fcmd-s3-base）的真實內容。池 #10 是修護艦（艦種 6，位移 2+10*78=0x30E）。",
+  "args": [],
+  "seeds": [
+    {"pokes": [{"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0A00"}, {"addr": "668B:031E", "hex": "FFFF"}]},
+    {"pokes": [{"addr": "ds:9896", "hex": "0200"}, {"addr": "ds:98BA", "hex": "00000A00"}]},
+    {"pokes": [{"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}, {"addr": "668B:0006", "hex": "06"}]},
+    {"pokes": [{"addr": "ds:9896", "hex": "0300"}, {"addr": "ds:98BA", "hex": "0A000A000A00"}]},
+    {"pokes": [{"addr": "ds:9896", "hex": "0300"}, {"addr": "ds:98BA", "hex": "0100000400FFFF"}, {"addr": "668B:0006", "hex": "06"}]},
+    {"pokes": [{"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0A00"}, {"addr": "668B:030A", "hex": "FFFF"}]},
+    {"pokes": [{"addr": "ds:9896", "hex": "0000"}, {"addr": "ds:98BA", "hex": "0A00"}, {"addr": "668B:031E", "hex": "FFFF"}]},
+    {"pokes": [{"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "00000A00"}, {"addr": "668B:031E", "hex": "FFFF"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

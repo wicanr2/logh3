@@ -1,0 +1,10 @@
+[
+  {"name": "槽位移+2", "find": "wr16(m, LIN(out_seg, out_off), rd16(m, DS(slot)));", "replace": "wr16(m, LIN(out_seg, out_off), rd16(m, DS(slot + 2)));"},
+  {"name": "槽步距2", "find": "slot = (uint16_t)(slot + 4);", "replace": "slot = (uint16_t)(slot + 2);"},
+  {"name": "艦隊步距120", "find": "* 0x7Au));", "replace": "* 0x78u));"},
+  {"name": "組數讀+0E", "find": "while (j < rd8(m, DS(fleet + 0x0F))) {", "replace": "while (j < rd8(m, DS(fleet + 0x0E))) {"},
+  {"name": "n只看低位元組", "find": "while (i < n) {", "replace": "while ((uint8_t)i < (uint8_t)n) {"},
+  {"name": "輸出步距4", "find": "out_off = (uint16_t)(out_off + 2);", "replace": "out_off = (uint16_t)(out_off + 4);"},
+  {"name": "編號指標步距2", "find": "ids_off = (uint16_t)(ids_off + 1);", "replace": "ids_off = (uint16_t)(ids_off + 2);"},
+  {"name": "編號指標位移進位到段", "find": "ids_off = (uint16_t)(ids_off + 1);", "replace": "ids_off = (uint16_t)(ids_off + 1); if (ids_off == 0) ids_seg = (uint16_t)(ids_seg + 0x1000u);"}
+]

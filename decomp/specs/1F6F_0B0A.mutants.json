@@ -1,0 +1,18 @@
+[
+  {"name": "X下界取較大", "find": "uint16_t xmin = ax_ > bx_ ? bx_ : ax_;", "replace": "uint16_t xmin = ax_ > bx_ ? ax_ : bx_;"},
+  {"name": "Y上界取較小", "find": "uint16_t ymax = ay_ > by_ ? ay_ : by_;", "replace": "uint16_t ymax = ay_ > by_ ? by_ : ay_;"},
+  {"name": "X上界取A", "find": "uint16_t xmax = ax_ > bx_ ? ax_ : bx_;", "replace": "uint16_t xmax = ax_;"},
+  {"name": "Y下界取B", "find": "uint16_t ymin = ay_ > by_ ? by_ : ay_;", "replace": "uint16_t ymin = by_;"},
+  {"name": "排除A只比位移", "find": "!(seg == a_seg && ship == a_off)", "replace": "!(ship == a_off)"},
+  {"name": "排除B只比位移", "find": "!(seg == b_seg && ship == b_off)", "replace": "!(ship == b_off)"},
+  {"name": "排除B改比A的段", "find": "!(seg == b_seg && ship == b_off)", "replace": "!(seg == a_seg && ship == b_off)"},
+  {"name": "不入bit7改bit6", "find": "!(rd8(m, LIN(seg, ship + 0x1E)) & 0x80)", "replace": "!(rd8(m, LIN(seg, ship + 0x1E)) & 0x40)"},
+  {"name": "X下界含等號排除", "find": "!(rd16(m, LIN(seg, ship + 0x34)) < xmin)", "replace": "!(rd16(m, LIN(seg, ship + 0x34)) <= xmin)"},
+  {"name": "Y下界含等號排除", "find": "!(rd16(m, LIN(seg, ship + 0x36)) < ymin)", "replace": "!(rd16(m, LIN(seg, ship + 0x36)) <= ymin)"},
+  {"name": "X上界含等號排除", "find": "!(rd16(m, LIN(seg, ship + 0x34)) > xmax)", "replace": "!(rd16(m, LIN(seg, ship + 0x34)) >= xmax)"},
+  {"name": "Y上界含等號排除", "find": "!(rd16(m, LIN(seg, ship + 0x36)) > ymax)", "replace": "!(rd16(m, LIN(seg, ship + 0x36)) >= ymax)"},
+  {"name": "X下界改有號比較", "find": "!(rd16(m, LIN(seg, ship + 0x34)) < xmin)", "replace": "!((int16_t)rd16(m, LIN(seg, ship + 0x34)) < (int16_t)xmin)"},
+  {"name": "輸出步距4", "find": "out_off = (uint16_t)(out_off + 2);", "replace": "out_off = (uint16_t)(out_off + 4);"},
+  {"name": "輸出寫艦艇位移", "find": "wr16(m, LIN(out_seg, out_off), idx);", "replace": "wr16(m, LIN(out_seg, out_off), ship);"},
+  {"name": "回傳少算", "find": "return found;", "replace": "return (uint16_t)(found - (found > 0));"}
+]

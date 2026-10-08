@@ -1,0 +1,26 @@
+{
+  "id": "2703_14CF",
+  "entry": "2703:14CF",
+  "conv": "far",
+  "ret": "none",
+  "size": 140,
+  "code_sha256_16": "1e6698ec753c73ab",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "ship": {"base": "ptr:CFB4:CFB6", "stride": 78, "count": 352}
+  },
+  "args": [
+    {"name": "ship", "kind": "farptr", "gen": {"table": "ship"}},
+    {"name": "n", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 100, 255, 256, 3000, 4200, 32767, 32768, 65534, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [2, 26251, 65535], "pokes": [{"addr": "668B:0002", "hex": "00"}, {"addr": "668B:0006", "hex": "03"}]},
+    {"args": [2, 26251, 3000], "pokes": [{"addr": "668B:0002", "hex": "01"}, {"addr": "668B:0006", "hex": "03"}, {"addr": "668B:0010", "hex": "FFFFFFFFFFFFFFFF"}]},
+    {"args": [2, 26251, 1], "pokes": [{"addr": "668B:0002", "hex": "00"}, {"addr": "668B:0006", "hex": "00"}, {"addr": "668B:0010", "hex": "0000000000000000"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

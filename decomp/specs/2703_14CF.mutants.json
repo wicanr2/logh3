@@ -1,0 +1,14 @@
+[
+  {"name": "飛彈高字不寫", "find": "wr16(m, LIN(rec_seg, (uint16_t)(rec_off + 0x10)), (uint16_t)(missiles >> 16));", "replace": "(void)0;"},
+  {"name": "艦載機高字不寫", "find": "wr16(m, LIN(rec_seg, (uint16_t)(rec_off + 0x14)), (uint16_t)(fighters >> 16));", "replace": "(void)0;"},
+  {"name": "艦載機係數改讀+0x10", "find": "DS((uint16_t)(row + 0x14))", "replace": "DS((uint16_t)(row + 0x10))"},
+  {"name": "飛彈改成累加", "find": "wr16(m, LIN(rec_seg, (uint16_t)(rec_off + 0x0E)), (uint16_t)missiles);", "replace": "wr16(m, LIN(rec_seg, (uint16_t)(rec_off + 0x0E)), (uint16_t)(missiles + rd16(m, LIN(rec_seg, (uint16_t)(rec_off + 0x0E)))));"},
+  {"name": "乘積截成16位元", "find": "missiles = gin3_lmul(rd8(m, DS((uint16_t)(row + 0x10))), n);", "replace": "missiles = (uint16_t)gin3_lmul(rd8(m, DS((uint16_t)(row + 0x10))), n);"},
+  {"name": "艘數只取低位元組", "find": "fighters = gin3_lmul(rd8(m, DS((uint16_t)(row + 0x14))), n);", "replace": "fighters = gin3_lmul(rd8(m, DS((uint16_t)(row + 0x14))), (uint8_t)n);"},
+  {"name": "飛彈係數讀word", "find": "missiles = gin3_lmul(rd8(m, DS((uint16_t)(row + 0x10))), n);", "replace": "missiles = gin3_lmul(rd16(m, DS((uint16_t)(row + 0x10))), n);"},
+  {"name": "艦種步幅改0x1B", "find": "* 0x1A)", "replace": "* 0x1B)"},
+  {"name": "陣營步幅改0xCF", "find": "* 0xD0)", "replace": "* 0xCF)"},
+  {"name": "飛彈低字寫到+0x0C", "find": "(uint16_t)(rec_off + 0x0E)), (uint16_t)missiles);", "replace": "(uint16_t)(rec_off + 0x0C)), (uint16_t)missiles);"},
+  {"name": "艦載機低字寫到+0x13", "find": "(uint16_t)(rec_off + 0x12)), (uint16_t)fighters);", "replace": "(uint16_t)(rec_off + 0x13)), (uint16_t)fighters);"},
+  {"name": "艦種改讀+0x05", "find": "(uint16_t)(rec_off + 4)", "replace": "(uint16_t)(rec_off + 5)"}
+]

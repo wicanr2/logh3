@@ -1,0 +1,37 @@
+{
+  "id": "2AF5_01F7",
+  "entry": "2AF5:01F7",
+  "conv": "far",
+  "ret": "ax",
+  "size": 47,
+  "code_sha256_16": "eda90e46df6ea684",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "planet": {"base": "ptr:5336:5338", "stride": 82, "count": 81}
+  },
+  "args": [
+    {"name": "planet", "kind": "farptr", "gen": {"table": "planet"}}
+  ],
+  "seeds": [
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "DB05"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "DC05"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "DD05"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "7017"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "6F17"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "7117"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "0000"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "FFFF"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "0080"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "FF7F"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "B80B"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "E803"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "8817"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "8917"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "8A17"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

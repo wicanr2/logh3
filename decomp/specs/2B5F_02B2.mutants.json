@@ -1,0 +1,19 @@
+[
+  {"name": "無主不跳過", "find": "!= 2 && (rd8", "replace": "!= 7 && (rd8"},
+  {"name": "旗標改看bit1", "find": "+ 0x13))) & 1) == 0", "replace": "+ 0x13))) & 2) == 0"},
+  {"name": "旗標忽略", "find": "&& (rd8(m, DS((uint16_t)(region + 0x13))) & 1) == 0", "replace": ""},
+  {"name": "補量除數10改11", "find": "gin3_uldiv(limit, 10)", "replace": "gin3_uldiv(limit, 11)"},
+  {"name": "上限不含防衛力", "find": " + rd16(m, DS((uint16_t)(region + 0x20)));", "replace": ";"},
+  {"name": "防衛力改讀+0x22", "find": "region + 0x20", "replace": "region + 0x22"},
+  {"name": "上限經濟力改讀+0x18", "find": "region + 0x1A", "replace": "region + 0x18"},
+  {"name": "飛彈夾值改比低16位元", "find": "            value = rd32w(m, slot) + refill;\n            if (value > limit)\n                value = limit;\n            wr32w(m, slot, value);\n\n            slot = (uint16_t)(region + 0x70", "replace": "            value = rd32w(m, slot) + refill;\n            if ((uint16_t)value > (uint16_t)limit)\n                value = limit;\n            wr32w(m, slot, value);\n\n            slot = (uint16_t)(region + 0x70"},
+  {"name": "艦載機夾值改有號比較", "find": "            slot = (uint16_t)(region + 0x70 + 4u * rd8(m, DS((uint16_t)(region + 0x12))));\n            value = rd32w(m, slot) + refill;\n            if (value > limit)", "replace": "            slot = (uint16_t)(region + 0x70 + 4u * rd8(m, DS((uint16_t)(region + 0x12))));\n            value = rd32w(m, slot) + refill;\n            if ((int32_t)value > (int32_t)limit)"},
+  {"name": "飛彈夾值不夾", "find": "            slot = (uint16_t)(region + 0x68 + 4u * rd8(m, DS((uint16_t)(region + 0x12))));\n            value = rd32w(m, slot) + refill;\n            if (value > limit)\n                value = limit;", "replace": "            slot = (uint16_t)(region + 0x68 + 4u * rd8(m, DS((uint16_t)(region + 0x12))));\n            value = rd32w(m, slot) + refill;"},
+  {"name": "艦載機夾值不夾", "find": "            slot = (uint16_t)(region + 0x70 + 4u * rd8(m, DS((uint16_t)(region + 0x12))));\n            value = rd32w(m, slot) + refill;\n            if (value > limit)\n                value = limit;", "replace": "            slot = (uint16_t)(region + 0x70 + 4u * rd8(m, DS((uint16_t)(region + 0x12))));\n            value = rd32w(m, slot) + refill;"},
+  {"name": "艦載機表位移0x70改0x6C", "find": "region + 0x70", "replace": "region + 0x6C"},
+  {"name": "飛彈表位移0x68改0x64", "find": "region + 0x68", "replace": "region + 0x64"},
+  {"name": "擁有者索引步幅4改2", "find": "region + 0x68 + 4u *", "replace": "region + 0x68 + 2u *"},
+  {"name": "星域步幅0x7E改0x7D", "find": "region + 0x7E", "replace": "region + 0x7D"},
+  {"name": "少掃最後一個星域", "find": "i < 0x20", "replace": "i < 0x1F"},
+  {"name": "高字進位丟失", "find": "return (uint32_t)rd16(m, DS(off)) | ((uint32_t)rd16(m, DS((uint16_t)(off + 2))) << 16);", "replace": "return (uint32_t)rd16(m, DS(off)) | ((uint32_t)rd16(m, DS((uint16_t)(off + 2))) << 16) & 0x7FFFFFFFu;"}
+]

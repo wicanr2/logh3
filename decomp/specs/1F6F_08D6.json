@@ -1,0 +1,33 @@
+{
+  "id": "1F6F_08D6",
+  "entry": "1F6F:08D6",
+  "conv": "far",
+  "ret": "none",
+  "size": 70,
+  "code_sha256_16": "88a0a0c2e5bee14e",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦艇池取 S3 開局（fcmd-s3-base）的真實內容：池 #0 組序 0 艦種 0，#10 組序 9 艦種 6（位移 0x30E），#11 艦種 1。種子用 pokes 把艦種改成 5 與各種 +0x46。",
+  "tables": {
+    "ship": {"base": "ptr:CFB4:CFB6", "stride": 78, "count": 352}
+  },
+  "args": [
+    {"name": "ship", "kind": "farptr", "gen": {"table": "ship"}}
+  ],
+  "seeds": [
+    {"args": [2, 26251], "pokes": [{"addr": "668B:0048", "hex": "5655"}]},
+    {"args": [2, 26251], "pokes": [{"addr": "668B:0048", "hex": "0080"}]},
+    {"args": [782, 26251], "pokes": [{"addr": "668B:0354", "hex": "0080"}]},
+    {"args": [782, 26251], "pokes": [{"addr": "668B:0354", "hex": "5655"}, {"addr": "668B:0312", "hex": "05"}]},
+    {"args": [782, 26251], "pokes": [{"addr": "668B:0354", "hex": "FFFF"}, {"addr": "668B:0312", "hex": "05"}]},
+    {"args": [782, 26251], "pokes": [{"addr": "668B:0354", "hex": "0100"}, {"addr": "668B:0312", "hex": "05"}]},
+    {"args": [782, 26251], "pokes": [{"addr": "668B:0354", "hex": "FFFF"}, {"addr": "668B:0312", "hex": "04"}]},
+    {"args": [782, 26251], "pokes": [{"addr": "668B:0354", "hex": "FFFF"}, {"addr": "668B:0311", "hex": "00"}, {"addr": "668B:0312", "hex": "06"}]},
+    {"args": [782, 26251], "pokes": [{"addr": "668B:0354", "hex": "5555"}, {"addr": "668B:0311", "hex": "00"}]},
+    {"args": [782, 26251], "pokes": [{"addr": "668B:0311", "hex": "00"}, {"addr": "668B:0354", "hex": "0000"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

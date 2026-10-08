@@ -1,0 +1,7 @@
+[
+  {"name": "寫入偏移3F", "find": "wr16(m, LIN(seg, ship + 0x3E), rd16(m, LIN(seg, ship + 0x08)));", "replace": "wr16(m, LIN(seg, ship + 0x3F), rd16(m, LIN(seg, ship + 0x08)));"},
+  {"name": "來源偏移0A", "find": "rd16(m, LIN(seg, ship + 0x08)));", "replace": "rd16(m, LIN(seg, ship + 0x0A)));"},
+  {"name": "迴圈多跑一筆", "find": "while (i < rd16(m, DS(0x9896))) {", "replace": "while (i <= rd16(m, DS(0x9896))) {"},
+  {"name": "清單步距4", "find": "list = (uint16_t)(list + 2);", "replace": "list = (uint16_t)(list + 4);"},
+  {"name": "池步距4D", "find": "(uint16_t)(idx * 0x4Eu)", "replace": "(uint16_t)(idx * 0x4Du)"}
+]

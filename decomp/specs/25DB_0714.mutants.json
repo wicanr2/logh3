@@ -1,0 +1,13 @@
+[
+  {"name": "x 減的是 ds:9BF6", "find": "rd16(m, DS(0x9BF4))", "replace": "rd16(m, DS(0x9BF6))"},
+  {"name": "x 改成加鏡頭", "find": "rd16(m, LIN(ship_seg, ship_off + 0x34)) - rd16(m, DS(0x9BF4))", "replace": "rd16(m, LIN(ship_seg, ship_off + 0x34)) + rd16(m, DS(0x9BF4))"},
+  {"name": "y 讀艦艇+0x34", "find": "rd16(m, LIN(ship_seg, ship_off + 0x36))", "replace": "rd16(m, LIN(ship_seg, ship_off + 0x34))"},
+  {"name": "x 寫到 obj+7", "find": "put16(m, LIN(a_seg, a_off + 6), x);", "replace": "put16(m, LIN(a_seg, a_off + 7), x);"},
+  {"name": "y 寫到 obj+6", "find": "put16(m, LIN(b_seg, b_off + 8), y);", "replace": "put16(m, LIN(b_seg, b_off + 6), y);"},
+  {"name": "不寫旗標", "find": "put8(m, LIN(c_seg, c_off + 1), 0xFF);", "replace": "(void)c_seg;\n    (void)c_off;"},
+  {"name": "旗標值 0xFE", "find": "put8(m, LIN(c_seg, c_off + 1), 0xFF);", "replace": "put8(m, LIN(c_seg, c_off + 1), 0xFE);"},
+  {"name": "第二次不重讀物件位移", "find": "b_off = rd16(m, LIN(ship_seg, ship_off + 0x38));", "replace": "b_off = a_off;"},
+  {"name": "第三次不重讀物件位移", "find": "c_off = rd16(m, LIN(ship_seg, ship_off + 0x38));", "replace": "c_off = b_off;"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"},
+  {"name": "y 在寫 obj+6 之前讀", "find": "    put16(m, LIN(a_seg, a_off + 6), x);\n    y = (uint16_t)(rd16(m, LIN(ship_seg, ship_off + 0x36)) - rd16(m, DS(0x9BF6)));", "replace": "    y = (uint16_t)(rd16(m, LIN(ship_seg, ship_off + 0x36)) - rd16(m, DS(0x9BF6)));\n    put16(m, LIN(a_seg, a_off + 6), x);"}
+]

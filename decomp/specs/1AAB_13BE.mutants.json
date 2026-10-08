@@ -1,0 +1,12 @@
+[
+  {"name": "艦種比較改看n", "find": "== (uint8_t)kind) {", "replace": "== (uint8_t)n) {"},
+  {"name": "艦種用16位元比", "find": "if (rd8(m, LIN(seg, ship + 0x04)) == (uint8_t)kind) {", "replace": "if (rd8(m, LIN(seg, ship + 0x04)) == kind) {"},
+  {"name": "n加上高位元組", "find": "while (i < (uint8_t)n) {", "replace": "while (i < (uint8_t)(n + (n >> 8))) {"},
+  {"name": "艦艇欄位+5", "find": "if (rd8(m, LIN(seg, ship + 0x04)) == (uint8_t)kind) {", "replace": "if (rd8(m, LIN(seg, ship + 0x05)) == (uint8_t)kind) {"},
+  {"name": "輸出寫艦艇位移", "find": "wr16(m, LIN(out_seg, out_off), idx);", "replace": "wr16(m, LIN(out_seg, out_off), ship);"},
+  {"name": "輸出步距4", "find": "out_off = (uint16_t)(out_off + 2);", "replace": "out_off = (uint16_t)(out_off + 4);"},
+  {"name": "槽步距2", "find": "slot = (uint16_t)(slot + 4);", "replace": "slot = (uint16_t)(slot + 2);"},
+  {"name": "池步距4D", "find": "(uint16_t)(idx * 0x4Eu)", "replace": "(uint16_t)(idx * 0x4Du)"},
+  {"name": "艦隊步距120", "find": "* 0x7Au));", "replace": "* 0x78u));"},
+  {"name": "回傳多算一", "find": "return found;", "replace": "return (uint16_t)(found + (found > 0));"}
+]

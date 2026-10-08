@@ -1,0 +1,14 @@
+[
+  {"name": "擁有者2不跳過", "find": "if (owner != 2 && snap != 2 && owner != snap)", "replace": "if (snap != 2 && owner != snap)"},
+  {"name": "快照2不跳過", "find": "if (owner != 2 && snap != 2 && owner != snap)", "replace": "if (owner != 2 && owner != snap)"},
+  {"name": "相同也計數", "find": "if (owner != 2 && snap != 2 && owner != snap)", "replace": "if (owner != 2 && snap != 2)"},
+  {"name": "索引改用擁有者", "find": "LIN(out_seg, (uint16_t)(out_off + snap))", "replace": "LIN(out_seg, (uint16_t)(out_off + owner))"},
+  {"name": "不清out1", "find": "wr8(m, LIN(out_seg, (uint16_t)(out_off + 1)), 0);", "replace": "(void)0;"},
+  {"name": "不清out0", "find": "wr8(m, LIN(out_seg, out_off), 0);", "replace": "(void)0;"},
+  {"name": "少一格", "find": "for (i = 0; i < 0x20; i++) {", "replace": "for (i = 0; i < 0x1F; i++) {"},
+  {"name": "多一格", "find": "for (i = 0; i < 0x20; i++) {", "replace": "for (i = 0; i < 0x21; i++) {"},
+  {"name": "快照表位址改B75D", "find": "0xB75C + i", "replace": "0xB75D + i"},
+  {"name": "擁有者位移改+0x13", "find": "region + 0x12", "replace": "region + 0x13"},
+  {"name": "星域步幅改0x7D", "find": "region = (uint16_t)(region + 0x7E);", "replace": "region = (uint16_t)(region + 0x7D);"},
+  {"name": "一次加二", "find": "(uint8_t)(rd8(m, at) + 1)", "replace": "(uint8_t)(rd8(m, at) + 2)"}
+]

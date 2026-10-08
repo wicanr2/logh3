@@ -190,6 +190,7 @@ type probe struct {
 	covered   map[uint32]struct{}
 	curReads  map[uint32]struct{}
 	recording bool
+	vgaRead   bool // 這一案是否讀了 A0000 到 BFFFF（平面模式下那裡不在 Mem[] 裡，WatchReads 看不到）
 }
 
 type resolvedTable struct {
@@ -399,6 +400,7 @@ func (p *probe) run(in *input) result {
 	logLen := len(m.PortLog)
 	var planar [4]uint64
 	planar = m.WriteModeUse
+	p.vgaRead = false
 	p.curReads = map[uint32]struct{}{}
 	p.recording = true
 	cover := map[uint32]struct{}{}
@@ -488,6 +490,8 @@ func (p *probe) run(in *input) result {
 			res.ok, res.reason = false, "寫了 I/O 埠"
 		case m.WriteModeUse != planar:
 			res.ok, res.reason = false, "寫了平面視訊記憶體"
+		case p.vgaRead:
+			res.ok, res.reason = false, "讀了視訊記憶體區（A0000 到 BFFFF）"
 		}
 	}
 	res.ret = p.packRet(c)
@@ -663,6 +667,7 @@ func main() {
 		}
 		return false
 	}
+	p.m.CPU.Bus = &vgaWatchBus{Bus: p.m.CPU.Bus, hit: &p.vgaRead, recording: &p.recording}
 	p.baseCPU = *p.m.CPU // 要在 WatchReads 之前擷取：保留取指令的快速路徑，取指令就不會算進讀取集
 	p.base = make([]byte, memSize)
 	copy(p.base, p.m.Mem[:memSize])
@@ -1043,4 +1048,20 @@ func repeatBytes(b []byte, n int) []byte {
 		out = append(out, b...)
 	}
 	return out
+}
+
+// vgaWatchBus 包住 CPU 的 Bus，記下執行期間有沒有讀 A0000 到 BFFFF。
+// 平面模式下那段不在 Mem[]（讀它走 VGA 的 latch，且 WatchReads 看不到），
+// 基底傾印裡的內容和原版實際讀到的不是同一份，這種案例不能拿去和 C 版比，要丟棄。
+type vgaWatchBus struct {
+	cpu.Bus
+	hit       *bool
+	recording *bool
+}
+
+func (b *vgaWatchBus) Read8(a uint32) uint8 {
+	if *b.recording && a < 0x100000 && a >= 0xA0000 && a < 0xC0000 {
+		*b.hit = true
+	}
+	return b.Bus.Read8(a)
 }

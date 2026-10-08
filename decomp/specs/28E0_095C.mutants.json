@@ -1,0 +1,15 @@
+[
+  {"name": "上限0xC8改0xC9", "find": "level >= 0xC8u", "replace": "level >= 0xC9u"},
+  {"name": "上限0xC8改0xC7", "find": "level >= 0xC8u", "replace": "level >= 0xC7u"},
+  {"name": "分界0x64改0x65", "find": "level < 0x64u", "replace": "level < 0x65u"},
+  {"name": "分界0x64改0x63", "find": "level < 0x64u", "replace": "level < 0x63u"},
+  {"name": "兩個跨度對調", "find": "(level < 0x64u) ? span_a : span_b", "replace": "(level < 0x64u) ? span_b : span_a"},
+  {"name": "除數改跨度加2", "find": "d = (uint16_t)(span + 1u);", "replace": "d = (uint16_t)(span + 2u);"},
+  {"name": "只抽一次亂數", "find": "r2 = (uint16_t)(f_3CD5_000C(m) % d);", "replace": "r2 = r1;"},
+  {"name": "多抽一次亂數", "find": "r2 = (uint16_t)(f_3CD5_000C(m) % d);", "replace": "(void)f_3CD5_000C(m); r2 = (uint16_t)(f_3CD5_000C(m) % d);"},
+  {"name": "最後除數改101", "find": "/ 100u);", "replace": "/ 101u);"},
+  {"name": "最後除數改99", "find": "/ 100u);", "replace": "/ 99u);"},
+  {"name": "相加改成相減", "find": "(uint16_t)(r1 + r2) / 100u", "replace": "(uint16_t)(r1 > r2 ? r1 - r2 : r2 - r1) / 100u"},
+  {"name": "等級取整個word", "find": "uint8_t level = (uint8_t)level_word;", "replace": "uint16_t level = level_word;"},
+  {"name": "高位元組有值時才用乙跨度", "find": "(level < 0x64u) ? span_a : span_b", "replace": "(level_word < 0x64u) ? span_a : span_b"}
+]

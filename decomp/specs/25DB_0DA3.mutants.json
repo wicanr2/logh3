@@ -1,0 +1,17 @@
+[
+  {"name": "null 判斷只看段", "find": "if ((rd16(m, DS(ptr_off + 2)) | rd16(m, DS(ptr_off))) == 0)", "replace": "if (rd16(m, DS(ptr_off + 2)) == 0)"},
+  {"name": "null 判斷只看位移", "find": "if ((rd16(m, DS(ptr_off + 2)) | rd16(m, DS(ptr_off))) == 0)", "replace": "if (rd16(m, DS(ptr_off)) == 0)"},
+  {"name": "x 減的是 ds:9BF6", "find": "rd16(m, DS(x_off)) - rd16(m, DS(0x9BF4))", "replace": "rd16(m, DS(x_off)) - rd16(m, DS(0x9BF6))"},
+  {"name": "y 減的是 ds:9BF4", "find": "rd16(m, DS(y_off)) - rd16(m, DS(0x9BF6))", "replace": "rd16(m, DS(y_off)) - rd16(m, DS(0x9BF4))"},
+  {"name": "x 寫到 obj+7", "find": "put16(m, LIN(a_seg, a_off + 6), x);", "replace": "put16(m, LIN(a_seg, a_off + 7), x);"},
+  {"name": "y 寫到 obj+6", "find": "put16(m, LIN(b_seg, b_off + 8), y);", "replace": "put16(m, LIN(b_seg, b_off + 6), y);"},
+  {"name": "不寫旗標", "find": "put8(m, LIN(c_seg, c_off + 1), 0xFF);", "replace": "(void)c_seg;\n    (void)c_off;"},
+  {"name": "旗標值 0xFE", "find": "put8(m, LIN(c_seg, c_off + 1), 0xFF);", "replace": "put8(m, LIN(c_seg, c_off + 1), 0xFE);"},
+  {"name": "第二次不重讀物件位移", "find": "b_off = rd16(m, DS(ptr_off));", "replace": "b_off = a_off;"},
+  {"name": "第三次不重讀物件位移", "find": "c_off = rd16(m, DS(ptr_off));", "replace": "c_off = b_off;"},
+  {"name": "y 在寫 obj+6 之前讀", "find": "    put16(m, LIN(a_seg, a_off + 6), x);\n\n    y = (uint16_t)(rd16(m, DS(y_off)) - rd16(m, DS(0x9BF6)));", "replace": "    y = (uint16_t)(rd16(m, DS(y_off)) - rd16(m, DS(0x9BF6)));\n    put16(m, LIN(a_seg, a_off + 6), x);"},
+  {"name": "B 的 y 讀 A 的座標", "find": "update_block(m, 0xA788, 0xA794, 0xA796);", "replace": "update_block(m, 0xA788, 0xA794, 0xA792);"},
+  {"name": "B 的 x 讀 A 的座標", "find": "update_block(m, 0xA788, 0xA794, 0xA796);", "replace": "update_block(m, 0xA788, 0xA790, 0xA796);"},
+  {"name": "A、B 順序對調", "find": "    update_block(m, 0xA784, 0xA790, 0xA792);\n    update_block(m, 0xA788, 0xA794, 0xA796);", "replace": "    update_block(m, 0xA788, 0xA794, 0xA796);\n    update_block(m, 0xA784, 0xA790, 0xA792);"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]

@@ -1,0 +1,14 @@
+[
+  {"name": "null 判斷只看段", "find": "if ((rd16(m, DS(0xA78E)) | rd16(m, DS(0xA78C))) == 0)", "replace": "if (rd16(m, DS(0xA78E)) == 0)"},
+  {"name": "null 判斷只看位移", "find": "if ((rd16(m, DS(0xA78E)) | rd16(m, DS(0xA78C))) == 0)", "replace": "if (rd16(m, DS(0xA78C)) == 0)"},
+  {"name": "x 減的是 ds:9BF6", "find": "rd16(m, DS(0xA798)) - rd16(m, DS(0x9BF4))", "replace": "rd16(m, DS(0xA798)) - rd16(m, DS(0x9BF6))"},
+  {"name": "y 減的是 ds:9BF4", "find": "rd16(m, DS(0xA79A)) - rd16(m, DS(0x9BF6))", "replace": "rd16(m, DS(0xA79A)) - rd16(m, DS(0x9BF4))"},
+  {"name": "x 讀 ds:A794", "find": "rd16(m, DS(0xA798))", "replace": "rd16(m, DS(0xA794))"},
+  {"name": "y 讀 ds:A796", "find": "rd16(m, DS(0xA79A))", "replace": "rd16(m, DS(0xA796))"},
+  {"name": "x 寫到 obj+7", "find": "put16(m, LIN(a_seg, a_off + 6), x);", "replace": "put16(m, LIN(a_seg, a_off + 7), x);"},
+  {"name": "y 寫到 obj+6", "find": "put16(m, LIN(b_seg, b_off + 8), y);", "replace": "put16(m, LIN(b_seg, b_off + 6), y);"},
+  {"name": "多寫 0DA3 的旗標", "find": "put16(m, LIN(b_seg, b_off + 8), y);", "replace": "put16(m, LIN(b_seg, b_off + 8), y);\n    put8(m, LIN(b_seg, b_off + 1), 0xFF);"},
+  {"name": "第二次不重讀物件位移", "find": "b_off = rd16(m, DS(0xA78C));", "replace": "b_off = a_off;"},
+  {"name": "y 在寫 obj+6 之前讀", "find": "    put16(m, LIN(a_seg, a_off + 6), x);\n\n    y = (uint16_t)(rd16(m, DS(0xA79A)) - rd16(m, DS(0x9BF6)));", "replace": "    y = (uint16_t)(rd16(m, DS(0xA79A)) - rd16(m, DS(0x9BF6)));\n    put16(m, LIN(a_seg, a_off + 6), x);"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]

@@ -1,0 +1,21 @@
+{
+  "id": "2703_0853",
+  "entry": "2703:0853",
+  "conv": "far",
+  "ret": "none",
+  "size": 139,
+  "code_sha256_16": "8fd37e8f2f1cb6bb",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [],
+  "seeds": [
+    {"pokes": [{"addr": "ds:A7C4", "hex": "5555"}, {"addr": "ds:B706", "hex": "5555"}, {"addr": "ds:B784", "hex": "5555"}]},
+    {"pokes": [{"addr": "ds:CF3A", "hex": "00 01 00 00 00 00 1F"}, {"addr": "ds:B706", "hex": "5555"}]},
+    {"pokes": [{"addr": "ds:C0EE", "hex": "00 80 00 00 00 00 FF"}]},
+    {"pokes": [{"addr": "ds:C0EE", "hex": "00 01 00 00 00 00 00"}, {"addr": "ds:C168", "hex": "00 00 00 00 00 00 00"}, {"addr": "ds:A7C4", "hex": "FFFF"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

@@ -1,0 +1,32 @@
+{
+  "id": "28E0_057F",
+  "entry": "28E0:057F",
+  "conv": "far",
+  "ret": "ax",
+  "size": 77,
+  "code_sha256_16": "bbcc709dc902edbf",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "id", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 5, 10, 40, 60, 63, 81, 82, 100, 200, 255, 256, 261, 511, 65280, 65285], "also_random": true}},
+    {"name": "flag", "kind": "word", "gen": {"choices": [0, 1, 2, 127, 128, 255, 256, 257, 512, 65280, 65281, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [5, 0], "pokes": [{"addr": "ds:B808", "hex": "55"}, {"addr": "ds:B80A", "hex": "11223344"}, {"addr": "ds:B811", "hex": "00"}]},
+    {"args": [5, 1], "pokes": [{"addr": "ds:B808", "hex": "55"}, {"addr": "ds:B80A", "hex": "11223344"}, {"addr": "ds:B811", "hex": "00"}]},
+    {"args": [5, 256], "pokes": [{"addr": "ds:B808", "hex": "55"}, {"addr": "ds:B80A", "hex": "11223344"}, {"addr": "ds:B811", "hex": "00"}]},
+    {"args": [5, 257], "pokes": [{"addr": "ds:B808", "hex": "55"}, {"addr": "ds:B80A", "hex": "11223344"}, {"addr": "ds:B811", "hex": "00"}]},
+    {"args": [5, 255], "pokes": [{"addr": "ds:B808", "hex": "80"}, {"addr": "ds:B80A", "hex": "ffffffff"}, {"addr": "ds:B811", "hex": "7f"}]},
+    {"args": [5, 0], "pokes": [{"addr": "ds:B808", "hex": "00"}, {"addr": "ds:B80A", "hex": "01000000"}, {"addr": "ds:B811", "hex": "80"}]},
+    {"args": [5, 1], "pokes": [{"addr": "ds:B808", "hex": "80"}, {"addr": "ds:B80A", "hex": "00000100"}, {"addr": "ds:B811", "hex": "01"}]},
+    {"args": [261, 0], "pokes": [{"addr": "ds:B808", "hex": "55"}, {"addr": "ds:B80A", "hex": "11223344"}, {"addr": "ds:B811", "hex": "00"}]},
+    {"args": [65285, 65280], "pokes": [{"addr": "ds:B808", "hex": "55"}, {"addr": "ds:B80A", "hex": "11223344"}, {"addr": "ds:B811", "hex": "00"}]},
+    {"args": [0, 0], "pokes": [{"addr": "ds:B77C", "hex": "55"}, {"addr": "ds:B77E", "hex": "11223344"}, {"addr": "ds:B785", "hex": "00"}]},
+    {"args": [255, 1], "pokes": [{"addr": "ds:D360", "hex": "55"}, {"addr": "ds:D362", "hex": "11223344"}, {"addr": "ds:D369", "hex": "00"}]},
+    {"args": [255, 0], "pokes": [{"addr": "ds:D360", "hex": "55"}, {"addr": "ds:D362", "hex": "11223344"}, {"addr": "ds:D369", "hex": "00"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 95
+}

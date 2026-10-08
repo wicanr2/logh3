@@ -1,0 +1,27 @@
+{
+  "id": "2703_09DD",
+  "entry": "2703:09DD",
+  "conv": "far",
+  "ret": "none",
+  "size": 107,
+  "code_sha256_16": "2b1f85a94f519954",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "out", "kind": "farptr", "gen": {"scratch": 256}}
+  ],
+  "seeds": [
+    {"args": [0, 40192], "pokes": [{"addr": "ds:B6F0", "hex": "00"}, {"addr": "ds:B77B", "hex": "01"}]},
+    {"args": [0, 40192], "pokes": [{"addr": "ds:B6F0", "hex": "01"}, {"addr": "ds:B77B", "hex": "00"}]},
+    {"args": [0, 40192], "pokes": [{"addr": "ds:B6F0", "hex": "00"}, {"addr": "ds:B77B", "hex": "02"}]},
+    {"args": [0, 40192], "pokes": [{"addr": "ds:B6F0", "hex": "02"}, {"addr": "ds:B77B", "hex": "00"}]},
+    {"args": [0, 40192], "pokes": [{"addr": "ds:B6F0", "hex": "00"}, {"addr": "ds:B77B", "hex": "03"}]},
+    {"args": [0, 40192], "pokes": [{"addr": "ds:B6F0", "hex": "00"}, {"addr": "ds:B77B", "hex": "FF"}]},
+    {"args": [0, 40192], "pokes": [{"addr": "ds:B76E", "hex": "00"}, {"addr": "ds:B77C", "hex": "01"}]},
+    {"args": [0, 40192], "pokes": [{"addr": "ds:B76E", "hex": "01"}, {"addr": "ds:B77C", "hex": "00"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

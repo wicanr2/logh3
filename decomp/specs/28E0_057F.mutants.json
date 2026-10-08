@@ -1,0 +1,21 @@
+[
+  {"name": "不設bit7", "find": "wr8(m, DS((uint16_t)(rec + 9u)), (uint8_t)(rd8(m, DS((uint16_t)(rec + 9u))) | 0x80u));", "replace": ""},
+  {"name": "設定位元改bit6", "find": "rd8(m, DS((uint16_t)(rec + 9u))) | 0x80u", "replace": "rd8(m, DS((uint16_t)(rec + 9u))) | 0x40u"},
+  {"name": "改成整個byte覆寫0x80", "find": "(uint8_t)(rd8(m, DS((uint16_t)(rec + 9u))) | 0x80u)", "replace": "(uint8_t)0x80u"},
+  {"name": "旗標0時寫值改0x81", "find": "? 0x80u : 0u;", "replace": "? 0x81u : 0u;"},
+  {"name": "旗標0與非0的值對調", "find": "? 0x80u : 0u;", "replace": "? 0u : 0x80u;"},
+  {"name": "旗標比較改非0", "find": "((uint8_t)flag_w == 0u)", "replace": "((uint8_t)flag_w != 0u)"},
+  {"name": "旗標取整個word", "find": "((uint8_t)flag_w == 0u)", "replace": "(flag_w == 0u)"},
+  {"name": "不寫+0x00", "find": "wr8(m, DS(rec), (uint8_t)ax);", "replace": ""},
+  {"name": "+0x00位移改+1", "find": "wr8(m, DS(rec), (uint8_t)ax);", "replace": "wr8(m, DS((uint16_t)(rec + 1u)), (uint8_t)ax);"},
+  {"name": "不清+0x02", "find": "wr16(m, DS((uint16_t)(rec + 2u)), 0u);", "replace": ""},
+  {"name": "不清+0x04", "find": "wr16(m, DS((uint16_t)(rec + 4u)), 0u);", "replace": ""},
+  {"name": "+0x02只清一個byte", "find": "wr16(m, DS((uint16_t)(rec + 2u)), 0u);", "replace": "wr8(m, DS((uint16_t)(rec + 2u)), 0u);"},
+  {"name": "+0x04改清+0x06", "find": "wr16(m, DS((uint16_t)(rec + 4u)), 0u);", "replace": "wr16(m, DS((uint16_t)(rec + 6u)), 0u);"},
+  {"name": "清成1", "find": "wr16(m, DS((uint16_t)(rec + 2u)), 0u);", "replace": "wr16(m, DS((uint16_t)(rec + 2u)), 1u);"},
+  {"name": "欄位位移改+8", "find": "rd8(m, DS((uint16_t)(rec + 9u))) | 0x80u", "replace": "rd8(m, DS((uint16_t)(rec + 8u))) | 0x80u"},
+  {"name": "記錄步幅改0x1B", "find": "id * 0x1Cu", "replace": "id * 0x1Bu"},
+  {"name": "記錄基底改B77D", "find": "0xB77Cu + ", "replace": "0xB77Du + "},
+  {"name": "編號取整個word", "find": "uint8_t id = (uint8_t)id_w;", "replace": "uint16_t id = id_w;"},
+  {"name": "殘值AX改回0", "find": "return ax;", "replace": "return 0;"}
+]

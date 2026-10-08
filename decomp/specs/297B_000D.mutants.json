@@ -1,0 +1,13 @@
+[
+  {"name": "填充值FF改FE", "find": "GIN3_DS, 0xFF, 0x0F40", "replace": "GIN3_DS, 0xFE, 0x0F40"},
+  {"name": "填充長度少一", "find": "GIN3_DS, 0xFF, 0x0F40", "replace": "GIN3_DS, 0xFF, 0x0F3F"},
+  {"name": "填充長度多一", "find": "GIN3_DS, 0xFF, 0x0F40", "replace": "GIN3_DS, 0xFF, 0x0F41"},
+  {"name": "槽號寫到+4", "find": "wr8(m, DS(record + 3), i);", "replace": "wr8(m, DS(record + 4), i);"},
+  {"name": "番號mod16改mod15", "find": "(uint8_t)(i % 16 + 1)", "replace": "(uint8_t)(i % 15 + 1)"},
+  {"name": "番號不加一", "find": "(uint8_t)(i % 16 + 1)", "replace": "(uint8_t)(i % 16)"},
+  {"name": "少做最後一筆", "find": "i < 0x20", "replace": "i < 0x1F"},
+  {"name": "步幅0x7A改0x79", "find": "record + 0x7A", "replace": "record + 0x79"},
+  {"name": "不清8F4A", "find": "wr8(m, DS(0x8F4A), 0);", "replace": ""},
+  {"name": "不清8F49", "find": "wr8(m, DS(0x8F49), 0);", "replace": ""},
+  {"name": "回傳改1", "find": "    return 0;\n}\n\nstatic", "replace": "    return 1;\n}\n\nstatic"}
+]

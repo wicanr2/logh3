@@ -1,0 +1,11 @@
+[
+  {"name": "空槽判斷改+0", "find": "LIN(seg, off + 1)", "replace": "LIN(seg, off + 0)"},
+  {"name": "空槽判斷改+2", "find": "LIN(seg, off + 1)", "replace": "LIN(seg, off + 2)"},
+  {"name": "空槽值FF改FE", "find": "== 0xFF)", "replace": "== 0xFE)"},
+  {"name": "步幅0x4E改0x4D", "find": "off + 0x4E", "replace": "off + 0x4D"},
+  {"name": "上限少一筆", "find": "i < 0x160u", "replace": "i < 0x15Fu"},
+  {"name": "上限多一筆", "find": "i < 0x160u", "replace": "i < 0x161u"},
+  {"name": "池滿回0", "find": "return 0xFFFF;", "replace": "return 0;"},
+  {"name": "位移不回繞", "find": "if (rd8(m, LIN(seg, off + 1)) == 0xFF)", "replace": "if (rd8(m, (((uint32_t)seg << 4) + (uint32_t)i * 0x4Eu + (uint32_t)rd16(m, DS(0xCFB4)) + 1u) & 0xFFFFFu) == 0xFF)"},
+  {"name": "讀成word判斷高位元組", "find": "rd8(m, LIN(seg, off + 1)) == 0xFF", "replace": "(rd16(m, LIN(seg, off)) >> 8) == 0xFF && rd8(m, LIN(seg, off)) != 0xFF"}
+]

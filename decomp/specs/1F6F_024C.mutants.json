@@ -1,0 +1,12 @@
+[
+  {"name": "門檻2000改2001", "find": "if (q < 0x2000u && count >= 3)", "replace": "if (q < 0x2001u && count >= 3)"},
+  {"name": "門檻4000改4001", "find": "if (q < 0x4000u && count >= 2)", "replace": "if (q < 0x4001u && count >= 2)"},
+  {"name": "第一檔筆數改2", "find": "if (q < 0x2000u && count >= 3)", "replace": "if (q < 0x2000u && count >= 2)"},
+  {"name": "第二檔筆數改1", "find": "if (q < 0x4000u && count >= 2)", "replace": "if (q < 0x4000u && count >= 1)"},
+  {"name": "商不截成16位元", "find": "uint16_t q = (uint16_t)gin3_uldiv(", "replace": "uint32_t q = gin3_uldiv("},
+  {"name": "除數99", "find": "rd8(m, DS(fleet + 0x45))), 100u);", "replace": "rd8(m, DS(fleet + 0x45))), 99u);"},
+  {"name": "欄位讀+0x44", "find": "rd8(m, DS(fleet + 0x45))), 100u);", "replace": "rd8(m, DS(fleet + 0x44))), 100u);"},
+  {"name": "艦隊步距120", "find": "* 0x7Au));", "replace": "* 0x78u));"},
+  {"name": "槽號讀+0", "find": "ship_off + 0x01)) * 0x7Au", "replace": "ship_off + 0x00)) * 0x7Au"},
+  {"name": "count改有號比較", "find": "if (q < 0x4000u && count >= 2)", "replace": "if (q < 0x4000u && (int16_t)count >= 2)"}
+]

@@ -1,0 +1,18 @@
+[
+  {"name": "欄位位移改+0x0B", "find": "(uint16_t)(rec + 0x0Au)", "replace": "(uint16_t)(rec + 0x0Bu)"},
+  {"name": "欄位位移改+0x09", "find": "(uint16_t)(rec + 0x0Au)", "replace": "(uint16_t)(rec + 0x09u)"},
+  {"name": "比較改不等於", "find": "(uint16_t)(rec + 0x0Au))) == want) {", "replace": "(uint16_t)(rec + 0x0Au))) != want) {"},
+  {"name": "記錄步幅改0x1B", "find": "id * 0x1Cu", "replace": "id * 0x1Bu"},
+  {"name": "記錄基底改B77D", "find": "0xB77Cu + ", "replace": "0xB77Du + "},
+  {"name": "比較值取整個word", "find": "uint8_t want = (uint8_t)want_w;", "replace": "uint16_t want = want_w;"},
+  {"name": "項數只取低7位元", "find": "uint8_t count = (uint8_t)count_w;", "replace": "uint8_t count = (uint8_t)(count_w & 0x7Fu);"},
+  {"name": "項數少跑最後一個", "find": "for (i = 0; i < count; i++) {", "replace": "for (i = 0; (uint16_t)(i + 1u) < count; i++) {"},
+  {"name": "丟棄時AH清0", "find": "ah = (uint8_t)(GIN3_DS >> 8);", "replace": "ah = 0;"},
+  {"name": "AH起點清0", "find": "uint8_t ah = (uint8_t)(list_seg >> 8);", "replace": "uint8_t ah = 0;"},
+  {"name": "保留時AH也換成DS高位元組", "find": "kept = (uint8_t)(kept + 1u);", "replace": "kept = (uint8_t)(kept + 1u); ah = (uint8_t)(GIN3_DS >> 8);"},
+  {"name": "保留項寫在讀取位置", "find": "wr8(m, LIN(list_seg, dst), id);", "replace": "wr8(m, LIN(list_seg, src), id);"},
+  {"name": "保留項不寫回", "find": "wr8(m, LIN(list_seg, dst), id);", "replace": ""},
+  {"name": "寫入位置不前進", "find": "dst = (uint16_t)(dst + 1u);", "replace": ""},
+  {"name": "個數不累加", "find": "kept = (uint8_t)(kept + 1u);", "replace": ""},
+  {"name": "清單位移不回繞", "find": "uint8_t id = rd8(m, LIN(list_seg, src));", "replace": "uint8_t id = rd8(m, (((uint32_t)list_seg << 4) + (uint32_t)list_off + i) & 0xFFFFFu);"}
+]

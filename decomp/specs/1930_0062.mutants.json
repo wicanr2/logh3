@@ -1,0 +1,15 @@
+[
+  {"name": "飛彈不受每次上限", "find": "uint32_t give = need <= per ? need : per;", "replace": "uint32_t give = need;"},
+  {"name": "艦載機不受每次上限", "find": "    give = need <= per ? need : per;\n    add32w(m, ship_seg, ship_off + 0x12, give);", "replace": "    give = need;\n    add32w(m, ship_seg, ship_off + 0x12, give);"},
+  {"name": "飛彈上限改有號比較", "find": "uint32_t give = need <= per ? need : per;", "replace": "uint32_t give = (int32_t)need <= (int32_t)per ? need : per;"},
+  {"name": "艦載機上限改有號比較", "find": "    give = need <= per ? need : per;\n    add32w(m, ship_seg, ship_off + 0x12, give);", "replace": "    give = (int32_t)need <= (int32_t)per ? need : per;\n    add32w(m, ship_seg, ship_off + 0x12, give);"},
+  {"name": "飛彈缺口截成16位元", "find": "uint32_t need = cap - rd32w(m, ship_seg, ship_off + 0x0E);", "replace": "uint32_t need = (uint16_t)(cap - rd32w(m, ship_seg, ship_off + 0x0E));"},
+  {"name": "飛彈滿庫存欄位改0F", "find": "uint32_t cap = gin3_lmul(rd8(m, DS(row + 0x10)), n);", "replace": "uint32_t cap = gin3_lmul(rd8(m, DS(row + 0x0F)), n);"},
+  {"name": "飛彈每次欄位改13", "find": "uint32_t per = gin3_lmul(rd8(m, DS(row + 0x0F)), n);", "replace": "uint32_t per = gin3_lmul(rd8(m, DS(row + 0x13)), n);"},
+  {"name": "艦載機滿庫存欄位改13", "find": "cap = gin3_lmul(rd8(m, DS(row + 0x14)), n);", "replace": "cap = gin3_lmul(rd8(m, DS(row + 0x13)), n);"},
+  {"name": "艦載機每次欄位改14", "find": "per = gin3_lmul(rd8(m, DS(row + 0x13)), n);", "replace": "per = gin3_lmul(rd8(m, DS(row + 0x14)), n);"},
+  {"name": "艦載機存量讀0E", "find": "need = cap - rd32w(m, ship_seg, ship_off + 0x12);", "replace": "need = cap - rd32w(m, ship_seg, ship_off + 0x0E);"},
+  {"name": "列號艦種步距25", "find": "* 0x1Au));", "replace": "* 0x19u));"},
+  {"name": "列號陣營步距207", "find": "* 0xD0u) +", "replace": "* 0xCFu) +"},
+  {"name": "飛彈補量少一", "find": "add32w(m, ship_seg, ship_off + 0x0E, give);", "replace": "add32w(m, ship_seg, ship_off + 0x0E, give - (give > 0));"}
+]

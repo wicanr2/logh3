@@ -1,0 +1,19 @@
+{
+  "id": "2B5F_000A",
+  "entry": "2B5F:000A",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 21,
+  "code_sha256_16": "1cfd3d28c06682b6",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [],
+  "seeds": [
+    {"pokes": [{"addr": "ds:8F9A", "hex": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}]},
+    {"pokes": [{"addr": "ds:8F9A", "hex": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"}]}
+  ],
+  "iters": 40,
+  "max_cases": 4,
+  "seed": 20261009,
+  "min_coverage": 100
+}

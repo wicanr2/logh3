@@ -1,0 +1,8 @@
+[
+  {"name": "長度0x38改0x37", "find": "GIN3_DS, 0, 0x38", "replace": "GIN3_DS, 0, 0x37"},
+  {"name": "長度0x38改0x39", "find": "GIN3_DS, 0, 0x38", "replace": "GIN3_DS, 0, 0x39"},
+  {"name": "起點8F9C改8F9D", "find": "0x8F9C, GIN3_DS", "replace": "0x8F9D, GIN3_DS"},
+  {"name": "起點8F9C改8F9B", "find": "0x8F9C, GIN3_DS", "replace": "0x8F9B, GIN3_DS"},
+  {"name": "填入值0改1", "find": "GIN3_DS, 0, 0x38", "replace": "GIN3_DS, 1, 0x38"},
+  {"name": "回傳殘值改成只回段", "find": "return f_3C9C_000A(m, 0x8F9C, GIN3_DS, 0, 0x38);", "replace": "return f_3C9C_000A(m, 0x8F9C, GIN3_DS, 0, 0x38) & 0xFFFF0000u;"}
+]

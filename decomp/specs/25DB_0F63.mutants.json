@@ -1,0 +1,7 @@
+[
+  {"name": "只回低位元組", "find": "    return v;", "replace": "    return (uint8_t)v;"},
+  {"name": "最高位元清掉", "find": "    return v;", "replace": "    return (uint16_t)(v & 0x7FFFu);"},
+  {"name": "回傳加一", "find": "    return v;", "replace": "    return (uint16_t)(v + 1u);"},
+  {"name": "高低位元組對調", "find": "    return v;", "replace": "    return (uint16_t)((v << 8) | (v >> 8));"},
+  {"name": "位元組符號延伸", "find": "    return v;", "replace": "    return (uint16_t)(int16_t)(int8_t)v;"}
+]

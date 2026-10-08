@@ -24,6 +24,13 @@ out="$ROOT/workplace/decomp/diff/$id/$name"
 test ! -e "$out" || { echo "批次已存在：$out" >&2; exit 1; }
 mkdir -p "$out/src"
 cp "$D/harness/diffprobe.go" "$out/src/main.go"
+{
+  echo "dosgolem_head=$head"
+  echo "diffprobe_sha256=$(sha256sum "$D/harness/diffprobe.go" | cut -d' ' -f1)"
+  echo "spec_sha256=$(sha256sum "$spec" | cut -d' ' -f1)"
+  echo "repo_head=$(git -C "$ROOT" rev-parse HEAD) decomp_dirty_files=$(git -C "$ROOT" status --porcelain decomp | wc -l)"
+  echo "date=$(date -u +%FT%TZ)"
+} > "$out/meta.txt"
 cat > "$out/run_in_container.sh" <<'INNER'
 #!/usr/bin/env bash
 set -euo pipefail

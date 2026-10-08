@@ -1,0 +1,38 @@
+{
+  "id": "2703_1ADB",
+  "entry": "2703:1ADB",
+  "conv": "far",
+  "ret": "none",
+  "size": 109,
+  "code_sha256_16": "9e1651939f65720f",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "planet": {"base": "ptr:5336:5338", "stride": 82, "count": 81}
+  },
+  "args": [
+    {"name": "planet", "kind": "farptr", "gen": {"table": "planet"}}
+  ],
+  "seeds": [
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "6400"}, {"addr": "5313:0018", "hex": "2C01"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "6400"}, {"addr": "5313:0018", "hex": "2D01"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "6400"}, {"addr": "5313:0018", "hex": "2B01"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "5655"}, {"addr": "5313:0018", "hex": "0200"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "5655"}, {"addr": "5313:0018", "hex": "6400"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "0000"}, {"addr": "5313:0018", "hex": "0000"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "FFFF"}, {"addr": "5313:0018", "hex": "FFFF"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "0100"}, {"addr": "5313:0018", "hex": "FFFF"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:0016", "hex": "0500"}, {"addr": "5313:0018", "hex": "0200"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:001C", "hex": "07000000"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:001C", "hex": "00000080"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:001C", "hex": "FFFFFFFF"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:001C", "hex": "00000100"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:001C", "hex": "00000000"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:001C", "hex": "FEFFFFFF"}]},
+    {"args": [2, 21267], "pokes": [{"addr": "5313:001C", "hex": "FFFFFF7F"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

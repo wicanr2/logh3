@@ -1,0 +1,31 @@
+{
+  "id": "2703_1433",
+  "entry": "2703:1433",
+  "conv": "far",
+  "ret": "ax",
+  "size": 156,
+  "code_sha256_16": "c1c11fe9eff29718",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "region", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 5, 8, 13, 20, 30, 31, 31, 2, 256, 287, 32, 100, 255, 65285]}},
+    {"name": "side", "kind": "word", "gen": {"choices": [0, 0, 1, 1, 256, 257, 2, 255]}},
+    {"name": "kind", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 7, 256, 259, 255]}}
+  ],
+  "seeds": [
+    {"args": [2, 0, 0], "pokes": [{"addr": "ds:A8C8", "hex": "B80B0000"}]},
+    {"args": [2, 0, 0], "pokes": [{"addr": "ds:A8C8", "hex": "B70B0000"}]},
+    {"args": [2, 0, 0], "pokes": [{"addr": "ds:A8C8", "hex": "B90B0000"}]},
+    {"args": [2, 0, 0], "pokes": [{"addr": "ds:A8C8", "hex": "01000100"}]},
+    {"args": [2, 0, 0], "pokes": [{"addr": "ds:A8C8", "hex": "FFFFFFFF"}]},
+    {"args": [2, 0, 0], "pokes": [{"addr": "ds:A8C8", "hex": "00000000"}]},
+    {"args": [2, 0, 0], "pokes": [{"addr": "ds:A8C8", "hex": "00000100"}]},
+    {"args": [2, 1, 6], "pokes": [{"addr": "ds:A8FC", "hex": "E803 0000"}]},
+    {"args": [2, 1, 6], "pokes": [{"addr": "ds:A8FC", "hex": "E803 0100"}]},
+    {"args": [2, 1, 6], "pokes": [{"addr": "ds:A8FC", "hex": "E703 0000"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

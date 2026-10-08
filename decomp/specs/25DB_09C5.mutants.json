@@ -1,0 +1,21 @@
+[
+  {"name": "清單迴圈多跑一圈", "find": "while (di < rd16(m, DS(0x9894))) {", "replace": "while (di <= rd16(m, DS(0x9894))) {"},
+  {"name": "清單筆數不重讀", "find": "while (di < rd16(m, DS(0x9894))) {", "replace": "for (uint16_t n0 = rd16(m, DS(0x9894)); di < n0; ) {"},
+  {"name": "艦隊步距 0x79", "find": "(uint16_t)(fi * 0x7Au)", "replace": "(uint16_t)(fi * 0x79u)"},
+  {"name": "清單項目當有號", "find": "uint8_t fi = rd8(m, DS(list_off));", "replace": "int8_t fi = (int8_t)rd8(m, DS(list_off));"},
+  {"name": "艦隊物件指標讀 +0x6A", "find": "rd16(m, DS(f + 0x6C))", "replace": "rd16(m, DS(f + 0x6A))"},
+  {"name": "艦隊物件旗標寫 +2", "find": "put8(m, LIN(o_seg, o_off + 1), 0);", "replace": "put8(m, LIN(o_seg, o_off + 2), 0);"},
+  {"name": "艦艇物件旗標寫 +2", "find": "put8(m, LIN(p_seg, p_off + 1), 0);", "replace": "put8(m, LIN(p_seg, p_off + 2), 0);"},
+  {"name": "艦艇物件旗標改寫 0xFF", "find": "put8(m, LIN(p_seg, p_off + 1), 0);", "replace": "put8(m, LIN(p_seg, p_off + 1), 0xFF);"},
+  {"name": "不清艦隊物件", "find": "put8(m, LIN(o_seg, o_off + 1), 0);", "replace": "(void)o_seg;\n        (void)o_off;"},
+  {"name": "不清艦艇物件", "find": "put8(m, LIN(p_seg, p_off + 1), 0);", "replace": "(void)p_seg;\n        (void)p_off;"},
+  {"name": "分隊迴圈多跑一圈", "find": "while (k < rd8(m, DS(f + 0x0F))) {", "replace": "while (k < 255 && k <= rd8(m, DS(f + 0x0F))) {"},
+  {"name": "分隊數不重讀", "find": "while (k < rd8(m, DS(f + 0x0F))) {", "replace": "for (uint8_t cnt0 = rd8(m, DS(f + 0x0F)); k < cnt0; ) {"},
+  {"name": "分隊數讀 +0x0E", "find": "rd8(m, DS(f + 0x0F))", "replace": "rd8(m, DS(f + 0x0E))"},
+  {"name": "艦艇步距 0x4D", "find": "(uint16_t)(index * 0x4Eu)", "replace": "(uint16_t)(index * 0x4Du)"},
+  {"name": "艦艇池位移讀 CFB6", "find": "rd16(m, DS(0xCFB4))", "replace": "rd16(m, DS(0xCFB6))"},
+  {"name": "分隊槽步距 2", "find": "slot = (uint16_t)(slot + 4);", "replace": "slot = (uint16_t)(slot + 2);"},
+  {"name": "清單指標步距 2", "find": "list_off = (uint16_t)(list_off + 1);", "replace": "list_off = (uint16_t)(list_off + 2);"},
+  {"name": "艦隊物件與艦艇物件順序對調", "find": "        put8(m, LIN(o_seg, o_off + 1), 0);\n        zero_ship_objs(m, f);", "replace": "        zero_ship_objs(m, f);\n        put8(m, LIN(o_seg, o_off + 1), 0);"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]

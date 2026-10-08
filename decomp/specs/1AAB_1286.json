@@ -1,0 +1,34 @@
+{
+  "id": "1AAB_1286",
+  "entry": "1AAB:1286",
+  "conv": "far",
+  "ret": "none",
+  "size": 312,
+  "code_sha256_16": "c3347e1e29a23e13",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦隊表（ds:C074，32 筆 × 122）與艦艇池取 S3 開局（fcmd-s3-base）的真實內容：艦隊 0 的 10 組是池 0,2,3,...,10，池 #10 是修護艦（艦種 6，位移 0x30E，+0x08 ＝ 1000）。種子用 pokes 造出缺額、存量不足、存量夠、高字非 0（池索引別名：池 #15974 ＝ 池 #10 + 8 bytes）。args 的 49268 ＝ 0xC074，21683 ＝ 0x54B3。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}}
+  ],
+  "seeds": [
+    {"args": [49268, 21683], "pokes": [{"addr": "668B:000A", "hex": "C409"}, {"addr": "668B:00A6", "hex": "D007"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "668B:000A", "hex": "C409"}, {"addr": "668B:00A6", "hex": "D007"}, {"addr": "668B:0316", "hex": "2823"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "03"}, {"addr": "ds:C084", "hex": "0A00"}, {"addr": "ds:C088", "hex": "663E"}, {"addr": "ds:C08C", "hex": "0000"}, {"addr": "668B:0322", "hex": "0500"}, {"addr": "668B:000A", "hex": "D007"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "668B:000A", "hex": "C409"}, {"addr": "668B:031E", "hex": "FFFF"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "00"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "668B:000A", "hex": "C409"}, {"addr": "668B:000E", "hex": "6400"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "668B:000A", "hex": "F401"}, {"addr": "668B:0316", "hex": "F401"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "668B:000A", "hex": "F301"}, {"addr": "668B:0316", "hex": "F401"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "668B:000A", "hex": "F501"}, {"addr": "668B:0316", "hex": "F401"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "668B:000A", "hex": "C409"}, {"addr": "668B:0316", "hex": "0000"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "668B:0006", "hex": "06"}, {"addr": "668B:00A6", "hex": "D007"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

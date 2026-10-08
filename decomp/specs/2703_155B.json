@@ -1,0 +1,30 @@
+{
+  "id": "2703_155B",
+  "entry": "2703:155B",
+  "conv": "far",
+  "ret": "none",
+  "size": 64,
+  "code_sha256_16": "9b35815b20241684",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "region": {"base": "ds:A79C", "stride": 126, "count": 32},
+    "ship": {"base": "ptr:CFB4:CFB6", "stride": 78, "count": 352}
+  },
+  "args": [
+    {"name": "region", "kind": "farptr", "gen": {"table": "region"}},
+    {"name": "ship", "kind": "farptr", "gen": {"table": "ship"}}
+  ],
+  "seeds": [
+    {"args": [42908, 21683, 2, 26251], "pokes": [{"addr": "ds:A7CC", "hex": "FFFF0000"}, {"addr": "668B:0002", "hex": "00"}, {"addr": "668B:0006", "hex": "00"}, {"addr": "668B:000A", "hex": "0100"}]},
+    {"args": [42908, 21683, 2, 26251], "pokes": [{"addr": "ds:A7CC", "hex": "FFFFFFFF"}, {"addr": "668B:0002", "hex": "00"}, {"addr": "668B:0006", "hex": "00"}, {"addr": "668B:000A", "hex": "FFFF"}]},
+    {"args": [42908, 21683, 2, 26251], "pokes": [{"addr": "ds:A7CC", "hex": "00800000"}, {"addr": "668B:0002", "hex": "00"}, {"addr": "668B:0006", "hex": "00"}, {"addr": "668B:000A", "hex": "0080"}]},
+    {"args": [42908, 21683, 2, 26251], "pokes": [{"addr": "ds:A7CC", "hex": "FFFF0000"}, {"addr": "668B:0002", "hex": "00"}, {"addr": "668B:0006", "hex": "00"}, {"addr": "668B:000A", "hex": "0000"}]},
+    {"args": [42908, 21683, 2, 26251], "pokes": [{"addr": "ds:A800", "hex": "FEFF0000"}, {"addr": "668B:0002", "hex": "01"}, {"addr": "668B:0006", "hex": "06"}, {"addr": "668B:000A", "hex": "0100"}]},
+    {"args": [42908, 21683, 2, 26251], "pokes": [{"addr": "ds:A800", "hex": "FFFF0000"}, {"addr": "668B:0002", "hex": "01"}, {"addr": "668B:0006", "hex": "06"}, {"addr": "668B:000A", "hex": "0100"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

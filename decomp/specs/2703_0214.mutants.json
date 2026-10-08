@@ -1,0 +1,20 @@
+[
+  {"name": "索敵等級改等於1", "find": "ship_off + 0x17))) != 0)", "replace": "ship_off + 0x17))) == 1)"},
+  {"name": "星域比對改小於等於", "find": "rd8(m, DS((uint16_t)(fleet + 6))) == no", "replace": "rd8(m, DS((uint16_t)(fleet + 6))) <= no"},
+  {"name": "最後一組不算", "find": "j < rd8(m, DS((uint16_t)(fleet + 0x0F)))", "replace": "j + 1 < rd8(m, DS((uint16_t)(fleet + 0x0F)))"},
+  {"name": "旗標逐艦重設", "find": "if (rd8(m, LIN(pool_seg, (uint16_t)(ship_off + 0x17))) != 0)\n                    seen = 1;", "replace": "seen = (rd8(m, LIN(pool_seg, (uint16_t)(ship_off + 0x17))) != 0);"},
+  {"name": "一次加二", "find": "(uint8_t)(rd8(m, at) + 1)", "replace": "(uint8_t)(rd8(m, at) + 2)"},
+  {"name": "計數格改+0x2B", "find": "(uint16_t)((uint16_t)(region + 0x2A) + rd8", "replace": "(uint16_t)((uint16_t)(region + 0x2B) + rd8"},
+  {"name": "不清+0x2B", "find": "wr8(m, DS((uint16_t)(region + 0x2B)), 0);", "replace": "(void)0;"},
+  {"name": "不清+0x2A", "find": "wr8(m, DS((uint16_t)(region + 0x2A)), 0);", "replace": "(void)0;"},
+  {"name": "艦艇步幅改0x4D", "find": "* 0x4Eu", "replace": "* 0x4Du"},
+  {"name": "空位標記改0xFE", "find": "(uint16_t)(fleet + 4))) != 0xFF", "replace": "(uint16_t)(fleet + 4))) != 0xFE"},
+  {"name": "艦隊步幅改0x7B", "find": "fleet = (uint16_t)(fleet + 0x7A);", "replace": "fleet = (uint16_t)(fleet + 0x7B);"},
+  {"name": "索敵位移改0x16", "find": "ship_off + 0x17", "replace": "ship_off + 0x16"},
+  {"name": "編制組數位移改0x0E", "find": "(uint16_t)(fleet + 0x0F)", "replace": "(uint16_t)(fleet + 0x0E)"},
+  {"name": "槽位只前進2", "find": "slot = (uint16_t)(slot + 4);", "replace": "slot = (uint16_t)(slot + 2);"},
+  {"name": "星域步幅改0x7D", "find": "(uint16_t)(no * 0x7E)", "replace": "(uint16_t)(no * 0x7D)"},
+  {"name": "艦隊少掃一筆", "find": "for (i = 0; i < 0x20; i++) {", "replace": "for (i = 0; i < 0x1F; i++) {"},
+  {"name": "槽位不前進", "find": "slot = (uint16_t)(slot + 4);", "replace": "slot = slot;"},
+  {"name": "池基底改讀段", "find": "uint16_t pool_off = rd16(m, DS(0xCFB4));", "replace": "uint16_t pool_off = rd16(m, DS(0xCFB6));"}
+]

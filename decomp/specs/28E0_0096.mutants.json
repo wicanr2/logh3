@@ -1,0 +1,17 @@
+[
+  {"name": "門檻2改3", "find": "if (v < 0x02u)", "replace": "if (v < 0x03u)"},
+  {"name": "門檻4改3", "find": "if (v < 0x04u)", "replace": "if (v < 0x03u)"},
+  {"name": "門檻6改7", "find": "if (v < 0x06u)", "replace": "if (v < 0x07u)"},
+  {"name": "門檻8改9", "find": "if (v < 0x08u)", "replace": "if (v < 0x09u)"},
+  {"name": "門檻0C改0B", "find": "if (v < 0x0Cu)", "replace": "if (v < 0x0Bu)"},
+  {"name": "門檻10改11", "find": "if (v < 0x10u)", "replace": "if (v < 0x11u)"},
+  {"name": "門檻14改13", "find": "if (v < 0x14u)", "replace": "if (v < 0x13u)"},
+  {"name": "門檻18改19", "find": "if (v < 0x18u)", "replace": "if (v < 0x19u)"},
+  {"name": "門檻1D改1C", "find": "if (v < 0x1Du)", "replace": "if (v < 0x1Cu)"},
+  {"name": "門檻22改23", "find": "if (v < 0x22u)", "replace": "if (v < 0x23u)"},
+  {"name": "門檻27改26", "find": "if (v < 0x27u)", "replace": "if (v < 0x26u)"},
+  {"name": "最後等級改10", "find": "    return 11;", "replace": "    return 10;"},
+  {"name": "等級8與9對調", "find": "        return 8;", "replace": "        return 9;"},
+  {"name": "參數取整個word", "find": "uint8_t v = (uint8_t)v_word;", "replace": "uint16_t v = v_word;"},
+  {"name": "第一道門檻改有號比較", "find": "if (v < 0x02u)", "replace": "if ((int8_t)v < 2)"}
+]

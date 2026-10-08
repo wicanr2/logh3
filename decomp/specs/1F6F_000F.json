@@ -1,0 +1,22 @@
+{
+  "id": "1F6F_000F",
+  "entry": "1F6F:000F",
+  "conv": "far",
+  "ret": "none",
+  "size": 80,
+  "code_sha256_16": "78b590ec71731656",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "戰場在場分隊清單 ds:9896／98BA 在 fcmd-base、fcmd-standby、fcmd-s3-base 三個狀態裡都是 0（diff_run.sh 只掛載 dosgolem-logh3，看不到主 repo workplace 的 battle79 戰場狀態），清單用 seeds 的 pokes 造；池與艦隊取 S3 開局（fcmd-s3-base）的真實內容。",
+  "args": [],
+  "seeds": [
+    {"pokes": [{"addr": "ds:9896", "hex": "0200"}, {"addr": "ds:98BA", "hex": "00000A00"}]},
+    {"pokes": [{"addr": "ds:9896", "hex": "0400"}, {"addr": "ds:98BA", "hex": "010060010004FFFF"}]},
+    {"pokes": [{"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0B00"}, {"addr": "668B:0003", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:9896", "hex": "0000"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

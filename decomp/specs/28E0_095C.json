@@ -1,0 +1,40 @@
+{
+  "id": "28E0_095C",
+  "entry": "28E0:095C",
+  "conv": "far",
+  "ret": "ax",
+  "size": 97,
+  "code_sha256_16": "fe9094cac9a158fb",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "level", "kind": "word", "gen": {"choices": [0, 1, 50, 98, 99, 100, 101, 150, 198, 199, 200, 201, 255, 256, 355, 356, 455, 456, 65280, 65380, 65480], "also_random": true}},
+    {"name": "span_a", "kind": "word", "gen": {"choices": [0, 1, 2, 5, 9, 50, 99, 100, 198, 199, 200, 255, 300, 1000, 30000, 32766, 32767, 32768, 65534], "also_random": true}},
+    {"name": "span_b", "kind": "word", "gen": {"choices": [0, 1, 2, 5, 9, 50, 99, 100, 198, 199, 200, 255, 300, 1000, 30000, 32766, 32767, 32768, 65534], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [99, 5, 30000], "pokes": []},
+    {"args": [100, 5, 30000], "pokes": []},
+    {"args": [199, 5, 30000], "pokes": []},
+    {"args": [200, 5, 30000], "pokes": []},
+    {"args": [0, 30000, 5], "pokes": []},
+    {"args": [99, 30000, 5], "pokes": []},
+    {"args": [100, 30000, 5], "pokes": []},
+    {"args": [199, 30000, 5], "pokes": []},
+    {"args": [200, 30000, 5], "pokes": []},
+    {"args": [356, 5, 30000], "pokes": []},
+    {"args": [456, 5, 30000], "pokes": []},
+    {"args": [0, 0, 0], "pokes": []},
+    {"args": [0, 32767, 32767], "pokes": [{"addr": "ds:94DC", "hex": "ffffffff"}]},
+    {"args": [150, 32767, 32767], "pokes": [{"addr": "ds:94DC", "hex": "ffffff7f"}]},
+    {"args": [150, 98, 99], "pokes": []},
+    {"args": [150, 99, 100], "pokes": []},
+    {"args": [10, 100, 99], "pokes": []},
+    {"args": [10, 65534, 65534], "pokes": []},
+    {"args": [255, 30000, 30000], "pokes": []}
+  ],
+  "iters": 6000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 95
+}

@@ -1,0 +1,13 @@
+[
+  {"name": "比較改成大於才寫", "find": "if (prio != cur) {", "replace": "if (prio > cur) {"},
+  {"name": "順位讀艦艇+0x31", "find": "rd8(m, LIN(ship_seg, ship_off + 0x30))", "replace": "rd8(m, LIN(ship_seg, ship_off + 0x31))"},
+  {"name": "順位寫到 obj+2", "find": "put8(m, LIN(a_seg, t_off), prio);", "replace": "put8(m, LIN(a_seg, (uint16_t)(t_off - 1)), prio);"},
+  {"name": "旗標值 0xFE", "find": "put8(m, LIN(b_seg, b_off + 1), 0xFF);", "replace": "put8(m, LIN(b_seg, b_off + 1), 0xFE);"},
+  {"name": "不寫旗標", "find": "put8(m, LIN(b_seg, b_off + 1), 0xFF);", "replace": "(void)b_seg;\n        (void)b_off;"},
+  {"name": "旗標寫到 obj+2", "find": "put8(m, LIN(b_seg, b_off + 1), 0xFF);", "replace": "put8(m, LIN(b_seg, b_off + 2), 0xFF);"},
+  {"name": "回傳恆為 1", "find": "uint16_t ret = 0;", "replace": "uint16_t ret = 1;"},
+  {"name": "有寫入時回 0", "find": "ret = 1;", "replace": "ret = 0;"},
+  {"name": "旗標不重讀物件指標", "find": "b_off = rd16(m, LIN(ship_seg, ship_off + 0x38));", "replace": "b_off = a_off;"},
+  {"name": "比較時讀 word", "find": "uint8_t cur = rd8(m, LIN(a_seg, t_off));", "replace": "uint16_t cur = rd16(m, LIN(a_seg, t_off));"},
+  {"name": "物件指標讀艦艇+0x34", "find": "uint16_t a_off = rd16(m, LIN(ship_seg, ship_off + 0x38));", "replace": "uint16_t a_off = rd16(m, LIN(ship_seg, ship_off + 0x34));"}
+]

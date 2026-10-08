@@ -1,0 +1,28 @@
+{
+  "id": "297B_13C3",
+  "entry": "297B:13C3",
+  "conv": "far",
+  "ret": "ax",
+  "size": 103,
+  "code_sha256_16": "126794215a7e69d6",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "buf", "kind": "farptr", "gen": {"scratch": 256}},
+    {"name": "n", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 8, 16, 31, 32, 33, 64, 127, 128, 129, 254, 255], "also_random": true}},
+    {"name": "value", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 7, 15, 16, 31, 32, 127, 128, 254, 255], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0, 32768, 6, 3], "pokes": [{"addr": "lin:80000", "hex": "000102030405"}, {"addr": "ds:C07A", "hex": "03"}, {"addr": "ds:C0F4", "hex": "05"}, {"addr": "ds:C16E", "hex": "03"}, {"addr": "ds:C1E8", "hex": "03"}, {"addr": "ds:C262", "hex": "05"}, {"addr": "ds:C2DC", "hex": "02"}]},
+    {"args": [0, 32768, 262, 259], "pokes": [{"addr": "lin:80000", "hex": "000102030405"}, {"addr": "ds:C07A", "hex": "03"}, {"addr": "ds:C0F4", "hex": "05"}, {"addr": "ds:C16E", "hex": "03"}, {"addr": "ds:C1E8", "hex": "03"}, {"addr": "ds:C262", "hex": "05"}, {"addr": "ds:C2DC", "hex": "02"}]},
+    {"args": [0, 32768, 3, 3], "pokes": [{"addr": "lin:80000", "hex": "000102"}, {"addr": "ds:C07A", "hex": "03"}, {"addr": "ds:C0F4", "hex": "03"}, {"addr": "ds:C16E", "hex": "03"}]},
+    {"args": [0, 32768, 0, 3], "pokes": [{"addr": "lin:80000", "hex": "000102"}, {"addr": "ds:C07A", "hex": "03"}]},
+    {"args": [65534, 32768, 4, 3], "pokes": [{"addr": "lin:8FFFE", "hex": "0001"}, {"addr": "lin:80000", "hex": "0203"}, {"addr": "ds:C07A", "hex": "03"}, {"addr": "ds:C0F4", "hex": "05"}, {"addr": "ds:C16E", "hex": "03"}, {"addr": "ds:C1E8", "hex": "03"}]},
+    {"args": [0, 32768, 4, 3], "pokes": [{"addr": "lin:80000", "hex": "03020100"}, {"addr": "ds:C07A", "hex": "05"}, {"addr": "ds:C0F4", "hex": "03"}, {"addr": "ds:C16E", "hex": "05"}, {"addr": "ds:C1E8", "hex": "03"}]},
+    {"args": [0, 32768, 5, 255], "pokes": [{"addr": "lin:80000", "hex": "0001020304"}, {"addr": "ds:C07A", "hex": "FF"}, {"addr": "ds:C0F4", "hex": "FE"}, {"addr": "ds:C16E", "hex": "FF"}, {"addr": "ds:C1E8", "hex": "00"}, {"addr": "ds:C262", "hex": "FF"}]}
+  ],
+  "iters": 60000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

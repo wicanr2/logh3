@@ -1,0 +1,20 @@
+{
+  "id": "2AF5_00B6",
+  "entry": "2AF5:00B6",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 21,
+  "code_sha256_16": "5698a6398526918f",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [],
+  "seeds": [
+    {"pokes": [{"addr": "ds:51B0", "hex": "3412 7856"}, {"addr": "ds:CFF8", "hex": "0000 0000 00 00"}]},
+    {"pokes": [{"addr": "ds:51B0", "hex": "FFFF FFFF"}, {"addr": "ds:CFF8", "hex": "0000 0000 00 07"}]},
+    {"pokes": [{"addr": "ds:51B0", "hex": "0000 0000"}, {"addr": "ds:CFF8", "hex": "AAAA BBBB CC 05"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 200,
+  "seed": 20261009,
+  "min_coverage": 100
+}

@@ -1,0 +1,25 @@
+{
+  "id": "25DB_0F63",
+  "entry": "25DB:0F63",
+  "conv": "far",
+  "ret": "ax",
+  "size": 8,
+  "code_sha256_16": "bbc96b8d1203e17d",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "回傳第一個參數。不讀寫記憶體，基底狀態無影響。",
+  "args": [
+    {"name": "v", "kind": "word", "gen": {"choices": [0, 1, 2, 127, 128, 255, 256, 257, 4095, 4096, 32767, 32768, 32769, 65279, 65280, 65534, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0]},
+    {"args": [255]},
+    {"args": [256]},
+    {"args": [32768]},
+    {"args": [65535]}
+  ],
+  "iters": 3000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

@@ -1,0 +1,9 @@
+[
+  {"name": "位移來源改51B2", "find": "wr16(m, DS(0xCFF8), saved_off);", "replace": "wr16(m, DS(0xCFF8), saved_seg);"},
+  {"name": "段來源改51B0", "find": "wr16(m, DS(0xCFFA), saved_seg);", "replace": "wr16(m, DS(0xCFFA), saved_off);"},
+  {"name": "顆數改讀CFFC", "find": "saved_count = rd8(m, DS(0xCFFD));", "replace": "saved_count = rd8(m, DS(0xCFFC));"},
+  {"name": "顆數不還原", "find": "wr8(m, DS(0xCFFC), saved_count);", "replace": ""},
+  {"name": "顆數寫成word", "find": "wr8(m, DS(0xCFFC), saved_count);", "replace": "wr16(m, DS(0xCFFC), saved_count);"},
+  {"name": "殘值AH清零", "find": "(saved_seg & 0xFF00u) | saved_count", "replace": "saved_count"},
+  {"name": "殘值BX改段", "find": "<< 16) | saved_off; /* AX<<16 | BX */", "replace": "<< 16) | saved_seg; /* AX<<16 | BX */"}
+]

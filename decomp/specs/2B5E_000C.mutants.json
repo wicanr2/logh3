@@ -1,0 +1,9 @@
+[
+  {"name": "位移值2改3", "find": "wr16(m, DS(0x5336), 2);", "replace": "wr16(m, DS(0x5336), 3);"},
+  {"name": "段值0x5313改0x5312", "find": "#define GIN3_SEG131 0x5313u", "replace": "#define GIN3_SEG131 0x5312u"},
+  {"name": "位移寫到5334", "find": "wr16(m, DS(0x5336), 2);", "replace": "wr16(m, DS(0x5334), 2);"},
+  {"name": "段值寫到533A", "find": "wr16(m, DS(0x5338), GIN3_SEG131);", "replace": "wr16(m, DS(0x533A), GIN3_SEG131);"},
+  {"name": "不寫位移", "find": "wr16(m, DS(0x5336), 2);", "replace": ""},
+  {"name": "段值只寫低位元組", "find": "wr16(m, DS(0x5338), GIN3_SEG131);", "replace": "wr8(m, DS(0x5338), (uint8_t)GIN3_SEG131);"},
+  {"name": "殘值BX改0", "find": "return ((uint32_t)GIN3_SEG131 << 16) | 2u; /* AX<<16 | BX */", "replace": "return ((uint32_t)GIN3_SEG131 << 16);"}
+]

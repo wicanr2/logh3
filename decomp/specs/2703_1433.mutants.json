@@ -1,0 +1,15 @@
+[
+  {"name": "高字非0不處理", "find": "if (hi != 0)", "replace": "if (hi != 0 && lo >= cap)"},
+  {"name": "低字大於改取大值", "find": "else if (lo < cap)", "replace": "else if (lo > cap)"},
+  {"name": "不借位", "find": "(uint16_t)(hi - (lo < take))", "replace": "hi"},
+  {"name": "少扣1", "find": "(uint16_t)(lo - take)", "replace": "(uint16_t)(lo - take + (take != 0))"},
+  {"name": "回傳加1", "find": "return take;", "replace": "return (uint16_t)(take + (take == cap));"},
+  {"name": "星域步幅改0x7D", "find": "(uint16_t)(r * 0x7E)", "replace": "(uint16_t)(r * 0x7D)"},
+  {"name": "存量基底改+0x31", "find": "field = (uint16_t)(field + 0x30);", "replace": "field = (uint16_t)(field + 0x31);"},
+  {"name": "陣營存量步幅改0x1B", "find": "(uint16_t)(s * 0x1C)", "replace": "(uint16_t)(s * 0x1B)"},
+  {"name": "艦種存量步幅改2", "find": "(uint16_t)(k << 2)", "replace": "(uint16_t)(k << 1)"},
+  {"name": "艦種表陣營步幅改0xCF", "find": "(uint16_t)(s * 0xD0)", "replace": "(uint16_t)(s * 0xCF)"},
+  {"name": "艦種表艦種步幅改0x1B", "find": "(uint16_t)(k * 0x1A)", "replace": "(uint16_t)(k * 0x1B)"},
+  {"name": "滿編改讀艦種表+2", "find": "0x4E3A + (uint16_t)(s * 0xD0)", "replace": "0x4E3C + (uint16_t)(s * 0xD0)"},
+  {"name": "艦種低位元組之外也讀", "find": "k = (uint8_t)kind;", "replace": "k = (uint8_t)(kind | (kind >> 8));"}
+]

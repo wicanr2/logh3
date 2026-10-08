@@ -1,0 +1,16 @@
+[
+  {"name": "比較改小於等於", "find": "if ((uint16_t)(def * 3u) < cap)", "replace": "if ((uint16_t)(def * 3u) <= cap)"},
+  {"name": "比較改32位元", "find": "if ((uint16_t)(def * 3u) < cap)", "replace": "if ((def * 3u) < cap)"},
+  {"name": "防衛力扣二分之一", "find": "(uint16_t)(cap / 3u)", "replace": "(uint16_t)(cap / 2u)"},
+  {"name": "經濟力改無號除法", "find": "gin3_ldivmod(econ, 3, &q, &r);", "replace": "gin3_uldivmod(econ, 3, &q, &r);"},
+  {"name": "經濟力扣二分之一", "find": "gin3_ldivmod(econ, 3, &q, &r);", "replace": "gin3_ldivmod(econ, 2, &q, &r);"},
+  {"name": "經濟力高字不更新", "find": "wr16(m, LIN(planet_seg, (uint16_t)(econ_off + 2)), (uint16_t)(econ >> 16));", "replace": "(void)0;"},
+  {"name": "擁有者改1", "find": "(uint16_t)(planet_off + 0x11)), 2);", "replace": "(uint16_t)(planet_off + 0x11)), 1);"},
+  {"name": "防衛力位移改0x12", "find": "planet_off + 0x14", "replace": "planet_off + 0x12"},
+  {"name": "上限位移改0x18", "find": "planet_off + 0x16", "replace": "planet_off + 0x18"},
+  {"name": "較大分支不扣", "find": "wr16(m, LIN(planet_seg, def_off), (uint16_t)(def - (uint16_t)(cap / 3u)));", "replace": "(void)0;"},
+  {"name": "較小分支不歸零", "find": "wr16(m, LIN(planet_seg, def_off), 0);", "replace": "(void)0;"},
+  {"name": "經濟力位移改0x18", "find": "planet_off + 0x1A", "replace": "planet_off + 0x18"},
+  {"name": "經濟力用商而非差", "find": "econ = econ - q;", "replace": "econ = q;"},
+  {"name": "乘數改2", "find": "(def * 3u)", "replace": "(def * 2u)"}
+]

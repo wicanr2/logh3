@@ -1,0 +1,18 @@
+[
+  {"name": "飛彈滿庫存欄位改0F", "find": "gin3_lmul(rd8(m, DS(row + 0x10)), n)", "replace": "gin3_lmul(rd8(m, DS(row + 0x0F)), n)"},
+  {"name": "艦載機滿庫存欄位改13", "find": "gin3_lmul(rd8(m, DS(row + 0x14)), n)", "replace": "gin3_lmul(rd8(m, DS(row + 0x13)), n)"},
+  {"name": "飛彈存量欄位改6C", "find": "uint32_t stock1 = rd32w(m, reg_seg, (uint16_t)(reg_off + 0x68 + w));", "replace": "uint32_t stock1 = rd32w(m, reg_seg, (uint16_t)(reg_off + 0x6C + w));"},
+  {"name": "艦載機存量欄位改74", "find": "uint32_t stock2 = rd32w(m, reg_seg, (uint16_t)(reg_off + 0x70 + w));", "replace": "uint32_t stock2 = rd32w(m, reg_seg, (uint16_t)(reg_off + 0x74 + w));"},
+  {"name": "飛彈取較大", "find": "uint32_t give1 = stock1 < want1 ? stock1 : want1;", "replace": "uint32_t give1 = stock1 > want1 ? stock1 : want1;"},
+  {"name": "飛彈比較改有號", "find": "uint32_t give1 = stock1 < want1 ? stock1 : want1;", "replace": "uint32_t give1 = (int32_t)stock1 < (int32_t)want1 ? stock1 : want1;"},
+  {"name": "艦載機比較改有號", "find": "uint32_t give2 = stock2 < want2 ? stock2 : want2;", "replace": "uint32_t give2 = (int32_t)stock2 < (int32_t)want2 ? stock2 : want2;"},
+  {"name": "缺口夾0", "find": "uint32_t want1 = gin3_lmul(rd8(m, DS(row + 0x10)), n) - rd32w(m, pseg, (uint16_t)(ship + 0x0E));", "replace": "uint32_t want1 = gin3_lmul(rd8(m, DS(row + 0x10)), n) > rd32w(m, pseg, (uint16_t)(ship + 0x0E)) ? gin3_lmul(rd8(m, DS(row + 0x10)), n) - rd32w(m, pseg, (uint16_t)(ship + 0x0E)) : 0;"},
+  {"name": "艦載機加量用飛彈給量", "find": "add32w(m, pseg, (uint16_t)(ship + 0x12), give2);", "replace": "add32w(m, pseg, (uint16_t)(ship + 0x12), give1);"},
+  {"name": "星域飛彈扣量用艦載機給量", "find": "sub32w(m, reg_seg, (uint16_t)(reg_off + 0x68 + w), give1);", "replace": "sub32w(m, reg_seg, (uint16_t)(reg_off + 0x68 + w), give2);"},
+  {"name": "星域艦載機不扣", "find": "sub32w(m, reg_seg, (uint16_t)(reg_off + 0x70 + w), give2);", "replace": ";"},
+  {"name": "星域飛彈扣量不借位", "find": "wr16(m, LIN(seg, off + 2), (uint16_t)(rd16(m, LIN(seg, off + 2)) - (uint16_t)(v >> 16) - (lo < (uint16_t)v)));", "replace": "wr16(m, LIN(seg, off + 2), (uint16_t)(rd16(m, LIN(seg, off + 2)) - (uint16_t)(v >> 16)));"},
+  {"name": "擁有者索引步距2", "find": "uint16_t w = (uint16_t)(rd8(m, LIN(reg_seg, reg_off + 0x12)) * 4u);", "replace": "uint16_t w = (uint16_t)(rd8(m, LIN(reg_seg, reg_off + 0x12)) * 2u);"},
+  {"name": "扣飛彈時不重讀擁有者", "find": "        w = (uint16_t)(rd8(m, LIN(reg_seg, reg_off + 0x12)) * 4u);\n        sub32w(m, reg_seg, (uint16_t)(reg_off + 0x68 + w), give1);", "replace": "        sub32w(m, reg_seg, (uint16_t)(reg_off + 0x68 + w), give1);"},
+  {"name": "列號艦種步距25", "find": "* 0x1Au));", "replace": "* 0x19u));"},
+  {"name": "池步距4D", "find": "(uint16_t)(rd16(m, LIN(fleet_seg, slot)) * 0x4Eu)", "replace": "(uint16_t)(rd16(m, LIN(fleet_seg, slot)) * 0x4Du)"}
+]

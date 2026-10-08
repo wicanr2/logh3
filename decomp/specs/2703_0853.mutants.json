@@ -1,0 +1,14 @@
+[
+  {"name": "清除不含+0x29", "find": "wr8(m, DS((uint16_t)(region + 0x29)), 0);", "replace": "(void)0;"},
+  {"name": "清除不含+0x28", "find": "wr8(m, DS((uint16_t)(region + 0x28)), 0);", "replace": "(void)0;"},
+  {"name": "第一圈少一格", "find": "for (i = 0; i < 0x20; i++) {\n        wr8(m, DS((uint16_t)(region + 0x29)), 0);", "replace": "for (i = 0; i < 0x1F; i++) {\n        wr8(m, DS((uint16_t)(region + 0x29)), 0);"},
+  {"name": "第一圈多一格", "find": "for (i = 0; i < 0x20; i++) {\n        wr8(m, DS((uint16_t)(region + 0x29)), 0);", "replace": "for (i = 0; i < 0x21; i++) {\n        wr8(m, DS((uint16_t)(region + 0x29)), 0);"},
+  {"name": "第二圈少一格", "find": "for (i = 0; i < 0x20; i++) {\n        if (rd8(m, DS((uint16_t)(fleet + 4))) != 0xFF) {", "replace": "for (i = 0; i < 0x1F; i++) {\n        if (rd8(m, DS((uint16_t)(fleet + 4))) != 0xFF) {"},
+  {"name": "空位標記改0xFE", "find": "(uint16_t)(fleet + 4))) != 0xFF", "replace": "(uint16_t)(fleet + 4))) != 0xFE"},
+  {"name": "星域步幅改0x7D", "find": "(uint16_t)(fleet + 6))) * 0x7E)", "replace": "(uint16_t)(fleet + 6))) * 0x7D)"},
+  {"name": "計數格改+0x29", "find": "target = (uint16_t)(target + 0x28);", "replace": "target = (uint16_t)(target + 0x29);"},
+  {"name": "艦隊步幅改0x7B", "find": "fleet = (uint16_t)(fleet + 0x7A);", "replace": "fleet = (uint16_t)(fleet + 0x7B);"},
+  {"name": "一次加二", "find": "(uint8_t)(rd8(m, at) + 1)", "replace": "(uint8_t)(rd8(m, at) + 2)"},
+  {"name": "陣營改讀+0x02", "find": "(uint16_t)(fleet + 1)", "replace": "(uint16_t)(fleet + 2)"},
+  {"name": "星域改讀+0x05", "find": "(uint16_t)(fleet + 6)", "replace": "(uint16_t)(fleet + 5)"}
+]

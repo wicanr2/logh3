@@ -1,0 +1,13 @@
+[
+  {"name": "寫入值改0x7E", "find": "0x7Fu);", "replace": "0x7Eu);"},
+  {"name": "寫入值改0xFF", "find": "0x7Fu);", "replace": "0xFFu);"},
+  {"name": "只清bit7不填低七位", "find": "wr8(m, DS((uint16_t)(0xB77Cu + p + 9u)), 0x7Fu);", "replace": "wr8(m, DS((uint16_t)(0xB77Cu + p + 9u)), (uint8_t)(rd8(m, DS((uint16_t)(0xB77Cu + p + 9u))) & 0x7Fu));"},
+  {"name": "只設低七位不清bit7", "find": "wr8(m, DS((uint16_t)(0xB77Cu + p + 9u)), 0x7Fu);", "replace": "wr8(m, DS((uint16_t)(0xB77Cu + p + 9u)), (uint8_t)(rd8(m, DS((uint16_t)(0xB77Cu + p + 9u))) | 0x7Fu));"},
+  {"name": "欄位位移改+8", "find": "p + 9u", "replace": "p + 8u"},
+  {"name": "欄位位移改+10", "find": "p + 9u", "replace": "p + 10u"},
+  {"name": "記錄步幅改0x1B", "find": "id * 0x1Cu", "replace": "id * 0x1Bu"},
+  {"name": "記錄基底改B77D", "find": "0xB77Cu + p", "replace": "0xB77Du + p"},
+  {"name": "編號取整個word", "find": "uint8_t id = (uint8_t)id_w;", "replace": "uint16_t id = id_w;"},
+  {"name": "殘值AX改回0", "find": "return p;", "replace": "return 0;"},
+  {"name": "殘值AX改回編號", "find": "return p;", "replace": "return id;"}
+]
