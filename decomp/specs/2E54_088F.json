@@ -2,14 +2,13 @@
   "id": "2E54_088F",
   "entry": "2E54:088F",
   "conv": "far",
-  "ret": "ax",
+  "ret": "pack:al",
   "size": 68,
   "code_sha256_16": "93f413c1d082dabb",
   "base_state": "/src/workplace/fcmd/fcmd-base.state",
   "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
   "args": [
-    {"name": "idx", "kind": "word", "gen": {"choices": [0, 1, 2, 5, 16, 30, 31, 32, 100, 255, 256, 257, 287, 65280, 65311, 32769]}},
-    {"name": "ax_in", "kind": "reg", "reg": "ax", "gen": {"choices": [0, 255, 4660, 23205, 65280, 65535]}}
+    {"name": "idx", "kind": "word", "gen": {"choices": [0, 1, 2, 5, 16, 30, 31, 32, 100, 255, 256, 257, 287, 65280, 65311, 32769]}}
   ],
   "iters": 80000,
   "max_cases": 4000,

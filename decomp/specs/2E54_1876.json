@@ -1,0 +1,20 @@
+{
+  "id": "2E54_1876",
+  "entry": "2E54:1876",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 223,
+  "code_sha256_16": "19a414c96fcdcbcb",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "region", "kind": "word", "gen": {"choices": [0, 1, 13, 31, 65535]}},
+    {"name": "list", "kind": "farptr", "gen": {"scratch": 48}},
+    {"name": "count", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 5, 8, 16, 32, 40, 256, 258, 4099, 65291]}},
+    {"name": "faction", "kind": "word", "gen": {"choices": [0, 1, 2, 65535]}}
+  ],
+  "iters": 100000,
+  "max_cases": 2000,
+  "seed": 20261009,
+  "min_coverage": 100
+}

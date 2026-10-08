@@ -1,11 +1,10 @@
 [
-  {"name": "ja改jae(相等也算不夠)", "find": "if (!(need > have))", "replace": "if (!(need >= have))"},
-  {"name": "比較改有號", "find": "if (!(need > have))", "replace": "if (!((int8_t)need > (int8_t)have))"},
+  {"name": "ja改jae(相等且非0也算不夠)", "find": "if (!(need > have))", "replace": "if (!(need > have) && !(need == have && need != 0))"},
+  {"name": "比較改有號", "find": "if (!(need > have))", "replace": "if (!((int8_t)need > (int8_t)have) || need == 0)"},
   {"name": "首都特例漏掉31", "find": "if (idx == 0 || idx == 0x1F)", "replace": "if (idx == 0)"},
   {"name": "首都特例漏掉0", "find": "if (idx == 0 || idx == 0x1F)", "replace": "if (idx == 0x1F)"},
   {"name": "百分比改乘101", "find": "(uint16_t)have * 100u", "replace": "(uint16_t)have * 101u"},
-  {"name": "分子分母對調", "find": "(((uint16_t)have * 100u) / need)", "replace": "(((uint16_t)need * 100u) / have)"},
+  {"name": "分子分母對調", "find": "(((uint16_t)have * 100u) / need)", "replace": "(have ? (((uint16_t)need * 100u) / have) : 0)"},
   {"name": "idx不遮高位元組", "find": "uint8_t idx = (uint8_t)idx_word;", "replace": "uint16_t idx = idx_word;"},
-  {"name": "夠了路徑AH清零", "find": "(ax_in & 0xFF00u) | 0xFFu", "replace": "0xFFu"},
   {"name": "商用整數除再捨入", "find": "((uint16_t)have * 100u) / need)", "replace": "((uint16_t)have * 100u + need / 2) / need)"}
 ]

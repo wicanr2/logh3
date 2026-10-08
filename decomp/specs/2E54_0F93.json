@@ -1,0 +1,30 @@
+{
+  "id": "2E54_0F93",
+  "entry": "2E54:0F93",
+  "conv": "far",
+  "ret": "ax",
+  "size": 110,
+  "code_sha256_16": "14f94b5ad54f9537",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [],
+  "seeds": [
+    {"pokes": [{"addr": "ds:AE14", "hex": "01"}, {"addr": "ds:8F18", "hex": "ed00"}]},
+    {"pokes": [{"addr": "ds:AE14", "hex": "01"}, {"addr": "ds:8F18", "hex": "ee00"}]},
+    {"pokes": [{"addr": "ds:AE14", "hex": "01"}, {"addr": "ds:8F18", "hex": "ef00"}]},
+    {"pokes": [{"addr": "ds:AE14", "hex": "01"}, {"addr": "ds:8F18", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:AE14", "hex": "01"}, {"addr": "ds:8F18", "hex": "0000"}]},
+    {"pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F18", "hex": "3c01"}]},
+    {"pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F18", "hex": "3d01"}]},
+    {"pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F18", "hex": "3e01"}]},
+    {"pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F18", "hex": "3f01"}]},
+    {"pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F18", "hex": "ee00"}]},
+    {"pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F18", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:8F18", "hex": "0000"}]},
+    {"pokes": [{"addr": "ds:8F1D", "hex": "02"}, {"addr": "ds:AE14", "hex": "01"}, {"addr": "ds:8F18", "hex": "ffff"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 1000,
+  "seed": 20261009,
+  "min_coverage": 100
+}

@@ -1,0 +1,36 @@
+{
+  "id": "07F9_033A",
+  "entry": "07F9:033A",
+  "conv": "far",
+  "ret": "ax",
+  "size": 114,
+  "code_sha256_16": "2d21442fa1d85160",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "admiral_off", "kind": "word", "gen": {"choices": [46972, 47000, 47028, 47056, 47084, 47112, 47140, 47168, 47196, 47224, 47252, 47280, 47308, 47336, 47364, 47392, 47420, 47448, 47476, 47504, 47532, 47560, 47588, 47616, 47644, 47672, 47700, 47728, 47756, 47784, 47812, 47840, 47868, 47896, 47924, 47952, 47980, 48008, 48036, 48064, 48092, 48120, 48148, 48176, 48204, 48232, 48260, 48288, 48316, 48344, 48372, 48400, 48428, 48456, 48484, 48512, 48540, 48568, 48596, 48624, 48652, 48680, 48708, 48736, 48764, 48792, 48820, 48848, 48876, 48904, 48932, 48960, 48988, 49016, 49044, 49072, 49100, 49128, 49156, 49184, 49212, 49240, 65535, 65532, 65530, 65528]}},
+    {"name": "admiral_seg", "kind": "word", "gen": {"choices": [21683, 21683, 21683, 21683, 21699]}}
+  ],
+  "seeds": [
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "14"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "15"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "90"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "00"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "7f"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "40"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "c0"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "fe"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "00"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "01"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "11"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "80"}]},
+    {"args": [47000, 21683], "pokes": [{"addr": "ds:B79E", "hex": "14"}, {"addr": "ds:B79F", "hex": "ff"}, {"addr": "ds:B7A2", "hex": "00"}, {"addr": "ds:D360", "hex": "ff"}, {"addr": "ds:D366", "hex": "00"}, {"addr": "ds:D369", "hex": "80"}, {"addr": "ds:D36A", "hex": "00"}]},
+    {"args": [65530, 20480], "pokes": [{"addr": "5000:0000", "hex": "20"}, {"addr": "5000:0001", "hex": "11"}, {"addr": "5000:0004", "hex": "00"}, {"addr": "5000:0006", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [65535, 20480], "pokes": [{"addr": "5000:0005", "hex": "20"}, {"addr": "5000:0006", "hex": "11"}, {"addr": "5000:0009", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "12"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21699], "pokes": [{"addr": "ds:B89E", "hex": "00"}, {"addr": "ds:B89F", "hex": "11"}, {"addr": "ds:B8A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]},
+    {"args": [47000, 21699], "pokes": [{"addr": "ds:B89E", "hex": "20"}, {"addr": "ds:B89F", "hex": "11"}, {"addr": "ds:B8A2", "hex": "00"}, {"addr": "ds:B958", "hex": "ff"}, {"addr": "ds:B95E", "hex": "10"}, {"addr": "ds:B961", "hex": "80"}, {"addr": "ds:B962", "hex": "00"}]}  ],
+  "iters": 200000,
+  "max_cases": 5000,
+  "seed": 20261009,
+  "min_coverage": 100
+}

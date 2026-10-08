@@ -1,0 +1,9 @@
+[
+  {"name": "帝國門檻238改239", "find": ">= 0xEEu", "replace": ">= 0xEFu"},
+  {"name": "同盟門檻>=改>", "find": ">= 0x13Eu", "replace": "> 0x13Eu"},
+  {"name": "帝國方伊謝爾倫擁有者條件取反", "find": "rd8(m, rec + 0x12) == 1 &&", "replace": "rd8(m, rec + 0x12) != 1 &&"},
+  {"name": "同盟方擁有者條件改1", "find": "rd8(m, rec + 0x12) == 0 &&", "replace": "rd8(m, rec + 0x12) == 1 &&"},
+  {"name": "放行旗標忽略", "find": "if (rd8(m, DS(0x8F48)) != 0)", "replace": "if (0)"},
+  {"name": "回合計數器只看低位元組", "find": "rd16(m, DS(0x8F18)) >= 0xEEu", "replace": "rd8(m, DS(0x8F18)) >= 0xEEu"},
+  {"name": "其餘陣營也走同盟分支", "find": "if (side == 1) {", "replace": "if (side >= 1) {"}
+]

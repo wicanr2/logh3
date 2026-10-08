@@ -1,0 +1,21 @@
+[
+  {"name": "陣營非0的基底16改15", "find": "? 16u : 0u", "replace": "? 15u : 0u"},
+  {"name": "陣營判斷取反", "find": "rd8(m, LIN(adm_seg, adm_off + 1u)) ? 16u : 0u", "replace": "rd8(m, LIN(adm_seg, adm_off + 1u)) == 0 ? 16u : 0u"},
+  {"name": "槽取提督+0x08", "find": "adm_off + 9u", "replace": "adm_off + 8u"},
+  {"name": "槽遮掉bit7", "find": "uint16_t slot = rd8(m, LIN(adm_seg, adm_off + 9u));", "replace": "uint16_t slot = rd8(m, LIN(adm_seg, adm_off + 9u)) & 0x7Fu;"},
+  {"name": "原槽位移的步幅122改121", "find": "(uint16_t)(slot * 122u)", "replace": "(uint16_t)(slot * 121u)"},
+  {"name": "基底的步幅122改121", "find": "(uint16_t)(base * 122u)", "replace": "(uint16_t)(base * 121u)"},
+  {"name": "掃描步幅122改121", "find": "ptr = (uint16_t)(ptr + 122u);", "replace": "ptr = (uint16_t)(ptr + 121u);"},
+  {"name": "艦隊表基底C074改C075", "find": "uint16_t ptr = (uint16_t)(0xC074u + base_bytes);", "replace": "uint16_t ptr = (uint16_t)(0xC075u + base_bytes);"},
+  {"name": "原槽空判斷改讀+0x05", "find": "rd8(m, DS(cur + 4u)) == 0xFF", "replace": "rd8(m, DS(cur + 5u)) == 0xFF"},
+  {"name": "原槽空判斷用0xFE", "find": "rd8(m, DS(cur + 4u)) == 0xFF", "replace": "rd8(m, DS(cur + 4u)) == 0xFE"},
+  {"name": "掃描空判斷改讀+0x05", "find": "rd8(m, DS(ptr + 4u)) == 0xFF", "replace": "rd8(m, DS(ptr + 5u)) == 0xFF"},
+  {"name": "掃描只掃15槽", "find": "for (i = 0; i < 16; i++) {", "replace": "for (i = 0; i < 15; i++) {"},
+  {"name": "掃描掃17槽", "find": "for (i = 0; i < 16; i++) {", "replace": "for (i = 0; i < 17; i++) {"},
+  {"name": "找到回i加1", "find": "return (uint16_t)(ah | i);", "replace": "return (uint16_t)(ah | (uint8_t)(i + 1));"},
+  {"name": "沒有空槽回0xFE", "find": "return (uint16_t)(ah | 0xFFu);", "replace": "return (uint16_t)(ah | 0xFEu);"},
+  {"name": "原槽回傳AH清零", "find": "return (uint16_t)(ah | slot);", "replace": "return (uint16_t)slot;"},
+  {"name": "找到回傳AH清零", "find": "return (uint16_t)(ah | i);", "replace": "return (uint16_t)i;"},
+  {"name": "沒有空槽回傳AH清零", "find": "return (uint16_t)(ah | 0xFFu);", "replace": "return 0xFFu;"},
+  {"name": "提督段忽略改用DS", "find": "rd8(m, LIN(adm_seg, adm_off + 9u))", "replace": "rd8(m, LIN(GIN3_DS, adm_off + 9u))"}
+]
