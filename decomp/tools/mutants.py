@@ -30,9 +30,13 @@ for i, m in enumerate(muts):
     if cc.returncode != 0:
         print(f"突變 {m['name']}：編譯失敗\n{cc.stderr}")
         sys.exit(2)
-    run = subprocess.run([exe, f"{vdir}/{vname}"], capture_output=True, text=True)
-    caught = run.returncode != 0
-    last = run.stdout.strip().splitlines()[-1] if run.stdout.strip() else ""
+    try:
+        run = subprocess.run([exe, f"{vdir}/{vname}"], capture_output=True, text=True, timeout=180)
+        caught = run.returncode != 0
+        last = run.stdout.strip().splitlines()[-1] if run.stdout.strip() else ""
+    except subprocess.TimeoutExpired:
+        caught = True      # 突變造成無窮迴圈或極慢，視為被抓到
+        last = "（逾時 180 秒，視為被抓到）"
     print(f"  {'抓到' if caught else '存活'}  {m['name']}  {last}")
     if not caught:
         survivors.append(m["name"])

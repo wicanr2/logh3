@@ -9,5 +9,6 @@
   {"name": "BP-6與BP-8對調", "find": "(int16_t)ax > (int16_t)rd16(m, LIN(ss, bp - 6))", "replace": "(int16_t)ax > (int16_t)rd16(m, LIN(ss, bp - 8))"},
   {"name": "物件讀取改走DS", "find": "rd8(m, LIN(es, si + 0x1D))", "replace": "rd8(m, LIN(GIN3_DS, si + 0x1D))"},
   {"name": "AH殘值丟掉", "find": "    return (uint16_t)(ax & 0xFF00u);\n}", "replace": "    return 0;\n}"},
-  {"name": "分離時回2", "find": "    ax = cbw(rd8(m, LIN(es, si + 0x1B)));\n    if ((int16_t)ax > (int16_t)rd16(m, LIN(ss, bp - 8)))\n        return (uint16_t)((ax & 0xFF00u) | 1u);", "replace": "    ax = cbw(rd8(m, LIN(es, si + 0x1B)));\n    if ((int16_t)ax > (int16_t)rd16(m, LIN(ss, bp - 8)))\n        return (uint16_t)((ax & 0xFF00u) | 2u);"}
+  {"name": "分離時回2", "find": "    ax = cbw(rd8(m, LIN(es, si + 0x1B)));\n    if ((int16_t)ax > (int16_t)rd16(m, LIN(ss, bp - 8)))\n        return (uint16_t)((ax & 0xFF00u) | 1u);", "replace": "    ax = cbw(rd8(m, LIN(es, si + 0x1B)));\n    if ((int16_t)ax > (int16_t)rd16(m, LIN(ss, bp - 8)))\n        return (uint16_t)((ax & 0xFF00u) | 2u);"},
+  {"name": "物件讀取改走SS", "find": "ax = cbw(rd8(m, LIN(es, si + 0x1C)));", "replace": "ax = cbw(rd8(m, LIN(ss, si + 0x1C)));"}
 ]

@@ -1,0 +1,12 @@
+[
+  {"name": "X右移改邏輯右移", "find": "v = (int16_t)(v >> 3); /* sar ax,3 */", "replace": "v = (int16_t)((uint16_t)v >> 3);"},
+  {"name": "X上界邊界改成含等號", "find": "if (v > 0x4E)", "replace": "if (v >= 0x4E)"},
+  {"name": "X下界邊界改成含等號", "find": "if (v < 1)", "replace": "if (v <= 1)"},
+  {"name": "Y上界邊界改成含等號", "find": "if (v > 0x187)", "replace": "if (v >= 0x187)"},
+  {"name": "Y下界邊界改成含等號", "find": "if (v < 0xA8)", "replace": "if (v <= 0xA8)"},
+  {"name": "X加W改成飽和不回繞", "find": "v = (int16_t)(uint16_t)((uint16_t)v + rd16(m, LIN(ds, 0x78A)));", "replace": "{ int32_t s = (int32_t)v + (int16_t)rd16(m, LIN(ds, 0x78A)); v = (int16_t)(s > 0x7FFF ? 0x7FFF : (s < -0x8000 ? -0x8000 : s)); }"},
+  {"name": "Y加H改成飽和不回繞", "find": "v = (int16_t)(uint16_t)((uint16_t)v + rd16(m, LIN(ds, 0x78C)));", "replace": "{ int32_t s = (int32_t)v + (int16_t)rd16(m, LIN(ds, 0x78C)); v = (int16_t)(s > 0x7FFF ? 0x7FFF : (s < -0x8000 ? -0x8000 : s)); }"},
+  {"name": "Y比較改無號", "find": "if (v > 0x187)", "replace": "if ((uint16_t)v > 0x187)"},
+  {"name": "旗標OF漏掉", "find": "if (((a ^ b) & (a ^ r)) & 0x8000u)\n        f |= F_OF;", "replace": ""},
+  {"name": "通過時CF仍為1", "find": "return (uint16_t)(f & ~F_CF);", "replace": "return (uint16_t)(f | F_CF);"}
+]

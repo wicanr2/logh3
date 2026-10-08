@@ -1,0 +1,26 @@
+{
+  "id": "2376_097D",
+  "entry": "2376:097D",
+  "conv": "near",
+  "ret": "pack:flags",
+  "size": 49,
+  "code_sha256_16": "b6ba3534b3026e60",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "ds_seg": "3D22",
+  "args": [],
+  "seeds": [
+    {"pokes": [{"addr": "ds:786", "hex": "7002 8701 0000 0000"}]},
+    {"pokes": [{"addr": "ds:786", "hex": "7802 8701 0000 0000"}]},
+    {"pokes": [{"addr": "ds:786", "hex": "0000 A800 0100 0000"}]},
+    {"pokes": [{"addr": "ds:786", "hex": "0000 A800 0000 0000"}]},
+    {"pokes": [{"addr": "ds:786", "hex": "0000 8801 0100 0000"}]},
+    {"pokes": [{"addr": "ds:786", "hex": "0000 A700 0100 0000"}]},
+    {"pokes": [{"addr": "ds:786", "hex": "F8FF A800 0200 0000"}]},
+    {"pokes": [{"addr": "ds:786", "hex": "F8FF A800 0100 0000"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

@@ -19,13 +19,8 @@
  *   61 案原版完整雙跑）。欄位名稱（+1A..+1D 為 X 最小、Y 最小、X 最大、Y 最大圖塊，
  *   [BP-2..-8] 為矩形的 X 最小、Y 最小、X 最大、Y 最大）是對照 01E6 的用法推出的，強推論。
  *
- * 限制（差異測試的覆蓋範圍）：
- *   diffprobe 的 kind=reg 不支援 es 與 ss，ES 與 SS 都是基底狀態留下的值（實測兩者相同，
- *   都是 0x63EB），run 包裝函式把它們當常數傳入。所以：
- *   - 驗到：兩個基底位址的組合下，比較順序、符號、邊界、AH 殘值、位移 16 位元回繞（SI = 0xFFE5、BP = 4）。
- *   - 沒驗到：ES 與 SS 不同值的情形，以及「某筆讀取是走 ES 還是走 SS」的區別
- *     （ES 與 SS 相等，兩者對調不會被發現；走 DS 的錯誤會被發現，因為 DS 是 0x54B3）。
- *     這兩項靠反組譯：位元組讀取帶 es: 前綴，[bp-n] 預設走 SS。
+ * ES 在描述檔是暫存器參數（取 0x54B3、0x3D22、0x2000、0x1000、0x63EB），SS 是基底狀態的 0x63EB。
+ * 所以「物件讀取走 ES」與「[bp-n] 走 SS」兩者可以被分辨（突變清單有對調的案例）。
  * 輸入域：SI、BP 各取幾個代表值（含回繞），記憶體內容由突變涵蓋全部 byte／字值。
  */
 #include "gin3_reg.h"
@@ -53,8 +48,7 @@ uint16_t f_2376_02B0(Mem *m, uint16_t es, uint16_t ss, uint16_t si, uint16_t bp)
 }
 
 /* fcmd-base.state 的 ES 與 SS（diffprobe 無法設定這兩個暫存器） */
-#define BASE_ES 0x63EBu
 #define BASE_SS 0x63EBu
 
-static uint64_t run(Mem *m, const uint16_t *a) { return f_2376_02B0(m, BASE_ES, BASE_SS, a[0], a[1]); }
-GIN3_REGISTER("2376_02B0", 2, run)
+static uint64_t run(Mem *m, const uint16_t *a) { return f_2376_02B0(m, a[0], BASE_SS, a[1], a[2]); }
+GIN3_REGISTER("2376_02B0", 3, run)
