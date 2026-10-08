@@ -1,0 +1,35 @@
+{
+  "id": "2703_0EF9",
+  "entry": "2703:0EF9",
+  "conv": "far",
+  "ret": "ax",
+  "size": 222,
+  "code_sha256_16": "ae5e95866af308fc",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "region": {"base": "ds:A79C", "stride": 126, "count": 32}
+  },
+  "args": [
+    {"name": "region", "kind": "farptr", "gen": {"table": "region"}}
+  ],
+  "seeds": [
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "0100"}, {"addr": "ds:A7C3", "hex": "04"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "3300"}, {"addr": "ds:A7C3", "hex": "CD"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "3F00"}, {"addr": "ds:A7C3", "hex": "FF"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "0400"}, {"addr": "ds:A7C3", "hex": "01"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "0F00"}, {"addr": "ds:A7C3", "hex": "04"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "1900"}, {"addr": "ds:A7C3", "hex": "06"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "0B00"}, {"addr": "ds:A7C3", "hex": "03"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "0100"}, {"addr": "ds:A7C3", "hex": "01"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "0100"}, {"addr": "ds:A7C3", "hex": "03"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "0200"}, {"addr": "ds:A7C3", "hex": "07"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "3200"}, {"addr": "ds:A7C3", "hex": "C7"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "0000"}, {"addr": "ds:A7C3", "hex": "20"}]},
+    {"args": [42908, 21683], "pokes": [{"addr": "ds:A7BA", "hex": "0080"}, {"addr": "ds:A7C3", "hex": "20"}]}
+  ],
+  "iters": 100000,
+  "max_cases": 4000,
+  "seed": 20261009,
+  "min_coverage": 100
+}

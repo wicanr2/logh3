@@ -1,0 +1,11 @@
+[
+  {"name": "+0x17寫成4", "find": "wr8(m, LIN(pool_seg, ship + 0x17), 3);", "replace": "wr8(m, LIN(pool_seg, ship + 0x17), 4);"},
+  {"name": "+0x18寫成1", "find": "wr8(m, LIN(pool_seg, ship + 0x18), 2);", "replace": "wr8(m, LIN(pool_seg, ship + 0x18), 1);"},
+  {"name": "艦艇記錄長度77", "find": "(uint16_t)(index * 0x4Eu)", "replace": "(uint16_t)(index * 0x4Du)"},
+  {"name": "迴圈多跑一個分隊", "find": "while (i < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {", "replace": "while (i < rd8(m, LIN(fleet_seg, fleet_off + 0x0F)) + (i < 200)) {"},
+  {"name": "迴圈少跑一個分隊", "find": "while (i < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {", "replace": "while (i + 1 < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {"},
+  {"name": "槽位步距2", "find": "slot = (uint16_t)(slot + 4);", "replace": "slot = (uint16_t)(slot + 2);"},
+  {"name": "只揭露第一個分隊", "find": "slot = (uint16_t)(slot + 4);", "replace": "slot = (uint16_t)(slot + 4); i = 255;"},
+  {"name": "池段讀成艦隊段", "find": "uint16_t pool_seg = rd16(m, DS(0xCFB6));", "replace": "uint16_t pool_seg = fleet_seg;"},
+  {"name": "寫入位移不回繞", "find": "wr8(m, LIN(pool_seg, ship + 0x17), 3);", "replace": "wr8(m, ((uint32_t)pool_seg << 4) + (uint32_t)ship + 0x17u, 3);"}
+]

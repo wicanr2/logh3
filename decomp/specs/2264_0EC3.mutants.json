@@ -1,0 +1,10 @@
+[
+  {"name": "除數199", "find": "/ 200u + 0x50u", "replace": "/ 199u + 0x50u"},
+  {"name": "除數201", "find": "/ 200u + 0x50u", "replace": "/ 201u + 0x50u"},
+  {"name": "長半軸加81", "find": "/ 200u + 0x50u", "replace": "/ 200u + 0x51u"},
+  {"name": "短半軸右移1", "find": "(uint16_t)(semi_major >> 2)", "replace": "(uint16_t)(semi_major >> 1)"},
+  {"name": "短半軸除3", "find": "(uint16_t)(semi_major >> 2)", "replace": "(uint16_t)(semi_major / 3)"},
+  {"name": "讀防衛力+0x14", "find": "planet_off + 0x16", "replace": "planet_off + 0x14"},
+  {"name": "短半軸寫到A776", "find": "wr16(m, DS(0xA774)", "replace": "wr16(m, DS(0xA776)"},
+  {"name": "長半軸寫到A770", "find": "wr16(m, DS(0xA772)", "replace": "wr16(m, DS(0xA770)"}
+]

@@ -1,0 +1,6 @@
+[
+  {"name": "追上改成嚴格大於", "find": "return a >= rd16(m, LIN(planet_seg, planet_off + 0x14)) ? 1 : 0;", "replace": "return a > rd16(m, LIN(planet_seg, planet_off + 0x14)) ? 1 : 0;"},
+  {"name": "改成有號比較", "find": "return a >= rd16(m, LIN(planet_seg, planet_off + 0x14)) ? 1 : 0;", "replace": "return (int16_t)a >= (int16_t)rd16(m, LIN(planet_seg, planet_off + 0x14)) ? 1 : 0;"},
+  {"name": "比較防衛力上限+0x16", "find": "return a >= rd16(m, LIN(planet_seg, planet_off + 0x14)) ? 1 : 0;", "replace": "return a >= rd16(m, LIN(planet_seg, planet_off + 0x16)) ? 1 : 0;"},
+  {"name": "比較方向相反", "find": "return a >= rd16(m, LIN(planet_seg, planet_off + 0x14)) ? 1 : 0;", "replace": "return a <= rd16(m, LIN(planet_seg, planet_off + 0x14)) ? 1 : 0;"}
+]

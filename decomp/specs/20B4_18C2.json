@@ -1,0 +1,27 @@
+{
+  "id": "20B4_18C2",
+  "entry": "20B4:18C2",
+  "conv": "far",
+  "ret": "none",
+  "size": 96,
+  "code_sha256_16": "9ce5ede6a0b97e0e",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}}
+  ],
+  "seeds": [
+    {"args": [49268, 21683]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "00"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "03"}, {"addr": "ds:C084", "hex": "0100"}, {"addr": "ds:C088", "hex": "0200"}, {"addr": "ds:C08C", "hex": "0300"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "02"}, {"addr": "ds:C084", "hex": "FFFF"}, {"addr": "ds:C088", "hex": "FF03"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:CFB4", "hex": "F0FF"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

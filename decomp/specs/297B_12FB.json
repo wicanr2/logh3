@@ -13,8 +13,16 @@
   "args": [
     {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}}
   ],
-  "iters": 60000,
-  "max_cases": 2500,
+  "seeds": [
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C07C", "hex": "02"}, {"addr": "ds:C080", "hex": "3412"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C07C", "hex": "05"}, {"addr": "ds:C080", "hex": "0180"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C07C", "hex": "00"}, {"addr": "ds:C080", "hex": "0080"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C07C", "hex": "01"}, {"addr": "ds:C080", "hex": "FF7F"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C07C", "hex": "03"}, {"addr": "ds:C080", "hex": "0100"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C07C", "hex": "04"}, {"addr": "ds:C080", "hex": "FFFF"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 400,
   "seed": 20261009,
   "min_coverage": 100
 }

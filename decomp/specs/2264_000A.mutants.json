@@ -1,0 +1,10 @@
+[
+  {"name": "要塞旗標讀+0x11", "find": "if (rd8(m, LIN(seg, off + 0x12)) != 0 && rd8(m, LIN(seg, off + 0x45)) != 0) {", "replace": "if (rd8(m, LIN(seg, off + 0x11)) != 0 && rd8(m, LIN(seg, off + 0x45)) != 0) {"},
+  {"name": "沒有要塞旗標的守衛", "find": "if (rd8(m, LIN(seg, off + 0x12)) != 0 && rd8(m, LIN(seg, off + 0x45)) != 0) {", "replace": "if (rd8(m, LIN(seg, off + 0x45)) != 0) {"},
+  {"name": "沒有倒數非零的守衛", "find": "if (rd8(m, LIN(seg, off + 0x12)) != 0 && rd8(m, LIN(seg, off + 0x45)) != 0) {", "replace": "if (rd8(m, LIN(seg, off + 0x12)) != 0) {"},
+  {"name": "倒數一次減2", "find": "(uint8_t)(rd8(m, LIN(seg, off + 0x45)) - 1)", "replace": "(uint8_t)(rd8(m, LIN(seg, off + 0x45)) - 2)"},
+  {"name": "倒數讀寫+0x44", "find": "wr8(m, LIN(seg, off + 0x45), (uint8_t)(rd8(m, LIN(seg, off + 0x45)) - 1));", "replace": "wr8(m, LIN(seg, off + 0x44), (uint8_t)(rd8(m, LIN(seg, off + 0x45)) - 1));"},
+  {"name": "行星步距80", "find": "off = (uint16_t)(off + 0x52);", "replace": "off = (uint16_t)(off + 0x50);"},
+  {"name": "迴圈多跑一顆", "find": "while (i < rd8(m, DS(0xCFFC))) {", "replace": "while (i < rd8(m, DS(0xCFFC)) + (i < 200)) {"},
+  {"name": "迴圈少跑一顆", "find": "while (i < rd8(m, DS(0xCFFC))) {", "replace": "while (i + 1 < rd8(m, DS(0xCFFC))) {"}
+]

@@ -14,6 +14,15 @@
     {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
     {"name": "slots", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 31, 32, 255]}}
   ],
+  "seeds": [
+    {"args": [49268, 21683, 5], "pokes": [{"addr": "ds:C078", "hex": "00FE"}, {"addr": "ds:B793", "hex": "00"}, {"addr": "ds:D35B", "hex": "64"}]},
+    {"args": [49268, 21683, 3], "pokes": [{"addr": "ds:C078", "hex": "0001"}, {"addr": "ds:B793", "hex": "64"}, {"addr": "ds:B7AF", "hex": "40"}]},
+    {"args": [49268, 21683, 3], "pokes": [{"addr": "ds:C078", "hex": "0001"}, {"addr": "ds:B793", "hex": "40"}, {"addr": "ds:B7AF", "hex": "64"}]},
+    {"args": [49268, 21683, 3], "pokes": [{"addr": "ds:C078", "hex": "0001"}, {"addr": "ds:B793", "hex": "50"}, {"addr": "ds:B7AF", "hex": "50"}]},
+    {"args": [49268, 21683, 9], "pokes": [{"addr": "ds:C078", "hex": "00FF"}, {"addr": "ds:B793", "hex": "C8"}]},
+    {"args": [49268, 21683, 9], "pokes": [{"addr": "ds:C078", "hex": "00FF"}, {"addr": "ds:B793", "hex": "00"}]},
+    {"args": [49268, 21683, 0], "pokes": [{"addr": "ds:C078", "hex": "0001"}, {"addr": "ds:B793", "hex": "90"}, {"addr": "ds:B7AF", "hex": "FF"}]}
+  ],
   "iters": 100000,
   "max_cases": 4000,
   "seed": 20261009,

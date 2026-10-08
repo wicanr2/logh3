@@ -1,0 +1,12 @@
+[
+  {"name": "除數99", "find": "gin3_uldiv(gin3_lmul(cap, rate), 100u)", "replace": "gin3_uldiv(gin3_lmul(cap, rate), 99u)"},
+  {"name": "乘積截成16位元", "find": "gin3_uldiv(gin3_lmul(cap, rate), 100u)", "replace": "gin3_uldiv((uint16_t)gin3_lmul(cap, rate), 100u)"},
+  {"name": "加法不回繞", "find": "uint16_t cur = (uint16_t)(rd16(m, LIN(seg, cur_off)) + inc);", "replace": "uint32_t cur = (uint32_t)rd16(m, LIN(seg, cur_off)) + inc;"},
+  {"name": "不夾上限", "find": "if (cur >= rd16(m, LIN(seg, cap_off))) {", "replace": "if (0) {"},
+  {"name": "夾上限改有號比較", "find": "if (cur >= rd16(m, LIN(seg, cap_off))) {", "replace": "if ((int16_t)cur >= (int16_t)rd16(m, LIN(seg, cap_off))) {"},
+  {"name": "夾上限門檻少一", "find": "if (cur >= rd16(m, LIN(seg, cap_off))) {", "replace": "if (cur + 1u >= rd16(m, LIN(seg, cap_off))) {"},
+  {"name": "夾上限寫成回復前的值", "find": "wr16(m, LIN(seg, cur_off), rd16(m, LIN(seg, cap_off)));", "replace": "wr16(m, LIN(seg, cur_off), (uint16_t)(cur - inc));"},
+  {"name": "行星步距80", "find": "off = (uint16_t)(off + 0x52);", "replace": "off = (uint16_t)(off + 0x50);"},
+  {"name": "回復率讀+0x1A", "find": "uint16_t rate = rd16(m, LIN(seg, off + 0x18));", "replace": "uint16_t rate = rd16(m, LIN(seg, off + 0x1A));"},
+  {"name": "迴圈多跑一顆", "find": "while (i < rd8(m, DS(0xCFFC))) {", "replace": "while (i <= rd8(m, DS(0xCFFC))) {"}
+]

@@ -1,0 +1,9 @@
+[
+  {"name": "副官加量改成除2向上取整", "find": "(uint16_t)(n >> 1)", "replace": "(uint16_t)((n + 1) >> 1)"},
+  {"name": "副官加量改成右移2", "find": "(uint16_t)(n >> 1)", "replace": "(uint16_t)(n >> 2)"},
+  {"name": "低字進位不進高字", "find": "(uint16_t)(rd16(m, hi_lin) + (sum >> 16))", "replace": "rd16(m, hi_lin)"},
+  {"name": "提督記錄長度27", "find": "idx * 0x1Cu", "replace": "idx * 0x1Bu"},
+  {"name": "副官旗標改成0", "find": "if (deputy != 0xFF) {", "replace": "if (deputy != 0) {"},
+  {"name": "功績加在+0而不是+2", "find": "uint32_t lo_lin = DS(rec + 2);", "replace": "uint32_t lo_lin = DS(rec + 0);"},
+  {"name": "n當有號數擴充", "find": "uint32_t sum = (uint32_t)rd16(m, lo_lin) + v;", "replace": "uint32_t sum = (uint32_t)rd16(m, lo_lin) + (uint32_t)(int32_t)(int16_t)v;"}
+]

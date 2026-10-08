@@ -1,0 +1,31 @@
+{
+  "id": "20B4_0E2C",
+  "entry": "20B4:0E2C",
+  "conv": "far",
+  "ret": "ax",
+  "size": 25,
+  "code_sha256_16": "ee666aef3442ddcb",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "planet": {"base": "ptr:5336:5338", "stride": 82, "count": 81}
+  },
+  "args": [
+    {"name": "planet", "kind": "farptr", "gen": {"table": "planet"}},
+    {"name": "a", "kind": "word", "gen": {"choices": [0, 1, 4800, 6300, 6800, 7000, 9199, 9200, 9201, 32767, 32768, 65534, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [2, 21267, 9199]},
+    {"args": [2, 21267, 9200]},
+    {"args": [2, 21267, 9201]},
+    {"args": [2, 21267, 32767], "pokes": [{"addr": "5313:0016", "hex": "0080"}]},
+    {"args": [2, 21267, 32768], "pokes": [{"addr": "5313:0016", "hex": "FF7F"}]},
+    {"args": [2, 21267, 0], "pokes": [{"addr": "5313:0016", "hex": "0000"}]},
+    {"args": [2, 21267, 65535], "pokes": [{"addr": "5313:0016", "hex": "FFFF"}]},
+    {"args": [2, 21267, 65534], "pokes": [{"addr": "5313:0016", "hex": "FFFF"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

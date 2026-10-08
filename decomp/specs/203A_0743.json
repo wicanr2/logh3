@@ -1,0 +1,29 @@
+{
+  "id": "203A_0743",
+  "entry": "203A:0743",
+  "conv": "far",
+  "ret": "none",
+  "size": 105,
+  "code_sha256_16": "83bb90973be33921",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "n", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 100, 255, 256, 4200, 32767, 32768, 65534, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [49268, 21683, 1], "pokes": [{"addr": "ds:B77E", "hex": "FFFF0000"}]},
+    {"args": [49268, 21683, 3], "pokes": [{"addr": "ds:BAFE", "hex": "FFFF0000"}]},
+    {"args": [49268, 21683, 65535], "pokes": [{"addr": "ds:B77E", "hex": "FFFFFFFF"}, {"addr": "ds:BAFE", "hex": "FFFFFFFF"}]},
+    {"args": [49268, 21683, 65535], "pokes": [{"addr": "ds:B77E", "hex": "01000000"}, {"addr": "ds:BAFE", "hex": "01800000"}]},
+    {"args": [49268, 21683, 65535], "pokes": [{"addr": "ds:C079", "hex": "FF"}]},
+    {"args": [49268, 21683, 100], "pokes": [{"addr": "ds:C079", "hex": "00"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}
