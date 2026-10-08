@@ -87,6 +87,7 @@ func (g *Game) beginBattlePreparation(after func()) {
 			}
 			return 0xFF
 		})
+	g.battlePreparation.SetRepairShipsRepairable(g.repairShipsRepairable)
 	g.continueBattlePreparation()
 }
 

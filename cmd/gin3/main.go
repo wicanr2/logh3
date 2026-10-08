@@ -282,6 +282,8 @@ func main() {
 	saveDir := flag.String("save", defaultSaveDir(), "玩家存檔的目錄（「存進度」寫這裡，原版目錄一律唯讀）")
 	aiLevel := flag.Int("ai", -1, "電腦 AI：-1 ＝ 原版；0–3 ＝ 強化版，"+
 		"數字越大越兇（會挑目標、集結、包圍）")
+	repairShips := flag.Bool("repair-ship-repairable", false,
+		"可選規則：修護艦可被其他修護艦修理（原版不行；預設關閉，規格125）")
 	musicDir := flag.String("music", "",
 		"配樂與音效OGG目錄；空值停用音訊。\n"+
 			"    玩家自備原版，配樂用 tools/music_to_ogg.sh 匯入；\n"+
@@ -316,6 +318,7 @@ func main() {
 	if err := g.SetAILevel(*aiLevel); err != nil {
 		die(err)
 	}
+	g.SetRepairShipsRepairable(*repairShips)
 	a := &app{
 		g:         g,
 		screen:    ebiten.NewImage(gfx.Width, gfx.Height),

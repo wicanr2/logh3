@@ -122,7 +122,11 @@ func (g *Game) supplyCandidates(unit int, repair bool) []int {
 		if u.Faction != me.Faction || u.Out {
 			continue
 		}
-		if u.Kind == shipKindRepair || u.Kind == shipKindScout {
+		if u.Kind == shipKindScout {
+			continue
+		}
+		// 規格125：開啟時修理的對象可以是其他修護艦，發令的自己仍排除。
+		if u.Kind == shipKindRepair && !(repair && g.repairShipsRepairable && i != unit) {
 			continue
 		}
 		if !repair && u.Kind == shipKindSupply {

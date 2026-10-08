@@ -1036,6 +1036,8 @@ type Game struct {
 	// 保留原版建隊／整補並在載入後重接（規格 068）。
 	brain  ai.Brain
 	aiMode int // 0 原版，1–4 增強難度 0–3；執行期偏好，不進存檔。
+	// repairShipsRepairable 是規格125的可選規則：修護艦可被其他修護艦修理。執行期偏好，不進存檔。
+	repairShipsRepairable bool
 
 	// sides 是對戰模式下兩邊各自的錢與造船計劃，索引就是陣營。
 	// 世界資料（星域記錄、行星表）兩邊共用一份——月底的成長是就地

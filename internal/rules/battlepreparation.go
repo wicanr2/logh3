@@ -36,7 +36,14 @@ type BattlePreparation struct {
 	candidates []int
 	target     int
 	started    bool
+
+	// repairShipsRepairable 開啟時，第二階段的修理對象可以是其他修護艦（規格125）。
+	// 預設關閉，與原版相同。
+	repairShipsRepairable bool
 }
+
+// SetRepairShipsRepairable 設定規格125的可選規則。要在第一次 Next 之前設。
+func (p *BattlePreparation) SetRepairShipsRepairable(on bool) { p.repairShipsRepairable = on }
 
 func NewBattlePreparation(kinds *ShipKindTable, units []PreparationUnit, planets []BattlePlanet,
 	sources *PreparationSources, poolFleet func(int) int) *BattlePreparation {
@@ -97,7 +104,8 @@ func (p *BattlePreparation) sourceFleet(repair bool) int {
 	return p.poolFleet(s.Pool)
 }
 
-func (p *BattlePreparation) collect(x, y, faction int, initial, fine int64, supply bool) []int {
+// collect 收一個來源的候選。source 是來源單位在 p.units 的索引，行星來源傳 -1。
+func (p *BattlePreparation) collect(x, y, faction int, initial, fine int64, supply bool, source int) []int {
 	var out []int
 	for i, v := range p.units {
 		u := v.Unit
@@ -107,7 +115,7 @@ func (p *BattlePreparation) collect(x, y, faction int, initial, fine int64, supp
 		if supply && (u.Kind == SupplyKind || u.Kind == RepairKind) {
 			continue
 		}
-		if !supply && p.phase == 2 && u.Kind == RepairKind {
+		if !supply && p.phase == 2 && u.Kind == RepairKind && !(p.repairShipsRepairable && i != source) {
 			continue
 		}
 		d := Distance16(x, y, u.X, u.Y) // SHIP+34/+36：現在位置。
@@ -185,14 +193,14 @@ func (p *BattlePreparation) Next() (PreparationResult, bool) {
 			if p.phase == 2 {
 				initial = int64(kindSpeed(p.kinds, u.Faction, kind)*6) << 16
 			}
-			p.candidates = p.collect(u.X, u.Y, u.Faction, initial, fine, p.phase == 0)
+			p.candidates = p.collect(u.X, u.Y, u.Faction, initial, fine, p.phase == 0, p.cursor)
 		} else {
 			planet := p.planets[p.cursor]
 			if planet.Owner != 0 && planet.Owner != 1 {
 				continue
 			}
 			r := int64(PlanetQueryRadius(planet.Defence)) << 16
-			p.candidates = p.collect(planet.X, planet.Y, planet.Owner, r, r, p.phase == 1)
+			p.candidates = p.collect(planet.X, planet.Y, planet.Owner, r, r, p.phase == 1, -1)
 		}
 		SortPreparationCandidates(p.candidates,
 			func(i int) *BattleUnit { return p.units[i].Unit },
