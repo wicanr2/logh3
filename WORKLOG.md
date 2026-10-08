@@ -10809,3 +10809,5 @@ CONTEXT與矩陣，87張、11張open，267條核實零不成立、3條人工、1
 - 相依套件用 `LOGH3_NET=1 tools/gui.sh mod download` 抓進 `workplace/gomodcache`（ebiten v2.8.8、oggvorbis v1.0.5）。`tools/gui.sh build -o /dev/null ./cmd/gin3 ./cmd/music-import` 與 `vet` 通過。
 - `LOGH3_TIMEOUT=40m tools/gui.sh test ./cmd/... ./internal/... -count=1` 全過（含 `cmd/gin3` 55 秒、`cmd/music-import`、`internal/game` 70 秒）。記錄在 `workplace/decomp/gui-test-20261009.log`（gitignore）。這輪沒有跑 `gui_check.sh`：沒有改畫面，且工作樹有使用者未提交的 `presentation/` HD 修改，新映像的 mesa 版本也可能不同，差異不能直接歸因於本輪程式。
 - 候選工作項（沒有開 GitHub issue，開 issue 屬先回報再確認）：decomp 下一支函式；`203A:0424` 溢位區可達性查證；`FleetAttack`（戰場版）對向量；啟動器選項畫面接 `-repair-ship-repairable`；持續追查 Datalight C 3.10 來源。`docs/goal/` 當輪檔與 `render-matrix` 等 issue 開了再補。
+- 推送：`git push origin main` 把 `66d7ad7..7d2650d` 共 8 個 commit 送出，其中 4 個是使用者先前的本地 commit（HD 首批與 Issue96 記錄），4 個是本輪。使用者未提交的 HD 修改（`assets/hd/`、`presentation/`、`tools/scripts/hd_*`、`cmd/gin3/main.go` 的 HD 訊息一行、`00-README.md` 頂端 HD 段、`spec/123`）維持未提交。
+- 清理狀態：工作樹與 `workplace/decomp/` 無 root 擁有的檔案；本輪的一次性容器皆 `--rm`，無殘留；沒有 prune 或刪映像；新建的只有 `logh3-ebiten:2`（重建），候選編譯器留在 `workplace/toolchains/`（gitignore）。
