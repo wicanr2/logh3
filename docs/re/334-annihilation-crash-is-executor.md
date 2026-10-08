@@ -1,5 +1,7 @@
 # 334 — 戰略全滅之後轉跑 `ENDING.EXE` 是執行器造成的：BIOS ROM 尾巴是 0
 
+> 2026-10-08 指標：下文「`ds:0000` 的 Borland 字串」實為 Datalight C 3.10 的橫幅（[`442`](442-compiler-is-datalight-c.md)），結論不變。
+
 日期：2026-09-17。#57 的第一步（使用者裁決「先查執行器再做」）。
 執行器：dosgolem-logh3 `b5485eb`（工作樹乾淨）。輸入：`GIN3.COM` SHA-256 `770ed52607bf02584c125043830f22b19cc4b9a21f4909ad2f5f02d8fc8fd918`。
 調查由 subagent 做（筆記 `workplace/re-notes/a20-crash.md`，批次 `fcx-a20-boot`／`-cont`／`-entry`／`-rom`，反組譯

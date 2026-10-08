@@ -1,5 +1,7 @@
 # 戰損那幾支輔助函式：先把 Borland 的 long 慣例釘死
 
+> 2026-10-08 指標：本體的 C runtime 是 Datalight C 3.10 Large，不是 Borland（[`442`](442-compiler-is-datalight-c.md)）。下文的位址、呼叫慣例與讀出來的行為不受影響，「Borland」一詞照原文保留。
+
 `docs/spec/019`（打行星）與 `docs/re/145`（要塞砲開火）卡在同一批沒讀完的
 函式上。它們共同的障礙是同一件事：算式全走 Borland 的 32 位元輔助函式，
 不知道參數怎麼傳就每一條都讀不下去。所以先讀那幾支。

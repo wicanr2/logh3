@@ -1,9 +1,11 @@
-# Borland 的 32 位元輔助函式（`3CC9` 那一段）
+# Datalight C 的 32 位元輔助函式（`3CC9` 那一段）
 
 證據等級：**confirmed**，逐行讀出來的（[`docs/re/146`](../re/146-battle-damage-helpers.md)）。
+檔名沿用舊名，因為有連結指向它。
 
-`GIN3PS.EXE` 是 Borland C 編出來的，`long` 的乘除比較都呼叫執行期輔助
-函式。看不懂這幾支就每一條算式都讀不下去，所以先釘死。
+`GIN3PS.EXE` 的 C runtime 是 Datalight C 3.10 Large（橫幅在 `ds:0000`，
+見 [`docs/re/442`](../re/442-compiler-is-datalight-c.md)）。`long` 的乘除比較
+都呼叫執行期輔助函式。看不懂這幾支就每一條算式都讀不下去，所以先釘死。
 
 ## 呼叫慣例
 

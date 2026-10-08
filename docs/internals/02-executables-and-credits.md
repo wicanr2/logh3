@@ -43,10 +43,13 @@ GLUE → TINYPROG → GLUE → TINYPROG → GLUE → PKLITE 系（搬運 stub 55
 `MS Run-Time Library - Copyright (c) 1990, Microsoft Corp`
 ——Microsoft C 6.0 世代的執行期程式庫。
 
-本體用的 C runtime 有一支 `int86x` 風格的中斷派送常式：它**不發 `int nn`**，
+`GIN3PS.EXE` 的 C runtime 是 Datalight C 3.10 Large：`ds:0000` 起是
+`ERROR: NULL pointer` 與橫幅 `Datalight C 3.10 L, written by Walter Bright`
+（confirmed，[`docs/re/442`](../re/442-compiler-is-datalight-c.md)）。
+
+這支 runtime 有一支 `int86x` 風格的中斷派送常式：它**不發 `int nn`**，
 而是 `int 21h AH=35h` 取向量、自己疊一個中斷框架、再 `iret` 跳進去
-（見 [`03`](03-startup-and-memory.md)）。這是 Microsoft C 的作法，也是
-逆向與模擬時最容易漏掉的一條路徑。
+（見 [`03`](03-startup-and-memory.md)）。這是逆向與模擬時最容易漏掉的一條路徑。
 
 ## 製作團隊（confirmed，取自 `ENDING.EXE`）
 

@@ -1016,6 +1016,8 @@ SHA-256為9a0e7a220fa8b1a91217c3f06b5c8daa0887d36af0c31951e15b70398693c2b8。
 
 ## 已被推翻的斷言
 
+- 2026-10-08：「`GIN3PS.EXE` 是 Borland C 編出來的」已撤回。原依據只有 long 輔助函式的呼叫形狀；傾印的 `ds:0000` 是 `Datalight C 3.10 L, written by Walter Bright`，傾印中無 Borland 與 MS runtime 字樣。長度與位址等觀察不變，歸屬改為 Datalight C 3.10 Large runtime；遊戲碼的精確編譯器版本未知。證據見[442](docs/re/442-compiler-is-datalight-c.md)，`internals/51`、`02` 已改正文。
+
 - 第111輪：019／149的反擊「再加」登陸條件及至少一支bit0才開場被40案新執行原版與counter-only續行否定。原始0153／015C／0169均跳向獨立017A，038F依相符target開場。019現行正文已勘誤，149歷史保持；證據及限定完成範圍見[439](docs/re/439-planet-eligibility.md)與[099](docs/playtest/099-planet-eligibility.md)。
 
 - 第101輪：孤立報告renderer通過不能證明正式Frame游標在報告上方。正式Frame先畫背景游標再畫不透明報告，137像素游標被蓋；按既有107契約修正後58240像素零差。第83輪正常到期只跑第8步的限制，由七次公開完整實行及60 Hz GUI補一條；原版正常整回合同態限制保持。讀檔六檔須原封不動亦不適用STELLAR既有載入派生重算，見[435](docs/re/435-scout-player-report-cursor.md)及[089](docs/playtest/089-scout-player.md)。
