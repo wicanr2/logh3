@@ -1,0 +1,8 @@
+[
+  {"name": "es 與 si 對調", "find": "return f_2376_01E6(m, obj_seg, obj_off);", "replace": "return f_2376_01E6(m, obj_off, obj_seg);"},
+  {"name": "si 加 1", "find": "return f_2376_01E6(m, obj_seg, obj_off);", "replace": "return f_2376_01E6(m, obj_seg, (uint16_t)(obj_off + 1u));"},
+  {"name": "es 固定 DGROUP", "find": "return f_2376_01E6(m, obj_seg, obj_off);", "replace": "return f_2376_01E6(m, GIN3_DS, obj_off);"},
+  {"name": "不呼叫 01E6", "find": "return f_2376_01E6(m, obj_seg, obj_off);", "replace": "return 0;"},
+  {"name": "回傳只留低位元組", "find": "return f_2376_01E6(m, obj_seg, obj_off);", "replace": "return (uint8_t)f_2376_01E6(m, obj_seg, obj_off);"},
+  {"name": "回傳加 1", "find": "return f_2376_01E6(m, obj_seg, obj_off);", "replace": "return (uint16_t)(f_2376_01E6(m, obj_seg, obj_off) + 1u);"}
+]

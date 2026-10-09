@@ -1,0 +1,31 @@
+{
+  "id": "0AD0_000B",
+  "entry": "0AD0:000B",
+  "conv": "far",
+  "ret": "pack:al",
+  "size": 31,
+  "code_sha256_16": "1fd71a4002cffdf3",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦隊清單頁重建：ds:9593 清 0，呼叫 297B:131C(ds:9594, v, 旗標 1＝只留本方) 把現役艦隊槽號列進 ds:9594 起的緩衝區，個數存 ds:9592。基底取 S3 開局（現役艦隊 f0、f2..f5、f7..f9、f11、f12、f14、f15 為陣營 0，星域 0x19 有 f0、f2..f5、f11、f15；f16、f17、f28..f31 為陣營 1，星域 0x1B）。ds:9592／9593／9594 起 32 bytes 先 poke 成非零，才看得出少寫與寫錯位置；v 的高位元組非 0、ds:8F1D 的 word 高位元組非 0 由種子涵蓋。",
+  "args": [
+    {"name": "v", "kind": "word", "gen": {"choices": [0, 1, 13, 14, 23, 25, 27, 28, 255, 511, 65280, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "v ＝ 0xFF 不過濾：本方（陣營 0）12 支", "args": [255], "pokes": [{"addr": "ds:9592", "hex": "AAAA"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}]},
+    {"note": "v ＝ 0x19：星域 0x19 的本方 7 支", "args": [25], "pokes": [{"addr": "ds:9592", "hex": "AAAA"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}]},
+    {"note": "v ＝ 0x1B：星域 0x1B 只有陣營 1 的艦隊，本方沒有 → 0", "args": [27], "pokes": [{"addr": "ds:9592", "hex": "AAAA"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}]},
+    {"note": "ds:8F1D ＝ 1：本方改為陣營 1，v ＝ 0xFF → 6 支", "args": [255], "pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:9592", "hex": "AAAA"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}]},
+    {"note": "ds:8F1D ＝ 1、v ＝ 0x1B：陣營 1 在星域 0x1B 的 6 支", "args": [27], "pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:9592", "hex": "AAAA"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}]},
+    {"note": "v 的高位元組非 0（0x01FF）：低位元組 0xFF 不過濾 → 12", "args": [511], "pokes": [{"addr": "ds:9592", "hex": "AAAA"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}]},
+    {"note": "v ＝ 0x0119：低位元組 0x19 過濾 → 7", "args": [281], "pokes": [{"addr": "ds:9592", "hex": "AAAA"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}]},
+    {"note": "v ＝ 0：星域 0 沒有現役艦隊 → n ＝ 0，ds:9592 寫 0、ds:9593 寫 0", "args": [0], "pokes": [{"addr": "ds:9592", "hex": "AAAA"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}]},
+    {"note": "ds:8F1D 的 word 高位元組非 0（8F1E ＝ 5）：131C 只取低位元組", "args": [255], "pokes": [{"addr": "ds:8F1E", "hex": "05"}, {"addr": "ds:9592", "hex": "AAAA"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}]},
+    {"note": "ds:9593 原為 0xFF：確實被清成 0（不是只在 n ＝ 0 時寫）", "args": [25], "pokes": [{"addr": "ds:9592", "hex": "FFFF"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}]},
+    {"note": "沒有任何現役艦隊（+4 全 0xFF）", "args": [255], "pokes": [{"addr": "ds:9592", "hex": "AAAA"}, {"addr": "ds:9594", "hex": "55", "repeat": 34}, {"addr": "ds:C078", "hex": "FF"}, {"addr": "ds:C16C", "hex": "FF"}, {"addr": "ds:C1E6", "hex": "FF"}, {"addr": "ds:C260", "hex": "FF"}, {"addr": "ds:C2DA", "hex": "FF"}, {"addr": "ds:C354", "hex": "FF"}, {"addr": "ds:C3CE", "hex": "FF"}, {"addr": "ds:C448", "hex": "FF"}, {"addr": "ds:C4C2", "hex": "FF"}, {"addr": "ds:C53C", "hex": "FF"}, {"addr": "ds:C5B6", "hex": "FF"}, {"addr": "ds:C630", "hex": "FF"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 800,
+  "seed": 20261013,
+  "min_coverage": 100
+}

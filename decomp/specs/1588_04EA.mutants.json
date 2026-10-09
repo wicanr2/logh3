@@ -1,0 +1,19 @@
+[
+  {"name": "x0 右移 2", "find": "uint16_t x0 = (uint16_t)(x >> 3);", "replace": "uint16_t x0 = (uint16_t)(x >> 2);"},
+  {"name": "y0 除 11", "find": "uint16_t y0 = (uint16_t)(y / 10u);", "replace": "uint16_t y0 = (uint16_t)(y / 11u);"},
+  {"name": "x1 加 14", "find": "uint16_t x1 = (uint16_t)((uint16_t)(x + 15u) >> 3);", "replace": "uint16_t x1 = (uint16_t)((uint16_t)(x + 14u) >> 3);"},
+  {"name": "x1 加 16", "find": "uint16_t x1 = (uint16_t)((uint16_t)(x + 15u) >> 3);", "replace": "uint16_t x1 = (uint16_t)((uint16_t)(x + 16u) >> 3);"},
+  {"name": "y1 加 14", "find": "uint16_t y1 = (uint16_t)((uint16_t)(y + 15u) / 10u);", "replace": "uint16_t y1 = (uint16_t)((uint16_t)(y + 14u) / 10u);"},
+  {"name": "y1 加 16", "find": "uint16_t y1 = (uint16_t)((uint16_t)(y + 15u) / 10u);", "replace": "uint16_t y1 = (uint16_t)((uint16_t)(y + 16u) / 10u);"},
+  {"name": "x1 不回繞（32 位元加法）", "find": "uint16_t x1 = (uint16_t)((uint16_t)(x + 15u) >> 3);", "replace": "uint16_t x1 = (uint16_t)(((uint32_t)x + 15u) >> 3);"},
+  {"name": "y1 不回繞（32 位元加法）", "find": "uint16_t y1 = (uint16_t)((uint16_t)(y + 15u) / 10u);", "replace": "uint16_t y1 = (uint16_t)(((uint32_t)y + 15u) / 10u);"},
+  {"name": "欄不含終點（c < x1）", "find": "for (c = x0; c <= x1; c++) {", "replace": "for (c = x0; c < x1; c++) {"},
+  {"name": "列不含終點（r < y1）", "find": "for (r = y0; r <= y1; r++) {", "replace": "for (r = y0; r < y1; r++) {"},
+  {"name": "欄從 x0 + 1 起", "find": "for (c = x0; c <= x1; c++) {", "replace": "for (c = (uint16_t)(x0 + 1u); c <= x1; c++) {"},
+  {"name": "列從 y0 + 1 起", "find": "for (r = y0; r <= y1; r++) {", "replace": "for (r = (uint16_t)(y0 + 1u); r <= y1; r++) {"},
+  {"name": "呼叫 0621 的 c 與 r 對調", "find": "if (f_1588_0621(m, c, r) != 0)", "replace": "if (f_1588_0621(m, r, c) != 0)"},
+  {"name": "判定反向（0 ＝ 擋）", "find": "if (f_1588_0621(m, c, r) != 0)", "replace": "if (f_1588_0621(m, c, r) == 0)"},
+  {"name": "只看第一格", "find": "            if (f_1588_0621(m, c, r) != 0)\n                return 0;", "replace": "            return f_1588_0621(m, c, r) != 0 ? 0u : 1u;"},
+  {"name": "全通行回 0", "find": "    return 1;\n}", "replace": "    return 0;\n}"},
+  {"name": "只看遮罩低 4 位元", "find": "if (f_1588_0621(m, c, r) != 0)", "replace": "if ((f_1588_0621(m, c, r) & 0x0Fu) != 0)"}
+]

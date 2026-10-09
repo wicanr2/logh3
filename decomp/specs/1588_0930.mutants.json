@@ -1,0 +1,9 @@
+[
+  {"name": "座位順序對調（先 1 後 0）", "find": "    f_1588_0945(m, 0u);\n    return f_1588_0945(m, 1u);", "replace": "    f_1588_0945(m, 1u);\n    return f_1588_0945(m, 0u);"},
+  {"name": "不呼叫座位 0", "find": "    f_1588_0945(m, 0u);\n", "replace": ""},
+  {"name": "座位 1 也當座位 0", "find": "return f_1588_0945(m, 1u);", "replace": "return f_1588_0945(m, 0u);"},
+  {"name": "回傳第一次的 AX", "find": "    f_1588_0945(m, 0u);\n    return f_1588_0945(m, 1u);", "replace": "    uint16_t r = f_1588_0945(m, 0u);\n    f_1588_0945(m, 1u);\n    return r;"},
+  {"name": "座位 1 改 2", "find": "return f_1588_0945(m, 1u);", "replace": "return f_1588_0945(m, 2u);"},
+  {"name": "不呼叫座位 1", "find": "    return f_1588_0945(m, 1u);", "replace": "    return 0;"},
+  {"name": "座位 0 改 3（陣營 0x1F）", "find": "    f_1588_0945(m, 0u);\n    return", "replace": "    f_1588_0945(m, 3u);\n    return"}
+]

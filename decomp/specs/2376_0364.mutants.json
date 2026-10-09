@@ -1,0 +1,7 @@
+[
+  {"name": "es 與 si 對調（對調後列數、每列格數都非 0 才呼叫，避免原版以外的長迴圈）", "find": "f_2376_02DE(m, 0, obj_seg, obj_off);", "replace": "if (rd8(m, LIN(obj_off, (uint16_t)(obj_seg + 0x26u))) != 0 && rd8(m, LIN(obj_off, (uint16_t)(obj_seg + 0x27u))) != 0) f_2376_02DE(m, 0, obj_off, obj_seg);"},
+  {"name": "si 加 1（新位置的列數、每列格數都非 0 才呼叫）", "find": "f_2376_02DE(m, 0, obj_seg, obj_off);", "replace": "if (rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x27u))) != 0 && rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x28u))) != 0) f_2376_02DE(m, 0, obj_seg, (uint16_t)(obj_off + 1u));"},
+  {"name": "不呼叫 02DE", "find": "    f_2376_02DE(m, 0, obj_seg, obj_off);\n", "replace": ""},
+  {"name": "改呼叫 02F2（欄位位移不同；+0x21、+0x22 非 0 才呼叫）", "find": "f_2376_02DE(m, 0, obj_seg, obj_off);", "replace": "{ extern void f_2376_02F2(Mem *, uint16_t, uint16_t, uint16_t); if (rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x21u))) != 0 && rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x22u))) != 0) f_2376_02F2(m, 0, obj_seg, obj_off); }"},
+  {"name": "es 固定 DGROUP（新位置的列數、每列格數都非 0 才呼叫）", "find": "f_2376_02DE(m, 0, obj_seg, obj_off);", "replace": "if (rd8(m, LIN(GIN3_DS, (uint16_t)(obj_off + 0x26u))) != 0 && rd8(m, LIN(GIN3_DS, (uint16_t)(obj_off + 0x27u))) != 0) f_2376_02DE(m, 0, GIN3_DS, obj_off);"}
+]

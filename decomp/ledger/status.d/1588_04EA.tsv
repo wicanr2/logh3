@@ -1,0 +1,2 @@
+golem_linear	level	source	evidence
+15d6a	diff-tested	decomp/src/f_1588_04EA.c	decomp/specs/1588_04EA.json

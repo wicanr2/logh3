@@ -1,0 +1,14 @@
+[
+  {"name": "旗標 1 改 2（敵方）", "find": "n = f_297B_131C(m, 0x9594u, GIN3_DS, v, 1u);", "replace": "n = f_297B_131C(m, 0x9594u, GIN3_DS, v, 2u);"},
+  {"name": "旗標 1 改 3（本方且敵方）", "find": "n = f_297B_131C(m, 0x9594u, GIN3_DS, v, 1u);", "replace": "n = f_297B_131C(m, 0x9594u, GIN3_DS, v, 3u);"},
+  {"name": "旗標 1 改 0（不過濾陣營）", "find": "n = f_297B_131C(m, 0x9594u, GIN3_DS, v, 1u);", "replace": "n = f_297B_131C(m, 0x9594u, GIN3_DS, v, 0u);"},
+  {"name": "緩衝區位移 0x9595", "find": "n = f_297B_131C(m, 0x9594u, GIN3_DS, v, 1u);", "replace": "n = f_297B_131C(m, 0x9595u, GIN3_DS, v, 1u);"},
+  {"name": "v 固定 0xFF（不過濾星域）", "find": "n = f_297B_131C(m, 0x9594u, GIN3_DS, v, 1u);", "replace": "n = f_297B_131C(m, 0x9594u, GIN3_DS, 0xFFu, 1u);"},
+  {"name": "v 加 1", "find": "n = f_297B_131C(m, 0x9594u, GIN3_DS, v, 1u);", "replace": "n = f_297B_131C(m, 0x9594u, GIN3_DS, (uint16_t)(v + 1u), 1u);"},
+  {"name": "個數存到 ds:9593", "find": "wr8(m, DS(0x9592u), n);", "replace": "wr8(m, DS(0x9593u), n);"},
+  {"name": "不存個數", "find": "    wr8(m, DS(0x9592u), n);\n", "replace": ""},
+  {"name": "不清 ds:9593", "find": "    wr8(m, DS(0x9593u), 0);\n", "replace": ""},
+  {"name": "ds:9593 清成 1", "find": "    wr8(m, DS(0x9593u), 0);\n", "replace": "    wr8(m, DS(0x9593u), 1);\n"},
+  {"name": "不呼叫 131C", "find": "n = f_297B_131C(m, 0x9594u, GIN3_DS, v, 1u);", "replace": "n = 0;"},
+  {"name": "個數加 1 後存", "find": "wr8(m, DS(0x9592u), n);", "replace": "wr8(m, DS(0x9592u), (uint8_t)(n + 1u));"}
+]

@@ -1,0 +1,36 @@
+{
+  "id": "1588_0571",
+  "entry": "1588:0571",
+  "conv": "far",
+  "ret": "ax",
+  "size": 54,
+  "code_sha256_16": "9b7b67156d02290d",
+  "base_state": "/src/workplace/fcmd/fcmd-standby.state",
+  "base_state_sha256": "2f07118746ba249290a5f5e3de71020090a10c58b8072f84b110e1c1c95f2394",
+  "note": "戰場像素 (x, y) 那一點是否通行：r ＝ y ÷ 10、c ＝ x >> 3，呼叫 1588:0621(c, r)，≠ 0 回 0，否則回 1。基底與種子沿用 1588:04EA 的設計（遮罩表清零，圖塊 (2,3) 的遮罩非零使 c ∈ {4,5}、r ∈ {6,7} 被擋；ds:3C3E 取 FF 或只擋單一象限）。",
+  "args": [
+    {"name": "x", "kind": "word", "gen": {"choices": [0, 7, 8, 15, 16, 17, 24, 31, 32, 33, 40, 47, 48, 49, 64, 100, 255, 256, 1000, 1017, 32768, 65520, 65521, 65528, 65535], "also_random": true}},
+    {"name": "y", "kind": "word", "gen": {"choices": [0, 9, 10, 44, 45, 59, 60, 61, 69, 70, 79, 80, 81, 100, 255, 800, 1000, 32768, 65521, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "基底原樣", "args": [32, 60], "pokes": []},
+    {"note": "遮罩全清零 → 1", "args": [32, 60], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}]},
+    {"note": "(32,60)：c ＝ 4、r ＝ 6 被擋 → 0", "args": [32, 60], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "(39,69)：c ＝ 4、r ＝ 6 → 0", "args": [39, 69], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "(40,60)：c ＝ 5、r ＝ 6 → 0", "args": [40, 60], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "(32,70)：c ＝ 4、r ＝ 7 → 0", "args": [32, 70], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "(48,60)：c ＝ 6（圖塊欄 3）→ 1", "args": [48, 60], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "(31,60)：c ＝ 3 → 1", "args": [31, 60], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "(32,59)：r ＝ 5 → 1", "args": [32, 59], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "(32,80)：r ＝ 8 → 1", "args": [32, 80], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "只擋 c 奇 r 奇（00 00 00 FF）：(47,79) → c ＝ 5、r ＝ 7 → 0；(32,60) → 1", "args": [47, 79], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "000000FF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "只擋 c 奇 r 奇：(32,60) → c ＝ 4、r ＝ 6，該象限遮罩 0 → 1", "args": [32, 60], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "000000FF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "x ＝ 65535（c ＝ 8191）", "args": [65535, 60], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "y ＝ 65535（r ＝ 6553）", "args": [32, 65535], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "圖塊遮罩只有高 4 位元（0xF0）：(32,60) 的 t & mask ＝ 0xF0，非零 → 被擋 → 0（只看低 4 位元會當成通行）", "args": [32, 60], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "F0"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261013,
+  "min_coverage": 100
+}

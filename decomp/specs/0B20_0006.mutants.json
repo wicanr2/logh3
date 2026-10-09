@@ -1,0 +1,18 @@
+[
+  {"name": "旗標 2 改 1（本方）", "find": "n = f_297B_131C(m, buf, W0006_SS, v, 2u);", "replace": "n = f_297B_131C(m, buf, W0006_SS, v, 1u);"},
+  {"name": "旗標 2 改 3（本方且敵方）", "find": "n = f_297B_131C(m, buf, W0006_SS, v, 2u);", "replace": "n = f_297B_131C(m, buf, W0006_SS, v, 3u);"},
+  {"name": "旗標 2 改 0（不過濾陣營）", "find": "n = f_297B_131C(m, buf, W0006_SS, v, 2u);", "replace": "n = f_297B_131C(m, buf, W0006_SS, v, 0u);"},
+  {"name": "v 固定 0xFF（不過濾星域）", "find": "n = f_297B_131C(m, buf, W0006_SS, v, 2u);", "replace": "n = f_297B_131C(m, buf, W0006_SS, 0xFFu, 2u);"},
+  {"name": "v 加 1", "find": "n = f_297B_131C(m, buf, W0006_SS, v, 2u);", "replace": "n = f_297B_131C(m, buf, W0006_SS, (uint16_t)(v + 1u), 2u);"},
+  {"name": "003B 的 n 少一", "find": "r = f_0B20_003B(m, buf, W0006_SS, n);", "replace": "r = f_0B20_003B(m, buf, W0006_SS, (uint16_t)(n - 1u));"},
+  {"name": "003B 的 n 固定 32", "find": "r = f_0B20_003B(m, buf, W0006_SS, n);", "replace": "r = f_0B20_003B(m, buf, W0006_SS, 32u);"},
+  {"name": "003B 的清單位移加 1", "find": "r = f_0B20_003B(m, buf, W0006_SS, n);", "replace": "r = f_0B20_003B(m, (uint16_t)(buf + 1u), W0006_SS, n);"},
+  {"name": "不呼叫 003B", "find": "    r = f_0B20_003B(m, buf, W0006_SS, n);", "replace": "    r = n;"},
+  {"name": "筆數存 131C 的 n 而不是 003B 的筆數", "find": "wr8(m, DS(0x95B4u), (uint8_t)r);", "replace": "wr8(m, DS(0x95B4u), n);"},
+  {"name": "筆數存到 ds:95B5", "find": "wr8(m, DS(0x95B4u), (uint8_t)r);", "replace": "wr8(m, DS(0x95B5u), (uint8_t)r);"},
+  {"name": "不存筆數", "find": "    wr8(m, DS(0x95B4u), (uint8_t)r);\n", "replace": ""},
+  {"name": "不清 ds:95B5", "find": "    wr8(m, DS(0x95B5u), 0);\n", "replace": ""},
+  {"name": "ds:95B5 清成 1", "find": "    wr8(m, DS(0x95B5u), 0);\n", "replace": "    wr8(m, DS(0x95B5u), 1);\n"},
+  {"name": "回傳 131C 的 n", "find": "    return r;\n}", "replace": "    return n;\n}"},
+  {"name": "回傳加 1", "find": "    return r;\n}", "replace": "    return (uint16_t)(r + 1u);\n}"}
+]

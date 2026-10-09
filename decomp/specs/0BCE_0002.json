@@ -1,0 +1,30 @@
+{
+  "id": "0BCE_0002",
+  "entry": "0BCE:0002",
+  "conv": "far",
+  "ret": "pack:al",
+  "size": 32,
+  "code_sha256_16": "7099dfb091ac59bf",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "提督清單頁重建：ds:95D9 清 0，呼叫 28E0:0103(ds:95DA, a, 旗標 0x25, limit 0) 列出提督編號並依 a 與旗標 bit0／bit2／bit5 篩選，個數存 ds:95D8。基底取 fcmd-base（28E0:0103 的基底）。ds:95D8／95D9／95DA 起 84 bytes 先 poke 成非零，看得出少寫與寫錯位置；種子用 ds:B77C 起的 6 筆提督造出「全過、[+1] 不符、[+0] 不符、[+9] bit7 未設、空位 0xFE、[+0x0A] 不同」，並與 ds:8F1D ＝ 0、1 組合，才分得出旗標 0x25 的三道篩選器各自的作用。",
+  "args": [
+    {"name": "a", "kind": "word", "gen": {"choices": [255, 255, 255, 255, 0, 1, 2, 7, 8, 31, 32, 511, 65535, 65280, 256], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "基底原狀，a ＝ 0xFF", "args": [255], "pokes": [{"addr": "ds:95D8", "hex": "AAAA"}, {"addr": "ds:95DA", "hex": "55", "repeat": 84}]},
+    {"note": "6 筆提督，a ＝ 0xFF：全過的 #0 與 [+0x0A] 不同的 #5 留下（其餘依三道篩選器剔除）", "args": [255], "pokes": [{"addr": "ds:95D8", "hex": "AAAA"}, {"addr": "ds:95DA", "hex": "55", "repeat": 84}, {"addr":"ds:B77C","hex":"FF00000000000000008007"},{"addr":"ds:B798","hex":"FF01000000000000008007"},{"addr":"ds:B7B4","hex":"0500000000000000008007"},{"addr":"ds:B7D0","hex":"FF00000000000000000007"},{"addr":"ds:B7EC","hex":"FE00000000000000008007"},{"addr":"ds:B808","hex":"FF00000000000000008008"}]},
+    {"note": "6 筆提督，a ＝ 7：只留 [+0x0A] ＝ 7 的全過者 #0", "args": [7], "pokes": [{"addr": "ds:95D8", "hex": "AAAA"}, {"addr": "ds:95DA", "hex": "55", "repeat": 84}, {"addr":"ds:B77C","hex":"FF00000000000000008007"},{"addr":"ds:B798","hex":"FF01000000000000008007"},{"addr":"ds:B7B4","hex":"0500000000000000008007"},{"addr":"ds:B7D0","hex":"FF00000000000000000007"},{"addr":"ds:B7EC","hex":"FE00000000000000008007"},{"addr":"ds:B808","hex":"FF00000000000000008008"}]},
+    {"note": "6 筆提督，a ＝ 8：只留 #5", "args": [8], "pokes": [{"addr": "ds:95D8", "hex": "AAAA"}, {"addr": "ds:95DA", "hex": "55", "repeat": 84}, {"addr":"ds:B77C","hex":"FF00000000000000008007"},{"addr":"ds:B798","hex":"FF01000000000000008007"},{"addr":"ds:B7B4","hex":"0500000000000000008007"},{"addr":"ds:B7D0","hex":"FF00000000000000000007"},{"addr":"ds:B7EC","hex":"FE00000000000000008007"},{"addr":"ds:B808","hex":"FF00000000000000008008"}]},
+    {"note": "6 筆提督，ds:8F1D ＝ 1，a ＝ 0xFF：本方改為 1，#1 留下、#0 剔除", "args": [255], "pokes": [{"addr": "ds:95D8", "hex": "AAAA"}, {"addr": "ds:95DA", "hex": "55", "repeat": 84}, {"addr":"ds:B77C","hex":"FF00000000000000008007"},{"addr":"ds:B798","hex":"FF01000000000000008007"},{"addr":"ds:B7B4","hex":"0500000000000000008007"},{"addr":"ds:B7D0","hex":"FF00000000000000000007"},{"addr":"ds:B7EC","hex":"FE00000000000000008007"},{"addr":"ds:B808","hex":"FF00000000000000008008"}, {"addr": "ds:8F1D", "hex": "01"}]},
+    {"note": "6 筆提督，a ＝ 0x0107：低位元組 7 過濾（高位元組被忽略）", "args": [263], "pokes": [{"addr": "ds:95D8", "hex": "AAAA"}, {"addr": "ds:95DA", "hex": "55", "repeat": 84}, {"addr":"ds:B77C","hex":"FF00000000000000008007"},{"addr":"ds:B798","hex":"FF01000000000000008007"},{"addr":"ds:B7B4","hex":"0500000000000000008007"},{"addr":"ds:B7D0","hex":"FF00000000000000000007"},{"addr":"ds:B7EC","hex":"FE00000000000000008007"},{"addr":"ds:B808","hex":"FF00000000000000008008"}]},
+    {"note": "6 筆提督，a ＝ 0x01FF：低位元組 0xFF 不過 0227", "args": [511], "pokes": [{"addr": "ds:95D8", "hex": "AAAA"}, {"addr": "ds:95DA", "hex": "55", "repeat": 84}, {"addr":"ds:B77C","hex":"FF00000000000000008007"},{"addr":"ds:B798","hex":"FF01000000000000008007"},{"addr":"ds:B7B4","hex":"0500000000000000008007"},{"addr":"ds:B7D0","hex":"FF00000000000000000007"},{"addr":"ds:B7EC","hex":"FE00000000000000008007"},{"addr":"ds:B808","hex":"FF00000000000000008008"}]},
+    {"note": "6 筆提督，a ＝ 0：沒有 [+0x0A] ＝ 0 的全過者（或有）", "args": [0], "pokes": [{"addr": "ds:95D8", "hex": "AAAA"}, {"addr": "ds:95DA", "hex": "55", "repeat": 84}, {"addr":"ds:B77C","hex":"FF00000000000000008007"},{"addr":"ds:B798","hex":"FF01000000000000008007"},{"addr":"ds:B7B4","hex":"0500000000000000008007"},{"addr":"ds:B7D0","hex":"FF00000000000000000007"},{"addr":"ds:B7EC","hex":"FE00000000000000008007"},{"addr":"ds:B808","hex":"FF00000000000000008008"}]},
+    {"note": "ds:8F1D 的 word 高位元組非 0（8F1E ＝ 5）：028E 只取低位元組", "args": [255], "pokes": [{"addr": "ds:95D8", "hex": "AAAA"}, {"addr": "ds:95DA", "hex": "55", "repeat": 84}, {"addr":"ds:B77C","hex":"FF00000000000000008007"},{"addr":"ds:B798","hex":"FF01000000000000008007"},{"addr":"ds:B7B4","hex":"0500000000000000008007"},{"addr":"ds:B7D0","hex":"FF00000000000000000007"},{"addr":"ds:B7EC","hex":"FE00000000000000008007"},{"addr":"ds:B808","hex":"FF00000000000000008008"}, {"addr": "ds:8F1E", "hex": "05"}]},
+    {"note": "ds:95D9 原為 0xFF：確實被清成 0", "args": [255], "pokes": [{"addr": "ds:95D8", "hex": "FFFF"}, {"addr": "ds:95DA", "hex": "55", "repeat": 84}]}
+  ],
+  "iters": 20000,
+  "max_cases": 800,
+  "seed": 20261013,
+  "min_coverage": 100
+}

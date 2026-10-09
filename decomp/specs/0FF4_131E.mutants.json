@@ -1,0 +1,17 @@
+[
+  {"name": "星域記錄大小 0x7F", "find": "(uint16_t)(region_no * 0x7Eu)", "replace": "(uint16_t)(region_no * 0x7Fu)"},
+  {"name": "星域基底 0xA79D", "find": "uint16_t region = (uint16_t)(0xA79Cu +", "replace": "uint16_t region = (uint16_t)(0xA79Du +"},
+  {"name": "星域編號取艦隊[+5]", "find": "LIN(fleet_seg, (uint16_t)(fleet_off + 6u))", "replace": "LIN(fleet_seg, (uint16_t)(fleet_off + 5u))"},
+  {"name": "星域編號取艦隊[+7]", "find": "LIN(fleet_seg, (uint16_t)(fleet_off + 6u))", "replace": "LIN(fleet_seg, (uint16_t)(fleet_off + 7u))"},
+  {"name": "星域編號取 word [+6]", "find": "uint8_t region_no = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 6u)));", "replace": "uint16_t region_no = (uint16_t)(rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 6u))) | (rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 7u))) << 8));"},
+  {"name": "星域段寫 0", "find": "wr16(m, DS(0x9874u), GIN3_DS);", "replace": "wr16(m, DS(0x9874u), 0);"},
+  {"name": "不寫星域段", "find": "    wr16(m, DS(0x9874u), GIN3_DS);\n", "replace": ""},
+  {"name": "不寫星域位移", "find": "    wr16(m, DS(0x9872u), region);\n", "replace": ""},
+  {"name": "星域位移與段寫反", "find": "    wr16(m, DS(0x9874u), GIN3_DS);\n    wr16(m, DS(0x9872u), region);", "replace": "    wr16(m, DS(0x9872u), GIN3_DS);\n    wr16(m, DS(0x9874u), region);"},
+  {"name": "a 加 1", "find": "return f_0FF4_1350(m, fleet_off, fleet_seg, a);", "replace": "return f_0FF4_1350(m, fleet_off, fleet_seg, (uint16_t)(a + 1u));"},
+  {"name": "a 固定 0", "find": "return f_0FF4_1350(m, fleet_off, fleet_seg, a);", "replace": "return f_0FF4_1350(m, fleet_off, fleet_seg, 0);"},
+  {"name": "艦隊指標位移加 2", "find": "return f_0FF4_1350(m, fleet_off, fleet_seg, a);", "replace": "return f_0FF4_1350(m, (uint16_t)(fleet_off + 2u), fleet_seg, a);"},
+  {"name": "艦隊段固定 DGROUP", "find": "return f_0FF4_1350(m, fleet_off, fleet_seg, a);", "replace": "return f_0FF4_1350(m, fleet_off, GIN3_DS, a);"},
+  {"name": "先呼叫 1350 再設星域", "find": "    wr16(m, DS(0x9874u), GIN3_DS);\n    wr16(m, DS(0x9872u), region);\n    return f_0FF4_1350(m, fleet_off, fleet_seg, a);", "replace": "    uint8_t r = f_0FF4_1350(m, fleet_off, fleet_seg, a);\n    wr16(m, DS(0x9874u), GIN3_DS);\n    wr16(m, DS(0x9872u), region);\n    return r;"},
+  {"name": "回傳加 1", "find": "return f_0FF4_1350(m, fleet_off, fleet_seg, a);", "replace": "return (uint8_t)(f_0FF4_1350(m, fleet_off, fleet_seg, a) + 1u);"}
+]

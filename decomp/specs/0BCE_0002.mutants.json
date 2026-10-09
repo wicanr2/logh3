@@ -1,0 +1,15 @@
+[
+  {"name": "旗標 0x25 改 0x24（少 bit0）", "find": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x25u, 0u)", "replace": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x24u, 0u)"},
+  {"name": "旗標 0x25 改 0x21（少 bit2）", "find": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x25u, 0u)", "replace": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x21u, 0u)"},
+  {"name": "旗標 0x25 改 0x05（少 bit5）", "find": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x25u, 0u)", "replace": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x05u, 0u)"},
+  {"name": "旗標 0x25 改 0x27（多 bit1）", "find": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x25u, 0u)", "replace": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x27u, 0u)"},
+  {"name": "旗標 0x25 改 0x65（多 bit6，limit 為 0 時全部剔除）", "find": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x25u, 0u)", "replace": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x65u, 0u)"},
+  {"name": "旗標 0x25 改 0x35（多 bit4）", "find": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x25u, 0u)", "replace": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x35u, 0u)"},
+  {"name": "a 固定 0xFF", "find": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x25u, 0u)", "replace": "f_28E0_0103(m, 0x95DAu, GIN3_DS, 0xFFu, 0x25u, 0u)"},
+  {"name": "a 加 1", "find": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x25u, 0u)", "replace": "f_28E0_0103(m, 0x95DAu, GIN3_DS, (uint16_t)(a + 1u), 0x25u, 0u)"},
+  {"name": "緩衝區位移 0x95DB", "find": "f_28E0_0103(m, 0x95DAu, GIN3_DS, a, 0x25u, 0u)", "replace": "f_28E0_0103(m, 0x95DBu, GIN3_DS, a, 0x25u, 0u)"},
+  {"name": "個數存到 ds:95D9", "find": "wr8(m, DS(0x95D8u), n);", "replace": "wr8(m, DS(0x95D9u), n);"},
+  {"name": "不存個數", "find": "    wr8(m, DS(0x95D8u), n);\n", "replace": ""},
+  {"name": "不清 ds:95D9", "find": "    wr8(m, DS(0x95D9u), 0);\n", "replace": ""},
+  {"name": "個數加 1 後存", "find": "wr8(m, DS(0x95D8u), n);", "replace": "wr8(m, DS(0x95D8u), (uint8_t)(n + 1u));"}
+]

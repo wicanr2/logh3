@@ -1,0 +1,30 @@
+{
+  "id": "0B20_0006",
+  "entry": "0B20:0006",
+  "conv": "far",
+  "ret": "ax",
+  "size": 53,
+  "code_sha256_16": "d559de6130b9f314",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "敵艦隊頁重建：ds:95B5 清 0，297B:131C(堆疊上的清單, v, 旗標 2＝只留艦隊[+1] != ds:8F1D 的敵方) 列出（所在星域 ＝ v 的）敵方現役艦隊，0B20:003B 重算它們的 +0x70（索敵等級，各組艦艇池記錄 +0x17 取最大）並把等級非 0 的編號收進 ds:95B6 起的清單，筆數存 ds:95B4。基底 S3 開局：ds:8F1D ＝ 0，陣營 1 的敵方艦隊 f16（池 #102、104..108）、f17（#142、144..146）、f28..f31 在星域 0x1B，艦隊 +0x70 ＝ 0xFFFF；池記錄 +0x17 全為 0，種子 poke 成非零造出等級（線性 0x668B2 ＋ 78 × 池編號 ＋ 0x17）。陣營 0 的現役艦隊 f0、f2..f5、f11、f15 在星域 0x19。ds:95B4／95B5 與清單先 poke 成非零。清單緩衝區在堆疊上（進入點 SP − 0x28），C 版寫在同一個線性位置。",
+  "args": [
+    {"name": "v", "kind": "word", "gen": {"choices": [0, 13, 14, 23, 25, 27, 27, 27, 28, 255, 283, 511, 65280, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "星域 0x1B 的敵方（陣營 1）6 支，等級全 0：清單空，筆數 0，各艦隊 +0x70 ← 0", "args": [27], "pokes": [{"addr": "ds:95B4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 40}]},
+    {"note": "星域 0x1B：f16 的池 #102、#104 等級 0x20、0x90（最大 0x90），f28 的池 #109 等級 5，f31 的池 #147 等級 1；f17、f29、f30 等級 0 → 清單 [16, 28, 31]", "args": [27], "pokes": [{"addr": "ds:95B4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 40}, {"addr": "lin:687DD", "hex": "20"}, {"addr": "lin:68879", "hex": "90"}, {"addr": "lin:689FF", "hex": "05"}, {"addr": "lin:69593", "hex": "01"}]},
+    {"note": "同上但 v ＝ 0xFF：不過濾星域，敵方還是同樣 6 支", "args": [255], "pokes": [{"addr": "ds:95B4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 40}, {"addr": "lin:687DD", "hex": "20"}, {"addr": "lin:68879", "hex": "90"}, {"addr": "lin:689FF", "hex": "05"}, {"addr": "lin:69593", "hex": "01"}]},
+    {"note": "v 的高位元組非 0（0x011B）：低位元組 0x1B", "args": [283], "pokes": [{"addr": "ds:95B4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 40}, {"addr": "lin:687DD", "hex": "20"}, {"addr": "lin:689FF", "hex": "05"}]},
+    {"note": "星域 0x19 沒有敵方（敵方在 0x1B）：n ＝ 0，003B 不處理任何艦隊", "args": [25], "pokes": [{"addr": "ds:95B4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 40}, {"addr": "lin:687DD", "hex": "20"}]},
+    {"note": "ds:8F1D ＝ 1：敵方改為陣營 0，星域 0x19 的 f0、f2..f5、f11、f15 七支；f0 的池 #0、#2 等級 0x30、0x31，f2 的池 #11 等級 0x40，f15 的第一組等級 7", "args": [25], "pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:95B4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 40}, {"addr": "lin:668C9", "hex": "30"}, {"addr": "lin:66965", "hex": "31"}, {"addr": "lin:66C23", "hex": "40"}]},
+    {"note": "ds:8F1D ＝ 1、v ＝ 0xFF：陣營 0 的全部 12 支艦隊", "args": [255], "pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:95B4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 40}, {"addr": "lin:668C9", "hex": "30"}, {"addr": "lin:66C23", "hex": "40"}, {"addr": "lin:669B3", "hex": "02"}]},
+    {"note": "ds:8F1D 的 word 高位元組非 0（8F1E ＝ 5）：131C 取 word ds:8F1D 的低位元組比較", "args": [27], "pokes": [{"addr": "ds:8F1E", "hex": "05"}, {"addr": "ds:95B4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 40}, {"addr": "lin:687DD", "hex": "20"}]},
+    {"note": "ds:95B5 原為 0xFF：確實被清成 0（筆數 ds:95B4 與它相鄰）", "args": [27], "pokes": [{"addr": "ds:95B4", "hex": "FFFF"}, {"addr": "ds:95B6", "hex": "55", "repeat": 40}, {"addr": "lin:687DD", "hex": "20"}]},
+    {"note": "沒有任何現役艦隊（+4 全 0xFF）", "args": [255], "pokes": [{"addr": "ds:95B4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 40}, {"addr": "ds:C078", "hex": "FF"}, {"addr": "ds:C16C", "hex": "FF"}, {"addr": "ds:C1E6", "hex": "FF"}, {"addr": "ds:C260", "hex": "FF"}, {"addr": "ds:C2DA", "hex": "FF"}, {"addr": "ds:C354", "hex": "FF"}, {"addr": "ds:C3CE", "hex": "FF"}, {"addr": "ds:C448", "hex": "FF"}, {"addr": "ds:C4C2", "hex": "FF"}, {"addr": "ds:C53C", "hex": "FF"}, {"addr": "ds:C5B6", "hex": "FF"}, {"addr": "ds:C630", "hex": "FF"}, {"addr": "ds:C6AA", "hex": "FF"}, {"addr": "ds:C724", "hex": "FF"}, {"addr": "ds:C79E", "hex": "FF"}, {"addr": "ds:C818", "hex": "FF"}, {"addr": "ds:C890", "hex": "FF"}, {"addr": "ds:C8CA", "hex": "FF"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261013,
+  "min_coverage": 100
+}

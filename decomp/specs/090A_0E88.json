@@ -1,0 +1,43 @@
+{
+  "id": "090A_0E88",
+  "entry": "090A:0E88",
+  "conv": "far",
+  "ret": "none",
+  "size": 253,
+  "code_sha256_16": "43b3fb16771a7fd5",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "某陣營的回合預算：297B:10DE(f) 算維持費（寫 ds:8F72 ＋ 4f，回 AX:BX）與移動經費（寫 ds:8F82 ＋ 4 × (f & 0xFF)），net ＝ ds:8F52 ＋ ds:8F6A − 維持費 − ds:8F82（皆加 4f），net < 0 寫 0；net < 0x0147AE14 先乘比率（byte ds:8F92 ＋ f）再除 100，否則先除 100 再乘比率，結果寫 ds:8F5A ＋ 4f。基底 S3 開局（陣營 0 十二支現役艦隊，陣營 1 六支；ds:8F52 起 X ＝ 160000／30000、ds:8F6A 起 Y ＝ 13131／9748，比率 ds:8F92 ＝ 00 14），f ＝ 2 沒有艦隊（維持費與移動經費 0）所以 net ＝ ds:8F5A ＋ ds:8F72，種子直接 poke 這兩格與比率 ds:8F94 造出：恰在門檻 0x0147AE14／0x0147AE13、net 為負（0xFFFFFFFF、0x80000000）、net ＝ 0、乘積回繞成正／負（比率 200、255）、低字進位、32 位元進位出界；f ＝ 1 的借位用 X 的高字造。輸出槽先填 0xAA。",
+  "args": [
+    {"name": "f", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 255, 256, 257, 258, 7211, 16384, 16385, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "f ＝ 1 基底原樣（比率 0x14）", "args": [1], "pokes": [{"addr": "ds:8F5E", "hex": "AAAAAAAA"}]},
+    {"note": "f ＝ 0 基底原樣（比率 0 → 輸出 0）", "args": [0], "pokes": [{"addr": "ds:8F5A", "hex": "AAAAAAAA"}]},
+    {"note": "f ＝ 0、比率 0x19", "args": [0], "pokes": [{"addr": "ds:8F5A", "hex": "AAAAAAAA"}, {"addr": "ds:8F92", "hex": "19"}]},
+    {"note": "f ＝ 2：net ＝ 0x0147AE14（恰在門檻，先除後乘），比率 5 → 215403 × 5", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "14ae4701"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "05"}]},
+    {"note": "f ＝ 2：net ＝ 0x0147AE13（差 1，先乘後除），比率 5", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "13ae4701"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "05"}]},
+    {"note": "f ＝ 2：net ＝ 0xFFFFFFFF（−1）→ 寫 0", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "ffffffff"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "05"}]},
+    {"note": "f ＝ 2：net ＝ 0x80000000（最小負數）→ 寫 0", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "00000080"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "05"}]},
+    {"note": "f ＝ 2：net ＝ 0 → 先乘後除 → 0", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "00000000"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "05"}]},
+    {"note": "f ＝ 2：net ＝ 0x7FFFFFFF、比率 200：先除後乘 21474836 × 200 ＝ 4294967200（未回繞）", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "ffffff7f"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "c8"}]},
+    {"note": "f ＝ 2：net ＝ 0x7FFFFFFF、比率 255：乘積回繞", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "ffffff7f"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "ff"}]},
+    {"note": "f ＝ 2：net ＝ 0x0147AE13、比率 200：先乘後除，乘積 4294967000 當有號 32 位元是 −296，商 −2", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "13ae4701"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "c8"}]},
+    {"note": "f ＝ 2：net ＝ 15000000、比率 255：乘積 3825000000 回繞成負，有號除法", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "c0e1e400"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "ff"}]},
+    {"note": "f ＝ 2：X ＝ Y ＝ 0xFFFF：低字相加進位到高字", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "ffff0000"}, {"addr": "ds:8F72", "hex": "ffff0000"}, {"addr": "ds:8F94", "hex": "03"}]},
+    {"note": "f ＝ 2：X ＝ 1、Y ＝ 0xFFFFFFFF：相加進位出 32 位元，net ＝ 0", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "01000000"}, {"addr": "ds:8F72", "hex": "ffffffff"}, {"addr": "ds:8F94", "hex": "03"}]},
+    {"note": "f ＝ 2：比率 0 → 輸出 0", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "a0860100"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "00"}]},
+    {"note": "f ＝ 2：比率 1", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "39300000"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "01"}]},
+    {"note": "f ＝ 2：比率 128（byte 的最高位元，不當有號數）", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "a0860100"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "80"}]},
+    {"note": "f ＝ 2：net ＝ 99（除 100 向零取整 → 0）、比率 100", "args": [2], "pokes": [{"addr": "ds:8F62", "hex": "AAAAAAAA"}, {"addr": "ds:8F5A", "hex": "63000000"}, {"addr": "ds:8F72", "hex": "00000000"}, {"addr": "ds:8F94", "hex": "64"}]},
+    {"note": "f ＝ 1：X 的高字 1、低字 0（net ＝ 0x10000 − 維持費 − 移動經費，低字借位）", "args": [1], "pokes": [{"addr": "ds:8F5E", "hex": "AAAAAAAA"}, {"addr": "ds:8F56", "hex": "00000100"}, {"addr": "ds:8F6E", "hex": "00000000"}]},
+    {"note": "f ＝ 1：X ＝ 0（net ＝ −維持費 − 移動經費 < 0）→ 寫 0", "args": [1], "pokes": [{"addr": "ds:8F5E", "hex": "AAAAAAAA"}, {"addr": "ds:8F56", "hex": "00000000"}, {"addr": "ds:8F6E", "hex": "00000000"}]},
+    {"note": "f ＝ 1：X 很大（0x40000000），先除後乘，比率 0x14", "args": [1], "pokes": [{"addr": "ds:8F5E", "hex": "AAAAAAAA"}, {"addr": "ds:8F56", "hex": "00000040"}]},
+    {"note": "f ＝ 0x0102（258）：10DE 用低位元組 2，表索引用整個 word 的 4f，比率取 ds:(f ＋ 0x8F92) ＝ ds:9094", "args": [258], "pokes": [{"addr": "ds:9094", "hex": "07"}, {"addr": "ds:9362", "hex": "AAAAAAAA"}, {"addr": "ds:935A", "hex": "E8030000"}, {"addr": "ds:9372", "hex": "E8030000"}]},
+    {"note": "f ＝ 0x1C2B（7211）：X 的 dword 在位移 0xFFFE，高字取同段位移 0", "args": [7211], "pokes": [{"addr": "ds:FFFE", "hex": "E803"}, {"addr": "ds:0000", "hex": "0000"}, {"addr": "ds:ABBD", "hex": "05"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261013,
+  "min_coverage": 100
+}

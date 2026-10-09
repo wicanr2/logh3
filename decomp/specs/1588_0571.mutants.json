@@ -1,0 +1,10 @@
+[
+  {"name": "c 右移 2", "find": "uint16_t c = (uint16_t)(x >> 3);", "replace": "uint16_t c = (uint16_t)(x >> 2);"},
+  {"name": "r 除 11", "find": "uint16_t r = (uint16_t)(y / 10u);", "replace": "uint16_t r = (uint16_t)(y / 11u);"},
+  {"name": "c 與 r 對調", "find": "return f_1588_0621(m, c, r) != 0 ? 0u : 1u;", "replace": "return f_1588_0621(m, r, c) != 0 ? 0u : 1u;"},
+  {"name": "判定反向", "find": "return f_1588_0621(m, c, r) != 0 ? 0u : 1u;", "replace": "return f_1588_0621(m, c, r) != 0 ? 1u : 0u;"},
+  {"name": "c 加 1", "find": "return f_1588_0621(m, c, r) != 0 ? 0u : 1u;", "replace": "return f_1588_0621(m, (uint16_t)(c + 1u), r) != 0 ? 0u : 1u;"},
+  {"name": "r 加 1", "find": "return f_1588_0621(m, c, r) != 0 ? 0u : 1u;", "replace": "return f_1588_0621(m, c, (uint16_t)(r + 1u)) != 0 ? 0u : 1u;"},
+  {"name": "只看遮罩低 4 位元", "find": "return f_1588_0621(m, c, r) != 0 ? 0u : 1u;", "replace": "return (f_1588_0621(m, c, r) & 0x0Fu) != 0 ? 0u : 1u;"},
+  {"name": "x 的右移改算術右移", "find": "uint16_t c = (uint16_t)(x >> 3);", "replace": "uint16_t c = (uint16_t)((int16_t)x >> 3);"}
+]

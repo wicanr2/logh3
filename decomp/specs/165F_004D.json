@@ -1,0 +1,49 @@
+{
+  "id": "165F_004D",
+  "entry": "165F:004D",
+  "conv": "far",
+  "ret": "none",
+  "size": 770,
+  "code_sha256_16": "565df83055ad1000",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "step_budget": 3000000,
+  "note": "艦隊層選點的外形點表：out（描述結構）← 艦隊中心 ＋ 8 與常數，取樣迴圈用 A（速度B × 8，與 Q 比較的上限）、B（回轉速度 +0x4D，除數）與正弦表 ds:573A 積出點，存在 ds:9C1A 起每點 4 bytes，再鏡像、依艦隊朝向用 3A92:0001 旋轉，out[+8] ← 點數 × 2。內層 do-while 在 i < B 時 mm 16 位元回繞，約 65536 ÷ B 圈才離開，所以一次呼叫約 30 萬步，step_budget 調到 300 萬。A 取 0 到 2040（含 2583:0003 的例子 30 × 8 ＝ 240）、B 取 2 到 4000 與 33000（> 32768：無號比較對有號比較的差別），B ＝ 0 不在輸入域（迴圈不終止）。out 放暫存區 9D00:0000（先填 0x5A），點表 ds:9C1A 起先填 0xAA（1536 bytes），艦隊取艦隊表或種子指定的位置（艦隊 0 的 +0x5C／+0x5E／+0x4A 在 ds:C0D0／C0D2／C0BE）。word 存取在位移 0xFFFF 的種子把 out、艦隊放在 8000:FFxx。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "out", "kind": "farptr", "gen": {"scratch": 16}},
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "A", "kind": "word", "gen": {"choices": [0, 1, 2, 5, 10, 16, 30, 64, 120, 240, 240, 480, 1000, 2040]}},
+    {"name": "B", "kind": "word", "gen": {"choices": [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 64, 120, 240, 240, 480, 960, 1920, 4000, 33000]}}
+  ],
+  "seeds": [
+    {"note": "典型（2583:0003 的例子）：A ＝ 240（速度B 30 × 8）、B ＝ 20（回轉）、艦隊 (288, 256)、朝向 0x40", "args": [0, 40192, 49268, 21683, 240, 20], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "40"}]},
+    {"note": "A ＝ 0、B ＝ 240：只有 Q ＝ 0 的前幾圈，第一個 Q ＞ A 的圈加 (0,0) 後離開", "args": [0, 40192, 49268, 21683, 0, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "40"}]},
+    {"note": "A ＝ 16、B ＝ 240：Q ＝ A 的圈（jle 的相等）", "args": [0, 40192, 49268, 21683, 16, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "80"}]},
+    {"note": "A ＝ 10、B ＝ 64、朝向 0xC0", "args": [0, 40192, 49268, 21683, 10, 64], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "4001"}, {"addr": "ds:C0BE", "hex": "C0"}]},
+    {"note": "B ＝ 33000（> 32768）、A ＝ 5", "args": [0, 40192, 49268, 21683, 5, 33000], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "10"}]},
+    {"note": "B ＝ 8、A ＝ 1：內層回繞迴圈約 8192 圈", "args": [0, 40192, 49268, 21683, 1, 8], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "FF"}]},
+    {"note": "A ＝ 240、B ＝ 40、朝向 0x80", "args": [0, 40192, 49268, 21683, 240, 40], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "80"}]},
+    {"note": "A ＝ 480、B ＝ 10、朝向 0x20", "args": [0, 40192, 49268, 21683, 480, 10], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "20"}]},
+    {"note": "A ＝ 2040、B ＝ 3（內層回繞迴圈約 21845 圈）", "args": [0, 40192, 49268, 21683, 2040, 3], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "C0"}]},
+    {"note": "A ＝ 120、B ＝ 2（內層回繞迴圈約 32768 圈）", "args": [0, 40192, 49268, 21683, 120, 2], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "40"}]},
+    {"note": "B ＝ 4000、A ＝ 5", "args": [0, 40192, 49268, 21683, 5, 4000], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "00"}]},
+    {"note": "朝向 word 的高位元組非 0（0x0140）：3A92:0001 只取低位元組 0x40", "args": [0, 40192, 49268, 21683, 10, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "4001"}]},
+    {"note": "艦隊 x 很小（0）、y 很小（0）：out[+0] ＝ 8、out[+2] ＝ 8", "args": [0, 40192, 49268, 21683, 10, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "20"}]},
+    {"note": "艦隊 x 為 0xFFF8（+8 回繞成 0）、y 為 0xFFFF", "args": [0, 40192, 49268, 21683, 10, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "F8FFFFFF"}, {"addr": "ds:C0BE", "hex": "20"}]},
+    {"note": "out 在 9D00:FFFF 之前的位移：out ＝ 8000:FFFF，out[+0] 的 word 跨位移 0xFFFF", "args": [65535, 32768, 49268, 21683, 10, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "40"}, {"addr": "lin:8FFFF", "hex": "5A"}, {"addr": "lin:80000", "hex": "5A5A5A5A5A5A5A5A5A5A5A5A5A"}]},
+    {"note": "out ＝ 8000:FFFD：out[+2] 的 word 跨位移 0xFFFF", "args": [65533, 32768, 49268, 21683, 10, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "40"}, {"addr": "lin:8FFFD", "hex": "5A5A5A"}, {"addr": "lin:80000", "hex": "5A5A5A5A5A5A5A5A5A5A5A5A5A"}]},
+    {"note": "out ＝ 8000:FFF7：out[+8] 的 word 跨位移 0xFFFF", "args": [65527, 32768, 49268, 21683, 10, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "40"}, {"addr": "lin:8FFF7", "hex": "5A5A5A5A5A5A5A5A5A"}, {"addr": "lin:80000", "hex": "5A5A5A5A5A5A5A5A5A5A5A5A5A"}]},
+    {"note": "out ＝ 8000:FFF5：out[+0x0A] 的 word 跨位移 0xFFFF", "args": [65525, 32768, 49268, 21683, 10, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "40"}, {"addr": "lin:8FFF5", "hex": "5A5A5A5A5A5A5A5A5A5A5A"}, {"addr": "lin:80000", "hex": "5A5A5A5A5A5A5A5A5A5A5A5A5A"}]},
+    {"note": "艦隊在 8000:FFA3（+0x5C 的 word 跨位移 0xFFFF）：x 的低位元組在 FFFF、高位元組在 8000:0000", "args": [0, 40192, 65443, 32768, 10, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "lin:8FFFF", "hex": "20"}, {"addr": "lin:80000", "hex": "01"}, {"addr": "lin:8FFF1", "hex": "40"}]},
+    {"note": "艦隊在 8000:FFA1（+0x5E 的 word 跨位移 0xFFFF）", "args": [0, 40192, 65441, 32768, 10, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "lin:8FFFF", "hex": "00"}, {"addr": "lin:80000", "hex": "01"}, {"addr": "lin:8FFEB", "hex": "40"}]},
+    {"note": "艦隊在 8000:FFB5（+0x4A 的朝向 word 跨位移 0xFFFF）：低位元組 0x40 在 FFFF，高位元組在 8000:0000", "args": [0, 40192, 65461, 32768, 10, 240], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "lin:8FFFF", "hex": "40"}, {"addr": "lin:80000", "hex": "7F"}]},
+    {"note": "表全為 +1000、A ＝ 0、B ＝ 33000：y 恆為正，迴圈跑到 Q ＞ A；i ≥ 232 時內層結束的 mm ≥ 0x8000（有號為負），M 的符號延伸（D 為負）才分得出來", "args": [0, 40192, 49268, 21683, 0, 33000], "pokes": [{"addr": "lin:9D000", "hex": "5A", "repeat": 16}, {"addr": "ds:9C1A", "hex": "AA", "repeat": 1536}, {"addr": "ds:573A", "hex": "E803", "repeat": 256}, {"addr": "ds:C0D0", "hex": "2001"}, {"addr": "ds:C0BE", "hex": "40"}]}
+  ],
+  "iters": 600,
+  "max_cases": 400,
+  "seed": 20261013,
+  "min_coverage": 95
+}

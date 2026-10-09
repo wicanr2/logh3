@@ -1,0 +1,14 @@
+[
+  {"name": "旗標 0 改 1（只留本方）", "find": "uint8_t n = f_297B_131C(m, buf, W1235_SS, v, 0u);", "replace": "uint8_t n = f_297B_131C(m, buf, W1235_SS, v, 1u);"},
+  {"name": "旗標 0 改 2（只留敵方）", "find": "uint8_t n = f_297B_131C(m, buf, W1235_SS, v, 0u);", "replace": "uint8_t n = f_297B_131C(m, buf, W1235_SS, v, 2u);"},
+  {"name": "v 固定 0xFF（不過濾星域）", "find": "uint8_t n = f_297B_131C(m, buf, W1235_SS, v, 0u);", "replace": "uint8_t n = f_297B_131C(m, buf, W1235_SS, 0xFFu, 0u);"},
+  {"name": "v 加 1", "find": "uint8_t n = f_297B_131C(m, buf, W1235_SS, v, 0u);", "replace": "uint8_t n = f_297B_131C(m, buf, W1235_SS, (uint16_t)(v + 1u), 0u);"},
+  {"name": "迴圈少一支（i < n − 1）", "find": "for (i = 0; i < n; i++) {", "replace": "for (i = 0; i + 1 < n; i++) {"},
+  {"name": "迴圈從 1 起", "find": "for (i = 0; i < n; i++) {", "replace": "for (i = 1; i < n; i++) {"},
+  {"name": "艦隊大小 0x7B", "find": "(uint16_t)(0xC074u + (uint16_t)(id * 0x7Au))", "replace": "(uint16_t)(0xC074u + (uint16_t)(id * 0x7Bu))"},
+  {"name": "艦隊基底 0xC075", "find": "(uint16_t)(0xC074u + (uint16_t)(id * 0x7Au))", "replace": "(uint16_t)(0xC075u + (uint16_t)(id * 0x7Au))"},
+  {"name": "艦隊段取 SS", "find": "GIN3_DS);\n    }\n}", "replace": "W1235_SS);\n    }\n}"},
+  {"name": "只處理第一支", "find": "        f_1AAB_1286(m, (uint16_t)(0xC074u + (uint16_t)(id * 0x7Au)), GIN3_DS);", "replace": "        f_1AAB_1286(m, (uint16_t)(0xC074u + (uint16_t)(id * 0x7Au)), GIN3_DS);\n        break;"},
+  {"name": "呼叫 1286 時改傳下一支的編號", "find": "        f_1AAB_1286(m, (uint16_t)(0xC074u + (uint16_t)(id * 0x7Au)), GIN3_DS);", "replace": "        f_1AAB_1286(m, (uint16_t)(0xC074u + (uint16_t)(((uint8_t)(id + 1u)) * 0x7Au)), GIN3_DS);"},
+  {"name": "不呼叫 1286", "find": "        f_1AAB_1286(m, (uint16_t)(0xC074u + (uint16_t)(id * 0x7Au)), GIN3_DS);\n", "replace": ""}
+]

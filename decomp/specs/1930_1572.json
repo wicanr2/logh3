@@ -1,0 +1,34 @@
+{
+  "id": "1930_1572",
+  "entry": "1930:1572",
+  "conv": "far",
+  "ret": "none",
+  "size": 130,
+  "code_sha256_16": "40dd3a3128631e83",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "某星域的飛彈與艦載機補給：ds:8F1D ← 星域擁有者，列出（所在星域 ＝ region，陣營 ＝ ds:8F1D）的現役艦隊（297B:131C，旗標 1），逐支呼叫 1930:15F4(艦隊, 星域)，最後 ds:8F1D ← 0xFF。基底 S3 開局：星域 0x19（A79C ＋ 25 × 0x7E ＝ ds:B3EA）擁有者 0、+0x68／+0x70 存量 0x449C，現役本方艦隊 f0、f2..f5、f11、f15；星域 0x1B（ds:B4FA）擁有者 1、存量在 +0x6C／+0x74（0x4BF0），艦隊 f16、f17、f28..f31（陣營 1）；星域 0x0D 有 f7，0x17 有 f8、f14，0x0E 有 f9，0x1C 有 f12。種子造出：艦艇池 #0 的存量過量／不足、星域存量清零、擁有者改成與艦隊不同陣營（n ＝ 0）、region 的高位元組非 0、region ＝ 0xFF（星域記錄落在 ds:251E，不過濾星域）。清單緩衝區在堆疊上（進入點 SP − 0x32），C 版寫在同一個線性位置。",
+  "args": [
+    {"name": "region", "kind": "word", "gen": {"choices": [0, 13, 14, 23, 25, 25, 25, 27, 27, 28, 26, 31, 32, 255, 281, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "星域 0x19 基底原樣：本方 7 支各補一遍", "args": [25], "pokes": [{"addr": "ds:8F1D", "hex": "55"}]},
+    {"note": "星域 0x19，艦艇池 #0 的飛彈存量 ＝ 100（缺口為正）", "args": [25], "pokes": [{"addr": "ds:8F1D", "hex": "55"}, {"addr": "668B:0010", "hex": "6400"}]},
+    {"note": "星域 0x19，池 #0 的飛彈存量 ＝ 0x4E20（超過滿庫存，缺口借位回繞）", "args": [25], "pokes": [{"addr": "ds:8F1D", "hex": "55"}, {"addr": "668B:0010", "hex": "204E"}]},
+    {"note": "星域 0x19 的存量清零（+0x68 ＝ +0x70 ＝ 0）：補量 0", "args": [25], "pokes": [{"addr": "ds:8F1D", "hex": "55"}, {"addr": "ds:B452", "hex": "00000000"}, {"addr": "ds:B45A", "hex": "00000000"}]},
+    {"note": "星域 0x1B：擁有者 1，ds:8F1D 被設成 1，陣營 1 的 6 支艦隊補給，存量取 +0x6C／+0x74", "args": [27], "pokes": [{"addr": "ds:8F1D", "hex": "55"}]},
+    {"note": "星域 0x1B 的擁有者改成 0：ds:8F1D ＝ 0，星域 0x1B 內沒有陣營 0 的艦隊 → n ＝ 0（用錯擁有者會補到陣營 1 的艦隊）", "args": [27], "pokes": [{"addr": "ds:8F1D", "hex": "55"}, {"addr": "ds:B50C", "hex": "00"}]},
+    {"note": "星域 0x19 的擁有者改成 1：陣營 1 在星域 0x19 沒有艦隊 → n ＝ 0", "args": [25], "pokes": [{"addr": "ds:8F1D", "hex": "55"}, {"addr": "ds:B3FC", "hex": "01"}]},
+    {"note": "region 的高位元組非 0（0x0119）：低位元組 0x19", "args": [281], "pokes": [{"addr": "ds:8F1D", "hex": "55"}]},
+    {"note": "region ＝ 0xFF：星域記錄 ＝ ds:251E，不過濾星域；擁有者取 ds:2530", "args": [255], "pokes": [{"addr": "ds:8F1D", "hex": "55"}, {"addr": "ds:2530", "hex": "00"}]},
+    {"note": "region ＝ 0xFF，擁有者取 ds:2530 ＝ 1：陣營 1 的 6 支", "args": [255], "pokes": [{"addr": "ds:8F1D", "hex": "55"}, {"addr": "ds:2530", "hex": "01"}]},
+    {"note": "星域 0x0D：只有 f7 一支", "args": [13], "pokes": [{"addr": "ds:8F1D", "hex": "55"}]},
+    {"note": "星域 0x17：f8、f14 兩支", "args": [23], "pokes": [{"addr": "ds:8F1D", "hex": "55"}]},
+    {"note": "星域 0x1A：沒有艦隊 → n ＝ 0，只寫 ds:8F1D", "args": [26], "pokes": [{"addr": "ds:8F1D", "hex": "55"}]},
+    {"note": "星域 0x19，艦隊 0 的組數清零（f0 不補），池 #0 的飛彈存量 100", "args": [25], "pokes": [{"addr": "ds:8F1D", "hex": "55"}, {"addr": "ds:C083", "hex": "00"}, {"addr": "668B:0010", "hex": "6400"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261013,
+  "min_coverage": 100
+}

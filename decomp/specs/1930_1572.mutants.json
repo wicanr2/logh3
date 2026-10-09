@@ -1,0 +1,19 @@
+[
+  {"name": "星域記錄大小 0x7F", "find": "(uint16_t)((uint16_t)(region_word & 0xFFu) * 0x7Eu)", "replace": "(uint16_t)((uint16_t)(region_word & 0xFFu) * 0x7Fu)"},
+  {"name": "星域基底 0xA79D", "find": "uint16_t region = (uint16_t)(0xA79Cu +", "replace": "uint16_t region = (uint16_t)(0xA79Du +"},
+  {"name": "星域編號取整個 word", "find": "(uint16_t)(region_word & 0xFFu) * 0x7Eu", "replace": "region_word * 0x7Eu"},
+  {"name": "擁有者取星域[+0x11]", "find": "rd8(m, DS((uint16_t)(region + 0x12u)))", "replace": "rd8(m, DS((uint16_t)(region + 0x11u)))"},
+  {"name": "不設 ds:8F1D 為擁有者", "find": "    wr8(m, DS(0x8F1Du), rd8(m, DS((uint16_t)(region + 0x12u))));\n", "replace": ""},
+  {"name": "不在結尾寫 0xFF", "find": "    wr8(m, DS(0x8F1Du), 0xFFu);\n}", "replace": "}"},
+  {"name": "結尾寫 0", "find": "    wr8(m, DS(0x8F1Du), 0xFFu);\n}", "replace": "    wr8(m, DS(0x8F1Du), 0u);\n}"},
+  {"name": "先呼叫 131C 再設 ds:8F1D", "find": "    wr8(m, DS(0x8F1Du), rd8(m, DS((uint16_t)(region + 0x12u))));\n    n = f_297B_131C(m, buf, W1572_SS, region_word, 1u);", "replace": "    n = f_297B_131C(m, buf, W1572_SS, region_word, 1u);\n    wr8(m, DS(0x8F1Du), rd8(m, DS((uint16_t)(region + 0x12u))));"},
+  {"name": "旗標 1 改 0（不過濾陣營）", "find": "n = f_297B_131C(m, buf, W1572_SS, region_word, 1u);", "replace": "n = f_297B_131C(m, buf, W1572_SS, region_word, 0u);"},
+  {"name": "旗標 1 改 2（敵方）", "find": "n = f_297B_131C(m, buf, W1572_SS, region_word, 1u);", "replace": "n = f_297B_131C(m, buf, W1572_SS, region_word, 2u);"},
+  {"name": "v 固定 0xFF（不過濾星域）", "find": "n = f_297B_131C(m, buf, W1572_SS, region_word, 1u);", "replace": "n = f_297B_131C(m, buf, W1572_SS, 0xFFu, 1u);"},
+  {"name": "迴圈少一支", "find": "for (i = 0; i < n; i++) {", "replace": "for (i = 0; i + 1 < n; i++) {"},
+  {"name": "迴圈多一支（i <= n）", "find": "for (i = 0; i < n; i++) {", "replace": "for (i = 0; i <= n; i++) {"},
+  {"name": "艦隊大小 0x7B", "find": "(uint16_t)(0xC074u + (uint16_t)(id * 0x7Au))", "replace": "(uint16_t)(0xC074u + (uint16_t)(id * 0x7Bu))"},
+  {"name": "只處理第一支", "find": "        f_1930_15F4(m, (uint16_t)(0xC074u + (uint16_t)(id * 0x7Au)), GIN3_DS, region, GIN3_DS);", "replace": "        f_1930_15F4(m, (uint16_t)(0xC074u + (uint16_t)(id * 0x7Au)), GIN3_DS, region, GIN3_DS);\n        break;"},
+  {"name": "星域位移加 4", "find": "GIN3_DS, region, GIN3_DS);", "replace": "GIN3_DS, (uint16_t)(region + 4u), GIN3_DS);"},
+  {"name": "不呼叫 15F4", "find": "        f_1930_15F4(m, (uint16_t)(0xC074u + (uint16_t)(id * 0x7Au)), GIN3_DS, region, GIN3_DS);\n", "replace": ""}
+]
