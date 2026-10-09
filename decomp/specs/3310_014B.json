@@ -1,0 +1,36 @@
+{
+  "id": "3310_014B",
+  "entry": "3310:014B",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 160,
+  "code_sha256_16": "2e9b5057cfe5ec69",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "16.16 定點開平方：n（低字、高字兩個堆疊字）→ 回 AX:BX。n = 0 回 0；G 從 1.0 起，迴圈一把 G 左移、T = n 算術右移到 G >= T（32 位元有號），迴圈二以 39B5:005C(n, G) = (n << 16) / G 做牛頓法 G ← (Q + G) >> 1 到不再變小，回上一次的 G。39B5:005C 寫 ds:8EDC..8EED（18 bytes）。基底 fcmd-base.state（與 39B5:005C 相同，其 C 版的暫存位置在堆疊帶內）。n 的低字、高字各用一組偏向邊界與完全平方數（1.0、4.0、2.0、0.25）的 choices，另混入均勻隨機值。seeds：完全平方、非完全平方、極小值、最大正值、負值（迴圈一立即離開）、n = 0。",
+  "args": [
+    {"name": "lo", "kind": "word", "gen": {"choices": [0, 0, 0, 1, 2, 255, 256, 16384, 32767, 32768, 49152, 65534, 65535], "also_random": true}},
+    {"name": "hi", "kind": "word", "gen": {"choices": [0, 0, 1, 1, 2, 2, 3, 4, 9, 16, 255, 256, 4096, 16384, 32767, 32768, 49152, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "n = 0 → 0:0", "args": [0, 0], "pokes": []},
+    {"note": "n = 1.0（0x00010000）→ 1.0", "args": [0, 1], "pokes": []},
+    {"note": "n = 4.0 → 2.0", "args": [0, 4], "pokes": []},
+    {"note": "n = 2.0 → 約 1.414", "args": [0, 2], "pokes": []},
+    {"note": "n = 0.25（0x00004000）→ 0.5", "args": [16384, 0], "pokes": []},
+    {"note": "n = 0x00000001（極小）", "args": [1, 0], "pokes": []},
+    {"note": "n = 9.0", "args": [0, 9], "pokes": []},
+    {"note": "n = 0x7FFFFFFF（最大正值）", "args": [65535, 32767], "pokes": []},
+    {"note": "n = 0x80000000（負值：迴圈一 G >= T 立即離開）", "args": [0, 32768], "pokes": []},
+    {"note": "n = 0xFFFFFFFF（−1）", "args": [65535, 65535], "pokes": []},
+    {"note": "n = 0x0000FFFF（0.99998）", "args": [65535, 0], "pokes": []},
+    {"note": "n = 0x00010001（1.00002）", "args": [1, 1], "pokes": []},
+    {"note": "n = 100.0（0x00640000）→ 10.0", "args": [0, 100], "pokes": []},
+    {"note": "n = 0x40000000", "args": [0, 16384], "pokes": []},
+    {"note": "ds:8EDC..8EED 先放非 0 值（005C 要覆寫）", "args": [0, 4], "pokes": [{"addr": "ds:8EDC", "hex": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261037,
+  "min_coverage": 100
+}

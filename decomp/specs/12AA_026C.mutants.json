@@ -1,0 +1,14 @@
+[
+  {"name": "不呼叫 03BC（清單不重建）", "find": "    f_12AA_03BC(m, star_word);\n", "replace": ""},
+  {"name": "03BC 的星域固定 0", "find": "f_12AA_03BC(m, star_word);", "replace": "f_12AA_03BC(m, 0);"},
+  {"name": "03BC 的星域加一", "find": "f_12AA_03BC(m, star_word);", "replace": "f_12AA_03BC(m, (uint16_t)(star_word + 1u));"},
+  {"name": "03BC 的星域取高位元組", "find": "f_12AA_03BC(m, star_word);", "replace": "f_12AA_03BC(m, (uint16_t)(star_word >> 8));"},
+  {"name": "不呼叫 0930（鏡頭槽不設）", "find": "    ax = f_1588_0930(m);\n", "replace": "    ax = 0;\n"},
+  {"name": "0930 先於 03BC", "find": "    f_12AA_03BC(m, star_word);\n    ax = f_1588_0930(m);", "replace": "    ax = f_1588_0930(m);\n    f_12AA_03BC(m, star_word);"},
+  {"name": "ds:9B7A 寫 0xFFFD", "find": "0xFFFEu);", "replace": "0xFFFDu);"},
+  {"name": "ds:9B7A 只寫低位元組", "find": "wr16(m, DS(0x9B7Au), 0xFFFEu);", "replace": "wr8(m, DS(0x9B7Au), 0xFEu);"},
+  {"name": "不寫 ds:9B7A", "find": "    wr16(m, DS(0x9B7Au), 0xFFFEu);\n", "replace": ""},
+  {"name": "寫 ds:9B7C 而不是 9B7A", "find": "DS(0x9B7Au)", "replace": "DS(0x9B7Cu)"},
+  {"name": "回傳 AX 恆 0", "find": "    return ax;", "replace": "    return 0;"},
+  {"name": "回傳 AX 加一", "find": "    return ax;", "replace": "    return (uint16_t)(ax + 1u);"}
+]

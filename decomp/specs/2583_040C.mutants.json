@@ -1,0 +1,16 @@
+[
+  {"name": "不看 04EA（地形一律通）", "find": "    if (f_1588_04EA(m, x, y) == 0)\n        return 0xFFFFu;\n", "replace": ""},
+  {"name": "地形不通回 0 而不是 0xFFFF", "find": "        return 0xFFFFu;\n    r =", "replace": "        return 0;\n    r ="},
+  {"name": "地形判斷反向", "find": "if (f_1588_04EA(m, x, y) == 0)", "replace": "if (f_1588_04EA(m, x, y) != 0)"},
+  {"name": "04EA 的 x、y 對調", "find": "f_1588_04EA(m, x, y)", "replace": "f_1588_04EA(m, y, x)"},
+  {"name": "04EA 的 x 加一", "find": "f_1588_04EA(m, x, y)", "replace": "f_1588_04EA(m, (uint16_t)(x + 1u), y)"},
+  {"name": "04EA 的 y 加一", "find": "f_1588_04EA(m, x, y)", "replace": "f_1588_04EA(m, x, (uint16_t)(y + 1u))"},
+  {"name": "06D7 的 x、y 對調", "find": "f_17A0_06D7(m, x, y, faction)", "replace": "f_17A0_06D7(m, y, x, faction)"},
+  {"name": "06D7 的 faction 固定 0", "find": "f_17A0_06D7(m, x, y, faction)", "replace": "f_17A0_06D7(m, x, y, 0)"},
+  {"name": "06D7 的 faction 只取低位元組零延伸成高位元組", "find": "f_17A0_06D7(m, x, y, faction)", "replace": "f_17A0_06D7(m, x, y, (uint16_t)(faction >> 8))"},
+  {"name": "0xFFFF 不改成 0", "find": "    if (r == 0xFFFFu)\n        r = 0;\n", "replace": ""},
+  {"name": "0xFFFF 改成 1", "find": "        r = 0;", "replace": "        r = 1;"},
+  {"name": "只在 r == 0 時改成 0xFFFF（對調）", "find": "    if (r == 0xFFFFu)\n        r = 0;", "replace": "    if (r == 0)\n        r = 0xFFFFu;"},
+  {"name": "回傳只取低位元組", "find": "    return r;", "replace": "    return (uint8_t)r;"},
+  {"name": "回傳加一", "find": "    return r;", "replace": "    return (uint16_t)(r + 1u);"}
+]

@@ -1,0 +1,23 @@
+[
+  {"name": "n = 0 的判斷只看低字", "find": "if ((uint16_t)(hi | lo) == 0)", "replace": "if (lo == 0)"},
+  {"name": "n = 0 的判斷只看高字", "find": "if ((uint16_t)(hi | lo) == 0)", "replace": "if (hi == 0)"},
+  {"name": "n = 0 回 1", "find": "    if ((uint16_t)(hi | lo) == 0)\n        return 0;", "replace": "    if ((uint16_t)(hi | lo) == 0)\n        return 1;"},
+  {"name": "初值 G = 2.0", "find": "uint32_t g = 0x00010000u;", "replace": "uint32_t g = 0x00020000u;"},
+  {"name": "初值 G = 0.5", "find": "uint32_t g = 0x00010000u;", "replace": "uint32_t g = 0x00008000u;"},
+  {"name": "迴圈一改無號比較", "find": "if ((int32_t)g >= (int32_t)t)\n            break;", "replace": "if (g >= t)\n            break;"},
+  {"name": "迴圈一提早一步離開（(G << 1) >= T，G 可能低於根）", "find": "if ((int32_t)g >= (int32_t)t)\n            break;", "replace": "if ((int32_t)(g << 1) >= (int32_t)t)\n            break;"},
+  {"name": "迴圈一 G 不移位（只有 T 右移，G 停在 1.0）", "find": "        g = g << 1;\n", "replace": ""},
+  {"name": "迴圈一 T 每圈右移 2", "find": "        t = w3310_sar1(t);", "replace": "        t = w3310_sar1(w3310_sar1(t));"},
+  {"name": "005C 的 a、b 對調（G ÷ n）", "find": "q = f_39B5_005C(m, lo, hi, (uint16_t)g, (uint16_t)(g >> 16));", "replace": "q = f_39B5_005C(m, (uint16_t)g, (uint16_t)(g >> 16), lo, hi);"},
+  {"name": "005C 的 n 高低字對調", "find": "q = f_39B5_005C(m, lo, hi, (uint16_t)g, (uint16_t)(g >> 16));", "replace": "q = f_39B5_005C(m, hi, lo, (uint16_t)g, (uint16_t)(g >> 16));"},
+  {"name": "005C 的 G 高低字對調", "find": "q = f_39B5_005C(m, lo, hi, (uint16_t)g, (uint16_t)(g >> 16));", "replace": "q = f_39B5_005C(m, lo, hi, (uint16_t)(g >> 16), (uint16_t)g);"},
+  {"name": "005C 的 G 只傳低字", "find": "q = f_39B5_005C(m, lo, hi, (uint16_t)g, (uint16_t)(g >> 16));", "replace": "q = f_39B5_005C(m, lo, hi, (uint16_t)g, 0);"},
+  {"name": "和用減法", "find": "g = w3310_sar1(q + g);", "replace": "g = w3310_sar1(q - g);"},
+  {"name": "和用邏輯右移", "find": "g = w3310_sar1(q + g);", "replace": "g = (q + g) >> 1;"},
+  {"name": "和右移 2", "find": "g = w3310_sar1(q + g);", "replace": "g = w3310_sar1(w3310_sar1(q + g));"},
+  {"name": "只取 Q 不加 G", "find": "g = w3310_sar1(q + g);", "replace": "g = w3310_sar1(q);"},
+  {"name": "繼續條件 G < T 改 G <= T", "find": "if (!((int32_t)g < (int32_t)t))\n            return t;", "replace": "if (!((int32_t)g <= (int32_t)t))\n            return t;"},
+  {"name": "繼續條件改無號", "find": "if (!((int32_t)g < (int32_t)t))\n            return t;", "replace": "if (!(g < t))\n            return t;"},
+  {"name": "回傳新的 G 而不是上一次的", "find": "if (!((int32_t)g < (int32_t)t))\n            return t;", "replace": "if (!((int32_t)g < (int32_t)t))\n            return g;"},
+  {"name": "T 不記下上一次的 G", "find": "        t = g;\n        q =", "replace": "        q ="}
+]

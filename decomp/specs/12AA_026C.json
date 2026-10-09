@@ -1,0 +1,30 @@
+{
+  "id": "12AA_026C",
+  "entry": "12AA:026C",
+  "conv": "far",
+  "ret": "ax",
+  "size": 26,
+  "code_sha256_16": "ec7206d20d738f73",
+  "base_state": "/src/workplace/fcmd/fcmd-standby.state",
+  "base_state_sha256": "2f07118746ba249290a5f5e3de71020090a10c58b8072f84b110e1c1c95f2394",
+  "note": "戰場艦隊清單重建後設兩個座位的鏡頭：12AA:03BC(star) 依星域寫 ds:9894/9898/9896/98BA，1588:0930 為座位 0、1 各呼叫一次 1588:0945（依 ds:8F25 的座位陣營表找第一支同陣營艦隊，算鏡頭槽 ds:8F3A），最後 ds:9B7A ← 0xFFFE，回 0930 的 AX。基底沿用 0930 的 fcmd-standby.state（艦隊 0 在星域 0；其餘艦隊 +4 為 0xFF）。艦隊 k 的記錄在 ds:C074 + 0x7A × k：+1 陣營、+4（0xFF 表示不在場）、+6 星域、+0xF 艦艇組數、+0x10 起每組 4 bytes（word 池索引）、+0x38 索敵分遣隊 word、+0x5C／+0x5E 戰場座標。seeds：兩艦隊同星域（座位 0 找艦隊 0、座位 1 找艦隊 1）、陣營對調、艦隊 1 不在場、星域高位元組非 0、沒有任何艦隊在場（0945 用清單 [筆數] 那一格）、三支艦隊、組數 3。ds:9B7A 基底為 0，寫 0xFFFE 看得出。",
+  "args": [
+    {"name": "star", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 5, 255, 256, 257, 261, 511], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "基底原樣，星域 0：只有艦隊 0 在場", "args": [0], "pokes": []},
+    {"note": "星域 1：沒有艦隊在場，0945 用清單 [0] 那一格", "args": [1], "pokes": []},
+    {"note": "星域 5：艦隊 0（陣營 0，座標 (256,200)）與艦隊 1（陣營 1，座標 (1792,1864)）都在星域 5：座位 0 → 艦隊 0、座位 1 → 艦隊 1", "args": [5], "pokes": [{"addr": "ds:C07A", "hex": "05"}, {"addr": "ds:C0D0", "hex": "0001C800"}, {"addr": "ds:C0EF", "hex": "01"}, {"addr": "ds:C0F2", "hex": "00"}, {"addr": "ds:C0F4", "hex": "05"}, {"addr": "ds:C0FD", "hex": "02"}, {"addr": "ds:C0FE", "hex": "1100000022000000"}, {"addr": "ds:C126", "hex": "3300"}, {"addr": "ds:C14A", "hex": "00074807"}]},
+    {"note": "同上但陣營對調（艦隊 0 陣營 1、艦隊 1 陣營 0）：座位 0 → 清單第二項", "args": [5], "pokes": [{"addr": "ds:C075", "hex": "01"}, {"addr": "ds:C07A", "hex": "05"}, {"addr": "ds:C0D0", "hex": "0001C800"}, {"addr": "ds:C0EF", "hex": "00"}, {"addr": "ds:C0F2", "hex": "00"}, {"addr": "ds:C0F4", "hex": "05"}, {"addr": "ds:C0FD", "hex": "02"}, {"addr": "ds:C0FE", "hex": "1100000022000000"}, {"addr": "ds:C126", "hex": "3300"}, {"addr": "ds:C14A", "hex": "00074807"}]},
+    {"note": "艦隊 1 的 +4 為 0xFF（不在場）：清單只有艦隊 0；座位 1 找不到陣營 1，用清單 [1] 那一格（ds:9899）", "args": [5], "pokes": [{"addr": "ds:C07A", "hex": "05"}, {"addr": "ds:C0D0", "hex": "0001C800"}, {"addr": "ds:C0EF", "hex": "01"}, {"addr": "ds:C0F2", "hex": "FF"}, {"addr": "ds:C0F4", "hex": "05"}, {"addr": "ds:C14A", "hex": "00074807"}, {"addr": "ds:9899", "hex": "01"}]},
+    {"note": "星域 word ＝ 0x0105：03BC 只取低位元組 5", "args": [261], "pokes": [{"addr": "ds:C07A", "hex": "05"}, {"addr": "ds:C0D0", "hex": "0001C800"}, {"addr": "ds:C0EF", "hex": "01"}, {"addr": "ds:C0F2", "hex": "00"}, {"addr": "ds:C0F4", "hex": "05"}, {"addr": "ds:C0FD", "hex": "02"}, {"addr": "ds:C14A", "hex": "00074807"}]},
+    {"note": "星域 9 沒有艦隊，ds:9894／9896 先放垃圾（03BC 要清 0）、ds:9898 放 2：0945 取艦隊 2 的座標", "args": [9], "pokes": [{"addr": "ds:9894", "hex": "0505"}, {"addr": "ds:9896", "hex": "0707"}, {"addr": "ds:9898", "hex": "02"}, {"addr": "ds:C1C4", "hex": "40018001"}]},
+    {"note": "三支艦隊同星域 5（艦隊 0、1、2），艦隊 2 陣營 1；座位 1 先看到艦隊 1（陣營 0）再看到艦隊 2", "args": [5], "pokes": [{"addr": "ds:C07A", "hex": "05"}, {"addr": "ds:C0F2", "hex": "00"}, {"addr": "ds:C0F4", "hex": "05"}, {"addr": "ds:C0FD", "hex": "01"}, {"addr": "ds:C0EF", "hex": "00"}, {"addr": "ds:C168", "hex": "00"}, {"addr": "ds:C169", "hex": "01"}, {"addr": "ds:C16C", "hex": "00"}, {"addr": "ds:C16E", "hex": "05"}, {"addr": "ds:C177", "hex": "03"}, {"addr": "ds:C178", "hex": "AA00BB00CC00DD00EE00FF00"}, {"addr": "ds:C1A0", "hex": "7700"}, {"addr": "ds:C1C4", "hex": "20034001"}]},
+    {"note": "艦隊 0 的組數 3、各組池索引 7、8、9、+0x38 ＝ 0xABCD", "args": [0], "pokes": [{"addr": "ds:C083", "hex": "03"}, {"addr": "ds:C084", "hex": "0700AA550800AA550900AA55"}, {"addr": "ds:C0AC", "hex": "CDAB"}]},
+    {"note": "ds:9B7A 先放 0xFFFE：寫入的值與原值相同看不出少寫，所以另一個 seed 放別的值", "args": [0], "pokes": [{"addr": "ds:9B7A", "hex": "34 12"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 500,
+  "seed": 20261031,
+  "min_coverage": 100
+}

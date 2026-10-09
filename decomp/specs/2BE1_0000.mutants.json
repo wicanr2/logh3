@@ -1,0 +1,21 @@
+[
+  {"name": "清單從 F + 0x0E 起", "find": "(uint16_t)(f_off + 0x10u);", "replace": "(uint16_t)(f_off + 0x0Eu);"},
+  {"name": "清單從 F + 0x12 起", "find": "(uint16_t)(f_off + 0x10u);", "replace": "(uint16_t)(f_off + 0x12u);"},
+  {"name": "清單每組前進 2", "find": "ids_off = (uint16_t)(ids_off + 4u);", "replace": "ids_off = (uint16_t)(ids_off + 2u);"},
+  {"name": "清單每組前進 8", "find": "ids_off = (uint16_t)(ids_off + 4u);", "replace": "ids_off = (uint16_t)(ids_off + 8u);"},
+  {"name": "清單不前進", "find": "        ids_off = (uint16_t)(ids_off + 4u);\n", "replace": ""},
+  {"name": "組數讀 F[+0x0E]", "find": "(uint16_t)(f_off + 0x0Fu)", "replace": "(uint16_t)(f_off + 0x0Eu)"},
+  {"name": "組數讀 F[+0x10]", "find": "(uint16_t)(f_off + 0x0Fu)", "replace": "(uint16_t)(f_off + 0x10u)"},
+  {"name": "多走一組（有上界）", "find": "while (i < rd8(m, LIN(f_seg, (uint16_t)(f_off + 0x0Fu)))) {", "replace": "while (i < (uint16_t)(rd8(m, LIN(f_seg, (uint16_t)(f_off + 0x0Fu))) + (i < 200u ? 1u : 0u))) {"},
+  {"name": "少走一組", "find": "while (i < rd8(m, LIN(f_seg, (uint16_t)(f_off + 0x0Fu)))) {", "replace": "while ((uint16_t)(i + 1u) < rd8(m, LIN(f_seg, (uint16_t)(f_off + 0x0Fu)))) {"},
+  {"name": "組數只讀一次（不每圈重讀）", "find": "    while (i < rd8(m, LIN(f_seg, (uint16_t)(f_off + 0x0Fu)))) {", "replace": "    uint8_t cnt0 = rd8(m, LIN(f_seg, (uint16_t)(f_off + 0x0Fu)));\n    while (i < cnt0) {"},
+  {"name": "池基底只讀一次（不每圈重讀）", "find": "    uint8_t i = 0;\n    uint16_t ids_off = (uint16_t)(f_off + 0x10u);\n\n    while (i < rd8(m, LIN(f_seg, (uint16_t)(f_off + 0x0Fu)))) {\n        uint16_t idx = w2BE1_0000_rd16s(m, f_seg, ids_off);\n        uint16_t ship = (uint16_t)(w2BE1_0000_rd16s(m, GIN3_DS, 0xCFB4u) + (uint16_t)(idx * 0x4Eu));\n        uint16_t seg = w2BE1_0000_rd16s(m, GIN3_DS, 0xCFB6u);\n", "replace": "    uint8_t i = 0;\n    uint16_t ids_off = (uint16_t)(f_off + 0x10u);\n    uint16_t base0 = w2BE1_0000_rd16s(m, GIN3_DS, 0xCFB4u);\n    uint16_t seg0 = w2BE1_0000_rd16s(m, GIN3_DS, 0xCFB6u);\n\n    while (i < rd8(m, LIN(f_seg, (uint16_t)(f_off + 0x0Fu)))) {\n        uint16_t idx = w2BE1_0000_rd16s(m, f_seg, ids_off);\n        uint16_t ship = (uint16_t)(base0 + (uint16_t)(idx * 0x4Eu));\n        uint16_t seg = seg0;\n"},
+  {"name": "池大小 0x4F", "find": "(uint16_t)(idx * 0x4Eu)", "replace": "(uint16_t)(idx * 0x4Fu)"},
+  {"name": "池索引只取低位元組", "find": "(uint16_t)(idx * 0x4Eu)", "replace": "(uint16_t)((idx & 0xFFu) * 0x4Eu)"},
+  {"name": "池段用 DS", "find": "f_2BE1_0059(m, f_off, f_seg, ship, seg);", "replace": "f_2BE1_0059(m, f_off, f_seg, ship, GIN3_DS);"},
+  {"name": "0059 的 F 與 S 對調", "find": "f_2BE1_0059(m, f_off, f_seg, ship, seg);", "replace": "f_2BE1_0059(m, ship, seg, f_off, f_seg);"},
+  {"name": "0059 的 F 段改用池段", "find": "f_2BE1_0059(m, f_off, f_seg, ship, seg);", "replace": "f_2BE1_0059(m, f_off, seg, ship, seg);"},
+  {"name": "0059 呼叫兩次再加一次 i（改動 i）", "find": "        f_2BE1_0059(m, f_off, f_seg, ship, seg);\n", "replace": "        f_2BE1_0059(m, f_off, f_seg, ship, seg);\n        if (i == 0)\n            f_2BE1_0059(m, f_off, f_seg, (uint16_t)(ship + 0x4Eu), seg);\n"},
+  {"name": "清單 word 讀成 byte", "find": "uint16_t idx = w2BE1_0000_rd16s(m, f_seg, ids_off);", "replace": "uint16_t idx = rd8(m, LIN(f_seg, ids_off));"},
+  {"name": "清單段改用 DS", "find": "uint16_t idx = w2BE1_0000_rd16s(m, f_seg, ids_off);", "replace": "uint16_t idx = w2BE1_0000_rd16s(m, GIN3_DS, ids_off);"}
+]

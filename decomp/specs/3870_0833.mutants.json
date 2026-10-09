@@ -1,0 +1,19 @@
+[
+  {"name": "對調條件改成 >=（x0 == x1 也對調 y）", "find": "if ((int16_t)x0 > (int16_t)x1) {", "replace": "if ((int16_t)x0 >= (int16_t)x1) {"},
+  {"name": "對調條件改無號比較", "find": "if ((int16_t)x0 > (int16_t)x1) {", "replace": "if (x0 > x1) {"},
+  {"name": "只對調 x、不對調 y", "find": "        t = y0;\n        y0 = y1;\n        y1 = t;\n", "replace": ""},
+  {"name": "不做端點排序", "find": "if ((int16_t)x0 > (int16_t)x1) {", "replace": "if (0) {"},
+  {"name": "08FF 的 XA、YA 指標對調", "find": "f_3870_08FF(m, W0833_X0, W0833_SS, W0833_Y0, W0833_SS, W0833_X1, W0833_SS, W0833_Y1, W0833_SS)", "replace": "f_3870_08FF(m, W0833_Y0, W0833_SS, W0833_X0, W0833_SS, W0833_X1, W0833_SS, W0833_Y1, W0833_SS)"},
+  {"name": "08FF 的 A、B 兩端對調", "find": "f_3870_08FF(m, W0833_X0, W0833_SS, W0833_Y0, W0833_SS, W0833_X1, W0833_SS, W0833_Y1, W0833_SS)", "replace": "f_3870_08FF(m, W0833_X1, W0833_SS, W0833_Y1, W0833_SS, W0833_X0, W0833_SS, W0833_Y0, W0833_SS)"},
+  {"name": "08FF 回 0 仍呼叫替身", "find": "W0833_Y1, W0833_SS) != 0) {", "replace": "W0833_Y1, W0833_SS) != 77) {"},
+  {"name": "08FF 回傳反向", "find": "W0833_Y1, W0833_SS) != 0) {", "replace": "W0833_Y1, W0833_SS) == 0) {"},
+  {"name": "替身用裁切前的端點", "find": "        a[0] = w0833_rd(m, W0833_X0);", "replace": "        a[0] = x0;"},
+  {"name": "替身用裁切前的 y1", "find": "        a[3] = w0833_rd(m, W0833_Y1);", "replace": "        a[3] = y1;"},
+  {"name": "替身的 x1 讀 y1 的位置", "find": "        a[2] = w0833_rd(m, W0833_X1);", "replace": "        a[2] = w0833_rd(m, W0833_Y1);"},
+  {"name": "色不遮成低位元組", "find": "a[4] = (uint16_t)(color_word & 0xFFu);", "replace": "a[4] = color_word;"},
+  {"name": "色取高位元組", "find": "a[4] = (uint16_t)(color_word & 0xFFu);", "replace": "a[4] = (uint16_t)(color_word >> 8);"},
+  {"name": "最後 word 改傳 0", "find": "        a[5] = last_word;", "replace": "        a[5] = 0;"},
+  {"name": "最後 word 與色互換", "find": "        a[5] = last_word;", "replace": "        a[5] = color_word;"},
+  {"name": "替身呼叫成 39D7:0647（07C9 的目標）", "find": "gin3_stub(m, \"39D7_0936\", 6, a)", "replace": "gin3_stub(m, \"39D7_0647\", 6, a)"},
+  {"name": "替身呼叫兩次", "find": "        (void)gin3_stub(m, \"39D7_0936\", 6, a);", "replace": "        (void)gin3_stub(m, \"39D7_0936\", 6, a);\n        (void)gin3_stub(m, \"39D7_0936\", 6, a);"}
+]

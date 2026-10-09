@@ -1,0 +1,41 @@
+{
+  "id": "2583_040C",
+  "entry": "2583:040C",
+  "conv": "far",
+  "ret": "ax",
+  "size": 69,
+  "code_sha256_16": "8d1f8af4eec2a94c",
+  "base_state": "/src/workplace/fcmd/fcmd-standby.state",
+  "base_state_sha256": "2f07118746ba249290a5f5e3de71020090a10c58b8072f84b110e1c1c95f2394",
+  "note": "戰場像素 (x, y) 能不能站：1588:04EA(x, y) 為 0（16 × 16 範圍有半格被擋）回 0xFFFF；否則 17A0:06D7(x, y, faction)（在場分隊清單 ds:98BA、筆數 word ds:9896、池基底 ds:CFB4:CFB6、艦艇 78 bytes 一筆）回 0xFFFF 改成 0，其餘（池索引 + 1）原樣回。基底 fcmd-standby.state（戰場地圖 79B0:0010、遮罩表 ds:9BB4 起 128 bytes、四分之一格遮罩 ds:3C3E；池 #0 的座標 (0x150, 0x118)，陣營 0、艦種 0）。seeds：被地形擋（圖塊 (2,3) 的遮罩非零，x=32、y=60）、通行且清單空、通行且池 #0 在 16 範圍內（陣營不同／相同／艦種 7／旗標 bit7）、陣營 word 的高位元組非 0、x、y 回繞。",
+  "args": [
+    {"name": "x", "kind": "word", "gen": {"choices": [0, 15, 16, 24, 32, 33, 48, 100, 335, 336, 351, 352, 65520, 65535], "also_random": true}},
+    {"name": "y", "kind": "word", "gen": {"choices": [0, 45, 50, 60, 70, 100, 279, 280, 295, 296, 65521, 65535], "also_random": true}},
+    {"name": "faction", "kind": "word", "gen": {"choices": [0, 1, 2, 255, 256, 257], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "基底原樣，清單空：地形通、沒人佔 → 0", "args": [100, 100, 1], "pokes": []},
+    {"note": "遮罩清零、清單空 → 0", "args": [100, 100, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}]},
+    {"note": "地形擋 (32,60)，清單 [0] 且池 #0 就在 (336,280) 以外：04EA 回 0 → 0xFFFF", "args": [32, 60, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}]},
+    {"note": "地形通 (48,60)（圖塊欄 3）、清單空 → 0", "args": [48, 60, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "地形通，清單 [0]，池 #0（陣營 0，(336,280)）在 (340,284) 附近，faction 1 ≠ 0 → 06D7 回 1", "args": [340, 284, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}]},
+    {"note": "同上，faction 0 ＝ 池 #0 的陣營 → 跳過 → 0xFFFF → 0", "args": [340, 284, 0], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}]},
+    {"note": "faction word ＝ 0x0100：低位元組 0 ＝ 池 #0 陣營 → 跳過 → 0", "args": [340, 284, 256], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}]},
+    {"note": "池 #0 艦種 7 → 跳過 → 0", "args": [340, 284, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}, {"addr": "668B:0006", "hex": "07"}]},
+    {"note": "池 #0 旗標 +0x1E ＝ 0x80 → 跳過 → 0", "args": [340, 284, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}, {"addr": "668B:0020", "hex": "80"}]},
+    {"note": "清單 [5, 0]：池 #5 太遠、池 #0 近 → 06D7 回 1", "args": [340, 284, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0200"}, {"addr": "ds:98BA", "hex": "05000000"}]},
+    {"note": "池 #0 在 (0x150, 0x118)：x 距 15 近、16 不近", "args": [351, 295, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}]},
+    {"note": "x 距 16 → 不近 → 0", "args": [352, 295, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}]},
+    {"note": "x ＝ 65520（x + 15 ＝ 65535，兩欄）：地形全通、清單空 → 0", "args": [65520, 100, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}]},
+    {"note": "池 #0 的陣營改成 1、faction 1：同陣營 → 跳過 → 0；faction 2 → 回 1", "args": [340, 284, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}, {"addr": "668B:0002", "hex": "01"}]},
+    {"note": "池 #0 的陣營改成 1、faction 2", "args": [340, 284, 2], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}, {"addr": "668B:0002", "hex": "01"}]},
+    {"note": "x ＝ 16：c 2..3 全通 → 0；x ＋ 1 ＝ 17 則 c 2..4 被擋（x 加一的突變要被抓到）", "args": [16, 60, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "y ＝ 44：r 4..5 全通 → 0；y ＋ 1 ＝ 45 則 r 4..6 被擋", "args": [32, 44, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "01"}]},
+    {"note": "y ＝ 44，清單 [0]，池 #0 在 (44, 45) 附近且陣營不同：通行 → 06D7 回 1", "args": [44, 44, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0000"}, {"addr": "668B:0036", "hex": "2C002C00"}]},
+    {"note": "池索引 256：清單 [0x0100]，池 #256（668B:4E02 起）在 (44,44)、陣營 0：回 0x0101（回傳高位元組非 0）", "args": [44, 44, 1], "pokes": [{"addr": "ds:9BB4", "hex": "00", "repeat": 128}, {"addr": "ds:9896", "hex": "0100"}, {"addr": "ds:98BA", "hex": "0001"}, {"addr": "668B:4E02", "hex": "00"}, {"addr": "668B:4E06", "hex": "00"}, {"addr": "668B:4E20", "hex": "00"}, {"addr": "668B:4E36", "hex": "2C002C00"}]}
+  ],
+  "iters": 15000,
+  "max_cases": 500,
+  "seed": 20261032,
+  "min_coverage": 100
+}
