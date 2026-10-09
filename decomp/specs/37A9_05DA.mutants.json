@@ -1,0 +1,7 @@
+[
+  {"name": "位移與段對調", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "return f_3CD9_01FC(m, seg, off);"},
+  {"name": "不呼叫free", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "return 0;"},
+  {"name": "位移加2", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "return f_3CD9_01FC(m, (uint16_t)(off + 2), seg);"},
+  {"name": "回傳值取低位元組", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "return (uint16_t)(f_3CD9_01FC(m, off, seg) & 0xFF);"},
+  {"name": "段加一", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "return f_3CD9_01FC(m, off, (uint16_t)(seg + 1));"}
+]

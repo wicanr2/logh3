@@ -1,0 +1,34 @@
+{
+  "id": "3870_089D",
+  "entry": "3870:089D",
+  "conv": "far",
+  "ret": "ax",
+  "size": 98,
+  "code_sha256_16": "238906880a0c5af4",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "依 mode（只取低位元組）設定 ds:8D6A..8D70 四個 word。mode 1 落入 mode 2。函式不讀記憶體，案例由參數與種子構成；種子把前態 poke 成別的矩形，基底狀態的矩形剛好等於 mode 2 的值。",
+  "args": [
+    {"name": "mode", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 255, 256, 257, 258, 259, 513, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0]},
+    {"args": [1]},
+    {"args": [2]},
+    {"args": [3]},
+    {"args": [0], "pokes": [{"addr": "ds:8D6A", "hex": "1111 2222 3333 4444"}]},
+    {"args": [1], "pokes": [{"addr": "ds:8D6A", "hex": "1111 2222 3333 4444"}]},
+    {"args": [2], "pokes": [{"addr": "ds:8D6A", "hex": "1111 2222 3333 4444"}]},
+    {"args": [3], "pokes": [{"addr": "ds:8D6A", "hex": "1111 2222 3333 4444"}]},
+    {"args": [256], "pokes": [{"addr": "ds:8D6A", "hex": "1111 2222 3333 4444"}]},
+    {"args": [257], "pokes": [{"addr": "ds:8D6A", "hex": "1111 2222 3333 4444"}]},
+    {"args": [258], "pokes": [{"addr": "ds:8D6A", "hex": "1111 2222 3333 4444"}]},
+    {"args": [259], "pokes": [{"addr": "ds:8D6A", "hex": "1111 2222 3333 4444"}]},
+    {"args": [0], "pokes": [{"addr": "ds:8D68", "hex": "aaaa 1111 2222 3333 4444 aaaa"}]},
+    {"args": [2], "pokes": [{"addr": "ds:8D68", "hex": "aaaa 1111 2222 3333 4444 aaaa"}]}
+  ],
+  "iters": 300,
+  "max_cases": 60,
+  "seed": 20261009,
+  "min_coverage": 100
+}

@@ -1,0 +1,23 @@
+{
+  "id": "3870_0004",
+  "entry": "3870:0004",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 22,
+  "code_sha256_16": "88110cc509dd6b06",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "memset(ds:F254, 0xFF, 128)。函式不讀記憶體，案例全來自種子。基底狀態該區已是 0xFF，所以種子把前態 poke 成 0 或 0xAA 才看得出多寫少寫。",
+  "args": [],
+  "seeds": [
+    {},
+    {"pokes": [{"addr": "ds:F250", "hex": "aa", "repeat": 4}, {"addr": "ds:F254", "hex": "00", "repeat": 128}, {"addr": "ds:F2D4", "hex": "aa", "repeat": 4}]},
+    {"pokes": [{"addr": "ds:F24C", "hex": "55aa", "repeat": 80}]},
+    {"pokes": [{"addr": "ds:F250", "hex": "ff", "repeat": 4}, {"addr": "ds:F254", "hex": "fe", "repeat": 128}, {"addr": "ds:F2D4", "hex": "ff", "repeat": 4}]},
+    {"pokes": [{"addr": "ds:F254", "hex": "00ff", "repeat": 64}]}
+  ],
+  "iters": 12,
+  "max_cases": 3,
+  "seed": 20261009,
+  "min_coverage": 100
+}

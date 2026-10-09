@@ -1,0 +1,8 @@
+[
+  {"name": "位移與段對調", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "return f_3CD9_01FC(m, seg, off);"},
+  {"name": "不呼叫 free 直接回 0", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "return 0;"},
+  {"name": "忽略 free 的回傳值（一律回 0）", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "f_3CD9_01FC(m, off, seg);\n    return 0;"},
+  {"name": "位移對齊到偶數再轉交", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "return f_3CD9_01FC(m, (uint16_t)(off & 0xFFFEu), seg);"},
+  {"name": "回傳值加 1", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "return (uint16_t)(f_3CD9_01FC(m, off, seg) + 1);"},
+  {"name": "段固定用 DS", "find": "return f_3CD9_01FC(m, off, seg);", "replace": "return f_3CD9_01FC(m, off, GIN3_DS);"}
+]

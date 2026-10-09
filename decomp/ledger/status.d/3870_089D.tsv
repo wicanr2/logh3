@@ -1,0 +1,2 @@
+golem_linear	level	source	evidence
+38f9d	diff-tested	decomp/src/f_3870_089D.c	decomp/specs/3870_089D.json

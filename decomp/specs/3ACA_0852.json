@@ -1,0 +1,40 @@
+{
+  "id": "3ACA_0852",
+  "entry": "3ACA:0852",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 100,
+  "code_sha256_16": "5dd00dc3c898770b",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "ap（指向引數清單游標的 far 指標）拆成位移、段兩個 word。slot 段取 9D00（暫存區）、54B3（DGROUP）、8000；位移含 0xFFFC..0xFFFF 以覆蓋段內回繞（9D00 段的這幾個位移會讀到視訊區而被丟棄，8000 段才有效）。slot 內的 p 由記憶體內容與突變決定，seeds 造 p 指到自己、指到位移 0xFFFE／0xFFFF 的案例。flags 只有 0x10 與 0x200 兩個位元有意義，choices 含兩者各自與同時設、都不設、其他位元。",
+  "args": [
+    {"name": "ap_off", "kind": "word", "gen": {"choices": [0, 0, 2, 4, 8, 16, 32, 48, 64, 65532, 65534, 65535]}},
+    {"name": "ap_seg", "kind": "word", "gen": {"choices": [40192, 40192, 40192, 21683, 32768]}},
+    {"name": "flags", "kind": "word", "gen": {"choices": [0, 16, 512, 528, 32, 256, 1024, 65519, 64991, 65535, 15, 31, 17, 513], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0, 40192, 16], "pokes": [{"addr": "9D00:0000", "hex": "0000009d"}]},
+    {"args": [0, 40192, 0], "pokes": [{"addr": "9D00:0000", "hex": "0000009d"}]},
+    {"args": [0, 40192, 512], "pokes": [{"addr": "9D00:0000", "hex": "0000009d"}]},
+    {"args": [16, 40192, 0], "pokes": [{"addr": "9D00:0010", "hex": "1200009d"}]},
+    {"args": [16, 40192, 16], "pokes": [{"addr": "9D00:0010", "hex": "1200009d"}, {"addr": "9D00:0014", "hex": "3412"}]},
+    {"args": [32, 40192, 16], "pokes": [{"addr": "9D00:0020", "hex": "feff0080"}, {"addr": "8000:FFFE", "hex": "3412"}, {"addr": "8000:0000", "hex": "7856"}]},
+    {"args": [32, 40192, 0], "pokes": [{"addr": "9D00:0020", "hex": "feff0080"}, {"addr": "8000:FFFE", "hex": "3412"}, {"addr": "8000:0000", "hex": "7856"}]},
+    {"args": [32, 40192, 0], "pokes": [{"addr": "9D00:0020", "hex": "feff0080"}, {"addr": "8000:FFFE", "hex": "3492"}, {"addr": "8000:0000", "hex": "7856"}]},
+    {"args": [32, 40192, 512], "pokes": [{"addr": "9D00:0020", "hex": "feff0080"}, {"addr": "8000:FFFE", "hex": "3492"}, {"addr": "8000:0000", "hex": "7856"}]},
+    {"args": [48, 40192, 0], "pokes": [{"addr": "9D00:0030", "hex": "ffff0080"}, {"addr": "8000:FFFF", "hex": "ff"}, {"addr": "8000:0000", "hex": "80"}]},
+    {"args": [48, 40192, 16], "pokes": [{"addr": "9D00:0030", "hex": "ffff0080"}, {"addr": "8000:FFFF", "hex": "ff"}, {"addr": "8000:0000", "hex": "80"}, {"addr": "8000:0001", "hex": "cdab"}]},
+    {"args": [65535, 32768, 16], "pokes": [{"addr": "8000:FFFF", "hex": "10"}, {"addr": "8000:0000", "hex": "00"}, {"addr": "8000:0001", "hex": "00"}, {"addr": "8000:0002", "hex": "7e"}, {"addr": "7E00:0010", "hex": "11223344"}]},
+    {"args": [65534, 32768, 0], "pokes": [{"addr": "8000:FFFE", "hex": "2000"}, {"addr": "8000:0000", "hex": "007e"}, {"addr": "7E00:0020", "hex": "ff7f"}]},
+    {"args": [64, 40192, 528], "pokes": [{"addr": "9D00:0040", "hex": "6000009d"}, {"addr": "9D00:0060", "hex": "78563412"}]},
+    {"args": [80, 40192, 16], "pokes": [{"addr": "9D00:0050", "hex": "fcff007e"}, {"addr": "7E00:FFFC", "hex": "11223344"}]},
+    {"args": [96, 40192, 512], "pokes": [{"addr": "9D00:0060", "hex": "8000007e"}, {"addr": "7E00:0080", "hex": "ffff"}]},
+    {"args": [112, 40192, 0], "pokes": [{"addr": "9D00:0070", "hex": "feff007e"}, {"addr": "7E00:FFFE", "hex": "0180"}]},
+    {"args": [112, 40192, 65535], "pokes": [{"addr": "9D00:0070", "hex": "feff007e"}, {"addr": "7E00:FFFE", "hex": "ff7f"}]}
+  ],
+  "iters": 12000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

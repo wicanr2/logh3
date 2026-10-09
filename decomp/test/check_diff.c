@@ -313,6 +313,27 @@ int main(int argc, char **argv)
         if (!same) {
             if (bad_writes < 10)
                 printf("寫入集合不符 case %ld: C 寫了 %ld 個 byte，原版 %ld 個\n", id, nmine, nw);
+            if (bad_writes < 3) { /* 逐位址列出前幾筆差異，除錯用 */
+                long a = 0, b = 0, shown = 0;
+                while ((a < nmine || b < nw) && shown < 8) {
+                    if (b >= nw || (a < nmine && mine[a].addr < want[b].addr)) {
+                        printf("  只有C: %x:%02x\n", mine[a].addr, mine[a].val);
+                        a++;
+                        shown++;
+                    } else if (a >= nmine || want[b].addr < mine[a].addr) {
+                        printf("  只有原版: %x:%02x\n", want[b].addr, want[b].val);
+                        b++;
+                        shown++;
+                    } else {
+                        if (mine[a].val != want[b].val) {
+                            printf("  值不同 %x C=%02x 原=%02x\n", mine[a].addr, mine[a].val, want[b].val);
+                            shown++;
+                        }
+                        a++;
+                        b++;
+                    }
+                }
+            }
             bad_writes++;
         }
         free(mine);

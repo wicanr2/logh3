@@ -1,0 +1,23 @@
+[
+  {"name": "旗標改測整個 word", "find": "if ((uint8_t)f != 0) {", "replace": "if (f != 0) {"},
+  {"name": "寬度加 5 改加 4", "find": "dl = (uint8_t)(dl + 5);", "replace": "dl = (uint8_t)(dl + 4);"},
+  {"name": "高度加 2 改加 3", "find": "hh = (uint8_t)(hh + 2);", "replace": "hh = (uint8_t)(hh + 3);"},
+  {"name": "格 x 的遞減沒有 >= 1 守衛（0 會變 0xFF）", "find": "if (rd8(m, la) >= 1)", "replace": "if (1)"},
+  {"name": "格 y 的遞減沒有 >= 1 守衛（0 會變 0xFF）", "find": "if (rd8(m, lb) >= 1)", "replace": "if (1)"},
+  {"name": "格 y 的遞減改作用在 x 指標", "find": "if (rd8(m, lb) >= 1)\n            wr8(m, lb, (uint8_t)(rd8(m, lb) - 1));", "replace": "if (rd8(m, lb) >= 1)\n            wr8(m, la, (uint8_t)(rd8(m, la) - 1));"},
+  {"name": "格 x 沒有最小值夾限", "find": "if (rd8(m, la) < 1)", "replace": "if (0)"},
+  {"name": "格 y 沒有最小值夾限", "find": "if (rd8(m, lb) < 1)", "replace": "if (0)"},
+  {"name": "格 x 最小值設成 0", "find": "wr8(m, la, 1);", "replace": "wr8(m, la, 0);"},
+  {"name": "格 y 最小值設成 0", "find": "wr8(m, lb, 1);", "replace": "wr8(m, lb, 0);"},
+  {"name": "x 上限 0x1D 改 0x1E（判斷）", "find": "if ((uint16_t)(rd8(m, la) + dl) > 0x1D)", "replace": "if ((uint16_t)(rd8(m, la) + dl) > 0x1E)"},
+  {"name": "x 上限 0x1D 改 0x1E（夾限值）", "find": "wr8(m, la, (uint8_t)(0x1D - dl));", "replace": "wr8(m, la, (uint8_t)(0x1E - dl));"},
+  {"name": "y 上限 0x13 改 0x14（判斷）", "find": "if ((uint16_t)(rd8(m, lb) + hh) > 0x13)", "replace": "if ((uint16_t)(rd8(m, lb) + hh) > 0x14)"},
+  {"name": "y 上限 0x13 改 0x14（夾限值）", "find": "wr8(m, lb, (uint8_t)(0x13 - hh));", "replace": "wr8(m, lb, (uint8_t)(0x14 - hh));"},
+  {"name": "x 的和改成 8 位元（不是 16 位元）", "find": "if ((uint16_t)(rd8(m, la) + dl) > 0x1D)", "replace": "if ((uint8_t)(rd8(m, la) + dl) > 0x1D)"},
+  {"name": "y 的和改成 8 位元", "find": "if ((uint16_t)(rd8(m, lb) + hh) > 0x13)", "replace": "if ((uint8_t)(rd8(m, lb) + hh) > 0x13)"},
+  {"name": "y 夾限用原來的高而不是加 2 之後的高", "find": "wr8(m, lb, (uint8_t)(0x13 - hh));", "replace": "wr8(m, lb, (uint8_t)(0x13 - (uint8_t)h));"},
+  {"name": "y 的和用原來的高", "find": "if ((uint16_t)(rd8(m, lb) + hh) > 0x13)", "replace": "if ((uint16_t)(rd8(m, lb) + (uint8_t)h) > 0x13)"},
+  {"name": "x 夾限用原來的寬而不是加 5 之後的寬", "find": "wr8(m, la, (uint8_t)(0x1D - dl));", "replace": "wr8(m, la, (uint8_t)(0x1D - (uint8_t)w));"},
+  {"name": "寬度連高位元組一起算", "find": "uint8_t dl = (uint8_t)w;", "replace": "uint8_t dl = (uint8_t)(w + (w >> 8));"},
+  {"name": "x 與 y 的上限夾限順序對調（別名時後者蓋掉前者）", "find": "    if ((uint16_t)(rd8(m, la) + dl) > 0x1D)\n        wr8(m, la, (uint8_t)(0x1D - dl));\n    if ((uint16_t)(rd8(m, lb) + hh) > 0x13)\n        wr8(m, lb, (uint8_t)(0x13 - hh));", "replace": "    if ((uint16_t)(rd8(m, lb) + hh) > 0x13)\n        wr8(m, lb, (uint8_t)(0x13 - hh));\n    if ((uint16_t)(rd8(m, la) + dl) > 0x1D)\n        wr8(m, la, (uint8_t)(0x1D - dl));"}
+]

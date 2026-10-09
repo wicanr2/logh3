@@ -1,0 +1,8 @@
+[
+  {"name": "neg 只測低位元組", "find": "if (neg != 0)", "replace": "if ((uint8_t)neg != 0)"},
+  {"name": "正號與空白的判斷順序對調", "find": "else if ((uint8_t)flags & 2)\n        bx = 0x90FE;\n    else if ((uint8_t)flags & 4)\n        bx = 0x9100;", "replace": "else if ((uint8_t)flags & 4)\n        bx = 0x9100;\n    else if ((uint8_t)flags & 2)\n        bx = 0x90FE;"},
+  {"name": "flags 改測 word（高位元組也算）", "find": "else if ((uint8_t)flags & 2)", "replace": "else if (flags & 0x202)"},
+  {"name": "預設指標 9102 改 9100", "find": "bx = 0x9102;", "replace": "bx = 0x9100;"},
+  {"name": "空白旗標位元 4 改 8", "find": "else if ((uint8_t)flags & 4)", "replace": "else if ((uint8_t)flags & 8)"},
+  {"name": "回傳段改 0", "find": "return ((uint32_t)GIN3_DS << 16) | bx;", "replace": "return (uint32_t)bx;"}
+]

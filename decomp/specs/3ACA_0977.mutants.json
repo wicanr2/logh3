@@ -1,0 +1,12 @@
+[
+  {"name": "去 0 只做一次（while 改 if）", "find": "while (rd8(m, LIN(seg, (uint16_t)(off - 1))) == 0x30)", "replace": "if (rd8(m, LIN(seg, (uint16_t)(off - 1))) == 0x30)"},
+  {"name": "不去小數點", "find": "if (rd8(m, LIN(seg, (uint16_t)(off - 1))) == 0x2E)", "replace": "if (0)"},
+  {"name": "小數點也去到底（if 改 while）", "find": "if (rd8(m, LIN(seg, (uint16_t)(off - 1))) == 0x2E)", "replace": "while (rd8(m, LIN(seg, (uint16_t)(off - 1))) == 0x2E)"},
+  {"name": "去 '1' 而不是 '0'", "find": "== 0x30) /* '0' */", "replace": "== 0x31) /* '0' */"},
+  {"name": "小數點字元改成逗號", "find": "== 0x2E) /* '.' */", "replace": "== 0x2C) /* '.' */"},
+  {"name": "第一次比較讀 p 本身而不是 p−1", "find": "while (rd8(m, LIN(seg, (uint16_t)(off - 1))) == 0x30)", "replace": "while (rd8(m, LIN(seg, off)) == 0x30)"},
+  {"name": "去小數點時一次退 2", "find": "== 0x2E) /* '.' */\n        off = (uint16_t)(off - 1);", "replace": "== 0x2E) /* '.' */\n        off = (uint16_t)(off - 2);"},
+  {"name": "p−1 在位移 0 時不回繞（讀到段起點前一個位元組）", "find": "while (rd8(m, LIN(seg, (uint16_t)(off - 1))) == 0x30)", "replace": "while (rd8(m, LIN(seg, 0) + (uint32_t)off - 1) == 0x30)"},
+  {"name": "回傳的段清成 0", "find": "return ((uint32_t)seg << 16) | off;", "replace": "return (uint32_t)off;"},
+  {"name": "去 0 時順便把位移的低位元組限制在 8 位元", "find": "    while (rd8(m, LIN(seg, (uint16_t)(off - 1))) == 0x30) /* '0' */\n        off = (uint16_t)(off - 1);", "replace": "    while (rd8(m, LIN(seg, (uint16_t)(off - 1))) == 0x30) /* '0' */\n        off = (uint16_t)((off & 0xFF00u) | (uint8_t)(off - 1));"}
+]

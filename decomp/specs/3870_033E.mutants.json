@@ -1,0 +1,8 @@
+[
+  {"name": "只掃7槽", "find": "for (i = 0; i < 8; i++) {", "replace": "for (i = 0; i < 7; i++) {"},
+  {"name": "多掃一槽", "find": "for (i = 0; i < 8; i++) {", "replace": "for (i = 0; i < 9; i++) {"},
+  {"name": "槽距15", "find": "DS(0xF254 + 16 * i + 7)", "replace": "DS(0xF254 + 15 * i + 7)"},
+  {"name": "看+6不看+7", "find": "DS(0xF254 + 16 * i + 7)", "replace": "DS(0xF254 + 16 * i + 6)"},
+  {"name": "空槽判斷改為0", "find": "== 0xFF)\n            return i;", "replace": "== 0x00)\n            return i;"},
+  {"name": "找不到回0", "find": "return 0xFF;\n}", "replace": "return 0x00;\n}"}
+]

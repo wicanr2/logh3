@@ -1,0 +1,27 @@
+{
+  "id": "39C8_00CA",
+  "entry": "39C8:00CA",
+  "conv": "near",
+  "ret": "ax",
+  "size": 41,
+  "code_sha256_16": "5dc35b5082d0122a",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "無參數。基底狀態 ds:8EF8..8EFF = 10 07 00 00 00 00 00 00（8EFC、8EFE 皆 0）；讀取集是這 8 個 byte，隨機突變會把倒數計時改成非 0。seeds 補進位、32 位元回繞、值為 1 與低位元組為 0 的 word。",
+  "args": [],
+  "seeds": [
+    {"args": []},
+    {"args": [], "pokes": [{"addr": "ds:8EF8", "hex": "ffff0000 0100 0100"}]},
+    {"args": [], "pokes": [{"addr": "ds:8EF8", "hex": "ffffffff 0000 0000"}]},
+    {"args": [], "pokes": [{"addr": "ds:8EF8", "hex": "ffffffff ffff ffff"}]},
+    {"args": [], "pokes": [{"addr": "ds:8EF8", "hex": "feff0000 0001 0001"}]},
+    {"args": [], "pokes": [{"addr": "ds:8EF8", "hex": "00000000 0200 0000"}]},
+    {"args": [], "pokes": [{"addr": "ds:8EF8", "hex": "00000000 0000 0200"}]},
+    {"args": [], "pokes": [{"addr": "ds:8EF8", "hex": "ffff0100 0080 ff7f"}]},
+    {"args": [], "pokes": [{"addr": "ds:8EF8", "hex": "01000000 0000 0000"}]}
+  ],
+  "iters": 4000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

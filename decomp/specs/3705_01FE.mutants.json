@@ -1,0 +1,13 @@
+[
+  {"name": "圖塊高改19", "find": "(uint16_t)(y / 20u)", "replace": "(uint16_t)(y / 19u)"},
+  {"name": "圖塊列內改y餘19", "find": "(uint16_t)(y % 20u)", "replace": "(uint16_t)(y % 19u)"},
+  {"name": "圖塊欄用x右移3", "find": "(uint16_t)(x >> 4)", "replace": "(uint16_t)(x >> 3)"},
+  {"name": "半列改x餘8", "find": "(uint16_t)((x % 16u) >> 3)", "replace": "(uint16_t)((x % 8u) >> 3)"},
+  {"name": "每塊40改38", "find": "(uint16_t)(tile << 1) * 20u", "replace": "(uint16_t)(tile << 1) * 19u"},
+  {"name": "列內偏移不乘2", "find": "(uint16_t)(row_in_tile << 1)", "replace": "row_in_tile"},
+  {"name": "遮罩索引用x餘16", "find": "DS(0x8BCA + (x % 8u))", "replace": "DS(0x8BCA + (x % 16u))"},
+  {"name": "AND改OR", "find": "return (uint16_t)(byte & mask);", "replace": "return (uint16_t)(byte | mask);"},
+  {"name": "w只取低位元組", "find": "(uint16_t)(tile_row * w)", "replace": "(uint16_t)(tile_row * (w & 0xFFu))"},
+  {"name": "w改用第四個參數", "find": "(uint16_t)(tile_row * w)", "replace": "(uint16_t)(tile_row * unused)"},
+  {"name": "回傳布林", "find": "return (uint16_t)(byte & mask);", "replace": "return (uint16_t)((byte & mask) != 0);"}
+]

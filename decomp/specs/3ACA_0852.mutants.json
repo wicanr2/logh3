@@ -1,0 +1,16 @@
+[
+  {"name": "long 旗標位元 0x10 改 0x20", "find": "if (flags & 0x10) {", "replace": "if (flags & 0x20) {"},
+  {"name": "unsigned 旗標位元 0x200 改 0x100", "find": "if (flags & 0x200) {", "replace": "if (flags & 0x100) {"},
+  {"name": "unsigned 旗標只看低位元組", "find": "if (flags & 0x200) {", "replace": "if ((uint8_t)flags & 0x200) {"},
+  {"name": "long 路徑游標只前進 2", "find": "ap_off) + 4));", "replace": "ap_off) + 2));"},
+  {"name": "int 路徑游標前進 4", "find": "ap_off) + 2));", "replace": "ap_off) + 4));"},
+  {"name": "符號延伸改零延伸", "find": "hi = (lo & 0x8000u) ? 0xFFFFu : 0u; /* cwd */", "replace": "hi = 0u;"},
+  {"name": "符號位元看 bit 14", "find": "hi = (lo & 0x8000u) ? 0xFFFFu : 0u; /* cwd */", "replace": "hi = (lo & 0x4000u) ? 0xFFFFu : 0u;"},
+  {"name": "unsigned 時不清高字", "find": "            hi = 0;\n", "replace": "\n"},
+  {"name": "unsigned 時把低字遮成 byte", "find": "            hi = 0;\n", "replace": "            hi = 0;\n            lo &= 0xFFu;\n"},
+  {"name": "long 的高低字對調", "find": "hi = f_3ACA_0852_rd16s(m, p_seg, (uint16_t)(p_off + 2));\n        lo = f_3ACA_0852_rd16s(m, p_seg, p_off);", "replace": "lo = f_3ACA_0852_rd16s(m, p_seg, (uint16_t)(p_off + 2));\n        hi = f_3ACA_0852_rd16s(m, p_seg, p_off);"},
+  {"name": "long 先前進游標再讀值", "find": "        hi = f_3ACA_0852_rd16s(m, p_seg, (uint16_t)(p_off + 2));\n        lo = f_3ACA_0852_rd16s(m, p_seg, p_off);\n        f_3ACA_0852_wr16s(m, ap_seg, ap_off, (uint16_t)(f_3ACA_0852_rd16s(m, ap_seg, ap_off) + 4));", "replace": "        f_3ACA_0852_wr16s(m, ap_seg, ap_off, (uint16_t)(f_3ACA_0852_rd16s(m, ap_seg, ap_off) + 4));\n        hi = f_3ACA_0852_rd16s(m, p_seg, (uint16_t)(p_off + 2));\n        lo = f_3ACA_0852_rd16s(m, p_seg, p_off);"},
+  {"name": "引數段誤用 slot 的段", "find": "p_seg = f_3ACA_0852_rd16s(m, ap_seg, (uint16_t)(ap_off + 2));", "replace": "p_seg = ap_seg;"},
+  {"name": "word 讀取跨位移 0xFFFF 時不回繞", "find": "rd8(m, LIN(seg, (uint16_t)(off + 1))) << 8", "replace": "rd8(m, LIN(seg, off) + 1) << 8"},
+  {"name": "word 寫入跨位移 0xFFFF 時不回繞", "find": "wr8(m, LIN(seg, (uint16_t)(off + 1)), (uint8_t)(v >> 8));", "replace": "wr8(m, LIN(seg, off) + 1, (uint8_t)(v >> 8));"}
+]

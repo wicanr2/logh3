@@ -1,0 +1,12 @@
+[
+  {"name": "xmin邊界含等號", "find": "if ((int16_t)x < (int16_t)rd16(m, DS(0x8D6A)))", "replace": "if ((int16_t)x <= (int16_t)rd16(m, DS(0x8D6A)))"},
+  {"name": "xmax邊界含等號", "find": "else if ((int16_t)x > (int16_t)rd16(m, DS(0x8D6E)))", "replace": "else if ((int16_t)x >= (int16_t)rd16(m, DS(0x8D6E)))"},
+  {"name": "ymin邊界含等號", "find": "if ((int16_t)y < (int16_t)rd16(m, DS(0x8D6C)))", "replace": "if ((int16_t)y <= (int16_t)rd16(m, DS(0x8D6C)))"},
+  {"name": "ymax邊界含等號", "find": "else if ((int16_t)y > (int16_t)rd16(m, DS(0x8D70)))", "replace": "else if ((int16_t)y >= (int16_t)rd16(m, DS(0x8D70)))"},
+  {"name": "x改無號比較", "find": "if ((int16_t)x < (int16_t)rd16(m, DS(0x8D6A)))", "replace": "if (x < rd16(m, DS(0x8D6A)))"},
+  {"name": "y改無號比較", "find": "else if ((int16_t)y > (int16_t)rd16(m, DS(0x8D70)))", "replace": "else if (y > rd16(m, DS(0x8D70)))"},
+  {"name": "上下位元對調", "find": "code |= 8;", "replace": "code |= 4;"},
+  {"name": "左右位元對調", "find": "code |= 1;", "replace": "code |= 2;"},
+  {"name": "高位元組清零", "find": "return (uint16_t)((y & 0xFF00u) | code);", "replace": "return code;"},
+  {"name": "x的兩個判斷互不排斥", "find": "else if ((int16_t)x > (int16_t)rd16(m, DS(0x8D6E)))", "replace": "if ((int16_t)x > (int16_t)rd16(m, DS(0x8D6E)))"}
+]

@@ -1,0 +1,14 @@
+[
+  {"name": "符號判斷改 bit 14", "find": "& 0x8000u) == 0)", "replace": "& 0x4000u) == 0)"},
+  {"name": "符號判斷讀低字而不是高字", "find": "if ((f_39B5_0126_rd16s(m, ss, (uint16_t)(bp + 2)) & 0x8000u) == 0)", "replace": "if ((f_39B5_0126_rd16s(m, ss, bp) & 0x8000u) == 0)"},
+  {"name": "不論正負一律取負", "find": "if ((f_39B5_0126_rd16s(m, ss, (uint16_t)(bp + 2)) & 0x8000u) == 0)", "replace": "if (0)"},
+  {"name": "高字少扣借位", "find": "dx = (uint16_t)(0 - hi - borrow);", "replace": "dx = (uint16_t)(0 - hi);"},
+  {"name": "借位條件反過來（lo 為 0 才借位）", "find": "borrow = (lo != 0) ? 1 : 0;", "replace": "borrow = (lo == 0) ? 1 : 0;"},
+  {"name": "高字改成一補數（取反不加 1）", "find": "dx = (uint16_t)(0 - hi - borrow);", "replace": "dx = (uint16_t)(~hi);"},
+  {"name": "高字沒寫回", "find": "    f_39B5_0126_wr16s(m, ss, (uint16_t)(bp + 2), dx);\n", "replace": "\n"},
+  {"name": "低字沒寫回", "find": "    f_39B5_0126_wr16s(m, ss, bp, ax);\n", "replace": "\n"},
+  {"name": "回傳的 AX 與 DX 對調", "find": "    return ((uint32_t)ax << 16) | dx;\n}\n\nstatic", "replace": "    return ((uint32_t)dx << 16) | ax;\n}\n\nstatic"},
+  {"name": "不取負時 DX 清成 0", "find": "        return ((uint32_t)ax << 16) | dx;\n    lo =", "replace": "        return ((uint32_t)ax << 16);\n    lo ="},
+  {"name": "word 存取跨位移 0xFFFF 時不回繞（讀）", "find": "rd8(m, LIN(seg, (uint16_t)(off + 1))) << 8", "replace": "rd8(m, LIN(seg, off) + 1) << 8"},
+  {"name": "word 存取跨位移 0xFFFF 時不回繞（寫）", "find": "wr8(m, LIN(seg, (uint16_t)(off + 1)), (uint8_t)(v >> 8));", "replace": "wr8(m, LIN(seg, off) + 1, (uint8_t)(v >> 8));"}
+]

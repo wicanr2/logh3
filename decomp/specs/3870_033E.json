@@ -1,0 +1,28 @@
+{
+  "id": "3870_033E",
+  "entry": "3870:033E",
+  "conv": "far",
+  "ret": "pack:al",
+  "size": 52,
+  "code_sha256_16": "1502b1bb32d634a1",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "在 ds:F254 起 8 槽（每槽 16 bytes）找 [+7] == 0xFF 的第一槽。回傳只寫 AL，AH 是進入值，所以只比 AL。基底狀態 8 槽全空。",
+  "args": [],
+  "seeds": [
+    {},
+    {"pokes": [{"addr": "ds:F25B", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:F25B", "hex": "00"}, {"addr": "ds:F26B", "hex": "01"}]},
+    {"pokes": [{"addr": "ds:F25B", "hex": "00"}, {"addr": "ds:F26B", "hex": "fe"}, {"addr": "ds:F27B", "hex": "00"}, {"addr": "ds:F28B", "hex": "7f"}, {"addr": "ds:F29B", "hex": "80"}, {"addr": "ds:F2AB", "hex": "00"}, {"addr": "ds:F2BB", "hex": "01"}]},
+    {"pokes": [{"addr": "ds:F25B", "hex": "00"}, {"addr": "ds:F26B", "hex": "00"}, {"addr": "ds:F27B", "hex": "00"}, {"addr": "ds:F28B", "hex": "00"}, {"addr": "ds:F29B", "hex": "00"}, {"addr": "ds:F2AB", "hex": "00"}, {"addr": "ds:F2BB", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:F25B", "hex": "00"}, {"addr": "ds:F26B", "hex": "00"}, {"addr": "ds:F27B", "hex": "00"}, {"addr": "ds:F28B", "hex": "00"}, {"addr": "ds:F29B", "hex": "00"}, {"addr": "ds:F2AB", "hex": "00"}, {"addr": "ds:F2BB", "hex": "00"}, {"addr": "ds:F2CB", "hex": "00"}, {"addr": "ds:F2DB", "hex": "ff"}]},
+    {"pokes": [{"addr": "ds:F25B", "hex": "fe"}, {"addr": "ds:F26B", "hex": "fe"}, {"addr": "ds:F27B", "hex": "fe"}, {"addr": "ds:F28B", "hex": "fe"}, {"addr": "ds:F29B", "hex": "fe"}, {"addr": "ds:F2AB", "hex": "fe"}, {"addr": "ds:F2BB", "hex": "fe"}, {"addr": "ds:F2CB", "hex": "fe"}, {"addr": "ds:F2DB", "hex": "ff"}]},
+    {"pokes": [{"addr": "ds:F254", "hex": "00", "repeat": 128}, {"addr": "ds:F2DB", "hex": "ff"}]},
+    {"pokes": [{"addr": "ds:F254", "hex": "00", "repeat": 128}, {"addr": "ds:F25A", "hex": "ff"}, {"addr": "ds:F26A", "hex": "ff"}, {"addr": "ds:F2CC", "hex": "ff"}, {"addr": "ds:F2CB", "hex": "ff"}]},
+    {"pokes": [{"addr": "ds:F254", "hex": "ff", "repeat": 7}, {"addr": "ds:F25B", "hex": "00"}, {"addr": "ds:F25C", "hex": "ff", "repeat": 100}]}
+  ],
+  "iters": 5000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

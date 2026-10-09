@@ -1,0 +1,13 @@
+[
+  {"name": "搬11bytes", "find": "q_seg, 12);", "replace": "q_seg, 11);"},
+  {"name": "不減筆數", "find": "wr16(m, DS(0xF24C), (uint16_t)(rd16(m, DS(0xF24C)) - 1u));", "replace": ""},
+  {"name": "tail在起點時不繞回終點", "find": "wr16(m, DS(0xF244), 0xF244);", "replace": ""},
+  {"name": "tail只退10", "find": "(uint16_t)(rd16(m, DS(0xF244)) + 0xFFF4u)", "replace": "(uint16_t)(rd16(m, DS(0xF244)) + 0xFFF6u)"},
+  {"name": "q等於tail也搬", "find": "if (!(q_seg == t_seg && q_off == t_off))", "replace": "if (1)"},
+  {"name": "p繞回判斷差一", "find": "if (!f_3765_0307_before_end(p_seg, p_off)) {", "replace": "if (!f_3765_0307_before_end(p_seg, (uint16_t)(p_off - 1u))) {"},
+  {"name": "cur繞回判斷差一", "find": "if (!f_3765_0307_before_end(cur_seg, cur_off)) {", "replace": "if (!f_3765_0307_before_end(cur_seg, (uint16_t)(cur_off - 1u))) {"},
+  {"name": "搬移方向相反", "find": "f_3CA9_0002(m, p_off, p_seg, q_off, q_seg, 12);", "replace": "f_3CA9_0002(m, q_off, q_seg, p_off, p_seg, 12);"},
+  {"name": "刪除後不重查同一格", "find": "/* 重新檢查同一格 */", "replace": "cur_off = (uint16_t)(cur_off + 12u);"},
+  {"name": "事件碼只比低位元組", "find": "if (f_3765_0307_rd16s(m, cur_seg, cur_off) != key) {", "replace": "if ((uint8_t)f_3765_0307_rd16s(m, cur_seg, cur_off) != (uint8_t)key) {"},
+  {"name": "q繞回不處理", "find": "q_off = 0xF184;\n                q_seg = GIN3_DS;", "replace": "q_off = q_off;"}
+]

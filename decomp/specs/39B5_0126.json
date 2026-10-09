@@ -1,0 +1,39 @@
+{
+  "id": "39B5_0126",
+  "entry": "39B5:0126",
+  "conv": "near",
+  "ret": "pack:ax,dx",
+  "size": 24,
+  "code_sha256_16": "b35c6c0d7fbe0d5a",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "BP 是暫存器參數，資料在 SS:[BP+0..3]，SS＝0x63EB。基底狀態 SP＝1F8A，探針堆疊區是 SS:1B8A..1F89，BP 的 choices 避開它。不用 also_random，隨機 BP 可能落進堆疊區。seeds 的參數順序是 ax、dx、bp。",
+  "args": [
+    {"name": "ax", "kind": "reg", "reg": "ax", "gen": {"choices": [0, 1, 255, 256, 32767, 32768, 65535], "also_random": true}},
+    {"name": "dx", "kind": "reg", "reg": "dx", "gen": {"choices": [0, 1, 255, 256, 32767, 32768, 65535], "also_random": true}},
+    {"name": "bp", "kind": "reg", "reg": "bp", "gen": {"choices": [0, 4, 256, 4096, 6912, 8192, 32768, 49152, 65520, 65532, 65533, 65534, 65535]}}
+  ],
+  "seeds": [
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "00000080"}]},
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "01000080"}]},
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "00000180"}]},
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "0000ffff"}]},
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "ffffffff"}]},
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "0100ffff"}]},
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "ff7fffff"}]},
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "00000000"}]},
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "0500ff7f"}]},
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "ffff0080"}]},
+    {"args": [4660, 22136, 4096], "pokes": [{"addr": "63EB:1000", "hex": "ffffff7f"}]},
+    {"args": [4660, 22136, 65535], "pokes": [{"addr": "63EB:FFFF", "hex": "01"}, {"addr": "63EB:0000", "hex": "00"}, {"addr": "63EB:0001", "hex": "00"}, {"addr": "63EB:0002", "hex": "80"}]},
+    {"args": [4660, 22136, 65535], "pokes": [{"addr": "63EB:FFFF", "hex": "34"}, {"addr": "63EB:0000", "hex": "12"}, {"addr": "63EB:0001", "hex": "00"}, {"addr": "63EB:0002", "hex": "00"}]},
+    {"args": [4660, 22136, 65533], "pokes": [{"addr": "63EB:FFFD", "hex": "0200"}, {"addr": "63EB:FFFF", "hex": "00"}, {"addr": "63EB:0000", "hex": "80"}]},
+    {"args": [4660, 22136, 65533], "pokes": [{"addr": "63EB:FFFD", "hex": "0200"}, {"addr": "63EB:FFFF", "hex": "ff"}, {"addr": "63EB:0000", "hex": "7f"}]},
+    {"args": [4660, 22136, 65534], "pokes": [{"addr": "63EB:FFFE", "hex": "0300"}, {"addr": "63EB:0000", "hex": "ff"}, {"addr": "63EB:0001", "hex": "ff"}]},
+    {"args": [4660, 22136, 65534], "pokes": [{"addr": "63EB:FFFE", "hex": "00ff"}, {"addr": "63EB:0000", "hex": "00"}, {"addr": "63EB:0001", "hex": "80"}]}
+  ],
+  "iters": 8000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

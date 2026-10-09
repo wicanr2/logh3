@@ -1,0 +1,10 @@
+[
+  {"name": "mode1不落入mode2", "find": "if (sel == 1 || sel == 2) {", "replace": "if (sel == 2) {"},
+  {"name": "mode0的xmax差一", "find": "wr16(m, DS(0x8D6E), 0x01CF);", "replace": "wr16(m, DS(0x8D6E), 0x01D0);"},
+  {"name": "mode0的ymax差一", "find": "wr16(m, DS(0x8D70), 0x017B);", "replace": "wr16(m, DS(0x8D70), 0x017C);"},
+  {"name": "mode2的xmax差一", "find": "wr16(m, DS(0x8D6E), 0x027F);", "replace": "wr16(m, DS(0x8D6E), 0x027E);"},
+  {"name": "mode2的ymax差一", "find": "wr16(m, DS(0x8D70), 0x018F);", "replace": "wr16(m, DS(0x8D70), 0x018E);"},
+  {"name": "mode用整個word判斷", "find": "uint8_t sel = (uint8_t)mode;", "replace": "uint16_t sel = mode;"},
+  {"name": "mode大於等於3回0", "find": "    return sel;\n}", "replace": "    return 0;\n}"},
+  {"name": "mode0的ymin差一", "find": "wr16(m, DS(0x8D6C), 0x0014);", "replace": "wr16(m, DS(0x8D6C), 0x0015);"}
+]

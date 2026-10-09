@@ -1,0 +1,40 @@
+{
+  "id": "3ACA_0944",
+  "entry": "3ACA:0944",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 51,
+  "code_sha256_16": "b5b1e5dc6e27529a",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "無記憶體讀取，探針沒有讀取集可突變，所以輸入由 seeds 與 gen 給定。neg 測整個 word，flags 只測低位元組；seeds 含高位元組有設而低位元組為 0 的值，以及 bit1 與 bit2 同時設的值。neg 的 choices 以重複項加重 0 的權重，讓四條路徑都被隨機走到。",
+  "args": [
+    {"name": "neg", "kind": "word", "gen": {"choices": [0, 0, 0, 0, 0, 0, 1, 2, 255, 256, 32768, 65280, 65535]}},
+    {"name": "flags", "kind": "word", "gen": {"choices": [0, 2, 4, 6, 1, 3, 5, 7, 8, 256, 512, 1024, 514, 1028, 1536, 65282, 65284, 65280, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0, 0]},
+    {"args": [0, 2]},
+    {"args": [0, 4]},
+    {"args": [0, 6]},
+    {"args": [0, 1]},
+    {"args": [0, 8]},
+    {"args": [0, 512]},
+    {"args": [0, 1024]},
+    {"args": [0, 514]},
+    {"args": [0, 65282]},
+    {"args": [0, 65284]},
+    {"args": [0, 65535]},
+    {"args": [1, 0]},
+    {"args": [1, 6]},
+    {"args": [256, 0]},
+    {"args": [256, 6]},
+    {"args": [32768, 2]},
+    {"args": [65280, 4]},
+    {"args": [65535, 65535]}
+  ],
+  "iters": 4000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

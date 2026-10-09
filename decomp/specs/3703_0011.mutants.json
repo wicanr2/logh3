@@ -1,0 +1,8 @@
+[
+  {"name": "不寫DDBE", "find": "wr16(m, LIN(0x3D22, 0xDDBE), 0x0000);", "replace": ""},
+  {"name": "不寫DDC0", "find": "wr16(m, LIN(0x3D22, 0xDDC0), 0x60BE);", "replace": ""},
+  {"name": "DDC0值差一", "find": "wr16(m, LIN(0x3D22, 0xDDC0), 0x60BE);", "replace": "wr16(m, LIN(0x3D22, 0xDDC0), 0x60BF);"},
+  {"name": "DDBE位移錯一格", "find": "wr16(m, LIN(0x3D22, 0xDDBE), 0x0000);", "replace": "wr16(m, LIN(0x3D22, 0xDDBF), 0x0000);"},
+  {"name": "寫成byte", "find": "wr16(m, LIN(0x3D22, 0xDDC0), 0x60BE);", "replace": "wr8(m, LIN(0x3D22, 0xDDC0), 0xBE);"},
+  {"name": "回傳值改0", "find": "return 0x60BE;", "replace": "return 0;"}
+]

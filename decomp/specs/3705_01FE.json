@@ -1,0 +1,46 @@
+{
+  "id": "3705_01FE",
+  "entry": "3705:01FE",
+  "conv": "far",
+  "ret": "ax",
+  "size": 134,
+  "code_sha256_16": "7568e178a5c4c742",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "1 位元遮罩圖像素測試。遮罩資料指標取 ds:0000..ds:003F（表 dsp），所有讀取都在 DGROUP 內（位移 16 位元回繞），不會讀到視訊記憶體區。第 4 個參數（h）函式不讀。",
+  "tables": {
+    "dsp": {"base": "ds:0000", "stride": 1, "count": 64}
+  },
+  "args": [
+    {"name": "x", "kind": "word", "gen": {"choices": [0, 1, 7, 8, 9, 15, 16, 17, 31, 32, 100, 159, 160, 319, 320, 639, 640], "also_random": true}},
+    {"name": "y", "kind": "word", "gen": {"choices": [0, 1, 19, 20, 21, 39, 40, 41, 199, 200, 399, 400], "also_random": true}},
+    {"name": "w", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 10, 20, 40, 41, 4096, 4097, 65535], "also_random": true}},
+    {"name": "h_unused", "kind": "word", "gen": {"choices": [0, 4660, 65535]}},
+    {"name": "mask", "kind": "farptr", "gen": {"table": "dsp"}}
+  ],
+  "seeds": [
+    {"args": [0, 0, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c"}]},
+    {"args": [1, 0, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c"}]},
+    {"args": [2, 0, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c"}]},
+    {"args": [3, 0, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c"}]},
+    {"args": [4, 0, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c"}]},
+    {"args": [5, 0, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c"}]},
+    {"args": [6, 0, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c"}]},
+    {"args": [7, 0, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c"}]},
+    {"args": [8, 0, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c"}]},
+    {"args": [15, 0, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c"}]},
+    {"args": [9, 3, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c 4b5a 6978 8796 a5b4"}]},
+    {"args": [3, 3, 1, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ffa5 c3e7 0f1e 2d3c 4b5a 6978 8796 a5b4"}]},
+    {"args": [20, 25, 3, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ff", "repeat": 400}]},
+    {"args": [40, 45, 3, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ff", "repeat": 400}]},
+    {"args": [47, 19, 3, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ff", "repeat": 400}]},
+    {"args": [47, 20, 3, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ff", "repeat": 400}]},
+    {"args": [16, 40, 4097, 0, 256, 21683], "pokes": [{"addr": "ds:0100", "hex": "ff", "repeat": 400}]},
+    {"args": [100, 100, 41, 0, 65500, 21683]},
+    {"args": [100, 100, 41, 4660, 65500, 21683]}
+  ],
+  "iters": 20000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

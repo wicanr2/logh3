@@ -1,0 +1,24 @@
+{
+  "id": "3703_0011",
+  "entry": "3703:0011",
+  "conv": "far",
+  "ret": "ax",
+  "size": 21,
+  "code_sha256_16": "fbd42aec1df10d65",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "寫 3D22:DDBE ← 0、3D22:DDC0 ← 0x60BE。基底狀態這兩格已經是這兩個值，寫入集合要靠種子先 poke 別的前態。函式不讀記憶體，案例全來自種子。",
+  "args": [],
+  "seeds": [
+    {},
+    {"pokes": [{"addr": "3D22:DDBE", "hex": "3412 7856"}]},
+    {"pokes": [{"addr": "3D22:DDBE", "hex": "ffff ffff"}]},
+    {"pokes": [{"addr": "3D22:DDBE", "hex": "0100 be60"}]},
+    {"pokes": [{"addr": "3D22:DDBE", "hex": "0000 bf60"}]},
+    {"pokes": [{"addr": "3D22:DDBA", "hex": "a5a5a5a5 a5a5a5a5 a5a5a5a5"}]}
+  ],
+  "iters": 12,
+  "max_cases": 3,
+  "seed": 20261009,
+  "min_coverage": 100
+}

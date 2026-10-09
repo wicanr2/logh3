@@ -1,0 +1,10 @@
+[
+  {"name": "倒數計時 A 不看是否為 0（0 會回繞成 FFFF）", "find": "if (rd16(m, DS(0x8EFC)) != 0)", "replace": "if (rd16(m, DS(0x8EFC)) != 0 || 1)"},
+  {"name": "倒數計時 B 守衛改成大於 1", "find": "if (rd16(m, DS(0x8EFE)) != 0)", "replace": "if (rd16(m, DS(0x8EFE)) > 1)"},
+  {"name": "倒數計時 A 守衛只看低位元組", "find": "if (rd16(m, DS(0x8EFC)) != 0)", "replace": "if ((uint8_t)rd16(m, DS(0x8EFC)) != 0)"},
+  {"name": "倒數計時 B 一次減 2", "find": "wr16(m, DS(0x8EFE), (uint16_t)(rd16(m, DS(0x8EFE)) - 1));", "replace": "wr16(m, DS(0x8EFE), (uint16_t)(rd16(m, DS(0x8EFE)) - 2));"},
+  {"name": "計數低字加 2", "find": "ax = (uint16_t)(ax + 1);", "replace": "ax = (uint16_t)(ax + 2);"},
+  {"name": "高字不加進位", "find": "ax = (uint16_t)(rd16(m, DS(0x8EFA)) + carry);", "replace": "ax = (uint16_t)(rd16(m, DS(0x8EFA)) + 0);"},
+  {"name": "進位判斷改成加完等於 1","find": "carry = (ax == 0) ? 1 : 0;", "replace": "carry = (ax == 1) ? 1 : 0;"},
+  {"name": "回傳低字而不是高字", "find": "return ax;", "replace": "return rd16(m, DS(0x8EF8));"}
+]

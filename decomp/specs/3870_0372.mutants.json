@@ -1,0 +1,6 @@
+[
+  {"name": "AX與CX對調", "find": "return ((uint32_t)a1 << 16) | a0;", "replace": "return ((uint32_t)a0 << 16) | a1;"},
+  {"name": "CX清零", "find": "return ((uint32_t)a1 << 16) | a0;", "replace": "return a0;"},
+  {"name": "AX取低位元組", "find": "return ((uint32_t)a1 << 16) | a0;", "replace": "return ((uint32_t)a1 << 16) | (a0 & 0xFFu);"},
+  {"name": "CX加一", "find": "return ((uint32_t)a1 << 16) | a0;", "replace": "return ((uint32_t)(uint16_t)(a1 + 1u) << 16) | a0;"}
+]

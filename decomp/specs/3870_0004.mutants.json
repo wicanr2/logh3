@@ -1,0 +1,7 @@
+[
+  {"name": "少填一格", "find": "0x00FF, 0x0080)", "replace": "0x00FF, 0x007F)"},
+  {"name": "多填一格", "find": "0x00FF, 0x0080)", "replace": "0x00FF, 0x0081)"},
+  {"name": "填值0xFE", "find": "0x00FF, 0x0080)", "replace": "0x00FE, 0x0080)"},
+  {"name": "起點偏一格", "find": "f_3C9C_000A(m, 0xF254, GIN3_DS,", "replace": "f_3C9C_000A(m, 0xF255, GIN3_DS,"},
+  {"name": "回傳值AX與BX對調", "find": "return f_3C9C_000A(m, 0xF254, GIN3_DS, 0x00FF, 0x0080); /* AX<<16 | BX */", "replace": "{ uint32_t r = f_3C9C_000A(m, 0xF254, GIN3_DS, 0x00FF, 0x0080); return (r << 16) | (r >> 16); }"}
+]

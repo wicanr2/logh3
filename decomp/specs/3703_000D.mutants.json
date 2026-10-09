@@ -1,0 +1,6 @@
+[
+  {"name": "段值加一", "find": "return 0x3D22;", "replace": "return 0x3D23;"},
+  {"name": "回傳資料段DGROUP", "find": "return 0x3D22;", "replace": "return 0x54B3;"},
+  {"name": "回傳0", "find": "return 0x3D22;", "replace": "return 0;"},
+  {"name": "只留高位元組", "find": "return 0x3D22;", "replace": "return 0x3D00;"}
+]

@@ -1,0 +1,18 @@
+[
+  {"name": "數字偏移 A27F 改 A280", "find": "return (uint16_t)(c + 0xA27F);", "replace": "return (uint16_t)(c + 0xA280);"},
+  {"name": "小寫偏移 A288 改 A287", "find": "return (uint16_t)(c + 0xA288);", "replace": "return (uint16_t)(c + 0xA287);"},
+  {"name": "大寫偏移 A28E 改 A28F", "find": "return (uint16_t)(c + 0xA28E);", "replace": "return (uint16_t)(c + 0xA28F);"},
+  {"name": "數字範圍上限 39 改 3A", "find": "s <= 0x39", "replace": "s <= 0x3A"},
+  {"name": "數字範圍下限 30 改 2F", "find": "s >= 0x30", "replace": "s >= 0x2F"},
+  {"name": "小寫範圍上限 7A 改 7B", "find": "s <= 0x7A", "replace": "s <= 0x7B"},
+  {"name": "小寫範圍下限 61 改 60", "find": "s >= 0x61", "replace": "s >= 0x60"},
+  {"name": "大寫範圍上限 5A 改 5B", "find": "s <= 0x5A", "replace": "s <= 0x5B"},
+  {"name": "大寫範圍下限 41 改 40", "find": "s >= 0x41", "replace": "s >= 0x40"},
+  {"name": "範圍只比低位元組", "find": "int16_t s = (int16_t)c;", "replace": "int16_t s = (int16_t)(uint8_t)c;"},
+  {"name": "表迴圈少一筆", "find": "i <= 0x21", "replace": "i <= 0x20"},
+  {"name": "表迴圈多一筆", "find": "i <= 0x21", "replace": "i <= 0x22"},
+  {"name": "key 只比低位元組", "find": "if (c == rd16(m, DS((uint16_t)(F3B6B_KEYS + i * 2u))))", "replace": "if ((uint8_t)c == (uint8_t)rd16(m, DS((uint16_t)(F3B6B_KEYS + i * 2u))))"},
+  {"name": "值表位址錯成 key 表", "find": "return rd16(m, DS((uint16_t)(F3B6B_VALS + i * 2u)));", "replace": "return rd16(m, DS((uint16_t)(F3B6B_KEYS + i * 2u)));"},
+  {"name": "找不到時回 0", "find": "    return c;\n}", "replace": "    return 0;\n}"},
+  {"name": "表項由後往前找（重複的 0x60 取後者）", "find": "for (i = 0; i <= 0x21; i++) {\n        if (c == rd16(m, DS((uint16_t)(F3B6B_KEYS + i * 2u))))\n            return rd16(m, DS((uint16_t)(F3B6B_VALS + i * 2u)));\n    }", "replace": "for (i = 0x22; i-- > 0;) {\n        if (c == rd16(m, DS((uint16_t)(F3B6B_KEYS + i * 2u))))\n            return rd16(m, DS((uint16_t)(F3B6B_VALS + i * 2u)));\n    }"}
+]

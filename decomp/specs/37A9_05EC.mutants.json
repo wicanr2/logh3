@@ -1,0 +1,23 @@
+[
+  {"name": "首格旗標改0x81", "find": "f_37A9_05EC_put8(m, cell_seg, (uint16_t)(cell_off + 3u), 0x80);", "replace": "f_37A9_05EC_put8(m, cell_seg, (uint16_t)(cell_off + 3u), 0x81);"},
+  {"name": "後續格旗標改0x09", "find": "f_37A9_05EC_put8(m, cell_seg, (uint16_t)(cell_off + 3u), 0x08);", "replace": "f_37A9_05EC_put8(m, cell_seg, (uint16_t)(cell_off + 3u), 0x09);"},
+  {"name": "首格顏色改0x86", "find": "f_37A9_05EC_put8(m, cell_seg, (uint16_t)(cell_off + 2u), 0x87);\n        cell_off = (uint16_t)(cell_off + 4u);\n        for", "replace": "f_37A9_05EC_put8(m, cell_seg, (uint16_t)(cell_off + 2u), 0x86);\n        cell_off = (uint16_t)(cell_off + 4u);\n        for"},
+  {"name": "後續格顏色改0x86", "find": "f_37A9_05EC_put8(m, cell_seg, (uint16_t)(cell_off + 2u), 0x87);\n            cell_off", "replace": "f_37A9_05EC_put8(m, cell_seg, (uint16_t)(cell_off + 2u), 0x86);\n            cell_off"},
+  {"name": "字碼改0x2021", "find": "f_37A9_05EC_put16(m, cell_seg, cell_off, 0x2020);\n        f_37A9_05EC_put8(m, cell_seg, (uint16_t)(cell_off + 3u), 0x80);", "replace": "f_37A9_05EC_put16(m, cell_seg, cell_off, 0x2021);\n        f_37A9_05EC_put8(m, cell_seg, (uint16_t)(cell_off + 3u), 0x80);"},
+  {"name": "後續格字碼改0x2120", "find": "f_37A9_05EC_put16(m, cell_seg, cell_off, 0x2020);\n            f_37A9_05EC_put8", "replace": "f_37A9_05EC_put16(m, cell_seg, cell_off, 0x2120);\n            f_37A9_05EC_put8"},
+  {"name": "後續格從j等於0起", "find": "for (j = 1; j < (w & 0xFFu); j++) {", "replace": "for (j = 0; j < (w & 0xFFu); j++) {"},
+  {"name": "列位置不加i", "find": "uint16_t row = (uint16_t)((y & 0xFFu) + i);", "replace": "uint16_t row = (uint16_t)((y & 0xFFu));"},
+  {"name": "w用整個word", "find": "for (j = 1; j < (w & 0xFFu); j++) {", "replace": "for (j = 1; j < w; j++) {"},
+  {"name": "h用整個word", "find": "for (i = 0; i < (h & 0xFFu); i++) {", "replace": "for (i = 0; i < h; i++) {"},
+  {"name": "捲軸頂碼改FF10", "find": "f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF11);", "replace": "f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF10);"},
+  {"name": "捲軸第二碼改FF1F", "find": "f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF12);", "replace": "f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF1F);"},
+  {"name": "捲軸中段碼改FF1E", "find": "f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF13);", "replace": "f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF1E);"},
+  {"name": "捲軸倒數第二碼改FF1D", "find": "f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF14);", "replace": "f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF1D);"},
+  {"name": "捲軸底碼改FF1C", "find": "f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF15);", "replace": "f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF1C);"},
+  {"name": "捲軸中段少一格", "find": "for (k = 2; (int16_t)(uint16_t)((h & 0xFFu) + 0xFFFEu) > (int16_t)k; k++) {", "replace": "for (k = 3; (int16_t)(uint16_t)((h & 0xFFu) + 0xFFFEu) > (int16_t)k; k++) {"},
+  {"name": "捲軸欄位置漏掉w", "find": "bar_off = (uint16_t)(bar_off + w4);", "replace": ""},
+  {"name": "捲軸起始列漏掉y", "find": "rowoff = (uint16_t)((uint16_t)((y & 0xFFu) * stride1) << 2);", "replace": "rowoff = 0;"},
+  {"name": "捲軸第一次下移沿用舊stride", "find": "bar_off = (uint16_t)(bar_off + (uint16_t)((uint16_t)rd8(m, LIN(win_seg, stride_off)) << 2));\n    f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF12);", "replace": "bar_off = (uint16_t)(bar_off + (uint16_t)(stride1 << 2));\n    f_37A9_05EC_put16(m, bar_seg, bar_off, 0xFF12);"},
+  {"name": "拿掉ROM寫入模型", "find": "if (lin < 0xF0000u)\n        wr8(m, lin, v);", "replace": "wr8(m, lin, v);"},
+  {"name": "x欄位乘2不乘4", "find": "uint16_t x4 = (uint16_t)((x & 0xFFu) << 2);", "replace": "uint16_t x4 = (uint16_t)((x & 0xFFu) << 1);"}
+]

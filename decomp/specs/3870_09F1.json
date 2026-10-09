@@ -1,0 +1,43 @@
+{
+  "id": "3870_09F1",
+  "entry": "3870:09F1",
+  "conv": "far",
+  "ret": "ax",
+  "size": 63,
+  "code_sha256_16": "942a844562561bab",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "Cohen-Sutherland outcode。矩形 ds:8D6A/8D6C/8D6E/8D70（有號 word）；回傳 AX 高位元組是 y 的高位元組。邊界值（x==xmin、x==xmax 等）隨機突變不容易打到，用種子保證。",
+  "args": [
+    {"name": "x", "kind": "word", "gen": {"choices": [0, 1, 15, 16, 19, 20, 100, 50, 75, 379, 380, 399, 400, 463, 464, 639, 640, 32767, 32768, 65535, 65520, 65519], "also_random": true}},
+    {"name": "y", "kind": "word", "gen": {"choices": [0, 1, 15, 16, 19, 20, 100, 50, 75, 379, 380, 399, 400, 463, 464, 639, 640, 4660, 32767, 32768, 65535, 65520, 65519], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0, 0]},
+    {"args": [65535, 65535]},
+    {"args": [639, 399]},
+    {"args": [640, 400]},
+    {"args": [32768, 32768]},
+    {"args": [32767, 32767]},
+    {"args": [100, 4660]},
+    {"args": [100, 52719]},
+    {"args": [16, 20], "pokes": [{"addr": "ds:8D6A", "hex": "1000 1400 cf01 7b01"}]},
+    {"args": [15, 19], "pokes": [{"addr": "ds:8D6A", "hex": "1000 1400 cf01 7b01"}]},
+    {"args": [463, 379], "pokes": [{"addr": "ds:8D6A", "hex": "1000 1400 cf01 7b01"}]},
+    {"args": [464, 380], "pokes": [{"addr": "ds:8D6A", "hex": "1000 1400 cf01 7b01"}]},
+    {"args": [16, 380], "pokes": [{"addr": "ds:8D6A", "hex": "1000 1400 cf01 7b01"}]},
+    {"args": [464, 20], "pokes": [{"addr": "ds:8D6A", "hex": "1000 1400 cf01 7b01"}]},
+    {"args": [65520, 65520], "pokes": [{"addr": "ds:8D6A", "hex": "f0ff f0ff ff7f ff7f"}]},
+    {"args": [65519, 65519], "pokes": [{"addr": "ds:8D6A", "hex": "f0ff f0ff ff7f ff7f"}]},
+    {"args": [32768, 32768], "pokes": [{"addr": "ds:8D6A", "hex": "f0ff f0ff ff7f ff7f"}]},
+    {"args": [32767, 32767], "pokes": [{"addr": "ds:8D6A", "hex": "f0ff f0ff ff7f ff7f"}]},
+    {"args": [75, 75], "pokes": [{"addr": "ds:8D6A", "hex": "6400 6400 3200 3200"}]},
+    {"args": [100, 100], "pokes": [{"addr": "ds:8D6A", "hex": "6400 6400 3200 3200"}]},
+    {"args": [50, 50], "pokes": [{"addr": "ds:8D6A", "hex": "6400 6400 3200 3200"}]},
+    {"args": [10, 200], "pokes": [{"addr": "ds:8D6A", "hex": "6400 6400 3200 3200"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

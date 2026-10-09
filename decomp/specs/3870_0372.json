@@ -1,0 +1,24 @@
+{
+  "id": "3870_0372",
+  "entry": "3870:0372",
+  "conv": "far",
+  "ret": "pack:cx,ax",
+  "size": 11,
+  "code_sha256_16": "cb30dd48e07af336",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "把 [bp+6] 放進 AX、[bp+8] 放進 CX。不讀記憶體，案例全來自參數。呼叫者實際推 4 個 word，函式只讀前兩個。",
+  "args": [
+    {"name": "a0", "kind": "word", "gen": {"choices": [0, 1, 2, 255, 256, 4660, 32767, 32768, 65535], "also_random": true}},
+    {"name": "a1", "kind": "word", "gen": {"choices": [0, 1, 2, 255, 256, 22136, 32767, 32768, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [4660, 22136]},
+    {"args": [0, 65535]},
+    {"args": [65535, 0]}
+  ],
+  "iters": 600,
+  "max_cases": 150,
+  "seed": 20261009,
+  "min_coverage": 100
+}

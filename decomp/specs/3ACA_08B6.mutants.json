@@ -1,0 +1,17 @@
+[
+  {"name": "零也當負數（< 改 <=）", "find": "if ((int16_t)value < 0) {", "replace": "if ((int16_t)value <= 0) {"},
+  {"name": "負數的符號字元也用 '+'", "find": "c[0] = '-';", "replace": "c[0] = '+';"},
+  {"name": "不取絕對值", "find": "nv = (uint16_t)(0u - value); /* neg ax：0x8000 取負後仍是 0x8000 */", "replace": "nv = value;"},
+  {"name": "除法改無號（0x8000 的商與餘數不為負）", "find": "q100 = (int)(int16_t)nv / 100; /* idiv：有號、向零取整 */\n    r100 = (int)(int16_t)nv % 100;", "replace": "q100 = (int)nv / 100;\n    r100 = (int)nv % 100;"},
+  {"name": "百位數字加 '1' 而不是 '0'", "find": "c[1] = (uint8_t)(q100 + 0x30);", "replace": "c[1] = (uint8_t)(q100 + 0x31);"},
+  {"name": "十位數字的除數錯成 11", "find": "q10 = r100 / 10;", "replace": "q10 = r100 / 11;"},
+  {"name": "個位數字取模錯成 9", "find": "r10 = r100 % 10;", "replace": "r10 = r100 % 9;"},
+  {"name": "只寫 3 個位元組", "find": "for (i = 0; i < 4; i++) {", "replace": "for (i = 0; i < 3; i++) {"},
+  {"name": "游標只前進 3", "find": "coff = (uint16_t)(coff + 4);", "replace": "coff = (uint16_t)(coff + 3);"},
+  {"name": "沒有寫回游標的段", "find": "    f_3ACA_08B6_wr16s(m, cp_seg, (uint16_t)(cp_off + 2), cseg);\n", "replace": ""},
+  {"name": "拿掉 ROM 寫入模型", "find": "if (lin < 0xF0000u)", "replace": "if (1)"},
+  {"name": "游標位移跨 0xFFFF 時不回繞", "find": "LIN(cseg, (uint16_t)(coff + i))", "replace": "LIN(cseg, coff) + i"},
+  {"name": "slot 的 word 讀取跨位移 0xFFFF 時不回繞", "find": "rd8(m, LIN(seg, (uint16_t)(off + 1))) << 8", "replace": "rd8(m, LIN(seg, off) + 1) << 8"},
+  {"name": "slot 的 word 寫入跨位移 0xFFFF 時不回繞", "find": "f_3ACA_08B6_wr8m(m, LIN(seg, (uint16_t)(off + 1)), (uint8_t)(v >> 8));", "replace": "f_3ACA_08B6_wr8m(m, LIN(seg, off) + 1, (uint8_t)(v >> 8));"},
+  {"name": "先寫回 slot 再寫字元（別名時後者蓋掉前者）", "find": "    for (i = 0; i < 4; i++) {\n        f_3ACA_08B6_wr8m(m, LIN(cseg, (uint16_t)(coff + i)), c[i]);\n    }\n    coff = (uint16_t)(coff + 4);\n    f_3ACA_08B6_wr16s(m, cp_seg, (uint16_t)(cp_off + 2), cseg);\n    f_3ACA_08B6_wr16s(m, cp_seg, cp_off, coff);", "replace": "    f_3ACA_08B6_wr16s(m, cp_seg, (uint16_t)(cp_off + 2), cseg);\n    f_3ACA_08B6_wr16s(m, cp_seg, cp_off, (uint16_t)(coff + 4));\n    for (i = 0; i < 4; i++) {\n        f_3ACA_08B6_wr8m(m, LIN(cseg, (uint16_t)(coff + i)), c[i]);\n    }"}
+]
