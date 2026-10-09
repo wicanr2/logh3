@@ -1,0 +1,19 @@
+[
+  {"name": "長度取 +0Ah（最後 word 的欄位）", "find": "w03D4_rd16s(m, obj_seg, (uint16_t)(obj_off + 8u))", "replace": "w03D4_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Au))"},
+  {"name": "角度取 +5（色的欄位）", "find": "uint16_t angle = rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 4u)));", "replace": "uint16_t angle = rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 5u)));"},
+  {"name": "角度取 +3", "find": "uint16_t angle = rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 4u)));", "replace": "uint16_t angle = rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 3u)));"},
+  {"name": "旋轉的 x、y 指標對調（旋轉 (0, 長度)）", "find": "(void)f_3A92_0001(m, W03D4_L0, W03D4_SS, W03D4_L2, W03D4_SS, angle);", "replace": "(void)f_3A92_0001(m, W03D4_L2, W03D4_SS, W03D4_L0, W03D4_SS, angle);"},
+  {"name": "不旋轉", "find": "    (void)f_3A92_0001(m, W03D4_L0, W03D4_SS, W03D4_L2, W03D4_SS, angle);\n", "replace": ""},
+  {"name": "旋轉角度加 0x40", "find": "(void)f_3A92_0001(m, W03D4_L0, W03D4_SS, W03D4_L2, W03D4_SS, angle);", "replace": "(void)f_3A92_0001(m, W03D4_L0, W03D4_SS, W03D4_L2, W03D4_SS, (uint16_t)(angle + 0x40u));"},
+  {"name": "區域變數 [bp+2] 初值放長度而不是 0", "find": "wr16(m, LIN(W03D4_SS, W03D4_L2), 0);", "replace": "wr16(m, LIN(W03D4_SS, W03D4_L2), w03D4_rd16s(m, obj_seg, (uint16_t)(obj_off + 8u)));"},
+  {"name": "終點 x 加 y 的旋轉量（dx、dy 互換）", "find": "f_3870_0833(m, x, y, (uint16_t)(x + dx), (uint16_t)(y + dy), color_word, last_word);", "replace": "f_3870_0833(m, x, y, (uint16_t)(x + dy), (uint16_t)(y + dx), color_word, last_word);"},
+  {"name": "終點用減法", "find": "(uint16_t)(x + dx), (uint16_t)(y + dy)", "replace": "(uint16_t)(x - dx), (uint16_t)(y - dy)"},
+  {"name": "終點 y 不加起點 y", "find": "(uint16_t)(y + dy), color_word", "replace": "dy, color_word"},
+  {"name": "起點與終點對調", "find": "f_3870_0833(m, x, y, (uint16_t)(x + dx), (uint16_t)(y + dy), color_word, last_word);", "replace": "f_3870_0833(m, (uint16_t)(x + dx), (uint16_t)(y + dy), x, y, color_word, last_word);"},
+  {"name": "色 word 取 +4", "find": "color_word = w03D4_rd16s(m, obj_seg, (uint16_t)(obj_off + 5u));", "replace": "color_word = w03D4_rd16s(m, obj_seg, (uint16_t)(obj_off + 4u));"},
+  {"name": "最後 word 取 +8", "find": "last_word = w03D4_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Au));", "replace": "last_word = w03D4_rd16s(m, obj_seg, (uint16_t)(obj_off + 8u));"},
+  {"name": "色與最後 word 對調", "find": "color_word, last_word);", "replace": "last_word, color_word);"},
+  {"name": "最後 word 按線性位址讀（位移 0xFFFF 不回繞）", "find": "last_word = w03D4_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Au));", "replace": "last_word = rd16(m, LIN(obj_seg, 0) + (uint16_t)(obj_off + 0x0Au));"},
+  {"name": "最後 word 只取低位元組", "find": "last_word = w03D4_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Au));", "replace": "last_word = (uint16_t)(w03D4_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Au)) & 0xFFu);"},
+  {"name": "不呼叫 0833", "find": "    f_3870_0833(m, x, y, (uint16_t)(x + dx), (uint16_t)(y + dy), color_word, last_word);\n", "replace": ""}
+]

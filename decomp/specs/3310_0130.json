@@ -1,0 +1,30 @@
+{
+  "id": "3310_0130",
+  "entry": "3310:0130",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 27,
+  "code_sha256_16": "d8757410e24c649e",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "整數開平方：一個堆疊字 x，組成 dword（高字 x、低字 0）交給 3310:014B（16.16 定點牛頓開方）。回 AX:BX 原樣取自 014B，副作用是 014B 內 39B5:005C 寫的 ds:8EDC..8EED。基底 fcmd-base.state（與 014B 相同）。x 取完全平方數、非完全平方數、邊界與均勻隨機。seeds：x = 0（回 0:0）、1、2、4、9、100、0x7FFF（最大正）、0x8000（n 為負：迴圈一立即離開）、0xFFFF、ds:8EDC 先放非 0（005C 要覆寫）。",
+  "args": [
+    {"name": "x", "kind": "word", "gen": {"choices": [0, 0, 1, 1, 2, 3, 4, 4, 9, 16, 25, 100, 255, 256, 400, 4096, 16384, 32767, 32768, 49152, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "x = 0 → 0:0", "args": [0], "pokes": []},
+    {"note": "x = 1 → 1.0", "args": [1], "pokes": []},
+    {"note": "x = 2 → 約 1.414", "args": [2], "pokes": []},
+    {"note": "x = 4 → 2.0", "args": [4], "pokes": []},
+    {"note": "x = 9 → 3.0", "args": [9], "pokes": []},
+    {"note": "x = 100 → 10.0", "args": [100], "pokes": []},
+    {"note": "x = 0x7FFF（最大正值）", "args": [32767], "pokes": []},
+    {"note": "x = 0x8000（n 為負）", "args": [32768], "pokes": []},
+    {"note": "x = 0xFFFF", "args": [65535], "pokes": []},
+    {"note": "ds:8EDC..8EED 先放非 0 值（005C 要覆寫）", "args": [4], "pokes": [{"addr": "ds:8EDC", "hex": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261101,
+  "min_coverage": 100
+}
