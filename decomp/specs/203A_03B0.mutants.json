@@ -1,0 +1,19 @@
+[
+  {"name": "3870:0643 的參數 A、B 對調", "find": "f_3870_0643(m, a, b)", "replace": "f_3870_0643(m, b, a)"},
+  {"name": "乘法的 A 改成有號延伸（CX ＝ 符號）", "find": "(uint16_t)(e >> 16), (uint16_t)e, 0, a);", "replace": "(uint16_t)(e >> 16), (uint16_t)e, (uint16_t)((int16_t)a >> 15), a);"},
+  {"name": "乘數改成 B", "find": "(uint16_t)(e >> 16), (uint16_t)e, 0, a);", "replace": "(uint16_t)(e >> 16), (uint16_t)e, 0, b);"},
+  {"name": "不加 A << 16", "find": "    s = (uint32_t)(s + ((uint32_t)a << 16)); /* adc ax, cx：高字加 A */\n", "replace": ""},
+  {"name": "加的是 A << 15", "find": "((uint32_t)a << 16)); /* adc", "replace": "((uint32_t)a << 15)); /* adc"},
+  {"name": "加的是 A（低字）", "find": "(s + ((uint32_t)a << 16))", "replace": "(s + (uint32_t)a)"},
+  {"name": "乘積取 e 的高字而不是 e 全部", "find": "(uint16_t)(e >> 16), (uint16_t)e, 0, a);", "replace": "0, (uint16_t)(e >> 16), 0, a);"},
+  {"name": "x2 讀 p2[+0x32]", "find": "x2 = rd16(m, LIN(p2_seg, (uint16_t)(p2_off + 0x34u)));", "replace": "x2 = rd16(m, LIN(p2_seg, (uint16_t)(p2_off + 0x32u)));"},
+  {"name": "y1 讀 p1[+0x38]", "find": "y1 = rd16(m, LIN(p1_seg, (uint16_t)(p1_off + 0x36u)));", "replace": "y1 = rd16(m, LIN(p1_seg, (uint16_t)(p1_off + 0x38u)));"},
+  {"name": "p2 的 y 也讀 p1（兩點同 y）", "find": "y2 = rd16(m, LIN(p2_seg, (uint16_t)(p2_off + 0x36u)));", "replace": "y2 = rd16(m, LIN(p1_seg, (uint16_t)(p1_off + 0x36u)));"},
+  {"name": "p2 的 x 也讀 p1（兩點同 x）", "find": "x2 = rd16(m, LIN(p2_seg, (uint16_t)(p2_off + 0x34u)));", "replace": "x2 = rd16(m, LIN(p1_seg, (uint16_t)(p1_off + 0x34u)));"},
+  {"name": "3310:0006 的座標順序 (x1, x2, y1, y2)", "find": "f_3310_0006(m, x1, y1, x2, y2)", "replace": "f_3310_0006(m, x1, x2, y1, y2)"},
+  {"name": "第二點 x、y 對調 (x1, y1, y2, x2)", "find": "f_3310_0006(m, x1, y1, x2, y2)", "replace": "f_3310_0006(m, x1, y1, y2, x2)"},
+  {"name": "39B5:005C 的被除數與除數對調", "find": "return f_39B5_005C(m, (uint16_t)d, (uint16_t)(d >> 16), (uint16_t)s, (uint16_t)(s >> 16));", "replace": "return f_39B5_005C(m, (uint16_t)s, (uint16_t)(s >> 16), (uint16_t)d, (uint16_t)(d >> 16));"},
+  {"name": "39B5:005C 的被除數高低字對調", "find": "return f_39B5_005C(m, (uint16_t)d, (uint16_t)(d >> 16),", "replace": "return f_39B5_005C(m, (uint16_t)(d >> 16), (uint16_t)d,"},
+  {"name": "S 的高低字對調", "find": "(uint16_t)s, (uint16_t)(s >> 16));\n}", "replace": "(uint16_t)(s >> 16), (uint16_t)s);\n}"},
+  {"name": "不用 3310:0006 的距離（用 ady）", "find": "    d = f_3310_0006(m, x1, y1, x2, y2);", "replace": "    d = (uint32_t)(uint16_t)(y1 > y2 ? y1 - y2 : y2 - y1) << 16;"}
+]

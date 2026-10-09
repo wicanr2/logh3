@@ -1,0 +1,11 @@
+[
+  {"name": "不呼叫 1727:011E", "find": "    f_1727_011E(m);\n", "replace": ""},
+  {"name": "不呼叫 25DB:0221", "find": "    f_25DB_0221(m);\n", "replace": ""},
+  {"name": "先 0221 後 011E（順序對調）", "find": "    f_1727_011E(m);\n    f_25DB_0221(m);\n", "replace": "    f_25DB_0221(m);\n    f_1727_011E(m);\n"},
+  {"name": "條件改成 ds:8F16 != 0 才呼叫", "find": "if (rd8(m, DS(0x8F16u)) != 1u)", "replace": "if (rd8(m, DS(0x8F16u)) == 0u)"},
+  {"name": "條件常數改 2", "find": "if (rd8(m, DS(0x8F16u)) != 1u)", "replace": "if (rd8(m, DS(0x8F16u)) != 2u)"},
+  {"name": "條件反向（等於 1 時不呼叫）", "find": "if (rd8(m, DS(0x8F16u)) != 1u)", "replace": "if (rd8(m, DS(0x8F16u)) == 1u)"},
+  {"name": "條件改成讀整個 word", "find": "if (rd8(m, DS(0x8F16u)) != 1u)", "replace": "if (rd16(m, DS(0x8F16u)) != 1u)"},
+  {"name": "條件讀 ds:8F17", "find": "if (rd8(m, DS(0x8F16u)) != 1u)", "replace": "if (rd8(m, DS(0x8F17u)) != 1u)"},
+  {"name": "條件不成立時仍呼叫 011E", "find": "if (rd8(m, DS(0x8F16u)) != 1u)\n        return;", "replace": "if (rd8(m, DS(0x8F16u)) != 1u) {\n        f_1727_011E(m);\n        return;\n    }"}
+]
