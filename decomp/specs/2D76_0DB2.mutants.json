@@ -1,0 +1,9 @@
+[
+  {"name": "比較第1個byte", "find": "if (rd8(m, LIN(list_seg, list_off + 1)) == value)", "replace": "if (rd8(m, LIN(list_seg, list_off)) == value)"},
+  {"name": "迴圈含第n筆（byte 計數器加上界）", "find": "while (i < n) {", "replace": "while (i < n || (i == n && i != 0xFF)) {"},
+  {"name": "迴圈少一筆", "find": "while (i < n) {", "replace": "while (i + 1 < n) {"},
+  {"name": "每筆間距改1", "find": "list_off = (uint16_t)(list_off + 2);", "replace": "list_off = (uint16_t)(list_off + 1);"},
+  {"name": "找到與沒找到的回傳對調", "find": "            return 0;\n        i++;", "replace": "            return 1;\n        i++;"},
+  {"name": "n高位元組有值時改取255（飽和而非截斷）", "find": "uint8_t n = (uint8_t)n_word;", "replace": "uint8_t n = (n_word > 255u) ? 255u : (uint8_t)n_word;"},
+  {"name": "value取整個word", "find": "uint8_t value = (uint8_t)value_word;", "replace": "uint16_t value = value_word;"}
+]

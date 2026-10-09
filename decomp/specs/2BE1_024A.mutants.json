@@ -1,0 +1,8 @@
+[
+  {"name": "比較改成有號", "find": "if (a >= b)", "replace": "if ((int8_t)a >= (int8_t)b)"},
+  {"name": "不取絕對值", "find": "return (uint16_t)(b - a);", "replace": "return (uint16_t)(a - b);"},
+  {"name": "a取整個word比較", "find": "uint8_t a = (uint8_t)a_word;", "replace": "uint16_t a = a_word;"},
+  {"name": "b取整個word比較", "find": "uint8_t b = (uint8_t)b_word;", "replace": "uint16_t b = b_word;"},
+  {"name": "差加一", "find": "return (uint16_t)(a - b);", "replace": "return (uint16_t)(a - b + 1);"},
+  {"name": "折回成環形角度差", "find": "return (uint16_t)(b - a);", "replace": "return (uint16_t)(256 - (b - a) < b - a ? 256 - (b - a) : b - a);"}
+]

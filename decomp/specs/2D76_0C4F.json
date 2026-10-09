@@ -1,0 +1,37 @@
+{
+  "id": "2D76_0C4F",
+  "entry": "2D76:0C4F",
+  "conv": "far",
+  "ret": "ax",
+  "size": 96,
+  "code_sha256_16": "07f0d01b43559a75",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "艦隊編制組清單找隊形槽。艦隊 0 在 ds:C074：+0x0F（ds:C083）是組數，第 k 組在 ds:C084+4k，+2 艦種、+3 隊形槽。kind、slot 只取低位元組。seeds 的版面：第 0 組 (0,0xEE)、第 1 組 (5,9)、第 2 組 (3,10)、第 3 組 (4,11)，位址 ds:C086、C08A、C08E、C092。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "kind", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 255, 256, 259, 1283, 65280], "also_random": true}},
+    {"name": "slot", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 9, 10, 11, 12, 29, 99, 255, 256, 266, 1290, 65280], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "組數 1：迴圈不執行，回 0", "args": [49268, 21683, 3, 10], "pokes": [{"addr": "ds:C083", "hex": "01"}, {"addr": "ds:C086", "hex": "00ee"}, {"addr": "ds:C08A", "hex": "0509"}, {"addr": "ds:C08E", "hex": "030a"}, {"addr": "ds:C092", "hex": "040b"}]},
+    {"note": "組數 0：回 0", "args": [49268, 21683, 3, 10], "pokes": [{"addr": "ds:C083", "hex": "00"}, {"addr": "ds:C086", "hex": "00ee"}, {"addr": "ds:C08A", "hex": "0509"}, {"addr": "ds:C08E", "hex": "030a"}, {"addr": "ds:C092", "hex": "040b"}]},
+    {"note": "第 2 組槽與艦種都相同：回 0xFFFF", "args": [49268, 21683, 3, 10], "pokes": [{"addr": "ds:C083", "hex": "04"}, {"addr": "ds:C086", "hex": "00ee"}, {"addr": "ds:C08A", "hex": "0509"}, {"addr": "ds:C08E", "hex": "030a"}, {"addr": "ds:C092", "hex": "040b"}]},
+    {"note": "第 2 組槽相同艦種不同：回 2", "args": [49268, 21683, 7, 10], "pokes": [{"addr": "ds:C083", "hex": "04"}, {"addr": "ds:C086", "hex": "00ee"}, {"addr": "ds:C08A", "hex": "0509"}, {"addr": "ds:C08E", "hex": "030a"}, {"addr": "ds:C092", "hex": "040b"}]},
+    {"note": "第 1 組槽與艦種都相同：回 0xFFFF", "args": [49268, 21683, 5, 9], "pokes": [{"addr": "ds:C083", "hex": "04"}, {"addr": "ds:C086", "hex": "00ee"}, {"addr": "ds:C08A", "hex": "0509"}, {"addr": "ds:C08E", "hex": "030a"}, {"addr": "ds:C092", "hex": "040b"}]},
+    {"note": "第 1 組槽相同艦種不同：回 1", "args": [49268, 21683, 4, 9], "pokes": [{"addr": "ds:C083", "hex": "04"}, {"addr": "ds:C086", "hex": "00ee"}, {"addr": "ds:C08A", "hex": "0509"}, {"addr": "ds:C08E", "hex": "030a"}, {"addr": "ds:C092", "hex": "040b"}]},
+    {"note": "第 3 組（最後一組，i = 組數 − 1）槽與艦種相同：回 0xFFFF", "args": [49268, 21683, 4, 11], "pokes": [{"addr": "ds:C083", "hex": "04"}, {"addr": "ds:C086", "hex": "00ee"}, {"addr": "ds:C08A", "hex": "0509"}, {"addr": "ds:C08E", "hex": "030a"}, {"addr": "ds:C092", "hex": "040b"}]},
+    {"note": "組數 3：第 3 組不在掃描範圍，回 0", "args": [49268, 21683, 4, 11], "pokes": [{"addr": "ds:C083", "hex": "03"}, {"addr": "ds:C086", "hex": "00ee"}, {"addr": "ds:C08A", "hex": "0509"}, {"addr": "ds:C08E", "hex": "030a"}, {"addr": "ds:C092", "hex": "040b"}]},
+    {"note": "第 0 組槽相同但被跳過：回 0", "args": [49268, 21683, 3, 10], "pokes": [{"addr": "ds:C083", "hex": "04"}, {"addr": "ds:C086", "hex": "030a"}, {"addr": "ds:C08A", "hex": "0509"}, {"addr": "ds:C08E", "hex": "0000"}, {"addr": "ds:C092", "hex": "0000"}]},
+    {"note": "參數高位元組不為 0：只看低位元組，回 0xFFFF", "args": [49268, 21683, 259, 1290], "pokes": [{"addr": "ds:C083", "hex": "04"}, {"addr": "ds:C086", "hex": "00ee"}, {"addr": "ds:C08A", "hex": "0509"}, {"addr": "ds:C08E", "hex": "030a"}, {"addr": "ds:C092", "hex": "040b"}]},
+    {"note": "艦隊指標位移 0xFFF0：組指標 +0x14 後回繞到 0x0004", "args": [65520, 32768, 5, 7], "pokes": [{"addr": "lin:8FFFF", "hex": "02"}, {"addr": "lin:80006", "hex": "0507"}]},
+    {"note": "組數 255、全部不符：掃到最後一組", "args": [49268, 21683, 200, 201], "pokes": [{"addr": "ds:C083", "hex": "ff"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

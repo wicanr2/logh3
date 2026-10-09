@@ -1,0 +1,15 @@
+[
+  {"name": "四捨五入常數改0x1FF", "find": "prod += 0x200u;", "replace": "prod += 0x1FFu;"},
+  {"name": "右移改9位", "find": ">> 10)", "replace": ">> 9)"},
+  {"name": "乘積只取低16位元後右移", "find": "(uint16_t)(uint32_t)((int32_t)prod >> 10)", "replace": "(uint16_t)((uint16_t)prod >> 10)"},
+  {"name": "x夾限上界改0x7F0", "find": "if ((int16_t)x > 0x7EF)\n        x = 0x7EF;", "replace": "if ((int16_t)x > 0x7F0)\n        x = 0x7F0;"},
+  {"name": "y夾限上界改0x7E8", "find": "if ((int16_t)y > 0x7E7)\n        y = 0x7E7;", "replace": "if ((int16_t)y > 0x7E8)\n        y = 0x7E8;"},
+  {"name": "x先夾上界（無號）再夾下界", "find": "    if ((int16_t)x < 0)\n        x = 0;\n    if ((int16_t)x > 0x7EF)\n        x = 0x7EF;", "replace": "    if (x > 0x7EF)\n        x = 0x7EF;\n    if ((int16_t)x < 0)\n        x = 0;"},
+  {"name": "下界不夾0", "find": "    if ((int16_t)x < 0)\n        x = 0;\n", "replace": ""},
+  {"name": "y下界不夾0", "find": "    if ((int16_t)y < 0)\n        y = 0;\n", "replace": ""},
+  {"name": "余弦相位多1", "find": "w026f_step(m, (uint8_t)(angle + 0x40u), dist)", "replace": "w026f_step(m, (uint8_t)(angle + 0x41u), dist)"},
+  {"name": "距離當有號數", "find": "uint32_t prod = f_3CC9_0009(sign, t, 0, dist);", "replace": "uint32_t prod = f_3CC9_0009(sign, t, (dist & 0x8000u) ? 0xFFFFu : 0u, dist);"},
+  {"name": "表值當無號數", "find": "uint16_t sign = (t & 0x8000u) ? 0xFFFFu : 0u;", "replace": "uint16_t sign = 0u;"},
+  {"name": "先寫y再寫x", "find": "    w026f_put16(m, LIN(ox_seg, ox_off), x);\n    w026f_put16(m, LIN(oy_seg, oy_off), y);", "replace": "    w026f_put16(m, LIN(oy_seg, oy_off), y);\n    w026f_put16(m, LIN(ox_seg, ox_off), x);"},
+  {"name": "拿掉ROM區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, (uint8_t)v);\n    if (((lin + 1) & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin + 1, (uint8_t)(v >> 8));", "replace": "    wr8(m, lin, (uint8_t)v);\n    wr8(m, lin + 1, (uint8_t)(v >> 8));"}
+]

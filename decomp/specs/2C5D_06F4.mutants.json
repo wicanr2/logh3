@@ -1,0 +1,12 @@
+[
+  {"name": "遮罩改0xBE", "find": "w06f4_put8(m, flags, (uint8_t)(rd8(m, flags) & 0xBFu));", "replace": "w06f4_put8(m, flags, (uint8_t)(rd8(m, flags) & 0xBEu));"},
+  {"name": "池少處理最後一筆", "find": "for (i = 0; i < 0x160; i++) {", "replace": "for (i = 0; i < 0x15F; i++) {"},
+  {"name": "池每筆大小改0x4D", "find": "pool_off = (uint16_t)(pool_off + 0x4E);", "replace": "pool_off = (uint16_t)(pool_off + 0x4D);"},
+  {"name": "艦隊少處理最後一支", "find": "for (i = 0; i < 0x20; i++) {", "replace": "for (i = 0; i < 0x1F; i++) {"},
+  {"name": "艦隊每筆大小改0x79", "find": "fleet = (uint16_t)(fleet + 0x7A);", "replace": "fleet = (uint16_t)(fleet + 0x79);"},
+  {"name": "艦隊不清+0x6E", "find": "        w06f4_put16(m, GIN3_DS, (uint16_t)(fleet + 0x6E), 0);\n", "replace": ""},
+  {"name": "池不清+0x3A", "find": "        w06f4_put16(m, pool_seg, (uint16_t)(pool_off + 0x3A), 0);\n", "replace": ""},
+  {"name": "池旗標位移改0x1A", "find": "uint32_t flags = LIN(pool_seg, pool_off + 0x19);", "replace": "uint32_t flags = LIN(pool_seg, pool_off + 0x1A);"},
+  {"name": "池指標每圈重讀", "find": "pool_off = (uint16_t)(pool_off + 0x4E);", "replace": "pool_off = (uint16_t)(rd16(m, DS(0xCFB4)) + 0x4E * (i + 1));\n        pool_seg = rd16(m, DS(0xCFB6));"},
+  {"name": "拿掉ROM區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]

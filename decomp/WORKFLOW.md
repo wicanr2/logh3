@@ -149,3 +149,14 @@ decomp/tools/ledger.sh mark <SEG:OFF> diff-tested decomp/src/f_<SEG>_<OFF>.c dec
 - `pokes` 的 `"repeat": N`：把 `hex` 重複 N 次再寫入，用來填大段資料，不必逐格寫 100 KB 的描述檔。
 - `"note"`：說明文字，探針不使用。
 - 暫存緩衝區（`scratch`）固定在線性 `0x9D000` 到 `0xA0000`，共 12,288 bytes，讀到 `0xA0000` 以上不會被發現。需要更大的輸出緩衝時，描述檔先限制輸入域並在 C 檔頭寫明。
+
+### `freeze`：不讓隨機突變碰的位址
+
+```json
+"freeze": [{"addr": "ds:6022", "len": 8}]
+```
+
+跳躍表（`jmp [ds:6022+kind*2]`）的表項屬於讀取集，隨機突變會把它改成不相干的程式位移；原版跳進鄰近函式的中間照樣可能返回而被收錄，C 版無法也不該模型化。
+把表所在的位址列入 `freeze`，探索就只突變其他位址。`addr` 的格式同 `pokes`（`ds:OFF`、`SEG:OFF`、`lin:ADDR`），`len` 是十進位 bytes 數。
+`seeds` 的 `pokes` 仍可改凍結的位址，用來刻意驗證「表項換成另一個 case 的位址」這類案例。
+不要為了避開難測的路徑把整個函式設成 `iters: 1`（只跑 seeds）；那會讓 `diff-tested` 退化成只驗手工案例。

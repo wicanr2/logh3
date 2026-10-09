@@ -1,0 +1,14 @@
+[
+  {"name": "鬆弛條件改成小於等於", "find": "if (s < rd16(m, cell)) {", "replace": "if (s <= rd16(m, cell)) {"},
+  {"name": "鬆弛條件改成有號比較", "find": "if (s < rd16(m, cell)) {", "replace": "if ((int16_t)s < (int16_t)rd16(m, cell)) {"},
+  {"name": "加法不回繞", "find": "uint16_t s = (uint16_t)(dik + dkj);", "replace": "uint32_t s = (uint32_t)dik + dkj;"},
+  {"name": "中點初值改0xFE", "find": "w01b1_put8(m, LIN(m_seg, m_off + i), 0xFF);", "replace": "w01b1_put8(m, LIN(m_seg, m_off + i), 0xFE);"},
+  {"name": "中點少填最後一個byte", "find": "for (i = 0; i < 0x400; i++)", "replace": "for (i = 0; i < 0x3FF; i++)"},
+  {"name": "對角線不歸零", "find": "    for (i = 0; i < 0x20; i++)\n        w01b1_put16(m, LIN(d_seg, d_off + (uint16_t)(i << 6) + (uint16_t)(i << 1)), 0);\n", "replace": ""},
+  {"name": "中點寫入j而非k", "find": "(uint8_t)k);", "replace": "(uint8_t)j);"},
+  {"name": "k少迴圈一層", "find": "for (k = 0; k < 0x20; k++) {", "replace": "for (k = 0; k < 0x1F; k++) {"},
+  {"name": "中點行列互換", "find": "m_off + (uint16_t)(i << 5) + j)", "replace": "m_off + (uint16_t)(j << 5) + i)"},
+  {"name": "距離i到k誤讀成i到j", "find": "(uint16_t)(i << 6) + (uint16_t)(k << 1)));", "replace": "(uint16_t)(i << 6) + (uint16_t)(j << 1)));"},
+  {"name": "加數k到j誤讀成j到k", "find": "d_off + (uint16_t)(k << 6) + (uint16_t)(j << 1)));", "replace": "d_off + (uint16_t)(j << 6) + (uint16_t)(k << 1)));"},
+  {"name": "拿掉ROM區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]

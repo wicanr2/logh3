@@ -1,0 +1,22 @@
+[
+  {"name": "X 原點 0x57", "find": "uint16_t tx = (uint16_t)(px - 0x58u);", "replace": "uint16_t tx = (uint16_t)(px - 0x57u);"},
+  {"name": "Y 原點 0x5B", "find": "uint16_t ty = (uint16_t)(py - 0x5Cu);", "replace": "uint16_t ty = (uint16_t)(py - 0x5Bu);"},
+  {"name": "X 下界改成含等號才跳過", "find": "if ((int16_t)tx < (int16_t)x)", "replace": "if ((int16_t)tx <= (int16_t)x)"},
+  {"name": "X 上界改成含等號為中", "find": "if ((int16_t)(uint16_t)(x + 0x10u) <= (int16_t)tx)", "replace": "if ((int16_t)(uint16_t)(x + 0x10u) < (int16_t)tx)"},
+  {"name": "Y 下界改成含等號才跳過", "find": "if ((int16_t)ty < (int16_t)y)", "replace": "if ((int16_t)ty <= (int16_t)y)"},
+  {"name": "Y 上界改成含等號為中", "find": "if ((int16_t)ax <= (int16_t)ty)", "replace": "if ((int16_t)ax < (int16_t)ty)"},
+  {"name": "X 下界無號比較", "find": "if ((int16_t)tx < (int16_t)x)", "replace": "if (tx < x)"},
+  {"name": "X 上界無號比較", "find": "if ((int16_t)(uint16_t)(x + 0x10u) <= (int16_t)tx)", "replace": "if ((uint16_t)(x + 0x10u) <= tx)"},
+  {"name": "Y 上界無號比較", "find": "if ((int16_t)ax <= (int16_t)ty)", "replace": "if ((uint16_t)ax <= ty)"},
+  {"name": "X+0x10 不回繞", "find": "if ((int16_t)(uint16_t)(x + 0x10u) <= (int16_t)tx)", "replace": "if ((int32_t)(int16_t)x + 0x10 <= (int32_t)(int16_t)tx)"},
+  {"name": "Y+0x10 不回繞", "find": "ax = (uint16_t)(rd16(m, DS((uint16_t)(ent + 2))) + 0x10u);\n        if ((int16_t)ax <= (int16_t)ty)", "replace": "ax = (uint16_t)(rd16(m, DS((uint16_t)(ent + 2))) + 0x10u);\n        if ((int32_t)(int16_t)rd16(m, DS((uint16_t)(ent + 2))) + 0x10 <= (int32_t)(int16_t)ty)"},
+  {"name": "格寬 0x11", "find": "(int16_t)(uint16_t)(x + 0x10u) <= (int16_t)tx", "replace": "(int16_t)(uint16_t)(x + 0x11u) <= (int16_t)tx"},
+  {"name": "格高 0x11", "find": "ax = (uint16_t)(rd16(m, DS((uint16_t)(ent + 2))) + 0x10u);", "replace": "ax = (uint16_t)(rd16(m, DS((uint16_t)(ent + 2))) + 0x11u);"},
+  {"name": "只掃 40 格", "find": "for (i = 0; i < 0x29; i++) {", "replace": "for (i = 0; i < 0x28; i++) {"},
+  {"name": "表步距 5", "find": "(uint16_t)i * 4u", "replace": "(uint16_t)i * 5u"},
+  {"name": "Y 讀 X 欄", "find": "y = rd16(m, DS((uint16_t)(ent + 2)));", "replace": "y = rd16(m, DS(ent));"},
+  {"name": "不中回 0", "find": "return (uint16_t)((ax & 0xFF00u) | 0xFFu);", "replace": "return (uint16_t)((ax & 0xFF00u) | 0x00u);"},
+  {"name": "AH 清掉", "find": "return (uint16_t)((ax & 0xFF00u) | i);", "replace": "return (uint16_t)i;"},
+  {"name": "不中時 AH 清掉", "find": "return (uint16_t)((ax & 0xFF00u) | 0xFFu);", "replace": "return 0xFFu;"},
+  {"name": "AX 不先設成 DS", "find": "        ax = GIN3_DS;\n", "replace": ""}
+]

@@ -1,0 +1,20 @@
+[
+  {"name": "存量偏移 0x2F", "find": "uint16_t at = (uint16_t)(rec_off + 0x30u);", "replace": "uint16_t at = (uint16_t)(rec_off + 0x2Fu);"},
+  {"name": "存量位移飽和不回繞", "find": "uint16_t at = (uint16_t)(rec_off + 0x30u);", "replace": "uint16_t at = (rec_off + 0x30u > 0xFFFFu) ? 0xFFFFu : (uint16_t)(rec_off + 0x30u);"},
+  {"name": "陣營步距 0x1B", "find": "(uint16_t)(side * 0x1Cu)", "replace": "(uint16_t)(side * 0x1Bu)"},
+  {"name": "艦種步距 2", "find": "(uint16_t)(kind << 2)", "replace": "(uint16_t)(kind << 1)"},
+  {"name": "存量高位字讀 +4", "find": "w0E84_rd16(m, rec_seg, (uint16_t)(at + 2))", "replace": "w0E84_rd16(m, rec_seg, (uint16_t)(at + 4))"},
+  {"name": "存量只用低位字", "find": "stock = ((uint32_t)w0E84_rd16(m, rec_seg, (uint16_t)(at + 2)) << 16) | w0E84_rd16(m, rec_seg, at);", "replace": "stock = w0E84_rd16(m, rec_seg, at);"},
+  {"name": "存量段改用 DS", "find": "w0E84_rd16(m, rec_seg, at)", "replace": "w0E84_rd16(m, GIN3_DS, at)"},
+  {"name": "每組表基底 0x4E3B", "find": "0x4E3Au +", "replace": "0x4E3Bu +"},
+  {"name": "每組表陣營步距 0xCF", "find": "(uint16_t)(side * 0xD0u)", "replace": "(uint16_t)(side * 0xCFu)"},
+  {"name": "每組表艦種步距 0x19", "find": "(uint16_t)(kind * 0x1Au)", "replace": "(uint16_t)(kind * 0x19u)"},
+  {"name": "每組表位移飽和不回繞", "find": "per_off = (uint16_t)(0x4E3Au + (uint16_t)(side * 0xD0u) + (uint16_t)(kind * 0x1Au));", "replace": "per_off = (0x4E3Au + (uint16_t)(side * 0xD0u) + (uint16_t)(kind * 0x1Au) > 0xFFFFu) ? 0xFFFFu : (uint16_t)(0x4E3Au + (uint16_t)(side * 0xD0u) + (uint16_t)(kind * 0x1Au));"},
+  {"name": "每組只讀低位元組", "find": "per = rd16(m, DS(per_off));", "replace": "per = rd8(m, DS(per_off));"},
+  {"name": "回傳高 16 位元", "find": "return (uint16_t)q;", "replace": "return (uint16_t)(q >> 16);"},
+  {"name": "除數 0 回 0", "find": "q = gin3_uldiv(stock, per);", "replace": "q = per ? stock / per : 0;"},
+  {"name": "艦種取整個 word", "find": "uint16_t kind = (uint8_t)kind_word;", "replace": "uint16_t kind = kind_word;"},
+  {"name": "陣營取 word", "find": "uint16_t side = rd8(m, DS(0x8F1D));", "replace": "uint16_t side = rd16(m, DS(0x8F1D));"},
+  {"name": "改成有號除法", "find": "q = gin3_uldiv(stock, per);", "replace": "q = per ? (uint32_t)((int32_t)stock / (int32_t)per) : 0xFFFFFFFFu;"},
+  {"name": "word 高位元組線性連續不回繞", "find": "rd8(m, LIN(seg, off + 1))", "replace": "rd8(m, LIN(seg, off) + 1)"}
+]

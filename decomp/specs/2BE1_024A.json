@@ -1,0 +1,32 @@
+{
+  "id": "2BE1_024A",
+  "entry": "2BE1:024A",
+  "conv": "far",
+  "ret": "ax",
+  "size": 37,
+  "code_sha256_16": "7896f9f3c71a6e34",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "byte 無號絕對差。兩個參數都只取低位元組，所以 choices 含高位元組不為 0 的值並混入均勻隨機。",
+  "args": [
+    {"name": "a", "kind": "word", "gen": {"choices": [0, 1, 2, 126, 127, 128, 129, 130, 253, 254, 255, 256, 257, 383, 384, 65280, 65407, 65535], "also_random": true}},
+    {"name": "b", "kind": "word", "gen": {"choices": [0, 1, 2, 126, 127, 128, 129, 130, 253, 254, 255, 256, 257, 383, 384, 65280, 65407, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [200, 10]},
+    {"args": [10, 200]},
+    {"args": [128, 127]},
+    {"args": [127, 128]},
+    {"args": [255, 0]},
+    {"args": [0, 255]},
+    {"args": [5, 5]},
+    {"args": [256, 1]},
+    {"args": [1, 256]},
+    {"args": [511, 2]},
+    {"args": [2, 511]}
+  ],
+  "iters": 6000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

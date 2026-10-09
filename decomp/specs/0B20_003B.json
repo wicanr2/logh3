@@ -1,0 +1,41 @@
+{
+  "id": "0B20_003B",
+  "entry": "0B20:003B",
+  "conv": "far",
+  "ret": "ax",
+  "size": 193,
+  "code_sha256_16": "edba77bbb35000ce",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "敵艦隊清單重建：ids 是艦隊編號 byte 陣列，n 是長度（只取低位元組）。基底用 S3 開局（20 多支真實艦隊，艦艇池有等級）。ids 指到暫存緩衝區 9D00:0000，隨機內容大多不是合法編號，所以 seeds 先 poke 合法編號；艦隊 +0x70 與清單 ds:95B6 先填別的值才看得出少寫與寬度。別名 seeds 把 ids 指到艦隊 +0x70 與清單本身。",
+  "args": [
+    {"name": "ids", "kind": "farptr", "gen": {"scratch": 16}},
+    {"name": "n", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 8, 12, 16, 259]}}
+  ],
+  "seeds": [
+    {"note": "ids ＝ 0,2,3,4,5、n ＝ 5：艦隊 +0x70 與清單先填 0xAA/0x55；艦隊 2 的兩組等級 0x20、0x90", "args": [0, 40192, 5], "pokes": [{"addr": "lin:66C23", "hex": "20"}, {"addr": "lin:66CBF", "hex": "90"},
+      {"addr": "lin:9D000", "hex": "0002030405"}, {"addr": "ds:C0E4", "hex": "AAAA"}, {"addr": "ds:C1D8", "hex": "AAAA"}, {"addr": "ds:C252", "hex": "AAAA"}, {"addr": "ds:C2CC", "hex": "AAAA"}, {"addr": "ds:C346", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 16}]},
+    {"note": "同上但 n ＝ 0x103：只取低位元組 3", "args": [0, 40192, 259], "pokes": [
+      {"addr": "lin:9D000", "hex": "0002030405"}, {"addr": "ds:C0E4", "hex": "AAAA"}, {"addr": "ds:C1D8", "hex": "AAAA"}, {"addr": "ds:C252", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 16}]},
+    {"note": "n ＝ 0：什麼都不做，回 0", "args": [0, 40192, 0], "pokes": [{"addr": "lin:9D000", "hex": "0002030405"}, {"addr": "ds:95B6", "hex": "55", "repeat": 16}]},
+    {"note": "艦隊 0 的組數改 0：等級 0，+0x70 ← 0，不進清單；其餘艦隊照常", "args": [0, 40192, 3], "pokes": [
+      {"addr": "lin:9D000", "hex": "000203"}, {"addr": "ds:C083", "hex": "00"}, {"addr": "ds:C0E4", "hex": "AAAA"}, {"addr": "ds:C1D8", "hex": "AAAA"}, {"addr": "ds:C252", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 16}]},
+    {"note": "別名：ids 指到艦隊 2 的 +0x70（ds:C1D8，內容 2）；寫入 +0x70 之後重讀 ids[0] 讀到等級低位元組，清單收進等級而不是編號", "args": [49624, 21683, 1], "pokes": [
+      {"addr": "ds:C1D8", "hex": "02"}, {"addr": "lin:66C23", "hex": "77"}, {"addr": "ds:95B6", "hex": "55", "repeat": 16}]},
+    {"note": "別名：ids ＝ ds:95B5，ids[1] 就是清單第一格；第 0 圈寫入清單後第 1 圈讀到剛寫入的編號", "args": [38325, 21683, 3], "pokes": [
+      {"addr": "ds:95B5", "hex": "0002030405"}, {"addr": "ds:C0E4", "hex": "AAAA"}, {"addr": "ds:C1D8", "hex": "AAAA"}, {"addr": "ds:C252", "hex": "AAAA"}]},
+    {"note": "ids 在 8000:FFFF：ids[1] 回繞到 8000:0000", "args": [65535, 32768, 3], "pokes": [
+      {"addr": "lin:8FFFF", "hex": "00"}, {"addr": "lin:80000", "hex": "0203"}, {"addr": "ds:C0E4", "hex": "AAAA"}, {"addr": "ds:C1D8", "hex": "AAAA"}, {"addr": "ds:C252", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 16}]},
+    {"note": "同一艦隊編號重複出現（0,0,0）：清單收三次", "args": [0, 40192, 3], "pokes": [
+      {"addr": "lin:9D000", "hex": "000000"}, {"addr": "ds:C0E4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 16}]},
+    {"note": "艦艇池指標段改 9D00、位移 0：等級來自 lin 9D017 起（p × 0x4E 後的 +0x17）", "args": [0, 40192, 1], "pokes": [
+      {"addr": "lin:9D000", "hex": "00"}, {"addr": "lin:9E000", "hex": "00"}, {"addr": "ds:CFB4", "hex": "0000009E"}, {"addr": "lin:9E017", "hex": "07"}, {"addr": "ds:C0E4", "hex": "AAAA"}, {"addr": "ds:95B6", "hex": "55", "repeat": 16}]},
+    {"note": "等級 0xFF 與 0x80（無號比較）：艦隊 0 第 0 組的艦艇等級 0xFF", "args": [0, 40192, 1], "pokes": [
+      {"addr": "lin:9D000", "hex": "00"}, {"addr": "ds:C0E4", "hex": "AAAA"}, {"addr": "ds:C083", "hex": "01"}, {"addr": "ds:C084", "hex": "0000"}, {"addr": "lin:668C9", "hex": "FF"}, {"addr": "ds:95B6", "hex": "55", "repeat": 16}]}
+  ],
+  "iters": 12000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100,
+  "step_budget": 400000
+}

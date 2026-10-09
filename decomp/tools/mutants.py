@@ -1,6 +1,9 @@
 """負向對照：套用 specs/<id>.mutants.json 的每個突變到 C 參考實作，重編並跑向量檔，
 每個突變都必須被抓到（檢查程式退出碼非 0）。有任何突變存活就失敗。
 
+其他已通過的函式與 check_diff.c 只預編一次成物件檔，每個突變只重編被突變的那個檔再連結；
+預編失敗的檔案（別人寫到一半的）略過並印警告，連結時缺符號才算錯誤。
+
 用法（Docker 內，python3 -I）：
     mutants.py <id> <向量檔所在目錄> <vectors檔名>
 """
@@ -8,6 +11,7 @@ import json
 import os
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 
 d = "/d"
 fid, vdir, vname = sys.argv[1:4]
@@ -19,6 +23,29 @@ others = [f"{d}/src/f_{i}.c" for i in done_ids if f"f_{i}.c" != src_name and os.
 survivors = []
 timeouts = []
 os.makedirs("/build/m", exist_ok=True)
+objdir = "/build/m/obj"
+os.makedirs(objdir, exist_ok=True)
+CFLAGS = ["-std=gnu99", "-O1", "-Wall", "-Wextra", f"-I{d}/include"]
+
+
+def compile_obj(src):
+    out = f"{objdir}/{os.path.basename(src)}.o"
+    r = subprocess.run(["gcc", *CFLAGS, "-c", src, "-o", out], capture_output=True, text=True)
+    return src, out, r
+
+
+with ThreadPoolExecutor(max_workers=4) as ex:
+    pre = list(ex.map(compile_obj, others + [f"{d}/test/check_diff.c"]))
+objs = []
+for src, out, r in pre:
+    if r.returncode == 0:
+        objs.append(out)
+    elif src.endswith("check_diff.c"):
+        print(f"check_diff.c 編譯失敗\n{r.stderr}")
+        sys.exit(2)
+    else:
+        print(f"警告：{os.path.basename(src)} 編譯失敗，略過（別人寫到一半的檔案？）")
+
 for i, m in enumerate(muts):
     if orig.count(m["find"]) != 1:
         print(f"突變 {m['name']}：原始碼中找到 {orig.count(m['find'])} 處（必須剛好 1 處）")
@@ -26,8 +53,7 @@ for i, m in enumerate(muts):
     mut_src = f"/build/m/{src_name}"
     open(mut_src, "w").write(orig.replace(m["find"], m["replace"]))
     exe = f"/build/m/check_{i}"
-    cc = subprocess.run(["gcc", "-std=gnu99", "-O1", "-Wall", "-Wextra", f"-I{d}/include", mut_src, *others,
-                         f"{d}/test/check_diff.c", "-o", exe], capture_output=True, text=True)
+    cc = subprocess.run(["gcc", *CFLAGS, mut_src, *objs, "-o", exe], capture_output=True, text=True)
     if cc.returncode != 0:
         print(f"突變 {m['name']}：編譯失敗\n{cc.stderr}")
         sys.exit(2)
@@ -39,7 +65,7 @@ for i, m in enumerate(muts):
         caught = True      # 突變造成無窮迴圈或極慢，視為被抓到；但只是弱證據，另外計數
         timeouts.append(m["name"])
         last = "（逾時 180 秒，視為被抓到，弱證據）"
-    print(f"  {'抓到' if caught else '存活'}  {m['name']}  {last}")
+    print(f"  {'抓到' if caught else '存活'}  {m['name']}  {last}", flush=True)
     if not caught:
         survivors.append(m["name"])
 print(f"突變 {len(muts)} 個，存活 {len(survivors)} 個" + (f"：{', '.join(survivors)}" if survivors else ""))

@@ -1,0 +1,20 @@
+[
+  {"name": "陣營判斷取反", "find": "if (rd8(m, DS(0x8F1D)) == 0) {", "replace": "if (rd8(m, DS(0x8F1D)) != 0) {"},
+  {"name": "陣營 0 的空位圖塊 0x2D", "find": "wr8(m, DS(0x984D), 0x2C);", "replace": "wr8(m, DS(0x984D), 0x2D);"},
+  {"name": "陣營 0 的基底圖塊 0x25", "find": "wr8(m, DS(0x984E), 0x24);", "replace": "wr8(m, DS(0x984E), 0x25);"},
+  {"name": "陣營 1 的空位圖塊 0x4B", "find": "wr8(m, DS(0x984D), 0x4A);", "replace": "wr8(m, DS(0x984D), 0x4B);"},
+  {"name": "陣營 1 的基底圖塊 0x43", "find": "wr8(m, DS(0x984E), 0x42);", "replace": "wr8(m, DS(0x984E), 0x43);"},
+  {"name": "只在陣營 0 寫圖塊", "find": "} else {\n        wr8(m, DS(0x984D), 0x4A);\n        wr8(m, DS(0x984E), 0x42);\n    }", "replace": "}"},
+  {"name": "工作表少清一個 byte", "find": "f_3C9C_000A(m, 0x977A, GIN3_DS, 0xFF, 0xA4);", "replace": "f_3C9C_000A(m, 0x977A, GIN3_DS, 0xFF, 0xA3);"},
+  {"name": "工作表填 0xFE", "find": "f_3C9C_000A(m, 0x977A, GIN3_DS, 0xFF, 0xA4);", "replace": "f_3C9C_000A(m, 0x977A, GIN3_DS, 0xFE, 0xA4);"},
+  {"name": "工作表位移 0x977B", "find": "f_3C9C_000A(m, 0x977A, GIN3_DS, 0xFF, 0xA4);", "replace": "f_3C9C_000A(m, 0x977B, GIN3_DS, 0xFF, 0xA4);"},
+  {"name": "星域編號在清表和寫入之前先讀", "find": "    f_3C9C_000A(m, 0x977A, GIN3_DS, 0xFF, 0xA4);\n    wr16(m, DS(0x9878), fleet_seg);\n    wr16(m, DS(0x9876), fleet_off);\n    kind = rd8(m, LIN(fleet_seg, fleet_off + 6));", "replace": "    kind = rd8(m, LIN(fleet_seg, fleet_off + 6));\n    f_3C9C_000A(m, 0x977A, GIN3_DS, 0xFF, 0xA4);\n    wr16(m, DS(0x9878), fleet_seg);\n    wr16(m, DS(0x9876), fleet_off);"},
+  {"name": "星域編號在 ds:9876/9878 寫入之前讀", "find": "    wr16(m, DS(0x9878), fleet_seg);\n    wr16(m, DS(0x9876), fleet_off);\n    kind = rd8(m, LIN(fleet_seg, fleet_off + 6));", "replace": "    kind = rd8(m, LIN(fleet_seg, fleet_off + 6));\n    wr16(m, DS(0x9878), fleet_seg);\n    wr16(m, DS(0x9876), fleet_off);"},
+  {"name": "星域編號符號延伸", "find": "kind = rd8(m, LIN(fleet_seg, fleet_off + 6));", "replace": "kind = (uint16_t)(int16_t)(int8_t)rd8(m, LIN(fleet_seg, fleet_off + 6));"},
+  {"name": "星域記錄步距 0x7D", "find": "(uint16_t)(kind * 0x7Eu)", "replace": "(uint16_t)(kind * 0x7Du)"},
+  {"name": "星域表基底 0xA79D", "find": "0xA79Cu +", "replace": "0xA79Du +"},
+  {"name": "星域記錄位移不回繞而是飽和", "find": "wr16(m, DS(0x9872), (uint16_t)(0xA79Cu + (uint16_t)(kind * 0x7Eu)));", "replace": "wr16(m, DS(0x9872), (uint16_t)(0xA79Cu + kind * 0x7Eu > 0xFFFFu ? 0xFFFFu : 0xA79Cu + kind * 0x7Eu));"},
+  {"name": "艦隊段存成 DS", "find": "wr16(m, DS(0x9878), fleet_seg);", "replace": "wr16(m, DS(0x9878), GIN3_DS);"},
+  {"name": "艦隊位移不存", "find": "wr16(m, DS(0x9876), fleet_off);", "replace": "(void)fleet_off;"},
+  {"name": "星域段不存", "find": "wr16(m, DS(0x9874), GIN3_DS);", "replace": "(void)m;"}
+]

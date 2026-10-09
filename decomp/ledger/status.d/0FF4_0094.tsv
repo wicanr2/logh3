@@ -1,0 +1,2 @@
+golem_linear	level	source	evidence
+0ffd4	diff-tested	decomp/src/f_0FF4_0094.c	decomp/specs/0FF4_0094.json

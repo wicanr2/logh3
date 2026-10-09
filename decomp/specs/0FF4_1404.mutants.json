@@ -1,0 +1,21 @@
+[
+  {"name": "艦種 5 改 4", "find": "if (rd8(m, LIN(fleet_seg, slot + 2)) == 5)", "replace": "if (rd8(m, LIN(fleet_seg, slot + 2)) == 4)"},
+  {"name": "艦種 6 改 7", "find": "if (rd8(m, LIN(fleet_seg, slot + 2)) == 6)", "replace": "if (rd8(m, LIN(fleet_seg, slot + 2)) == 7)"},
+  {"name": "艦種 5 的計數寫到 out_b", "find": "wr8(m, LIN(a_seg, a_off), (uint8_t)(rd8(m, LIN(a_seg, a_off)) + 1));", "replace": "wr8(m, LIN(b_seg, b_off), (uint8_t)(rd8(m, LIN(b_seg, b_off)) + 1));"},
+  {"name": "艦種 6 的計數寫到 out_a", "find": "wr8(m, LIN(b_seg, b_off), (uint8_t)(rd8(m, LIN(b_seg, b_off)) + 1));", "replace": "wr8(m, LIN(a_seg, a_off), (uint8_t)(rd8(m, LIN(a_seg, a_off)) + 1));"},
+  {"name": "艦種 5 一次加 2", "find": "wr8(m, LIN(a_seg, a_off), (uint8_t)(rd8(m, LIN(a_seg, a_off)) + 1));", "replace": "wr8(m, LIN(a_seg, a_off), (uint8_t)(rd8(m, LIN(a_seg, a_off)) + 2));"},
+  {"name": "艦種 5 改成設定而非累加", "find": "wr8(m, LIN(a_seg, a_off), (uint8_t)(rd8(m, LIN(a_seg, a_off)) + 1));", "replace": "wr8(m, LIN(a_seg, a_off), 1);"},
+  {"name": "不清 out_a", "find": "    wr8(m, LIN(a_seg, a_off), 0);\n", "replace": ""},
+  {"name": "不清 out_b", "find": "    wr8(m, LIN(b_seg, b_off), 0);\n", "replace": ""},
+  {"name": "第二個比較用第一個比較讀到的值", "find": "        if (rd8(m, LIN(fleet_seg, slot + 2)) == 5)\n            wr8(m, LIN(a_seg, a_off), (uint8_t)(rd8(m, LIN(a_seg, a_off)) + 1));\n        if (rd8(m, LIN(fleet_seg, slot + 2)) == 6)", "replace": "        uint8_t kind0 = rd8(m, LIN(fleet_seg, slot + 2));\n        if (kind0 == 5)\n            wr8(m, LIN(a_seg, a_off), (uint8_t)(rd8(m, LIN(a_seg, a_off)) + 1));\n        if (kind0 == 6)"},
+  {"name": "迴圈多跑一圈", "find": "while (j < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {", "replace": "while (j < rd8(m, LIN(fleet_seg, fleet_off + 0x0F)) + 1u && j != 255) {"},
+  {"name": "迴圈少跑一圈", "find": "while (j < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {", "replace": "while (j + 1u < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {"},
+  {"name": "組數有號比較", "find": "while (j < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {", "replace": "while ((int8_t)j < (int8_t)rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {"},
+  {"name": "組數讀 +0x0E", "find": "while (j < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {", "replace": "while (j < rd8(m, LIN(fleet_seg, fleet_off + 0x0E))) {"},
+  {"name": "組欄位從 +0x0F 起", "find": "uint16_t slot = (uint16_t)(fleet_off + 0x10u);", "replace": "uint16_t slot = (uint16_t)(fleet_off + 0x0Fu);"},
+  {"name": "組欄位位移飽和不回繞", "find": "uint16_t slot = (uint16_t)(fleet_off + 0x10u);", "replace": "uint16_t slot = (fleet_off + 0x10u > 0xFFFFu) ? 0xFFFFu : (uint16_t)(fleet_off + 0x10u);"},
+  {"name": "組步距 3", "find": "slot = (uint16_t)(slot + 4);", "replace": "slot = (uint16_t)(slot + 3);"},
+  {"name": "艦種讀 [3]", "find": "if (rd8(m, LIN(fleet_seg, slot + 2)) == 5)", "replace": "if (rd8(m, LIN(fleet_seg, slot + 3)) == 5)"},
+  {"name": "艦種 5 判斷用 word", "find": "if (rd8(m, LIN(fleet_seg, slot + 2)) == 5)", "replace": "if (rd16(m, LIN(fleet_seg, slot + 2)) == 5)"},
+  {"name": "計數器用 16 位元寫", "find": "wr8(m, LIN(b_seg, b_off), (uint8_t)(rd8(m, LIN(b_seg, b_off)) + 1));", "replace": "wr16(m, LIN(b_seg, b_off), (uint16_t)(rd8(m, LIN(b_seg, b_off)) + 1));"}
+]

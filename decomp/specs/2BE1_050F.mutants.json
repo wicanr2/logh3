@@ -1,0 +1,11 @@
+[
+  {"name": "旗標值改2", "find": "wr8(m, DS(si + 4), 1);", "replace": "wr8(m, DS(si + 4), 2);"},
+  {"name": "旗標位移改5", "find": "wr8(m, DS(si + 4), 1);", "replace": "wr8(m, DS(si + 5), 1);"},
+  {"name": "分組項大小改9", "find": "(uint16_t)(id * 10u)", "replace": "(uint16_t)(id * 9u)"},
+  {"name": "分組表起點改D071", "find": "0xD072u + (uint16_t)(id * 10u)", "replace": "0xD071u + (uint16_t)(id * 10u)"},
+  {"name": "組數只讀一次", "find": "while (i < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {", "replace": "uint8_t cnt0 = rd8(m, LIN(fleet_seg, fleet_off + 0x0F));\n    while (i < cnt0) {"},
+  {"name": "組間距改2", "find": "p = (uint16_t)(p + 4);", "replace": "p = (uint16_t)(p + 2);"},
+  {"name": "組別讀+2", "find": "uint8_t id = rd8(m, LIN(fleet_seg, p + 3));", "replace": "uint8_t id = rd8(m, LIN(fleet_seg, p + 2));"},
+  {"name": "從第1組開始", "find": "uint16_t p = (uint16_t)(fleet_off + 0x10);", "replace": "uint16_t p = (uint16_t)(fleet_off + 0x14);"},
+  {"name": "迴圈含第n組（byte 計數器加上界）", "find": "while (i < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {", "replace": "while (i < rd8(m, LIN(fleet_seg, fleet_off + 0x0F)) || (i == rd8(m, LIN(fleet_seg, fleet_off + 0x0F)) && i != 0xFF)) {"}
+]

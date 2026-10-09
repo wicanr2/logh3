@@ -1,0 +1,32 @@
+{
+  "id": "1213_007B",
+  "entry": "1213:007B",
+  "conv": "far",
+  "ret": "none",
+  "size": 27,
+  "code_sha256_16": "61c368d88fd0dd61",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "費沙易主登記。星域表 ds:A79C 每筆 126 bytes，星域編號在 +0x11；基底 ds:988E 為 0、ds:8F48 為 0，所以寫 1 看得出來。",
+  "tables": {
+    "region": {"base": "ds:A79C", "stride": 126, "count": 32}
+  },
+  "args": [
+    {"name": "region", "kind": "farptr", "gen": {"table": "region"}}
+  ],
+  "seeds": [
+    {"note": "星域 14（+0x11 ＝ 0x0E）、ds:8F48 ＝ 0：寫 ds:988E ← 1", "args": [44672, 21683]},
+    {"note": "星域 14、ds:8F48 ＝ 1：放行旗標擋掉，不寫", "args": [44672, 21683], "pokes": [{"addr": "ds:8F48", "hex": "01"}]},
+    {"note": "星域 14、ds:8F48 ＝ 0xFF：非 0 一律擋掉", "args": [44672, 21683], "pokes": [{"addr": "ds:8F48", "hex": "FF"}]},
+    {"note": "星域 13（+0x11 ＝ 0x0D）：不寫", "args": [44546, 21683]},
+    {"note": "星域 15（+0x11 ＝ 0x0F）：不寫", "args": [44798, 21683]},
+    {"note": "星域 14 的 +0x11 改 0x8E：不寫（byte 全等比較）", "args": [44672, 21683], "pokes": [{"addr": "ds:AE91", "hex": "8E"}]},
+    {"note": "星域 14 的 +0x11 改 0x4E：不寫", "args": [44672, 21683], "pokes": [{"addr": "ds:AE91", "hex": "4E"}]},
+    {"note": "別名：指標指到 ds:988E－0x11，被比的 byte 就是旗標本身（0x0E），寫入把它改成 1", "args": [39037, 21683], "pokes": [{"addr": "ds:988E", "hex": "0E"}]},
+    {"note": "星域 5 的 +0x11 改 0x0E（任何星域記錄，只看這一格）", "args": [43538, 21683], "pokes": [{"addr": "ds:AA23", "hex": "0E"}]}
+  ],
+  "iters": 8000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

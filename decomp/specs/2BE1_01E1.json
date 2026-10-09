@@ -1,0 +1,32 @@
+{
+  "id": "2BE1_01E1",
+  "entry": "2BE1:01E1",
+  "conv": "far",
+  "ret": "ax",
+  "size": 58,
+  "code_sha256_16": "8bd89f141ce7e66e",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "反正切表查找，表在 ds:593A（基底狀態 64 筆遞增值 0 到 41713，第 65 筆是表外資料 64）。",
+  "args": [
+    {"name": "ratio", "kind": "word", "gen": {"choices": [0, 1, 24, 25, 26, 49, 50, 51, 100, 255, 256, 1023, 1024, 1025, 20843, 20844, 41712, 41713, 41714, 64, 65, 32767, 32768, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0]},
+    {"args": [1]},
+    {"args": [25]},
+    {"args": [26]},
+    {"args": [41713]},
+    {"args": [41714]},
+    {"args": [64]},
+    {"args": [65]},
+    {"args": [65535]},
+    {"args": [41714], "pokes": [{"addr": "ds:59BA", "hex": "ffff"}]},
+    {"args": [41714], "pokes": [{"addr": "ds:59BA", "hex": "a2a3"}]},
+    {"args": [41714], "pokes": [{"addr": "ds:59B8", "hex": "a2a3"}]}
+  ],
+  "iters": 6000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

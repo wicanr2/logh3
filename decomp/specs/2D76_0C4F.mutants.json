@@ -1,0 +1,10 @@
+[
+  {"name": "起始組改0", "find": "uint8_t i = 1;", "replace": "uint8_t i = 0;"},
+  {"name": "全同的回傳值改0xFFFE", "find": "return 0xFFFFu;", "replace": "return 0xFFFEu;"},
+  {"name": "槽與艦種對調", "find": "if (rd8(m, LIN(fleet_seg, p + 3)) == slot) {", "replace": "if (rd8(m, LIN(fleet_seg, p + 2)) == slot) {"},
+  {"name": "迴圈含第n組（byte 計數器加上界）", "find": "while (i < rd8(m, LIN(fleet_seg, fleet_off + 0x0F))) {", "replace": "while (i < rd8(m, LIN(fleet_seg, fleet_off + 0x0F)) || (i == rd8(m, LIN(fleet_seg, fleet_off + 0x0F)) && i != 0xFF)) {"},
+  {"name": "槽取整個word", "find": "uint8_t slot = (uint8_t)slot_word;", "replace": "uint16_t slot = slot_word;"},
+  {"name": "艦種取整個word", "find": "uint8_t kind = (uint8_t)kind_word;", "replace": "uint16_t kind = kind_word;"},
+  {"name": "回傳組號加一", "find": "            return i;\n", "replace": "            return (uint16_t)(i + 1);\n"},
+  {"name": "組間距改成2", "find": "        p = (uint16_t)(p + 4);\n    }\n    return 0;", "replace": "        p = (uint16_t)(p + 2);\n    }\n    return 0;"}
+]

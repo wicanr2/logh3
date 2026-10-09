@@ -1,0 +1,13 @@
+[
+  {"name": "遮罩改0x1F", "find": "(uint8_t)(rd8(m, DS(rec + 8)) & 0x0Fu)", "replace": "(uint8_t)(rd8(m, DS(rec + 8)) & 0x1Fu)"},
+  {"name": "左移改3位", "find": "(uint8_t)(key << 4)", "replace": "(uint8_t)(key << 3)"},
+  {"name": "餘數用n加一", "find": "(uint16_t)(r % n)", "replace": "(uint16_t)(r % (n + 1u))"},
+  {"name": "清單起點不跳過筆數byte", "find": "    list = (uint16_t)(list + 1);\n", "replace": ""},
+  {"name": "記錄大小改27", "find": "(uint16_t)(idx * 28u)", "replace": "(uint16_t)(idx * 27u)"},
+  {"name": "類別1與類別2的清單對調", "find": "case 0x05AE: return 0x5F70;\n    case 0x05B8: return 0x5F6C;", "replace": "case 0x05AE: return 0x5F6C;\n    case 0x05B8: return 0x5F70;"},
+  {"name": "idx取整個word", "find": "uint8_t idx = (uint8_t)idx_word;", "replace": "uint16_t idx = idx_word;"},
+  {"name": "不先清高四位", "find": "    wr8(m, DS(rec + 8), (uint8_t)(rd8(m, DS(rec + 8)) & 0x0Fu));\n", "replace": ""},
+  {"name": "亂數多取一次", "find": "    r = f_3CD5_000C(m);\n", "replace": "    (void)f_3CD5_000C(m);\n    r = f_3CD5_000C(m);\n"},
+  {"name": "最後一次寫入位移改+9", "find": "wr8(m, DS(rec + 8), (uint8_t)(rd8(m, DS(rec + 8)) | (uint8_t)(key << 4)));", "replace": "wr8(m, DS(rec + 9), (uint8_t)(rd8(m, DS(rec + 8)) | (uint8_t)(key << 4)));"},
+  {"name": "跳躍表索引不乘2", "find": "DS(0x602A + kind * 2)", "replace": "DS(0x602A + kind)"}
+]

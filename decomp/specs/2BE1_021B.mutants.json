@@ -1,0 +1,10 @@
+[
+  {"name": "上界改成大於128", "find": "if ((int16_t)d >= 0x80)", "replace": "if ((int16_t)d > 0x80)"},
+  {"name": "下界改成大於等於-128", "find": "if ((int16_t)d > (int16_t)0xFF80)", "replace": "if ((int16_t)d >= (int16_t)0xFF80)"},
+  {"name": "上界改成無號比較", "find": "if ((int16_t)d >= 0x80)", "replace": "if (d >= 0x80)"},
+  {"name": "下加256改255", "find": "return (uint16_t)(d + 0x100u);", "replace": "return (uint16_t)(d + 0xFFu);"},
+  {"name": "上減256改255", "find": "return (uint16_t)(d + 0xFF00u);", "replace": "return (uint16_t)(d + 0xFF01u);"},
+  {"name": "a取整個word", "find": "(uint16_t)(uint8_t)a_word", "replace": "a_word"},
+  {"name": "b取整個word", "find": "(uint16_t)(uint8_t)b_word", "replace": "b_word"},
+  {"name": "相減順序對調", "find": "uint16_t d = (uint16_t)((uint16_t)(uint8_t)a_word - (uint16_t)(uint8_t)b_word);", "replace": "uint16_t d = (uint16_t)((uint16_t)(uint8_t)b_word - (uint16_t)(uint8_t)a_word);"}
+]

@@ -1,0 +1,20 @@
+[
+  {"name": "資金門檻改成小於等於", "find": "funds_lo < 0x4E20u", "replace": "funds_lo <= 0x4E20u"},
+  {"name": "資金高字不檢查", "find": "use_table = (funds_hi == 0 && funds_lo < 0x4E20u);", "replace": "use_table = (funds_lo < 0x4E20u);"},
+  {"name": "side判斷改成非0", "find": "if (side == 1) {", "replace": "if (side != 0) {"},
+  {"name": "除數改101", "find": "/ 100u);\n    if (kind <= 3) {", "replace": "/ 101u);\n    if (kind <= 3) {"},
+  {"name": "乘積不截成16位元", "find": "(uint16_t)(si * rd8(m, LIN(rec_seg, rec_off + 0x0B))) / 100u", "replace": "(si * rd8(m, LIN(rec_seg, rec_off + 0x0B))) / 100u"},
+  {"name": "三分之二改右移2", "find": "(uint16_t)(si * 3u) >> 1", "replace": "(uint16_t)(si * 3u) >> 2"},
+  {"name": "三分之二的判斷不遮低四位", "find": "(rd8(m, LIN(rec_seg, rec_off + 8)) & 0x0Fu) == 1", "replace": "(rd8(m, LIN(rec_seg, rec_off + 8)) & 0x1Fu) == 1"},
+  {"name": "三分之二乘積不截成16位元", "find": "si = (uint16_t)((uint16_t)(si * 3u) >> 1);", "replace": "si = (uint16_t)((si * 3u) >> 1);"},
+  {"name": "kind1欄位改+0x14", "find": "case 0x04AE: return 0x13;", "replace": "case 0x04AE: return 0x14;"},
+  {"name": "kind3欄位改+0x16", "find": "case 0x04CC: return 0x17;", "replace": "case 0x04CC: return 0x16;"},
+  {"name": "default位址也乘", "find": "default: return -1;", "replace": "case 0x04D9: return 0x14;\n    default: return -1;"},
+  {"name": "等級乘2改乘3", "find": "si = (uint16_t)(lvl * 2);", "replace": "si = (uint16_t)(lvl * 3);"},
+  {"name": "表項索引不乘2", "find": "si = rd16(m, DS(0x5FCA + lvl * 2));", "replace": "si = rd16(m, DS(0x5FCA + lvl));"},
+  {"name": "跳躍表索引不乘2", "find": "DS(0x6022 + kind * 2)", "replace": "DS(0x6022 + kind)"},
+  {"name": "kind取整個word", "find": "uint8_t kind = (uint8_t)kind_word;", "replace": "uint16_t kind = kind_word;"},
+  {"name": "寫入位移改+0x1B", "find": "(uint16_t)(rec_off + 0x1A), si);", "replace": "(uint16_t)(rec_off + 0x1B), si);"},
+  {"name": "回傳只留低位元組", "find": "    return si;\n}", "replace": "    return (uint8_t)si;\n}"},
+  {"name": "拿掉ROM區寫入無效的模型", "find": "    if (lin < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]

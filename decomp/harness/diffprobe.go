@@ -91,6 +91,7 @@ type Spec struct {
 	Stubs       []StubSpec           `json:"stubs"`  // 硬體葉函式替身：不執行原函式，記錄呼叫並回傳記錄下來的值
 	StepBudget  int                  `json:"step_budget"` // 每案步數上限；0 ＝ 預設 200000。輸出很大的函式（例如解壓縮）才需要調高
 	Note        string               `json:"note"`        // 說明文字，探針不使用
+	Freeze      []FreezeSpec         `json:"freeze"` // 探索時不突變的位址範圍（例如跳躍表）；seeds 的 pokes 仍可改它
 }
 
 // StubSpec 描述一個被替身取代的函式（通常是碰硬體的葉函式）。
@@ -109,6 +110,13 @@ type traceEntry struct {
 	id   string
 	args []uint16
 	ret  uint32
+}
+
+// FreezeSpec 是一段不讓隨機突變碰的位址：addr 同 pokeAddr（ds:OFF、SEG:OFF、lin:ADDR），len 是 bytes 數（十進位）。
+// 用在跳躍表這類「讀取集的一部分、但突變成別的值會跳進鄰近函式中間」的位址。
+type FreezeSpec struct {
+	Addr string `json:"addr"`
+	Len  int    `json:"len"`
 }
 
 // PokeSpec 把一段 hex bytes 寫到指定位址：ds:OFF、SEG:OFF（hex）或 lin:ADDR。
@@ -191,6 +199,9 @@ type probe struct {
 	curReads  map[uint32]struct{}
 	recording bool
 	vgaRead   bool // 這一案是否讀了 A0000 到 BFFFF（平面模式下那裡不在 Mem[] 裡，WatchReads 看不到）
+	frozenLo  []uint32
+	frozenHi  []uint32
+	frozenOK  bool
 }
 
 type resolvedTable struct {
@@ -526,6 +537,9 @@ func (p *probe) learn(res result) {
 		if a >= 0xA0000 {
 			continue
 		}
+		if p.frozen(a) {
+			continue
+		}
 		if _, ok := p.readSeen[a]; !ok {
 			p.readSeen[a] = struct{}{}
 			p.readPool = append(p.readPool, a)
@@ -561,6 +575,9 @@ func (p *probe) mutate(in *input) *input {
 			cur = v
 		}
 		set := func(addr uint32, v uint8) {
+			if p.frozen(addr) {
+				return
+			}
 			if p.base[addr] == v {
 				delete(out.muts, addr)
 			} else {
@@ -1064,4 +1081,22 @@ func (b *vgaWatchBus) Read8(a uint32) uint8 {
 		*b.hit = true
 	}
 	return b.Bus.Read8(a)
+}
+
+// frozen 回報 addr 是否落在描述檔 freeze 指定的範圍內。
+func (p *probe) frozen(addr uint32) bool {
+	if !p.frozenOK {
+		for _, fz := range p.spec.Freeze {
+			lo := p.pokeAddr(fz.Addr)
+			p.frozenLo = append(p.frozenLo, lo)
+			p.frozenHi = append(p.frozenHi, lo+uint32(fz.Len))
+		}
+		p.frozenOK = true
+	}
+	for i := range p.frozenLo {
+		if addr >= p.frozenLo[i] && addr < p.frozenHi[i] {
+			return true
+		}
+	}
+	return false
 }

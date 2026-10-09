@@ -1,0 +1,38 @@
+{
+  "id": "0FF4_10C1",
+  "entry": "0FF4:10C1",
+  "conv": "far",
+  "ret": "none",
+  "size": 102,
+  "code_sha256_16": "13e897bc77f8e808",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "編成視窗「決定」：工作表 ds:981E（10 × 4 bytes）寫回艦隊 +0x10 起，組數 ds:984B 寫回 +0x0F。基底 ds:984B ＝ 1 且艦隊 0 的內容與工作表已一致，seeds 先把艦隊 0 的組欄位填 0xEE 才看得出少寫。別名 seeds 把艦隊指標指到工作表或 ds:984B 本身。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}}
+  ],
+  "seeds": [
+    {"note": "ds:984B ＝ 0：不進迴圈，只寫 +0x0F ← 0", "args": [49268, 21683], "pokes": [{"addr": "ds:984B", "hex": "00"}, {"addr": "ds:C084", "hex": "EE", "repeat": 16}]},
+    {"note": "ds:984B ＝ 3：複製三組", "args": [49268, 21683], "pokes": [{"addr": "ds:984B", "hex": "03"}, {"addr": "ds:981E", "hex": "11223344556677889900AABBCCDDEEFF"}, {"addr": "ds:C084", "hex": "EE", "repeat": 16}]},
+    {"note": "ds:984B ＝ 1", "args": [49268, 21683], "pokes": [{"addr": "ds:984B", "hex": "01"}, {"addr": "ds:981E", "hex": "11223344556677889900AABBCCDDEEFF"}, {"addr": "ds:C084", "hex": "EE", "repeat": 16}]},
+    {"note": "ds:984B ＝ 10：滿編十組", "args": [49268, 21683], "pokes": [{"addr": "ds:984B", "hex": "0A"}, {"addr": "ds:981E", "hex": "0102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F2021222324252627"}, {"addr": "ds:C084", "hex": "EE", "repeat": 48}]},
+    {"note": "別名：艦隊+0x12 就是 ds:984B；第 0 組的 [2] ＝ 0 寫進 ds:984B，迴圈上界中途變成 0，最後 +0x0F 寫入新的 0", "args": [38969, 21683], "pokes": [{"addr": "ds:984B", "hex": "03"}, {"addr": "ds:981E", "hex": "AABB00DDEEFF1122334455667788"}]},
+    {"note": "別名：同上但第 0 組的 [2] ＝ 2，上界改成 2（縮小），迴圈只跑兩圈", "args": [38969, 21683], "pokes": [{"addr": "ds:984B", "hex": "05"}, {"addr": "ds:981E", "hex": "AABB02DD11223344556677889900AABBCCDD"}]},
+    {"note": "別名：同上但第 0 組的 [2] ＝ 9，上界改成 9（放大）", "args": [38969, 21683], "pokes": [{"addr": "ds:984B", "hex": "02"}, {"addr": "ds:981E", "hex": "AABB09DD11223344556677889900AABBCCDD"}]},
+    {"note": "別名：目的地從 ds:981D 起（工作表前一格），[+2] 寫進 981F 之後才讀 word 來源", "args": [38925, 21683], "pokes": [{"addr": "ds:984B", "hex": "03"}, {"addr": "ds:981D", "hex": "0111223344556677889900AABBCC"}]},
+    {"note": "別名：目的地與工作表相同（原地複製）", "args": [38926, 21683], "pokes": [{"addr": "ds:984B", "hex": "03"}, {"addr": "ds:981E", "hex": "11223344556677889900AABBCCDDEEFF"}]},
+    {"note": "別名：目的地是工作表往後 2 bytes（ds:9820）", "args": [38928, 21683], "pokes": [{"addr": "ds:984B", "hex": "04"}, {"addr": "ds:981E", "hex": "11223344556677889900AABBCCDDEEFF"}]},
+    {"note": "別名：目的地是工作表往後一組（ds:9822），第 i 組複製到第 i+1 組", "args": [38930, 21683], "pokes": [{"addr": "ds:984B", "hex": "04"}, {"addr": "ds:981E", "hex": "11223344556677889900AABBCCDDEEFF"}]},
+    {"note": "艦隊在別的段 9D00:0000，三組", "args": [0, 40192], "pokes": [{"addr": "ds:984B", "hex": "03"}, {"addr": "ds:981E", "hex": "11223344556677889900AABBCCDDEEFF"}, {"addr": "lin:9D010", "hex": "EE", "repeat": 16}]},
+    {"note": "ds:984B ＝ 0xFF：255 圈，寫過艦隊記錄之後的記憶體", "args": [49268, 21683], "pokes": [{"addr": "ds:984B", "hex": "FF"}]},
+    {"note": "艦隊在 8000:FFEF：第 0 組的目的位移 0xFFFF，word 的高位元組回繞到同一段的位移 0；[2][3] 在位移 1、2", "args": [65519, 32768], "pokes": [{"addr": "ds:984B", "hex": "02"}, {"addr": "ds:981E", "hex": "1122334455667788"}, {"addr": "lin:8FFFE", "hex": "EEEE"}, {"addr": "lin:80000", "hex": "EE", "repeat": 16}]},
+    {"note": "ds:984B ＝ 0x80：無號比較（有號會視為負數而不進迴圈）", "args": [49268, 21683], "pokes": [{"addr": "ds:984B", "hex": "80"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

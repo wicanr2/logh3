@@ -1,0 +1,11 @@
+[
+  {"name": "星域13擁有者0改1的基底", "find": "base = 4;", "replace": "base = 5;"},
+  {"name": "其他的基底改7", "find": "base = 8;", "replace": "base = 7;"},
+  {"name": "旗標f判斷反向", "find": "if (f == 0)\n        return base;", "replace": "if (f != 0)\n        return base;"},
+  {"name": "b等於0與1對調", "find": "if (b == 0)\n        return (uint16_t)(base + 1);", "replace": "if (b == 1)\n        return (uint16_t)(base + 1);"},
+  {"name": "b等於1改2", "find": "if (b == 1)\n        return (uint16_t)(base + 2);", "replace": "if (b == 2)\n        return (uint16_t)(base + 2);"},
+  {"name": "其他b的碼改4", "find": "return (uint16_t)(base + 3);", "replace": "return (uint16_t)(base + 4);"},
+  {"name": "a讀錯位移", "find": "uint8_t a = rd8(m, DS(0xAE02 + 0x12));", "replace": "uint8_t a = rd8(m, DS(0xAE02 + 0x11));"},
+  {"name": "b讀錯位移", "find": "b = rd8(m, DS(0xAE80 + 0x12));", "replace": "b = rd8(m, DS(0xAE80 + 0x11));"},
+  {"name": "f讀錯位移", "find": "f = rd8(m, DS(0x8F48));", "replace": "f = rd8(m, DS(0x8F49));"}
+]

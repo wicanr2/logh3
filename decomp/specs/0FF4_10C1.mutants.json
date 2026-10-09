@@ -1,0 +1,20 @@
+[
+  {"name": "迴圈多跑一圈", "find": "while (i < rd8(m, DS(0x984B))) {", "replace": "while (i < rd8(m, DS(0x984B)) + 1u && i != 255) {"},
+  {"name": "迴圈少跑一圈", "find": "while (i < rd8(m, DS(0x984B))) {", "replace": "while (i + 1u < rd8(m, DS(0x984B))) {"},
+  {"name": "上界有號比較", "find": "while (i < rd8(m, DS(0x984B))) {", "replace": "while ((int8_t)i < (int8_t)rd8(m, DS(0x984B))) {"},
+  {"name": "上界讀 ds:984C", "find": "while (i < rd8(m, DS(0x984B))) {", "replace": "while (i < rd8(m, DS(0x984C))) {"},
+  {"name": "上界只在迴圈前讀一次", "find": "    while (i < rd8(m, DS(0x984B))) {", "replace": "    uint8_t n0 = rd8(m, DS(0x984B));\n    while (i < n0) {"},
+  {"name": "組數用迴圈次數而不是重讀", "find": "wr8(m, LIN(fleet_seg, fleet_off + 0x0F), rd8(m, DS(0x984B)));", "replace": "wr8(m, LIN(fleet_seg, fleet_off + 0x0F), i);"},
+  {"name": "組數寫到 +0x0E", "find": "wr8(m, LIN(fleet_seg, fleet_off + 0x0F), rd8(m, DS(0x984B)));", "replace": "wr8(m, LIN(fleet_seg, fleet_off + 0x0E), rd8(m, DS(0x984B)));"},
+  {"name": "不寫組數", "find": "wr8(m, LIN(fleet_seg, fleet_off + 0x0F), rd8(m, DS(0x984B)));", "replace": "(void)fleet_seg;"},
+  {"name": "每組步距 3", "find": "uint16_t bx = (uint16_t)(i << 2);", "replace": "uint16_t bx = (uint16_t)(i * 3);"},
+  {"name": "艦隊組欄位從 +0x0F 起", "find": "uint16_t dst = (uint16_t)(fleet_off + 0x10u + bx);", "replace": "uint16_t dst = (uint16_t)(fleet_off + 0x0Fu + bx);"},
+  {"name": "工作表從 0x981F 起", "find": "wr8(m, LIN(fleet_seg, dst + 2), rd8(m, DS(0x981Eu + bx + 2)));", "replace": "wr8(m, LIN(fleet_seg, dst + 2), rd8(m, DS(0x981Fu + bx + 2)));"},
+  {"name": "[2] 與 [3] 對調", "find": "wr8(m, LIN(fleet_seg, dst + 2), rd8(m, DS(0x981Eu + bx + 2)));\n        wr8(m, LIN(fleet_seg, dst + 3), rd8(m, DS(0x981Eu + bx + 3)));", "replace": "wr8(m, LIN(fleet_seg, dst + 2), rd8(m, DS(0x981Eu + bx + 3)));\n        wr8(m, LIN(fleet_seg, dst + 3), rd8(m, DS(0x981Eu + bx + 2)));"},
+  {"name": "word 只寫低位元組", "find": "w10C1_wr16(m, fleet_seg, dst, rd16(m, DS(0x981Eu + bx)));", "replace": "wr8(m, LIN(fleet_seg, dst), rd8(m, DS(0x981Eu + bx)));"},
+  {"name": "不寫 [3]", "find": "wr8(m, LIN(fleet_seg, dst + 3), rd8(m, DS(0x981Eu + bx + 3)));", "replace": "(void)dst;"},
+  {"name": "先寫 word 再寫兩個 byte", "find": "        wr8(m, LIN(fleet_seg, dst + 2), rd8(m, DS(0x981Eu + bx + 2)));\n        wr8(m, LIN(fleet_seg, dst + 3), rd8(m, DS(0x981Eu + bx + 3)));\n        w10C1_wr16(m, fleet_seg, dst, rd16(m, DS(0x981Eu + bx)));", "replace": "        w10C1_wr16(m, fleet_seg, dst, rd16(m, DS(0x981Eu + bx)));\n        wr8(m, LIN(fleet_seg, dst + 2), rd8(m, DS(0x981Eu + bx + 2)));\n        wr8(m, LIN(fleet_seg, dst + 3), rd8(m, DS(0x981Eu + bx + 3)));"},
+  {"name": "三個來源先讀完再寫", "find": "        wr8(m, LIN(fleet_seg, dst + 2), rd8(m, DS(0x981Eu + bx + 2)));\n        wr8(m, LIN(fleet_seg, dst + 3), rd8(m, DS(0x981Eu + bx + 3)));\n        w10C1_wr16(m, fleet_seg, dst, rd16(m, DS(0x981Eu + bx)));", "replace": "        {\n            uint8_t s2 = rd8(m, DS(0x981Eu + bx + 2)), s3 = rd8(m, DS(0x981Eu + bx + 3));\n            uint16_t s0 = rd16(m, DS(0x981Eu + bx));\n            wr8(m, LIN(fleet_seg, dst + 2), s2);\n            wr8(m, LIN(fleet_seg, dst + 3), s3);\n            wr16(m, LIN(fleet_seg, dst), s0);\n        }"},
+  {"name": "艦隊段用 DS", "find": "w10C1_wr16(m, fleet_seg, dst, rd16(m, DS(0x981Eu + bx)));", "replace": "w10C1_wr16(m, GIN3_DS, dst, rd16(m, DS(0x981Eu + bx)));"},
+  {"name": "word 高位元組線性連續不回繞", "find": "wr8(m, LIN(seg, off + 1), (uint8_t)(v >> 8));", "replace": "wr8(m, LIN(seg, off) + 1, (uint8_t)(v >> 8));"}
+]

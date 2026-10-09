@@ -1,0 +1,10 @@
+[
+  {"name": "終止值改0xFE", "find": "if (v == 0xFFu)", "replace": "if (v == 0xFEu)"},
+  {"name": "列間距改16", "find": "(uint16_t)((uint16_t)start << 5)", "replace": "(uint16_t)((uint16_t)start << 4)"},
+  {"name": "終止時回矩陣值而非dest", "find": "            return dest;\n        dest = v;", "replace": "            return v;\n        dest = v;"},
+  {"name": "終止時回start", "find": "            return dest;\n        dest = v;", "replace": "            return start;\n        dest = v;"},
+  {"name": "start取整個word", "find": "(uint16_t)((uint16_t)start << 5)", "replace": "(uint16_t)(start_word << 5)"},
+  {"name": "回傳dest的整個word", "find": "            return dest;\n        dest = v;", "replace": "            return dest | (dest_word & 0xFF00u);\n        dest = v;"},
+  {"name": "行列互換", "find": "uint16_t si = (uint16_t)(mat_off + (uint16_t)((uint16_t)start << 5) + dest);", "replace": "uint16_t si = (uint16_t)(mat_off + (uint16_t)((uint16_t)dest << 5) + start);"},
+  {"name": "遞迴時對調起點與目標", "find": "        dest = v;\n", "replace": "        {\n            uint8_t t = start;\n            start = dest;\n            dest = t;\n        }\n"}
+]

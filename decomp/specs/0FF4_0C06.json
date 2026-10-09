@@ -1,0 +1,43 @@
+{
+  "id": "0FF4_0C06",
+  "entry": "0FF4:0C06",
+  "conv": "far",
+  "ret": "ax",
+  "size": 122,
+  "code_sha256_16": "07e85608a83b3c1d",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "格盤命中。ds:28B8 是 41 格 (X,Y) 有號 word 表（基底：-0x40..0x40 的六角格）。隨機參數取 0x10..0xB0 涵蓋整個格盤；邊界與回繞用 seeds。回傳比完整 AX（AH 是最後一圈的殘值）。",
+  "args": [
+    {"name": "px", "kind": "word", "gen": {"min": 16, "max": 176}},
+    {"name": "py", "kind": "word", "gen": {"min": 16, "max": 176}}
+  ],
+  "seeds": [
+    {"note": "格 0 左上角 (tx,ty)=(-0x40,-0x40)：中", "args": [24, 28]},
+    {"note": "tx=-0x41：不中", "args": [23, 28]},
+    {"note": "ty=-0x41：不中", "args": [24, 27]},
+    {"note": "格 0 右下角 (-0x31,-0x31)：中", "args": [39, 43]},
+    {"note": "tx=-0x30（X+0x10）：不中", "args": [40, 43]},
+    {"note": "ty=-0x30（Y+0x10）：不中", "args": [39, 44]},
+    {"note": "最後一格 40 左上角 (0x40,0x40)：中，回 0x28", "args": [152, 156]},
+    {"note": "最後一格 tx=0x41-1+... 右邊界外一格", "args": [153, 156]},
+    {"note": "最後一格右下角 (0x4F,0x4F)：中", "args": [167, 171]},
+    {"note": "最後一格 tx=0x50：不中，回 0xFF", "args": [168, 171]},
+    {"note": "格 6 (X=-0x10)：tx=-5 跨過 0；X+0x10 ＝ 0 要用有號比較才中", "args": [83, 47]},
+    {"note": "原點 (0,0)：全不中", "args": [0, 0]},
+    {"note": "px=0x58,py=0x5C：(tx,ty)=(0,0)", "args": [88, 92]},
+    {"note": "格 0 的 X 改 0x7FF8，tx=0x7FFA：X+0x10 回繞成負數，有號比較視為不中", "args": [32850, 29], "pokes": [{"addr": "ds:28B8", "hex": "F87F"}]},
+    {"note": "格 0 的 X 改 0x7FF8，tx=0x7FF8（等於 X）：X+0x10 回繞成負數，仍不中", "args": [32848, 29], "pokes": [{"addr": "ds:28B8", "hex": "F87F"}]},
+    {"note": "格 0 的 Y 改 0x7FF8，ty=0x7FFA：Y+0x10 回繞成負數，不中", "args": [24, 32854], "pokes": [{"addr": "ds:28BA", "hex": "F87F"}]},
+    {"note": "格 0 的 X 改 0x7FEF，tx=0x7FFE：X+0x10=0x7FFF > tx 中", "args": [32854, 29], "pokes": [{"addr": "ds:28B8", "hex": "EF7F"}]},
+    {"note": "格 0 的 X 改 0x7FEF，tx=0x7FFF：X+0x10=0x7FFF <= tx 不中（邊界）", "args": [32855, 29], "pokes": [{"addr": "ds:28B8", "hex": "EF7F"}]},
+    {"note": "整張表清成 0：每格是 [0,0x10)²，tx,ty 在 0..0xF 時第 0 格就中", "args": [92, 96], "pokes": [{"addr": "ds:28B8", "hex": "00", "repeat": 164}]},
+    {"note": "整張表清成 0，不中：AH 殘值是 DS 的高位元組或 Y+0x10 的高位元組", "args": [200, 200], "pokes": [{"addr": "ds:28B8", "hex": "00", "repeat": 164}]},
+    {"note": "最後一格改成 X=-0x58、Y=0xF000：前三個比較都過、第四個不過，Y+0x10 已載入 AX，不中時 AH 殘值是 0xF0", "args": [0, 0], "pokes": [{"addr": "ds:2958", "hex": "A8FF00F0"}]},
+    {"note": "最後一格改成 X=-0x58、Y=-0x5C：中，回 0x28，AH 是 (Y+0x10) 的高位元組 0xFF", "args": [0, 0], "pokes": [{"addr": "ds:2958", "hex": "A8FFA4FF"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

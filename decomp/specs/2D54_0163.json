@@ -1,0 +1,33 @@
+{
+  "id": "2D54_0163",
+  "entry": "2D54:0163",
+  "conv": "far",
+  "ret": "ax",
+  "size": 191,
+  "code_sha256_16": "d02fb320d0c39aec",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "戰略態勢碼：a = ds:AE14（星域 13 的擁有者）、f = ds:8F48、b = ds:AE92（星域 14 的擁有者）。無參數，三個 byte 由突變與 seeds 供給；seeds 逐一涵蓋 12 種組合。",
+  "args": [],
+  "seeds": [
+    {"note": "a=0 f=0 b=0", "pokes": [{"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F48", "hex": "00"}, {"addr": "ds:AE92", "hex": "00"}]},
+    {"note": "a=0 f=1 b=0", "pokes": [{"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "00"}]},
+    {"note": "a=0 f=1 b=1", "pokes": [{"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "01"}]},
+    {"note": "a=0 f=1 b=2", "pokes": [{"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "02"}]},
+    {"note": "a=1 f=0 b=0", "pokes": [{"addr": "ds:AE14", "hex": "01"}, {"addr": "ds:8F48", "hex": "00"}, {"addr": "ds:AE92", "hex": "00"}]},
+    {"note": "a=1 f=1 b=0", "pokes": [{"addr": "ds:AE14", "hex": "01"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "00"}]},
+    {"note": "a=1 f=1 b=1", "pokes": [{"addr": "ds:AE14", "hex": "01"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "01"}]},
+    {"note": "a=1 f=1 b=2", "pokes": [{"addr": "ds:AE14", "hex": "01"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "02"}]},
+    {"note": "a=2 f=0 b=0", "pokes": [{"addr": "ds:AE14", "hex": "02"}, {"addr": "ds:8F48", "hex": "00"}, {"addr": "ds:AE92", "hex": "00"}]},
+    {"note": "a=2 f=1 b=0", "pokes": [{"addr": "ds:AE14", "hex": "02"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "00"}]},
+    {"note": "a=2 f=1 b=1", "pokes": [{"addr": "ds:AE14", "hex": "02"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "01"}]},
+    {"note": "a=2 f=1 b=2", "pokes": [{"addr": "ds:AE14", "hex": "02"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "02"}]},
+    {"note": "f 非 0/1（0x80）、a=0xFF、b=0xFF", "pokes": [{"addr": "ds:AE14", "hex": "ff"}, {"addr": "ds:8F48", "hex": "80"}, {"addr": "ds:AE92", "hex": "ff"}]},
+    {"note": "a=1 的高位元不影響：a=0x81", "pokes": [{"addr": "ds:AE14", "hex": "81"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "01"}]},
+    {"note": "b=0x81", "pokes": [{"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:8F48", "hex": "01"}, {"addr": "ds:AE92", "hex": "81"}]}
+  ],
+  "iters": 3000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

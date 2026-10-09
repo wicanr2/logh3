@@ -1,0 +1,9 @@
+[
+  {"name": "比較改成嚴格小於", "find": "if (ratio <= entry)", "replace": "if (ratio < entry)"},
+  {"name": "上限0x40改0x41", "find": "if (k >= 0x40)", "replace": "if (k >= 0x41)"},
+  {"name": "上限0x40改0x3F", "find": "if (k >= 0x40)", "replace": "if (k >= 0x3F)"},
+  {"name": "比較改成有號", "find": "if (ratio <= entry)", "replace": "if ((int16_t)ratio <= (int16_t)entry)"},
+  {"name": "表起點差2", "find": "uint16_t p = 0x593A;", "replace": "uint16_t p = 0x5938;"},
+  {"name": "表項間距改1", "find": "p = (uint16_t)(p + 2);", "replace": "p = (uint16_t)(p + 1);"},
+  {"name": "回傳值遮掉第6位元", "find": "    return k;", "replace": "    return (uint16_t)(k & 0x3F);"}
+]

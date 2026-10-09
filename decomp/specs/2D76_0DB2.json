@@ -1,0 +1,32 @@
+{
+  "id": "2D76_0DB2",
+  "entry": "2D76:0DB2",
+  "conv": "far",
+  "ret": "ax",
+  "size": 58,
+  "code_sha256_16": "6809ad51e571ef62",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "清單每筆 2 bytes，比較第 2 個 byte。清單放在暫存緩衝區（線性 9D000，即 9D00:0000，512 bytes）。value、n 只取低位元組。",
+  "args": [
+    {"name": "list", "kind": "farptr", "gen": {"scratch": 512}},
+    {"name": "value", "kind": "word", "gen": {"choices": [0, 1, 2, 7, 8, 9, 10, 255, 256, 265, 65280], "also_random": true}},
+    {"name": "n", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 8, 16, 32, 100, 254, 255, 256, 259, 65283], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "n = 0：回 1", "args": [0, 40192, 9, 0], "pokes": [{"addr": "lin:9D000", "hex": "0009"}]},
+    {"note": "第 3 筆的第 2 byte 是 9，n = 3：回 0", "args": [0, 40192, 9, 3], "pokes": [{"addr": "lin:9D000", "hex": "000700080009"}]},
+    {"note": "同上但 n = 2：回 1（第 3 筆不在範圍）", "args": [0, 40192, 9, 2], "pokes": [{"addr": "lin:9D000", "hex": "000700080009"}]},
+    {"note": "第 1 筆，n = 1：回 0", "args": [0, 40192, 7, 1], "pokes": [{"addr": "lin:9D000", "hex": "000700080009"}]},
+    {"note": "偶數位置（第 1 byte）等於 value 但第 2 byte 不等：回 1", "args": [0, 40192, 9, 1], "pokes": [{"addr": "lin:9D000", "hex": "0900"}]},
+    {"note": "高位元組不為 0：只看低位元組，回 0", "args": [0, 40192, 265, 515], "pokes": [{"addr": "lin:9D000", "hex": "000700080009"}]},
+    {"note": "n = 255、全部不符：掃完 255 筆，回 1", "args": [0, 40192, 9, 255], "pokes": [{"addr": "lin:9D000", "hex": "0000", "repeat": 256}]},
+    {"note": "n = 255、最後一筆（第 255 筆）符合：回 0", "args": [0, 40192, 9, 255], "pokes": [{"addr": "lin:9D000", "hex": "0000", "repeat": 256}, {"addr": "lin:9D1FD", "hex": "09"}]},
+    {"note": "n = 254 時最後一筆不在範圍：回 1", "args": [0, 40192, 9, 254], "pokes": [{"addr": "lin:9D000", "hex": "0000", "repeat": 256}, {"addr": "lin:9D1FD", "hex": "09"}]},
+    {"note": "清單位移 0xFFFF：第 1 筆的第 2 byte 在位移 0x10000 回繞到 0000（線性 90000），第 2 筆的位移 0001、第 2 byte 在 0002（線性 90002）：回 0", "args": [65535, 36864, 9, 2], "pokes": [{"addr": "lin:90000", "hex": "00"}, {"addr": "lin:90002", "hex": "09"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

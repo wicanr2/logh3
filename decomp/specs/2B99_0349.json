@@ -1,0 +1,32 @@
+{
+  "id": "2B99_0349",
+  "entry": "2B99:0349",
+  "conv": "far",
+  "ret": "ax",
+  "size": 73,
+  "code_sha256_16": "6af584e090d12b7c",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "中點矩陣查下一跳（遞迴）。矩陣放在暫存緩衝區（線性 9D000，即 9D00:0000，1104 bytes）。dest、start 只取低位元組；choices 限制在 0 到 33 與高位元組變體，不用均勻隨機：隨機低位元組會讀到緩衝區外的零，形成環而無窮遞迴（原版因步數上限被丟棄）。矩陣含環的案例屬輸入域外。seeds 造遞迴鏈（矩陣[start × 32 + dest]，起點 5 的那一列在 9D0A0）。",
+  "args": [
+    {"name": "dest", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 16, 30, 31, 32, 33, 256, 265, 1291, 65280, 65291]}},
+    {"name": "start", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 16, 30, 31, 32, 33, 256, 261, 1291, 65280, 65285]}},
+    {"name": "matrix", "kind": "farptr", "gen": {"scratch": 1104}}
+  ],
+  "seeds": [
+    {"note": "一層：矩陣[5][9] = 0xFF，回 9", "args": [9, 5, 0, 40192], "pokes": [{"addr": "lin:9D0A9", "hex": "ff"}]},
+    {"note": "兩層：[5][9] = 3，[5][3] = 0xFF，回 3", "args": [9, 5, 0, 40192], "pokes": [{"addr": "lin:9D0A9", "hex": "03"}, {"addr": "lin:9D0A3", "hex": "ff"}]},
+    {"note": "三層：[5][9] = 3，[5][3] = 7，[5][7] = 0xFF，回 7", "args": [9, 5, 0, 40192], "pokes": [{"addr": "lin:9D0A9", "hex": "03"}, {"addr": "lin:9D0A3", "hex": "07"}, {"addr": "lin:9D0A7", "hex": "ff"}]},
+    {"note": "五層", "args": [9, 5, 0, 40192], "pokes": [{"addr": "lin:9D0A9", "hex": "03"}, {"addr": "lin:9D0A3", "hex": "07"}, {"addr": "lin:9D0A7", "hex": "0b"}, {"addr": "lin:9D0AB", "hex": "02"}, {"addr": "lin:9D0A2", "hex": "ff"}]},
+    {"note": "dest 高位元組不為 0：只看低位元組，回 9（不是 0x0309）", "args": [777, 5, 0, 40192], "pokes": [{"addr": "lin:9D0A9", "hex": "ff"}]},
+    {"note": "start 高位元組不為 0：只看低位元組，列 5", "args": [9, 261, 0, 40192], "pokes": [{"addr": "lin:9D0A9", "hex": "ff"}]},
+    {"note": "dest = 0：[5][0] = 0xFF 回 0", "args": [0, 5, 0, 40192], "pokes": [{"addr": "lin:9D0A0", "hex": "ff"}]},
+    {"note": "遞迴中矩陣值是 0（有效節點）：[5][9] = 0，[5][0] = 0xFF，回 0", "args": [9, 5, 0, 40192], "pokes": [{"addr": "lin:9D0A9", "hex": "00"}, {"addr": "lin:9D0A0", "hex": "ff"}]},
+    {"note": "起點 31 的列（索引 992 起）", "args": [30, 31, 0, 40192], "pokes": [{"addr": "lin:9D3FE", "hex": "1d"}, {"addr": "lin:9D3FD", "hex": "ff"}]},
+    {"note": "矩陣位移 0xFFF0：索引 5 × 32 + 9 + 0xFFF0 回繞到 0x0099（FFF0 + A0 + 9 = 0x10099）", "args": [9, 5, 65520, 32768], "pokes": [{"addr": "lin:80099", "hex": "ff"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

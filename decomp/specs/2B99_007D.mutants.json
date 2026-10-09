@@ -1,0 +1,14 @@
+[
+  {"name": "罰則改0x401", "find": "(uint16_t)(w007d_rd16(m, tbl_seg, cell) + 0x400u)", "replace": "(uint16_t)(w007d_rd16(m, tbl_seg, cell) + 0x401u)"},
+  {"name": "不相鄰值改0x7FFE", "find": "w007d_put16(m, tbl_seg, cell, 0x7FFF);", "replace": "w007d_put16(m, tbl_seg, cell, 0x7FFE);"},
+  {"name": "擁有者條件改成且", "find": "!= faction || rd8(m, DS(rec_j + 0x12)) != faction", "replace": "!= faction && rd8(m, DS(rec_j + 0x12)) != faction"},
+  {"name": "只看第一端的擁有者", "find": "!= faction || rd8(m, DS(rec_j + 0x12)) != faction", "replace": "!= faction"},
+  {"name": "第二端用第一端的擁有者", "find": "rd8(m, DS(rec_j + 0x12)) != faction", "replace": "rd8(m, DS(rec_i + 0x12)) != faction"},
+  {"name": "陣營取整個word", "find": "uint8_t faction = (uint8_t)faction_word;", "replace": "uint16_t faction = faction_word;"},
+  {"name": "邊權表行列互換", "find": "rd8(m, DS(0x533A + (i << 5) + j))", "replace": "rd8(m, DS(0x533A + (j << 5) + i))"},
+  {"name": "陣營非0的表指標讀成陣營0的段", "find": "tbl_seg = rd16(m, DS(0xD068));", "replace": "tbl_seg = rd16(m, DS(0xD064));"},
+  {"name": "j少迴圈一格", "find": "for (j = 0; j < 0x20; j++) {", "replace": "for (j = 0; j < 0x1F; j++) {"},
+  {"name": "表列間距改成32", "find": "(uint16_t)(i << 6)", "replace": "(uint16_t)(i << 5)"},
+  {"name": "邊權值當作有號", "find": "w007d_put16(m, tbl_seg, cell, w);", "replace": "w007d_put16(m, tbl_seg, cell, (uint16_t)(int16_t)(int8_t)w);"},
+  {"name": "拿掉ROM區寫入無效的模型", "find": "    if (lin < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]
