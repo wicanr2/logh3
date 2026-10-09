@@ -1,0 +1,21 @@
+[
+  {"name": "外框的 y1 差 1", "find": "0x97, 0xB3, 0x118, 0x134, 0xFF07u", "replace": "0x97, 0xB3, 0x118, 0x133, 0xFF07u"},
+  {"name": "不畫外框", "find": "    f_3870_0723(m, 0x97, 0xB3, 0x118, 0x134, 0xFF07u, 0xFFFFu);\n", "replace": ""},
+  {"name": "影子的 x0 用 0x120", "find": "f_3870_07C9(m, 0x11F, ", "replace": "f_3870_07C9(m, 0x120, "},
+  {"name": "影子的 y0 不減 1", "find": "(uint16_t)(y - 1u), (uint16_t)(x2 - 1u)", "replace": "y, (uint16_t)(x2 - 1u)"},
+  {"name": "影子的 x1 不減 1", "find": "(uint16_t)(x2 - 1u), (uint16_t)(y2 - 1u),", "replace": "x2, (uint16_t)(y2 - 1u),"},
+  {"name": "影子的 y1 不減 1", "find": "(uint16_t)(y2 - 1u),\n", "replace": "y2,\n"},
+  {"name": "影子色 3 改 4", "find": "(y & 0xFF00u) | 3u", "replace": "(y & 0xFF00u) | 4u"},
+  {"name": "影子的最後 word 改 0", "find": "(uint16_t)((y & 0xFF00u) | 3u), 0xFFFFu);", "replace": "(uint16_t)((y & 0xFF00u) | 3u), 0u);"},
+  {"name": "色表位移 ×2", "find": "DS((uint16_t)(0x6092u + owner))", "replace": "DS((uint16_t)(0x6092u + owner * 2u))"},
+  {"name": "擁有者讀 +0x10", "find": "(uint16_t)(p_off + 0x11u)", "replace": "(uint16_t)(p_off + 0x10u)"},
+  {"name": "X 改算術右移", "find": "(w1594_rd16s(m, p_seg, (uint16_t)(p_off + 0x46u)) >> 4) + 0x98u", "replace": "(uint16_t)(((int16_t)w1594_rd16s(m, p_seg, (uint16_t)(p_off + 0x46u)) >> 4) + 0x98u)"},
+  {"name": "Y 右移 3", "find": "(uint16_t)(p_off + 0x48u)) >> 4) + 0xB4u", "replace": "(uint16_t)(p_off + 0x48u)) >> 3) + 0xB4u"},
+  {"name": "行星步幅 0x50", "find": "p_off + 0x52u", "replace": "p_off + 0x50u"},
+  {"name": "迴圈多跑一輪（有上界）", "find": "i < rd8(m, DS(0xCFFCu))", "replace": "i <= rd8(m, DS(0xCFFCu)) && i < 255"},
+  {"name": "y 截成 8 位元", "find": "uint16_t y = (uint16_t)((uint16_t)(i + 9u) * 20u + 0x0Au);", "replace": "uint16_t y = (uint8_t)((uint16_t)(i + 9u) * 20u + 0x0Au);"},
+  {"name": "彩色線的最後 word 改 0", "find": "rd16(m, DS((uint16_t)(0x6092u + owner))), 0xFFFFu);", "replace": "rd16(m, DS((uint16_t)(0x6092u + owner))), 0u);"},
+  {"name": "彩色線的 x0 用 0x11F", "find": "f_3870_07C9(m, 0x120, y, x2, y2,", "replace": "f_3870_07C9(m, 0x11F, y, x2, y2,"},
+  {"name": "影子多畫一次", "find": "        f_3870_07C9(m, 0x11F, ", "replace": "        f_3870_07C9(m, 0x11F, y, x2, y2, 3u, 0xFFFFu);\n        f_3870_07C9(m, 0x11F, "},
+  {"name": "word 存取不回繞（位移 0xFFFF 的高位元組取下一段的位移 0 以外）", "find": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8));", "replace": "return rd16(m, LIN(seg, off));"}
+]

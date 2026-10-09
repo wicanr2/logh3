@@ -1,0 +1,41 @@
+{
+  "id": "2703_10FC",
+  "entry": "2703:10FC",
+  "conv": "far",
+  "ret": "ax",
+  "size": 238,
+  "code_sha256_16": "5472873218256c18",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "叛亂度公式的提督項 f5 2703:10FC(星域 far)：a ← 星域[+0x11]；n ← 28E0:0103(SS:bp 的 82 byte 清單, a, 0x24, 0)；對清單裡 提督[+1] == 星域[+0x12] 者數 count、取 提督[+0x0B] 與 [+0x13] 的最大值 pmax、qmax；再 3CC9:0009(count,pmax)、3CC9:0009(結果,qmax)、3CC9:0020(結果,1000)，商的低字是死儲存；推給 3310:0130 的是清成 0 的一格，回它的 AX。真實的乘、除、開根號(0) 沒有全域副作用且回 0，不用替身時除了回傳 0 之外沒有任何可觀察輸出（迴圈完全不被驗證），所以 3CC9:0009、3CC9:0020、3310:0130 用 stubs 取代並以 argregs 記錄 AX BX CX DX，軌跡因此比對 count、pmax、qmax、乘法串接、除數與 0130 的引數；替身回傳值隨機（真實 0130(0) 回 0），乘除與開根號本身由各自的差異測試負責。28E0:0103 照常執行。基底 fcmd-base.state（星域表 ds:A79C 每筆 126 bytes，前 40 位提督 +1 為 0、+0/+9 符合篩選）。seeds：星域 0（a=0 側別 0，大量符合）、星域 1、星域 3（側別 2，count=0）、a=0xFF（不過 0227）、提督能力欄的最大值落在清單中段與兩欄不同位置、側別 1 且 a=0x1F（只有提督 40 符合）、星域記錄位移 0xFFEF（+0x11 與 +0x12 的 byte 在 seg:FFFF 與 seg:0000）。",
+  "stubs": [
+    {"entry": "3CC9:0009", "conv": "far", "nargs": 0, "argregs": ["ax", "bx", "cx", "dx"], "ret": "pack:ax,bx",
+     "gen": {"choices": [0, 1, 2, 255, 1000, 32768, 65535], "also_random": true}},
+    {"entry": "3CC9:0020", "conv": "far", "nargs": 0, "argregs": ["ax", "bx", "cx", "dx"], "ret": "pack:ax,bx",
+     "gen": {"choices": [0, 1, 2, 255, 1000, 32768, 65535], "also_random": true}},
+    {"entry": "3310:0130", "conv": "far", "nargs": 1, "ret": "ax",
+     "gen": {"choices": [0, 1, 2, 4660, 65535], "also_random": true}}
+  ],
+  "tables": {
+    "region": {"base": "ds:A79C", "stride": 126, "count": 32}
+  },
+  "args": [
+    {"name": "region", "kind": "farptr", "gen": {"table": "region"}}
+  ],
+  "seeds": [
+    {"note": "星域 0：a=0、側別 0", "args": [42908, 21683], "pokes": []},
+    {"note": "星域 1：a=1、側別 0", "args": [43034, 21683], "pokes": []},
+    {"note": "星域 3：a=3、側別 2：count=0", "args": [43286, 21683], "pokes": []},
+    {"note": "星域 0 的 a 改 0xFF：不過 0227", "args": [42908, 21683], "pokes": [{"addr": "ds:A7AD", "hex": "ff"}]},
+    {"note": "a=0xFF，p 的最大值在提督 5（中段）、q 的最大值在提督 2", "args": [42908, 21683], "pokes": [{"addr": "ds:A7AD", "hex": "ff"}, {"addr": "ds:B813", "hex": "f0"}, {"addr": "ds:B7C7", "hex": "ee"}]},
+    {"note": "a=0xFF，p 的最大值在第一位符合者（提督 1）、q 的最大值在最後一位（提督 39）", "args": [42908, 21683], "pokes": [{"addr": "ds:A7AD", "hex": "ff"}, {"addr": "ds:B7A7", "hex": "fd"}, {"addr": "ds:BBD3", "hex": "fc"}]},
+    {"note": "a=0xFF，p 的最大值在最後一位符合者（提督 39）、q 的最大值在第一位（提督 1）", "args": [42908, 21683], "pokes": [{"addr": "ds:A7AD", "hex": "ff"}, {"addr": "ds:BBCB", "hex": "fb"}, {"addr": "ds:B7AB", "hex": "fa"}]},
+    {"note": "星域 0 改成 a=0x1F、側別 1：只有提督 40 符合", "args": [42908, 21683], "pokes": [{"addr": "ds:A7AD", "hex": "1f01"}]},
+    {"note": "星域記錄位移 0xFFEF（段 8000）：+0x11 在 seg:0000、+0x12 在 seg:0001；a=0x1F、側別 1", "args": [65519, 32768], "pokes": [{"addr": "8000:0000", "hex": "1f01"}]},
+    {"note": "星域記錄位移 0xFFEE：+0x11 在 seg:FFFF、+0x12 在 seg:0000；a=0xFF、側別 0", "args": [65518, 32768], "pokes": [{"addr": "8000:FFFF", "hex": "ff"}, {"addr": "8000:0000", "hex": "00"}]}
+  ],
+  "iters": 8000,
+  "max_cases": 500,
+  "seed": 20261203,
+  "min_coverage": 100
+}

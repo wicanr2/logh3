@@ -1,0 +1,56 @@
+{
+  "id": "073F_0A39",
+  "entry": "073F:0A39",
+  "conv": "far",
+  "ret": "none",
+  "size": 196,
+  "code_sha256_16": "42d7a6f64ce3eb14",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "星系情報視窗的外框與引線 073F:0A39()：先 3870:0723(23,44,152,173,0xFF07,0xFFFF) 畫小圖外框，再對目前星域切片（行星表 ds:CFF8:CFFA，筆數 byte ds:CFFC，每筆 82 bytes）的每顆行星 i 呼叫兩次 3870:07C9：影子 (159, y−1)-(x2−1, y2−1) 色 (y 高位元組<<8)|3，彩色 (160, y)-(x2, y2) 色 word ds:(6092+擁有者 byte)；y = (i+3)×20+10、x2 = (行星 +46 >> 4)+0x18、y2 = (行星 +48 >> 4)+0x2D，最後 word 都是 0xFFFF。07C9 內的畫線 39D7:0647 用 stubs 取代（探針只記錄六個堆疊字與呼叫順序），畫線像素不在驗證範圍。無參數。基底 fcmd-base.state（星域 0，4 顆行星；裁切矩形 (0,0)-(639,399)）。seeds：基底原樣、筆數 0 與 1、筆數 14（y 超過 255，8 位元截斷突變）、自備行星表 8000:0000 三筆（不同擁有者、X=0xFFF0 與 Y=0x8000 驗邏輯右移、色表 ds:6092 各 byte 互異驗擁有者當 byte 位移）、行星表基底讓 +46 的 word 落在 seg:FFFF（高位元組取 seg:0000）、+48 的 word 落在 seg:FFFF、位移回繞（p 加 0x52 越過 0xFFFF）、裁切矩形改成 (16,20)-(463,379) 與 (-100,0)-(639,399)。",
+  "stubs": [
+    {"entry": "39D7:0647", "conv": "far", "nargs": 6, "ret": "none"}
+  ],
+  "args": [],
+  "seeds": [
+    {"note": "基底原樣：4 顆行星", "args": [], "pokes": []},
+    {"note": "筆數 0：只畫外框", "args": [], "pokes": [{"addr": "ds:CFFC", "hex": "00"}]},
+    {"note": "筆數 1", "args": [], "pokes": [{"addr": "ds:CFFC", "hex": "01"}]},
+    {"note": "筆數 14：y 超過 255，影子色 word 高位元組非 0", "args": [], "pokes": [{"addr": "ds:CFFC", "hex": "0e"}]},
+    {"note": "自備行星表 8000:0000 三筆：擁有者 1／2／3，X Y 各異，色表 ds:6092 各 byte 互異", "args": [], "pokes": [
+      {"addr": "ds:CFF8", "hex": "0000"}, {"addr": "ds:CFFA", "hex": "0080"}, {"addr": "ds:CFFC", "hex": "03"},
+      {"addr": "ds:6092", "hex": "0a0b0c0d0e0f1011"},
+      {"addr": "8000:0011", "hex": "01"}, {"addr": "8000:0046", "hex": "00010002"},
+      {"addr": "8000:0063", "hex": "02"}, {"addr": "8000:0098", "hex": "f0ff0080"},
+      {"addr": "8000:00B5", "hex": "03"}, {"addr": "8000:00EA", "hex": "10002000"}
+    ]},
+    {"note": "自備行星表、裁切矩形 (-100,0)-(639,399)：X=0xFFF0 的終點 x 是 0x1017（在矩形外）與負值端點", "args": [], "pokes": [
+      {"addr": "ds:8D6A", "hex": "9cff00007f028f01"},
+      {"addr": "ds:CFF8", "hex": "0000"}, {"addr": "ds:CFFA", "hex": "0080"}, {"addr": "ds:CFFC", "hex": "03"},
+      {"addr": "ds:6092", "hex": "0a0b0c0d0e0f1011"},
+      {"addr": "8000:0011", "hex": "01"}, {"addr": "8000:0046", "hex": "20000040"},
+      {"addr": "8000:0063", "hex": "02"}, {"addr": "8000:0098", "hex": "00000000"},
+      {"addr": "8000:00B5", "hex": "03"}, {"addr": "8000:00EA", "hex": "ff0f0f00"}
+    ]},
+    {"note": "裁切矩形 (16,20)-(463,379)，基底行星表", "args": [], "pokes": [{"addr": "ds:8D6A", "hex": "10001400cf017b01"}]},
+    {"note": "行星表基底 8000:FFB9：+46 的 word 低位元組在 FFFF、高位元組在 8000:0000", "args": [], "pokes": [
+      {"addr": "ds:CFF8", "hex": "b9ff"}, {"addr": "ds:CFFA", "hex": "0080"}, {"addr": "ds:CFFC", "hex": "01"},
+      {"addr": "8000:FFFF", "hex": "34"}, {"addr": "8000:0000", "hex": "12"}, {"addr": "8000:0001", "hex": "5678"},
+      {"addr": "8000:FFCA", "hex": "02"}
+    ]},
+    {"note": "行星表基底 8000:FFB7：+48 的 word 低位元組在 FFFF、高位元組在 8000:0000", "args": [], "pokes": [
+      {"addr": "ds:CFF8", "hex": "b7ff"}, {"addr": "ds:CFFA", "hex": "0080"}, {"addr": "ds:CFFC", "hex": "01"},
+      {"addr": "8000:FFFD", "hex": "1234"}, {"addr": "8000:FFFF", "hex": "ab"}, {"addr": "8000:0000", "hex": "cd"},
+      {"addr": "8000:FFC8", "hex": "03"}
+    ]},
+    {"note": "行星表基底 8000:FFE0、兩筆：第二筆的位移越過 0xFFFF 回繞到 8000:0032 起", "args": [], "pokes": [
+      {"addr": "ds:CFF8", "hex": "e0ff"}, {"addr": "ds:CFFA", "hex": "0080"}, {"addr": "ds:CFFC", "hex": "02"},
+      {"addr": "8000:FFF1", "hex": "01"}, {"addr": "8000:0026", "hex": "10002000"},
+      {"addr": "8000:0043", "hex": "02"}, {"addr": "8000:0078", "hex": "30004000"}
+    ]}
+  ],
+  "iters": 6000,
+  "max_cases": 400,
+  "seed": 20261201,
+  "min_coverage": 100
+}
