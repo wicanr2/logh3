@@ -1,0 +1,34 @@
+{
+  "id": "3870_0614",
+  "entry": "3870:0614",
+  "conv": "far",
+  "ret": "ax",
+  "size": 47,
+  "code_sha256_16": "025f9d4e3d4da5c5",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "橢圓焦距 c = ⌊a × e⌋：e = 3870:0643(a, b)（16.16 離心率，AX:BX），乘上 sext32(a)（3CC9:0009），回乘積的高字。a、b 都是 16 位元有號整數。沒有記憶體輸入（寫入只來自 0643 內的 39B5:005C）。seeds：典型長短半軸、b = 0、b 剛好 0xFF／0x100、a = 0（e 的 T = 1.0 或除以零）、a 為負（cwd 符號延伸影響乘積）、b 為負、a 小於 b（T 為負）、乘積高字溢位的大值。",
+  "args": [
+    {"name": "a", "kind": "word", "gen": {"choices": [0, 1, 2, 15, 16, 100, 255, 256, 257, 1000, 4095, 4096, 32767, 32768, 65535, 65280, 65000], "also_random": true}},
+    {"name": "b", "kind": "word", "gen": {"choices": [0, 1, 2, 15, 16, 100, 254, 255, 256, 257, 600, 1000, 4096, 32767, 32768, 65535, 65280], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "典型：長半軸 1000、短半軸 600", "args": [1000, 600], "pokes": []},
+    {"note": "b = 0：e = 1.0 → c = a", "args": [100, 0], "pokes": []},
+    {"note": "a 為負、b = 0：乘積為負", "args": [65436, 0], "pokes": []},
+    {"note": "a 為負、b 小值", "args": [65036, 10], "pokes": []},
+    {"note": "b = 0xFF，小值路徑上界", "args": [300, 255], "pokes": []},
+    {"note": "b = 0x100，大值路徑下界", "args": [300, 256], "pokes": []},
+    {"note": "a = b：T = 0，e = 0", "args": [256, 256], "pokes": []},
+    {"note": "a < b：T 為負", "args": [100, 200], "pokes": []},
+    {"note": "a = 0、b = 5：除以零", "args": [0, 5], "pokes": []},
+    {"note": "b 為負", "args": [1000, 65535], "pokes": []},
+    {"note": "a = 0x8000", "args": [32768, 32767], "pokes": []},
+    {"note": "a = 0x7FFF、b = 0x7FFF", "args": [32767, 32767], "pokes": []},
+    {"note": "a = 0x7FFF、b = 1：e 接近 1.0，乘積約 a", "args": [32767, 1], "pokes": []}
+  ],
+  "iters": 12000,
+  "max_cases": 600,
+  "seed": 20261301,
+  "min_coverage": 100
+}

@@ -1,0 +1,22 @@
+[
+  {"name": "正弦表索引加 0x3F", "find": "(uint8_t)(theta + 0x40u)", "replace": "(uint8_t)(theta + 0x3Fu)"},
+  {"name": "正弦表索引加 0x80", "find": "(uint8_t)(theta + 0x40u)", "replace": "(uint8_t)(theta + 0x80u)"},
+  {"name": "θ 不截成低位元組（索引用整個 word，位移 0x573A 起回繞）", "find": "idx = (uint16_t)((uint8_t)(theta + 0x40u));", "replace": "idx = (uint16_t)((theta + 0x40u) & 0x1FFu);"},
+  {"name": "正弦值零延伸", "find": "t = (uint32_t)(int32_t)(int16_t)rd16(m, DS((uint16_t)(0x573Au + 2u * idx))) << 6;", "replace": "t = (uint32_t)rd16(m, DS((uint16_t)(0x573Au + 2u * idx))) << 6;"},
+  {"name": "正弦值左移 5", "find": "(int16_t)rd16(m, DS((uint16_t)(0x573Au + 2u * idx))) << 6;", "replace": "(int16_t)rd16(m, DS((uint16_t)(0x573Au + 2u * idx))) << 5;"},
+  {"name": "正弦表基底 0x573C", "find": "0x573Au + 2u * idx", "replace": "0x573Cu + 2u * idx"},
+  {"name": "分母改 1 ＋ e cos", "find": "den = 0x10000u - p;", "replace": "den = 0x10000u + p;"},
+  {"name": "分母 1.0 改 0x20000", "find": "den = 0x10000u - p;", "replace": "den = 0x20000u - p;"},
+  {"name": "b² 不截低字", "find": "gin3_ldivmod((b2 & 0xFFFFu) << 16, (uint32_t)a, &r, &rem);", "replace": "gin3_ldivmod(b2, (uint32_t)a, &r, &rem);"},
+  {"name": "除數 a 符號延伸", "find": "(b2 & 0xFFFFu) << 16, (uint32_t)a, &r, &rem);", "replace": "(b2 & 0xFFFFu) << 16, (uint32_t)(int32_t)(int16_t)a, &r, &rem);"},
+  {"name": "b² 只用 b 的低位元組", "find": "b2 = f_3CC9_0009(0, b, 0, b);", "replace": "b2 = f_3CC9_0009(0, (uint16_t)(b & 0xFFu), 0, (uint16_t)(b & 0xFFu));"},
+  {"name": "除法分子分母對調", "find": "gin3_ldivmod((b2 & 0xFFFFu) << 16, (uint32_t)a, &r, &rem);", "replace": "gin3_ldivmod((uint32_t)a, (b2 & 0xFFFFu) << 16, &r, &rem);"},
+  {"name": "離心率參數對調", "find": "e = f_3870_0643(m, a, b);", "replace": "e = f_3870_0643(m, b, a);"},
+  {"name": "005C 的被除數與除數對調", "find": "s = f_39B5_005C(m, (uint16_t)r, (uint16_t)(r >> 16), (uint16_t)den, (uint16_t)(den >> 16));", "replace": "s = f_39B5_005C(m, (uint16_t)den, (uint16_t)(den >> 16), (uint16_t)r, (uint16_t)(r >> 16));"},
+  {"name": "e 與 t 的高低字傳反", "find": "p = f_39B5_000C(m, (uint16_t)e, (uint16_t)(e >> 16), (uint16_t)t, (uint16_t)(t >> 16));", "replace": "p = f_39B5_000C(m, (uint16_t)(e >> 16), (uint16_t)e, (uint16_t)t, (uint16_t)(t >> 16));"},
+  {"name": "jle 改 jl（相等不算）", "find": "if ((fl & F02DE_ZF) != 0 || ((fl & F02DE_SF) != 0) != ((fl & F02DE_OF) != 0)) /* jle */", "replace": "if (((fl & F02DE_SF) != 0) != ((fl & F02DE_OF) != 0))"},
+  {"name": "jle 改 jg（反向）", "find": "if ((fl & F02DE_ZF) != 0 || ((fl & F02DE_SF) != 0) != ((fl & F02DE_OF) != 0)) /* jle */", "replace": "if (!((fl & F02DE_ZF) != 0 || ((fl & F02DE_SF) != 0) != ((fl & F02DE_OF) != 0)))"},
+  {"name": "jle 少了 OF（只看 SF）", "find": "if ((fl & F02DE_ZF) != 0 || ((fl & F02DE_SF) != 0) != ((fl & F02DE_OF) != 0)) /* jle */", "replace": "if ((fl & F02DE_ZF) != 0 || (fl & F02DE_SF) != 0)"},
+  {"name": "L 高低字對調", "find": "fl = f_3CC9_00B9(l_hi, l_lo,", "replace": "fl = f_3CC9_00B9(l_lo, l_hi,"},
+  {"name": "比較時 S 取高低字對調", "find": "(uint16_t)(s >> 16), (uint16_t)s);\n    if", "replace": "(uint16_t)s, (uint16_t)(s >> 16));\n    if"}
+]

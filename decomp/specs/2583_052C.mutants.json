@@ -1,0 +1,19 @@
+[
+  {"name": "設錯位元（bit5）", "find": "| 0x10u));", "replace": "| 0x20u));"},
+  {"name": "改成覆寫而不是 or", "find": "wr8(m, LIN(seg, (uint16_t)(off + 0x48u)), (uint8_t)(rd8(m, LIN(seg, (uint16_t)(off + 0x48u))) | 0x10u));", "replace": "wr8(m, LIN(seg, (uint16_t)(off + 0x48u)), 0x10u);"},
+  {"name": "條件反向（d >= thr 才設）", "find": "if (((fl & F052C_SF) != 0) != ((fl & F052C_OF) != 0))", "replace": "if (((fl & F052C_SF) != 0) == ((fl & F052C_OF) != 0))"},
+  {"name": "只看 SF（忽略 OF）", "find": "if (((fl & F052C_SF) != 0) != ((fl & F052C_OF) != 0))", "replace": "if ((fl & F052C_SF) != 0)"},
+  {"name": "改成 d <= thr（含相等）", "find": "if (((fl & F052C_SF) != 0) != ((fl & F052C_OF) != 0))", "replace": "if (((fl & F052C_SF) != 0) != ((fl & F052C_OF) != 0) || (fl & 0x40u) != 0)"},
+  {"name": "無號比較（CF）", "find": "if (((fl & F052C_SF) != 0) != ((fl & F052C_OF) != 0))", "replace": "if ((fl & F052C_CF) != 0)"},
+  {"name": "門檻加 3.0", "find": "thr = q + 0x40000u;", "replace": "thr = q + 0x30000u;"},
+  {"name": "門檻加 5.0", "find": "thr = q + 0x40000u;", "replace": "thr = q + 0x50000u;"},
+  {"name": "門檻加 4（不是 4.0）", "find": "thr = q + 0x40000u;", "replace": "thr = q + 4u;"},
+  {"name": "除以 2", "find": "gin3_ldivmod(v, 3u, &q, &r);", "replace": "gin3_ldivmod(v, 2u, &q, &r);"},
+  {"name": "除以 4", "find": "gin3_ldivmod(v, 3u, &q, &r);", "replace": "gin3_ldivmod(v, 4u, &q, &r);"},
+  {"name": "無號除法（行程視為無號）", "find": "gin3_ldivmod(v, 3u, &q, &r);", "replace": "q = v / 3u;"},
+  {"name": "向下取整的有號除法", "find": "gin3_ldivmod(v, 3u, &q, &r);", "replace": "q = (uint32_t)((int32_t)v >= 0 ? (int32_t)v / 3 : -(((-(int32_t)v) + 2) / 3));"},
+  {"name": "行程高低字對調", "find": "v = ((uint32_t)rd16(m, LIN(seg, (uint16_t)(off + 0x54u))) << 16) | rd16(m, LIN(seg, (uint16_t)(off + 0x52u)));", "replace": "v = ((uint32_t)rd16(m, LIN(seg, (uint16_t)(off + 0x52u))) << 16) | rd16(m, LIN(seg, (uint16_t)(off + 0x54u)));"},
+  {"name": "距離的 x2 讀 +0x62", "find": "rd16(m, LIN(seg, (uint16_t)(off + 0x64u))), rd16(m, LIN(seg, (uint16_t)(off + 0x66u))));", "replace": "rd16(m, LIN(seg, (uint16_t)(off + 0x62u))), rd16(m, LIN(seg, (uint16_t)(off + 0x66u))));"},
+  {"name": "距離的 x2、y2 對調（x1 對 y2、y1 對 x2）", "find": "rd16(m, LIN(seg, (uint16_t)(off + 0x64u))), rd16(m, LIN(seg, (uint16_t)(off + 0x66u))));", "replace": "rd16(m, LIN(seg, (uint16_t)(off + 0x66u))), rd16(m, LIN(seg, (uint16_t)(off + 0x64u))));"},
+  {"name": "比較時 d 取高字:低字對調", "find": "fl = f_3CC9_00B9((uint16_t)(d >> 16), (uint16_t)d,", "replace": "fl = f_3CC9_00B9((uint16_t)d, (uint16_t)(d >> 16),"}
+]

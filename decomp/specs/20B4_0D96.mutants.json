@@ -1,0 +1,21 @@
+[
+  {"name": "除數 150 改 100", "find": "gin3_ldivmod(d, 150u, &q, &r);", "replace": "gin3_ldivmod(d, 100u, &q, &r);"},
+  {"name": "除數 150 改 151", "find": "gin3_ldivmod(d, 150u, &q, &r);", "replace": "gin3_ldivmod(d, 151u, &q, &r);"},
+  {"name": "第二除數 5.0 改 5（不是 16.16）", "find": "gin3_ldivmod(p, 0x50000u, &q2, &r);", "replace": "gin3_ldivmod(p, 5u, &q2, &r);"},
+  {"name": "第二除數改 4.0", "find": "gin3_ldivmod(p, 0x50000u, &q2, &r);", "replace": "gin3_ldivmod(p, 0x40000u, &q2, &r);"},
+  {"name": "A 加上 Q2（方向相反）", "find": "a = (uint16_t)(a - (uint16_t)q2);", "replace": "a = (uint16_t)(a + (uint16_t)q2);"},
+  {"name": "減 Q2 的高字", "find": "a = (uint16_t)(a - (uint16_t)q2);", "replace": "a = (uint16_t)(a - (uint16_t)(q2 >> 16));"},
+  {"name": "A 不扣 Q2", "find": "a = (uint16_t)(a - (uint16_t)q2);", "replace": "a = (uint16_t)(a - 0u);"},
+  {"name": "右移 2 位", "find": "half = (uint16_t)(a >> 1);", "replace": "half = (uint16_t)(a >> 2);"},
+  {"name": "除以 4 取餘", "find": "div = (uint16_t)(a / 3u);", "replace": "div = (uint16_t)(a / 4u);"},
+  {"name": "加餘數改加商", "find": "return (uint16_t)(half + (uint16_t)(rnd % div));", "replace": "return (uint16_t)(half + (uint16_t)(rnd / div));"},
+  {"name": "亂數呼叫兩次", "find": "rnd = f_3CD5_000C(m);", "replace": "rnd = f_3CD5_000C(m); rnd = f_3CD5_000C(m);"},
+  {"name": "不呼叫亂數（rnd 取 0）", "find": "rnd = f_3CD5_000C(m);", "replace": "rnd = 0;"},
+  {"name": "距離用無號除法（D 視為無號）", "find": "gin3_ldivmod(d, 150u, &q, &r);", "replace": "q = d / 150u;"},
+  {"name": "乘積的 Q 高低字對調", "find": "p = f_3CC9_0009(0, a, (uint16_t)(q >> 16), (uint16_t)q);", "replace": "p = f_3CC9_0009(0, a, (uint16_t)q, (uint16_t)(q >> 16));"},
+  {"name": "乘積用 Q 的低字", "find": "p = f_3CC9_0009(0, a, (uint16_t)(q >> 16), (uint16_t)q);", "replace": "p = f_3CC9_0009(0, a, 0, (uint16_t)q);"},
+  {"name": "距離的 y1 讀 f[+5C]", "find": "rd16(m, LIN(f_seg, (uint16_t)(f_off + 0x5Eu)))", "replace": "rd16(m, LIN(f_seg, (uint16_t)(f_off + 0x5Cu)))"},
+  {"name": "行星座標讀 +0x44", "find": "rd16(m, LIN(p_seg, (uint16_t)(p_off + 0x46u)))", "replace": "rd16(m, LIN(p_seg, (uint16_t)(p_off + 0x44u)))"},
+  {"name": "行星 y 讀 +0x4A", "find": "rd16(m, LIN(p_seg, (uint16_t)(p_off + 0x48u)))", "replace": "rd16(m, LIN(p_seg, (uint16_t)(p_off + 0x4Au)))"},
+  {"name": "A 不截成 16 位元前就用 32 位元商", "find": "a = (uint16_t)(a - (uint16_t)q2);", "replace": "a = (uint16_t)(a - (uint16_t)(q2 > 0xFFFFu ? 0xFFFFu : q2));"}
+]

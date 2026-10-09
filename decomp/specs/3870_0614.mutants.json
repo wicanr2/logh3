@@ -1,0 +1,9 @@
+[
+  {"name": "a 以無號零延伸", "find": "uint32_t sa = (uint32_t)(int32_t)(int16_t)a; /* cwd */", "replace": "uint32_t sa = (uint32_t)a;"},
+  {"name": "回傳乘積低字", "find": "return (uint16_t)(prod >> 16);", "replace": "return (uint16_t)prod;"},
+  {"name": "0643 的參數對調", "find": "f_3870_0643(m, a, b)", "replace": "f_3870_0643(m, b, a)"},
+  {"name": "乘 b 而不是 a", "find": "uint32_t sa = (uint32_t)(int32_t)(int16_t)a; /* cwd */", "replace": "uint32_t sa = (uint32_t)(int32_t)(int16_t)b;"},
+  {"name": "e 的低字丟掉（BX ＝ 0）", "find": "f_3CC9_0009((uint16_t)(e >> 16), (uint16_t)e,", "replace": "f_3CC9_0009((uint16_t)(e >> 16), 0,"},
+  {"name": "e 的高字與低字對調", "find": "f_3CC9_0009((uint16_t)(e >> 16), (uint16_t)e,", "replace": "f_3CC9_0009((uint16_t)e, (uint16_t)(e >> 16),"},
+  {"name": "回傳進位後的高字（加上低字的最高位）", "find": "return (uint16_t)(prod >> 16);", "replace": "return (uint16_t)((prod + 0x8000u) >> 16);"}
+]
