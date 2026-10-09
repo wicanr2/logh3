@@ -1,0 +1,20 @@
+[
+  {"name": "格寬改 8 像素", "find": "(uint8_t)(x >> 4)", "replace": "(uint8_t)(x >> 3)"},
+  {"name": "格高改 21 像素", "find": "(uint8_t)(y / 20u)", "replace": "(uint8_t)(y / 21u)"},
+  {"name": "X 原點取 +6", "find": "LIN(wseg, (uint16_t)(woff + 5u))", "replace": "LIN(wseg, (uint16_t)(woff + 6u))"},
+  {"name": "Y 原點取 +5", "find": "LIN(wseg, (uint16_t)(woff + 6u))", "replace": "LIN(wseg, (uint16_t)(woff + 5u))"},
+  {"name": "X 原點的位移加法不回繞", "find": "LIN(wseg, (uint16_t)(woff + 5u))", "replace": "(LIN(wseg, woff) + 5u)"},
+  {"name": "有框旗標判斷反向", "find": "(woff + 3u))) == 0)\n        return;", "replace": "(woff + 3u))) != 0)\n        return;"},
+  {"name": "寬度減 2", "find": "(woff + 7u))) - 1u) > a)", "replace": "(woff + 7u))) - 2u) > a)"},
+  {"name": "寬度比較改含等於", "find": "(woff + 7u))) - 1u) > a)", "replace": "(woff + 7u))) - 1u) >= a)"},
+  {"name": "高度比較改含等於", "find": "(woff + 8u))) - 1u) > a)", "replace": "(woff + 8u))) - 1u) >= a)"},
+  {"name": "高度取寬度欄位 +7", "find": "(uint16_t)(rd8(m, LIN(wseg, (uint16_t)(woff + 8u))) - 1u) > a", "replace": "(uint16_t)(rd8(m, LIN(wseg, (uint16_t)(woff + 7u))) - 1u) > a"},
+  {"name": "寬度減 1 截成位元組", "find": "(uint16_t)(rd8(m, LIN(wseg, (uint16_t)(woff + 7u))) - 1u) > a", "replace": "(uint8_t)(rd8(m, LIN(wseg, (uint16_t)(woff + 7u))) - 1u) > a"},
+  {"name": "X 內部格 dec 改成 inc", "find": "(uint8_t)(rd8(m, LIN(xs, xo)) - 1u)", "replace": "(uint8_t)(rd8(m, LIN(xs, xo)) + 1u)"},
+  {"name": "Y 出界值 FF 改 0", "find": "f341B044A_wr8_skip_rom(m, LIN(ys, yo), 0xFFu);", "replace": "f341B044A_wr8_skip_rom(m, LIN(ys, yo), 0x00u);"},
+  {"name": "X 夾限用剛算的值而不重讀記憶體", "find": "a = rd8(m, LIN(xs, xo));", "replace": "a = cell_x;"},
+  {"name": "Y 夾限用剛算的值而不重讀記憶體", "find": "a = rd8(m, LIN(ys, yo));", "replace": "a = cell_y;"},
+  {"name": "兩個輸出的寫入順序對調", "find": "    cell_x = (uint8_t)((uint8_t)(x >> 4) - rd8(m, LIN(wseg, (uint16_t)(woff + 5u))));\n    f341B044A_wr8_skip_rom(m, LIN(xs, xo), cell_x);\n    cell_y = (uint8_t)((uint8_t)(y / 20u) - rd8(m, LIN(wseg, (uint16_t)(woff + 6u))));\n    f341B044A_wr8_skip_rom(m, LIN(ys, yo), cell_y);", "replace": "    cell_y = (uint8_t)((uint8_t)(y / 20u) - rd8(m, LIN(wseg, (uint16_t)(woff + 6u))));\n    f341B044A_wr8_skip_rom(m, LIN(ys, yo), cell_y);\n    cell_x = (uint8_t)((uint8_t)(x >> 4) - rd8(m, LIN(wseg, (uint16_t)(woff + 5u))));\n    f341B044A_wr8_skip_rom(m, LIN(xs, xo), cell_x);"},
+  {"name": "拿掉 out_y 第一次寫入的 ROM 模型", "find": "f341B044A_wr8_skip_rom(m, LIN(ys, yo), cell_y);", "replace": "wr8(m, LIN(ys, yo), cell_y);"},
+  {"name": "拿掉夾限階段 out_x 的 ROM 模型", "find": "f341B044A_wr8_skip_rom(m, LIN(xs, xo), 0xFFu);", "replace": "wr8(m, LIN(xs, xo), 0xFFu);"}
+]

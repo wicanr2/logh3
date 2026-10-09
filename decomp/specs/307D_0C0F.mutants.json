@@ -1,0 +1,23 @@
+[
+  {"name": "th ＝ 0 時左移 2 位", "find": "w = (uint16_t)(w << 3);", "replace": "w = (uint16_t)(w << 2);"},
+  {"name": "th ＝ 0 的判斷改成 <= 1", "find": "if (th == 0)", "replace": "if (th <= 1)"},
+  {"name": "250 的門檻改含等於", "find": "else if (th < 0xFAu)", "replace": "else if (th <= 0xFAu)"},
+  {"name": "500 的門檻改含等於", "find": "else if (th < 0x1F4u)", "replace": "else if (th <= 0x1F4u)"},
+  {"name": "1000 的門檻改含等於", "find": "else if (th < 0x3E8u)", "replace": "else if (th <= 0x3E8u)"},
+  {"name": "2000 的門檻改含等於", "find": "else if (th < 0x7D0u)", "replace": "else if (th <= 0x7D0u)"},
+  {"name": "4000 的門檻改含等於", "find": "else if (th < 0xFA0u)", "replace": "else if (th <= 0xFA0u)"},
+  {"name": "250 的門檻改 249", "find": "else if (th < 0xFAu)", "replace": "else if (th < 0xF9u)"},
+  {"name": "4000 的門檻改 4001", "find": "else if (th < 0xFA0u)", "replace": "else if (th < 0xFA1u)"},
+  {"name": "500～999 檔右移 2 位", "find": "else if (th < 0x3E8u)\n            w = (uint16_t)(w >> 1);", "replace": "else if (th < 0x3E8u)\n            w = (uint16_t)(w >> 2);"},
+  {"name": "最大檔改成算術右移", "find": "w = (uint16_t)(w >> 4);", "replace": "w = (uint16_t)((int16_t)w >> 4);"},
+  {"name": "2000～3999 檔改成算術右移", "find": "else if (th < 0xFA0u)\n            w = (uint16_t)(w >> 3);", "replace": "else if (th < 0xFA0u)\n            w = (uint16_t)((int16_t)w >> 3);"},
+  {"name": "250～499 檔改成右移 1", "find": "else if (th < 0x1F4u)\n            w = w;", "replace": "else if (th < 0x1F4u)\n            w = (uint16_t)(w >> 1);"},
+  {"name": "小於 250 檔改成左移 2", "find": "w = (uint16_t)(w << 1);", "replace": "w = (uint16_t)(w << 2);"},
+  {"name": "門檻表步距 4 改 2", "find": "uint16_t bx = (uint16_t)(t << 2);", "replace": "uint16_t bx = (uint16_t)(t << 1);"},
+  {"name": "門檻取高位 word", "find": "uint16_t th = rd16(m, DS((uint16_t)(bx + 0xD69Cu)));", "replace": "uint16_t th = rd16(m, DS((uint16_t)(bx + 0xD69Eu)));"},
+  {"name": "門檻只讀低位元組", "find": "uint16_t th = rd16(m, DS((uint16_t)(bx + 0xD69Cu)));", "replace": "uint16_t th = rd8(m, DS((uint16_t)(bx + 0xD69Cu)));"},
+  {"name": "記錄步距 6 改 4", "find": "q = (uint16_t)(q + 6u);", "replace": "q = (uint16_t)(q + 4u);"},
+  {"name": "只處理 7 筆", "find": "for (i = 0; i < 8; i++) {", "replace": "for (i = 0; i < 7; i++) {"},
+  {"name": "對照表位置多 1", "find": "DS((uint16_t)(0x606Au + i))", "replace": "DS((uint16_t)(0x606Bu + i))"},
+  {"name": "t 不經對照表直接用 i", "find": "uint16_t t = rd8(m, DS((uint16_t)(0x606Au + i)));", "replace": "uint16_t t = i;"}
+]

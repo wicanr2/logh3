@@ -1,0 +1,9 @@
+[
+  {"name": "長度少一個 byte", "find": "1u, 0x20u)", "replace": "1u, 0x1Fu)"},
+  {"name": "長度多一個 byte", "find": "1u, 0x20u)", "replace": "1u, 0x21u)"},
+  {"name": "填 0", "find": "GIN3_DS, 1u, 0x20u)", "replace": "GIN3_DS, 0u, 0x20u)"},
+  {"name": "填 2", "find": "GIN3_DS, 1u, 0x20u)", "replace": "GIN3_DS, 2u, 0x20u)"},
+  {"name": "起點少一個 byte", "find": "f_3C9C_000A(m, 0xD6ECu,", "replace": "f_3C9C_000A(m, 0xD6EBu,"},
+  {"name": "起點多一個 byte", "find": "f_3C9C_000A(m, 0xD6ECu,", "replace": "f_3C9C_000A(m, 0xD6EDu,"},
+  {"name": "回傳殘值改成 0", "find": "return f_3C9C_000A(m, 0xD6ECu, GIN3_DS, 1u, 0x20u);", "replace": "(void)f_3C9C_000A(m, 0xD6ECu, GIN3_DS, 1u, 0x20u); return 0;"}
+]

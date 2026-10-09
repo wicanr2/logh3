@@ -1,0 +1,17 @@
+[
+  {"name": "池記錄大小 0x4E 改 0x4D", "find": "(uint16_t)(idx * 0x4Eu)", "replace": "(uint16_t)(idx * 0x4Du)"},
+  {"name": "組的步距 4 改 2", "find": "(uint16_t)(di << 2)", "replace": "(uint16_t)(di << 1)"},
+  {"name": "輸出步距 4 改 2", "find": "out_off = (uint16_t)(out_off + 4u);", "replace": "out_off = (uint16_t)(out_off + 2u);"},
+  {"name": "段與位移寫反", "find": "f321F01CA_wr16s_rom(m, out_seg, (uint16_t)(obx + 2u), cx);\n        f321F01CA_wr16s_rom(m, out_seg, obx, si);", "replace": "f321F01CA_wr16s_rom(m, out_seg, (uint16_t)(obx + 2u), si);\n        f321F01CA_wr16s_rom(m, out_seg, obx, cx);"},
+  {"name": "迴圈條件改成 <=", "find": "if (di >= cnt)", "replace": "if (di > cnt)"},
+  {"name": "組數讀成 word", "find": "uint16_t cnt = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x0Fu)));", "replace": "uint16_t cnt = f321F01CA_rd16s(m, fleet_seg, (uint16_t)(fleet_off + 0x0Fu));"},
+  {"name": "組數只讀一次（不重讀）", "find": "        uint16_t cnt = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x0Fu)));", "replace": "        static uint16_t cnt0; uint16_t cnt = (di == 0) ? (cnt0 = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x0Fu)))) : cnt0;"},
+  {"name": "池段改讀 ds:CFB4", "find": "cx = rd16(m, DS(0xCFB6));", "replace": "cx = rd16(m, DS(0xCFB4));"},
+  {"name": "池位移改讀 ds:CFB6", "find": "si = (uint16_t)(rd16(m, DS(0xCFB4)) + (uint16_t)(idx * 0x4Eu));", "replace": "si = (uint16_t)(rd16(m, DS(0xCFB6)) + (uint16_t)(idx * 0x4Eu));"},
+  {"name": "索引起點取 +0x12", "find": "fleet_off + 0x10u + (uint16_t)(di << 2)", "replace": "fleet_off + 0x12u + (uint16_t)(di << 2)"},
+  {"name": "池位移相加不回繞（32 位元再截成 16 位元寫入同值，改成飽和）", "find": "si = (uint16_t)(rd16(m, DS(0xCFB4)) + (uint16_t)(idx * 0x4Eu));", "replace": "si = (uint16_t)((uint32_t)rd16(m, DS(0xCFB4)) + (uint16_t)(idx * 0x4Eu) > 0xFFFFu ? 0xFFFFu : rd16(m, DS(0xCFB4)) + (uint16_t)(idx * 0x4Eu));"},
+  {"name": "拿掉 ROM 模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"},
+  {"name": "word 寫入不回繞（線性加 1）", "find": "    f321F01CA_wr8_skip_rom(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "    f321F01CA_wr8_skip_rom(m, LIN(seg, off) + 1u, (uint8_t)(v >> 8));"},
+  {"name": "word 讀取不回繞（線性加 1）", "find": "    return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8));", "replace": "    return rd16(m, LIN(seg, off));"},
+  {"name": "回傳組數加 1", "find": "    return count;", "replace": "    return (uint16_t)(count + 1u);"}
+]

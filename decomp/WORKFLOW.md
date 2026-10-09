@@ -161,3 +161,13 @@ decomp/tools/ledger.sh mark <SEG:OFF> diff-tested decomp/src/f_<SEG>_<OFF>.c dec
 把表所在的位址列入 `freeze`，探索就只突變其他位址。`addr` 的格式同 `pokes`（`ds:OFF`、`SEG:OFF`、`lin:ADDR`），`len` 是十進位 bytes 數。
 `seeds` 的 `pokes` 仍可改凍結的位址，用來刻意驗證「表項換成另一個 case 的位址」這類案例。
 不要為了避開難測的路徑把整個函式設成 `iters: 1`（只跑 seeds）；那會讓 `diff-tested` 退化成只驗手工案例。
+
+### 描述檔的幾個陷阱（來自各批次）
+
+- `pokes` 的 hex 跨位移 `0xFFFF` 時是線性連續寫入，不是段內回繞。要造「word 在 `seg:FFFF` 與 `seg:0000` 跨界」的資料，拆成兩個 poke（`SEG:FFFF` 與 `SEG:0000`）。
+- `seeds` 的位址要避開線性 `A0000` 到 `BFFFF`（例如用 `8000:FFxx`，不要用 `9D00:FFxx`），落在那裡的 seed 會讓探針 panic。
+- `farptr` 參數的 `gen` 只能選 `table`、`ds`、`scratch`、`null` 其中一種，不能混用。需要「null 或真實節點」時，改用成對的 word 參數加 `choices`。
+- byte 計數器的迴圈突變（例如 `i <= cnt` 且 `cnt = 255`）會無窮迴圈，只靠 180 秒逾時算抓到。寫成有上界的版本（`i < cnt + (i < 200)`、少算一組、多算一組）。
+- `LIN()`、`DS()` 巨集在內部把位移截成 16 位元，所以「位移改 `uint32_t` 再丟進去」是等價突變；要做「不回繞」的突變，在讀寫點用 `LIN(seg, 0) + 線性和`。
+- 只被寫、不被讀的欄位探針不會突變；基底值剛好等於寫入值就看不出「少寫」，用 `seeds` 先把前態 poke 成不同的值。
+- 寫入的值與原值相同時，寫入集合看不出來（同上）。

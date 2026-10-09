@@ -1,0 +1,11 @@
+[
+  {"name": "key 用整個 word 比對", "find": "uint8_t k = (uint8_t)key;", "replace": "uint16_t k = key;"},
+  {"name": "比對欄位改成 +5", "find": "rd8(m, LIN(seg, (uint16_t)(off + 4u))) == k", "replace": "rd8(m, LIN(seg, (uint16_t)(off + 5u))) == k"},
+  {"name": "下一個的段與位移欄位對調", "find": "nseg = f341B0353_rd16s(m, seg, (uint16_t)(off + 0x18u));\n        noff = f341B0353_rd16s(m, seg, (uint16_t)(off + 0x16u));", "replace": "nseg = f341B0353_rd16s(m, seg, (uint16_t)(off + 0x16u));\n        noff = f341B0353_rd16s(m, seg, (uint16_t)(off + 0x18u));"},
+  {"name": "結尾只看位移", "find": "if ((seg | off) == 0)\n            return 0;", "replace": "if (off == 0)\n            return 0;"},
+  {"name": "結尾只看段", "find": "if ((seg | off) == 0)\n            return 0;", "replace": "if (seg == 0)\n            return 0;"},
+  {"name": "word 讀取不回繞（線性加 1）", "find": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8));", "replace": "return rd16(m, LIN(seg, off));"},
+  {"name": "do-while 改成 while（先檢查空串列）", "find": "    for (;;) {\n        uint16_t nseg, noff;", "replace": "    if ((seg | off) == 0)\n        return 0;\n    for (;;) {\n        uint16_t nseg, noff;"},
+  {"name": "回傳 AX 與 BX 對調", "find": "return ((uint32_t)seg << 16) | off; /* AX:BX */", "replace": "return ((uint32_t)off << 16) | seg;"},
+  {"name": "頭指標段與位移欄位對調", "find": "uint16_t off = rd16(m, DS(0xD804));\n    uint16_t seg = rd16(m, DS(0xD806));", "replace": "uint16_t off = rd16(m, DS(0xD806));\n    uint16_t seg = rd16(m, DS(0xD804));"}
+]

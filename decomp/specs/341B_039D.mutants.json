@@ -1,0 +1,21 @@
+[
+  {"name": "種類改認 1", "find": "rd8(m, LIN(seg, off)) == 2", "replace": "rd8(m, LIN(seg, off)) == 1"},
+  {"name": "種類改成位元測試（&2）", "find": "rd8(m, LIN(seg, off)) == 2", "replace": "(rd8(m, LIN(seg, off)) & 2) != 0"},
+  {"name": "格寬改 15 像素", "find": "uint8_t cell_x = (uint8_t)(x >> 4);", "replace": "uint8_t cell_x = (uint8_t)(x / 15u);"},
+  {"name": "格高改 21 像素", "find": "uint8_t cell_y = (uint8_t)(y / 20u);", "replace": "uint8_t cell_y = (uint8_t)(y / 21u);"},
+  {"name": "cell_x 不截成 byte", "find": "uint8_t cell_x = (uint8_t)(x >> 4);", "replace": "uint16_t cell_x = (uint16_t)(x >> 4);"},
+  {"name": "cell_y 不截成 byte", "find": "uint8_t cell_y = (uint8_t)(y / 20u);", "replace": "uint16_t cell_y = (uint16_t)(y / 20u);"},
+  {"name": "左邊界含等於改成不含", "find": "&& !(cell_x < rd8(m, LIN(seg, (uint16_t)(off + 5u))))", "replace": "&& !(cell_x <= rd8(m, LIN(seg, (uint16_t)(off + 5u))))"},
+  {"name": "上邊界含等於改成不含", "find": "&& !(cell_y < rd8(m, LIN(seg, (uint16_t)(off + 6u))))", "replace": "&& !(cell_y <= rd8(m, LIN(seg, (uint16_t)(off + 6u))))"},
+  {"name": "右邊界不含改成含", "find": "(uint16_t)(off + 7u)))) <= cell_x)", "replace": "(uint16_t)(off + 7u)))) < cell_x)"},
+  {"name": "下邊界不含改成含", "find": "(uint16_t)(off + 8u)))) <= cell_y)", "replace": "(uint16_t)(off + 8u)))) < cell_y)"},
+  {"name": "X 範圍的和截成 byte", "find": "&& !((uint16_t)(rd8(m, LIN(seg, (uint16_t)(off + 5u))) + rd8(m, LIN(seg, (uint16_t)(off + 7u)))) <= cell_x)", "replace": "&& !((uint8_t)(rd8(m, LIN(seg, (uint16_t)(off + 5u))) + rd8(m, LIN(seg, (uint16_t)(off + 7u)))) <= cell_x)"},
+  {"name": "Y 範圍的和截成 byte", "find": "&& !((uint16_t)(rd8(m, LIN(seg, (uint16_t)(off + 6u))) + rd8(m, LIN(seg, (uint16_t)(off + 8u)))) <= cell_y))", "replace": "&& !((uint8_t)(rd8(m, LIN(seg, (uint16_t)(off + 6u))) + rd8(m, LIN(seg, (uint16_t)(off + 8u)))) <= cell_y))"},
+  {"name": "寬高欄位對調（+7 與 +8）", "find": "(uint16_t)(off + 7u)))) <= cell_x)", "replace": "(uint16_t)(off + 8u)))) <= cell_x)"},
+  {"name": "下一個的段與位移欄位對調", "find": "nseg = f341B039D_rd16s(m, seg, (uint16_t)(off + 0x18u));\n        noff = f341B039D_rd16s(m, seg, (uint16_t)(off + 0x16u));", "replace": "nseg = f341B039D_rd16s(m, seg, (uint16_t)(off + 0x16u));\n        noff = f341B039D_rd16s(m, seg, (uint16_t)(off + 0x18u));"},
+  {"name": "結尾只看位移", "find": "while ((seg | off) != 0) {", "replace": "while (off != 0) {"},
+  {"name": "結尾只看段", "find": "while ((seg | off) != 0) {", "replace": "while (seg != 0) {"},
+  {"name": "word 讀取不回繞（線性加 1）", "find": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8));", "replace": "return rd16(m, LIN(seg, off));"},
+  {"name": "回傳 AX 與 BX 對調", "find": "return ((uint32_t)seg << 16) | off; /* AX:BX */", "replace": "return ((uint32_t)off << 16) | seg;"},
+  {"name": "+5 欄位的位移加法不回繞（線性加 5）", "find": "&& !(cell_x < rd8(m, LIN(seg, (uint16_t)(off + 5u))))", "replace": "&& !(cell_x < rd8(m, LIN(seg, off) + 5u))"}
+]

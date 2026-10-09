@@ -1,0 +1,12 @@
+[
+  {"name": "格寬改 8 像素", "find": "(uint8_t)(x >> 4)", "replace": "(uint8_t)(x >> 3)"},
+  {"name": "格高改 19 像素", "find": "(uint8_t)(y / 20u)", "replace": "(uint8_t)(y / 19u)"},
+  {"name": "x 先取低位元組再右移", "find": "(uint8_t)(x >> 4)", "replace": "(uint8_t)((uint8_t)x >> 4)"},
+  {"name": "y 先取低位元組再相除", "find": "(uint8_t)(y / 20u)", "replace": "(uint8_t)((uint8_t)y / 20u)"},
+  {"name": "寫入順序對調（x 後寫）", "find": "    f341B04DB_wr8_skip_rom(m, LIN(xs, xo), (uint8_t)(x >> 4));\n    f341B04DB_wr8_skip_rom(m, LIN(ys, yo), (uint8_t)(y / 20u));", "replace": "    f341B04DB_wr8_skip_rom(m, LIN(ys, yo), (uint8_t)(y / 20u));\n    f341B04DB_wr8_skip_rom(m, LIN(xs, xo), (uint8_t)(x >> 4));"},
+  {"name": "拿掉 out_x 的 ROM 模型", "find": "f341B04DB_wr8_skip_rom(m, LIN(xs, xo), (uint8_t)(x >> 4));", "replace": "wr8(m, LIN(xs, xo), (uint8_t)(x >> 4));"},
+  {"name": "拿掉 out_y 的 ROM 模型", "find": "f341B04DB_wr8_skip_rom(m, LIN(ys, yo), (uint8_t)(y / 20u));", "replace": "wr8(m, LIN(ys, yo), (uint8_t)(y / 20u));"},
+  {"name": "ROM 邊界差一格", "find": "if ((lin & 0xFFFFFu) < 0xF0000u)", "replace": "if ((lin & 0xFFFFFu) < 0xF0001u)"},
+  {"name": "兩個輸出的 x、y 對調", "find": "(uint8_t)(y / 20u));\n}", "replace": "(uint8_t)(x >> 4));\n}"},
+  {"name": "out_y 多寫高位元組", "find": "    f341B04DB_wr8_skip_rom(m, LIN(ys, yo), (uint8_t)(y / 20u));", "replace": "    f341B04DB_wr8_skip_rom(m, LIN(ys, yo), (uint8_t)(y / 20u));\n    f341B04DB_wr8_skip_rom(m, LIN(ys, (uint16_t)(yo + 1u)), (uint8_t)((y / 20u) >> 8));"}
+]

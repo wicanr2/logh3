@@ -1,0 +1,34 @@
+{
+  "id": "341B_04DB",
+  "entry": "341B:04DB",
+  "conv": "far",
+  "ret": "none",
+  "size": 43,
+  "code_sha256_16": "27518cbeef290427",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "x>>4 與 y÷20 各存低位元組到兩個輸出指標。輸出指標用暫存緩衝區（scratch，隨機預填 0／FF／亂數），x、y 的 choices 含格邊界與 x>=4096、y>=5120 的回繞值。seeds 造：兩個輸出指標相同（以 out_y 為準）、輸出在 ROM 區（F000:0000 起寫入被丟棄、EFFF:000F 剛好在 ROM 邊界前一格）、輸出位移 0xFFFF（byte 存取不跨段）。",
+  "args": [
+    {"name": "x", "kind": "word", "gen": {"choices": [0, 1, 15, 16, 17, 31, 32, 255, 256, 319, 320, 4095, 4096, 4111, 4112, 8191, 8192, 65519, 65520, 65535], "also_random": true}},
+    {"name": "y", "kind": "word", "gen": {"choices": [0, 1, 19, 20, 21, 39, 40, 255, 256, 299, 300, 5099, 5100, 5119, 5120, 5139, 5140, 65519, 65520, 65535], "also_random": true}},
+    {"name": "out_x", "kind": "farptr", "gen": {"scratch": 16}},
+    {"name": "out_y", "kind": "farptr", "gen": {"scratch": 16}}
+  ],
+  "seeds": [
+    {"note": "一般：x=0x50 -> 5，y=0x100 -> 12（256 ÷ 20）", "args": [80, 256, 0, 40192, 0, 40208], "pokes": [{"addr": "9D00:0000", "hex": "aa"}, {"addr": "9D01:0000", "hex": "bb"}]},
+    {"note": "兩個輸出指標相同：out_y 蓋過 out_x（5 vs 12）", "args": [80, 256, 0, 40192, 0, 40192], "pokes": [{"addr": "9D00:0000", "hex": "aa"}]},
+    {"note": "兩個輸出指標相同、值相同則看不出順序；x=0x140 -> 20、y=400 -> 20", "args": [320, 400, 0, 40192, 0, 40192], "pokes": [{"addr": "9D00:0000", "hex": "aa"}]},
+    {"note": "out_x 在 ROM 區 F000:0000：寫入被丟棄；out_y 正常", "args": [80, 256, 0, 61440, 0, 40192], "pokes": [{"addr": "9D00:0000", "hex": "aa"}]},
+    {"note": "out_y 在 ROM 區 F000:0010：寫入被丟棄；out_x 正常", "args": [80, 256, 0, 40192, 16, 61440], "pokes": [{"addr": "9D00:0000", "hex": "aa"}]},
+    {"note": "out_x 在 EFFF:000F ＝ 線性 EFFFF（ROM 前一格）：寫入有效", "args": [80, 256, 15, 61439, 0, 40192], "pokes": [{"addr": "lin:EFFFF", "hex": "aa"}, {"addr": "9D00:0000", "hex": "bb"}]},
+    {"note": "out_x 在 EFFF:0010 ＝ 線性 F0000（ROM 第一格）：寫入被丟棄", "args": [80, 256, 16, 61439, 0, 40192], "pokes": [{"addr": "9D00:0000", "hex": "bb"}]},
+    {"note": "out_x 位移 0xFFFF（byte 存取在 8000:FFFF，線性 8FFFF）", "args": [80, 256, 65535, 32768, 0, 40208], "pokes": [{"addr": "lin:8FFFF", "hex": "aa"}]},
+    {"note": "x=0x0F50（3920）：先右移得 0xF5；先取低位元組再右移會得 5", "args": [3920, 5120, 0, 40192, 0, 40208], "pokes": [{"addr": "9D00:0000", "hex": "aa"}, {"addr": "9D01:0000", "hex": "bb"}]},
+    {"note": "y=5120 -> 商 256 -> 低位元組 0；y=5140 -> 257 -> 1", "args": [4096, 5140, 0, 40192, 0, 40208], "pokes": [{"addr": "9D00:0000", "hex": "aa"}, {"addr": "9D01:0000", "hex": "bb"}]},
+    {"note": "x=y=0xFFFF：x>>4 ＝ 0xFFF -> FF；y÷20 ＝ 3276 -> 0xCC", "args": [65535, 65535, 0, 40192, 0, 40208], "pokes": [{"addr": "9D00:0000", "hex": "00"}, {"addr": "9D01:0000", "hex": "00"}]}
+  ],
+  "iters": 4000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

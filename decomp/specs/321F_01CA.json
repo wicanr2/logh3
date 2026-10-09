@@ -1,0 +1,46 @@
+{
+  "id": "321F_01CA",
+  "entry": "321F:01CA",
+  "conv": "far",
+  "ret": "ax",
+  "size": 89,
+  "code_sha256_16": "741fa3a154096a6e",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦隊每組編制 -> 艦艇池 far 指標。基底用 fcmd-s3-base（艦隊表 ds:C074 起 32 筆 × 122 bytes，有 20 多支真實艦隊，組數 +0x0F 到 10；艦艇池 ds:CFB4／CFB6 ＝ 668B:0002）。fleet 取艦隊表隨機一筆；out 用暫存緩衝區（1040 bytes，容納 255 組）。seeds：組數 0／1／255、池索引 0／1／0x35F／0x8000／0xFFFF（×0x4E 回繞）、out 與艦隊記錄別名（out ＝ 艦隊+0x0C 使 +0x0F 被覆寫為池段高位元組、out ＝ 艦隊+0x14 覆寫第二組索引）、out ＝ ds:CFB4（池基底每次迭代重讀）、out／fleet 位移 0xFFFF 回繞、out 在 ROM 區。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "out", "kind": "farptr", "gen": {"scratch": 1040}},
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}}
+  ],
+  "seeds": [
+    {"note": "艦隊 0（10 組）-> 暫存緩衝區", "args": [0, 40192, 49268, 21683], "pokes": []},
+    {"note": "艦隊 3", "args": [0, 40192, 49634, 21683], "pokes": []},
+    {"note": "組數 0 -> 不寫、回 0", "args": [0, 40192, 49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "00"}]},
+    {"note": "組數 1", "args": [0, 40192, 49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "01"}]},
+    {"note": "組數 255（讀到艦隊記錄之後的相鄰記憶體）", "args": [0, 40192, 49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "ff"}]},
+    {"note": "組數 0x80（高位元組不是 0 的 word 讀法會錯）", "args": [0, 40192, 49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "80"}, {"addr": "ds:C084", "hex": "01 00"}]},
+    {"note": "池索引 0x035F、0x0360（×0x4E 剛好跨 16 位元）、0x8000、0xFFFF", "args": [0, 40192, 49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "04"}, {"addr": "ds:C084", "hex": "5f 03 00 14 60 03 00 14 00 80 00 14 ff ff 00 14"}]},
+    {"note": "池索引 0 與 1", "args": [0, 40192, 49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "02"}, {"addr": "ds:C084", "hex": "00 00 00 14 01 00 00 14"}]},
+    {"note": "池基底 ds:CFB4 ＝ 0xFFF0、CFB6 ＝ 0x7000（位移相加回繞）", "args": [0, 40192, 49268, 21683], "pokes": [{"addr": "ds:CFB4", "hex": "f0 ff 00 70"}, {"addr": "ds:C083", "hex": "03"}]},
+    {"note": "別名：out ＝ 艦隊 0 的 +0x0C：第一組的段寫進 +0x0E..+0x0F，組數 +0x0F 被覆寫為 0x66（池段 668B 的高位元組）", "args": [49280, 21683, 49268, 21683], "pokes": []},
+    {"note": "別名：out ＝ 艦隊 0 的 +0x0C，組數預設 2：第一輪就覆寫組數", "args": [49280, 21683, 49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "02"}]},
+    {"note": "別名：out ＝ 艦隊 0 的 +0x14（第二組索引字）：第一輪的位移寫進第二組索引，第二輪讀到被覆寫的索引", "args": [49288, 21683, 49268, 21683], "pokes": []},
+    {"note": "別名：out ＝ 艦隊 0 的 +0x10（第一組本身）：寫入發生在讀索引之後，不影響本輪，下一輪輸出位置推進 4", "args": [49284, 21683, 49268, 21683], "pokes": []},
+    {"note": "別名：out ＝ ds:CFB4：第一輪把池基底寫成（新位移、池段），第二輪起讀到被改的基底", "args": [53172, 21683, 49268, 21683], "pokes": []},
+    {"note": "別名：out ＝ ds:CFB6 -> 第一輪把 CFB6 寫成新位移、CFB8 寫成段", "args": [53174, 21683, 49268, 21683], "pokes": []},
+    {"note": "out 位移 0xFFFD（段 8000）：out[+2] 的 word 在 FFFF／0000 跨界、之後輸出位移回繞到 0x0001", "args": [65533, 32768, 49268, 21683], "pokes": []},
+    {"note": "out 位移 0xFFFF：out[+0] 的 word 跨 FFFF／0000", "args": [65535, 32768, 49268, 21683], "pokes": []},
+    {"note": "fleet 在 8000:FFEB：+0x0F ＝ FFFA、+0x10 ＝ FFFB（組 0 的字）、組 1 的字跨 FFFF／0000", "args": [0, 40192, 65515, 32768], "pokes": [{"addr": "lin:8FFFA", "hex": "03"}, {"addr": "lin:8FFFB", "hex": "11 11 00 14 22"}, {"addr": "lin:80000", "hex": "22 00 14 33 33"}]},
+    {"note": "out 在 ROM 區 F000:0000：寫入丟棄", "args": [0, 61440, 49268, 21683], "pokes": []},
+    {"note": "out 在 EFFF:FFF9：輸出落在 ROM 邊界附近：第一筆 +2 ＝ 000B、+0 ＝ FFF9，跨進 F0000 的丟棄", "args": [65529, 61439, 49268, 21683], "pokes": [{"addr": "lin:EFFFF", "hex": "aa"}]},
+    {"note": "fleet 在 ROM 區 F000:0000：組數讀到 0", "args": [0, 40192, 0, 61440], "pokes": []},
+    {"note": "池段 ds:CFB6 與位移改成別的值", "args": [0, 40192, 49268, 21683], "pokes": [{"addr": "ds:CFB4", "hex": "34 12 78 56"}]}
+  ],
+  "iters": 12000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

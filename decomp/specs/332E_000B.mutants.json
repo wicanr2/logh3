@@ -1,0 +1,7 @@
+[
+  {"name": "多寫 ds:0000 一個 byte", "find": "(void)m; /* 不讀不寫 */", "replace": "wr8(m, DS(0x0000), (uint8_t)(rd8(m, DS(0x0000)) + 1));"},
+  {"name": "多寫 ds:D61A 一個 byte", "find": "(void)m; /* 不讀不寫 */", "replace": "wr8(m, DS(0xD61A), (uint8_t)(rd8(m, DS(0xD61A)) ^ 0xFF));"},
+  {"name": "AX 回傳加 1", "find": "((uint64_t)a[0] << 48)", "replace": "((uint64_t)(uint16_t)(a[0] + 1) << 48)"},
+  {"name": "BX 與 CX 對調", "find": "((uint64_t)a[1] << 32) | ((uint64_t)a[2] << 16)", "replace": "((uint64_t)a[2] << 32) | ((uint64_t)a[1] << 16)"},
+  {"name": "DX 清成 0", "find": "| (uint64_t)a[3];", "replace": "| 0;"}
+]

@@ -1,0 +1,23 @@
+{
+  "id": "307D_0005",
+  "entry": "307D:0005",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 22,
+  "code_sha256_16": "dd90bc9da40c566d",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "memset(ds:D6EC, 1, 0x20) 的包裝，沒有參數也不讀記憶體，所以隨機突變無事可做，全靠 seeds。基底 ds:D6EC 起全 0，種子預填 0x00／0x01／0xAA 的不同圖樣，驗證寫入範圍剛好是 D6EC..D70B：不少寫（被填 1 的格子原本不是 1）、不多寫（兩側的哨兵不變）、值是 1（不是 0 或其他）。",
+  "args": [],
+  "seeds": [
+    {"note": "基底：全 0", "pokes": []},
+    {"note": "目標區與兩側 8 bytes 全預填 AA", "pokes": [{"addr": "ds:D6E4", "hex": "aa", "repeat": 48}]},
+    {"note": "目標區預填 01、兩側 AA：只有哨兵驗得出位移與長度", "pokes": [{"addr": "ds:D6E4", "hex": "aa", "repeat": 8}, {"addr": "ds:D6EC", "hex": "01", "repeat": 32}, {"addr": "ds:D70C", "hex": "aa", "repeat": 8}]},
+    {"note": "目標區預填 00，兩側預填 01：多寫 1 的突變看不出來，多寫 0 的看得出來（兩側變 0）", "pokes": [{"addr": "ds:D6E4", "hex": "01", "repeat": 8}, {"addr": "ds:D70C", "hex": "01", "repeat": 8}]},
+    {"note": "目標區預填遞增圖樣", "pokes": [{"addr": "ds:D6EC", "hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f"}]}
+  ],
+  "iters": 10,
+  "max_cases": 5,
+  "seed": 20261009,
+  "min_coverage": 100
+}

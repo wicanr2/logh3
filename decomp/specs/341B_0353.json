@@ -1,0 +1,36 @@
+{
+  "id": "341B_0353",
+  "entry": "341B:0353",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 74,
+  "code_sha256_16": "34e11511122ef00d",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "視窗串列依編號找節點。基底狀態的串列有 5 個節點（頭 54B3:F144、再 955C、953A、9518、尾 94F6），編號 +0x04 依序是 4、3、2、1、0；頭尾指標在 ds:D804／D806／D808／D80A。key 是 word，只用低位元組：choices 含高位元組非 0 的值（0x0104 等）驗證高位元組被忽略。seeds 造空串列（頭 0:0，do-while 先讀 0000:0004）、頭節點直接符合、尾節點符合、全不符合、下一個指標的位移或段單獨為 0、位移 0xFFFF 的 word 存取。",
+  "args": [
+    {"name": "key", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 255, 256, 257, 258, 259, 260, 261, 65280, 65535, 4660], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "key=4：頭節點", "args": [4], "pokes": []},
+    {"note": "key=0：尾節點", "args": [0], "pokes": []},
+    {"note": "key=2：中間節點", "args": [2], "pokes": []},
+    {"note": "key=0x0104：高位元組忽略，頭節點", "args": [260], "pokes": []},
+    {"note": "key=0x0200：低位元組 0，高位元組 2：符合尾節點(0)，不符合 2 號", "args": [512], "pokes": []},
+    {"note": "key=9：全不符合，回 0:0", "args": [9], "pokes": []},
+    {"note": "key=0xFF 全不符合", "args": [255], "pokes": []},
+    {"note": "頭指標 0:0（空串列）、0000:0004 的值不等於 key：往 0000:0016／0018 取下一個", "args": [7], "pokes": [{"addr": "ds:D804", "hex": "00000000"}, {"addr": "lin:00004", "hex": "01"}, {"addr": "lin:00016", "hex": "00000000"}]},
+    {"note": "頭指標 0:0（空串列）、0000:0004 的值等於 key：回 0:0", "args": [1], "pokes": [{"addr": "ds:D804", "hex": "00000000"}, {"addr": "lin:00004", "hex": "01"}]},
+    {"note": "頭節點的下一個：位移 0、段 54B3（只有位移為 0）仍繼續走（讀 54B3:0004）", "args": [3], "pokes": [{"addr": "ds:F15A", "hex": "0000b354"}]},
+    {"note": "頭節點的下一個：位移非 0、段 0：繼續走，讀 0000:955C+4（lin 9560）符合 key 3，回 0000:955C", "args": [3], "pokes": [{"addr": "ds:F15A", "hex": "5c950000"}, {"addr": "lin:09560", "hex": "03"}, {"addr": "lin:09572", "hex": "00000000"}]},
+    {"note": "同上但 lin 9560 不符合：再取 0000:9572（零）結束，回 0", "args": [3], "pokes": [{"addr": "ds:F15A", "hex": "5c950000"}, {"addr": "lin:09560", "hex": "07"}, {"addr": "lin:09572", "hex": "00000000"}]},
+    {"note": "頭指標 0:0、0000:0004 不符合 key 0，下一個取自 0000:0016 ＝ 54B3:94F6（尾節點，編號 0）：do-while 走到它，回 54B3:94F6", "args": [0], "pokes": [{"addr": "ds:D804", "hex": "00000000"}, {"addr": "lin:00004", "hex": "01"}, {"addr": "lin:00016", "hex": "f694b354"}]},
+    {"note": "兩個 word 都 0：串列結尾", "args": [3], "pokes": [{"addr": "ds:F15A", "hex": "00000000"}]},
+    {"note": "頭節點在 8000:FFE9：+0x16 的 word 跨 FFFF／0000 回繞（位移 94F6 ＝ lin 8FFFF 的 F6 與 lin 80000 的 94），+0x18 在 8000:0001（段 54B3）；下一個是尾節點，key=0 符合", "args": [0], "pokes": [{"addr": "ds:D804", "hex": "e9ff0080"}, {"addr": "8000:FFED", "hex": "09"}, {"addr": "lin:8FFFF", "hex": "f6"}, {"addr": "lin:80000", "hex": "94"}, {"addr": "lin:80001", "hex": "b354"}]},
+    {"note": "同上但 key=9 符合頭節點的 +4（8000:FFED = 09）", "args": [9], "pokes": [{"addr": "ds:D804", "hex": "e9ff0080"}, {"addr": "8000:FFED", "hex": "09"}, {"addr": "lin:8FFFF", "hex": "f6"}, {"addr": "lin:80000", "hex": "94"}, {"addr": "lin:80001", "hex": "b354"}]}
+  ],
+  "iters": 12000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}
