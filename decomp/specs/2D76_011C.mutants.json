@@ -1,0 +1,22 @@
+[
+  {"name": "不清 ds:D506 的計數", "find": "    f_3C9C_000A(m, 0xD506u, GIN3_DS, 0, 8);\n", "replace": ""},
+  {"name": "只清 6 bytes", "find": "f_3C9C_000A(m, 0xD506u, GIN3_DS, 0, 8);", "replace": "f_3C9C_000A(m, 0xD506u, GIN3_DS, 0, 6);"},
+  {"name": "清 10 bytes", "find": "f_3C9C_000A(m, 0xD506u, GIN3_DS, 0, 8);", "replace": "f_3C9C_000A(m, 0xD506u, GIN3_DS, 0, 10);"},
+  {"name": "清 0xFF 而不是 0", "find": "f_3C9C_000A(m, 0xD506u, GIN3_DS, 0, 8);", "replace": "f_3C9C_000A(m, 0xD506u, GIN3_DS, 0xFF, 8);"},
+  {"name": "131C 的 flags 改 0（不過濾陣營）", "find": "0xFFu, 1);", "replace": "0xFFu, 0);"},
+  {"name": "131C 的 flags 改 2（只留敵方）", "find": "0xFFu, 1);", "replace": "0xFFu, 2);"},
+  {"name": "131C 的 v 改 0（星域 0）", "find": "0xFFu, 1);", "replace": "0u, 1);"},
+  {"name": "不跳過 bit0 有設的", "find": "        if (rd8(m, DS(f)) & 1u)\n            continue;\n", "replace": ""},
+  {"name": "bit0 條件反向", "find": "        if (rd8(m, DS(f)) & 1u)\n            continue;", "replace": "        if (!(rd8(m, DS(f)) & 1u))\n            continue;"},
+  {"name": "類別碼讀 f[+8]", "find": "rd8(m, DS((uint16_t)(f + 9u)))", "replace": "rd8(m, DS((uint16_t)(f + 8u)))"},
+  {"name": "類別表基底 0x5F53", "find": "DS((uint16_t)(0x5F52u + t))", "replace": "DS((uint16_t)(0x5F53u + t))"},
+  {"name": "word 位址 2k 改 k", "find": "(uint16_t)(0xD506u + 2u * k)", "replace": "(uint16_t)(0xD506u + k)"},
+  {"name": "word 位址基底 0xD508", "find": "(uint16_t)(0xD506u + 2u * k)", "replace": "(uint16_t)(0xD508u + 2u * k)"},
+  {"name": "加二而非加一", "find": "(uint16_t)(rd16(m, DS(w)) + 1u)", "replace": "(uint16_t)(rd16(m, DS(w)) + 2u)"},
+  {"name": "計數在跳過時也加", "find": "        if (rd8(m, DS(f)) & 1u)\n            continue;", "replace": "        if (rd8(m, DS(f)) & 1u) {\n            count++;\n            continue;\n        }"},
+  {"name": "不累計 count", "find": "        count++;\n", "replace": ""},
+  {"name": "艦隊記錄長度 0x7B", "find": "(uint16_t)(idx * 0x7Au)", "replace": "(uint16_t)(idx * 0x7Bu)"},
+  {"name": "少走最後一筆", "find": "    for (i = 0; i < n; i++) {", "replace": "    for (i = 0; i + 1u < n; i++) {"},
+  {"name": "回傳 count 加一", "find": "    return count;", "replace": "    return (uint8_t)(count + 1u);"},
+  {"name": "word 讀改寫只寫低位元組", "find": "wr16(m, DS(w), (uint16_t)(rd16(m, DS(w)) + 1u));", "replace": "wr8(m, DS(w), (uint8_t)(rd8(m, DS(w)) + 1u));"}
+]

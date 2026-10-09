@@ -1,0 +1,22 @@
+{
+  "id": "341B_0004",
+  "entry": "341B:0004",
+  "conv": "far",
+  "ret": "none",
+  "size": 80,
+  "code_sha256_16": "f92a9fca729ffded",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "視窗系統初始化：ds:D804..D80A 四個 word 與 D80C 一個 byte 清 0，依序呼叫 2376:0082（清畫面格表 ds:D81E 起 4800 bytes）、3703:0011（seg129 的 DDBE／DDC0）、2376:0092、35D1:0002（ds:EADE ← 0）、36A1:0000（ds:F128..F137）、36A1:0076（ds:F138..F13B），最後 memset(ds:D80E, 0, 16)。不讀記憶體，探針沒有讀取集，案例全靠 seeds：先把所有會被寫的範圍與兩端相鄰位元組預填成非最終值（D80D 保持 0xAA 抓『D80C 寫成 word』、D80E..D81D、D81E..EADD 整張表與兩端、EADE、F128..F13B、seg129 的兩個 word）。",
+  "args": [],
+  "seeds": [
+    {"note": "基底原狀", "args": [], "pokes": []},
+    {"note": "全部寫入範圍與相鄰位元組預填非最終值", "args": [], "pokes": [{"addr": "ds:D7FC", "hex": "AA", "repeat": 34}, {"addr": "ds:D81E", "hex": "55", "repeat": 4800}, {"addr": "ds:EADC", "hex": "AA", "repeat": 4}, {"addr": "ds:F124", "hex": "AB", "repeat": 24}, {"addr": "3D22:DDBE", "hex": "11112222"}]},
+    {"note": "畫面格表以 FF 預填（0092 若沒有在 0082 之後會改動）", "args": [], "pokes": [{"addr": "ds:D7FC", "hex": "FF", "repeat": 4900}, {"addr": "ds:F124", "hex": "FF", "repeat": 24}, {"addr": "3D22:DDBE", "hex": "FFFFFFFF"}]},
+    {"note": "畫面格表以 EF／DF 交錯預填（旗標 bit4 有設／沒設）", "args": [], "pokes": [{"addr": "ds:D81E", "hex": "EF01020304 05DF06070809 0A", "repeat": 400}, {"addr": "ds:D804", "hex": "FFFFFFFFFFFFFFFFFF"}, {"addr": "ds:D80E", "hex": "77", "repeat": 16}]}
+  ],
+  "iters": 20,
+  "max_cases": 6,
+  "seed": 20261012,
+  "min_coverage": 100
+}

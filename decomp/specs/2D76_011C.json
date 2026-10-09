@@ -1,0 +1,27 @@
+{
+  "id": "2D76_011C",
+  "entry": "2D76:011C",
+  "conv": "far",
+  "ret": "pack:al",
+  "size": 137,
+  "code_sha256_16": "64f1df5834241341",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "數各類別的本方現役艦隊：ds:D506 起 8 bytes 清 0；297B:131C(清單在堆疊, 0xFF, 1) 列出本方（f[+1] == ds:8F1D）現役艦隊；每支 f[+0] bit0 未設者，ds:(D506 + 2 × ds:5F52[f[+9]]) 的 word 加一，回總數。沒有參數，輸入全由記憶體突變（艦隊表、ds:8F1D、類別對照表 ds:5F52）。seeds：基底（ds:8F1D = 0）、ds:8F1D = 1、bit0 設起來、類別表項改成 3 以外的值（k > 3，寫到 ds:D50E 以後）、全部艦隊同類別。回傳只比 AL。",
+  "args": [],
+  "seeds": [
+    {"note": "基底：本方 = 陣營 0", "args": [], "pokes": []},
+    {"note": "ds:8F1D = 1：陣營 1 的艦隊", "args": [], "pokes": [{"addr": "ds:8F1D", "hex": "01"}]},
+    {"note": "ds:8F1D = 2：沒有艦隊", "args": [], "pokes": [{"addr": "ds:8F1D", "hex": "02"}]},
+    {"note": "f0 的 [+0] bit0 設起來：跳過 f0", "args": [], "pokes": [{"addr": "ds:C074", "hex": "01"}]},
+    {"note": "f0 的類別碼 [+9] = 15（對照表 3）", "args": [], "pokes": [{"addr": "ds:C07D", "hex": "0F"}]},
+    {"note": "對照表 ds:5F52 的第 0 項改成 5：k = 5 → word ds:D510（先放 0xFFFF，加一變 0 帶進位）加一（超出 4 個 word）", "args": [], "pokes": [{"addr": "ds:5F52", "hex": "05"}, {"addr": "ds:D510", "hex": "FFFF"}]},
+    {"note": "對照表第 0 項改成 0xFF：k = 255 → word ds:D704", "args": [], "pokes": [{"addr": "ds:5F52", "hex": "FF"}]},
+    {"note": "f0 的類別碼 [+9] = 0xFF（讀對照表 ds:6051）", "args": [], "pokes": [{"addr": "ds:C07D", "hex": "FF"}]},
+    {"note": "ds:D506 先放非 0 值，3C9C 要清掉：D506 = 0xFFFF、D50E = 0x1234（清除範圍 8 bytes 外的不動）", "args": [], "pokes": [{"addr": "ds:D506", "hex": "FFFFFFFFFFFFFFFF3412"}]}
+  ],
+  "iters": 12000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}

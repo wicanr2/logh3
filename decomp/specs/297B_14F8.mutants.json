@@ -1,0 +1,21 @@
+[
+  {"name": "陣營判斷反向（f[+1] != 0 數進 out1）", "find": "        if (rd8(m, DS((uint16_t)(f + 1u))) == 0)", "replace": "        if (rd8(m, DS((uint16_t)(f + 1u))) != 0)"},
+  {"name": "不跳過 bit0 有設的", "find": "        if (rd8(m, DS(f)) & 1u)\n            continue;", "replace": ""},
+  {"name": "跳過的位元改 bit1", "find": "        if (rd8(m, DS(f)) & 1u)\n            continue;", "replace": "        if (rd8(m, DS(f)) & 2u)\n            continue;"},
+  {"name": "跳過條件反向", "find": "        if (rd8(m, DS(f)) & 1u)\n            continue;", "replace": "        if (!(rd8(m, DS(f)) & 1u))\n            continue;"},
+  {"name": "不清 out2", "find": "    f14F8_put8(m, LIN(o2_seg, o2_off), 0);\n", "replace": ""},
+  {"name": "不清 out1", "find": "    f14F8_put8(m, LIN(o1_seg, o1_off), 0);\n", "replace": ""},
+  {"name": "星域編號取 +0x10", "find": "(uint16_t)(reg_off + 0x11u)", "replace": "(uint16_t)(reg_off + 0x10u)"},
+  {"name": "星域編號取 +0x12", "find": "(uint16_t)(reg_off + 0x11u)", "replace": "(uint16_t)(reg_off + 0x12u)"},
+  {"name": "131C 的 flags 改 1（只留本方）", "find": "f14F8_rd16s(m, reg_seg, (uint16_t)(reg_off + 0x11u)), 0);", "replace": "f14F8_rd16s(m, reg_seg, (uint16_t)(reg_off + 0x11u)), 1);"},
+  {"name": "131C 的 flags 改 2（只留敵方）", "find": "f14F8_rd16s(m, reg_seg, (uint16_t)(reg_off + 0x11u)), 0);", "replace": "f14F8_rd16s(m, reg_seg, (uint16_t)(reg_off + 0x11u)), 2);"},
+  {"name": "131C 不過濾星域（v = 0xFF）", "find": "f_297B_131C(m, F14F8_BP, F14F8_SS, f14F8_rd16s(m, reg_seg, (uint16_t)(reg_off + 0x11u)), 0);", "replace": "f_297B_131C(m, F14F8_BP, F14F8_SS, 0xFFu, 0);"},
+  {"name": "清單索引從 1 起", "find": "(uint16_t)(F14F8_BP + i)", "replace": "(uint16_t)(F14F8_BP + i + 1u)"},
+  {"name": "艦隊記錄長度 0x7B", "find": "(uint16_t)(idx * 0x7Au)", "replace": "(uint16_t)(idx * 0x7Bu)"},
+  {"name": "少走最後一筆", "find": "    for (i = 0; i < n; i++) {", "replace": "    for (i = 0; i + 1u < n; i++) {"},
+  {"name": "多走一筆", "find": "    for (i = 0; i < n; i++) {", "replace": "    for (i = 0; i <= n && i < 33u; i++) {"},
+  {"name": "遞增改成設為 1（out1）", "find": "f14F8_put8(m, LIN(o1_seg, o1_off), (uint8_t)(rd8(m, LIN(o1_seg, o1_off)) + 1u));", "replace": "f14F8_put8(m, LIN(o1_seg, o1_off), 1u);"},
+  {"name": "遞增改成加 2（out2）", "find": "f14F8_put8(m, LIN(o2_seg, o2_off), (uint8_t)(rd8(m, LIN(o2_seg, o2_off)) + 1u));", "replace": "f14F8_put8(m, LIN(o2_seg, o2_off), (uint8_t)(rd8(m, LIN(o2_seg, o2_off)) + 2u));"},
+  {"name": "陣營讀 f[+2]", "find": "        if (rd8(m, DS((uint16_t)(f + 1u))) == 0)", "replace": "        if (rd8(m, DS((uint16_t)(f + 2u))) == 0)"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]

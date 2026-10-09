@@ -1,0 +1,19 @@
+[
+  {"name": "初始同側拒絕改 |", "find": "    if (c0 & c1)\n        return 0;\n    for (guard = 0; guard < 4096u; guard++) {", "replace": "    if (c0 | c1)\n        return 0;\n    for (guard = 0; guard < 4096u; guard++) {"},
+  {"name": "初始同側拒絕拿掉", "find": "    if (c0 & c1)\n        return 0;\n    for (guard = 0; guard < 4096u; guard++) {", "replace": "    for (guard = 0; guard < 4096u; guard++) {"},
+  {"name": "迴圈開頭 && 改 ||", "find": "        if (c0 == 0 && c1 == 0)\n            return 1;\n        if (c0 != 0) {", "replace": "        if (c0 == 0 || c1 == 0)\n            return 1;\n        if (c0 != 0) {"},
+  {"name": "迴圈開頭全 0 回 2", "find": "        if (c0 == 0 && c1 == 0)\n            return 1;\n        if (c0 != 0) {", "replace": "        if (c0 == 0 && c1 == 0)\n            return 2;\n        if (c0 != 0) {"},
+  {"name": "裁 A 之後的同側拒絕拿掉", "find": "        if (c0 & c1)\n            return 0;\n        if (c1 != 0) {", "replace": "        if (c1 != 0) {"},
+  {"name": "裁 B 之後的同側拒絕拿掉", "find": "        if (c0 & c1)\n            return 0;\n    }\n    return 0xFFFFu;", "replace": "    }\n    return 0xFFFFu;"},
+  {"name": "裁 A 的 code 改用 c1", "find": "(uint8_t)f_3870_0A30(m, (uint16_t)(c0 | ((uint16_t)c1 << 8)), xa_off", "replace": "(uint8_t)f_3870_0A30(m, c1, xa_off"},
+  {"name": "裁 A 的 c、d 對調", "find": "xa_off, xa_seg, ya_off, ya_seg, c, d)", "replace": "xa_off, xa_seg, ya_off, ya_seg, d, c)"},
+  {"name": "裁 A 的 x、y 指標對調", "find": "xa_off, xa_seg, ya_off, ya_seg, c, d)", "replace": "ya_off, ya_seg, xa_off, xa_seg, c, d)"},
+  {"name": "裁 B 的 x、y 指標對調", "find": "c1, xb_off, xb_seg, yb_off, yb_seg, c, d)", "replace": "c1, yb_off, yb_seg, xb_off, xb_seg, c, d)"},
+  {"name": "裁 B 的 c 讀 B 自己的 x", "find": "uint16_t c = f3870_08FF_rd16s(m, xa_seg, xa_off);", "replace": "uint16_t c = f3870_08FF_rd16s(m, xb_seg, xb_off);"},
+  {"name": "裁 A 的 d 讀 A 自己的 y", "find": "uint16_t d = f3870_08FF_rd16s(m, yb_seg, yb_off);", "replace": "uint16_t d = f3870_08FF_rd16s(m, ya_seg, ya_off);"},
+  {"name": "裁 A 只在 B 已在內時做", "find": "        if (c0 != 0) {\n            uint16_t c = f3870_08FF_rd16s(m, xb_seg, xb_off);", "replace": "        if (c0 != 0 && c1 == 0) {\n            uint16_t c = f3870_08FF_rd16s(m, xb_seg, xb_off);"},
+  {"name": "裁 B 只在 A 已在內時做", "find": "        if (c1 != 0) {\n            uint16_t c = f3870_08FF_rd16s(m, xa_seg, xa_off);", "replace": "        if (c1 != 0 && c0 == 0) {\n            uint16_t c = f3870_08FF_rd16s(m, xa_seg, xa_off);"},
+  {"name": "初始 c1 用 A 的 x", "find": "f_3870_09F1(m, f3870_08FF_rd16s(m, xb_seg, xb_off)", "replace": "f_3870_09F1(m, f3870_08FF_rd16s(m, xa_seg, xa_off)"},
+  {"name": "初始 c0 的 x、y 對調", "find": "f_3870_09F1(m, f3870_08FF_rd16s(m, xa_seg, xa_off), f3870_08FF_rd16s(m, ya_seg, ya_off))", "replace": "f_3870_09F1(m, f3870_08FF_rd16s(m, ya_seg, ya_off), f3870_08FF_rd16s(m, xa_seg, xa_off))"},
+  {"name": "word 高位元組取線性下一格", "find": "(rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8)", "replace": "(rd8(m, LIN(seg, off) + 1u) << 8)"}
+]

@@ -1,0 +1,21 @@
+[
+  {"name": "x 只做無號上限夾限（沒有下限）", "find": "    if (sx < 0)\n        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x28u), 0);\n    else if (sx > 0x7FF)\n        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x28u), 0x7FF);\n    else\n        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x28u), x);", "replace": "    f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x28u), x > 0x7FFu ? 0x7FFu : x);"},
+  {"name": "y 只做無號上限夾限（沒有下限）", "find": "    if (sy < 0)\n        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x2Au), 0);\n    else if (sy > 0x7F7)\n        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x2Au), 0x7F7);\n    else\n        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x2Au), y);", "replace": "    f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x2Au), y > 0x7F7u ? 0x7F7u : y);"},
+  {"name": "槽表間隔 2 bytes", "find": "(rd8(m, LIN(s_seg, slot_at)) << 2)));\n    y =", "replace": "(rd8(m, LIN(s_seg, slot_at)) << 1)));\n    y ="},
+  {"name": "x、y 讀反（y 取 +0）", "find": "(uint16_t)(0x59BAu + (uint16_t)(rd8(m, LIN(s_seg, slot_at)) << 2) + 2u));", "replace": "(uint16_t)(0x59BAu + (uint16_t)(rd8(m, LIN(s_seg, slot_at)) << 2) + 4u));"},
+  {"name": "槽取 S[+4]", "find": "uint16_t slot_at = (uint16_t)(s_off + 5u);", "replace": "uint16_t slot_at = (uint16_t)(s_off + 4u);"},
+  {"name": "槽表基底 0x59BC", "find": "x = f0059_rd16s(m, GIN3_DS, (uint16_t)(0x59BAu", "replace": "x = f0059_rd16s(m, GIN3_DS, (uint16_t)(0x59BCu"},
+  {"name": "角度取 F[+0x4B]", "find": "(uint16_t)(f_off + 0x4Au)", "replace": "(uint16_t)(f_off + 0x4Bu)"},
+  {"name": "不旋轉", "find": "    f_3A92_0001(m, F0059_BP, F0059_SS, (uint16_t)(F0059_BP + 2u), F0059_SS, f0059_rd16s(m, f_seg, (uint16_t)(f_off + 0x4Au)));\n", "replace": ""},
+  {"name": "旋轉的 x、y 指標對調", "find": "f_3A92_0001(m, F0059_BP, F0059_SS, (uint16_t)(F0059_BP + 2u), F0059_SS,", "replace": "f_3A92_0001(m, (uint16_t)(F0059_BP + 2u), F0059_SS, F0059_BP, F0059_SS,"},
+  {"name": "x 加 F[+0x5E]", "find": "f0059_rd16s(m, f_seg, (uint16_t)(f_off + 0x5Cu))", "replace": "f0059_rd16s(m, f_seg, (uint16_t)(f_off + 0x5Eu))"},
+  {"name": "y 加 F[+0x5C]", "find": "f0059_rd16s(m, f_seg, (uint16_t)(f_off + 0x5Eu))", "replace": "f0059_rd16s(m, f_seg, (uint16_t)(f_off + 0x5Cu))"},
+  {"name": "x 不加艦隊座標", "find": "    x = (uint16_t)(f0059_rd16s(m, F0059_SS, F0059_BP) + f0059_rd16s(m, f_seg, (uint16_t)(f_off + 0x5Cu)));", "replace": "    x = f0059_rd16s(m, F0059_SS, F0059_BP);"},
+  {"name": "x 上限 0x7FE", "find": "    else if (sx > 0x7FF)\n        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x28u), 0x7FF);", "replace": "    else if (sx > 0x7FE)\n        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x28u), 0x7FE);"},
+  {"name": "y 上限 0x7F8", "find": "        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x2Au), 0x7F7);", "replace": "        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x2Au), 0x7F8);"},
+  {"name": "x 寫到 +0x2A、y 寫到 +0x28", "find": "        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x28u), x);", "replace": "        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x2Au), x);"},
+  {"name": "y 的下限寫 1", "find": "        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x2Au), 0);", "replace": "        f0059_wr16s(m, s_seg, (uint16_t)(s_off + 0x2Au), 1);"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"},
+  {"name": "word 高位元組取線性下一格", "find": "(rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8)", "replace": "(rd8(m, LIN(seg, off) + 1u) << 8)"},
+  {"name": "word 寫入高位元組取線性下一格", "find": "    f0059_put8(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "    f0059_put8(m, LIN(seg, off) + 1u, (uint8_t)(v >> 8));"}
+]

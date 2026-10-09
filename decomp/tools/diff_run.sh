@@ -14,6 +14,7 @@ id="${1:?用法: diff_run.sh <函式id> <新批次名>}"; name="${2:?新批次�
 [[ "$name" =~ ^[a-z0-9][a-z0-9._-]*$ ]] || { echo "批次名只能用小寫英數與 . _ -" >&2; exit 1; }
 spec="$D/specs/$id.json"
 test -f "$spec"
+GIN3_REPO_ROOT="$ROOT" DECOMP_DIR="$D" bash "$D/tools/lint_spec.sh" "$id"   # 描述檔與突變清單先過一次快速檢查，不浪費整個探針
 test -d "$ROOT/org_game/extracted"
 test -f "$D/ledger/insns.tsv"
 head="$(git -C "$GOLEM" rev-parse HEAD)"

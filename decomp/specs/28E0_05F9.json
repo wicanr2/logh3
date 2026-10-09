@@ -1,0 +1,40 @@
+{
+  "id": "28E0_05F9",
+  "entry": "28E0:05F9",
+  "conv": "far",
+  "ret": "ax",
+  "size": 202,
+  "code_sha256_16": "757f69bfa7c78a53",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "提督（ds:B77C + 編號 × 28）升級：等級 adm[+6] == 0x63 回 0；門檻 ds:4DBE[min(等級, 39)]（word），功績 dword adm[+2] 不足回 0；否則扣門檻（含借位）、mask |= 1、0096 的軍階檔（等級 與 等級+1）有變 mask |= 2、等級加一、mask |= 06C3(adm)（抽亂數成長能力）。參數是提督編號（word，只取低位元組）。seeds 造出等級 0x63／0x62／0x27／0x26／0x28／0xFF／0／1／2／5、功績恰等於門檻與少一、高 word 非 0、借位、軍階檔有變與沒變、編號高位元組非 0、編號 81／82，並配亂數種子。",
+  "args": [
+    {"name": "idx", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 5, 10, 40, 80, 81, 82, 100, 255, 259, 65280], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "等級 0x64（100）、功績 60000：等級恰為 99 才拒絕，100 照常升級（docs/re/418：等級 100 與 255 只為診斷注入）", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "60EA0000"}, {"addr": "ds:B782", "hex": "64"}, {"addr": "ds:94DC", "hex": "78563412"}]},
+    {"note": "等級 0x64、功績 60000，另一個亂數種子", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "60EA0000"}, {"addr": "ds:B782", "hex": "64"}, {"addr": "ds:94DC", "hex": "3D2B7A19"}]},
+    {"note": "等級 0x63：回 0（功績 10000）", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "1027000063"}]},
+    {"note": "等級 0x62、功績 0x00010000：高 word 非 0，門檻 ds:4DBE[39] = 60000，借位", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "000001006200"}, {"addr": "ds:94DC", "hex": "78563412"}]},
+    {"note": "等級 5、功績恰等於門檻 3000：升級，功績變 0", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "B80B0000"}, {"addr": "ds:B782", "hex": "05"}, {"addr": "ds:94DC", "hex": "78563412"}]},
+    {"note": "等級 5、功績 2999：不足，回 0", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "B70B0000"}, {"addr": "ds:B782", "hex": "05"}]},
+    {"note": "等級 1、功績 2000：軍階檔 0→1（等級 1 檔 0、等級 2 檔 1）→ mask |= 2", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "D0070000"}, {"addr": "ds:B782", "hex": "01"}, {"addr": "ds:94DC", "hex": "01000000"}]},
+    {"note": "等級 2、功績 2200：軍階檔 1→1 不變", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "98080000"}, {"addr": "ds:B782", "hex": "02"}, {"addr": "ds:94DC", "hex": "01000000"}]},
+    {"note": "等級 0、功績 2000：檔 0→0 不變", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "D0070000"}, {"addr": "ds:B782", "hex": "00"}, {"addr": "ds:94DC", "hex": "02000000"}]},
+    {"note": "等級 0x27（39）：門檻 ds:4DBE[39] = 60000，功績 60000", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "60EA0000"}, {"addr": "ds:B782", "hex": "27"}, {"addr": "ds:94DC", "hex": "9107C82C"}]},
+    {"note": "等級 0x26（38）：門檻 50000", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "50C30000"}, {"addr": "ds:B782", "hex": "26"}, {"addr": "ds:94DC", "hex": "9107C82C"}]},
+    {"note": "等級 0x28（40）：夾成 39，門檻 60000", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "60EA0000"}, {"addr": "ds:B782", "hex": "28"}, {"addr": "ds:94DC", "hex": "9107C82C"}]},
+    {"note": "等級 0xFF：夾成 39；等級+1 溢位成 0x100（低位元組 0），檔 11→0；等級回繞成 0", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "60EA0000"}, {"addr": "ds:B782", "hex": "FF"}, {"addr": "ds:94DC", "hex": "9107C82C"}]},
+    {"note": "功績高 word 非 0：70000 = 0x00011170，等級 5 門檻 3000，不借位", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "70110100"}, {"addr": "ds:B782", "hex": "05"}, {"addr": "ds:94DC", "hex": "78563412"}]},
+    {"note": "功績低 word < 門檻、高 word = 1：升級並借位", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "64000100"}, {"addr": "ds:B782", "hex": "05"}, {"addr": "ds:94DC", "hex": "78563412"}]},
+    {"note": "功績 0xFFFFFFFF、等級 0x62", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "FFFFFFFF"}, {"addr": "ds:B782", "hex": "62"}, {"addr": "ds:94DC", "hex": "3D2B7A19"}]},
+    {"note": "編號 0x0103（高位元組非 0，取低位元組 3）：提督 3 在 ds:B7D0", "args": [259], "pokes": [{"addr": "ds:B7D2", "hex": "10270000"}, {"addr": "ds:B7D6", "hex": "05"}, {"addr": "ds:94DC", "hex": "78563412"}]},
+    {"note": "編號 81：提督表最後一筆 ds:C058", "args": [81], "pokes": [{"addr": "ds:C05A", "hex": "10270000"}, {"addr": "ds:C05E", "hex": "05"}, {"addr": "ds:94DC", "hex": "78563412"}]},
+    {"note": "編號 82：落在艦隊表 f0（ds:C074）上", "args": [82], "pokes": [{"addr": "ds:C076", "hex": "10270000"}, {"addr": "ds:C07A", "hex": "05"}, {"addr": "ds:94DC", "hex": "78563412"}]},
+    {"note": "功績 0 等級 0：回 0", "args": [0], "pokes": [{"addr": "ds:B77E", "hex": "00000000"}, {"addr": "ds:B782", "hex": "00"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 1200,
+  "seed": 20261012,
+  "min_coverage": 100
+}

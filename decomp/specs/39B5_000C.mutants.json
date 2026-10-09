@@ -1,0 +1,16 @@
+[
+  {"name": "不呼叫 010C（不取絕對值也不取負）", "find": "    sign = f_39B5_010C(m, F000C_BP);", "replace": "    sign = 0;"},
+  {"name": "只取絕對值不取負", "find": "    if (sign & 0x8000u) {", "replace": "    if (0) {"},
+  {"name": "取負判斷反向", "find": "    if (sign & 0x8000u) {", "replace": "    if (!(sign & 0x8000u)) {"},
+  {"name": "取負的借位不計", "find": "(uint16_t)(0u - si - (di != 0u ? 1u : 0u))", "replace": "(uint16_t)(0u - si)"},
+  {"name": "取負的借位恆計", "find": "(uint16_t)(0u - si - (di != 0u ? 1u : 0u))", "replace": "(uint16_t)(0u - si - 1u)"},
+  {"name": "第一個進位 adc si,0 不加", "find": "    si = (uint16_t)(si + (t >> 16));                /* adc si,0 */", "replace": ""},
+  {"name": "第二個進位不加", "find": "(uint16_t)(si + (uint16_t)(p >> 16) + (t >> 16));", "replace": "(uint16_t)(si + (uint16_t)(p >> 16));"},
+  {"name": "a.hi × b.hi 取高字而非低字", "find": "    si = (uint16_t)(si + (uint16_t)p);              /* add si,ax */", "replace": "    si = (uint16_t)(si + (uint16_t)(p >> 16));"},
+  {"name": "a.hi × b.hi 不加", "find": "    si = (uint16_t)(si + (uint16_t)p);              /* add si,ax */", "replace": ""},
+  {"name": "a.lo × b.lo 取低字當 di", "find": "    di = (uint16_t)(((uint32_t)a_lo * b_lo) >> 16);", "replace": "    di = (uint16_t)((uint32_t)a_lo * b_lo);"},
+  {"name": "a.lo × b.hi 的低字不加進 di", "find": "    t = (uint32_t)di + (uint16_t)p;                 /* add di,ax */\n    di = (uint16_t)t;\n    si = (uint16_t)(si + (t >> 16));", "replace": "    t = (uint32_t)di;\n    di = (uint16_t)t;\n    si = (uint16_t)(si + (t >> 16));"},
+  {"name": "回傳高低字對調", "find": "    return ((uint32_t)ax << 16) | bx;", "replace": "    return ((uint32_t)bx << 16) | ax;"},
+  {"name": "改讀原始參數而非取絕對值後的值", "find": "    a_lo = f000C_rd16s(m, (uint16_t)(F000C_BP + 6u));\n    a_hi = f000C_rd16s(m, (uint16_t)(F000C_BP + 8u));", "replace": ""},
+  {"name": "符號只看 a 的高字", "find": "    sign = f_39B5_010C(m, F000C_BP);", "replace": "    f_39B5_010C(m, F000C_BP);\n    sign = a_hi & 0x8000u;"}
+]

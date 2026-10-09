@@ -1,0 +1,49 @@
+{
+  "id": "297B_0E8B",
+  "entry": "297B:0E8B",
+  "conv": "far",
+  "ret": "ax",
+  "size": 595,
+  "code_sha256_16": "c83e624172c88a49",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦隊 F（ds:C074，122 bytes 一筆）的 F[+0x0F] 個分隊（組 = F + 0x10 + 4i，word 池編號）：池記錄 P（ds:CFB4:CFB6 起，78 bytes 一筆）查艦種表列 R = ds:4E3A + P[+0] × 0xD0 + P[+4] × 0x1A，算 P[+0x1F] = R[+8] × F[+0x43] ÷ 100、P[+0x21] = R[+6] × F[+0x42] ÷ 80、P[+0x22] = R[+7] × F[+0x42] ÷ 60，再乘折扣 q = (低字((0x10E − 2 × F[+0x46]) × ds:4E2E[F[+0x0F]]) 當有號) ÷ 100 扣掉，各取最小值寫 F[+0x4D..0x50]；F[+0x3C] = 0x64；分遣隊（F[+0x38] 的池記錄）從艦種 7 的列設三項；最後 1261:032B(F)，回傳其 AX。基底 S3 開局（艦隊 f0 有 10 個分隊）；池指標 ds:CFB4..CFB7 用 freeze 排除。seeds：組數 0／1／10／255、折扣乘積超過 0x7FFF（q 為負）、F[+0x46] 為 0／0xFF、F[+0x42]／F[+0x43] 為 0／0xFF、池編號很大（16 位元回繞）、F 放在池內、F 的 word 欄位在位移 0xFFFF 跨界。",
+  "freeze": [{"addr": "ds:CFB4", "len": 4}],
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}}
+  ],
+  "seeds": [
+    {"note": "基底 f0（10 個分隊）", "args": [49268, 21683], "pokes": []},
+    {"note": "基底 f2", "args": [49512, 21683], "pokes": []},
+    {"note": "f0 組數 0：迴圈不執行，四個最小值維持 0xFF", "args": [49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "00"}]},
+    {"note": "f0 組數 1", "args": [49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "01"}]},
+    {"note": "f0 組數 255：讀到鄰近艦隊記錄當組", "args": [49268, 21683], "pokes": [{"addr": "ds:C083", "hex": "FF"}]},
+    {"note": "F[+0x46] = 0xFF：0x10E − 0x1FE 為負（16 位元）", "args": [49268, 21683], "pokes": [{"addr": "ds:C0BA", "hex": "FF"}]},
+    {"note": "F[+0x46] = 0", "args": [49268, 21683], "pokes": [{"addr": "ds:C0BA", "hex": "00"}]},
+    {"note": "折扣表 ds:4E2E[10] = 0xC8：270 × 200 = 54000 > 0x7FFF，q 為負 −115（有號除法）", "args": [49268, 21683], "pokes": [{"addr": "ds:C0BA", "hex": "00"}, {"addr": "ds:4E38", "hex": "C8"}]},
+    {"note": "折扣表 ds:4E2E[10] = 0xFF、F[+0x46] = 0：270 × 255 = 68850 超過 16 位元", "args": [49268, 21683], "pokes": [{"addr": "ds:C0BA", "hex": "00"}, {"addr": "ds:4E38", "hex": "FF"}]},
+    {"note": "折扣表 ds:4E2E[10] = 0：q = 0", "args": [49268, 21683], "pokes": [{"addr": "ds:4E38", "hex": "00"}]},
+    {"note": "F[+0x42] = F[+0x43] = 0xFF", "args": [49268, 21683], "pokes": [{"addr": "ds:C0B6", "hex": "FFFF"}]},
+    {"note": "F[+0x42] = F[+0x43] = 0", "args": [49268, 21683], "pokes": [{"addr": "ds:C0B6", "hex": "0000"}]},
+    {"note": "F[+0x42] = 0xFF、F[+0x43] = 0：兩個係數不同", "args": [49268, 21683], "pokes": [{"addr": "ds:C0B6", "hex": "FF00"}]},
+    {"note": "F[+0x42] = 0、F[+0x43] = 0xFF", "args": [49268, 21683], "pokes": [{"addr": "ds:C0B6", "hex": "00FF"}]},
+    {"note": "第 0 組池編號 0x1000：池記錄位移 16 位元回繞", "args": [49268, 21683], "pokes": [{"addr": "ds:C084", "hex": "0010"}]},
+    {"note": "第 0 組池編號 0xFFFF", "args": [49268, 21683], "pokes": [{"addr": "ds:C084", "hex": "FFFF"}]},
+    {"note": "F[+0x38]（分遣隊池編號）= 0xFFFF", "args": [49268, 21683], "pokes": [{"addr": "ds:C0AC", "hex": "FFFF"}]},
+    {"note": "F[+0x38] = 3（別的池記錄）", "args": [49268, 21683], "pokes": [{"addr": "ds:C0AC", "hex": "0300"}]},
+    {"note": "池記錄 P[+0] 陣營 1（艦種表另一列）：分隊 0 的池記錄 668B:0002 的 [+0] = 1", "args": [49268, 21683], "pokes": [{"addr": "668B:0002", "hex": "01"}]},
+    {"note": "池記錄 P[+4] 艦種 7（列 +0xB6）", "args": [49268, 21683], "pokes": [{"addr": "668B:0006", "hex": "07"}]},
+    {"note": "池記錄 P[+0x23] = 0（min4 變 0）", "args": [49268, 21683], "pokes": [{"addr": "668B:0025", "hex": "00"}]},
+    {"note": "F 放在池內（668B:0002 起當艦隊）：F[+0x0F] = 0x2E 個組", "args": [2, 26251], "pokes": []},
+    {"note": "別名：F ＝ 668B:0012（池記錄 0 的 +0x10），F[+0x0F] ＝ P0[+0x1F] ＝ 5、F[+0x10] ＝ P0[+0x20] 組 0 的池編號 ＝ 0：迴圈寫 P0[+0x1F] 就改了組數", "args": [18, 26251], "pokes": [{"addr": "668B:0021", "hex": "05"}, {"addr": "668B:0022", "hex": "0000"}, {"addr": "668B:0026", "hex": "0100"}, {"addr": "668B:002A", "hex": "0200"}, {"addr": "668B:002E", "hex": "0300"}, {"addr": "668B:0032", "hex": "0400"}, {"addr": "ds:4E42", "hex": "0F"}]},
+    {"note": "F 在 8000:FFEF：F[+0x0F] ＝ 1 個組，組 0 的 word 跨位移 0xFFFF（低位元組在 FFFF = 0、高位元組在 8000:0000；線性 +1 會讀 9000:0000 的 0x77）", "args": [65519, 32768], "pokes": [{"addr": "8000:FFFE", "hex": "01"}, {"addr": "8000:FFFF", "hex": "00"}, {"addr": "8000:0000", "hex": "00"}, {"addr": "lin:90000", "hex": "77"}, {"addr": "8000:0027", "hex": "0100"}]},
+    {"note": "F 在 8000:FFF0：F[+0x38] 之後的欄位位移回繞", "args": [65520, 32768], "pokes": [{"addr": "8000:FFFF", "hex": "01"}, {"addr": "8000:0000", "hex": "00"}, {"addr": "8000:0001", "hex": "0000"}, {"addr": "lin:90000", "hex": "77"}]}
+  ],
+  "iters": 8000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}

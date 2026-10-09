@@ -1,0 +1,48 @@
+{
+  "id": "2BE1_0059",
+  "entry": "2BE1:0059",
+  "conv": "far",
+  "ret": "none",
+  "size": 196,
+  "code_sha256_16": "2ab6ff6f1a6f346f",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦艇 S 的隊形槽 S[+5]（表 ds:59BA，一筆 4 bytes＝x、y 兩個有號 word）依艦隊 F[+0x4A]（3A92:0001 的 byte 角度）旋轉，加上 F[+0x5C]、F[+0x5E]，夾進 [0,0x7FF]×[0,0x7F7] 寫成 S[+0x28]、S[+0x2A]。艦隊表 ds:C074（122 bytes 一筆）、艦艇池取 S3 開局（668B:0002 起，一筆 78 bytes）。seeds 用艦隊 0（F[+0x4A] 在 ds:C0BE、F[+0x5C] 在 ds:C0D0、F[+0x5E] 在 ds:C0D2）與池 #0（S[+5] 在 668B:0007）造出：槽 20＝(0,0)、各個夾限邊界（0x7FF、0x800、−1、0x7F7、0x7F8）、角度高位元組非 0、S 的位移回繞與 word 跨界、S 在 ROM。回傳殘值不比。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32},
+    "ship": {"base": "ptr:CFB4:CFB6", "stride": 78, "count": 352}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "ship", "kind": "farptr", "gen": {"table": "ship"}}
+  ],
+  "seeds": [
+    {"note": "艦隊在 8000:FFA3：F[+0x5C] 的 word 跨位移 0xFFFF（低位元組 FFFF = 0x34、高位元組 8000:0000 = 0x12；線性 +1 會讀 9000:0000 的 0x77），F[+0x5E] 回繞到 8000:0001", "args": [65443, 32768, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "8000:FFFF", "hex": "34"}, {"addr": "8000:0000", "hex": "12"}, {"addr": "8000:0001", "hex": "7856"}, {"addr": "lin:90000", "hex": "77"}, {"addr": "8000:FFF1", "hex": "0000"}]},
+    {"note": "艦隊在 8000:FFA1：F[+0x5E] 的 word 跨位移 0xFFFF（低位元組 FFFF = 0x34、高位元組 8000:0000 = 0x12），F[+0x5C] 在 FFFD", "args": [65441, 32768, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "8000:FFFD", "hex": "7856"}, {"addr": "8000:FFFF", "hex": "34"}, {"addr": "8000:0000", "hex": "12"}, {"addr": "lin:90000", "hex": "77"}, {"addr": "8000:FFEF", "hex": "0000"}]},
+    {"note": "槽 20 ＝ (0,0)，角度 0，艦隊座標 (0x100,0x100)：S[+0x28] ＝ 0x100、S[+0x2A] ＝ 0x100", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00010001"}]},
+    {"note": "x ＝ 0x7FF：不夾限", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "FF070001"}]},
+    {"note": "x ＝ 0x800：夾成 0x7FF", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00080001"}]},
+    {"note": "x ＝ 0xFFFF（−1）：夾成 0", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "FFFF0001"}]},
+    {"note": "x ＝ 0x8000（最小有號）：夾成 0（無號比較會夾成 0x7FF）", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00800001"}]},
+    {"note": "x ＝ 0：不夾限", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00000001"}]},
+    {"note": "y ＝ 0x7F7：不夾限", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "0001F707"}]},
+    {"note": "y ＝ 0x7F8：夾成 0x7F7", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "0001F807"}]},
+    {"note": "y ＝ −1：夾成 0", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "0001FFFF"}]},
+    {"note": "y ＝ 0x8000：夾成 0", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00010080"}]},
+    {"note": "y ＝ 0：不夾限", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00010000"}]},
+    {"note": "槽 3 ＝ (0x10, −0x10)，角度 0x40（90 度）", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "03"}, {"addr": "ds:59C6", "hex": "1000F0FF"}, {"addr": "ds:C0BE", "hex": "4000"}, {"addr": "ds:C0D0", "hex": "00040004"}]},
+    {"note": "槽 3，角度 0x0140（高位元組非 0，3A92 只取低位元組 0x40）", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "03"}, {"addr": "ds:59C6", "hex": "1000F0FF"}, {"addr": "ds:C0BE", "hex": "4001"}, {"addr": "ds:C0D0", "hex": "00040004"}]},
+    {"note": "槽 3，角度 0xC0（270 度）", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "03"}, {"addr": "ds:59C6", "hex": "1000F0FF"}, {"addr": "ds:C0BE", "hex": "C000"}, {"addr": "ds:C0D0", "hex": "00040004"}]},
+    {"note": "槽 3，角度 0x80", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "03"}, {"addr": "ds:59C6", "hex": "1000F0FF"}, {"addr": "ds:C0BE", "hex": "8000"}, {"addr": "ds:C0D0", "hex": "00040004"}]},
+    {"note": "槽 255：表尾端之外（ds:59BA + 1020）", "args": [49268, 21683, 2, 26251], "pokes": [{"addr": "668B:0007", "hex": "FF"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00010001"}]},
+    {"note": "艦艇在 8000:FFE0：S+5 ＝ FFE5、S+0x28 回繞到 8000:0008、S+0x2A 回繞到 8000:000A", "args": [49268, 21683, 65504, 32768], "pokes": [{"addr": "8000:FFE5", "hex": "14"}, {"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00010001"}, {"addr": "lin:80008", "hex": "AAAAAAAA"}]},
+    {"note": "艦艇在 8000:FFD7：S+0x28 的 word 跨位移 0xFFFF（高位元組寫到 8000:0000，線性 +1 會寫到 9000:0000）", "args": [49268, 21683, 65495, 32768], "pokes": [{"addr": "8000:FFDC", "hex": "14"}, {"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00010001"}, {"addr": "lin:90000", "hex": "77"}, {"addr": "lin:80000", "hex": "66"}]},
+    {"note": "艦艇在 8000:FFD5：S+0x2A 的 word 跨位移 0xFFFF", "args": [49268, 21683, 65493, 32768], "pokes": [{"addr": "8000:FFDA", "hex": "14"}, {"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00010001"}, {"addr": "lin:90000", "hex": "77"}, {"addr": "lin:80000", "hex": "66"}]},
+    {"note": "艦艇在 ROM F000:0000：寫入丟棄", "args": [49268, 21683, 0, 61440], "pokes": [{"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00010001"}]},
+    {"note": "艦艇與艦隊同一個指標（別名）", "args": [49268, 21683, 49268, 21683], "pokes": [{"addr": "ds:C079", "hex": "14"}, {"addr": "668B:0007", "hex": "14"}, {"addr": "ds:5A0A", "hex": "00000000"}, {"addr": "ds:C0BE", "hex": "0000"}, {"addr": "ds:C0D0", "hex": "00010001"}]}
+  ],
+  "iters": 12000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}
