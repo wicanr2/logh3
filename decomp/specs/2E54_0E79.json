@@ -1,0 +1,33 @@
+{
+  "id": "2E54_0E79",
+  "entry": "2E54:0E79",
+  "conv": "far",
+  "ret": "none",
+  "size": 73,
+  "code_sha256_16": "fcdb692b7f0ac5a9",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦隊表要有多支真實艦隊（兩個陣營、空位 +4 == 0xFF），選 S3 開局 fcmd-s3-base（f0、f2..f5、f7..f9、f11、f12、f14、f15 是陣營 0，f16、f17、f28..f31 是陣營 1，其餘空位）；同模組 2E54:088F 等用 fcmd-base，該狀態只有零星艦隊。基底的 +0x79 全是 0xFF，寫入 0xFF 看不出來，所以 seeds 先 poke +0x79。艦隊 k 的位移 = C074 + 122k，+0x79 = C0ED + 122k。",
+  "args": [],
+  "seeds": [
+    {"note": "本方 f0 +0x79=4、f2=6 都改成 0xFF；f3=5、f4=7、f5=0 不動；敵方 f16 +0x79=4 不動",
+     "pokes": [{"addr": "ds:C0ED", "hex": "04"}, {"addr": "ds:C1E1", "hex": "06"}, {"addr": "ds:C25B", "hex": "05"},
+               {"addr": "ds:C2D5", "hex": "07"}, {"addr": "ds:C34F", "hex": "00"}, {"addr": "ds:C88D", "hex": "04"}]},
+    {"note": "空位 f1（+4 == 0xFF）即使陣營符合、+0x79=4 也不動",
+     "pokes": [{"addr": "ds:C0EF", "hex": "00"}, {"addr": "ds:C167", "hex": "04"}]},
+    {"note": "最後一筆 f31 轉成本方且 +0x79=6：迴圈要跑滿 32 筆",
+     "pokes": [{"addr": "ds:CF3B", "hex": "00"}, {"addr": "ds:CFB3", "hex": "06"}]},
+    {"note": "陣營 1：f16 +0x79=6 改成 0xFF；本方 f0 +0x79=6 不動",
+     "pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:C88D", "hex": "06"}, {"addr": "ds:C0ED", "hex": "06"}]},
+    {"note": "+0x79 的近似值：0x0C、0x14、0x84（低三位是 4）、0x16、0x0E、3、2 都不動",
+     "pokes": [{"addr": "ds:C0ED", "hex": "0C"}, {"addr": "ds:C1E1", "hex": "14"}, {"addr": "ds:C25B", "hex": "84"},
+               {"addr": "ds:C2D5", "hex": "16"}, {"addr": "ds:C34F", "hex": "0E"}, {"addr": "ds:C443", "hex": "03"},
+               {"addr": "ds:C4BD", "hex": "02"}]},
+    {"note": "陣營碼不同：f0 +1=2、+0x79=4 不動；f2 +1=0 +0x79=4 改成 0xFF",
+     "pokes": [{"addr": "ds:C075", "hex": "02"}, {"addr": "ds:C0ED", "hex": "04"}, {"addr": "ds:C1E1", "hex": "04"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

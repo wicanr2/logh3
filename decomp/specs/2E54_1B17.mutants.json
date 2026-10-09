@@ -1,0 +1,17 @@
+[
+  {"name": "目前星域欄位改+5", "find": "rd8(m, LIN(f_seg, f_off + 6u)) == region", "replace": "rd8(m, LIN(f_seg, f_off + 5u)) == region"},
+  {"name": "已在目的地的判斷反向", "find": "rd8(m, LIN(f_seg, f_off + 6u)) == region", "replace": "rd8(m, LIN(f_seg, f_off + 6u)) != region"},
+  {"name": "region 不遮高位元組", "find": "uint8_t region = (uint8_t)region_w;", "replace": "uint16_t region = region_w;"},
+  {"name": "action 取高位元組", "find": "uint8_t action = (uint8_t)action_w;", "replace": "uint8_t action = (uint8_t)(action_w >> 8);"},
+  {"name": "待命碼比 4 而非 5", "find": "if (rd8(m, LIN(f_seg, st)) != 5) {", "replace": "if (rd8(m, LIN(f_seg, st)) != 4) {"},
+  {"name": "待命碼比 6 而非 5", "find": "if (rd8(m, LIN(f_seg, st)) != 5) {", "replace": "if (rd8(m, LIN(f_seg, st)) != 6) {"},
+  {"name": "已待命也照寫", "find": "if (rd8(m, LIN(f_seg, st)) != 5) {", "replace": "if (1) {"},
+  {"name": "寫入的待命碼改4", "find": "w1B17_put8(m, LIN(f_seg, st), 5);", "replace": "w1B17_put8(m, LIN(f_seg, st), 4);"},
+  {"name": "待命時目標不清成0xFF", "find": "w1B17_put8(m, LIN(f_seg, f_off + 7u), 0xFF);", "replace": "(void)0;"},
+  {"name": "待命時目標清成0xFE", "find": "w1B17_put8(m, LIN(f_seg, f_off + 7u), 0xFF);", "replace": "w1B17_put8(m, LIN(f_seg, f_off + 7u), 0xFE);"},
+  {"name": "行動碼寫到+7目標寫到+8(對調)", "find": "        w1B17_put8(m, LIN(f_seg, f_off + 8u), action);\n        w1B17_put8(m, LIN(f_seg, f_off + 7u), region);", "replace": "        w1B17_put8(m, LIN(f_seg, f_off + 7u), action);\n        w1B17_put8(m, LIN(f_seg, f_off + 8u), region);"},
+  {"name": "不等分支漏寫目標", "find": "w1B17_put8(m, LIN(f_seg, f_off + 7u), region);", "replace": "(void)0;"},
+  {"name": "不等分支漏寫行動碼", "find": "w1B17_put8(m, LIN(f_seg, f_off + 8u), action);", "replace": "(void)0;"},
+  {"name": "+8 讀取用線性相加不回繞", "find": "if (rd8(m, LIN(f_seg, st)) != 5) {", "replace": "if (rd8(m, LIN(f_seg, f_off) + 8u) != 5) {"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]

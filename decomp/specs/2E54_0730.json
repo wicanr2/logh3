@@ -1,0 +1,28 @@
+{
+  "id": "2E54_0730",
+  "entry": "2E54:0730",
+  "conv": "far",
+  "ret": "none",
+  "size": 168,
+  "code_sha256_16": "b1f52ae762719b1d",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "同模組 2E54:088F、0F93、1876 用的基底。星域表只在 DGROUP，fcmd-base 的擁有者分布是 0（r0..r2、r4..r9、r13）、1（r15..r22、r26、r27、r29..r31）、2（r3、r10..r12、r14、r23..r25、r28）三種，ds:8F1D 預設 0；ds:D50E／D54E／D5CE／D58E 在基底裡全是 0，D58E 的 memset 看不出來，seeds 先把 D58E 填 0xFF。",
+  "args": [],
+  "seeds": [
+    {"note": "陣營 0：front 邊界(w=4、5、3、1、0x200、0xFFFF、6)、缺口邊界(equal、have>need、0x400、0x3FC、有號邊界)；r3 屬陣營 2 不處理；D58E 先填 0xFF",
+     "pokes": [{"addr": "ds:D58E", "hex": "ff", "repeat": 32}, {"addr": "ds:D50E", "hex": "0400"}, {"addr": "ds:D54E", "hex": "0a00"}, {"addr": "ds:D5CE", "hex": "0300"}, {"addr": "ds:D510", "hex": "0300"}, {"addr": "ds:D550", "hex": "0800"}, {"addr": "ds:D5D0", "hex": "0800"}, {"addr": "ds:D512", "hex": "0100"}, {"addr": "ds:D552", "hex": "0001"}, {"addr": "ds:D5D2", "hex": "0000"}, {"addr": "ds:D516", "hex": "0002"}, {"addr": "ds:D556", "hex": "0004"}, {"addr": "ds:D5D6", "hex": "0000"}, {"addr": "ds:D518", "hex": "ffff"}, {"addr": "ds:D558", "hex": "fc03"}, {"addr": "ds:D5D8", "hex": "0000"}, {"addr": "ds:D51A", "hex": "0500"}, {"addr": "ds:D55A", "hex": "0300"}, {"addr": "ds:D5DA", "hex": "0400"}, {"addr": "ds:D51C", "hex": "0000"}, {"addr": "ds:D55C", "hex": "ff7f"}, {"addr": "ds:D5DC", "hex": "0080"}, {"addr": "ds:D520", "hex": "0600"}, {"addr": "ds:D560", "hex": "0300"}, {"addr": "ds:D5E0", "hex": "0000"}, {"addr": "ds:D528", "hex": "0400"}, {"addr": "ds:D568", "hex": "0400"}, {"addr": "ds:D5E8", "hex": "0000"}, {"addr": "ds:D514", "hex": "0400"}, {"addr": "ds:D554", "hex": "6400"}, {"addr": "ds:D5D4", "hex": "0000"}]},
+    {"note": "陣營 1：最後一筆 r31 要處理；r30 的 front 與缺口同時回繞；r0 屬陣營 0 不處理",
+     "pokes": [{"addr": "ds:D58E", "hex": "ff", "repeat": 32}, {"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:D54C", "hex": "0400"}, {"addr": "ds:D58C", "hex": "2000"}, {"addr": "ds:D60C", "hex": "0000"}, {"addr": "ds:D52C", "hex": "0000"}, {"addr": "ds:D56C", "hex": "0c00"}, {"addr": "ds:D5EC", "hex": "0500"}, {"addr": "ds:D52E", "hex": "0200"}, {"addr": "ds:D56E", "hex": "0500"}, {"addr": "ds:D5EE", "hex": "0500"}, {"addr": "ds:D54A", "hex": "ff00"}, {"addr": "ds:D58A", "hex": "ffff"}, {"addr": "ds:D60A", "hex": "0100"}, {"addr": "ds:D50E", "hex": "0400"}, {"addr": "ds:D54E", "hex": "6400"}, {"addr": "ds:D5CE", "hex": "0000"}]},
+    {"note": "陣營 2：r3、r28、r23；其餘陣營 0 與 1 的星域不處理",
+     "pokes": [{"addr": "ds:D58E", "hex": "ff", "repeat": 32}, {"addr": "ds:8F1D", "hex": "02"}, {"addr": "ds:D514", "hex": "0400"}, {"addr": "ds:D554", "hex": "4000"}, {"addr": "ds:D5D4", "hex": "1000"}, {"addr": "ds:D546", "hex": "0300"}, {"addr": "ds:D586", "hex": "0201"}, {"addr": "ds:D606", "hex": "0100"}, {"addr": "ds:D53C", "hex": "0000"}, {"addr": "ds:D57C", "hex": "ffff"}, {"addr": "ds:D5FC", "hex": "feff"}, {"addr": "ds:D54C", "hex": "0400"}, {"addr": "ds:D58C", "hex": "6400"}, {"addr": "ds:D60C", "hex": "0000"}]},
+    {"note": "陣營 0：缺口 3 以下取 0、剛好 4 取 1、7 取 1、8 取 2",
+     "pokes": [{"addr": "ds:D58E", "hex": "ff", "repeat": 32}, {"addr": "ds:D50E", "hex": "0000"}, {"addr": "ds:D54E", "hex": "0300"}, {"addr": "ds:D5CE", "hex": "0000"}, {"addr": "ds:D510", "hex": "0000"}, {"addr": "ds:D550", "hex": "0400"}, {"addr": "ds:D5D0", "hex": "0000"}, {"addr": "ds:D512", "hex": "0000"}, {"addr": "ds:D552", "hex": "0700"}, {"addr": "ds:D5D2", "hex": "0000"}, {"addr": "ds:D516", "hex": "0000"}, {"addr": "ds:D556", "hex": "0800"}, {"addr": "ds:D5D6", "hex": "0000"}, {"addr": "ds:D518", "hex": "0000"}, {"addr": "ds:D558", "hex": "0100"}, {"addr": "ds:D5D8", "hex": "0000"}, {"addr": "ds:D51A", "hex": "0000"}, {"addr": "ds:D55A", "hex": "0000"}, {"addr": "ds:D5DA", "hex": "0100"}]},
+    {"note": "陣營 0：front 只剩 1 的邊界 w=2、w=3、w=0xFE、w=0x1FF(低位元組 0xFF)、w=0x100",
+     "pokes": [{"addr": "ds:D58E", "hex": "ff", "repeat": 32}, {"addr": "ds:D50E", "hex": "0200"}, {"addr": "ds:D54E", "hex": "0000"}, {"addr": "ds:D5CE", "hex": "0000"}, {"addr": "ds:D510", "hex": "0300"}, {"addr": "ds:D550", "hex": "0000"}, {"addr": "ds:D5D0", "hex": "0000"}, {"addr": "ds:D512", "hex": "fe00"}, {"addr": "ds:D552", "hex": "0000"}, {"addr": "ds:D5D2", "hex": "0000"}, {"addr": "ds:D516", "hex": "ff01"}, {"addr": "ds:D556", "hex": "0000"}, {"addr": "ds:D5D6", "hex": "0000"}, {"addr": "ds:D518", "hex": "0001"}, {"addr": "ds:D558", "hex": "0000"}, {"addr": "ds:D5D8", "hex": "0000"}, {"addr": "ds:D51A", "hex": "0800"}, {"addr": "ds:D55A", "hex": "0000"}, {"addr": "ds:D5DA", "hex": "0000"}, {"addr": "ds:D51C", "hex": "0700"}, {"addr": "ds:D55C", "hex": "0000"}, {"addr": "ds:D5DC", "hex": "0000"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 100
+}

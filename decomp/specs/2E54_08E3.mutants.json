@@ -1,0 +1,20 @@
+[
+  {"name": "memset 少清一格(0x1F)", "find": "0xD58Eu, GIN3_DS, 0, 0x20);", "replace": "0xD58Eu, GIN3_DS, 0, 0x1F);"},
+  {"name": "不 memset", "find": "(void)f_3C9C_000A(m, 0xD58Eu, GIN3_DS, 0, 0x20);", "replace": "(void)0;"},
+  {"name": "只掃 31 個星域", "find": "i < 0x20", "replace": "i < 0x1F"},
+  {"name": "閘門只看 D50E 低位元組", "find": "if (rd16(m, DS((uint16_t)(0xD50Eu + 2u * i))) == 0)", "replace": "if ((uint8_t)rd16(m, DS((uint16_t)(0xD50Eu + 2u * i))) == 0)"},
+  {"name": "閘門改看 D54E", "find": "if (rd16(m, DS((uint16_t)(0xD50Eu + 2u * i))) == 0)", "replace": "if (rd16(m, DS((uint16_t)(0xD54Eu + 2u * i))) == 0)"},
+  {"name": "閘門反向", "find": "if (rd16(m, DS((uint16_t)(0xD50Eu + 2u * i))) == 0)", "replace": "if (rd16(m, DS((uint16_t)(0xD50Eu + 2u * i))) != 0)"},
+  {"name": "沒有閘門", "find": "if (rd16(m, DS((uint16_t)(0xD50Eu + 2u * i))) == 0)\n            continue;", "replace": ""},
+  {"name": "除數 5 改 4", "find": "/ 5u);", "replace": "/ 4u);"},
+  {"name": "除數 5 改 6", "find": "/ 5u);", "replace": "/ 6u);"},
+  {"name": "商飽和成 255 而非取低位元組", "find": "base = (uint8_t)((uint16_t)(need - have) / 5u);", "replace": "base = (uint8_t)(((uint16_t)(need - have) / 5u) > 255u ? 255u : ((uint16_t)(need - have) / 5u));"},
+  {"name": "缺口比較改有號", "find": "if (have < need)", "replace": "if ((int16_t)have < (int16_t)need)"},
+  {"name": "缺口對調(有 − 需)", "find": "base = (uint8_t)((uint16_t)(need - have) / 5u);", "replace": "base = (uint8_t)((uint16_t)(have - need) / 5u);"},
+  {"name": "亂數餘數改 % 5", "find": "(int16_t)r % 4)", "replace": "(int16_t)r % 5)"},
+  {"name": "亂數餘數改 % 3", "find": "(int16_t)r % 4)", "replace": "(int16_t)r % 3)"},
+  {"name": "亂數餘數改 & 1", "find": "(uint8_t)((int16_t)r % 4)", "replace": "(uint8_t)(r & 1u)"},
+  {"name": "亂數只在有缺口時抽", "find": "r = f_3CD5_000C(m);", "replace": "r = (have < need) ? f_3CD5_000C(m) : 0;"},
+  {"name": "亂數抽兩次", "find": "r = f_3CD5_000C(m);", "replace": "(void)f_3CD5_000C(m);\n        r = f_3CD5_000C(m);"},
+  {"name": "加亂數改飽和加法", "find": "(uint8_t)(rd8(m, DS((uint16_t)(0xD58Eu + i))) + (uint8_t)((int16_t)r % 4)));", "replace": "(uint8_t)(rd8(m, DS((uint16_t)(0xD58Eu + i))) + (uint8_t)((int16_t)r % 4) > 255 ? 255 : rd8(m, DS((uint16_t)(0xD58Eu + i))) + (uint8_t)((int16_t)r % 4)));"}
+]

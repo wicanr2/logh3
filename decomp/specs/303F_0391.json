@@ -1,0 +1,40 @@
+{
+  "id": "303F_0391",
+  "entry": "303F:0391",
+  "conv": "far",
+  "ret": "ax",
+  "size": 84,
+  "code_sha256_16": "f3e7435afd23b8af",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦艇池取 S3 開局(fcmd-s3-base)的真實內容(池 #0 到 #0x65 的 +0 是陣營 0、#0x66 起是陣營 1)；ds:A49A 的清單在基底裡全是 0，內容由 seeds 的 pokes 與突變造出。n 取 0..3000，更大的 n 超過步數上限被探針丟棄。",
+  "args": [
+    {"name": "n", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 24, 32, 40, 64, 100, 256, 1000, 2000, 3000]}}
+  ],
+  "seeds": [
+    {"note": "清單 [0x66(陣營 1)、0(陣營 0)、0x8E(陣營 1)、0x67(陣營 1)]，8F1D = 0：不是本方的有 3 筆",
+     "args": [4], "pokes": [{"addr": "ds:A49A", "hex": "660000008e006700"}]},
+    {"note": "同一份清單，8F1D = 1：不是本方的只有 idx 0(陣營 0)一筆",
+     "args": [4], "pokes": [{"addr": "ds:A49A", "hex": "660000008e006700"}, {"addr": "ds:8F1D", "hex": "01"}]},
+    {"note": "n = 0",
+     "args": [0], "pokes": [{"addr": "ds:A49A", "hex": "6600"}]},
+    {"note": "n = 1：只看第一筆",
+     "args": [1], "pokes": [{"addr": "ds:A49A", "hex": "66006600"}]},
+    {"note": "n = 2，8F1D = 2：全都不是本方",
+     "args": [2], "pokes": [{"addr": "ds:A49A", "hex": "66000000"}, {"addr": "ds:8F1D", "hex": "02"}]},
+    {"note": "池索引 0x0500：idx × 78 = 99840 超過 16 位元，位移回繞到 668B:8602(線性 6EEB2)，不是線性 7EEB2",
+     "args": [1], "pokes": [{"addr": "ds:A49A", "hex": "0005"}, {"addr": "lin:6EEB2", "hex": "05"}, {"addr": "lin:7EEB2", "hex": "00"}]},
+    {"note": "池索引 0x0349：idx × 78 = 0x1003E，乘積高位元被丟掉(位移 +0x3E)",
+     "args": [1], "pokes": [{"addr": "ds:A49A", "hex": "4903"}, {"addr": "lin:668F0", "hex": "05"}]},
+    {"note": "n = 300、全是 idx 0x66(陣營 1)：計數 300，超過 255",
+     "args": [300], "pokes": [{"addr": "ds:A49A", "hex": "6600", "repeat": 300}]},
+    {"note": "n = 300、前 299 筆是 idx 0(本方)、最後一筆 idx 0x66：計數 1",
+     "args": [300], "pokes": [{"addr": "ds:A49A", "hex": "0000", "repeat": 299}, {"addr": "ds:A6F0", "hex": "6600"}]},
+    {"note": "池索引 0xFFFF(位移 −78 回繞)與 0x8000(乘積 0 回繞)",
+     "args": [2], "pokes": [{"addr": "ds:A49A", "hex": "ffff0080"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

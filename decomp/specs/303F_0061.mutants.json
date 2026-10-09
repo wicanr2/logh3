@@ -1,0 +1,18 @@
+[
+  {"name": "不先清零 D610", "find": "    wr16(m, DS(0xD610), 0);\n", "replace": ""},
+  {"name": "先清成 1", "find": "    wr16(m, DS(0xD610), 0);\n", "replace": "    wr16(m, DS(0xD610), 1);\n"},
+  {"name": "陣營判斷反向(數本方)", "find": "!= rd8(m, DS(0x8F1D)))", "replace": "== rd8(m, DS(0x8F1D)))"},
+  {"name": "陣營固定 0", "find": "!= rd8(m, DS(0x8F1D)))", "replace": "!= 0)"},
+  {"name": "陣營欄位改 +1", "find": "rd8(m, LIN(pool_seg, unit))", "replace": "rd8(m, LIN(pool_seg, unit + 1u))"},
+  {"name": "每筆加 2", "find": "rd16(m, DS(0xD610)) + 1u", "replace": "rd16(m, DS(0xD610)) + 2u"},
+  {"name": "計數只存低位元組", "find": "wr16(m, DS(0xD610), (uint16_t)(rd16(m, DS(0xD610)) + 1u));", "replace": "wr16(m, DS(0xD610), (uint8_t)(rd16(m, DS(0xD610)) + 1u));"},
+  {"name": "計數寫成單一位元組(不進位)", "find": "wr16(m, DS(0xD610), (uint16_t)(rd16(m, DS(0xD610)) + 1u));", "replace": "wr8(m, DS(0xD610), (uint8_t)(rd8(m, DS(0xD610)) + 1u));"},
+  {"name": "筆數只比低位元組", "find": "i < rd16(m, DS(0x9896))", "replace": "i < rd8(m, DS(0x9896))"},
+  {"name": "筆數用小於等於", "find": "i < rd16(m, DS(0x9896))", "replace": "i <= rd16(m, DS(0x9896))"},
+  {"name": "清單位置步幅 2 改 1", "find": "2u * i", "replace": "1u * i"},
+  {"name": "清單基底 98BA 改 98BB", "find": "0x98BAu", "replace": "0x98BBu"},
+  {"name": "池記錄步幅 78 改 77", "find": "(uint16_t)(idx * 0x4Eu)", "replace": "(uint16_t)(idx * 0x4Du)"},
+  {"name": "池位移線性相加不回繞", "find": "rd8(m, LIN(pool_seg, unit)) != rd8", "replace": "rd8(m, LIN(pool_seg, rd16(m, DS(0xCFB4))) + (uint32_t)idx * 0x4Eu) != rd8"},
+  {"name": "池段改用 DS", "find": "rd8(m, LIN(pool_seg, unit))", "replace": "rd8(m, LIN(GIN3_DS, unit))"},
+  {"name": "池基底位移改讀 CFB2", "find": "rd16(m, DS(0xCFB4))", "replace": "rd16(m, DS(0xCFB2))"}
+]

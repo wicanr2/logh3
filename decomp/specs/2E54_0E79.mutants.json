@@ -1,0 +1,17 @@
+[
+  {"name": "空位判斷反向(+4 == 0xFF 才處理)", "find": "rd8(m, DS((uint16_t)(p + 4u))) != 0xFFu", "replace": "rd8(m, DS((uint16_t)(p + 4u))) == 0xFFu"},
+  {"name": "空位欄位改+5", "find": "rd8(m, DS((uint16_t)(p + 4u))) != 0xFFu", "replace": "rd8(m, DS((uint16_t)(p + 5u))) != 0xFFu"},
+  {"name": "忽略空位檢查", "find": "rd8(m, DS((uint16_t)(p + 4u))) != 0xFFu &&", "replace": "1 &&"},
+  {"name": "陣營欄位改+2", "find": "rd8(m, DS((uint16_t)(p + 1u))) == rd8(m, DS(0x8F1D))", "replace": "rd8(m, DS((uint16_t)(p + 2u))) == rd8(m, DS(0x8F1D))"},
+  {"name": "陣營判斷反向(處理敵方)", "find": "rd8(m, DS((uint16_t)(p + 1u))) == rd8(m, DS(0x8F1D))", "replace": "rd8(m, DS((uint16_t)(p + 1u))) != rd8(m, DS(0x8F1D))"},
+  {"name": "陣營固定為0", "find": "rd8(m, DS((uint16_t)(p + 1u))) == rd8(m, DS(0x8F1D))", "replace": "rd8(m, DS((uint16_t)(p + 1u))) == 0"},
+  {"name": "只清4(漏掉6)", "find": "if (st == 4 || st == 6)", "replace": "if (st == 4)"},
+  {"name": "只清6(漏掉4)", "find": "if (st == 4 || st == 6)", "replace": "if (st == 6)"},
+  {"name": "4到6的區間都清(含5)", "find": "if (st == 4 || st == 6)", "replace": "if (st >= 4 && st <= 6)"},
+  {"name": "只比低三位是4或6", "find": "if (st == 4 || st == 6)", "replace": "if ((st & 7u) == 4 || (st & 7u) == 6)"},
+  {"name": "寫入值改0", "find": "DS((uint16_t)(p + 0x79u)), 0xFFu);", "replace": "DS((uint16_t)(p + 0x79u)), 0x00u);"},
+  {"name": "寫入位置改+0x78", "find": "wr8(m, DS((uint16_t)(p + 0x79u)), 0xFFu);", "replace": "wr8(m, DS((uint16_t)(p + 0x78u)), 0xFFu);"},
+  {"name": "只掃31筆", "find": "i < 0x20", "replace": "i < 0x1F"},
+  {"name": "艦隊記錄步幅改0x79", "find": "p = (uint16_t)(p + 0x7Au);", "replace": "p = (uint16_t)(p + 0x79u);"},
+  {"name": "艦隊表基底改C075", "find": "uint16_t p = 0xC074u;", "replace": "uint16_t p = 0xC075u;"}
+]
