@@ -1,0 +1,49 @@
+{
+  "id": "34CB_07EE",
+  "entry": "34CB:07EE",
+  "conv": "far",
+  "ret": "none",
+  "size": 348,
+  "code_sha256_16": "937ea09ba8cf719c",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "視窗內容（彩色，一格 4 bytes）的差量更新：擁有者符合且（字碼 word、顏色、顏色高位）有任一不同的格子才更新。參數是視窗結構（0x22 bytes）的 far 指標，基底狀態的視窗串列在 ds:94F6 起、一個 0x22 bytes（4 個）。畫面格表 ds:D81E 起 6 bytes 一格。基底狀態視窗 94F6 的畫面格與它的內容緩衝區逐格相同（+3 = 1，內縮到欄21列1），所以原樣不寫入，由突變與 seeds 造差異：字碼 word 不同、只有顏色不同、只有顏色高位不同、只有字碼高位元組不同、擁有者不符、框 +3 = 0、擁有者 > 15。seeds 另有：結構放進畫面格表造別名（格1 的旗標就是擁有者 +4，更新時 OR 0x80 使重讀的擁有者不再符合，格2 因此不更新）、內容 word 在位移 0xFFFF 回繞、結構放在 ds:FFEF 與 ds:FFF1 讓 +E／+10 的 word 讀取回繞、欄列 255 加框內縮的 16 位元回繞。",
+  "tables": {
+    "win": {"base": "ds:94F6", "stride": 34, "count": 4}
+  },
+  "args": [
+    {"name": "win", "kind": "farptr", "gen": {"table": "win"}}
+  ],
+  "seeds": [
+    {"note": "基底原狀：視窗 94F6，畫面格與內容逐格相同", "args": [38134, 21683]},
+    {"note": "第一格字碼 word 不同（兩個 byte 都不同）", "args": [38134, 21683], "pokes": [{"addr": "ds:D98E", "hex": "0000"}]},
+    {"note": "第一格只有字碼高位元組不同", "args": [38134, 21683], "pokes": [{"addr": "ds:D98F", "hex": "ac"}]},
+    {"note": "第一格只有字碼低位元組不同", "args": [38134, 21683], "pokes": [{"addr": "ds:D98E", "hex": "d3"}]},
+    {"note": "第一格只有顏色（[+4]）不同", "args": [38134, 21683], "pokes": [{"addr": "ds:D990", "hex": "00"}]},
+    {"note": "第一格只有顏色高位（[+5]）不同", "args": [38134, 21683], "pokes": [{"addr": "ds:D991", "hex": "05"}]},
+    {"note": "擁有者不符：第一格旗標 0x05，字碼也不同，仍不更新", "args": [38134, 21683], "pokes": [{"addr": "ds:D98C", "hex": "05"}, {"addr": "ds:D98E", "hex": "0000"}]},
+    {"note": "第一格旗標 0x7F（低四位 F ≠ 0）與第二格 0x10：第二格字碼不同才更新", "args": [38134, 21683], "pokes": [{"addr": "ds:D98C", "hex": "7f"}, {"addr": "ds:D994", "hex": "0000"}]},
+    {"note": "沒有外框（+3 = 0）：起點在欄20列0（ds:D896）", "args": [38134, 21683], "pokes": [{"addr": "ds:94F9", "hex": "00"}]},
+    {"note": "擁有者 +4 = 0x10（> 15）：沒有格子符合", "args": [38134, 21683], "pokes": [{"addr": "ds:94FA", "hex": "10"}, {"addr": "ds:D98E", "hex": "0000"}]},
+    {"note": "別名：結構在 ds:D820。+4 = 格1 旗標 = 3（擁有者），格1 更新時 OR 0x80 變 0x83，重讀的擁有者不再符合，格2（旗標 3）不更新",
+     "args": [55328, 21683],
+     "pokes": [{"addr": "ds:D81E", "hex": "100000000000"}, {"addr": "ds:D824", "hex": "030000000000"}, {"addr": "ds:D82A", "hex": "0303010000e1"}, {"addr": "ds:D830", "hex": "b354"}, {"addr": "ds:E100", "hex": "112233445566778899aabbcc"}]},
+    {"note": "內容 word 在位移 0xFFFF：+E = 0xFFFF、+10 = 0x54B3，ds:FFFF = 0x11、ds:0000 = 0x22", "args": [38134, 21683],
+     "pokes": [{"addr": "ds:9504", "hex": "ffffb354"}, {"addr": "ds:FFFF", "hex": "11"}, {"addr": "ds:0000", "hex": "22"}]},
+    {"note": "結構在 ds:FFEF：+0x10 的 word 在 FFFF／0000 回繞（段 0x54B3），+E = 0xE100；格0、格1 旗標 1 符合擁有者 1",
+     "args": [65519, 21683],
+     "pokes": [{"addr": "ds:D81E", "hex": "010000000000010000000000"}, {"addr": "ds:FFF2", "hex": "000100000201"}, {"addr": "ds:FFFA", "hex": "0201"}, {"addr": "ds:FFFD", "hex": "00e1"}, {"addr": "ds:FFFF", "hex": "b3"}, {"addr": "ds:0000", "hex": "54"}, {"addr": "ds:E100", "hex": "aabbccddeeff0011"}]},
+    {"note": "結構在 ds:FFF1：+E 的 word 在 FFFF／0000 回繞（位移 0xE100），+0x10 在 ds:0001（段 0x54B3）；格0、格1 旗標 1 符合擁有者 1",
+     "args": [65521, 21683],
+     "pokes": [{"addr": "ds:D81E", "hex": "010000000000010000000000"}, {"addr": "ds:FFF4", "hex": "000100000201"}, {"addr": "ds:FFFC", "hex": "0201"}, {"addr": "ds:FFFF", "hex": "00"}, {"addr": "ds:0000", "hex": "e1"}, {"addr": "ds:0001", "hex": "b354"}, {"addr": "ds:E100", "hex": "aabbccddeeff0011"}]},
+    {"note": "有外框、欄 255、列 255、內容寬 2 高 2：內縮後 (255+1)×6 與 (255+1)×0xF0 加起點 16 位元回繞到 ds:CE1E",
+     "args": [38134, 21683],
+     "pokes": [{"addr": "ds:94FB", "hex": "ffff"}, {"addr": "ds:9501", "hex": "0202"}, {"addr": "ds:CE1E", "hex": "00"}, {"addr": "ds:CE24", "hex": "00"}, {"addr": "ds:CE2A", "hex": "00"}, {"addr": "ds:CE30", "hex": "00"}]},
+    {"note": "內容寬 +B = 0：內層不執行", "args": [38134, 21683], "pokes": [{"addr": "ds:9501", "hex": "00"}, {"addr": "ds:D98E", "hex": "0000"}]},
+    {"note": "內容高 +C = 0：外層不執行", "args": [38134, 21683], "pokes": [{"addr": "ds:9502", "hex": "00"}, {"addr": "ds:D98E", "hex": "0000"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

@@ -1,0 +1,41 @@
+{
+  "id": "348A_0281",
+  "entry": "348A:0281",
+  "conv": "near",
+  "ret": "pack:si,di,ax,dx",
+  "size": 50,
+  "code_sha256_16": "f6ed8088bb8b7049",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "COMANI 動畫逐格前置：等計時器 ds:8EFE 到 0 後設成間隔表 ds:8F10[ds:8F37]，再從 DS:SI 讀兩個 word，把下一格位移存進程式段 cs:01D8，回傳 SI／DI／AX／DX。輸入是暫存器 DS 與 SI（DS = 呼叫者的動畫資料段）。ds:8EFE 在基底狀態是 0，突變成非 0 的案例原版自旋到步數上限被丟棄。程式段的 cs:01D8／01DA（線性 0x34A78 起）不在探針的突變候選裡（讀取集排除程式碼區），DI 的輸入值用 seeds 的 pokes 改。seeds：DS 與 SI 的別名（資料段 = 348A 時第三次讀取撞上剛寫入的 cs:01D8；資料段 = 54B3 時撞上剛寫入的 ds:8EFE）、word 讀取在位移 0xFFFF 回繞、DI 初值、xlat 索引 0xFF、AX 為負。flags 不比對（被呼叫者不用），pack 只有四格。",
+  "args": [
+    {"name": "ds", "kind": "reg", "reg": "ds", "gen": {"choices": [21683, 21683, 40192, 15650, 0, 13450]}},
+    {"name": "si", "kind": "reg", "reg": "si", "gen": {"choices": [0, 1, 2, 3, 255, 256, 4096, 32766, 32767, 32768, 65530, 65531, 65532, 65533, 65534, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "DS = DGROUP、SI = 0x8000", "args": [21683, 32768]},
+    {"note": "第一次 word 讀取在位移 0xFFFF：SI = 0xFFFE", "args": [21683, 65534],
+     "pokes": [{"addr": "ds:FFFF", "hex": "34"}, {"addr": "ds:0000", "hex": "12"}]},
+    {"note": "第二次 word 讀取在位移 0xFFFF：SI = 0xFFFC（si+3 → 0xFFFF）", "args": [21683, 65532],
+     "pokes": [{"addr": "ds:FFFF", "hex": "cd"}, {"addr": "ds:0000", "hex": "ab"}]},
+    {"note": "別名：DS = 348A、SI = 0x01D5，第二次 word 讀取位移正好是剛寫入的 cs:01D8", "args": [13450, 469]},
+    {"note": "別名：DS = 348A、SI = 0x01D6，第一次讀取跨到 cs:01D8，第二次讀取跨 cs:01D9／01DA", "args": [13450, 470]},
+    {"note": "別名：DS = DGROUP、SI = 0x8EFD，第一次讀取撞上剛寫入的 ds:8EFE", "args": [21683, 36605],
+     "pokes": [{"addr": "ds:8F37", "hex": "00"}]},
+    {"note": "DI 初值 0xFFFF 加 AX 為正：進位", "args": [21683, 32768],
+     "pokes": [{"addr": "348A:01DA", "hex": "ffff"}, {"addr": "ds:8003", "hex": "0100"}, {"addr": "ds:8005", "hex": "0200"}]},
+    {"note": "AX 為負（0x8000）：DX = 0xFFFF", "args": [21683, 32768],
+     "pokes": [{"addr": "ds:8005", "hex": "0080"}]},
+    {"note": "AX 為 0x7FFF：DX = 0", "args": [21683, 32768],
+     "pokes": [{"addr": "ds:8005", "hex": "ff7f"}, {"addr": "348A:01DA", "hex": "0100"}]},
+    {"note": "xlat 索引 0xFF：表位置 0x900F", "args": [21683, 32768],
+     "pokes": [{"addr": "ds:8F37", "hex": "ff"}, {"addr": "ds:900F", "hex": "5a"}]},
+    {"note": "xlat 索引 0：取 ds:8F10 第 0 格", "args": [21683, 32768],
+     "pokes": [{"addr": "ds:8F37", "hex": "00"}, {"addr": "ds:8F10", "hex": "77"}]},
+    {"note": "DS = scratch 段 9D00，全零資料", "args": [40192, 0]}
+  ],
+  "iters": 30000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

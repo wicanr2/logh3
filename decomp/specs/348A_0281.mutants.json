@@ -1,0 +1,16 @@
+[
+  {"name": "第一次讀取位移少加1", "find": "si = (uint16_t)(si + 1u);\n    ax = f348A0281_rd16s(m, ds, si);", "replace": "ax = f348A0281_rd16s(m, ds, si);\n    si = (uint16_t)(si + 1u);"},
+  {"name": "下一格位移不加SI", "find": "ax = (uint16_t)(ax + si);", "replace": "ax = (uint16_t)(ax + si - 1u);"},
+  {"name": "存入cs:01DA", "find": "wr16(m, LIN(F348A0281_CS, 0x01D8u), ax);", "replace": "wr16(m, LIN(F348A0281_CS, 0x01DAu), ax);"},
+  {"name": "DI讀cs:01D8", "find": "di = rd16(m, LIN(F348A0281_CS, 0x01DAu));", "replace": "di = rd16(m, LIN(F348A0281_CS, 0x01D8u));"},
+  {"name": "DX不做符號延伸", "find": "dx = (ax & 0x8000u) ? 0xFFFFu : 0u;", "replace": "dx = 0u;"},
+  {"name": "DX用bit14", "find": "dx = (ax & 0x8000u) ? 0xFFFFu : 0u;", "replace": "dx = (ax & 0x4000u) ? 0xFFFFu : 0u;"},
+  {"name": "DI減AX", "find": "di = (uint16_t)(di + ax);", "replace": "di = (uint16_t)(di - ax);"},
+  {"name": "回傳SI少加2", "find": "ax = f348A0281_rd16s(m, ds, si);\n    si = (uint16_t)(si + 2u);\n    dx", "replace": "ax = f348A0281_rd16s(m, ds, si);\n    dx"},
+  {"name": "間隔表基底0x8F11", "find": "0x8F10u + rd8(m, DS(0x8F37))", "replace": "0x8F11u + rd8(m, DS(0x8F37))"},
+  {"name": "間隔索引當有號", "find": "0x8F10u + rd8(m, DS(0x8F37))", "replace": "0x8F10u + (uint16_t)(int16_t)(int8_t)rd8(m, DS(0x8F37))"},
+  {"name": "間隔索引用ds:8F36", "find": "rd8(m, DS(0x8F37))", "replace": "rd8(m, DS(0x8F36))"},
+  {"name": "計時器沒設", "find": "wr16(m, DS(0x8EFE), rd8(m, DS((uint16_t)(0x8F10u + rd8(m, DS(0x8F37))))));", "replace": ""},
+  {"name": "word讀取高位元組取下一段", "find": "(rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8)", "replace": "(rd8(m, LIN(seg, off) + 1u) << 8)"},
+  {"name": "第二次讀取先於寫入", "find": "wr16(m, LIN(F348A0281_CS, 0x01D8u), ax);\n    di = rd16(m, LIN(F348A0281_CS, 0x01DAu));\n    ax = f348A0281_rd16s(m, ds, si);", "replace": "{ uint16_t pre = f348A0281_rd16s(m, ds, si); wr16(m, LIN(F348A0281_CS, 0x01D8u), ax);\n    di = rd16(m, LIN(F348A0281_CS, 0x01DAu));\n    ax = pre; }"}
+]

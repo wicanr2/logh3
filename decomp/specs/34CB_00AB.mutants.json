@@ -1,0 +1,19 @@
+[
+  {"name": "鎖住位元改0x40", "find": "if ((rd8(m, LIN(ds, cell)) & 0x20u) == 0) {", "replace": "if ((rd8(m, LIN(ds, cell)) & 0x40u) == 0) {"},
+  {"name": "髒位元改0x40", "find": "w_off, 4) | 0x80u)", "replace": "w_off, 4) | 0x40u)"},
+  {"name": "格1寫0", "find": "(uint16_t)(cell + 1u)), 1);", "replace": "(uint16_t)(cell + 1u)), 0);"},
+  {"name": "格3寫1", "find": "(uint16_t)(cell + 3u)), 0);", "replace": "(uint16_t)(cell + 3u)), 1);"},
+  {"name": "格步距5", "find": "cell = (uint16_t)(cell + 6u);", "replace": "cell = (uint16_t)(cell + 5u);"},
+  {"name": "列步距0xEE", "find": "cur = (uint16_t)(cur + 0xF0u);", "replace": "cur = (uint16_t)(cur + 0xEEu);"},
+  {"name": "內容步距2", "find": "cptr = (uint16_t)(cptr + 1u);", "replace": "cptr = (uint16_t)(cptr + 2u);"},
+  {"name": "內容列進位用+7", "find": "coff = (uint16_t)(coff + f34CB00AB_wb(m, w_seg, w_off, 0x0B));", "replace": "coff = (uint16_t)(coff + f34CB00AB_wb(m, w_seg, w_off, 7));"},
+  {"name": "內容起點少+9", "find": "+ f34CB00AB_wb(m, w_seg, w_off, 9)", "replace": "+ 0"},
+  {"name": "內容起點+A乘+7", "find": "f34CB00AB_wb(m, w_seg, w_off, 0x0A) * f34CB00AB_wb(m, w_seg, w_off, 0x0B)", "replace": "f34CB00AB_wb(m, w_seg, w_off, 0x0A) * f34CB00AB_wb(m, w_seg, w_off, 7)"},
+  {"name": "內容起點不乘+B", "find": "f34CB00AB_wb(m, w_seg, w_off, 0x0A) * f34CB00AB_wb(m, w_seg, w_off, 0x0B)", "replace": "f34CB00AB_wb(m, w_seg, w_off, 0x0A)"},
+  {"name": "高度每輪重讀", "find": "const uint8_t h = f34CB00AB_wb(m, w_seg, w_off, 8);", "replace": "#define h f34CB00AB_wb(m, w_seg, w_off, 8)"},
+  {"name": "寬度每列只讀一次", "find": "while (j < f34CB00AB_wb(m, w_seg, w_off, 7)) {", "replace": "const uint8_t w0 = f34CB00AB_wb(m, w_seg, w_off, 7);\n        while (j < w0) {"},
+  {"name": "擁有者每列只讀一次", "find": "        while (j < f34CB00AB_wb(m, w_seg, w_off, 7)) {\n            if ((rd8(m, LIN(ds, cell)) & 0x20u) == 0) {\n                wr8(m, LIN(ds, cell), (uint8_t)(f34CB00AB_wb(m, w_seg, w_off, 4) | 0x80u));", "replace": "        const uint8_t a0 = f34CB00AB_wb(m, w_seg, w_off, 4);\n        while (j < f34CB00AB_wb(m, w_seg, w_off, 7)) {\n            if ((rd8(m, LIN(ds, cell)) & 0x20u) == 0) {\n                wr8(m, LIN(ds, cell), (uint8_t)(a0 | 0x80u));"},
+  {"name": "內容byte先讀再寫格", "find": "                wr8(m, LIN(ds, cell), (uint8_t)(f34CB00AB_wb(m, w_seg, w_off, 4) | 0x80u));\n                wr8(m, LIN(ds, (uint16_t)(cell + 1u)), 1);\n                wr8(m, LIN(ds, (uint16_t)(cell + 2u)), rd8(m, LIN(cseg, cptr)));", "replace": "                const uint8_t pre = rd8(m, LIN(cseg, cptr));\n                wr8(m, LIN(ds, cell), (uint8_t)(f34CB00AB_wb(m, w_seg, w_off, 4) | 0x80u));\n                wr8(m, LIN(ds, (uint16_t)(cell + 1u)), 1);\n                wr8(m, LIN(ds, (uint16_t)(cell + 2u)), pre);"},
+  {"name": "+0x10的word不回繞", "find": "f34CB00AB_rd16s(m, w_seg, (uint16_t)(w_off + 0x10u))", "replace": "(uint16_t)(rd8(m, LIN(w_seg, (uint16_t)(w_off + 0x10u))) | (rd8(m, LIN(w_seg, (uint16_t)(w_off + 0x10u)) + 1u) << 8))"},
+  {"name": "+E的word不回繞", "find": "f34CB00AB_rd16s(m, w_seg, (uint16_t)(w_off + 0x0Eu))", "replace": "(uint16_t)(rd8(m, LIN(w_seg, (uint16_t)(w_off + 0x0Eu))) | (rd8(m, LIN(w_seg, (uint16_t)(w_off + 0x0Eu)) + 1u) << 8))"}
+]

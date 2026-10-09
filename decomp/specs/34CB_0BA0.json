@@ -1,0 +1,43 @@
+{
+  "id": "34CB_0BA0",
+  "entry": "34CB:0BA0",
+  "conv": "far",
+  "ret": "none",
+  "size": 598,
+  "code_sha256_16": "847131f63a842cec",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "視窗外框（與 34CB:094A 逐指令相同，只有鎖住位元的判斷相反：只寫已鎖住的格子）。參數是視窗結構（0x22 bytes）的 far 指標，基底狀態的視窗串列在 ds:94F6 起、一個 0x22 bytes（4 個）。畫面格表 ds:D81E 起 6 bytes 一格。基底狀態的畫面格沒有鎖住位元，所以 seeds 先把欄20到39、列0到4 的格子旗標寫成 0x20（視窗 94F6 的外圈全部落在其中）。seeds：外圈八類位置各自鎖住、寬或高 1／2／3、結構放進畫面格表造別名（結構在 ds:D8DF：+5 欄 = 右上格旗標 0x20 = 32，起點在 ds:D8DE；+7 寬、+8 高就是右上格的字碼，寫完變成 起始碼+2 與 0xFF，驗證原版每一輪重讀寬高）、擁有者 0xFF、外框起始碼 0 與 0xFF、列欄 255 的起點回繞。寬或高為 0 時原版無窮迴圈，不在範圍。",
+  "tables": {
+    "win": {"base": "ds:94F6", "stride": 34, "count": 4}
+  },
+  "args": [
+    {"name": "win", "kind": "farptr", "gen": {"table": "win"}}
+  ],
+  "seeds": [
+    {"note": "基底原狀：視窗 94F6，沒有鎖住的格子", "args": [38134, 21683]},
+    {"note": "外圈全部鎖住：八類位置都寫", "args": [38134, 21683], "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}]},
+    {"note": "外圈八類位置各鎖住一格（左上、上緣 k=3、右上、左緣第1列、右緣第1列、左下、下緣 k=4、右下）：只寫這八格",
+     "args": [38134, 21683],
+     "pokes": [{"addr": "ds:D896", "hex": "20"}, {"addr": "ds:D8A8", "hex": "20"}, {"addr": "ds:D908", "hex": "20"}, {"addr": "ds:D986", "hex": "20"}, {"addr": "ds:D9F8", "hex": "20"}, {"addr": "ds:DB66", "hex": "20"}, {"addr": "ds:DB7E", "hex": "20"}, {"addr": "ds:DBD8", "hex": "20"}]},
+    {"note": "寬1高1，範圍鎖住", "args": [38134, 21683], "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}, {"addr": "ds:94FD", "hex": "0101"}]},
+    {"note": "寬2高2，範圍鎖住", "args": [38134, 21683], "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}, {"addr": "ds:94FD", "hex": "0202"}]},
+    {"note": "寬3高3，範圍鎖住", "args": [38134, 21683], "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}, {"addr": "ds:94FD", "hex": "0303"}]},
+    {"note": "寬1高4，範圍鎖住：左緣與右緣同一格", "args": [38134, 21683], "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}, {"addr": "ds:94FD", "hex": "0104"}]},
+    {"note": "寬20高1，範圍鎖住：下緣那一列落在矩形下方", "args": [38134, 21683], "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}, {"addr": "ds:94FD", "hex": "1401"}]},
+    {"note": "別名：結構在 ds:D8DF。+5 欄 = 右上格旗標 0x20（起點 = D81E + 32×6 = D8DE，左上格也鎖住）、+7 寬 = 右上格[+2]（5）、+8 高 = 右上格[+3]（3）；右上寫入字碼 0xFF03 後寬變 3、高變 0xFF。ds:D9CE、DABE、369E 是左緣第1、2、100 列，鎖住，高被重讀才會寫到後兩者",
+     "args": [55519, 21683],
+     "pokes": [{"addr": "ds:D8DE", "hex": "20"}, {"addr": "ds:D8E0", "hex": "9700010020000503"}, {"addr": "ds:D9CE", "hex": "20"}, {"addr": "ds:DABE", "hex": "20"}, {"addr": "ds:369E", "hex": "20"}]},
+    {"note": "擁有者 +4 = 0xFF、顏色 +1 = 0x00、起始碼 +3 = 0，範圍鎖住", "args": [38134, 21683],
+     "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}, {"addr": "ds:94FA", "hex": "ff"}, {"addr": "ds:94F7", "hex": "00"}, {"addr": "ds:94F9", "hex": "00"}]},
+    {"note": "起始碼 +3 = 0xFF，範圍鎖住：字碼 0xFFFF 起，+1 回繞到 0", "args": [38134, 21683], "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}, {"addr": "ds:94F9", "hex": "ff"}]},
+    {"note": "顏色 +1 = 0xAA，範圍鎖住", "args": [38134, 21683], "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}, {"addr": "ds:94F7", "hex": "aa"}]},
+    {"note": "列 +6 = 255、欄 +5 = 255：起點超過 0xFFFF 回繞到 ds:CD28；左上與右上鎖住", "args": [38134, 21683], "pokes": [{"addr": "ds:94FB", "hex": "ffff"}, {"addr": "ds:CD28", "hex": "20"}, {"addr": "ds:CD2E", "hex": "20"}]},
+    {"note": "寬 255 高 2，範圍鎖住", "args": [38134, 21683], "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}, {"addr": "ds:94FD", "hex": "ff02"}]},
+    {"note": "寬 2 高 255，範圍鎖住", "args": [38134, 21683], "pokes": [{"addr": "ds:D896", "hex": "200000000000", "repeat": 20}, {"addr": "ds:D986", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DA76", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DB66", "hex": "200000000000", "repeat": 20}, {"addr": "ds:DC56", "hex": "200000000000", "repeat": 20}, {"addr": "ds:94FD", "hex": "02ff"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

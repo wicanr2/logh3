@@ -1,0 +1,20 @@
+[
+  {"name": "擁有者遮罩0x1F", "find": "(rd8(m, LIN(ds, cell)) & 0x0Fu) == f34CB0370_wb(m, w_seg, w_off, 4)", "replace": "(rd8(m, LIN(ds, cell)) & 0x1Fu) == f34CB0370_wb(m, w_seg, w_off, 4)"},
+  {"name": "旗標寫0x80", "find": "wr8(m, LIN(ds, cell), 0xA0);", "replace": "wr8(m, LIN(ds, cell), 0x80);"},
+  {"name": "旗標寫0x20", "find": "wr8(m, LIN(ds, cell), 0xA0);", "replace": "wr8(m, LIN(ds, cell), 0x20);"},
+  {"name": "清格1不清格2", "find": "wr8(m, LIN(ds, (uint16_t)(cell + 2u)), 0);", "replace": "wr8(m, LIN(ds, (uint16_t)(cell + 1u)), 0);"},
+  {"name": "沒有清字碼", "find": "wr8(m, LIN(ds, (uint16_t)(cell + 2u)), 0);", "replace": ""},
+  {"name": "多清格3", "find": "wr8(m, LIN(ds, (uint16_t)(cell + 2u)), 0);", "replace": "wr8(m, LIN(ds, (uint16_t)(cell + 2u)), 0); wr8(m, LIN(ds, (uint16_t)(cell + 3u)), 0);"},
+  {"name": "列步距0xEE", "find": "cur = (uint16_t)(cur + 0xF0u);", "replace": "cur = (uint16_t)(cur + 0xEEu);"},
+  {"name": "格步距5", "find": "cell = (uint16_t)(cell + 6u);", "replace": "cell = (uint16_t)(cell + 5u);"},
+  {"name": "起點列乘欄位+5", "find": "f34CB0370_wb(m, w_seg, w_off, 6) * 0xF0u", "replace": "f34CB0370_wb(m, w_seg, w_off, 5) * 0xF0u"},
+  {"name": "起點欄乘欄位+6", "find": "f34CB0370_wb(m, w_seg, w_off, 5) * 6u", "replace": "f34CB0370_wb(m, w_seg, w_off, 6) * 6u"},
+  {"name": "表起點0xD81C", "find": "0xD81Eu +", "replace": "0xD81Cu +"},
+  {"name": "少一欄", "find": "while (j < f34CB0370_wb(m, w_seg, w_off, 7)) {", "replace": "while ((unsigned)j + 1u < f34CB0370_wb(m, w_seg, w_off, 7)) {"},
+  {"name": "少一列", "find": "while (i < f34CB0370_wb(m, w_seg, w_off, 8)) {", "replace": "while ((unsigned)i + 1u < f34CB0370_wb(m, w_seg, w_off, 8)) {"},
+  {"name": "寬度只讀一次", "find": "cur = (uint16_t)(cur + 0xF0u);\n        while (j < f34CB0370_wb(m, w_seg, w_off, 7)) {", "replace": "cur = (uint16_t)(cur + 0xF0u);\n        const uint8_t w0 = f34CB0370_wb(m, w_seg, w_off, 7);\n        while (j < w0) {"},
+  {"name": "高度只讀一次", "find": "uint8_t i = 0;\n\n    while (i < f34CB0370_wb(m, w_seg, w_off, 8)) {", "replace": "uint8_t i = 0;\n    const uint8_t h0 = f34CB0370_wb(m, w_seg, w_off, 8);\n\n    while (i < h0) {"},
+  {"name": "擁有者只讀一次", "find": "if ((rd8(m, LIN(ds, cell)) & 0x0Fu) == f34CB0370_wb(m, w_seg, w_off, 4)) {", "replace": "static uint8_t o0; if (i == 0 && j == 0) o0 = f34CB0370_wb(m, w_seg, w_off, 4);\n            if ((rd8(m, LIN(ds, cell)) & 0x0Fu) == o0) {"},
+  {"name": "擁有者比較用整個旗標byte", "find": "(rd8(m, LIN(ds, cell)) & 0x0Fu) == f34CB0370_wb(m, w_seg, w_off, 4)", "replace": "rd8(m, LIN(ds, cell)) == f34CB0370_wb(m, w_seg, w_off, 4)"},
+  {"name": "擁有者只比低四位", "find": "(rd8(m, LIN(ds, cell)) & 0x0Fu) == f34CB0370_wb(m, w_seg, w_off, 4)", "replace": "(rd8(m, LIN(ds, cell)) & 0x0Fu) == (f34CB0370_wb(m, w_seg, w_off, 4) & 0x0Fu)"}
+]

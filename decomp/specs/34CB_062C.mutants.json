@@ -1,0 +1,14 @@
+[
+  {"name": "鎖住位元改0x40", "find": "if ((rd8(m, LIN(ds, cell)) & 0x20u) != 0)", "replace": "if ((rd8(m, LIN(ds, cell)) & 0x40u) != 0)"},
+  {"name": "髒位元改0x40", "find": "w_off, 4) | 0x80u)", "replace": "w_off, 4) | 0x40u)"},
+  {"name": "擁有者讀+5", "find": "f34CB062C_wb(m, w_seg, w_off, 4) | 0x80u", "replace": "f34CB062C_wb(m, w_seg, w_off, 5) | 0x80u"},
+  {"name": "格步距5", "find": "cell = (uint16_t)(cell + 6u);", "replace": "cell = (uint16_t)(cell + 5u);"},
+  {"name": "列步距0xEE", "find": "cur = (uint16_t)(cur + 0xF0u);", "replace": "cur = (uint16_t)(cur + 0xEEu);"},
+  {"name": "起點列乘欄位+5", "find": "f34CB062C_wb(m, w_seg, w_off, 6) * 0xF0u", "replace": "f34CB062C_wb(m, w_seg, w_off, 5) * 0xF0u"},
+  {"name": "表起點0xD81C", "find": "0xD81Eu +", "replace": "0xD81Cu +"},
+  {"name": "少一欄", "find": "while (j < w) {", "replace": "while ((unsigned)j + 1u < w) {"},
+  {"name": "少一列", "find": "while (i < h) {", "replace": "while ((unsigned)i + 1u < h) {"},
+  {"name": "寬度每格重讀", "find": "const uint8_t w = f34CB062C_wb(m, w_seg, w_off, 7);", "replace": "#define w f34CB062C_wb(m, w_seg, w_off, 7)"},
+  {"name": "高度每列重讀", "find": "const uint8_t h = f34CB062C_wb(m, w_seg, w_off, 8);", "replace": "#define h f34CB062C_wb(m, w_seg, w_off, 8)"},
+  {"name": "多寫格1", "find": "wr8(m, LIN(ds, cell), (uint8_t)(f34CB062C_wb(m, w_seg, w_off, 4) | 0x80u));", "replace": "{ wr8(m, LIN(ds, cell), (uint8_t)(f34CB062C_wb(m, w_seg, w_off, 4) | 0x80u)); wr8(m, LIN(ds, (uint16_t)(cell + 1u)), 1); }"}
+]

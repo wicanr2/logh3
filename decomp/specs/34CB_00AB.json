@@ -1,0 +1,46 @@
+{
+  "id": "34CB_00AB",
+  "entry": "34CB:00AB",
+  "conv": "far",
+  "ret": "none",
+  "size": 249,
+  "code_sha256_16": "f85f41647d1402c6",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "視窗內容顯示（顏色 0 那條路）。參數是視窗結構（0x22 bytes）的 far 指標，基底狀態的視窗串列在 ds:94F6 起、一個 0x22 bytes（4 個）。畫面格表 ds:D81E 起 6 bytes 一格。seeds：視窗結構放進畫面格表造別名（格子的寫入改到之後重讀的 +4 擁有者、+7 寬，高 +8 在進函式時快取）、內容緩衝區指到第一格自己（寫入順序）、鎖住位元混合、結構放在 ds:FFEF 與 ds:FFF1 讓 +E／+10 的 word 讀取在位移 0xFFFF 回繞。",
+  "tables": {
+    "win": {"base": "ds:94F6", "stride": 34, "count": 4}
+  },
+  "args": [
+    {"name": "win", "kind": "farptr", "gen": {"table": "win"}}
+  ],
+  "seeds": [
+    {"note": "基底原狀：視窗 94F6", "args": [38134, 21683]},
+    {"note": "別名：結構在 ds:D822。+4 = 格1[2]，格1 被寫入內容 byte 後擁有者改變，格2 用新值；+8 = 格2 旗標（h 在進函式時快取，不受影響）",
+     "args": [55330, 21683],
+     "pokes": [{"addr": "ds:D81E", "hex": "000000000000"}, {"addr": "ds:D824", "hex": "000001000003"}, {"addr": "ds:D82A", "hex": "010000000000"}, {"addr": "ds:D830", "hex": "00e1b3540000"}, {"addr": "ds:E100", "hex": "556677"}]},
+    {"note": "別名：結構在 ds:D823。+7 = 格2 旗標（w = 3），格2 被寫成（新擁有者 | 0x80）= 0x80，寬變 128；+4 = 格1[3]，格1 把它清成 0",
+     "args": [55331, 21683],
+     "pokes": [{"addr": "ds:D81E", "hex": "000000000000"}, {"addr": "ds:D824", "hex": "000000020000"}, {"addr": "ds:D82A", "hex": "030100000000"}, {"addr": "ds:D830", "hex": "0000e1b354"}, {"addr": "ds:E100", "hex": "5566778899"}]},
+    {"note": "內容緩衝區指到第一格自己（ds:D896）：格[+0] 寫完才讀內容 byte，所以格[+2] 拿到新的旗標；下一格讀到上一格剛寫的格[+1]",
+     "args": [38134, 21683],
+     "pokes": [{"addr": "ds:9504", "hex": "96d8b354"}, {"addr": "ds:94FA", "hex": "00"}, {"addr": "ds:94FF", "hex": "0000"}]},
+    {"note": "鎖住位元混合：第一欄起連續四格旗標 0x20、0x30、0x0F、0x5F",
+     "args": [38134, 21683],
+     "pokes": [{"addr": "ds:D896", "hex": "200000000000300000000000 0f0000000000 5f0000000000"}]},
+    {"note": "結構在 ds:FFEF：+0x10 的 word 在 FFFF／0000 回繞（段 0x54B3），+E = 0xE100",
+     "args": [65519, 21683],
+     "pokes": [{"addr": "ds:FFF3", "hex": "0100000201000002"}, {"addr": "ds:FFFD", "hex": "00e1"}, {"addr": "ds:FFFF", "hex": "b3"}, {"addr": "ds:0000", "hex": "54"}, {"addr": "ds:E100", "hex": "aabbccdd"}]},
+    {"note": "結構在 ds:FFF1：+E 的 word 在 FFFF／0000 回繞（位移 0xE100），+0x10 在 ds:0001（段 0x54B3）",
+     "args": [65521, 21683],
+     "pokes": [{"addr": "ds:FFF5", "hex": "0100000201000002"}, {"addr": "ds:FFFF", "hex": "00"}, {"addr": "ds:0000", "hex": "e1"}, {"addr": "ds:0001", "hex": "b354"}, {"addr": "ds:E100", "hex": "aabbccdd"}]},
+    {"note": "內容起點補正 +9 = 3、+A = 2（+B = 0x12）：內容起點 + 3 + 36", "args": [38134, 21683], "pokes": [{"addr": "ds:94FF", "hex": "0302"}]},
+    {"note": "內容起點補正只有 +9 = 1", "args": [38134, 21683], "pokes": [{"addr": "ds:94FF", "hex": "01"}]},
+    {"note": "高 +8 = 0：外層不執行", "args": [38134, 21683], "pokes": [{"addr": "ds:94FE", "hex": "00"}]},
+    {"note": "寬 +7 = 0：內層不執行", "args": [38134, 21683], "pokes": [{"addr": "ds:94FD", "hex": "00"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}
