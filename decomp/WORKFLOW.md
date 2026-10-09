@@ -19,6 +19,7 @@
 decomp/tools/ledger.sh order            # 由下而上；game-pure 與 game-logic
 decomp/tools/ledger.sh show 203A:0424   # 特徵、分類、呼叫與被呼叫
 decomp/tools/asm.sh 203A:0424           # IDA 反組譯，呼叫目標附 seg:off 與分類
+decomp/tools/ready.sh [排除清單檔]   # 規則層裡「呼叫的函式都已標記」的函式（可以動手的）；排除清單檔用來略過已派給別人的批次
 ```
 
 - 先做深度 0（沒有呼叫其他函式）的葉函式，再做只呼叫「已經 diff-tested」函式的函式。
