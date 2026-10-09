@@ -1,0 +1,12 @@
+[
+  {"name": "旗標遮罩改0xBF", "find": "& 0x9Fu", "replace": "& 0xBFu"},
+  {"name": "旗標遮罩改0xDF", "find": "& 0x9Fu", "replace": "& 0xDFu"},
+  {"name": "第二byte遮罩改0x03", "find": "& 0x01u));", "replace": "& 0x03u));"},
+  {"name": "測bit5而非bit4", "find": "(al & 0x10u) == 0", "replace": "(al & 0x20u) == 0"},
+  {"name": "條件反向", "find": "(al & 0x10u) == 0", "replace": "(al & 0x10u) != 0"},
+  {"name": "無條件清第四個byte", "find": "if ((al & 0x10u) == 0)\n            wr8", "replace": "if (1)\n            wr8"},
+  {"name": "清錯成+2", "find": "si + 3u", "replace": "si + 2u"},
+  {"name": "少一筆", "find": "for (cx = 0x320u; cx != 0; cx--)", "replace": "for (cx = 0x31Fu; cx != 0; cx--)"},
+  {"name": "多一筆", "find": "for (cx = 0x320u; cx != 0; cx--)", "replace": "for (cx = 0x321u; cx != 0; cx--)"},
+  {"name": "筆長改成5", "find": "si = (uint16_t)(si + 6u);", "replace": "si = (uint16_t)(si + 5u);"}
+]

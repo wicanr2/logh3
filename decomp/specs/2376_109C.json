@@ -1,0 +1,30 @@
+{
+  "id": "2376_109C",
+  "entry": "2376:109C",
+  "conv": "near",
+  "ret": "none",
+  "size": 27,
+  "code_sha256_16": "3b0398b85d930c35",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "把 15 個 byte 隔格搬進字形緩衝區（ds:829C 起 20 列 × 2 bytes），再清第 0、1、18、19 列。DS 是 DGROUP（呼叫者 2376:040E 載入 seg132 = 54B3）。SI、DI 是暫存器輸入。種子把四個要清的 word 與緩衝區其餘位置填非 0，並造來源與目的重疊的案例（逐 byte 先讀後寫才對得上）。",
+  "args": [
+    {"name": "si", "kind": "reg", "reg": "si", "gen": {"choices": [33440, 33441, 33436, 33408, 27636, 0, 65521, 65534, 65535, 4096], "also_random": true}},
+    {"name": "di", "kind": "reg", "reg": "di", "gen": {"choices": [33440, 33441, 33436, 33408, 33456, 0, 65521, 65534, 65535, 4096], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [34000, 33441], "pokes": [{"addr": "ds:829A", "hex": "ff", "repeat": 48}, {"addr": "ds:84D0", "hex": "0102030405060708090a0b0c0d0e0f10"}]},
+    {"args": [34000, 33440], "pokes": [{"addr": "ds:829A", "hex": "55", "repeat": 48}, {"addr": "ds:84D0", "hex": "f1f2f3f4f5f6f7f8f9fafbfcfdfeff00"}]},
+    {"args": [33440, 33440], "pokes": [{"addr": "ds:829A", "hex": "ff", "repeat": 48}, {"addr": "ds:82A0", "hex": "0102030405060708090a0b0c0d0e0f1011121314151617181920"}]},
+    {"args": [33441, 33440], "pokes": [{"addr": "ds:829A", "hex": "aa", "repeat": 48}, {"addr": "ds:82A0", "hex": "0102030405060708090a0b0c0d0e0f1011121314151617181920"}]},
+    {"args": [33440, 33441], "pokes": [{"addr": "ds:829A", "hex": "aa", "repeat": 48}, {"addr": "ds:82A0", "hex": "0102030405060708090a0b0c0d0e0f1011121314151617181920"}]},
+    {"args": [33439, 33441], "pokes": [{"addr": "ds:829A", "hex": "ff", "repeat": 48}]},
+    {"args": [33450, 33440], "pokes": [{"addr": "ds:829A", "hex": "ff", "repeat": 48}]},
+    {"args": [65530, 33440], "pokes": [{"addr": "ds:829A", "hex": "ff", "repeat": 48}, {"addr": "ds:FFFA", "hex": "0102030405060708090a0b0c0d0e0f10"}, {"addr": "ds:0000", "hex": "a1a2a3a4a5a6a7a8a9"}]},
+    {"args": [33440, 65522], "pokes": [{"addr": "ds:829A", "hex": "ff", "repeat": 48}, {"addr": "ds:FFF2", "hex": "ee", "repeat": 48}]}
+  ],
+  "iters": 8000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

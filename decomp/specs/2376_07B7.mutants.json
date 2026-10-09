@@ -1,0 +1,18 @@
+[
+  {"name": "重讀來源改用先前讀到的值", "find": "uint16_t again = w07B7_rd16(m, ds, si); /* mov ax,[si]：重新讀來源 */", "replace": "uint16_t again = p0;"},
+  {"name": "遮罩少算第四平面", "find": "uint16_t mask = (uint16_t)~(p0 | p1 | p2 | p3);", "replace": "uint16_t mask = (uint16_t)~(p0 | p1 | p2);"},
+  {"name": "目的平面1合成平面2", "find": "(uint16_t)(w07B7_rd16(m, ds, (uint16_t)(di + 2u)) | p1)", "replace": "(uint16_t)(w07B7_rd16(m, ds, (uint16_t)(di + 2u)) | p2)"},
+  {"name": "目的平面2的and改or", "find": "(uint16_t)(w07B7_rd16(m, ds, (uint16_t)(di + 4u)) & mask)", "replace": "(uint16_t)(w07B7_rd16(m, ds, (uint16_t)(di + 4u)) | mask)"},
+  {"name": "目的平面3漏做and", "find": "        w07B7_wr16(m, ds, (uint16_t)(di + 6u), (uint16_t)(w07B7_rd16(m, ds, (uint16_t)(di + 6u)) & mask));\n", "replace": ""},
+  {"name": "目的平面0漏做and", "find": "        w07B7_wr16(m, ds, di, (uint16_t)(w07B7_rd16(m, ds, di) & mask));\n", "replace": ""},
+  {"name": "目的平面0漏做or", "find": "w07B7_wr16(m, ds, di, (uint16_t)(w07B7_rd16(m, ds, di) | again));", "replace": ""},
+  {"name": "來源平面1間距改9", "find": "(uint16_t)(si + 8u)", "replace": "(uint16_t)(si + 9u)"},
+  {"name": "來源平面3間距改0x10", "find": "(uint16_t)(si + 0x18u)", "replace": "(uint16_t)(si + 0x10u)"},
+  {"name": "少做一列", "find": "for (cx = 0x14u; cx != 0; cx--)", "replace": "for (cx = 0x13u; cx != 0; cx--)"},
+  {"name": "多做一列", "find": "for (cx = 0x14u; cx != 0; cx--)", "replace": "for (cx = 0x15u; cx != 0; cx--)"},
+  {"name": "來源列距改0x1F", "find": "si = (uint16_t)(si + 0x20u);", "replace": "si = (uint16_t)(si + 0x1Fu);"},
+  {"name": "目的列距改7", "find": "di = (uint16_t)(di + 8u);", "replace": "di = (uint16_t)(di + 7u);"},
+  {"name": "來源word高位元組走線性位址", "find": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8));", "replace": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, off) + 1u) << 8));"},
+  {"name": "目的word高位元組走線性位址", "find": "wr8(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "wr8(m, LIN(seg, off) + 1u, (uint8_t)(v >> 8));"},
+  {"name": "BP與DI對調", "find": "uint16_t si = bp;", "replace": "uint16_t si = di; di = bp;"}
+]

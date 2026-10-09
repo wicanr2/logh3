@@ -1,0 +1,13 @@
+[
+  {"name": "只搬14個", "find": "for (cx = 15u; cx != 0; cx--)", "replace": "for (cx = 14u; cx != 0; cx--)"},
+  {"name": "搬16個", "find": "for (cx = 15u; cx != 0; cx--)", "replace": "for (cx = 16u; cx != 0; cx--)"},
+  {"name": "目的不隔格", "find": "di = (uint16_t)(di + 2u);", "replace": "di = (uint16_t)(di + 1u);"},
+  {"name": "目的隔兩格", "find": "di = (uint16_t)(di + 2u);", "replace": "di = (uint16_t)(di + 3u);"},
+  {"name": "來源隔格", "find": "si = (uint16_t)(si + 1u);", "replace": "si = (uint16_t)(si + 2u);"},
+  {"name": "漏清829C", "find": "    wr16(m, DS(0x829Cu), 0);\n", "replace": ""},
+  {"name": "漏清829E", "find": "    wr16(m, DS(0x829Eu), 0);\n", "replace": ""},
+  {"name": "漏清82C0", "find": "    wr16(m, DS(0x82C0u), 0);\n", "replace": ""},
+  {"name": "漏清82C2", "find": "    wr16(m, DS(0x82C2u), 0);\n", "replace": ""},
+  {"name": "82C2清成82C4", "find": "wr16(m, DS(0x82C2u), 0);", "replace": "wr16(m, DS(0x82C4u), 0);"},
+  {"name": "來源先全部讀進暫存再寫", "find": "uint16_t cx;\n\n    for (cx = 15u; cx != 0; cx--) {\n        wr8(m, DS(di), rd8(m, DS(si))); /* movsb */", "replace": "uint16_t cx;\n    uint8_t snap[15];\n    int k = 0, j;\n    for (j = 0; j < 15; j++)\n        snap[j] = rd8(m, DS((uint16_t)(si + j)));\n\n    for (cx = 15u; cx != 0; cx--) {\n        wr8(m, DS(di), snap[k++]); /* movsb */"}
+]

@@ -1,0 +1,31 @@
+{
+  "id": "2376_0092",
+  "entry": "2376:0092",
+  "conv": "far",
+  "ret": "none",
+  "size": 32,
+  "code_sha256_16": "38baac492058c6ca",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "畫面格表 ds:D81E 起 800 筆 × 6 bytes 的旗標整理。+3 只寫不讀，不在讀取集，種子把頭尾幾筆的 +3 填非 0。第 799 筆是最後一筆（D81E + 799*6 = EAD8），第 800、801 筆（EADE、EAE4）是表外鄰居，不得被動到。",
+  "args": [],
+  "seeds": [
+    {},
+    {"pokes": [
+      {"addr": "ds:D81E", "hex": "60ffaabbccdd f0ffaabbccdd"},
+      {"addr": "ds:EAD2", "hex": "60ffaabbccdd f0ffaabbccdd 60ffaabbccdd 60ffaabbccdd"}]},
+    {"pokes": [
+      {"addr": "ds:D81E", "hex": "f0ffaabbccdd 60ffaabbccdd"},
+      {"addr": "ds:EAD2", "hex": "f0ffaabbccdd 60ffaabbccdd 60ffaabbccdd 60ffaabbccdd"}]},
+    {"pokes": [
+      {"addr": "ds:D81E", "hex": "000300aa0000 100300aa0000"},
+      {"addr": "ds:EAD8", "hex": "e0fe11223344 e0fe11223344"}]},
+    {"pokes": [
+      {"addr": "ds:D81E", "hex": "9f0301020304 ffffffffffff 000000000000 10ff10ff10ff"},
+      {"addr": "ds:EADE", "hex": "ffffffffffff ffffffffffff"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

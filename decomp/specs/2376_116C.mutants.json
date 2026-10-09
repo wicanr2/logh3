@@ -1,0 +1,9 @@
+[
+  {"name": "起始遮罩改成0xAAAA", "find": "uint16_t mask = 0x5555u;", "replace": "uint16_t mask = 0xAAAAu;"},
+  {"name": "遮罩不交錯", "find": "        mask = (uint16_t)~mask;\n", "replace": ""},
+  {"name": "少做一個word", "find": "for (i = 0; i < 20; i++)", "replace": "for (i = 0; i < 19; i++)"},
+  {"name": "多做一個word", "find": "for (i = 0; i < 20; i++)", "replace": "for (i = 0; i < 21; i++)"},
+  {"name": "起點差一個word", "find": "uint16_t off = 0x829Cu;", "replace": "uint16_t off = 0x829Eu;"},
+  {"name": "and改or", "find": "rd16(m, DS(off)) & mask", "replace": "rd16(m, DS(off)) | mask"},
+  {"name": "遮罩改成取反後相與", "find": "rd16(m, DS(off)) & mask", "replace": "rd16(m, DS(off)) & (uint16_t)~mask"}
+]

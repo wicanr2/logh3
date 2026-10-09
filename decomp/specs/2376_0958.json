@@ -1,0 +1,74 @@
+{
+  "id": "2376_0958",
+  "entry": "2376:0958",
+  "conv": "near",
+  "ret": "none",
+  "size": 37,
+  "code_sha256_16": "f99be48651b7f92b",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "ds_seg": "3D22",
+  "note": "清空 ds:0 起 1920 bytes，再逐列把 SI 指的來源搬進去（每列 w 個 word，目的每列前進 16 bytes，共 R 列）。w = ds:78E、R = ds:790 凍結，只由種子給定，避免隨機突變造出幾億步的案例。種子造：典型 (w=8,R=20)、(4,20)、(0,5)、(1,300) 驗 loop 次數大於 255、目的列蓋到 ds:78E 的別名案例（w 在第 120 列之後變 2）、來源跨越位移 0xFFFF（高位元組取同段位移 0，不是下一段）。",
+  "args": [
+    {"name": "si", "kind": "reg", "reg": "si", "gen": {"choices": [1950, 2110, 2270, 2048, 4096, 65535, 65534, 65520, 0, 32768], "also_random": true}}
+  ],
+  "freeze": [{"addr": "ds:78E", "len": 4}],
+  "seeds": [
+    {},
+    {"args": [2048], "pokes": [
+      {"addr": "ds:0000", "hex": "ff", "repeat": 16},
+      {"addr": "ds:0770", "hex": "ff", "repeat": 30},
+      {"addr": "ds:078E", "hex": "0800 1400"},
+      {"addr": "ds:0800", "hex": "1122334455667788", "repeat": 40}]},
+    {"args": [2048], "pokes": [
+      {"addr": "ds:0000", "hex": "ff", "repeat": 320},
+      {"addr": "ds:0770", "hex": "ff", "repeat": 30},
+      {"addr": "ds:078E", "hex": "0400 1400"},
+      {"addr": "ds:0800", "hex": "a1a2a3a4a5a6a7a8", "repeat": 40}]},
+    {"args": [4096], "pokes": [
+      {"addr": "ds:0000", "hex": "ff", "repeat": 128},
+      {"addr": "ds:0770", "hex": "ff", "repeat": 30},
+      {"addr": "ds:078E", "hex": "0000 0500"}]},
+    {"args": [8192], "pokes": [
+      {"addr": "ds:0000", "hex": "ff", "repeat": 64},
+      {"addr": "ds:0770", "hex": "ff", "repeat": 30},
+      {"addr": "ds:078E", "hex": "0100 2c01"},
+      {"addr": "ds:2000", "hex": "a2", "repeat": 700}]},
+    {"args": [8192], "pokes": [
+      {"addr": "ds:0760", "hex": "ff", "repeat": 112},
+      {"addr": "ds:2000", "hex": "a2", "repeat": 2048},
+      {"addr": "ds:278E", "hex": "0200"},
+      {"addr": "ds:078E", "hex": "0800 7d00"}]},
+    {"args": [65535], "pokes": [
+      {"addr": "ds:0000", "hex": "ff", "repeat": 64},
+      {"addr": "ds:FFFF", "hex": "7e"},
+      {"addr": "lin:4D220", "hex": "5a"},
+      {"addr": "ds:0770", "hex": "ff", "repeat": 30},
+      {"addr": "ds:078E", "hex": "0200 0300"}]},
+    {"args": [65534], "pokes": [
+      {"addr": "ds:0000", "hex": "ff", "repeat": 64},
+      {"addr": "ds:FFFE", "hex": "7e7f"},
+      {"addr": "lin:4D220", "hex": "5a5b"},
+      {"addr": "ds:0770", "hex": "ff", "repeat": 30},
+      {"addr": "ds:078E", "hex": "0300 0200"}]},
+    {"args": [65520], "pokes": [
+      {"addr": "ds:0000", "hex": "ff", "repeat": 64},
+      {"addr": "ds:FFF0", "hex": "1112131415161718191a1b1c1d1e1f20"},
+      {"addr": "ds:0770", "hex": "ff", "repeat": 30},
+      {"addr": "ds:078E", "hex": "0c00 0200"}]},
+    {"args": [2048], "pokes": [
+      {"addr": "ds:0000", "hex": "ff", "repeat": 64},
+      {"addr": "ds:0770", "hex": "ff", "repeat": 30},
+      {"addr": "ds:078E", "hex": "0300 0100"},
+      {"addr": "ds:0800", "hex": "a1a2a3a4a5a6"}]},
+    {"args": [1950], "pokes": [
+      {"addr": "ds:0000", "hex": "ff", "repeat": 64},
+      {"addr": "ds:0770", "hex": "ff", "repeat": 30},
+      {"addr": "ds:079E", "hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff", "repeat": 10},
+      {"addr": "ds:078E", "hex": "0400 2c01"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

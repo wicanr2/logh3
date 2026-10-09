@@ -1,0 +1,14 @@
+[
+  {"name": "零填充少一個word", "find": "i < 0x3C0u", "replace": "i < 0x3BFu"},
+  {"name": "零填充多一個word", "find": "i < 0x3C0u", "replace": "i < 0x3C1u"},
+  {"name": "零填充起點偏移", "find": "uint16_t di = 0;", "replace": "uint16_t di = 2;"},
+  {"name": "列距改8", "find": "di = (uint16_t)(row + 0x10u);", "replace": "di = (uint16_t)(row + 0x08u);"},
+  {"name": "列距改0x20", "find": "di = (uint16_t)(row + 0x10u);", "replace": "di = (uint16_t)(row + 0x20u);"},
+  {"name": "列首不還原di", "find": "di = (uint16_t)(row + 0x10u);", "replace": "di = (uint16_t)(di + 0x10u);"},
+  {"name": "每列搬運數只讀一次", "find": "    cx = rd16(m, LIN(ds, 0x790u));\n    di = 0;\n    do {\n        uint16_t row = di;\n        uint16_t n = rd16(m, LIN(ds, 0x78Eu)); /* mov cx, ds:78Eh */\n", "replace": "    cx = rd16(m, LIN(ds, 0x790u));\n    uint16_t n0 = rd16(m, LIN(ds, 0x78Eu));\n    di = 0;\n    do {\n        uint16_t row = di;\n        uint16_t n = n0;\n"},
+  {"name": "列數用8位元計數", "find": "    uint16_t cx;\n    uint16_t i;", "replace": "    uint8_t cx;\n    uint16_t i;"},
+  {"name": "loop改成先減後判", "find": "} while (--cx != 0); /* loop */", "replace": "} while (cx-- != 0); /* loop */"},
+  {"name": "來源每個word只前進1", "find": "si = (uint16_t)(si + 2u);", "replace": "si = (uint16_t)(si + 1u);"},
+  {"name": "來源word高位元組走線性位址", "find": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8));", "replace": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, off) + 1u) << 8));"},
+  {"name": "每列由後往前搬", "find": "        while (n != 0) { /* rep movsw */\n            w0958_wr16(m, ds, di, w0958_rd16(m, ds, si));\n            si = (uint16_t)(si + 2u);\n            di = (uint16_t)(di + 2u);\n            n--;\n        }\n", "replace": "        {\n            uint16_t k;\n            for (k = n; k > 0; k--)\n                w0958_wr16(m, ds, (uint16_t)(di + 2u * (k - 1u)), w0958_rd16(m, ds, (uint16_t)(si + 2u * (k - 1u))));\n            si = (uint16_t)(si + 2u * n);\n            di = (uint16_t)(di + 2u * n);\n        }\n"}
+]

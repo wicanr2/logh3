@@ -1,0 +1,23 @@
+{
+  "id": "2376_0082",
+  "entry": "2376:0082",
+  "conv": "far",
+  "ret": "none",
+  "size": 16,
+  "code_sha256_16": "a83e66e6260cd791",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "清空畫面格表 ds:D81E 起 4800 bytes。函式不讀記憶體，探針沒有讀取集可突變，案例全靠種子：基底原狀、表內外都填0xFF、表內全0。表內外各留 4 bytes 的 0xFF 抓起點偏移與多寫。",
+  "args": [],
+  "seeds": [
+    {},
+    {"pokes": [{"addr": "ds:D81A", "hex": "ff", "repeat": 4808}]},
+    {"pokes": [{"addr": "ds:D81A", "hex": "ff", "repeat": 4}, {"addr": "ds:D81E", "hex": "00", "repeat": 4800}, {"addr": "ds:EADE", "hex": "ff", "repeat": 4}]},
+    {"pokes": [{"addr": "ds:D81E", "hex": "ff00", "repeat": 2400}, {"addr": "ds:EADE", "hex": "aa55 aa55"}]},
+    {"pokes": [{"addr": "ds:D81E", "hex": "00ff", "repeat": 2400}, {"addr": "ds:D81A", "hex": "55aa 55aa"}]}
+  ],
+  "iters": 12,
+  "max_cases": 3,
+  "seed": 20261009,
+  "min_coverage": 100
+}

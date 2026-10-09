@@ -1,0 +1,21 @@
+[
+  {"name": "上緣比較改無號", "find": "(int16_t)ax < 0xA8", "replace": "ax < 0xA8u"},
+  {"name": "上緣邊界改含等號", "find": "(int16_t)ax < 0xA8", "replace": "(int16_t)ax <= 0xA8"},
+  {"name": "下緣比較改無號", "find": "!((int16_t)ax < 0x187)", "replace": "!(ax < 0x187u)"},
+  {"name": "下緣邊界改含等號", "find": "!((int16_t)ax < 0x187)", "replace": "!((int16_t)ax <= 0x187)"},
+  {"name": "右緣邊界改含等號", "find": "!((int16_t)ax < 0x4E)", "replace": "!((int16_t)ax <= 0x4E)"},
+  {"name": "右緣比較改無號", "find": "!((int16_t)ax < 0x4E)", "replace": "!(ax < 0x4Eu)"},
+  {"name": "左緣邊界改含等號", "find": "if ((int16_t)ax < 1) {", "replace": "if ((int16_t)ax <= 1) {"},
+  {"name": "左緣比較改無號", "find": "if ((int16_t)ax < 1) {", "replace": "if (ax < 1u) {"},
+  {"name": "上緣shr改成sar", "find": "dx = (uint16_t)(dx >> 2); /* shr dx,2 */", "replace": "dx = (uint16_t)((int16_t)dx >> 2);"},
+  {"name": "DI的X右移改邏輯", "find": "ax = (uint16_t)((int16_t)x >> 3); /* sar ax,3 */", "replace": "ax = (uint16_t)(x >> 3);"},
+  {"name": "裁切的X右移改邏輯", "find": "ax = (uint16_t)((int16_t)rd16(m, LIN(ds, 0x786u)) >> 3);", "replace": "ax = (uint16_t)(rd16(m, LIN(ds, 0x786u)) >> 3);"},
+  {"name": "畫面保留列常數", "find": "di = (uint16_t)(di + 0xC80u);", "replace": "di = (uint16_t)(di + 0xC00u);"},
+  {"name": "上緣SI不加", "find": "        si = (uint16_t)(si + ax);\n        dx = ax;", "replace": "        dx = ax;"},
+  {"name": "上緣shl改5", "find": "ax = (uint16_t)(ax << 6);", "replace": "ax = (uint16_t)(ax << 5);"},
+  {"name": "上緣不改H", "find": "        w09AE_sub16(m, ds, 0x78Cu, ax);\n        ax = (uint16_t)(ax << 6);", "replace": "        ax = (uint16_t)(ax << 6);"},
+  {"name": "左緣DI不加", "find": "        si = (uint16_t)(si + ax);\n        di = (uint16_t)(di + ax);\n        w09AE_sub16(m, ds, 0x78Au, ax);", "replace": "        si = (uint16_t)(si + ax);\n        w09AE_sub16(m, ds, 0x78Au, ax);"},
+  {"name": "下緣少加1", "find": "            ax = (uint16_t)(ax + 1u);\n            w09AE_sub16(m, ds, 0x78Cu, ax);", "replace": "            w09AE_sub16(m, ds, 0x78Cu, ax);"},
+  {"name": "右緣常數", "find": "ax = (uint16_t)(ax - 0x4Eu);", "replace": "ax = (uint16_t)(ax - 0x4Du);"},
+  {"name": "Y乘80改成64", "find": "ax = (uint16_t)(ax + dx); /* Y * 80 */", "replace": "ax = (uint16_t)(ax + 0); /* Y * 64 */"}
+]

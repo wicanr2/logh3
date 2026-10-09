@@ -1,0 +1,11 @@
+[
+  {"name": "右移2位", "find": "sw = (uint16_t)(sw >> 1);", "replace": "sw = (uint16_t)(sw >> 2);"},
+  {"name": "改成左移1位", "find": "sw = (uint16_t)(sw >> 1);", "replace": "sw = (uint16_t)(sw << 1);"},
+  {"name": "少第一次byte交換", "find": "uint16_t sw = (uint16_t)((w << 8) | (w >> 8));", "replace": "uint16_t sw = w;"},
+  {"name": "少第二次byte交換", "find": "sw = (uint16_t)((sw << 8) | (sw >> 8));", "replace": ""},
+  {"name": "or改xor", "find": "(uint16_t)(w | sw)", "replace": "(uint16_t)(w ^ sw)"},
+  {"name": "少做一個word", "find": "for (i = 0; i < 20; i++)", "replace": "for (i = 0; i < 19; i++)"},
+  {"name": "多做一個word", "find": "for (i = 0; i < 20; i++)", "replace": "for (i = 0; i < 21; i++)"},
+  {"name": "起點差一個word", "find": "uint16_t off = 0x829Cu;", "replace": "uint16_t off = 0x829Eu;"},
+  {"name": "改成覆蓋不OR", "find": "(uint16_t)(w | sw)", "replace": "sw"}
+]

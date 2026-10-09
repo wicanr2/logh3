@@ -1,0 +1,32 @@
+{
+  "id": "2376_05FC",
+  "entry": "2376:05FC",
+  "conv": "near",
+  "ret": "none",
+  "size": 92,
+  "code_sha256_16": "8ee2091b740faed7",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "ds_seg": "3D22",
+  "note": "依 ds:786 低 3 位元改寫程式碼段 2376 的兩段指令位元組（cs:0691..069A、cs:06A5..06AE），ds:782 是快取。DS 是模組資料段 3D22。寫入落在程式碼段，所以每個種子先把 cs:068F..06B1 填成 0xFF，改寫的每個 word 才看得出寫了沒有；基底狀態的程式碼段是 k=0 的樣子（全是 mov ax,ax），不填的話 k=0 的寫入看不出來。",
+  "args": [],
+  "seeds": [
+    {},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "ffff"}, {"addr": "ds:786", "hex": "0800"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "ffff"}, {"addr": "ds:786", "hex": "0101"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "ffff"}, {"addr": "ds:786", "hex": "0201"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "ffff"}, {"addr": "ds:786", "hex": "0301"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "ffff"}, {"addr": "ds:786", "hex": "0401"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "ffff"}, {"addr": "ds:786", "hex": "0501"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "ffff"}, {"addr": "ds:786", "hex": "0601"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "ffff"}, {"addr": "ds:786", "hex": "0701"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "0000"}, {"addr": "ds:786", "hex": "0d00"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "0300"}, {"addr": "ds:786", "hex": "0300"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "0301"}, {"addr": "ds:786", "hex": "0300"}]},
+    {"pokes": [{"addr": "2376:068F", "hex": "ff", "repeat": 35}, {"addr": "ds:782", "hex": "0500"}, {"addr": "ds:786", "hex": "fdff"}]}
+  ],
+  "iters": 12000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

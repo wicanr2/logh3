@@ -1,0 +1,9 @@
+[
+  {"name": "少清一個word", "find": "for (cx = 0x960u; cx != 0; cx--)", "replace": "for (cx = 0x95Fu; cx != 0; cx--)"},
+  {"name": "多清一個word", "find": "for (cx = 0x960u; cx != 0; cx--)", "replace": "for (cx = 0x961u; cx != 0; cx--)"},
+  {"name": "起點差一個word", "find": "uint16_t di = 0xD81Eu;", "replace": "uint16_t di = 0xD820u;"},
+  {"name": "起點提前一個word", "find": "uint16_t di = 0xD81Eu;", "replace": "uint16_t di = 0xD81Cu;"},
+  {"name": "只清低位元組", "find": "wr16(m, DS(di), 0);", "replace": "wr8(m, DS(di), 0);"},
+  {"name": "清成1", "find": "wr16(m, DS(di), 0);", "replace": "wr16(m, DS(di), 1);"},
+  {"name": "清成0xFFFF", "find": "wr16(m, DS(di), 0);", "replace": "wr16(m, DS(di), 0xFFFFu);"}
+]

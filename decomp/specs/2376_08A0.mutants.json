@@ -1,0 +1,20 @@
+[
+  {"name": "k邊界改成大於5", "find": "if (k > 4u) {", "replace": "if (k > 5u) {"},
+  {"name": "k邊界改成大於等於4", "find": "if (k > 4u) {", "replace": "if (k >= 4u) {"},
+  {"name": "翻轉常數8改7", "find": "k = (uint16_t)(8u - k);", "replace": "k = (uint16_t)(7u - k);"},
+  {"name": "快取寫成翻轉後的k", "find": "k = (uint16_t)(8u - k);", "replace": "k = (uint16_t)(8u - k);\n        wr16(m, LIN(ds, 0x784u), k);"},
+  {"name": "遮罩改成0xF", "find": "& 7u);", "replace": "& 0xFu);"},
+  {"name": "快取只比低位元組", "find": "if (k == rd16(m, LIN(ds, 0x784u)))", "replace": "if (k == (rd16(m, LIN(ds, 0x784u)) & 0xFFu))"},
+  {"name": "快取比較反向", "find": "if (k == rd16(m, LIN(ds, 0x784u)))", "replace": "if (k != rd16(m, LIN(ds, 0x784u)))"},
+  {"name": "不更新快取", "find": "    wr16(m, LIN(ds, 0x784u), k);\n    bx = 0xC089u;", "replace": "    bx = 0xC089u;"},
+  {"name": "漏寫cs091A", "find": "    wr16(m, LIN(cs, 0x091Au), bx);\n", "replace": ""},
+  {"name": "漏寫cs092E", "find": "    wr16(m, LIN(cs, 0x092Eu), bx);\n", "replace": ""},
+  {"name": "第二段起點偏移", "find": "di = 0x0930u;", "replace": "di = 0x0932u;"},
+  {"name": "第一段起點偏移", "find": "si = 0x091Cu;", "replace": "si = 0x091Eu;"},
+  {"name": "第一段次數多一個", "find": "cx = (uint16_t)(4u - k);", "replace": "cx = (uint16_t)(5u - k);"},
+  {"name": "翻轉分支的bx常數", "find": "bx = 0xC486u;", "replace": "bx = 0xC089u;"},
+  {"name": "翻轉分支的dx常數", "find": "dx = 0xC0D1u;", "replace": "dx = 0xC8D1u;"},
+  {"name": "不翻轉的dx常數", "find": "dx = 0xC8D1u;", "replace": "dx = 0xC0D1u;"},
+  {"name": "第二段改寫bx", "find": "            wr16(m, LIN(cs, si), dx);\n            wr16(m, LIN(cs, di), dx);", "replace": "            wr16(m, LIN(cs, si), bx);\n            wr16(m, LIN(cs, di), bx);"},
+  {"name": "第二段第二個目的漏寫", "find": "            wr16(m, LIN(cs, di), dx);\n", "replace": ""}
+]
