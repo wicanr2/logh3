@@ -1,0 +1,17 @@
+{
+  "id": "3CD5_003C",
+  "entry": "3CD5:003C",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 17,
+  "code_sha256_16": "b08acfc1500e7e0c",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "seed", "kind": "word", "gen": {"choices": [0, 1, 2, 255, 256, 4660, 32767, 32768, 65535], "also_random": true}}
+  ],
+  "iters": 3000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

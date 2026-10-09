@@ -1,0 +1,18 @@
+{
+  "id": "3C5B_00B2",
+  "entry": "3C5B:00B2",
+  "conv": "far",
+  "ret": "pack:ax,bx,cx",
+  "size": 31,
+  "code_sha256_16": "8b0bfe63a2ac9b09",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "bx", "kind": "reg", "reg": "bx", "gen": {"choices": [0, 1, 7, 8, 9, 639, 640, 32767, 32768, 65528, 65535], "also_random": true}},
+    {"name": "cx", "kind": "reg", "reg": "cx", "gen": {"choices": [0, 1, 2, 199, 200, 400, 479, 480, 819, 820, 32767, 32768, 65535], "also_random": true}}
+  ],
+  "iters": 4000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

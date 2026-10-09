@@ -1,0 +1,15 @@
+[
+  {"name": "不略過空白0x20", "find": "if (al == 0x20)\n            continue;", "replace": "if (0)\n            continue;"},
+  {"name": "空白上界改0x0C", "find": "if (al <= 0x0D)\n            continue;", "replace": "if (al <= 0x0C)\n            continue;"},
+  {"name": "空白上界改0x0E", "find": "if (al <= 0x0D)\n            continue;", "replace": "if (al <= 0x0E)\n            continue;"},
+  {"name": "空白下界改8", "find": "if (al < 9)\n            break;", "replace": "if (al < 8)\n            break;"},
+  {"name": "負號不設旗標", "find": "if (al == '-')\n            neg = 1;", "replace": "if (0)\n            neg = 1;"},
+  {"name": "不認正號", "find": "if (al == '+' || al == '-') {", "replace": "if (al == '-') {"},
+  {"name": "數字下界改小於等於", "find": "if (al < '0')\n            break;", "replace": "if (al <= '0')\n            break;"},
+  {"name": "數字上界改小於9", "find": "if (d > 9)\n            break;", "replace": "if (d >= 9)\n            break;"},
+  {"name": "數字上界放寬到10", "find": "if (d > 9)\n            break;", "replace": "if (d > 10)\n            break;"},
+  {"name": "乘10改乘8", "find": "cx = (uint16_t)((uint16_t)(cx * 10u) - d);", "replace": "cx = (uint16_t)((uint16_t)(cx * 8u) - d);"},
+  {"name": "改累加正值", "find": "cx = (uint16_t)((uint16_t)(cx * 10u) - d);", "replace": "cx = (uint16_t)((uint16_t)(cx * 10u) + d);"},
+  {"name": "結果正負顛倒", "find": "return neg ? cx : (uint16_t)(0u - cx);", "replace": "return neg ? (uint16_t)(0u - cx) : cx;"},
+  {"name": "位移不回繞", "find": "al = rd8(m, LIN(seg, si));\n        si++;\n    }\n    return", "replace": "al = rd8(m, LIN(seg, si));\n        si++; if (si == 0) si = 1;\n    }\n    return"}
+]

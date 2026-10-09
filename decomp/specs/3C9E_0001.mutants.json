@@ -1,0 +1,8 @@
+[
+  {"name": "長度多一", "find": "return (uint16_t)(k - 1);", "replace": "return k;"},
+  {"name": "長度少一", "find": "return (uint16_t)(k - 1);", "replace": "return (uint16_t)(k - 2);"},
+  {"name": "位移不回繞", "find": "rd8(m, LIN(seg, (uint16_t)(off + k)))", "replace": "rd8(m, LIN(seg, off) + k)"},
+  {"name": "略過第一個位元組", "find": "uint16_t k = 0, cx = 0xFFFF;", "replace": "uint16_t k = 1, cx = 0xFFFF;"},
+  {"name": "掃描上限少一個位元組", "find": "uint16_t k = 0, cx = 0xFFFF;", "replace": "uint16_t k = 0, cx = 0xFFFE;"},
+  {"name": "掃完沒找到時結果少一", "find": "return (uint16_t)(k - 1); /* ~cx - 1，cx ＝ 0xFFFF − k */", "replace": "return (uint16_t)(k - 1 - (cx == 0)); /* ~cx - 1，cx ＝ 0xFFFF − k */"}
+]

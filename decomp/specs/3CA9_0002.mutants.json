@@ -1,0 +1,11 @@
+[
+  {"name": "位移比較改有號", "find": "if (si >= di) {", "replace": "if ((int16_t)si >= (int16_t)di) {"},
+  {"name": "方向改用線性位址比較", "find": "if (si >= di) {", "replace": "if (LIN(sseg, si) >= LIN(dseg, di)) {"},
+  {"name": "永遠由低往高", "find": "if (si >= di) {", "replace": "if (1) {"},
+  {"name": "永遠由高往低", "find": "if (si >= di) {", "replace": "if (0) {"},
+  {"name": "相等時走高往低", "find": "if (si >= di) {", "replace": "if (si > di) {"},
+  {"name": "高往低起點多一格", "find": "si = (uint16_t)(si + count - 1);", "replace": "si = (uint16_t)(si + count);"},
+  {"name": "高往低位移不回繞", "find": "wr8(m, LIN(dseg, (uint16_t)(di - i)), rd8(m, LIN(sseg, (uint16_t)(si - i))));", "replace": "wr8(m, LIN(dseg, di) - i, rd8(m, LIN(sseg, (uint16_t)(si - i))));"},
+  {"name": "回傳目的位移加count", "find": "return ((uint32_t)dseg << 16) | doff; /* AX<<16 | BX */", "replace": "return ((uint32_t)dseg << 16) | (uint16_t)(doff + count);"},
+  {"name": "回傳段改src段", "find": "return ((uint32_t)dseg << 16) | doff; /* AX<<16 | BX */", "replace": "return ((uint32_t)sseg << 16) | doff;"}
+]

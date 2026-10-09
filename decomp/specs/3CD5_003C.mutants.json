@@ -1,0 +1,7 @@
+[
+  {"name": "高字不清零", "find": "wr16(m, DS(0x94DE), 0);", "replace": ""},
+  {"name": "低字不寫", "find": "wr16(m, DS(0x94DC), seed);", "replace": ""},
+  {"name": "低字寫seed加一", "find": "wr16(m, DS(0x94DC), seed);", "replace": "wr16(m, DS(0x94DC), (uint16_t)(seed + 1));"},
+  {"name": "高字寫seed", "find": "wr16(m, DS(0x94DE), 0);", "replace": "wr16(m, DS(0x94DE), seed);"},
+  {"name": "BX殘值錯", "find": "return seed; /* AX<<16 | BX ＝ 0:seed */", "replace": "return 0;"}
+]

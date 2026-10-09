@@ -1,0 +1,13 @@
+[
+  {"name": "n比k小一時仍複製NUL", "find": "c = (n >= k) ? k : n;", "replace": "c = (n >= (uint16_t)(k - 1)) ? k : n;"},
+  {"name": "n與k比較改有號", "find": "c = (n >= k) ? k : n;", "replace": "c = ((int16_t)n >= (int16_t)k) ? k : n;"},
+  {"name": "補零數多一", "find": "pad = (uint16_t)(n - c);", "replace": "pad = (uint16_t)(n - c + 1);"},
+  {"name": "補零數少一", "find": "pad = (uint16_t)(n - c);", "replace": "pad = (uint16_t)(n - c - (n > c));"},
+  {"name": "補的值改1", "find": "(uint16_t)(doff + c + i)), 0);", "replace": "(uint16_t)(doff + c + i)), 1);"},
+  {"name": "補零位移不回繞", "find": "wr8(m, LIN(dseg, (uint16_t)(doff + c + i)), 0);", "replace": "wr8(m, LIN(dseg, doff) + c + i, 0);"},
+  {"name": "補零從dst開頭", "find": "wr8(m, LIN(dseg, (uint16_t)(doff + c + i)), 0);", "replace": "wr8(m, LIN(dseg, (uint16_t)(doff + i)), 0);"},
+  {"name": "改由高往低複製", "find": "for (i = 0; i < c; i++)", "replace": "for (i = c; i-- > 0;)"},
+  {"name": "複製位移不回繞", "find": "wr8(m, LIN(dseg, (uint16_t)(doff + i)), rd8(m, LIN(sseg, (uint16_t)(soff + i))));", "replace": "wr8(m, LIN(dseg, (uint16_t)(doff + i)), rd8(m, LIN(sseg, soff) + i));"},
+  {"name": "回傳補零後位移", "find": "return ((uint32_t)dseg << 16) | doff; /* AX<<16 | BX */", "replace": "return ((uint32_t)dseg << 16) | (uint16_t)(doff + n);"},
+  {"name": "掃描上限少一個位元組", "find": "cx = 0xFFFF, c, pad, i;", "replace": "cx = 0xFFFE, c, pad, i;"}
+]

@@ -1,0 +1,7 @@
+[
+  {"name": "遮罩改0x40", "find": "& 0x80u);", "replace": "& 0x40u);"},
+  {"name": "遮罩改0xC0", "find": "& 0x80u);", "replace": "& 0xC0u);"},
+  {"name": "表偏移少一", "find": "DS((uint16_t)(c + 0x93D7u))", "replace": "DS((uint16_t)(c + 0x93D6u))"},
+  {"name": "偏移不回繞", "find": "DS((uint16_t)(c + 0x93D7u))", "replace": "(DS(c) + 0x93D7u)"},
+  {"name": "回傳整個表項", "find": "return (uint16_t)(rd8(m, DS((uint16_t)(c + 0x93D7u))) & 0x80u);", "replace": "return (uint16_t)(rd8(m, DS((uint16_t)(c + 0x93D7u))));"}
+]

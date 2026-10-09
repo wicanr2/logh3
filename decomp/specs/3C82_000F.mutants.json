@@ -1,0 +1,7 @@
+[
+  {"name": "負數不取反", "find": "(x & 0x8000u) ? (uint16_t)(0u - x) : x", "replace": "x"},
+  {"name": "改成取反少一", "find": "(uint16_t)(0u - x)", "replace": "(uint16_t)(~x)"},
+  {"name": "邊界0x8001以下不取反", "find": "(x & 0x8000u) ?", "replace": "(x > 0x8001u) ?"},
+  {"name": "邊界0x7FFF以上才取反", "find": "(x & 0x8000u) ?", "replace": "(x >= 0x7FFFu) ?"},
+  {"name": "正數也取反", "find": "(x & 0x8000u) ? (uint16_t)(0u - x) : x", "replace": "(uint16_t)(0u - x)"}
+]

@@ -1,0 +1,8 @@
+[
+  {"name": "多寫一個位元組", "find": "for (i = 0; i < count; i++)", "replace": "for (i = 0; i <= count && i != 0xFFFFu; i++)"},
+  {"name": "少寫一個位元組", "find": "for (i = 0; i < count; i++)", "replace": "for (i = 0; i + 1 < count; i++)"},
+  {"name": "填值取高位元組", "find": "(uint8_t)val);", "replace": "(uint8_t)(val >> 8));"},
+  {"name": "位移不回繞", "find": "wr8(m, LIN(seg, (uint16_t)(off + i)), (uint8_t)val);", "replace": "wr8(m, LIN(seg, off) + i, (uint8_t)val);"},
+  {"name": "回傳填完後的位移", "find": "return ((uint32_t)seg << 16) | off; /* AX<<16 | BX */", "replace": "return ((uint32_t)seg << 16) | (uint16_t)(off + count);"},
+  {"name": "回傳高低對調", "find": "return ((uint32_t)seg << 16) | off; /* AX<<16 | BX */", "replace": "return ((uint32_t)off << 16) | seg;"}
+]

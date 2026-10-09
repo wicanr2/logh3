@@ -1,0 +1,27 @@
+{
+  "id": "3C9C_000A",
+  "entry": "3C9C:000A",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 23,
+  "code_sha256_16": "0c62bbc39f218892",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "dst", "kind": "farptr", "gen": {"scratch": 320}},
+    {"name": "val", "kind": "word", "gen": {"choices": [0, 1, 85, 170, 255, 256, 511, 65280, 65535], "also_random": true}},
+    {"name": "count", "kind": "word", "gen": {"min": 0, "max": 300}}
+  ],
+  "seeds": [
+    {"args": [65528, 36096, 165, 16]},
+    {"args": [65535, 36096, 90, 1]},
+    {"args": [65535, 36096, 90, 2]},
+    {"args": [0, 36096, 18, 0]},
+    {"args": [65520, 36096, 127, 64]},
+    {"args": [4, 36096, 4660, 4096]}
+  ],
+  "iters": 4000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

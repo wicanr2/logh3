@@ -1,0 +1,26 @@
+{
+  "id": "3D17_0003",
+  "entry": "3D17:0003",
+  "conv": "far",
+  "ret": "pack:ax,bx,cx,dx",
+  "size": 28,
+  "code_sha256_16": "b454dafcb4953f97",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "ax", "kind": "reg", "reg": "ax", "gen": {"choices": [0, 1, 15, 16, 255, 4095, 4096, 32767, 32768, 61440, 65520, 65535], "also_random": true}},
+    {"name": "bx", "kind": "reg", "reg": "bx", "gen": {"choices": [0, 1, 15, 16, 255, 4095, 4096, 32767, 32768, 61440, 65520, 65535], "also_random": true}},
+    {"name": "cx", "kind": "reg", "reg": "cx", "gen": {"choices": [0, 1, 255, 4660, 65535], "also_random": true}},
+    {"name": "dx", "kind": "reg", "reg": "dx", "gen": {"choices": [0, 1, 255, 4660, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [65535, 65535, 4660, 22136]},
+    {"args": [65520, 16, 255, 1]},
+    {"args": [65535, 16, 0, 0]},
+    {"args": [4096, 61440, 1, 2]}
+  ],
+  "iters": 6000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

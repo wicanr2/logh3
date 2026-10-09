@@ -1,0 +1,33 @@
+{
+  "id": "3CA2_0009",
+  "entry": "3CA2:0009",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 36,
+  "code_sha256_16": "2fc209de719630ad",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "tables": {
+    "t": {"base": "ds:0200", "stride": 1, "count": 150}
+  },
+  "args": [
+    {"name": "dst", "kind": "farptr", "gen": {"scratch": 300}},
+    {"name": "src", "kind": "farptr", "gen": {"table": "t"}}
+  ],
+  "seeds": [
+    {"args": [256,36864,258,36864], "pokes": [{"addr": "9000:0100", "hex": "41424344454600"}]},
+    {"args": [258,36864,256,36864], "pokes": [{"addr": "9000:0100", "hex": "41424344454600"}]},
+    {"args": [512,36864,768,36864], "pokes": [{"addr": "9000:0300", "hex": "00"}]},
+    {"args": [512,36864,768,36864], "pokes": [{"addr": "9000:0300", "hex": "48454c4c4f00"}]},
+    {"args": [65533,36096,1024,36864], "pokes": [{"addr": "9000:0400", "hex": "58595a00"}]},
+    {"args": [1280,36864,65534,36096], "pokes": [{"addr": "8D00:FFFE", "hex": "515200"}, {"addr": "lin:9D000", "hex": "55"}]},
+    {"args": [1280,36864,65535,36096], "pokes": [{"addr": "8D00:FFFF", "hex": "41"}, {"addr": "8D00:0000", "hex": "4200"}]},
+    {"args": [0,28672,0,36096], "pokes": [{"addr": "8D00:0000", "hex": "41", "repeat": 65535}]},
+    {"args": [65535,28672,1,36096], "pokes": [{"addr": "8D00:0000", "hex": "41", "repeat": 65535}]},
+    {"args": [2,28672,0,36096], "pokes": [{"addr": "8D00:0000", "hex": "41", "repeat": 65536}]}
+  ],
+  "iters": 5000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

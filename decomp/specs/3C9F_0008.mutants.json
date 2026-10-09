@@ -1,0 +1,10 @@
+[
+  {"name": "接在NUL之後而不是NUL處", "find": "uint16_t di = (uint16_t)(doff + k1 - 1);", "replace": "uint16_t di = (uint16_t)(doff + k1);"},
+  {"name": "少複製結尾NUL", "find": "for (i = 0; i < k2; i++)", "replace": "for (i = 0; i + 1 < k2; i++)"},
+  {"name": "改由高往低複製", "find": "for (i = 0; i < k2; i++)", "replace": "for (i = k2; i-- > 0;)"},
+  {"name": "dst位移不回繞", "find": "wr8(m, LIN(dseg, (uint16_t)(di + i)), rd8(m, LIN(sseg, (uint16_t)(soff + i))));", "replace": "wr8(m, LIN(dseg, di) + i, rd8(m, LIN(sseg, (uint16_t)(soff + i))));"},
+  {"name": "src位移不回繞", "find": "wr8(m, LIN(dseg, (uint16_t)(di + i)), rd8(m, LIN(sseg, (uint16_t)(soff + i))));", "replace": "wr8(m, LIN(dseg, (uint16_t)(di + i)), rd8(m, LIN(sseg, soff) + i));"},
+  {"name": "回傳NUL處位移", "find": "return ((uint32_t)dseg << 16) | doff; /* AX<<16 | BX */", "replace": "return ((uint32_t)dseg << 16) | di;"},
+  {"name": "回傳段改src段", "find": "return ((uint32_t)dseg << 16) | doff; /* AX<<16 | BX */", "replace": "return ((uint32_t)sseg << 16) | doff;"},
+  {"name": "掃描上限少一個位元組", "find": "uint16_t k = 0, cx = 0xFFFF;", "replace": "uint16_t k = 0, cx = 0xFFFE;"}
+]

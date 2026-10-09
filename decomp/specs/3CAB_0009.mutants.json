@@ -1,0 +1,10 @@
+[
+  {"name": "環境段取錯欄位", "find": "LIN(rd16(m, DS(0x00D8)), 0x2C)", "replace": "LIN(rd16(m, DS(0x00D8)), 0x2E)"},
+  {"name": "等號改冒號", "find": "== '=')", "replace": "== ':')"},
+  {"name": "回傳位移少一", "find": "return ((uint32_t)es << 16) | di;", "replace": "return ((uint32_t)es << 16) | (uint16_t)(di - 1);"},
+  {"name": "不在環境項NUL處停", "find": "if (rd8(m, LIN(es, (uint16_t)(di - 1))) == 0)\n            return 0;", "replace": "if (0)\n            return 0;"},
+  {"name": "name結尾判斷錯", "find": "if (rd8(m, LIN(nseg, (uint16_t)(si - 1))) == 0) {", "replace": "if (rd8(m, LIN(nseg, (uint16_t)(si - 1))) == 1) {"},
+  {"name": "不跳到環境項結尾", "find": "if (e == 0)\n                break;", "replace": "break;"},
+  {"name": "name位移不回繞", "find": "uint8_t a = rd8(m, LIN(nseg, si));", "replace": "uint8_t a = rd8(m, LIN(nseg, noff) + (uint16_t)(si - noff));"},
+  {"name": "找不到時回傳段非零", "find": "            return 0;\n        if (rd8(m, LIN(nseg", "replace": "            return ((uint32_t)es << 16);\n        if (rd8(m, LIN(nseg"}
+]

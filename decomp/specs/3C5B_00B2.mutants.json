@@ -1,0 +1,8 @@
+[
+  {"name": "乘80改乘64", "find": "ax = (uint16_t)(ax + cx16); /* ＝ 原 CX × 80 */", "replace": "ax = (uint16_t)(ax + 0); /* ＝ 原 CX × 80 */"},
+  {"name": "x右移改2", "find": "bx = (uint16_t)((bx >> 3) + ax + 0x0C80u);", "replace": "bx = (uint16_t)((bx >> 2) + ax + 0x0C80u);"},
+  {"name": "基底常數錯", "find": "bx = (uint16_t)((bx >> 3) + ax + 0x0C80u);", "replace": "bx = (uint16_t)((bx >> 3) + ax + 0x0C81u);"},
+  {"name": "x改算術右移", "find": "bx = (uint16_t)((bx >> 3) + ax + 0x0C80u);", "replace": "bx = (uint16_t)(((int16_t)bx >> 3) + ax + 0x0C80u);"},
+  {"name": "CX輸出不乘16", "find": "return ((uint64_t)ax << 32) | ((uint64_t)bx << 16) | cx16; /* AX:BX:CX */", "replace": "return ((uint64_t)ax << 32) | ((uint64_t)bx << 16) | cx; /* AX:BX:CX */"},
+  {"name": "AX輸出錯", "find": "return ((uint64_t)ax << 32) | ((uint64_t)bx << 16) | cx16; /* AX:BX:CX */", "replace": "return ((uint64_t)cx16 << 32) | ((uint64_t)bx << 16) | cx16; /* AX:BX:CX */"}
+]

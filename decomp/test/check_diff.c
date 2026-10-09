@@ -103,7 +103,8 @@ typedef struct {
     uint32_t ret;
 } TraceEnt;
 
-static TraceEnt g_trace[512];
+#define TRACE_MAX 16384
+static TraceEnt g_trace[TRACE_MAX];
 static int g_ntrace, g_tcur;
 static int g_trace_flag; /* 本案軌跡不符的旗標：1 多呼叫或參數／順序不同 */
 static char g_trace_why[160];
@@ -144,10 +145,10 @@ static int parse_trace(char *s)
     g_trace_why[0] = '\0';
     if (!s || strcmp(s, "-") == 0)
         return 0;
-    for (char *ent = strtok_r(s, ";", &save); ent && g_ntrace < 512; ent = strtok_r(NULL, ";", &save)) {
+    for (char *ent = strtok_r(s, ";", &save); ent; ent = strtok_r(NULL, ";", &save)) {
         char *colon = strchr(ent, ':'), *eq = strrchr(ent, '=');
         TraceEnt *e;
-        if (!colon || !eq || eq < colon)
+        if (!colon || !eq || eq < colon || g_ntrace >= TRACE_MAX) /* 超過上限當格式錯誤，不安靜截斷 */
             return -1;
         *colon = '\0';
         *eq = '\0';

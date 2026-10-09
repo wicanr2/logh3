@@ -1,0 +1,23 @@
+[
+  {"name": "gap縮小分母12", "find": "gap = (uint16_t)((uint16_t)(gap * 10u) / 13u);", "replace": "gap = (uint16_t)((uint16_t)(gap * 10u) / 12u);"},
+  {"name": "gap乘法不截斷", "find": "gap = (uint16_t)((uint16_t)(gap * 10u) / 13u);", "replace": "gap = (uint16_t)((gap * 10u) / 13u);"},
+  {"name": "gap為9才改11", "find": "else if (gap == 9 || gap == 10)", "replace": "else if (gap == 9)"},
+  {"name": "gap為10才改11", "find": "else if (gap == 9 || gap == 10)", "replace": "else if (gap == 10)"},
+  {"name": "gap零不改1", "find": "if (gap == 0)\n            gap = 1;\n        else if", "replace": "if (0)\n            gap = 1;\n        else if"},
+  {"name": "n為1仍排序", "find": "if (n <= 1)\n        return;", "replace": "if (n < 1)\n        return;"},
+  {"name": "比較結果改無號", "find": "if ((int16_t)(uint16_t)r > 0) {", "replace": "if ((uint16_t)r > 0) {"},
+  {"name": "比較結果含零", "find": "if ((int16_t)(uint16_t)r > 0) {", "replace": "if ((int16_t)(uint16_t)r >= 0) {"},
+  {"name": "迴圈條件含等於", "find": "} while (a_off < limit);", "replace": "} while (a_off <= limit);"},
+  {"name": "limit多一個size", "find": "limit = (uint16_t)(rest + base_off);", "replace": "limit = (uint16_t)(rest + base_off + size);"},
+  {"name": "step忽略size", "find": "step = (uint16_t)(gap * size);", "replace": "step = gap;"},
+  {"name": "gap大於1才再來一趟改2", "find": "if (gap > 1)\n            continue;", "replace": "if (gap > 2)\n            continue;"},
+  {"name": "有交換不再來一趟", "find": "if (swapped != 0)\n            continue;", "replace": "if (0)\n            continue;"},
+  {"name": "奇偶判斷錯", "find": "int is_word = !(size & 1);", "replace": "int is_word = !(size & 2);"},
+  {"name": "F37C寫size不減半", "find": "wr16(m, DS(0xF37C), is_word ? (uint16_t)(size >> 1) : size);", "replace": "wr16(m, DS(0xF37C), size);"},
+  {"name": "比較參數AB對調", "find": "args[0] = a_off;\n                args[1] = base_seg;\n                args[2] = b_off;", "replace": "args[0] = b_off;\n                args[1] = base_seg;\n                args[2] = a_off;"},
+  {"name": "交換只寫一邊", "find": "f_3C6A_000D_wr16s(m, seg, boff, a);", "replace": ""},
+  {"name": "位移步進不回繞", "find": "a_off = (uint16_t)(a_off + size);", "replace": "a_off = (uint16_t)(a_off + size + (a_off > 0xFFF0u ? 1 : 0));"},
+  {"name": "B起點位移不回繞", "find": "b_off = (uint16_t)(base_off + step);", "replace": "b_off = (uint16_t)(base_off + step + (base_off > 0xFFF0u ? 1 : 0));"},
+  {"name": "word讀B不在段內回繞", "find": "uint16_t b = f_3C6A_000D_rd16s(m, seg, boff);", "replace": "uint16_t b = rd16(m, LIN(seg, boff));"},
+  {"name": "word寫A不在段內回繞", "find": "f_3C6A_000D_wr16s(m, seg, aoff, b);", "replace": "wr16(m, LIN(seg, aoff), b);"}
+]

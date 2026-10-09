@@ -1,0 +1,8 @@
+[
+  {"name": "新段漏掉高位", "find": "uint16_t seg = (uint16_t)((((al << 4) & 0xFFu) << 8) | (lo >> 4));", "replace": "uint16_t seg = (uint16_t)(lo >> 4);"},
+  {"name": "新位移取錯位元", "find": "uint16_t off = (uint16_t)(lo & 0xFu);", "replace": "uint16_t off = (uint16_t)(lo & 0x1Fu);"},
+  {"name": "新段高位取錯移位", "find": "(((al << 4) & 0xFFu) << 8)", "replace": "(((al << 3) & 0xFFu) << 8)"},
+  {"name": "DX被改", "find": "((uint64_t)cx << 16) | dx;", "replace": "((uint64_t)cx << 16) | (uint16_t)(dx + 1);"},
+  {"name": "CX不保留", "find": "((uint64_t)cx << 16) | dx;", "replace": "dx;"},
+  {"name": "新段低位取錯移位", "find": "| (lo >> 4)); /* shl ah,4", "replace": "| (lo >> 3)); /* shl ah,4"}
+]

@@ -1,0 +1,9 @@
+[
+  {"name": "少複製結尾NUL", "find": "for (i = 0; i < k; i++)\n        wr8", "replace": "for (i = 0; i + 1 < k; i++)\n        wr8"},
+  {"name": "改由高往低複製", "find": "for (i = 0; i < k; i++)\n        wr8", "replace": "for (i = k; i-- > 0;)\n        wr8"},
+  {"name": "dst位移不回繞", "find": "wr8(m, LIN(dseg, (uint16_t)(doff + i)), rd8(m, LIN(sseg, (uint16_t)(soff + i))));", "replace": "wr8(m, LIN(dseg, doff) + i, rd8(m, LIN(sseg, (uint16_t)(soff + i))));"},
+  {"name": "src位移不回繞", "find": "wr8(m, LIN(dseg, (uint16_t)(doff + i)), rd8(m, LIN(sseg, (uint16_t)(soff + i))));", "replace": "wr8(m, LIN(dseg, (uint16_t)(doff + i)), rd8(m, LIN(sseg, soff) + i));"},
+  {"name": "回傳複製後位移", "find": "return ((uint32_t)dseg << 16) | doff; /* AX<<16 | BX */", "replace": "return ((uint32_t)dseg << 16) | (uint16_t)(doff + k);"},
+  {"name": "回傳段改src段", "find": "return ((uint32_t)dseg << 16) | doff; /* AX<<16 | BX */", "replace": "return ((uint32_t)sseg << 16) | doff;"},
+  {"name": "掃描上限少一個位元組", "find": "cx = 0xFFFF, i;", "replace": "cx = 0xFFFE, i;"}
+]

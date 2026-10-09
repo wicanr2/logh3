@@ -1,0 +1,26 @@
+{
+  "id": "3CA8_0002",
+  "entry": "3CA8:0002",
+  "conv": "far",
+  "ret": "ax",
+  "size": 16,
+  "code_sha256_16": "5ce879b0dc8c0d7a",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "c", "kind": "word", "gen": {"min": 0, "max": 255}}
+  ],
+  "seeds": [
+    {"args": [65535]},
+    {"args": [65534]},
+    {"args": [256]},
+    {"args": [28713]},
+    {"args": [28712]},
+    {"args": [32768]},
+    {"args": [65280]}
+  ],
+  "iters": 6000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

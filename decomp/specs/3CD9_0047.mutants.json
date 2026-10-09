@@ -1,0 +1,22 @@
+[
+  {"name": "初始化旗標值錯", "find": "if (rd16(m, DS(0x94E6)) == 0xFFFF) {", "replace": "if (rd16(m, DS(0x94E6)) == 0xFFFE) {"},
+  {"name": "初始化rover段存成位移", "find": "f_3CD9_0047_wr16m(m, DS(0x94E8), ax);", "replace": "f_3CD9_0047_wr16m(m, DS(0x94E8), bx);"},
+  {"name": "大小進位用加2", "find": "bp = (uint16_t)((uint16_t)(size + 3) & 0xFFFEu);", "replace": "bp = (uint16_t)((uint16_t)(size + 2) & 0xFFFEu);"},
+  {"name": "太小的要求改5也失敗", "find": "if (bp < 4)\n            return 0;", "replace": "if (bp < 5)\n            return 0;"},
+  {"name": "太小的要求4也失敗", "find": "if (bp < 4)\n            return 0;", "replace": "if (bp <= 4)\n            return 0;"},
+  {"name": "最小要求改8", "find": "if (bp < 6)\n            bp = 6;", "replace": "if (bp < 8)\n            bp = 8;"},
+  {"name": "找到條件改小於", "find": "if (bp <= f_3CD9_0047_rd16s(m, ax, bx + 4))", "replace": "if (bp < f_3CD9_0047_rd16s(m, ax, bx + 4))"},
+  {"name": "繞回判斷只比段", "find": "if (cx == dx && si == di)\n                break;", "replace": "if (cx == dx)\n                break;"},
+  {"name": "系統要求最小值改0x100", "find": "if (bp < 0x200)\n            bp = 0x200;", "replace": "if (bp < 0x100)\n            bp = 0x100;"},
+  {"name": "系統失敗回傳非空指標", "find": "if (bx == 0xFFFF)\n            return 0;", "replace": "if (bx == 0xFFFF)\n            return 1;"},
+  {"name": "free指標位移加4", "find": "bx = (uint16_t)(bx + 2);\n        if (f_3CD9_01FC", "replace": "bx = (uint16_t)(bx + 4);\n        if (f_3CD9_01FC"},
+  {"name": "free失敗不判斷", "find": "if (f_3CD9_01FC(m, bx, ax) == 0xFFFF)\n            return 0;", "replace": "f_3CD9_01FC(m, bx, ax);"},
+  {"name": "不更新rover", "find": "f_3CD9_0047_wr16m(m, DS(0x94E6), si);", "replace": ""},
+  {"name": "切開條件含等於改嚴格", "find": "(uint16_t)t > f_3CD9_0047_rd16s(m, ax, bx + 4)", "replace": "(uint16_t)t >= f_3CD9_0047_rd16s(m, ax, bx + 4)"},
+  {"name": "溢位不整塊取走", "find": "if (t > 0xFFFFu || (uint16_t)t", "replace": "if ((uint16_t)t"},
+  {"name": "整塊取走next位移來源錯", "find": "di = f_3CD9_0047_rd16s(m, ax, bx);", "replace": "di = f_3CD9_0047_rd16s(m, ax, bx + 2);"},
+  {"name": "餘塊大小少一", "find": "rest = (uint16_t)(f_3CD9_0047_rd16s(m, ax, bx + 4) - bp);", "replace": "rest = (uint16_t)(f_3CD9_0047_rd16s(m, ax, bx + 4) - bp - 1);"},
+  {"name": "餘塊起點多一", "find": "r = f_3D17_0003(ax, (uint16_t)(bx + bp), cx, dx);", "replace": "r = f_3D17_0003(ax, (uint16_t)(bx + bp + 1), cx, dx);"},
+  {"name": "表頭寫入大小多2", "find": "f_3CD9_0047_wr16s(m, ax, bx, bp);", "replace": "f_3CD9_0047_wr16s(m, ax, bx, (uint16_t)(bp + 2));"},
+  {"name": "回傳位移不加2", "find": "return ((uint32_t)ax << 16) | bx;", "replace": "return ((uint32_t)ax << 16) | (uint16_t)(bx - 2);"}
+]

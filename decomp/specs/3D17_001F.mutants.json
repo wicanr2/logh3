@@ -1,0 +1,7 @@
+[
+  {"name": "進位漏掉", "find": "ax = (uint16_t)((lo + (sum >> 16)) & 0xFFu);", "replace": "ax = (uint16_t)lo;"},
+  {"name": "段高位元漏掉", "find": "ax = (uint16_t)((lo + (sum >> 16)) & 0xFFu);", "replace": "ax = (uint16_t)(sum >> 16);"},
+  {"name": "段位移加法少遮低4位", "find": "uint32_t sum = (uint32_t)bx + (uint16_t)(rot ^ lo);", "replace": "uint32_t sum = (uint32_t)bx + (uint16_t)(rot);"},
+  {"name": "BX不加位移", "find": "uint32_t sum = (uint32_t)bx + (uint16_t)(rot ^ lo);", "replace": "uint32_t sum = (uint32_t)(uint16_t)(rot ^ lo);"},
+  {"name": "CX不保留", "find": "((uint64_t)bx << 16) | cx;", "replace": "((uint64_t)bx << 16);"}
+]
