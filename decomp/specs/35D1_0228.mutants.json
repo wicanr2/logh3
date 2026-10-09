@@ -1,0 +1,13 @@
+[
+  {"name": "key 用整個 word 比較", "find": "== (uint8_t)key)", "replace": "== key)"},
+  {"name": "符合時 si 也加一（不再看同一格）", "find": "            (void)f_35D1_0102(m, off, seg);\n        else\n            si = (uint16_t)(si + 1u);", "replace": "        {\n            (void)f_35D1_0102(m, off, seg);\n            si = (uint16_t)(si + 1u);\n        }\n        else\n            si = (uint16_t)(si + 1u);"},
+  {"name": "比對 obj[+3]", "find": "LIN(seg, (uint16_t)(off + 2u))", "replace": "LIN(seg, (uint16_t)(off + 3u))"},
+  {"name": "比對條件反向", "find": "== (uint8_t)key)", "replace": "!= (uint8_t)key)"},
+  {"name": "少看最後一筆（si + 1 < 筆數）", "find": "while (si < rd16(m, DS(0xEADEu))) {", "replace": "while ((uint16_t)(si + 1u) < rd16(m, DS(0xEADEu))) {"},
+  {"name": "0102 的位移與段對調（si 前進以免停不下來）", "find": "            (void)f_35D1_0102(m, off, seg);\n        else", "replace": "        {\n            (void)f_35D1_0102(m, seg, off);\n            si = (uint16_t)(si + 1u);\n        }\n        else"},
+  {"name": "符合時不移除（si 前進）", "find": "            (void)f_35D1_0102(m, off, seg);\n", "replace": "            si = (uint16_t)(si + 1u);\n"},
+  {"name": "項目 stride 2", "find": "uint16_t b = (uint16_t)(si << 2);", "replace": "uint16_t b = (uint16_t)(si << 1);"},
+  {"name": "段與位移讀反", "find": "uint16_t seg = rd16(m, DS((uint16_t)(b + 0xEAE2u)));\n        uint16_t off = rd16(m, DS((uint16_t)(b + 0xEAE0u)));", "replace": "uint16_t seg = rd16(m, DS((uint16_t)(b + 0xEAE0u)));\n        uint16_t off = rd16(m, DS((uint16_t)(b + 0xEAE2u)));"},
+  {"name": "符合時呼叫 0102 兩次", "find": "            (void)f_35D1_0102(m, off, seg);\n        else", "replace": "        {\n            (void)f_35D1_0102(m, off, seg);\n            (void)f_35D1_0102(m, off, seg);\n        }\n        else"},
+  {"name": "永遠只看第 0 筆項目", "find": "uint16_t b = (uint16_t)(si << 2);", "replace": "uint16_t b = 0;"}
+]

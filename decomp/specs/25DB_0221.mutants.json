@@ -1,0 +1,20 @@
+[
+  {"name": "艦隊迴圈 i <= 筆數", "find": "    while (i < w0221_rd16s(m, GIN3_DS, 0x9894u)) {", "replace": "    while (i <= w0221_rd16s(m, GIN3_DS, 0x9894u)) {"},
+  {"name": "不處理艦隊圖示", "find": "        w0221_release(m, GIN3_DS, (uint16_t)(f + 0x6Cu));\n", "replace": ""},
+  {"name": "圖示欄位位移 0x68", "find": "(uint16_t)(f + 0x6Cu)", "replace": "(uint16_t)(f + 0x68u)"},
+  {"name": "不處理旗艦艦艇", "find": "        q = w0221_ship_slot(m, w0221_rd16s(m, GIN3_DS, (uint16_t)(f + 0x38u)), &seg);\n        w0221_release(m, seg, q);\n", "replace": ""},
+  {"name": "旗艦序號讀 f+0x10（第一格分隊）", "find": "(uint16_t)(f + 0x38u)", "replace": "(uint16_t)(f + 0x10u)"},
+  {"name": "旗艦序號讀 f+0x36", "find": "w0221_rd16s(m, GIN3_DS, (uint16_t)(f + 0x38u))", "replace": "w0221_rd16s(m, GIN3_DS, (uint16_t)(f + 0x36u))"},
+  {"name": "不處理各分隊的艦艇", "find": "            w0221_release(m, seg, q);\n            j = (uint8_t)(j + 1u);", "replace": "            j = (uint8_t)(j + 1u);"},
+  {"name": "分隊槽 stride 2", "find": "slot = (uint16_t)(slot + 4u);", "replace": "slot = (uint16_t)(slot + 2u);"},
+  {"name": "分隊迴圈 j <= 組數", "find": "while (j < rd8(m, DS((uint16_t)(f + 0x0Fu)))) {", "replace": "while (j <= rd8(m, DS((uint16_t)(f + 0x0Fu)))) {"},
+  {"name": "艦艇記錄長度 0x4C", "find": "(uint16_t)(s * 0x4Eu)", "replace": "(uint16_t)(s * 0x4Cu)"},
+  {"name": "艦隊序號忽略（永遠用艦隊 0）", "find": "uint16_t f = (uint16_t)(0xC074u + (uint16_t)(idx * 0x7Au));", "replace": "uint16_t f = (uint16_t)(0xC074u + (uint16_t)(0u * idx));"},
+  {"name": "艦隊序號清單每次前進 2", "find": "lp = (uint16_t)(lp + 1u);", "replace": "lp = (uint16_t)(lp + 2u);"},
+  {"name": "艦隊序號清單起點 0x9899", "find": "uint16_t lp = 0x9898u;", "replace": "uint16_t lp = 0x9899u;"},
+  {"name": "0102 的位移與段對調", "find": "f_35D1_0102(m, bx, ax)", "replace": "f_35D1_0102(m, ax, bx)"},
+  {"name": "空指標判斷只看位移", "find": "if ((uint16_t)(ax | bx) != 0) {", "replace": "if (bx != 0) {"},
+  {"name": "空指標判斷只看段", "find": "if ((uint16_t)(ax | bx) != 0) {", "replace": "if (ax != 0) {"},
+  {"name": "不清段 word", "find": "        w0221_wr16s(m, seg, (uint16_t)(q + 2u), 0);\n", "replace": ""},
+  {"name": "先清指標再呼叫 0102", "find": "        (void)f_35D1_0102(m, bx, ax);\n        w0221_wr16s(m, seg, q, 0);\n        w0221_wr16s(m, seg, (uint16_t)(q + 2u), 0);\n", "replace": "        w0221_wr16s(m, seg, q, 0);\n        w0221_wr16s(m, seg, (uint16_t)(q + 2u), 0);\n        (void)f_35D1_0102(m, bx, ax);\n"}
+]

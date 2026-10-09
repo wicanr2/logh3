@@ -1,0 +1,38 @@
+{
+  "id": "3870_0643",
+  "entry": "3870:0643",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 224,
+  "code_sha256_16": "43035126ff4f37c7",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "橢圓離心率 √(1 − B² ÷ A²)（16.16，回 AX:BX）：A、B 是 16 位元有號整數（cwd 符號延伸成 32 位元）。B < 0 或 B >= 0x100 走大值路徑：Q ＝ ((B² << 12) ÷ A²)、T ＝ (0x1000 − Q) << 4；0 <= B < 0x100 走小值路徑：Q ＝ ((B² 的低字 << 16) ÷ A²)、T ＝ 0x10000 − Q；乘除走 3CC9:0009／0020，最後 3310:014B(T)。沒有記憶體輸入（只有 39B5:005C 寫 ds:8EDC..8EED），輸入全在兩個參數。seeds：B 0、1、0xFF、0x100（路徑分界）、0x101、負值（0xFFFF、0x8000）、A 為 0（除以零，商 0xFFFFFFFF）、A 為負、A 等於 B、A 小於 B（T 為負）、A 大 B 小、B 超過 0x8000 的邊界。",
+  "args": [
+    {"name": "a", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 15, 16, 100, 255, 256, 257, 1000, 4095, 4096, 32767, 32768, 65535, 65280], "also_random": true}},
+    {"name": "b", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 15, 16, 100, 254, 255, 256, 257, 1000, 4095, 4096, 32767, 32768, 65535, 65280], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "B ＝ 0：小值路徑，T ＝ 1.0，開方 1.0", "args": [100, 0], "pokes": []},
+    {"note": "B ＝ 1", "args": [100, 1], "pokes": []},
+    {"note": "B ＝ 0xFF：小值路徑的上界", "args": [300, 255], "pokes": []},
+    {"note": "B ＝ 0x100：大值路徑的下界", "args": [300, 256], "pokes": []},
+    {"note": "B ＝ 0x101", "args": [300, 257], "pokes": []},
+    {"note": "A ＝ B ＝ 0x100：T ＝ 0", "args": [256, 256], "pokes": []},
+    {"note": "A ＝ 0xFF、B ＝ 0xFF：小值路徑 T ＝ 0", "args": [255, 255], "pokes": []},
+    {"note": "A < B（A ＝ 100、B ＝ 200）：T 為負", "args": [100, 200], "pokes": []},
+    {"note": "A ＝ 0：A² ＝ 0，商 0xFFFFFFFF（小值路徑）", "args": [0, 5], "pokes": []},
+    {"note": "A ＝ 0：大值路徑", "args": [0, 300], "pokes": []},
+    {"note": "B ＝ 0xFFFF（−1）：高字非 0，走大值路徑", "args": [100, 65535], "pokes": []},
+    {"note": "B ＝ 0x8000（−32768）", "args": [32767, 32768], "pokes": []},
+    {"note": "A ＝ 0xFFFF（−1）、B ＝ 0", "args": [65535, 0], "pokes": []},
+    {"note": "A ＝ 0x8000、B ＝ 0x7FFF：A² ＝ 2^30", "args": [32768, 32767], "pokes": []},
+    {"note": "A ＝ 0x7FFF、B ＝ 0x7FFF：B² << 12 溢位 32 位元", "args": [32767, 32767], "pokes": []},
+    {"note": "A ＝ 1000、B ＝ 600（典型橢圓）", "args": [1000, 600], "pokes": []},
+    {"note": "A ＝ 1000、B ＝ 10", "args": [1000, 10], "pokes": []}
+  ],
+  "iters": 12000,
+  "max_cases": 600,
+  "seed": 20261205,
+  "min_coverage": 100
+}

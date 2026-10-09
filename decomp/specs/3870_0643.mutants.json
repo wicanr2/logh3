@@ -1,0 +1,16 @@
+[
+  {"name": "路徑分界改 > 0x100", "find": "(uint16_t)b32 >= 0x100u", "replace": "(uint16_t)b32 > 0x100u"},
+  {"name": "路徑分界改 0x200", "find": "(uint16_t)b32 >= 0x100u", "replace": "(uint16_t)b32 >= 0x200u"},
+  {"name": "路徑分界用有號比較（負的 B 走小值路徑）", "find": "if ((uint16_t)(b32 >> 16) != 0 || (uint16_t)b32 >= 0x100u) {", "replace": "if ((int16_t)b_word >= 0x100) {"},
+  {"name": "大值路徑左移 11", "find": "uint32_t bb = w0643_mul(b32, b32) << 12;", "replace": "uint32_t bb = w0643_mul(b32, b32) << 11;"},
+  {"name": "大值路徑結尾左移 3", "find": "t = (0x1000u - q) << 4;", "replace": "t = (0x1000u - q) << 3;"},
+  {"name": "大值路徑 1.0 改 0x1001", "find": "t = (0x1000u - q) << 4;", "replace": "t = (0x1001u - q) << 4;"},
+  {"name": "小值路徑 1.0 改 0x10001", "find": "t = 0x10000u - q;", "replace": "t = 0x10001u - q;"},
+  {"name": "小值路徑左移 15", "find": "bb = (uint32_t)(uint16_t)bb << 16;", "replace": "bb = (uint32_t)(uint16_t)bb << 15;"},
+  {"name": "A 以無號零延伸", "find": "uint32_t a32 = (uint32_t)(int32_t)(int16_t)a_word; /* cwd */", "replace": "uint32_t a32 = (uint32_t)a_word;"},
+  {"name": "B 以無號零延伸", "find": "uint32_t b32 = (uint32_t)(int32_t)(int16_t)b_word; /* cwd */", "replace": "uint32_t b32 = (uint32_t)b_word;"},
+  {"name": "分母用 A 乘 B", "find": "        uint32_t aa = w0643_mul(a32, a32);\n        uint32_t q = w0643_div(bb, aa);", "replace": "        uint32_t aa = w0643_mul(a32, b32);\n        uint32_t q = w0643_div(bb, aa);"},
+  {"name": "小值路徑分子分母對調", "find": "        q = w0643_div(bb, aa);\n        t = 0x10000u - q;", "replace": "        q = w0643_div(aa, bb);\n        t = 0x10000u - q;"},
+  {"name": "不開方", "find": "return f_3310_014B(m, (uint16_t)t, (uint16_t)(t >> 16));", "replace": "return t;"},
+  {"name": "開方的高低字對調", "find": "return f_3310_014B(m, (uint16_t)t, (uint16_t)(t >> 16));", "replace": "return f_3310_014B(m, (uint16_t)(t >> 16), (uint16_t)t);"}
+]

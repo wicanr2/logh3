@@ -1,0 +1,17 @@
+[
+  {"name": "沿朝向的後方端點不取負", "find": "w042F_put(m, 0, (uint16_t)(0u - w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Au))));", "replace": "w042F_put(m, 0, w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Au)));"},
+  {"name": "前方端點讀 +0A", "find": "w042F_put(m, 2, w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 8u)));", "replace": "w042F_put(m, 2, w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Au)));"},
+  {"name": "朝向讀 +5", "find": "uint16_t ang = rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 4u)));", "replace": "uint16_t ang = rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 5u)));"},
+  {"name": "朝向加 0x40", "find": ", ang);", "replace": ", (uint16_t)(ang + 0x40u));"},
+  {"name": "旋轉的 x、y 指標對調", "find": "(uint16_t)(F042F_BP + 2u * a), F042F_SS, (uint16_t)(F042F_BP + 2u * b), F042F_SS", "replace": "(uint16_t)(F042F_BP + 2u * b), F042F_SS, (uint16_t)(F042F_BP + 2u * a), F042F_SS"},
+  {"name": "垂直線的負端點不取負", "find": "w042F_put(m, 1, (uint16_t)(0u - w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Cu))));", "replace": "w042F_put(m, 1, w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Cu)));"},
+  {"name": "垂直線的正端點讀 +0A", "find": "w042F_put(m, 3, w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Cu)));", "replace": "w042F_put(m, 3, w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Au)));"},
+  {"name": "中心 xc、yc 對調", "find": "(uint16_t)(xc + w042F_get(m, 0)), (uint16_t)(yc + w042F_get(m, 1))", "replace": "(uint16_t)(yc + w042F_get(m, 0)), (uint16_t)(xc + w042F_get(m, 1))"},
+  {"name": "第二個點的 x 用 L3", "find": "(uint16_t)(xc + w042F_get(m, 2))", "replace": "(uint16_t)(xc + w042F_get(m, 3))"},
+  {"name": "色 word 讀 +6", "find": "uint16_t color = w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 5u));", "replace": "uint16_t color = w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 6u));"},
+  {"name": "最後 word 讀 +0C", "find": "uint16_t last = w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Eu));", "replace": "uint16_t last = w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Cu));"},
+  {"name": "第一條線第二個端點不旋轉", "find": "    w042F_rot(m, obj_off, obj_seg, 2, 3);\n    w042F_draw(m, xc, yc, obj_off, obj_seg);\n\n    w042F_put(m, 0, 0);", "replace": "    w042F_draw(m, xc, yc, obj_off, obj_seg);\n\n    w042F_put(m, 0, 0);"},
+  {"name": "第二條線不旋轉", "find": "    w042F_rot(m, obj_off, obj_seg, 0, 1);\n    w042F_rot(m, obj_off, obj_seg, 2, 3);\n    w042F_draw(m, xc, yc, obj_off, obj_seg);\n}", "replace": "    w042F_draw(m, xc, yc, obj_off, obj_seg);\n}"},
+  {"name": "不畫第二條線", "find": "    w042F_rot(m, obj_off, obj_seg, 2, 3);\n    w042F_draw(m, xc, yc, obj_off, obj_seg);\n}", "replace": "    w042F_rot(m, obj_off, obj_seg, 2, 3);\n}"},
+  {"name": "第一條線的端點改成垂直線的端點（兩次都畫垂直線）", "find": "    w042F_put(m, 0, (uint16_t)(0u - w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Au))));\n    w042F_put(m, 1, 0);\n    w042F_put(m, 2, w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 8u)));\n    w042F_put(m, 3, 0);\n", "replace": "    w042F_put(m, 0, 0);\n    w042F_put(m, 1, (uint16_t)(0u - w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Cu))));\n    w042F_put(m, 2, 0);\n    w042F_put(m, 3, w042F_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Cu)));\n"}
+]

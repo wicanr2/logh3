@@ -1,0 +1,15 @@
+[
+  {"name": "長短邊比較改無號", "find": "if ((int32_t)dx >= (int32_t)dy) {", "replace": "if (dx >= dy) {"},
+  {"name": "長短邊比較反向", "find": "if ((int32_t)dx >= (int32_t)dy) {", "replace": "if ((int32_t)dx < (int32_t)dy) {"},
+  {"name": "adx 為 0 時回 dx", "find": "    if (adx == 0)\n        return dy;", "replace": "    if (adx == 0)\n        return dx;"},
+  {"name": "ady 為 0 時回 dy", "find": "    if (ady == 0)\n        return dx;", "replace": "    if (ady == 0)\n        return dy;"},
+  {"name": "不加 1.0", "find": "t = t + 0x10000u;", "replace": "t = t + 0u;"},
+  {"name": "加 2.0", "find": "t = t + 0x10000u;", "replace": "t = t + 0x20000u;"},
+  {"name": "最後乘短邊", "find": "return f_39B5_000C(m, (uint16_t)big, (uint16_t)(big >> 16), (uint16_t)s, (uint16_t)(s >> 16));", "replace": "return f_39B5_000C(m, (uint16_t)num, (uint16_t)(num >> 16), (uint16_t)s, (uint16_t)(s >> 16));"},
+  {"name": "比值分子分母對調", "find": "r = f_39B5_005C(m, (uint16_t)num, (uint16_t)(num >> 16), (uint16_t)den, (uint16_t)(den >> 16));", "replace": "r = f_39B5_005C(m, (uint16_t)den, (uint16_t)(den >> 16), (uint16_t)num, (uint16_t)(num >> 16));"},
+  {"name": "平方改成 r 乘 1.0", "find": "t = f_39B5_000C(m, (uint16_t)r, (uint16_t)(r >> 16), (uint16_t)r, (uint16_t)(r >> 16));", "replace": "t = f_39B5_000C(m, (uint16_t)r, (uint16_t)(r >> 16), 0, 1);"},
+  {"name": "不開方", "find": "s = f_3310_014B(m, (uint16_t)t, (uint16_t)(t >> 16));", "replace": "s = t;"},
+  {"name": "x 差不取絕對值（永遠 x1 − x2）", "find": "uint16_t adx = (x1 < x2) ? (uint16_t)(x2 - x1) : (uint16_t)(x1 - x2);", "replace": "uint16_t adx = (uint16_t)(x1 - x2);"},
+  {"name": "y 差不取絕對值（永遠 y2 − y1）", "find": "uint16_t ady = (y1 < y2) ? (uint16_t)(y2 - y1) : (uint16_t)(y1 - y2);", "replace": "uint16_t ady = (uint16_t)(y2 - y1);"},
+  {"name": "x 與 y 的參數順序互換", "find": "uint16_t adx = (x1 < x2) ? (uint16_t)(x2 - x1) : (uint16_t)(x1 - x2);", "replace": "uint16_t adx = (y1 < x2) ? (uint16_t)(x2 - y1) : (uint16_t)(y1 - x2);"}
+]

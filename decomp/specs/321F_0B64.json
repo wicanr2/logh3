@@ -1,0 +1,46 @@
+{
+  "id": "321F_0B64",
+  "entry": "321F:0B64",
+  "conv": "far",
+  "ret": "none",
+  "size": 211,
+  "code_sha256_16": "a2daa0ebd47e423d",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "兩個圖示之間畫連線：記錄 A、B（各自的 +0x42 word 都非 0 才畫）的 X ＝ rec[+0x3E] ＋ 0x12、Y ＝ rec[+0x40] − 2 − 4 × ((rec[+0x08] ＋ 0x1F3) ÷ 500 − 1)（全 16 位元），畫三條線 3870:07C9(X1, Y1+d, X2, Y2+d, 色, 0xFFFF)：d ＝ −1 色 0x0106（低位元組 6）、0 色 4、+1 色 0xFF06。07C9 的畫線 39D7:0647 用 stubs 取代，只比對呼叫順序與參數（端點經 3870:08FF 裁切）。A、B 取暫存區 9D00:0000 或 9D00:0100（可能同一筆），欄位由 seeds 給定，基底為 0 時 +0x42 ＝ 0 直接返回。基底裁切矩形 (0,0)-(639,399)，seeds 另設 (16,20)-(463,379)。seeds：+0x42 其中一個為 0、word 的高位元組非 0、+0x08 為 0 與 0xFE0C／0xFE0D（÷ 500 與 16 位元回繞）、A 在 B 右邊（07C9 對調端點）、完全在矩形外、部分被裁、Y 回繞、A 與 B 同一筆。",
+  "stubs": [
+    {"entry": "39D7:0647", "conv": "far", "nargs": 6, "ret": "none"}
+  ],
+  "args": [
+    {"name": "a_off", "kind": "word", "gen": {"choices": [0, 256]}},
+    {"name": "a_seg", "kind": "word", "gen": {"choices": [40192]}},
+    {"name": "b_off", "kind": "word", "gen": {"choices": [0, 256]}},
+    {"name": "b_seg", "kind": "word", "gen": {"choices": [40192]}}
+  ],
+  "seeds": [
+    {"note": "典型：A (118,194)、B (318,148)，都在矩形內，三條線都畫", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "A[+0x42] ＝ 0：返回", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0000"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "B[+0x42] ＝ 0：返回", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0000"}]},
+    {"note": "A[+0x42] ＝ 0x0100（低位元組 0、高位元組非 0）：word 比較，仍畫", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0001"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "B[+0x42] ＝ 0x0100：仍畫", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0001"}]},
+    {"note": "A[+0x08] ＝ 0：÷ 500 商 0，減 1 回繞成 0xFFFF，乘 4 得 0xFFFC", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "0000"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "A[+0x08] ＝ 0xFE0C（和 0xFFFF，商 131）", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "0CFE"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "A[+0x08] ＝ 0xFE0D（和回繞成 0，商 0）", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "0DFE"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "B[+0x08] ＝ 0xFE0D（和回繞成 0）", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "0DFE"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "B[+0x08] ＝ 499（和 998，商 1）", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "F301"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "B[+0x08] ＝ 500（和 999，商 1）", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "F401"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "B[+0x08] ＝ 501（和 1000，商 2）", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "F501"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "A 在 B 右邊：A (418,194)、B (118,148)，07C9 對調端點", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "9001"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "6400"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "B 超出矩形右邊（X2 ＝ 718）：被裁", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "BC02"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "兩個 X 都為負（0xFFE0 ＋ 0x12 ＝ 0xFFF2）：完全在矩形外，不畫", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "E0FF"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "E0FF"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "Y 回繞：A[+0x40] ＝ 1，Y1 ＝ 0xFFFF − ...", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "0100"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}]},
+    {"note": "A 與 B 是同一筆記錄", "args": [0, 40192, 0, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}]},
+    {"note": "矩形 (16,20)-(463,379)：A 在左外、B 在內：裁 A", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "E803"}, {"addr": "lin:9D03E", "hex": "0000"}, {"addr": "lin:9D040", "hex": "C800"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "9600"}, {"addr": "lin:9D142", "hex": "0100"}, {"addr": "ds:8D6A", "hex": "10001400cf017b01"}]},
+    {"note": "矩形 (16,20)-(463,379)：Y 超出下緣：三條線有的被裁掉", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "FA00"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "7F01"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "7C01"}, {"addr": "lin:9D142", "hex": "0100"}, {"addr": "ds:8D6A", "hex": "10001400cf017b01"}]},
+    {"note": "矩形 (16,20)-(463,379)：Y 在上緣附近（y−1 剛好出界）", "args": [0, 40192, 256, 40192], "pokes": [{"addr": "lin:9D008", "hex": "FA00"}, {"addr": "lin:9D03E", "hex": "6400"}, {"addr": "lin:9D040", "hex": "1700"}, {"addr": "lin:9D042", "hex": "0100"}, {"addr": "lin:9D108", "hex": "FA00"}, {"addr": "lin:9D13E", "hex": "2C01"}, {"addr": "lin:9D140", "hex": "1700"}, {"addr": "lin:9D142", "hex": "0100"}, {"addr": "ds:8D6A", "hex": "10001400cf017b01"}]}
+  ],
+  "iters": 12000,
+  "max_cases": 600,
+  "seed": 20261206,
+  "min_coverage": 100
+}

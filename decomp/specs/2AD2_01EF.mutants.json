@@ -1,0 +1,16 @@
+[
+  {"name": "空指標判斷只看位移 word", "find": "if ((uint16_t)(seg | off) != 0) {", "replace": "if (off != 0) {"},
+  {"name": "空指標判斷只看段 word", "find": "if ((uint16_t)(seg | off) != 0) {", "replace": "if (seg != 0) {"},
+  {"name": "不呼叫 35D1:0102", "find": "        (void)f_35D1_0102(m, off, seg);\n", "replace": ""},
+  {"name": "0102 的位移與段對調", "find": "f_35D1_0102(m, off, seg)", "replace": "f_35D1_0102(m, seg, off)"},
+  {"name": "呼叫 0102 兩次", "find": "        (void)f_35D1_0102(m, off, seg);\n", "replace": "        (void)f_35D1_0102(m, off, seg);\n        (void)f_35D1_0102(m, off, seg);\n"},
+  {"name": "不清位移 word", "find": "        w01EF_wr16s(m, p_seg, q, 0);\n", "replace": ""},
+  {"name": "不清段 word", "find": "        w01EF_wr16s(m, p_seg, (uint16_t)(q + 2u), 0);\n", "replace": ""},
+  {"name": "先清指標再呼叫 0102", "find": "        (void)f_35D1_0102(m, off, seg);\n        w01EF_wr16s(m, p_seg, q, 0);\n        w01EF_wr16s(m, p_seg, (uint16_t)(q + 2u), 0);\n", "replace": "        w01EF_wr16s(m, p_seg, q, 0);\n        w01EF_wr16s(m, p_seg, (uint16_t)(q + 2u), 0);\n        (void)f_35D1_0102(m, off, seg);\n"},
+  {"name": "p[+1] 寫 0", "find": "(uint16_t)(p_off + 1u)), 0xFFu);", "replace": "(uint16_t)(p_off + 1u)), 0u);"},
+  {"name": "寫 p[+0] 而不是 p[+1]", "find": "LIN(p_seg, (uint16_t)(p_off + 1u))", "replace": "LIN(p_seg, p_off)"},
+  {"name": "p[+1] 只在指標非 0 時寫", "find": "    }\n    w01EF_put8(m, LIN(p_seg, (uint16_t)(p_off + 1u)), 0xFFu);\n}", "replace": "        w01EF_put8(m, LIN(p_seg, (uint16_t)(p_off + 1u)), 0xFFu);\n    }\n}"},
+  {"name": "指標欄位位移 0x3C", "find": "(uint16_t)(p_off + 0x38u)", "replace": "(uint16_t)(p_off + 0x3Cu)"},
+  {"name": "段 word 讀 q+4", "find": "w01EF_rd16s(m, p_seg, (uint16_t)(q + 2u))", "replace": "w01EF_rd16s(m, p_seg, (uint16_t)(q + 4u))"},
+  {"name": "拿掉 ROM 模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]
