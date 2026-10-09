@@ -1,0 +1,20 @@
+[
+  {"name": "維持費相加不進位", "find": "            upkeep += f_297B_116C(m, fleet, GIN3_DS);", "replace": "            { uint32_t r = f_297B_116C(m, fleet, GIN3_DS); upkeep = (upkeep & 0xFFFF0000u) + ((uint32_t)(uint16_t)(upkeep + (uint16_t)r)) + (r & 0xFFFF0000u); }"},
+  {"name": "移動經費相加不進位", "find": "            move += f_297B_12FB(m, fleet, GIN3_DS);", "replace": "            { uint32_t r = f_297B_12FB(m, fleet, GIN3_DS); move = (move & 0xFFFF0000u) + ((uint32_t)(uint16_t)(move + (uint16_t)r)) + (r & 0xFFFF0000u); }"},
+  {"name": "先 12FB 後 116C（讀到舊的 +0x0C）", "find": "            upkeep += f_297B_116C(m, fleet, GIN3_DS);\n            move += f_297B_12FB(m, fleet, GIN3_DS);", "replace": "            move += f_297B_12FB(m, fleet, GIN3_DS);\n            upkeep += f_297B_116C(m, fleet, GIN3_DS);"},
+  {"name": "只呼叫 116C", "find": "            move += f_297B_12FB(m, fleet, GIN3_DS);", "replace": "            (void)0;"},
+  {"name": "只呼叫 12FB", "find": "            upkeep += f_297B_116C(m, fleet, GIN3_DS);", "replace": "            (void)0;"},
+  {"name": "陣營判斷改看整個 word", "find": "rd8(m, DS((uint16_t)(fleet + 1u))) == faction", "replace": "rd8(m, DS((uint16_t)(fleet + 1u))) == faction_word"},
+  {"name": "陣營判斷改看 +2", "find": "rd8(m, DS((uint16_t)(fleet + 1u))) == faction", "replace": "rd8(m, DS((uint16_t)(fleet + 2u))) == faction"},
+  {"name": "陣營判斷改 !=", "find": "rd8(m, DS((uint16_t)(fleet + 1u))) == faction", "replace": "rd8(m, DS((uint16_t)(fleet + 1u))) != faction"},
+  {"name": "沒有現役判斷", "find": "rd8(m, DS((uint16_t)(fleet + 4u))) != 0xFF && ", "replace": ""},
+  {"name": "現役判斷看 +3", "find": "rd8(m, DS((uint16_t)(fleet + 4u))) != 0xFF", "replace": "rd8(m, DS((uint16_t)(fleet + 3u))) != 0xFF"},
+  {"name": "艦隊步幅 0x79", "find": "(uint16_t)(i * 0x7Au)", "replace": "(uint16_t)(i * 0x79u)"},
+  {"name": "只掃 31 筆", "find": "i < 0x20u", "replace": "i < 0x1Fu"},
+  {"name": "表高低字對調", "find": "    wr16(m, DS((uint16_t)(slot + 0x8F84u)), (uint16_t)(move >> 16));\n    wr16(m, DS((uint16_t)(slot + 0x8F82u)), (uint16_t)move);", "replace": "    wr16(m, DS((uint16_t)(slot + 0x8F84u)), (uint16_t)move);\n    wr16(m, DS((uint16_t)(slot + 0x8F82u)), (uint16_t)(move >> 16));"},
+  {"name": "表步幅 2", "find": "slot = (uint16_t)(faction << 2);", "replace": "slot = (uint16_t)(faction << 1);"},
+  {"name": "表索引用整個 word", "find": "slot = (uint16_t)(faction << 2);", "replace": "slot = (uint16_t)(faction_word << 2);"},
+  {"name": "表寫的是維持費", "find": "(uint16_t)(move >> 16));", "replace": "(uint16_t)(upkeep >> 16));"},
+  {"name": "回傳移動經費", "find": "    return upkeep;", "replace": "    return move;"},
+  {"name": "不寫表", "find": "    wr16(m, DS((uint16_t)(slot + 0x8F84u)), (uint16_t)(move >> 16));\n", "replace": ""}
+]

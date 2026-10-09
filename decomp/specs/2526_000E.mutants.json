@@ -1,0 +1,15 @@
+[
+  {"name": "艦隊筆距改 0x79", "find": "(uint16_t)(id * 0x7Au)", "replace": "(uint16_t)(id * 0x79u)"},
+  {"name": "艦隊筆距截成 byte", "find": "(uint16_t)(id * 0x7Au)", "replace": "(uint8_t)(id * 0x7Au)"},
+  {"name": "艦隊表基底改 0xC070", "find": "0xC074u + (uint16_t)", "replace": "0xC070u + (uint16_t)"},
+  {"name": "清單基底改 0x9899", "find": "uint16_t p = 0x9898u;", "replace": "uint16_t p = 0x9899u;"},
+  {"name": "筆數只比低位元組", "find": "while (i < rd16(m, DS(0x9894u))) {", "replace": "while ((uint8_t)i < rd8(m, DS(0x9894u))) {"},
+  {"name": "迴圈多跑一圈", "find": "while (i < rd16(m, DS(0x9894u))) {", "replace": "while (i <= rd16(m, DS(0x9894u))) {"},
+  {"name": "傳給 005A 的位移段對調", "find": "f_2526_005A(m, fleet, GIN3_DS);", "replace": "f_2526_005A(m, GIN3_DS, fleet);"},
+  {"name": "傳給 005A 的段改模組資料段", "find": "f_2526_005A(m, fleet, GIN3_DS);", "replace": "f_2526_005A(m, fleet, 0x3D22u);"},
+  {"name": "傳給 005A 的艦隊多 122", "find": "f_2526_005A(m, fleet, GIN3_DS);", "replace": "f_2526_005A(m, (uint16_t)(fleet + 0x7Au), GIN3_DS);"},
+  {"name": "清單指標每圈進 2", "find": "p = (uint16_t)(p + 1u);", "replace": "p = (uint16_t)(p + 2u);"},
+  {"name": "清單項目當 word 讀", "find": "uint16_t id = rd8(m, DS(p));", "replace": "uint16_t id = rd16(m, DS(p));"},
+  {"name": "不呼叫 005A", "find": "        f_2526_005A(m, fleet, GIN3_DS);\n", "replace": "        (void)fleet;\n"},
+  {"name": "只處理第一筆", "find": "        i = (uint16_t)(i + 1u);", "replace": "        i = (uint16_t)(i + 2u);"}
+]

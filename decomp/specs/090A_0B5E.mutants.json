@@ -1,0 +1,12 @@
+[
+  {"name": "帝國段 ds:8F1D 改寫 1", "find": "wr8(m, DS(0x8F1D), 0);", "replace": "wr8(m, DS(0x8F1D), 1);"},
+  {"name": "同盟段 ds:8F1D 改寫 0", "find": "wr8(m, DS(0x8F1D), 1);", "replace": "wr8(m, DS(0x8F1D), 0);"},
+  {"name": "結尾不寫 ds:8F1D ＝ 2", "find": "    wr8(m, DS(0x8F1D), 2);\n", "replace": ""},
+  {"name": "帝國段 level 改讀 ds:8FD5", "find": "f_090A_0B93(m, rd8(m, DS(0x8FD4)));", "replace": "f_090A_0B93(m, rd8(m, DS(0x8FD5)));"},
+  {"name": "同盟段 level 改讀 ds:8FD4", "find": "f_090A_0B93(m, rd8(m, DS(0x8FD5)));", "replace": "f_090A_0B93(m, rd8(m, DS(0x8FD4)));"},
+  {"name": "帝國段 level 改讀 word", "find": "f_090A_0B93(m, rd8(m, DS(0x8FD4)));", "replace": "f_090A_0B93(m, rd16(m, DS(0x8FD4)));"},
+  {"name": "無主段 level 改 3", "find": "f_090A_0DC0(m, 2);", "replace": "f_090A_0DC0(m, 3);"},
+  {"name": "少呼叫無主段", "find": "    f_090A_0DC0(m, 2);\n", "replace": ""},
+  {"name": "少呼叫帝國段", "find": "    f_090A_0B93(m, rd8(m, DS(0x8FD4)));\n", "replace": ""},
+  {"name": "少呼叫同盟段", "find": "    f_090A_0B93(m, rd8(m, DS(0x8FD5)));\n", "replace": ""}
+]

@@ -1,0 +1,32 @@
+{
+  "id": "2376_1144",
+  "entry": "2376:1144",
+  "conv": "near",
+  "ret": "none",
+  "size": 17,
+  "code_sha256_16": "49b3811ec2ee75bb",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "字形緩衝區（ds:829C 起 40 bytes）的樣式變換分派。CX 高位元組的 bit2 做加粗（2376:1155）、bit1 做網點（2376:116C），兩者同時成立時先加粗後網點。DS 是 DGROUP。種子把緩衝區前後各填 0x0101 圖樣防止多做少做，並造出『先 OR 後 AND』與『先 AND 後 OR』結果不同的圖樣。",
+  "args": [
+    {"name": "cx", "kind": "reg", "reg": "cx", "gen": {"choices": [0, 256, 512, 768, 1024, 1280, 1536, 1792, 2048, 4096, 8192, 65280, 65535, 1, 255], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0], "pokes": [{"addr": "ds:829C", "hex": "8001 4002 2004 1008 0810 0420 0240 0180 ffff 0000 aaaa 5555 f0f0 0f0f 3333 cccc 8000 0001 7ffe 1234"}]},
+    {"args": [1024], "pokes": [{"addr": "ds:829C", "hex": "8001 4002 2004 1008 0810 0420 0240 0180 ffff 0000 aaaa 5555 f0f0 0f0f 3333 cccc 8000 0001 7ffe 1234"}]},
+    {"args": [512], "pokes": [{"addr": "ds:829C", "hex": "8001 4002 2004 1008 0810 0420 0240 0180 ffff 0000 aaaa 5555 f0f0 0f0f 3333 cccc 8000 0001 7ffe 1234"}]},
+    {"args": [1536], "pokes": [{"addr": "ds:829C", "hex": "8001 4002 2004 1008 0810 0420 0240 0180 ffff 0000 aaaa 5555 f0f0 0f0f 3333 cccc 8000 0001 7ffe 1234"}]},
+    {"args": [1536], "pokes": [{"addr": "ds:829C", "hex": "0300 0300 0300 0300 0300 0300 0300 0300 0300 0300 0300 0300 0300 0300 0300 0300 0300 0300 0300 0300"}]},
+    {"args": [1536], "pokes": [{"addr": "ds:829C", "hex": "0100 0100 0100 0100 0100 0100 0100 0100 0100 0100 0100 0100 0100 0100 0100 0100 0100 0100 0100 0100"}]},
+    {"args": [1536], "pokes": [{"addr": "ds:8298", "hex": "0101 0101"}, {"addr": "ds:82C4", "hex": "0101 0101"}]},
+    {"args": [1], "pokes": [{"addr": "ds:829C", "hex": "ffff", "repeat": 20}]},
+    {"args": [255], "pokes": [{"addr": "ds:829C", "hex": "ffff", "repeat": 20}]},
+    {"args": [65280], "pokes": [{"addr": "ds:8298", "hex": "0101 0101"}, {"addr": "ds:829C", "hex": "8001", "repeat": 20}, {"addr": "ds:82C4", "hex": "0101 0101"}]},
+    {"args": [3072], "pokes": [{"addr": "ds:829C", "hex": "ffff", "repeat": 20}]},
+    {"args": [2048], "pokes": [{"addr": "ds:829C", "hex": "ffff", "repeat": 20}]}
+  ],
+  "iters": 8000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

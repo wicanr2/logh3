@@ -1,0 +1,31 @@
+{
+  "id": "2B99_0068",
+  "entry": "2B99:0068",
+  "conv": "far",
+  "ret": "none",
+  "size": 21,
+  "code_sha256_16": "5c3f42a514cf30ef",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "呼叫 2B99:007D(0) 再 007D(1)。表指標 ds:D062/D064（陣營 0）與 ds:D066/D068（陣營 1）用 freeze 排除在隨機突變外（突變成亂指標會讓表蓋到程式碼或堆疊），由 seeds 給定：基底（D000:0000 與 D000:0800）、兩表相同（後寫的陣營 1 蓋掉陣營 0，+0x400 罰則的讀改寫看到前一次的值）、兩表錯開 64 bytes 重疊一列、都指到暫存區、陣營 1 的表在 ROM。邊權表 ds:533A、星域擁有者 ds:A79C + 0x7E×k + 0x12 仍由隨機突變變化。",
+  "freeze": [{"addr": "ds:D062", "len": 8}],
+  "args": [],
+  "seeds": [
+    {"note": "基底原狀", "args": [], "pokes": []},
+    {"note": "兩個表指標相同 D000:0000：陣營 1 蓋掉陣營 0，+0x400 的讀改寫看到陣營 0 的值", "args": [], "pokes": [{"addr": "ds:D066", "hex": "0000"}]},
+    {"note": "兩個表錯開 64 bytes（一列）：D000:0000 與 D000:0040，重疊 1984 bytes", "args": [], "pokes": [{"addr": "ds:D066", "hex": "4000"}]},
+    {"note": "兩個表錯開 2 bytes（一個 word）", "args": [], "pokes": [{"addr": "ds:D066", "hex": "0200"}]},
+    {"note": "兩個表都指到暫存區 9D00:0000 與 9D00:0800", "args": [], "pokes": [{"addr": "ds:D062", "hex": "0000009D0008009D"}]},
+    {"note": "陣營 1 的表在 ROM F000:0000：寫入被丟棄", "args": [], "pokes": [{"addr": "ds:D066", "hex": "000000F0"}]},
+    {"note": "陣營 0 的表在 ROM，陣營 1 的表正常", "args": [], "pokes": [{"addr": "ds:D062", "hex": "000000F0"}]},
+    {"note": "陣營 1 的表放在邊權表 ds:533A 上（自己改自己的輸入）：重複呼叫會讀到上一次寫的值", "args": [], "pokes": [{"addr": "ds:D066", "hex": "3A53B354"}]},
+    {"note": "陣營 1 的表放在星域記錄 ds:A79C 上（寫表會改掉之後才讀的擁有者；重複呼叫讀到的擁有者不同）", "args": [], "pokes": [{"addr": "ds:D066", "hex": "9CA7B354"}]},
+    {"note": "陣營 1 的表放在 ds:A79D（奇數位移）", "args": [], "pokes": [{"addr": "ds:D066", "hex": "9DA7B354"}, {"addr": "ds:A7AE", "hex": "01"}, {"addr": "ds:A82C", "hex": "01"}]},
+    {"note": "陣營 0 的表放在星域記錄 ds:A79C 上", "args": [], "pokes": [{"addr": "ds:D062", "hex": "9CA7B354"}]},
+    {"note": "陣營 0 的表指標位移 0xFF80（寫 2048 bytes 跨段尾回繞到段首）段 8000", "args": [], "pokes": [{"addr": "ds:D062", "hex": "80FF0080"}]}
+  ],
+  "iters": 1500,
+  "max_cases": 200,
+  "seed": 20261012,
+  "min_coverage": 100
+}

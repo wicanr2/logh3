@@ -1,0 +1,50 @@
+{
+  "id": "307D_097E",
+  "entry": "307D:097E",
+  "conv": "far",
+  "ret": "none",
+  "size": 213,
+  "code_sha256_16": "3e7545a19494fb0b",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "rand()&1 為 1：*P1 ← F[+0x5C]、*P2 ← F[+0x5E]、*P3 ← F[+0x4A]；為 0：多抽一次 rand（死碼的 3CC9:0070 除法輸入）、再抽一次得 r2，angle = F[+0x4A] + r2%32 + 0xF0（低位元組），*P3 ← F[+0x4A]，呼叫 2BE1:026F(F[+0x5C], F[+0x5E], angle, F[+0x54], P1, P2)。F 取艦隊表（ds:C074；+0x4A = ds:C0BE、+0x52 = C0C6、+0x54 = C0C8、+0x5C = C0D0、+0x5E = C0D2），P1、P2、P3 取暫存區（9D00:0000、9D01:0000、9D02:0000，args 的 40192、40193、40194）。亂數種子 ds:94DC 由 workplace/decomp/w3-3-notes/tools/lcg.c 算：S=0x00001000 → r1 奇數（sel 1）；S=0x00011001 → r1=0x751a 偶（sel 0）、r3=0x4002（余 2）；S=0x00031003 → 偶、r3=0x3a67（余 7）；S=0x00061006 → 偶、r3=0x71ff（余 31）；S=0x00121012 → 偶、r3=0x5060（余 0）。別名 seeds：P3 疊在 F[+0x54]、F[+0x5C]、F[+0x5E]（sel 0 時 *P3 先寫，之後才讀的欄位被改）；P1 疊在 F[+0x5E]、F[+0x4A]，P2 疊在 F[+0x4A]（sel 1 時前一步寫入改掉後一步要讀的欄位）；F 疊在亂數種子上（F+0x54 = ds:94DC，第二次讀 +0x54 在 r2 之後）；F 在段尾（F+0x5C 的 word 跨 FFFF）。2BE1:026F 的 C 版 word 寫入用線性位址，所以 P1、P2 不放在位移 0xFFFF。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "f", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "p1", "kind": "farptr", "gen": {"scratch": 16}},
+    {"name": "p2", "kind": "farptr", "gen": {"scratch": 16}},
+    {"name": "p3", "kind": "farptr", "gen": {"scratch": 16}}
+  ],
+  "seeds": [
+    {"note": "sel 1：基底艦隊 f0 填 x=0x0123、y=0x0456、方位 0x77；輸出前態 0xAA", "args": [49268, 21683, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "ds:C0D0", "hex": "23015604"}, {"addr": "ds:C0BE", "hex": "77"}, {"addr": "lin:9D000", "hex": "AAAA"}, {"addr": "lin:9D010", "hex": "AAAA"}, {"addr": "lin:9D020", "hex": "AA"}]},
+    {"note": "sel 0：S=0x00011001，餘 2，方位 0x20 → angle 0x12，距離 0x0100，x=0x0200、y=0x0100", "args": [49268, 21683, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "01100100"}, {"addr": "ds:C0D0", "hex": "00020001"}, {"addr": "ds:C0BE", "hex": "20"}, {"addr": "ds:C0C8", "hex": "0001"}, {"addr": "lin:9D020", "hex": "AA"}]},
+    {"note": "sel 0：S=0x00031003，餘 7，方位 0x00，距離 0x0040", "args": [49268, 21683, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "03100300"}, {"addr": "ds:C0D0", "hex": "00030003"}, {"addr": "ds:C0BE", "hex": "00"}, {"addr": "ds:C0C8", "hex": "4000"}]},
+    {"note": "sel 0：S=0x00061006，餘 31，方位 0x20 → angle 0x4F（byte 加法回繞前 0x14F）", "args": [49268, 21683, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "06100600"}, {"addr": "ds:C0D0", "hex": "00040004"}, {"addr": "ds:C0BE", "hex": "20"}, {"addr": "ds:C0C8", "hex": "0002"}]},
+    {"note": "sel 0：S=0x00121012，餘 0，方位 0xFF → angle 0xEF", "args": [49268, 21683, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "12101200"}, {"addr": "ds:C0D0", "hex": "00050005"}, {"addr": "ds:C0BE", "hex": "FF"}, {"addr": "ds:C0C8", "hex": "0001"}]},
+    {"note": "sel 0：距離 0xFFFF（無號大數），x、y 為負", "args": [49268, 21683, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "01100100"}, {"addr": "ds:C0D0", "hex": "00FF00FF"}, {"addr": "ds:C0BE", "hex": "40"}, {"addr": "ds:C0C8", "hex": "FFFF"}]},
+    {"note": "sel 0 距離 0：分量為 0，x、y 夾限", "args": [49268, 21683, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "01100100"}, {"addr": "ds:C0D0", "hex": "FF7FFF7F"}, {"addr": "ds:C0BE", "hex": "40"}, {"addr": "ds:C0C8", "hex": "0000"}]},
+    {"note": "別名 sel 0：P3 = F+0x54（ds:C0C8），*P3 ← 方位 0x20 寫進距離的低位元組之後才重讀距離", "args": [49268, 21683, 0, 40192, 0, 40193, 49352, 21683], "pokes": [{"addr": "ds:94DC", "hex": "01100100"}, {"addr": "ds:C0D0", "hex": "00020001"}, {"addr": "ds:C0BE", "hex": "20"}, {"addr": "ds:C0C8", "hex": "3412"}]},
+    {"note": "別名 sel 0：P3 = F+0x5C（ds:C0D0），x 的低位元組被方位取代", "args": [49268, 21683, 0, 40192, 0, 40193, 49360, 21683], "pokes": [{"addr": "ds:94DC", "hex": "01100100"}, {"addr": "ds:C0D0", "hex": "00020001"}, {"addr": "ds:C0BE", "hex": "20"}, {"addr": "ds:C0C8", "hex": "0001"}]},
+    {"note": "別名 sel 0：P3 = F+0x5E（ds:C0D2），y 的低位元組被方位取代", "args": [49268, 21683, 0, 40192, 0, 40193, 49362, 21683], "pokes": [{"addr": "ds:94DC", "hex": "01100100"}, {"addr": "ds:C0D0", "hex": "00020001"}, {"addr": "ds:C0BE", "hex": "20"}, {"addr": "ds:C0C8", "hex": "0001"}]},
+    {"note": "別名 sel 1：P1 = F+0x5E（ds:C0D2）：*P1 ← x 蓋掉 y，之後讀的 y 就是 x", "args": [49268, 21683, 49362, 21683, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "ds:C0D0", "hex": "23015604"}, {"addr": "ds:C0BE", "hex": "77"}, {"addr": "lin:9D010", "hex": "AAAA"}]},
+    {"note": "別名 sel 1：P2 = F+0x4A（ds:C0BE）：*P2 ← y 蓋掉方位，之後 *P3 ← F[+0x4A] 是 y 的低位元組", "args": [49268, 21683, 0, 40192, 49342, 21683, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "ds:C0D0", "hex": "23015604"}, {"addr": "ds:C0BE", "hex": "77"}, {"addr": "lin:9D020", "hex": "AA"}]},
+    {"note": "別名 sel 1：P1 = F+0x4A（ds:C0BE）：*P1 ← x，*P3 ← F[+0x4A] 是 x 的低位元組", "args": [49268, 21683, 49342, 21683, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "ds:C0D0", "hex": "23015604"}, {"addr": "ds:C0BE", "hex": "77"}, {"addr": "lin:9D020", "hex": "AA"}]},
+    {"note": "別名 sel 1：P3 = F+0x5C（ds:C0D0）：最後一步才寫，不影響讀", "args": [49268, 21683, 0, 40192, 0, 40193, 49360, 21683], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "ds:C0D0", "hex": "23015604"}, {"addr": "ds:C0BE", "hex": "77"}]},
+    {"note": "F 疊在亂數種子上：F = ds:9488，F+0x54 = ds:94DC（種子低位元組），sel 0；x 在 ds:94E4、y 在 ds:94E6、方位在 ds:94D2；第二次讀 +0x54 在 r2 之後", "args": [38024, 21683, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "DB020000"}, {"addr": "ds:94E4", "hex": "00020001"}, {"addr": "ds:94D2", "hex": "20"}]},
+    {"note": "F 疊在亂數種子上，另一組種子 S=0x00014680（第二次、第三次 rand 之後種子低字 0x00FE、0x005F，距離都小，不被 026F 夾限）", "args": [38024, 21683, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "80460100"}, {"addr": "ds:94E4", "hex": "00020001"}, {"addr": "ds:94D2", "hex": "50"}]},
+    {"note": "F 疊在亂數種子上（sel 1 分支）：F = ds:9488，*P1 ← word ds:94E4", "args": [38024, 21683, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "ds:94E4", "hex": "23015604"}, {"addr": "ds:94D2", "hex": "77"}]},
+    {"note": "F 在 8000:FFA3：F+0x5C 的 word 跨 FFFF（x = 0x1234 低位元組在 FFFF、高位元組在 0000），F+0x5E = 0x0001（y = 0x5678）；sel 1", "args": [65443, 32768, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "lin:8FFFF", "hex": "34"}, {"addr": "lin:80000", "hex": "12"}, {"addr": "lin:80001", "hex": "7856"}, {"addr": "lin:8FFED", "hex": "77"}]},
+    {"note": "F 在 8000:FFA3；sel 0", "args": [65443, 32768, 0, 40192, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "01100100"}, {"addr": "lin:8FFFF", "hex": "34"}, {"addr": "lin:80000", "hex": "02"}, {"addr": "lin:80001", "hex": "0001"}, {"addr": "lin:8FFED", "hex": "20"}, {"addr": "lin:8FFF7", "hex": "0001"}]},
+    {"note": "P3 在 ROM F000:0000：*P3 的寫入被丟棄（sel 1）", "args": [49268, 21683, 0, 40192, 0, 40193, 0, 61440], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "ds:C0D0", "hex": "23015604"}, {"addr": "ds:C0BE", "hex": "77"}]},
+    {"note": "P3 在 ROM（sel 0）", "args": [49268, 21683, 0, 40192, 0, 40193, 0, 61440], "pokes": [{"addr": "ds:94DC", "hex": "01100100"}, {"addr": "ds:C0D0", "hex": "00020001"}, {"addr": "ds:C0BE", "hex": "20"}, {"addr": "ds:C0C8", "hex": "0001"}]},
+    {"note": "P1 在 ROM（sel 1）：word 寫入被丟棄", "args": [49268, 21683, 0, 61440, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "ds:C0D0", "hex": "23015604"}, {"addr": "ds:C0BE", "hex": "77"}]},
+    {"note": "P2 在 ROM（sel 1）", "args": [49268, 21683, 0, 40192, 0, 61440, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "ds:C0D0", "hex": "23015604"}, {"addr": "ds:C0BE", "hex": "77"}]},
+    {"note": "P1 在 ROM（sel 0）：026F 的 C 版有 ROM 模型", "args": [49268, 21683, 0, 61440, 0, 40193, 0, 40194], "pokes": [{"addr": "ds:94DC", "hex": "01100100"}, {"addr": "ds:C0D0", "hex": "00020001"}, {"addr": "ds:C0BE", "hex": "20"}, {"addr": "ds:C0C8", "hex": "0001"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 900,
+  "seed": 20261012,
+  "min_coverage": 98
+}

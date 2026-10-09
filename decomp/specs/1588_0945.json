@@ -1,0 +1,35 @@
+{
+  "id": "1588_0945",
+  "entry": "1588:0945",
+  "conv": "far",
+  "ret": "ax",
+  "size": 208,
+  "code_sha256_16": "3f983363fa417a06",
+  "base_state": "/src/workplace/fcmd/fcmd-standby.state",
+  "base_state_sha256": "2f07118746ba249290a5f5e3de71020090a10c58b8072f84b110e1c1c95f2394",
+  "note": "戰場鏡頭初始化。基底：fcmd-standby.state。座位 → 陣營表 ds:8F25（基底 00 01 00 1F）；在場艦隊清單 ds:9898、筆數 ds:9894（byte）基底是空的，由 seeds 造；艦隊表 ds:C074（122 bytes 一筆）：艦隊 0 的 +1／+0x5C／+0x5E 在 ds:C075／C0D0／C0D2，艦隊 1 在 C0EF／C14A／C14C，艦隊 2 在 C169／C1C4／C1C6。輸出 ds:8F3A ＋ 4 × 座位。原版把 x、y 放在堆疊上交給 04A0，C 版借用線性 0x9D000，seeds 先把它填 0x5A 驗證有還原。",
+  "args": [
+    {"name": "seat", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 15, 16, 255, 256, 257, 258, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "基底原樣（清單空，艦隊編號取 ds:9898 的第 0 項 ＝ 0）", "args": [0], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}]},
+    {"note": "座位 0（陣營 0）：清單 [1, 2, 0]，艦隊 1、2 的陣營 5，艦隊 0 的陣營 0 → 第三項找到；(+0x5C, +0x5E) ＝ (256, 200) → x ＝ 2、y ＝ 1", "args": [0], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "03"}, {"addr": "ds:9898", "hex": "010200"}, {"addr": "ds:C0EF", "hex": "05"}, {"addr": "ds:C169", "hex": "05"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0D0", "hex": "0001C800"}]},
+    {"note": "座位 1（陣營 1）：清單 [0, 1, 2]，艦隊 0 的陣營 0、艦隊 1 的陣營 1 → 第二項找到；(1792, 1864) → x ＝ 98、y ＝ 84（夾限內的最大值附近）", "args": [1], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "03"}, {"addr": "ds:9898", "hex": "000102"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0EF", "hex": "01"}, {"addr": "ds:C14A", "hex": "00074807"}]},
+    {"note": "座位 1 找不到（清單 [0, 2]，筆數 2，都是陣營 0）：改用清單第 3 項（ds:9898[2] ＝ 1，艦隊 1）；(2048, 2048) → 夾成 (100, 84)", "args": [1], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "02"}, {"addr": "ds:9898", "hex": "000201"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C169", "hex": "00"}, {"addr": "ds:C0EF", "hex": "09"}, {"addr": "ds:C14A", "hex": "00080008"}]},
+    {"note": "負值：(208, 179) → x ＝ −1 → 0、y ＝ 0", "args": [0], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "00"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0D0", "hex": "D000B300"}]},
+    {"note": "零座標：(0, 0) → 有號 −224 ÷ 16 ＝ −14 → 0；無號除法會得 4082 → 夾成 100", "args": [0], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "00"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0D0", "hex": "00000000"}]},
+    {"note": "邊界：x ＝ 1824（x ＝ 100）、y ＝ 180 ＋ 1680 ＝ 1860（y ＝ 84）", "args": [0], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "00"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0D0", "hex": "20074407"}]},
+    {"note": "邊界：x ＝ 224（x ＝ 0）、y ＝ 180（y ＝ 0）", "args": [0], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "00"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0D0", "hex": "E000B400"}]},
+    {"note": "x ＝ 0x8000：加 0xFF20 得 0x7F20（正 32544）→ 2034 → 夾成 100", "args": [0], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "00"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0D0", "hex": "00800080"}]},
+    {"note": "筆數的 word ＝ 0x0100（byte 為 0，迴圈不進入）：用 ds:9898[0] ＝ 1 的艦隊 1，不是找到陣營 0 的艦隊 2", "args": [0], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "0001"}, {"addr": "ds:9898", "hex": "0102"}, {"addr": "ds:C0EF", "hex": "09"}, {"addr": "ds:C169", "hex": "00"}, {"addr": "ds:C14A", "hex": "00020002"}, {"addr": "ds:C1C4", "hex": "00040004"}]},
+    {"note": "筆數的 word ＝ 0x0103（byte ＝ 3）", "args": [0], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "0301"}, {"addr": "ds:9898", "hex": "010200"}, {"addr": "ds:C0EF", "hex": "09"}, {"addr": "ds:C169", "hex": "09"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0D0", "hex": "00030003"}]},
+    {"note": "seat word ＝ 0x0101：低位元組 1", "args": [257], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "02"}, {"addr": "ds:9898", "hex": "0001"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0EF", "hex": "01"}, {"addr": "ds:C14A", "hex": "00030003"}]},
+    {"note": "座位 255：陣營表 ds:9024、輸出 ds:9336", "args": [255], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "00"}, {"addr": "ds:C075", "hex": "07"}, {"addr": "ds:9024", "hex": "07"}, {"addr": "ds:C0D0", "hex": "00030003"}, {"addr": "ds:9336", "hex": "AA", "repeat": 8}]},
+    {"note": "座位 3（陣營 0x1F）：找不到 → 用清單 [筆數]", "args": [3], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "0001"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0EF", "hex": "00"}, {"addr": "ds:C14A", "hex": "00050005"}]},
+    {"note": "借用區已有 0xFFFFFFFF（x、y 不是從前一次殘留來的）", "args": [0], "pokes": [{"addr": "ds:8F3A", "hex": "AA", "repeat": 16}, {"addr": "lin:9D000", "hex": "5A5A5A5A"}, {"addr": "lin:9D000", "hex": "FFFFFFFF"}, {"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "00"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0D0", "hex": "00020002"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 100
+}

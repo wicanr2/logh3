@@ -1,0 +1,15 @@
+[
+  {"name": "陣營判斷反向", "find": "== 0) ? 0x6830u : 0x689Cu;", "replace": "!= 0) ? 0x6830u : 0x689Cu;"},
+  {"name": "陣營讀 +2", "find": "(uint16_t)(rec_off + 1u))) == 0)", "replace": "(uint16_t)(rec_off + 2u))) == 0)"},
+  {"name": "表 A 位移錯 4", "find": "? 0x6830u : 0x689Cu;", "replace": "? 0x6834u : 0x689Cu;"},
+  {"name": "表 B 位移錯 4", "find": "? 0x6830u : 0x689Cu;", "replace": "? 0x6830u : 0x68A0u;"},
+  {"name": "兩表對調", "find": "? 0x6830u : 0x689Cu;", "replace": "? 0x689Cu : 0x6830u;"},
+  {"name": "能力值讀 +7", "find": "(uint16_t)(rec_off + 6u))))", "replace": "(uint16_t)(rec_off + 7u))))"},
+  {"name": "能力值讀 +5", "find": "(uint16_t)(rec_off + 6u))))", "replace": "(uint16_t)(rec_off + 5u))))"},
+  {"name": "等級索引每筆 2 bytes", "find": "(uint16_t)((uint16_t)level << 2);", "replace": "(uint16_t)((uint16_t)level << 1);"},
+  {"name": "等級索引每筆 8 bytes", "find": "(uint16_t)((uint16_t)level << 2);", "replace": "(uint16_t)((uint16_t)level << 3);"},
+  {"name": "段與位移對調", "find": "return ((uint32_t)seg << 16) | off;", "replace": "return ((uint32_t)off << 16) | seg;"},
+  {"name": "段讀位移欄位", "find": "uint16_t seg = rd16(m, DS((uint16_t)(table + idx + 2u)));", "replace": "uint16_t seg = rd16(m, DS((uint16_t)(table + idx)));"},
+  {"name": "位移讀段欄位", "find": "uint16_t off = rd16(m, DS((uint16_t)(table + idx)));", "replace": "uint16_t off = rd16(m, DS((uint16_t)(table + idx + 2u)));"},
+  {"name": "不經 0096 直接用能力值右移 2", "find": "uint8_t level = f_28E0_0096(m, rd8(m, LIN(rec_seg, (uint16_t)(rec_off + 6u))));", "replace": "uint8_t level = (uint8_t)(rd8(m, LIN(rec_seg, (uint16_t)(rec_off + 6u))) >> 5);"}
+]

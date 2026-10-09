@@ -1,0 +1,15 @@
+[
+  {"name": "同值取後者（<= 改）", "find": "if (v < best_val) {", "replace": "if (v <= best_val) {"},
+  {"name": "取最大值", "find": "if (v < best_val) {", "replace": "if (v > best_val && v != 0xFFu) {"},
+  {"name": "最佳值起點 99（值 99 不再 < 起點）", "find": "uint8_t best_val = 0xFF;", "replace": "uint8_t best_val = 99;"},
+  {"name": "迴圈少一格（j < 0x1F）", "find": "j < 0x20u", "replace": "j < 0x1Fu"},
+  {"name": "迴圈多一格（j < 0x21）", "find": "j < 0x20u", "replace": "j < 0x21u"},
+  {"name": "閘門改看 D5AE", "find": "DS((uint16_t)(0xD58Eu + j))) != 0", "replace": "DS((uint16_t)(0xD5AEu + j))) != 0"},
+  {"name": "閘門改 > 1（需求 1 的格不算）", "find": "DS((uint16_t)(0xD58Eu + j))) != 0", "replace": "DS((uint16_t)(0xD58Eu + j))) > 1"},
+  {"name": "閘門反向", "find": "DS((uint16_t)(0xD58Eu + j))) != 0", "replace": "DS((uint16_t)(0xD58Eu + j))) == 0"},
+  {"name": "回傳最佳值而非最佳格", "find": "    return best_idx;", "replace": "    return best_val;"},
+  {"name": "傳 j+1 給 088F", "find": "f_2E54_088F(m, j);", "replace": "f_2E54_088F(m, (uint16_t)(j + 1u));"},
+  {"name": "最佳格記成 j+1", "find": "best_idx = j;", "replace": "best_idx = (uint8_t)(j + 1u);"},
+  {"name": "起點最佳格改 0", "find": "uint8_t best_idx = 0xFF;", "replace": "uint8_t best_idx = 0;"},
+  {"name": "088F 呼叫兩次(後一次覆蓋值)", "find": "uint8_t v = f_2E54_088F(m, j);", "replace": "uint8_t v = f_2E54_088F(m, j);\n            v = f_2E54_088F(m, (uint16_t)(j ^ 1u));"}
+]

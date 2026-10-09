@@ -1,0 +1,15 @@
+[
+  {"name": "遮罩改3位元", "find": "(uint8_t)(rd8(m, DS(si)) & 0x0Fu) == key", "replace": "(uint8_t)(rd8(m, DS(si)) & 0x07u) == key"},
+  {"name": "遮罩改5位元", "find": "(uint8_t)(rd8(m, DS(si)) & 0x0Fu) == key", "replace": "(uint8_t)(rd8(m, DS(si)) & 0x1Fu) == key"},
+  {"name": "加一改加二", "find": "(uint8_t)(rd8(m, DS((uint16_t)(si + 3u))) + 1u)", "replace": "(uint8_t)(rd8(m, DS((uint16_t)(si + 3u))) + 2u)"},
+  {"name": "加一改位移2", "find": "wr8(m, DS((uint16_t)(si + 3u)), (uint8_t)(rd8(m, DS((uint16_t)(si + 3u))) + 1u));", "replace": "wr8(m, DS((uint16_t)(si + 2u)), (uint8_t)(rd8(m, DS((uint16_t)(si + 2u))) + 1u));"},
+  {"name": "加一不回繞成16位元寫入低位", "find": "(uint8_t)(rd8(m, DS((uint16_t)(si + 3u))) + 1u)", "replace": "(uint8_t)(rd8(m, DS((uint16_t)(si + 3u))) < 0xFFu ? rd8(m, DS((uint16_t)(si + 3u))) + 1u : 0xFFu)"},
+  {"name": "格距改5", "find": "si = (uint16_t)(si + 6u);", "replace": "si = (uint16_t)(si + 5u);"},
+  {"name": "列距改0xEF", "find": "di = (uint16_t)(di + 0xF0u);", "replace": "di = (uint16_t)(di + 0xEFu);"},
+  {"name": "鍵值取AL", "find": "uint8_t key = (uint8_t)(ax >> 8); /* AH */", "replace": "uint8_t key = (uint8_t)ax;"},
+  {"name": "列數與格數對調", "find": "uint16_t rows = (uint16_t)(dx & 0xFFu);          /* mov cl,dl；xor ch,ch */", "replace": "uint16_t rows = (uint16_t)(dx >> 8);"},
+  {"name": "起點欄列對調（0150 參數 BH BL 互換）", "find": "f_2376_0150(ax, bx, dx); /* mov ch,bh；mov cl,bl：CX = BX */", "replace": "f_2376_0150(ax, (uint16_t)((bx << 8) | (bx >> 8)), dx);"},
+  {"name": "不呼叫0150", "find": "uint16_t di = (uint16_t)f_2376_0150(ax, bx, dx); /* mov ch,bh；mov cl,bl：CX = BX */", "replace": "uint16_t di = 0xD81Eu;"},
+  {"name": "比較改不等", "find": "(uint8_t)(rd8(m, DS(si)) & 0x0Fu) == key", "replace": "(uint8_t)(rd8(m, DS(si)) & 0x0Fu) != key"},
+  {"name": "外圈多跑一列", "find": "uint16_t rows = (uint16_t)(dx & 0xFFu);          /* mov cl,dl；xor ch,ch */", "replace": "uint16_t rows = (uint16_t)((dx & 0xFFu) + 1u);"}
+]

@@ -1,0 +1,18 @@
+[
+  {"name": "經濟力讀 +0x18", "find": "uint16_t field = (uint16_t)(planet_off + 0x1Au);", "replace": "uint16_t field = (uint16_t)(planet_off + 0x18u);"},
+  {"name": "高低字讀反", "find": "uint32_t prod = f_3CC9_0009(hi, lo, 0, rate);", "replace": "uint32_t prod = f_3CC9_0009(lo, hi, 0, rate);"},
+  {"name": "乘數不是成長率（改 0）", "find": "uint32_t prod = f_3CC9_0009(hi, lo, 0, rate);", "replace": "uint32_t prod = f_3CC9_0009(hi, lo, 0, 0);"},
+  {"name": "乘數取成長率 +1", "find": "uint32_t prod = f_3CC9_0009(hi, lo, 0, rate);", "replace": "uint32_t prod = f_3CC9_0009(hi, lo, 0, (uint16_t)(rate + 1u));"},
+  {"name": "乘數的高字不是 0", "find": "uint32_t prod = f_3CC9_0009(hi, lo, 0, rate);", "replace": "uint32_t prod = f_3CC9_0009(hi, lo, rate, rate);"},
+  {"name": "除數改 1024", "find": "(uint16_t)prod, 0, 0x3E8u)", "replace": "(uint16_t)prod, 0, 0x400u)"},
+  {"name": "除數改 999", "find": "(uint16_t)prod, 0, 0x3E8u)", "replace": "(uint16_t)prod, 0, 0x3E7u)"},
+  {"name": "商不是 AX:BX 而是餘數", "find": "(uint16_t)prod, 0, 0x3E8u) >> 32);", "replace": "(uint16_t)prod, 0, 0x3E8u) & 0xFFFFFFFFu);"},
+  {"name": "成長率讀另一筆行星", "find": "uint16_t rate = f_2703_0D47(m, planet_off, planet_seg);", "replace": "uint16_t rate = f_2703_0D47(m, (uint16_t)(planet_off + 0x52u), planet_seg);"},
+  {"name": "成長率函式的位移段對調", "find": "uint16_t rate = f_2703_0D47(m, planet_off, planet_seg);", "replace": "uint16_t rate = f_2703_0D47(m, planet_seg, planet_off);"},
+  {"name": "進位不加", "find": "(uint16_t)(quot >> 16) + (sum >> 16)))", "replace": "(uint16_t)(quot >> 16)))"},
+  {"name": "高字不加商的高字", "find": "(uint16_t)(quot >> 16) + (sum >> 16)))", "replace": "(sum >> 16)))"},
+  {"name": "低字加商的高字", "find": "(uint32_t)rd16(m, LIN(planet_seg, field)) + (uint16_t)quot;", "replace": "(uint32_t)rd16(m, LIN(planet_seg, field)) + (uint16_t)(quot >> 16);"},
+  {"name": "只寫低字", "find": "    wr16(m, LIN(planet_seg, (uint16_t)(field + 2u)),\n         (uint16_t)(rd16(m, LIN(planet_seg, (uint16_t)(field + 2u))) + (uint16_t)(quot >> 16) + (sum >> 16))); /* adc es:[si+2], ax */", "replace": ""},
+  {"name": "只寫高字", "find": "    wr16(m, LIN(planet_seg, field), (uint16_t)sum);\n", "replace": ""},
+  {"name": "加到錯誤位移 +0x1C", "find": "    wr16(m, LIN(planet_seg, field), (uint16_t)sum);", "replace": "    wr16(m, LIN(planet_seg, (uint16_t)(field + 2u)), (uint16_t)sum);"}
+]

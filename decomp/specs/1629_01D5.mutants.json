@@ -1,0 +1,17 @@
+[
+  {"name": "不比段", "find": "(uint16_t)(hit >> 16) != GIN3_DS || ", "replace": ""},
+  {"name": "不比位移", "find": " || (uint16_t)hit != 0x9BF8u", "replace": ""},
+  {"name": "改比線性位址", "find": "(uint16_t)(hit >> 16) != GIN3_DS || (uint16_t)hit != 0x9BF8u", "replace": "LIN((uint16_t)(hit >> 16), (uint16_t)hit) != LIN(GIN3_DS, 0x9BF8u)"},
+  {"name": "位移比對 0x9BF9", "find": "(uint16_t)hit != 0x9BF8u", "replace": "(uint16_t)hit != 0x9BF9u"},
+  {"name": "不檢查命中的是誰", "find": "    if ((uint16_t)(hit >> 16) != GIN3_DS || (uint16_t)hit != 0x9BF8u)\n        return 0;\n", "replace": ""},
+  {"name": "範圍去掉下界", "find": "al >= 1u && al <= 2u", "replace": "al <= 2u"},
+  {"name": "範圍上界 3", "find": "al >= 1u && al <= 2u", "replace": "al >= 1u && al <= 3u"},
+  {"name": "範圍下界 2", "find": "al >= 1u && al <= 2u", "replace": "al >= 2u && al <= 2u"},
+  {"name": "範圍只有 1", "find": "al >= 1u && al <= 2u", "replace": "al >= 1u && al <= 1u"},
+  {"name": "讀 out_y", "find": "rd8(m, LIN(F1629_01D5_SS, F1629_01D5_BP))", "replace": "rd8(m, LIN(F1629_01D5_SS, (uint16_t)(F1629_01D5_BP + 1u)))"},
+  {"name": "兩個輸出位址對調", "find": "F1629_01D5_BP, F1629_01D5_SS, (uint16_t)(F1629_01D5_BP + 1u), F1629_01D5_SS);", "replace": "(uint16_t)(F1629_01D5_BP + 1u), F1629_01D5_SS, F1629_01D5_BP, F1629_01D5_SS);"},
+  {"name": "044A 的 x、y 對調", "find": "f_341B_044A(m, 0x9BF8u, GIN3_DS, x, y,", "replace": "f_341B_044A(m, 0x9BF8u, GIN3_DS, y, x,"},
+  {"name": "039D 的 x、y 對調", "find": "f_341B_039D(m, x, y)", "replace": "f_341B_039D(m, y, x)"},
+  {"name": "044A 用另一個視窗位址", "find": "f_341B_044A(m, 0x9BF8u,", "replace": "f_341B_044A(m, 0x9C1Au,"},
+  {"name": "不呼叫 044A", "find": "    f_341B_044A(m, 0x9BF8u, GIN3_DS, x, y,\n                F1629_01D5_BP, F1629_01D5_SS, (uint16_t)(F1629_01D5_BP + 1u), F1629_01D5_SS);\n", "replace": ""}
+]

@@ -1,0 +1,11 @@
+[
+  {"name": "不呼叫 0731", "find": "    f_1588_0731(m);\n", "replace": ""},
+  {"name": "不呼叫 06C0", "find": "    f_1588_06C0(m, dst_off, dst_seg, src_off, src_seg);\n", "replace": ""},
+  {"name": "先 0731 後 06C0", "find": "    f_1588_06C0(m, dst_off, dst_seg, src_off, src_seg);\n    f_1588_0731(m);\n", "replace": "    f_1588_0731(m);\n    f_1588_06C0(m, dst_off, dst_seg, src_off, src_seg);\n"},
+  {"name": "dst 與 src 對調", "find": "f_1588_06C0(m, dst_off, dst_seg, src_off, src_seg);", "replace": "f_1588_06C0(m, src_off, src_seg, dst_off, dst_seg);"},
+  {"name": "dst 位移與段對調", "find": "f_1588_06C0(m, dst_off, dst_seg, src_off, src_seg);", "replace": "f_1588_06C0(m, dst_seg, dst_off, src_off, src_seg);"},
+  {"name": "src 位移與段對調", "find": "f_1588_06C0(m, dst_off, dst_seg, src_off, src_seg);", "replace": "f_1588_06C0(m, dst_off, dst_seg, src_seg, src_off);"},
+  {"name": "src 位移加一", "find": "f_1588_06C0(m, dst_off, dst_seg, src_off, src_seg);", "replace": "f_1588_06C0(m, dst_off, dst_seg, (uint16_t)(src_off + 1u), src_seg);"},
+  {"name": "dst 位移加一", "find": "f_1588_06C0(m, dst_off, dst_seg, src_off, src_seg);", "replace": "f_1588_06C0(m, (uint16_t)(dst_off + 1u), dst_seg, src_off, src_seg);"},
+  {"name": "dst 段加一", "find": "f_1588_06C0(m, dst_off, dst_seg, src_off, src_seg);", "replace": "f_1588_06C0(m, dst_off, (uint16_t)(dst_seg + 1u), src_off, src_seg);"}
+]

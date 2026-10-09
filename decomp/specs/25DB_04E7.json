@@ -1,0 +1,42 @@
+{
+  "id": "25DB_04E7",
+  "entry": "25DB:04E7",
+  "conv": "far",
+  "ret": "none",
+  "size": 45,
+  "code_sha256_16": "af42960a930f0248",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "艦隊 +0x6A 的方向索引：旗標為 0 寫 9，否則寫 3982:0022(艦隊[+0x4A])。艦隊指標取艦隊表（ds:C074，每筆 122 bytes，32 筆）；種子另用暫存區 9D00:0000 與 F000:0000（寫入落在 ROM）、8000:FFxx（跨位移 0xFFFF）。種子先把 +0x6A 預填與結果不同的值，才看得出寫入。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "flag", "kind": "word", "gen": {"choices": [0, 1, 2, 255, 256, 257, 32768, 65535, 0, 1], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [49268, 21683, 1], "pokes": [{"addr": "ds:C0BE", "hex": "00"}, {"addr": "ds:C0DE", "hex": "55"}]},
+    {"args": [49268, 21683, 0], "pokes": [{"addr": "ds:C0BE", "hex": "00"}, {"addr": "ds:C0DE", "hex": "55"}]},
+    {"args": [49268, 21683, 256], "pokes": [{"addr": "ds:C0BE", "hex": "40"}, {"addr": "ds:C0DE", "hex": "55"}]},
+    {"args": [49268, 21683, 65535], "pokes": [{"addr": "ds:C0BE", "hex": "40"}, {"addr": "ds:C0DE", "hex": "00"}]},
+    {"args": [49268, 21683, 1], "pokes": [{"addr": "ds:C0BE", "hex": "10"}, {"addr": "ds:C0BF", "hex": "99"}, {"addr": "ds:C0DE", "hex": "55"}]},
+    {"args": [49268, 21683, 1], "pokes": [{"addr": "ds:C0BE", "hex": "0F"}, {"addr": "ds:C0DE", "hex": "55"}]},
+    {"args": [49268, 21683, 1], "pokes": [{"addr": "ds:C0BE", "hex": "F0"}, {"addr": "ds:C0DE", "hex": "55"}]},
+    {"args": [49268, 21683, 1], "pokes": [{"addr": "ds:C0BE", "hex": "17"}, {"addr": "ds:C0DE", "hex": "55"}]},
+    {"args": [49268, 21683, 1], "pokes": [{"addr": "ds:C0BE", "hex": "18"}, {"addr": "ds:C0DE", "hex": "55"}, {"addr": "ds:C0DF", "hex": "66"}]},
+    {"args": [0, 40192, 1], "pokes": [{"addr": "lin:9D04A", "hex": "80"}, {"addr": "lin:9D06A", "hex": "55"}]},
+    {"args": [0, 40192, 0], "pokes": [{"addr": "lin:9D04A", "hex": "80"}, {"addr": "lin:9D06A", "hex": "55"}]},
+    {"args": [65430, 32768, 1], "pokes": [{"addr": "lin:8FFE0", "hex": "40"}, {"addr": "lin:80000", "hex": "55"}, {"addr": "lin:8FFFF", "hex": "55"}]},
+    {"args": [65430, 32768, 0], "pokes": [{"addr": "lin:8FFE0", "hex": "40"}, {"addr": "lin:80000", "hex": "55"}, {"addr": "lin:8FFFF", "hex": "55"}]},
+    {"args": [0, 61440, 1], "pokes": []},
+    {"args": [0, 61440, 0], "pokes": []},
+    {"args": [65462, 32768, 1], "pokes": [{"addr": "lin:8FFB6", "hex": "00"}, {"addr": "lin:80000", "hex": "77"}]},
+    {"args": [49268, 21683, 1], "pokes": [{"addr": "ds:C0BE", "hex": "50"}, {"addr": "ds:C0DE", "hex": "09"}]},
+    {"args": [49268, 21683, 1], "pokes": [{"addr": "ds:C0BE", "hex": "00"}, {"addr": "ds:C0DE", "hex": "09"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

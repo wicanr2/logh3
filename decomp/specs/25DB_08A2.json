@@ -1,0 +1,48 @@
+{
+  "id": "25DB_08A2",
+  "entry": "25DB:08A2",
+  "conv": "far",
+  "ret": "ax",
+  "size": 115,
+  "code_sha256_16": "353c527780839e0c",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "艦隊 +0x6A（圖塊編號）與物件 +0x0C 不同時更新物件的圖塊指標（+0x0E／+0x10）、編號與標髒旗標。艦隊指標取艦隊表（ds:C074，122 bytes 一筆，32 筆）；種子把艦隊 0 的物件指標（ds:C0E0）指到暫存區 9D00:0000，並造出物件蓋到艦隊記錄自己的各種別名（obj+0x10／+0x0E／+0x0C／+1 落在指標或編號上）、物件放在 8000:FFxx 讓 word 跨位移 0xFFFF、艦隊放在 8000:FFxx 讓指標字跨位移 0xFFFF。圖塊池基底 ds:F12C／F12E 由種子給定。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}}
+  ],
+  "seeds": [
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "0000009D"}, {"addr": "lin:9D00C", "hex": "05"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "05"}, {"addr": "ds:C0E0", "hex": "0000009D"}, {"addr": "lin:9D00C", "hex": "05"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "00"}, {"addr": "ds:C0E0", "hex": "0000009D"}, {"addr": "lin:9D00C", "hex": "00"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "80"}, {"addr": "ds:C0E0", "hex": "0000009D"}, {"addr": "lin:9D00C", "hex": "00"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "00"}, {"addr": "ds:C0E0", "hex": "0000009D"}, {"addr": "lin:9D00C", "hex": "80"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "FF"}, {"addr": "ds:C0E0", "hex": "0000009D"}, {"addr": "lin:9D00C", "hex": "7F"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "01"}, {"addr": "ds:C0E0", "hex": "0000009D"}, {"addr": "lin:9D00C", "hex": "00"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "02"}, {"addr": "ds:C0E0", "hex": "0000009D"}, {"addr": "lin:9D00C", "hex": "00"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}, {"addr": "ds:F12C", "hex": "F0FF 0080"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "7F"}, {"addr": "ds:C0E0", "hex": "0000009D"}, {"addr": "lin:9D00C", "hex": "00"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}, {"addr": "ds:F12C", "hex": "0100 0010"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "D0C0 B354"}, {"addr": "ds:F12C", "hex": "0010 0040"}, {"addr": "ds:C0DC", "hex": "05"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "D0C0 B354"}, {"addr": "ds:F12C", "hex": "0010 0040"}, {"addr": "ds:C0DC", "hex": "05"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "D2C0 B354"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "DFC0 B354"}, {"addr": "ds:F12C", "hex": "0010 0040"}, {"addr": "ds:C0EB", "hex": "05"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "D4C0 B354"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "D2C0 B354"}, {"addr": "ds:F12C", "hex": "0010 0040"}, {"addr": "ds:C0DE", "hex": "05"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "D6C0 B354"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "D7C0 B354"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "F1FF 0080"}, {"addr": "lin:8FFFD", "hex": "05"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "EFFF 0080"}, {"addr": "lin:8FFFB", "hex": "05"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}, {"addr": "ds:C0E0", "hex": "FEFF 0080"}, {"addr": "lin:8000A", "hex": "05"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [65427, 32768], "pokes": [{"addr": "lin:8FFFD", "hex": "03"}, {"addr": "lin:90000", "hex": "77"}, {"addr": "lin:8FFFF", "hex": "00"}, {"addr": "lin:80000", "hex": "00009D"}, {"addr": "lin:9D00C", "hex": "05"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [65429, 32768], "pokes": [{"addr": "lin:90000", "hex": "77"}, {"addr": "lin:8FFFF", "hex": "03"}, {"addr": "lin:80001", "hex": "0000009D"}, {"addr": "lin:9D00C", "hex": "05"}, {"addr": "lin:9D000", "hex": "5555555555555555555555555555555555555555555555555555555555555555"}, {"addr": "ds:F12C", "hex": "0010 0040"}]},
+    {"args": [49268, 21683], "pokes": [{"addr": "ds:C0DE", "hex": "03"}]},
+    {"args": [49268, 21683], "pokes": []},
+    {"args": [0, 61440], "pokes": []}
+  ],
+  "iters": 40000,
+  "max_cases": 700,
+  "seed": 20261009,
+  "min_coverage": 100
+}

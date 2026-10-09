@@ -1,0 +1,18 @@
+[
+  {"name": "搬移來源改 +0x50", "find": "(uint16_t)(fleet + 0x52u));\n\n        f1C03", "replace": "(uint16_t)(fleet + 0x50u));\n\n        f1C03"},
+  {"name": "搬移目的改 +0x5A", "find": "f1C03_0006_wr16(m, (uint16_t)(fleet + 0x56u), lo);", "replace": "f1C03_0006_wr16(m, (uint16_t)(fleet + 0x5Au), lo);"},
+  {"name": "高字不搬", "find": "        f1C03_0006_wr16(m, (uint16_t)(fleet + 0x58u), hi);\n", "replace": ""},
+  {"name": "低字不搬", "find": "        f1C03_0006_wr16(m, (uint16_t)(fleet + 0x56u), lo);\n", "replace": ""},
+  {"name": "高低字對調", "find": "f1C03_0006_wr16(m, (uint16_t)(fleet + 0x56u), lo);", "replace": "f1C03_0006_wr16(m, (uint16_t)(fleet + 0x56u), hi);"},
+  {"name": "高字來源改 +0x56", "find": "uint16_t hi = f1C03_0006_rd16(m, (uint16_t)(fleet + 0x54u));", "replace": "uint16_t hi = f1C03_0006_rd16(m, (uint16_t)(fleet + 0x56u));"},
+  {"name": "先呼叫 0005 後搬移", "find": "        f1C03_0006_wr16(m, (uint16_t)(fleet + 0x58u), hi);\n        f1C03_0006_wr16(m, (uint16_t)(fleet + 0x56u), lo);\n        f_1C61_0005(m, fleet, GIN3_DS);\n", "replace": "        f_1C61_0005(m, fleet, GIN3_DS);\n        f1C03_0006_wr16(m, (uint16_t)(fleet + 0x58u), hi);\n        f1C03_0006_wr16(m, (uint16_t)(fleet + 0x56u), lo);\n"},
+  {"name": "不呼叫 0005", "find": "        f_1C61_0005(m, fleet, GIN3_DS);\n", "replace": ""},
+  {"name": "0005 收到的艦隊位移加 0x7A", "find": "f_1C61_0005(m, fleet, GIN3_DS);", "replace": "f_1C61_0005(m, (uint16_t)(fleet + 0x7Au), GIN3_DS);"},
+  {"name": "艦隊大小 0x7A 改 0x79", "find": "* 0x7Au));", "replace": "* 0x79u));"},
+  {"name": "艦隊表基底 0xC074 改 0xC075", "find": "0xC074u +", "replace": "0xC075u +"},
+  {"name": "清單基底 0x9898 改 0x9899", "find": "uint16_t list = 0x9898u;", "replace": "uint16_t list = 0x9899u;"},
+  {"name": "清單步幅 1 改 2", "find": "list = (uint16_t)(list + 1u);", "replace": "list = (uint16_t)(list + 2u);"},
+  {"name": "筆數只讀低位元組", "find": "while (di < f1C03_0006_rd16(m, 0x9894u)) {", "replace": "while (di < (uint8_t)f1C03_0006_rd16(m, 0x9894u)) {"},
+  {"name": "清單項目讀 word", "find": "rd8(m, DS(list)) * 0x7Au", "replace": "f1C03_0006_rd16(m, list) * 0x7Au"},
+  {"name": "回傳改 0", "find": "    return di;\n}", "replace": "    return 0;\n}"}
+]

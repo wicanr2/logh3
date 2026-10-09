@@ -1,0 +1,20 @@
+[
+  {"name": "星域記錄大小 0x7E 改 0x7D", "find": "* 0x7Eu);", "replace": "* 0x7Du);"},
+  {"name": "星域表基底 0xA79C 改 0xA79D", "find": "0xA79Cu + prod", "replace": "0xA79Du + prod"},
+  {"name": "艦種遮罩 0x0F 改 0x07", "find": "& 0x0Fu);", "replace": "& 0x07u);"},
+  {"name": "艦種遮罩 0x0F 改 0x1F", "find": "& 0x0Fu);", "replace": "& 0x1Fu);"},
+  {"name": "第一次成立不立刻回 1", "find": "(uint16_t)((prod & 0xFF00u) | type)) != 0)\n        return 1;", "replace": "(uint16_t)((prod & 0xFF00u) | type)) != 0 && 0)\n        return 1;"},
+  {"name": "next 取反（0 → 0、非 0 → 1）", "find": "next = (uint8_t)(type == 0 ? 1 : 0);", "replace": "next = (uint8_t)(type == 0 ? 0 : 1);"},
+  {"name": "next 固定為 1", "find": "next = (uint8_t)(type == 0 ? 1 : 0);", "replace": "next = 1;"},
+  {"name": "next 等於現在的艦種", "find": "next = (uint8_t)(type == 0 ? 1 : 0);", "replace": "next = type;"},
+  {"name": "第二次呼叫的陣營固定 0", "find": "f07F9_023B_rd16s(m, adm_seg, (uint16_t)(adm_off + 1u)), next)", "replace": "0, next)"},
+  {"name": "第一次呼叫的陣營改讀 adm[+0]", "find": "f_07F9_02CB(m, region, GIN3_DS, f07F9_023B_rd16s(m, adm_seg, (uint16_t)(adm_off + 1u)),\n                    (uint16_t)((prod & 0xFF00u) | type))", "replace": "f_07F9_02CB(m, region, GIN3_DS, f07F9_023B_rd16s(m, adm_seg, (uint16_t)(adm_off + 0u)),\n                    (uint16_t)((prod & 0xFF00u) | type))"},
+  {"name": "星域段改用提督段", "find": "f_07F9_02CB(m, region, GIN3_DS, f07F9_023B_rd16s(m, adm_seg, (uint16_t)(adm_off + 1u)), next)", "replace": "f_07F9_02CB(m, region, adm_seg, f07F9_023B_rd16s(m, adm_seg, (uint16_t)(adm_off + 1u)), next)"},
+  {"name": "不寫回艦種欄", "find": "        wr8(m, LIN(adm_seg, at), (uint8_t)(rd8(m, LIN(adm_seg, at)) & 0xF0u));\n        wr8(m, LIN(adm_seg, at), (uint8_t)(rd8(m, LIN(adm_seg, at)) | next));\n", "replace": ""},
+  {"name": "寫回時高 4 位元清 0", "find": "& 0xF0u));", "replace": "& 0x00u));"},
+  {"name": "寫回時保留低 4 位元", "find": "& 0xF0u));", "replace": "& 0xFFu));"},
+  {"name": "寫回的值改成現在的艦種", "find": "| next));", "replace": "| type));"},
+  {"name": "第二次也不成立仍寫回", "find": "f07F9_023B_rd16s(m, adm_seg, (uint16_t)(adm_off + 1u)), next) != 0) {", "replace": "f07F9_023B_rd16s(m, adm_seg, (uint16_t)(adm_off + 1u)), next) != 0 || type == 7) {"},
+  {"name": "寫回位移改 +9", "find": "uint16_t at = (uint16_t)(adm_off + 8u);", "replace": "uint16_t at = (uint16_t)(adm_off + 9u);"},
+  {"name": "不呼叫第二次（第二次視為成立）", "find": "f07F9_023B_rd16s(m, adm_seg, (uint16_t)(adm_off + 1u)), next) != 0) {", "replace": "f07F9_023B_rd16s(m, adm_seg, (uint16_t)(adm_off + 1u)), next) != 0 || 1) {"}
+]

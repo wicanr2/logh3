@@ -1,0 +1,2 @@
+golem_linear	level	source	evidence
+2526e	diff-tested	decomp/src/f_2526_000E.c	decomp/specs/2526_000E.json

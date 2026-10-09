@@ -1,0 +1,16 @@
+[
+  {"name": "flag 只看低位元組", "find": "    if (flag != 0) {", "replace": "    if ((uint8_t)flag != 0) {"},
+  {"name": "flag 反向", "find": "    if (flag != 0) {", "replace": "    if (flag == 0) {"},
+  {"name": "不抄寫", "find": "        f_3CA9_0002(m, (uint16_t)(0x8F9Cu + (uint16_t)(f * 0x1Cu)), GIN3_DS, 0xD01Eu, GIN3_DS, 0x1Cu);", "replace": "        (void)f;"},
+  {"name": "抄 27 bytes", "find": "0xD01Eu, GIN3_DS, 0x1Cu);", "replace": "0xD01Eu, GIN3_DS, 0x1Bu);"},
+  {"name": "抄 29 bytes", "find": "0xD01Eu, GIN3_DS, 0x1Cu);", "replace": "0xD01Eu, GIN3_DS, 0x1Du);"},
+  {"name": "座位步幅 27", "find": "f * 0x1Cu", "replace": "f * 0x1Bu"},
+  {"name": "座位步幅 28 但表基底 8F9D", "find": "0x8F9Cu +", "replace": "0x8F9Du +"},
+  {"name": "來源位移 D01C", "find": "0xD01Eu, GIN3_DS", "replace": "0xD01Cu, GIN3_DS"},
+  {"name": "目的與來源對調", "find": "f_3CA9_0002(m, (uint16_t)(0x8F9Cu + (uint16_t)(f * 0x1Cu)), GIN3_DS, 0xD01Eu, GIN3_DS, 0x1Cu);", "replace": "f_3CA9_0002(m, 0xD01Eu, GIN3_DS, (uint16_t)(0x8F9Cu + (uint16_t)(f * 0x1Cu)), GIN3_DS, 0x1Cu);"},
+  {"name": "座位取 16 位元 word（讀 8F1D/8F1E）", "find": "uint16_t f = rd8(m, DS(0x8F1Du));", "replace": "uint16_t f = rd16(m, DS(0x8F1Du));"},
+  {"name": "先抄後算（抄的是舊值）", "find": "    uint32_t total = f_2B5F_014D(m);\n\n    if (flag != 0) {\n        uint16_t f = rd8(m, DS(0x8F1Du));\n\n        f_3CA9_0002(m, (uint16_t)(0x8F9Cu + (uint16_t)(f * 0x1Cu)), GIN3_DS, 0xD01Eu, GIN3_DS, 0x1Cu);\n    }\n    return total;", "replace": "    uint32_t total;\n\n    if (flag != 0) {\n        uint16_t f = rd8(m, DS(0x8F1Du));\n\n        f_3CA9_0002(m, (uint16_t)(0x8F9Cu + (uint16_t)(f * 0x1Cu)), GIN3_DS, 0xD01Eu, GIN3_DS, 0x1Cu);\n    }\n    total = f_2B5F_014D(m);\n    return total;"},
+  {"name": "014D 呼叫兩次", "find": "    uint32_t total = f_2B5F_014D(m);\n", "replace": "    uint32_t total = f_2B5F_014D(m);\n    total = f_2B5F_014D(m);\n"},
+  {"name": "不呼叫 014D", "find": "    uint32_t total = f_2B5F_014D(m);\n", "replace": "    uint32_t total = 0;\n"},
+  {"name": "回傳 0", "find": "    return total;", "replace": "    return 0;"}
+]

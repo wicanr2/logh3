@@ -1,0 +1,23 @@
+[
+  {"name": "比較改成不等才返回", "find": "if (cur == rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Cu))))", "replace": "if (cur != rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Cu))))"},
+  {"name": "比較用物件 +0x0D", "find": "rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Cu))))\n        return 0;", "replace": "rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Du))))\n        return 0;"},
+  {"name": "編號讀艦隊 +0x6B", "find": "uint8_t cur = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x6Au)));", "replace": "uint8_t cur = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x6Bu)));"},
+  {"name": "回傳 1 改 2", "find": "    return 1;\n}", "replace": "    return 2;\n}"},
+  {"name": "沒改時回 1", "find": "        return 0;\n    tile", "replace": "        return 1;\n    tile"},
+  {"name": "圖塊池取物件舊編號", "find": "tile = f_3982_0001(m, cur);", "replace": "tile = f_3982_0001(m, rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Cu))));"},
+  {"name": "圖塊池編號加 1", "find": "tile = f_3982_0001(m, cur);", "replace": "tile = f_3982_0001(m, (uint8_t)(cur + 1u));"},
+  {"name": "不呼叫圖塊池直接用編號", "find": "tile = f_3982_0001(m, cur);", "replace": "tile = (uint32_t)cur << 7;"},
+  {"name": "段與位移寫反", "find": "    w08A2_put16(m, obj_seg, (uint16_t)(obj_off + 0x10u), (uint16_t)(tile >> 16));\n    w08A2_put16(m, obj_seg, (uint16_t)(obj_off + 0x0Eu), (uint16_t)tile);", "replace": "    w08A2_put16(m, obj_seg, (uint16_t)(obj_off + 0x10u), (uint16_t)tile);\n    w08A2_put16(m, obj_seg, (uint16_t)(obj_off + 0x0Eu), (uint16_t)(tile >> 16));"},
+  {"name": "池位移寫到 +0x0F", "find": "w08A2_put16(m, obj_seg, (uint16_t)(obj_off + 0x0Eu), (uint16_t)tile);", "replace": "w08A2_put16(m, obj_seg, (uint16_t)(obj_off + 0x0Fu), (uint16_t)tile);"},
+  {"name": "池段寫到 +0x11", "find": "w08A2_put16(m, obj_seg, (uint16_t)(obj_off + 0x10u), (uint16_t)(tile >> 16));", "replace": "w08A2_put16(m, obj_seg, (uint16_t)(obj_off + 0x11u), (uint16_t)(tile >> 16));"},
+  {"name": "編號寫到 +0x0D", "find": "w08A2_put8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Cu)), cur);", "replace": "w08A2_put8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Du)), cur);"},
+  {"name": "編號不重讀艦隊", "find": "    cur = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x6Au)));\n", "replace": ""},
+  {"name": "旗標值 0xFE", "find": "(uint16_t)(obj_off + 1u)), 0xFF);", "replace": "(uint16_t)(obj_off + 1u)), 0xFE);"},
+  {"name": "旗標寫到 +2", "find": "(uint16_t)(obj_off + 1u)), 0xFF);", "replace": "(uint16_t)(obj_off + 2u)), 0xFF);"},
+  {"name": "不寫旗標", "find": "    w08A2_put8(m, LIN(obj_seg, (uint16_t)(obj_off + 1u)), 0xFF);\n", "replace": ""},
+  {"name": "編號寫入前不重讀物件指標", "find": "    cur = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x6Au)));\n    obj_off = w08A2_rd16(m, fleet_seg, (uint16_t)(fleet_off + 0x6Cu));\n    obj_seg = w08A2_rd16(m, fleet_seg, (uint16_t)(fleet_off + 0x6Eu));\n", "replace": "    cur = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x6Au)));\n"},
+  {"name": "旗標寫入前不重讀物件指標", "find": "    obj_off = w08A2_rd16(m, fleet_seg, (uint16_t)(fleet_off + 0x6Cu));\n    obj_seg = w08A2_rd16(m, fleet_seg, (uint16_t)(fleet_off + 0x6Eu));\n    w08A2_put8(m, LIN(obj_seg, (uint16_t)(obj_off + 1u)), 0xFF);", "replace": "    w08A2_put8(m, LIN(obj_seg, (uint16_t)(obj_off + 1u)), 0xFF);"},
+  {"name": "word 存取改線性連續（位移 0xFFFF 不回繞）", "find": "    w08A2_put8(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "    w08A2_put8(m, LIN(seg, 0) + (uint32_t)off + 1u, (uint8_t)(v >> 8));"},
+  {"name": "讀 word 改線性連續（位移 0xFFFF 不回繞）", "find": "    return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8));", "replace": "    return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, 0) + (uint32_t)off + 1u) << 8));"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"}
+]

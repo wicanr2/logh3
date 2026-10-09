@@ -1,0 +1,10 @@
+[
+  {"name": "加粗旗標改看bit0", "find": "if ((ch & 4u) != 0)", "replace": "if ((ch & 1u) != 0)"},
+  {"name": "網點旗標改看bit3", "find": "if ((ch & 2u) != 0)", "replace": "if ((ch & 8u) != 0)"},
+  {"name": "加粗與網點的呼叫順序對調", "find": "    if ((ch & 4u) != 0)\n        f_2376_1155(m);\n    if ((ch & 2u) != 0)\n        f_2376_116C(m);", "replace": "    if ((ch & 2u) != 0)\n        f_2376_116C(m);\n    if ((ch & 4u) != 0)\n        f_2376_1155(m);"},
+  {"name": "加粗旗標沒設也做", "find": "if ((ch & 4u) != 0)", "replace": "if ((ch & 4u) == 0)"},
+  {"name": "網點旗標沒設也做", "find": "if ((ch & 2u) != 0)", "replace": "if ((ch & 2u) == 0)"},
+  {"name": "加粗呼叫兩次", "find": "        f_2376_1155(m);", "replace": "        f_2376_1155(m), f_2376_1155(m);"},
+  {"name": "旗標取低位元組", "find": "uint8_t ch = (uint8_t)(cx >> 8);", "replace": "uint8_t ch = (uint8_t)cx;"},
+  {"name": "只做加粗不做網點", "find": "    if ((ch & 2u) != 0)\n        f_2376_116C(m);", "replace": "    if ((ch & 2u) != 0)\n        (void)0;"}
+]

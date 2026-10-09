@@ -1,0 +1,67 @@
+[
+  {
+    "name": "c 改算術右移",
+    "find": "(uint16_t)(c >> 1), (uint16_t)(r >> 1)",
+    "replace": "(uint16_t)((int16_t)c >> 1), (uint16_t)(r >> 1)"
+  },
+  {
+    "name": "r 只取低位元組再右移",
+    "find": "(uint16_t)(c >> 1), (uint16_t)(r >> 1)",
+    "replace": "(uint16_t)(c >> 1), (uint16_t)((r & 0xFFu) >> 1)"
+  },
+  {
+    "name": "c 不右移",
+    "find": "(uint16_t)(c >> 1), (uint16_t)(r >> 1)",
+    "replace": "c, (uint16_t)(r >> 1)"
+  },
+  {
+    "name": "x、y 對調",
+    "find": "(uint16_t)(c >> 1), (uint16_t)(r >> 1)",
+    "replace": "(uint16_t)(r >> 1), (uint16_t)(c >> 1)"
+  },
+  {
+    "name": "奇偶索引高低位對調",
+    "find": "(uint16_t)((r & 1u) << 1) + (c & 1u)",
+    "replace": "(uint16_t)((c & 1u) << 1) + (r & 1u)"
+  },
+  {
+    "name": "奇偶索引少一位（只看 c）",
+    "find": "(uint16_t)((r & 1u) << 1) + (c & 1u)",
+    "replace": "(c & 1u)"
+  },
+  {
+    "name": "奇偶索引取 2 位元",
+    "find": "(uint16_t)((r & 1u) << 1) + (c & 1u)",
+    "replace": "(uint16_t)((r & 3u) << 1) + (c & 1u)"
+  },
+  {
+    "name": "遮罩表基底 0x3C3E 改 0x3C3F",
+    "find": "0x3C3Eu +",
+    "replace": "0x3C3Fu +"
+  },
+  {
+    "name": "AND 改 OR",
+    "find": "return (uint16_t)(t & rd8(m, DS((uint16_t)(0x3C3Eu + k))));",
+    "replace": "return (uint16_t)(t | rd8(m, DS((uint16_t)(0x3C3Eu + k))));"
+  },
+  {
+    "name": "AND 改 XOR",
+    "find": "return (uint16_t)(t & rd8(m, DS((uint16_t)(0x3C3Eu + k))));",
+    "replace": "return (uint16_t)(t ^ rd8(m, DS((uint16_t)(0x3C3Eu + k))));"
+  },
+  {
+    "name": "不查圖塊遮罩表（直接用地圖值）",
+    "find": "uint8_t t = f_1588_0693(m, f_1588_0672(m, (uint16_t)(c >> 1), (uint16_t)(r >> 1)));",
+    "replace": "uint8_t t = f_1588_0672(m, (uint16_t)(c >> 1), (uint16_t)(r >> 1));"
+  },
+  {
+    "name": "只回遮罩表的值",
+    "find": "return (uint16_t)(t & rd8(m, DS((uint16_t)(0x3C3Eu + k))));",
+    "replace": "return (uint16_t)t;"
+  },
+  {
+    "name": "0693 的索引加 1",
+    "find": "f_1588_0693(m, f_1588_0672(",
+    "replace": "f_1588_0693(m, 1 + f_1588_0672("
+  }
+]

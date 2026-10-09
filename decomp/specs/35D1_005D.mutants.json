@@ -1,0 +1,26 @@
+[
+  {"name": "編號取 P[+3]", "find": "w005D_rd16s(m, p_seg, (uint16_t)(p_off + 2u))", "replace": "w005D_rd16s(m, p_seg, (uint16_t)(p_off + 3u))"},
+  {"name": "編號取高位元組", "find": "uint32_t q = f_341B_0353(m, w005D_rd16s(m, p_seg, (uint16_t)(p_off + 2u)));", "replace": "uint32_t q = f_341B_0353(m, (uint16_t)(w005D_rd16s(m, p_seg, (uint16_t)(p_off + 2u)) >> 8));"},
+  {"name": "段與位移對調", "find": "    uint16_t qseg = (uint16_t)(q >> 16);\n    uint16_t qoff = (uint16_t)q;", "replace": "    uint16_t qoff = (uint16_t)(q >> 16);\n    uint16_t qseg = (uint16_t)q;"},
+  {"name": "P[+0] 取 Q[+1]", "find": "w005D_wr8s(m, p_seg, p_off, rd8(m, LIN(qseg, qoff)));", "replace": "w005D_wr8s(m, p_seg, p_off, rd8(m, LIN(qseg, (uint16_t)(qoff + 1u))));"},
+  {"name": "X 左移 3", "find": "(uint16_t)((uint16_t)a << 4)", "replace": "(uint16_t)((uint16_t)a << 3)"},
+  {"name": "X 左移 5", "find": "(uint16_t)((uint16_t)a << 4)", "replace": "(uint16_t)((uint16_t)a << 5)"},
+  {"name": "Y 乘 16", "find": "(uint16_t)(b * 20u)", "replace": "(uint16_t)(b * 16u)"},
+  {"name": "Y 乘 21", "find": "(uint16_t)(b * 20u)", "replace": "(uint16_t)(b * 21u)"},
+  {"name": "X 只寫低位元組", "find": "    w005D_wr16s(m, p_seg, (uint16_t)(p_off + 0x12u), (uint16_t)((uint16_t)a << 4));", "replace": "    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x12u), (uint8_t)((uint16_t)a << 4));"},
+  {"name": "Y 只寫低位元組", "find": "    w005D_wr16s(m, p_seg, (uint16_t)(p_off + 0x14u), (uint16_t)(b * 20u));", "replace": "    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x14u), (uint8_t)(b * 20u));"},
+  {"name": "+0x1A 與 +0x1B 對調", "find": "    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x1Au), rd8(m, LIN(qseg, (uint16_t)(qoff + 5u))));\n    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x1Bu), rd8(m, LIN(qseg, (uint16_t)(qoff + 6u))));", "replace": "    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x1Au), rd8(m, LIN(qseg, (uint16_t)(qoff + 6u))));\n    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x1Bu), rd8(m, LIN(qseg, (uint16_t)(qoff + 5u))));"},
+  {"name": "右緣不減 1", "find": "(uint8_t)(a + rd8(m, LIN(qseg, (uint16_t)(qoff + 7u))) - 1u)", "replace": "(uint8_t)(a + rd8(m, LIN(qseg, (uint16_t)(qoff + 7u))))"},
+  {"name": "下緣不減 1", "find": "(uint8_t)(b + rd8(m, LIN(qseg, (uint16_t)(qoff + 8u))) - 1u)", "replace": "(uint8_t)(b + rd8(m, LIN(qseg, (uint16_t)(qoff + 8u))))"},
+  {"name": "右緣加高不加寬", "find": "(uint8_t)(a + rd8(m, LIN(qseg, (uint16_t)(qoff + 7u))) - 1u)", "replace": "(uint8_t)(a + rd8(m, LIN(qseg, (uint16_t)(qoff + 8u))) - 1u)"},
+  {"name": "下緣加寬不加高", "find": "(uint8_t)(b + rd8(m, LIN(qseg, (uint16_t)(qoff + 8u))) - 1u)", "replace": "(uint8_t)(b + rd8(m, LIN(qseg, (uint16_t)(qoff + 7u))) - 1u)"},
+  {"name": "右緣用 +0x1C 與下緣 +0x1D 對調", "find": "    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x1Cu), a);", "replace": "    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x1Du), a);"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"},
+  {"name": "word 寫入不在段內回繞(線性連續)", "find": "    w005D_put8(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "    w005D_put8(m, LIN(seg, off) + 1u, (uint8_t)(v >> 8));"},
+  {"name": "key 的位址不在段內回繞(線性加 2)", "find": "w005D_rd16s(m, p_seg, (uint16_t)(p_off + 2u))", "replace": "rd16(m, LIN(p_seg, p_off) + 2u)"},
+
+  {"name": "+0x1A 沿用第一次讀的 Q[+5](不重讀)", "find": "    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x1Au), rd8(m, LIN(qseg, (uint16_t)(qoff + 5u))));", "replace": "    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x1Au), a);"},
+  {"name": "+0x1B 沿用第一次讀的 Q[+6](不重讀)", "find": "    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x1Bu), rd8(m, LIN(qseg, (uint16_t)(qoff + 6u))));", "replace": "    w005D_wr8s(m, p_seg, (uint16_t)(p_off + 0x1Bu), b);"},
+  {"name": "右緣沿用 Q[+5] 舊值(不重讀)", "find": "    a = rd8(m, LIN(qseg, (uint16_t)(qoff + 5u)));\n    a = (uint8_t)(a +", "replace": "    a = (uint8_t)(a +"},
+  {"name": "下緣沿用 Q[+6] 舊值(不重讀)", "find": "    b = rd8(m, LIN(qseg, (uint16_t)(qoff + 6u)));\n    b = (uint8_t)(b +", "replace": "    b = (uint8_t)(b +"}
+]

@@ -1,0 +1,29 @@
+{
+  "id": "3A92_0042",
+  "entry": "3A92:0042",
+  "conv": "far",
+  "ret": "pack:bx,cx,si,di",
+  "size": 32,
+  "code_sha256_16": "3d92ba43047d7fac",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "旋轉(暫存器版)：AL=角度、BX=x、CX=y。輸出 BX=x'、CX=y'、SI/DI=表項位移。DX 與 AX 不比對（AX 等於 CX，DX 是 0081 的殘值）。角度含高位元組非 0 的 AX（AH 被忽略）、0xC0 以上（+0x40 的 8 位元回繞）。",
+  "args": [
+    {"name": "ax", "kind": "reg", "reg": "ax", "gen": {"choices": [0, 1, 2, 63, 64, 65, 127, 128, 129, 191, 192, 193, 254, 255, 256, 319, 320, 65280, 65472, 65535], "also_random": true}},
+    {"name": "bx", "kind": "reg", "reg": "bx", "gen": {"choices": [0, 1, 2, 255, 256, 1023, 1024, 2047, 2048, 32767, 32768, 63488, 64513, 65534, 65535], "also_random": true}},
+    {"name": "cx", "kind": "reg", "reg": "cx", "gen": {"choices": [0, 1, 2, 255, 256, 1023, 1024, 2047, 2048, 32767, 32768, 63488, 64513, 65534, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "角度 0 (x, y) = (1000, 0)", "args": [0, 1000, 0], "pokes": []},
+    {"note": "角度 64 (x, y) = (1000, 0)", "args": [64, 1000, 0], "pokes": []},
+    {"note": "角度 192：+0x40 回繞到 0", "args": [192, 1000, 500], "pokes": []},
+    {"note": "角度 255：+0x40 = 0x13F，8 位元回繞成 0x3F", "args": [255, 300, 200], "pokes": []},
+    {"note": "AH 非 0：AX = 0x0140 → 角度 0x40", "args": [320, 1000, 0], "pokes": []},
+    {"note": "x = y = -32768", "args": [37, 32768, 32768], "pokes": []},
+    {"note": "x = y = 32767", "args": [100, 32767, 32767], "pokes": []}
+  ],
+  "iters": 20000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}

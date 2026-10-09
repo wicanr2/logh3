@@ -1,0 +1,34 @@
+{
+  "id": "2D76_0D40",
+  "entry": "2D76:0D40",
+  "conv": "far",
+  "ret": "pack:al",
+  "size": 114,
+  "code_sha256_16": "9add5e79d8019f08",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "step_budget": 1200000,
+  "note": "艦隊記錄 p（取暫存區 9D00:0000，1100 bytes）：p[+9] ＝ 樣板列（ds:2BC6 + 20 × p[+9]），p[+0xF] ＝ 組數 n，p[+0x10 + 4i + 3] ＝ 第 i 組的隊形槽（word，只有低位元組有用）。基底樣板 0 列是 (00 14)(00 0b)(00 0f)(00 10)(06 1c)(05 1e)(00 13)(02 1a)(00 15)(02 17)，第 2 個 byte 是隊形槽。回 AL（AH 殘值）。n 最大 255 時每案約 70 萬步，step_budget 調高。",
+  "args": [
+    {"name": "p", "kind": "farptr", "gen": {"scratch": 1100}}
+  ],
+  "seeds": [
+    {"note": "樣板 0、n=3，槽 14、0b、99：第 3 組(索引 2)不在前 3 筆內，回 2", "args": [0, 40192], "pokes": [{"addr": "lin:9D009", "hex": "00"}, {"addr": "lin:9D00F", "hex": "03"}, {"addr": "lin:9D013", "hex": "14"}, {"addr": "lin:9D017", "hex": "0B"}, {"addr": "lin:9D01B", "hex": "99"}]},
+    {"note": "槽 14、0b、0f 全在前 3 筆內：回 0xFF", "args": [0, 40192], "pokes": [{"addr": "lin:9D00F", "hex": "03"}, {"addr": "lin:9D013", "hex": "14"}, {"addr": "lin:9D017", "hex": "0B"}, {"addr": "lin:9D01B", "hex": "0F"}]},
+    {"note": "第一組不在樣板內：回 0", "args": [0, 40192], "pokes": [{"addr": "lin:9D00F", "hex": "03"}, {"addr": "lin:9D013", "hex": "99"}, {"addr": "lin:9D017", "hex": "0B"}, {"addr": "lin:9D01B", "hex": "0F"}]},
+    {"note": "n=0：回 0xFF", "args": [0, 40192], "pokes": [{"addr": "lin:9D013", "hex": "99"}]},
+    {"note": "n=10，前 9 組在樣板內、第 10 組(索引 9)槽 0x55 不在：回 9", "args": [0, 40192], "pokes": [{"addr": "lin:9D00F", "hex": "0A"}, {"addr": "lin:9D013", "hex": "14"}, {"addr": "lin:9D017", "hex": "0B"}, {"addr": "lin:9D01B", "hex": "0F"}, {"addr": "lin:9D01F", "hex": "10"}, {"addr": "lin:9D023", "hex": "1C"}, {"addr": "lin:9D027", "hex": "1E"}, {"addr": "lin:9D02B", "hex": "13"}, {"addr": "lin:9D02F", "hex": "1A"}, {"addr": "lin:9D033", "hex": "15"}, {"addr": "lin:9D037", "hex": "55"}]},
+    {"note": "槽的 word 高位元組非 0（0x0114）：只看低位元組 0x14，在樣板內；第二組 0x0299 不在：回 1", "args": [0, 40192], "pokes": [{"addr": "lin:9D00F", "hex": "02"}, {"addr": "lin:9D013", "hex": "1401"}, {"addr": "lin:9D017", "hex": "9902"}]},
+    {"note": "n=4，第二組的槽 0x1C 是樣板第 5 筆（索引 4），不在前 4 筆內：回 1", "args": [0, 40192], "pokes": [{"addr": "lin:9D00F", "hex": "04"}, {"addr": "lin:9D013", "hex": "14"}, {"addr": "lin:9D017", "hex": "1C"}]},
+    {"note": "n=5，同上但 0x1C 是第 5 筆：在內，回 0xFF 或後面", "args": [0, 40192], "pokes": [{"addr": "lin:9D00F", "hex": "05"}, {"addr": "lin:9D013", "hex": "14"}, {"addr": "lin:9D017", "hex": "1C"}, {"addr": "lin:9D01B", "hex": "0B"}, {"addr": "lin:9D01F", "hex": "0F"}, {"addr": "lin:9D023", "hex": "10"}]},
+    {"note": "樣板列 1：p[+9]=1，樣板是 ds:2BDA 起 (00 21)(02 10)(00 22)...；槽 21 在內，槽 14 不在(列 0 才有)：回 1", "args": [0, 40192], "pokes": [{"addr": "lin:9D009", "hex": "01"}, {"addr": "lin:9D00F", "hex": "02"}, {"addr": "lin:9D013", "hex": "21"}, {"addr": "lin:9D017", "hex": "14"}]},
+    {"note": "樣板列 255：p[+9]=0xFF，樣板在 ds:2BC6 + 5100", "args": [0, 40192], "pokes": [{"addr": "lin:9D009", "hex": "FF"}, {"addr": "lin:9D00F", "hex": "03"}, {"addr": "lin:9D013", "hex": "01"}]},
+    {"note": "p 在 8000:FFF8：p+9 回繞到 0001、p+0xF 回繞到 0007、組指標 q = 0x0008，槽的 word 在 q+3 = 000B；第 2 組(索引 1)不在樣板內：回 1", "args": [65528, 32768], "pokes": [{"addr": "8000:0001", "hex": "00"}, {"addr": "8000:0007", "hex": "02"}, {"addr": "8000:000B", "hex": "14"}, {"addr": "8000:000F", "hex": "99"}]},
+    {"note": "q = 0xFFFD：q+3 回繞到 0x0000（槽在 8000:0000 = 0x14 在內），不回繞的算法會讀到 9000:0000", "args": [65517, 32768], "pokes": [{"addr": "8000:FFF6", "hex": "00"}, {"addr": "8000:FFFC", "hex": "01"}, {"addr": "lin:80000", "hex": "14"}]},
+    {"note": "組指標 q+3 = 0xFFFF：p 在 8000:FFEC，q = FFFC，槽 word 的低位元組在 FFFF、高位元組在同段 0000(回繞)", "args": [65516, 32768], "pokes": [{"addr": "8000:FFF5", "hex": "00"}, {"addr": "8000:FFFB", "hex": "01"}, {"addr": "lin:8FFFF", "hex": "14"}, {"addr": "lin:80000", "hex": "00"}]}
+  ],
+  "iters": 8000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}

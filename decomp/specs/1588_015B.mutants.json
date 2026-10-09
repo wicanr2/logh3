@@ -1,0 +1,17 @@
+[
+  {"name": "計數減二", "find": "(uint8_t)(rd8(m, DS(0x3C19)) - 1u)", "replace": "(uint8_t)(rd8(m, DS(0x3C19)) - 2u)"},
+  {"name": "計數不減", "find": "(uint8_t)(rd8(m, DS(0x3C19)) - 1u)", "replace": "(uint8_t)(rd8(m, DS(0x3C19)) - 0u)"},
+  {"name": "計數不寫回", "find": "    wr8(m, DS(0x3C19), n);\n", "replace": ""},
+  {"name": "計數 <= 1 就釋放", "find": "    if (n != 0)\n        return;", "replace": "    if (n > 1)\n        return;"},
+  {"name": "計數為 0xFF 也釋放", "find": "    if (n != 0)\n        return;", "replace": "    if (n != 0 && n != 0xFFu)\n        return;"},
+  {"name": "不釋放", "find": "    (void)f_3ABF_003B(m, rd16(m, DS(0x3C1A)), rd16(m, DS(0x3C1C)));\n", "replace": ""},
+  {"name": "釋放的位移與段對調", "find": "f_3ABF_003B(m, rd16(m, DS(0x3C1A)), rd16(m, DS(0x3C1C)))", "replace": "f_3ABF_003B(m, rd16(m, DS(0x3C1C)), rd16(m, DS(0x3C1A)))"},
+  {"name": "先清指標再釋放", "find": "    (void)f_3ABF_003B(m, rd16(m, DS(0x3C1A)), rd16(m, DS(0x3C1C)));\n    wr16(m, DS(0x3C1A), 0);\n    wr16(m, DS(0x3C1C), 0);\n", "replace": "    wr16(m, DS(0x3C1A), 0);\n    wr16(m, DS(0x3C1C), 0);\n    (void)f_3ABF_003B(m, rd16(m, DS(0x3C1A)), rd16(m, DS(0x3C1C)));\n"},
+  {"name": "釋放兩次", "find": "    (void)f_3ABF_003B(m, rd16(m, DS(0x3C1A)), rd16(m, DS(0x3C1C)));\n", "replace": "    (void)f_3ABF_003B(m, rd16(m, DS(0x3C1A)), rd16(m, DS(0x3C1C)));\n    (void)f_3ABF_003B(m, rd16(m, DS(0x3C1A)), rd16(m, DS(0x3C1C)));\n"},
+  {"name": "不清位移", "find": "    wr16(m, DS(0x3C1A), 0);\n", "replace": ""},
+  {"name": "不清段", "find": "    wr16(m, DS(0x3C1C), 0);\n", "replace": ""},
+  {"name": "段只清低位元組", "find": "    wr16(m, DS(0x3C1C), 0);\n", "replace": "    wr8(m, DS(0x3C1C), 0);\n"},
+  {"name": "3C18 寫 0xFE", "find": "wr8(m, DS(0x3C18), 0xFFu);", "replace": "wr8(m, DS(0x3C18), 0xFEu);"},
+  {"name": "3C18 不寫", "find": "    wr8(m, DS(0x3C18), 0xFFu);\n", "replace": ""},
+  {"name": "計數歸零不釋放而是提早 3C18", "find": "    if (n != 0)\n        return;", "replace": "    if (n != 0 || rd8(m, DS(0x3C18)) == 0xFFu)\n        return;"}
+]

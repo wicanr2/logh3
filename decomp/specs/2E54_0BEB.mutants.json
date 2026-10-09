@@ -1,0 +1,15 @@
+[
+  {"name": "分支對調", "find": "    if (r % 5 == 0)\n        f_2E54_0C27(m, list_off, list_seg, count_w, target_w);\n    else\n        f_2E54_0C83(m, list_off, list_seg, count_w, target_w);", "replace": "    if (r % 5 == 0)\n        f_2E54_0C83(m, list_off, list_seg, count_w, target_w);\n    else\n        f_2E54_0C27(m, list_off, list_seg, count_w, target_w);"},
+  {"name": "餘數改 ÷ 4", "find": "r % 5 == 0", "replace": "r % 4 == 0"},
+  {"name": "餘數改 ÷ 6", "find": "r % 5 == 0", "replace": "r % 6 == 0"},
+  {"name": "餘數改比 1", "find": "r % 5 == 0", "replace": "r % 5 == 1"},
+  {"name": "永遠走 0C83（不看亂數結果）", "find": "r % 5 == 0", "replace": "r < 0"},
+  {"name": "永遠走 0C27", "find": "r % 5 == 0", "replace": "r >= 0"},
+  {"name": "不抽亂數", "find": "    int16_t r = (int16_t)f_3CD5_000C(m);", "replace": "    int16_t r = 1;"},
+  {"name": "亂數抽兩次", "find": "    int16_t r = (int16_t)f_3CD5_000C(m);", "replace": "    (void)f_3CD5_000C(m);\n    int16_t r = (int16_t)f_3CD5_000C(m);"},
+  {"name": "0C27 的 count 與 target 對調", "find": "        f_2E54_0C27(m, list_off, list_seg, count_w, target_w);", "replace": "        f_2E54_0C27(m, list_off, list_seg, target_w, count_w);"},
+  {"name": "0C83 的 count 與 target 對調", "find": "        f_2E54_0C83(m, list_off, list_seg, count_w, target_w);", "replace": "        f_2E54_0C83(m, list_off, list_seg, target_w, count_w);"},
+  {"name": "0C83 的陣列段位移對調", "find": "        f_2E54_0C83(m, list_off, list_seg, count_w, target_w);", "replace": "        f_2E54_0C83(m, list_seg, list_off, count_w, target_w);"},
+  {"name": "0C27 筆數少一", "find": "        f_2E54_0C27(m, list_off, list_seg, count_w, target_w);", "replace": "        f_2E54_0C27(m, list_off, list_seg, (uint16_t)(count_w - 1u), target_w);"},
+  {"name": "兩個都呼叫", "find": "    else\n        f_2E54_0C83(m, list_off, list_seg, count_w, target_w);", "replace": "    f_2E54_0C83(m, list_off, list_seg, count_w, target_w);"}
+]

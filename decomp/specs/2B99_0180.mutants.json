@@ -1,0 +1,12 @@
+[
+  {"name": "順序對調(先陣營 1 後陣營 0)", "find": "    f_2B99_01B1(m, rd16(m, DS(0xD062)), rd16(m, DS(0xD064)), rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));\n    f_2B99_01B1(m, rd16(m, DS(0xD066)), rd16(m, DS(0xD068)), rd16(m, DS(0xD06E)), rd16(m, DS(0xD070)));", "replace": "    f_2B99_01B1(m, rd16(m, DS(0xD066)), rd16(m, DS(0xD068)), rd16(m, DS(0xD06E)), rd16(m, DS(0xD070)));\n    f_2B99_01B1(m, rd16(m, DS(0xD062)), rd16(m, DS(0xD064)), rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));"},
+  {"name": "只做第一組", "find": "    f_2B99_01B1(m, rd16(m, DS(0xD066)), rd16(m, DS(0xD068)), rd16(m, DS(0xD06E)), rd16(m, DS(0xD070)));", "replace": "    (void)0;"},
+  {"name": "只做第二組", "find": "    f_2B99_01B1(m, rd16(m, DS(0xD062)), rd16(m, DS(0xD064)), rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));\n", "replace": ""},
+  {"name": "第二次距離矩陣位移與段對調", "find": "f_2B99_01B1(m, rd16(m, DS(0xD066)), rd16(m, DS(0xD068)),", "replace": "f_2B99_01B1(m, rd16(m, DS(0xD068)), rd16(m, DS(0xD066)),"},
+  {"name": "第一次中點矩陣位移與段對調", "find": "rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));", "replace": "rd16(m, DS(0xD06C)), rd16(m, DS(0xD06A)));"},
+  {"name": "第二次中點矩陣用第一組", "find": "rd16(m, DS(0xD06E)), rd16(m, DS(0xD070)));", "replace": "rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));"},
+  {"name": "第二次距離矩陣用第一組", "find": "f_2B99_01B1(m, rd16(m, DS(0xD066)), rd16(m, DS(0xD068)),", "replace": "f_2B99_01B1(m, rd16(m, DS(0xD062)), rd16(m, DS(0xD064)),"},
+  {"name": "距離矩陣與中點矩陣位置對調(第一次)", "find": "f_2B99_01B1(m, rd16(m, DS(0xD062)), rd16(m, DS(0xD064)), rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));", "replace": "f_2B99_01B1(m, rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)), rd16(m, DS(0xD062)), rd16(m, DS(0xD064)));"},
+  {"name": "第二次指標在第一次呼叫之前讀(快取)", "find": "    f_2B99_01B1(m, rd16(m, DS(0xD062)), rd16(m, DS(0xD064)), rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));\n    f_2B99_01B1(m, rd16(m, DS(0xD066)), rd16(m, DS(0xD068)), rd16(m, DS(0xD06E)), rd16(m, DS(0xD070)));", "replace": "    uint16_t q0 = rd16(m, DS(0xD066)), q1 = rd16(m, DS(0xD068)), q2 = rd16(m, DS(0xD06E)), q3 = rd16(m, DS(0xD070));\n\n    f_2B99_01B1(m, rd16(m, DS(0xD062)), rd16(m, DS(0xD064)), rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));\n    f_2B99_01B1(m, q0, q1, q2, q3);"},
+  {"name": "第一次呼叫兩次", "find": "    f_2B99_01B1(m, rd16(m, DS(0xD062)), rd16(m, DS(0xD064)), rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));\n", "replace": "    f_2B99_01B1(m, rd16(m, DS(0xD062)), rd16(m, DS(0xD064)), rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));\n    f_2B99_01B1(m, rd16(m, DS(0xD062)), rd16(m, DS(0xD064)), rd16(m, DS(0xD06A)), rd16(m, DS(0xD06C)));\n"}
+]

@@ -1,0 +1,39 @@
+{
+  "id": "2376_03F6",
+  "entry": "2376:03F6",
+  "conv": "near",
+  "ret": "none",
+  "size": 24,
+  "code_sha256_16": "e3017e06fe760a90",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "ds_seg": "3D22",
+  "note": "圖形表一筆（160 bytes，ds:79E + 160 * 物件[+2]）搬到 ds:DI。DS 是模組資料段 3D22。物件 ES:SI 取 DGROUP、模組資料段與暫存區。種子造出來源與目的重疊（目的 = 來源 + 2 逐 word 先讀後寫會逐步塗抹）、目的跨越位移 0xFFFF、編號 0 與 255。",
+  "args": [
+    {"name": "es", "kind": "reg", "reg": "es", "gen": {"choices": [21683, 15650, 40192, 15650, 21683]}},
+    {"name": "si", "kind": "reg", "reg": "si", "gen": {"choices": [0, 16, 4096, 8192, 49268, 65533, 65534, 65535, 2, 32768]}},
+    {"name": "di", "kind": "reg", "reg": "di", "gen": {"choices": [0, 1920, 1950, 1952, 2110, 2048, 4096, 32768, 65280, 65504, 65520, 65535, 65534, 65535, 2000, 1948]}}
+  ],
+  "seeds": [
+    {"args": [40192, 0, 4096], "pokes": [{"addr": "lin:9D002", "hex": "00"}]},
+    {"args": [40192, 0, 4096], "pokes": [{"addr": "lin:9D002", "hex": "01"}, {"addr": "ds:79E", "hex": "11223344", "repeat": 40}, {"addr": "ds:83E", "hex": "99aabbcc", "repeat": 40}]},
+    {"args": [40192, 0, 1952], "pokes": [{"addr": "lin:9D002", "hex": "00"}, {"addr": "ds:79E", "hex": "0102030405060708090a0b0c0d0e0f10", "repeat": 10}]},
+    {"args": [40192, 0, 1950], "pokes": [{"addr": "lin:9D002", "hex": "00"}, {"addr": "ds:79E", "hex": "0102030405060708090a0b0c0d0e0f10", "repeat": 10}]},
+    {"args": [40192, 0, 1948], "pokes": [{"addr": "lin:9D002", "hex": "00"}, {"addr": "ds:79E", "hex": "0102030405060708090a0b0c0d0e0f10", "repeat": 10}]},
+    {"args": [40192, 0, 2110], "pokes": [{"addr": "lin:9D002", "hex": "00"}, {"addr": "ds:79E", "hex": "0102030405060708090a0b0c0d0e0f10", "repeat": 20}]},
+    {"args": [40192, 0, 2030], "pokes": [{"addr": "lin:9D002", "hex": "00"}, {"addr": "ds:79E", "hex": "0102030405060708090a0b0c0d0e0f10", "repeat": 20}]},
+    {"args": [40192, 0, 65520], "pokes": [{"addr": "lin:9D002", "hex": "00"}, {"addr": "ds:79E", "hex": "0102030405060708090a0b0c0d0e0f10", "repeat": 10}, {"addr": "ds:0000", "hex": "55", "repeat": 200}]},
+    {"args": [40192, 0, 65535], "pokes": [{"addr": "lin:9D002", "hex": "00"}, {"addr": "ds:79E", "hex": "0102030405060708090a0b0c0d0e0f10", "repeat": 10}, {"addr": "ds:0000", "hex": "55", "repeat": 200}]},
+    {"args": [40192, 0, 65534], "pokes": [{"addr": "lin:9D002", "hex": "00"}, {"addr": "ds:79E", "hex": "0102030405060708090a0b0c0d0e0f10", "repeat": 10}, {"addr": "ds:0000", "hex": "55", "repeat": 200}]},
+    {"args": [40192, 0, 4096], "pokes": [{"addr": "lin:9D002", "hex": "ff"}, {"addr": "ds:A0A0", "hex": "a1a2a3a4a5a6a7a8", "repeat": 25}]},
+    {"args": [40192, 0, 4096], "pokes": [{"addr": "lin:9D002", "hex": "05"}, {"addr": "ds:ABE", "hex": "b1b2b3b4b5b6b7b8", "repeat": 25}]},
+    {"args": [21683, 0, 4096], "pokes": [{"addr": "lin:54B32", "hex": "01"}, {"addr": "lin:3D222", "hex": "02"}, {"addr": "ds:83E", "hex": "c1c2c3c4", "repeat": 40}, {"addr": "ds:8DE", "hex": "d1d2d3d4", "repeat": 40}]},
+    {"args": [15650, 0, 4096], "pokes": [{"addr": "lin:54B32", "hex": "01"}, {"addr": "lin:3D222", "hex": "02"}, {"addr": "ds:83E", "hex": "c1c2c3c4", "repeat": 40}, {"addr": "ds:8DE", "hex": "d1d2d3d4", "repeat": 40}]},
+    {"args": [40192, 65535, 4096], "pokes": [{"addr": "lin:9D001", "hex": "00"}, {"addr": "lin:9D000", "hex": "ff"}]},
+    {"args": [40192, 65534, 4096], "pokes": [{"addr": "lin:9D000", "hex": "00"}, {"addr": "lin:9D001", "hex": "ff"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

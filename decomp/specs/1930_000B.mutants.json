@@ -1,0 +1,17 @@
+[
+  {"name": "艦種 5 改 4", "find": "== 5)", "replace": "== 4)"},
+  {"name": "艦種不限（全部呼叫）", "find": "if (rd8(m, LIN(ship_seg, (uint16_t)(ship_off + 4u))) == 5)\n            f_1930_0062", "replace": "if (1)\n            f_1930_0062"},
+  {"name": "艦種欄位位移 +4 改 +5", "find": "(uint16_t)(ship_off + 4u))) == 5)", "replace": "(uint16_t)(ship_off + 5u))) == 5)"},
+  {"name": "清單基底 0x98BA 改 0x98B8", "find": "uint16_t list = 0x98BAu;", "replace": "uint16_t list = 0x98B8u;"},
+  {"name": "筆數只讀低位元組", "find": "while (di < f1930_000B_ds16(m, 0x9896u)) {", "replace": "while (di < (uint8_t)f1930_000B_ds16(m, 0x9896u)) {"},
+  {"name": "筆數比較改小於等於", "find": "while (di < f1930_000B_ds16(m, 0x9896u)) {", "replace": "while (di <= f1930_000B_ds16(m, 0x9896u) && di < 600) {"},
+  {"name": "清單項目只讀低位元組", "find": "uint16_t idx = f1930_000B_ds16(m, list);", "replace": "uint16_t idx = (uint8_t)f1930_000B_ds16(m, list);"},
+  {"name": "清單步幅 2 改 1", "find": "list = (uint16_t)(list + 2u);", "replace": "list = (uint16_t)(list + 1u);"},
+  {"name": "艦艇大小 0x4E 改 0x4D", "find": "(uint16_t)(idx * 0x4Eu)", "replace": "(uint16_t)(idx * 0x4Du)"},
+  {"name": "池段改用 DS", "find": "uint16_t ship_seg = f1930_000B_ds16(m, 0xCFB6u);", "replace": "uint16_t ship_seg = GIN3_DS;"},
+  {"name": "池位移改讀 ds:CFB2", "find": "f1930_000B_ds16(m, 0xCFB4u)", "replace": "f1930_000B_ds16(m, 0xCFB2u)"},
+  {"name": "不呼叫 0062", "find": "            f_1930_0062(m, ship_off, ship_seg);\n", "replace": "            (void)ship_seg;\n"},
+  {"name": "呼叫 0062 的艦艇位移加 0x4E", "find": "f_1930_0062(m, ship_off, ship_seg);", "replace": "f_1930_0062(m, (uint16_t)(ship_off + 0x4Eu), ship_seg);"},
+  {"name": "回傳改 0", "find": "    return di;\n}", "replace": "    return 0;\n}"},
+  {"name": "起始序號改 1", "find": "uint16_t di = 0;", "replace": "uint16_t di = 1;"}
+]

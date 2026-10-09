@@ -1,0 +1,122 @@
+[
+  {
+    "name": "021B 的參數對調（朝向在前）",
+    "find": "f_2BE1_021B(m, target, f0524_rd16(m, fleet_seg, head))",
+    "replace": "f_2BE1_021B(m, f0524_rd16(m, fleet_seg, head), target)"
+  },
+  {
+    "name": "朝向欄位改 +0x4B",
+    "find": "uint16_t head = (uint16_t)(fleet_off + 0x4Au);",
+    "replace": "uint16_t head = (uint16_t)(fleet_off + 0x4Bu);"
+  },
+  {
+    "name": "|d| 不取絕對值（有號比較）",
+    "find": "uint16_t absd = (int16_t)d < 0 ? (uint16_t)(0u - d) : d;",
+    "replace": "uint16_t absd = d;"
+  },
+  {
+    "name": "回轉速度改讀 +0x4C",
+    "find": "uint16_t rate = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x4Du)));",
+    "replace": "uint16_t rate = rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x4Cu)));"
+  },
+  {
+    "name": "|d| <= rate 改 <",
+    "find": "if (absd <= rate) {",
+    "replace": "if (absd < rate) {"
+  },
+  {
+    "name": "一步轉到時加整個 d（16 位元）",
+    "find": "wr8(m, LIN(fleet_seg, head), (uint8_t)(rd8(m, LIN(fleet_seg, head)) + (uint8_t)d));",
+    "replace": "f0524_wr16(m, fleet_seg, head, (uint16_t)(f0524_rd16(m, fleet_seg, head) + d));"
+  },
+  {
+    "name": "一步轉到時加 rate",
+    "find": "wr8(m, LIN(fleet_seg, head), (uint8_t)(rd8(m, LIN(fleet_seg, head)) + (uint8_t)d));",
+    "replace": "wr8(m, LIN(fleet_seg, head), (uint8_t)(rd8(m, LIN(fleet_seg, head)) + (uint8_t)rate));"
+  },
+  {
+    "name": "額度欄位改 +0x54",
+    "find": "uint16_t pos = (uint16_t)(fleet_off + 0x56u);",
+    "replace": "uint16_t pos = (uint16_t)(fleet_off + 0x54u);"
+  },
+  {
+    "name": "額度門檻 8.0 改 7.0",
+    "find": "< (int32_t)0x00080000)",
+    "replace": "< (int32_t)0x00070000)"
+  },
+  {
+    "name": "額度門檻 8.0 改 9.0",
+    "find": "< (int32_t)0x00080000)",
+    "replace": "< (int32_t)0x00090000)"
+  },
+  {
+    "name": "額度比較改小於等於",
+    "find": "< (int32_t)0x00080000)",
+    "replace": "<= (int32_t)0x00080000)"
+  },
+  {
+    "name": "額度比較改無號",
+    "find": "if ((int32_t)(((uint32_t)hi << 16) | lo) < (int32_t)0x00080000)",
+    "replace": "if ((((uint32_t)hi << 16) | lo) < 0x00080000u)"
+  },
+  {
+    "name": "符號對調（d > 0 → −1）",
+    "find": "s = (int16_t)d > 0 ? 1 : ((int16_t)d == 0 ? 0 : -1);",
+    "replace": "s = (int16_t)d > 0 ? -1 : 1;"
+  },
+  {
+    "name": "轉的量不乘符號（恆為 +rate）",
+    "find": "s = (int16_t)d > 0 ? 1 : ((int16_t)d == 0 ? 0 : -1);",
+    "replace": "s = 1;"
+  },
+  {
+    "name": "轉的量用 d 本身",
+    "find": "p = (int16_t)((int16_t)s * (int16_t)(int8_t)rd8(m, LIN(fleet_seg, (uint16_t)(fleet_off + 0x4Du))));",
+    "replace": "p = (int16_t)d;"
+  },
+  {
+    "name": "轉的量用 +0x4C",
+    "find": "(uint16_t)(fleet_off + 0x4Du))));\n        wr8",
+    "replace": "(uint16_t)(fleet_off + 0x4Cu))));\n        wr8"
+  },
+  {
+    "name": "多步轉向不寫朝向",
+    "find": "        wr8(m, LIN(fleet_seg, head), (uint8_t)(rd8(m, LIN(fleet_seg, head)) + (uint8_t)p));\n",
+    "replace": ""
+  },
+  {
+    "name": "多步轉向寫 16 位元朝向",
+    "find": "        wr8(m, LIN(fleet_seg, head), (uint8_t)(rd8(m, LIN(fleet_seg, head)) + (uint8_t)p));\n",
+    "replace": "        f0524_wr16(m, fleet_seg, head, (uint16_t)(f0524_rd16(m, fleet_seg, head) + (uint16_t)p));\n"
+  },
+  {
+    "name": "額度扣 7.0",
+    "find": "- 8u));",
+    "replace": "- 7u));"
+  },
+  {
+    "name": "額度不扣",
+    "find": "        f0524_wr16(m, fleet_seg, (uint16_t)(pos + 2u), (uint16_t)(f0524_rd16(m, fleet_seg, (uint16_t)(pos + 2u)) - 8u));\n",
+    "replace": ""
+  },
+  {
+    "name": "額度扣在低字",
+    "find": "(uint16_t)(f0524_rd16(m, fleet_seg, (uint16_t)(pos + 2u)) - 8u));",
+    "replace": "f0524_rd16(m, fleet_seg, (uint16_t)(pos + 2u)));\n        f0524_wr16(m, fleet_seg, pos, (uint16_t)(f0524_rd16(m, fleet_seg, pos) - 8u));"
+  },
+  {
+    "name": "回傳結果恆為 1 之外 AH 清 0",
+    "find": "return (uint16_t)(((uint16_t)p & 0xFF00u) | 1u);",
+    "replace": "return 1u;"
+  },
+  {
+    "name": "不轉的回傳 AH 恆為 0",
+    "find": "return (uint16_t)(hi & 0xFF00u);",
+    "replace": "return 0u;"
+  },
+  {
+    "name": "一步轉到的回傳 AH 恆為 0",
+    "find": "return (uint16_t)((d & 0xFF00u) | 1u);",
+    "replace": "return 1u;"
+  }
+]

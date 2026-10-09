@@ -1,0 +1,8 @@
+[
+  {"name": "傳 0（隱藏）", "find": "return f_1727_035E(m, 1u);", "replace": "return f_1727_035E(m, 0u);"},
+  {"name": "傳 2", "find": "return f_1727_035E(m, 1u);", "replace": "return f_1727_035E(m, 2u);"},
+  {"name": "傳 0x100（低位元組 0、word 非 0）", "find": "return f_1727_035E(m, 1u);", "replace": "return f_1727_035E(m, 0x100u);"},
+  {"name": "不呼叫 035E", "find": "return f_1727_035E(m, 1u);", "replace": "return 1u;"},
+  {"name": "呼叫兩次", "find": "return f_1727_035E(m, 1u);", "replace": "f_1727_035E(m, 1u);\n    return f_1727_035E(m, 1u);"},
+  {"name": "回傳改 0", "find": "return f_1727_035E(m, 1u);", "replace": "f_1727_035E(m, 1u);\n    return 0u;"}
+]

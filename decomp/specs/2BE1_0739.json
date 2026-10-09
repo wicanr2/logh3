@@ -1,0 +1,41 @@
+{
+  "id": "2BE1_0739",
+  "entry": "2BE1:0739",
+  "conv": "far",
+  "ret": "ax",
+  "size": 141,
+  "code_sha256_16": "87b2d7ffbfdf5b1d",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "畫面座標 → 格序：先用 1588:0362 換成世界座標 (wx, wy) = (x − 0x10 + ds:9BF4, y − 0x14 + ds:9BF6)，再掃 ds:D072 起 41 筆 × 10 bytes（X、Y 各 word，+4 旗標 0 才有效）找第一個 [X, X+0x10) × [Y, Y+0x10) 包住的格。輸入域：x 取 0x10..0x1CF、y 取 0x14..0x17B（0362 一定寫輸出；範圍外 wx、wy 是堆疊殘值，框架無法重現，見 C 檔頭）。基底表全 0（所有項旗標 0、X = Y = 0，所以 wx、wy < 16 時命中第 0 項）。seeds 造邊界：命中邊（wx = X、X + 0xF，不含 X + 0x10）、y 同、旗標非 0 跳過、第 40 項（最後一項）命中而第 41 項不看、兩項都命中取第一項、X + 0x10 回繞（X = 0xFFF8、wx = 0xFFFF）、有號與無號比較（wx = 0x8003、X = 0x7FFC）、世界原點平移。",
+  "args": [
+    {"name": "x", "kind": "word", "gen": {"min": 16, "max": 463}},
+    {"name": "y", "kind": "word", "gen": {"min": 20, "max": 379}}
+  ],
+  "seeds": [
+    {"note": "基底表全 0：wx = 8、wy = 8 命中第 0 項", "args": [24, 28], "pokes": []},
+    {"note": "第 0 項 (X=0x10, Y=0x10)：wx=0x10(=X)、wy=0x1C 命中", "args": [32, 48], "pokes": [{"addr": "ds:D072", "hex": "1000100000"}, {"addr": "ds:D07C", "hex": "2000100000"}]},
+    {"note": "wx = X + 0xF（0x1F）命中", "args": [47, 48], "pokes": [{"addr": "ds:D072", "hex": "1000100000"}, {"addr": "ds:D07C", "hex": "2000100000"}]},
+    {"note": "wx = X + 0x10（0x20）不命中第 0 項，命中第 1 項(X=0x20)", "args": [48, 48], "pokes": [{"addr": "ds:D072", "hex": "1000100000"}, {"addr": "ds:D07C", "hex": "2000100000"}]},
+    {"note": "wx = X − 1（0x0F）不命中第 0 項(X=0x10)，也不命中第 1 項 → 0xFFFF", "args": [31, 48], "pokes": [{"addr": "ds:D072", "hex": "1000100000"}, {"addr": "ds:D07C", "hex": "2000100000"}]},
+    {"note": "wy = Y（0x10）命中；wy = Y − 1 不命中", "args": [32, 36], "pokes": [{"addr": "ds:D072", "hex": "1000100000"}]},
+    {"note": "wy = Y − 1（0x0F）不命中", "args": [32, 35], "pokes": [{"addr": "ds:D072", "hex": "1000100000"}]},
+    {"note": "wy = Y + 0xF（0x1F）命中", "args": [32, 51], "pokes": [{"addr": "ds:D072", "hex": "1000100000"}]},
+    {"note": "wy = Y + 0x10（0x20）不命中", "args": [32, 52], "pokes": [{"addr": "ds:D072", "hex": "1000100000"}]},
+    {"note": "第 0 項旗標 1 跳過，第 1 項 (同格) 旗標 0 命中 → 1", "args": [32, 48], "pokes": [{"addr": "ds:D072", "hex": "1000100001"}, {"addr": "ds:D07C", "hex": "1000100000"}]},
+    {"note": "旗標 0x80（非 0）跳過", "args": [32, 48], "pokes": [{"addr": "ds:D072", "hex": "1000100080"}, {"addr": "ds:D07C", "hex": "1000100000"}]},
+    {"note": "第 40 項（最後一項）命中：其餘項都不命中(X=0x1000)", "args": [32, 48], "pokes": [{"addr": "ds:D072", "hex": "0010001000"}, {"addr": "ds:D07C", "hex": "0010001000"}, {"addr": "ds:D202", "hex": "1000100000"}]},
+    {"note": "第 41 項命中但迴圈只到 40：回 0xFFFF（第 0..40 項都不命中；基底表全 0 會命中第 0 項，所以先把第 0..40 項改走)", "args": [32, 48], "pokes": [{"addr": "ds:D072", "hex": "0010001000"}, {"addr": "ds:D07C", "hex": "0010001000"}, {"addr": "ds:D086", "hex": "0010001000"}, {"addr": "ds:D090", "hex": "0010001000"}, {"addr": "ds:D09A", "hex": "0010001000"}, {"addr": "ds:D0A4", "hex": "0010001000"}, {"addr": "ds:D0AE", "hex": "0010001000"}, {"addr": "ds:D0B8", "hex": "0010001000"}, {"addr": "ds:D0C2", "hex": "0010001000"}, {"addr": "ds:D0CC", "hex": "0010001000"}, {"addr": "ds:D0D6", "hex": "0010001000"}, {"addr": "ds:D0E0", "hex": "0010001000"}, {"addr": "ds:D0EA", "hex": "0010001000"}, {"addr": "ds:D0F4", "hex": "0010001000"}, {"addr": "ds:D0FE", "hex": "0010001000"}, {"addr": "ds:D108", "hex": "0010001000"}, {"addr": "ds:D112", "hex": "0010001000"}, {"addr": "ds:D11C", "hex": "0010001000"}, {"addr": "ds:D126", "hex": "0010001000"}, {"addr": "ds:D130", "hex": "0010001000"}, {"addr": "ds:D13A", "hex": "0010001000"}, {"addr": "ds:D144", "hex": "0010001000"}, {"addr": "ds:D14E", "hex": "0010001000"}, {"addr": "ds:D158", "hex": "0010001000"}, {"addr": "ds:D162", "hex": "0010001000"}, {"addr": "ds:D16C", "hex": "0010001000"}, {"addr": "ds:D176", "hex": "0010001000"}, {"addr": "ds:D180", "hex": "0010001000"}, {"addr": "ds:D18A", "hex": "0010001000"}, {"addr": "ds:D194", "hex": "0010001000"}, {"addr": "ds:D19E", "hex": "0010001000"}, {"addr": "ds:D1A8", "hex": "0010001000"}, {"addr": "ds:D1B2", "hex": "0010001000"}, {"addr": "ds:D1BC", "hex": "0010001000"}, {"addr": "ds:D1C6", "hex": "0010001000"}, {"addr": "ds:D1D0", "hex": "0010001000"}, {"addr": "ds:D1DA", "hex": "0010001000"}, {"addr": "ds:D1E4", "hex": "0010001000"}, {"addr": "ds:D1EE", "hex": "0010001000"}, {"addr": "ds:D1F8", "hex": "0010001000"}, {"addr": "ds:D202", "hex": "0010001000"}, {"addr": "ds:D20C", "hex": "1000100000"}]},
+    {"note": "第 3 與第 5 項都命中：回 3（第一個）", "args": [32, 48], "pokes": [{"addr": "ds:D072", "hex": "0010001000"}, {"addr": "ds:D07C", "hex": "0010001000"}, {"addr": "ds:D086", "hex": "0010001000"}, {"addr": "ds:D090", "hex": "1000100000"}, {"addr": "ds:D09A", "hex": "0010001000"}, {"addr": "ds:D0A4", "hex": "1000100000"}]},
+    {"note": "有號／無號：ds:9BF4 = 0x8003 → wx = 0x8003；X = 0x7FFC，X + 0x10 = 0x800C > wx、wx >= X（無號）命中；有號比較 wx 是負數", "args": [16, 20], "pokes": [{"addr": "ds:9BF4", "hex": "0380"}, {"addr": "ds:D072", "hex": "FC7F000000"}]},
+    {"note": "X + 0x10 回繞：ds:9BF4 = 0xFFF0、x = 0x1F → wx = 0xFFFF；X = 0xFFF8，X + 0x10 = 0x0008（回繞）> 0xFFFF 為假 → 不命中；不回繞會命中", "args": [31, 20], "pokes": [{"addr": "ds:9BF4", "hex": "F0FF"}, {"addr": "ds:D072", "hex": "F8FF000000"}]},
+    {"note": "Y + 0x10 回繞：ds:9BF6 = 0xFFF0、y = 0x23 → wy = 0xFFFF；Y = 0xFFF8", "args": [16, 35], "pokes": [{"addr": "ds:9BF6", "hex": "F0FF"}, {"addr": "ds:D072", "hex": "0000F8FF00"}]},
+    {"note": "世界原點平移：ds:9BF4 = 0x40、ds:9BF6 = 0x28、(x,y) = (0x50,0x3C) → (wx,wy) = (0x80,0x54)，第 2 項 (0x78,0x50) 命中", "args": [80, 60], "pokes": [{"addr": "ds:9BF4", "hex": "4000"}, {"addr": "ds:9BF6", "hex": "2800"}, {"addr": "ds:D072", "hex": "0010001000"}, {"addr": "ds:D07C", "hex": "0010001000"}, {"addr": "ds:D086", "hex": "7800500000"}]},
+    {"note": "x = 0x10（0362 範圍下界）、y = 0x14", "args": [16, 20], "pokes": []},
+    {"note": "x = 0x1CF（上界）、y = 0x17B（上界）：wx = 0x1BF、wy = 0x167", "args": [463, 379], "pokes": [{"addr": "ds:D072", "hex": "0010001000"}, {"addr": "ds:D07C", "hex": "B001600100"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}

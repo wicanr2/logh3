@@ -1,0 +1,16 @@
+[
+  {"name": "符號用 xor 改 or", "find": "^ f39B5_010C_rd16s(m, ss, (uint16_t)(bp + 0x0Cu))", "replace": "| f39B5_010C_rd16s(m, ss, (uint16_t)(bp + 0x0Cu))"},
+  {"name": "符號用 xor 改 and", "find": "^ f39B5_010C_rd16s(m, ss, (uint16_t)(bp + 0x0Cu))", "replace": "& f39B5_010C_rd16s(m, ss, (uint16_t)(bp + 0x0Cu))"},
+  {"name": "遮罩改 0xC000", "find": "& 0x8000u);", "replace": "& 0xC000u);"},
+  {"name": "遮罩改 0x4000", "find": "& 0x8000u);", "replace": "& 0x4000u);"},
+  {"name": "第二個高字讀 +0x0A", "find": "(uint16_t)(bp + 0x0Cu))", "replace": "(uint16_t)(bp + 0x0Au))"},
+  {"name": "第一個高字讀 +6", "find": "(uint16_t)(bp + 8u))", "replace": "(uint16_t)(bp + 6u))"},
+  {"name": "第一個運算元位移 +4", "find": "f_39B5_0126(m, ss, (uint16_t)(bp + 6u), sign, 0)", "replace": "f_39B5_0126(m, ss, (uint16_t)(bp + 4u), sign, 0)"},
+  {"name": "第二個運算元位移 +8", "find": "f_39B5_0126(m, ss, (uint16_t)(bp + 0x0Au), sign, 0)", "replace": "f_39B5_0126(m, ss, (uint16_t)(bp + 8u), sign, 0)"},
+  {"name": "只處理第一個運算元", "find": "    (void)f_39B5_0126(m, ss, (uint16_t)(bp + 0x0Au), sign, 0);\n", "replace": ""},
+  {"name": "只處理第二個運算元", "find": "    (void)f_39B5_0126(m, ss, (uint16_t)(bp + 6u), sign, 0);\n", "replace": ""},
+  {"name": "第二個運算元處理兩次第一個", "find": "f_39B5_0126(m, ss, (uint16_t)(bp + 0x0Au), sign, 0)", "replace": "f_39B5_0126(m, ss, (uint16_t)(bp + 6u), sign, 0)"},
+  {"name": "回傳 0", "find": "    return sign;\n}", "replace": "    return 0;\n}"},
+  {"name": "回傳符號改成 1", "find": "    return sign;\n}", "replace": "    return (uint16_t)(sign != 0);\n}"},
+  {"name": "word 高位元組取線性下一格", "find": "(rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8)", "replace": "(rd8(m, LIN(seg, off) + 1u) << 8)"}
+]

@@ -1,0 +1,11 @@
+[
+  {"name": "下界 0x20 改 0x21", "find": "s < 0x20", "replace": "s < 0x21"},
+  {"name": "下界 0x20 改 0x1F", "find": "s < 0x20", "replace": "s < 0x1F"},
+  {"name": "上界 0x7E 改 0x7F", "find": "s > 0x7E", "replace": "s > 0x7F"},
+  {"name": "上界 0x7E 改 0x7D", "find": "s > 0x7E", "replace": "s > 0x7D"},
+  {"name": "只比低位元組", "find": "int16_t s = (int16_t)c;", "replace": "int16_t s = (int16_t)(uint8_t)c;"},
+  {"name": "不守衛直接呼叫", "find": "    if (s < 0x20 || s > 0x7E)\n        return c;\n", "replace": ""},
+  {"name": "永不呼叫", "find": "    return f_3B6B_0025(m, c);", "replace": "    return c;"},
+  {"name": "傳給 0025 的參數加一", "find": "return f_3B6B_0025(m, c);", "replace": "return f_3B6B_0025(m, (uint16_t)(c + 1u));"},
+  {"name": "回傳忽略 0025 的結果", "find": "    return f_3B6B_0025(m, c);", "replace": "    (void)f_3B6B_0025(m, c);\n    return c;"}
+]

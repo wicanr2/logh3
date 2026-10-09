@@ -1,0 +1,47 @@
+{
+  "id": "0FF4_1350",
+  "entry": "0FF4:1350",
+  "conv": "far",
+  "ret": "pack:al",
+  "size": 180,
+  "code_sha256_16": "c856aad1dd5a0a6f",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦種替代順序（ds:295C，一列 6 bytes，列 0 是 02 04 FE 03 01 FF，列 1 是 02 00 04 FE 03 FF，列 2 是 04 00 FE 03 01 FF，列 3 是 04 02 FE 00 01 FF，列 4 是 02 00 FE 03 01 FF，列 5 是 06 04 02 00 03 FF，列 6 是 05 02 04 00 03 FF）。基底 S3 開局：艦隊 0 十組（艦種 0×5、2×4、6×1，所以 A（艦種 5 的組數）＝ 0、B（艦種 6）＝ 1）；ds:9872 ＝ 0000:0000（沒設星域），seeds 把它設成星域 0（ds:A79C／54B3）。星域 0 陣營 0 的存量：艦種 0 ＝ 41380（ds:A7CC）、1 ＝ 39790、2 ＝ 48290（ds:A7D4）、3 ＝ 6410、4 ＝ 11860（ds:A7DC）、5 ＝ 11380（ds:A7E0）、6 ＝ 3680（ds:A7E4）、7 ＝ 0；每組艘數 3000／3000／4000／2000／3000／3000／1000。艦隊 0 的組欄位 [2]（艦種）在 ds:C086 ＋ 4g。借用的暫存區（線性 0x9D000）seeds 先填 0x5A，驗證有還原。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "a", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 255, 256, 257, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "列 0：艦種 2 存量夠 → 回 2", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}]},
+    {"note": "列 0：艦種 2、4 存量 0 → 0xFE：A ＝ 0、B ＝ 1（A < B）→ 先試 5：存量夠 → 回 5", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}]},
+    {"note": "同上，艦隊 0 第 0 組的艦種改成 5（A ＝ 1、B ＝ 1，A >= B）→ 先試 6：夠 → 回 6", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:C086", "hex": "05"}]},
+    {"note": "A >= B，艦種 6 存量 0 → 再試 5：夠 → 回 5", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:C086", "hex": "05"}, {"addr": "ds:A7E4", "hex": "00000000"}]},
+    {"note": "A >= B，艦種 6 與 5 存量都 0 → 下一格 3：夠 → 回 3", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:C086", "hex": "05"}, {"addr": "ds:A7E4", "hex": "00000000"}, {"addr": "ds:A7E0", "hex": "00000000"}]},
+    {"note": "A < B（B ＝ 2），艦種 5 存量 0 → 再試 6：夠 → 回 6", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:C086", "hex": "06"}, {"addr": "ds:C08A", "hex": "06"}, {"addr": "ds:A7E0", "hex": "00000000"}]},
+    {"note": "A < B，艦種 5、6 存量都 0 → 3 也 0 → 1 也 0 → 回 0xFF", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7CC", "hex": "00", "repeat": 28}]},
+    {"note": "A ＝ B ＝ 0（沒有艦種 5、6）：A >= B → 先試 6", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:C086", "hex": "00"}, {"addr": "ds:C0A0", "hex": "00"}]},
+    {"note": "A ＝ 2、B ＝ 1：A >= B → 先試 6", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:C086", "hex": "05"}, {"addr": "ds:C08A", "hex": "05"}]},
+    {"note": "A ＝ 255（組數 0xFF 全是艦種 5）、B ＝ 0：1404 的 byte 計數回繞", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:C083", "hex": "FF"}, {"addr": "ds:C084", "hex": "00000500", "repeat": 255}]},
+    {"note": "A ＝ 0x80、B ＝ 0x7F：無號比較 A >= B（有號會是負數）", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:C083", "hex": "FF"}, {"addr": "ds:C084", "hex": "00000500", "repeat": 128}, {"addr": "ds:C284", "hex": "00000600", "repeat": 127}]},
+    {"note": "A ＝ 0x7F、B ＝ 0x80", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:C083", "hex": "FF"}, {"addr": "ds:C084", "hex": "00000500", "repeat": 127}, {"addr": "ds:C280", "hex": "00000600", "repeat": 128}]},
+    {"note": "列 1：艦種 2、0、4 存量 0 → 0xFE → 5", "args": [49268, 21683, 1], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:A7CC", "hex": "00000000"}]},
+    {"note": "列 2：艦種 4、0 存量 0 → 0xFE → 5", "args": [49268, 21683, 2], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:A7CC", "hex": "00000000"}]},
+    {"note": "列 3：艦種 4、2 存量 0 → 0xFE → 5", "args": [49268, 21683, 3], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}]},
+    {"note": "列 4：艦種 2、0 存量 0 → 0xFE → 5", "args": [49268, 21683, 4], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7CC", "hex": "00000000"}, {"addr": "ds:A7D4", "hex": "00000000"}]},
+    {"note": "列 5：艦種 6 夠 → 回 6", "args": [49268, 21683, 5], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}]},
+    {"note": "列 6：艦種 5 夠 → 回 5", "args": [49268, 21683, 6], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}]},
+    {"note": "列 7 ＝ 0B38 的列 0（01 02 04 03 05 06 後面接 FF），艦種 1 夠 → 回 1", "args": [49268, 21683, 7], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}]},
+    {"note": "a ＝ 0x0100：低位元組 0 → 列 0", "args": [49268, 21683, 256], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}]},
+    {"note": "a ＝ 0x0105：低位元組 5 → 列 5", "args": [49268, 21683, 261], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}]},
+    {"note": "艦隊 15（有一組艦種 5）：A ＝ 1、B ＝ 0", "args": [51098, 21683, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}]},
+    {"note": "艦隊在 8000:FFF0（組數 +0x0F 在 FFFF、組欄位從位移 0 起）：兩組都是艦種 6（A ＝ 0、B ＝ 2）→ 先試 5；若艦隊段誤用 DS 會得到不同的先後", "args": [65520, 32768, 0], "pokes": [{"addr": "ds:9872", "hex": "9CA7B354"},{"addr": "ds:8F1D", "hex": "00"},{"addr": "lin:9D000", "hex": "5A5A"}, {"addr": "ds:A7D4", "hex": "00000000"},{"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "8000:FFFF", "hex": "02"}, {"addr": "8000:0000", "hex": "0000060000000600"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 100
+}

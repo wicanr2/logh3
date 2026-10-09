@@ -1,0 +1,29 @@
+{
+  "id": "28E0_000C",
+  "entry": "28E0:000C",
+  "conv": "far",
+  "ret": "ax",
+  "size": 67,
+  "code_sha256_16": "17f41c1748054357",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "六位專任參謀（ds:8F4B、8F4C、8F4F、8F50、8F4D、8F4E 依這個順序）就任：對每個編號呼叫 28E0:05CC，提督[編號][+0x09] ← 0x7F。種子把六個編號各設成不同值（互不相同才看得出哪一個參數是哪一位參謀），並先把被寫的 +0x09 改成 0，才看得出寫入。",
+  "args": [],
+  "seeds": [
+    {"pokes": [{"addr": "ds:8F4B", "hex": "060708090A0B"}, {"addr": "ds:B82D", "hex": "00"}, {"addr": "ds:B849", "hex": "00"}, {"addr": "ds:B865", "hex": "00"}, {"addr": "ds:B881", "hex": "00"}, {"addr": "ds:B89D", "hex": "00"}, {"addr": "ds:B8B9", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "01 02 03 04 05 06"}, {"addr": "ds:B7A1", "hex": "00"}, {"addr": "ds:B7BD", "hex": "00"}, {"addr": "ds:B7D9", "hex": "00"}, {"addr": "ds:B7F5", "hex": "00"}, {"addr": "ds:B811", "hex": "00"}, {"addr": "ds:B82D", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "06 4F 0D 3A 10 3C 00 18"}, {"addr": "ds:B82D", "hex": "00"}, {"addr": "ds:C029", "hex": "00"}, {"addr": "ds:B8F1", "hex": "00"}, {"addr": "ds:BDDD", "hex": "00"}, {"addr": "ds:B945", "hex": "00"}, {"addr": "ds:BE15", "hex": "00"}, {"addr": "ds:B785", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "11 22 33 44 55 66"}, {"addr": "ds:B961", "hex": "00"}, {"addr": "ds:BB3D", "hex": "00"}, {"addr": "ds:BD19", "hex": "00"}, {"addr": "ds:BEF5", "hex": "00"}, {"addr": "ds:C0D1", "hex": "00"}, {"addr": "ds:C2AD", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "FF FE FD FC FB FA"}, {"addr": "ds:D369", "hex": "00"}, {"addr": "ds:D34D", "hex": "00"}, {"addr": "ds:D331", "hex": "00"}, {"addr": "ds:D315", "hex": "00"}, {"addr": "ds:D2F9", "hex": "00"}, {"addr": "ds:D2DD", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "00 00 00 00 00 00"}, {"addr": "ds:B785", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "09 09 09 09 09 09"}, {"addr": "ds:B881", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "0A 14 1E 28 32 3C 46 50"}, {"addr": "ds:B89D", "hex": "00"}, {"addr": "ds:B9B5", "hex": "00"}, {"addr": "ds:BACD", "hex": "00"}, {"addr": "ds:BBE5", "hex": "00"}, {"addr": "ds:BCFD", "hex": "00"}, {"addr": "ds:BE15", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "52 53 54 55 56 57"}, {"addr": "ds:C07D", "hex": "00"}, {"addr": "ds:C099", "hex": "00"}, {"addr": "ds:C0B5", "hex": "00"}, {"addr": "ds:C0D1", "hex": "00"}, {"addr": "ds:C0ED", "hex": "00"}, {"addr": "ds:C109", "hex": "00"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "01 00 02 00 03 00 04 00"}, {"addr": "ds:B7A1", "hex": "00"}, {"addr": "ds:B7BD", "hex": "00"}, {"addr": "ds:B7D9", "hex": "00"}, {"addr": "ds:B7F5", "hex": "00"}, {"addr": "ds:B785", "hex": "00"}]},
+    {"pokes": []}
+  ],
+  "iters": 20000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

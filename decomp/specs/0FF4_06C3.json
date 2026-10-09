@@ -1,0 +1,39 @@
+{
+  "id": "0FF4_06C3",
+  "entry": "0FF4:06C3",
+  "conv": "far",
+  "ret": "none",
+  "size": 186,
+  "code_sha256_16": "183606cd274179b2",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "艦隊組成畫面開場。艦隊表 ds:C074（一筆 122 bytes）；艦隊 0 的 +0x0E ＝ 8、+0x0F ＝ 1，組 0 ＝ (0, 艦種 0, 隊形槽 0x14)。工作表 ds:977A（41 × 4 bytes）基底全 0xFF，ds:984B／984C 基底各 0，所以 seeds 先把工作表填 0xAA、984B／984C 填 0x55，才看得出少寫與寫了別的值。格盤顯示物件 ds:9850 → 79A9:0004（41 × 40 bytes），ds:984D／984E ＝ 0x2C／0x24。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}}
+  ],
+  "seeds": [
+    {"note": "艦隊 0 基底（1 組，隊形槽 20）", "args": [49268, 21683], "pokes": [{"addr": "ds:977A", "hex": "AA", "repeat": 164}, {"addr": "ds:984B", "hex": "5555"}]},
+    {"note": "艦隊 0：5 組（組 2 是空組 0xFF；隊形槽 20、19、5、21、0）；984B → 4、984C → 8 − 4", "args": [49268, 21683], "pokes": [{"addr": "ds:977A", "hex": "AA", "repeat": 164}, {"addr": "ds:984B", "hex": "5555"}, {"addr": "ds:C083", "hex": "05"}, {"addr": "ds:C084", "hex": "10000014110001131200FF0513000215140003000000FF00"}]},
+    {"note": "艦隊 0：組數 0 → 984B ＝ 0、984C ＝ +0x0E", "args": [49268, 21683], "pokes": [{"addr": "ds:977A", "hex": "AA", "repeat": 164}, {"addr": "ds:984B", "hex": "5555"}, {"addr": "ds:C083", "hex": "00"}]},
+    {"note": "艦隊 0：組數 0x80（無號比較，有號會視為負數而不進迴圈）", "args": [49268, 21683], "pokes": [{"addr": "ds:977A", "hex": "AA", "repeat": 164}, {"addr": "ds:984B", "hex": "5555"}, {"addr": "ds:C083", "hex": "80"}, {"addr": "ds:C084", "hex": "20000013", "repeat": 128}]},
+    {"note": "艦隊 0：組數 0xFF（255 組，讀過艦隊記錄之後的記憶體）", "args": [49268, 21683], "pokes": [{"addr": "ds:977A", "hex": "AA", "repeat": 164}, {"addr": "ds:984B", "hex": "5555"}, {"addr": "ds:C083", "hex": "FF"}, {"addr": "ds:C084", "hex": "10000010", "repeat": 255}]},
+    {"note": "隊形槽 0x28（最後一格）與 0x29（越過工作表，寫進 ds:981E）", "args": [49268, 21683], "pokes": [{"addr": "ds:977A", "hex": "AA", "repeat": 164}, {"addr": "ds:984B", "hex": "5555"}, {"addr": "ds:C083", "hex": "02"}, {"addr": "ds:C084", "hex": "0100002802000029"}]},
+    {"note": "隊形槽 0xFF：di ＝ 0x977A ＋ 0x3FC ＝ 0x9B76", "args": [49268, 21683], "pokes": [{"addr": "ds:977A", "hex": "AA", "repeat": 164}, {"addr": "ds:984B", "hex": "5555"}, {"addr": "ds:C083", "hex": "01"}, {"addr": "ds:C084", "hex": "123400FF"}]},
+    {"note": "ds:984B 先放 0xFF 但開頭清 0；組數 3 全是空組 → 984B ＝ 0", "args": [49268, 21683], "pokes": [{"addr": "ds:977A", "hex": "AA", "repeat": 164}, {"addr": "ds:984B", "hex": "5555"}, {"addr": "ds:984B", "hex": "FF"}, {"addr": "ds:C083", "hex": "03"}, {"addr": "ds:C084", "hex": "0000FF000000FF000000FF00"}]},
+    {"note": "艦隊 +0x0E ＝ 0、2 組 → 984C ＝ 0 − 2 ＝ 0xFE", "args": [49268, 21683], "pokes": [{"addr": "ds:977A", "hex": "AA", "repeat": 164}, {"addr": "ds:984B", "hex": "5555"}, {"addr": "ds:C082", "hex": "00"}, {"addr": "ds:C083", "hex": "02"}, {"addr": "ds:C084", "hex": "0100000102000102"}]},
+    {"note": "艦隊 +0x0E ＝ 2、2 組 → 984C ＝ 0", "args": [49268, 21683], "pokes": [{"addr": "ds:977A", "hex": "AA", "repeat": 164}, {"addr": "ds:984B", "hex": "5555"}, {"addr": "ds:C082", "hex": "02"}, {"addr": "ds:C083", "hex": "02"}, {"addr": "ds:C084", "hex": "0100000102000102"}]},
+    {"note": "別名：艦隊在 ds:976A，組 0 就是工作表第 0 格（ds:977A）；組 0 ＝ (AAAA, 5, 1)、組 1 ＝ (CCCC, 6, 2)、組 2 ＝ (EEEE, 7, 0)：後面的組在處理前已被先前的寫入改過", "args": [38762, 21683], "pokes": [{"addr": "ds:9778", "hex": "0803"}, {"addr": "ds:977A", "hex": "AAAA0501CCCC0602EEEE0700"}]},
+    {"note": "別名：艦隊在 ds:9768，組 0 在 ds:9778，組 0 的 [2][3] 落在 ds:977A、977B（隊形槽 0 的目的位址）：word 寫入先蓋掉 [2][3]，之後的 byte／word 讀取看到新值", "args": [38760, 21683], "pokes": [{"addr": "ds:9776", "hex": "0801"}, {"addr": "ds:9778", "hex": "34120500"}]},
+    {"note": "別名：同上，隊形槽 1（組[3] ＝ 1）：目的 ds:977E，不與組自己重疊", "args": [38760, 21683], "pokes": [{"addr": "ds:9776", "hex": "0801"}, {"addr": "ds:9778", "hex": "34120501"}]},
+    {"note": "艦隊在 9D00:0000（暫存區，+0x0E 在 0x0E、+0x0F 在 0x0F、組從 0x10 起）：3 組", "args": [0, 40192], "pokes": [{"addr": "lin:9D00E", "hex": "0603"}, {"addr": "lin:9D010", "hex": "0100000A0200010B0300FF0C"}]},
+    {"note": "艦隊在 8000:FFF0：組 0 的位移回繞成 0x0000（+0x0E 在 FFFE、+0x0F 在 FFFF）", "args": [65520, 32768], "pokes": [{"addr": "8000:FFFE", "hex": "0501"}, {"addr": "8000:0000", "hex": "AABB0305"}]},
+    {"note": "艦隊在 8000:FFEC：組 0 在 FFFC，[3] 在 FFFF，組[3] 的 word 讀取跨段尾（高位元組取位移 0）", "args": [65516, 32768], "pokes": [{"addr": "8000:FFFA", "hex": "0501"}, {"addr": "8000:FFFC", "hex": "AABB0305"}, {"addr": "8000:0000", "hex": "CC"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 100
+}

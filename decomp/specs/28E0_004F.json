@@ -1,0 +1,33 @@
+{
+  "id": "28E0_004F",
+  "entry": "28E0:004F",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 71,
+  "code_sha256_16": "eb308b74178e70cf",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "提督記錄 +1（陣營）選表（ds:6830 或 ds:689C），+6（能力值）經 28E0:0096 換成等級 0 到 11，回傳表中 far 指標（AX 段、BX 位移）。提督指標取提督表（ds:B77C，28 bytes 一筆，82 筆）。種子造出陣營 0／1／其他、能力值在各等級門檻兩側。",
+  "tables": {
+    "adm": {"base": "ds:B77C", "stride": 28, "count": 82}
+  },
+  "args": [
+    {"name": "adm", "kind": "farptr", "gen": {"table": "adm"}}
+  ],
+  "seeds": [
+    {"args": [46972, 21683], "pokes": [{"addr": "ds:B77D", "hex": "00"}, {"addr": "ds:B782", "hex": "00"}]},
+    {"args": [46972, 21683], "pokes": [{"addr": "ds:B77D", "hex": "01"}, {"addr": "ds:B782", "hex": "00"}]},
+    {"args": [46972, 21683], "pokes": [{"addr": "ds:B77D", "hex": "00"}, {"addr": "ds:B782", "hex": "27"}]},
+    {"args": [46972, 21683], "pokes": [{"addr": "ds:B77D", "hex": "01"}, {"addr": "ds:B782", "hex": "27"}]},
+    {"args": [46972, 21683], "pokes": [{"addr": "ds:B77D", "hex": "02"}, {"addr": "ds:B782", "hex": "26"}]},
+    {"args": [46972, 21683], "pokes": [{"addr": "ds:B77D", "hex": "FF"}, {"addr": "ds:B782", "hex": "1D"}]},
+    {"args": [46972, 21683], "pokes": [{"addr": "ds:B77D", "hex": "00"}, {"addr": "ds:B782", "hex": "08"}]},
+    {"args": [46972, 21683], "pokes": [{"addr": "ds:B77D", "hex": "01"}, {"addr": "ds:B782", "hex": "0C"}]},
+    {"args": [46972, 21683], "pokes": [{"addr": "ds:B77D", "hex": "00"}, {"addr": "ds:B782", "hex": "FF"}, {"addr": "ds:B783", "hex": "03"}]},
+    {"args": [46972, 21683], "pokes": [{"addr": "ds:B77D", "hex": "01"}, {"addr": "ds:B782", "hex": "05"}, {"addr": "ds:B783", "hex": "FF"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

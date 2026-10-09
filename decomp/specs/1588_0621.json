@@ -1,0 +1,31 @@
+{
+  "id": "1588_0621",
+  "entry": "1588:0621",
+  "conv": "far",
+  "ret": "ax",
+  "size": 81,
+  "code_sha256_16": "2979908f195ea2f7",
+  "base_state": "/src/workplace/fcmd/fcmd-standby.state",
+  "base_state_sha256": "2f07118746ba249290a5f5e3de71020090a10c58b8072f84b110e1c1c95f2394",
+  "note": "戰場格的通行遮罩。基底：fcmd-standby.state（戰場地圖在 79B0:0010 起 128 × 102，ds:9BB4 起 128 bytes 是圖塊遮罩，ds:3C3E 起 4 bytes 是 00 02 04 08）。seeds 把 ds:3C3E 改成 0F F0 3C C3、格 (2,3)（地圖位址 79B0:0010 ＋ 3×128 ＋ 2 ＝ 79B0:0192）設成圖塊 7、ds:9BBB（遮罩表第 7 筆）設成 0x5A，再用 c ∈ {4,5}、r ∈ {6,7} 走遍四個四分之一格。",
+  "args": [
+    {"name": "c", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 126, 127, 254, 255, 256, 257, 32768, 32769, 65534, 65535], "also_random": true}},
+    {"name": "r", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 6, 7, 100, 101, 202, 203, 204, 205, 32768, 32769, 65534, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "基底原樣", "args": [4, 6], "pokes": []},
+    {"note": "k ＝ 0（c 偶、r 偶）：0x5A & 0x0F", "args": [4, 6], "pokes": [{"addr": "ds:3C3E", "hex": "0FF03CC3"},{"addr": "79B0:0192", "hex": "07"},{"addr": "ds:9BBB", "hex": "5A"}]},
+    {"note": "k ＝ 1（c 奇、r 偶）：0x5A & 0xF0", "args": [5, 6], "pokes": [{"addr": "ds:3C3E", "hex": "0FF03CC3"},{"addr": "79B0:0192", "hex": "07"},{"addr": "ds:9BBB", "hex": "5A"}]},
+    {"note": "k ＝ 2（c 偶、r 奇）：0x5A & 0x3C", "args": [4, 7], "pokes": [{"addr": "ds:3C3E", "hex": "0FF03CC3"},{"addr": "79B0:0192", "hex": "07"},{"addr": "ds:9BBB", "hex": "5A"}]},
+    {"note": "k ＝ 3（c 奇、r 奇）：0x5A & 0xC3", "args": [5, 7], "pokes": [{"addr": "ds:3C3E", "hex": "0FF03CC3"},{"addr": "79B0:0192", "hex": "07"},{"addr": "ds:9BBB", "hex": "5A"}]},
+    {"note": "c ＝ 0x8004：邏輯右移得 0x4002（算術右移是 0xC002）", "args": [32772, 6], "pokes": [{"addr": "ds:3C3E", "hex": "0FF03CC3"},{"addr": "79B0:0192", "hex": "07"},{"addr": "ds:9BBB", "hex": "5A"}, {"addr": "79B0:4192", "hex": "03"}, {"addr": "79B0:C192", "hex": "04"}]},
+    {"note": "r ＝ 0x8006：邏輯右移得 0x4003", "args": [4, 32774], "pokes": [{"addr": "ds:3C3E", "hex": "0FF03CC3"},{"addr": "79B0:0192", "hex": "07"},{"addr": "ds:9BBB", "hex": "5A"}]},
+    {"note": "c ＝ 0xFFFF、r ＝ 0xFFFF：右移得 0x7FFF，位移回繞", "args": [65535, 65535], "pokes": [{"addr": "ds:3C3E", "hex": "0FF03CC3"},{"addr": "79B0:0192", "hex": "07"},{"addr": "ds:9BBB", "hex": "5A"}]},
+    {"note": "遮罩表值 0xFF：與 3C3E 的 0xFF 相乘", "args": [4, 6], "pokes": [{"addr": "ds:3C3E", "hex": "FFFFFFFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "FF"}]},
+    {"note": "遮罩表值 0xA5（高位元組檢查：結果 AH 必為 0）", "args": [5, 7], "pokes": [{"addr": "ds:3C3E", "hex": "0FF03CFF"}, {"addr": "79B0:0192", "hex": "07"}, {"addr": "ds:9BBB", "hex": "A5"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

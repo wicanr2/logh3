@@ -1,0 +1,45 @@
+{
+  "id": "2AD2_0029",
+  "entry": "2AD2:0029",
+  "conv": "far",
+  "ret": "ax",
+  "size": 296,
+  "code_sha256_16": "0d4147c3da61a2f1",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "艦艇池挑第一個空槽並建一筆新記錄。基底 fcmd-base：池 668B:0002 起 352 筆 × 78 bytes，槽 0、1 在用，槽 2 起 [+1] = 0xFF（空），所以 idx = 2、rec = 668B:009E（線性 6694E）。來源記錄 S 取艦隊表（ds:C074，122 × 32；基底只有 f0 現役，其餘全 FF）。池指標 ds:CFB4..CFB7 用 freeze 排除隨機突變，seeds 另給：池滿（7000:0000 全 0，無 0xFF）、池基底 8000:FFC7（槽 0 空，rec+0x38 的 word 跨 FFFF 回繞）。別名 seeds：S 放在 rec 附近（rec−2、rec−1、rec、rec+1、rec+2），讓 rec 的寫入改到 S[+1]、S[+3]、S[+6]，驗證寫入與重讀的交錯順序（rec[+0] 先寫、S[+1] 在建完欄位之後才重讀去查艦種表）。池在 ROM 不涵蓋（見 C 檔頭）。rec[+0x0E..0x15] 的清零被 14CF 覆寫，最終記憶體看不出，不測。",
+  "freeze": [{"addr": "ds:CFB4", "len": 4}],
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "src", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "kind", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 255, 256, 263, 519, 65287], "also_random": true}},
+    {"name": "b", "kind": "word", "gen": {"choices": [0, 1, 2, 255, 256, 4660, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "基底、來源 f0、kind 0（走 1433）", "args": [49268, 21683, 0, 5], "pokes": []},
+    {"note": "kind 7（走艦種表 +0xB6 分支）", "args": [49268, 21683, 7, 5], "pokes": []},
+    {"note": "kind 0x0107：低位元組 7，走 7 分支，rec[+4] = 7", "args": [49268, 21683, 263, 4660], "pokes": []},
+    {"note": "kind 3、b = 0x1234：rec[+3] = 0x34", "args": [49268, 21683, 3, 4660], "pokes": []},
+    {"note": "來源 f0 欄位：[+1] = 1、[+3] = 0x44、[+6] = 0x19，kind 2", "args": [49268, 21683, 2, 9], "pokes": [{"addr": "ds:C075", "hex": "01"}, {"addr": "ds:C077", "hex": "44"}, {"addr": "ds:C07A", "hex": "19"}]},
+    {"note": "來源 [+1] = 0xFF（艦種表列位移 16 位元回繞 0x1D6A），kind 6", "args": [49268, 21683, 6, 9], "pokes": [{"addr": "ds:C075", "hex": "FF"}]},
+    {"note": "池滿：池指標指到全 0 的 7000:0000，idx = 0xFFFF，rec = 7000:FFB2", "args": [49268, 21683, 1, 1], "pokes": [{"addr": "ds:CFB4", "hex": "00000070"}]},
+    {"note": "池滿 + kind 7", "args": [49268, 21683, 7, 1], "pokes": [{"addr": "ds:CFB4", "hex": "00000070"}]},
+    {"note": "池基底 8000:FFC7，槽 0 空：rec+0x38 的 word 低位元組在 FFFF、高位元組回繞到 0000；前態 0x77", "args": [49268, 21683, 1, 1], "pokes": [{"addr": "ds:CFB4", "hex": "C7FF0080"}, {"addr": "lin:8FFC8", "hex": "FF"}, {"addr": "lin:8FFFF", "hex": "77"}, {"addr": "lin:80000", "hex": "77"}, {"addr": "lin:80001", "hex": "77"}]},
+    {"note": "別名 S = rec（668B:009E），kind 2：rec[+0] = S[+1]（FF）、rec[+1] = S[+3]（0x12，S[+1] 因此變 0x12），重讀的 S[+1] = 0x12", "args": [158, 26251, 2, 1], "pokes": [{"addr": "668B:00A1", "hex": "12"}, {"addr": "668B:00A4", "hex": "34"}]},
+    {"note": "別名 S = rec，kind 7", "args": [158, 26251, 7, 1], "pokes": [{"addr": "668B:00A1", "hex": "12"}, {"addr": "668B:00A4", "hex": "34"}]},
+    {"note": "別名 S = rec − 1（668B:009D）：S[+1] = rec[+0]、S[+3] = rec[+2]、S[+6] = rec[+5]；kind 2", "args": [157, 26251, 2, 1], "pokes": [{"addr": "668B:00A0", "hex": "21"}, {"addr": "668B:00A3", "hex": "22"}]},
+    {"note": "別名 S = rec − 1，kind 7", "args": [157, 26251, 7, 1], "pokes": [{"addr": "668B:00A0", "hex": "21"}, {"addr": "668B:00A3", "hex": "22"}, {"addr": "668B:009E", "hex": "05"}]},
+    {"note": "別名 S = rec + 1（668B:009F）：S[+1] = rec[+2]、S[+3] = rec[+4]、S[+6] = rec[+7]", "args": [159, 26251, 2, 1], "pokes": [{"addr": "668B:00A0", "hex": "31"}, {"addr": "668B:00A2", "hex": "32"}, {"addr": "668B:00A5", "hex": "33"}]},
+    {"note": "別名 S = rec + 1，kind 7", "args": [159, 26251, 7, 1], "pokes": [{"addr": "668B:00A0", "hex": "31"}, {"addr": "668B:00A2", "hex": "32"}, {"addr": "668B:00A5", "hex": "33"}]},
+    {"note": "別名 S = rec + 2（668B:00A0）：S[+1] = rec[+3]", "args": [160, 26251, 2, 9], "pokes": [{"addr": "668B:00A1", "hex": "01"}, {"addr": "668B:00A3", "hex": "02"}, {"addr": "668B:00A6", "hex": "03"}]},
+    {"note": "別名 S = rec − 2（668B:009C）：S[+1] = rec[−1]（槽 1 尾端）、S[+3] = rec[+1]（FF）、S[+6] = rec[+4]", "args": [156, 26251, 3, 9], "pokes": [{"addr": "668B:009D", "hex": "02"}, {"addr": "668B:00A2", "hex": "04"}]},
+    {"note": "別名 S 放進池槽 0（668B:0002）：S[+1] = 槽 0 的 [+1] = 0（陣營 0），kind 5", "args": [2, 26251, 5, 1], "pokes": []},
+    {"note": "S 的 [+6] = 0x19（星域），kind 1，ds:A79C 星域待命存量先 poke 成 100：領出後 −", "args": [49268, 21683, 1, 1], "pokes": [{"addr": "ds:C07A", "hex": "19"}, {"addr": "ds:BA00", "hex": "64000000"}]}
+  ],
+  "iters": 12000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}

@@ -1,0 +1,12 @@
+[
+  {"name": "不呼叫 028C", "find": "    f_3BB6_028C(m, ds);\n", "replace": ""},
+  {"name": "不呼叫 0003", "find": "    f_3BB6_0003(m, ds);\n", "replace": ""},
+  {"name": "028C 用 DGROUP", "find": "f_3BB6_028C(m, ds);", "replace": "f_3BB6_028C(m, 0x54B3u);"},
+  {"name": "0003 用 DGROUP", "find": "f_3BB6_0003(m, ds);", "replace": "f_3BB6_0003(m, 0x54B3u);"},
+  {"name": "末尾寫入用 DGROUP", "find": "wr8(m, LIN(ds, 0x0BEFu), 0xFFu);", "replace": "wr8(m, LIN(0x54B3u, 0x0BEFu), 0xFFu);"},
+  {"name": "末尾寫 0xFE", "find": "wr8(m, LIN(ds, 0x0BEFu), 0xFFu);", "replace": "wr8(m, LIN(ds, 0x0BEFu), 0xFEu);"},
+  {"name": "末尾寫 0BEE", "find": "wr8(m, LIN(ds, 0x0BEFu), 0xFFu);", "replace": "wr8(m, LIN(ds, 0x0BEEu), 0xFFu);"},
+  {"name": "末尾寫 0BF0", "find": "wr8(m, LIN(ds, 0x0BEFu), 0xFFu);", "replace": "wr8(m, LIN(ds, 0x0BF0u), 0xFFu);"},
+  {"name": "末尾不寫", "find": "    wr8(m, LIN(ds, 0x0BEFu), 0xFFu);\n", "replace": ""},
+  {"name": "末尾寫 word", "find": "wr8(m, LIN(ds, 0x0BEFu), 0xFFu);", "replace": "wr16(m, LIN(ds, 0x0BEFu), 0xFFFFu);"}
+]

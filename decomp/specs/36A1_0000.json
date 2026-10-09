@@ -1,0 +1,31 @@
+{
+  "id": "36A1_0000",
+  "entry": "36A1:0000",
+  "conv": "far",
+  "ret": "ax",
+  "size": 118,
+  "code_sha256_16": "6e07815a3c6ab770",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "把四個遠指標 3D22:079E／2F9E／551E／5B1E 存進 ds:F128／F12C／F130／F134。函式不讀記憶體，沒有讀取集可突變，案例全來自 seeds。基底 ds:F128..F137 已是目標值，所以 seeds 先預填成別的值（全 5A、互異的 16 個 byte、單一指標不同等），才看得出少寫、寫偏、寬度與哪個指標。",
+  "args": [],
+  "seeds": [
+    {"note": "基底原樣（已是目標值，寫入集合為空）", "pokes": []},
+    {"note": "預填 F126..F139 ＝ 5A", "pokes": [{"addr": "ds:F126", "hex": "5A", "repeat": 20}]},
+    {"note": "預填 F128..F137 ＝ 互異的值 01..10", "pokes": [{"addr": "ds:F128", "hex": "0102030405060708090A0B0C0D0E0F10"}]},
+    {"note": "預填 F128..F137 ＝ FF", "pokes": [{"addr": "ds:F128", "hex": "FF", "repeat": 16}]},
+    {"note": "預填 F128..F137 ＝ 00", "pokes": [{"addr": "ds:F128", "hex": "00", "repeat": 16}]},
+    {"note": "只有第 1 個指標的位移不同", "pokes": [{"addr": "ds:F128", "hex": "9F07"}]},
+    {"note": "只有第 2 個指標的段不同", "pokes": [{"addr": "ds:F12E", "hex": "2339"}]},
+    {"note": "只有第 3 個指標的位移不同", "pokes": [{"addr": "ds:F130", "hex": "1F55"}]},
+    {"note": "只有第 4 個指標的段不同", "pokes": [{"addr": "ds:F136", "hex": "213D"}]},
+    {"note": "第 5 個指標 F138..F13B 預填 5A：本函式不應該寫", "pokes": [{"addr": "ds:F138", "hex": "5A5A5A5A"}, {"addr": "ds:F128", "hex": "00", "repeat": 16}]},
+    {"note": "四個指標的位移與段互換", "pokes": [{"addr": "ds:F128", "hex": "223D9E07223D9E2F223D1E55223D1E5B"}]},
+    {"note": "指標的位移與段高低位元組對調", "pokes": [{"addr": "ds:F128", "hex": "079E3D22 2F9E3D22 551E3D22 5B1E3D22"}]},
+    {"note": "F127 與 F138 的鄰居預填 5A：確認沒有多寫一個 byte", "pokes": [{"addr": "ds:F127", "hex": "5A"}, {"addr": "ds:F128", "hex": "00", "repeat": 16}, {"addr": "ds:F138", "hex": "5A"}]}
+  ],
+  "iters": 100,
+  "max_cases": 30,
+  "seed": 20261009,
+  "min_coverage": 100
+}

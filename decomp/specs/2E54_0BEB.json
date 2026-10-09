@@ -1,0 +1,28 @@
+{
+  "id": "2E54_0BEB",
+  "entry": "2E54:0BEB",
+  "conv": "far",
+  "ret": "none",
+  "size": 60,
+  "code_sha256_16": "865494fbb054681a",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "rand() ÷ 5 餘數為 0 走 2E54:0C27，否則走 2E54:0C83。種子 ds:94DC 的 LCG 結果由 workplace/decomp/w3-3-notes/tools/lcg.c 算出：S = 0x000b100b 時第一次 rand = 0x171b（÷5 餘 0）；S = 0x00001000 時 0x64e7（餘 1）。艦隊陣列取暫存區 9D00:0000，seeds 造指向 S3 開局艦隊的指標（f? 位於 ds:C168、C1E2、C25C、C2D6），+0x79 設 6、5、6、7 讓兩個分支的寫入不同（0C27 只處理 6、0C83 全處理）；+7、+8 只被寫不被讀，seeds 先 poke 前態 55、66。args 的 40192 = 0x9D00。",
+  "args": [
+    {"name": "list", "kind": "farptr", "gen": {"scratch": 64}},
+    {"name": "count", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 8, 16, 255, 256, 259, 65280], "also_random": true}},
+    {"name": "target", "kind": "word", "gen": {"choices": [0, 1, 7, 31, 255, 4660, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "S=0x000b100b：r=0x171b，餘 0 → 0C27：只處理 +0x79 == 6 的 f 第 1、3 支", "args": [0, 40192, 4, 31], "pokes": [{"addr": "ds:94DC", "hex": "0b100b00"}, {"addr": "lin:9D000", "hex": "68c1b354e2c1b3545cc2b354d6c2b354"}, {"addr": "ds:C16F", "hex": "55"}, {"addr": "ds:C170", "hex": "66"}, {"addr": "ds:C1E1", "hex": "06"}, {"addr": "ds:C1E9", "hex": "55"}, {"addr": "ds:C1EA", "hex": "66"}, {"addr": "ds:C25B", "hex": "05"}, {"addr": "ds:C263", "hex": "55"}, {"addr": "ds:C264", "hex": "66"}, {"addr": "ds:C2D5", "hex": "06"}, {"addr": "ds:C2DD", "hex": "55"}, {"addr": "ds:C2DE", "hex": "66"}, {"addr": "ds:C34F", "hex": "07"}]},
+    {"note": "S=0x00001000：r=0x64e7，餘 1 → 0C83：4 支全處理", "args": [0, 40192, 4, 31], "pokes": [{"addr": "ds:94DC", "hex": "00100000"}, {"addr": "lin:9D000", "hex": "68c1b354e2c1b3545cc2b354d6c2b354"}, {"addr": "ds:C16F", "hex": "55"}, {"addr": "ds:C170", "hex": "66"}, {"addr": "ds:C1E1", "hex": "06"}, {"addr": "ds:C1E9", "hex": "55"}, {"addr": "ds:C1EA", "hex": "66"}, {"addr": "ds:C25B", "hex": "05"}, {"addr": "ds:C263", "hex": "55"}, {"addr": "ds:C264", "hex": "66"}, {"addr": "ds:C2D5", "hex": "06"}, {"addr": "ds:C2DD", "hex": "55"}, {"addr": "ds:C2DE", "hex": "66"}, {"addr": "ds:C34F", "hex": "07"}]},
+    {"note": "S=0x00131013：r=0x18b5，餘 0 → 0C27", "args": [0, 40192, 3, 9], "pokes": [{"addr": "ds:94DC", "hex": "13101300"}, {"addr": "lin:9D000", "hex": "68c1b354e2c1b3545cc2b354d6c2b354"}, {"addr": "ds:C16F", "hex": "55"}, {"addr": "ds:C170", "hex": "66"}, {"addr": "ds:C1E1", "hex": "06"}, {"addr": "ds:C1E9", "hex": "55"}, {"addr": "ds:C1EA", "hex": "66"}, {"addr": "ds:C25B", "hex": "05"}, {"addr": "ds:C263", "hex": "55"}, {"addr": "ds:C264", "hex": "66"}, {"addr": "ds:C2D5", "hex": "06"}, {"addr": "ds:C2DD", "hex": "55"}, {"addr": "ds:C2DE", "hex": "66"}, {"addr": "ds:C34F", "hex": "07"}]},
+    {"note": "S=0x00011001：r=0x751a，餘 3 → 0C83，count = 2", "args": [0, 40192, 2, 9], "pokes": [{"addr": "ds:94DC", "hex": "01100100"}, {"addr": "lin:9D000", "hex": "68c1b354e2c1b3545cc2b354d6c2b354"}, {"addr": "ds:C16F", "hex": "55"}, {"addr": "ds:C170", "hex": "66"}, {"addr": "ds:C1E1", "hex": "06"}, {"addr": "ds:C1E9", "hex": "55"}, {"addr": "ds:C1EA", "hex": "66"}, {"addr": "ds:C25B", "hex": "05"}, {"addr": "ds:C263", "hex": "55"}, {"addr": "ds:C264", "hex": "66"}, {"addr": "ds:C2D5", "hex": "06"}, {"addr": "ds:C2DD", "hex": "55"}, {"addr": "ds:C2DE", "hex": "66"}, {"addr": "ds:C34F", "hex": "07"}]},
+    {"note": "S=0x00031003：r=0x1580，餘 4 → 0C83", "args": [0, 40192, 259, 4660], "pokes": [{"addr": "ds:94DC", "hex": "03100300"}, {"addr": "lin:9D000", "hex": "68c1b354e2c1b3545cc2b354d6c2b354"}, {"addr": "ds:C16F", "hex": "55"}, {"addr": "ds:C170", "hex": "66"}, {"addr": "ds:C1E1", "hex": "06"}, {"addr": "ds:C1E9", "hex": "55"}, {"addr": "ds:C1EA", "hex": "66"}, {"addr": "ds:C25B", "hex": "05"}, {"addr": "ds:C263", "hex": "55"}, {"addr": "ds:C264", "hex": "66"}, {"addr": "ds:C2D5", "hex": "06"}, {"addr": "ds:C2DD", "hex": "55"}, {"addr": "ds:C2DE", "hex": "66"}, {"addr": "ds:C34F", "hex": "07"}]},
+    {"note": "S=0x00021002：r=0x054d，餘 2 → 0C83", "args": [0, 40192, 4, 0], "pokes": [{"addr": "ds:94DC", "hex": "02100200"}, {"addr": "lin:9D000", "hex": "68c1b354e2c1b3545cc2b354d6c2b354"}, {"addr": "ds:C16F", "hex": "55"}, {"addr": "ds:C170", "hex": "66"}, {"addr": "ds:C1E1", "hex": "06"}, {"addr": "ds:C1E9", "hex": "55"}, {"addr": "ds:C1EA", "hex": "66"}, {"addr": "ds:C25B", "hex": "05"}, {"addr": "ds:C263", "hex": "55"}, {"addr": "ds:C264", "hex": "66"}, {"addr": "ds:C2D5", "hex": "06"}, {"addr": "ds:C2DD", "hex": "55"}, {"addr": "ds:C2DE", "hex": "66"}, {"addr": "ds:C34F", "hex": "07"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261012,
+  "min_coverage": 100
+}

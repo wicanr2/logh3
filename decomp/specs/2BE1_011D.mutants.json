@@ -1,0 +1,20 @@
+[
+  {"name": "象限 a<0、b>=0 改 k − 0x80", "find": "        return (uint8_t)(0x80u - k);", "replace": "        return (uint8_t)(k - 0x80u);"},
+  {"name": "象限 a<0、b<0 改 0x80 − k", "find": "    return (uint8_t)(k + 0x80u);", "replace": "    return (uint8_t)(0x80u - k);"},
+  {"name": "象限 a>=0、b<0 改 k", "find": "        return (uint8_t)(0u - k);", "replace": "        return k;"},
+  {"name": "象限 a>=0、b<0 改 0x100 − k 的 9 位元版", "find": "        return (uint8_t)(0u - k);", "replace": "        return (uint8_t)(0xFFu - k);"},
+  {"name": "a 的符號判斷改 <= 0", "find": "    if (a >= 0) {", "replace": "    if (a > 0) {"},
+  {"name": "b 的符號判斷改 <= 0", "find": "        if (b >= 0)\n            return k;", "replace": "        if (b > 0)\n            return k;"},
+  {"name": "|a|=0 的比值改 0xFFFE", "find": "        ratio = 0xFFFFu;\n    } else {", "replace": "        ratio = 0xFFFEu;\n    } else {"},
+  {"name": "|a| 的 cwd 改零延伸", "find": "uint32_t den = (uint32_t)(int32_t)(int16_t)abs_a;", "replace": "uint32_t den = (uint32_t)abs_a;"},
+  {"name": "|b| 的 cwd 改零延伸", "find": "uint32_t num = (uint32_t)(int32_t)(int16_t)abs_b << 10;", "replace": "uint32_t num = (uint32_t)abs_b << 10;"},
+  {"name": "被除數左移 9", "find": "(int16_t)abs_b << 10;", "replace": "(int16_t)abs_b << 9;"},
+  {"name": "被除數左移 11", "find": "(int16_t)abs_b << 10;", "replace": "(int16_t)abs_b << 11;"},
+  {"name": "被除數與除數對調（|a|/|b|）", "find": "uint32_t num = (uint32_t)(int32_t)(int16_t)abs_b << 10; /* cwd；shl／rcl 十次，32 位元 */\n        uint32_t den = (uint32_t)(int32_t)(int16_t)abs_a;       /* cwd */", "replace": "uint32_t num = (uint32_t)(int32_t)(int16_t)abs_a << 10;\n        uint32_t den = (uint32_t)(int32_t)(int16_t)abs_b;"},
+  {"name": "夾限只在高字 > 1", "find": "ratio = ((q >> 16) == 0) ? (uint16_t)q : 0xFFFFu;", "replace": "ratio = ((q >> 16) <= 1) ? (uint16_t)q : 0xFFFFu;"},
+  {"name": "高字不夾限（取低字）", "find": "ratio = ((q >> 16) == 0) ? (uint16_t)q : 0xFFFFu;", "replace": "ratio = (uint16_t)q;"},
+  {"name": "|a| 取負用 ~a（少加 1）", "find": "uint16_t abs_a = (a < 0) ? (uint16_t)(0u - a_word) : a_word;", "replace": "uint16_t abs_a = (a < 0) ? (uint16_t)(~a_word) : a_word;"},
+  {"name": "|b| 取負用 ~b（少加 1）", "find": "uint16_t abs_b = (b < 0) ? (uint16_t)(0u - b_word) : b_word;", "replace": "uint16_t abs_b = (b < 0) ? (uint16_t)(~b_word) : b_word;"},
+  {"name": "01E1 的參數取除法低字（不夾限、不看 a == 0）", "find": "    k = (uint8_t)f_2BE1_01E1(m, ratio);", "replace": "    k = (uint8_t)f_2BE1_01E1(m, (uint16_t)(ratio ^ (a_word == 0x8000u ? 1u : 0u)));"},
+  {"name": "01E1 不呼叫（k = 比值高位元組）", "find": "    k = (uint8_t)f_2BE1_01E1(m, ratio);", "replace": "    k = (uint8_t)(ratio >> 10);"}
+]

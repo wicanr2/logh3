@@ -1,0 +1,13 @@
+[
+  {"name": "列寬 7 改 6", "find": "* 7u)", "replace": "* 6u)"},
+  {"name": "表基底 0x2986 改 0x2985", "find": "0x2986u +", "replace": "0x2985u +"},
+  {"name": "idx 不遮低位元組", "find": "(idx_word & 0xFFu)", "replace": "idx_word"},
+  {"name": "結尾標記 0xFF 改 0xFE", "find": "if (k == 0xFFu)", "replace": "if (k == 0xFEu)"},
+  {"name": "找不到時回 0xFE", "find": "return 0xFFu;", "replace": "return 0xFEu;"},
+  {"name": "走訪步幅改 2", "find": "p = (uint16_t)(p + 1u);", "replace": "p = (uint16_t)(p + 2u);"},
+  {"name": "傳給 0E84 的艦種加 1", "find": "f_0FF4_0E84(m, k) != 0", "replace": "f_0FF4_0E84(m, (uint16_t)(k + 1u)) != 0"},
+  {"name": "0E84 的結果取反", "find": "f_0FF4_0E84(m, k) != 0", "replace": "f_0FF4_0E84(m, k) == 0"},
+  {"name": "只看 0E84 結果的低位元組", "find": "f_0FF4_0E84(m, k) != 0", "replace": "(uint8_t)f_0FF4_0E84(m, k) != 0"},
+  {"name": "不呼叫 0E84（第一個就回）", "find": "f_0FF4_0E84(m, k) != 0", "replace": "k != 0xA5u"},
+  {"name": "回傳改成列內序號", "find": "return rd8(m, DS(p));", "replace": "return (uint8_t)(p - (uint16_t)(0x2986u + (uint16_t)((idx_word & 0xFFu) * 7u)));"}
+]

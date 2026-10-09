@@ -1,0 +1,21 @@
+[
+  {"name": "現役判斷反向", "find": "if (rd8(m, DS((uint16_t)(fleet + 4u))) != 0xFF) {", "replace": "if (rd8(m, DS((uint16_t)(fleet + 4u))) == 0xFF) {"},
+  {"name": "現役判斷改看 +3", "find": "DS((uint16_t)(fleet + 4u))", "replace": "DS((uint16_t)(fleet + 3u))"},
+  {"name": "現役判斷改看 +5", "find": "DS((uint16_t)(fleet + 4u))", "replace": "DS((uint16_t)(fleet + 5u))"},
+  {"name": "艦隊步幅 0x79", "find": "(uint16_t)(i * 0x7Au)", "replace": "(uint16_t)(i * 0x79u)"},
+  {"name": "只掃 31 筆", "find": "i < 0x20u", "replace": "i < 0x1Fu"},
+  {"name": "掃 33 筆", "find": "i < 0x20u", "replace": "i < 0x21u"},
+  {"name": "寫入的是 n 不是 i", "find": "wr8(m, LIN(buf_seg, wp), i);", "replace": "wr8(m, LIN(buf_seg, wp), n);"},
+  {"name": "寫入位移不遞增", "find": "            wp = (uint16_t)(wp + 1u);\n", "replace": ""},
+  {"name": "v 判斷改看整個 word", "find": "if ((uint8_t)v_word != 0xFF)", "replace": "if (v_word != 0xFF)"},
+  {"name": "v 判斷改 != 0", "find": "if ((uint8_t)v_word != 0xFF)", "replace": "if ((uint8_t)v_word != 0)"},
+  {"name": "flags bit0 改 bit1", "find": "if (flags_word & 1u)", "replace": "if (flags_word & 2u)"},
+  {"name": "flags 看高位元組的 bit0", "find": "if (flags_word & 1u)", "replace": "if ((flags_word & 1u) || (flags_word & 0x100u))"},
+  {"name": "flags bit1 改看高位元組 bit1", "find": "if (flags_word & 2u)", "replace": "if (flags_word & 0x200u)"},
+  {"name": "本方與敵方過濾順序對調", "find": "    if (flags_word & 1u)\n        n = (uint8_t)f_297B_142A(m, buf_off, buf_seg, (uint16_t)(0x2000u | n), rd16(m, DS(0x8F1Du)));\n    if (flags_word & 2u)\n        n = (uint8_t)f_297B_1491(m, buf_off, buf_seg, (uint16_t)(0x2000u | n), rd16(m, DS(0x8F1Du)));", "replace": "    if (flags_word & 2u)\n        n = (uint8_t)f_297B_1491(m, buf_off, buf_seg, (uint16_t)(0x2000u | n), rd16(m, DS(0x8F1Du)));\n    if (flags_word & 1u)\n        n = (uint8_t)f_297B_142A(m, buf_off, buf_seg, (uint16_t)(0x2000u | n), rd16(m, DS(0x8F1Du)));"},
+  {"name": "星域過濾放在最後", "find": "    if ((uint8_t)v_word != 0xFF)\n        n = (uint8_t)f_297B_13C3(m, buf_off, buf_seg, (uint16_t)(0x2000u | n), v_word);\n    if (flags_word & 1u)", "replace": "    if (flags_word & 1u)"},
+  {"name": "本方過濾傳 v 而非 ds:8F1D", "find": "n = (uint8_t)f_297B_142A(m, buf_off, buf_seg, (uint16_t)(0x2000u | n), rd16(m, DS(0x8F1Du)));", "replace": "n = (uint8_t)f_297B_142A(m, buf_off, buf_seg, (uint16_t)(0x2000u | n), v_word);"},
+  {"name": "敵方過濾讀 ds:8F1E", "find": "n = (uint8_t)f_297B_1491(m, buf_off, buf_seg, (uint16_t)(0x2000u | n), rd16(m, DS(0x8F1Du)));", "replace": "n = (uint8_t)f_297B_1491(m, buf_off, buf_seg, (uint16_t)(0x2000u | n), rd16(m, DS(0x8F1Eu)));"},
+  {"name": "星域過濾傳 n 以外的筆數(i)", "find": "n = (uint8_t)f_297B_13C3(m, buf_off, buf_seg, (uint16_t)(0x2000u | n), v_word);", "replace": "n = (uint8_t)f_297B_13C3(m, buf_off, buf_seg, (uint16_t)(0x2000u | (uint8_t)(n + 1u)), v_word);"},
+  {"name": "回傳初次列舉個數（忽略過濾）", "find": "    return n;\n}", "replace": "    return (uint8_t)(n + (flags_word & 3u));\n}"}
+]

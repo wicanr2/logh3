@@ -1,0 +1,13 @@
+[
+  {"name": "上界改 0x1F（少一個星域）", "find": "for (i = 0; i < 0x20u; i++)", "replace": "for (i = 0; i < 0x1Fu; i++)"},
+  {"name": "上界改 0x21（多一個星域）", "find": "for (i = 0; i < 0x20u; i++)", "replace": "for (i = 0; i < 0x21u; i++)"},
+  {"name": "起點改 1", "find": "for (i = 0; i < 0x20u; i++)", "replace": "for (i = 1; i < 0x20u; i++)"},
+  {"name": "每圈加 2", "find": "for (i = 0; i < 0x20u; i++)", "replace": "for (i = 0; i < 0x20u; i += 2)"},
+  {"name": "傳給 0214 的編號加 1", "find": "f_2703_0214(m, i);", "replace": "f_2703_0214(m, (uint16_t)(i + 1u));"},
+  {"name": "跳過星域 31", "find": "        f_2703_0214(m, i);", "replace": "        if (i != 0x1Fu)\n            f_2703_0214(m, i);"},
+  {"name": "跳過星域 0", "find": "        f_2703_0214(m, i);", "replace": "        if (i != 0)\n            f_2703_0214(m, i);"},
+  {"name": "編號取高位元組當參數", "find": "f_2703_0214(m, i);", "replace": "f_2703_0214(m, (uint16_t)(i << 8));"}
+
+,
+  {"name": "傳給 0214 的編號只取低 4 位元", "find": "f_2703_0214(m, i);", "replace": "f_2703_0214(m, (uint16_t)(i & 0x0Fu));"}
+]

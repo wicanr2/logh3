@@ -1,0 +1,37 @@
+{
+  "id": "1727_035E",
+  "entry": "1727:035E",
+  "conv": "far",
+  "ret": "ax",
+  "size": 113,
+  "code_sha256_16": "71ad653bbc3800f6",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "小地圖視野框的更新。基底 ds:9BF4／9BF6 ＝ 0x0F0F，ds:A426..A42C 全 0（沒有舊框）。畫線 39D7:0936 以 stubs 取代，只比對呼叫序列與參數。arg 用 word 才看得出兩個條件的寬度差異。",
+  "args": [
+    {"name": "arg", "kind": "word", "gen": {"choices": [0, 1, 2, 255, 256, 257, 32768, 65535], "also_random": true}}
+  ],
+  "stubs": [
+    {"entry": "39D7:0936", "conv": "far", "nargs": 6, "ret": "none"}
+  ],
+  "seeds": [
+    {"note": "基底原樣（A426 ＝ 0）：兩個條件都不成立，只寫 A428..A42C、A427", "args": [1], "pokes": []},
+    {"note": "A426 ＝ 1、A427 ＝ 1、舊框 (0x1111, 0x2222, 0x3333)、arg ＝ 5：擦舊框、畫新框兩次呼叫", "args": [5], "pokes": [{"addr": "ds:A426", "hex": "0101"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "A426 ＝ 1、A427 ＝ 0、arg ＝ 0：都不畫，A427 寫 0", "args": [0], "pokes": [{"addr": "ds:A426", "hex": "0100"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "A426 ＝ 1、A427 ＝ 1、arg ＝ 0：只擦舊框", "args": [0], "pokes": [{"addr": "ds:A426", "hex": "0101"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "A426 ＝ 1、A427 ＝ 0、arg ＝ 7：只畫新框", "args": [7], "pokes": [{"addr": "ds:A426", "hex": "0100"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "A426 ＝ 0、A427 ＝ 1、arg ＝ 7：A426 為 0 兩個都不畫", "args": [7], "pokes": [{"addr": "ds:A426", "hex": "0001"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "arg ＝ 0x0100：word 非 0（畫新框），低位元組 0（A427 寫 0）", "args": [256], "pokes": [{"addr": "ds:A426", "hex": "0101"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "arg ＝ 0x0001：A427 寫 1", "args": [1], "pokes": [{"addr": "ds:A426", "hex": "0100"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "A426 ＝ 0x80（非 0 的高位元）、A427 ＝ 0x80", "args": [3], "pokes": [{"addr": "ds:A426", "hex": "8080"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "鏡頭 (0xFFFF, 0xFFFF)：右移 4 得 0x0FFF，加原點", "args": [1], "pokes": [{"addr": "ds:9BF4", "hex": "FFFFFFFF"}, {"addr": "ds:A426", "hex": "0100"}]},
+    {"note": "鏡頭 (0x000F, 0x0010)：右移 4 的邊界", "args": [1], "pokes": [{"addr": "ds:9BF4", "hex": "0F001000"}, {"addr": "ds:A426", "hex": "0100"}]},
+    {"note": "鏡頭 (0x0000, 0x0000)", "args": [1], "pokes": [{"addr": "ds:9BF4", "hex": "00000000"}, {"addr": "ds:A426", "hex": "0100"}]},
+    {"note": "鏡頭 (0x8000, 0x8000)：邏輯右移（不是算術右移）", "args": [1], "pokes": [{"addr": "ds:9BF4", "hex": "00800080"}, {"addr": "ds:A426", "hex": "0100"}]},
+    {"note": "舊框 x、y、mask 的高位元組有值", "args": [9], "pokes": [{"addr": "ds:A426", "hex": "0101"}, {"addr": "ds:A428", "hex": "FFEEDDCCBBAA"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 100
+}

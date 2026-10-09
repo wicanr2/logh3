@@ -1,0 +1,15 @@
+[
+  {"name": "BX 不 xchg（欄列對調）", "find": "bx = f02DE_xchg(f02DE_rd16s(m, es, (uint16_t)(si + 0x24u)));", "replace": "bx = f02DE_rd16s(m, es, (uint16_t)(si + 0x24u));"},
+  {"name": "DX 不 xchg（寬高對調）", "find": "dx = f02DE_xchg(f02DE_rd16s(m, es, (uint16_t)(si + 0x26u)));", "replace": "dx = f02DE_rd16s(m, es, (uint16_t)(si + 0x26u));"},
+  {"name": "鍵值取 [si+3]", "find": "rd8(m, LIN(es, (uint16_t)(si + 2u)))", "replace": "rd8(m, LIN(es, (uint16_t)(si + 3u)))"},
+  {"name": "BX 位移少 1", "find": "(uint16_t)(si + 0x24u)", "replace": "(uint16_t)(si + 0x23u)"},
+  {"name": "BX 位移多 1", "find": "(uint16_t)(si + 0x24u)", "replace": "(uint16_t)(si + 0x25u)"},
+  {"name": "DX 位移少 1", "find": "(uint16_t)(si + 0x26u)", "replace": "(uint16_t)(si + 0x25u)"},
+  {"name": "DX 位移多 1", "find": "(uint16_t)(si + 0x26u)", "replace": "(uint16_t)(si + 0x27u)"},
+  {"name": "BX 與 DX 的來源對調", "find": "    bx = f02DE_xchg(f02DE_rd16s(m, es, (uint16_t)(si + 0x24u)));\n    dx = f02DE_xchg(f02DE_rd16s(m, es, (uint16_t)(si + 0x26u)));\n", "replace": "    dx = f02DE_xchg(f02DE_rd16s(m, es, (uint16_t)(si + 0x24u)));\n    bx = f02DE_xchg(f02DE_rd16s(m, es, (uint16_t)(si + 0x26u)));\n"},
+  {"name": "word 高位元組取線性下一格", "find": "(rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8)", "replace": "(rd8(m, LIN(seg, off) + 1u) << 8)"},
+  {"name": "不傳鍵值（AH 保持進入值）", "find": "    ax = (uint16_t)((ax & 0x00FFu) | ((uint16_t)rd8(m, LIN(es, (uint16_t)(si + 2u))) << 8));\n", "replace": ""},
+  {"name": "鍵值放在 AL", "find": "ax = (uint16_t)((ax & 0x00FFu) | ((uint16_t)rd8(m, LIN(es, (uint16_t)(si + 2u))) << 8));", "replace": "ax = (uint16_t)((ax & 0xFF00u) | rd8(m, LIN(es, (uint16_t)(si + 2u))));"},
+  {"name": "不呼叫 00B2", "find": "    f_2376_00B2(m, ax, bx, dx);\n", "replace": ""},
+  {"name": "ES 改 DS", "find": "rd8(m, LIN(es, (uint16_t)(si + 2u)))", "replace": "rd8(m, LIN(0x54B3u, (uint16_t)(si + 2u)))"}
+]

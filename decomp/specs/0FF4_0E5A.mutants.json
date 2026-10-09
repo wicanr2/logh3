@@ -1,0 +1,12 @@
+[
+  {"name": "星域記錄大小 0x7E 改 0x7D", "find": "* 0x7Eu)", "replace": "* 0x7Du)"},
+  {"name": "星域表基底 0xA79C 改 0xA79D", "find": "0xA79Cu +", "replace": "0xA79Du +"},
+  {"name": "region_no 不遮低位元組", "find": "(region_no & 0xFFu)", "replace": "region_no"},
+  {"name": "段寫 0（不是 DS）", "find": "wr16(m, DS(0x9874), GIN3_DS);", "replace": "wr16(m, DS(0x9874), 0);"},
+  {"name": "不寫 ds:9872", "find": "    wr16(m, DS(0x9872), region);\n", "replace": ""},
+  {"name": "不寫 ds:9874", "find": "    wr16(m, DS(0x9874), GIN3_DS);\n", "replace": ""},
+  {"name": "傳給 0E84 的是 region_no", "find": "return f_0FF4_0E84(m, kind);", "replace": "return f_0FF4_0E84(m, region_no);"},
+  {"name": "傳給 0E84 的 kind 加 1", "find": "return f_0FF4_0E84(m, kind);", "replace": "return f_0FF4_0E84(m, (uint16_t)(kind + 1u));"},
+  {"name": "回傳改成 AL（丟掉 AH）", "find": "return f_0FF4_0E84(m, kind);", "replace": "return (uint8_t)f_0FF4_0E84(m, kind);"},
+  {"name": "不呼叫 0E84", "find": "return f_0FF4_0E84(m, kind);", "replace": "return 0;"}
+]

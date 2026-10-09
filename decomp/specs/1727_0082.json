@@ -1,0 +1,30 @@
+{
+  "id": "1727_0082",
+  "entry": "1727:0082",
+  "conv": "far",
+  "ret": "ax",
+  "size": 12,
+  "code_sha256_16": "02c2fe7e5b1ec436",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "固定以參數 1 呼叫 1727:035E（小地圖視野框的更新）。無參數，隨機探索的鑑別力來自讀取集（鏡頭 ds:9BF4／9BF6、ds:A426..A42C）的突變；基底 ds:A426..A42C 全 0（沒有舊框），seeds 造出各種舊框狀態。畫線 39D7:0936 以 stubs 取代，只比對呼叫序列與參數。",
+  "args": [],
+  "stubs": [
+    {"entry": "39D7:0936", "conv": "far", "nargs": 6, "ret": "none"}
+  ],
+  "seeds": [
+    {"note": "基底原樣（A426 ＝ 0）：兩個條件都不成立，只寫 A428..A42C、A427 ← 1", "pokes": []},
+    {"note": "A426 ＝ 1、A427 ＝ 1、舊框 (0x1111, 0x2222, 0x3333)：擦舊框、畫新框兩次呼叫，A427 仍 ← 1", "pokes": [{"addr": "ds:A426", "hex": "0101"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "A426 ＝ 1、A427 ＝ 0：不擦舊框，只畫新框，A427 ← 1", "pokes": [{"addr": "ds:A426", "hex": "0100"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "A426 ＝ 0、A427 ＝ 1：兩個都不畫，A427 保持 1 時寫入集合看不出，故 A428.. 要有變化", "pokes": [{"addr": "ds:A426", "hex": "0001"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "A426 ＝ 1、A427 ＝ 5：A427 寫 1（不是原值、不是 arg 的其他值）", "pokes": [{"addr": "ds:A426", "hex": "0105"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "A426 ＝ 0x80、A427 ＝ 0x80", "pokes": [{"addr": "ds:A426", "hex": "8080"}, {"addr": "ds:A428", "hex": "111122223333"}]},
+    {"note": "鏡頭 (0xFFFF, 0xFFFF)：右移 4 得 0x0FFF，加原點", "pokes": [{"addr": "ds:9BF4", "hex": "FFFFFFFF"}, {"addr": "ds:A426", "hex": "0100"}]},
+    {"note": "鏡頭 (0x8000, 0x8000)：邏輯右移", "pokes": [{"addr": "ds:9BF4", "hex": "00800080"}, {"addr": "ds:A426", "hex": "0101"}, {"addr": "ds:A428", "hex": "FFEEDDCCBBAA"}]},
+    {"note": "鏡頭 (0x000F, 0x0010)：右移 4 的邊界", "pokes": [{"addr": "ds:9BF4", "hex": "0F001000"}, {"addr": "ds:A426", "hex": "0100"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

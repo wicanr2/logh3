@@ -1,0 +1,17 @@
+[
+  {"name": "第 1 個位移 0x079F", "find": "wr16(m, DS(0xF128u), 0x079Eu);", "replace": "wr16(m, DS(0xF128u), 0x079Fu);"},
+  {"name": "第 2 個位移 0x2F9F", "find": "wr16(m, DS(0xF12Cu), 0x2F9Eu);", "replace": "wr16(m, DS(0xF12Cu), 0x2F9Fu);"},
+  {"name": "第 3 個位移 0x551F", "find": "wr16(m, DS(0xF130u), 0x551Eu);", "replace": "wr16(m, DS(0xF130u), 0x551Fu);"},
+  {"name": "第 4 個位移 0x5B1F", "find": "wr16(m, DS(0xF134u), 0x5B1Eu);", "replace": "wr16(m, DS(0xF134u), 0x5B1Fu);"},
+  {"name": "第 1 個段加一", "find": "wr16(m, DS(0xF12Au), seg);", "replace": "wr16(m, DS(0xF12Au), (uint16_t)(seg + 1u));"},
+  {"name": "第 2 個段加一", "find": "wr16(m, DS(0xF12Eu), seg);", "replace": "wr16(m, DS(0xF12Eu), (uint16_t)(seg + 1u));"},
+  {"name": "第 3 個段加一", "find": "wr16(m, DS(0xF132u), seg);", "replace": "wr16(m, DS(0xF132u), (uint16_t)(seg + 1u));"},
+  {"name": "第 4 個段加一", "find": "wr16(m, DS(0xF136u), seg);", "replace": "wr16(m, DS(0xF136u), (uint16_t)(seg + 1u));"},
+  {"name": "第 2 個位移與第 3 個位移對調", "find": "wr16(m, DS(0xF12Cu), 0x2F9Eu);", "replace": "wr16(m, DS(0xF12Cu), 0x551Eu);"},
+  {"name": "第 4 個指標寫到 F138", "find": "wr16(m, DS(0xF134u), 0x5B1Eu);", "replace": "wr16(m, DS(0xF138u), 0x5B1Eu);"},
+  {"name": "第 1 個位移只寫低位元組", "find": "wr16(m, DS(0xF128u), 0x079Eu);", "replace": "wr8(m, DS(0xF128u), 0x9Eu);"},
+  {"name": "第 4 個段只寫低位元組", "find": "wr16(m, DS(0xF136u), seg);", "replace": "wr8(m, DS(0xF136u), (uint8_t)seg);"},
+  {"name": "不寫第 3 個指標", "find": "    wr16(m, DS(0xF132u), seg);\n    wr16(m, DS(0xF130u), 0x551Eu);\n", "replace": ""},
+  {"name": "多寫第 5 個指標", "find": "    return seg;\n}", "replace": "    wr16(m, DS(0xF138u), 0x60BEu);\n    return seg;\n}"},
+  {"name": "回傳位移", "find": "    return seg;\n}", "replace": "    return 0x5B1Eu;\n}"}
+]

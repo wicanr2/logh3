@@ -1,0 +1,28 @@
+{
+  "id": "31DB_000C",
+  "entry": "31DB:000C",
+  "conv": "far",
+  "ret": "ax",
+  "size": 24,
+  "code_sha256_16": "0b0d3f7b234c3308",
+  "base_state": "/src/workplace/fcmd/fcmd-standby.state",
+  "base_state_sha256": "2f07118746ba249290a5f5e3de71020090a10c58b8072f84b110e1c1c95f2394",
+  "note": "呼叫 1588:05A7(tile 1, ds:D70C, 0x20) 後把個數低位元組存進 ds:D78C。基底：fcmd-standby.state（ds:3C1A 指向 79B0:0010 的戰場地圖，圖塊 1 在基底有 8 格，位置在地圖偏移 0x4B0、0xCAA、0xE09、0x109C、0x1444、0x1A53、0x1D22、0x2531）。沒有參數，變化全來自記憶體突變與 seeds。seeds 先把 ds:D78C poke 成 0x55，才看得出個數 0 時的寫入。",
+  "args": [],
+  "seeds": [
+    {"note": "基底原狀：8 格", "args": [], "pokes": [{"addr": "ds:D78C", "hex": "55"}]},
+    {"note": "圖塊 1 全清掉：個數 0，ds:D78C 要從 0x55 變 0", "args": [], "pokes": [{"addr": "ds:D78C", "hex": "55"}, {"addr": "79B0:04C0", "hex": "00"}, {"addr": "79B0:0CBA", "hex": "00"}, {"addr": "79B0:0E19", "hex": "00"}, {"addr": "79B0:10AC", "hex": "00"}, {"addr": "79B0:1454", "hex": "00"}, {"addr": "79B0:1A63", "hex": "00"}, {"addr": "79B0:1D32", "hex": "00"}, {"addr": "79B0:2541", "hex": "00"}]},
+    {"note": "只剩 1 格", "args": [], "pokes": [{"addr": "ds:D78C", "hex": "55"}, {"addr": "79B0:0CBA", "hex": "00"}, {"addr": "79B0:0E19", "hex": "00"}, {"addr": "79B0:10AC", "hex": "00"}, {"addr": "79B0:1454", "hex": "00"}, {"addr": "79B0:1A63", "hex": "00"}, {"addr": "79B0:1D32", "hex": "00"}, {"addr": "79B0:2541", "hex": "00"}]},
+    {"note": "個數 = 32（剛好填滿 D70C..D78B，不碰 D78C）：24 格新增 + 8 格原有", "args": [], "pokes": [{"addr": "ds:D78C", "hex": "55"}, {"addr": "79B0:0010", "hex": "01", "repeat": 24}]},
+    {"note": "個數 = 33：輸出越過 D78C，之後被個數 0x21 蓋掉", "args": [], "pokes": [{"addr": "ds:D78C", "hex": "55"}, {"addr": "79B0:0010", "hex": "01", "repeat": 25}]},
+    {"note": "個數 = 48", "args": [], "pokes": [{"addr": "ds:D78C", "hex": "55"}, {"addr": "79B0:0010", "hex": "01", "repeat": 40}]},
+    {"note": "個數 = 255：AL = 0xFF", "args": [], "pokes": [{"addr": "ds:D78C", "hex": "55"}, {"addr": "79B0:0010", "hex": "01", "repeat": 247}]},
+    {"note": "個數 = 256：AL = 0、AX = 0x100", "args": [], "pokes": [{"addr": "ds:D78C", "hex": "55"}, {"addr": "79B0:0010", "hex": "01", "repeat": 248}]},
+    {"note": "個數 = 308：AL = 0x34、AX = 0x134", "args": [], "pokes": [{"addr": "ds:D78C", "hex": "55"}, {"addr": "79B0:0010", "hex": "01", "repeat": 300}]},
+    {"note": "地圖指標指向 8000:FF00（段內回繞：讀 128 × 102 格橫跨 FFFF 回到 0000）", "args": [], "pokes": [{"addr": "ds:D78C", "hex": "55"}, {"addr": "ds:3C1A", "hex": "00FF0080"}, {"addr": "8000:FFF8", "hex": "0101010101010101"}, {"addr": "8000:0000", "hex": "01010101"}]}
+  ],
+  "iters": 800,
+  "max_cases": 300,
+  "seed": 20261012,
+  "min_coverage": 100
+}

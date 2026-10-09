@@ -1,0 +1,37 @@
+{
+  "id": "39B5_010C",
+  "entry": "39B5:010C",
+  "conv": "near",
+  "ret": "ax",
+  "size": 26,
+  "code_sha256_16": "5c1dba0161738641",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "BP 是暫存器參數，兩個 32 位元運算元在 SS:[BP+6..9] 與 SS:[BP+0A..0D]，SS＝0x63EB。基底狀態 SP＝1F8A，探針堆疊區是 SS:1B8A..1F89，BP 的 choices 避開它（BP+6..BP+0xD 不進堆疊區）。不用 also_random，隨機 BP 可能落進堆疊區。回傳 AX ＝ 兩高字 bit15 的異或。",
+  "args": [
+    {"name": "bp", "kind": "reg", "reg": "bp", "gen": {"choices": [0, 2, 4, 256, 4096, 4097, 4098, 6912, 8192, 8200, 12288, 32768, 49152, 65520, 65524, 65525, 65526, 65527, 65528, 65529, 65530, 65531, 65532, 65533, 65534, 65535]}}
+  ],
+  "seeds": [
+    {"note": "兩個皆正：不變，回 0", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "0500000007000000"}]},
+    {"note": "第一個負（0xFFFF0005）、第二個正：第一個變 0x0000FFFB，回 0x8000", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "0500FFFF07000000"}]},
+    {"note": "第一個正、第二個負（0xFFFF0007）：回 0x8000", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "050000000700FFFF"}]},
+    {"note": "兩個皆負：各自取絕對值，回 0", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "0500FFFF0700FFFE"}]},
+    {"note": "0x80000000 與 0：0x80000000 取負後不變，0 不變；異號", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "0000008000000000"}]},
+    {"note": "0x80000001（低字非 0 的借位）與 0x80000000", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "0100008000000080"}]},
+    {"note": "高字 0x7FFF（正）與 0xFFFF（負）", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "FFFFFF7FFFFFFFFF"}]},
+    {"note": "高字 0x4000 與 0：異或 0x4000，and 0x8000 後為 0（bit14 不算符號）", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "0100004001000000"}]},
+    {"note": "高字 0xC000 與 0x4000：異或 0x8000，回 0x8000；第一個為負，第二個為正", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "0100 00C0 0100 0040"}]},
+    {"note": "低字最高位為 1 但高字為正：不變（符號只看高字）", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "0080000000800000"}]},
+    {"note": "第二個運算元的低字高位為 1 且高字為負、第一個低字 0x8000 高字正", "args": [4096], "pokes": [{"addr": "63EB:1006", "hex": "0080000000 80FFFF"}]},
+    {"note": "bp ＝ 0xFFF7：op1 低字在 FFFD..FFFE、高字在 FFFF／0000（word 回繞，線性 +1 會讀 73EB0）；op2 在 0001..0004", "args": [65527], "pokes": [{"addr": "lin:73EB0", "hex": "77"}, {"addr": "63EB:FFFD", "hex": "0500FF"}, {"addr": "63EB:0000", "hex": "FF"}, {"addr": "63EB:0001", "hex": "0700 0000"}]},
+    {"note": "bp ＝ 0xFFF7，op1 正（高字 FFFF／0000 → 0x0001），op2 負", "args": [65527], "pokes": [{"addr": "lin:73EB0", "hex": "77"}, {"addr": "63EB:FFFD", "hex": "0500FF"}, {"addr": "63EB:0000", "hex": "7F"}, {"addr": "63EB:0001", "hex": "0700 FFFF"}]},
+    {"note": "bp ＝ 0xFFF9：op1 低字在 FFFF／0000（word 回繞），高字在 0001..0002；op2 在 0003..0006", "args": [65529], "pokes": [{"addr": "lin:73EB0", "hex": "77"}, {"addr": "63EB:FFFF", "hex": "05"}, {"addr": "63EB:0000", "hex": "00"}, {"addr": "63EB:0001", "hex": "FFFF"}, {"addr": "63EB:0003", "hex": "07000000"}]},
+    {"note": "bp ＝ 0xFFFB：op1 在 0001..0004（BP+6 回繞到 0001），op2 在 0005..0008", "args": [65531], "pokes": [{"addr": "63EB:0001", "hex": "0500 00F0 0700 0000"}]},
+    {"note": "bp ＝ 0xFFF5：op2 低字在 FFFF／0000（word 回繞），高字在 0001..0002；op1 在 FFFB..FFFE 之後", "args": [65525], "pokes": [{"addr": "lin:73EB0", "hex": "77"}, {"addr": "63EB:FFFB", "hex": "05000000"}, {"addr": "63EB:FFFF", "hex": "07"}, {"addr": "63EB:0000", "hex": "00"}, {"addr": "63EB:0001", "hex": "FFFF"}]},
+    {"note": "bp ＝ 0xFFFE：op1 在 0004..0007，op2 在 0008..000B", "args": [65534], "pokes": [{"addr": "63EB:0004", "hex": "0500 FFFF 0700 0000"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

@@ -1,0 +1,30 @@
+{
+  "id": "297B_10DE",
+  "entry": "297B:10DE",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 142,
+  "code_sha256_16": "25f6073e379cee3c",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "某陣營全部現役艦隊的維持費合計（回 AX:BX）與移動經費合計（寫 ds:8F82 + 4 × 陣營）。基底 S3 開局：陣營 0 現役艦隊 12 支（f0、f2..f5、f7..f9、f11、f12、f14、f15），陣營 1 有 6 支（f16、f17、f28..f31）。艦艇池 668B:0002 起每筆 78 bytes，艦種表 ds:4E3A 起。進位（32 位元相加）由 seeds 造：f0、f2 的第 0 組都指池 0、池 0 數量 0xFFFF、艦種表 ds:4E3E 的 +4／+5 = 0xFF，每支維持費 0x828E（負），兩支相加低字進位。表 ds:8F82 起先 poke 成 0xAA 才看得出寫入。",
+  "args": [
+    {"name": "faction", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 255, 256, 257, 258, 65280, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "陣營 0，基底原狀", "args": [0], "pokes": [{"addr": "ds:8F82", "hex": "AA", "repeat": 16}]},
+    {"note": "陣營 1，基底原狀", "args": [1], "pokes": [{"addr": "ds:8F82", "hex": "AA", "repeat": 16}]},
+    {"note": "陣營 2：沒有艦隊，U = M = 0，表項被寫成 0", "args": [2], "pokes": [{"addr": "ds:8F82", "hex": "AA", "repeat": 16}]},
+    {"note": "faction 的高位元組非 0：0x0100 → 陣營 0", "args": [256], "pokes": [{"addr": "ds:8F82", "hex": "AA", "repeat": 16}]},
+    {"note": "faction 的高位元組非 0：0x0101 → 陣營 1", "args": [257], "pokes": [{"addr": "ds:8F82", "hex": "AA", "repeat": 16}]},
+    {"note": "faction 255：表寫在 ds:(8F82 + 1020) = 937E", "args": [255], "pokes": [{"addr": "ds:937E", "hex": "AA", "repeat": 8}]},
+    {"note": "進位：f0、f2 第 0 組指池 0（數量 0xFFFF，艦種表 +4 = +5 = 0xFF）→ 每支維持費 0x828E、移動經費 0x828E；其餘艦隊照基底", "args": [0], "pokes": [{"addr": "ds:8F82", "hex": "AA", "repeat": 16}, {"addr": "ds:C083", "hex": "01"}, {"addr": "ds:C084", "hex": "00000000"}, {"addr": "ds:C177", "hex": "01"}, {"addr": "ds:C178", "hex": "00000000"}, {"addr": "668B:0002", "hex": "00"}, {"addr": "668B:0006", "hex": "00"}, {"addr": "668B:000A", "hex": "FFFF"}, {"addr": "ds:4E3E", "hex": "FFFF"}, {"addr": "ds:C0BB", "hex": "00"}, {"addr": "ds:C1AF", "hex": "00"}]},
+    {"note": "進位 + 移動狀態 2 與 5：f0 的 +8 = 2 → 12FB 回 0；f2 的 +8 = 5 → 回 0（12FB 以 +8 判斷，且 116C 不改 +8）", "args": [0], "pokes": [{"addr": "ds:8F82", "hex": "AA", "repeat": 16}, {"addr": "ds:C083", "hex": "01"}, {"addr": "ds:C084", "hex": "00000000"}, {"addr": "ds:C177", "hex": "01"}, {"addr": "ds:C178", "hex": "00000000"}, {"addr": "668B:0002", "hex": "00"}, {"addr": "668B:0006", "hex": "00"}, {"addr": "668B:000A", "hex": "FFFF"}, {"addr": "ds:4E3E", "hex": "FFFF"}, {"addr": "ds:C0BB", "hex": "00"}, {"addr": "ds:C1AF", "hex": "00"}, {"addr": "ds:C07C", "hex": "02"}, {"addr": "ds:C170", "hex": "05"}]},
+    {"note": "沒有現役艦隊(+4 全 FF)：表被寫成 0，回傳 0", "args": [0], "pokes": [{"addr": "ds:8F82", "hex": "AA", "repeat": 16}, {"addr": "ds:C078", "hex": "FF"}, {"addr": "ds:C16C", "hex": "FF"}, {"addr": "ds:C1E6", "hex": "FF"}, {"addr": "ds:C260", "hex": "FF"}, {"addr": "ds:C2DA", "hex": "FF"}, {"addr": "ds:C354", "hex": "FF"}, {"addr": "ds:C3CE", "hex": "FF"}, {"addr": "ds:C448", "hex": "FF"}, {"addr": "ds:C4C2", "hex": "FF"}, {"addr": "ds:C53C", "hex": "FF"}, {"addr": "ds:C5B6", "hex": "FF"}, {"addr": "ds:C630", "hex": "FF"}]},
+    {"note": "所有艦隊都是現役且陣營 0：f1、f6、f10、f13 也算", "args": [0], "pokes": [{"addr": "ds:8F82", "hex": "AA", "repeat": 16}, {"addr": "ds:C0F2", "hex": "00"}, {"addr": "ds:C0EF", "hex": "00"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}

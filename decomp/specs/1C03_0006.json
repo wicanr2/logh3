@@ -1,0 +1,28 @@
+{
+  "id": "1C03_0006",
+  "entry": "1C03:0006",
+  "conv": "far",
+  "ret": "ax",
+  "size": 100,
+  "code_sha256_16": "9f9fb7264300a22a",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦隊表（ds:C074，一筆 122 bytes）取 S3 開局的真實內容（艦隊 0、2 到 5、8、15 到 31 有艦艇；艦隊 1 的組數欄是 0xFF，避免選它）。在場艦隊清單（ds:9898、筆數 ds:9894 word）在基底是空的，由 seeds 造。基底所有艦隊的 +0x52 與 +0x56 都是 0xFFFFFFFF，搬移看不出來，所以 seeds 先把它們 poke 成不同的值。",
+  "args": [
+  ],
+  "seeds": [
+    {"note": "筆數 0：不進迴圈，AX ＝ 0", "pokes": []},
+    {"note": "清單 [0]：艦隊 0 的 +0x52 ＝ 0x11223344、+0x56 ＝ 0xAAAAAAAA", "pokes": [{"addr": "ds:9894", "hex": "0100"}, {"addr": "ds:9898", "hex": "00"}, {"addr": "ds:C0C6", "hex": "44332211"}, {"addr": "ds:C0CA", "hex": "AAAAAAAA"}]},
+    {"note": "清單 [0, 2, 3]", "pokes": [{"addr": "ds:9894", "hex": "0300"}, {"addr": "ds:9898", "hex": "000203"}, {"addr": "ds:C0C6", "hex": "44332211"}, {"addr": "ds:C0CA", "hex": "AAAAAAAA"}, {"addr": "ds:C1BA", "hex": "78563412"}, {"addr": "ds:C1BE", "hex": "BBBBBBBB"}, {"addr": "ds:C234", "hex": "21436587"}, {"addr": "ds:C238", "hex": "CCCCCCCC"}]},
+    {"note": "清單 [5, 5]：同一支艦隊搬兩次、呼叫兩次", "pokes": [{"addr": "ds:9894", "hex": "0200"}, {"addr": "ds:9898", "hex": "0505"}, {"addr": "ds:C2AE", "hex": "01000000"}, {"addr": "ds:C2B2", "hex": "FFFFFFFF"}]},
+    {"note": "清單 [31]（最後一支，+0x52 在 C0C6 ＋ 31×122）", "pokes": [{"addr": "ds:9894", "hex": "0100"}, {"addr": "ds:9898", "hex": "1F"}, {"addr": "ds:CE5E", "hex": "A5A5A5A5"}, {"addr": "ds:CE62", "hex": "5A5A5A5A"}]},
+    {"note": "清單 [16, 17]：陣營 1 的艦隊", "pokes": [{"addr": "ds:9894", "hex": "0200"}, {"addr": "ds:9898", "hex": "1011"}, {"addr": "ds:C86E", "hex": "0A0B0C0D"}, {"addr": "ds:C872", "hex": "00000000"}, {"addr": "ds:C8E8", "hex": "0E0F1011"}, {"addr": "ds:C8EC", "hex": "00000000"}]},
+    {"note": "筆數 0x0100 的 word（byte 讀得 0）：256 項都是艦隊 31", "pokes": [{"addr": "ds:9894", "hex": "0001"}, {"addr": "ds:9898", "hex": "1F", "repeat": 256}]},
+    {"note": "清單項目 255：0xC074 ＋ 255×0x7A ＝ 0x13A7A → 位移回繞成 0x3A7A；組數欄讀到別處", "pokes": [{"addr": "ds:9894", "hex": "0100"}, {"addr": "ds:9898", "hex": "FF"}, {"addr": "ds:3ACC", "hex": "11223344"}]},
+    {"note": "清單 [0]，+0x52 高字低字不同、+0x56 已有值：只搬 dword，不動別處", "pokes": [{"addr": "ds:9894", "hex": "0100"}, {"addr": "ds:9898", "hex": "00"}, {"addr": "ds:C0C6", "hex": "01000200"}, {"addr": "ds:C0CA", "hex": "03000400"}, {"addr": "ds:C0CE", "hex": "05000600"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 100
+}

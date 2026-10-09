@@ -1,0 +1,34 @@
+{
+  "id": "3A92_0001",
+  "entry": "3A92:0001",
+  "conv": "far",
+  "ret": "ax",
+  "size": 65,
+  "code_sha256_16": "228e100b0075b57d",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "旋轉(指標版)：*x、*y 各一個 word（有號），角度只取低位元組。x、y 指標取暫存區（各 8 bytes；args 的 40192 = 0x9D00，x 緩衝區在 9D00:0000，y 緩衝區在 9D00:0008 起，視配置而定，所以 seeds 用 lin: 位址寫入）。seeds：兩個指標相同（後寫的 x' 蓋掉 y'）、x 與 y 重疊一個 byte、x 指標位移 0xFFFF（word 跨段尾回繞）、y 指標在 ROM（寫入丟棄）、角度高位元組非 0。",
+  "args": [
+    {"name": "x", "kind": "farptr", "gen": {"scratch": 16}},
+    {"name": "y", "kind": "farptr", "gen": {"scratch": 16}},
+    {"name": "angle", "kind": "word", "gen": {"choices": [0, 1, 2, 63, 64, 65, 127, 128, 129, 191, 192, 193, 254, 255, 256, 319, 320, 65280, 65472, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "角度 0、x=1000、y=0；x 在 9D00:0000，y 在 9D00:0010", "args": [0, 40192, 16, 40192, 0], "pokes": [{"addr": "lin:9D000", "hex": "E803"}, {"addr": "lin:9D010", "hex": "0000"}]},
+    {"note": "角度 64、x=1000、y=500", "args": [0, 40192, 16, 40192, 64], "pokes": [{"addr": "lin:9D000", "hex": "E803"}, {"addr": "lin:9D010", "hex": "F401"}]},
+    {"note": "x 與 y 指標相同（9D00:0000）：y' 先寫、x' 後寫，留下 x'", "args": [0, 40192, 0, 40192, 37], "pokes": [{"addr": "lin:9D000", "hex": "E803"}]},
+    {"note": "x 指標 9D00:0000、y 指標 9D00:0001（重疊一個 byte）：y 讀到 x 的高位元組與下一個 byte", "args": [0, 40192, 1, 40192, 100], "pokes": [{"addr": "lin:9D000", "hex": "E8030A"}]},
+    {"note": "x 指標 9D00:0001、y 指標 9D00:0000：x 後寫，蓋掉 y' 的高位元組", "args": [1, 40192, 0, 40192, 200], "pokes": [{"addr": "lin:9D000", "hex": "E8030A"}]},
+    {"note": "x 指標 8000:FFFF：word 的低位元組在 FFFF、高位元組回繞到 8000:0000（線性 80000）", "args": [65535, 32768, 16, 40192, 33], "pokes": [{"addr": "lin:8FFFF", "hex": "10"}, {"addr": "lin:80000", "hex": "02"}, {"addr": "lin:9D010", "hex": "0001"}]},
+    {"note": "y 指標 8000:FFFF（寫入也跨段尾回繞）", "args": [0, 40192, 65535, 32768, 77], "pokes": [{"addr": "lin:9D000", "hex": "2C01"}, {"addr": "lin:8FFFF", "hex": "50"}, {"addr": "lin:80000", "hex": "03"}]},
+    {"note": "y 指標在 ROM F000:0000：y' 寫入被丟棄，x' 寫在 9D00", "args": [0, 40192, 0, 61440, 12], "pokes": [{"addr": "lin:9D000", "hex": "E803"}]},
+    {"note": "x 指標在 ROM F000:0000：x' 被丟棄", "args": [0, 61440, 16, 40192, 12], "pokes": [{"addr": "lin:9D010", "hex": "E803"}]},
+    {"note": "x 指標 F000:FFFF（高位元組回繞到 F000:0000，都在 ROM）", "args": [65535, 61440, 16, 40192, 12], "pokes": [{"addr": "lin:9D010", "hex": "E803"}]},
+    {"note": "角度 0x0140：高位元組忽略，等於角度 0x40", "args": [0, 40192, 16, 40192, 320], "pokes": [{"addr": "lin:9D000", "hex": "E803"}, {"addr": "lin:9D010", "hex": "F401"}]},
+    {"note": "角度 0xFF：+0x40 8 位元回繞", "args": [0, 40192, 16, 40192, 255], "pokes": [{"addr": "lin:9D000", "hex": "2C01"}, {"addr": "lin:9D010", "hex": "C800"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}

@@ -1,0 +1,13 @@
+[
+  {"name": "寫入順序對調（先 x 後 y）", "find": "    w0001_wr16s(m, y_seg, y_off, y1);\n    w0001_wr16s(m, x_seg, x_off, x1);", "replace": "    w0001_wr16s(m, x_seg, x_off, x1);\n    w0001_wr16s(m, y_seg, y_off, y1);"},
+  {"name": "x' 與 y' 寫反", "find": "    w0001_wr16s(m, y_seg, y_off, y1);\n    w0001_wr16s(m, x_seg, x_off, x1);", "replace": "    w0001_wr16s(m, y_seg, y_off, x1);\n    w0001_wr16s(m, x_seg, x_off, y1);"},
+  {"name": "回傳 y' 而非 x'", "find": "    return x1;", "replace": "    return y1;"},
+  {"name": "x 與 y 讀取對調", "find": "    uint16_t bx = w0001_rd16s(m, x_seg, x_off);\n    uint16_t cx = w0001_rd16s(m, y_seg, y_off);", "replace": "    uint16_t bx = w0001_rd16s(m, y_seg, y_off);\n    uint16_t cx = w0001_rd16s(m, x_seg, x_off);"},
+  {"name": "cos 偏移 +0x41", "find": "uint8_t a2 = (uint8_t)(a + 0x40u);", "replace": "uint8_t a2 = (uint8_t)(a + 0x41u);"},
+  {"name": "角度取整個 word", "find": "uint8_t a = (uint8_t)angle_word;", "replace": "uint16_t a = angle_word;"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"},
+  {"name": "讀 word 不在段內回繞(線性連續)", "find": "    uint16_t bx = w0001_rd16s(m, x_seg, x_off);", "replace": "    uint16_t bx = rd16(m, LIN(x_seg, x_off));"},
+  {"name": "寫 word 不在段內回繞(線性連續)", "find": "    w0001_wr16s(m, y_seg, y_off, y1);\n", "replace": "    w0001_put8(m, LIN(y_seg, y_off), (uint8_t)y1);\n    w0001_put8(m, LIN(y_seg, y_off) + 1u, (uint8_t)(y1 >> 8));\n"},
+  {"name": "0062 與 0081 的 SI/DI 對調", "find": "uint16_t y1 = f_3A92_0081(m, si, di, bx, cx);", "replace": "uint16_t y1 = f_3A92_0081(m, di, si, bx, cx);"},
+  {"name": "0081 看到 0062 的結果當 x", "find": "uint16_t y1 = f_3A92_0081(m, si, di, bx, cx);", "replace": "uint16_t y1 = f_3A92_0081(m, si, di, x1, cx);"}
+]

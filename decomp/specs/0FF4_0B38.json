@@ -1,0 +1,34 @@
+{
+  "id": "0FF4_0B38",
+  "entry": "0FF4:0B38",
+  "conv": "far",
+  "ret": "pack:al",
+  "size": 77,
+  "code_sha256_16": "d43a48f0dcaa0e86",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "艦種優先順序表（ds:2986，一列 7 bytes、0xFF 結尾，基底有 6 列）。基底 ds:9872 → 星域 0（ds:A79C）、ds:8F1D ＝ 0，星域 0 的艦種 0 到 6 存量都不低於每組艘數，所以第一個艦種就成立；seeds 把存量與每組艘數改成各個邊界。星域 0 艦種 k 存量在 ds:A7CC ＋ 4k、每組艘數在 ds:4E3A ＋ 26k。idx 用 word 才看得出原版只讀低位元組。",
+  "args": [
+    {"name": "idx", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 255, 256, 257, 261, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "列 0 基底：第一個艦種 1 就成立", "args": [0], "pokes": []},
+    {"note": "列 0：艦種 1 存量 ＝ 每組 − 1（商 0）→ 換艦種 2", "args": [0], "pokes": [{"addr": "ds:A7D0", "hex": "B70B0000"}]},
+    {"note": "列 0：艦種 1 存量 ＝ 每組（商 1）→ 成立", "args": [0], "pokes": [{"addr": "ds:A7D0", "hex": "B80B0000"}]},
+    {"note": "列 0：艦種 1、2、4 存量 0 → 換到艦種 3", "args": [0], "pokes": [{"addr": "ds:A7D0", "hex": "00000000"}, {"addr": "ds:A7D4", "hex": "00000000"}, {"addr": "ds:A7DC", "hex": "00000000"}]},
+    {"note": "列 0：艦種 1、2、4、3、5 存量 0 → 換到艦種 6", "args": [0], "pokes": [{"addr": "ds:A7D0", "hex": "00000000"}, {"addr": "ds:A7D4", "hex": "00000000"}, {"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:A7D8", "hex": "00000000"}, {"addr": "ds:A7E0", "hex": "00000000"}]},
+    {"note": "列 0 六個艦種存量全 0 → 碰到 0xFF 回 0xFF（呼叫過 0E84）", "args": [0], "pokes": [{"addr": "ds:A7D0", "hex": "00000000"}, {"addr": "ds:A7D4", "hex": "00000000"}, {"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:A7D8", "hex": "00000000"}, {"addr": "ds:A7E0", "hex": "00000000"}, {"addr": "ds:A7E4", "hex": "00000000"}]},
+    {"note": "列 5 六個艦種存量全 0", "args": [5], "pokes": [{"addr": "ds:A7CC", "hex": "00000000"}, {"addr": "ds:A7D0", "hex": "00000000"}, {"addr": "ds:A7D4", "hex": "00000000"}, {"addr": "ds:A7D8", "hex": "00000000"}, {"addr": "ds:A7DC", "hex": "00000000"}, {"addr": "ds:A7E0", "hex": "00000000"}, {"addr": "ds:A7E4", "hex": "00000000"}]},
+    {"note": "列 2：開頭就是 0xFF（一次都不呼叫 0E84）", "args": [2], "pokes": [{"addr": "ds:2994", "hex": "FF"}]},
+    {"note": "列 0：開頭 0xFF（一次都不呼叫）", "args": [0], "pokes": [{"addr": "ds:2986", "hex": "FF"}]},
+    {"note": "idx ＝ 0x0102：只取低位元組 2", "args": [258], "pokes": [{"addr": "ds:A7CC", "hex": "00000000"}]},
+    {"note": "列 1：艦種 2 存量 0 → 換 4 → 換 0", "args": [1], "pokes": [{"addr": "ds:A7D4", "hex": "00000000"}, {"addr": "ds:A7DC", "hex": "00000000"}]},
+    {"note": "列 0：艦種 1 存量 ＝ 每組 × 256（商 0x100，低位元組 0 但 word 非 0）→ 成立", "args": [0], "pokes": [{"addr": "ds:A7D0", "hex": "00B80B00"}]},
+    {"note": "idx ＝ 6：讀到表後面的文字區，艦種編號是 0xBE（超過 7 的艦種）", "args": [6], "pokes": []},
+    {"note": "陣營 1：星域 0 艦種表列換一組，列 0", "args": [0], "pokes": [{"addr": "ds:8F1D", "hex": "01"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

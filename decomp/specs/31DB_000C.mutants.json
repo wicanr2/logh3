@@ -1,0 +1,11 @@
+[
+  {"name": "圖塊改 2", "find": "0x0001u, 0xD70Cu", "replace": "0x0002u, 0xD70Cu"},
+  {"name": "輸出位移改 D710", "find": "0xD70Cu, GIN3_DS", "replace": "0xD710u, GIN3_DS"},
+  {"name": "個數存到 D78D", "find": "wr8(m, DS(0xD78Cu), (uint8_t)count);", "replace": "wr8(m, DS(0xD78Du), (uint8_t)count);"},
+  {"name": "存個數高位元組", "find": "(uint8_t)count);", "replace": "(uint8_t)(count >> 8));"},
+  {"name": "不存個數", "find": "wr8(m, DS(0xD78Cu), (uint8_t)count);", "replace": "(void)0;"},
+  {"name": "存的是個數加一", "find": "(uint8_t)count);", "replace": "(uint8_t)(count + 1u));"},
+  {"name": "回傳只取低位元組", "find": "    return count;", "replace": "    return (uint8_t)count;"},
+  {"name": "個數超過 32 時不蓋 D78C(保留輸出陣列的內容)", "find": "    wr8(m, DS(0xD78Cu), (uint8_t)count);", "replace": "    if (count <= 32u)\n        wr8(m, DS(0xD78Cu), (uint8_t)count);"},
+  {"name": "呼叫兩次(第二次輸出位移多 4)", "find": "    uint16_t count = f_1588_05A7(m, 0x0001u, 0xD70Cu, GIN3_DS, 0x0020u);\n", "replace": "    uint16_t count = f_1588_05A7(m, 0x0001u, 0xD70Cu, GIN3_DS, 0x0020u);\n    count = f_1588_05A7(m, 0x0001u, 0xD70Cu + 4u, GIN3_DS, 0x0020u);\n"}
+]

@@ -1,0 +1,16 @@
+[
+  {"name": "第1位參謀讀 8F4A", "find": "rd16(m, DS(0x8F4Bu))", "replace": "rd16(m, DS(0x8F4Au))"},
+  {"name": "第2位參謀讀 8F4D", "find": "rd16(m, DS(0x8F4Cu))", "replace": "rd16(m, DS(0x8F4Du))"},
+  {"name": "第3位參謀讀 8F4E", "find": "rd16(m, DS(0x8F4Fu))", "replace": "rd16(m, DS(0x8F4Eu))"},
+  {"name": "第4位參謀讀 8F51", "find": "rd16(m, DS(0x8F50u))", "replace": "rd16(m, DS(0x8F51u))"},
+  {"name": "第5位參謀讀 8F4C", "find": "rd16(m, DS(0x8F4Du))", "replace": "rd16(m, DS(0x8F4Cu))"},
+  {"name": "第6位參謀讀 8F4F", "find": "ax = f_28E0_05CC(m, rd16(m, DS(0x8F4Eu)));", "replace": "ax = f_28E0_05CC(m, rd16(m, DS(0x8F4Fu)));"},
+  {"name": "少呼叫第1位", "find": "    f_28E0_05CC(m, rd16(m, DS(0x8F4Bu)));\n", "replace": ""},
+  {"name": "少呼叫第2位", "find": "    f_28E0_05CC(m, rd16(m, DS(0x8F4Cu)));\n", "replace": ""},
+  {"name": "少呼叫第3位", "find": "    f_28E0_05CC(m, rd16(m, DS(0x8F4Fu)));\n", "replace": ""},
+  {"name": "少呼叫第4位", "find": "    f_28E0_05CC(m, rd16(m, DS(0x8F50u)));\n", "replace": ""},
+  {"name": "少呼叫第5位", "find": "    f_28E0_05CC(m, rd16(m, DS(0x8F4Du)));\n", "replace": ""},
+  {"name": "少呼叫第6位（回傳改最後一次之前）", "find": "    ax = f_28E0_05CC(m, rd16(m, DS(0x8F4Eu)));\n    return ax;", "replace": "    ax = f_28E0_05CC(m, rd16(m, DS(0x8F4Du)));\n    return ax;"},
+  {"name": "回傳改 0", "find": "    return ax;\n}", "replace": "    return 0 * ax;\n}"},
+  {"name": "把第6位參數高位元組當編號", "find": "ax = f_28E0_05CC(m, rd16(m, DS(0x8F4Eu)));", "replace": "ax = f_28E0_05CC(m, (uint16_t)(rd16(m, DS(0x8F4Eu)) >> 8));"}
+]

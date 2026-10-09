@@ -1,0 +1,13 @@
+[
+  {"name": "位移值 0x60BF", "find": "wr16(m, DS(0xF138u), 0x60BEu);", "replace": "wr16(m, DS(0xF138u), 0x60BFu);"},
+  {"name": "位移值 0x60BE 的高低位元組對調", "find": "wr16(m, DS(0xF138u), 0x60BEu);", "replace": "wr16(m, DS(0xF138u), 0xBE60u);"},
+  {"name": "段值加一", "find": "wr16(m, DS(0xF13Au), seg);", "replace": "wr16(m, DS(0xF13Au), (uint16_t)(seg + 1u));"},
+  {"name": "位移與段寫反", "find": "    wr16(m, DS(0xF13Au), seg);\n    wr16(m, DS(0xF138u), 0x60BEu);\n", "replace": "    wr16(m, DS(0xF13Au), 0x60BEu);\n    wr16(m, DS(0xF138u), seg);\n"},
+  {"name": "位移只寫低位元組", "find": "wr16(m, DS(0xF138u), 0x60BEu);", "replace": "wr8(m, DS(0xF138u), 0xBEu);"},
+  {"name": "段只寫低位元組", "find": "wr16(m, DS(0xF13Au), seg);", "replace": "wr8(m, DS(0xF13Au), (uint8_t)seg);"},
+  {"name": "段寫到 F13C", "find": "wr16(m, DS(0xF13Au), seg);", "replace": "wr16(m, DS(0xF13Cu), seg);"},
+  {"name": "位移寫到 F136", "find": "wr16(m, DS(0xF138u), 0x60BEu);", "replace": "wr16(m, DS(0xF136u), 0x60BEu);"},
+  {"name": "不寫段", "find": "    wr16(m, DS(0xF13Au), seg);\n", "replace": ""},
+  {"name": "不寫位移", "find": "    wr16(m, DS(0xF138u), 0x60BEu);\n", "replace": ""},
+  {"name": "回傳位移", "find": "    return seg;\n}", "replace": "    return 0x60BEu;\n}"}
+]

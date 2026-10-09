@@ -1,0 +1,41 @@
+{
+  "id": "35D1_005D",
+  "entry": "35D1:005D",
+  "conv": "far",
+  "ret": "none",
+  "size": 165,
+  "code_sha256_16": "0ab7500cdea0b07c",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "P[+2] 當編號找視窗節點 Q（基底串列 5 個節點：編號 4 = 54B3:F144、3 = 955C、2 = 953A、1 = 9518、0 = 94F6；各節點 +5/+6/+7/+8 為格 x/y/寬/高：94F6 = 20,0,20,4；9518 = 20,5,20,14；953A = 0,15,20,4；955C = 20,3,20,3(實際值以基底為準)；F144 = 0,0,20,15）。P 取暫存區 9D00:0000（args 的 40192 = 0x9D00，64 bytes），seeds 設 P[+2] 與前態（P 的 +0x12、+0x14、+0x1A..+0x1D 先 poke 成 0xAA）。別名 seeds：P 放在 Q 之前 0x0D、0x0E、0x16 bytes，讓 P 的寫入改到之後才讀的 Q[+5..+8]，驗證讀寫交錯的順序。另有 P 在 ROM（寫入丟棄）、P 在段尾（word 跨 FFFF）、找不到（Q = 0:0 讀 IVT）。",
+  "args": [
+    {"name": "p", "kind": "farptr", "gen": {"scratch": 64}}
+  ],
+  "seeds": [
+    {"note": "編號 4（頭節點 F144）", "args": [0, 40192], "pokes": [{"addr": "lin:9D002", "hex": "04"}, {"addr": "lin:9D000", "hex": "AA"}, {"addr": "lin:9D012", "hex": "AA", "repeat": 12}]},
+    {"note": "編號 3（955C）", "args": [0, 40192], "pokes": [{"addr": "lin:9D002", "hex": "03"}, {"addr": "lin:9D012", "hex": "AA", "repeat": 12}]},
+    {"note": "編號 2（953A）", "args": [0, 40192], "pokes": [{"addr": "lin:9D002", "hex": "02"}, {"addr": "lin:9D012", "hex": "AA", "repeat": 12}]},
+    {"note": "編號 1（9518）", "args": [0, 40192], "pokes": [{"addr": "lin:9D002", "hex": "01"}, {"addr": "lin:9D012", "hex": "AA", "repeat": 12}]},
+    {"note": "編號 0（尾節點 94F6）", "args": [0, 40192], "pokes": [{"addr": "lin:9D002", "hex": "00"}, {"addr": "lin:9D012", "hex": "AA", "repeat": 12}]},
+    {"note": "編號 9：找不到，Q = 0000:0000（IVT 的 byte 0、5、6、7、8）", "args": [0, 40192], "pokes": [{"addr": "lin:9D002", "hex": "09"}, {"addr": "lin:9D012", "hex": "AA", "repeat": 12}]},
+    {"note": "key 的高位元組非 0（P[+3] = 0x01）：只用低位元組", "args": [0, 40192], "pokes": [{"addr": "lin:9D002", "hex": "0301"}, {"addr": "lin:9D012", "hex": "AA", "repeat": 12}]},
+    {"note": "節點 +5 = 0xFF、+6 = 0xFF、+7 = 0、+8 = 0（x<<4 = 0xFF0、y×20 = 5100、右緣 = 0xFE、下緣 = 0xFE）", "args": [0, 40192], "pokes": [{"addr": "lin:9D002", "hex": "02"}, {"addr": "ds:953F", "hex": "FFFF0000"}, {"addr": "lin:9D012", "hex": "AA", "repeat": 12}]},
+    {"note": "節點 +5 = 0、+6 = 0、+7 = 0、+8 = 0（右緣 = 下緣 = 0xFF：0 + 0 − 1 借位）", "args": [0, 40192], "pokes": [{"addr": "lin:9D002", "hex": "02"}, {"addr": "ds:953F", "hex": "00000000"}, {"addr": "lin:9D012", "hex": "AA", "repeat": 12}]},
+    {"note": "別名：P = Q − 0x0D（F137）：P[+0x12] 的 word 蓋掉 Q[+5]、Q[+6]；之後讀的 Q[+6] 是新值", "args": [61751, 21683], "pokes": [{"addr": "ds:F139", "hex": "0400"}, {"addr": "ds:F149", "hex": "05030406"}]},
+    {"note": "別名：P = Q − 0x0E（F136）：P[+0x12] 蓋掉 Q[+4]、Q[+5]；P[+0x14] 蓋掉 Q[+6]、Q[+7]", "args": [61750, 21683], "pokes": [{"addr": "ds:F138", "hex": "0400"}, {"addr": "ds:F149", "hex": "05030406"}]},
+    {"note": "別名：P = Q − 0x0F（F135）：P[+0x14] 的 word 蓋掉 Q[+5]、Q[+6]（Y×20 的低、高位元組），之後重讀的 Q[+6] 是新值", "args": [61749, 21683], "pokes": [{"addr": "ds:F137", "hex": "0400"}, {"addr": "ds:F149", "hex": "05030406"}]},
+    {"note": "P 在 8000:FFFE：P+2 回繞到 8000:0000（編號 2），不回繞會讀 9000:0000（編號 0）", "args": [65534, 32768], "pokes": [{"addr": "lin:80000", "hex": "02"}]},
+    {"note": "別名：P = Q − 0x16（F12E）：P[+0x1B] 寫進 Q[+5]、P[+0x1C] 寫進 Q[+6]、P[+0x1D] 寫進 Q[+7]", "args": [61742, 21683], "pokes": [{"addr": "ds:F130", "hex": "0400"}, {"addr": "ds:F149", "hex": "05030406"}]},
+    {"note": "別名：P = Q − 0x15（F12F）：P[+0x1A] 寫進 Q[+5]、P[+0x1B] 寫進 Q[+6]、P[+0x1C] 寫進 Q[+7]、P[+0x1D] 寫進 Q[+8]", "args": [61743, 21683], "pokes": [{"addr": "ds:F131", "hex": "0400"}, {"addr": "ds:F149", "hex": "05030406"}]},
+    {"note": "別名：P = Q − 0x17（F12D）：P[+0x1C] 寫進 Q[+5]、P[+0x1D] 寫進 Q[+6]", "args": [61741, 21683], "pokes": [{"addr": "ds:F12F", "hex": "0400"}, {"addr": "ds:F149", "hex": "05030406"}]},
+    {"note": "別名：P = Q（尾節點 94F6 自己，P[+2] = 0x0100 → 編號 0）：P[+0x12] 蓋掉自己的下一個指標，不影響本函式讀取", "args": [38134, 21683], "pokes": []},
+    {"note": "P 在 ROM F000:0000：寫入丟棄", "args": [0, 61440], "pokes": [{"addr": "lin:F0002", "hex": "03"}]},
+    {"note": "P 在 8000:FFF0（P+0x12 = 0x10002 回繞到 0002、P+0x14 = 0004）：word 在段內回繞，P[+2] 在 FFF2", "args": [65520, 32768], "pokes": [{"addr": "lin:8FFF2", "hex": "02"}]},
+    {"note": "P 在 8000:FFED，編號 1（9518，X=0x14 → 0x140）：P[+0x12] 的 word 跨 FFFF／0000（低位元組寫 FFFF、高位元組 0x01 寫 8000:0000）", "args": [65517, 32768], "pokes": [{"addr": "lin:8FFEF", "hex": "01"}]},
+    {"note": "P 在 8000:FFEB，編號 2（953A，Y=15 → 300 = 0x012C）：P[+0x14] 的 word 跨 FFFF／0000", "args": [65515, 32768], "pokes": [{"addr": "lin:8FFED", "hex": "02"}]}
+  ],
+  "iters": 12000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}

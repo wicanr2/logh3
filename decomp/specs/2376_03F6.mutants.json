@@ -1,0 +1,14 @@
+[
+  {"name": "搬運字數改79", "find": "for (n = 0x50u; n != 0; n--) {", "replace": "for (n = 0x4Fu; n != 0; n--) {"},
+  {"name": "搬運字數改81", "find": "for (n = 0x50u; n != 0; n--) {", "replace": "for (n = 0x51u; n != 0; n--) {"},
+  {"name": "編號讀物件 +3", "find": "(uint16_t)(si + 2u)", "replace": "(uint16_t)(si + 3u)"},
+  {"name": "編號讀物件走 DS", "find": "rd8(m, LIN(es, (uint16_t)(si + 2u)))", "replace": "rd8(m, LIN(ds, (uint16_t)(si + 2u)))"},
+  {"name": "不呼叫051F直接用編號", "find": "uint16_t src = f_2376_051F(rd8(m, LIN(es, (uint16_t)(si + 2u))));", "replace": "uint16_t src = (uint16_t)(0x79Eu + rd8(m, LIN(es, (uint16_t)(si + 2u))));"},
+  {"name": "051F 參數取高位元組", "find": "uint16_t src = f_2376_051F(rd8(m, LIN(es, (uint16_t)(si + 2u))));", "replace": "uint16_t src = f_2376_051F((uint16_t)(rd8(m, LIN(es, (uint16_t)(si + 2u))) << 8));"},
+  {"name": "先全部讀再寫（等同 memmove）", "find": "    for (n = 0x50u; n != 0; n--) { /* rep movsw，ES = DS */\n        w03F6_wr16(m, ds, di, w03F6_rd16(m, ds, src));\n        src = (uint16_t)(src + 2u);\n        di = (uint16_t)(di + 2u);\n    }", "replace": "    {\n        uint16_t tmp[0x50];\n        for (n = 0; n < 0x50u; n++)\n            tmp[n] = w03F6_rd16(m, ds, (uint16_t)(src + 2u * n));\n        for (n = 0; n < 0x50u; n++)\n            w03F6_wr16(m, ds, (uint16_t)(di + 2u * n), tmp[n]);\n    }"},
+  {"name": "來源走物件段 ES", "find": "w03F6_wr16(m, ds, di, w03F6_rd16(m, ds, src));", "replace": "w03F6_wr16(m, ds, di, w03F6_rd16(m, es, src));"},
+  {"name": "目的走物件段 ES", "find": "w03F6_wr16(m, ds, di, w03F6_rd16(m, ds, src));", "replace": "w03F6_wr16(m, es, di, w03F6_rd16(m, ds, src));"},
+  {"name": "word 存取改線性連續（位移 0xFFFF 不回繞）", "find": "    wr8(m, LIN(seg, off), (uint8_t)v);\n    wr8(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "    wr8(m, LIN(seg, off), (uint8_t)v);\n    wr8(m, LIN(seg, 0) + (uint32_t)off + 1u, (uint8_t)(v >> 8));"},
+  {"name": "目的指標每次進 4 bytes", "find": "        di = (uint16_t)(di + 2u);\n    }", "replace": "        di = (uint16_t)(di + 4u);\n    }"},
+  {"name": "來源每次進 1 byte", "find": "src = (uint16_t)(src + 2u);", "replace": "src = (uint16_t)(src + 1u);"}
+]

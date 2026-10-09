@@ -1,0 +1,27 @@
+{
+  "id": "36A1_0076",
+  "entry": "36A1:0076",
+  "conv": "far",
+  "ret": "ax",
+  "size": 36,
+  "code_sha256_16": "5b72273667d04cff",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "把遠指標 3D22:60BE 存進 ds:F138（位移）／F13A（段）。函式不讀記憶體，沒有讀取集可突變，案例全來自 seeds。基底 ds:F138..F13B 已是 be 60 22 3d（與要寫的值相同），所以 seeds 先預填成別的值，才看得出少寫、寫偏與寬度。",
+  "args": [],
+  "seeds": [
+    {"note": "基底原樣（已是目標值，寫入集合為空）", "pokes": []},
+    {"note": "預填 F136..F13D ＝ 5A", "pokes": [{"addr": "ds:F136", "hex": "5A", "repeat": 8}]},
+    {"note": "預填 F136..F13D ＝ 互異的值 01..08", "pokes": [{"addr": "ds:F136", "hex": "0102030405060708"}]},
+    {"note": "預填 F138..F13B ＝ FF FF FF FF", "pokes": [{"addr": "ds:F138", "hex": "FFFFFFFF"}]},
+    {"note": "預填 F138..F13B ＝ 00", "pokes": [{"addr": "ds:F138", "hex": "00000000"}]},
+    {"note": "位移已是 60BE、段不同：只有段被寫", "pokes": [{"addr": "ds:F13A", "hex": "1234"}]},
+    {"note": "段已是 3D22、位移不同：只有位移被寫", "pokes": [{"addr": "ds:F138", "hex": "BF60"}]},
+    {"note": "位移與段互換的值：F138 ＝ 3D22、F13A ＝ 60BE", "pokes": [{"addr": "ds:F138", "hex": "223DBE60"}]},
+    {"note": "位移的低位元組已是 BE、高位元組不同；段的高位元組已是 3D、低位元組不同", "pokes": [{"addr": "ds:F138", "hex": "BE0023"}, {"addr": "ds:F13B", "hex": "3D"}]}
+  ],
+  "iters": 100,
+  "max_cases": 20,
+  "seed": 20261009,
+  "min_coverage": 100
+}

@@ -1,0 +1,31 @@
+{
+  "id": "2B5F_0103",
+  "entry": "2B5F:0103",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 74,
+  "code_sha256_16": "e85939c4ebcd9aef",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "次月份造艦計劃：呼叫 2B5F:014D，flag != 0 時把 ds:D01E 起 28 bytes 抄到 ds:(8F9C + 28 × ds:8F1D)。flag 是整個 word（0x0100 也算非 0）。014D 的提督營運 +0x0E 為 0 時原版 #DE，探針丟棄。seeds 沿用 014D 的種子並加座位 F 與計劃表前態（先 poke 成 0xAA，才看得出抄寫）。",
+  "args": [
+    {"name": "flag", "kind": "word", "gen": {"choices": [0, 1, 2, 255, 256, 257, 32768, 65280, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "基底、flag = 1，座位 0；計劃表前態 0xAA", "args": [1], "pokes": [{"addr": "ds:8F9C", "hex": "AA", "repeat": 28}]},
+    {"note": "基底、flag = 0：不抄", "args": [0], "pokes": [{"addr": "ds:8F9C", "hex": "AA", "repeat": 28}]},
+    {"note": "flag = 0x0100：低位元組 0，但 word 非 0，仍抄", "args": [256], "pokes": [{"addr": "ds:8F9C", "hex": "AA", "repeat": 28}]},
+    {"note": "座位 1，flag = 1：抄到 ds:8FB8", "args": [1], "pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:8FB8", "hex": "AA", "repeat": 28}, {"addr": "ds:8F9C", "hex": "BB", "repeat": 28}]},
+    {"note": "座位 1、預算 0xFFFFFFFF、撥款全 100", "args": [1], "pokes": [{"addr": "ds:8F1D", "hex": "01"}, {"addr": "ds:8F5E", "hex": "FFFFFFFF"}, {"addr": "ds:8FD6", "hex": "64646464646464"}, {"addr": "ds:8FB8", "hex": "AA", "repeat": 28}]},
+    {"note": "提督索引 224：提督[+0x0E] 落在 ds:D00A（014D 自己寫的 A[2]），營運先 poke 成 5；重複呼叫 014D 會讀到上一次寫的值", "args": [1], "pokes": [{"addr": "ds:8F4B", "hex": "E0"}, {"addr": "ds:D00A", "hex": "05"}, {"addr": "ds:8F9C", "hex": "AA", "repeat": 28}]},
+    {"note": "提督索引 225：提督[+0x0E] 落在 ds:D026（艘數 × 10 的陣列內）", "args": [1], "pokes": [{"addr": "ds:8F4B", "hex": "E1"}, {"addr": "ds:D026", "hex": "07"}, {"addr": "ds:8F9C", "hex": "AA", "repeat": 28}]},
+    {"note": "座位 255：目的 ds:(8F9C + 7140) = AB80；提督索引 ds:8F4B[255] 取鄰近資料", "args": [1], "pokes": [{"addr": "ds:8F1D", "hex": "FF"}, {"addr": "ds:AB80", "hex": "AA", "repeat": 28}]},
+    {"note": "座位 3，預算 100000", "args": [1], "pokes": [{"addr": "ds:8F1D", "hex": "03"}, {"addr": "ds:8F66", "hex": "A0860100"}, {"addr": "ds:8FF0", "hex": "AA", "repeat": 28}]},
+    {"note": "014D 的 ds:4E3C 單價 0（艘數除以 0 → 0xFFFFFFFF）", "args": [1], "pokes": [{"addr": "ds:4E3C", "hex": "0000"}, {"addr": "ds:8F9C", "hex": "AA", "repeat": 28}]},
+    {"note": "預算 0xFFFFFFFF", "args": [1], "pokes": [{"addr": "ds:8F5A", "hex": "FFFFFFFF"}, {"addr": "ds:8F9C", "hex": "AA", "repeat": 28}]}
+  ],
+  "iters": 30000,
+  "max_cases": 800,
+  "seed": 20261012,
+  "min_coverage": 100
+}

@@ -1,0 +1,43 @@
+{
+  "id": "1C03_0524",
+  "entry": "1C03:0524",
+  "conv": "far",
+  "ret": "ax",
+  "size": 193,
+  "code_sha256_16": "54d9b6d2c3404594",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦隊轉向一步。艦隊表 ds:C074（122 bytes 一筆）：艦隊 0 的朝向 +0x4A 在 ds:C0BE（word，+0x4B 在 C0BF）、回轉速度 +0x4D 在 ds:C0C1、行進額度 dword +0x56 在 ds:C0CA。target 的低位元組是目標方位。seeds 逐一造出：一步轉到（|d| <= rate）、多步（額度 >= 8.0 轉並扣 8.0、< 8.0 不轉）、正負號、|d| ＝ 128 邊界、byte 加法不進位、跨段尾的 word／dword。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "target", "kind": "word", "gen": {"choices": [0, 1, 2, 16, 32, 48, 63, 64, 100, 127, 128, 129, 192, 200, 254, 255, 256, 257, 4096, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "一步轉到：朝向 0x10 → 目標 0x30，d ＝ 32，rate ＝ 40 → 朝向 0x30、+0x4B 保持 0x55", "args": [49268, 21683, 48], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "28"}, {"addr": "ds:C0CA", "hex": "00000000"}]},
+    {"note": "|d| ＝ rate ＝ 32 → 一步轉到", "args": [49268, 21683, 48], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "20"}, {"addr": "ds:C0CA", "hex": "00000000"}]},
+    {"note": "rate ＝ 31（|d| > rate）、額度 ＝ 0x00080000（>= 8.0）→ 朝向 += 31、額度 → 0", "args": [49268, 21683, 48], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "1F"}, {"addr": "ds:C0CA", "hex": "00000800"}]},
+    {"note": "額度 ＝ 0x0007FFFF（< 8.0）→ 不轉、不扣；AH ＝ 額度高字的高位元組", "args": [49268, 21683, 48], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "1F"}, {"addr": "ds:C0CA", "hex": "FFFF0700"}]},
+    {"note": "額度 ＝ 0x00080001 → 轉；額度 → 0x00000001", "args": [49268, 21683, 48], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "1F"}, {"addr": "ds:C0CA", "hex": "01000800"}]},
+    {"note": "額度 ＝ 0xFFFF0000（有號負數）→ 不轉（無號比較會轉）；AH ＝ 0xFF", "args": [49268, 21683, 48], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "1F"}, {"addr": "ds:C0CA", "hex": "0000FFFF"}]},
+    {"note": "額度 ＝ 0x7FFFFFFF → 轉；額度 → 0x7FF7FFFF", "args": [49268, 21683, 48], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "1F"}, {"addr": "ds:C0CA", "hex": "FFFFFF7F"}]},
+    {"note": "額度 ＝ 0x80000000（有號最小）→ 不轉", "args": [49268, 21683, 48], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "1F"}, {"addr": "ds:C0CA", "hex": "00000080"}]},
+    {"note": "額度 ＝ 0x00100000 → 轉；d < 0（朝向 0x30 → 目標 0x10，d ＝ −32，rate ＝ 20）→ 朝向 −20、AX ＝ 0xFF01", "args": [49268, 21683, 16], "pokes": [{"addr": "ds:C0BE", "hex": "3055"}, {"addr": "ds:C0C1", "hex": "14"}, {"addr": "ds:C0CA", "hex": "00001000"}]},
+    {"note": "d ＝ −32、rate ＝ 20、額度 < 8.0 → 不轉", "args": [49268, 21683, 16], "pokes": [{"addr": "ds:C0BE", "hex": "3055"}, {"addr": "ds:C0C1", "hex": "14"}, {"addr": "ds:C0CA", "hex": "00000500"}]},
+    {"note": "d 正規化邊界：朝向 0、目標 0x80 → d ＝ 0x80 ＝ 128 → 回 −128（|d| ＝ 128）；rate ＝ 127 → 多步", "args": [49268, 21683, 128], "pokes": [{"addr": "ds:C0BE", "hex": "0055"}, {"addr": "ds:C0C1", "hex": "7F"}, {"addr": "ds:C0CA", "hex": "00000800"}]},
+    {"note": "同上，rate ＝ 128 → |d| <= rate → 一步轉到（d 的低位元組 0x80 加進朝向）", "args": [49268, 21683, 128], "pokes": [{"addr": "ds:C0BE", "hex": "0055"}, {"addr": "ds:C0C1", "hex": "80"}, {"addr": "ds:C0CA", "hex": "00000800"}]},
+    {"note": "朝向 0x80、目標 0 → d ＝ −128 → 回 +128；rate ＝ 127 → 多步，方向 +", "args": [49268, 21683, 0], "pokes": [{"addr": "ds:C0BE", "hex": "8055"}, {"addr": "ds:C0C1", "hex": "7F"}, {"addr": "ds:C0CA", "hex": "00000800"}]},
+    {"note": "rate ＝ 0 且 d ≠ 0：多步，轉量 0、額度仍扣 8.0", "args": [49268, 21683, 48], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "00"}, {"addr": "ds:C0CA", "hex": "00000800"}]},
+    {"note": "d ＝ 0、rate ＝ 0：一步轉到（0 <= 0），朝向不變", "args": [49268, 21683, 16], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "00"}, {"addr": "ds:C0CA", "hex": "00000800"}]},
+    {"note": "朝向 0xFF + 轉量 3 → 0x02、+0x4B 不進位（0x55 保持）", "args": [49268, 21683, 2], "pokes": [{"addr": "ds:C0BE", "hex": "FF55"}, {"addr": "ds:C0C1", "hex": "05"}, {"addr": "ds:C0CA", "hex": "00000800"}]},
+    {"note": "target word ＝ 0x1230（只取低位元組 0x30）", "args": [49268, 21683, 4656], "pokes": [{"addr": "ds:C0BE", "hex": "1055"}, {"addr": "ds:C0C1", "hex": "28"}, {"addr": "ds:C0CA", "hex": "00000000"}]},
+    {"note": "艦隊在 8000:FFA7：+0x56 在 FFFD（低字 FFFD..FFFE、高字 FFFF..0000 跨段尾），+0x4A 在 FFF1、+0x4D 在 FFF4", "args": [65447, 32768, 48], "pokes": [{"addr": "8000:FFF1", "hex": "1055"}, {"addr": "8000:FFF4", "hex": "1F"}, {"addr": "8000:FFFD", "hex": "0000"}, {"addr": "8000:FFFF", "hex": "08"}, {"addr": "8000:0000", "hex": "00"}]},
+    {"note": "艦隊在 8000:FFB5：+0x4A 在 FFFF（word 的高位元組在位移 0）、+0x4D 在 0002、+0x56 在 000B", "args": [65461, 32768, 48], "pokes": [{"addr": "8000:FFFF", "hex": "10"}, {"addr": "8000:0000", "hex": "55"}, {"addr": "8000:0002", "hex": "1F"}, {"addr": "8000:000B", "hex": "0000"}, {"addr": "8000:000D", "hex": "0800"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 95
+}

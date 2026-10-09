@@ -1,0 +1,18 @@
+[
+  {"name": "不看可見旗標bit7", "find": "if ((b & 0x80u) != 0 && (uint8_t)(b & 0x0Fu) == key &&", "replace": "if ((uint8_t)(b & 0x0Fu) == key &&"},
+  {"name": "可見旗標改bit6", "find": "(b & 0x80u) != 0", "replace": "(b & 0x40u) != 0"},
+  {"name": "不看髒旗標bit0", "find": "                (rd8(m, DS((uint16_t)(si + 1u))) & 0x01u) != 0)", "replace": "                1)"},
+  {"name": "髒旗標改bit1", "find": "(rd8(m, DS((uint16_t)(si + 1u))) & 0x01u) != 0)", "replace": "(rd8(m, DS((uint16_t)(si + 1u))) & 0x02u) != 0)"},
+  {"name": "髒旗標改讀 [si]", "find": "(rd8(m, DS((uint16_t)(si + 1u))) & 0x01u) != 0)", "replace": "(rd8(m, DS(si)) & 0x01u) != 0)"},
+  {"name": "遮罩改3位元", "find": "(uint8_t)(b & 0x0Fu) == key", "replace": "(uint8_t)(b & 0x07u) == key"},
+  {"name": "遮罩改5位元", "find": "(uint8_t)(b & 0x0Fu) == key", "replace": "(uint8_t)(b & 0x1Fu) == key"},
+  {"name": "找到改回 2", "find": "                return 1;", "replace": "                return 2;"},
+  {"name": "沒找到改回 1", "find": "    return 0;\n}", "replace": "    return 1;\n}"},
+  {"name": "格距改5", "find": "si = (uint16_t)(si + 6u);", "replace": "si = (uint16_t)(si + 5u);"},
+  {"name": "列距改0xEF", "find": "di = (uint16_t)(di + 0xF0u);", "replace": "di = (uint16_t)(di + 0xEFu);"},
+  {"name": "鍵值取AL", "find": "uint8_t key = (uint8_t)(ax >> 8); /* AH */", "replace": "uint8_t key = (uint8_t)ax;"},
+  {"name": "列數與格數對調", "find": "uint16_t rows = (uint16_t)(dx & 0xFFu);          /* mov cl,dl；xor ch,ch */", "replace": "uint16_t rows = (uint16_t)(dx >> 8);"},
+  {"name": "不呼叫0150", "find": "uint16_t di = (uint16_t)f_2376_0150(ax, bx, dx); /* mov ch,bh；mov cl,bl：CX = BX */", "replace": "uint16_t di = 0xD81Eu;"},
+  {"name": "起點欄列對調（0150 參數 BH BL 互換）", "find": "f_2376_0150(ax, bx, dx); /* mov ch,bh；mov cl,bl：CX = BX */", "replace": "f_2376_0150(ax, (uint16_t)((bx << 8) | (bx >> 8)), dx);"},
+  {"name": "外圈少跑一列", "find": "uint16_t rows = (uint16_t)(dx & 0xFFu);          /* mov cl,dl；xor ch,ch */", "replace": "uint16_t rows = (uint16_t)((dx & 0xFFu) > 1u ? (dx & 0xFFu) - 1u : 1u);"}
+]
