@@ -1,0 +1,19 @@
+[
+  {"name": "除數99", "find": "/ 100u);", "replace": "/ 99u);"},
+  {"name": "乘積不截成16位元", "find": "(uint16_t)((uint16_t)(cap * rate) / 100u)", "replace": "(uint16_t)(((uint32_t)cap * rate) / 100u)"},
+  {"name": "沒有cur小於cap的守衛", "find": "if (rd16s(m, seg, cur_off) < rd16s(m, seg, cap_off)) {", "replace": "if (1) {"},
+  {"name": "守衛改小於等於", "find": "if (rd16s(m, seg, cur_off) < rd16s(m, seg, cap_off)) {", "replace": "if (rd16s(m, seg, cur_off) <= rd16s(m, seg, cap_off)) {"},
+  {"name": "守衛改有號比較", "find": "if (rd16s(m, seg, cur_off) < rd16s(m, seg, cap_off)) {", "replace": "if ((int16_t)rd16s(m, seg, cur_off) < (int16_t)rd16s(m, seg, cap_off)) {"},
+  {"name": "加法不回繞", "find": "wr16s_rom(m, seg, cur_off, (uint16_t)(rd16s(m, seg, cur_off) + inc));\n            if (rd16s(m, seg, cur_off) >= rd16s(m, seg, cap_off))", "replace": "uint32_t sum = (uint32_t)rd16s(m, seg, cur_off) + inc;\n            wr16s_rom(m, seg, cur_off, (uint16_t)sum);\n            if (sum >= rd16s(m, seg, cap_off))"},
+  {"name": "不夾上限", "find": "if (rd16s(m, seg, cur_off) >= rd16s(m, seg, cap_off))\n                wr16s_rom(m, seg, cur_off, rd16s(m, seg, cap_off));", "replace": ""},
+  {"name": "夾上限改有號比較", "find": "if (rd16s(m, seg, cur_off) >= rd16s(m, seg, cap_off))", "replace": "if ((int16_t)rd16s(m, seg, cur_off) >= (int16_t)rd16s(m, seg, cap_off))"},
+  {"name": "夾上限門檻少一", "find": "if (rd16s(m, seg, cur_off) >= rd16s(m, seg, cap_off))", "replace": "if (rd16s(m, seg, cur_off) + 1u >= rd16s(m, seg, cap_off))"},
+  {"name": "夾上限寫成回復前的值", "find": "wr16s_rom(m, seg, cur_off, rd16s(m, seg, cap_off));", "replace": "wr16s_rom(m, seg, cur_off, (uint16_t)(rd16s(m, seg, cur_off) - inc));"},
+  {"name": "行星步距80", "find": "off = (uint16_t)(off + 0x52u);", "replace": "off = (uint16_t)(off + 0x50u);"},
+  {"name": "回復率讀+0x1A", "find": "uint16_t rate = rd16s(m, seg, (uint16_t)(off + 0x18u));", "replace": "uint16_t rate = rd16s(m, seg, (uint16_t)(off + 0x1Au));"},
+  {"name": "迴圈多跑一顆", "find": "while (i < rd8(m, DS(0xCFFC))) {", "replace": "while (i < rd8(m, DS(0xCFFC)) + (i < 200)) {"},
+  {"name": "word讀取高位元組取下一段", "find": "(rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8)", "replace": "(rd8(m, LIN(seg, off) + 1u) << 8)"},
+  {"name": "word寫入高位元組取下一段", "find": "wr8_skip_rom(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "wr8_skip_rom(m, LIN(seg, off) + 1u, (uint8_t)(v >> 8));"},
+  {"name": "ROM寫入照寫", "find": "wr8_skip_rom(m, LIN(seg, off), (uint8_t)v);\n    wr8_skip_rom(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "wr8(m, LIN(seg, off), (uint8_t)v);\n    wr8(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));"},
+  {"name": "ROM邊界多含一格", "find": "wr8_skip_rom(m, LIN(seg, off), (uint8_t)v);", "replace": "if (LIN(seg, off) <= 0xF0000u) wr8(m, LIN(seg, off), (uint8_t)v);"}
+]

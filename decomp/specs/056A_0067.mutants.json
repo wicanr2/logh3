@@ -1,0 +1,15 @@
+[
+  {"name": "加 50 改加 49", "find": "uint32_t sum = (uint32_t)lo + 0x32u;", "replace": "uint32_t sum = (uint32_t)lo + 0x31u;"},
+  {"name": "加 50 改加 51", "find": "uint32_t sum = (uint32_t)lo + 0x32u;", "replace": "uint32_t sum = (uint32_t)lo + 0x33u;"},
+  {"name": "低字進位不加進高字", "find": "(uint16_t)(hi + (sum >> 16))", "replace": "hi"},
+  {"name": "高字永遠加一", "find": "(uint16_t)(hi + (sum >> 16))", "replace": "(uint16_t)(hi + 1u)"},
+  {"name": "只處理前五位", "find": "for (k = 0; k < 6; k++) {", "replace": "for (k = 0; k < 5; k++) {"},
+  {"name": "處理七位", "find": "for (k = 0; k < 6; k++) {", "replace": "for (k = 0; k < 7; k++) {"},
+  {"name": "從 ds:8F4A 起讀編號", "find": "DS((uint16_t)(0x8F4B + k))", "replace": "DS((uint16_t)(0x8F4A + k))"},
+  {"name": "記錄步幅 28 改 27", "find": "(uint16_t)(id * 28u)", "replace": "(uint16_t)(id * 27u)"},
+  {"name": "提督表基底 B77C 改 B77D", "find": "uint16_t rec = (uint16_t)(0xB77C +", "replace": "uint16_t rec = (uint16_t)(0xB77D +"},
+  {"name": "欄位改 +0x00（整個低字位移少 2）", "find": "uint16_t lo = rd16(m, DS((uint16_t)(rec + 2)));", "replace": "uint16_t lo = rd16(m, DS((uint16_t)(rec + 0)));"},
+  {"name": "編號相同時只加一次", "find": "uint8_t id = rd8(m, DS((uint16_t)(0x8F4B + k)));", "replace": "uint8_t id = rd8(m, DS((uint16_t)(0x8F4B + k)));\n        if (k > 0 && id == rd8(m, DS((uint16_t)(0x8F4B + k - 1)))) continue;"},
+  {"name": "編號只取低 7 位", "find": "uint8_t id = rd8(m, DS((uint16_t)(0x8F4B + k)));", "replace": "uint8_t id = rd8(m, DS((uint16_t)(0x8F4B + k))) & 0x7F;"},
+  {"name": "32 位元不回繞（高字飽和）", "find": "(uint16_t)(hi + (sum >> 16))", "replace": "(uint16_t)((hi + (sum >> 16)) > 0xFFFFu ? 0xFFFFu : (hi + (sum >> 16)))"}
+]

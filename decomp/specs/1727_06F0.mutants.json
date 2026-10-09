@@ -1,0 +1,14 @@
+[
+  {"name": "第2個座標不看", "find": "&& rd16(m, DS(0x3C82)) == 0xFFFFu && rd16(m, DS(0x3C84))", "replace": "&& rd16(m, DS(0x3C84))"},
+  {"name": "第3個座標不看", "find": "&& rd16(m, DS(0x3C84)) == 0xFFFFu\n        && rd16(m, DS(0x3C86))", "replace": "\n        && rd16(m, DS(0x3C86))"},
+  {"name": "第4個座標不看", "find": "\n        && rd16(m, DS(0x3C86)) == 0xFFFFu)", "replace": ")"},
+  {"name": "只要有一個是FFFF就不畫", "find": "if (x0 == 0xFFFFu && rd16(m, DS(0x3C82)) == 0xFFFFu && rd16(m, DS(0x3C84)) == 0xFFFFu\n        && rd16(m, DS(0x3C86)) == 0xFFFFu)", "replace": "if (x0 == 0xFFFFu || rd16(m, DS(0x3C82)) == 0xFFFFu || rd16(m, DS(0x3C84)) == 0xFFFFu\n        || rd16(m, DS(0x3C86)) == 0xFFFFu)"},
+  {"name": "畫線色改5", "find": "a[4] = 4u;", "replace": "a[4] = 5u;"},
+  {"name": "畫線遮罩改0xFF", "find": "a[5] = 0xFFFFu;", "replace": "a[5] = 0xFFu;"},
+  {"name": "畫線端點順序對調", "find": "a[0] = x0;\n        a[1] = rd16(m, DS(0x3C82));\n        a[2] = rd16(m, DS(0x3C84));\n        a[3] = rd16(m, DS(0x3C86));", "replace": "a[0] = rd16(m, DS(0x3C84));\n        a[1] = rd16(m, DS(0x3C86));\n        a[2] = x0;\n        a[3] = rd16(m, DS(0x3C82));"},
+  {"name": "有線時不畫", "find": "(void)gin3_stub(m, \"39D7_0936\", 6, a);", "replace": ""},
+  {"name": "x1沒有清掉", "find": "wr16(m, DS(0x3C84), 0xFFFFu);", "replace": ""},
+  {"name": "y1清成0", "find": "wr16(m, DS(0x3C86), 0xFFFFu);", "replace": "wr16(m, DS(0x3C86), 0u);"},
+  {"name": "x0沒有清掉", "find": "wr16(m, DS(0x3C80), 0xFFFFu);", "replace": ""},
+  {"name": "沒有線時也清掉", "find": "        return;\n", "replace": "    {\n        wr16(m, DS(0x3C80), 0u);\n        return;\n    }\n"}
+]

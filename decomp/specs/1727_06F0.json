@@ -1,0 +1,41 @@
+{
+  "id": "1727_06F0",
+  "entry": "1727:06F0",
+  "conv": "far",
+  "ret": "none",
+  "size": 70,
+  "code_sha256_16": "17ab70ddc24c0113",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [],
+  "stubs": [
+    {"entry": "39D7:0936", "conv": "far", "nargs": 6, "ret": "none"}
+  ],
+  "seeds": [
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "0000"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "0000"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "0000"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "0000"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "e001"}, {"addr": "ds:3C82", "hex": "2400"}, {"addr": "ds:3C84", "hex": "f001"}, {"addr": "ds:3C86", "hex": "3400"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "0000"}, {"addr": "ds:3C82", "hex": "0000"}, {"addr": "ds:3C84", "hex": "0000"}, {"addr": "ds:3C86", "hex": "0000"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "0100"}, {"addr": "ds:3C82", "hex": "0200"}, {"addr": "ds:3C84", "hex": "0300"}, {"addr": "ds:3C86", "hex": "0400"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "feff"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "feff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "feff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "feff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "00ff"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ff00"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "00ff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ff00"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "00ff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ff7f"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "0080"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "ffff"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "ffff"}, {"addr": "ds:3C82", "hex": "ffff"}, {"addr": "ds:3C84", "hex": "ffff"}, {"addr": "ds:3C86", "hex": "0080"}]},
+    {"pokes": [{"addr": "ds:3C80", "hex": "3412"}, {"addr": "ds:3C82", "hex": "7856"}, {"addr": "ds:3C84", "hex": "bc9a"}, {"addr": "ds:3C86", "hex": "f0de"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

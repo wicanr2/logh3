@@ -1,0 +1,10 @@
+[
+  {"name": "第一個指標位移 05E1 改 05E2", "find": "wr16(m, DS(0x957E), 0x05E1);", "replace": "wr16(m, DS(0x957E), 0x05E2);"},
+  {"name": "第二個指標位移 05E2 改 05E1", "find": "wr16(m, DS(0x9582), 0x05E2);", "replace": "wr16(m, DS(0x9582), 0x05E1);"},
+  {"name": "段值 04F8 改 04F9", "find": "#define GIN3_SEG_04F8 0x04F8u", "replace": "#define GIN3_SEG_04F8 0x04F9u"},
+  {"name": "第一個指標的段寫到 9580 之外（改 9581）", "find": "wr16(m, DS(0x9580), GIN3_SEG_04F8);", "replace": "wr16(m, DS(0x9581), GIN3_SEG_04F8);"},
+  {"name": "不寫第二個指標的段", "find": "wr16(m, DS(0x9584), GIN3_SEG_04F8);", "replace": "(void)0;"},
+  {"name": "不寫第一個指標的位移", "find": "wr16(m, DS(0x957E), 0x05E1);", "replace": "(void)0;"},
+  {"name": "段只寫低位元組", "find": "wr16(m, DS(0x9580), GIN3_SEG_04F8);", "replace": "wr8(m, DS(0x9580), (uint8_t)GIN3_SEG_04F8);"},
+  {"name": "殘值 BX 改成 05E1", "find": "| 0x05E2u; /* AX<<16 | BX */", "replace": "| 0x05E1u; /* AX<<16 | BX */"}
+]

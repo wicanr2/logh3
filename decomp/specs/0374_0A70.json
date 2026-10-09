@@ -1,0 +1,43 @@
+{
+  "id": "0374_0A70",
+  "entry": "0374:0A70",
+  "conv": "far",
+  "ret": "none",
+  "size": 130,
+  "code_sha256_16": "83200e4f96fa06d4",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "艦隊表取 S3 開局（艦隊 0 有 10 組，真實艦隊 18 支）。艦隊指標從表中任選一筆（段 54B3），組序 idx 是 word（高位元組非 0 時仍只取低位元組）。seeds：最前、中間、最後一組，idx 大於組數，組數 0（回繞成 255）、1、0x81（無號比較），一支編制各 byte 都不同的艦隊，位移 0xFFFF 回繞的 word 讀寫（段 7000），以及 ROM 區（F000、EFFF）的艦隊指標。",
+  "tables": {
+    "fleet": {"base": "ds:C074", "stride": 122, "count": 32}
+  },
+  "args": [
+    {"name": "fleet", "kind": "farptr", "gen": {"table": "fleet"}},
+    {"name": "idx", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 128, 254, 255, 256, 259, 258, 65280], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [49268, 21683, 0], "pokes": []},
+    {"args": [49268, 21683, 5], "pokes": []},
+    {"args": [49268, 21683, 8], "pokes": []},
+    {"args": [49268, 21683, 9], "pokes": []},
+    {"args": [49268, 21683, 10], "pokes": []},
+    {"args": [49268, 21683, 20], "pokes": []},
+    {"args": [49268, 21683, 3], "pokes": [{"addr": "ds:C083", "hex": "00"}]},
+    {"args": [49268, 21683, 0], "pokes": [{"addr": "ds:C083", "hex": "01"}]},
+    {"args": [49268, 21683, 0], "pokes": [{"addr": "ds:C083", "hex": "81"}]},
+    {"args": [49268, 21683, 1], "pokes": [{"addr": "ds:C083", "hex": "81"}]},
+    {"args": [49268, 21683, 515], "pokes": []},
+    {"args": [49390, 21683, 2], "pokes": [{"addr": "ds:C0FD", "hex": "06"}, {"addr": "ds:C0FE", "hex": "112233445566778899AABBCCDDEEFF0102030405060708090A0B0C0D"}]},
+    {"args": [49390, 21683, 0], "pokes": [{"addr": "ds:C0FD", "hex": "04"}, {"addr": "ds:C0FE", "hex": "112233445566778899AABBCCDDEEFF01"}]},
+    {"args": [49390, 21683, 3], "pokes": [{"addr": "ds:C0FD", "hex": "04"}, {"addr": "ds:C0FE", "hex": "112233445566778899AABBCCDDEEFF01"}]},
+    {"note": "位移 0xFFFF 的 word 寫入回繞到段首：組 0 在 FFFF，組 1 在 0003", "args": [65519, 28672, 0], "pokes": [{"addr": "7000:FFFE", "hex": "03"}, {"addr": "7000:FFFF", "hex": "11"}, {"addr": "7000:0000", "hex": "223344"}, {"addr": "7000:0003", "hex": "5566778899AABBCC"}]},
+    {"note": "來源 word 跨 0xFFFF：組 0 在 FFFB、組 1 在 FFFF、組 2 在 0003", "args": [65515, 28672, 0], "pokes": [{"addr": "7000:FFFA", "hex": "03"}, {"addr": "7000:FFFB", "hex": "11223344"}, {"addr": "7000:FFFF", "hex": "55"}, {"addr": "7000:0000", "hex": "667788"}, {"addr": "7000:0003", "hex": "99AABBCC"}]},
+    {"note": "艦隊在 ROM 區 F000:0000，組數 ROM[+0xF] ＝ 0，減一寫入被丟棄", "args": [0, 61440, 1], "pokes": []},
+    {"note": "艦隊在 F000:FFE5，組數 ROM[FFF4] ＝ F0，整串搬移的寫入全落在 ROM", "args": [65509, 61440, 0], "pokes": []},
+    {"note": "艦隊在 EFFF:0000，組數在線性 EFFFF（RAM，照寫），組在 F0000 起（ROM，丟棄）", "args": [0, 61439, 0], "pokes": [{"addr": "lin:EFFFF", "hex": "05"}]}
+  ],
+  "iters": 40000,
+  "max_cases": 800,
+  "seed": 20261009,
+  "min_coverage": 100
+}

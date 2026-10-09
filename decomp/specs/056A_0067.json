@@ -1,0 +1,25 @@
+{
+  "id": "056A_0067",
+  "entry": "056A:0067",
+  "conv": "far",
+  "ret": "none",
+  "size": 181,
+  "code_sha256_16": "08c6c13f40d157e5",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "六個編號在 ds:8F4B..8F50（基底 06 4F 0D 3A 10 3C）。seeds 造出：低字進位、低字差一不進位、32 位元回繞、六個編號全相同、部分相同、編號 0xFF、記錄旁邊的位元組不被碰。",
+  "args": [],
+  "seeds": [
+    {"pokes": [{"addr": "ds:B826", "hex": "CEFF0000"}, {"addr": "ds:C022", "hex": "CDFF0000"}, {"addr": "ds:B8EA", "hex": "FFFFFFFF"}, {"addr": "ds:BDD6", "hex": "FFFF0000"}, {"addr": "ds:B93E", "hex": "00000000"}, {"addr": "ds:BE0E", "hex": "FFFFFF7F"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "050505050505"}, {"addr": "ds:B80A", "hex": "00000000"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "050505050505"}, {"addr": "ds:B80A", "hex": "F0FF0000"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "0707080807FF"}, {"addr": "ds:B842", "hex": "00000000"}, {"addr": "ds:B85E", "hex": "FFFFFFFF"}, {"addr": "ds:D362", "hex": "CEFF0000"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "000102030405"}, {"addr": "ds:B77C", "hex": "55"}, {"addr": "ds:B77D", "hex": "55"}, {"addr": "ds:B782", "hex": "55555555"}, {"addr": "ds:B786", "hex": "5555"}, {"addr": "ds:B798", "hex": "5555555555555555"}]},
+    {"pokes": [{"addr": "ds:B826", "hex": "55555555"}, {"addr": "ds:B82A", "hex": "5555"}, {"addr": "ds:B824", "hex": "5555"}]},
+    {"pokes": [{"addr": "ds:8F4B", "hex": "0A0B0C0D0E0A"}, {"addr": "ds:B896", "hex": "FFFF0000"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

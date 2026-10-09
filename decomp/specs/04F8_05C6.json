@@ -1,0 +1,25 @@
+{
+  "id": "04F8_05C6",
+  "entry": "04F8:05C6",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 27,
+  "code_sha256_16": "47bfafb0ff51720a",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "code_sha256_16 是重定位後的位元組（台帳 sha256_final_16）；函式有 2 個重定位，寫進去的段值 04F8 是自己的程式段。函式不讀記憶體，所以沒有突變候選，變化全由 seeds 供給（先把 ds:957E 起 8 bytes poke 成不同的值，寫入才看得出來）。",
+  "args": [],
+  "seeds": [
+    {"note": "基底原樣（基底的指標是 0AD0:002A 與 0AD0:01B6）", "pokes": []},
+    {"note": "全 0", "pokes": [{"addr": "ds:957E", "hex": "0000000000000000"}]},
+    {"note": "全 FF", "pokes": [{"addr": "ds:957E", "hex": "FFFFFFFFFFFFFFFF"}]},
+    {"note": "圖樣 55", "pokes": [{"addr": "ds:957E", "hex": "5555555555555555"}]},
+    {"note": "已是預設值（寫入前後相同）", "pokes": [{"addr": "ds:957E", "hex": "E105F804E205F804"}]},
+    {"note": "兩個指標互換成對方的預設值", "pokes": [{"addr": "ds:957E", "hex": "E205F804E105F804"}]},
+    {"note": "旁邊的位元組不能被碰：957D 與 9586 填 AA", "pokes": [{"addr": "ds:957D", "hex": "AA"}, {"addr": "ds:957E", "hex": "5555555555555555"}, {"addr": "ds:9586", "hex": "AA"}]}
+  ],
+  "iters": 40,
+  "max_cases": 12,
+  "seed": 20261009,
+  "min_coverage": 100
+}

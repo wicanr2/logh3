@@ -1,0 +1,26 @@
+{
+  "id": "04C8_02D3",
+  "entry": "04C8:02D3",
+  "conv": "far",
+  "ret": "ax",
+  "size": 59,
+  "code_sha256_16": "0ad218e2e1fabe8c",
+  "base_state": "/src/workplace/fcmd/fcmd-s3-base.state",
+  "base_state_sha256": "0155f63e373582b76a3b7ee54eccbef5ae2626481e09a68550b5fddc580146d7",
+  "note": "數星域擁有者（+0x12）等於參數低位元組的個數。基底用 S3 開局（星域擁有者 0／1／2 都有）。參數用 word（不是 byte），choices 含高位元組非 0 的值，驗證只取低位元組。",
+  "args": [
+    {"name": "owner", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 255, 256, 257, 258, 511, 512, 65280, 65281, 65282, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [255], "pokes": [{"addr": "ds:A7AE", "hex": "FF"}]},
+    {"args": [255], "pokes": [{"addr": "ds:A7AE", "hex": "FF"}, {"addr": "ds:B6F0", "hex": "FF"}]},
+    {"args": [65535], "pokes": [{"addr": "ds:A7AE", "hex": "FF"}, {"addr": "ds:A82C", "hex": "FF"}]},
+    {"args": [0], "pokes": [{"addr": "ds:A7AE", "hex": "00"}, {"addr": "ds:A82C", "hex": "00"}, {"addr": "ds:A8AA", "hex": "00"}, {"addr": "ds:A928", "hex": "00"}, {"addr": "ds:A9A6", "hex": "00"}, {"addr": "ds:AA24", "hex": "00"}, {"addr": "ds:AAA2", "hex": "00"}, {"addr": "ds:AB20", "hex": "00"}, {"addr": "ds:AB9E", "hex": "00"}, {"addr": "ds:AC1C", "hex": "00"}, {"addr": "ds:AC9A", "hex": "00"}, {"addr": "ds:AD18", "hex": "00"}, {"addr": "ds:AD96", "hex": "00"}, {"addr": "ds:AE14", "hex": "00"}, {"addr": "ds:AE92", "hex": "00"}, {"addr": "ds:AF10", "hex": "00"}, {"addr": "ds:AF8E", "hex": "00"}, {"addr": "ds:B00C", "hex": "00"}, {"addr": "ds:B08A", "hex": "00"}, {"addr": "ds:B108", "hex": "00"}, {"addr": "ds:B186", "hex": "00"}, {"addr": "ds:B204", "hex": "00"}, {"addr": "ds:B282", "hex": "00"}, {"addr": "ds:B300", "hex": "00"}, {"addr": "ds:B37E", "hex": "00"}, {"addr": "ds:B3FC", "hex": "00"}, {"addr": "ds:B47A", "hex": "00"}, {"addr": "ds:B4F8", "hex": "00"}, {"addr": "ds:B576", "hex": "00"}, {"addr": "ds:B5F4", "hex": "00"}, {"addr": "ds:B672", "hex": "00"}, {"addr": "ds:B6F0", "hex": "00"}]},
+    {"args": [2], "pokes": [{"addr": "ds:A7AE", "hex": "02"}, {"addr": "ds:A82C", "hex": "02"}, {"addr": "ds:A8AA", "hex": "02"}, {"addr": "ds:A928", "hex": "02"}, {"addr": "ds:A9A6", "hex": "02"}, {"addr": "ds:AA24", "hex": "02"}, {"addr": "ds:AAA2", "hex": "02"}, {"addr": "ds:AB20", "hex": "02"}, {"addr": "ds:AB9E", "hex": "02"}, {"addr": "ds:AC1C", "hex": "02"}, {"addr": "ds:AC9A", "hex": "02"}, {"addr": "ds:AD18", "hex": "02"}, {"addr": "ds:AD96", "hex": "02"}, {"addr": "ds:AE14", "hex": "02"}, {"addr": "ds:AE92", "hex": "02"}, {"addr": "ds:AF10", "hex": "02"}, {"addr": "ds:AF8E", "hex": "02"}, {"addr": "ds:B00C", "hex": "02"}, {"addr": "ds:B08A", "hex": "02"}, {"addr": "ds:B108", "hex": "02"}, {"addr": "ds:B186", "hex": "02"}, {"addr": "ds:B204", "hex": "02"}, {"addr": "ds:B282", "hex": "02"}, {"addr": "ds:B300", "hex": "02"}, {"addr": "ds:B37E", "hex": "02"}, {"addr": "ds:B3FC", "hex": "02"}, {"addr": "ds:B47A", "hex": "02"}, {"addr": "ds:B4F8", "hex": "02"}, {"addr": "ds:B576", "hex": "02"}, {"addr": "ds:B5F4", "hex": "02"}, {"addr": "ds:B672", "hex": "02"}, {"addr": "ds:B6F0", "hex": "02"}]},
+    {"args": [258], "pokes": [{"addr": "ds:A7AE", "hex": "02"}, {"addr": "ds:A82C", "hex": "02"}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}

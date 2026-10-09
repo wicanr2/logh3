@@ -1,0 +1,21 @@
+[
+  {"name": "陣營判斷改比較整個 word", "find": "((uint8_t)faction_w != 0) ? 0x10u : 0u", "replace": "(faction_w != 0) ? 0x10u : 0u"},
+  {"name": "陣營判斷改成等於 1", "find": "((uint8_t)faction_w != 0) ? 0x10u : 0u", "replace": "((uint8_t)faction_w == 1) ? 0x10u : 0u"},
+  {"name": "陣營判斷取反", "find": "((uint8_t)faction_w != 0) ? 0x10u : 0u", "replace": "((uint8_t)faction_w == 0) ? 0x10u : 0u"},
+  {"name": "同盟起點槽 16 改 15", "find": "? 0x10u : 0u", "replace": "? 0x0Fu : 0u"},
+  {"name": "同盟起點槽 16 改 17", "find": "? 0x10u : 0u", "replace": "? 0x11u : 0u"},
+  {"name": "艦隊步幅 0x7A 改 0x79（起點）", "find": "(uint16_t)(slot * 0x7A)", "replace": "(uint16_t)(slot * 0x79)"},
+  {"name": "艦隊步幅 0x7A 改 0x79（逐筆）", "find": "fleet = (uint16_t)(fleet + 0x7A);", "replace": "fleet = (uint16_t)(fleet + 0x79);"},
+  {"name": "艦隊表基底 C074 改 C075", "find": "(uint16_t)(0xC074 +", "replace": "(uint16_t)(0xC075 +"},
+  {"name": "判斷欄位 +4 改 +5", "find": "DS((uint16_t)(fleet + 4))", "replace": "DS((uint16_t)(fleet + 5))"},
+  {"name": "空位條件改成 >= 0xFE", "find": "== 0xFF) ? 1u : 0u", "replace": ">= 0xFE) ? 1u : 0u"},
+  {"name": "空位條件改成 > 0x7F", "find": "== 0xFF) ? 1u : 0u", "replace": "> 0x7F) ? 1u : 0u"},
+  {"name": "空位旗標值 1 改 2", "find": "== 0xFF) ? 1u : 0u", "replace": "== 0xFF) ? 2u : 0u"},
+  {"name": "空位旗標取反", "find": "== 0xFF) ? 1u : 0u", "replace": "== 0xFF) ? 0u : 1u"},
+  {"name": "輸出步幅 6 改 5", "find": "out = (uint16_t)(out + 6);", "replace": "out = (uint16_t)(out + 5);"},
+  {"name": "輸出步幅 6 改 7", "find": "out = (uint16_t)(out + 6);", "replace": "out = (uint16_t)(out + 7);"},
+  {"name": "輸出基底 11AA 改 11AB", "find": "uint16_t out = 0x11AA;", "replace": "uint16_t out = 0x11AB;"},
+  {"name": "只寫 15 筆", "find": "for (i = 0; i < 0x10; i++) {", "replace": "for (i = 0; i < 0x0F; i++) {"},
+  {"name": "寫 17 筆", "find": "for (i = 0; i < 0x10; i++) {", "replace": "for (i = 0; i < 0x11; i++) {"},
+  {"name": "每筆寫成 word（連旁邊的 byte 一起清）", "find": "wr8(m, DS(out), free_slot);", "replace": "wr16(m, DS(out), free_slot);"}
+]

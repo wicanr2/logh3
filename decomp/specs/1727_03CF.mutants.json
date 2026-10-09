@@ -1,0 +1,13 @@
+[
+  {"name": "框寬0x1B改0x1A", "find": "uint16_t xr = (uint16_t)(x + 0x1Bu);", "replace": "uint16_t xr = (uint16_t)(x + 0x1Au);"},
+  {"name": "框高0x14改0x13", "find": "uint16_t y2 = (uint16_t)(y + 0x14u);", "replace": "uint16_t y2 = (uint16_t)(y + 0x13u);"},
+  {"name": "下緣0x15改0x16", "find": "uint16_t y3 = (uint16_t)(y + 0x15u);", "replace": "uint16_t y3 = (uint16_t)(y + 0x16u);"},
+  {"name": "左右緣起點含角", "find": "uint16_t y1 = (uint16_t)(y + 1u);", "replace": "uint16_t y1 = y;"},
+  {"name": "色改5", "find": "a[0] = x; a[1] = y; a[2] = xr; a[3] = y; a[4] = 4u; a[5] = mask;", "replace": "a[0] = x; a[1] = y; a[2] = xr; a[3] = y; a[4] = 5u; a[5] = mask;"},
+  {"name": "下緣色改3", "find": "a[0] = x; a[1] = y3; a[2] = xr; a[3] = y3; a[4] = 4u; a[5] = mask;", "replace": "a[0] = x; a[1] = y3; a[2] = xr; a[3] = y3; a[4] = 3u; a[5] = mask;"},
+  {"name": "右緣遮罩固定0xFFFF", "find": "a[0] = xr; a[1] = y1; a[2] = xr; a[3] = y2; a[4] = 4u; a[5] = mask;", "replace": "a[0] = xr; a[1] = y1; a[2] = xr; a[3] = y2; a[4] = 4u; a[5] = 0xFFFFu;"},
+  {"name": "少畫下緣", "find": "    a[0] = x; a[1] = y3; a[2] = xr; a[3] = y3; a[4] = 4u; a[5] = mask;\n    (void)gin3_stub(m, \"39D7_0936\", 6, a);\n", "replace": ""},
+  {"name": "左右緣呼叫順序對調", "find": "    a[0] = x; a[1] = y1; a[2] = x; a[3] = y2; a[4] = 4u; a[5] = mask;\n    (void)gin3_stub(m, \"39D7_0936\", 6, a);\n\n    a[0] = xr; a[1] = y1; a[2] = xr; a[3] = y2; a[4] = 4u; a[5] = mask;\n    (void)gin3_stub(m, \"39D7_0936\", 6, a);\n", "replace": "    a[0] = xr; a[1] = y1; a[2] = xr; a[3] = y2; a[4] = 4u; a[5] = mask;\n    (void)gin3_stub(m, \"39D7_0936\", 6, a);\n\n    a[0] = x; a[1] = y1; a[2] = x; a[3] = y2; a[4] = 4u; a[5] = mask;\n    (void)gin3_stub(m, \"39D7_0936\", 6, a);\n"},
+  {"name": "上緣y1寫成y加1", "find": "a[0] = x; a[1] = y; a[2] = xr; a[3] = y; a[4] = 4u;", "replace": "a[0] = x; a[1] = y; a[2] = xr; a[3] = y1; a[4] = 4u;"},
+  {"name": "左緣的x1用xr", "find": "a[0] = x; a[1] = y1; a[2] = x; a[3] = y2;", "replace": "a[0] = x; a[1] = y1; a[2] = xr; a[3] = y2;"}
+]

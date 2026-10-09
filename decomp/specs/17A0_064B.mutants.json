@@ -1,0 +1,14 @@
+[
+  {"name": "艦艇記錄步幅78改77", "find": "(uint16_t)(ship * 0x4Eu)", "replace": "(uint16_t)(ship * 0x4Du)"},
+  {"name": "寫艦艇+0x31", "find": "rec + 0x30u", "replace": "rec + 0x31u"},
+  {"name": "旗艦條件改成非0", "find": "if (rd8(m, LIN(seg, rec + 3u)) == 0) {", "replace": "if (rd8(m, LIN(seg, rec + 3u)) != 0) {"},
+  {"name": "旗艦條件改成小於等於1", "find": "if (rd8(m, LIN(seg, rec + 3u)) == 0) {", "replace": "if (rd8(m, LIN(seg, rec + 3u)) <= 1) {"},
+  {"name": "艦隊記錄步幅122改121", "find": "* 0x7Au));", "replace": "* 0x79u));"},
+  {"name": "艦隊欄位+0x6C", "find": "DS(fleet + 0x6Bu)", "replace": "DS(fleet + 0x6Cu)"},
+  {"name": "艦隊位移不回繞", "find": "wr8(m, DS(fleet + 0x6Bu), (uint8_t)value);", "replace": "wr8(m, ((uint32_t)GIN3_DS << 4) + 0xC074u + (uint32_t)rd8(m, LIN(seg, rec + 1u)) * 0x7Au + 0x6Bu, (uint8_t)value);"},
+  {"name": "艦隊索引讀艦艇+0x02", "find": "rd8(m, LIN(seg, rec + 1u)) * 0x7Au", "replace": "rd8(m, LIN(seg, rec + 2u)) * 0x7Au"},
+  {"name": "值取高位元組", "find": "wr8(m, DS(fleet + 0x6Bu), (uint8_t)value);", "replace": "wr8(m, DS(fleet + 0x6Bu), (uint8_t)(value >> 8));"},
+  {"name": "非旗艦也寫艦隊", "find": "if (rd8(m, LIN(seg, rec + 3u)) == 0) {", "replace": "if (1) {"},
+  {"name": "艦艇欄位的ROM寫入照寫", "find": "wr8_skip_rom(m, LIN(seg, rec + 0x30u), (uint8_t)value);", "replace": "wr8(m, LIN(seg, rec + 0x30u), (uint8_t)value);"},
+  {"name": "ROM邊界多含一格", "find": "wr8_skip_rom(m, LIN(seg, rec + 0x30u), (uint8_t)value);", "replace": "if (LIN(seg, rec + 0x30u) <= 0xF0000u) wr8(m, LIN(seg, rec + 0x30u), (uint8_t)value);"}
+]

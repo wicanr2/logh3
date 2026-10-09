@@ -1,0 +1,10 @@
+[
+  {"name": "只數 31 個星域", "find": "for (i = 0; i < 0x20; i++) {", "replace": "for (i = 0; i < 0x1F; i++) {"},
+  {"name": "數 33 個星域", "find": "for (i = 0; i < 0x20; i++) {", "replace": "for (i = 0; i < 0x21; i++) {"},
+  {"name": "比較整個 word 參數", "find": "if (rd8(m, DS((uint16_t)(region + 0x12))) == want)", "replace": "if (rd8(m, DS((uint16_t)(region + 0x12))) == owner_w)"},
+  {"name": "讀 +0x11 而不是 +0x12", "find": "DS((uint16_t)(region + 0x12))", "replace": "DS((uint16_t)(region + 0x11))"},
+  {"name": "星域步幅 0x7E 改 0x7D", "find": "region = (uint16_t)(region + 0x7E);", "replace": "region = (uint16_t)(region + 0x7D);"},
+  {"name": "相等改不相等", "find": "== want)", "replace": "!= want)"},
+  {"name": "表基底 A79C 改 A79D", "find": "uint16_t region = 0xA79C;", "replace": "uint16_t region = 0xA79D;"},
+  {"name": "個數最多只算到 31", "find": "return count; /* AH ＝ 0 */", "replace": "return count > 31 ? 31 : count; /* AH ＝ 0 */"}
+]

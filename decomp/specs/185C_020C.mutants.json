@@ -1,0 +1,20 @@
+[
+  {"name": "組數不減1", "find": "wr8_skip_rom(m, LIN(f_seg, f_off + 0x0Fu), (uint8_t)(rd8(m, LIN(f_seg, f_off + 0x0Fu)) - 1u));", "replace": ""},
+  {"name": "組數一次減2", "find": "(uint8_t)(rd8(m, LIN(f_seg, f_off + 0x0Fu)) - 1u)", "replace": "(uint8_t)(rd8(m, LIN(f_seg, f_off + 0x0Fu)) - 2u)"},
+  {"name": "組的位移乘2", "find": "(uint16_t)(i * 4u)", "replace": "(uint16_t)(i * 2u)"},
+  {"name": "來源是下兩組", "find": "src = (uint16_t)(dst + 4u);", "replace": "src = (uint16_t)(dst + 8u);"},
+  {"name": "組序號取整個word", "find": "uint8_t i = (uint8_t)group;", "replace": "uint16_t i = group;"},
+  {"name": "迴圈多跑一組", "find": "while (j < rd8(m, LIN(f_seg, f_off + 0x0Fu))) {", "replace": "while (j < rd8(m, LIN(f_seg, f_off + 0x0Fu)) + (j < 200)) {"},
+  {"name": "迴圈少跑一組", "find": "while (j < rd8(m, LIN(f_seg, f_off + 0x0Fu))) {", "replace": "while (j + 1 < rd8(m, LIN(f_seg, f_off + 0x0Fu))) {"},
+  {"name": "從第i+1組起算", "find": "j = i;", "replace": "j = (uint8_t)(i + 1u);"},
+  {"name": "不搬艦種", "find": "wr8_skip_rom(m, LIN(f_seg, dst + 2u), rd8(m, LIN(f_seg, src + 2u)));", "replace": ""},
+  {"name": "不搬隊形槽", "find": "wr8_skip_rom(m, LIN(f_seg, dst + 3u), rd8(m, LIN(f_seg, src + 3u)));", "replace": ""},
+  {"name": "艦隊記錄位移的組數欄不回繞", "find": "while (j < rd8(m, LIN(f_seg, f_off + 0x0Fu))) {", "replace": "while (j < rd8(m, ((uint32_t)f_seg << 4) + f_off + 0x0Fu)) {"},
+  {"name": "搬動位移到0xFFFF不回繞而是停住", "find": "dst = (uint16_t)(dst + 4u);", "replace": "dst = (uint16_t)(dst + 4u > 0xFFFFu ? 0xFFFFu : dst + 4u);"},
+  {"name": "來源位移到0xFFFF不回繞而是停住", "find": "src = (uint16_t)(src + 4u);", "replace": "src = (uint16_t)(src + 4u > 0xFFFFu ? 0xFFFFu : src + 4u);"},
+  {"name": "word讀取高位元組取下一段", "find": "(rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8)", "replace": "(rd8(m, LIN(seg, off) + 1u) << 8)"},
+  {"name": "word寫入高位元組取下一段", "find": "wr8_skip_rom(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "wr8_skip_rom(m, LIN(seg, off) + 1u, (uint8_t)(v >> 8));"},
+  {"name": "ROM寫入照寫", "find": "wr8_skip_rom(m, LIN(seg, off), (uint8_t)v);\n    wr8_skip_rom(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "wr8(m, LIN(seg, off), (uint8_t)v);\n    wr8(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));"},
+  {"name": "ROM邊界多含一格", "find": "wr8_skip_rom(m, LIN(seg, off), (uint8_t)v);", "replace": "if (LIN(seg, off) <= 0xF0000u) wr8(m, LIN(seg, off), (uint8_t)v);"},
+  {"name": "組數遞減的ROM寫入照寫", "find": "wr8_skip_rom(m, LIN(f_seg, f_off + 0x0Fu), (uint8_t)(rd8(m, LIN(f_seg, f_off + 0x0Fu)) - 1u));", "replace": "wr8(m, LIN(f_seg, f_off + 0x0Fu), (uint8_t)(rd8(m, LIN(f_seg, f_off + 0x0Fu)) - 1u));"}
+]

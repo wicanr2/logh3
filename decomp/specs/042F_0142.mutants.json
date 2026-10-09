@@ -1,0 +1,15 @@
+[
+  {"name": "bit0 設時音源預設改 1", "find": "if (mask & 1u)\n        wr8(m, DS(0x8F33), 0);", "replace": "if (mask & 1u)\n        wr8(m, DS(0x8F33), 1);"},
+  {"name": "沒有 MIDI 也沒有 FM 時預設改 3", "find": "else\n        wr8(m, DS(0x8F33), 2);", "replace": "else\n        wr8(m, DS(0x8F33), 3);"},
+  {"name": "先看 bit1 再看 bit0", "find": "if (mask & 1u)\n        wr8(m, DS(0x8F33), 0);\n    else if (mask & 2u)\n        wr8(m, DS(0x8F33), 1);", "replace": "if (mask & 2u)\n        wr8(m, DS(0x8F33), 1);\n    else if (mask & 1u)\n        wr8(m, DS(0x8F33), 0);"},
+  {"name": "bit0 判斷改成 0x81", "find": "if (mask & 1u)\n        wr8(m, DS(0x8F33), 0);", "replace": "if (mask & 0x81u)\n        wr8(m, DS(0x8F33), 0);"},
+  {"name": "bit1 判斷改成 0x82", "find": "else if (mask & 2u)", "replace": "else if (mask & 0x82u)"},
+  {"name": "03DC 改用 bit1", "find": "cx = (al & 1u) ? 1u : 0u;", "replace": "cx = (al & 2u) ? 1u : 0u;"},
+  {"name": "03E8 改用 bit0", "find": "ax = (al & 2u) ? 1u : 0u;", "replace": "ax = (al & 1u) ? 1u : 0u;"},
+  {"name": "03DC 寫成 word", "find": "wr8(m, DS(0x03DC), (uint8_t)cx);", "replace": "wr16(m, DS(0x03DC), cx);"},
+  {"name": "03F4 寫 0", "find": "wr8(m, DS(0x03F4), 1);", "replace": "wr8(m, DS(0x03F4), 0);"},
+  {"name": "03F4 不寫", "find": "wr8(m, DS(0x03F4), 1);", "replace": "(void)0;"},
+  {"name": "8F34 不清", "find": "wr8(m, DS(0x8F34), (uint8_t)ax);", "replace": "(void)0;"},
+  {"name": "8F35 不清", "find": "wr8(m, DS(0x8F35), (uint8_t)ax);", "replace": "(void)0;"},
+  {"name": "殘值 CX 改 0", "find": "return ((uint32_t)ax << 16) | cx; /* AX<<16 | CX */", "replace": "return ((uint32_t)ax << 16); /* AX<<16 | CX */"}
+]

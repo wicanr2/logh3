@@ -1,0 +1,11 @@
+[
+  {"name": "池記錄步幅78改77", "find": "(uint16_t)(idx * 0x4Eu)", "replace": "(uint16_t)(idx * 0x4Du)"},
+  {"name": "艘數讀+0x0A", "find": "ship + 8u", "replace": "ship + 0x0Au"},
+  {"name": "結果取反", "find": "== 0 ? 1 : 0;", "replace": "!= 0 ? 1 : 0;"},
+  {"name": "池索引讀艦隊+0x12", "find": "fleet_off + 0x10u", "replace": "fleet_off + 0x12u"},
+  {"name": "池內位移不回繞", "find": "return rd16s(m, pool_seg, (uint16_t)(ship + 8u)) == 0 ? 1 : 0;", "replace": "return rd16(m, ((uint32_t)pool_seg << 4) + (uint32_t)ship + 8u) == 0 ? 1 : 0;"},
+  {"name": "艘數只看低位元組", "find": "return rd16s(m, pool_seg, (uint16_t)(ship + 8u)) == 0 ? 1 : 0;", "replace": "return rd8(m, LIN(pool_seg, ship + 8u)) == 0 ? 1 : 0;"},
+  {"name": "艦隊位移不回繞", "find": "rd16s(m, fleet_seg, (uint16_t)(fleet_off + 0x10u))", "replace": "rd16(m, ((uint32_t)fleet_seg << 4) + (uint32_t)fleet_off + 0x10u)"},
+  {"name": "池基底改讀CFB6當位移", "find": "rd16(m, DS(0xCFB4))", "replace": "rd16(m, DS(0xCFB6))"},
+  {"name": "word讀取高位元組取下一段", "find": "(rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8)", "replace": "(rd8(m, LIN(seg, off) + 1u) << 8)"}
+]

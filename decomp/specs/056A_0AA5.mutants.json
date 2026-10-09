@@ -1,0 +1,17 @@
+[
+  {"name": "無主目標 100 改 99", "find": "target = 100;", "replace": "target = 99;"},
+  {"name": "無主目標 100 改 101", "find": "target = 100;", "replace": "target = 101;"},
+  {"name": "其餘目標 200 改 199", "find": "target = 200;", "replace": "target = 199;"},
+  {"name": "其餘目標 200 改 201", "find": "target = 200;", "replace": "target = 201;"},
+  {"name": "擁有者 0 的目標 0 改 1", "find": "target = 0;", "replace": "target = 1;"},
+  {"name": "擁有者 2 判斷改成 1", "find": "else if (rd8(m, DS((uint16_t)(region + 0x12))) == 2)", "replace": "else if (rd8(m, DS((uint16_t)(region + 0x12))) == 1)"},
+  {"name": "擁有者 0 判斷改成 1", "find": "if (rd8(m, DS((uint16_t)(region + 0x12))) == 0)\n            target = 0;", "replace": "if (rd8(m, DS((uint16_t)(region + 0x12))) == 1)\n            target = 0;"},
+  {"name": "民心當有號 byte", "find": "diff = (int16_t)((uint16_t)rd8(m, DS((uint16_t)(region + 0x7C))) - target);", "replace": "diff = (int16_t)((int8_t)rd8(m, DS((uint16_t)(region + 0x7C))) - (int16_t)target);"},
+  {"name": "相等時也減一", "find": "else if (diff > 0)", "replace": "else if (diff >= 0)"},
+  {"name": "相等時也加一", "find": "if (diff < 0)\n            wr8", "replace": "if (diff <= 0)\n            wr8"},
+  {"name": "加減方向對調", "find": "(uint8_t)(rd8(m, DS((uint16_t)(region + 0x7C))) + 1)", "replace": "(uint8_t)(rd8(m, DS((uint16_t)(region + 0x7C))) - 1)"},
+  {"name": "一次走兩格", "find": "(uint8_t)(rd8(m, DS((uint16_t)(region + 0x7C))) - 1)", "replace": "(uint8_t)(rd8(m, DS((uint16_t)(region + 0x7C))) - 2)"},
+  {"name": "只處理 31 個星域", "find": "for (i = 0; i < 0x20; i++) {", "replace": "for (i = 0; i < 0x1F; i++) {"},
+  {"name": "星域步幅 0x7E 改 0x7D", "find": "region = (uint16_t)(region + 0x7E);", "replace": "region = (uint16_t)(region + 0x7D);"},
+  {"name": "民心欄位 +0x7C 改 +0x7B（讀寫都改）", "find": "diff = (int16_t)((uint16_t)rd8(m, DS((uint16_t)(region + 0x7C))) - target);", "replace": "diff = (int16_t)((uint16_t)rd8(m, DS((uint16_t)(region + 0x7B))) - target);"}
+]

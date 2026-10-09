@@ -1,0 +1,8 @@
+[
+  {"name": "x距離門檻16改<=16", "find": "if (dx >= 0x10u)", "replace": "if (dx > 0x10u)"},
+  {"name": "y距離門檻16改<=16", "find": "return dy < 0x10u ? 1 : 0;", "replace": "return dy <= 0x10u ? 1 : 0;"},
+  {"name": "x距離不取大減小", "find": "dx = x0 < x1 ? (uint16_t)(x1 - x0) : (uint16_t)(x0 - x1);", "replace": "dx = (uint16_t)(x0 - x1);"},
+  {"name": "y距離改成有號差的絕對值", "find": "dy = y0 < y1 ? (uint16_t)(y1 - y0) : (uint16_t)(y0 - y1);", "replace": "dy = (uint16_t)((int16_t)(y0 - y1) < 0 ? -(int16_t)(y0 - y1) : (int16_t)(y0 - y1));"},
+  {"name": "兩軸條件改成或", "find": "if (dx >= 0x10u)\n        return 0;\n    return dy < 0x10u ? 1 : 0;", "replace": "if (dx < 0x10u)\n        return 1;\n    return dy < 0x10u ? 1 : 0;"},
+  {"name": "y距離拿x1當另一端", "find": "dy = y0 < y1 ? (uint16_t)(y1 - y0) : (uint16_t)(y0 - y1);", "replace": "dy = y0 < x1 ? (uint16_t)(x1 - y0) : (uint16_t)(y0 - x1);"}
+]

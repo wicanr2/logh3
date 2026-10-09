@@ -1,0 +1,11 @@
+[
+  {"name": "行星記錄步幅82改80", "find": "(planet & 0x7FFFu) * 0x52u", "replace": "(planet & 0x7FFFu) * 0x50u"},
+  {"name": "寫+0x45", "find": "off + 0x44u", "replace": "off + 0x45u"},
+  {"name": "遮罩縮成0x3FFF", "find": "(planet & 0x7FFFu) * 0x52u", "replace": "(planet & 0x3FFFu) * 0x52u"},
+  {"name": "寫整個word", "find": "wr8_skip_rom(m, LIN(seg, off + 0x44u), (uint8_t)value);", "replace": "wr16(m, LIN(seg, off + 0x44u), value);"},
+  {"name": "表段與位移用錯變數", "find": "uint16_t seg = rd16(m, DS(0xCFFA));", "replace": "uint16_t seg = rd16(m, DS(0xCFF8));"},
+  {"name": "值高位元組當成低位元組", "find": "(uint8_t)value", "replace": "(uint8_t)(value >> 8)"},
+  {"name": "行星表位移不回繞", "find": "wr8_skip_rom(m, LIN(seg, off + 0x44u), (uint8_t)value);", "replace": "wr8_skip_rom(m, ((uint32_t)seg << 4) + (uint32_t)off + 0x44u, (uint8_t)value);"},
+  {"name": "ROM寫入照寫", "find": "wr8_skip_rom(m, LIN(seg, off + 0x44u), (uint8_t)value);", "replace": "wr8(m, LIN(seg, off + 0x44u), (uint8_t)value);"},
+  {"name": "ROM邊界多含一格", "find": "wr8_skip_rom(m, LIN(seg, off + 0x44u), (uint8_t)value);", "replace": "if (LIN(seg, off + 0x44u) <= 0xF0000u) wr8(m, LIN(seg, off + 0x44u), (uint8_t)value);"}
+]

@@ -1,0 +1,16 @@
+[
+  {"name": "遮罩改清bit7", "find": "& 0xBFu)", "replace": "& 0x7Fu)"},
+  {"name": "遮罩改成不清", "find": "& 0xBFu)", "replace": "& 0xFFu)"},
+  {"name": "遮罩改成連bit5一起清", "find": "& 0xBFu)", "replace": "& 0x9Fu)"},
+  {"name": "寫+0x1A", "find": "wr8_skip_rom(m, LIN(seg, rec + 0x19u), (uint8_t)(rd8(m, LIN(seg, rec + 0x19u)) & 0xBFu));", "replace": "wr8_skip_rom(m, LIN(seg, rec + 0x1Au), (uint8_t)(rd8(m, LIN(seg, rec + 0x1Au)) & 0xBFu));"},
+  {"name": "艦艇記錄步幅78改77", "find": "(uint16_t)(idx * 0x4Eu)", "replace": "(uint16_t)(idx * 0x4Du)"},
+  {"name": "多處理一艘", "find": "while (i < rd16(m, DS(0x9896))) {", "replace": "while (i < rd16(m, DS(0x9896)) + (i < 300)) {"},
+  {"name": "少處理一艘", "find": "while (i < rd16(m, DS(0x9896))) {", "replace": "while (i + 1 < rd16(m, DS(0x9896))) {"},
+  {"name": "清單步幅改4", "find": "p = (uint16_t)(p + 2u);", "replace": "p = (uint16_t)(p + 4u);"},
+  {"name": "清單基底98BA改98BC", "find": "uint16_t p = 0x98BAu;", "replace": "uint16_t p = 0x98BCu;"},
+  {"name": "筆數只看低位元組", "find": "while (i < rd16(m, DS(0x9896))) {", "replace": "while (i < rd8(m, DS(0x9896))) {"},
+  {"name": "池基底位移與段互換", "find": "uint16_t rec = (uint16_t)(rd16(m, DS(0xCFB4))", "replace": "uint16_t rec = (uint16_t)(rd16(m, DS(0xCFB6))"},
+  {"name": "池位移加0x19不回繞", "find": "wr8_skip_rom(m, LIN(seg, rec + 0x19u), (uint8_t)(rd8(m, LIN(seg, rec + 0x19u)) & 0xBFu));", "replace": "wr8_skip_rom(m, ((uint32_t)seg << 4) + (uint32_t)rec + 0x19u, (uint8_t)(rd8(m, ((uint32_t)seg << 4) + (uint32_t)rec + 0x19u) & 0xBFu));"},
+  {"name": "ROM寫入照寫", "find": "wr8_skip_rom(m, LIN(seg, rec + 0x19u),", "replace": "wr8(m, LIN(seg, rec + 0x19u),"},
+  {"name": "ROM邊界多含一格", "find": "wr8_skip_rom(m, LIN(seg, rec + 0x19u), (uint8_t)(rd8(m, LIN(seg, rec + 0x19u)) & 0xBFu));", "replace": "if (LIN(seg, rec + 0x19u) <= 0xF0000u) wr8(m, LIN(seg, rec + 0x19u), (uint8_t)(rd8(m, LIN(seg, rec + 0x19u)) & 0xBFu));"}
+]

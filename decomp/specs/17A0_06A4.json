@@ -1,0 +1,39 @@
+{
+  "id": "17A0_06A4",
+  "entry": "17A0:06A4",
+  "conv": "far",
+  "ret": "none",
+  "size": 51,
+  "code_sha256_16": "8e2b5bc40d9d5377",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "args": [
+    {"name": "planet", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 80, 81, 16384, 16385, 32767, 32768, 32769, 32771, 49152, 65535, 8192, 16383], "also_random": true}},
+    {"name": "value", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 4, 5, 6, 7, 127, 128, 255, 256, 511, 341, 65280, 65535, 4660], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0, 85], "pokes": []},
+    {"args": [3, 102], "pokes": []},
+    {"args": [32771, 119], "pokes": []},
+    {"args": [16384, 136], "pokes": []},
+    {"args": [16383, 153], "pokes": []},
+    {"args": [32767, 170], "pokes": []},
+    {"args": [65535, 187], "pokes": []},
+    {"args": [1, 4660], "pokes": []},
+    {"args": [2, 65280], "pokes": []},
+    {"args": [32768, 204], "pokes": []},
+    {"args": [49153, 221], "pokes": []},
+    {"args": [1, 66], "pokes": [{"addr": "ds:CFF8", "hex": "d0ff"}]},
+    {"args": [32769, 67], "pokes": [{"addr": "ds:CFF8", "hex": "d0ff"}]},
+    {"args": [0, 68], "pokes": [{"addr": "ds:CFF8", "hex": "baff"}]},
+    {"args": [3, 69], "pokes": [{"addr": "ds:CFF8", "hex": "00f0"}]},
+    {"args": [0, 70], "pokes": [{"addr": "ds:CFF8", "hex": "0b00"}, {"addr": "ds:CFFA", "hex": "fbef"}]},
+    {"args": [0, 71], "pokes": [{"addr": "ds:CFF8", "hex": "0c00"}, {"addr": "ds:CFFA", "hex": "fbef"}]},
+    {"args": [0, 72], "pokes": [{"addr": "ds:CFF8", "hex": "0000"}, {"addr": "ds:CFFA", "hex": "00ff"}]},
+    {"args": [2, 73], "pokes": [{"addr": "ds:CFF8", "hex": "00f0"}, {"addr": "ds:CFFA", "hex": "ffff"}]}
+  ],
+  "iters": 30000,
+  "max_cases": 600,
+  "seed": 20261009,
+  "min_coverage": 100
+}
