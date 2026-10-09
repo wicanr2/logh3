@@ -1,0 +1,24 @@
+{
+  "id": "35D1_0002",
+  "entry": "35D1:0002",
+  "conv": "far",
+  "ret": "none",
+  "size": 7,
+  "code_sha256_16": "5a505277898aca3d",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "把筆數 ds:EADE（word）清成 0。函式不讀記憶體，案例全靠種子：基底的筆數已是 0（寫入不可見），所以種子預先把筆數設成高低位元組都不為 0、只有低位元組非 0、只有高位元組非 0，相鄰位元組（ds:EADD、EAE0）也設成非 0，抓少寫、寫錯值與位址差 1。",
+  "args": [],
+  "seeds": [
+    {},
+    {"pokes": [{"addr": "ds:EADC", "hex": "11223344"}]},
+    {"pokes": [{"addr": "ds:EADC", "hex": "ffff01ffff"}]},
+    {"pokes": [{"addr": "ds:EADC", "hex": "55aa0100aa55"}]},
+    {"pokes": [{"addr": "ds:EADC", "hex": "55aa0001aa55"}]},
+    {"pokes": [{"addr": "ds:EADC", "hex": "ffffffffffff"}]}
+  ],
+  "iters": 12,
+  "max_cases": 3,
+  "seed": 20261009,
+  "min_coverage": 100
+}

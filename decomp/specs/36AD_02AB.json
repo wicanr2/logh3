@@ -1,0 +1,26 @@
+{
+  "id": "36AD_02AB",
+  "entry": "36AD:02AB",
+  "conv": "near",
+  "ret": "pack:ax,dx,di",
+  "size": 37,
+  "code_sha256_16": "416054b4888800d4",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "座標換 VGA 位移。讀 ds:8ADE（X）與 ds:8AE0（Y），輸出 DI，另比對暫用的 AX、DX。X、Y 用突變取邊界值；種子補負數 X（sar 與 shr 不同）、負數 Y、16 位元乘法回繞。",
+  "args": [],
+  "seeds": [
+    {"pokes": [{"addr": "ds:8ADE", "hex": "0000 0000"}]},
+    {"pokes": [{"addr": "ds:8ADE", "hex": "f8ff 0000"}]},
+    {"pokes": [{"addr": "ds:8ADE", "hex": "0080 0000"}]},
+    {"pokes": [{"addr": "ds:8ADE", "hex": "ffff ffff"}]},
+    {"pokes": [{"addr": "ds:8ADE", "hex": "ff7f ff7f"}]},
+    {"pokes": [{"addr": "ds:8ADE", "hex": "7502 3601"}]},
+    {"pokes": [{"addr": "ds:8ADE", "hex": "0700 ce0c"}]},
+    {"pokes": [{"addr": "ds:8ADE", "hex": "0800 0080"}]}
+  ],
+  "iters": 3000,
+  "max_cases": 200,
+  "seed": 20261009,
+  "min_coverage": 100
+}

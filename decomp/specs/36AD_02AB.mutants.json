@@ -1,0 +1,10 @@
+[
+  {"name": "X右移改邏輯", "find": "ax = (uint16_t)((int16_t)rd16(m, DS(0x8ADEu)) >> 3); /* 三次 sar ax,1 */", "replace": "ax = (uint16_t)(rd16(m, DS(0x8ADEu)) >> 3);"},
+  {"name": "X右移改2位", "find": "ax = (uint16_t)((int16_t)rd16(m, DS(0x8ADEu)) >> 3); /* 三次 sar ax,1 */", "replace": "ax = (uint16_t)((int16_t)rd16(m, DS(0x8ADEu)) >> 2);"},
+  {"name": "Y乘64不乘80", "find": "dx = (uint16_t)(dx + ax); /* Y * 80 */", "replace": "dx = (uint16_t)(dx + 0); /* Y * 16 */"},
+  {"name": "Y左移改5", "find": "ax = (uint16_t)(ax << 4); /* 四次 add ax,ax */", "replace": "ax = (uint16_t)(ax << 5);"},
+  {"name": "畫面保留列常數", "find": "di = (uint16_t)(di + 0xC80u);", "replace": "di = (uint16_t)(di + 0xC00u);"},
+  {"name": "X與Y對調", "find": "ax = rd16(m, DS(0x8AE0u));", "replace": "ax = rd16(m, DS(0x8ADEu));"},
+  {"name": "DI不含X", "find": "ax = (uint16_t)(ax + dx);\n    di = ax;", "replace": "ax = dx;\n    di = ax;"},
+  {"name": "AX多加保留列", "find": "ax = (uint16_t)(ax + dx);\n    di = ax;", "replace": "ax = (uint16_t)(ax + dx + 1);\n    di = (uint16_t)(ax - 1);"}
+]

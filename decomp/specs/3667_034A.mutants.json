@@ -1,0 +1,15 @@
+[
+  {"name": "row取16位元", "find": "* (uint8_t)row); /* mul cx（cx ＝ row 低位元組） */", "replace": "* row); /* mul */"},
+  {"name": "起點不含row", "find": "rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Bu))) * (uint8_t)row", "replace": "0 * (uint8_t)row"},
+  {"name": "起點位移少乘2", "find": "ax = (uint16_t)(ax << 2); /* 兩次 shl ax,1 */", "replace": "ax = (uint16_t)(ax << 1);"},
+  {"name": "color取高位元組", "find": "(uint16_t)(ptr_off + 2u)), (uint8_t)color);", "replace": "(uint16_t)(ptr_off + 2u)), (uint8_t)(color >> 8));"},
+  {"name": "寫入位移改+3", "find": "LIN(ptr_seg, (uint16_t)(ptr_off + 2u))", "replace": "LIN(ptr_seg, (uint16_t)(ptr_off + 3u))"},
+  {"name": "寫入位移+2不回繞", "find": "LIN(ptr_seg, (uint16_t)(ptr_off + 2u))", "replace": "(LIN(ptr_seg, ptr_off) + 2u)"},
+  {"name": "步幅改2", "find": "ptr_off = (uint16_t)(ptr_off + 4u);", "replace": "ptr_off = (uint16_t)(ptr_off + 2u);"},
+  {"name": "寬度只讀一次", "find": "    col = 0;\n    while (col < rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Bu)))) {", "replace": "    col = 0;\n    uint8_t w0 = rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Bu)));\n    while (col < w0) {"},
+  {"name": "少跑一圈", "find": "while (col < rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Bu)))) {", "replace": "while (col + 1u < rd8(m, LIN(obj_seg, (uint16_t)(obj_off + 0x0Bu)))) {"},
+  {"name": "拿掉ROM模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"},
+  {"name": "word存取不段內回繞", "find": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8));", "replace": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, (LIN(seg, off) + 1u)) << 8));"},
+  {"name": "緩衝區段讀成+0x12", "find": "cx = f3667_034A_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x10u));", "replace": "cx = f3667_034A_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x12u));"},
+  {"name": "緩衝區位移讀成+0x0C", "find": "si = f3667_034A_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Eu));", "replace": "si = f3667_034A_rd16s(m, obj_seg, (uint16_t)(obj_off + 0x0Cu));"}
+]

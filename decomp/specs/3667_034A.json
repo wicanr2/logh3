@@ -1,0 +1,33 @@
+{
+  "id": "3667_034A",
+  "entry": "3667:034A",
+  "conv": "far",
+  "ret": "none",
+  "size": 86,
+  "code_sha256_16": "f4b475177e5d0744",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "把視窗內容緩衝區第 row 列每一格的顏色位元組設成 color。物件在暫存緩衝區（lin 9D000，內容隨機，欄位由種子與突變控制）。種子涵蓋：正常列、緩衝區指標指到物件自己（寫入改到 obj[+0B]，迴圈次數跟著變）、起點加法 16 位元回繞、緩衝區位移繞過 0xFFFF、寫入落在 ROM 區（FFFF:0000，以及 RAM 與 ROM 交界 EFF0:00FC）、寬度 0、row 與 color 的高位元組不為 0、寬 255 乘 row 255 的乘積溢位、物件本身在 8000:FFF1（欄位 word 跨位移 0xFFFF）。",
+  "args": [
+    {"name": "obj", "kind": "farptr", "gen": {"scratch": 64}},
+    {"name": "row", "kind": "word", "gen": {"choices": [0, 1, 2, 3, 5, 10, 255, 256, 258, 4611], "also_random": true}},
+    {"name": "color", "kind": "word", "gen": {"choices": [0, 1, 39, 119, 151, 255, 256, 4727], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0, 40192, 2, 119], "pokes": [{"addr": "lin:9D00B", "hex": "04"}, {"addr": "lin:9D00E", "hex": "0001009d"}, {"addr": "lin:9D100", "hex": "55", "repeat": 200}]},
+    {"args": [0, 40192, 0, 3], "pokes": [{"addr": "lin:9D00B", "hex": "08"}, {"addr": "lin:9D00E", "hex": "0900009d"}]},
+    {"args": [0, 40192, 1, 3], "pokes": [{"addr": "lin:9D00B", "hex": "08"}, {"addr": "lin:9D00E", "hex": "e9ff009d"}]},
+    {"args": [0, 40192, 0, 119], "pokes": [{"addr": "lin:9D00B", "hex": "04"}, {"addr": "lin:9D00E", "hex": "f8ff0080"}, {"addr": "8000:FFF0", "hex": "55", "repeat": 16}, {"addr": "8000:0000", "hex": "55", "repeat": 16}]},
+    {"args": [0, 40192, 0, 119], "pokes": [{"addr": "lin:9D00B", "hex": "03"}, {"addr": "lin:9D00E", "hex": "feff0080"}, {"addr": "8000:FFF0", "hex": "55", "repeat": 16}, {"addr": "8000:0000", "hex": "55", "repeat": 16}]},
+    {"args": [0, 40192, 0, 119], "pokes": [{"addr": "lin:9D00B", "hex": "03"}, {"addr": "lin:9D00E", "hex": "0000ffff"}]},
+    {"args": [0, 40192, 0, 119], "pokes": [{"addr": "lin:9D00B", "hex": "02"}, {"addr": "lin:9D00E", "hex": "fc00f0ef"}, {"addr": "lin:EFFFE", "hex": "55"}]},
+    {"args": [0, 40192, 3, 119], "pokes": [{"addr": "lin:9D00B", "hex": "00"}, {"addr": "lin:9D00E", "hex": "0001009d"}, {"addr": "lin:9D100", "hex": "55", "repeat": 200}]},
+    {"args": [0, 40192, 258, 4727], "pokes": [{"addr": "lin:9D00B", "hex": "04"}, {"addr": "lin:9D00E", "hex": "0001009d"}, {"addr": "lin:9D100", "hex": "55", "repeat": 200}]},
+    {"args": [0, 40192, 255, 119], "pokes": [{"addr": "lin:9D00B", "hex": "ff"}, {"addr": "lin:9D00E", "hex": "00000070"}]},
+    {"args": [65521, 32768, 1, 119], "pokes": [{"addr": "8000:FFFC", "hex": "03"}, {"addr": "8000:FFFF", "hex": "00"}, {"addr": "8000:0000", "hex": "02"}, {"addr": "8000:0001", "hex": "00 9d"}, {"addr": "lin:9D200", "hex": "55", "repeat": 64}]}
+  ],
+  "iters": 8000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

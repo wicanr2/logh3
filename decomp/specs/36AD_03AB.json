@@ -1,0 +1,37 @@
+{
+  "id": "36AD_03AB",
+  "entry": "36AD:03AB",
+  "conv": "near",
+  "ret": "pack:cx,si,di,bp",
+  "size": 116,
+  "code_sha256_16": "97f1c2ef654e30f1",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "圖塊矩形的螢幕裁切。讀 ds:8ADE（X）、ds:8AE0（Y）、ds:8AF2，輸入暫存器 DI，輸出 SI、DI、BP、CX（框架 ret 最多 4 個暫存器，AX 與 DX 的最終值不比對，唯一的下游 36AD:041F 一進入就覆蓋它們），寫 ds:8AF8、ds:8AFA。所有種子都把 ds:8AF8／8AFA 預設成非 0，才看得出『先清成 0』。邊界值：X = −1／0／7／8／0x270／0x271／0x7FF0／0x7FF1／0x7FF8／0x8000／−8／−15，Y = −1／0／0x17F／0x180／0x181／0x7FFF／0x8000，SI 與 DI 接近 0xFFFF。",
+  "args": [
+    {"name": "di", "kind": "reg", "reg": "di", "gen": {"choices": [0, 1, 3200, 4660, 32767, 32768, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "0000 0000"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "ffff ffff"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "0700 7f01"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "0800 8001"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "7002 8101"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "7102 7f01"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "7202 8201"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "f07f 0080"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "f17f ff7f"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "f87f 0000"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "0080 0100"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "f8ff f8ff"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [4660], "pokes": [{"addr": "ds:8ADE", "hex": "f1ff f0ff"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [65535], "pokes": [{"addr": "ds:8ADE", "hex": "3512 fbff"}, {"addr": "ds:8AF2", "hex": "f0ff"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [65535], "pokes": [{"addr": "ds:8ADE", "hex": "9803 8001"}, {"addr": "ds:8AF2", "hex": "f0ff"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [32768], "pokes": [{"addr": "ds:8ADE", "hex": "6001 8ffe"}, {"addr": "ds:8AF2", "hex": "0080"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]},
+    {"args": [0], "pokes": [{"addr": "ds:8ADE", "hex": "6f02 5400"}, {"addr": "ds:8AF8", "hex": "3412 7856"}]}
+  ],
+  "iters": 9000,
+  "max_cases": 500,
+  "seed": 20261009,
+  "min_coverage": 100
+}

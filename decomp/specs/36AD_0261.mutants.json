@@ -1,0 +1,9 @@
+[
+  {"name": "ror改rol", "find": "al = (uint8_t)((al >> 1) | (al << 7)); /* ror al,1 */", "replace": "al = (uint8_t)((al << 1) | (al >> 7));"},
+  {"name": "bit0不反相", "find": "al = (uint8_t)(al ^ 1u);", "replace": "al = (uint8_t)(al ^ 0u);"},
+  {"name": "bit1不反相", "find": "bl = (uint8_t)(bl ^ 2u);", "replace": "bl = (uint8_t)(bl ^ 0u);"},
+  {"name": "shl改3", "find": "bl = (uint8_t)(bl << 4); /* shl bl,4（8 位元） */", "replace": "bl = (uint8_t)(bl << 3);"},
+  {"name": "bit0遮罩改2位元", "find": "uint8_t al = (uint8_t)(bl & 1u);", "replace": "uint8_t al = (uint8_t)(bl & 3u);"},
+  {"name": "bit1遮罩改bit2", "find": "bl = (uint8_t)(bl & 2u);", "replace": "bl = (uint8_t)(bl & 6u);"},
+  {"name": "AH洩漏BH", "find": "return al; /* xor ah,ah */", "replace": "return (uint16_t)(al | (bx & 0xFF00u));"}
+]

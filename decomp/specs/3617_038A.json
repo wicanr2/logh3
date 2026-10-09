@@ -1,0 +1,35 @@
+{
+  "id": "3617_038A",
+  "entry": "3617:038A",
+  "conv": "far",
+  "ret": "ax",
+  "size": 52,
+  "code_sha256_16": "669bbacf814a2846",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "跳脫碼參數收字元。字元表 ds:93D7+c 的 bit7 決定是不是數字（由突變改表項，非數字字元也可能被當成數字）；ds:F125 的累加是 byte（10 倍取低位元組、加法 8 位元回繞）。種子補：F125 >= 26 的乘法截斷、F125 + 位值的加法回繞、非數字字元表項被設 bit7、數字字元表項被清 bit7、'[' 的表項被設 bit7、c 的高位元組不為 0。",
+  "args": [
+    {"name": "c", "kind": "word", "gen": {"choices": [0, 47, 48, 49, 53, 57, 58, 90, 91, 92, 32, 127, 128, 255, 256, 347, 511, 65371, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [53], "pokes": [{"addr": "ds:F124", "hex": "11 1a 22"}]},
+    {"args": [57], "pokes": [{"addr": "ds:F124", "hex": "11 ff 22"}]},
+    {"args": [48], "pokes": [{"addr": "ds:F124", "hex": "11 19 22"}]},
+    {"args": [48], "pokes": [{"addr": "ds:F124", "hex": "11 1a 22"}]},
+    {"args": [49], "pokes": [{"addr": "ds:F124", "hex": "11 19 22"}]},
+    {"args": [57], "pokes": [{"addr": "ds:F124", "hex": "11 19 22"}]},
+    {"args": [57], "pokes": [{"addr": "ds:F124", "hex": "11 1b 22"}]},
+    {"args": [65], "pokes": [{"addr": "ds:9418", "hex": "80"}, {"addr": "ds:F124", "hex": "11 03 22"}]},
+    {"args": [53], "pokes": [{"addr": "ds:940C", "hex": "00"}, {"addr": "ds:F124", "hex": "11 03 22"}]},
+    {"args": [91], "pokes": [{"addr": "ds:9432", "hex": "80"}, {"addr": "ds:F124", "hex": "11 03 22"}]},
+    {"args": [91], "pokes": [{"addr": "ds:F124", "hex": "11 03 22"}]},
+    {"args": [92], "pokes": [{"addr": "ds:F124", "hex": "11 03 22"}]},
+    {"args": [90], "pokes": [{"addr": "ds:F124", "hex": "11 03 22"}]},
+    {"args": [65333], "pokes": [{"addr": "ds:F124", "hex": "11 07 22"}]},
+    {"args": [255], "pokes": [{"addr": "ds:94D6", "hex": "80"}, {"addr": "ds:F124", "hex": "11 07 22"}]}
+  ],
+  "iters": 8000,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

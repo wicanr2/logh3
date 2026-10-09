@@ -1,0 +1,33 @@
+{
+  "id": "35D1_0194",
+  "entry": "35D1:0194",
+  "conv": "far",
+  "ret": "none",
+  "size": 74,
+  "code_sha256_16": "2c929a22b4784343",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "戰場圖示物件清單（筆數 ds:EADE、陣列 ds:EAE0 起每筆 far 指標）中，物件 [+2] 等於參數低位元組者把 [+0] 寫成 2。基底狀態筆數為 0，清單與物件全由種子造：物件放暫存緩衝區 9D00:0000、0010、0020…，[+0] 預設 0x55 讓寫入可見。種子涵蓋：命中、不命中、筆數 0／1、筆數邊界（最後一筆之後的項目不被處理）、寫入落在筆數 ds:EADE 上（筆數縮小／增大，抓『筆數只讀一次』）、寫入落在後面的清單項上（抓『先整份讀完』）、目標在 ROM 區（FFFF:0000、F000:0100）、目標位移 0xFFFF（鍵值在位移 +2 回繞到 0001）、筆數 1400 讓陣列位移繞過 0xFFFF 回到 ds:0000、參數高位元組不為 0。",
+  "args": [
+    {"name": "key", "kind": "word", "gen": {"choices": [0, 1, 2, 5, 7, 64, 127, 128, 222, 254, 255], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [5], "pokes": [{"addr": "ds:EADE", "hex": "0300 0000009d 1000009d 2000009d"}, {"addr": "lin:9D000", "hex": "55"}, {"addr": "lin:9D002", "hex": "05"}, {"addr": "lin:9D010", "hex": "55"}, {"addr": "lin:9D012", "hex": "07"}, {"addr": "lin:9D020", "hex": "55"}, {"addr": "lin:9D022", "hex": "05"}]},
+    {"args": [9], "pokes": [{"addr": "ds:EADE", "hex": "0300 0000009d 1000009d 2000009d"}, {"addr": "lin:9D000", "hex": "55"}, {"addr": "lin:9D002", "hex": "05"}, {"addr": "lin:9D010", "hex": "55"}, {"addr": "lin:9D012", "hex": "07"}, {"addr": "lin:9D020", "hex": "55"}, {"addr": "lin:9D022", "hex": "05"}]},
+    {"args": [5], "pokes": [{"addr": "ds:EADE", "hex": "0000 0000009d 1000009d 2000009d"}, {"addr": "lin:9D000", "hex": "55"}, {"addr": "lin:9D002", "hex": "05"}, {"addr": "lin:9D010", "hex": "55"}, {"addr": "lin:9D012", "hex": "07"}, {"addr": "lin:9D020", "hex": "55"}, {"addr": "lin:9D022", "hex": "05"}]},
+    {"args": [7], "pokes": [{"addr": "ds:EADE", "hex": "0100 0000009d 1000009d 2000009d"}, {"addr": "lin:9D000", "hex": "55"}, {"addr": "lin:9D002", "hex": "05"}, {"addr": "lin:9D010", "hex": "55"}, {"addr": "lin:9D012", "hex": "07"}, {"addr": "lin:9D020", "hex": "55"}, {"addr": "lin:9D022", "hex": "05"}]},
+    {"args": [5], "pokes": [{"addr": "ds:EADE", "hex": "0100 0000009d 1000009d 2000009d"}, {"addr": "lin:9D000", "hex": "55"}, {"addr": "lin:9D002", "hex": "05"}, {"addr": "lin:9D010", "hex": "55"}, {"addr": "lin:9D012", "hex": "07"}, {"addr": "lin:9D020", "hex": "55"}, {"addr": "lin:9D022", "hex": "05"}]},
+    {"args": [4613], "pokes": [{"addr": "ds:EADE", "hex": "0300 0000009d 1000009d 2000009d"}, {"addr": "lin:9D000", "hex": "55"}, {"addr": "lin:9D002", "hex": "05"}, {"addr": "lin:9D010", "hex": "55"}, {"addr": "lin:9D012", "hex": "07"}, {"addr": "lin:9D020", "hex": "55"}, {"addr": "lin:9D022", "hex": "05"}]},
+    {"args": [222], "pokes": [{"addr": "ds:EADE", "hex": "0500 deeab354 1000009d 2000009d 3000009d 4000009d"}, {"addr": "lin:9D010", "hex": "55"}, {"addr": "lin:9D012", "hex": "de"}, {"addr": "lin:9D020", "hex": "55"}, {"addr": "lin:9D022", "hex": "de"}, {"addr": "lin:9D030", "hex": "55"}, {"addr": "lin:9D032", "hex": "de"}, {"addr": "lin:9D040", "hex": "55"}, {"addr": "lin:9D042", "hex": "de"}]},
+    {"args": [222], "pokes": [{"addr": "ds:EADE", "hex": "0100 deeab354 1000009d"}, {"addr": "lin:9D010", "hex": "55"}, {"addr": "lin:9D012", "hex": "de"}]},
+    {"args": [64], "pokes": [{"addr": "ds:EADE", "hex": "0300 e6eab354 0000009d 4000009d"}, {"addr": "lin:9D000", "hex": "55"}, {"addr": "lin:9D002", "hex": "40"}, {"addr": "lin:9D010", "hex": "55"}, {"addr": "lin:9D012", "hex": "42"}, {"addr": "lin:9D020", "hex": "55"}, {"addr": "lin:9D022", "hex": "41"}, {"addr": "lin:9D040", "hex": "55"}, {"addr": "lin:9D042", "hex": "40"}]},
+    {"args": [224], "pokes": [{"addr": "ds:EADE", "hex": "0100 0000ffff"}]},
+    {"args": [0], "pokes": [{"addr": "ds:EADE", "hex": "0200 000100f0 1000009d"}, {"addr": "lin:9D010", "hex": "55"}, {"addr": "lin:9D012", "hex": "00"}]},
+    {"args": [107], "pokes": [{"addr": "ds:EADE", "hex": "0100 ffff0080"}, {"addr": "8000:0001", "hex": "6b"}, {"addr": "8000:FFFF", "hex": "55"}]},
+    {"args": [0], "pokes": [{"addr": "ds:EADE", "hex": "7805"}, {"addr": "lin:9D000", "hex": "55"}]}
+  ],
+  "iters": 8000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

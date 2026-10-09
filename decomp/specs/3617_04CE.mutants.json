@@ -1,0 +1,11 @@
+[
+  {"name": "列欄互換", "find": "rd8(m, LIN(seg, (uint16_t)(off + 0x1Du))) * rd8", "replace": "rd8(m, LIN(seg, (uint16_t)(off + 0x1Cu))) * rd8"},
+  {"name": "欄寬讀錯位移", "find": "* rd8(m, LIN(seg, (uint16_t)(off + 0x0Bu)))); /* mul cx，取 AX */", "replace": "* rd8(m, LIN(seg, (uint16_t)(off + 0x0Cu)))); /* mul cx，取 AX */"},
+  {"name": "列位移少乘2", "find": "ax = (uint16_t)(ax << 2); /* 兩次 shl ax,1 */", "replace": "ax = (uint16_t)(ax << 1);"},
+  {"name": "欄位移少乘2", "find": "cx = (uint16_t)(rd8(m, LIN(seg, (uint16_t)(off + 0x1Cu))) << 2);", "replace": "cx = (uint16_t)(rd8(m, LIN(seg, (uint16_t)(off + 0x1Cu))) << 1);"},
+  {"name": "乘積截成8位元", "find": "ax = (uint16_t)(rd8(m, LIN(seg, (uint16_t)(off + 0x1Du))) * rd8", "replace": "ax = (uint8_t)(rd8(m, LIN(seg, (uint16_t)(off + 0x1Du))) * rd8"},
+  {"name": "段位移對調", "find": "return ((uint64_t)dx << 48) | ((uint64_t)di << 32)", "replace": "return ((uint64_t)di << 48) | ((uint64_t)dx << 32)"},
+  {"name": "段讀成+0x12", "find": "dx = f3617_04CE_rd16s(m, seg, (uint16_t)(off + 0x10u));", "replace": "dx = f3617_04CE_rd16s(m, seg, (uint16_t)(off + 0x12u));"},
+  {"name": "位移不含欄", "find": "di = (uint16_t)(di + cx);", "replace": "di = (uint16_t)(di + 0);"},
+  {"name": "word存取不段內回繞", "find": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8));", "replace": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, (LIN(seg, off) + 1u)) << 8));"}
+]

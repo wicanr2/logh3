@@ -1,0 +1,7 @@
+[
+  {"name": "只清低位元組", "find": "wr16(m, DS(0xEADEu), 0);", "replace": "wr8(m, DS(0xEADEu), 0);"},
+  {"name": "清成1", "find": "wr16(m, DS(0xEADEu), 0);", "replace": "wr16(m, DS(0xEADEu), 1);"},
+  {"name": "位址差1往前", "find": "wr16(m, DS(0xEADEu), 0);", "replace": "wr16(m, DS(0xEADDu), 0);"},
+  {"name": "位址差2往後", "find": "wr16(m, DS(0xEADEu), 0);", "replace": "wr16(m, DS(0xEAE0u), 0);"},
+  {"name": "不寫", "find": "wr16(m, DS(0xEADEu), 0);", "replace": "(void)m;"}
+]

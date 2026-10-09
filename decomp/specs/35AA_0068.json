@@ -1,0 +1,41 @@
+{
+  "id": "35AA_0068",
+  "entry": "35AA:0068",
+  "conv": "far",
+  "ret": "none",
+  "size": 95,
+  "code_sha256_16": "b4c46dde076ae81a",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "step_budget": 1000000,
+  "note": "文字視窗內容緩衝區清空，每格 4 bytes 寫成 (0x2020, 顏色 obj[+1], 0)。預設物件在 ds:F400（基底為零區），格寬格高 ds:F40B／F40C 用 freeze 排除在隨機突變外（避免格數爆量），只由種子給定。種子涵蓋：一般格數、格數 400（8 位元乘積會截斷）、格數 0、寬為 0、高為 0、格數 1、緩衝區指到物件自己（寫入改到 obj[+1] 顏色、obj[+0B] 格寬、obj[+0C] 格高，迴圈次數與顏色隨之改變）、ROM 區（FFFF:0000）、RAM 與 ROM 交界（EFF0:00FF／00FE／00FD，word 的低位元組在 RAM、高位元組在 ROM 等）、緩衝區位移繞過 0xFFFF（8000:FFFF、FFFE、FFFD）、格數 32895（有號比較會判成負數）、物件本身在 8000:FFF1（欄位 word 跨位移 0xFFFF）。",
+  "args": [
+    {"name": "obj", "kind": "farptr", "gen": {"ds": "F400"}}
+  ],
+  "freeze": [
+    {"addr": "ds:F40B", "len": 2},
+    {"addr": "8000:FFFC", "len": 2}
+  ],
+  "seeds": [
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 04 03 00 00 01 00 9d"}, {"addr": "lin:9D100", "hex": "ff", "repeat": 64}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 14 14 00 00 02 00 9d"}, {"addr": "lin:9D200", "hex": "ff", "repeat": 1700}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 00 03 00 00 01 00 9d"}, {"addr": "lin:9D100", "hex": "ff", "repeat": 64}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 04 00 00 00 01 00 9d"}, {"addr": "lin:9D100", "hex": "ff", "repeat": 64}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 01 01 00 00 01 00 9d"}, {"addr": "lin:9D100", "hex": "ff", "repeat": 64}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 02 02 00 00 f4 b3 54"}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 02 02 00 0c f4 b3 54"}, {"addr": "ds:F410", "hex": "ff", "repeat": 256}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 02 02 00 00 00 ff ff"}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 02 01 00 ff 00 f0 ef"}, {"addr": "lin:EFFF0", "hex": "ff", "repeat": 16}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 02 01 00 fe 00 f0 ef"}, {"addr": "lin:EFFF0", "hex": "ff", "repeat": 16}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 02 01 00 fd 00 f0 ef"}, {"addr": "lin:EFFF0", "hex": "ff", "repeat": 16}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 02 01 00 ff ff 00 80"}, {"addr": "8000:FFF0", "hex": "ff", "repeat": 16}, {"addr": "8000:0000", "hex": "ff", "repeat": 16}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 02 01 00 fe ff 00 80"}, {"addr": "8000:FFF0", "hex": "ff", "repeat": 16}, {"addr": "8000:0000", "hex": "ff", "repeat": 16}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 55 000000000000000000 02 01 00 fd ff 00 80"}, {"addr": "8000:FFF0", "hex": "ff", "repeat": 16}, {"addr": "8000:0000", "hex": "ff", "repeat": 16}]},
+    {"pokes": [{"addr": "ds:F400", "hex": "00 77 000000000000000000 ff 81 00 00 00 00 70"}]},
+    {"args": [65521, 32768], "pokes": [{"addr": "8000:FFF2", "hex": "77"}, {"addr": "8000:FFFC", "hex": "02 01"}, {"addr": "8000:FFFF", "hex": "00"}, {"addr": "8000:0000", "hex": "01"}, {"addr": "8000:0001", "hex": "00 9d"}, {"addr": "lin:9D100", "hex": "ff", "repeat": 16}]}
+  ],
+  "iters": 6000,
+  "max_cases": 200,
+  "seed": 20261009,
+  "min_coverage": 100
+}

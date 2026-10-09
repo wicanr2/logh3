@@ -1,0 +1,8 @@
+[
+  {"name": "寫成0", "find": "wr8(m, DS(0x8AFDu), 0xFF);", "replace": "wr8(m, DS(0x8AFDu), 0);"},
+  {"name": "寫成0x7F", "find": "wr8(m, DS(0x8AFDu), 0xFF);", "replace": "wr8(m, DS(0x8AFDu), 0x7F);"},
+  {"name": "寫成word", "find": "wr8(m, DS(0x8AFDu), 0xFF);", "replace": "wr16(m, DS(0x8AFDu), 0xFFFFu);"},
+  {"name": "位址差1往前", "find": "wr8(m, DS(0x8AFDu), 0xFF);", "replace": "wr8(m, DS(0x8AFCu), 0xFF);"},
+  {"name": "位址差1往後", "find": "wr8(m, DS(0x8AFDu), 0xFF);", "replace": "wr8(m, DS(0x8AFEu), 0xFF);"},
+  {"name": "不寫", "find": "wr8(m, DS(0x8AFDu), 0xFF);", "replace": "(void)m;"}
+]

@@ -1,0 +1,13 @@
+[
+  {"name": "數字判斷改看字元範圍", "find": "if (rd8(m, DS((uint16_t)(bx + 0x93D6u))) & 0x80u) { /* test byte [bx-6C2Ah],80h */", "replace": "if (cl >= 0x30u && cl <= 0x39u) {"},
+  {"name": "表位移差1", "find": "DS((uint16_t)(bx + 0x93D6u))", "replace": "DS((uint16_t)(bx + 0x93D7u))"},
+  {"name": "表判斷改bit6", "find": "& 0x80u) { /* test byte [bx-6C2Ah],80h */", "replace": "& 0x40u) {"},
+  {"name": "方括號常數", "find": "} else if (cl != 0x5Bu) {", "replace": "} else if (cl != 0x5Cu) {"},
+  {"name": "方括號也結束", "find": "} else if (cl != 0x5Bu) {", "replace": "} else if (1) {"},
+  {"name": "乘10改乘9", "find": "uint8_t al = (uint8_t)(10u * rd8(m, DS(0xF125u)));", "replace": "uint8_t al = (uint8_t)(9u * rd8(m, DS(0xF125u)));"},
+  {"name": "位值常數", "find": "al = (uint8_t)(cl + 0xD0u);", "replace": "al = (uint8_t)(cl + 0xCFu);"},
+  {"name": "乘積存成word", "find": "        wr8(m, DS(0xF125u), al);\n        al = (uint8_t)(cl + 0xD0u);", "replace": "        wr16(m, DS(0xF125u), (uint16_t)(10u * rd8(m, DS(0xF125u))));\n        al = (uint8_t)(cl + 0xD0u);"},
+  {"name": "加法存成word", "find": "wr8(m, DS(0xF125u), (uint8_t)(rd8(m, DS(0xF125u)) + al));", "replace": "wr16(m, DS(0xF125u), (uint16_t)(rd8(m, DS(0xF125u)) + al));"},
+  {"name": "數字回1", "find": "        wr8(m, DS(0xF125u), (uint8_t)(rd8(m, DS(0xF125u)) + al));\n    } else", "replace": "        wr8(m, DS(0xF125u), (uint8_t)(rd8(m, DS(0xF125u)) + al));\n        dx = 1;\n    } else"},
+  {"name": "高位元組也讀", "find": "uint8_t cl = (uint8_t)c;", "replace": "uint8_t cl = (uint8_t)(c ^ (c >> 8));"}
+]

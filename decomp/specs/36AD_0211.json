@@ -1,0 +1,23 @@
+{
+  "id": "36AD_0211",
+  "entry": "36AD:0211",
+  "conv": "near",
+  "ret": "none",
+  "size": 6,
+  "code_sha256_16": "132a4defec8afc5e",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "把 ds:8AFD 清成 0。函式不讀記憶體，探針沒有讀取集可突變，案例全靠種子：基底原狀（ds:8AFD=0xFF）、目標與前後相鄰位元組都設成非 0、目標已是 0 而鄰居是 0xFF（寫入不可見，但多寫鄰居會被看見）。",
+  "args": [],
+  "seeds": [
+    {},
+    {"pokes": [{"addr": "ds:8AFC", "hex": "aa55aa"}]},
+    {"pokes": [{"addr": "ds:8AFC", "hex": "ffffff"}]},
+    {"pokes": [{"addr": "ds:8AFC", "hex": "ff00ff"}]},
+    {"pokes": [{"addr": "ds:8AFC", "hex": "010203"}]}
+  ],
+  "iters": 12,
+  "max_cases": 3,
+  "seed": 20261009,
+  "min_coverage": 100
+}

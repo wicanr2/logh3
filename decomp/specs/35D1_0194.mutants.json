@@ -1,0 +1,15 @@
+[
+  {"name": "寫入值改1", "find": "f35D1_0194_put8(m, LIN(seg, off), 2);", "replace": "f35D1_0194_put8(m, LIN(seg, off), 1);"},
+  {"name": "比較改不等於", "find": "== dl)", "replace": "!= dl)"},
+  {"name": "鍵值改讀+3", "find": "(uint16_t)(off + 2u))) == dl", "replace": "(uint16_t)(off + 3u))) == dl"},
+  {"name": "寫入位址差1", "find": "f35D1_0194_put8(m, LIN(seg, off), 2);", "replace": "f35D1_0194_put8(m, LIN(seg, (uint16_t)(off + 1u)), 2);"},
+  {"name": "筆數比較改小於等於", "find": "while (si < rd16(m, DS(0xEADEu))) {", "replace": "while (si <= rd16(m, DS(0xEADEu))) {"},
+  {"name": "筆數只讀一次", "find": "    uint16_t p = 0xEAE0u;\n\n    while (si < rd16(m, DS(0xEADEu))) {", "replace": "    uint16_t p = 0xEAE0u;\n    uint16_t cnt0 = rd16(m, DS(0xEADEu));\n\n    while (si < cnt0) {"},
+  {"name": "清單先整份讀完", "find": "    uint16_t p = 0xEAE0u;\n\n    while (si < rd16(m, DS(0xEADEu))) {\n        uint16_t seg = rd16(m, DS((uint16_t)(p + 2u)));\n        uint16_t off = rd16(m, DS(p));", "replace": "    uint16_t p = 0xEAE0u;\n    uint16_t snap[16];\n    for (int k = 0; k < 8; k++) {\n        snap[2 * k] = rd16(m, DS((uint16_t)(0xEAE0u + 4 * k)));\n        snap[2 * k + 1] = rd16(m, DS((uint16_t)(0xEAE0u + 4 * k + 2)));\n    }\n\n    while (si < rd16(m, DS(0xEADEu))) {\n        uint16_t seg = si < 8 ? snap[2 * si + 1] : rd16(m, DS((uint16_t)(p + 2u)));\n        uint16_t off = si < 8 ? snap[2 * si] : rd16(m, DS(p));"},
+  {"name": "拿掉ROM模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"},
+  {"name": "目標位移+2不回繞", "find": "rd8(m, LIN(seg, (uint16_t)(off + 2u)))", "replace": "rd8(m, LIN(seg, off) + 2u)"},
+  {"name": "比較16位元", "find": "if (rd8(m, LIN(seg, (uint16_t)(off + 2u))) == dl)", "replace": "if ((uint16_t)rd8(m, LIN(seg, (uint16_t)(off + 2u))) == key)"},
+  {"name": "陣列步幅改2", "find": "p = (uint16_t)(p + 4u);", "replace": "p = (uint16_t)(p + 2u);"},
+  {"name": "陣列繞過0xFFFF後回清單頭", "find": "p = (uint16_t)(p + 4u);", "replace": "p = (uint16_t)(p + 4u); if (p < 0xEAE0u) p = 0xEAE0u;"},
+  {"name": "段位移互換", "find": "uint16_t seg = rd16(m, DS((uint16_t)(p + 2u)));", "replace": "uint16_t seg = rd16(m, DS((uint16_t)(p + 0u)));"}
+]

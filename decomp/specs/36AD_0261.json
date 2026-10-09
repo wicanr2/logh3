@@ -1,0 +1,18 @@
+{
+  "id": "36AD_0261",
+  "entry": "36AD:0261",
+  "conv": "near",
+  "ret": "pack:ax,bx",
+  "size": 24,
+  "code_sha256_16": "42abcf823371fac9",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "BL 的 bit0、bit1 重排成 AL。輸入在暫存器 BX；只讀 BL 的兩個位元，BH 與 BL 高位元用均勻隨機值證明不讀。ret 含 BX，驗證 push／pop 還原。",
+  "args": [
+    {"name": "bx", "kind": "reg", "reg": "bx", "gen": {"choices": [0, 1, 2, 3, 255, 254, 252, 256, 512, 768, 65535, 4660], "also_random": true}}
+  ],
+  "iters": 600,
+  "max_cases": 120,
+  "seed": 20261009,
+  "min_coverage": 100
+}
