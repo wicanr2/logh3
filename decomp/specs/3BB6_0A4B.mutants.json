@@ -1,0 +1,7 @@
+[
+  {"name": "段改4AFF", "find": "return ((uint64_t)F3BB6_0A4B_SEG130 << 16) | 0x13F2u;", "replace": "return ((uint64_t)0x4AFFu << 16) | 0x13F2u;"},
+  {"name": "位移改13F3", "find": "return ((uint64_t)F3BB6_0A4B_SEG130 << 16) | 0x13F2u;", "replace": "return ((uint64_t)F3BB6_0A4B_SEG130 << 16) | 0x13F3u;"},
+  {"name": "AX與BX對調", "find": "return ((uint64_t)F3BB6_0A4B_SEG130 << 16) | 0x13F2u;", "replace": "return ((uint64_t)0x13F2u << 16) | F3BB6_0A4B_SEG130;"},
+  {"name": "BX沿用進入值", "find": "return ((uint64_t)F3BB6_0A4B_SEG130 << 16) | 0x13F2u;", "replace": "return ((uint64_t)F3BB6_0A4B_SEG130 << 16) | bx_in;"},
+  {"name": "AX沿用進入值", "find": "return ((uint64_t)F3BB6_0A4B_SEG130 << 16) | 0x13F2u;", "replace": "return ((uint64_t)ax_in << 16) | 0x13F2u;"}
+]

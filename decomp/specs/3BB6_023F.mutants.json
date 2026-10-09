@@ -1,0 +1,12 @@
+[
+  {"name": "表基底01B5", "find": "uint16_t bx = 0x01B4u;", "replace": "uint16_t bx = 0x01B5u;"},
+  {"name": "表基底01B3", "find": "uint16_t bx = 0x01B4u;", "replace": "uint16_t bx = 0x01B3u;"},
+  {"name": "索引改用DL", "find": "uint8_t dh = (uint8_t)(dx >> 8);", "replace": "uint8_t dh = (uint8_t)dx;"},
+  {"name": "索引符號延伸", "find": "rd8(m, LIN(ds, (uint16_t)(bx + dh)));", "replace": "rd8(m, LIN(ds, (uint16_t)(bx + (int8_t)dh)));"},
+  {"name": "表值不進DL", "find": "dx = (uint16_t)((dx & 0xFF00u) | al); /* mov dl,al */", "replace": ""},
+  {"name": "表值寫進整個DX", "find": "dx = (uint16_t)((dx & 0xFF00u) | al); /* mov dl,al */", "replace": "dx = al;"},
+  {"name": "AL不更新", "find": "ax = (uint16_t)((ax & 0xFF00u) | al);", "replace": ""},
+  {"name": "AX整個清掉", "find": "ax = (uint16_t)((ax & 0xFF00u) | al);", "replace": "ax = al;"},
+  {"name": "BX回傳進入前值0", "find": "return ((uint64_t)dx << 32) | ((uint64_t)ax << 16) | bx;", "replace": "return ((uint64_t)dx << 32) | ((uint64_t)ax << 16);"},
+  {"name": "表在DGROUP", "find": "rd8(m, LIN(ds, (uint16_t)(bx + dh)));", "replace": "rd8(m, DS((uint16_t)(bx + dh)));"}
+]

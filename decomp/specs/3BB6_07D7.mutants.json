@@ -1,0 +1,12 @@
+[
+  {"name": "填充少一個byte", "find": "uint16_t cx = 0x0800u;", "replace": "uint16_t cx = 0x07FFu;"},
+  {"name": "填充起點後移一個byte", "find": "uint16_t di = 0x03ECu;", "replace": "uint16_t di = 0x03EDu;"},
+  {"name": "填充起點前移一個byte", "find": "uint16_t di = 0x03ECu;", "replace": "uint16_t di = 0x03EBu;"},
+  {"name": "填充值非0", "find": "wr8(m, LIN(ds, di), 0);", "replace": "wr8(m, LIN(ds, di), 1);"},
+  {"name": "不清0BEC", "find": "wr8(m, LIN(ds, 0x0BECu), 0); /* mov ds:0BECh,al，al ＝ 0 */", "replace": ""},
+  {"name": "旗標寫0", "find": "wr8(m, LIN(ds, 0x01ABu), 1);", "replace": "wr8(m, LIN(ds, 0x01ABu), 0);"},
+  {"name": "旗標位址01AA", "find": "wr8(m, LIN(ds, 0x01ABu), 1);", "replace": "wr8(m, LIN(ds, 0x01AAu), 1);"},
+  {"name": "旗標寫word", "find": "wr8(m, LIN(ds, 0x01ABu), 1);", "replace": "wr16(m, LIN(ds, 0x01ABu), 1);"},
+  {"name": "不設旗標", "find": "wr8(m, LIN(ds, 0x01ABu), 1);", "replace": ""},
+  {"name": "填充改寫DGROUP", "find": "wr8(m, LIN(ds, di), 0);", "replace": "wr8(m, DS(di), 0);"}
+]

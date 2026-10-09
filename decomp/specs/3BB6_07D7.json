@@ -1,0 +1,28 @@
+{
+  "id": "3BB6_07D7",
+  "entry": "3BB6:07D7",
+  "conv": "near",
+  "ret": "none",
+  "size": 24,
+  "code_sha256_16": "5c44b35e26d0b4ef",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "ds_seg": "4AFE",
+  "note": "ds:03EC..0BEB 清 0（rep stosb 0x800 bytes）、ds:0BEC 清 0、ds:01AB 設 1。函式不讀記憶體，讀取集是空的，鑑別力全部來自 seeds。基底的 03EC..0BEC 全是 0、ds:01AB 是 0，所以 seeds 先填 0xAA 並在邊界兩側（03EB、0BED）放不可動的非 0 值。",
+  "args": [],
+  "seeds": [
+    {"pokes": []},
+    {"note": "整段填 AA，邊界 03EB 與 0BED 也是 AA（應原封不動），ds:01AB 設 5A", "pokes": [{"addr": "ds:03E0", "hex": "AA", "repeat": 2068}, {"addr": "ds:01AB", "hex": "5A"}]},
+    {"note": "只有 0BEC（填充區之後一個 byte）非 0", "pokes": [{"addr": "ds:0BEC", "hex": "55"}]},
+    {"note": "只有填充區最後一個 byte 0BEB 非 0", "pokes": [{"addr": "ds:0BEB", "hex": "55"}]},
+    {"note": "只有填充區第一個 byte 03EC 非 0", "pokes": [{"addr": "ds:03EC", "hex": "55"}]},
+    {"note": "只有邊界外 03EB 與 0BED 非 0，應原封不動", "pokes": [{"addr": "ds:03EB", "hex": "55"}, {"addr": "ds:0BED", "hex": "55"}]},
+    {"note": "03ED 與 0BEA 非 0", "pokes": [{"addr": "ds:03ED", "hex": "77"}, {"addr": "ds:0BEA", "hex": "77"}]},
+    {"note": "ds:01AB 已是 1：寫入集合不含它", "pokes": [{"addr": "ds:01AB", "hex": "01"}, {"addr": "ds:0400", "hex": "FF"}]},
+    {"note": "ds:01AA..01AC 非 0：只改 01AB", "pokes": [{"addr": "ds:01AA", "hex": "FFFFFF"}]}
+  ],
+  "iters": 20,
+  "max_cases": 4,
+  "seed": 20261009,
+  "min_coverage": 100
+}

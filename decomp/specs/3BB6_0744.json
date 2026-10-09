@@ -1,0 +1,24 @@
+{
+  "id": "3BB6_0744",
+  "entry": "3BB6:0744",
+  "conv": "far",
+  "ret": "ax",
+  "size": 13,
+  "code_sha256_16": "de32d5c5018cc794",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "ds_seg": "4AFE",
+  "note": "讀 seg130（dosgolem 下 0x4AFE）的 ds:0BF0 零擴展回 AX。函式自己設 DS 並還原，ds_seg 只是讓 seeds 的 ds: 指到該段。code_sha256_16 是重定位後的值（台帳 sha256_final_16）。seeds 先把鄰近的 ds:0BF1 設成非 0（基底已是 0xFF），才分得出零擴展與讀 word；基底 ds:0BF0 是 0。",
+  "args": [],
+  "seeds": [
+    {"pokes": []},
+    {"pokes": [{"addr": "ds:0BF0", "hex": "00"}, {"addr": "ds:0BF1", "hex": "A5"}]},
+    {"pokes": [{"addr": "ds:0BF0", "hex": "80"}, {"addr": "ds:0BF1", "hex": "5A"}]},
+    {"pokes": [{"addr": "ds:0BF0", "hex": "7F"}, {"addr": "ds:0BF1", "hex": "FF"}]},
+    {"pokes": [{"addr": "ds:0BF0", "hex": "FF"}, {"addr": "ds:0BEF", "hex": "01"}, {"addr": "ds:0BF1", "hex": "01"}]}
+  ],
+  "iters": 600,
+  "max_cases": 300,
+  "seed": 20261009,
+  "min_coverage": 100
+}

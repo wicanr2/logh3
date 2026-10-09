@@ -1,0 +1,25 @@
+{
+  "id": "3BB6_0A4B",
+  "entry": "3BB6:0A4B",
+  "conv": "far",
+  "ret": "pack:ax,bx",
+  "size": 7,
+  "code_sha256_16": "b2ae9c40d04538e1",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "note": "常數函式：AX＝seg130（dosgolem 下 0x4AFE），BX＝0x13F2。不讀記憶體，所以讀取集是空的，案例的差異只來自 ax、bx 兩個進入暫存器（驗證回傳與它們無關）。code_sha256_16 是重定位後的值（台帳 sha256_final_16）。",
+  "args": [
+    {"name": "ax", "kind": "reg", "reg": "ax", "gen": {"choices": [0, 1, 255, 19198, 32768, 65535], "also_random": true}},
+    {"name": "bx", "kind": "reg", "reg": "bx", "gen": {"choices": [0, 1, 255, 5106, 32768, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"args": [0, 0]},
+    {"args": [19198, 5106]},
+    {"args": [5106, 19198]},
+    {"args": [65535, 65535]}
+  ],
+  "iters": 200,
+  "max_cases": 60,
+  "seed": 20261009,
+  "min_coverage": 100
+}

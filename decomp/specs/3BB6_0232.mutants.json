@@ -1,0 +1,8 @@
+[
+  {"name": "讀ds:0BF0", "find": "return (uint16_t)rd8(m, LIN(F3BB6_0232_SEG130, 0x0BEF));", "replace": "return (uint16_t)rd8(m, LIN(F3BB6_0232_SEG130, 0x0BF0));"},
+  {"name": "讀ds:0BEE", "find": "return (uint16_t)rd8(m, LIN(F3BB6_0232_SEG130, 0x0BEF));", "replace": "return (uint16_t)rd8(m, LIN(F3BB6_0232_SEG130, 0x0BEE));"},
+  {"name": "改讀word不清高位元組", "find": "return (uint16_t)rd8(m, LIN(F3BB6_0232_SEG130, 0x0BEF));", "replace": "return rd16(m, LIN(F3BB6_0232_SEG130, 0x0BEF));"},
+  {"name": "符號延伸", "find": "return (uint16_t)rd8(m, LIN(F3BB6_0232_SEG130, 0x0BEF));", "replace": "return (uint16_t)(int16_t)(int8_t)rd8(m, LIN(F3BB6_0232_SEG130, 0x0BEF));"},
+  {"name": "改從DGROUP讀", "find": "return (uint16_t)rd8(m, LIN(F3BB6_0232_SEG130, 0x0BEF));", "replace": "return (uint16_t)rd8(m, DS(0x0BEF));"},
+  {"name": "高位元組殘留段值", "find": "return (uint16_t)rd8(m, LIN(F3BB6_0232_SEG130, 0x0BEF));", "replace": "return (uint16_t)(0x4A00u | rd8(m, LIN(F3BB6_0232_SEG130, 0x0BEF)));"}
+]

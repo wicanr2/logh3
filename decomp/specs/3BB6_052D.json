@@ -1,0 +1,34 @@
+{
+  "id": "3BB6_052D",
+  "entry": "3BB6:052D",
+  "conv": "near",
+  "ret": "pack:ax,dx",
+  "size": 34,
+  "code_sha256_16": "4477e892310a4724",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "ds_seg": "4AFE",
+  "note": "SI ＝ 聲道記錄指標（8 筆，ds:0006 起每筆 0x14，另加隨機值與 0xFFF0 附近的 word 回繞值）。讀 [si+0C]、[si+0E] 兩個 word 與 [si+04] 一個 byte。seeds 以 si ＝ 6 為例造邊界：[si+0C] 在 ds:0012、[si+0E] 在 ds:0014、[si+04] 在 ds:000A。雙倍乘積高字 ＝ 0x03FF／0x03FE／0x0400／0x8000 的邊界，低字 bit15 進位，dl 的 +1 與回繞，以及 si ＝ 0xFFF3／0xFFF1（word 跨 seg:FFFF）。",
+  "args": [
+    {"name": "si", "kind": "reg", "reg": "si", "gen": {"choices": [6, 26, 46, 66, 86, 106, 126, 146, 0, 65520, 65521, 65522, 65523, 65535], "also_random": true}}
+  ],
+  "seeds": [
+    {"note": "基底的聲道 0", "args": [6], "pokes": []},
+    {"note": "a ＝ 0x03FF，b ＝ 0x8000：高字剛好 0x03FF，不走 jb；dl ＝ 3 → 4 → 16", "args": [6], "pokes": [{"addr": "ds:0012", "hex": "FF03"}, {"addr": "ds:0014", "hex": "0080"}, {"addr": "ds:000A", "hex": "03"}]},
+    {"note": "a ＝ 0x03FE：高字 0x03FE，jb 成立", "args": [6], "pokes": [{"addr": "ds:0012", "hex": "FE03"}, {"addr": "ds:0014", "hex": "0080"}, {"addr": "ds:000A", "hex": "03"}]},
+    {"note": "a ＝ 0x0400：高字 0x0400", "args": [6], "pokes": [{"addr": "ds:0012", "hex": "0004"}, {"addr": "ds:0014", "hex": "0080"}, {"addr": "ds:000A", "hex": "03"}]},
+    {"note": "a ＝ b ＝ 0x8000：高字 0x8000（有號會是負），走減半路徑", "args": [6], "pokes": [{"addr": "ds:0012", "hex": "0080"}, {"addr": "ds:0014", "hex": "0080"}, {"addr": "ds:000A", "hex": "07"}]},
+    {"note": "a ＝ b ＝ 0xFFFF：乘積 0xFFFE0001，雙倍超出 32 位元", "args": [6], "pokes": [{"addr": "ds:0012", "hex": "FFFF"}, {"addr": "ds:0014", "hex": "FFFF"}, {"addr": "ds:000A", "hex": "FF"}]},
+    {"note": "a ＝ 3，b ＝ 0x5555：乘積 0x0000FFFF，低字 bit15 進位到高字（高字變 1）", "args": [6], "pokes": [{"addr": "ds:0012", "hex": "0300"}, {"addr": "ds:0014", "hex": "5555"}, {"addr": "ds:000A", "hex": "02"}]},
+    {"note": "a ＝ 0x7FFF，b ＝ 0x8000：乘積 0x3FFF8000，雙倍 0x7FFF0000，高字 0x7FFF；dl ＝ 0xFF 加 1 回繞成 0", "args": [6], "pokes": [{"addr": "ds:0012", "hex": "FF7F"}, {"addr": "ds:0014", "hex": "0080"}, {"addr": "ds:000A", "hex": "FF"}]},
+    {"note": "a ＝ 0，b 任意：乘積 0，dl ＝ 5 → 0x14", "args": [6], "pokes": [{"addr": "ds:0012", "hex": "0000"}, {"addr": "ds:0014", "hex": "1234"}, {"addr": "ds:000A", "hex": "05"}]},
+    {"note": "dl ＝ 0x40：乘四後 8 位元回繞為 0，DX 殘值可見", "args": [6], "pokes": [{"addr": "ds:0012", "hex": "5701"}, {"addr": "ds:0014", "hex": "0080"}, {"addr": "ds:000A", "hex": "40"}]},
+    {"note": "si ＝ 0xFFF3：[si+0C] 在 ds:FFFF（高位元組在 ds:0000，不是下一段），[si+0E] 在 ds:0001，[si+04] 在 ds:FFF7", "args": [65523], "pokes": [{"addr": "ds:FFFF", "hex": "34"}, {"addr": "ds:0000", "hex": "12"}, {"addr": "ds:0001", "hex": "00"}, {"addr": "ds:0002", "hex": "80"}, {"addr": "ds:FFF7", "hex": "02"}]},
+    {"note": "si ＝ 0xFFF1：[si+0E] 在 ds:FFFF（高位元組在 ds:0000），[si+0C] 在 ds:FFFD", "args": [65521], "pokes": [{"addr": "ds:FFFD", "hex": "00"}, {"addr": "ds:FFFE", "hex": "04"}, {"addr": "ds:FFFF", "hex": "00"}, {"addr": "ds:0000", "hex": "80"}, {"addr": "ds:FFF5", "hex": "01"}]},
+    {"note": "si ＝ 0xFFF3 且 ds:FFFF 之後的線性位址（下一段的第一個 byte，線性 0x5AFE0）設成不同值，區分段內回繞與線性進位", "args": [65523], "pokes": [{"addr": "ds:FFFF", "hex": "11"}, {"addr": "ds:0000", "hex": "22"}, {"addr": "lin:5AFE0", "hex": "99"}, {"addr": "ds:0001", "hex": "0080"}, {"addr": "ds:FFF7", "hex": "00"}]}
+  ],
+  "iters": 8000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}

@@ -1,0 +1,8 @@
+[
+  {"name": "寫1", "find": "wr8(m, LIN(ds, 0x01AB), 0);", "replace": "wr8(m, LIN(ds, 0x01AB), 1);"},
+  {"name": "位址01AA", "find": "wr8(m, LIN(ds, 0x01AB), 0);", "replace": "wr8(m, LIN(ds, 0x01AA), 0);"},
+  {"name": "位址01AC", "find": "wr8(m, LIN(ds, 0x01AB), 0);", "replace": "wr8(m, LIN(ds, 0x01AC), 0);"},
+  {"name": "寫word", "find": "wr8(m, LIN(ds, 0x01AB), 0);", "replace": "wr16(m, LIN(ds, 0x01AB), 0);"},
+  {"name": "改寫DGROUP", "find": "wr8(m, LIN(ds, 0x01AB), 0);", "replace": "wr8(m, DS(0x01AB), 0);"},
+  {"name": "不寫", "find": "wr8(m, LIN(ds, 0x01AB), 0);", "replace": ""}
+]

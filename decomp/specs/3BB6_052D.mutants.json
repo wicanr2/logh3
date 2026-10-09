@@ -1,0 +1,22 @@
+[
+  {"name": "邊界0x03FF改嚴格大於", "find": "if (ax >= 0x03FFu) {", "replace": "if (ax > 0x03FFu) {"},
+  {"name": "邊界0x03FF改0x0400", "find": "if (ax >= 0x03FFu) {", "replace": "if (ax >= 0x0400u) {"},
+  {"name": "比較改有號", "find": "if (ax >= 0x03FFu) {", "replace": "if ((int16_t)ax >= 0x03FF) {"},
+  {"name": "雙倍時漏掉低字進位", "find": "hi = (uint16_t)((hi << 1) | carry); /* adc dx,dx */", "replace": "hi = (uint16_t)(hi << 1);"},
+  {"name": "沒有雙倍", "find": "hi = (uint16_t)((hi << 1) | carry); /* adc dx,dx */", "replace": "hi = (uint16_t)(hi | (carry << 15));"},
+  {"name": "減半改右移2", "find": "ax = (uint16_t)(ax >> 1);", "replace": "ax = (uint16_t)(ax >> 2);"},
+  {"name": "減半改四捨五入", "find": "ax = (uint16_t)(ax >> 1);", "replace": "ax = (uint16_t)((ax + 1u) >> 1);"},
+  {"name": "減半路徑漏掉dl加1", "find": "dl = (uint8_t)(dl + 1u);", "replace": ""},
+  {"name": "減半路徑dl加2", "find": "dl = (uint8_t)(dl + 1u);", "replace": "dl = (uint8_t)(dl + 2u);"},
+  {"name": "dl只乘2", "find": "dl = (uint8_t)(dl << 1); /* add dl,dl 第二次 */", "replace": ""},
+  {"name": "dl乘8", "find": "dl = (uint8_t)(dl << 1); /* add dl,dl 第二次 */", "replace": "dl = (uint8_t)(dl << 2);"},
+  {"name": "遮罩改0x3FFF", "find": "ax = (uint16_t)(ax & 0x1FFFu);", "replace": "ax = (uint16_t)(ax & 0x3FFFu);"},
+  {"name": "遮罩改0x0FFF", "find": "ax = (uint16_t)(ax & 0x1FFFu);", "replace": "ax = (uint16_t)(ax & 0x0FFFu);"},
+  {"name": "dl併進al而不是ah", "find": "ax = (uint16_t)(ax | ((uint16_t)dl << 8)); /* or ah,dl */", "replace": "ax = (uint16_t)(ax | dl);"},
+  {"name": "dl用加法併入ah", "find": "ax = (uint16_t)(ax | ((uint16_t)dl << 8)); /* or ah,dl */", "replace": "ax = (uint16_t)(ax + ((uint16_t)dl << 8));"},
+  {"name": "word讀取偏移+0D", "find": "uint16_t a = f052d_rd16s(m, ds, (uint16_t)(si + 0x0Cu));", "replace": "uint16_t a = f052d_rd16s(m, ds, (uint16_t)(si + 0x0Du));"},
+  {"name": "乘數偏移+0A", "find": "uint16_t b = f052d_rd16s(m, ds, (uint16_t)(si + 0x0Eu));", "replace": "uint16_t b = f052d_rd16s(m, ds, (uint16_t)(si + 0x0Au));"},
+  {"name": "byte偏移+5", "find": "dl = rd8(m, LIN(ds, (uint16_t)(si + 4u)));", "replace": "dl = rd8(m, LIN(ds, (uint16_t)(si + 5u)));"},
+  {"name": "word讀取改線性位址加1", "find": "return (uint16_t)(rd8(m, LIN(seg, off)) | (rd8(m, LIN(seg, (uint16_t)(off + 1u))) << 8));", "replace": "return rd16(m, LIN(seg, off));"},
+  {"name": "DX高位元組清0", "find": "dh = (uint8_t)(hi >> 8);", "replace": "dh = 0;"}
+]

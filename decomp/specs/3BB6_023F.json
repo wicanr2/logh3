@@ -1,0 +1,28 @@
+{
+  "id": "3BB6_023F",
+  "entry": "3BB6:023F",
+  "conv": "near",
+  "ret": "pack:dx,ax,bx",
+  "size": 9,
+  "code_sha256_16": "4e74d794fba6956f",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "ds_seg": "4AFE",
+  "note": "xlat 表 ds:01B4 以 DH 為索引。基底的表很稀疏，靠隨機 DH 把 256 格都讀到，再由突變改表值。seeds 補索引邊界 0 與 255（最大位址 0x02B3）以及 DL、AH 與 DH 的穿透。",
+  "args": [
+    {"name": "dx", "kind": "reg", "reg": "dx", "gen": {}},
+    {"name": "ax", "kind": "reg", "reg": "ax", "gen": {}}
+  ],
+  "seeds": [
+    {"args": [0, 0], "pokes": [{"addr": "ds:01B4", "hex": "A5"}]},
+    {"args": [65280, 4660], "pokes": [{"addr": "ds:02B3", "hex": "C3"}, {"addr": "ds:02B4", "hex": "99"}]},
+    {"args": [32768, 65535], "pokes": [{"addr": "ds:0234", "hex": "D7"}, {"addr": "ds:0134", "hex": "11"}]},
+    {"args": [127, 43690], "pokes": [{"addr": "ds:0133", "hex": "E1"}, {"addr": "ds:01B4", "hex": "5A"}]},
+    {"args": [43775, 21845], "pokes": [{"addr": "ds:025E", "hex": "7C"}, {"addr": "ds:015E", "hex": "99"}]},
+    {"args": [256, 255], "pokes": [{"addr": "ds:01B5", "hex": "20"}]}
+  ],
+  "iters": 8000,
+  "max_cases": 400,
+  "seed": 20261009,
+  "min_coverage": 100
+}
