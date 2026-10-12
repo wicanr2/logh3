@@ -124,6 +124,12 @@ func (s *CopyProtSpec) Frame() ui.Frame {
 	return f
 }
 
+// ConfirmAt 沿實際繪製矩形，讓問答確認與 Enter 使用同一條送出路徑。
+func (s *CopyProtSpec) ConfirmAt(x, y int) bool {
+	b := s.InputBox
+	return b != nil && s.ButtonText != nil && x >= b.X && x < b.X+b.W && y >= b.Y && y < b.Y+b.H
+}
+
 // CopyProtection 畫防拷問答畫面。face 是 `FACE.AMG` 解出來的頭像
 // （nil 就不畫，用來單獨驗版面），typed 是玩家已經打進去的數字。
 // 回傳畫不出來的字碼。
@@ -141,7 +147,7 @@ func CopyProtectionAt(s *CopyProtSpec, fnt *font.Font, face *asset.Image, typed 
 		face.Draw(fb, s.Face.X, s.Face.Y, face.W, face.H)
 	}
 	if b := s.InputBox; b != nil {
-		f := ui.Frame{Fill: b.Fill, Order: b.Order}
+		f := ui.Frame{Role: "ui/button", Fill: b.Fill, Order: b.Order}
 		for _, l := range b.Layers {
 			f.Layers = append(f.Layers, ui.Layer{Top: l[0], Right: l[1], Bottom: l[2], Left: l[3]})
 		}

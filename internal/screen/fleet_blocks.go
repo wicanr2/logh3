@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"image"
 )
 
 // FleetBlockKind 是095已投影下方場景的操作種類。
@@ -76,6 +77,7 @@ func DrawFleetBlocks(fb *gfx.Framebuffer, ops []FleetBlockOp) error {
 	for _, op := range ops {
 		switch op.Kind {
 		case FleetBlockBackground:
+			start := fb.BeginGroup()
 			r := FleetBlockBackgroundRect()
 			for y := r.Y0; y <= r.Y1; y++ {
 				for x := r.X0; x <= r.X1; x++ {
@@ -86,6 +88,7 @@ func DrawFleetBlocks(fb *gfx.Framebuffer, ops []FleetBlockOp) error {
 					fb.Set(x, y, ink)
 				}
 			}
+			fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawProjection, Code: 0, X: r.X0, Y: r.Y0, W: r.X1 - r.X0 + 1, H: r.Y1 - r.Y0 + 1})
 			mask = 15
 		case FleetBlockSprite:
 			r, im := FleetBlockSpriteClip(), op.Image
@@ -94,6 +97,7 @@ func DrawFleetBlocks(fb *gfx.Framebuffer, ops []FleetBlockOp) error {
 				if top > r.Y1 || top+im.H <= r.Y0 {
 					continue
 				}
+				start := fb.BeginGroup()
 				for sy := 0; sy < im.H; sy++ {
 					for sx := 0; sx < im.W; sx++ {
 						x, y := op.X+sx, top+sy
@@ -103,6 +107,7 @@ func DrawFleetBlocks(fb *gfx.Framebuffer, ops []FleetBlockOp) error {
 						}
 					}
 				}
+				fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawProjection, Code: 1, X: op.X, Y: top, W: im.W, H: im.H, SourceW: im.W, SourceH: im.H, Source: im.Pix, Clip: image.Rect(r.X0, r.Y0, r.X1+1, r.Y1+1)})
 				mask = 8
 			}
 		case FleetBlockLine:
@@ -111,7 +116,9 @@ func DrawFleetBlocks(fb *gfx.Framebuffer, ops []FleetBlockOp) error {
 			if !ok {
 				continue
 			}
+			start := fb.BeginGroup()
 			r.line(x0, y0, x1, y1, func(x, y int) { fb.Set(x, y, (fb.At(x, y)&(15^mask))|(op.Ink&mask)) })
+			fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawProjection, Code: 2, X: x0, Y: y0, WorldX: x1, WorldY: y1, Colour: op.Ink})
 			mask = 15
 		}
 	}

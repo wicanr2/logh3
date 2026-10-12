@@ -18,8 +18,33 @@ import (
 const Scale = 3
 
 type Renderer struct {
-	images map[string]*image.RGBA
-	frame  *image.RGBA
+	images         map[string]*image.RGBA
+	frame          *image.RGBA
+	refine         bool
+	font           *fontAtlas
+	theme          bool
+	classic        bool
+	factionThemes  map[string]*factionTheme
+	activeTheme    *factionTheme
+	themeID        string
+	uiMask         []uint8
+	material       *image.RGBA
+	terrainMasks   map[uint64][]uint8
+	planets        [2]*image.RGBA
+	mapPlanets     [4]*image.RGBA
+	mapEmblems     [2]*image.RGBA
+	opaque         map[string]bool
+	paletteWords   [16][12]byte
+	starCache      map[[32]byte]*image.RGBA
+	hull           *image.RGBA
+	grid           *image.RGBA
+	projected      map[[32]byte]*projectionSprite
+	animationCache map[[32]byte]*image.RGBA
+	ships          map[string]*image.RGBA
+	shipHashes     map[string][32]byte
+	frameKey       [32]byte
+	frameValid     bool
+	generation     uint64
 }
 
 // Load 只載入真實 FACE.AMG 索引中的替換圖；缺少單張時保留原圖。
@@ -31,7 +56,7 @@ func Load(dir string, faces *asset.AMG) (*Renderer, error) {
 	if err != nil {
 		return nil, fmt.Errorf("HD 圖片目錄：%w", err)
 	}
-	r := &Renderer{images: make(map[string]*image.RGBA), frame: image.NewRGBA(image.Rect(0, 0, gfx.Width*Scale, gfx.Height*Scale))}
+	r := &Renderer{images: make(map[string]*image.RGBA), frame: image.NewRGBA(image.Rect(0, 0, gfx.Width*Scale, gfx.Height*Scale)), refine: true, classic: true}
 	for _, entry := range entries {
 		name := entry.Name()
 		if entry.IsDir() || !strings.HasSuffix(name, ".png") {
@@ -87,6 +112,38 @@ func Load(dir string, faces *asset.AMG) (*Renderer, error) {
 	if len(r.images) == 0 {
 		return nil, fmt.Errorf("HD 目錄沒有可用人物圖：%s", dir)
 	}
+	r.opaque = make(map[string]bool)
+	for key, im := range r.images {
+		r.opaque[key] = im.Opaque()
+	}
+	r.font, err = loadFontAtlas(filepath.Join(dir, "font"))
+	if err != nil {
+		return nil, err
+	}
+	r.theme = r.font != nil
+	r.factionThemes, err = loadFactionThemes(dir)
+	if err != nil {
+		return nil, err
+	}
+	if r.theme {
+		r.material, err = loadMapMaterial(filepath.Join(dir, "material"))
+		if err != nil {
+			return nil, err
+		}
+		if err = r.loadMapDecor(filepath.Join(dir, "strategy")); err != nil {
+			return nil, err
+		}
+		r.terrainMasks = make(map[uint64][]uint8)
+		r.hull, err = loadMaterial(filepath.Join(dir, "material"), "hull-01.png")
+		if err != nil {
+			return nil, err
+		}
+		r.ships, r.shipHashes, err = loadShips(filepath.Join(dir, "animation"))
+		if err != nil {
+			return nil, err
+		}
+		r.projectionGrid()
+	}
 	return r, nil
 }
 
@@ -100,6 +157,34 @@ func (r *Renderer) Count() int { return len(r.images) }
 
 // Render 使用原圖的可見像素覆蓋範圍，後畫內容即使同色也不被 HD 圖覆寫。
 func (r *Renderer) Render(fb *gfx.Framebuffer, pal gfx.Palette) *image.RGBA {
+	key := r.renderKey(fb, pal)
+	if r.frameValid && key == r.frameKey {
+		return r.frame
+	}
+	r.frameKey, r.frameValid = key, true
+	r.generation++
+	r.themeID = fb.InterfaceTheme
+	r.activeTheme = r.factionThemes[r.themeID]
+	if r.activeTheme != nil && r.theme {
+		if len(r.uiMask) != gfx.Width*gfx.Height {
+			r.uiMask = make([]uint8, gfx.Width*gfx.Height)
+		}
+		clear(r.uiMask)
+	} else {
+		r.activeTheme = nil
+	}
+	if r.theme && len(fb.Commands) > 0 {
+		for i := range r.paletteWords {
+			red, green, blue := pal.RGB8(i)
+			for j := 0; j < 3; j++ {
+				copy(r.paletteWords[i][j*4:], []byte{red, green, blue, 255})
+			}
+		}
+		r.replay(fb.Commands, pal)
+		r.applyFactionUI(fb, pal)
+		r.hoverControl(fb, pal)
+		return r.frame
+	}
 	var colours [gfx.Colors][4]uint8
 	for i := range colours {
 		red, green, blue := pal.RGB8(i)
@@ -107,11 +192,23 @@ func (r *Renderer) Render(fb *gfx.Framebuffer, pal gfx.Palette) *image.RGBA {
 	}
 	for y := 0; y < gfx.Height; y++ {
 		for x := 0; x < gfx.Width; x++ {
-			c := colours[fb.Pix[y*gfx.Width+x]&15]
+			index := fb.Pix[y*gfx.Width+x] & 15
+			corners := [4]uint8{index, index, index, index}
+			if r.refine {
+				corners = refinedCorners(fb, x, y)
+			}
+			c := colours[index]
 			for j := 0; j < Scale; j++ {
 				o := (y*Scale+j)*r.frame.Stride + x*Scale*4
 				for i := 0; i < Scale; i++ {
 					copy(r.frame.Pix[o+i*4:o+i*4+4], c[:])
+				}
+			}
+			for k, p := range [4][2]int{{0, 0}, {Scale - 1, 0}, {0, Scale - 1}, {Scale - 1, Scale - 1}} {
+				if corners[k] != index {
+					o := (y*Scale+p[1])*r.frame.Stride + (x*Scale+p[0])*4
+					v := colours[corners[k]]
+					copy(r.frame.Pix[o:o+4], v[:])
 				}
 			}
 		}

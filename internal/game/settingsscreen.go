@@ -144,6 +144,10 @@ func (g *Game) DisplaySettings() DisplaySettings { return g.display }
 //
 // 「ＭＩＤＩ Ｉ／Ｆ」（`midi-if`）與 `BUG!` 也還沒接，點下去什麼都不會發生。
 func (g *Game) settingsClick(x, y int) {
+	if enemyVisibilityButtonContains(x, y) {
+		g.ToggleEnemyVisibility()
+		return
+	}
 	spec := g.commandSpec(StateSettings)
 	if spec == nil {
 		return

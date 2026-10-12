@@ -16,5 +16,5 @@ exec timeout "${LOGH3_TIMEOUT:-15m}" docker run --rm --network none \
     -v "$ROOT/tools:/tools:ro" \
     -e HOME=/out/wine-home -e WINEPREFIX=/out/wine-prefix -e WINEARCH=win64 \
     -e WINEDEBUG=-all -e DISPLAY=:98 -e LANG=C.UTF-8 -e LC_ALL=C.UTF-8 -w /out \
-    colonization-windows-verification:20261001-r1 \
+    "${LOGH3_WINE_IMAGE:-kol-wine-verify:ubuntu-noble-20261007-r1}" \
     /tools/music_wine_entry.sh "$@"

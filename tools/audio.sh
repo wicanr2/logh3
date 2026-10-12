@@ -12,9 +12,14 @@ IMAGE="${LOGH3_AUDIO_IMAGE:-logh3-audio:2}"
   echo '研究輸出目錄不屬於目前使用者，停止寫入。' >&2; exit 2;
 }
 docker image inspect "$IMAGE" >/dev/null
+FONT_MOUNTS=()
+if [[ -n "${LOGH3_FONT_DIR:-}" ]]; then
+  test -d "$LOGH3_FONT_DIR"
+  FONT_MOUNTS=(-v "$LOGH3_FONT_DIR:/fonts:ro")
+fi
 exec timeout "${LOGH3_TIMEOUT:-15m}" docker run --rm --network none \
-  --memory "${LOGH3_MEM:-2g}" --cpus "${LOGH3_CPUS:-2}" --pids-limit 128 \
+  --memory "${LOGH3_MEM:-2g}" --cpus "${LOGH3_CPUS:-2}" --pids-limit "${LOGH3_PIDS:-128}" \
   --log-opt max-size=10m --log-opt max-file=3 \
   -u "$(id -u):$(id -g)" \
   -v "$ROOT:/src:ro" -v "$ROOT/org_game/extracted:/orig:ro" \
-  -v "$ROOT/workplace:/work" -e HOME=/tmp -w /work "$IMAGE" "$@"
+  -v "$ROOT/workplace:/work" "${FONT_MOUNTS[@]}" -e HOME=/tmp -w /work "$IMAGE" "$@"

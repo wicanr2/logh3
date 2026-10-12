@@ -392,7 +392,9 @@ func (w *GameWindow) bevel() ui.Frame {
 
 // Draw 畫這個視窗的外框與文字。shadow 是文字的立體邊色號。
 func (w *GameWindow) Draw(fb *gfx.Framebuffer, fnt *font.Font, shadow uint8, faces *asset.AMG) []uint16 {
-	w.bevel().Draw(fb, w.X, w.Y, w.W, w.H)
+	frame := w.bevel()
+	frame.Role = "ui/window"
+	frame.Draw(fb, w.X, w.Y, w.W, w.H)
 	w.DrawBoxes(fb, fnt)
 	// Rules 畫在分頁鈕**之後**：規格裡的純色塊除了圖例色票，還兼收
 	// 「壓在分頁鈕立體邊上的游標尾巴」那種最上層的補丁（`docs/re/53`）。
@@ -603,6 +605,13 @@ func (w *GameWindow) DrawBoxes(fb *gfx.Framebuffer, fnt *font.Font) {
 			fill = sel.Colour
 		}
 		f := ui.Frame{Fill: fill}
+		if b.H <= 24 && b.W <= 140 && (b.Text != "" || b.W == 16) {
+			f.Role = "ui/button"
+		}
+		switch b.Text {
+		case "結束", "參謀", "決定", "實行":
+			f.Role = "ui/primary"
+		}
 		for _, l := range b.Layers {
 			f.Layers = append(f.Layers, ui.Layer{Top: l[0], Right: l[1], Bottom: l[2], Left: l[3]})
 		}
@@ -694,11 +703,7 @@ func MainGameLayered(s *MainGameSpec, fnt *font.Font, mapImg *asset.Image, faces
 		missing = append(missing, w.Draw(fb, fnt, 3, faces)...)
 	}
 	if mapImg != nil {
-		for y := 0; y < mapImg.H; y++ {
-			for x := 0; x < mapImg.W; x++ {
-				fb.Set(s.Map.X+x, s.Map.Y+y, mapImg.Pix[y*mapImg.W+x])
-			}
-		}
+		mapImg.Draw(fb, s.Map.X, s.Map.Y, mapImg.W, mapImg.H)
 	}
 	if afterBoard != nil {
 		afterBoard(fb)

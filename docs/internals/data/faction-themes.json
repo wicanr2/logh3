@@ -1,0 +1,3115 @@
+{
+  "date": "2026-10-11",
+  "scope": "正式陣營介面及戰略星圖；影片與新版封包未完成",
+  "git_head": "523ced1346358b1d3a9982148c569a69af953a5f",
+  "worktree_dirty": true,
+  "original_bundle_sha256": "de905aa0b5a666aa9d31dce36f43a5584f1842950c39d7e1b1f97c72e0d79673",
+  "new_dos_oracle_receipts": false,
+  "images": {
+    "logh3-ebiten:2": "sha256:d7f4d3e04c75fc9e9b2b3606d9f015d8f1bcde806c25d6780780450ad40827ab",
+    "logh3-hd-preview:20261011-r1": "sha256:932b5ad00e356b4252945c35938d9b30b939109abfaaca8b6673f1a17f532aff"
+  },
+  "x11": {
+    "windows": 68,
+    "pixels": 47001600,
+    "different": 0,
+    "early_attempts": [
+      {
+        "path": "hd126/theme-x11-empire-r4/lists-moved-attempt-1-x11-comparison.json",
+        "different": 468
+      },
+      {
+        "path": "hd126/theme-x11-alliance-r4/strategy-moved-attempt-1-x11-comparison.json",
+        "different": 472
+      }
+    ]
+  },
+  "tests": {
+    "pass": 15,
+    "no_tests": 4
+  },
+  "approved_ui": {
+    "scope": "核准概念與正式HD呈現；包含全部UI差異，不宣稱DOS原版parity",
+    "source_html_sha256": "7e6cb3610d94a9bc8ad4b3a3370ef6b6ded3f4e50c8f81e3387abc1baf83a5a7",
+    "revision": "r4",
+    "comparisons": [
+      {
+        "faction": "empire",
+        "scene": "budget",
+        "label": "財政預算",
+        "ui_pixels": 1730880,
+        "different": 0,
+        "known_cursor_neighbourhood": 0,
+        "unclassified": 0,
+        "bbox": null,
+        "pairs": {},
+        "cursors": [
+          [
+            448,
+            350,
+            13,
+            16
+          ]
+        ],
+        "source_geometry_sha256": "12715b4d4d8ca651218b8b9f7fcaeef859dc8fb7a1fb24f2397114069b082d38",
+        "actual_sha256": "6d934a58387339e6dc1f12d16d2d49fce1acbf8348f75bf905610eb04fbb5818",
+        "difference_sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c"
+      },
+      {
+        "faction": "empire",
+        "scene": "build",
+        "label": "艦艇建造",
+        "ui_pixels": 1851840,
+        "different": 0,
+        "known_cursor_neighbourhood": 0,
+        "unclassified": 0,
+        "bbox": null,
+        "pairs": {},
+        "cursors": [
+          [
+            448,
+            350,
+            13,
+            16
+          ],
+          [
+            448,
+            350,
+            13,
+            16
+          ]
+        ],
+        "source_geometry_sha256": "6a304ad8ccfb864cf0738d7557a572d2497f1e83286103b2efc9d183f49553d7",
+        "actual_sha256": "f7525e1212ae9a9b9c857b910d40d57c809ef34afbf72cd00d7d8e39167cdcfa",
+        "difference_sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c"
+      },
+      {
+        "faction": "empire",
+        "scene": "strategy",
+        "label": "戰略星圖",
+        "ui_pixels": 1319040,
+        "different": 0,
+        "known_cursor_neighbourhood": 0,
+        "unclassified": 0,
+        "bbox": null,
+        "pairs": {},
+        "cursors": [
+          [
+            448,
+            370,
+            13,
+            16
+          ]
+        ],
+        "source_geometry_sha256": "3f3e5b5ce7dcd9a583899a872380eb1acbbfc88cce313e37c25b69822c277500",
+        "actual_sha256": "22a149898cd3527867a68a1f2534887c8c6549e8baa96160bc4308ac82c03c61",
+        "difference_sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c"
+      },
+      {
+        "faction": "empire",
+        "scene": "settings",
+        "label": "遊戲設定",
+        "ui_pixels": 1749600,
+        "different": 0,
+        "known_cursor_neighbourhood": 0,
+        "unclassified": 0,
+        "bbox": null,
+        "pairs": {},
+        "cursors": [
+          [
+            560,
+            185,
+            13,
+            16
+          ],
+          [
+            560,
+            185,
+            13,
+            16
+          ]
+        ],
+        "source_geometry_sha256": "855791959f47aaf34aacfcb7e71e4d7c469a0306e39ecd139e933bd18a649f2d",
+        "actual_sha256": "3e2c9272feebbebb2579a1c780fd1113be0c463e39e7574cefa3b60e45ad9223",
+        "difference_sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c"
+      },
+      {
+        "faction": "alliance",
+        "scene": "budget",
+        "label": "財政預算",
+        "ui_pixels": 1730880,
+        "different": 0,
+        "known_cursor_neighbourhood": 0,
+        "unclassified": 0,
+        "bbox": null,
+        "pairs": {},
+        "cursors": [
+          [
+            448,
+            350,
+            13,
+            16
+          ]
+        ],
+        "source_geometry_sha256": "12715b4d4d8ca651218b8b9f7fcaeef859dc8fb7a1fb24f2397114069b082d38",
+        "actual_sha256": "207ea4215c3dc4bc5774a6d332ab542e2f719e88e74c01398aa3e30adc7ff256",
+        "difference_sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c"
+      },
+      {
+        "faction": "alliance",
+        "scene": "build",
+        "label": "艦艇建造",
+        "ui_pixels": 1851840,
+        "different": 0,
+        "known_cursor_neighbourhood": 0,
+        "unclassified": 0,
+        "bbox": null,
+        "pairs": {},
+        "cursors": [
+          [
+            448,
+            350,
+            13,
+            16
+          ],
+          [
+            448,
+            350,
+            13,
+            16
+          ]
+        ],
+        "source_geometry_sha256": "6a304ad8ccfb864cf0738d7557a572d2497f1e83286103b2efc9d183f49553d7",
+        "actual_sha256": "1c5d91a8550c5bf114acf275bc75f1afca865adb33f39c3a17eeb33eaa4fc36d",
+        "difference_sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c"
+      },
+      {
+        "faction": "alliance",
+        "scene": "strategy",
+        "label": "戰略星圖",
+        "ui_pixels": 1319040,
+        "different": 7,
+        "known_cursor_neighbourhood": 7,
+        "unclassified": 0,
+        "bbox": [
+          1371,
+          1140,
+          1374,
+          1144
+        ],
+        "pairs": {
+          "(60, 46, 36) -> (255, 244, 220)": 7
+        },
+        "cursors": [
+          [
+            448,
+            370,
+            13,
+            16
+          ]
+        ],
+        "source_geometry_sha256": "3f3e5b5ce7dcd9a583899a872380eb1acbbfc88cce313e37c25b69822c277500",
+        "actual_sha256": "b11de9dcacfa453aefa8e21cd5f0780ff8514ca9881da905b82fa75c4c581bac",
+        "difference_sha256": "5b4fdd8dd4bb854d00a756b72c143ced67868a8e594e7fd4dfa21c78b9dce3cb"
+      },
+      {
+        "faction": "alliance",
+        "scene": "settings",
+        "label": "遊戲設定",
+        "ui_pixels": 1749600,
+        "different": 0,
+        "known_cursor_neighbourhood": 0,
+        "unclassified": 0,
+        "bbox": null,
+        "pairs": {},
+        "cursors": [
+          [
+            560,
+            185,
+            13,
+            16
+          ],
+          [
+            560,
+            185,
+            13,
+            16
+          ]
+        ],
+        "source_geometry_sha256": "855791959f47aaf34aacfcb7e71e4d7c469a0306e39ecd139e933bd18a649f2d",
+        "actual_sha256": "5c9eb0a6c7e3734644f403c1c1641bba94a1360f0bf73290b8ddf69c704b4051",
+        "difference_sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c"
+      }
+    ]
+  },
+  "browser": [
+    {
+      "pass": true,
+      "width": 1440,
+      "checks": 34
+    },
+    {
+      "pass": true,
+      "width": 390,
+      "checks": 34
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "assets/hd/MANIFEST.json",
+      "bytes": 35366,
+      "sha256": "2b3f24e3a9bbf3527703a39445f55022ed875b886099061fa6fa12f10f44f5e0",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "assets/hd/font/MANIFEST.json",
+      "bytes": 2206408,
+      "sha256": "7236fc119524221b42ddec4c4b99965fdf3ebdaa36548f1fa53cbe139ef9778c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "assets/hd/interface-alliance-approved.png",
+      "bytes": 307867,
+      "sha256": "7fd11efca6c0ac07eaef0ce71dd0e0efc5e49ac24ff0f9d5dc5056df8220237b",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "assets/hd/interface-empire-approved.png",
+      "bytes": 321721,
+      "sha256": "71c5de38e33f0e2b26d14ff37460f2bbe5c464a9ab90c67c55d23f0fa3cab8e0",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "assets/hd/interface-themes.json",
+      "bytes": 1619,
+      "sha256": "fb79921c8c3ebb92b8175aab52238fb41db9712723b05914d6c828eeedd4614f",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "assets/hd/material/MANIFEST.json",
+      "bytes": 648,
+      "sha256": "abb86257709b91a09f510d244c0b1393e88d1302322e9f3340a1e0587ab829de",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "docs/internals/data/original-ui-concepts.json",
+      "bytes": 85962,
+      "sha256": "9e747c443aca56d64b6ea19dec3467b8189552dbd6ca12dadb2d036a675f21e7",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "docs/internals/data/screen-budget-plan.json",
+      "bytes": 87354,
+      "sha256": "12715b4d4d8ca651218b8b9f7fcaeef859dc8fb7a1fb24f2397114069b082d38",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "docs/internals/data/screen-build-plan.json",
+      "bytes": 307837,
+      "sha256": "6a304ad8ccfb864cf0738d7557a572d2497f1e83286103b2efc9d183f49553d7",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "docs/internals/data/screen-command-phase.json",
+      "bytes": 153134,
+      "sha256": "3f3e5b5ce7dcd9a583899a872380eb1acbbfc88cce313e37c25b69822c277500",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "docs/internals/data/screen-settings.json",
+      "bytes": 186059,
+      "sha256": "855791959f47aaf34aacfcb7e71e4d7c469a0306e39ecd139e933bd18a649f2d",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "docs/playtest/113-faction-themes.md",
+      "bytes": 5937,
+      "sha256": "715d5f0f230d76da41c03894b282f81f178adc23fcbd8e750138ff8bba87401a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "docs/spec/132-hd-strategy-and-symbols.md",
+      "bytes": 2918,
+      "sha256": "6464ec71ecde66de598febe02ab357fb5402b62e71b96380cfe406ebe1c5ca97",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "docs/spec/135-original-style-hd-ui.md",
+      "bytes": 6127,
+      "sha256": "fe9b9933396732bb54fa0060c63a6010250fc6cc3058129bf885c60bb3e61e5d",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/bootstrap/hd_journal_test.go",
+      "bytes": 4856,
+      "sha256": "844ff73298134de503542139a52218c83dd1546b885634d5182962de580b6d9c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/game/enemyvisibility.go",
+      "bytes": 3683,
+      "sha256": "838d54f637ef2d975692b2f9c34efaf5cb4402640867d433e406acb41cb4578e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/game/game.go",
+      "bytes": 206383,
+      "sha256": "38caefd9a5cc644c5024a749dabaf49c9ac37edd2d5946ebf8cc9f55eeeeb5d2",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/gfx/framebuffer.go",
+      "bytes": 3069,
+      "sha256": "d1a47d65713896fd04b6a1cbb6c9a9fbaf151b88fb59acac99cbc116e4ee314e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/presentation/artwork.go",
+      "bytes": 7728,
+      "sha256": "3b6e8b457467d677341d2cbf637c1bcdbc154e66c61627aec998763f1a455bfa",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/presentation/classic.go",
+      "bytes": 1496,
+      "sha256": "4b3f31f336d501c735b799f13c22a9b5811757fa574ca299b523b5fde8bc19f1",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/presentation/faction.go",
+      "bytes": 7765,
+      "sha256": "ac082424e180946ac77e7a99b51ee05c62b432b88a6681a930bedeaeb945ce64",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/presentation/faction_test.go",
+      "bytes": 3516,
+      "sha256": "4a0097f297e2c006311b40a00b3ddee3befc15a78c1bc3f07827902b8d0a819e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/presentation/journal.go",
+      "bytes": 8063,
+      "sha256": "ffbf800df4b06fb4370664910a8876a84431a3a696c72ece910f68e33e9649de",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/presentation/symbols.go",
+      "bytes": 11428,
+      "sha256": "ac9daad8967205e3f12bbfd5f5c5c145880d5da275844c230d341baed120fb5c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/screen/maingame.go",
+      "bytes": 30689,
+      "sha256": "0394a5e71039ac3b1fc8b6b40b03bfd35f8c7cf261502e54990d2e85e4a68738",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "internal/ui/bevel.go",
+      "bytes": 3973,
+      "sha256": "241979e35fae95d63a6c3dfcb699e61d2eec5fbf97093ce76849e8106eb3583c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "tools/audio.sh",
+      "bytes": 1190,
+      "sha256": "7134e935dc00df063f7e18fed152b28dd2f6048fb0063718ac2a8386518edbc4",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "tools/gui.sh",
+      "bytes": 1551,
+      "sha256": "3f0cd67388775829a3dbec810570558a1bacd1cd0fc89c22babd8c70bf0542b5",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "tools/s1_record_display.sh",
+      "bytes": 529,
+      "sha256": "8156a4956b2220bdf78218909afc2045bead0988928c89a1bff35ee001a08827",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "tools/scripts/faction_hd_check.py",
+      "bytes": 13350,
+      "sha256": "47b36d55cd5089b651553348db97e5fa66c8c03947929f716783cbfb75c86e12",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "tools/scripts/faction_hd_concept_check.py",
+      "bytes": 8350,
+      "sha256": "1b54122c78fd6e7c6a5a1b6ec6386c9663964df6861bf1e06cddc998d04ab17a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "tools/scripts/faction_hd_concepts.py",
+      "bytes": 20276,
+      "sha256": "7df85ea1ad38d9afd885023874991f37170c9632ae7b83c21784406ff068ed80",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "tools/scripts/hd_art_gui.py",
+      "bytes": 4719,
+      "sha256": "daf3470297ca6b9303f97e2f42338b4a0933c4c5515eb19be6cbadef602ef977",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "tools/scripts/hd_art_model.go",
+      "bytes": 6485,
+      "sha256": "bce3b798ee1f70d041ba0d655c4cb7b0de55b9d6251db26a4f2c988fc6546e8f",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/APPROVED-UI-COMPARISON-r4.json",
+      "bytes": 5782,
+      "sha256": "9a63babf528ebda1e141f74a811a7422ec191db758fd8069244072b712c47b8a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/FACTION-GAME-BROWSER-RESULTS.json",
+      "bytes": 128,
+      "sha256": "31ea7867994a8aade83976a38259550ee463dfd825aa0294fb72650c432b87b5",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/FACTION-HD-CONCEPTS.html",
+      "bytes": 10008838,
+      "sha256": "7e6cb3610d94a9bc8ad4b3a3370ef6b6ded3f4e50c8f81e3387abc1baf83a5a7",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/FACTION-HD-GAME.html",
+      "bytes": 3828004,
+      "sha256": "2668ff0a8aa23b3bfdcce57e7ed6b0f51f3e0f1f72811902c914f6819d53c92d",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/approved-alliance-budget-difference-r4.png",
+      "bytes": 8118,
+      "sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/approved-alliance-build-difference-r4.png",
+      "bytes": 8118,
+      "sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/approved-alliance-settings-difference-r4.png",
+      "bytes": 8118,
+      "sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/approved-alliance-strategy-difference-r4.png",
+      "bytes": 8160,
+      "sha256": "5b4fdd8dd4bb854d00a756b72c143ced67868a8e594e7fd4dfa21c78b9dce3cb",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/approved-empire-budget-difference-r4.png",
+      "bytes": 8118,
+      "sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/approved-empire-build-difference-r4.png",
+      "bytes": 8118,
+      "sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/approved-empire-settings-difference-r4.png",
+      "bytes": 8118,
+      "sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/approved-empire-strategy-difference-r4.png",
+      "bytes": 8118,
+      "sha256": "e4c77277e64d30a980476b55fd8bfa647410042826e09436b95e56338bc01d3c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/faction-benchmark-r4.log",
+      "bytes": 238,
+      "sha256": "9024c6a339c593336015cc675d9c8771b956a4ea9b07ee161170d9b7933263b6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/faction-game-1440-alliance.png",
+      "bytes": 580153,
+      "sha256": "1e040da097c33a10596460497f348fa25ce321e7a6a62ac56063347ecf12de21",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/faction-game-1440-empire.png",
+      "bytes": 532891,
+      "sha256": "b3b24ad25f76f0111189fc4d47cfd0f072f666e58682716d648187cf13e07afd",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/faction-game-390-alliance.png",
+      "bytes": 127265,
+      "sha256": "0632722650274eb916811447a5ba69858c6f55d52895a129587ba222818ad45b",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/faction-game-390-empire.png",
+      "bytes": 125680,
+      "sha256": "2261ac752d14fdb49fe8b013284201acbee9c2c1bfd4811501a70ccbca5524de",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/faction-standard-tests-r4.log",
+      "bytes": 1029,
+      "sha256": "e7f14cc002c8fdcf7c7b16222e14eae73a050d879c5968c5aeb6274a2eb09660",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/faction-x11-alliance-r4.log",
+      "bytes": 6504,
+      "sha256": "8f3b7e513a18e639d7fc0dbff2061988677e9f1b4aa1fa66427748da45cb10a8",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/faction-x11-empire-r4.log",
+      "bytes": 6502,
+      "sha256": "253903c9182cd08af8e66713d4741ed7a7622ade946391790ef9dded73501905",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/gin3-faction-r4",
+      "bytes": 14473232,
+      "sha256": "5eb4d9456962382455564d058a08d5bc7007ea94c062edd8c6937a54ad413f23",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/01-account.png",
+      "bytes": 398787,
+      "sha256": "5a5507f80302fdb13fda7cb4aca8f596b008e34527b61f0197102ffa3ca3741a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/02-budget.png",
+      "bytes": 374873,
+      "sha256": "207ea4215c3dc4bc5774a6d332ab542e2f719e88e74c01398aa3e30adc7ff256",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/03-budget-changed.png",
+      "bytes": 374909,
+      "sha256": "091d878515fa4748f302b297b00507afb41c668521e579a73d80ae57f9fc974e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/04-account-return.png",
+      "bytes": 398862,
+      "sha256": "9a6c83658cf0c9a60d157d6f41be4a4b132878a5d1514ec5bcddec3b0d235d63",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/05-order.png",
+      "bytes": 408343,
+      "sha256": "e8509492c2ce71370440a5e0f2c2b5b76e62d39ac92ddc102a368ca2e8cc7be3",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/06-order-cursor.png",
+      "bytes": 408497,
+      "sha256": "e7a8f95f6fd66777f8ef3a6b13ed0adf8e64ffb13b855264cf331eedb26c277e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/07-build.png",
+      "bytes": 303249,
+      "sha256": "1c5d91a8550c5bf114acf275bc75f1afca865adb33f39c3a17eeb33eaa4fc36d",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/08-build-row0.png",
+      "bytes": 303345,
+      "sha256": "89901e612b0b0fc2ee9bc61e63409b1f19cec49530327a060a05663d51bc97fc",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/09-build-row1.png",
+      "bytes": 303352,
+      "sha256": "c017407778e71f1b3c7dc5c357111c1fc8f767a32ef2bdc8e31607b4539bba56",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/10-build-cursor.png",
+      "bytes": 303378,
+      "sha256": "2cb27c4315bb25909c18dad09ece75fe4950186cef0a6efff9272df3b200f4f6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/11-order-return.png",
+      "bytes": 408164,
+      "sha256": "f59f3b8a0d70c96757f833f4c03c9ab3aecdffa558305fb3a99b9aca4583153a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/12-command.png",
+      "bytes": 548137,
+      "sha256": "b11de9dcacfa453aefa8e21cd5f0780ff8514ca9881da905b82fa75c4c581bac",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/13-admiral-list.png",
+      "bytes": 557681,
+      "sha256": "d022feff61b493da925d714487d5d316ac5dfd3c9290a5c298ce2be08e63d1fc",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/14-admiral-detail.png",
+      "bytes": 362227,
+      "sha256": "a0a0a9417a0b8f7ff3824531a87b59ef683e344a5d85e2f955554579bb8def55",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/15-portrait-cursor.png",
+      "bytes": 360980,
+      "sha256": "64e4c93beddd8458884cec07a1c11804caf6ae879477ab2a270a7e5da852086e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/16-detail-return.png",
+      "bytes": 552052,
+      "sha256": "b8ccc7fed39403d50fbdff5a1e7f31047c56a2e6b821b141b2eeee69f32a50ac",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/17-new-portrait.png",
+      "bytes": 353693,
+      "sha256": "ba3bd541e68d5730ecca1d61c8b78e54371709f573140595b94389f205671cf1",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/18-new-portrait-cursor.png",
+      "bytes": 352631,
+      "sha256": "44d8526d40179d930d5b068c95af9c3166846e6eecedb68977bd99fae581192b",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/19-new-detail-return.png",
+      "bytes": 552052,
+      "sha256": "b8ccc7fed39403d50fbdff5a1e7f31047c56a2e6b821b141b2eeee69f32a50ac",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/20-command-return.png",
+      "bytes": 548130,
+      "sha256": "a28f190d90ad8140b18a2d985ba9b796d87a053234d735c65e6d1c7bffaa43b6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/PLAN.json",
+      "bytes": 12109,
+      "sha256": "1b06d5c4d43dc64f555f84472c2dbb7faa66b9fe91e5f9e1109c5cbcf8135e0a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/lists-closed.png",
+      "bytes": 548130,
+      "sha256": "a28f190d90ad8140b18a2d985ba9b796d87a053234d735c65e6d1c7bffaa43b6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/lists-moved.png",
+      "bytes": 550528,
+      "sha256": "83751431d65945b3c7c2cba7909e89cd47872331eec32e431bc56d1ee63d1de3",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/lists-open.png",
+      "bytes": 550722,
+      "sha256": "ce7e5d131570b2d5ebccaf83db009b685631e4e4b90e3eac0c5ff2d1c894258a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/lists-selected.png",
+      "bytes": 557681,
+      "sha256": "d022feff61b493da925d714487d5d316ac5dfd3c9290a5c298ce2be08e63d1fc",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/strategy-closed.png",
+      "bytes": 548130,
+      "sha256": "a28f190d90ad8140b18a2d985ba9b796d87a053234d735c65e6d1c7bffaa43b6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/strategy-moved.png",
+      "bytes": 548732,
+      "sha256": "0bb9a10cdb6a0f943b75ef5d7b66240bd22c29f4c538e1d03bf65c43672d6aeb",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/strategy-open.png",
+      "bytes": 548776,
+      "sha256": "050da11c034a22774a54638851434d05ce9ec1ec7b16729d4e1b5e9f285ca026",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/strategy-selected.png",
+      "bytes": 379816,
+      "sha256": "789a63a7eb85b8b01a2c032ecf284e859bdba6bdf06b95c59add41d919dafd17",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/system-closed.png",
+      "bytes": 548130,
+      "sha256": "a28f190d90ad8140b18a2d985ba9b796d87a053234d735c65e6d1c7bffaa43b6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/system-enemies-off.png",
+      "bytes": 322992,
+      "sha256": "aaba540cae4e52aea164002ece4f04df18ccc8c5e5c6b2f263a133e5d35b1189",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/system-enemies-on.png",
+      "bytes": 323167,
+      "sha256": "0ca72d844ad293c46200ea14247935aa09e92e010053e68bda9be38c1d726630",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/system-moved.png",
+      "bytes": 549896,
+      "sha256": "0129d98e0620a1f8e2ace267347a1367c0fb19a7c87f108f08204464c6fc19f8",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/system-open.png",
+      "bytes": 549906,
+      "sha256": "9bd85262eb5eb6cdd02489edb354248121570fac2e3d80ff34343e580d1e1a29",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-alliance-r4/system-selected.png",
+      "bytes": 322724,
+      "sha256": "5c9eb0a6c7e3734644f403c1c1641bba94a1360f0bf73290b8ddf69c704b4051",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/01-account.png",
+      "bytes": 347741,
+      "sha256": "b1dc248a5c81fa55ec898e78a7a31ffe6964748a15f243681eedf65f9ac77bb7",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/02-budget.png",
+      "bytes": 332598,
+      "sha256": "6d934a58387339e6dc1f12d16d2d49fce1acbf8348f75bf905610eb04fbb5818",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/03-budget-changed.png",
+      "bytes": 332642,
+      "sha256": "ff0eb9a70937b7f4444941ed9fd57c9a846e56bc8df9485ded21ea6593bc1662",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/04-account-return.png",
+      "bytes": 347892,
+      "sha256": "488641ce60357932f1b399fed90d038eee57d842e73a7fa8d838fc6968eef206",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/05-order.png",
+      "bytes": 345924,
+      "sha256": "e1902a77302c4a00e6f2f79f04e9dae68ccc6592a4d820db23e636e4775bb257",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/06-order-cursor.png",
+      "bytes": 346192,
+      "sha256": "dc7e592fb44d3aac61586131924de81d33f566980b70a653c65469e1abe516d5",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/07-build.png",
+      "bytes": 268105,
+      "sha256": "f7525e1212ae9a9b9c857b910d40d57c809ef34afbf72cd00d7d8e39167cdcfa",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/08-build-row0.png",
+      "bytes": 268197,
+      "sha256": "ee89961ad653575bc98f87882e8fee1421bf595b21aec83a3590d5e2328a3c37",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/09-build-row1.png",
+      "bytes": 268072,
+      "sha256": "68cbc863b85869106c4a261db6893d8ff1b80d81c02ce592739e7587808579ea",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/10-build-cursor.png",
+      "bytes": 268192,
+      "sha256": "718dfa002ae952e208d7a4d3f5e617d8034d5244b375106f6233252ffbf7b647",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/11-order-return.png",
+      "bytes": 345857,
+      "sha256": "ba8afef53aa026b376ab2a0ca2b4e0d0e6925ca5adee1990fd78a916beb58511",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/12-command.png",
+      "bytes": 456846,
+      "sha256": "22a149898cd3527867a68a1f2534887c8c6549e8baa96160bc4308ac82c03c61",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/13-admiral-list.png",
+      "bytes": 469796,
+      "sha256": "e4d746935f06fca64346f3c5d1e8617a292ffa4f732a12f1d44b90f12aa2d286",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/14-admiral-detail.png",
+      "bytes": 340567,
+      "sha256": "9f8da903cc4a1c5d05fc3eacbb81af47d3e870d8152116bb519edc5360865416",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/15-portrait-cursor.png",
+      "bytes": 338641,
+      "sha256": "e5dd93b17c2b76126304de3909ce9d97cca194e309537d435756d1dc2aceaffc",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/16-detail-return.png",
+      "bytes": 461479,
+      "sha256": "85acc8839f3d8e3dfdfc6d5a951df517a2f1365b58c0f226abf770f5f903a0c9",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/17-new-portrait.png",
+      "bytes": 326754,
+      "sha256": "62cfc8f7ac2dcbcd463c2da3e7b07bc80d6b2bf13540da8f8f114e47e94a1de5",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/18-new-portrait-cursor.png",
+      "bytes": 325502,
+      "sha256": "13e04a24c696173dc67bc6ce90143d8164861debbcaa5239d6c7f342dc8b7596",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/19-new-detail-return.png",
+      "bytes": 461479,
+      "sha256": "85acc8839f3d8e3dfdfc6d5a951df517a2f1365b58c0f226abf770f5f903a0c9",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/20-command-return.png",
+      "bytes": 456956,
+      "sha256": "2c747282ced233812aebef3c7f00313b2cb4a82b074dbc38c5fe425c77836f28",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/PLAN.json",
+      "bytes": 12106,
+      "sha256": "9ee3b0c6ea78faa63a15c9d1d367e58023fdd27b18d1de0ebd863a4e30f47c3c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/lists-closed.png",
+      "bytes": 456956,
+      "sha256": "2c747282ced233812aebef3c7f00313b2cb4a82b074dbc38c5fe425c77836f28",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/lists-moved.png",
+      "bytes": 458933,
+      "sha256": "e54d184c790cb39b8a70ec19e43dcaa16021e1d57ff8118522be07018ba9da3e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/lists-open.png",
+      "bytes": 459153,
+      "sha256": "b2359dde3d676e0d0531f150ffa83e42519595f2d52f3e5456281f71a51d93ad",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/lists-selected.png",
+      "bytes": 469796,
+      "sha256": "e4d746935f06fca64346f3c5d1e8617a292ffa4f732a12f1d44b90f12aa2d286",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/strategy-closed.png",
+      "bytes": 456956,
+      "sha256": "2c747282ced233812aebef3c7f00313b2cb4a82b074dbc38c5fe425c77836f28",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/strategy-moved.png",
+      "bytes": 457028,
+      "sha256": "a815011b11501e7cdb226a02a95e125afc2ad1cf7944b63e75b3369d38ff68eb",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/strategy-open.png",
+      "bytes": 457127,
+      "sha256": "1d726a6c1eea4f0438603522fd8aab107586d0519d230e8acc648002674416b2",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/strategy-selected.png",
+      "bytes": 337457,
+      "sha256": "83a728d1df2e03f1de707efdcdd2f556b33ce80dc43c35754d17e77c80f1be49",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/system-closed.png",
+      "bytes": 456956,
+      "sha256": "2c747282ced233812aebef3c7f00313b2cb4a82b074dbc38c5fe425c77836f28",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/system-enemies-off.png",
+      "bytes": 261771,
+      "sha256": "d177a7b66719603b43b155c21f6798c49de8b38fb0bd4c73bce39c64325b0988",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/system-enemies-on.png",
+      "bytes": 262112,
+      "sha256": "72e9c1f6dad9d9869b5cc370d3a42595e42e15d7af8dda388e1732ec7623ab41",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/system-moved.png",
+      "bytes": 458453,
+      "sha256": "350730914a16645f5bbdba1fba0d9a5c5247d3a77fa44e306a2de3f73b674a3f",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/system-open.png",
+      "bytes": 458386,
+      "sha256": "09d01a33ec28b142866922f96d370881351976389e6075bc59ac10c9cc867195",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-empire-r4/system-selected.png",
+      "bytes": 261872,
+      "sha256": "3e2c9272feebbebb2579a1c780fd1113be0c463e39e7574cefa3b60e45ad9223",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/01-account-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/01-account-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/01-account-x11.png",
+      "bytes": 142177,
+      "sha256": "6485a81493419448f00aae29e129cd790b20e277f9d2908306aa42e4b0ed137b",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/01-account.png",
+      "bytes": 398787,
+      "sha256": "5a5507f80302fdb13fda7cb4aca8f596b008e34527b61f0197102ffa3ca3741a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/02-budget-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/02-budget-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/02-budget-x11.png",
+      "bytes": 135675,
+      "sha256": "ef383d47d0e3a71624a02405b56ebf81c4368d2375b3eff62e346bdc1ff9b6dd",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/02-budget.png",
+      "bytes": 374873,
+      "sha256": "207ea4215c3dc4bc5774a6d332ab542e2f719e88e74c01398aa3e30adc7ff256",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/03-budget-changed-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/03-budget-changed-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/03-budget-changed-x11.png",
+      "bytes": 135713,
+      "sha256": "8c095b18bd37cbf1750eb9e57c711cd09305c99c79b97d96f7bc21fbfb603af7",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/03-budget-changed.png",
+      "bytes": 374909,
+      "sha256": "091d878515fa4748f302b297b00507afb41c668521e579a73d80ae57f9fc974e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/04-account-return-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/04-account-return-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/04-account-return-x11.png",
+      "bytes": 142220,
+      "sha256": "30462130218125b19f7c141e3bfa5ae6835b9cc07d0f5c2d5604ffa259963c04",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/04-account-return.png",
+      "bytes": 398862,
+      "sha256": "9a6c83658cf0c9a60d157d6f41be4a4b132878a5d1514ec5bcddec3b0d235d63",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/05-order-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/05-order-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/05-order-x11.png",
+      "bytes": 146094,
+      "sha256": "a8f7a54ebf31b737d7a4c0d86c16b66d5fce8d4f9b8abe48318dfe420b75705c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/05-order.png",
+      "bytes": 408343,
+      "sha256": "e8509492c2ce71370440a5e0f2c2b5b76e62d39ac92ddc102a368ca2e8cc7be3",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/06-order-cursor-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/06-order-cursor-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/06-order-cursor-x11.png",
+      "bytes": 146198,
+      "sha256": "2f7c3c811fb136ab2ba3a2f25c6ce953975a23abffdfab711056b4af2a09b4db",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/06-order-cursor.png",
+      "bytes": 408497,
+      "sha256": "e7a8f95f6fd66777f8ef3a6b13ed0adf8e64ffb13b855264cf331eedb26c277e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/07-build-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/07-build-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/07-build-x11.png",
+      "bytes": 110617,
+      "sha256": "8d684e13150c902a18bc0e41552ae1ce588541ca25de12d327793a00e54b7871",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/07-build.png",
+      "bytes": 303249,
+      "sha256": "1c5d91a8550c5bf114acf275bc75f1afca865adb33f39c3a17eeb33eaa4fc36d",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/08-build-row0-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/08-build-row0-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/08-build-row0-x11.png",
+      "bytes": 110743,
+      "sha256": "d6598c5acf7b8f61cc7c27f80c25099e4432317b32810924082c0a52c069f090",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/08-build-row0.png",
+      "bytes": 303345,
+      "sha256": "89901e612b0b0fc2ee9bc61e63409b1f19cec49530327a060a05663d51bc97fc",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/09-build-row1-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/09-build-row1-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/09-build-row1-x11.png",
+      "bytes": 110729,
+      "sha256": "7605b803692ab4c77a4f07dba48ca80ef31750bafb7794057ab40a18d39209fe",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/09-build-row1.png",
+      "bytes": 303352,
+      "sha256": "c017407778e71f1b3c7dc5c357111c1fc8f767a32ef2bdc8e31607b4539bba56",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/10-build-cursor-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/10-build-cursor-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/10-build-cursor-x11.png",
+      "bytes": 110601,
+      "sha256": "053733e77139913fcd6b20a82a91c8c046341020d527045d38c9831aeae04fdd",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/10-build-cursor.png",
+      "bytes": 303378,
+      "sha256": "2cb27c4315bb25909c18dad09ece75fe4950186cef0a6efff9272df3b200f4f6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/11-order-return-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/11-order-return-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/11-order-return-x11.png",
+      "bytes": 146053,
+      "sha256": "a4af1addf82885fb4e9b2924a94b501ac92bda2996840970cdbec7dab2713768",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/11-order-return.png",
+      "bytes": 408164,
+      "sha256": "f59f3b8a0d70c96757f833f4c03c9ab3aecdffa558305fb3a99b9aca4583153a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/12-command-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/12-command-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/12-command-x11.png",
+      "bytes": 201955,
+      "sha256": "21dcafc7b40f49a59a03f812cef2e8493280ac01252d5045098990e2b2e53810",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/12-command.png",
+      "bytes": 548137,
+      "sha256": "b11de9dcacfa453aefa8e21cd5f0780ff8514ca9881da905b82fa75c4c581bac",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/13-admiral-list-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/13-admiral-list-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/13-admiral-list-x11.png",
+      "bytes": 206508,
+      "sha256": "3de2d21c304505b8f92ea6c43e1cfb3597df08ca476fd86207a4525c3988c36a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/13-admiral-list.png",
+      "bytes": 557681,
+      "sha256": "d022feff61b493da925d714487d5d316ac5dfd3c9290a5c298ce2be08e63d1fc",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/14-admiral-detail-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/14-admiral-detail-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/14-admiral-detail-x11.png",
+      "bytes": 132983,
+      "sha256": "7f5cc5af3a125f58b3d6aa31b718c6bde0b092f84bf471abaa6c8dc192fe1211",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/14-admiral-detail.png",
+      "bytes": 362227,
+      "sha256": "a0a0a9417a0b8f7ff3824531a87b59ef683e344a5d85e2f955554579bb8def55",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/15-portrait-cursor-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/15-portrait-cursor-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/15-portrait-cursor-x11.png",
+      "bytes": 132482,
+      "sha256": "9fe8426d77e2c7461b6d4781cf9a550bbc19b1260f56a6c90b9b1761881a15ee",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/15-portrait-cursor.png",
+      "bytes": 360980,
+      "sha256": "64e4c93beddd8458884cec07a1c11804caf6ae879477ab2a270a7e5da852086e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/16-detail-return-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/16-detail-return-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/16-detail-return-x11.png",
+      "bytes": 203724,
+      "sha256": "a18249cfcb38932e7f7e0057b8fe240e98147f3deee19b803034a6b86d70449f",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/16-detail-return.png",
+      "bytes": 552052,
+      "sha256": "b8ccc7fed39403d50fbdff5a1e7f31047c56a2e6b821b141b2eeee69f32a50ac",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/17-new-portrait-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/17-new-portrait-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/17-new-portrait-x11.png",
+      "bytes": 129001,
+      "sha256": "71b5e925368245787883abbfc86dd7ef7e311e3d3740315fa4f05615ba131bd7",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/17-new-portrait.png",
+      "bytes": 353693,
+      "sha256": "ba3bd541e68d5730ecca1d61c8b78e54371709f573140595b94389f205671cf1",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/18-new-portrait-cursor-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/18-new-portrait-cursor-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/18-new-portrait-cursor-x11.png",
+      "bytes": 128627,
+      "sha256": "50e4a240979e3e13c41a8f3d5602eb282ef31318751b2101b1922fdf77362b12",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/18-new-portrait-cursor.png",
+      "bytes": 352631,
+      "sha256": "44d8526d40179d930d5b068c95af9c3166846e6eecedb68977bd99fae581192b",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/19-new-detail-return-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/19-new-detail-return-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/19-new-detail-return-x11.png",
+      "bytes": 203724,
+      "sha256": "a18249cfcb38932e7f7e0057b8fe240e98147f3deee19b803034a6b86d70449f",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/19-new-detail-return.png",
+      "bytes": 552052,
+      "sha256": "b8ccc7fed39403d50fbdff5a1e7f31047c56a2e6b821b141b2eeee69f32a50ac",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/20-command-return-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/20-command-return-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/20-command-return-x11.png",
+      "bytes": 201921,
+      "sha256": "9f3b92599a70c56f28355e4f5b51863616af7e809fdcc713b6c5ef4bd35cef9d",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/20-command-return.png",
+      "bytes": 548130,
+      "sha256": "a28f190d90ad8140b18a2d985ba9b796d87a053234d735c65e6d1c7bffaa43b6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/TRACE.json",
+      "bytes": 26049,
+      "sha256": "858385493cfb300b9a02c1b3b637141ad0608ed8a56586b36a7913aa481377fb",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/game.log",
+      "bytes": 381,
+      "sha256": "2cd35b0bd3733aefe9c6595005fb79c7c319aed25e6c55d9d77651d79000629b",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-closed-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-closed-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-closed-x11.png",
+      "bytes": 201921,
+      "sha256": "9f3b92599a70c56f28355e4f5b51863616af7e809fdcc713b6c5ef4bd35cef9d",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-closed.png",
+      "bytes": 548130,
+      "sha256": "a28f190d90ad8140b18a2d985ba9b796d87a053234d735c65e6d1c7bffaa43b6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-moved-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-moved-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-moved-x11.png",
+      "bytes": 203340,
+      "sha256": "b76f683dba7ef837147cd3bf1fba9af3d90e45b42dfb4a08011ed44d9f206a33",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-moved.png",
+      "bytes": 550528,
+      "sha256": "83751431d65945b3c7c2cba7909e89cd47872331eec32e431bc56d1ee63d1de3",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-open-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-open-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-open-x11.png",
+      "bytes": 203359,
+      "sha256": "9ddcd0ff56ee9fa2d5117bfe1894669c84894393155cbca31b4dfd593fae9186",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-open.png",
+      "bytes": 550722,
+      "sha256": "ce7e5d131570b2d5ebccaf83db009b685631e4e4b90e3eac0c5ff2d1c894258a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-selected-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-selected-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-selected-x11.png",
+      "bytes": 206508,
+      "sha256": "3de2d21c304505b8f92ea6c43e1cfb3597df08ca476fd86207a4525c3988c36a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/lists-selected.png",
+      "bytes": 557681,
+      "sha256": "d022feff61b493da925d714487d5d316ac5dfd3c9290a5c298ce2be08e63d1fc",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-closed-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-closed-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-closed-x11.png",
+      "bytes": 201921,
+      "sha256": "9f3b92599a70c56f28355e4f5b51863616af7e809fdcc713b6c5ef4bd35cef9d",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-closed.png",
+      "bytes": 548130,
+      "sha256": "a28f190d90ad8140b18a2d985ba9b796d87a053234d735c65e6d1c7bffaa43b6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-moved-attempt-1-x11-comparison.json",
+      "bytes": 424,
+      "sha256": "4ddc2d5e27b7da02b3d8212f20caba9607062b94b6df40c0406883efecf56991",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-moved-attempt-1-x11-diff.png",
+      "bytes": 4950,
+      "sha256": "4c958caf19e73bcba386d0e8a7804f801c72340dc5f540ce06607409b91b640f",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-moved-attempt-1-x11.png",
+      "bytes": 202297,
+      "sha256": "e0b6ad41e75a087999251b21b4eae40583dddf666683236046ec8e7b49e2e610",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-moved-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-moved-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-moved-x11.png",
+      "bytes": 202335,
+      "sha256": "a3cfea693e4ac9e17367a2de28cbe809d127c6db494994875908538ca2c1930f",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-moved.png",
+      "bytes": 548732,
+      "sha256": "0bb9a10cdb6a0f943b75ef5d7b66240bd22c29f4c538e1d03bf65c43672d6aeb",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-open-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-open-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-open-x11.png",
+      "bytes": 202297,
+      "sha256": "e0b6ad41e75a087999251b21b4eae40583dddf666683236046ec8e7b49e2e610",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-open.png",
+      "bytes": 548776,
+      "sha256": "050da11c034a22774a54638851434d05ce9ec1ec7b16729d4e1b5e9f285ca026",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-selected-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-selected-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-selected-x11.png",
+      "bytes": 138312,
+      "sha256": "aa194e375126f01798209ebaeb5b730d5a7baf5d9837f0d7364904a8883ab3e5",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/strategy-selected.png",
+      "bytes": 379816,
+      "sha256": "789a63a7eb85b8b01a2c032ecf284e859bdba6bdf06b95c59add41d919dafd17",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-closed-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-closed-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-closed-x11.png",
+      "bytes": 201921,
+      "sha256": "9f3b92599a70c56f28355e4f5b51863616af7e809fdcc713b6c5ef4bd35cef9d",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-closed.png",
+      "bytes": 548130,
+      "sha256": "a28f190d90ad8140b18a2d985ba9b796d87a053234d735c65e6d1c7bffaa43b6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-enemies-off-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-enemies-off-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-enemies-off-x11.png",
+      "bytes": 125911,
+      "sha256": "561f33ae0d7e0ce547dec5da263a519aa8032b85ad8e45a6df5d4ee9f8782a94",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-enemies-off.png",
+      "bytes": 322992,
+      "sha256": "aaba540cae4e52aea164002ece4f04df18ccc8c5e5c6b2f263a133e5d35b1189",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-enemies-on-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-enemies-on-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-enemies-on-x11.png",
+      "bytes": 126029,
+      "sha256": "afb6b92d0c8fdbc449d61e8f0204994ae6e973ecdd9737c596e2515de7cafc4c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-enemies-on.png",
+      "bytes": 323167,
+      "sha256": "0ca72d844ad293c46200ea14247935aa09e92e010053e68bda9be38c1d726630",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-moved-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-moved-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-moved-x11.png",
+      "bytes": 202782,
+      "sha256": "33c65eefbc42b421ce038e9c85bf801fd63b752123683d11b655258399bfe048",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-moved.png",
+      "bytes": 549896,
+      "sha256": "0129d98e0620a1f8e2ace267347a1367c0fb19a7c87f108f08204464c6fc19f8",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-open-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-open-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-open-x11.png",
+      "bytes": 202762,
+      "sha256": "71b9acb9d1a28747024316541702a96a9523d0f8bac00d6c92a1d555842bdfa5",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-open.png",
+      "bytes": 549906,
+      "sha256": "9bd85262eb5eb6cdd02489edb354248121570fac2e3d80ff34343e580d1e1a29",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-selected-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-selected-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-selected-x11.png",
+      "bytes": 125908,
+      "sha256": "62a26249d18724f6bcc8dad4ec3e14d749e116bf72de725a7096852bfa73a0c4",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-alliance-r4/system-selected.png",
+      "bytes": 322724,
+      "sha256": "5c9eb0a6c7e3734644f403c1c1641bba94a1360f0bf73290b8ddf69c704b4051",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/01-account-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/01-account-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/01-account-x11.png",
+      "bytes": 125202,
+      "sha256": "dc46ae1fd8706dcf918b1ad19ac203c7d4f07701d0c749f28780449ef60b3517",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/01-account.png",
+      "bytes": 347741,
+      "sha256": "b1dc248a5c81fa55ec898e78a7a31ffe6964748a15f243681eedf65f9ac77bb7",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/02-budget-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/02-budget-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/02-budget-x11.png",
+      "bytes": 121772,
+      "sha256": "0cd8ea051e15074e0e128500f8065839e9ddbb254512cde68fb7a51da74239ba",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/02-budget.png",
+      "bytes": 332598,
+      "sha256": "6d934a58387339e6dc1f12d16d2d49fce1acbf8348f75bf905610eb04fbb5818",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/03-budget-changed-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/03-budget-changed-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/03-budget-changed-x11.png",
+      "bytes": 121819,
+      "sha256": "8f0f92d659cc8886217eb1370c01a012bd8c125b7e20ba50a3e758ed61b12a48",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/03-budget-changed.png",
+      "bytes": 332642,
+      "sha256": "ff0eb9a70937b7f4444941ed9fd57c9a846e56bc8df9485ded21ea6593bc1662",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/04-account-return-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/04-account-return-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/04-account-return-x11.png",
+      "bytes": 125323,
+      "sha256": "ffad4dd6b717e713865ac2bb55c342808490d9e10825982486a65f7cd066de5e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/04-account-return.png",
+      "bytes": 347892,
+      "sha256": "488641ce60357932f1b399fed90d038eee57d842e73a7fa8d838fc6968eef206",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/05-order-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/05-order-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/05-order-x11.png",
+      "bytes": 125767,
+      "sha256": "2b3b2591f073e5582b593ffa086fb92b823d9a71eb6d756644dc3f9f03ec01a2",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/05-order.png",
+      "bytes": 345924,
+      "sha256": "e1902a77302c4a00e6f2f79f04e9dae68ccc6592a4d820db23e636e4775bb257",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/06-order-cursor-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/06-order-cursor-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/06-order-cursor-x11.png",
+      "bytes": 125688,
+      "sha256": "6c5faddf5d081f1ccc1b9a8c59bafde1762d5ec558abe404ae9bb2fef7539a80",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/06-order-cursor.png",
+      "bytes": 346192,
+      "sha256": "dc7e592fb44d3aac61586131924de81d33f566980b70a653c65469e1abe516d5",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/07-build-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/07-build-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/07-build-x11.png",
+      "bytes": 98995,
+      "sha256": "356f8526c2205a7532221d341e2713c34b42f87b4d9c6daf81c34d7eae8eee98",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/07-build.png",
+      "bytes": 268105,
+      "sha256": "f7525e1212ae9a9b9c857b910d40d57c809ef34afbf72cd00d7d8e39167cdcfa",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/08-build-row0-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/08-build-row0-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/08-build-row0-x11.png",
+      "bytes": 99033,
+      "sha256": "72d15f052cff48678401c734228c08743c569068c99c61bac2a7a62c2b33652c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/08-build-row0.png",
+      "bytes": 268197,
+      "sha256": "ee89961ad653575bc98f87882e8fee1421bf595b21aec83a3590d5e2328a3c37",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/09-build-row1-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/09-build-row1-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/09-build-row1-x11.png",
+      "bytes": 98985,
+      "sha256": "0bf934f1169353d944647b4e6bf3ba7969aaa258060b2ecb7570c71466c0a1e9",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/09-build-row1.png",
+      "bytes": 268072,
+      "sha256": "68cbc863b85869106c4a261db6893d8ff1b80d81c02ce592739e7587808579ea",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/10-build-cursor-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/10-build-cursor-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/10-build-cursor-x11.png",
+      "bytes": 99024,
+      "sha256": "c61bb24af056dbdf56b549e8179dfd801e77daa5965aee56695e79288ca63732",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/10-build-cursor.png",
+      "bytes": 268192,
+      "sha256": "718dfa002ae952e208d7a4d3f5e617d8034d5244b375106f6233252ffbf7b647",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/11-order-return-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/11-order-return-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/11-order-return-x11.png",
+      "bytes": 125717,
+      "sha256": "f5c6a9e13ce06b45eb60e344f3fb87f397c48b70e921ab29be85a868164768df",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/11-order-return.png",
+      "bytes": 345857,
+      "sha256": "ba8afef53aa026b376ab2a0ca2b4e0d0e6925ca5adee1990fd78a916beb58511",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/12-command-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/12-command-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/12-command-x11.png",
+      "bytes": 173085,
+      "sha256": "a8c65fcb4a259d04de20db8f15f962c82288a5b423d657bf3905abf8d3641c66",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/12-command.png",
+      "bytes": 456846,
+      "sha256": "22a149898cd3527867a68a1f2534887c8c6549e8baa96160bc4308ac82c03c61",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/13-admiral-list-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/13-admiral-list-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/13-admiral-list-x11.png",
+      "bytes": 179816,
+      "sha256": "19a4ca3cd61e82b1815a21e2ca44a8307742067af62b567d6fd14d45c44c7274",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/13-admiral-list.png",
+      "bytes": 469796,
+      "sha256": "e4d746935f06fca64346f3c5d1e8617a292ffa4f732a12f1d44b90f12aa2d286",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/14-admiral-detail-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/14-admiral-detail-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/14-admiral-detail-x11.png",
+      "bytes": 124266,
+      "sha256": "683b1a6c060eb37b436d2984ed99758ead2c37ea58ff0a9ee07800858373c27b",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/14-admiral-detail.png",
+      "bytes": 340567,
+      "sha256": "9f8da903cc4a1c5d05fc3eacbb81af47d3e870d8152116bb519edc5360865416",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/15-portrait-cursor-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/15-portrait-cursor-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/15-portrait-cursor-x11.png",
+      "bytes": 123821,
+      "sha256": "3df533b5015a9c8766cb1223856e2b1842d4fabeff9ab57c9621e7eda6a7da09",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/15-portrait-cursor.png",
+      "bytes": 338641,
+      "sha256": "e5dd93b17c2b76126304de3909ce9d97cca194e309537d435756d1dc2aceaffc",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/16-detail-return-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/16-detail-return-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/16-detail-return-x11.png",
+      "bytes": 175615,
+      "sha256": "238bf2ee31a4817d350646e64d1649cb0c8652ce015de7a7da9288899a682589",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/16-detail-return.png",
+      "bytes": 461479,
+      "sha256": "85acc8839f3d8e3dfdfc6d5a951df517a2f1365b58c0f226abf770f5f903a0c9",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/17-new-portrait-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/17-new-portrait-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/17-new-portrait-x11.png",
+      "bytes": 119983,
+      "sha256": "9ce1d7d2eccfe948b47462bd50bfc1f44a13557bed5cc99a8a3d09d98c80beab",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/17-new-portrait.png",
+      "bytes": 326754,
+      "sha256": "62cfc8f7ac2dcbcd463c2da3e7b07bc80d6b2bf13540da8f8f114e47e94a1de5",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/18-new-portrait-cursor-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/18-new-portrait-cursor-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/18-new-portrait-cursor-x11.png",
+      "bytes": 119688,
+      "sha256": "a2b966baa555cfc3b73db0b748c01451d5b287ed7541e91901e843e34e6ce7a9",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/18-new-portrait-cursor.png",
+      "bytes": 325502,
+      "sha256": "13e04a24c696173dc67bc6ce90143d8164861debbcaa5239d6c7f342dc8b7596",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/19-new-detail-return-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/19-new-detail-return-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/19-new-detail-return-x11.png",
+      "bytes": 175615,
+      "sha256": "238bf2ee31a4817d350646e64d1649cb0c8652ce015de7a7da9288899a682589",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/19-new-detail-return.png",
+      "bytes": 461479,
+      "sha256": "85acc8839f3d8e3dfdfc6d5a951df517a2f1365b58c0f226abf770f5f903a0c9",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/20-command-return-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/20-command-return-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/20-command-return-x11.png",
+      "bytes": 173105,
+      "sha256": "6114dfe50baf808bc4628571d6af22f45e20ec51a06f08c1ae7d828c57cdf05e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/20-command-return.png",
+      "bytes": 456956,
+      "sha256": "2c747282ced233812aebef3c7f00313b2cb4a82b074dbc38c5fe425c77836f28",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/TRACE.json",
+      "bytes": 26023,
+      "sha256": "44304736afa41638c96007aff55e0f504345c5d5a382af1cdf76283e28558c6e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/game.log",
+      "bytes": 381,
+      "sha256": "2cd35b0bd3733aefe9c6595005fb79c7c319aed25e6c55d9d77651d79000629b",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-closed-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-closed-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-closed-x11.png",
+      "bytes": 173105,
+      "sha256": "6114dfe50baf808bc4628571d6af22f45e20ec51a06f08c1ae7d828c57cdf05e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-closed.png",
+      "bytes": 456956,
+      "sha256": "2c747282ced233812aebef3c7f00313b2cb4a82b074dbc38c5fe425c77836f28",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-moved-attempt-1-x11-comparison.json",
+      "bytes": 424,
+      "sha256": "bab1ad6c80c1061df5a16844e3cb94fbf8a8d7ca442147e562ec2e722114c019",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-moved-attempt-1-x11-diff.png",
+      "bytes": 5027,
+      "sha256": "69292a28e8c3ec499e3bee55e565104925696f52725110b770dc2b8f6da14c6c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-moved-attempt-1-x11.png",
+      "bytes": 174589,
+      "sha256": "6e48049dbe761416a86e50803cbfe252276cf1ffd398e57f891c1a18e3259ba6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-moved-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-moved-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-moved-x11.png",
+      "bytes": 174625,
+      "sha256": "85d7c40010f97180a41f938a8fadacf8734bf3b3e03bc75ff3a75ad3f7486e2e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-moved.png",
+      "bytes": 458933,
+      "sha256": "e54d184c790cb39b8a70ec19e43dcaa16021e1d57ff8118522be07018ba9da3e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-open-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-open-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-open-x11.png",
+      "bytes": 174589,
+      "sha256": "6e48049dbe761416a86e50803cbfe252276cf1ffd398e57f891c1a18e3259ba6",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-open.png",
+      "bytes": 459153,
+      "sha256": "b2359dde3d676e0d0531f150ffa83e42519595f2d52f3e5456281f71a51d93ad",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-selected-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-selected-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-selected-x11.png",
+      "bytes": 179816,
+      "sha256": "19a4ca3cd61e82b1815a21e2ca44a8307742067af62b567d6fd14d45c44c7274",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/lists-selected.png",
+      "bytes": 469796,
+      "sha256": "e4d746935f06fca64346f3c5d1e8617a292ffa4f732a12f1d44b90f12aa2d286",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-closed-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-closed-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-closed-x11.png",
+      "bytes": 173105,
+      "sha256": "6114dfe50baf808bc4628571d6af22f45e20ec51a06f08c1ae7d828c57cdf05e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-closed.png",
+      "bytes": 456956,
+      "sha256": "2c747282ced233812aebef3c7f00313b2cb4a82b074dbc38c5fe425c77836f28",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-moved-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-moved-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-moved-x11.png",
+      "bytes": 173297,
+      "sha256": "8a42c7fdcf0b3c5bdd44fd015822b5b9aebcd95b6c90f6fbb734e9a994318d8e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-moved.png",
+      "bytes": 457028,
+      "sha256": "a815011b11501e7cdb226a02a95e125afc2ad1cf7944b63e75b3369d38ff68eb",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-open-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-open-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-open-x11.png",
+      "bytes": 173246,
+      "sha256": "c7735f4c4aab0b0e4119c752d65b2786fbb405cd7a7da234d556b104d4a115d3",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-open.png",
+      "bytes": 457127,
+      "sha256": "1d726a6c1eea4f0438603522fd8aab107586d0519d230e8acc648002674416b2",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-selected-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-selected-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-selected-x11.png",
+      "bytes": 124248,
+      "sha256": "c58b015f00f71b23b5dbe5bef2e9ee522ff95bdb782d5524cc81f9d2156ab4de",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/strategy-selected.png",
+      "bytes": 337457,
+      "sha256": "83a728d1df2e03f1de707efdcdd2f556b33ce80dc43c35754d17e77c80f1be49",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-closed-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-closed-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-closed-x11.png",
+      "bytes": 173105,
+      "sha256": "6114dfe50baf808bc4628571d6af22f45e20ec51a06f08c1ae7d828c57cdf05e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-closed.png",
+      "bytes": 456956,
+      "sha256": "2c747282ced233812aebef3c7f00313b2cb4a82b074dbc38c5fe425c77836f28",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-enemies-off-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-enemies-off-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-enemies-off-x11.png",
+      "bytes": 105509,
+      "sha256": "31ae96498bed4befffed5619ae1a581b891e6e05bc5c6849e4f0e15d7b6c097b",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-enemies-off.png",
+      "bytes": 261771,
+      "sha256": "d177a7b66719603b43b155c21f6798c49de8b38fb0bd4c73bce39c64325b0988",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-enemies-on-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-enemies-on-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-enemies-on-x11.png",
+      "bytes": 105666,
+      "sha256": "750a95dbe4521e2e82363e78f6e1985da2b51d22b0b96775488b1beedaba97c5",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-enemies-on.png",
+      "bytes": 262112,
+      "sha256": "72e9c1f6dad9d9869b5cc370d3a42595e42e15d7af8dda388e1732ec7623ab41",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-moved-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-moved-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-moved-x11.png",
+      "bytes": 174455,
+      "sha256": "40696ee0d8c88fec57f907e804db839055363492ba0f0bf66d144e078e42b34a",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-moved.png",
+      "bytes": 458453,
+      "sha256": "350730914a16645f5bbdba1fba0d9a5c5247d3a77fa44e306a2de3f73b674a3f",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-open-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-open-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-open-x11.png",
+      "bytes": 174371,
+      "sha256": "cd2d98a53bd55e8a46ee58d3173ad24c02ded609671049807f415aae24f2c48c",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-open.png",
+      "bytes": 458386,
+      "sha256": "09d01a33ec28b142866922f96d370881351976389e6075bc59ac10c9cc867195",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-selected-x11-comparison.json",
+      "bytes": 384,
+      "sha256": "83bcccef41afcbeb8f44465c0bda5b871d581155c7e3f20ad9c0a1fcef1cc26e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-selected-x11-diff.png",
+      "bytes": 3505,
+      "sha256": "88669dee7d937c236fa82b72aae19436c537a7dc090948aa15906cb69a1b8d4e",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-selected-x11.png",
+      "bytes": 105485,
+      "sha256": "f3734c18efb857ad82927f9bd136de22af4aa5fce6ccaec438eff3b2d2d1e68b",
+      "uid": 1000,
+      "gid": 1000
+    },
+    {
+      "path": "workplace/hd126/theme-x11-empire-r4/system-selected.png",
+      "bytes": 261872,
+      "sha256": "3e2c9272feebbebb2579a1c780fd1113be0c463e39e7574cefa3b60e45ad9223",
+      "uid": 1000,
+      "gid": 1000
+    }
+  ],
+  "rights": "原版衍生HD圖片與實機畫面只留本機及目前private儲存庫；沒有新增公開發行",
+  "pending": [
+    "戰場真實X11敵軍開關",
+    "戰略與戰術AI比較實錄",
+    "HD世界觀片頭與新版S1交火推廣片",
+    "新封包"
+  ]
+}

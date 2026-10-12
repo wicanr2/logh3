@@ -21,6 +21,7 @@ type BMG struct {
 	data    []byte
 	entries map[string]bmgEntry
 	names   []string
+	static  map[string]*Image
 }
 
 type bmgEntry struct{ size, off int }
@@ -59,6 +60,37 @@ func OpenBMG(data []byte) (*BMG, error) {
 
 // Names 回目錄裡的段名（照目錄順序；名稱是原始位元組，不一定是 ASCII）。
 func (b *BMG) Names() []string { return b.names }
+
+// StaticPicture是原前兩byte的D0首格，用於共用HD艦型；無資料就回錯誤。
+func (b *BMG) StaticPicture(prefix string) (*Image, error) {
+	if len(prefix) != 2 {
+		return nil, fmt.Errorf("動畫前綴長度不是2")
+	}
+	if im := b.static[prefix]; im != nil {
+		return im, nil
+	}
+	frames, err := b.Frames(prefix + "D0")
+	if err != nil {
+		return nil, err
+	}
+	if len(frames) == 0 {
+		return nil, fmt.Errorf("靜態圖段是空的")
+	}
+	planes := PlanesFrom(make([]byte, 640*480))
+	if err := frames[0].Draw(planes, 0); err != nil {
+		return nil, err
+	}
+	pix := planes.Pixels()
+	im := &Image{W: 256, H: 102, Pix: make([]byte, 256*102), ArtworkKey: fmt.Sprintf("%X", []byte(prefix))}
+	for y := 0; y < 102; y++ {
+		copy(im.Pix[y*256:], pix[y*640:y*640+256])
+	}
+	if b.static == nil {
+		b.static = make(map[string]*Image)
+	}
+	b.static[prefix] = im
+	return im, nil
+}
 
 // Frames 回一段的所有格。
 func (b *BMG) Frames(name string) ([]BMGFrame, error) {

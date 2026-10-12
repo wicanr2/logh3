@@ -150,7 +150,8 @@ func (g *Game) AdvanceBattleTurn() {
 	if g.tactic != nil {
 		b := ai.Battlefield{
 			Units: g.battleUnits, Planets: g.battlePlanets,
-			Rally: g.battleRally, Terrain: g.res.Terrain,
+			Commanders: g.battleCommanders(),
+			Rally:      g.battleRally, Terrain: g.res.Terrain,
 			Cells: g.battleCells(g.battleRegion), Rand: g.battleRand,
 		}
 		cpu, passive := g.passiveComputer()
@@ -163,7 +164,11 @@ func (g *Game) AdvanceBattleTurn() {
 			}
 			for _, m := range g.tactic.Moves(b, faction, g.battleTurn) {
 				if m.Unit >= 0 && m.Unit < len(g.battleUnits) {
-					g.applyTacticalMove(m.Unit, m.X, m.Y)
+					if m.Formation {
+						g.applyFormationMove(m.Unit, m.X, m.Y)
+					} else {
+						g.applyTacticalMove(m.Unit, m.X, m.Y)
+					}
 				}
 			}
 		}
@@ -366,6 +371,9 @@ func (g *Game) battleClick(x, y int) {
 				// 保存選單會離開StateBattle；先同步當前戰場的typed副本。
 				// 原版直接改行星記錄，保存必須保留相同歸屬（規格106）。
 				g.res.Planets.ApplyBattlePlanets(g.battlePlanets)
+			}
+			if to == StateSettings {
+				g.settingsReturnState = StateBattle
 			}
 			g.state = to
 		}

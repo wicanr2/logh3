@@ -8,6 +8,82 @@ import (
 	"github.com/wicanr2/logh3/internal/rules"
 )
 
+func TestCopyProtectionVisibleConfirm(t *testing.T) {
+	for _, row := range []int{menuRowEmpire, menuRowAlliance, menuRowVersus, menuRowLoad} {
+		g, err := New(load(t))
+		if err != nil {
+			t.Fatal(err)
+		}
+		g.Click(300, 210+20*row)
+		b := g.res.CopyProt.InputBox
+		if b == nil {
+			t.Fatal("缺少確認按鈕")
+		}
+		g.Click(b.X+b.W/2, b.Y+b.H/2)
+		if g.State() != StateCopyProtection {
+			t.Fatal("空答案被送出")
+		}
+		for _, c := range []byte("138") {
+			g.Key(c)
+		}
+		g.Click(b.X-1, b.Y+b.H/2)
+		if g.State() != StateCopyProtection {
+			t.Fatal("按鈕外送出答案")
+		}
+		g.Click(b.X+b.W/2, b.Y+b.H/2)
+		want := StateMainGame
+		if row == menuRowVersus {
+			want = StateVersusInput
+		}
+		if row == menuRowLoad {
+			want = StateLoadGame
+		}
+		if g.State() != want {
+			t.Fatalf("選項%d確認未送出：%v != %v", row, g.State(), want)
+		}
+	}
+}
+
+func TestVersusVisibleMonthlyButtons(t *testing.T) {
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 250)
+	for _, c := range []byte("138\r") {
+		g.Key(c)
+	}
+	w := g.commandSpec(StateVersusInput).Windows["overlay"].Boxes[0]
+	g.Click(w.X+w.W/2, w.Y+w.H/2)
+	if g.State() != StateVersusAccount {
+		t.Fatal(g.State())
+	}
+	g.Click(448, 350)
+	if g.State() != StateBudgetPlan {
+		t.Fatalf("雙人財政變更失效：%v", g.State())
+	}
+	g.Click(463, 370)
+	if g.State() != StateVersusAccount {
+		t.Fatalf("預算未回雙人財政：%v", g.State())
+	}
+	g.Click(448, 370)
+	if g.State() != StateVersusShipOrder {
+		t.Fatalf("雙人財政確認失效：%v", g.State())
+	}
+	g.Click(448, 350)
+	if g.State() != StateBuildPlan {
+		t.Fatalf("雙人訂造變更失效：%v", g.State())
+	}
+	g.Click(512, 370)
+	if g.State() != StateVersusShipOrder {
+		t.Fatalf("建造未回雙人訂造：%v", g.State())
+	}
+	g.Click(448, 370)
+	if g.State() != StateCommandPhase {
+		t.Fatalf("雙人訂造確認失效：%v", g.State())
+	}
+}
+
 // 畫面上的按鈕必須可以由 Game 公開畫面座標操作，不能沿用舊熱區座標。
 func TestVisibleMonthlyReportButtons(t *testing.T) {
 	for _, faction := range []int{0, 1} {

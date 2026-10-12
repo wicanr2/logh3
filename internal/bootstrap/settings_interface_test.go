@@ -15,7 +15,7 @@ import (
 
 // 113：正常bootstrap及公開玩家輸入；出貨BUG!不可選，畫面核固定原版。
 func TestSettingsBugUnavailablePlayerPath(t *testing.T) {
-	_, g := titlePlayerResources(t)
+	res, g := titlePlayerResources(t)
 	g.Click(300, 210) // 正常跳過片頭。
 	g.LeftRelease()
 	g.Click(300, 210) // 帝國。
@@ -44,8 +44,18 @@ func TestSettingsBugUnavailablePlayerPath(t *testing.T) {
 	record := func(name, want string) {
 		t.Helper()
 		fb, pal := g.Frame(), g.Palette()
-		if got := digest(fb.Pix); got != want {
-			t.Fatalf("%s全圖色號SHA=%s，原版=%s", name, got, want)
+		// 134新增展示控制，只允許其已核矩形與原版不同。此區原為
+		// 設定窗的空白底色，還原後仍核原完整SHA，不更新原版golden。
+		original := bytes.Clone(fb.Pix)
+		r := game.EnemyVisibilityButtonBounds()
+		fill := res.Screens["screen-settings"].Windows["overlay"].Frame.Fill
+		for y := r.Min.Y; y < r.Max.Y; y++ {
+			for x := r.Min.X; x < r.Max.X; x++ {
+				original[y*gfx.Width+x] = fill
+			}
+		}
+		if got := digest(original); got != want {
+			t.Fatalf("%s新增控制外原色SHA=%s，原版=%s", name, got, want)
 		}
 		var rgb []byte
 		for i := 0; i < gfx.Colors; i++ {

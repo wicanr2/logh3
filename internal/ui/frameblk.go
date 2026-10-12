@@ -96,6 +96,12 @@ func (f TileFrame) Draw(fb *gfx.Framebuffer, cellX, cellY, cols, rows int) {
 	if f.Tiles == nil || cols < 2 || rows < 2 {
 		return
 	}
+	start := fb.BeginGroup()
+	defer func() {
+		fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawPanel,
+			X: cellX * FrameTileW, Y: cellY*FrameTileH + FrameCellOriginY,
+			W: cols * FrameTileW, H: rows * FrameTileH, Colour: f.Fill})
+	}()
 	for r := 0; r < rows; r++ {
 		for c := 0; c < cols; c++ {
 			x := (cellX + c) * FrameTileW

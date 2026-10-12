@@ -2,6 +2,8 @@ package game
 
 import (
 	"bytes"
+	"github.com/wicanr2/logh3/internal/rules"
+	"reflect"
 	"testing"
 )
 
@@ -218,5 +220,36 @@ func TestSettingsCloseIsRightClick(t *testing.T) {
 	}
 	if !bytes.Equal(snapshot(byClose), snapshot(byRight)) {
 		t.Fatal("「結束」與右鍵離開之後的畫面不一樣")
+	}
+}
+
+// 診斷戰場起點；實際主選單至S1的返回另由規格139的正常X11收據驗證。
+func TestBattleSettingsReturnsToCallerWithoutAdvancing(t *testing.T) {
+	for _, right := range []bool{false, true} {
+		g := reachDashiliBattle(t)
+		units := append([]rules.BattleUnit(nil), g.battleUnits...)
+		ship, fleet := bytes.Clone(g.slot.Ship), bytes.Clone(g.slot.Fleet)
+		turn, seed := g.battleTurn, g.battleRand.Seed()
+		g.Click(600, 240)
+		g.Click(600, 342)
+		if g.State() != StateSettings {
+			t.Fatal("戰術設定入口未到達")
+		}
+		g.Click(232, 370)
+		if !g.ShowEnemies() {
+			t.Fatal("設定未開啟敵軍顯示")
+		}
+		if right {
+			g.RightClick(410, 370)
+		} else {
+			g.Click(410, 370)
+		}
+		if !g.BattleInputReady() || !g.ShowEnemies() {
+			t.Fatal("設定沒有返回戰場或遺失偏好")
+		}
+		if turn != g.battleTurn || seed != g.battleRand.Seed() || !reflect.DeepEqual(units, g.battleUnits) || !bytes.Equal(ship, g.slot.Ship) || !bytes.Equal(fleet, g.slot.Fleet) {
+			t.Fatal("設定返回推進回合、亂數或戰場資料")
+		}
+		g.Frame()
 	}
 }

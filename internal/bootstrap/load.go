@@ -642,6 +642,7 @@ func UseSaveDir(res *game.Resources, dir string) error {
 	if err != nil {
 		return fmt.Errorf("存檔目錄的 SAVEDATA.IDX：%w", err)
 	}
+	rules.RestoreBundledScenarios(idx, res.SaveIndex)
 	res.SaveIndex = idx
 	return nil
 }

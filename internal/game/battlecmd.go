@@ -213,7 +213,7 @@ func (g *Game) refreshBattleHover() {
 		return
 	}
 	i := g.battleUnitAt(g.mouseX, g.mouseY)
-	if i >= 0 && g.battleUnits[i].Faction != g.faction {
+	if i >= 0 && g.battleUnits[i].Faction != g.faction && !g.showEnemies {
 		i = -1 // 敵方摘要仍待原版取證，不使用己方完整摘要洩漏資料。
 	}
 	if i == g.battleHoverUnit {

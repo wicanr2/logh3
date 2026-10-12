@@ -179,6 +179,10 @@ func (g *Game) orderedFleetForRange() *rangeShape {
 		return nil
 	}
 	turn, perTurn := g.fleetSpeeds(g.battleUnits[unit].Fleet, g.fleetOrderBattle)
+	commanders := g.battleCommanders()
+	if faction := g.battleUnits[unit].Faction; faction >= 0 && faction < len(commanders) && commanders[faction] != 0 {
+		perTurn = rules.CommandMovementBudget(perTurn)
+	}
 	dist := perTurn / rules.FixOne
 	if turn <= 0 || dist <= 0 {
 		return nil

@@ -136,10 +136,12 @@ func IntroScreen(page *asset.Image) *gfx.Framebuffer {
 	if page == nil {
 		return fb
 	}
+	start := fb.BeginGroup()
 	for y := 0; y < page.H; y++ {
 		for x := 0; x < page.W; x++ {
 			fb.Set(x, IntroScreenTop+y, page.Pix[y*page.W+x])
 		}
 	}
+	fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawAnimation, X: 0, Y: IntroScreenTop, W: page.W, H: page.H, SourceW: page.W, SourceH: page.H, Source: page.Pix, Code: 1})
 	return fb
 }

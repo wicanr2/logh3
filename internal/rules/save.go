@@ -117,6 +117,16 @@ type SaveIndexEntry struct {
 	Stamp [6]byte
 }
 
+// RestoreBundledScenarios 補回個人目錄缺少的出貨劇本。前八格是玩家
+// 保存位置，尾三格是既有S1／S2／S3（規格129）；已有記錄保持相容。
+func RestoreBundledScenarios(index, bundled []SaveIndexEntry) {
+	for n := 8; n < SaveSlots && n < len(index) && n < len(bundled); n++ {
+		if !index[n].Used {
+			index[n] = bundled[n]
+		}
+	}
+}
+
 // StampFields 把 Stamp 拆成畫面上那六個數字。解法未驗（見 Stamp）。
 func (e SaveIndexEntry) StampFields() (year, month, day, hour, min, sec int) {
 	bcd := func(b byte) int { return int(b>>4)*10 + int(b&0x0F) }

@@ -130,7 +130,10 @@
 |---|---|---|
 | 資料段裡的熱區清單 | **25 份全部掃出**（含每個按鈕的中文標籤） | [`docs/internals/23`](docs/internals/23-hotspot-lists.md) |
 | 清單 ↔ 畫面的對應 | **27 處命中測試呼叫端全部掃出**，其中 14 處讀得出按鈕標籤（[`data/hittest-sites.json`](docs/internals/data/hittest-sites.json)）；清單位移寫死在呼叫端，兩者由呼叫點綁死（[`docs/re/16`](docs/re/16-window-list-right-button.md)、[`docs/re/156`](docs/re/156-hotspot-lists-from-call-sites.md)） | 同上 |
-| 原畫風HD圖片修復 | 原畫風HD首批5/83張；顯示接線完成，其他素材待修復 | [規格122](docs/spec/122-hd-artwork.md)、[HD來源](assets/hd/MANIFEST.json)。 |
+| 三劇本目錄修正與S1實際戰鬥推廣片 | 完成 | [驗收110](docs/playtest/110-hd-interface-s1-promo.md) |
+| 原版介面HD、敵軍全顯示與AI故事影片 | v.1.1.6正常播放與設定入口通過；完整登陸仍開放 | [驗證118](docs/playtest/118-battle-playback-and-settings.md)及[來源索引](docs/internals/data/battle-playback-settings.json) |
+| v1.0.0按鈕修正與正式交付 | 已完成正常操作、三平台引擎／完整包及66秒影片 | [128](docs/spec/128-visible-button-activation.md)、[109](docs/playtest/109-v1-release.md)、[來源](docs/internals/data/v1-release.json) |
+| 原畫風HD人物修復與呈現 | 82人物與1空格完整；正常操作及三平台包已驗 | [123](docs/spec/123-hd-complete-presentation.md)、[驗收109](docs/playtest/109-v1-release.md)、[來源](docs/internals/data/v1-release.json) |
 | 月初可見按鈕與下拉選單游標 | 已修正並交付v.0.1.3本機完整版 | [107](docs/playtest/107-player-input-hotspots.md)、[121](docs/spec/121-player-input-hotspots.md)及[凍結來源](docs/internals/data/player-input-hotspots.json)；新Linux包兩陣營48張正常X11全圖零差。 |
 | 故事首頁與復古重製推廣片 | 故事首頁與72秒新版影片完成 | [106](docs/playtest/106-macos-and-retro-promo.md)及[本輪來源](docs/internals/data/macos-retro-promo.json)，v.0.1.2-20261006實際交付。 |
 | macOS本機完整版測試包 | 封包完成；macOS真機待試玩 | [106](docs/playtest/106-macos-and-retro-promo.md)及[本輪來源](docs/internals/data/macos-retro-promo.json)，v.0.1.2-20261006實際交付。 |

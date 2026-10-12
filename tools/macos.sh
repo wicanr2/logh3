@@ -2,8 +2,8 @@
 # #94：既有Go1.24.13／osxcross的有界入口，來源與限制見docs/playtest/106。
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-IMAGE=psychicwar-osxcross:latest
-EXPECTED=sha256:0f50c77c732087b104b3aadc3aecb352054aa37dee8e1d293523a66dfa02ba61
+IMAGE=psychicwar-osxcross:go1.24.13-15.5-r2
+EXPECTED=sha256:d4c50a5cf3cf35164b83fb1531fe66f52b9224e826944363bf1bc4d7ba3c8d0c
 batch="${1:?需建置批次}"
 shift
 [[ "$batch" =~ ^[a-z0-9-]+$ ]]

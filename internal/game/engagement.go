@@ -2,6 +2,7 @@ package game
 
 import (
 	"encoding/hex"
+	"image"
 	"time"
 
 	"github.com/wicanr2/logh3/internal/asset"
@@ -127,6 +128,7 @@ func (g *Game) fillEngagementNames(e *engagement) {
 // startEngagement 把佇列最前面那一場從 tick 0 開始。
 func (g *Game) startEngagement() {
 	g.engTick, g.engTickRemainder, g.engClick = 0, 0, false
+	g.engTimelineCache, g.engFrameCache = nil, nil
 }
 
 // engagementPicture 是時間線上的一次畫圖：哪一段、哪一格、哪個視窗、第幾 tick。
@@ -145,6 +147,10 @@ func (g *Game) engagementTimeline(e engagement) (pics []engagementPicture, resul
 	interval := 8
 	if iv := g.res.Engagement.Animation.Intervals; g.display.AnimSpeed >= 0 && g.display.AnimSpeed < len(iv) {
 		interval = iv[g.display.AnimSpeed]
+	}
+	key := engagementTimelineKey{g.res.Comani, g.res.Engagement, interval, e.planetKind, e.fleetName, e.planetSide, e.fleetSide, e.ships, e.destroyed}
+	if cache := g.engTimelineCache; cache != nil && cache.key == key {
+		return cache.pictures, cache.result
 	}
 	tick := 0
 	add := func(seg string, frames []int, side int) {
@@ -180,6 +186,7 @@ func (g *Game) engagementTimeline(e engagement) (pics []engagementPicture, resul
 		seg := string([]byte{e.fleetName[0], e.fleetName[1], 'D', sub})
 		add(seg, g.comaniFrames(seg), e.fleetSide)
 	}
+	g.engTimelineCache = &engagementTimelineCache{key, pics, tick}
 	return pics, tick
 }
 
@@ -356,12 +363,18 @@ func (g *Game) drawEngagement() *gfx.Framebuffer {
 	if g.fleetCombat.active {
 		return g.drawFleetCombatScene()
 	}
-	fb := gfx.NewFramebuffer(0)
 	if g.res.Engagement == nil {
+		return gfx.NewFramebuffer(0)
+	}
+	view := g.engagementView()
+	pictures := g.activeEngagementPictures()
+	if fb := g.cachedEngagementFrame(view, pictures); fb != nil {
 		return fb
 	}
-	g.res.Engagement.Draw(fb, g.res.Font, g.res.FrameTiles, g.res.EngagementPanel, g.engagementView())
+	fb := gfx.NewFramebuffer(0)
+	g.res.Engagement.Draw(fb, g.res.Font, g.res.FrameTiles, g.res.EngagementPanel, view)
 	g.drawEngagementPictures(fb)
+	g.saveEngagementFrame(view, pictures, fb)
 	return fb
 }
 
@@ -375,6 +388,7 @@ func (g *Game) drawEngagementPictures(fb *gfx.Framebuffer) {
 	win := g.res.Engagement.Animation.Windows
 	var planes asset.Planes
 	drawn := false
+	bases := make([]*asset.Image, len(win))
 	for _, pc := range pics {
 		if pc.tick > g.engTick || pc.side < 0 || pc.side >= len(win) {
 			break
@@ -387,15 +401,24 @@ func (g *Game) drawEngagementPictures(fb *gfx.Framebuffer) {
 			planes, drawn = asset.PlanesFrom(fb.Pix), true
 		}
 		_ = fr[pc.frame].Draw(planes, asset.BMGWindowBase(win[pc.side][0], win[pc.side][1]))
+		if len(pc.segment) == 4 {
+			if im, err := g.res.Comani.StaticPicture(pc.segment[:2]); err == nil {
+				bases[pc.side] = im
+			}
+		}
 	}
 	if !drawn {
 		return
 	}
 	pix := planes.Pixels()
+	clipped := append([]uint8(nil), fb.Pix...)
+	var rects []image.Rectangle
 	for _, w := range win {
 		x0, y0 := w[0]*8, 40+w[1]*4
+		rects = append(rects, image.Rect(x0, y0, x0+256, y0+102))
 		for y := y0; y < y0+102 && y < gfx.Height; y++ {
-			fb.WriteRow(x0, y, pix[y*gfx.Width+x0:y*gfx.Width+x0+256])
+			copy(clipped[y*gfx.Width+x0:y*gfx.Width+x0+256], pix[y*gfx.Width+x0:y*gfx.Width+x0+256])
 		}
 	}
+	screen.DrawAnimationPixels(fb, clipped, rects, bases...)
 }

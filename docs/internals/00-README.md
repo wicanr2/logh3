@@ -1,5 +1,47 @@
 # 原版內部構造參考
 
+[介面操作第128輪](../goal/2026-10-12-launch-hover-round-128.md)、[功能列與反光138](../spec/138-top-toolbar-and-hover.md)及[正常介面試樣器](../../tools/scripts/interface_hover_preview.go)保存本次啟動確認、F1／F7／F8配置及調暗試樣。
+
+[原配置HD交付111](../playtest/111-production-hd.md)及[唯一來源索引](data/production-hd.json)保存正式A介面、地圖、動畫、正常S1實錄與三平台交付；[最終核對器](../../tools/scripts/hd_finalize.py)逐檔驗證凍結來源、封包與收據。
+
+[HD共用艦型匯入器](../../tools/scripts/hd_ship_import.py)只複製生成原PNG，保存2×2圖集與原D0像素雜湊；正式載入器取格，不以影像腳本修圖。
+
+[HD動畫批次診斷](../../tools/scripts/hd_animation_check.go)枚舉實際COMANI段、解覆寫／XOR與片頭播放序列，原色重播及HD抽樣分開記錄。
+
+[動畫艦殼與光效133](../spec/133-hd-animation-surfaces.md)共用原解碼幀，保留片頭／交火幀序、鏡頭及事件；完整快照不能抹掉外側HD文字。
+
+[策略面材與高解析符號132](../spec/132-hd-strategy-and-symbols.md)保留32遮罩、當幀色號、75張真實SPRITE索引、情報與游標裁切；策略前景以原PNG定位重畫，不能驅動規則或點選。
+
+[正式HD第125輪](../goal/2026-10-11-production-hd-round-125.md)沿已確認的A原配置接正式遊戲；[繪製紀錄規格130](../spec/130-hd-drawing-journal.md)定義原色號保持、高解析文字、面框及疊窗順序。
+
+[HD字型圖集產生器](../../tools/scripts/hd_font_atlas.py)在既有HD工具映像排版Noto Serif CJK TC；輸出保存來源字型、授權及生成器雜湊，缺字沿原字模回退。
+
+[HD地圖材質131](../spec/131-hd-map-materials.md)沿原格號、世界座標、星域遮罩及小地圖bitmap；共享生成材質不取代地形或規則資料。
+
+[32張HD地圖診斷](../../tools/scripts/hd_map_check.go)從正式Battle消費端檢查64個鏡頭、53實際圖塊及天體四格；正常玩家錄影另外驗收。
+
+[HD介面與S1影片第123輪](../goal/2026-10-11-hd-interface-and-s1-promo-round-123.md)保存本輪狀態；[三劇本目錄129](../spec/129-bundled-scenario-catalog.md)、[正常X11實錄](../../tools/scripts/s1_gameplay_record.py)與[有界錄影顯示](../../tools/s1_record_display.sh)為重現入口。
+
+[下一階段HD提案](../goal/2026-10-10-v1-and-hd-plan-round-122.md)列實際素材範圍、畫布方向與分階段驗收，未確認部分不進正式程式。
+
+[v1引擎封包器](../../tools/scripts/v1_release.py)、[啟動器抽驗](../../tools/scripts/v1_release_smoke.py)與[推廣片製作](../../tools/scripts/v1_promo.py)保存正式交付的重現入口；[來源索引](data/v1-release.json)集中輸入、輸出及驗收身份。
+
+[HD畫布試樣產生器](../../tools/scripts/v1_hd_preview.py)只產生可丟棄HTML；[集中交付核對器](../../tools/scripts/v1_finalize.py)核六份ZIP、正常視窗、影音及來源，產生最終SHA清單。
+
+[封包美術說明更正](../../tools/scripts/v1_package_notes.py)保留本次尚未發布的舊ZIP，從相同程式及素材重封，逐檔驗證新版說明、manifest與平台權限。
+
+[按鈕修正128](../spec/128-visible-button-activation.md)與[正式交付109](../playtest/109-v1-release.md)保存第二畫面確認、月初報告接線及v.1.0.0封包驗收。
+
+[原素材HD取樣](../../tools/scripts/hd_refinement_probe.go)驗各類首／中／尾PNG的邏輯像素中心與色盤，與正常玩家路徑收據分開標示。
+
+[完整人物核對器](../../tools/scripts/hd_complete_check.go)以實際FACE.AMG驗82個人物及第82號單色空格，逐項核對生成PNG、原圖與提示詞。
+
+[HD邊緣細化](../../internal/presentation/refinement.go)與[中心／細線／動態色盤回歸](../../internal/presentation/refinement_test.go)保存123的固定取樣契約。
+
+[全畫面HD規格123](../spec/123-hd-complete-presentation.md)區分逐張人物修復與地圖、艦艇、動畫的呈現層邊緣細化，沿原索引與動態色盤。
+
+HD 素材匯入使用[原始輸出匯入器](../../tools/scripts/hd_art_import.py)保存 image_gen PNG 與提示詞；[人物核對表](../../tools/scripts/hd_art_review.go)只產生原圖與 HD 並排的診斷圖，不修改素材。
+
 HD 美術沿使用者核准的原畫風試樣：[規格122](../spec/122-hd-artwork.md)定義可選高解析度圖片、原索引、遮擋及輸入契約。定版圖保存在 `assets/hd/face/face-00.png`；完整提示詞及來源見 WORKLOG 的 HD 試樣記錄。這是美術修復方向，不宣稱原版像素對拍。
 
 [HD素材入口](../../assets/hd/README.md)、[來源與雜湊](../../assets/hd/MANIFEST.json)及[正常操作與試玩108](../playtest/108-hd-artwork.md)保存實際覆蓋與交付。HD驗收沿[正式操作模型](../../tools/scripts/hd_art_model.go)、[真實X11輸入](../../tools/scripts/hd_art_gui.py)與[全視窗擷取](../../tools/scripts/hd_art_capture.go)；歷史原畫面收據保持。
@@ -962,6 +1004,34 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [計畫119](../goal/2026-10-06-macos-retro-promo-round-119.md)及[macOS與新版推廣片106](../playtest/106-macos-and-retro-promo.md)。
 - [macOS隔離入口](../../tools/macos.sh)與[兩架構建置器](../../tools/scripts/local_test_macos_build.sh)沿既有Go1.24.13映像。
 
+## 第123輪三劇本、實錄影片與HD介面
+
+- [計畫123](../goal/2026-10-11-hd-interface-and-s1-promo-round-123.md)列操作介面及動畫HD的分批工作與樣式閘門。
+- [129劇本目錄契約](../spec/129-bundled-scenario-catalog.md)、[封包三劇本抽驗](../../tools/scripts/bundled_scenarios_smoke.py)與[驗收110](../playtest/110-hd-interface-s1-promo.md)保存個人索引空尾格的修正。
+- [正常X11實錄器](../../tools/scripts/s1_gameplay_record.py)、[有界顯示](../../tools/s1_record_display.sh)、[雙旗故事製片](../../tools/scripts/s1_story_promo.py)與[交付核對器](../../tools/scripts/s1_finalize.py)保存來源、剪接及影音檢查。
+- [素材盤點器](../../tools/scripts/hd_interface_inventory.py)、[可操作介面模板](../../tools/scripts/hd_interface_preview.html)與[瀏覽器抽驗](../../tools/scripts/hd_interface_browser_check.py)保持與正式遊戲獨立。
+- [瀏覽器增補映像](../../tools/Dockerfile.hd-preview)及[套件下載核對器](../../tools/scripts/hd_preview_deps.py)延伸既有影片工具；精確套件與SHA-256收據由映像保存。
+- [唯一來源索引](data/s1-gameplay-promo.json)記錄本次修正版、正常實錄、素材盤點與試樣的驗收範圍。
+
+## 第124輪原介面與地圖HD
+
+- [計畫124](../goal/2026-10-11-original-layout-hd-round-124.md)記錄A風格、原介面配置及戰略／戰術／小地圖HD範圍，取代前輪尚待選型的現行說法。
+- [原配置試樣產生器](../../tools/scripts/hd_original_layout_preview.py)只寫入workplace，沿現行JSON、星域遮罩及正常S1截圖製作；不接正式Game或存檔。
+- [原配置瀏覽器抽驗](../../tools/scripts/hd_original_layout_check.py)核對疊窗與六鈕矩形、32星域選取、鍵盤返回、文字格及4:3比例，另產生目視截圖。
+
+## 第126輪原版介面與敵軍AI展示
+
+- [計畫126](../goal/2026-10-11-original-ui-ai-promo-round-126.md)是本輪唯一狀態表，保留既有交付並記錄外觀修正及影片要求。
+- [規格134](../spec/134-enemy-visibility-display.md)定義預設關閉、遊戲中切換的敵軍全顯示，以及顯示與規則的資料邊界。
+- [規格135](../spec/135-original-style-hd-ui.md)沿使用者確認的原配色、原框線及原字模輪廓強化方向。
+- [四款陣營HTML概念產生器](../../tools/scripts/faction_hd_concepts.py)保留各兩款比較。第2版依使用者選擇，帝國B改亮藍／黃金，同盟A改淡黃／淡赤紅；[瀏覽器核對](../../tools/scripts/faction_hd_concept_check.py)檢查四畫面、原色切換、試點框與對齊線。本機核准概念入口為`workplace/hd126/FACTION-HD-CONCEPTS.html`，正式接線的證據見113。
+- [驗證112](../playtest/112-original-ui-concepts-and-enemy-display.md)與[來源索引](data/original-ui-concepts.json)保存68張原框／原字模正常視窗、敵軍顯示測試、HTML第2版及待完成的AI錄影範圍。
+- [正式陣營主題資料](../../assets/hd/interface-themes.json)沿使用者核准的[帝國B原PNG](../../assets/hd/interface-empire-approved.png)與最新[同盟B原PNG](../../assets/hd/interface-alliance-approved.png)，配合135追加的戰略地圖主題契約；只供顯示，不改規則或存檔。
+- [正式陣營外觀核對器](../../tools/scripts/faction_hd_check.py)比較核准HTML的四畫面與正式呈現，保存完整差圖與已分類差異，並產生兩陣營的離線實際畫面頁。
+- [正式主題驗證113](../playtest/113-faction-themes.md)及[凍結來源](data/faction-themes.json)保存改選前同盟A的歷史收據；最新同盟B見114，影片與封包見115。本機實際畫面頁為`workplace/hd126/FACTION-HD-GAME.html`。
+- [AI影片模型](../../tools/scripts/ai_promo_model.go)從公開S3載入兩種模式，保存相同初始六表與正常逐回合圖，供實際X11錄影核對；不能單獨代替實錄或DOS原版證據。
+- [AI與S1正常實錄](../../tools/scripts/ai_gameplay_record.py)沿正式遊戲、X11鍵鼠及有時鐘虛擬音訊，同次錄製遊戲畫面、配樂與音效；可用模型逐張核完整視窗。
+
 ## decomp 與編譯器歸屬
 
 - [`66-fleet-attack-203a-0424.md`](66-fleet-attack-203a-0424.md)：戰略艦隊攻擊力 `203A:0424` 的精確語意與 16 位元溢位區。
@@ -969,3 +1039,78 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 - [研究443](../re/443-fleet-attack-differential-test.md)：`203A:0424` 的差異測試收據。
 - [規格124](../spec/124-decomp-reference-oracle.md)：C 參考實作作為規則 oracle 的驗收契約，C 程式在 [`decomp/`](../../decomp/README.md)。
 - [規格125](../spec/125-repair-ship-repairable.md)：修護艦可被其他修護艦修理（可選規則，預設關閉）。
+
+- [戰略AI推廣片正常新局模型](../../tools/scripts/strategy_ai_promo_model.go)：正常實行及存讀換陣營檢視電腦部署，供第126輪實錄核對。
+
+- [陣營正式HTML瀏覽器核對](../../tools/scripts/faction_hd_game_browser_check.py)：最新帝國B／同盟B的離線圖片、切換與手機版面。
+
+- [雙旗HD故事及實戰比較影片](../../tools/scripts/faction_story_promo.py)：有界逐幀片頭、正式封包錄音與來源影格核對，僅本機交付。
+
+- [114 同盟赤焰戰線](../playtest/114-alliance-fireline.md)：最新同盟B與戰略星圖，68個正常視窗及[來源索引](data/alliance-fireline-theme.json)。
+
+- [114來源凍結工具](../../tools/scripts/faction_fireline_finalize.py)：核對同盟B的正常收據並保存來源副本。
+
+- [115交付核對工具](../../tools/scripts/faction_delivery_finalize.py)：核對最新陣營素材、封包、正常實錄及故事影片，將本機交付集中於`dist-all/v.1.1.2-20261011/`。
+
+- [115雙陣營HD與AI實錄交付](../playtest/115-faction-hd-ai-promo.md)及[來源索引](data/faction-hd-ai-delivery.json)：最新同盟B、戰場F7、兩種AI比較、118秒HD故事影片與新版封包。
+
+- [第127輪目前狀態](../goal/2026-10-11-map-icons-cadence-round-127.md)：戰鬥節奏、原版圖示／地圖比較與即時切換。
+- [規格136](../spec/136-live-graphics-and-cadence.md)：F6即時顯示切換、視覺快取及交火時鐘，依116限定CONFORMED。
+
+- [規格137](../spec/137-original-symbols-and-clear-map.md)：已確認戰術圖示與待選星圖前景保護。
+- 第三稿本機比較頁：`workplace/hd127/CLARITY-COMPARISON.html`。新繪星球／徽章及完整提示、雜湊在`workplace/hd127/map-sprites/`，原版地名與航路保留，使用者已明確核准第三稿。
+- [正常切換與節奏核對器](../../tools/scripts/live_graphics_audit.py)：從正式視窗的唯讀顯示收據、X11事件及同次錄音驗F6、畫面復原與原生來源格間隔。
+- [驗證116](../playtest/116-live-graphics-review.md)與[來源索引](data/live-graphics-review.json)：正常S1六次F6、單調時鐘修復、全部星圖地名保護及第三稿限定驗收。
+
+第127輪核准第三稿：[星圖素材](../../assets/hd/strategy/MANIFEST.json)、[提示](../../assets/hd/strategy/PROMPTS.json)、[正式畫面逐像素核對工具](../../tools/scripts/approved_map_check.go)。驗收契約見[規格137](../spec/137-original-symbols-and-clear-map.md)。
+
+第127輪正式交付：[來源索引](data/live-graphics-review.json)、[交付核對工具](../../tools/scripts/live_graphics_finalize.py)，沿[驗收116](../playtest/116-live-graphics-review.md)。
+## 第128輪驗證工具
+
+第129輪接續入口：[唯一狀態表](../goal/2026-10-12-battle-playback-round-129.md)、[規格139](../spec/139-battle-playback-and-settings.md)。敵軍顯示改為設定選單，另核對正常模式戰鬥播放。
+
+[驗證118](../playtest/118-battle-playback-and-settings.md)保存正常S1／S3播放、設定返回修正、工具時序與交付限制。
+
+[正常播放唯讀觀測](../../internal/game/playbackobservation.go)經既有[正常錄影工具](../../tools/scripts/ai_gameplay_record.py)保存段名、格號及時點，不注入局面或控制遊戲時鐘。
+
+[正常動畫順序核對器](../../tools/scripts/battle_playback_audit.py)檢查實際Draw觀測的逐格順序、音效閘門及最後一格後才顯示結果。
+
+[本輪交付核對器](../../tools/scripts/battle_delivery_finalize.py)在正常播放、設定與封包全通過後產生[唯一來源索引](data/battle-playback-settings.json)。
+
+[正常艦隊計畫準備](../../tools/scripts/battle_fleet_prepare.py)沿既有公開玩家鏈，保持現行活動AI並停用舊種子注入；觀測overlay不更動戰鬥規則或時間。
+
+[正常艦隊錄影](../../tools/scripts/battle_fleet_record.py)沿第79輪鍵鼠與鏡頭回授工具，追加正式聲音、逐格觀測及F7顯示切換；診斷保存另行標示。
+
+[頂端功能列正常視窗驗收](../../tools/scripts/toolbar_gui_check.py)沿片頭、主選單、財政、訂造、建造及戰略畫面，以X11鍵鼠輸入檢查規格138。
+
+[功能列與反光來源索引](data/top-toolbar-hover.json)只在本次驗收全通過後記錄正式八包交付，前版影片身份沿驗證116。
+
+[功能列交付核對器](../../tools/scripts/toolbar_delivery_finalize.py)核對八封包、兩陣營正式啟動器、反光亮度、標準測試與來源身份。
+
+[頂端功能列驗收117](../playtest/117-top-toolbar-hover.md)保存已核准A配色、正常啟動器流程、反光修正及前版影片邊界。
+
+## 第130輪名將戰術與發行
+
+[目前狀態表130](../goal/2026-10-12-hero-ai-release-round-130.md)與[規格140](../spec/140-hero-tactics-and-release.md)記錄已核准1.5倍陣營加速、名將包圍、1988動畫來源及新版交付。
+
+[可撤回戰術試樣產生器](../../tools/scripts/hero_tactics_preview.py)只產生規則示意HTML，不接正式遊戲；本機入口為`workplace/hero130/HERO-TACTICS-PREVIEW.html`。
+
+[舊版動畫來源保存器](../../tools/scripts/hero_promo_sources.py)保存官方石黑版人物圖與年代／權利頁，僅供本機試剪，不把角色圖稱為1988正片影格。
+
+[指定動畫下載器](../../tools/scripts/hero_anime_download.py)只下載指定影片可公開讀取的串流，不帶登入憑證；來源原生尺寸與SHA-256保存在本機收據。
+
+[名將整隊戰術](../../internal/ai/hero.go)與[存活帶隊名將接線](../../internal/game/herocommand.go)沿規格140，移動加成只作用於每回合新額度。
+
+[正常名將玩家模型](../../tools/scripts/hero_gameplay_model.go)從主選單讀S1／S3，保存正式輸入與實際艦隊命令，供X11重播；不使用狀態或種子注入。
+
+[雙旗名將故事製片工具](../../tools/scripts/hero_story_promo.py)保留正常遊玩與動畫原速、遊戲聲音、來源雜湊及字幕矩形；指定動畫的原生尺寸另列，不稱原生HD。
+
+[正常名將實錄核對器](../../tools/scripts/hero_gameplay_audit.py)逐回合核對正式封包、公開玩家輸入模型、兩側同初始狀態及F7實際切換。
+
+[名將故事剪輯計畫](../../tools/scripts/hero_promo_plan.py)從完整實戰場次產生可重現時碼，保留普通速度及遊戲聲音。
+
+[名將交付核對器](../../tools/scripts/hero_delivery_finalize.py)只在封包、正常實錄與新片驗收通過後建立[來源索引](data/hero-ai-release-promo.json)。
+
+[驗證119](../playtest/119-hero-ai-release-promo.md)保存1.5倍新額度、兩位名將正常玩家比較、普通動畫、新片來源及三平台交付限制。
+
+[影片低變動回查](../../tools/scripts/hero_promo_review.py)逐區間核對來源與成片，不把固定背景、選單停留或音效等待直接當成異常凍結。

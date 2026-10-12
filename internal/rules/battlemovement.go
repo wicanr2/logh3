@@ -8,6 +8,8 @@ type MovementFleet struct {
 	Units []MovementOccupant
 	// Frozen只停用本組步進；仍列入碰撞物件。遊戲層用於規格061。
 	Frozen bool
+	// CommandBoost是規格140的暫態加成；不改基本速度與存檔格式。
+	CommandBoost bool
 }
 
 // BattleMovement每次Next處理完整一圈，讓正常renderer可畫中間位置。
@@ -27,6 +29,9 @@ func NewBattleMovement(groups []MovementFleet, formation *FormationSlots, terrai
 		}
 		if !group.Frozen {
 			group.Fleet.Budget = group.Fleet.PerTurn
+			if group.CommandBoost {
+				group.Fleet.Budget = CommandMovementBudget(group.Fleet.Budget)
+			}
 		}
 		for _, entry := range group.Units {
 			u := entry.Unit
@@ -41,6 +46,9 @@ func NewBattleMovement(groups []MovementFleet, formation *FormationSlots, terrai
 				continue
 			}
 			amount := u.CruiseSpeed << 19
+			if group.CommandBoost {
+				amount = CommandMovementBudget(amount)
+			}
 			if u.Budget > 0 && u.Budget < fleetStepCost {
 				amount += u.Budget
 			}
@@ -48,6 +56,18 @@ func NewBattleMovement(groups []MovementFleet, formation *FormationSlots, terrai
 		}
 	}
 	return m
+}
+
+// 只放大本回合新額度；餘額在呼叫端另加，不會累乘。
+func CommandMovementBudget(amount int) int {
+	if amount <= 0 {
+		return amount
+	}
+	n := int64(amount) * 3 / 2
+	if n > 0x7fffffff {
+		n = 0x7fffffff
+	}
+	return int(n)
 }
 
 func (m *BattleMovement) Next() bool {

@@ -31,6 +31,9 @@ func (f *Framebuffer) MarkArtwork(key string, x, y, w, h, sourceW, sourceH int) 
 func (f *Framebuffer) WriteRow(x, y int, pix []uint8) {
 	if len(f.Artwork) == 0 && y >= 0 && y < Height && x >= 0 && x+len(pix) <= Width {
 		copy(f.Pix[y*Width+x:], pix)
+		for i, c := range pix {
+			f.recordPixel(x+i, y, c)
+		}
 		return
 	}
 	for i, c := range pix {
@@ -41,5 +44,7 @@ func (f *Framebuffer) WriteRow(x, y int, pix []uint8) {
 // CopyPixels 以新的整張底圖取代畫面，舊圖片顯示層同時失效。
 func (f *Framebuffer) CopyPixels(pix []uint8) {
 	f.Artwork = nil
+	f.Commands = nil
 	copy(f.Pix, pix)
+	f.Commands = []DrawCommand{{Kind: DrawImage, W: Width, H: Height, SourceW: Width, SourceH: Height, Source: append([]uint8(nil), f.Pix...)}}
 }

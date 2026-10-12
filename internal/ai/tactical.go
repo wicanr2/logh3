@@ -6,15 +6,17 @@ import "github.com/wicanr2/logh3/internal/rules"
 //
 // 對應原版的 `+0x64`／`+0x66`（`docs/re/80`）。
 type Move struct {
-	Unit int `json:"unit"`
-	X    int `json:"x"`
-	Y    int `json:"y"`
+	Unit      int  `json:"unit"`
+	X         int  `json:"x"`
+	Y         int  `json:"y"`
+	Formation bool `json:"formation,omitempty"` // 規格140：旗艦下令，一般分隊保持編隊。
 }
 
 // Battlefield 是戰術層看得到的局面。**只讀**。
 type Battlefield struct {
-	Units   []rules.BattleUnit
-	Planets []rules.BattlePlanet
+	Units      []rules.BattleUnit
+	Planets    []rules.BattlePlanet
+	Commanders [2]Commander // 規格140，由遊戲層依存活帶隊旗艦重算。
 
 	// Rally 是這張地圖上埋的集結點，Terrain／Cells 是通行判定要的地形
 	// （`docs/re/100`）。三者缺一時 OriginalTactic 會退回「直接壓向
@@ -135,7 +137,8 @@ type Encircle struct {
 	// Radius 是圍上去時停在目標周圍多遠。0 ＝ 用預設。
 	Radius int
 
-	start map[int]int // 開場時各方的戰力，用來算撤退門檻
+	start       map[int]int // 開場時各方的戰力，用來算撤退門檻
+	commandAxis [2][2]int   // 名將首次接敵軸，每場第一回合重算。
 }
 
 // 圍上去的八個方位（8 分之一圓，避免浮點數）。
@@ -172,6 +175,9 @@ func (e *Encircle) Moves(b Battlefield, faction, turn int) []Move {
 	now := rules.BattleStrength(b.Units, faction)
 	if e.start[faction] > 0 && now*100 < e.start[faction]*e.retreatAt() {
 		return e.retreat(b, mine, foes)
+	}
+	if faction >= 0 && faction < len(b.Commanders) && b.Commanders[faction] != NoCommander {
+		return e.heroMoves(b, faction, b.Commanders[faction], turn)
 	}
 
 	// 集火：挑戰力最低的那一支，整場只打它。

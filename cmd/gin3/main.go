@@ -21,7 +21,6 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	eaudio "github.com/hajimehoshi/ebiten/v2/audio"
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
 	"github.com/wicanr2/logh3/internal/audio"
 	"github.com/wicanr2/logh3/internal/bootstrap"
@@ -31,14 +30,20 @@ import (
 )
 
 type app struct {
-	g          *game.Game
-	pal        [gfx.Colors]color.RGBA
-	screen     *ebiten.Image
-	music      musicPlayback
-	musicState game.State
-	effects    effectPlayback
-	buf        []byte
-	hd         *presentation.Renderer
+	g             *game.Game
+	pal           [gfx.Colors]color.RGBA
+	screen        *ebiten.Image
+	music         musicPlayback
+	musicState    game.State
+	effects       effectPlayback
+	buf           []byte
+	hd            *presentation.Renderer
+	original      bool
+	hdScreen      *ebiten.Image
+	hdUploaded    uint64
+	frameTrace    *os.File
+	animationTime time.Time
+	toolbar       toolbar
 
 	shot      string
 	shotBin   string
@@ -104,7 +109,7 @@ func (a *app) Update() error {
 	// 只看名義時長會在更新追趕時關掉仍有樣本的播放器。
 	a.g.SetSoundEffectPlaying(a.effects != nil && a.effects.Busy())
 	// 時間往前走一格；Game統一推進動畫、標題等待及回合演出。
-	a.g.Tick(time.Second / time.Duration(ebiten.TPS()))
+	a.g.Tick(a.animationStep(time.Now(), a.g.State() == game.StateEngagement))
 	if a.music != nil {
 		if err := a.syncMusic(); err != nil {
 			// 配樂出錯不該把遊戲帶走，但**要留下痕跡**——安靜地沒有音樂
@@ -128,43 +133,7 @@ func (a *app) Update() error {
 		}
 		return nil
 	}
-	// 視窗就是 640×480 的邏輯畫布，Game 也吃畫面座標，所以直接傳。
-	x, y := ebiten.CursorPosition()
-	x, y = a.gamePosition(x, y)
-	a.g.MoveMouse(x, y)
-	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		a.g.Click(x, y)
-	} else if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		a.g.LeftHold(x, y, time.Second/time.Duration(ebiten.TPS()))
-	} else if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
-		a.g.LeftRelease()
-	}
-	switch {
-	case inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight):
-		a.g.RightClick(x, y)
-	case ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight):
-		// 按著沒放：戰場上每一幀再捲一格視野（`docs/re/326`）。
-		a.g.RightHold(x, y)
-	case inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonRight):
-		a.g.RightRelease()
-	}
-	for k := ebiten.Key0; k <= ebiten.Key9; k++ {
-		if inpututil.IsKeyJustPressed(k) {
-			a.g.Key(byte('0' + (k - ebiten.Key0)))
-		}
-	}
-	for k := ebiten.KeyKP0; k <= ebiten.KeyKP9; k++ {
-		if inpututil.IsKeyJustPressed(k) {
-			a.g.Key(byte('0' + (k - ebiten.KeyKP0)))
-		}
-	}
-	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) ||
-		inpututil.IsKeyJustPressed(ebiten.KeyKPEnter) {
-		a.g.Key('\r')
-	}
-	if inpututil.IsKeyJustPressed(ebiten.KeyBackspace) {
-		a.g.Key(8)
-	}
+	a.updateInput()
 	a.updateEffects()
 	a.ticks++
 	if (a.shot != "" || a.shotBin != "") && a.ticks >= a.shotAfter {
@@ -180,7 +149,7 @@ func (a *app) dump() error {
 	fb := a.g.Frame()
 	if a.shot != "" {
 		var err error
-		if a.hd != nil {
+		if a.hd != nil && !a.original {
 			err = a.hd.WritePNG(a.shot, fb, a.g.Palette())
 		} else {
 			err = fb.WritePNG(a.shot, a.paletteSpec())
@@ -225,20 +194,43 @@ func (a *app) paletteSpec() gfx.Palette {
 }
 
 func (a *app) Draw(screen *ebiten.Image) {
-	if a.hd != nil {
-		a.screen.WritePixels(a.hd.Render(a.g.Frame(), a.g.Palette()).Pix)
-		screen.DrawImage(a.screen, nil)
+	started := time.Now()
+	fb := a.g.Frame()
+	frameTime := time.Since(started)
+	if a.hd != nil && !a.original {
+		frame := a.hd.Render(fb, a.g.Palette())
+		if a.hdUploaded != a.hd.Generation() {
+			a.hdScreen.WritePixels(frame.Pix)
+			a.hdUploaded = a.hd.Generation()
+		}
+		screen.DrawImage(a.hdScreen, nil)
+		a.drawToolbar(screen, fb.InterfaceTheme)
+		a.traceFrame(fb, started, frameTime)
 		return
 	}
 	// 調色盤每格問一次：開頭動畫那一段是自己的一組灰階。
 	a.setPalette(a.g.Palette())
-	fb := a.g.Frame()
 	for i, v := range fb.Pix {
 		c := a.pal[v]
 		a.buf[i*4], a.buf[i*4+1], a.buf[i*4+2], a.buf[i*4+3] = c.R, c.G, c.B, 255
 	}
 	a.screen.WritePixels(a.buf)
-	screen.DrawImage(a.screen, nil)
+	options := &ebiten.DrawImageOptions{}
+	if a.hd != nil {
+		options.GeoM.Scale(presentation.Scale, presentation.Scale)
+	}
+	screen.DrawImage(a.screen, options)
+	a.drawToolbar(screen, fb.InterfaceTheme)
+	a.traceFrame(fb, started, frameTime)
+}
+
+// Only the display mode changes. Layout, mouse mapping and Game stay intact.
+func (a *app) toggleGraphics() bool {
+	if a.hd == nil {
+		return false
+	}
+	a.original = !a.original
+	return true
 }
 
 func (a *app) Layout(int, int) (int, int) {
@@ -270,6 +262,7 @@ func main() {
 	scale := flag.Float64("scale", 1, "視窗放大倍率")
 	graphics := flag.String("graphics", "original", "圖片顯示：original 或 hd")
 	artDir := flag.String("art", "assets/hd", "HD 圖片目錄")
+	frameTrace := flag.String("frame-trace", "", "可選顯示性能JSONL收據；僅觀測，不改遊戲狀態")
 	shot := flag.String("shot", "", "跑幾格之後把畫面倒成 PNG 就結束（無頭驗收用）")
 	script := flag.String("script", "", "開場先送進去的輸入，分號分隔："+
 		"move X Y／click [X Y]／rclick [X Y]／type 數字／enter／back")
@@ -294,6 +287,7 @@ func main() {
 		fmt.Println(buildVersion)
 		return
 	}
+	fmt.Fprintln(os.Stderr, "啟動中：正在載入遊戲與圖片，請稍候。")
 
 	res, err := bootstrap.Load(*orig, *data)
 	if err != nil {
@@ -321,6 +315,7 @@ func main() {
 	g.SetRepairShipsRepairable(*repairShips)
 	a := &app{
 		g:         g,
+		toolbar:   toolbar{font: res.Font},
 		screen:    ebiten.NewImage(gfx.Width, gfx.Height),
 		buf:       make([]byte, gfx.Width*gfx.Height*4),
 		shot:      *shot,
@@ -329,22 +324,38 @@ func main() {
 		shotAfter: *shotAfter,
 		script:    *script,
 	}
-	switch *graphics {
-	case "original":
-	case "hd":
-		a.hd, err = presentation.Load(*artDir, res.Faces)
+	if *frameTrace != "" {
+		a.frameTrace, err = os.OpenFile(*frameTrace, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o644)
 		if err != nil {
 			die(err)
 		}
+		defer a.frameTrace.Close()
+	}
+	if *graphics != "original" && *graphics != "hd" {
+		die(fmt.Errorf("圖片顯示模式無效：%s", *graphics))
+	}
+	a.original = *graphics == "original"
+	_, artErr := os.Stat(filepath.Join(*artDir, "face"))
+	if *graphics == "hd" || artErr == nil {
+		a.hd, err = presentation.Load(*artDir, res.Faces)
+		if err != nil {
+			if *graphics == "hd" {
+				die(err)
+			}
+			fmt.Fprintln(os.Stderr, "F6：", err)
+		}
+	}
+	if a.hd != nil {
 		res.Faces.ArtworkPrefix = "face"
 		// 固定 Ebitengine 2.8.8 的最終縮放契約：HD 內部已完成圖片取樣，
 		// 縮小視窗不再對細字與框線套第二次線性濾波。
 		ebiten.SetScreenFilterEnabled(false)
-		a.screen.Dispose()
-		a.screen = ebiten.NewImage(gfx.Width*presentation.Scale, gfx.Height*presentation.Scale)
-		fmt.Fprintf(os.Stderr, "HD：%d/%d 張人物已載入，其餘使用原圖\n", a.hd.Count(), len(res.Faces.Entries))
-	default:
-		die(fmt.Errorf("圖片顯示模式無效：%s", *graphics))
+		a.hdScreen = ebiten.NewImage(gfx.Width*presentation.Scale, gfx.Height*presentation.Scale)
+		if a.hd.ThemeEnabled() {
+			fmt.Fprintf(os.Stderr, "HD：%d/%d 個人物圖索引；A原配置介面與高解析文字\n", a.hd.Count(), len(res.Faces.Entries))
+		} else {
+			fmt.Fprintf(os.Stderr, "HD：%d/%d 個人物圖索引已載入；其他圖像沿原素材\n", a.hd.Count(), len(res.Faces.Entries))
+		}
 	}
 	// 配樂：**要求了才開音訊**。缺檔就不播，但要說出來——安靜與
 	// 「沒接播放層」長得一樣，不講的話沒有人分得出是哪一種

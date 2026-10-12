@@ -57,7 +57,8 @@ def main(version, hd=False):
         if hd:
             import struct
             assert struct.unpack('>II', (out/(name+'.png')).read_bytes()[16:24]) == (1920, 1440)
-            assert 'HD：5/83' in (out/(name+'.log')).read_text()
+            hd_count = len(list((package/'art/face').glob('face-*.png')))
+            assert f'HD：{hd_count}/83' in (out/(name+'.log')).read_text()
         rows.append({'name': name, 'command': command, 'state': state, 'png_sha256': sha(out/(name+'.png'))})
         print('Windows封包Wine', name, state.splitlines()[0], flush=True)
     assert 'state=StateBattle' in (out/'battle.txt').read_text()

@@ -14,6 +14,9 @@ type Region struct {
 // RGNHeader 是 `STRMAP.RGN` 檔頭的長度；每筆 6 bytes，所以有 32 個區域。
 const RGNHeader = 192
 
+// StarMapLayers只供HD呈現，Regions用1..32標記原遮罩，0為界外。
+type StarMapLayers struct{ Base, Regions, Colours []uint8 }
+
 // OpenRGN 解析星域區域遮罩。
 //
 // 檔頭每筆 6 bytes：`{塊x, 塊y, 塊寬, 塊高, u16 位移}`，位移相對資料區
@@ -94,6 +97,18 @@ func BuildStarMap(bit, rgn []byte, colours []uint8, tw, th, cols int) (*Image, e
 	for i, r := range regions {
 		r.Paint(out, base, colours[i], tw, th)
 	}
+	layers := &StarMapLayers{Base: base.Pix, Regions: make([]uint8, base.W*base.H), Colours: append([]uint8(nil), colours...)}
+	for i, r := range regions {
+		for y := 0; y < r.BH*th && r.BY*th+y < base.H; y++ {
+			for x := 0; x < r.BW*tw && r.BX*tw+x < base.W; x++ {
+				if r.Covers(x, y, tw, th) {
+					at := (r.BY*th+y)*base.W + r.BX*tw + x
+					layers.Regions[at] = uint8(i + 1)
+				}
+			}
+		}
+	}
+	out.StarMap = layers
 	return out, nil
 }
 

@@ -3,6 +3,7 @@ package ui
 import (
 	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
+	"image"
 )
 
 // Cell 是文字視窗的一格：一個全形字碼與一個屬性。
@@ -112,7 +113,7 @@ func (w *TextWindow) DrawRow(fb *gfx.Framebuffer, fnt *font.Font, r int) []uint1
 func (w *TextWindow) drawCell(fb *gfx.Framebuffer, fnt *font.Font, c, r int) uint16 {
 	cell := w.Cells[r*w.Cols+c]
 	cx, cy, cw, ch := w.cellRect(c, r)
-	fb.FillRect(cx, cy, cw, ch, cell.BG())
+	fb.SurfaceRect(cx, cy, cw, ch, cell.BG())
 	if cell.Code == Blank {
 		return 0
 	}
@@ -121,6 +122,11 @@ func (w *TextWindow) drawCell(fb *gfx.Framebuffer, fnt *font.Font, c, r int) uin
 		return cell.Code
 	}
 	px, py := cx, cy+w.CellPadY
+	start := fb.BeginGroup()
+	defer func() {
+		fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawGlyph, X: px, Y: py, W: font.GlyphW, H: font.GlyphH,
+			Code: cell.Code, Colour: cell.FG(), Shadow: cell.Shadow, ShadowDY: w.Shadow.DY, Clip: image.Rect(0, 0, gfx.Width, gfx.Height)})
+	}()
 	blit := func(shift, oy int, col uint8) {
 		for gy, bits := range g {
 			row := bits << uint(shift)
@@ -176,6 +182,11 @@ func DrawGlyphClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16
 	if g == nil {
 		return false
 	}
+	start := fb.BeginGroup()
+	defer func() {
+		fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawGlyph, X: x, Y: y, W: font.GlyphW, H: font.GlyphH,
+			Code: code, Colour: fg, Shadow: shadow, ShadowDY: shadowDY, Bold: bold, Clip: image.Rect(cx, cy, cx+cw, cy+ch)})
+	}()
 	if bold {
 		for i, v := range g {
 			g[i] = v | v>>1
@@ -217,6 +228,11 @@ func DrawHalfGlyph(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8, fg
 // DrawHalfGlyphClipped 同 DrawHalfGlyph，但把整個字（含立體邊）裁在矩形內。
 func DrawHalfGlyphClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint8,
 	fg, shadow uint8, shadowDY int, bold bool, cx, cy, cw, ch int) bool {
+	start := fb.BeginGroup()
+	defer func() {
+		fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawGlyph, X: x, Y: y, W: font.HalfW, H: font.GlyphH,
+			Code: uint16(code), Half: true, Colour: fg, Shadow: shadow, ShadowDY: shadowDY, Bold: bold, Clip: image.Rect(cx, cy, cx+cw, cy+ch)})
+	}()
 	if shadow != 0 {
 		halfPass(fb, fnt, x, y, code, shadow, 1, shadowDY, bold, cx, cy, cw, ch)
 	}
@@ -276,6 +292,7 @@ func DrawCellClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16,
 	if code>>8 >= 0x80 {
 		return DrawGlyphClipped(fb, fnt, x, y, code, fg, shadow, shadowDY, bold, cx, cy, cw, ch)
 	}
+	start := fb.BeginGroup()
 	// **整格先畫立體邊、再畫兩個字身。** 一個字一個字畫的話，右半那個字的
 	// 立體邊會蓋掉左半那個字加粗溢出來的最後一行（`docs/re/111`）。
 	if shadow != 0 {
@@ -284,5 +301,8 @@ func DrawCellClipped(fb *gfx.Framebuffer, fnt *font.Font, x, y int, code uint16,
 	}
 	a := halfPass(fb, fnt, x, y, uint8(code>>8), fg, 0, 0, bold, cx, cy, cw, ch)
 	b := halfPass(fb, fnt, x+font.HalfW, y, uint8(code), fg, 0, 0, bold, cx, cy, cw, ch)
+	// 保留原本「兩字陰影先畫」的 fallback，HD 則以兩個半形格重播。
+	fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawGlyph, X: x, Y: y, W: font.GlyphW, H: font.GlyphH,
+		Code: code, Half: true, Colour: fg, Shadow: shadow, ShadowDY: shadowDY, Bold: bold, Clip: image.Rect(cx, cy, cx+cw, cy+ch)})
 	return a && b
 }

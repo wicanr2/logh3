@@ -1,9 +1,11 @@
 package game
 
 import (
+	"bytes"
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
+	"reflect"
 
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
@@ -21,6 +23,8 @@ type fleetCombatSceneState struct {
 	attackEnd, resultTick, tick int
 	damaged, click              bool
 	hit                         rules.FleetCombatHit
+	frameView                   *screen.FleetFrameView
+	frameCache                  *gfx.Framebuffer
 }
 
 func (g *Game) fleetDamageCommand(own, target int, weapon byte) (rules.FleetCombatCommand, error) {
@@ -468,10 +472,32 @@ func (g *Game) drawFleetCombatScene() *gfx.Framebuffer {
 		g.fleetCombatFail(err)
 		return gfx.NewFramebuffer(0)
 	}
-	fb, err := g.res.FleetPresentation.RenderFleetFrame(v, g.res.EngagementPanel, g.res.FleetSceneSprites, g.res.Comani, g.res.Font, g.res.FrameTiles)
+	fb, err := s.renderFrame(v, func() (*gfx.Framebuffer, error) {
+		return g.res.FleetPresentation.RenderFleetFrame(v, g.res.EngagementPanel, g.res.FleetSceneSprites, g.res.Comani, g.res.Font, g.res.FrameTiles)
+	})
 	if err != nil {
 		g.fleetCombatFail(err)
 		return gfx.NewFramebuffer(0)
 	}
 	return fb
+}
+
+func (s *fleetCombatSceneState) renderFrame(v screen.FleetFrameView, build func() (*gfx.Framebuffer, error)) (*gfx.Framebuffer, error) {
+	if s.frameCache != nil && s.frameView != nil && reflect.DeepEqual(*s.frameView, v) {
+		return s.frameCache, nil
+	}
+	fb, err := build()
+	if err != nil {
+		return nil, err
+	}
+	// Keep a detached visual view. The tick and sound gates still advance in
+	// Update; repeated native animation frames only reuse their drawing.
+	for i := range v.Scene.Sides {
+		v.Scene.Sides[i] = append([]screen.FleetSceneUnit(nil), v.Scene.Sides[i]...)
+		v.Units[i].AdmiralName = bytes.Clone(v.Units[i].AdmiralName)
+		v.Units[i].KindName = bytes.Clone(v.Units[i].KindName)
+	}
+	v.Pictures = append([]screen.FleetScenePicture(nil), v.Pictures...)
+	s.frameView, s.frameCache = &v, fb
+	return fb, nil
 }

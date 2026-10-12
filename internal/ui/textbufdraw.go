@@ -79,7 +79,7 @@ func drawContentCell(fb *gfx.Framebuffer, fnt *font.Font, tiles *FrameTiles,
 	if cell.Flags&0x40 != 0 {
 		shadow = TextShadowAltInk
 	}
-	fb.FillRect(x, y, FrameTileW, FrameTileH, bg)
+	fb.SurfaceRect(x, y, FrameTileW, FrameTileH, bg)
 	var missing uint16
 	if fnt != nil {
 		if hi >= 0x80 {

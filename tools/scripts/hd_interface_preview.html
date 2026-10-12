@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>銀河英雄傳說III SP：HD操作介面試樣</title>
+<style>
+:root{color-scheme:dark;--bg:#07111e;--panel:#102133;--line:#344a60;--ink:#edf0e9;--muted:#9bacba;--accent:#d7b77a;--radius:2px}
+*{box-sizing:border-box}body{margin:0;background:#030812;color:var(--ink);font:18px/1.5 "Noto Sans CJK TC","Noto Sans TC",system-ui,sans-serif}
+button{font:inherit;min-height:44px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:8px 16px;border-radius:var(--radius);cursor:pointer;transition:background .15s,border-color .15s}
+button:hover{background:#263e53;border-color:var(--accent)}button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}button[aria-pressed=true],button.primary{border-color:var(--accent);color:var(--accent);background:#30302a}
+.toolbar{max-width:1280px;margin:20px auto;padding:0 18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}.toolbar small{color:var(--muted)}
+.bridge{width:min(1280px,100%);aspect-ratio:4/3;margin:0 auto 24px;background:radial-gradient(ellipse at 0 0,#18394b,#07111e 70%);border:1px solid var(--line);display:grid;grid-template-rows:94px 58px 1fr 70px;overflow:hidden;box-shadow:0 20px 90px #0008}
+header{padding:20px 30px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.eyebrow{font-size:13px;letter-spacing:3px;color:var(--accent)}h1{font:600 25px/1.3 "Noto Serif CJK TC",serif;margin:3px 0}header .date{text-align:right;color:var(--muted);font-size:15px}
+nav{display:flex;gap:8px;padding:6px 28px;border-bottom:1px solid var(--line)}nav button{border-color:transparent;font-size:16px}
+.body{display:grid;grid-template-columns:32% 1fr;gap:24px;padding:28px}.sidebar{display:flex;flex-direction:column;gap:20px}.star-map{position:relative;min-height:280px;flex:1;overflow:hidden;border:1px solid var(--line);background:#030914}.star-map svg{width:100%;height:100%;opacity:.6;position:absolute}.star-map::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 60%,#07111e)}.map-label{position:absolute;bottom:20px;left:22px;z-index:1}.map-label strong{display:block;font:22px serif;color:var(--accent)}
+.brief{padding:20px;border:1px solid var(--line);border-radius:var(--radius);font-size:16px;background:#0b1825}.brief span{color:var(--muted)}.brief strong{font-size:28px;display:block;margin:6px 0;font-variant-numeric:tabular-nums}
+.sheet{border:1px solid var(--line);background:linear-gradient(120deg,#13283a,#0c1927);border-radius:var(--radius);padding:24px 28px;display:flex;flex-direction:column;box-shadow:0 10px 25px #0003}.sheet-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}.sheet h2{font:500 27px "Noto Serif CJK TC",serif;margin:0 0 4px}.sheet .note{color:var(--muted);font-size:14px;margin:0 0 18px}.tag{color:var(--accent);font-size:14px;white-space:nowrap}
+.rows{flex:1}.row{display:grid;grid-template-columns:minmax(150px,1fr) 110px 144px;align-items:center;min-height:65px;border-bottom:1px solid #344a6070;gap:10px;font-size:17px}.row .num{text-align:right;font-variant-numeric:tabular-nums;font-size:21px}.stepper{display:flex;gap:5px;justify-content:flex-end;align-items:center}.stepper button{width:44px;padding:0;min-height:44px}.stepper output{min-width:38px;text-align:center;color:var(--accent);font-size:15px}.row.total{color:var(--accent);border-top:1px solid var(--accent);border-bottom:0;margin-top:10px}.buttons{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}.buttons button{min-width:94px}
+footer{display:flex;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding:12px 28px;font-size:14px;color:var(--muted)}footer .message{color:var(--accent)}footer button{font-size:14px}
+body[data-theme=clear]{--panel:#123343;--line:#356273;--accent:#72e0e2;--radius:12px}.clear-only{display:none}body[data-theme=clear] .clear-only{display:inline}
+@media(max-width:1000px){.bridge{grid-template-rows:80px 58px 1fr 70px;aspect-ratio:auto;min-height:850px}.body{grid-template-columns:24% 1fr;padding:20px;gap:16px}.sheet{padding:20px}.row{grid-template-columns:minmax(0,1fr) 90px 144px;font-size:15px}.row .num{font-size:18px}.brief{padding:12px}.star-map{min-height:300px}}
+@media(max-width:700px){.bridge{min-height:0;grid-template-rows:auto auto 1fr auto}.body{grid-template-columns:1fr;padding:12px}.sidebar{display:none}header{padding:16px;gap:12px}h1{font-size:19px}.row{grid-template-columns:minmax(0,1fr) 78px 144px;gap:4px;font-size:14px}.sheet{padding:12px}.sheet-top{flex-wrap:wrap}nav{padding:6px 10px;flex-wrap:wrap}.toolbar{margin:12px auto}footer{padding:12px;flex-wrap:wrap;min-height:90px;height:auto}header .date{font-size:13px}.buttons{flex-wrap:wrap}.buttons button{min-width:80px;padding:8px 12px}}
+</style>
+<div class="toolbar"><strong>HD操作介面試樣</strong><button id="classic" aria-pressed="true" onclick="theme('classic')">A　典雅艦橋</button><button id="clear" aria-pressed="false" onclick="theme('clear')">B　清晰指揮台</button><small>可操作草稿。數值只供試樣，不連接遊戲或正式存檔。</small></div>
+<main class="bridge"><header><div><div class="eyebrow">銀河英雄傳說 III SP</div><h1>銀河帝國　艦隊司令部</h1></div><div class="date">宇宙曆 796 年 1 月 1 日<br>軍務管理</div></header>
+<nav aria-label="軍務管理"><button id="tab-account" onclick="page('account')">會計報告</button><button id="tab-budget" aria-pressed="true" onclick="page('budget')">預算計劃</button><button id="tab-build" onclick="page('build')">艦艇建造</button></nav>
+<section class="body"><aside class="sidebar"><div class="star-map"><svg viewBox="8 69 462 437" preserveAspectRatio="xMidYMid slice" role="img" aria-label="原版戰略星圖局部"><image width="960" height="720" href="__MAP__"/></svg><div class="map-label"><div class="eyebrow">銀河帝國領</div><strong>瓦爾哈拉</strong>保衛疆域，維繫前線。</div></div><div class="brief"><span>可用軍事費</span><strong id="sidebar-money">60,741</strong><span>每一項部署，都需要後方支持。</span></div></aside>
+<article class="sheet"><div class="sheet-top"><h2 id="heading">次月份預算計劃</h2><span class="tag" id="tag">軍事預算</span></div><p class="note" id="note">調整徵稅與建造比例，為下一次出征做好準備。</p><div class="rows" id="rows"></div><div class="buttons"><button onclick="reset()">重設</button><button onclick="staff()">參謀</button><button class="primary" onclick="finish()">結束</button></div></article></section>
+<footer><span id="status" class="message" role="status" aria-live="polite">等待指令</span><div><button onclick="save()">保存試樣</button> <button onclick="load()">讀回試樣</button> <span>Esc 返回</span></div></footer></main>
+<script>
+const initial={tax:100,pct:[25,0,0,0,0,0,0]};let state=structuredClone(initial),current='budget';
+const names=['戰鬥艦','巡航艦','驅逐艦','高速戰鬥艦','航空母艦','運補艦','修護艦'];
+function money(n){return Math.round(n).toLocaleString('en-US')}
+function say(s){document.getElementById('status').textContent=s}
+function theme(t){document.body.dataset.theme=t;for(const id of ['classic','clear'])document.getElementById(id).setAttribute('aria-pressed',id===t);say(t==='classic'?'典雅艦橋':'清晰指揮台')}
+function stepper(key,i,value,label){return `<div class="stepper"><button aria-label="減少${label}" onclick="step('${key}',${i},-1)">−</button><output>${value}</output><button aria-label="增加${label}" onclick="step('${key}',${i},1)">＋</button></div>`}
+function row(label,value,control='',total=false){return `<div class="row ${total?'total':''}"><span>${label}</span><span class="num">${value}</span>${control||'<span></span>'}</div>`}
+function render(){let tax=10741*state.tax/100,budget=50000+tax,paid=budget*state.pct[0]/100;document.getElementById('sidebar-money').textContent=money(budget);
+ let html='';if(current==='budget'){html=row('本月份原定軍事費','50,000')+row('艦隊維持費','0')+row('移動經費','0')+row('預估徵稅額',money(tax),stepper('tax',0,state.tax+'%','徵稅比例'))+row('預估軍事費',money(budget))+row('艦艇建造費',money(paid),stepper('pct',0,state.pct[0]+'%','建造比例'))+row('剩餘軍事費',money(budget-paid),'',true)}
+ else if(current==='build'){html=names.map((n,i)=>row(n,money(budget*state.pct[i]/100),stepper('pct',i,state.pct[i]+'%',n+'比例'))).join('')}
+ else{html=row('本月份軍事費','50,000')+row('本月份徵稅額','10,741')+row('艦隊維持費','0')+row('移動經費','0')+row('現有軍事費','60,741','',true)}document.getElementById('rows').innerHTML=html}
+function page(p){current=p;for(const id of ['account','budget','build'])document.getElementById('tab-'+id).setAttribute('aria-pressed',id===p);document.getElementById('heading').textContent={account:'本月份會計報告',budget:'次月份預算計劃',build:'艦艇建造計劃'}[p];document.getElementById('tag').textContent={account:'軍務總覽',budget:'軍事預算',build:'七種艦型'}[p];document.getElementById('note').textContent={account:'掌握財政，才能支持前線。',budget:'調整徵稅與建造比例，為下一次出征做好準備。',build:'分配造艦預算，組成你需要的艦隊。'}[p];render();say('已開啟'+document.getElementById('heading').textContent)}
+function step(key,i,d){if(key==='tax')state.tax=Math.max(50,Math.min(150,state.tax+d*5));else state.pct[i]=Math.max(0,Math.min(100,state.pct[i]+d));render();say('試樣設定已更新')}
+function reset(){state=structuredClone(initial);render();say('已恢復試樣初值')}
+function staff(){say(current==='build'?'參謀：先確保造艦經費，再依作戰需要分配艦型。':'參謀：留出維持費與移動經費，避免出征後捉襟見肘。')}
+function finish(){page(current==='account'?'budget':'account');say('已確認並返回報告')}
+function save(){try{localStorage.setItem('logh3-hd-preview',JSON.stringify(state));say('試樣設定已保存')}catch(e){say('瀏覽器未允許本機保存')}}
+function load(){try{let v=JSON.parse(localStorage.getItem('logh3-hd-preview'));if(!v||!Number.isFinite(v.tax)||!Array.isArray(v.pct)||v.pct.length!==7||!v.pct.every(Number.isFinite))throw Error();state={tax:Math.max(50,Math.min(150,v.tax)),pct:v.pct.map(x=>Math.max(0,Math.min(100,x)))};render();say('已讀回試樣設定')}catch(e){say('尚無可讀回的試樣設定')}}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){page('account');say('已返回會計報告')}});render();
+if(new URLSearchParams(location.search).get('theme'))theme('clear');
+</script></html>

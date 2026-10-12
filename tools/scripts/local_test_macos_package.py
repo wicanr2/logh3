@@ -100,16 +100,16 @@ def universal(path):
     return result
 
 
-def package(version, batch):
+def package(version, batch, source_stage=None):
     assert Path.cwd()==Path('/src') and os.getuid()==1000
     root=Path('dist-all')/version
     build=json.loads((root/'BUILD.json').read_text())
     stage=Path('workplace')/batch
     binary=stage/'gin3-universal'
     slices=universal(binary)
-    common=Path('workplace')/('package92-'+version)/'common'
+    common=(Path(source_stage) if source_stage else Path('workplace')/('package92-'+version))/'common'
     assert common.is_dir()
-    folder=root/'full-local'/('LOGH3-'+version+'-macos-universal')
+    folder=root/build.get('full_directory', 'full-local')/('LOGH3-'+version+'-macos-universal')
     assert not folder.exists()
     folder.mkdir()
     app=folder/'銀河英雄傳說III.app'
@@ -150,6 +150,7 @@ def package(version, batch):
         '也可雙擊start-original.command或start-enhanced.command選兩種AI；強化預設難度1。\n'
         '程式與資料都在app內，.app可整個搬移，兩個.command須留在app旁。\n'
         '兩種戰略及戰術AI均已啟用，電腦能下令、移動與交戰。\n'
+        '強化模式：存活帶隊楊威利或萊因哈特在場時，其陣營全部艦隊移動額度1.5倍，離場解除。楊採牽制與雙翼包抄；萊因哈特採集中突擊與側後封鎖。原版模式與動畫速度維持。\n'
         '22首配樂、28段音效、音色庫與必要原版資料已包含，不用另下載。\n'
         '防拷題可用138進入，右鍵返回；主選單安靜是正常行為。\n'
         '存檔：~/Library/Application Support/logh3/save\n'
@@ -166,8 +167,20 @@ def package(version, batch):
     if graphics:
         with (folder/'README.txt').open('ab') as f:
             count = len(list((resources/'art/face').glob('face-*.png')))
-            f.write(('\n本版預設HD顯示1920×1440，包含'+str(count)+'張原畫風HD人物。\n'
-                '其餘圖片與字型沿用原圖，整套HD美術仍在進行。規則、AI與存檔保持。\n').encode())
+            people=count-int((resources/'art/face/face-82.png').is_file())
+            method = ('帝國調暗藍色／黃金、同盟赤焰戰線已接正式介面，保留原字模與立體框；星圖使用核准新繪星球、徽章與原名稱。\n'
+                      '32張戰術地圖與小地圖沿HD呈現，部隊圖示保留原版細節。F7即時切換原版／HD；敵軍全顯示在系統指令的設定選單開關，預設關閉。\n'
+                      '戰鬥使用45組AI新繪艦型基底、原幀變更與高解析光效；片頭沿原鏡頭重建表面。\n'
+                      '動畫保留原幀序與事件，不宣稱每一幀逐張AI新繪。\n') if build.get('hd_complete_presentation') else (
+                      '艦艇、地圖、動畫與其他畫面使用三倍邊緣細化，保留原圖內容；這部分未逐張AI重繪。\n')
+            f.write(('\n本版預設HD顯示1920×1440，包含'+str(people)+'張原畫風HD人物；空白格保持空白。\n'+method+
+                '原640×480邏輯畫布、4:3、視窗／按鈕位置、規則、AI與存檔保持。\n'
+                '滑鼠移到頂端顯示功能列；F1說明、F7原版／HD。顯示敵軍請到系統指令的設定選單。HD按鈕有停留反光。\n').encode())
+    if build.get('full_directory') == 'full':
+        p = folder/'README.txt'
+        p.write_bytes(p.read_bytes().replace('macOS本機完整版測試包'.encode(), 'macOS正式本機完整版'.encode()))
+        info['CFBundleGetInfoString'] = version+' 正式本機完整版'
+        (contents/'Info.plist').write_bytes(plistlib.dumps(info))
     record(folder/'VERSION.json',{'version':version,'platform':'macos','architecture':'universal-amd64-arm64',
                                  'source_head':build['head'],'source_files':build['source_files']})
     files={str(p.relative_to(folder)):{'bytes':p.stat().st_size,'sha256':sha(p),
@@ -207,5 +220,6 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--version',required=True)
     p.add_argument('--batch',required=True)
+    p.add_argument('--source-stage', help='同版號Windows／Linux完整包的明確來源批次')
     args=p.parse_args()
-    package(args.version,args.batch)
+    package(args.version,args.batch,args.source_stage)

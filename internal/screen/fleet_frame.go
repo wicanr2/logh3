@@ -2,6 +2,7 @@ package screen
 
 import (
 	"fmt"
+	"image"
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
@@ -90,9 +91,11 @@ func (s *FleetPresentationSpec) RenderFleetFrame(v FleetFrameView, panel *asset.
 		frames[i] = frames[i][:p.LastFrame+1]
 	}
 	fb := gfx.NewFramebuffer(0)
+	start := fb.BeginGroup()
 	for y := 0; y < panel.H; y++ {
 		fb.WriteRow(0, y+40, panel.Pix[y*panel.W:(y+1)*panel.W])
 	}
+	fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawPanel, X: 0, Y: 40, W: 640, H: 400, Colour: 9})
 	for side, b := range buffers {
 		w := s.Windows[side]
 		ui.DrawTextBuffer(fb, fnt, tiles, b, w.X, w.Y)
@@ -102,6 +105,7 @@ func (s *FleetPresentationSpec) RenderFleetFrame(v FleetFrameView, panel *asset.
 	ui.DrawTextBuffer(fb, fnt, tiles, middle, w.X, w.Y)
 	if len(frames) != 0 {
 		planes := asset.PlanesFrom(fb.Pix)
+		var bases [2]*asset.Image
 		for i, list := range frames {
 			x := 1
 			if v.Pictures[i].Side == 1 {
@@ -112,8 +116,11 @@ func (s *FleetPresentationSpec) RenderFleetFrame(v FleetFrameView, panel *asset.
 					return nil, err
 				}
 			}
+			if im, err := bmg.StaticPicture(v.Pictures[i].Segment[:2]); err == nil {
+				bases[v.Pictures[i].Side] = im
+			}
 		}
-		fb.CopyPixels(planes.Pixels())
+		DrawAnimationPixels(fb, planes.Pixels(), []image.Rectangle{image.Rect(8, 56, 264, 158), image.Rect(376, 56, 632, 158)}, bases[:]...)
 	}
 	if err := DrawFleetBlocks(fb, ops); err != nil {
 		return nil, err

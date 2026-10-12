@@ -29,6 +29,7 @@ type Patch struct {
 // `2376:0E4A` 那一條，所以還不知道像素從哪裡來。視窗那種對得上格線的框
 // 一律走 `TileFrame`。
 type Frame struct {
+	Role    string // 顯示角色；不改原色號與矩形。
 	Layers  []Layer
 	Fill    uint8
 	Patches []Patch
@@ -76,6 +77,10 @@ func pick(x, y int, c, alt uint8) uint8 {
 
 // Draw 把外框與內部填色畫到畫布上。
 func (f Frame) Draw(fb *gfx.Framebuffer, x, y, w, h int) {
+	start := fb.BeginGroup()
+	defer func() {
+		fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawPanel, Key: f.Role, X: x, Y: y, W: w, H: h, Colour: f.Fill})
+	}()
 	for r, l := range f.Layers {
 		if w-2*r <= 0 || h-2*r <= 0 {
 			return

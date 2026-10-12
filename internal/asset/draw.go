@@ -8,10 +8,14 @@ func (img *Image) Draw(fb *gfx.Framebuffer, x, y, w, h int) {
 		return
 	}
 	w, h = min(w, img.W), min(h, img.H)
-	for j := 0; j < h; j++ {
-		for i := 0; i < w; i++ {
-			fb.Set(x+i, y+j, img.Pix[j*img.W+i])
-		}
+	start := -1
+	if img.StarMap != nil {
+		start = fb.BeginGroup()
 	}
+	fb.DrawSource(img.ArtworkKey, x, y, w, h, img.W, img.H, img.Pix)
 	fb.MarkArtwork(img.ArtworkKey, x, y, w, h, img.W, img.H)
+	if start >= 0 {
+		m := img.StarMap
+		fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawStarMap, X: x, Y: y, W: w, H: h, SourceW: img.W, SourceH: img.H, Source: img.Pix, Base: m.Base, Regions: m.Regions, Colours: m.Colours})
+	}
 }

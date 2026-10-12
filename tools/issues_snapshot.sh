@@ -14,12 +14,7 @@ REPO="${LOGH3_REPO:-wicanr2/logh3}"
 OUT="$ROOT/workplace/issues.json"
 mkdir -p "$ROOT/workplace"
 tmp="$OUT.tmp"
-gh issue list -R "$REPO" --label worklist --state all --limit 1000 \
+/home/anr2/.local/bin/gh issue list -R "$REPO" --label worklist --state all --limit 1000 \
   --json number,title,body,state,labels > "$tmp"
 mv "$tmp" "$OUT"
-python3 - "$OUT" <<'PY'
-import json, sys
-d = json.load(open(sys.argv[1], encoding="utf-8"))
-o = sum(1 for x in d if x["state"] == "OPEN")
-print(f"抓到 {len(d)} 張 worklist issue（open {o}、closed {len(d)-o}）→ {sys.argv[1]}")
-PY
+printf '已更新 worklist Issue 快照：%s\n' "$OUT"

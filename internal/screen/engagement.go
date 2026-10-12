@@ -171,11 +171,13 @@ func (s *EngagementSpec) Draw(fb *gfx.Framebuffer, fnt *font.Font, tiles *ui.Fra
 		return
 	}
 	if panel != nil {
+		start := fb.BeginGroup()
 		for y := 0; y < panel.H && y+s.Panel.Y < gfx.Height; y++ {
 			for x := 0; x < panel.W && x < gfx.Width; x++ {
 				fb.Set(x, y+s.Panel.Y, panel.Pix[y*panel.W+x])
 			}
 		}
+		fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawPanel, X: 0, Y: s.Panel.Y, W: panel.W, H: panel.H, Colour: 9})
 	}
 	if v == nil {
 		return

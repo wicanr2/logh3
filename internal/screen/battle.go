@@ -2,6 +2,7 @@ package screen
 
 import (
 	"encoding/json"
+	"image"
 	"os"
 	"sort"
 
@@ -73,11 +74,9 @@ type BattleView struct{ Col, Row int }
 func Battle(s *BattleSpec, panel *asset.Image, tiles []*asset.Image, cells []uint8, v BattleView) *gfx.Framebuffer {
 	fb := gfx.NewFramebuffer(3) // 原版上下外區是色號3，色號0為藍色（規格080／研究373）。
 	if panel != nil {
-		for y := 0; y < panel.H; y++ {
-			for x := 0; x < panel.W; x++ {
-				fb.Set(x, s.Panel.Y+y, panel.Pix[y*panel.W+x])
-			}
-		}
+		start := fb.BeginGroup()
+		panel.Draw(fb, 0, s.Panel.Y, panel.W, panel.H)
+		fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawPanel, X: 0, Y: s.Panel.Y, W: panel.W, H: panel.H, Colour: 9})
 	}
 	drawTerrain(fb, s, tiles, cells, v)
 	drawBattleGrid(fb, s, cells, v)
@@ -97,10 +96,33 @@ func drawTerrain(fb *gfx.Framebuffer, s *BattleSpec, tiles []*asset.Image, cells
 			}
 			t := tiles[int(cells[i])%len(tiles)]
 			ox, oy := s.Field.X+c*s.Field.TileW, s.Field.Y+r*s.Field.TileH
-			for y := 0; y < t.H; y++ {
-				for x := 0; x < t.W; x++ {
-					fb.Set(ox+x, oy+y, t.Pix[y*t.W+x])
+			start := fb.BeginGroup()
+			t.Draw(fb, ox, oy, t.W, t.H)
+			if len(tiles) == 128 && s.Field.Tiles == "BLOCK_2.BLK" && int(cells[i]) < len(tiles) {
+				edges := uint8(0)
+				nebulaAt := func(col, row int) bool {
+					if col < 0 || row < 0 || col >= s.Field.MapCols || row >= s.Field.MapRows {
+						return false
+					}
+					at := row*s.Field.MapCols + col
+					if at >= len(cells) {
+						return false
+					}
+					id := cells[at]
+					switch id {
+					case 14, 15, 22, 23, 30, 31:
+						return false
+					}
+					return id >= 8 && id <= 55
 				}
+				for n, delta := range [4][2]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}} {
+					if !nebulaAt(v.Col+c+delta[0], v.Row+r+delta[1]) {
+						edges |= 1 << n
+					}
+				}
+				fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawTerrain, X: ox, Y: oy, W: t.W, H: t.H, Code: uint16(cells[i]),
+					WorldX: (v.Col + c) * s.Field.TileW, WorldY: (v.Row + r) * s.Field.TileH,
+					SourceW: t.W, SourceH: t.H, Source: append([]uint8(nil), t.Pix...), OpenEdges: edges})
 			}
 		}
 	}
@@ -387,6 +409,7 @@ func DrawBattleUnits(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
 		}
 		t := sprites[n]
 		sx, sy := fx+u.X-ox, fy+u.Y-oy
+		start := fb.BeginGroup()
 		for y := 0; y < t.H; y++ {
 			for x := 0; x < t.W; x++ {
 				px, py := sx+x, sy+y
@@ -396,6 +419,7 @@ func DrawBattleUnits(s *BattleSpec, fb *gfx.Framebuffer, sprites []*asset.Image,
 				fb.Set(px, py, t.Pix[y*t.W+x])
 			}
 		}
+		fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawUnitSymbol, X: sx, Y: sy, W: t.W, H: t.H, Code: uint16(n), Clip: image.Rect(fx, fy, fx+fw, fy+fh)})
 	}
 }
 
@@ -435,6 +459,7 @@ func DrawBattleFleetDirectionsCached(s *BattleSpec, fb *gfx.Framebuffer, sprites
 		}
 		sx := fx + f.X - v.Col*s.Field.TileW + offsets[d][0]
 		sy := fy + f.Y - v.Row*s.Field.TileH + offsets[d][1]
+		start := fb.BeginGroup()
 		for y := 0; y < t.H; y++ {
 			for x := 0; x < t.W; x++ {
 				px, py := sx+x, sy+y
@@ -444,6 +469,7 @@ func DrawBattleFleetDirectionsCached(s *BattleSpec, fb *gfx.Framebuffer, sprites
 				}
 			}
 		}
+		fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawDirection, X: sx, Y: sy, W: t.W, H: t.H, Code: uint16(d), Clip: image.Rect(fx, fy, fx+fw, fy+fh)})
 	}
 }
 
@@ -535,6 +561,7 @@ func DrawMinimap(s *BattleSpec, fb *gfx.Framebuffer, cells []uint8, v BattleView
 	if num <= 0 || den <= 0 {
 		num, den = s.Field.TileW, s.Field.TileH
 	}
+	start := fb.BeginGroup()
 	if bits := battleMinimapBitmap(s, cells); bits != nil {
 		for x := 0; x < m.W; x++ {
 			fb.Set(m.X+x, m.Y, m.TopInk)
@@ -569,6 +596,14 @@ func DrawMinimap(s *BattleSpec, fb *gfx.Framebuffer, cells []uint8, v BattleView
 			}
 		}
 	}
+	bitmap := make([]uint8, m.W*(m.H+1))
+	for y := 0; y <= m.H; y++ {
+		for x := 0; x < m.W; x++ {
+			bitmap[y*m.W+x] = fb.At(m.X+x, m.Y+y)
+		}
+	}
+	fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawMinimap, X: m.X, Y: m.Y, W: m.W, H: m.H + 1,
+		SourceW: m.W, SourceH: m.H + 1, Source: bitmap, Colour: m.TopInk, Shadow: m.GridInk})
 	// 視野框：只畫邊。
 	// 1727:035E將世界鏡頭右移4，沿標記原點加DOS的40列（研究395）。
 	// bitmap的128／102比例與世界像素縮放不是同一個座標域。

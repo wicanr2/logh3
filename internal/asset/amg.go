@@ -26,6 +26,7 @@ type Image struct {
 	W, H       int
 	Pix        []uint8
 	ArtworkKey string
+	StarMap    *StarMapLayers
 
 	// Used 是解碼實際吃掉的位元組數。**應該剛好等於索引表寫的長度**——
 	// 對不上就是解碼走偏了，而畫面多半還是看得出人形，不會報錯。

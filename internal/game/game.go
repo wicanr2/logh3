@@ -763,6 +763,11 @@ type Game struct {
 	// 同樣跟著存檔走（`WORK.DT?` 的 `+0x22`／`+0x23`／`+0x24`，
 	// `docs/re/286`）。
 	display DisplaySettings
+	// 規格139：設定面板回到實際呼叫端，不以殘留戰場資料推測。
+	settingsReturnState State
+
+	// 執行期展示偏好，與原版存檔及索敵資料分開（規格134）。
+	showEnemies bool
 
 	// saveErr 是上一次存檔的結果（nil ＝ 成功或還沒存過）。
 	saveErr error
@@ -1001,6 +1006,8 @@ type Game struct {
 	engTick          int
 	engTickRemainder time.Duration
 	engClick         bool
+	engTimelineCache *engagementTimelineCache
+	engFrameCache    *engagementFrameCache
 	fleetCombat      fleetCombatState
 	soundEffects     soundEffectsState
 	// battleGunAim 是射程橢圓現在的傾角（一整圈 256）；瞄準當下由
@@ -2409,6 +2416,10 @@ func (g *Game) click(x, y int) {
 			g.copyProtTicks = 0
 			g.copyProtTickRemainder = 0
 		}
+	case StateCopyProtection:
+		if s := g.res.CopyProt; s != nil && s.ConfirmAt(x, y) {
+			g.Key('\r')
+		}
 	case StateLoadGame:
 		if n := SlotAt(y); n >= 0 && n < len(g.res.SaveIndex) && g.res.SaveIndex[n].Used &&
 			g.res.LoadFactionMenu != nil && g.res.LoadFactionMenu.ItemCount(screen.CommandMenuLoadFaction) == 3 {
@@ -2480,14 +2491,36 @@ func (g *Game) click(x, y int) {
 				g.state = StateBudgetPlan
 			}
 		}
+	case StateVersusAccount:
+		if s := g.commandSpec(g.state); s != nil {
+			if w := s.Windows["overlay"]; w != nil {
+				switch w.BoxAt(x, y) {
+				case 0:
+					if g.res.BudgetPlan != nil {
+						g.planArrowsDim = [4]bool{}
+						g.budgetCursorMoved = false
+						g.state = StateBudgetPlan
+					}
+				case 1:
+					g.rightClick(x, y)
+				}
+			}
+		}
+	case StateVersusShipOrder:
+		if s := g.commandSpec(g.state); s != nil {
+			if w := s.Windows["overlay"]; w != nil {
+				switch w.BoxAt(x, y) {
+				case 0:
+					g.openMonthlyBuildPlan()
+				case 1:
+					g.rightClick(x, y)
+				}
+			}
+		}
 	case StateShipOrder:
 		switch g.res.ShipOrder.HitTest(x, y-mouseDY) {
 		case "build-plan":
-			if g.res.BuildPlan != nil {
-				g.state = StateBuildPlan
-				p := g.thisPlan()
-				g.plan = &p
-			}
+			g.openMonthlyBuildPlan()
 		case "?": // 舊熱區索引1是畫面上的「確認」（規格121）。
 			g.rightClick(x, y)
 		}
@@ -2514,7 +2547,7 @@ func (g *Game) click(x, y int) {
 				g.state = StateAdmiralList
 			}
 		case act == "commit":
-			g.state = StateShipOrder
+			g.state = g.monthlyShipOrderState()
 		}
 	case StateAdmiralDetail:
 		// 下緣三顆按鈕：經歷／中止／出擊（`docs/re/65`）。
@@ -2830,6 +2863,9 @@ func (g *Game) click(x, y int) {
 						if item == StateStandbyAdmirals {
 							g.standbyScroll = 0
 						}
+						if item == StateSettings {
+							g.settingsReturnState = StateCommandPhase
+						}
 						g.state = item
 					}
 				}
@@ -2931,7 +2967,13 @@ func (g *Game) rightClick(x, y int) {
 		}
 	case StateBuildPlan:
 		// 箭頭已同步 g.pct；結束與右鍵都保留分配並返回訂造報告。
-		g.state = StateShipOrder
+		g.state = g.monthlyShipOrderState()
+	case StateAdmiralList:
+		g.state = StateBuildPlan
+	case StateBudgetPlan:
+		if !g.staffPickRightClick() {
+			g.state = g.monthlyAccountState()
+		}
 	case StateVersusAccount:
 		// 對戰模式那張（`vs4`）也是兩下右鍵（收據 `vs5`），而**中間那張
 		// 就是船艦訂造報告**——收據 `vs7` 的畫面與 `vsreports` 在兩下
@@ -2943,6 +2985,11 @@ func (g *Game) rightClick(x, y int) {
 		}
 		g.reportLayer++
 		if g.reportLayer >= 2 && g.commandSpec(StateCommandPhase) != nil {
+			g.state = StateCommandPhase
+		}
+	case StateVersusShipOrder:
+		g.reportLayer = 0
+		if g.commandSpec(StateCommandPhase) != nil {
 			g.state = StateCommandPhase
 		}
 	case StateCommandPhase:
@@ -3029,6 +3076,13 @@ func (g *Game) rightClick(x, y int) {
 		g.battleScroll(x, y)
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
+	case StateSettings:
+		if g.settingsReturnState == StateBattle {
+			g.state = StateBattle
+		} else {
+			g.state = StateCommandPhase
+		}
+		g.settingsReturnState = StateCommandPhase
 	case StateFleetWindow, StateFleetActionMenu, StateFleetTargetPick, StateFleetMessage, StateFleetConfirm,
 		StateFleetStandby, StateFleetOccupyWarn, StateFleetChangeMenu, StateFleetChangeAdj, StateFleetChangeOrg:
 		g.fleetCmdRightClick(x, y)
@@ -3308,6 +3362,7 @@ func (g *Game) SaveSlot(dir string, index int) error {
 	}
 	// 畫面上的清單跟著換（下一次開存讀檔畫面就看得到這一格的日期）。
 	if idx, err := rules.ParseSaveIndex(b); err == nil {
+		rules.RestoreBundledScenarios(idx, g.res.SaveIndex)
 		g.res.SaveIndex = idx
 	}
 	return nil
@@ -3323,7 +3378,23 @@ func readOrig(dir, name string) []byte {
 }
 
 // Frame 畫出目前的畫面。
-func (g *Game) Frame() *gfx.Framebuffer {
+func (g *Game) Frame() (result *gfx.Framebuffer) {
+	defer func() {
+		if result == nil {
+			return
+		}
+		result.InterfaceTheme = ""
+		result.HoverControl = g.hoverControlBounds()
+		switch g.state {
+		case StateIntro, StateTitle, StateMainMenu, StateCopyProtection, StateEnding:
+			return
+		}
+		if g.faction == 0 {
+			result.InterfaceTheme = "empire"
+		} else if g.faction == 1 {
+			result.InterfaceTheme = "alliance"
+		}
+	}()
 	// 戰鬥中的報告框（`3826:0405`）疊在戰場上，不是戰略地圖（規格 062）。
 	if g.state == StateTurnReport && g.turnRep.battle {
 		fb := g.drawBattle()
@@ -3432,6 +3503,12 @@ func (g *Game) Frame() *gfx.Framebuffer {
 			g.drawAdmiralBio(fb)
 			g.drawSpecStaff(fb, spec)
 			g.drawLoadFaction(fb)
+			if g.state == StateSettings {
+				g.drawEnemyVisibilitySetting(fb)
+				if spec.Mouse != nil && g.res.Cursor != nil && g.mouseY >= 0 {
+					g.res.Cursor.Draw(fb, spec.Mouse.X, spec.Mouse.Y)
+				}
+			}
 			// 參謀任命的清單與詳細資料疊在**所有**內容之上（#62）——底層那幾條
 			// 分隔線是在 `afterWindow` 之後才畫的，接在那裡會被它們戳穿。
 			// 游標本來由 `MainGameLayered` 畫，被蓋掉了所以自己補一次。
@@ -4990,11 +5067,12 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 		view = g.battleSpotting.view
 	}
 	g.battleDisplayedView, g.battleDisplayKnown = view, true
+	units, directions := g.battleDisplayUnits()
 	fb := screen.Battle(g.res.Battle, g.res.BattlePanel, g.res.BattleTiles, cells, view)
 	if len(g.battleUnits) > 0 && len(g.res.Sprites) > 0 {
-		screen.DrawBattleUnits(g.res.Battle, fb, g.res.Sprites, g.battleUnits,
-			g.cachedBattleSprite, view)
-		screen.DrawBattleFleetDirectionsCached(g.res.Battle, fb, g.res.Sprites, g.battleFleets, g.battleUnits, g.faction, view, g.battleSpotting.directions)
+		screen.DrawBattleUnits(g.res.Battle, fb, g.res.Sprites, units,
+			g.displayBattleSprite, view)
+		screen.DrawBattleFleetDirectionsCached(g.res.Battle, fb, g.res.Sprites, g.battleFleets, units, g.faction, view, directions)
 		if g.battleSpotting.highlight >= 0 && g.battleSpotting.active && g.battleSpotting.stage == 5 {
 			u := g.battleSpotting.refs[g.battleSpotting.highlight].Unit
 			screen.DrawBattleSpottingHighlight(g.res.Battle, fb, g.res.Sprites, [2]int{u.X, u.Y}, view)
@@ -5050,7 +5128,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	screen.DrawMinimap(g.res.Battle, fb, cells, view)
 	screen.DrawMinimapPlanets(g.res.Battle, fb,
 		rules.PlanetSites(cells, g.res.Battle.Field.TileW, g.res.Battle.Field.TileH))
-	screen.DrawMinimapUnits(g.res.Battle, fb, g.battleUnits)
+	screen.DrawMinimapUnits(g.res.Battle, fb, units)
 	if g.battleHoverOn && g.battleInputIdle() {
 		screen.DrawMinimapInputHighlight(g.res.Battle, fb, g.battleHoverMinimapFrom, g.battleHoverTarget, g.battleHoverMinimapLine)
 	}
@@ -5124,6 +5202,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	g.drawSpottingHeader(fb)
 	// 正常輸入時游標在最上面；移動階段原版邊界均藏游標（規格080）。
 	g.drawFleetCombatCommand(fb)
+	g.drawEnemyVisibilityNotice(fb)
 	if g.res.Cursor != nil && !g.battleMoving {
 		g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)
 	}

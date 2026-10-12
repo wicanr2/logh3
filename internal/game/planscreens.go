@@ -54,7 +54,7 @@ func (g *Game) planScreenClick(x, y int) bool {
 		if planEnd.hit(x, y) {
 			// 關掉疊圖，露出底下那一層。
 			if g.state == StateBudgetPlan {
-				g.state = StateMainGame
+				g.state = g.monthlyAccountState()
 			} else {
 				g.state = StateCommandPhase
 			}
@@ -190,15 +190,20 @@ func (g *Game) drawPlanArrows(fb *gfx.Framebuffer) {
 		return
 	}
 	for i, b := range [...]planBox{planTaxUp, planTaxDown, planPctUp, planPctDown} {
-		if !g.planArrowsDim[i] {
-			continue
-		}
-		for y := b.Y0; y <= b.Y1; y++ {
-			for x := b.X0; x <= b.X1; x++ {
-				if fb.At(x, y) == 9 {
-					fb.Set(x, y, 8)
+		if g.planArrowsDim[i] {
+			for y := b.Y0; y <= b.Y1; y++ {
+				for x := b.X0; x <= b.X1; x++ {
+					if fb.At(x, y) == 9 {
+						fb.Set(x, y, 8)
+					}
 				}
 			}
 		}
+		ink := uint8(14)
+		if g.planArrowsDim[i] {
+			ink = 8
+		}
+		// 原箭頭藏在框的像素修正裡；HD沿同一組操作矩形重畫方向符號。
+		fb.Commands = append(fb.Commands, gfx.DrawCommand{Kind: gfx.DrawIcon, X: b.X0, Y: b.Y0, W: b.X1 - b.X0 + 1, H: b.Y1 - b.Y0 + 1, Code: uint16(i % 2), Colour: ink})
 	}
 }

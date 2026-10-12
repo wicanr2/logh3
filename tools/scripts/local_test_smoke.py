@@ -14,7 +14,9 @@ def sha(path):
 
 def main(version):
     assert Path.cwd() == Path('/src') and os.getuid() == 1000
-    package = Path('dist-all')/version/'full-local'/('LOGH3-'+version+'-linux-amd64')
+    root = Path('dist-all')/version
+    build = json.loads((root/'BUILD.json').read_text())
+    package = root/build.get('full_directory', 'full-local')/('LOGH3-'+version+'-linux-amd64')
     binary = (package/'gin3').resolve()
     out = Path('workplace')/('package92-smoke-'+version)
     out.mkdir()

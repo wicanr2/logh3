@@ -2,6 +2,7 @@ package ui
 
 import (
 	"encoding/json"
+	"image"
 	"os"
 
 	"github.com/wicanr2/logh3/internal/gfx"
@@ -58,6 +59,7 @@ func (c *Cursor) Draw(fb *gfx.Framebuffer, mouseX, mouseY int) {
 // 那在畫面上完全看不出來。
 func (c *Cursor) DrawClipped(fb *gfx.Framebuffer, mouseX, mouseY, cx, cy, cw, ch int) {
 	x0, y0 := mouseX+c.Offset[0], mouseY+c.Offset[1]
+	start := fb.BeginGroup()
 	for y, row := range c.Rows {
 		for x, r := range row {
 			px, py := x0+x, y0+y
@@ -69,6 +71,7 @@ func (c *Cursor) DrawClipped(fb *gfx.Framebuffer, mouseX, mouseY, cx, cy, cw, ch
 			}
 		}
 	}
+	fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawCursor, X: x0, Y: y0, W: c.Width, H: c.Height, Clip: image.Rect(cx, cy, cx+cw, cy+ch)})
 }
 
 // Overlaps 回游標的矩形是否與指定矩形相交。

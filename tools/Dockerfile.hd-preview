@@ -1,0 +1,13 @@
+# 影片工具的瀏覽器驗收增補。基底由既有影片流程沿用。
+FROM eob-audio-capture:20261009-r3@sha256:d831720f8dfa388af8ad175fa8adeae8f2814dd4637be1e3db6a43274b26f36c
+USER root
+RUN apt-get update
+COPY scripts/hd_preview_deps.py /opt/hd_preview_deps.py
+RUN python3 /opt/hd_preview_deps.py --download-only
+RUN --network=none python3 -c "from pathlib import Path; import shutil; [shutil.copyfile(p,p.with_name(p.name.replace(':','%3a'))) for p in Path('/var/cache/apt/archives').glob('*.deb') if ':' in p.name]" \
+    && apt-get --no-download --yes --no-install-recommends install chromium=154.0.8037.92-1~deb12u1 fonts-noto-cjk=1:20220127+repack1-1 \
+    && chromium --version \
+    && dpkg-query -W > /usr/local/share/hd-preview-packages.txt \
+    && rm -rf /var/lib/apt/lists/*
+ENV HOME=/tmp
+USER 1000:1000
