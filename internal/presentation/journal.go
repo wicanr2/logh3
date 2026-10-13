@@ -87,7 +87,7 @@ func (r *Renderer) panel(c gfx.DrawCommand) {
 	}
 }
 
-func (r *Renderer) glyph(c gfx.DrawCommand) bool {
+func (r *Renderer) glyph(c gfx.DrawCommand, p gfx.Palette) bool {
 	if r.font == nil {
 		return false
 	}
@@ -104,8 +104,8 @@ func (r *Renderer) glyph(c gfx.DrawCommand) bool {
 		if _, ok := r.font.glyphs[glyphID(right.Code, true)]; !ok {
 			return false
 		}
-		r.glyph(left)
-		r.glyph(right)
+		r.glyph(left, p)
+		r.glyph(right, p)
 		return true
 	}
 	g, ok := r.font.glyphs[glyphID(c.Code, c.Half)]
@@ -114,6 +114,9 @@ func (r *Renderer) glyph(c gfx.DrawCommand) bool {
 	}
 	mask := r.font.pages[g.Page]
 	ink := textColour(c.Colour)
+	if r.classic {
+		ink = paletteColour(p, c.Colour)
+	}
 	clip := image.Rect(c.Clip.Min.X*Scale, c.Clip.Min.Y*Scale, c.Clip.Max.X*Scale, c.Clip.Max.Y*Scale)
 	rect := image.Rect(c.X*Scale, c.Y*Scale, c.X*Scale+g.W, c.Y*Scale+g.H).Intersect(clip).Intersect(r.frame.Bounds())
 	for y := rect.Min.Y; y < rect.Max.Y; y++ {
@@ -125,6 +128,9 @@ func (r *Renderer) glyph(c gfx.DrawCommand) bool {
 			}
 			if a == 0 {
 				continue
+			}
+			if r.activeTheme != nil {
+				r.uiMask[(y/Scale)*gfx.Width+x/Scale] |= themeUI | themeGlyph
 			}
 			o := y*r.frame.Stride + x*4
 			for channel, v := range [3]uint8{ink.R, ink.G, ink.B} {
@@ -162,9 +168,9 @@ func (r *Renderer) replay(commands []gfx.DrawCommand, p gfx.Palette) {
 				r.markUIEdges(c)
 			}
 		case gfx.DrawGlyph:
-			if r.classic {
+			if r.classic && (r.FontStyle() == "classic" || r.FontStyle() == "original") {
 				r.classicGlyph(c, p)
-			} else if !r.glyph(c) {
+			} else if !r.glyph(c, p) {
 				r.replay(c.Fallback, p)
 			}
 		case gfx.DrawIcon:

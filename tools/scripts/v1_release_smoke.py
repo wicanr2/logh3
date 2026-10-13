@@ -10,7 +10,7 @@ import zipfile
 VERSION = 'v.1.0.0-20261010'
 
 
-def main(windows=False):
+def main(windows=False, original_override=None):
     assert os.getuid() == 1000
     root = Path('/src/dist-all') / VERSION
     output = Path('/out/release-smoke-' + VERSION) if windows else root / 'smoke/release-linux'
@@ -24,6 +24,8 @@ def main(windows=False):
     else:
         package = root / 'release' / f'LOGH3-{VERSION}-{platform}'
     original = Path('/out/package92-smoke-' + VERSION) / f'LOGH3-{VERSION}-windows-amd64/original' if windows else Path('/orig')
+    if original_override:
+        original = Path(original_override)
     assert original.is_dir() and not (package / 'original').exists()
 
     def path(value):
@@ -57,6 +59,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--windows', action='store_true')
     parser.add_argument('--version', default=VERSION)
+    parser.add_argument('--original', help='唯讀的外部合法原版資料目錄')
     args = parser.parse_args()
     VERSION = args.version
-    main(args.windows)
+    main(args.windows, args.original)

@@ -64,7 +64,7 @@ def complete_hd_readme(version, count, blank):
             '含原版衍生素材，僅供合法持有人本機使用。字型授權見font內授權檔。\n')
 
 
-def build(version, revision, art_dir=None, formal=False, library_dir=None, soundfont_dir=None, complete_hd=False):
+def build(version, revision, art_dir=None, formal=False, library_dir=None, soundfont_dir=None, complete_hd=False, hd_music_dir=None):
     assert Path.cwd() == ROOT and os.getuid() == 1000
     assert re.fullmatch(r'v\.[0-9]+\.[0-9]+\.[0-9]+-[0-9]{8}', version)
     owned(ROOT)
@@ -142,6 +142,18 @@ def build(version, revision, art_dir=None, formal=False, library_dir=None, sound
         assert p.stat().st_size == entry['bytes'] and digest(p) == entry['sha256'], p
         copy(p, common/'music'/p.name)
     copy(library/'LIBRARY-SOURCES.json', common/'music/LIBRARY-SOURCES.json')
+    if hd_music_dir:
+        hd_music = Path(hd_music_dir)
+        hd_receipt = json.loads((hd_music/'MANIFEST.json').read_text())
+        assert len(hd_receipt['files']) == 11 and hd_receipt['sample_rate'] == 44100
+        for entry in hd_receipt['files']:
+            p = hd_music/entry['file']
+            assert p.stat().st_size == entry['bytes'] and digest(p) == entry['sha256']
+            copy(p, common/'music/hd'/p.name)
+        for name in ('MANIFEST.json', 'SOUNDFONT-LICENSE.txt'):
+            copy(hd_music/name, common/'music/hd'/name)
+        metadata['hd_music'] = {'tracks': 11, 'manifest_sha256': digest(hd_music/'MANIFEST.json'),
+                                'scope': '原版MIDI樂譜升級音色及混音；原版FM庫與存檔保持，聽感待確認'}
     sf = json.loads((ROOT/'docs/internals/data/player-music-library.json').read_text())['soundfont']
     prepared = Path(soundfont_dir) if soundfont_dir else ROOT/'workplace/music69-source/prepared'
     metadata['audio_inputs'] = {'library': str(library), 'source_receipt_sha256': digest(library/'LIBRARY-SOURCES.json'), 'soundfont': str(prepared)}
@@ -152,6 +164,8 @@ def build(version, revision, art_dir=None, formal=False, library_dir=None, sound
     copy(ROOT/'LICENSE', common/'LICENSE')
     (common/'licenses').mkdir(exist_ok=True)
     (common/'licenses/Go-LICENSE').write_bytes(Path('/usr/local/go/LICENSE').read_bytes())
+    if (source/'cmd/gin3/startup_font.LICENSE.txt').is_file():
+        copy(source/'cmd/gin3/startup_font.LICENSE.txt', common/'licenses/Startup-Noto-CJK-LICENSE.txt')
     for p in (source/'vendor').rglob('*'):
         if p.is_file() and (p.name.lower().startswith(('license', 'notice', 'copying'))):
             copy(p, common/'licenses'/p.relative_to(source/'vendor'))
@@ -172,15 +186,16 @@ def build(version, revision, art_dir=None, formal=False, library_dir=None, sound
         if platform == 'linux':
             executable.chmod(0o755)
         for name, level in [('original', -1), ('enhanced', 1)]:
+            audio_args = ' -music-quality hd' if hd_music_dir and name == 'enhanced' else ''
             if platform == 'windows':
                 launcher = folder/('start-'+name+'.cmd')
                 launcher.write_bytes(('@echo off\r\ncd /d "%~dp0"\r\n'
-                    'gin3.exe -orig "original" -data "data" -music "music" -ai '+str(level)+' -scale 1.5'+graphics_args+'\r\n'
+                    'gin3.exe -orig "original" -data "data" -music "music" -ai '+str(level)+' -scale 1.5'+graphics_args+audio_args+'\r\n'
                     'if errorlevel 1 pause\r\n').encode('ascii'))
             else:
                 launcher = folder/('start-'+name+'.sh')
                 launcher.write_text('#!/bin/sh\nset -eu\ncd "$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"\n'
-                    'exec ./gin3 -orig original -data data -music music -ai '+str(level)+' -scale 1.5'+graphics_args+' "$@"\n')
+                    'exec ./gin3 -orig original -data data -music music -ai '+str(level)+' -scale 1.5'+graphics_args+audio_args+' "$@"\n')
                 launcher.chmod(0o755)
         launch = 'start-original.cmd／start-enhanced.cmd' if platform == 'windows' else './start-original.sh／./start-enhanced.sh'
         readme = ('銀河英雄傳說III SP remake '+version+' 本機測試版\n\n'
@@ -189,6 +204,8 @@ def build(version, revision, art_dir=None, formal=False, library_dir=None, sound
                   '預設播放片頭；主選單可以開始新局或讀S0至S3。防拷題可用138進入。右鍵離開面板。\n'
                   '遊戲為640×480，啟動視窗960×720，可拖曳改大小。\n'
                   '配樂22首、音效28段已包含。預設片頭為GM，遊戲FM／GM與曲目由設定選擇。主選單安靜是正常行為。\n'
+                  '啟動先顯示真實載入階段與HD人物張數的小視窗。設定的介面字型按鈕依序切換原版強化、思源宋體、思源黑體、原版點陣；預設原版強化，原圖模式保留原版字體。\n'
+                  '本版另含11首原曲的HD音色與混音。強化啟動器預設HD音樂，原版啟動器保持原音色；設定音源行的HD與FM可切換，關閉仍可靜音。選擇在本次執行有效，不改存檔格式。\n'
                   'Windows存檔在%APPDATA%\\logh3\\save；Linux在$XDG_CONFIG_HOME/logh3/save或~/.config/logh3/save。\n'
                   'Linux需X11或XWayland、OpenGL與ALSA；Windows需可用OpenGL顯示驅動。\n\n'
                   '本版為可試玩的實作快照，尚未完成人耳、Windows實機及完整登陸分段演出驗收。\n'
@@ -257,6 +274,7 @@ if __name__ == '__main__':
     p.add_argument('--library', help='既有且通過來源收據核對的50首OGG目錄')
     p.add_argument('--soundfont', help='符合固定來源雜湊的音色庫目錄')
     p.add_argument('--complete-hd', action='store_true', help='本輪原配置HD，必須有45艦型、字型與面材清單')
+    p.add_argument('--hd-music', help='通過HD音訊manifest核對的11首MIDI版OGG目錄')
     args = p.parse_args()
     assert not args.complete_hd or args.art
-    build(args.version, args.revision, args.art, args.formal, args.library, args.soundfont, args.complete_hd)
+    build(args.version, args.revision, args.art, args.formal, args.library, args.soundfont, args.complete_hd, args.hd_music)

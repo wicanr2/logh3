@@ -1,5 +1,7 @@
 # 規格
 
+第131輪呈現及輸入修正：[141系統視窗](141-system-dialog-cursor.md)、[142啟動進度](142-startup-progress.md)、[143四字型與HD音色](143-font-and-hd-music.md)。均限定於[驗證120](../playtest/120-system-dialog-polish.md)的remake範圍；音樂人耳與真機不在完成聲明內。
+
 [117：正常玩家公開退出](117-player-public-quit.md)，沿 #90 補正式 GUI 接線。
 
 `AGENTS.md` 的流程：

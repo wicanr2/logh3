@@ -1,0 +1,45 @@
+{
+  "classification": "已核准的可丟棄試樣，保留原提案文字，不代表正式遊戲截圖",
+  "decision": "使用者確認三款加入、原版強化預設，追加保留原版點陣，共四款。",
+  "variants": [
+    {
+      "id": "classic",
+      "label": "原版強化",
+      "file": "classic.png",
+      "sha256": "70a9cd08e05f204a8676a248c17c05d9e6ed64cabfc2718542893092822bcba7",
+      "font_source": null,
+      "classification": "可撤回字型試樣，非正式遊戲驗收",
+      "saved": {
+        "path": "docs/images/font-v130-classic.png",
+        "bytes": 3798,
+        "sha256": "70a9cd08e05f204a8676a248c17c05d9e6ed64cabfc2718542893092822bcba7"
+      }
+    },
+    {
+      "id": "serif",
+      "label": "思源宋體",
+      "file": "serif.png",
+      "sha256": "4b60b60c23799150bc15da04a983f0f98fed54950d47732b691d6e042b652998",
+      "font_source": "/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc",
+      "classification": "可撤回字型試樣，非正式遊戲驗收",
+      "saved": {
+        "path": "docs/images/font-v130-serif.png",
+        "bytes": 11662,
+        "sha256": "4b60b60c23799150bc15da04a983f0f98fed54950d47732b691d6e042b652998"
+      }
+    },
+    {
+      "id": "sans",
+      "label": "思源黑體",
+      "file": "sans.png",
+      "sha256": "ea505b5c6ed74f0a03e931da632977858fdb8473be9543f3c7812d1905cf7c8d",
+      "font_source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+      "classification": "可撤回字型試樣，非正式遊戲驗收",
+      "saved": {
+        "path": "docs/images/font-v130-sans.png",
+        "bytes": 10844,
+        "sha256": "ea505b5c6ed74f0a03e931da632977858fdb8473be9543f3c7812d1905cf7c8d"
+      }
+    }
+  ]
+}

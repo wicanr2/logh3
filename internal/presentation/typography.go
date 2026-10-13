@@ -35,6 +35,42 @@ type fontAtlas struct {
 	glyphs map[uint32]atlasGlyph
 }
 
+// FontStyles 只列出已完整載入的字型；原版點陣與原版強化共用原字庫。
+func (r *Renderer) FontStyles() []string {
+	styles := []string{"original", "classic"}
+	for _, style := range []string{"serif", "sans"} {
+		if r.fonts[style] != nil {
+			styles = append(styles, style)
+		}
+	}
+	return styles
+}
+
+func (r *Renderer) FontStyle() string {
+	if r.fontStyle == "" {
+		return "classic"
+	}
+	return r.fontStyle
+}
+
+func (r *Renderer) SetFontStyle(style string) error {
+	switch style {
+	case "original", "classic":
+	case "serif", "sans":
+		if r.fonts[style] == nil {
+			return fmt.Errorf("缺少字型圖集：%s", style)
+		}
+	default:
+		return fmt.Errorf("未知字型：%s", style)
+	}
+	if style == "serif" || style == "sans" {
+		r.font = r.fonts[style]
+	}
+	r.fontStyle = style
+	r.frameValid = false
+	return nil
+}
+
 func glyphID(code uint16, half bool) uint32 {
 	id := uint32(code)
 	if half {

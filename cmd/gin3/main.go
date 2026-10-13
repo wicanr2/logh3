@@ -27,6 +27,7 @@ import (
 	"github.com/wicanr2/logh3/internal/game"
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/presentation"
+	"github.com/wicanr2/logh3/internal/ui"
 )
 
 type app struct {
@@ -34,6 +35,10 @@ type app struct {
 	pal           [gfx.Colors]color.RGBA
 	screen        *ebiten.Image
 	music         musicPlayback
+	musicOriginal *audio.Library
+	musicHD       *audio.Library
+	hdMusic       bool
+	cursor        *ui.Cursor
 	musicState    game.State
 	effects       effectPlayback
 	buf           []byte
@@ -146,7 +151,7 @@ func (a *app) Update() error {
 // `-dump-ega` 相同，可以直接與收據逐位元組比。
 func (a *app) dump() error {
 	a.setPalette(a.g.Palette())
-	fb := a.g.Frame()
+	fb := a.frame()
 	if a.shot != "" {
 		var err error
 		if a.hd != nil && !a.original {
@@ -195,7 +200,7 @@ func (a *app) paletteSpec() gfx.Palette {
 
 func (a *app) Draw(screen *ebiten.Image) {
 	started := time.Now()
-	fb := a.g.Frame()
+	fb := a.frame()
 	frameTime := time.Since(started)
 	if a.hd != nil && !a.original {
 		frame := a.hd.Render(fb, a.g.Palette())
@@ -262,6 +267,8 @@ func main() {
 	scale := flag.Float64("scale", 1, "視窗放大倍率")
 	graphics := flag.String("graphics", "original", "圖片顯示：original 或 hd")
 	artDir := flag.String("art", "assets/hd", "HD 圖片目錄")
+	fontStyle := flag.String("font", "classic", "HD字型：original原版點陣、classic原版強化、serif思源宋體、sans思源黑體")
+	musicQuality := flag.String("music-quality", "original", "配樂音色：original 或 hd；HD曲庫放在music/hd")
 	frameTrace := flag.String("frame-trace", "", "可選顯示性能JSONL收據；僅觀測，不改遊戲狀態")
 	shot := flag.String("shot", "", "跑幾格之後把畫面倒成 PNG 就結束（無頭驗收用）")
 	script := flag.String("script", "", "開場先送進去的輸入，分號分隔："+
@@ -289,123 +296,163 @@ func main() {
 	}
 	fmt.Fprintln(os.Stderr, "啟動中：正在載入遊戲與圖片，請稍候。")
 
-	res, err := bootstrap.Load(*orig, *data)
-	if err != nil {
-		die(err)
-	}
-	// 走腳本的時候不放動畫：腳本是照「開機就是主選單」寫的，
-	// 前面多一張畫面整條序列就對不上收據。
-	if *intro && *script == "" {
-		if err := bootstrap.LoadIntro(res, *orig); err != nil {
-			die(err)
-		}
-	}
-	if *saveDir != "" {
-		if err := bootstrap.UseSaveDir(res, *saveDir); err != nil {
-			die(err)
-		}
-	}
-	g, err := game.New(res)
-	if err != nil {
-		die(err)
-	}
-	if err := g.SetAILevel(*aiLevel); err != nil {
-		die(err)
-	}
-	g.SetRepairShipsRepairable(*repairShips)
-	a := &app{
-		g:         g,
-		toolbar:   toolbar{font: res.Font},
-		screen:    ebiten.NewImage(gfx.Width, gfx.Height),
-		buf:       make([]byte, gfx.Width*gfx.Height*4),
-		shot:      *shot,
-		shotBin:   *shotBin,
-		stateOut:  *stateOut,
-		shotAfter: *shotAfter,
-		script:    *script,
-	}
-	if *frameTrace != "" {
-		a.frameTrace, err = os.OpenFile(*frameTrace, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o644)
+	load := func(report func(int, string)) (*app, error) {
+		report(1, "載入原版資料")
+		res, err := bootstrap.Load(*orig, *data)
 		if err != nil {
-			die(err)
+			return nil, err
 		}
-		defer a.frameTrace.Close()
-	}
-	if *graphics != "original" && *graphics != "hd" {
-		die(fmt.Errorf("圖片顯示模式無效：%s", *graphics))
-	}
-	a.original = *graphics == "original"
-	_, artErr := os.Stat(filepath.Join(*artDir, "face"))
-	if *graphics == "hd" || artErr == nil {
-		a.hd, err = presentation.Load(*artDir, res.Faces)
-		if err != nil {
-			if *graphics == "hd" {
-				die(err)
+		// 走腳本的時候不放動畫：腳本是照「開機就是主選單」寫的，
+		// 前面多一張畫面整條序列就對不上收據。
+		report(2, "載入開場動畫")
+		if *intro && *script == "" {
+			if err := bootstrap.LoadIntro(res, *orig); err != nil {
+				return nil, err
 			}
-			fmt.Fprintln(os.Stderr, "F6：", err)
-		}
-	}
-	if a.hd != nil {
-		res.Faces.ArtworkPrefix = "face"
-		// 固定 Ebitengine 2.8.8 的最終縮放契約：HD 內部已完成圖片取樣，
-		// 縮小視窗不再對細字與框線套第二次線性濾波。
-		ebiten.SetScreenFilterEnabled(false)
-		a.hdScreen = ebiten.NewImage(gfx.Width*presentation.Scale, gfx.Height*presentation.Scale)
-		if a.hd.ThemeEnabled() {
-			fmt.Fprintf(os.Stderr, "HD：%d/%d 個人物圖索引；A原配置介面與高解析文字\n", a.hd.Count(), len(res.Faces.Entries))
 		} else {
-			fmt.Fprintf(os.Stderr, "HD：%d/%d 個人物圖索引已載入；其他圖像沿原素材\n", a.hd.Count(), len(res.Faces.Entries))
+			report(2, "略過開場動畫")
 		}
-	}
-	// 配樂：**要求了才開音訊**。缺檔就不播，但要說出來——安靜與
-	// 「沒接播放層」長得一樣，不講的話沒有人分得出是哪一種
-	// （AGENTS.md：缺檔就 skip，不用代用品）。
-	if *musicDir != "" {
-		lib := audio.NewLibrary(*musicDir)
-		sounds := audio.NewSoundLibrary(*musicDir)
-		var audioContext *eaudio.Context
-		deviceAvailable := hasAudioDevice()
-		if deviceAvailable && (lib.Have() > 0 || sounds.Have() == 28) {
-			audioContext = eaudio.NewContext(audio.SampleRate)
+		report(3, "載入存檔")
+		if *saveDir != "" {
+			if err := bootstrap.UseSaveDir(res, *saveDir); err != nil {
+				return nil, err
+			}
 		}
-		if audioContext != nil && sounds.Have() == 28 {
-			player := newEffectPlayer(audioContext, sounds)
-			if err := player.validate(); err != nil {
-				fmt.Fprintln(os.Stderr, "音效：", err)
-			} else if err := g.EnableSoundEffects(true); err != nil {
-				fmt.Fprintln(os.Stderr, "音效：", err)
+		report(4, "準備初始局")
+		g, err := game.New(res)
+		if err != nil {
+			return nil, err
+		}
+		if err := g.SetAILevel(*aiLevel); err != nil {
+			return nil, err
+		}
+		g.SetRepairShipsRepairable(*repairShips)
+		a := &app{
+			g:         g,
+			cursor:    res.Cursor,
+			toolbar:   toolbar{font: res.Font},
+			buf:       make([]byte, gfx.Width*gfx.Height*4),
+			shot:      *shot,
+			shotBin:   *shotBin,
+			stateOut:  *stateOut,
+			shotAfter: *shotAfter,
+			script:    *script,
+		}
+		if *frameTrace != "" {
+			a.frameTrace, err = os.OpenFile(*frameTrace, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o644)
+			if err != nil {
+				return nil, err
+			}
+		}
+		if *graphics != "original" && *graphics != "hd" {
+			a.close()
+			return nil, fmt.Errorf("圖片顯示模式無效：%s", *graphics)
+		}
+		a.original = *graphics == "original"
+		report(5, "載入HD圖像與字型")
+		_, artErr := os.Stat(filepath.Join(*artDir, "face"))
+		if *graphics == "hd" || artErr == nil {
+			a.hd, err = presentation.LoadWithProgress(*artDir, res.Faces, func(done, total int) {
+				report(5, fmt.Sprintf("載入人物圖像 %d / %d", done, total))
+			})
+			if err != nil {
+				if *graphics == "hd" {
+					a.close()
+					return nil, err
+				}
+				fmt.Fprintln(os.Stderr, "F6：", err)
+			}
+		}
+		if a.hd != nil {
+			if err := a.hd.SetFontStyle(*fontStyle); err != nil {
+				a.close()
+				return nil, err
+			}
+			res.Faces.ArtworkPrefix = "face"
+			// 固定 Ebitengine 2.8.8 的最終縮放契約：HD 內部已完成圖片取樣，
+			// 縮小視窗不再對細字與框線套第二次線性濾波。
+			if a.hd.ThemeEnabled() {
+				fmt.Fprintf(os.Stderr, "HD：%d/%d 個人物圖索引；A原配置介面與高解析文字\n", a.hd.Count(), len(res.Faces.Entries))
 			} else {
-				a.effects = player
-				defer a.effects.Stop()
+				fmt.Fprintf(os.Stderr, "HD：%d/%d 個人物圖索引已載入；其他圖像沿原素材\n", a.hd.Count(), len(res.Faces.Entries))
+			}
+		}
+		// 配樂：**要求了才開音訊**。缺檔就不播，但要說出來——安靜與
+		// 「沒接播放層」長得一樣，不講的話沒有人分得出是哪一種
+		// （AGENTS.md：缺檔就 skip，不用代用品）。
+		report(6, "準備音樂與音效")
+		if *musicDir != "" {
+			lib := audio.NewLibrary(*musicDir)
+			a.musicOriginal = lib
+			hdLibrary := audio.NewHDLibrary(filepath.Join(*musicDir, "hd"))
+			if len(hdLibrary.Missing()) == 0 {
+				a.musicHD = hdLibrary
+			}
+			sounds := audio.NewSoundLibrary(*musicDir)
+			var audioContext *eaudio.Context
+			deviceAvailable := hasAudioDevice()
+			if deviceAvailable && (lib.Have() > 0 || sounds.Have() == 28) {
+				audioContext = eaudio.NewContext(audio.SampleRate)
+			}
+			if audioContext != nil && sounds.Have() == 28 {
+				player := newEffectPlayer(audioContext, sounds)
+				if err := player.validate(); err != nil {
+					fmt.Fprintln(os.Stderr, "音效：", err)
+				} else if err := g.EnableSoundEffects(true); err != nil {
+					fmt.Fprintln(os.Stderr, "音效：", err)
+				} else {
+					a.effects = player
+				}
+			} else {
+				fmt.Fprintf(os.Stderr, "音效：%d/28段或裝置不可用，未啟用；來源轉檔見規格104\n", sounds.Have())
+			}
+			switch {
+			case !deviceAvailable:
+				fmt.Fprintln(os.Stderr, "配樂：這台機器沒有可用的音效裝置，"+
+					"這一趟沒有音樂")
+			case lib.Have() == 0:
+				fmt.Fprintf(os.Stderr, "配樂：%s 裡一首都沒有，這一趟沒有音樂。"+
+					"轉檔看 tools/music_to_ogg.sh\n", lib.Dir())
+			default:
+				if miss := lib.Missing(); len(miss) > 0 {
+					fmt.Fprintf(os.Stderr, "配樂：%d/%d 首，缺 %v\n",
+						lib.Have(), len(audio.Tracks), miss)
+				}
+				a.music = newMusicPlayer(audioContext, lib)
 			}
 		} else {
-			fmt.Fprintf(os.Stderr, "音效：%d/28段或裝置不可用，未啟用；來源轉檔見規格104\n", sounds.Have())
+			report(6, "略過音樂與音效")
 		}
-		switch {
-		case !deviceAvailable:
-			fmt.Fprintln(os.Stderr, "配樂：這台機器沒有可用的音效裝置，"+
-				"這一趟沒有音樂")
-		case lib.Have() == 0:
-			fmt.Fprintf(os.Stderr, "配樂：%s 裡一首都沒有，這一趟沒有音樂。"+
-				"轉檔看 tools/music_to_ogg.sh\n", lib.Dir())
-		default:
-			if miss := lib.Missing(); len(miss) > 0 {
-				fmt.Fprintf(os.Stderr, "配樂：%d/%d 首，缺 %v\n",
-					lib.Have(), len(audio.Tracks), miss)
-			}
-			a.music = newMusicPlayer(audioContext, lib)
+		if *musicQuality != "original" && *musicQuality != "hd" {
+			a.close()
+			return nil, fmt.Errorf("配樂音色無效：%s", *musicQuality)
 		}
+		if *musicQuality == "hd" && !a.setHDMusic(true) {
+			fmt.Fprintln(os.Stderr, "HD配樂不完整，保留原版曲庫。")
+		}
+
+		a.setPalette(g.Palette())
+		report(7, "載入完成")
+		return a, nil
 	}
 
-	a.setPalette(g.Palette())
-	ebiten.SetWindowSize(int(float64(gfx.Width)*(*scale)), int(float64(gfx.Height)*(*scale)))
-	ebiten.SetWindowTitle("銀河英雄傳說III SP")
-	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
-	// 遊戲會依原版素材自行畫游標；若保留作業系統游標，使用者會同時看到
-	// 即時的硬體游標與下一更新格才重畫的遊戲游標，視覺上必然不同步。
-	ebiten.SetCursorMode(ebiten.CursorModeHidden)
-	err = ebiten.RunGame(a)
-	if err != nil && err != ebiten.Termination && a.music != nil &&
+	var a *app
+	var err error
+	if *script != "" {
+		a, err = load(func(int, string) {})
+		if err != nil {
+			die(err)
+		}
+		a.prepareWindow(*scale)
+		err = ebiten.RunGame(a)
+		a.close()
+	} else {
+		startup := newStartup(load, *scale)
+		err = ebiten.RunGame(startup)
+		a = startup.game
+		startup.close()
+	}
+	if err != nil && err != ebiten.Termination && a != nil && a.music != nil &&
 		strings.Contains(err.Error(), "oto:") {
 		// 裝置在但開不起來（被佔用、權限、PulseAudio 沒跑）。
 		// 原始訊息只有 ALSA 的字串，看不出與配樂有關。

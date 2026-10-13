@@ -13,11 +13,13 @@ IMAGE="${LOGH3_AUDIO_IMAGE:-logh3-audio:2}"
 }
 docker image inspect "$IMAGE" >/dev/null
 FONT_MOUNTS=()
+NETWORK=none
+[[ "${LOGH3_NET:-0}" == 1 ]] && NETWORK=bridge
 if [[ -n "${LOGH3_FONT_DIR:-}" ]]; then
   test -d "$LOGH3_FONT_DIR"
   FONT_MOUNTS=(-v "$LOGH3_FONT_DIR:/fonts:ro")
 fi
-exec timeout "${LOGH3_TIMEOUT:-15m}" docker run --rm --network none \
+exec timeout "${LOGH3_TIMEOUT:-15m}" docker run --rm --network "$NETWORK" \
   --memory "${LOGH3_MEM:-2g}" --cpus "${LOGH3_CPUS:-2}" --pids-limit "${LOGH3_PIDS:-128}" \
   --log-opt max-size=10m --log-opt max-file=3 \
   -u "$(id -u):$(id -g)" \

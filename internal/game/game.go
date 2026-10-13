@@ -888,6 +888,7 @@ type Game struct {
 	// 088：載入的這輪兩個座位都不重新顯示月報。
 	versusLoadedRound bool
 	pendingLoadSlot   int
+	loadReturnState   State // 141：取消讀檔回到實際入口，不開始預備的新局。
 
 	// battleRegion 是戰術畫面看的是哪個星域的地形，battleView 是視野
 	// 在整張戰場上的位置（單位是格）。-1 ＝ 還沒進過戰場。
@@ -2220,6 +2221,9 @@ func (g *Game) pickQuestion() error {
 // State 回目前在哪個畫面。
 func (g *Game) State() State { return g.state }
 
+// MousePosition 回目前的公開畫面座標，供純顯示選項補畫游標。
+func (g *Game) MousePosition() (int, int) { return g.mouseX, g.mouseY }
+
 // Faction 回玩家陣營：0 帝國、1 同盟。對戰模式下是**目前輪到的那一方**。
 func (g *Game) Faction() int { return g.faction }
 
@@ -2866,6 +2870,9 @@ func (g *Game) click(x, y int) {
 						if item == StateSettings {
 							g.settingsReturnState = StateCommandPhase
 						}
+						if item == StateLoadGame {
+							g.loadReturnState = StateCommandPhase
+						}
 						g.state = item
 					}
 				}
@@ -3076,6 +3083,13 @@ func (g *Game) rightClick(x, y int) {
 		g.battleScroll(x, y)
 	case StateCmdMenu, StateListMenu, StateSysMenu:
 		g.state = StateCommandPhase
+	case StateLoadGame:
+		switch g.loadReturnState {
+		case StateMainMenu, StateBattle:
+			g.state = g.loadReturnState
+		default:
+			g.state = StateCommandPhase
+		}
 	case StateSettings:
 		if g.settingsReturnState == StateBattle {
 			g.state = StateBattle
@@ -3141,6 +3155,7 @@ func (g *Game) Key(c byte) {
 			// 主選單前三列開新遊戲，第四列「取進度」先進存檔畫面
 			// （`docs/re/38`、`docs/spec/007`）。
 			if g.menuRow == menuRowLoad && g.commandSpec(StateLoadGame) != nil {
+				g.loadReturnState = StateMainMenu
 				g.state = StateLoadGame
 			} else if g.menuRow == menuRowVersus && g.commandSpec(StateVersusInput) != nil {
 				// 第 2 列「對戰」：兩個人輪流下命令。先跳帝國的交棒視窗
@@ -3491,8 +3506,13 @@ func (g *Game) Frame() (result *gfx.Framebuffer) {
 			}
 			// 從狀態算出來的那幾塊要畫在底板之後、疊上去的視窗之前
 			// （`docs/spec/002`）。
+			cursor := g.res.Cursor
+			if g.systemDialog() {
+				// 系統視窗的 JSON 游標僅是擷取位置；動態內容完成後統一畫一次。
+				cursor = nil
+			}
 			fb, _ := screen.MainGameLayered(spec, g.res.Font, g.starMapFor(spec),
-				g.res.Faces, g.res.Cursor, g.drawBoardPanels, g.afterWindow)
+				g.res.Faces, cursor, g.drawBoardPanels, g.afterWindow)
 			g.drawListScreenOverlays(fb)
 			g.drawBudget(fb)
 			g.drawProduction(fb)
@@ -3518,6 +3538,7 @@ func (g *Game) Frame() (result *gfx.Framebuffer) {
 					g.res.Cursor.Draw(fb, spec.Mouse.X, spec.Mouse.Y)
 				}
 			}
+			g.drawSystemDialogCursor(fb)
 			return fb
 		}
 		fb, _ := screen.MainMenuAt(g.res.Menu, g.res.Font, g.res.FrameTiles,
@@ -3844,6 +3865,7 @@ func (g *Game) liveCursor(spec *screen.MainGameSpec) {
 		// `lst3e`／`settings1e` 與同盟的五張，十份都是同一個結論。
 		StateInfo, StateFleetList, StateAdmiralListView, StateEnemyList,
 		StateStarList, StateSettings,
+		StateLoadGame, StateLoadFaction, StateSaveGame, StateQuitConfirm,
 		// 徵稅／生產／次月份預算計劃接上鈕之後游標也要跟著搬（收據
 		// `fcmd-plan-tax-up`／`-pct-up`：點完箭頭游標停在那顆鈕上）。
 		StateTaxPlan, StateProductionPlan, StateBudgetPlan,
@@ -4162,9 +4184,6 @@ func (g *Game) drawSlotList(fb *gfx.Framebuffer) {
 		row := g.saveRow()
 		g.res.SlotList.DrawSaveBar(fb, row)
 		g.res.SlotList.DrawSaveRow(fb, g.res.Font, row)
-		if g.res.Cursor != nil {
-			g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)
-		}
 	}
 }
 

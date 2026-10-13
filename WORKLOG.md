@@ -11039,3 +11039,15 @@ v.1.1.3-20261011從1533項乾淨凍結輸入建立Windows、Linux與macOS完整�
 - 完整版、動畫影片、原版檔與工作目錄繼續由.gitignore排除，正式Git檔案清單沒有dist-all、org_game或workplace。文件與截圖從既有隔離發行分支提交，再以快轉更新main；不覆寫主工作樹的既有decomp與本機HD資產。本次僅將README文件圖加入私有儲存庫，不變更可見度或上傳完整版。
 - README提交3c2247408b3bd4ce91a5af19bd9170be10b77c1c，與發行分支一起以一般快轉推送main。同步前確認本機main仍為523ced1且索引沒有暫存改動，再以git reset --mixed --no-refresh同步分支及索引，未改寫工作檔。277項既有HD／decomp修改的大小與SHA-256全部保持；本機full四封包的大小與SHA-256亦與BUILD.json相同。
 - GitHub main的README內容逐位元組相同，八張圖片與來源收據共九檔的Git blob與大小相同；遠端樹未截斷且無dist-all、org_game或workplace。#101補充README與截圖證據並保持CLOSED；101項、4 OPEN／97 CLOSED，281條verify零失效，CONTEXT與整份矩陣由最新快照同步。擁有權及.md目錄10346項通過，本次Docker容器均已退出刪除。原Release仍為正式版，tag物件及程式commit4096431未移動。
+
+## 2026-10-13：第131輪系統視窗、四字型、HD音色與載入進度
+
+- 命中正常試玩、音樂OGG與跨平台發行路由，使用逆向重製、grilling與原曲配樂技能。字型試樣先供確認，使用者選三款、原版強化預設，再追加保留原版點陣；音樂明確選保留原曲、提升音色混音。四款均加入設定，原圖模式使用原字形，選擇本次執行有效。
+- v.1.2.0正常X11由片頭進戰略，讀檔與退出移動前後完整PNG相同，唯讀trace仍更新、右鍵可返回。根因是liveCursor缺少四系統視窗，另有固定擷取游標與後畫局部補丁；修正統一單一即時游標並在最後畫。主選單讀檔取消固定回戰略，改記入口，戰術父畫面亦有回歸；原始JSON未改。141、142、143經READY後實作，本輪限定CONFORMED。
+- 啟動重構在同一RunGame先顯示560×220載入視窗，七個真實階段及83張人物進度，工作執行緒載入、主執行緒準備GPU與視窗。缺檔保留錯誤、Escape退出1；191字元的Noto啟動字集與完整授權入Git，不含原版字模。系統游標隱藏移至startup.go，#37舊核對只掃main.go造成假回歸，更新路徑。#102初建機器summary與證據格式不合解析器，已依issues.go契約修正。
+- GeneralUser GS 2.0.3固定官方commit684543d與SF2雜湊9575028；11首匯出MIDI與保存來源逐檔相同，音符及速度事件不變。FluidSynth2.3.1與FFmpeg5.1.9合成混音為44.1kHz雙聲道Vorbis q7。11首完整解碼非靜音，最高樣本峰值−1.387419dB、最大首尾跳變0.0000358324。最短BGM6為28.704秒，原先任意30秒下限誤判已移除，檢查改依正時長及實際音符。新舊檔案尾音不同不代表曲速改變。HD／FM／關閉保持原WORK格式，原音效不改；#69人耳、完整曲目與音樂性循環及真機限制保持。
+- tools/audio.sh預設network none，下載固定官方公開來源才用LOGH3_NET=1。確認原logh3-audio:2不存在後，從既有Dockerfile.audio重建同名工具鏈，配置ID6a89b51fb40e66fa3d5b13ad6d7a0ec22a3fcdfc03caa708c18f428581581c79；沒有另建重複用途image，既有HD、GUI、Wine及macOS工具沿用。
+- 標準tools/gui.sh test ./internal/... ./cmd/...：19套件、15PASS／4無測試。曾誤用./...掃入workplace與工具探針，分類測試範圍問題，改正標準命令重跑。戰術測試初始fixture缺BattleMenu，改用既有newTestGame；GUI保存初次使用讀檔y132，依原保存TextTop142改測試為y152，產品座標不改。
+- 正式Linux完整版帝國強化與同盟原版規則各從載入、片頭、主選單正常操作，沒有script或注入。各38張完整視窗、六組原圖／HD游標差分、三劇本與六檔存讀、四字型、F7及音色切換、可見退出0通過。Wine正常片頭及讀檔／退出／黑體三診斷，兩平台引擎各四入口通過；本輪Wine音訊停用。macOS雙架構依賴與ARM簽章全頁、ZIP權限檢查通過，未真機。
+- v.1.3.0-20261013從1553項凍結輸入建立八封包，575項非vendor與工作樹相同，978項vendor只在來源stage。最終核對初次錯把vendor視為主工作樹既有目錄，依實際凍結架構修正核對器。BUILD保留當時ae5866b及髒工作樹，正式commit另以git archive綁定575來源，不假稱當時乾淨HEAD。完整版與原曲OGG、HD資產只在dist-all本機；GitHub附件只有引擎／來源及校驗檔。
+- README更新下載、字型／音色／進度與三張正常新截圖；既有八張S1圖明示v.1.2.0來源。核准字型HTML與三試樣保留Git，來源與決定獨立於正式截圖。新驗證120與system-dialog-polish.json集中結果，文件及工具均掛索引。v.1.2.0及其推廣片保持原身份，沒有重做或重標影片，不動既有HD／decomp修改。

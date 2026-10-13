@@ -35,7 +35,7 @@ func (r *Renderer) classicGlyph(c gfx.DrawCommand, p gfx.Palette) {
 		for dy := 0; dy < Scale; dy++ {
 			for dx := 0; dx < Scale; dx++ {
 				a := uint32(255)
-				if (dy == 0 && !up || dy == Scale-1 && !down) &&
+				if r.FontStyle() != "original" && (dy == 0 && !up || dy == Scale-1 && !down) &&
 					(dx == 0 && !left || dx == Scale-1 && !right) {
 					a = 192
 				}

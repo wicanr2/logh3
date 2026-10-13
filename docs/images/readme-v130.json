@@ -1,0 +1,53 @@
+{
+  "version": "v.1.3.0-20261013",
+  "shots": [
+    {
+      "path": "docs/images/readme-v130-loading.png",
+      "bytes": 7027,
+      "sha256": "e7c86f402a59dc9c750c3eae2e5cedd5a34158c7c668d63d825cbd41f1103d8d",
+      "source": {
+        "path": "workplace/modal131/full-f0/00-loading.png",
+        "bytes": 7027,
+        "sha256": "e7c86f402a59dc9c750c3eae2e5cedd5a34158c7c668d63d825cbd41f1103d8d"
+      },
+      "normal_entry": true,
+      "cropped": false,
+      "resized": false
+    },
+    {
+      "path": "docs/images/readme-v130-empire-font.png",
+      "bytes": 109988,
+      "sha256": "9bc4430c3ea96e6562cafa311417d25cc020eac746e8b10009a202d4cd1465ea",
+      "source": {
+        "path": "workplace/modal131/full-f0/settings-serif.png",
+        "bytes": 109988,
+        "sha256": "9bc4430c3ea96e6562cafa311417d25cc020eac746e8b10009a202d4cd1465ea"
+      },
+      "normal_entry": true,
+      "cropped": false,
+      "resized": false
+    },
+    {
+      "path": "docs/images/readme-v130-alliance-font.png",
+      "bytes": 104019,
+      "sha256": "cf7b7fca823f211844a1e5990f4431b45e519864a160d40de8560aa605642ae1",
+      "source": {
+        "path": "workplace/modal131/full-f1/settings-sans.png",
+        "bytes": 104019,
+        "sha256": "cf7b7fca823f211844a1e5990f4431b45e519864a160d40de8560aa605642ae1"
+      },
+      "normal_entry": true,
+      "cropped": false,
+      "resized": false
+    }
+  ],
+  "binary": {
+    "path": "dist-all/v.1.3.0-20261013/full/LOGH3-v.1.3.0-20261013-linux-amd64/gin3",
+    "bytes": 14686632,
+    "sha256": "048cc9597b4758729cc96b06ab7fab55e0e1718c231382cf37f88d6047b7214d"
+  },
+  "normal_receipts": [
+    "workplace/modal131/full-f0/RESULT.json",
+    "workplace/modal131/full-f1/RESULT.json"
+  ]
+}

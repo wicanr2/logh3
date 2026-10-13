@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 )
 
@@ -164,6 +165,90 @@ func TestMonthlyBuildPlanRightClickReturnsReport(t *testing.T) {
 	g.RightClick(600, 400)
 	if g.State() != StateShipOrder || g.pct != want {
 		t.Fatalf("右鍵未保留計畫返回訂造：%v %v", g.State(), g.pct)
+	}
+}
+
+func TestSystemDialogVisibleCursor(t *testing.T) {
+	for _, state := range []State{StateLoadGame, StateLoadFaction, StateSaveGame, StateQuitConfirm} {
+		t.Run(state.String(), func(t *testing.T) {
+			g, err := New(load(t))
+			if err != nil {
+				t.Fatal(err)
+			}
+			g.state = state
+			for _, point := range [][2]int{{300, 240}, {400, 240}, {384, 270}, {432, 270}} {
+				g.MoveMouse(point[0], point[1])
+				fb := g.Frame()
+				count := 0
+				for _, command := range fb.Commands {
+					if command.Kind == gfx.DrawCursor {
+						count++
+					}
+				}
+				if count != 1 || fb.Commands[len(fb.Commands)-1].Kind != gfx.DrawCursor {
+					t.Fatalf("游標數=%d或未在最後繪製", count)
+				}
+				for y, row := range g.res.Cursor.Rows {
+					for x, symbol := range row {
+						if ink, ok := g.res.Cursor.Colors[string(symbol)]; ok && fb.At(point[0]+x, point[1]+y) != ink {
+							t.Fatalf("游標被按鈕或文字覆蓋：%v + %d,%d", point, x, y)
+						}
+					}
+				}
+				spec := g.commandSpec(state)
+				if spec == nil || spec.Mouse == nil {
+					t.Fatal("缺少系統視窗游標")
+				}
+				if spec.Mouse.X != point[0] || spec.Mouse.Y != point[1]-mouseDY {
+					t.Fatalf("游標仍使用擷取位置：%+v，滑鼠=%v", spec.Mouse, point)
+				}
+			}
+			g.MoveMouse(-100, -100)
+			for _, command := range g.Frame().Commands {
+				if command.Kind == gfx.DrawCursor {
+					t.Fatal("功能列攔截後留下游標")
+				}
+			}
+		})
+	}
+}
+
+func TestMainMenuLoadCancelReturnsMenu(t *testing.T) {
+	g, err := New(load(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Click(300, 270)
+	for _, c := range []byte("138\r") {
+		g.Key(c)
+	}
+	if g.State() != StateLoadGame {
+		t.Fatal(g.State())
+	}
+	g.RightClick(400, 240)
+	if g.State() != StateMainMenu {
+		t.Fatalf("取消誤進遊戲：%v", g.State())
+	}
+}
+
+func TestBattleLoadCancelReturnsBattle(t *testing.T) {
+	g := newTestGame(t)
+	g.state = StateBattle // 僅驗返回接線，不當作正常戰場GUI驗收。
+	g.Click(600, 400)
+	if !g.battleMenu || g.res.BattleMenu == nil {
+		t.Fatal("未開戰術選單")
+	}
+	layout := g.res.BattleMenu.Layout
+	x := g.battleMenuX + layout.Highlight.X - layout.Window.X + 4
+	y := g.battleMenuY + layout.Highlight.Y - layout.Window.Y + 3*layout.Text.RowPitch + 4
+	turn := g.turn
+	g.Click(x, y)
+	if g.State() != StateLoadGame {
+		t.Fatal(g.State())
+	}
+	g.RightClick(400, 240)
+	if g.State() != StateBattle || g.turn != turn {
+		t.Fatal("取消離開戰場或推進回合")
 	}
 }
 

@@ -65,7 +65,4 @@ func (g *Game) drawLoadFaction(fb *gfx.Framebuffer) {
 		screen.DrawCommandMenu(s, fb, g.res.Font, g.res.FrameTiles, screen.CommandMenuLoadFaction,
 			nil, loadFactionLeft, loadFactionTop, g.loadFactionRow(g.mouseX, g.mouseY))
 	}
-	if g.res.Cursor != nil && g.mouseY >= 0 {
-		g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)
-	}
 }

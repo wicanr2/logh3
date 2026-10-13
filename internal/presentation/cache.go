@@ -24,6 +24,7 @@ func (r *Renderer) renderKey(fb *gfx.Framebuffer, pal gfx.Palette) [32]byte {
 		_, _ = h.Write(c[:])
 	}
 	w.ints(boolInt(r.refine), boolInt(r.theme), boolInt(r.classic))
+	w.bytes([]byte(r.FontStyle()))
 	w.commands(fb.Commands)
 	w.ints(len(fb.Artwork))
 	for _, a := range fb.Artwork {

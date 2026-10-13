@@ -375,6 +375,9 @@ func (g *Game) battleClick(x, y int) {
 			if to == StateSettings {
 				g.settingsReturnState = StateBattle
 			}
+			if to == StateLoadGame {
+				g.loadReturnState = StateBattle
+			}
 			g.state = to
 		}
 	}

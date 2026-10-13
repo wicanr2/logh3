@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""在固定 HD 工具映像內排版 Noto Serif CJK TC，不讀取或放大原字模。"""
+"""在固定 HD 工具映像內排版思源宋體／黑體，不讀取或放大原字模。"""
 import argparse
 import hashlib
 import json
@@ -15,10 +15,11 @@ def digest(path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=Path("/work/hd125/font"))
+    parser.add_argument("--family", choices=["serif", "sans"], default="serif")
     args = parser.parse_args()
     out = args.output
     out.mkdir(parents=True, exist_ok=True)
-    source = Path("/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc")
+    source = Path("/usr/share/fonts/opentype/noto") / ("NotoSansCJK-Regular.ttc" if args.family == "sans" else "NotoSerifCJK-Regular.ttc")
     license_source = Path("/usr/share/doc/fonts-noto-cjk/copyright")
     face = ImageFont.truetype(str(source), 42, index=3)
     assert "TC" in face.getname()[0], face.getname()

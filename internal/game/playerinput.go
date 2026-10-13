@@ -30,3 +30,18 @@ func (g *Game) drawMonthlyCursor(fb *gfx.Framebuffer) {
 		g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)
 	}
 }
+
+func (g *Game) systemDialog() bool {
+	switch g.state {
+	case StateLoadGame, StateLoadFaction, StateSaveGame, StateQuitConfirm:
+		return true
+	}
+	return false
+}
+
+// 141：系統視窗的即時游標放在所有動態文字、反白及按鈕之上。
+func (g *Game) drawSystemDialogCursor(fb *gfx.Framebuffer) {
+	if g.systemDialog() && g.res.Cursor != nil && g.mouseY >= 0 {
+		g.res.Cursor.Draw(fb, g.mouseX, g.mouseY-mouseDY)
+	}
+}

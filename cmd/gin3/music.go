@@ -40,6 +40,13 @@ func newMusicPlayer(ctx *eaudio.Context, lib *audio.Library) *musicPlayer {
 	return &musicPlayer{ctx: ctx, lib: lib}
 }
 
+func (p *musicPlayer) SetLibrary(lib *audio.Library) {
+	if p.lib != lib {
+		p.Stop()
+		p.lib = lib
+	}
+}
+
 // Play 播 track 並無限循環。已經在播同一首就什麼都不做——
 // **不要每一幀都重播**，那會把曲子卡在開頭 0.016 秒。
 //

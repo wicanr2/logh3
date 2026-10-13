@@ -138,10 +138,11 @@ def package(version, batch, source_stage=None):
           'CFBundleGetInfoString':version+' 本機測試版'}
     (contents/'Info.plist').write_bytes(plistlib.dumps(info))
     for mode, level in [('original',-1),('enhanced',1)]:
+        audio_args = ' -music-quality hd' if mode == 'enhanced' and (resources/'music/hd/MANIFEST.json').is_file() else ''
         script=folder/('start-'+mode+'.command')
         script.write_text('#!/bin/sh\nset -eu\n'
             'cd "$(CDPATH= cd "$(dirname "$0")" && pwd)"\n'
-            'exec "./銀河英雄傳說III.app/Contents/MacOS/launch" -ai '+str(level)+' "$@"\n')
+            'exec "./銀河英雄傳說III.app/Contents/MacOS/launch" -ai '+str(level)+audio_args+' "$@"\n')
         script.chmod(0o755)
     (folder/'README.txt').write_bytes(b'\xef\xbb\xbf'+(
         '銀河英雄傳說III SP remake '+version+' macOS本機完整版測試包\n\n'

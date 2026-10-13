@@ -97,6 +97,10 @@ func (a *app) updateInput() {
 	ebiten.SetCursorMode(ebiten.CursorModeHidden)
 	a.g.MoveMouse(x, y)
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+		if a.presentationClick(x, y) {
+			a.g.LeftRelease()
+			return
+		}
 		a.g.Click(x, y)
 	} else if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
 		a.g.LeftHold(x, y, time.Second/time.Duration(ebiten.TPS()))

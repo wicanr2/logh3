@@ -1091,6 +1091,20 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 
 ## 第130輪名將戰術與發行
 
+第131輪目前入口：[狀態表131](../goal/2026-10-13-system-dialog-and-polish-round-131.md)、[規格141系統視窗](../spec/141-system-dialog-cursor.md)、[驗證120](../playtest/120-system-dialog-polish.md)及[交付索引](data/system-dialog-polish.json)。保存游標與取消修正、四字型、原曲HD音色、啟動進度及v.1.3.0三平台交付。
+
+[規格142啟動進度](../spec/142-startup-progress.md)限定真實載入階段、小視窗與錯誤顯示，保持正常遊戲入口及原版時鐘。
+
+[規格143字型與HD音樂](../spec/143-font-and-hd-music.md)記錄原版點陣／強化／宋體／黑體、原曲升級音色及獨立顯示選項。[載入字集工具](../../tools/scripts/startup_font.py)產生可散布啟動字集，[正常系統視窗驗收](../../tools/scripts/system_dialog_gui_check.py)追蹤載入、取消、存讀及退出。
+
+[HD音樂MIDI匯出](../../tools/scripts/hd_music_export.py)沿既有原曲匯出器，[HD音訊核對](../../tools/scripts/hd_music_check.py)保存OGG格式、音量、循環邊界、來源及權利分類。[啟動字集來源](data/startup-font.json)保存內嵌授權字集的來源與雜湊。
+
+[HD音色合成](../../tools/scripts/hd_music_render.sh)在既有音訊容器執行，輸入原曲MIDI與固定音色庫，輸出44.1kHz雙聲道OGG。
+
+[第131輪最終核對器](../../tools/scripts/system_dialog_finalize.py)驗1553凍結來源、八封包、正常GUI及音樂；[通用發行核對器](../../tools/scripts/release_publish_check.py)以實際下載核對新Release身份，沿[引擎抽驗器](../../tools/scripts/v1_release_smoke.py)檢查外部原版匯入。既有v.1.2.0專用核對器保留歷史契約。
+
+[核准字型試樣](../images/font-v130-preview.html)與[決定索引](../images/font-v130-preview.json)保存使用者選擇；[新版首頁截圖收據](../images/readme-v130.json)保存載入視窗及兩陣營正常設定畫面，沒有裁切或縮放。
+
 [目前狀態表130](../goal/2026-10-12-hero-ai-release-round-130.md)與[規格140](../spec/140-hero-tactics-and-release.md)記錄已核准1.5倍陣營加速、名將包圍、1988動畫來源及新版交付。
 
 [可撤回戰術試樣產生器](../../tools/scripts/hero_tactics_preview.py)只產生規則示意HTML，不接正式遊戲；本機入口為`workplace/hero130/HERO-TACTICS-PREVIEW.html`。

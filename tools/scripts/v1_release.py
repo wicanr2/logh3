@@ -48,6 +48,8 @@ def main(version):
             assets_target.mkdir()
             for mode in ('original', 'enhanced'):
                 shutil.copyfile(source / f'start-{mode}.command', target / f'start-{mode}.command')
+                script = target / f'start-{mode}.command'
+                script.write_text(script.read_text().replace(' -music-quality hd', ''))
                 (target / f'start-{mode}.command').chmod(0o755)
             launcher = destination / 'MacOS/launch'
             launcher.write_text(launcher.read_text().replace('-graphics hd -art "$LOGH3_RES_DIR/art" ', '').replace('-music "$LOGH3_RES_DIR/music"', '-music ""'))
@@ -74,7 +76,7 @@ def main(version):
         shutil.copyfile(assets_source / 'LICENSE', assets_target / 'LICENSE')
         shutil.copyfile(source / 'VERSION.json', target / 'VERSION.json')
         readme = (f'銀河英雄傳說III SP remake {version} 引擎發行包\n\n'
-                  '本包不含原版遊戲、字型、音樂、音效、人物圖或HD衍生素材。引擎授權RRSAL-1.0，第三方授權見licenses。\n'
+                  '本包不含原版遊戲、原版字型、音樂、音效、人物圖或其HD衍生素材。引擎授權RRSAL-1.0，第三方與啟動字集授權見licenses。\n'
                   '先取得自己合法持有的PC DOS中文版原版資料。解開原版ZIP後，找到同時包含GIN3.COM、GRAPH.IMG、FACE.AMG的目錄。\n'
                   'Windows／Linux：在本包的gin3旁建立original資料夾，把該原版目錄內的檔案複製進去，再啟動start-original或start-enhanced。\n'
                   'macOS：對銀河英雄傳說III.app按右鍵，顯示套件內容；在Contents/Resources建立original資料夾，把原版目錄內的檔案複製進去。再開.app或start-enhanced.command。\n'

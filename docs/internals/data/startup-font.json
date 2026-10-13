@@ -1,0 +1,13 @@
+{
+  "source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+  "source_sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+  "face_index": 3,
+  "generator": "tools/scripts/startup_font.py",
+  "license": "SIL Open Font License 1.1",
+  "generator_sha256": "698b3a2c732a9ec99acf13786065398d716a0b72408f7f4196806e309522d331",
+  "files": {
+    "startup_font.png": "209a75111757a20a462d091362b9baa6e3882bba5478b15ae3c0425a6d0bea02",
+    "startup_font.json": "39e621a06acf4df35ae65cb86d8f08c4de813174d660021c4180e3409c394592",
+    "startup_font.LICENSE.txt": "5bb218343ded506b258d86186d460fc47d9b6b28f0e642cf32676c396b7df763"
+  }
+}

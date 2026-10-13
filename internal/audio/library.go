@@ -58,6 +58,20 @@ func NewLibrary(dir string) *Library {
 	return newLibrary(dir, Tracks)
 }
 
+// NewHDLibrary 使用原版MIDI樂譜的HD合成版本。曲目鍵保持，FM鍵映射同曲的MIDI版。
+// 不修改原版音源設定、MDS或存檔；11首MIDI版必須全部存在才可選用。
+func NewHDLibrary(dir string) *Library {
+	l := NewLibrary(dir)
+	for _, track := range Tracks {
+		if strings.HasSuffix(track, "F") {
+			if path, ok := l.tracks[strings.TrimSuffix(track, "F")+"M"]; ok {
+				l.tracks[track] = path
+			}
+		}
+	}
+	return l
+}
+
 func newLibrary(dir string, names []string) *Library {
 	l := &Library{dir: dir, tracks: map[string]string{}, want: names}
 	for _, name := range l.want {

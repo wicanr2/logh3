@@ -22,6 +22,8 @@ type Renderer struct {
 	frame          *image.RGBA
 	refine         bool
 	font           *fontAtlas
+	fonts          map[string]*fontAtlas
+	fontStyle      string
 	theme          bool
 	classic        bool
 	factionThemes  map[string]*factionTheme
@@ -49,6 +51,11 @@ type Renderer struct {
 
 // Load 只載入真實 FACE.AMG 索引中的替換圖；缺少單張時保留原圖。
 func Load(dir string, faces *asset.AMG) (*Renderer, error) {
+	return LoadWithProgress(dir, faces, nil)
+}
+
+// LoadWithProgress 回報實際已解碼的HD人物圖數量，不改變載入或驗證契約。
+func LoadWithProgress(dir string, faces *asset.AMG, progress func(done, total int)) (*Renderer, error) {
 	if faces == nil {
 		return nil, fmt.Errorf("HD：缺少 FACE.AMG")
 	}
@@ -57,6 +64,12 @@ func Load(dir string, faces *asset.AMG) (*Renderer, error) {
 		return nil, fmt.Errorf("HD 圖片目錄：%w", err)
 	}
 	r := &Renderer{images: make(map[string]*image.RGBA), frame: image.NewRGBA(image.Rect(0, 0, gfx.Width*Scale, gfx.Height*Scale)), refine: true, classic: true}
+	total := 0
+	for _, entry := range entries {
+		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".png") {
+			total++
+		}
+	}
 	for _, entry := range entries {
 		name := entry.Name()
 		if entry.IsDir() || !strings.HasSuffix(name, ".png") {
@@ -108,6 +121,9 @@ func Load(dir string, faces *asset.AMG) (*Renderer, error) {
 			return nil, closeErr
 		}
 		r.images[fmt.Sprintf("face/%02d", id)] = resize(img, original.W*Scale, original.H*Scale)
+		if progress != nil {
+			progress(len(r.images), total)
+		}
 	}
 	if len(r.images) == 0 {
 		return nil, fmt.Errorf("HD 目錄沒有可用人物圖：%s", dir)
@@ -120,6 +136,12 @@ func Load(dir string, faces *asset.AMG) (*Renderer, error) {
 	if err != nil {
 		return nil, err
 	}
+	r.fonts = map[string]*fontAtlas{"serif": r.font}
+	r.fonts["sans"], err = loadFontAtlas(filepath.Join(dir, "font-sans"))
+	if err != nil {
+		return nil, err
+	}
+	r.fontStyle = "classic"
 	r.theme = r.font != nil
 	r.factionThemes, err = loadFactionThemes(dir)
 	if err != nil {
