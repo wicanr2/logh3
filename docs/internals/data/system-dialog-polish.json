@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "version": "v.1.3.0-20261013",
-  "status": "PASS 本機交付與機械驗證；HD聽感及真機保留#69",
+  "status": "PASS v.1.3.0正式引擎Release、三平台本機完整版與機械驗收；#69保留人耳與真機",
   "build_head": "ae5866b196dccd6798e5d5c8ba066480b6ca7b31",
   "build_working_tree": "當時含未提交修改；1553項凍結檔符合BUILD，575項非vendor與工作樹相同；另以commit收據綁定正式來源",
   "frozen_source_files": 1553,
@@ -3718,6 +3718,81 @@
       "path": "dist-all/v.1.3.0-20261013/smoke/macos/MACOS.json",
       "bytes": 3007,
       "sha256": "ff8dfe355250a3728f82186164b4afbedabf37e248d8a608c84521d3f88a4394"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/GH-PREFLIGHT.json",
+      "bytes": 86,
+      "sha256": "8d9f70b4ccb2ad65ef9eb4140d677b7997bdc1798725451f21a381c3ae486710"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/GH-DRAFT.json",
+      "bytes": 10152,
+      "sha256": "5e271565e18c1a4e481f3952ef4be5f842fea70f27916b69b12c0ff92dfec519"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/GH-DOWNLOAD-CHECK.json",
+      "bytes": 1383,
+      "sha256": "ca690971fb046f7112da90a7c8c72214e90be8586552f94c3d358f39a8d834b9"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/GH-RELEASE.json",
+      "bytes": 10222,
+      "sha256": "2533a8d3fcce237b763c0ef69a97cd23a17c3d751107a59283a7c9bf2c914df0"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/GH-TAG.json",
+      "bytes": 712,
+      "sha256": "1ea5f1cee65fb3bd54a7da03fc69fd83a38d21fb6a73d781c934df34c0175ff4"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/GH-PUBLISHED-CHECK.json",
+      "bytes": 1560,
+      "sha256": "77e1ee8d03df68c227c60109763d08bbecc10c9768be88e5e8953f11aec95752"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/COMMIT-SOURCE-CHECK.json",
+      "bytes": 212,
+      "sha256": "139ae5eab65c34903e855593c2b541788ccab634c4319141a769f9153b253b7d"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/README-REMOTE-CHECK.json",
+      "bytes": 1661,
+      "sha256": "5970325aa587332e4e82afd161d225399f5375c371296de8ffb7046f11c62d9e"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/HANDOFF-CHECK.json",
+      "bytes": 193,
+      "sha256": "6f30bb043907be38886a420cb014564921b06fc1a19e01f534b49e9c4eb05a02"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/HYGIENE.json",
+      "bytes": 150,
+      "sha256": "b754ce61d0cd8295a37461196a219737beb5e8c5d58ef4b020f863d08c969805"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/DOC-CHECK.json",
+      "bytes": 604,
+      "sha256": "e3700dc46c97dda20def014abbad7631f5925f5616a5389f8510a27c8191237f"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/WORKLIST-FINAL.log",
+      "bytes": 542,
+      "sha256": "f5e7ad320a716a4db053ff9bf682faa5199555521ab570141e6160d4ac252e75"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/TESTS-FINAL.log",
+      "bytes": 1033,
+      "sha256": "618eb4783f7f1370a80da44eed2528536be9e0f61fcc63a9c0532ac2aaf0d60d"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/DOCKER-PS.jsonl",
+      "bytes": 8889,
+      "sha256": "b3dade434a5c8f8daef55bfd620c221de73511e66162c426a1c2b7925c205743"
+    },
+    {
+      "path": "dist-all/v.1.3.0-20261013/smoke/REMOTE-TAGS.txt",
+      "bytes": 278,
+      "sha256": "2dc8c9422e9b7070b8fe234f605b74ac16c6ea88f1897e0bc0c61cb70989afcd"
     }
   ],
   "rights": "完整版、原字庫、HD素材與原曲衍生OGG只留本機；GitHub只有引擎與來源；內嵌啟動字集為授權Noto衍生",
@@ -3727,5 +3802,110 @@
     "Windows Wine抽樣音訊停用；Windows／macOS真機未驗",
     "人耳、完整曲目播放及音樂性循環待#69",
     "本輪沒有重製推廣片，v.1.2.0影片保持原身份"
-  ]
+  ],
+  "source_commit_check": {
+    "passed": true,
+    "commit": "d2a85832bcdf6e9116547dd1082906282a44adc1",
+    "files_checked": 575,
+    "version": "v.1.3.0-20261013",
+    "method": "git archive commit的575項非vendor與BUILD凍結雜湊相同",
+    "receipt": {
+      "path": "workplace/modal131/COMMIT-SOURCE-CHECK.json",
+      "bytes": 212,
+      "sha256": "139ae5eab65c34903e855593c2b541788ccab634c4319141a769f9153b253b7d"
+    }
+  },
+  "published_assets": [
+    {
+      "path": "release/LOGH3-v.1.3.0-20261013-engine-source.tar.gz",
+      "bytes": 3509411,
+      "sha256": "b55296cce96f79013ea2d99714bcf31f12b3044c935a8c85e12fb6412f2caa92",
+      "name": "LOGH3-v.1.3.0-20261013-engine-source.tar.gz",
+      "id": 637147973,
+      "download_url": "https://github.com/wicanr2/logh3/releases/download/v.1.3.0-20261013/LOGH3-v.1.3.0-20261013-engine-source.tar.gz",
+      "remote_digest": "sha256:b55296cce96f79013ea2d99714bcf31f12b3044c935a8c85e12fb6412f2caa92"
+    },
+    {
+      "path": "release/LOGH3-v.1.3.0-20261013-linux-amd64.zip",
+      "bytes": 8327369,
+      "sha256": "0970d88aef12b481ba5ac2f89a26a0fb54d746ee302f88c1c3072ce846da6e5f",
+      "name": "LOGH3-v.1.3.0-20261013-linux-amd64.zip",
+      "id": 637147974,
+      "download_url": "https://github.com/wicanr2/logh3/releases/download/v.1.3.0-20261013/LOGH3-v.1.3.0-20261013-linux-amd64.zip",
+      "remote_digest": "sha256:0970d88aef12b481ba5ac2f89a26a0fb54d746ee302f88c1c3072ce846da6e5f"
+    },
+    {
+      "path": "release/LOGH3-v.1.3.0-20261013-macos-universal.zip",
+      "bytes": 14889840,
+      "sha256": "b48cd65506f79cbb74294fba4f3eba5a3878ccc43ac2bca2de4c389355af640c",
+      "name": "LOGH3-v.1.3.0-20261013-macos-universal.zip",
+      "id": 637147996,
+      "download_url": "https://github.com/wicanr2/logh3/releases/download/v.1.3.0-20261013/LOGH3-v.1.3.0-20261013-macos-universal.zip",
+      "remote_digest": "sha256:b48cd65506f79cbb74294fba4f3eba5a3878ccc43ac2bca2de4c389355af640c"
+    },
+    {
+      "path": "release/LOGH3-v.1.3.0-20261013-windows-amd64.zip",
+      "bytes": 8182098,
+      "sha256": "eef5fa658b825513c8dfd28d98e61bb93189dad0ca83eea9768f23aa28095be6",
+      "name": "LOGH3-v.1.3.0-20261013-windows-amd64.zip",
+      "id": 637147979,
+      "download_url": "https://github.com/wicanr2/logh3/releases/download/v.1.3.0-20261013/LOGH3-v.1.3.0-20261013-windows-amd64.zip",
+      "remote_digest": "sha256:eef5fa658b825513c8dfd28d98e61bb93189dad0ca83eea9768f23aa28095be6"
+    }
+  ],
+  "published_checksum": {
+    "url": "https://api.github.com/repos/wicanr2/logh3/releases/assets/637147980",
+    "id": 637147980,
+    "node_id": "RA_kwDOUP1jBc4l-htM",
+    "name": "SHA256SUMS.txt",
+    "label": "",
+    "uploader": {
+      "login": "wicanr2",
+      "id": 7655317,
+      "node_id": "MDQ6VXNlcjc2NTUzMTc=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7655317?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/wicanr2",
+      "html_url": "https://github.com/wicanr2",
+      "followers_url": "https://api.github.com/users/wicanr2/followers",
+      "following_url": "https://api.github.com/users/wicanr2/following{/other_user}",
+      "gists_url": "https://api.github.com/users/wicanr2/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/wicanr2/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/wicanr2/subscriptions",
+      "organizations_url": "https://api.github.com/users/wicanr2/orgs",
+      "repos_url": "https://api.github.com/users/wicanr2/repos",
+      "events_url": "https://api.github.com/users/wicanr2/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/wicanr2/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "content_type": "text/plain; charset=utf-8",
+    "state": "uploaded",
+    "size": 431,
+    "digest": "sha256:5e5dcf8788f3388d9dc0263f80f23924718250cbb47011362e37d0ab6817c05f",
+    "download_count": 0,
+    "created_at": "2026-10-13T13:38:22Z",
+    "updated_at": "2026-10-13T13:38:22Z",
+    "browser_download_url": "https://github.com/wicanr2/logh3/releases/download/v.1.3.0-20261013/SHA256SUMS.txt"
+  },
+  "remote_release": {
+    "url": "https://github.com/wicanr2/logh3/releases/tag/v.1.3.0-20261013",
+    "id": 411715690,
+    "tag": "v.1.3.0-20261013",
+    "commit": "d2a85832bcdf6e9116547dd1082906282a44adc1",
+    "tag_object": "91ae5f42751d8cb146443436d94cfff8c32bbcfb",
+    "published_at": "2026-10-13T13:40:08Z",
+    "downloaded_and_hashed": true
+  },
+  "handoff": {
+    "passed": true,
+    "project_containers": [],
+    "preserved_files": 1961,
+    "root_owned_or_md_directory_issues": 0,
+    "issue102": "CLOSED",
+    "issue69": "OPEN",
+    "issues": 102,
+    "open": 4
+  }
 }

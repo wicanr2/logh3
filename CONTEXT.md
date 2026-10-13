@@ -10,7 +10,7 @@
 
 唯一現行狀態表為[計畫131](docs/goal/2026-10-13-system-dialog-and-polish-round-131.md)，結果及雜湊見[驗證120](docs/playtest/120-system-dialog-polish.md)及[交付索引](docs/internals/data/system-dialog-polish.json)。1553凍結來源建立八封包，575項非vendor與目前程式相同；正式Linux兩陣營正常GUI、三劇本、六檔存讀、四字型及原圖／HD／音色切換通過。標準19套件15PASS／4無測試。Windows Wine正常片頭及三診斷、兩平台引擎各四入口、macOS雙架構／ARM簽章核對通過。戰術取消只有回歸測試；人耳、音樂性循環及Windows／macOS真機仍待#69，不升格DOS同態。
 
-新版完整版保留在 `dist-all/v.1.3.0-20261013/full/`，GitHub只發布引擎／來源及校驗檔，正式遠端身份以交付索引remote_release為準。新首頁載入／字型三圖見[截圖收據](docs/images/readme-v130.json)。v.1.2.0及其推廣片保持原身份，本輪沒有重製影片；既有HD／decomp修改保留。
+**新版遠端發行**：[v.1.3.0-20261013](https://github.com/wicanr2/logh3/releases/tag/v.1.3.0-20261013)已正式發布。tag固定來源`d2a85832bcdf6e9116547dd1082906282a44adc1`，575項非vendor與凍結來源相同；四引擎／來源及校驗檔五附件實際下載、SHA-256與發行說明通過。完整版保留在 `dist-all/v.1.3.0-20261013/full/`。新首頁載入／字型三圖見[截圖收據](docs/images/readme-v130.json)。v.1.2.0及其推廣片保持原身份，本輪沒有重製影片；既有HD／decomp修改保留。
 
 
 **第130輪交付歷史（2026-10-12）**：`v.1.2.0-20261012`已完成名將協同、八封包及新版推廣片。僅強化模式，存活帶隊楊威利／萊因哈特在場時，所屬陣營全部艦隊每回合新移動額度1.5倍，離場即解除；楊牽制與雙翼包抄，萊因哈特集中突擊與側後封鎖。原版規則、動畫時鐘及存檔格式保持。當輪狀態表為[計畫130](docs/goal/2026-10-12-hero-ai-release-round-130.md)，[140限定CONFORMED](docs/spec/140-hero-tactics-and-release.md)。
@@ -19,7 +19,7 @@
 
 新片124.957秒、1080p60、雙聲道，含52.133秒完整艦隊交火、16秒指定1988動畫、HD雙旗片頭、三劇本、S1操作、名將AI比較與F7切換。85個來源影格核對、39段總覽及9個低變動區間回查通過，非靜音、零黑段。指定來源原生852×480，海報同含1988／1993電影，均如實標示。結果與身份見[驗證119](docs/playtest/119-hero-ai-release-promo.md)及[來源索引](docs/internals/data/hero-ai-release-promo.json)。
 
-**遠端發行（2026-10-13）**：使用者明示「授權gh」，本次主機gh發布例外已取得。[v.1.2.0-20261012 GitHub Release](https://github.com/wicanr2/logh3/releases/tag/v.1.2.0-20261012)已正式發布，tag固定於`4096431f43f84a6bfe0588171401c497672f4a98`，未移動已發布tag。四個引擎／來源包及SHA-256清單均從GitHub實際下載並核對相同，發行說明與本機相同。版號沿10月12日本機已完成交付；10月13日補遠端發布。儲存庫保持私有，完整包及影片只留本機。收據由來源索引保存。
+**第130輪遠端發行歷史（2026-10-13）**：使用者明示「授權gh」，本次主機gh發布例外已取得。[v.1.2.0-20261012 GitHub Release](https://github.com/wicanr2/logh3/releases/tag/v.1.2.0-20261012)已正式發布，tag固定於`4096431f43f84a6bfe0588171401c497672f4a98`，未移動已發布tag。四個引擎／來源包及SHA-256清單均從GitHub實際下載並核對相同，發行說明與本機相同。版號沿10月12日本機已完成交付；10月13日補遠端發布。儲存庫保持私有，完整包及影片只留本機。收據由來源索引保存。
 
 本輪#101已依完整驗收更新並關閉；#48、#69、#66及#16保持原狀。前輪清理清單依使用者指示保留，既有decomp修改保持。發行程式由隔離分支保存；README結案時沿已驗證來源快轉同步main，工作檔保留。完整登陸／占領、DOS原版同態、Windows／macOS真機及人耳限制保持。
 
@@ -3803,9 +3803,11 @@ dosgolem 執行器修正後，`ending-empire` 已依原旗標重錄；remake 的
 - 收據確認 `cursor_mode=1`（Ebitengine v2.8.8 的 `CursorModeHidden`）。
 - 艦隊多層路徑另以最後邏輯座標 (368,350) 命中，排除只對單一熱區成立。
 
-**證據**：[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`tools/gui_input_check.sh`](tools/gui_input_check.sh)、[`docs/playtest/007-gui-x11-input-and-resize.md`](docs/playtest/007-gui-x11-input-and-resize.md)
+2026-10-13：啟動進度重構將隱藏系統游標移至startup.go的prepareWindow，正常遊戲仍為CursorModeHidden；載入小視窗使用系統游標。更新查核路徑，沒有產品回歸。
 
-**核實**：`cmd/gin3/main.go` 裡出現 `CursorModeHidden` 就是做好了
+**證據**：[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`cmd/gin3/startup.go`](cmd/gin3/startup.go)、[`tools/gui_input_check.sh`](tools/gui_input_check.sh)、[`docs/playtest/007-gui-x11-input-and-resize.md`](docs/playtest/007-gui-x11-input-and-resize.md)
+
+**核實**：`cmd/gin3/main.go`、`cmd/gin3/startup.go` 裡出現 `CursorModeHidden` 就是做好了
 
 #### gui-nested-menu-click — 視窗版的第二層選單無法點選
 

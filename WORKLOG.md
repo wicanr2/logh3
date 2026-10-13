@@ -11051,3 +11051,9 @@ v.1.1.3-20261011從1533項乾淨凍結輸入建立Windows、Linux與macOS完整�
 - 正式Linux完整版帝國強化與同盟原版規則各從載入、片頭、主選單正常操作，沒有script或注入。各38張完整視窗、六組原圖／HD游標差分、三劇本與六檔存讀、四字型、F7及音色切換、可見退出0通過。Wine正常片頭及讀檔／退出／黑體三診斷，兩平台引擎各四入口通過；本輪Wine音訊停用。macOS雙架構依賴與ARM簽章全頁、ZIP權限檢查通過，未真機。
 - v.1.3.0-20261013從1553項凍結輸入建立八封包，575項非vendor與工作樹相同，978項vendor只在來源stage。最終核對初次錯把vendor視為主工作樹既有目錄，依實際凍結架構修正核對器。BUILD保留當時ae5866b及髒工作樹，正式commit另以git archive綁定575來源，不假稱當時乾淨HEAD。完整版與原曲OGG、HD資產只在dist-all本機；GitHub附件只有引擎／來源及校驗檔。
 - README更新下載、字型／音色／進度與三張正常新截圖；既有八張S1圖明示v.1.2.0來源。核准字型HTML與三試樣保留Git，來源與決定獨立於正式截圖。新驗證120與system-dialog-polish.json集中結果，文件及工具均掛索引。v.1.2.0及其推廣片保持原身份，沒有重做或重標影片，不動既有HD／decomp修改。
+
+- 正式來源提交d2a85832bcdf6e9116547dd1082906282a44adc1；git archive的575項非vendor與凍結BUILD相同。新tag物件91ae5f42751d8cb146443436d94cfff8c32bbcfb固定此commit。GitHub先建立草稿，五附件實際下載SHA-256與大小相同後正式發布v.1.3.0-20261013，發行說明、正式狀態與遠端tag回讀通過；舊v.1.2.0物件8444344及程式4096431未移動。草稿tags API回404，改用Release清單讀取草稿身份，不當作產品缺陷。
+- #37隱藏游標查核改掃main.go與startup.go；#69補HD技術證據仍OPEN。發布整理前後1961項HD／decomp檔案大小及SHA-256相同；全專案擁有權與錯誤.md目錄檢查零項。容器清理與最終Issue快照另在交接收據核對。
+
+- #102已依六項正常GUI與封包證據更新並關閉，#69保留OPEN；102張Issue中4 OPEN／98 CLOSED。最新快照282條verify零失效、128一致、1人工及153歷史文件證據，CONTEXT產生區段與整份矩陣已同步。遠端README逐位元組相同，九個新版圖片／試樣檔Git blob及大小相同，無dist-all／workplace／org_game入遠端樹；舊新tag均符合固定身份。
+- HANDOFF-CHECK.json、HYGIENE.json及DOCKER-PS.jsonl確認零專案容器、零root-owned或.md目錄，1961保留檔案不變。正式Release與下載、來源commit、清單、首頁及衛生收據已複製到dist-all/v.1.3.0-20261013/smoke並登錄唯一交付索引。後續文件提交不移動已發布tag。
