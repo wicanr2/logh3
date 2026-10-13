@@ -3,7 +3,7 @@ org_game/
 workplace/
 testdata/
 
-# 建置與交付產物
+# 建置與交付產物只保留本機，不加入 Git
 dist/
 dist-all/
 

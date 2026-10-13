@@ -11029,3 +11029,11 @@ v.1.1.3-20261011從1533項乾淨凍結輸入建立Windows、Linux與macOS完整�
 - 新增並索引hero_release_publish_check.py，發布後再核遠端tag、說明全文、正式狀態及下載身份，才登錄四項published_assets；校驗檔另列。收據在本版smoke/GH-PUBLISHED-CHECK.json，來源索引615項來源／證據重核通過，10288項擁有權與.md目錄檢查通過。規格140、驗證119、README與唯一狀態表130同步遠端現況，原玩法及未完成範圍保持。
 - 沿既有授權更新並關閉#101，機器訊號綁遠端四包完成後才產生的published_assets。完整遊戲、新片、下載驗證副本與先前保留清單均未刪除，未上傳原版或動畫；既有decomp工作樹與主索引保持。未改程式，沿上一輪標準15PASS／4無測試，不重複建置或遊玩抽測。
 - 關閉後回讀確認CLOSED，重抓101項、4 OPEN／97 CLOSED；281條verify零失效、127一致、1人工與153歷史文件證據。CONTEXT產生區段及整份驗證矩陣由同一快照更新。發行後的文件與核對工具另提交至既有隔離發行分支，不移動固定於程式commit4096431的Release tag；本次一次性Docker容器均退出刪除，未重建映像或清理其他專案。
+
+## 2026-10-13：README截圖、特點與發行結案
+
+- 使用者要求更新README截圖與特點、發布結案，並再次確認完整版只保留本機。命中README標準與文件職責路由，沿用逆向重製技能的README reference。遠端正式Release仍為v.1.2.0-20261012，只有四個引擎／來源包及校驗檔；不重新打包、改版號或覆寫既有tag／Release。
+- README移除長篇歷史研究展示，改為下載、本機完整版、功能特點、八張本版實錄、資料匯入、啟動器、快捷鍵、驗證範圍與文件入口。舊研究事實由原docs與Git歷史保存，十二張原研究截圖沒有刪除或改寫。Windows啟動器查證為.cmd，Linux為.sh，macOS為.command。
+- 新增readme_release_shots.py並掛索引。六張沿正式Linux正常S1實錄的完整PNG，兩張F7沿同次RAW.mp4的33.3／35.4秒擷取；正式程式雜湊相同，兩圖完整戰術狀態相同。八張均960×720，沒有裁切或縮放；收據在docs/images/readme-v120.json。GUI image沒有Pillow，改採標準函式庫安裝圖片，音訊／影像處理仍在既有HD image內，未建立新工具映像。
+- GitHub Markdown API成功渲染，八張圖、九張表、標題階層、全部相對連結及本機內容無GitHub失效連結通過。工作紀錄與HTML收據保存在workplace/hero130/README-CHECK.json，圖像雜湊與原實錄再核通過。程式及發行資產未改，沿本版既有標準測試與正常玩家驗收。
+- 完整版、動畫影片、原版檔與工作目錄繼續由.gitignore排除，正式Git檔案清單沒有dist-all、org_game或workplace。文件與截圖從既有隔離發行分支提交，再以快轉更新main；不覆寫主工作樹的既有decomp與本機HD資產。本次僅將README文件圖加入私有儲存庫，不變更可見度或上傳完整版。

@@ -1,225 +1,125 @@
-# logh3 — 銀河英雄傳說III SP DOS remake／研究專案
+# 銀河英雄傳說 III SP remake
 
-遙遠的未來，人類的戰爭延伸到銀河。奉皇帝為首的銀河帝國，與採民主制度的自由惑星同盟，已交戰一百五十年。帝國受門閥貴族牽制，同盟也陷入政治腐敗。兩位年輕將領在這個時代崛起：帝國的萊因哈特，以及同盟的楊威利。他們率領艦隊反覆交鋒，改變兩國的命運。故事背景參考[Production I.G 官方介紹](https://www.production-ig.co.jp/works/ginei/story.html)。
+以 Go 與 Ebitengine 重製 1994 年 PC DOS 中文版，保留原版操作方式，加入陣營 HD 介面與強化 AI。
 
-萊因哈特從軍的起點，是要救回被皇帝納入後宮的姊姊。他的野心逐漸指向帝國的權力中心。楊威利則站在對立陣營，成為他難以擊敗的對手。這場英雄的競逐，同時也是兩種政治制度與無數人生的交會。萊因哈特的背景見[集英社作品介紹](https://youngjump.jp/manga/gineiden/)。
+選擇銀河帝國或自由行星同盟，從財政、生產與提督任命安排戰略，再親自指揮艦隊迎戰。從亞姆力札會戰重新下令，讓你的戰術改變局勢。
 
-《銀河英雄傳說III SP》讓玩家從星域、財政與艦隊指揮參與這場戰爭。選擇帝國或同盟，任命提督、編組艦隊，再把戰略部署帶進戰術戰場。遊戲中人物的經歷，另保存於[原版人物傳](docs/lore/character-biographies.md)。
+**目前版本：[v.1.2.0-20261012](https://github.com/wicanr2/logh3/releases/tag/v.1.2.0-20261012)。** GitHub 提供引擎與程式來源，玩家須自備合法取得的原版遊戲資料。含遊戲資料的完整版與推廣影片僅保留本機，不加入 Git 或 Release 附件。
 
-## 重製與保存
+## 下載與本機完整版
 
-《銀河英雄傳說III SP》（Legend of the Galactic Heroes III SP）PC DOS 中文版的
-重製與保存專案。原版 1993 年由 BOTHTEC／QUEST 與 Micro Vision 製作，
-1994 年由亨和企業．微波軟體發行中文版。
-
-專案有兩個並行的目的：把遊戲重做成可維護的版本，以及保存這款 1994 年台灣
-中文化作品的技術細節——原始碼與開發資料都不存在，只剩執行檔可以問。
-
-## 現在做到哪裡
-
-Windows、Linux與macOS的[現行HD交付](docs/playtest/119-hero-ai-release-promo.md)為`v.1.2.0-20261012`，引擎包及本機完整版集中於`dist-all/v.1.2.0-20261012/`。[GitHub Release](https://github.com/wicanr2/logh3/releases/tag/v.1.2.0-20261012)提供三平台引擎、來源及校驗檔，遊戲資料需自行匯入。第二畫面確認、財政及訂造按鈕已接通，三個額外劇本可正常存讀。
-
-介面採帝國核准A調暗藍色與黃金、同盟赤焰戰線，保留原版字形、立體框、4:3配置與操作位置。HD按鈕有停留反光；滑鼠移到頂端顯示功能列，F1說明、F7原版／HD；敵軍顯示只在設定選單切換，預設關閉。星圖採核准第三稿的新繪星球與雙方徽章，保留全部名稱與航路；戰術部隊圖示保留原版細節。82張修復人物與原版空格、32張戰術地圖、小地圖及既有HD動畫到齊。
-
-強化模式新增名將協同：楊威利牽制與雙翼包抄，萊因哈特集中突擊與側後封鎖。存活帶隊名將參戰時，所屬陣營全部艦隊新移動額度1.5倍，離場即解除。原版規則模式、動畫速度及存檔格式保持。
-
-[新版約125秒推廣片](dist-all/v.1.2.0-20261012/promo/LOGH3-v.1.2.0-20261012-promo.mp4)包含HD雙旗片頭、指定1988動畫、三劇本清單、正常S1遊玩、兩位名將與既有AI比較、F7原版／HD實際切換，以及52秒完整艦隊交火與遊戲聲音。指定動畫原生480p，依原比例放大。完整版及影片含原版或衍生素材，只留本機；完整登陸分段、Windows／macOS真機及人耳驗收保持開放，不宣稱DOS全遊戲同態。
-
-以下保存原圖模式的歷史畫面與限定驗收，HD圖的重繪不套用這些一致性聲明。
-
-下面八張都是 **remake 自己畫的**——Go 寫的繪製器 ＋ 玩家自備的原版素材
-（字型、星域圖、頭像），走正常玩家路徑，不是直接開畫面。每一張都與原版在
-無頭執行器裡跑出來的收據**逐位元組相同**（0 個像素不同），
-用 `tools/readme_shots.sh` 產生：比不過收據的圖不會被寫出去。
-
-| 主選單 | 防拷問答 |
+| 平台 | GitHub 引擎包 |
 |---|---|
-| ![主選單](docs/images/01-main-menu.png) | ![防拷問答](docs/images/02-copy-protection.png) |
-| 收據 `r0` | 收據 `cb1` |
+| Windows amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.2.0-20261012/LOGH3-v.1.2.0-20261012-windows-amd64.zip) |
+| Linux amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.2.0-20261012/LOGH3-v.1.2.0-20261012-linux-amd64.zip) |
+| macOS Intel／Apple Silicon | [下載通用版 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.2.0-20261012/LOGH3-v.1.2.0-20261012-macos-universal.zip) |
 
-| 月初報告 | 戰略地圖介面 |
+[引擎來源包](https://github.com/wicanr2/logh3/releases/download/v.1.2.0-20261012/LOGH3-v.1.2.0-20261012-engine-source.tar.gz) · [SHA-256 校驗清單](https://github.com/wicanr2/logh3/releases/download/v.1.2.0-20261012/SHA256SUMS.txt) · [發行驗證](docs/playtest/119-hero-ai-release-promo.md)
+
+本機交付保留於以下位置。`dist-all/` 已由 `.gitignore` 排除，不隨儲存庫下載。
+
+| 本機內容 | 路徑 |
 |---|---|
-| ![月初報告](docs/images/03-month-report.png) | ![戰略地圖介面](docs/images/04-command-phase.png) |
-| 收據 `key1` | 收據 `main1e` |
+| 三平台完整版與啟動器 | `dist-all/v.1.2.0-20261012/full/` |
+| 約 125 秒有聲推廣片與正常遊玩實錄 | `dist-all/v.1.2.0-20261012/promo/` |
+| 封包、聲畫及發布驗證 | `dist-all/v.1.2.0-20261012/smoke/` |
 
-![取進度](docs/images/05-load-game.png)
+推廣片包含雙旗 HD 片頭、S1 讀檔、三個額外劇本、名將 AI 比較、F7 即時切換，以及約 52 秒正常速度艦隊交火。指定 1988 動畫片段的原生畫質為 480p，保留來源標示；成片與相關素材僅留本機。
 
-「取進度」那 11 列不是量好畫死的——存檔時間、序號、遊戲內日期與名稱都從
-`SAVEDATA.IDX` 算出來（收據 `load1e`，整張逐位元組相同）。
+## 主要特點
 
-| 戰略情報報告 | 提督資料 |
+- **保留原版操作。** 維持 4:3 畫面、原版字形、立體框線與按鈕位置；修正確認、財政、訂造及建造操作，加入滑鼠停留反光。
+- **兩套陣營 HD。** 帝國採藍金配色，同盟採赤焰戰線；戰略星圖重繪星球與徽章，保留星球名稱及航路。戰術地圖、人物與艦影支援 HD，部隊圖示保留原版細節。
+- **隨時切換畫面。** F7 切換原版／HD，F1 開啟說明；滑鼠移到頂端可顯示功能列。顯示敵軍從設定選單切換，預設關閉。
+- **強化戰略與戰術 AI。** 可選原版規則模式或四級強化難度；強化 AI 會集結兵力、協同移動並尋找包圍方向。
+- **名將協同。** 楊威利採牽制與雙翼包抄，萊因哈特採集中突擊與側後封鎖。僅強化模式，兩人作為存活帶隊提督參戰時，所屬陣營全部艦隊的新移動額度為 1.5 倍，離場即解除。
+- **三個額外劇本。** 取進度保留 S1「亞姆力札會戰」、S2「諸神的黃昏」、S3「巴米利恩會戰」，可正常載入及存讀。
+- **有聲交火。** 支援遊戲配樂、艦隊音效與普通速度戰鬥動畫。引擎包需另匯入自有音訊與 HD 素材；原版規則模式、動畫時鐘及存檔格式保持。
+
+## 遊戲畫面
+
+以下八張取自本版 Linux 正式程式的正常 S1 遊玩實錄，保留完整 960×720 視窗。[截圖來源與雜湊](docs/images/readme-v120.json)可核對程式、操作紀錄及影片時碼。
+
+| 帝國藍金介面與星圖 | 同盟赤焰戰線介面與星圖 |
 |---|---|
-| ![戰略情報報告](docs/images/06-info.png) | ![提督資料](docs/images/07-admiral-list.png) |
-| 收據 `info1e` | 收據 `lst2e` |
+| ![帝國HD戰略星圖，保留星球名稱與航路](docs/images/readme-v120-empire-map.png) | ![同盟HD戰略星圖與艦隊清單](docs/images/readme-v120-alliance-map.png) |
 
-左邊那張的星域圖跟著**治安**換色（不是勢力色），頭像來自 `FACE.AMG`。
-右邊那張十六列的姓名、軍階與幕僚職記號全部從 `ADMIRAL.DT*` 與 `WORK` 算出來，
-規格裡只有版面。
-
-| 提督詳細資料 | 提督經歷（人物傳）|
+| 三個額外劇本 | 強化模式戰術戰場 |
 |---|---|
-| ![提督詳細資料](docs/images/09-admiral-detail.png) | ![提督經歷](docs/images/10-biography.png) |
-| 收據 `adm1e` | 收據 `keireki1e` |
+| ![正常取進度清單中的S1、S2、S3](docs/images/readme-v120-scenarios.png) | ![同盟視角第4回合戰場，顯示敵軍已開啟](docs/images/readme-v120-tactical-ai.png) |
 
-出擊命令的待命中提督清單點一位提督就到這裡。這張畫面把 `ADMIRAL.DT*`
-十四個能力欄位裡的十個標了名字——統率力、移動、回轉、營運、光線砲、
-飛彈、戰鬥機、防禦、占領、運用——逆向到這一步之前那幾格只知道
-「值域 80–140」（[`docs/re/65`](docs/re/65-admiral-detail-screen.md)）。
-旗艦查的是執行檔資料段裡兩張各 16 筆的對照表。
-
-右邊那張是「經歷」開出來的**人物傳**，內容逐字取自原版 `KEIREKI.DAT`，
-中譯是當年微波軟體的中文化工程；82 篇的可讀版本在
-[`docs/lore/character-biographies.md`](docs/lore/character-biographies.md)。
-
-![艦隊編成](docs/images/11-fleet-org.png)
-
-詳細資料按「出擊」開出**艦隊編成**（收據 `fleet1e`）。九格艦隊能力不是
-提督自己的值，是提督與副官合成的——而且副官贏的那幾格印成另一個顏色，
-畫面自己把「這一格是副官撐起來的」標了出來
-（[`docs/re/66`](docs/re/66-fleet-organisation-screen.md)）。
-合成方式前五項與後六項不同：前五項副官只把值往上拉一半
-（`(提督＋副官) ÷ 2`），後六項才是逐項取大——拿三格原版存檔對，
-62 支艦隊 682 個值全對（[`docs/re/91`](docs/re/91-fleet-ability-blend.md)）。
-副官是 `ADMIRAL.DT*` 記錄裡的 `+0x07`，`0xFF` 同時代表這位提督
-沒有旗艦、帶不了艦隊。
-
-![戰術畫面](docs/images/12-battle.png)
-
-雙方的艦隊走到同一個星域就切進**戰術畫面**。這張是走正常玩家路徑拍的：
-主選單開新遊戲 → 戰略地圖介面 → 系統指令／取進度 → 第 10 格
-「巴米利恩會戰」→ 選帝國 → 實行。面板、地形、格線、右側狀態欄、
-單位與小地圖五層都是從原版檔案重建的，整張畫面與原版收據
-**逐位元組相同**（`TestBattleMatchesOracle`、`TestMinimapMatchesOracle`）
-——這張圖本身沒有同狀態收據可比，因為 remake 的行軍速度還沒對到原版
-（原版要按六次實行才會合）。
-
-![遊戲設定](docs/images/08-settings.png)
-
-遊戲設定那張把字型層的兩個問題一次逼出來：曲名「波利路」用到 Big5 的
-次常用字，而字型檔沒有存 `0xC6A1`–`0xC8FE` 那 408 個碼位；「MIDI I/F」
-則是**兩個半形字塞在同一格**，不是全形（[`docs/re/51`](docs/re/51-settings-screen-two-font-bugs.md)）。
-
-戰略地圖介面上的每一個數字也是算出來的：左下角的星域摘要、右側的日期與
-兩筆錢、預算與生產計劃的四十幾個數字，全部從原版資料檔推到像素，
-中間沒有抄來的值。
-
-### 走得完的路
-
-```
-主選單 ─┬─ 帝國／同盟／對戰 ─→ 防拷問答 ─→ 月初報告 ─→ 戰略地圖介面
-        └─ 取進度 ─→ 防拷問答 ─→ 存檔畫面 ─→ 選一格 ─→ 戰略地圖介面
-```
-
-視窗版（Ebiten）走得完同一條路：`tools/gui_check.sh` 把 Ebiten 畫出來的
-色號陣列與原版收據逐位元組比，五張全中。
-
-命令階段三格下拉選單、十二張子畫面、預算／生產計劃、結局畫面都畫得出來且
-對過。一覽表的四張清單（提督、待命中提督、敵提督、星系）也是——十六列的
-姓名、軍階、幕僚職記號與星域名全部從原版資料檔算出來，規格裡只有版面。
-存檔可以讀也可以寫回去（六個檔逐位元組相同）。
-
-**回合也走得動**：按一次「實行」推進三天，整張畫面與原版逐位元組相同；
-第十次跨月時跳出「船艦接收報告」，十四個數字是上一份建造計劃買到的船，
-署名的參謀由存檔算出來。
-
-### 解出來的規則
-
-| 主題 | 做到哪裡 |
+| 原版顯示 | 同一戰場切回 HD |
 |---|---|
-| 月底結算 | 逐行星成長、兩種稅、造船扣款——796 年 1 月畫面上每一個錢都算得出來 |
-| 未安定度 | 載入時整支算式解出來，三個局面 ×32 個星域**全中**；跨月不重算 |
-| 星域表重算 | 新遊戲開局的擁有者、行星數、經濟力、成長率、民心、稅率、未安定度七項全中 |
-| 存檔格式 | `*.DT[89A]` 就是執行期那幾張表；讀、寫、目錄都對過 |
-| 曆法、路徑表、星域圖 | 已解 |
-| 戰場畫面 | 640×480 逐位元組相同（面板、地形、格線、狀態欄、單位、小地圖五層）|
-| 戰鬥 | 雙方走到同一星域就開戰；總損失以**行星**為中心算（防衛力、查詢半徑、距離衰減、方向係數、防禦係數、亂數），分攤、九回合上限與分數都照原版 |
+| ![正常遊戲按F7切為原版顯示](docs/images/readme-v120-switch-original.png) | ![同一戰術狀態按F7切回HD](docs/images/readme-v120-switch-hd.png) |
 
-完成度的數字看 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)，
-規格與狀態看 [`docs/spec/000-README.md`](docs/spec/000-README.md)。
-
-## 還沒做的
-
-**不在這裡列清單。** 還剩什麼的權威是
-[GitHub 的 worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)，畫成人看的樣子在
-[`CONTEXT.md`](CONTEXT.md) 的 worklist 一節；完成度看
-[`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)。兩份 markdown 都是產生的。
-
-```
-tools/go.sh run ./cmd/worklist verify     # 每一條的斷言還成立嗎
-```
-
-在 README 再抄一份清單，就是再多一個會過期的地方——這個專案已經因此把
-「還沒接」寫在三個檔案裡，而東西早就接上了。
-
-## 電腦 AI
-
-兩套並存，預設走原版模式 `-ai -1`，強化版用 `-ai 0` 至 `3` 選擇難度。兩種模式的戰略與戰術都已接線，電腦能下令、移動與依交戰規則造成傷害。強化版會集結兵力並尋找包圍方向；原版戰術參考點仍有強推論限制。作用與驗收範圍見[規格120](docs/spec/120-active-tactical-ai.md)及[試玩交付](docs/playtest/105-local-full-test-package.md)。
-
-## 五張清單為什麼一直是空的
-
-這五張清單畫面在收據上長期是空的，一度被記成「原版在這個局面下就是空的」。
-實際上資料一直都在：篩選器回了 11 筆提督，字元平面上名字與軍階也都在，
-**是無頭執行器少了 VGA 的 read mode 1（color compare）**。
-
-原版畫字用 write mode 3 ＋ read mode 1，color don't care 全 0，拿讀回的
-`0xFF` 當全開的遮罩配 `and es:[di],al` 把字形寫進去。執行器回的是 plane 值，
-遮罩就變成 `plane0 AND 字形`——底色所在 plane 是 0 的格子整個歸零，
-字一個像素都不寫。所以底色色號 9 的標題畫得出來、底色 8 的名字畫不出來。
-
-補上之後（dosgolem `35d4cc3`，spec 017），178 份收據裡有 155 份變了：
-命令按鈕、確認鈕、分頁鈕、清單內容——大半個介面的文字本來都少畫了。
-調查過程在 [`docs/re/49`](docs/re/49-lists-were-a-vga-read-mode-gap.md)，
-字元平面的格式在
-[`docs/internals/31`](docs/internals/31-text-plane.md)。
+| 中子光線砲交火 | 戰鬥機交火 |
+|---|---|
+| ![正常戰鬥實錄中的中子光線砲與HD艦影](docs/images/readme-v120-beam.png) | ![正常戰鬥實錄中的戰鬥機攻擊與HD艦影](docs/images/readme-v120-fighters.png) |
 
 ## 怎麼跑
 
-需要自備合法取得的原版遊戲檔，放在 `org_game/extracted/`。私有儲存庫的研究素材
-不取代玩家自備資料，也不加入可散布封包。
+1. 下載並解壓對應平台的引擎包。
+2. 找到自己原版資料中同時包含 `GIN3.COM`、`GRAPH.IMG`、`FACE.AMG` 的目錄，依下表放入引擎包。原始來源可另外保留。
+3. 啟動原版規則或強化模式。防拷畫面輸入 `138`，按確認或 Enter。
 
+| 平台 | 原版資料位置 | 原版規則／強化模式啟動器 |
+|---|---|---|
+| Windows | `gin3.exe` 旁的 `original/` | `start-original.cmd`／`start-enhanced.cmd` |
+| Linux | `gin3` 旁的 `original/` | `start-original.sh`／`start-enhanced.sh` |
+| macOS | `.app/Contents/Resources/original/` | `start-original.command`／`start-enhanced.command` |
+
+Linux 也可直接指定既有原版資料目錄：
+
+```sh
+./start-enhanced.sh -orig "/path/to/game"
 ```
-tools/gui.sh build ./cmd/gin3                # 建 Ebiten 視窗版
-tools/gui.sh run ./cmd/gin3 -orig /orig      # 玩（Ebiten）
-tools/gui.sh run ./cmd/gin3 -orig /orig -ai 1   # 開強化版電腦 AI（0–3）
-tools/gui_check.sh                           # 顯示層的同狀態驗收
-tools/gui.sh test ./cmd/... ./internal/...    # 產品及對拍回歸測試
-tools/go.sh run ./cmd/play -orig /orig -out /src/workplace/play \
-  -pal /src/workplace/oracle/main1e/pal.bin \
-  -script "move 300 210; click; type 138; enter; rclick 300 240; rclick 300 240"
-tools/go.sh run ./cmd/oradiff \
-  -oracle workplace/oracle/main1e/screen.bin -remake workplace/play/06-rclick-300-240.bin
+
+啟動器可加 `-music "/path/to/music"` 匯入自行準備的 OGG 配樂與音效；加 `-graphics hd -art "/path/to/art"` 使用自有 HD 素材。未匯入音訊時，引擎包保持安靜。本機完整版已附該次本機交付的素材。
+
+| 操作 | 功能 |
+|---|---|
+| F1 | 說明 |
+| F7 | 原版／HD 顯示切換 |
+| 滑鼠移到頂端 | 顯示功能列 |
+| 系統指令 → 設定 → 顯示敵軍 | 遊戲中開關敵軍顯示 |
+
+Windows 存檔位於 `%APPDATA%\logh3\save`；Linux 位於 `$XDG_CONFIG_HOME/logh3/save`，未設定時使用 `~/.config/logh3/save`；macOS 位於 `~/Library/Application Support/logh3/save`。兩種 AI 模式共用存檔。
+
+Linux 需要 X11 或 XWayland、OpenGL 與 ALSA；Windows 需要 OpenGL 驅動；macOS 最低版本為 11.0，尚未經 Apple 公證。詳細步驟與第三方聲明見包內 `README.txt`。
+
+## 驗證範圍
+
+正常玩家路徑已抽測讀檔、財政與生產操作、艦隊指令、戰場移動、交火、存讀及顯示切換。兩陣營的原版規則／強化模式從相同初始艦隊比較，兩位名將各有正常實戰錄影；普通速度演出的格序、音效閘門及結果時點另有收據。
+
+Linux 封包已實際啟動，Windows 以 Wine 驗證，macOS 完成雙架構、依賴與 ARM 簽章檢查。Windows／macOS 真機、人耳與完整登陸／占領演出仍待驗證。HD 是重繪模式，不宣稱全遊戲與 DOS 原版逐像素或流程完全一致。
+
+詳細證據見[發行驗證119](docs/playtest/119-hero-ai-release-promo.md)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
+
+## 重製與保存
+
+本專案同時保存台灣中文版的資料格式、規則、畫面與人物傳。逆向結論附原始定位與證據等級；原版畫面及流程對拍使用 [dosgolem](https://github.com/wicanr2/dosgolem)，規則層另有經差異測試的 C 參考實作。原版規則模式與重製新增功能分開記錄。
+
+開發、測試與素材處理使用既有 Docker 工具鏈。將合法原版資料放入 `org_game/extracted/` 後：
+
+```sh
+tools/gui.sh build ./cmd/gin3
+tools/gui.sh run ./cmd/gin3 -orig /orig -ai 1
+tools/gui.sh test ./cmd/... ./internal/...
 ```
-
-原版側的畫面由 [dosgolem](https://github.com/wicanr2/dosgolem)（無頭、決定性的
-DOS 執行器）產生，它是本專案唯一的 oracle。
-
-上面那幾張 PNG 是 remake 的輸出，用原版字型與地圖畫的；原版檔案本身
-不隨本儲存庫散布。
 
 ## 文件
 
-| 檔 | 內容 |
+| 入口 | 內容 |
 |---|---|
-| [`AGENTS.md`](AGENTS.md) | 協作規範與對拍契約 |
-| [`CONTEXT.md`](CONTEXT.md) | 目前真相與唯一剩餘工作 |
-| [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md) | 完成度的唯一數字來源 |
-| [`docs/spec/`](docs/spec/) | 規格：要照著做什麼與驗收條件 |
-| [`docs/internals/`](docs/internals/) | 逆向出來的事實（格式、結構、演算法），含機器可讀的 `data/*.json` |
-| [`docs/re/`](docs/re/) | 逐次調查紀錄 |
-| [`docs/lore/`](docs/lore/) | 從遊戲裡抓出來的人物傳等文本 |
-| [`docs/playtest/`](docs/playtest/) | 對拍收據 |
-| [`docs/playtest/007-gui-x11-input-and-resize.md`](docs/playtest/007-gui-x11-input-and-resize.md) | 真實 X11 滑鼠、第二層選單與視窗縮放黑箱收據 |
-| [`docs/playtest/008-music-player-path-integration.md`](docs/playtest/008-music-player-path-integration.md) | 正常玩家路徑的曲目切換、曲庫與錯誤處理收據 |
-| [`docs/playtest/067-fleet-sound.md`](docs/playtest/067-fleet-sound.md) | 玩家自備原版的音效轉檔入口、播放方式及驗證範圍 |
-| [`docs/playtest/009-fleet-composition-multiple-groups.md`](docs/playtest/009-fleet-composition-multiple-groups.md) | 艦隊組成 B／C／D 多編組的記憶體與逐格對拍收據 |
-| [`WORKLOG.md`](WORKLOG.md) | 流水帳 |
+| [CONTEXT.md](CONTEXT.md)／[驗證矩陣](VERIFICATION-MATRIX.md) | 目前狀態與驗證範圍 |
+| [規格索引](docs/spec/000-README.md) | 規則、操作與驗收契約 |
+| [逆向資料索引](docs/internals/00-README.md)／[調查紀錄](docs/re/) | 資料格式、演算法與原始證據 |
+| [人物傳](docs/lore/character-biographies.md) | 原版人物經歷保存 |
+| [試玩與交付](docs/playtest/) | 正常玩家路徑、畫面及封包收據 |
+| [WORKLOG.md](WORKLOG.md)／[AGENTS.md](AGENTS.md) | 工作歷程與協作規範 |
 
 ## 授權
 
-採用 **復古重製 source-available 授權條款 1.0（RRSAL-1.0）**：非商業用途免費，
-含修改與再散布；實況、影片與平台分潤明示允許；商業用途要先洽談。
-完整條款見 [`LICENSE`](LICENSE)。第三方工具與音色庫依各自授權，完整聲明隨包保留。
+引擎採[復古重製 source-available 授權條款 1.0（RRSAL-1.0）](LICENSE)：非商業用途免費，允許修改與再散布；實況、影片與平台分潤明示允許，商業用途另洽。第三方工具與音色庫依各自授權。
 
-本授權不涵蓋原版遊戲檔、素材、原版譯文或其轉檔產物。儲存庫目前為私有，
-`assets/original/`、`docs/images/` 與 `docs/lore/` 含原版研究素材；它們不加入可散布封包。
-轉公開前須另行裁決這些內容及 Git 歷史的處理方式。
+此授權不涵蓋原版遊戲檔、素材、譯文及其轉檔產物。本專案為非官方重製，與原作權利人無隸屬關係。儲存庫維持私有；研究素材與畫面不隨引擎包散布，完整版及動畫影片僅保留本機。

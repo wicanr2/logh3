@@ -1116,3 +1116,5 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 [影片低變動回查](../../tools/scripts/hero_promo_review.py)逐區間核對來源與成片，不把固定背景、選單停留或音效等待直接當成異常凍結。
 
 [GitHub發行下載核對](../../tools/scripts/hero_release_publish_check.py)先核草稿五資產的實際下載雜湊，正式發布後再核遠端tag、說明及完成訊號；完整遊戲與影片不列入遠端資產。
+
+[README實錄截圖工具](../../tools/scripts/readme_release_shots.py)由本版正常玩家實錄保存八張完整視窗，原圖／HD切換兩張核對同戰術狀態；[來源收據](../images/readme-v120.json)連結正式程式、時碼與雜湊。
