@@ -11018,3 +11018,14 @@ v.1.1.3-20261011從1533項乾淨凍結輸入建立Windows、Linux與macOS完整�
 - v.1.2.0-20261012由1545項凍結輸入建立三平台完整／引擎八封包。六ZIP逐檔、manifest、權限、版號及雜湊通過，兩份來源tar對凍結輸入通過。Linux完整11入口、Windows Wine六入口、兩平台引擎各四入口及macOS雙架構／依賴／ARM簽章頁通過。首次打包因舊音訊library目錄缺失停止，改用已驗證且保留的v.1.1.6音樂／字型來源，從乾淨final staging重建。初次Mac建置的來源逐檔與final相同，未靠版號推定身份。
 - 驗證119、唯一狀態表130、140本機限定CONFORMED及新工具均掛專案索引。hero-ai-release-promo.json保存八包、正常實錄、聲畫檢查及來源身份。含原版／HD／動畫的full及promo只留本機；release四個引擎／來源資產及發行說明已備妥。AGENTS主機gh例外只涵蓋Issue，遠端Release發布另請本次例外，尚未把本機交付稱為遠端已發布。
 - 使用者要求保留前輪清理清單，本輪未刪資料。工作根與本版交付2950項擁有權及.md目錄檢查通過，UID/GID1000:1000。本次一次性Docker容器已退出刪除，其他專案容器保持，未重建映像或prune。誤用HD影像跑with-xvfb的工具入口缺件屬環境錯誤，改回既有GUI wrapper重跑通過。既有decomp修改保留；git diff --check通過。
+- 在隔離工作樹保存發行分支codex/release-v.1.2.0-20261012，commit4096431。567項非vendor正式來源從git archive重新取出後與建置凍結輸入逐檔相同。只提交本次及前續HD／操作／影片引擎改動與文件工具，未加入新HD美術、動畫、原版檔或未完成decomp；主checkout仍為523ced1，原索引未暫存其他變更。遠端發布尚未授權，沒有tag或push。
+- #101更新為本機完成、遠端Release例外待答覆，保持OPEN；published_assets空陣列只在遠端驗證後填。第一次Issue證據列未包反引號被解析器拒絕，修正格式後同一流程乾淨重跑：101項、5 OPEN／96 CLOSED，281核對零失效、127一致、1人工與153歷史文件證據；CONTEXT產生區段與整份矩陣已同步。最終608個來源／證據及25個交付雜湊重核通過。
+
+## 2026-10-13，第130輪收尾：GitHub正式發行
+
+- 使用者明示「授權gh」，只套用本次Release發布。命中版號、dist-all與文件職責路由，沿用逆向重製技能及既有Docker工具鏈。主機gh auth status成功；遠端沒有同名tag／Release，儲存庫仍私有。沿10月12日本機已交付的v.1.2.0-20261012，10月13日補遠端發布，未改封包版號或重建已驗證程式。
+- 四個引擎／來源資產再核逐檔、來源tar、manifest、大小及SHA-256，未列原版、HD美術、音樂、字型或動畫。tag物件8444344e9e0feaba4efeffb02cee4c2d782af484固定於4096431f43f84a6bfe0588171401c497672f4a98，推送後遠端解參照相同。沒有移動已發布tag、合併main或修改私有可見度。
+- 先建立Release草稿並上傳四包及SHA256SUMS.txt，五檔全部從GitHub實際下載，大小、SHA-256及GitHub digest均與本機相同。草稿由按tag讀取回404，改從已驗證帳號的Release列舉取得；屬API草稿讀取路徑，未把它記為產品故障。核對後正式發布，isDraft=false、isPrerelease=false且latest指向本版，published_at為2026-10-13T03:12:13Z。網址：https://github.com/wicanr2/logh3/releases/tag/v.1.2.0-20261012。
+- 新增並索引hero_release_publish_check.py，發布後再核遠端tag、說明全文、正式狀態及下載身份，才登錄四項published_assets；校驗檔另列。收據在本版smoke/GH-PUBLISHED-CHECK.json，來源索引615項來源／證據重核通過，10288項擁有權與.md目錄檢查通過。規格140、驗證119、README與唯一狀態表130同步遠端現況，原玩法及未完成範圍保持。
+- 沿既有授權更新並關閉#101，機器訊號綁遠端四包完成後才產生的published_assets。完整遊戲、新片、下載驗證副本與先前保留清單均未刪除，未上傳原版或動畫；既有decomp工作樹與主索引保持。未改程式，沿上一輪標準15PASS／4無測試，不重複建置或遊玩抽測。
+- 關閉後回讀確認CLOSED，重抓101項、4 OPEN／97 CLOSED；281條verify零失效、127一致、1人工與153歷史文件證據。CONTEXT產生區段及整份驗證矩陣由同一快照更新。發行後的文件與核對工具另提交至既有隔離發行分支，不移動固定於程式commit4096431的Release tag；本次一次性Docker容器均退出刪除，未重建映像或清理其他專案。

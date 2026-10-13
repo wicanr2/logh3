@@ -43,4 +43,8 @@ S1本身雙方名將均參戰。原版規則模式不產生名將加成，強化
 
 六個ZIP逐檔核對內容、manifest、雜湊、版號及啟動權限；兩份來源包逐項對凍結輸入。Linux完整版11入口、Windows完整版Wine六入口、兩平台純引擎各四入口、macOS amd64／arm64系統依賴與ARM簽章頁通過。Wine與macOS靜態檢查不等於真機驗收，音訊技術核對不等於人耳確認。完整登陸、#69音訊、#66 MIDI I/F及#16欄位證據保持原開放狀態。
 
-完整遊戲、HD與影片含原版或衍生素材，僅本機使用。未把動畫、海報或原版檔案加入GitHub Release。建置使用帶未提交改動的凍結來源，舊HEAD不是本版完整程式的代稱；來源逐檔雜湊才是交付身份。GitHub Release發布狀態另由目前狀態表與遠端確認。
+完整遊戲、HD與影片含原版或衍生素材，僅本機使用。未把動畫、海報或原版檔案加入GitHub Release。建置使用帶未提交改動的凍結來源，舊HEAD不是本版完整程式的代稱；來源逐檔雜湊才是交付身份。
+
+2026-10-13使用者明示「授權gh」，[GitHub Release](https://github.com/wicanr2/logh3/releases/tag/v.1.2.0-20261012)已正式發布。版號沿10月12日本機交付，tag物件`8444344e9e0feaba4efeffb02cee4c2d782af484`固定於發行commit`4096431f43f84a6bfe0588171401c497672f4a98`，567項非vendor正式來源從commit取出後與凍結輸入相同。沒有移動已發布tag或變更私有儲存庫可見度。
+
+遠端只有三平台引擎、來源tar及SHA-256清單，共五個資產。發布前從草稿實際下載五檔，逐檔SHA-256、大小及GitHub digest均與本機相同；發布後再核發行說明、正式狀態及遠端tag。[核對工具](../../tools/scripts/hero_release_publish_check.py)在全部通過後才填入來源索引的四項`published_assets`完成訊號，收據位於本版`smoke/GH-PUBLISHED-CHECK.json`。

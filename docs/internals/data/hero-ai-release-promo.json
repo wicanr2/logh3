@@ -1,6 +1,6 @@
 {
   "version": "v.1.2.0-20261012",
-  "status": "PASS 名將戰術、三平台本機完整版及有聲史詩推廣片",
+  "status": "PASS 名將戰術、三平台本機完整版、有聲史詩推廣片與GitHub引擎發行",
   "packages": [
     {
       "path": "full/LOGH3-v.1.2.0-20261012-windows-amd64.zip",
@@ -3250,6 +3250,11 @@
       "path": "tools/scripts/v1_release.py",
       "bytes": 8205,
       "sha256": "4c1b453d24dcba4236fed155f413b103cf6170e9663c5cf2e47dd42d8b8de5d6"
+    },
+    {
+      "path": "tools/scripts/hero_release_publish_check.py",
+      "bytes": 4860,
+      "sha256": "a5992bbcfe6922821641f4376cb9243f3d362ac4ad73970874fb81a8050a7dfa"
     }
   ],
   "evidence": [
@@ -3382,8 +3387,100 @@
       "path": "dist-all/v.1.2.0-20261012/smoke/CLEANUP.json",
       "bytes": 296,
       "sha256": "831b18334cbea407614feebc69b9f2a0b56879dbe1a1e2d76814263d6c75ab68"
+    },
+    {
+      "path": "dist-all/v.1.2.0-20261012/smoke/COMMIT-SOURCE-CHECK.json",
+      "bytes": 292,
+      "sha256": "ed59bd61bf749cbe838e684ea78e3f9ec4a0c57c02c00e6f89e1a7b1acaf31d3"
+    },
+    {
+      "path": "dist-all/v.1.2.0-20261012/smoke/GH-DOWNLOAD-CHECK.json",
+      "bytes": 1325,
+      "sha256": "80601849c8d1db6737bae867e4d7891a4124ada691cf5d3ca4c51a72559c8b00"
+    },
+    {
+      "path": "dist-all/v.1.2.0-20261012/smoke/GH-DRAFT.json",
+      "bytes": 1893,
+      "sha256": "6b42f136cb533ddd11654a024f9905bda616e6c0b3059923be131e6550274d32"
+    },
+    {
+      "path": "dist-all/v.1.2.0-20261012/smoke/GH-PREFLIGHT.json",
+      "bytes": 1103,
+      "sha256": "30e0f5115e57cb96eb1cf2cfd4009ec2139ac02b62c928b370adffa7026217bb"
+    },
+    {
+      "path": "dist-all/v.1.2.0-20261012/smoke/GH-PUBLISHED-CHECK.json",
+      "bytes": 1502,
+      "sha256": "29b5f311e1ea787be67a9257a4c981234534b7b9a18bcf1d6890adbda8a82349"
+    },
+    {
+      "path": "dist-all/v.1.2.0-20261012/smoke/GH-RELEASE.json",
+      "bytes": 3282,
+      "sha256": "e569e127bd92566ee121728a6b19947d40d21f8c324deb3c47474619f72740cc"
+    },
+    {
+      "path": "dist-all/v.1.2.0-20261012/smoke/GH-TAG.json",
+      "bytes": 256,
+      "sha256": "003e47fe8fda4db5122cc7bf6fdd00dcfb2d7d47ac2df4be81ea77e566e5c1dd"
     }
   ],
   "rights": "full與promo僅本機；release僅引擎與來源，不含原版素材",
-  "remote_release": "尚未建立，需依主機gh例外範圍處理"
+  "remote_release": {
+    "url": "https://github.com/wicanr2/logh3/releases/tag/v.1.2.0-20261012",
+    "id": 411216040,
+    "tag": "v.1.2.0-20261012",
+    "commit": "4096431f43f84a6bfe0588171401c497672f4a98",
+    "tag_object": "8444344e9e0feaba4efeffb02cee4c2d782af484",
+    "published_at": "2026-10-13T03:12:13Z",
+    "downloaded_and_hashed": true,
+    "authorization": "2026-10-13 使用者：授權gh"
+  },
+  "published_assets": [
+    {
+      "path": "release/LOGH3-v.1.2.0-20261012-engine-source.tar.gz",
+      "bytes": 3450010,
+      "sha256": "44d844d2d8b4ef62326e6a538068968eb6f9cedbd6e9390b831be3a413c7e210",
+      "name": "LOGH3-v.1.2.0-20261012-engine-source.tar.gz",
+      "id": 635719350,
+      "download_url": "https://github.com/wicanr2/logh3/releases/download/v.1.2.0-20261012/LOGH3-v.1.2.0-20261012-engine-source.tar.gz",
+      "remote_digest": "sha256:44d844d2d8b4ef62326e6a538068968eb6f9cedbd6e9390b831be3a413c7e210"
+    },
+    {
+      "path": "release/LOGH3-v.1.2.0-20261012-linux-amd64.zip",
+      "bytes": 8244602,
+      "sha256": "46dce878bd2bbfedc0659e9f34e199e3fcd923f2c2ee630546b6dc6e01cab851",
+      "name": "LOGH3-v.1.2.0-20261012-linux-amd64.zip",
+      "id": 635719309,
+      "download_url": "https://github.com/wicanr2/logh3/releases/download/v.1.2.0-20261012/LOGH3-v.1.2.0-20261012-linux-amd64.zip",
+      "remote_digest": "sha256:46dce878bd2bbfedc0659e9f34e199e3fcd923f2c2ee630546b6dc6e01cab851"
+    },
+    {
+      "path": "release/LOGH3-v.1.2.0-20261012-macos-universal.zip",
+      "bytes": 14729535,
+      "sha256": "7349cf23737200b45a5228ad3f260a75ad07513b8a82470864a939402a490ef0",
+      "name": "LOGH3-v.1.2.0-20261012-macos-universal.zip",
+      "id": 635719311,
+      "download_url": "https://github.com/wicanr2/logh3/releases/download/v.1.2.0-20261012/LOGH3-v.1.2.0-20261012-macos-universal.zip",
+      "remote_digest": "sha256:7349cf23737200b45a5228ad3f260a75ad07513b8a82470864a939402a490ef0"
+    },
+    {
+      "path": "release/LOGH3-v.1.2.0-20261012-windows-amd64.zip",
+      "bytes": 8101825,
+      "sha256": "dc9dbf36281562c7f072c4747fb58d8c84a9ca2e8b86ab498ab4f542cde4941f",
+      "name": "LOGH3-v.1.2.0-20261012-windows-amd64.zip",
+      "id": 635719314,
+      "download_url": "https://github.com/wicanr2/logh3/releases/download/v.1.2.0-20261012/LOGH3-v.1.2.0-20261012-windows-amd64.zip",
+      "remote_digest": "sha256:dc9dbf36281562c7f072c4747fb58d8c84a9ca2e8b86ab498ab4f542cde4941f"
+    }
+  ],
+  "release_commit": "4096431",
+  "release_branch": "codex/release-v.1.2.0-20261012",
+  "published_checksum": {
+    "browser_download_url": "https://github.com/wicanr2/logh3/releases/download/v.1.2.0-20261012/SHA256SUMS.txt",
+    "digest": "sha256:9b96b41250c6e2c3fd6df7cd6c204adff1c365d393852717933ee8ff6db5aa1a",
+    "id": 635719317,
+    "name": "SHA256SUMS.txt",
+    "size": 431,
+    "state": "uploaded"
+  }
 }

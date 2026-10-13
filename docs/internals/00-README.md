@@ -1114,3 +1114,5 @@ tools/go.sh run ./cmd/probe -exe /orig/GIN3.COM -root /orig ... \
 [驗證119](../playtest/119-hero-ai-release-promo.md)保存1.5倍新額度、兩位名將正常玩家比較、普通動畫、新片來源及三平台交付限制。
 
 [影片低變動回查](../../tools/scripts/hero_promo_review.py)逐區間核對來源與成片，不把固定背景、選單停留或音效等待直接當成異常凍結。
+
+[GitHub發行下載核對](../../tools/scripts/hero_release_publish_check.py)先核草稿五資產的實際下載雜湊，正式發布後再核遠端tag、說明及完成訊號；完整遊戲與影片不列入遠端資產。

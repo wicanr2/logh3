@@ -130,6 +130,7 @@
 |---|---|---|
 | 資料段裡的熱區清單 | **25 份全部掃出**（含每個按鈕的中文標籤） | [`docs/internals/23`](docs/internals/23-hotspot-lists.md) |
 | 清單 ↔ 畫面的對應 | **27 處命中測試呼叫端全部掃出**，其中 14 處讀得出按鈕標籤（[`data/hittest-sites.json`](docs/internals/data/hittest-sites.json)）；清單位移寫死在呼叫端，兩者由呼叫點綁死（[`docs/re/16`](docs/re/16-window-list-right-button.md)、[`docs/re/156`](docs/re/156-hotspot-lists-from-call-sites.md)） | 同上 |
+| 名將戰術加成、三平台完整遊戲及史詩推廣片 | 完成：名將協同、三平台完整版、新片及GitHub引擎Release | [驗證119](docs/playtest/119-hero-ai-release-promo.md)及[來源索引](docs/internals/data/hero-ai-release-promo.json) |
 | 三劇本目錄修正與S1實際戰鬥推廣片 | 完成 | [驗收110](docs/playtest/110-hd-interface-s1-promo.md) |
 | 原版介面HD、敵軍全顯示與AI故事影片 | v.1.1.6正常播放與設定入口通過；完整登陸仍開放 | [驗證118](docs/playtest/118-battle-playback-and-settings.md)及[來源索引](docs/internals/data/battle-playback-settings.json) |
 | v1.0.0按鈕修正與正式交付 | 已完成正常操作、三平台引擎／完整包及66秒影片 | [128](docs/spec/128-visible-button-activation.md)、[109](docs/playtest/109-v1-release.md)、[來源](docs/internals/data/v1-release.json) |
