@@ -11037,3 +11037,5 @@ v.1.1.3-20261011從1533項乾淨凍結輸入建立Windows、Linux與macOS完整�
 - 新增readme_release_shots.py並掛索引。六張沿正式Linux正常S1實錄的完整PNG，兩張F7沿同次RAW.mp4的33.3／35.4秒擷取；正式程式雜湊相同，兩圖完整戰術狀態相同。八張均960×720，沒有裁切或縮放；收據在docs/images/readme-v120.json。GUI image沒有Pillow，改採標準函式庫安裝圖片，音訊／影像處理仍在既有HD image內，未建立新工具映像。
 - GitHub Markdown API成功渲染，八張圖、九張表、標題階層、全部相對連結及本機內容無GitHub失效連結通過。工作紀錄與HTML收據保存在workplace/hero130/README-CHECK.json，圖像雜湊與原實錄再核通過。程式及發行資產未改，沿本版既有標準測試與正常玩家驗收。
 - 完整版、動畫影片、原版檔與工作目錄繼續由.gitignore排除，正式Git檔案清單沒有dist-all、org_game或workplace。文件與截圖從既有隔離發行分支提交，再以快轉更新main；不覆寫主工作樹的既有decomp與本機HD資產。本次僅將README文件圖加入私有儲存庫，不變更可見度或上傳完整版。
+- README提交3c2247408b3bd4ce91a5af19bd9170be10b77c1c，與發行分支一起以一般快轉推送main。同步前確認本機main仍為523ced1且索引沒有暫存改動，再以git reset --mixed --no-refresh同步分支及索引，未改寫工作檔。277項既有HD／decomp修改的大小與SHA-256全部保持；本機full四封包的大小與SHA-256亦與BUILD.json相同。
+- GitHub main的README內容逐位元組相同，八張圖片與來源收據共九檔的Git blob與大小相同；遠端樹未截斷且無dist-all、org_game或workplace。#101補充README與截圖證據並保持CLOSED；101項、4 OPEN／97 CLOSED，281條verify零失效，CONTEXT與整份矩陣由最新快照同步。擁有權及.md目錄10346項通過，本次Docker容器均已退出刪除。原Release仍為正式版，tag物件及程式commit4096431未移動。
