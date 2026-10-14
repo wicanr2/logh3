@@ -56,6 +56,20 @@
 
 ## 遊戲畫面
 
+### 將領頭像總覽
+
+帝國 40 位、同盟 42 位將領，原版與 HD 使用相同排列，姓名沿用原版。點圖可查看完整總覽。[圖片來源與雜湊](docs/images/readme-admirals.json) · [總覽產生器](tools/scripts/readme_portrait_overviews.py)
+
+| 銀河帝國原版 | 銀河帝國 HD |
+|---|---|
+| [![帝國40位將領原版頭像總覽](docs/images/readme-admirals-empire-original.png)](docs/images/readme-admirals-empire-original.png) | [![帝國40位將領HD頭像總覽](docs/images/readme-admirals-empire-hd.png)](docs/images/readme-admirals-empire-hd.png) |
+
+| 自由行星同盟原版 | 自由行星同盟 HD |
+|---|---|
+| [![同盟42位將領原版頭像總覽](docs/images/readme-admirals-alliance-original.png)](docs/images/readme-admirals-alliance-original.png) | [![同盟42位將領HD頭像總覽](docs/images/readme-admirals-alliance-hd.png)](docs/images/readme-admirals-alliance-hd.png) |
+
+### 遊戲實錄
+
 載入進度與兩陣營字型設定的實際畫面，取自 v.1.3.0 Linux 版。[截圖來源與雜湊](docs/images/readme-v130.json)
 
 ![實際七階段載入進度與人物圖張數](docs/images/readme-v130-loading.png)

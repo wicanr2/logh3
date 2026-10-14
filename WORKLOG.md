@@ -11217,3 +11217,9 @@ README、CONTEXT、規格與內部參考已更新，工作歷程只追加本檔�
 README只補穩定成果及限制，CONTEXT、規格索引、內部參考與驗收125同步。#48已更新並讀回核對，保持OPEN。正式戰場讀回重建、同盟／雙人分支、鏡頭／圖示快取及計分續接是下一閘門，完整DOS整段同態仍未完成。原版可續戰不等於remake已實作；未加新保存格式、tag、Release或發行包。最新102張Issue仍101 CLOSED／1 OPEN，282條verify零失效、126一致、1 manual、155僅文件證據；CONTEXT及矩陣由工具重生。
 
 收尾：2850個相關文件相對連結、Python語法、gofmt、`git diff --check`與凍結索引重核通過。工作樹253283項無root-owned檔案或錯誤`.md`目錄，專用dosgolem工作樹乾淨，掛載本專案的執行中／已停止容器清空。依既有授權提交並推送main，保存本輪實作、研究及驗收，GitHub #48仍保持OPEN。
+
+## 2026-10-14 README將領原版／HD總覽
+
+依使用者要求，在README遊戲畫面加入帝國原版、帝國HD、同盟原版、同盟HD四張可點開的總覽。名單沿`keireki.json`原版人物索引與side，帝國40位、同盟42位，兩版本同序、保留原版姓名，排除82號空白圖。沿既有PNG拼版，沒有生成新頭像或修改來源；原版以最近鄰3倍放大，HD等比例縮放、完整保留、不裁切。四圖各1904×2342，來源、逐格座標、字型、製圖版本與SHA-256保存於`docs/images/readme-admirals.json`，README連結來源索引與產生器。
+
+重生與核對命令為`LOGH3_PY_IMAGE=logh3-hd-preview:20261011-r1 LOGH3_EXTRA_RO=$PWD tools/py.sh tools/scripts/readme_portrait_overviews.py`，核對加`--check`。工具拒絕覆寫既有圖；第二次在記憶體獨立重生，四圖及索引逐位元組相同，82筆原圖／HD來源雜湊、姓名、陣營及文字安全矩形均核對。已逐張目視確認。相關PNG、來源索引、腳本及README連結與擁有權核對，原圖不變，沒有遊戲程式修改，不重跑產品測試。開工Issue快照及verify維持1張OPEN、零失效斷言；#48範圍及狀態未改。沿既有授權commit並push，Docker工作均為有界一次性容器，完成後清空本專案容器。

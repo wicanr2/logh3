@@ -1,0 +1,2780 @@
+{
+  "schema": "logh3.readme-admiral-overviews.v1",
+  "generator": "tools/scripts/readme_portrait_overviews.py",
+  "generator_sha256": "e47b4f4061559d661725eaa7f2ddf068ef02df1b52c334a7ea63a99eae4f02fc",
+  "docker_image": "logh3-hd-preview:20261011-r1",
+  "pillow_version": "9.4.0",
+  "fonts": [
+    {
+      "file": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+      "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a"
+    },
+    {
+      "file": "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
+      "sha256": "faa5f3656a78b2e2d450d27fe8382c778bc2b6bb5ea29c986664a6a435056ceb"
+    }
+  ],
+  "catalog_sha256": "6cc35b2dc5e4b71b3f03091fa21747f67ffd4e2738ded69d885580ddccf61841",
+  "hd_manifest_sha256": "cb6559178d0ebfca48660b21add134b020c08ecef62e11fe37dda815e75dfa49",
+  "method": "Existing portraits only; original nearest-neighbour 3x; HD aspect-preserving contain; no crop; identical index order.",
+  "classification": "derived original artwork; private preservation and full-local test packages only",
+  "excluded_blank_index": 82,
+  "people": [
+    {
+      "index": 0,
+      "name": "萊因哈特",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-00.png",
+        "sha256": "d9aa3f11db0c8ca8bc104fb6b308abe6b3836bee2218f50a59c2fd2581130083"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-00.png",
+        "sha256": "411468e4d80cacc10edd2c82d5b4c0a35955a0580842cd8187835d37d87fe285"
+      }
+    },
+    {
+      "index": 1,
+      "name": "吉爾菲艾斯",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-01.png",
+        "sha256": "d934d04281f1f9c31cbb2065423457b0b08d62ce83af3655a68ce0fc8eafe58c"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-01.png",
+        "sha256": "eb41df36ba011fc96a40ca7b026ec487a7bfcab0a7dac3fd32ab97d20e7d6ddd"
+      }
+    },
+    {
+      "index": 2,
+      "name": "米達麥亞",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-02.png",
+        "sha256": "55c9ea494fdabbfcd01838d9e3f3a9f0583f2932e9c2d59e8c0e8f2d51741d14"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-02.png",
+        "sha256": "ad41fa726565487b20c6b1e84f408ff71e210d8e22a33441543ffe51e759d445"
+      }
+    },
+    {
+      "index": 3,
+      "name": "羅嚴塔爾",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-03.png",
+        "sha256": "b4f6f5b485faae228257d26017adf4a5c1a7bb5c9589ec247ef13245f07e56a8"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-03.png",
+        "sha256": "352621e265d2dd69c9ab35e52dbdb895e6738da7f73de3003de54262800c9eb4"
+      }
+    },
+    {
+      "index": 4,
+      "name": "畢典菲爾特",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-04.png",
+        "sha256": "48240a35779a8fbc5b2cbce782fbc1f97077bba906e0ce3aa88eceb94f6d9128"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-04.png",
+        "sha256": "96f837158306860df04f56a7e50cedd30b753ee21350238558ed8c3ada14e7cb"
+      }
+    },
+    {
+      "index": 5,
+      "name": "謬拉",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-05.png",
+        "sha256": "224a81f1bc9ffe2197b4dba0b1b3103a36b7880a533d0a06c89eb4e4b88556e3"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-05.png",
+        "sha256": "57ee5df6903a7e46f43c996971bb541e1462d4169aecf3c094ef56d38a1cd86b"
+      }
+    },
+    {
+      "index": 6,
+      "name": "梅克林格",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-06.png",
+        "sha256": "b97486f478219ac1a3c3d3f17c63a4f6299707b1a1b1a4501999ce20025465a6"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-06.png",
+        "sha256": "9b498c86a6935d0a4acbdcd5fd83060a9758d11d60134e337dbb2a38461a1c0a"
+      }
+    },
+    {
+      "index": 7,
+      "name": "魯茲",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-07.png",
+        "sha256": "9237fc99622397b2fb65aa9c5b0edd29b91c8818103d345753351ae749db5a35"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-07.png",
+        "sha256": "47af7c51a7c9ac04f45b7959deda0066028c56b77fca7052a387c8648a0bae0c"
+      }
+    },
+    {
+      "index": 8,
+      "name": "瓦列",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-08.png",
+        "sha256": "62076cf0bee49d8e3c0948c6f2535be73da71e2240587f477e30076f496f6c4f"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-08.png",
+        "sha256": "3a9b06f527419c50e5b5969b685238eb3d92d11ea5d5c0b2011f2e4b3aef029a"
+      }
+    },
+    {
+      "index": 9,
+      "name": "艾齊納哈",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-09.png",
+        "sha256": "1f71dd6a9aded49fc0809df179cfeb6ca37111bdc5c2fd383207c64a8280b80b"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-09.png",
+        "sha256": "8e8d07811409ae02b84994f4bc25f12fbe0aa1ccb256688719657355e3cd2b2d"
+      }
+    },
+    {
+      "index": 10,
+      "name": "坎普",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-10.png",
+        "sha256": "9129e2727c634119460efdbe63566a43aac75dcd3996d8f9d5a99e6674d92080"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-10.png",
+        "sha256": "0afbd620234f08b111cb0d205db6e911e20f785904577a997c08896905c79e27"
+      }
+    },
+    {
+      "index": 11,
+      "name": "法倫海特",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-11.png",
+        "sha256": "8293bebb3400b5e1bc20cdadb06f08931ba839746ae7710d965d6bbb30b02c50"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-11.png",
+        "sha256": "ca7b12cc4ec8bd875169ef98f42a1fb3cedf77107d1aed82bbf26ec345b94314"
+      }
+    },
+    {
+      "index": 12,
+      "name": "舒坦梅茲",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-12.png",
+        "sha256": "771d9112a29fec773cc4c9cd5dfa404a3cfe5adadbfef0d3d914d62a20c1071d"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-12.png",
+        "sha256": "4cb92c80b6a182ebdfad5edd233944aef757e667cc40c1d0abd948afde796da3"
+      }
+    },
+    {
+      "index": 13,
+      "name": "克斯拉",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-13.png",
+        "sha256": "e51f13cfac7f7493d2595b164d4e0a2f50793b6cb9af6f592787e9c0859220a6"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-13.png",
+        "sha256": "3f35b5f2432c57ebb99f67d259e1f0ea3890851e8ba2e17a240f03e346b25fd2"
+      }
+    },
+    {
+      "index": 14,
+      "name": "連內肯普",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-14.png",
+        "sha256": "ab97dd268b109fb2996e29b5c33b08a971ec1d9647c75c1972e0a95155dd2be6"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-14.png",
+        "sha256": "13138f51271776ca29f48c11246a1a0ddcad7d4be21a2d2d8b2c4b2bbb21472b"
+      }
+    },
+    {
+      "index": 15,
+      "name": "托爾奈森",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-15.png",
+        "sha256": "6b21d1fb6e7218046b82a39872ee2168971ccd9d3d78e2ad1a743937014bfb60"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-15.png",
+        "sha256": "602f3d02a370b184dac1c1ea959403c6308df543281098abf720df38bcc3e5aa"
+      }
+    },
+    {
+      "index": 16,
+      "name": "奧貝斯坦",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-16.png",
+        "sha256": "ebfb5866ad9279eda55eb64c563f5d4e7ad63d6d13c3de2c67a8a5f15867a719"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-16.png",
+        "sha256": "a53b6e8cb03c96d238362adf1e81905e99007b6e3bc982f9122c79f486de15bb"
+      }
+    },
+    {
+      "index": 17,
+      "name": "錦茲",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-17.png",
+        "sha256": "79f7a54342eb97e1e3e6be09638358b127a1580b7e3b0cefaacda297f2528b30"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-17.png",
+        "sha256": "7d4c8f8bed7d006eb896bcb226120097ec02fab39f31bf015e9ec071bbeaf05e"
+      }
+    },
+    {
+      "index": 18,
+      "name": "拜耶爾藍",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-18.png",
+        "sha256": "8f56224ed090acb05af8a6e9091db0a48635e45b8b46590036a940105500c56a"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-18.png",
+        "sha256": "dbcf987e1343bf7b698121c8b9968b4a359365ca9bbfb835719f427eafc17b3d"
+      }
+    },
+    {
+      "index": 19,
+      "name": "列肯道夫",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-19.png",
+        "sha256": "0992d0a84cc7acad6e5f9d56a87cd5011728b87fae3cf197f00f5a7b00f4f50f"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-19.png",
+        "sha256": "34f1e8ca951591b2b14e7a0f09f5fd8f7f808b74f5f4042807606f8a3317b7ad"
+      }
+    },
+    {
+      "index": 20,
+      "name": "迪爾克先",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-20.png",
+        "sha256": "bc94a3c721769ca0634115a7a28c645cc5088f70f05523aba3cffb5cc0ba3d99"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-20.png",
+        "sha256": "d4536c7d05de60611ab0cf3d551d802823d45ae1b2eaa1fe3529896b90473e3c"
+      }
+    },
+    {
+      "index": 21,
+      "name": "瑞文茲",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-21.png",
+        "sha256": "4182116c65ebf39d18aa913355d1d90e9317ec5ec7dc145b1fd72b5dbcddaa78"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-21.png",
+        "sha256": "ba755d52cde41f018f9ed525009903f6f6017d5f838452f26e01b3a3a617217c"
+      }
+    },
+    {
+      "index": 22,
+      "name": "列佛爾特",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-22.png",
+        "sha256": "7d437b4fef8fd7fd2dbbb61278027f4773957d57d26170bd0451fd7ee55e3925"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-22.png",
+        "sha256": "d8129ac116530c99013c68bfb7c9c1b1ee3594c5a6c2e4b1f818803d4a984b73"
+      }
+    },
+    {
+      "index": 23,
+      "name": "庫典森",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-23.png",
+        "sha256": "07e0631321034e6957c96f3410fc8877a3788ef62a884e5a6eedd58b25d056d4"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-23.png",
+        "sha256": "3deb72fe084b6851bdb26ec691b3b7bd2d439dbc0000429f7fa32c7887b701e3"
+      }
+    },
+    {
+      "index": 24,
+      "name": "萊博爾",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-24.png",
+        "sha256": "2897ab60be85dfff7360d2ce64936a50d09dec740b47ee03ca67aff74afcb5ed"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-24.png",
+        "sha256": "8abbf19d34b4177f22436de1f819b5dae614e1a41c457ca14027c5b851d15140"
+      }
+    },
+    {
+      "index": 25,
+      "name": "克里希",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-25.png",
+        "sha256": "1af6fab535e107dd46a8fb2066b517375cf9e19640015eb12807c105dd0a6b76"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-25.png",
+        "sha256": "e66ccb69e8da1dd57f3753f37d1db77a5a1cde005df0840c7416a145d50e66fa"
+      }
+    },
+    {
+      "index": 26,
+      "name": "魯比茲",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-26.png",
+        "sha256": "c2cce8e3a44eed1363dfbf5f4af753a9f13fec140731d1215d7a1f3a9adf6b08"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-26.png",
+        "sha256": "24fba849d856d40d7407aa28d1b4989cf0fb3bb604edf86d45deff898344b42f"
+      }
+    },
+    {
+      "index": 27,
+      "name": "山德斯",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-27.png",
+        "sha256": "93d909b2fb17c93fdbff0657279be6be33db36e6eba56a03bd560cebb39e6239"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-27.png",
+        "sha256": "f0272f79a1de287f87e2e29e043a0540db5b1bd7a0903609f2b329e048ad2661"
+      }
+    },
+    {
+      "index": 28,
+      "name": "奈西巴哈",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-28.png",
+        "sha256": "38ad452e48b43484428e04ac6f565708aaad32fae79b94a2a56ab64730f7a48d"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-28.png",
+        "sha256": "8dae3f6fa7cabfaa5a419780cd3e5fb5eea73e074f484734fb440bbc6a6665e5"
+      }
+    },
+    {
+      "index": 29,
+      "name": "布連塔諾",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-29.png",
+        "sha256": "6ab23b1671115fafe674379b0683e43c238962e991a1780c437c8c04d96feaf7"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-29.png",
+        "sha256": "9941ff58af4d14c630f9a6fbaada984d5662e25aedc30608c022ba9f1f3eb827"
+      }
+    },
+    {
+      "index": 30,
+      "name": "布魯丹巴",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-30.png",
+        "sha256": "84441e5cc197756622f73d683d3a919ea7e12a48acb1bf009d775de4aebce6ec"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-30.png",
+        "sha256": "240e9d300910ed0996f4a6e05b3df4fa93100855118570f696160eb3fd0283db"
+      }
+    },
+    {
+      "index": 31,
+      "name": "菲爾納",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-31.png",
+        "sha256": "02791ebea24c20fe1e2f0339aa6623d924115200f6311b4d9a5220c600c3e870"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-31.png",
+        "sha256": "82a867d6ac640b0418cfe1d634d174989d7372311be52470db5a45a3e9f549b2"
+      }
+    },
+    {
+      "index": 32,
+      "name": "修特萊",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-32.png",
+        "sha256": "de3fe20337fe825c7fbe4aa008e787a5a3275ad37afaa5aa2b6c498574dbe133"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-32.png",
+        "sha256": "19979d0f398e35c8d2c5e845a4e9c76d2962e0d4829892ea49ef624b49c09503"
+      }
+    },
+    {
+      "index": 33,
+      "name": "皮羅",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-33.png",
+        "sha256": "765cee5789c98200229012e29bdfeb66a4b893af1d33bfce09edcf93eedf1fa6"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-33.png",
+        "sha256": "2743f55f823bbf2f4052a3b7ddbf55f1a8ffca98813492f97b5d7e4c00759819"
+      }
+    },
+    {
+      "index": 34,
+      "name": "貝爾肯格林",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-34.png",
+        "sha256": "1e5c25687989f42de807ca75c91f90487303495b2856009ec95ec3900d284087"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-34.png",
+        "sha256": "83dd80a74d28e4287965154e0cb41b16f7786365fb137d85a4c622c398196a75"
+      }
+    },
+    {
+      "index": 35,
+      "name": "費塞尼加",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-35.png",
+        "sha256": "d6541e716ce38e284bee0b80e06b2e72e384f17d5a00b5b85f8b8808b5db9d81"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-35.png",
+        "sha256": "b499ae725b9639e3e0e68d149b69b4dc73057cffcbd59c55bda75420cef4cd6d"
+      }
+    },
+    {
+      "index": 36,
+      "name": "阿姆斯道爾夫",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-36.png",
+        "sha256": "334c09a6043294d1607952e6edd496617dfe5ec59470d3da28fb5f547fd828ab"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-36.png",
+        "sha256": "b920a1da677c6066eec027b3385d424cae09ce2258e78e9872349a269ba4d87b"
+      }
+    },
+    {
+      "index": 37,
+      "name": "格雷布納",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-37.png",
+        "sha256": "9f9d2cbfddfc48e76ba07924d5278929dfd9e819f3c84d2a7354803c10ff7c97"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-37.png",
+        "sha256": "a0b94b52dd3a47e014f9209418d973a8e376a34781716b6808ac72720ede2070"
+      }
+    },
+    {
+      "index": 38,
+      "name": "烏爾拉",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-38.png",
+        "sha256": "53d840921156399d50a620a741bc4d905a0e88e94e38390469e6b97a8b2d54b3"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-38.png",
+        "sha256": "dfe02a44f261efda4cba88f268abdb0ad1e7753a3209fcf645eed2d1dea55ebb"
+      }
+    },
+    {
+      "index": 39,
+      "name": "狄克爾",
+      "faction": 0,
+      "original": {
+        "file": "assets/original/face/face-39.png",
+        "sha256": "47870429c4dea4de5fbae27c0f9ce329362e5422d01491049d004b598e327a0e"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-39.png",
+        "sha256": "8dd302b22c5a69f1e3dadb8ddbb8e91fca0b296657f4b1b549cafb752f669743"
+      }
+    },
+    {
+      "index": 40,
+      "name": "亞典波羅",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-40.png",
+        "sha256": "870fcde21d5b0d6b0e5e61acc62ff6a3898b8e54c570e6e5562c665fb2565b33"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-40.png",
+        "sha256": "b1bf5a555a4bfb02e7f64842cdebaacc1f3bfac2fdb89bcf0cef120f9780a07e"
+      }
+    },
+    {
+      "index": 41,
+      "name": "派特",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-41.png",
+        "sha256": "9d30a45e38e49830797205447ffb8841b5c488ed1ad7d58d23e5676f5ead7be9"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-41.png",
+        "sha256": "513d396111ed72d4a8324f19d0432dc898e8c44fc2eb90920f5d38b1adf8d9ff"
+      }
+    },
+    {
+      "index": 42,
+      "name": "路菲普",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-42.png",
+        "sha256": "7f477a81e0f240aa97e907d74440ceeb212dcc4b77b867e02e80a8a121efdb9c"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-42.png",
+        "sha256": "e4b49c59e5c9c84e639883ee6369129ad018f5fa2e69fe18291075d046bf6816"
+      }
+    },
+    {
+      "index": 43,
+      "name": "培特雷",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-43.png",
+        "sha256": "8a74c7360df6b744c6aa838cc9b29730b29ed73874df40f3e5446cdf3403e604"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-43.png",
+        "sha256": "ee60461ab31986db2553dae448f50d414d5923debb0907293790153b12a21cf0"
+      }
+    },
+    {
+      "index": 44,
+      "name": "比克古",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-44.png",
+        "sha256": "ac277325a7b0d094acddad561be1b6d258dc05a45b85c79afa753dffad3d0e9a"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-44.png",
+        "sha256": "f334d0955de37d1ad60dfc0aaec2df5c84ac998939fb6c0580f7796bca723227"
+      }
+    },
+    {
+      "index": 45,
+      "name": "慕亞",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-45.png",
+        "sha256": "06d21274543e0194275bd197d83ece8d3f230d86d13876754b279f3bf8b33301"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-45.png",
+        "sha256": "6a251ff1db0a8b0817550115a19b0d55bf7ce8a93a2894e7d986a156e348b651"
+      }
+    },
+    {
+      "index": 46,
+      "name": "赫伍得",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-46.png",
+        "sha256": "2d855e7edbf74e06f610a302b73cef2ea50438635bd6742ba536a0dc78287a88"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-46.png",
+        "sha256": "cbcc5b0c897b13037f0ccf4b78ac8307b9276d7517c0e654160fd09df4c9c9c8"
+      }
+    },
+    {
+      "index": 47,
+      "name": "阿普頓",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-47.png",
+        "sha256": "691ff90c49cf38259d66b694c608d87b28aee37bcacff4f8bc8a3f43473d4f1e"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-47.png",
+        "sha256": "bacc446b0994b0fb2954615f6a54f312850d6fc9b7e5defb968266d175c163d1"
+      }
+    },
+    {
+      "index": 48,
+      "name": "亞爾•沙列姆",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-48.png",
+        "sha256": "16bf405f26ba29285a18f789a29bef7036b814ee44c3a8fbbc9da7c1b0b4c34d"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-48.png",
+        "sha256": "7eed302e077c4d83981e18507314a3da010a82b29e47d1b0596ef92c43949062"
+      }
+    },
+    {
+      "index": 49,
+      "name": "伍蘭夫",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-49.png",
+        "sha256": "f270f4d5c0a07eaed22b1d0f08b75d8d32b99f159a98ab3522da1fd2c5fc2d3e"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-49.png",
+        "sha256": "b473969ec7a7c120a7f413225cd44d455a55e489c58280fb170c6c76757b987d"
+      }
+    },
+    {
+      "index": 50,
+      "name": "魯格拉希",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-50.png",
+        "sha256": "d58727ba371a93f6846547b62964cfdd14aec0bbec33153906fe224979dbca1c"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-50.png",
+        "sha256": "649e471db7fb3929dbd3bb4eb170fd705e0ee367ca4554f741efe26875e98732"
+      }
+    },
+    {
+      "index": 51,
+      "name": "波羅汀",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-51.png",
+        "sha256": "09fce9002c52c128fe8bb76c02a6c130dc89efe0756cfb487ac15963a74d6fed"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-51.png",
+        "sha256": "d414c660020ade14f5c2584eb13266dd9b22a920e3469ae3a1a0a5137f335b2f"
+      }
+    },
+    {
+      "index": 52,
+      "name": "楊威利",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-52.png",
+        "sha256": "760671e80f947ff89aaa5575e5a27661eede1b57a76587e7616268ff60a8a5e3"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-52.png",
+        "sha256": "a6595941db15c2204fa5d04fb378b72d362ccb48a2e19db5c22f0d8329e16074"
+      }
+    },
+    {
+      "index": 53,
+      "name": "莫頓",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-53.png",
+        "sha256": "767876106b05d6f7001cfcdb29aad9378170b42213a29871704413b6ef255e06"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-53.png",
+        "sha256": "6b43732671c36ef662f14dc53bd4a3539fec605ecc8cdac4faa3df6fe92d2876"
+      }
+    },
+    {
+      "index": 54,
+      "name": "卡爾先",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-54.png",
+        "sha256": "72b377d97571c0c6fea152d4a3ff36f18863a0960eafdcd48b185008bfde6994"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-54.png",
+        "sha256": "a22e0aa0b4e74a2b13445f658c7955ed583a1c4dbf7e4a5abbab092d83213fce"
+      }
+    },
+    {
+      "index": 55,
+      "name": "費雪",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-55.png",
+        "sha256": "e73a161d4572d2d2ef8da8f8e525edb79de1599959db81a99b6327d6a7e4136f"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-55.png",
+        "sha256": "b07f10bae6bbb7704682bad883e54ae9f102e52f74909dd2e25acba2af8966d1"
+      }
+    },
+    {
+      "index": 56,
+      "name": "尤里安",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-56.png",
+        "sha256": "74b3405ad534f493711b3834dcf3ea899cc6b78e31071597e48278e2a4b61650"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-56.png",
+        "sha256": "c01b682f8d6db9de048c022026f881f3d011445ce0fb3e6d8dc6102f6f1bd9d6"
+      }
+    },
+    {
+      "index": 57,
+      "name": "拉歐",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-57.png",
+        "sha256": "d6b2fa40f100e8403b3de93b9e86ef8e6cff06d846dc9c44133f72ad9f92e91b"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-57.png",
+        "sha256": "6f40e6d9f348c65b06a2f4bb7b62415963577cd21873cbae8408ed4b01790abc"
+      }
+    },
+    {
+      "index": 58,
+      "name": "巴格達胥",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-58.png",
+        "sha256": "def5f9eb87795f4649785ac64ce16445d77ee1f11373993c217b57e39807a422"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-58.png",
+        "sha256": "23d50881f9a1c9555764f31bcf6b77ff42a5cf096c7eb4f48a32db7e792a838e"
+      }
+    },
+    {
+      "index": 59,
+      "name": "古嚴",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-59.png",
+        "sha256": "08ffba848e7637879a06fb17d65c174428f21e4e9b1bc7758f6f3f0e9fb38565"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-59.png",
+        "sha256": "0306e28a1279ed6b026f896dae7f4473ef293769d3836525bad979caa268abc3"
+      }
+    },
+    {
+      "index": 60,
+      "name": "邱吾權",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-60.png",
+        "sha256": "0bb40e5abc83f617c543eb53a7f9d5e8e634a65c516bbfccf728e931525a56f1"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-60.png",
+        "sha256": "29c454b8223ed9bf67957ab07225bb9c21fb779a2357aa0b72fdd9eb2adb3eae"
+      }
+    },
+    {
+      "index": 61,
+      "name": "拉普",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-61.png",
+        "sha256": "2222562ac10fd2f6caf9de2da6d2728a508acdcb120c17ccdf386a965af62298"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-61.png",
+        "sha256": "fab365256a8c8824cde10d5f5b97465041372f7232eaeef3d9b511f8e4267404"
+      }
+    },
+    {
+      "index": 62,
+      "name": "雅拉肯",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-62.png",
+        "sha256": "7abad82d5e75d1da3153f6e6867bbfeeff3c29cc1015697925c7254cd4a3c35a"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-62.png",
+        "sha256": "4b2453c517860e54d589a225eb8fdcb95412627c4e5896c6dbf015b9872fee5c"
+      }
+    },
+    {
+      "index": 63,
+      "name": "法菲爾",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-63.png",
+        "sha256": "c9178e5de0f7b83ac87946efe41e7ec3e947d1a9be0c0d375eb04611097a9eb8"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-63.png",
+        "sha256": "463fcc7985e509a713013fe8611d035d722a407b90d66fd84a03b627f6f48134"
+      }
+    },
+    {
+      "index": 64,
+      "name": "馬里涅汀",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-64.png",
+        "sha256": "09e94405b5409a231cfa7b9c9a636281bc5a002f1e9ef254d02573b44f826e21"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-64.png",
+        "sha256": "13d34cafe2337d55404f28b7c2c9f5dd2490b1a1e0490fbdd9d384853147f127"
+      }
+    },
+    {
+      "index": 65,
+      "name": "陳",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-65.png",
+        "sha256": "53812c576ad74aa144a04f615162ed37d73b691c92f39cc709f02ecabf459789"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-65.png",
+        "sha256": "24d00cb819ed11a856f0bf8bcfa03f4d24968e3396315f247e449becc56d3405"
+      }
+    },
+    {
+      "index": 66,
+      "name": "史多克斯",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-66.png",
+        "sha256": "0aa3f295ec7ee2d83c3a98526be54f78ef504f87d4ad8a32dd0f6e438ac146b7"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-66.png",
+        "sha256": "8ecdb6ea27ac9686443c4f0fb9300c411f2c2dd345f4503d9e871b1e3fdb904c"
+      }
+    },
+    {
+      "index": 67,
+      "name": "可那利",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-67.png",
+        "sha256": "5f7eaa42cd6919c92b48d0e09a54b88e8bd76482cb0933a5d60770fca707e6f7"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-67.png",
+        "sha256": "c86cc2ddbc90972a309cfc14232f83770e85d39482594994b17d1c59632c5b06"
+      }
+    },
+    {
+      "index": 68,
+      "name": "菲列特利加",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-68.png",
+        "sha256": "dd0cf58610d81a5698d49ab4908028960030202c781f03c9519a8fe6f636ffcf"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-68.png",
+        "sha256": "d9270bd0c4fb6ecbdc9388eaf9a3a5e371513293fd69befc079c43aef35bce96"
+      }
+    },
+    {
+      "index": 69,
+      "name": "馬利諾",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-69.png",
+        "sha256": "87f20d2912eb29b492f4416cf161f8840911ff3f065c78fedaacc329a69a8806"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-69.png",
+        "sha256": "fc223adedd071758332fe9666b9280f53846ebff8240da878f77a98ef086c6cf"
+      }
+    },
+    {
+      "index": 70,
+      "name": "沙尼亞",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-70.png",
+        "sha256": "f101708e675684b91e24c42becce751eef309d25a291857ee57c5aeb2bcd326f"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-70.png",
+        "sha256": "c09532c57dd943a3aea328b703738779dff6ef2af5cef0271d91c5840103c33b"
+      }
+    },
+    {
+      "index": 71,
+      "name": "姆萊",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-71.png",
+        "sha256": "69535b6ff92f3a28f6fa59de6f73bbe04254193923008b38cdd32c922fa5fe82"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-71.png",
+        "sha256": "974a2a555338ef8421f54f669e6f4f4effffbb7c76b7200aa79933366339356c"
+      }
+    },
+    {
+      "index": 72,
+      "name": "先寇布",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-72.png",
+        "sha256": "5b732b8cbb2517fc47604bc6df05c109f7ffc67cadac2839a99685ad306386bc"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-72.png",
+        "sha256": "d1840ec29bb8a8bc5ae26a8ca91f8d9e28880bcfd7283ef8e36bb4a06c7a740c"
+      }
+    },
+    {
+      "index": 73,
+      "name": "史路茲卡利達",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-73.png",
+        "sha256": "6a5722aa271882f737594d7acc791a86bb2c852f402f5d2ae9520bcaef03e3b3"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-73.png",
+        "sha256": "a4904f48ba36fdd1bc03f4594f0619696184f5aee20879a6906daa10f90de819"
+      }
+    },
+    {
+      "index": 74,
+      "name": "波布蘭",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-74.png",
+        "sha256": "ff017e6cc297739ec2865dcccdb592919dfa2ac4836ebce4a983d3422865e4a4"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-74.png",
+        "sha256": "1d10a0eaa03c28374b11009e4e375151e9c578b0e65e5d9de6a48aef46c6fa8e"
+      }
+    },
+    {
+      "index": 75,
+      "name": "卡介倫",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-75.png",
+        "sha256": "f92f90fbdc9d2a1d8292624d96adcac0579205d81063e925af38ed7408d37a49"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-75.png",
+        "sha256": "7c7b09d9f1a74b836554055e701656fac62f548acc714403196a4104ec1b8d79"
+      }
+    },
+    {
+      "index": 76,
+      "name": "林滋",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-76.png",
+        "sha256": "f065d370f64b902404a8e473ae5f7688bc03680cfba29336e3838a33bc799e6c"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-76.png",
+        "sha256": "2563a75be146e373e8fcb10a6746afd2f9fe95198e09fdb90cf565a70a45adab"
+      }
+    },
+    {
+      "index": 77,
+      "name": "布魯姆哈爾特",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-77.png",
+        "sha256": "c4af8958d32c790e0303b0ff02bca31744dfcbf463829010a250d533728ea339"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-77.png",
+        "sha256": "d150247875e8c480b7ee81c0bc658529c34003afdeb2900fffa55e7ccc508498"
+      }
+    },
+    {
+      "index": 78,
+      "name": "伊旺•高尼夫",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-78.png",
+        "sha256": "bc950e95778856e2de7b55f9e4841b06cf3aaf6ad7d8899ac8088dc075dbd28f"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-78.png",
+        "sha256": "ec1b463bd85cb2cf081bc6548b66915a1e0049afe6d8c445e765f4f245ccedc6"
+      }
+    },
+    {
+      "index": 79,
+      "name": "派特里契夫",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-79.png",
+        "sha256": "220d2f31e6cebdbc2cb973660a4eee100f1ca7d599ab494851bb5679140fdb14"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-79.png",
+        "sha256": "58db5ba8d4aa5c94ac5f8f4e45d2b9ac76353b49415ff98f48f562c90d92b24d"
+      }
+    },
+    {
+      "index": 80,
+      "name": "梅爾卡茲",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-80.png",
+        "sha256": "7ba9d961ede2584cced5150ead6f999acc99718a2994129fa63a6be09a1df65c"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-80.png",
+        "sha256": "918f5e540c661c8aa32f7eb437d4fe1a9d637958e7d4660c56c60549b78c2fad"
+      }
+    },
+    {
+      "index": 81,
+      "name": "舒奈德",
+      "faction": 1,
+      "original": {
+        "file": "assets/original/face/face-81.png",
+        "sha256": "420b27e63c768bf47de782526f58f1ed6f5d4d4f9caaf03649b74b795b3d7e19"
+      },
+      "hd": {
+        "file": "assets/hd/face/face-81.png",
+        "sha256": "543125c5b3475198c2322a7e9aabe896f249ea942c6bb428665cefdbbada8338"
+      }
+    }
+  ],
+  "products": [
+    {
+      "file": "docs/images/readme-admirals-empire-original.png",
+      "faction": 0,
+      "mode": "original",
+      "count": 40,
+      "width": 1904,
+      "height": 2342,
+      "bytes": 268702,
+      "sha256": "b0f738719259efd951bbf6cad91aedfc4cebf5fd9a167fc3638f8e276af40b57",
+      "cells": [
+        {
+          "index": 0,
+          "name": "萊因哈特",
+          "portrait_box": [
+            40,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 1,
+          "name": "吉爾菲艾斯",
+          "portrait_box": [
+            304,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 2,
+          "name": "米達麥亞",
+          "portrait_box": [
+            568,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 3,
+          "name": "羅嚴塔爾",
+          "portrait_box": [
+            832,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 4,
+          "name": "畢典菲爾特",
+          "portrait_box": [
+            1096,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 5,
+          "name": "謬拉",
+          "portrait_box": [
+            1360,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 6,
+          "name": "梅克林格",
+          "portrait_box": [
+            1624,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 7,
+          "name": "魯茲",
+          "portrait_box": [
+            40,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 8,
+          "name": "瓦列",
+          "portrait_box": [
+            304,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 9,
+          "name": "艾齊納哈",
+          "portrait_box": [
+            568,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 10,
+          "name": "坎普",
+          "portrait_box": [
+            832,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 11,
+          "name": "法倫海特",
+          "portrait_box": [
+            1096,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 12,
+          "name": "舒坦梅茲",
+          "portrait_box": [
+            1360,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 13,
+          "name": "克斯拉",
+          "portrait_box": [
+            1624,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 14,
+          "name": "連內肯普",
+          "portrait_box": [
+            40,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 15,
+          "name": "托爾奈森",
+          "portrait_box": [
+            304,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 16,
+          "name": "奧貝斯坦",
+          "portrait_box": [
+            568,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 17,
+          "name": "錦茲",
+          "portrait_box": [
+            832,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 18,
+          "name": "拜耶爾藍",
+          "portrait_box": [
+            1096,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 19,
+          "name": "列肯道夫",
+          "portrait_box": [
+            1360,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 20,
+          "name": "迪爾克先",
+          "portrait_box": [
+            1624,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 21,
+          "name": "瑞文茲",
+          "portrait_box": [
+            40,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 22,
+          "name": "列佛爾特",
+          "portrait_box": [
+            304,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 23,
+          "name": "庫典森",
+          "portrait_box": [
+            568,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 24,
+          "name": "萊博爾",
+          "portrait_box": [
+            832,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 25,
+          "name": "克里希",
+          "portrait_box": [
+            1096,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 26,
+          "name": "魯比茲",
+          "portrait_box": [
+            1360,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 27,
+          "name": "山德斯",
+          "portrait_box": [
+            1624,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 28,
+          "name": "奈西巴哈",
+          "portrait_box": [
+            40,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 29,
+          "name": "布連塔諾",
+          "portrait_box": [
+            304,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 30,
+          "name": "布魯丹巴",
+          "portrait_box": [
+            568,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 31,
+          "name": "菲爾納",
+          "portrait_box": [
+            832,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 32,
+          "name": "修特萊",
+          "portrait_box": [
+            1096,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 33,
+          "name": "皮羅",
+          "portrait_box": [
+            1360,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 34,
+          "name": "貝爾肯格林",
+          "portrait_box": [
+            1624,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 35,
+          "name": "費塞尼加",
+          "portrait_box": [
+            40,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 36,
+          "name": "阿姆斯道爾夫",
+          "portrait_box": [
+            304,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 37,
+          "name": "格雷布納",
+          "portrait_box": [
+            568,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 38,
+          "name": "烏爾拉",
+          "portrait_box": [
+            832,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 39,
+          "name": "狄克爾",
+          "portrait_box": [
+            1096,
+            1946,
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/images/readme-admirals-empire-hd.png",
+      "faction": 0,
+      "mode": "hd",
+      "count": 40,
+      "width": 1904,
+      "height": 2342,
+      "bytes": 3897873,
+      "sha256": "5b0b78646a40a675da37fab94e0d61d7e333fa681eed5c5e6c3e357f38ad80b2",
+      "cells": [
+        {
+          "index": 0,
+          "name": "萊因哈特",
+          "portrait_box": [
+            40,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 1,
+          "name": "吉爾菲艾斯",
+          "portrait_box": [
+            304,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 2,
+          "name": "米達麥亞",
+          "portrait_box": [
+            568,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 3,
+          "name": "羅嚴塔爾",
+          "portrait_box": [
+            832,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 4,
+          "name": "畢典菲爾特",
+          "portrait_box": [
+            1096,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 5,
+          "name": "謬拉",
+          "portrait_box": [
+            1360,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 6,
+          "name": "梅克林格",
+          "portrait_box": [
+            1624,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 7,
+          "name": "魯茲",
+          "portrait_box": [
+            40,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 8,
+          "name": "瓦列",
+          "portrait_box": [
+            304,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 9,
+          "name": "艾齊納哈",
+          "portrait_box": [
+            568,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 10,
+          "name": "坎普",
+          "portrait_box": [
+            832,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 11,
+          "name": "法倫海特",
+          "portrait_box": [
+            1096,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 12,
+          "name": "舒坦梅茲",
+          "portrait_box": [
+            1360,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 13,
+          "name": "克斯拉",
+          "portrait_box": [
+            1624,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 14,
+          "name": "連內肯普",
+          "portrait_box": [
+            40,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 15,
+          "name": "托爾奈森",
+          "portrait_box": [
+            304,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 16,
+          "name": "奧貝斯坦",
+          "portrait_box": [
+            568,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 17,
+          "name": "錦茲",
+          "portrait_box": [
+            832,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 18,
+          "name": "拜耶爾藍",
+          "portrait_box": [
+            1096,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 19,
+          "name": "列肯道夫",
+          "portrait_box": [
+            1360,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 20,
+          "name": "迪爾克先",
+          "portrait_box": [
+            1624,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 21,
+          "name": "瑞文茲",
+          "portrait_box": [
+            40,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 22,
+          "name": "列佛爾特",
+          "portrait_box": [
+            304,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 23,
+          "name": "庫典森",
+          "portrait_box": [
+            568,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 24,
+          "name": "萊博爾",
+          "portrait_box": [
+            832,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 25,
+          "name": "克里希",
+          "portrait_box": [
+            1096,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 26,
+          "name": "魯比茲",
+          "portrait_box": [
+            1360,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 27,
+          "name": "山德斯",
+          "portrait_box": [
+            1624,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 28,
+          "name": "奈西巴哈",
+          "portrait_box": [
+            40,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 29,
+          "name": "布連塔諾",
+          "portrait_box": [
+            304,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 30,
+          "name": "布魯丹巴",
+          "portrait_box": [
+            568,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 31,
+          "name": "菲爾納",
+          "portrait_box": [
+            832,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 32,
+          "name": "修特萊",
+          "portrait_box": [
+            1096,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 33,
+          "name": "皮羅",
+          "portrait_box": [
+            1360,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 34,
+          "name": "貝爾肯格林",
+          "portrait_box": [
+            1624,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 35,
+          "name": "費塞尼加",
+          "portrait_box": [
+            40,
+            1946,
+            240,
+            299
+          ]
+        },
+        {
+          "index": 36,
+          "name": "阿姆斯道爾夫",
+          "portrait_box": [
+            304,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 37,
+          "name": "格雷布納",
+          "portrait_box": [
+            568,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 38,
+          "name": "烏爾拉",
+          "portrait_box": [
+            832,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 39,
+          "name": "狄克爾",
+          "portrait_box": [
+            1096,
+            1946,
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/images/readme-admirals-alliance-original.png",
+      "faction": 1,
+      "mode": "original",
+      "count": 42,
+      "width": 1904,
+      "height": 2342,
+      "bytes": 259744,
+      "sha256": "5fb0a95903c980cefbab776834910e5817bdf95140dcb97d0989ed132429b642",
+      "cells": [
+        {
+          "index": 40,
+          "name": "亞典波羅",
+          "portrait_box": [
+            40,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 41,
+          "name": "派特",
+          "portrait_box": [
+            304,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 42,
+          "name": "路菲普",
+          "portrait_box": [
+            568,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 43,
+          "name": "培特雷",
+          "portrait_box": [
+            832,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 44,
+          "name": "比克古",
+          "portrait_box": [
+            1096,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 45,
+          "name": "慕亞",
+          "portrait_box": [
+            1360,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 46,
+          "name": "赫伍得",
+          "portrait_box": [
+            1624,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 47,
+          "name": "阿普頓",
+          "portrait_box": [
+            40,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 48,
+          "name": "亞爾•沙列姆",
+          "portrait_box": [
+            304,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 49,
+          "name": "伍蘭夫",
+          "portrait_box": [
+            568,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 50,
+          "name": "魯格拉希",
+          "portrait_box": [
+            832,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 51,
+          "name": "波羅汀",
+          "portrait_box": [
+            1096,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 52,
+          "name": "楊威利",
+          "portrait_box": [
+            1360,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 53,
+          "name": "莫頓",
+          "portrait_box": [
+            1624,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 54,
+          "name": "卡爾先",
+          "portrait_box": [
+            40,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 55,
+          "name": "費雪",
+          "portrait_box": [
+            304,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 56,
+          "name": "尤里安",
+          "portrait_box": [
+            568,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 57,
+          "name": "拉歐",
+          "portrait_box": [
+            832,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 58,
+          "name": "巴格達胥",
+          "portrait_box": [
+            1096,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 59,
+          "name": "古嚴",
+          "portrait_box": [
+            1360,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 60,
+          "name": "邱吾權",
+          "portrait_box": [
+            1624,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 61,
+          "name": "拉普",
+          "portrait_box": [
+            40,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 62,
+          "name": "雅拉肯",
+          "portrait_box": [
+            304,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 63,
+          "name": "法菲爾",
+          "portrait_box": [
+            568,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 64,
+          "name": "馬里涅汀",
+          "portrait_box": [
+            832,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 65,
+          "name": "陳",
+          "portrait_box": [
+            1096,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 66,
+          "name": "史多克斯",
+          "portrait_box": [
+            1360,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 67,
+          "name": "可那利",
+          "portrait_box": [
+            1624,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 68,
+          "name": "菲列特利加",
+          "portrait_box": [
+            40,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 69,
+          "name": "馬利諾",
+          "portrait_box": [
+            304,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 70,
+          "name": "沙尼亞",
+          "portrait_box": [
+            568,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 71,
+          "name": "姆萊",
+          "portrait_box": [
+            832,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 72,
+          "name": "先寇布",
+          "portrait_box": [
+            1096,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 73,
+          "name": "史路茲卡利達",
+          "portrait_box": [
+            1360,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 74,
+          "name": "波布蘭",
+          "portrait_box": [
+            1624,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 75,
+          "name": "卡介倫",
+          "portrait_box": [
+            40,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 76,
+          "name": "林滋",
+          "portrait_box": [
+            304,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 77,
+          "name": "布魯姆哈爾特",
+          "portrait_box": [
+            568,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 78,
+          "name": "伊旺•高尼夫",
+          "portrait_box": [
+            832,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 79,
+          "name": "派特里契夫",
+          "portrait_box": [
+            1096,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 80,
+          "name": "梅爾卡茲",
+          "portrait_box": [
+            1360,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 81,
+          "name": "舒奈德",
+          "portrait_box": [
+            1624,
+            1946,
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "file": "docs/images/readme-admirals-alliance-hd.png",
+      "faction": 1,
+      "mode": "hd",
+      "count": 42,
+      "width": 1904,
+      "height": 2342,
+      "bytes": 3737595,
+      "sha256": "9dc06d9c7069ba3b4a9330af2b9d5e8617587c5f57ec4c9d486581599e3ff250",
+      "cells": [
+        {
+          "index": 40,
+          "name": "亞典波羅",
+          "portrait_box": [
+            40,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 41,
+          "name": "派特",
+          "portrait_box": [
+            304,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 42,
+          "name": "路菲普",
+          "portrait_box": [
+            568,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 43,
+          "name": "培特雷",
+          "portrait_box": [
+            832,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 44,
+          "name": "比克古",
+          "portrait_box": [
+            1096,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 45,
+          "name": "慕亞",
+          "portrait_box": [
+            1360,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 46,
+          "name": "赫伍得",
+          "portrait_box": [
+            1624,
+            126,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 47,
+          "name": "阿普頓",
+          "portrait_box": [
+            40,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 48,
+          "name": "亞爾•沙列姆",
+          "portrait_box": [
+            304,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 49,
+          "name": "伍蘭夫",
+          "portrait_box": [
+            568,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 50,
+          "name": "魯格拉希",
+          "portrait_box": [
+            832,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 51,
+          "name": "波羅汀",
+          "portrait_box": [
+            1096,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 52,
+          "name": "楊威利",
+          "portrait_box": [
+            1360,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 53,
+          "name": "莫頓",
+          "portrait_box": [
+            1624,
+            490,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 54,
+          "name": "卡爾先",
+          "portrait_box": [
+            40,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 55,
+          "name": "費雪",
+          "portrait_box": [
+            304,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 56,
+          "name": "尤里安",
+          "portrait_box": [
+            568,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 57,
+          "name": "拉歐",
+          "portrait_box": [
+            832,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 58,
+          "name": "巴格達胥",
+          "portrait_box": [
+            1096,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 59,
+          "name": "古嚴",
+          "portrait_box": [
+            1360,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 60,
+          "name": "邱吾權",
+          "portrait_box": [
+            1624,
+            854,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 61,
+          "name": "拉普",
+          "portrait_box": [
+            40,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 62,
+          "name": "雅拉肯",
+          "portrait_box": [
+            304,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 63,
+          "name": "法菲爾",
+          "portrait_box": [
+            568,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 64,
+          "name": "馬里涅汀",
+          "portrait_box": [
+            832,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 65,
+          "name": "陳",
+          "portrait_box": [
+            1096,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 66,
+          "name": "史多克斯",
+          "portrait_box": [
+            1360,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 67,
+          "name": "可那利",
+          "portrait_box": [
+            1624,
+            1218,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 68,
+          "name": "菲列特利加",
+          "portrait_box": [
+            40,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 69,
+          "name": "馬利諾",
+          "portrait_box": [
+            304,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 70,
+          "name": "沙尼亞",
+          "portrait_box": [
+            568,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 71,
+          "name": "姆萊",
+          "portrait_box": [
+            832,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 72,
+          "name": "先寇布",
+          "portrait_box": [
+            1096,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 73,
+          "name": "史路茲卡利達",
+          "portrait_box": [
+            1360,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 74,
+          "name": "波布蘭",
+          "portrait_box": [
+            1624,
+            1582,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 75,
+          "name": "卡介倫",
+          "portrait_box": [
+            40,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 76,
+          "name": "林滋",
+          "portrait_box": [
+            304,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 77,
+          "name": "布魯姆哈爾特",
+          "portrait_box": [
+            568,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 78,
+          "name": "伊旺•高尼夫",
+          "portrait_box": [
+            832,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 79,
+          "name": "派特里契夫",
+          "portrait_box": [
+            1096,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 80,
+          "name": "梅爾卡茲",
+          "portrait_box": [
+            1360,
+            1946,
+            240,
+            300
+          ]
+        },
+        {
+          "index": 81,
+          "name": "舒奈德",
+          "portrait_box": [
+            1624,
+            1946,
+            240,
+            300
+          ]
+        }
+      ]
+    }
+  ]
+}
