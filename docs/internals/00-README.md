@@ -1,5 +1,7 @@
 # 原版內部構造參考
 
+[交戰整合驗收124](../playtest/124-engagement-integration.md)、[研究448](../re/448-engagement-integration.md)及[凍結來源](data/engagement-integration.json)保存118限定CONFORMED、459完整幀、目前CPU政策的正常S3登陸占領與公開六表。[核對器](../../tools/scripts/engagement_integration_receipt.py)檢查原版792雙跑檔及兩種顯示各24段／293格。原版整回合同態及戰場續讀仍未升格。
+
 [要塞演出驗收123](../playtest/123-fortress-presentation.md)、[研究447](../re/447-fortress-presentation.md)及[凍結來源](data/fortress-presentation.json)保存144正式逐分隊演出、423完整幀、正常GUI與六表存讀。[核對器](../../tools/scripts/fortress_presentation_receipt.py)重核原版1956檔及所有來源；戰場續讀與整段DOS同態未升格。
 
 [要塞砲正常觸發122](../playtest/122-fortress-gun-trigger.md)、[研究446](../re/446-fortress-gun-scene.md)及[唯一來源索引](data/fortress-scene.json)保存原版三案雙跑、IDA778指令、逐分隊圖序列及正常S1伊謝爾倫開火；[核對器](../../tools/scripts/fortress_scene_receipt.py)可重核。COMANI已證實事實見[20](20-comani-bmg.md#要塞砲演出)，正式要塞砲已由上方123接續驗收。

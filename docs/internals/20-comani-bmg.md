@@ -107,3 +107,10 @@
 這是cue選擇與順序證據，不是實體音訊驗收。
 靜圖基底及PFAM在本次caller已不再僅靠段名推測；其他未取證caller與陣營仍保留原等級。
 正式要塞砲renderer／排程已依[144限定CONFORMED](../spec/144-fortress-gun-presentation.md)接線，[驗收123](../playtest/123-fortress-presentation.md)核423完整幀與正常GUI。要塞圖側取目標對側，標題色仍取Owner；[研究447](../re/447-fortress-presentation.md)補逐擊量表、01CC清圖及PZ／左右分支。目標使用分隊數字，不沿用登陸全艦隊總數或一般行星攻擊段。
+
+## 要塞型行星的登陸與反擊補證
+
+證據等級：proven，限第135輪明示注入的種類1／2及成功／失敗邊界，來源為[研究448](../re/448-engagement-integration.md)、[驗收124](../playtest/124-engagement-integration.md)及[凍結來源](data/engagement-integration.json)。工具為乾淨dosgolem `f7523f9`，輸入及父state雜湊見448；沒有新增IDA分析。
+0486之前設定種類1可觀測`PFAB`／`PFD0`／`PFD2`，種類2並明示星域13可觀測`PZAB`／`PZD0`／`PZD2`。原版各雙跑相同；本輪162完整幀與普通行星297幀共459幀零差。
+此處的AB是登陸／反擊呈現，不與要塞砲AM／AF混用。EL／FL登陸艦有AB而沒有D0；HD基底按目前左右側的最後圖段選擇，沒有D0即沿原面材回退，不能借前段或對側的基底。
+目前CPU政策下S3同盟24段正常演出、兩種顯示各293來源格、音訊及公開六表已驗。正常GUI仍是獨立remake驗收，未將原版注入診斷升為DOS整回合同態。

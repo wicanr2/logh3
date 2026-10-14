@@ -6,7 +6,9 @@
 
 **目前版本：[v.1.3.0-20261013](https://github.com/wicanr2/logh3/releases/tag/v.1.3.0-20261013)。** GitHub 提供引擎與程式來源，玩家須自備合法取得的原版遊戲資料。含遊戲資料的完整版與推廣影片僅保留本機，不加入 Git 或 Release 附件。
 
-目前原始碼已加入 **Roland MT-32／GeneralUser GS 音色選擇**，設定中的 MIDI I/F 列改為音色庫，支援取消、靜音保持與重開保存選擇。登陸、反擊與占領也已改為獨立分段演出，保留各階段的擁有者與戰損快照。這些變更尚未納入上述發行包。[本輪驗證與曲庫使用方式](docs/playtest/121-landing-and-soundfont.md)
+目前原始碼已加入 **Roland MT-32／GeneralUser GS 音色選擇**，設定中的 MIDI I/F 列改為音色庫，支援取消、靜音保持與重開保存選擇。[音色選擇與曲庫使用方式](docs/playtest/121-landing-and-soundfont.md)
+
+**登陸、反擊與占領已完成正常流程驗收。** S3同盟保留獨立分段、各階段擁有者與戰損，支援原版／HD、F7及實際音效。公開六表存讀符合完整載入重算；HD左右圖段基底錯配已修正。這些變更尚未納入上述發行包。[交戰整合驗收](docs/playtest/124-engagement-integration.md)
 
 **要塞砲演出已完成。** 支援發射通知、射程橢圓、首次開火動畫、逐分隊中彈與戰損、下方方塊及音效等待。伊謝爾倫正常操作、原版／HD、動畫關閉、F7及演出後六表存讀已驗收。[要塞砲驗收與操作路徑](docs/playtest/123-fortress-presentation.md)
 
@@ -113,7 +115,7 @@ Linux 需要 X11 或 XWayland、OpenGL 與 ALSA；Windows 需要 OpenGL 驅動�
 
 ## 驗證範圍
 
-Linux 版已抽測兩陣營的讀檔、財政與生產、艦隊指令、戰場移動、交火、存讀，以及畫面、字型與音色切換。要塞砲已驗收S1同盟正常演出，試射包含友軍傷害；423張原版完整場景幀的正式渲染對拍零差。現行音樂已通過使用者實際聆聽驗收。Windows 完成 Wine 驗證，macOS 完成雙架構、依賴與 ARM 簽章檢查。Windows／macOS 真機、完整登陸／占領正常流程及同戰場讀檔續戰仍待完成。HD 是重繪模式，不宣稱全遊戲與 DOS 原版逐像素或流程完全一致。
+Linux 版已抽測兩陣營的讀檔、財政與生產、艦隊指令、戰場移動、交火、存讀，以及畫面、字型與音色切換。S3同盟已驗24段完整登陸／反擊／占領，兩種顯示各293來源格無漏格；普通／要塞行星459完整幀的原版渲染對拍零差。要塞砲另驗S1同盟正常演出及423完整幀，試射包含友軍傷害。現行音樂已通過使用者實際聆聽驗收。Windows 完成 Wine 驗證，macOS 完成雙架構、依賴與 ARM 簽章檢查。Windows／macOS 真機、DOS整回合同態及同戰場讀檔續戰仍未新增驗收。HD 是重繪模式，不宣稱全遊戲與 DOS 原版逐像素或流程完全一致。
 
 完整結果見[發行驗證](docs/playtest/120-system-dialog-polish.md)與[戰場及影片驗證](docs/playtest/119-hero-ai-release-promo.md)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
 

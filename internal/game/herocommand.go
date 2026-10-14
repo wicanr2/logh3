@@ -60,20 +60,27 @@ type TacticalFleetObservation struct {
 }
 
 type TacticalObservation struct {
-	Region         int                         `json:"region"`
-	Turn           int                         `json:"turn"`
-	View           [2]int                      `json:"view"`
-	Commanders     [2]string                   `json:"commanders"`
-	Fleets         []TacticalFleetObservation  `json:"fleets"`
-	CombatInput    string                      `json:"combat_input"`
-	CombatPoint    [2]int                      `json:"combat_point"`
-	Idle           bool                        `json:"idle"`
-	MessageOpen    bool                        `json:"message_open"`
-	MenuOpen       bool                        `json:"menu_open"`
-	PlanetMenu     bool                        `json:"planet_menu"`
-	FortressTarget bool                        `json:"fortress_target"`
-	Planets        []TacticalPlanetObservation `json:"planets"`
-	GunHits        []rules.FortressGunHit      `json:"gun_hits,omitempty"`
+	Units            []TacticalUnitObservation         `json:"units"`
+	CombatChoices    []TacticalCombatChoiceObservation `json:"combat_choices,omitempty"`
+	CombatWeaponMask int                               `json:"combat_weapon_mask"`
+	FleetOrder       int                               `json:"fleet_order"`
+	CommandOpen      bool                              `json:"command_open"`
+	CommandKind      string                            `json:"command_kind"`
+	CommandPoint     [2]int                            `json:"command_point"`
+	Region           int                               `json:"region"`
+	Turn             int                               `json:"turn"`
+	View             [2]int                            `json:"view"`
+	Commanders       [2]string                         `json:"commanders"`
+	Fleets           []TacticalFleetObservation        `json:"fleets"`
+	CombatInput      string                            `json:"combat_input"`
+	CombatPoint      [2]int                            `json:"combat_point"`
+	Idle             bool                              `json:"idle"`
+	MessageOpen      bool                              `json:"message_open"`
+	MenuOpen         bool                              `json:"menu_open"`
+	PlanetMenu       bool                              `json:"planet_menu"`
+	FortressTarget   bool                              `json:"fortress_target"`
+	Planets          []TacticalPlanetObservation       `json:"planets"`
+	GunHits          []rules.FortressGunHit            `json:"gun_hits,omitempty"`
 }
 
 // Detached observations only; these fields never set a position, order or RNG.
@@ -96,11 +103,32 @@ func (g *Game) TacticalObservation() *TacticalObservation {
 	v := &TacticalObservation{Region: g.battleRegion, Turn: g.battleTurn, View: [2]int{g.battleView.Col, g.battleView.Row}, Commanders: g.HeroCommandObservation()}
 	v.Idle, v.MessageOpen, v.MenuOpen = g.battleInputIdle(), g.msgOn, g.battleMenu
 	v.PlanetMenu, v.FortressTarget = g.PlanetMenuOpen(), g.FortressTargetPending()
+	v.FleetOrder, v.CommandOpen, v.CommandKind = int(g.fleetOrder), g.battleCmd, string(g.battleCmdKind)
+	if g.res.CommandMenus != nil {
+		l := g.res.CommandMenus.Layout
+		v.CommandPoint = [2]int{g.battleCmdX + l.HighlightDX + 8, g.battleCmdY + l.HighlightDY + 8}
+	}
+	for i, u := range g.battleUnits {
+		v.Units = append(v.Units, TacticalUnitObservation{i, u.Fleet, u.Faction, u.Squadron, u.Kind, u.X, u.Y, u.Ships, u.Out})
+	}
 	for _, p := range g.battlePlanets {
 		v.Planets = append(v.Planets, TacticalPlanetObservation{p.Index, p.Owner, p.X, p.Y, p.Fortress, p.GunState, p.GunAim, p.DefenceMax})
 	}
 	v.GunHits = append([]rules.FortressGunHit(nil), g.battleGunHits...)
 	if g.fleetCombat.active {
+		for _, candidate := range g.fleetCombat.candidates {
+			if candidate.Target == g.fleetCombat.target {
+				v.CombatWeaponMask = int(candidate.Mask)
+			}
+			if candidate.Target < 0 || candidate.Target >= len(g.battleUnits) || g.res.Battle == nil {
+				continue
+			}
+			u, f := g.battleUnits[candidate.Target], g.res.Battle.Field
+			x, y := f.X+u.X-g.battleView.Col*f.TileW, f.Y+u.Y-g.battleView.Row*f.TileH
+			if x >= f.X && y >= f.Y && x+16 < f.X+f.Cols*f.TileW && y+16 < f.Y+f.Rows*f.TileH {
+				v.CombatChoices = append(v.CombatChoices, TacticalCombatChoiceObservation{candidate.Target, int(candidate.Mask), [2]int{x + 8, y + 8}})
+			}
+		}
 		v.CombatPoint = [2]int{240, 470}
 		switch g.fleetCombat.stage {
 		case fleetCommandHeader:

@@ -1,13 +1,59 @@
 package game
 
 import (
+	"bytes"
 	"fmt"
 	"testing"
 	"time"
 
+	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/rules"
 	"github.com/wicanr2/logh3/internal/screen"
 )
+
+func TestPlanetAnimationBasesFollowDisplayedSides(t *testing.T) {
+	for _, faction := range []int{0, 1} {
+		g := captureSceneGame(t, faction)
+		// A previous surface must also be discarded when the later landing
+		// craft has no D0 base; keep the other side's own base intact.
+		g.engQueue[0].stage.base.Pictures = []screen.FleetScenePicture{{Side: uint8(faction), Segment: "PPD0", LastFrame: 0}}
+		for _, tick := range []int{2 * g.fleetSceneInterval(), g.engQueue[0].stage.resultTick} {
+			g.engTick = tick
+			view := g.planetEngagementView(g.engQueue[0].stage)
+			var prefixes [2]string
+			for _, p := range view.Pictures {
+				prefixes[p.Side] = p.Segment[:2]
+			}
+			seen := 0
+			for _, c := range g.drawEngagement().Commands {
+				if c.Kind != gfx.DrawAnimation {
+					continue
+				}
+				side := 0
+				if c.X == 376 {
+					side = 1
+				}
+				base, err := g.res.Comani.StaticPicture(prefixes[side])
+				if err != nil {
+					// Landing craft have AB but no D0 segment. Their own
+					// fallback must not borrow the opposite planet's base.
+					if c.Key != "" || len(c.Base) != 0 {
+						t.Fatal("missing D0 borrowed an opposite-side base", side, c.Key)
+					}
+					seen++
+					continue
+				}
+				if c.Key != base.ArtworkKey || !bytes.Equal(c.Base, base.Pix) {
+					t.Fatalf("faction%d tick%d side%d: wrong HD base %q for displayed prefix %X", faction, tick, side, c.Key, prefixes[side])
+				}
+				seen++
+			}
+			if seen != 2 {
+				t.Fatal("both animation windows must retain their own base", seen)
+			}
+		}
+	}
+}
 
 // Diagnostic rule-to-renderer coverage; normal GUI evidence is recorded
 // separately in playtest121 and is not inferred from this injected state.

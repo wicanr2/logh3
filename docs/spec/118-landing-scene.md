@@ -1,6 +1,8 @@
 # 118：登陸戰分段演出
 
-狀態：READY。2026-10-06，沿 [#48](https://github.com/wicanr2/logh3/issues/48)。
+狀態：限定CONFORMED。2026-10-14，沿 [#48](https://github.com/wicanr2/logh3/issues/48)。原READY契約保持。
+完成範圍為正式分段接線、459完整renderer幀，以及目前CPU政策下S3同盟的正常登陸／反擊／占領、兩種顯示、音訊、F7及公開六表存讀。
+[驗收124](../playtest/124-engagement-integration.md)與[凍結來源](../internals/data/engagement-integration.json)保存結果；DOS整回合同態及同戰場續讀未升格。
 來源：[研究436](../re/436-landing-scene.md)、[來源索引](../internals/data/landing-scene.json)。
 完整056／062保持DRAFT，094／095／096及105的既有契約沿用。
 第109輪補[研究437](../re/437-landing-frame.md)與[十八張完整單幀](../playtest/097-landing-frame.md)。
@@ -68,7 +70,7 @@
 播放中排入的滑鼠只在下一次結果等待消費一次，不能連續跳過之後所有段。
 
 本規格不修Targets eligibility；bit1獨立條件的產品差異另追蹤。
-要塞渲染及實際音訊需最小抽樣後才可稱CONFORMED；完整056／062保持DRAFT。
+要塞渲染及實際音訊的最小抽樣已由第135輪補齊；原版要塞／伊謝爾倫為明示診斷，正常GUI限定S3同盟一般行星。完整056／062保持DRAFT。
 
 typed邊界：攻方side0／1，行星owner0／1／2、kind0／1／2；下方1..22筆同陣營且身份唯一的編制分隊。
 身份範圍0..65534，保留65535作行星投影點；艘數、防衛力及座標是word。
@@ -82,6 +84,9 @@ typed邊界：攻方side0／1，行星owner0／1／2、kind0／1／2；下方1..
 
 ## 正式套用狀態
 
-2026-10-14使用者明確要求針對#48處理，已授權依本READY規格接正式路徑。實作及驗收見[第132輪](../goal/2026-10-14-landing-soundfont-round-132.md)與[驗證121](../playtest/121-landing-and-soundfont.md)，尚未升格CONFORMED。
+2026-10-14使用者明確要求針對#48處理，已授權依本READY規格接正式路徑。第132輪實作及初驗見[計畫132](../goal/2026-10-14-landing-soundfont-round-132.md)與[驗證121](../playtest/121-landing-and-soundfont.md)，當時尚未升格CONFORMED。
+
+第135輪補目前CPU政策下正常片頭至S3同盟，24段演出、每種顯示293來源格完整、F7往返、正式音訊及公開存讀；原版四種要塞分支雙跑792檔一致，普通／要塞459幀、141004800像素皆零差。
+133呈現契約內的左右基底錯配已修，兩陣營真實素材回歸與修正前負向對照通過。標準19套件15 PASS、4無測試。正式狀態限定上方範圍，未將獨立GUI升為DOS整場同態。
 
 第110輪歷史：證據審查與候選完整幀API已完成，只載獨立候選JSON驗證，未接Game。當時兩次正式資料生成遭自動審核拒絕，理由為缺少使用者對READY的直接確認。本輪已有明確授權，舊環境阻塞不再當作現行狀態。

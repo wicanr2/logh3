@@ -6,6 +6,8 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/hajimehoshi/ebiten/v2"
+
 	"github.com/wicanr2/logh3/internal/game"
 	"github.com/wicanr2/logh3/internal/gfx"
 )
@@ -57,6 +59,9 @@ func (a *app) traceFrame(fb *gfx.Framebuffer, start time.Time, frameTime time.Du
 		BattleReady      bool                              `json:"battle_ready"`
 		Tactical         *game.TacticalObservation         `json:"tactical,omitempty"`
 		Fortress         *game.FortressPlaybackObservation `json:"fortress,omitempty"`
+		Planet           *game.PlanetPlaybackObservation   `json:"planet,omitempty"`
+		MouseButtons     [2]bool                           `json:"mouse_buttons"`
+		Cursor           [2]int                            `json:"cursor"`
 		FontStyle        string                            `json:"font_style"`
 		MusicQuality     string                            `json:"music_quality"`
 		HDMusicAvailable bool                              `json:"hd_music_available"`
@@ -65,6 +70,7 @@ func (a *app) traceFrame(fb *gfx.Framebuffer, start time.Time, frameTime time.Du
 		MT32Available    bool                              `json:"mt32_available"`
 		SoundFontMenu    bool                              `json:"soundfont_menu"`
 		MusicLibrary     string                            `json:"music_library"`
-	}{start.UnixNano(), a.ticks, a.g.State().String(), mode, float64(frameTime) / 1e6, float64(time.Since(start)) / 1e6, animations, a.toolbar.visible, a.toolbar.help, a.g.ShowEnemies(), a.g.PlaybackObservation(), a.g.BattleInputReady(), a.g.TacticalObservation(), a.g.FortressPlaybackObservation(), fontStyle, musicQuality, a.musicHD != nil, musicTrack, a.selectedSoundFont(), a.musicMT32 != nil, a.soundFontMenu, musicLibrary}
+	}{start.UnixNano(), a.ticks, a.g.State().String(), mode, float64(frameTime) / 1e6, float64(time.Since(start)) / 1e6, animations, a.toolbar.visible, a.toolbar.help, a.g.ShowEnemies(), a.g.PlaybackObservation(), a.g.BattleInputReady(), a.g.TacticalObservation(), a.g.FortressPlaybackObservation(), a.g.PlanetPlaybackObservation(), [2]bool{ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft), ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight)}, [2]int{}, fontStyle, musicQuality, a.musicHD != nil, musicTrack, a.selectedSoundFont(), a.musicMT32 != nil, a.soundFontMenu, musicLibrary}
+	row.Cursor[0], row.Cursor[1] = a.g.MousePosition()
 	_ = json.NewEncoder(a.frameTrace).Encode(row)
 }

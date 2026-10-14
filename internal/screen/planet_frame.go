@@ -257,7 +257,7 @@ func (s *EngagementSpec) RenderPlanetFrame(v PlanetFrameView, panel *asset.Image
 			return nil, fmt.Errorf("缺行星交戰動畫庫")
 		}
 		planes := asset.PlanesFrom(fb.Pix)
-		var bases []*asset.Image
+		var bases [2]*asset.Image
 		for _, pc := range v.Pictures {
 			frames, err := comani.Frames(pc.Segment)
 			if err != nil {
@@ -277,7 +277,9 @@ func (s *EngagementSpec) RenderPlanetFrame(v PlanetFrameView, panel *asset.Image
 			}
 			if len(pc.Segment) == 4 {
 				if base, err := comani.StaticPicture(pc.Segment[:2]); err == nil {
-					bases = append(bases, base)
+					bases[pc.Side] = base
+				} else {
+					bases[pc.Side] = nil
 				}
 			}
 		}
@@ -286,7 +288,7 @@ func (s *EngagementSpec) RenderPlanetFrame(v PlanetFrameView, panel *asset.Image
 			x, y := window[0]*8, 40+window[1]*4
 			rects = append(rects, image.Rect(x, y, x+256, y+102))
 		}
-		DrawAnimationPixels(fb, planes.Pixels(), rects, bases...)
+		DrawAnimationPixels(fb, planes.Pixels(), rects, bases[:]...)
 	}
 	if v.Scene != nil {
 		ops, err := PlanPlanetBlocks(*v.Scene, sprites)
