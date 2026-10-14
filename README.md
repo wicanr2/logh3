@@ -8,6 +8,8 @@
 
 目前原始碼已加入 **Roland MT-32／GeneralUser GS 音色選擇**，設定中的 MIDI I/F 列改為音色庫，支援取消、靜音保持與重開保存選擇。登陸、反擊與占領也已改為獨立分段演出，保留各階段的擁有者與戰損快照。這些變更尚未納入上述發行包。[本輪驗證與曲庫使用方式](docs/playtest/121-landing-and-soundfont.md)
 
+**要塞砲可由正常操作觸發。** S1同盟已驗證在伊謝爾倫從行星選單瞄準、實行及結算戰損；原版開火樣本與規則回歸也已取得。要塞砲的獨立動畫演出仍待完成。[要塞砲驗證與操作路徑](docs/playtest/122-fortress-gun-trigger.md)
+
 ## 故事背景
 
 遙遠的未來，人類已將生活圈擴展到銀河。實行專制政治的銀河帝國與奉行民主制度的自由行星同盟，持續交戰長達一百五十年。帝國受門閥貴族的腐敗侵蝕，同盟也陷入政客操弄與長年戰爭的消耗。兩位軍事天才的崛起，開始改變這場僵局。[世界觀來源：Production I.G 故事介紹](https://www.production-ig.co.jp/works/ginei/story.html)
@@ -111,7 +113,7 @@ Linux 需要 X11 或 XWayland、OpenGL 與 ALSA；Windows 需要 OpenGL 驅動�
 
 ## 驗證範圍
 
-Linux 版已抽測兩陣營的讀檔、財政與生產、艦隊指令、戰場移動、交火、存讀，以及畫面、字型與音色切換。現行音樂已通過使用者實際聆聽驗收。Windows 完成 Wine 驗證，macOS 完成雙架構、依賴與 ARM 簽章檢查。Windows／macOS 真機與完整登陸／占領演出仍待驗證。HD 是重繪模式，不宣稱全遊戲與 DOS 原版逐像素或流程完全一致。
+Linux 版已抽測兩陣營的讀檔、財政與生產、艦隊指令、戰場移動、交火、存讀，以及畫面、字型與音色切換。要塞砲已抽測S1同盟正常瞄準及開火，測試射擊包含友軍傷害。現行音樂已通過使用者實際聆聽驗收。Windows 完成 Wine 驗證，macOS 完成雙架構、依賴與 ARM 簽章檢查。Windows／macOS 真機、完整登陸／占領正常流程及要塞砲演出仍待驗證。HD 是重繪模式，不宣稱全遊戲與 DOS 原版逐像素或流程完全一致。
 
 完整結果見[發行驗證](docs/playtest/120-system-dialog-polish.md)與[戰場及影片驗證](docs/playtest/119-hero-ai-release-promo.md)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
 

@@ -1,9 +1,11 @@
 # 056 — 交戰演出（打行星那一種）與戰鬥曲的出口
 
+2026-10-14現況：[登陸分段121](../playtest/121-landing-and-soundfont.md)已依118 READY正式接線；[要塞砲122](../playtest/122-fortress-gun-trigger.md)已取得原版逐分隊動態樣本與正常GUI開火證據。要塞砲正式演出、完整登陸／占領正常GUI與公開存讀、DOS整段同狀態仍待驗，完整056保持DRAFT。下方`eng-*`描述保留其歷史診斷範圍，不當作現行未完成清單。
+
 狀態：**DRAFT**（入口、換曲、面板、三個視窗、**兩個圖視窗的序列與計時、按鍵排隊** CONFORMED——六批 `eng-*`
 與 `eng-skip-mid` 扣掉量表與戰場兩塊逐位元組相同（`docs/re/331`，歷史收據）；
 094已接既有防衛標題分支量表，096正式交戰色盤已接；099艦隊完整單幀及098等待predicate已驗。
-Game戰場方塊、另外三種演出及完整正常同狀態仍待驗）。
+其後正式接線與未完成範圍依上方現況及#48核對，完整正常同狀態仍待驗）。
 證據：[`docs/re/324`](../re/324-engagement-scene.md)；素材 [`docs/internals/20`](../internals/20-comani-bmg.md)
 （`COMANI.BMG`，`docs/re/328`）、[`docs/re/331`](../re/331-engagement-picture-sequence.md)（序列與計時）、[`docs/internals/37`](../internals/37-ani-pnl-a98.md)（`ANI_PNL1.A98`）。
 收據：[`docs/playtest/022`](../playtest/022-engagement-scene.md)。

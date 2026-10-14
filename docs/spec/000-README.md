@@ -1,6 +1,8 @@
 # 規格
 
-目前第132輪：[118交戰分段](118-landing-scene.md)與[114音色選擇](114-midi-interface.md)，狀態見[計畫132](../goal/2026-10-14-landing-soundfont-round-132.md)及[驗證121](../playtest/121-landing-and-soundfont.md)。使用者已驗收現行音樂並關閉#69，人工檢視一致並關閉#16；原版欄名未知及未驗真機仍保留證據限制。
+目前第133輪：[計畫133](../goal/2026-10-14-fortress-gun-round-133.md)沿[028要塞砲](028-fortress-gun-fire.md)完成原版三案雙跑、規則回歸及正常伊謝爾倫開火；[研究446](../re/446-fortress-gun-scene.md)與[驗證122](../playtest/122-fortress-gun-trigger.md)保存證據。正式要塞砲演出尚未接，完整056保持DRAFT。
+
+第132輪成果：[118交戰分段](118-landing-scene.md)與[114音色選擇](114-midi-interface.md)，狀態見[計畫132](../goal/2026-10-14-landing-soundfont-round-132.md)及[驗證121](../playtest/121-landing-and-soundfont.md)。使用者已驗收現行音樂並關閉#69，人工檢視一致並關閉#16；原版欄名未知及未驗真機仍保留證據限制。
 
 第131輪呈現及輸入修正：[141系統視窗](141-system-dialog-cursor.md)、[142啟動進度](142-startup-progress.md)、[143四字型與HD音色](143-font-and-hd-music.md)。機器結果限定於[驗證120](../playtest/120-system-dialog-polish.md)的remake範圍。
 
