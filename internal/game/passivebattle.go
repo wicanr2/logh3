@@ -87,7 +87,9 @@ func (g *Game) fortressGunFire() []rules.FortressGunHit {
 func (g *Game) planetAssault() []rules.PlanetAssaultHit {
 	cpu, passive := g.passiveComputer()
 	if !passive {
-		return rules.PlanetAssault(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+		hits, scenes := rules.PlanetAssaultWithScenes(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+		g.battleAssaultScenes = scenes
+		return hits
 	}
 	actions := map[int]int{}
 	for i := range g.battleFleets {
@@ -97,10 +99,35 @@ func (g *Game) planetAssault() []rules.PlanetAssaultHit {
 		}
 	}
 	saved := g.snapshotSide(g.faction)
-	hits := rules.PlanetAssault(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+	hits, scenes := rules.PlanetAssaultWithScenes(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
 	g.restoreSide(saved)
 	for i, a := range actions {
 		g.battleFleets[i].Action = a
 	}
+	// The passive policy restores player units. Its visible snapshots must do
+	// the same instead of presenting damage that the player never received.
+	for i := range scenes {
+		for _, s := range []*rules.PlanetAssaultSnapshot{&scenes[i].Before, &scenes[i].After} {
+			for j, u := range saved {
+				if j < len(s.Units) {
+					s.Units[j] = u
+				}
+			}
+			for fi, f := range g.battleFleets {
+				if f.Index == s.Fleet.Index {
+					if a, ok := actions[fi]; ok {
+						s.Fleet.Action = a
+					}
+					break
+				}
+			}
+			s.Attack = rules.FleetAttack(&s.Fleet, s.Units)
+			s.Integrity = rules.FleetIntegrity(&s.Fleet, s.Units)
+		}
+		if scenes[i].Kind == rules.PlanetCounterScene && scenes[i].Before.Fleet.Faction == g.faction {
+			scenes[i].Destroyed = 0
+		}
+	}
+	g.battleAssaultScenes = scenes
 	return hits
 }

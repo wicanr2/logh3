@@ -23,6 +23,7 @@ case "${1:-}" in
   xrun)
     shift
     PRE=(with-xvfb)
+    [[ -n "${LOGH3_XVFB_SCRIPT:-}" ]] && PRE=(sh "$LOGH3_XVFB_SCRIPT")
     CMD=("$@")
     ;;
 esac

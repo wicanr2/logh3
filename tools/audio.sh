@@ -4,7 +4,7 @@
 # /orig 與 /src 唯讀；只有 /work（workplace/）可寫。
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-IMAGE="${LOGH3_AUDIO_IMAGE:-logh3-audio:2}"
+IMAGE="${LOGH3_AUDIO_IMAGE:-logh3-audio:3-munt2.8.2}"
 [[ -d "$ROOT/workplace" && -d "$ROOT/org_game/extracted" ]] || {
   echo '缺少既有研究輸出或原版目錄，停止掛載。' >&2; exit 2;
 }

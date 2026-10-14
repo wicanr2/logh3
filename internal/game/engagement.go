@@ -23,9 +23,8 @@ import (
 // 左／右鍵排進佇列，到停頓時才讀、讀到就提早收場。動畫效果關掉時四次畫圖都跳過、
 // 直接到「擊毀」與停頓。
 //
-// 既有防衛標題分支的量表已依規格094接入；戰場方塊動畫沒畫（`321F:008A`／`0897`）。
-// 舊演出收據仍排除量表與方塊，新的量表測試獨立逐像素核對。
-// 艦隊對艦隊、要塞砲、登陸艦攻擊（`20B4:0681`）那幾種的圖沒接。
+// 正式行星演出依118使用結算當下快照、量表及321F下方方塊。
+// 舊Hit重建只保留歷史診斷，不能作為正式路徑的同態證據。
 
 // engagement 是一場演出要印的數。
 type engagement struct {
@@ -41,12 +40,16 @@ type engagement struct {
 	planetKind            byte
 	fleetName             [2]byte
 	gauges                *rules.PlanetDefenceGauges
+	stage                 *planetEngagementStage
 }
 
 // queueEngagements 把這一回合打行星的結果排成演出（一顆行星一場：原版
 // `20B4:0222` 逐顆行星開場；同一顆被幾支打就在同一場裡逐支印——這裡先
 // 一支一場，假設待驗）。回 true ＝ 有得演。
 func (g *Game) queueEngagements(hits []rules.PlanetAssaultHit) bool {
+	if len(g.battleAssaultScenes) > 0 {
+		return g.queuePlanetEngagements(g.battleAssaultScenes)
+	}
 	if g.res.Engagement == nil || g.res.EngagementPanel == nil {
 		return false
 	}
@@ -129,6 +132,9 @@ func (g *Game) fillEngagementNames(e *engagement) {
 func (g *Game) startEngagement() {
 	g.engTick, g.engTickRemainder, g.engClick = 0, 0, false
 	g.engTimelineCache, g.engFrameCache = nil, nil
+	if len(g.engQueue) > 0 && g.engQueue[0].stage != nil {
+		g.startPlanetEngagement()
+	}
 }
 
 // engagementPicture 是時間線上的一次畫圖：哪一段、哪一格、哪個視窗、第幾 tick。
@@ -141,6 +147,9 @@ type engagementPicture struct {
 
 // engagementTimeline 回這一場的畫圖序列與「擊毀」那一刻的 tick（`20B4:08B1`）。
 func (g *Game) engagementTimeline(e engagement) (pics []engagementPicture, result int) {
+	if e.stage != nil {
+		return e.stage.pictures, e.stage.resultTick
+	}
 	if g.res.Comani == nil || g.res.Engagement == nil || g.display.Anim == 0 {
 		return nil, 0
 	}
@@ -220,6 +229,10 @@ func (g *Game) engagementTickDuration() time.Duration {
 func (g *Game) engagementTick(n int) {
 	for ; n > 0 && g.state == StateEngagement; n-- {
 		g.engTick++
+		if len(g.engQueue) > 0 && g.engQueue[0].stage != nil {
+			g.advanceSoundEffects(g.engagementTickDuration())
+			g.processPlanetSounds(g.engQueue[0].stage)
+		}
 		g.engagementMaybeEnd()
 	}
 }
@@ -265,6 +278,13 @@ func (g *Game) battleFleetShipsMax(fleet int) int {
 func (g *Game) engagementView() *screen.EngagementView {
 	if len(g.engQueue) == 0 {
 		return nil
+	}
+	if g.engQueue[0].stage != nil {
+		v := g.planetEngagementView(g.engQueue[0].stage)
+		return &screen.EngagementView{Faction: v.Planet.Owner, PlanetName: v.Planet.Name,
+			Defence: v.Planet.Defence, DefenceMax: v.Planet.DefenceMax, Ships: int(v.Fleet.Ships), ShipsMax: int(v.Fleet.ShipsMax),
+			FleetNumber: int(v.Fleet.Number), AdmiralName: v.Fleet.AdmiralName, FleetKnown: v.Fleet.Side == uint8(g.faction) || v.Fleet.Detail == 3,
+			Label: v.Middle.Label, Destroyed: int(v.Middle.Destroyed), ShowResult: v.Middle.ShowResult, Gauges: &v.Gauges}
 	}
 	e := g.engQueue[0]
 	if e.planet < 0 || e.planet >= len(g.battlePlanets) {
@@ -347,8 +367,19 @@ func (g *Game) engagementClick() {
 
 // finishEngagement 收場：下一場從頭開始，沒有了就回戰場做完那一回合。
 func (g *Game) finishEngagement() {
+	var previous *screen.PlanetFrameView
+	planet := -1
+	if len(g.engQueue) > 0 && g.engQueue[0].stage != nil {
+		v := g.planetEngagementView(g.engQueue[0].stage)
+		previous, planet = &v, g.engQueue[0].planet
+	}
 	if len(g.engQueue) > 0 {
 		g.engQueue = g.engQueue[1:]
+	}
+	if len(g.engQueue) > 0 && g.engQueue[0].stage != nil {
+		if g.engQueue[0].planet == planet {
+			g.engQueue[0].stage.previous = previous
+		}
 	}
 	g.startEngagement()
 	if len(g.engQueue) > 0 {
@@ -365,6 +396,9 @@ func (g *Game) drawEngagement() *gfx.Framebuffer {
 	}
 	if g.res.Engagement == nil {
 		return gfx.NewFramebuffer(0)
+	}
+	if len(g.engQueue) > 0 && g.engQueue[0].stage != nil {
+		return g.drawPlanetEngagement(g.engQueue[0].stage)
 	}
 	view := g.engagementView()
 	pictures := g.activeEngagementPictures()

@@ -103,5 +103,41 @@
   ],
   "flagship_codes": "b1b2b3b4b5b6bab9b8bfb7bdbbbcbeddddddddddddddddddddddddddddddddddddddddddddddddddb1ddb3ddb5ddb7b8b9baddbcbdbebec0dddddddddddddddddddddddddddddddddddddddddddddddddddd",
   "fortress_region": 13
+ },
+ "planet_frame": {
+  "Factions": [
+   "abd2b0eaad78",
+   "a650b7f9ad78",
+   "a4a4a5dfad78"
+  ],
+  "Kinds": [
+   "a6e6ac50",
+   "ad6eb6eb",
+   ""
+  ],
+  "Colours": [
+   2,
+   13,
+   4
+  ],
+  "Attack": "a7f0c0bba44f202020202020202020202020202020202020253675",
+  "Ships": "b2eec4a5c160bcc620202020202020202020202535752f253575",
+  "Unknown": "b2c4a148c4a5b6a42020a148a148a148a148a148a148a148a148a1480a",
+  "ControlledPrefix": "0cb2c4",
+  "ControlledSuffix": "c4a5b6a4",
+  "ControlledName": "252d3138730a",
+  "KnownPrefix": "0cb2c4",
+  "KnownSuffix": "c4a5b6a42020",
+  "KnownName": "252d3138730a",
+  "Title": "0c2573",
+  "Name": "257325730a",
+  "Defence": "a8bebdc3a44f202020202020202020202020202535752f253575",
+  "Labels": [
+   "0ca8bebdc3a7f0c0bb",
+   "0cb56eb3b0c4a5a7f0c0bb",
+   "0ca565bbe2a6a8a55c",
+   "0ca565bbe2a5a2b1d1"
+  ],
+  "Destroyed": "015b302c312cc0bbb7b42020253675"
  }
 }

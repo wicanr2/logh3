@@ -6,6 +6,18 @@
 
 **目前版本：[v.1.3.0-20261013](https://github.com/wicanr2/logh3/releases/tag/v.1.3.0-20261013)。** GitHub 提供引擎與程式來源，玩家須自備合法取得的原版遊戲資料。含遊戲資料的完整版與推廣影片僅保留本機，不加入 Git 或 Release 附件。
 
+目前原始碼已加入 **Roland MT-32／GeneralUser GS 音色選擇**，設定中的 MIDI I/F 列改為音色庫，支援取消、靜音保持與重開保存選擇。登陸、反擊與占領也已改為獨立分段演出，保留各階段的擁有者與戰損快照。這些變更尚未納入上述發行包。[本輪驗證與曲庫使用方式](docs/playtest/121-landing-and-soundfont.md)
+
+## 故事背景
+
+遙遠的未來，人類已將生活圈擴展到銀河。實行專制政治的銀河帝國與奉行民主制度的自由行星同盟，持續交戰長達一百五十年。帝國受門閥貴族的腐敗侵蝕，同盟也陷入政客操弄與長年戰爭的消耗。兩位軍事天才的崛起，開始改變這場僵局。[世界觀來源：Production I.G 故事介紹](https://www.production-ig.co.jp/works/ginei/story.html)
+
+帝國的萊因哈特因姊姊被皇帝納入後宮，決心與摯友吉爾菲艾斯奪取權力，進而追求統一宇宙。同盟的楊威利原本立志成為歷史學家，卻以靈活的戰術屢次挽救戰局。他被稱為「不敗的楊」與「魔術師楊」，心中盼望的仍是和平。兩人各自率領艦隊，在戰場上成為彼此最難戰勝的對手。[人物設定來源：原版人物傳](docs/lore/character-biographies.md)
+
+亞姆力札會戰是這段歷史的重要轉折。同盟軍大舉進攻帝國領土，卻因補給困境與萊因哈特的反攻陷入危局，雙方艦隊最終集結於亞姆力札星域。[會戰背景來源：動畫本傳第 12 至 15 話介紹](https://ginei.jp/story1.php)
+
+本作讓玩家接手兩大陣營的軍政與艦隊指揮，從亞姆力札會戰等局面重新作出選擇。人物的理想與衝突構成故事背景，戰局則交由玩家的部署、補給與臨場指揮決定。
+
 ## 下載與本機完整版
 
 | 平台 | GitHub 引擎包 |
@@ -22,13 +34,10 @@
 |---|---|
 | 三平台完整版與啟動器 | `dist-all/v.1.3.0-20261013/full/` |
 | 約 125 秒有聲推廣片與正常遊玩實錄 | `dist-all/v.1.2.0-20261012/promo/` |
-| 封包、聲畫及發布驗證 | `dist-all/v.1.3.0-20261013/smoke/` |
-
-既有 v.1.2.0 推廣片包含雙旗 HD 片頭、S1 讀檔、三個額外劇本、名將 AI 比較、F7 即時切換，以及約 52 秒正常速度艦隊交火。指定 1988 動畫片段的原生畫質為 480p，保留來源標示；成片與相關素材僅留本機。
 
 ## 主要特點
 
-- **保留原版操作。** 維持 4:3 畫面、立體框線與按鈕位置，保留原版字形；修正確認、財政、訂造及建造操作，加入滑鼠停留反光。
+- **保留原版操作。** 維持 4:3 畫面、立體框線、按鈕位置與原版字形，支援滑鼠停留反光。
 - **兩套陣營 HD。** 帝國採藍金配色，同盟採赤焰戰線；戰略星圖重繪星球與徽章，保留星球名稱及航路。戰術地圖、人物與艦影支援 HD，部隊圖示保留原版細節。
 - **隨時切換畫面。** F7 切換原版／HD，F1 開啟說明；滑鼠移到頂端可顯示功能列。顯示敵軍從設定選單切換，預設關閉。
 - **強化戰略與戰術 AI。** 可選原版規則模式或四級強化難度；強化 AI 會集結兵力、協同移動並尋找包圍方向。
@@ -36,12 +45,12 @@
 - **三個額外劇本。** 取進度保留 S1「亞姆力札會戰」、S2「諸神的黃昏」、S3「巴米利恩會戰」，可正常載入及存讀。
 - **四款字型。** 設定可選原版點陣、原版強化、思源宋體及思源黑體，預設原版強化。原版顯示固定使用原字形；新字集需另匯入，本機完整版已附。
 - **原曲 HD 音色。** 本機完整版保留原曲，升級 11 首配樂的音色與混音；設定可切 HD／FM 或靜音。強化啟動器預設 HD，原版規則啟動器預設原音色。
-- **啟動進度。** 小視窗顯示實際載入階段與人物圖張數，缺檔時顯示錯誤。讀檔與退出確認使用即時游標；主選單讀檔取消回主選單。
+- **啟動進度。** 小視窗顯示實際載入階段與人物圖張數，缺檔時顯示錯誤。
 - **有聲交火。** 支援遊戲配樂、艦隊音效與普通速度戰鬥動畫。引擎包需另匯入自有音訊與 HD 素材；原版規則模式、動畫時鐘及存檔格式保持。
 
 ## 遊戲畫面
 
-新版載入與字型設定取自 v.1.3.0 的兩陣營正常 Linux 操作。[新版截圖來源](docs/images/readme-v130.json)保存來源與雜湊。
+載入進度與兩陣營字型設定的實際畫面，取自 v.1.3.0 Linux 版。[截圖來源與雜湊](docs/images/readme-v130.json)
 
 ![實際七階段載入進度與人物圖張數](docs/images/readme-v130-loading.png)
 
@@ -49,7 +58,7 @@
 |---|---|
 | ![帝國設定中的四字型選擇](docs/images/readme-v130-empire-font.png) | ![同盟設定中的思源黑體與音源選擇](docs/images/readme-v130-alliance-font.png) |
 
-以下八張取自 v.1.2.0 Linux 正式程式的正常 S1 遊玩實錄，保留完整 960×720 視窗。[截圖來源與雜湊](docs/images/readme-v120.json)可核對程式、操作紀錄及影片時碼。
+以下為陣營介面、劇本與交火畫面，取自 v.1.2.0 Linux 版正常 S1 遊玩，保留完整 960×720 視窗。[截圖來源與雜湊](docs/images/readme-v120.json)
 
 | 帝國藍金介面與星圖 | 同盟赤焰戰線介面與星圖 |
 |---|---|
@@ -102,23 +111,15 @@ Linux 需要 X11 或 XWayland、OpenGL 與 ALSA；Windows 需要 OpenGL 驅動�
 
 ## 驗證範圍
 
-正常玩家路徑已抽測讀檔、財政與生產操作、艦隊指令、戰場移動、交火、存讀及顯示切換。兩陣營的原版規則／強化模式從相同初始艦隊比較，兩位名將各有正常實戰錄影；普通速度演出的格序、音效閘門及結果時點另有收據。
+Linux 版已抽測兩陣營的讀檔、財政與生產、艦隊指令、戰場移動、交火、存讀，以及畫面、字型與音色切換。現行音樂已通過使用者實際聆聽驗收。Windows 完成 Wine 驗證，macOS 完成雙架構、依賴與 ARM 簽章檢查。Windows／macOS 真機與完整登陸／占領演出仍待驗證。HD 是重繪模式，不宣稱全遊戲與 DOS 原版逐像素或流程完全一致。
 
-本版 Linux 完整包已驗兩陣營正常讀檔取消、三劇本、存讀、四字型與音色切換；標準 19 套件通過。Windows 以 Wine 驗證，macOS 完成雙架構、依賴與 ARM 簽章檢查。Windows／macOS 真機、人耳與完整登陸／占領演出仍待驗證。HD 是重繪模式，不宣稱全遊戲與 DOS 原版逐像素或流程完全一致。
-
-本版證據見[發行驗證120](docs/playtest/120-system-dialog-polish.md)，既有戰場與影片證據見[驗證119](docs/playtest/119-hero-ai-release-promo.md)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
+完整結果見[發行驗證](docs/playtest/120-system-dialog-polish.md)與[戰場及影片驗證](docs/playtest/119-hero-ai-release-promo.md)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
 
 ## 重製與保存
 
 本專案同時保存台灣中文版的資料格式、規則、畫面與人物傳。逆向結論附原始定位與證據等級；原版畫面及流程對拍使用 [dosgolem](https://github.com/wicanr2/dosgolem)，規則層另有經差異測試的 C 參考實作。原版規則模式與重製新增功能分開記錄。
 
-開發、測試與素材處理使用既有 Docker 工具鏈。將合法原版資料放入 `org_game/extracted/` 後：
-
-```sh
-tools/gui.sh build ./cmd/gin3
-tools/gui.sh run ./cmd/gin3 -orig /orig -ai 1
-tools/gui.sh test ./cmd/... ./internal/...
-```
+開發與測試方式見 [AGENTS.md](AGENTS.md)，工作歷程見 [WORKLOG.md](WORKLOG.md)。
 
 ## 文件
 
@@ -129,7 +130,8 @@ tools/gui.sh test ./cmd/... ./internal/...
 | [逆向資料索引](docs/internals/00-README.md)／[調查紀錄](docs/re/) | 資料格式、演算法與原始證據 |
 | [人物傳](docs/lore/character-biographies.md) | 原版人物經歷保存 |
 | [試玩與交付](docs/playtest/) | 正常玩家路徑、畫面及封包收據 |
-| [WORKLOG.md](WORKLOG.md)／[AGENTS.md](AGENTS.md) | 工作歷程與協作規範 |
+| [WORKLOG.md](WORKLOG.md) | 開發、驗證與交付歷程 |
+| [AGENTS.md](AGENTS.md) | 開發方式與協作規範 |
 
 ## 授權
 

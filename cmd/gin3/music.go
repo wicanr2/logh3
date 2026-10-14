@@ -109,6 +109,14 @@ func (p *musicPlayer) Stop() {
 // Playing 是目前在播的曲名；沒有就是空字串。
 func (p *musicPlayer) Playing() string { return p.name }
 
+// LibraryDir exposes the selected file source to the optional read-only trace.
+func (p *musicPlayer) LibraryDir() string {
+	if p.lib == nil {
+		return ""
+	}
+	return p.lib.Dir()
+}
+
 // 讓 io 這個 import 有用途：DecodeWithoutResampling 吃 io.Reader，
 // 這裡宣告一次型別確保簽章不會在升版時悄悄改掉。
 var _ func(io.Reader) (*vorbis.Stream, error) = vorbis.DecodeWithoutResampling

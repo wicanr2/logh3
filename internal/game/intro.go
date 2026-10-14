@@ -53,7 +53,8 @@ func (g *Game) Tick(d time.Duration) {
 	if d <= 0 {
 		return
 	}
-	if !g.fleetCombat.active || g.fleetCombat.stage != fleetCombatScene {
+	planetScene := g.state == StateEngagement && len(g.engQueue) > 0 && g.engQueue[0].stage != nil
+	if (!g.fleetCombat.active || g.fleetCombat.stage != fleetCombatScene) && !planetScene {
 		g.advanceSoundEffects(d)
 	}
 	if g.fleetCombat.active {

@@ -23,8 +23,12 @@ func (a *app) traceFrame(fb *gfx.Framebuffer, start time.Time, frameTime time.Du
 	var animations []string
 	fontStyle, musicQuality := "original", "original"
 	musicTrack := ""
+	musicLibrary := ""
 	if a.music != nil {
 		musicTrack = a.music.Playing()
+		if player, ok := a.music.(interface{ LibraryDir() string }); ok {
+			musicLibrary = player.LibraryDir()
+		}
 	}
 	if a.hd != nil {
 		fontStyle = a.hd.FontStyle()
@@ -56,6 +60,10 @@ func (a *app) traceFrame(fb *gfx.Framebuffer, start time.Time, frameTime time.Du
 		MusicQuality     string                    `json:"music_quality"`
 		HDMusicAvailable bool                      `json:"hd_music_available"`
 		MusicTrack       string                    `json:"music_track"`
-	}{start.UnixNano(), a.ticks, a.g.State().String(), mode, float64(frameTime) / 1e6, float64(time.Since(start)) / 1e6, animations, a.toolbar.visible, a.toolbar.help, a.g.ShowEnemies(), a.g.PlaybackObservation(), a.g.BattleInputReady(), a.g.TacticalObservation(), fontStyle, musicQuality, a.musicHD != nil, musicTrack}
+		SoundFont        string                    `json:"soundfont"`
+		MT32Available    bool                      `json:"mt32_available"`
+		SoundFontMenu    bool                      `json:"soundfont_menu"`
+		MusicLibrary     string                    `json:"music_library"`
+	}{start.UnixNano(), a.ticks, a.g.State().String(), mode, float64(frameTime) / 1e6, float64(time.Since(start)) / 1e6, animations, a.toolbar.visible, a.toolbar.help, a.g.ShowEnemies(), a.g.PlaybackObservation(), a.g.BattleInputReady(), a.g.TacticalObservation(), fontStyle, musicQuality, a.musicHD != nil, musicTrack, a.selectedSoundFont(), a.musicMT32 != nil, a.soundFontMenu, musicLibrary}
 	_ = json.NewEncoder(a.frameTrace).Encode(row)
 }

@@ -2,6 +2,7 @@ package screen
 
 import (
 	"fmt"
+	"image"
 
 	"github.com/wicanr2/logh3/internal/asset"
 	"github.com/wicanr2/logh3/internal/font"
@@ -256,6 +257,7 @@ func (s *EngagementSpec) RenderPlanetFrame(v PlanetFrameView, panel *asset.Image
 			return nil, fmt.Errorf("缺行星交戰動畫庫")
 		}
 		planes := asset.PlanesFrom(fb.Pix)
+		var bases []*asset.Image
 		for _, pc := range v.Pictures {
 			frames, err := comani.Frames(pc.Segment)
 			if err != nil {
@@ -273,8 +275,18 @@ func (s *EngagementSpec) RenderPlanetFrame(v PlanetFrameView, panel *asset.Image
 					return nil, err
 				}
 			}
+			if len(pc.Segment) == 4 {
+				if base, err := comani.StaticPicture(pc.Segment[:2]); err == nil {
+					bases = append(bases, base)
+				}
+			}
 		}
-		fb.CopyPixels(planes.Pixels())
+		var rects []image.Rectangle
+		for _, window := range s.Animation.Windows {
+			x, y := window[0]*8, 40+window[1]*4
+			rects = append(rects, image.Rect(x, y, x+256, y+102))
+		}
+		DrawAnimationPixels(fb, planes.Pixels(), rects, bases...)
 	}
 	if v.Scene != nil {
 		ops, err := PlanPlanetBlocks(*v.Scene, sprites)

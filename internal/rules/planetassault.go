@@ -92,6 +92,11 @@ func flagshipShips(fleet int, units []BattleUnit) int {
 // PlanetAssault 跑完打行星那一步，回逐支的結果。
 func PlanetAssault(planets []BattlePlanet, fleets []BattleFleet,
 	units []BattleUnit, kinds *ShipKindTable, r *Rand) []PlanetAssaultHit {
+	return planetAssaultObserved(planets, fleets, units, kinds, r, nil)
+}
+
+func planetAssaultObserved(planets []BattlePlanet, fleets []BattleFleet,
+	units []BattleUnit, kinds *ShipKindTable, r *Rand, observe func(PlanetAssaultScene)) []PlanetAssaultHit {
 	if r == nil {
 		return nil
 	}
@@ -125,8 +130,8 @@ func PlanetAssault(planets []BattlePlanet, fleets []BattleFleet,
 			if target[fi] != pi {
 				continue
 			}
-			if h, ok := assaultOne(&planets[pi], pi, &fleets[fi], bits[fi],
-				units, kinds, r); ok {
+			if h, ok := assaultOneObserved(&planets[pi], pi, &fleets[fi], bits[fi],
+				units, kinds, r, observe); ok {
 				out = append(out, h)
 			}
 		}
@@ -137,12 +142,21 @@ func PlanetAssault(planets []BattlePlanet, fleets []BattleFleet,
 // assaultOne 是 `20B4:0503`：一支艦隊對一顆行星的一輪。
 func assaultOne(p *BattlePlanet, pi int, f *BattleFleet, bits int,
 	units []BattleUnit, kinds *ShipKindTable, r *Rand) (PlanetAssaultHit, bool) {
+	return assaultOneObserved(p, pi, f, bits, units, kinds, r, nil)
+}
+
+func assaultOneObserved(p *BattlePlanet, pi int, f *BattleFleet, bits int,
+	units []BattleUnit, kinds *ShipKindTable, r *Rand, observe func(PlanetAssaultScene)) (PlanetAssaultHit, bool) {
 	h := PlanetAssaultHit{Fleet: f.Index, Planet: pi, Scorer: f.Faction}
 	if p.Owner == f.Faction {
 		return h, false // 已經是自己的了（前面有人打下來）
 	}
 	// 門檻 ＝ 防衛力還剩幾成。不低於它就先開火，低於就先挨反擊。
 	counter := func() int {
+		var before PlanetAssaultSnapshot
+		if observe != nil && bits&2 != 0 {
+			before = assaultSnapshot(p, f, units, r)
+		}
 		beforeIntegrity, beforeAttack := f.Integrity, FleetAttack(f, units)
 		amount := assaultCounter(p, f, bits, units, kinds, r)
 		if bits&2 != 0 {
@@ -150,26 +164,52 @@ func assaultOne(p *BattlePlanet, pi int, f *BattleFleet, bits int,
 				BeforeIntegrity: beforeIntegrity, AfterIntegrity: FleetIntegrity(f, units),
 				BeforeAttack: beforeAttack, AfterAttack: FleetAttack(f, units),
 			}
+			if observe != nil {
+				after := assaultSnapshot(p, f, units, r)
+				after.Integrity = h.DefenceGauges.AfterIntegrity
+				observe(PlanetAssaultScene{Kind: PlanetCounterScene, PlanetIndex: pi,
+					Before: before, After: after, Destroyed: amount})
+			}
 		}
 		return amount
+	}
+	fire := func() (int, bool) {
+		var before PlanetAssaultSnapshot
+		if observe != nil && bits&1 != 0 {
+			before = assaultSnapshot(p, f, units, r)
+		}
+		damage, captured := assaultFire(p, f, bits, units, r)
+		if observe != nil && bits&1 != 0 {
+			observe(PlanetAssaultScene{Kind: PlanetLandingScene, PlanetIndex: pi,
+				Before: before, After: assaultSnapshot(p, f, units, r), Destroyed: damage, Captured: captured})
+		}
+		return damage, captured
 	}
 	thr := 0
 	if p.DefenceMax > 0 {
 		thr = p.Defence * 100 / p.DefenceMax
 	}
 	if f.Integrity >= thr {
-		h.Damage, h.Captured = assaultFire(p, f, bits, units, r)
+		h.Damage, h.Captured = fire()
 		if !h.Captured {
 			h.Counter = counter()
 		}
 	} else {
 		h.Counter = counter()
-		h.Damage, h.Captured = assaultFire(p, f, bits, units, r)
+		h.Damage, h.Captured = fire()
 	}
 	h.Score = h.Damage / ScoreDivisor
+	var captureBefore PlanetAssaultSnapshot
+	if observe != nil && bits&1 != 0 {
+		captureBefore = assaultSnapshot(p, f, units, r)
+	}
 	if h.Captured {
 		h.Score += p.DefenceMax / captureScoreDiv
 		capturePlanet(p, f.Faction)
+	}
+	if observe != nil && bits&1 != 0 {
+		observe(PlanetAssaultScene{Kind: PlanetCaptureScene, PlanetIndex: pi,
+			Before: captureBefore, After: assaultSnapshot(p, f, units, r), Captured: h.Captured})
 	}
 	return h, true
 }

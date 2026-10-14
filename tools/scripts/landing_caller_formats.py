@@ -7,6 +7,20 @@ import struct
 import sys
 
 assert Path.cwd() == Path('/src') and os.getuid() == 1000
+if len(sys.argv) == 3 and sys.argv[1] == '--from-receipt':
+    # The reviewed 110 receipt preserves the exact candidate formats even
+    # when the disposable original RAM captures have been removed.
+    receipt = json.loads(Path(sys.argv[2]).read_text())
+    candidate = receipt['candidate_panel']
+    current_path = Path('docs/internals/data/engagement-panel.json')
+    current = json.loads(current_path.read_text())
+    original = dict(candidate)
+    assert original.pop('planet_frame')
+    current.pop('planet_frame', None)
+    assert current == original, 'candidate changes fields outside the reviewed 118 formats'
+    current_path.write_text(json.dumps(candidate, ensure_ascii=False, indent=1)+'\n')
+    print('118 reviewed formats restored from retained receipt; no native capture regenerated')
+    raise SystemExit(0)
 path = Path('workplace/oracle/landing48-r108-r5-failure-a/frame-20b4-078f-01-mem.bin')
 m = path.read_bytes()
 assert hashlib.sha256(m).hexdigest() == '3df4f9a27014ca83a6194df9e6cc248eda3b945fcb9a68a9043012f2df140274'

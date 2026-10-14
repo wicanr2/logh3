@@ -142,7 +142,7 @@ func (g *Game) DisplaySettings() DisplaySettings { return g.display }
 // 「ＭＩＤＩ」那一格點不下去：原版的可選旗標由開機偵測寫（`ds:03DC`），
 // 出貨設定下是 0，`HitTest` 直接跳過它，所以這裡連 `device-0` 都收不到。
 //
-// 「ＭＩＤＩ Ｉ／Ｆ」（`midi-if`）與 `BUG!` 也還沒接，點下去什麼都不會發生。
+// MIDI I/F所在列由正式app的音色選單接管（114）。BUG!出貨不可選（113）。
 func (g *Game) settingsClick(x, y int) {
 	if enemyVisibilityButtonContains(x, y) {
 		g.ToggleEnemyVisibility()

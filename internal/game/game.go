@@ -503,7 +503,7 @@ type Resources struct {
 	// 規格 056）。
 	Engagement      *screen.EngagementSpec
 	EngagementPanel *asset.Image
-	// FleetPresentation 是096原版格式與交戰色盤；完整艦隊演出待092接線。
+	// FleetPresentation 是096原版格式與交戰色盤；艦隊演出已接正式路徑。
 	FleetPresentation   *screen.FleetPresentationSpec
 	FleetCommand        *screen.FleetCommandSpec
 	FleetCommandDisplay *screen.FleetCommandDisplaySpec
@@ -998,8 +998,9 @@ type Game struct {
 	battleGun   int
 	// battleGunHits 是上一回合要塞砲打掉的分隊（`docs/spec/028`）；
 	// battleAssaults 是上一回合打行星的結果（`docs/spec/019`）。
-	battleGunHits  []rules.FortressGunHit
-	battleAssaults []rules.PlanetAssaultHit
+	battleGunHits       []rules.FortressGunHit
+	battleAssaults      []rules.PlanetAssaultHit
+	battleAssaultScenes []rules.PlanetAssaultScene
 	// engQueue 是排隊等演的交戰演出（`engagement.go`）；engTick 是目前這一場從底圖
 	// 畫下去算起的計時器 tick、engTickRemainder 是還不滿一 tick 的時間、engClick ＝
 	// 演出中按過左／右鍵（排進佇列，停頓時才讀）。
@@ -2844,7 +2845,7 @@ func (g *Game) click(x, y int) {
 	case StateSettings:
 		// 六組都在這裡：音源／平時配樂／戰鬥配樂三組單選（`docs/re/285`）、
 		// 訊息速度的上下箭頭、動畫效果與動畫速度，以及「結束」
-		// （`docs/re/286`）。「ＭＩＤＩ Ｉ／Ｆ」與 `BUG!` 還沒接。
+		// （`docs/re/286`）。音色庫由app依規格114處理，BUG依113保留停用。
 		g.settingsClick(x, y)
 	case StateBattle:
 		g.battleClick(x, y)

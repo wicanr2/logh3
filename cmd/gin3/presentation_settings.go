@@ -21,13 +21,14 @@ var fontLabels = map[string][]uint16{
 }
 
 func (a *app) setHDMusic(enabled bool) bool {
-	if enabled && a.musicHD == nil {
+	selected := a.soundFontLibrary(a.selectedSoundFont())
+	if enabled && selected == nil {
 		return false
 	}
 	a.hdMusic = enabled
 	lib := a.musicOriginal
 	if enabled {
-		lib = a.musicHD
+		lib = selected
 	}
 	if player, ok := a.music.(interface{ SetLibrary(*audio.Library) }); ok && lib != nil {
 		player.SetLibrary(lib)
@@ -40,6 +41,24 @@ func (a *app) presentationClick(x, y int) bool {
 		return false
 	}
 	point := image.Pt(x, y)
+	if a.soundFontMenu {
+		for i, choice := range soundFontChoices {
+			if point.In(soundFontMenuRow(i)) {
+				if err := a.selectSoundFont(choice, true); err != nil {
+					a.soundFontError = err.Error()
+					return true
+				}
+				a.soundFontMenu = false
+				return true
+			}
+		}
+		a.soundFontMenu = false
+		return true
+	}
+	if point.In(soundFontChoiceRect) {
+		a.soundFontMenu = true
+		return true
+	}
 	if point.In(fontChoiceRect) && a.hd != nil {
 		styles := a.hd.FontStyles()
 		for i, style := range styles {
@@ -50,7 +69,7 @@ func (a *app) presentationClick(x, y int) bool {
 		}
 		return true
 	}
-	if point.In(hdMusicRect) && a.musicHD != nil {
+	if point.In(hdMusicRect) && a.soundFontLibrary(a.selectedSoundFont()) != nil {
 		if a.g.MusicSettings().Device == 2 {
 			// 沿已接線的FM按鈕解除靜音，不啟用原版未接線的MIDI I/F。
 			a.g.Click(originalMusicRect.Min.X+originalMusicRect.Dx()/2, originalMusicRect.Min.Y+originalMusicRect.Dy()/2)
@@ -94,7 +113,7 @@ func (a *app) frame() *gfx.Framebuffer {
 		ui.DrawHalfGlyphClipped(fb, a.toolbar.font, fontChoiceRect.Max.X-14, fontChoiceRect.Min.Y+2, '>', 7, 3, -1, false,
 			fontChoiceRect.Min.X+2, fontChoiceRect.Min.Y+2, fontChoiceRect.Dx()-4, fontChoiceRect.Dy()-4)
 	}
-	if a.musicHD != nil {
+	if a.soundFontLibrary(a.selectedSoundFont()) != nil {
 		fill := uint8(9)
 		if a.hdMusic && a.g.MusicSettings().Device != 2 {
 			fill = 2
@@ -109,6 +128,7 @@ func (a *app) frame() *gfx.Framebuffer {
 			x += 8
 		}
 	}
+	a.drawSoundFontChoice(fb, text, button)
 	x, y := a.g.MousePosition()
 	for i, r := range []image.Rectangle{fontChoiceRect, hdMusicRect} {
 		if (i == 0 && a.hd != nil || i == 1 && a.musicHD != nil) && image.Pt(x, y).In(r) {

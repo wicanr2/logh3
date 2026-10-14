@@ -61,6 +61,20 @@ func loadEngagement(t *testing.T, res *Resources) {
 		}
 		res.Comani = bmg
 	}
+	if res.FleetSceneSprites == nil {
+		blocks, err := os.ReadFile(filepath.Join(root, "org_game/extracted/3DBLOCK.SPR"))
+		if err != nil {
+			t.Skipf("缺行星方塊素材：%v", err)
+		}
+		flags, err := os.ReadFile(filepath.Join(root, "org_game/extracted/COM_FLAG.SPR"))
+		if err != nil {
+			t.Skipf("缺行星旗標素材：%v", err)
+		}
+		res.FleetSceneSprites, err = asset.DecodeFleetSceneSprites(blocks, flags)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
 }
 
 // 正式Game的交戰色盤對原版actual RGB；此入口仍是交戰診斷fixture。

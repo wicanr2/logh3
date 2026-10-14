@@ -72,6 +72,11 @@ func (g *Game) PlaybackObservation() *PlaybackObservation {
 		v.Kind, v.Tick, v.Interval = "planet", g.engTick, g.fleetSceneInterval()
 		pictures, v.ResultTick = g.engagementTimeline(e)
 		v.Result, v.Lost = g.engTick >= v.ResultTick, e.destroyed
+		if e.stage != nil {
+			for _, cue := range e.stage.sounds {
+				v.Sounds = append(v.Sounds, PlaybackSound{cue.id, cue.tick, cue.defence, cue.played})
+			}
+		}
 	}
 	for _, p := range pictures {
 		v.Pictures = append(v.Pictures, PlaybackPicture{hex.EncodeToString([]byte(p.segment)), p.frame, p.side, p.tick})

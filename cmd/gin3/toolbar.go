@@ -108,6 +108,9 @@ func (a *app) updateInput() {
 		a.g.LeftRelease()
 	}
 	switch {
+	case inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) && a.soundFontMenu:
+		a.soundFontMenu = false
+		a.g.RightRelease()
 	case inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight):
 		a.g.RightClick(x, y)
 	case ebiten.IsMouseButtonPressed(ebiten.MouseButtonRight):
@@ -119,6 +122,9 @@ func (a *app) updateInput() {
 		if inpututil.IsKeyJustPressed(k) {
 			a.g.Key(byte('0' + k - ebiten.Key0))
 		}
+	}
+	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) && a.soundFontMenu {
+		a.soundFontMenu = false
 	}
 	for k := ebiten.KeyKP0; k <= ebiten.KeyKP9; k++ {
 		if inpututil.IsKeyJustPressed(k) {

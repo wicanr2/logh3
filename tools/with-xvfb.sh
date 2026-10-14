@@ -4,24 +4,34 @@
 #
 # 不用 xvfb-run：它在 -u <uid>:<gid> 且該 uid 不在 /etc/passwd 時會無限等待。
 set -e
+if [ ! -d /tmp/.X11-unix ]; then
+    mkdir /tmp/.X11-unix
+    chmod 1777 /tmp/.X11-unix
+fi
 Xvfb :99 -screen 0 1280x800x24 -nolisten tcp >/tmp/xvfb.log 2>&1 &
 XVFB_PID=$!
+cleanup() {
+    kill "$XVFB_PID" 2>/dev/null || true
+    wait "$XVFB_PID" 2>/dev/null || true
+}
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM HUP
 DISPLAY=:99
 export DISPLAY
 # 等 X server 接受連線；xdpyinfo 不一定裝，改用一次性 X 連線測試。
 i=0
 while [ $i -lt 50 ]; do
-    if xset q >/dev/null 2>&1; then break; fi
+    if xdotool getdisplaygeometry >/dev/null 2>&1; then break; fi
     i=$((i + 1))
     sleep 0.2
 done
-if ! xset q >/dev/null 2>&1; then
+if ! xdotool getdisplaygeometry >/dev/null 2>&1; then
     echo "with-xvfb：X server 未就緒" >&2
     tail -5 /tmp/xvfb.log >&2 || true
     kill "$XVFB_PID" 2>/dev/null || true
     exit 1
 fi
-"$@"
-STATUS=$?
-kill "$XVFB_PID" 2>/dev/null || true
+STATUS=0
+"$@" || STATUS=$?
 exit $STATUS

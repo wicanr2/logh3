@@ -1,5 +1,7 @@
 # 原版內部構造參考
 
+[第132輪音色與登陸分段](../playtest/121-landing-and-soundfont.md)及[來源索引](data/landing-soundfont.json)區分正式音色驗收、原版完整幀診斷與尚未完成的#48整合。音色入口見[17](17-mds.md)，核對器為[landing_soundfont_receipt.py](../../tools/scripts/landing_soundfont_receipt.py)。
+
 [介面操作第128輪](../goal/2026-10-12-launch-hover-round-128.md)、[功能列與反光138](../spec/138-top-toolbar-and-hover.md)及[正常介面試樣器](../../tools/scripts/interface_hover_preview.go)保存本次啟動確認、F1／F7／F8配置及調暗試樣。
 
 [原配置HD交付111](../playtest/111-production-hd.md)及[唯一來源索引](data/production-hd.json)保存正式A介面、地圖、動畫、正常S1實錄與三平台交付；[最終核對器](../../tools/scripts/hd_finalize.py)逐檔驗證凍結來源、封包與收據。

@@ -105,7 +105,12 @@ func renderItem(b *strings.Builder, doc *Doc, it *Item) {
 	if len(it.Evidence) > 0 {
 		links := make([]string, 0, len(it.Evidence))
 		for _, e := range it.Evidence {
-			links = append(links, fmt.Sprintf("[`%s`](%s)", e, e))
+			path := strings.SplitN(e, "::", 2)[0]
+			if strings.HasPrefix(path, "workplace/") {
+				links = append(links, fmt.Sprintf("`%s`（本機收據）", e))
+			} else {
+				links = append(links, fmt.Sprintf("[`%s`](%s)", e, path))
+			}
 		}
 		fmt.Fprintf(b, "**證據**：%s\n\n", strings.Join(links, "、"))
 	}

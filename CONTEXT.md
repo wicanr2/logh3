@@ -1,4 +1,4 @@
-<!-- 第131輪：系統游標與取消、四字型、原曲HD音色、啟動進度及v.1.3.0交付。 -->
+<!-- 第132輪：處理交戰分段與音色選擇，依使用者驗收結案音樂及人工一致。 -->
 # CONTEXT — 銀河英雄傳說III SP 專案目前真相
 
 本檔保存目前真相；剩餘工作的權威是 GitHub 上的 `worklist` Issue。
@@ -6,9 +6,13 @@
 
 ## 現況一覽
 
+歷史收據勘誤（2026-10-14）：`workplace/oracle/s3datamem/`及`workplace/check/s3datamem-rerun2/`目前不存在。下方舊核實數值保存當時結果，不能當作本輪已重驗；原方法與雜湊仍可由[研究111](docs/re/111-battle-data-screen-layout.md)及[研究270](docs/re/270-enter-works-the-divergence-is-after-it.md)回查。本機路徑由產生器保留為文字，函式定位連到實際Go檔。
+
+**目前工作（2026-10-14，第132輪）**：唯一目前狀態表為[計畫132](docs/goal/2026-10-14-landing-soundfont-round-132.md)，結果集中於[驗證121](docs/playtest/121-landing-and-soundfont.md)。使用者已聆聽現行音樂PASS，#69已關閉；回報remake人工與原版一致，#16已關閉。原版未知欄名保留證據限制。#66的Roland MT-32／GeneralUser GS選擇、取消、靜音保持、偏好重開與兩陣營正常GUI已驗收並關閉。#48已接118分段快照、正式完整renderer及音效閘門；六案原版1041檔雙跑相同，297完整幀91238400像素零差。這是renderer同狀態診斷，不宣稱目前CPU政策下正常GUI／保存或完整DOS整回合同態；要塞砲演出仍缺，#48保持OPEN。標準19套件15PASS／4無測試。本輪為原始碼更新，已發布v.1.3.0封包保持。
+
 **目前交付（2026-10-13，第131輪）**：v.1.3.0-20261013已修正讀檔／保存／陣營／退出確認的固定或重複游標，以及主選單讀檔取消誤進帝國初始局。新增四字型，預設原版強化並保留原版點陣；思源宋體與黑體可在設定切換。11首原MIDI資料保持，GeneralUser GS 2.0.3音色及混音已接HD／FM設定；強化啟動器預設HD音色、原版規則啟動器預設原音色。啟動先顯示560×220小視窗、七個真實階段及人物圖完成張數，缺檔保留錯誤視窗。
 
-唯一現行狀態表為[計畫131](docs/goal/2026-10-13-system-dialog-and-polish-round-131.md)，結果及雜湊見[驗證120](docs/playtest/120-system-dialog-polish.md)及[交付索引](docs/internals/data/system-dialog-polish.json)。1553凍結來源建立八封包，575項非vendor與目前程式相同；正式Linux兩陣營正常GUI、三劇本、六檔存讀、四字型及原圖／HD／音色切換通過。標準19套件15PASS／4無測試。Windows Wine正常片頭及三診斷、兩平台引擎各四入口、macOS雙架構／ARM簽章核對通過。戰術取消只有回歸測試；人耳、音樂性循環及Windows／macOS真機仍待#69，不升格DOS同態。
+v.1.3.0交付狀態表為[計畫131](docs/goal/2026-10-13-system-dialog-and-polish-round-131.md)，結果及雜湊見[驗證120](docs/playtest/120-system-dialog-polish.md)及[交付索引](docs/internals/data/system-dialog-polish.json)。1553凍結來源建立八封包；正式Linux兩陣營正常GUI、三劇本、六檔存讀、四字型及原圖／HD／音色切換通過。標準19套件15PASS／4無測試。Windows Wine正常片頭及三診斷、兩平台引擎各四入口、macOS雙架構／ARM簽章核對通過。戰術取消只有回歸測試。使用者已於2026-10-14驗收現行音樂；Windows／macOS真機與未明列循環仍為證據限制，不升格DOS同態。
 
 **新版遠端發行**：[v.1.3.0-20261013](https://github.com/wicanr2/logh3/releases/tag/v.1.3.0-20261013)已正式發布。tag固定來源`d2a85832bcdf6e9116547dd1082906282a44adc1`，575項非vendor與凍結來源相同；四引擎／來源及校驗檔五附件實際下載、SHA-256與發行說明通過。完整版保留在 `dist-all/v.1.3.0-20261013/full/`。新首頁載入／字型三圖見[截圖收據](docs/images/readme-v130.json)。v.1.2.0及其推廣片保持原身份，本輪沒有重製影片；既有HD／decomp修改保留。
 
@@ -1238,7 +1242,7 @@ v1保留為失效推論，現行證據為[原版v2](docs/internals/data/battle-o
 
 <!-- worklist:begin 由 `tools/go.sh run ./cmd/worklist render` 產生，不要手改 -->
 
-權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 4 條**。
+權威是 [GitHub issue（label `worklist`）](https://github.com/wicanr2/logh3/issues?q=is%3Aopen+label%3Aworklist)：**還剩 1 條**。
 搬移（2026-09-11）之前做完的在 [`docs/worklist.json`](docs/worklist.json)；
 這一節由 JSON ＋ issue 快照合併產生，產生前先跑 `tools/issues_snapshot.sh`。
 每一條掛一個 `verify`，`tools/go.sh run ./cmd/worklist verify` 會回答
@@ -1248,103 +1252,20 @@ v1保留為失效推論，現行證據為[原版v2](docs/internals/data/battle-o
 
 ### 還沒做的
 
-#### admiral-unknown-fields — 提督記錄的 `+20`／`+22` 還沒有名字
-
-*[#16](https://github.com/wicanr2/logh3/issues/16) · 原編號 17 · re（逆向：機制還沒讀出來）*
-
-十四個能力欄位裡十個從提督詳細資料那張畫面標到名字。剩下的在
-[`docs/re/287`](docs/re/287-admiral-remaining-fields.md) 收斂成兩件事：
-**`+8`／`+10` 不是未知**——`+10` 是所在星域（`113A:047D` 的寫入點 ＋ 開局
-全在自己首都 ＋ 詳細資料那張的「現在位置」），`+8` 低四位是能帶哪一種艦、
-高四位是艦隊類別鍵（`2D76:0576`）。**`+24` 也不是「沒有名字」，是沒有消費者**：
-四份不同階段的 1 MB 傾印裡，`+0x18` 一個讀取指令都沒有（同一支掃描在
-`+0x17` 找到 11 處、`+0x15` 4 處），它也不被抄進艦隊記錄，而且值域是
-5–100 不是能力值那段 80–140。
-**還差的是 `+20` 與 `+22` 的名字。** 用途已經齊了——`+20` 有四個消費者
-（稅率、治安分段、AI 類別 0 評分、戰鬥層的 `ds:D61A` 完整度門檻），
-`+22` 合成進艦隊 `+0x45` 之後決定分隊挑不挑得中分數最高的攻擊目標
-（`1F6F:024C`）。但原版沒有任何畫面印這兩格的欄名，所以掃消費者這條路
-已經走到底。下一步是**原版說明書附的提督資料表**（防拷問答要玩家查的
-就是它，`ds:8D10` 的字串寫著「請查閱提督資料表」），拿到就同時解掉
-`+20`／`+22`／`+24` 三個名字。
-
-**做完的判準**：`+20` 與 `+22` 有畫面或紙本資料表給的名字。
-
-**證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
-
-**核實**：`docs/internals/08-admiral-dt.md` 裡還找得到 `名字仍未知`（自承還在 ＝ 還沒做）
-
-#### music-library-pipeline — 玩家自產曲庫的管線與 MIDI 音色（MPU-401）
-
-*[#69](https://github.com/wicanr2/logh3/issues/69) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-第119輪：v.0.1.2-20261006已補macOS Intel／Apple Silicon本機完整版，最低部署11.0。通用Mach-O、系統依賴、2994頁ARM ad-hoc簽章、ZIP權限／完整資產與SHA-256通過；尚未在macOS真機執行。Windows／Linux同步重建相同版號，新Linux11條CLI輸入、Wine4條入口與虛擬音效卡非靜音輸出通過。72秒新版推廣片与故事首頁已完成，入口106及macos-retro-promo.json。#94／#95收尾範圍為封包、影片與故事；人耳、實體Windows／macOS、完整曲目及循環仍由本Issue追蹤。
-
-以下為第118輪及更早歷史。
-
-第118輪：本機完整版v.0.1.1-20261006已包含22首配樂、28段音效、固定FluidR3_GM及授權、Windows／Linux程式與完整vendor來源包。逐檔manifest及SHA-256已核對；Linux正式封包經ALSA／虛擬PulseAudio有17.495465秒非靜音輸出，Windows相同二進位在Wine完成四條公開入口。交付105與local-test-package.json保存證據。這輪已補版號、dist-all及目前來源包；人耳、實體Windows、macOS、完整曲目與循環驗收仍缺，#69保持OPEN。
-
-以下為歷史紀錄。
-
-第106輪：Windows正常公開保存及新程序主選單讀回已補。公開退出缺漏另開#90，沿研究341既有契約、117審查READY後補正式app四行，回歸先失敗後通過。Windows兩批與Linux正式GUI共300項真實X11操作、48張14745600像素全圖零差；三批兩次完整六檔267360 bytes及IDX3168 bytes符合對照，WORK四byte依既有帝國選擇更新，沒有遮罩。離線雙建各平台二進位相同，標準18套件13PASS／5無測試。117限定CONFORMED，094及2118來源／164原版輸入索引98f0f08adca4d05f9e0fbb28e83b92446dc846f3bedee5ca323a0766c4a1203e。舊103來源包維持歷史版本，104／105舊main按91d85785核實；舊配樂不外推新二進位。實機、人耳／完整播放及循環、macOS、最新來源包及正式版號／dist-all仍缺，#69 OPEN。
-
-## 第105輪當時紀錄
-
-第105輪：來源Windows玩家程式已觀測預設片頭、正常FM換曲及停止。e／f共66項真實X11命令、12張3686400像素全圖零差；f的OPEN_M／BGM_0F／BGM_1F連續PCM分別8.793084／7.970000／6.358413秒逐位元組相同，兩批主選單與關配樂各至少3秒全零。e片頭首段2.486757秒仍FAIL，額外片段及缺口完整保留。固定8秒直接Pulse與Windows Oto／ALSA對照全同，Oto／Wine Pulse有缺口，精確成因unknown。補齊音訊工具缺件並鎖新增50套件，未改產品Go、AI、MIDI I/F或112／116。標準13PASS／5無測試，103／104來源保持；093及812來源／164原版輸入索引2656f562ca578e86cd2c5dde44c708743e04ba8bd606205b5a40bb31df7bd937。正常Windows配樂輸出只驗所列內段；e缺口、完整播放／循環、人耳、Windows公開存讀、實機、macOS及正式版號／dist-all仍待完成，#69 OPEN。
-
-## 第104輪當時紀錄
-
-第104輪：來源Windows玩家程式已在Wine驗正常GUI。兩次預設片頭4998更新自然到標題，PNG及307200色號符合來源Linux；三條真實GUI路徑87項X11操作，可開取進度及艦隊編號。原生畫布與一倍視窗37組11366400像素零差；1.5倍7組實際視窗共154407像素不同、最大通道差1，仍未通過全視窗相同。已追到固定Ebitengine方框濾鏡，兩側4838400像素符合平均值整數界，完整差異及反例保留，未核准正式容許差。產品Go及112／116狀態不改。標準13PASS／5無測試，原103輪20469來源重驗通過；092、1096現行來源與164原版輸入索引5e4af9398f5eb1775e262dfaec971c9f50f4767bfd9c2484993a6b839f02c5ef。Windows曲庫播放／公開存讀、正式版號／dist-all、macOS、實機、人耳／循環仍缺；#69 OPEN。
-
-## 第103輪來源準備
-
-第103輪：目前9e1d318玩家與音樂Go入口的離線來源重建完成。d／e各2810項、35461120 bytes，tar SHA89be259435d35d22f3db7e27ffe2658bdafb67183abd592c4bc8b13e2af5f954；保留077原來源格式與必填欄位，兩個新工具附件另列身份。空模組快取及無網路重建7種二進位符合對照，真實dosgolem f752／clean，原生CLI六項通過、零跳過。來源Linux程式自然421格→標題，4998更新／307200像素及PNG符合目前程式；正常FM BGM_0F的VGM／WAV／PCM與Linux OGG符合固定鎖。Windows來源玩家程式只驗Wine help，不稱遊戲GUI。標準13PASS／5無測試，116限定CONFORMED，091及20469來源索引033ec921cd4a67b135cb34ad157fc7271c355ecd8bb7245aaa64cd346e3f71f1。正式版號／dist-all、macOS、實機、人耳及循環仍缺；#69 OPEN。
-
-配樂播放層支援二十二首 OGG；原生 `cmd/music-import` 已可生成完整 Linux 曲庫及 Windows 曲庫，玩家入口不呼叫 Docker／Python／shell。尚待三平台工具與依賴的正式來源／授權封裝、macOS 實跑、聆聽及循環接點驗收。
-
-## 2026-10-04第81輪：正式音效完成回報
-
-正常公開關配樂GUI證實SFX21／08各遺失81／974取樣，Close前buffer648／7792 bytes正好相同。
-105由DRAFT審查READY後實作Busy回報，後一音效與首格等待正式前樣本完成。
-修正後帝國14／同盟10次完整PCM逐位元組相同，每次Close前Playing=false且buffer=0；共播另14次亦完成後釋放，五次換曲正常。
-修正前後與共播15張完整原生圖各307200像素零差，六份診斷保存相同；公開關配樂只改WORK+0x1F，RND／戰損與CPU被動契約保持。
-單獨28段26段全PCM相同、全28來源保留；兩筆插入靜音及同盟修正前一筆仍全段FAIL，不放寬門檻。
-四次鏡頭操作失敗屬驗證器反向回授；保留舊批次，改單軸朝目標及合併無命令的連續捲動，不改產品速度、不增加40次上限。
-標準18套件13PASS／5無測試，原版編號／戰損及新增完成等待回歸無skip通過。
-521來源凍結SHA-256 a5541a1b654e2c5a218ef3aa1394e177f956dad62749973299075e09520de8e7，驗證070與規格105。
-105限定CONFORMED，104 READY，完整056／092／062 DRAFT。實體卡、人耳、循環、正常原版整段同態及正式交付仍缺，本Issue保持OPEN；#89裁決pending。
-
-**卡在**：人耳、Windows與macOS真機、完整曲目與循環驗收仍缺。三平台本機封包已交付；macOS打包不再是缺項。
-
-**做完的判準**：玩家自備原版後有一個不需要 Docker 的轉檔入口（或 remake 內建合成），`_F` 的原版 VGM、合成 WAV、增益後 PCM 符合固定基準，允許各平台 OGG 差異；`_M` 的音色取捨經使用者裁決。
-
-**證據**：[`docs/playtest/106-macos-and-retro-promo.md`](docs/playtest/106-macos-and-retro-promo.md)、[`docs/internals/data/macos-retro-promo.json`](docs/internals/data/macos-retro-promo.json)、[`docs/playtest/105-local-full-test-package.md`](docs/playtest/105-local-full-test-package.md)、[`docs/internals/data/local-test-package.json`](docs/internals/data/local-test-package.json)、[`docs/re/440-normal-first-turn-and-active-ai.md`](docs/re/440-normal-first-turn-and-active-ai.md)、[`docs/spec/120-active-tactical-ai.md`](docs/spec/120-active-tactical-ai.md)、[`docs/playtest/094-windows-save-load.md`](docs/playtest/094-windows-save-load.md)、[`docs/spec/117-player-public-quit.md`](docs/spec/117-player-public-quit.md)、[`docs/internals/data/windows-save-load.json`](docs/internals/data/windows-save-load.json)、[`tools/windows_save_load.sh`](tools/windows_save_load.sh)、[`tools/scripts/windows_save_load.py`](tools/scripts/windows_save_load.py)、[`tools/scripts/windows_save_load_receipt.py`](tools/scripts/windows_save_load_receipt.py)、[`cmd/gin3/quit_test.go`](cmd/gin3/quit_test.go)、[`docs/playtest/093-windows-music-playback.md`](docs/playtest/093-windows-music-playback.md)、[`docs/internals/data/windows-music-playback.json`](docs/internals/data/windows-music-playback.json)、[`docs/goal/2026-10-05-windows-playback-round-105.md`](docs/goal/2026-10-05-windows-playback-round-105.md)、[`tools/player_wine_audio.sh`](tools/player_wine_audio.sh)、[`tools/build_windows_audio.sh`](tools/build_windows_audio.sh)、[`tools/Dockerfile.windows-audio`](tools/Dockerfile.windows-audio)、[`tools/windows-audio-packages.lock`](tools/windows-audio-packages.lock)、[`tools/scripts/windows_music_playback_receipt.py`](tools/scripts/windows_music_playback_receipt.py)、[`tools/scripts/windows_music_analysis.py`](tools/scripts/windows_music_analysis.py)、[`docs/playtest/092-windows-player.md`](docs/playtest/092-windows-player.md)、[`docs/internals/data/windows-player.json`](docs/internals/data/windows-player.json)、[`docs/goal/2026-10-05-windows-player-round-104.md`](docs/goal/2026-10-05-windows-player-round-104.md)、[`tools/player_wine.sh`](tools/player_wine.sh)、[`tools/scripts/windows_player_check.py`](tools/scripts/windows_player_check.py)、[`tools/scripts/windows_player_pixels.py`](tools/scripts/windows_player_pixels.py)、[`tools/scripts/windows_player_receipt.py`](tools/scripts/windows_player_receipt.py)、[`docs/playtest/091-current-source.md`](docs/playtest/091-current-source.md)、[`docs/spec/116-current-source.md`](docs/spec/116-current-source.md)、[`docs/internals/data/current-source.json`](docs/internals/data/current-source.json)、[`tools/scripts/remake_source_kit.py`](tools/scripts/remake_source_kit.py)、[`tools/scripts/remake_source_rebuild.py`](tools/scripts/remake_source_rebuild.py)、[`tools/scripts/remake_source_runtime.py`](tools/scripts/remake_source_runtime.py)、[`tools/scripts/remake_source_receipt.py`](tools/scripts/remake_source_receipt.py)、[`docs/playtest/070-sound-tail.md`](docs/playtest/070-sound-tail.md)、[`docs/spec/105-sound-completion.md`](docs/spec/105-sound-completion.md)、[`docs/internals/data/sound-tail.json`](docs/internals/data/sound-tail.json)、[`docs/goal/2026-10-04-sound-tail-round-81.md`](docs/goal/2026-10-04-sound-tail-round-81.md)、[`docs/playtest/069-fleet-playback.md`](docs/playtest/069-fleet-playback.md)、[`docs/internals/data/fleet-playback.json`](docs/internals/data/fleet-playback.json)、[`docs/goal/2026-10-04-fleet-playback-round-80.md`](docs/goal/2026-10-04-fleet-playback-round-80.md)、[`tools/playback.sh`](tools/playback.sh)、[`cmd/gin3/audio_device_linux.go`](cmd/gin3/audio_device_linux.go)、[`tools/scripts/music_source_import_check.py`](tools/scripts/music_source_import_check.py)、[`docs/playtest/037-music-source-delivery.md`](docs/playtest/037-music-source-delivery.md)、[`docs/spec/077-music-source-delivery.md`](docs/spec/077-music-source-delivery.md)、[`docs/re/365-music-source-delivery.md`](docs/re/365-music-source-delivery.md)、[`docs/internals/data/music-source-delivery.json`](docs/internals/data/music-source-delivery.json)、[`LICENSE`](LICENSE)、[`tools/scripts/music_source_kit.py`](tools/scripts/music_source_kit.py)、[`tools/scripts/music_source_kit_test.py`](tools/scripts/music_source_kit_test.py)、[`tools/scripts/music_source_rebuild.sh`](tools/scripts/music_source_rebuild.sh)、[`tools/scripts/music_source_receipt.py`](tools/scripts/music_source_receipt.py)、[`docs/playtest/036-windows-combined-music-tools.md`](docs/playtest/036-windows-combined-music-tools.md)、[`docs/spec/076-windows-combined-music-tools.md`](docs/spec/076-windows-combined-music-tools.md)、[`docs/re/364-windows-combined-music-tools.md`](docs/re/364-windows-combined-music-tools.md)、[`docs/internals/data/windows-combined-music-tools.json`](docs/internals/data/windows-combined-music-tools.json)、[`tools/scripts/music_windows_bundle.py`](tools/scripts/music_windows_bundle.py)、[`tools/scripts/music_windows_bundle_archive.py`](tools/scripts/music_windows_bundle_archive.py)、[`tools/scripts/music_windows_bundle_receipt.py`](tools/scripts/music_windows_bundle_receipt.py)、[`tools/scripts/music_windows_bundle_test.py`](tools/scripts/music_windows_bundle_test.py)、[`tools/scripts/music_windows_opl_unicode_build.py`](tools/scripts/music_windows_opl_unicode_build.py)、[`tools/scripts/music_windows_opl_unicode_probe.py`](tools/scripts/music_windows_opl_unicode_probe.py)、[`docs/playtest/035-windows-gm-sources-unicode.md`](docs/playtest/035-windows-gm-sources-unicode.md)、[`docs/spec/075-windows-gm-unicode.md`](docs/spec/075-windows-gm-unicode.md)、[`docs/re/363-windows-music-source-build.md`](docs/re/363-windows-music-source-build.md)、[`docs/internals/data/windows-music-source-lock.json`](docs/internals/data/windows-music-source-lock.json)、[`docs/internals/data/windows-gm-source-tools.json`](docs/internals/data/windows-gm-source-tools.json)、[`tools/scripts/music_windows_sources.py`](tools/scripts/music_windows_sources.py)、[`tools/scripts/music_windows_gm_source_receipt.py`](tools/scripts/music_windows_gm_source_receipt.py)、[`docs/playtest/034-windows-music-pcm.md`](docs/playtest/034-windows-music-pcm.md)、[`docs/internals/data/windows-fm-pcm.json`](docs/internals/data/windows-fm-pcm.json)、[`tools/scripts/music_windows_fm_receipt.py`](tools/scripts/music_windows_fm_receipt.py)、[`docs/spec/074-cross-platform-fm-pcm.md`](docs/spec/074-cross-platform-fm-pcm.md)、[`docs/re/362-windows-music-tools.md`](docs/re/362-windows-music-tools.md)、[`docs/internals/data/windows-music-probes.json`](docs/internals/data/windows-music-probes.json)、[`docs/re/361-linux-music-source-closure.md`](docs/re/361-linux-music-source-closure.md)、[`docs/spec/073-linux-music-source-closure.md`](docs/spec/073-linux-music-source-closure.md)、[`docs/playtest/033-linux-music-sources.md`](docs/playtest/033-linux-music-sources.md)、[`docs/internals/data/linux-music-source-lock.json`](docs/internals/data/linux-music-source-lock.json)、[`docs/internals/data/linux-music-sources.json`](docs/internals/data/linux-music-sources.json)、[`tools/scripts/music_linux_sources.py`](tools/scripts/music_linux_sources.py)、[`docs/re/360-linux-bundled-music-tools.md`](docs/re/360-linux-bundled-music-tools.md)、[`docs/spec/072-linux-music-tools.md`](docs/spec/072-linux-music-tools.md)、[`docs/playtest/032-linux-music-tools.md`](docs/playtest/032-linux-music-tools.md)、[`docs/internals/data/linux-music-tools.json`](docs/internals/data/linux-music-tools.json)、[`cmd/music-tool/`](cmd/music-tool/)、[`docs/re/359-native-fm-import.md`](docs/re/359-native-fm-import.md)、[`docs/spec/070-deterministic-ogg-framing.md`](docs/spec/070-deterministic-ogg-framing.md)、[`docs/spec/071-native-fm-import.md`](docs/spec/071-native-fm-import.md)、[`docs/playtest/031-native-fm-import.md`](docs/playtest/031-native-fm-import.md)、[`docs/internals/data/native-fm-import.json`](docs/internals/data/native-fm-import.json)、[`docs/internals/data/fm-import-lock.json`](docs/internals/data/fm-import-lock.json)、[`docs/re/358-native-gm-import.md`](docs/re/358-native-gm-import.md)、[`docs/spec/069-native-gm-import.md`](docs/spec/069-native-gm-import.md)、[`docs/playtest/030-native-gm-import.md`](docs/playtest/030-native-gm-import.md)、[`docs/internals/data/native-gm-import.json`](docs/internals/data/native-gm-import.json)、[`cmd/music-import/`](cmd/music-import/)、[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)
-
-**核實**：要人判——三平台本機封包、Linux虛擬音訊及72秒影片已交付；尚待人耳、Windows與macOS真機及完整曲目／循環驗收。
-
-#### settings-midi-if-and-bug — 設定畫面的「ＭＩＤＩ Ｉ／Ｆ」與 BUG!
-
-*[#66](https://github.com/wicanr2/logh3/issues/66) · feature（功能：玩家會撞到、但 remake 還沒有）*
-
-設定畫面的「ＭＩＤＩ Ｉ／Ｆ」（動作22）仍未接正式路徑。BUG!出貨入口原本不可選，第98輪已修正typed熱區並核正常反應。
-
-**卡在**：已向使用者提出一個決定：保留原版七項介面，任一Roland埠在MIDI曲目齊全時啟用軟體MIDI、無退回FM，或改成軟體MIDI／無兩項。尚未收到回答，不能將建議寫進正式程式。操作探針為tools/scripts/midi_interface_prototype.html。
-
-BUG!的特殊啟用來源仍unknown，不把除錯模式加入正常玩家路徑。061被動戰術CPU及既有增強戰略AI不改。
-
-**做完的判準**：- BUG!除錯callee的七項寫端已由286保存。第98輪432補核可達性：042F:01B1／01B4將DS:0210寫DS:04CC，正常兩者為0。撤回「知道位置即可點入除錯」及「直接補七個按鈕即可完成」的舊斷言。
-- MUSIC.INI六位元組、INI+4七項埠表及一般音源只存WORK已寫入internals/17；RESSOUND.COM是複製MUSIC.ORG還原出貨值，硬體偵測由音樂初始化處理。
-- MIDI I/F反組譯已達成：042F:08F8→3667七項選單→列號／FF取消→INI+4→重初始化→重畫。開窗、無／330H、右鍵取消各雙跑原圖／palette相同；選擇／取消整份RAM亦相同，保存INI指標生命週期限制。
-- BUG!正常路徑已達成：113限定CONFORMED，原版WORK230 bytes不變，正式bootstrap7檔雙跑與保存不變。兩張原版／Game各307200色號／RGB零差，两張正常60 Hz真實X11共614400像素零差。標準18套件13通過／5無測試。
-- MIDI I/F正式子選單、軟體音源映射、安全偏好寫入、選擇／取消／重開及配樂要求仍待實作與同態驗收。114 DRAFT，整項保持OPEN。
-
-**證據**：[`docs/re/432-settings-interface.md`](docs/re/432-settings-interface.md)、[`docs/spec/113-settings-bug-unavailable.md`](docs/spec/113-settings-bug-unavailable.md)、[`docs/spec/114-midi-interface.md`](docs/spec/114-midi-interface.md)、[`docs/playtest/087-settings-interface.md`](docs/playtest/087-settings-interface.md)、[`docs/internals/data/settings-interface.json`](docs/internals/data/settings-interface.json)、[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/internals/23-hotspot-lists.md`](docs/internals/23-hotspot-lists.md)
-
-**核實**：`internal/game/settingsscreen.go` 裡還找得到 `與 `BUG!` 也還沒接`（自承還在 ＝ 還沒做）
-
 #### engagement-animation — 交戰演出（ANI_PNL1 ＋ COMANI.BMG）與戰鬥曲的出口
 
 *[#48](https://github.com/wicanr2/logh3/issues/48) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+## 2026-10-14 第132輪實作與驗證
+
+正式登陸／反擊／占領已依118 READY接獨立規則快照、完整renderer、321F下方、分段結果等待與音效閘門。占領後擁有者不再回流前段畫面。六種原版情境雙跑1041檔相同，297完整幀91238400像素及八區／RGB零差。這是renderer同狀態診斷，不是Game正常整段同態。標準19套件15PASS／4無測試。要塞砲、目前CPU政策下正常GUI／公開保存及DOS整合同態尚缺，保持OPEN。#69與#16已依使用者驗收關閉，#66另按兩音色範圍完成。
+
+以下保留先前盤點歷史。
+## 2026-10-14 現況盤點
+
+艦隊交火、三種武器、原版／HD 切換、普通速度格序與音效完成閘門已有正常玩家實錄。驗證119保存102場、1361來源格，其中85場艦隊及17場既有行星；未宣稱完整登陸／占領或 DOS 整場同狀態完成。剩餘正式分段演出與原版整合驗收仍未完成，保持 OPEN。
+
+以下保留既有紀錄。
 
 **交戰演出**：戰場回合處理裡打行星（`20B4:0276`）、艦隊對艦隊（`1DD6:0009`）、要塞砲
 （`2264:02BB`）各自開的一段（`1DD6:0152` 開場 → 各自的演出 → `1DD6:026B` 收場），
@@ -1491,31 +1412,22 @@ Game索引SHA-256 830e5c5615be977c5e18cff23fe990c18cc6ee0ad01802b17562a8338ee334
 另先開#91再比七艦隊向量：31 Action0，原版target0／bits2，現行target-1／bits0；兩跑相同。原始0091及038F支持獨立反擊及counter-only。未重跑0091或修改規則／061。
 正式分段、正常GUI／保存、要塞及完整正常原版同態仍缺，保持OPEN。
 
-**卡在**：第110輪已補完整反擊caller與跨攻方獨立快照，六案297完整幀零差，118完成證據審查READY。
-正式資料套用被自動審核拒絕，要求使用者直接確認READY；候選已驗，確認題待答，正式Game仍合併Hit。
-正式瞬時段／接線、正常GUI／公開保存及要塞樣本仍缺；eligibility差異另開#91。
-第81輪音效完成閘門保持，實體卡、人耳及完整循環不升格；#89裁決pending。
-
-- **打行星（行星防衛攻擊）那一種的圖已接**：`COMANI.BMG` 解碼（`docs/re/328`）、`3958:0041` 的記錄與段名、
-  計時器 tick、按鍵排隊（`docs/re/331`）；六批 `eng-*` 與 `eng-skip-mid` 扣掉量表與戰場逐位元組。
-- 兩條量表已依094 READY接既有防衛標題分支。32例原版雙跑與色號逐像素核對通過；其他標題缺分段資料，正常同狀態仍未驗；096交戰專用色盤已接並診斷核RGB。
-- 095完整下方合成器已實作並以原版40層／20裁切驗證；第76輪艦隊Game方塊已接，其他兩個owner不由此升格。
-- 艦隊對艦隊（`1DD6:05D7`）已有第69輪完整四案場景原版收據，第76輪正式Game／圖序列已接；同盟一般行星登陸原版分段收據已補；其他登陸分支、正式接線與要塞砲動態收據仍缺。
-- 第73輪已核開場沒有額外固定八tick等待，舊觀測包含CPU繪圖耗時；099完整幀及098等待已接；音效記錄及消費端已依406定位，第81輪正式ALSA虛擬輸出與完成閘門已驗；實體裝置與人耳仍未驗。
-- 演出中點過滑鼠的那一趟，回戰場之後的畫面（`317d97d8…`）與沒點的（`1e9a68f0…`）不同，原因沒查（佇列裡剩下的放開事件，`docs/re/331` §三）。
-- 尚未建立與原版完整第五回合對齊的正常收據；第107輪正常第六回合占領與本輪原版注入診斷不代替整段same-state。
+**卡在**：- 要塞砲2264:02BB動態演出、要塞渲染及音訊最小抽樣仍缺；完整056／062保持DRAFT，118保持READY。
+- 目前CPU政策下的完整登陸／占領正常GUI與公開保存，以及DOS原版整段同狀態仍待驗收。
+- 舊107占領探針明確強制被動CPU，不能直接用作目前預設玩家路徑。獨立bootstrap重播的狀態不匹配已記錄於121，不列PASS。
+- 艦隊三武器、普通速度格序、音效閘門及本輪正式行星分段已實作，不再列為未接線。
 
 **做完的判準**：交戰演出的觸發點、跳過條件、面板與圖庫格式、幀序與節奏（動畫速度）都有反組譯與
 收據；remake 在同一時點播同一段、換同一首，`Settings.BattleTune` 有出口；
 `TestEveryTuneIsReachable` 覆蓋到 `BGM_6`／`BGM_7`。
 
-**證據**：[`docs/re/438-landing-caller.md`](docs/re/438-landing-caller.md)、[`docs/playtest/098-landing-caller.md`](docs/playtest/098-landing-caller.md)、[`docs/internals/data/landing-caller.json`](docs/internals/data/landing-caller.json)、[`docs/goal/2026-10-06-landing-caller-round-110.md`](docs/goal/2026-10-06-landing-caller-round-110.md)、[`tools/scripts/landing_caller_candidate.go`](tools/scripts/landing_caller_candidate.go)、[`tools/scripts/landing_caller_receipt.py`](tools/scripts/landing_caller_receipt.py)、[`docs/re/437-landing-frame.md`](docs/re/437-landing-frame.md)、[`docs/playtest/097-landing-frame.md`](docs/playtest/097-landing-frame.md)、[`docs/internals/data/landing-frame.json`](docs/internals/data/landing-frame.json)、[`docs/goal/2026-10-06-landing-frame-round-109.md`](docs/goal/2026-10-06-landing-frame-round-109.md)、[`tools/landing_frame_branch_oracle.sh`](tools/landing_frame_branch_oracle.sh)、[`tools/scripts/landing_frame_receipt.py`](tools/scripts/landing_frame_receipt.py)、[`docs/re/436-landing-scene.md`](docs/re/436-landing-scene.md)、[`docs/spec/118-landing-scene.md`](docs/spec/118-landing-scene.md)、[`docs/playtest/096-landing-scene.md`](docs/playtest/096-landing-scene.md)、[`docs/internals/data/landing-scene.json`](docs/internals/data/landing-scene.json)、[`docs/goal/2026-10-05-landing-scene-round-108.md`](docs/goal/2026-10-05-landing-scene-round-108.md)、[`tools/landing_scene_oracle.sh`](tools/landing_scene_oracle.sh)、[`docs/playtest/070-sound-tail.md`](docs/playtest/070-sound-tail.md)、[`docs/spec/105-sound-completion.md`](docs/spec/105-sound-completion.md)、[`docs/internals/data/sound-tail.json`](docs/internals/data/sound-tail.json)、[`docs/goal/2026-10-04-sound-tail-round-81.md`](docs/goal/2026-10-04-sound-tail-round-81.md)、[`docs/playtest/069-fleet-playback.md`](docs/playtest/069-fleet-playback.md)、[`docs/internals/data/fleet-playback.json`](docs/internals/data/fleet-playback.json)、[`docs/goal/2026-10-04-fleet-playback-round-80.md`](docs/goal/2026-10-04-fleet-playback-round-80.md)、[`tools/playback.sh`](tools/playback.sh)、[`cmd/gin3/audio_device_linux.go`](cmd/gin3/audio_device_linux.go)、[`docs/playtest/068-fleet-player-gui.md`](docs/playtest/068-fleet-player-gui.md)、[`docs/internals/data/fleet-player-gui.json`](docs/internals/data/fleet-player-gui.json)、[`tools/fleet_player_gui.sh`](tools/fleet_player_gui.sh)、[`docs/goal/2026-10-04-fleet-player-gui-round-79.md`](docs/goal/2026-10-04-fleet-player-gui-round-79.md)、[`docs/goal/2026-10-04-fleet-sound-round-78.md`](docs/goal/2026-10-04-fleet-sound-round-78.md)、[`docs/spec/104-fleet-sound.md`](docs/spec/104-fleet-sound.md)、[`docs/re/415-fleet-sound.md`](docs/re/415-fleet-sound.md)、[`docs/playtest/067-fleet-sound.md`](docs/playtest/067-fleet-sound.md)、[`docs/internals/data/fleet-sound-source.json`](docs/internals/data/fleet-sound-source.json)、[`docs/internals/data/fleet-sound-game.json`](docs/internals/data/fleet-sound-game.json)、[`tools/sound_to_ogg.sh`](tools/sound_to_ogg.sh)、[`internal/game/soundeffects.go`](internal/game/soundeffects.go)、[`cmd/gin3/effects.go`](cmd/gin3/effects.go)、[`docs/goal/2026-10-04-fleet-command-display-round-77.md`](docs/goal/2026-10-04-fleet-command-display-round-77.md)、[`docs/spec/103-fleet-command-display.md`](docs/spec/103-fleet-command-display.md)、[`docs/re/414-fleet-command-display.md`](docs/re/414-fleet-command-display.md)、[`docs/playtest/066-fleet-command-display.md`](docs/playtest/066-fleet-command-display.md)、[`docs/internals/data/fleet-command-display-game.json`](docs/internals/data/fleet-command-display-game.json)、[`docs/internals/data/fleet-command-display-native.json`](docs/internals/data/fleet-command-display-native.json)、[`tools/fleet_command_display_oracle.sh`](tools/fleet_command_display_oracle.sh)、[`internal/game/fleetcommanddisplay_test.go`](internal/game/fleetcommanddisplay_test.go)、[`docs/spec/102-fleet-player-chain.md`](docs/spec/102-fleet-player-chain.md)、[`docs/re/413-fleet-player-chain.md`](docs/re/413-fleet-player-chain.md)、[`docs/playtest/065-fleet-player-chain.md`](docs/playtest/065-fleet-player-chain.md)、[`docs/internals/data/fleet-player-chain-native.json`](docs/internals/data/fleet-player-chain-native.json)、[`docs/internals/data/fleet-player-chain-game.json`](docs/internals/data/fleet-player-chain-game.json)、[`tools/scripts/fleet_player_chain_receipt.py`](tools/scripts/fleet_player_chain_receipt.py)、[`tools/scripts/fleet_player_chain_replay.go`](tools/scripts/fleet_player_chain_replay.go)、[`internal/game/fleetcombat.go`](internal/game/fleetcombat.go)、[`internal/game/fleetcombatscene.go`](internal/game/fleetcombatscene.go)、[`internal/game/fleetplayerchain_test.go`](internal/game/fleetplayerchain_test.go)、[`docs/spec/101-fleet-auto-command.md`](docs/spec/101-fleet-auto-command.md)、[`docs/re/412-fleet-auto-command.md`](docs/re/412-fleet-auto-command.md)、[`docs/playtest/064-fleet-auto-command.md`](docs/playtest/064-fleet-auto-command.md)、[`docs/internals/data/fleet-auto-command.json`](docs/internals/data/fleet-auto-command.json)、[`docs/internals/data/fleet-auto-game.json`](docs/internals/data/fleet-auto-game.json)、[`tools/combat_player_command_oracle.sh`](tools/combat_player_command_oracle.sh)、[`tools/scripts/combat_auto_receipt.py`](tools/scripts/combat_auto_receipt.py)、[`tools/scripts/fleet_auto_game_receipt.py`](tools/scripts/fleet_auto_game_receipt.py)、[`internal/rules/fleetauto.go`](internal/rules/fleetauto.go)、[`internal/game/fleetauto_test.go`](internal/game/fleetauto_test.go)、[`docs/spec/100-fleet-combat-candidates.md`](docs/spec/100-fleet-combat-candidates.md)、[`docs/re/411-fleet-command-data.md`](docs/re/411-fleet-command-data.md)、[`docs/playtest/063-fleet-command-data.md`](docs/playtest/063-fleet-command-data.md)、[`docs/internals/data/fleet-command-data.json`](docs/internals/data/fleet-command-data.json)、[`tools/scripts/fleet_command_data_receipt.py`](tools/scripts/fleet_command_data_receipt.py)、[`internal/rules/fleetcandidates.go`](internal/rules/fleetcandidates.go)、[`internal/game/fleetcombatcommand.go`](internal/game/fleetcombatcommand.go)、[`docs/spec/099-fleet-frame.md`](docs/spec/099-fleet-frame.md)、[`docs/re/410-fleet-frame.md`](docs/re/410-fleet-frame.md)、[`docs/playtest/062-fleet-frame.md`](docs/playtest/062-fleet-frame.md)、[`docs/internals/data/fleet-frame.json`](docs/internals/data/fleet-frame.json)、[`internal/screen/fleet_frame.go`](internal/screen/fleet_frame.go)、[`internal/screen/fleet_frame_test.go`](internal/screen/fleet_frame_test.go)、[`tools/scripts/fleet_frame_receipt.py`](tools/scripts/fleet_frame_receipt.py)、[`docs/spec/097-fleet-projection.md`](docs/spec/097-fleet-projection.md)、[`docs/spec/098-engagement-wait.md`](docs/spec/098-engagement-wait.md)、[`docs/re/409-fleet-projection.md`](docs/re/409-fleet-projection.md)、[`docs/playtest/061-fleet-projection.md`](docs/playtest/061-fleet-projection.md)、[`docs/internals/data/fleet-projection.json`](docs/internals/data/fleet-projection.json)、[`docs/internals/data/fleet-scene-plan.json`](docs/internals/data/fleet-scene-plan.json)、[`docs/internals/data/fleet-wait.json`](docs/internals/data/fleet-wait.json)、[`internal/rules/fleetprojection.go`](internal/rules/fleetprojection.go)、[`internal/screen/fleet_scene.go`](internal/screen/fleet_scene.go)、[`internal/game/engagement_wait_test.go`](internal/game/engagement_wait_test.go)、[`docs/spec/096-fleet-presentation.md`](docs/spec/096-fleet-presentation.md)、[`docs/re/408-fleet-presentation.md`](docs/re/408-fleet-presentation.md)、[`docs/playtest/060-fleet-presentation.md`](docs/playtest/060-fleet-presentation.md)、[`docs/internals/data/fleet-presentation-spec.json`](docs/internals/data/fleet-presentation-spec.json)、[`docs/internals/data/fleet-presentation.json`](docs/internals/data/fleet-presentation.json)、[`internal/screen/fleet_presentation.go`](internal/screen/fleet_presentation.go)、[`internal/screen/fleet_presentation_test.go`](internal/screen/fleet_presentation_test.go)、[`tools/fleet_presentation_oracle.sh`](tools/fleet_presentation_oracle.sh)、[`docs/spec/095-fleet-blocks.md`](docs/spec/095-fleet-blocks.md)、[`docs/re/407-fleet-blocks.md`](docs/re/407-fleet-blocks.md)、[`docs/playtest/059-fleet-blocks.md`](docs/playtest/059-fleet-blocks.md)、[`docs/internals/data/fleet-blocks.json`](docs/internals/data/fleet-blocks.json)、[`internal/asset/fleet_scene.go`](internal/asset/fleet_scene.go)、[`internal/screen/fleet_blocks.go`](internal/screen/fleet_blocks.go)、[`internal/screen/fleet_blocks_test.go`](internal/screen/fleet_blocks_test.go)、[`docs/re/406-fleet-scene.md`](docs/re/406-fleet-scene.md)、[`docs/playtest/058-fleet-scene.md`](docs/playtest/058-fleet-scene.md)、[`docs/internals/data/fleet-scene.json`](docs/internals/data/fleet-scene.json)、[`tools/fleet_scene_oracle.sh`](tools/fleet_scene_oracle.sh)、[`tools/scripts/fleet_scene_receipt.py`](tools/scripts/fleet_scene_receipt.py)、[`docs/spec/094-engagement-gauges.md`](docs/spec/094-engagement-gauges.md)、[`docs/re/405-engagement-gauges.md`](docs/re/405-engagement-gauges.md)、[`docs/playtest/057-engagement-gauges.md`](docs/playtest/057-engagement-gauges.md)、[`docs/internals/data/engagement-gauges.json`](docs/internals/data/engagement-gauges.json)、[`docs/re/324-engagement-scene.md`](docs/re/324-engagement-scene.md)、[`docs/spec/056-engagement-scene.md`](docs/spec/056-engagement-scene.md)、[`docs/playtest/022-engagement-scene.md`](docs/playtest/022-engagement-scene.md)、[`docs/internals/20-comani-bmg.md`](docs/internals/20-comani-bmg.md)、[`docs/re/328-comani-bmg-codec.md`](docs/re/328-comani-bmg-codec.md)、[`docs/re/331-engagement-picture-sequence.md`](docs/re/331-engagement-picture-sequence.md)
+**證據**：[`docs/playtest/121-landing-and-soundfont.md`](docs/playtest/121-landing-and-soundfont.md)、[`docs/internals/data/landing-soundfont.json`](docs/internals/data/landing-soundfont.json)、[`docs/goal/2026-10-14-landing-soundfont-round-132.md`](docs/goal/2026-10-14-landing-soundfont-round-132.md)、[`docs/re/438-landing-caller.md`](docs/re/438-landing-caller.md)、[`docs/playtest/098-landing-caller.md`](docs/playtest/098-landing-caller.md)、[`docs/internals/data/landing-caller.json`](docs/internals/data/landing-caller.json)、[`docs/goal/2026-10-06-landing-caller-round-110.md`](docs/goal/2026-10-06-landing-caller-round-110.md)、[`tools/scripts/landing_caller_candidate.go`](tools/scripts/landing_caller_candidate.go)、[`tools/scripts/landing_caller_receipt.py`](tools/scripts/landing_caller_receipt.py)、[`docs/re/437-landing-frame.md`](docs/re/437-landing-frame.md)、[`docs/playtest/097-landing-frame.md`](docs/playtest/097-landing-frame.md)、[`docs/internals/data/landing-frame.json`](docs/internals/data/landing-frame.json)、[`docs/goal/2026-10-06-landing-frame-round-109.md`](docs/goal/2026-10-06-landing-frame-round-109.md)、[`tools/landing_frame_branch_oracle.sh`](tools/landing_frame_branch_oracle.sh)、[`tools/scripts/landing_frame_receipt.py`](tools/scripts/landing_frame_receipt.py)、[`docs/re/436-landing-scene.md`](docs/re/436-landing-scene.md)、[`docs/spec/118-landing-scene.md`](docs/spec/118-landing-scene.md)、[`docs/playtest/096-landing-scene.md`](docs/playtest/096-landing-scene.md)、[`docs/internals/data/landing-scene.json`](docs/internals/data/landing-scene.json)、[`docs/goal/2026-10-05-landing-scene-round-108.md`](docs/goal/2026-10-05-landing-scene-round-108.md)、[`tools/landing_scene_oracle.sh`](tools/landing_scene_oracle.sh)、[`docs/playtest/070-sound-tail.md`](docs/playtest/070-sound-tail.md)、[`docs/spec/105-sound-completion.md`](docs/spec/105-sound-completion.md)、[`docs/internals/data/sound-tail.json`](docs/internals/data/sound-tail.json)、[`docs/goal/2026-10-04-sound-tail-round-81.md`](docs/goal/2026-10-04-sound-tail-round-81.md)、[`docs/playtest/069-fleet-playback.md`](docs/playtest/069-fleet-playback.md)、[`docs/internals/data/fleet-playback.json`](docs/internals/data/fleet-playback.json)、[`docs/goal/2026-10-04-fleet-playback-round-80.md`](docs/goal/2026-10-04-fleet-playback-round-80.md)、[`tools/playback.sh`](tools/playback.sh)、[`cmd/gin3/audio_device_linux.go`](cmd/gin3/audio_device_linux.go)、[`docs/playtest/068-fleet-player-gui.md`](docs/playtest/068-fleet-player-gui.md)、[`docs/internals/data/fleet-player-gui.json`](docs/internals/data/fleet-player-gui.json)、[`tools/fleet_player_gui.sh`](tools/fleet_player_gui.sh)、[`docs/goal/2026-10-04-fleet-player-gui-round-79.md`](docs/goal/2026-10-04-fleet-player-gui-round-79.md)、[`docs/goal/2026-10-04-fleet-sound-round-78.md`](docs/goal/2026-10-04-fleet-sound-round-78.md)、[`docs/spec/104-fleet-sound.md`](docs/spec/104-fleet-sound.md)、[`docs/re/415-fleet-sound.md`](docs/re/415-fleet-sound.md)、[`docs/playtest/067-fleet-sound.md`](docs/playtest/067-fleet-sound.md)、[`docs/internals/data/fleet-sound-source.json`](docs/internals/data/fleet-sound-source.json)、[`docs/internals/data/fleet-sound-game.json`](docs/internals/data/fleet-sound-game.json)、[`tools/sound_to_ogg.sh`](tools/sound_to_ogg.sh)、[`internal/game/soundeffects.go`](internal/game/soundeffects.go)、[`cmd/gin3/effects.go`](cmd/gin3/effects.go)、[`docs/goal/2026-10-04-fleet-command-display-round-77.md`](docs/goal/2026-10-04-fleet-command-display-round-77.md)、[`docs/spec/103-fleet-command-display.md`](docs/spec/103-fleet-command-display.md)、[`docs/re/414-fleet-command-display.md`](docs/re/414-fleet-command-display.md)、[`docs/playtest/066-fleet-command-display.md`](docs/playtest/066-fleet-command-display.md)、[`docs/internals/data/fleet-command-display-game.json`](docs/internals/data/fleet-command-display-game.json)、[`docs/internals/data/fleet-command-display-native.json`](docs/internals/data/fleet-command-display-native.json)、[`tools/fleet_command_display_oracle.sh`](tools/fleet_command_display_oracle.sh)、[`internal/game/fleetcommanddisplay_test.go`](internal/game/fleetcommanddisplay_test.go)、[`docs/spec/102-fleet-player-chain.md`](docs/spec/102-fleet-player-chain.md)、[`docs/re/413-fleet-player-chain.md`](docs/re/413-fleet-player-chain.md)、[`docs/playtest/065-fleet-player-chain.md`](docs/playtest/065-fleet-player-chain.md)、[`docs/internals/data/fleet-player-chain-native.json`](docs/internals/data/fleet-player-chain-native.json)、[`docs/internals/data/fleet-player-chain-game.json`](docs/internals/data/fleet-player-chain-game.json)、[`tools/scripts/fleet_player_chain_receipt.py`](tools/scripts/fleet_player_chain_receipt.py)、[`tools/scripts/fleet_player_chain_replay.go`](tools/scripts/fleet_player_chain_replay.go)、[`internal/game/fleetcombat.go`](internal/game/fleetcombat.go)、[`internal/game/fleetcombatscene.go`](internal/game/fleetcombatscene.go)、[`internal/game/fleetplayerchain_test.go`](internal/game/fleetplayerchain_test.go)、[`docs/spec/101-fleet-auto-command.md`](docs/spec/101-fleet-auto-command.md)、[`docs/re/412-fleet-auto-command.md`](docs/re/412-fleet-auto-command.md)、[`docs/playtest/064-fleet-auto-command.md`](docs/playtest/064-fleet-auto-command.md)、[`docs/internals/data/fleet-auto-command.json`](docs/internals/data/fleet-auto-command.json)、[`docs/internals/data/fleet-auto-game.json`](docs/internals/data/fleet-auto-game.json)、[`tools/combat_player_command_oracle.sh`](tools/combat_player_command_oracle.sh)、[`tools/scripts/combat_auto_receipt.py`](tools/scripts/combat_auto_receipt.py)、[`tools/scripts/fleet_auto_game_receipt.py`](tools/scripts/fleet_auto_game_receipt.py)、[`internal/rules/fleetauto.go`](internal/rules/fleetauto.go)、[`internal/game/fleetauto_test.go`](internal/game/fleetauto_test.go)、[`docs/spec/100-fleet-combat-candidates.md`](docs/spec/100-fleet-combat-candidates.md)、[`docs/re/411-fleet-command-data.md`](docs/re/411-fleet-command-data.md)、[`docs/playtest/063-fleet-command-data.md`](docs/playtest/063-fleet-command-data.md)、[`docs/internals/data/fleet-command-data.json`](docs/internals/data/fleet-command-data.json)、[`tools/scripts/fleet_command_data_receipt.py`](tools/scripts/fleet_command_data_receipt.py)、[`internal/rules/fleetcandidates.go`](internal/rules/fleetcandidates.go)、[`internal/game/fleetcombatcommand.go`](internal/game/fleetcombatcommand.go)、[`docs/spec/099-fleet-frame.md`](docs/spec/099-fleet-frame.md)、[`docs/re/410-fleet-frame.md`](docs/re/410-fleet-frame.md)、[`docs/playtest/062-fleet-frame.md`](docs/playtest/062-fleet-frame.md)、[`docs/internals/data/fleet-frame.json`](docs/internals/data/fleet-frame.json)、[`internal/screen/fleet_frame.go`](internal/screen/fleet_frame.go)、[`internal/screen/fleet_frame_test.go`](internal/screen/fleet_frame_test.go)、[`tools/scripts/fleet_frame_receipt.py`](tools/scripts/fleet_frame_receipt.py)、[`docs/spec/097-fleet-projection.md`](docs/spec/097-fleet-projection.md)、[`docs/spec/098-engagement-wait.md`](docs/spec/098-engagement-wait.md)、[`docs/re/409-fleet-projection.md`](docs/re/409-fleet-projection.md)、[`docs/playtest/061-fleet-projection.md`](docs/playtest/061-fleet-projection.md)、[`docs/internals/data/fleet-projection.json`](docs/internals/data/fleet-projection.json)、[`docs/internals/data/fleet-scene-plan.json`](docs/internals/data/fleet-scene-plan.json)、[`docs/internals/data/fleet-wait.json`](docs/internals/data/fleet-wait.json)、[`internal/rules/fleetprojection.go`](internal/rules/fleetprojection.go)、[`internal/screen/fleet_scene.go`](internal/screen/fleet_scene.go)、[`internal/game/engagement_wait_test.go`](internal/game/engagement_wait_test.go)、[`docs/spec/096-fleet-presentation.md`](docs/spec/096-fleet-presentation.md)、[`docs/re/408-fleet-presentation.md`](docs/re/408-fleet-presentation.md)、[`docs/playtest/060-fleet-presentation.md`](docs/playtest/060-fleet-presentation.md)、[`docs/internals/data/fleet-presentation-spec.json`](docs/internals/data/fleet-presentation-spec.json)、[`docs/internals/data/fleet-presentation.json`](docs/internals/data/fleet-presentation.json)、[`internal/screen/fleet_presentation.go`](internal/screen/fleet_presentation.go)、[`internal/screen/fleet_presentation_test.go`](internal/screen/fleet_presentation_test.go)、[`tools/fleet_presentation_oracle.sh`](tools/fleet_presentation_oracle.sh)、[`docs/spec/095-fleet-blocks.md`](docs/spec/095-fleet-blocks.md)、[`docs/re/407-fleet-blocks.md`](docs/re/407-fleet-blocks.md)、[`docs/playtest/059-fleet-blocks.md`](docs/playtest/059-fleet-blocks.md)、[`docs/internals/data/fleet-blocks.json`](docs/internals/data/fleet-blocks.json)、[`internal/asset/fleet_scene.go`](internal/asset/fleet_scene.go)、[`internal/screen/fleet_blocks.go`](internal/screen/fleet_blocks.go)、[`internal/screen/fleet_blocks_test.go`](internal/screen/fleet_blocks_test.go)、[`docs/re/406-fleet-scene.md`](docs/re/406-fleet-scene.md)、[`docs/playtest/058-fleet-scene.md`](docs/playtest/058-fleet-scene.md)、[`docs/internals/data/fleet-scene.json`](docs/internals/data/fleet-scene.json)、[`tools/fleet_scene_oracle.sh`](tools/fleet_scene_oracle.sh)、[`tools/scripts/fleet_scene_receipt.py`](tools/scripts/fleet_scene_receipt.py)、[`docs/spec/094-engagement-gauges.md`](docs/spec/094-engagement-gauges.md)、[`docs/re/405-engagement-gauges.md`](docs/re/405-engagement-gauges.md)、[`docs/playtest/057-engagement-gauges.md`](docs/playtest/057-engagement-gauges.md)、[`docs/internals/data/engagement-gauges.json`](docs/internals/data/engagement-gauges.json)、[`docs/re/324-engagement-scene.md`](docs/re/324-engagement-scene.md)、[`docs/spec/056-engagement-scene.md`](docs/spec/056-engagement-scene.md)、[`docs/playtest/022-engagement-scene.md`](docs/playtest/022-engagement-scene.md)、[`docs/internals/20-comani-bmg.md`](docs/internals/20-comani-bmg.md)、[`docs/re/328-comani-bmg-codec.md`](docs/re/328-comani-bmg-codec.md)、[`docs/re/331-engagement-picture-sequence.md`](docs/re/331-engagement-picture-sequence.md)、[`docs/playtest/118-battle-playback-and-settings.md`](docs/playtest/118-battle-playback-and-settings.md)、[`docs/playtest/119-hero-ai-release-promo.md`](docs/playtest/119-hero-ai-release-promo.md)、[`docs/playtest/120-system-dialog-polish.md`](docs/playtest/120-system-dialog-polish.md)、[`internal/game/engagement.go`](internal/game/engagement.go)
 
-**核實**：`internal/game/engagement.go` 裡還找得到 `方塊動畫沒畫`（自承還在 ＝ 還沒做）
+**核實**：要人判——132已接118正式分段並驗297完整幀；尚缺要塞砲、目前CPU政策的正常GUI／公開保存與DOS整合同態。121逐項列範圍；新整合收據完成後改綁其可機器核對訊號。
 
 ### 做完的（不在矩陣裡的那幾條）
 
-89 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
+92 條。完成度的全貌在 [`VERIFICATION-MATRIX.md`](VERIFICATION-MATRIX.md)——已完成的矩陣列不在這裡重抄一份。更早的逆向歷程（舊 worklist 那 65 條的原文）在
 [`docs/solved-history.md`](docs/solved-history.md)，那是快照、不再維護。
 
 #### intro-full-diff — 開頭動畫整段的畫面對拍
@@ -1615,7 +1527,7 @@ tools/oracle.sh s3datamem \
   名稱、擁有者、防衛力與經濟力逐欄符合 `docs/re/111`。完整傾印雜湊也與原研究
   引用相同。
 
-**證據**：[`workplace/oracle/s3datamem/meta.txt`](workplace/oracle/s3datamem/meta.txt)、[`workplace/oracle/s3datamem/flags.txt`](workplace/oracle/s3datamem/flags.txt)、[`workplace/oracle/s3datamem/memory.bin`](workplace/oracle/s3datamem/memory.bin)、[`workplace/check/s3datamem-rerun2/`](workplace/check/s3datamem-rerun2/)、[`docs/re/111-battle-data-screen-layout.md`](docs/re/111-battle-data-screen-layout.md)、[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
+**證據**：`workplace/oracle/s3datamem/meta.txt`（本機收據）、`workplace/oracle/s3datamem/flags.txt`（本機收據）、`workplace/oracle/s3datamem/memory.bin`（本機收據）、`workplace/check/s3datamem-rerun2/`（本機收據）、[`docs/re/111-battle-data-screen-layout.md`](docs/re/111-battle-data-screen-layout.md)、[`docs/re/270-enter-works-the-divergence-is-after-it.md`](docs/re/270-enter-works-the-divergence-is-after-it.md)
 
 **核實**：收據 `s3datamem` 的 3 個檔案雜湊相符
 
@@ -2064,6 +1976,46 @@ remake 不應為了符合舊推論而改成逐一開火。
 
 **核實**：`TestPlanetMenuOpensAndEnables` 釘在 `internal/game`
 
+#### admiral-unknown-fields — 提督記錄的 `+20`／`+22` 還沒有名字
+
+*[#16](https://github.com/wicanr2/logh3/issues/16) · 原編號 17 · re（逆向：機制還沒讀出來）*
+
+## 2026-10-14 使用者驗收結案
+
+使用者於2026-10-14明確要求關閉本Issue，並回報目前remake人工檢視與原版一致。依此人工驗收結案；`+20`／`+22` 的原版紙本欄名仍未知，保留既有用途與證據，不猜補名稱。
+
+以下保留結案前的盤點與歷史。
+
+## 2026-10-14 現況盤點
+
+用途追查與資料保存已完成；`+20`／`+22` 的原版欄名仍無畫面或紙本依據。本項屬保存證據缺口，未發現它阻塞目前已交付的玩家功能。未達本 Issue 的命名判準，保持 OPEN。
+
+以下保留既有紀錄。
+
+十四個能力欄位裡十個從提督詳細資料那張畫面標到名字。剩下的在
+[`docs/re/287`](docs/re/287-admiral-remaining-fields.md) 收斂成兩件事：
+**`+8`／`+10` 不是未知**——`+10` 是所在星域（`113A:047D` 的寫入點 ＋ 開局
+全在自己首都 ＋ 詳細資料那張的「現在位置」），`+8` 低四位是能帶哪一種艦、
+高四位是艦隊類別鍵（`2D76:0576`）。**`+24` 也不是「沒有名字」，是沒有消費者**：
+四份不同階段的 1 MB 傾印裡，`+0x18` 一個讀取指令都沒有（同一支掃描在
+`+0x17` 找到 11 處、`+0x15` 4 處），它也不被抄進艦隊記錄，而且值域是
+5–100 不是能力值那段 80–140。
+**還差的是 `+20` 與 `+22` 的名字。** 用途已經齊了——`+20` 有四個消費者
+（稅率、治安分段、AI 類別 0 評分、戰鬥層的 `ds:D61A` 完整度門檻），
+`+22` 合成進艦隊 `+0x45` 之後決定分隊挑不挑得中分數最高的攻擊目標
+（`1F6F:024C`）。但原版沒有任何畫面印這兩格的欄名，所以掃消費者這條路
+已經走到底。下一步是**原版說明書附的提督資料表**（防拷問答要玩家查的
+就是它，`ds:8D10` 的字串寫著「請查閱提督資料表」），拿到就同時解掉
+`+20`／`+22`／`+24` 三個名字。
+
+**卡在**：無。本輪使用者已明確驗收並要求結案；未證實細節保留為證據限制。
+
+**做完的判準**：依使用者本輪決定，以目前remake人工檢視與原版一致作為本Issue結案依據。原版紙本欄名未知改列保存證據限制，不再阻塞本Issue。
+
+**證據**：[`docs/internals/08-admiral-dt.md`](docs/internals/08-admiral-dt.md)、[`docs/re/287-admiral-remaining-fields.md`](docs/re/287-admiral-remaining-fields.md)
+
+**核實**：要人判——2026-10-14使用者人工驗收並要求結案；remake人工與原版一致；原版欄名仍未知，不再作結案閘門。
+
 #### window-frame-corners — 視窗外框的角落：沒有規則，是圖塊裡的美術
 
 *原編號 12 · re（逆向：機制還沒讀出來）*
@@ -2109,7 +2061,7 @@ remake 不應為了符合舊推論而改成逐一開火。
 **做完的判準**：捲動的行為與原版資料流相同，40 列測例可到達最大偏移 26，且不會越界或
 在邊界點擊時誤關視窗。
 
-**證據**：[`docs/re/303-battle-data-scroll-rules.md`](docs/re/303-battle-data-scroll-rules.md)、[`docs/spec/021-battle-data-screen.md`](docs/spec/021-battle-data-screen.md)、[`internal/game/battledata_test.go::TestBattleDataScrollMatchesOriginal`](internal/game/battledata_test.go::TestBattleDataScrollMatchesOriginal)、[`internal/screen/battledata_test.go::TestBattleDataScrollHitboxesMatchOriginal`](internal/screen/battledata_test.go::TestBattleDataScrollHitboxesMatchOriginal)
+**證據**：[`docs/re/303-battle-data-scroll-rules.md`](docs/re/303-battle-data-scroll-rules.md)、[`docs/spec/021-battle-data-screen.md`](docs/spec/021-battle-data-screen.md)、[`internal/game/battledata_test.go::TestBattleDataScrollMatchesOriginal`](internal/game/battledata_test.go)、[`internal/screen/battledata_test.go::TestBattleDataScrollHitboxesMatchOriginal`](internal/screen/battledata_test.go)
 
 **核實**：`TestBattleDataScrollMatchesOriginal` 釘在 `internal/game`
 
@@ -2123,7 +2075,7 @@ remake 不應為了符合舊推論而改成逐一開火。
 
 **做完的判準**：那一列的來源查出來，戰場畫面的排除清單只剩游標。
 
-**證據**：[`docs/re/103-minimap-y203-strip.md`](docs/re/103-minimap-y203-strip.md)、[`docs/spec/046-battle-grid-residue.md`](docs/spec/046-battle-grid-residue.md)、[`internal/screen/battle_test.go::TestBattleMatchesOracle`](internal/screen/battle_test.go::TestBattleMatchesOracle)
+**證據**：[`docs/re/103-minimap-y203-strip.md`](docs/re/103-minimap-y203-strip.md)、[`docs/spec/046-battle-grid-residue.md`](docs/spec/046-battle-grid-residue.md)、[`internal/screen/battle_test.go::TestBattleMatchesOracle`](internal/screen/battle_test.go)
 
 **核實**：`TestBattleMatchesOracle` 釘在 `internal/screen`
 
@@ -2539,7 +2491,7 @@ CONFORMED。
 - counter-only仍有反擊而沒有占領結果，seed與最終原池符合原版。
 - 061被動CPU仍完全不傷玩家，正常戰術／快速路徑、公開保存回歸保持。
 
-**證據**：[`docs/spec/119-planet-assault-eligibility.md`](docs/spec/119-planet-assault-eligibility.md)、[`docs/re/439-planet-eligibility.md`](docs/re/439-planet-eligibility.md)、[`docs/internals/data/planet-eligibility.json`](docs/internals/data/planet-eligibility.json)、[`tools/planet_eligibility_oracle.sh`](tools/planet_eligibility_oracle.sh)、[`internal/rules/planet_eligibility_test.go`](internal/rules/planet_eligibility_test.go)、[`workplace/round111-standard-tests.log`](workplace/round111-standard-tests.log)、[`tools/planet_eligibility_oracle.sh`](tools/planet_eligibility_oracle.sh)
+**證據**：[`docs/spec/119-planet-assault-eligibility.md`](docs/spec/119-planet-assault-eligibility.md)、[`docs/re/439-planet-eligibility.md`](docs/re/439-planet-eligibility.md)、[`docs/internals/data/planet-eligibility.json`](docs/internals/data/planet-eligibility.json)、[`tools/planet_eligibility_oracle.sh`](tools/planet_eligibility_oracle.sh)、[`internal/rules/planet_eligibility_test.go`](internal/rules/planet_eligibility_test.go)、`workplace/round111-standard-tests.log`（本機收據）、[`tools/planet_eligibility_oracle.sh`](tools/planet_eligibility_oracle.sh)
 
 **核實**：`TestPlanetAssaultCounterOnlyMatchesOriginal` 釘在 `internal/rules`
 
@@ -2553,7 +2505,7 @@ CONFORMED。
 
 **做完的判準**：依既有 Game.Quit 與原版結束契約，正式 cmd/gin3 在公開確認退出後結束，取消時保持遊戲。補接線回歸，Linux／Windows 正常 GUI 各驗保存、公開退出、重新啟動主選單讀回及重存；標準產品測試通過。只修顯示層讀取已存在退出旗標，不改規則、存檔格式或 AI。
 
-**證據**：[`docs/playtest/094-windows-save-load.md`](docs/playtest/094-windows-save-load.md)、[`docs/spec/117-player-public-quit.md`](docs/spec/117-player-public-quit.md)、[`docs/internals/data/windows-save-load.json`](docs/internals/data/windows-save-load.json)、[`tools/windows_save_load.sh`](tools/windows_save_load.sh)、[`tools/scripts/windows_save_load.py`](tools/scripts/windows_save_load.py)、[`tools/scripts/windows_save_load_receipt.py`](tools/scripts/windows_save_load_receipt.py)、[`cmd/gin3/quit_test.go`](cmd/gin3/quit_test.go)、[`internal/game/game.go`](internal/game/game.go)、[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`docs/goal/2026-10-05-windows-save-load-round-106.md`](docs/goal/2026-10-05-windows-save-load-round-106.md)、[`tools/scripts/windows_save_load.py`](tools/scripts/windows_save_load.py)、[`workplace/music69-windows/saveload69-r106-a/new/TRACE.json`](workplace/music69-windows/saveload69-r106-a/new/TRACE.json)
+**證據**：[`docs/playtest/094-windows-save-load.md`](docs/playtest/094-windows-save-load.md)、[`docs/spec/117-player-public-quit.md`](docs/spec/117-player-public-quit.md)、[`docs/internals/data/windows-save-load.json`](docs/internals/data/windows-save-load.json)、[`tools/windows_save_load.sh`](tools/windows_save_load.sh)、[`tools/scripts/windows_save_load.py`](tools/scripts/windows_save_load.py)、[`tools/scripts/windows_save_load_receipt.py`](tools/scripts/windows_save_load_receipt.py)、[`cmd/gin3/quit_test.go`](cmd/gin3/quit_test.go)、[`internal/game/game.go`](internal/game/game.go)、[`cmd/gin3/main.go`](cmd/gin3/main.go)、[`docs/goal/2026-10-05-windows-save-load-round-106.md`](docs/goal/2026-10-05-windows-save-load-round-106.md)、[`tools/scripts/windows_save_load.py`](tools/scripts/windows_save_load.py)、`workplace/music69-windows/saveload69-r106-a/new/TRACE.json`（本機收據）
 
 **核實**：`TestPlayerPublicQuit` 釘在 `cmd/gin3`
 
@@ -3249,6 +3201,66 @@ dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且�
 
 **核實**：`TestRemainingAssetExports` 釘在 `internal/asset`
 
+#### music-library-pipeline — 玩家自產曲庫的管線與 MIDI 音色（MPU-401）
+
+*[#69](https://github.com/wicanr2/logh3/issues/69) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+## 2026-10-14 使用者驗收結案
+
+使用者於2026-10-14回報「目前音樂ok，我聽過了，pass結案」。依現行音樂的人耳驗收與既有技術交付結案。Windows／macOS真機及未指明的完整曲目／循環仍保留證據範圍限制，不宣稱新增機器驗收。後續MT-32／GeneralUser GS選擇由#66獨立追蹤。
+
+以下保留結案前的盤點與歷史。
+
+## 2026-10-14 現況盤點
+
+原生曲庫匯入、三平台本機封包、Linux／Wine 技術輸出、11首原曲 HD 音色與正常 HD／FM 切換已完成。現行交付為 v.1.3.0-20261013，音色與混音證據見規格143及驗證120。尚缺人耳聽感、完整遊戲播放／音樂性循環，以及 Windows／macOS 真機驗收，保持 OPEN。
+
+以下保留既有紀錄。
+
+第119輪：v.0.1.2-20261006已補macOS Intel／Apple Silicon本機完整版，最低部署11.0。通用Mach-O、系統依賴、2994頁ARM ad-hoc簽章、ZIP權限／完整資產與SHA-256通過；尚未在macOS真機執行。Windows／Linux同步重建相同版號，新Linux11條CLI輸入、Wine4條入口與虛擬音效卡非靜音輸出通過。72秒新版推廣片与故事首頁已完成，入口106及macos-retro-promo.json。#94／#95收尾範圍為封包、影片與故事；人耳、實體Windows／macOS、完整曲目及循環仍由本Issue追蹤。
+
+以下為第118輪及更早歷史。
+
+第118輪：本機完整版v.0.1.1-20261006已包含22首配樂、28段音效、固定FluidR3_GM及授權、Windows／Linux程式與完整vendor來源包。逐檔manifest及SHA-256已核對；Linux正式封包經ALSA／虛擬PulseAudio有17.495465秒非靜音輸出，Windows相同二進位在Wine完成四條公開入口。交付105與local-test-package.json保存證據。這輪已補版號、dist-all及目前來源包；人耳、實體Windows、macOS、完整曲目與循環驗收仍缺，#69保持OPEN。
+
+以下為歷史紀錄。
+
+第106輪：Windows正常公開保存及新程序主選單讀回已補。公開退出缺漏另開#90，沿研究341既有契約、117審查READY後補正式app四行，回歸先失敗後通過。Windows兩批與Linux正式GUI共300項真實X11操作、48張14745600像素全圖零差；三批兩次完整六檔267360 bytes及IDX3168 bytes符合對照，WORK四byte依既有帝國選擇更新，沒有遮罩。離線雙建各平台二進位相同，標準18套件13PASS／5無測試。117限定CONFORMED，094及2118來源／164原版輸入索引98f0f08adca4d05f9e0fbb28e83b92446dc846f3bedee5ca323a0766c4a1203e。舊103來源包維持歷史版本，104／105舊main按91d85785核實；舊配樂不外推新二進位。實機、人耳／完整播放及循環、macOS、最新來源包及正式版號／dist-all仍缺，#69 OPEN。
+
+## 第105輪當時紀錄
+
+第105輪：來源Windows玩家程式已觀測預設片頭、正常FM換曲及停止。e／f共66項真實X11命令、12張3686400像素全圖零差；f的OPEN_M／BGM_0F／BGM_1F連續PCM分別8.793084／7.970000／6.358413秒逐位元組相同，兩批主選單與關配樂各至少3秒全零。e片頭首段2.486757秒仍FAIL，額外片段及缺口完整保留。固定8秒直接Pulse與Windows Oto／ALSA對照全同，Oto／Wine Pulse有缺口，精確成因unknown。補齊音訊工具缺件並鎖新增50套件，未改產品Go、AI、MIDI I/F或112／116。標準13PASS／5無測試，103／104來源保持；093及812來源／164原版輸入索引2656f562ca578e86cd2c5dde44c708743e04ba8bd606205b5a40bb31df7bd937。正常Windows配樂輸出只驗所列內段；e缺口、完整播放／循環、人耳、Windows公開存讀、實機、macOS及正式版號／dist-all仍待完成，#69 OPEN。
+
+## 第104輪當時紀錄
+
+第104輪：來源Windows玩家程式已在Wine驗正常GUI。兩次預設片頭4998更新自然到標題，PNG及307200色號符合來源Linux；三條真實GUI路徑87項X11操作，可開取進度及艦隊編號。原生畫布與一倍視窗37組11366400像素零差；1.5倍7組實際視窗共154407像素不同、最大通道差1，仍未通過全視窗相同。已追到固定Ebitengine方框濾鏡，兩側4838400像素符合平均值整數界，完整差異及反例保留，未核准正式容許差。產品Go及112／116狀態不改。標準13PASS／5無測試，原103輪20469來源重驗通過；092、1096現行來源與164原版輸入索引5e4af9398f5eb1775e262dfaec971c9f50f4767bfd9c2484993a6b839f02c5ef。Windows曲庫播放／公開存讀、正式版號／dist-all、macOS、實機、人耳／循環仍缺；#69 OPEN。
+
+## 第103輪來源準備
+
+第103輪：目前9e1d318玩家與音樂Go入口的離線來源重建完成。d／e各2810項、35461120 bytes，tar SHA89be259435d35d22f3db7e27ffe2658bdafb67183abd592c4bc8b13e2af5f954；保留077原來源格式與必填欄位，兩個新工具附件另列身份。空模組快取及無網路重建7種二進位符合對照，真實dosgolem f752／clean，原生CLI六項通過、零跳過。來源Linux程式自然421格→標題，4998更新／307200像素及PNG符合目前程式；正常FM BGM_0F的VGM／WAV／PCM與Linux OGG符合固定鎖。Windows來源玩家程式只驗Wine help，不稱遊戲GUI。標準13PASS／5無測試，116限定CONFORMED，091及20469來源索引033ec921cd4a67b135cb34ad157fc7271c355ecd8bb7245aaa64cd346e3f71f1。正式版號／dist-all、macOS、實機、人耳及循環仍缺；#69 OPEN。
+
+配樂播放層支援二十二首 OGG；原生 `cmd/music-import` 已可生成完整 Linux 曲庫及 Windows 曲庫，玩家入口不呼叫 Docker／Python／shell。尚待三平台工具與依賴的正式來源／授權封裝、macOS 實跑、聆聽及循環接點驗收。
+
+## 2026-10-04第81輪：正式音效完成回報
+
+正常公開關配樂GUI證實SFX21／08各遺失81／974取樣，Close前buffer648／7792 bytes正好相同。
+105由DRAFT審查READY後實作Busy回報，後一音效與首格等待正式前樣本完成。
+修正後帝國14／同盟10次完整PCM逐位元組相同，每次Close前Playing=false且buffer=0；共播另14次亦完成後釋放，五次換曲正常。
+修正前後與共播15張完整原生圖各307200像素零差，六份診斷保存相同；公開關配樂只改WORK+0x1F，RND／戰損與CPU被動契約保持。
+單獨28段26段全PCM相同、全28來源保留；兩筆插入靜音及同盟修正前一筆仍全段FAIL，不放寬門檻。
+四次鏡頭操作失敗屬驗證器反向回授；保留舊批次，改單軸朝目標及合併無命令的連續捲動，不改產品速度、不增加40次上限。
+標準18套件13PASS／5無測試，原版編號／戰損及新增完成等待回歸無skip通過。
+521來源凍結SHA-256 a5541a1b654e2c5a218ef3aa1394e177f956dad62749973299075e09520de8e7，驗證070與規格105。
+105限定CONFORMED，104 READY，完整056／092／062 DRAFT。實體卡、人耳、循環、正常原版整段同態及正式交付仍缺，本Issue保持OPEN；#89裁決pending。
+
+**卡在**：無。本輪使用者已明確驗收並要求結案；未證實細節保留為證據限制。
+
+**做完的判準**：原生曲庫與現行音樂技術交付已有證據，使用者本輪確認實際聆聽PASS並要求結案。原歷史門檻保留下方，未驗真機不升格完成。
+
+**證據**：[`docs/playtest/106-macos-and-retro-promo.md`](docs/playtest/106-macos-and-retro-promo.md)、[`docs/internals/data/macos-retro-promo.json`](docs/internals/data/macos-retro-promo.json)、[`docs/playtest/105-local-full-test-package.md`](docs/playtest/105-local-full-test-package.md)、[`docs/internals/data/local-test-package.json`](docs/internals/data/local-test-package.json)、[`docs/re/440-normal-first-turn-and-active-ai.md`](docs/re/440-normal-first-turn-and-active-ai.md)、[`docs/spec/120-active-tactical-ai.md`](docs/spec/120-active-tactical-ai.md)、[`docs/playtest/094-windows-save-load.md`](docs/playtest/094-windows-save-load.md)、[`docs/spec/117-player-public-quit.md`](docs/spec/117-player-public-quit.md)、[`docs/internals/data/windows-save-load.json`](docs/internals/data/windows-save-load.json)、[`tools/windows_save_load.sh`](tools/windows_save_load.sh)、[`tools/scripts/windows_save_load.py`](tools/scripts/windows_save_load.py)、[`tools/scripts/windows_save_load_receipt.py`](tools/scripts/windows_save_load_receipt.py)、[`cmd/gin3/quit_test.go`](cmd/gin3/quit_test.go)、[`docs/playtest/093-windows-music-playback.md`](docs/playtest/093-windows-music-playback.md)、[`docs/internals/data/windows-music-playback.json`](docs/internals/data/windows-music-playback.json)、[`docs/goal/2026-10-05-windows-playback-round-105.md`](docs/goal/2026-10-05-windows-playback-round-105.md)、[`tools/player_wine_audio.sh`](tools/player_wine_audio.sh)、[`tools/build_windows_audio.sh`](tools/build_windows_audio.sh)、[`tools/Dockerfile.windows-audio`](tools/Dockerfile.windows-audio)、[`tools/windows-audio-packages.lock`](tools/windows-audio-packages.lock)、[`tools/scripts/windows_music_playback_receipt.py`](tools/scripts/windows_music_playback_receipt.py)、[`tools/scripts/windows_music_analysis.py`](tools/scripts/windows_music_analysis.py)、[`docs/playtest/092-windows-player.md`](docs/playtest/092-windows-player.md)、[`docs/internals/data/windows-player.json`](docs/internals/data/windows-player.json)、[`docs/goal/2026-10-05-windows-player-round-104.md`](docs/goal/2026-10-05-windows-player-round-104.md)、[`tools/player_wine.sh`](tools/player_wine.sh)、[`tools/scripts/windows_player_check.py`](tools/scripts/windows_player_check.py)、[`tools/scripts/windows_player_pixels.py`](tools/scripts/windows_player_pixels.py)、[`tools/scripts/windows_player_receipt.py`](tools/scripts/windows_player_receipt.py)、[`docs/playtest/091-current-source.md`](docs/playtest/091-current-source.md)、[`docs/spec/116-current-source.md`](docs/spec/116-current-source.md)、[`docs/internals/data/current-source.json`](docs/internals/data/current-source.json)、[`tools/scripts/remake_source_kit.py`](tools/scripts/remake_source_kit.py)、[`tools/scripts/remake_source_rebuild.py`](tools/scripts/remake_source_rebuild.py)、[`tools/scripts/remake_source_runtime.py`](tools/scripts/remake_source_runtime.py)、[`tools/scripts/remake_source_receipt.py`](tools/scripts/remake_source_receipt.py)、[`docs/playtest/070-sound-tail.md`](docs/playtest/070-sound-tail.md)、[`docs/spec/105-sound-completion.md`](docs/spec/105-sound-completion.md)、[`docs/internals/data/sound-tail.json`](docs/internals/data/sound-tail.json)、[`docs/goal/2026-10-04-sound-tail-round-81.md`](docs/goal/2026-10-04-sound-tail-round-81.md)、[`docs/playtest/069-fleet-playback.md`](docs/playtest/069-fleet-playback.md)、[`docs/internals/data/fleet-playback.json`](docs/internals/data/fleet-playback.json)、[`docs/goal/2026-10-04-fleet-playback-round-80.md`](docs/goal/2026-10-04-fleet-playback-round-80.md)、[`tools/playback.sh`](tools/playback.sh)、[`cmd/gin3/audio_device_linux.go`](cmd/gin3/audio_device_linux.go)、[`tools/scripts/music_source_import_check.py`](tools/scripts/music_source_import_check.py)、[`docs/playtest/037-music-source-delivery.md`](docs/playtest/037-music-source-delivery.md)、[`docs/spec/077-music-source-delivery.md`](docs/spec/077-music-source-delivery.md)、[`docs/re/365-music-source-delivery.md`](docs/re/365-music-source-delivery.md)、[`docs/internals/data/music-source-delivery.json`](docs/internals/data/music-source-delivery.json)、[`LICENSE`](LICENSE)、[`tools/scripts/music_source_kit.py`](tools/scripts/music_source_kit.py)、[`tools/scripts/music_source_kit_test.py`](tools/scripts/music_source_kit_test.py)、[`tools/scripts/music_source_rebuild.sh`](tools/scripts/music_source_rebuild.sh)、[`tools/scripts/music_source_receipt.py`](tools/scripts/music_source_receipt.py)、[`docs/playtest/036-windows-combined-music-tools.md`](docs/playtest/036-windows-combined-music-tools.md)、[`docs/spec/076-windows-combined-music-tools.md`](docs/spec/076-windows-combined-music-tools.md)、[`docs/re/364-windows-combined-music-tools.md`](docs/re/364-windows-combined-music-tools.md)、[`docs/internals/data/windows-combined-music-tools.json`](docs/internals/data/windows-combined-music-tools.json)、[`tools/scripts/music_windows_bundle.py`](tools/scripts/music_windows_bundle.py)、[`tools/scripts/music_windows_bundle_archive.py`](tools/scripts/music_windows_bundle_archive.py)、[`tools/scripts/music_windows_bundle_receipt.py`](tools/scripts/music_windows_bundle_receipt.py)、[`tools/scripts/music_windows_bundle_test.py`](tools/scripts/music_windows_bundle_test.py)、[`tools/scripts/music_windows_opl_unicode_build.py`](tools/scripts/music_windows_opl_unicode_build.py)、[`tools/scripts/music_windows_opl_unicode_probe.py`](tools/scripts/music_windows_opl_unicode_probe.py)、[`docs/playtest/035-windows-gm-sources-unicode.md`](docs/playtest/035-windows-gm-sources-unicode.md)、[`docs/spec/075-windows-gm-unicode.md`](docs/spec/075-windows-gm-unicode.md)、[`docs/re/363-windows-music-source-build.md`](docs/re/363-windows-music-source-build.md)、[`docs/internals/data/windows-music-source-lock.json`](docs/internals/data/windows-music-source-lock.json)、[`docs/internals/data/windows-gm-source-tools.json`](docs/internals/data/windows-gm-source-tools.json)、[`tools/scripts/music_windows_sources.py`](tools/scripts/music_windows_sources.py)、[`tools/scripts/music_windows_gm_source_receipt.py`](tools/scripts/music_windows_gm_source_receipt.py)、[`docs/playtest/034-windows-music-pcm.md`](docs/playtest/034-windows-music-pcm.md)、[`docs/internals/data/windows-fm-pcm.json`](docs/internals/data/windows-fm-pcm.json)、[`tools/scripts/music_windows_fm_receipt.py`](tools/scripts/music_windows_fm_receipt.py)、[`docs/spec/074-cross-platform-fm-pcm.md`](docs/spec/074-cross-platform-fm-pcm.md)、[`docs/re/362-windows-music-tools.md`](docs/re/362-windows-music-tools.md)、[`docs/internals/data/windows-music-probes.json`](docs/internals/data/windows-music-probes.json)、[`docs/re/361-linux-music-source-closure.md`](docs/re/361-linux-music-source-closure.md)、[`docs/spec/073-linux-music-source-closure.md`](docs/spec/073-linux-music-source-closure.md)、[`docs/playtest/033-linux-music-sources.md`](docs/playtest/033-linux-music-sources.md)、[`docs/internals/data/linux-music-source-lock.json`](docs/internals/data/linux-music-source-lock.json)、[`docs/internals/data/linux-music-sources.json`](docs/internals/data/linux-music-sources.json)、[`tools/scripts/music_linux_sources.py`](tools/scripts/music_linux_sources.py)、[`docs/re/360-linux-bundled-music-tools.md`](docs/re/360-linux-bundled-music-tools.md)、[`docs/spec/072-linux-music-tools.md`](docs/spec/072-linux-music-tools.md)、[`docs/playtest/032-linux-music-tools.md`](docs/playtest/032-linux-music-tools.md)、[`docs/internals/data/linux-music-tools.json`](docs/internals/data/linux-music-tools.json)、[`cmd/music-tool/`](cmd/music-tool/)、[`docs/re/359-native-fm-import.md`](docs/re/359-native-fm-import.md)、[`docs/spec/070-deterministic-ogg-framing.md`](docs/spec/070-deterministic-ogg-framing.md)、[`docs/spec/071-native-fm-import.md`](docs/spec/071-native-fm-import.md)、[`docs/playtest/031-native-fm-import.md`](docs/playtest/031-native-fm-import.md)、[`docs/internals/data/native-fm-import.json`](docs/internals/data/native-fm-import.json)、[`docs/internals/data/fm-import-lock.json`](docs/internals/data/fm-import-lock.json)、[`docs/re/358-native-gm-import.md`](docs/re/358-native-gm-import.md)、[`docs/spec/069-native-gm-import.md`](docs/spec/069-native-gm-import.md)、[`docs/playtest/030-native-gm-import.md`](docs/playtest/030-native-gm-import.md)、[`docs/internals/data/native-gm-import.json`](docs/internals/data/native-gm-import.json)、[`cmd/music-import/`](cmd/music-import/)、[`docs/re/356-player-music-library.md`](docs/re/356-player-music-library.md)、[`docs/internals/data/player-music-library.json`](docs/internals/data/player-music-library.json)、[`tools/scripts/soundfont_prepare.py`](tools/scripts/soundfont_prepare.py)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/re/274-which-screen-plays-which-tune.md`](docs/re/274-which-screen-plays-which-tune.md)、[`docs/spec/143-font-and-hd-music.md`](docs/spec/143-font-and-hd-music.md)、[`docs/playtest/120-system-dialog-polish.md`](docs/playtest/120-system-dialog-polish.md)、[`docs/internals/data/system-dialog-polish.json`](docs/internals/data/system-dialog-polish.json)
+
+**核實**：要人判——2026-10-14使用者人工驗收並要求結案；音樂已聆聽PASS，未擴張真機或完整循環證據。
+
 #### title-screen-sptit — 開頭動畫之後的 SPTIT.350 標題畫面
 
 *[#68](https://github.com/wicanr2/logh3/issues/68) · feature（功能：玩家會撞到、但 remake 還沒有）*
@@ -3309,6 +3321,51 @@ dosgolem 的 BIOS ROM 最後 16 bytes（線性 `FFFF0–FFFFF`）是 0，而且�
 **證據**：[`docs/playtest/047-battle-data-scroll.md`](docs/playtest/047-battle-data-scroll.md)、[`docs/re/395-battle-data-scroll.md`](docs/re/395-battle-data-scroll.md)、[`docs/spec/021-battle-data-screen.md`](docs/spec/021-battle-data-screen.md)、[`docs/spec/083-battle-phase-panel.md`](docs/spec/083-battle-phase-panel.md)、[`docs/internals/data/battle-data-scroll.json`](docs/internals/data/battle-data-scroll.json)、[`tools/battle_data_scroll_oracle.sh`](tools/battle_data_scroll_oracle.sh)、[`tools/battle_data_scroll_gui.sh`](tools/battle_data_scroll_gui.sh)、[`internal/game/battledata_wholeframe_test.go`](internal/game/battledata_wholeframe_test.go)、[`docs/re/303-battle-data-scroll-rules.md`](docs/re/303-battle-data-scroll-rules.md)、[`docs/re/337-region-panel-frozen-recheck.md`](docs/re/337-region-panel-frozen-recheck.md)
 
 **核實**：`TestBattleDataScrollWholeFrameMatchesOracle` 釘在 `internal/game`
+
+#### settings-midi-if-and-bug — 音色選擇：Roland MT-32／GeneralUser GS（取代 MIDI I/F）
+
+*[#66](https://github.com/wicanr2/logh3/issues/66) · feature（功能：玩家會撞到、但 remake 還沒有）*
+
+## 2026-10-14 完成驗收
+
+依使用者指定，MIDI I/F已改為Roland MT-32／GeneralUser GS音色選擇。11首MT-32曲庫完整解碼／非靜音／峰值通過；兩陣營正式片頭到設定的真實X11、實際兩種音訊、靜音保持、取消、偏好重開與公開退出均通過。規格114限定CONFORMED，標準19套件15PASS／4無測試。原版七項硬體埠不列為本重製驗收。來源索引SHA-256 7cb6b951e551b66078862871aa32b4c1c89cc6c04dd3aee4343fd8df5cb0f8a0。
+
+以下保留先前盤點歷史。
+## 2026-10-14 使用者定案與實作
+
+使用者明確指定將MIDI I/F改為音色選擇，兩項為Roland MT-32與GeneralUser GS，並確認Gsound指GeneralUser GS.sf2。MT-32素材在使用者指定/home/anr2/cht/mt32，實際為ROM，採Munt離線合成OGG。規格114已審READY，正式選單及偏好保存正在驗收，不再等待硬體埠取捨回答。#69與#16已依本輪使用者驗收關閉。
+
+以下保留先前盤點歷史。
+
+## 2026-10-14 現況盤點
+
+BUG! 出貨正常路徑不可選已由規格113與驗證087完成。四字型及 HD／FM 音色切換已由規格143與驗證120完成。原版「MIDI I/F」七項介面的軟體映射、正式操作與偏好保存仍未完成，保持 OPEN。
+
+以下保留既有紀錄。
+
+設定畫面的「ＭＩＤＩ Ｉ／Ｆ」（動作22）仍未接正式路徑。BUG!出貨入口原本不可選，第98輪已修正typed熱區並核正常反應。
+
+<details><summary>定案前的驗收紀錄</summary>
+
+- BUG!除錯callee的七項寫端已由286保存。第98輪432補核可達性：042F:01B1／01B4將DS:0210寫DS:04CC，正常兩者為0。撤回「知道位置即可點入除錯」及「直接補七個按鈕即可完成」的舊斷言。
+- MUSIC.INI六位元組、INI+4七項埠表及一般音源只存WORK已寫入internals/17；RESSOUND.COM是複製MUSIC.ORG還原出貨值，硬體偵測由音樂初始化處理。
+- MIDI I/F反組譯已達成：042F:08F8→3667七項選單→列號／FF取消→INI+4→重初始化→重畫。開窗、無／330H、右鍵取消各雙跑原圖／palette相同；選擇／取消整份RAM亦相同，保存INI指標生命週期限制。
+- BUG!正常路徑已達成：113限定CONFORMED，原版WORK230 bytes不變，正式bootstrap7檔雙跑與保存不變。兩張原版／Game各307200色號／RGB零差，两張正常60 Hz真實X11共614400像素零差。標準18套件13通過／5無測試。
+- MIDI I/F正式子選單、軟體音源映射、安全偏好寫入、選擇／取消／重開及配樂要求仍待實作與同態驗收。114 DRAFT，整項保持OPEN。
+
+</details>
+
+**卡在**：使用者指定範圍已完成。新MT-32音訊沒有追加人耳或實機逐波形聲明；原版七項硬體埠的歷史證據保留，不重新列為本項阻塞。
+
+**做完的判準**：- BUG!正常出貨不可選，沿113既有驗收。
+- 使用者指定的GeneralUser GS／Roland MT-32兩項選擇，完整曲庫可用、選擇／右鍵／Escape取消及缺檔拒絕。
+- 切音色保持靜音，獨立preferences.json原子保存及重開恢復，不修改原版MUSIC.INI或六表。
+- 兩陣營正常GUI、實際非靜音音訊、F7保持音色與公開退出通過。
+- 損壞偏好與缺曲庫拒絕測試、標準測試通過；ROM與音訊保持本機。
+
+**證據**：[`docs/playtest/121-landing-and-soundfont.md`](docs/playtest/121-landing-and-soundfont.md)、[`docs/internals/data/landing-soundfont.json`](docs/internals/data/landing-soundfont.json)、[`docs/goal/2026-10-14-landing-soundfont-round-132.md`](docs/goal/2026-10-14-landing-soundfont-round-132.md)、[`docs/re/432-settings-interface.md`](docs/re/432-settings-interface.md)、[`docs/spec/113-settings-bug-unavailable.md`](docs/spec/113-settings-bug-unavailable.md)、[`docs/spec/114-midi-interface.md`](docs/spec/114-midi-interface.md)、[`docs/playtest/087-settings-interface.md`](docs/playtest/087-settings-interface.md)、[`docs/internals/data/settings-interface.json`](docs/internals/data/settings-interface.json)、[`docs/re/286-settings-other-rows.md`](docs/re/286-settings-other-rows.md)、[`docs/internals/17-mds.md`](docs/internals/17-mds.md)、[`docs/internals/23-hotspot-lists.md`](docs/internals/23-hotspot-lists.md)、[`docs/spec/143-font-and-hd-music.md`](docs/spec/143-font-and-hd-music.md)、[`docs/playtest/120-system-dialog-polish.md`](docs/playtest/120-system-dialog-polish.md)
+
+**核實**：`docs/internals/data/landing-soundfont.json` 的 `soundfont_gui` 超過 1 項
 
 #### fleet-number-list-and-quit-confirm — 艦隊編號清單的列、結束確認的中止／決定
 

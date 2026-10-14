@@ -31,24 +31,29 @@ import (
 )
 
 type app struct {
-	g             *game.Game
-	pal           [gfx.Colors]color.RGBA
-	screen        *ebiten.Image
-	music         musicPlayback
-	musicOriginal *audio.Library
-	musicHD       *audio.Library
-	hdMusic       bool
-	cursor        *ui.Cursor
-	musicState    game.State
-	effects       effectPlayback
-	buf           []byte
-	hd            *presentation.Renderer
-	original      bool
-	hdScreen      *ebiten.Image
-	hdUploaded    uint64
-	frameTrace    *os.File
-	animationTime time.Time
-	toolbar       toolbar
+	g               *game.Game
+	pal             [gfx.Colors]color.RGBA
+	screen          *ebiten.Image
+	music           musicPlayback
+	musicOriginal   *audio.Library
+	musicHD         *audio.Library
+	musicMT32       *audio.Library
+	hdMusic         bool
+	soundFont       string
+	soundFontMenu   bool
+	soundFontError  string
+	preferencesPath string
+	cursor          *ui.Cursor
+	musicState      game.State
+	effects         effectPlayback
+	buf             []byte
+	hd              *presentation.Renderer
+	original        bool
+	hdScreen        *ebiten.Image
+	hdUploaded      uint64
+	frameTrace      *os.File
+	animationTime   time.Time
+	toolbar         toolbar
 
 	shot      string
 	shotBin   string
@@ -269,6 +274,7 @@ func main() {
 	artDir := flag.String("art", "assets/hd", "HD 圖片目錄")
 	fontStyle := flag.String("font", "classic", "HD字型：original原版點陣、classic原版強化、serif思源宋體、sans思源黑體")
 	musicQuality := flag.String("music-quality", "original", "配樂音色：original 或 hd；HD曲庫放在music/hd")
+	soundFont := flag.String("soundfont", "", "音色庫：gs 或 mt32；未指定沿玩家偏好")
 	frameTrace := flag.String("frame-trace", "", "可選顯示性能JSONL收據；僅觀測，不改遊戲狀態")
 	shot := flag.String("shot", "", "跑幾格之後把畫面倒成 PNG 就結束（無頭驗收用）")
 	script := flag.String("script", "", "開場先送進去的輸入，分號分隔："+
@@ -388,10 +394,15 @@ func main() {
 			if len(hdLibrary.Missing()) == 0 {
 				a.musicHD = hdLibrary
 			}
+			mt32Library := audio.NewHDLibrary(filepath.Join(*musicDir, "mt32"))
+			if len(mt32Library.Missing()) == 0 {
+				a.musicMT32 = mt32Library
+			}
 			sounds := audio.NewSoundLibrary(*musicDir)
+			musicAvailable := lib.Have() > 0 || a.musicHD != nil || a.musicMT32 != nil
 			var audioContext *eaudio.Context
 			deviceAvailable := hasAudioDevice()
-			if deviceAvailable && (lib.Have() > 0 || sounds.Have() == 28) {
+			if deviceAvailable && (musicAvailable || sounds.Have() == 28) {
 				audioContext = eaudio.NewContext(audio.SampleRate)
 			}
 			if audioContext != nil && sounds.Have() == 28 {
@@ -410,7 +421,7 @@ func main() {
 			case !deviceAvailable:
 				fmt.Fprintln(os.Stderr, "配樂：這台機器沒有可用的音效裝置，"+
 					"這一趟沒有音樂")
-			case lib.Have() == 0:
+			case !musicAvailable:
 				fmt.Fprintf(os.Stderr, "配樂：%s 裡一首都沒有，這一趟沒有音樂。"+
 					"轉檔看 tools/music_to_ogg.sh\n", lib.Dir())
 			default:
@@ -429,6 +440,25 @@ func main() {
 		}
 		if *musicQuality == "hd" && !a.setHDMusic(true) {
 			fmt.Fprintln(os.Stderr, "HD配樂不完整，保留原版曲庫。")
+		}
+		a.preferencesPath = filepath.Join(*saveDir, "preferences.json")
+		choice, prefErr := readSoundFontPreference(a.preferencesPath)
+		if prefErr != nil {
+			a.soundFontError = prefErr.Error()
+			fmt.Fprintln(os.Stderr, "音色偏好：", prefErr)
+		}
+		if *soundFont != "" {
+			choice = *soundFont
+		}
+		if choice != "" {
+			if err := a.selectSoundFont(choice, false); err != nil {
+				if *soundFont != "" {
+					a.close()
+					return nil, err
+				}
+				a.soundFontError = err.Error()
+				fmt.Fprintln(os.Stderr, "音色偏好：", err)
+			}
 		}
 
 		a.setPalette(g.Palette())

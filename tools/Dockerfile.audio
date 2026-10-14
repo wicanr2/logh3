@@ -19,16 +19,34 @@
 # （`adplug-utils` 只裝 `adplugdb`），也沒有任何 VGM 播放器。
 FROM debian:bookworm-slim AS build
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      g++ pkg-config libadplug-dev \
+      g++ pkg-config libadplug-dev cmake curl ca-certificates libglib2.0-dev \
  && rm -rf /var/lib/apt/lists/*
 COPY opl2wav.cpp /tmp/opl2wav.cpp
 RUN g++ -O2 -o /usr/local/bin/opl2wav /tmp/opl2wav.cpp $(pkg-config --cflags --libs adplug)
+RUN apt-get update && apt-get install -y --no-install-recommends make \
+ && rm -rf /var/lib/apt/lists/*
+
+# Munt 2.8.2，固定官方來源；ROM由使用者唯讀提供，不放進image。
+RUN curl -fL --retry 3 https://codeload.github.com/munt/munt/tar.gz/3b05ec276f9e605af86b0eaef7f5eda43477a31f -o /tmp/munt.tar.gz \
+ && echo '209e1042a3e4392f0c807467e9afcc56cc5b14fd3bbb49655a4689e8febf51ec  /tmp/munt.tar.gz' | sha256sum -c - \
+ && mkdir /tmp/munt \
+ && tar -xzf /tmp/munt.tar.gz -C /tmp/munt --strip-components=1 \
+ && cmake -S /tmp/munt -B /tmp/munt-build -DCMAKE_BUILD_TYPE=Release \
+      -Dmunt_WITH_MT32EMU_QT=OFF -Dlibmt32emu_BUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF \
+ && cmake --build /tmp/munt-build --parallel 2 \
+ && cmake --install /tmp/munt-build
 
 FROM debian:bookworm-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      fluidsynth fluid-soundfont-gm ffmpeg libadplug-2.3.3-0 \
+      fluidsynth fluid-soundfont-gm ffmpeg libadplug-2.3.3-0 libglib2.0-0 \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=build /usr/local/bin/opl2wav /usr/local/bin/opl2wav
+COPY --from=build /usr/local/bin/mt32emu-smf2wav /usr/local/bin/mt32emu-smf2wav
+COPY --from=build /usr/local/share/doc/munt /usr/local/share/doc/munt
+RUN apt-get update && apt-get install -y --no-install-recommends python3 \
+ && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /usr/local/share/logh3-audio \
+ && dpkg-query -W > /usr/local/share/logh3-audio/dpkg-versions.tsv
 
 ENV HOME=/tmp

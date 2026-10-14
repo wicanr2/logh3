@@ -4,13 +4,13 @@
 `docs/internals/data/music-mapping.json`（曲號 ↔ 曲名 ↔ 播放時機）
 素材：`assets/original/music/mid/*.mid`（22 首，進版控；同目錄另有 `vgm/`、`ogg/`；
 以 `tools/py.sh tools/scripts/mds_export.py` 從自備原版重建；清單與雜湊見 [`assets/original/README.md`](../../assets/original/README.md)）
-音訊工具查詢入口：`bash tools/audio.sh <命令>`，沿用 `logh3-audio:2`；
+音訊工具查詢入口：`bash tools/audio.sh <命令>`，使用 `logh3-audio:3-munt2.8.2`；
 原版及儲存庫唯讀，輸出限 `workplace/`，無網路、有資源與逾時限制。
 完整原生匯入已通過指定 Linux 驗收：十一首 FM 的 VGM／固定封裝 OGG 全檔符合
 保存基準，戰略、結局、替換開場三路徑可獨立重現；十一首 GM 沿用既有近似。
 二十二首正式解碼與正常玩家選曲通過，來源／工具身份與參數見
 [`native-fm-import.json`](data/native-fm-import.json) 及[驗證 031](../playtest/031-native-fm-import.md)。
-此為原版 cue／串流重現及 remake 管線驗收，尚未完成三平台工具封包或聆聽。
+此段保存原生匯入的技術範圍。三平台本機封包與使用者現行音樂聆聽已驗收，見下方現況；Windows／macOS真機及未抽樣循環仍為證據限制。
 證據等級：版面與事件語意 **強證據**（小節長度、曲目節拍與已知樂曲吻合）；
 速度數值的單位 **未確認**。
 
@@ -111,15 +111,23 @@
 完整 VGM／OGG 雜湊與來源固定於 [`fm-import-lock.json`](data/fm-import-lock.json)，
 由 `tools/scripts/music_fm_lock.py` 匯出，程式生成表格須與 JSON 一致。
 
-目前轉檔使用 FluidR3_GM（Debian `fluid-soundfont-gm 3.1-5.3`），音色庫本體採 MIT，
+原生GM匯入管線使用 FluidR3_GM（Debian `fluid-soundfont-gm 3.1-5.3`），音色庫本體採 MIT，
 可隨 remake 封包發行，必須保留完整著作權、授權及貢獻者資訊。
 它不屬於原版素材，也不由專案 RRSAL 授權覆蓋。來源、148,398,306-byte 實物雜湊、
 完整授權及 11 首 FM 基準核對見[研究 356](../re/356-player-music-library.md)、
 [`player-music-library.json`](data/player-music-library.json)。
 使用者已選音色庫隨包，建置時下載固定版本並驗 SHA-256，不採 Git LFS；
-原生 GM 階段已由規格 069 驗收；完整免 Docker 曲庫管線尚未完成（#69）。
+原生 GM 階段已由規格 069 驗收；免 Docker 曲庫管線的分階段結果見規格071至077。三平台本機交付與現行HD音樂已有驗證120，使用者於2026-10-14確認實際聆聽PASS，#69已關閉。新音色選擇另依[規格114](../spec/114-midi-interface.md)與[驗證121](../playtest/121-landing-and-soundfont.md)。
 建置音色庫入口：`LOGH3_NET=1 tools/py.sh tools/scripts/soundfont_prepare.py --download`；
 離線快取重跑與授權核對方法見[研究 356](../re/356-player-music-library.md)。
+
+## 重製的兩種音色
+
+設定原MIDI I/F列依[114](../spec/114-midi-interface.md)改為GeneralUser GS／Roland MT-32。兩項都播放原MIDI版11首曲目，分別位於`music/hd/`與`music/mt32/`，FM沿原曲庫保留。獨立`preferences.json`保存音色，不寫原版MUSIC.INI或六表存檔。完整驗收與本機使用方式見[121](../playtest/121-landing-and-soundfont.md)。
+
+GeneralUser GS.sf2沿143固定輸入。使用者提供的MT-32目錄實際為ROM，採未修改的1.07控制ROM與PCM，Munt 2.8.2離線合成，再以固定參數編成OGG。原MIDI每首最多8個旋律通道，依原通道排序映射至MT-32的1..8；僅改status低4bits，音符、program、delta與tempo位元組保持。這是MT-32模擬音色近似，不宣稱GM音色編號等價或實機逐波形一致。
+
+生成器為[mt32_prepare.py](../../tools/scripts/mt32_prepare.py)，有界入口為`LOGH3_FONT_DIR=/home/anr2/cht/mt32 bash tools/audio.sh python3 /src/tools/scripts/mt32_prepare.py --midi <容器內MIDI目錄> --out /work/<新目錄>`。ROM唯讀、不進image或Git；每首來源、通道映射、完整命令、OGG雜湊、時長及峰值保存於SOURCES.json，版控摘要見[來源索引](data/landing-soundfont.json)。
 
 ## 哪個畫面播哪一首
 
@@ -199,7 +207,7 @@ play_music(戰鬥嗎):
 
 ### `_F` 還是 `_M`：`MUSIC.INI` 只說「有沒有 MIDI 介面」
 
-第98輪補證：[研究432](../re/432-settings-interface.md)。MIDI選單右鍵取消不開檔、不命中INI寫端；DS:F138的指標不代表任意時點都有有效INI內容。七項查表及無／330H的实际寫端已核，軟體MIDI映射仍待使用者決定。
+第98輪補證：[研究432](../re/432-settings-interface.md)。MIDI選單右鍵取消不開檔、不命中INI寫端；DS:F138的指標不代表任意時點都有有效INI內容。七項查表及無／330H的實際寫端已核。2026-10-14使用者決定remake改為MT-32／GeneralUser GS音色選擇，原版七項埠不進新選單，契約見114。
 
 `MUSIC.INI` 六個位元組，與 `MUSIC.ORG` 相同（`RESSOUND.COM` 用
 `COPY music.org *.ini` 還原出廠值）：
