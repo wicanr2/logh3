@@ -41,7 +41,7 @@ type PlaybackSound struct {
 
 // BattleInputReady reports the existing input boundary without changing it.
 func (g *Game) BattleInputReady() bool {
-	return g.state == StateBattle && !g.battlePreparing && !g.battleMoving && !g.battleSpotting.active && !g.fleetCombat.active && !g.battleFinishing
+	return g.state == StateBattle && !g.battlePreparing && !g.battleMoving && !g.battleSpotting.active && !g.fleetCombat.active && !g.battleFinishing && !g.fortressEngagement
 }
 
 func (g *Game) PlaybackObservation() *PlaybackObservation {
@@ -61,6 +61,16 @@ func (g *Game) PlaybackObservation() *PlaybackObservation {
 		v.DamageApplied, v.Result, v.Lost, v.Weapon = s.damaged, s.damaged && s.tick >= s.resultTick, s.hit.Lost, int(s.weapon)
 		pictures = s.pictures
 		for _, cue := range s.sounds {
+			v.Sounds = append(v.Sounds, PlaybackSound{cue.id, cue.tick, cue.defence, cue.played})
+		}
+	} else if len(g.engQueue) > 0 && g.engQueue[0].gun != nil {
+		s := g.engQueue[0].gun
+		v.ID = fmt.Sprintf("fortress/%d/%d/%d/%d", g.battleRegion, g.battleTurn, s.scene.Planet, s.scene.Unit)
+		v.Kind, v.Tick, v.Interval = "fortress", g.engTick, g.fleetSceneInterval()
+		v.ResultTick = s.schedule.resultTick
+		v.Result, v.DamageApplied, v.Lost = g.engTick >= s.schedule.resultTick, true, s.scene.Hit.Lost
+		pictures = s.schedule.pictures
+		for _, cue := range s.schedule.sounds {
 			v.Sounds = append(v.Sounds, PlaybackSound{cue.id, cue.tick, cue.defence, cue.played})
 		}
 	} else {

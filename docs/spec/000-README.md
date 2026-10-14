@@ -1,5 +1,7 @@
 # 規格
 
+第134輪：[要塞砲呈現144限定CONFORMED](144-fortress-gun-presentation.md)與[驗收123](../playtest/123-fortress-presentation.md)，423完整幀、正常GUI、音訊、F7與六表存讀通過。[目前狀態表](../goal/2026-10-14-fortress-presentation-round-134.md)分開要塞完成與續讀／整段同態限制。
+
 目前第133輪：[計畫133](../goal/2026-10-14-fortress-gun-round-133.md)沿[028要塞砲](028-fortress-gun-fire.md)完成原版三案雙跑、規則回歸及正常伊謝爾倫開火；[研究446](../re/446-fortress-gun-scene.md)與[驗證122](../playtest/122-fortress-gun-trigger.md)保存證據。正式要塞砲演出尚未接，完整056保持DRAFT。
 
 第132輪成果：[118交戰分段](118-landing-scene.md)與[114音色選擇](114-midi-interface.md)，狀態見[計畫132](../goal/2026-10-14-landing-soundfont-round-132.md)及[驗證121](../playtest/121-landing-and-soundfont.md)。使用者已驗收現行音樂並關閉#69，人工檢視一致並關閉#16；原版欄名未知及未驗真機仍保留證據限制。

@@ -139,5 +139,36 @@
    "0ca565bbe2a5a2b1d1"
   ],
   "Destroyed": "015b302c312cc0bbb7b42020253675"
+ },
+ "fortress_frame": {
+  "Formats": {
+   "clear": "0c",
+   "unknown": "b2c4a148c4a5b6a42020b2c4a148b3a1b6a40a",
+   "prefix": "b2c4",
+   "suffix": "c4a5b6a4",
+   "squadron": "062020b2c4253264b3a1b6a4070a",
+   "admiral": "252d3138730a",
+   "ships": "252d387320202020202020202020202535752f253575",
+   "title": "0c2573",
+   "name": "257325730a",
+   "defence": "a8bebdc3a44f202020202020202020202020202535752f253575",
+   "label": "0cad6eb6ebafa5",
+   "goto": "015b25642c25642c",
+   "destroyed": "c0bbb7b42020253675",
+   "notice": "015b332c312c035b25642c2573035b25642c2020ad6eb6ebafa5b56fae67a149"
+  },
+  "Cues": [
+   17,
+   27,
+   17,
+   17,
+   27,
+   17
+  ],
+  "NoticeColours": [
+   150,
+   149,
+   151
+  ]
  }
 }

@@ -67,7 +67,9 @@ func (g *Game) resolveBattleTurn() []rules.BattleLoss {
 func (g *Game) fortressGunFire() []rules.FortressGunHit {
 	cpu, passive := g.passiveComputer()
 	if !passive {
-		return rules.FortressGunFire(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+		hits, scenes := rules.FortressGunWithScenes(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+		g.battleGunScenes = scenes
+		return hits
 	}
 	states := map[int]int{}
 	for i := range g.battlePlanets {
@@ -76,7 +78,8 @@ func (g *Game) fortressGunFire() []rules.FortressGunHit {
 			p.GunState = rules.FortressGunIdle
 		}
 	}
-	hits := rules.FortressGunFire(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+	hits, scenes := rules.FortressGunWithScenes(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+	g.battleGunScenes = scenes
 	for i, st := range states {
 		g.battlePlanets[i].GunState = st
 	}

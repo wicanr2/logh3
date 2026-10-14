@@ -128,7 +128,7 @@ func clampRow(r, rows int) int {
 
 // AdvanceBattleTurn經準備及逐幀交錯移動後續接結算；完整八步對齊仍依規格062。
 func (g *Game) AdvanceBattleTurn() {
-	if g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.fleetCombat.active || g.battleFinishing {
+	if g.battlePreparing || g.battleMoving || g.battleSpotting.active || g.fleetCombat.active || g.battleFinishing || g.fortressEngagement {
 		return
 	}
 	g.saveBattleWorkView()
@@ -217,6 +217,13 @@ func (g *Game) advanceBattleTurnAfterFleetCombat() {
 			g.battleScore[h.Scorer] += h.Score
 		}
 	}
+	if g.queueFortressEngagements(g.battleGunScenes) {
+		return
+	}
+	g.advanceBattleTurnAfterFortress()
+}
+
+func (g *Game) advanceBattleTurnAfterFortress() {
 	// 打行星讀艦隊的編制完整度（`+0x3C`），先重算一次（`docs/re/153`）。
 	rules.RefreshFleetIntegrity(g.battleFleets, g.battleUnits)
 	planetOwners := make([]int, len(g.battlePlanets))
@@ -287,6 +294,10 @@ func (g *Game) endBattleTurn() {
 //
 // 第二項「資料」開的是什麼還沒逆向，所以只把選單關掉。
 func (g *Game) battleClick(x, y int) {
+	if g.currentFortressNotice() != nil {
+		g.fortressNoticeClick()
+		return
+	}
 	if g.fleetCombat.active {
 		g.fleetCombatClick(x, y, false)
 		return
@@ -549,7 +560,7 @@ func (g *Game) battleScroll(x, y int) {
 
 // RightHold 是右鍵按著沒放的每一幀：戰場上就再捲一格。
 func (g *Game) RightHold(x, y int) {
-	if g.state != StateBattle || !g.battleScrollHeld || g.battleMoving || g.battlePreparing || g.battleSpotting.active || g.fleetCombat.active {
+	if g.state != StateBattle || !g.battleScrollHeld || g.battleMoving || g.battlePreparing || g.battleSpotting.active || g.fleetCombat.active || g.fortressEngagement {
 		return
 	}
 	g.moveMouse(x, y)

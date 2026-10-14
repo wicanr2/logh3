@@ -999,6 +999,8 @@ type Game struct {
 	// battleGunHits 是上一回合要塞砲打掉的分隊（`docs/spec/028`）；
 	// battleAssaults 是上一回合打行星的結果（`docs/spec/019`）。
 	battleGunHits       []rules.FortressGunHit
+	battleGunScenes     []rules.FortressGunScene
+	fortressEngagement  bool
 	battleAssaults      []rules.PlanetAssaultHit
 	battleAssaultScenes []rules.PlanetAssaultScene
 	// engQueue 是排隊等演的交戰演出（`engagement.go`）；engTick 是目前這一場從底圖
@@ -3029,6 +3031,10 @@ func (g *Game) rightClick(x, y int) {
 		g.state = StateStandbyAdmirals
 	case StateBattle:
 		// 右鍵關掉最上面那一層：詳細資料 → 「資料」 → 命令選單 → 選單。
+		if g.currentFortressNotice() != nil {
+			g.fortressNoticeClick()
+			return
+		}
 		if g.fleetCombat.active {
 			g.fleetCombatClick(x, y, true)
 			return
@@ -3280,6 +3286,9 @@ func (g *Game) loadSlotFromDisk(n int) bool {
 // 保存前同步現況艦隊／艦艇（規格 067）；未知欄位從底稿保留。
 // `dir` 由呼叫端指定，原版目錄一律唯讀。
 func (g *Game) SaveSlot(dir string, index int) error {
+	if g.fortressEngagement {
+		return fmt.Errorf("要塞砲演出尚未完成")
+	}
 	if g.battleFinishing {
 		return fmt.Errorf("戰場結束或占領報告尚未完成")
 	}
@@ -5088,6 +5097,9 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	}
 	g.battleDisplayedView, g.battleDisplayKnown = view, true
 	units, directions := g.battleDisplayUnits()
+	if s := g.currentFortressNotice(); s != nil {
+		units = append([]rules.BattleUnit(nil), s.scene.Before.Units...)
+	}
 	fb := screen.Battle(g.res.Battle, g.res.BattlePanel, g.res.BattleTiles, cells, view)
 	if len(g.battleUnits) > 0 && len(g.res.Sprites) > 0 {
 		screen.DrawBattleUnits(g.res.Battle, fb, g.res.Sprites, units,
@@ -5220,6 +5232,7 @@ func (g *Game) drawBattle() *gfx.Framebuffer {
 	// 訊息框畫在最上面（模態）。
 	g.drawMessage(fb)
 	g.drawSpottingHeader(fb)
+	g.drawFortressNotice(fb)
 	// 正常輸入時游標在最上面；移動階段原版邊界均藏游標（規格080）。
 	g.drawFleetCombatCommand(fb)
 	g.drawEnemyVisibilityNotice(fb)

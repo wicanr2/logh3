@@ -106,4 +106,4 @@
 命中10支分隊時共31次COMANI呼叫，音效呼叫參數為27、7、3、6、3、0、4、2、3、1、7。
 這是cue選擇與順序證據，不是實體音訊驗收。
 靜圖基底及PFAM在本次caller已不再僅靠段名推測；其他未取證caller與陣營仍保留原等級。
-正式要塞砲renderer／排程尚未接，不沿用登陸的全艦隊數字或一般行星攻擊段替代。
+正式要塞砲renderer／排程已依[144限定CONFORMED](../spec/144-fortress-gun-presentation.md)接線，[驗收123](../playtest/123-fortress-presentation.md)核423完整幀與正常GUI。要塞圖側取目標對側，標題色仍取Owner；[研究447](../re/447-fortress-presentation.md)補逐擊量表、01CC清圖及PZ／左右分支。目標使用分隊數字，不沿用登陸全艦隊總數或一般行星攻擊段。

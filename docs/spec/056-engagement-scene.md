@@ -1,6 +1,6 @@
 # 056 — 交戰演出（打行星那一種）與戰鬥曲的出口
 
-2026-10-14現況：[登陸分段121](../playtest/121-landing-and-soundfont.md)已依118 READY正式接線；[要塞砲122](../playtest/122-fortress-gun-trigger.md)已取得原版逐分隊動態樣本與正常GUI開火證據。要塞砲正式演出、完整登陸／占領正常GUI與公開存讀、DOS整段同狀態仍待驗，完整056保持DRAFT。下方`eng-*`描述保留其歷史診斷範圍，不當作現行未完成清單。
+2026-10-14現況：[登陸分段121](../playtest/121-landing-and-soundfont.md)已依118 READY正式接線；[要塞演出123](../playtest/123-fortress-presentation.md)已依144限定CONFORMED接線，423完整幀、正常GUI及六表存讀通過。完整登陸／占領正常GUI、戰場續讀與DOS整段同狀態仍待驗，完整056保持DRAFT。下方`eng-*`描述保留其歷史診斷範圍，不當作現行未完成清單。
 
 狀態：**DRAFT**（入口、換曲、面板、三個視窗、**兩個圖視窗的序列與計時、按鍵排隊** CONFORMED——六批 `eng-*`
 與 `eng-skip-mid` 扣掉量表與戰場兩塊逐位元組相同（`docs/re/331`，歷史收據）；

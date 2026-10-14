@@ -139,6 +139,11 @@ const (
 // 打完之後呼叫端要走一次 FortressGunTickAll。
 func FortressGunFire(planets []BattlePlanet, fleets []BattleFleet,
 	units []BattleUnit, kinds *ShipKindTable, r *Rand) []FortressGunHit {
+	return fortressGunObserved(planets, fleets, units, kinds, r, nil)
+}
+
+func fortressGunObserved(planets []BattlePlanet, fleets []BattleFleet,
+	units []BattleUnit, kinds *ShipKindTable, r *Rand, observe func(FortressGunScene)) []FortressGunHit {
 	if r == nil {
 		return nil
 	}
@@ -149,6 +154,11 @@ func FortressGunFire(planets []BattlePlanet, fleets []BattleFleet,
 			continue
 		}
 		a, b := FortressRange(p.DefenceMax)
+		if observe != nil {
+			s := PlanetAssaultSnapshot{Planet: *p, Units: append([]BattleUnit(nil), units...), Seed: r.Seed()}
+			s.Planet.NameBytes = append([]byte(nil), p.NameBytes...)
+			observe(FortressGunScene{Planet: pi, Unit: -1, Before: s, After: s})
+		}
 		var hits []int
 		for i := range units {
 			u := &units[i]
@@ -160,14 +170,53 @@ func FortressGunFire(planets []BattlePlanet, fleets []BattleFleet,
 			}
 		}
 		sortFortressTargets(hits, units)
-		for _, i := range hits {
+		for at, i := range hits {
+			var before PlanetAssaultSnapshot
+			if observe != nil {
+				before = fortressSnapshot(p, units[i].Fleet, fleets, units, r)
+			}
 			h := fireOne(pi, p, i, fleets, units, kinds, r)
+			if observe != nil {
+				observe(FortressGunScene{Planet: pi, Unit: i, First: at == 0, Before: before, After: fortressSnapshot(p, units[i].Fleet, fleets, units, r), Hit: h})
+			}
 			if h.Lost > 0 {
 				out = append(out, h)
 			}
 		}
 	}
 	return out
+}
+
+// FortressGunScene保留144瞬時快照。Unit=-1為發射通知，空射也有。
+type FortressGunScene struct {
+	Planet, Unit  int
+	First         bool
+	Before, After PlanetAssaultSnapshot
+	Hit           FortressGunHit
+}
+
+func FortressGunWithScenes(planets []BattlePlanet, fleets []BattleFleet, units []BattleUnit, kinds *ShipKindTable, r *Rand) ([]FortressGunHit, []FortressGunScene) {
+	var scenes []FortressGunScene
+	hits := fortressGunObserved(planets, fleets, units, kinds, r, func(s FortressGunScene) { scenes = append(scenes, s) })
+	return hits, scenes
+}
+
+func fortressSnapshot(p *BattlePlanet, index int, fleets []BattleFleet, units []BattleUnit, r *Rand) PlanetAssaultSnapshot {
+	var fleet BattleFleet
+	for _, f := range fleets {
+		if f.Index == index {
+			fleet = f
+			break
+		}
+	}
+	// 只在副本計算逐擊完整度；正式FLEET仍由原回合接點刷新。
+	for _, u := range units {
+		if u.Fleet == index && u.Squadron >= 0 && u.Kind != kindScout && u.Ships > 0 {
+			fleet.Integrity = FleetIntegrity(&fleet, units)
+			break
+		}
+	}
+	return assaultSnapshot(p, &fleet, units, r)
 }
 
 // sortFortressTargets 照帝國那支比較函式（`2264:052F`）排：艦隊編號

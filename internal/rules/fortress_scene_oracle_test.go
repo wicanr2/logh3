@@ -4,7 +4,9 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"fmt"
+	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 )
 
@@ -47,17 +49,61 @@ func TestFortressGunSceneOracle(t *testing.T) {
 			Missiles: u32(s, 14), Fighters: u32(s, 18)})
 	}
 	var fleets []BattleFleet
+	admirals, err := os.ReadFile("../../org_game/extracted/ADMIRAL.DTA")
+	if err != nil {
+		t.Skipf("缺原版S3提督表：%v", err)
+	}
+	if fmt.Sprintf("%x", sha256.Sum256(admirals)) != "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263" {
+		t.Fatal("S3提督表身份不符")
+	}
 	for i := 0; i < 32; i++ {
 		f := pre.fleet(i)
+		factor := 0
+		if int(f[4]) < len(admirals)/AdmiralRecord {
+			factor = int(admirals[int(f[4])*AdmiralRecord+0x0B])
+		}
 		fleets = append(fleets, BattleFleet{Index: i, Faction: int(f[1]),
-			Facing: int(f[0x4A]), Ability0: int(f[0x3D])})
+			Facing: int(f[0x4A]), Ability0: int(f[0x3D]), Ability3: int(f[0x40]), AdmiralLossFactor: factor, Integrity: int(f[0x3C])})
 	}
 	kinds, err := LoadShipKindTable("../../docs/internals/data/ship-kind-table.json")
 	if err != nil {
 		t.Fatal(err)
 	}
 	rng := NewRand(uint32(pre.u32(oracleDS + 0x94DC)))
-	hits := FortressGunFire(planets, fleets, units, kinds, rng)
+	baselineUnits := append([]BattleUnit(nil), units...)
+	baselinePlanets := append([]BattlePlanet(nil), planets...)
+	baselineFleets := append([]BattleFleet(nil), fleets...)
+	baselineRNG := NewRand(rng.Seed())
+	baselineHits := FortressGunFire(baselinePlanets, baselineFleets, baselineUnits, kinds, baselineRNG)
+	hits, scenes := FortressGunWithScenes(planets, fleets, units, kinds, rng)
+	if !reflect.DeepEqual(hits, baselineHits) || !reflect.DeepEqual(units, baselineUnits) || !reflect.DeepEqual(fleets, baselineFleets) || rng.Seed() != baselineRNG.Seed() {
+		t.Fatal("呈現觀測改變原規則或RNG")
+	}
+	if len(scenes) != 11 || scenes[0].Unit != -1 {
+		t.Fatal("缺發射通知或逐分隊快照", len(scenes))
+	}
+	first := 0
+	for _, s := range scenes[1:] {
+		if s.First {
+			first++
+		}
+		if s.Before.Units[s.Unit].Ships-s.After.Units[s.Unit].Ships != s.Hit.Lost {
+			t.Fatal("快照損失與原規則不符")
+		}
+	}
+	if first != 1 {
+		t.Fatal("要塞攻擊動畫必須只有首次目標一次")
+	}
+	for i, want := range []int{93, 88, 81, 77, 66, 98, 96, 94, 94, 88} {
+		if scenes[i+1].After.Integrity != want {
+			t.Errorf("目標%d逐擊完整度%d != 原版%d", i, scenes[i+1].After.Integrity, want)
+		}
+	}
+	for i, want := range []int{844, 752, 674, 674, 674, 1450, 1404, 1320, 1320, 406} {
+		if scenes[i+1].Before.Attack != want {
+			t.Errorf("目標%d量表分母%d != 原版%d", i, scenes[i+1].Before.Attack, want)
+		}
+	}
 	var total int
 	var scores [2]int
 	for _, h := range hits {

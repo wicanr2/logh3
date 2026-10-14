@@ -53,7 +53,7 @@ func (g *Game) Tick(d time.Duration) {
 	if d <= 0 {
 		return
 	}
-	planetScene := g.state == StateEngagement && len(g.engQueue) > 0 && g.engQueue[0].stage != nil
+	planetScene := g.state == StateEngagement && len(g.engQueue) > 0 && (g.engQueue[0].stage != nil || g.engQueue[0].gun != nil)
 	if (!g.fleetCombat.active || g.fleetCombat.stage != fleetCombatScene) && !planetScene {
 		g.advanceSoundEffects(d)
 	}
@@ -108,7 +108,7 @@ func (g *Game) Tick(d time.Duration) {
 		g.turnWindowTick(n)
 		return
 	}
-	if g.state == StateEngagement {
+	if g.state == StateEngagement || g.currentFortressNotice() != nil {
 		g.engTickRemainder += d
 		n := 0
 		for tick := g.engagementTickDuration(); g.engTickRemainder >= tick; g.engTickRemainder -= tick {

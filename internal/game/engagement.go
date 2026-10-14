@@ -41,6 +41,7 @@ type engagement struct {
 	fleetName             [2]byte
 	gauges                *rules.PlanetDefenceGauges
 	stage                 *planetEngagementStage
+	gun                   *fortressEngagementStage
 }
 
 // queueEngagements 把這一回合打行星的結果排成演出（一顆行星一場：原版
@@ -135,6 +136,9 @@ func (g *Game) startEngagement() {
 	if len(g.engQueue) > 0 && g.engQueue[0].stage != nil {
 		g.startPlanetEngagement()
 	}
+	if len(g.engQueue) > 0 && g.engQueue[0].gun != nil {
+		g.startFortressEngagement()
+	}
 }
 
 // engagementPicture 是時間線上的一次畫圖：哪一段、哪一格、哪個視窗、第幾 tick。
@@ -147,6 +151,9 @@ type engagementPicture struct {
 
 // engagementTimeline 回這一場的畫圖序列與「擊毀」那一刻的 tick（`20B4:08B1`）。
 func (g *Game) engagementTimeline(e engagement) (pics []engagementPicture, result int) {
+	if e.gun != nil {
+		return e.gun.schedule.pictures, e.gun.schedule.resultTick
+	}
 	if e.stage != nil {
 		return e.stage.pictures, e.stage.resultTick
 	}
@@ -227,8 +234,16 @@ func (g *Game) engagementTickDuration() time.Duration {
 // engagementTick 讓演出往前走 n 個計時器 tick：擊毀之後停頓滿「訊息速度」或停頓時
 // 佇列裡有按鍵就收場。
 func (g *Game) engagementTick(n int) {
-	for ; n > 0 && g.state == StateEngagement; n-- {
+	for ; n > 0 && (g.state == StateEngagement || g.currentFortressNotice() != nil); n-- {
 		g.engTick++
+		if s := g.currentFortressNotice(); s != nil {
+			g.fortressNoticeMaybeEnd()
+			continue
+		}
+		if len(g.engQueue) > 0 && g.engQueue[0].gun != nil {
+			g.advanceSoundEffects(g.engagementTickDuration())
+			g.processPlanetSounds(&g.engQueue[0].gun.schedule)
+		}
 		if len(g.engQueue) > 0 && g.engQueue[0].stage != nil {
 			g.advanceSoundEffects(g.engagementTickDuration())
 			g.processPlanetSounds(g.engQueue[0].stage)
@@ -367,14 +382,26 @@ func (g *Game) engagementClick() {
 
 // finishEngagement 收場：下一場從頭開始，沒有了就回戰場做完那一回合。
 func (g *Game) finishEngagement() {
+	var gunPrevious *screen.FortressFrameView
+	gunPlanet := -1
+	if len(g.engQueue) > 0 && g.engQueue[0].gun != nil && g.engQueue[0].gun.scene.Unit >= 0 {
+		v := g.fortressEngagementView(g.engQueue[0].gun)
+		gunPrevious, gunPlanet = &v, g.engQueue[0].planet
+	}
 	var previous *screen.PlanetFrameView
 	planet := -1
 	if len(g.engQueue) > 0 && g.engQueue[0].stage != nil {
 		v := g.planetEngagementView(g.engQueue[0].stage)
 		previous, planet = &v, g.engQueue[0].planet
 	}
+	if g.fortressEngagement {
+		g.state = StateEngagement
+	}
 	if len(g.engQueue) > 0 {
 		g.engQueue = g.engQueue[1:]
+	}
+	if gunPrevious != nil && len(g.engQueue) > 0 && g.engQueue[0].gun != nil && g.engQueue[0].planet == gunPlanet {
+		g.engQueue[0].gun.previous = gunPrevious
 	}
 	if len(g.engQueue) > 0 && g.engQueue[0].stage != nil {
 		if g.engQueue[0].planet == planet {
@@ -386,11 +413,19 @@ func (g *Game) finishEngagement() {
 		return
 	}
 	g.state = StateBattle
+	if g.fortressEngagement {
+		g.fortressEngagement = false
+		g.advanceBattleTurnAfterFortress()
+		return
+	}
 	g.finishBattleTurn()
 }
 
 // drawEngagement 畫演出：底圖與三個視窗（沒有游標）。
 func (g *Game) drawEngagement() *gfx.Framebuffer {
+	if len(g.engQueue) > 0 && g.engQueue[0].gun != nil {
+		return g.drawFortressEngagement(g.engQueue[0].gun)
+	}
 	if g.fleetCombat.active {
 		return g.drawFleetCombatScene()
 	}
