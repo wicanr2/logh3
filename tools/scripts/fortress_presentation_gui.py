@@ -211,8 +211,8 @@ try:
     snap('public-saved')
     first={p.stem:p.read_bytes() for p in (out/'save').glob('*.DT0')}
     assert first['PLANET'][33*82+0x45]==2
-    click(400,240,3);wait('save returned to strategy',lambda r:r['state']=='StateCommandPhase')
-    click(544,125);click(560,145);wait('public load list',lambda r:r['state']=='StateLoadGame')
+    wait('save returned to battle',lambda r:r['state']=='StateBattle')
+    battle_menu(3);wait('public load list',lambda r:r['state']=='StateLoadGame')
     click(300,132);wait('public saved faction',lambda r:r['state']=='StateLoadFaction')
     click(318,228);wait('public load completed',lambda r:r['state']=='StateCommandPhase')
     click(544,125);click(560,165);wait('public resave',lambda r:r['state']=='StateSaveGame')

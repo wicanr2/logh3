@@ -889,6 +889,7 @@ type Game struct {
 	versusLoadedRound bool
 	pendingLoadSlot   int
 	loadReturnState   State // 141：取消讀檔回到實際入口，不開始預備的新局。
+	saveReturnState   State // 145：戰術保存成功直接回原戰場。
 
 	// battleRegion 是戰術畫面看的是哪個星域的地形，battleView 是視野
 	// 在整張戰場上的位置（單位是格）。-1 ＝ 還沒進過戰場。
@@ -2440,6 +2441,11 @@ func (g *Game) click(x, y int) {
 		// 會跳「磁碟片載入時有發生錯誤。」（`docs/spec/010`）。
 		if n := g.saveRow(); n >= 0 && g.res.SaveDir != "" {
 			g.saveErr = g.SaveSlot(g.res.SaveDir, n)
+			if g.saveErr == nil && g.saveReturnState == StateBattle {
+				g.state = StateBattle
+				g.battleMenu = false
+				g.refreshBattleHover()
+			}
 		}
 	case StateShipDelivery:
 		// 報告只有一個「確認」鈕，點哪裡都收掉——哪裡按不算數還沒量過。
@@ -2875,6 +2881,9 @@ func (g *Game) click(x, y int) {
 						}
 						if item == StateLoadGame {
 							g.loadReturnState = StateCommandPhase
+						}
+						if item == StateSaveGame {
+							g.saveReturnState = StateCommandPhase
 						}
 						g.state = item
 					}

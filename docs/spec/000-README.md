@@ -1,5 +1,7 @@
 # 規格
 
+第136輪：[145戰術保存成功返回](145-battle-save-return.md)、[驗收125](../playtest/125-battle-save-return.md)與[研究449](../re/449-original-battle-save-load.md)。原版冷啟動可直接續戰已證實；正式remake只修保存成功返回，讀回重建及DOS整段同態保持未完成。[目前狀態表](../goal/2026-10-14-original-battle-load-round-136.md)
+
 第135輪：[登陸分段118限定CONFORMED](118-landing-scene.md)與[驗收124](../playtest/124-engagement-integration.md)，459完整幀及目前CPU政策下S3正常登陸／反擊／占領、兩種顯示、音訊、F7與公開六表通過。[目前狀態表](../goal/2026-10-14-engagement-integration-round-135.md)保留DOS整回合同態及戰場續讀限制。
 
 第134輪：[要塞砲呈現144限定CONFORMED](144-fortress-gun-presentation.md)與[驗收123](../playtest/123-fortress-presentation.md)，423完整幀、正常GUI、音訊、F7與六表存讀通過。[目前狀態表](../goal/2026-10-14-fortress-presentation-round-134.md)分開要塞完成與續讀／整段同態限制。

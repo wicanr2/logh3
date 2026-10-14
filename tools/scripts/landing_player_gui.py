@@ -239,9 +239,9 @@ try:
     first={p.stem:p.read_bytes() for p in (out/'save').glob('*.DT0')}
     assert first['PLANET'][63*82+17]==1
     snap('public-saved')
-    click(400,240,3)
-    wait({'state':'StateCommandPhase'},'save returned')
-    click(544,125);click(560,145)
+    wait({'state':'StateBattle'},'save returned')
+    click(240,470)
+    click(cx*o['cell_w']+o['origin_bias']+h['x']-w['x']+8,cy*o['cell_h']+o['origin_bias']+h['y']-w['y']+3*l['text']['row_pitch']+8)
     wait({'state':'StateLoadGame'},'public load list')
     click(300,132)
     wait({'state':'StateLoadFaction'},'saved faction')

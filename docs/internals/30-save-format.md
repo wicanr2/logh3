@@ -1,5 +1,11 @@
 # 存檔格式
 
+## 戰術保存與冷啟動續讀
+
+[研究449](../re/449-original-battle-save-load.md)、[驗收125](../playtest/125-battle-save-return.md)與[唯一索引](data/battle-save-return.json)以原版公開S3帝國保存／冷啟動雙跑確認：保存成功自動回同戰場；取進度載入戰鬥DT0後，不重選陣營，保留WORK+02、+03及+06並續至下一回合。這限定於已測單人案例，不能將下文一般讀檔重選陣營套用到所有戰術存檔。
+
+本案完整六表差分只有FLEET+6A、八筆SHIP+2F圖示快取及座位1鏡頭，詳細位移及前後值保存於索引。RNG的DS:94DC在230-byte WORK外，冷啟動未沿保存前seed。remake已依[145](../spec/145-battle-save-return.md)修正保存成功返回；戰場讀回重建尚未完成，不新增保存欄位猜補。
+
 資料：[`data/unrest-at-load.json`](data/unrest-at-load.json)
 證據等級：檔案對應、槽位編號、`SAVEDATA.IDX` 版面、`PLANET`／`FLEET`
 與記憶體逐位元組相同 **confirmed**（[`docs/re/41`](../re/41-save-files-are-the-runtime-tables.md)）；

@@ -289,8 +289,8 @@ func (g *Game) endBattleTurn() {
 // 主迴圈繼續下一個回合；其餘六項回非 0，**跳出主迴圈**去處理那個命令。
 //
 // 後四項的字串與戰略地圖上「系統指令」的後四項一字不差，所以接到同一
-// 組畫面。**離開之後會不會回到這一場戰鬥還沒逆向**——這裡不動戰場狀態
-// （不寫回損失、不清單位），純粹換畫面，回得來就接得上。
+// 組畫面。保存成功依145返回原戰場；讀回重建另追#48。開系統視窗時
+// 保留戰場狀態，保存入口先同步當前行星，避免遺漏已結算的歸屬與戰損。
 //
 // 第二項「資料」開的是什麼還沒逆向，所以只把選單關掉。
 func (g *Game) battleClick(x, y int) {
@@ -382,6 +382,9 @@ func (g *Game) battleClick(x, y int) {
 				// 保存選單會離開StateBattle；先同步當前戰場的typed副本。
 				// 原版直接改行星記錄，保存必須保留相同歸屬（規格106）。
 				g.res.Planets.ApplyBattlePlanets(g.battlePlanets)
+			}
+			if to == StateSaveGame {
+				g.saveReturnState = StateBattle
 			}
 			if to == StateSettings {
 				g.settingsReturnState = StateBattle

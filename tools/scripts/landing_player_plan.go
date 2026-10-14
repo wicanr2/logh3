@@ -324,9 +324,11 @@ func main() {
 		panic(e)
 	}
 	snap("public-saved")
-	right(400, 240)
-	click(544, 125)
-	click(560, 145)
+	if g.State() != game.StateBattle {
+		panic("save did not return to battle")
+	}
+	click(240, 470)
+	click(mx+20, my+20+3*r.BattleMenu.Layout.Text.RowPitch)
 	click(300, 132)
 	click(318, 228)
 	if g.State() != game.StateCommandPhase {
