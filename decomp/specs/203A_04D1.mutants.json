@@ -1,0 +1,18 @@
+[
+  {"name": "加總不飽和（回繞）", "find": "sum = (s > 0xFFFFu) ? 0xFFFFu : (uint16_t)s;", "replace": "sum = (uint16_t)s;"},
+  {"name": "飽和值 0xF000（除以 100 後仍不同）", "find": "sum = (s > 0xFFFFu) ? 0xFFFFu : (uint16_t)s;", "replace": "sum = (s > 0xFFFFu) ? 0xF000u : (uint16_t)s;"},
+  {"name": "艦種 2 也算", "find": "if (type == 0 || type == 1) {", "replace": "if (type <= 2) {"},
+  {"name": "只算艦種 0", "find": "if (type == 0 || type == 1) {", "replace": "if (type == 0) {"},
+  {"name": "艦種讀 +5 而非 +4", "find": "uint8_t type = rd8(m, LIN(seg, (uint16_t)(rec + 4u)));", "replace": "uint8_t type = rd8(m, LIN(seg, (uint16_t)(rec + 5u)));"},
+  {"name": "艘數讀 +0xA 而非 +8", "find": "uint16_t v = w04D1_rd16s(m, seg, (uint16_t)(rec + 8u));", "replace": "uint16_t v = w04D1_rd16s(m, seg, (uint16_t)(rec + 0xAu));"},
+  {"name": "池索引乘 0x4C 而非 0x4E", "find": "(uint16_t)(idx * 0x4Eu));", "replace": "(uint16_t)(idx * 0x4Cu));"},
+  {"name": "除數 50", "find": "return (uint16_t)(sum / 100u);", "replace": "return (uint16_t)(sum / 50u);"},
+  {"name": "00AC 的 x、y 對調", "find": "f_17A0_00AC(m, faction, px, py, thr,", "replace": "f_17A0_00AC(m, faction, py, px, thr,"},
+  {"name": "00AC 的陣營讀 +0x10", "find": "faction = w04D1_rd16s(m, p_seg, (uint16_t)(p_off + 0x11u));", "replace": "faction = w04D1_rd16s(m, p_seg, (uint16_t)(p_off + 0x10u));"},
+  {"name": "00AC 的 y 讀 +0x46（欄位位移錯）", "find": "py = w04D1_rd16s(m, p_seg, (uint16_t)(p_off + 0x48u));", "replace": "py = w04D1_rd16s(m, p_seg, (uint16_t)(p_off + 0x46u));"},
+  {"name": "半徑固定 60（不呼叫 2AF5）", "find": "thr = f_2AF5_01F7(m, p_off, p_seg);", "replace": "thr = 60u;"},
+  {"name": "迴圈多走一筆（i <= n，有上界）", "find": "for (i = 0; i < n; i++) {", "replace": "for (i = 0; i < (uint16_t)(n + (n < 350u)); i++) {"},
+  {"name": "少走一筆（n − 1）", "find": "for (i = 0; i < n; i++) {", "replace": "for (i = 0; i + 1u < n; i++) {"},
+  {"name": "A764 與 A766 對調", "find": "    wr16(m, DS(0xA766u), p_seg);\n    wr16(m, DS(0xA764u), p_off);", "replace": "    wr16(m, DS(0xA766u), p_off);\n    wr16(m, DS(0xA764u), p_seg);"},
+  {"name": "不寫 ds:A764", "find": "    wr16(m, DS(0xA764u), p_off);\n", "replace": ""}
+]

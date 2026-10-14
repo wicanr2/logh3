@@ -1,0 +1,29 @@
+{
+  "id": "3009_01DB",
+  "entry": "3009:01DB",
+  "conv": "far",
+  "ret": "none",
+  "size": 90,
+  "code_sha256_16": "83e4c7203766e5d1",
+  "base_state": "/src/workplace/fcmd/fcmd-base.state",
+  "base_state_sha256": "c55de581a6393e0e39e304dd0f191e9d1cfa8457b86b93f2a9e3368b5751ba26",
+  "step_budget": 2000000,
+  "note": "對在場艦隊清單（count byte ds:9894、清單 ds:9898 起每項 1 byte 艦隊編號）裡每支 f[+1] != byte ds:8F1D 的艦隊呼叫 3009:0235(f, DS)。艦隊 n 在 ds:C074 + n*7A。艦隊 0 欄位位址：+1 C075、+0x48 C0BC、+0x4A C0BE、+0x4C C0C0、+0x52 C0C6、+0x5C C0D0、+0x64 C0D8、+0x74 C0E8；艦隊 1 各加 7A、艦隊 2 各加 F4。seeds 用狀態 4（f[+0x74] ← f[+0x5C]、+0x76 ← +0x5E、+0x78 ← +0x4A）讓每次呼叫可觀察，輸出欄位前態填 AA。涵蓋：艦隊 0 因陣營等於 ds:8F1D 略過、清單重複、count 0、count 0x80 與 0x81（i 超過 127 時有號／無號比較不同）、清單項 0x80 與 0xFF（艦隊位移乘 7A 後回繞 16 位元）、兩支移動中艦隊的呼叫順序（ds:8EDC 暫存區的最後內容）。",
+  "args": [],
+  "seeds": [
+    {"note": "count 3、清單 0 1 2、ds:8F1D = 05：艦隊 0（+1 = 05）略過，艦隊 1、2 狀態 4 寫入", "pokes": [{"addr": "ds:9894", "hex": "03"}, {"addr": "ds:9898", "hex": "000102"}, {"addr": "ds:8F1D", "hex": "05"}, {"addr": "ds:C075", "hex": "05"}, {"addr": "ds:C0EF", "hex": "06"}, {"addr": "ds:C169", "hex": "07"}, {"addr": "ds:C0BC", "hex": "04"}, {"addr": "ds:C136", "hex": "04"}, {"addr": "ds:C1B0", "hex": "14"}, {"addr": "ds:C0BE", "hex": "11"}, {"addr": "ds:C138", "hex": "22"}, {"addr": "ds:C1B2", "hex": "33"}, {"addr": "ds:C0D0", "hex": "11112222"}, {"addr": "ds:C14A", "hex": "33334444"}, {"addr": "ds:C1C4", "hex": "55556666"}, {"addr": "ds:C0E8", "hex": "AA", "repeat": 5}, {"addr": "ds:C162", "hex": "AA", "repeat": 5}, {"addr": "ds:C1DC", "hex": "AA", "repeat": 5}]},
+    {"note": "count 1、清單 2、艦隊 2 的 +1 等於 ds:8F1D：略過", "pokes": [{"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "02"}, {"addr": "ds:8F1D", "hex": "07"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C169", "hex": "07"}, {"addr": "ds:C1B0", "hex": "04"}, {"addr": "ds:C1B2", "hex": "33"}, {"addr": "ds:C1C4", "hex": "55556666"}, {"addr": "ds:C1DC", "hex": "AA", "repeat": 5}]},
+    {"note": "count 1、清單 2、艦隊 2 的 +1 與 ds:8F1D 差 1：寫入", "pokes": [{"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "02"}, {"addr": "ds:8F1D", "hex": "07"}, {"addr": "ds:C169", "hex": "08"}, {"addr": "ds:C1B0", "hex": "04"}, {"addr": "ds:C1B2", "hex": "33"}, {"addr": "ds:C1C4", "hex": "55556666"}, {"addr": "ds:C1DC", "hex": "AA", "repeat": 5}]},
+    {"note": "count 0：不呼叫", "pokes": [{"addr": "ds:9894", "hex": "00"}, {"addr": "ds:9898", "hex": "01"}, {"addr": "ds:8F1D", "hex": "00"}, {"addr": "ds:C0EF", "hex": "06"}, {"addr": "ds:C136", "hex": "04"}, {"addr": "ds:C14A", "hex": "33334444"}, {"addr": "ds:C162", "hex": "AA", "repeat": 5}]},
+    {"note": "清單重複 1 1", "pokes": [{"addr": "ds:9894", "hex": "02"}, {"addr": "ds:9898", "hex": "0101"}, {"addr": "ds:8F1D", "hex": "09"}, {"addr": "ds:C0EF", "hex": "00"}, {"addr": "ds:C136", "hex": "04"}, {"addr": "ds:C138", "hex": "22"}, {"addr": "ds:C14A", "hex": "33334444"}, {"addr": "ds:C162", "hex": "AA", "repeat": 5}]},
+    {"note": "count 0x81：清單 0..127 是艦隊 0（狀態 2、不寫），清單 128 是艦隊 1（狀態 4）。無號比較走到第 128 項，有號比較（count 為負）一圈都不走", "pokes": [{"addr": "ds:9894", "hex": "81"}, {"addr": "ds:9898", "hex": "00", "repeat": 128}, {"addr": "ds:9918", "hex": "01"}, {"addr": "ds:8F1D", "hex": "00"}, {"addr": "ds:C075", "hex": "01"}, {"addr": "ds:C0BC", "hex": "02"}, {"addr": "ds:C0EF", "hex": "06"}, {"addr": "ds:C136", "hex": "04"}, {"addr": "ds:C138", "hex": "22"}, {"addr": "ds:C14A", "hex": "33334444"}, {"addr": "ds:C162", "hex": "AA", "repeat": 5}]},
+    {"note": "count 0x80：同上，清單 128 項不處理", "pokes": [{"addr": "ds:9894", "hex": "80"}, {"addr": "ds:9898", "hex": "00", "repeat": 128}, {"addr": "ds:9918", "hex": "01"}, {"addr": "ds:8F1D", "hex": "00"}, {"addr": "ds:C075", "hex": "01"}, {"addr": "ds:C0BC", "hex": "02"}, {"addr": "ds:C0EF", "hex": "06"}, {"addr": "ds:C136", "hex": "04"}, {"addr": "ds:C138", "hex": "22"}, {"addr": "ds:C14A", "hex": "33334444"}, {"addr": "ds:C162", "hex": "AA", "repeat": 5}]},
+    {"note": "清單項 0xFF：f = C074 + FF*7A = 143FA → 43FA（16 位元回繞），狀態 4", "pokes": [{"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "FF"}, {"addr": "ds:8F1D", "hex": "00"}, {"addr": "ds:43FB", "hex": "01"}, {"addr": "ds:4442", "hex": "04"}, {"addr": "ds:4444", "hex": "5B"}, {"addr": "ds:4456", "hex": "77778888"}, {"addr": "ds:446E", "hex": "AA", "repeat": 5}]},
+    {"note": "清單項 0x80：f = C074 + 80*7A = 10D74 → 0D74（乘積 3D00 不可截成 byte），狀態 4", "pokes": [{"addr": "ds:9894", "hex": "01"}, {"addr": "ds:9898", "hex": "80"}, {"addr": "ds:8F1D", "hex": "00"}, {"addr": "ds:0D75", "hex": "01"}, {"addr": "ds:0DBC", "hex": "04"}, {"addr": "ds:0DBE", "hex": "6C"}, {"addr": "ds:0DD0", "hex": "9999AAAA"}, {"addr": "ds:0DE8", "hex": "AA", "repeat": 5}]},
+    {"note": "兩支移動中艦隊（狀態 0）：艦隊 0 (100,100)→(500,400)、艦隊 1 (500,500)→(900,700)，S 都是 8.0（斜向才會經 39B5:005C 寫暫存區）；暫存區 ds:8EDC 最後內容由第二支決定", "pokes": [{"addr": "ds:9894", "hex": "02"}, {"addr": "ds:9898", "hex": "0001"}, {"addr": "ds:8F1D", "hex": "09"}, {"addr": "ds:C075", "hex": "00"}, {"addr": "ds:C0EF", "hex": "00"}, {"addr": "ds:C0BC", "hex": "00"}, {"addr": "ds:C136", "hex": "00"}, {"addr": "ds:C0D0", "hex": "64006400"}, {"addr": "ds:C0D8", "hex": "F4019001"}, {"addr": "ds:C0C6", "hex": "00000800"}, {"addr": "ds:C0C0", "hex": "5A"}, {"addr": "ds:C14A", "hex": "F401F401"}, {"addr": "ds:C152", "hex": "8403BC02"}, {"addr": "ds:C140", "hex": "00000800"}, {"addr": "ds:C13A", "hex": "5B"}, {"addr": "ds:C0E8", "hex": "AA", "repeat": 5}, {"addr": "ds:C162", "hex": "AA", "repeat": 5}]}
+  ],
+  "iters": 20000,
+  "max_cases": 600,
+  "seed": 20261010,
+  "min_coverage": 100
+}

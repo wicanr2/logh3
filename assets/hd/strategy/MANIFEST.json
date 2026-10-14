@@ -1,0 +1,23 @@
+{
+  "rights": "local-only-original-derived",
+  "files": [
+    {
+      "file": "planets.png",
+      "generated_source": "/home/anr2/.codex/generated_images/01a12668-e0a4-7a11-ab97-1f76aaec2b2f/exec-8fbcb2e1-00b0-4042-9c19-c6c3a072714f.png",
+      "sha256": "d0f7e7103c293eb7bf3ddda6d3afae290ebcf8abab75994f7e77e6a45683c16e"
+    },
+    {
+      "file": "empire.png",
+      "generated_source": "/home/anr2/.codex/generated_images/01a12668-e0a4-7a11-ab97-1f76aaec2b2f/exec-db424d35-c7e2-4342-9403-25c688471d02.png",
+      "sha256": "42ec7c5f8746c6db1f8784d7c3b8a5aae83f0ed8972be406887a58eb2ec6ecb7"
+    },
+    {
+      "file": "alliance.png",
+      "generated_source": "/home/anr2/.codex/generated_images/01a12668-e0a4-7a11-ab97-1f76aaec2b2f/exec-d985a878-6ac7-4086-ab9e-a9adf93664ef.png",
+      "sha256": "f11dc675ab8d169ed04ecfeab2d8dbe08f6609f62a600b2e2e25a7b55d156758"
+    }
+  ],
+  "schema": 1,
+  "approval": "2026-10-11 使用者：採用第三稿",
+  "generated_source_directory": "/home/anr2/.codex/generated_images/01a12668-e0a4-7a11-ab97-1f76aaec2b2f"
+}

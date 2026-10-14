@@ -1,0 +1,18 @@
+[
+  {"name": "陣營比較 != 改 ==", "find": "if (rd8(m, DS((uint16_t)(f + 1u))) != rd8(m, DS(0x8F1Du)))", "replace": "if (rd8(m, DS((uint16_t)(f + 1u))) == rd8(m, DS(0x8F1Du)))"},
+  {"name": "陣營欄位取 +2", "find": "rd8(m, DS((uint16_t)(f + 1u)))", "replace": "rd8(m, DS((uint16_t)(f + 2u)))"},
+  {"name": "比較對象 ds:8F1E", "find": "rd8(m, DS(0x8F1Du))", "replace": "rd8(m, DS(0x8F1Eu))"},
+  {"name": "艦隊記錄大小 0x7A 改 0x79", "find": "(uint16_t)(rd8(m, DS(list)) * 0x7Au)", "replace": "(uint16_t)(rd8(m, DS(list)) * 0x79u)"},
+  {"name": "艦隊表基底 C074 改 C075", "find": "uint16_t f = (uint16_t)(0xC074u +", "replace": "uint16_t f = (uint16_t)(0xC075u +"},
+  {"name": "乘積截成 byte", "find": "(uint16_t)(rd8(m, DS(list)) * 0x7Au)", "replace": "(uint16_t)(uint8_t)(rd8(m, DS(list)) * 0x7Au)"},
+  {"name": "count 有號比較", "find": "while (i < rd8(m, DS(0x9894u))) {", "replace": "while ((int8_t)i < (int8_t)rd8(m, DS(0x9894u))) {"},
+  {"name": "多走一圈（有上界）", "find": "while (i < rd8(m, DS(0x9894u))) {", "replace": "while (i < rd8(m, DS(0x9894u)) + (i < 200)) {"},
+  {"name": "少走一圈", "find": "while (i < rd8(m, DS(0x9894u))) {", "replace": "while ((uint16_t)(i + 1u) < rd8(m, DS(0x9894u))) {"},
+  {"name": "清單基底 9898 改 9899", "find": "uint16_t list = 0x9898u;", "replace": "uint16_t list = 0x9899u;"},
+  {"name": "清單項目改讀 word", "find": "(uint16_t)(rd8(m, DS(list)) * 0x7Au)", "replace": "(uint16_t)(rd16(m, DS(list)) * 0x7Au)"},
+  {"name": "只呼叫偶數項（少呼叫）", "find": "if (rd8(m, DS((uint16_t)(f + 1u))) != rd8(m, DS(0x8F1Du)))", "replace": "if (rd8(m, DS((uint16_t)(f + 1u))) != rd8(m, DS(0x8F1Du)) && (i & 1u) == 0)"},
+  {"name": "從第二項開始呼叫", "find": "if (rd8(m, DS((uint16_t)(f + 1u))) != rd8(m, DS(0x8F1Du)))", "replace": "if (rd8(m, DS((uint16_t)(f + 1u))) != rd8(m, DS(0x8F1Du)) && i != 0)"},
+  {"name": "傳給被呼叫者的段錯", "find": "f_3009_0235(m, f, GIN3_DS);", "replace": "f_3009_0235(m, f, (uint16_t)(GIN3_DS + 1u));"},
+  {"name": "傳給被呼叫者的位移加 2", "find": "f_3009_0235(m, f, GIN3_DS);", "replace": "f_3009_0235(m, (uint16_t)(f + 2u), GIN3_DS);"},
+  {"name": "第二支之後再呼叫第一支（改變 ds:8EDC 暫存區最後內容）", "find": "list = (uint16_t)(list + 1u);\n    }", "replace": "list = (uint16_t)(list + 1u);\n        if (i == 2u && rd8(m, DS(0x9894u)) == 2u)\n            f_3009_0235(m, (uint16_t)(0xC074u + (uint16_t)(rd8(m, DS(0x9898u)) * 0x7Au)), GIN3_DS);\n    }"}
+]

@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "generator": "內建 image_gen",
+  "use": "原地圖地形範圍內的共享星雲材質，非完整地圖替換",
+  "files": [
+    {
+      "file": "nebula-01.png",
+      "sha256": "7ab65cf9b682830c9f3a0d68a0c8fee6856ac3d71646fd40b410e882760769be",
+      "prompt": "nebula-01.prompt.txt",
+      "rights": "本專案生成材質；未使用原圖作生成輸入"
+    },
+    {
+      "file": "hull-01.png",
+      "sha256": "3775c96ee8a13de56cfb4d4e752a774eaefe391ea40f96b96fe9950c6bdf638b",
+      "prompt": "hull-01.prompt.txt",
+      "rights": "內建image_gen生成的中性艦殼材質；沒有原版圖像輸入。"
+    }
+  ]
+}

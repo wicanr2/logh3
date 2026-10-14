@@ -1,0 +1,23 @@
+[
+  {
+    "name": "planets",
+    "transparent_background": true,
+    "prompt": "Use case: stylized-concept. Asset type: a single production sprite atlas for a high definition remake of a 1994 space strategy game. Make a precisely aligned 2 by 2 atlas of FOUR isolated circular planet sprites on a genuinely transparent background. Each cell is an equal square, every sphere centered in its cell, diameter 70 percent of the cell width, all four the same apparent size, no rings. Top left: rich blue oceans, clearly readable green continents, thin white cloud bands, Earthlike. Top right: golden ochre rocky world, amber highlights, visible craters and desert formations. Bottom left: pale icy white and gray planet, crisp crater details. Bottom right: deep blue planet with turquoise ocean and pale coastal continents. Classical hand painted realistic science fiction strategy map art, sharp contour, readable at a displayed diameter of 36 pixels, strong silhouette, restrained rim light, hard surface details rather than blurry glow, top left illumination consistent across the atlas. No space background, no stars, no text, no labels, no borders, no cell lines, no watermark. Render native high resolution, not pixel art and not an enlargement of a pixel image. Transparent alpha outside every planet. This is one atlas asset, not a scene."
+  },
+  {
+    "name": "empire",
+    "transparent_background": true,
+    "referenced_image_paths": [
+      "/home/anr2/cht/logh3/workplace/hd127/empire-emblem-reference.png"
+    ],
+    "prompt": "Use case: style-transfer. Edit target: the attached pixel reference from the Galactic Empire emblem in the original Legend of the Galactic Heroes III strategy map. Repaint ONLY its emblem as an isolated high resolution transparent game sprite. Preserve the recognizable upright central body and symmetrical raised spreading feathered wings, the gold and pale ivory heraldic details, dark cutout separations. Carefully resolve the low resolution original silhouette into crisp precise gold metal feather shapes with restrained engraved detail. The reference background contains blue checker pixels, diagonal map lines and part of a frame: REMOVE ALL OF THOSE and leave genuine alpha transparency, no square background. The emblem must be large and centered, whole wings and body fully inside the image with a 10 percent safe margin, compact approximately square silhouette, no pole and no banner fabric, no lettering and no added symbols. Sharp edges and readable contrast at a final display size of 110 pixels. No soft halo or bloom, no extra eagle heads invented, no watermark. Match the original pose and visual identity rather than designing a generic replacement."
+  },
+  {
+    "name": "alliance",
+    "transparent_background": true,
+    "referenced_image_paths": [
+      "/home/anr2/cht/logh3/workplace/hd127/alliance-emblem-reference.png"
+    ],
+    "prompt": "Use case: style-transfer. Edit target: the attached low resolution reference of the Free Planets Alliance gold strategy map insignia from Legend of the Galactic Heroes III. Repaint the central gold geometric faceted insignia as a crisp high resolution transparent game sprite. Keep its tilted upright diamond / angular shield silhouette, the warm pale ivory left face, golden upper planes and darker ochre right and lower planes; preserve the original recognizable geometry and diagonal orientation. Render refined sharp bevels and subtle engraved metal detail, readable as a small strategy map emblem. The reference contains blue map checker texture and parts of the border; REMOVE ALL BACKGROUND, map lines and frame, genuine alpha transparency. Center the complete emblem with a 10 percent safe margin. No text, no invented lettering or generic eagle, no extra ornaments. Crisp edges, strong contrast, no blurry glow, no shadow outside the silhouette, no watermark. Native high resolution repaint, not pixel upscale."
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {"name": "dx 加到 y、dy 加到 x", "find": "    w0A71_add16s(m, x_seg, x_off, dx);\n    dy = rd16(m, LIN(F0A71_SS, (uint16_t)(F0A71_BP + 2u)));\n    w0A71_add16s(m, y_seg, y_off, dy);", "replace": "    dy = rd16(m, LIN(F0A71_SS, (uint16_t)(F0A71_BP + 2u)));\n    w0A71_add16s(m, x_seg, x_off, dy);\n    w0A71_add16s(m, y_seg, y_off, dx);"},
+  {"name": "y 指標餵給 x（x 與 y 都加到 x 指標）", "find": "    w0A71_add16s(m, y_seg, y_off, dy);", "replace": "    w0A71_add16s(m, x_seg, x_off, dy);"},
+  {"name": "不呼叫旋轉（c 不轉向）", "find": "    (void)f_3A92_0001(m, F0A71_BP, F0A71_SS, (uint16_t)(F0A71_BP + 2u), F0A71_SS, angle_word);\n", "replace": ""},
+  {"name": "旋轉的方位固定 0", "find": "(uint16_t)(F0A71_BP + 2u), F0A71_SS, angle_word);", "replace": "(uint16_t)(F0A71_BP + 2u), F0A71_SS, 0);"},
+  {"name": "焦距的 a、b 對調", "find": "f_3870_0614(m, a, b)", "replace": "f_3870_0614(m, b, a)"},
+  {"name": "y 分量初值 1 而非 0", "find": "wr16(m, LIN(F0A71_SS, (uint16_t)(F0A71_BP + 2u)), 0);", "replace": "wr16(m, LIN(F0A71_SS, (uint16_t)(F0A71_BP + 2u)), 1);"},
+  {"name": "回傳 dx 而非 dy", "find": "    return dy;", "replace": "    return dx;"},
+  {"name": "拿掉 ROM 區寫入無效的模型", "find": "    if ((lin & 0xFFFFFu) < 0xF0000u)\n        wr8(m, lin, v);", "replace": "    wr8(m, lin, v);"},
+  {"name": "word 讀不在段內回繞（線性連續）", "find": "    uint16_t v = (uint16_t)(w0A71_rd16s(m, seg, off) + add);", "replace": "    uint16_t v = (uint16_t)(rd16(m, LIN(seg, off)) + add);"},
+  {"name": "word 寫的高位元組不在段內回繞", "find": "    w0A71_put8(m, LIN(seg, (uint16_t)(off + 1u)), (uint8_t)(v >> 8));", "replace": "    w0A71_put8(m, LIN(seg, off) + 1u, (uint8_t)(v >> 8));"},
+  {"name": "加法飽和而非回繞", "find": "    uint16_t v = (uint16_t)(w0A71_rd16s(m, seg, off) + add);", "replace": "    uint32_t s32 = (uint32_t)w0A71_rd16s(m, seg, off) + add;\n    uint16_t v = s32 > 0xFFFFu ? 0xFFFFu : (uint16_t)s32;"}
+]

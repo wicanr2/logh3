@@ -1,0 +1,569 @@
+{
+  "schema": 1,
+  "logical_cell": [
+    256,
+    102
+  ],
+  "atlases": [
+    {
+      "file": "ships-00.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "09ac75077942dad3689c6e065d245c85ce97347caa84154f309025928f012473",
+      "prompt": "ships-00.prompt.txt",
+      "cells": [
+        {
+          "key": "4541",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4541D0/f00.png",
+          "source_sha256": "79359cea2c03651267959ea56cb75b60178345b738282c05b26255f2b2461025",
+          "pixels_sha256": "9f8b0b98b4727110cb62908ee4a74abc7ce0766971c19527c1be92341f844d7d"
+        },
+        {
+          "key": "4542",
+          "x": 993,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4542D0/f00.png",
+          "source_sha256": "b6429fe02cde44ccc2527713c4142f2447c806f25fa9d060d16631566adb0dfd",
+          "pixels_sha256": "7ecd0ba84665a4cb0b5e1846ac0b34c2591ea4179c2d2de23f25ac9ef4fa4734"
+        },
+        {
+          "key": "4543",
+          "x": 0,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4543D0/f00.png",
+          "source_sha256": "224706d512f4f9ee76f1c8242630a11a6b85218dab80384d93186d4db9a5fcd0",
+          "pixels_sha256": "1fbfed454794d15597ca1e1e4d0f3fcb8ca57b000bb1e39c32b7ad4aaca1680a"
+        },
+        {
+          "key": "4544",
+          "x": 993,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4544D0/f00.png",
+          "source_sha256": "9ca80f075a7be03e78bdc941075e7ad39d75cb697f53b7376b1518261e9bb451",
+          "pixels_sha256": "92d9c7ea5f169a6f48df4528601831c4f976fa17cfe1d0d2bd02c055296cb602"
+        }
+      ]
+    },
+    {
+      "file": "ships-01.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "e6c2b35340996f2d624c842ab9b722111d1a96e50d71408344c29f845073d00c",
+      "prompt": "ships-01.prompt.txt",
+      "cells": [
+        {
+          "key": "4545",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4545D0/f00.png",
+          "source_sha256": "8b4b3d26f52ac1b1293497906129622b4dc2366bf323d845715b4b3ea676c2d3",
+          "pixels_sha256": "40ad4f8f8e27e174f3d0701566c2890d669a87def5c0d0d086b050082ab6335a"
+        },
+        {
+          "key": "4548",
+          "x": 993,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4548D0/f00.png",
+          "source_sha256": "2c6a7ba6a80ecd275c6513cb27de3e308991e7c19b0a494eb0bf2f4a137f8236",
+          "pixels_sha256": "57a9da6c1afbfd5383bee24f2c0c32a619efe3cd51d38f0115720e7036383e0c"
+        },
+        {
+          "key": "4554",
+          "x": 0,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4554D0/f00.png",
+          "source_sha256": "ac741750f2e175b475a6b7b582d8a5545a16a5ec7590cdbf17439a675473428e",
+          "pixels_sha256": "fb69cae324595f9861d3908845131866d99bde9edd2990185629e887431b492f"
+        },
+        {
+          "key": "45B1",
+          "x": 993,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45B1D0/f00.png",
+          "source_sha256": "a8336af3b892b6ae0a4ae409c0c995a9f7b298c8633304b786fd40114d72ff6e",
+          "pixels_sha256": "ec6d9b517734d80695c0fff0cac6c8fd6990f9ad5a7a190dde186d1f88a648e1"
+        }
+      ]
+    },
+    {
+      "file": "ships-02.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "cf1b41e3217ca6eebdf23cf4386664d1ff862cc0f6627dc09a95def4c723fc8f",
+      "prompt": "ships-02.prompt.txt",
+      "cells": [
+        {
+          "key": "45B2",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45B2D0/f00.png",
+          "source_sha256": "8f78ec544785261d4eb1ae36e9b987b457ce9cd6ec393b8b0b6fb0bfc0572ead",
+          "pixels_sha256": "8c6d7fc5f4e340042b3926de7cbb27b5620b207e0d23eda8fadf6c3eb97d8ab2"
+        },
+        {
+          "key": "45B3",
+          "x": 993,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45B3D0/f00.png",
+          "source_sha256": "e8a173789dd60a783b56fcd48b2d2c7ba9d7f210614b7017dbfd863540f9dc9d",
+          "pixels_sha256": "2719b60e4eaf546043e6a3a8fa13cd51fd836622784d288eb92354addf695610"
+        },
+        {
+          "key": "45B4",
+          "x": 0,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45B4D0/f00.png",
+          "source_sha256": "07c4a1514c8846ec4138e3a1fac5544239c21bae85df46e11ea771f22ed2c84d",
+          "pixels_sha256": "f8c13bdd9fe2c987035aff71193f90f352a3857ef6af766e520a0100f1ee4508"
+        },
+        {
+          "key": "45B5",
+          "x": 993,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45B5D0/f00.png",
+          "source_sha256": "c38444ccabde6a17b0da8cbaedbc5bbe738844e701467d6cb80584c36c3c5cbd",
+          "pixels_sha256": "6df0105240f0e8b5446924b2ad6bf3d659a734c05a544cdb775097945fc01515"
+        }
+      ]
+    },
+    {
+      "file": "ships-03.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "104f0cc44c6a7ff8c3288916cf9c96261f0ebcb8576ce7cc0da27116f83d3536",
+      "prompt": "ships-03.prompt.txt",
+      "cells": [
+        {
+          "key": "45B6",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45B6D0/f00.png",
+          "source_sha256": "f58d8f2e851f6e81e69869d98fefae4e5dccd5b710b5d9763d68612366e41751",
+          "pixels_sha256": "cd82c26237066f7e05c9a4cd26bb4dd96b0f353c9c6226b4c3d56455d56342c6"
+        },
+        {
+          "key": "45B7",
+          "x": 993,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45B7D0/f00.png",
+          "source_sha256": "d31f1025a74e09aa1dcfb883d4d17f3ba7c50a392c1c2a999fa39bada72f16c5",
+          "pixels_sha256": "40f30f81dcbef4722588c53fea96031bcbb464957980c143a1b044adcf39d84b"
+        },
+        {
+          "key": "45B8",
+          "x": 0,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45B8D0/f00.png",
+          "source_sha256": "057bc21d9e9df1dc480ba830087cdf653b27f8598d6ec4c87422159d1911fc71",
+          "pixels_sha256": "193668b1607452c37b5e8bb55fc1426a5e8f99751975f178feca278df319190c"
+        },
+        {
+          "key": "45B9",
+          "x": 993,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45B9D0/f00.png",
+          "source_sha256": "01a818b1ff0debd2f721fa2296c4e694a196f5c0d3e3c60a5679dd1781c97b65",
+          "pixels_sha256": "4db0e98c891fdd53f3571a96cc0c703009e61c7d97894f57b4f4eaf98668eecb"
+        }
+      ]
+    },
+    {
+      "file": "ships-04.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "d0ab58e6fbf67b33b2a057ab2bee0005db05c562cf18435ccf73c6db740e8a77",
+      "prompt": "ships-04.prompt.txt",
+      "cells": [
+        {
+          "key": "45BA",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45BAD0/f00.png",
+          "source_sha256": "0e572231585df3db1644f3cbf324c7e16a6cf0affb3a664a0cbde104c649e507",
+          "pixels_sha256": "89d09a94ac51438663863ef5d745b5f476db9572185afabfaeac4c377ecfb487"
+        },
+        {
+          "key": "45BB",
+          "x": 993,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45BBD0/f00.png",
+          "source_sha256": "f2587b71008a401ebaf1ca72c02ee974041890a811a422b9110c43aa799450db",
+          "pixels_sha256": "eae3a14180a99531878c88e4909d9eabadc842ab7a299627bd95ab460bff6081"
+        },
+        {
+          "key": "45BC",
+          "x": 0,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45BCD0/f00.png",
+          "source_sha256": "631a077647777ec9d41b866d95b8135198ec3297cb8d6cb374549246f52c4270",
+          "pixels_sha256": "ab0a78fd281687c3daaf065bccde86afe2e73ec665ea1b2451eb3ea5c6149570"
+        },
+        {
+          "key": "45BD",
+          "x": 993,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45BDD0/f00.png",
+          "source_sha256": "a33653ef985ddf7568a3067148c3e9d4182d93e93c3eedeaecae56570e649561",
+          "pixels_sha256": "646c50421149e6a5a6d83618d06dee11ea1ecf3e9bde6ebf0b4ec83cdf516cdf"
+        }
+      ]
+    },
+    {
+      "file": "ships-05.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "5e0c70813acdefa0c13c43d4cf4090d8e9fd07cc4e1ee91f9a3e70773ab84f1f",
+      "prompt": "ships-05.prompt.txt",
+      "cells": [
+        {
+          "key": "45BE",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45BED0/f00.png",
+          "source_sha256": "40981ce6218e7c72c135565bc9977611e4d210614ea6b29a9be0edb1f4ed9a32",
+          "pixels_sha256": "f460813074551b221c171e82b8a4c0f1c101a22e2ee48b9a5154e2700fb52560"
+        },
+        {
+          "key": "45BF",
+          "x": 993,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45BFD0/f00.png",
+          "source_sha256": "bda02ba5051e02371465d1433240ed764b880036b207a02f488c8ef5f99d3dc0",
+          "pixels_sha256": "5fb8d108cc0fa08eaf654b0cf0e6b685c35267acb6c18472f9385e4599e7453a"
+        },
+        {
+          "key": "45DD",
+          "x": 0,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/45DDD0/f00.png",
+          "source_sha256": "b9c6d9388d41c42da1d564486fe8bc3a1a160f7dce7c76ce80f94688e8ec52c7",
+          "pixels_sha256": "fd45280766f27f6f7a7c787fc2402467b94b538e847731e54d8fa142233d8b5f"
+        },
+        {
+          "key": "4641",
+          "x": 993,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4641D0/f00.png",
+          "source_sha256": "7922be61e9f6d29ca8f807fefa03bb7cca39ab7a6bbfeeb9d3819a3b601b765e",
+          "pixels_sha256": "475e3f25d03a86faeb76ea675fd9043e0f5dd7cc503c17ffb64ddebe18145cce"
+        }
+      ]
+    },
+    {
+      "file": "ships-06.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "dd9f1ca72c19a77c078e8eb19fa6b947294a61104027c55869f99550203ac9a8",
+      "prompt": "ships-06.prompt.txt",
+      "cells": [
+        {
+          "key": "4642",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4642D0/f00.png",
+          "source_sha256": "b0f61ac7343ce21c532f5feedd5e4759389e7b452c1e7aa03a41f117e58446f5",
+          "pixels_sha256": "319686e12bdbecf7cdcfd0c485b49bff14c5f6e59d912f32c7ee8cab7c528ffa"
+        },
+        {
+          "key": "4643",
+          "x": 993,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4643D0/f00.png",
+          "source_sha256": "8646a4e787c5a1b63b8c9e07a0126dac29629e41f4d1abcb59fe798d53c50403",
+          "pixels_sha256": "11b85e27a9e86d047298b25063b74e89fb0b1df030c8132531ea6f008bf80ee8"
+        },
+        {
+          "key": "4644",
+          "x": 0,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4644D0/f00.png",
+          "source_sha256": "80a4e74f1866c109a1d4a39f7f1288c79e9944d2e7c7e30fe75e4cb4521647fe",
+          "pixels_sha256": "f8233d50ac0138898684da2c978ea246d29bcf0601e9aeb145004c52e40c7248"
+        },
+        {
+          "key": "4645",
+          "x": 993,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/4645D0/f00.png",
+          "source_sha256": "15d82dcbd6edc3876fea5e3a917c811dc1b76b7e662f410e0feefe0d42b2393f",
+          "pixels_sha256": "5ed2db7f37408a43b6f7621c9383b8a8d3ccd2b19464398a886c22850c364479"
+        }
+      ]
+    },
+    {
+      "file": "ships-07.png",
+      "width": 1983,
+      "height": 793,
+      "sha256": "fa49907b98d78aac8bfbf8fe25003abe302362960e0d5dba19feab7c18372923",
+      "prompt": "ships-07.prompt.txt",
+      "cells": [
+        {
+          "key": "4648",
+          "x": 0,
+          "y": 0,
+          "w": 991,
+          "h": 396,
+          "source": "assets/original/comani/4648D0/f00.png",
+          "source_sha256": "92af007b4827b48beb5110ca646fa748ea6207d44e87aaf9eb82d58b20ee5823",
+          "pixels_sha256": "d424c8ede58ccf6280ac8eedef8a28eb8fb47c479a44570afebfe3c9e297caca"
+        },
+        {
+          "key": "4654",
+          "x": 991,
+          "y": 0,
+          "w": 991,
+          "h": 396,
+          "source": "assets/original/comani/4654D0/f00.png",
+          "source_sha256": "9d0b32d28698e88c5de5f2297360af6f1e21b917a5648157bace1078f99722f9",
+          "pixels_sha256": "c87786ef74be4d675498e9bb99ea1915df0b2d1e093f141e4e9691d75b05ff6c"
+        },
+        {
+          "key": "46B1",
+          "x": 0,
+          "y": 396,
+          "w": 991,
+          "h": 396,
+          "source": "assets/original/comani/46B1D0/f00.png",
+          "source_sha256": "e856e4b41a1d64272d32a67904a28fe6a9d5e1bed147e28939c92c88522f84b3",
+          "pixels_sha256": "77e23130b99ee02fcb3e425258f4428a0844871ca66dfa3dec4039bcdea4d698"
+        },
+        {
+          "key": "46B3",
+          "x": 991,
+          "y": 396,
+          "w": 991,
+          "h": 396,
+          "source": "assets/original/comani/46B3D0/f00.png",
+          "source_sha256": "22b0096c4845563b86849b2844610590b49b9d47d40ec4cdf08e52369bee71a9",
+          "pixels_sha256": "08f084e83a84d5147d3d9e508efba4fab9042b240915dfd302a584befd9e12e7"
+        }
+      ]
+    },
+    {
+      "file": "ships-08.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "e86dccb6e0ebf538e27e9c6c30d9a20e5a42d95260425ab3009de924c76ae8f8",
+      "prompt": "ships-08.prompt.txt",
+      "cells": [
+        {
+          "key": "46B5",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/46B5D0/f00.png",
+          "source_sha256": "ab5d375eec0b6c29f90304cf5fc94848d768a933920597da4a6264e79c78782f",
+          "pixels_sha256": "1f0f4233cc5b3236436772a2f05aad32298fb178b81525d8e505069b9b8cda7f"
+        },
+        {
+          "key": "46B7",
+          "x": 993,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/46B7D0/f00.png",
+          "source_sha256": "01997884a073f4945463ef01b0183382de7a5cfb714f36f12c69c1fcbc302bf4",
+          "pixels_sha256": "e358d7627dee240b20e8b650f451d9982db710f472298f0bdef2b907dee063ac"
+        },
+        {
+          "key": "46B8",
+          "x": 0,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/46B8D0/f00.png",
+          "source_sha256": "5ae194233a23392bd90bacf0bf020594d7595ac8ac39d14d95afc4ca8a462676",
+          "pixels_sha256": "b333eac50830ef8790a43135965817edd3d28aa55cd7699d02d3186ec539f8ac"
+        },
+        {
+          "key": "46B9",
+          "x": 993,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/46B9D0/f00.png",
+          "source_sha256": "7c202ef04cea3f9c0e924dd2b14502f489c4eb4dbddeb33f3cee9d624d48a396",
+          "pixels_sha256": "3572c6b0a1233d346ded8ccd4e0e12b9aa5c122af1380659c83e156fb977be21"
+        }
+      ]
+    },
+    {
+      "file": "ships-09.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "cf7835dcdb367ec2912eb796459e37aa9ad4ff6e58ef14624df1dc905e7e1c44",
+      "prompt": "ships-09.prompt.txt",
+      "cells": [
+        {
+          "key": "46BA",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/46BAD0/f00.png",
+          "source_sha256": "141be89011c741567ed67ec703150b06c79c3b10fddaa0c40c8e429cf8f181de",
+          "pixels_sha256": "9d2a8bde0045ce56319f346c03099d770717ae7b07b4daa5b030484b4fa08ebf"
+        },
+        {
+          "key": "46BC",
+          "x": 993,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/46BCD0/f00.png",
+          "source_sha256": "9f20a8701da5c52193831b412f910a6759b1507167ba8ef2b71f5d4614c44ae3",
+          "pixels_sha256": "76e65aeb37ba0d55beeef100ed02c4715182bfb9cb9afae6bf3efecb0307f9ae"
+        },
+        {
+          "key": "46BD",
+          "x": 0,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/46BDD0/f00.png",
+          "source_sha256": "dab257e321aa30648573dacc0b46e97a752e0a7c8b8a08a05f6ccea2f1543596",
+          "pixels_sha256": "baad6a6d2992dbc70100c58609cc3894fefb627b8977d45bf3a971f15fac1106"
+        },
+        {
+          "key": "46BE",
+          "x": 993,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/46BED0/f00.png",
+          "source_sha256": "54ec885425695e9a5a6ab128a89956040a008646ed4da5b3d80dd2e5f553ecd5",
+          "pixels_sha256": "5b3d82d0bae3646026967b9b7e96f5495efbb9eb239ee1266ffa82f442e37483"
+        }
+      ]
+    },
+    {
+      "file": "ships-10.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "72d9f9fddb23111e872f198e28d540f1534e781edc71bda97c2d3f7cd75fb215",
+      "prompt": "ships-10.prompt.txt",
+      "cells": [
+        {
+          "key": "46C0",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/46C0D0/f00.png",
+          "source_sha256": "ba02d2f65937b4d9b73e4b7a79f989ccca095abbb0beb13404c33b17012ce549",
+          "pixels_sha256": "af181c24a36b1c1d25b723c8979956758e409b7f6a3621d730b268883cd952b3"
+        },
+        {
+          "key": "46DD",
+          "x": 993,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/46DDD0/f00.png",
+          "source_sha256": "90a83f511c25a58521e83fff3c341ab7d6651111daff239729d38fb72556d1ea",
+          "pixels_sha256": "62d4b546c3836c3c0a8b1f690913c694a21c23c82b5f772e1e67bacd1f621f77"
+        },
+        {
+          "key": "5046",
+          "x": 0,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/5046D0/f00.png",
+          "source_sha256": "75d549da4d7dba3f2abc08dc2ce61798a11f2e179dcd4cb687bbf48ee002139c",
+          "pixels_sha256": "c9a023f48a75a8099aacef255ace113494590a2e5dd00af0e80e00b372561e1a"
+        },
+        {
+          "key": "5050",
+          "x": 993,
+          "y": 396,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/5050D0/f00.png",
+          "source_sha256": "9090cf42c1d0d9de0c7c17f5aa036db42d26d680200705028e36fd58a282a147",
+          "pixels_sha256": "4091d6ca8c7184a3ffe9d7a4f5d5e719fd5ddf57c85c397a559cae8a15ac6af3"
+        }
+      ]
+    },
+    {
+      "file": "ships-11.png",
+      "width": 1986,
+      "height": 792,
+      "sha256": "783a8de39673323fe560d4d5ef166dedb80944edf3f88f984a82d16f8b0b36f7",
+      "prompt": "ships-11.prompt.txt",
+      "cells": [
+        {
+          "key": "505A",
+          "x": 0,
+          "y": 0,
+          "w": 993,
+          "h": 396,
+          "source": "assets/original/comani/505AD0/f00.png",
+          "source_sha256": "25ba352e7db91586a29e42fd5554df571fa0f9c6c50b7c9526759b714209d67e",
+          "pixels_sha256": "667259f277a3898b66e8c2cbb74db6bdeefdc40a5e9c56a253f2376cb6087603"
+        }
+      ]
+    }
+  ],
+  "rights": "原版艦型衍生重繪，沿本機私有完整包邊界。",
+  "completed_models": 45
+}

@@ -1,0 +1,13 @@
+[
+  {"name": "距離的 x2、y2 對調", "find": "uint32_t d = f_3310_0006(m, x1, y1, x2, y2);", "replace": "uint32_t d = f_3310_0006(m, x1, y1, y2, x2);"},
+  {"name": "011D 的 dx、dy 對調", "find": "f_2BE1_011D(m, (uint16_t)(x2 - x1), (uint16_t)(y2 - y1));", "replace": "f_2BE1_011D(m, (uint16_t)(y2 - y1), (uint16_t)(x2 - x1));"},
+  {"name": "011D 的位移方向反過來（B − P）", "find": "f_2BE1_011D(m, (uint16_t)(x2 - x1), (uint16_t)(y2 - y1));", "replace": "f_2BE1_011D(m, (uint16_t)(x1 - x2), (uint16_t)(y1 - y2));"},
+  {"name": "朝向讀 +0x4E 而非 +0x50", "find": "(uint16_t)(b_off + 0x50u));", "replace": "(uint16_t)(b_off + 0x4Eu));"},
+  {"name": "02DE 的 a、b 對調", "find": "rd16(m, DS(0xD616u)), rd16(m, DS(0xD618u)));", "replace": "rd16(m, DS(0xD618u)), rd16(m, DS(0xD616u)));"},
+  {"name": "02DE 的 d 低字與高字對調", "find": "f_303F_02DE(m, (uint16_t)d, (uint16_t)(d >> 16), delta,", "replace": "f_303F_02DE(m, (uint16_t)(d >> 16), (uint16_t)d, delta,"},
+  {"name": "略過 024A，直接用方位", "find": "delta = f_2BE1_024A(m, ang, face);", "replace": "delta = ang; (void)face;"},
+  {"name": "艦隊表項步距 0x78 而非 0x7A", "find": "uint16_t p = (uint16_t)(0xC074u + k * 0x7Au);", "replace": "uint16_t p = (uint16_t)(0xC074u + k * 0x78u);"},
+  {"name": "艦隊索引讀 A[+0] 而非 A[+1]", "find": "uint8_t k = rd8(m, LIN(a_seg, (uint16_t)(a_off + 1u)));", "replace": "uint8_t k = rd8(m, LIN(a_seg, a_off));"},
+  {"name": "艦隊位置讀 +0x72 而非 +0x74", "find": "uint16_t x2 = w0221_rd16s(m, GIN3_DS, (uint16_t)(p + 0x74u));", "replace": "uint16_t x2 = w0221_rd16s(m, GIN3_DS, (uint16_t)(p + 0x72u));"},
+  {"name": "艦隊表基底 0xC072", "find": "uint16_t p = (uint16_t)(0xC074u + k * 0x7Au);", "replace": "uint16_t p = (uint16_t)(0xC072u + k * 0x7Au);"}
+]
