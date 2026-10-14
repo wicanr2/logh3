@@ -1,5 +1,7 @@
 # 原版內部構造參考
 
+[推廣片連續配樂126](../playtest/126-continuous-promo-music.md)、[來源索引](data/promo-continuous-music.json)與[製作器](../../tools/scripts/promo_continuous_music.py)記錄同一首原曲連續播放、依實際觀測獨立重混音效及38個剪接點驗收。影片只留本機，原版素材與既有遊戲驗收範圍保持。
+
 [戰術保存／原版續讀125](../playtest/125-battle-save-return.md)、[研究449](../re/449-original-battle-save-load.md)與[來源索引](data/battle-save-return.json)保存82對原版重播、六表差分及正式保存返回修正。[核對器](../../tools/scripts/battle_save_receipt.py)綁原版觀察器、正式程式、正常GUI及正負回歸；目前只完成145保存成功返回，正式讀回重建仍待實作。
 
 [交戰整合驗收124](../playtest/124-engagement-integration.md)、[研究448](../re/448-engagement-integration.md)及[凍結來源](data/engagement-integration.json)保存118限定CONFORMED、459完整幀、目前CPU政策的正常S3登陸占領與公開六表。[核對器](../../tools/scripts/engagement_integration_receipt.py)檢查原版792雙跑檔及兩種顯示各24段／293格。原版整回合同態及戰場續讀仍未升格。

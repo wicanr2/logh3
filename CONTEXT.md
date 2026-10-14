@@ -6,6 +6,8 @@
 
 ## 現況一覽
 
+**推廣片配樂更新（2026-10-14，第137輪）**：依使用者要求，全片改為BGM_0F單首連續音軌，不隨39段畫面切換重啟；交火音效獨立重混。新片124.956315秒、1080p60、雙聲道，原片7496個視訊封包及時間戳全部保持，38個剪接點連續取樣與聲畫驗收通過。新版為本機`dist-all/v.1.2.0-20261012/promo/LOGH3-v.1.2.0-20261012-promo-continuous-music.mp4`，原片與已發布遊戲身份保持。來源及限定範圍見[驗收126](docs/playtest/126-continuous-promo-music.md)、[唯一索引](docs/internals/data/promo-continuous-music.json)及[狀態表137](docs/goal/2026-10-14-continuous-promo-music-round-137.md)。本輪沒有重新錄製遊戲操作或更動遊戲規則，#48剩餘工作維持下方狀態。
+
 **目前狀態（2026-10-14，第136輪）**：[145保存成功返回](docs/spec/145-battle-save-return.md)已驗。戰術保存後直接回原戰場，不改回合、鏡頭、命令、分數或seed；失敗保存保持畫面。正常片頭至S3帝國，HD及原版顯示各保存、返回並續下一回合，8張完整視窗與12份六表通過；標準19套件15 PASS、4無測試，修正前負向對照明確失敗。原版公開保存／冷啟動續戰82對檔案雙跑相同，證實原版不重選陣營便可續回星域26第2回合及推進第3回合。成果見[驗收125](docs/playtest/125-battle-save-return.md)、[研究449](docs/re/449-original-battle-save-load.md)、[唯一索引](docs/internals/data/battle-save-return.json)及[狀態表136](docs/goal/2026-10-14-original-battle-load-round-136.md)。135已由`e402794d`推送；其限定成果保持，沒有新發行包。
 
 **目前狀態（2026-10-14，第135輪）**：[118限定CONFORMED](docs/spec/118-landing-scene.md)。目前CPU政策下，正式片頭至S3同盟的24段登陸／反擊／占領、兩種顯示各293來源格、音訊、F7及公開六表存讀通過；無腳本、局面／seed或被動CPU覆寫。第6回合艦隊31攻占雷奧米爾，第7回合續行。修正HD圖段基底左右錯配及無D0時借用舊基底，保留規則、原色像素與時鐘。新原版要塞四案雙跑792檔一致，普通／要塞459完整幀、141004800像素全圖／八區／RGB零差。標準19套件15 PASS、4無測試。成果與邊界見[驗收124](docs/playtest/124-engagement-integration.md)、[研究448](docs/re/448-engagement-integration.md)、[來源索引](docs/internals/data/engagement-integration.json)及[唯一狀態表135](docs/goal/2026-10-14-engagement-integration-round-135.md)。沒有新發行包。

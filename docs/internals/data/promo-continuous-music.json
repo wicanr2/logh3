@@ -1,0 +1,375 @@
+{
+  "schema": "logh3.continuous-promo-music.v1",
+  "version": "v.1.2.0-20261012",
+  "source_head": "f597f13c5177e6f84b9c9d40e6115339500494c1",
+  "status": "soundtrack revision verified; existing visual cut retained",
+  "generator": "tools/scripts/promo_continuous_music.py",
+  "generator_sha256": "0580de54f4429a4d4d1500cba65ca684b3b0416ff776ee0e35464dbf98951513",
+  "inputs": {
+    "dist-all/v.1.2.0-20261012/promo/LOGH3-v.1.2.0-20261012-promo.mp4": "1974f95bf87b05f1d8059d21e3a04605f840f67077c157a11798cbcf6b062bea",
+    "dist-all/v.1.2.0-20261012/promo/PLAN.json": "c287ca2bdd487af3023c89320d59f9ff01b82779d6cfc2b1ca7a02a1773098c2",
+    "workplace/hero130/anime-sources/remaster-poster.png": "5edd3ac6347d66006f9c2851d3779e4c681d4fce3d239f12760d6d929aac2fcf",
+    "workplace/hero130/ANIME-SOURCE-CLEAN.mp4": "3aa78473f5fafdd4e6af7e8ada68f0e56fd91b792b76ee27a318ec3e75e9f516",
+    "workplace/hero130/full-record-f1-r2/RAW.mp4": "98c38867ee8b49f734cceb501fdfffcceeeaa07482e2a4a03e4ccee1e6a5a856",
+    "workplace/hero130/record-f0-ai-1/RAW.mp4": "2b636e850fa7aaee0a2e32c96636cb1fa479b1a26f063a9b666743c763b03a1e",
+    "workplace/hero130/full-record-f0/RAW.mp4": "cb4726883a0f820be5d5498bd8d0c4aaa80844934993a0cec457eec5e0382c74",
+    "workplace/hero130/record-f1-ai-1/RAW.mp4": "629c91aa612953fc6d1768caeb37209231134178086d35a69730035d27fcb663",
+    "workplace/hero130/record-f0-ai1/RAW.mp4": "fc152ad85f2c7e34b75b7b9fd040db31641ebb99550e3e277ac1eee2df47a0d9",
+    "workplace/hd127/promo-final/BACKGROUND.png": "af04293bbb7ae1f845dddd676bb18b488e24df1677f6d00fb1d702d38a4a581c",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/BGM_0F.ogg": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+    "workplace/hero130/full-record-f1-r2/TRACE.json": "ff910e4690cd9bd70103a304827339a332941753988e23e6b6cbdcb77ab14ae3",
+    "workplace/hero130/full-record-f1-r2/FRAMES.jsonl": "a736513f175da367e14980a7c3e348afe712269b4402656ecb9227542902cad0",
+    "workplace/hero130/full-record-f1-r2/FRAME-TRACE-CLOSE.json": "9f4d52d40e1406af18f341633abe818005f8d937aa157b222d716291de7429af",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_21.ogg": "be0a2b6f5119e17ca86cca3359cb3aae6898d1d302102013afc789b5392018ba",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_06.ogg": "2502e136c7363352ce943898cbf380207c173226df56140daaef6f24ebc76622",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_08.ogg": "856415d790c8e1990f0162dff90e215f923ec1d93f814a23a0ad1dd5cbef37a8",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_07.ogg": "8817065d0da5a7176ce694c4bd57f296bfdef35dff9eaf0103d68289833da2c9",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_24.ogg": "a84e403efc58a4848da3a5ac6b44c90a83c92da39856b611dfa0afc86426e2a1",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_01.ogg": "4b39b7b0935121af2163f4deb05b20976274ab9e87062963cc5a0fbf9d5550ed",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_02.ogg": "43c50808c56b5e899e9ac2f333e0435287bc58a0849bdbf0d0e331714364f50d",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_11.ogg": "ce0f8dad250b5543afd7f0bee2cd8c009bb4246537c9ee33d5622dc7083648a1",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_25.ogg": "612f3a022a6660aaee0d7de6590c967840dab7b961a477370a0e7805dca99b75",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_04.ogg": "3ae1d827eda2eca77a54fb504dc458b8c1815f7c45d2d6c4881ab13309578bd6",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_05.ogg": "f2ba990a3a3edd7fe97f589bf42f6bf3234290c3b09c594448be3616c0f6ef67",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_03.ogg": "2b83ea331a4e420bf5ece7b01eaa69a097bc55798c7f3326f4270c689a58c4ed",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_00.ogg": "18153e66dfdc31bad21b121021edaa2be048ddb6980241f63709b25bd23a9456",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_23.ogg": "528338a7714cf10bf817369f3fc1495cec21a2812dc719c58d3ee360f1e59717",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_09.ogg": "063fb56e36fea3f58d1e7a765f5688af4577a2b5860f5e82f35dbbe64b4f85f9",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_19.ogg": "e32c56e11b449b102213fc8e85e2ff7db83d869d4e27146c29e51b2b2d59e8f0",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_18.ogg": "8d730c988ed0285d924500e9db51320d8dfb749363338e3e9963630739217837",
+    "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/SFX_20.ogg": "5fb9ef43e3526a9fee4eb038930691a1d5982ae81b982e1bfa62c25b856685ba",
+    "workplace/hero130/record-f0-ai-1/TRACE.json": "f844b9ecea8e1503d1731cd20b2e138debff5e99a428022e68fa3e1c9a81dcc4",
+    "workplace/hero130/record-f0-ai-1/FRAMES.jsonl": "a662645157d25a23441c27f75736aa64765500924be102b599e3045d81a592f0",
+    "workplace/hero130/record-f0-ai-1/FRAME-TRACE-CLOSE.json": "dfd13131a291a83d244910e1f2e67672d40b4116a6e482f31252991997cb4e60",
+    "workplace/hero130/full-record-f0/TRACE.json": "2f20de14fab09713cc6efe1149f46388710958b828ea7b0156d3f0bd47bb4cae",
+    "workplace/hero130/full-record-f0/FRAMES.jsonl": "4037793f4f589c12c37c24ebb63c2d5202ec6b82c885c676a212b0cc790f09a5",
+    "workplace/hero130/full-record-f0/FRAME-TRACE-CLOSE.json": "74ed11acb4271a67d1cee3e02e109cb74de8d1171ce881bfd12e62b4d63a554c",
+    "workplace/hero130/record-f1-ai-1/TRACE.json": "09ed0796da3efe797f6134446b72842106b792f0da6b8d23ac15a187e69c76f3",
+    "workplace/hero130/record-f1-ai-1/FRAMES.jsonl": "d2bef449542a5965385774b90a15b9f0bd8e3fca4cc9b784666bd53d7120d8c1",
+    "workplace/hero130/record-f1-ai-1/FRAME-TRACE-CLOSE.json": "024b922958fe6ea13eb2c8393c0a15f0385c4764674d67b1c6aa7704ec45f8c3",
+    "workplace/hero130/record-f0-ai1/TRACE.json": "9360a20b4bf49ab2356197a64ca0c51917dc044eb222fe7e54503d2a2dc6ac2f",
+    "workplace/hero130/record-f0-ai1/FRAMES.jsonl": "d68760bd1a38c3c887b72c10ff5bc9595d61cc6d285d295386fb75566b462e08",
+    "workplace/hero130/record-f0-ai1/FRAME-TRACE-CLOSE.json": "fa512d8129739151d65868d2872d99b001afb03919e57d578a055cc01f59415f"
+  },
+  "audio": {
+    "music": "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/BGM_0F.ogg",
+    "track_count": 1,
+    "loops": 0,
+    "whole_film_fades_seconds": [
+      1,
+      2.5
+    ],
+    "original_clip_audio_mixed": false,
+    "sfx_fragments": 71
+  },
+  "audit": {
+    "passed": true,
+    "version": "v.1.2.0-20261012",
+    "video_sha256": "cb1557f811366cd1cae06d38f7a000db422b5bba8964db94e1789fd9b03cbfe0",
+    "source_video_sha256": "1974f95bf87b05f1d8059d21e3a04605f840f67077c157a11798cbcf6b062bea",
+    "seconds": 124.956315,
+    "video_frames": 7496,
+    "video_packet_hash": "SHA256=8c7f4704fd8c20d07586b73c415960e2793d07bf64851d7e0aeb938d584c0d8e",
+    "video_packets_and_timestamps_unchanged": true,
+    "music_track_count": 1,
+    "music_loops": 0,
+    "music": "dist-all/v.1.2.0-20261012/full/LOGH3-v.1.2.0-20261012-linux-amd64/music/BGM_0F.ogg",
+    "music_sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+    "scene_cuts": [
+      {
+        "scene": 1,
+        "sample": 309714,
+        "decoded_mix_snr_db": 38.07651068579739,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 2,
+        "sample": 442014,
+        "decoded_mix_snr_db": 38.090690174193156,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 3,
+        "sample": 574314,
+        "decoded_mix_snr_db": 47.55554272893413,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 4,
+        "sample": 750714,
+        "decoded_mix_snr_db": 49.25205424632658,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 5,
+        "sample": 1015314,
+        "decoded_mix_snr_db": 40.417339172669806,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 6,
+        "sample": 1147614,
+        "decoded_mix_snr_db": 50.11562498641359,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 7,
+        "sample": 1368114,
+        "decoded_mix_snr_db": 35.75830287550307,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 8,
+        "sample": 1676814,
+        "decoded_mix_snr_db": 45.767254323456385,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 9,
+        "sample": 1809114,
+        "decoded_mix_snr_db": 49.199662111802965,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 10,
+        "sample": 2029614,
+        "decoded_mix_snr_db": 40.69443740403338,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 11,
+        "sample": 2250114,
+        "decoded_mix_snr_db": 43.52312072006727,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 12,
+        "sample": 2558814,
+        "decoded_mix_snr_db": 39.93686529441795,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 13,
+        "sample": 2814594,
+        "decoded_mix_snr_db": 48.816820918008865,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 14,
+        "sample": 2904263,
+        "decoded_mix_snr_db": 35.27415758358353,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 15,
+        "sample": 2989523,
+        "decoded_mix_snr_db": 35.64527744178697,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 16,
+        "sample": 3081398,
+        "decoded_mix_snr_db": 27.78675921554185,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 17,
+        "sample": 3164453,
+        "decoded_mix_snr_db": 38.55969376620797,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 18,
+        "sample": 3257063,
+        "decoded_mix_snr_db": 27.255000148433858,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 19,
+        "sample": 3351143,
+        "decoded_mix_snr_db": 30.851442919960853,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 20,
+        "sample": 3441548,
+        "decoded_mix_snr_db": 30.84166975789582,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 21,
+        "sample": 3554003,
+        "decoded_mix_snr_db": 29.880063716215666,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 22,
+        "sample": 3642938,
+        "decoded_mix_snr_db": 35.646390236433696,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 23,
+        "sample": 3756863,
+        "decoded_mix_snr_db": 36.39873736467716,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 24,
+        "sample": 3846533,
+        "decoded_mix_snr_db": 34.64964777207482,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 25,
+        "sample": 3959723,
+        "decoded_mix_snr_db": 38.19287883867616,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 26,
+        "sample": 4071443,
+        "decoded_mix_snr_db": 33.61307907096577,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 27,
+        "sample": 4158908,
+        "decoded_mix_snr_db": 35.14185391466113,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 28,
+        "sample": 4247843,
+        "decoded_mix_snr_db": 29.164365429704134,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 29,
+        "sample": 4336043,
+        "decoded_mix_snr_db": 29.533075831464345,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 30,
+        "sample": 4425713,
+        "decoded_mix_snr_db": 31.466799159179004,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 31,
+        "sample": 4519058,
+        "decoded_mix_snr_db": 29.033991453560603,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 32,
+        "sample": 4623428,
+        "decoded_mix_snr_db": 41.78152681580437,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 33,
+        "sample": 4712363,
+        "decoded_mix_snr_db": 35.83280706993197,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 34,
+        "sample": 4829228,
+        "decoded_mix_snr_db": 29.171181328589952,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 35,
+        "sample": 4929923,
+        "decoded_mix_snr_db": 37.487302247711824,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 36,
+        "sample": 5018858,
+        "decoded_mix_snr_db": 39.022409627930486,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 37,
+        "sample": 5113673,
+        "decoded_mix_snr_db": 42.970531393310544,
+        "same_continuous_music_samples": true
+      },
+      {
+        "scene": 38,
+        "sample": 5245973,
+        "decoded_mix_snr_db": 41.614061536700895,
+        "same_continuous_music_samples": true
+      }
+    ],
+    "decoded_mix_snr_db": 33.85970024346456,
+    "sfx_events": 71,
+    "peak_pcm": 0.6475112438201904,
+    "encoded_peak": 0.645006537437439,
+    "black_segments": 0,
+    "long_silences": 0,
+    "visual_review": "8 sampled frames inspected; source picture, captions and ending intact",
+    "source_scope": "v.1.2.0 original visual cut, soundtrack revision only",
+    "generator_sha256": "0580de54f4429a4d4d1500cba65ca684b3b0416ff776ee0e35464dbf98951513"
+  },
+  "outputs": [
+    {
+      "file": "dist-all/v.1.2.0-20261012/promo/LOGH3-v.1.2.0-20261012-promo-continuous-music.mp4",
+      "bytes": 16523485,
+      "sha256": "cb1557f811366cd1cae06d38f7a000db422b5bba8964db94e1789fd9b03cbfe0"
+    },
+    {
+      "file": "dist-all/v.1.2.0-20261012/promo/continuous-music-PLAN.json",
+      "bytes": 44710,
+      "sha256": "4d50584803c63862ee592c20bccbf82af84795c9f459d32747f952b13259c3d1"
+    },
+    {
+      "file": "dist-all/v.1.2.0-20261012/promo/continuous-music-AUDIT.json",
+      "bytes": 6747,
+      "sha256": "1c7a34595a9e20e2af4348b62b959bcebbaa1182d7e2bc24b760e4e916e60d1c"
+    },
+    {
+      "file": "dist-all/v.1.2.0-20261012/promo/continuous-music-FFPROBE.json",
+      "bytes": 3395,
+      "sha256": "bbdfb9226ebe10e3902f57ad6e84c34dc57a59ac547891a1c1266f1f0eb6fbab"
+    },
+    {
+      "file": "dist-all/v.1.2.0-20261012/promo/continuous-music-AUDIO-AUDIT.log",
+      "bytes": 3764,
+      "sha256": "48a1e1489b090f71d010d29127a64ac3d492c8389d7bcaa6ad21421e7ee94be7"
+    },
+    {
+      "file": "dist-all/v.1.2.0-20261012/promo/continuous-music-VIDEO-AUDIT.log",
+      "bytes": 7939,
+      "sha256": "ce4f5e71a10e6f5995aa866d14065adab5d54ff15885641a1487912d751ac8b2"
+    },
+    {
+      "file": "dist-all/v.1.2.0-20261012/promo/continuous-music-FREEZE-REVIEW.json",
+      "bytes": 10747,
+      "sha256": "d160ceefefdc9f7c0b8b6f56aaed15a1822d91d095da5a1861fda90f0b7656dc"
+    },
+    {
+      "file": "dist-all/v.1.2.0-20261012/promo/continuous-music-CONTACT.jpg",
+      "bytes": 233838,
+      "sha256": "dab9f3e888fe689057d722ef1c965b08d42cb869a2d85a0de6d6d123447fdfc2"
+    },
+    {
+      "file": "dist-all/v.1.2.0-20261012/promo/continuous-music-RIGHTS.txt",
+      "bytes": 226,
+      "sha256": "55f03f370abb3c66fb4db977605b5200ebf4aa7ffed61165c3183d8c7b94d8f4"
+    }
+  ],
+  "checksum": {
+    "file": "dist-all/v.1.2.0-20261012/promo/continuous-music-SHA256SUMS.json",
+    "sha256": "83faed7f116a88e77d55973afccdfbb72e2d0da08ac72bf161fca3423f1be37d"
+  },
+  "rights": "original and derived audiovisual assets; local-only, no upload",
+  "limits": [
+    "SFX onset follows first observed played frame; not sample-exact original live capture",
+    "No anime source audio mixed; it could contain other background music",
+    "No new gameplay recording or game parity claim"
+  ]
+}
