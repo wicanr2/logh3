@@ -1,5 +1,7 @@
 # 規格
 
+第141輪：[148設定左緣補充修正](148-clear-settings-font.md)，保留陰影並補上可見金屬外緣；重新打包的版號決定及進度見[狀態表141](../goal/2026-10-15-settings-repackage-round-141.md)。
+
 第140輪：[148系統設定專用清晰字型](148-clear-settings-font.md)，以原生小字與高解析遮罩修正縮小字模的斷筆及陰影重疊。[驗收129](../playtest/129-clear-settings-font.md)／[狀態表140](../goal/2026-10-15-settings-font-round-140.md)。
 
 第139輪：[147緊湊系統設定與AI選擇](147-compact-system-settings.md)，使用者指定縮小文字、恢復顯示敵軍入口及加入現有AI難度。顯示敵軍預設關閉；三平台v.1.4.0候選重新打包，進度集中於[狀態表139](../goal/2026-10-15-release-and-promo-round-139.md)。

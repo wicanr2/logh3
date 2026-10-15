@@ -215,7 +215,11 @@ func (a *app) compactSettingsClick(x, y int) bool {
 }
 
 func (a *app) drawCompactSettings(fb *gfx.Framebuffer) {
-	(ui.Frame{Role: "ui/window", Layers: []ui.Layer{{Top: 7, Right: 7, Bottom: 3, Left: 3}}, Fill: 9}).Draw(fb, 160, 41, 304, 359)
+	// 金屬外緣讓深色介面也能辨識左框，內層保留右上光源的陰影。
+	(ui.Frame{Role: "ui/window", Layers: []ui.Layer{
+		{Top: 15, Right: 15, Bottom: 15, Left: 15},
+		{Top: 7, Right: 7, Bottom: 3, Left: 3},
+	}, Fill: 9}).Draw(fb, compactSettingsBounds.Min.X, compactSettingsBounds.Min.Y, compactSettingsBounds.Dx(), compactSettingsBounds.Dy())
 	a.compactText(fb, image.Rect(176, 48, 448, 64), "遊戲設定", 7)
 	for _, l := range []struct {
 		text string

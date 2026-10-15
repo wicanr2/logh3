@@ -6,6 +6,8 @@
 
 ## 現況一覽
 
+**目前工作（2026-10-15，第141輪）**：依使用者要求補回帝國設定視窗左框，保留陰影。原矩形內新增色號15金屬外緣，內層右上亮、左下暗；兩陣營22張正常設定／選單各530行連續、內側陰影完整，標準15 PASS／4無測試與設定／戰場操作通過。README三張完整實錄已更新，[來源索引](docs/images/readme-settings-frame.json)及[驗收129補充](docs/playtest/129-clear-settings-font.md)保存證據。三平台完整／release重新打包已授權，但已發布v.1.4.0身份不能自行覆寫，版號選擇仍待使用者答覆；唯一進度表為[141](docs/goal/2026-10-15-settings-repackage-round-141.md)。
+
 **目前原始碼（2026-10-15，第140輪）**：[148設定專用清晰字型](docs/spec/148-clear-settings-font.md)限定CONFORMED。設定頁以原生12字格及36像素HD遮罩替代縮小原字模，移除小字陰影，選取項目使用深色文字。兩陣營正常S1、四款遊戲字型、F7、AI五值、敵軍預設關閉／實際圖示開關及戰場返回通過，標準19套件15 PASS／4無測試。README三張原尺寸實錄已更新，[驗收129](docs/playtest/129-clear-settings-font.md)、[來源索引](docs/images/readme-settings-clear.json)與[狀態表140](docs/goal/2026-10-15-settings-font-round-140.md)保存結果。這是原始碼更新；下方139的已發布v.1.4.0包、tag與影片維持既有身份，尚未包含這次字型修正。
 
 **正式Release（2026-10-15）**：[v.1.4.0-20261015](https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015)已發布，tag指向`d2a59fc7`。五個引擎／來源／校驗附件實際下載後SHA-256全部相符，598項tag產品來源與建置凍結輸入一致。完整包與影片限本機，公開附件沒有原版素材；既有tag與Release保持。發布收據見[交付索引](docs/internals/data/v140-release-promo.json)的`release`。

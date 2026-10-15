@@ -1,0 +1,929 @@
+{
+  "source": "141：原始碼正常Linux片頭至S1設定，非舊v.1.4.0 ZIP",
+  "binary_sha256": "4e0c85d30e58d5948e1bce5aac7627f4b0fd0c22a045d15ce7549472647a6411",
+  "gui_receipts": {
+    "workplace/settings141/f0-r2/RESULT.json": "ee41ec585a1086efa835ead9933716e07095c2d49b3eff1a9954b066dbba51a7",
+    "workplace/settings141/f1-r2/RESULT.json": "a52a5ba94bc510896feb186a14b8bb685ebe50109c1fdca08f35e7bff595ad5b"
+  },
+  "frame_checks": {
+    "empire/default-off": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#82a4cb",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "empire/settings-on": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#82a4cb",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "empire/settings-off": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#82a4cb",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "empire/settings-original": {
+      "graphics": "original",
+      "rows": 530,
+      "outer_colour": "#b2b2c3",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "empire/ai-menu": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#82a4cb",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "empire/font-serif": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#82a4cb",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "empire/font-sans": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#82a4cb",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "empire/font-original": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#82a4cb",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "empire/font-classic": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#82a4cb",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "empire/soundfont-menu": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#82a4cb",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "empire/settings-final-on": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#82a4cb",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/default-off": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#b99050",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/settings-on": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#b99050",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/settings-off": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#b99050",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/settings-original": {
+      "graphics": "original",
+      "rows": 530,
+      "outer_colour": "#b2b2c3",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/ai-menu": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#b99050",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/font-serif": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#b99050",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/font-sans": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#b99050",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/font-original": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#b99050",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/font-classic": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#b99050",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/soundfont-menu": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#b99050",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    },
+    "alliance/settings-final-on": {
+      "graphics": "hd",
+      "rows": 530,
+      "outer_colour": "#b99050",
+      "metal_edge_continuous": true,
+      "inner_shadow_preserved": true
+    }
+  },
+  "files": [
+    {
+      "file": "readme-settings-frame-empire.png",
+      "sha256": "b6aaf344548b21f7291665f22eb0f768104d9d55e17b24dd796f18ce8653c653",
+      "bytes": 89530,
+      "source": "workplace/settings141/f0-r2/settings-on.png",
+      "observed": {
+        "wall_ns": 1792044532729472003,
+        "ticks": 246,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 5.623145,
+        "draw_ms": 7.006004,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": true,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          600,
+          450
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": true,
+        "music_track": "BGM_0F",
+        "soundfont": "gs",
+        "mt32_available": true,
+        "soundfont_menu": false,
+        "music_library": "/src/workplace/promo139/package-compact/LOGH3-v.1.4.0-20261015-linux-amd64/music",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        }
+      }
+    },
+    {
+      "file": "readme-settings-frame-ai.png",
+      "sha256": "01b5e8591e85a767e69bb8563a9023f99530009a5c0093384d345caab0422796",
+      "bytes": 89258,
+      "source": "workplace/settings141/f0-r2/ai-menu.png",
+      "observed": {
+        "wall_ns": 1792044537667831445,
+        "ticks": 442,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 5.315134,
+        "draw_ms": 6.551009,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": true,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          600,
+          450
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": true,
+        "music_track": "BGM_0F",
+        "soundfont": "gs",
+        "mt32_available": true,
+        "soundfont_menu": false,
+        "music_library": "/src/workplace/promo139/package-compact/LOGH3-v.1.4.0-20261015-linux-amd64/music",
+        "ai_level": 1,
+        "ai_menu": true,
+        "settings": {
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        }
+      }
+    },
+    {
+      "file": "readme-settings-frame-alliance.png",
+      "sha256": "fede137758dca65484aaeb52cdd3a7ec60dc1f99034cde979af0712fda7c1d17",
+      "bytes": 90060,
+      "source": "workplace/settings141/f1-r2/settings-on.png",
+      "observed": {
+        "wall_ns": 1792044533798950652,
+        "ticks": 262,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 5.391167,
+        "draw_ms": 6.765077,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": true,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          600,
+          450
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": true,
+        "music_track": "BGM_0F",
+        "soundfont": "gs",
+        "mt32_available": true,
+        "soundfont_menu": false,
+        "music_library": "/src/workplace/promo139/package-compact/LOGH3-v.1.4.0-20261015-linux-amd64/music",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        }
+      }
+    }
+  ],
+  "source_sha256": {
+    "cmd/gin3/compact_settings.go": "e2252a85a85ccf9de085675d7ce396f5c188064643e036749fc322040013856c",
+    "internal/presentation/faction.go": "ac082424e180946ac77e7a99b51ee05c62b432b88a6681a930bedeaeb945ce64",
+    "assets/hd/interface-themes.json": "adfdcfff76653e5b7ba7ad5587d262fe4f6b117f041ae387819303e275b226cd",
+    "internal/font/settings_font.SOURCE.json": "f5359e51c814b4c2193b979511eae8a75a1844ef102806238d29d2ec7d549c5f",
+    "tools/scripts/settings_border_receipt.py": "1b55812d5912c346ac9b7b7374a24a879ac721f80a9bb28fd54dbfc27916aa63"
+  }
+}

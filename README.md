@@ -64,15 +64,15 @@
 
 從「系統指令 → 設定」調整敵軍顯示、AI 模式、音色與可選規則。全部選項位於同一個對話框內。顯示敵軍預設關閉，下圖為手動開啟後的畫面。「轉移旗艦」與「名將移動加成」預設開啟，退出重開後保留選擇。
 
-**原始碼已強化設定頁小字。** 設定頁採專用黑體字形，HD 使用高解析遮罩，移除小字陰影，選取項目改用深字配亮底。「介面字型」仍可切換其他遊戲畫面的四款字型。已發布的 v.1.4.0 封包尚未包含這次字型更新。[字型驗收](docs/playtest/129-clear-settings-font.md)
+**原始碼已強化設定頁小字與邊框。** 設定頁採專用黑體字形，HD 使用高解析遮罩，移除小字陰影，選取項目改用深字配亮底。視窗新增可見金屬外緣，內側保留立體陰影。「介面字型」仍可切換其他遊戲畫面的四款字型。已發布的 v.1.4.0 封包尚未包含這次更新。[字型與邊框驗收](docs/playtest/129-clear-settings-font.md)
 
-以下設定頁取自最新原始碼的 Linux 正常操作，保留完整 960×720 視窗。點圖可放大。[字型與實錄來源](docs/images/readme-settings-clear.json)
+以下設定頁取自最新原始碼的 Linux 正常操作，保留完整 960×720 視窗。點圖可放大。[邊框逐行核對與實錄來源](docs/images/readme-settings-frame.json)
 
 | 帝國清晰設定頁 | 同盟清晰設定頁 |
 |---|---|
-| [![帝國設定專用清晰字型，顯示敵軍已手動開啟](docs/images/readme-settings-clear-empire.png)](docs/images/readme-settings-clear-empire.png) | [![同盟設定專用清晰字型，全部選項保持框內](docs/images/readme-settings-clear-alliance.png)](docs/images/readme-settings-clear-alliance.png) |
+| [![帝國設定專用清晰字型與可見金屬外緣，顯示敵軍已手動開啟](docs/images/readme-settings-frame-empire.png)](docs/images/readme-settings-frame-empire.png) | [![同盟設定專用清晰字型與保留陰影的金屬外框](docs/images/readme-settings-frame-alliance.png)](docs/images/readme-settings-frame-alliance.png) |
 
-![清晰小字的AI原版與強化0至3選單](docs/images/readme-settings-clear-ai.png)
+![清晰小字與完整外框的AI原版與強化0至3選單](docs/images/readme-settings-frame-ai.png)
 
 下方敵軍顯示畫面沿已發布 v.1.4.0 正式 ZIP 實錄。[來源與功能驗收](docs/images/readme-v140-compact.json)
 

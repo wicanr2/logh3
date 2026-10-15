@@ -75,6 +75,7 @@ def main(version, base_version):
     full.mkdir()
     for name in ['original', 'art', 'licenses', 'soundfont']:
         shutil.copytree(base/name, full/name)
+    shutil.copyfile(ROOT/'internal/font/settings_font.LICENSE.txt', full/'licenses/Noto-Settings.txt')
     shutil.copyfile(ROOT/'LICENSE', full/'LICENSE')
     shutil.copytree(ROOT/'workplace/round132/music', full/'music')
     library = json.loads((full/'music/LIBRARY-SOURCES.json').read_text())

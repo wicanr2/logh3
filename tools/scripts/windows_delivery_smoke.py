@@ -6,11 +6,16 @@ from pathlib import Path
 import subprocess
 import zipfile
 import argparse
+import re
 
 VERSION='v.1.4.0-20261015'
 p=argparse.ArgumentParser(description=__doc__)
 p.add_argument('--root',default='/out/windows138-delivery')
-ROOT=Path(p.parse_args().root)
+p.add_argument('--version',default=VERSION)
+args=p.parse_args()
+VERSION=args.version
+assert re.fullmatch(r'v\.[0-9]+\.[0-9]+\.[0-9]+-[0-9]{8}',VERSION)
+ROOT=Path(args.root)
 OUTPUT=ROOT/'unpacked/銀河 修正版'
 assert ROOT.is_dir() and not OUTPUT.exists() and os.getuid()==os.getgid()==1000
 OUTPUT.mkdir(parents=True)

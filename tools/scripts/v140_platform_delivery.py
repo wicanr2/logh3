@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import plistlib
+import re
 import shutil
 import subprocess
 import zipfile
@@ -16,6 +17,7 @@ VERSION = 'v.1.4.0-20261015'
 OUT = ROOT/'dist-all'/VERSION
 STAGE = ROOT/'workplace'/('package92-'+VERSION+'-release139')
 WIN = OUT/'full'/('LOGH3-'+VERSION+'-windows-amd64')
+MACOS = ROOT/'workplace/macos-release139'
 
 
 def sha(path):
@@ -72,6 +74,7 @@ def readme(platform, full):
     details += f'資料目錄為{location}，須包含GIN3.COM、GRAPH.IMG、FACE.AMG及其餘原版檔案。\n'
     details += ('start-original使用原版AI，start-enhanced使用強化AI；F1說明、F7原版／HD、防拷題138。\n'
 	            '系統設定使用緊湊字型，顯示敵軍預設關閉，可在設定開啟。AI強化可選原版及強化0至3，數字越大越強。\n'
+                '設定頁使用專用清晰字型，HD直接繪製高解析字形；視窗金屬外緣保留內側陰影。\n'
                 '系統設定可選Roland MT-32／GeneralUser GS；轉移旗艦及名將移動加成預設開啟，可分別關閉並保存偏好。\n'
                 '旗艦擊毀後謬拉100%、其他提督約25%，須有存活戰艦或高速戰艦，轉往最多艘數分隊並保留提督、副官。\n'
                 '名將移動只限強化模式，帶隊楊威利／萊因哈特參戰時全陣營新移動額度1.5倍，關閉仍保留戰術AI。\n'
@@ -130,7 +133,7 @@ def unix_folder(platform, full):
                     CFBundleShortVersionString=short, CFBundleVersion=short, LSMinimumSystemVersion='11.0',
                     NSHighResolutionCapable=True, LOGH3FullVersion=VERSION)
         (contents/'Info.plist').write_bytes(plistlib.dumps(info))
-        shutil.copyfile(ROOT/'workplace/macos-release139/gin3-universal', contents/'MacOS/gin3')
+        shutil.copyfile(MACOS/'gin3-universal', contents/'MacOS/gin3')
         (contents/'MacOS/gin3').chmod(0o755)
         launcher = contents/'MacOS/launch'
         launcher.write_text('#!/bin/sh\nset -eu\n'
@@ -174,12 +177,12 @@ def linux():
 
 
 def macos():
-    slices = universal(ROOT/'workplace/macos-release139/gin3-universal')
+    slices = universal(MACOS/'gin3-universal')
     rows = [archive(unix_folder('macos-universal', full), '本機完整包' if full else '可散布引擎包') for full in [True, False]]
     smoke = OUT/'smoke/macos'
     assert not smoke.exists()
     smoke.mkdir()
-    for p in (ROOT/'workplace/macos-release139').glob('*.txt'):
+    for p in MACOS.glob('*.txt'):
         shutil.copyfile(p, smoke/p.name)
     write(smoke/'MACOS.json', dict(version=VERSION, slices=slices, runtime_test='未在macOS真機執行',
                                   packages=rows, zip_integrity=True, executable_permissions_preserved=True))
@@ -200,8 +203,11 @@ def finalize():
     print('PASS 七封包，Release三平台引擎／來源及SHA256SUMS.txt', flush=True)
 
 
-def extract(name='package'):
-    target=ROOT/'workplace/promo139'/name
+def extract(name='package', extract_root=None):
+    parent=Path(extract_root) if extract_root else ROOT/'workplace/promo139'
+    assert parent.resolve().is_relative_to((ROOT/'workplace').resolve())
+    assert parent.is_dir() and parent.stat().st_uid==os.getuid()
+    target=parent/name
     assert not target.exists()
     target.mkdir()
     source=OUT/'full'/('LOGH3-'+VERSION+'-linux-amd64.zip')
@@ -244,6 +250,16 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('mode', choices=['prepare', 'linux', 'macos', 'finalize', 'extract', 'archive_pending'])
     p.add_argument('--extract-name',choices=['package','package-compact'],default='package')
+    p.add_argument('--extract-root',help='既有workplace子目錄，每次解壓建立獨立目錄')
+    p.add_argument('--version',default=VERSION)
+    p.add_argument('--batch',default='release139')
     args = p.parse_args()
-    if args.mode=='extract':extract(args.extract_name)
+    assert re.fullmatch(r'v\.[0-9]+\.[0-9]+\.[0-9]+-[0-9]{8}',args.version)
+    assert re.fullmatch(r'release[0-9]+',args.batch)
+    VERSION=args.version
+    OUT=ROOT/'dist-all'/VERSION
+    STAGE=ROOT/'workplace'/('package92-'+VERSION+'-'+args.batch)
+    WIN=OUT/'full'/('LOGH3-'+VERSION+'-windows-amd64')
+    MACOS=ROOT/'workplace'/('macos-'+args.batch)
+    if args.mode=='extract':extract(args.extract_name,args.extract_root)
     else:globals()[args.mode]()

@@ -3,10 +3,21 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import argparse
+import re
 
 root=Path('/src')
 version='v.1.4.0-20261015'
 batch=root/'workplace/promo139'
+p=argparse.ArgumentParser(description=__doc__)
+p.add_argument('--version',default=version)
+p.add_argument('--batch',default=str(batch))
+p.add_argument('--index',default='docs/internals/data/v140-release-promo.json')
+args=p.parse_args()
+version=args.version
+assert re.fullmatch(r'v\.[0-9]+\.[0-9]+\.[0-9]+-[0-9]{8}',version)
+batch=Path(args.batch)
+assert batch.resolve().is_relative_to((root/'workplace').resolve())
 delivery=root/'dist-all'/version
 
 
@@ -45,7 +56,8 @@ result=dict(version=version,passed=True,url=remote['url'],tag_commit=tag_commit,
             tag_nonvendor_source_files=count,assets=checks,release_json_sha256=sha(batch/'GH-RELEASE.json'),
             public_release=True,full_packages_uploaded=False,promo_uploaded=False)
 (batch/'RELEASE-CHECK.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
-index=root/'docs/internals/data/v140-release-promo.json'
+index=root/args.index
+assert index.resolve().is_relative_to((root/'docs/internals/data').resolve())
 data=read(index);data['release']=result
 index.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
 print('PASS GitHub Release實際五附件下載／SHA-256、tag與',count,'項非vendor凍結來源一致')
