@@ -1,5 +1,7 @@
 # 128：v.1.4.0三平台發行與推廣片重拍
 
+同版重包位置勘誤：使用者在第141輪明確授權覆寫已發布v.1.4.0，本篇記錄的舊正式七包、Windows來源與promo已保存於`workplace/settings141/published-before-overwrite/`，完整對照及舊雜湊見該處`MAPPING.json`。舊tag／Release資訊與下載附件一併保留。本篇及v140-release-promo.json保持原批歷史身份；新字型／左框與重新發行結果以[第141輪](../goal/2026-10-15-settings-repackage-round-141.md)為準，影片逐位元組保留。
+
 本輪狀態集中於[第139輪狀態表](../goal/2026-10-15-release-and-promo-round-139.md)。可選規則沿[127](127-windows-and-rule-settings.md)，設定頁修正依[147](../spec/147-compact-system-settings.md)。舊候選完整歸檔，現行封包、設定頁及影片各有新收據。
 
 Windows／Linux／macOS完整版與引擎包已從修正後程式重建。正式交付根目錄為`dist-all/v.1.4.0-20261015/`，維持`full/`、`release/`及`promo/`。完整包與影片只留本機，GitHub Release只發布三平台引擎、來源及校驗檔。

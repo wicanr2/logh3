@@ -7,6 +7,8 @@ from pathlib import Path
 import shutil
 import subprocess
 
+from PIL import Image
+
 ROOT=Path('/src')
 VERSION='v.1.4.0-20261015'
 OUT=ROOT/'dist-all'/VERSION
@@ -91,14 +93,24 @@ def receipt():
     build=read(OUT/'BUILD.json')
     for name,row in build['source_files'].items():
         if not name.startswith('vendor/'):assert sha(ROOT/name)==row['sha256'],name
-    files=[OUT/'smoke/full-linux/SMOKE.json',OUT/'smoke/release-linux/SMOKE.json',OUT/'smoke/macos/MACOS.json',
+    files=[OUT/'smoke/full-linux-r2/SMOKE.json',OUT/'smoke/release-linux/SMOKE.json',OUT/'smoke/macos/MACOS.json',
            ROOT/'workplace/music69-windows/windows141-delivery/RESULT.json',
-           BATCH/'package-gui-f0/RESULT.json',ROOT/'workplace/music69-windows/windows141-gui-f1/RESULT.json']
+           BATCH/'package-gui-f0-r2/RESULT.json',ROOT/'workplace/music69-windows/windows141-gui-f1-r2/RESULT.json']
     for p in files:assert p.is_file() and p.stat().st_uid==os.getuid()
+    frames={}
     for p in files[-2:]:
         result=read(p)
         assert result['passed'] and result['show_enemies_default'] is False and result['show_enemies_functional']
         assert result['units_unchanged'] and result['turn_unchanged']
+        image_path=p.parent/'settings-on.png'
+        with Image.open(image_path) as raw:
+            assert raw.size==(960,720)
+            image=raw.convert('RGB')
+        metal=(130,164,203) if result['faction']==0 else (185,144,80)
+        assert all(image.getpixel((240,y))==metal and image.getpixel((242,y))==(0,0,0)
+                   for y in range(66,596)),image_path
+        frames[str(image_path.relative_to(ROOT))]=dict(sha256=sha(image_path),rows=530,
+            metal_edge_continuous=True,inner_shadow_preserved=True)
     write(INDEX,dict(version=VERSION,authorization='使用者明確授權同版覆寫Release、附件與tag',
         source_commit=build['head'],source_files=build['source_files'],packages=packages,
         backup=read(BACKUP/'MAPPING.json'),backup_mapping_sha256=sha(BACKUP/'MAPPING.json'),
@@ -107,6 +119,7 @@ def receipt():
             'windows_hotfix_package.py','windows_delivery_smoke.py','v140_release_verify.py','compact_settings_gui.py']},
         font=read(ROOT/'internal/font/settings_font.SOURCE.json'),
         border_receipt_sha256=sha(ROOT/'docs/images/readme-settings-frame.json'),
+        package_frame_checks=frames,
         promo=dict(preserved=True,manifest=read(OUT/'promo/SHA256SUMS.json')),
         tests=dict(command='tools/gui.sh test ./internal/... ./cmd/...',passed=15,no_test_files=4),
         limits=['Windows為Wine，macOS僅雙架構／依賴／ARM簽章與ZIP，未真機驗收',

@@ -62,6 +62,8 @@ def ack(button=None,pressed=None):
         time.sleep(.04)
     raise AssertionError(('未確認輸入',button,pressed,observe()))
 def click(px,py,button=1):
+    # Wine可在片頭／遊戲切換後再次置中，避免右側超出Xvfb而夾住游標。
+    x('windowmove','--sync',window,0,0)
     x('mousemove','--window',window,round((px+.5)*1.5),round((py+.5)*1.5));time.sleep(.08)
     x('mousedown',button);ack(button,True);x('mouseup',button);ack(button,False);time.sleep(.12)
     events.append(dict(kind='click',point=[px,py,button],wall_ns=time.time_ns()))
@@ -72,6 +74,7 @@ def control(name):
     r=observe()['settings'][name]
     click((r[0]+r[2])//2,(r[1]+r[3])//2)
 def snap(name,hold=.2):
+    x('windowmove','--sync',window,0,0)
     x('mousemove','--window',window,900,675);time.sleep(.25)
     begin=time.time_ns()
     file=out/(name+'.png')
@@ -138,7 +141,15 @@ try:
     control('soundfont');check('音色選單',soundfont_menu=True);snap('soundfont-menu');key('Escape');check('音色取消',soundfont_menu=False)
     snap('settings-final-on')
     control('close');check('返回戰略',state='StateCommandPhase')
-    click(544,125);click(560,125);click(240,240)
+    click(544,125);click(560,125)
+    # 等通知真正出現後才按掉，不讓快機／慢機的輸入落在不同畫面。
+    deadline=time.monotonic()+120
+    while True:
+        pending=observe()
+        if pending.get('state')=='StateBattle' and pending.get('battle_ready'):break
+        assert time.monotonic()<deadline,('回合通知未進戰場',pending)
+        if pending.get('state')=='StateTurnWindow':click(240,240)
+        else:time.sleep(.1)
     row=check('正常戰場',state='StateBattle',battle_ready=True)
     field=json.loads((package/'data/screen-battle.json').read_text())['field']
     tactical=row['tactical'];targets=[u for u in tactical['units'] if u['Faction']!=args.faction and not u['Out']]

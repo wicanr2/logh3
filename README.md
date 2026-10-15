@@ -34,7 +34,9 @@
 | Linux amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-linux-amd64.zip) |
 | macOS Intel／Apple Silicon | [下載通用版 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-macos-universal.zip) |
 
-[引擎來源包](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-engine-source.tar.gz) · [SHA-256 校驗清單](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/SHA256SUMS.txt) · [發行驗證](docs/playtest/128-v140-release-and-promo.md)
+[引擎來源包](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-engine-source.tar.gz) · [SHA-256 校驗清單](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/SHA256SUMS.txt) · [本次重包驗證](docs/playtest/129-clear-settings-font.md)
+
+v.1.4.0 已依指定維持版號重新打包，加入清晰設定字型與可見金屬外框。請重新下載，並使用最新 SHA-256 清單核對內容。
 
 本機交付保留於以下位置。`dist-all/` 已由 `.gitignore` 排除，不隨儲存庫下載。
 
@@ -44,7 +46,7 @@
 | 三平台 v.1.4.0 引擎、來源與校驗檔 | `dist-all/v.1.4.0-20261015/release/` |
 | 約 102 秒重新拍攝的連續配樂推廣片 | `dist-all/v.1.4.0-20261015/promo/` |
 
-推廣片的遊戲畫面重新錄製，包含兩陣營交火、要塞砲與新版設定頁。全片使用同一首 BGM_0F，剪接處不換曲或重啟，交火音效獨立混音。本機檔名為 `LOGH3-v.1.4.0-20261015-promo.mp4`。[影片與音軌驗收](docs/playtest/128-v140-release-and-promo.md)
+推廣片的遊戲畫面包含兩陣營交火、要塞砲與設定操作。全片使用同一首 BGM_0F，剪接處不換曲或重啟，交火音效獨立混音。本機檔名為 `LOGH3-v.1.4.0-20261015-promo.mp4`。影片沿字型強化前的實錄原樣保留。[影片與音軌驗收](docs/playtest/128-v140-release-and-promo.md)
 
 ## 主要特點
 
@@ -64,7 +66,7 @@
 
 從「系統指令 → 設定」調整敵軍顯示、AI 模式、音色與可選規則。全部選項位於同一個對話框內。顯示敵軍預設關閉，下圖為手動開啟後的畫面。「轉移旗艦」與「名將移動加成」預設開啟，退出重開後保留選擇。
 
-**原始碼已強化設定頁小字與邊框。** 設定頁採專用黑體字形，HD 使用高解析遮罩，移除小字陰影，選取項目改用深字配亮底。視窗新增可見金屬外緣，內側保留立體陰影。「介面字型」仍可切換其他遊戲畫面的四款字型。已發布的 v.1.4.0 封包尚未包含這次更新。[字型與邊框驗收](docs/playtest/129-clear-settings-font.md)
+**設定頁小字與邊框已強化。** 設定頁採專用黑體字形，HD 使用高解析遮罩，移除小字陰影，選取項目改用深字配亮底。視窗新增可見金屬外緣，內側保留立體陰影。「介面字型」仍可切換其他遊戲畫面的四款字型。三平台 v.1.4.0 完整版與引擎包均已納入本次更新。[字型與邊框驗收](docs/playtest/129-clear-settings-font.md)
 
 以下設定頁取自最新原始碼的 Linux 正常操作，保留完整 960×720 視窗。點圖可放大。[邊框逐行核對與實錄來源](docs/images/readme-settings-frame.json)
 
@@ -168,7 +170,7 @@ Linux 需要 X11 或 XWayland、OpenGL 與 ALSA；Windows 需要 OpenGL 驅動�
 
 Linux 版已抽測兩陣營的讀檔、財政與生產、艦隊指令、戰場移動、交火、存讀，以及畫面、字型與音色切換。S3同盟已驗24段完整登陸／反擊／占領，兩種顯示各293來源格無漏格；普通／要塞行星459完整幀的原版渲染對拍零差。要塞砲另驗S1同盟正常演出及423完整幀，試射包含友軍傷害。現行音樂已通過使用者實際聆聽驗收。Windows 完成 Wine 驗證，macOS 完成雙架構、依賴與 ARM 簽章檢查。Windows／macOS 真機、DOS整回合同態及同戰場讀檔續戰仍未新增驗收。HD 是重繪模式，不宣稱全遊戲與 DOS 原版逐像素或流程完全一致。
 
-新版結果見[三平台、系統設定與影片驗證](docs/playtest/128-v140-release-and-promo.md)及[來源與交付雜湊](docs/internals/data/v140-release-promo.json)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
+本次結果見[字型、邊框與三平台重包驗證](docs/playtest/129-clear-settings-font.md)及[來源與交付雜湊](docs/internals/data/v140-repackage.json)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
 
 ## 重製與保存
 
