@@ -43,11 +43,12 @@ def archive(folder, version, classification):
     return dict(path=str(target.relative_to(target.parents[1])), bytes=target.stat().st_size, sha256=sha(target))
 
 
-def main(version, base_version):
+def main(version, base_version, base_package=None):
     assert Path.cwd() == ROOT and os.getuid() == os.getgid() == 1000
     for v in [version, base_version]:
         assert re.fullmatch(r'v\.[0-9]+\.[0-9]+\.[0-9]+-[0-9]{8}', v)
-    base = ROOT/'dist-all'/base_version/'full'/f'LOGH3-{base_version}-windows-amd64'
+    base = Path(base_package) if base_package else ROOT/'dist-all'/base_version/'full'/f'LOGH3-{base_version}-windows-amd64'
+    assert base.resolve().is_relative_to(ROOT.resolve())
     assert base.is_dir()
     original_manifest = json.loads((base/'MANIFEST.json').read_text())
     for name, info in original_manifest['files'].items():
@@ -103,6 +104,7 @@ def main(version, base_version):
             '系統設定可選 GeneralUser GS 或 Roland MT-32，選擇會保存在玩家存檔目錄的 preferences.json。\n'
             '轉移旗艦與名將移動加成預設開啟，可在系統設定各自關閉；關閉與開啟會保存在偏好檔。\n'
             '設定頁使用緊湊字型，顯示敵軍預設關閉，可手動開啟。AI強化可選原版與強化0至3，數字越大越強；選擇在本次執行有效。\n'
+            '設定頁使用專用清晰字型，HD直接繪製高解析字形；金屬外緣保持可見，內側保留立體陰影。\n'
             '旗艦被擊毀後，謬拉必定轉移，其他提督約25%；須有存活戰艦或高速戰艦，轉往艘數最多的分隊。\n'
             '名將移動加成只在強化模式啟用，楊威利／萊因哈特參戰時全陣營新移動額度1.5倍；關閉仍保留名將戰術AI。\n'
             'F1 說明、F7 原版／HD；防拷題輸入 138。存檔在 %APPDATA%\\logh3\\save。\n'
@@ -140,6 +142,12 @@ def main(version, base_version):
     source_archive = output/'release'/f'LOGH3-{version}-engine-source.tar.gz'
     with tarfile.open(source_archive,'x:gz') as tar:
         tar.add(source,arcname='logh3-source')
+    with tarfile.open(source_archive,'r:gz') as tar:
+        archived={m.name.removeprefix('logh3-source/'):m for m in tar.getmembers() if m.isfile()}
+        assert set(archived)==set(source_files)
+        for name,row in source_files.items():
+            data=tar.extractfile(archived[name]).read()
+            assert len(data)==row['bytes'] and hashlib.sha256(data).hexdigest()==row['sha256'],name
     packages.append(dict(path=str(source_archive.relative_to(output)),bytes=source_archive.stat().st_size,sha256=sha(source_archive)))
     record(output/'BUILD.json',metadata)
     record(output/'SHA256SUMS.json',dict(version=version,files=packages))
@@ -150,5 +158,6 @@ if __name__ == '__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--version',required=True)
     p.add_argument('--base-version',default='v.1.3.0-20261013')
+    p.add_argument('--base-package',help='已驗收且位於專案內的舊完整包目錄，可使用同版歸檔副本')
     a=p.parse_args()
-    main(a.version,a.base_version)
+    main(a.version,a.base_version,a.base_package)
