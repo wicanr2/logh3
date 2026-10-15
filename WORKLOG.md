@@ -11261,3 +11261,5 @@ README本機影片入口、CONTEXT、140配樂修訂及驗收126已同步，唯�
 依使用者要求，README加入兩項可選規則的開啟／關閉對照圖，說明轉移候選、謬拉100%與其他提督約25%、每次擊毀一次判定、名將移動加成範圍及偏好保存。截圖沿正式Windows v.1.4.0解壓包的Wine正常設定流程，完整960×720、不裁切或改圖；不稱Windows真機或自然戰鬥轉移事件。新增關閉圖由`tools/scripts/readme_rule_settings.py`匯出，兩圖身份及來源索引為`docs/images/readme-v140-rules.json`，README已有入口。獨立`--check`核對原圖、狀態與SHA-256通過，README相對連結通過。本次沒有修改產品程式，不重跑產品測試。
 
 主機gh核對儲存庫起始PRIVATE、目前使用者ADMIN。盤點Git歷史與目前檔案：assets/original有2680個檔案、66455437 bytes；decomp目前1748個檔案、6209021 bytes，歷史1755個路徑。org_game及dist-all未進入Git歷史。依AGENTS與grilling的公開範圍閘門，使用者已明確回答「保留素材與 decomp，原樣公開」，包含完整Git歷史，不刪檔、不改寫歷史。README與AGENTS同步此決定；原版權利歸屬及原始遊戲檔／完整版本機邊界保持。先提交並推送本次文件與截圖，再執行GitHub公開可見性變更並讀回核對。
+
+README、截圖及公開範圍決定已由`7a3307fc`提交並推送main。主機`gh repo edit wicanr2/logh3 --visibility public --accept-visibility-change-consequences`成功，`gh repo view`讀回PUBLIC；不掛載憑證的Docker容器匿名讀取GitHub API、README及新截圖通過，截圖SHA-256與本機相同。沒有改寫歷史、移動tag、建立Release或另行上傳本機封包。收尾53個README相對連結、Python語法、7項檔案擁有權及264070個工作樹項目核對通過，無root-owned檔案或誤建.md目錄。一次性Docker容器已清空，#48範圍與OPEN狀態保持。CONTEXT補上公開現況後，沿既有授權提交並推送收尾紀錄。
