@@ -4,9 +4,9 @@
 
 選擇銀河帝國或自由行星同盟，從財政、生產與提督任命安排戰略，再親自指揮艦隊迎戰。從亞姆力札會戰重新下令，讓你的戰術改變局勢。
 
-**目前 GitHub 版本：[v.1.3.0-20261013](https://github.com/wicanr2/logh3/releases/tag/v.1.3.0-20261013)。** GitHub 提供引擎與程式來源，玩家須自備合法取得的原版遊戲資料。含遊戲資料的完整版與推廣影片僅保留本機，不加入 Git 或 Release 附件。
+**目前 GitHub 版本：[v.1.4.0-20261015](https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015)。** GitHub 提供三平台引擎與程式來源，玩家須自備合法取得的原版遊戲資料。含遊戲資料的完整版與推廣影片僅保留本機，不加入 Git 或 Release 附件。
 
-**Windows 本機修正版：v.1.4.0-20261015。** 修正直接雙擊 `gin3.exe` 找不到 `GRAPH.IMG` 的問題，程式會從執行檔旁讀取資料。加入「轉移旗艦」與「名將移動加成」兩個設定，預設開啟並保存偏好。本機完整版亦包含下列音色、要塞演出與保存返回更新；GitHub v.1.3.0 發行包保持原內容。[新版規則與驗收](docs/playtest/127-windows-and-rule-settings.md)
+**系統設定已整合全部選項。** 縮小字型並將「顯示敵軍」、AI 模式、音色庫與兩項可選規則收進對話框。顯示敵軍預設關閉；轉移旗艦與名將移動加成預設開啟。Windows 直接雙擊會從執行檔旁讀取資料，修正找不到 `GRAPH.IMG` 的問題。三平台完整版與引擎均已重新打包。[新版功能與驗收](docs/playtest/128-v140-release-and-promo.md)
 
 目前原始碼已加入 **Roland MT-32／GeneralUser GS 音色選擇**，設定中的 MIDI I/F 列改為音色庫，支援取消、靜音保持與重開保存選擇。[音色選擇與曲庫使用方式](docs/playtest/121-landing-and-soundfont.md)
 
@@ -30,22 +30,21 @@
 
 | 平台 | GitHub 引擎包 |
 |---|---|
-| Windows amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.3.0-20261013/LOGH3-v.1.3.0-20261013-windows-amd64.zip) |
-| Linux amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.3.0-20261013/LOGH3-v.1.3.0-20261013-linux-amd64.zip) |
-| macOS Intel／Apple Silicon | [下載通用版 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.3.0-20261013/LOGH3-v.1.3.0-20261013-macos-universal.zip) |
+| Windows amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-windows-amd64.zip) |
+| Linux amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-linux-amd64.zip) |
+| macOS Intel／Apple Silicon | [下載通用版 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-macos-universal.zip) |
 
-[引擎來源包](https://github.com/wicanr2/logh3/releases/download/v.1.3.0-20261013/LOGH3-v.1.3.0-20261013-engine-source.tar.gz) · [SHA-256 校驗清單](https://github.com/wicanr2/logh3/releases/download/v.1.3.0-20261013/SHA256SUMS.txt) · [發行驗證](docs/playtest/120-system-dialog-polish.md)
+[引擎來源包](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-engine-source.tar.gz) · [SHA-256 校驗清單](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/SHA256SUMS.txt) · [發行驗證](docs/playtest/128-v140-release-and-promo.md)
 
 本機交付保留於以下位置。`dist-all/` 已由 `.gitignore` 排除，不隨儲存庫下載。
 
 | 本機內容 | 路徑 |
 |---|---|
-| Windows v.1.4.0 修正版完整版與啟動器 | `dist-all/v.1.4.0-20261015/full/` |
-| Windows v.1.4.0 引擎與來源包 | `dist-all/v.1.4.0-20261015/release/` |
-| 三平台完整版與啟動器 | `dist-all/v.1.3.0-20261013/full/` |
-| 約 125 秒連續配樂推廣片與正常遊玩實錄 | `dist-all/v.1.2.0-20261012/promo/` |
+| 三平台 v.1.4.0 完整版與啟動器 | `dist-all/v.1.4.0-20261015/full/` |
+| 三平台 v.1.4.0 引擎、來源與校驗檔 | `dist-all/v.1.4.0-20261015/release/` |
+| 約 102 秒重新拍攝的連續配樂推廣片 | `dist-all/v.1.4.0-20261015/promo/` |
 
-推廣片全片使用同一首 BGM_0F，剪接處不換曲或重啟，交火音效獨立混音。本機新版檔名為 `LOGH3-v.1.2.0-20261012-promo-continuous-music.mp4`。[影片與音軌驗收](docs/playtest/126-continuous-promo-music.md)
+推廣片的遊戲畫面重新錄製，包含兩陣營交火、要塞砲與新版設定頁。全片使用同一首 BGM_0F，剪接處不換曲或重啟，交火音效獨立混音。本機檔名為 `LOGH3-v.1.4.0-20261015-promo.mp4`。[影片與音軌驗收](docs/playtest/128-v140-release-and-promo.md)
 
 ## 主要特點
 
@@ -61,15 +60,19 @@
 - **啟動進度。** 小視窗顯示實際載入階段與人物圖張數，缺檔時顯示錯誤。
 - **有聲交火。** 支援遊戲配樂、艦隊音效與普通速度戰鬥動畫。引擎包需另匯入自有音訊與 HD 素材；原版規則模式、動畫時鐘及存檔格式保持。
 
-## 新功能：可選規則
+## 系統設定與可選規則
 
-從「系統指令 → 設定」開關「轉移旗艦」與「名將移動加成」。兩項預設開啟，可各自切換，退出重開後仍保留選擇。
+從「系統指令 → 設定」調整敵軍顯示、AI 模式、音色與可選規則。字型已縮小，全部選項位於同一個對話框內。顯示敵軍預設關閉，下圖為手動開啟後的畫面。「轉移旗艦」與「名將移動加成」預設開啟，退出重開後保留選擇。
 
-下圖取自 Windows v.1.4.0 實際解壓封包的 Wine 正常操作，保留完整視窗。點圖可放大。[截圖來源與雜湊](docs/images/readme-v140-rules.json) · [功能與驗收](docs/playtest/127-windows-and-rule-settings.md)
+下圖取自修正版 Linux 完整 ZIP 的正常操作，保留完整 960×720 視窗。點圖可放大。[截圖來源與雜湊](docs/images/readme-v140-compact.json) · [功能與驗收](docs/playtest/128-v140-release-and-promo.md)
 
-| 兩項預設開啟 | 兩項關閉 |
+| 全部設定與敵軍顯示開啟 | AI 原版／強化選單 |
 |---|---|
-| [![設定中的轉移旗艦與名將移動加成開啟](docs/images/readme-v140-windows-settings.png)](docs/images/readme-v140-windows-settings.png) | [![設定中的轉移旗艦與名將移動加成關閉](docs/images/readme-v140-windows-settings-off.png)](docs/images/readme-v140-windows-settings-off.png) |
+| [![縮小字型後的完整系統設定，顯示敵軍已手動開啟](docs/images/readme-v140-compact-settings.png)](docs/images/readme-v140-compact-settings.png) | [![系統設定中的AI原版與強化0至3選單](docs/images/readme-v140-compact-ai.png)](docs/images/readme-v140-compact-ai.png) |
+
+![手動開啟顯示敵軍後，實際戰場可見敵方分隊](docs/images/readme-v140-compact-enemies.png)
+
+「顯示敵軍」只改變畫面；開關後戰場回合、部隊與鏡頭保持。AI 可選原版與強化 0 至 3，沿啟動器的初始模式，本次執行有效，影響之後的決策。
 
 | 選項 | 開啟時 | 關閉時 |
 |---|---|---|
@@ -148,8 +151,10 @@ Linux 也可直接指定既有原版資料目錄：
 | F7 | 原版／HD 顯示切換 |
 | 滑鼠移到頂端 | 顯示功能列 |
 | 系統指令 → 設定 → 顯示敵軍 | 遊戲中開關敵軍顯示 |
+| 系統指令 → 設定 → AI強化 | 選擇原版規則或強化0至3 |
 | 系統指令 → 設定 → 介面字型 | 循環切換四款字型 |
 | 系統指令 → 設定 → HD／FM | 切換配樂音色，需已匯入 HD 曲庫 |
+| 系統指令 → 設定 → 音色庫 | 選擇 GeneralUser GS 或 Roland MT-32 |
 | 系統指令 → 設定 → 轉移旗艦 | 開關旗艦擊毀後的轉移規則，預設開啟 |
 | 系統指令 → 設定 → 名將移動加成 | 開關強化模式的名將陣營移動加成，預設開啟 |
 
@@ -161,7 +166,7 @@ Linux 需要 X11 或 XWayland、OpenGL 與 ALSA；Windows 需要 OpenGL 驅動�
 
 Linux 版已抽測兩陣營的讀檔、財政與生產、艦隊指令、戰場移動、交火、存讀，以及畫面、字型與音色切換。S3同盟已驗24段完整登陸／反擊／占領，兩種顯示各293來源格無漏格；普通／要塞行星459完整幀的原版渲染對拍零差。要塞砲另驗S1同盟正常演出及423完整幀，試射包含友軍傷害。現行音樂已通過使用者實際聆聽驗收。Windows 完成 Wine 驗證，macOS 完成雙架構、依賴與 ARM 簽章檢查。Windows／macOS 真機、DOS整回合同態及同戰場讀檔續戰仍未新增驗收。HD 是重繪模式，不宣稱全遊戲與 DOS 原版逐像素或流程完全一致。
 
-完整結果見[發行驗證](docs/playtest/120-system-dialog-polish.md)與[戰場及影片驗證](docs/playtest/119-hero-ai-release-promo.md)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
+新版結果見[三平台、系統設定與影片驗證](docs/playtest/128-v140-release-and-promo.md)及[來源與交付雜湊](docs/internals/data/v140-release-promo.json)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
 
 ## 重製與保存
 

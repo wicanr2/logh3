@@ -88,6 +88,21 @@ def trace_value(row, key):
     return row
 
 
+def latest_frame(path):
+    # 目前觀測含分隊清單，一行可能大於舊版8KB；往前讀到完整JSON。
+    with path.open('rb') as frame_log:
+        end=frame_log.seek(0,2)
+        window=min(end,65536)
+        while window:
+            frame_log.seek(end-window)
+            for line in reversed(frame_log.read(window).splitlines()):
+                try:return json.loads(line)
+                except json.JSONDecodeError:continue
+            if window==end:break
+            window=min(end,window*2)
+    return {}
+
+
 def screenshot(path):
     run('import', '-window', window, path, timeout=15)
     with Image.open(path) as im:
@@ -181,16 +196,7 @@ try:
             assert a.frame_trace, 'wait_state需要唯讀顯示收據'
             deadline = min(started+a.limit-5, time.monotonic()+event.get('timeout', 180))
             while True:
-                with (out/'FRAMES.jsonl').open('rb') as frame_log:
-                    frame_log.seek(max(0, frame_log.seek(0, 2)-8192))
-                    lines = frame_log.read().splitlines()
-                row = {}
-                for line in reversed(lines):
-                    try:
-                        row = json.loads(line)
-                        break
-                    except json.JSONDecodeError:
-                        continue
+                row = latest_frame(out/'FRAMES.jsonl')
                 if row.get('state') == event['state'] and (not event.get('animation') or row.get('animations')) and all(trace_value(row,k) == v for k, v in event.get('expect', {}).items()):
                     break
                 combat = row.get('tactical') or {}

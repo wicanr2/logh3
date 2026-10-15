@@ -12,13 +12,13 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def main(version):
+def main(version, full_directory=None, output_override=None):
     assert Path.cwd() == Path('/src') and os.getuid() == 1000
     root = Path('dist-all')/version
     build = json.loads((root/'BUILD.json').read_text())
-    package = root/build.get('full_directory', 'full-local')/('LOGH3-'+version+'-linux-amd64')
+    package = root/(full_directory or build.get('full_directory', 'full-local'))/('LOGH3-'+version+'-linux-amd64')
     binary = (package/'gin3').resolve()
-    out = Path('workplace')/('package92-smoke-'+version)
+    out = Path(output_override) if output_override else Path('workplace')/('package92-smoke-'+version)
     out.mkdir()
     assert subprocess.check_output([str(binary), '-version'], text=True).strip() == version
     base = 'click 300 210;type 138;enter;rclick 300 240;rclick 300 240'
@@ -88,4 +88,7 @@ def main(version):
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--version', required=True)
-    main(p.parse_args().version)
+    p.add_argument('--full-directory',choices=['full','full-local'],help='既有Windows BUILD未列跨平台目錄時明確指定')
+    p.add_argument('--out',help='獨立驗收輸出，避免覆寫先前失敗批次')
+    args=p.parse_args()
+    main(args.version,args.full_directory,args.out)

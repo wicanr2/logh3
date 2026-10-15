@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import signal
 import time
 
 p=argparse.ArgumentParser(description=__doc__)
@@ -13,6 +14,8 @@ p.add_argument('--out',required=True)
 p.add_argument('--graphics',choices=['original','hd'],default='hd')
 p.add_argument('--off',action='store_true')
 p.add_argument('--music')
+p.add_argument('--package',help='使用實際完整包的原版、data、art與music')
+p.add_argument('--video',action='store_true',help='同步錄製本輪正常操作的完整視窗，供本機推廣片')
 a=p.parse_args()
 out=Path(a.out)
 assert not out.exists() and out.parent.stat().st_uid==os.getuid()
@@ -21,7 +24,12 @@ trace=out/'FRAMES.jsonl'
 env=dict(os.environ,GOMAXPROCS='2',LP_NUM_THREADS='2',GOMEMLIMIT='1200MiB',GOGC='50')
 cmd=[a.binary,'-orig','/orig','-data','/src/docs/internals/data','-art','/src/assets/hd',
      '-graphics',a.graphics,'-scale','1.5','-ai','-1','-save',str(out/'save'),'-frame-trace',str(trace)]
-pulse=recorder=None
+pulse=recorder=video=None
+if a.package:
+    package=Path(a.package)
+    for flag,folder in [('-orig','original'),('-data','data'),('-art','art')]:
+        assert (package/folder).is_dir()
+        cmd[cmd.index(flag)+1]=str(package/folder)
 if a.music:
     cmd.extend(['-music',a.music])
     runtime=out/'pulse';runtime.mkdir(mode=0o700)
@@ -153,6 +161,18 @@ def arm(p):
 try:
     window=x('search','--sync','--onlyvisible','--name','^銀河英雄傳說III SP$',timeout=60).splitlines()[-1]
     x('windowfocus',window);x('windowmove',window,0,0);time.sleep(.6)
+    if a.video:
+        assert a.music,'錄影須保留同次正常音訊來源'
+        record_command=['ffmpeg','-nostdin','-v','warning','-thread_queue_size','8',
+            '-f','x11grab','-draw_mouse','0','-framerate','60','-video_size','960x720',
+            '-i',os.environ['DISPLAY']+'.0+0,0','-thread_queue_size','64','-f','pulse','-i','logh3.monitor',
+            '-t','600','-af','aresample=async=1:first_pts=0','-c:v','libx264','-preset','ultrafast',
+            '-crf','18','-threads','2','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k',
+            '-movflags','+frag_keyframe+empty_moov+default_base_moof',str(out/'RAW.mp4')]
+        video_log=(out/'record.log').open('x')
+        record_started=time.time_ns()
+        video=subprocess.Popen(record_command,env=env,stdout=video_log,stderr=subprocess.STDOUT)
+        time.sleep(.5)
     click(600,440);click(600,440);wait('main menu',lambda r:r['state']=='StateMainMenu')
     click(300,270);wait('copy protection',lambda r:r['state']=='StateCopyProtection')
     for c in '138':key(c)
@@ -232,6 +252,10 @@ finally:
     if window and game.poll() is None:
         try:snap('final')
         except Exception:pass
+    if video is not None:
+        if video.poll() is None:video.send_signal(signal.SIGINT)
+        video.wait(timeout=30);video_log.close()
+        assert video.returncode in (0,255),video.returncode
     if game.poll() is None:
         game.terminate()
         try:game.wait(timeout=5)
@@ -244,4 +268,11 @@ finally:
         result['audio_peak']=max(map(abs,array.array('h',pcm)));result['audio_sha256']=hashlib.sha256((out/'audio.wav').read_bytes()).hexdigest()
     if pulse is not None:pulse.terminate();pulse.wait(timeout=5);pulse_log.close()
     log.close();(out/'RESULT.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+    if a.video and video is not None and result['passed']:
+        record=dict(command=cmd,record_command=record_command,normal_x11_input=True,script_flag=False,
+                    state_injection=False,seed_injection=False,ai=-1,record_started_utc_ns=record_started,
+                    binary_sha256=result['binary_sha256'],raw_sha256=hashlib.sha256((out/'RAW.mp4').read_bytes()).hexdigest(),
+                    frame_trace_sha256=hashlib.sha256(trace.read_bytes()).hexdigest(),events=events)
+        (out/'TRACE.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n')
+        (out/'FRAME-TRACE-CLOSE.json').write_text(json.dumps(dict(frame_trace_sha256=record['frame_trace_sha256'],finalized_after_child_termination=True))+'\n')
     if a.music:assert result['audio_format']==[2,2,44100] and result['audio_peak']>32

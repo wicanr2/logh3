@@ -1,10 +1,14 @@
-<!-- 第138輪：Windows直接啟動與兩項可選規則已驗；#48正式讀回重建與DOS整段同態仍未完成。 -->
+<!-- 第139輪：緊湊設定與AI選單、三平台封包已驗；#48正式讀回重建與DOS整段同態仍未完成。 -->
 # CONTEXT — 銀河英雄傳說III SP 專案目前真相
 
 本檔保存目前真相；剩餘工作的權威是 GitHub 上的 `worklist` Issue。
 流水帳在 `WORKLOG.md`；協作規範在 `AGENTS.md`。
 
 ## 現況一覽
+
+**目前交付（2026-10-15，第139輪）**：v.1.4.0-20261015三平台完整／引擎及來源共七包已從修正版`024a851d`重建。Linux11條完整／4條引擎入口、Windows8條Wine入口與兩陣營正常設定／戰場操作通過；macOS雙架構／系統依賴及ARM3180簽章頁通過，未真機驗收。新拍影片36段102.13秒、1080p60，35個剪接點全片單曲連續、AAC SNR34.23dB與零黑段，來源完整場次及目視抽樣通過。Release發布進度沿[唯一狀態表139](docs/goal/2026-10-15-release-and-promo-round-139.md)，結果集中於[驗收128](docs/playtest/128-v140-release-and-promo.md)與[來源索引](docs/internals/data/v140-release-promo.json)。#48範圍保持。
+
+**系統設定（2026-10-15）**：[147限定CONFORMED](docs/spec/147-compact-system-settings.md)以12×12／6×12字格整合敵軍顯示、現有AI五值與兩項規則，全部收進原對話框。使用者最後決定敵軍預設關閉，覆蓋稍早開啟的回答；兩規則預設開啟。正式Linux ZIP帝國與Windows ZIP Wine同盟通過敵軍實際圖示開／關、AI原版及0至3、四字型、F7、音色取消及返回戰場不改回合／鏡頭／單位。標準19套件15 PASS／4無測試；[README三張完整截圖](docs/images/readme-v140-compact.json)已目視及獨立核對。修正前候選與舊凍結目錄完整歸檔，舊127／138收據對應路徑依`workplace/promo139/precompact/MAPPING.json`回查，不代表現行七包身份。
 
 **儲存庫公開（2026-10-15）**：使用者明確裁決保留原版解碼素材、`decomp/`及完整Git歷史，原樣公開。[GitHub儲存庫](https://github.com/wicanr2/logh3)已轉為PUBLIC，主機gh讀回與無憑證HTTP存取通過。README新增兩項可選規則的開啟／關閉實際截圖及說明，[截圖來源索引](docs/images/readme-v140-rules.json)已核對。原始遊戲檔、完整版與動畫影片仍限本機，既有授權及引擎包內容不變。下方較早的「私有」敘述僅記錄當時狀態。
 

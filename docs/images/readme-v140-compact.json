@@ -1,0 +1,514 @@
+{
+  "version": "v.1.4.0-20261015",
+  "source": "修正後實際Linux完整ZIP，正常片頭至S1、系統設定及戰場，無注入",
+  "source_commit": "024a851d5f880e26af127afb9667c7c8c371ba76",
+  "binary_sha256": "45edf18d37447191fcc2122ce48bfd08dedd9edd7b841d1762cfb8b3e8399a62",
+  "source_result_sha256": "abdf90537869feb96e1238fcbc02f7fb158f03b0eb68b78d6cb9dd72589abba6",
+  "full_zip_sha256": "fdcde97456feb92b1d8796a8698fa2f60b4c45229f778e4f322201b0c3a7da8d",
+  "show_enemies_default": false,
+  "enemy_visibility_test": {
+    "target": {
+      "Index": 111,
+      "Fleet": 28,
+      "Faction": 1,
+      "Squadron": 3,
+      "Kind": 2,
+      "X": 413,
+      "Y": 892,
+      "Ships": 4000,
+      "Out": false
+    },
+    "box": [
+      368,
+      396,
+      416,
+      444
+    ],
+    "changed_channels": 1728,
+    "units_unchanged": true,
+    "turn_unchanged": true
+  },
+  "files": [
+    {
+      "file": "readme-v140-compact-settings.png",
+      "bytes": 64082,
+      "sha256": "aa6081911847a58e1980191ef626d8f5959132610011a82f010c5414051e3ecc",
+      "source": "workplace/promo139/compact-delivery-f0/settings-on.png",
+      "role": "設定：敵軍開啟、AI強化1、兩規則開啟",
+      "size": [
+        960,
+        720
+      ],
+      "show_enemies": true,
+      "ai_level": 1,
+      "graphics": "hd",
+      "settings": {
+        "ai": [
+          288,
+          324,
+          448,
+          340
+        ],
+        "ai-choice--1": [
+          288,
+          244,
+          448,
+          260
+        ],
+        "ai-choice-0": [
+          288,
+          260,
+          448,
+          276
+        ],
+        "ai-choice-1": [
+          288,
+          276,
+          448,
+          292
+        ],
+        "ai-choice-2": [
+          288,
+          292,
+          448,
+          308
+        ],
+        "ai-choice-3": [
+          288,
+          308,
+          448,
+          324
+        ],
+        "anim-off": [
+          370,
+          252,
+          448,
+          268
+        ],
+        "anim-on": [
+          288,
+          252,
+          366,
+          268
+        ],
+        "battle-0": [
+          288,
+          190,
+          448,
+          204
+        ],
+        "battle-1": [
+          288,
+          204,
+          448,
+          218
+        ],
+        "battle-2": [
+          288,
+          218,
+          448,
+          232
+        ],
+        "bgm-0": [
+          288,
+          104,
+          448,
+          118
+        ],
+        "bgm-1": [
+          288,
+          118,
+          448,
+          132
+        ],
+        "bgm-2": [
+          288,
+          132,
+          448,
+          146
+        ],
+        "bgm-3": [
+          288,
+          146,
+          448,
+          160
+        ],
+        "bgm-4": [
+          288,
+          160,
+          448,
+          174
+        ],
+        "bgm-5": [
+          288,
+          174,
+          448,
+          188
+        ],
+        "bounds": [
+          160,
+          41,
+          464,
+          400
+        ],
+        "close": [
+          360,
+          378,
+          448,
+          394
+        ],
+        "enemies": [
+          288,
+          306,
+          448,
+          322
+        ],
+        "flagship": [
+          288,
+          342,
+          448,
+          358
+        ],
+        "fm": [
+          342,
+          86,
+          392,
+          102
+        ],
+        "font": [
+          288,
+          68,
+          448,
+          84
+        ],
+        "glyph": [
+          12,
+          12,
+          6,
+          12
+        ],
+        "hd": [
+          288,
+          86,
+          338,
+          102
+        ],
+        "movement": [
+          288,
+          360,
+          448,
+          376
+        ],
+        "msg-dec": [
+          426,
+          234,
+          448,
+          250
+        ],
+        "msg-inc": [
+          400,
+          234,
+          422,
+          250
+        ],
+        "off": [
+          396,
+          86,
+          448,
+          102
+        ],
+        "soundfont": [
+          288,
+          288,
+          448,
+          304
+        ],
+        "soundfont-choice-0": [
+          288,
+          256,
+          448,
+          272
+        ],
+        "soundfont-choice-1": [
+          288,
+          272,
+          448,
+          288
+        ],
+        "speed-0": [
+          288,
+          270,
+          340,
+          286
+        ],
+        "speed-1": [
+          342,
+          270,
+          394,
+          286
+        ],
+        "speed-2": [
+          396,
+          270,
+          448,
+          286
+        ]
+      },
+      "rules": {
+        "flagship_transfer": true,
+        "hero_movement": true
+      }
+    },
+    {
+      "file": "readme-v140-compact-ai.png",
+      "bytes": 63496,
+      "sha256": "06dd89a93355acfa2990ea5b0cb1a4a0789a006945c0ce0ecf6d125418444969",
+      "source": "workplace/promo139/compact-delivery-f0/ai-menu.png",
+      "role": "AI原版／強化0至3選單",
+      "size": [
+        960,
+        720
+      ],
+      "show_enemies": true,
+      "ai_level": 1,
+      "graphics": "hd",
+      "settings": {
+        "ai": [
+          288,
+          324,
+          448,
+          340
+        ],
+        "ai-choice--1": [
+          288,
+          244,
+          448,
+          260
+        ],
+        "ai-choice-0": [
+          288,
+          260,
+          448,
+          276
+        ],
+        "ai-choice-1": [
+          288,
+          276,
+          448,
+          292
+        ],
+        "ai-choice-2": [
+          288,
+          292,
+          448,
+          308
+        ],
+        "ai-choice-3": [
+          288,
+          308,
+          448,
+          324
+        ],
+        "anim-off": [
+          370,
+          252,
+          448,
+          268
+        ],
+        "anim-on": [
+          288,
+          252,
+          366,
+          268
+        ],
+        "battle-0": [
+          288,
+          190,
+          448,
+          204
+        ],
+        "battle-1": [
+          288,
+          204,
+          448,
+          218
+        ],
+        "battle-2": [
+          288,
+          218,
+          448,
+          232
+        ],
+        "bgm-0": [
+          288,
+          104,
+          448,
+          118
+        ],
+        "bgm-1": [
+          288,
+          118,
+          448,
+          132
+        ],
+        "bgm-2": [
+          288,
+          132,
+          448,
+          146
+        ],
+        "bgm-3": [
+          288,
+          146,
+          448,
+          160
+        ],
+        "bgm-4": [
+          288,
+          160,
+          448,
+          174
+        ],
+        "bgm-5": [
+          288,
+          174,
+          448,
+          188
+        ],
+        "bounds": [
+          160,
+          41,
+          464,
+          400
+        ],
+        "close": [
+          360,
+          378,
+          448,
+          394
+        ],
+        "enemies": [
+          288,
+          306,
+          448,
+          322
+        ],
+        "flagship": [
+          288,
+          342,
+          448,
+          358
+        ],
+        "fm": [
+          342,
+          86,
+          392,
+          102
+        ],
+        "font": [
+          288,
+          68,
+          448,
+          84
+        ],
+        "glyph": [
+          12,
+          12,
+          6,
+          12
+        ],
+        "hd": [
+          288,
+          86,
+          338,
+          102
+        ],
+        "movement": [
+          288,
+          360,
+          448,
+          376
+        ],
+        "msg-dec": [
+          426,
+          234,
+          448,
+          250
+        ],
+        "msg-inc": [
+          400,
+          234,
+          422,
+          250
+        ],
+        "off": [
+          396,
+          86,
+          448,
+          102
+        ],
+        "soundfont": [
+          288,
+          288,
+          448,
+          304
+        ],
+        "soundfont-choice-0": [
+          288,
+          256,
+          448,
+          272
+        ],
+        "soundfont-choice-1": [
+          288,
+          272,
+          448,
+          288
+        ],
+        "speed-0": [
+          288,
+          270,
+          340,
+          286
+        ],
+        "speed-1": [
+          342,
+          270,
+          394,
+          286
+        ],
+        "speed-2": [
+          396,
+          270,
+          448,
+          286
+        ]
+      },
+      "rules": {
+        "flagship_transfer": true,
+        "hero_movement": true
+      }
+    },
+    {
+      "file": "readme-v140-compact-enemies.png",
+      "bytes": 200435,
+      "sha256": "883509afc2abbdd52356fe953f2e40c13426dc4b309540ddd0b2afcd0355c14a",
+      "source": "workplace/promo139/compact-delivery-f0/battle-enemies-on-again.png",
+      "role": "實際戰場敵方分隊顯示",
+      "size": [
+        960,
+        720
+      ],
+      "show_enemies": true,
+      "ai_level": 1,
+      "graphics": "hd",
+      "settings": null,
+      "rules": {
+        "flagship_transfer": true,
+        "hero_movement": true
+      }
+    }
+  ],
+  "generator_sha256": "c824b80e8e173e8867439dff8d5c7626d6f87fe42fe26a6aa98e682731a9470f",
+  "transformation": "完整原尺寸複製，不裁切、不縮放、不改圖"
+}

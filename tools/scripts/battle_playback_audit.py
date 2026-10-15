@@ -10,6 +10,8 @@ import subprocess
 
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('recording', type=Path)
+p.add_argument('--kinds',nargs='+',choices=['fleet','planet','fortress'],help='明列要驗的動畫種類；未選類型不作本次完成聲明')
+p.add_argument('--scene-ids',nargs='+',help='只驗影片實際選用的完整場次；所有指定ID必須存在')
 a = p.parse_args()
 root = a.recording
 trace = json.loads((root/'TRACE.json').read_text())
@@ -23,6 +25,10 @@ for line in path.open():
     row = json.loads(line)
     v = row.get('playback')
     if not v:
+        continue
+    if a.kinds and v['kind'] not in a.kinds:
+        continue
+    if a.scene_ids and v['id'] not in a.scene_ids:
         continue
     modes[row['graphics']] += 1
     s = scenes.setdefault(v['id'], {'kind':v['kind'], 'first_tick':v['tick'],
@@ -55,7 +61,10 @@ for line in path.open():
         s['applied'] = v['applied']
     if v['kind'] in ('fleet','planet'):
         assert len(pictures) >= 3 and pictures[0]['frame'] == pictures[1]['frame'] == 0
-        assert bytes.fromhex(pictures[0]['segment_hex'])[2:] == b'D0'
+        first_segment=bytes.fromhex(pictures[0]['segment_hex'])
+        # 驗收124／第135輪：EL、FL無D0，正式呈現以該側AB首格安全回退。
+        # 艦隊基底仍嚴格要求D0；不把其他未知缺段一併放行。
+        assert first_segment[2:] == b'D0' or (v['kind']=='planet' and first_segment in (b'ELAB',b'FLAB'))
         assert bytes.fromhex(pictures[1]['segment_hex'])[2:] == b'D0'
         if v['kind']=='fleet':assert pictures[0]['side'] != pictures[1]['side']
         attack = [q for q in pictures[2:] if bytes.fromhex(q['segment_hex'])[2] == ord('A')]
@@ -85,6 +94,7 @@ for line in path.open():
         if s['result_first_tick'] is None:s['result_first_tick']=v['tick']
     s['last'] = v
 assert scenes, '沒有正常交戰'
+assert not a.scene_ids or set(a.scene_ids)<=set(scenes),'指定場次不存在'
 assert all(s['result_seen'] for s in scenes.values()), '存在未播完場次'
 assert not gaps, ('正常速度有未顯示格', gaps)
 summary = []
@@ -98,10 +108,12 @@ for identity, s in scenes.items():
         'segments':list(dict.fromkeys(q['segment_hex'] for q in v['pictures']))})
     summary[-1]['same_side_planet'] = v['kind']=='planet' and v['pictures'][0]['side']==v['pictures'][1]['side']
 result = {'passed':True,'normal_entry':True,'state_injection':False,
+          'kinds_requested':a.kinds or ['fleet','planet','fortress'],
+          'scene_ids_requested':a.scene_ids,
           'ai':trace['command'][trace['command'].index('-ai')+1] if 'command' in trace else None,
           'frame_trace_sha256':closed['frame_trace_sha256'],
           'graphics_observations':dict(modes),'skipped_frames':gaps,'scenes':summary}
-result['scope'] = '艦隊／行星既有演出段序、逐格及結果時點；完整登陸及占領呈現仍沿原有未完成項，不宣稱由本輪閉合'
+result['scope'] = '只驗kinds_requested所列的圖像演出段序、逐格及結果時點；其他階段未由本收據驗證；不稱DOS整場同態'
 raw = root/'RAW.mp4'
 probe = json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-show_format','-of','json',str(raw)]))
 video = next(q for q in probe['streams'] if q['codec_type']=='video')

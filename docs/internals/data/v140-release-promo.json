@@ -1,0 +1,3285 @@
+{
+  "version": "v.1.4.0-20261015",
+  "source_commit": "024a851d5f880e26af127afb9667c7c8c371ba76",
+  "working_tree": " M CONTEXT.md\n M README.md\n M WORKLOG.md\n M docs/playtest/127-windows-and-rule-settings.md\n M docs/spec/139-battle-playback-and-settings.md\n M docs/spec/147-compact-system-settings.md\n M tools/scripts/ai_gameplay_record.py\n M tools/scripts/battle_playback_audit.py\n M tools/scripts/fortress_presentation_gui.py\n M tools/scripts/local_test_smoke.py\n M tools/scripts/windows_delivery_smoke.py\n M tools/scripts/windows_hotfix_package.py\n?? docs/goal/2026-10-15-release-and-promo-round-139.md\n?? docs/images/readme-v140-compact-ai.png\n?? docs/images/readme-v140-compact-enemies.png\n?? docs/images/readme-v140-compact-settings.png\n?? docs/images/readme-v140-compact.json\n?? docs/playtest/128-v140-release-and-promo.md\n?? tools/scripts/compact_settings_gui.py\n?? tools/scripts/promo_v140_movie.py\n?? tools/scripts/promo_v140_prepare.py\n?? tools/scripts/readme_compact_settings.py\n?? tools/scripts/v140_platform_delivery.py\n?? tools/scripts/v140_release_verify.py\n",
+  "frozen_product_inputs_sha256": "aeb0147ec9106a3542bbb687e80c23097f0d672ee826f25c164cbfb637c3f4e5",
+  "generator_sha256": {
+    "promo_v140_prepare.py": "c982a3c9430bb99bb6a6448a4a7af1e20d44b3a35d1c0073f5522891bf6f0256",
+    "promo_v140_movie.py": "abba420dc52dc68cdfc54a416898799ed60ae613bcd46c6d1617fa0ad170ae55",
+    "v140_platform_delivery.py": "cc9d538a3b887d1486139b452a97f6f152d8bc8ea9e44072aeb262539c6ca5f4",
+    "ai_gameplay_record.py": "7742cc102832526c276d949baeb75b9726f8a29acca711f8bb3809890cf793ed",
+    "fortress_presentation_gui.py": "b5a877f0b18cbcb947c629095315acc29c601a7010cd8a927e5ae48d9c17f9ac",
+    "hero_story_promo.py": "18fdb2ac6a2e65031b1a47202f3fdfb9e4b21943911c68075e3030ed5b570ac5"
+  },
+  "tests": {
+    "command": "tools/gui.sh test ./internal/... ./cmd/...",
+    "packages": 19,
+    "passed": 15,
+    "no_test_files": 4
+  },
+  "platform_receipts": {
+    "dist-all/v.1.4.0-20261015/smoke/full-linux/SMOKE.json": "1065b7bdd9f4099121dd7cd9320cdc0d3f50b1d4b891cbfa6466b4d1128073be",
+    "dist-all/v.1.4.0-20261015/smoke/release-linux/SMOKE.json": "1b36f747386eff9c60d6eb78dafef1eca12edaa883f73f8b62a9c5af88fd29b5",
+    "dist-all/v.1.4.0-20261015/smoke/macos/MACOS.json": "432ba9d367c10e732a75b82ee1877e8bf01b843b57a490cafaf4db8453c30818",
+    "workplace/music69-windows/windows139-compact/RESULT.json": "35b6e5dce9691d5ca053e2a0fa32e9a21dcd2a65c3c3009d1b37afac6ae62144",
+    "workplace/music69-windows/compact139-gui-f1/RESULT.json": "e8c7596c7fb08be32aed8f8e597a7934ea661605cfc757ebca0638c89c133dd8",
+    "workplace/promo139/compact-delivery-f0/RESULT.json": "abdf90537869feb96e1238fcbc02f7fb158f03b0eb68b78d6cb9dd72589abba6"
+  },
+  "packages": {
+    "version": "v.1.4.0-20261015",
+    "files": [
+      {
+        "path": "full/LOGH3-v.1.4.0-20261015-linux-amd64.zip",
+        "bytes": 417407267,
+        "sha256": "fdcde97456feb92b1d8796a8698fa2f60b4c45229f778e4f322201b0c3a7da8d"
+      },
+      {
+        "path": "full/LOGH3-v.1.4.0-20261015-macos-universal.zip",
+        "bytes": 424102219,
+        "sha256": "c21c472ad3157846772c13efd60aa2f10330542ba35c43ce314698a2f46417c2"
+      },
+      {
+        "path": "full/LOGH3-v.1.4.0-20261015-windows-amd64.zip",
+        "bytes": 417191336,
+        "sha256": "89e2034ae181be6b38393a5413c9a6522813875a67323633d2fb9888aab0bee9"
+      },
+      {
+        "path": "release/LOGH3-v.1.4.0-20261015-engine-source.tar.gz",
+        "bytes": 3548745,
+        "sha256": "0bd9aa89fcff097fd0fa0a594eae906c139f9d8197277570eff6a9d506d8de48"
+      },
+      {
+        "path": "release/LOGH3-v.1.4.0-20261015-linux-amd64.zip",
+        "bytes": 8444070,
+        "sha256": "d4e9f424909acd0df4e8b695c97ce10e78248a6ec4247b58c0e88e3318a19a9b"
+      },
+      {
+        "path": "release/LOGH3-v.1.4.0-20261015-macos-universal.zip",
+        "bytes": 15091376,
+        "sha256": "a4bb2db975df6d7aa7668d1fcd75838e90e6d3a56ab8bb094c3ec5484860ac7c"
+      },
+      {
+        "path": "release/LOGH3-v.1.4.0-20261015-windows-amd64.zip",
+        "bytes": 8225605,
+        "sha256": "e0b82fc07afcc9e3073734a528ba0b7d348e8afdbfe133b81d9a68b06671bee7"
+      }
+    ]
+  },
+  "promo_files": [
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/LOGH3-v.1.4.0-20261015-promo.mp4",
+      "bytes": 11816346,
+      "sha256": "5465b7693a75469daeec20a5be8aeafc4068cd4ffa88ab74433068c8299d2733"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/PLAN.json",
+      "bytes": 19085,
+      "sha256": "8271545fecaac666a0b381cb949dd7c0a3c75504ea270921740ad28847ab6d0f"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/AUDIT.json",
+      "bytes": 596,
+      "sha256": "66a239091241e098c11b9af5aeaba510343690c0535b521e2ca161cb24518735"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/TEXT-BOUNDS.json",
+      "bytes": 10268,
+      "sha256": "7763244f823055af59fbec740a60c8845bb349143f3da6e91f3e1a805fe02553"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/SOURCE-FRAMES.json",
+      "bytes": 12073,
+      "sha256": "2d28c2ffb409457d64de0c851897ac8ce27f921762ee55aad8b23f77e6616ea7"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/SOURCE-PLAYBACK.json",
+      "bytes": 61760,
+      "sha256": "b9739e27fcbf2cca3d0d2ccb08796cbb544654b2ebf8bbe3102651498b02f842"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/CONTINUITY-AUDIT.json",
+      "bytes": 10953,
+      "sha256": "b236974a7e89ceb80e99f1ef6456060780cbca37d1b32bc88dae8e878a24d641"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/SOUNDTRACK.json",
+      "bytes": 17909,
+      "sha256": "3b22e8736a2ab70d825b6a82c0e5406e857dc6496baa8c35c9852ef919717b07"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/REUSE.json",
+      "bytes": 7114,
+      "sha256": "e28beebe6f3374e235fbb5d04b109f2219e0d4179ed23456062e8589f2ae5ad7"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/FREEZE-REVIEW.json",
+      "bytes": 5443,
+      "sha256": "5f1def3a00ac6429ef1e86bbf19f4b13d6f529d2196709f48a5bb77306e5cace"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/AUDIO-AUDIT.log",
+      "bytes": 3802,
+      "sha256": "9bbab4846c04f6626326c47fa6a72bb7b9bfb1de762d48932b9085702c4f85d9"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/VIDEO-AUDIT.log",
+      "bytes": 7610,
+      "sha256": "f2d97f9ae2265c529bdffc4a6588eba31651feceead56e3f2cd2ea7491334b36"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/CONTACT.jpg",
+      "bytes": 670451,
+      "sha256": "5cd041988f4586e25361688e0943f18e0eb407170b467ff6c301d89bb1512955"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/RIGHTS.txt",
+      "bytes": 153,
+      "sha256": "78fc4a76792b2b51d1e14e4837f9c78699778aea7e329d42b970acd6a8f4d03e"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/REVIEW-settings.png",
+      "bytes": 1217907,
+      "sha256": "cb7da5a0aeeec3b41a1df08208ef32090c31d2477e6d35c65dc69073e5bc43b3"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/REVIEW-fortress.png",
+      "bytes": 871046,
+      "sha256": "51e8cc9d8761f6a3fc0bf9b2d94d0e187d4b6d23dfcd9ae8528922826447b851"
+    },
+    {
+      "path": "dist-all/v.1.4.0-20261015/promo/REVIEW-ending.png",
+      "bytes": 745480,
+      "sha256": "106f6d9d6c62da6eca5acb9a806f42d4d2a87388e0e747bb9f180a045b23391b"
+    }
+  ],
+  "recording_sources": {
+    "/src/workplace/promo139/compact-delivery-f0/TRACE.json": "7cbd8e37ee9ccadbbc206869fcbe6c6f63b69f68c7a142a1c6acc251e2575c97",
+    "/src/workplace/promo139/compact-delivery-f0/FRAMES.jsonl": "40401f59b8daa8ae4e05c1ae4bdef8538c17d65ccb49b4c865c80b6b264ace75",
+    "/src/workplace/promo139/compact-delivery-f0/FRAME-TRACE-CLOSE.json": "717d366063e6431772ba507732a51723bf515c1075a96506510e69de4b85444b",
+    "/src/workplace/promo139/compact-delivery-f0/RESULT.json": "abdf90537869feb96e1238fcbc02f7fb158f03b0eb68b78d6cb9dd72589abba6",
+    "/src/workplace/promo139/record-f0-final/TRACE.json": "49db6b7201b492c8d011d61d9a8f56808dd504792fcaa9038ea5d23635604ca5",
+    "/src/workplace/promo139/record-f0-final/FRAMES.jsonl": "a7c6bd82593f21ea0a9a1f2dfe30da9edf14742d54189f676d447041b8634573",
+    "/src/workplace/promo139/record-f0-final/FRAME-TRACE-CLOSE.json": "0aad5fdd20f46ca1c447b5f3701e419a7575285d1e2bb067dfc6ee0207a1a9ca",
+    "/src/workplace/promo139/record-f1/TRACE.json": "63c1e3368524cc3f63646be54cfc04c87dc319c643fac5e53aa8345333a29edf",
+    "/src/workplace/promo139/record-f1/FRAMES.jsonl": "6c0a64b363d38d9a334ccfe73809ed078bbf4276c980019acb910a24c3d1cd1f",
+    "/src/workplace/promo139/record-f1/FRAME-TRACE-CLOSE.json": "1d8644d20585fd91e3eaa3a883c4e3f553e6957be28e5d74ec195413d58d81f6",
+    "/src/workplace/promo139/record-fortress/TRACE.json": "bef38211195f25a29ece2a33e7b7e6316a68875e00067321205b9178c6333f48",
+    "/src/workplace/promo139/record-fortress/FRAMES.jsonl": "bd43b59a90219f6197490e9f7f8e68044cc4e9c6c2bc26c222b5076d589a07bd",
+    "/src/workplace/promo139/record-fortress/FRAME-TRACE-CLOSE.json": "6be3b7fc6bba2de3ffd777089432efb2bc606f316cec70dafd8da6b5883948e9",
+    "/src/workplace/promo139/record-fortress/RESULT.json": "595a7745e1cf1ba464c4fbe6f34e771bef3a8398a630d38b637c419700c2456e"
+  },
+  "audit": {
+    "passed": true,
+    "version": "v.1.4.0-20261015",
+    "music_sha256": "48c22ed0b5d9fec5d0b9bed70e7a06ae1ab3a07faef99da80ddfd21b4644739c",
+    "music_track_count": 1,
+    "music_loops": 0,
+    "original_clip_audio_mixed": false,
+    "decoded_mix_snr_db": 34.2326698591441,
+    "cuts": [
+      {
+        "scene": 1,
+        "sample": 264600,
+        "decoded_snr_db": 37.467533531837205,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 2,
+        "sample": 396900,
+        "decoded_snr_db": 37.701909506419675,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 3,
+        "sample": 529200,
+        "decoded_snr_db": 42.02478931510864,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 4,
+        "sample": 661500,
+        "decoded_snr_db": 55.761713735252066,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 5,
+        "sample": 749700,
+        "decoded_snr_db": 48.77945041321339,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 6,
+        "sample": 837900,
+        "decoded_snr_db": 36.74720323104188,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 7,
+        "sample": 970200,
+        "decoded_snr_db": 43.211363148989115,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 8,
+        "sample": 1146600,
+        "decoded_snr_db": 49.46742893042729,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 9,
+        "sample": 1323000,
+        "decoded_snr_db": 38.190975203201575,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 10,
+        "sample": 1499400,
+        "decoded_snr_db": 43.91548809137166,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 11,
+        "sample": 1675800,
+        "decoded_snr_db": 46.772798113928616,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 12,
+        "sample": 2010960,
+        "decoded_snr_db": 39.36481776615987,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 13,
+        "sample": 2099160,
+        "decoded_snr_db": 40.64937960757612,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 14,
+        "sample": 2185890,
+        "decoded_snr_db": 37.54732652604413,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 15,
+        "sample": 2275560,
+        "decoded_snr_db": 44.17964953568723,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 16,
+        "sample": 2359350,
+        "decoded_snr_db": 40.59280724089373,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 17,
+        "sample": 2451960,
+        "decoded_snr_db": 31.223459028123898,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 18,
+        "sample": 2547510,
+        "decoded_snr_db": 27.930013117435607,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 19,
+        "sample": 2639385,
+        "decoded_snr_db": 30.578257047956612,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 20,
+        "sample": 2737875,
+        "decoded_snr_db": 29.945267651343393,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 21,
+        "sample": 2831220,
+        "decoded_snr_db": 34.986367954618885,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 22,
+        "sample": 2920890,
+        "decoded_snr_db": 30.91917697517189,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 23,
+        "sample": 3039225,
+        "decoded_snr_db": 31.45795193359513,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 24,
+        "sample": 3145800,
+        "decoded_snr_db": 37.22794318940372,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 25,
+        "sample": 3245025,
+        "decoded_snr_db": 31.013386791005328,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 26,
+        "sample": 3336165,
+        "decoded_snr_db": 39.22459525855131,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 27,
+        "sample": 3450825,
+        "decoded_snr_db": 29.71626870846267,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 28,
+        "sample": 3539025,
+        "decoded_snr_db": 34.20392467510811,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 29,
+        "sample": 3652215,
+        "decoded_snr_db": 46.35364198001692,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 30,
+        "sample": 3744825,
+        "decoded_snr_db": 34.30086455646358,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 31,
+        "sample": 3858015,
+        "decoded_snr_db": 36.02037915016892,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 32,
+        "sample": 3970470,
+        "decoded_snr_db": 41.47829143833973,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 33,
+        "sample": 4061610,
+        "decoded_snr_db": 29.015760304472103,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 34,
+        "sample": 4149810,
+        "decoded_snr_db": 32.00132169880244,
+        "continuous_source_samples": true
+      },
+      {
+        "scene": 35,
+        "sample": 4239480,
+        "decoded_snr_db": 31.64660401706009,
+        "continuous_source_samples": true
+      }
+    ],
+    "peak": 0.6622474193572998,
+    "sfx_events": 69,
+    "all_gameplay_new": true,
+    "freeze_review": [
+      {
+        "start": 0.0,
+        "end": 6.0,
+        "checks": [
+          {
+            "scene": 0,
+            "classification": "刻意靜態標題卡"
+          }
+        ]
+      },
+      {
+        "start": 12.0167,
+        "end": 15.0,
+        "checks": [
+          {
+            "scene": 3,
+            "seconds": 12.31503,
+            "source_difference": 1.303849826388889,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 3,
+            "seconds": 13.50835,
+            "source_difference": 1.303849826388889,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 3,
+            "seconds": 14.70167,
+            "source_difference": 1.3026736111111112,
+            "classification": "原速對應來源等待／低變動"
+          }
+        ]
+      },
+      {
+        "start": 15.0,
+        "end": 17.0,
+        "checks": [
+          {
+            "scene": 4,
+            "seconds": 15.2,
+            "source_difference": 1.2384375,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 4,
+            "seconds": 16.0,
+            "source_difference": 1.2384375,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 4,
+            "seconds": 16.8,
+            "source_difference": 1.2375824652777776,
+            "classification": "原速對應來源等待／低變動"
+          }
+        ]
+      },
+      {
+        "start": 17.0,
+        "end": 19.0,
+        "checks": [
+          {
+            "scene": 5,
+            "seconds": 17.2,
+            "source_difference": 1.2231293402777779,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 5,
+            "seconds": 18.0,
+            "source_difference": 1.2231293402777779,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 5,
+            "seconds": 18.8,
+            "source_difference": 1.2231119791666667,
+            "classification": "原速對應來源等待／低變動"
+          }
+        ]
+      },
+      {
+        "start": 19.0167,
+        "end": 22.0,
+        "checks": [
+          {
+            "scene": 6,
+            "seconds": 19.31503,
+            "source_difference": 1.3040972222222222,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 6,
+            "seconds": 20.50835,
+            "source_difference": 1.3040972222222222,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 6,
+            "seconds": 21.70167,
+            "source_difference": 1.3039583333333333,
+            "classification": "原速對應來源等待／低變動"
+          }
+        ]
+      },
+      {
+        "start": 30.0167,
+        "end": 32.4333,
+        "checks": [
+          {
+            "scene": 9,
+            "seconds": 30.25836,
+            "source_difference": 0.6171875,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 9,
+            "seconds": 31.225,
+            "source_difference": 0.6185286458333333,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 9,
+            "seconds": 32.19164,
+            "source_difference": 0.6205642361111111,
+            "classification": "原速對應來源等待／低變動"
+          }
+        ]
+      },
+      {
+        "start": 75.8333,
+        "end": 78.2,
+        "checks": [
+          {
+            "scene": 26,
+            "seconds": 76.06997,
+            "source_difference": 0.7025130208333333,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 26,
+            "seconds": 77.01665,
+            "source_difference": 0.6945052083333332,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 26,
+            "seconds": 77.96333,
+            "source_difference": 0.6978472222222223,
+            "classification": "原速對應來源等待／低變動"
+          }
+        ]
+      },
+      {
+        "start": 80.4,
+        "end": 82.7833,
+        "checks": [
+          {
+            "scene": 28,
+            "seconds": 80.63833000000001,
+            "source_difference": 0.7107465277777778,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 28,
+            "seconds": 81.59165,
+            "source_difference": 0.7073003472222222,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 28,
+            "seconds": 82.54496999999999,
+            "source_difference": 0.7084114583333333,
+            "classification": "原速對應來源等待／低變動"
+          }
+        ]
+      },
+      {
+        "start": 85.05,
+        "end": 87.45,
+        "checks": [
+          {
+            "scene": 30,
+            "seconds": 85.28999999999999,
+            "source_difference": 0.6949609375,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 30,
+            "seconds": 86.25,
+            "source_difference": 0.6968359375000001,
+            "classification": "原速對應來源等待／低變動"
+          },
+          {
+            "scene": 30,
+            "seconds": 87.21000000000001,
+            "source_difference": 0.6897786458333334,
+            "classification": "原速對應來源等待／低變動"
+          }
+        ]
+      }
+    ],
+    "visual_review": "本輪CONTACT及完整原尺寸抽樣已目視，字幕、來源與片尾完整",
+    "limits": [
+      "macOS與Windows真機、人耳驗收未新增",
+      "音效時刻依frame trace首次played取樣，不稱逐取樣同步或DOS整場同態"
+    ]
+  },
+  "source_playback": {
+    "passed": true,
+    "scope": "成片實際選用的完整艦隊與要塞場次；不宣稱整份來源錄影或完整遊戲無漏格",
+    "recordings": [
+      {
+        "source": "/src/workplace/promo139/record-f0-final",
+        "sha256": "fce991e9744e385878ffd188335ecf0aaa9c40aa73e5d98aa5136c8f193ed560",
+        "audit": {
+          "passed": true,
+          "normal_entry": true,
+          "state_injection": false,
+          "kinds_requested": [
+            "fleet"
+          ],
+          "scene_ids_requested": [
+            "fleet/8/4/28",
+            "fleet/8/4/34",
+            "fleet/8/4/42",
+            "fleet/8/4/45",
+            "fleet/8/4/46",
+            "fleet/8/4/55"
+          ],
+          "ai": "1",
+          "frame_trace_sha256": "a7c6bd82593f21ea0a9a1f2dfe30da9edf14742d54189f676d447041b8634573",
+          "graphics_observations": {
+            "hd": 336
+          },
+          "skipped_frames": [],
+          "scenes": [
+            {
+              "id": "fleet/8/4/28",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 1,
+              "lost": 2445,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 137.16312,
+              "segments": [
+                "46434430",
+                "45434430",
+                "4643414d",
+                "45434432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/4/34",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 0,
+              "lost": 488,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 143.978533,
+              "segments": [
+                "46424430",
+                "45434430",
+                "46424142",
+                "45434431"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/4/42",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 1,
+              "lost": 1330,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 9,
+              "median_frame_ms": 141.020032,
+              "segments": [
+                "46434430",
+                "45ba4430",
+                "4643414d",
+                "45ba4432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/4/45",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 0,
+              "lost": 915,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 142.932122,
+              "segments": [
+                "46424430",
+                "45424430",
+                "46424142",
+                "45424431"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/4/46",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 1,
+              "lost": 1131,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 7,
+              "median_frame_ms": 136.70136,
+              "segments": [
+                "46434430",
+                "45424430",
+                "4643414d",
+                "45424432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/4/55",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 0,
+              "lost": 243,
+              "pictures": 13,
+              "observed_transitions": 13,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 139.42643199999998,
+              "segments": [
+                "46b34430",
+                "45414430",
+                "46b34142"
+              ],
+              "same_side_planet": false
+            }
+          ],
+          "scope": "只驗kinds_requested所列的圖像演出段序、逐格及結果時點；其他階段未由本收據驗證；不稱DOS整場同態",
+          "media": {
+            "raw_sha256": "222f88fcfac40cbedd70eb04ced9e0ab211381a19620c4a6144cdbe123ae1aba",
+            "duration": 110.104688,
+            "width": 960,
+            "height": 720,
+            "fps": "60/1",
+            "audio_channels": 2,
+            "mean_volume_db": -30.2,
+            "black_intervals": [
+              [
+                "0",
+                "0.738021",
+                "0.738021"
+              ]
+            ],
+            "freeze_events": [
+              [
+                "freeze_start",
+                "0.738021"
+              ],
+              [
+                "freeze_duration",
+                "2.05"
+              ],
+              [
+                "freeze_end",
+                "2.78802"
+              ],
+              [
+                "freeze_start",
+                "2.78802"
+              ],
+              [
+                "freeze_duration",
+                "3.3"
+              ],
+              [
+                "freeze_end",
+                "6.08802"
+              ],
+              [
+                "freeze_start",
+                "6.08802"
+              ],
+              [
+                "freeze_duration",
+                "5.8"
+              ],
+              [
+                "freeze_end",
+                "11.888"
+              ],
+              [
+                "freeze_start",
+                "11.888"
+              ],
+              [
+                "freeze_duration",
+                "1"
+              ],
+              [
+                "freeze_end",
+                "12.888"
+              ],
+              [
+                "freeze_start",
+                "12.888"
+              ],
+              [
+                "freeze_duration",
+                "1.85"
+              ],
+              [
+                "freeze_end",
+                "14.738"
+              ],
+              [
+                "freeze_start",
+                "14.738"
+              ],
+              [
+                "freeze_duration",
+                "1.03333"
+              ],
+              [
+                "freeze_end",
+                "15.7714"
+              ],
+              [
+                "freeze_start",
+                "15.7714"
+              ],
+              [
+                "freeze_duration",
+                "4.16667"
+              ],
+              [
+                "freeze_end",
+                "19.938"
+              ],
+              [
+                "freeze_start",
+                "19.938"
+              ],
+              [
+                "freeze_duration",
+                "5"
+              ],
+              [
+                "freeze_end",
+                "24.938"
+              ],
+              [
+                "freeze_start",
+                "24.938"
+              ],
+              [
+                "freeze_duration",
+                "3.15"
+              ],
+              [
+                "freeze_end",
+                "28.088"
+              ],
+              [
+                "freeze_start",
+                "28.088"
+              ],
+              [
+                "freeze_duration",
+                "14.7333"
+              ],
+              [
+                "freeze_end",
+                "42.8214"
+              ],
+              [
+                "freeze_start",
+                "42.8214"
+              ],
+              [
+                "freeze_duration",
+                "1.01667"
+              ],
+              [
+                "freeze_end",
+                "43.838"
+              ],
+              [
+                "freeze_start",
+                "43.838"
+              ],
+              [
+                "freeze_duration",
+                "1.08333"
+              ],
+              [
+                "freeze_end",
+                "44.9214"
+              ],
+              [
+                "freeze_start",
+                "47.7714"
+              ],
+              [
+                "freeze_duration",
+                "1.55"
+              ],
+              [
+                "freeze_end",
+                "49.3214"
+              ],
+              [
+                "freeze_start",
+                "49.5047"
+              ],
+              [
+                "freeze_duration",
+                "1.03333"
+              ],
+              [
+                "freeze_end",
+                "50.538"
+              ],
+              [
+                "freeze_start",
+                "51.238"
+              ],
+              [
+                "freeze_duration",
+                "2.1"
+              ],
+              [
+                "freeze_end",
+                "53.338"
+              ],
+              [
+                "freeze_start",
+                "53.338"
+              ],
+              [
+                "freeze_duration",
+                "1.03333"
+              ],
+              [
+                "freeze_end",
+                "54.3714"
+              ],
+              [
+                "freeze_start",
+                "55.1714"
+              ],
+              [
+                "freeze_duration",
+                "1.11667"
+              ],
+              [
+                "freeze_end",
+                "56.288"
+              ],
+              [
+                "freeze_start",
+                "59.3047"
+              ],
+              [
+                "freeze_duration",
+                "3.33333"
+              ],
+              [
+                "freeze_end",
+                "62.638"
+              ],
+              [
+                "freeze_start",
+                "62.638"
+              ],
+              [
+                "freeze_duration",
+                "3"
+              ],
+              [
+                "freeze_end",
+                "65.638"
+              ],
+              [
+                "freeze_start",
+                "65.638"
+              ],
+              [
+                "freeze_duration",
+                "2.5"
+              ],
+              [
+                "freeze_end",
+                "68.138"
+              ],
+              [
+                "freeze_start",
+                "72.138"
+              ],
+              [
+                "freeze_duration",
+                "1.88333"
+              ],
+              [
+                "freeze_end",
+                "74.0214"
+              ],
+              [
+                "freeze_start",
+                "75.238"
+              ],
+              [
+                "freeze_duration",
+                "3.21667"
+              ],
+              [
+                "freeze_end",
+                "78.4547"
+              ],
+              [
+                "freeze_start",
+                "78.4547"
+              ],
+              [
+                "freeze_duration",
+                "2.95"
+              ],
+              [
+                "freeze_end",
+                "81.4047"
+              ],
+              [
+                "freeze_start",
+                "81.4047"
+              ],
+              [
+                "freeze_duration",
+                "2.11667"
+              ],
+              [
+                "freeze_end",
+                "83.5214"
+              ],
+              [
+                "freeze_start",
+                "83.5214"
+              ],
+              [
+                "freeze_duration",
+                "1.13333"
+              ],
+              [
+                "freeze_end",
+                "84.6547"
+              ],
+              [
+                "freeze_start",
+                "86.088"
+              ],
+              [
+                "freeze_duration",
+                "3.95"
+              ],
+              [
+                "freeze_end",
+                "90.038"
+              ],
+              [
+                "freeze_start",
+                "92.3047"
+              ],
+              [
+                "freeze_duration",
+                "1.11667"
+              ],
+              [
+                "freeze_end",
+                "93.4214"
+              ],
+              [
+                "freeze_start",
+                "93.5714"
+              ],
+              [
+                "freeze_duration",
+                "1.56667"
+              ],
+              [
+                "freeze_end",
+                "95.138"
+              ],
+              [
+                "freeze_start",
+                "95.5714"
+              ],
+              [
+                "freeze_duration",
+                "1.63333"
+              ],
+              [
+                "freeze_end",
+                "97.2047"
+              ],
+              [
+                "freeze_start",
+                "97.788"
+              ],
+              [
+                "freeze_duration",
+                "1.4"
+              ],
+              [
+                "freeze_end",
+                "99.188"
+              ],
+              [
+                "freeze_start",
+                "99.9214"
+              ],
+              [
+                "freeze_duration",
+                "1.15"
+              ],
+              [
+                "freeze_end",
+                "101.071"
+              ],
+              [
+                "freeze_start",
+                "101.971"
+              ],
+              [
+                "freeze_duration",
+                "1.2"
+              ],
+              [
+                "freeze_end",
+                "103.171"
+              ],
+              [
+                "freeze_start",
+                "103.605"
+              ],
+              [
+                "freeze_duration",
+                "1.83333"
+              ],
+              [
+                "freeze_end",
+                "105.438"
+              ],
+              [
+                "freeze_start",
+                "105.738"
+              ],
+              [
+                "freeze_duration",
+                "2.53333"
+              ],
+              [
+                "freeze_end",
+                "108.271"
+              ],
+              [
+                "freeze_start",
+                "108.438"
+              ]
+            ],
+            "freeze_scope": "完整GUI包含刻意停留的選單、訊息及音效等待；逐格閘門另由實際Draw與來源時間線核對"
+          },
+          "sample_timing": "錄影程序開始時點",
+          "visual_samples": [
+            {
+              "id": "fleet/8/4/34",
+              "weapon": 0,
+              "applied": 10,
+              "wall_ns": 1792038223918144822,
+              "graphics": "hd",
+              "video_seconds": 96.90732881,
+              "file": "review-00.png"
+            },
+            {
+              "id": "fleet/8/4/45",
+              "weapon": 0,
+              "applied": 7,
+              "wall_ns": 1792038227340622920,
+              "graphics": "hd",
+              "video_seconds": 100.329806908,
+              "file": "review-01.png"
+            },
+            {
+              "id": "fleet/8/4/55",
+              "weapon": 0,
+              "applied": 12,
+              "wall_ns": 1792038232121981979,
+              "graphics": "hd",
+              "video_seconds": 105.111165967,
+              "file": "review-02.png"
+            },
+            {
+              "id": "fleet/8/4/28",
+              "weapon": 1,
+              "applied": 10,
+              "wall_ns": 1792038221975922008,
+              "graphics": "hd",
+              "video_seconds": 94.965105996,
+              "file": "review-03.png"
+            },
+            {
+              "id": "fleet/8/4/42",
+              "weapon": 1,
+              "applied": 7,
+              "wall_ns": 1792038225321766550,
+              "graphics": "hd",
+              "video_seconds": 98.310950538,
+              "file": "review-04.png"
+            },
+            {
+              "id": "fleet/8/4/46",
+              "weapon": 1,
+              "applied": 11,
+              "wall_ns": 1792038230002617196,
+              "graphics": "hd",
+              "video_seconds": 102.991801184,
+              "file": "review-05.png"
+            }
+          ]
+        }
+      },
+      {
+        "source": "/src/workplace/promo139/record-f1",
+        "sha256": "af32a49435b4705024dd4bc7adc6037f06881dc0503d56143337db10d325d91a",
+        "audit": {
+          "passed": true,
+          "normal_entry": true,
+          "state_injection": false,
+          "kinds_requested": [
+            "fleet"
+          ],
+          "scene_ids_requested": [
+            "fleet/8/2/101",
+            "fleet/8/2/102",
+            "fleet/8/3/2",
+            "fleet/8/3/5",
+            "fleet/8/3/8",
+            "fleet/8/3/11",
+            "fleet/8/3/12",
+            "fleet/8/3/14",
+            "fleet/8/3/15",
+            "fleet/8/3/19",
+            "fleet/8/3/20",
+            "fleet/8/3/22",
+            "fleet/8/3/25",
+            "fleet/8/3/29",
+            "fleet/8/3/32",
+            "fleet/8/3/33",
+            "fleet/8/3/36"
+          ],
+          "ai": "1",
+          "frame_trace_sha256": "6c0a64b363d38d9a334ccfe73809ed078bbf4276c980019acb910a24c3d1cd1f",
+          "graphics_observations": {
+            "hd": 946
+          },
+          "skipped_frames": [],
+          "scenes": [
+            {
+              "id": "fleet/8/2/101",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 1,
+              "lost": 3960,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 6,
+              "median_frame_ms": 139.23806,
+              "segments": [
+                "45434430",
+                "46434430",
+                "4543414d",
+                "46434432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/2/102",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 0,
+              "lost": 2203,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 140.049671,
+              "segments": [
+                "45b74430",
+                "46434430",
+                "45b74142",
+                "46434432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/2",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 1,
+              "lost": 2152,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 136.206951,
+              "segments": [
+                "45434430",
+                "46424430",
+                "4543414d",
+                "46424432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/5",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 1,
+              "lost": 3227,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 137.397325,
+              "segments": [
+                "45434430",
+                "46434430",
+                "4543414d",
+                "46434432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/8",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 2,
+              "lost": 438,
+              "pictures": 15,
+              "observed_transitions": 15,
+              "result_seen": true,
+              "observed_result_pause_ticks": 9,
+              "median_frame_ms": 144.456185,
+              "segments": [
+                "46424430",
+                "45484430",
+                "46424146"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/11",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 2,
+              "lost": 906,
+              "pictures": 14,
+              "observed_transitions": 14,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 137.786015,
+              "segments": [
+                "46424430",
+                "45484430",
+                "46424146",
+                "45484431"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/12",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 0,
+              "lost": 1493,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 9,
+              "median_frame_ms": 150.334311,
+              "segments": [
+                "45b34430",
+                "46b84430",
+                "45b34142",
+                "46b84432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/14",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 0,
+              "lost": 367,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 7,
+              "median_frame_ms": 141.15371,
+              "segments": [
+                "45484430",
+                "46424430",
+                "45484142",
+                "46424432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/15",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 2,
+              "lost": 452,
+              "pictures": 15,
+              "observed_transitions": 15,
+              "result_seen": true,
+              "observed_result_pause_ticks": 9,
+              "median_frame_ms": 138.345054,
+              "segments": [
+                "45b54430",
+                "46ba4430",
+                "45b54146"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/19",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 1,
+              "lost": 929,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 9,
+              "median_frame_ms": 135.463534,
+              "segments": [
+                "45434430",
+                "46b84430",
+                "4543414d",
+                "46b84432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/20",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 2,
+              "lost": 437,
+              "pictures": 13,
+              "observed_transitions": 13,
+              "result_seen": true,
+              "observed_result_pause_ticks": 9,
+              "median_frame_ms": 142.30553700000002,
+              "segments": [
+                "45484430",
+                "46424430",
+                "45484146"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/22",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 0,
+              "lost": 200,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 140.548166,
+              "segments": [
+                "45484430",
+                "46424430",
+                "45484142",
+                "46424432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/25",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 2,
+              "lost": 236,
+              "pictures": 13,
+              "observed_transitions": 13,
+              "result_seen": true,
+              "observed_result_pause_ticks": 7,
+              "median_frame_ms": 135.618722,
+              "segments": [
+                "45484430",
+                "46ba4430",
+                "45484146"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/29",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 2,
+              "lost": 455,
+              "pictures": 15,
+              "observed_transitions": 15,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 139.225898,
+              "segments": [
+                "46424430",
+                "45b74430",
+                "46424146"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/32",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 1,
+              "lost": 1778,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 135.415228,
+              "segments": [
+                "46434430",
+                "45b54430",
+                "4643414d",
+                "45b54432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/33",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 1,
+              "lost": 2033,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 142.176643,
+              "segments": [
+                "45434430",
+                "46c04430",
+                "4543414d",
+                "46c04432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fleet/8/3/36",
+              "kind": "fleet",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 1,
+              "lost": 667,
+              "pictures": 12,
+              "observed_transitions": 12,
+              "result_seen": true,
+              "observed_result_pause_ticks": 8,
+              "median_frame_ms": 136.180449,
+              "segments": [
+                "46434430",
+                "45b54430",
+                "4643414d",
+                "45b54432"
+              ],
+              "same_side_planet": false
+            }
+          ],
+          "scope": "只驗kinds_requested所列的圖像演出段序、逐格及結果時點；其他階段未由本收據驗證；不稱DOS整場同態",
+          "media": {
+            "raw_sha256": "84dca0ea1e5649f82b426e933649612b84d7cfb403533cb0a7724847aebbcdb9",
+            "duration": 294.771354,
+            "width": 1280,
+            "height": 960,
+            "fps": "60/1",
+            "audio_channels": 2,
+            "mean_volume_db": -26.4,
+            "black_intervals": [
+              [
+                "0",
+                "0.754687",
+                "0.754687"
+              ]
+            ],
+            "freeze_events": [
+              [
+                "freeze_start",
+                "0.754687"
+              ],
+              [
+                "freeze_duration",
+                "2.06667"
+              ],
+              [
+                "freeze_end",
+                "2.82135"
+              ],
+              [
+                "freeze_start",
+                "2.82135"
+              ],
+              [
+                "freeze_duration",
+                "3.26667"
+              ],
+              [
+                "freeze_end",
+                "6.08802"
+              ],
+              [
+                "freeze_start",
+                "6.08802"
+              ],
+              [
+                "freeze_duration",
+                "5.81667"
+              ],
+              [
+                "freeze_end",
+                "11.9047"
+              ],
+              [
+                "freeze_start",
+                "11.9047"
+              ],
+              [
+                "freeze_duration",
+                "1.05"
+              ],
+              [
+                "freeze_end",
+                "12.9547"
+              ],
+              [
+                "freeze_start",
+                "12.9547"
+              ],
+              [
+                "freeze_duration",
+                "1.86667"
+              ],
+              [
+                "freeze_end",
+                "14.8214"
+              ],
+              [
+                "freeze_start",
+                "14.8214"
+              ],
+              [
+                "freeze_duration",
+                "1.06667"
+              ],
+              [
+                "freeze_end",
+                "15.888"
+              ],
+              [
+                "freeze_start",
+                "15.888"
+              ],
+              [
+                "freeze_duration",
+                "9.35"
+              ],
+              [
+                "freeze_end",
+                "25.238"
+              ],
+              [
+                "freeze_start",
+                "25.238"
+              ],
+              [
+                "freeze_duration",
+                "3.15"
+              ],
+              [
+                "freeze_end",
+                "28.388"
+              ],
+              [
+                "freeze_start",
+                "28.388"
+              ],
+              [
+                "freeze_duration",
+                "14.8"
+              ],
+              [
+                "freeze_end",
+                "43.188"
+              ],
+              [
+                "freeze_start",
+                "43.188"
+              ],
+              [
+                "freeze_duration",
+                "1.01667"
+              ],
+              [
+                "freeze_end",
+                "44.2047"
+              ],
+              [
+                "freeze_start",
+                "44.2047"
+              ],
+              [
+                "freeze_duration",
+                "1.1"
+              ],
+              [
+                "freeze_end",
+                "45.3047"
+              ],
+              [
+                "freeze_start",
+                "46.3047"
+              ],
+              [
+                "freeze_duration",
+                "2.78333"
+              ],
+              [
+                "freeze_end",
+                "49.088"
+              ],
+              [
+                "freeze_start",
+                "49.088"
+              ],
+              [
+                "freeze_duration",
+                "1.03333"
+              ],
+              [
+                "freeze_end",
+                "50.1214"
+              ],
+              [
+                "freeze_start",
+                "50.9714"
+              ],
+              [
+                "freeze_duration",
+                "4.73333"
+              ],
+              [
+                "freeze_end",
+                "55.7047"
+              ],
+              [
+                "freeze_start",
+                "55.7047"
+              ],
+              [
+                "freeze_duration",
+                "4.58333"
+              ],
+              [
+                "freeze_end",
+                "60.288"
+              ],
+              [
+                "freeze_start",
+                "60.6714"
+              ],
+              [
+                "freeze_duration",
+                "10.2667"
+              ],
+              [
+                "freeze_end",
+                "70.938"
+              ],
+              [
+                "freeze_start",
+                "71.288"
+              ],
+              [
+                "freeze_duration",
+                "3.01667"
+              ],
+              [
+                "freeze_end",
+                "74.3047"
+              ],
+              [
+                "freeze_start",
+                "74.3047"
+              ],
+              [
+                "freeze_duration",
+                "2.73333"
+              ],
+              [
+                "freeze_end",
+                "77.038"
+              ],
+              [
+                "freeze_start",
+                "77.138"
+              ],
+              [
+                "freeze_duration",
+                "3.08333"
+              ],
+              [
+                "freeze_end",
+                "80.2214"
+              ],
+              [
+                "freeze_start",
+                "80.2214"
+              ],
+              [
+                "freeze_duration",
+                "2.66667"
+              ],
+              [
+                "freeze_end",
+                "82.888"
+              ],
+              [
+                "freeze_start",
+                "83.0214"
+              ],
+              [
+                "freeze_duration",
+                "3.05"
+              ],
+              [
+                "freeze_end",
+                "86.0714"
+              ],
+              [
+                "freeze_start",
+                "86.0714"
+              ],
+              [
+                "freeze_duration",
+                "2.68333"
+              ],
+              [
+                "freeze_end",
+                "88.7547"
+              ],
+              [
+                "freeze_start",
+                "88.888"
+              ],
+              [
+                "freeze_duration",
+                "3.06667"
+              ],
+              [
+                "freeze_end",
+                "91.9547"
+              ],
+              [
+                "freeze_start",
+                "91.9547"
+              ],
+              [
+                "freeze_duration",
+                "2.53333"
+              ],
+              [
+                "freeze_end",
+                "94.488"
+              ],
+              [
+                "freeze_start",
+                "94.488"
+              ],
+              [
+                "freeze_duration",
+                "2.13333"
+              ],
+              [
+                "freeze_end",
+                "96.6214"
+              ],
+              [
+                "freeze_start",
+                "96.6214"
+              ],
+              [
+                "freeze_duration",
+                "1.01667"
+              ],
+              [
+                "freeze_end",
+                "97.638"
+              ],
+              [
+                "freeze_start",
+                "99.2214"
+              ],
+              [
+                "freeze_duration",
+                "1.1"
+              ],
+              [
+                "freeze_end",
+                "100.321"
+              ],
+              [
+                "freeze_start",
+                "101.421"
+              ],
+              [
+                "freeze_duration",
+                "1.15"
+              ],
+              [
+                "freeze_end",
+                "102.571"
+              ],
+              [
+                "freeze_start",
+                "103.155"
+              ],
+              [
+                "freeze_duration",
+                "2.51667"
+              ],
+              [
+                "freeze_end",
+                "105.671"
+              ],
+              [
+                "freeze_start",
+                "105.671"
+              ],
+              [
+                "freeze_duration",
+                "2.15"
+              ],
+              [
+                "freeze_end",
+                "107.821"
+              ],
+              [
+                "freeze_start",
+                "107.821"
+              ],
+              [
+                "freeze_duration",
+                "1"
+              ],
+              [
+                "freeze_end",
+                "108.821"
+              ],
+              [
+                "freeze_start",
+                "110.338"
+              ],
+              [
+                "freeze_duration",
+                "1.88333"
+              ],
+              [
+                "freeze_end",
+                "112.221"
+              ],
+              [
+                "freeze_start",
+                "113.671"
+              ],
+              [
+                "freeze_duration",
+                "2.71667"
+              ],
+              [
+                "freeze_end",
+                "116.388"
+              ],
+              [
+                "freeze_start",
+                "121.571"
+              ],
+              [
+                "freeze_duration",
+                "1.56667"
+              ],
+              [
+                "freeze_end",
+                "123.138"
+              ],
+              [
+                "freeze_start",
+                "123.588"
+              ],
+              [
+                "freeze_duration",
+                "1.43333"
+              ],
+              [
+                "freeze_end",
+                "125.021"
+              ],
+              [
+                "freeze_start",
+                "125.755"
+              ],
+              [
+                "freeze_duration",
+                "2.4"
+              ],
+              [
+                "freeze_end",
+                "128.155"
+              ],
+              [
+                "freeze_start",
+                "128.455"
+              ],
+              [
+                "freeze_duration",
+                "1.93333"
+              ],
+              [
+                "freeze_end",
+                "130.388"
+              ],
+              [
+                "freeze_start",
+                "131.288"
+              ],
+              [
+                "freeze_duration",
+                "1.3"
+              ],
+              [
+                "freeze_end",
+                "132.588"
+              ],
+              [
+                "freeze_start",
+                "132.905"
+              ],
+              [
+                "freeze_duration",
+                "1.61667"
+              ],
+              [
+                "freeze_end",
+                "134.521"
+              ],
+              [
+                "freeze_start",
+                "135.655"
+              ],
+              [
+                "freeze_duration",
+                "1.71667"
+              ],
+              [
+                "freeze_end",
+                "137.371"
+              ],
+              [
+                "freeze_start",
+                "138.071"
+              ],
+              [
+                "freeze_duration",
+                "1.13333"
+              ],
+              [
+                "freeze_end",
+                "139.205"
+              ],
+              [
+                "freeze_start",
+                "139.921"
+              ],
+              [
+                "freeze_duration",
+                "1.98333"
+              ],
+              [
+                "freeze_end",
+                "141.905"
+              ],
+              [
+                "freeze_start",
+                "142.038"
+              ],
+              [
+                "freeze_duration",
+                "1.65"
+              ],
+              [
+                "freeze_end",
+                "143.688"
+              ],
+              [
+                "freeze_start",
+                "144.555"
+              ],
+              [
+                "freeze_duration",
+                "1.96667"
+              ],
+              [
+                "freeze_end",
+                "146.521"
+              ],
+              [
+                "freeze_start",
+                "146.805"
+              ],
+              [
+                "freeze_duration",
+                "2.23333"
+              ],
+              [
+                "freeze_end",
+                "149.038"
+              ],
+              [
+                "freeze_start",
+                "149.188"
+              ],
+              [
+                "freeze_duration",
+                "1.71667"
+              ],
+              [
+                "freeze_end",
+                "150.905"
+              ],
+              [
+                "freeze_start",
+                "151.205"
+              ],
+              [
+                "freeze_duration",
+                "1.66667"
+              ],
+              [
+                "freeze_end",
+                "152.871"
+              ],
+              [
+                "freeze_start",
+                "153.205"
+              ],
+              [
+                "freeze_duration",
+                "1.68333"
+              ],
+              [
+                "freeze_end",
+                "154.888"
+              ],
+              [
+                "freeze_start",
+                "155.721"
+              ],
+              [
+                "freeze_duration",
+                "1.05"
+              ],
+              [
+                "freeze_end",
+                "156.771"
+              ],
+              [
+                "freeze_start",
+                "157.338"
+              ],
+              [
+                "freeze_duration",
+                "1.56667"
+              ],
+              [
+                "freeze_end",
+                "158.905"
+              ],
+              [
+                "freeze_start",
+                "159.488"
+              ],
+              [
+                "freeze_duration",
+                "2.08333"
+              ],
+              [
+                "freeze_end",
+                "161.571"
+              ],
+              [
+                "freeze_start",
+                "161.721"
+              ],
+              [
+                "freeze_duration",
+                "1.43333"
+              ],
+              [
+                "freeze_end",
+                "163.155"
+              ],
+              [
+                "freeze_start",
+                "163.888"
+              ],
+              [
+                "freeze_duration",
+                "2.35"
+              ],
+              [
+                "freeze_end",
+                "166.238"
+              ],
+              [
+                "freeze_start",
+                "166.521"
+              ],
+              [
+                "freeze_duration",
+                "1.96667"
+              ],
+              [
+                "freeze_end",
+                "168.488"
+              ],
+              [
+                "freeze_start",
+                "168.638"
+              ],
+              [
+                "freeze_duration",
+                "1.41667"
+              ],
+              [
+                "freeze_end",
+                "170.055"
+              ],
+              [
+                "freeze_start",
+                "170.655"
+              ],
+              [
+                "freeze_duration",
+                "1.83333"
+              ],
+              [
+                "freeze_end",
+                "172.488"
+              ],
+              [
+                "freeze_start",
+                "173.321"
+              ],
+              [
+                "freeze_duration",
+                "1.03333"
+              ],
+              [
+                "freeze_end",
+                "174.355"
+              ],
+              [
+                "freeze_start",
+                "174.838"
+              ],
+              [
+                "freeze_duration",
+                "1.78333"
+              ],
+              [
+                "freeze_end",
+                "176.621"
+              ],
+              [
+                "freeze_start",
+                "177.338"
+              ],
+              [
+                "freeze_duration",
+                "1.98333"
+              ],
+              [
+                "freeze_end",
+                "179.321"
+              ],
+              [
+                "freeze_start",
+                "179.905"
+              ],
+              [
+                "freeze_duration",
+                "1.38333"
+              ],
+              [
+                "freeze_end",
+                "181.288"
+              ],
+              [
+                "freeze_start",
+                "181.571"
+              ],
+              [
+                "freeze_duration",
+                "1"
+              ],
+              [
+                "freeze_end",
+                "182.571"
+              ],
+              [
+                "freeze_start",
+                "184.555"
+              ],
+              [
+                "freeze_duration",
+                "1.41667"
+              ],
+              [
+                "freeze_end",
+                "185.971"
+              ],
+              [
+                "freeze_start",
+                "186.721"
+              ],
+              [
+                "freeze_duration",
+                "1.33333"
+              ],
+              [
+                "freeze_end",
+                "188.055"
+              ],
+              [
+                "freeze_start",
+                "190.555"
+              ],
+              [
+                "freeze_duration",
+                "1.7"
+              ],
+              [
+                "freeze_end",
+                "192.255"
+              ],
+              [
+                "freeze_start",
+                "192.738"
+              ],
+              [
+                "freeze_duration",
+                "2.25"
+              ],
+              [
+                "freeze_end",
+                "194.988"
+              ],
+              [
+                "freeze_start",
+                "195.255"
+              ],
+              [
+                "freeze_duration",
+                "1.55"
+              ],
+              [
+                "freeze_end",
+                "196.805"
+              ],
+              [
+                "freeze_start",
+                "197.255"
+              ],
+              [
+                "freeze_duration",
+                "1.85"
+              ],
+              [
+                "freeze_end",
+                "199.105"
+              ],
+              [
+                "freeze_start",
+                "199.571"
+              ],
+              [
+                "freeze_duration",
+                "1.75"
+              ],
+              [
+                "freeze_end",
+                "201.321"
+              ],
+              [
+                "freeze_start",
+                "202.171"
+              ],
+              [
+                "freeze_duration",
+                "2.93333"
+              ],
+              [
+                "freeze_end",
+                "205.105"
+              ],
+              [
+                "freeze_start",
+                "205.105"
+              ],
+              [
+                "freeze_duration",
+                "2.41667"
+              ],
+              [
+                "freeze_end",
+                "207.521"
+              ],
+              [
+                "freeze_start",
+                "212.788"
+              ],
+              [
+                "freeze_duration",
+                "4.03333"
+              ],
+              [
+                "freeze_end",
+                "216.821"
+              ],
+              [
+                "freeze_start",
+                "217.055"
+              ],
+              [
+                "freeze_duration",
+                "1.18333"
+              ],
+              [
+                "freeze_end",
+                "218.238"
+              ],
+              [
+                "freeze_start",
+                "220.938"
+              ],
+              [
+                "freeze_duration",
+                "1.41667"
+              ],
+              [
+                "freeze_end",
+                "222.355"
+              ],
+              [
+                "freeze_start",
+                "223.321"
+              ],
+              [
+                "freeze_duration",
+                "2"
+              ],
+              [
+                "freeze_end",
+                "225.321"
+              ],
+              [
+                "freeze_start",
+                "225.588"
+              ],
+              [
+                "freeze_duration",
+                "1.96667"
+              ],
+              [
+                "freeze_end",
+                "227.555"
+              ],
+              [
+                "freeze_start",
+                "228.238"
+              ],
+              [
+                "freeze_duration",
+                "1.45"
+              ],
+              [
+                "freeze_end",
+                "229.688"
+              ],
+              [
+                "freeze_start",
+                "229.988"
+              ],
+              [
+                "freeze_duration",
+                "1.65"
+              ],
+              [
+                "freeze_end",
+                "231.638"
+              ],
+              [
+                "freeze_start",
+                "232.505"
+              ],
+              [
+                "freeze_duration",
+                "1.25"
+              ],
+              [
+                "freeze_end",
+                "233.755"
+              ],
+              [
+                "freeze_start",
+                "234.505"
+              ],
+              [
+                "freeze_duration",
+                "1.26667"
+              ],
+              [
+                "freeze_end",
+                "235.771"
+              ],
+              [
+                "freeze_start",
+                "236.071"
+              ],
+              [
+                "freeze_duration",
+                "1.78333"
+              ],
+              [
+                "freeze_end",
+                "237.855"
+              ],
+              [
+                "freeze_start",
+                "238.488"
+              ],
+              [
+                "freeze_duration",
+                "2.08333"
+              ],
+              [
+                "freeze_end",
+                "240.571"
+              ],
+              [
+                "freeze_start",
+                "241.721"
+              ],
+              [
+                "freeze_duration",
+                "1.11667"
+              ],
+              [
+                "freeze_end",
+                "242.838"
+              ],
+              [
+                "freeze_start",
+                "243.955"
+              ],
+              [
+                "freeze_duration",
+                "1.01667"
+              ],
+              [
+                "freeze_end",
+                "244.971"
+              ],
+              [
+                "freeze_start",
+                "245.221"
+              ],
+              [
+                "freeze_duration",
+                "1.58333"
+              ],
+              [
+                "freeze_end",
+                "246.805"
+              ],
+              [
+                "freeze_start",
+                "247.105"
+              ],
+              [
+                "freeze_duration",
+                "1.7"
+              ],
+              [
+                "freeze_end",
+                "248.805"
+              ],
+              [
+                "freeze_start",
+                "249.105"
+              ],
+              [
+                "freeze_duration",
+                "1.48333"
+              ],
+              [
+                "freeze_end",
+                "250.588"
+              ],
+              [
+                "freeze_start",
+                "251.671"
+              ],
+              [
+                "freeze_duration",
+                "1.15"
+              ],
+              [
+                "freeze_end",
+                "252.821"
+              ],
+              [
+                "freeze_start",
+                "253.388"
+              ],
+              [
+                "freeze_duration",
+                "2.36667"
+              ],
+              [
+                "freeze_end",
+                "255.755"
+              ],
+              [
+                "freeze_start",
+                "256.455"
+              ],
+              [
+                "freeze_duration",
+                "1.08333"
+              ],
+              [
+                "freeze_end",
+                "257.538"
+              ],
+              [
+                "freeze_start",
+                "258.905"
+              ],
+              [
+                "freeze_duration",
+                "1.56667"
+              ],
+              [
+                "freeze_end",
+                "260.471"
+              ],
+              [
+                "freeze_start",
+                "260.638"
+              ],
+              [
+                "freeze_duration",
+                "1.91667"
+              ],
+              [
+                "freeze_end",
+                "262.555"
+              ],
+              [
+                "freeze_start",
+                "262.855"
+              ],
+              [
+                "freeze_duration",
+                "1.7"
+              ],
+              [
+                "freeze_end",
+                "264.555"
+              ],
+              [
+                "freeze_start",
+                "264.988"
+              ],
+              [
+                "freeze_duration",
+                "2.03333"
+              ],
+              [
+                "freeze_end",
+                "267.021"
+              ],
+              [
+                "freeze_start",
+                "267.338"
+              ],
+              [
+                "freeze_duration",
+                "1.93333"
+              ],
+              [
+                "freeze_end",
+                "269.271"
+              ],
+              [
+                "freeze_start",
+                "270.555"
+              ],
+              [
+                "freeze_duration",
+                "1.01667"
+              ],
+              [
+                "freeze_end",
+                "271.571"
+              ],
+              [
+                "freeze_start",
+                "272.405"
+              ],
+              [
+                "freeze_duration",
+                "1.28333"
+              ],
+              [
+                "freeze_end",
+                "273.688"
+              ],
+              [
+                "freeze_start",
+                "274.021"
+              ],
+              [
+                "freeze_duration",
+                "1.8"
+              ],
+              [
+                "freeze_end",
+                "275.821"
+              ],
+              [
+                "freeze_start",
+                "276.705"
+              ],
+              [
+                "freeze_duration",
+                "1.21667"
+              ],
+              [
+                "freeze_end",
+                "277.921"
+              ],
+              [
+                "freeze_start",
+                "278.205"
+              ],
+              [
+                "freeze_duration",
+                "1.86667"
+              ],
+              [
+                "freeze_end",
+                "280.071"
+              ],
+              [
+                "freeze_start",
+                "280.371"
+              ],
+              [
+                "freeze_duration",
+                "1.6"
+              ],
+              [
+                "freeze_end",
+                "281.971"
+              ],
+              [
+                "freeze_start",
+                "282.871"
+              ],
+              [
+                "freeze_duration",
+                "1.66667"
+              ],
+              [
+                "freeze_end",
+                "284.538"
+              ],
+              [
+                "freeze_start",
+                "285.005"
+              ],
+              [
+                "freeze_duration",
+                "1.66667"
+              ],
+              [
+                "freeze_end",
+                "286.671"
+              ],
+              [
+                "freeze_start",
+                "287.288"
+              ],
+              [
+                "freeze_duration",
+                "1.63333"
+              ],
+              [
+                "freeze_end",
+                "288.921"
+              ],
+              [
+                "freeze_start",
+                "289.688"
+              ],
+              [
+                "freeze_duration",
+                "3"
+              ],
+              [
+                "freeze_end",
+                "292.688"
+              ],
+              [
+                "freeze_start",
+                "292.688"
+              ]
+            ],
+            "freeze_scope": "完整GUI包含刻意停留的選單、訊息及音效等待；逐格閘門另由實際Draw與來源時間線核對"
+          },
+          "sample_timing": "錄影程序開始時點",
+          "visual_samples": [
+            {
+              "id": "fleet/8/3/12",
+              "weapon": 0,
+              "applied": 1,
+              "wall_ns": 1792037518966220254,
+              "graphics": "hd",
+              "video_seconds": 130.689402908,
+              "file": "review-00.png"
+            },
+            {
+              "id": "fleet/8/3/14",
+              "weapon": 0,
+              "applied": 1,
+              "wall_ns": 1792037521166086062,
+              "graphics": "hd",
+              "video_seconds": 132.889268716,
+              "file": "review-01.png"
+            },
+            {
+              "id": "fleet/8/3/22",
+              "weapon": 0,
+              "applied": 11,
+              "wall_ns": 1792037531956244355,
+              "graphics": "hd",
+              "video_seconds": 143.679427009,
+              "file": "review-02.png"
+            },
+            {
+              "id": "fleet/8/3/2",
+              "weapon": 1,
+              "applied": 10,
+              "wall_ns": 1792037511268909483,
+              "graphics": "hd",
+              "video_seconds": 122.992092137,
+              "file": "review-03.png"
+            },
+            {
+              "id": "fleet/8/3/19",
+              "weapon": 1,
+              "applied": 7,
+              "wall_ns": 1792037526619183841,
+              "graphics": "hd",
+              "video_seconds": 138.342366495,
+              "file": "review-04.png"
+            },
+            {
+              "id": "fleet/8/3/36",
+              "weapon": 1,
+              "applied": 11,
+              "wall_ns": 1792037543030652455,
+              "graphics": "hd",
+              "video_seconds": 154.753835109,
+              "file": "review-05.png"
+            },
+            {
+              "id": "fleet/8/3/11",
+              "weapon": 2,
+              "applied": 7,
+              "wall_ns": 1792037517401725094,
+              "graphics": "hd",
+              "video_seconds": 129.124907748,
+              "file": "review-06.png"
+            },
+            {
+              "id": "fleet/8/3/15",
+              "weapon": 2,
+              "applied": 14,
+              "wall_ns": 1792037525361292209,
+              "graphics": "hd",
+              "video_seconds": 137.084474863,
+              "file": "review-07.png"
+            },
+            {
+              "id": "fleet/8/3/29",
+              "weapon": 2,
+              "applied": 14,
+              "wall_ns": 1792037537029851989,
+              "graphics": "hd",
+              "video_seconds": 148.753034643,
+              "file": "review-08.png"
+            }
+          ]
+        }
+      },
+      {
+        "source": "/src/workplace/promo139/record-fortress",
+        "sha256": "90db77dcf029855b89ac5f2043975c0620a1e507c897bc15f26f786a8ef21245",
+        "audit": {
+          "passed": true,
+          "normal_entry": true,
+          "state_injection": false,
+          "ai": "-1",
+          "frame_trace_sha256": "bd43b59a90219f6197490e9f7f8e68044cc4e9c6c2bc26c222b5076d589a07bd",
+          "graphics_observations": {
+            "hd": 108,
+            "original": 10
+          },
+          "skipped_frames": [],
+          "scenes": [
+            {
+              "id": "fortress/13/1/0/7",
+              "kind": "fortress",
+              "graphics": [
+                "hd",
+                "original"
+              ],
+              "weapon": 0,
+              "lost": 2678,
+              "pictures": 17,
+              "observed_transitions": 17,
+              "result_seen": true,
+              "observed_result_pause_ticks": 58,
+              "median_frame_ms": 135.640756,
+              "segments": [
+                "505a4430",
+                "46dd4430",
+                "505a414d",
+                "46dd4432"
+              ],
+              "same_side_planet": false
+            },
+            {
+              "id": "fortress/13/1/0/8",
+              "kind": "fortress",
+              "graphics": [
+                "hd"
+              ],
+              "weapon": 0,
+              "lost": 2254,
+              "pictures": 7,
+              "observed_transitions": 7,
+              "result_seen": true,
+              "observed_result_pause_ticks": 58,
+              "median_frame_ms": 136.68870600000002,
+              "segments": [
+                "505a4430",
+                "46544430",
+                "46544432"
+              ],
+              "same_side_planet": false
+            }
+          ],
+          "scope": "艦隊／行星既有演出段序、逐格及結果時點；完整登陸及占領呈現仍沿原有未完成項，不宣稱由本輪閉合",
+          "media": {
+            "raw_sha256": "5fb6ab21b0206a4a66fa5469cbfba801922ce4fbd6df1de5b22566fed46d3f13",
+            "duration": 23.971354,
+            "width": 960,
+            "height": 720,
+            "fps": "60/1",
+            "audio_channels": 2,
+            "mean_volume_db": -31.4,
+            "black_intervals": [
+              [
+                "0",
+                "0.638021",
+                "0.638021"
+              ]
+            ],
+            "freeze_events": [
+              [
+                "freeze_start",
+                "1.37135"
+              ],
+              [
+                "freeze_duration",
+                "1.31667"
+              ],
+              [
+                "freeze_end",
+                "2.68802"
+              ],
+              [
+                "freeze_start",
+                "4.15469"
+              ],
+              [
+                "freeze_duration",
+                "1.45"
+              ],
+              [
+                "freeze_end",
+                "5.60469"
+              ],
+              [
+                "freeze_start",
+                "9.77135"
+              ],
+              [
+                "freeze_duration",
+                "1"
+              ],
+              [
+                "freeze_end",
+                "10.7714"
+              ],
+              [
+                "freeze_start",
+                "11.888"
+              ],
+              [
+                "freeze_duration",
+                "1.08333"
+              ],
+              [
+                "freeze_end",
+                "12.9714"
+              ],
+              [
+                "freeze_start",
+                "12.9714"
+              ],
+              [
+                "freeze_duration",
+                "1.08333"
+              ],
+              [
+                "freeze_end",
+                "14.0547"
+              ],
+              [
+                "freeze_start",
+                "16.4714"
+              ],
+              [
+                "freeze_duration",
+                "1.05"
+              ],
+              [
+                "freeze_end",
+                "17.5214"
+              ],
+              [
+                "freeze_start",
+                "18.4714"
+              ],
+              [
+                "freeze_duration",
+                "1.05"
+              ],
+              [
+                "freeze_end",
+                "19.5214"
+              ]
+            ],
+            "freeze_scope": "完整GUI包含刻意停留的選單、訊息及音效等待；逐格閘門另由實際Draw與來源時間線核對"
+          },
+          "sample_timing": "錄影程序開始時點",
+          "visual_samples": [
+            {
+              "id": "fortress/13/1/0/7",
+              "weapon": 0,
+              "applied": 7,
+              "wall_ns": 1792037727051992377,
+              "graphics": "original",
+              "video_seconds": 15.037766139,
+              "file": "review-00.png"
+            },
+            {
+              "id": "fortress/13/1/0/7",
+              "weapon": 0,
+              "applied": 13,
+              "wall_ns": 1792037727886259591,
+              "graphics": "hd",
+              "video_seconds": 15.872033353,
+              "file": "review-01.png"
+            },
+            {
+              "id": "fortress/13/1/0/8",
+              "weapon": 0,
+              "applied": 6,
+              "wall_ns": 1792037730313225956,
+              "graphics": "hd",
+              "video_seconds": 18.298999718,
+              "file": "review-02.png"
+            }
+          ]
+        }
+      }
+    ],
+    "unselected_source_anomalies": [
+      {
+        "source": "/src/workplace/promo139/record-f1",
+        "scene": "fleet/8/3/93",
+        "reason": "來源漏格，未列為通過",
+        "gaps": [
+          [
+            10,
+            12
+          ]
+        ]
+      },
+      {
+        "source": "/src/workplace/promo139/record-f1",
+        "scene": "fleet/8/3/94",
+        "reason": "來源漏格，未列為通過",
+        "gaps": [
+          [
+            2,
+            4
+          ],
+          [
+            9,
+            11
+          ]
+        ]
+      },
+      {
+        "source": "/src/workplace/promo139/record-f1",
+        "scene": "fleet/8/3/95",
+        "reason": "來源漏格，未列為通過",
+        "gaps": [
+          [
+            3,
+            5
+          ],
+          [
+            9,
+            11
+          ]
+        ]
+      },
+      {
+        "source": "/src/workplace/promo139/record-f1",
+        "scene": "fleet/8/4/90",
+        "reason": "來源未播完整，不選用"
+      },
+      {
+        "source": "/src/workplace/promo139/record-f1",
+        "scene": "fleet/8/4/102",
+        "reason": "來源漏格，未列為通過",
+        "gaps": [
+          [
+            1,
+            4
+          ]
+        ]
+      },
+      {
+        "source": "/src/workplace/promo139/record-f1",
+        "scene": "fleet/8/4/103",
+        "reason": "來源漏格，未列為通過",
+        "gaps": [
+          [
+            1,
+            3
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            9,
+            12
+          ],
+          [
+            12,
+            14
+          ]
+        ]
+      }
+    ]
+  },
+  "platforms": {
+    "linux": "修正版實際ZIP、15條入口與正常帝國GUI",
+    "windows": "修正版實際ZIP、8條Wine入口與正常同盟GUI",
+    "macos": "雙架構／依賴／ARM簽章與ZIP，未真機執行"
+  },
+  "rights": "完整版與推廣片僅本機，Release只有三平台引擎、來源與校驗檔"
+}

@@ -1,5 +1,7 @@
 # Windows啟動與兩項可選規則
 
+第139輪交付位置勘誤：使用者要求設定頁修正後重建未發布v.1.4.0，本篇第138輪候選完整保留於`workplace/promo139/precompact/dist-all/v.1.4.0-20261015/`，原Windows凍結來源在同一`precompact/workplace/`對應目錄。舊來源索引及雜湊不變，其`dist-all/v.1.4.0-20261015/`路徑應以上述歸檔根回查；現行交付以[驗收128](128-v140-release-and-promo.md)為準。這是尚未發布候選替換，不移動已發布tag或Release。
+
 2026-10-15，第138輪。契約為[146](../spec/146-flagship-transfer-and-rule-settings.md)，目前狀態見[唯一狀態表](../goal/2026-10-15-windows-and-rule-settings-round-138.md)。來源與交付雜湊集中於[收據索引](../internals/data/windows-rule-settings.json)。本輪為使用者指定的 remake 擴充。
 
 ## Windows路徑修正
