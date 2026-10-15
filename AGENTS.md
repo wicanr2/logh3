@@ -67,8 +67,9 @@ MR 合併回 master；agent 只負責在專用副本內 commit 並 push 該分�
   `assets/original/face/`）。目的是保存遊戲資產、給日後重新繪圖當參考。進版控的
   只限解碼後的可檢視格式（PNG、MIDI 這一類），而且必須由 `tools/scripts/` 的匯出
   腳本產生；雜湊記在 `docs/internals/data/*.json`，不要手改圖檔。
-  這個 repo 目前是 **private**，要轉公開之前先請使用者裁決怎麼處理
-  `assets/original/`——它已經在歷史裡，只刪檔案不夠。
+  使用者於2026-10-15明確裁決保留 `assets/original/`、`decomp/` 與完整 Git 歷史，
+  原樣轉為公開儲存庫。此決定不改變原版素材的權利歸屬，也不授權公開原始遊戲檔或完整版。
+  未來若擴大公開素材範圍，先請使用者裁決，並檢查 Git 歷史；只刪目前檔案不會移除歷史。
 - `org_game/`（bundle 與原始遊戲檔本體）、模擬器快照與收據 dump、錄影及 `.i64`
   仍是本機 oracle，不得加入 Git。remake 的發行包（`dist-all/`）不內嵌原版遊戲檔與
   素材，`assets/original/` 也不例外。
@@ -257,7 +258,8 @@ remake 刻意不照做的規則（例如規格 125）只在偏好關閉時與 C 
 **權利邊界**：`decomp/` 只放重寫的 C 與測試程式，不含原版執行檔或可重組成原版的片段，
 不含 Datalight runtime 的原始碼或由它改寫的內容。進入點的短簽章只用來核對位置，比照
 `docs/internals` 的位元組簽章慣例。向量檔、保存狀態與候選編譯器留在 `workplace/`，不進 Git。
-本 repo 為 private，轉公開前 `decomp/` 與 `assets/original/` 一併請使用者裁決。
+`decomp/` 與 `assets/original/` 及其 Git 歷史已由使用者於2026-10-15裁決保留並原樣公開。
+後續擴大公開範圍時，沿用上方素材邊界的裁決要求。
 
 ### 4. 擷取 remake
 

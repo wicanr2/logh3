@@ -61,6 +61,25 @@
 - **啟動進度。** 小視窗顯示實際載入階段與人物圖張數，缺檔時顯示錯誤。
 - **有聲交火。** 支援遊戲配樂、艦隊音效與普通速度戰鬥動畫。引擎包需另匯入自有音訊與 HD 素材；原版規則模式、動畫時鐘及存檔格式保持。
 
+## 新功能：可選規則
+
+從「系統指令 → 設定」開關「轉移旗艦」與「名將移動加成」。兩項預設開啟，可各自切換，退出重開後仍保留選擇。
+
+下圖取自 Windows v.1.4.0 實際解壓封包的 Wine 正常操作，保留完整視窗。點圖可放大。[截圖來源與雜湊](docs/images/readme-v140-rules.json) · [功能與驗收](docs/playtest/127-windows-and-rule-settings.md)
+
+| 兩項預設開啟 | 兩項關閉 |
+|---|---|
+| [![設定中的轉移旗艦與名將移動加成開啟](docs/images/readme-v140-windows-settings.png)](docs/images/readme-v140-windows-settings.png) | [![設定中的轉移旗艦與名將移動加成關閉](docs/images/readme-v140-windows-settings-off.png)](docs/images/readme-v140-windows-settings-off.png) |
+
+| 選項 | 開啟時 | 關閉時 |
+|---|---|---|
+| 轉移旗艦 | 旗艦分隊被擊毀後，謬拉100%、其他提督約25%機率轉移。須有同艦隊存活的戰艦或高速戰艦，選艘數最多的分隊，保留提督與副官 | 沿原本旗艦全滅判定，不額外擲轉移機率 |
+| 名將移動加成 | 僅強化模式，存活帶隊的萊因哈特或楊威利參戰時，所屬陣營的新移動額度為1.5倍 | 恢復一般新移動額度，仍保留兩人的戰術AI |
+
+轉移旗艦每次擊毀只判定一次，失敗不重擲。轉移使用現有分隊，不增加艦艇、不回補彈藥。新旗艦若再次被擊毀，才有下一次轉移機會。這是可選的 remake 擴充規則。
+
+兩項設定保存於玩家存檔目錄的 `preferences.json`，不改原版六表存檔格式。名將移動開關影響之後取得的新額度，不回溯改動本回合已取得的額度。
+
 ## 遊戲畫面
 
 ### 將領頭像總覽
@@ -76,10 +95,6 @@
 | [![同盟42位將領原版頭像總覽](docs/images/readme-admirals-alliance-original.png)](docs/images/readme-admirals-alliance-original.png) | [![同盟42位將領HD頭像總覽](docs/images/readme-admirals-alliance-hd.png)](docs/images/readme-admirals-alliance-hd.png) |
 
 ### 遊戲實錄
-
-Windows v.1.4.0 本機修正版的兩個新設定，取自實際解壓封包的 Wine 正常操作。[設定與來源收據](docs/playtest/127-windows-and-rule-settings.md)
-
-![Windows修正版的轉移旗艦與名將移動加成開關](docs/images/readme-v140-windows-settings.png)
 
 載入進度與兩陣營字型設定的實際畫面，取自 v.1.3.0 Linux 版。[截圖來源與雜湊](docs/images/readme-v130.json)
 
@@ -170,4 +185,4 @@ Linux 版已抽測兩陣營的讀檔、財政與生產、艦隊指令、戰場�
 
 引擎採[復古重製 source-available 授權條款 1.0（RRSAL-1.0）](LICENSE)：非商業用途免費，允許修改與再散布；實況、影片與平台分潤明示允許，商業用途另洽。第三方工具與音色庫依各自授權。
 
-此授權不涵蓋原版遊戲檔、素材、譯文及其轉檔產物。本專案為非官方重製，與原作權利人無隸屬關係。儲存庫維持私有；研究素材與畫面不隨引擎包散布，完整版及動畫影片僅保留本機。
+此授權不涵蓋原版遊戲檔、素材、譯文及其轉檔產物。本專案為非官方重製，與原作權利人無隸屬關係。儲存庫保留解碼後的原版素材、研究畫面與 `decomp/` C 參考實作及其 Git 歷史，供研究與保存。引擎包不附原版素材；原始遊戲檔、完整版及動畫影片僅保留本機。

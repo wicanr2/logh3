@@ -1,0 +1,99 @@
+{
+  "schema": "logh3.readme-rule-settings.v1",
+  "version": "v.1.4.0-20261015",
+  "parent_receipt": {
+    "path": "docs/internals/data/windows-rule-settings.json",
+    "sha256": "74745a09e9e96a912703e097d8e7832516ef6cad831b6880597bb06c7760231c"
+  },
+  "product_source_commit": "6ef56b26b522e1e9f86ba86421a20d2b1fa8d422",
+  "exporter": "tools/scripts/readme_rule_settings.py",
+  "exporter_sha256": "108c4e6dc8f9d1ebefda46f1ab78a277213008597db320181f449c0baec06375",
+  "method": "複製已驗實際Windows ZIP的Wine正常GUI完整視窗，不裁切、不縮放、不重畫",
+  "scope": "系統設定開／關與正常GUI證據；不是自然遊玩轉移旗艦事件或Windows真機截圖",
+  "screenshots": [
+    {
+      "path": "docs/images/readme-v140-windows-settings.png",
+      "bytes": 65783,
+      "sha256": "a3acc28f9979e8dbf2b7dfcb0054596e8b8f83325435dfa8c548a4877d2db63f",
+      "source": {
+        "path": "workplace/music69-windows/rules138-wine-f0-r5/01-default-on.png",
+        "bytes": 65783,
+        "sha256": "a3acc28f9979e8dbf2b7dfcb0054596e8b8f83325435dfa8c548a4877d2db63f"
+      },
+      "observed": {
+        "wall_ns": 1792034320697043000,
+        "ticks": 108,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 4.3714,
+        "draw_ms": 5.4583,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          600,
+          450
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": true,
+        "music_track": "BGM_0F",
+        "soundfont": "gs",
+        "mt32_available": true,
+        "soundfont_menu": false,
+        "music_library": "Z:\\out\\windows138-delivery\\unpacked\\銀河 修正版\\full\\LOGH3-v.1.4.0-20261015-windows-amd64\\music",
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        }
+      }
+    },
+    {
+      "path": "docs/images/readme-v140-windows-settings-off.png",
+      "bytes": 65613,
+      "sha256": "b7804a7916e8a622463bbf33c1915c4bc7f7a3f61de5b1461a5fb81c096d5451",
+      "source": {
+        "path": "workplace/music69-windows/rules138-wine-f0-r5/02-off-hd.png",
+        "bytes": 65613,
+        "sha256": "b7804a7916e8a622463bbf33c1915c4bc7f7a3f61de5b1461a5fb81c096d5451"
+      },
+      "observed": {
+        "wall_ns": 1792034322235180000,
+        "ticks": 129,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 36.4344,
+        "draw_ms": 37.511,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          600,
+          450
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": true,
+        "music_track": "BGM_0F",
+        "soundfont": "gs",
+        "mt32_available": true,
+        "soundfont_menu": false,
+        "music_library": "Z:\\out\\windows138-delivery\\unpacked\\銀河 修正版\\full\\LOGH3-v.1.4.0-20261015-windows-amd64\\music",
+        "rules": {
+          "flagship_transfer": false,
+          "hero_movement": false
+        }
+      }
+    }
+  ]
+}

@@ -11255,3 +11255,9 @@ README本機影片入口、CONTEXT、140配樂修訂及驗收126已同步，唯�
 146限定CONFORMED、驗收127、goal138唯一狀態表、CONTEXT及README已更新；README加入實際Windows設定截圖。唯一收據windows-rule-settings.json的SHA-256為 `74745a09e9e96a912703e097d8e7832516ef6cad831b6880597bb06c7760231c`。本輪只證明受控傷害與正常設定路徑，沒有另稱自然遊玩轉移觸發、DOS parity或Windows真機通過。#48正式戰術讀回重建與DOS整段同態仍保持OPEN。
 
 收尾：1566個現行入口相對連結通過，verify仍零失效斷言；全專案無root-owned檔案或誤建.md目錄，根目錄及Wine子工作區的容器均清空。實作6ef56b26已commit並push至main，遠端核對相同；README、收據與驗證工具修正另作收尾提交並推送。既有已發布版本與其他專案容器保持。
+
+## 2026-10-15 README新功能截圖與公開範圍
+
+依使用者要求，README加入兩項可選規則的開啟／關閉對照圖，說明轉移候選、謬拉100%與其他提督約25%、每次擊毀一次判定、名將移動加成範圍及偏好保存。截圖沿正式Windows v.1.4.0解壓包的Wine正常設定流程，完整960×720、不裁切或改圖；不稱Windows真機或自然戰鬥轉移事件。新增關閉圖由`tools/scripts/readme_rule_settings.py`匯出，兩圖身份及來源索引為`docs/images/readme-v140-rules.json`，README已有入口。獨立`--check`核對原圖、狀態與SHA-256通過，README相對連結通過。本次沒有修改產品程式，不重跑產品測試。
+
+主機gh核對儲存庫起始PRIVATE、目前使用者ADMIN。盤點Git歷史與目前檔案：assets/original有2680個檔案、66455437 bytes；decomp目前1748個檔案、6209021 bytes，歷史1755個路徑。org_game及dist-all未進入Git歷史。依AGENTS與grilling的公開範圍閘門，使用者已明確回答「保留素材與 decomp，原樣公開」，包含完整Git歷史，不刪檔、不改寫歷史。README與AGENTS同步此決定；原版權利歸屬及原始遊戲檔／完整版本機邊界保持。先提交並推送本次文件與截圖，再執行GitHub公開可見性變更並讀回核對。
