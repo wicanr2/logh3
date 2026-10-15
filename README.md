@@ -4,15 +4,17 @@
 
 選擇銀河帝國或自由行星同盟，從財政、生產與提督任命安排戰略，再親自指揮艦隊迎戰。從亞姆力札會戰重新下令，讓你的戰術改變局勢。
 
-**目前版本：[v.1.3.0-20261013](https://github.com/wicanr2/logh3/releases/tag/v.1.3.0-20261013)。** GitHub 提供引擎與程式來源，玩家須自備合法取得的原版遊戲資料。含遊戲資料的完整版與推廣影片僅保留本機，不加入 Git 或 Release 附件。
+**目前 GitHub 版本：[v.1.3.0-20261013](https://github.com/wicanr2/logh3/releases/tag/v.1.3.0-20261013)。** GitHub 提供引擎與程式來源，玩家須自備合法取得的原版遊戲資料。含遊戲資料的完整版與推廣影片僅保留本機，不加入 Git 或 Release 附件。
+
+**Windows 本機修正版：v.1.4.0-20261015。** 修正直接雙擊 `gin3.exe` 找不到 `GRAPH.IMG` 的問題，程式會從執行檔旁讀取資料。加入「轉移旗艦」與「名將移動加成」兩個設定，預設開啟並保存偏好。本機完整版亦包含下列音色、要塞演出與保存返回更新；GitHub v.1.3.0 發行包保持原內容。[新版規則與驗收](docs/playtest/127-windows-and-rule-settings.md)
 
 目前原始碼已加入 **Roland MT-32／GeneralUser GS 音色選擇**，設定中的 MIDI I/F 列改為音色庫，支援取消、靜音保持與重開保存選擇。[音色選擇與曲庫使用方式](docs/playtest/121-landing-and-soundfont.md)
 
-**登陸、反擊與占領已完成正常流程驗收。** S3同盟保留獨立分段、各階段擁有者與戰損，支援原版／HD、F7及實際音效。公開六表存讀符合完整載入重算；HD左右圖段基底錯配已修正。這些變更尚未納入上述發行包。[交戰整合驗收](docs/playtest/124-engagement-integration.md)
+**登陸、反擊與占領已完成正常流程驗收。** S3同盟保留獨立分段、各階段擁有者與戰損，支援原版／HD、F7及實際音效。公開六表存讀符合完整載入重算；HD左右圖段基底錯配已修正。[交戰整合驗收](docs/playtest/124-engagement-integration.md)
 
 **要塞砲演出已完成。** 支援發射通知、射程橢圓、首次開火動畫、逐分隊中彈與戰損、下方方塊及音效等待。伊謝爾倫正常操作、原版／HD、動畫關閉、F7及演出後六表存讀已驗收。[要塞砲驗收與操作路徑](docs/playtest/123-fortress-presentation.md)
 
-**戰術存檔成功後會回到原戰場。** 保留當前回合、鏡頭與命令，原版／HD正常操作已驗收。讀檔後重建同一戰場仍待完成；原版可直接續戰的證據已保存。這項修正尚未納入上述發行包。[保存返回驗收](docs/playtest/125-battle-save-return.md)
+**戰術存檔成功後會回到原戰場。** 保留當前回合、鏡頭與命令，原版／HD正常操作已驗收。讀檔後重建同一戰場仍待完成；原版可直接續戰的證據已保存。[保存返回驗收](docs/playtest/125-battle-save-return.md)
 
 ## 故事背景
 
@@ -38,6 +40,8 @@
 
 | 本機內容 | 路徑 |
 |---|---|
+| Windows v.1.4.0 修正版完整版與啟動器 | `dist-all/v.1.4.0-20261015/full/` |
+| Windows v.1.4.0 引擎與來源包 | `dist-all/v.1.4.0-20261015/release/` |
 | 三平台完整版與啟動器 | `dist-all/v.1.3.0-20261013/full/` |
 | 約 125 秒連續配樂推廣片與正常遊玩實錄 | `dist-all/v.1.2.0-20261012/promo/` |
 
@@ -49,7 +53,8 @@
 - **兩套陣營 HD。** 帝國採藍金配色，同盟採赤焰戰線；戰略星圖重繪星球與徽章，保留星球名稱及航路。戰術地圖、人物與艦影支援 HD，部隊圖示保留原版細節。
 - **隨時切換畫面。** F7 切換原版／HD，F1 開啟說明；滑鼠移到頂端可顯示功能列。顯示敵軍從設定選單切換，預設關閉。
 - **強化戰略與戰術 AI。** 可選原版規則模式或四級強化難度；強化 AI 會集結兵力、協同移動並尋找包圍方向。
-- **名將協同。** 楊威利採牽制與雙翼包抄，萊因哈特採集中突擊與側後封鎖。僅強化模式，兩人作為存活帶隊提督參戰時，所屬陣營全部艦隊的新移動額度為 1.5 倍，離場即解除。
+- **轉移旗艦。** 旗艦分隊被擊毀時，謬拉必定轉移，其餘提督約 25%。須有存活戰艦或高速戰艦，轉往艘數最多的分隊，保留提督與副官。可在系統設定關閉。
+- **名將協同。** 楊威利採牽制與雙翼包抄，萊因哈特採集中突擊與側後封鎖。僅強化模式，兩人作為存活帶隊提督參戰時，所屬陣營全部艦隊的新移動額度為 1.5 倍，離場即解除。「名將移動加成」可獨立關閉，仍保留名將戰術 AI。
 - **三個額外劇本。** 取進度保留 S1「亞姆力札會戰」、S2「諸神的黃昏」、S3「巴米利恩會戰」，可正常載入及存讀。
 - **四款字型。** 設定可選原版點陣、原版強化、思源宋體及思源黑體，預設原版強化。原版顯示固定使用原字形；新字集需另匯入，本機完整版已附。
 - **原曲 HD 音色。** 本機完整版保留原曲，升級 11 首配樂的音色與混音；設定可切 HD／FM 或靜音。強化啟動器預設 HD，原版規則啟動器預設原音色。
@@ -71,6 +76,10 @@
 | [![同盟42位將領原版頭像總覽](docs/images/readme-admirals-alliance-original.png)](docs/images/readme-admirals-alliance-original.png) | [![同盟42位將領HD頭像總覽](docs/images/readme-admirals-alliance-hd.png)](docs/images/readme-admirals-alliance-hd.png) |
 
 ### 遊戲實錄
+
+Windows v.1.4.0 本機修正版的兩個新設定，取自實際解壓封包的 Wine 正常操作。[設定與來源收據](docs/playtest/127-windows-and-rule-settings.md)
+
+![Windows修正版的轉移旗艦與名將移動加成開關](docs/images/readme-v140-windows-settings.png)
 
 載入進度與兩陣營字型設定的實際畫面，取自 v.1.3.0 Linux 版。[截圖來源與雜湊](docs/images/readme-v130.json)
 
@@ -106,7 +115,7 @@
 
 | 平台 | 原版資料位置 | 原版規則／強化模式啟動器 |
 |---|---|---|
-| Windows | `gin3.exe` 旁的 `original/` | `start-original.cmd`／`start-enhanced.cmd` |
+| Windows | `gin3.exe` 旁的 `original/` | `start-original.cmd`／`start-enhanced.cmd`；本機修正版亦可直接雙擊 `gin3.exe` |
 | Linux | `gin3` 旁的 `original/` | `start-original.sh`／`start-enhanced.sh` |
 | macOS | `.app/Contents/Resources/original/` | `start-original.command`／`start-enhanced.command` |
 
@@ -126,8 +135,10 @@ Linux 也可直接指定既有原版資料目錄：
 | 系統指令 → 設定 → 顯示敵軍 | 遊戲中開關敵軍顯示 |
 | 系統指令 → 設定 → 介面字型 | 循環切換四款字型 |
 | 系統指令 → 設定 → HD／FM | 切換配樂音色，需已匯入 HD 曲庫 |
+| 系統指令 → 設定 → 轉移旗艦 | 開關旗艦擊毀後的轉移規則，預設開啟 |
+| 系統指令 → 設定 → 名將移動加成 | 開關強化模式的名將陣營移動加成，預設開啟 |
 
-Windows 存檔位於 `%APPDATA%\logh3\save`；Linux 位於 `$XDG_CONFIG_HOME/logh3/save`，未設定時使用 `~/.config/logh3/save`；macOS 位於 `~/Library/Application Support/logh3/save`。兩種 AI 模式共用存檔。字型與 HD 音色選擇僅本次執行有效，可用 `-font original|classic|serif|sans` 與 `-music-quality original|hd` 指定啟動值；HD 曲目放在配樂目錄的 `hd/`。
+Windows 存檔位於 `%APPDATA%\logh3\save`；Linux 位於 `$XDG_CONFIG_HOME/logh3/save`，未設定時使用 `~/.config/logh3/save`；macOS 位於 `~/Library/Application Support/logh3/save`。兩種 AI 模式共用存檔。轉移旗艦、名將移動加成與 GeneralUser GS／Roland MT-32 音色選擇保存於同目錄的 `preferences.json`，不改原版六表格式。字型與 HD／FM 切換僅本次執行有效，可用 `-font original|classic|serif|sans` 與 `-music-quality original|hd` 指定啟動值；HD 曲目放在配樂目錄的 `hd/`。
 
 Linux 需要 X11 或 XWayland、OpenGL 與 ALSA；Windows 需要 OpenGL 驅動；macOS 最低版本為 11.0，尚未經 Apple 公證。詳細步驟與第三方聲明見包內 `README.txt`。
 

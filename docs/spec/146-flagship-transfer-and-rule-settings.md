@@ -1,6 +1,6 @@
 # 146：轉移旗艦與名將移動設定
 
-狀態：**READY**。2026-10-15使用者指定規則，並確認兩項預設開啟及擊毀後立即判定的方案。本規格記錄使用者授權的 remake 擴充，不宣稱 DOS 原版規則。[目前狀態表](../goal/2026-10-15-windows-and-rule-settings-round-138.md)
+狀態：**CONFORMED，規則與設定限定**。2026-10-15使用者指定規則，並確認兩項預設開啟及擊毀後立即判定的方案，先標READY再實作。三條受控傷害路徑、固定機率分支、編制清理／六表存讀、實際移動引擎、兩陣營正常GUI及Windows ZIP／設定重開通過。成果見[驗收127](../playtest/127-windows-and-rule-settings.md)。本規格記錄使用者授權的 remake 擴充，不宣稱 DOS 原版規則、自然遊玩觸發或Windows真機通過。[目前狀態表](../goal/2026-10-15-windows-and-rule-settings-round-138.md)
 
 ## 輸入與依據
 

@@ -1,10 +1,12 @@
-<!-- 第136輪：戰術保存成功返回已驗；原版冷啟動續戰已取證，正式讀回重建仍未完成。 -->
+<!-- 第138輪：Windows直接啟動與兩項可選規則已驗；#48正式讀回重建與DOS整段同態仍未完成。 -->
 # CONTEXT — 銀河英雄傳說III SP 專案目前真相
 
 本檔保存目前真相；剩餘工作的權威是 GitHub 上的 `worklist` Issue。
 流水帳在 `WORKLOG.md`；協作規範在 `AGENTS.md`。
 
 ## 現況一覽
+
+**Windows與可選規則（2026-10-15，第138輪）**：[146限定CONFORMED](docs/spec/146-flagship-transfer-and-rule-settings.md)。修正直接雙擊gin3.exe仍找開發目錄的問題，封包自動從執行檔旁讀original／data／art／music，明確旗標優先。「轉移旗艦」及「名將移動加成」依使用者確認預設開啟，獨立開關與偏好保存已接。謬拉100%、其他提督約25%，每次擊毀一次判定，轉往最多艘數的存活戰艦／高速戰艦，保持提督、副官及原池；名將移動仍限強化模式，關閉保持名將戰術AI。三條受控傷害、固定seed、連續轉移、清理及六表存讀、實際移動額度／範圍通過。兩陣營Linux正常GUI及正式Windows ZIP的設定／F7／退出重開通過；標準19套件15 PASS／4無測試。Windows v.1.4.0-20261015完整／引擎／來源三包本機交付，實際ZIP八案及逐檔／SHA-256通過；沒有建立遠端tag或Release。來源及限制見[驗收127](docs/playtest/127-windows-and-rule-settings.md)、[唯一收據](docs/internals/data/windows-rule-settings.json)及[狀態表138](docs/goal/2026-10-15-windows-and-rule-settings-round-138.md)。完整傷害是受控S3測試，沒有新增自然遊玩觸發、DOS parity或Windows真機聲明。實作6ef56b26已推送main；#48仍OPEN。
 
 **推廣片配樂更新（2026-10-14，第137輪）**：依使用者要求，全片改為BGM_0F單首連續音軌，不隨39段畫面切換重啟；交火音效獨立重混。新片124.956315秒、1080p60、雙聲道，原片7496個視訊封包及時間戳全部保持，38個剪接點連續取樣與聲畫驗收通過。新版為本機`dist-all/v.1.2.0-20261012/promo/LOGH3-v.1.2.0-20261012-promo-continuous-music.mp4`，原片與已發布遊戲身份保持。來源及限定範圍見[驗收126](docs/playtest/126-continuous-promo-music.md)、[唯一索引](docs/internals/data/promo-continuous-music.json)及[狀態表137](docs/goal/2026-10-14-continuous-promo-music-round-137.md)。本輪沒有重新錄製遊戲操作或更動遊戲規則，#48剩餘工作維持下方狀態。
 

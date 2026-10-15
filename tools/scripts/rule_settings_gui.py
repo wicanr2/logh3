@@ -55,14 +55,26 @@ def check(label,**want):
     raise AssertionError((label,want,observe()))
 
 
-def click(xp,yp,button=1):
+def click(xp,yp,button=1,exiting=False):
+    if a.windows:
+        geometry=dict(line.split('=',1) for line in x('getwindowgeometry','--shell',window).splitlines())
+        screen_w,screen_h=map(int,x('getdisplaygeometry').split())
+        if int(geometry['X'])+int(geometry['WIDTH'])>screen_w or int(geometry['Y'])+int(geometry['HEIGHT'])>screen_h:
+            x('windowmove','--sync',window,0,0)
+            events.append(dict(window_moved_into_screen=geometry))
     x('mousemove','--window',window,int((xp+.5)*1.5),int((yp+.5)*1.5))
     time.sleep(.1)
     if a.windows:
         x('mousedown',button)
-        acknowledge(button=button,pressed=True)
+        if exiting:
+            process.wait(timeout=15)
+            x('mouseup',button)
+            assert process.returncode==0
+            events.append(dict(click=[xp,yp,button],expected_exit=0))
+            return
+        acknowledge(button=button,pressed=True,exiting=exiting)
         x('mouseup',button)
-        acknowledge(button=button,pressed=False)
+        acknowledge(button=button,pressed=False,exiting=exiting)
     else:
         x('mousedown',button,'sleep','.07','mouseup',button)
     time.sleep(.2)
@@ -79,12 +91,19 @@ def key(k):
     events.append(dict(key=k))
 
 
-def acknowledge(button=None,pressed=None):
+def acknowledge(button=None,pressed=None,exiting=False):
     # Wine software rendering can update slower than a short synthetic press.
     # Observe actual updates instead of guessing a longer wall-clock delay.
+    if exiting and process.poll() is not None:
+        assert process.returncode==0
+        return
     first=observe().get('ticks',-1)
     deadline=time.monotonic()+8
     while time.monotonic()<deadline:
+        if exiting and process.poll() is not None:
+            assert process.returncode==0
+            events.append(dict(expected_exit=0))
+            return
         row=observe()
         if row.get('ticks',-1)>=first+2 and (button is None or row.get('mouse_buttons',[False,False])[0 if button==1 else 1]==pressed):
             events.append(dict(input_ack_ticks=row['ticks'],button=button,pressed=pressed))
@@ -113,7 +132,8 @@ def launch(index):
     process=subprocess.Popen(command,cwd='/tmp',env=env,stdout=log,stderr=subprocess.STDOUT)
     # Main window is created after the startup progress window completes.
     window=subprocess.check_output(['xdotool','search','--sync','--onlyvisible','--name','^銀河英雄傳說III SP$'],env=env,text=True,timeout=75).strip().splitlines()[-1]
-    x('windowfocus',window);x('windowmove',window,0,0);time.sleep(.6)
+    time.sleep(.6)
+    x('windowfocus',window);x('windowmove','--sync',window,0,0)
     click(600,440);click(600,440);check('片頭至主選單',state='StateMainMenu')
 
 
@@ -129,7 +149,7 @@ def enter():
 def quit_game():
     click(416,370);check('設定返回',state='StateCommandPhase')
     click(544,125);click(560,205);check('退出確認',state='StateQuitConfirm')
-    click(432,270);process.wait(timeout=15)
+    click(432,270,exiting=True);process.wait(timeout=15)
     assert process.returncode==0
 
 
