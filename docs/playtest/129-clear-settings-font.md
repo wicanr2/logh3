@@ -41,3 +41,5 @@
 | macOS完整／引擎 | Intel／Apple Silicon通用程式、最低11.0、只依賴系統庫，ARM3196程式頁SHA-256相同，ZIP內容與權限通過 |
 
 macOS未真機驗收或Apple公證；Windows為Wine。前次影片與16項驗收檔逐位元組保留，SHA-256仍為`5465b7693a75469daeec20a5be8aeafc4068cd4ffa88ab74433068c8299d2733`；影片設定頁為字型強化前實錄，不冒稱本輪重拍。#48既有未完成範圍保持。
+
+同版公開覆寫完成：[Release](https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015)五附件已換新並重新公開，tag指向`b13298d0`。實際下載的名稱、大小及SHA-256與新正式包全部相符，公開四筆校驗清單相符；新tag的606項非vendor產品來源與BUILD凍結輸入逐檔一致。收據在`workplace/settings141/RELEASE-CHECK.json`並併入本次來源索引的`release`。完整包及影片未上傳，其他tag／Release未改。

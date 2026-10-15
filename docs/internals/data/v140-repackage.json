@@ -6613,5 +6613,43 @@
   "limits": [
     "Windows為Wine，macOS僅雙架構／依賴／ARM簽章與ZIP，未真機驗收",
     "#48正式戰術讀回重建與DOS整段同狀態保持OPEN"
-  ]
+  ],
+  "release": {
+    "version": "v.1.4.0-20261015",
+    "passed": true,
+    "url": "https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015",
+    "tag_commit": "b13298d05e00e44b5736bd8347170afc6c41cf9a",
+    "tag_nonvendor_source_files": 606,
+    "assets": [
+      {
+        "name": "LOGH3-v.1.4.0-20261015-engine-source.tar.gz",
+        "bytes": 3619798,
+        "sha256": "a2789e5f4f8bfc19240c8985236f61f9d23c882fabf2a72fc0c50b99dcfc168a"
+      },
+      {
+        "name": "LOGH3-v.1.4.0-20261015-linux-amd64.zip",
+        "bytes": 8516999,
+        "sha256": "8e375bd7ceb2fd9f49c7d78fa92c295cc9ded4905475b7245df8140d89a3ee1e"
+      },
+      {
+        "name": "LOGH3-v.1.4.0-20261015-macos-universal.zip",
+        "bytes": 15234808,
+        "sha256": "75b4ce063ae4fb9deceb7f17e568320c512ef82d208d0f1bf61a715b2de18be2"
+      },
+      {
+        "name": "LOGH3-v.1.4.0-20261015-windows-amd64.zip",
+        "bytes": 8297553,
+        "sha256": "126aba76061d207325b4082e180ce16083e15f0a5f4c5e30f603ce69c061260e"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "bytes": 431,
+        "sha256": "77705effb49016d8e777b3c0dbbc333743a5510f170719cd4e00f29371cd77bd"
+      }
+    ],
+    "release_json_sha256": "59256267a028da3a48582e919b0f238ffba84a153e63c838a57f9872420cf4ea",
+    "public_release": true,
+    "full_packages_uploaded": false,
+    "promo_uploaded": false
+  }
 }
