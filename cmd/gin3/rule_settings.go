@@ -11,7 +11,7 @@ import (
 	"github.com/wicanr2/logh3/internal/ui"
 )
 
-var ruleOptionRects = [2]image.Rectangle{image.Rect(320, 400, 432, 420), image.Rect(320, 424, 432, 444)}
+var ruleOptionRects = [2]image.Rectangle{compactControlBounds("flagship"), compactControlBounds("movement")}
 
 func readRulePreferences(path string) (game.RuleOptions, error) {
 	options := game.DefaultRuleOptions()

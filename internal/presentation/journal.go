@@ -118,10 +118,21 @@ func (r *Renderer) glyph(c gfx.DrawCommand, p gfx.Palette) bool {
 		ink = paletteColour(p, c.Colour)
 	}
 	clip := image.Rect(c.Clip.Min.X*Scale, c.Clip.Min.Y*Scale, c.Clip.Max.X*Scale, c.Clip.Max.Y*Scale)
-	rect := image.Rect(c.X*Scale, c.Y*Scale, c.X*Scale+g.W, c.Y*Scale+g.H).Intersect(clip).Intersect(r.frame.Bounds())
+	w, h := g.W, g.H
+	nativeW := 16
+	if c.Half {
+		nativeW = 8
+	}
+	if c.W != nativeW || c.H != 15 {
+		w, h = c.W*Scale, c.H*Scale
+	}
+	if w <= 0 || h <= 0 {
+		return true
+	}
+	rect := image.Rect(c.X*Scale, c.Y*Scale, c.X*Scale+w, c.Y*Scale+h).Intersect(clip).Intersect(r.frame.Bounds())
 	for y := rect.Min.Y; y < rect.Max.Y; y++ {
 		for x := rect.Min.X; x < rect.Max.X; x++ {
-			mx, my := g.X+x-c.X*Scale, g.Y+y-c.Y*Scale
+			mx, my := g.X+(x-c.X*Scale)*g.W/w, g.Y+(y-c.Y*Scale)*g.H/h
 			a := uint32(mask.Pix[my*mask.Stride+mx])
 			if c.Bold && mx > g.X {
 				a = max(a, uint32(mask.Pix[my*mask.Stride+mx-1]))

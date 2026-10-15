@@ -44,6 +44,7 @@ type app struct {
 	soundFontError    string
 	preferencesPath   string
 	ruleSettingsError string
+	aiSettingsMenu    bool
 	cursor            *ui.Cursor
 	musicState        game.State
 	effects           effectPlayback

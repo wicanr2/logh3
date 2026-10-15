@@ -13,11 +13,11 @@ import (
 )
 
 var soundFontChoices = []string{"gs", "mt32"}
-var soundFontChoiceRect = image.Rect(320, 360, 384, 380)
+var soundFontChoiceRect = compactControlBounds("soundfont")
 var soundFontLabels = map[string]string{"gs": "GeneralUser GS", "mt32": "Roland MT-32"}
 
 func soundFontMenuRow(i int) image.Rectangle {
-	return image.Rect(304, 316+i*22, 448, 338+i*22)
+	return image.Rect(288, 256+i*16, 448, 272+i*16)
 }
 func (a *app) selectedSoundFont() string {
 	if a.soundFont == "" {

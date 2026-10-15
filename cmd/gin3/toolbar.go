@@ -5,6 +5,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/wicanr2/logh3/internal/font"
+	"github.com/wicanr2/logh3/internal/game"
 	"image"
 	"image/color"
 	"image/draw"
@@ -103,13 +104,18 @@ func (a *app) updateInput() {
 		}
 		a.g.Click(x, y)
 	} else if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		a.g.LeftHold(x, y, time.Second/time.Duration(ebiten.TPS()))
+		if a.g.State() == game.StateSettings {
+			a.g.LeftRelease()
+		} else {
+			a.g.LeftHold(x, y, time.Second/time.Duration(ebiten.TPS()))
+		}
 	} else if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
 		a.g.LeftRelease()
 	}
 	switch {
-	case inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) && a.soundFontMenu:
+	case inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) && (a.soundFontMenu || a.aiSettingsMenu):
 		a.soundFontMenu = false
+		a.aiSettingsMenu = false
 		a.g.RightRelease()
 	case inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight):
 		a.g.RightClick(x, y)
@@ -125,6 +131,9 @@ func (a *app) updateInput() {
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) && a.soundFontMenu {
 		a.soundFontMenu = false
+	}
+	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) && a.aiSettingsMenu {
+		a.aiSettingsMenu = false
 	}
 	for k := ebiten.KeyKP0; k <= ebiten.KeyKP9; k++ {
 		if inpututil.IsKeyJustPressed(k) {
