@@ -31,29 +31,30 @@ import (
 )
 
 type app struct {
-	g               *game.Game
-	pal             [gfx.Colors]color.RGBA
-	screen          *ebiten.Image
-	music           musicPlayback
-	musicOriginal   *audio.Library
-	musicHD         *audio.Library
-	musicMT32       *audio.Library
-	hdMusic         bool
-	soundFont       string
-	soundFontMenu   bool
-	soundFontError  string
-	preferencesPath string
-	cursor          *ui.Cursor
-	musicState      game.State
-	effects         effectPlayback
-	buf             []byte
-	hd              *presentation.Renderer
-	original        bool
-	hdScreen        *ebiten.Image
-	hdUploaded      uint64
-	frameTrace      *os.File
-	animationTime   time.Time
-	toolbar         toolbar
+	g                 *game.Game
+	pal               [gfx.Colors]color.RGBA
+	screen            *ebiten.Image
+	music             musicPlayback
+	musicOriginal     *audio.Library
+	musicHD           *audio.Library
+	musicMT32         *audio.Library
+	hdMusic           bool
+	soundFont         string
+	soundFontMenu     bool
+	soundFontError    string
+	preferencesPath   string
+	ruleSettingsError string
+	cursor            *ui.Cursor
+	musicState        game.State
+	effects           effectPlayback
+	buf               []byte
+	hd                *presentation.Renderer
+	original          bool
+	hdScreen          *ebiten.Image
+	hdUploaded        uint64
+	frameTrace        *os.File
+	animationTime     time.Time
+	toolbar           toolbar
 
 	shot      string
 	shotBin   string
@@ -300,6 +301,11 @@ func main() {
 		fmt.Println(buildVersion)
 		return
 	}
+	explicit := map[string]bool{}
+	flag.Visit(func(f *flag.Flag) { explicit[f.Name] = true })
+	if executable, err := os.Executable(); err == nil {
+		packagedDefaults(executable, explicit, orig, data, artDir, musicDir, graphics)
+	}
 	fmt.Fprintln(os.Stderr, "啟動中：正在載入遊戲與圖片，請稍候。")
 
 	load := func(report func(int, string)) (*app, error) {
@@ -442,6 +448,13 @@ func main() {
 			fmt.Fprintln(os.Stderr, "HD配樂不完整，保留原版曲庫。")
 		}
 		a.preferencesPath = filepath.Join(*saveDir, "preferences.json")
+		options, optionsErr := readRulePreferences(a.preferencesPath)
+		if optionsErr != nil {
+			a.ruleSettingsError = optionsErr.Error()
+			fmt.Fprintln(os.Stderr, "規則偏好：", optionsErr)
+		} else {
+			g.SetRuleOptions(options)
+		}
 		choice, prefErr := readSoundFontPreference(a.preferencesPath)
 		if prefErr != nil {
 			a.soundFontError = prefErr.Error()

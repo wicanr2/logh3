@@ -24,6 +24,7 @@ func (g *Game) startPlacedBattle(region int) {
 }
 
 func (g *Game) startBattle(region int, placed bool) {
+	g.flagshipTransferTried = nil
 	g.battleFinishing, g.battleFinishEnded = false, false
 	g.battleOccupation = nil
 	if err := g.syncFleetTables(); err != nil {

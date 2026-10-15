@@ -8,11 +8,10 @@ import (
 // newBattleMovement保留一般組及索敵隊順序；未放出的隊只在本階段持有，不進可見名單。
 func (g *Game) newBattleMovement() *rules.BattleMovement {
 	g.battleMovementGroups = nil
-	commanders := g.battleCommanders()
 	for i := range g.battleFleets {
 		bf := &g.battleFleets[i]
 		group := rules.MovementFleet{Fleet: bf}
-		group.CommandBoost = bf.Faction >= 0 && bf.Faction < len(commanders) && commanders[bf.Faction] != 0
+		group.CommandBoost = g.heroMovementActive(bf.Faction)
 		if cpu, passive := g.passiveComputer(); passive && bf.Faction == cpu {
 			group.Frozen = true
 		}

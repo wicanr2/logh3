@@ -1050,6 +1050,9 @@ type Game struct {
 	aiMode int // 0 原版，1–4 增強難度 0–3；執行期偏好，不進存檔。
 	// repairShipsRepairable 是規格125的可選規則：修護艦可被其他修護艦修理。執行期偏好，不進存檔。
 	repairShipsRepairable bool
+	flagshipTransfer      bool
+	heroMovementDisabled  bool
+	flagshipTransferTried map[int]bool
 
 	// sides 是對戰模式下兩邊各自的錢與造船計劃，索引就是陣營。
 	// 世界資料（星域記錄、行星表）兩邊共用一份——月底的成長是就地
@@ -2105,6 +2108,7 @@ func New(res *Resources) (*Game, error) {
 		// 不像音源要等偵測（`docs/re/286` §二）。
 		display: newDisplaySettings()}
 	g.startNewGame(res.Faction)
+	g.SetRuleOptions(DefaultRuleOptions())
 	// 電腦那一方走原版的戰略 AI（`docs/spec/029` READY，使用者裁決
 	// 2026-09-10）。資源不齊時 `OriginalBrain` 自己回 nil ＝ 不下命令。
 	if err := g.SetAILevel(-1); err != nil {

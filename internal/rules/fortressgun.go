@@ -196,8 +196,19 @@ type FortressGunScene struct {
 }
 
 func FortressGunWithScenes(planets []BattlePlanet, fleets []BattleFleet, units []BattleUnit, kinds *ShipKindTable, r *Rand) ([]FortressGunHit, []FortressGunScene) {
+	return FortressGunWithAfterHit(planets, fleets, units, kinds, r, nil)
+}
+
+// FortressGunWithAfterHit adds an optional remake transition between hits.
+// The recorded damage snapshot precedes that transition; nil keeps original rules.
+func FortressGunWithAfterHit(planets []BattlePlanet, fleets []BattleFleet, units []BattleUnit, kinds *ShipKindTable, r *Rand, afterHit func(FortressGunScene)) ([]FortressGunHit, []FortressGunScene) {
 	var scenes []FortressGunScene
-	hits := fortressGunObserved(planets, fleets, units, kinds, r, func(s FortressGunScene) { scenes = append(scenes, s) })
+	hits := fortressGunObserved(planets, fleets, units, kinds, r, func(s FortressGunScene) {
+		scenes = append(scenes, s)
+		if afterHit != nil {
+			afterHit(s)
+		}
+	})
 	return hits, scenes
 }
 

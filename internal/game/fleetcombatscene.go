@@ -17,6 +17,7 @@ type fleetCombatSceneState struct {
 	weapon                      byte
 	command                     rules.FleetCombatCommand
 	before                      []rules.BattleUnit
+	after                       []rules.BattleUnit
 	integrity                   [2]int
 	pictures                    []engagementPicture
 	sounds                      []fleetSceneSound
@@ -361,6 +362,10 @@ func (g *Game) applyFleetSceneDamage(s *fleetCombatSceneState) error {
 		}
 	}
 	s.resultTick = tick
+	if h.Lost > 0 && s.before[s.target].Squadron == 0 && s.before[s.target].Ships > 0 && g.battleUnits[s.target].Ships == 0 {
+		s.after = append([]rules.BattleUnit(nil), g.battleUnits...)
+		g.tryFlagshipTransfer(s.target)
+	}
 	return nil
 }
 
@@ -400,6 +405,9 @@ func (g *Game) fleetFrameView(s *fleetCombatSceneState, result bool) (screen.Fle
 	units := s.before
 	if result {
 		units = g.battleUnits
+		if s.after != nil {
+			units = s.after
+		}
 	}
 	visibility := screen.FleetVisibility{PlayerSide: uint8(g.faction), SideControl: [2]uint8{0, 1}}
 	if g.versus {

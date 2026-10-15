@@ -78,6 +78,11 @@ func writeSoundFontPreference(path, choice string) error {
 	if _, ok := soundFontLabels[choice]; !ok {
 		return fmt.Errorf("未知音色庫：%s", choice)
 	}
+	b, _ := json.Marshal(choice)
+	return writePreferences(path, map[string]json.RawMessage{"soundfont": b})
+}
+
+func writePreferences(path string, updates map[string]json.RawMessage) error {
 	p := map[string]json.RawMessage{}
 	if b, err := os.ReadFile(path); err == nil {
 		if err = json.Unmarshal(b, &p); err != nil {
@@ -89,7 +94,9 @@ func writeSoundFontPreference(path, choice string) error {
 	} else if !os.IsNotExist(err) {
 		return err
 	}
-	p["soundfont"], _ = json.Marshal(choice)
+	for key, value := range updates {
+		p[key] = value
+	}
 	b, err := json.MarshalIndent(p, "", "  ")
 	if err != nil {
 		return err

@@ -32,9 +32,18 @@ type PlanetAssaultScene struct {
 // Observation only copies data; it cannot modify the calculation or input.
 func PlanetAssaultWithScenes(planets []BattlePlanet, fleets []BattleFleet,
 	units []BattleUnit, kinds *ShipKindTable, r *Rand) ([]PlanetAssaultHit, []PlanetAssaultScene) {
+	return PlanetAssaultWithAfterCounter(planets, fleets, units, kinds, r, nil)
+}
+
+// A remake transition may run after a counterattack and before the next stage.
+func PlanetAssaultWithAfterCounter(planets []BattlePlanet, fleets []BattleFleet,
+	units []BattleUnit, kinds *ShipKindTable, r *Rand, afterCounter func(PlanetAssaultScene)) ([]PlanetAssaultHit, []PlanetAssaultScene) {
 	var scenes []PlanetAssaultScene
 	hits := planetAssaultObserved(planets, fleets, units, kinds, r, func(s PlanetAssaultScene) {
 		scenes = append(scenes, s)
+		if afterCounter != nil && s.Kind == PlanetCounterScene {
+			afterCounter(s)
+		}
 	})
 	return hits, scenes
 }

@@ -55,6 +55,9 @@ func (a *app) presentationClick(x, y int) bool {
 		a.soundFontMenu = false
 		return true
 	}
+	if a.ruleSettingsClick(point) {
+		return true
+	}
 	if point.In(soundFontChoiceRect) {
 		a.soundFontMenu = true
 		return true
@@ -128,6 +131,7 @@ func (a *app) frame() *gfx.Framebuffer {
 			x += 8
 		}
 	}
+	a.drawRuleSettings(fb, text, button)
 	a.drawSoundFontChoice(fb, text, button)
 	x, y := a.g.MousePosition()
 	for i, r := range []image.Rectangle{fontChoiceRect, hdMusicRect} {

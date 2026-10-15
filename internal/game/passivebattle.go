@@ -67,7 +67,7 @@ func (g *Game) resolveBattleTurn() []rules.BattleLoss {
 func (g *Game) fortressGunFire() []rules.FortressGunHit {
 	cpu, passive := g.passiveComputer()
 	if !passive {
-		hits, scenes := rules.FortressGunWithScenes(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+		hits, scenes := rules.FortressGunWithAfterHit(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand, g.transferAfterGun)
 		g.battleGunScenes = scenes
 		return hits
 	}
@@ -78,7 +78,7 @@ func (g *Game) fortressGunFire() []rules.FortressGunHit {
 			p.GunState = rules.FortressGunIdle
 		}
 	}
-	hits, scenes := rules.FortressGunWithScenes(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+	hits, scenes := rules.FortressGunWithAfterHit(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand, g.transferAfterGun)
 	g.battleGunScenes = scenes
 	for i, st := range states {
 		g.battlePlanets[i].GunState = st
@@ -90,7 +90,7 @@ func (g *Game) fortressGunFire() []rules.FortressGunHit {
 func (g *Game) planetAssault() []rules.PlanetAssaultHit {
 	cpu, passive := g.passiveComputer()
 	if !passive {
-		hits, scenes := rules.PlanetAssaultWithScenes(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+		hits, scenes := rules.PlanetAssaultWithAfterCounter(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand, g.transferAfterCounter)
 		g.battleAssaultScenes = scenes
 		return hits
 	}
@@ -102,7 +102,11 @@ func (g *Game) planetAssault() []rules.PlanetAssaultHit {
 		}
 	}
 	saved := g.snapshotSide(g.faction)
-	hits, scenes := rules.PlanetAssaultWithScenes(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand)
+	hits, scenes := rules.PlanetAssaultWithAfterCounter(g.battlePlanets, g.battleFleets, g.battleUnits, g.res.ShipKinds, g.battleRand, func(scene rules.PlanetAssaultScene) {
+		if scene.Before.Fleet.Faction != g.faction {
+			g.transferAfterCounter(scene)
+		}
+	})
 	g.restoreSide(saved)
 	for i, a := range actions {
 		g.battleFleets[i].Action = a

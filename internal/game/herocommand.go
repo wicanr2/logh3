@@ -99,7 +99,6 @@ func (g *Game) TacticalObservation() *TacticalObservation {
 	if g.state != StateBattle && g.state != StateEngagement {
 		return nil
 	}
-	c := g.battleCommanders()
 	v := &TacticalObservation{Region: g.battleRegion, Turn: g.battleTurn, View: [2]int{g.battleView.Col, g.battleView.Row}, Commanders: g.HeroCommandObservation()}
 	v.Idle, v.MessageOpen, v.MenuOpen = g.battleInputIdle(), g.msgOn, g.battleMenu
 	v.PlanetMenu, v.FortressTarget = g.PlanetMenuOpen(), g.FortressTargetPending()
@@ -156,7 +155,7 @@ func (g *Game) TacticalObservation() *TacticalObservation {
 		if f == nil {
 			continue
 		}
-		v.Fleets = append(v.Fleets, TacticalFleetObservation{bf.Index, bf.Faction, f.Admiral, bf.X, bf.Y, bf.DestX, bf.DestY, bf.PerTurn, bf.Budget, bf.Faction >= 0 && bf.Faction < 2 && c[bf.Faction] != 0})
+		v.Fleets = append(v.Fleets, TacticalFleetObservation{bf.Index, bf.Faction, f.Admiral, bf.X, bf.Y, bf.DestX, bf.DestY, bf.PerTurn, bf.Budget, g.heroMovementActive(bf.Faction)})
 	}
 	return v
 }
