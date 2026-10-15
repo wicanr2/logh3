@@ -9,7 +9,7 @@
 | Linux完整版與引擎包 | 修正後重建通過 | 實際ZIP逐檔／權限、11條完整與4條引擎入口及帝國正常GUI通過 |
 | macOS完整版與引擎包 | 修正後結構檢查通過 | 雙架構／依賴／ARM3180簽章頁及ZIP重新檢查，未真機驗收 |
 | 推廣片重新拍攝 | 本機交付通過 | 新拍23場艦隊及2支分隊要塞演出逐格通過；147設定／AI重新錄製；36段102.13秒，35剪接點音樂連續、AAC SNR34.23dB、零黑段，總覽及原尺寸抽樣已目視 |
-| GitHub Release | 待發布 | 同版號tag、三平台引擎、來源及校驗附件，發布後下載重核 |
+| GitHub Release | 已發布並下載核對 | 正式tag指向d2a59fc7；三平台引擎、來源與校驗共五附件，實際下載SHA-256及598項tag產品來源全部相符 |
 
 使用者已授權本輪全部工作及commit／push。版本固定`v.1.4.0-20261015`；依追加設定頁修正重建尚未發布候選。舊候選及凍結目錄完整保存於`workplace/promo139/precompact/`，`MAPPING.json`綁原路徑及七包雜湊；既有已發布身份不動。三平台使用同一1576項凍結程式。原版、HD、完整包及影片保持本機，不上傳Release。公開儲存庫的素材／decomp授權沿AGENTS既有決定，不擴張為完整包或影片公開授權。
 
@@ -24,3 +24,5 @@
 使用者追加的設定頁修正依[147限定CONFORMED](../spec/147-compact-system-settings.md)實作，正常驗收與新錄影入口為[compact_settings_gui.py](../../tools/scripts/compact_settings_gui.py)。敵軍預設關閉，README展示開啟與實際戰場效果；現有AI五值已接系統設定。
 
 README正式ZIP截圖沿[匯出工具](../../tools/scripts/readme_compact_settings.py)產生並獨立核對，不修改來源PNG。
+
+正式入口：[v.1.4.0-20261015 Release](https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015)。產品修正`024a851d`、交付及tag`d2a59fc7`均已推送；[唯一交付索引](../internals/data/v140-release-promo.json)的`release`保存實際下載與tag核對收據。既有發布身份未移動。本輪授權工作已完成，Windows／macOS真機、新混音人耳及#48既有未完成範圍保持明示限制。

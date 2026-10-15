@@ -99,13 +99,9 @@
 
 ### 遊戲實錄
 
-載入進度與兩陣營字型設定的實際畫面，取自 v.1.3.0 Linux 版。[截圖來源與雜湊](docs/images/readme-v130.json)
+載入進度畫面取自 v.1.3.0 Linux 版；目前設定頁見上方新版截圖。[載入截圖來源與雜湊](docs/images/readme-v130.json)
 
 ![實際七階段載入進度與人物圖張數](docs/images/readme-v130-loading.png)
-
-| 帝國思源宋體 | 同盟思源黑體 |
-|---|---|
-| ![帝國設定中的四字型選擇](docs/images/readme-v130-empire-font.png) | ![同盟設定中的思源黑體與音源選擇](docs/images/readme-v130-alliance-font.png) |
 
 以下為陣營介面、劇本與交火畫面，取自 v.1.2.0 Linux 版正常 S1 遊玩，保留完整 960×720 視窗。[截圖來源與雜湊](docs/images/readme-v120.json)
 

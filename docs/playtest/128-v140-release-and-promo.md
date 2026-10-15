@@ -40,4 +40,8 @@ macOS未在真機執行；Intel切片未簽章，Apple Silicon為ad-hoc簽章，
 
 影片與16項證據檔位於`promo/`，另有`SHA256SUMS.json`。來源、平台收據及每項輸出由交付索引綁定；Release發布後另核對實際五個下載附件、校驗清單及tag的598項產品來源。
 
+## 公開Release
+
+[v.1.4.0-20261015](https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015)已發布，正式tag指向`d2a59fc7`。五個實際下載附件的名稱、大小與SHA-256全部符合本機正式包，公開校驗清單四筆相符，tag的598項非vendor產品來源逐檔符合BUILD。收據為`workplace/promo139/RELEASE-CHECK.json`，完整結果併入交付索引的`release`。未上傳完整版或影片，未修改既有已發布tag／Release。
+
 工具入口：[三平台封包](../../tools/scripts/v140_platform_delivery.py)、[正常錄影](../../tools/scripts/ai_gameplay_record.py)、[設定頁驗證](../../tools/scripts/compact_settings_gui.py)、[製片與連續音軌驗證](../../tools/scripts/promo_v140_movie.py)、[公開附件下載核對](../../tools/scripts/v140_release_verify.py)。#48正式戰術讀回重建與DOS整段同狀態仍保持OPEN。

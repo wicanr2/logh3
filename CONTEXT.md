@@ -6,6 +6,8 @@
 
 ## 現況一覽
 
+**正式Release（2026-10-15）**：[v.1.4.0-20261015](https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015)已發布，tag指向`d2a59fc7`。五個引擎／來源／校驗附件實際下載後SHA-256全部相符，598項tag產品來源與建置凍結輸入一致。完整包與影片限本機，公開附件沒有原版素材；既有tag與Release保持。發布收據見[交付索引](docs/internals/data/v140-release-promo.json)的`release`。
+
 **目前交付（2026-10-15，第139輪）**：v.1.4.0-20261015三平台完整／引擎及來源共七包已從修正版`024a851d`重建。Linux11條完整／4條引擎入口、Windows8條Wine入口與兩陣營正常設定／戰場操作通過；macOS雙架構／系統依賴及ARM3180簽章頁通過，未真機驗收。新拍影片36段102.13秒、1080p60，35個剪接點全片單曲連續、AAC SNR34.23dB與零黑段，來源完整場次及目視抽樣通過。Release發布進度沿[唯一狀態表139](docs/goal/2026-10-15-release-and-promo-round-139.md)，結果集中於[驗收128](docs/playtest/128-v140-release-and-promo.md)與[來源索引](docs/internals/data/v140-release-promo.json)。#48範圍保持。
 
 **系統設定（2026-10-15）**：[147限定CONFORMED](docs/spec/147-compact-system-settings.md)以12×12／6×12字格整合敵軍顯示、現有AI五值與兩項規則，全部收進原對話框。使用者最後決定敵軍預設關閉，覆蓋稍早開啟的回答；兩規則預設開啟。正式Linux ZIP帝國與Windows ZIP Wine同盟通過敵軍實際圖示開／關、AI原版及0至3、四字型、F7、音色取消及返回戰場不改回合／鏡頭／單位。標準19套件15 PASS／4無測試；[README三張完整截圖](docs/images/readme-v140-compact.json)已目視及獨立核對。修正前候選與舊凍結目錄完整歸檔，舊127／138收據對應路徑依`workplace/promo139/precompact/MAPPING.json`回查，不代表現行七包身份。
