@@ -62,13 +62,19 @@
 
 ## 系統設定與可選規則
 
-從「系統指令 → 設定」調整敵軍顯示、AI 模式、音色與可選規則。字型已縮小，全部選項位於同一個對話框內。顯示敵軍預設關閉，下圖為手動開啟後的畫面。「轉移旗艦」與「名將移動加成」預設開啟，退出重開後保留選擇。
+從「系統指令 → 設定」調整敵軍顯示、AI 模式、音色與可選規則。全部選項位於同一個對話框內。顯示敵軍預設關閉，下圖為手動開啟後的畫面。「轉移旗艦」與「名將移動加成」預設開啟，退出重開後保留選擇。
 
-下圖取自修正版 Linux 完整 ZIP 的正常操作，保留完整 960×720 視窗。點圖可放大。[截圖來源與雜湊](docs/images/readme-v140-compact.json) · [功能與驗收](docs/playtest/128-v140-release-and-promo.md)
+**原始碼已強化設定頁小字。** 設定頁採專用黑體字形，HD 使用高解析遮罩，移除小字陰影，選取項目改用深字配亮底。「介面字型」仍可切換其他遊戲畫面的四款字型。已發布的 v.1.4.0 封包尚未包含這次字型更新。[字型驗收](docs/playtest/129-clear-settings-font.md)
 
-| 全部設定與敵軍顯示開啟 | AI 原版／強化選單 |
+以下設定頁取自最新原始碼的 Linux 正常操作，保留完整 960×720 視窗。點圖可放大。[字型與實錄來源](docs/images/readme-settings-clear.json)
+
+| 帝國清晰設定頁 | 同盟清晰設定頁 |
 |---|---|
-| [![縮小字型後的完整系統設定，顯示敵軍已手動開啟](docs/images/readme-v140-compact-settings.png)](docs/images/readme-v140-compact-settings.png) | [![系統設定中的AI原版與強化0至3選單](docs/images/readme-v140-compact-ai.png)](docs/images/readme-v140-compact-ai.png) |
+| [![帝國設定專用清晰字型，顯示敵軍已手動開啟](docs/images/readme-settings-clear-empire.png)](docs/images/readme-settings-clear-empire.png) | [![同盟設定專用清晰字型，全部選項保持框內](docs/images/readme-settings-clear-alliance.png)](docs/images/readme-settings-clear-alliance.png) |
+
+![清晰小字的AI原版與強化0至3選單](docs/images/readme-settings-clear-ai.png)
+
+下方敵軍顯示畫面沿已發布 v.1.4.0 正式 ZIP 實錄。[來源與功能驗收](docs/images/readme-v140-compact.json)
 
 ![手動開啟顯示敵軍後，實際戰場可見敵方分隊](docs/images/readme-v140-compact-enemies.png)
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image"
 
+	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
 	"github.com/wicanr2/logh3/internal/ui"
 )
@@ -87,6 +88,21 @@ func compactTextWidth(text string) int {
 func (a *app) compactText(fb *gfx.Framebuffer, r image.Rectangle, text string, ink uint8) {
 	x, y := r.Min.X+(r.Dx()-compactTextWidth(text))/2, r.Min.Y+(r.Dy()-12)/2
 	for _, c := range text {
+		if glyph, ok := font.SettingsGlyph(c); ok {
+			start := fb.BeginGroup()
+			for py := 0; py < 12; py++ {
+				for px := 0; px < glyph.Width; px++ {
+					if glyph.Native[py*glyph.Width+px] >= 88 && image.Pt(x+px, y+py).In(r) {
+						fb.Set(x+px, y+py, ink)
+					}
+				}
+			}
+			fb.EndGroup(start, gfx.DrawCommand{Kind: gfx.DrawGlyph, Key: font.SettingsGlyphKey,
+				X: x, Y: y, W: glyph.Width, H: 12, Colour: ink, Clip: r,
+				SourceW: glyph.Width * 3, SourceH: 36, Source: glyph.HD})
+			x += glyph.Width
+			continue
+		}
 		code, width, sourceW := uint16(c), 12, 16
 		var rows []uint16
 		if c < 128 {
@@ -212,6 +228,7 @@ func (a *app) drawCompactSettings(fb *gfx.Framebuffer) {
 		fill, ink := uint8(9), uint8(7)
 		if selected {
 			fill = 2
+			ink = 3
 		}
 		if !enabled {
 			ink = 8

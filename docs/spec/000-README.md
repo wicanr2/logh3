@@ -1,5 +1,7 @@
 # 規格
 
+第140輪：[148系統設定專用清晰字型](148-clear-settings-font.md)，以原生小字與高解析遮罩修正縮小字模的斷筆及陰影重疊。[驗收129](../playtest/129-clear-settings-font.md)／[狀態表140](../goal/2026-10-15-settings-font-round-140.md)。
+
 第139輪：[147緊湊系統設定與AI選擇](147-compact-system-settings.md)，使用者指定縮小文字、恢復顯示敵軍入口及加入現有AI難度。顯示敵軍預設關閉；三平台v.1.4.0候選重新打包，進度集中於[狀態表139](../goal/2026-10-15-release-and-promo-round-139.md)。
 
 第136輪：[145戰術保存成功返回](145-battle-save-return.md)、[驗收125](../playtest/125-battle-save-return.md)與[研究449](../re/449-original-battle-save-load.md)。原版冷啟動可直接續戰已證實；正式remake只修保存成功返回，讀回重建及DOS整段同態保持未完成。[目前狀態表](../goal/2026-10-14-original-battle-load-round-136.md)

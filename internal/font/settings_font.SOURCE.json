@@ -1,0 +1,36 @@
+{
+  "source": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+  "source_sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+  "face_index": 8,
+  "family": "Noto Sans Mono CJK TC Regular",
+  "license": "SIL Open Font License 1.1",
+  "glyph_count": 191,
+  "native_size": [
+    12,
+    12,
+    6,
+    12
+  ],
+  "hd_size": [
+    36,
+    36,
+    18,
+    36
+  ],
+  "font_pixels": [
+    10,
+    32
+  ],
+  "ink_bounds_checked": true,
+  "pillow": "9.4.0",
+  "freetype": "2.12.1",
+  "image": "logh3-hd-preview:20261011-r1",
+  "generator": "tools/scripts/settings_font.py",
+  "generator_sha256": "7419f15ad867af89ac4fa445393a4b76b33c629b0bf6b099b1eb58934283f2fa",
+  "files": {
+    "settings_font_12.png": "13e7bf5cfe40ab9cc5869a19e7c301c4be75a6f8cbb31d6b3df2783bf807a9d5",
+    "settings_font_36.png": "ffe7954e4ecaec53341e182d08df74c9b95952aeb6605b9eacfa3a10ecd2fff5",
+    "settings_font.json": "99fdaa1d99c0bead24b984f1d8b4c423cb64fdd146232a170a8ac36fb6cf236f",
+    "settings_font.LICENSE.txt": "5bb218343ded506b258d86186d460fc47d9b6b28f0e642cf32676c396b7df763"
+  }
+}

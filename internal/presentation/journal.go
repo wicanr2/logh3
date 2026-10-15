@@ -5,6 +5,7 @@ import (
 	"image/color"
 	"image/draw"
 
+	"github.com/wicanr2/logh3/internal/font"
 	"github.com/wicanr2/logh3/internal/gfx"
 )
 
@@ -179,7 +180,11 @@ func (r *Renderer) replay(commands []gfx.DrawCommand, p gfx.Palette) {
 				r.markUIEdges(c)
 			}
 		case gfx.DrawGlyph:
-			if r.classic && (r.FontStyle() == "classic" || r.FontStyle() == "original") {
+			if c.Key == font.SettingsGlyphKey {
+				if !r.settingsGlyph(c, p) {
+					r.replay(c.Fallback, p)
+				}
+			} else if r.classic && (r.FontStyle() == "classic" || r.FontStyle() == "original") {
 				r.classicGlyph(c, p)
 			} else if !r.glyph(c, p) {
 				r.replay(c.Fallback, p)

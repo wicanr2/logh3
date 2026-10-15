@@ -6,6 +6,8 @@
 
 ## 現況一覽
 
+**目前原始碼（2026-10-15，第140輪）**：[148設定專用清晰字型](docs/spec/148-clear-settings-font.md)限定CONFORMED。設定頁以原生12字格及36像素HD遮罩替代縮小原字模，移除小字陰影，選取項目使用深色文字。兩陣營正常S1、四款遊戲字型、F7、AI五值、敵軍預設關閉／實際圖示開關及戰場返回通過，標準19套件15 PASS／4無測試。README三張原尺寸實錄已更新，[驗收129](docs/playtest/129-clear-settings-font.md)、[來源索引](docs/images/readme-settings-clear.json)與[狀態表140](docs/goal/2026-10-15-settings-font-round-140.md)保存結果。這是原始碼更新；下方139的已發布v.1.4.0包、tag與影片維持既有身份，尚未包含這次字型修正。
+
 **正式Release（2026-10-15）**：[v.1.4.0-20261015](https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015)已發布，tag指向`d2a59fc7`。五個引擎／來源／校驗附件實際下載後SHA-256全部相符，598項tag產品來源與建置凍結輸入一致。完整包與影片限本機，公開附件沒有原版素材；既有tag與Release保持。發布收據見[交付索引](docs/internals/data/v140-release-promo.json)的`release`。
 
 **目前交付（2026-10-15，第139輪）**：v.1.4.0-20261015三平台完整／引擎及來源共七包已從修正版`024a851d`重建。Linux11條完整／4條引擎入口、Windows8條Wine入口與兩陣營正常設定／戰場操作通過；macOS雙架構／系統依賴及ARM3180簽章頁通過，未真機驗收。新拍影片36段102.13秒、1080p60，35個剪接點全片單曲連續、AAC SNR34.23dB與零黑段，來源完整場次及目視抽樣通過。Release發布進度沿[唯一狀態表139](docs/goal/2026-10-15-release-and-promo-round-139.md)，結果集中於[驗收128](docs/playtest/128-v140-release-and-promo.md)與[來源索引](docs/internals/data/v140-release-promo.json)。#48範圍保持。

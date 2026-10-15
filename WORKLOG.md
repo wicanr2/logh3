@@ -11287,3 +11287,17 @@ README、截圖及公開範圍決定已由`7a3307fc`提交並推送main。主機
 提交前獨立核對1722個相關markdown相對連結、修改腳本Python語法及檔案擁有權；七封包、17個影片／證據檔、產生器、平台收據及598項現行產品雜湊全部通過。工作樹283444項無root-owned檔案或誤建.md目錄。交付文件、README三圖與可重現工具由`d2a59fc7`commit並push，正式`v.1.4.0-20261015`annotated tag指向此提交，推送遠端後建立含五個附件的草稿，核對版號／清單後發布為latest。
 
 主機gh讀回公開Release並下載五個附件；`v140_release_verify.py`核對實際附件名稱／大小／SHA-256、公開四筆SHA256SUMS及tag598項產品來源，全部通過。發布網址為`https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015`，RELEASE-CHECK.json及交付索引release保存結果。未上傳完整包或影片，未移動舊tag或修改既有Release。最後補上README入口、CONTEXT、唯一狀態表及驗收128的發布結果，另commit並push；不回移正式tag。#48仍OPEN，現有Windows／macOS真機及新混音人耳限制保持。本次Docker容器均已清空，沒有新建映像或清理其他專案資源。
+
+## 2026-10-15 第140輪：設定頁小字清晰化
+
+起點`e1917b5e`，工作樹乾淨。使用者要求強化系統設定縮小字型。命中重製字型、畫面驗收及文件職責路由，載入reverse-engineer-retro-game-remake技能及驗收reference。主機gh認證與Issue快照通過，282條verify零失效，仍僅#48 OPEN。本輪不重新開啟已完成項，不覆寫已發布v.1.4.0封包、tag或影片。
+
+根因為147直接抽樣16×15原版字模到12×12，再疊左上陰影，密集筆畫遺失或黏連。先建立148 READY與唯一狀態表140，再用既有Docker映像的Noto Sans Mono CJK TC Regular第8字面產生191字元專用圖集。保留12×12／6×12邏輯字格及全部命中矩形；原色使用原生小字，HD直接用36×36／18×36灰階遮罩，不先縮原版字形。小字移除陰影，選取文字改深色；設定頁統一字型，原四款字型仍影響其他遊戲畫面。原始字庫SHA-256為`b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a`，OFL全文、Pillow9.4.0／FreeType2.12.1與產生器及圖集雜湊保存於internal/font/settings_font.SOURCE.json。兩份圖集及完整來源／授權均可由settings_font.py --check獨立重生，逐位元組相同。
+
+初版名義12／36像素字庫有墨跡超出em，經bbox檢查發現部分中文字及ASCII下伸部會裁切。改用適合字格的10／32像素字面、字格內邊距及逐字墨跡邊界驗證，少數ASCII將完整墨跡縮入，保留f0／f1初版實錄；最終另建r2程式及f0-r2／f1-r2收據。新顯示測試首次未設定theme，使驗證器走原色回退而報9像素；修正測試環境啟用HD命令重播後同命令重跑，未放寬門檻或更改產品來遷就錯誤環境。
+
+標準tools/gui.sh test ./internal/... ./cmd/...通過19套件15 PASS／4無測試，設定文字原色重播、四種遊戲字型下獨立遮罩、裁切及後畫遮擋通過。兩陣營Linux從正常片頭至S1，無腳本入口、局面或seed注入，完成原版／HD、四字型、AI五值、兩規則、音色取消與戰場AI3→原版→1。敵軍預設關閉，實際圖示開／關與返回戰場的回合、單位、鏡頭保持通過。最終兩陣營HD、原版及AI選單原尺寸抽樣已目視，HD細筆畫清楚，原版保留點陣呈現。
+
+README改用兩陣營清晰設定頁及AI選單的三張完整960×720實錄，settings_font_receipt.py --check獨立核對正常收據、二進位、原圖及目前來源雜湊通過；索引為docs/images/readme-settings-clear.json。原字型與舊正式封包截圖均保留，不改圖或冒稱正式ZIP。148限定CONFORMED，驗收129、CONTEXT與唯一狀態表140同步；明示已發布v.1.4.0尚未包含本次字型修正。沿既有授權commit並push原始碼、開放字型、工具與文件，未新增Windows／macOS真機、DOS字形parity或發行聲明。
+
+收尾25項修改／新檔、1804個markdown相對連結、Python語法、字型／程式／圖片收據及git diff --check通過。工作樹283998項無root-owned檔案或誤建.md目錄，相關輸出UID/GID均1000:1000。Docker本輪容器清空，沒有新建映像、全域清理或碰其他專案資源；工作樹修改均為本次授權範圍，提交並推送main。

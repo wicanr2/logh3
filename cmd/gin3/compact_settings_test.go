@@ -49,6 +49,10 @@ func TestCompactTextKeepsGlyphsAndIndexedReplay(t *testing.T) {
 		if len(f.Glyph(code)) != 15 {
 			t.Fatal("縮小字型缺字", rune, code)
 		}
+		glyph, ok := font.SettingsGlyph(rune)
+		if !ok || glyph.Width != 12 || len(glyph.Native) != 144 || len(glyph.HD) != 1296 {
+			t.Fatal("設定專用字型缺字或尺寸不完整", rune)
+		}
 	}
 	a := &app{toolbar: toolbar{font: f}}
 	fb := gfx.NewFramebuffer(9)
@@ -60,6 +64,9 @@ func TestCompactTextKeepsGlyphsAndIndexedReplay(t *testing.T) {
 	for _, c := range fb.Commands {
 		if c.Kind == gfx.DrawGlyph && (c.H != 12 || c.W != 12 && c.W != 6 || c.Clip != r) {
 			t.Fatal("字格尺寸或裁切錯誤", c)
+		}
+		if c.Kind == gfx.DrawGlyph && (c.Key != font.SettingsGlyphKey || c.ShadowDY != 0 || len(c.Source) != c.SourceW*c.SourceH) {
+			t.Fatal("設定仍走舊縮小字模或陰影", c)
 		}
 	}
 }
