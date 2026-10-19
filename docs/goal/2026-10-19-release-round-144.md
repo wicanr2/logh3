@@ -9,8 +9,8 @@
 | README | 19張新版正式包實錄已就緒，下載連結切換至v1.5 | [圖片索引](../images/readme-v150.json) |
 | 發行輸入 | 七包及影片交付收據獨立重核通過 | [交付131](../playtest/131-admiral-editor-delivery.md)、[本機索引](../internals/data/v150-delivery.json) |
 | 公開附件 | 僅三平台引擎、來源及SHA256SUMS.txt五附件 | 完整版與影片留本機；不擴大素材公開範圍 |
-| 提交與tag | 待提交、核對612項凍結產品來源 | 新tag為`v.1.5.0-20261019`；遠端尚無同名tag |
-| Release | 待發布及實際下載核對 | 主機gh登入有效；現行Docker-only規則只明訂Issue的主機gh例外，尚須解決Release傳輸入口 |
+| 提交與tag | 本機提交及新tag已備妥，尚未推送 | `5ec56c683688c9c540e27ecde77352a36f6bf0b4`逐檔符合612項凍結產品來源；新tag為`v.1.5.0-20261019` |
+| Release | 發行前檢查通過，等待主機gh例外許可 | 五附件36625876 bytes；待發布及實際下載核對。現行規則只明訂Issue的主機gh例外 |
 
 本輪只做文件與發行，不重開已驗規則。Issue快照102張、#48 OPEN；282條verify無失效。三平台完整驗收與來源限制沿131。Windows為Wine驗收，macOS為雙架構、依賴及ARM簽章檢查，沒有新增平台真機聲明。
 

@@ -11401,3 +11401,7 @@ README改用19張v1.5正式ZIP正常操作實錄，包含兩陣營設定、基�
 使用者明確要求更新README截圖並發布Release，沿已驗v.1.5.0-20261019交付新建版本。載入README、版號、dist-all及文件職責路由；不重錄或重建相同產品來源。主機gh登入有效，Issue快照102張、#48 OPEN，282條verify無斷言不成立。遠端尚無v150 tag，既有版本不動。交付核對器首次誤用gui.sh exec，被Go拒絕；改用既有xrun Python入口，同一交付收據乾淨重核通過，屬命令入口問題。
 
 README沿19張v150正式包實錄，將三平台引擎、來源、SHA連結及功能說明切換至v150，移除尚未包含編輯器的過期區分。公開附件限定三引擎、來源及SHA256SUMS.txt，完整版與影片保持本機。唯一目前狀態表144掛入CONTEXT；本機索引維持凍結，發布下載收據另存。主機gh的既有例外只列Issue；目前沒有GitHub連接器，Release傳輸入口仍待確認，不搬運主機憑證進容器。
+
+發行前核對五附件36625876 bytes、四包SHA及SHA256SUMS.txt、ZIP素材邊界、1590來源與19張README圖通過，PREFLIGHT.json及具體RELEASE-NOTES.md保存於workplace/admiral144。79個功能、測試、文件與實錄檔提交為5ec56c683688c9c540e27ecde77352a36f6bf0b4；Docker內git show逐檔確認612項非vendor來源全同。建立新annotated tag首次遭sandbox唯讀檔案系統拒絕，改用已授權Git提權入口成功，沒有修改tag內容或覆寫舊tag。遠端main無新增提交；本輪尚未push。
+
+已提出本次主機gh Release發布與下載核對的規範例外請求，完整結果及說明均可檢閱，不請使用者重選發行範圍。工作樹全樹find碰到三個sandbox暫態隱藏掛載不存在，未出現root-owned檔或誤建.md目錄；後續以實際工作目錄重核。已抽查README、狀態表及PREFLIGHT均1000:1000。本輪容器均退出並刪除，其他專案保持。
