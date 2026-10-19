@@ -418,7 +418,9 @@ type Resources struct {
 	SaveDir string
 
 	// AdmiralNames 是 82 名提督姓名的 Big5 字碼（`docs/internals/data/keireki.json`）。
-	AdmiralNames [][]uint16
+	AdmiralNames       [][]uint16
+	AdmiralLabels      []string
+	AdmiralPreferences *rules.AdmiralPreferences
 
 	// StarListOrder 是「星系資料」那張清單的列順序
 	// （`docs/internals/data/star-list-order.json`）。
@@ -1039,8 +1041,10 @@ type Game struct {
 	// 參謀（`docs/re/268`）——那要寫 `WORK` 的 `+0x37` 起那六格與提督記錄
 	// 的 `+0x09`。`Resources` 可能被多局共用，所以第一次要寫的時候才複製
 	// （`mutableWork`／`mutableAdmirals`）。nil ＝ 這一局還沒有人寫過。
-	work     []byte
-	admirals []byte
+	work               []byte
+	admirals           []byte
+	admiralPreferences rules.AdmiralPreferences
+	admiralDefaults    []byte
 
 	// brain 是電腦那一方的決策（`internal/ai`、`docs/spec/017`）。
 	//
@@ -1990,6 +1994,13 @@ func (g *Game) enterSide(faction int) {
 }
 
 func (g *Game) startNewGame(faction int) {
+	if len(g.admiralDefaults) > 0 {
+		g.admirals = append([]byte(nil), g.admiralDefaults...)
+		g.res.Admiral = g.admirals
+	}
+	if g.admiralPreferences.Version == 1 {
+		g.applyAdmiralOverrides()
+	}
 	g.versusLoadedRound = false
 	g.monthSettlementPending = false
 	g.budgetTaxRefreshed = false
@@ -2107,6 +2118,14 @@ func New(res *Resources) (*Game, error) {
 		// 另外三行是純軟體設定，開機就有預設值（動畫開啟／普通／90），
 		// 不像音源要等偵測（`docs/re/286` §二）。
 		display: newDisplaySettings()}
+	g.admiralDefaults = append([]byte(nil), res.Admiral...)
+	g.admiralPreferences = rules.NewAdmiralPreferences()
+	if res.AdmiralPreferences != nil && res.AdmiralPreferences.Validate() == nil {
+		if err := res.AdmiralPreferences.ValidateCombat(res.ShipKinds); err != nil {
+			return nil, err
+		}
+		g.admiralPreferences = res.AdmiralPreferences.Clone()
+	}
 	g.startNewGame(res.Faction)
 	g.SetRuleOptions(DefaultRuleOptions())
 	// 電腦那一方走原版的戰略 AI（`docs/spec/029` READY，使用者裁決
@@ -2144,6 +2163,7 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	g.slot = sl
 	g.res.Admiral = sl.Admiral
 	g.admirals = nil
+	g.applyAdmiralOverrides()
 	g.work = nil
 	g.pendingRebellionReports = nil
 	g.rebellionReports = nil
@@ -2206,6 +2226,11 @@ func (g *Game) LoadSlot(sl *rules.Slot) {
 	// 星域記錄與行星表剛剛才換成存檔那一份，戰略 AI 的地基跟著換，
 	// 所以重接一次。
 	g.reconnectAI()
+	if len(g.admiralPreferences.Admirals) > 0 {
+		if err := g.SetAdmiralPreferences(g.admiralPreferences); err != nil {
+			g.saveErr = err
+		}
+	}
 	g.setHumanSeat()
 }
 

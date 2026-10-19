@@ -52,6 +52,8 @@ func (g *Game) fleetDamageCommand(own, target int, weapon byte) (rules.FleetComb
 	}
 	c.TargetFacing, c.TargetWeapon, c.TargetAttribute = int(b[0x4a]), int(r[0x2e]), int(admiral[0x12])
 	c.TargetComputer = !g.humanSeat(g.battleUnits[target].Faction)
+	c.AttackBonus = g.armyBonus(g.battleUnits[own].Faction, false)
+	c.FighterAttackBonus = g.fleetFighterBonus(g.battleUnits[own].Fleet)
 	return c, nil
 }
 

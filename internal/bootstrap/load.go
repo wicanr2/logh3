@@ -405,7 +405,8 @@ func Load(orig, data string) (*game.Resources, error) {
 			frameTiles = ft
 		}
 	}
-	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph, Weights: weights, AdmiralNames: names, StarListOrder: starOrder,
+	labels := loadAdmiralLabels(filepath.Join(data, "keireki.json"))
+	return &game.Resources{Font: fnt, OrigDir: orig, Graph: graph, Weights: weights, AdmiralNames: names, AdmiralLabels: labels, StarListOrder: starOrder,
 		UnrestParams: rules.UnrestParams{
 			Ruler: [2]int{16, 60}, Blend: [2]int{1, 2}, Rate: [2]int{2, 2},
 			Table: []int{170, 150, 130, 90, 60},
@@ -527,6 +528,23 @@ func regionColours(path string) ([]uint8, error) {
 		out[i] = r.Colour
 	}
 	return out, nil
+}
+
+func loadAdmiralLabels(path string) []string {
+	var raw struct {
+		Records []struct {
+			Name string `json:"name"`
+		} `json:"records"`
+	}
+	b, err := os.ReadFile(path)
+	if err != nil || json.Unmarshal(b, &raw) != nil {
+		return nil
+	}
+	var out []string
+	for _, r := range raw.Records {
+		out = append(out, r.Name)
+	}
+	return out
 }
 
 // loadAdmiralNames 讀 82 名提督姓名的 Big5 字碼。

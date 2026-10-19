@@ -44,6 +44,7 @@ var compactControls = func() []compactControl {
 		add(s, "", image.Rect(288, 288+i*18, 448, 304+i*18), 0, 0)
 	}
 	add("close", "結束", image.Rect(360, 378, 448, 394), 0, 0)
+	add("admirals", "編輯提督", image.Rect(176, 378, 288, 394), 0, 0)
 	return controls
 }()
 
@@ -183,6 +184,8 @@ func (a *app) compactSettingsClick(x, y int) bool {
 					}
 				}
 			}
+		case "admirals":
+			a.openAdmiralEditor()
 		case "hd":
 			if a.soundFontLibrary(a.selectedSoundFont()) != nil {
 				if a.g.MusicSettings().Device == 2 {
@@ -299,7 +302,7 @@ func (a *app) drawCompactSettings(fb *gfx.Framebuffer) {
 	}
 	a.compactText(fb, image.Rect(288, 234, 396, 250), fmt.Sprint(display.MsgSpeed), 7)
 	if a.ruleSettingsError != "" || a.soundFontError != "" {
-		a.compactText(fb, image.Rect(176, 378, 352, 394), "無法設定", 7)
+		a.compactText(fb, image.Rect(292, 378, 356, 394), "設定失敗", 7)
 	}
 	if a.soundFontMenu {
 		for i, s := range soundFontChoices {

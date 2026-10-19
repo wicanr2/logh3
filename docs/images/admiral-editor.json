@@ -1,0 +1,186 @@
+{
+  "spec": "149",
+  "kind": "remake-feature",
+  "comparison": "layout-only against approved prototype; no DOS parity claim",
+  "binary_sha256": "309645088a93ba94c2772e5b8c73afaa901fc27349ab661cdf27b2c3cc3912ac",
+  "gui_result": "workplace/admiral-editor-gui-r6/RESULT.json",
+  "gui_result_sha256": "69f071f5f17fddd2d1b78068d65a21702b085d4dfa04319710d277688c578aae",
+  "normal_entry": true,
+  "script": false,
+  "state_injection": false,
+  "seed_injection": false,
+  "captures": [
+    {
+      "name": "0-settings",
+      "sha256": "8cc28c8fa6ee0b3e38bc0595ac9fb6251a03c1e6a1f6462b5a6693d2824ddac4",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "hd"
+    },
+    {
+      "name": "0-basic",
+      "sha256": "233d1f54c2b29dc3567fabaaadb286203d712fd3dad834ab7353eff78fd59acb",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "hd"
+    },
+    {
+      "name": "0-hidden",
+      "sha256": "dbb62730e52a1e7c1b46aec9452d3a67fb68e1f8bb2cc4ab415fcf4912dd58c1",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "hd"
+    },
+    {
+      "name": "0-special",
+      "sha256": "bca3f731940347b72689b52552e65bc6ae420884db23b8d9fe2a472e79c39aae",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "hd"
+    },
+    {
+      "name": "0-applied",
+      "sha256": "3dbff2dd91e8f565234c39dcb0c25365bf3bc9975b716f9ab09aefc271799906",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "hd"
+    },
+    {
+      "name": "0-original",
+      "sha256": "f46f35d4a35f67393d05cedaf4b6cdea202a8ca7d22b2979ac8dc756916708bd",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "original"
+    },
+    {
+      "name": "0-kemp-fighter",
+      "sha256": "d70054f04eea0f754217ca38480a24d856ea7b3ccb56f215bf67704e8e0064e7",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "hd"
+    },
+    {
+      "name": "1-settings",
+      "sha256": "b333eea4709963f8661db4c3b77059fa71c3e466ca64f280cb12fe79531e8dff",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "hd"
+    },
+    {
+      "name": "1-special",
+      "sha256": "3db98e0b6c6b407731313187ed2a5f24f6c8513ff795f7f7879a03b88241712e",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "hd"
+    },
+    {
+      "name": "1-poplan-fighter",
+      "sha256": "8d269dee7ba2ff96ade9aaeec3a3c1349dd97e78294b557b9c5f104353d1a46d",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "hd"
+    },
+    {
+      "name": "1-global-reload",
+      "sha256": "8335f4d5a52d943c5db177e16fcfc20b1183431653ea8b3374f344415a1e93e0",
+      "size": [
+        960,
+        720
+      ],
+      "mode": "hd"
+    }
+  ],
+  "approved": {
+    "docs/images/admiral-editor-approved-alliance-special.png": "25460e275e4fbbe5d24f220b5120500953bc99dcacdd0d58cd4b0763f1ee87c3",
+    "docs/images/admiral-editor-approved-empire-basic.png": "eb7445d76ab9416862e78fe5e17baf75d10e98ee9169b03f352eb009540bede6",
+    "docs/images/admiral-editor-approved-empire-hidden.png": "2a85df3367a7f9551fad1bddaec4e7150ae9f09920f55ba37e2cace4a16cffc6",
+    "docs/images/admiral-editor-approved-empire-settings.png": "2bcfc8cd607bcf8a0d3df40211147bcc8c41de048398087433408cfb34ce11a1",
+    "docs/images/admiral-editor-approved-empire-special.png": "69f7f2ec6ca975b4b8ad5f671995ddd7e1ff3ed5b2d24e490a33da61f45e29be"
+  },
+  "exported": {
+    "admiral-editor-empire.png": "bca3f731940347b72689b52552e65bc6ae420884db23b8d9fe2a472e79c39aae",
+    "admiral-editor-alliance.png": "3db98e0b6c6b407731313187ed2a5f24f6c8513ff795f7f7879a03b88241712e",
+    "admiral-editor-internal.png": "dbb62730e52a1e7c1b46aec9452d3a67fb68e1f8bb2cc4ab415fcf4912dd58c1",
+    "admiral-editor-kemp.png": "d70054f04eea0f754217ca38480a24d856ea7b3ccb56f215bf67704e8e0064e7",
+    "admiral-editor-poplan.png": "8d269dee7ba2ff96ade9aaeec3a3c1349dd97e78294b557b9c5f104353d1a46d"
+  },
+  "product_sources": {
+    "cmd/gin3/admiral_editor.go": "a1aed3b8567f95dc73228f336b6b0f6b613e4dbf379845571c5a87c7b7889173",
+    "cmd/gin3/admiral_editor_test.go": "fe13a4c88ea38a71d4b89cc596b252e56f1cc585220d6097bf493b6c7a08fe8e",
+    "cmd/gin3/compact_settings.go": "67567f5d297bdb734cffe0dec4e23677e18645dcebbb68ab58c0a5eb8d3a92ba",
+    "cmd/gin3/main.go": "b265c67b8d8e9fa42d83fcf3994f27cae4b1c0b905d984abf300baf45d9436f0",
+    "cmd/gin3/presentation_settings.go": "a845cb2184a4bdc62e9fa38f285387960abe267f586a7a2db6ce2318174bd3a4",
+    "cmd/gin3/telemetry.go": "0957a0b8173cfe26faa74696ce95887637253d1f6058e6bd5f46d8b73d99f69f",
+    "cmd/gin3/toolbar.go": "ca98cf1c0c0c9449a2c8f2a651f6281f21d30e4786f331845b2cc5973f89cf13",
+    "internal/bootstrap/load.go": "b8f53c9eea865271d5ce4c0929ce18158a40dea7266dcbc447c3eee8765a1e70",
+    "internal/font/settings.go": "3650c27fea335f0c711408126ad629b57395b8a12b4500fa69b596171401ce51",
+    "internal/font/settings_font.SOURCE.json": "29e5840652ee1fe94c4e1015b29931ac40ba6c984245f3cd1f08a5947740017e",
+    "internal/font/settings_font.json": "7d0724883c5f980297bab0a07a0df0cfbd8663ef32083625d877698c7813da89",
+    "internal/font/settings_font_12.png": "1700f1f34616026d9905090929c23efa4268b6a5759f79c4d884fe44caad7f1b",
+    "internal/font/settings_font_36.png": "a0a40a8380a1070ebb8f3f850a65ce5fb2b49782c1b86e38abb2f44b4045f9c5",
+    "internal/game/admiraleditor.go": "bc6e162d8400ae02e42bc491aa8b960b5cc6fbd74ed812050094f397d2c28de3",
+    "internal/game/admiraleditor_test.go": "614e4617d193c464659518cf577a15a7508f882f9ae16be1ea2ba36004566f67",
+    "internal/game/battlemovement.go": "e8b8702d463182fdeddd51f73a05998e288b354c3ccb33646274e2af430dc97f",
+    "internal/game/flagshiptransfer.go": "e6a7bd3ce4e6c2721210e43913e2dbe5df2f4712d67afa855ff54774aff35ec3",
+    "internal/game/fleetcombatscene.go": "b0faa0672c0a869177c80c87c2743eb7471626d411334af5b185b2aa55c16d51",
+    "internal/game/fleetorder.go": "a8d6ba678732a720d274b439e37089577231a57858531aed143c76678fef6594",
+    "internal/game/game.go": "e6c89144378f2a9f7a95aad0e5c93e716ca3e3a9548b6069e8dfcd0f7dbd5f98",
+    "internal/game/ruleoptions.go": "b5960d9abc8c1684bae8d8e1c893f05ed5dd272688424b605889fc09ee77a7c6",
+    "internal/presentation/artwork.go": "98df186370ec8750320be6d3a41acecb07931e41b39072db35780a660d4d4d56",
+    "internal/presentation/journal.go": "7fde73d8fa9bcd0b6abb52be8c7b8931839a8b256bef41b90d1110239d2ab80d",
+    "internal/rules/admiraleditor.go": "cd14aa7c91bacbfc781744ddb108b342307f3801f19cd309893e2653a373630e",
+    "internal/rules/admiraleditor_test.go": "0389479af21e5212c621f8cb1b3730bacdc109dbe0775bd9f9ba7bca9e4ade82",
+    "internal/rules/battlemovement.go": "0f313bdc87ef01c4d968202ba078de82a9b614b49a7ef66993cfdabf3d48eaa4",
+    "internal/rules/fleetcombat.go": "c31d3ef966a318f8316953dd1e9547e6075b16fd4370a2188423cbca582e6fc6",
+    "internal/rules/promotion.go": "c5b415b670bff27e654d720019bb7eba8cc589ca517e252819517ad2e785402d",
+    "tools/scripts/settings_font.py": "8baf6330c802106b8efdc1d5e048c6d8cb4ec214c48670ae43526537fc064dc0"
+  },
+  "original_inputs": {
+    "org_game/extracted/ADMIRAL.DT8": "13a019cb16a59519ef13d529341c5af79179c40cabba679d193284db20d62851",
+    "org_game/extracted/ADMIRAL.DT9": "5a58b03e02422914c897200b68638ef69793d612f069e28e7232695406991250",
+    "org_game/extracted/ADMIRAL.DTA": "756009ea71f1d02812d086f47963d7028bcad12d2060d028ebe09b24b94f4263",
+    "org_game/extracted/ADMIRAL.DTX": "482a24048a9f553ae568560ad2a3ae21e2764c3783032a1ce0d204aecf2273c7"
+  },
+  "references": {
+    "docs/internals/data/ship-kind-table.json": "1d67b16a9617d6a0eb09391e69d8853c7c53f232f26c89bf74fef4fca3d42895",
+    "docs/internals/data/keireki.json": "6cc35b2dc5e4b71b3f03091fa21747f67ffd4e2738ded69d885580ddccf61841",
+    "assets/hd/interface-themes.json": "adfdcfff76653e5b7ba7ad5587d262fe4f6b117f041ae387819303e275b226cd"
+  },
+  "generators": {
+    "tools/scripts/admiral_editor_gui.py": "051551161511e8b7774ad007c7d09390040a0b13d3ac8f879cae55e072b8d411",
+    "tools/scripts/admiral_editor_receipt.py": "152e8ec4d0074e977c8578123b623cbe94c72c7c0f54b7cfe74e839827a9da52",
+    "tools/scripts/settings_font.py": "8baf6330c802106b8efdc1d5e048c6d8cb4ec214c48670ae43526537fc064dc0"
+  },
+  "tests": {
+    "command": "LOGH3_TIMEOUT=20m tools/gui.sh xrun sh -c 'go test ./internal/... ./cmd/... > workplace/admiral-editor-tests.log 2>&1; test_status=$?; cat workplace/admiral-editor-tests.log; exit \"$test_status\"'",
+    "passed": 15,
+    "no_tests": 4,
+    "sha256": "46737efb38aff3d54a9f07f6753d40e5f5a5dda7153322e6557a6a633c212f09"
+  },
+  "limits": [
+    "原版欄名仍未知",
+    "未新增DOS同狀態對拍",
+    "未新增Windows／macOS真機或發行包"
+  ],
+  "tool_image": "logh3-hd-preview:20261011-r1"
+}

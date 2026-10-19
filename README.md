@@ -4,7 +4,9 @@
 
 選擇銀河帝國或自由行星同盟，從財政、生產與提督任命安排戰略，再親自指揮艦隊迎戰。從亞姆力札會戰重新下令，讓你的戰術改變局勢。
 
-**目前 GitHub 版本：[v.1.4.0-20261015](https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015)。** GitHub 提供三平台引擎與程式來源，玩家須自備合法取得的原版遊戲資料。含遊戲資料的完整版與推廣影片僅保留本機，不加入 Git 或 Release 附件。
+**最新版本：[v.1.5.0-20261019](https://github.com/wicanr2/logh3/releases/tag/v.1.5.0-20261019)。** GitHub 提供三平台引擎與程式來源，玩家須自備合法取得的原版遊戲資料。含遊戲資料的完整版與推廣影片僅保留本機，不加入 Git 或 Release 附件。
+
+**新版加入[提督能力編輯器](#提督能力編輯器)。** 可調整十三項能力及四項特殊能力，包含光線砲、飛彈、戰鬥機與坎普／波布蘭的戰鬥機攻擊加成。設定全局共用，新遊戲與讀檔也套用。[新版封包與驗收](docs/playtest/131-admiral-editor-delivery.md)
 
 **系統設定已整合全部選項。** 縮小字型並將「顯示敵軍」、AI 模式、音色庫與兩項可選規則收進對話框。顯示敵軍預設關閉；轉移旗艦與名將移動加成預設開啟。Windows 直接雙擊會從執行檔旁讀取資料，修正找不到 `GRAPH.IMG` 的問題。三平台完整版與引擎均已重新打包。[新版功能與驗收](docs/playtest/128-v140-release-and-promo.md)
 
@@ -30,23 +32,23 @@
 
 | 平台 | GitHub 引擎包 |
 |---|---|
-| Windows amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-windows-amd64.zip) |
-| Linux amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-linux-amd64.zip) |
-| macOS Intel／Apple Silicon | [下載通用版 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-macos-universal.zip) |
+| Windows amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/LOGH3-v.1.5.0-20261019-windows-amd64.zip) |
+| Linux amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/LOGH3-v.1.5.0-20261019-linux-amd64.zip) |
+| macOS Intel／Apple Silicon | [下載通用版 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/LOGH3-v.1.5.0-20261019-macos-universal.zip) |
 
-[引擎來源包](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/LOGH3-v.1.4.0-20261015-engine-source.tar.gz) · [SHA-256 校驗清單](https://github.com/wicanr2/logh3/releases/download/v.1.4.0-20261015/SHA256SUMS.txt) · [本次重包驗證](docs/playtest/129-clear-settings-font.md)
+[引擎來源包](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/LOGH3-v.1.5.0-20261019-engine-source.tar.gz) · [SHA-256 校驗清單](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/SHA256SUMS.txt) · [封包與截圖驗收](docs/playtest/131-admiral-editor-delivery.md)
 
-v.1.4.0 已依指定維持版號重新打包，加入清晰設定字型與可見金屬外框。請重新下載，並使用最新 SHA-256 清單核對內容。
+三平台引擎包均含提督編輯器、全軍攻擊加成，以及提督／參謀提供的戰鬥機攻擊加成。
 
 本機交付保留於以下位置。`dist-all/` 已由 `.gitignore` 排除，不隨儲存庫下載。
 
 | 本機內容 | 路徑 |
 |---|---|
-| 三平台 v.1.4.0 完整版與啟動器 | `dist-all/v.1.4.0-20261015/full/` |
-| 三平台 v.1.4.0 引擎、來源與校驗檔 | `dist-all/v.1.4.0-20261015/release/` |
-| 約 102 秒重新拍攝的連續配樂推廣片 | `dist-all/v.1.4.0-20261015/promo/` |
+| 三平台 v.1.5.0 完整版與啟動器 | `dist-all/v.1.5.0-20261019/full/` |
+| 三平台 v.1.5.0 公開引擎、來源與校驗檔 | `dist-all/v.1.5.0-20261019/release/` |
+| 新版連續配樂推廣片與聲畫驗證資料 | `dist-all/v.1.5.0-20261019/promo/` |
 
-推廣片的遊戲畫面包含兩陣營交火、要塞砲與設定操作。全片使用同一首 BGM_0F，剪接處不換曲或重啟，交火音效獨立混音。本機檔名為 `LOGH3-v.1.4.0-20261015-promo.mp4`。影片沿字型強化前的實錄原樣保留。[影片與音軌驗收](docs/playtest/128-v140-release-and-promo.md)
+新版推廣片加入正式包的提督編輯與三武器實戰，展示四項特殊能力及參謀加成。全片使用同一首 BGM_0F，剪接處不換曲或重啟，交火音效獨立混音；部分交火及要塞砲沿用前版已驗完整場次，片中明列來源。本機檔名為 `LOGH3-v.1.5.0-20261019-promo.mp4`。[影片與音軌驗收](docs/playtest/131-admiral-editor-delivery.md)
 
 ## 主要特點
 
@@ -56,6 +58,7 @@ v.1.4.0 已依指定維持版號重新打包，加入清晰設定字型與可見
 - **強化戰略與戰術 AI。** 可選原版規則模式或四級強化難度；強化 AI 會集結兵力、協同移動並尋找包圍方向。
 - **轉移旗艦。** 旗艦分隊被擊毀時，謬拉必定轉移，其餘提督約 25%。須有存活戰艦或高速戰艦，轉往艘數最多的分隊，保留提督與副官。可在系統設定關閉。
 - **名將協同。** 楊威利採牽制與雙翼包抄，萊因哈特採集中突擊與側後封鎖。僅強化模式，兩人作為存活帶隊提督參戰時，所屬陣營全部艦隊的新移動額度為 1.5 倍，離場即解除。「名將移動加成」可獨立關閉，仍保留名將戰術 AI。
+- **提督能力編輯。** 可編輯十三項能力與四項特殊能力。兩位名將全軍攻擊預設+30%；坎普、波布蘭任提督或參謀時，本艦隊戰鬥機攻擊預設+30%。攻擊加成限強化模式，數值可調整並全局保存。
 - **三個額外劇本。** 取進度保留 S1「亞姆力札會戰」、S2「諸神的黃昏」、S3「巴米利恩會戰」，可正常載入及存讀。
 - **四款字型。** 設定可選原版點陣、原版強化、思源宋體及思源黑體，預設原版強化。原版顯示固定使用原字形；新字集需另匯入，本機完整版已附。
 - **原曲 HD 音色。** 本機完整版保留原曲，升級 11 首配樂的音色與混音；設定可切 HD／FM 或靜音。強化啟動器預設 HD，原版規則啟動器預設原音色。
@@ -64,21 +67,21 @@ v.1.4.0 已依指定維持版號重新打包，加入清晰設定字型與可見
 
 ## 系統設定與可選規則
 
-從「系統指令 → 設定」調整敵軍顯示、AI 模式、音色與可選規則。全部選項位於同一個對話框內。顯示敵軍預設關閉，下圖為手動開啟後的畫面。「轉移旗艦」與「名將移動加成」預設開啟，退出重開後保留選擇。
+從「系統指令 → 設定」調整敵軍顯示、AI 模式、音色與可選規則。對話框另有「編輯提督」入口。顯示敵軍預設關閉，下圖為預設狀態。「轉移旗艦」與「名將移動加成」預設開啟，退出重開後保留選擇。
 
 **設定頁小字與邊框已強化。** 設定頁採專用黑體字形，HD 使用高解析遮罩，移除小字陰影，選取項目改用深字配亮底。視窗新增可見金屬外緣，內側保留立體陰影。「介面字型」仍可切換其他遊戲畫面的四款字型。三平台 v.1.4.0 完整版與引擎包均已納入本次更新。[字型與邊框驗收](docs/playtest/129-clear-settings-font.md)
 
-以下設定頁取自最新原始碼的 Linux 正常操作，保留完整 960×720 視窗。點圖可放大。[邊框逐行核對與實錄來源](docs/images/readme-settings-frame.json)
+以下設定頁與編輯器取自 v.1.5.0 實際 Linux 完整 ZIP 解壓後的正常操作，保留完整960×720視窗。點圖可放大。[正式包截圖來源與雜湊](docs/images/readme-v150.json)
 
 | 帝國清晰設定頁 | 同盟清晰設定頁 |
 |---|---|
-| [![帝國設定專用清晰字型與可見金屬外緣，顯示敵軍已手動開啟](docs/images/readme-settings-frame-empire.png)](docs/images/readme-settings-frame-empire.png) | [![同盟設定專用清晰字型與保留陰影的金屬外框](docs/images/readme-settings-frame-alliance.png)](docs/images/readme-settings-frame-alliance.png) |
+| [![帝國新版設定頁，新增編輯提督入口，顯示敵軍預設關閉](docs/images/readme-v150-settings-empire.png)](docs/images/readme-v150-settings-empire.png) | [![同盟新版設定頁，保留陣營配色與金屬外框](docs/images/readme-v150-settings-alliance.png)](docs/images/readme-v150-settings-alliance.png) |
 
-![清晰小字與完整外框的AI原版與強化0至3選單](docs/images/readme-settings-frame-ai.png)
+![新版正式包的AI原版與強化0至3選單](docs/images/readme-v150-ai.png)
 
-下方敵軍顯示畫面沿已發布 v.1.4.0 正式 ZIP 實錄。[來源與功能驗收](docs/images/readme-v140-compact.json)
+下方為新版正式包錄影前手動開啟顯示敵軍的實際戰場。[來源與功能驗收](docs/playtest/131-admiral-editor-delivery.md)
 
-![手動開啟顯示敵軍後，實際戰場可見敵方分隊](docs/images/readme-v140-compact-enemies.png)
+![新版同盟戰場，手動開啟顯示敵軍後可見敵方分隊](docs/images/readme-v150-battle-alliance.png)
 
 「顯示敵軍」只改變畫面；開關後戰場回合、部隊與鏡頭保持。AI 可選原版與強化 0 至 3，沿啟動器的初始模式，本次執行有效，影響之後的決策。
 
@@ -90,6 +93,43 @@ v.1.4.0 已依指定維持版號重新打包，加入清晰設定字型與可見
 轉移旗艦每次擊毀只判定一次，失敗不重擲。轉移使用現有分隊，不增加艦艇、不回補彈藥。新旗艦若再次被擊毀，才有下一次轉移機會。這是可選的 remake 擴充規則。
 
 兩項設定保存於玩家存檔目錄的 `preferences.json`，不改原版六表存檔格式。名將移動開關影響之後取得的新額度，不回溯改動本回合已取得的額度。
+
+## 提督能力編輯器
+
+從「系統指令 → 設定 → 編輯提督」開啟，支援帝國40位、同盟42位將領。介面沿用兩陣營配色、立體框與人物頭像，分為基本、內部、特殊能力三頁。
+
+| 分頁 | 可編輯項目 |
+|---|---|
+| 基本能力 | 統率力、移動、回轉、營運、光線砲、飛彈、戰鬥機、防禦、占領、運用 |
+| 內部能力 | 內政／應變參數、稅務／決策權重、目標選擇判斷。這些是依用途取的標籤，原版欄名未知，詳見[三項能力調查](docs/internals/08-admiral-dt.md#沒有名字那三格在做什麼) |
+| 特殊能力 | 旗艦擊毀換艦率、全軍移動加成、全軍攻擊加成、本艦隊戰鬥機攻擊加成 |
+
+**光線砲、飛彈與戰鬥機可分別修改。** 改的是原版武器能力值，參與攻擊及防禦公式；沒有獨立的命中率或射擊頻率欄位。十三項能力可設1至200，現行艦種資料下三項武器能力最低為3。等級、功績、陣營、人物狀態、參謀任命、位置與艦艇裝備／彈藥尚未開放編輯。
+
+| 特殊能力 | 預設與作用範圍 |
+|---|---|
+| 旗艦擊毀換艦率 | 謬拉100%，其他25%；可設0至100%，須開啟「轉移旗艦」 |
+| 全軍移動加成 | 萊因哈特、楊威利各+50%，其他0%；須為存活在場的帶隊提督，並開啟「名將移動加成」 |
+| 全軍攻擊加成 | 萊因哈特、楊威利各+30%，其他0%；須為存活在場的帶隊提督 |
+| 本艦隊戰鬥機攻擊 | 坎普、波布蘭各+30%，其他0%；擔任提督或參謀均生效，只加強所在艦隊的戰鬥機 |
+
+三項攻擊／移動增幅均可設0至200%，只在強化模式生效。全軍加成取同陣營最高值；戰鬥機加成取該艦隊提督與參謀的較高值。全軍攻擊與戰鬥機倍率各自乘算，例如兩者均+30%時為1.3×1.3。攻擊增幅只作用於戰術艦隊交火，不增加彈藥、射程或動畫速度，也不影響要塞砲、行星反擊與戰略自動攻城。
+
+點數值可直接輸入，也可用「−／+」微調。「套用變更」會保存全局設定，立即套用目前遊戲，並於重啟、新遊戲及讀檔後繼續套用。只有編輯過的能力持續覆寫，其餘保留劇本、存檔與升級結果。「取消」放棄未套用修改；「還原本提督」恢復該人的預設能力。設定保存在存檔目錄的 `preferences.json`，原版六表格式保持。
+
+以下為新版正式包正常入口的完整960×720視窗實錄。[功能驗收](docs/playtest/130-admiral-editor.md) · [封包驗收](docs/playtest/131-admiral-editor-delivery.md) · [畫面與來源雜湊](docs/images/readme-v150.json)
+
+| 基本能力 | 三項內部能力 |
+|---|---|
+| ![可分別編輯光線砲、飛彈、戰鬥機等十項基本能力](docs/images/readme-v150-editor-basic.png) | ![三項內部能力的用途標籤與數值編輯](docs/images/readme-v150-editor-internal.png) |
+
+| 帝國提督編輯 | 同盟提督編輯 |
+|---|---|
+| ![帝國提督特殊能力，萊因哈特全軍攻擊預設30%](docs/images/readme-v150-editor-empire.png) | ![同盟提督特殊能力，楊威利全軍攻擊預設30%](docs/images/readme-v150-editor-alliance.png) |
+
+| 坎普戰鬥機加成 | 波布蘭戰鬥機加成 |
+|---|---|
+| ![坎普任提督或參謀時，本艦隊戰鬥機攻擊預設30%](docs/images/readme-v150-editor-kemp.png) | ![波布蘭任提督或參謀時，本艦隊戰鬥機攻擊預設30%](docs/images/readme-v150-editor-poplan.png) |
 
 ## 遊戲畫面
 
@@ -111,23 +151,25 @@ v.1.4.0 已依指定維持版號重新打包，加入清晰設定字型與可見
 
 ![實際七階段載入進度與人物圖張數](docs/images/readme-v130-loading.png)
 
-以下為陣營介面、劇本與交火畫面，取自 v.1.2.0 Linux 版正常 S1 遊玩，保留完整 960×720 視窗。[截圖來源與雜湊](docs/images/readme-v120.json)
+以下陣營介面、劇本與交火畫面，更新為v.1.5.0 Linux正式包正常S1遊玩，保留完整960×720視窗。交火圖取自同次原速實錄，沒有重畫或裁切遊戲內容。[截圖來源與雜湊](docs/images/readme-v150.json)
 
 | 帝國藍金介面與星圖 | 同盟赤焰戰線介面與星圖 |
 |---|---|
-| ![帝國HD戰略星圖，保留星球名稱與航路](docs/images/readme-v120-empire-map.png) | ![同盟HD戰略星圖與艦隊清單](docs/images/readme-v120-alliance-map.png) |
+| ![帝國HD戰略星圖，保留星球名稱與航路](docs/images/readme-v150-map-empire.png) | ![同盟HD戰略星圖與艦隊清單](docs/images/readme-v150-map-alliance.png) |
 
 | 三個額外劇本 | 強化模式戰術戰場 |
 |---|---|
-| ![正常取進度清單中的S1、S2、S3](docs/images/readme-v120-scenarios.png) | ![同盟視角第4回合戰場，顯示敵軍已開啟](docs/images/readme-v120-tactical-ai.png) |
+| ![新版正常取進度清單中的S1、S2、S3](docs/images/readme-v150-scenarios.png) | ![新版同盟戰場，顯示敵軍已開啟](docs/images/readme-v150-battle-alliance.png) |
 
-| 原版顯示 | 同一戰場切回 HD |
+| 編輯器原版顯示 | 同一編輯狀態切回 HD |
 |---|---|
-| ![正常遊戲按F7切為原版顯示](docs/images/readme-v120-switch-original.png) | ![同一戰術狀態按F7切回HD](docs/images/readme-v120-switch-hd.png) |
+| ![新版編輯器按F7切為原版顯示](docs/images/readme-v150-editor-original.png) | ![相同已套用編輯值的HD畫面](docs/images/readme-v150-editor-applied.png) |
 
 | 中子光線砲交火 | 戰鬥機交火 |
 |---|---|
-| ![正常戰鬥實錄中的中子光線砲與HD艦影](docs/images/readme-v120-beam.png) | ![正常戰鬥實錄中的戰鬥機攻擊與HD艦影](docs/images/readme-v120-fighters.png) |
+| ![新版正式包實錄中的光線砲與HD艦影](docs/images/readme-v150-beam.png) | ![新版正式包實錄中的戰鬥機攻擊與HD艦影](docs/images/readme-v150-fighters.png) |
+
+[帝國戰場實錄](docs/images/readme-v150-battle-empire.png)與[飛彈交火實錄](docs/images/readme-v150-missile.png)也取自同批正式包。
 
 ## 怎麼跑
 
@@ -161,6 +203,7 @@ Linux 也可直接指定既有原版資料目錄：
 | 系統指令 → 設定 → 音色庫 | 選擇 GeneralUser GS 或 Roland MT-32 |
 | 系統指令 → 設定 → 轉移旗艦 | 開關旗艦擊毀後的轉移規則，預設開啟 |
 | 系統指令 → 設定 → 名將移動加成 | 開關強化模式的名將陣營移動加成，預設開啟 |
+| 系統指令 → 設定 → 編輯提督 | 修改十三項能力與四項特殊能力，全局保存 |
 
 Windows 存檔位於 `%APPDATA%\logh3\save`；Linux 位於 `$XDG_CONFIG_HOME/logh3/save`，未設定時使用 `~/.config/logh3/save`；macOS 位於 `~/Library/Application Support/logh3/save`。兩種 AI 模式共用存檔。轉移旗艦、名將移動加成與 GeneralUser GS／Roland MT-32 音色選擇保存於同目錄的 `preferences.json`，不改原版六表格式。字型與 HD／FM 切換僅本次執行有效，可用 `-font original|classic|serif|sans` 與 `-music-quality original|hd` 指定啟動值；HD 曲目放在配樂目錄的 `hd/`。
 
@@ -170,7 +213,9 @@ Linux 需要 X11 或 XWayland、OpenGL 與 ALSA；Windows 需要 OpenGL 驅動�
 
 Linux 版已抽測兩陣營的讀檔、財政與生產、艦隊指令、戰場移動、交火、存讀，以及畫面、字型與音色切換。S3同盟已驗24段完整登陸／反擊／占領，兩種顯示各293來源格無漏格；普通／要塞行星459完整幀的原版渲染對拍零差。要塞砲另驗S1同盟正常演出及423完整幀，試射包含友軍傷害。現行音樂已通過使用者實際聆聽驗收。Windows 完成 Wine 驗證，macOS 完成雙架構、依賴與 ARM 簽章檢查。Windows／macOS 真機、DOS整回合同態及同戰場讀檔續戰仍未新增驗收。HD 是重繪模式，不宣稱全遊戲與 DOS 原版逐像素或流程完全一致。
 
-本次結果見[字型、邊框與三平台重包驗證](docs/playtest/129-clear-settings-font.md)及[來源與交付雜湊](docs/internals/data/v140-repackage.json)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
+v.1.5.0的七個封包、Linux與Windows Wine兩陣營正常編輯、19張新版截圖及本機推廣影片，見[新版交付驗收](docs/playtest/131-admiral-editor-delivery.md)。能力規則、取消／套用與全局保存另見[編輯器驗收](docs/playtest/130-admiral-editor.md)。它是 remake 擴充，不宣稱新增能力具有 DOS 原版一致性。
+
+前版的字型與邊框驗證見[驗收129](docs/playtest/129-clear-settings-font.md)。目前狀態以 [CONTEXT.md](CONTEXT.md)、[驗證矩陣](VERIFICATION-MATRIX.md)及 [GitHub worklist Issue](https://github.com/wicanr2/logh3/issues?q=label%3Aworklist)為準。
 
 ## 重製與保存
 

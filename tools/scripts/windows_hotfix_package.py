@@ -108,6 +108,9 @@ def main(version, base_version, base_package=None):
             '旗艦被擊毀後，謬拉必定轉移，其他提督約25%；須有存活戰艦或高速戰艦，轉往艘數最多的分隊。\n'
             '名將移動加成只在強化模式啟用，楊威利／萊因哈特參戰時全陣營新移動額度1.5倍；關閉仍保留名將戰術AI。\n'
             'F1 說明、F7 原版／HD；防拷題輸入 138。存檔在 %APPDATA%\\logh3\\save。\n'
+            '系統指令→設定→編輯提督：十三項能力及四項特殊能力均可編輯，全局保存，新局與讀檔也套用。\n'
+            '萊因哈特／楊威利全軍移動預設+50%、攻擊+30%；坎普／波布蘭任提督或參謀時，本艦隊戰鬥機攻擊預設+30%。\n'
+            '移動與攻擊加成只限強化模式；同類取最高值，全軍與戰鬥機攻擊倍率各自乘算。\n'
             '本包含原版及衍生素材，僅供合法持有人本機使用，不公開散布。\n'
             'Windows Wine 已驗證；Windows 真機待使用者驗收。戰術讀回重建仍由 #48 追蹤。\n')
     (full/'README.txt').write_bytes(b'\xef\xbb\xbf'+text.replace('\n','\r\n').encode())
@@ -129,6 +132,8 @@ def main(version, base_version, base_package=None):
         '不含原版、HD 或音訊素材。請將合法取得的原版資料放入 gin3.exe 旁的 original 資料夾。\r\n'
         '該資料夾須含 GRAPH.IMG、GIN3.COM、FACE.AMG 及其他原版檔案。然後雙擊 gin3.exe 或啟動器。\r\n'
         '可另放入自有 art 與 music；程式會依封包位置尋找，亦接受明確的命令列路徑。\r\n').encode())
+    with (engine/'README.txt').open('ab') as stream:
+        stream.write('系統設定的編輯提督可調整十三項能力與四項特殊能力，設定全局共用。\r\n'.encode())
     packages = []
     for folder, classification in [(full,'含原版與衍生素材，僅本機完整包'), (engine,'引擎包，不含原版／HD／音訊素材')]:
         record(folder/'VERSION.json', metadata)

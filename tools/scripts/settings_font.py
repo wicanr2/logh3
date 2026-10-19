@@ -20,7 +20,12 @@ def sha(data):
 
 def generate():
     text = (ROOT / 'cmd/gin3/compact_settings.go').read_text()
-    chars = ''.join(sorted(set(re.findall(r"'([^']+)': 0x", text) + [chr(i) for i in range(32, 127)])))
+    editor = (ROOT / 'cmd/gin3/admiral_editor.go').read_text()
+    for rel in ['internal/rules/admiraleditor.go', 'internal/game/admiraleditor.go', 'internal/rules/promotion.go']:
+        editor += (ROOT / rel).read_text()
+    labels = json.loads((ROOT / 'docs/internals/data/keireki.json').read_text())['records']
+    extra = ''.join(re.findall(r'"([^"\n]*)"', editor)) + ''.join(r['name'] for r in labels) + '編輯提督設定失敗▲▼'
+    chars = ''.join(sorted(set(re.findall(r"'([^']+)': 0x", text) + [chr(i) for i in range(32, 127)] + list(extra))))
     face_index = 8
     images = {}
     for size in (12, 36):
@@ -32,7 +37,7 @@ def generate():
             width = size // 2 if ord(char) < 128 else size
             glyph = Image.new('L', (width, size))
             box = face.getbbox(char, anchor='ls')
-            if char != ' ':
+            if not char.isspace():
                 ink = Image.new('L', (box[2] - box[0], box[3] - box[1]))
                 ImageDraw.Draw(ink).text((-box[0], -box[1]), char, font=face, anchor='ls', fill=255)
                 if ink.width > width or ink.height > size:
@@ -43,7 +48,7 @@ def generate():
                 x = (width - ink.width) // 2
                 assert x >= 0 and y >= 0 and x + ink.width <= width and y + ink.height <= size
                 glyph.paste(ink, (x, y))
-            assert glyph.getbbox() is not None or char == ' ', char
+            assert glyph.getbbox() is not None or char.isspace(), char
             atlas.paste(glyph, ((i % 16) * size, (i // 16) * size))
         buf = io.BytesIO()
         atlas.save(buf, format='PNG')

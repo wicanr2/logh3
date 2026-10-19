@@ -3,6 +3,7 @@ import argparse
 from collections import Counter
 import hashlib
 import json
+import math
 from pathlib import Path
 import statistics
 import re
@@ -127,11 +128,16 @@ result['media'] = {'raw_sha256':hashlib.sha256(raw.read_bytes()).hexdigest(),
                    'duration':float(probe['format']['duration']), 'width':video['width'],
                    'height':video['height'],'fps':video['r_frame_rate'],
                    'audio_channels':audio['channels'],'mean_volume_db':mean}
-visual = subprocess.run(['ffmpeg','-nostdin','-v','info','-i',str(raw),'-an',
+# 固定短片120秒的工作時限不適用於較長正常實錄。只調整資源與工作時限，
+# 黑段／凍結及逐格條件保持；143的621秒來源見驗收131。
+scan_timeout = max(120, math.ceil(float(probe['format']['duration']) / 2))
+visual = subprocess.run(['ffmpeg','-nostdin','-v','info','-threads','2','-filter_threads','1','-i',str(raw),'-an',
     '-vf','scale=320:240,blackdetect=d=0.25:pic_th=0.98:pix_th=0.1,freezedetect=n=-50dB:d=1',
-    '-f','null','-'],capture_output=True,text=True,timeout=120,check=True).stderr
+    '-f','null','-'],capture_output=True,text=True,timeout=scan_timeout,check=True).stderr
 (root/'VIDEO-CHECK.log').write_text(visual)
 result['media']['black_intervals'] = re.findall(r'black_start:([0-9.]+) black_end:([0-9.]+) black_duration:([0-9.]+)', visual)
+result['media']['scan_timeout_seconds'] = scan_timeout
+result['media']['scan_threads'] = 2
 result['media']['freeze_events'] = re.findall(r'lavfi.freezedetect.([a-z_]+): ([0-9.]+)', visual)
 result['media']['freeze_scope'] = '完整GUI包含刻意停留的選單、訊息及音效等待；逐格閘門另由實際Draw與來源時間線核對'
 # Extract real recorded frames at observed source changes for visual review.

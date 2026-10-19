@@ -33,13 +33,15 @@ var fleetMobilityCoefficients = [...]int{0, 0, 7, 14, 21, 28, 35, 42, 49, 56, 63
 // FleetCombatCommand帶入已提交命令與FLEET／ADML欄位。三能力分別是
 // FLEET+3D／3E／3F，TargetAttribute是目標提督ADML+12。
 type FleetCombatCommand struct {
-	Weapon          int
-	AttackAbilities [3]int
-	DefendAbilities [3]int
-	TargetFacing    int
-	TargetWeapon    int
-	TargetAttribute int
-	TargetComputer  bool
+	Weapon             int
+	AttackAbilities    [3]int
+	DefendAbilities    [3]int
+	TargetFacing       int
+	TargetWeapon       int
+	TargetAttribute    int
+	TargetComputer     bool
+	AttackBonus        int // 規格149的remake加成，零值保持原版核心算式。
+	FighterAttackBonus int // 僅武器2；提督／參謀所在艦隊的獨立倍率。
 }
 
 // FleetCombatHit保留演出所需係數與逐擊增量。呼叫端依Scorer累加兩張
@@ -147,6 +149,16 @@ func ApplyFleetCombatDamage(own, target *BattleUnit, kinds *ShipKindTable, c Fle
 		AngleDiff256(Atan256(own.X-target.X, own.Y-target.Y), c.TargetFacing), c.DefendAbilities[c.Weapon])
 	if h.Defence <= 0 {
 		return h, fmt.Errorf("交戰防禦係數為零")
+	}
+	if c.AttackBonus < 0 || c.AttackBonus > 200 {
+		return h, fmt.Errorf("攻擊加成超出範圍")
+	}
+	h.Attack = BonusAmount(h.Attack, c.AttackBonus)
+	if c.FighterAttackBonus < 0 || c.FighterAttackBonus > 200 {
+		return h, fmt.Errorf("戰鬥機攻擊加成超出範圍")
+	}
+	if c.Weapon == 2 {
+		h.Attack = BonusAmount(h.Attack, c.FighterAttackBonus)
 	}
 	h.Shots = ok.Byte(11+c.Weapon*4) * own.Ships
 	switch c.Weapon {

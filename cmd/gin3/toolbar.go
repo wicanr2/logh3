@@ -97,6 +97,36 @@ func (a *app) updateInput() {
 	}
 	ebiten.SetCursorMode(ebiten.CursorModeHidden)
 	a.g.MoveMouse(x, y)
+	if a.admiralEditor != nil {
+		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+			a.editorClick(x, y)
+		}
+		if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+			a.editorCancel()
+		}
+		for k := ebiten.Key0; k <= ebiten.Key9; k++ {
+			if inpututil.IsKeyJustPressed(k) {
+				a.editorKey(byte('0' + k - ebiten.Key0))
+			}
+		}
+		for k := ebiten.KeyKP0; k <= ebiten.KeyKP9; k++ {
+			if inpututil.IsKeyJustPressed(k) {
+				a.editorKey(byte('0' + k - ebiten.KeyKP0))
+			}
+		}
+		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) || inpututil.IsKeyJustPressed(ebiten.KeyKPEnter) {
+			a.editorKey('\r')
+		}
+		if inpututil.IsKeyJustPressed(ebiten.KeyBackspace) {
+			a.editorKey(8)
+		}
+		if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
+			a.editorKey(27)
+		}
+		a.g.LeftRelease()
+		a.g.RightRelease()
+		return
+	}
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		if a.presentationClick(x, y) {
 			a.g.LeftRelease()

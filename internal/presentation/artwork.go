@@ -19,6 +19,7 @@ const Scale = 3
 
 type Renderer struct {
 	images         map[string]*image.RGBA
+	editorFaces    map[string]*image.RGBA
 	frame          *image.RGBA
 	refine         bool
 	font           *fontAtlas
@@ -129,8 +130,14 @@ func LoadWithProgress(dir string, faces *asset.AMG, progress func(done, total in
 		return nil, fmt.Errorf("HD 目錄沒有可用人物圖：%s", dir)
 	}
 	r.opaque = make(map[string]bool)
+	r.editorFaces = make(map[string]*image.RGBA)
 	for key, im := range r.images {
 		r.opaque[key] = im.Opaque()
+		if strings.HasPrefix(key, "face/") {
+			smallKey := "editor-face/" + strings.TrimPrefix(key, "face/")
+			r.editorFaces[smallKey] = resize(im, 64*Scale, 80*Scale)
+			r.opaque[smallKey] = r.editorFaces[smallKey].Opaque()
+		}
 	}
 	r.font, err = loadFontAtlas(filepath.Join(dir, "font"))
 	if err != nil {

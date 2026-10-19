@@ -40,6 +40,7 @@ func (a *app) frame() *gfx.Framebuffer {
 		return fb
 	}
 	a.drawCompactSettings(fb)
+	a.drawAdmiralEditor(fb)
 	x, y := a.g.MousePosition()
 	if a.cursor != nil && y >= 0 {
 		a.cursor.Draw(fb, x, y-ui.MouseDY)

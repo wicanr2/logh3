@@ -45,6 +45,7 @@ type app struct {
 	preferencesPath   string
 	ruleSettingsError string
 	aiSettingsMenu    bool
+	admiralEditor     *admiralEditorState
 	cursor            *ui.Cursor
 	musicState        game.State
 	effects           effectPlayback
@@ -332,6 +333,10 @@ func main() {
 			}
 		}
 		report(4, "準備初始局")
+		admiralPrefs, admiralPrefErr := readAdmiralPreferences(filepath.Join(*saveDir, "preferences.json"))
+		if admiralPrefErr == nil {
+			res.AdmiralPreferences = &admiralPrefs
+		}
 		g, err := game.New(res)
 		if err != nil {
 			return nil, err
@@ -449,6 +454,10 @@ func main() {
 			fmt.Fprintln(os.Stderr, "HD配樂不完整，保留原版曲庫。")
 		}
 		a.preferencesPath = filepath.Join(*saveDir, "preferences.json")
+		if admiralPrefErr != nil {
+			a.ruleSettingsError = admiralPrefErr.Error()
+			fmt.Fprintln(os.Stderr, "提督偏好：", admiralPrefErr)
+		}
 		options, optionsErr := readRulePreferences(a.preferencesPath)
 		if optionsErr != nil {
 			a.ruleSettingsError = optionsErr.Error()

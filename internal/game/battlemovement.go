@@ -11,7 +11,7 @@ func (g *Game) newBattleMovement() *rules.BattleMovement {
 	for i := range g.battleFleets {
 		bf := &g.battleFleets[i]
 		group := rules.MovementFleet{Fleet: bf}
-		group.CommandBoost = g.heroMovementActive(bf.Faction)
+		group.CommandBonus = g.armyBonus(bf.Faction, true)
 		if cpu, passive := g.passiveComputer(); passive && bf.Faction == cpu {
 			group.Frozen = true
 		}

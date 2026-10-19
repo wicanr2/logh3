@@ -7,6 +7,7 @@ import (
 	"image"
 	"image/color"
 	"image/png"
+	"sync"
 )
 
 // SettingsGlyphKey僅供系統設定使用，不替換遊戲的原版字庫。
@@ -31,6 +32,42 @@ type SettingsMask struct {
 }
 
 var settingsGlyphs = loadSettingsGlyphs()
+
+var settingsSized sync.Map
+
+// 編輯頁沿核准草稿的10／12／14／16字格。來源仍為同一份設定字型。
+func SettingsGlyphSize(char rune, size int) (SettingsMask, bool) {
+	base, ok := SettingsGlyph(char)
+	if !ok || size < 1 || size > 24 {
+		return SettingsMask{}, false
+	}
+	if size == 12 {
+		return base, true
+	}
+	key := struct {
+		C    rune
+		Size int
+	}{char, size}
+	if cached, ok := settingsSized.Load(key); ok {
+		return cached.(SettingsMask), true
+	}
+	w := size
+	if char < 128 {
+		w = size / 2
+	}
+	resize := func(src []uint8, sw, sh, dw, dh int) []uint8 {
+		dst := make([]uint8, dw*dh)
+		for y := 0; y < dh; y++ {
+			for x := 0; x < dw; x++ {
+				dst[y*dw+x] = src[(y*sh/dh)*sw+x*sw/dw]
+			}
+		}
+		return dst
+	}
+	mask := SettingsMask{Width: w, Native: resize(base.Native, base.Width, 12, w, size), HD: resize(base.HD, base.Width*3, 36, w*3, size*3)}
+	settingsSized.Store(key, mask)
+	return mask, true
+}
 
 func loadSettingsGlyphs() map[rune]SettingsMask {
 	var index struct {

@@ -43,7 +43,11 @@ func (g *Game) tryFlagshipTransfer(destroyed int) bool {
 		return false
 	}
 	roll := 0
-	if f.Admiral != 5 {
+	chance := g.admiralPreferences.Special(f.Admiral).Transfer
+	if chance == 0 {
+		return false
+	}
+	if chance < 100 {
 		if g.battleRand == nil {
 			g.saveErr = fmt.Errorf("旗艦轉移缺本場亂數狀態")
 			return false
@@ -54,7 +58,7 @@ func (g *Game) tryFlagshipTransfer(destroyed int) bool {
 		g.flagshipTransferTried = map[int]bool{}
 	}
 	g.flagshipTransferTried[pool] = true
-	if !rules.FlagshipTransferSucceeds(f.Admiral, roll) {
+	if chance < 100 && roll%100 >= chance {
 		return false
 	}
 	g.slot.Fleet, g.slot.Ship = work.Fleet, work.Ship

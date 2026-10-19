@@ -1,0 +1,5238 @@
+{
+  "version": "v.1.5.0-20261019",
+  "source": "實際Linux完整版ZIP解壓後正常片頭至S1操作，未縮放完整視窗",
+  "zip_sha256": "f8914da71927591687a3846aa42eecbd11dbc9b70c4e8492e9d566ba3e0c1cab",
+  "binary_sha256": "e691fba7f92188f31e04c22e11388816f3fa72af278f6d60c195b65d02a9cbec",
+  "receipt_sha256": "1ef13d4020db75870f57e87250e862c5b7320f8ada9bcb8357625a3a92f07edf",
+  "files": [
+    {
+      "file": "docs/images/readme-v150-settings-empire.png",
+      "source": "workplace/admiral143/editor-linux/0-settings.png",
+      "sha256": "8cc28c8fa6ee0b3e38bc0595ac9fb6251a03c1e6a1f6462b5a6693d2824ddac4",
+      "bytes": 91284,
+      "observed": {
+        "wall_ns": 1792411614213687829,
+        "ticks": 46,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 13.683568,
+        "draw_ms": 18.249677,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          623,
+          470
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": false,
+        "music_track": "",
+        "soundfont": "gs",
+        "mt32_available": false,
+        "soundfont_menu": false,
+        "music_library": "",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "admirals": [
+            176,
+            378,
+            288,
+            394
+          ],
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        }
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-settings-alliance.png",
+      "source": "workplace/admiral143/editor-linux/1-settings.png",
+      "sha256": "b333eea4709963f8661db4c3b77059fa71c3e466ca64f280cb12fe79531e8dff",
+      "bytes": 91853,
+      "observed": {
+        "wall_ns": 1792411690868760825,
+        "ticks": 50,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 11.409678,
+        "draw_ms": 14.275368,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          623,
+          470
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": false,
+        "music_track": "",
+        "soundfont": "gs",
+        "mt32_available": false,
+        "soundfont_menu": false,
+        "music_library": "",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "admirals": [
+            176,
+            378,
+            288,
+            394
+          ],
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        }
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-editor-empire.png",
+      "source": "workplace/admiral143/editor-linux/0-special.png",
+      "sha256": "bca3f731940347b72689b52552e65bc6ae420884db23b8d9fe2a472e79c39aae",
+      "bytes": 105998,
+      "observed": {
+        "wall_ns": 1792411630219367534,
+        "ticks": 132,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 18.247583,
+        "draw_ms": 22.257684,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          623,
+          470
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": false,
+        "music_track": "",
+        "soundfont": "gs",
+        "mt32_available": false,
+        "soundfont_menu": false,
+        "music_library": "",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "admirals": [
+            176,
+            378,
+            288,
+            394
+          ],
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        },
+        "admiral_editor": {
+          "confirm": "",
+          "controls": {
+            "admiral-0": [
+              40,
+              110,
+              184,
+              136
+            ],
+            "admiral-1": [
+              40,
+              139,
+              184,
+              165
+            ],
+            "admiral-2": [
+              40,
+              168,
+              184,
+              194
+            ],
+            "admiral-3": [
+              40,
+              197,
+              184,
+              223
+            ],
+            "admiral-4": [
+              40,
+              226,
+              184,
+              252
+            ],
+            "admiral-5": [
+              40,
+              255,
+              184,
+              281
+            ],
+            "admiral-6": [
+              40,
+              284,
+              184,
+              310
+            ],
+            "admiral-7": [
+              40,
+              313,
+              184,
+              339
+            ],
+            "apply": [
+              515,
+              402,
+              608,
+              427
+            ],
+            "basic": [
+              204,
+              168,
+              328,
+              193
+            ],
+            "cancel": [
+              414,
+              402,
+              507,
+              427
+            ],
+            "confirm-no": [
+              204,
+              267,
+              309,
+              292
+            ],
+            "confirm-yes": [
+              315,
+              267,
+              420,
+              292
+            ],
+            "faction-0": [
+              36,
+              76,
+              112,
+              99
+            ],
+            "faction-1": [
+              116,
+              76,
+              192,
+              99
+            ],
+            "field-13-dec": [
+              477,
+              205,
+              498,
+              228
+            ],
+            "field-13-inc": [
+              571,
+              205,
+              592,
+              228
+            ],
+            "field-13-value": [
+              501,
+              205,
+              568,
+              228
+            ],
+            "field-14-dec": [
+              477,
+              245,
+              498,
+              268
+            ],
+            "field-14-inc": [
+              571,
+              245,
+              592,
+              268
+            ],
+            "field-14-value": [
+              501,
+              245,
+              568,
+              268
+            ],
+            "field-15-dec": [
+              477,
+              285,
+              498,
+              308
+            ],
+            "field-15-inc": [
+              571,
+              285,
+              592,
+              308
+            ],
+            "field-15-value": [
+              501,
+              285,
+              568,
+              308
+            ],
+            "field-16-dec": [
+              477,
+              325,
+              498,
+              348
+            ],
+            "field-16-inc": [
+              571,
+              325,
+              592,
+              348
+            ],
+            "field-16-value": [
+              501,
+              325,
+              568,
+              348
+            ],
+            "hidden": [
+              332,
+              168,
+              456,
+              193
+            ],
+            "input-cancel": [
+              220,
+              268,
+              300,
+              292
+            ],
+            "input-ok": [
+              310,
+              268,
+              390,
+              292
+            ],
+            "restore": [
+              36,
+              402,
+              129,
+              427
+            ],
+            "scroll-down": [
+              116,
+              362,
+              192,
+              382
+            ],
+            "special": [
+              460,
+              168,
+              584,
+              193
+            ]
+          },
+          "dirty": true,
+          "editing": -1,
+          "entry": {
+            "Index": 0,
+            "Faction": 0,
+            "Level": 39,
+            "Name": [
+              46556,
+              42589,
+              43938,
+              44883
+            ],
+            "Label": "萊因哈特",
+            "Abilities": [
+              150,
+              112,
+              120,
+              102,
+              121,
+              116,
+              112,
+              119,
+              128,
+              117,
+              145,
+              140,
+              130
+            ],
+            "Defaults": [
+              138,
+              110,
+              118,
+              100,
+              119,
+              114,
+              110,
+              117,
+              126,
+              115,
+              120,
+              140,
+              130
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 50,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "error": "",
+          "faction": 0,
+          "game_entry": {
+            "Index": 0,
+            "Faction": 0,
+            "Level": 39,
+            "Name": [
+              46556,
+              42589,
+              43938,
+              44883
+            ],
+            "Label": "萊因哈特",
+            "Abilities": [
+              141,
+              112,
+              120,
+              102,
+              121,
+              116,
+              112,
+              119,
+              128,
+              117,
+              120,
+              140,
+              130
+            ],
+            "Defaults": [
+              138,
+              110,
+              118,
+              100,
+              119,
+              114,
+              110,
+              117,
+              126,
+              115,
+              120,
+              140,
+              130
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 50,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "notice": "尚未套用",
+          "selected": 0,
+          "tab": 2
+        }
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-editor-alliance.png",
+      "source": "workplace/admiral143/editor-linux/1-special.png",
+      "sha256": "3db98e0b6c6b407731313187ed2a5f24f6c8513ff795f7f7879a03b88241712e",
+      "bytes": 99527,
+      "observed": {
+        "wall_ns": 1792411692536556207,
+        "ticks": 60,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 17.180637,
+        "draw_ms": 20.796201,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          623,
+          470
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": false,
+        "music_track": "",
+        "soundfont": "gs",
+        "mt32_available": false,
+        "soundfont_menu": false,
+        "music_library": "",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "admirals": [
+            176,
+            378,
+            288,
+            394
+          ],
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        },
+        "admiral_editor": {
+          "confirm": "",
+          "controls": {
+            "admiral-45": [
+              40,
+              110,
+              184,
+              136
+            ],
+            "admiral-46": [
+              40,
+              139,
+              184,
+              165
+            ],
+            "admiral-47": [
+              40,
+              168,
+              184,
+              194
+            ],
+            "admiral-48": [
+              40,
+              197,
+              184,
+              223
+            ],
+            "admiral-49": [
+              40,
+              226,
+              184,
+              252
+            ],
+            "admiral-50": [
+              40,
+              255,
+              184,
+              281
+            ],
+            "admiral-51": [
+              40,
+              284,
+              184,
+              310
+            ],
+            "admiral-52": [
+              40,
+              313,
+              184,
+              339
+            ],
+            "apply": [
+              515,
+              402,
+              608,
+              427
+            ],
+            "basic": [
+              204,
+              168,
+              328,
+              193
+            ],
+            "cancel": [
+              414,
+              402,
+              507,
+              427
+            ],
+            "confirm-no": [
+              204,
+              267,
+              309,
+              292
+            ],
+            "confirm-yes": [
+              315,
+              267,
+              420,
+              292
+            ],
+            "faction-0": [
+              36,
+              76,
+              112,
+              99
+            ],
+            "faction-1": [
+              116,
+              76,
+              192,
+              99
+            ],
+            "field-13-dec": [
+              477,
+              205,
+              498,
+              228
+            ],
+            "field-13-inc": [
+              571,
+              205,
+              592,
+              228
+            ],
+            "field-13-value": [
+              501,
+              205,
+              568,
+              228
+            ],
+            "field-14-dec": [
+              477,
+              245,
+              498,
+              268
+            ],
+            "field-14-inc": [
+              571,
+              245,
+              592,
+              268
+            ],
+            "field-14-value": [
+              501,
+              245,
+              568,
+              268
+            ],
+            "field-15-dec": [
+              477,
+              285,
+              498,
+              308
+            ],
+            "field-15-inc": [
+              571,
+              285,
+              592,
+              308
+            ],
+            "field-15-value": [
+              501,
+              285,
+              568,
+              308
+            ],
+            "field-16-dec": [
+              477,
+              325,
+              498,
+              348
+            ],
+            "field-16-inc": [
+              571,
+              325,
+              592,
+              348
+            ],
+            "field-16-value": [
+              501,
+              325,
+              568,
+              348
+            ],
+            "hidden": [
+              332,
+              168,
+              456,
+              193
+            ],
+            "input-cancel": [
+              220,
+              268,
+              300,
+              292
+            ],
+            "input-ok": [
+              310,
+              268,
+              390,
+              292
+            ],
+            "restore": [
+              36,
+              402,
+              129,
+              427
+            ],
+            "scroll-down": [
+              116,
+              362,
+              192,
+              382
+            ],
+            "special": [
+              460,
+              168,
+              584,
+              193
+            ]
+          },
+          "dirty": false,
+          "editing": -1,
+          "entry": {
+            "Index": 52,
+            "Faction": 1,
+            "Level": 26,
+            "Name": [
+              47016,
+              43970,
+              42833
+            ],
+            "Label": "楊威利",
+            "Abilities": [
+              139,
+              115,
+              123,
+              91,
+              127,
+              125,
+              116,
+              115,
+              118,
+              112,
+              112,
+              82,
+              138
+            ],
+            "Defaults": [
+              136,
+              112,
+              120,
+              88,
+              125,
+              123,
+              114,
+              113,
+              116,
+              110,
+              112,
+              82,
+              138
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 50,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "error": "",
+          "faction": 1,
+          "game_entry": {
+            "Index": 52,
+            "Faction": 1,
+            "Level": 26,
+            "Name": [
+              47016,
+              43970,
+              42833
+            ],
+            "Label": "楊威利",
+            "Abilities": [
+              139,
+              115,
+              123,
+              91,
+              127,
+              125,
+              116,
+              115,
+              118,
+              112,
+              112,
+              82,
+              138
+            ],
+            "Defaults": [
+              136,
+              112,
+              120,
+              88,
+              125,
+              123,
+              114,
+              113,
+              116,
+              110,
+              112,
+              82,
+              138
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 50,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "notice": "",
+          "selected": 52,
+          "tab": 2
+        }
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-editor-basic.png",
+      "source": "workplace/admiral143/editor-linux/0-basic.png",
+      "sha256": "233d1f54c2b29dc3567fabaaadb286203d712fd3dad834ab7353eff78fd59acb",
+      "bytes": 86668,
+      "observed": {
+        "wall_ns": 1792411615438563592,
+        "ticks": 52,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 33.934393,
+        "draw_ms": 37.921025,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          623,
+          470
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": false,
+        "music_track": "",
+        "soundfont": "gs",
+        "mt32_available": false,
+        "soundfont_menu": false,
+        "music_library": "",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "admirals": [
+            176,
+            378,
+            288,
+            394
+          ],
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        },
+        "admiral_editor": {
+          "confirm": "",
+          "controls": {
+            "admiral-0": [
+              40,
+              110,
+              184,
+              136
+            ],
+            "admiral-1": [
+              40,
+              139,
+              184,
+              165
+            ],
+            "admiral-2": [
+              40,
+              168,
+              184,
+              194
+            ],
+            "admiral-3": [
+              40,
+              197,
+              184,
+              223
+            ],
+            "admiral-4": [
+              40,
+              226,
+              184,
+              252
+            ],
+            "admiral-5": [
+              40,
+              255,
+              184,
+              281
+            ],
+            "admiral-6": [
+              40,
+              284,
+              184,
+              310
+            ],
+            "admiral-7": [
+              40,
+              313,
+              184,
+              339
+            ],
+            "apply": [
+              515,
+              402,
+              608,
+              427
+            ],
+            "basic": [
+              204,
+              168,
+              328,
+              193
+            ],
+            "cancel": [
+              414,
+              402,
+              507,
+              427
+            ],
+            "confirm-no": [
+              204,
+              267,
+              309,
+              292
+            ],
+            "confirm-yes": [
+              315,
+              267,
+              420,
+              292
+            ],
+            "faction-0": [
+              36,
+              76,
+              112,
+              99
+            ],
+            "faction-1": [
+              116,
+              76,
+              192,
+              99
+            ],
+            "field-0-dec": [
+              299,
+              205,
+              320,
+              228
+            ],
+            "field-0-inc": [
+              369,
+              205,
+              390,
+              228
+            ],
+            "field-0-value": [
+              323,
+              205,
+              366,
+              228
+            ],
+            "field-1-dec": [
+              501,
+              205,
+              522,
+              228
+            ],
+            "field-1-inc": [
+              571,
+              205,
+              592,
+              228
+            ],
+            "field-1-value": [
+              525,
+              205,
+              568,
+              228
+            ],
+            "field-2-dec": [
+              299,
+              238,
+              320,
+              261
+            ],
+            "field-2-inc": [
+              369,
+              238,
+              390,
+              261
+            ],
+            "field-2-value": [
+              323,
+              238,
+              366,
+              261
+            ],
+            "field-3-dec": [
+              501,
+              238,
+              522,
+              261
+            ],
+            "field-3-inc": [
+              571,
+              238,
+              592,
+              261
+            ],
+            "field-3-value": [
+              525,
+              238,
+              568,
+              261
+            ],
+            "field-4-dec": [
+              299,
+              271,
+              320,
+              294
+            ],
+            "field-4-inc": [
+              369,
+              271,
+              390,
+              294
+            ],
+            "field-4-value": [
+              323,
+              271,
+              366,
+              294
+            ],
+            "field-5-dec": [
+              501,
+              271,
+              522,
+              294
+            ],
+            "field-5-inc": [
+              571,
+              271,
+              592,
+              294
+            ],
+            "field-5-value": [
+              525,
+              271,
+              568,
+              294
+            ],
+            "field-6-dec": [
+              299,
+              304,
+              320,
+              327
+            ],
+            "field-6-inc": [
+              369,
+              304,
+              390,
+              327
+            ],
+            "field-6-value": [
+              323,
+              304,
+              366,
+              327
+            ],
+            "field-7-dec": [
+              501,
+              304,
+              522,
+              327
+            ],
+            "field-7-inc": [
+              571,
+              304,
+              592,
+              327
+            ],
+            "field-7-value": [
+              525,
+              304,
+              568,
+              327
+            ],
+            "field-8-dec": [
+              299,
+              337,
+              320,
+              360
+            ],
+            "field-8-inc": [
+              369,
+              337,
+              390,
+              360
+            ],
+            "field-8-value": [
+              323,
+              337,
+              366,
+              360
+            ],
+            "field-9-dec": [
+              501,
+              337,
+              522,
+              360
+            ],
+            "field-9-inc": [
+              571,
+              337,
+              592,
+              360
+            ],
+            "field-9-value": [
+              525,
+              337,
+              568,
+              360
+            ],
+            "hidden": [
+              332,
+              168,
+              456,
+              193
+            ],
+            "input-cancel": [
+              220,
+              268,
+              300,
+              292
+            ],
+            "input-ok": [
+              310,
+              268,
+              390,
+              292
+            ],
+            "restore": [
+              36,
+              402,
+              129,
+              427
+            ],
+            "scroll-down": [
+              116,
+              362,
+              192,
+              382
+            ],
+            "special": [
+              460,
+              168,
+              584,
+              193
+            ]
+          },
+          "dirty": false,
+          "editing": -1,
+          "entry": {
+            "Index": 0,
+            "Faction": 0,
+            "Level": 39,
+            "Name": [
+              46556,
+              42589,
+              43938,
+              44883
+            ],
+            "Label": "萊因哈特",
+            "Abilities": [
+              141,
+              112,
+              120,
+              102,
+              121,
+              116,
+              112,
+              119,
+              128,
+              117,
+              120,
+              140,
+              130
+            ],
+            "Defaults": [
+              138,
+              110,
+              118,
+              100,
+              119,
+              114,
+              110,
+              117,
+              126,
+              115,
+              120,
+              140,
+              130
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 50,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "error": "",
+          "faction": 0,
+          "game_entry": {
+            "Index": 0,
+            "Faction": 0,
+            "Level": 39,
+            "Name": [
+              46556,
+              42589,
+              43938,
+              44883
+            ],
+            "Label": "萊因哈特",
+            "Abilities": [
+              141,
+              112,
+              120,
+              102,
+              121,
+              116,
+              112,
+              119,
+              128,
+              117,
+              120,
+              140,
+              130
+            ],
+            "Defaults": [
+              138,
+              110,
+              118,
+              100,
+              119,
+              114,
+              110,
+              117,
+              126,
+              115,
+              120,
+              140,
+              130
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 50,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "notice": "",
+          "selected": 0,
+          "tab": 0
+        }
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-editor-internal.png",
+      "source": "workplace/admiral143/editor-linux/0-hidden.png",
+      "sha256": "dbb62730e52a1e7c1b46aec9452d3a67fb68e1f8bb2cc4ab415fcf4912dd58c1",
+      "bytes": 99327,
+      "observed": {
+        "wall_ns": 1792411625399455582,
+        "ticks": 106,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 15.987742,
+        "draw_ms": 21.399938,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          623,
+          470
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": false,
+        "music_track": "",
+        "soundfont": "gs",
+        "mt32_available": false,
+        "soundfont_menu": false,
+        "music_library": "",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "admirals": [
+            176,
+            378,
+            288,
+            394
+          ],
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        },
+        "admiral_editor": {
+          "confirm": "",
+          "controls": {
+            "admiral-0": [
+              40,
+              110,
+              184,
+              136
+            ],
+            "admiral-1": [
+              40,
+              139,
+              184,
+              165
+            ],
+            "admiral-2": [
+              40,
+              168,
+              184,
+              194
+            ],
+            "admiral-3": [
+              40,
+              197,
+              184,
+              223
+            ],
+            "admiral-4": [
+              40,
+              226,
+              184,
+              252
+            ],
+            "admiral-5": [
+              40,
+              255,
+              184,
+              281
+            ],
+            "admiral-6": [
+              40,
+              284,
+              184,
+              310
+            ],
+            "admiral-7": [
+              40,
+              313,
+              184,
+              339
+            ],
+            "apply": [
+              515,
+              402,
+              608,
+              427
+            ],
+            "basic": [
+              204,
+              168,
+              328,
+              193
+            ],
+            "cancel": [
+              414,
+              402,
+              507,
+              427
+            ],
+            "confirm-no": [
+              204,
+              267,
+              309,
+              292
+            ],
+            "confirm-yes": [
+              315,
+              267,
+              420,
+              292
+            ],
+            "faction-0": [
+              36,
+              76,
+              112,
+              99
+            ],
+            "faction-1": [
+              116,
+              76,
+              192,
+              99
+            ],
+            "field-10-dec": [
+              501,
+              205,
+              522,
+              228
+            ],
+            "field-10-inc": [
+              571,
+              205,
+              592,
+              228
+            ],
+            "field-10-value": [
+              525,
+              205,
+              568,
+              228
+            ],
+            "field-11-dec": [
+              501,
+              254,
+              522,
+              277
+            ],
+            "field-11-inc": [
+              571,
+              254,
+              592,
+              277
+            ],
+            "field-11-value": [
+              525,
+              254,
+              568,
+              277
+            ],
+            "field-12-dec": [
+              501,
+              303,
+              522,
+              326
+            ],
+            "field-12-inc": [
+              571,
+              303,
+              592,
+              326
+            ],
+            "field-12-value": [
+              525,
+              303,
+              568,
+              326
+            ],
+            "hidden": [
+              332,
+              168,
+              456,
+              193
+            ],
+            "input-cancel": [
+              220,
+              268,
+              300,
+              292
+            ],
+            "input-ok": [
+              310,
+              268,
+              390,
+              292
+            ],
+            "restore": [
+              36,
+              402,
+              129,
+              427
+            ],
+            "scroll-down": [
+              116,
+              362,
+              192,
+              382
+            ],
+            "special": [
+              460,
+              168,
+              584,
+              193
+            ]
+          },
+          "dirty": true,
+          "editing": -1,
+          "entry": {
+            "Index": 0,
+            "Faction": 0,
+            "Level": 39,
+            "Name": [
+              46556,
+              42589,
+              43938,
+              44883
+            ],
+            "Label": "萊因哈特",
+            "Abilities": [
+              150,
+              112,
+              120,
+              102,
+              121,
+              116,
+              112,
+              119,
+              128,
+              117,
+              120,
+              140,
+              130
+            ],
+            "Defaults": [
+              138,
+              110,
+              118,
+              100,
+              119,
+              114,
+              110,
+              117,
+              126,
+              115,
+              120,
+              140,
+              130
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 50,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "error": "",
+          "faction": 0,
+          "game_entry": {
+            "Index": 0,
+            "Faction": 0,
+            "Level": 39,
+            "Name": [
+              46556,
+              42589,
+              43938,
+              44883
+            ],
+            "Label": "萊因哈特",
+            "Abilities": [
+              141,
+              112,
+              120,
+              102,
+              121,
+              116,
+              112,
+              119,
+              128,
+              117,
+              120,
+              140,
+              130
+            ],
+            "Defaults": [
+              138,
+              110,
+              118,
+              100,
+              119,
+              114,
+              110,
+              117,
+              126,
+              115,
+              120,
+              140,
+              130
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 50,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "notice": "尚未套用",
+          "selected": 0,
+          "tab": 1
+        }
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-editor-original.png",
+      "source": "workplace/admiral143/editor-linux/0-original.png",
+      "sha256": "f46f35d4a35f67393d05cedaf4b6cdea202a8ca7d22b2979ac8dc756916708bd",
+      "bytes": 10885,
+      "observed": {
+        "wall_ns": 1792411648543679992,
+        "ticks": 236,
+        "state": "StateSettings",
+        "graphics": "original",
+        "frame_ms": 19.637944,
+        "draw_ms": 22.243242,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          623,
+          470
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": false,
+        "music_track": "",
+        "soundfont": "gs",
+        "mt32_available": false,
+        "soundfont_menu": false,
+        "music_library": "",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "admirals": [
+            176,
+            378,
+            288,
+            394
+          ],
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        },
+        "admiral_editor": {
+          "confirm": "",
+          "controls": {
+            "admiral-0": [
+              40,
+              110,
+              184,
+              136
+            ],
+            "admiral-1": [
+              40,
+              139,
+              184,
+              165
+            ],
+            "admiral-2": [
+              40,
+              168,
+              184,
+              194
+            ],
+            "admiral-3": [
+              40,
+              197,
+              184,
+              223
+            ],
+            "admiral-4": [
+              40,
+              226,
+              184,
+              252
+            ],
+            "admiral-5": [
+              40,
+              255,
+              184,
+              281
+            ],
+            "admiral-6": [
+              40,
+              284,
+              184,
+              310
+            ],
+            "admiral-7": [
+              40,
+              313,
+              184,
+              339
+            ],
+            "apply": [
+              515,
+              402,
+              608,
+              427
+            ],
+            "basic": [
+              204,
+              168,
+              328,
+              193
+            ],
+            "cancel": [
+              414,
+              402,
+              507,
+              427
+            ],
+            "confirm-no": [
+              204,
+              267,
+              309,
+              292
+            ],
+            "confirm-yes": [
+              315,
+              267,
+              420,
+              292
+            ],
+            "faction-0": [
+              36,
+              76,
+              112,
+              99
+            ],
+            "faction-1": [
+              116,
+              76,
+              192,
+              99
+            ],
+            "field-13-dec": [
+              477,
+              205,
+              498,
+              228
+            ],
+            "field-13-inc": [
+              571,
+              205,
+              592,
+              228
+            ],
+            "field-13-value": [
+              501,
+              205,
+              568,
+              228
+            ],
+            "field-14-dec": [
+              477,
+              245,
+              498,
+              268
+            ],
+            "field-14-inc": [
+              571,
+              245,
+              592,
+              268
+            ],
+            "field-14-value": [
+              501,
+              245,
+              568,
+              268
+            ],
+            "field-15-dec": [
+              477,
+              285,
+              498,
+              308
+            ],
+            "field-15-inc": [
+              571,
+              285,
+              592,
+              308
+            ],
+            "field-15-value": [
+              501,
+              285,
+              568,
+              308
+            ],
+            "field-16-dec": [
+              477,
+              325,
+              498,
+              348
+            ],
+            "field-16-inc": [
+              571,
+              325,
+              592,
+              348
+            ],
+            "field-16-value": [
+              501,
+              325,
+              568,
+              348
+            ],
+            "hidden": [
+              332,
+              168,
+              456,
+              193
+            ],
+            "input-cancel": [
+              220,
+              268,
+              300,
+              292
+            ],
+            "input-ok": [
+              310,
+              268,
+              390,
+              292
+            ],
+            "restore": [
+              36,
+              402,
+              129,
+              427
+            ],
+            "scroll-down": [
+              116,
+              362,
+              192,
+              382
+            ],
+            "special": [
+              460,
+              168,
+              584,
+              193
+            ]
+          },
+          "dirty": false,
+          "editing": -1,
+          "entry": {
+            "Index": 0,
+            "Faction": 0,
+            "Level": 39,
+            "Name": [
+              46556,
+              42589,
+              43938,
+              44883
+            ],
+            "Label": "萊因哈特",
+            "Abilities": [
+              150,
+              112,
+              120,
+              102,
+              121,
+              116,
+              112,
+              119,
+              128,
+              117,
+              145,
+              140,
+              130
+            ],
+            "Defaults": [
+              138,
+              110,
+              118,
+              100,
+              119,
+              114,
+              110,
+              117,
+              126,
+              115,
+              120,
+              140,
+              130
+            ],
+            "Special": {
+              "transfer": 60,
+              "movement": 55,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "error": "",
+          "faction": 0,
+          "game_entry": {
+            "Index": 0,
+            "Faction": 0,
+            "Level": 39,
+            "Name": [
+              46556,
+              42589,
+              43938,
+              44883
+            ],
+            "Label": "萊因哈特",
+            "Abilities": [
+              150,
+              112,
+              120,
+              102,
+              121,
+              116,
+              112,
+              119,
+              128,
+              117,
+              145,
+              140,
+              130
+            ],
+            "Defaults": [
+              138,
+              110,
+              118,
+              100,
+              119,
+              114,
+              110,
+              117,
+              126,
+              115,
+              120,
+              140,
+              130
+            ],
+            "Special": {
+              "transfer": 60,
+              "movement": 55,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "notice": "已保存全局設定",
+          "selected": 0,
+          "tab": 2
+        }
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-editor-applied.png",
+      "source": "workplace/admiral143/editor-linux/0-applied.png",
+      "sha256": "3dbff2dd91e8f565234c39dcb0c25365bf3bc9975b716f9ab09aefc271799906",
+      "bytes": 106428,
+      "observed": {
+        "wall_ns": 1792411647253881389,
+        "ticks": 230,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 21.062158,
+        "draw_ms": 24.842229,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          623,
+          470
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": false,
+        "music_track": "",
+        "soundfont": "gs",
+        "mt32_available": false,
+        "soundfont_menu": false,
+        "music_library": "",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "admirals": [
+            176,
+            378,
+            288,
+            394
+          ],
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        },
+        "admiral_editor": {
+          "confirm": "",
+          "controls": {
+            "admiral-0": [
+              40,
+              110,
+              184,
+              136
+            ],
+            "admiral-1": [
+              40,
+              139,
+              184,
+              165
+            ],
+            "admiral-2": [
+              40,
+              168,
+              184,
+              194
+            ],
+            "admiral-3": [
+              40,
+              197,
+              184,
+              223
+            ],
+            "admiral-4": [
+              40,
+              226,
+              184,
+              252
+            ],
+            "admiral-5": [
+              40,
+              255,
+              184,
+              281
+            ],
+            "admiral-6": [
+              40,
+              284,
+              184,
+              310
+            ],
+            "admiral-7": [
+              40,
+              313,
+              184,
+              339
+            ],
+            "apply": [
+              515,
+              402,
+              608,
+              427
+            ],
+            "basic": [
+              204,
+              168,
+              328,
+              193
+            ],
+            "cancel": [
+              414,
+              402,
+              507,
+              427
+            ],
+            "confirm-no": [
+              204,
+              267,
+              309,
+              292
+            ],
+            "confirm-yes": [
+              315,
+              267,
+              420,
+              292
+            ],
+            "faction-0": [
+              36,
+              76,
+              112,
+              99
+            ],
+            "faction-1": [
+              116,
+              76,
+              192,
+              99
+            ],
+            "field-13-dec": [
+              477,
+              205,
+              498,
+              228
+            ],
+            "field-13-inc": [
+              571,
+              205,
+              592,
+              228
+            ],
+            "field-13-value": [
+              501,
+              205,
+              568,
+              228
+            ],
+            "field-14-dec": [
+              477,
+              245,
+              498,
+              268
+            ],
+            "field-14-inc": [
+              571,
+              245,
+              592,
+              268
+            ],
+            "field-14-value": [
+              501,
+              245,
+              568,
+              268
+            ],
+            "field-15-dec": [
+              477,
+              285,
+              498,
+              308
+            ],
+            "field-15-inc": [
+              571,
+              285,
+              592,
+              308
+            ],
+            "field-15-value": [
+              501,
+              285,
+              568,
+              308
+            ],
+            "field-16-dec": [
+              477,
+              325,
+              498,
+              348
+            ],
+            "field-16-inc": [
+              571,
+              325,
+              592,
+              348
+            ],
+            "field-16-value": [
+              501,
+              325,
+              568,
+              348
+            ],
+            "hidden": [
+              332,
+              168,
+              456,
+              193
+            ],
+            "input-cancel": [
+              220,
+              268,
+              300,
+              292
+            ],
+            "input-ok": [
+              310,
+              268,
+              390,
+              292
+            ],
+            "restore": [
+              36,
+              402,
+              129,
+              427
+            ],
+            "scroll-down": [
+              116,
+              362,
+              192,
+              382
+            ],
+            "special": [
+              460,
+              168,
+              584,
+              193
+            ]
+          },
+          "dirty": false,
+          "editing": -1,
+          "entry": {
+            "Index": 0,
+            "Faction": 0,
+            "Level": 39,
+            "Name": [
+              46556,
+              42589,
+              43938,
+              44883
+            ],
+            "Label": "萊因哈特",
+            "Abilities": [
+              150,
+              112,
+              120,
+              102,
+              121,
+              116,
+              112,
+              119,
+              128,
+              117,
+              145,
+              140,
+              130
+            ],
+            "Defaults": [
+              138,
+              110,
+              118,
+              100,
+              119,
+              114,
+              110,
+              117,
+              126,
+              115,
+              120,
+              140,
+              130
+            ],
+            "Special": {
+              "transfer": 60,
+              "movement": 55,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "error": "",
+          "faction": 0,
+          "game_entry": {
+            "Index": 0,
+            "Faction": 0,
+            "Level": 39,
+            "Name": [
+              46556,
+              42589,
+              43938,
+              44883
+            ],
+            "Label": "萊因哈特",
+            "Abilities": [
+              150,
+              112,
+              120,
+              102,
+              121,
+              116,
+              112,
+              119,
+              128,
+              117,
+              145,
+              140,
+              130
+            ],
+            "Defaults": [
+              138,
+              110,
+              118,
+              100,
+              119,
+              114,
+              110,
+              117,
+              126,
+              115,
+              120,
+              140,
+              130
+            ],
+            "Special": {
+              "transfer": 60,
+              "movement": 55,
+              "attack": 30,
+              "fighter_attack": 0
+            }
+          },
+          "notice": "已保存全局設定",
+          "selected": 0,
+          "tab": 2
+        }
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-editor-kemp.png",
+      "source": "workplace/admiral143/editor-linux/0-kemp-fighter.png",
+      "sha256": "d70054f04eea0f754217ca38480a24d856ea7b3ccb56f215bf67704e8e0064e7",
+      "bytes": 99344,
+      "observed": {
+        "wall_ns": 1792411654048314449,
+        "ticks": 258,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 16.749935,
+        "draw_ms": 20.30356,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          623,
+          470
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": false,
+        "music_track": "",
+        "soundfont": "gs",
+        "mt32_available": false,
+        "soundfont_menu": false,
+        "music_library": "",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "admirals": [
+            176,
+            378,
+            288,
+            394
+          ],
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        },
+        "admiral_editor": {
+          "confirm": "",
+          "controls": {
+            "admiral-10": [
+              40,
+              313,
+              184,
+              339
+            ],
+            "admiral-3": [
+              40,
+              110,
+              184,
+              136
+            ],
+            "admiral-4": [
+              40,
+              139,
+              184,
+              165
+            ],
+            "admiral-5": [
+              40,
+              168,
+              184,
+              194
+            ],
+            "admiral-6": [
+              40,
+              197,
+              184,
+              223
+            ],
+            "admiral-7": [
+              40,
+              226,
+              184,
+              252
+            ],
+            "admiral-8": [
+              40,
+              255,
+              184,
+              281
+            ],
+            "admiral-9": [
+              40,
+              284,
+              184,
+              310
+            ],
+            "apply": [
+              515,
+              402,
+              608,
+              427
+            ],
+            "basic": [
+              204,
+              168,
+              328,
+              193
+            ],
+            "cancel": [
+              414,
+              402,
+              507,
+              427
+            ],
+            "confirm-no": [
+              204,
+              267,
+              309,
+              292
+            ],
+            "confirm-yes": [
+              315,
+              267,
+              420,
+              292
+            ],
+            "faction-0": [
+              36,
+              76,
+              112,
+              99
+            ],
+            "faction-1": [
+              116,
+              76,
+              192,
+              99
+            ],
+            "field-13-dec": [
+              477,
+              205,
+              498,
+              228
+            ],
+            "field-13-inc": [
+              571,
+              205,
+              592,
+              228
+            ],
+            "field-13-value": [
+              501,
+              205,
+              568,
+              228
+            ],
+            "field-14-dec": [
+              477,
+              245,
+              498,
+              268
+            ],
+            "field-14-inc": [
+              571,
+              245,
+              592,
+              268
+            ],
+            "field-14-value": [
+              501,
+              245,
+              568,
+              268
+            ],
+            "field-15-dec": [
+              477,
+              285,
+              498,
+              308
+            ],
+            "field-15-inc": [
+              571,
+              285,
+              592,
+              308
+            ],
+            "field-15-value": [
+              501,
+              285,
+              568,
+              308
+            ],
+            "field-16-dec": [
+              477,
+              325,
+              498,
+              348
+            ],
+            "field-16-inc": [
+              571,
+              325,
+              592,
+              348
+            ],
+            "field-16-value": [
+              501,
+              325,
+              568,
+              348
+            ],
+            "hidden": [
+              332,
+              168,
+              456,
+              193
+            ],
+            "input-cancel": [
+              220,
+              268,
+              300,
+              292
+            ],
+            "input-ok": [
+              310,
+              268,
+              390,
+              292
+            ],
+            "restore": [
+              36,
+              402,
+              129,
+              427
+            ],
+            "scroll-down": [
+              116,
+              362,
+              192,
+              382
+            ],
+            "special": [
+              460,
+              168,
+              584,
+              193
+            ]
+          },
+          "dirty": false,
+          "editing": -1,
+          "entry": {
+            "Index": 10,
+            "Faction": 0,
+            "Level": 24,
+            "Name": [
+              42914,
+              46262
+            ],
+            "Label": "坎普",
+            "Abilities": [
+              104,
+              93,
+              97,
+              91,
+              92,
+              93,
+              128,
+              97,
+              83,
+              100,
+              78,
+              110,
+              90
+            ],
+            "Defaults": [
+              101,
+              90,
+              94,
+              88,
+              90,
+              91,
+              126,
+              95,
+              81,
+              98,
+              78,
+              110,
+              90
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 0,
+              "attack": 0,
+              "fighter_attack": 30
+            }
+          },
+          "error": "",
+          "faction": 0,
+          "game_entry": {
+            "Index": 10,
+            "Faction": 0,
+            "Level": 24,
+            "Name": [
+              42914,
+              46262
+            ],
+            "Label": "坎普",
+            "Abilities": [
+              104,
+              93,
+              97,
+              91,
+              92,
+              93,
+              128,
+              97,
+              83,
+              100,
+              78,
+              110,
+              90
+            ],
+            "Defaults": [
+              101,
+              90,
+              94,
+              88,
+              90,
+              91,
+              126,
+              95,
+              81,
+              98,
+              78,
+              110,
+              90
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 0,
+              "attack": 0,
+              "fighter_attack": 30
+            }
+          },
+          "notice": "已保存全局設定",
+          "selected": 10,
+          "tab": 2
+        }
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-editor-poplan.png",
+      "source": "workplace/admiral143/editor-linux/1-poplan-fighter.png",
+      "sha256": "3382de797e5a78f0bd3c9accbfd193fe62de1f8c216f60a25b6144b42ae547ff",
+      "bytes": 98557,
+      "observed": {
+        "wall_ns": 1792411698851835846,
+        "ticks": 103,
+        "state": "StateSettings",
+        "graphics": "hd",
+        "frame_ms": 8.838736,
+        "draw_ms": 12.390909,
+        "toolbar_visible": false,
+        "help_visible": false,
+        "show_enemies": false,
+        "battle_ready": false,
+        "mouse_buttons": [
+          false,
+          false
+        ],
+        "cursor": [
+          623,
+          470
+        ],
+        "font_style": "classic",
+        "music_quality": "original",
+        "hd_music_available": false,
+        "music_track": "",
+        "soundfont": "gs",
+        "mt32_available": false,
+        "soundfont_menu": false,
+        "music_library": "",
+        "ai_level": 1,
+        "ai_menu": false,
+        "settings": {
+          "admirals": [
+            176,
+            378,
+            288,
+            394
+          ],
+          "ai": [
+            288,
+            324,
+            448,
+            340
+          ],
+          "ai-choice--1": [
+            288,
+            244,
+            448,
+            260
+          ],
+          "ai-choice-0": [
+            288,
+            260,
+            448,
+            276
+          ],
+          "ai-choice-1": [
+            288,
+            276,
+            448,
+            292
+          ],
+          "ai-choice-2": [
+            288,
+            292,
+            448,
+            308
+          ],
+          "ai-choice-3": [
+            288,
+            308,
+            448,
+            324
+          ],
+          "anim-off": [
+            370,
+            252,
+            448,
+            268
+          ],
+          "anim-on": [
+            288,
+            252,
+            366,
+            268
+          ],
+          "battle-0": [
+            288,
+            190,
+            448,
+            204
+          ],
+          "battle-1": [
+            288,
+            204,
+            448,
+            218
+          ],
+          "battle-2": [
+            288,
+            218,
+            448,
+            232
+          ],
+          "bgm-0": [
+            288,
+            104,
+            448,
+            118
+          ],
+          "bgm-1": [
+            288,
+            118,
+            448,
+            132
+          ],
+          "bgm-2": [
+            288,
+            132,
+            448,
+            146
+          ],
+          "bgm-3": [
+            288,
+            146,
+            448,
+            160
+          ],
+          "bgm-4": [
+            288,
+            160,
+            448,
+            174
+          ],
+          "bgm-5": [
+            288,
+            174,
+            448,
+            188
+          ],
+          "bounds": [
+            160,
+            41,
+            464,
+            400
+          ],
+          "close": [
+            360,
+            378,
+            448,
+            394
+          ],
+          "enemies": [
+            288,
+            306,
+            448,
+            322
+          ],
+          "flagship": [
+            288,
+            342,
+            448,
+            358
+          ],
+          "fm": [
+            342,
+            86,
+            392,
+            102
+          ],
+          "font": [
+            288,
+            68,
+            448,
+            84
+          ],
+          "glyph": [
+            12,
+            12,
+            6,
+            12
+          ],
+          "hd": [
+            288,
+            86,
+            338,
+            102
+          ],
+          "movement": [
+            288,
+            360,
+            448,
+            376
+          ],
+          "msg-dec": [
+            426,
+            234,
+            448,
+            250
+          ],
+          "msg-inc": [
+            400,
+            234,
+            422,
+            250
+          ],
+          "off": [
+            396,
+            86,
+            448,
+            102
+          ],
+          "soundfont": [
+            288,
+            288,
+            448,
+            304
+          ],
+          "soundfont-choice-0": [
+            288,
+            256,
+            448,
+            272
+          ],
+          "soundfont-choice-1": [
+            288,
+            272,
+            448,
+            288
+          ],
+          "speed-0": [
+            288,
+            270,
+            340,
+            286
+          ],
+          "speed-1": [
+            342,
+            270,
+            394,
+            286
+          ],
+          "speed-2": [
+            396,
+            270,
+            448,
+            286
+          ]
+        },
+        "rules": {
+          "flagship_transfer": true,
+          "hero_movement": true
+        },
+        "admiral_editor": {
+          "confirm": "",
+          "controls": {
+            "admiral-69": [
+              40,
+              110,
+              184,
+              136
+            ],
+            "admiral-70": [
+              40,
+              139,
+              184,
+              165
+            ],
+            "admiral-71": [
+              40,
+              168,
+              184,
+              194
+            ],
+            "admiral-72": [
+              40,
+              197,
+              184,
+              223
+            ],
+            "admiral-73": [
+              40,
+              226,
+              184,
+              252
+            ],
+            "admiral-74": [
+              40,
+              255,
+              184,
+              281
+            ],
+            "admiral-75": [
+              40,
+              284,
+              184,
+              310
+            ],
+            "admiral-76": [
+              40,
+              313,
+              184,
+              339
+            ],
+            "apply": [
+              515,
+              402,
+              608,
+              427
+            ],
+            "basic": [
+              204,
+              168,
+              328,
+              193
+            ],
+            "cancel": [
+              414,
+              402,
+              507,
+              427
+            ],
+            "confirm-no": [
+              204,
+              267,
+              309,
+              292
+            ],
+            "confirm-yes": [
+              315,
+              267,
+              420,
+              292
+            ],
+            "faction-0": [
+              36,
+              76,
+              112,
+              99
+            ],
+            "faction-1": [
+              116,
+              76,
+              192,
+              99
+            ],
+            "field-13-dec": [
+              477,
+              205,
+              498,
+              228
+            ],
+            "field-13-inc": [
+              571,
+              205,
+              592,
+              228
+            ],
+            "field-13-value": [
+              501,
+              205,
+              568,
+              228
+            ],
+            "field-14-dec": [
+              477,
+              245,
+              498,
+              268
+            ],
+            "field-14-inc": [
+              571,
+              245,
+              592,
+              268
+            ],
+            "field-14-value": [
+              501,
+              245,
+              568,
+              268
+            ],
+            "field-15-dec": [
+              477,
+              285,
+              498,
+              308
+            ],
+            "field-15-inc": [
+              571,
+              285,
+              592,
+              308
+            ],
+            "field-15-value": [
+              501,
+              285,
+              568,
+              308
+            ],
+            "field-16-dec": [
+              477,
+              325,
+              498,
+              348
+            ],
+            "field-16-inc": [
+              571,
+              325,
+              592,
+              348
+            ],
+            "field-16-value": [
+              501,
+              325,
+              568,
+              348
+            ],
+            "hidden": [
+              332,
+              168,
+              456,
+              193
+            ],
+            "input-cancel": [
+              220,
+              268,
+              300,
+              292
+            ],
+            "input-ok": [
+              310,
+              268,
+              390,
+              292
+            ],
+            "restore": [
+              36,
+              402,
+              129,
+              427
+            ],
+            "scroll-down": [
+              116,
+              362,
+              192,
+              382
+            ],
+            "special": [
+              460,
+              168,
+              584,
+              193
+            ]
+          },
+          "dirty": false,
+          "editing": -1,
+          "entry": {
+            "Index": 74,
+            "Faction": 1,
+            "Level": 4,
+            "Name": [
+              43625,
+              42412,
+              50421
+            ],
+            "Label": "波布蘭",
+            "Abilities": [
+              95,
+              78,
+              84,
+              73,
+              71,
+              74,
+              139,
+              71,
+              78,
+              76,
+              81,
+              83,
+              84
+            ],
+            "Defaults": [
+              93,
+              76,
+              83,
+              72,
+              70,
+              73,
+              138,
+              70,
+              77,
+              75,
+              81,
+              83,
+              84
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 0,
+              "attack": 0,
+              "fighter_attack": 30
+            }
+          },
+          "error": "",
+          "faction": 1,
+          "game_entry": {
+            "Index": 74,
+            "Faction": 1,
+            "Level": 4,
+            "Name": [
+              43625,
+              42412,
+              50421
+            ],
+            "Label": "波布蘭",
+            "Abilities": [
+              95,
+              78,
+              84,
+              73,
+              71,
+              74,
+              139,
+              71,
+              78,
+              76,
+              81,
+              83,
+              84
+            ],
+            "Defaults": [
+              93,
+              76,
+              83,
+              72,
+              70,
+              73,
+              138,
+              70,
+              77,
+              75,
+              81,
+              83,
+              84
+            ],
+            "Special": {
+              "transfer": 25,
+              "movement": 0,
+              "attack": 0,
+              "fighter_attack": 30
+            }
+          },
+          "notice": "",
+          "selected": 74,
+          "tab": 2
+        }
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-map-empire.png",
+      "source": "workplace/admiral143/gameplay-f0-final/strategy-current.png",
+      "sha256": "aea5a214517e0d73dab38ad8bd96c5d78a2af28d040ebfb922628613559d00c1",
+      "bytes": 93149,
+      "source_trace_sha256": "af027dd296233d8158d427d1cdb6b7f8aa8de384a1a40930e6dc7f08da38d6f7",
+      "capture_event": {
+        "kind": "capture",
+        "name": "strategy-current",
+        "start_seconds": 15.900255606975406,
+        "end_seconds": 16.95982168894261,
+        "wall_begin_ns": 1792412274748238706,
+        "wall_end_ns": 1792412275807808697
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-battle-empire.png",
+      "source": "workplace/admiral143/gameplay-f0-final/entry.png",
+      "sha256": "98291183afdc255ba92e161ab850d7318461d25714228732b6f60c04b51dd25c",
+      "bytes": 14343,
+      "source_trace_sha256": "af027dd296233d8158d427d1cdb6b7f8aa8de384a1a40930e6dc7f08da38d6f7",
+      "capture_event": {
+        "kind": "capture",
+        "name": "entry",
+        "start_seconds": 48.975375120993704,
+        "end_seconds": 49.84657528717071,
+        "wall_begin_ns": 1792412307823358438,
+        "wall_end_ns": 1792412308694560800
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-scenarios.png",
+      "source": "workplace/admiral143/gameplay-f0-final/load.png",
+      "sha256": "033a03df3e4ae7ea6eb67e9c29c8cfc5c090550dc433819e3fa26dfc06593c1d",
+      "bytes": 41588,
+      "source_trace_sha256": "af027dd296233d8158d427d1cdb6b7f8aa8de384a1a40930e6dc7f08da38d6f7",
+      "capture_event": {
+        "kind": "capture",
+        "name": "load",
+        "start_seconds": 6.6334784547798336,
+        "end_seconds": 8.016950180754066,
+        "wall_begin_ns": 1792412265481462484,
+        "wall_end_ns": 1792412266864937344
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-ai.png",
+      "source": "workplace/admiral143/gameplay-f0-final/ai-menu.png",
+      "sha256": "dd9de4a2d503d58823238a5c65db12daf17553d89ec91b52289bb1ec2e25d581",
+      "bytes": 91305,
+      "source_trace_sha256": "af027dd296233d8158d427d1cdb6b7f8aa8de384a1a40930e6dc7f08da38d6f7",
+      "capture_event": {
+        "kind": "capture",
+        "name": "ai-menu",
+        "wait": 2,
+        "start_seconds": 20.811621111817658,
+        "end_seconds": 23.06083731399849,
+        "wall_begin_ns": 1792412279659605338,
+        "wall_end_ns": 1792412281908823226
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-map-alliance.png",
+      "source": "workplace/admiral143/gameplay-f1-final/strategy-current.png",
+      "sha256": "d8d479ebd0f734e365afa37d8eeca4b12112c559f418114dbc85e04ecf50a1af",
+      "bytes": 95388,
+      "source_trace_sha256": "81a11f3df0d82e32eb9aa9d316f5d1b46db44c5592e566ecf92457d9ce75c89b",
+      "capture_event": {
+        "kind": "capture",
+        "name": "strategy-current",
+        "start_seconds": 14.942272508051246,
+        "end_seconds": 15.881766280159354,
+        "wall_begin_ns": 1792412512970438071,
+        "wall_end_ns": 1792412513909934718
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-battle-alliance.png",
+      "source": "workplace/admiral143/gameplay-f1-final/turn-02.png",
+      "sha256": "e4d1d4cec5b3d096cc1c00e6fb248dbacab166ff123cdd432b892f72385adb22",
+      "bytes": 30762,
+      "source_trace_sha256": "81a11f3df0d82e32eb9aa9d316f5d1b46db44c5592e566ecf92457d9ce75c89b",
+      "capture_event": {
+        "kind": "capture",
+        "name": "turn-02",
+        "start_seconds": 112.20476612029597,
+        "end_seconds": 113.1601143963635,
+        "wall_begin_ns": 1792412610232932205,
+        "wall_end_ns": 1792412611188283101
+      }
+    },
+    {
+      "file": "docs/images/readme-v150-beam.png",
+      "sha256": "5a50bf9ec2b8ec47a62d28150b24db8b52212ad6a6b895dfd537252677e5870c",
+      "bytes": 226678,
+      "source": "/src/workplace/admiral143/gameplay-f0-final/RAW.mp4",
+      "source_sha256": "c8d0a4e9847e8fafd3a0ce601fa1ec039b9ee7c2caff1e5390039f7e71e0ee1b",
+      "source_seconds": 186.89166666666668,
+      "playback": "fleet/8/4/34"
+    },
+    {
+      "file": "docs/images/readme-v150-missile.png",
+      "sha256": "eb9371f70f9e0f197eefc637cf4a28ce00d8201587f7c851abef8b7d611f7672",
+      "bytes": 233383,
+      "source": "/src/workplace/admiral143/gameplay-f0-final/RAW.mp4",
+      "source_sha256": "c8d0a4e9847e8fafd3a0ce601fa1ec039b9ee7c2caff1e5390039f7e71e0ee1b",
+      "source_seconds": 184.86666666666665,
+      "playback": "fleet/8/4/28"
+    },
+    {
+      "file": "docs/images/readme-v150-fighters.png",
+      "sha256": "dc4bbc4d0dd60852bc2c287ae9808e354c232286f286c0140f586955b3833859",
+      "bytes": 201971,
+      "source": "/src/workplace/admiral143/gameplay-f1-final/RAW.mp4",
+      "source_sha256": "59a7fb5ec19d59a5849f1209ddff703f9b717796c88eb1197ff0711e50e0508c",
+      "source_seconds": 563.1750000000001,
+      "playback": "fleet/8/4/8"
+    }
+  ],
+  "generator_sha256": "0c16361067fd420dc062a71e91bac11c140b2281038a14e8c22793318c158344"
+}

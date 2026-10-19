@@ -302,6 +302,42 @@ func (s *Slot) recalculatePromotionFleet(index int, c PromotionContext) {
 	}
 }
 
+// 編輯器只重算指定艦隊，沿升級的能力派生，不重配艦艇池或重跑月份。
+func (s *Slot) RefreshAdmiralFleet(index int, kinds *ShipKindTable, mobility []int) error {
+	if index < 0 || index >= FleetCount || len(s.Fleet) != FleetCount*FleetRecord || len(s.Ship) != ShipCount*ShipRecord || len(s.Admiral) < 82*AdmiralRecord || kinds == nil {
+		return fmt.Errorf("能力重算缺完整資料")
+	}
+	f := s.fleet(index)
+	if f[4] >= 82 || (f[5] != 255 && f[5] >= 82) || int(f[15]) >= len(mobility) {
+		return fmt.Errorf("能力重算艦隊無效")
+	}
+	for i := 0; i < int(f[15]); i++ {
+		pool := int(binary.LittleEndian.Uint16(f[0x10+4*i:]))
+		if pool >= ShipCount {
+			return fmt.Errorf("能力重算艦艇池越界")
+		}
+		sh := s.Ship[pool*ShipRecord:]
+		k, ok := kinds.Kind(int(sh[0]), int(sh[4]))
+		if !ok || len(k.Words) != 13 || binary.LittleEndian.Uint16(sh[8:]) > 0 && binary.LittleEndian.Uint16(sh[10:]) == 0 {
+			return fmt.Errorf("能力重算艦艇無效")
+		}
+	}
+	pool := int(binary.LittleEndian.Uint16(f[0x38:]))
+	if pool >= ShipCount {
+		return fmt.Errorf("能力重算索敵池越界")
+	}
+	sh := s.Ship[pool*ShipRecord:]
+	k, ok := kinds.Kind(int(sh[0]), 7)
+	if !ok || len(k.Words) != 13 {
+		return fmt.Errorf("能力重算索敵資料缺失")
+	}
+	s.recalculatePromotionFleet(index, PromotionContext{Kinds: kinds, Mobility: mobility})
+	groups := s.FleetComposition(index)
+	binary.LittleEndian.PutUint16(f[0x0a:], uint16(FleetUpkeep(kinds, int(f[1]), groups, int(f[0x47]))))
+	binary.LittleEndian.PutUint16(f[0x0c:], uint16(FleetOtherCost(kinds, int(f[1]), groups, int(f[0x47]))))
+	return nil
+}
+
 func (s *Slot) recalculatePromotionGlobal(c PromotionContext) {
 	ResumRegionEconomy(s.Stellar, s.Planets)
 	u := UnrestState{Regions: s.Stellar, Planets: s.Planets, Fleets: s.Fleet, Admirals: s.Admiral, Graph: c.Graph, Params: c.Params, Paths: c.Paths}

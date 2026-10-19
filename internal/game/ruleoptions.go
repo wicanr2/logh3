@@ -21,5 +21,5 @@ func (g *Game) heroMovementActive(faction int) bool {
 	if g.heroMovementDisabled || faction < 0 || faction > 1 {
 		return false
 	}
-	return g.battleCommanders()[faction] != 0
+	return g.armyBonus(faction, true) > 0
 }

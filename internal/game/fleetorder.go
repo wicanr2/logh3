@@ -180,7 +180,7 @@ func (g *Game) orderedFleetForRange() *rangeShape {
 	}
 	turn, perTurn := g.fleetSpeeds(g.battleUnits[unit].Fleet, g.fleetOrderBattle)
 	if g.heroMovementActive(g.battleUnits[unit].Faction) {
-		perTurn = rules.CommandMovementBudget(perTurn)
+		perTurn = rules.BonusAmount(perTurn, g.armyBonus(g.battleUnits[unit].Faction, true))
 	}
 	dist := perTurn / rules.FixOne
 	if turn <= 0 || dist <= 0 {

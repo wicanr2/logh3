@@ -260,6 +260,9 @@ func (r *Renderer) replay(commands []gfx.DrawCommand, p gfx.Palette) {
 		case gfx.DrawImage:
 			r.markUI(c, 0)
 			hd := r.images[c.Key]
+			if hd == nil {
+				hd = r.editorFaces[c.Key]
+			}
 			if hd != nil && (hd.Bounds().Dx() != c.SourceW*Scale || hd.Bounds().Dy() != c.SourceH*Scale) {
 				hd = nil
 			}

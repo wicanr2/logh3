@@ -6,6 +6,12 @@
 
 ## 現況一覽
 
+**目前發行工作（2026-10-19，第144輪）**：使用者已授權發布`v.1.5.0-20261019`。README採19張新版正式包實錄，三平台引擎、來源與校驗連結已準備；七包、GUI、截圖及影片交付收據重新核對通過。遠端尚無同名tag，既有版本保持；只公開五個引擎／來源／校驗附件，完整包與影片留本機。[唯一狀態表144](docs/goal/2026-10-19-release-round-144.md)保存發布進度及傳輸入口限制；尚未發布。
+
+**目前交付（2026-10-19，第143輪）**：`v.1.5.0-20261019`本機三平台完整／引擎及來源七包通過，來源1590項、非vendor612項一致。Linux11入口、Windows8條Wine入口及兩平台兩陣營正常編輯／重啟／讀檔通過；macOS雙架構11.0、SDK15.5與ARM3253頁簽章通過，未真機驗收。新版影片37段101.016667秒、1080p60、36剪接點單首BGM連續、AAC SNR33.96dB及零黑段通過；新三武器完整交火27.9667秒，明列沿用前版場次後合計51.2833秒，不宣稱全部新拍。README19張正式v1.5實錄已更新並獨立核對。[唯一狀態表143](docs/goal/2026-10-19-admiral-delivery-round-143.md)、[驗收131](docs/playtest/131-admiral-editor-delivery.md)與[交付索引](docs/internals/data/v150-delivery.json)保存結果。完整包與影片留`dist-all/v.1.5.0-20261019/`，舊版、GitHub tag／Release及#48保持，未commit或push。
+
+**目前工作（2026-10-19，第142輪）**：[149限定CONFORMED](docs/spec/149-admiral-editor.md)，含戰鬥機擴充。設定頁已接十三項提督能力及四項特殊能力；兩位名將移動50%、全軍攻擊30%，坎普／波布蘭任提督或參謀時，本艦隊戰鬥機攻擊預設30%，均可編輯。全局稀疏覆寫、新局／讀檔及六表保存已驗。最後標準19套件15 PASS／4無測試；r6兩陣營GUI、無效武器能力下限3、取消／套用、F7、重啟與S1讀回通過，README已列範圍及發布封包區別。原版欄名仍未知；新增規則不作DOS parity聲明。已發布封包未改，#48保持。[本輪唯一狀態表](docs/goal/2026-10-19-admiral-editor-round-142.md)、[驗收130](docs/playtest/130-admiral-editor.md)與[來源索引](docs/images/admiral-editor.json)保存結果與限制。
+
 **目前工作（2026-10-15，第141輪）**：使用者已明確回答「複寫已發布的」，本輪例外維持v.1.4.0-20261015並覆寫該tag／Release及附件，其他版本保持。舊七包、完整目錄與來源、五下載附件、Release與tag身份已備份至`workplace/settings141/published-before-overwrite/`，`MAPPING.json`綁定原路徑及舊雜湊；三平台完整／引擎及來源七包已從同一1584項凍結來源重建，606項非vendor來源一致；Linux15條及Windows8條Wine入口、兩正式ZIP正常GUI與530行金屬左緣／陰影通過，macOS雙架構及ARM3196頁簽章通過。[v.1.4.0 Release](https://github.com/wicanr2/logh3/releases/tag/v.1.4.0-20261015)已依授權覆寫並重新公開，新tag指向b13298d0；五附件實際下載SHA-256與606項tag產品來源核對全部相符，結果保存於[本次重包索引](docs/internals/data/v140-repackage.json)的release。左緣在兩陣營22張正常設定／選單各530行連續、內側陰影完整，標準15 PASS／4無測試與設定／戰場操作通過。[來源索引](docs/images/readme-settings-frame.json)、[驗收129補充](docs/playtest/129-clear-settings-font.md)及[唯一狀態表141](docs/goal/2026-10-15-settings-repackage-round-141.md)保存結果。下方139的正式七包身份已歸檔；本輪新封包與Release驗收另建收據，不混用舊雜湊。
 
 **第140輪原始碼修正歷史（2026-10-15）**：[148設定專用清晰字型](docs/spec/148-clear-settings-font.md)限定CONFORMED。設定頁以原生12字格及36像素HD遮罩替代縮小原字模，移除小字陰影，選取項目使用深色文字。兩陣營正常S1、四款遊戲字型、F7、AI五值、敵軍預設關閉／實際圖示開關及戰場返回通過，標準19套件15 PASS／4無測試。README三張原尺寸實錄已更新，[驗收129](docs/playtest/129-clear-settings-font.md)、[來源索引](docs/images/readme-settings-clear.json)與[狀態表140](docs/goal/2026-10-15-settings-font-round-140.md)保存結果。當時僅更新原始碼；本次字型及左框已由上方141同版重包納入，139原包與身份依MAPPING完整備份，影片原樣保留。
