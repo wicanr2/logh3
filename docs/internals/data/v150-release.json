@@ -1,0 +1,103 @@
+{
+  "version": "v.1.5.0-20261019",
+  "delivery_index": "docs/internals/data/v150-delivery.json",
+  "readme_image_index": "docs/images/readme-v150.json",
+  "workflow": "docs/goal/2026-10-19-release-round-144.md",
+  "publication_authorization": "使用者允許本次主機 gh 發布與下載核對，並明確要求 git push。",
+  "tag_object": "76e750dcf610f5681844fc702f5e0aea8a83df71",
+  "tag_commit": "5ec56c683688c9c540e27ecde77352a36f6bf0b4",
+  "status": "published_verified",
+  "release": {
+    "version": "v.1.5.0-20261019",
+    "passed": true,
+    "url": "https://github.com/wicanr2/logh3/releases/tag/v.1.5.0-20261019",
+    "tag_commit": "5ec56c683688c9c540e27ecde77352a36f6bf0b4",
+    "tag_nonvendor_source_files": 612,
+    "assets": [
+      {
+        "name": "LOGH3-v.1.5.0-20261019-engine-source.tar.gz",
+        "bytes": 3763257,
+        "sha256": "4669ad8f08ba24a45fc55b7eb6ee91644bb615a38740590314123512d57773d3"
+      },
+      {
+        "name": "LOGH3-v.1.5.0-20261019-linux-amd64.zip",
+        "bytes": 8694688,
+        "sha256": "19a88a576e0dd9c70ed32ba12d10f93c0a24b622a811ddcbaa83ef0866d87e63"
+      },
+      {
+        "name": "LOGH3-v.1.5.0-20261019-macos-universal.zip",
+        "bytes": 15612546,
+        "sha256": "808d2bef27f19d7fd3a69d77f57ee3006ffe6342b7e22bb0d1888407603f00ac"
+      },
+      {
+        "name": "LOGH3-v.1.5.0-20261019-windows-amd64.zip",
+        "bytes": 8554954,
+        "sha256": "2c59b9e8b24b83477256106d7bd2621de9dd5f74aa76d62874b5470a4935fe22"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "bytes": 431,
+        "sha256": "5d720188ad5ea094157a3957e066094cd9f4a44b46fda31b9efeda5437f5089d"
+      }
+    ],
+    "release_json_sha256": "4759ed94a3ae2f40b26c16733b714377e917f0b3984ca3c43a72a61166e8fabd",
+    "public_release": true,
+    "full_packages_uploaded": false,
+    "promo_uploaded": false
+  },
+  "publication_checks": {
+    "passed": true,
+    "release_id": 418104822,
+    "published_at": "2026-10-20T07:16:29Z",
+    "latest": true,
+    "existing_releases_preserved": 3,
+    "remote_refs": {
+      "refs/heads/main": "a654b554a12a7ae3836c0a4c9f28e194b14e088e",
+      "refs/tags/v.1.5.0-20261019": "76e750dcf610f5681844fc702f5e0aea8a83df71",
+      "refs/tags/v.1.5.0-20261019^{}": "5ec56c683688c9c540e27ecde77352a36f6bf0b4"
+    },
+    "assets_unchanged_since_draft": true
+  },
+  "receipt_files": {
+    "workplace/admiral144/PREFLIGHT.json": {
+      "bytes": 1256,
+      "sha256": "24721b58dd0781073ebdfff900fafcd3e9d5826f6edde1b1b28ae9d03104d977"
+    },
+    "workplace/admiral144/RELEASE-NOTES.md": {
+      "bytes": 1305,
+      "sha256": "3338e34c4a22766e740557f2b2643befbcc1c637afa4182c97b1e5ac0d660bab"
+    },
+    "workplace/admiral144/DRAFT-CHECK.json": {
+      "bytes": 1072,
+      "sha256": "139764c72708abd8d9dfd07cf810525d353ef7897907f51bc3fd9ac1dd9a2e43"
+    },
+    "workplace/admiral144/GH-RELEASE.json": {
+      "bytes": 4148,
+      "sha256": "4759ed94a3ae2f40b26c16733b714377e917f0b3984ca3c43a72a61166e8fabd"
+    },
+    "workplace/admiral144/RELEASE-CHECK.json": {
+      "bytes": 1289,
+      "sha256": "fac413e743c835435828d40833b52caf7361e92fa18ddf2d76340b558f825def"
+    },
+    "workplace/admiral144/REMOTE-CHECK.json": {
+      "bytes": 433,
+      "sha256": "b9a896b41e257e76b11759cf7ab6e4e299a70b8ea3b5854a6967f52988f655e2"
+    },
+    "workplace/admiral144/GH-RELEASES-BEFORE.json": {
+      "bytes": 31600,
+      "sha256": "5ba139924c0dd0b68d36a7d28add17b19ada63f05a9dc0b02eba3c10c10a408d"
+    },
+    "workplace/admiral144/GH-RELEASES-AFTER.json": {
+      "bytes": 42086,
+      "sha256": "3bb74d220d3bd0e9def16e3ac005208693d45789d398ce57b506096609abba54"
+    },
+    "workplace/admiral144/GH-LATEST.json": {
+      "bytes": 10485,
+      "sha256": "b219d3ee438de9ab1b35423a2713425018fc4cfa92a54d10ed1ecb6011f5e032"
+    }
+  },
+  "verification_script": {
+    "path": "tools/scripts/v140_release_verify.py",
+    "sha256": "bbf14ae03b72ed00c12d215a24e6c4863bcb2762c8b7ab3997172cf79f05a122"
+  }
+}

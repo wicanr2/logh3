@@ -9,12 +9,14 @@
 | README | 19張新版正式包實錄已就緒，下載連結切換至v1.5 | [圖片索引](../images/readme-v150.json) |
 | 發行輸入 | 七包及影片交付收據獨立重核通過 | [交付131](../playtest/131-admiral-editor-delivery.md)、[本機索引](../internals/data/v150-delivery.json) |
 | 公開附件 | 僅三平台引擎、來源及SHA256SUMS.txt五附件 | 完整版與影片留本機；不擴大素材公開範圍 |
-| 提交與tag | 本機提交及新tag已備妥，尚未推送 | `5ec56c683688c9c540e27ecde77352a36f6bf0b4`逐檔符合612項凍結產品來源；新tag為`v.1.5.0-20261019` |
-| Release | 發行前檢查通過，等待主機gh例外許可 | 五附件36625876 bytes；待發布及實際下載核對。現行規則只明訂Issue的主機gh例外 |
+| 提交與tag | main與新tag已推送，遠端回讀一致 | `5ec56c683688c9c540e27ecde77352a36f6bf0b4`逐檔符合612項凍結產品來源；新tag為`v.1.5.0-20261019` |
+| Release | 已公開並設為最新版，五附件實際下載全部通過 | [正式Release](https://github.com/wicanr2/logh3/releases/tag/v.1.5.0-20261019)、[公開核對收據](../internals/data/v150-release.json)，既有三個Release保持 |
 
 本輪只做文件與發行，不重開已驗規則。Issue快照102張、#48 OPEN；282條verify無失效。三平台完整驗收與來源限制沿131。Windows為Wine驗收，macOS為雙架構、依賴及ARM簽章檢查，沒有新增平台真機聲明。
 
-發布後沿[既有核對器](../../tools/scripts/v140_release_verify.py)，指定`--version v.1.5.0-20261019 --batch /src/workplace/admiral144 --index docs/internals/data/v150-release.json`，以五個實際下載附件核SHA-256，並核對新tag的612項非vendor來源。使用既有Docker Python入口，不能在主機執行核對器。本機交付索引維持凍結，公開收據另存並由本表索引。
+發布後沿[既有核對器](../../tools/scripts/v140_release_verify.py)，指定`--version v.1.5.0-20261019 --batch /src/workplace/admiral144 --index docs/internals/data/v150-release.json`，五個實際下載附件的大小、SHA-256與校驗清單全部通過，新tag的612項非vendor來源全同。核對器在既有Docker Python入口執行。本機交付索引維持凍結，公開收據另存並由本表索引。
+
+使用者於2026-10-20允許本次主機gh上傳與核對，並另要求git push。沿用其核准的既有版本、tag及封包，實際公開時間為2026-10-20 07:16:29 UTC。先核草稿五附件的GitHub SHA-256及說明，再公開、實際下載並核對。三個舊Release的tag、本文、狀態、附件身份與雜湊均保持；新版本未上傳完整包或影片。
 
 ## 發行說明
 

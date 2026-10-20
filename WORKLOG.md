@@ -11405,3 +11405,13 @@ README沿19張v150正式包實錄，將三平台引擎、來源、SHA連結及�
 發行前核對五附件36625876 bytes、四包SHA及SHA256SUMS.txt、ZIP素材邊界、1590來源與19張README圖通過，PREFLIGHT.json及具體RELEASE-NOTES.md保存於workplace/admiral144。79個功能、測試、文件與實錄檔提交為5ec56c683688c9c540e27ecde77352a36f6bf0b4；Docker內git show逐檔確認612項非vendor來源全同。建立新annotated tag首次遭sandbox唯讀檔案系統拒絕，改用已授權Git提權入口成功，沒有修改tag內容或覆寫舊tag。遠端main無新增提交；本輪尚未push。
 
 已提出本次主機gh Release發布與下載核對的規範例外請求，完整結果及說明均可檢閱，不請使用者重選發行範圍。工作樹全樹find碰到三個sandbox暫態隱藏掛載不存在，未出現root-owned檔或誤建.md目錄；後續以實際工作目錄重核。已抽查README、狀態表及PREFLIGHT均1000:1000。本輪容器均退出並刪除，其他專案保持。
+
+### 第144輪續行：2026-10-20公開及推送
+
+使用者允許本次主機gh上傳與下載核對，並另明確要求git push。沿前輪已核准的v.1.5.0-20261019版本、tag與封包，不重新打包或移動tag。主機gh登入、Issue快照及容器worklist verify成功，102張Issue、#48 OPEN，282條斷言零失效。git push --atomic一次推送main至a654b554及新tag物件76e750dc，tag指向已驗產品提交5ec56c68；遠端回讀一致。
+
+先建立草稿並上傳三平台引擎、來源及SHA256SUMS.txt五附件，總計36625876 bytes。草稿tag REST入口回404，改由已登入的Release列表讀同一草稿id418104822，不改附件或發行內容。容器核對五附件名稱、大小、uploaded狀態、GitHub SHA-256與本機PREFLIGHT全同，發行說明也相符，才公開為latest。實際published_at為2026-10-20T07:16:29Z，正式網址https://github.com/wicanr2/logh3/releases/tag/v.1.5.0-20261019。
+
+主機gh實際下載公開五附件到workplace/admiral144/release-download。既有v140_release_verify.py指定v150、新批次及獨立v150-release.json，在Docker核對五附件大小／SHA、四筆校驗及tag的612項非vendor凍結來源全部通過。另核最新Release身份、草稿／公開附件id相同，以及三個既有Release的tag、本文、狀態、發布時間與附件id／大小／雜湊保持。沒有上傳完整版或影片，沒有覆寫舊tag或Release，沒有改遠端Issue。
+
+公開收據保存於docs/internals/data/v150-release.json，README及唯一狀態表144掛入入口，CONTEXT更新公開現況；本機交付索引保持凍結。README／狀態表連結、git diff --check、下載及收據UID/GID1000:1000通過，實際輸出目錄無root-owned檔或誤建.md目錄。產品程式未改，沿已驗來源及標準19套件15 PASS／4無測試，不冒稱重跑。Docker本專案容器均清空，其他專案保持。此收尾紀錄與公開收據另提交推送main，不再次移動發行tag。

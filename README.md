@@ -36,7 +36,7 @@
 | Linux amd64 | [下載 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/LOGH3-v.1.5.0-20261019-linux-amd64.zip) |
 | macOS Intel／Apple Silicon | [下載通用版 ZIP](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/LOGH3-v.1.5.0-20261019-macos-universal.zip) |
 
-[引擎來源包](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/LOGH3-v.1.5.0-20261019-engine-source.tar.gz) · [SHA-256 校驗清單](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/SHA256SUMS.txt) · [封包與截圖驗收](docs/playtest/131-admiral-editor-delivery.md)
+[引擎來源包](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/LOGH3-v.1.5.0-20261019-engine-source.tar.gz) · [SHA-256 校驗清單](https://github.com/wicanr2/logh3/releases/download/v.1.5.0-20261019/SHA256SUMS.txt) · [封包與截圖驗收](docs/playtest/131-admiral-editor-delivery.md) · [公開下載核對](docs/internals/data/v150-release.json)
 
 三平台引擎包均含提督編輯器、全軍攻擊加成，以及提督／參謀提供的戰鬥機攻擊加成。
 
