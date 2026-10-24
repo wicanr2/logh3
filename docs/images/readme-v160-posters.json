@@ -1,0 +1,57 @@
+{
+  "version": "v.1.6.0-20261024",
+  "source": "實際v1.6.0 Linux完整ZIP正常主選單操作，完整1280×720視窗原圖，無重畫或縮放",
+  "canvas": [
+    1280,
+    720
+  ],
+  "normal_entry": true,
+  "state_injection": false,
+  "seed_injection": false,
+  "binary_sha256": "187e826961c66d393b4653908ad95ef293522d6c8ae61a098c0d96bc743869e5",
+  "archive_sha256": "ff05f0dd4739d39c72de900e890f343555172a38e479819fcb60a294f41c85ab",
+  "source_receipts": [
+    {
+      "path": "workplace/poster150/player-linux/RESULT.json",
+      "bytes": 1308214,
+      "sha256": "66eb0ed1d3b56eae983edfe2e8ec46886eca88f21c7b5c21f73a4f0aaad76b9f"
+    },
+    {
+      "path": "workplace/poster150/empire-linux/RESULT.json",
+      "bytes": 27319,
+      "sha256": "b93e6d7c3af28c50cbecb128b12147daea6038cdddb91f959e475cbcc454ec6d"
+    },
+    {
+      "path": "workplace/poster150/garrison-linux/RESULT.json",
+      "bytes": 540498,
+      "sha256": "d4f23f219220376a20e04f7c39c76ead4271c095e72a2064c73667a5e535769b"
+    }
+  ],
+  "files": [
+    {
+      "file": "docs/images/readme-v160-poster-v1.png",
+      "sha256": "c9828efd982d9896c116e577e30b38d9f1ee718cf1867d48df23b7ecc52577b7",
+      "bytes": 518869,
+      "locale": "zh-TW",
+      "poster_set": "v1",
+      "state": "StateCommandPhase"
+    },
+    {
+      "file": "docs/images/readme-v160-poster-v2.png",
+      "sha256": "3a9d1282e750d21490ece9051b496d730b5c4b00797dad55842f35882e7bb5a9",
+      "bytes": 648131,
+      "locale": "zh-TW",
+      "poster_set": "v2",
+      "state": "StateCommandPhase"
+    },
+    {
+      "file": "docs/images/readme-v160-poster-v3.png",
+      "sha256": "5cd1066531c60a0a468540fb94124efe9d3325baa47ad231b6ba8a4b75cd49b1",
+      "bytes": 656605,
+      "locale": "zh-TW",
+      "poster_set": "v3",
+      "state": "StateCommandPhase"
+    }
+  ],
+  "rights": "使用者明確授權GitHub README海報實錄；未公開完整版、原始海報或影片"
+}
