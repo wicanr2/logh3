@@ -17,4 +17,6 @@
 
 實際AppImage兩陣營及Windows Wine共33張，連續前線整軍另19張；兩陣營六表與164各自基準一致，同盟跨平台相同。實際AppImage採extract-and-run，Linux桌面FUSE及Windows／macOS真機未驗；macOS雙架構、依賴及ARM簽章通過。#48同戰場讀回、DOS整段同態、尖端舊版逐字與新人耳驗收限制保持。
 
+交付索引完整讀回、11張原圖SHA、109個文件連結、16份Python依賴與UID/GID核對通過，整專案無root-owned檔案或誤建.md目錄，本輪容器已退出自刪。來源、收據與README截圖以`5b21bf4f`推送既有`feat/approved-poster-frame`，遠端SHA相符；main、tag與Release保持。未提交或公開完整版與影片。
+
 入口：[目前脈絡](../../CONTEXT.md)、[本輪驗收139](../playtest/139-poster-frame-full-promo.md)、[交付索引](../internals/data/v163-full-delivery.json)、[海報157](../spec/157-poster-galaxy-frame.md)、[五組名言驗證138](../playtest/138-poster-quote-rotation.md)、[既有故事片151](2026-10-24-story-promo-round-151.md)、[README實包截圖](../images/readme-v163.json)。

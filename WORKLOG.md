@@ -11755,3 +11755,5 @@ README、157、137與164相對連結完成Git索引檢查，以README到157作�
 README換11張實際AppImage完整原視窗及當前交付入口，複製後逐檔SHA相同；初次匯出器混用garrison的file與普通GUI的screenshot欄位，修正工具後同入口重跑，沒有重畫截圖。139、v163-full-delivery.json、README截圖索引、CONTEXT與166同步；其餘前輪未提交工具及使用者文字檔保持。#48、DOS整段同態、尖端逐字、FUSE與Windows／macOS真機限制未升格。最終來源／文件／擁有權與Docker清理核對，及Git提交推送另在本節追加。
 
 獨立交付索引產生後，以--check完整讀回通過；11張README原圖SHA核對通過。README到定案HTML作正對照，109個相關連結與16份Python來源依賴均在Git索引。錄製工具來源已綁收據SHA，保留實錄版本末尾空白行，不為格式改動已錄來源。正式cmd、internal及核准藝術層Git差異為零；Python與shell語法通過，整專案find無root-owned檔案或誤建.md目錄，交付及圖片抽查1000:1000。本輪Go／HD／AppImage／macOS／Wine一次性容器均退出自刪，沒有新增映像或清理其他專案資源。只暫存38份必要工具、收據、文件與截圖，不含原始遊戲、完整版或影片。
+
+5b21bf4f87824e92ad189d87becf5d69ff9cb35a已推送feat/approved-poster-frame，git ls-remote逐字核對相同；main仍44a8cae1875a9af39ff9f23e645d7b8f96eeb5ff。README、11張新版截圖及可重現工具均在該功能分支。沒有建立或修改tag、Release，沒有再嘗試先前403的PR建立。工作樹僅保留原先其餘工具與使用者文字檔。
