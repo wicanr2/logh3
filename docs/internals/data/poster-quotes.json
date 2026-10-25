@@ -1,5 +1,7 @@
 {
   "status": "verified-Linux-source-normal-entry",
+  "implementation_commit": "208849ac3f0e48c98a5fc9495346857548e7e1b9",
+  "branch": "feat/approved-poster-frame",
   "decision": "2026-10-26 使用者ok 同意附來源網路語錄及五語候選，尖端逐字unknown保留",
   "parent_git": "d10e3b27",
   "interval_seconds": 60,

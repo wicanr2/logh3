@@ -10,7 +10,8 @@
 | 規格 | 擴充限定CONFORMED | [157](../spec/157-poster-galaxy-frame.md)先READY後實作，限Linux來源程式正常入口 |
 | 正式程式 | 已接線 | 原字形及姓名位置，20張2560×400文字層與獨立manifest；原九張藝術層及manifest SHA保持 |
 | 驗證 | 通過 | 標準20套件16PASS／4無測試；時間邊界／負向素材、同盟36張五分鐘完整循環與25語系／組別，帝國9張乾淨重跑；兩陣營六表與164基準相同 |
-| 交付 | 同一功能分支 | feat/approved-poster-frame；不更動正式版號、三平台包、tag或Release |
+| 交付 | 已提交及推送 | [208849ac](https://github.com/wicanr2/logh3/commit/208849ac3f0e48c98a5fc9495346857548e7e1b9)已核對遠端feat/approved-poster-frame，main保持44a8cae1；正式版號、三平台包、tag及Release不動 |
+| 收尾 | 已核對 | README到138作索引正對照，相關相對連結皆入Git；輸出1000:1000，無root-owned／誤建.md目錄，本輪容器全退出自刪 |
 
 入口：[目前脈絡](../../CONTEXT.md)、[候選及來源](../../tools/scripts/poster_quote_candidates.json)、[164定案及藝術基準](2026-10-25-approved-poster-implementation-round-164.md)。
 

@@ -11733,3 +11733,5 @@ README、157、137與164相對連結完成Git索引檢查，以README到157作�
 帝國首批正常流程9張與收據PASS，但容器退出回143，未觀測產品失敗；相同工具鏈、相同流程以新收據目錄乾淨重跑，9張與退出碼0通過。同盟完整流程退出0。兩陣營完整六表SHA與164各自基準相同；重啟首組約1.5秒。25組各86600文字區像素合計2165000，與相應背景及PNG透明合成比對最大通道差1；v2／v3文字區與原背景完全相同。差分及命令／來源SHA留在workplace/poster165與唯一來源索引，不外推DOS parity、尖端官方譯文或真機FPS。
 
 157擴充限定Linux正常入口CONFORMED，138、poster-quotes.json、165及CONTEXT／README同步，README新增正常60秒後第二組截圖。舊164待答文字改指165結果，歷史WORKLOG與凍結HTML不改。新HTML預覽另存165，164原稿保留。整專案find無root-owned檔案或誤建.md目錄，輸出1000:1000；本輪Go／HD／Chromium容器全部退出自刪，無新映像與全域清理。版號、三平台包、tag及Release保持，Windows／macOS這次未重建或真機驗證；其他前輪未提交工具與使用者檔案保持。
+
+正式提交208849ac3f0e48c98a5fc9495346857548e7e1b9已推送feat/approved-poster-frame，git ls-remote逐字核對遠端SHA，main仍44a8cae1。README到138作正對照，相關文件相對連結均在Git索引；最後工作樹僅保留既有前輪工具與使用者檔案修改。
