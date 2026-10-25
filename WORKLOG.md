@@ -11717,3 +11717,5 @@ Linux兩陣營各23張正常X11截圖，三組、五語、F1／F7、設定、動
 使用者追加v1五組兩人名言、約60秒替換。查得網路轉錄及篇章線索，但尖端舊版逐字／頁碼仍unknown，依既有要求送出是否接受轉錄的單一來源問題，尚待答覆。五組五語候選及可操作HTML保留DRAFT，原首組完全沿核准HTML；長句向上排，保持姓名位置。25組語系／名言安全矩形及實際61秒第二組切換在鎖版Chromium通過，沒有外網依賴。未把未核來源文字接入production path。
 
 README、157、137與164相對連結完成Git索引檢查，以README到157作正對照。整專案find無root-owned檔案或誤建.md目錄，已抽查1000:1000；Go／HD／Chromium容器均退出自刪，沒有新增映像或清理其他專案資源。
+
+正式接線324cb899已推送feat/approved-poster-frame，git ls-remote核對分支SHA完整相符，main保持44a8cae1。GitHub連接器建立draft PR回403 Resource not accessible by integration，分支及比較頁仍可檢視；未搬運憑證或擴權。其餘前輪封包工具、來源紀錄與使用者文字檔保留原未提交狀態，這次沒有加入原始遊戲檔、完整版或影片。
