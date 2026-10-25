@@ -1,7 +1,8 @@
 {
-  "status": "DRAFT-source-decision-pending",
+  "status": "user-approved-2026-10-26",
+  "decision": "使用者回答ok 同意，接受附來源網路轉錄及既有五語候選，保留未核尖端逐字註記。",
   "interval_seconds": 60,
-  "notice": "五組網路轉錄候選，尚未核對尖端舊版逐字及頁碼。新增譯文為本專案翻譯，不稱官方字幕；未接正式程式。",
+  "notice": "五組附來源網路語錄，尚未核對尖端舊版逐字及頁碼。新增譯文為本專案翻譯，不稱尖端官方譯文或官方字幕。",
   "pairs": [
     {
       "id": "stars-peace",

@@ -1,4 +1,4 @@
-"""名言來源待裁決的可丟棄預覽；不修改已核准HTML或正式素材。Docker內執行。"""
+"""已核准網路語錄的五語輪替預覽；不修改凍結HTML或正式素材。Docker內執行。"""
 import json
 from pathlib import Path
 
@@ -12,7 +12,7 @@ const quoteDraft=__DATA__;
 const pairSelector=document.createElement('select');pairSelector.id='quote-pair';
 quoteDraft.pairs.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent='第'+(i+1)+'組：'+p.reinhard['zh-TW']+' ／ '+p.yang['zh-TW'];pairSelector.append(o)});
 const panel=document.createElement('section');panel.style.cssText='padding:18px;border:1px solid #d6bc86;margin:20px 0';
-const label=document.createElement('p');label.textContent='名言輪替草案 · 五組、每組60秒、五語。來源選擇待確認，尚未加入正式程式。';panel.append(label,pairSelector);
+const label=document.createElement('p');label.textContent='名言輪替預覽 · 五組、每組60秒、五語。已同意附來源網路語錄，尚未逐字核對尖端舊版。';panel.append(label,pairSelector);
 const remaining=document.createElement('p');panel.append(remaining);
 const button=document.createElement('button');button.textContent='暫停名言輪替';panel.append(button);
 const list=document.createElement('details'),summary=document.createElement('summary');summary.textContent='五組原文、來源與核對限制';list.append(summary);
@@ -29,7 +29,7 @@ window.quotePreview={setPair:i=>{pair=i;began=performance.now();applyPair()},dra
 })();
 </script>
 """.replace('__DATA__', json.dumps(data, ensure_ascii=False).replace('</', '<\/'))
-out = root/'workplace/poster164/quotes-preview.html'
+out = root/'workplace/poster165/quotes-preview.html'
 assert out.parent.stat().st_uid == (root/'tools/scripts').stat().st_uid
 out.write_text(original.replace('</body>',code+'</body>'))
 print(out, out.stat().st_size)

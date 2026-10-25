@@ -10,6 +10,7 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -42,6 +43,8 @@ type approvedPosterArt struct {
 	hullTexture   *ebiten.Image
 	labelTextures map[string]*ebiten.Image
 	overlay       *ebiten.Image
+	rotation      *posterQuoteRotation
+	quoteError    error
 }
 
 func loadApprovedPosterArt(art string) (*approvedPosterArt, error) {
@@ -118,6 +121,10 @@ func loadApprovedPosterArt(art string) (*approvedPosterArt, error) {
 			return nil, err
 		}
 	}
+	p.rotation, err = loadPosterQuoteRotation(dir)
+	if err != nil && !os.IsNotExist(err) {
+		p.quoteError = err
+	}
 	return p, nil
 }
 
@@ -168,13 +175,7 @@ func (a *app) drawApprovedPoster(screen, game *ebiten.Image) {
 		if p.catalog != nil {
 			locale = p.catalog.Locale
 		}
-		if art.labels[locale] == nil {
-			locale = "zh-TW"
-		}
-		if art.labelTextures[locale] == nil {
-			art.labelTextures[locale] = ebiten.NewImageFromImage(art.labels[locale])
-		}
-		screen.DrawImage(art.labelTextures[locale], nil)
+		art.drawQuote(screen, locale, time.Now())
 	}
 	a.drawApprovedPosterWeapons(screen, game.Bounds().Dx())
 	// Pointer, toolbar and help stay above the restored empty bands and artwork.

@@ -4,7 +4,7 @@
 
 選擇銀河帝國或自由行星同盟，從財政、生產與提督任命安排戰略，再親自指揮艦隊迎戰。從亞姆力札會戰重新下令，讓你的戰術改變局勢。
 
-**目前開發版已接入定案銀河海報。** 三組人物海報與上下銀河連接，上方休伯利安、下方伯倫希爾保持固定船體，循環短光束。中央遊戲與滑鼠命中同步縮放。Linux正常入口、三組、五語及存讀已驗證；本機已打包版本仍為v.1.6.2-20261025，尚未包含這次構圖。[定案與驗證](docs/playtest/137-approved-poster-frame.md) · [海報與語系](#海報與語系)
+**目前開發版已接入定案銀河海報。** 三組人物海報與上下銀河連接，上方休伯利安、下方伯倫希爾保持固定船體，循環短光束。v1加入五組雙人名言，每60秒輪替，支援五語。中央遊戲與滑鼠命中同步縮放。Linux正常入口、三組、五語及存讀已驗證；本機已打包版本仍為v.1.6.2-20261025，尚未包含這次構圖。[定案與驗證](docs/playtest/137-approved-poster-frame.md) · [名言輪替驗證](docs/playtest/138-poster-quote-rotation.md) · [海報與語系](#海報與語系)
 
 **Windows更新：v.1.6.1-20261025。** 改善滑鼠移動的重繪延遲，修正按鈕與下拉選項的hover變色。滑鼠移至頂端後，可從工具列直接切換思源黑體等既有字型及戰略AI。更新包沿用v1.6.0素材與存檔。[更新與驗收](docs/playtest/134-pointer-toolbar.md)
 
@@ -106,6 +106,10 @@ Linux AppImage包含完整素材，設為可執行後即可啟動；存檔沿原
 目前來源程式已套用核准構圖。以下三圖取自Linux來源程式的正常遊玩入口，保留完整1280×720視窗。這次構圖尚未重打三平台套件。[定案HTML](docs/spec/157-poster-galaxy-frame.html) · [正常操作驗證與限制](docs/playtest/137-approved-poster-frame.md) · [來源與雜湊](docs/internals/data/poster-approved.json)
 
 ![定案v1，左右主角、圖內名言、上方休伯利安及下方伯倫希爾](docs/images/poster-runtime-v1.png)
+
+v1的兩人名言每60秒同步換一組，五組循環。切換語系時保留當前組別；重開遊戲由第一組開始。文字與姓名保持在人物圖片內，長句向上排。語錄採已同意的網路轉錄及本專案譯文，尚未逐字核對尖端舊版，不稱官方譯文。[五組清單與來源](tools/scripts/poster_quote_candidates.json) · [驗證與截圖雜湊](docs/playtest/138-poster-quote-rotation.md)
+
+![正常遊玩約60秒後，v1兩人的名言已切換到第二組](docs/images/poster-quote-rotation.png)
 
 | v2兩軍將領 | v3雙方親友 |
 |---|---|

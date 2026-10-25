@@ -30,14 +30,18 @@ type posterDecoration struct {
 }
 
 type posterDecorationTrace struct {
-	Approved  bool       `json:"approved"`
-	Viewport  [4]float64 `json:"viewport"`
-	Bands     [2][4]int  `json:"bands"`
-	Flagships [2]int     `json:"flagships"`
-	Fighters  int        `json:"fighters"`
-	Phase     int        `json:"phase"`
-	Page      int        `json:"page"`
-	Animated  bool       `json:"animated"`
+	Approved       bool       `json:"approved"`
+	Viewport       [4]float64 `json:"viewport"`
+	Bands          [2][4]int  `json:"bands"`
+	Flagships      [2]int     `json:"flagships"`
+	Fighters       int        `json:"fighters"`
+	Phase          int        `json:"phase"`
+	Page           int        `json:"page"`
+	Animated       bool       `json:"animated"`
+	QuoteGroup     int        `json:"quote_group"`
+	QuoteCount     int        `json:"quote_count"`
+	QuoteElapsedMS int64      `json:"quote_elapsed_ms"`
+	QuoteTextures  int        `json:"quote_textures"`
 }
 
 func (a *app) posterDecorationObservation() *posterDecorationTrace {
@@ -50,6 +54,22 @@ func (a *app) posterDecorationObservation() *posterDecorationTrace {
 	o.Viewport = [4]float64{v.X, v.Y, v.W, v.H}
 	if a.usingApprovedPoster() {
 		o.Approved, o.Flagships = true, [2]int{1, 1}
+		art := a.posters.approved
+		o.QuoteCount = 1
+		o.QuoteTextures = len(art.labelTextures)
+		if a.posters.selected == 0 {
+			o.QuoteGroup = 1
+		}
+		if q := art.rotation; q != nil {
+			o.QuoteCount = 5
+			o.QuoteTextures += len(q.textures)
+			if a.posters.selected == 0 {
+				o.QuoteGroup = q.index + 1
+			}
+			if !q.epoch.IsZero() {
+				o.QuoteElapsedMS = time.Since(q.epoch).Milliseconds()
+			}
+		}
 	}
 	scale := 1
 	if a.hd != nil {

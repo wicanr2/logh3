@@ -29,6 +29,6 @@ try{
  await delay(30500);await delay(30500);
  const selected=await evaluate(`document.getElementById("quote-pair").value`);assert(selected==="1","60秒未換到第二組："+selected);
  assert(!errors.length,"JavaScript例外");assert(!requests.some(x=>/^https?:/.test(x)),"外網依賴");
- await fs.writeFile(out+"/QUOTES-PREVIEW.json",JSON.stringify({passed:true,status:"DRAFT-only",rows,timer:{wall_wait_ms:61000,selected},errors,external_requests:0},null,2)+"\n");console.log("PASS quote preview 25 pairs/locales; 60s timer");
+ await fs.writeFile(out+"/QUOTES-PREVIEW.json",JSON.stringify({passed:true,status:"approved-preview",rows,timer:{wall_wait_ms:61000,selected},errors,external_requests:0},null,2)+"\n");console.log("PASS quote preview 25 pairs/locales; 60s timer");
 }catch(error){await fs.writeFile(out+"/QUOTES-FAILED.json",JSON.stringify({error:String(error),errors},null,2)+"\n");throw error}
 finally{ws?.close();browser.kill("SIGTERM");await Promise.race([new Promise(r=>browser.once("exit",r)),delay(2000)]);if(browser.exitCode===null)browser.kill("SIGKILL");await log.close()}

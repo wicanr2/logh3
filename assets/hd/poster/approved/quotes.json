@@ -1,0 +1,114 @@
+{
+  "format": "logh3-poster-quotes-v1",
+  "proposal_sha256": "ac843a911fce876e67292940285d22f19c988e092465fe09ab0746f6bf34c202",
+  "source_sha256": "4962d715e1ef02bb26b28abc7a15b5204694bf999ab8ef70c77176a9d3debe4f",
+  "interval_seconds": 60,
+  "rect": [
+    0,
+    880,
+    2560,
+    1280
+  ],
+  "sets": [
+    {
+      "id": "prudence-choice",
+      "files": {
+        "zh-TW": {
+          "file": "quote-2-zh-TW.png",
+          "sha256": "415c258d4f4de9b86d006ecab08275a7ee5cce6d2d0b471c313d2bce04fec17d"
+        },
+        "zh-CN": {
+          "file": "quote-2-zh-CN.png",
+          "sha256": "4085229548d31921731a2df00e584338f8b10337b41dfee24271f086d6ce9b08"
+        },
+        "ja": {
+          "file": "quote-2-ja.png",
+          "sha256": "51e58301ffcd35624677a5e1a5efa0ac05e33d3acd6cddb6e3045b611acfdc1b"
+        },
+        "en": {
+          "file": "quote-2-en.png",
+          "sha256": "47a4116f7a041270c4633934ac84bbcb6acb68d09215a07a53ecd84ed703c30a"
+        },
+        "ko": {
+          "file": "quote-2-ko.png",
+          "sha256": "6b6bf69bcf2a4373036ba922476defb068bd93a4ad36cc47c43273de544b1d89"
+        }
+      }
+    },
+    {
+      "id": "victory-tea",
+      "files": {
+        "zh-TW": {
+          "file": "quote-3-zh-TW.png",
+          "sha256": "80b9cd3bd139fc2cf83654d00179865f5dde5d088fe319e3cdd8c59d3cb04510"
+        },
+        "zh-CN": {
+          "file": "quote-3-zh-CN.png",
+          "sha256": "544682f570fde3d9712a4b752b2aa1c8fbdc41f0b26e9fcc85ab96012b27a537"
+        },
+        "ja": {
+          "file": "quote-3-ja.png",
+          "sha256": "3edb2e817c287a26fa08388a5e7a4e83d4e47529a9153033cd731d478085b91d"
+        },
+        "en": {
+          "file": "quote-3-en.png",
+          "sha256": "dd05e36a6680ccc724b0d6108ef9c460864b5238fdb5b1f36f2309708571b0a4"
+        },
+        "ko": {
+          "file": "quote-3-ko.png",
+          "sha256": "ba3a62c8482dae33659529f7c626668d99fb5a7088127f21e94ecdfaad6254aa"
+        }
+      }
+    },
+    {
+      "id": "universe-state",
+      "files": {
+        "zh-TW": {
+          "file": "quote-4-zh-TW.png",
+          "sha256": "856f937fc01a781dbca5545d64d44973182c3bb4ed072084de5b24d867db0d61"
+        },
+        "zh-CN": {
+          "file": "quote-4-zh-CN.png",
+          "sha256": "a1040ded8497a3ac42bc3ca23cd6521b2e482e6d38b915475407fd7378e9a911"
+        },
+        "ja": {
+          "file": "quote-4-ja.png",
+          "sha256": "32febbd5e53b11d3bea73515cbe2eb1dd851acf8c510e66308d145e06d331e49"
+        },
+        "en": {
+          "file": "quote-4-en.png",
+          "sha256": "7aae6b596a28c18efa7ee720597a6ad084d06e804c195320fa3bae4f8b45a03d"
+        },
+        "ko": {
+          "file": "quote-4-ko.png",
+          "sha256": "5c85226aa31c1a93a486c301942e4460545f1b58d2fc5290556a44e53eba1ae3"
+        }
+      }
+    },
+    {
+      "id": "rebirth-democracy",
+      "files": {
+        "zh-TW": {
+          "file": "quote-5-zh-TW.png",
+          "sha256": "61abd23311d6358ad67c917d1b46dc6ba1b5f26510f2cc2503e3a8de837765b9"
+        },
+        "zh-CN": {
+          "file": "quote-5-zh-CN.png",
+          "sha256": "7e62adb14f27d4cf2f040607070ae26a68e88740bae87c0f64deeeab9b4dab94"
+        },
+        "ja": {
+          "file": "quote-5-ja.png",
+          "sha256": "48508b196293bcbf4a730e802dcd00b758edbd153400076f0bd7fe0692f60ec7"
+        },
+        "en": {
+          "file": "quote-5-en.png",
+          "sha256": "1f02c6b334bc5693386d33304eccbaae7eb81ed1c45c110348c71071f2e521ff"
+        },
+        "ko": {
+          "file": "quote-5-ko.png",
+          "sha256": "d1a11e42c67fe8c6bd9ce367b56f02c3289fb255c9feec810d05882d31738e94"
+        }
+      }
+    }
+  ]
+}

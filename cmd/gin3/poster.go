@@ -41,7 +41,7 @@ type posterArt struct {
 func loadPosterArt(art string) (*posterArt, error) {
 	approved, approvedErr := loadApprovedPosterArt(art)
 	if approvedErr == nil {
-		return &posterArt{approved: approved}, nil
+		return &posterArt{approved: approved}, approved.quoteError
 	}
 	p, err := loadPosterPair(art, "")
 	if err != nil {
